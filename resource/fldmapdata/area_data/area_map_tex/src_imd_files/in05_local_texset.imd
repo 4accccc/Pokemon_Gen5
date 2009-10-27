@@ -3,9 +3,9 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-10-15T14:52:36" source="gate_01.mb"/>
+	<create user="james_turner" host="W00212" date="2009-10-27T19:11:38"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
 
 <body>
@@ -22,16 +22,1678 @@
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
 	compress_material="on" material_size="1 1"
-	output_texture="used"
+	output_texture="all"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
 <box_test pos_scale="0" xyz="-0.500000 -0.500000 -0.500000" whd="1.000000 1.000000 1.000000"/>
 
+<tex_image_array size="60">
+	<tex_image index="0" name="backparts"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="backparts_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/backparts.tga"
+	>
+		<bitmap size="256">
+			ddbb eeed eeee eeee eeee eeee 9999 9999
+			ddbb eeed eeee eeee eeee eeee 9999 9999
+			ddbb eeed eeee eeee eeee eeee 3333 3333
+			ddbb eeed eeee eeee eeee eeee 3333 3333
+			ddbb eeed eeee eeee eeee eeee 3333 3333
+			ddbb eeed eeee eeee eeee eeee 3333 3333
+			7755 8887 8888 8888 8888 8888 1111 1111
+			7755 8887 8888 8888 8888 8888 1111 1111
+			aa88 ccca cccc cccc cccc cccc 0000 0000
+			aa88 ccca cccc cccc cccc cccc 0000 0000
+			ddbb eeed eeee eeee eeee eeee 4444 4444
+			ddbb eeed eeee eeee eeee eeee 6666 6666
+			ddbb eeed eeee eeee eeee eeee 6666 6666
+			ddbb eeed eeee eeee eeee eeee 6666 6666
+			7755 8887 8888 8888 8888 8888 0000 0000
+			7755 8887 8888 8888 8888 8888 0000 0000
+			aa88 ccca cccc cccc cccc cccc accc 88aa
+			aa88 ccca cccc cccc cccc cccc accc 88aa
+			ddbb eeed eeee eeee eeee eeee deee bbdd
+			ddbb eeed eeee eeee eeee eeee deee bbdd
+			ddbb eeed eeee eeee eeee eeee deee bbdd
+			ddbb eeed eeee eeee eeee eeee deee bbdd
+			7755 8887 8888 8888 8888 8888 7888 5577
+			7755 8887 8888 8888 8888 8888 7888 5577
+			aa88 ccca cccc cccc cccc cccc accc 88aa
+			aa88 ccca cccc cccc cccc cccc accc 88aa
+			ddbb eeed eeee eeee eeee eeee deee bbdd
+			ddbb eeed eeee eeee eeee eeee deee bbdd
+			ddbb eeed eeee eeee eeee eeee deee bbdd
+			ddbb eeed eeee eeee eeee eeee deee bbdd
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="beam_1"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="beam_1_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/beam_1.tga"
+	>
+		<bitmap size="16">
+			5432 1345 5432 1345 5432 1345 5432 1345
+			5432 1345 5432 1345 5432 1345 5432 1345
+		</bitmap>
+	</tex_image>
+	<tex_image index="2" name="black"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="black_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/black.tga"
+	>
+		<bitmap size="8">
+			5555 5555 5555 5555 5555 5555 5555 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="3" name="c01_01"
+		width="32" height="32" original_width="32" original_height="32"
+		format="a5i3"
+		palette_name="c01_01_pl"
+		path="C:/home/wb_data3d/field/in05/chip/tex/c01_01.tga"
+	>
+		<bitmap size="512">
+			1111 1111 1111 1111 1111 1111 1111 1111
+			0911 0909 0909 0909 0909 0909 0909 0909
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 0909 0909 0909
+			1911 1911 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1919 1919 1919 1919 1919 1119 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1919 1919 1919 1919 1919 1919 1919 1919
+			1919 1119 1119 1111 1111 1111 1111 1111
+			2119 1919 1919 1919 1919 1919 1919 1919
+			1919 1919 1919 1919 1919 1119 1111 1111
+			2121 2121 2121 2121 2119 1919 1919 1919
+			1919 1919 1919 1919 1919 1919 1919 1919
+			2121 2121 2121 2222 2222 2121 2121 2121
+			2121 1919 1919 1b19 1b1b 191a 1919 1919
+			2929 2929 2229 2725 2526 2123 2121 2121
+			2121 2121 2121 2624 2727 2426 1919 1919
+			2929 2929 2d2b 2f2f 2f2f 2b2e 2129 2121
+			2121 2121 2321 2727 2727 2627 2123 2121
+			2929 2929 2f2b 2f2f 2f2f 2d2f 292a 2929
+			2929 2929 2d22 2727 2727 2727 2224 2121
+			3131 3131 3734 3737 3737 2e2f 292a 2929
+			2929 2929 2e2b 2f2f 2f2f 2f2f 292c 2121
+			3131 3131 3734 3737 3737 3637 3131 3131
+			3131 2929 2f2b 2f2f 2f2f 2f2f 2a2c 2929
+			3939 3939 3f3c 3f3f 3737 3537 3133 3131
+			3131 3131 3633 3737 3737 2f2f 2a2c 2929
+			3939 3a39 3e3b 3f3f 3f3f 3d3f 393a 3939
+			3131 3131 3634 3737 3737 3737 3134 3131
+			4141 4141 4641 3f47 3f3f 3c3f 3939 3939
+			3939 3939 3d3a 3f3f 373f 3737 3234 3131
+			4141 4141 4441 4747 4747 4346 4141 4141
+			3939 3939 3c39 3f3f 3f3f 3d3f 393a 3939
+			4949 4949 4a49 4f4d 464f 4144 4141 4141
+			4141 4141 4141 4744 3f47 3c3e 393a 3939
+			4951 4949 4949 4949 4b4b 494a 4949 4949
+			4949 4141 4141 4241 4443 4243 4141 4141
+			5151 5151 5151 5151 5151 4949 4949 4949
+			4949 4949 4949 4949 414a 4141 4141 4141
+			5959 5959 5151 5151 5151 5151 5151 5151
+			5151 4949 4949 4949 4949 4949 4949 4949
+			5959 5959 5959 5959 5959 5959 5151 5151
+			5151 5151 5151 5151 5151 4951 4949 4949
+			6161 6161 6161 5961 5959 5959 5959 5959
+			5959 5959 5951 5151 5151 5151 5151 5151
+			6169 6161 6161 6161 6161 6161 6161 5961
+			5959 5959 5959 5959 5959 5959 5951 5151
+			6969 6969 6969 6969 6169 6161 6161 6161
+			6161 6161 6161 6161 5961 5959 5959 5959
+			7171 7171 6969 6969 6969 6969 6969 6969
+			6969 6161 6161 6161 6161 6161 6161 6161
+			7171 7171 7171 7171 7171 7171 6971 6969
+			6969 6969 6969 6969 6169 6161 6161 6161
+			7979 7979 7979 7979 7171 7171 7171 7171
+			7171 7171 6971 6969 6969 6969 6969 6969
+			8181 8181 7979 7979 7979 7979 7979 7979
+			7179 7171 7171 7171 7171 7171 7171 6969
+			8181 8181 8181 8181 8181 8181 7979 7979
+			7979 7979 7979 7979 7171 7171 7171 7171
+			8989 8989 8989 8989 8189 8181 8181 8181
+			8181 8181 7981 7979 7979 7979 7979 7979
+			9191 9189 8989 8989 8989 8989 8989 8989
+			8181 8181 8181 8181 8181 8181 8179 7979
+		</bitmap>
+	</tex_image>
+	<tex_image index="4" name="c01_02"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="c01_02_pl"
+		path="C:/home/wb_data3d/field/in05/chip/tex/c01_02.tga"
+	>
+		<bitmap size="256">
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 4431 1112 4321 1113 1111 2321 1111
+			2111 9986 1147 a963 1369 2111 7775 1125
+			6111 ddda 247b ddb6 26bd 5111 bcb9 1159
+			8311 fffc 45ae ffe9 39ef 8311 fffd 138d
+			a411 fffd 56bf fffb 4bff a411 ffff 14af
+			9411 fffd 46af fffa 4aff a411 ffff 14af
+			7211 ffeb 258d ffd7 27df 9411 fffd 139d
+			4111 bba7 1258 ba84 148a 6111 cdca 116a
+			1111 6654 1124 6642 1146 2111 8885 1125
+			1211 1211 1111 2111 1111 1111 4432 1234
+			6664 1114 3331 1112 4311 1134 7521 3688
+			aba8 3148 8875 1136 9852 1579 c952 7acd
+			fffd 537d cdc9 137a dc95 48cd fc83 9eff
+			ffff 85af fffc 359e ffc7 7aef fd94 bfff
+			ffff 95bf fffd 46bf ffd8 7cff fd94 bfff
+			fffe 959e fffd 36bf ffc8 7bff ec74 9dff
+			dddb 736b ffec 259d fea6 59df a851 69bc
+			9a96 5136 bca8 1269 b973 369b 7411 3577
+			3431 1111 7765 1135 6531 1356 2111 1223
+			1111 2332 2331 4311 2113 1112 3311 1112
+			4111 6776 1114 8862 1258 1111 7753 1146
+			7411 acc9 1157 dca6 16ac 3111 cb96 158b
+			a621 effd 336b ffd8 38df 5111 ffd9 37ce
+			b731 ffff 438c fffb 4aff 6111 fffb 49df
+			c731 ffff 448c fffa 4aff 6211 fffb 49df
+			a621 effe 327b ffd8 38df 5111 ffe9 38cf
+			7411 bccb 1158 cb95 159b 3111 cca7 159b
+			5111 7886 1125 7752 1257 1111 8863 1257
+			1111 2342 1111 3211 1112 1111 4321 1113
+		</bitmap>
+	</tex_image>
+	<tex_image index="5" name="candle"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="candle_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/candle.tga"
+	>
+		<bitmap size="64">
+			0000 0000 0000 0000 0000 1100 0011 0000
+			0000 4410 0144 0000 0000 1410 0141 0000
+			0000 4410 0144 0000 1000 6411 1146 0001
+			6150 6414 4146 0516 4615 6444 4446 5164
+			4415 6664 4666 5144 4425 6666 6666 5244
+			4425 6666 6666 5244 4435 6664 4666 5344
+			4350 6644 4466 0534 3500 4443 3444 0053
+			5000 3335 5333 0005 0000 5550 0555 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="6" name="chair_1_1"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="chair_1_1_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/chair_1_1.tga"
+	>
+		<bitmap size="8">
+			5555 5555 5555 5555 5555 5555 5555 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="7" name="chair_2_1"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="chair_2_1_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/chair_2_1.tga"
+	>
+		<bitmap size="8">
+			5555 5555 5555 5555 5555 5555 5555 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="8" name="chair_2_2"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="chair_2_2_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/chair_2_2.tga"
+	>
+		<bitmap size="8">
+			5555 5555 5555 5555 5555 5555 5555 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="9" name="chip_counter"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="color"
+		palette_name="chip_counter_pl"
+		path="C:/home/wb_data3d/field/in00/chip/tex/chip_counter.tga"
+	>
+		<bitmap size="8">
+			0000 0000 0000 0000 5555 5555 5555 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="10" name="chip_kabe"
+		width="8" height="16" original_width="8" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="chip_kabe_pl"
+		path="C:/home/wb_data3d/field/in00/chip/tex/chip_kabe.tga"
+	>
+		<bitmap size="16">
+			aaaa 5555 aaaa 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 0000 5555 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="11" name="chip_kabe2"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="color"
+		palette_name="chip_kabe2_pl"
+		path="C:/home/wb_data3d/field/in00/chip/tex/chip_kabe2.tga"
+	>
+		<bitmap size="8">
+			5555 5555 5555 5555 5555 5555 5555 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="12" name="chip_mat"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="chip_mat_pl"
+		path="C:/home/wb_data3d/field/in00/chip/tex/chip_mat.tga"
+	>
+		<bitmap size="32">
+			0000 0000 0000 0000 5550 0555 aa94 16aa
+			55a4 1a55 0064 1900 0064 1900 0064 1900
+			0064 1900 0064 1900 0064 1900 55a4 1a55
+			aa94 16aa 5550 0555 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="13" name="chip_yuka"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="chip_yuka_pl"
+		path="C:/home/wb_data3d/field/in00/chip/tex/chip_yuka.tga"
+	>
+		<bitmap size="32">
+			ffff ffff aaab eaaa 555b e555 555b e555
+			555b e555 a95b e56a a95b e56a a95b e56a
+			a95b e56a a95b e56a a95b e56a 555b e555
+			555b e555 555b e555 aaab eaaa ffff ffff
+		</bitmap>
+	</tex_image>
+	<tex_image index="14" name="chip_yuka2"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="chip_yuka2_pl"
+		path="C:/home/wb_data3d/field/in00/chip/tex/chip_yuka2.tga"
+	>
+		<bitmap size="32">
+			5555 5555 5555 5555 aa95 56aa a965 596a
+			fd65 597f eba5 5aeb aba5 5aea afa5 5afa
+			afa5 5afa aba5 5aea eba5 5aeb fd65 597f
+			a965 596a aa95 56aa 5555 5555 5555 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="15" name="colors"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette16"
+		color0_mode="color"
+		palette_name="colors_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/colors.tga"
+	>
+		<bitmap size="16">
+			2255 aabb 2255 aabb 4411 cc66 4411 cc66
+			7799 dd00 7799 dd00 3388 dddd 3388 dddd
+		</bitmap>
+	</tex_image>
+	<tex_image index="16" name="cup"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="cup_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/cup.tga"
+	>
+		<bitmap size="64">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 4000 4444 0044 0000
+			1400 1111 0411 0044 2140 3333 4123 0411
+			3214 3333 1233 4111 2114 3333 1123 4123
+			1124 1111 2111 4123 1224 1111 2211 4222
+			2240 1112 4222 0422 2400 2222 0422 0044
+			4000 2222 0042 0000 0000 4444 0004 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="17" name="d0_miz"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="d0_miz_pl"
+		path="C:/home/wb_data3d/field/in00/chip/tex/d0_miz.tga"
+	>
+		<bitmap size="64">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="18" name="d0yuka_001"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="d0yuka_001_pl"
+		path="C:/home/wb_data3d/field/in00/chip/tex/d0yuka_001.tga"
+	>
+		<bitmap size="64">
+			4200 0041 3220 2233 4042 0000 2333 2333
+			2434 2232 2233 0232 0033 2333 2022 0223
+			3000 2242 0033 3222 3300 3433 0333 0220
+			2332 0033 3302 0022 3333 4403 3302 3330
+			0402 2332 3002 0303 2404 2232 0220 0034
+			0320 3202 0030 0030 3333 3022 3244 2003
+			2333 2222 3044 0000 2323 0222 0040 3002
+			2232 0422 0004 3330 4202 0044 0024 3233
+		</bitmap>
+	</tex_image>
+	<tex_image index="19" name="floor1"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="floor1_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/floor1.tga"
+	>
+		<bitmap size="256">
+			3333 2333 7759 8887 8888 4888 6661 3333
+			3333 2333 7779 8888 8888 4888 3666 3333
+			3333 2333 8779 8888 8888 4888 3366 3333
+			3333 2333 8879 8888 8888 4888 3336 3333
+			3333 2333 8889 8888 8888 4888 3333 3333
+			3333 2333 8889 8888 8888 4888 3333 3333
+			3333 2333 8889 8888 8888 4888 3333 3333
+			3333 2333 8889 8888 8888 4888 3333 3333
+			7755 4887 1111 1111 6661 2333 5559 5555
+			7775 4888 1111 1111 3666 2333 5559 5555
+			8777 4888 1111 6111 3366 2333 5559 5555
+			8877 4888 1111 6611 3336 2333 5559 7555
+			8887 4888 1111 6661 3333 2333 5559 7755
+			8888 4888 1111 3666 3333 2333 5559 7775
+			8888 4888 6111 3366 3333 2333 5559 8777
+			8888 4888 6611 3336 3333 2333 7559 8877
+			8888 4888 6661 3333 3333 2333 7759 8887
+			8888 4888 3666 3333 3333 2333 7779 8888
+			8888 4888 3366 3333 3333 2333 8779 8888
+			8888 4888 3336 3333 3333 2333 8879 8888
+			8888 4888 3333 3333 3333 2333 8889 8888
+			8888 4888 3333 3333 3333 2333 8889 8888
+			8888 4888 3333 3333 3333 2333 8889 8888
+			8888 4888 3333 3333 3333 2333 8889 8888
+			6661 2333 5559 5555 7755 4887 1111 1111
+			3666 2333 5559 5555 7775 4888 1111 1111
+			3366 2333 5559 5555 8777 4888 1111 6111
+			3336 2333 5559 7555 8877 4888 1111 6611
+			3333 2333 5559 7755 8887 4888 1111 6661
+			3333 2333 5559 7775 8888 4888 1111 3666
+			3333 2333 5559 8777 8888 4888 6111 3366
+			3333 2333 7559 8877 8888 4888 6611 3336
+		</bitmap>
+	</tex_image>
+	<tex_image index="20" name="floor1_2"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="floor1_2_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/floor1_2.tga"
+	>
+		<bitmap size="8">
+			5555 5555 5555 5555 5555 5555 5555 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="21" name="floor1_3"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="floor1_3_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/floor1_3.tga"
+	>
+		<bitmap size="128">
+			5555 5555 5555 5559 fffd aaa9 aaaa 5559
+			fffd aaad aaaa 6559 fffd aaa9 a6aa 5559
+			effd a969 aaaa 5559 affd aaa9 aa56 5559
+			effd 6aa9 aaaa 5569 effd aaad aaaa 5559
+			fafd 5555 5555 5555 fefd 5559 fffd ffff
+			fefd 5559 fffd ffff fafd 5559 fffd ffff
+			fefd 5659 abfd fffe fffd 5559 bffd ffff
+			fffd 5559 fffd ffff fffd 5959 fffd ffff
+			5555 5559 5555 5555 aaaa 5559 aaa9 aaa9
+			aaaa 5559 aaad aaad aaaa 5559 aaa9 aaa9
+			aaaa 5559 aaa9 95a9 a95a 5559 a9ad aaa9
+			aaaa 5559 a9a9 aaa9 aaaa 5959 aaa9 aaad
+			5555 5555 9aa9 5555 fffd ffff 9aad aaa5
+			fffd ffff a9a9 5559 fffd ffef a9a9 5559
+			fffd ffff a9a9 5959 abfd faff 9aa9 5559
+			fffd ffff 5aa9 6559 fffd ffff aaad 5559
+		</bitmap>
+	</tex_image>
+	<tex_image index="22" name="floor2"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="floor2_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/floor2.tga"
+	>
+		<bitmap size="256">
+			88c7 2888 44e7 d444 1136 7111 99b6 9999
+			88c7 2888 44e7 b444 1136 7111 99b6 9999
+			88c7 2888 44e6 b444 1136 7111 99b6 9999
+			88c7 2888 44e7 b444 1136 7111 99b6 9999
+			1136 7111 bbf6 cbbb 7776 7777 99b6 9999
+			1136 7111 bbf6 cbbb 6666 6666 99b6 9999
+			1136 7111 bbf6 cbbb eeea deee 99b7 9999
+			1136 7111 99b6 a999 ee57 4eee 88c7 8888
+			1136 7111 99b6 a999 ee57 deee 88c7 8888
+			1136 7111 99b6 a999 44e7 d444 88c7 8888
+			1136 7111 99b6 a999 44e7 b444 88c7 8888
+			7776 7777 99b6 a999 44e7 b444 88c7 8888
+			6666 6666 99b6 a999 44e7 b444 1136 1111
+			eeea deee 99b7 a999 bbf7 cbbb 1136 1111
+			ee5a 4eee 88c7 2888 bbf7 cbbb 1136 1111
+			ee5a deee 88c7 2888 bbf7 cbbb 1136 1111
+			44ea d444 88c7 2888 99b6 a999 1136 1111
+			44ea b444 88c7 2888 99b6 a999 1136 1111
+			44ea b444 88c7 2888 99b6 a999 1136 1111
+			44ea b444 1136 7111 99b6 a999 7776 7777
+			bbfa cbbb 1136 7111 99b6 a999 6666 6666
+			bbfa cbbb 1136 7111 99b6 a999 eee7 eeee
+			bbfa cbbb 1136 7111 99b6 a999 ee57 eeee
+			99b7 a999 1136 7111 88c6 2888 ee57 eeee
+			99b7 a999 1136 7111 88c6 2888 44e7 4444
+			99b7 a999 1136 7111 88c6 2888 44e7 4444
+			99b7 a999 7776 7777 88c6 2888 44e6 4444
+			99b7 a999 6666 6666 88c6 2888 44e7 4444
+			99b7 a999 eee7 deee 1136 7111 bbf6 bbbb
+			99b7 a999 ee57 4eee 1136 7111 bbf6 bbbb
+			88c7 2888 ee57 4eee 1136 7111 bbf6 bbbb
+			88c7 2888 44e7 d444 1136 7111 bbf6 bbbb
+		</bitmap>
+	</tex_image>
+	<tex_image index="23" name="floor3"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="floor3_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/floor3.tga"
+	>
+		<bitmap size="256">
+			997b 3999 558b c555 33e1 2333 44f1 4444
+			997b 3999 558b 6555 33e1 2333 44f1 4444
+			997b 3999 558b 6555 33e1 2333 44f1 4444
+			997b 3999 558b 6555 33e1 2333 44f1 4444
+			33e1 2333 c681 dccc 2221 2222 44f1 4444
+			33e1 2333 cc81 dccc 1111 1111 44f1 4444
+			33e1 2333 ccf1 dccc 888a c888 44fa 4444
+			33e1 2333 44f1 9444 778a c777 997b 9999
+			33e1 2333 44f1 9444 778a c777 997b 9999
+			33e1 2333 44f1 9444 558a c555 997b 9999
+			33e1 2333 44f1 9444 558a 6555 997b 9999
+			2221 2222 44f1 9444 558a 6555 997b 9999
+			1111 1111 44f1 9444 558a 6555 33e1 3333
+			888a c888 44fa 9444 c68a dccc 33e1 3333
+			7782 c777 997b 3999 ccfb dccc 33e1 3333
+			778a c777 997b 3999 cc8b dccc 33e1 3333
+			558a c555 997b 3999 44fb 9444 33e1 3333
+			5582 6555 997b 3999 44fb 9444 33e1 3333
+			558a 6555 997b 3999 44fb 9444 33e1 3333
+			558a 6555 33e1 2333 44f1 9444 2221 2222
+			cc8a dccc 33e1 2333 44f1 9444 1111 1111
+			cc8a dccc 33e1 2333 44f1 9444 888a 8888
+			ccf2 dccc 33e1 2333 44f1 9444 778a 7777
+			44fa 9444 33e1 2333 9971 3999 778b 7777
+			44fa 9444 33e1 2333 9971 3999 558b 5555
+			44fa 9444 33e1 2333 9971 3999 558b 5555
+			44fa 9444 2221 2222 9971 3999 558b 5555
+			44fa 9444 1111 1111 9971 3999 558b 5555
+			44fa 9444 888a c888 33e1 2333 c681 cccc
+			44fa 9444 778a c777 33e1 2333 cc81 cccc
+			997b 3999 778b c777 33e1 2333 ccf1 cccc
+			997b 3999 558b c555 33e1 2333 cc81 cccc
+		</bitmap>
+	</tex_image>
+	<tex_image index="24" name="floor4"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="floor4_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/floor4.tga"
+	>
+		<bitmap size="256">
+			1111 1111 2221 2222 3332 3333 3333 6c33
+			4491 7778 4448 4444 4444 4444 4444 6c44
+			4441 4444 4444 4444 4444 4444 4444 6c44
+			4441 4444 4444 4444 4444 4444 4444 6c44
+			8881 8888 8888 8888 8888 8888 8888 6c88
+			8871 8888 8888 8888 8888 8888 8888 6c88
+			8881 8888 8888 8888 8888 8888 8888 6c88
+			8871 8888 8888 8888 8888 8888 8888 6c88
+			ccc2 cccc cccc cccc cccc cccc cccc 65cc
+			cc72 cccc cccc cccc cccc cccc cccc 65cc
+			ccc2 cccc cccc cccc cccc cccc cccc 65cc
+			ccc2 cccc cccc cccc cccc cccc cccc 65cc
+			ccc2 cccc cccc cccc cccc cccc cccc 65cc
+			5559 5555 5555 5555 5555 5555 5555 6a55
+			5559 5555 5555 5555 5555 5555 5555 6a55
+			5559 5555 5555 5555 5555 5555 5555 6a55
+			5559 5555 5555 5555 5555 5555 5555 6b55
+			aaa4 aaaa aaaa aaaa aaaa aaaa aaaa 6daa
+			aaa4 aaaa aaaa aaaa aaaa aaaa aaaa 6daa
+			aaa4 aaaa aaaa aaaa aaaa aaaa aaaa 6daa
+			aaa8 aaaa aaaa aaaa aaaa aaaa aaaa 6daa
+			aaa8 aaaa aaaa aaaa aaaa aaaa aaaa 6daa
+			aaa8 aaaa aaaa aaaa aaaa aaaa aaaa 6daa
+			aaa8 aaaa aaaa aaaa aaaa aaaa aaaa 6daa
+			aaa7 aaaa aaaa aaaa aaaa aaaa aaaa 6daa
+			fffc ffff ffff ffff ffff ffff ffff 6eff
+			fffc ffff ffff ffff ffff ffff ffff 6eff
+			fffc ffff ffff ffff ffff ffff ffff 6eff
+			fffc ffff ffff ffff ffff ffff ffff 6eff
+			fffc ffff ffff ffff ffff ffff ffff 6eff
+			eeee eeee eeee eeee eeee eeee eeee 6eee
+			6666 6666 6666 6666 6666 6666 6666 6666
+		</bitmap>
+	</tex_image>
+	<tex_image index="25" name="floor5"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette4"
+		color0_mode="color"
+		palette_name="floor5_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/floor5.tga"
+	>
+		<bitmap size="128">
+			150a 50a8 2a05 a054 150a 50a8 2a05 a054
+			1500 00a8 2a00 0054 1500 00a8 2a00 0054
+			1555 aaa8 2aaa 5554 1555 aaa8 2aaa 5554
+			1555 aaa8 2aaa 5554 0000 0000 0000 0000
+			0000 0000 0000 0000 2aaa 5554 1555 aaa8
+			2aaa 5554 1555 aaa8 2aaa 5554 1555 aaa8
+			2a00 0054 1500 00a8 2a00 0054 1500 00a8
+			2a05 a054 150a 50a8 2a05 a054 150a 50a8
+			2a05 a054 150a 50a8 2a05 a054 150a 50a8
+			2a00 0054 1500 00a8 2a00 0054 1500 00a8
+			2aaa 5554 1555 aaa8 2aaa 5554 1555 aaa8
+			2aaa 5554 1555 aaa8 0000 0000 0000 0000
+			0000 0000 0000 0000 1555 aaa8 2aaa 5554
+			1555 aaa8 2aaa 5554 1555 aaa8 2aaa 5554
+			1500 00a8 2a00 0054 1500 00a8 2a00 0054
+			150a 50a8 2a05 a054 150a 50a8 2a05 a054
+		</bitmap>
+	</tex_image>
+	<tex_image index="26" name="glow1"
+		width="16" height="16" original_width="16" original_height="16"
+		format="a5i3"
+		palette_name="glow1_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/glow1.tga"
+	>
+		<bitmap size="128">
+			0101 0101 0101 1101 0111 0101 0101 0101
+			0101 0101 1101 2111 1121 0111 0101 0101
+			0101 0101 2111 2121 2121 1121 0101 0101
+			0101 1101 2121 4121 2141 2121 0111 0101
+			0101 2111 2121 4141 4141 2121 1121 0101
+			1101 2121 4121 7141 4171 2141 2121 0111
+			1101 2121 4141 8171 7181 4141 2121 0111
+			2111 4121 7141 8181 8181 4171 2141 1121
+			2111 4121 7141 8181 8181 4171 2141 1121
+			1101 2121 4141 8171 7181 4141 2121 0111
+			1101 2121 4121 7141 4171 2141 2121 0111
+			0101 2111 2121 4141 4141 2121 1121 0101
+			0101 1101 2121 4121 2141 2121 0111 0101
+			0101 0101 2111 2121 2121 1121 0101 0101
+			0101 0101 1101 2111 1121 0111 0101 0101
+			0101 0101 0101 1101 0111 0101 0101 0101
+		</bitmap>
+	</tex_image>
+	<tex_image index="27" name="gold_tile"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="gold_tile_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/gold_tile.tga"
+	>
+		<bitmap size="64">
+			cccc cccc cccc 06cc 999c 9999 9999 0699
+			339c 3333 3333 0693 939c 9999 9999 0693
+			939c 9999 9999 0693 939c 9999 9999 0693
+			939c 9999 9999 0693 939c 9999 9999 0693
+			828b 8888 8888 0582 828b 8888 8888 0582
+			717a 7777 7777 0471 717a 7777 7777 0471
+			117a 1111 1111 0471 777a 7777 7777 0477
+			4444 4444 4444 0444 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="28" name="gold_tile2"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="gold_tile2_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/gold_tile2.tga"
+	>
+		<bitmap size="64">
+			9999 9999 9904 6699 6669 6666 6604 6666
+			6669 6666 6604 6666 6669 6666 6604 6666
+			6669 6666 6604 6666 6669 6666 6604 6666
+			6669 6666 6604 6666 6669 6666 6604 6666
+			5558 5555 5503 5555 5558 5555 5503 5555
+			2227 2222 2201 2222 2227 2222 2201 2222
+			2227 2222 2201 2222 2227 2222 2201 2222
+			1111 1111 2201 2222 0000 0000 6600 6666
+		</bitmap>
+	</tex_image>
+	<tex_image index="29" name="light"
+		width="16" height="16" original_width="16" original_height="16"
+		format="a5i3"
+		palette_name="light_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/light.tga"
+	>
+		<bitmap size="128">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 2800 0028 0000 0000 0000
+			0000 0000 2800 2828 2828 0028 0000 0000
+			0000 0000 2828 2828 2828 2828 0000 0000
+			0000 2800 2828 9090 9090 2828 0028 0000
+			0000 2828 9028 f9f8 f8f9 2890 2828 0000
+			0000 2828 f890 f9f9 f9f9 90f8 2828 0000
+			2800 2828 f990 f9f9 f9f9 90f9 2828 0028
+			2800 2828 f990 f9f9 f9f9 90f9 2828 0028
+			0000 2828 f890 f9f9 f9f9 90f8 2828 0000
+			0000 2828 9028 f9f8 f8f9 2890 2828 0000
+			0000 2800 2828 9090 9090 2828 0028 0000
+			0000 0000 2828 2828 2828 2828 0000 0000
+			0000 0000 2800 2828 2828 0028 0000 0000
+			0000 0000 0000 2800 0028 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="30" name="light1"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="light1_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/light1.tga"
+	>
+		<bitmap size="8">
+			5555 5555 5555 5555 5555 5555 5555 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="31" name="matt"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="matt_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/matt.tga"
+	>
+		<bitmap size="64">
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			9aaa 9999 9999 9999 47aa 4336 6633 4336
+			849a 541b dc14 741c b69a 9748 c847 9748
+			139a 2774 1477 4774 439a 1477 2774 1477
+			549a b129 7921 c129 439a 1477 2774 1477
+			139a 2774 1477 4774 b69a 9748 c847 9748
+			849a 541b dc14 741c 47aa 4336 6633 4336
+			9aaa 9999 9999 9999 aaaa aaaa aaaa aaaa
+		</bitmap>
+	</tex_image>
+	<tex_image index="32" name="paintings"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="paintings_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/paintings.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 7770 7777 7777 7777 7777 0777 0000
+			0000 9977 9999 9999 9999 9999 6999 0000
+			0000 9997 9999 9999 9999 9999 6999 0000
+			0000 4997 4444 4444 4444 4444 6994 0000
+			0000 4997 3334 2333 2222 3332 6991 0000
+			0000 4997 3333 3233 2223 1322 6991 0000
+			0000 4997 3311 3333 3333 1111 6991 0000
+			0000 4997 3111 3333 1333 1111 6991 0000
+			0000 4997 1111 3311 1113 2211 6991 0000
+			0000 4997 1333 1111 2222 2222 6992 0000
+			0000 4997 3333 3333 2333 2222 6994 0000
+			0000 9997 9999 9999 9999 9999 6999 0000
+			0000 9997 9999 9999 9999 9999 6999 0000
+			0000 6660 6666 6666 6666 6666 0666 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 7770 7777 7777 7777 7777 0777 0000
+			0000 9977 9999 9999 9999 9999 6999 0000
+			0000 9997 9999 9999 9999 9999 6999 0000
+			0000 b997 bbbb bbbb bbbb bbbb 699b 0000
+			0000 b997 aaab 8aaa 8888 aaa8 6995 0000
+			0000 b997 aaaa a8aa 888a 5a88 6995 0000
+			0000 b997 aa55 aaaa aaaa 5555 6995 0000
+			0000 b997 a555 aaaa 5aaa 5555 6995 0000
+			0000 b997 5555 aa55 555a 8855 6995 0000
+			0000 b997 5aaa 5555 8888 8888 6998 0000
+			0000 b997 aaaa aaaa 8aaa 8888 699b 0000
+			0000 9997 9999 9999 9999 9999 6999 0000
+			0000 9997 9999 9999 9999 9999 6999 0000
+			0000 6660 6666 6666 6666 6666 0666 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="33" name="paintings02"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="paintings02_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/paintings02.tga"
+	>
+		<bitmap size="256">
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			9777 9999 9999 9999 9999 9999 9999 7778
+			9777 5558 5555 5555 6665 6666 8666 7778
+			9777 5586 5555 5555 6666 6666 5866 7778
+			9777 5866 5555 6555 6666 6666 5586 7778
+			9777 3666 3333 3333 3333 3333 5553 7778
+			9777 3666 4444 4444 4444 4444 5554 7778
+			9777 3666 4444 4444 4424 4444 5554 7778
+			9777 3666 4444 4444 4222 4444 5554 7778
+			9777 3666 4444 2444 2222 4244 5554 7778
+			9777 3666 4414 2224 2222 2244 5554 7778
+			9777 3666 1114 2211 2222 2242 5554 7778
+			9777 3666 1114 1111 2221 2442 5564 7778
+			9777 3666 1114 1111 2111 4422 5664 7778
+			9777 3665 1114 1111 1111 4111 6664 7778
+			9777 3655 4114 1144 1111 4111 6664 7778
+			9777 3555 4444 4444 4444 4444 6664 7778
+			9777 3555 4444 4444 1444 1111 6661 7778
+			9777 3555 1444 1111 1111 1111 6664 7778
+			9777 3555 1114 1111 1111 2221 6664 7778
+			9777 3555 4444 4444 1111 2222 6664 7778
+			9777 3555 4444 4444 4444 4444 6664 7778
+			9777 3555 4444 4444 4444 4444 6664 7778
+			9777 6855 6666 6666 5566 5555 6685 7778
+			9777 6685 6666 6666 5666 5555 6855 7778
+			9777 6668 6666 6666 6666 5555 8555 7778
+			8777 8888 8888 8888 8888 8888 8888 7778
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+		</bitmap>
+	</tex_image>
+	<tex_image index="34" name="paintings03"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="paintings03_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/paintings03.tga"
+	>
+		<bitmap size="256">
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			9777 9999 9999 9999 9999 9999 9999 7778
+			9777 5558 5555 5555 6665 6666 8666 7778
+			9777 5586 5555 5555 6666 6666 5866 7778
+			9777 5866 5555 6555 6666 6666 5586 7778
+			9777 4666 4444 4444 4444 4444 5554 7778
+			9777 4666 1111 1111 1111 1111 5551 7778
+			9777 4666 1111 1111 1131 1111 5551 7778
+			9777 4666 1111 1111 1333 1111 5551 7778
+			9777 4666 1111 3111 3333 1311 5551 7778
+			9777 4666 1121 3331 3333 3311 5551 7778
+			9777 4666 2221 3322 3333 3313 5551 7778
+			9777 4666 2221 2222 3332 3113 5561 7778
+			9777 4666 2221 2222 3222 1133 5661 7778
+			9777 4665 2221 2222 2222 1222 6661 7778
+			9777 4655 1221 2211 2222 1222 6661 7778
+			9777 4555 1111 1111 1111 1111 6661 7778
+			9777 4555 1111 1111 2111 2222 6662 7778
+			9777 4555 2111 2222 2222 2222 6661 7778
+			9777 4555 2221 2222 2222 3332 6661 7778
+			9777 4555 1111 1111 2222 3333 6661 7778
+			9777 4555 1111 1111 1111 1111 6661 7778
+			9777 4555 1111 1111 1111 1111 6661 7778
+			9777 6855 6666 6666 5566 5555 6685 7778
+			9777 6685 6666 6666 5666 5555 6855 7778
+			9777 6668 6666 6666 6666 5555 8555 7778
+			8777 8888 8888 8888 8888 8888 8888 7778
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+		</bitmap>
+	</tex_image>
+	<tex_image index="35" name="paintings04"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="paintings04_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/paintings04.tga"
+	>
+		<bitmap size="256">
+			eeee eeee eeee deee eeee eeee eeee deee
+			bbde bbbb cccb ddcc bbde bbbb cccb ddcc
+			bdce bbbb cccc dbdc bdce bbbb cccc dbdc
+			8cce 8888 8888 dbb8 4cce 4444 4444 dbb4
+			8cce 8888 8888 dbb8 4cce 4242 4242 dbb2
+			8cce 8989 8989 dbb8 4cce 4444 4444 dbb4
+			8cce 8888 8888 dbb8 4cce 4242 4242 dbb2
+			8cce 8898 8889 dbb8 2cce e444 2444 dbb2
+			8cce 8879 8888 dbb8 4cce 4444 2222 dbb2
+			8cce 7778 6877 dbb8 4cce 4442 2244 dbb2
+			8cce 7778 7777 dbb7 4cce 4444 4444 dbb4
+			9cce 7778 7777 dbb7 4cce 4f44 44f4 dbb4
+			6cce 9998 9999 dbb9 1cce 4442 4444 dbc4
+			6cce 8998 9988 dbb9 3cce 2442 4422 dbb4
+			6cce 8886 8886 dbc8 3cce 2222 2222 dbc2
+			6cbe 6888 6888 dcc8 3cbe 2222 2222 dcc2
+			6bbe 9868 9999 dcc9 3bbe 4222 4444 dcc4
+			6bbe 9998 9999 dcc9 3bbe 4442 4444 dcc4
+			abbe 6666 6666 dcc8 1bbe 2222 2222 dcc4
+			6bbe 6868 6868 dcc8 1bbe 2222 2222 dcc2
+			abbe 8686 6686 dcc6 1bbe 3232 3232 dcc2
+			abbe 6666 6666 dcc6 5bbe 3333 3333 dcc3
+			abbe 6666 6666 dcc6 5bbe 3333 3333 dcc3
+			abbe 6666 6868 dcc8 5bbe 2333 2222 dcc2
+			abbe 8866 8888 dcc8 5bbe 2223 2222 dcc2
+			abbe 6666 a66a dcc8 5bbe 3333 3333 dcc2
+			abbe 6666 6666 dcc6 5bbe 3333 3333 dcc3
+			abbe 6a66 6666 dcc6 5bbe 3333 3333 dcc3
+			cdbe cccc bbbc dcdb cdbe cccc bbbc dcdb
+			ccde cccc bbcc ddbb ccde cccc bbcc ddbb
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			ffff ffff ffff ffff ffff ffff ffff ffff
+		</bitmap>
+	</tex_image>
+	<tex_image index="36" name="paintings_all"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="paintings_all_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/paintings_all.tga"
+	>
+		<bitmap size="256">
+			3333 3333 3333 3333 3333 3333 3333 3333
+			1103 1111 1111 1111 2221 2222 2222 0022
+			1023 1111 1111 1111 2222 2222 2222 0102
+			0223 1111 1111 2111 2222 2222 2222 0110
+			2223 0000 0000 0000 0000 0000 0000 0111
+			2223 4440 4444 4444 4444 4444 3444 0111
+			2223 4440 4444 4444 4444 4444 3444 0111
+			2223 6440 6666 6666 6666 6666 3666 0111
+			2223 6440 6666 6666 6666 6666 3666 0111
+			2223 6440 6666 6666 6656 6666 3666 0111
+			2223 6440 6666 6666 6555 6666 3666 0111
+			2223 6440 6666 5666 5555 6566 3666 0111
+			2223 6440 6676 5556 5555 5566 3666 0111
+			2223 6440 7776 5577 5555 5565 3666 0111
+			2223 6440 7776 7777 5557 5665 3666 0111
+			2213 6440 7776 7777 5777 6655 3666 0111
+			2113 6440 7776 7777 7777 6777 3666 0112
+			1113 6440 6776 7766 7777 6777 3666 0122
+			1113 6440 6666 6666 6666 6666 3666 0222
+			1113 6440 6666 6666 7666 7777 3667 0222
+			1113 6440 7666 7777 7777 7777 3666 0222
+			1113 6440 7776 7777 7777 5557 3666 0222
+			1113 6440 6666 6666 7777 5555 3666 0222
+			1113 6440 6666 6666 6666 6666 3666 0222
+			1113 6440 6666 6666 6666 6666 3666 0222
+			1113 6440 6666 6666 6666 6666 3666 0222
+			1113 6440 6666 6666 6666 6666 3666 0222
+			1113 3330 3333 3333 3333 3333 3333 0222
+			0113 2222 2222 1222 1111 1111 1111 0220
+			2013 2222 2222 2222 1111 1111 1111 0201
+			2203 2222 2222 2222 1112 1111 1111 0011
+			0003 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="37" name="pillar"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="pillar_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/pillar.tga"
+	>
+		<bitmap size="8">
+			5555 5555 5555 5555 5555 5555 5555 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="38" name="pillar_top"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="pillar_top_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/pillar_top.tga"
+	>
+		<bitmap size="8">
+			5555 5555 5555 5555 5555 5555 5555 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="39" name="placematt1"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="placematt1_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/placematt1.tga"
+	>
+		<bitmap size="8">
+			5555 7ffd 755d 769d 769d 755d 7ffd 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="40" name="plant01"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="plant01"
+		path="C:/gshome/pmgs_map/room00/room00_btex/plant01.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 1110 1111 1111 0111
+			0000 0000 0000 0000 1110 1111 1111 0111
+			0000 0000 0000 0000 1110 1111 1111 0111
+			0000 4000 0004 0000 1110 1111 1111 0111
+			0000 7440 0447 0000 1110 1111 1111 0111
+			0000 7474 4747 0000 1110 1111 1111 0111
+			2000 6677 7766 0002 1110 1111 1111 0111
+			4000 6677 7766 0004 1110 1111 1111 0111
+			7200 7667 7667 0027 1110 1111 1111 0111
+			6200 7766 6677 0026 1110 1111 1111 0111
+			6200 7766 6677 0026 1110 1111 1111 0111
+			5420 7666 6667 0245 8880 8888 8888 0888
+			5420 6665 5666 0245 8880 8888 8888 0888
+			4420 6555 5556 0244 8880 8888 8888 0888
+			4620 5544 4455 0264 8880 8888 8888 0888
+			6620 4444 4444 0266 8880 8888 8888 0888
+			6620 4444 4444 0266 8880 8888 8888 0888
+			4620 4444 4444 0264 8880 8888 8888 0888
+			4c00 4444 4444 00c4 8880 8888 8888 0888
+			4c00 4444 4444 00c4 8880 8888 8888 0888
+			c000 2444 4442 000c 8880 8888 8888 0888
+			c000 9244 4429 000c 8880 8888 8888 0888
+			0000 994c c499 0000 3330 3333 3333 0333
+			0000 99c0 0c99 0000 3330 3333 3333 0333
+			0000 9b00 00b9 0000 3330 3333 3333 0333
+			0000 bb00 00bb 0000 3330 3333 3333 0333
+			0000 ba00 00ab 0000 3330 3333 3333 0333
+			0000 aa00 00aa 0000 3330 3333 3333 0333
+			0000 aa00 00aa 0000 3330 3333 3333 0333
+			0000 a000 000a 0000 3330 3333 3333 0333
+			0000 0000 0000 0000 3330 3333 3333 0333
+			0000 0000 0000 0000 3330 3333 3333 0333
+		</bitmap>
+	</tex_image>
+	<tex_image index="41" name="platformside"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="platformside_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/platformside.tga"
+	>
+		<bitmap size="8">
+			aaaa aaaa ffff 5555 5555 5555 aaaa aaaa
+		</bitmap>
+	</tex_image>
+	<tex_image index="42" name="pokeball"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="pokeball_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/pokeball.tga"
+	>
+		<bitmap size="32">
+			0000 0000 5000 0005 5500 0055 5540 0155
+			5540 0155 0550 0550 4150 0541 5000 0005
+			4150 0541 0550 0550 5540 0155 5540 0155
+			5500 0055 5000 0005 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="43" name="rcount_d"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="rcount_d_pl"
+		path="C:/gshome/pmgs_map/room12/room12_m/radio/tex/rcount_d.tga"
+	>
+		<bitmap size="32">
+			0000 0000 0000 0000 5555 5555 5555 5555
+			0000 0000 0000 0000 5555 5555 5555 5555
+			0000 0000 0000 0000 5555 5555 5555 5555
+			0000 0000 0000 0000 5555 5555 5555 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="44" name="sign"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="sign_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/sign.tga"
+	>
+		<bitmap size="8">
+			6aaa 6efe 6aaa 6fee 6aaa 6abe 6aaa 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="45" name="steps1"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="steps1_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/steps1.tga"
+	>
+		<bitmap size="256">
+			1155 2221 2222 2222 2222 2222 1222 5511
+			1155 2221 2222 2222 2222 2222 1222 5511
+			1155 2221 2222 2222 2222 2222 1222 5511
+			1155 2221 2222 2222 2222 2222 1222 5511
+			1155 2221 2222 2222 2222 2222 1222 5511
+			1155 2221 2222 2222 2222 2222 1222 5511
+			4433 6664 6666 6666 6666 6666 4666 3344
+			4433 6664 6666 6666 6666 6666 4666 3344
+			7799 8887 8888 8888 8888 8888 7888 9977
+			7799 8887 8888 8888 8888 8888 7888 9977
+			1155 2221 2222 2222 2222 2222 1222 5511
+			1155 2221 2222 2222 2222 2222 1222 5511
+			1155 2221 2222 2222 2222 2222 1222 5511
+			1155 2221 2222 2222 2222 2222 1222 5511
+			4433 6664 6666 6666 6666 6666 4666 3344
+			4433 6664 6666 6666 6666 6666 4666 3344
+			7799 8887 8888 8888 8888 8888 7888 9977
+			7799 8887 8888 8888 8888 8888 7888 9977
+			1155 2221 2222 2222 2222 2222 1222 5511
+			1155 2221 2222 2222 2222 2222 1222 5511
+			1155 2221 2222 2222 2222 2222 1222 5511
+			1155 2221 2222 2222 2222 2222 1222 5511
+			4433 6664 6666 6666 6666 6666 4666 3344
+			4433 6664 6666 6666 6666 6666 4666 3344
+			7799 8887 8888 8888 8888 8888 7888 9977
+			7799 8887 8888 8888 8888 8888 7888 9977
+			1155 2221 2222 2222 2222 2222 1222 5511
+			1155 2221 2222 2222 2222 2222 1222 5511
+			1155 2221 2222 2222 2222 2222 1222 5511
+			1155 2221 2222 2222 2222 2222 1222 5511
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+		</bitmap>
+	</tex_image>
+	<tex_image index="46" name="strip2"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="strip2_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/strip2.tga"
+	>
+		<bitmap size="8">
+			5555 5555 ffff ffff ffff ffff aaaa aaaa
+		</bitmap>
+	</tex_image>
+	<tex_image index="47" name="table1_1"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="table1_1_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/table1_1.tga"
+	>
+		<bitmap size="8">
+			5555 5555 5555 5555 5555 5555 5555 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="48" name="table1_2"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="table1_2_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/table1_2.tga"
+	>
+		<bitmap size="8">
+			5a5a 5a5a a5a5 a5a5 5a5a 5a5a a5a5 a5a5
+		</bitmap>
+	</tex_image>
+	<tex_image index="49" name="table_3_1"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="table_3_1_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/table_3_1.tga"
+	>
+		<bitmap size="8">
+			5555 5555 5555 5555 5555 5555 5555 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="50" name="table_4"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="table_4_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/table_4.tga"
+	>
+		<bitmap size="8">
+			5555 5555 5555 5555 5555 5555 5555 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="51" name="wall1"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="wall1_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/wall1.tga"
+	>
+		<bitmap size="256">
+			eefe eeee eeee eeee eeee eeee eeee eefe
+			fffe ffff ffff ffff ffff ffff ffff eeff
+			ccfe cccc cccc cccc cccc cccc cccc eecc
+			bcfe bbbb bbbb bbbb bbbb bbbb bbbb eebb
+			bcfe bbbb bbbb bbbb bbbb bbbb bbbb eebb
+			bcfe bbbb bbbb bbbb bbbb bbbb bbbb eebb
+			bcfe bbbb bbbb bbbb bbbb bbbb bbbb eebb
+			bcfe bbbb bbbb bbbb bbbb bbbb bbbb eebb
+			bcfe bbbb bbbb bbbb bbbb bbbb bbbb eebb
+			bcfe bbbb bbbb bbbb bbbb bbbb bbbb eebb
+			bcfe bbbb bbbb bbbb bbbb bbbb bbbb eebb
+			bcfe bbbb bbbb bbbb bbbb bbbb bbbb eebb
+			bcfe bbbb bbbb bbbb bbbb bbbb bbbb eebb
+			bcfe bbbb bbbb bbbb bbbb bbbb bbbb eebb
+			bcfe bbbb bbbb bbbb bbbb bbbb bbbb eebb
+			bcfe bbbb bbbb bbbb bbbb bbbb bbbb eebb
+			eefe eeee eeee eeee eeee eeee eeee eeee
+			fffe ffff ffff ffff ffff ffff ffff eeff
+			99fe 4444 9999 4444 9999 4444 9999 ee44
+			a9fe 2222 aaaa 2222 aaaa 2222 aaaa ee22
+			69fe 1111 6666 1111 6666 1111 6666 ee11
+			69fe 1111 6666 1111 6666 1111 6666 ee11
+			69fe 1111 6666 1111 6666 1111 6666 ee11
+			69fe 1111 6666 1111 6666 1111 6666 ee11
+			a9fe 2222 aaaa 2222 aaaa 2222 aaaa ee22
+			79fe 3333 7777 3333 7777 3333 7777 ee33
+			89fe 5555 8888 5555 8888 5555 8888 ee55
+			99fe 4444 9999 4444 9999 4444 9999 ee44
+			dffe dddd dddd dddd dddd dddd dddd eedd
+			effe eeee eeee eeee eeee eeee eeee eeee
+			effe eeee eeee eeee eeee eeee eeee eeee
+			fffe ffff ffff ffff ffff ffff ffff eeff
+		</bitmap>
+	</tex_image>
+	<tex_image index="52" name="wall2"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="wall2_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/wall2.tga"
+	>
+		<bitmap size="128">
+			aaae aaaa aaaa aeaa fffe ffff ffff afff
+			aaae aaaa aaaa aaaa 556e 5555 5555 a555
+			556e 5555 5555 a555 556e 5555 5555 a555
+			556e 5555 5555 a555 556e 5555 5555 a555
+			556e 5555 5555 a555 556e 5555 5555 a555
+			556e 5555 5555 a555 556e 5555 5555 a555
+			556e 5555 5555 a555 556e 5555 5555 a555
+			556e 5555 5555 a555 556e 5555 5555 a555
+			556e 5555 5555 a555 556e 5555 5555 a555
+			556e 5555 5555 a555 556e 5555 5555 a555
+			556e 5555 5555 a555 556e 5555 5555 a555
+			556e 5555 5555 a555 556e 5555 5555 a555
+			556e 5555 5555 a555 556e 5555 5555 a555
+			556e 5555 5555 a555 556e 5555 5555 a555
+			556e 5555 5555 a555 556e 5555 5555 a555
+			556e 5555 5555 a555 556e 5555 5555 a555
+		</bitmap>
+	</tex_image>
+	<tex_image index="53" name="wall3"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="wall3_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/wall3.tga"
+	>
+		<bitmap size="256">
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			bbbb bbbb bbbb bbbb bbbb bbbb bbbb bbbb
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			9999 9999 9999 9999 9999 9999 9999 9999
+			6666 6666 6666 6666 6666 6666 6666 6666
+			5155 5555 5551 5155 5555 5551 5155 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5515 1555 5555 5515 1555 5555 5515
+			3333 3333 3333 3333 3333 3333 3333 3333
+			4447 7777 7444 4777 7744 4477 7774 4444
+			a2aa a8aa aaa2 a2aa aaaa aaa2 a2aa aaaa
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			ffff ffff ffff ffff ffff ffff ffff ffff
+		</bitmap>
+	</tex_image>
+	<tex_image index="54" name="wall3_4"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="wall3_4_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/wall3_4.tga"
+	>
+		<bitmap size="256">
+			7777 7777 7777 7777 7777 7777 2672 8762
+			3333 3333 3333 3333 3333 3333 2672 8762
+			bbbb bbbb bbbb bbbb bbbb bbbb 2672 8762
+			ffff ffff ffff eeee eeee eeee 2672 8762
+			ffff ffff ffff eeee eeee eeee 2672 8762
+			ffff ffff ffff eeee eeee eeee 2672 8762
+			ffff ffff ffff eeee eeee eeee 2672 8762
+			ffff ffff ffff eeee eeee eeee 2672 8762
+			ffff ffff ffff eeee eeee eeee 2672 8762
+			ffff ffff ffff eeee eeee eeee 2672 8762
+			ffff ffff ffff eeee eeee eeee 2672 8762
+			ffff ffff ffff eeee eeee eeee 2672 8762
+			ffff ffff ffff eeee eeee eeee 2672 8762
+			ffff ffff ffff eeee eeee eeee 2672 8762
+			ffff ffff ffff eeee eeee eeee 2672 8762
+			ffff ffff ffff eeee eeee eeee 2672 8762
+			7777 7777 7777 eeee eeee eeee 2672 8762
+			3333 3333 3333 eeee eeee eeee 2672 8762
+			0000 0000 0000 eeee eeee eeee 2672 8762
+			4444 4444 4444 eeee eeee eeee 2672 8762
+			5555 5555 5555 eeee eeee eeee 2672 8762
+			5555 5555 5555 eeee eeee eeee 2672 8762
+			5555 5555 5555 eeee eeee eeee 2672 8762
+			5555 5555 5555 eeee eeee eeee 2672 8762
+			5555 5555 5555 dddd dddd dddd 2672 8762
+			1111 1111 1111 cccc cccc cccc 2672 8762
+			0000 0000 0000 bbbb bbbb bbbb 2672 8762
+			0000 0000 0000 aaaa aaaa aaaa 2672 8762
+			0000 0000 0000 aaaa aaaa aaaa 2672 8762
+			9999 9999 9999 9999 9999 9999 2672 8762
+			7777 7777 7777 7777 7777 7777 2672 8762
+			3333 3333 3333 3333 3333 3333 2672 8762
+		</bitmap>
+	</tex_image>
+	<tex_image index="55" name="wall4"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="wall4_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/wall4.tga"
+	>
+		<bitmap size="256">
+			9999 9999 9999 9999 9999 9999 9999 9999
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			4444 4444 4444 4444 4444 4444 4444 4444
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			3333 3333 3333 3333 3333 3333 3333 3333
+			6667 7777 7666 6777 7766 6677 7776 6666
+			8888 8488 8888 8888 8888 8888 8888 8888
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			5555 5555 5555 5555 5555 5555 5555 5555
+			9999 9999 9999 9999 9999 9999 9999 9999
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+		</bitmap>
+	</tex_image>
+	<tex_image index="56" name="wall5"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="wall5_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/wall5.tga"
+	>
+		<bitmap size="256">
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			88cc 8888 8888 8888 8888 8888 8888 cc88
+			88cc a999 66aa 3344 4433 aa66 999a cc88
+			88cc bbbb bbbb bbbb bbbb bbbb bbbb cc88
+			88cc 777b 7777 7777 7777 7777 b777 cc88
+			88dd 777b 7777 7777 7777 7777 b777 dd88
+			88dd 777b 7777 6667 7666 7777 b777 dd88
+			88dd 777b 6777 4446 6444 7776 b777 dd88
+			88ee 777b 4677 3334 5333 7764 b777 ee88
+			99ee 777f 3467 1123 3211 7643 f777 ee99
+			99ee 777f 2346 1111 1111 6432 f777 ee99
+			99ee 777f 1346 1111 1111 6431 f777 ee99
+			99ee 677b 1234 1111 1111 4321 b776 ee99
+			aaee 677b 1134 1111 1111 4311 b776 eeaa
+			aaee 677b 1134 1111 1111 4311 b776 eeaa
+			aaee 677b 1134 1111 1111 4311 b776 eeaa
+			aaee 677b 1134 1111 1111 4311 b776 eeaa
+			aaee 677b 1234 1111 1111 4321 b776 eeaa
+			aaee 777b 1346 1111 1111 6431 b777 eeaa
+			aaee 777b 2346 1111 1111 6432 b777 eeaa
+			aaee 777b 3467 1123 3211 7643 b777 eeaa
+			aaee 777b 4677 3334 4333 7764 b777 eeaa
+			aaee 777b 6777 4446 6444 7776 b777 eeaa
+			aaee 777b 7777 6667 7666 7777 b777 eeaa
+			aaee 777b 7777 7777 7777 7777 b777 eeaa
+			aaee 777b 7777 7777 7777 7777 b777 eeaa
+			aaee 777b 7777 7777 7777 7777 b777 eeaa
+			aaee bbbb bbbb bbbb bbbb bbbb bbbb eeaa
+			aaee 77aa 4466 1123 3211 6443 a776 eeaa
+			aaee aaaa aaaa aaaa aaaa aaaa aaaa eeaa
+			eeee eeee eeee eeee eeee eeee eeee eeee
+		</bitmap>
+	</tex_image>
+	<tex_image index="57" name="wall5_2"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="wall5_2_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/wall5_2.tga"
+	>
+		<bitmap size="256">
+			4444 4444 4444 4444 cccc cccc cccc cccc
+			4444 4444 4444 4444 dddc dddd dddd cddd
+			4444 4444 4444 4444 eedc eeee eeee cdee
+			b444 bbbb bbbb 444b aedc aaaa aaaa cdea
+			b444 9999 9999 444b aedc dddd dddd cdea
+			b444 bbb9 9bbb 444b aedc aaad daaa cdea
+			b444 99b9 9b99 444b aedc aaad daaa cdea
+			b444 99b9 9b99 444b aedc aaad daaa cdea
+			b444 99b9 9b99 444b aedc aaad daaa cdea
+			b444 99b9 9b99 444b aedc aaad daaa cdea
+			b444 99b9 9b99 444b aedc aaad daaa cdea
+			b444 99b9 9b99 444b aedc aaad daaa cdea
+			b444 99b9 9b99 444b aedc aaad daaa cdea
+			b444 99b4 4b99 444b aedc aaad daaa cdea
+			b444 99b4 4b99 444b aedc aaad daaa cdea
+			b444 99b3 3b99 444b aedc aaad daaa cdea
+			b444 99b2 2b99 444b aedc aaad daaa cdea
+			b444 99b8 8b99 444b aedc aaad daaa cdea
+			b444 99b7 7b99 444b aedc aaad daaa cdea
+			b444 99b6 6b99 444b aedc aaad daaa cdea
+			b444 99b5 5b99 444b aedc aaad daaa cdea
+			b333 99b5 5b99 333b aedc aaad daaa cdea
+			b333 99b6 6b99 333b aedc aaad daaa cdea
+			b222 99b7 7b99 222b aedc aaad daaa cdea
+			b222 99b8 8b99 222b aedc aaad daaa cdea
+			b222 99b2 2b99 222b aedc aaad daaa cdea
+			b111 bbb3 3bbb 111b aedc aaad daaa cdea
+			b111 9994 4999 111b aedc dddd dddd cdea
+			b888 bbbb bbbb 888b aedc aaaa aaaa cdea
+			8888 8888 8888 8888 eedc eeee eeee cdee
+			7777 7777 7777 7777 dddc dddd dddd cddd
+			7777 7777 7777 7777 cccc cccc cccc cccc
+		</bitmap>
+	</tex_image>
+	<tex_image index="58" name="wall5_3"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="wall5_3_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/wall5_3.tga"
+	>
+		<bitmap size="32">
+			aaaa 5555 aaaa 5555 aaaa 5555 aaaa 5555
+			aaaa 5555 aaaa 5555 aaaa 5555 aaaa 5555
+			aaaa 5555 aaaa 5555 aaaa 5555 aaaa 5555
+			aaaa 5555 aaaa 5555 ffff ffff ffff ffff
+		</bitmap>
+	</tex_image>
+	<tex_image index="59" name="wall6"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="wall6_pl"
+		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/wall6.tga"
+	>
+		<bitmap size="8">
+			5555 5555 5555 5555 5555 5555 5555 5555
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="60">
+	<tex_palette index="0" name="backparts_pl" color_size="16">
+		14ea 190a 190b 192c 192d 194d 1d4f 1d6e
+		218f 2191 25b1 25d2 29d2 29f3 3234 7fff
+	</tex_palette>
+	<tex_palette index="1" name="beam_1_pl" color_size="8">
+		7fff 25d2 1d4e 2190 216f 1d4e 7fff 7fff
+	</tex_palette>
+	<tex_palette index="2" name="black_pl" color_size="4">
+		7fff 0000 7fff 7fff
+	</tex_palette>
+	<tex_palette index="3" name="c01_01_pl" color_size="8">
+		7fff 03df 03df 039d 033a 0294 018d 0021
+	</tex_palette>
+	<tex_palette index="4" name="c01_02_pl" color_size="16">
+		7fff 001f 001f 001f 001e 001d 043c 043b
+		0859 0857 0c75 1094 1093 1092 14b1 14b1
+	</tex_palette>
+	<tex_palette index="5" name="candle_pl" color_size="8">
+		7d3c 2a96 2ed8 373b 4fdf 3b5d 7fff 7fff
+	</tex_palette>
+	<tex_palette index="6" name="chair_1_1_pl" color_size="4">
+		7fff 29d3 7fff 7fff
+	</tex_palette>
+	<tex_palette index="7" name="chair_2_1_pl" color_size="4">
+		7fff 14ea 7fff 7fff
+	</tex_palette>
+	<tex_palette index="8" name="chair_2_2_pl" color_size="4">
+		7fff 6f0b 7fff 7fff
+	</tex_palette>
+	<tex_palette index="9" name="chip_counter_pl" color_size="4">
+		62ec 675c 7fff 7fff
+	</tex_palette>
+	<tex_palette index="10" name="chip_kabe2_pl" color_size="4">
+		2b17 0000 7fff 7fff
+	</tex_palette>
+	<tex_palette index="11" name="chip_kabe_pl" color_size="4">
+		1e73 22d6 2b17 7fff
+	</tex_palette>
+	<tex_palette index="12" name="chip_mat_pl" color_size="4">
+		28f8 2d18 3539 7fff
+	</tex_palette>
+	<tex_palette index="13" name="chip_yuka2_pl" color_size="4">
+		5a7f 565f 5ebf 6b1f
+	</tex_palette>
+	<tex_palette index="14" name="chip_yuka_pl" color_size="4">
+		6739 6739 5ef7 5ad6
+	</tex_palette>
+	<tex_palette index="15" name="colors_pl" color_size="16">
+		0000 11db 14ea 1e3c 2190 29d3 2d19 2e13
+		437e 473e 539f 6f0b 6fbe 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="16" name="cup_pl" color_size="8">
+		7d3c 739c 5ef7 4631 39ce 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="17" name="d0_miz_pl" color_size="8">
+		4165 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="18" name="d0yuka_001_pl" color_size="8">
+		31f2 31f4 35d1 3611 3613 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="19" name="floor1_2_pl" color_size="4">
+		5ef7 2190 7fff 7fff
+	</tex_palette>
+	<tex_palette index="20" name="floor1_3_pl" color_size="4">
+		7fff 3256 3a98 42d9
+	</tex_palette>
+	<tex_palette index="21" name="floor1_pl" color_size="16">
+		7fff 4e2c 4a0c 524e 5ab1 5ed3 4e2d 62f4
+		62f4 6b37 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="22" name="floor2_pl" color_size="16">
+		7fff 2a57 2a57 2e57 3299 3aba 2615 2a36
+		2e57 2e78 2e57 3278 3278 3279 369a 3699
+	</tex_palette>
+	<tex_palette index="23" name="floor3_pl" color_size="16">
+		7fff 192e 1d70 2171 2192 25b3 2592 25b3
+		29d4 2191 1d4e 192e 2592 2191 25b2 29b3
+	</tex_palette>
+	<tex_palette index="24" name="floor4_pl" color_size="16">
+		7fff 2637 29d4 25d3 2191 1d4f 192c 2170
+		2170 2592 1d4e 1d4e 2170 1d2e 1d2d 1d4e
+	</tex_palette>
+	<tex_palette index="25" name="floor5_pl" color_size="4">
+		1cf5 2118 31bb 7fff
+	</tex_palette>
+	<tex_palette index="26" name="glow1_pl" color_size="8">
+		7fff 47bf 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="27" name="gold_tile2_pl" color_size="16">
+		21f5 2636 2a57 2a58 2e79 2e99 329a 471c
+		473c 4b3d 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="28" name="gold_tile_pl" color_size="16">
+		21f5 2215 2637 2638 2a58 2e79 2e9a 32ba
+		36dc 3afd 4f7e 537e 539f 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="29" name="light1_pl" color_size="4">
+		7fff 539f 7fff 7fff
+	</tex_palette>
+	<tex_palette index="30" name="light_pl" color_size="8">
+		47bf 6bff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="31" name="matt_pl" color_size="16">
+		7fff 3515 3d37 3916 3936 4158 3936 4159
+		3935 455a 457b 3936 3d37 4157 7fff 7fff
+	</tex_palette>
+	<tex_palette index="32" name="paintings02_pl" color_size="16">
+		7fff 3afd 2e56 2a14 3278 1d2c 214d 1d4c
+		14ea 29b2 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="33" name="paintings03_pl" color_size="16">
+		7fff 52ae 6330 4e6c 464b 1d2c 214d 1d4c
+		14ea 29b2 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="34" name="paintings04_pl" color_size="16">
+		7fff 20ed 2950 250e 3593 1cec 39c9 56ae
+		462b 4e8c 2d67 1d2c 214d 14ea 29b2 5ad6
+	</tex_palette>
+	<tex_palette index="35" name="paintings_all_pl" color_size="8">
+		14ea 1d2c 214d 29b2 4631 4a52 5294 6739
+	</tex_palette>
+	<tex_palette index="36" name="paintings_pl" color_size="16">
+		5ad6 5a1b 4156 49b8 4175 3efd 296c 3e32
+		2637 2dae 2e5a 2617 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="37" name="pillar_pl" color_size="4">
+		7fff 11db 7fff 7fff
+	</tex_palette>
+	<tex_palette index="38" name="pillar_top_pl" color_size="4">
+		7fff 2190 7fff 7fff
+	</tex_palette>
+	<tex_palette index="39" name="placematt1_pl" color_size="4">
+		7fff 2d36 2913 3db8
+	</tex_palette>
+	<tex_palette index="40" name="plant01" color_size="16">
+		5695 4d9a 2da5 42a7 2e23 3264 32a4 1f40
+		2eff 1d4e 15b8 1d74 294a 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="41" name="platformside_pl" color_size="4">
+		7fff 1d4f 14ea 192d
+	</tex_palette>
+	<tex_palette index="42" name="pokeball_pl" color_size="4">
+		56b5 112e 7fff 7fff
+	</tex_palette>
+	<tex_palette index="43" name="rcount_d_pl" color_size="4">
+		023d 01fb 7fff 7fff
+	</tex_palette>
+	<tex_palette index="44" name="sign_pl" color_size="4">
+		7fff 4b5b 5bdf 3f1a
+	</tex_palette>
+	<tex_palette index="45" name="steps1_pl" color_size="16">
+		7fff 29f3 3234 194d 1d6e 25d2 218f 25b1
+		29d2 218f 190b 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="46" name="strip2_pl" color_size="4">
+		7fff 1d4e 10c8 14ea
+	</tex_palette>
+	<tex_palette index="47" name="table1_1_pl" color_size="4">
+		7fff 2d19 7fff 7fff
+	</tex_palette>
+	<tex_palette index="48" name="table1_2_pl" color_size="4">
+		7fff 4a1e 62df 7fff
+	</tex_palette>
+	<tex_palette index="49" name="table_3_1_pl" color_size="4">
+		7fff 6fbe 7fff 7fff
+	</tex_palette>
+	<tex_palette index="50" name="table_4_pl" color_size="4">
+		7fff 473e 7fff 7fff
+	</tex_palette>
+	<tex_palette index="51" name="wall1_pl" color_size="16">
+		7fff 564d 564c 522c 4a0b 4e0b 66d0 62af
+		5e8e 5a6e 66d0 4b1b 42d8 2df4 2190 1d6e
+	</tex_palette>
+	<tex_palette index="52" name="wall2_pl" color_size="4">
+		7fff 25d2 2190 1d6e
+	</tex_palette>
+	<tex_palette index="53" name="wall3_4_pl" color_size="16">
+		1cd0 1cd1 1d4e 1d6e 20d2 20f2 216f 2190
+		25d2 2df4 3635 3656 3a77 3e78 3e98 3e99
+	</tex_palette>
+	<tex_palette index="54" name="wall3_pl" color_size="16">
+		7fff 2534 2112 20f2 1cd1 20f2 20d2 1cd1
+		1cd0 1cd0 1cd0 3656 3e99 2df4 2190 1d6e
+	</tex_palette>
+	<tex_palette index="55" name="wall4_pl" color_size="16">
+		7fff 3635 3e98 3e78 3656 2df4 3a77 3a77
+		3656 2190 1d6e 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="56" name="wall5_2_pl" color_size="16">
+		7fff 3256 3255 3234 2e13 3efd 3aba 3699
+		3677 29f3 2190 2590 192c 1d4d 192b 7fff
+	</tex_palette>
+	<tex_palette index="57" name="wall5_3_pl" color_size="4">
+		7fff 150b 1d6e 14ea
+	</tex_palette>
+	<tex_palette index="58" name="wall5_pl" color_size="16">
+		7fff 3afd 3adc 3abb 3699 3699 3677 3256
+		29f3 2e13 3234 29b1 258f 25b0 25b0 25b0
+	</tex_palette>
+	<tex_palette index="59" name="wall6_pl" color_size="4">
+		7fff 2e13 7fff 7fff
+	</tex_palette>
+</tex_palette_array>
+
 <material_array size="1">
 	<material index="0" name="lambert1"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
@@ -131,6 +1793,143 @@
 
 <output_info vertex_size="24" polygon_size="6"
 	triangle_size="0" quad_size="6"/>
+
+<ex_nns_3dme>
+	<ex_model_info scene_name="V‹KƒV[ƒ“" disp_pos="0.000000 60.000000"/>
+	<ex_tex_image_array size="60">
+		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="3" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="4" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="5" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="6" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="7" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="8" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="9" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="10" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="11" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="12" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="13" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="14" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="15" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="16" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="17" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="18" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="19" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="20" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="21" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="22" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="23" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="24" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="25" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="26" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="27" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="28" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="29" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="30" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="31" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="32" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="33" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="34" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="35" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="36" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="37" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="38" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="39" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="40" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="41" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="42" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="43" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="44" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="45" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="46" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="47" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="48" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="49" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="50" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="51" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="52" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="53" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="54" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="55" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="56" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="57" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="58" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="59" disp_pos="0.000000 0.000000"/>
+	</ex_tex_image_array>
+	<ex_tex_palette_array size="60">
+		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="3" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="4" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="5" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="6" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="7" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="8" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="9" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="10" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="11" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="12" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="13" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="14" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="15" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="16" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="17" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="18" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="19" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="20" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="21" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="22" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="23" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="24" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="25" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="26" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="27" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="28" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="29" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="30" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="31" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="32" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="33" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="34" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="35" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="36" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="37" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="38" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="39" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="40" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="41" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="42" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="43" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="44" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="45" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="46" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="47" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="48" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="49" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="50" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="51" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="52" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="53" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="54" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="55" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="56" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="57" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="58" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="59" disp_pos="0.000000 0.000000"/>
+	</ex_tex_palette_array>
+	<ex_material_array size="1">
+		<ex_material index="0" disp_pos="0.000000 240.000000"/>
+	</ex_material_array>
+	<ex_polygon_array size="1">
+		<ex_polygon index="0" disp_pos="960.000000 180.000000"/>
+	</ex_polygon_array>
+	<ex_node_array size="1">
+		<ex_node index="0" disp_pos="0.000000 120.000000"/>
+	</ex_node_array>
+</ex_nns_3dme>
 
 </body>
 
