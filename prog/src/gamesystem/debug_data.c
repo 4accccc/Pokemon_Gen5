@@ -129,6 +129,11 @@ static const ITEM_ST DebugItem[] = {
 	{ ITEM_MOKOSINOMI,	50},	//モコシのみ
 	{ ITEM_GOSUNOMI,	50},	//ゴスのみ
 	{ ITEM_RABUTANOMI,	50},	//ラブタのみ
+	
+  { ITEM_GAKUSYUUSOUTI,  5},  // がくしゅうそうち
+  {ITEM_SENSEINOTUME, 5}, // せんせいのツメ
+  { ITEM_KODAWARIHATIMAKI,  5},  // こだわりハチマキ
+  {ITEM_OMAMORIKOBAN, 5}, // おまもりこばん
 
   { ITEM_WAZAMASIN01,  328},		// わざマシン０１
   {  ITEM_WAZAMASIN02	, 329 },		// わざマシン０２
