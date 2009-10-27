@@ -141,6 +141,7 @@
  * @param autoWait 自動フレームウェイト
  *
  * #param COMBOBOX_TEXT ON OFF
+ * #param COMBOBOX_VALUE  1 0
  */
 //======================================================================
   .macro  ComCurtainUp autoWait
@@ -156,6 +157,7 @@
  * @param autoWait 自動フレームウェイト
  *
  * #param COMBOBOX_TEXT ON OFF
+ * #param COMBOBOX_VALUE  1 0
  */
 //======================================================================
   .macro  ComCurtainDown autoWait
@@ -175,6 +177,7 @@
  * #param VALUE_INT frame
  * #param VALUE_INT posY
  * #param COMBOBOX_TEXT ON OFF
+ * #param COMBOBOX_VALUE  1 0
  */
 //======================================================================
   .macro  ComCurtainMove  frame height autoWait
@@ -197,6 +200,7 @@
  * #param VALUE_INT frame
  * #param VALUE_INT posX
  * #param COMBOBOX_TEXT ON OFF
+ * #param COMBOBOX_VALUE  1 0
  */
 //======================================================================
   .macro  ComStageMove  frame pos autoWait
@@ -298,6 +302,7 @@
  * #param VALUE_INT frame
  * #param VALUE_VECFX32 posX posY posZ
  * #param COMBOBOX_TEXT ON OFF
+ * #param COMBOBOX_VALUE  1 0
  */
 //======================================================================
   .macro  ComPokeMove pokeNo  frame posX  posY  posZ autoWait
@@ -324,6 +329,7 @@
  * #param VALUE_INT frame
  * #param VALUE_VECFX32 offsetX offsetY offsetZ
  * #param COMBOBOX_TEXT ON OFF
+ * #param COMBOBOX_VALUE  1 0
  */
 //======================================================================
   .macro  ComPokeMoveOffset pokeNo  frame offsetX offsetY offsetZ autoWait
@@ -481,6 +487,7 @@
  * #param VALUE_INT repeat
  * #param VALUE_FX32
  * #param COMBOBOX_TEXT ON OFF
+ * #param COMBOBOX_VALUE  1 0
  */
 //======================================================================
   .macro  ComPokeActionJump pokeNo  interval  repeat  height autoWait
@@ -508,6 +515,7 @@
  * #param VALUE_INT startAngle
  * #param VALUE_INT rotateAngle
  * #param COMBOBOX_TEXT ON OFF
+ * #param COMBOBOX_VALUE  1 0
  */
 //======================================================================
   .macro  ComPokeActionRotate pokeNo  frame  startAngle rotateAngle autoWait
@@ -529,6 +537,7 @@
  *
  * #param VALUE_INT frame
  * #param COMBOBOX_TEXT ON OFF
+ * #param COMBOBOX_VALUE  1 0
  */
 //======================================================================
   .macro  ComPokeActionComeNearToTop frame autoWait
