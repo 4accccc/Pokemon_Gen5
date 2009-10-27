@@ -24,6 +24,7 @@
 
 #include "field_bmanime_tool.h"
 
+#include "script_def.h"
 //============================================================================================
 //============================================================================================
 struct _BMANIME_CONTROL_WORK {
@@ -94,6 +95,9 @@ BMANIME_CONTROL_WORK * BMANIME_CTRL_Create(FIELD_BMODEL_MAN * bmodel_man, const 
   BMANIME_CONTROL_WORK * ctrl;
   G3DMAPOBJST * obj;
   FIELD_BMODEL * entry;
+
+  GF_ASSERT( SCR_BMANM_DOOR_OPEN == ANM_INDEX_DOOR_OPEN );
+  GF_ASSERT( SCR_BMANM_DOOR_CLOSE == ANM_INDEX_DOOR_CLOSE );
 
   obj = searchDoorObject(bmodel_man, pos);
   if (obj == NULL) return NULL;
