@@ -402,7 +402,7 @@ u32 BAPP_CursorMove( BAPP_CURSOR_MVWK * wk )
 */
 
 
-#define	BATTLE_CURSOR_ANIME		( 11 )
+#define	BATTLE_CURSOR_ANIME		( 0 )
 
 BAPP_CURSOR_PUT_WORK * BAPPTOOL_CreateCursor( HEAPID heapID )
 {

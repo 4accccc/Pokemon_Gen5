@@ -550,7 +550,7 @@ static void CursorResLoad( BPLIST_WORK * wk )
 
 	// キャラ
 	wk->chrRes[BPLIST_CHRRES_CURSOR] = GFL_CLGRP_CGR_Register(
-																			ah, NARC_battgra_wb_battle_w_obj_NCGR,
+																			ah, NARC_battgra_wb_battle_w_cursor_NCGR,
 																			FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
 	// パレット
   wk->palRes[BPLIST_PALRES_CURSOR] = GFL_CLGRP_PLTT_RegisterEx(
@@ -560,8 +560,8 @@ static void CursorResLoad( BPLIST_WORK * wk )
 	// セル・アニメ
   wk->celRes[BPLIST_CELRES_CURSOR] = GFL_CLGRP_CELLANIM_Register(
 																			ah,
-																			NARC_battgra_wb_battle_w_obj_NCER,
-																			NARC_battgra_wb_battle_w_obj_NANR,
+																			NARC_battgra_wb_battle_w_cursor_NCER,
+																			NARC_battgra_wb_battle_w_cursor_NANR,
 																			wk->dat->heap );
 
   GFL_ARC_CloseDataHandle( ah );
@@ -648,6 +648,18 @@ static void BPL_ClactAddAll( BPLIST_WORK * wk )
 	for( i=0; i<BPL_CA_MAX; i++ ){
 		wk->clwk[i] = BPL_ClactAdd( wk, ObjParamEz[i] );
 	}
+	GFL_NET_ReloadIcon();
+/*
+	{
+		u16 * pltt_vram = (u16 *)HW_DB_OBJ_PLTT;
+		OS_Printf( "■■■ pal ■■■\n" );
+		for( i=0; i<16; i++ ){
+			OS_Printf( "0x%x, ", pltt_vram[14*16+i] );
+		}
+		OS_Printf( "\n■■■ pal ■■■\n" );
+	}
+*/
+
 	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 0, 0x1e0 );
 	BPL_PokeIconPaletteChg( wk );
 }

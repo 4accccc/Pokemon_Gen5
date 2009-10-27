@@ -433,7 +433,7 @@ static void CursorResLoad( BBAG_WORK * wk )
 
 	// キャラ
 	wk->chrRes[BBAG_CHRRES_CURSOR] = GFL_CLGRP_CGR_Register(
-																		ah, NARC_battgra_wb_battle_w_obj_NCGR,
+																		ah, NARC_battgra_wb_battle_w_cursor_NCGR,
 																		FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
 	// パレット
   wk->palRes[BBAG_PALRES_CURSOR] = GFL_CLGRP_PLTT_RegisterEx(
@@ -442,8 +442,8 @@ static void CursorResLoad( BBAG_WORK * wk )
 	// セル・アニメ
   wk->celRes[BBAG_CELRES_CURSOR] = GFL_CLGRP_CELLANIM_Register(
 																		ah,
-																		NARC_battgra_wb_battle_w_obj_NCER,
-																		NARC_battgra_wb_battle_w_obj_NANR,
+																		NARC_battgra_wb_battle_w_cursor_NCER,
+																		NARC_battgra_wb_battle_w_cursor_NANR,
 																		wk->dat->heap );
 
 	// パレットフェードに設定

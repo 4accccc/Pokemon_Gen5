@@ -384,6 +384,9 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
 	BattleBag_CursorMoveSet( wk, wk->page );
 	BBAG_GetDemoCursorSet( wk, wk->page );
 
+	GFL_NET_ReloadIcon();
+	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 14*16, 0x20 );
+
 	PaletteFadeReq(
 		wk->pfd, PF_BIT_SUB_ALL, 0xffff, BATTLE_BAGLIST_FADE_SPEED, 16, 0, 0, BTLV_EFFECT_GetTCBSYS() );
 
@@ -433,6 +436,9 @@ static int BBAG_SeqShooterInit( BBAG_WORK * wk )
 */
 	BattleBag_CursorMoveSet( wk, wk->page );
 	BBAG_GetDemoCursorSet( wk, wk->page );
+
+	GFL_NET_ReloadIcon();
+	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 14*16, 0x20 );
 
 	PaletteFadeReq(
 		wk->pfd, PF_BIT_SUB_ALL, 0xffff, BATTLE_BAGLIST_FADE_SPEED, 16, 0, 0, BTLV_EFFECT_GetTCBSYS() );

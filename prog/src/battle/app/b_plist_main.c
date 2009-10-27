@@ -664,8 +664,40 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
 
 	BPL_ExpGagePut( wk, wk->page );
 
+//	GFL_NET_ReloadIcon();
+//	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 14*16, FADE_PAL_ONE_SIZE );
+	{
+/*
+		u16 * defWk = PaletteWorkDefaultWorkGet( wk->pfd, FADE_SUB_OBJ );
+		u16 * trsWk = PaletteWorkTransWorkGet( wk->pfd, FADE_SUB_OBJ );
+//		u32	i;
+		defWk[14*16+1] = 0x1f;
+		defWk[14*16+2] = 0x3e;
+		defWk[14*16+3] = 0x7c;
+		defWk[14*16+15] = 0x7fff;
+		trsWk[14*16+1] = 0x1f;
+		trsWk[14*16+2] = 0x3e;
+		trsWk[14*16+3] = 0x7c;
+		trsWk[14*16+15] = 0x7fff;
+*/
+/*
+		OS_Printf( "Å°Å°Å° pal Å°Å°Å°\n" );
+		for( i=0; i<16; i++ ){
+			OS_Printf( "0x%x, ", defWk[14*16+i] );
+		}
+		OS_Printf( "\nÅ°Å°Å° pal Å°Å°Å°\n" );
+		defWk = PaletteWorkTransWorkGet( wk->pfd, FADE_SUB_OBJ );
+		for( i=0; i<16; i++ ){
+			OS_Printf( "0x%x, ", defWk[14*16+i] );
+		}
+		OS_Printf( "\nÅ°Å°Å° pal Å°Å°Å°\n" );
+*/
+	}
+
+
 	PaletteFadeReq(
 		wk->pfd, PF_BIT_SUB_ALL, 0xffff, BATTLE_BAGLIST_FADE_SPEED, 16, 0, 0, BTLV_EFFECT_GetTCBSYS() );
+
 
 	return ret;
 }
