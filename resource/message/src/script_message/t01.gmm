@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-26T17:50:24"/>
+	<create user="matsumiya" host="W00207" date="2009-10-27T11:48:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -438,8 +438,10 @@
 	<row id="msg_t01_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
-		<language name="JPN" width="256">ここは　カノコタウン</language>
-		<language name="JPN_KANJI" width="256">ここは　カノコタウン</language>
+		<language name="JPN" width="256">ここは　カノコタウン
+ちいさな　てんが　つどう　まち</language>
+		<language name="JPN_KANJI" width="256">ここは　カノコタウン
+小さな点が　集う　街</language>
 	</row>
 
 	<row id="msg_t01_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">

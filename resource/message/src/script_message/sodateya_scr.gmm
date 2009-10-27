@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00178" date="2009-10-13T10:50:26"/>
+	<create user="matsumiya" host="W00207" date="2009-10-27T11:46:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,14 +307,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1572" top="202" right="2267" bottom="822" maximized="no" rayout="Vertical2">
+	<dialog left="21" top="178" right="726" bottom="806" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="520"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="533"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="687"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -347,10 +347,10 @@
 なにか　そだてて　ほしければ
 ばあさんに　たのんで　おくれ</language>
 		<language name="JPN_KANJI" width="256">わしは　育て屋じいさんじゃ▼
-ここで　みんなの　だいじな
+ここで　みんなの　大事な
 ポケモンの　めんどうを　みておるよ▼
-なにか　そだてて　ほしければ
-ばあさんに　たのんで　おくれ</language>
+なにか　育てて　ほしければ
+ばあさんに　頼んで　おくれ</language>
 	</row>
 
 	<row id="msg_sodateya_oldman_02">
@@ -359,7 +359,7 @@
 ・預けているポケモン＝１匹</comment>
 		<language name="JPN" width="256">よくきたな！
 [1:01:ポケモン種族名:0]は　げんきじゃぞ！</language>
-		<language name="JPN_KANJI" width="256">よくきたな！
+		<language name="JPN_KANJI" width="256">よく来たな！
 [1:01:ポケモン種族名:0]は　げんきじゃぞ！</language>
 	</row>
 
@@ -371,7 +371,7 @@
 　キー待ちあり</comment>
 		<language name="JPN" width="256">２ひきの　なかは
 とっても　よいようじゃ！</language>
-		<language name="JPN_KANJI" width="256">２ひきの　なかは
+		<language name="JPN_KANJI" width="256">２ひきの　仲は
 とっても　よいようじゃ！</language>
 	</row>
 
@@ -383,7 +383,7 @@
 　キー待ちあり</comment>
 		<language name="JPN" width="256">２ひきの　なかは
 まずまずの　ようじゃ</language>
-		<language name="JPN_KANJI" width="256">２ひきの　なかは
+		<language name="JPN_KANJI" width="256">２ひきの　仲は
 まずまずの　ようじゃ</language>
 	</row>
 
@@ -395,7 +395,7 @@
 　キー待ちあり</comment>
 		<language name="JPN" width="256">２ひきの　なかは
 それほど　よくないがなあ</language>
-		<language name="JPN_KANJI" width="256">２ひきの　なかは
+		<language name="JPN_KANJI" width="256">２ひきの　仲は
 それほど　よくないがなあ</language>
 	</row>
 
@@ -409,8 +409,8 @@
 ちがう　ポケモンたちと▽
 あそんでおるがなあ……</language>
 		<language name="JPN_KANJI" width="256">２ひきは　おたがいに
-ちがう　ポケモンたちと▽
-あそんでおるがなあ……</language>
+違う　ポケモンたちと▽
+遊んでおるがなあ……</language>
 	</row>
 
 	<row id="msg_sodateya_oldman_07">
@@ -430,11 +430,11 @@
 タマゴ　なんじゃ▼
 やっぱり　ほしいじゃろ？</language>
 		<language name="JPN_KANJI" width="256">おお！　あんたか▼
-あずかっていた　ポケモンを
-そだてていたら……　なんと！▼
+預かっていた　ポケモンを
+育てていたら……　なんと！▼
 ポケモンが　タマゴを
-もっておったんじゃ！▼
-どこから　もってきたか　わからんが
+持っておったんじゃ！▼
+どこから　持ってきたか　わからんが
 あんたの　ポケモンが　もっていた▽
 タマゴ　なんじゃ▼
 やっぱり　ほしいじゃろ？</language>
@@ -452,7 +452,7 @@
 
 	<row id="msg_sodateya_oldman_08_01">
 		<language name="JPN" width="256">だいじに　そだてなさいよ！</language>
-		<language name="JPN_KANJI" width="256">だいじに　そだてなさいよ！</language>
+		<language name="JPN_KANJI" width="256">大事に　育てなさいよ！</language>
 	</row>
 
 	<row id="msg_sodateya_oldman_09">
@@ -462,9 +462,9 @@
 		<language name="JPN" width="256">てもちが　いっぱいの　ようじゃな……▼
 てもちの　ポケモンを
 せいりしてから　またきなさい</language>
-		<language name="JPN_KANJI" width="256">てもちが　いっぱいの　ようじゃな……▼
-てもちの　ポケモンを
-せいりしてから　またきなさい</language>
+		<language name="JPN_KANJI" width="256">手持ちが　一杯の　ようじゃな……▼
+手持ちの　ポケモンを
+整理してから　また来なさい</language>
 	</row>
 
 	<row id="msg_sodateya_oldman_10">
@@ -482,13 +482,13 @@
 ・初回</comment>
 		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">わしは　そだてや　ばあさんじゃ▼
-おまえさんの　かわりに　ポケモンを
-そだてて　あげるよ▼
+おまえさんの　かわりに
+ポケモンを　そだてて　あげるよ▼
 なにか　そだてて　ほしいのかい？</language>
 		<language name="JPN_KANJI" width="256">わしは　育て屋ばあさんじゃ▼
-おまえさんの　かわりに　ポケモンを
-そだてて　あげるよ▼
-なにか　そだてて　ほしいのかい？</language>
+おまえさんの　かわりに
+ポケモンを　育てて　あげるよ▼
+なにか　育てて　ほしいのかい？</language>
 	</row>
 
 	<row id="msg_sodateya_oldwoman_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
@@ -510,7 +510,7 @@
 ・メニュー表示後
 　「やめる」選択時/Bキャンセル時</comment>
 		<language name="JPN" width="256">それじゃ　また　きておくれ</language>
-		<language name="JPN_KANJI" width="256">それじゃ　また　きておくれ</language>
+		<language name="JPN_KANJI" width="256">それじゃ　また　来ておくれ</language>
 	</row>
 
 	<row id="msg_sodateya_oldwoman_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
@@ -520,7 +520,7 @@
 		<language name="JPN" width="256">おお！　じいさんが
 あんたを　さがして　おったぞ</language>
 		<language name="JPN_KANJI" width="256">おお！　じいさんが
-あんたを　さがして　おったぞ</language>
+あんたを　探して　おったぞ</language>
 	</row>
 
 	<row id="msg_sodateya_oldwoman_05" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
@@ -531,9 +531,9 @@
 		<language name="JPN" width="256">その　ポケモンを　あずけると
 たたかえなく　なるぞ▼
 また　きなさいよ</language>
-		<language name="JPN_KANJI" width="256">その　ポケモンを　あずけると
-たたかえなく　なるぞ▼
-また　きなさいよ</language>
+		<language name="JPN_KANJI" width="256">その　ポケモンを　預けると
+闘えなく　なるぞ▼
+また　来なさいよ</language>
 	</row>
 
 	<row id="msg_sodateya_oldwoman_06" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
@@ -542,7 +542,7 @@
 　「あずける」選択時
 ・手持ちが２匹以上</comment>
 		<language name="JPN" width="256">どのこを　そだてて　みるかね？▼</language>
-		<language name="JPN_KANJI" width="256">どのこを　そだてて　みるかね？▼</language>
+		<language name="JPN_KANJI" width="256">どのこを　育てて　みるかね？▼</language>
 	</row>
 
 	<row id="msg_sodateya_oldwoman_07" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
@@ -560,23 +560,23 @@
 		<language name="JPN" width="256">それでは　[1:00:トレーナー名:0]を
 しばらく　あずかるぞ▼</language>
 		<language name="JPN_KANJI" width="256">それでは　[1:00:トレーナー名:0]を
-しばらく　あずかるぞ▼</language>
+しばらく　預かるぞ▼</language>
 	</row>
 
 	<row id="msg_sodateya_oldwoman_09" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
 		<comment>♀：育て屋ばあさん</comment>
 		<language name="JPN" width="256">てきとうに　じかんが
 たったら　またきなさい▼</language>
-		<language name="JPN_KANJI" width="256">てきとうに　じかんが
-たったら　またきなさい▼</language>
+		<language name="JPN_KANJI" width="256">適当に　時間が
+たったら　また来なさい▼</language>
 	</row>
 
 	<row id="msg_sodateya_oldwoman_10" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
 		<comment>♀：育て屋ばあさん</comment>
 		<language name="JPN" width="256">２ひき　までなら　あずかれるけど
 もう　１ぴき　そだててみるかい？</language>
-		<language name="JPN_KANJI" width="256">２ひき　までなら　あずかれるけど
-もう　１ぴき　そだててみるかい？</language>
+		<language name="JPN_KANJI" width="256">２ひき　までなら　預かれるけど
+もう　１ぴき　育ててみるかい？</language>
 	</row>
 
 	<row id="msg_sodateya_oldwoman_11" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
@@ -587,7 +587,7 @@
 		<language name="JPN" width="256">おお　あんたか！　よくきたな
 おまえさんの　ポケモンは　ゲンキじゃ▼
 どうする？　ひきとるかい？</language>
-		<language name="JPN_KANJI" width="256">おお　あんたか！　よくきたな
+		<language name="JPN_KANJI" width="256">おお　あんたか！　よく来たな
 おまえさんの　ポケモンは　ゲンキじゃ▼
 どうする？　ひきとるかい？</language>
 	</row>
@@ -598,7 +598,7 @@
 		<language name="JPN" width="256">[1:01:ポケモン種族名:0]は　レベルで　いうと
 [2:01:２桁:1]くらい　そだって　おるぞ▼</language>
 		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]は　レベルで　いうと
-[2:01:２桁:1]くらい　そだって　おるぞ▼</language>
+[2:01:２桁:1]くらい　育って　おるぞ▼</language>
 	</row>
 
 	<row id="msg_sodateya_oldwoman_13" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
@@ -611,7 +611,7 @@
 りょうきんは　[2:03:４桁:1]円　だよ▽
 ひきとるかい？</language>
 		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]を　ひきとるなら
-りょうきんは　[2:03:４桁:1]円　だよ▽
+料金は　[2:03:４桁:1]円　だよ▽
 ひきとるかい？</language>
 	</row>
 
@@ -619,7 +619,7 @@
 		<comment>♀：育て屋ばあさん
 ・引き取るときに所持金不足</comment>
 		<language name="JPN" width="256">おかねが　たりない　ようじゃのう……</language>
-		<language name="JPN_KANJI" width="256">おかねが　たりない　ようじゃのう……</language>
+		<language name="JPN_KANJI" width="256">お金が　たりない　ようじゃのう……</language>
 	</row>
 
 	<row id="msg_sodateya_oldwoman_15" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
@@ -656,11 +656,11 @@
 もっと　たくさん　つかまえてから
 きてみては　どうじゃ？</language>
 		<language name="JPN_KANJI" width="256">おや？　おまえさん
-その　ポケモンを　あずけると▽
-ぜんぶで　ポケモンが　１ひき　だけに▽
+その　ポケモンを　預けると▽
+全部で　ポケモンが　１ひき　だけに▽
 なってしまう　みたいじゃな▼
-もっと　たくさん　つかまえてから
-きてみては　どうじゃ？</language>
+もっと　たくさん　捕まえてから
+来てみては　どうじゃ？</language>
 	</row>
 
 	<row id="msg_sodateya_menu_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
