@@ -1,0 +1,34 @@
+//======================================================================
+/**
+ * @file	debug_flg.cdat
+ * @brief	グローバルに参照できるフラグの定義
+ * @author	ariizumi
+ * @data	09/10/27
+ */
+//======================================================================
+
+//ココにはdebug_flgで使われるフラグの定義をします。
+//DEBUG_FLG_DEF( 定義名 ・ 表示名 )
+//上のように書いてください。
+//取得時には DEBUG_FLG_定義名 で取得できます。
+
+//Page1
+DEBUG_FLG_DEF( EnableEncount , "EncountOff" )
+DEBUG_FLG_DEF( TestFlg1 , "テスト1")
+DEBUG_FLG_DEF( TestFlg2 , "テスト2")
+DEBUG_FLG_DEF( TestFlg3 , "テスト3")
+DEBUG_FLG_DEF( TestFlg4 , "テスト4")
+DEBUG_FLG_DEF( TestFlg5 , "テスト5")
+DEBUG_FLG_DEF( TestFlg6 , "テスト6")
+DEBUG_FLG_DEF( TestFlg7 , "テスト7")
+DEBUG_FLG_DEF( TestFlg8 , "テスト8")
+DEBUG_FLG_DEF( TestFlg9 , "テスト9")
+//Page2
+DEBUG_FLG_DEF( TestFlg10, "テスト10")
+DEBUG_FLG_DEF( TestFlg11, "テスト11")
+DEBUG_FLG_DEF( TestFlg12, "テスト12")
+DEBUG_FLG_DEF( TestFlg13, "テスト13")
+DEBUG_FLG_DEF( TestFlg14, "テスト14")
+DEBUG_FLG_DEF( TestFlg15, "テスト15")
+DEBUG_FLG_DEF( TestFlg16, "テスト16")
+DEBUG_FLG_DEF( TestFlg17, "テスト17")

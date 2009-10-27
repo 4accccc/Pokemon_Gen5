@@ -10,6 +10,7 @@
 
 #include "debug/debugwin_sys.h"
 #include "debug/debug_system_group.h"
+#include "debug/debug_flg.h"
 #include "savedata/config.h"
 #include "test/performance.h"
 #include "test/debug_pause.h"
@@ -100,11 +101,13 @@ void DEBUGWIN_AddSystemGroup( const HEAPID heapId )
   DEBUGWIN_AddItemToGroup( "“K—p",DEBWIN_Update_RTC_apply , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
   DEBUGWIN_AddItemToGroup( "Œ»ÝŽžŽæ“¾",DEBWIN_Update_RTC_get , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
   
+  DEBUG_FLG_CreateDebugGoupe( heapId );
 }
 
 void DEBUGWIN_RemoveSystemGroup(void)
 {
-  DEBUGWIN_RemoveGroup( 254 );
+  DEBUG_FLG_DeleteDebugGoupe();
+  DEBUGWIN_RemoveGroup( DEBUGWIN_GROUPID_SYSTEM );
 }
 
 #pragma mark [> system
