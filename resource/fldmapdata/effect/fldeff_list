@@ -7,17 +7,26 @@
 G3D_FE_ANMITP = hero_kemu.itp \
   kusaeff.itp \
   ripple.itp \
-  shibuki.itp
+  shibuki.itp \
+  taki_loop_s.itp \
+  taki_roop_f.itp \
+  taki_start_f.itp \
+  taki_start_s.itp
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　icaアニメ定義
 #---------------------------------------------------------------
-G3D_FE_ANMICA = shibuki01.ica
+G3D_FE_ANMICA = shibuki01.ica \
+  taki_land.ica \
+  taki_loop_s.ica \
+  taki_roop_f.ica \
+  taki_start_f.ica \
+  taki_start_s.ica
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　imaアニメ定義
 #---------------------------------------------------------------
-G3D_FE_ANMIMA =
+G3D_FE_ANMIMA = taki_land.ima
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　itaアニメ定義
@@ -59,7 +68,13 @@ G3D_FE_MDL = kage.imd \
   nc_mark_ul.imd \
   nc_mark_ur.imd \
   nc_mark_dl.imd \
-  nc_mark_dr.imd
+  nc_mark_dr.imd \
+  taki_land.imd \
+  taki_loop_s.imd \
+  taki_roop_f.imd \
+  taki_start_f.imd \
+  taki_start_s.imd
+
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　テクスチャ定義

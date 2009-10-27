@@ -39,12 +39,27 @@ enum {
 	NARC_fldeff_nc_mark_ur_nsbmd = 25,
 	NARC_fldeff_nc_mark_dl_nsbmd = 26,
 	NARC_fldeff_nc_mark_dr_nsbmd = 27,
-	NARC_fldeff_hero_kemu_nsbtp = 28,
-	NARC_fldeff_kusaeff_nsbtp = 29,
-	NARC_fldeff_ripple_nsbtp = 30,
-	NARC_fldeff_shibuki_nsbtp = 31,
-	NARC_fldeff_shibuki01_nsbca = 32,
-	NARC_fldeff_shibuki01_nsbta = 33
+	NARC_fldeff_taki_land_nsbmd = 28,
+	NARC_fldeff_taki_loop_s_nsbmd = 29,
+	NARC_fldeff_taki_roop_f_nsbmd = 30,
+	NARC_fldeff_taki_start_f_nsbmd = 31,
+	NARC_fldeff_taki_start_s_nsbmd = 32,
+	NARC_fldeff_hero_kemu_nsbtp = 33,
+	NARC_fldeff_kusaeff_nsbtp = 34,
+	NARC_fldeff_ripple_nsbtp = 35,
+	NARC_fldeff_shibuki_nsbtp = 36,
+	NARC_fldeff_taki_loop_s_nsbtp = 37,
+	NARC_fldeff_taki_roop_f_nsbtp = 38,
+	NARC_fldeff_taki_start_f_nsbtp = 39,
+	NARC_fldeff_taki_start_s_nsbtp = 40,
+	NARC_fldeff_shibuki01_nsbca = 41,
+	NARC_fldeff_taki_land_nsbca = 42,
+	NARC_fldeff_taki_loop_s_nsbca = 43,
+	NARC_fldeff_taki_roop_f_nsbca = 44,
+	NARC_fldeff_taki_start_f_nsbca = 45,
+	NARC_fldeff_taki_start_s_nsbca = 46,
+	NARC_fldeff_taki_land_nsbma = 47,
+	NARC_fldeff_shibuki01_nsbta = 48
 };
 
 /* NARC_FLDEFF_NAIX_ */

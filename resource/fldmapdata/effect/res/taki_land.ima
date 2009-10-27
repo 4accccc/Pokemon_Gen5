@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ima version="1.6.0">
+
+<head>
+	<create user="unno" host="W00199" date="2009-10-23T15:58:23" source="taki_land.mb"/>
+	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<mat_color_info
+	frame_size="21"
+	tool_start_frame="0"
+	tool_end_frame="20"
+	interpolation="frame"
+	compress_material="on" material_size="1 1"
+	frame_step_mode="1"
+	tolerance_color="2"
+/>
+
+<mat_color_data size="24">
+	25 31 0 0 9 19 28 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	28 19 9 0
+</mat_color_data>
+
+<mat_color_anm_array size="1">
+	<mat_color_anm index="0" material_name="lambert2">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="1"/>
+		<ambient_g frame_step="1" data_size="1" data_head="1"/>
+		<ambient_b frame_step="1" data_size="1" data_head="1"/>
+		<specular_r frame_step="1" data_size="1" data_head="2"/>
+		<specular_g frame_step="1" data_size="1" data_head="2"/>
+		<specular_b frame_step="1" data_size="1" data_head="2"/>
+		<emission_r frame_step="1" data_size="1" data_head="2"/>
+		<emission_g frame_step="1" data_size="1" data_head="2"/>
+		<emission_b frame_step="1" data_size="1" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="21" data_head="3"/>
+	</mat_color_anm>
+</mat_color_anm_array>
+
+</body>
+
+</ima>
