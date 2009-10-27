@@ -566,7 +566,7 @@ static BOOL _keyChangeItemCheck(FIELD_ITEMMENU_WORK* pWork)
 
 //------------------------------------------------------------------------------
 /**
- * @brief   アイテム交換時のキーの動きの処理
+ * @brief   キーの動きの処理
  * @retval  none
  */
 //------------------------------------------------------------------------------
@@ -885,14 +885,14 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     return;
   }
 
-  // スクロール
+  // タッチスクロール
   if( _itemScrollCheck(pWork) )
   {
     KTST_SetDraw( pWork, FALSE );
     ITEMDISP_scrollCursorMove(pWork);
     bChange = TRUE;
   }
-  else if(_keyMoveCheck(pWork))
+  else if( _keyMoveCheck(pWork) )
   {
     ITEMDISP_scrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
     bChange = TRUE;

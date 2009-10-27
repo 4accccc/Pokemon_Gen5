@@ -52,7 +52,8 @@
 
 #include "msg/msg_itempocket.h"
 #include "bag_parts_d_NANR_LBLDEFS.h"
-	
+
+#include "item/itemtype_def.h"
 
 
 //------------------------------------------------------------------
@@ -425,9 +426,6 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
                                             GFL_BG_FRAME1_S, 0,
                                             GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg2), 0, 0, pWork->heapID);
 
-    //    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_p_list_NCLR,
-    //                                    PALTYPE_MAIN_BG, _SUBLIST_NORMAL_PAL*0x20, 2*0x20,  pWork->heapID);
-
     //下画面アイコン
     _load_parts( pWork, p_handle );
 
@@ -439,18 +437,10 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     //数字フレーム用パレット
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_win05_d_NCLR,
                                       PALTYPE_MAIN_BG, PALOFS_NUM_FRAME*0x20, 1*0x20,  pWork->heapID);
-
-    // @TODO 消して良い？
-#if 0
-    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_win01_d_man_NCLR,
-                                      PALTYPE_MAIN_BG, 1*0x20, 2*0x20,  pWork->heapID);
-#endif
     
     GFL_ARC_CloseDataHandle(p_handle);
   }
 
-// GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
-//                                0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
                                 0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
 
@@ -1014,6 +1004,37 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
 
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アイテムナンバーからパレットカラーを指定
+ *
+ *	@param	u16 itemtype 
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+static void _cellmessage_printcolor( u16 itemtype )
+{
+  switch( itemtype )
+  {
+  case ITEMTYPE_BALL:
+  case ITEMTYPE_MAIL:
+    GFL_FONTSYS_SetColor( 0x9, 0x8, 0 );
+    break;
+
+  case ITEMTYPE_EQUIP:
+    GFL_FONTSYS_SetColor( 0x0b, 0xa, 0 );
+    break;
+
+  case ITEMTYPE_BATTLE:
+  case ITEMTYPE_NORMAL:
+  case ITEMTYPE_NONE:
+    GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
+    break;
+
+  default : GF_ASSERT(0);
+  }
+}
 
 //-----------------------------------------------------------------------------
 /**
@@ -1056,9 +1077,13 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
       switch( color_tbl[i] )
       {
       case 0:
-        GFL_FONTSYS_SetColor( 0xf, 0xe, backColor );
+        {
+          u16 type = ITEM_GetParam( item->id, ITEM_PRM_ITEM_TYPE, pWork->heapID );
+          _cellmessage_printcolor( type );
+        }
         break;
       case 1:
+        // 画面端はカラーフェード
         GFL_FONTSYS_SetColor( 0xd, 0xc, backColor );
         break;
       default : GF_ASSERT(0);
@@ -1109,6 +1134,8 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
     GFL_CLACT_WK_GetPos( pWork->clwkCur , &pos, CLWK_SETSF_NONE );
     pos.y = 24 * pWork->curpos + 24;
     GFL_CLACT_WK_SetPos( pWork->clwkCur ,  &pos, CLWK_SETSF_NONE );
+
+    GFL_CLACT_WK_SetAnmIndex( pWork->clwkCur, 0 );
   }
   for(i = 0; i< ITEM_LIST_NUM ; i++){
     {
