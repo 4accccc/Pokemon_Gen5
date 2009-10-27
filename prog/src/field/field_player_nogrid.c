@@ -190,8 +190,8 @@ FIELD_PLAYER_NOGRID* FIELD_PLAYER_NOGRID_Create( FIELD_PLAYER* p_player, HEAPID 
   // 動作コードをレール動作に変更
   if( MMDL_GetMoveCode( p_wk->p_mmdl ) != MV_RAIL_DMY )
   {
-    MMDL_OnStatusBit( p_wk->p_mmdl, MMDL_STABIT_RAIL_MOVE );
-    MMDL_ChangeMoveCode( p_wk->p_mmdl, MV_RAIL_DMY );
+    //MMDL_OnStatusBit( p_wk->p_mmdl, MMDL_STABIT_RAIL_MOVE );
+    //MMDL_ChangeMoveCode( p_wk->p_mmdl, MV_RAIL_DMY );
   }
 
 
