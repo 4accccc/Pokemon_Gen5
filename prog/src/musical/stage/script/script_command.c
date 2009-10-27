@@ -353,6 +353,7 @@ SCRIPT_FUNC_DEF( CurtainUp )
   STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
   MOVE_WORK_S32 *moveWork;
+  const BOOL autoWait = (ScriptFunc_GetValueS32()==0?TRUE:FALSE);
   SCRIPT_PRINT_LABEL(CurtainUp);
 
   moveWork = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_WORK_S32 ));
@@ -374,6 +375,7 @@ SCRIPT_FUNC_DEF( CurtainDown )
 {
   STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
+  const BOOL autoWait = (ScriptFunc_GetValueS32()==0?TRUE:FALSE);
   MOVE_WORK_S32 *moveWork;
   SCRIPT_PRINT_LABEL(CurtainDown);
   moveWork = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_WORK_S32 ));
@@ -399,6 +401,7 @@ SCRIPT_FUNC_DEF( CurtainMove )
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
   const s32 frame = ScriptFunc_GetValueS32();
   const s32 pos = ScriptFunc_GetValuefx32();
+  const BOOL autoWait = (ScriptFunc_GetValueS32()==0?TRUE:FALSE);
   SCRIPT_PRINT_LABEL(CurtainMove);
   
   if( frame == 0 )
@@ -450,6 +453,7 @@ SCRIPT_FUNC_DEF( StageMove )
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
   const s32 frame = ScriptFunc_GetValueS32();
   const s32 pos = ScriptFunc_GetValuefx32();
+  const BOOL autoWait = (ScriptFunc_GetValueS32()==0?TRUE:FALSE);
   SCRIPT_PRINT_LABEL(StageMove);
   
   if( frame == 0 )
@@ -608,6 +612,7 @@ SCRIPT_FUNC_DEF( PokeMove )
   const fx32 posX = ScriptFunc_GetValuefx32();
   const fx32 posY = ScriptFunc_GetValuefx32();
   const fx32 posZ = ScriptFunc_GetValuefx32();
+  const BOOL autoWait = (ScriptFunc_GetValueS32()==0?TRUE:FALSE);
   u8  pokeNo;
   
   STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
@@ -661,6 +666,7 @@ SCRIPT_FUNC_DEF( PokeMoveOffset )
   const fx32 ofsX = ScriptFunc_GetValuefx32();
   const fx32 ofsY = ScriptFunc_GetValuefx32();
   const fx32 ofsZ = ScriptFunc_GetValuefx32();
+  const BOOL autoWait = (ScriptFunc_GetValueS32()==0?TRUE:FALSE);
   u8  pokeNo;
   
   STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
@@ -922,6 +928,7 @@ SCRIPT_FUNC_DEF( PokeActionJump )
   const s32 interval = ScriptFunc_GetValueS32();
   const s32 num = ScriptFunc_GetValueS32();
   const fx32 height = ScriptFunc_GetValuefx32();
+  const BOOL autoWait = (ScriptFunc_GetValueS32()==0?TRUE:FALSE);
   u8  pokeNo;
 
   STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
@@ -993,6 +1000,7 @@ SCRIPT_FUNC_DEF( PokeActionRotate )
   const s32 frame = ScriptFunc_GetValueS32();
   const s32 startAngle = ScriptFunc_GetValueS32();
   const s32 rotateAngle = ScriptFunc_GetValuefx32();
+  const BOOL autoWait = (ScriptFunc_GetValueS32()==0?TRUE:FALSE);
   u8  pokeNo;
 
   STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
@@ -1053,6 +1061,7 @@ SCRIPT_FUNC_DEF( PokeActionComeNearToTop )
   STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
   const s32 frame = ScriptFunc_GetValueS32();
+  const BOOL autoWait = (ScriptFunc_GetValueS32()==0?TRUE:FALSE);
 
   STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
   u8 topPoke;

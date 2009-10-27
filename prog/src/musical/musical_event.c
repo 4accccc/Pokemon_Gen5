@@ -37,7 +37,9 @@
 #include "musical/stage/sta_local_def.h"
 #include "musical/dressup/dup_local_def.h"
 
-#include "musical_event.h"
+#include "../resource/fldmapdata/script/c04r0202_def.h"
+
+#include "musical/musical_event.h"
 
 //======================================================================
 //  define
@@ -89,7 +91,7 @@ typedef enum
 //  typedef struct
 //======================================================================
 #pragma mark [> struct
-typedef struct
+struct _MUSICAL_EVENT_WORK
 {
   GAMESYS_WORK *gsys;
 
@@ -112,7 +114,7 @@ typedef struct
 
   u8 musicalIndex[MUSICAL_POKE_MAX];
 
-}MUSICAL_EVENT_WORK;
+};
 
 
 //======================================================================
@@ -199,7 +201,7 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     break;
 
   case MES_WAITROOM_FIRST:
-    MUSICAL_EVENT_RunScript( event , evWork , 1 );
+    MUSICAL_EVENT_RunScript( event , evWork , SCRID_C04R0202_MUS_1ST );
     evWork->state = MES_EXIT_FIELD;
     break;
     
@@ -254,7 +256,7 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     break;
     
   case MES_WAITROOM_SECOND:
-    MUSICAL_EVENT_RunScript( event , evWork , 2 );
+    MUSICAL_EVENT_RunScript( event , evWork , SCRID_C04R0202_MUS_2ND );
     evWork->state = MES_EXIT_WAITROOM_SECOND;
     break;
     
@@ -316,7 +318,7 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     break;
     
   case MES_WAITROOM_THIRD:
-    MUSICAL_EVENT_RunScript( event , evWork , 3 );
+    MUSICAL_EVENT_RunScript( event , evWork , SCRID_C04R0202_MUS_3RD );
     //evWork->state = MES_EXIT_WAITROOM_THIRD;
     evWork->state = MES_TERM_MUSICAL;
     break;

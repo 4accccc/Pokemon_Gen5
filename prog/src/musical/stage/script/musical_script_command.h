@@ -137,40 +137,51 @@
 /**
  * @brief カーテン：幕を上げる(固定速度
  *
- * #param_num 0
+ * #param_num 1
+ * @param autoWait 自動フレームウェイト
+ *
+ * #param COMBOBOX_TEXT ON OFF
  */
 //======================================================================
-  .macro  ComCurtainUp
+  .macro  ComCurtainUp autoWait
   .short  SCRIPT_ENUM_CurtainUp
+  .long   \autoWait
   .endm
 
 //======================================================================
 /**
  * @brief カーテン：幕を下げる(固定速度
  *
- * #param_num 0
+ * #param_num 1
+ * @param autoWait 自動フレームウェイト
+ *
+ * #param COMBOBOX_TEXT ON OFF
  */
 //======================================================================
-  .macro  ComCurtainDown
+  .macro  ComCurtainDown autoWait
   .short  SCRIPT_ENUM_CurtainDown
+  .long   \autoWait
   .endm
 
 //======================================================================
 /**
  * @brief カーテン：幕を動かす(速度設定可
  *
- * #param_num 2
+ * #param_num 3
  * @param frame フレーム数
  * @param heaight Y座標
+ * @param autoWait 自動フレームウェイト
  *
  * #param VALUE_INT frame
  * #param VALUE_INT posY
+ * #param COMBOBOX_TEXT ON OFF
  */
 //======================================================================
-  .macro  ComCurtainMove  frame height
+  .macro  ComCurtainMove  frame height autoWait
   .short  SCRIPT_ENUM_CurtainMove
   .long \frame
   .long \height
+  .long   \autoWait
   .endm
 
 #pragma mark [>Stage Command
@@ -178,18 +189,21 @@
 /**
  * @brief ステージ：舞台のスクロール
  *
- * #param_num 2
+ * #param_num 3
  * @param frame フレーム数
  * @param pos   X座標
+ * @param autoWait 自動フレームウェイト
  *
  * #param VALUE_INT frame
  * #param VALUE_INT posX
+ * #param COMBOBOX_TEXT ON OFF
  */
 //======================================================================
-  .macro  ComStageMove  frame pos
+  .macro  ComStageMove  frame pos autoWait
   .short  SCRIPT_ENUM_StageMove
   .long \frame
   .long \pos
+  .long   \autoWait
   .endm
 
 //======================================================================
@@ -274,46 +288,52 @@
 /**
  * @brief ポケモン：移動
  *
- * #param_num 3
+ * #param_num 4
  * @param pokeNo  ポケモン番号(-1で事前登録対象)
  * @param frame フレーム数
  * @param pos   座標
+ * @param autoWait 自動フレームウェイト
  *
  * #param VALUE_INT pokeNo
  * #param VALUE_INT frame
  * #param VALUE_VECFX32 posX posY posZ
+ * #param COMBOBOX_TEXT ON OFF
  */
 //======================================================================
-  .macro  ComPokeMove pokeNo  frame posX  posY  posZ
+  .macro  ComPokeMove pokeNo  frame posX  posY  posZ autoWait
   .short  SCRIPT_ENUM_PokeMove
   .long \pokeNo
   .long \frame
   .long \posX
   .long \posY
   .long \posZ
-  .endm
+  .long   \autoWait
+ .endm
 
 //======================================================================
 /**
  * @brief ポケモン：移動(相対座標)
  *
- * #param_num 3
+ * #param_num 4
  * @param pokeNo  ポケモン番号(-1で事前登録対象)
  * @param frame フレーム数
  * @param offset  オフセット
+ * @param autoWait 自動フレームウェイト
  *
  * #param VALUE_INT pokeNo
  * #param VALUE_INT frame
  * #param VALUE_VECFX32 offsetX offsetY offsetZ
+ * #param COMBOBOX_TEXT ON OFF
  */
 //======================================================================
-  .macro  ComPokeMoveOffset pokeNo  frame offsetX offsetY offsetZ
+  .macro  ComPokeMoveOffset pokeNo  frame offsetX offsetY offsetZ autoWait
   .short  SCRIPT_ENUM_PokeMoveOffset
   .long \pokeNo
   .long \frame
   .long \offsetX
   .long \offsetY
   .long \offsetZ
+  .long   \autoWait
   .endm
 
 //======================================================================
@@ -449,63 +469,72 @@
 /**
  * @brief ポケモンアクション：跳ねる
  *
- * #param_num 4
+ * #param_num 5
  * @param pokeNo  ポケモン番号(-1で事前登録対象)
  * @param interval  間隔
  * @param repeat  回数
  * @param height  高さ
+ * @param autoWait 自動フレームウェイト
  *
  * #param VALUE_INT pokeNo
  * #param VALUE_INT interval
  * #param VALUE_INT repeat
  * #param VALUE_FX32
+ * #param COMBOBOX_TEXT ON OFF
  */
 //======================================================================
-  .macro  ComPokeActionJump pokeNo  interval  repeat  height
+  .macro  ComPokeActionJump pokeNo  interval  repeat  height autoWait
   .short  SCRIPT_ENUM_PokeActionJump
   .long \pokeNo
   .long \interval
   .long \repeat
   .long \height
+  .long   \autoWait
   .endm
 
 //======================================================================
 /**
  * @brief ポケモンアクション：回る
  *
- * #param_num 4
+ * #param_num 5
  * @param pokeNo  ポケモン番号(-1で事前登録対象)
  * @param frame   フレーム数
  * @param angle   開始角度(360度計算
  * @param angle   回転角度(マイナスで逆回転・720で2回転
+ * @param autoWait 自動フレームウェイト
  *
  * #param VALUE_INT pokeNo
  * #param VALUE_INT frame
  * #param VALUE_INT startAngle
  * #param VALUE_INT rotateAngle
+ * #param COMBOBOX_TEXT ON OFF
  */
 //======================================================================
-  .macro  ComPokeActionRotate pokeNo  frame  startAngle rotateAngle
+  .macro  ComPokeActionRotate pokeNo  frame  startAngle rotateAngle autoWait
   .short  SCRIPT_ENUM_PokeActionRotate
   .long \pokeNo
   .long \frame
   .long \startAngle
   .long \rotateAngle
+  .long   \autoWait
   .endm
 
 //======================================================================
 /**
  * @brief ポケモンアクション：トップに寄る
  *
- * #param_num 1
+ * #param_num 2
  * @param frame   フレーム数
+ * @param autoWait 自動フレームウェイト
  *
  * #param VALUE_INT frame
+ * #param COMBOBOX_TEXT ON OFF
  */
 //======================================================================
-  .macro  ComPokeActionComeNearToTop frame
+  .macro  ComPokeActionComeNearToTop frame autoWait
   .short  SCRIPT_ENUM_PokeActionComeNearToTop
   .long \frame
+  .long   \autoWait
   .endm
   
 #pragma mark [>Pokemon Manage Command

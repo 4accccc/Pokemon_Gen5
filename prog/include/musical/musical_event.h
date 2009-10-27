@@ -8,5 +8,8 @@
  * ÉÇÉWÉÖÅ[ÉãñºÅFMUSICAL_
  */
 //======================================================================
+#pragma once
+
+typedef struct _MUSICAL_EVENT_WORK MUSICAL_EVENT_WORK;
 
 extern GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const BOOL isComm );
