@@ -35,6 +35,7 @@
 
 #include "app/itemuse.h"
 #include "savedata/mystatus.h"
+#include "savedata/encount_sv.h"
 
 #include "system/main.h"			//GFL_HEAPID_APP参照
 
@@ -108,6 +109,8 @@ static BOOL _keyChangeItemCheck(FIELD_ITEMMENU_WORK* pWork);
 static BOOL _keyMoveCheck(FIELD_ITEMMENU_WORK* pWork);
 static BOOL _itemMovePositionTouchItem(FIELD_ITEMMENU_WORK* pWork);
 static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork);
+static void _itemInnerUse( FIELD_ITEMMENU_WORK* pWork );
+static void _itemInnerUseWait( FIELD_ITEMMENU_WORK* pWork );
 static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork);
 static void _itemSelectState(FIELD_ITEMMENU_WORK* pWork);
 static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork);
@@ -689,6 +692,120 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
   }
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  スプレー使用チェック
+ *
+ *	@param	u16 item_id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL _check_spray( u16 item_id )
+{
+  return ( item_id == ITEM_GOORUDOSUPUREE ||
+      item_id == ITEM_SIRUBAASUPUREE ||
+      item_id == ITEM_MUSIYOKESUPUREE  );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  バッグ内で使うアイテムか判定
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *
+ *	@retval TURE:バッグ内で使うアイテム
+ */
+//-----------------------------------------------------------------------------
+static BOOL BAG_IsInnerItem( u16 item_id )
+{
+  // スプレー
+  if(  _check_spray( item_id ) )
+  {
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  バッグ内で使うアイテム処理
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _itemInnerUse( FIELD_ITEMMENU_WORK* pWork )
+{
+  // スプレー
+  if( _check_spray( pWork->ret_item ) )
+  {
+    SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( pWork->gamedata );
+    ENC_SV_PTR encsv = EncDataSave_GetSaveDataPtr( save );
+
+    // 使用チェック
+    if( EncDataSave_CanUseSpray( encsv ) )
+    {
+      u8 count = ITEM_GetParam( pWork->ret_item, ITEM_PRM_ATTACK, pWork->heapID );
+
+      // スプレー処理
+      EncDataSave_SetSprayCnt( encsv, count );
+
+      // 手持ちからひとつ削除
+      MYITEM_SubItem( pWork->pMyItem, pWork->ret_item, 1, pWork->heapID );
+
+      // つかった
+      GFL_MSG_GetString( pWork->MsgManager, msg_bag_066, pWork->pStrBuf );
+      WORDSET_RegisterPlayerName(pWork->WordSet, 0,  pWork->mystatus );
+      WORDSET_RegisterItemName(pWork->WordSet, 1,  pWork->ret_item );
+      WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+      ITEMDISP_ItemInfoWindowDisp( pWork );
+
+      // @TODO スプレー音が見当たらないのでとりあえずテキトーな音
+      GFL_SOUND_PlaySE( SE_BAG_DECIDE );
+    }
+    else
+    {
+      // つかえなかった
+      GFL_MSG_GetString( pWork->MsgManager, msg_bag_067, pWork->pStrBuf );
+      WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+      ITEMDISP_ItemInfoWindowDisp( pWork );
+    }
+
+    _CHANGE_STATE(pWork,_itemInnerUseWait);
+  }
+  else
+  {
+    GF_ASSERT(0);
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アイテム使用メッセージウェイト
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _itemInnerUseWait( FIELD_ITEMMENU_WORK* pWork )
+{
+  if(!ITEMDISP_MessageEndCheck(pWork)){
+    return;
+  }
+  
+  // 入力待ち
+  if( ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ) || GFL_UI_TP_GetTrg() )
+  {
+    GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+
+    _CHANGE_STATE(pWork,_itemKindSelectMenu);
+  }
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   アイテムを選択してどういう動作を行うかきいているところ
@@ -734,6 +851,7 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     else if(BAG_MENU_TOUROKU==pWork->ret_code2){  //とうろく
       GFL_SOUND_PlaySE( SE_BAG_REGIST_Y );
         // @TODO 登録処理
+        // @TODO なくなる？
       _CHANGE_STATE(pWork, _itemKindSelectMenu);
     }
     else if(pWork->ret_item == ITEM_TAUNMAPPU){
@@ -748,9 +866,18 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       pWork->ret_code = BAG_NEXTPROC_PALACEJUMP;  //@TODO 仮 パレスへゴー
       _CHANGE_STATE(pWork,NULL);
     }
-    else if(BAG_MENU_TSUKAU==pWork->ret_code2){
-      pWork->ret_code = BAG_NEXTPROC_ITEMUSE;  //つかう
-      _CHANGE_STATE(pWork,NULL);
+    else if(BAG_MENU_TSUKAU==pWork->ret_code2){ //つかう
+      // バッグ内で使うアイテム判定
+      if( BAG_IsInnerItem( pWork->ret_item ) )
+      {
+        _CHANGE_STATE(pWork,_itemInnerUse); //メッセージウェイトして通常メニューにもどる
+      }
+      else
+      {
+        // 通常の「つかう」はWBではバッグを抜けた後に使う処理
+        pWork->ret_code = BAG_NEXTPROC_ITEMUSE;  
+        _CHANGE_STATE(pWork,NULL);
+      }
     }
     else if(BAG_MENU_URU==pWork->ret_code2){ //うる
       pWork->ret_code = BAG_NEXTPROC_RETURN;
@@ -2235,7 +2362,8 @@ static int Bag_MenuUse( FIELD_ITEMMENU_WORK * pWork )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-#if 1
+
+#if 0
 
 int (*MenuFuncTbl[])( FIELD_ITEMMENU_WORK *pWork)={
   //Bag_MenuUse,		// つかう
@@ -2256,6 +2384,10 @@ int (*MenuFuncTbl[])( FIELD_ITEMMENU_WORK *pWork)={
   //Bag_MenuUse,		// とめる
 };
 
+#endif 
+
+#if 1
+
 static BOOL BAGMAIN_NPlanterUseCheck( u16 pocket, u16 item )
 {
   if( pocket == BAG_POKE_NUTS ||
@@ -2271,6 +2403,7 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
   void * itemdata;
   u8	pocket;
   ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
+
   if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
     return;
   }
@@ -2278,9 +2411,11 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
   itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
   pocket   = pWork->pocketno;
 
+#if 0
   for(i=0;i<BAG_MENUTBL_MAX;i++){
     pWork->menu_func[i] = NULL;
   }
+#endif
 
   // フィールド
   if( pWork->mode == BAG_MODE_FIELD ){
@@ -2354,12 +2489,14 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
   OS_Printf("tbl[BAG_MENU_SUB]=%d\n",   tbl[BAG_MENU_SUB]);
   OS_Printf("tbl[BAG_MENU_MOVE]=%d\n",   tbl[BAG_MENU_ITEMMOVE]);
 
+#if 0
   for(i=0;i<BAG_MENUTBL_MAX;i++){
     if(tbl[i]!=255){
       pWork->menu_func[i] = MenuFuncTbl[tbl[i]];
     }
     OS_Printf("menu_func[%d]=%08x\n", i,pWork->menu_func[i]);
   }
+#endif
 
   GFL_HEAP_FreeMemory( itemdata );
 }

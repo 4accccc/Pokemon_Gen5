@@ -50,7 +50,7 @@ typedef struct {
   // [IN] 初期化時に外部から受け渡されるメンバ
 //  GMEVENT           * p_event;
 //  FIELDMAP_WORK     * p_fieldmap;
-  GAMEDATA          * p_gamedata;   ///< Yボタン登録に使用
+  GAMEDATA          * p_gamedata;   ///< Yボタン登録 + バッグ内使用アイテム（スプレーなど） に使用
   CONFIG            * p_config;    
   MYSTATUS          * p_mystatus;
   BAG_CURSOR        * p_bagcursor;
