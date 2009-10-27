@@ -193,6 +193,3 @@
 "ncastle07.bin"
 "ncastle08.bin"
 "palacefield.bin"
-"soccer01.bin"
-"live01.bin"
-"ive02.bin"
