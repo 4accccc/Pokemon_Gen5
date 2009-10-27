@@ -825,7 +825,10 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
 
   FIELD_PLACE_NAME_Draw( fieldWork->placeNameSys );
   
+	MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);
 	fldmap_G3D_Draw( fieldWork );
+	MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
+
 	GFL_CLACT_SYS_Main(); // CLSYSÉÅÉCÉì
   
 
