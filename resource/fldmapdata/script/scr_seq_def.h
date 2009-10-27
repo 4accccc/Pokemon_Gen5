@@ -4412,3 +4412,14 @@
   .short  EV_SEQ_INTRUDE_MINIMONO_SETTING
   .endm
 
+//--------------------------------------------------------------
+/**
+ * 侵入コマンド　ミッション開始
+ */
+//--------------------------------------------------------------
+#define _INTRUDE_MISSION_START() _ASM_INTRUDE_MISSION_START
+
+  .macro  _ASM_INTRUDE_MISSION_START
+  .short  EV_SEQ_INTRUDE_MISSION_START
+  .endm
+

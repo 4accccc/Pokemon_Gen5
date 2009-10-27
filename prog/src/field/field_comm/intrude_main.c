@@ -26,6 +26,7 @@
 #include "field/zonedata.h"
 #include "intrude_field.h"
 #include "field/field_const.h"
+#include "intrude_mission.h"
 
 
 //==============================================================================
@@ -184,6 +185,8 @@ void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm)
   
   //話しかけお断りの返事が貯まっているなら返事を送信する
   Intrude_CheckTalkAnswerNG(intcomm);
+  //ミッション送信リクエストがあれば送信
+  MISSION_SendUpdate(intcomm, &intcomm->mission);
   //ビンゴの送信リクエストがあれば送信
   Bingo_SendUpdate(intcomm, Bingo_GetBingoSystemWork(intcomm));
 }
@@ -691,4 +694,28 @@ void Intrude_GetPalaceTownRandPos(int town_tblno, VecFx32 *vec)
   vec->y = PalaceTownData[town_tblno].warp_pos[rand_no].y * FX32_ONE;
   vec->z = GRID_TO_FX32( PalaceTownData[town_tblno].warp_pos[rand_no].gz );
   GF_ASSERT(vec->x != 0 || vec->y != 0 || vec->z != 0); //全部0は設定し忘れ
+}
+
+//==================================================================
+/**
+ * 侵入通信が正常に繋がっているか調べる
+ *
+ * @param   game_comm		
+ *
+ * @retval  INTRUDE_COMM_SYS_PTR	繋がっているなら intcomm
+ * @retval  INTRUDE_COMM_SYS_PTR	繋がっていないなら NULL
+ *
+ * 通信相手の返事待ち、親の返事待ち、などしている時に、途中でエラーが発生していないか
+ * 監視する処理を共通化。
+ */
+//==================================================================
+INTRUDE_COMM_SYS_PTR Intrude_Check_CommConnect(GAME_COMM_SYS_PTR game_comm)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(game_comm);
+  
+  if(NetErr_App_CheckError() == TRUE || GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION 
+      || GameCommSys_CheckSystemWaiting(game_comm) == TRUE || intcomm == NULL){
+    return NULL;
+  }
+  return intcomm;
 }

@@ -61,6 +61,9 @@ void MINIMONO_AddMMdl(FIELDMAP_WORK *fieldWork, u16 grid_x, u16 grid_z, fx32 fx_
   zone_id = FIELDMAP_GetZoneID( fieldWork );
   
   head = data_MMdlHeader;
+  if(GFUser_GetPublicRand0(1) == 0){
+    head.obj_code = WHITEMONOLITH;
+  }
   grid_pos = (MMDL_HEADER_GRIDPOS *)head.pos_buf;
   
   grid_pos->gx = grid_x;

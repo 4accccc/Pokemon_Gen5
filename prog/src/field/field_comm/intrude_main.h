@@ -87,6 +87,7 @@ extern void Intrude_SetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int net_id, INTR
 extern INTRUDE_TALK_STATUS Intrude_GetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm);
 extern int Intrude_GetPalaceTownZoneID(int town_tblno);
 extern void Intrude_GetPalaceTownRandPos(int town_tblno, VecFx32 *vec);
+extern INTRUDE_COMM_SYS_PTR Intrude_Check_CommConnect(GAME_COMM_SYS_PTR game_comm);
 
 //==============================================================================
 //  ÉfÅ[É^

@@ -606,7 +606,7 @@
 
   //êNì¸ä÷òA
   DEF_CMD( EvCmdIntrudeMinimonoSetting, EV_SEQ_INTRUDE_MINIMONO_SETTING )
-  NO_CMD()
+  DEF_CMD( EvCmdIntrudeMissionStart, EV_SEQ_INTRUDE_MISSION_START )
   NO_CMD()
   NO_CMD()
   

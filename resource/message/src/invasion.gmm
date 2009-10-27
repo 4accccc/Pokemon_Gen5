@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-22T15:21:02"/>
+	<create user="matsuda" host="W00142" date="2009-10-26T21:04:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="139"/>
+		<id position="0" width="161"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -268,7 +268,7 @@
 		<band id="2" index="2" style="0000" width="691"/>
 		<band id="3" index="3" style="0000" width="691"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -485,6 +485,45 @@
 		<comment>通信接続時</comment>
 		<language name="JPN" width="256">つうしん　せつぞく　しました</language>
 		<language name="JPN_KANJI" width="256">CONNECTION</language>
+	</row>
+
+	<row id="msg_invasion_mission_sys000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">ミッションの　じゅしんが　できませんでした</language>
+		<language name="JPN_KANJI" width="256">ミッションの　受信が　出来ませんでした</language>
+	</row>
+
+	<row id="msg_invasion_mission_sys001" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]が　ミッションたっせい！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]が　ミッション達成！</language>
+	</row>
+
+	<row id="msg_invasion_mission_sys002" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">ミッションしっぱい</language>
+		<language name="JPN_KANJI" width="256">ミッション失敗</language>
+	</row>
+
+	<row id="msg_invasion_mission000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">げんざい　ミッションは　ありません</language>
+		<language name="JPN_KANJI" width="256">現在　ミッションは　ありません</language>
+	</row>
+
+	<row id="msg_invasion_mission001" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">WHITEミッション：
+６０びょうで　[1:00:トレーナー名:0]　と　であい　たすけよ</language>
+		<language name="JPN_KANJI" width="256">WHITEミッション：
+６０秒で　[1:00:トレーナー名:0]　と　出会い　助けよ</language>
+	</row>
+
+	<row id="msg_invasion_mission001_01" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">BLACKミッション：
+６０びょうで　[1:00:トレーナー名:0]　と　であい　たすけよ</language>
+		<language name="JPN_KANJI" width="256">BLACKミッション：
+６０秒で　[1:00:トレーナー名:0]　と　出会い　助けよ</language>
+	</row>
+
+	<row id="msg_invasion_mission001_02" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]を　かいふくさせた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]を　回復させた！</language>
 	</row>
 
 	<flowchart-group-list>

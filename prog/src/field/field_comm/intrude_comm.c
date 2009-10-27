@@ -23,6 +23,7 @@
 #include "savedata/mystatus.h"
 #include "bingo_system.h"
 #include "intrude_field.h"
+#include "intrude_mission.h"
 
 
 //--------------------------------------------------------------
@@ -121,6 +122,7 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
   intcomm->member_num = 1;
   Intrude_InitTalkWork(intcomm, INTRUDE_NETID_NULL);
   Bingo_InitBingoSystem(Bingo_GetBingoSystemWork(intcomm));
+  MISSION_Init(&intcomm->mission);
 
   GAMEDATA_SetIntrudeMyID(gamedata, 0);
 

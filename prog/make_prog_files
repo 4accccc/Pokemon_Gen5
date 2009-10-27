@@ -103,6 +103,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/field_comm/intrude_comm_command.c \
         field/field_comm/intrude_main.c \
         field/field_comm/intrude_work.c \
+        field/field_comm/intrude_mission.c \
         field/field_comm/bingo_system.c \
         net_app/union/comm_player.c \
 				field/field_comm/palace_sys.c \

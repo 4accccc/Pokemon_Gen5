@@ -15,6 +15,7 @@
 #include "field/zonedata.h"
 #include "bingo_system.h"
 #include "intrude_main.h"
+#include "intrude_mission.h"
 
 
 //==============================================================================
@@ -32,6 +33,8 @@ static void _IntrudeRecv_BingoIntrusion(const int netID, const int size, const v
 static void _IntrudeRecv_BingoIntrusionAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_ReqBingoIntrusionParam(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_BingoIntrusionParam(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_MissionReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_MissionData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 //==============================================================================
@@ -50,6 +53,8 @@ const NetRecvFuncTable Intrude_CommPacketTbl[] = {
   {_IntrudeRecv_BingoIntrusionAnswer, NULL},   //INTRUDE_CMD_BINGO_INTRUSION_ANSWER
   {_IntrudeRecv_ReqBingoIntrusionParam, NULL}, //INTRUDE_CMD_REQ_BINGO_INTRUSION_PARAM
   {_IntrudeRecv_BingoIntrusionParam, NULL},    //INTRUDE_CMD_BINGO_INTRUSION_PARAM
+  {_IntrudeRecv_MissionReq, NULL},             //INTRUDE_CMD_MISSION_REQ
+  {_IntrudeRecv_MissionData, NULL},            //INTRUDE_CMD_MISSION_DATA
 };
 SDK_COMPILER_ASSERT(NELEMS(Intrude_CommPacketTbl) == INTRUDE_CMD_NUM);
 
@@ -238,6 +243,11 @@ BOOL IntrudeSend_Profile(INTRUDE_COMM_SYS_PTR intcomm)
   if(ret == TRUE){
     intcomm->profile_req = FALSE;
     OS_TPrintf("自分プロフィール送信\n");
+    if(GFL_NET_IsParentMachine() == TRUE){
+      //親の場合、プロフィールを要求されていたという事は途中参加者がいるので
+      //現在のミッションも送信する
+      intcomm->mission_send_req = TRUE;
+    }
   }
   else{
     OS_TPrintf("自分プロフィール送信失敗\n");
@@ -503,7 +513,7 @@ static void _IntrudeRecv_BingoIntrusionParam(const int netID, const int size, co
   BINGO_SYSTEM *bingo = Bingo_GetBingoSystemWork(intcomm);
   const BINGO_INTRUSION_PARAM *inpara = pData;
   
-  GFL_STD_MemCopy(inpara, &bingo->intrusion_param, size);
+  GFL_STD_MemCopy(inpara, &bingo->intrusion_param, sizeof(BINGO_INTRUSION_PARAM));
   OS_TPrintf("ビンゴバトル乱入パラメータ受信 net_id = %d\n", netID);
 }
 
@@ -519,5 +529,97 @@ BOOL IntrudeSend_BingoBattleIntrusionParam(BINGO_SYSTEM *bingo, int send_net_id)
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
     INTRUDE_CMD_BINGO_INTRUSION_PARAM, sizeof(BINGO_INTRUSION_PARAM), &bingo->intrusion_param, 
     FALSE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：ミッション要求
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_MissionReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  const MISSION_REQ *req = pData;
+  
+  if(GFL_NET_IsParentMachine() == FALSE){
+    return;
+  }
+  
+  OS_TPrintf("受信：ミッション要求 net_id=%d\n", netID);
+  MISSION_SetEntry(intcomm, &intcomm->mission, req, netID);
+  //要求されたからには今のミッションを返してあげる。発動後の途中乱入かもしれないので。
+  intcomm->mission_send_req = TRUE;
+}
+
+//==================================================================
+/**
+ * データ送信：ミッション要求
+ *
+ * @param   intcomm         
+ * @param   monolith_type		MONOLITH_TYPE_???
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_MissonReq(INTRUDE_COMM_SYS_PTR intcomm, int monolith_type)
+{
+  MISSION_REQ req;
+  
+  req.monolith_type = monolith_type;
+  return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
+    INTRUDE_CMD_MISSION_REQ, sizeof(MISSION_REQ), &req);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：ミッションデータ
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_MissionData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  const MISSION_DATA *mdata = pData;
+  
+  MISSION_SetMissionData(&intcomm->mission, mdata);
+}
+
+//==================================================================
+/**
+ * データ送信：ミッションデータ
+ *
+ * @param   intcomm         
+ * @param   mission         ミッションデータ
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_MissonData(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_DATA *mission)
+{
+  BOOL ret;
+  
+  ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
+    INTRUDE_CMD_MISSION_DATA, sizeof(MISSION_DATA), mission);
+  if(ret == TRUE){
+    OS_TPrintf("送信：ミッションデータ mission_no=%d\n", mission->mission_no);
+  }
+  return ret;
 }
 
