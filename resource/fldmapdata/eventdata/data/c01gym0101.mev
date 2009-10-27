@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/26 14:39:04
+#save date:2009/10/26 20:06:29
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01gym0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/26 14:39:04
+#save date:2009/10/26 20:06:29
 2
 #hold event type:
 1
@@ -763,7 +763,7 @@ DIR_RIGHT
 #Move Limit Z Number
 0
 #position
--104 0 -264
+-104 0 -232
 #event number: 26
 #type
 1
@@ -792,12 +792,12 @@ DIR_LEFT
 #Move Limit Z Number
 0
 #position
--8 0 -104
+-8 0 -72
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/26 14:39:04
+#save date:2009/10/26 20:06:29
 2
 #hold event type:
 1
@@ -829,7 +829,7 @@ SCRID_BG_C01GYM0101_POKEZOU
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/26 14:39:04
+#save date:2009/10/26 20:06:29
 2
 #hold event type:
 1
@@ -1529,7 +1529,7 @@ LOCALWORK14
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/26 14:39:04
+#save date:2009/10/26 20:06:29
 2
 #hold event type:
 1

@@ -12,7 +12,7 @@
 #define DOOR_ID_C03_C03P10_EXIT01         7
 #define DOOR_ID_C03_C03P03_EXIT01         8
 #define DOOR_ID_C03_C03P09_EXIT01         9
-#define DOOR_ID_C03_H01_EXIT01           10
+#define DOOR_ID_C03_H01R0201_EXIT01      10
 #define DOOR_ID_C03_C03PC0101_EXIT01     11
 
 #endif //ZONE_C03_EVD_H

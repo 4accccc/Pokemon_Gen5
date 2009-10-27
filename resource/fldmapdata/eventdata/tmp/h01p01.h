@@ -5,9 +5,9 @@
 #define DOOR_ID_H01P01_D02R0101_EXIT01    0
 #define DOOR_ID_H01P01_D02R0101_EXIT02    1
 #define DOOR_ID_H01P01_D02R0101_EXIT03    2
-#define DOOR_ID_H01P01_H01_EXIT02         3
-#define DOOR_ID_H01P01_H01_EXIT03         4
-#define DOOR_ID_H01P01_H01_EXIT01         5
+#define DOOR_ID_H01P01_H01R0101_EXIT02    3
+#define DOOR_ID_H01P01_H01R0101_EXIT03    4
+#define DOOR_ID_H01P01_H01R0101_EXIT01    5
 
 #endif //ZONE_H01P01_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h01p01.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
