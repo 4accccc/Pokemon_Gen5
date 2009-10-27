@@ -1095,7 +1095,11 @@ void TimeEventFlagClear( EVENTWORK * eventwork )
 u16 SCRIPT_GetTrainerID_ByScriptID( u16 scr_id )
 {
 	if( scr_id < ID_TRAINER_2VS2_OFFSET ){
+#if 0
 		return (scr_id - ID_TRAINER_OFFSET + 1);		//1オリジン
+#else //wb
+		return (scr_id - ID_TRAINER_OFFSET);		//0オリジンになりました。
+#endif
 	}else{
 		return (scr_id - ID_TRAINER_2VS2_OFFSET + 1);		//1オリジン
 	}
