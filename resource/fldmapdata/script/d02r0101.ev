@@ -27,6 +27,7 @@ _EVENT_DATA		ev_d02r0101_leader3_01
 _EVENT_DATA		ev_pos_d02r0101_stop
 _EVENT_DATA		ev_d02r0101_leader2_01
 _EVENT_DATA		ev_d02r0101_hakaim_01
+_EVENT_DATA		ev_init_d02r0101
 _EVENT_DATA_END
 
 
@@ -37,30 +38,42 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
+/*  FIELD_INIT_LABEL						                  */
+/**************************************************************/
+INIT_EVENT_START	ev_init_d02r0101
+	IF $WK_SCENE_D02R0101 == 1 THEN
+		_OBJ_POS_CHANGE( D02R0101_LEADER3_01, 74, 0, 27, DIR_DOWN )
+	ELSE
+	
+	ENDIF
+
+INIT_EVENT_END
+
+/**************************************************************/
 /*  D02R0101 SPORTSMの会話用イベントスクリプト                */
 /**************************************************************/
-EVENT_START    ev_d02r0101_sportsm_01
+EVENT_START		ev_d02r0101_sportsm_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d02r0101_sportsm_01 )
 EVENT_END
  
 /**************************************************************/
 /*  D02R0101 MOUNTMANの会話用イベントスクリプト               */
 /**************************************************************/
-EVENT_START    ev_d02r0101_mountman_01
+EVENT_START		ev_d02r0101_mountman_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d02r0101_mountain_01 )
 EVENT_END
 
 /**************************************************************/
 /*  D02R0101 GIRL1の会話用イベントスクリプト                  */
 /**************************************************************/
-EVENT_START    ev_d02r0101_assistantw_01
+EVENT_START		ev_d02r0101_assistantw_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d02r0101_assistantw_01 )
 EVENT_END
 
 /**************************************************************/
 /*  D02R0101 SCENE_CHANGE									  */
 /**************************************************************/
-EVENT_START    ev_d02r0101_scene_change_01
+EVENT_START		ev_d02r0101_scene_change_01
 	
 	//アーティ：自機を見る
 	_OBJ_ANIME( D02R0101_LEADER3_01, anm_leader_staywalk )
@@ -102,14 +115,14 @@ _ANIME_LABEL anm_leader_saru
 /**************************************************************/
 /*  D02R0101 ジムリーダーアーティ会話						  */
 /**************************************************************/
-EVENT_START    ev_d02r0101_leader3_01
+EVENT_START		ev_d02r0101_leader3_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d02r0101_leader3_02 )
 EVENT_END
 
 /**************************************************************/
 /*  D02R0101 ジムリーダーアーティストッパー　ＰＯＳ発動		  */
 /**************************************************************/
-EVENT_START    ev_pos_d02r0101_stop
+EVENT_START		ev_pos_d02r0101_stop
 
 	//ローカル変数定義
     DEFINE_LOCAL  POS_X
@@ -245,14 +258,14 @@ _ANIME_LABEL	anm_leader_modoru5
 /**************************************************************/
 /*  D02R0101 ジムリーダーアロエ会話							  */
 /**************************************************************/
-EVENT_START    ev_d02r0101_leader2_01
+EVENT_START		ev_d02r0101_leader2_01
 
 EVENT_END
 
 /**************************************************************/
 /*  D02R0101 プラズマ団員♂会話								  */
 /**************************************************************/
-EVENT_START    ev_d02r0101_hakaim_01
+EVENT_START		ev_d02r0101_hakaim_01
 _TALK_OBJ_START()
 	//団員：気付く
 	_OBJ_ANIME( D02R0101_HAKAIM_01, anm_hakai_kiduku )
@@ -284,8 +297,6 @@ _TALK_OBJ_START()
 	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_hakaim1_02 , D02R0101_HAKAIM_01 )
 	_BALLOONWIN_CLOSE()
 	
-	_FLAG_RESET( FV_D02R0101_LEADER2 )
-	
 	//【仮】アーティ：画面左から現れる　演出仮
 	_OBJ_POS_CHANGE( D02R0101_LEADER3_01, 28, 0, 71, DIR_DOWN )
 	_OBJ_ANIME( D02R0101_LEADER3_01, anm_leader3_deru )
@@ -298,6 +309,7 @@ _TALK_OBJ_START()
 	_OBJ_ANIME_WAIT()
 	
 	//自機名！アーティ！　おつかれさん！！
+	_FLAG_RESET( FV_D02R0101_LEADER2 )
 	_PLAYER_NAME( 0 )
 	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_leader2_01 , D02R0101_LEADER2_01 )
 	_BALLOONWIN_CLOSE()

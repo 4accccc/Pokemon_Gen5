@@ -22,8 +22,24 @@ _EVENT_DATA		ev_t02pc0101_support_01
 _EVENT_DATA		ev_zone_t02pc0101					//現状未使用。field_init_labelとして再利用します。斉藤マ091003
 _EVENT_DATA		ev_t02pc0101_rival_01
 _EVENT_DATA		ev_t02pc0101_shop
+_EVENT_DATA		ev_init_t02pc0101
 _EVENT_DATA_END
 
+
+/************************************************************/
+/*					FIELD_INIT_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_t02pc0101
+	//イベント状況によりOBJの表示位置変更
+	IF $WK_SCENE_T02PC0101 == 1 THEN
+		//博士の案内イベント後
+		//サポート：位置変更
+		_OBJ_POS_CHANGE( T02PC0101_SUPPORT_01, 9, 0, 15, DIR_RIGHT )
+	ELSE
+	
+	ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*     博士によるポケセン案内イベント                         */
