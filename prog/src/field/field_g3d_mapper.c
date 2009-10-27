@@ -32,6 +32,7 @@
 
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
 #include "field/map_matrix.h"   // for MAP_MATRIX_MAX
+#include "map_attr.h" //MAPATTR_IsEnable
 
 //============================================================================================
 /**

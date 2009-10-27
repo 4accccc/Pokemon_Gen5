@@ -18,6 +18,8 @@
 #include "gamesystem/game_event.h"
 #include "eventwork.h"
 
+#include "fldmmdl.h"    //MMDL
+
 #include "scrend_check_work.h"
 
 //======================================================================
