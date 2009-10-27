@@ -36,7 +36,11 @@ enum {
 	NARC_buildmodel_anime_fountain_01_nsbta = 22,
 	NARC_buildmodel_anime_machine_l02_nsbta = 23,
 	NARC_buildmodel_anime_t1_labo_01_nsbca = 24,
-	NARC_buildmodel_anime_trailer_01test_nsbca = 25
+	NARC_buildmodel_anime_time_anime1_nsbtp = 25,
+	NARC_buildmodel_anime_time_anime2_nsbtp = 26,
+	NARC_buildmodel_anime_time_anime3_nsbtp = 27,
+	NARC_buildmodel_anime_time_anime4_nsbtp = 28,
+	NARC_buildmodel_anime_trailer_01test_nsbca = 29
 };
 
 /* NARC_BUILDMODEL_ANIME_NAIX_ */
