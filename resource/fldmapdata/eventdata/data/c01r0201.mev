@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/14 21:09:10
+#save date:2009/10/27 12:27:27
 # linked worldmap file name
-C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01r0401.wms
+C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01r0201.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/14 21:09:10
+#save date:2009/10/27 12:27:27
 2
 #hold event type:
 1
@@ -38,7 +38,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--184 0 184
+-200 0 184
 #event number: 1
 #type
 1
@@ -67,7 +67,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--168 0 184
+-184 0 184
 #event number: 2
 #type
 1
@@ -96,12 +96,12 @@ DIR_LEFT
 #Move Limit Z Number
 0
 #position
--136 0 104
+-88 0 136
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/14 21:09:10
+#save date:2009/10/27 12:27:27
 2
 #hold event type:
 1
@@ -111,7 +111,7 @@ DIR_LEFT
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/14 21:09:10
+#save date:2009/10/27 12:27:27
 2
 #hold event type:
 1
@@ -121,7 +121,7 @@ DIR_LEFT
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/14 21:09:10
+#save date:2009/10/27 12:27:27
 2
 #hold event type:
 1
@@ -135,11 +135,11 @@ ZONE_ID_C01
 #Next Door ID Name
 DOOR_ID_C01_C01R0201_EXIT01
 #Door Direction
-EXIT_DIR_RIGHT
+EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--232 0 152
+-152 0 88
 #event number: 1
 #Door Event Label
 DOOR_ID_C01R0201_C01_EXIT03
@@ -148,11 +148,11 @@ ZONE_ID_C01
 #Next Door ID Name
 DOOR_ID_C01_C01R0201_EXIT01
 #Door Direction
-EXIT_DIR_RIGHT
+EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--232 0 120
+-120 0 88
 #event number: 2
 #Door Event Label
 DOOR_ID_C01R0201_C01_EXIT02
@@ -161,11 +161,11 @@ ZONE_ID_C01
 #Next Door ID Name
 DOOR_ID_C01_C01R0201_EXIT01
 #Door Direction
-EXIT_DIR_RIGHT
+EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--232 0 136
+-136 0 88
 #event number: 3
 #Door Event Label
 DOOR_ID_C01R0201_C01R0202_EXIT01
@@ -178,6 +178,6 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_STAIRS
 #position
--88 0 88
+-120 0 216
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

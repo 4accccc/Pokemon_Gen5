@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/15 14:53:39
+#save date:2009/10/27 12:33:22
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01r0302.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/15 14:53:39
+#save date:2009/10/27 12:33:22
 2
 #hold event type:
 1
@@ -38,7 +38,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--168 0 120
+-136 0 152
 #event number: 1
 #type
 1
@@ -67,7 +67,7 @@ DIR_RIGHT
 #Move Limit Z Number
 0
 #position
--152 0 88
+-104 0 168
 #event number: 2
 #type
 1
@@ -96,7 +96,7 @@ DIR_LEFT
 #Move Limit Z Number
 0
 #position
--136 0 72
+-88 0 184
 #event number: 3
 #type
 1
@@ -125,12 +125,12 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--120 0 184
+-200 0 152
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/15 14:53:39
+#save date:2009/10/27 12:33:22
 2
 #hold event type:
 1
@@ -140,7 +140,7 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/15 14:53:39
+#save date:2009/10/27 12:33:22
 2
 #hold event type:
 1
@@ -150,7 +150,7 @@ DIR_DOWN
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/15 14:53:39
+#save date:2009/10/27 12:33:22
 2
 #hold event type:
 1
@@ -168,6 +168,6 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_STAIRS
 #position
--216 0 72
+-88 0 216
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

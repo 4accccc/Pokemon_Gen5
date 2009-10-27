@@ -1,5 +1,5 @@
 #WorldMap SaveData 
-#save date:2009/07/07 18:33:29
+#save date:2009/10/27 12:31:25
 #Width
 1
 #Height
@@ -10,4 +10,6 @@
 0
 #3dp file names
 C:\home\wb_data3d\field\in01\m_buill01_00_00.3dp
+#block size
+32 32
 #End of WorldMap SaveData
