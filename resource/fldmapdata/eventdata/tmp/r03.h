@@ -16,7 +16,7 @@
 #ifndef ZONE_R03_EVC_H
 #define ZONE_R03_EVC_H
 
-#define R03_OLDWOMAN1                      0
+#define R03_SODATEYA_GRANDPA               0
 #define TR_FUTAGO_01_2                     1
 #define TR_FUTAGO_01                       2
 #define R03_WOMAN3                         3

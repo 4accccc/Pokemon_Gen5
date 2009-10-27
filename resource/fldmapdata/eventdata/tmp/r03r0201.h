@@ -11,5 +11,6 @@
 #ifndef ZONE_R03R0201_EVC_H
 #define ZONE_R03R0201_EVC_H
 
+#define R03R0201_SODATEYA_GRANDMA          0
 
 #endif //ZONE_R03R0201_EVC_H
