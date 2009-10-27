@@ -230,10 +230,10 @@ sub_club_counter_connect:
 
 
   //クラブイベント呼び出し
-  _BLACK_OUT( DISP_FADE_SPEED )
+  _BLACK_OUT( )
 	_DISP_FADE_END_CHECK()
   _WIFI_CLUB_EVENT_CALL()
-	_BLACK_IN( DISP_FADE_SPEED )
+	_BLACK_IN( )
 	_DISP_FADE_END_CHECK()
 
   $reg_return = SEQ_GOODBYE
