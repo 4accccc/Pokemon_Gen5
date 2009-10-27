@@ -11,8 +11,7 @@ extern "C" {
 //=============================================================================
 
 
-#ifndef __DWC_RAPCOMMON_H__
-#define __DWC_RAPCOMMON_H__
+#pragma once
 
 #if GFL_NET_WIFI
 
@@ -20,11 +19,11 @@ extern "C" {
 //==============================================================================
 /**
  * DWCライブラリ初期化
- * @param   GFL_WIFI_FRIENDLIST  ユーザーデータがない場合作成
+ * @param   heapID   ヒープID
  * @retval  DS本体に保存するユーザIDのチェック・作成結果。
  */
 //==============================================================================
-extern int mydwc_init(int heapID);
+extern int mydwc_init(HEAPID heapID);
 
 //==============================================================================
 /**
@@ -53,7 +52,6 @@ extern void mydwc_createUserData( DWCUserData *userdata );
 //==============================================================================
 extern BOOL mydwc_checkMyGSID(void);
 
-#endif //
 #endif //
 
 #ifdef __cplusplus
