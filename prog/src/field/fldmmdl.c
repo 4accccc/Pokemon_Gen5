@@ -4125,20 +4125,21 @@ void MMDL_InitGridPosition( MMDL * mmdl, s16 gx, s16 gy, s16 gz, u16 dir )
 
 //--------------------------------------------------------------
 /**
- * MMDL 動作コード変更
+ * MMDL ヘッダーから座標タイプ、座標、コードを変更
  * @param	mmdl	MMDL *
- * @param	code	MV_RND等
+ * @param	head MMDL_HEADAER
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void MMDL_ChangeMoveCode( MMDL *mmdl, u16 code )
+void MMDL_ChangeMoveParam( MMDL *mmdl, const MMDL_HEADER *head )
 {
 	const MMDLSYS *fos = MMDL_GetMMdlSys( mmdl );
-
+  
 	MMDL_CallMoveDeleteProc( mmdl );
-	MMDL_SetMoveCode( mmdl, code );
+  MMdl_SetHeaderBefore( mmdl, head, NULL );
 	MMdl_InitCallMoveProcWork( mmdl );
 	MMdl_InitMoveProc( fos, mmdl );
+  MMdl_SetHeaderAfter( mmdl, head, NULL );
 }
 
 //--------------------------------------------------------------
