@@ -892,8 +892,8 @@ void CI_pv_disp_HitTableSet( CODEIN_WORK* wk )
 
 #include "msg/msg_code_input.h"
 
-#define	PRINT_COL_BLACK		(GF_PRINTCOLOR_MAKE(15, 13, 2))		// フォントカラー：白
-#define	PRINT_COL_NUM		(GF_PRINTCOLOR_MAKE( 1,  2, 0))		// フォントカラー：黒
+#define	PRINT_COL_BLACK		(GF_PRINTCOLOR_MAKE( 15, 13, 2))		// フォントカラー：白
+#define	PRINT_COL_BUTTON	(PRINTSYS_LSB_Make( 10,  9, 0))		// フォントカラー：黒
 #define PRINT_NUM_CLEAR		(0x00)
 #define PRINT_NUM_CLEAR_2	(0xEE)
 
@@ -1039,7 +1039,7 @@ void CI_pv_FontOam_Create(CODEIN_WORK* wk, int no, int x, int y, int pal_offset)
 		///< FONT_BUTTON は 2dotでかい
 //		GF_BGL_BmpWinInit(&bmpwin);
 		bmp = GFL_BMP_Create(10, 2, GFL_BMP_16_COLOR, HEAPID_CODEIN);
-		PRINTSYS_Print( bmp , 0,0,str,wk->sys.fontHandle );
+		PRINTSYS_PrintColor( bmp , 0,0,str,wk->sys.fontHandle, PRINTSYS_LSB_Make( 15, 14, 0) );
 	}
 
 	pal_id = eID_FNT_OAM;
@@ -1069,12 +1069,16 @@ void CI_pv_FontOam_Create(CODEIN_WORK* wk, int no, int x, int y, int pal_offset)
 	finit.bmp = bmp;
 	finit.x = ox;
 	finit.y = oy;
-	finit.pltt_index = wk->sys.bmpOamPltIdx;
+//	finit.pltt_index = wk->sys.bmpOamPltIdx;
+  finit.pltt_index = wk->sys.resIdx[CIO_RES1_PLT][CIO_RES2_BUTTON];
 	finit.pal_offset = 0;
 	finit.soft_pri = 0;
 	finit.bg_pri = 0;
 	finit.setSerface = CLSYS_DEFREND_MAIN;
 	finit.draw_type = CLSYS_DRAW_MAIN;
+	
+	OS_Printf("bmpOamPltIdx=%d\n",wk->sys.bmpOamPltIdx );
+	OS_Printf("resIdx RES2_BUTTOn=%d\n", wk->sys.resIdx[CIO_RES1_PLT][CIO_RES2_BUTTON]);
 	
 	wk->sys.bmp_obj[ no ] = BmpOam_ActorAdd( wk->sys.bmpoam_sys , &finit );
 	BmpOam_ActorBmpTrans( wk->sys.bmp_obj[ no ] );
