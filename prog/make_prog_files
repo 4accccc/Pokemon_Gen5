@@ -36,14 +36,15 @@ SAVEDATASRC =   savedata/save_tbl.c \
 				savedata/worldtrade_data.c \
 				savedata/regulation.c \
         savedata/gimmickwork.c \
-        savedata/battle_rec.c \
+        savedata/battle_rec.c \ 
         savedata/battle_box_save.c \
         savedata/sodateya_work.c \
         savedata/intrude_save.c \
 				savedata/misc.c \
 				savedata/shortcut.c \
 				savedata/musical_dist_save.c \
-				savedata/zukan_savedata.c
+				savedata/zukan_savedata.c \
+				savedata/encount_sv.c
 
 
 #’ÊM‚Ìí’“

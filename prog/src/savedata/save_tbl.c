@@ -42,6 +42,7 @@
 #include "savedata/shortcut.h"
 #include "savedata/musical_dist_save.h"
 #include "savedata/zukan_savedata.h"
+#include "savedata/encount_sv.h"
 
 //==============================================================================
 //	定数定義
@@ -363,9 +364,12 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		GMDATA_ID_ZUKAN,
 		(FUNC_GET_SIZE)ZukanSave_GetWorkSize,
 		(FUNC_INIT_WORK)ZukanSave_Init,
+	},
+	{	//エンカウント関連セーブデータ
+		GMDATA_ID_ENCOUNT,
+		(FUNC_GET_SIZE)EncDataSave_GetWorkSize,
+		(FUNC_INIT_WORK)EncDataSave_Init,
 	}
-
-
 };
 
 //--------------------------------------------------------------

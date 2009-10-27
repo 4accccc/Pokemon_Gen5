@@ -81,6 +81,7 @@ enum{
 	GMDATA_ID_INTRUDE,          // 侵入
 	GMDATA_ID_SHORTCUT,	        // Yボタン登録
 	GMDATA_ID_ZUKAN,	          // ポケモン図鑑
+	GMDATA_ID_ENCOUNT,	        // エンカウント関連セーブデータ
   
 	GMDATA_ID_MAX,
 };
