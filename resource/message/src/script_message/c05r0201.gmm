@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-09T12:56:37"/>
+	<create user="masafumi_saitou" host="W00178" date="2009-10-27T13:14:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -340,10 +340,14 @@
 それは　すばらしいこと　なんじゃ！</language>
 	</row>
 
-	<row id="msg_c05r0201_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c05r0201_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♀
 ・仮メッセージ
-・アイテム入手条件を満たしていないとき</comment>
+・アイテム入手条件を満たしていないとき
+
+※現状イベントで配布できる量の
+アクセサリーがないため、一時凍結
+091027斉藤マ</comment>
 		<attribute name="キャラ指定">WOMAN2</attribute>
 		<language name="JPN" width="256">アクセサリーを　ながめているだけで
 シアワセ気分に　なれるでしょ？</language>
@@ -351,7 +355,7 @@
 シアワセ気分に　なれるでしょ？</language>
 	</row>
 
-	<row id="msg_c05r0201_woman2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c05r0201_woman2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♀
 ・仮メッセージ
 ・10種以上</comment>
@@ -365,7 +369,7 @@
 じゃあ　アタシは　これをあげる！</language>
 	</row>
 
-	<row id="msg_c05r0201_woman2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c05r0201_woman2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♀
 ・仮メッセージ
 ・50種以上</comment>
@@ -379,7 +383,7 @@
 じゃあ　アタシは　これをあげる！</language>
 	</row>
 
-	<row id="msg_c05r0201_woman2_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c05r0201_woman2_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♀
 ・仮メッセージ
 ・100種以上</comment>
@@ -393,7 +397,7 @@
 じゃあ　アタシは　これをあげる！</language>
 	</row>
 
-	<row id="msg_c05r0201_woman2_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c05r0201_woman2_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♀
 ・仮メッセージ
 ・150種以上</comment>
@@ -407,7 +411,7 @@
 じゃあ　アタシは　これをあげる！</language>
 	</row>
 
-	<row id="msg_c05r0201_woman2_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c05r0201_woman2_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♀
 ・仮メッセージ
 ・200種以上</comment>
