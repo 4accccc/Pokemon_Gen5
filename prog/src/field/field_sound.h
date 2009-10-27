@@ -14,7 +14,6 @@
 #include "gamesystem/game_data.h"
 
 #include "sound/pm_sndsys.h"
-#include "sound/wb_sound_data.sadl"
 
 #include "field_sound_proc.h"
 
@@ -51,6 +50,9 @@ extern void FIELD_SOUND_ChangeBGMActionVolume( int vol );
 //フィールドBGM BGMナンバー
 extern u32 FIELD_SOUND_GetFieldBGMNo(
     GAMEDATA *gdata, PLAYER_MOVE_FORM form, u32 zone_id );
+
+//トレーナー視線BGMナンバー
+extern u32 FIELD_SOUND_GetTrainerEyeBgmNo( u32 trtype );
 
 //フィールドBGM BGM退避、復帰
 extern void FIELD_SOUND_PushBGM( FIELD_SOUND *fsnd );

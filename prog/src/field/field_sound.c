@@ -10,7 +10,6 @@
 #include "system/gfl_use.h"
 
 #include "sound/pm_sndsys.h"
-#include "sound/wb_sound_data.sadl"
 
 #include "fieldmap.h"
 #include "field/zonedata.h"
@@ -356,6 +355,37 @@ u32 FIELD_SOUND_GetFieldBGMNo(
   }
   
   return( fsnd_GetMapBGMIndex(gdata,zone_id) );
+}
+
+//======================================================================
+//  トレーナー視線BGM
+//======================================================================
+//--------------------------------------------------------------
+/// 視線BGM対応データ
+//--------------------------------------------------------------
+#include "tr_tool/trtype_def.h"
+#include "../../../resource/trtype_bgm/trtype_bgm.cdat"
+
+//--------------------------------------------------------------
+/**
+ * トレーナー視線曲を再生します。
+ * @param trtype トレーナータイプ
+ * @retval u32 BGM番号
+ */
+//--------------------------------------------------------------
+u32 FIELD_SOUND_GetTrainerEyeBgmNo( u32 trtype )
+{
+  int i = 0;
+  while( DATA_TrainerTypeToEyeBGMNo[i][0] != TRTYPE_MAX ){
+    if( DATA_TrainerTypeToEyeBGMNo[i][0] == trtype ){
+      return( DATA_TrainerTypeToEyeBGMNo[i][1]  );
+    }
+    i++;
+  }
+  
+  OS_Printf( "ERROR:UNKNOW TRAINER TYPE BGM\n" );
+  GF_ASSERT( 0 );
+  return( SEQ_BGM_EYE_01 );
 }
 
 //======================================================================

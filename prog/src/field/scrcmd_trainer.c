@@ -99,16 +99,17 @@ VMCMD_RESULT EvCmdEyeTrainerMoveSet( VMHANDLE *core, void *wk )
   //GMEVENT **ev_eye_move;
   EV_TRAINER_EYE_HITDATA * eye;
 
-  if ( pos == 0 ) {//Ž‹ü0
+  if( pos == 0 ){ //Ž‹ü0
     eye = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
-  } else {
+  }else{
     eye = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER1 );
   }
+  
   eye->ev_eye_move = EVENT_SetTrainerEyeMove( fparam->fieldMap,
       eye->mmdl, FIELDMAP_GetFieldPlayer(fparam->fieldMap),
       eye->dir, eye->range, 0, eye->tr_type, pos );
   
-	return 0;
+	return VMCMD_RESULT_CONTINUE;
 }
 
 //--------------------------------------------------------------
@@ -181,11 +182,12 @@ static BOOL EvWaitTrainer01Move( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GMEVENT_RESULT res0,res1;
-  EV_TRAINER_EYE_HITDATA * eye0 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
-  EV_TRAINER_EYE_HITDATA * eye1 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
+  EV_TRAINER_EYE_HITDATA * eye0 = 
+    SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
+  EV_TRAINER_EYE_HITDATA * eye1 = 
+    SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
 
   ev_eye_move0 = &eye0->ev_eye_move;
-  //ev_eye_move0 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_TCB );
   
   if( *ev_eye_move0 != NULL ){
     res0 = GMEVENT_Run( *ev_eye_move0 );
@@ -194,7 +196,6 @@ static BOOL EvWaitTrainer01Move( VMHANDLE *core, void *wk )
   }
   
   ev_eye_move1 = &eye1->ev_eye_move;
-  //ev_eye_move1 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_TCB );
   
   if( *ev_eye_move1 != NULL ){
     res1 = GMEVENT_Run( *ev_eye_move1 );
@@ -232,13 +233,13 @@ VMCMD_RESULT EvCmdEyeTrainerMoveSingle( VMHANDLE *core, void *wk )
 	u16 pos = SCRCMD_GetVMWorkValue( core, work ); //Ž‹üƒf[ƒ^‚Ì0,1‚©H
   
 	if( pos == SCR_EYE_TR_0 ){
-    EV_TRAINER_EYE_HITDATA * eye0 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
+    EV_TRAINER_EYE_HITDATA * eye0 =
+      SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
     ev_eye_move = &eye0->ev_eye_move;
-		//ev_eye_move = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR0_TCB );
 	}else{
-    EV_TRAINER_EYE_HITDATA * eye1 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
+    EV_TRAINER_EYE_HITDATA * eye1 =
+      SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
     ev_eye_move = &eye1->ev_eye_move;
-		//ev_eye_move = SCRIPT_GetMemberWork( sc, ID_EVSCR_TR1_TCB );
 	}
   
 	//“o˜^‚³‚ê‚Ä‚¢‚È‚¢Žž
@@ -561,13 +562,14 @@ VMCMD_RESULT EvCmdTrainerBgmSet( VMHANDLE *core, void *wk )
 	u16 tr_id = SCRCMD_GetVMWorkValue(core);
 	Snd_EyeBgmSet( Snd_EyeBgmGet(tr_id) );
 	return 1;
-#else //wb kari
+#else //wb
   u16 tr_id = SCRCMD_GetVMWorkValue(core,wk);
   SCRCMD_WORK *work = wk;
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-
-  FIELD_SOUND_PushPlayEventBGM( fsnd, SEQ_BGM_EYE_01 ); //wb kari
+  u32 type = TT_TrainerDataParaGet( tr_id, ID_TD_tr_type );
+  u32 seq = FIELD_SOUND_GetTrainerEyeBgmNo( type );
+  FIELD_SOUND_PushPlayEventBGM( fsnd, seq );
   return 0;
 #endif
 }
