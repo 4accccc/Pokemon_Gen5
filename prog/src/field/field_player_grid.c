@@ -2027,7 +2027,7 @@ static void gjikiReq_SetSwim( FIELD_PLAYER_GRID *gjiki )
     MMDL_GetVectorPos( mmdl, &pos );
     
     gjiki->fldeff_joint = FLDEFF_NAMIPOKE_SetMMdl(
-        fectrl, dir, &pos, mmdl, TRUE );
+        fectrl, dir, &pos, mmdl, NAMIPOKE_JOINT_ON );
   }
 }
 

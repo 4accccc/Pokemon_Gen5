@@ -34,6 +34,7 @@ typedef enum
   FLDEFF_PROCID_REFLECT, ///<映り込み
   FLDEFF_PROCID_RIPPLE, ///<水波紋
   FLDEFF_PROCID_SPLASH, ///<水飛沫
+  FLDEFF_PROCID_NAMIPOKE_EFFECT, ///<波乗りポケモンエフェクト
   FLDEFF_PROCID_MAX, ///<最大
 }FLDEFF_PROCID;
 

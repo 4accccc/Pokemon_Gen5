@@ -715,7 +715,7 @@ static void DEBUG_SetMenuWorkZoneID_SelectZone(
 		GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID )
 {
 	int i;
-	STRBUF *strBuf = GFL_STR_CreateBuffer( 128, heapID );
+	STRBUF *strBuf = GFL_STR_CreateBuffer( 64, heapID );
   
 	for(i = 0; i < NELEMS(JumpZoneID_ListTbl); i++){
 		GFL_STR_ClearBuffer( strBuf );
@@ -1369,14 +1369,14 @@ static u16 * DEBUG_GetZoneNameUTF16( u32 heapID, u32 zoneID )
 	int i;
 	u16 utf16,utf16_eom;
 	u16 *pStrBuf;
-	char name8[128];
+	char name8[64];
 	
-	pStrBuf = GFL_HEAP_AllocClearMemory( heapID, sizeof(u16)*128 );
+	pStrBuf = GFL_HEAP_AllocClearMemory( heapID, sizeof(u16)*64 );
 	ZONEDATA_DEBUG_GetZoneName( name8, zoneID );
 	utf16_eom = GFL_STR_GetEOMCode();
 //	OS_Printf( "変換 %s\n", name8 );
 	
-	for( i = 0; i < 128; i++ ){
+	for( i = 0; i < 64; i++ ){
 		utf16 = DEBUG_ASCIICODE_UTF16( name8[i] );
 		pStrBuf[i] = utf16;
 		
@@ -1419,8 +1419,8 @@ static void DEBUG_SetMenuWorkZoneIDNameAll(
     GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID )
 {
 	int id,max = ZONEDATA_GetZoneIDMax();
-	STRBUF *strBuf1 = GFL_STR_CreateBuffer( 128, heapID );
-  STRBUF *strBuf2 = GFL_STR_CreateBuffer( 128, heapID );
+	STRBUF *strBuf1 = GFL_STR_CreateBuffer( 64, heapID );
+  STRBUF *strBuf2 = GFL_STR_CreateBuffer( 64, heapID );
   FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   FLDMSGBG * msgBG = FIELDMAP_GetFldMsgBG( fieldmap );
 	GFL_MSGDATA * pMsgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_place_name_dat );
@@ -1440,6 +1440,7 @@ static void DEBUG_SetMenuWorkZoneIDNameAll(
 	GFL_HEAP_FreeMemory( strBuf1 );
 	GFL_HEAP_FreeMemory( strBuf2 );
 }
+
 //--------------------------------------------------------------
 /**
  * @brief 何処でもジャンプ用リスト最大値取得関数

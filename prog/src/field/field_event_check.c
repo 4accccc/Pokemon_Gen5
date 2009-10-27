@@ -1838,7 +1838,7 @@ static GMEVENT_RESULT event_NaminoriStart(
         fectrl = FIELDMAP_GetFldEffCtrl( work->fieldWork );
         
         task = FLDEFF_NAMIPOKE_SetMMdl(
-            fectrl, dir, &pos, mmdl, FALSE );
+            fectrl, dir, &pos, mmdl, NAMIPOKE_JOINT_OFF );
         
         FIELD_PLAYER_GRID_SetEffectTaskWork( gjiki, task );
       }
@@ -1869,7 +1869,7 @@ static GMEVENT_RESULT event_NaminoriStart(
     if( MMDL_CheckEndAcmd(mmdl) == TRUE ){
       MMDL_EndAcmd( mmdl );
       task = FIELD_PLAYER_GRID_GetEffectTaskWork( gjiki );
-      FLDEFF_NAMIPOKE_SetJointFlag( task, TRUE );
+      FLDEFF_NAMIPOKE_SetJointFlag( task, NAMIPOKE_JOINT_ON );
       FIELD_PLAYER_SetNaminori( gjiki );
       (*seq)++;
     }
@@ -1958,7 +1958,7 @@ static GMEVENT_RESULT event_NaminoriEnd(
     break;
   case 1: //îgèÊÇËÉ|ÉPÉÇÉìêÿÇËó£Çµ
     task = FIELD_PLAYER_GRID_GetEffectTaskWork( gjiki );
-    FLDEFF_NAMIPOKE_SetJointFlag( task, FALSE );
+    FLDEFF_NAMIPOKE_SetJointFlag( task, NAMIPOKE_JOINT_OFF );
     FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_REQBIT_NORMAL );
     FIELD_PLAYER_GRID_UpdateRequest( gjiki );
     {
