@@ -148,7 +148,7 @@ sub_shop_sell:
   DEFINE_LOCAL  ret_mode
   DEFINE_LOCAL  ret_item
 
-  _BLACK_OUT( DISP_FADE_SPEED )
+  _BLACK_OUT()
   _DISP_FADE_END_CHECK()
   _TALKWIN_CLOSE()
   _FIELD_CLOSE()
@@ -156,7 +156,7 @@ sub_shop_sell:
   _CALL_BAG_PROC( SCR_BAG_MODE_SELL,ret_mode, ret_item )
 
   _FIELD_OPEN()
-  _BLACK_IN( DISP_FADE_SPEED )
+  _BLACK_IN()
   _DISP_FADE_END_CHECK()
 
   IF $ret_mode == SCR_PROC_RETMODE_EXIT THEN

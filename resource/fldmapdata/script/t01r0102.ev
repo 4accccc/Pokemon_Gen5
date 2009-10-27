@@ -367,7 +367,7 @@ t01r0102_poke_get_yes:
 	_BALLOONWIN_CLOSE()
 
 	//ブラックアウト
-	_BLACK_OUT( DISP_FADE_SPEED )
+	_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
 
 	//ボール削除
@@ -379,7 +379,7 @@ t01r0102_poke_get_yes:
 	_FLAG_SET( FV_T01R0102_BALL02 )
 
 	//ブラックイン
-	_BLACK_IN( DISP_FADE_SPEED )
+	_BLACK_IN()
 	_DISP_FADE_END_CHECK()
 
 	//サポート：左を向く
@@ -452,9 +452,9 @@ t01r0102_poke_get_yes:
 	_BALLOONWIN_CLOSE()
 
 	//【仮】ライバル戦
-	_BLACK_OUT( DISP_FADE_SPEED )
+	_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
-	_BLACK_IN( DISP_FADE_SPEED )
+	_BLACK_IN()
 	_DISP_FADE_END_CHECK()
 
 	//ライバル会話：フゥ　これがポケモン勝負か！

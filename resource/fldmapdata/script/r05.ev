@@ -328,13 +328,13 @@ EVENT_START	ev_pos_r05_h02demo_01
 	_BALLOONWIN_CLOSE()
 
 	//【仮】H02デモ
-	_BLACK_OUT( DISP_FADE_SPEED )
+	_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
 
 	//カメラマン（ストッパー）の位置を変更
 	_OBJ_POS_CHANGE( R05_CAMERAMAN_01, 331, 0, 431, DIR_LEFT )
 
-	_BLACK_IN( DISP_FADE_SPEED )
+	_BLACK_IN()
 	_DISP_FADE_END_CHECK()
 
 	//カミツレ：ここで帰るけど　頑張ってね

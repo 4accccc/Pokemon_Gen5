@@ -83,12 +83,12 @@ EVENT_START ev_scene_t01r0101_first_01
 	_BALLOONWIN_CLOSE()
 
 	//暗転して手持ちポケモンを回復
-	_BLACK_OUT( DISP_FADE_SPEED )
+	_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
 	_TEMOTI_POKEMON_KAIFUKU()		//回復処理
 	_ME_PLAY( SEQ_ME_ASA )
 	_ME_WAIT()
-	_BLACK_IN( DISP_FADE_SPEED )
+	_BLACK_IN()
 	_DISP_FADE_END_CHECK()
 
 	//【仮】ママ再会話時に回復処理にならないように回復済みチェックワークに値を代入
@@ -184,12 +184,12 @@ EVENT_START ev_t01r0101_mother_01
 		_BALLOONWIN_CLOSE()
 
 		//暗転して手持ちポケモンを回復
-		_BLACK_OUT( DISP_FADE_SPEED )
+		_BLACK_OUT()
 		_DISP_FADE_END_CHECK()
 		_TEMOTI_POKEMON_KAIFUKU()		//回復処理
 		_ME_PLAY( SEQ_ME_ASA )
 		_ME_WAIT()
-		_BLACK_IN( DISP_FADE_SPEED )
+		_BLACK_IN()
 		_DISP_FADE_END_CHECK()
 
 		//回復済みチェック用にローカルワークに値を代入

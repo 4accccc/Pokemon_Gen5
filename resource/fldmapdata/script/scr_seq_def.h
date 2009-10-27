@@ -2252,7 +2252,7 @@
 
 //--------------------------------------------------------------
 /**
- *  _DISP_FADE_START 画面フェード終了チェック
+ *  _DISP_FADE_CHECK 画面フェード終了チェック
  *  @param none
  */
 //--------------------------------------------------------------
@@ -2267,37 +2267,41 @@
 /**
  *  @def  _WHITE_OUT
  *  @brief  ホワイトアウト
- *  @param speed フェードスピード 0～
+ *  @param none
  */
 //--------------------------------------------------------------
-#define _WHITE_OUT( speed ) _DISP_FADE_START( DISP_FADE_WHITEOUT,0,16,speed )
+#define _WHITE_OUT() \
+    _DISP_FADE_START(DISP_FADE_WHITEOUT,0,16,DISP_FADE_SPEED)
 
 //--------------------------------------------------------------
 /**
  *  @def  _WHITE_IN
  *  @brief  ホワイトイン
- *  @param speed フェードスピード 0～
+ *  @param none
  */
 //--------------------------------------------------------------
-#define _WHITE_IN( speed ) _DISP_FADE_START( DISP_FADE_WHITEOUT,16,0,speed )
+#define _WHITE_IN() \
+    _DISP_FADE_START(DISP_FADE_WHITEOUT,16,0,DISP_FADE_SPEED)
 
 //--------------------------------------------------------------
 /**
  *  @def  _BLACK_OUT
  *  @brief  ブラックアウト
- *  @param  speed フェードスピード 0～
+ *  @param  none
  */
 //--------------------------------------------------------------
-#define _BLACK_OUT( speed ) _DISP_FADE_START( DISP_FADE_BLACKOUT,0,16,speed )
-
+#define _BLACK_OUT() \
+    _DISP_FADE_START(DISP_FADE_BLACKOUT,0,16,DISP_FADE_SPEED)
+  
 //--------------------------------------------------------------
 /**
  *  @def  _BLACK_IN
  *  @brief  ブラックイン
- *  @param  speed フェードスピード 0～
+ *  @param  none
  */
 //--------------------------------------------------------------
-#define _BLACK_IN( speed ) _DISP_FADE_START( DISP_FADE_BLACKOUT,16,0,speed )
+#define _BLACK_IN() \
+    _DISP_FADE_START(DISP_FADE_BLACKOUT,16,0,DISP_FADE_SPEED)
 
 //======================================================================
 //  アイテム関連

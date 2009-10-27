@@ -107,9 +107,9 @@ ev_dummy_end:
 	_OBJ_ANIME_WAIT()
 
 	//【仮】ポケモン捕獲デモ。仮処理で画面フェードを入れています。
-	_WHITE_OUT( 8 )
+	_WHITE_OUT()
 	_DISP_FADE_END_CHECK()
-	_WHITE_IN( 8 )
+	_WHITE_IN()
 	_DISP_FADE_END_CHECK()
 	
 //博士、メッセージ＋退場アニメ
