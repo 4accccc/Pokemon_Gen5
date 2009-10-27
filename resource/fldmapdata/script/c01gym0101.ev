@@ -78,6 +78,8 @@ _EVENT_DATA_END
 //																	//
 //------------------------------------------------------------------//
 
+//【杉中】ポッド、コーン、～～のfield_init_labelがない…！
+
 
 /**************************************************************/
 /*               フィールド初期化スクリプト                   */
@@ -445,7 +447,10 @@ EVENT_START		ev_c01gym0101_leader1_01
 			//戦闘処理
 			_TRAINER_BTL_SET( TRID_LEADER1C_01, 0 )
 			//敗戦チェック
-				_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+
+			//【杉中】マジックナンバー消滅キャンペーン SCR_BATTLE_RESULT_LOSE を使ってください。
+			//これ以降のトレーナー戦呼び出しにおいても同様です。
 			IF $SCWK_ANSWER == 0 THEN
 				_TRAINER_LOSE()//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 			ENDIF
@@ -523,6 +528,7 @@ EVENT_START		ev_c01gym0101_leader1_02
 	//分岐：ジムバッジ取得しているか、いないか
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
 	
+	//【杉中】↓何が仮か分からーん。もしかしたら仮じゃない？
 	//【仮】ジムバッジを取得していない場合
 	IF $SCWK_TEMP0 == 0 THEN
 		//分岐：草タイプを選択しているか、いないか
@@ -576,7 +582,7 @@ EVENT_START		ev_c01gym0101_leader1_02
 			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
 			_BALLOONWIN_CLOSE()
 			
-			//============フラグワーク操作=============//
+			//========================================//
 			
 			//トレーナーズスクールのライバル削除
 			_FLAG_SET( FV_C01R0501_RIVAL_01 )
@@ -697,7 +703,7 @@ EVENT_START		ev_c01gym0101_leader1_03
 			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
 			_BALLOONWIN_CLOSE()
 			
-			//============フラグワーク操作=============//
+			//========================================//
 
 			//トレーナーズスクールのライバル削除
 			_FLAG_SET( FV_C01R0501_RIVAL_01 )
@@ -770,6 +776,7 @@ EVENT_START	ev_pos_c01gym0101_button_kusa_01
 		_SE_PLAY( SEQ_SE_FLD_44 )
 		_SE_WAIT()
 
+		//【杉中】これは仮？
 		//【仮】ＳＥ：ブッブー
 		_SE_PLAY( SEQ_SE_FLD_42 )
 		_SE_WAIT()
@@ -1144,6 +1151,8 @@ EVENT_START	ev_pos_c01gym0101_button_mizu_03
 
 EVENT_END
 
+
+//【杉中】全部消しちゃってください
 /**************************************************************/
 /*     炎カーテン	１番目	Ａ～Ｇ						      */
 /**************************************************************/

@@ -303,6 +303,10 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c01_leader_01
 	_TALK_OBJ_START()
+
+	//【杉中】フラグ操作を//========//でかこってお願い。
+	//階段SE／ドアアニメのどちらかをお願いします。
+	//あとタブが多い。コピペしたね！
 		_BALLOONWIN_TALKOBJ_OPEN( msg_c01_leader1_01 )
 		_BALLOONWIN_CLOSE()
 		
@@ -353,7 +357,7 @@ EVENT_START   ev_c01_scene_change_01
 	_MAP_CHANGE( ZONE_ID_C01R0101, 2, 7, DIR_RIGHT )
 	
 
-	//============フラグワーク操作=============//
+	//========================================//
 
 	//発明家マコモのバニッシュフラグセット
 	_FLAG_SET( FV_C01_INVENTOR_01 )

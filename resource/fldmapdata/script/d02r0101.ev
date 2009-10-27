@@ -41,8 +41,11 @@ _EVENT_DATA_END
 /*  FIELD_INIT_LABEL						                  */
 /**************************************************************/
 INIT_EVENT_START	ev_init_d02r0101
+	//【杉中】コメントをお願いします。POSイベント後にリーダー位置を奥にとか？
+
 	IF $WK_SCENE_D02R0101 == 1 THEN
 		_OBJ_POS_CHANGE( D02R0101_LEADER3_01, 74, 0, 27, DIR_DOWN )
+	//↓ELSEは消しても大丈夫ですよ
 	ELSE
 	
 	ENDIF
@@ -94,7 +97,7 @@ EVENT_START		ev_d02r0101_scene_change_01
 	
 	//シーンチェンジイベント終了
 	$WK_SCENE_D02R0101 = 1
-		
+	
 	//======================================//
 	
 EVENT_END
