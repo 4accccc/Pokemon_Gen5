@@ -10,6 +10,7 @@
 #include "system/gfl_use.h"
 #include "arc_def.h"
 
+#include "gamesystem/game_data.h"
 #include "field/map_matrix.h"
 
 //======================================================================

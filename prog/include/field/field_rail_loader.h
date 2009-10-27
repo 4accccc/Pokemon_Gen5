@@ -18,6 +18,8 @@ extern "C"{
 
 //#include "field_rail.h"
 
+#include "gamesystem/game_data.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -59,6 +61,18 @@ extern void FIELD_RAIL_LOADER_DEBUG_LoadBinary( FIELD_RAIL_LOADER* p_sys, void* 
 extern void* FIELD_RAIL_LOADER_DEBUG_GetData( const FIELD_RAIL_LOADER* cp_sys );
 extern u32 FIELD_RAIL_LOADER_DEBUG_GetDataSize( const FIELD_RAIL_LOADER* cp_sys );
 #endif
+
+//--------------------------------------------------------------
+/**
+ * @brief FIELD_RAIL_LOADERへのポインタ取得
+ * @param	gamedata	GAMEDATAへのポインタ
+ * @return  FIELD_RAIL_LOADER レールデータローダーシステムへのポインタ
+ *
+ * 実態はgamesystem/game_data.cにあるが、アクセス制限のため
+ * こちらに配置する
+ */
+//--------------------------------------------------------------
+extern FIELD_RAIL_LOADER * GAMEDATA_GetFieldRailLoader(GAMEDATA * gamedata);
 
 #ifdef _cplusplus
 }	// extern "C"{

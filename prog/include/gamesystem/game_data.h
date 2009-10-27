@@ -16,19 +16,29 @@
 //============================================================================================
 #pragma once
 
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief	GAMEDATA型定義
+ *
+ * _GAMEDATAの実体はgame_data.c内に定義されている
+ */
+//------------------------------------------------------------------
+typedef struct _GAMEDATA GAMEDATA;
+
 #include "gamesystem/playerwork.h"
 #include "field/eventdata_system.h"
 #include "field/location.h"
 #include "field/rail_location.h"  //RAIL_LOCATION
 #include "savedata/myitem_savedata.h"  //BAG_CURSOR MYITEM
 #include "poke_tool/pokeparty.h"
-#include "field/field_rail_loader.h"    //FIELD_RAIL_LOADER
-#include "field/fldmmdl.h"
+//#include "field/field_rail_loader.h"    //FIELD_RAIL_LOADER
+//#include "field/fldmmdl.h"
 #include "field/eventwork.h"
-#include "gamesystem/game_data.h"       //MAP_MATRIX
 #include "field/field_sound_proc.h"
 #include "sound/bgm_info.h"
-#include "field/field_status.h"
+//#include "field/field_status.h"
 #include "field/field_beacon_message.h" //FIELD_BEACON_MSG_DATA
 #include "field/field_encount.h" //ENCOUNT_WORK
 #include "savedata/box_savedata.h"      //BOX_MANAGER
@@ -49,16 +59,6 @@ enum {
   OCCUPY_ID_MINE = OCCUPY_ID_MAX - 1,   ///<自分自身の占拠情報ID
 };
 
-//============================================================================================
-//============================================================================================
-//------------------------------------------------------------------
-/**
- * @brief	GAMEDATA型定義
- *
- * _GAMEDATAの実体はgame_data.c内に定義されている
- */
-//------------------------------------------------------------------
-typedef struct _GAMEDATA GAMEDATA;
 
 //============================================================================================
 //	ゲームデータ本体の生成・破棄処理
@@ -251,30 +251,12 @@ extern MYSTATUS * GAMEDATA_GetMyStatusPlayer(GAMEDATA * gamedata, u32 player_id)
 
 //--------------------------------------------------------------
 /**
- * @brief FIELD_RAIL_LOADERへのポインタ取得
- * @param	gamedata	GAMEDATAへのポインタ
- * @return  FIELD_RAIL_LOADER レールデータローダーシステムへのポインタ
- */
-//--------------------------------------------------------------
-extern FIELD_RAIL_LOADER * GAMEDATA_GetFieldRailLoader(GAMEDATA * gamedata);
-
-//--------------------------------------------------------------
-/**
  * @brief BGM_INFO_SYSへのポインタ取得
  * @param gamedata    GAMEDATAへのポインタ
  * preturn BGM_INFO_SYS BGM情報取得システムへのポインタ
  */
 //--------------------------------------------------------------
 extern BGM_INFO_SYS * GAMEDATA_GetBGMInfoSys(GAMEDATA * gamedata);
-
-//--------------------------------------------------------------
-/**
- * @brief 動作モデルへのポインタ取得
- * @param gamedata GAMEDATAへのポインタ
- * @retval MMDLSYSへのポインタ
- */
-//--------------------------------------------------------------
-extern MMDLSYS * GAMEDATA_GetMMdlSys(GAMEDATA *gamedata);
 
 //--------------------------------------------------------------
 /**
@@ -409,15 +391,6 @@ extern SAVE_RESULT GAMEDATA_SaveAsyncMain(GAMEDATA *gamedata);
 //--------------------------------------------------------------
 extern EVENTWORK * GAMEDATA_GetEventWork(GAMEDATA *gamedata);
 
-//--------------------------------------------------------------
-/**
- * @brief   MAP_MATRIXへのポインタ取得
- * @param	  gamedata	GAMEDATAへのポインタ
- * @retval  MAP_MATRIXへのポインタ
- */
-//--------------------------------------------------------------
-extern MAP_MATRIX * GAMEDATA_GetMapMatrix(GAMEDATA * gamedata);
-
 //------------------------------------------------------------------
 /**
  * @brief	  フィールドマップ歩数カウント取得
@@ -471,15 +444,6 @@ extern void GAMEDATA_SetLastBattleResult( GAMEDATA * gamedata, u32 btl_result );
  */
 //--------------------------------------------------------------
 extern u32 GAMEDATA_GetLastBattleResult( const GAMEDATA * gamedata );
-
-//==================================================================
-/**
- * @brief
- * @param   gamedata		GAMEDATAへのポインタ
- * @return  FIELD_STATUS
- */
-//==================================================================
-extern FIELD_STATUS * GAMEDATA_GetFieldStatus(GAMEDATA * gamedata);
 
 //==================================================================
 /**

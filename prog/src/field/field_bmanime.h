@@ -21,6 +21,7 @@ typedef enum {
   BMANIME_TYPE_NONE = 0,    ///<アニメなし
   BMANIME_TYPE_ETERNAL,     ///<常に適用
   BMANIME_TYPE_EVENT,       ///<イベントで適用
+  BMANIME_TYPE_TIMEZONE,    ///<時間帯変化
 
   BMANIME_TYPE_MAX
 }BMANIME_TYPE;

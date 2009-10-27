@@ -13,6 +13,7 @@
 
 #include <gflib.h>
 
+#include "gamesystem/game_data.h"
 //======================================================================
 //	define
 //======================================================================
@@ -51,4 +52,17 @@ extern BOOL MAP_MATRIX_CheckBlockPosRange(
 		const MAP_MATRIX *pMat, int x, int z );
 extern BOOL MAP_MATRIX_CheckVectorPosRange(
 		const MAP_MATRIX *pMat, fx32 x, fx32 z );
+
+//--------------------------------------------------------------
+/**
+ * @brief   MAP_MATRIXへのポインタ取得
+ * @param	  gamedata	GAMEDATAへのポインタ
+ * @retval  MAP_MATRIXへのポインタ
+ *
+ * 実態はgamesystem/game_data.cにあるが、アクセス制限のため
+ * こちらに配置する
+ */
+//--------------------------------------------------------------
+extern MAP_MATRIX * GAMEDATA_GetMapMatrix(GAMEDATA * gamedata);
+
 #endif //MAP_MATRIX_H_FILE
