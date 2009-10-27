@@ -195,4 +195,7 @@
 "palacefield.bin"
 "soccer01.bin"
 "live01.bin"
-"ive02.bin"
+"live02.bin"
+"theater03.bin"
+"cabin01.bin"
+"ybuill01.bin"
