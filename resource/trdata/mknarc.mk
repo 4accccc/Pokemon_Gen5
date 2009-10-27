@@ -57,11 +57,11 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 do-build: trdata.narc
 trdata.narc: $(DATAFILES:.s=.bin)
-	nnsarc -c -l -n trdata.narc trdata_*.bin
+	nnsarc -c -l -n -i trdata.narc trdata_*.bin
 
 do-build: trpoke.narc
 trpoke.narc: $(POKEFILES:.s=.bin)
-	nnsarc -c -l -n trpoke.narc trpoke_*.bin
+	nnsarc -c -l -n -i trpoke.narc trpoke_*.bin
 
 do-build: $(DATAFILES:.s=.bin)
 %.bin:%.s
