@@ -92,7 +92,6 @@ SRCS  +=    $(SOUNDSRC) \
         field/event_mapchange.c \
         field/event_fieldmap_menu.c \
 				field/event_shortcut_menu.c \
-        field/event_debug_menu.c \
         field/event_battle.c \
         field/event_ircbattle.c \
         field/event_fldmmdl_control.c \
@@ -369,6 +368,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/weather.c \
 				field/weather_task.c \
 				field/field_debug.c \
+        field/event_debug_menu.c \
 				field/fieldmap_ctrl_grid.c \
 				field/field_player.c \
 				field/field_player_grid.c \

@@ -111,16 +111,37 @@ typedef struct
 //--------------------------------------------------------------
 struct _TAG_DEBUG_MENU_EVENT_WORK
 {
-	u32 page_id;
 	HEAPID heapID;
 	GMEVENT *gmEvent;
 	GAMESYS_WORK *gmSys;
+  GAMEDATA * gdata;
 	FIELDMAP_WORK * fieldWork;
 	
 	DEBUG_MENU_CALLPROC call_proc;
 	GFL_MSGDATA *msgData;
 	FLDMENUFUNC *menuFunc;
 };
+
+typedef void MAKE_LIST_FUNC(FLDMENUFUNC_LISTDATA *list, HEAPID heapID );
+typedef u16 GET_MAX_FUNC(FIELDMAP_WORK * fieldmap );
+//--------------------------------------------------------------
+/**
+ * @brief   メニュー初期化構造体
+ *
+ * @note
+ * 可変メニューの場合、makeListFunc/getMaxFuncも定義する必要がある。
+ * 使用方法についてはどこでもジャンプなどを参照のこと。
+ */
+//--------------------------------------------------------------
+typedef struct {
+  u16 msg_arc_id;     ///<引用するメッセージアーカイブの指定
+  u16 max;            ///<項目最大数
+  const FLDMENUFUNC_LIST * menulist;  ///<参照するメニューデータ（生成する場合はNULL)
+  const FLDMENUFUNC_HEADER * menuH;   ///<メニュー表示指定データ
+  u8 px, py, sx, sy;
+  MAKE_LIST_FUNC * makeListFunc;      ///<メニュー生成関数へのポインタ（固定メニューの場合はNULL)
+  GET_MAX_FUNC * getMaxFunc;          ///<項目最大数取得関数へのポインタ（固定メニューの場合はNULL)
+}DEBUG_MENU_INITIALIZER;
 
 //======================================================================
 //	proto
@@ -144,8 +165,8 @@ static debugMenuCallProc_MusicalSelect( DEBUG_MENU_EVENT_WORK *wk );
 
 static void DEBUG_SetMenuWorkZoneIDNameAll(
 		FLDMENUFUNC_LISTDATA *list, HEAPID heapID );
-static void DEBUG_SetMenuWorkZoneIDName(
-		FLDMENUFUNC_LISTDATA *list, HEAPID heapID, u32 zoneID );
+static u16 DEBUG_GetZoneIDNameMax( FIELDMAP_WORK * fieldmap );
+
 
 static BOOL debugMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_ControlTarget( DEBUG_MENU_EVENT_WORK *wk );
@@ -222,71 +243,6 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 	{	DEBUG_FIELD_STR47, debugMenu_ControlShortCut },
 };
 
-//--------------------------------------------------------------
-///	デバッグメニューリスト	グリッド実験マップ用。
-///	データを追加する事でメニューの項目も増えます。
-//--------------------------------------------------------------
-#if 0 //使わなくなりました。
-static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
-{
-	{	DEBUG_FIELD_STR38, debugMenuCallProc_DebugSkyJump },
-	{ DEBUG_FIELD_STR17, debugMenuCallProc_FieldPosData },
-	{ DEBUG_FIELD_STR02, debugMenuCallProc_ControlCamera },
-	{ DEBUG_FIELD_STR20, debugMenuCallProc_ControlTarget },
-	{ DEBUG_FIELD_STR03, debugMenuCallProc_GridScaleSwitch },
-	{ DEBUG_FIELD_STR04, debugMenuCallProc_GridScaleControl },
-	{ DEBUG_FIELD_STR05, debugMenuCallProc_MapZoneSelect },
-	{ DEBUG_FIELD_STR06, debugMenuCallProc_MapSeasonSelect},
-	{ DEBUG_FIELD_STR07, debugMenuCallProc_CameraList },
-	{ DEBUG_FIELD_STR13, debugMenuCallProc_MMdlList },
-	{ DEBUG_FIELD_C_CHOICE00, debugMenuCallProc_OpenCommDebugMenu },
-	{ DEBUG_FIELD_STR19, debugMenuCallProc_OpenClubMenu },
-	{ DEBUG_FIELD_STR22, debugMenuCallProc_ControlRtcList },
-	{ DEBUG_FIELD_STR15, debugMenuCallProc_ControlLight },
-	{ DEBUG_FIELD_STR16, debugMenuCallProc_WeatherList },
-  { DEBUG_FIELD_STR_SUBSCRN, debugMenuCallProc_SubscreenSelect },
-  { DEBUG_FIELD_STR21 , debugMenuCallProc_MusicalSelect },
-  { DEBUG_FIELD_STR31, debugMenuCallProc_Naminori },
-  { DEBUG_FIELD_STR32, debugMenuCallProc_DebugItem },
-	{ DEBUG_FIELD_STR01, NULL },
-};
-#endif
-
-//--------------------------------------------------------------
-///	デバッグメニューリストテーブル
-//--------------------------------------------------------------
-static const DEBUG_MENU_LISTDATA DATA_DebugMenuListTbl[] =
-{
-	{	//実験マップ 橋
-		D_MENU_CHARSIZE_X,
-		D_MENU_CHARSIZE_Y,
-		NELEMS(DATA_DebugMenuList),
-		DATA_DebugMenuList
-	},
-#if 0
-	{	//実験マップ　グリッド移動
-		D_MENU_CHARSIZE_X,
-		D_MENU_CHARSIZE_Y,
-		NELEMS(DATA_DebugMenuListGrid),
-		DATA_DebugMenuListGrid
-	},
-	{	//実験マップ　橋
-		D_MENU_CHARSIZE_X,
-		D_MENU_CHARSIZE_Y,
-		NELEMS(DATA_DebugMenuList),
-		DATA_DebugMenuList
-	},
-	{	//実験マップ　グリッド移動
-		D_MENU_CHARSIZE_X,
-		D_MENU_CHARSIZE_Y,
-		NELEMS(DATA_DebugMenuListGrid),
-		DATA_DebugMenuListGrid
-	},
-#endif
-};
-
-//メニュー最大数
-#define D_MENULISTTBL_MAX (NELEMS(DATA_DebugMenuListTbl))
 
 //--------------------------------------------------------------
 ///	メニューヘッダー
@@ -312,6 +268,21 @@ static const FLDMENUFUNC_HEADER DATA_DebugMenuListHeader =
 	0,		//表示サイズX キャラ単位
 	0,		//表示サイズY キャラ単位
 };	
+
+//--------------------------------------------------------------
+/**
+ * @brief フィールドデバッグメニュー初期化データ
+ */
+//--------------------------------------------------------------
+static const DEBUG_MENU_INITIALIZER DebugMenuData = {
+  NARC_message_d_field_dat,
+  NELEMS(DATA_DebugMenuList),
+  DATA_DebugMenuList,
+  &DATA_DebugMenuListHeader, 
+  1, 1, D_MENU_CHARSIZE_X, D_MENU_CHARSIZE_Y,
+  NULL,
+  NULL,
+};
 
 //======================================================================
 //	イベント：フィールドデバッグメニュー
@@ -341,21 +312,51 @@ GMEVENT * DEBUG_EVENT_DebugMenu(
 	
 	dmew->gmSys = gsys;
 	dmew->gmEvent = event;
+  dmew->gdata = GAMESYSTEM_GetGameData( gsys );
 	dmew->fieldWork = fieldWork;
 	dmew->heapID = heapID;
   
-#if 0
-	dmew->page_id = page_id;
-#else
-  dmew->page_id = 0;
-#endif
-  
-	if( dmew->page_id >= D_MENULISTTBL_MAX ){
-		OS_Printf( "debug menu number error\n" );
-		dmew->page_id = 0;
-	}
-	
 	return event;
+}
+
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static FLDMENUFUNC * DebugMenuInit(
+    FIELDMAP_WORK * fieldmap, HEAPID heapID,
+    const DEBUG_MENU_INITIALIZER * init )
+{
+  FLDMENUFUNC * ret;
+	GFL_MSGDATA *msgData;
+  FLDMSGBG *msgBG;
+  FLDMENUFUNC_LISTDATA *listdata;
+  FLDMENUFUNC_HEADER menuH;
+  u16 max;
+  
+  msgBG = FIELDMAP_GetFldMsgBG( fieldmap );
+  msgData = FLDMSGBG_CreateMSGDATA( msgBG, init->msg_arc_id );
+
+  if (init->getMaxFunc) {
+    max = init->getMaxFunc( fieldmap );
+  } else {
+    max = init->max;
+  }
+  if (init->makeListFunc) {
+    listdata = FLDMENUFUNC_CreateListData( max, heapID );
+    init->makeListFunc( listdata, heapID );
+  } else {
+    listdata = FLDMENUFUNC_CreateMakeListData( init->menulist, max, msgData, heapID );
+  }
+
+  menuH = *(init->menuH);
+  {
+    u8 sy = (max * 2 < init->sy) ? max * 2 : init->sy;
+    FLDMENUFUNC_InputHeaderListSize( &menuH, max, init->px, init->py, init->sx, sy );
+  }
+  ret = FLDMENUFUNC_AddMenu( msgBG, &menuH, listdata );
+  GFL_MSG_Delete( msgData );
+  return ret;
 }
 
 //--------------------------------------------------------------
@@ -373,39 +374,7 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
 	
 	switch (*seq) {
 	case 0:
-		{
-			FLDMSGBG *msgBG;
-			FLDMENUFUNC_HEADER head;
-			FLDMENUFUNC_LISTDATA *listdata;
-			const FLDMENUFUNC_LIST *menulist;
-			const DEBUG_MENU_LISTDATA *d_menu_listdata;
-			
-			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
-			
-			work->msgData = FLDMSGBG_CreateMSGDATA(
-						msgBG, NARC_message_d_field_dat );
-			
-      {
-        FLDMSGWIN *msgWin = FLDMSGWIN_AddTalkWin( msgBG, work->msgData );
-        FLDMSGWIN_Print( msgWin, 0, 0, 0 );
-        FLDMSGWIN_Delete( msgWin );
-      }
-
-			d_menu_listdata = &DATA_DebugMenuListTbl[work->page_id];
-			menulist = d_menu_listdata->list;
-			
-			listdata = FLDMENUFUNC_CreateMakeListData(
-				menulist, d_menu_listdata->max, work->msgData, work->heapID );
-			
-			head = DATA_DebugMenuListHeader;
-			FLDMENUFUNC_InputHeaderListSize(
-				&head, d_menu_listdata->max, 1, 1,
-				d_menu_listdata->charsize_x, d_menu_listdata->charsize_y );
-			
-			work->menuFunc = FLDMENUFUNC_AddMenu( msgBG, &head, listdata );
-			GFL_MSG_Delete( work->msgData );
-		}
-		
+    work->menuFunc = DebugMenuInit( work->fieldWork, work->heapID,  &DebugMenuData );
 		(*seq)++;
 		break;
 	case 1:
@@ -557,11 +526,24 @@ typedef struct
 	HEAPID heapID;
 	GAMESYS_WORK *gmSys;
 	GMEVENT *gmEvent;
+  GAMEDATA * gdata;
 	FIELDMAP_WORK *fieldWork;
 	GFL_MSGDATA *msgData;
 	FLDMENUFUNC *menuFunc;
 }DEBUG_ZONESEL_EVENT_WORK;
 
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void initDZEW(DEBUG_ZONESEL_EVENT_WORK * dzew,
+    GAMESYS_WORK * gsys, GMEVENT * event, HEAPID heapID)
+{
+	MI_CpuClear8( dzew, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
+	
+	dzew->gmSys = gsys;
+	dzew->gmEvent = event;
+	dzew->heapID = heapID;
+	dzew->fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
+}
 //--------------------------------------------------------------
 ///	proto
 //--------------------------------------------------------------
@@ -589,6 +571,18 @@ static const FLDMENUFUNC_HEADER DATA_DebugMenuList_ZoneSel =
 	0,		//表示座標Y キャラ単位
 	0,		//表示サイズX キャラ単位
 	0,		//表示サイズY キャラ単位
+};
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const DEBUG_MENU_INITIALIZER DebugZoneSelectData = {
+  NARC_message_d_field_dat,
+  0,
+  NULL,
+  &DATA_DebugMenuList_ZoneSel,
+  1, 1, 12, 16,
+  DEBUG_SetMenuWorkZoneIDNameAll,
+  DEBUG_GetZoneIDNameMax,
 };
 
 //--------------------------------------------------------------
@@ -635,24 +629,7 @@ static GMEVENT_RESULT debugMenuZoneSelectEvent(
 	
 	switch( (*seq) ){
 	case 0:
-		{
-			FLDMSGBG *msgBG;
-			u32 max = ZONEDATA_GetZoneIDMax();
-			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_ZoneSel;
-			FLDMENUFUNC_LISTDATA *pMenuListData;
-			
-			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
-			work->msgData = FLDMSGBG_CreateMSGDATA(
-					msgBG, NARC_message_d_field_dat );
-			pMenuListData = FLDMENUFUNC_CreateListData( max, work->heapID );
-			DEBUG_SetMenuWorkZoneIDNameAll( pMenuListData, work->heapID );
-			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 11, 16 );
-			
-			work->menuFunc = FLDMENUFUNC_AddMenu(
-					msgBG, &menuH, pMenuListData );
-			GFL_MSG_Delete( work->msgData );
-		}
-		
+    work->menuFunc = DebugMenuInit( work->fieldWork, work->heapID,  &DebugZoneSelectData );
 		(*seq)++;
 		break;
 	case 1:
@@ -720,12 +697,8 @@ static BOOL debugMenuCallProc_Jump( DEBUG_MENU_EVENT_WORK *wk )
 		debugMenuZoneJump, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
 	
 	work = GMEVENT_GetEventWork( event );
-	MI_CpuClear8( work, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
-	
-	work->gmSys = gsys;
-	work->gmEvent = event;
-	work->heapID = heapID;
-	work->fieldWork = fieldWork;
+  initDZEW( work, gsys, event, heapID );
+
 	return( TRUE );
 }
 
@@ -744,6 +717,16 @@ static void DEBUG_SetMenuWorkZoneID_SelectZone(
 	GFL_HEAP_FreeMemory( strBuf );
 }
 
+static const DEBUG_MENU_INITIALIZER DebugMenuZoneJumpData = {
+  NARC_message_d_field_dat,
+  NELEMS(JumpZoneID_ListTbl),
+  NULL,
+  &DATA_DebugMenuList_ZoneSel, //流用
+  1, 1, 11, 16,
+  DEBUG_SetMenuWorkZoneID_SelectZone,
+  NULL,
+};
+
 //--------------------------------------------------------------
 /**
  * イベント：ジャンプ
@@ -759,24 +742,7 @@ static GMEVENT_RESULT debugMenuZoneJump(GMEVENT *event, int *seq, void *wk )
 	
 	switch( (*seq) ){
 	case 0:
-		{
-			FLDMSGBG *msgBG;
-			u32 max = NELEMS(JumpZoneID_ListTbl);
-			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_ZoneSel;
-			FLDMENUFUNC_LISTDATA *pMenuListData;
-			
-			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
-			work->msgData = FLDMSGBG_CreateMSGDATA(
-					msgBG, NARC_message_d_field_dat );
-			pMenuListData = FLDMENUFUNC_CreateListData( max, work->heapID );
-			DEBUG_SetMenuWorkZoneID_SelectZone( pMenuListData, work->heapID );
-			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 11, 16 );
-			
-			work->menuFunc = FLDMENUFUNC_AddMenu(
-					msgBG, &menuH, pMenuListData );
-			GFL_MSG_Delete( work->msgData );
-		}
-		
+    work->menuFunc = DebugMenuInit( work->fieldWork, work->heapID,  &DebugMenuZoneJumpData );
 		(*seq)++;
 		break;
 	case 1:
@@ -833,8 +799,7 @@ static debugMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk )
 	HEAPID heapID = wk->heapID;
 	GMEVENT *event = wk->gmEvent;
 	GAMESYS_WORK *gsys = wk->gmSys;
-	GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-	PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+	PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( wk->gdata );
 	ZONEID zone_id = PLAYERWORK_getZoneID( player );
 	FIELDMAP_WORK *fieldWork = wk->fieldWork;
 	DEBUG_ZONESEL_EVENT_WORK *work;
@@ -842,12 +807,8 @@ static debugMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk )
 		GMEVENT_Change( event,
 			debugMenuSeasonSelectEvent, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
 		work = GMEVENT_GetEventWork( event );
-		MI_CpuClear8( work, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
-	
-		work->gmSys = gsys;
-		work->gmEvent = event;
-		work->heapID = heapID;
-		work->fieldWork = fieldWork;
+    initDZEW( work, gsys, event, heapID );
+
 		return( TRUE );
 }
 
@@ -860,6 +821,25 @@ static const FLDMENUFUNC_LIST DATA_SeasonMenuList[PMSEASON_TOTAL] =
 	{ DEBUG_FIELD_STR_SUMMER, (void*)PMSEASON_SUMMER },
 	{ DEBUG_FIELD_STR_AUTUMN, (void*)PMSEASON_AUTUMN },
 	{ DEBUG_FIELD_STR_WINTER, (void*)PMSEASON_WINTER },
+};
+
+/*
+typedef struct {
+  u16 msg_arc_id;
+  u16 max;
+  FLDMENUFUNC_LIST * menulist;
+  const FLDMENUFUNC_HEADER * menuH;
+  u8 px, py, sx, sy;
+}DEBUG_MENU_INITIALIZER;
+*/
+static const DEBUG_MENU_INITIALIZER DebugSeasonJumpMenuData = {
+  NARC_message_d_field_dat,
+  NELEMS(DATA_SeasonMenuList),
+  DATA_SeasonMenuList,
+  &DATA_DebugMenuList_ZoneSel, //流用
+  1, 1, 16, 17,
+  NULL,
+  NULL
 };
 
 //--------------------------------------------------------------
@@ -878,22 +858,7 @@ static GMEVENT_RESULT debugMenuSeasonSelectEvent(
 
 	switch( (*seq) ){
 	case 0:
-		{
-			FLDMSGBG *msgBG;
-			FLDMENUFUNC_LISTDATA *listdata;
-			u32 max = NELEMS(DATA_SeasonMenuList);
-			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_ZoneSel;  //流用
-			
-			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
-			work->msgData = FLDMSGBG_CreateMSGDATA(
-				msgBG, NARC_message_d_field_dat );
-			listdata = FLDMENUFUNC_CreateMakeListData(
-				DATA_SeasonMenuList, max, work->msgData, work->heapID );
-			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 16, 7 );
-			
-			work->menuFunc = FLDMENUFUNC_AddMenu( msgBG, &menuH, listdata );
-			GFL_MSG_Delete( work->msgData );
-		}
+    work->menuFunc = DebugMenuInit( work->fieldWork, work->heapID,  &DebugSeasonJumpMenuData );
 		(*seq)++;
 		break;
 	case 1:
@@ -1017,6 +982,16 @@ static const FLDMENUFUNC_LIST DATA_SubcreenMenuList[FIELD_SUBSCREEN_MODE_MAX] =
 	{ DEBUG_FIELD_STR_SUBSCRN05, (void*)setupUnionSubscreen },
 };
 
+static const DEBUG_MENU_INITIALIZER DebugSubscreenSelectData = {
+  NARC_message_d_field_dat,
+  NELEMS(DATA_SubcreenMenuList),
+  DATA_SubcreenMenuList,
+  &DATA_DebugMenuList_ZoneSel, //流用
+  1, 1, 16, 17,
+  NULL,
+  NULL
+};
+
 //--------------------------------------------------------------
 /**
  * イベント：した画面ジャンプ
@@ -1034,22 +1009,7 @@ static GMEVENT_RESULT debugMenuSubscreenSelectEvent(
 	switch( *seq )
   {
 	case 0:
-		{
-			FLDMSGBG *msgBG;
-	    GFL_MSGDATA *msgData;
-			FLDMENUFUNC_LISTDATA *listdata;
-			u32 max = NELEMS(DATA_SubcreenMenuList);
-			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_ZoneSel;  //流用
-			
-			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
-			msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_d_field_dat );
-			listdata = FLDMENUFUNC_CreateMakeListData(
-				DATA_SubcreenMenuList, max, msgData, work->heapID );
-			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 16, max*2 );
-			
-			work->menuFunc = FLDMENUFUNC_AddMenu( msgBG, &menuH, listdata );
-			GFL_MSG_Delete( msgData );
-		}
+    work->menuFunc = DebugMenuInit( work->fieldWork, work->heapID,  &DebugSubscreenSelectData );
 		(*seq)++;
 		break;
 	case 1:
@@ -1204,6 +1164,16 @@ static const FLDMENUFUNC_LIST DATA_MusicalMenuList[3] =
 	{ DEBUG_FIELD_STR_MUSICAL2, (void*)setupMusicarShowPart },
 };
 
+static const DEBUG_MENU_INITIALIZER DebugMusicalSelectData = {
+  NARC_message_d_field_dat,
+  NELEMS(DATA_MusicalMenuList),
+  DATA_MusicalMenuList,
+  &DATA_DebugMenuList_ZoneSel, //流用
+  1, 1, 16, 17,
+  NULL,
+  NULL
+};
+
 //--------------------------------------------------------------
 /**
  * イベント：ミュージカルデバッグメニュー
@@ -1221,22 +1191,7 @@ static GMEVENT_RESULT debugMenuMusicalSelectEvent(
 	switch( *seq )
   {
 	case 0:
-		{
-			FLDMSGBG *msgBG;
-	    GFL_MSGDATA *msgData;
-			FLDMENUFUNC_LISTDATA *listdata;
-			u32 max = NELEMS(DATA_MusicalMenuList);
-			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_ZoneSel;  //流用
-			
-			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
-			msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_d_field_dat );
-			listdata = FLDMENUFUNC_CreateMakeListData(
-				DATA_MusicalMenuList, max, msgData, work->heapID );
-			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 16, max*2 );
-			
-			work->menuFunc = FLDMENUFUNC_AddMenu( msgBG, &menuH, listdata );
-			GFL_MSG_Delete( msgData );
-		}
+    work->menuFunc = DebugMenuInit( work->fieldWork, work->heapID,  &DebugMusicalSelectData );
 		(*seq)++;
 		break;
 	case 1:
@@ -1465,27 +1420,18 @@ static void DEBUG_SetMenuWorkZoneIDNameAll(
 	
 	GFL_HEAP_FreeMemory( strBuf );
 }
-
 //--------------------------------------------------------------
 /**
- * ZONE_ID文字列をBMP_MENULIST_DATAにセット
- * @param	list	セット先BMP_MENULIST_DATA
- * @param	heapID	文字列バッファ確保用HEAPID
- * @param	zoneID	セットするZONE_ID
- * @retval	nothing
+ * @brief 何処でもジャンプ用リスト最大値取得関数
+ * @param fieldmap
+ * @return  マップ最大数
  */
 //--------------------------------------------------------------
-static void DEBUG_SetMenuWorkZoneIDName(
-		FLDMENUFUNC_LISTDATA *list, HEAPID heapID, u32 zoneID )
+static u16 DEBUG_GetZoneIDNameMax( FIELDMAP_WORK * fieldmap )
 {
-	int max = ZONEDATA_GetZoneIDMax();
-	STRBUF *strBuf = GFL_STR_CreateBuffer( 128, heapID );
-	
-	GFL_STR_ClearBuffer( strBuf );
-	DEBUG_SetSTRBUF_ZoneIDName( heapID, zoneID, strBuf );
-	FLDMENUFUNC_AddStringListData( list, strBuf, zoneID, heapID );
-	GFL_HEAP_FreeMemory( strBuf );
+  return ZONEDATA_GetZoneIDMax();
 }
+
 
 //======================================================================
 //	デバッグメニュー　カメラ操作
@@ -1732,6 +1678,16 @@ static const FLDMENUFUNC_LIST DATA_TestCameraMenuList[TESTCAMERALISTMAX] =
 	{ DEBUG_FIELD_STR08, (void*)3 },
 };
 
+static const DEBUG_MENU_INITIALIZER DebugCameraMenuListData = {
+  NARC_message_d_field_dat,
+  NELEMS(DATA_TestCameraMenuList),
+  DATA_TestCameraMenuList,
+  &DATA_DebugMenuList_TestCameraList, //流用
+  1, 1, 8, 7,
+  NULL,
+  NULL
+};
+
 //--------------------------------------------------------------
 /**
  * デバッグメニュー呼び出し　テストカメラリスト
@@ -1772,27 +1728,11 @@ static BOOL debugMenuCallProc_CameraList( DEBUG_MENU_EVENT_WORK *wk )
 static GMEVENT_RESULT debugMenuTestCameraListEvent(
 		GMEVENT *event, int *seq, void *wk )
 {
-	DEBUG_ZONESEL_EVENT_WORK *work = wk;
+	DEBUG_TESTCAMERALIST_EVENT_WORK *work = wk;
 	
 	switch( (*seq) ){
 	case 0:
-		{
-			FLDMSGBG *msgBG;
-			FLDMENUFUNC_LISTDATA *listdata;
-			u32 max = TESTCAMERALISTMAX;
-			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_TestCameraList;
-			
-			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
-			work->msgData = FLDMSGBG_CreateMSGDATA(
-				msgBG, NARC_message_d_field_dat );
-			listdata = FLDMENUFUNC_CreateMakeListData(
-				DATA_TestCameraMenuList, max, work->msgData, work->heapID );
-			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 8, 7 );
-			
-			work->menuFunc = FLDMENUFUNC_AddMenu( msgBG, &menuH, listdata );
-			GFL_MSG_Delete( work->msgData );
-		}
-		
+    work->menuFunc = DebugMenuInit( work->fieldWork, work->heapID,  &DebugCameraMenuListData );
 		(*seq)++;
 		break;
 	case 1:
@@ -1896,6 +1836,15 @@ static const FLDMENUFUNC_HEADER DATA_DebugMenuList_MMdlList =
 	0,		//表示サイズY キャラ単位
 };
 
+static const DEBUG_MENU_INITIALIZER DebugMMdlListData = {
+  NARC_message_d_field_dat,
+  OBJCODEMAX,
+  NULL,
+  &DATA_DebugMenuList_MMdlList,
+  1, 1, 11, 16,
+  DEBUG_SetMenuWorkMMdlList,
+};
+
 //--------------------------------------------------------------
 /**
  * デバッグメニュー呼び出し　動作モデル一覧
@@ -1923,7 +1872,7 @@ static BOOL debugMenuCallProc_MMdlList( DEBUG_MENU_EVENT_WORK *wk )
 	work->fieldWork = fieldWork;
 	
 	{
-		GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+    GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
 		work->fldmmdlsys = GAMEDATA_GetMMdlSys( gdata );
 	}
 
@@ -1946,24 +1895,7 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
 	
 	switch( (*seq) ){
 	case 0:
-		{
-			FLDMSGBG *msgBG;
-			u32 max = OBJCODEMAX;
-			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_MMdlList;
-			FLDMENUFUNC_LISTDATA *pMenuListData;
-			
-			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
-			work->msgData = FLDMSGBG_CreateMSGDATA(
-					msgBG, NARC_message_d_field_dat );
-			pMenuListData = FLDMENUFUNC_CreateListData( max, work->heapID );
-			DEBUG_SetMenuWorkMMdlList( pMenuListData, work->heapID );
-			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 11, 16 );
-			
-			work->menuFunc = FLDMENUFUNC_AddMenu(
-					msgBG, &menuH, pMenuListData );
-			GFL_MSG_Delete( work->msgData );
-		}
-		
+    work->menuFunc = DebugMenuInit( work->fieldWork, work->heapID,  &DebugMMdlListData );
 		(*seq)++;
 		break;
 	case 1:
@@ -2445,6 +2377,16 @@ static const FLDMENUFUNC_LIST DATA_WeatherMenuList[] =
 };
 #define DEBUG_WEATHERLIST_LIST_MAX	( NELEMS(DATA_WeatherMenuList) )
 
+static const DEBUG_MENU_INITIALIZER DebugWeatherMenuListData = {
+  NARC_message_d_tomoya_dat,
+  NELEMS(DATA_WeatherMenuList),
+  DATA_WeatherMenuList,
+  &DATA_DebugMenuList_WeatherList,
+  1, 1, 12, 11,
+  NULL,
+  NULL
+};
+
 //--------------------------------------------------------------
 /**
  * デバッグメニュー呼び出し　天気リスト
@@ -2485,27 +2427,11 @@ static BOOL debugMenuCallProc_WeatherList( DEBUG_MENU_EVENT_WORK *wk )
 static GMEVENT_RESULT debugMenuWeatherListEvent(
 		GMEVENT *event, int *seq, void *wk )
 {
-	DEBUG_ZONESEL_EVENT_WORK *work = wk;
+	DEBUG_WEATERLIST_EVENT_WORK *work = wk;
 	
 	switch( (*seq) ){
 	case 0:
-		{
-			FLDMSGBG *msgBG;
-			FLDMENUFUNC_LISTDATA *listdata;
-			u32 max = DEBUG_WEATHERLIST_LIST_MAX;
-			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_WeatherList;
-			
-			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
-			work->msgData = FLDMSGBG_CreateMSGDATA(
-				msgBG, NARC_message_d_tomoya_dat );
-			listdata = FLDMENUFUNC_CreateMakeListData(
-				DATA_WeatherMenuList, max, work->msgData, work->heapID );
-			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 8, 11 );
-			
-			work->menuFunc = FLDMENUFUNC_AddMenu( msgBG, &menuH, listdata );
-			GFL_MSG_Delete( work->msgData );
-		}
-		
+    work->menuFunc = DebugMenuInit( work->fieldWork, work->heapID,  &DebugWeatherMenuListData );
 		(*seq)++;
 		break;
 	case 1:
@@ -2626,6 +2552,16 @@ static const FLDMENUFUNC_LIST DATA_ControlTimeMenuList[CONT_TIME_TYPE_NUM] =
 	{ DEBUG_FIELD_STR29, (void*)CONT_TIME_TYPE_60RATE,  },
 };
 
+static const DEBUG_MENU_INITIALIZER DebugControlTimeMenuListData = {
+  NARC_message_d_field_dat,
+  NELEMS(DATA_ControlTimeMenuList),
+  DATA_ControlTimeMenuList,
+  &DATA_DebugMenuList_ContTimeList,
+  1, 1, 9, 13,
+  NULL,
+  NULL
+};
+
 //--------------------------------------------------------------
 /**
  * デバッグメニュー呼び出し　テストカメラリスト
@@ -2670,23 +2606,7 @@ static GMEVENT_RESULT debugMenuControlTimeListEvent(
 	
 	switch( (*seq) ){
 	case 0:
-		{
-			FLDMSGBG *msgBG;
-			FLDMENUFUNC_LISTDATA *listdata;
-			u32 max = CONT_TIME_TYPE_NUM;
-			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_ContTimeList;
-			
-			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
-			work->msgData = FLDMSGBG_CreateMSGDATA(
-				msgBG, NARC_message_d_field_dat );
-			listdata = FLDMENUFUNC_CreateMakeListData(
-				DATA_ControlTimeMenuList, max, work->msgData, work->heapID );
-			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 9, 13 );
-			
-			work->menuFunc = FLDMENUFUNC_AddMenu( msgBG, &menuH, listdata );
-			GFL_MSG_Delete( work->msgData );
-		}
-		
+    work->menuFunc = DebugMenuInit( work->fieldWork, work->heapID,  &DebugControlTimeMenuListData );
 		(*seq)++;
 		break;
 	case 1:
@@ -3098,9 +3018,8 @@ static BOOL debugMenuCallProc_ChangePlayerSex( DEBUG_MENU_EVENT_WORK *wk )
   HEAPID heapID = wk->heapID;
   FIELDMAP_WORK *fieldMap = wk->fieldWork;
   u16 zone_id = FIELDMAP_GetZoneID( fieldMap );
-  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-  MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
-  SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
+  MYSTATUS *mystatus = GAMEDATA_GetMyStatus( wk->gdata );
+  SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( wk->gdata );
   MYSTATUS *s_mystatus = SaveData_GetMyStatus( save );
   
   sex = MyStatus_GetMySex( mystatus );
@@ -3343,8 +3262,7 @@ static GMEVENT_RESULT debugMenuUITemplate( GMEVENT *p_event, int *p_seq, void *p
 static BOOL debugMenuCallProc_Kairiki( DEBUG_MENU_EVENT_WORK *wk )
 {
 	GAMESYS_WORK *gsys = wk->gmSys;
-	GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-  EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
+  EVENTWORK *evwork = GAMEDATA_GetEventWork( wk->gdata );
   EVENTWORK_SetEventFlag( evwork, SYS_FLAG_KAIRIKI );
   return( FALSE );
 }
@@ -3537,8 +3455,7 @@ static BOOL debugMenu_ControlShortCut( DEBUG_MENU_EVENT_WORK *wk )
 {	
 	int i;
 	GAMESYS_WORK *gsys = wk->gmSys;
-	GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-	SAVE_CONTROL_WORK *p_sv	= GAMEDATA_GetSaveControlWork(gdata);
+	SAVE_CONTROL_WORK *p_sv	= GAMEDATA_GetSaveControlWork(wk->gdata);
 	SHORTCUT *p_shortcut_sv	= SaveData_GetShortCut( p_sv );
 	for( i = 0; i < SHORTCUT_ID_MAX; i++ )
 	{	
