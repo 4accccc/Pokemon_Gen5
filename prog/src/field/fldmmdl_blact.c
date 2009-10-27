@@ -13,7 +13,8 @@
 //======================================================================
 #define REGIDCODE_MAX (0xffff) ///<BBDRESID最大
 #define BLACT_RESID_NULL (0xffff) ///<ビルボードリソース 無効ID
-#define RES_DIGEST_FRAME_MAX (4) ///<1フレームに消化できるリソース数
+//#define RES_DIGEST_FRAME_MAX (4) ///<1フレームに消化できるリソース数
+#define RES_DIGEST_FRAME_MAX (1) ///<1フレームに消化できるリソース数
 
 typedef enum
 {
