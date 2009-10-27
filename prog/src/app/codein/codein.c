@@ -63,7 +63,7 @@ GFL_DISP_VRAM vramSetTable = {
 	GX_VRAM_TEX_01_BC,				// テクスチャイメージスロット
 	GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット
 
-	GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
+	GX_OBJVRAMMODE_CHAR_1D_64K,	// メインOBJマッピングモード
 	GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
 };
 
