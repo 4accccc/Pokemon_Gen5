@@ -892,6 +892,7 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
   }
   
   // 男女でウィンドウカーソル用パレットを切替
+  // OAMリストの項目に使用。
   {
     u32 sex = MyStatus_GetMySex( pWork->mystatus );
     u32 res_nclr;

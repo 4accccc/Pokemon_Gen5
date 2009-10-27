@@ -873,6 +873,14 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     return;
   }
 
+  // ‹­§I—¹
+  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_X)
+  {
+    pWork->ret_code = BAG_NEXTPROC_EXIT;
+    _CHANGE_STATE(pWork,NULL);
+    return;
+  }
+
   // •À‚Ñ‘Ö‚¦
   if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT)
   {
