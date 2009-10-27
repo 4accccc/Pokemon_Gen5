@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/24 16:45:36
+#save date:2009/10/27 17:49:13
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04r0401.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/24 16:45:36
+#save date:2009/10/27 17:49:13
 2
 #hold event type:
 1
@@ -18,7 +18,7 @@ C04R0401_BADMAN_01
 #OBJ CODE Number
 BADMAN
 #MOVE CODE Number
-MV_DOWN
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -34,11 +34,11 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+1
 #Move Limit Z Number
-0
+3
 #position
--184 0 184
+-56 0 -40
 #event number: 1
 #type
 1
@@ -47,7 +47,7 @@ C04R0401_WOMAN2_01
 #OBJ CODE Number
 WOMAN2
 #MOVE CODE Number
-MV_DMY
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -55,7 +55,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C04R0401_WOMAN2_01
 #Direction Type Number
-DIR_DOWN
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -63,11 +63,11 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+2
 #Move Limit Z Number
-0
+2
 #position
--136 0 184
+-152 -32 152
 #event number: 2
 #type
 1
@@ -96,7 +96,7 @@ DIR_DOWN
 #Move Limit Z Number
 1
 #position
--88 0 136
+40 0 -8
 #event number: 3
 #type
 1
@@ -125,12 +125,12 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--200 0 136
+104 -32 120
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/24 16:45:36
+#save date:2009/10/27 17:49:13
 2
 #hold event type:
 1
@@ -140,7 +140,7 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/24 16:45:36
+#save date:2009/10/27 17:49:13
 2
 #hold event type:
 1
@@ -150,7 +150,7 @@ DIR_DOWN
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/24 16:45:36
+#save date:2009/10/27 17:49:13
 2
 #hold event type:
 1
@@ -168,7 +168,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--168 0 88
+-24 0 -168
 #event number: 1
 #Door Event Label
 DOOR_ID_C04R0401_C04_EXIT03
@@ -181,7 +181,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--136 0 88
+8 0 -168
 #event number: 2
 #Door Event Label
 DOOR_ID_C04R0401_C04_EXIT02
@@ -194,6 +194,6 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--152 0 88
+-8 0 -168
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
