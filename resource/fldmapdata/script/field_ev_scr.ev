@@ -9,7 +9,7 @@
   .text
 
   .include  "scr_seq_def.h"
-//  .include  "msg_field_ev_scr.h"
+  .include  "msg_field_ev_scr.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -18,8 +18,8 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA     ev_fld_ev_spray_effect_end
-_EVENT_DATA     ev_fld_ev_amaikaori_encount_failed
-_EVENT_DATA     ev_fld_ev_amaikaori_weather
+_EVENT_DATA     ev_fld_ev_amaikaori_enc_failed
+_EVENT_DATA     ev_fld_ev_amaikaori_weather_failed
 _EVENT_DATA_END
 
 DEFINE_LOCAL  reg_return
@@ -33,6 +33,9 @@ DEFINE_LOCAL  reg_return
 //==============================================================
 EVENT_START ev_fld_ev_spray_effect_end
 {
+  _TALKMSG( msg_fld_ev_spray_01 )
+  _AB_KEYWAIT()
+  _TALKWIN_CLOSE()
 }
 EVENT_END
 
@@ -43,13 +46,19 @@ EVENT_END
 ///
 ///
 //==============================================================
-EVENT_START ev_fld_ev_amaikaori_encount_failed
+EVENT_START ev_fld_ev_amaikaori_enc_failed
 {
+  _TALKMSG( msg_fld_ev_amaikaori_01 )
+  _AB_KEYWAIT()
+  _TALKWIN_CLOSE()
 }
 EVENT_END
 
-EVENT_START ev_fld_ev_amaikaori_weather
+EVENT_START ev_fld_ev_amaikaori_weather_failed
 {
+  _TALKMSG( msg_fld_ev_amaikaori_02 )
+  _AB_KEYWAIT()
+  _TALKWIN_CLOSE()
 }
 EVENT_END
 

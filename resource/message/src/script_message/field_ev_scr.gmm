@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2009-10-27T16:48:06"/>
+	<create user="iwasawa" host="W00157" date="2009-10-27T17:36:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,43 +292,28 @@
 	</lock>
 
 
-	<row id="msg_shop_01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
-		<language name="JPN" width="256">ようこそ！
-おかいもの　ですね？</language>
-		<language name="JPN_KANJI" width="256">ようこそ！
-お買い物ですね？</language>
+	<row id="msg_fld_ev_spray_01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>アイテム「むしよけスプレー」系の効果が切れたとき</comment>
+		<language name="JPN" width="256">スプレーの　こうかが　きれた</language>
+		<language name="JPN_KANJI" width="256">スプレーの　効果が　切れた</language>
 	</row>
 
-	<row id="msg_shop_02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
-		<language name="JPN" width="256">その　ほかに　わたしどもで
-なにか　おちからに　なれることは？</language>
-		<language name="JPN_KANJI" width="256">その他に　私どもで
-何か　お力に　なれることは？</language>
+	<row id="msg_fld_ev_amaikaori_01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>わざ「あまいかおり」使用
+だけどエンカウントしない場所</comment>
+		<language name="JPN" width="256">ここには
+なにも　いないようだ……</language>
+		<language name="JPN_KANJI" width="256">ここには
+なにも　いないようだ……</language>
 	</row>
 
-	<row id="msg_shop_03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
-		<language name="JPN" width="256">また　どうぞ！</language>
-		<language name="JPN_KANJI" width="256">また　どうぞ！</language>
-	</row>
-
-	<row id="msg_shop_greeting" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
-		<language name="JPN" width="256">いらっしゃいませ！</language>
-		<language name="JPN_KANJI" width="256">いらっしゃいませ！</language>
-	</row>
-
-	<row id="msg_shop_menu01_01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
-		<language name="JPN" width="256">かいに　きた</language>
-		<language name="JPN_KANJI" width="256">買いにきた</language>
-	</row>
-
-	<row id="msg_shop_menu01_02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
-		<language name="JPN" width="256">うりに　きた</language>
-		<language name="JPN_KANJI" width="256">売りにきた</language>
-	</row>
-
-	<row id="msg_shop_menu01_03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
-		<language name="JPN" width="256">なんでもないです</language>
-		<language name="JPN_KANJI" width="256">なんでもないです</language>
+	<row id="msg_fld_ev_amaikaori_02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>わざ「あまいかおり」使用
+だけど天気で無効</comment>
+		<language name="JPN" width="256">なぜだか
+あまいかおりは　きえてしまった……</language>
+		<language name="JPN_KANJI" width="256">何故だか
+あまいかおりは　消えてしまった……</language>
 	</row>
 
 	<flowchart-group-list>
