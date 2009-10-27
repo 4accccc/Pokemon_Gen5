@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-26T18:23:53"/>
+	<create user="matsumiya" host="W00207" date="2009-10-27T11:52:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -754,8 +754,10 @@
 	<row id="msg_t01_babygirl1_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・ほのお選択で主人公の勝ち</comment>
-		<language name="JPN" width="256">ほのおタイプは
-みずタイプに　よわい……[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="256">あなたが　ほのおで
+あたしは　くさ……[BE:01:ページ切り替え（クリア）]
+くさタイプは
+ほのおタイプに　よわい……[BE:00:ページ切り替え（行送り）]
 ということで　あたしの　まけね</language>
 		<language name="JPN_KANJI" width="256">あなたが　ほのおで
 あたしは　くさ……[BE:01:ページ切り替え（クリア）]
@@ -767,7 +769,9 @@
 	<row id="msg_t01_babygirl1_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・ほのお選択で主人公の負け</comment>
-		<language name="JPN" width="256">ほのおタイプは
+		<language name="JPN" width="256">あなたが　ほのおで
+あたしは　みず……[BE:01:ページ切り替え（クリア）]
+ほのおタイプは
 みずタイプに　よわい！[BE:00:ページ切り替え（行送り）]
 ということで　あたしの　かち！</language>
 		<language name="JPN_KANJI" width="256">あなたが　ほのおで
@@ -780,8 +784,10 @@
 	<row id="msg_t01_babygirl1_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・みず選択で主人公の勝ち</comment>
-		<language name="JPN" width="256">みずタイプは
-くさタイプに　よわい……[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="256">あなたが　みずで
+あたしは　ほのお……[BE:01:ページ切り替え（クリア）]
+ほのおタイプは
+みずタイプに　よわい……[BE:00:ページ切り替え（行送り）]
 ということで　あたしの　まけね</language>
 		<language name="JPN_KANJI" width="256">あなたが　みずで
 あたしは　ほのお……[BE:01:ページ切り替え（クリア）]
@@ -793,7 +799,9 @@
 	<row id="msg_t01_babygirl1_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・みず選択で主人公の負け</comment>
-		<language name="JPN" width="256">みずタイプは
+		<language name="JPN" width="256">あなたが　みずで
+あたしは　くさ……[BE:01:ページ切り替え（クリア）]
+みずタイプは
 くさタイプに　よわい！[BE:00:ページ切り替え（行送り）]
 ということで　あたしの　かち！</language>
 		<language name="JPN_KANJI" width="256">あなたが　みずで
@@ -806,8 +814,10 @@
 	<row id="msg_t01_babygirl1_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・くさ選択で主人公の勝ち</comment>
-		<language name="JPN" width="256">くさタイプは
-ほのおタイプに　よわい……[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="256">あなたが　くさで
+あたしは　みず……[BE:01:ページ切り替え（クリア）]
+みずタイプは
+くさタイプに　よわい……[BE:00:ページ切り替え（行送り）]
 ということで　あたしの　まけね</language>
 		<language name="JPN_KANJI" width="256">あなたが　くさで
 あたしは　みず……[BE:01:ページ切り替え（クリア）]
@@ -819,8 +829,10 @@
 	<row id="msg_t01_babygirl1_09" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・くさ選択で主人公の負け</comment>
-		<language name="JPN" width="256">くさタイプは
-ほのおタイプに　よわい！[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="256">あなたが　くさで
+あたしは　みず……[BE:01:ページ切り替え（クリア）]
+みずタイプは
+くさタイプに　よわい！[BE:00:ページ切り替え（行送り）]
 ということで　あたしの　かち！</language>
 		<language name="JPN_KANJI" width="256">あなたが　くさで
 あたしは　みず……[BE:01:ページ切り替え（クリア）]
@@ -915,14 +927,16 @@
 	<row id="msg_t02_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
-		<language name="JPN" width="256">カラクサタウン</language>
+		<language name="JPN" width="256">カラクサタウン
+おいしげるツルは　はんえいのあかし</language>
 		<language name="JPN_KANJI" width="256">カラクサタウン
 生い茂るツルは繁栄の証</language>
 	</row>
 
 	<row id="msg_t02_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<attribute name="キャラ指定">看板：ポケセン</attribute>
-		<language name="JPN" width="256">？？？</language>
+		<language name="JPN" width="256">たびのおともに　ポケモンセンター
+フレンドリィショップも　あります</language>
 		<language name="JPN_KANJI" width="256">旅のお供に　ポケモンセンター
 ショップコーナーも　あります</language>
 	</row>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-09T16:37:23"/>
+	<create user="matsumiya" host="W00207" date="2009-10-27T11:55:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -526,20 +526,8 @@ msg_t02pc0101_docotr_jr_03表示後
 	<row id="msg_t02pc0101_middlewoman1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除予定</comment>
 		<attribute name="キャラ指定">おばさん！</attribute>
-		<language name="JPN" width="256">トレーナーの　いこいの　ばしょ
-ポケモンたちが　すきな　くうかん[BE:00:ページ切り替え（行送り）]
-それが　この　ポケモンセンター！[BE:01:ページ切り替え（クリア）]
-たたかう　げんきの　ない
-ポケモンを　かいふく　させたり[BE:01:ページ切り替え（クリア）]
-パソコンに　あずけた　ポケモンを
-たびに　つれていけるわ</language>
-		<language name="JPN_KANJI" width="256">トレーナーの　憩いの　場所
-ポケモンたちが　好きな　空間[BE:00:ページ切り替え（行送り）]
-それが　この　ポケモンセンター！[BE:01:ページ切り替え（クリア）]
-たたかう　元気の　ない
-ポケモンを　回復　させたり[BE:01:ページ切り替え（クリア）]
-パソコンに　預けた　ポケモンを
-旅に　連れて行けるわ</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>
