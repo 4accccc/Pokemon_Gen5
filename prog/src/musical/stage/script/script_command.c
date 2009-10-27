@@ -353,7 +353,7 @@ SCRIPT_FUNC_DEF( CurtainUp )
   STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
   MOVE_WORK_S32 *moveWork;
-  const BOOL autoWait = (ScriptFunc_GetValueS32()==0?TRUE:FALSE);
+  const BOOL autoWait = ScriptFunc_GetValueS32();
   SCRIPT_PRINT_LABEL(CurtainUp);
 
   moveWork = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_WORK_S32 ));
@@ -367,6 +367,12 @@ SCRIPT_FUNC_DEF( CurtainUp )
   
   moveWork->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_MoveCurtainTCB , (void*)moveWork , SCRIPT_TCB_PRI_NORMAL );
   
+  if( autoWait == 1 )
+  {
+    scriptWork->waitCnt = moveWork->frame;
+    SCRIPT_TPrintf("   AutoWait[%d]\n",scriptWork->waitCnt );
+  }
+  
   return SFT_CONTINUE;
   
 }
@@ -375,7 +381,7 @@ SCRIPT_FUNC_DEF( CurtainDown )
 {
   STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
-  const BOOL autoWait = (ScriptFunc_GetValueS32()==0?TRUE:FALSE);
+  const BOOL autoWait = ScriptFunc_GetValueS32();
   MOVE_WORK_S32 *moveWork;
   SCRIPT_PRINT_LABEL(CurtainDown);
   moveWork = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_WORK_S32 ));
@@ -389,6 +395,12 @@ SCRIPT_FUNC_DEF( CurtainDown )
   
   moveWork->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_MoveCurtainTCB , (void*)moveWork , SCRIPT_TCB_PRI_NORMAL );
   
+  if( autoWait == 1 )
+  {
+    scriptWork->waitCnt = moveWork->frame;
+    SCRIPT_TPrintf("   AutoWait[%d]\n",scriptWork->waitCnt );
+  }
+  
   PMSND_PlaySE( STA_SE_CLOSE_CURTAIN );
 //  PMSND_PlaySE( SEQ_SE_MSCL_09 );
   
@@ -401,7 +413,7 @@ SCRIPT_FUNC_DEF( CurtainMove )
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
   const s32 frame = ScriptFunc_GetValueS32();
   const s32 pos = ScriptFunc_GetValuefx32();
-  const BOOL autoWait = (ScriptFunc_GetValueS32()==0?TRUE:FALSE);
+  const BOOL autoWait = ScriptFunc_GetValueS32();
   SCRIPT_PRINT_LABEL(CurtainMove);
   
   if( frame == 0 )
@@ -421,6 +433,13 @@ SCRIPT_FUNC_DEF( CurtainMove )
 //    moveWork->stepVal = (moveWork->end-moveWork->start)/moveWork->frame;
   
     moveWork->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_MoveCurtainTCB , (void*)moveWork , SCRIPT_TCB_PRI_NORMAL );
+  
+    if( autoWait == 1 )
+    {
+      scriptWork->waitCnt = moveWork->frame;
+      SCRIPT_TPrintf("   AutoWait[%d]\n",scriptWork->waitCnt );
+    }
+    
   }
   
   return SFT_CONTINUE;
@@ -453,7 +472,7 @@ SCRIPT_FUNC_DEF( StageMove )
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
   const s32 frame = ScriptFunc_GetValueS32();
   const s32 pos = ScriptFunc_GetValuefx32();
-  const BOOL autoWait = (ScriptFunc_GetValueS32()==0?TRUE:FALSE);
+  const BOOL autoWait = ScriptFunc_GetValueS32();
   SCRIPT_PRINT_LABEL(StageMove);
   
   if( frame == 0 )
@@ -473,6 +492,13 @@ SCRIPT_FUNC_DEF( StageMove )
 //    moveWork->stepVal = (moveWork->end-moveWork->start)/moveWork->frame;
   
     moveWork->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_MoveStageTCB , (void*)moveWork , SCRIPT_TCB_PRI_NORMAL );
+  
+    if( autoWait == 1 )
+    {
+      scriptWork->waitCnt = moveWork->frame;
+      SCRIPT_TPrintf("   AutoWait[%d]\n",scriptWork->waitCnt );
+    }
+    
   }
 
   return SFT_CONTINUE;
@@ -612,7 +638,7 @@ SCRIPT_FUNC_DEF( PokeMove )
   const fx32 posX = ScriptFunc_GetValuefx32();
   const fx32 posY = ScriptFunc_GetValuefx32();
   const fx32 posZ = ScriptFunc_GetValuefx32();
-  const BOOL autoWait = (ScriptFunc_GetValueS32()==0?TRUE:FALSE);
+  const BOOL autoWait = ScriptFunc_GetValueS32();
   u8  pokeNo;
   
   STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
@@ -652,6 +678,13 @@ SCRIPT_FUNC_DEF( PokeMove )
     }
   }
   
+  if( autoWait == 1 )
+  {
+    scriptWork->waitCnt = frame;
+    SCRIPT_TPrintf("   AutoWait[%d]\n",scriptWork->waitCnt );
+  }
+  
+  
   return SFT_CONTINUE;
 }
 
@@ -666,7 +699,7 @@ SCRIPT_FUNC_DEF( PokeMoveOffset )
   const fx32 ofsX = ScriptFunc_GetValuefx32();
   const fx32 ofsY = ScriptFunc_GetValuefx32();
   const fx32 ofsZ = ScriptFunc_GetValuefx32();
-  const BOOL autoWait = (ScriptFunc_GetValueS32()==0?TRUE:FALSE);
+  const BOOL autoWait = ScriptFunc_GetValueS32();
   u8  pokeNo;
   
   STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
@@ -710,6 +743,12 @@ SCRIPT_FUNC_DEF( PokeMoveOffset )
       }
     }
   }
+  if( autoWait == 1 )
+  {
+    scriptWork->waitCnt = frame;
+    SCRIPT_TPrintf("   AutoWait[%d]\n",scriptWork->waitCnt );
+  }
+  
   
   return SFT_CONTINUE;  
 }
@@ -928,7 +967,7 @@ SCRIPT_FUNC_DEF( PokeActionJump )
   const s32 interval = ScriptFunc_GetValueS32();
   const s32 num = ScriptFunc_GetValueS32();
   const fx32 height = ScriptFunc_GetValuefx32();
-  const BOOL autoWait = (ScriptFunc_GetValueS32()==0?TRUE:FALSE);
+  const BOOL autoWait = ScriptFunc_GetValueS32();
   u8  pokeNo;
 
   STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
@@ -951,6 +990,12 @@ SCRIPT_FUNC_DEF( PokeActionJump )
       jumpWork->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_PokeAct_Jump , (void*)jumpWork , SCRIPT_TCB_PRI_NORMAL );
     }
   }
+  if( autoWait == 1 )
+  {
+    scriptWork->waitCnt = num*interval;
+    SCRIPT_TPrintf("   AutoWait[%d]\n",scriptWork->waitCnt );
+  }
+  
 
   return SFT_CONTINUE;
 
@@ -1000,7 +1045,7 @@ SCRIPT_FUNC_DEF( PokeActionRotate )
   const s32 frame = ScriptFunc_GetValueS32();
   const s32 startAngle = ScriptFunc_GetValueS32();
   const s32 rotateAngle = ScriptFunc_GetValuefx32();
-  const BOOL autoWait = (ScriptFunc_GetValueS32()==0?TRUE:FALSE);
+  const BOOL autoWait = ScriptFunc_GetValueS32();
   u8  pokeNo;
 
   STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
@@ -1022,6 +1067,11 @@ SCRIPT_FUNC_DEF( PokeActionRotate )
       
       rotWork->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_PokeAct_Rotate , (void*)rotWork , SCRIPT_TCB_PRI_NORMAL );
     }
+  }
+  if( autoWait == 1 )
+  {
+    scriptWork->waitCnt = frame;
+    SCRIPT_TPrintf("   AutoWait[%d]\n",scriptWork->waitCnt );
   }
 
   return SFT_CONTINUE;
@@ -1061,7 +1111,7 @@ SCRIPT_FUNC_DEF( PokeActionComeNearToTop )
   STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
   const s32 frame = ScriptFunc_GetValueS32();
-  const BOOL autoWait = (ScriptFunc_GetValueS32()==0?TRUE:FALSE);
+  const BOOL autoWait = ScriptFunc_GetValueS32();
 
   STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
   u8 topPoke;
@@ -1223,6 +1273,11 @@ SCRIPT_FUNC_DEF( PokeActionComeNearToTop )
       moveWork->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_MoveStageTCB , (void*)moveWork , SCRIPT_TCB_PRI_NORMAL );
       STA_ACT_SetForceScroll( work->actWork , TRUE );
     }
+  }
+  if( autoWait == 1 )
+  {
+    scriptWork->waitCnt = frame;
+    SCRIPT_TPrintf("   AutoWait[%d]\n",scriptWork->waitCnt );
   }
   
   return SFT_CONTINUE;
