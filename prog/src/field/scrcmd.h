@@ -22,6 +22,16 @@
 //#define EVCMD_MAX	(565)		//scrcmd.c ScriptCmdTblの要素数
 #define SCRCMD_PL_NULL //無効化定義
 
+//--------------------------------------------------------------
+/// スクリプトイベント　キーシンボル
+//--------------------------------------------------------------
+enum
+{
+  EVENT_WAIT_AB_KEY = PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL,
+  EVENT_WAIT_PAD_KEY = PAD_KEY_UP|PAD_KEY_DOWN|PAD_KEY_LEFT|PAD_KEY_RIGHT,
+  EVENT_WAIT_LAST_KEY = EVENT_WAIT_AB_KEY|EVENT_WAIT_PAD_KEY 
+};
+
 //======================================================================
 //	グローバル変数
 //======================================================================

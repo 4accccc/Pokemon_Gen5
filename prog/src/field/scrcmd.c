@@ -1080,14 +1080,16 @@ static VMCMD_RESULT EvCmdABKeyWait( VMHANDLE * core, void *wk )
 //--------------------------------------------------------------
 static BOOL evWaitLastKey( VMHANDLE * core, void *wk )
 {
+#if 0
   enum {
     WAIT_AB_KEY = PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL,
     WAIT_PAD_KEY = PAD_KEY_UP | PAD_KEY_DOWN | PAD_KEY_LEFT | PAD_KEY_RIGHT,
     WAIT_LAST_KEY = WAIT_AB_KEY | WAIT_PAD_KEY 
   };
-  
+#endif
+
   u32 trg = GFL_UI_KEY_GetTrg();
-  if( (trg & WAIT_LAST_KEY) != 0)
+  if( (trg & EVENT_WAIT_LAST_KEY) != 0)
   {
     return TRUE;
   }
