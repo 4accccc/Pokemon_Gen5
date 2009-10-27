@@ -32,7 +32,7 @@ class BmAnime
   @@COL_FILES = 6
 
   #アニメタイプ指定(ならびに注意！！）
-  @@anime_type = ["NO_ANIME", "ETERNAL", "EVENT"]
+  @@anime_type = ["NO_ANIME", "ETERNAL", "EVENT", "TIMEZONE"]
 
   #動作タイプ指定(ならびに注意！！）
   @@program_type = ["NONE", "ELBOARD1", "ELBOARD2"]
