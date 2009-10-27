@@ -66,6 +66,8 @@ typedef enum
   _TIMING_SAVEST,
   _TIMING_SAVELAST,
   _TIMING_SAVEEND,
+  _TIMING_ANIMEEND,
+  
  } NET_TIMING_ENUM;
 
 #define BOX_VERTICAL_NUM (5)
@@ -268,6 +270,8 @@ typedef struct
   MCSS_WORK* pMcss;  ///< 動かす物体
   int   time;			   ///< トータル時間
   int   nowcount;	   ///<  現在の進行時間
+  float   percent;   ///< 加速する計算
+  float   add;   ///< 変化率
   VecFx32  start;      ///< 開始位置
   VecFx32  end;        ///< 終わり位置
 }_POKEMCSS_MOVE_WORK;

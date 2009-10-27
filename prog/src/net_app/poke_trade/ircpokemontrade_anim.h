@@ -45,7 +45,11 @@
 #define _POKE_SIDEOUT_START   (368)  //絵コンテ１０番  ポケモン左右に移動していく
 #define _POKE_SIDEOUT_TIME    (46)      //絵コンテ１０番  ポケモン登場移動時間
 #define _POKE_SIDEIN_START   (434)   //絵コンテ１１番  ポケモン左右に移動して戻ってくる
-#define _POKE_SIDEIN_TIME    (140)     //絵コンテ１１番 ポケモン登場移動時間
+#define _POKE_SIDEIN_TIME    (203)     //絵コンテ１１番 ポケモン登場移動時間
+
+#define _POKE_SIDEIN_PERCENT (0.1f)     
+#define _POKE_SIDEIN_PERCENTADD (0.0044334975f)
+
 #define _POKE_LEAVE_START   (637)  //絵コンテ１３番  ポケモン退場
 #define _POKE_LEAVE_TIME    (7)      //絵コンテ１３番  ポケモン退場移動時間
 
@@ -99,10 +103,10 @@
 //絵コンテ１０番
 #define _POKEMON_PLAYER_SIDEOUT_POSX _MCSS_POS_X(-140)           // 自分のポケモンのX
 #define _POKEMON_PLAYER_SIDEOUT_POSY _POKEMON_PLAYER_UP_POSY    // 自分のポケモンのY
-#define _POKEMON_PLAYER_SIDEOUT_POSZ _POKEMON_PLAYER_UP_POSZ    // 自分のポケモンのZ
+#define _POKEMON_PLAYER_SIDEOUT_POSZ _MCSS_POS_Z(0)    // 自分のポケモンのZ
 #define _POKEMON_FRIEND_SIDEOUT_POSX _MCSS_POS_X(140)           // 相手のポケモンのX
 #define _POKEMON_FRIEND_SIDEOUT_POSY _POKEMON_FRIEND_DOWN_POSY  // 相手のポケモンのY
-#define _POKEMON_FRIEND_SIDEOUT_POSZ _POKEMON_FRIEND_DOWN_POSZ  // 相手のポケモンのZ
+#define _POKEMON_FRIEND_SIDEOUT_POSZ _MCSS_POS_Z(0)  // 相手のポケモンのZ
 
 //絵コンテ１１番
 #define _POKEMON_PLAYER_SIDEST_POSX _POKEMON_PLAYER_SIDEOUT_POSX  // 自分のポケモンが左から登場する場合のX

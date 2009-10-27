@@ -1245,19 +1245,21 @@ static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork)
     if(GFL_UI_TP_GetPointTrg(&x, &y)==TRUE){
       GFL_CLWK* pCL = IRC_POKETRADE_GetCLACT(pWork,x+12,y+12, &pWork->workBoxno, &pWork->workPokeIndex, &line, &index);
       if(pCL){
-        //今のつかんでる物を元の位置に戻す
-        _CatchPokemonPositionRewind(pWork);
-        _CatchPokemonPositionActive(pWork,pCL);
-
-        IRC_POKETRADE_CursorEnable(pWork,line, index);  //OAMカーソル移動
-        OS_TPrintf("GET %d %d\n",pWork->workBoxno,pWork->workPokeIndex);
-        pWork->underSelectBoxno  = pWork->workBoxno;
-        pWork->underSelectIndex = pWork->workPokeIndex;
-        pWork->x = x;
-        pWork->y = y;
-        pWork->workPokeIndex = 0;
-        pWork->workBoxno = 0;
-        bChange = TRUE;
+        POKEMON_PASO_PARAM* ppp =
+          IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, pWork->workBoxno, pWork->workPokeIndex,pWork);
+          _CatchPokemonPositionRewind(pWork);          //今のつかんでる物を元の位置に戻す
+        if(ppp && PPP_Get( ppp, ID_PARA_poke_exist, NULL  ) != 0 ){
+          _CatchPokemonPositionActive(pWork,pCL);
+          IRC_POKETRADE_CursorEnable(pWork,line, index);  //OAMカーソル移動
+          OS_TPrintf("GET %d %d\n",pWork->workBoxno,pWork->workPokeIndex);
+          pWork->underSelectBoxno  = pWork->workBoxno;
+          pWork->underSelectIndex = pWork->workPokeIndex;
+          pWork->x = x;
+          pWork->y = y;
+          pWork->workPokeIndex = 0;
+          pWork->workBoxno = 0;
+          bChange = TRUE;
+        }
       }
     }
   }
@@ -1949,6 +1951,11 @@ static void _padUDLRFunc(POKEMON_TRADE_WORK* pWork)
     if(pWork->MainObjCursorLine >= TRADEBOX_LINEMAX){
       pWork->MainObjCursorLine = 0;
     }
+    if(pWork->MainObjCursorLine < HAND_HORIZONTAL_NUM){  //手持ちトレイ上ではカーソル位置の補正がある
+      if(pWork->MainObjCursorIndex >= HAND_VERTICAL_NUM){
+        pWork->MainObjCursorIndex = HAND_VERTICAL_NUM-1;
+      }
+    }
     pWork->oldLine--;
     bChange=TRUE;
   }
@@ -1959,6 +1966,11 @@ static void _padUDLRFunc(POKEMON_TRADE_WORK* pWork)
     }
     if(pWork->MainObjCursorLine < 0){
       pWork->MainObjCursorLine = TRADEBOX_LINEMAX-1;
+    }
+    if(pWork->MainObjCursorLine < HAND_HORIZONTAL_NUM){  //手持ちトレイ上ではカーソル位置の補正がある
+      if(pWork->MainObjCursorIndex >= HAND_VERTICAL_NUM){
+        pWork->MainObjCursorIndex = HAND_VERTICAL_NUM-1;
+      }
     }
     pWork->oldLine++;
     bChange=TRUE;
@@ -1996,12 +2008,11 @@ static void _scrollMainFunc(POKEMON_TRADE_WORK* pWork,BOOL bSE, BOOL bNetSend)
   IRC_POKETRADE_SendScreenBoxNameChar(pWork);
   IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
 
-  if(!PMSND_CheckPlaySE()){
+  if(!PMSND_CheckPlaySE() && bSE){
     PMSND_PlaySystemSE(POKETRADESE_RIBBON);
   }
 
-  if(GFL_NET_IsInit()){
-    // 特に失敗してもかまわない通信 相手に位置を知らせているだけ
+  if(GFL_NET_IsInit() && bNetSend){  // 特に失敗してもかまわない通信 相手に位置を知らせているだけ
     GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_SCROLLBAR,4,&pWork->BoxScrollNum);
   }
 }
@@ -2016,12 +2027,14 @@ static void _touchState(POKEMON_TRADE_WORK* pWork)
 {
   int i;
 
+  GFL_STD_MemClear(pWork->pokeIconNo,sizeof(pWork->pokeIconNo));
+  
   _CatchPokemonPositionRewind(pWork);
   _PokemonReset(pWork,0);
   _PokemonReset(pWork,1);
 
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
-  //  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
+  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, FALSE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, FALSE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_RETURN ,TRUE );
@@ -2292,7 +2305,6 @@ static void _dispInit(POKEMON_TRADE_WORK* pWork)
 
   IRC_POKETRADE_CreatePokeIconResource(pWork);
 
-  IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);  //ポケモンの表示
   IRC_POKETRADE_SendVramBoxNameChar(pWork); // ボックス名初期化
 
   IRC_POKETRADE_GraphicInitSubDisp(pWork);  //BGを
@@ -2303,10 +2315,10 @@ static void _dispInit(POKEMON_TRADE_WORK* pWork)
 
   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
 
-  //	GFL_NET_WirelessIconEasyXY(GFL_WICON_POSX, GFL_WICON_POSY, TRUE, pWork->heapID);
-  //	GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_WORLDTRADE );
-  GFL_NET_WirelessIconEasy_HoldLCD(TRUE,pWork->heapID);
+  GFL_NET_WirelessIconEasy_HoldLCD(TRUE,pWork->heapID); //通信アイコン
   GFL_NET_ReloadIcon();
+
+  IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);  //ポケモンの表示
 
 }
 

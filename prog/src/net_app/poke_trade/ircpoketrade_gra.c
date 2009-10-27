@@ -34,8 +34,6 @@
 #define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット
 
 
-
-
 #define _CLACT_SOFTPRI_POKESEL  (2)
 #define _CLACT_SOFTPRI_POKESEL_BAR  (3)
 #define _CLACT_SOFTPRI_SCROLL_BAR  (4)
@@ -46,13 +44,11 @@
 
 static void IRC_POKETRADE_TrayInit(POKEMON_TRADE_WORK* pWork,int subchar);
 static void IRC_POKETRADE_TrayExit(POKEMON_TRADE_WORK* pWork);
-static int _DotToLine(int pos);
 static void _PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork );
 static void IRC_POKETRADE_PokeIcomPosSet(POKEMON_TRADE_WORK* pWork);
 
 
 static int _Line2RingLineIconGet(int line);
-static void _Line2RingLineSet(POKEMON_TRADE_WORK* pWork,int add);
 static void _iconAllDrawDisable(POKEMON_TRADE_WORK* pWork);
 
 
@@ -134,7 +130,7 @@ void IRC_POKETRADE_MainGraphicExit(POKEMON_TRADE_WORK* pWork)
 
 //------------------------------------------------------------------
 /**
- * @brief   初期化時のグラフィック初期化
+ * @brief   初期化時の下画面グラフィック初期化
  * @param   POKEMON_TRADE_WORK   ワークポインタ
  * @retval  none
  */
@@ -169,6 +165,14 @@ void IRC_POKETRADE_GraphicInitSubDisp(POKEMON_TRADE_WORK* pWork)
 			pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID );
 
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief   下画面のリソースの開放
+ * @param   POKEMON_TRADE_WORK   ワークポインタ
+ * @retval  none
+ */
+//------------------------------------------------------------------
 
 void IRC_POKETRADE_SubGraphicExit(POKEMON_TRADE_WORK* pWork)
 {
@@ -215,17 +219,6 @@ void IRC_POKETRADE_CommonCellInit(POKEMON_TRADE_WORK* pWork)
         APP_COMMON_GetBarIconAnimeArcIdx(APP_COMMON_MAPPING_128K) , pWork->heapID  );
     GFL_ARC_CloseDataHandle( p_handle );
   }
-
-  
-}
-
-
-
-void IRC_POKETRADE_G3dDraw(POKEMON_TRADE_WORK* pWork)
-{
-//		G3X_EdgeMarking( FALSE );
-//  GFL_G3D_CAMERA_Switching( pWork->p_camera );  
-//  GFL_G3D_DRAW_DrawObject( pWork->pG3dObj, &pWork->status );
 }
 
 
@@ -303,7 +296,6 @@ void IRC_POKETRADE_AppMenuOpen(POKEMON_TRADE_WORK* pWork, int *menustr,int num)
   for(i=0;i<num;i++){
     GFL_STR_DeleteBuffer(pWork->appitem[i].str);
   }
-  //G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , -8 );
 
 }
 
@@ -399,14 +391,6 @@ BOOL IRC_POKETRADE_MessageEndCheck(POKEMON_TRADE_WORK* pWork)
   return TRUE;// 終わっている
 }
 
-//------------------------------------------------------------------------------
-/**
- * @brief   トレイの表示
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-
 
 //------------------------------------------------------------------------------
 /**
@@ -430,6 +414,12 @@ static u16 _GetScr(int x , int y, POKEMON_TRADE_WORK* pWork)
   return pWork->scrTray[ 18+(y * 32) + x2 ];
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   トレイの表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
 
 void IRC_POKETRADE_TrayDisp(POKEMON_TRADE_WORK* pWork)
 {
@@ -453,6 +443,12 @@ void IRC_POKETRADE_TrayDisp(POKEMON_TRADE_WORK* pWork)
 
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   トレイの初期化
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
 
 static void IRC_POKETRADE_TrayInit(POKEMON_TRADE_WORK* pWork,int subchar)
 {
@@ -474,6 +470,14 @@ static void IRC_POKETRADE_TrayInit(POKEMON_TRADE_WORK* pWork,int subchar)
   IRC_POKETRADE_TrayDisp(pWork);
 //  IRC_POKETRADE_TrayDisp(pWork);
 }
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   トレイのリソースの開放
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
 
 static void IRC_POKETRADE_TrayExit(POKEMON_TRADE_WORK* pWork)
 {
@@ -506,13 +510,11 @@ void IRC_POKETRADE_SendVramBoxNameChar(POKEMON_TRADE_WORK* pWork)
     }
     GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
     GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->BoxNameWin[i]), 0 );
-//   GFL_BMPWIN_MakeScreen(pWork->BoxNameWin[i]);
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->BoxNameWin[i]), 0, 0, pWork->pStrBuf, pWork->pFontHandle);
     GFL_BMPWIN_TransVramCharacter(pWork->BoxNameWin[i]);
 
     GFL_BMPWIN_SetPosY( pWork->BoxNameWin[i], 0 );  //０に補正
   }
-//  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
 }
 
 //------------------------------------------------------------------------------
@@ -808,14 +810,47 @@ static BOOL _IsPokeLanguageMark(POKEMON_TRADE_WORK* pWork,int monsno)
 }
 #endif
 
-//ラインにあわせたポケモン表示
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   秘伝技の検査
+ * @param   POKEMON_PASO_PARAM
+ * @retval  TRUE  秘伝技もち
+ * @retval  FALSE  秘伝技もってない
+ */
+//------------------------------------------------------------------------------
+
+static BOOL _hedenWazaCheck(POKEMON_PASO_PARAM* ppp)
+{
+  int x;
+
+  for(x=0;x<4;x++){
+    int machine = PPP_Get(ppp,POKEPER_ID_machine1+x,NULL);
+    if(ITEM_CheckHidenWaza(machine)){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ラインにあわせたポケモン表示
+ * @param   POKEMON_TRADE_WORK ワーク
+ * @param   boxData  ボックスのワーク
+ * @param   line      ポケモン表示列
+ * @param   k         画面上の列
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+//
 static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxData ,int line, int k)
 {
   int i,j;
   
   POKEMON_PASO_PARAM* ppp;
 	void *obj_vram = G2S_GetOBJCharPtr();
-	ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
 
 
   if(line == pWork->MainObjCursorLine){
@@ -832,13 +867,18 @@ static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxDa
         pWork->pokeIconLine[k][i] = 0xff;
         continue;
       }
+      if(PPP_Get( ppp, ID_PARA_poke_exist, NULL  ) == 0 ){
+        pWork->pokeIconLine[k][i] = 0xff;
+        continue;
+      }
       pWork->pokeIconLine[k][i] = line;
-      monsno = PPP_Get(ppp,ID_PARA_monsno,NULL);
+      monsno = PPP_Get(ppp,ID_PARA_monsno_egg,NULL);
       if( monsno == 0 ){	//ポケモンがいるかのチェック
         continue;
       }
       else if(pWork->pokeIconNo[k][i] == monsno){
         GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[k][i], TRUE );
+        OS_TPrintf("DISPON %d %d\n",k,i);
       }
       else if(pWork->pokeIconNo[k][i] != monsno){
         u8 pltNum;
@@ -854,14 +894,9 @@ static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxDa
         
         GFL_STD_MemCopy(&pWork->pCharMem[4*8*4*4*monsno] , (char*)((u32)obj_vram) + aproxy.vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_2DSUB], 4*8*4*4);
 
-        if(bTemoti){
-          for(i=0;i<4;i++){
-            int machine = PPP_Get(ppp,POKEPER_ID_machine1+i,NULL);
-            if(ITEM_CheckHidenWaza(machine)){
-              pltNum-=_OBJPLT_POKEICON_GRAY; //
-              break;
-            }
-          }
+        
+        if(bTemoti && _hedenWazaCheck(ppp)){
+          pltNum -= _OBJPLT_POKEICON_GRAY; 
         }
         
         GFL_CLACT_WK_SetPlttOffs( pWork->pokeIcon[k][i] , pltNum , CLWK_PLTTOFFS_MODE_PLTT_TOP );
@@ -869,13 +904,13 @@ static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxDa
 
         GFL_CLACT_WK_SetAutoAnmFlag( pWork->pokeIcon[k][i] , FALSE );
         GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[k][i], TRUE );
+        OS_TPrintf("DISPON2 %d %d\n",k,i);
       }
-      if(_IsPokeLanguageMark(pWork,monsno)){
+      if(!PPP_Get(ppp,ID_PARA_tamago_flag,NULL) && _IsPokeLanguageMark(pWork,monsno)){
         GFL_CLACT_WK_SetDrawEnable( pWork->markIcon[k][i], TRUE );
       }
     }
   }
-  GFL_ARC_CloseDataHandle( arcHandle );
 }
 
 
@@ -908,8 +943,14 @@ static int _boxScrollNum2Line(POKEMON_TRADE_WORK* pWork)
 }
 
 
-
-
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイコンの描画
+ * @param   boxData    ボックスデータ
+ * @param   POKEMON_TRADE_WORK  ワーク
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
 
 void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork )
 {
@@ -924,8 +965,8 @@ void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork 
       }
     }
 
-    
-    _Line2RingLineSet(pWork,line);
+
+    pWork->ringLineNo = line;
     _iconAllDrawDisable(pWork);  // アイコン表示を一旦消す
   
     for(i=0;i < _LING_LINENO_MAX;i++){
@@ -945,55 +986,16 @@ void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork 
 
 //------------------------------------------------------------------------------
 /**
- * @brief   ポケモンアイコン場所計算
- * @param   line           横
- * @param   m              表示ラインとの差分
- * @param   vertical       縦
- * @param   boxscrollnum   スクロールドット
- * @param   GFL_CLACTPOS   計算した位置
+ * @brief   アイコンの場所を設定する
+ * @param   POKEMON_TRADE_WORK  ワーク
  * @retval  none
  */
 //------------------------------------------------------------------------------
-#if 0
-static void _pokeIcomPosCalc(int line,int m , int vertical, int boxscrollnum,GFL_CLACTPOS* pPos)
-{
-  int line2, i, no, subnum=0;
-  int x,y;
-
-  line2 = line;
-
-  no = _Line2RingLineIconGet(line + m);
-  
-  if(line2 >= TRADEBOX_LINEMAX){
-    line2 = line2 - TRADEBOX_LINEMAX;
-    subnum = _DOTMAX;
-  }
-
-  y = 32+vertical*24;
-
-  if(line2 == 0){
-    x = 16;
-  }
-  else if(line2 == 1){
-    x = 56;
-  }
-  else{
-    x = ((line2 - 2) / 6) * _BOXTRAY_MAX;
-    x += ((line2 - 2) % 6) * 24 + 16 + 4;
-    x += _TEMOTITRAY_MAX;
-  }
-  x = x - boxscrollnum + subnum;
-  pPos->x = x;
-  pPos->y = y;
-}
-#endif
-
 
 static void IRC_POKETRADE_PokeIcomPosSet(POKEMON_TRADE_WORK* pWork)
 {
   int line, i, no, m, subnum=0;
   int x,y;
-  //int bgscr = pWork->BoxScrollNum;
   
   line = pWork->oldLine;
   for(m = 0; m < _LING_LINENO_MAX; m++,line++){
@@ -1028,21 +1030,6 @@ static void IRC_POKETRADE_PokeIcomPosSet(POKEMON_TRADE_WORK* pWork)
       GFL_CLACT_WK_SetPos(pWork->markIcon[no][i], &apos, CLSYS_DRAW_SUB);
     }
   }
-}
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   ドットの位置
- * @param   state  変えるステートの関数
- * @param   time   ステート保持時間
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static int _DotToLine(int pos)
-{
-  return 0;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1091,25 +1078,6 @@ static int _Line2RingLineIconGet(int line)
 
   ret = line % _LING_LINENO_MAX;
   return ret;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * リングバッファを進める＆もどす
- *
- * @param	appwk	ボックス画面アプリワーク
- * @param	ppp		POKEMON_PASO_PARAM
- * @param	chr		NNSG2dCharacterData
- *
- * @return	buf
- */
-//--------------------------------------------------------------------------------------------
-
-static void _Line2RingLineSet(POKEMON_TRADE_WORK* pWork,int add)
-{
-  int ret;
-
-  pWork->ringLineNo = add;
 }
 
 //--------------------------------------------------------------------------------------------

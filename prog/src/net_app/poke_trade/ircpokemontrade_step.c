@@ -52,6 +52,8 @@
 #include "spahead.h"
 
 
+static void _changeDemo_ModelT1(POKEMON_TRADE_WORK* pWork);
+static void _changeDemo_ModelT2(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade0(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork);
@@ -230,7 +232,7 @@ static void _pEmitCBOutFunc( GFL_EMIT_PTR pEmiter, unsigned int flag)
     if(pWork->icaBallout){
       VecFx32 pos={0,0,0};
       ICA_ANIME_GetTranslate( pWork->icaBallout, &pos );
-      OS_TPrintf("---%d %d %d \n",pos.x / FX32_ONE,pos.y / FX32_ONE,pos.z / FX32_ONE );
+      //OS_TPrintf("---%d %d %d \n",pos.x / FX32_ONE,pos.y / FX32_ONE,pos.z / FX32_ONE );
       
       GFL_PTC_SetEmitterPosition(pEmiter, &pos);
     }
@@ -246,30 +248,62 @@ static void _balloutEmitFunc(GFL_EMIT_PTR pEmiter)
   GFL_PTC_SetCallbackFunc(pEmiter, &_pEmitCBOutFunc);
 }
 
-
+//------------------------------------------------------------------
+/**
+ * @brief   ポケモンが移動する前にアニメ終了待ち
+ * @param   POKEMON_TRADE_WORK ワーク
+ * @retval  none
+ */
+//------------------------------------------------------------------
 void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(POKEMON_TRADE_WORK* pWork)
 {
   VecFx32 apos;
   int i;
 
-  
-  _CHANGE_STATE(pWork,_changeDemo_ModelTrade0);
+  //待機アニメが止まるのを待つ
+  pWork->mcssStop[0] = FALSE;
+  MCSS_SetAnimCtrlCallBack(pWork->pokeMcss[0], (u32)pWork, _McssAnmStop, NNS_G2D_ANMCALLBACKTYPE_LAST_FRM);
+
+  _CHANGE_STATE(pWork,_changeDemo_ModelT1);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   ポケモン登場CALCTをだす
+ * @param   POKEMON_TRADE_WORK ワーク
+ * @retval  none
+ */
+//------------------------------------------------------------------
+static void _changeDemo_ModelT1(POKEMON_TRADE_WORK* pWork)
+{
+  if(pWork->mcssStop[0]!=TRUE){  //アニメ終了待ち
+    return;
+  }
+
+  if(GFL_NET_IsInit()){
+    GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ANIMEEND);
+    _CHANGE_STATE(pWork,_changeDemo_ModelT2);
+  }
+  else{
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade0);
+  }
+
 
 }
 
+static void _changeDemo_ModelT2(POKEMON_TRADE_WORK* pWork)
+{
+  if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ANIMEEND)){
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade0);
+  }
 
+}
 
-
-
-void _changeDemo_ModelTrade0(POKEMON_TRADE_WORK* pWork)
+static void _changeDemo_ModelTrade0(POKEMON_TRADE_WORK* pWork)
 {
   VecFx32 apos;
   int i;
 
-  //待機アニメが止まるのを待つ
-  MCSS_SetAnimCtrlCallBack(pWork->pokeMcss[0], (u32)pWork, _McssAnmStop, NNS_G2D_ANMCALLBACKTYPE_LAST_FRM);
-
-  pWork->mcssStop[0] = FALSE;
   _setNextAnim(pWork, 0);
 
   pWork->pD2Fade = GFL_HEAP_AllocClearMemory(pWork->heapID, sizeof(_D2_PAL_FADE_WORK));
@@ -317,9 +351,6 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
     _pokeMoveFunc(pWork->pMoveMcss[0]);
   }
 
-  if(pWork->mcssStop[0]!=TRUE){  //アニメ終了待ち
-    return;
-  }
 
   if(pWork->anmCount > ANMCNTC(_POKEMON_CENTER_TIME)){  //フェード完了
     GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
@@ -559,7 +590,9 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       apos.y = _POKEMON_PLAYER_SIDEIN_POSY;
       apos.z = _POKEMON_PLAYER_SIDEIN_POSZ;
       pWork->pMoveMcss[0] = _pokeMoveCreate(pWork->pokeMcss[0], ANMCNTC(_POKE_SIDEIN_TIME), &apos, pWork->heapID);
-      //MCSS_SetAnmStopFlag(pWork->pokeMcss[0]);
+      pWork->pMoveMcss[0]->percent = _POKE_SIDEIN_PERCENT;
+      pWork->pMoveMcss[0]->add = _POKE_SIDEIN_PERCENTADD;
+     //MCSS_SetAnmStopFlag(pWork->pokeMcss[0]);
     }
   }
   if(ANMCNTC(_POKE_SIDEIN_START+1) == pWork->anmCount){
@@ -585,6 +618,8 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       apos.x *= _POKMEON_SCALE_SIZE;
       apos.y *= _POKMEON_SCALE_SIZE;
       MCSS_SetScale( pWork->pokeMcss[1], &apos );
+      pWork->pMoveMcss[1]->percent = _POKE_SIDEIN_PERCENT;
+      pWork->pMoveMcss[1]->add = _POKE_SIDEIN_PERCENTADD;
       //MCSS_SetAnmStopFlag(pWork->pokeMcss[1]);
 
     }
@@ -653,7 +688,7 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
     _WIPE_SYS_StartRap(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_WHITE,
                        ANMCNTC(_POKESPLASH_WHITEIN_TIMER), 1, pWork->heapID );
   }
-  OS_TPrintf("C %d\n",pWork->anmCount);
+//  OS_TPrintf("C %d\n",pWork->anmCount);
 
   if(pWork->anmCount == ANMCNTC(_DEMO_END-1)){
     GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);
@@ -1051,6 +1086,7 @@ static _POKEMCSS_MOVE_WORK* _pokeMoveCreate(MCSS_WORK* pokeMcss, int time, const
 
   pPoke->pMcss = pokeMcss;
   _pokeMoveRenew(pPoke,time,pPos);
+  pPoke->percent=0.0f;
   return pPoke;
 
 }
@@ -1071,6 +1107,11 @@ static fx32 _movemath(fx32 st,fx32 en,_POKEMCSS_MOVE_WORK* pMove)
   fx32 re;
   re = en - st;
   re = re / pMove->time;
+  if(pMove->percent != 0.0f){
+    float ans = FX_FX32_TO_F32(re);
+    ans = pMove->percent * ans;
+    re = FX_F32_TO_FX32(ans);
+  }
   re = st + re * pMove->nowcount;
   return re;
 }
@@ -1092,6 +1133,21 @@ static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
     apos.x = _movemath(pMove->start.x, pMove->end.x ,pMove);
     apos.y = _movemath(pMove->start.y, pMove->end.y ,pMove);
     apos.z = _movemath(pMove->start.z, pMove->end.z ,pMove);
+
+    if(pMove->percent != 0.0f){
+      if(pMove->percent < 1.0f){
+        pMove->percent+=pMove->add;
+      }
+      else{
+        pMove->percent-=pMove->add;
+      }
+      if(pMove->percent > (1.0f-pMove->add)){
+        if(pMove->percent < (1.0f+pMove->add)){
+          pMove->percent=0.0f;
+        }
+      }
+    }
+
     
     MCSS_SetPosition( pMove->pMcss ,&apos );
   }
