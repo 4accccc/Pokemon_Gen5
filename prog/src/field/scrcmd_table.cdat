@@ -191,7 +191,7 @@
 
   DEF_CMD( EvCmdSodateyaPokeNickName, EV_SEQ_SODATEYA_NICK_NAME )
   DEF_CMD( EvCmdNumber, EV_SEQ_NUMBER )
-  NO_CMD()
+  DEF_CMD( EvCmdMusicalWord , EV_SEQ_MUSICAL_WORD )
   NO_CMD()
   
   NO_CMD()
@@ -595,12 +595,12 @@
 
   //ミュージカル関連
   DEF_CMD( EvCmdMusicalCall, EV_SEQ_MUSICAL_CALL )
-  DEF_CMD( EvCmdMusicalTitleName, EV_SEQ_MUSICAL_TITLE_NAME )
-  NO_CMD()
-  NO_CMD()
-  
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdMusicalFittingCall, EV_SEQ_MUSICAL_FITTING_CALL )
+  DEF_CMD( EvCmdGetMusicalValue, EV_SEQ_GET_MUSICAL_VALUE )
+  DEF_CMD( EvCmdGetMusicalFanValue, EV_SEQ_GET_MUSICAL_FAN_VALUE )
+
+  DEF_CMD( EvCmdGetMusicalWaitRoomValue, EV_SEQ_GET_MUSICAL_WAITROOM_VALUE )
+  DEF_CMD( EvCmdAddMusicalGoods, EV_SEQ_ADD_MUSICAL_GOODS )
   NO_CMD()
   NO_CMD()
 

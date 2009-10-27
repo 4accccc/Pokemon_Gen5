@@ -37,7 +37,7 @@ EVENT_START	ev_musical_recept_single
     _BALLOONWIN_TALKOBJ_OPEN( msg_musical_test_02 )
     _BALLOONWIN_CLOSE()
 
-    _MUSICAL_CALL() //ミュージカル呼び出し
+    _MUSICAL_CALL(0,0) //ミュージカル呼び出し
 
   ELSE
 

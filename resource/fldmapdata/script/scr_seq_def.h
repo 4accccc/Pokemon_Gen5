@@ -1533,6 +1533,57 @@
   .short \keta
   .endm
 
+//--------------------------------------------------------------
+/**
+ *  ミュージカル関係のワードを指定タグにセット(下のラッパーを使ってください。
+ * @param type セットする種類(0:演目名 1:グッズ名
+ * @param idx セットするタグナンバー
+ * @param val セットする種類番号(演目名:無効 グッズ名:グッズ番号
+ */
+//--------------------------------------------------------------
+#define _MUSICAL_WORD( type, idx, val ) \
+    _ASM_MUSICAL_WORD type, idx, val
+
+  .macro _ASM_MUSICAL_WORD type, idx, val
+  .short EV_SEQ_MUSICAL_WORD
+  .byte  \type
+  .byte  \idx
+  .short \val
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * ミュージカル ROMに入っている演目名をワードセットにセット
+ * @param idx セットするタグナンバー
+ */
+//--------------------------------------------------------------
+#define _MUSICAL_WORD_PROGRAM_TITLE( idx ) \
+    _ASM_MUSICAL_WORD_PROGRAM_TITLE idx
+
+  .macro _ASM_MUSICAL_WORD_PROGRAM_TITLE idx
+  .short EV_SEQ_MUSICAL_WORD
+  .byte  0
+  .byte  \idx
+  .short 0
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * ミュージカル グッズ名をワードセットにセット
+ * @param idx セットするタグナンバー
+ * @param no  グッズ番号
+ */
+//--------------------------------------------------------------
+#define _MUSICAL_WORD_GOODS_NAME( idx, no ) \
+    _ASM_MUSICAL_WORD_GOODS_NAME idx, no
+
+  .macro _ASM_MUSICAL_WORD_GOODS_NAME idx, no
+  .short EV_SEQ_MUSICAL_WORD
+  .byte  1
+  .byte  \idx
+  .short \no
+  .endm
+
 //======================================================================
 //  視線トレーナー関連
 //======================================================================
@@ -2490,29 +2541,252 @@
 //======================================================================
 //--------------------------------------------------------------
 /**
- *  _MUSICAL_CALL ミュージカル：呼び出し
- *  @param none
+ *  _MUSICAL_CALL ミュージカル：ミュージカル呼び出し
+ *  @param pokeIdx 選択位置
+ *  @param mode モード (0:非通信 1:通信
  */
 //--------------------------------------------------------------
-#define _MUSICAL_CALL() _ASM_MUSICAL_CALL
+#define _MUSICAL_CALL( pokeIdx, mode ) \
+    _ASM_MUSICAL_CALL pokeIdx, mode
 
-  .macro  _ASM_MUSICAL_CALL
+  .macro  _ASM_MUSICAL_CALL pokeIdx, mode
   .short EV_SEQ_MUSICAL_CALL
+  .short \pokeIdx
+  .byte \mode
   .endm
 
 //--------------------------------------------------------------
 /**
- *  _MUSICAL_TITLE_NAME ミュージカル：演目名をタグに設定(通常使用可
- *  @param idx セットするタグナンバー
+ *  _MUSICAL_FITTING_CALL ミュージカル：試着室呼び出し
+ *  @param pokeIdx 選択位置
  */
 //--------------------------------------------------------------
-#define _MUSICAL_TITLE_NAME( idx ) _ASM_MUSICAL_TITLE_NAME
+#define _MUSICAL_FITTING_CALL( pokeIdx ) \
+    _ASM_MUSICAL_FITTING_CALL pokeIdx
 
-  .macro  _ASM_MUSICAL_TITLE_NAME
-  .short EV_SEQ_MUSICAL_TITLE_NAME
-  .byte   \idx
+  .macro  _ASM_MUSICAL_FITTING_CALL pokeIdx
+  .short EV_SEQ_MUSICAL_FITTING_CALL
+  .short \pokeIdx
   .endm
 
+//--------------------------------------------------------------
+/**
+ *  _GET_MUSICAL_VALUE ミュージカル：ミュージカル数値取得(汎用
+ *      基本的に下にあるラッパーを呼んでください
+ *  @param type 種類(参加回数・トップ回数・最終評価点・最終コンディション
+ *  @param val  取得用番号 (現在未使用
+ *  @param ret_val  戻り値
+ */
+//--------------------------------------------------------------
+#define _GET_MUSICAL_VALUE( type, val, retVal ) \
+    _ASM_GET_MUSICAL_VALUE type, val, retVal
+
+  .macro  _ASM_GET_MUSICAL_VALUE type, val, retVal
+  .short EV_SEQ_GET_MUSICAL_VALUE
+  .byte \type
+  .short \val
+  .short \retVal
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _GET_MUSICAL_VALUE_JOIN_NUM ミュージカル：参加回数取得
+ *  @param ret_val  戻り値
+ */
+//--------------------------------------------------------------
+#define _GET_MUSICAL_VALUE_JOIN_NUM( retVal ) \
+    _ASM_GET_MUSICAL_VALUE_JOIN_NUM retVal
+
+  .macro  _ASM_GET_MUSICAL_VALUE_JOIN_NUM retVal
+  .short EV_SEQ_GET_MUSICAL_VALUE
+  .byte 0
+  .short 0
+  .short \retVal
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _GET_MUSICAL_VALUE_TOP_NUM ミュージカル：トップ回数
+ *  @param ret_val  戻り値
+ */
+//--------------------------------------------------------------
+#define _GET_MUSICAL_VALUE_TOP_NUM( retVal ) \
+    _ASM_GET_MUSICAL_VALUE_TOP_NUM retVal
+
+  .macro  _ASM_GET_MUSICAL_VALUE_TOP_NUM retVal
+  .short EV_SEQ_GET_MUSICAL_VALUE
+  .byte 1
+  .short 0
+  .short \retVal
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _GET_MUSICAL_VALUE_LAST_POINT ミュージカル：最終評価点
+ *  @param ret_val  戻り値
+ */
+//--------------------------------------------------------------
+#define _GET_MUSICAL_VALUE_LAST_POINT( retVal ) \
+    _ASM_GET_MUSICAL_VALUE_LAST_POINT retVal
+
+  .macro  _ASM_GET_MUSICAL_VALUE_LAST_POINT retVal
+  .short EV_SEQ_GET_MUSICAL_VALUE
+  .byte 3
+  .short 0
+  .short \retVal
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _GET_MUSICAL_VALUE_LAST_CONDITION ミュージカル：最終コンディション
+ *  @param ret_val  戻り値
+ */
+//--------------------------------------------------------------
+#define _GET_MUSICAL_VALUE_LAST_CONDITION( retVal ) \
+    _ASM_GET_MUSICAL_VALUE_LAST_CONDITION retVal
+
+  .macro  _ASM_GET_MUSICAL_VALUE_LAST_CONDITION retVal
+  .short EV_SEQ_GET_MUSICAL_VALUE
+  .byte 4
+  .short 0
+  .short \retVal
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _GET_MUSICAL_FAN_VALUE ミュージカル：ミュージカル数値取得(ファン用
+ *      基本的に下にあるラッパーを呼んでください
+ *  @param pos  立ち位置(0～4
+ *  @param type 種類(見た目・応援Msg・プレゼントMsg・プレゼント種類・プレゼント番号
+ *  @param ret_val  戻り値
+ */
+//--------------------------------------------------------------
+#define _GET_MUSICAL_FAN_VALUE( pos, type, retVal ) \
+    _ASM_GET_MUSICAL_FAN_VALUE pos, type, retVal
+
+  .macro  _ASM_GET_MUSICAL_FAN_VALUE pos, type, retVal
+  .short EV_SEQ_GET_MUSICAL_FAN_VALUE
+  .short \pos
+  .byte \type
+  .short \retVal
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _GET_MUSICAL_FAN_VALUE_TYPE ミュージカル：ファン見た目
+ *  @param pos  立ち位置(0～4
+ *  @param ret_val  戻り値(0で居ない・それ以外はOBJID
+ */
+//--------------------------------------------------------------
+#define _GET_MUSICAL_FAN_VALUE_TYPE( pos, retVal ) \
+    _ASM_GET_MUSICAL_FAN_VALUE_TYPE pos, retVal
+
+  .macro  _ASM_GET_MUSICAL_FAN_VALUE_TYPE pos, retVal
+  .short EV_SEQ_GET_MUSICAL_FAN_VALUE
+  .short \pos
+  .byte 0
+  .short \retVal
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _GET_MUSICAL_FAN_VALUE_CHEER_MSG ミュージカル：ファン応援メッセージ
+ *  @param pos  立ち位置(0～4
+ *  @param ret_val  戻り値(メッセージID
+ */
+//--------------------------------------------------------------
+#define _GET_MUSICAL_FAN_VALUE_CHEER_MSG( pos, retVal ) \
+    _ASM_GET_MUSICAL_FAN_VALUE_CHEER_MSG pos, retVal
+
+  .macro  _ASM_GET_MUSICAL_FAN_VALUE_CHEER_MSG pos, retVal
+  .short EV_SEQ_GET_MUSICAL_FAN_VALUE
+  .short \pos
+  .byte 1
+  .short \retVal
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _GET_MUSICAL_FAN_VALUE_GIFT_MSG ミュージカル：ファン贈り物メッセージ
+ *  @param pos  立ち位置(0～4
+ *  @param ret_val  戻り値(メッセージID
+ */
+//--------------------------------------------------------------
+#define _GET_MUSICAL_FAN_VALUE_GIFT_MSG( pos, retVal ) \
+    _ASM_GET_MUSICAL_FAN_VALUE_GIFT_MSG pos, retVal
+
+  .macro  _ASM_GET_MUSICAL_FAN_VALUE_GIFT_MSG pos, retVal
+  .short EV_SEQ_GET_MUSICAL_FAN_VALUE
+  .short \pos
+  .byte 2
+  .short \retVal
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _GET_MUSICAL_FAN_VALUE_GIFT_TYPE ミュージカル：ファン贈り物種類
+ *  @param pos  立ち位置(0～4
+ *  @param ret_val  戻り値(0無し・1グッズ・2通常アイテム
+ */
+//--------------------------------------------------------------
+#define _GET_MUSICAL_FAN_VALUE_GIFT_TYPE( pos, retVal ) \
+    _ASM_GET_MUSICAL_FAN_VALUE_GIFT_TYPE pos, retVal
+
+  .macro  _ASM_GET_MUSICAL_FAN_VALUE_GIFT_TYPE pos, retVal
+  .short EV_SEQ_GET_MUSICAL_FAN_VALUE
+  .short \pos
+  .byte 3
+  .short \retVal
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _GET_MUSICAL_FAN_VALUE_GIFT_NUMBER ミュージカル：ファン贈り物番号
+ *  @param pos  立ち位置(0～4
+ *  @param ret_val  戻り値(グッズ(アイテム)番号
+ */
+//--------------------------------------------------------------
+#define _GET_MUSICAL_FAN_VALUE_GIFT_NUMBER( pos, retVal ) \
+    _ASM_GET_MUSICAL_FAN_VALUE_GIFT_NUMBER pos, retVal
+
+  .macro  _ASM_GET_MUSICAL_FAN_VALUE_GIFT_NUMBER pos, retVal
+  .short EV_SEQ_GET_MUSICAL_FAN_VALUE
+  .short \pos
+  .byte 4
+  .short \retVal
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _GET_MUSICAL_WAITROOM_VALUE ミュージカル：ミュージカル数値取得(控え室用
+ *  @param type 種類(非公開
+ *  @param val  取得用番号 (非公開
+ *  @param ret_val  戻り値
+ */
+//--------------------------------------------------------------
+#define _GET_MUSICAL_WAITROOM_VALUE( type, val, retVal ) \
+    _ASM_GET_MUSICAL_WAITROOM_VALUE type, val, retVal
+
+  .macro  _ASM_GET_MUSICAL_WAITROOM_VALUE type, val, retVal
+  .short EV_SEQ_GET_MUSICAL_WAITROOM_VALUE
+  .byte \type
+  .short \val
+  .short \retVal
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _ADD_MUSICAL_GOODS ミュージカル：グッズ追加
+ *  @param no グッズ番号
+ */
+//--------------------------------------------------------------
+#define _ADD_MUSICAL_GOODS( no ) \
+    _ASM_ADD_MUSICAL_GOODS no
+
+  .macro  _ASM_ADD_MUSICAL_GOODS no
+  .short EV_SEQ_ADD_MUSICAL_GOODS
+  .short \no
+  .endm
 
 //======================================================================
 //  レポート関連

@@ -53,8 +53,7 @@ typedef struct
 //======================================================================
 //  proto
 //======================================================================
-static GMEVENT_RESULT event_Musical(
-    GMEVENT *event, int *seq, void *work );
+static GMEVENT_RESULT event_Musical( GMEVENT *event, int *seq, void *work );
 
 //======================================================================
 //  スクリプトコマンド　ミュージカル
@@ -77,6 +76,9 @@ VMCMD_RESULT EvCmdMusicalCall( VMHANDLE *core, void *wk )
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
   
+  u8  mode = VMGetU8(core);
+  u16 pokeIdx = SCRCMD_GetVMWorkValue( core, work );
+
   call_event = GMEVENT_Create(
       gsys, NULL, event_Musical, sizeof(EVENT_MUSICAL_WORK) );
   ev_musical_work = GMEVENT_GetEventWork( call_event );
@@ -111,25 +113,73 @@ VMCMD_RESULT EvCmdMusicalCall( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * ミュージカル：ミュージカル呼び出し
+ * ミュージカル：ミュージカル系ワードセット
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval  VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdMusicalTitleName( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdMusicalFittingCall( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
-  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
-  WORDSET **wordset    = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
 
-  u8 idx = VMGetU8(core);
-  
-  WORDSET_RegisterPlayerName( *wordset, idx, mystatus );
+  u16 pokeIdx = SCRCMD_GetVMWorkValue( core, work );
+
   return VMCMD_RESULT_CONTINUE;
 }
+
+VMCMD_RESULT EvCmdGetMusicalValue( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+
+  u8   type = VMGetU8(core);
+  u16  val = SCRCMD_GetVMWorkValue( core, work );
+  u16* ret_wk = SCRCMD_GetVMWork( core, work );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+VMCMD_RESULT EvCmdGetMusicalFanValue( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+
+  u16  pos  = SCRCMD_GetVMWorkValue( core, work );
+  u8   type = VMGetU8(core);
+  u16* ret_wk = SCRCMD_GetVMWork( core, work );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+VMCMD_RESULT EvCmdGetMusicalWaitRoomValue( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+
+  u8   type = VMGetU8(core);
+  u16  val   = SCRCMD_GetVMWorkValue( core, work );
+  u16* ret_wk = SCRCMD_GetVMWork( core, work );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+VMCMD_RESULT EvCmdAddMusicalGoods( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  u16  val   = SCRCMD_GetVMWorkValue( core, work );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+
+  u8   type = VMGetU8(core);
+  u8   idx  = VMGetU8(core);
+  u16  val  = SCRCMD_GetVMWorkValue( core, work );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
 //======================================================================
 //  ミュージカル　イベント部分
 //======================================================================

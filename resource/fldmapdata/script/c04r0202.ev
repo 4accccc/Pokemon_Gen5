@@ -22,6 +22,7 @@
 _EVENT_DATA    ev_c04r0202_mus_1st
 _EVENT_DATA    ev_c04r0202_mus_2nd
 _EVENT_DATA    ev_c04r0202_mus_3rd
+_EVENT_DATA    ev_script_test
 _EVENT_DATA_END
 
 
@@ -66,6 +67,14 @@ EVENT_START ev_c04r0202_mus_3rd
 	
 EVENT_END
 
+EVENT_START ev_script_test
+	//スクリプトチェックダミー
+	_MUSICAL_FITTING_CALL(0)
+	_GET_MUSICAL_VALUE(0,0,0)
+	_GET_MUSICAL_FAN_VALUE(0,0,0)
+	_GET_MUSICAL_WAITROOM_VALUE(0,0,0)
+	_ADD_MUSICAL_GOODS(0)
+EVENT_END
 
 /**************************************************************/
 //	移動　開始→待機位置
