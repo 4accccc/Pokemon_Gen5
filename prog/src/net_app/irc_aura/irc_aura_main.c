@@ -2733,8 +2733,7 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 				p_touch	= GRAPHIC_GetTouchEffWk( &p_wk->grp );
 				TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_LEFT, TRUE );
 				TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_LEFT, p_trg_left->x, p_trg_left->y );
-				//PMSND_PlaySE( IRCAURA_SE_AURA );
-				GFL_SNDTOOL_PlaySEwithPan( IRCAURA_SE_AURA, -127 );
+				PMSND_PlaySE( IRCAURA_SE_AURA_L );
 			}
 
 
@@ -2834,8 +2833,7 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 				p_touch	= GRAPHIC_GetTouchEffWk( &p_wk->grp );
 				TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_RIGHT, TRUE );
 				TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_RIGHT, p_trg_right->x, p_trg_right->y );
-				//PMSND_PlaySE( IRCAURA_SE_AURA );
-				GFL_SNDTOOL_PlaySEwithPan( IRCAURA_SE_AURA, 127 );
+				PMSND_PlaySE( IRCAURA_SE_AURA_R );
 			}
 		}
 		else if( TP_GetRectCont( &sc_left, &pos ) )
@@ -3663,12 +3661,12 @@ static void TOUCH_EFFECT_Draw( TOUCH_EFFECT_SYS *p_sys )
 		if( G3DMDL_GetVisible( p_sys->p_mdl[TOUCHEFFID_LEFT] ) && 
 				G3DMDL_IsLoopEnd( p_sys->p_mdl[TOUCHEFFID_LEFT] ) )
 		{	
-			GFL_SNDTOOL_PlaySEwithPan( IRCAURA_SE_AURA, -127 );
+			PMSND_PlaySE( IRCAURA_SE_AURA_L );
 		}
 		if( G3DMDL_GetVisible( p_sys->p_mdl[TOUCHEFFID_RIGHT] ) && 
 		 G3DMDL_IsLoopEnd( p_sys->p_mdl[TOUCHEFFID_RIGHT] ) )
 		{	
-			GFL_SNDTOOL_PlaySEwithPan( IRCAURA_SE_AURA, 127 );
+			PMSND_PlaySE( IRCAURA_SE_AURA_R );
 		}
 	}
 }
