@@ -86,7 +86,21 @@ static GFL_PROC_RESULT CI_Proc_Init( GFL_PROC * proc, int * seq , void *pwk, voi
 	
 	wk = GFL_PROC_AllocWork( proc, sizeof( CODEIN_WORK ), HEAPID_CODEIN );
 	GFL_STD_MemFill( wk, 0, sizeof( CODEIN_WORK ) );
-	wk->param = *( ( CODEIN_PARAM* )pwk );
+	
+	if( pwk == NULL )
+	{
+    //デバッグ作成
+    int block[ CODE_BLOCK_MAX ];
+  	CODEIN_PARAM* pWork;
+    CodeIn_BlockDataMake_4_4_4( block );
+    pWork = CodeInput_ParamCreate( HEAPID_CODEIN, 12, block );
+  	wk->param = *( ( CODEIN_PARAM* )pWork );
+    GFL_HEAP_FreeMemory(pWork);
+  }
+  else
+  {
+  	wk->param = *( ( CODEIN_PARAM* )pwk );
+  }
 	
 	///< 初期化
 	GFL_DISP_GX_InitVisibleControl();
@@ -214,6 +228,10 @@ static GFL_PROC_RESULT CI_Proc_Exit( GFL_PROC * proc, int * seq , void *pwk, voi
 	
 	GFL_BMN_Delete( wk->sys.btn );
 	
+  if( pwk == NULL )
+  {
+  	GFL_STR_DeleteBuffer( wk->param.strbuf );
+  }
 	GFL_PROC_FreeWork( proc );
 	
 	GFL_HEAP_DeleteHeap( HEAPID_CODEIN );

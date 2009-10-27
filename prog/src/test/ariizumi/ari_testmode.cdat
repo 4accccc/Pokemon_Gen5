@@ -83,6 +83,7 @@ FS_EXTERN_OVERLAY(poke_status);
 FS_EXTERN_OVERLAY(wifinote);
 extern const GFL_PROC_DATA ProcData_PMSInput;
 static BOOL TESTMODE_ITEM_SelectDebWifiNote( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectDebCodeIn( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectDebPmsInput( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectDebPokeList( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectDebPokeStatus( TESTMODE_WORK *work , const int idx );
@@ -104,6 +105,7 @@ static TESTMODE_MENU_LIST menuAriizumi[] =
 	{L"ミュージカルデバッグ"	,TESTMODE_ITEM_SelectMusicalEditor },
 #endif //USE_MUSICAL_EDIT
 	{L"友達手帳"				,TESTMODE_ITEM_SelectDebWifiNote },
+	{L"数値入力"			  ,TESTMODE_ITEM_SelectDebCodeIn },
 	{L"かんい文入力"			,TESTMODE_ITEM_SelectDebPmsInput },
 #if USE_CAMERA_TEST
 	{L"カメラテスト"			,TESTMODE_ITEM_SelectDebCameraTest },
@@ -118,8 +120,14 @@ static BOOL TESTMODE_ITEM_SelectDebWifiNote( TESTMODE_WORK *work , const int idx
   procParam->saveControlWork = SaveControl_GetPointer();
 	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(wifinote), &WifiNoteProcData, procParam );
 	return TRUE;
-	
 }
+
+static BOOL TESTMODE_ITEM_SelectDebCodeIn( TESTMODE_WORK *work , const int idx )
+{
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(wifinote), &CodeInput_ProcData, NULL );
+	return TRUE;
+}
+
 static BOOL TESTMODE_ITEM_SelectDebPmsInput( TESTMODE_WORK *work , const int idx )
 {
 	PMSI_PARAM	*initParam;
