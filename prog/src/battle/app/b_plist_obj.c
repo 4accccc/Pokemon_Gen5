@@ -1571,7 +1571,7 @@ void BattlePokelist_WazaTypeSet( BPLIST_WORK * wk )
 		BPL_ClactOn( wk->clwk[BPL_CA_WAZATYPE1+i], &P5_WazaTypePos[i] );
 	}
 
-	if( wk->dat->chg_waza != 0 ){
+	if( wk->dat->chg_waza != 0 && wk->dat->mode == BPL_MODE_WAZASET ){
 			BPL_TypeIconChange(
 				wk, wk->clwk[BPL_CA_WAZATYPE5],
 				BPLIST_CHRRES_WAZATYPE5,
