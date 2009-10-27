@@ -551,6 +551,7 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
     }
     break;
   default:
+    wk->selectItemSeq = 0;
     return TRUE;
   }
   return FALSE;
