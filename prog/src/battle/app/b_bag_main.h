@@ -309,13 +309,13 @@ typedef struct {
   u8  used_poke;    // 前回使用したアイテムのポケット
 
 //	WB追加
-	BAG_CURSOR * cur;		// 仮
-
 	u32	chrRes[BBAG_CHRRES_MAX];
 	u32	palRes[BBAG_PALRES_MAX];
 	u32	celRes[BBAG_CELRES_MAX];
 //	u32	anmRes[16];
 	BOOL cursor_flg;
+
+	const u8 * putWin;
 
 
 }BBAG_WORK;

@@ -52,6 +52,8 @@
 #define	FCOL_S12W		( PRINTSYS_LSB_Make(15,2,0) )	// フォントカラー：白
 //#define	FCOL_T12B		( PRINTSYS_LSB_Make(1,2,15) )	// フォントカラー：黒
 
+#define	SET_STR_SCRN_END	( 0xff )		// 転送ウィンドウ終了
+
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -187,6 +189,63 @@ static const u8 Page1_BmpData[][6] =
 	{	// 「つかう」
 		WIN_P3_USE_FRM, WIN_P3_USE_PX, WIN_P3_USE_PY, WIN_P3_USE_SX, WIN_P3_USE_SY, WIN_P3_USE_PAL
 	}
+};
+
+// ページ１
+static const u8 P1_PutWin[] = {
+	WIN_P1_HP,				// 「HP/PPかいふく」
+	WIN_P1_ZYOUTAI,		// 「じょうたいかいふく」
+	WIN_P1_BALL,			// 「ボール」
+	WIN_P1_BATTLE,		// 「せんとうよう」
+	WIN_P1_LASTITEM,	// 「さいごにつかったどうぐ」
+	SET_STR_SCRN_END
+};
+
+// ページ２
+static const u8 P2_PutWin[] = {
+	WIN_P2_NAME1,			// 道具名１
+	WIN_P2_NUM1,			// 道具数１
+	WIN_P2_NAME2,			// 道具名２
+	WIN_P2_NUM2,			// 道具数２
+	WIN_P2_NAME3,			// 道具名３
+	WIN_P2_NUM3,			// 道具数３
+	WIN_P2_NAME4,			// 道具名４
+	WIN_P2_NUM4,			// 道具数４
+	WIN_P2_NAME5,			// 道具名５
+	WIN_P2_NUM5,			// 道具数５
+	WIN_P2_NAME6,			// 道具名６
+	WIN_P2_NUM6,			// 道具数６
+	WIN_P2_POCKET,		// ポケット名
+	WIN_P2_PAGENUM,		// ページ数（アイテム数）
+	SET_STR_SCRN_END
+};
+
+// ページ２（スワップ用）
+static const u8 P2S_PutWin[] = {
+	WIN_P2_NAME1_S,		// 道具名１（スワップ用）
+	WIN_P2_NUM1_S,		// 道具数１（スワップ用）
+	WIN_P2_NAME2_S,		// 道具名２（スワップ用）
+	WIN_P2_NUM2_S,		// 道具数２（スワップ用）
+	WIN_P2_NAME3_S,		// 道具名３（スワップ用）
+	WIN_P2_NUM3_S,		// 道具数３（スワップ用）
+	WIN_P2_NAME4_S,		// 道具名４（スワップ用）
+	WIN_P2_NUM4_S,		// 道具数４（スワップ用）
+	WIN_P2_NAME5_S,		// 道具名５（スワップ用）
+	WIN_P2_NUM5_S,		// 道具数５（スワップ用）
+	WIN_P2_NAME6_S,		// 道具名６（スワップ用）
+	WIN_P2_NUM6_S,		// 道具数６（スワップ用）
+	WIN_P2_POCKET,		// ポケット名
+	WIN_P2_PAGENUM,		// ページ数（アイテム数）
+	SET_STR_SCRN_END
+};
+
+// ページ３
+static const u8 P3_PutWin[] = {
+	WIN_P3_NAME,		// 道具名
+	WIN_P3_NUM,			// 個数
+	WIN_P3_INFO,		// 説明
+	WIN_P3_USE,			// 「つかう」
+	SET_STR_SCRN_END
 };
 
 
@@ -361,7 +420,7 @@ static void BBAG_StrPut( BBAG_WORK * wk, u32 widx, u32 midx, u32 py, u16 col )
 //	PRINTSYS_PrintQueColor( wk->que, GFL_BMPWIN_GetBmp(win), px, py, str, wk->dat->font, col );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[widx] );
 	PRINT_UTIL_PrintColor( &wk->add_win[widx], wk->que, px, py, str, wk->dat->font, col );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[widx] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[widx] );
 
 	GFL_STR_DeleteBuffer( str );
 //  GFL_BMPWIN_MakeTransWindow_VBlank( win );
@@ -419,10 +478,14 @@ static void BBAG_Page1BmpWrite( BBAG_WORK * wk )
 */
 		PRINT_UTIL_PrintColor(
 			&wk->add_win[WIN_P1_LASTITEM], wk->que, 0, P1_LASTITEM_PY, str, wk->dat->font, FCOL_S12W );
-		BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P1_LASTITEM] );
+//		BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P1_LASTITEM] );
 		GFL_STR_DeleteBuffer( str );
 //	  GFL_BMPWIN_MakeTransWindow_VBlank( wk->add_win[WIN_P1_LASTITEM].win );
+	}else{
+		GFL_BMPWIN_TransVramCharacter( wk->add_win[WIN_P1_LASTITEM].win );
 	}
+
+	wk->putWin = P1_PutWin;
 }
 
 
@@ -478,10 +541,11 @@ static void BBAG_ItemNamePut(
 //		BAPPTOOL_PrintQueOn( &wk->add_win[widx] );
 		PRINT_UTIL_PrintColor(
 			&wk->add_win[widx], wk->que, px, P2_ITEMNAME_PY, wk->msg_buf, wk->dat->font, FCOL_S12W );
-		BAPPTOOL_PrintScreenTrans( &wk->add_win[widx] );
+//		BAPPTOOL_PrintScreenTrans( &wk->add_win[widx] );
 		GFL_STR_DeleteBuffer( str );
 	}else{
-		GFL_BMPWIN_MakeTransWindow_VBlank( win );
+//		GFL_BMPWIN_MakeTransWindow_VBlank( win );
+		GFL_BMPWIN_TransVramCharacter( win );
 	}
 }
 
@@ -511,7 +575,7 @@ static void BBAG_ItemNumPut(
 	bmp = GFL_BMPWIN_GetBmp( win );
 	GFL_BMP_Clear( bmp, 0 );
 
-	if( wk->pocket[wk->poke_id][dat_pos].no != 0 ){
+	if( wk->pocket[wk->poke_id][dat_pos].no != 0 && wk->dat->mode != BBAG_MODE_SHOOTER ){
 		str = GFL_MSG_CreateString( wk->mman, ItemStrGmm[put_pos][1] );
 
 		WORDSET_RegisterNumber(
@@ -525,10 +589,11 @@ static void BBAG_ItemNumPut(
 //		BAPPTOOL_PrintQueOn( &wk->add_win[widx] );
 		PRINT_UTIL_PrintColor(
 			&wk->add_win[widx], wk->que, 0, py, wk->msg_buf, wk->dat->font, FCOL_S12W );
-		BAPPTOOL_PrintScreenTrans( &wk->add_win[widx] );
+//		BAPPTOOL_PrintScreenTrans( &wk->add_win[widx] );
 		GFL_STR_DeleteBuffer( str );
 	}else{
-		GFL_BMPWIN_MakeTransWindow_VBlank( win );
+//		GFL_BMPWIN_MakeTransWindow_VBlank( win );
+		GFL_BMPWIN_TransVramCharacter( win );
 	}
 }
 
@@ -558,10 +623,7 @@ static void BBAG_P2_ItemPut( BBAG_WORK * wk, u32 pos )
 	}
 
 	BBAG_ItemNamePut( wk, dat_pos, pos, win_pos+pos*2, 0, 0 );
-	if( wk->dat->mode != BBAG_MODE_SHOOTER ){
-		BBAG_ItemNumPut(
-			wk, dat_pos, pos, win_pos+1+pos*2, 0, P2_ITEMNUM_PY, 0 );
-	}
+	BBAG_ItemNumPut( wk, dat_pos, pos, win_pos+1+pos*2, 0, P2_ITEMNUM_PY, 0 );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -581,6 +643,12 @@ void BattleBag_Page2_StrItemPut( BBAG_WORK * wk )
 
 	for( i=0; i<6; i++ ){
 		BBAG_P2_ItemPut( wk, i );
+	}
+
+	if( wk->p2_swap == 0 ){
+		wk->putWin = P2_PutWin;
+	}else{
+		wk->putWin = P2S_PutWin;
 	}
 
 	wk->p2_swap ^= 1;
@@ -647,7 +715,7 @@ void BattleBag_Page2_StrPageNumPut( BBAG_WORK * wk )
 	PRINT_UTIL_PrintColor(
 		&wk->add_win[WIN_P2_PAGENUM], wk->que,
 		px-siz, P2_PAGE_NUM_PY, wk->msg_buf, wk->dat->font, FCOL_S12W );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P2_PAGENUM] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P2_PAGENUM] );
 	GFL_STR_DeleteBuffer( str );
 
 //	GFL_BMPWIN_MakeTransWindow_VBlank( win );
@@ -678,27 +746,31 @@ static void BBAG_Page2PocketNamePut( BBAG_WORK * wk )
 	bmp = GFL_BMPWIN_GetBmp( wk->add_win[WIN_P2_POCKET].win );
 	GFL_BMP_Clear( bmp, 0 );
 
-	switch( wk->poke_id ){
-	case BBAG_POKE_HPRCV:	// HP回復ポケット
-		BBAG_StrPut(
-			wk, WIN_P2_POCKET, mes_b_bag_02_700, P2_POCKET_HP1_PY, FCOL_S12W );
-		BBAG_StrPut(
-			wk, WIN_P2_POCKET, mes_b_bag_02_701, P2_POCKET_HP2_PY, FCOL_S12W );
-		break;
-	case BBAG_POKE_STRCV:	// 状態回復ポケット
-		BBAG_StrPut(
-			wk, WIN_P2_POCKET, mes_b_bag_02_702, P2_POCKET_ST1_PY, FCOL_S12W );
-		BBAG_StrPut(
-			wk, WIN_P2_POCKET, mes_b_bag_02_703, P2_POCKET_ST2_PY, FCOL_S12W );
-		break;
-	case BBAG_POKE_BALL:	// ボールポケット
-		BBAG_StrPut(
-			wk, WIN_P2_POCKET, mes_b_bag_02_704, P2_POCKET_BALL_PY, FCOL_S12W );
-		break;
-	case BBAG_POKE_BATTLE:	// 戦闘用ポケット
-		BBAG_StrPut(
-			wk, WIN_P2_POCKET, mes_b_bag_02_705, P2_POCKET_BATL_PY, FCOL_S12W );
-		break;
+	if( wk->dat->mode != BBAG_MODE_SHOOTER ){
+		switch( wk->poke_id ){
+		case BBAG_POKE_HPRCV:	// HP回復ポケット
+			BBAG_StrPut(
+				wk, WIN_P2_POCKET, mes_b_bag_02_700, P2_POCKET_HP1_PY, FCOL_S12W );
+			BBAG_StrPut(
+				wk, WIN_P2_POCKET, mes_b_bag_02_701, P2_POCKET_HP2_PY, FCOL_S12W );
+			break;
+		case BBAG_POKE_STRCV:	// 状態回復ポケット
+			BBAG_StrPut(
+				wk, WIN_P2_POCKET, mes_b_bag_02_702, P2_POCKET_ST1_PY, FCOL_S12W );
+			BBAG_StrPut(
+				wk, WIN_P2_POCKET, mes_b_bag_02_703, P2_POCKET_ST2_PY, FCOL_S12W );
+			break;
+		case BBAG_POKE_BALL:	// ボールポケット
+			BBAG_StrPut(
+				wk, WIN_P2_POCKET, mes_b_bag_02_704, P2_POCKET_BALL_PY, FCOL_S12W );
+			break;
+		case BBAG_POKE_BATTLE:	// 戦闘用ポケット
+			BBAG_StrPut(
+				wk, WIN_P2_POCKET, mes_b_bag_02_705, P2_POCKET_BATL_PY, FCOL_S12W );
+			break;
+		}
+	}else{
+		GFL_BMPWIN_TransVramCharacter( wk->add_win[WIN_P2_POCKET].win );
 	}
 }
 
@@ -714,9 +786,7 @@ static void BBAG_Page2PocketNamePut( BBAG_WORK * wk )
 static void BBAG_Page2BmpWrite( BBAG_WORK * wk )
 {
 	BattleBag_Page2_StrItemPut( wk );
-	if( wk->dat->mode != BBAG_MODE_SHOOTER ){
-		BBAG_Page2PocketNamePut( wk );
-	}
+	BBAG_Page2PocketNamePut( wk );
 	BattleBag_Page2_StrPageNumPut( wk );
 }
 
@@ -756,7 +826,7 @@ static void BBAG_P3_ItemNamePut( BBAG_WORK * wk, u32 dat_pos )
 	PRINT_UTIL_PrintColor(
 		&wk->add_win[WIN_P3_NAME], wk->que,
 		0, P3_ITEMNAME_PY, wk->msg_buf, wk->dat->font, FCOL_S12W );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_NAME] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_NAME] );
 	GFL_STR_DeleteBuffer( str );
 
 //	GFL_BMPWIN_MakeTransWindow_VBlank( win );
@@ -788,7 +858,7 @@ static void BBAG_P3_ItemInfoPut( BBAG_WORK * wk, u32 dat_pos )
 	PRINT_UTIL_PrintColor(
 		&wk->add_win[WIN_P3_INFO], wk->que,
 		P3_ITEMINFO_PX, P3_ITEMINFO_PY, buf, wk->dat->font, FCOL_S12W );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_INFO] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_INFO] );
 	GFL_STR_DeleteBuffer( buf );
 
 //	GFL_BMPWIN_MakeTransWindow_VBlank( win );
@@ -819,11 +889,11 @@ static void BBAG_Page3BmpWrite( BBAG_WORK * wk )
 	dat_pos = wk->dat->item_scr[wk->poke_id]*6+wk->dat->item_pos[wk->poke_id];
 
 	BBAG_P3_ItemNamePut( wk, dat_pos );
-	if( wk->dat->mode != BBAG_MODE_SHOOTER ){
-		BBAG_ItemNumPut( wk, dat_pos, 0, WIN_P3_NUM, 0, P3_ITEMNUM_PY, 0 );
-	}
+	BBAG_ItemNumPut( wk, dat_pos, 0, WIN_P3_NUM, 0, P3_ITEMNUM_PY, 0 );
 	BBAG_P3_ItemInfoPut( wk, dat_pos );
 	BBAG_StrPut( wk, WIN_P3_USE, mes_b_bag_03_000, P3_USE_PY, FCOL_S12W );
+
+	wk->putWin = P3_PutWin;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -964,4 +1034,20 @@ void BattleBag_ItemUseMsgSet( BBAG_WORK * wk )
 void BBAGBMP_PrintMain( BBAG_WORK * wk )
 {
 	BAPPTOOL_PrintUtilTrans( wk->add_win, wk->que, WIN_MAX );
+}
+
+
+
+
+void BBAGBMP_SetStrScrn( BBAG_WORK * wk )
+{
+	u32	i = 0;
+
+	while(1){
+		if( wk->putWin[i] == SET_STR_SCRN_END ){
+			break;
+		}
+		BAPPTOOL_PrintScreenTrans( &wk->add_win[wk->putWin[i]] );
+		i++;
+	}
 }

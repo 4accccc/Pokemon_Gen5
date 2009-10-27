@@ -90,7 +90,10 @@ enum {
 	SEQ_BBAG_PAGE2_CHG,		// アイテム選択へ
 	SEQ_BBAG_PAGE3_CHG,		// アイテム使用へ
 
+	SEQ_BBAG_PAGECHG_WAIT,	// ページ切り替え待ち
+
 	SEQ_BBAG_ITEMSEL_NEXT,	// 次のアイテムページへ
+	SEQ_BBAG_ITEMSEL_WAIT,	// アイテムページ切り替え待ち
 
 	SEQ_BBAG_ERR,			// エラーメッセージ終了待ち
 	SEQ_BBAG_MSG_WAIT,		// メッセージ表示
@@ -125,7 +128,9 @@ static int BBAG_SeqUseSelect( BBAG_WORK * wk );
 static int BBAG_SeqPage1Chg( BBAG_WORK * wk );
 static int BBAG_SeqPage2Chg( BBAG_WORK * wk );
 static int BBAG_SeqPage3Chg( BBAG_WORK * wk );
+static int BBAG_SeqPageChgWait( BBAG_WORK * wk );
 static int BBAG_SeqItemSelNext( BBAG_WORK * wk );
+static int BBAG_SeqItemSelWait( BBAG_WORK * wk );
 static int BBAG_SeqError( BBAG_WORK * wk );
 static int BBAG_SeqMsgWait( BBAG_WORK * wk );
 static int BBAG_SeqTrgWait( BBAG_WORK * wk );
@@ -166,7 +171,10 @@ static const pBBagFunc MainSeqFunc[] = {
 	BBAG_SeqPage2Chg,
 	BBAG_SeqPage3Chg,
 
+	BBAG_SeqPageChgWait,
+
 	BBAG_SeqItemSelNext,
+	BBAG_SeqItemSelWait,
 
 	BBAG_SeqError,
 	BBAG_SeqMsgWait,
@@ -263,18 +271,14 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
 	}
 */
 
-	wk->cur = MYITEM_BagCursorAlloc( dat->heap );		// 仮でカーソルデータを作成
 	{
-		BAG_CURSOR * cur;
-		u8	i;
+		u32	i;
 
-//		cur = BattleWorkBagCursorGet( dat->bw );
-		cur = wk->cur;
 		for( i=0; i<BATTLE_BAG_POKE_MAX; i++ ){
-			MYITEM_BattleBagCursorGet( cur, i, &wk->dat->item_pos[i], &wk->dat->item_scr[i] );
+			MYITEM_BattleBagCursorGet( wk->dat->bagcursor, i, &wk->dat->item_pos[i], &wk->dat->item_scr[i] );
 		}
-		wk->used_item = MYITEM_BattleBagLastItemGet( cur );
-		wk->used_poke = MYITEM_BattleBagLastPageGet( cur );
+		wk->used_item = MYITEM_BattleBagLastItemGet( wk->dat->bagcursor );
+		wk->used_poke = MYITEM_BattleBagLastPageGet( wk->dat->bagcursor );
 	}
 
 	BattleBag_UsedItemChack( wk );
@@ -366,6 +370,7 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
 
 	BattleBag_BmpInit( wk );
 	BattleBag_BmpWrite( wk, wk->page );
+	BBAGBMP_SetStrScrn( wk );
 
 //	BattleBag_ButtonPageScreenInit( wk, wk->page );
 	BBAGANM_ButtonInit( wk );
@@ -419,6 +424,7 @@ static int BBAG_SeqShooterInit( BBAG_WORK * wk )
 
 	BattleBag_BmpInit( wk );
 	BattleBag_BmpWrite( wk, wk->page );
+	BBAGBMP_SetStrScrn( wk );
 
 //	BattleBag_ButtonPageScreenInit( wk, wk->page );
 	BBAGANM_ButtonInit( wk );
@@ -634,11 +640,23 @@ static int BBAG_SeqItemSelNext( BBAG_WORK * wk )
 	}
 	BattleBag_Page2_StrItemPut( wk );
 	BattleBag_Page2_StrPageNumPut( wk );
-	BattleBag_PageObjSet( wk, wk->page );
-	BBAGANM_PageButtonPut( wk, wk->page );
+//	BattleBag_PageObjSet( wk, wk->page );
+//	BBAGANM_PageButtonPut( wk, wk->page );
 //	BattleBag_ButtonPageScreenInit( wk, wk->page );
 //	BBAG_P2CursorMvTblMake( wk );
-	return SEQ_BBAG_ITEM;
+//	return SEQ_BBAG_ITEM;
+	return SEQ_BBAG_ITEMSEL_WAIT;
+}
+
+static int BBAG_SeqItemSelWait( BBAG_WORK * wk )
+{
+	if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
+		BBAGBMP_SetStrScrn( wk );
+		BattleBag_PageObjSet( wk, wk->page );
+		BBAGANM_PageButtonPut( wk, wk->page );
+		return SEQ_BBAG_ITEM;
+	}
+	return SEQ_BBAG_ITEMSEL_WAIT;
 }
 
 
@@ -824,8 +842,11 @@ static int BBAG_ItemUse( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BBAG_SeqPage1Chg( BBAG_WORK * wk )
 {
-	BBAG_PageChange( wk, BBAG_PAGE_POCKET );
-	return SEQ_BBAG_POCKET;
+//	BBAG_PageChange( wk, BBAG_PAGE_POCKET );
+	BattleBag_BmpWrite( wk, BBAG_PAGE_POCKET );
+	wk->page = BBAG_PAGE_POCKET;
+	wk->ret_seq = SEQ_BBAG_POCKET;
+	return SEQ_BBAG_PAGECHG_WAIT;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -839,8 +860,11 @@ static int BBAG_SeqPage1Chg( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BBAG_SeqPage2Chg( BBAG_WORK * wk )
 {
-	BBAG_PageChange( wk, BBAG_PAGE_MAIN );
-	return SEQ_BBAG_ITEM;
+//	BBAG_PageChange( wk, BBAG_PAGE_MAIN );
+	BattleBag_BmpWrite( wk, BBAG_PAGE_MAIN );
+	wk->page = BBAG_PAGE_MAIN;
+	wk->ret_seq = SEQ_BBAG_ITEM;
+	return SEQ_BBAG_PAGECHG_WAIT;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -854,10 +878,21 @@ static int BBAG_SeqPage2Chg( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BBAG_SeqPage3Chg( BBAG_WORK * wk )
 {
-	BBAG_PageChange( wk, BBAG_PAGE_ITEM );
-	return SEQ_BBAG_USE;
+//	BBAG_PageChange( wk, BBAG_PAGE_ITEM );
+	BattleBag_BmpWrite( wk, BBAG_PAGE_ITEM );
+	wk->page = BBAG_PAGE_ITEM;
+	wk->ret_seq = SEQ_BBAG_USE;
+	return SEQ_BBAG_PAGECHG_WAIT;
 }
 
+static int BBAG_SeqPageChgWait( BBAG_WORK * wk )
+{
+	if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
+		BBAG_PageChange( wk, wk->page );
+		return wk->ret_seq;
+	}
+	return SEQ_BBAG_PAGECHG_WAIT;
+}
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -986,7 +1021,6 @@ static BOOL BBAG_SeqEnd( GFL_TCB * tcb, BBAG_WORK * wk )
 	BBAGUI_Exit( wk );
 	BAPPTOOL_FreeCursor( wk->cpwk );
 
-	GFL_HEAP_FreeMemory( wk->cur );		// カーソルデータ削除（仮）
 	GFL_TCB_DeleteTask( tcb );
 	GFL_HEAP_FreeMemory( wk );
 
@@ -1431,7 +1465,8 @@ static void BBAG_PageChange( BBAG_WORK * wk, u8 next_page )
 
 //	BattleBag_BmpFree( wk );
 //	BattleBag_BmpAdd( wk, next_page );
-	BattleBag_BmpWrite( wk, next_page );
+//	BattleBag_BmpWrite( wk, next_page );
+	BBAGBMP_SetStrScrn( wk );
 
 //	BattleBag_ButtonPageScreenInit( wk, next_page );
 	BBAGANM_PageButtonPut( wk, next_page );
@@ -1441,9 +1476,10 @@ static void BBAG_PageChange( BBAG_WORK * wk, u8 next_page )
 	BattleBag_CursorMoveSet( wk, next_page );
 	BBAG_GetDemoCursorSet( wk, next_page );
 
-	wk->page = next_page;
+//	wk->page = next_page;
 
-	BattleBag_PageObjSet( wk, wk->page );
+//	BattleBag_PageObjSet( wk, wk->page );
+	BattleBag_PageObjSet( wk, next_page );
 }
 
 //--------------------------------------------------------------------------------------------
