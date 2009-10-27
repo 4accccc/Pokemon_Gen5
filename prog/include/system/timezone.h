@@ -6,9 +6,21 @@
  * @date	2006.02.13
  */
 //============================================================================================
+#pragma once
 
-#ifndef	__TIMEZONE_H__
-#define	__TIMEZONE_H__
+#ifndef ASM_CPP
+
+typedef enum {
+  TIMEZONE_MORNING =	0,
+  TIMEZONE_NOON =		  1,
+  TIMEZONE_EVENING =	2,
+  TIMEZONE_NIGHT =		3,
+  TIMEZONE_MIDNIGHT =	4,
+
+  TIMEZONE_MAX,
+}TIMEZONE;
+
+#else
 
 #define	TIMEZONE_MORNING	(0)
 #define	TIMEZONE_NOON		(1)
@@ -16,4 +28,4 @@
 #define TIMEZONE_NIGHT		(3)
 #define TIMEZONE_MIDNIGHT	(4)
 
-#endif	/* __TIMEZONE_H__ */
+#endif
