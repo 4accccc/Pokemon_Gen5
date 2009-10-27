@@ -442,7 +442,9 @@ struct _POKEMON_TRADE_WORK{
   u32 x;
   u32 y;
   BOOL bUpVec;
-  GFL_CLWK* pCatchCLWK;   //つかんでるポケモンCLACT
+
+  GFL_CLWK* pSelectCLWK;   ///<選んでるポケモンCLACT   こちらは何を選択しているかに使う
+  GFL_CLWK* pCatchCLWK;   ///<つかんでるポケモンCLACT  こちらはタッチ時に移動するために使う
   GFL_CLACTPOS aCatchOldPos;  //つかんでるポケモンの前の位置
   
 

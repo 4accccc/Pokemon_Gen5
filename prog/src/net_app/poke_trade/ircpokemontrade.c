@@ -78,7 +78,6 @@ static void _recvEnd(const int netID, const int size, const void* pData, void* p
 static void _touchState(POKEMON_TRADE_WORK* pWork);
 static u8* _setChangePokemonBuffer(int netID, void* pWork, int size);
 static void _changeWaitState(POKEMON_TRADE_WORK* pWork);
-//static void _changeYesNoWaitState(POKEMON_TRADE_WORK* pWork);
 static void _endWaitState(POKEMON_TRADE_WORK* pWork);
 static BOOL _PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork);
 static void _recvFriendScrollBar(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
@@ -125,50 +124,36 @@ int IRC_TRADE_LINE2POKEINDEX(int lineno,int verticalindex)
 }
 
 
+//------------------------------------------------------------------
+/**
+ * @brief   つかんだポケモンを元の位置に戻す
+ * @param   POKEMON_TRADE_WORK
+ * @retval  void
+ */
+//------------------------------------------------------------------
 
-#if 0
-static void _messageDelete(POKEMON_TRADE_WORK *pWork)
+static void _CatchPokemonPositionRewind(POKEMON_TRADE_WORK *pWork)
 {
-  if(pWork->MessageWin){
-    GFL_BMPWIN_ClearScreen(pWork->MessageWin);
-    GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_S);
-    BmpWinFrame_Clear(pWork->MessageWin, WINDOW_TRANS_OFF);
-    GFL_BMPWIN_Delete(pWork->MessageWin);
-    pWork->MessageWin=NULL;
+  if(pWork->pCatchCLWK){
+    GFL_CLACT_WK_SetPos(pWork->pCatchCLWK, &pWork->aCatchOldPos, CLSYS_DRAW_SUB);
+    GFL_CLACT_WK_SetDrawEnable( pWork->pCatchCLWK, TRUE);
+    pWork->pCatchCLWK=NULL;
   }
-
 }
-#endif
 
 //------------------------------------------------------------------
 /**
- * @brief   YESNOウインドウシステムスタート
- * @param   bgl
- * @param   touch_sub_window_sys
- * @retval  static
+ * @brief   つかみじょうたいにする
+ * @param   POKEMON_TRADE_WORK
+ * @retval  void
  */
 //------------------------------------------------------------------
-static void TouchYesNoStart( TOUCH_SW_SYS* touch_sub_window_sys )
+
+static void _CatchPokemonPositionActive(POKEMON_TRADE_WORK *pWork,GFL_CLWK* pCL)
 {
-
-#if 0
-
-  TOUCH_SW_PARAM param;
-
-
-  // YES NO ウィンドウボタンの表示
-  param.bg_frame	= GFL_BG_FRAME2_S;
-  param.char_offs	= YESNO_CHARA_OFFSET+YESNO_CHARA_W*YESNO_CHARA_H;
-  param.pltt_offs = 8;
-  param.x			= 25;
-  param.y			= 6;
-
-  param.key_pos = 0;
-  param.type = TOUCH_SW_TYPE_S;
-
-  TOUCH_SW_Init( touch_sub_window_sys, &param );
-  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_M );
-#endif
+  pWork->pCatchCLWK = pCL;
+  pWork->pSelectCLWK = pCL;
+  GFL_CLACT_WK_GetPos(pWork->pCatchCLWK, &pWork->aCatchOldPos, CLSYS_DRAW_SUB);
 }
 
 //--------------------------------------------------------------
@@ -1260,12 +1245,10 @@ static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork)
     if(GFL_UI_TP_GetPointTrg(&x, &y)==TRUE){
       GFL_CLWK* pCL = IRC_POKETRADE_GetCLACT(pWork,x+12,y+12, &pWork->workBoxno, &pWork->workPokeIndex, &line, &index);
       if(pCL){
-        if(pWork->pCatchCLWK){
-          //今のつかんでる物を元の位置に戻す
-          GFL_CLACT_WK_SetPos(pWork->pCatchCLWK, &pWork->aCatchOldPos, CLSYS_DRAW_SUB);
-        }
-        pWork->pCatchCLWK = pCL;
-        GFL_CLACT_WK_GetPos(pWork->pCatchCLWK, &pWork->aCatchOldPos, CLSYS_DRAW_SUB);
+        //今のつかんでる物を元の位置に戻す
+        _CatchPokemonPositionRewind(pWork);
+        _CatchPokemonPositionActive(pWork,pCL);
+
         IRC_POKETRADE_CursorEnable(pWork,line, index);  //OAMカーソル移動
         OS_TPrintf("GET %d %d\n",pWork->workBoxno,pWork->workPokeIndex);
         pWork->underSelectBoxno  = pWork->workBoxno;
@@ -1350,6 +1333,9 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
         selectno = 0;  //決定と同じ
         bExit=TRUE;
       }
+      else{  //ポケモンを元の位置に戻す
+        _CatchPokemonPositionRewind(pWork);
+      }
     }
     pWork->bUpVec = FALSE;
     if(GFL_UI_TP_GetPointCont(&x,&y)){   //ベクトルを監視  // 上向き判定
@@ -1370,7 +1356,7 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
       //相手に見せる
       pWork->selectIndex = pWork->underSelectIndex;
       pWork->selectBoxno = pWork->underSelectBoxno;
-      GFL_CLACT_WK_SetDrawEnable( pWork->pCatchCLWK, FALSE);
+      GFL_CLACT_WK_SetDrawEnable( pWork->pSelectCLWK, FALSE);
       _CHANGE_STATE(pWork, _changeMenuOpen);
     }
     else{
@@ -1478,6 +1464,7 @@ void IRC_POKMEONTRADE_ChangeFinish(POKEMON_TRADE_WORK* pWork)
   pWork->selectBoxno = 0;
   pWork->selectIndex = -1;
   pWork->pCatchCLWK = NULL;
+  pWork->pSelectCLWK = NULL;
   IRCPOKETRADE_PokeDeleteMcss(pWork, 0);
   IRCPOKETRADE_PokeDeleteMcss(pWork, 1);
 
@@ -1658,7 +1645,6 @@ static void _recvEndReqFunc(POKEMON_TRADE_WORK *pWork)
     IRC_POKETRADE_AppMenuOpen(pWork,msg,elementof(msg));
   }
 
-  //  TouchYesNoStart(pWork->TouchSubWindowSys);
   pWork->bTouchReset=TRUE;
 
   _CHANGE_STATE(pWork, _endWaitState);
@@ -1942,8 +1928,15 @@ static void _padUDLRFunc(POKEMON_TRADE_WORK* pWork)
   }
   else if(GFL_UI_KEY_GetRepeat()==PAD_KEY_DOWN ){   //ベクトルを監視
     pWork->MainObjCursorIndex++;
-    if(pWork->MainObjCursorIndex >= BOX_VERTICAL_NUM){
-      pWork->MainObjCursorIndex = BOX_VERTICAL_NUM-1;
+    if(pWork->MainObjCursorLine < HAND_HORIZONTAL_NUM){
+      if(pWork->MainObjCursorIndex >= HAND_VERTICAL_NUM){
+        pWork->MainObjCursorIndex = HAND_VERTICAL_NUM-1;
+      }
+    }
+    else{
+      if(pWork->MainObjCursorIndex >= BOX_VERTICAL_NUM){
+        pWork->MainObjCursorIndex = BOX_VERTICAL_NUM-1;
+      }
     }
     pWork->oldLine--;
     bChange=TRUE;
@@ -2023,12 +2016,7 @@ static void _touchState(POKEMON_TRADE_WORK* pWork)
 {
   int i;
 
-
-  if(pWork->pCatchCLWK){
-    GFL_CLACT_WK_SetPos(pWork->pCatchCLWK, &pWork->aCatchOldPos, CLSYS_DRAW_SUB);
-    GFL_CLACT_WK_SetDrawEnable( pWork->pCatchCLWK, TRUE);
-    pWork->pCatchCLWK=NULL;
-  }
+  _CatchPokemonPositionRewind(pWork);
   _PokemonReset(pWork,0);
   _PokemonReset(pWork,1);
 
@@ -2077,13 +2065,8 @@ static void _touchStateCommon(POKEMON_TRADE_WORK* pWork)
     if(i!=-1){
       pWork->underSelectBoxno = IRC_TRADE_LINE2TRAY(pWork->MainObjCursorLine);
       pWork->underSelectIndex = IRC_TRADE_LINE2POKEINDEX(pWork->MainObjCursorLine,pWork->MainObjCursorIndex);
-      if(pWork->pCatchCLWK){
-        //今のつかんでる物を元の位置に戻す
-        GFL_CLACT_WK_SetPos(pWork->pCatchCLWK, &pWork->aCatchOldPos, CLSYS_DRAW_SUB);
-      }
-      //つかみ状態
-      pWork->pCatchCLWK = pWork->pokeIcon[pWork->MainObjCursorLine][pWork->MainObjCursorIndex];
-      GFL_CLACT_WK_GetPos(pWork->pCatchCLWK, &pWork->aCatchOldPos, CLSYS_DRAW_SUB);
+      _CatchPokemonPositionRewind(pWork);
+      _CatchPokemonPositionActive(pWork,pWork->pokeIcon[pWork->MainObjCursorLine][pWork->MainObjCursorIndex]);
       bDecided=TRUE;
     }
   }
@@ -2099,8 +2082,7 @@ static void _touchStateCommon(POKEMON_TRADE_WORK* pWork)
       return;
     }
     else{
-      GFL_CLACT_WK_SetPos(pWork->pCatchCLWK, &pWork->aCatchOldPos, CLSYS_DRAW_SUB);
-      pWork->pCatchCLWK=NULL;
+      _CatchPokemonPositionRewind(pWork);
       pWork->underSelectBoxno = -1;
       pWork->underSelectIndex = -1;
     }
@@ -2392,6 +2374,8 @@ static void DEBUG_MyPokeAdd(POKEPARTY *party,MYSTATUS *myStatus,HEAPID heapID)
   PP_Put( pp , ID_PARA_tamago_flag , 1 );
   PokeParty_Add(party, pp);
   PokeParty_Add(party, pp);
+  PP_Setup(pp, MONSNO_MANAFI, 100, 123456);
+  PP_Put( pp , ID_PARA_tamago_flag , 1 );
   PokeParty_Add(party, pp);
   PokeParty_Add(party, pp);
   GFL_HEAP_FreeMemory(pp);
@@ -2500,8 +2484,6 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
     _dispSystemHeapInit(pWork);
     _savedataHeapInit(pWork,pParentWork);
 
-
-
     // 通信テーブル追加
     if(GFL_NET_IsInit()){
       GFL_NET_AddCommandTable(GFL_NET_CMD_IRCTRADE,_PacketTbl,NELEMS(_PacketTbl), pWork);
@@ -2527,7 +2509,7 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
     DEBUG_PAUSE_SetEnable( TRUE );
 #endif
 
-    //IRC_POKETRADEDEMO_SetModel( pWork, REEL_PANEL_OBJECT);
+   IRC_POKETRADEDEMO_SetModel( pWork, REEL_PANEL_OBJECT);
 
     _CHANGE_STATE(pWork, _touchState);
   }
