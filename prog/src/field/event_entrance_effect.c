@@ -136,7 +136,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     { //ドアを閉じるアニメ適用
       u16 seNo;
       BMANIME_CTRL_SetAnime( fdaw->ctrl, ANM_INDEX_DOOR_CLOSE );
-      if( BMANIME_CTRL_GetSENo( fdaw->ctrl, ANM_INDEX_DOOR_OPEN, &seNo) )
+      if( BMANIME_CTRL_GetSENo( fdaw->ctrl, ANM_INDEX_DOOR_CLOSE, &seNo) )
       {
         PMSND_PlaySE( seNo );
       }
