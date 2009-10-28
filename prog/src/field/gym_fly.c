@@ -488,8 +488,8 @@ BOOL test_GYM_FLY_Shot(GAMESYS_WORK *gsys);
 //--------------------------------------------------------------
 /**
  * セットアップ関数
- * @param	
- * @return
+ * @param	    fieldWork     フィールドワークポインタ
+ * @return    none
  */
 //--------------------------------------------------------------
 void GYM_FLY_Setup(FIELDMAP_WORK *fieldWork)
@@ -513,6 +513,9 @@ void GYM_FLY_Setup(FIELDMAP_WORK *fieldWork)
     };
       
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_FLY_UNIT_IDX, OBJ_CAN_1+i);
+    //大砲はカリングする
+    FLD_EXP_OBJ_SetCulling(ptr, GYM_FLY_UNIT_IDX, OBJ_CAN_1+i, TRUE);
+
     status->trans = pos[i];
     //回転セット
     {
@@ -534,8 +537,8 @@ void GYM_FLY_Setup(FIELDMAP_WORK *fieldWork)
 //--------------------------------------------------------------
 /**
  * 解放関数
- * @param	
- * @return
+ * @param   fieldWork     フィールドワークポインタ
+ * @return  none
  */
 //--------------------------------------------------------------
 void GYM_FLY_End(FIELDMAP_WORK *fieldWork)
@@ -550,8 +553,8 @@ void GYM_FLY_End(FIELDMAP_WORK *fieldWork)
 //--------------------------------------------------------------
 /**
  * 動作関数
- * @param	
- * @return
+ * @param	      fieldWork     フィールドワークポインタ
+ * @return      none
  */
 //--------------------------------------------------------------
 void GYM_FLY_Move(FIELDMAP_WORK *fieldWork)
@@ -567,8 +570,8 @@ void GYM_FLY_Move(FIELDMAP_WORK *fieldWork)
 //--------------------------------------------------------------
 /**
  * 打ち出しイベント作成
- * @param	
- * @return
+ * @param	      gsys    ゲームシステムポインタ
+ * @return      event   イベントポインタ
  */
 //--------------------------------------------------------------
 GMEVENT *GYM_FLY_CreateShotEvt(GAMESYS_WORK *gsys)
@@ -633,8 +636,8 @@ GMEVENT *GYM_FLY_CreateShotEvt(GAMESYS_WORK *gsys)
 //--------------------------------------------------------------
 /**
  * 実験イベント起動
- * @param	
- * @return
+ * @param	      gsys    ゲームシステムポインタ
+ * @return      BOOL
  */
 //--------------------------------------------------------------
 BOOL test_GYM_FLY_Shot(GAMESYS_WORK *gsys)
@@ -681,7 +684,7 @@ BOOL test_GYM_FLY_Shot(GAMESYS_WORK *gsys)
 
   //大砲が見つからない場合は終了
   if (shot_idx >= CANNON_NUM_MAX){
-    return NULL;
+    return FALSE;
   }
 
   {
@@ -701,8 +704,10 @@ BOOL test_GYM_FLY_Shot(GAMESYS_WORK *gsys)
 //--------------------------------------------------------------
 /**
  * 発射イベント
- * @param	
- * @return
+ * @param	  event   イベントポインタ
+ * @param   seq     シーケンサ
+ * @param   work    ワークポインタ
+ * @return  GMEVENT_RESULT  イベント結果
  */
 //--------------------------------------------------------------
 static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
@@ -1125,7 +1130,14 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
   return GMEVENT_RES_CONTINUE;
 }
 
-//指定グリッド座標に大砲があるかを調べる
+//--------------------------------------------------------------
+/**
+ * 指定グリッド座標に大砲があるかを調べる
+ * @param	  inX     Ｘ座標
+ * @param   inZ     Ｚ座標
+ * @return  u8      CANNON_NUM_MAX:見つからなかった　それ以外：見つけた大砲インデックス
+ */
+//--------------------------------------------------------------
 static u8 GetCanIdx(const int inX, const int inZ)
 {
   u8 i;
@@ -1139,6 +1151,13 @@ static u8 GetCanIdx(const int inX, const int inZ)
   return i;
 }
 
+//--------------------------------------------------------------
+/**
+ * 大砲アニメーションインデックスオフセットを取得
+ * @param	  inDirIdx      方向インデックス
+ * @return  u8            インデックスオフセット
+ */
+//--------------------------------------------------------------
 static u8 GetCannonAnmOfs(u8 inDirIdx)
 {
   u8 anm_ofs;
@@ -1162,7 +1181,13 @@ static u8 GetCannonAnmOfs(u8 inDirIdx)
   return anm_ofs;
 }
 
-//自機の向きコードを向きインデックスに変更
+//--------------------------------------------------------------
+/**
+ * 自機の向きコードを向きインデックスに変更
+ * @param	  inDir   方向コード  DIR_UP等
+ * @return  u8      方向インデックス
+ */
+//--------------------------------------------------------------
 static u8 GetDirIdxFromDir(u16 inDir)
 {
   switch(inDir){
@@ -1180,6 +1205,14 @@ static u8 GetDirIdxFromDir(u16 inDir)
   }
 }
 
+//--------------------------------------------------------------
+/**
+ * 指定方向インデックスと回転インデックスから回転後の方向インデックスを取得
+ * @param	  inDirIdx    方向インデックス
+ * @param   inRotIdx    回転インデックス
+ * @return  u8      方向インデックス
+ */
+//--------------------------------------------------------------
 static u8 ChgDirIdxByRot(const u8 inDirIdx, const u8 inRotIdx)
 {
   const u8 base_dir_idx[4] = {0,2,1,3}; //UP RIGHT DOWN LEFT 時計回り
@@ -1197,6 +1230,14 @@ static u8 ChgDirIdxByRot(const u8 inDirIdx, const u8 inRotIdx)
   return inDirIdx;
 }
 
+//--------------------------------------------------------------
+/**
+ * 指定方向コードと大砲インデックスから方向インデックスを取得
+ * @param	  inDir    方向コード　DIR_UP 等
+ * @param   inShotIdx    大砲インデックス
+ * @return  u8      方向インデックス
+ */
+//--------------------------------------------------------------
 static u8 GetDirIdx(const u16 inDir, const u8 inShotIdx)
 {
   u8 dir_idx;
@@ -1205,7 +1246,13 @@ static u8 GetDirIdx(const u16 inDir, const u8 inShotIdx)
   return dir_idx;
 }
 
-//カメラ振動開始リクエスト
+//--------------------------------------------------------------
+/**
+ * カメラ振動開始リクエスト
+ * @param	  tmp       ジムテンポラリポインタ
+ * @return  none
+ */
+//--------------------------------------------------------------
 static void ShakeCameraRequest(GYM_FLY_TMP *tmp)
 {
   CAM_SHAKE *shake;
@@ -1214,6 +1261,13 @@ static void ShakeCameraRequest(GYM_FLY_TMP *tmp)
   shake->Valid = TRUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * カメラ振動初期化
+ * @param	  shake   振動構造体ポインタ
+ * @return  none
+ */
+//--------------------------------------------------------------
 static void InitShakeCamera(CAM_SHAKE *shake)
 {
   shake->Valid = FALSE;
@@ -1225,8 +1279,14 @@ static void InitShakeCamera(CAM_SHAKE *shake)
   shake->dummy = 0;
 }
 
-
-//カメラ振動関数
+//--------------------------------------------------------------
+/**
+ * カメラ振動関数
+ * @param   shake   振動構造体ポインタ
+ * @param	  camera  カメラポインタ
+ * @return  none
+ */
+//--------------------------------------------------------------
 static void ShakeCameraFunc(CAM_SHAKE *shake, FIELD_CAMERA * camera)
 {
   if (!shake->Valid){
