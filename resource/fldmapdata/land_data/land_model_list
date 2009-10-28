@@ -515,6 +515,7 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_cabin01_00_00.nsbmd \
 	$(DIR_TEMP)/m_cabin01_01_00.nsbmd \
 	$(DIR_TEMP)/m_ybuill01_00_00.nsbmd \
+	$(DIR_TEMP)/m_museum02_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_00.nsbmd	$(DIR_TEMP)/C3_00_00.bhc \
 	$(DIR_TEMP)/C3_00_01.nsbmd	$(DIR_TEMP)/C3_00_01.bhc \
 	$(DIR_TEMP)/C3_01_00.nsbmd	$(DIR_TEMP)/C3_01_00.bhc \
