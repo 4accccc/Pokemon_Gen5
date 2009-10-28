@@ -1297,7 +1297,7 @@ static void updateTraceData(CAMERA_TRACE * trace,
   cam_ofs = trace->CamPoint;
   tgt_ofs = trace->TargetPoint;
 
-  if (trace->UpdateFlg){
+  if (trace->UpdateFlg && (!trace->StopReq)){
     //履歴データから座標取得
     *outTarget = trace->targetBuffer[cam_ofs];
     *outCamPos = trace->camPosBuffer[cam_ofs];
@@ -2147,6 +2147,7 @@ static void LinerMoveFunc(FIELD_CAMERA * camera, void *work)
   //アングルヨー
   if (data->Chk.Yaw)
   {
+///    OS_Printf("YAW\n");
     camera->angle_yaw = SubFuncU16(&src->AngleYaw, &dst->AngleYaw, data->CostFrm, data->NowFrm);
   }
   //座標
