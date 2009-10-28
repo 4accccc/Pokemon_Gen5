@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-28T14:28:22"/>
+	<create user="matsumiya" host="W00207" date="2009-10-28T17:50:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="535"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="689"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -304,12 +304,12 @@
 ちょうせんしゃを　まつ　ポケモンジム……[BE:00:ページ切り替え（行送り）]
 なんだか　ふんいき　あるっすよね[BE:01:ページ切り替え（クリア）]
 というわけで
-これを　さしあげるッす！</language>
+これを　さしあげるッす！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">博物館の　その奥で
 挑戦者を待つ　ポケモンジム……[BE:00:ページ切り替え（行送り）]
 なんだか　雰囲気あるっすよね[BE:01:ページ切り替え（クリア）]
 というわけで
-これを　さしあげるッす！</language>
+これを　さしあげるッす！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02gym0101_glasses_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -321,13 +321,13 @@
 よんでいくと　さきに　すすめます▼
 ちなみに　さいしょの　ほんは
 「ポケモン　えかきうた」です▽
-じどうしょの　ほんだなに　あるっすよ</language>
+じどうしょの　ほんだなに　あるっすよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">この　ジムはですね
 選ばれた　５冊の　本を▽
 読んでいくと　先に　進めます▼
 ちなみに　最初の　本は
 「ポケモン　えかきうた」です▽
-児童書の　本棚に　あるっすよ</language>
+児童書の　本棚に　あるっすよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02gym0101_glasses_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
