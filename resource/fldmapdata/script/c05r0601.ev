@@ -19,17 +19,15 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c05r0601_talkobj_man3
-_EVENT_DATA    ev_c05r0601_talkobj_woman2
-_EVENT_DATA    ev_c05r0601_talkobj_badman
-_EVENT_DATA    ev_c05r0601_talkobj_sunglasses
-_EVENT_DATA    ev_c05r0601_talkobj_trainerw
-_EVENT_DATA    ev_c05r0601_talkobj_nurse
-_EVENT_DATA    ev_c05r0601_talkobj_workman
+_EVENT_DATA    ev_c05r0601_man3_01
+_EVENT_DATA    ev_c05r0601_woman2_01
+_EVENT_DATA    ev_c05r0601_badman_01
+_EVENT_DATA    ev_c05r0601_sunglasses_01
+_EVENT_DATA    ev_c05r0601_trainerw_01
+_EVENT_DATA    ev_c05r0601_nurse_01
+_EVENT_DATA    ev_c05r0601_workman_01
 _EVENT_DATA_END
 
-
-//【安藤】ラベル名称の修正をお願いします。あと _easy に変更をば
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
@@ -40,70 +38,49 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C05R0601 MAN3の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c05r0601_talkobj_man3
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c05r0601_man3_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c05r0601_man3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0601_man3_01 )
 EVENT_END
 
 /**************************************************************/
 /*  C05R0601 WOMAN2の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c05r0601_talkobj_woman2
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c05r0601_woman2_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c05r0601_woman2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0601_woman2_01 )
 EVENT_END
 
 /**************************************************************/
 /*  C05R0601 BADMANの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c05r0601_talkobj_badman
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c05r0601_badman_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c05r0601_badman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05r0601_badman_01 )
 EVENT_END
 
 /**************************************************************/
 /*  C05R0601 SUNGLASSESの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c05r0601_talkobj_sunglasses
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c05r0601_sunglasses_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c05r0601_sunglasses_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0601_sunglasses_01 )
 EVENT_END
 
 /**************************************************************/
 /*  C05R0601 TRAINERWの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c05r0601_talkobj_trainerw
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c05r0601_trainerw_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c05r0601_trainerw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(  msg_c05r0601_trainerw_01 )
 EVENT_END
 
 /**************************************************************/
 /*  C05R0601 NURSEの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c05r0601_talkobj_nurse
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c05r0601_nurse_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c05r0601_nurse_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0601_nurse_01 )
 EVENT_END
 
 /**************************************************************/
 /*  C05R0601 WORKMANの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c05r0601_talkobj_workman
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c05r0601_workman_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c05r0601_workman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0601_workman_01 )
 EVENT_END
 

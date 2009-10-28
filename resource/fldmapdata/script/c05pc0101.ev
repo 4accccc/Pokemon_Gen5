@@ -19,12 +19,10 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c05pc0101_talkobj_middlewoman1
-_EVENT_DATA    ev_c05pc0101_talkobj_girl1
+_EVENT_DATA    ev_c05pc0101_middlewoman1
+_EVENT_DATA    ev_c05pc0101_girl1
 _EVENT_DATA    ev_c05pc0101_shop
 _EVENT_DATA_END
-
-//【安藤】ラベル名称ルールで統一しますかー
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
@@ -35,14 +33,14 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C05PC0101 MIDDLEWOMAN1の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c05pc0101_talkobj_middlewoman1
+EVENT_START   ev_c05pc0101_middlewoman1
 	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05pc0101_middlewoman1_01)
 EVENT_END
 
 /**************************************************************/
 /*  C05PC0101 GIRL1の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c05pc0101_talkobj_girl1
+EVENT_START   ev_c05pc0101_girl1
 	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05pc0101_girl1_01)
 EVENT_END
 

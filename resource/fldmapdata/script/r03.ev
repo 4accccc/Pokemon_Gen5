@@ -147,7 +147,7 @@ EVENT_START   ev_pos_r03_rival_01
 	_BALLOONWIN_CLOSE()
 	
 	//ÉåÉXÇ…ÇÊÇËï™äÚ
-	IF $SCWK_ANSWER == 0 THEN
+	IF $SCWK_ANSWER == SCR_YES THEN
   //ÅuÇÕÇ¢Åv
 		_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_06,R03_RIVAL)
 		_BALLOONWIN_CLOSE()

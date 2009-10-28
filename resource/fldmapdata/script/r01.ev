@@ -28,41 +28,23 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 
-_EVENT_DATA ev_r01_poke_getdemo
-_EVENT_DATA ev_r01_girl1
-_EVENT_DATA ev_r01_man1
-_EVENT_DATA ev_r01_poke_count_rivel
-_EVENT_DATA ev_pos_r01_pokecount
-_EVENT_DATA ev_r01_pokecount02
+_EVENT_DATA ev_r01_poke_getdemo_01
+_EVENT_DATA ev_r01_girl1_01
+_EVENT_DATA ev_r01_man1_01
+_EVENT_DATA ev_r01_rivel_02
+_EVENT_DATA ev_pos_r01_pokecount_01
+_EVENT_DATA ev_r01_support_02
 _EVENT_DATA ev_bg_r01_board_01
 _EVENT_DATA_END
 
-
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/*
- * 注意！(06.02.09現在)
- * ev_r01_SCRIPT_WORKを確保していないので、
- * SCWK_ANSWERなどのワークは使用することが出来ない！
- * LOCALWORK0などを使用するようにする！
- *
- * 共通スクリプトについては現状使用不可！
- * 対応予定だが、ゾーンをまたいだ時に処理落ちするかも？
- * あまりつかわないかも？
- */
-/**************************************************************/
-//ev_r01_r01_flag_change:
-//  _END
 
 DEFINE_LOCAL  TEMP_00 //ローカル変数定義を宣言
 /**************************************************************/
 /*   R01　ポケモン捕獲デモ                                    */
 /**************************************************************/
 
-//【安藤）】ev_dummy:　消してＯＫです。
-
 ev_dummy:
-EVENT_START   ev_r01_poke_getdemo
+EVENT_START   ev_r01_poke_getdemo_01
 //POSイベント、POSごとに主人公移動アニメ
   { //ここからローカル変数の参照制限範囲開始
     DEFINE_LOCAL  POSX   /* ローカル変数定義 */
@@ -203,21 +185,21 @@ EVENT_END
 /**************************************************************/
 /*きずぐすりくれるガール                                      */
 /**************************************************************/
-EVENT_START   ev_r01_girl1
+EVENT_START   ev_r01_girl1_01
   _EASY_TALK_ITEM_EVENT(ITEM_KIZUGUSURI, 3, FH_01, msg_r01_girl1_01, msg_r01_girl1_02, msg_r01_girl1_02 )
 EVENT_END
 
 /**************************************************************/
 /*野生のポケモンについて語る青年                               */
 /**************************************************************/
-EVENT_START   ev_r01_man1
+EVENT_START   ev_r01_man1_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r01_man1_01)
 EVENT_END
 
 /**************************************************************/
 /*看板01                                                      */
 /**************************************************************/
-EVENT_START   ev_bg_r01_board_01
+EVENT_START  ev_bg_r01_board_01
 	_EASY_MSG(msg_r01_sign3_01)
 EVENT_END
 
@@ -225,7 +207,7 @@ EVENT_END
 /*   R01　ポケモンカウント（ライバル）                         */
 /**************************************************************/
 
-EVENT_START   ev_r01_poke_count_rivel
+EVENT_START   ev_r01_rivel_02
 	//カウント勝負によって返答を分岐
 	IF $WK_SCENE_R01 == 1 THEN
 	//カウント前
@@ -241,7 +223,7 @@ EVENT_END
 /*   R01　ポケモンカウント（ヒロイン）                         */
 /**************************************************************/
 
-EVENT_START   ev_pos_r01_pokecount
+EVENT_START   ev_pos_r01_pokecount_01
 
 //POSイベント、POSごとに主人公移動アニメ
  { //ここからローカル変数の参照制限範囲開始
@@ -276,31 +258,31 @@ EVENT_START   ev_pos_r01_pokecount
 
 
 //カウント勝負質問
-_BALLOONWIN_OBJMSG_OPEN( msg_r01_white_10,R01_HEROINE02)
+_BALLOONWIN_OBJMSG_OPEN( msg_r01_white_10,R01_SUPPORT_02)
 _YES_NO_WIN( SCWK_ANSWER )
 
 //レスにより分岐
-IF $SCWK_ANSWER == 0 THEN
+IF $SCWK_ANSWER == SCR_YES THEN
   //「はい」
-	_BALLOONWIN_OBJMSG_OPEN(msg_r01_white_13,R01_HEROINE02)
-	_AB_KEYWAIT()     //キー待ち
+	_BALLOONWIN_OBJMSG_OPEN(msg_r01_white_13,R01_SUPPORT_02)
+	_LAST_KEYWAIT()     //キー待ち
 	_BALLOONWIN_CLOSE()
 	$WK_SCENE_R01 = 2
 ELSE
   //「いいえ」
-	_BALLOONWIN_OBJMSG_OPEN(msg_r01_white_11,R01_HEROINE02)
-	_AB_KEYWAIT()
+	_BALLOONWIN_OBJMSG_OPEN(msg_r01_white_11,R01_SUPPORT_02)
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_count_no )
 ENDIF
 
 EVENT_END
 
-//--------------------------------------------------------------
-//	R01　ポケモンカウント（ヒロイン）カウント後
-//--------------------------------------------------------------
+/**************************************************************/
+/*	R01　ポケモンカウント（ヒロイン）カウント後*/
+/**************************************************************/
 
-EVENT_START   ev_r01_pokecount02
+EVENT_START   ev_r01_support_02
 	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r01_white_13)
 EVENT_END
 

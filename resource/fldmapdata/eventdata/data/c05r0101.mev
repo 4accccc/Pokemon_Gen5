@@ -1,10 +1,10 @@
 #event data
-#save date:2009/08/04 15:45:07
+#save date:2009/10/28 11:24:06
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c05r0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/08/04 15:45:07
+#save date:2009/10/28 11:24:06
 2
 #hold event type:
 1
@@ -53,7 +53,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05R0101_TALKOBJ_WOMAN1
+SCRID_C05R0101_WOMAN1
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -82,7 +82,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05R0101_TALKOBJ_BOY1
+SCRID_C05R0101_BOY1
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -101,7 +101,7 @@ DIR_DOWN
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/08/04 15:45:07
+#save date:2009/10/28 11:24:06
 2
 #hold event type:
 1
@@ -111,7 +111,7 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/08/04 15:45:07
+#save date:2009/10/28 11:24:06
 2
 #hold event type:
 1
@@ -121,7 +121,7 @@ DIR_DOWN
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/08/04 15:45:07
+#save date:2009/10/28 11:24:06
 2
 #hold event type:
 1

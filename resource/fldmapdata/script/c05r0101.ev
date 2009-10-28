@@ -19,14 +19,10 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c05r0101_talkobj_woman1
-_EVENT_DATA    ev_c05r0101_talkobj_boy1
+_EVENT_DATA    ev_c05r0101_woman1
+_EVENT_DATA    ev_c05r0101_boy1
 _EVENT_DATA    ev_c05r0101_pokemon
 _EVENT_DATA_END
-
-//【安藤】ラベル名称ルールで統一しましょう。
-//下のイベントも簡易コマンドに変えましょう。以前そのままでって話をしてたらゴメンナサイ！
-//ポケモンの鳴き声も対応をお願いします
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
@@ -37,29 +33,20 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C05R0101 WOMAN1の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c05r0101_talkobj_woman1
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c05r0101_woman1_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c05r0101_woman1
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05r0101_woman1_01)
 EVENT_END
 
 /**************************************************************/
 /*  C05R0101 BOY1の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c05r0101_talkobj_boy1
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c05r0101_boy1_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c05r0101_boy1
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05r0101_boy1_01)
 EVENT_END
 
 /**************************************************************/
-/*  C05R0101 POKEMONの会話用イベントスクリプト*/
+/*  【仮】C05R0101 POKEMONの会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c05r0101_pokemon
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c05r0101_pokemon_01 ) //鳴き声処理追加
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+	 _EASY_TALK_POKEVOICE(MONSNO_HITOKAGE,msg_c05r0101_pokemon_01)  	
 EVENT_END

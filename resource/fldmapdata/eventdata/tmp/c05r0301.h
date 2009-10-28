@@ -11,7 +11,7 @@
 #ifndef ZONE_C05R0301_EVC_H
 #define ZONE_C05R0301_EVC_H
 
-#define C05R0301_TRAINERM                  0
-#define C05R0301_WOMAN2                    1
+#define C05R0301_TRAINERM_01               0
+#define C05R0301_WOMAN2_01                 1
 
 #endif //ZONE_C05R0301_EVC_H

@@ -5,7 +5,7 @@
 #define _D05R0101_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_D05R0101_SCENE_CHANGE_01 (1)
+#define SCRID_SCENE_D05R0101_01 (1)
 #define SCRID_POS_D05R0101_RIVAL_01 (2)
 
 #endif //_D05R0101_DEF_H_

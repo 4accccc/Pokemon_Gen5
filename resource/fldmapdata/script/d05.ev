@@ -19,16 +19,16 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d05_scene_change_01
+_EVENT_DATA    ev_scene_d05_01
 _EVENT_DATA    ev_d05_workman_01
-_EVENT_DATA    ev_d05_scene_change_02
+_EVENT_DATA    ev_scene_d05_02
 _EVENT_DATA_END
 
 
 /**************************************************************/
 /*$WK_SCENE_D05=0 時発動イベント：コンテナにいるよう言われる   */
 /**************************************************************/
-EVENT_START   ev_d05_scene_change_01
+EVENT_START   ev_scene_d05_01
 
 	//workmanコンテナにいるよう諭す
 	_BALLOONWIN_OBJMSG_OPEN(msg_d05_workman_01,D05_WORKMAN_01)
@@ -67,7 +67,7 @@ EVENT_END
 /**************************************************************/
 /*$WK_SCENE_D05=2 時発動イベント：ライバルD05へ向かう         */
 /**************************************************************/
-EVENT_START   ev_d05_scene_change_02
+EVENT_START   ev_scene_d05_02
 
 	//ライバル喋った後C05へ
 	_OBJ_ANIME(D05_RIVAL_01,anm_d05_rival_02)
@@ -80,7 +80,7 @@ EVENT_START   ev_d05_scene_change_02
 	//ライバル消去
 	_OBJ_DEL(D05_RIVAL_01)
 
-	//===========フラグワーク操作===========//
+	//======================================//	
 	
 	//ライバルのバニッシュフラグをセット
 	_FLAG_SET(FV_D05_RIVAL_01)

@@ -19,19 +19,15 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c05r0501_gentleman
-_EVENT_DATA    ev_c05r0501_veteranm
-_EVENT_DATA    ev_c05r0501_girl2
-_EVENT_DATA    ev_c05r0501_oldwoman
-_EVENT_DATA    ev_c05r0501_mountain
-_EVENT_DATA    ev_c05r0501_man1
-_EVENT_DATA    ev_c05r0501_woman2
-_EVENT_DATA    ev_c05r0501_veteranw
+_EVENT_DATA    ev_c05r0501_gentleman_01
+_EVENT_DATA    ev_c05r0501_veteranm_01
+_EVENT_DATA    ev_c05r0501_girl2_01
+_EVENT_DATA    ev_c05r0501_oldwoman_01
+_EVENT_DATA    ev_c05r0501_mountain_01
+_EVENT_DATA    ev_c05r0501_man1_01
+_EVENT_DATA    ev_c05r0501_woman2_01
+_EVENT_DATA    ev_c05r0501_veteranw_01
 _EVENT_DATA_END
-
-
-//【安藤】心苦しいのですが、ラベルにナンバリングをお願いします…！
-//スクリプト本体は全く問題ありません！かんぺき！
 
 
 /**************************************************************/
@@ -43,56 +39,56 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C05R0501 GENTLEMANの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c05r0501_gentleman
+EVENT_START   ev_c05r0501_gentleman_01
   _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05r0501_gentleman_01)
 EVENT_END
 
 /**************************************************************/
 /*  C05R0501 VETERANMの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c05r0501_veteranm
+EVENT_START   ev_c05r0501_veteranm_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0501_veteranm_01)
 EVENT_END
 
 /**************************************************************/
 /*  C05R0501 GIRL2の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c05r0501_girl2
+EVENT_START   ev_c05r0501_girl2_01
   _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05r0501_girl2_01)
 EVENT_END
 
 /**************************************************************/
 /*  C05R0501 OLDWOMANの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c05r0501_oldwoman
+EVENT_START   ev_c05r0501_oldwoman_01
   _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05r0501_oldwoman_01)
 EVENT_END
 
 /**************************************************************/
 /*  C05R0501 MOUNTAINの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c05r0501_mountain
+EVENT_START   ev_c05r0501_mountain_01
   _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05r0501_mountain_01)
 EVENT_END
 
 /**************************************************************/
 /*  C05R0501 MAN1の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c05r0501_man1
+EVENT_START   ev_c05r0501_man1_01
   _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05r0501_man1_01)
 EVENT_END
 
 /**************************************************************/
 /*  C05R0501 WOMAN2の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c05r0501_woman2
+EVENT_START   ev_c05r0501_woman2_01
   _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05r0501_woman2_01)
 EVENT_END
 
 /**************************************************************/
 /*  C05R0501 VETERANWの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c05r0501_veteranw
+EVENT_START   ev_c05r0501_veteranw_01
   //質問
 	_TALK_OBJ_START()
 	_BALLOONWIN_OBJMSG_OPEN(msg_c05r0501_veteranw_01,C05R0501_VETERANW)
@@ -100,7 +96,7 @@ EVENT_START   ev_c05r0501_veteranw
 	_BALLOONWIN_CLOSE()
 	
 	//はい
-	IF $SCWK_ANSWER == 0 THEN
+	IF $SCWK_ANSWER == SCR_YES THEN
 	_BALLOONWIN_OBJMSG_OPEN(msg_c05r0501_veteranw_02,C05R0501_VETERANW)
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()

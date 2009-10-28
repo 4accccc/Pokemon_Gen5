@@ -19,11 +19,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c05r0401_talkobj_workman
-_EVENT_DATA    ev_c05r0401_talkobj_middlewoman
+_EVENT_DATA    ev_c05r0401_workman
+_EVENT_DATA    ev_c05r0401_middlewoman
 _EVENT_DATA_END
-
-//【安藤】ラベル名称の修正と、_easyに変更をお願いしまっ
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
@@ -34,16 +32,13 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C05R0401 WORKMANの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c05r0401_talkobj_workman
+EVENT_START   ev_c05r0401_workman
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0401_workman_01 )
 EVENT_END
 
 /**************************************************************/
 /*  C05R0401 MIDDLEWOMANの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c05r0401_talkobj_middlewoman
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c05r0401_middlewoman_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c05r0401_middlewoman
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0401_middlewoman_01 )
 EVENT_END

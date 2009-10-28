@@ -16,11 +16,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c05r0301_talkobj_trainerm
-_EVENT_DATA    ev_c05r0301_talkobj_woman2
+_EVENT_DATA    ev_c05r0301_trainerm_01
+_EVENT_DATA    ev_c05r0301_woman2_01
 _EVENT_DATA_END
-
-//【安藤】ラベル名称ルールで
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
@@ -31,13 +29,13 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C05R0301 TRAINERMの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c05r0301_talkobj_trainerm
+EVENT_START   ev_c05r0301_trainerm_01
   _EASY_BALLOONWIN_TALKOBJ_MSG(  msg_c05r0301_trainerm_01  )
 EVENT_END
 
 /**************************************************************/
 /*  C05R0301 WOMAN2の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c05r0301_talkobj_woman2
+EVENT_START   ev_c05r0301_woman2_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0301_woman2_01)
 EVENT_END
