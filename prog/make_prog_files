@@ -657,6 +657,7 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btlv/btlv_input.c \
 			battle/btlv/btlv_gauge.c \
 			battle/btlv/btlv_b_gauge.c \
+			battle/btlv/btlv_timer.c \
 			battle/btlv/wazatype_panel.c \
             battle/app/b_app_tool.c \
 			battle/app/b_bag_bmp.c \
