@@ -13,6 +13,8 @@
 #include "field/intrude_common.h"
 #include "field/field_comm/bingo_types.h"
 #include "savedata/intrude_save.h"  //OCCUPY_INFO
+#include "field/field_comm/mission_types.h"
+
 
 //==============================================================================
 //  定数定義
@@ -101,20 +103,6 @@ typedef struct{
   u8 answer_talk_status;      ///<話しかけられている相手のINTRUDE_TALK_STATUS_???
 }INTRUDE_TALK;
 
-///ミッション要求データ
-typedef struct{
-  u8 monolith_type;   ///<石版タイプ  MONOLITH_TYPE_???
-  u8 padding[3];
-}MISSION_REQ;
-
-///ミッションデータ
-typedef struct{
-  u8 monolith_type;           ///<石版タイプ  MONOLITH_TYPE_???
-  u8 mission_no;              ///<ミッション番号(ミッションが無い場合はMISSION_NO_NULL)
-  u8 accept_netid;            ///<ミッション受注者のNetID
-  u8 target_netid;            ///<ミッション内容によってターゲットとなるプレイヤーのNetID
-}MISSION_DATA;
-
 ///侵入システムワーク
 typedef struct _INTRUDE_COMM_SYS{
   GAME_COMM_SYS_PTR game_comm;
@@ -126,7 +114,7 @@ typedef struct _INTRUDE_COMM_SYS{
   INTRUDE_TALK   talk;
   INTRUDE_PROFILE send_profile;   ///<自分プロフィール送信バッファ(受信はgamedata内なので不要)
   
-  MISSION_DATA mission;       ///<ミッションデータ
+  MISSION_SYSTEM mission;     ///<ミッションシステム
   BINGO_SYSTEM bingo;         ///<ビンゴシステムワーク
   
 //  BOOL comm_act_vanish[FIELD_COMM_MEMBER_MAX];   ///<TRUE:非表示
@@ -148,7 +136,6 @@ typedef struct _INTRUDE_COMM_SYS{
   u8 member_send_req;         ///<TRUE:参加人数の送信を行う
   
   u8 warp_town_tblno;         ///<ワープ先のテーブル番号
-  u8 mission_send_req;        ///<TRUE:ミッションデータの送信を行う
-  u8 padding[2];
+  u8 padding[3];
 }INTRUDE_COMM_SYS;
 

@@ -16,15 +16,17 @@
 #include "script.h"
 #include "event_fieldtalk.h"
 
+#include "print/wordset.h"
 #include "event_comm_talk.h"
 #include "field/field_comm/intrude_main.h"
 #include "field/field_comm/intrude_comm_command.h"
 #include "field/field_comm/bingo_system.h"
-
+#include "field/field_comm/intrude_mission.h"
+#include "field/field_comm/intrude_message.h"
+#include "msg/msg_invasion.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
-extern MMDLSYS * FIELDMAP_GetMMdlSys( FIELDMAP_WORK *fieldWork );
 
 //======================================================================
 //	define
@@ -48,6 +50,9 @@ typedef struct
 	FLDMSGBG *msgBG;
 	GFL_MSGDATA *msgData;
 	FLDMSGWIN *msgWin;
+	
+	INTRUDE_EVENT_MSGWORK iem;
+	BOOL error;
 }COMMTALK_EVENT_WORK;
 
 
@@ -56,6 +61,8 @@ typedef struct
 //==============================================================================
 static GMEVENT_RESULT CommTalkEvent( GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT CommBingoEvent( GMEVENT *event, int *seq, void *wk );
+static GMEVENT_RESULT CommMissionAchieveEvent( GMEVENT *event, int *seq, void *wk );
+static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk );
 
 
 
@@ -86,10 +93,20 @@ GMEVENT * EVENT_CommTalk(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
   	event = GMEVENT_Create(
   		gsys, NULL,	CommBingoEvent, sizeof(COMMTALK_EVENT_WORK) );
     Bingo_Clear_BingoBattleBeforeBuffer(Bingo_GetBingoSystemWork(intcomm));
+  	//侵入システムのアクションステータスを更新
+  	Intrude_SetActionStatus(intcomm, INTRUDE_ACTION_TALK);
+    Intrude_InitTalkWork(intcomm, talk_net_id);
+  }
+  else if(MISSION_Talk_CheckAchieve(&intcomm->mission, talk_net_id) == TRUE){
+  	event = GMEVENT_Create(
+  		gsys, NULL,	CommMissionAchieveEvent, sizeof(COMMTALK_EVENT_WORK) );
   }
   else{
   	event = GMEVENT_Create(
   		gsys, NULL,	CommTalkEvent, sizeof(COMMTALK_EVENT_WORK) );
+  	//侵入システムのアクションステータスを更新
+  	Intrude_SetActionStatus(intcomm, INTRUDE_ACTION_TALK);
+    Intrude_InitTalkWork(intcomm, talk_net_id);
   }
 	ftalk_wk = GMEVENT_GetEventWork( event );
 	GFL_STD_MemClear( ftalk_wk, sizeof(COMMTALK_EVENT_WORK) );
@@ -100,10 +117,6 @@ GMEVENT * EVENT_CommTalk(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
 	ftalk_wk->fmmdl_talk = CommPlayer_GetMmdl(intcomm->cps, talk_net_id);
 	ftalk_wk->fieldWork = fieldWork;
 	ftalk_wk->intcomm = intcomm;
-	
-	//侵入システムのアクションステータスを更新
-	Intrude_SetActionStatus(intcomm, INTRUDE_ACTION_TALK);
-  Intrude_InitTalkWork(intcomm, talk_net_id);
 	
 	return( event );
 }
@@ -121,39 +134,23 @@ static GMEVENT_RESULT CommTalkEvent( GMEVENT *event, int *seq, void *wk )
 	COMMTALK_EVENT_WORK *talk = wk;
 	
 	switch( *seq ){
-	case 0:	//対象MDLの移動終了待ち
-		if( talk->fmmdl_talk != NULL ){
-			if( MMDL_CheckStatusBitMove(talk->fmmdl_talk) == TRUE ){
-				MMDL_UpdateMove( talk->fmmdl_talk );
-				
-				if( MMDL_CheckStatusBitMove(talk->fmmdl_talk) == TRUE ){
-					break;
-				}
-			}
-		}
-		
-		{
-			MMDLSYS *fmmdlsys = FIELDMAP_GetMMdlSys( talk->fieldWork );
-			MMDLSYS_PauseMoveProc( fmmdlsys );
-		}
-		(*seq)++;
-	case 1:
+	case 0:
 		talk->msgData = FLDMSGBG_CreateMSGDATA(
 			talk->msgBG, NARC_message_intrude_comm_dat );
 		talk->msgWin = FLDMSGWIN_AddTalkWin( talk->msgBG, talk->msgData );
 		FLDMSGWIN_Print( talk->msgWin, 0, 0, msg_intrude_000 );
 		(*seq)++;
 		break;
-	case 2:
+	case 1:
 	  if(IntrudeSend_Talk(talk->intcomm->talk.talk_netid) == TRUE){
       (*seq)++;
     }
-	case 3:
+	case 2:
 		if( FLDMSGWIN_CheckPrintTrans(talk->msgWin) == TRUE ){
 			(*seq)++;
 		}
 		break;
-	case 4:
+	case 3:
 	  {
       INTRUDE_TALK_STATUS talk_status = Intrude_GetTalkAnswer(talk->intcomm);
       switch(talk_status){
@@ -209,11 +206,6 @@ static GMEVENT_RESULT CommTalkEvent( GMEVENT *event, int *seq, void *wk )
 		FLDMSGWIN_Delete( talk->msgWin );
 		GFL_MSG_Delete( talk->msgData );
 
-		{
-			MMDLSYS *fmmdlsys = FIELDMAP_GetMMdlSys( talk->fieldWork );
-			MMDLSYS_ClearPauseMoveProc( fmmdlsys );
-		}
-
   	//侵入システムのアクションステータスを更新
   	Intrude_SetActionStatus(talk->intcomm, INTRUDE_ACTION_FIELD);
     Intrude_InitTalkWork(talk->intcomm, INTRUDE_NETID_NULL);
@@ -236,39 +228,23 @@ static GMEVENT_RESULT CommBingoEvent( GMEVENT *event, int *seq, void *wk )
 	COMMTALK_EVENT_WORK *talk = wk;
 	
 	switch( *seq ){
-	case 0:	//対象MDLの移動終了待ち
-		if( talk->fmmdl_talk != NULL ){
-			if( MMDL_CheckStatusBitMove(talk->fmmdl_talk) == TRUE ){
-				MMDL_UpdateMove( talk->fmmdl_talk );
-				
-				if( MMDL_CheckStatusBitMove(talk->fmmdl_talk) == TRUE ){
-					break;
-				}
-			}
-		}
-		
-		{
-			MMDLSYS *fmmdlsys = FIELDMAP_GetMMdlSys( talk->fieldWork );
-			MMDLSYS_PauseMoveProc( fmmdlsys );
-		}
-		(*seq)++;
-	case 1:
+	case 0:
 		talk->msgData = FLDMSGBG_CreateMSGDATA(
 			talk->msgBG, NARC_message_intrude_comm_dat );
 		talk->msgWin = FLDMSGWIN_AddTalkWin( talk->msgBG, talk->msgData );
 		FLDMSGWIN_Print( talk->msgWin, 0, 0, msg_intrude_bingo000 );
 		(*seq)++;
 		break;
-	case 2:
+	case 1:
 	  if(IntrudeSend_BingoIntrusion(talk->intcomm->talk.talk_netid) == TRUE){
       (*seq)++;
     }
-	case 3:
+	case 2:
 		if( FLDMSGWIN_CheckPrintTrans(talk->msgWin) == TRUE ){
 			(*seq)++;
 		}
 		break;
-	case 4:
+	case 3:
 	  {
       BINGO_INTRUSION_ANSWER answer = Bingo_GetBingoIntrusionAnswer(talk->intcomm);
       switch(answer){
@@ -334,11 +310,6 @@ static GMEVENT_RESULT CommBingoEvent( GMEVENT *event, int *seq, void *wk )
 		FLDMSGWIN_Delete( talk->msgWin );
 		GFL_MSG_Delete( talk->msgData );
 
-		{
-			MMDLSYS *fmmdlsys = FIELDMAP_GetMMdlSys( talk->fieldWork );
-			MMDLSYS_ClearPauseMoveProc( fmmdlsys );
-		}
-
   	//侵入システムのアクションステータスを更新
   	Intrude_SetActionStatus(talk->intcomm, INTRUDE_ACTION_FIELD);
     Intrude_InitTalkWork(talk->intcomm, INTRUDE_NETID_NULL);
@@ -348,3 +319,195 @@ static GMEVENT_RESULT CommBingoEvent( GMEVENT *event, int *seq, void *wk )
 	return( GMEVENT_RES_CONTINUE );
 }
 
+//--------------------------------------------------------------
+/**
+ * ミッション達成話し掛けイベント
+ * @param	event	GMEVENT
+ * @param	seq		シーケンス
+ * @param	wk		event talk
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT CommMissionAchieveEvent( GMEVENT *event, int *seq, void *wk )
+{
+	COMMTALK_EVENT_WORK *talk = wk;
+	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+	INTRUDE_COMM_SYS_PTR intcomm;
+	enum{
+    SEQ_INIT,
+    SEQ_SEND_ACHIEVE,
+    SEQ_RECV_WAIT,
+    SEQ_MSG_INIT,
+    SEQ_MSG_WAIT,
+    SEQ_MSG_END_BUTTON_WAIT,
+    SEQ_END,
+  };
+	
+  intcomm = Intrude_Check_CommConnect(game_comm);
+  if(intcomm == NULL){
+    if((*seq) > SEQ_INIT && (*seq) < SEQ_MSG_WAIT){
+      IntrudeEventPrint_StartStream(&talk->iem, msg_invasion_mission_sys002);
+      *seq = SEQ_MSG_WAIT;
+      talk->error = TRUE;
+    }
+  }
+
+	switch( *seq ){
+  case SEQ_INIT:
+    IntrudeEventPrint_SetupFieldMsg(&talk->iem, gsys);
+    (*seq)++;
+    break;
+	case SEQ_SEND_ACHIEVE:
+    if(IntrudeSend_MissionAchieve(intcomm, &intcomm->mission) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case SEQ_RECV_WAIT:
+		if(MISSION_RecvAchieve(&intcomm->mission) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case SEQ_MSG_INIT:
+    {
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData(gsys);
+      MYSTATUS *target_myst = GAMEDATA_GetMyStatusPlayer(gdata,intcomm->mission.data.target_netid);
+      MYSTATUS *mine_myst = GAMEDATA_GetMyStatus(gdata);
+      int my_netid = GAMEDATA_GetIntrudeMyID(gdata);
+      u16 msg_id;
+      
+      msg_id = MISSION_GetAchieveMsgID(&intcomm->mission, my_netid);
+
+      WORDSET_RegisterPlayerName( talk->iem.wordset, 0, target_myst );
+      WORDSET_RegisterPlayerName( talk->iem.wordset, 1, mine_myst );
+
+      IntrudeEventPrint_StartStream(&talk->iem, msg_id);
+    }
+		(*seq)++;
+		break;
+  case SEQ_MSG_WAIT:
+    if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
+      *seq = SEQ_MSG_END_BUTTON_WAIT;
+    }
+    break;
+  case SEQ_MSG_END_BUTTON_WAIT:
+    if(IntrudeEventPrint_LastKeyWait() == TRUE){
+      *seq = SEQ_END;
+    }
+    break;
+  case SEQ_END:
+    IntrudeEventPrint_ExitFieldMsg(&talk->iem);
+    if(intcomm != NULL){
+      MISSION_Init(&intcomm->mission);
+    }
+    return GMEVENT_RES_FINISH;
+  }
+	return GMEVENT_RES_CONTINUE;
+}
+
+
+//==================================================================
+/**
+ * ミッション結果通知イベント起動(自分が達成ではなく通信相手が達成した結果が届いた)
+ *
+ * @param   gsys		
+ * @param   fieldWork		
+ * @param   intcomm		      侵入システムワークへのポインタ
+ * @param   fmmdl_player		自機動作モデル
+ * @param   heap_id		      ヒープID
+ *
+ * @retval  GMEVENT *		
+ */
+//==================================================================
+GMEVENT * EVENT_CommMissionResult(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
+  INTRUDE_COMM_SYS_PTR intcomm, MMDL *fmmdl_player, HEAPID heap_id)
+{
+	COMMTALK_EVENT_WORK *ftalk_wk;
+	GMEVENT *event;
+	
+	event = GMEVENT_Create(
+ 		gsys, NULL,	CommMissionResultEvent, sizeof(COMMTALK_EVENT_WORK) );
+
+	ftalk_wk = GMEVENT_GetEventWork( event );
+	GFL_STD_MemClear( ftalk_wk, sizeof(COMMTALK_EVENT_WORK) );
+	
+	ftalk_wk->heapID = heap_id;
+	ftalk_wk->msgBG = FIELDMAP_GetFldMsgBG( fieldWork );
+	ftalk_wk->fmmdl_player = fmmdl_player;
+	ftalk_wk->fieldWork = fieldWork;
+	ftalk_wk->intcomm = intcomm;
+	
+	return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * ミッション結果通知イベント(自分が達成ではなく通信相手が達成した結果が届いた)
+ * @param	event	GMEVENT
+ * @param	seq		シーケンス
+ * @param	wk		event talk
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk )
+{
+	COMMTALK_EVENT_WORK *talk = wk;
+	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+	INTRUDE_COMM_SYS_PTR intcomm;
+	enum{
+    SEQ_INIT,
+    SEQ_MSG_INIT,
+    SEQ_MSG_WAIT,
+    SEQ_MSG_END_BUTTON_WAIT,
+    SEQ_END,
+  };
+	
+  intcomm = Intrude_Check_CommConnect(game_comm);
+  if(intcomm == NULL){
+    if((*seq) > SEQ_INIT && (*seq) < SEQ_MSG_WAIT){
+      IntrudeEventPrint_StartStream(&talk->iem, msg_invasion_mission_sys002);
+      *seq = SEQ_MSG_WAIT;
+      talk->error = TRUE;
+    }
+  }
+
+	switch( *seq ){
+  case SEQ_INIT:
+    IntrudeEventPrint_SetupFieldMsg(&talk->iem, gsys);
+    (*seq)++;
+    break;
+  case SEQ_MSG_INIT:
+    {
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData(gsys);
+      MYSTATUS *target_myst = GAMEDATA_GetMyStatusPlayer(gdata,intcomm->mission.data.target_netid);
+      MYSTATUS *mine_myst = GAMEDATA_GetMyStatus(gdata);
+      int my_netid = GAMEDATA_GetIntrudeMyID(gdata);
+      u16 msg_id;
+      
+      msg_id = MISSION_GetAchieveMsgID(&intcomm->mission, my_netid);
+
+      WORDSET_RegisterPlayerName( talk->iem.wordset, 0, target_myst );
+      WORDSET_RegisterPlayerName( talk->iem.wordset, 1, mine_myst );
+
+      IntrudeEventPrint_StartStream(&talk->iem, msg_id);
+    }
+		(*seq)++;
+		break;
+  case SEQ_MSG_WAIT:
+    if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
+      *seq = SEQ_MSG_END_BUTTON_WAIT;
+    }
+    break;
+  case SEQ_MSG_END_BUTTON_WAIT:
+    if(IntrudeEventPrint_LastKeyWait() == TRUE){
+      *seq = SEQ_END;
+    }
+    break;
+  case SEQ_END:
+    IntrudeEventPrint_ExitFieldMsg(&talk->iem);
+    if(intcomm != NULL){
+      MISSION_Init(&intcomm->mission);
+    }
+    return GMEVENT_RES_FINISH;
+  }
+	return GMEVENT_RES_CONTINUE;
+}

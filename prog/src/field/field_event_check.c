@@ -71,6 +71,7 @@
 
 #include "waza_tool/wazano_def.h"
 #include "field/field_comm/intrude_main.h"
+#include "field/field_comm/intrude_mission.h"
 
 #include "savedata/encount_sv.h"
 #include "../../../resource/fldmapdata/script/eggevent_scr_def.h"   // for SCRID_EGG_BIRTH
@@ -339,7 +340,11 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
         FIELD_PLAYER_GRID_ForceStop( req.field_player );
         return EVENT_CommWasTalkedTo(gsys, fieldWork, intcomm, fmmdl_player, talk_netid, req.heapID);
       }
-      
+      //ミッション結果を受信していないかチェック
+      if(MISSION_RecvAchieve(&intcomm->mission) == TRUE){
+        FIELD_PLAYER_GRID_ForceStop( req.field_player );
+        return EVENT_CommMissionResult(gsys, fieldWork, intcomm, fmmdl_player, req.heapID);
+      }
       //話しかける
       if( req.talkRequest ){
         if(IntrudeField_CheckTalk(intcomm, req.field_player, &talk_netid) == TRUE){

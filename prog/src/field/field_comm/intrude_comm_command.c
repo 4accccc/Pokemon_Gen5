@@ -35,6 +35,8 @@ static void _IntrudeRecv_ReqBingoIntrusionParam(const int netID, const int size,
 static void _IntrudeRecv_BingoIntrusionParam(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MissionReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MissionData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_MissionAchieve(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_MissionResult(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 //==============================================================================
@@ -55,6 +57,8 @@ const NetRecvFuncTable Intrude_CommPacketTbl[] = {
   {_IntrudeRecv_BingoIntrusionParam, NULL},    //INTRUDE_CMD_BINGO_INTRUSION_PARAM
   {_IntrudeRecv_MissionReq, NULL},             //INTRUDE_CMD_MISSION_REQ
   {_IntrudeRecv_MissionData, NULL},            //INTRUDE_CMD_MISSION_DATA
+  {_IntrudeRecv_MissionAchieve, NULL},         //INTRUDE_CMD_MISSION_ACHIEVE
+  {_IntrudeRecv_MissionResult, NULL},          //INTRUDE_CMD_MISSION_RESULT
 };
 SDK_COMPILER_ASSERT(NELEMS(Intrude_CommPacketTbl) == INTRUDE_CMD_NUM);
 
@@ -246,7 +250,7 @@ BOOL IntrudeSend_Profile(INTRUDE_COMM_SYS_PTR intcomm)
     if(GFL_NET_IsParentMachine() == TRUE){
       //親の場合、プロフィールを要求されていたという事は途中参加者がいるので
       //現在のミッションも送信する
-      intcomm->mission_send_req = TRUE;
+      MISSION_Set_DataSendReq(&intcomm->mission);
     }
   }
   else{
@@ -557,7 +561,7 @@ static void _IntrudeRecv_MissionReq(const int netID, const int size, const void*
   OS_TPrintf("受信：ミッション要求 net_id=%d\n", netID);
   MISSION_SetEntry(intcomm, &intcomm->mission, req, netID);
   //要求されたからには今のミッションを返してあげる。発動後の途中乱入かもしれないので。
-  intcomm->mission_send_req = TRUE;
+  MISSION_Set_DataSendReq(&intcomm->mission);
 }
 
 //==================================================================
@@ -570,7 +574,7 @@ static void _IntrudeRecv_MissionReq(const int netID, const int size, const void*
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL IntrudeSend_MissonReq(INTRUDE_COMM_SYS_PTR intcomm, int monolith_type)
+BOOL IntrudeSend_MissionReq(INTRUDE_COMM_SYS_PTR intcomm, int monolith_type)
 {
   MISSION_REQ req;
   
@@ -611,14 +615,114 @@ static void _IntrudeRecv_MissionData(const int netID, const int size, const void
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL IntrudeSend_MissonData(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_DATA *mission)
+BOOL IntrudeSend_MissionData(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission)
 {
   BOOL ret;
   
   ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
-    INTRUDE_CMD_MISSION_DATA, sizeof(MISSION_DATA), mission);
+    INTRUDE_CMD_MISSION_DATA, sizeof(MISSION_DATA), &mission->data);
   if(ret == TRUE){
-    OS_TPrintf("送信：ミッションデータ mission_no=%d\n", mission->mission_no);
+    OS_TPrintf("送信：ミッションデータ mission_no=%d\n", mission->data.mission_no);
+  }
+  return ret;
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：ミッション達成を親に伝える
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_MissionAchieve(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  const MISSION_DATA *mdata = pData;
+  
+  if(GFL_NET_IsParentMachine() == FALSE){
+    return;
+  }
+  
+  OS_TPrintf("受信：ミッション達成 netID=%d\n", netID);
+  MISSION_EntryAchieve(&intcomm->mission, mdata, netID);
+}
+
+//==================================================================
+/**
+ * データ送信：ミッション達成を親に伝える
+ *
+ * @param   intcomm         
+ * @param   mission         ミッションデータ
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_MissionAchieve(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission)
+{
+  BOOL ret;
+  
+  ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
+    INTRUDE_CMD_MISSION_ACHIEVE, sizeof(MISSION_DATA), &mission->data);
+  if(ret == TRUE){
+    OS_TPrintf("送信：ミッション達成 mission_no=%d\n", mission->data.mission_no);
+  }
+  return ret;
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：ミッション結果
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_MissionResult(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  const MISSION_RESULT *mresult = pData;
+  
+  if((intcomm->recv_profile & (1 << netID)) == 0){
+    OS_TPrintf("受信：ミッション結果：プロフィール未受信の為、受け取らない recv_profile=%d\n", 
+      intcomm->recv_profile);
+    return;
+  }
+  
+  OS_TPrintf("受信：ミッション結果\n");
+  MISSION_SetResult(&intcomm->mission, mresult);
+}
+
+//==================================================================
+/**
+ * データ送信：ミッション結果
+ *
+ * @param   intcomm         
+ * @param   mission         ミッションデータ
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_MissionResult(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission)
+{
+  BOOL ret;
+  
+  ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
+    INTRUDE_CMD_MISSION_RESULT, sizeof(MISSION_RESULT), &mission->result);
+  if(ret == TRUE){
+    OS_TPrintf("送信：ミッション結果\n");
   }
   return ret;
 }

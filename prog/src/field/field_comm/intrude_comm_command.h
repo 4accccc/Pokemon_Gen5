@@ -34,6 +34,8 @@ enum INTRUDE_CMD{
   INTRUDE_CMD_BINGO_INTRUSION_PARAM,          ///<ビンゴバトル乱入用のパラメータ
   INTRUDE_CMD_MISSION_REQ,                    ///<ミッション要求リクエスト
   INTRUDE_CMD_MISSION_DATA,                   ///<ミッションデータ
+  INTRUDE_CMD_MISSION_ACHIEVE,                ///<ミッション達成報告
+  INTRUDE_CMD_MISSION_RESULT,                 ///<ミッション結果
   
   INTRUDE_CMD_MAX,
   INTRUDE_CMD_NUM = INTRUDE_CMD_MAX - INTRUDE_CMD_START,
@@ -60,6 +62,9 @@ extern BOOL IntrudeSend_BingoIntrusion(int send_net_id);
 extern BOOL IntrudeSend_BingoIntrusionAnswer(int send_net_id, BINGO_INTRUSION_ANSWER answer);
 extern BOOL IntrudeSend_ReqBingoBattleIntrusionParam(int send_net_id);
 extern BOOL IntrudeSend_BingoBattleIntrusionParam(BINGO_SYSTEM *bingo, int send_net_id);
-extern BOOL IntrudeSend_MissonReq(INTRUDE_COMM_SYS_PTR intcomm, int monolith_type);
-extern BOOL IntrudeSend_MissonData(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_DATA *mission);
+extern BOOL IntrudeSend_MissionReq(INTRUDE_COMM_SYS_PTR intcomm, int monolith_type);
+extern BOOL IntrudeSend_MissionData(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission);
+extern BOOL IntrudeSend_MissionAchieve(
+  INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission);
+extern BOOL IntrudeSend_MissionResult(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission);
 

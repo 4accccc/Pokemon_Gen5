@@ -418,6 +418,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fieldmap_func.c \
         net_app/union/union_subdisp.c \
         field/field_comm/intrude_subdisp.c \
+        field/field_comm/intrude_message.c \
         field/fldeff_footmark.c \
         field/fldeff_reflect.c \
         field/field_place_name.c \

@@ -30,30 +30,14 @@
 #include "field_comm\intrude_comm_command.h"
 #include "field/field_comm/intrude_minimono.h"
 #include "field/field_comm/intrude_mission.h"
+#include "field/field_comm/intrude_message.h"
 #include "message.naix"
-
-
-//==============================================================================
-//  定数定義
-//==============================================================================
-///侵入イベントで使用するヒープID
-#define INTRUDE_EVENT_HEAPID        (HEAPID_PROC)
-///侵入イベントで使用するメッセージバッファサイズ
-#define INTRUDE_EVENT_MSGBUF_SIZE   (256)
+#include "msg/msg_invasion.h"
 
 
 //==============================================================================
 //  構造体定義
 //==============================================================================
-///プリント制御構造体
-typedef struct{
-  WORDSET *wordset;
-  STRBUF *msgbuf;
-  STRBUF *tmpbuf;
-  GFL_MSGDATA *msgdata;
-  FLDMSGWIN_STREAM *msgwin_stream;
-}INTRUDE_EVENT_MSGWORK;
-
 ///イベント制御ワーク：ミッション開始
 typedef struct{
   INTRUDE_EVENT_MSGWORK iem;  ///<プリント制御
@@ -69,78 +53,6 @@ typedef struct{
 static GMEVENT * EVENT_Intrude_MissionStart( GAMESYS_WORK * gsys, u16 monolith_type );
 static GMEVENT_RESULT _event_IntrudeMissionStart( GMEVENT * event, int * seq, void * work );
 
-
-
-//==============================================================================
-//
-//  
-//
-//==============================================================================
-//--------------------------------------------------------------
-/**
- * プリント制御セットアップ
- *
- * @param   iem		
- * @param   gsys		
- */
-//--------------------------------------------------------------
-static void _IntrudePrint_SetupFieldMsg(INTRUDE_EVENT_MSGWORK *iem, GAMESYS_WORK *gsys)
-{
-  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
-  FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
-  
-  iem->wordset = WORDSET_Create(INTRUDE_EVENT_HEAPID);
-  iem->msgbuf = GFL_STR_CreateBuffer( INTRUDE_EVENT_MSGBUF_SIZE, INTRUDE_EVENT_HEAPID );
-  iem->tmpbuf = GFL_STR_CreateBuffer( INTRUDE_EVENT_MSGBUF_SIZE, INTRUDE_EVENT_HEAPID );
-  iem->msgdata = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_invasion_dat );
-  iem->msgwin_stream = FLDMSGWIN_STREAM_AddTalkWin( msgBG, iem->msgdata );
-}
-
-//--------------------------------------------------------------
-/**
- * プリント制御削除
- *
- * @param   iem		
- */
-//--------------------------------------------------------------
-static void _IntrudePrint_ExitFieldMsg(INTRUDE_EVENT_MSGWORK *iem)
-{
-  FLDMSGWIN_STREAM_Delete(iem->msgwin_stream);
-  FLDMSGBG_DeleteMSGDATA(iem->msgdata);
-  GFL_STR_DeleteBuffer(iem->tmpbuf);
-  GFL_STR_DeleteBuffer(iem->msgbuf);
-  WORDSET_Delete(iem->wordset);
-}
-
-//--------------------------------------------------------------
-/**
- * プリントストリーム出力
- *
- * @param   iem		
- * @param   msg_id		
- */
-//--------------------------------------------------------------
-static void _IntrudePrint_StartStream(INTRUDE_EVENT_MSGWORK *iem, u16 msg_id)
-{
-  GFL_MSG_GetString( iem->msgdata, msg_id, iem->tmpbuf );
-  WORDSET_ExpandStr( iem->wordset, iem->msgbuf, iem->tmpbuf );
-
-  FLDMSGWIN_STREAM_PrintStrBufStart( iem->msgwin_stream, 0, 0, iem->msgbuf );
-}
-
-//--------------------------------------------------------------
-/**
- * プリントストリーム出力待ち
- *
- * @param   iem		
- *
- * @retval  BOOL TRUE=表示終了,FALSE=表示中
- */
-//--------------------------------------------------------------
-static BOOL _IntrudePrint_WaitStream(INTRUDE_EVENT_MSGWORK *iem)
-{
-  return FLDMSGWIN_STREAM_Print(iem->msgwin_stream);
-}
 
 
 //==================================================================
@@ -239,25 +151,32 @@ static GMEVENT_RESULT _event_IntrudeMissionStart( GMEVENT * event, int * seq, vo
   GAME_COMM_SYS_PTR game_comm= GAMESYSTEM_GetGameCommSysPtr(gsys);
   INTRUDE_COMM_SYS_PTR intcomm;
   enum{
+    SEQ_INIT,
     SEQ_MISSION_REQ,
     SEQ_RECV_WAIT,
     SEQ_MSG_INIT,
     SEQ_MSG_WAIT,
+    SEQ_MSG_END_BUTTON_WAIT,
     SEQ_END,
   };
   
   intcomm = Intrude_Check_CommConnect(game_comm);
   if(intcomm == NULL){
-    if((*seq) < SEQ_MSG_INIT){
-      *seq = SEQ_MSG_INIT;
+    if((*seq) > SEQ_INIT && (*seq) < SEQ_MSG_WAIT){
+      IntrudeEventPrint_StartStream(&ems->iem, msg_invasion_mission_sys000);
+      *seq = SEQ_MSG_WAIT;
       ems->error = TRUE;
     }
   }
   
   switch( *seq ){
+  case SEQ_INIT:
+    IntrudeEventPrint_SetupFieldMsg(&ems->iem, gsys);
+    (*seq)++;
+    break;
   case SEQ_MISSION_REQ:
     if(MISSION_RecvCheck(&intcomm->mission) == TRUE || 
-        IntrudeSend_MissonReq(intcomm, ems->monolith_type) == TRUE){
+        IntrudeSend_MissionReq(intcomm, ems->monolith_type) == TRUE){
       *seq = SEQ_RECV_WAIT;
     }
     break;
@@ -269,27 +188,30 @@ static GMEVENT_RESULT _event_IntrudeMissionStart( GMEVENT * event, int * seq, vo
   case SEQ_MSG_INIT:
     {
       GAMEDATA *gdata = GAMESYSTEM_GetGameData(gsys);
-      MYSTATUS *target_myst = GAMEDATA_GetMyStatusPlayer(gdata, intcomm->mission.target_netid);
+      MYSTATUS *target_myst = GAMEDATA_GetMyStatusPlayer(gdata,intcomm->mission.data.target_netid);
       u32 msg_id;
 
-      _IntrudePrint_SetupFieldMsg(&ems->iem, gsys);
-      
       msg_id = MISSION_GetMissionMsgID(&intcomm->mission);
-      if(ems->error == FALSE && intcomm->mission.mission_no != MISSION_NO_NULL){
+      if(ems->error == FALSE && intcomm->mission.data.mission_no != MISSION_NO_NULL){
         WORDSET_RegisterPlayerName( ems->iem.wordset, 0, target_myst );
       }
 
-      _IntrudePrint_StartStream(&ems->iem, msg_id);
+      IntrudeEventPrint_StartStream(&ems->iem, msg_id);
     }
     *seq = SEQ_MSG_WAIT;
     break;
   case SEQ_MSG_WAIT:
-    if(_IntrudePrint_WaitStream(&ems->iem) == TRUE){
+    if(IntrudeEventPrint_WaitStream(&ems->iem) == TRUE){
+      *seq = SEQ_MSG_END_BUTTON_WAIT;
+    }
+    break;
+  case SEQ_MSG_END_BUTTON_WAIT:
+    if(IntrudeEventPrint_LastKeyWait() == TRUE){
       *seq = SEQ_END;
     }
     break;
   case SEQ_END:
-    _IntrudePrint_ExitFieldMsg(&ems->iem);
+    IntrudeEventPrint_ExitFieldMsg(&ems->iem);
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
