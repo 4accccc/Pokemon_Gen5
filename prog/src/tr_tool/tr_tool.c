@@ -79,6 +79,9 @@ u32 TT_TrainerDataParaGet( TrainerID tr_id, int id )
 	case ID_TD_tr_type:			//トレーナー分類
 		ret = td.tr_type;
 		break;
+  case ID_TD_fight_type:
+		ret = td.fight_type;
+    break;
 	case ID_TD_poke_count:	//所持ポケモン数
 		ret = td.poke_count;
 		break;
@@ -91,6 +94,10 @@ u32 TT_TrainerDataParaGet( TrainerID tr_id, int id )
 	case ID_TD_aibit:			  //AIパターン
 		ret = td.aibit;
 		break;
+  default:
+    //定義されていないIDです
+    GF_ASSERT( 0 );
+    break;
 	}
 	return ret;
 }
