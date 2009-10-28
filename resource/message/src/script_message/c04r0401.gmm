@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-07T12:22:51"/>
+	<create user="matsumiya" host="W00207" date="2009-10-28T16:52:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -301,7 +301,8 @@
 しあい　だけでなく[BE:00:ページ切り替え（行送り）]
 れんしゅうも　けんがく　しているのさ</language>
 		<language name="JPN_KANJI" width="256">ぼくたちは　サッカー大好きでね
-試合だけでなく　練習も見学しているのさ</language>
+試合だけでなく[BE:00:ページ切り替え（行送り）]
+練習も　見学しているのさ</language>
 	</row>
 
 	<row id="msg_c04r0401_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
