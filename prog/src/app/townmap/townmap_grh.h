@@ -68,10 +68,10 @@ enum
 	TOWNMAP_OBJ_PAL_M_07,		//  
 	TOWNMAP_OBJ_PAL_M_08,		//  
 	TOWNMAP_OBJ_PAL_M_09,		//  
-	TOWNMAP_OBJ_PAL_M_10,		//  
-	TOWNMAP_OBJ_PAL_M_11,		//  
-	TOWNMAP_OBJ_PAL_M_12,		//  
-	TOWNMAP_OBJ_PAL_M_13,		//  
+	TOWNMAP_OBJ_PAL_M_10,		// たっちー
+	TOWNMAP_OBJ_PAL_M_11,		// タッチバー
+	TOWNMAP_OBJ_PAL_M_12,		// タッチバー
+	TOWNMAP_OBJ_PAL_M_13,		// タッチバー
 	TOWNMAP_OBJ_PAL_M_14,		// アプリケーションバー
 	TOWNMAP_OBJ_PAL_M_15,		// アプリケーションバー
 

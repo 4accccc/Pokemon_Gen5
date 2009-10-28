@@ -29,6 +29,7 @@
 #include "print/printsys.h"
 #include "field/zonedata.h"
 #include "townmap_data_sys.h"
+#include "ui/touchbar.h"	//タッチバー
 
 //mine
 #include "townmap_grh.h"
@@ -39,6 +40,9 @@
 
 //debug
 #include "debug/debugwin_sys.h"
+
+
+FS_EXTERN_OVERLAY(ui_common);
 
 //=============================================================================
 /**
@@ -114,121 +118,22 @@ enum
 //-------------------------------------
 ///	APPBAR
 //=====================================
-typedef enum
-{	
-	APPBAR_OPTION_MASK_CLOSE		= 1<<0,	//閉じる
-	APPBAR_OPTION_MASK_RETURN		= 1<<1,	//戻る
-	APPBAR_OPTION_MASK_CUR_D		= 1<<2,	//カーソル上
-	APPBAR_OPTION_MASK_CUR_U		= 1<<3,	//カーソル下
-	APPBAR_OPTION_MASK_CUR_L		= 1<<4,	//カーソル左
-	APPBAR_OPTION_MASK_CUR_R		= 1<<5,	//カーソル右
-	APPBAR_OPTION_MASK_CHECK		= 1<<6,	//チェックボックス
-	APPBAR_OPTION_MASK_SCALE		= 1<<7,	//拡大縮小
-
-
-	APPBAR_OPTION_MASK_SKY	= APPBAR_OPTION_MASK_CLOSE|APPBAR_OPTION_MASK_RETURN,	//空を飛ぶ画面のとき
-	APPBAR_OPTION_MASK_TOWN	= APPBAR_OPTION_MASK_SCALE|
-		APPBAR_OPTION_MASK_CLOSE|APPBAR_OPTION_MASK_RETURN,	//地図画面のとき
-} APPBAR_OPTION_MASK;
-//選択したもの取得
-typedef enum
-{
-	APPBAR_SELECT_NONE	= GFL_UI_TP_HIT_NONE,
-	APPBAR_SELECT_CLOSE		= 0,
-	APPBAR_SELECT_RETURN,
-	APPBAR_SELECT_CUR_D,
-	APPBAR_SELECT_CUR_U,
-	APPBAR_SELECT_CUR_L,
-	APPBAR_SELECT_CUR_R,
-	APPBAR_SELECT_CHECK,
-	APPBAR_SELECT_SCALE_UP,
-	APPBAR_SELECT_SCALE_DOWN,
-} APPBAR_SELECT;
 //リソース
 enum
 {	
-	APPBAR_RES_COMMON_PLT,
-	APPBAR_RES_COMMON_CHR,
-	APPBAR_RES_COMMON_CEL,
 	APPBAR_RES_SCALE_PLT,
 	APPBAR_RES_SCALE_CHR,
 	APPBAR_RES_SCALE_CEL,
 
 	APPBAR_RES_MAX
 };
-//アイコン種類
-typedef enum
-{	
-	APPBAR_BARICON_CLOSE,
-	APPBAR_BARICON_RETURN,
-	APPBAR_BARICON_CUR_D,
-	APPBAR_BARICON_CUR_U,
-	APPBAR_BARICON_CUR_L,
-	APPBAR_BARICON_CUR_R,
-	APPBAR_BARICON_CHECK,
-	APPBAR_BARICON_SCALE_UP,
-	APPBAR_BARICON_SCALE_DOWN,
-	APPBAR_BARICON_MAX,
-}APPBAR_BARICON_TYPE;
-//位置
-//バー
-#define APPBAR_MENUBAR_X	(0)
-#define APPBAR_MENUBAR_Y	(21)
-#define APPBAR_MENUBAR_W	(32)
+//カスタムボタン
+#define TOUCHBAR_ICON_SCALEUP	(TOUCHBAR_ICON_CUTSOM1)
+#define TOUCHBAR_ICON_SCALEDOWN	(TOUCHBAR_ICON_CUTSOM2)
+
+//範囲
 #define APPBAR_MENUBAR_H	(3)
-//CLOSE
-#define APPBAR_ICON_Y	(168)
-#define APPBAR_ICON_CUR_L_X				(16)
-#define APPBAR_ICON_CUR_R_X				(38)
-#define APPBAR_ICON_SCALE_DOWN_X	(136)
-#define APPBAR_ICON_SCALE_UP_X		(168)
-#define APPBAR_ICON_CLOSE_X				(200)
-#define APPBAR_ICON_RETURN_X			(232)
-
-#define APPBAR_ICON_W	(24)
-#define APPBAR_ICON_H	(24)
-
-//アクティブアニメ
-static const u16 sc_appbar_icon_active_anm[]	=
-{	
-  APP_COMMON_BARICON_EXIT,
-  APP_COMMON_BARICON_RETURN,
-  APP_COMMON_BARICON_CURSOR_DOWN,
-  APP_COMMON_BARICON_CURSOR_UP,
-  APP_COMMON_BARICON_CURSOR_LEFT,
-  APP_COMMON_BARICON_CURSOR_RIGHT,
-  APP_COMMON_BARICON_CHECK_ON,
-	7,
-	8,
-};
-
-//押し中アニメ
-static const u16 sc_appbar_icon_push_anm[]	=
-{	
-  APP_COMMON_BARICON_EXIT_ON,
-  APP_COMMON_BARICON_RETURN_ON,
-  APP_COMMON_BARICON_CURSOR_DOWN_ON,
-  APP_COMMON_BARICON_CURSOR_UP_ON,
-  APP_COMMON_BARICON_CURSOR_LEFT_ON,
-  APP_COMMON_BARICON_CURSOR_RIGHT_ON,
-  APP_COMMON_BARICON_CHECK_ON,
-	9,
-	10,
-};
-
-//パッシブアニメ
-static const u16 sc_appbar_icon_passive_anm[]	=
-{	
-  APP_COMMON_BARICON_EXIT_OFF,
-  APP_COMMON_BARICON_RETURN_OFF,
-  APP_COMMON_BARICON_CURSOR_DOWN_OFF,
-  APP_COMMON_BARICON_CURSOR_UP_OFF,
-  APP_COMMON_BARICON_CURSOR_LEFT_OFF,
-  APP_COMMON_BARICON_CURSOR_RIGHT_OFF,
-	APP_COMMON_BARICON_CHECK_OFF,
-	11,
-	12,
-};
+#define APPBAR_MENUBAR_Y	(21)
 
 //-------------------------------------
 ///	CURSOR
@@ -337,17 +242,10 @@ enum
 //=====================================
 typedef struct 
 {
-	GFL_CLWK	*p_clwk[APPBAR_BARICON_MAX];
-	BOOL			active[APPBAR_BARICON_MAX];
-	BOOL			active_req[APPBAR_BARICON_MAX];
-	u32				res[APPBAR_RES_MAX];
-	u32				bg_frm;
-	GFL_ARCUTIL_TRANSINFO				chr_pos;
-	s32				trg;
-	s32				cont;
-	u32				mode;
+	u32						res[APPBAR_RES_MAX];
+	TOUCHBAR_WORK *p_touchbar;
+	GAMEDATA			*p_gamedata;
 } APPBAR_WORK;
-#define APPBAR_BG_CHARAAREA_SIZE	(8*8*GFL_BG_1CHRDATASIZ)
 
 //-------------------------------------
 ///	場所情報
@@ -583,13 +481,11 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs );
 //-------------------------------------
 ///	APPBAR
 //=====================================
-static void APPBAR_Init( APPBAR_WORK *p_wk, APPBAR_OPTION_MASK mask, GFL_CLUNIT* p_unit, u8 bar_frm, u8 bg_plt, u8 obj_plt, HEAPID heapID );
+static void APPBAR_Init( APPBAR_WORK *p_wk, TOWNMAP_MODE mode, GFL_CLUNIT* p_unit, u8 bar_frm, u8 bg_plt, u8 obj_plt, GAMEDATA *p_gamedata, HEAPID heapID );
 static void APPBAR_Exit( APPBAR_WORK *p_wk );
 static void APPBAR_Main( APPBAR_WORK *p_wk );
-static APPBAR_SELECT APPBAR_GetTrg( const APPBAR_WORK *cp_wk );
-static APPBAR_SELECT APPBAR_GetCont( const APPBAR_WORK *cp_wk );
-static void APPBAR_SetActive( APPBAR_WORK *p_wk, APPBAR_BARICON_TYPE icon, BOOL is_active );
-static void ARCHDL_UTIL_TransVramScreenEx( ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 chr_ofs, u8 src_x, u8 src_y, u8 src_w, u8 src_h, u8 dst_x, u8 dst_y, u8 dst_w, u8 dst_h,  u8 plt, BOOL compressedFlag, HEAPID heapID );
+static void APPBAR_SetActive( APPBAR_WORK *p_wk, TOUCHBAR_ICON icon, BOOL is_active );
+static TOUCHBAR_ICON APPBAR_GetTrg( const APPBAR_WORK *cp_wk );
 //-------------------------------------
 ///	CURSOR
 //=====================================
@@ -845,6 +741,9 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 	TOWNMAP_PARAM	*p_param	= p_param_adrs;
 	u16	data_len;
 
+	//オーバーレイ読み込み
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
+
 	//ヒープ作成
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TOWNMAP, 0x60000 );
 
@@ -877,22 +776,14 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 
 	//アプリケーションバー作成
 	{	
-		u32 appbar_mode;
+		GAMEDATA	*p_gdata;
 
+		p_gdata	= GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
 		if( p_wk->p_param->mode == TOWNMAP_MODE_MAP )
 		{	
-			appbar_mode	= APPBAR_OPTION_MASK_TOWN;
 		}
 		else
 		{	
-			if( p_wk->p_param->mode == TOWNMAP_MODE_DEBUGSKY )
-			{	
-				appbar_mode	= APPBAR_OPTION_MASK_TOWN;
-			}
-			else
-			{	
-				appbar_mode	= APPBAR_OPTION_MASK_SKY;
-			}
 
 			//空を飛ぶモードならばメッセージ面追加
 			MSGWND_Init( &p_wk->msgwnd,
@@ -911,10 +802,11 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 			GFL_FONTSYS_SetDefaultColor();
 		}
 
-		APPBAR_Init( &p_wk->appbar,appbar_mode,
+		APPBAR_Init( &p_wk->appbar,p_wk->p_param->mode,
 				TOWNMAP_GRAPHIC_GetUnit( p_wk->p_grh, TOWNMAP_OBJ_CLUNIT_DEFAULT ),
 				TOWNMAP_GRAPHIC_GetFrame( p_wk->p_grh, TOWNMAP_BG_FRAME_BAR_M),
-				TOWNMAP_BG_PAL_M_15, TOWNMAP_OBJ_PAL_M_12, HEAPID_TOWNMAP );
+				TOWNMAP_BG_PAL_M_15, TOWNMAP_OBJ_PAL_M_08, p_gdata,
+				HEAPID_TOWNMAP );
 	}
 
 	//地名ウィンドウ作成
@@ -1083,6 +975,9 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_
 
 	//ヒープ破棄
 	GFL_HEAP_DeleteHeap(HEAPID_TOWNMAP );
+
+	//オーバーレイ破棄
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -1437,7 +1332,10 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 			{	
 				GFL_POINT wld;
 
-				PMSND_PlaySE( TOWNMAP_SE_SELECT );
+				if( !PMSND_CheckPlaySE() )
+				{	
+					PMSND_PlaySE( TOWNMAP_SE_SELECT );
+				}
 				INFO_Update( &p_wk->info, cp_data );
 				PLACE_Active( &p_wk->place, cp_data );
 				p_wk->cp_select	= cp_data;
@@ -1522,19 +1420,17 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 	//アプリケーションバー選択
 	switch( APPBAR_GetTrg( &p_wk->appbar ) )
 	{	
-	case APPBAR_SELECT_CLOSE:
+	case TOUCHBAR_ICON_CLOSE:
 		p_wk->p_param->select	= TOWNMAP_SELECT_CLOSE;
 
-		PMSND_PlaySE( TOWNMAP_SE_CANCEL );
 		SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
 		break;
-	case APPBAR_SELECT_RETURN:
+	case TOUCHBAR_ICON_RETURN:
 		p_wk->p_param->select	= TOWNMAP_SELECT_RETURN;
 
-		PMSND_PlaySE( TOWNMAP_SE_CANCEL );
 		SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
 		break;
-	case APPBAR_SELECT_SCALE_UP:
+	case TOUCHBAR_ICON_SCALEUP:
 		if(p_wk->is_scale == FALSE && !MAP_IsScale( &p_wk->map ))
 		{	
 			GFL_POINT next_pos;
@@ -1563,15 +1459,14 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 
 			PLACE_SetVisible( &p_wk->place, FALSE );
 
-			//アイコンのアクティブせってい
-			APPBAR_SetActive( &p_wk->appbar, APPBAR_BARICON_SCALE_UP, FALSE );
-			APPBAR_SetActive( &p_wk->appbar, APPBAR_BARICON_SCALE_DOWN, TRUE );
+			APPBAR_SetActive( &p_wk->appbar, TOUCHBAR_ICON_SCALEUP, FALSE );
+			APPBAR_SetActive( &p_wk->appbar, TOUCHBAR_ICON_SCALEDOWN, TRUE );
 
-			PMSND_PlaySE( TOWNMAP_SE_SCALEUP );
+
 			p_wk->is_scale	= TRUE;
 		}
 		break;
-	case APPBAR_SELECT_SCALE_DOWN:
+	case TOUCHBAR_ICON_SCALEDOWN:
 		if(p_wk->is_scale == TRUE && !MAP_IsScale( &p_wk->map ) )
 		{	
 			GFL_POINT src_pos;
@@ -1603,11 +1498,9 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 			
 			PLACE_SetVisible( &p_wk->place, FALSE );
 
-			//アイコンのアクティブせってい
-			APPBAR_SetActive( &p_wk->appbar, APPBAR_BARICON_SCALE_DOWN, FALSE );
-			APPBAR_SetActive( &p_wk->appbar, APPBAR_BARICON_SCALE_UP, TRUE );
+			APPBAR_SetActive( &p_wk->appbar, TOUCHBAR_ICON_SCALEUP, TRUE );
+			APPBAR_SetActive( &p_wk->appbar, TOUCHBAR_ICON_SCALEDOWN, FALSE );
 
-			PMSND_PlaySE( TOWNMAP_SE_SCALEDOWN );
 			p_wk->is_scale	= FALSE;
 		}
 		break;
@@ -1629,232 +1522,118 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
  *	@brief	APPBAR	初期化
  *
  *	@param	APPBAR_WORK *p_wk	ワーク
- *	@param	mask							モードマスク
  *	@param	p_unit						APPBARのOBJ生成用p_unit
- *	@param	bar_frm						使用するBG面（同時にメインかサブかを判定するのにも使用）
+ *	@param	bar_frm						使用するBG面
  *	@param	bg_plt						使用するBGパレット番号
  *	@param	obj_plt						使用するOBJパレット番号
+ *	@param	cp_gamedata				ゲームデータ（Yボタン登録確認用）
  *	@param	heapID						ヒープID
  *
  */
 //-----------------------------------------------------------------------------
-static void APPBAR_Init( APPBAR_WORK *p_wk, APPBAR_OPTION_MASK mask, GFL_CLUNIT* p_unit, u8 bar_frm, u8 bg_plt, u8 obj_plt, HEAPID heapID )
+static void APPBAR_Init( APPBAR_WORK *p_wk, TOWNMAP_MODE mode, GFL_CLUNIT* p_unit, u8 bar_frm, u8 bg_plt, u8 obj_plt, GAMEDATA *p_gamedata, HEAPID heapID )
 {	
-	CLSYS_DRAW_TYPE	clsys_draw_type;
-	CLSYS_DEFREND_TYPE	clsys_def_type;
-	PALTYPE							bgplttype;
-
 	//クリア
 	GFL_STD_MemClear( p_wk, sizeof(APPBAR_WORK) );
-	p_wk->bg_frm	= bar_frm;
-	p_wk->trg			= APPBAR_SELECT_NONE;
-	p_wk->cont		= APPBAR_SELECT_NONE;
-	p_wk->mode		= mask;
+	p_wk->p_gamedata	= p_gamedata;
 
-	//OBJ読み込む場所をチェック
-	{	
-		if( bar_frm >= GFL_BG_FRAME0_S )
-		{	
-			clsys_draw_type	= CLSYS_DRAW_SUB;
-			clsys_def_type	= CLSYS_DEFREND_SUB;
-			bgplttype				= PALTYPE_SUB_BG;
-		}
-		else
-		{	
-			clsys_draw_type	= CLSYS_DRAW_MAIN;
-			clsys_def_type	= CLSYS_DEFREND_MAIN;
-			bgplttype				= PALTYPE_MAIN_BG;
-		}
-	}
-	
-	//共通リソース
-	{	
-		ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), heapID );
-
-		//BG
-		//領域の確保
-		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, APP_COMMON_GetBarPltArcIdx(),
-				bgplttype, bg_plt*0x20, APP_COMMON_BAR_PLT_NUM*0x20, heapID );
-
-		p_wk->chr_pos	= GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, APP_COMMON_GetBarCharArcIdx(), p_wk->bg_frm, APPBAR_BG_CHARAAREA_SIZE, FALSE, heapID );
-		GF_ASSERT( p_wk->chr_pos != GFL_ARCUTIL_TRANSINFO_FAIL );
-		//スクリーンはメモリ上に置いて、下部32*3だけ書き込み
-		ARCHDL_UTIL_TransVramScreenEx( p_handle, APP_COMMON_GetBarScrnArcIdx(), p_wk->bg_frm,
-				GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->chr_pos), 0, 21, 32, 24, 
-				APPBAR_MENUBAR_X, APPBAR_MENUBAR_Y, APPBAR_MENUBAR_W, APPBAR_MENUBAR_H,
-				bg_plt, FALSE, heapID );
-
-		//NAGI_Printf( "pos %d size %d\n", GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->chr_pos), GFL_ARCUTIL_TRANSINFO_GetSize(p_wk->chr_pos) );
-
-		//OBJ
-		//共通アイコンリソース
-		if( (p_wk->mode & APPBAR_OPTION_MASK_CLOSE)
-				|| (p_wk->mode & APPBAR_OPTION_MASK_RETURN)
-				|| (p_wk->mode & APPBAR_OPTION_MASK_CUR_D)
-				|| (p_wk->mode & APPBAR_OPTION_MASK_CUR_U)
-				|| (p_wk->mode & APPBAR_OPTION_MASK_CUR_L)
-				|| (p_wk->mode & APPBAR_OPTION_MASK_CUR_R)
-				|| (p_wk->mode & APPBAR_OPTION_MASK_CHECK)
-				)
-		{	
-			p_wk->res[APPBAR_RES_COMMON_PLT]	= GFL_CLGRP_PLTT_RegisterEx( p_handle,
-				APP_COMMON_GetBarIconPltArcIdx(), clsys_draw_type, obj_plt*0x20, 0, APP_COMMON_BARICON_PLT_NUM, heapID );	
-			p_wk->res[APPBAR_RES_COMMON_CHR]	= GFL_CLGRP_CGR_Register( p_handle,
-					APP_COMMON_GetBarIconCharArcIdx(), FALSE, clsys_draw_type, heapID );
-
-			p_wk->res[APPBAR_RES_COMMON_CEL]	= GFL_CLGRP_CELLANIM_Register( p_handle,
-					APP_COMMON_GetBarIconCellArcIdx(APP_COMMON_MAPPING_128K),
-				 	APP_COMMON_GetBarIconAnimeArcIdx(APP_COMMON_MAPPING_128K), heapID );
-		}
-		GFL_ARC_CloseDataHandle( p_handle );
-	}
-
-	//アプリごとのリソース
+	//カスタムボタンのリソース
 	{	
 		ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_TOWNMAP_GRAPHIC, heapID );
-		if( (p_wk->mode & APPBAR_OPTION_MASK_SCALE) )
-		{	
-			p_wk->res[APPBAR_RES_SCALE_PLT]	= GFL_CLGRP_PLTT_RegisterEx( p_handle,
-				NARC_townmap_gra_tmap_bg_d_NCLR, clsys_draw_type, (obj_plt+2)*0x20,
-				2, 1, heapID );	
 
-			p_wk->res[APPBAR_RES_SCALE_CHR]	= GFL_CLGRP_CGR_Register( p_handle,
-					NARC_townmap_gra_tmap_obj_d_NCGR, FALSE, clsys_draw_type, heapID );
+		p_wk->res[APPBAR_RES_SCALE_PLT]	= GFL_CLGRP_PLTT_RegisterEx( p_handle,
+				NARC_townmap_gra_tmap_bg_d_NCLR, CLSYS_DRAW_MAIN, (0)*0x20,
+				0, 4, heapID );	
 
-			p_wk->res[APPBAR_RES_SCALE_CEL]	= GFL_CLGRP_CELLANIM_Register( p_handle,
-					NARC_townmap_gra_tmap_obj_d_NCER,
-				 	NARC_townmap_gra_tmap_obj_d_NANR, heapID );
-		}
+		p_wk->res[APPBAR_RES_SCALE_CHR]	= GFL_CLGRP_CGR_Register( p_handle,
+				NARC_townmap_gra_tmap_obj_d_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
+
+		p_wk->res[APPBAR_RES_SCALE_CEL]	= GFL_CLGRP_CELLANIM_Register( p_handle,
+				NARC_townmap_gra_tmap_obj_d_NCER,
+				NARC_townmap_gra_tmap_obj_d_NANR, heapID );
 
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
 
-	//CLWKの作成
-	{
-		GFL_CLWK_DATA	cldata;
-		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-
-		//終了ボタン
- 		if( p_wk->mode & APPBAR_OPTION_MASK_CLOSE )
- 		{	
-			cldata.pos_x	= APPBAR_ICON_CLOSE_X;
-			cldata.pos_y	= APPBAR_ICON_Y;
-			cldata.anmseq	= APP_COMMON_BARICON_EXIT;
-			p_wk->p_clwk[APPBAR_BARICON_CLOSE]	= GFL_CLACT_WK_Create( p_unit, 
-					p_wk->res[APPBAR_RES_COMMON_CHR],
-					p_wk->res[APPBAR_RES_COMMON_PLT],
-					p_wk->res[APPBAR_RES_COMMON_CEL],
-					&cldata,
-					clsys_def_type,
-					heapID
-					);
-		}
-
-		//戻るボタン
- 		if( p_wk->mode & APPBAR_OPTION_MASK_RETURN )
- 		{	
-			cldata.pos_x	= APPBAR_ICON_RETURN_X;
-			cldata.pos_y	= APPBAR_ICON_Y;
-			cldata.anmseq	= APP_COMMON_BARICON_RETURN;
-			p_wk->p_clwk[APPBAR_BARICON_RETURN]	= GFL_CLACT_WK_Create( p_unit, 
-					p_wk->res[APPBAR_RES_COMMON_CHR],
-					p_wk->res[APPBAR_RES_COMMON_PLT],
-					p_wk->res[APPBAR_RES_COMMON_CEL],
-					&cldata,
-					clsys_def_type,
-					heapID
-					);
-		}
-
-		//左ボタン
- 		if( p_wk->mode & APPBAR_OPTION_MASK_CUR_L )
- 		{	
-			cldata.pos_x	= APPBAR_ICON_CUR_L_X;
-			cldata.pos_y	= APPBAR_ICON_Y;
-			cldata.anmseq	= APP_COMMON_BARICON_CURSOR_LEFT;
-			p_wk->p_clwk[APPBAR_BARICON_CUR_L]	= GFL_CLACT_WK_Create( p_unit, 
-					p_wk->res[APPBAR_RES_COMMON_CHR],
-					p_wk->res[APPBAR_RES_COMMON_PLT],
-					p_wk->res[APPBAR_RES_COMMON_CEL],
-					&cldata,
-					clsys_def_type,
-					heapID
-					);
-		}
-
-		//右ボタン
- 		if( p_wk->mode & APPBAR_OPTION_MASK_CUR_R )
- 		{	
-			cldata.pos_x	= APPBAR_ICON_CUR_R_X;
-			cldata.pos_y	= APPBAR_ICON_Y;
-			cldata.anmseq	= APP_COMMON_BARICON_CURSOR_RIGHT;
-			p_wk->p_clwk[APPBAR_BARICON_CUR_R]	= GFL_CLACT_WK_Create( p_unit, 
-					p_wk->res[APPBAR_RES_COMMON_CHR],
-					p_wk->res[APPBAR_RES_COMMON_PLT],
-					p_wk->res[APPBAR_RES_COMMON_CEL],
-					&cldata,
-					clsys_def_type,
-					heapID
-					);
-		}
-
-		//特殊リソース破棄
-		if( p_wk->mode & APPBAR_OPTION_MASK_SCALE )
-		{	
-			cldata.pos_x	= APPBAR_ICON_SCALE_UP_X;
-			cldata.pos_y	= APPBAR_ICON_Y;
-			cldata.anmseq	= 7;
-			p_wk->p_clwk[APPBAR_BARICON_SCALE_UP]	= GFL_CLACT_WK_Create( p_unit, 
-					p_wk->res[APPBAR_RES_SCALE_CHR],
-					p_wk->res[APPBAR_RES_SCALE_PLT],
-					p_wk->res[APPBAR_RES_SCALE_CEL],
-					&cldata,
-					clsys_def_type,
-					heapID
-					);
-
-			cldata.pos_x	= APPBAR_ICON_SCALE_DOWN_X;
-			cldata.pos_y	= APPBAR_ICON_Y;
-			cldata.anmseq	= 8;
-			p_wk->p_clwk[APPBAR_BARICON_SCALE_DOWN]	= GFL_CLACT_WK_Create( p_unit, 
-					p_wk->res[APPBAR_RES_SCALE_CHR],
-					p_wk->res[APPBAR_RES_SCALE_PLT],
-					p_wk->res[APPBAR_RES_SCALE_CEL],
-					&cldata,
-					clsys_def_type,
-					heapID
-					);
-			GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk[APPBAR_BARICON_SCALE_DOWN], 2, CLWK_PLTTOFFS_MODE_OAM_COLOR );
-			GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk[APPBAR_BARICON_SCALE_UP], 2, CLWK_PLTTOFFS_MODE_OAM_COLOR );
-		}
-	}
-
-	//設定
+	//タッチバー初期化
 	{	
-		int i;
-		for( i = 0; i < APPBAR_BARICON_MAX; i++ )
+		TOUCHBAR_SETUP	touchbar_setup;
+		TOUCHBAR_ITEM_ICON touchbar_icon_tbl[]	=
 		{	
-			if( p_wk->p_clwk[i] )
 			{	
-				GFL_CLACT_WK_SetBgPri( p_wk->p_clwk[i], TOWNMAP_BG_PRIORITY_BAR_M );
-				GFL_CLACT_WK_SetSoftPri( p_wk->p_clwk[i], OBJ_PRIORITY_FRONTEND );
-				GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
+				TOUCHBAR_ICON_RETURN,
+				{	TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
+			},
+			{	
+				TOUCHBAR_ICON_CLOSE,
+				{	TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_Y },
+			},
+			{	
+				TOUCHBAR_ICON_CHECK,
+				{	TOUCHBAR_ICON_X_03, TOUCHBAR_ICON_Y_CHECK }
+			},
+			{	
+				TOUCHBAR_ICON_CUTSOM1,	//カスタムボタン１を拡大アイコンに,
+				{	TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_Y },
+			},
+			{	
+				TOUCHBAR_ICON_CUTSOM2,	//カスタムボタン１を縮小アイコンに,
+				{	TOUCHBAR_ICON_X_04, TOUCHBAR_ICON_Y },
 			}
-		}
+		};
+		//拡大アイコン
+		touchbar_icon_tbl[3].cg_idx		= p_wk->res[APPBAR_RES_SCALE_CHR];				//キャラリソース
+		touchbar_icon_tbl[3].plt_idx	= p_wk->res[APPBAR_RES_SCALE_PLT];				//パレットリソース
+		touchbar_icon_tbl[3].cell_idx	=	p_wk->res[APPBAR_RES_SCALE_CEL];				//セルリソース
+		touchbar_icon_tbl[3].active_anmseq	=	7;						//アクティブのときのアニメ
+		touchbar_icon_tbl[3].noactive_anmseq	=		11;				//ノンアクティブのときのアニメ
+		touchbar_icon_tbl[3].push_anmseq	=		9;						//押したときのアニメ（STOPになっていること）
+		touchbar_icon_tbl[3].key	=		0;		//キーで押したときに動作させたいならば、ボタン番号
+		touchbar_icon_tbl[3].se		=		TOWNMAP_SE_SCALEUP;		//押したときにSEならしたいならば、SEの番号	
+
+		//縮小アイコン
+		touchbar_icon_tbl[4].cg_idx		=  p_wk->res[APPBAR_RES_SCALE_CHR];				//キャラリソース
+		touchbar_icon_tbl[4].plt_idx	= p_wk->res[APPBAR_RES_SCALE_PLT];				//パレットリソース
+		touchbar_icon_tbl[4].cell_idx	=	p_wk->res[APPBAR_RES_SCALE_CEL];				//セルリソース
+		touchbar_icon_tbl[4].active_anmseq	=	8;						//アクティブのときのアニメ
+		touchbar_icon_tbl[4].noactive_anmseq=	12;						//ノンアクティブのときのアニメ
+		touchbar_icon_tbl[4].push_anmseq		=	10;						//押したときのアニメ（STOPになっていること）
+		touchbar_icon_tbl[4].key	=	0;		//キーで押したときに動作させたいならば、ボタン番号
+		touchbar_icon_tbl[4].se		=	TOWNMAP_SE_SCALEDOWN;			//押したときにSEならしたいならば、SEの番号	
+
+		//設定構造体
+		//さきほどの窓情報＋リソース情報をいれる
+		GFL_STD_MemClear( &touchbar_setup, sizeof(TOUCHBAR_SETUP) );
+
+		touchbar_setup.p_item		= touchbar_icon_tbl;				//上の窓情報
+		touchbar_setup.item_num	= NELEMS(touchbar_icon_tbl);//いくつ窓があるか
+		touchbar_setup.p_unit		= p_unit;							//OBJ読み込みのためのCLUNIT
+		touchbar_setup.bar_frm	= bar_frm;						//BG読み込みのためのBG面
+		touchbar_setup.bg_plt		= bg_plt;			//BGﾊﾟﾚｯﾄ
+		touchbar_setup.obj_plt	= obj_plt + 4;		//OBJﾊﾟﾚｯﾄ
+		touchbar_setup.mapping	= APP_COMMON_MAPPING_128K;	//マッピングモード
+
+		p_wk->p_touchbar	= TOUCHBAR_Init( &touchbar_setup, heapID );
 	}
 
 
-	//初期は全部アクティブにする
+	//Yチェック
+	if( GAMEDATA_GetShortCut( p_wk->p_gamedata, SHORTCUT_ID_TOWNMAP ))
 	{	
-		int i;
-		for( i = 0; i < APPBAR_BARICON_MAX; i++ )
-		{
-			p_wk->active[i]	= p_wk->active_req[i]	= TRUE;
-		}
+		TOUCHBAR_SetFlip( p_wk->p_touchbar, TOUCHBAR_ICON_CHECK, TRUE );
+	}
+	else
+	{	
+		TOUCHBAR_SetFlip( p_wk->p_touchbar, TOUCHBAR_ICON_CHECK, FALSE );
 	}
 
-	//scale_downはパッシブ
-	APPBAR_SetActive( p_wk, APPBAR_BARICON_SCALE_DOWN, FALSE );
+	if( mode != TOWNMAP_MODE_MAP )
+	{	
+		TOUCHBAR_SetVisible( p_wk->p_touchbar, TOUCHBAR_ICON_CHECK, FALSE );
+	}
+
+	APPBAR_SetActive( p_wk, TOUCHBAR_ICON_SCALEUP, TRUE );
+	APPBAR_SetActive( p_wk, TOUCHBAR_ICON_SCALEDOWN, FALSE );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1866,49 +1645,15 @@ static void APPBAR_Init( APPBAR_WORK *p_wk, APPBAR_OPTION_MASK mask, GFL_CLUNIT*
 //-----------------------------------------------------------------------------
 static void APPBAR_Exit( APPBAR_WORK *p_wk )
 {	
-	//CLWK
-	{	
-		int i;
-		for( i = 0; i < APPBAR_BARICON_MAX; i++ )
-		{	
-			if( p_wk->p_clwk[i] )
-			{	
-				GFL_CLACT_WK_Remove( p_wk->p_clwk[i] );
-			}
-		}
-	}
+	//タッチバー破棄
+	TOUCHBAR_Exit( p_wk->p_touchbar );
 
 	//OBJ
 	{	
-		//特殊リソース破棄
-		if( p_wk->mode & APPBAR_OPTION_MASK_SCALE )
-		{	
-			GFL_CLGRP_CELLANIM_Release( p_wk->res[APPBAR_RES_SCALE_CEL] );
-			GFL_CLGRP_CGR_Release( p_wk->res[APPBAR_RES_SCALE_CHR] );
-			GFL_CLGRP_PLTT_Release( p_wk->res[APPBAR_RES_SCALE_PLT] );
-		}
-
-		//共通リソース破棄
-		if( (p_wk->mode & APPBAR_OPTION_MASK_CLOSE)
-				|| (p_wk->mode & APPBAR_OPTION_MASK_RETURN)
-				|| (p_wk->mode & APPBAR_OPTION_MASK_CUR_D)
-				|| (p_wk->mode & APPBAR_OPTION_MASK_CUR_U)
-				|| (p_wk->mode & APPBAR_OPTION_MASK_CUR_L)
-				|| (p_wk->mode & APPBAR_OPTION_MASK_CUR_R)
-				|| (p_wk->mode & APPBAR_OPTION_MASK_CHECK)
-				)
- 		{	
-			GFL_CLGRP_CELLANIM_Release( p_wk->res[APPBAR_RES_COMMON_CEL] );
-			GFL_CLGRP_CGR_Release( p_wk->res[APPBAR_RES_COMMON_CHR] );
-			GFL_CLGRP_PLTT_Release( p_wk->res[APPBAR_RES_COMMON_PLT] );
-		}
-	}
-
-	//BG
-	{	
-		GFL_BG_FreeCharacterArea(p_wk->bg_frm,
-				GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->chr_pos),
-				GFL_ARCUTIL_TRANSINFO_GetSize(p_wk->chr_pos));
+		//カスタムボタンリソース破棄
+		GFL_CLGRP_CELLANIM_Release( p_wk->res[APPBAR_RES_SCALE_CEL] );
+		GFL_CLGRP_CGR_Release( p_wk->res[APPBAR_RES_SCALE_CHR] );
+		GFL_CLGRP_PLTT_Release( p_wk->res[APPBAR_RES_SCALE_PLT] );
 	}
 
 	//クリア
@@ -1926,239 +1671,43 @@ static void APPBAR_Exit( APPBAR_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void APPBAR_Main( APPBAR_WORK *p_wk )
 {	
-	static const GFL_UI_TP_HITTBL	sc_hit_tbl[APPBAR_BARICON_MAX]	=
-	{	
-		{	
-			APPBAR_ICON_Y, APPBAR_ICON_Y + APPBAR_ICON_W, 
-			APPBAR_ICON_CLOSE_X, APPBAR_ICON_CLOSE_X + APPBAR_ICON_W
-		},
-		{	
-			APPBAR_ICON_Y, APPBAR_ICON_Y + APPBAR_ICON_W, 
-			APPBAR_ICON_RETURN_X, APPBAR_ICON_RETURN_X + APPBAR_ICON_W
-		},
-		{	
-			0
-		},
-		{	
-			0
-		},
-		{	
-			APPBAR_ICON_Y, APPBAR_ICON_Y + APPBAR_ICON_W, 
-			APPBAR_ICON_CUR_L_X, APPBAR_ICON_CUR_L_X + APPBAR_ICON_W
-		},
-		{	
-			APPBAR_ICON_Y, APPBAR_ICON_Y + APPBAR_ICON_W, 
-			APPBAR_ICON_CUR_R_X, APPBAR_ICON_CUR_R_X + APPBAR_ICON_W
-		},
-		{	
-			0
-		},
-		{	
-			APPBAR_ICON_Y, APPBAR_ICON_Y + APPBAR_ICON_W, 
-			APPBAR_ICON_SCALE_UP_X, APPBAR_ICON_SCALE_UP_X + APPBAR_ICON_W
-		},
-		{	
-			APPBAR_ICON_Y, APPBAR_ICON_Y + APPBAR_ICON_W, 
-			APPBAR_ICON_SCALE_DOWN_X, APPBAR_ICON_SCALE_DOWN_X + APPBAR_ICON_W
-		},
-		
-	};
-	static const u32 sc_mask_tbl[APPBAR_BARICON_MAX]	=
-	{	
-		APPBAR_OPTION_MASK_CLOSE,
-		APPBAR_OPTION_MASK_RETURN,
-		APPBAR_OPTION_MASK_CUR_D,
-		APPBAR_OPTION_MASK_CUR_U,
-		APPBAR_OPTION_MASK_CUR_L,
-		APPBAR_OPTION_MASK_CUR_R,
-		APPBAR_OPTION_MASK_CHECK,
-		APPBAR_OPTION_MASK_SCALE,
-		APPBAR_OPTION_MASK_SCALE,
-	};
-	
-	//タッチの動き
-	int i;
-	u32 x, y;
+	TOUCHBAR_Main( p_wk->p_touchbar );
 
-	p_wk->trg		= APPBAR_SELECT_NONE;
-	p_wk->cont	= APPBAR_SELECT_NONE;
-	for( i = 0; i < NELEMS(sc_hit_tbl); i++ )
+	if( TOUCHBAR_GetFlip( p_wk->p_touchbar, TOUCHBAR_ICON_CHECK ) )
 	{	
-		if( p_wk->mode & sc_mask_tbl[i] && p_wk->active[i] )
-		{	
-			//カーソルでバーを押せなくなった
-#if 0
-			if( CURSOR_GetPointTrg( cp_cursor, &x, &y ) )
-#else
-			if( GFL_UI_TP_GetPointTrg( &x, &y ) )
-#endif 
-			{	
-				if( ((u32)( x - sc_hit_tbl[i].rect.left) <= 
-							(u32)(sc_hit_tbl[i].rect.right - sc_hit_tbl[i].rect.left))
-						&	((u32)( y - sc_hit_tbl[i].rect.top) <=
-							(u32)(sc_hit_tbl[i].rect.bottom - sc_hit_tbl[i].rect.top)))
-				{
-
-					//アニメスタート
-					GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i], sc_appbar_icon_push_anm[i] );
-					p_wk->trg	= i;
-				}
-			}
-		}
-	}
-
-	//キーの動き
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-	{	
-		p_wk->trg	= APPBAR_SELECT_RETURN;
-	}
-	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
-	{	
-		p_wk->trg	= APPBAR_SELECT_CLOSE;
-	}
-	if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )
-	{	
-		p_wk->cont	= APPBAR_SELECT_CUR_L;
-	}
-	else if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT )
-	{	
-		p_wk->cont	= APPBAR_SELECT_CUR_R;
-	}
-
-	//アクティブアニメせっていリクエスト
-	//	押し状態のアニメが止まっていたら変更する
-	for( i = 0; i < APPBAR_BARICON_MAX; i++ )
-	{	
-		//せっていされていて、リクエストと現在が違ったら
-		//さらにアニメが停止していたら
-		if( (p_wk->mode & sc_mask_tbl[i] )
-				&& (p_wk->active_req[i] != p_wk->active[i] )
-				&& !GFL_CLACT_WK_CheckAnmActive(p_wk->p_clwk[i]))
-		{	
-			p_wk->active[i]	= p_wk->active_req[i];
-			if( p_wk->active[i] )
-			{	
-				GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i], sc_appbar_icon_active_anm[i] );
-			}
-			else
-			{	
-				GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i], sc_appbar_icon_passive_anm[i] );
-			}
-		}
-	}
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	APPBAR	選択されたものを取得
- *
- *	@param	const APPBAR_WORK *cp_wk ワーク
- *
- *	@return	APPBAR_SELECT列挙
- */
-//-----------------------------------------------------------------------------
-static APPBAR_SELECT APPBAR_GetTrg( const APPBAR_WORK *cp_wk )
-{	
-	return cp_wk->trg;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	APPBAR	選択されたものを取得
- *
- *	@param	const APPBAR_WORK *cp_wk ワーク
- *
- *	@return	APPBAR_SELECT列挙
- */
-//-----------------------------------------------------------------------------
-static APPBAR_SELECT APPBAR_GetCont( const APPBAR_WORK *cp_wk )
-{	
-	return cp_wk->cont;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	アクティブフラグせってい
- *
- *	@param	APPBAR_WORK *p_wk	ワーク
- *	@param	is_active					TRUEでアクティブ	FALSEでパッシブ
- */
-//-----------------------------------------------------------------------------
-static void APPBAR_SetActive( APPBAR_WORK *p_wk, APPBAR_BARICON_TYPE icon, BOOL is_active )
-{	
-	p_wk->active_req[ icon ]	= is_active;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	Screenデータの　VRAM転送拡張版（読み込んだスクリーンの一部範囲をバッファに張りつける）
- *
- *	@param	ARCHANDLE *handle	ハンドル
- *	@param	datID							データID
- *	@param	frm								フレーム
- *	@param	chr_ofs						キャラオフセット
- *	@param	src_x							転送元ｘ座標
- *	@param	src_y							転送元Y座標
- *	@param	src_w							転送元幅			//データの全体の大きさ
- *	@param	src_h							転送元高さ		//データの全体の大きさ
- *	@param	dst_x							転送先X座標
- *	@param	dst_y							転送先Y座標
- *	@param	dst_w							転送先幅
- *	@param	dst_h							転送先高さ
- *	@param	plt								パレット番号
- *	@param	compressedFlag		圧縮フラグ
- *	@param	heapID						一時バッファ用ヒープID
- *
- */
-//-----------------------------------------------------------------------------
-static void ARCHDL_UTIL_TransVramScreenEx( ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 chr_ofs, u8 src_x, u8 src_y, u8 src_w, u8 src_h, u8 dst_x, u8 dst_y, u8 dst_w, u8 dst_h, u8 plt, BOOL compressedFlag, HEAPID heapID )
-{	
-	void *p_src_arc;
-	NNSG2dScreenData* p_scr_data;
-
-	//読み込み
-	p_src_arc = GFL_ARCHDL_UTIL_Load( handle, datID, compressedFlag, GetHeapLowID(heapID) );
-
-	//アンパック
-	if(!NNS_G2dGetUnpackedScreenData( p_src_arc, &p_scr_data ) )
-	{	
-		GF_ASSERT(0);	//スクリーンデータじゃないよ
-	}
-
-	//エラー
-	GF_ASSERT( src_w * src_h * 2 <= p_scr_data->szByte );
-
-	//キャラオフセット計算
-	if( chr_ofs )
-	{	
-		int i;
-		if( GFL_BG_GetScreenColorMode( frm ) == GX_BG_COLORMODE_16 )
-		{
-			u16 *p_scr16;
-			
-			p_scr16	=	(u16 *)&p_scr_data->rawData;
-			for( i = 0; i < src_w * src_h ; i++ )
-			{
-				p_scr16[i]	+= chr_ofs;
-			}	
-		}
-		else
-		{	
-			GF_ASSERT(0);	//256版は作ってない
-		}
-	}
-
-	//書き込み
-	if( GFL_BG_GetScreenBufferAdrs( frm ) != NULL )
-	{	
-		GFL_BG_WriteScreenExpand( frm, dst_x, dst_y, dst_w, dst_h,
-				&p_scr_data->rawData, src_x, src_y, src_w, src_h );	
-		GFL_BG_ChangeScreenPalette( frm, dst_x, dst_y, dst_w, dst_h, plt );
-		GFL_BG_LoadScreenReq( frm );
+		GAMEDATA_SetShortCut( p_wk->p_gamedata, SHORTCUT_ID_TOWNMAP, TRUE );
 	}
 	else
 	{	
-		GF_ASSERT(0);	//バッファがない
+		GAMEDATA_SetShortCut( p_wk->p_gamedata, SHORTCUT_ID_TOWNMAP, FALSE );
 	}
-
-	GFL_HEAP_FreeMemory( p_src_arc );
-}	
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	APPBAR	アイコンのアクティブ設定
+ *
+ *	@param	APPBAR_WORK *p_wk	ワーク
+ *	@param	icon							設定するアイコン
+ *	@param	is_active		TRUEでアクティブ	FALSEでノンアクティブ
+ */
+//-----------------------------------------------------------------------------
+static void APPBAR_SetActive( APPBAR_WORK *p_wk, TOUCHBAR_ICON icon, BOOL is_active )
+{	
+	TOUCHBAR_SetActive(p_wk->p_touchbar, icon, is_active );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	APPBAR	選択されたものを取得
+ *
+ *	@param	const APPBAR_WORK *cp_wk ワーク
+ *
+ *	@return	APPBAR_SELECT列挙
+ */
+//-----------------------------------------------------------------------------
+static TOUCHBAR_ICON APPBAR_GetTrg( const APPBAR_WORK *cp_wk )
+{	
+	return TOUCHBAR_GetTrg( cp_wk->p_touchbar );
+}
 //=============================================================================
 /**
  *	CURSOR
