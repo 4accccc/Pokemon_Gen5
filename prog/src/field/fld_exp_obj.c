@@ -29,11 +29,17 @@ typedef struct ANM_LIST_tag
   EXP_OBJ_ANM_CNT *AnmCnt;
 }ANM_LIST;
 
+typedef struct EXP_OBJ_STATUS_tag
+{
+  BOOL Culling;
+  GFL_G3D_OBJSTATUS ObjStatus;
+}EXP_OBJ_STATUS;
 
 typedef struct EXP_UNIT_tag
 {
   BOOL Valid;
-  GFL_G3D_OBJSTATUS *ObjStatus;
+//  GFL_G3D_OBJSTATUS *ObjStatus;
+  EXP_OBJ_STATUS *ExpObjStatus;
   ANM_LIST  *AnmList;
   u16 UtilUnitIdx;
   u16 ObjNum;
@@ -43,8 +49,6 @@ typedef struct FLD_EXP_OBJ_CNT_tag
 {
   int HeapID;
   GFL_G3D_UTIL* ObjUtil;
-///  GFL_G3D_OBJSTATUS ObjStatus[FLD_EXP_OBJ_UNIT_MAX];
-///  BOOL Valid[FLD_EXP_OBJ_UNIT_MAX];
   EXP_UNIT  Unit[FLD_EXP_OBJ_UNIT_MAX];
 
 }FLD_EXP_OBJ_CNT;
@@ -114,7 +118,7 @@ void FLD_EXP_OBJ_AddUnit(  FLD_EXP_OBJ_CNT_PTR ptr,
 {
   u16 i;
   u16 unitIdx;
-  GFL_G3D_OBJSTATUS *status;
+  EXP_OBJ_STATUS *exp_status;
   u16 obj_num;
 
   if ( ptr->Unit[inIndex].Valid == TRUE ){
@@ -130,17 +134,29 @@ void FLD_EXP_OBJ_AddUnit(  FLD_EXP_OBJ_CNT_PTR ptr,
   ptr->Unit[inIndex].Valid = TRUE;
   ptr->Unit[inIndex].UtilUnitIdx = unitIdx;
 
+#if 0  
   status = GFL_HEAP_AllocClearMemory(ptr->HeapID, sizeof(GFL_G3D_OBJSTATUS)*obj_num);
   ptr->Unit[inIndex].ObjStatus = status;
+#endif
+  exp_status = GFL_HEAP_AllocClearMemory(ptr->HeapID, sizeof(EXP_OBJ_STATUS)*obj_num);
+  ptr->Unit[inIndex].ExpObjStatus = exp_status;
+
   ptr->Unit[inIndex].AnmList = GFL_HEAP_AllocClearMemory(ptr->HeapID, sizeof(ANM_LIST)*obj_num);
   for(i=0;i<obj_num;i++){
     const GFL_G3D_UTIL_OBJ * objTbl = inSetup->objTbl;
     u16 anm_num = objTbl[i].anmCount;
     AnmCntInit(&ptr->Unit[inIndex].AnmList[i], anm_num, ptr->HeapID);
-
+#if 0
     VEC_Set( &status[i].scale, FX32_ONE, FX32_ONE, FX32_ONE );
 	  MTX_Identity33( &status[i].rotate );
     VEC_Set( &status[i].trans, 0, 0, 0 );
+#endif
+    VEC_Set( &exp_status[i].ObjStatus.scale, FX32_ONE, FX32_ONE, FX32_ONE );
+	  MTX_Identity33( &exp_status[i].ObjStatus.rotate );
+    VEC_Set( &exp_status[i].ObjStatus.trans, 0, 0, 0 );
+
+    //デフォルトはカリングしない
+    exp_status[i].Culling = FALSE;
     {
       int j;
       GFL_G3D_OBJ *g3Dobj = FLD_EXP_OBJ_GetUnitObj(ptr, inIndex, i);
@@ -182,7 +198,7 @@ void FLD_EXP_OBJ_DelUnit( FLD_EXP_OBJ_CNT_PTR ptr, const u16 inUnitIdx )
   }
   GFL_HEAP_FreeMemory( ptr->Unit[inUnitIdx].AnmList );
 
-  GFL_HEAP_FreeMemory( ptr->Unit[inUnitIdx].ObjStatus );
+  GFL_HEAP_FreeMemory( ptr->Unit[inUnitIdx].ExpObjStatus );
   GFL_G3D_UTIL_DelUnit( ptr->ObjUtil, ptr->Unit[inUnitIdx].UtilUnitIdx );
 
   ptr->Unit[inUnitIdx].Valid = FALSE;
@@ -244,8 +260,29 @@ GFL_G3D_OBJSTATUS *FLD_EXP_OBJ_GetUnitObjStatus(FLD_EXP_OBJ_CNT_PTR ptr,
     return NULL;
   }
   GF_ASSERT(GFL_HEAP_CheckHeapSafe(ptr->HeapID) == TRUE);
-  return &ptr->Unit[inUnitIdx].ObjStatus[inObjIdx];
+  return &ptr->Unit[inUnitIdx].ExpObjStatus[inObjIdx].ObjStatus;
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ *  カリングするかどうかを決定する
+ *
+ * @param   ptr               モジュールポインタ
+ * @param   inUnitIdx         ユニットインデックス
+ * @param   inObjIdx          ユニット内ＯＢＪインデックス
+ * @param   inCullFlg         TRUEでカリングする
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void FLD_EXP_OBJ_SetCulling(FLD_EXP_OBJ_CNT_PTR ptr,
+                            const u16 inUnitIdx,
+                            const u16 inObjIdx,
+                            const BOOL inCulling)
+{
+  ptr->Unit[inUnitIdx].ExpObjStatus[inObjIdx].Culling = inCulling;
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -302,8 +339,12 @@ void FLD_EXP_OBJ_Draw( FLD_EXP_OBJ_CNT_PTR ptr )
       for (j=0;j<obj_count;j++){
         GFL_G3D_OBJ* pObj;
         pObj = GFL_G3D_UTIL_GetObjHandle(ptr->ObjUtil, obj_idx+j);
-///        GFL_G3D_DRAW_DrawObject( pObj, &ptr->Unit[i].ObjStatus[j] );
-        GFL_G3D_DRAW_DrawObjectCullingON( pObj, &ptr->Unit[i].ObjStatus[j] );
+        if ( ptr->Unit[i].ExpObjStatus[j].Culling ){
+          GFL_G3D_DRAW_DrawObjectCullingON( pObj, &ptr->Unit[i].ExpObjStatus[j].ObjStatus );
+        }else{
+          GFL_G3D_DRAW_DrawObject( pObj, &ptr->Unit[i].ExpObjStatus[j].ObjStatus );
+        }
+        
       }
     }
   }
