@@ -192,36 +192,21 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
   else
   {
     // C03P02は、特殊処理
-    u32 now_areaID;
+    // 屋内アトリビュートは、自動移動
     BOOL auto_move = FALSE;
-    const FLD_SCENEAREA* cp_fldscenearea = FLDNOGRID_MAPPER_GetSceneAreaMan( p_mapper );
     FIELD_RAIL_WORK* p_railwork = FIELD_PLAYER_NOGRID_GetRailWork( p_ngrid_player );
+    MAPATTR attr = FIELD_PLAYER_GetMapAttr( fld_player );
+    MAPATTR_VALUE value = MAPATTR_GetAttrValue( attr );
 
-    // エリアから、自動動作部分と、通常動作部分を判定
-    now_areaID = FLD_SCENEAREA_GetActiveArea(cp_fldscenearea);
-    if( now_areaID != FLD_SCENEAREA_ACTIVE_NONE )
+    if( value == 0xd )
     {
-      if( now_areaID < 5 )
+      // 左右おした？
+      if( (FIELD_RAIL_WORK_GetActionKey( p_railwork ) == RAIL_KEY_RIGHT) ||
+          (FIELD_RAIL_WORK_GetActionKey( p_railwork ) == RAIL_KEY_LEFT) )
       {
-        // 左右おした？
-        if( (FIELD_RAIL_WORK_GetActionKey( p_railwork ) == RAIL_KEY_RIGHT) ||
-            (FIELD_RAIL_WORK_GetActionKey( p_railwork ) == RAIL_KEY_LEFT) )
-        {
-          auto_move = TRUE;
-        }
-      }
-      else
-      {
-        
-        // 上下おした？
-        if( (FIELD_RAIL_WORK_GetActionKey( p_railwork ) == RAIL_KEY_UP) ||
-            (FIELD_RAIL_WORK_GetActionKey( p_railwork ) == RAIL_KEY_DOWN) )
-        {
-          auto_move = TRUE;
-        }
+        auto_move = TRUE;
       }
     }
-
     
     // 移動方向の設定
     // 通常動作部分

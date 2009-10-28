@@ -39,34 +39,8 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03p02.wms
 #hold event type:
 1
 #hold event number:
-42
+6
 #event number: 0
-#Door Event Label
-DOOR_ID_C03P02_C03P03_EXIT03
-#Next Zone ID Name
-ZONE_ID_C03P03
-#Next Door ID Name
-DOOR_ID_C03P03_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_RIGHT
-#Door Type
-EXIT_TYPE_MAT
-#position
--152 0 120
-#event number: 1
-#Door Event Label
-DOOR_ID_C03P02_C03P03_EXIT04
-#Next Zone ID Name
-ZONE_ID_C03P03
-#Next Door ID Name
-DOOR_ID_C03P03_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_RIGHT
-#Door Type
-EXIT_TYPE_MAT
-#position
--152 0 104
-#event number: 2
 #Door Event Label
 DOOR_ID_C03P02_C03P03_EXIT01
 #Next Zone ID Name
@@ -74,77 +48,16 @@ ZONE_ID_C03P03
 #Next Door ID Name
 DOOR_ID_C03P03_C03P02_EXIT01
 #Door Direction
-EXIT_DIR_RIGHT
+EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
 #position
--168 0 88
-#event number: 3
-#Door Event Label
-DOOR_ID_C03P02_C03P03_EXIT05
-#Next Zone ID Name
-ZONE_ID_C03P03
-#Next Door ID Name
-DOOR_ID_C03P03_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_RIGHT
-#Door Type
-EXIT_TYPE_MAT
-#position
--168 0 72
-#event number: 4
-#Door Event Label
-DOOR_ID_C03P02_C03P03_EXIT06
-#Next Zone ID Name
-ZONE_ID_C03P03
-#Next Door ID Name
-DOOR_ID_C03P03_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_RIGHT
-#Door Type
-EXIT_TYPE_MAT
-#position
--168 0 56
-#event number: 5
-#Door Event Label
-DOOR_ID_C03P02_C03P04_EXIT02
-#Next Zone ID Name
-ZONE_ID_C03P04
-#Next Door ID Name
-DOOR_ID_C03P04_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#position
--24 0 203
-#event number: 6
-#Door Event Label
-DOOR_ID_C03P02_C03P03_EXIT07
-#Next Zone ID Name
-ZONE_ID_C03P03
-#Next Door ID Name
-DOOR_ID_C03P03_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_RIGHT
-#Door Type
-EXIT_TYPE_MAT
-#position
--184 0 40
-#event number: 7
-#Door Event Label
-DOOR_ID_C03P02_C03P03_EXIT08
-#Next Zone ID Name
-ZONE_ID_C03P03
-#Next Door ID Name
-DOOR_ID_C03P03_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_RIGHT
-#Door Type
-EXIT_TYPE_MAT
-#position
--184 0 24
-#event number: 8
+1 0 -2
+#size
+1 5
+#event number: 1
 #Door Event Label
 DOOR_ID_C03P02_C03P04_EXIT01
 #Next Zone ID Name
@@ -152,51 +65,16 @@ ZONE_ID_C03P04
 #Next Door ID Name
 DOOR_ID_C03P04_C03P02_EXIT01
 #Door Direction
-EXIT_DIR_DOWN
+EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
 #position
--8 0 203
-#event number: 9
-#Door Event Label
-DOOR_ID_C03P02_C03P04_EXIT03
-#Next Zone ID Name
-ZONE_ID_C03P04
-#Next Door ID Name
-DOOR_ID_C03P04_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#position
--40 0 203
-#event number: 10
-#Door Event Label
-DOOR_ID_C03P02_C03P05_EXIT02
-#Next Zone ID Name
-ZONE_ID_C03P05
-#Next Door ID Name
-DOOR_ID_C03P05_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_LEFT
-#Door Type
-EXIT_TYPE_MAT
-#position
-152 0 104
-#event number: 11
-#Door Event Label
-DOOR_ID_C03P02_C03P04_EXIT04
-#Next Zone ID Name
-ZONE_ID_C03P04
-#Next Door ID Name
-DOOR_ID_C03P04_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#position
-8 0 203
-#event number: 12
+24 0 -2
+#size
+1 5
+#event number: 2
 #Door Event Label
 DOOR_ID_C03P02_C03P05_EXIT01
 #Next Zone ID Name
@@ -204,51 +82,16 @@ ZONE_ID_C03P05
 #Next Door ID Name
 DOOR_ID_C03P05_C03P02_EXIT01
 #Door Direction
-EXIT_DIR_LEFT
+EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
 #position
-152 0 88
-#event number: 13
-#Door Event Label
-DOOR_ID_C03P02_C03P05_EXIT03
-#Next Zone ID Name
-ZONE_ID_C03P05
-#Next Door ID Name
-DOOR_ID_C03P05_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_LEFT
-#Door Type
-EXIT_TYPE_MAT
-#position
-152 0 72
-#event number: 14
-#Door Event Label
-DOOR_ID_C03P02_C03P06_EXIT03
-#Next Zone ID Name
-ZONE_ID_C03P06
-#Next Door ID Name
-DOOR_ID_C03P06_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_LEFT
-#Door Type
-EXIT_TYPE_MAT
-#position
-132 0 -72
-#event number: 15
-#Door Event Label
-DOOR_ID_C03P02_C03P06_EXIT02
-#Next Zone ID Name
-ZONE_ID_C03P06
-#Next Door ID Name
-DOOR_ID_C03P06_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_LEFT
-#Door Type
-EXIT_TYPE_MAT
-#position
-132 0 -56
-#event number: 16
+5 0 -2
+#size
+1 5
+#event number: 3
 #Door Event Label
 DOOR_ID_C03P02_C03P06_EXIT01
 #Next Zone ID Name
@@ -256,103 +99,16 @@ ZONE_ID_C03P06
 #Next Door ID Name
 DOOR_ID_C03P06_C03P02_EXIT01
 #Door Direction
-EXIT_DIR_LEFT
-#Door Type
-EXIT_TYPE_MAT
-#position
-132 0 -104
-#event number: 17
-#Door Event Label
-DOOR_ID_C03P02_C03P06_EXIT04
-#Next Zone ID Name
-ZONE_ID_C03P06
-#Next Door ID Name
-DOOR_ID_C03P06_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_LEFT
-#Door Type
-EXIT_TYPE_MAT
-#position
-152 0 -88
-#event number: 18
-#Door Event Label
-DOOR_ID_C03P02_C03P06_EXIT05
-#Next Zone ID Name
-ZONE_ID_C03P06
-#Next Door ID Name
-DOOR_ID_C03P06_C03P02_EXIT01
-#Door Direction
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
 #position
-152 0 -104
-#event number: 19
-#Door Event Label
-DOOR_ID_C03P02_C03P06_EXIT10
-#Next Zone ID Name
-ZONE_ID_C03P06
-#Next Door ID Name
-DOOR_ID_C03P06_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#position
-104 0 -152
-#event number: 20
-#Door Event Label
-DOOR_ID_C03P02_C03P06_EXIT06
-#Next Zone ID Name
-ZONE_ID_C03P06
-#Next Door ID Name
-DOOR_ID_C03P06_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_LEFT
-#Door Type
-EXIT_TYPE_MAT
-#position
-168 0 -40
-#event number: 21
-#Door Event Label
-DOOR_ID_C03P02_C03P06_EXIT07
-#Next Zone ID Name
-ZONE_ID_C03P06
-#Next Door ID Name
-DOOR_ID_C03P06_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_LEFT
-#Door Type
-EXIT_TYPE_MAT
-#position
-136 0 -120
-#event number: 22
-#Door Event Label
-DOOR_ID_C03P02_C03P07_EXIT02
-#Next Zone ID Name
-ZONE_ID_C03P07
-#Next Door ID Name
-DOOR_ID_C03P07_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#position
--40 0 -216
-#event number: 23
-#Door Event Label
-DOOR_ID_C03P02_C03P07_EXIT03
-#Next Zone ID Name
-ZONE_ID_C03P07
-#Next Door ID Name
-DOOR_ID_C03P07_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#position
--17 0 -160
-#event number: 24
+7 0 -2
+#size
+1 5
+#event number: 4
 #Door Event Label
 DOOR_ID_C03P02_C03P07_EXIT01
 #Next Zone ID Name
@@ -363,191 +119,13 @@ DOOR_ID_C03P07_C03P02_EXIT01
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
 #position
--8 0 -216
-#event number: 25
-#Door Event Label
-DOOR_ID_C03P02_C03P08_EXIT02
-#Next Zone ID Name
-ZONE_ID_C03P08
-#Next Door ID Name
-DOOR_ID_C03P08_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_RIGHT
-#Door Type
-EXIT_TYPE_MAT
-#position
--136 0 -83
-#event number: 26
-#Door Event Label
-DOOR_ID_C03P02_C03P07_EXIT04
-#Next Zone ID Name
-ZONE_ID_C03P07
-#Next Door ID Name
-DOOR_ID_C03P07_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#position
-8 0 -216
-#event number: 27
-#Door Event Label
-DOOR_ID_C03P02_C03P08_EXIT03
-#Next Zone ID Name
-ZONE_ID_C03P08
-#Next Door ID Name
-DOOR_ID_C03P08_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_RIGHT
-#Door Type
-EXIT_TYPE_MAT
-#position
--168 0 -88
-#event number: 28
-#Door Event Label
-DOOR_ID_C03P02_C03P08_EXIT07
-#Next Zone ID Name
-ZONE_ID_C03P08
-#Next Door ID Name
-DOOR_ID_C03P08_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#position
--152 0 -104
-#event number: 29
-#Door Event Label
-DOOR_ID_C03P02_C03P08_EXIT04
-#Next Zone ID Name
-ZONE_ID_C03P08
-#Next Door ID Name
-DOOR_ID_C03P08_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_RIGHT
-#Door Type
-EXIT_TYPE_MAT
-#position
--152 0 -120
-#event number: 30
-#Door Event Label
-DOOR_ID_C03P02_C03P08_EXIT05
-#Next Zone ID Name
-ZONE_ID_C03P08
-#Next Door ID Name
-DOOR_ID_C03P08_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_RIGHT
-#Door Type
-EXIT_TYPE_MAT
-#position
--152 0 -136
-#event number: 31
-#Door Event Label
-DOOR_ID_C03P02_C03P03_EXIT09
-#Next Zone ID Name
-ZONE_ID_C03P03
-#Next Door ID Name
-DOOR_ID_C03P03_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#position
--152 0 104
-#event number: 32
-#Door Event Label
-DOOR_ID_C03P02_C03P07_EXIT05
-#Next Zone ID Name
-ZONE_ID_C03P07
-#Next Door ID Name
-DOOR_ID_C03P07_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#position
-24 0 -216
-#event number: 33
-#Door Event Label
-DOOR_ID_C03P02_C03P04_EXIT05
-#Next Zone ID Name
-ZONE_ID_C03P04
-#Next Door ID Name
-DOOR_ID_C03P04_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#position
-24 0 203
-#event number: 34
-#Door Event Label
-DOOR_ID_C03P02_C03P06_EXIT08
-#Next Zone ID Name
-ZONE_ID_C03P06
-#Next Door ID Name
-DOOR_ID_C03P06_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_LEFT
-#Door Type
-EXIT_TYPE_MAT
-#position
-136 0 -136
-#event number: 35
-#Door Event Label
-DOOR_ID_C03P02_C03P06_EXIT09
-#Next Zone ID Name
-ZONE_ID_C03P06
-#Next Door ID Name
-DOOR_ID_C03P06_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#position
-120 0 -152
-#event number: 36
-#Door Event Label
-DOOR_ID_C03P02_C03P06_EXIT12
-#Next Zone ID Name
-ZONE_ID_C03P06
-#Next Door ID Name
-DOOR_ID_C03P06_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#position
-152 0 -88
-#event number: 37
-#Door Event Label
-DOOR_ID_C03P02_C03P06_EXIT11
-#Next Zone ID Name
-ZONE_ID_C03P06
-#Next Door ID Name
-DOOR_ID_C03P06_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#position
-136 0 -104
-#event number: 38
-#Door Event Label
-DOOR_ID_C03P02_C03P08_EXIT06
-#Next Zone ID Name
-ZONE_ID_C03P08
-#Next Door ID Name
-DOOR_ID_C03P08_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_RIGHT
-#Door Type
-EXIT_TYPE_MAT
-#position
--152 0 -152
-#event number: 39
+9 0 -2
+#size
+1 5
+#event number: 5
 #Door Event Label
 DOOR_ID_C03P02_C03P08_EXIT01
 #Next Zone ID Name
@@ -555,36 +133,14 @@ ZONE_ID_C03P08
 #Next Door ID Name
 DOOR_ID_C03P08_C03P02_EXIT01
 #Door Direction
-EXIT_DIR_RIGHT
+EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
 #position
--152 0 -104
-#event number: 40
-#Door Event Label
-DOOR_ID_C03P02_C03P03_EXIT10
-#Next Zone ID Name
-ZONE_ID_C03P03
-#Next Door ID Name
-DOOR_ID_C03P03_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#position
--168 0 56
-#event number: 41
-#Door Event Label
-DOOR_ID_C03P02_C03P03_EXIT02
-#Next Zone ID Name
-ZONE_ID_C03P03
-#Next Door ID Name
-DOOR_ID_C03P03_C03P02_EXIT01
-#Door Direction
-EXIT_DIR_RIGHT
-#Door Type
-EXIT_TYPE_MAT
-#position
--152 0 136
+0 0 -1
+#size
+1 3
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

@@ -11,8 +11,7 @@
 #define NARC_FIELD_SCENEAREA_DATA_NAIX_
 
 enum {
-	NARC_field_scenearea_data_c03p02_dat = 0,
-	NARC_field_scenearea_data_c3_dat = 1
+	NARC_field_scenearea_data_c3_dat = 0
 };
 
 /* NARC_FIELD_SCENEAREA_DATA_NAIX_ */
