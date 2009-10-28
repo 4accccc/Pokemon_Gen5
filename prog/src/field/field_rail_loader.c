@@ -90,13 +90,6 @@ static RAIL_POS_FUNC* sp_RAIL_POS_FUNC[FIELD_RAIL_LOADER_LINEPOS_FUNC_MAX] =
 	FIELD_RAIL_POSFUNC_CurveLine,
 };
 
-// 座標動作関数テーブル
-static RAIL_LINE_DIST_FUNC* sp_RAIL_LINE_DIST_FUNC[FIELD_RAIL_LOADER_LINEDIST_FUNC_MAX] = 
-{
-	FIELD_RAIL_LINE_DIST_FUNC_StraitLine,
-	FIELD_RAIL_LINE_DIST_FUNC_CircleLine,
-};
-
 // ３Ｄ座標のロケーション当たり判定
 static RAIL_LINE_HIT_LOCATION_FUNC* sp_RAIL_LINE_HIT_LOCATION_FUNC[FIELD_RAIL_LOADER_LINEPOS_FUNC_MAX] = 
 {
@@ -115,11 +108,9 @@ static void SettingClear( RAIL_SETTING* p_setting )
 	GFL_STD_MemClear( p_setting, sizeof(RAIL_SETTING) );
 	p_setting->camera_func_count		= FIELD_RAIL_LOADER_CAMERA_FUNC_MAX;
 	p_setting->linepos_func_count		= FIELD_RAIL_LOADER_LINEPOS_FUNC_MAX;
-	p_setting->line_dist_func_count	= FIELD_RAIL_LOADER_LINEDIST_FUNC_MAX;
 	p_setting->line_hit_location_count	= FIELD_RAIL_LOADER_LINEPOS_FUNC_MAX;
 	p_setting->camera_func					= sp_RAIL_CAMERA_FUNC;
 	p_setting->line_pos_func				= sp_RAIL_POS_FUNC;
-	p_setting->line_dist_func				= sp_RAIL_LINE_DIST_FUNC;
 	p_setting->line_hit_location_func = sp_RAIL_LINE_HIT_LOCATION_FUNC;
 
 }
@@ -161,7 +152,6 @@ static void PrintLinePos( const RAIL_LINEPOS_SET* cp_linepos )
 {
 	TOMOYA_Printf( "linepos_set\n" );
 	TOMOYA_Printf( "funcindex = %d\n", cp_linepos->func_index );
-	TOMOYA_Printf( "funcdistindex = %d\n", cp_linepos->func_dist_index );
 	TOMOYA_Printf( "\n" );
 }
 #endif

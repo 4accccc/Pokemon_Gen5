@@ -349,92 +349,6 @@ void FIELD_RAIL_POSFUNC_CurveLine(const FIELD_RAIL_WORK * work, VecFx32 * pos)
 }
 
 
-//============================================================================================
-//
-//
-//      ２点間の距離を求める
-//
-//
-//============================================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	直線
- */
-//-----------------------------------------------------------------------------
-fx32 FIELD_RAIL_LINE_DIST_FUNC_StraitLine( const RAIL_POINT * point_s, const RAIL_POINT * point_e, const RAIL_LINEPOS_SET * line_pos_set )
-{
-  VecFx32 pos_s, pos_e;
-
-  VEC_Set( &pos_s, FX_Floor(point_s->pos.x), FX_Floor(point_s->pos.y), FX_Floor(point_s->pos.z) );
-  VEC_Set( &pos_e, FX_Floor(point_e->pos.x), FX_Floor(point_e->pos.y), FX_Floor(point_e->pos.z) );
-  
-	return VEC_Distance( &pos_s, &pos_e );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	円
- */
-//-----------------------------------------------------------------------------
-fx32 FIELD_RAIL_LINE_DIST_FUNC_CircleLine( const RAIL_POINT * point_s, const RAIL_POINT * point_e, const RAIL_LINEPOS_SET * line_pos_set )
-{
-	u16     rotate;
-	VecFx32 center;
-	fx32    r;
-	fx32    circle_par;
-  VecFx32 p0;
-  VecFx32 p1;
-  fx32 dist;
-	const RAIL_POSFUNC_CURVE_WORK* cp_wk;
-
-  p0 = point_s->pos;
-  p1 = point_e->pos;
-
-	cp_wk = (const RAIL_POSFUNC_CURVE_WORK*)line_pos_set->work;
-	center.x = cp_wk->x;
-	center.y = cp_wk->y;
-	center.z = cp_wk->z;
-
-
-	// 中心からの距離に変更
-	VEC_Subtract( &p0, &center, &p0 );
-	VEC_Subtract( &p1, &center, &p1 );
-  // 平面で考える
-  p0.y = 0;
-  p1.y = 0;
-
-  // 小数点以下切捨て
-  VEC_Set( &p0, FX_Floor(p0.x), FX_Floor(p0.y), FX_Floor(p0.z) );
-  VEC_Set( &p1, FX_Floor(p1.x), FX_Floor(p1.y), FX_Floor(p1.z) );
-
-
-	// 中心からの距離は、平均を使う
-	// 直径を求めたいので、２でわらない
-	r = VEC_Mag( &p0 );
-	r += VEC_Mag( &p1 );
-
-	// 角度を求める
-	VEC_Normalize( &p0, &p0 );
-	VEC_Normalize( &p1, &p1 );
-	rotate = FX_AcosIdx( VEC_DotProduct( &p0, &p1 ) );  // 180以下の角度が戻ってくる
-	
-	
-	// 角度の比を求める
-	circle_par = FX_Div( rotate<<FX32_SHIFT, 0x10000<<FX32_SHIFT );
-/*    OS_TPrintf( "circle_par 0x%x ", circle_par );
-	OS_TPrintf( "rotate=%d ", rotate / 182 );
-	OS_TPrintf( "r=0x%x\n", r );//*/
-
-	// 円周から、距離を求める
-	dist = FX_Mul( r, FX32_CONST(3.140f) );
-	dist = FX_Mul( dist, circle_par );
-
-
-	return dist;
-}
-
-
-
 //-----------------------------------------------------------------------------
 /**
  *					ロケーションあたり判定
@@ -460,7 +374,6 @@ BOOL FIELD_RAIL_LINE_HIT_LOCATION_FUNC_StraitLine( u32 rail_index, const FIELD_R
   fx32 width_dist, front_dist;
   u32 front_ofs_width, start_width, end_width;
   fx32 b_cos;
-  fx32 total_dist;
   u32 total_ofs, front_ofs;
   int i;
   BOOL result;
@@ -494,8 +407,7 @@ BOOL FIELD_RAIL_LINE_HIT_LOCATION_FUNC_StraitLine( u32 rail_index, const FIELD_R
   
   // トータルサイズの取得
   cp_linepos = FIELD_RAIL_MAN_GetRailDatLinePos( cp_man, cp_line->line_pos_set );
-  total_dist = FIELD_RAIL_LINE_DIST_FUNC_StraitLine( cp_point_s, cp_point_e, cp_linepos );
-  total_ofs = FX_Div( total_dist, unit_size ) >> FX32_SHIFT;
+  total_ofs = cp_line->line_grid_max * RAIL_WALK_OFS;
 
   // 交点のオフセット
   front_ofs = FX_Div( front_dist, unit_size ) >> FX32_SHIFT;

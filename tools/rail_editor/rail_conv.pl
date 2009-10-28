@@ -455,7 +455,7 @@ sub convData
 
 	#ライン情報
 	{
-		my( $point, $key, $linepos, $camera_set, $len );
+		my( $point, $key, $linepos, $camera_set, $len, $line_grid_max );
 		open( FILEOUT_LINE, ">$outfile.line" );
 		binmode( FILEOUT_LINE );
 
@@ -482,6 +482,10 @@ sub convData
 			#CAMERA_SET
 			$camera_set = &getPeaceParamForName( \@filedata, $LINE_NAME[$i], "CAMERA_SET");
 			print( FILEOUT_LINE pack( "i", &getNameIndex( \@CAMERA_NAME, $camera_set ) ) );
+
+			#LINE_GRID_MAX
+			$line_grid_max = &getPeaceParamForName( \@filedata, $LINE_NAME[$i], "LINE_GRID_MAX");
+			print( FILEOUT_LINE pack( "i", &get10Number( $line_grid_max ) ) );
 
 			#NAME
 			$len = length($LINE_NAME[$i]);
@@ -511,8 +515,8 @@ sub convData
 			print( FILEOUT_LINEPOS pack( "i", &getLinePosFuncIDNameToNo( $funcindex ) ) );
 
 			#FUNCDISTINDEX
-			$distfuncindex = &getPeaceParamForName( \@filedata, $LINEPOS_NAME[$i], "FUNCDISTINDEX");
-			print( FILEOUT_LINEPOS pack( "i", &getLineDistFuncIDNameToNo( $distfuncindex ) ) );
+      #$distfuncindex = &getPeaceParamForName( \@filedata, $LINEPOS_NAME[$i], "FUNCDISTINDEX");
+      #print( FILEOUT_LINEPOS pack( "i", &getLineDistFuncIDNameToNo( $distfuncindex ) ) );
 
 			#ワークデータの出力
 			$datasiz = 0;

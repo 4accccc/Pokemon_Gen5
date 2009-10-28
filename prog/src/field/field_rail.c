@@ -1963,16 +1963,7 @@ static RAIL_POS_FUNC*const getRailDatLinePosFunc( const RAIL_SETTING * raildat, 
 	GF_ASSERT( index == RAIL_TBL_NULL );
 	return NULL;
 }
-// ライン距離取得関数
-static RAIL_LINE_DIST_FUNC*const getRailDatLineDistFunc( const RAIL_SETTING * raildat, u32 index )
-{
-	if( raildat->line_dist_func_count > index )
-	{	
-		return raildat->line_dist_func[ index ];
-	}
-	GF_ASSERT( index == RAIL_TBL_NULL );
-	return NULL;
-}
+
 // ラインと座標の当たり判定
 static RAIL_LINE_HIT_LOCATION_FUNC*const getRailDatLineHitLocationFunc( const RAIL_SETTING * raildat, u32 index )
 {
@@ -2655,60 +2646,7 @@ static void getRailLocation( const FIELD_RAIL_WORK * work, RAIL_LOCATION * locat
 //-----------------------------------------------------------------------------
 static s32 getLineOfsMax( const RAIL_LINE * line, fx32 unit, const RAIL_SETTING* rail_dat )
 {
-  const RAIL_LINEPOS_SET * line_pos_set;
-	const RAIL_POINT* point_s;
-	const RAIL_POINT* point_e;
-	RAIL_LINE_DIST_FUNC* dist_func;
-  fx32 dist;
-  s32 div;
-  s32 amari;
-
-	point_s = getRailDatPoint( rail_dat, line->point_s );
-	point_e = getRailDatPoint( rail_dat, line->point_e );
-
-  // ライン動作情報を取得
-  line_pos_set = getRailDatLinePos( rail_dat, line->line_pos_set );
-
-	// 距離の取得
-	dist_func = getRailDatLineDistFunc( rail_dat, line_pos_set->func_dist_index );
-	if( dist_func )
-	{
-		dist = dist_func( point_s, point_e, line_pos_set );
-		div   = FX_Div( dist, unit ) >> FX32_SHIFT; // 小数点は無視
-	}
-	else
-	{
-    // 1グリッド分くらいは
-		div = RAIL_WALK_OFS;
-	}
-
-#if 0
-  // RAIL_WALK_OFSで割り切れる値にする
-  amari = div % RAIL_WALK_OFS;
-  if( amari >=  (RAIL_WALK_OFS/2) )
-  {
-    div += RAIL_WALK_OFS - amari;
-    TOMOYA_Printf( "ラインオフセット　あまり　があります。 amari=%d\n", amari );
-  }
-  else if( amari )
-  {
-    div -= amari;
-    TOMOYA_Printf( "ラインオフセット　あまり　があります。 amari=%d\n", amari );
-  }
-#else
-
-  amari = div % RAIL_WALK_OFS;
-  if(amari)
-  {
-    div -= amari;
-    DEBUG_RAIL_Printf( "ラインオフセット　あまり　があります。 amari=%d\n", amari );
-  }
-
-#endif
-
-//  OS_TPrintf( "div = %d dist = 0x%x unit = 0x%x\n", div, dist, unit );
-
-  return div;
+  return line->line_grid_max * RAIL_WALK_OFS;
 }
 
 //----------------------------------------------------------------------------

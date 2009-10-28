@@ -87,7 +87,7 @@ typedef struct _RAIL_CAMERA_SET{
 #define RAIL_LINEPOS_SET_WORK_SIZ	(32)
 typedef struct _RAIL_LINEPOS_SET{
   u32 func_index;
-  u32 func_dist_index;
+  //u32 func_dist_index;  // lineデータにline_grid_maxを入れたので廃止
 	union
 	{
 		struct
@@ -218,8 +218,8 @@ struct _RAIL_LINE {
 	u32 point_e;
   u32 key;
 	u32 line_pos_set;
-
 	u32 camera_set;
+	u32 line_grid_max;
 
 
   char name[ RAIL_NAME_BUF_SIZ ];
@@ -239,15 +239,14 @@ struct _RAIL_SETTING{
   u16 linepos_count;
   u16 camera_func_count;
   u16 linepos_func_count;
-  u16 line_dist_func_count;
 	u16 line_hit_location_count;
+  u16 pad;
   const RAIL_POINT* point_table;
   const RAIL_LINE*	line_table;
 	const RAIL_CAMERA_SET*	camera_table;
 	const RAIL_LINEPOS_SET* linepos_table;
 	RAIL_CAMERA_FUNC*const*	camera_func;
 	RAIL_POS_FUNC*const*		line_pos_func;
-	RAIL_LINE_DIST_FUNC*const* line_dist_func;
   RAIL_LINE_HIT_LOCATION_FUNC*const* line_hit_location_func;
 
   fx32  ofs_unit;     // 幅の移動単位
