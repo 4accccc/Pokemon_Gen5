@@ -25,15 +25,32 @@
 #include "field_bmanime_tool.h"
 
 #include "script_def.h"
+
+#include "sound/pm_sndsys.h"
+#include "sound/wb_sound_data.sadl" //SE指定
+
+//プログラム内参照の定義とスクリプト内参照の定義がずれていたらassert
+SDK_COMPILER_ASSERT( SCR_BMANM_DOOR_OPEN == ANM_INDEX_DOOR_OPEN );
+SDK_COMPILER_ASSERT( SCR_BMANM_DOOR_CLOSE == ANM_INDEX_DOOR_CLOSE );
+
 //============================================================================================
 //============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief 配置モデルアニメ制御ワーク
+ */
+//------------------------------------------------------------------
 struct _BMANIME_CONTROL_WORK {
-  FIELD_BMODEL_MAN * man;
-  FIELD_BMODEL * entry;
-  G3DMAPOBJST * obj;
-  u16 anm_idx;
+  FIELD_BMODEL_MAN * man;   ///<配置モデルマネジャーへのポインタ
+  FIELD_BMODEL * entry;     ///<クローンで生成したオブジェクト
+  G3DMAPOBJST * obj;        ///<オリジナルとなる配置モデルへの参照
+  u16 anm_idx;              ///<アニメ指定
+  u16 se_flag;
 };
 
+enum {
+  NO_ANIME_IDX = 0xffff,    ///<アニメがない指定
+};
 //============================================================================================
 //============================================================================================
 static void makeRect(FLDHIT_RECT * rect, const VecFx32 * pos);
@@ -96,9 +113,6 @@ BMANIME_CONTROL_WORK * BMANIME_CTRL_Create(FIELD_BMODEL_MAN * bmodel_man, const 
   G3DMAPOBJST * obj;
   FIELD_BMODEL * entry;
 
-  GF_ASSERT( SCR_BMANM_DOOR_OPEN == ANM_INDEX_DOOR_OPEN );
-  GF_ASSERT( SCR_BMANM_DOOR_CLOSE == ANM_INDEX_DOOR_CLOSE );
-
   obj = searchDoorObject(bmodel_man, pos);
   if (obj == NULL) return NULL;
   entry = FIELD_BMODEL_Create( bmodel_man, obj );
@@ -111,7 +125,8 @@ BMANIME_CONTROL_WORK * BMANIME_CTRL_Create(FIELD_BMODEL_MAN * bmodel_man, const 
   ctrl->man = bmodel_man;
   ctrl->obj = obj;
   ctrl->entry = entry;
-  ctrl->anm_idx = 0xffff;
+  ctrl->anm_idx = NO_ANIME_IDX;
+  ctrl->se_flag = FALSE;
   return ctrl;
 }
 
@@ -139,7 +154,7 @@ void BMANIME_CTRL_Delete(BMANIME_CONTROL_WORK * ctrl)
 extern void BMANIME_CTRL_SetAnime(BMANIME_CONTROL_WORK * ctrl, u32 anm_idx)
 {
   if (ctrl == NULL) return;
-  if (ctrl->anm_idx != 0xffff) {
+  if (ctrl->anm_idx != NO_ANIME_IDX) {
     FIELD_BMODEL_SetAnime( ctrl->entry, ctrl->anm_idx, BMANM_REQ_END);
   }
   ctrl->anm_idx = anm_idx;
@@ -151,7 +166,7 @@ extern void BMANIME_CTRL_SetAnime(BMANIME_CONTROL_WORK * ctrl, u32 anm_idx)
 BOOL BMANIME_CTRL_WaitAnime(BMANIME_CONTROL_WORK * ctrl)
 {
   if (ctrl == NULL) return TRUE;
-  if (ctrl->anm_idx == 0xffff) return TRUE;
+  if (ctrl->anm_idx == NO_ANIME_IDX) return TRUE;
   if ( FIELD_BMODEL_GetAnimeStatus( ctrl->entry, ctrl->anm_idx) == TRUE)
   {
     FIELD_BMODEL_SetAnime( ctrl->entry, ctrl->anm_idx, BMANM_REQ_STOP);
@@ -159,4 +174,36 @@ BOOL BMANIME_CTRL_WaitAnime(BMANIME_CONTROL_WORK * ctrl)
   }
   return FALSE;
 }
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+BOOL BMANIME_CTRL_GetSENo(const BMANIME_CONTROL_WORK * ctrl, u32 anm_idx, u16 * se_no)
+{
+  static const struct {
+    u16 prog_id;
+    u16 seID[BMANM_INDEX_MAX];
+  } SeTbl[] = {
+    { BM_PROG_ID_DOOR_NORMAL, { SEQ_SE_FLD_20, SEQ_SE_FLD_21 } },
+    { BM_PROG_ID_DOOR_AUTO,   { SEQ_SE_FLD_22, SEQ_SE_FLD_22 } },
+  };
+  int i;
+  BM_PROG_ID id = FIELD_BMODEL_GetProgID( ctrl->entry );
+
+  *se_no = 0;
+  GF_ASSERT( anm_idx < BMANM_INDEX_MAX );
+  for (i = 0; i < NELEMS(SeTbl); i++)
+  {
+    if (SeTbl[i].prog_id == id)
+    {
+      *se_no = SeTbl[i].seID[anm_idx];
+      TAMADA_Printf("BMANIME_PROG_ID(%d) SE(%d)\n", id, *se_no);
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+
+
+
 

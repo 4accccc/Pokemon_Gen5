@@ -28,6 +28,7 @@
 #include "event_camera_act.h" 
 #include "field_bgm_control.h"
 
+#include "sound/pm_sndsys.h"      //PMSND_PlaySE
 
 //============================================================================================
 //============================================================================================
@@ -89,7 +90,12 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     fdaw->ctrl = BMANIME_CTRL_Create( bmodel_man, &fdaw->pos );
     if (fdaw->ctrl)
     {
+      u16 seNo;
       BMANIME_CTRL_SetAnime( fdaw->ctrl, ANM_INDEX_DOOR_OPEN );
+      if( BMANIME_CTRL_GetSENo( fdaw->ctrl, ANM_INDEX_DOOR_OPEN, &seNo) )
+      {
+        PMSND_PlaySE( seNo );
+      }
     }
     *seq = SEQ_DOOROUT_CAMERA_ACT;
     break;
@@ -107,7 +113,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOOROUT_OPENANIME_WAIT:
-    if ( BMANIME_CTRL_WaitAnime( fdaw->ctrl ) == TRUE )
+    if ( BMANIME_CTRL_WaitAnime( fdaw->ctrl ) == TRUE && PMSND_CheckPlaySE() == FALSE )
     {
       *seq = SEQ_DOOROUT_PLAYER_STEP;
     }
@@ -128,13 +134,18 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     }
     else
     { //ドアを閉じるアニメ適用
+      u16 seNo;
       BMANIME_CTRL_SetAnime( fdaw->ctrl, ANM_INDEX_DOOR_CLOSE );
+      if( BMANIME_CTRL_GetSENo( fdaw->ctrl, ANM_INDEX_DOOR_OPEN, &seNo) )
+      {
+        PMSND_PlaySE( seNo );
+      }
       *seq = SEQ_DOOROUT_CLOSEANIME_WAIT;
     }
     break;
 
   case SEQ_DOOROUT_CLOSEANIME_WAIT:
-    if (BMANIME_CTRL_WaitAnime( fdaw->ctrl ) == TRUE )
+    if (BMANIME_CTRL_WaitAnime( fdaw->ctrl ) == TRUE && PMSND_CheckPlaySE() == FALSE )
     {
       *seq = SEQ_DOOROUT_END;
     }
@@ -197,7 +208,12 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
     fdaw->ctrl = BMANIME_CTRL_Create( bmodel_man, &fdaw->pos );
     if (fdaw->ctrl)
     {
+      u16 seNo;
       BMANIME_CTRL_SetAnime( fdaw->ctrl, ANM_INDEX_DOOR_OPEN );
+      if( BMANIME_CTRL_GetSENo( fdaw->ctrl, ANM_INDEX_DOOR_OPEN, &seNo) )
+      {
+        PMSND_PlaySE( seNo );
+      }
     }
     *seq = SEQ_DOORIN_CAMERA_ACT;
     break;
@@ -215,7 +231,7 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOORIN_OPENANIME_WAIT:
-    if ( BMANIME_CTRL_WaitAnime( fdaw->ctrl ) == TRUE)
+    if ( BMANIME_CTRL_WaitAnime( fdaw->ctrl ) == TRUE && PMSND_CheckPlaySE() == FALSE)
     {
       *seq = SEQ_DOORIN_PLAYER_ONESTEP;
     }

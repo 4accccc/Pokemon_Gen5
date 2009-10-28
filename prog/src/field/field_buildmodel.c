@@ -4,6 +4,9 @@
  * @brief		配置モデルの制御
  * @author	tamada GAMEFREAK inc.
  * @date	2009.04.20
+ *
+ * @todo
+ * メモリ削減：（１）テクスチャリソースをエリア単位で統合する（２）アニメリソースの重複を減らす
  */
 //============================================================================================
 
@@ -41,6 +44,8 @@ typedef EL_SCOREBOARD_TEX ELBOARD_TEX;
 enum {
   GFL_G3D_MAP_OBJST_MAX = 32,
   GFL_G3D_MAP_OBJID_NULL = 0xffffffff,
+
+  MAPBLOCK_MAX = 9,
 };
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -54,16 +59,6 @@ enum{
   FILEID_BMINFO_INDOOR = NARC_buildmodel_info_buildmodel_indoor_bin,
 };
 
-typedef enum {
-  BM_ANMMODE_NOTHING = 0,
-  BM_ANMMODE_LOOP,
-  BM_ANMMODE_STOP,
-  BM_ANMMODE_TEMPORARY,
-  BM_ANMMODE_TIMEZONE,
-}BM_ANMMODE;
-
-#define GLOBAL_OBJ_COUNT	(64)
-
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 enum {
@@ -74,58 +69,74 @@ enum {
   BMODEL_ENTRY_NG = BMODEL_ENTRY_MAX,
 
   BMANIME_NULL_ID  = 0xffff,
-  BM_SUBMODEL_NULL_ID = 0xffff,
+  //BM_SUBMODEL_NULL_ID = 0xffff,
 
   //電光掲示板で表示する文字列の長さ
   BMODEL_ELBOARD_STR_LEN = 64 * 2,
 };
 
+static const BMODEL_ID BM_SUBMODEL_NULL_ID = 0xffff;
+
 //------------------------------------------------------------------
+///アニメ状態
+//------------------------------------------------------------------
+typedef enum {
+  BM_ANMMODE_NOTHING = 0, ///<アニメ状態：なし
+  BM_ANMMODE_LOOP,        ///<アニメ状態：ループ制御
+  BM_ANMMODE_STOP,        ///<アニメ状態：停止中
+  BM_ANMMODE_TEMPORARY,   ///<アニメ状態：一時的に適用中
+  BM_ANMMODE_TIMEZONE,    ///<アニメ状態：時間帯で制御
+}BM_ANMMODE;
+
+//------------------------------------------------------------------
+/// 配置モデルアニメ情報
 //------------------------------------------------------------------
 typedef struct _FIELD_BMANIME_DATA
 { 
-  u8 anm_type;  //BMANIME_TYPE  アニメの種類指定
-  u8 prg_type;  //動作プログラムの種類指定
-  u8 anm_count; //アニメカウント
-  u8 set_count; //
-
-  ///アニメアーカイブ指定ID
-  u16 IDs[GLOBAL_OBJ_ANMCOUNT];
+  u8 anm_type;  ///<BMANIME_TYPE  アニメの種類指定
+  u8 prg_type;  ///<BMANIME_PROG_TYPE 動作プログラムの種類指定
+  u8 anm_count; ///<アニメカウント（未使用）
+  u8 set_count; ///<セットカウント（未使用）
+  u16 IDs[GLOBAL_OBJ_ANMCOUNT]; ///<アニメアーカイブ指定ID
 }FIELD_BMANIME_DATA;
 
 //------------------------------------------------------------------
+/// 配置モデル情報
 //------------------------------------------------------------------
 typedef struct {
   BMODEL_ID bm_id;              ///<配置モデルID
-  FIELD_BMANIME_DATA animeData; ///<アニメ指定データ
-  u16 prog_id;                  ///<プログラム指定ID
+  u16 prog_id;                  ///<BM_PROG_ID プログラム指定ID
   BMODEL_ID sub_bm_id;          ///<従属モデル指定ID
   s16 sx, sy, sz;               ///<従属モデルの相対位置
-  u16 anm_id;
+  u16 anm_id;                   ///<アニメ指定ID
+  FIELD_BMANIME_DATA animeData; ///<アニメ指定データ
 }BMINFO;
 
 //------------------------------------------------------------------
+/// 配置モデルオブジェクトリソース
 //------------------------------------------------------------------
 typedef struct {
-  const BMINFO * bmInfo;
-  GFL_G3D_RES*  g3DresMdl;            //モデルリソース(High Q)
-  GFL_G3D_RES*  g3DresTex;            //テクスチャリソース
-  GFL_G3D_RES*  g3DresAnm[GLOBAL_OBJ_ANMCOUNT];  //アニメリソース
+  const BMINFO * bmInfo;              ///<配置モデル情報
+  GFL_G3D_RES*  g3DresMdl;            ///<モデルリソース
+  GFL_G3D_RES*  g3DresTex;            ///<テクスチャリソース
+  GFL_G3D_RES*  g3DresAnm[GLOBAL_OBJ_ANMCOUNT];  ///<アニメリソース
 }OBJ_RES;
 
 //------------------------------------------------------------------
+/// モデル制御オブジェクト
 //------------------------------------------------------------------
 typedef struct {
-  GFL_G3D_OBJ*  g3Dobj;              //オブジェクトハンドル
-  const OBJ_RES * res;
-  BM_ANMMODE anmMode[GLOBAL_OBJ_ANMCOUNT];
+  GFL_G3D_OBJ*  g3Dobj;              ///<オブジェクトハンドル
+  const OBJ_RES * res;              ///<リソースへのポインタ
+  BM_ANMMODE anmMode[GLOBAL_OBJ_ANMCOUNT];  ///<保持アニメの状態
 }OBJ_HND;
 
 //------------------------------------------------------------------
+/// 配置モデル制御ワーク（外部からの制御用）
 //------------------------------------------------------------------
 struct _FIELD_BMODEL {
-  OBJ_HND objHdl;
-  GFL_G3D_OBJSTATUS g3dObjStatus;
+  OBJ_HND objHdl;         ///<モデル制御オブジェクト
+  GFL_G3D_OBJSTATUS g3dObjStatus; ///<表示制御オブジェクト
 };
 
 //------------------------------------------------------------------
@@ -135,23 +146,27 @@ struct _FIELD_BMODEL {
  */
 //------------------------------------------------------------------
 struct _G3DMAPOBJST{
-  GFL_G3D_MAP * g3Dmap;
-  u32 entryNoBackup;
-  u16 index;
-  u16 viewFlag;
-  GFL_G3D_MAP_GLOBALOBJ_ST * objSt;
+  GFL_G3D_MAP * g3Dmap;   ///<所属GFL_G3D_MAPへの参照
+  u32 entryNoBackup;      ///<モデル指定IDのバックアップ
+  u16 index;              ///<所属g3Dmap内でのインデックス
+  u16 viewFlag;           ///<可視設定フラグ
+  GFL_G3D_MAP_GLOBALOBJ_ST * objSt; ///<実オブジェクトへのポインタ
 };
 
 //------------------------------------------------------------------
 ///時間帯アニメ制御ワーク
 //------------------------------------------------------------------
 typedef struct {
-  TIMEZONE NowTimeZone;
-  TIMEZONE OldTimeZone;
-  BOOL update_flag;
-  u8 index;
+  TIMEZONE NowTimeZone;   ///<現在の時間帯
+  TIMEZONE OldTimeZone;   ///<直前の時間帯
+  BOOL update_flag;       ///<更新が必要かどうか
+  u8 index;               ///<時間帯から算出されたアニメ指定
 }TIMEANIME_CTRL;
+
 //------------------------------------------------------------------
+/** 
+ * @brief 配置モデルマネジャー用制御ワーク
+ */
 //------------------------------------------------------------------
 struct _FIELD_BMODEL_MAN
 {
@@ -186,7 +201,7 @@ struct _FIELD_BMODEL_MAN
 
   FIELD_BMODEL * bmodels[BMODEL_USE_MAX];
 
-  G3DMAPOBJST g3DmapObjSt[GFL_G3D_MAP_OBJST_MAX * 9];
+  G3DMAPOBJST g3DmapObjSt[GFL_G3D_MAP_OBJST_MAX * MAPBLOCK_MAX];
 };
 
 //============================================================================================
@@ -381,7 +396,7 @@ void FIELD_BMODEL_MAN_Delete(FIELD_BMODEL_MAN * man)
 
 //------------------------------------------------------------------
 /**
- * @brief 配置モデルマネジャーメイン処理
+ * @brief 配置モデルマネジャー：更新処理
  */
 //------------------------------------------------------------------
 void FIELD_BMODEL_MAN_Main(FIELD_BMODEL_MAN * man)
@@ -850,13 +865,13 @@ static void BMINFO_Load(FIELD_BMODEL_MAN * man, u16 file_id)
 static void BMINFO_init(BMINFO * bmInfo)
 {
   bmInfo->bm_id = 0;
-  BMANIME_init(&bmInfo->animeData);
-  bmInfo->prog_id = 0;
+  bmInfo->prog_id = BM_PROG_ID_NONE;
   bmInfo->sub_bm_id = BM_SUBMODEL_NULL_ID;
   bmInfo->sx = 0;
   bmInfo->sy = 0;
   bmInfo->sz = 0;
   bmInfo->anm_id = 0xffff;
+  BMANIME_init(&bmInfo->animeData);
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -868,7 +883,14 @@ static const FIELD_BMANIME_DATA * BMINFO_getAnimeData(const BMINFO * bmInfo)
 //------------------------------------------------------------------
 static BOOL BMINFO_isDoor(const BMINFO * bmInfo)
 {
-  return (bmInfo->prog_id == 1);
+  switch (bmInfo->prog_id)
+  {
+  case BM_PROG_ID_DOOR_AUTO:
+  case BM_PROG_ID_DOOR_NORMAL:
+    return TRUE;
+  default:
+    return FALSE;
+  }
 }
 
 //============================================================================================
@@ -1711,7 +1733,12 @@ BOOL FIELD_BMODEL_GetAnimeStatus(FIELD_BMODEL * bmodel, u32 idx)
   return OBJHND_getAnimeStatus( &bmodel->objHdl, idx );
 }
 
-
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+BM_PROG_ID FIELD_BMODEL_GetProgID(const FIELD_BMODEL * bmodel)
+{
+  return bmodel->objHdl.res->bmInfo->prog_id;
+}
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void FIELD_BMODEL_Draw( const FIELD_BMODEL * bmodel )

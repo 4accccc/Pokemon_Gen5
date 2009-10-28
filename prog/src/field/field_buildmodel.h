@@ -59,6 +59,10 @@ extern void FIELD_BMODEL_MAN_Draw(FIELD_BMODEL_MAN * man);
 //------------------------------------------------------------------
 extern void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * areadata);
 
+//------------------------------------------------------------------
+/// ヒープ指定の取得
+//------------------------------------------------------------------
+extern HEAPID FIELD_BMODEL_MAN_GetHeapID(const FIELD_BMODEL_MAN * man);
 
 //============================================================================================
 //
@@ -120,6 +124,18 @@ extern void FIELD_BMODEL_MAN_EntryELStringID(const FIELD_BMODEL_MAN * man,
     ARCID msg_arc_id, u16 str_id);
 
 
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+/// プログラム指定ID
+//------------------------------------------------------------------
+typedef enum {
+  BM_PROG_ID_NONE = 0,
+  BM_PROG_ID_DOOR_NORMAL,
+  BM_PROG_ID_DOOR_AUTO,
+
+  BM_PROG_ID_MAX,
+}BM_PROG_ID;
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct _G3DMAPOBJST G3DMAPOBJST;
@@ -130,9 +146,11 @@ extern FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man, const G3DMAPOB
 extern void FIELD_BMODEL_Delete(FIELD_BMODEL * bmodel);
 extern void FIELD_BMODEL_SetAnime(FIELD_BMODEL * bmodel, u32 idx, BMANM_REQUEST req);
 extern BOOL FIELD_BMODEL_GetAnimeStatus(FIELD_BMODEL * bmodel, u32 idx);
+extern BM_PROG_ID FIELD_BMODEL_GetProgID(const FIELD_BMODEL * bmodel);
 
 extern void FIELD_BMODEL_MAN_EntryBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel);
 extern void FIELD_BMODEL_MAN_releaseBuildModel(FIELD_BMODEL_MAN * man, FIELD_BMODEL * bmodel);
+
 
 extern void FIELD_BMODEL_MAN_ResistAllMapObjects
 (FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap, const PositionSt* objStatus, u32 objCount);
@@ -143,14 +161,6 @@ extern void FIELD_BMODEL_MAN_ReleaseAllMapObjects
 extern void FIELD_BMODEL_MAN_ResistMapObject
 (FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap, const PositionSt* objStatus, u32 objCount);
 
-//------------------------------------------------------------------
-/**
- * @brief ヒープ指定の取得
- * @param man
- * @return  HEAPID  ヒープ指定
- */
-//------------------------------------------------------------------
-extern HEAPID FIELD_BMODEL_MAN_GetHeapID(const FIELD_BMODEL_MAN * man);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 
