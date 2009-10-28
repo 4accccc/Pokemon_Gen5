@@ -239,12 +239,14 @@ EVENT_START   ev_pos_r03_rival_04
 	
 	//プラズマ団とダブルバトル！
 	_TRAINER_BTL_SET( TRID_HAKAIM1_01, TRID_HAKAIM1_02 )
-	//敗戦チェック
+	//結果チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-	IF $SCWK_ANSWER == 0 THEN
-		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()
+	ELSE
+		_TRAINER_LOSE()
 	ENDIF
-	
+
 	
 	//囚われのポケモン出現
 	_FLAG_RESET(FV_R03_POKE)
