@@ -595,7 +595,8 @@ static BOOL cleanup_alone_double( int* seq, void* work )
 static BOOL setup_alone_triple( int* seq, void* work )
 {
   enum {
-    BAG_MODE = BBAG_MODE_NORMAL,
+    //BAG_MODE = BBAG_MODE_NORMAL,
+    BAG_MODE = BBAG_MODE_SHOOTER,    // サポートシューター
   };
   // server*1, client*2
   BTL_MAIN_MODULE* wk = work;
