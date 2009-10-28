@@ -57,6 +57,7 @@ extern BOOL MAPATTR_VALUE_CheckJumpUp( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckJumpDown( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckumpLeft( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckJumpRight( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckSandStream( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckCounter( const MAPATTR_VALUE val );
 
 //アトリビュート話しかけ関連

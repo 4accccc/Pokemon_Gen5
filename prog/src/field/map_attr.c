@@ -188,6 +188,18 @@ BOOL MAPATTR_VALUE_CheckJumpRight( const MAPATTR_VALUE val )
 
 //--------------------------------------------------------------
 /**
+ * アトリビュートバリュー　チェック　流砂
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckSandStream( const MAPATTR_VALUE val )
+{
+  return (val == 0x7c);
+}
+
+//--------------------------------------------------------------
+/**
  * アトリビュートバリュー チェック カウンター
  * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う
