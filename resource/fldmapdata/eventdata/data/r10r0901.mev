@@ -39,7 +39,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r10r0901.wms
 #hold event type:
 1
 #hold event number:
-4
+8
 #event number: 0
 #Door Event Label
 DOOR_ID_R10R0901_R10R0801_EXIT01
@@ -92,5 +92,57 @@ EXIT_DIR_UP
 EXIT_TYPE_NONE
 #position
 216 0 -136
+#event number: 4
+#Door Event Label
+DOOR_ID_R10R0901_D09_EXIT01
+#Next Zone ID Name
+ZONE_ID_D09
+#Next Door ID Name
+DOOR_ID_D09_EXIT14_00
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_NONE
+#position
+200 0 40
+#event number: 5
+#Door Event Label
+DOOR_ID_R10R0901_D09_EXIT02
+#Next Zone ID Name
+ZONE_ID_D09
+#Next Door ID Name
+DOOR_ID_D09_EXIT14_00
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_NONE
+#position
+216 0 40
+#event number: 6
+#Door Event Label
+DOOR_ID_R10R0901_D09_EXIT03
+#Next Zone ID Name
+ZONE_ID_D09
+#Next Door ID Name
+DOOR_ID_D09_EXIT14_00
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_NONE
+#position
+232 0 40
+#event number: 7
+#Door Event Label
+DOOR_ID_R10R0901_D09_EXIT04
+#Next Zone ID Name
+ZONE_ID_D09
+#Next Door ID Name
+DOOR_ID_D09_EXIT14_00
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_NONE
+#position
+248 0 40
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

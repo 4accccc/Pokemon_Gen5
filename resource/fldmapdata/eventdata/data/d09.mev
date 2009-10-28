@@ -70,7 +70,7 @@ MMDL_HEADER_POSTYPE_RAIL
 #hold event type:
 1
 #hold event number:
-12
+15
 #event number: 0
 #Door Event Label
 DOOR_ID_D09_EXIT02
@@ -275,5 +275,56 @@ EVENTDATA_POSTYPE_RAIL
 58 4 6
 #size
 1 1
+#event number: 12
+#Door Event Label
+DOOR_ID_D09_EXIT14_00
+#Next Zone ID Name
+ZONE_ID_R10R0901
+#Next Door ID Name
+DOOR_ID_R10R0901_D09_EXIT01
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+7 0 -3
+#size
+2 1
+#event number: 13
+#Door Event Label
+DOOR_ID_D09_EXIT14_01
+#Next Zone ID Name
+ZONE_ID_R10R0901
+#Next Door ID Name
+DOOR_ID_R10R0901_D09_EXIT01
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+1 111 -3
+#size
+1 1
+#event number: 14
+#Door Event Label
+DOOR_ID_D09_EXIT15
+#Next Zone ID Name
+ZONE_ID_C09
+#Next Door ID Name
+DOOR_ID_C09_D09_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+65 17 -3
+#size
+1 7
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

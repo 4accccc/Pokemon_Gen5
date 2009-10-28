@@ -39,6 +39,32 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c09.wms
 #hold event type:
 1
 #hold event number:
-0
+2
+#event number: 0
+#Door Event Label
+DOOR_ID_C09_D09_EXIT01
+#Next Zone ID Name
+ZONE_ID_D09
+#Next Door ID Name
+DOOR_ID_D09_EXIT15
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#position
+0 0 -408
+#event number: 1
+#Door Event Label
+DOOR_ID_C09_D09_EXIT02
+#Next Zone ID Name
+ZONE_ID_D09
+#Next Door ID Name
+DOOR_ID_D09_EXIT15
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#position
+16 0 -408
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
