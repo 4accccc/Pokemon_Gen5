@@ -71,6 +71,12 @@
 #define OBJ3D_Y  (2*FIELD_CONST_GRID_FX32_SIZE)
 
 
+#define UP_SE_FRM1  (757760)
+#define DOWN_SE_FRM1  (1015808)
+#define UP_SE_FRM2  (1036288)
+#define DOWN_SE_FRM2  (1294336)
+
+
 static const VecFx32 CapPos[CAPSULE_NUM_MAX] = {
   {CAP1_X,OBJ3D_Y,CAP1_Z},
   {CAP2_X,OBJ3D_Y,CAP2_Z},
@@ -1509,20 +1515,20 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
   if (tmp->RadeRaleIdx == 2){
     u8 anm_idx = ANM_CAP_MOV1 + tmp->RadeRaleIdx;
     fx32 frm = GetAnimeFrame(ptr, obj_idx, anm_idx);
-    if (frm == 757760){
+    if (frm == UP_SE_FRM1){
       //昇りＳＥスタート
       PMSND_PlaySE(GYM_ELEC_SE_RISE);
-    }else if(frm == 1015808){
+    }else if(frm == DOWN_SE_FRM1){
       //下りＳＥスタート
       PMSND_PlaySE(GYM_ELEC_SE_DROP);
     }
   }else if(tmp->RadeRaleIdx == 3){
     u8 anm_idx = ANM_CAP_MOV1 + tmp->RadeRaleIdx;
     fx32 frm = GetAnimeFrame(ptr, obj_idx, anm_idx);
-    if (frm == 1036288){
+    if (frm == UP_SE_FRM2){
       //昇りＳＥスタート
       PMSND_PlaySE(GYM_ELEC_SE_RISE);
-    }else if(frm == 1294336){
+    }else if(frm == DOWN_SE_FRM2){
       //下りＳＥスタート
       PMSND_PlaySE(GYM_ELEC_SE_DROP);
     };
