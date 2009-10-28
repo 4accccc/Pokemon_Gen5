@@ -141,6 +141,8 @@ EVENT_START   ev_t02pc0101_scene_change_01
 	//博士案内イベント終了
 	$WK_SCENE_T02PC0101 = 1
 	
+	//ライバルストッパー終了
+	$WK_SCENE_T02 = 1	
 	//ライバルストッパー解除
 	_FLAG_SET( FV_T02_RIVAL )
 

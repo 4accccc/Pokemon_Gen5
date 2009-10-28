@@ -19,7 +19,7 @@ _EVENT_DATA		ev_c01r0101_inventor_01
 _EVENT_DATA		ev_c01r0101_bigman_01
 _EVENT_DATA		ev_c01r0101_woman1_01
 _EVENT_DATA		ev_c01r0101_boy3_01
-_EVENT_DATA		ev_c01r0101_scene_change_01
+_EVENT_DATA		ev_scene_c01r0101_pdwguide_01
 _EVENT_DATA		ev_init_c01r0101
 _EVENT_DATA_END
 
@@ -35,11 +35,14 @@ _EVENT_DATA_END
 /************************************************************/
 INIT_EVENT_START	ev_init_c01r0101
 	//イベント状況によりOBJの表示位置変更
+	
 	//分岐：ジムバッジ取得しているか、いないか
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
+	
 	//ジムバッジを取得している場合
 	IF $SCWK_TEMP0 == 1 THEN
-		//博士の案内イベント後
+	
+		//発明家のPDW案内イベント後
 		//サポート：位置変更
 		_OBJ_POS_CHANGE( C01R0101_BOY3_01, 5, 0, 3, DIR_DOWN )
 	ELSE
@@ -96,7 +99,7 @@ EVENT_END
 /**************************************************************/
 /*  C01R0101 ＰＤＷ誘導イベント								  */
 /**************************************************************/
-EVENT_START   ev_c01r0101_scene_change_01
+EVENT_START   ev_scene_c01r0101_pdwguide_01
 
 	//自機、マコモ：部屋中央まで移動
 	_OBJ_ANIME( C01R0101_INVENTOR_01, anm_inventor_yudo1 )
@@ -157,7 +160,7 @@ EVENT_END
 _ANIME_LABEL anm_player_yudo1
 	_ANIME_DATA		AC_WAIT_8F,1
 	_ANIME_DATA		AC_WALK_U_8F,4
-	_ANIME_DATA		AC_DIR_D,1
+	_ANIME_DATA		AC_DIR_U,1
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_inventor_yudo1

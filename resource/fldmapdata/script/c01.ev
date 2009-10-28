@@ -30,7 +30,7 @@ _EVENT_DATA		ev_c01_oldman1_01
 _EVENT_DATA		ev_pos_c01_stop
 _EVENT_DATA		ev_c01_glasses_01
 _EVENT_DATA		ev_c01_leader_01
-_EVENT_DATA		ev_c01_scene_change_01
+_EVENT_DATA		ev_scene_c01_pdwguide_01
 _EVENT_DATA		ev_c01_inventor_01
 _EVENT_DATA_END
 
@@ -157,14 +157,14 @@ EVENT_END
 EVENT_START   ev_pos_c01_stop
 	
 	//ローカル変数を定義
-	DEFINE_LOCAL	HERO_X
-	DEFINE_LOCAL	HERO_Z
+	DEFINE_LOCAL	LWK_HERO_X
+	DEFINE_LOCAL	LWK_HERO_Z
 
 	//自機の位置取得
-	_PLAYER_POS_GET( HERO_X,HERO_Z )
+	_PLAYER_POS_GET( LWK_HERO_X,LWK_HERO_Z )
 	
 	//X軸が13の場合
-	IF $HERO_X == 13 THEN
+	IF $LWK_HERO_X == 13 THEN
 		
 		//お爺さん：自機に近づく
 		//自機：お爺さんのほうを見る
@@ -320,7 +320,7 @@ EVENT_END
 /**************************************************************/
 /*  C01 発明家　ＰＤＷ誘導イベント						      */
 /**************************************************************/
-EVENT_START   ev_c01_scene_change_01
+EVENT_START   ev_scene_c01_pdwguide_01
 
 	//発明家マコモ：自機に気付いて近づく
 	_OBJ_ANIME( C01_INVENTOR_01, anm_inventor_tikaduku )
@@ -347,6 +347,9 @@ EVENT_START   ev_c01_scene_change_01
 
 	//発明家マコモのバニッシュフラグセット
 	_FLAG_SET( FV_C01_INVENTOR_01 )
+	
+	//発明家マコモのバニッシュフラグリセット
+	_FLAG_RESET( FV_C01R0101_INVENTOR_01 )
 
 	//C01のＰＤＷ誘導イベント終了
 	$WK_SCENE_C01 = 2

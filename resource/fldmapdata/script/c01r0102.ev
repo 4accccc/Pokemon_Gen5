@@ -15,7 +15,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_c01r0102_scene_change_01
+_EVENT_DATA		ev_scene_c01r0102_pdwguide_01
 _EVENT_DATA		ev_c01r0102_inventor_01
 _EVENT_DATA		ev_c01r0102_girl3_01
 _EVENT_DATA		ev_c01r0102_books_01
@@ -28,7 +28,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C01R0102 ＰＤＷ誘導イベント								  */
 /**************************************************************/
-EVENT_START   ev_c01r0102_scene_change_01
+EVENT_START   ev_scene_c01r0102_pdwguide_01
 
 	//自機：発明家の前に移動
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk )
@@ -165,8 +165,7 @@ _ANIME_LABEL	anm_inventor_dance
 /*  C01R0102 マコモの会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c01r0102_inventor_01
-//【杉中】_TALK_OBJ_STARTはタブ入れます。一番左に書くのはEVENT_STARTとかだけです。
-_TALK_OBJ_START()
+	_TALK_OBJ_START()
 
 	//重要アイテム「？？？」を所持しているか、いないかの分岐
 	
@@ -194,10 +193,8 @@ EVENT_END
 /*  C01R0102 GIRL3の会話用イベントスクリプト				  */
 /**************************************************************/
 EVENT_START   ev_c01r0102_girl3_01
-_TALK_OBJ_START()
-	
-	//【仮】PDWイベントフラグがないので、仮フラグです。
-	
+	_TALK_OBJ_START()
+
 	//PDWイベントが終わっていない場合
 	IF FLAG_OFF( FE_CGEAR_GET ) THEN
 		
