@@ -281,8 +281,8 @@ static BOOL test_GYM_ANTI_OpenDoor(GAMESYS_WORK *gsys, const u8 inDoorIdx);
 //--------------------------------------------------------------
 /**
  * セットアップ関数
- * @param	
- * @return
+ * @param	      fieldWork   フィールドワークポインタ
+ * @return      none
  */
 //--------------------------------------------------------------
 void GYM_ANTI_Setup(FIELDMAP_WORK *fieldWork)
@@ -386,8 +386,8 @@ void GYM_ANTI_Setup(FIELDMAP_WORK *fieldWork)
 //--------------------------------------------------------------
 /**
  * 解放関数
- * @param	
- * @return
+ * @param	    fieldWork   フィールドワークポインタ
+ * @return    none
  */
 //--------------------------------------------------------------
 void GYM_ANTI_End(FIELDMAP_WORK *fieldWork)
@@ -402,8 +402,8 @@ void GYM_ANTI_End(FIELDMAP_WORK *fieldWork)
 //--------------------------------------------------------------
 /**
  * 動作関数
- * @param	
- * @return
+ * @param	      fieldWork   フィールドワークポインタ
+ * @return      none
  */
 //--------------------------------------------------------------
 void GYM_ANTI_Move(FIELDMAP_WORK *fieldWork)
@@ -456,8 +456,9 @@ GMEVENT *GYM_ANTI_SwOnOff(GAMESYS_WORK *gsys, const u8 inSwIdx, const u8 inSwSta
 //--------------------------------------------------------------
 /**
  * ドアオープンアニメイベント起動
- * @param	
- * @return
+ * @param	      gsys        ゲームシステムポインタ
+ * @param       inDoorIdx   ドアインデックス
+ * @return      event       イベントポインタ
  */
 //--------------------------------------------------------------
 GMEVENT *GYM_ANTI_OpenDoor(GAMESYS_WORK *gsys, const u8 inDoorIdx)
@@ -489,8 +490,10 @@ GMEVENT *GYM_ANTI_OpenDoor(GAMESYS_WORK *gsys, const u8 inDoorIdx)
 //--------------------------------------------------------------
 /**
  * スイッチイベント
- * @param	
- * @return
+ * @param       event             イベントポインタ
+ * @param       seq               シーケンサ
+ * @param       work              ワークポインタ
+ * @return      GMEVENT_RESULT    イベント結果
  */
 //--------------------------------------------------------------
 static GMEVENT_RESULT PushSwEvt( GMEVENT* event, int* seq, void* work )
@@ -552,8 +555,10 @@ static GMEVENT_RESULT PushSwEvt( GMEVENT* event, int* seq, void* work )
 //--------------------------------------------------------------
 /**
  * ドアイベント
- * @param	
- * @return
+ * @param       event             イベントポインタ
+ * @param       seq               シーケンサ
+ * @param       work              ワークポインタ
+ * @return      GMEVENT_RESULT    イベント結果
  */
 //--------------------------------------------------------------
 static GMEVENT_RESULT OpenDoorEvt( GMEVENT* event, int* seq, void* work )
@@ -611,8 +616,9 @@ static GMEVENT_RESULT OpenDoorEvt( GMEVENT* event, int* seq, void* work )
 //--------------------------------------------------------------
 /**
  * レバーの切り替えを行うイベント起動
- * @param	
- * @return
+ * @param	    gsys        ゲームシステムポインタ
+ * @param     inSwIdx     スイッチインデックス
+ * @return    BOOL
  */
 //--------------------------------------------------------------
 static BOOL test_GYM_ANTI_SwOn(GAMESYS_WORK *gsys, const u8 inSwIdx)
@@ -637,6 +643,14 @@ static BOOL test_GYM_ANTI_SwOn(GAMESYS_WORK *gsys, const u8 inSwIdx)
   
 }
 
+//--------------------------------------------------------------
+/**
+ * レバーの切り替えを行うイベント起動
+ * @param	    gsys        ゲームシステムポインタ
+ * @param     inDoorIdx     ドアインデックス
+ * @return    BOOL
+ */
+//--------------------------------------------------------------
 static BOOL test_GYM_ANTI_OpenDoor(GAMESYS_WORK *gsys, const u8 inDoorIdx)
 {
   GYM_ANTI_SV_WORK *gmk_sv_work;
