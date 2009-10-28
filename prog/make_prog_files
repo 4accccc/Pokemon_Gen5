@@ -529,9 +529,8 @@ SRCS_OVERLAY_BAG = app/bag/itemmenu.c \
 												app/bag/itemmenu_disp.c \
 												app/bag/itemuse.c
 
-#===> SRCS_OVERLAY_DEV_WIFI
-#===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_IRC
+# タウンマップ画面
+#===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_TOWNMAP = app/townmap/townmap.c \
 											 app/townmap/townmap_grh.c \
 											 app/townmap/townmap_data_sys.c

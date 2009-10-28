@@ -61,7 +61,7 @@ typedef enum
 #define TOUCHBAR_ICON_X_01				(48)
 #define TOUCHBAR_ICON_X_02				(80)
 #define TOUCHBAR_ICON_X_03				(112)
-#define TOUCHBAR_ICON_X_04				(144)
+#define TOUCHBAR_ICON_X_04				(136)
 #define TOUCHBAR_ICON_X_05				(168)
 #define TOUCHBAR_ICON_X_06				(200)
 #define TOUCHBAR_ICON_X_07				(232)
