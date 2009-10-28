@@ -43,7 +43,7 @@ _EVENT_DATA_END
 /*  BABYGIRL1_1	じゃんけん少女								  */
 /**************************************************************/
 EVENT_START   ev_t02_babygirl1_01
-	_TALK_OBJ_START()
+_TALK_OBJ_START()
 	//ねえねえ　ポケモンじゃんけん　しようよ！
 	_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_01 )
 	_YES_NO_WIN( SCWK_ANSWER )
@@ -328,19 +328,19 @@ _ANIME_LABEL anm_doctor_pokecen
 _ANIME_LABEL anm_player_pokecen_up
 	_ANIME_DATA		AC_WALK_U_8F,1
 	_ANIME_DATA		AC_WALK_U_8F,1
-  _ANIME_DATA   AC_VANISH_ON, 1
+	_ANIME_DATA		AC_VANISH_ON, 1
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_player_pokecen_left
 	_ANIME_DATA		AC_WALK_L_8F,1
 	_ANIME_DATA		AC_WALK_U_8F,1
-  _ANIME_DATA   AC_VANISH_ON, 1
+	_ANIME_DATA		AC_VANISH_ON, 1
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_player_pokecen_right
 	_ANIME_DATA		AC_WALK_R_8F,1
 	_ANIME_DATA		AC_WALK_U_8F,1
-  _ANIME_DATA   AC_VANISH_ON, 1
+	_ANIME_DATA		AC_VANISH_ON, 1
 	_ANIME_DATA		ACMD_END,0
 
 /************************************************************/
@@ -372,6 +372,7 @@ EVENT_START   ev_pos_t02_rival_stop
 		//Z軸が650なら
 		_OBJ_ANIME( T02_RIVAL_01, anm_rival_tikaduku650 )
 	ENDIF
+	
 	_OBJ_ANIME_WAIT()
 	
 	//おい　ポケモンセンターの　まえで　はかせが
@@ -449,12 +450,12 @@ EVENT_START   ev_pos_t02_rival_speech
 	_OBJ_ANIME_WAIT()
 	
 	//ローカル変数を定義
-	DEFINE_LOCAL	SPEECH_X
-	DEFINE_LOCAL	SPEECH_Z
+	DEFINE_LOCAL	LWK_SPEECH_X
+	DEFINE_LOCAL	LWK_SPEECH_Z
 
 	//【仮】ライバル：近づく　場所が精確に決まっていない
-	_PLAYER_POS_GET( SPEECH_X,SPEECH_Z )		//主人公位置取得
-	IF $SPEECH_Z == 655 THEN
+	_PLAYER_POS_GET( LWK_SPEECH_X,LWK_SPEECH_Z )		//主人公位置取得
+	IF $LWK_SPEECH_Z == 655 THEN
 		//Z軸が655なら
 		_OBJ_ANIME( T02_RIVAL_02, anm_rival_tikaduku655 )
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_miru_d )
@@ -467,7 +468,7 @@ EVENT_START   ev_pos_t02_rival_speech
 	_BALLOONWIN_OBJMSG_OPEN( msg_t02_black_02 , T02_RIVAL_02 )
 	_BALLOONWIN_CLOSE()
 
-	IF $SPEECH_Z == 655 THEN
+	IF $LWK_SPEECH_Z == 655 THEN
 		//Z軸が655なら
 		_OBJ_ANIME( T02_RIVAL_02, anm_rival_yudo655 )
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_yudo655 )
@@ -476,6 +477,7 @@ EVENT_START   ev_pos_t02_rival_speech
 		_OBJ_ANIME( T02_RIVAL_02, anm_rival_yudo656 )
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_yudo656 )
 	ENDIF
+	
 	_OBJ_ANIME_WAIT()
 
 	//【仮】10月ROM～カメラ移動～
@@ -569,12 +571,11 @@ EVENT_START   ev_pos_t02_rival_speech
 	_BALLOONWIN_OBJMSG_OPEN( msg_t02_black_03 , T02_RIVAL_02 )
 	_BALLOONWIN_CLOSE()
 
-	//Ｎ：ライバルの方を向く
+	//【仮】Ｎ：ライバルの方を向く
 	
 	//ああ　話しているよ　そうか　キミたちにも　聞こえないのか
 	_BALLOONWIN_OBJMSG_OPEN( msg_t02_boss_02 , T02_N_01 )
 	_BALLOONWIN_CLOSE()
-
 
 	//オレは　クロックで　こちらは　自機　です
 	_PLAYER_NAME( 0 )
@@ -590,8 +591,10 @@ EVENT_START   ev_pos_t02_rival_speech
 	_TRAINER_BTL_SET( TRID_BOSS_01, 0 )
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_LOSE THEN
-		_TRAINER_LOSE()//負けならトレーナー敗北処理へ(ここでスクリプト終了します）
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+	ELSE
+		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
 
 	//……負けたか　ボクの　友達たち　ありがとう
@@ -716,25 +719,15 @@ _ANIME_LABEL anm_boodle_jump
 //	ゲーチス　左右動き
 //--------------------------------------------------------------
 _ANIME_LABEL anm_sage_move
-	_ANIME_DATA		AC_WALK_L_8F,1
-	_ANIME_DATA		AC_WAIT_8F,1
-	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_WALK_L_8F,2
 	_ANIME_DATA		AC_WAIT_8F,1
 	_ANIME_DATA		AC_DIR_D,1
 	_ANIME_DATA		AC_WAIT_8F,1
-	_ANIME_DATA		AC_WALK_R_8F,1
-	_ANIME_DATA		AC_WAIT_8F,1
-	_ANIME_DATA		AC_WALK_R_8F,1
-	_ANIME_DATA		AC_WAIT_8F,1
-	_ANIME_DATA		AC_WALK_R_8F,1
-	_ANIME_DATA		AC_WAIT_8F,1
-	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		AC_WALK_R_8F,4
 	_ANIME_DATA		AC_WAIT_8F,1
 	_ANIME_DATA		AC_DIR_D,1
 	_ANIME_DATA		AC_WAIT_8F,1
-	_ANIME_DATA		AC_WALK_L_8F,1
-	_ANIME_DATA		AC_WAIT_8F,1
-	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_WALK_L_8F,2
 	_ANIME_DATA		AC_WAIT_8F,1
 	_ANIME_DATA		AC_DIR_D,1
 	_ANIME_DATA		ACMD_END,0

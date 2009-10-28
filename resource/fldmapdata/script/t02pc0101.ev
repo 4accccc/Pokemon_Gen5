@@ -86,7 +86,7 @@ EVENT_START   ev_t02pc0101_scene_change_01
 	_BALLOONWIN_OBJMSG_OPEN( msg_t02pc0101_hakase2_04,T02PC0101_DOCTOR )
 	_BALLOONWIN_CLOSE()
 	
-	//サポート：博士の方に向く、その場ジャンプ
+	//サポート：博士の方に向く
 	_OBJ_ANIME( T02PC0101_SUPPORT_01,anm_support_jump )
 	_OBJ_ANIME_WAIT()
 	
@@ -118,7 +118,11 @@ EVENT_START   ev_t02pc0101_scene_change_01
 	
 	//博士の動作モデルを削除する
 	_OBJ_DEL( T02PC0101_DOCTOR )
-	
+
+	//階段ＳＥ再生
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+
 	//サポート：自機のほうに向く、自機：サポートに向く
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_muku )
 	_OBJ_ANIME( T02PC0101_SUPPORT_01, anm_support_muku )
@@ -212,11 +216,10 @@ _ANIME_LABEL	anm_support_pc
 	_ANIME_DATA	ACMD_END,0
 	
 //-------------------------------------------------------------
-//     サポート、博士のほうに向いてその場ジャンプ
+//     サポート、博士のほうに向く
 //-------------------------------------------------------------
 _ANIME_LABEL	anm_support_jump
 	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA AC_STAY_JUMP_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //-------------------------------------------------------------

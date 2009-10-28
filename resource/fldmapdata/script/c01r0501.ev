@@ -24,10 +24,8 @@ _EVENT_DATA		ev_c01r0501_girl1_01
 _EVENT_DATA		ev_c01r0501_boy2_01
 _EVENT_DATA		ev_c01r0501_trainerm_01
 _EVENT_DATA		ev_c01r0501_boy3_01
-_EVENT_DATA		ev_c01r0501_board_01
-//_EVENT_DATA		ev_pos_c01r0501_waza
+_EVENT_DATA		ev_bg_c01r0501_board_01
 _EVENT_DATA		ev_c01r0501_rival_01
-//_EVENT_DATA		ev_c01r0501_glasses_01
 _EVENT_DATA_END
 
 //【杉中】コメントしているラベルは消しちゃいましょう。
@@ -77,63 +75,63 @@ EVENT_END
 /**************************************************************/
 /*  C01R0501 BOARDの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c01r0501_board_01
-	_TALKWIN_OPEN()
+EVENT_START   ev_bg_c01r0501_board_01
+_TALKWIN_OPEN()
 	
-		//こくばんに　ポケモンが　たたかっているときに　おこる
-		_TALKMSG( msg_c01r0501_board_01 )
+	//こくばんに　ポケモンが　たたかっているときに　おこる
+	_TALKMSG( msg_c01r0501_board_01 )
 		
-		//どれについて　みますか？
-		_TALKMSG( msg_c01r0501_board_02 )
+	//どれについて　みますか？
+	_TALKMSG( msg_c01r0501_board_02 )
 		
-		//ローカル変数を定義
-		DEFINE_LOCAL	STATE_SELECT
+	//ローカル変数を定義
+	DEFINE_LOCAL	LWK_STATE_SELECT
+	
+	//分岐・どく・まひ・ねむり・やけど・こおり・やめる
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, LWK_STATE_SELECT )
+	
+	_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_01, 0 )	//どく
+	_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_02, 1 )	//まひ
+	_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_03, 2 )	//ねむり
+	_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_04, 3 )	//やけど
+	_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_05, 4 )	//こおり
+	_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_06, 5 )	//やめる
+	
+	//メニュー表示
+	_BMPMENU_START()
 		
-		//分岐・どく・まひ・ねむり・やけど・こおり・やめる
-		_BMPMENU_INIT_EX( 1, 1, 0, 1, STATE_SELECT )
-		
-		_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_01, 0 )	//どく
-		_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_02, 1 )	//まひ
-		_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_03, 2 )	//ねむり
-		_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_04, 3 )	//やけど
-		_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_05, 4 )	//こおり
-		_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_06, 5 )	//やめる
-		
-		//メニュー表示
-		_BMPMENU_START()
-		
-		//選択結果で分岐
+	//選択結果で分岐
 		
 		//どく選択
-		IF $STATE_SELECT == 0 THEN
+		IF $LWK_STATE_SELECT == 0 THEN
 			
 			//どくを　うけると　たいりょくが　へっていきます
 			_TALKMSG( msg_c01r0501_board_03 )
 			_TALKWIN_CLOSE()
 				
 		//まひ選択
-		ELSIF $STATE_SELECT == 1 THEN
+		ELSIF $LWK_STATE_SELECT == 1 THEN
 			
 			//まひすると　すばやさが　さがり
 			_TALKMSG( msg_c01r0501_board_04 )
 			_TALKWIN_CLOSE()
 				
 		//ねむり選択
-		ELSIF $STATE_SELECT == 2 THEN
+		ELSIF $LWK_STATE_SELECT == 2 THEN
 		
 			//ねむって　しまうと　その　あいだ　こうげき　できません
 			_TALKMSG( msg_c01r0501_board_05 )
 			_TALKWIN_CLOSE()
 			
 		//やけど選択
-		ELSIF $STATE_SELECT == 3 THEN
+		ELSIF $LWK_STATE_SELECT == 3 THEN
 			
 			//やけどに　なると　こうげきりょくが　さがるだけでなく
 			_TALKMSG( msg_c01r0501_board_06 )
 			_TALKWIN_CLOSE()
 			
 		//こおり選択
-		ELSIF $STATE_SELECT == 4 THEN
+		ELSIF $LWK_STATE_SELECT == 4 THEN
 			
 			//こおって　しまうと　なにも　できなくなります
 			_TALKMSG( msg_c01r0501_board_07 )
@@ -148,106 +146,26 @@ EVENT_START   ev_c01r0501_board_01
 EVENT_END
 
 /**************************************************************/
-/*  【仮】削除予定C01R0501 GLASSESの会話用イベントスクリプト  */
-/**************************************************************/
-/*EVENT_START   ev_c01r0501_glasses_01
-	_TALK_OBJ_START()
-	
-	//【仮】　わざマシン取得フラグ未発注
-	_CALL glasses_waza
-	
-EVENT_END
-
-glasses_waza:
-{
-IF FLAG_OFF( FH_01 ) THEN
-	_BALLOONWIN_OBJMSG_OPEN( msg_c01r0501_glasses_01 , C01R0501_GLASSES_01 )
-	_BALLOONWIN_CLOSE()
-
-
-	_YES_NO_WIN( SCWK_ANSWER )
-
-	IF $SCWK_ANSWER == 0 THEN
-		_EASY_TALK_ITEM_EVENT( ITEM_KURABONOMI, 1, FH_01, msg_c01r0501_glasses_03, msg_c01r0501_glasses_04, msg_c01r0501_glasses_04)
-
-	ELSE
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01r0501_glasses_02 , C01R0501_GLASSES_01 )
-		_BALLOONWIN_CLOSE()
-
-	ENDIF
-
-ELSE
-	_BALLOONWIN_OBJMSG_OPEN( msg_c01r0501_glasses_04 , C01R0501_GLASSES_01 )
-	_BALLOONWIN_CLOSE()
-ENDIF
-
-_RET
-}
-*/
-
-/**************************************************************/
-/*  【仮】サングラス　わざマシンイベント　ＰＯＳ発動削除予定  */
-/**************************************************************/
-/*EVENT_START   ev_pos_c01r0501_waza
-
-	//【仮】各座標対応をしていません　サングラス：自機に近づく
-	_OBJ_ANIME( C01R0501_GLASSES_01, anm_glasses_tikaduku )
-	_OBJ_ANIME_WAIT()
-	
-	//以下C01R0501 GLASSESと同じ
-	_CALL glasses_waza
-	
-	//持ち場に戻る
-	_OBJ_ANIME( C01R0501_GLASSES_01, anm_glasses_hanareru )
-	_OBJ_ANIME_WAIT()
-	
-	//=========フラグワーク操作==========//
-
-	//【仮】　フラグ未発注　サングラスわざマシンイベント終了
-	$LOCALWORK10 = 1
-	
-	//===================================//
-
-
-EVENT_END
-
-//--------------------------------------------------------------
-//	サングラス　近づく
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_glasses_tikaduku
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
-	
-//--------------------------------------------------------------
-//	サングラス　離れる
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_glasses_hanareru
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
-*/
-
-/**************************************************************/
 /*  C01R0501 RIVALの会話用イベントスクリプト				  */
 /**************************************************************/
-//【杉中】優先度低　分岐構文を整理すると良いです。水曜日中に無理であれば、残しちゃいましょう。
 EVENT_START   ev_c01r0501_rival_01
-	_TALK_OBJ_START()
+_TALK_OBJ_START()
+
+	_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0501_black_01 )
+	_BALLOONWIN_CLOSE()
+		
+	_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0501_black_02 )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 	
 	//ゆめのあとちに行っている場合
 	IF $WK_SCENE_D01R0101 >= 1 THEN
 
 		//ライバルと既に話している場合
 		IF FLAG_ON( FE_C01R0501_RIVALTALK ) THEN
-			_CALL rival_word
 
 		//ライバルとまだ話していない場合
 		ELSE
-			_CALL rival_word
 			
 			//=========フラグワーク操作==========//
 	
@@ -269,12 +187,10 @@ EVENT_START   ev_c01r0501_rival_01
 
 		//ライバルと既に話している場合
 		IF FLAG_ON( FE_C01R0501_RIVALTALK ) THEN
-			_CALL rival_word
 
 		//ライバルとまだ話していない場合
 		ELSE
-			_CALL rival_word
-			
+
 			_FLAG_SET( FE_C01R0501_RIVALTALK )
 
 		ENDIF
@@ -282,15 +198,4 @@ EVENT_START   ev_c01r0501_rival_01
 	ENDIF
 
 EVENT_END
-
-rival_word:
-{
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0501_black_01 )
-	_BALLOONWIN_CLOSE()
-		
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0501_black_02 )
-	_BALLOONWIN_CLOSE()
-
-_RET
-}
 

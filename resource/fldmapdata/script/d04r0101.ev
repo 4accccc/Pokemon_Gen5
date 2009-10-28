@@ -35,10 +35,10 @@ _EVENT_DATA_END
 /*			ó¨çª                                              */
 /**************************************************************/
 EVENT_START ev_mapchange1
-	_MAP_CHANGE_SAND_STREAM( ZONE_ID_D04R0201, 37, 6 )
+	_MAP_CHANGE_SAND_STREAM( ZONE_ID_D04R0201, 15, 11 )
 EVENT_END
 
 EVENT_START ev_mapchange2
-	_MAP_CHANGE_SAND_STREAM( ZONE_ID_D04R0201, 44, 4 )
+	_MAP_CHANGE_SAND_STREAM( ZONE_ID_D04R0201, 10, 10 )
 EVENT_END
 
