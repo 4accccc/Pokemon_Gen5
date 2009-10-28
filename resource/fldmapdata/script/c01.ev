@@ -302,20 +302,27 @@ EVENT_END
 /*  C01 ジムリーダーのジムストッパー			              */
 /**************************************************************/
 EVENT_START   ev_c01_leader_01
-	_TALK_OBJ_START()
+_TALK_OBJ_START()
 
-	//【杉中】フラグ操作を//========//でかこってお願い。
-	//階段SE／ドアアニメのどちらかをお願いします。
-	//あとタブが多い。コピペしたね！
-		_BALLOONWIN_TALKOBJ_OPEN( msg_c01_leader1_01 )
-		_BALLOONWIN_CLOSE()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_c01_leader1_01 )
+	_BALLOONWIN_CLOSE()
 		
-		_OBJ_ANIME( C01_LEADER_01, anm_leader_saru )
-		_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( C01_LEADER_01, anm_leader_saru )
+	_OBJ_ANIME_WAIT()
+	
+	//========================================//
+	
+	//ジムリーダーバニッシュフラグセット
+	_FLAG_SET( FV_C01_LEADER1_01 )
 		
-		_FLAG_SET( FV_C01_LEADER1_01 )
-		
-		_OBJ_DEL( C01_LEADER_01 )
+	//ジムリーダーオブジェ消去
+	_OBJ_DEL( C01_LEADER_01 )
+	
+	//========================================//
+
+	//階段ＳＥ
+	_SE_PLAY(SEQ_SE_KAIDAN)
+	_SE_WAIT()
 
 EVENT_END
 

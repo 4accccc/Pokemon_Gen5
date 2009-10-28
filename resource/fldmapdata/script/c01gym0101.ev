@@ -33,27 +33,6 @@ _EVENT_DATA		ev_pos_c01gym0101_button_mizu_02
 _EVENT_DATA		ev_pos_c01gym0101_button_kusa_03
 _EVENT_DATA		ev_pos_c01gym0101_button_honoo_03
 _EVENT_DATA		ev_pos_c01gym0101_button_mizu_03
-_EVENT_DATA		ev_c01gym0101_curtain_01a
-_EVENT_DATA		ev_c01gym0101_curtain_01b
-_EVENT_DATA		ev_c01gym0101_curtain_01c
-_EVENT_DATA		ev_c01gym0101_curtain_01d
-_EVENT_DATA		ev_c01gym0101_curtain_01e
-_EVENT_DATA		ev_c01gym0101_curtain_01f
-_EVENT_DATA		ev_c01gym0101_curtain_01g
-_EVENT_DATA		ev_c01gym0101_curtain_02a
-_EVENT_DATA		ev_c01gym0101_curtain_02b
-_EVENT_DATA		ev_c01gym0101_curtain_02c
-_EVENT_DATA		ev_c01gym0101_curtain_02d
-_EVENT_DATA		ev_c01gym0101_curtain_02e
-_EVENT_DATA		ev_c01gym0101_curtain_02f
-_EVENT_DATA		ev_c01gym0101_curtain_02g
-_EVENT_DATA		ev_c01gym0101_curtain_03a
-_EVENT_DATA		ev_c01gym0101_curtain_03b
-_EVENT_DATA		ev_c01gym0101_curtain_03c
-_EVENT_DATA		ev_c01gym0101_curtain_03d
-_EVENT_DATA		ev_c01gym0101_curtain_03e
-_EVENT_DATA		ev_c01gym0101_curtain_03f
-_EVENT_DATA		ev_c01gym0101_curtain_03g
 _EVENT_DATA		ev_pos_c01gym0101_button_kusa1_off
 _EVENT_DATA		ev_pos_c01gym0101_button_kusa2_off
 _EVENT_DATA		ev_pos_c01gym0101_button_kusa3_off
@@ -64,6 +43,7 @@ _EVENT_DATA		ev_pos_c01gym0101_button_mizu1_off
 _EVENT_DATA		ev_pos_c01gym0101_button_mizu2_off
 _EVENT_DATA		ev_pos_c01gym0101_button_mizu3_off
 _EVENT_DATA		ev_zone_c01gym0101
+_EVENT_DATA		ev_init_c01gym0101
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -78,8 +58,69 @@ _EVENT_DATA_END
 //																	//
 //------------------------------------------------------------------//
 
-//【杉中】ポッド、コーン、～～のfield_init_labelがない…！
+/************************************************************/
+/*					FIELD_INIT_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_c01gym0101
 
+	//分岐：ジムバッジ取得しているか、いないか
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
+	
+	//ジムバッジを取得していない場合
+	IF $SCWK_TEMP0 == 0 THEN
+
+		//ジムリーダー演出イベント後ならば
+		IF $WK_SCENE_C01GYM0101 == 1 THEN
+
+			//くさタイプ選択の場合
+			IF $WK_SYS_FIRST_POKE_NO  == MONSNO_HUSIGIDANE THEN
+		
+				//コーンの位置を変更する
+				_OBJ_POS_CHANGE( C01GYM0101_LEADER1_01, 11, 1, 3, DIR_DOWN )
+				//ポッドの位置を変更する
+				_OBJ_POS_CHANGE( C01GYM0101_LEADER1_02, 12, 1, 4, DIR_DOWN )
+				//デントの位置を変更する
+				_OBJ_POS_CHANGE( C01GYM0101_LEADER1_03, 13, 1, 3, DIR_DOWN )
+
+			//ほのおタイプ選択の場合
+			ELSIF $WK_SYS_FIRST_POKE_NO  == MONSNO_HITOKAGE THEN
+
+				//コーンの位置を変更する
+				_OBJ_POS_CHANGE( C01GYM0101_LEADER1_01, 12, 1, 4, DIR_DOWN )
+				//ポッドの位置を変更する
+				_OBJ_POS_CHANGE( C01GYM0101_LEADER1_02, 11, 1, 3, DIR_DOWN )
+				//デントの位置を変更する
+				_OBJ_POS_CHANGE( C01GYM0101_LEADER1_03, 13, 1, 3, DIR_DOWN )
+
+			//みずタイプ選択の場合
+			ELSE
+		
+				//コーンの位置を変更する
+				_OBJ_POS_CHANGE( C01GYM0101_LEADER1_01, 13, 1, 3, DIR_DOWN )
+				//ポッドの位置を変更する
+				_OBJ_POS_CHANGE( C01GYM0101_LEADER1_02, 11, 1, 3, DIR_DOWN )
+				//デントの位置を変更する
+				_OBJ_POS_CHANGE( C01GYM0101_LEADER1_03, 12, 1, 4, DIR_DOWN )
+
+			ENDIF
+
+		ELSE
+		
+		ENDIF
+
+	//ジムバッジを取得している場合
+	ELSE
+	
+		//コーンの位置を変更する
+		_OBJ_POS_CHANGE( C01GYM0101_LEADER1_01, 12, 1, 4, DIR_DOWN )
+		//ポッドの位置を変更する
+		_OBJ_POS_CHANGE( C01GYM0101_LEADER1_02, 11, 1, 3, DIR_DOWN )
+		//デントの位置を変更する
+		_OBJ_POS_CHANGE( C01GYM0101_LEADER1_03, 13, 1, 3, DIR_DOWN )
+	
+	ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*               フィールド初期化スクリプト                   */
@@ -99,7 +140,7 @@ EVENT_START		ev_c01gym0101_sunglasses_01
 	//ジムバッジを取得していない場合
 	IF $SCWK_TEMP0 == 0 THEN
 	
-	//【仮】ジムバッジフラグが０の場合
+	//ジムバッジフラグが０の場合
 		_EASY_TALK_ITEM_EVENT(ITEM_OISIIMIZU, 1, FE_C01GYM_ITEM, msg_c01gym0101_glasses_01, msg_c01gym0101_glasses_02, msg_c01gym0101_glasses_02 )	
 	
 	//ジムバッジフラグがそれ以外の場合
@@ -131,7 +172,7 @@ EVENT_START		ev_bg_c01gym0101_pokezou
 	//ジムバッジを取得している場合
 	ELSE
 	
-		//【仮】分岐処理・C02到着していないなら　到着フラグが動いていない！
+		//分岐処理・C02到着していないなら
 		IF FLAG_OFF( SYS_FLAG_ARRIVE_C02 ) THEN
 			_PLAYER_NAME( 0 )
 			_TALKMSG( msg_c01gym0101_statue_02 )
@@ -156,18 +197,18 @@ EVENT_END
 EVENT_START	ev_pos_c01gym0101_leader_battle
 	
 	//ローカル変数を定義
-	DEFINE_LOCAL	HERO_X
-	DEFINE_LOCAL	HERO_Z
+	DEFINE_LOCAL	LWK_HERO_X
+	DEFINE_LOCAL	LWK_HERO_Z
 	
 	//自機の位置取得
-	_PLAYER_POS_GET( HERO_X,HERO_Z )
+	_PLAYER_POS_GET( LWK_HERO_X,LWK_HERO_Z )
 	
-	IF $HERO_X == 11 THEN
+	IF $LWK_HERO_X == 11 THEN
 	//X軸が11グリッドの場合
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tikaduku_11 )
 		_OBJ_ANIME_WAIT()
 		
-	ELSIF $HERO_X == 12 THEN
+	ELSIF $LWK_HERO_X == 12 THEN
 	//X軸が12グリッドの場合
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tikaduku_12 )
 		_OBJ_ANIME_WAIT()
@@ -451,7 +492,7 @@ EVENT_START		ev_c01gym0101_leader1_01
 
 			//【杉中】マジックナンバー消滅キャンペーン SCR_BATTLE_RESULT_LOSE を使ってください。
 			//これ以降のトレーナー戦呼び出しにおいても同様です。
-			IF $SCWK_ANSWER == 0 THEN
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_LOSE THEN
 				_TRAINER_LOSE()//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 			ENDIF
 		
@@ -527,9 +568,7 @@ EVENT_START		ev_c01gym0101_leader1_02
 	
 	//分岐：ジムバッジ取得しているか、いないか
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
-	
-	//【杉中】↓何が仮か分からーん。もしかしたら仮じゃない？
-	//【仮】ジムバッジを取得していない場合
+	//ジムバッジを取得していない場合
 	IF $SCWK_TEMP0 == 0 THEN
 		//分岐：草タイプを選択しているか、いないか
 
@@ -544,7 +583,7 @@ EVENT_START		ev_c01gym0101_leader1_02
 			_TRAINER_BTL_SET( TRID_LEADER1A_01, 0 )
 			//敗戦チェック
 			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-			IF $SCWK_ANSWER == 0 THEN
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_LOSE THEN
 			_TRAINER_LOSE()//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 			ENDIF
 
@@ -665,7 +704,7 @@ EVENT_START		ev_c01gym0101_leader1_03
 			_TRAINER_BTL_SET( TRID_LEADER1B_01, 0 )
 			//敗戦チェック
 			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-			IF $SCWK_ANSWER == 0 THEN
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_LOSE THEN
 			_TRAINER_LOSE()//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 			ENDIF
 
@@ -1153,98 +1192,6 @@ EVENT_END
 
 
 //【杉中】全部消しちゃってください
-/**************************************************************/
-/*     炎カーテン	１番目	Ａ～Ｇ						      */
-/**************************************************************/
-EVENT_START	ev_c01gym0101_curtain_01a
-
-EVENT_END
-
-EVENT_START	ev_c01gym0101_curtain_01b
-
-EVENT_END
-
-EVENT_START	ev_c01gym0101_curtain_01c
-
-EVENT_END
-
-EVENT_START	ev_c01gym0101_curtain_01d
-
-EVENT_END
-
-EVENT_START	ev_c01gym0101_curtain_01e
-
-EVENT_END
-
-EVENT_START	ev_c01gym0101_curtain_01f
-
-EVENT_END
-
-EVENT_START	ev_c01gym0101_curtain_01g
-
-EVENT_END
-
-/**************************************************************/
-/*     水カーテン	２番目	Ａ～Ｇ						      */
-/**************************************************************/
-EVENT_START	ev_c01gym0101_curtain_02a
-
-EVENT_END
-
-EVENT_START	ev_c01gym0101_curtain_02b
-
-EVENT_END
-
-EVENT_START	ev_c01gym0101_curtain_02c
-
-EVENT_END
-
-EVENT_START	ev_c01gym0101_curtain_02d
-
-EVENT_END
-
-EVENT_START	ev_c01gym0101_curtain_02e
-
-EVENT_END
-
-EVENT_START	ev_c01gym0101_curtain_02f
-
-EVENT_END
-
-EVENT_START	ev_c01gym0101_curtain_02g
-
-EVENT_END
-
-/**************************************************************/
-/*     草カーテン	３番目	Ａ～Ｇ						      */
-/**************************************************************/
-EVENT_START	ev_c01gym0101_curtain_03a
-
-EVENT_END
-
-EVENT_START	ev_c01gym0101_curtain_03b
-
-EVENT_END
-
-EVENT_START	ev_c01gym0101_curtain_03c
-
-EVENT_END
-
-EVENT_START	ev_c01gym0101_curtain_03d
-
-EVENT_END
-
-EVENT_START	ev_c01gym0101_curtain_03e
-
-EVENT_END
-
-EVENT_START	ev_c01gym0101_curtain_03f
-
-EVENT_END
-
-EVENT_START	ev_c01gym0101_curtain_03g
-
-EVENT_END
 
 /**************************************************************/
 /*     草ボタン１　ハズレ　スイッチオフ　ＰＯＳ発動		      */
