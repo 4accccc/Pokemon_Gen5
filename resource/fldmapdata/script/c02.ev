@@ -609,7 +609,7 @@ _ANIME_LABEL	anm_leader03_come
 //アーティ: D02方向へ向かう                          
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader03_walk
-	_ANIME_DATA	AC_WALK_L_8F,6,1
+	_ANIME_DATA	AC_WALK_L_8F,8
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------

@@ -83,18 +83,18 @@ INIT_EVENT_START	ev_init_c02gym0201
 	//ストッパーとなっているトレーナーの位置を、本を読んだ段階に合わせて調整
 	
 	SWITCH $WK_SCENE_C02GYM0201
-    CASE 3,4 THEN
+    CASE 5,6 THEN
     	//なぞなぞ本棚前のトレーナーの位置
     	_OBJ_POS_CHANGE( C02GYM0201_ASSITANTM2_01, 2, 0, 5, DIR_RIGHT )
     	
- 	CASE 5 THEN
+ 	CASE 7 THEN
  		//なぞなぞ本棚前のトレーナーの位置
     	_OBJ_POS_CHANGE( C02GYM0201_ASSITANTM2_01, 2, 0, 5 , DIR_RIGHT)
     	
     	//仕掛け本棚前のトレーナーの位置
     	_OBJ_POS_CHANGE( C02GYM0201_ASSITANTM1_01, 17, 0, 11 , DIR_LEFT)
 
-	CASE 6 THEN	
+	CASE 8 THEN	
     	_OBJ_POS_CHANGE( C02GYM0201_ASSITANTM2_01, 2, 0, 5 , DIR_RIGHT)
     	
     	//仕掛け本棚前のトレーナーの位置
@@ -117,7 +117,6 @@ INIT_EVENT_START	ev_init_c02gym0201
     	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01N, 17, 0, 8 , DIR_UP)
     	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01O, 17, 0, 9 , DIR_UP)
     	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01P, 17, 0, 10 , DIR_UP)
-
 
     ENDSWITCH
 
@@ -217,7 +216,6 @@ EVENT_START		ev_pos_c02gym0201_sunglasses_01
 	_FLAG_SET( FE_C02GYM_ITEM )
 
 	//========================================//
-    
     
 EVENT_END
 
@@ -332,7 +330,6 @@ EVENT_END
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_statue_01
 	
-	_TALKWIN_OPEN()
 		
 	//ジムバッジを持っているのかを判定
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_02 )
@@ -344,21 +341,24 @@ EVENT_START		 ev_bg_c02gym0201_statue_01
 	
 	//ジムバッジを取得している場合
 	ELSE
+		_TALK_OBJ_START()
+		
 		_PLAYER_NAME( 0 )
-		_EASY_MSG( msg_c02gym0101_statue_02 )
+		
+		_TALKMSG   ( msg_c02gym0101_statue_02)
+    	
+    	_LAST_KEYWAIT()
+    	_BALLOONWIN_CLOSE() 
 		
 	ENDIF
 	
-	_LAST_KEYWAIT()
-	_TALKWIN_CLOSE()
-	
 EVENT_END
+
 /**************************************************************/
 /*     ポケモン像2               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		ev_bg_c02gym0201_statue_02
 
-	_TALKWIN_OPEN()
 	
 	//ジムバッジを持っているのかを判定
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_02 )
@@ -371,12 +371,16 @@ EVENT_START		ev_bg_c02gym0201_statue_02
 	//ジムバッジを取得している場合
 	ELSE
 		
-		_EASY_MSG( msg_c02gym0101_statue_02 )
-	
-	ENDIF
+		_TALK_OBJ_START()
 		
-	_LAST_KEYWAIT()
-	_TALKWIN_CLOSE()
+		_PLAYER_NAME( 0 )
+		
+		_TALKMSG   ( msg_c02gym0101_statue_02)
+    	
+    	_LAST_KEYWAIT()
+    	_BALLOONWIN_CLOSE()
+    	
+	ENDIF
 	
 EVENT_END
 
@@ -388,15 +392,18 @@ EVENT_START		ev_c02gym0201_assitantm1_01
 	
 	//読んだ本の状態によって、行動が分岐
 	SWITCH    $WK_SCENE_C02GYM0201
-	CASE 0,1,2,3 THEN		
+	CASE 0,1,2,3,4,5 THEN		
 		
 		//振り向きなし
 		_TALK_START_TURN_NOT()
 		
 		//前段階の本（カテゴリー3を読んでいない場合）
-		_EASY_MSG( msg_c02gym0101_girl3_01 )
+		_TALKMSG   ( msg_c02gym0101_girl3_01)
+		
+    	_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
     	
-	CASE 4 THEN	
+	CASE 6 THEN	
 		
 		_TALK_OBJ_START()
 		
@@ -443,9 +450,9 @@ EVENT_START		ev_c02gym0201_assitantm1_01
    		 }
    		 
     	//対戦後のメッセージにする為にワークを操作
-    	$WK_SCENE_C02GYM0201 = 5
+    	$WK_SCENE_C02GYM0201 = 7
     	
-	CASE 5,6 THEN	
+	CASE 7,8 THEN	
 		//対戦が終了した場合
 		_TALK_OBJ_START()
 		_BALLOONWIN_TALKOBJ_OPEN(msg_c02gym0101_girl3_03)
@@ -486,17 +493,18 @@ EVENT_START		ev_c02gym0201_assitantm2_01
 	
 	//読んだ本の状態によって、行動が分岐
 	SWITCH    $WK_SCENE_C02GYM0201
-	CASE 0,1 THEN
+	CASE 0,1,2,3 THEN
 	//前段階の本を読んでいない場合、本に夢中で本棚からどいてくれない		
 		
 		//振り向きなし
 		_TALK_START_TURN_NOT()
 		//前段階の本（カテゴリー3を読んでいない場合）
-		
-		_EASY_MSG( msg_c02gym0101_assitantw_01 )
-		
+		_TALKMSG   ( msg_c02gym0101_assitantw_01)
     	
-	CASE 2 THEN	
+    	_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
+    	
+	CASE 4 THEN	
 	//前段階の本を読んでいる場合、対戦出来る。対戦後にどいてくれる
 		
 		_TALK_OBJ_START()
@@ -543,9 +551,9 @@ EVENT_START		ev_c02gym0201_assitantm2_01
    		 }
    		 
     	//ワークの状態を、対戦後のメッセージを表示する為に変更
-    	$WK_SCENE_C02GYM0201 = 3
+    	$WK_SCENE_C02GYM0201 = 5
     	
-	CASE 3,4,5,6 THEN	
+	CASE 5,6,7,8 THEN	
 	//対戦が終了した場合は、ヒントメッセージを喋る
 		
 		_TALK_OBJ_START()
@@ -581,8 +589,6 @@ _ANIME_LABEL	anm_trainer_move_b
 /**************************************************************/
 /*     本棚ジャンル1               　　　　　　　　　　　　　*/
 /**************************************************************/
-//【バグ】本棚話しかけ時に、止まってしまう場合あり。
-
 EVENT_START		 ev_bg_c02gym0201_category_01
 	
 	_TALKWIN_OPEN()
@@ -597,29 +603,41 @@ EVENT_START		 ev_bg_c02gym0201_category_01
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT1 )
 	
 	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_01, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_02, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_03, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
-	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
 	
 	//三択のウィンドウを表示！　
 	_BMPMENU_START()
 	
+	_TALKWIN_CLOSE()
+	
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT1
-	CASE 0 THEN		
+    CASE 0 THEN	
+    	
+    	IF $WK_SCENE_C02GYM0201  == 1 THEN 
+		
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_switch_01)
+			_LAST_KEYWAIT()
+			_TALKWIN_CLOSE()
+			
+			$WK_SCENE_C02GYM0201 = 2
+		
+		ELSE
+			
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_switch_02)
+			_LAST_KEYWAIT()
+    		_TALKWIN_CLOSE()
+    		
+		ENDIF
+		
+		_TALKWIN_OPEN()		
 		_TALKMSG   ( msg_c02gym0101_book_01)
-	CASE 1 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_02)
-	CASE 2 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_03)
-	CASE 3THEN	
+		_LAST_KEYWAIT()
+		_TALKWIN_CLOSE()
 		
 	ENDSWITCH
-    
-    _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
-    _TALKWIN_CLOSE()
     }
     
 EVENT_END
@@ -636,37 +654,48 @@ EVENT_START		 ev_bg_c02gym0201_category_02
 	{
 	DEFINE_LOCAL	BOOK_SELECT2
 	
-	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+		//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT2 )
 	
 	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_01, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_02, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_03, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
 	
-	
-	//三択のウィンドウを表示！　
+	//三択のウィンドウを表示！
 	_BMPMENU_START()
+	
+	_TALKWIN_CLOSE()
 	
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT2
-	CASE 0 THEN		
+	 CASE 0 THEN
+	 
+	 	IF $WK_SCENE_C02GYM0201  == 1 THEN 
+		
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_switch_01)
+			_LAST_KEYWAIT()
+			_TALKWIN_CLOSE()
+			
+			$WK_SCENE_C02GYM0201 = 2
+		
+		ELSE
+			
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_switch_02)
+			_LAST_KEYWAIT()
+    		_TALKWIN_CLOSE()
+		
+		ENDIF
+		
+	 	_TALKWIN_OPEN()		
 		_TALKMSG   ( msg_c02gym0101_book_01)
-	CASE 1 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_02)
-	CASE 2 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_03)
-	CASE 3THEN	
+		_LAST_KEYWAIT()
+		_TALKWIN_CLOSE()
 		
 	ENDSWITCH
-	
-	 _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
-    _TALKWIN_CLOSE()
 	}
 	
 EVENT_END
-
 
 /**************************************************************/
 /*     本棚ジャンル3               　　　　　　　　　　　　　*/
@@ -681,41 +710,43 @@ EVENT_START		 ev_bg_c02gym0201_category_03
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT3 )
 	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_04, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_05, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_06, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
-	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_02, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
 	
 	//三択のウィンドウを表示！　
 	_BMPMENU_START()
 	
+	_TALKWIN_CLOSE()
+	
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT3
 	CASE 0 THEN		
-		_TALKMSG   ( msg_c02gym0101_book_04)
-	CASE 1 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_05)
-	CASE 2 THEN	
-	
 		
-		//2回、仕掛け前扉のトレーナーが動かないようにフラグ操作
-		IF $WK_SCENE_C02GYM0201 < 4 THEN
+		IF $WK_SCENE_C02GYM0201  == 5 THEN 
 		
-			//この本を読むと、仕掛け扉前のストッパーが動くフラグ
-			$WK_SCENE_C02GYM0201 = 4
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_switch_01)
+			_LAST_KEYWAIT()
+			_TALKWIN_CLOSE()
+			
+			$WK_SCENE_C02GYM0201 = 6
+		
+		ELSE
+			
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_switch_02)
+			_LAST_KEYWAIT()
+    		_TALKWIN_CLOSE()
 		
 		ENDIF
 		
-		_TALKMSG   ( msg_c02gym0101_book_06)
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_book_02)
+		_LAST_KEYWAIT()
+		_TALKWIN_CLOSE()
 		
-	CASE 3THEN	
-		
+	CASE 3 THEN	
 	ENDSWITCH
-	
-	 _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
-    _TALKWIN_CLOSE()
 
 EVENT_END
 
@@ -729,34 +760,47 @@ EVENT_START		 ev_bg_c02gym0201_category_04
 	
 	DEFINE_LOCAL	BOOK_SELECT4
 	
-	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT4 )
 	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_04, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_05, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_06, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
-	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_02, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
 	
 	//三択のウィンドウを表示！　
 	_BMPMENU_START()
 	
+	_TALKWIN_CLOSE()
+	
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT4
 	CASE 0 THEN		
-		_TALKMSG   ( msg_c02gym0101_book_04)
-	CASE 1 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_05)
-	CASE 2 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_06)
-	CASE 3THEN	
+	
+		IF $WK_SCENE_C02GYM0201  == 5 THEN 
 		
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_switch_01)
+			_LAST_KEYWAIT()
+			_TALKWIN_CLOSE()
+			
+			$WK_SCENE_C02GYM0201 = 6
+			
+		ELSE
+			
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_switch_02)
+			_LAST_KEYWAIT()
+    		_TALKWIN_CLOSE()
+    		
+		
+		ENDIF
+		
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_book_02)
+		_LAST_KEYWAIT()
+		_TALKWIN_CLOSE()
+		
+	CASE 3 THEN	
 	ENDSWITCH
 	
-	 _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
-    _TALKWIN_CLOSE()
-
 EVENT_END
 
 /**************************************************************/
@@ -770,33 +814,46 @@ EVENT_START		 ev_bg_c02gym0201_category_05
 	{
 	DEFINE_LOCAL	BOOK_SELECT5
 	
-	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT5 )
 	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_07, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_08, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_09, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
-	
-	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_03, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
+	    
 	//三択のウィンドウを表示！　
 	_BMPMENU_START()
+
+	_TALKWIN_CLOSE()
 	
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT5
 	CASE 0 THEN		
-		_TALKMSG   ( msg_c02gym0101_book_07)
-	CASE 1 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_08)
-	CASE 2 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_09)
+		
+		IF $WK_SCENE_C02GYM0201  == 2 THEN 
+		
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_switch_01)
+			_LAST_KEYWAIT()
+			_TALKWIN_CLOSE()
+			
+			$WK_SCENE_C02GYM0201 = 3
+		
+		ELSE
+			
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_switch_02)
+			_LAST_KEYWAIT()
+    		_TALKWIN_CLOSE()
+		
+		ENDIF
+		
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_book_03)
+		_LAST_KEYWAIT()
+		_TALKWIN_CLOSE()
+		
 	CASE 3THEN	
 		
 	ENDSWITCH
-	
-	 _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
-    _TALKWIN_CLOSE()
 	}
 	
 EVENT_END
@@ -812,33 +869,48 @@ EVENT_START		 ev_bg_c02gym0201_category_06
 	{
 	DEFINE_LOCAL	BOOK_SELECT6
 	
-	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT6 )
 	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_07, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_08, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_09, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
-	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_03, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
+
 	
 	//三択のウィンドウを表示！　
 	_BMPMENU_START()
 	
+	_TALKWIN_CLOSE()
+	
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT6
-	CASE 0 THEN		
-		_TALKMSG   ( msg_c02gym0101_book_07)
-	CASE 1 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_08)
-	CASE 2 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_09)
+	CASE 0 THEN	
+		
+		IF $WK_SCENE_C02GYM0201  == 2 THEN 
+		
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_switch_01)
+			_LAST_KEYWAIT()
+			_TALKWIN_CLOSE()
+			
+			$WK_SCENE_C02GYM0201 = 3
+		
+		ELSE
+			
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_switch_02)
+			_LAST_KEYWAIT()
+    		_TALKWIN_CLOSE()
+		
+		ENDIF
+		
+		_TALKWIN_OPEN()	
+		_TALKMSG   ( msg_c02gym0101_book_03)
+		_LAST_KEYWAIT()
+		_TALKWIN_CLOSE()
+		
 	CASE 3THEN	
 		
 	ENDSWITCH
 	
-	 _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
-    _TALKWIN_CLOSE()
     }
 
 EVENT_END
@@ -855,33 +927,34 @@ EVENT_START		 ev_bg_c02gym0201_category_07
 	{
 	DEFINE_LOCAL	BOOK_SELECT7
 	
-	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT7 )
 	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_10, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_11, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_12, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
-	
-	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_04, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
+	 
 	//三択のウィンドウを表示！　
 	_BMPMENU_START()
 	
+	_TALKWIN_CLOSE()
+	
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT7
-	CASE 0 THEN		
-		_TALKMSG   ( msg_c02gym0101_book_10)
-	CASE 1 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_11)
-	CASE 2 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_12)
+	CASE 0 THEN	
+		
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_switch_02)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
+    		
+		_TALKWIN_OPEN()	
+		_TALKMSG   ( msg_c02gym0101_book_04)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
+    	
 	CASE 3THEN	
 		
 	ENDSWITCH
 	
-	 _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
-    _TALKWIN_CLOSE()
     }
 
 EVENT_END
@@ -897,33 +970,32 @@ EVENT_START		 ev_bg_c02gym0201_category_08
 	{
 	DEFINE_LOCAL	BOOK_SELECT8
 	
-	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT8 )
 	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_10, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_11, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_12, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
-	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_04, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
 	
 	//三択のウィンドウを表示！　
 	_BMPMENU_START()
-	
+
+	 _TALKWIN_CLOSE()
+	 
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT8
-	CASE 0 THEN		
-		_TALKMSG   ( msg_c02gym0101_book_10)
-	CASE 1 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_11)
-	CASE 2 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_12)
+	CASE 0 THEN	
+		
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_switch_02)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
+    	
+		_TALKWIN_OPEN()	
+		_TALKMSG   ( msg_c02gym0101_book_04)
+		_LAST_KEYWAIT()
+		_TALKWIN_CLOSE()
 	CASE 3THEN	
-	
+		
 	ENDSWITCH
-	
-	 _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
-    _TALKWIN_CLOSE()
     }
 
 EVENT_END
@@ -939,33 +1011,32 @@ EVENT_START		 ev_bg_c02gym0201_category_09
 	{
 	DEFINE_LOCAL	BOOK_SELECT9
 	
-	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT9 )
 	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_13, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_14, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
-	
-	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_05, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
+		
 	//三択のウィンドウを表示！　
 	_BMPMENU_START()
+	
+	_TALKWIN_CLOSE()
 	
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT9
 	CASE 0 THEN		
-		_TALKMSG   ( msg_c02gym0101_book_13)
-	CASE 1 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_14)
-	CASE 2 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_15)
-	CASE 3THEN	
 		
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_switch_02)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
+		
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_book_05)
+		_LAST_KEYWAIT()
+		_TALKWIN_CLOSE()
+		
+	CASE 3THEN	
 	ENDSWITCH
-	
-	 _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
-    _TALKWIN_CLOSE()
     }
 
 EVENT_END
@@ -981,33 +1052,34 @@ EVENT_START		 ev_bg_c02gym0201_category_10
 	{
 	DEFINE_LOCAL	BOOK_SELECT10
 	
-	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT10 )
 	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_13, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_14, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_05, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
 	
 	
 	//三択のウィンドウを表示！　
 	_BMPMENU_START()
 	
+	_TALKWIN_CLOSE()
+	
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT10
 	CASE 0 THEN		
-		_TALKMSG   ( msg_c02gym0101_book_13)
-	CASE 1 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_14)
-	CASE 2 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_15)
+		
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_switch_02)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
+		
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_book_05)
+		_LAST_KEYWAIT()
+		_TALKWIN_CLOSE()
+		
 	CASE 3THEN	
 		
 	ENDSWITCH
-	
-	 _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
-    _TALKWIN_CLOSE()
     }
 
 EVENT_END
@@ -1023,33 +1095,32 @@ EVENT_START		 ev_bg_c02gym0201_category_11
 	{
 	DEFINE_LOCAL	BOOK_SELECT11
 	
-	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT11 )
 	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_16, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_17, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_18, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
-	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_06, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
 	
 	//三択のウィンドウを表示！　
 	_BMPMENU_START()
 	
+	_TALKWIN_CLOSE()
+	
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT11
-	CASE 0 THEN		
-		_TALKMSG   ( msg_c02gym0101_book_16)
-	CASE 1 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_17)
-	CASE 2 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_18)
+	CASE 0 THEN	
+	
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_switch_02)
+		_LAST_KEYWAIT()
+   		_TALKWIN_CLOSE()
+   		
+		_TALKWIN_OPEN()	
+		_TALKMSG   ( msg_c02gym0101_book_06)
+		_LAST_KEYWAIT()
+		_TALKWIN_CLOSE()
 	CASE 3THEN	
 		
 	ENDSWITCH
-	
-	 _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
-    _TALKWIN_CLOSE()
     }
 
 EVENT_END
@@ -1065,26 +1136,30 @@ EVENT_START		 ev_bg_c02gym0201_category_12
 	{
 	DEFINE_LOCAL	BOOK_SELECT12
 	
-	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT12 )
 	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_16, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_17, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_18, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
-	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_06, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
 	
 	//三択のウィンドウを表示！　
 	_BMPMENU_START()
+
+	_TALKWIN_CLOSE()
 	
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT12
 	CASE 0 THEN		
-		_TALKMSG   ( msg_c02gym0101_book_16)
-	CASE 1 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_17)
-	CASE 2 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_18)
+		
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_switch_02)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
+    	
+		_TALKWIN_OPEN()	
+		_TALKMSG   ( msg_c02gym0101_book_06)
+		_LAST_KEYWAIT()
+		_TALKWIN_CLOSE()
+		
 	CASE 3THEN	
 		
 	ENDSWITCH
@@ -1106,35 +1181,32 @@ EVENT_START		 ev_bg_c02gym0201_category_13
 	
 	{
 	DEFINE_LOCAL	BOOK_SELECT13
-	
-	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT13 )
 	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_19, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_20, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_21, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
-	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_07, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
 	
 	//三択のウィンドウを表示！　
 	_BMPMENU_START()
 	
+	_TALKWIN_CLOSE()
+	
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT13
-	CASE 0 THEN		
-		_TALKMSG   ( msg_c02gym0101_book_19)
-	CASE 1 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_20)
+	CASE 0 THEN
+	
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_switch_02)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
 		
-	CASE 2 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_21)
+		_TALKWIN_OPEN()		
+		_TALKMSG   ( msg_c02gym0101_book_07)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
 	CASE 3THEN	
 		
 	ENDSWITCH
-	
-	 _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
-    _TALKWIN_CLOSE()
     }
 
 EVENT_END
@@ -1144,40 +1216,42 @@ EVENT_END
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_14
 	
-	_TALKWIN_OPEN()
+	
 	_TALKMSG   ( msg_c02gym0101_category_04)
 	
 	{
 	DEFINE_LOCAL	BOOK_SELECT14
 	
-	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT14 )
 	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_19, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_20, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_21, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_07, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
 	
 	
 	//三択のウィンドウを表示！　
 	_BMPMENU_START()
 	
+	 _TALKWIN_CLOSE()
+	 
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT14
-	CASE 0 THEN		
-		_TALKMSG   ( msg_c02gym0101_book_19)
-	CASE 1 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_20)
+	CASE 0 THEN	
 		
-	CASE 2 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_21)
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_switch_02)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
+		
+		_TALKWIN_OPEN()	
+		_TALKMSG   ( msg_c02gym0101_book_07)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
 	CASE 3THEN	
 		
 	ENDSWITCH
 	
-	 _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
-    _TALKWIN_CLOSE()
+	
+   
     }
 	
 EVENT_END
@@ -1194,37 +1268,33 @@ EVENT_START		 ev_bg_c02gym0201_category_15
 	{
 	DEFINE_LOCAL	BOOK_SELECT15
 	
-	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT15 )
 	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_22, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_23, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_24, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_08, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
 	
+	_TALKWIN_CLOSE()
 	
 	//三択のウィンドウを表示！　
 	_BMPMENU_START()
 	
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT15
-	CASE 0 THEN		
-		_TALKMSG   ( msg_c02gym0101_book_22)
-	CASE 1 THEN	
-	
-		_TALKMSG   ( msg_c02gym0101_book_23)
+	CASE 0 THEN
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_switch_02)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
 		
-	CASE 2 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_24)
+		_TALKWIN_OPEN()	
+		_TALKMSG   ( msg_c02gym0101_book_08)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
+    	
 	CASE 3THEN	
 		
 	ENDSWITCH
-	
-	 _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
-    _TALKWIN_CLOSE()
     }
-	
 
 EVENT_END
 
@@ -1239,33 +1309,33 @@ EVENT_START		 ev_bg_c02gym0201_category_16
 	{
 	DEFINE_LOCAL	BOOK_SELECT16
 	
-	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT16 )
 	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_22, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_23, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_24, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_08, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
 	
+	_TALKWIN_CLOSE()
 	
 	//三択のウィンドウを表示！　
 	_BMPMENU_START()
 	
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT16
-	CASE 0 THEN		
-		_TALKMSG   ( msg_c02gym0101_book_22)
-	CASE 1 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_23)
-	CASE 2 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_24)
+	CASE 0 THEN	
+	
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_switch_02)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
+		
+		_TALKWIN_OPEN()	
+		_TALKMSG   ( msg_c02gym0101_book_08)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
+    	
 	CASE 3THEN	
 		
 	ENDSWITCH
-	
-	 _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
-    _TALKWIN_CLOSE()
     }
 
 EVENT_END
@@ -1281,33 +1351,51 @@ EVENT_START		 ev_c02gym0201_book_01d
 	{
 	DEFINE_LOCAL	BOOK_SELECT17
 	
-	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT17 )
 	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_25, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_26, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_27, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_09, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
 	
 	
+	 
+	   
 	//三択のウィンドウを表示！　
 	_BMPMENU_START()
+	
+	_TALKWIN_CLOSE()
 	
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT17
 	CASE 0 THEN		
-		_TALKMSG   ( msg_c02gym0101_book_25)
-	CASE 1 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_26)
-	CASE 2 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_27)
+		
+		IF $WK_SCENE_C02GYM0201  == 3 THEN 
+		
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_switch_01)
+			
+			_LAST_KEYWAIT()
+			_TALKWIN_CLOSE()
+			
+			$WK_SCENE_C02GYM0201 = 4
+		
+		ELSE
+			
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_switch_02)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
+		
+		ENDIF
+		
+		_TALKWIN_OPEN()	
+		_TALKMSG   ( msg_c02gym0101_book_09)
+		_LAST_KEYWAIT()
+		_TALKWIN_CLOSE()
+		
 	CASE 3THEN	
 		
 	ENDSWITCH
 	
-	 _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
-    _TALKWIN_CLOSE()
     }
 
 EVENT_END
@@ -1327,43 +1415,44 @@ EVENT_START		 ev_c02gym0201_book_01h
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT18 )
 	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_25, 0 )	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_26, 1 )	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_27, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
-	
-	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_09, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
+	 
 	//三択のウィンドウを表示！　
 	_BMPMENU_START()
 	
+	_TALKWIN_CLOSE()
+	
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT18
-	CASE 0 THEN		
-		
-		//次の本棚のトレーナが動くと、もう動かないようにする
-		IF $WK_SCENE_C02GYM0201 < 3 THEN
-		
-			//正解の本を読と、なぞなぞのある本棚前のストッパーを動かすフラグが立つ
-			$WK_SCENE_C02GYM0201 = 2
+	CASE 0 THEN	
+	
+		IF $WK_SCENE_C02GYM0201  == 3 THEN 
 			
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_switch_01)
+			_LAST_KEYWAIT()
+			_TALKWIN_CLOSE()
+				
+			$WK_SCENE_C02GYM0201 = 4
+		
+		ELSE
+			
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_switch_02)
+			_LAST_KEYWAIT()
+    		_TALKWIN_CLOSE()
+		
 		ENDIF
 		
-		_TALKMSG   ( msg_c02gym0101_book_25)
-		
-		
-	CASE 1 THEN	
-		
-		_TALKMSG   ( msg_c02gym0101_book_26)
-		
-	CASE 2 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_27)
+		_TALKWIN_OPEN()	
+		_TALKMSG   ( msg_c02gym0101_book_09)
+		_LAST_KEYWAIT()
+		_TALKWIN_CLOSE()
+	
 	CASE 3THEN	
 		
 	ENDSWITCH
-	
-	 _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
-    _TALKWIN_CLOSE()
     }
 
 EVENT_END
@@ -1383,30 +1472,38 @@ EVENT_START		 ev_c02gym0201_book_01l
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT19 )
 	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_28, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_29, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_30, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_10, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_11, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_12, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
 	
 	
 	//三択のウィンドウを表示！　
 	_BMPMENU_START()
 	
+	_TALKWIN_CLOSE()
+	
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT19
-	CASE 0 THEN		
-		_TALKMSG   ( msg_c02gym0101_book_28)
-		
-	CASE 1 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_29)
+	CASE 0 THEN	
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_book_10)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
+	
+	CASE 1 THEN
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_book_11)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
 		
 	CASE 2 THEN	
 		
-		IF $WK_SCENE_C02GYM0201 == 5 THEN
+		IF $WK_SCENE_C02GYM0201 == 7 THEN
 
 			//当たり判定を作っていた、透明OBJが移動
 			
-			_TALKMSG   ( msg_c02gym0101_switch_01)
+			_TALKMSG   ( msg_c02gym0101_switch_03)
 			_TALKWIN_CLOSE()
 			
 			//ギミック発動。本棚が横に移動する
@@ -1445,23 +1542,29 @@ EVENT_START		 ev_c02gym0201_book_01l
 			_OBJ_ANIME_WAIT()
 			
 			//かいだんが　　あらわれた
-			_TALKMSG   ( msg_c02gym0101_switch_02)
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_switch_04)
+			_LAST_KEYWAIT()
+    		_TALKWIN_CLOSE()
 			
 			//本棚が1度しか動かなくする
-			$WK_SCENE_C02GYM0201 = 6
+			$WK_SCENE_C02GYM0201 = 8
 		ELSE
-		
-			_TALKMSG   ( msg_c02gym0101_book_30)
-		
+			
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_switch_02)
+			_LAST_KEYWAIT()
+    		
+    		_TALKWIN_CLOSE()
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_book_12)
+			_LAST_KEYWAIT()
+    		_TALKWIN_CLOSE()
 		ENDIF
 		
 	CASE 3THEN	
 		
 	ENDSWITCH
-	
-	 _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
-    _TALKWIN_CLOSE()
     }
 EVENT_END
 
@@ -1476,6 +1579,7 @@ _ANIME_LABEL	anm_book_open
 /*     本棚ジャンル20               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_c02gym0201_book_01p	
+
 	_TALKWIN_OPEN()
 	_TALKMSG   ( msg_c02gym0101_category_05)
 	
@@ -1485,30 +1589,40 @@ EVENT_START		 ev_c02gym0201_book_01p
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT20 )
 	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_28, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_29, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_30, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_10, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_11, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_12, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
 	
 	
 	//三択のウィンドウを表示！　
 	_BMPMENU_START()
 	
+	_TALKWIN_CLOSE()
+	
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT20
-	CASE 0 THEN		
-		_TALKMSG   ( msg_c02gym0101_book_28)
+	CASE 0 THEN	
+		_TALKWIN_OPEN()	
+		_TALKMSG   ( msg_c02gym0101_book_10)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
+    	
 	CASE 1 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_29)
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_book_11)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
+    	
 	CASE 2 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_30)
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_book_12)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
+    	
 	CASE 3THEN	
 		
 	ENDSWITCH
-	
-	 _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
-    _TALKWIN_CLOSE()
 	}
 
 EVENT_END
@@ -1526,30 +1640,30 @@ EVENT_START		 ev_bg_c02gym0201_category_21
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT21 )
 	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_31, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_32, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_33, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
-	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_13, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
 	
 	//三択のウィンドウを表示！　
 	_BMPMENU_START()
 	
+	_TALKWIN_CLOSE()
+	
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT21
-	CASE 0 THEN		
-		_TALKMSG   ( msg_c02gym0101_book_31)
-	CASE 1 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_32)
-	CASE 2 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_33)
+	CASE 0 THEN
+		
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_switch_02)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
+    	
+		_TALKWIN_OPEN()		
+		_TALKMSG   ( msg_c02gym0101_book_13)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
 	CASE 3THEN	
 		
 	ENDSWITCH
-	
-	 _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
-    _TALKWIN_CLOSE()
     }
 
 EVENT_END
@@ -1568,30 +1682,32 @@ EVENT_START		 ev_bg_c02gym0201_category_22
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT22 )
 	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_31, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_32, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_33, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_13, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
 	
 	
 	//三択のウィンドウを表示！　
 	_BMPMENU_START()
 	
+	_TALKWIN_CLOSE()
+	
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT22
-	CASE 0 THEN		
-		_TALKMSG   ( msg_c02gym0101_book_31)
-	CASE 1 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_32)
-	CASE 2 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_33)
+	CASE 0 THEN	
+	
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_switch_02)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
+    	
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_book_13)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
+    	
 	CASE 3THEN	
 		
 	ENDSWITCH
-	
-	 _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
-    _TALKWIN_CLOSE()
     }
 
 EVENT_END
@@ -1610,30 +1726,34 @@ EVENT_START		 ev_bg_c02gym0201_category_23
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT23 )
 	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_34, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_35, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_36, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_14, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
 	
 	
 	//三択のウィンドウを表示！　
 	_BMPMENU_START()
 	
+    _TALKWIN_CLOSE()
+	
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT23
-	CASE 0 THEN		
-		_TALKMSG   ( msg_c02gym0101_book_34)
-	CASE 1 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_35)
-	CASE 2 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_36)
+	CASE 0 THEN	
+	
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_switch_02)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
+    	
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_book_14)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
+	
 	CASE 3THEN	
 		
 	ENDSWITCH
 	
-	 _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
-    _TALKWIN_CLOSE()
+
     }
 
 EVENT_END
@@ -1652,31 +1772,34 @@ EVENT_START		 ev_bg_c02gym0201_category_24
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT24 )
 	
-	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_34, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_35, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_36, 2 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_14, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 3 )	
 	
 	
 	//三択のウィンドウを表示！　
 	_BMPMENU_START()
 	
+	_TALKWIN_CLOSE()
+	
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT24
-	CASE 0 THEN		
-		_TALKMSG   ( msg_c02gym0101_book_34)
-	CASE 1 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_35)
-	CASE 2 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_36)
-	CASE 3THEN	
+	CASE 0 THEN
+		
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_switch_02)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
+    	
+		_TALKWIN_OPEN()
+		_TALKMSG   ( msg_c02gym0101_book_14)
+		_LAST_KEYWAIT()
+    	_TALKWIN_CLOSE()
+    	
+	CASE 3THEN
 		
 	ENDSWITCH
 	
-	 _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
-    _TALKWIN_CLOSE()
-    }
+	}
 EVENT_END
 
 /**************************************************************/

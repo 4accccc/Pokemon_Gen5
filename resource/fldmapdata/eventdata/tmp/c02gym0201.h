@@ -31,5 +31,6 @@
 #define C02GYM0201_BOOK_01C               16
 #define C02GYM0201_BOOK_01B               17
 #define C02GYM0201_BOOK_01A               18
+#define TR_SCHOOLB_04                     19
 
 #endif //ZONE_C02GYM0201_EVC_H

@@ -13,6 +13,5 @@
 #define SCRID_BG_R02_BOARD2_01 (6)
 #define SCRID_BG_R02_BOARD3_01 (7)
 #define SCRID_R02_BOY1_01 (8)
-#define SCRID_INIT_R02 (9)
 
 #endif //_R02_DEF_H_

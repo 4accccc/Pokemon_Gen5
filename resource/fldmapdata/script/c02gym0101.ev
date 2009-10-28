@@ -37,7 +37,7 @@ _EVENT_DATA    ev_bg_c02gym0101_plate_06
 _EVENT_DATA    ev_bg_c02gym0101_plate_07
 _EVENT_DATA    ev_pos_c02gym0101_ad_01
 _EVENT_DATA    ev_pos_c02gym0101_leader_01
-
+_EVENT_DATA    ev_init_c02gym0101
 _EVENT_DATA_END
 
 
@@ -46,6 +46,26 @@ _EVENT_DATA_END
 /**************************************************************/
 //ev_zone_c02gym0101:
 //  _END
+_OBJ_POS_CHANGE( C02GYM0101_AD_01, 14, 0, 13, DIR_DOWN )
+
+/**************************************************************/
+/*            FIELD_INIT_LABEL                              Å@ */
+/**************************************************************/
+INIT_EVENT_START	ev_init_c02gym0101
+	
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_02 )
+	
+	IF $SCWK_TEMP0 == 0 THEN
+		IF $WK_SCENE_C02GYM0101 == 1  THEN 
+			IF FLAG_ON( FE_MUSEUM_TOUNAN) THEN	
+		
+				_OBJ_POS_CHANGE( C02GYM0101_AD_01, 13, 3, 3, DIR_DOWN )
+		
+			ENDIF	
+		ENDIF
+	ENDIF
+	
+INIT_EVENT_END
 
 /**************************************************************/
 /*                                                            */

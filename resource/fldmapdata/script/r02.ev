@@ -26,8 +26,6 @@ _EVENT_DATA	   ev_bg_r02_board1_01
 _EVENT_DATA	   ev_bg_r02_board2_01
 _EVENT_DATA	   ev_bg_r02_board3_01
 _EVENT_DATA		ev_r02_boy1_01
-_EVENT_DATA 	 ev_init_r02
-
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -36,29 +34,10 @@ _EVENT_DATA_END
 //				FH_16⇒段差説明イベント								//
 //																	//
 //------------------------------------------------------------------//
-
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/*
- * 注意！(06.02.09現在)
- * EV_SCRIPT_WORKを確保していないので、
- * SCWK_ANSWERなどのワークは使用することが出来ない！
- * LOCALWORK0などを使用するようにする！
- *
- * 共通スクリプトについては現状使用不可！
- * 対応予定だが、ゾーンをまたいだ時に処理落ちするかも？
- * あまりつかわないかも？
- */
 /**************************************************************/
 //ev_r02_flag_change:
 //  _END
-/**************************************************************/
-/*            FIELD_INIT_LABEL                              　 */
-/**************************************************************/
-ev_init_r02:
-	
 
-_END
 /**************************************************************/
 /*段差降りパフォーマンスの少年                                */
 /**************************************************************/
@@ -74,7 +53,7 @@ EVENT_START   ev_r02_boy1_01
 		IF $SCWK_ANSWER == 0 THEN
 			_FLAG_SET(FH_16)
 			_BALLOONWIN_OBJMSG_OPEN(msg_r02_boy2a_02,R02_BOY1_01)
-			_AB_KEYWAIT()
+			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 			//段差を降りるアニメ+段差を降りるSE
 			_SE_PLAY( SEQ_SE_DANSA )
@@ -101,6 +80,7 @@ EVENT_END
 //段差説明少年:段差を飛び降りる                       
 //--------------------------------------------------------------------
 	_ANIME_LABEL test01anime
+	_ANIME_DATA AC_WALK_D_8F,2
 	_ANIME_DATA AC_JUMP_D_2G_16F,1
 	_ANIME_DATA AC_WALK_D_16F,1			//<下に移動　16フレーム
 	_ANIME_DATA ACMD_END,0
@@ -225,6 +205,9 @@ EVENT_START   ev_pos_r02_mama_01
 
 	_FLAG_RESET  ( FV_R02_MOTHER  )
 	
+	//プレイヤーの名前を取得
+	_PLAYER_NAME(0)
+	
 	//ママが主人公を呼ぶ
 	_BALLOONWIN_OBJMSG_OPEN( msg_r02_mama_01, R02_MAMA_01)
 	_BALLOONWIN_CLOSE()
@@ -251,7 +234,7 @@ EVENT_START   ev_pos_r02_mama_01
 	_BALLOONWIN_OBJMSG_OPEN( msg_r02_mama_03, R02_MAMA_01)
 
 //-----------------------------------------------------------	
-	_AB_KEYWAIT()
+	_LAST_KEYWAIT()
 	
 	//ママがランニングシューズの説明
 	_BALLOONWIN_OBJMSG_OPEN( msg_r02_mama_04, R02_MAMA_01)
