@@ -414,7 +414,7 @@ static void SetFarNear( FIELDMAP_WORK* p_fieldmap )
   */
 
   // Farプレーンを半分にする
-  far = far * 2 / 3;
+  far = FAR_PLANE;
   FIELD_CAMERA_SetFar( p_camera, far );
 
   // Nearプレーンを設定する
