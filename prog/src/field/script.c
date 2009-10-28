@@ -32,11 +32,9 @@
 #include "field/eventdata_system.h" //EVENTDATA_GetSpecialScriptData
 
 #include "fieldmap.h"   //FIELDMAP_GetFldMsgBG
-<<<<<<< .mine
 #include "battle/battle.h"
-=======
+
 #include "musical/musical_event.h"  //MUSICAL_EVENT_WORK
->>>>>>> .r10779
 
 #include "system/main.h"  //HEAPID_PROC
 
@@ -736,10 +734,8 @@ static void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
 
 
   case ID_EVSCR_TRAINER0:
-    OS_Printf( "視線データ0を返します\n" );
 		return &sc->eye_hitdata[0];
   case ID_EVSCR_TRAINER1:
-    OS_Printf( "視線データ1を返します\n" );
 		return &sc->eye_hitdata[1];
   
   case ID_EVSCR_MUSICAL_EVENT_WORK:
