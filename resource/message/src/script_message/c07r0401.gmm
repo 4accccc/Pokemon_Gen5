@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-21T17:49:13"/>
+	<create user="matsumiya" host="W00207" date="2009-10-28T20:32:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,9 +292,10 @@
 	</lock>
 
 
-	<row id="msg_c07r0401_gentleman_01">
+	<row id="msg_c07r0401_gentleman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・仮メッセージ</comment>
+・仮メッセージ
+・サブイベント追加予定</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 紳士</attribute>
 		<language name="JPN" width="256">ウォッホン！[BE:01:ページ切り替え（クリア）]
