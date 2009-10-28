@@ -104,14 +104,14 @@ static const GFL_G3D_UTIL_SETUP Setup = {
 
 static GMEVENT_RESULT WallAnmEvt( GMEVENT* event, int* seq, void* work );
 
-
+#ifdef PM_DEBUG
 BOOL test_GYM_NORMAL_WallAnm(GAMESYS_WORK *gsys, const u8 inWallIdx);
-
+#endif  //PM_DEBUG
 //--------------------------------------------------------------
 /**
  * セットアップ関数
- * @param	
- * @return
+ * @param	      fieldWork     フィールドワークポインタ
+ * @return      none
  */
 //--------------------------------------------------------------
 void GYM_NORMAL_Setup(FIELDMAP_WORK *fieldWork)
@@ -188,8 +188,8 @@ void GYM_NORMAL_Setup(FIELDMAP_WORK *fieldWork)
 //--------------------------------------------------------------
 /**
  * 解放関数
- * @param	
- * @return
+ * @param	      fieldWork     フィールドワークポインタ
+ * @return      none
  */
 //--------------------------------------------------------------
 void GYM_NORMAL_End(FIELDMAP_WORK *fieldWork)
@@ -204,15 +204,15 @@ void GYM_NORMAL_End(FIELDMAP_WORK *fieldWork)
 //--------------------------------------------------------------
 /**
  * 動作関数
- * @param	
- * @return
+ * @param	        fieldWork     フィールドワークポインタ
+ * @return        none
  */
 //--------------------------------------------------------------
 void GYM_NORMAL_Move(FIELDMAP_WORK *fieldWork)
 {
   int i;
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
-
+#ifdef PM_DEBUG
   //テスト
   {
     GAMESYS_WORK *gsys  = FIELDMAP_GetGameSysWork( fieldWork );
@@ -222,13 +222,19 @@ void GYM_NORMAL_Move(FIELDMAP_WORK *fieldWork)
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
     }
   }
-
+#endif  //PM_DEBUG
   //アニメーション再生
   FLD_EXP_OBJ_PlayAnime( ptr );
 
 }
 
-//スイッチ起動
+//--------------------------------------------------------------
+/**
+ * スイッチ起動
+ * @param	        fieldWork     フィールドワークポインタ
+ * @return        none
+ */
+//--------------------------------------------------------------
 void GYM_NORMAL_Unrock(FIELDMAP_WORK *fieldWork)
 {
   GYM_NORMAL_SV_WORK *gmk_sv_work;
@@ -240,7 +246,13 @@ void GYM_NORMAL_Unrock(FIELDMAP_WORK *fieldWork)
   gmk_sv_work->GmkUnrock = TRUE;
 }
 
-//スイッチチェック
+//--------------------------------------------------------------
+/**
+ * スイッチチェック
+ * @param	        fieldWork     フィールドワークポインタ
+ * @return        BOOL          TRUEで開錠
+ */
+//--------------------------------------------------------------
 BOOL GYM_NORMAL_CheckRock(FIELDMAP_WORK *fieldWork)
 {
   GYM_NORMAL_SV_WORK *gmk_sv_work;
@@ -252,7 +264,14 @@ BOOL GYM_NORMAL_CheckRock(FIELDMAP_WORK *fieldWork)
   return gmk_sv_work->GmkUnrock;
 }
 
-//棚アニメ起動
+//--------------------------------------------------------------
+/**
+ * 棚アニメ起動
+ * @param	        gsys       ゲームシステムポインタ
+ * @param         inWallIdx  現在は0固定
+ * @return        event       イベントポインタ
+ */
+//--------------------------------------------------------------
 GMEVENT * GYM_NORMAL_MoveWall(GAMESYS_WORK *gsys, const u8 inWallIdx)
 {
   GMEVENT * event;
@@ -273,6 +292,7 @@ GMEVENT * GYM_NORMAL_MoveWall(GAMESYS_WORK *gsys, const u8 inWallIdx)
 
 }
 
+#ifdef PM_DEBUG
 //--------------------------------------------------------------
 /**
  * レバーの切り替えを行うイベント起動
@@ -303,12 +323,15 @@ BOOL test_GYM_NORMAL_WallAnm(GAMESYS_WORK *gsys, const u8 inWallIdx)
   return TRUE;
   
 }
-
+#endif //PM_DEBUG
 //--------------------------------------------------------------
 /**
  * 本棚アニメイベント
- * @param	
- * @return
+ * @param	    event   イベントポインタ
+ * @param     seq     シーケンサ
+ * @param     work    ワークポインタ
+ *
+ * @return    GMEVENT_RESULT    イベント結果
  */
 //--------------------------------------------------------------
 static GMEVENT_RESULT WallAnmEvt( GMEVENT* event, int* seq, void* work )
