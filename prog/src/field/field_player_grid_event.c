@@ -664,9 +664,6 @@ void FIELD_PLAYER_GRID_DeleteEventTakinobori( GFL_TCB *tcb )
   GFL_TCB_DeleteTask( tcb );
 }
 
-//----
-#ifdef DEBUG_ONLY_FOR_kagaya
-//----
 #define TAKINOBORI_START_SHAKE_FRAME (16)
 #define TAKINOBORI_ZOOM_VALUE (NUM_FX32(32))
 #define TAKINOBORI_ADD_VAL_Y (NUM_FX32(6))
@@ -1150,10 +1147,6 @@ static void ev_Takikudari( TAKINOBORI_WORK *work )
     }
   }
 }
-
-//----
-#endif
-//----
 
 //--------------------------------------------------------------
 /**
