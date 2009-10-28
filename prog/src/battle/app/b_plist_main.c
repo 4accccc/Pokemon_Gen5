@@ -232,6 +232,8 @@ static u8 BPL_TamagoCheck( BPLIST_WORK * wk );
 static BOOL FightPokeCheck( BPLIST_WORK * wk, u32 pos );
 static BOOL ChangePokeCheck( BPLIST_WORK * wk, u32 pos );
 
+static void CursorMoveSet( BPLIST_WORK * wk, u8 page );
+
 
 //============================================================================================
 //	グローバル変数
@@ -417,6 +419,8 @@ void BattlePokeList_TaskAdd( BPLIST_DATA * dat )
 //	dat->heap = HEAPID_BATTLE_APP_TEST;
 
 	if( dat->sel_poke > 5 ){ dat->sel_poke = 0; }
+
+	dat->sel_wp = 0;
 
 	wk = GFL_HEAP_AllocClearMemory( dat->heap, sizeof(BPLIST_WORK) );
 
@@ -2026,10 +2030,11 @@ static void BPL_MsgManSet( BPLIST_WORK * wk )
 //	wk->nfnt = NUMFONT_Create( 15, 14, FBMP_COL_NULL, wk->dat->heap );
   wk->nfnt = GFL_FONT_Create( ARCID_FONT, NARC_font_small_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->dat->heap );
 	wk->wset = WORDSET_Create( wk->dat->heap );
-	wk->que  = PRINTSYS_QUE_Create( wk->dat->heap );
+//	wk->que  = PRINTSYS_QUE_Create( wk->dat->heap );
+	wk->que  = PRINTSYS_QUE_CreateEx( 2048, wk->dat->heap );
 	wk->msg_buf = GFL_STR_CreateBuffer( TMP_MSG_BUF_SIZ, wk->dat->heap );
 
-	PRINTSYS_QUE_ForceCommMode( wk->que, TRUE );			// テスト
+//	PRINTSYS_QUE_ForceCommMode( wk->que, TRUE );			// テスト
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2750,7 +2755,8 @@ static BOOL BPL_PageChange( BPLIST_WORK * wk, u8 next_page )
 //	BPL_ContestWazaHeartPut( wk, next_page );
 
 //	BattlePokeList_CursorMoveSet( wk, next_page );
-	BPLISTUI_ChangePage( wk, next_page, 0 );
+//	BPLISTUI_ChangePage( wk, next_page, 0 );
+	CursorMoveSet( wk, next_page );
 
 	BattlePokeList_ButtonPageScreenInit( wk, next_page );
 	BattlePokeList_ButtonPalSet( wk, next_page );
@@ -3125,4 +3131,44 @@ static BOOL ChangePokeCheck( BPLIST_WORK * wk, u32 pos )
 		}
 	}
 	return FALSE;
+}
+
+
+
+static void CursorMoveSet( BPLIST_WORK * wk, u8 page )
+{
+	u32	pos;
+
+	switch( page ){
+	case BPLIST_PAGE_SELECT:		// ポケモン選択ページ
+		wk->chg_page_cp = 0;
+		wk->dat->sel_wp = 0;
+		pos = wk->dat->sel_poke;
+		break;
+
+	case BPLIST_PAGE_POKE_CHG:		// ポケモン入れ替えページ
+		wk->dat->sel_wp = 0;
+		pos = wk->chg_page_cp;
+		break;
+
+	case BPLIST_PAGE_WAZA_SEL:		// ステータス技選択ページ
+	case BPLIST_PAGE_SKILL:				// ステータス技詳細ページ
+		pos = wk->dat->sel_wp;
+		break;
+
+	case BPLIST_PAGE_WAZASET_BS:	// ステータス技忘れ１ページ（戦闘技選択）
+		pos = wk->wws_page_cp;
+		break;
+
+	case BPLIST_PAGE_WAZASET_BI:	// ステータス技忘れ２ページ（戦闘技詳細）
+		pos = wk->wwm_page_cp;
+		break;
+
+	case BPLIST_PAGE_MAIN:			// ステータスメインページ	
+	case BPLIST_PAGE_PP_RCV:		// PP回復技選択ページ
+		pos = 0;
+		break;
+	}
+
+	BPLISTUI_ChangePage( wk, page, pos );
 }
