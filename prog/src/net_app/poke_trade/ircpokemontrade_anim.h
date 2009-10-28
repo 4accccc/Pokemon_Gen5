@@ -147,3 +147,8 @@
 
 //手前のポケモンのサイズ
 #define _POKMEON_SCALE_SIZE   (1.2)
+
+//ゆれる上下幅
+#define _WAVE_NUM    (5)
+//ゆれる間隔
+#define _WAVE_TIME    (255)

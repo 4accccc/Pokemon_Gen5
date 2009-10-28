@@ -272,7 +272,8 @@ typedef struct
   int   nowcount;	   ///<  現在の進行時間
   float   percent;   ///< 加速する計算
   float   add;   ///< 変化率
-  int sins;
+  u16 sins;
+  u16 wave;
   VecFx32  start;      ///< 開始位置
   VecFx32  end;        ///< 終わり位置
 }_POKEMCSS_MOVE_WORK;
@@ -611,8 +612,8 @@ extern int IRC_TRADE_LINE2POKEINDEX(int lineno,int verticalindex);
 #define	FBMP_COL_RED_SDW	(4)
 #define	FBMP_COL_GREEN		(7)
 #define	FBMP_COL_GRN_SDW	(8)
-#define	FBMP_COL_BLUE		(6)
-#define	FBMP_COL_BLUE_SDW	(5)
+#define	FBMP_COL_BLUE		(5)
+#define	FBMP_COL_BLUE_SDW	(6)
 #define	FBMP_COL_PINK		(9)
 #define	FBMP_COL_PNK_SDW	(10)
 #define	FBMP_COL_WHITE_SDW		(14)

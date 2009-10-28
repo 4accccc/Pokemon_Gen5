@@ -596,6 +596,8 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       apos.y = _POKEMON_FRIEND_SIDEOUT_POSY;
       apos.z = _POKEMON_FRIEND_SIDEOUT_POSZ;
       pWork->pMoveMcss[1] = _pokeMoveCreate(pWork->pokeMcss[3], ANMCNTC(_POKE_SIDEOUT_TIME), &apos , pWork->heapID);
+      pWork->pMoveMcss[0]->wave=1;
+      pWork->pMoveMcss[1]->wave=1;
     }
   }
 
@@ -623,8 +625,6 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       //pWork->pMoveMcss[0]->add = _POKE_SIDEIN_PERCENTADD;
      //MCSS_SetAnmStopFlag(pWork->pokeMcss[0]);
     }
-  }
-  if(ANMCNTC(_POKE_SIDEIN_START+1) == pWork->anmCount){
     GFL_HEAP_FreeMemory(pWork->pMoveMcss[1]);
     pWork->pMoveMcss[1]=NULL;
 
@@ -653,6 +653,8 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       //MCSS_SetAnmStopFlag(pWork->pokeMcss[1]);
 
     }
+    pWork->pMoveMcss[0]->wave=1;
+    pWork->pMoveMcss[1]->wave=1;
   }
 
   if(ANMCNTC(_POKE_SIDEIN_START2) == pWork->anmCount){
@@ -1145,19 +1147,24 @@ static _POKEMCSS_MOVE_WORK* _pokeMoveCreate(MCSS_WORK* pokeMcss, int time, const
  */
 //-------------------------------------------------
 
-static fx32 _movemath(fx32 st,fx32 en,_POKEMCSS_MOVE_WORK* pMove)
+static fx32 _movemath(fx32 st,fx32 en,_POKEMCSS_MOVE_WORK* pMove,BOOL bWave)
 {
   fx32 re;
   re = en - st;
   re = re / pMove->time;
+  
+
+#if 0
   if(pMove->percent != 0.0f){
     float ans = FX_FX32_TO_F32(re * pMove->nowcount);
     ans = FX_FX32_TO_F32( FX_Sqrt( FX_SinIdx(pMove->sins) )) * ans;
     re = FX_F32_TO_FX32(ans);
     re = st + re;
   }
-  else{
-    re = st + re * pMove->nowcount;
+#endif
+  re = st + re * pMove->nowcount;
+  if(pMove->wave && bWave){
+    re = re + FX_SinIdx(pMove->sins) * _WAVE_NUM;
   }
   return re;
 }
@@ -1176,9 +1183,10 @@ static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
   {
     VecFx32 apos;
 
-    apos.x = _movemath(pMove->start.x, pMove->end.x ,pMove);
-    apos.y = _movemath(pMove->start.y, pMove->end.y ,pMove);
-    apos.z = _movemath(pMove->start.z, pMove->end.z ,pMove);
+    
+    apos.x = _movemath(pMove->start.x, pMove->end.x ,pMove, FALSE);
+    apos.y = _movemath(pMove->start.y, pMove->end.y ,pMove, FALSE);
+    apos.z = _movemath(pMove->start.z, pMove->end.z ,pMove, TRUE);
 /*
     if(pMove->percent != 0.0f){
       if(pMove->percent < 1.0f){
@@ -1195,7 +1203,9 @@ static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
     }
    */
 
-    pMove->sins += (0x4000/pMove->time);
+    if(pMove->wave){
+      pMove->sins += _WAVE_TIME;
+    }
     
     MCSS_SetPosition( pMove->pMcss ,&apos );
   }
