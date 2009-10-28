@@ -67,6 +67,7 @@ extern "C" {
 #include "calc_2d.h"
 #include "calc_3d.h"
 #include "collision_3d.h"
+#include "g3d_3d_info.h"
 	
 /*  */
 
