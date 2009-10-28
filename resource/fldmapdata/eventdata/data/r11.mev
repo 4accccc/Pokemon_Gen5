@@ -1,10 +1,10 @@
 #event data
-#save date:2009/07/30 16:55:32
+#save date:2009/10/28 21:51:23
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r11.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/07/30 16:55:32
+#save date:2009/10/28 21:51:23
 2
 #hold event type:
 1
@@ -14,7 +14,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r11.wms
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/07/30 16:55:32
+#save date:2009/10/28 21:51:23
 2
 #hold event type:
 1
@@ -24,7 +24,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r11.wms
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/07/30 16:55:32
+#save date:2009/10/28 21:51:23
 2
 #hold event type:
 1
@@ -34,7 +34,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r11.wms
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/07/30 16:55:32
+#save date:2009/10/28 21:51:23
 2
 #hold event type:
 1
@@ -52,7 +52,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_NONE
 #position
--168 0 -56
+-120 0 24
 #event number: 1
 #Door Event Label
 DOOR_ID_R11_C08_EXIT05
@@ -65,7 +65,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_NONE
 #position
--168 0 -120
+-120 0 -40
 #event number: 2
 #Door Event Label
 DOOR_ID_R11_C08_EXIT04
@@ -78,7 +78,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_NONE
 #position
--168 0 -104
+-120 0 -24
 #event number: 3
 #Door Event Label
 DOOR_ID_R11_C08_EXIT03
@@ -91,7 +91,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_NONE
 #position
--168 0 -88
+-120 0 -8
 #event number: 4
 #Door Event Label
 DOOR_ID_R11_C08_EXIT02
@@ -104,7 +104,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_NONE
 #position
--168 0 -72
+-120 0 8
 #event number: 5
 #Door Event Label
 DOOR_ID_R11_R12_EXIT01

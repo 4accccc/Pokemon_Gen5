@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/28 11:24:06
+#save date:2009/10/28 22:11:50
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c05r0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/28 11:24:06
+#save date:2009/10/28 22:11:50
 2
 #hold event type:
 1
@@ -101,7 +101,7 @@ DIR_DOWN
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/28 11:24:06
+#save date:2009/10/28 22:11:50
 2
 #hold event type:
 1
@@ -111,7 +111,7 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/28 11:24:06
+#save date:2009/10/28 22:11:50
 2
 #hold event type:
 1
@@ -121,7 +121,7 @@ DIR_DOWN
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/28 11:24:06
+#save date:2009/10/28 22:11:50
 2
 #hold event type:
 1
@@ -139,7 +139,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--152 0 104
+-168 0 104
 #event number: 1
 #Door Event Label
 DOOR_ID_C05R0101_EXIT01
@@ -152,7 +152,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--168 0 104
+-184 0 104
 #event number: 2
 #Door Event Label
 DOOR_ID_C05R0101_EXIT03
@@ -165,6 +165,6 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--136 0 104
+-152 0 104
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

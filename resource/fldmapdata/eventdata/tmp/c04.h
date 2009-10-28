@@ -42,5 +42,6 @@
 #define C04_MIDDLEWOMAN1_01                5
 #define C04_GIRL3_01                       6
 #define C04_BABYGIRL1_01                   7
+#define DUMMY_OBJ_STOPPER_C04              8
 
 #endif //ZONE_C04_EVC_H
