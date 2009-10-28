@@ -48,6 +48,11 @@ extern void PokeParty_Copy(const POKEPARTY * src, POKEPARTY * dst);
 extern BOOL PokeParty_PokemonCheck(const POKEPARTY * ppt, int mons_no);
 extern int	PokeParty_GetPokeCountMax(const POKEPARTY * party);
 extern int PokeParty_GetPokeCount(const POKEPARTY* party);
+extern int PokeParty_GetPokeCountNotEgg(const POKEPARTY* party);
+extern int PokeParty_GetPokeCountBattleEnable(const POKEPARTY* party);
+extern int PokeParty_GetPokeCountOnlyEgg(const POKEPARTY* party);
+extern int PokeParty_GetPokeCountOnlyDameEgg(const POKEPARTY* party);
+extern int PokeParty_GetMemberTopIdxBattleEnable( const POKEPARTY * party );
 extern void PokeParty_SetMemberData( POKEPARTY* party, int pos, POKEMON_PARAM* pp );
 extern int PokeParty_GetBattlePokeNum(const POKEPARTY * ppt);
 

@@ -53,11 +53,6 @@
 //======================================================================
 //  proto
 //======================================================================
-static int GetPokeCount_NOT_EGG( const POKEPARTY* party );
-static int GetPokeCount_BATTLE_ENABLE( const POKEPARTY* party );
-static int GetPokeCount_ONLY_EGG( const POKEPARTY* party );
-static int GetPokeCount_ONLY_DAME_EGG( const POKEPARTY* party );
-
 static GMEVENT_RESULT EVENT_FUNC_PokeSelect(GMEVENT * event, int * seq, void * work);
 
 //======================================================================
@@ -357,16 +352,16 @@ VMCMD_RESULT EvCmdGetPartyPokeCount( VMHANDLE * core, void *wk )
     num = PokeParty_GetPokeCount( party );
     break;
   case POKECOUNT_MODE_NOT_EGG:
-    num = GetPokeCount_NOT_EGG( party );
+    num = PokeParty_GetPokeCountNotEgg( party );
     break;
   case POKECOUNT_MODE_BATTLE_ENABLE:
-    num = GetPokeCount_BATTLE_ENABLE( party );
+    num = PokeParty_GetPokeCountBattleEnable( party );
     break;
   case POKECOUNT_MODE_ONLY_EGG:
-    num = GetPokeCount_ONLY_EGG( party );
+    num = PokeParty_GetPokeCountOnlyEgg( party );
     break;
   case POKECOUNT_MODE_ONLY_DAME_EGG:
-    num = GetPokeCount_ONLY_DAME_EGG( party );
+    num = PokeParty_GetPokeCountOnlyDameEgg( party );
     break;
   default:
     num = 0;
@@ -416,90 +411,6 @@ extern VMCMD_RESULT EvCmdGetBoxPokeCount( VMHANDLE * core, void *wk )
 
   *ret_wk = (u16)num;
   return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-// タマゴを除く手持ちポケモンの数を取得する
-static int GetPokeCount_NOT_EGG( const POKEPARTY* party )
-{
-  int i;
-  int num = 0;
-  int max = PokeParty_GetPokeCount( party );  // 全ポケモン数
-  POKEMON_PARAM* param;
-  u32 tamago_flag;
-
-  // タマゴ以外のポケモン数をカウント
-  for( i=0; i<max; i++ )
-  {
-    param       = PokeParty_GetMemberPointer( party, i );
-    tamago_flag = PP_Get( param, ID_PARA_tamago_flag, NULL );
-    if( tamago_flag != TRUE ) num++;
-  }
-  return num;
-}
-
-//--------------------------------------------------------------
-// 戦える(タマゴと瀕死を除いた)ポケモン数を取得する
-static int GetPokeCount_BATTLE_ENABLE( const POKEPARTY* party )
-{
-  int i;
-  int num = 0;
-  int max = PokeParty_GetPokeCount( party );  // 全ポケモン数
-  POKEMON_PARAM* param;
-  u32 tamago_flag;
-  u32 hp;
-
-  // 戦えるポケモン数をカウント
-  for( i=0; i<max; i++ )
-  {
-    param       = PokeParty_GetMemberPointer( party, i );
-    tamago_flag = PP_Get( param, ID_PARA_tamago_flag, NULL );
-    hp          = PP_Get( param, ID_PARA_hp, NULL );
-    if( ( tamago_flag != TRUE ) && ( 0 < hp ) ) num++;
-  }
-  return num;
-}
-
-//--------------------------------------------------------------
-// タマゴの数(駄目タマゴを除く)を取得する
-static int GetPokeCount_ONLY_EGG( const POKEPARTY* party )
-{
-  int i;
-  int num = 0;
-  int max = PokeParty_GetPokeCount( party );  // 全ポケモン数
-  POKEMON_PARAM* param;
-  u32 tamago_flag;
-  u32 fusei_tamago_flag;
-
-  // 駄目じゃないタマゴの数をカウント
-  for( i=0; i<max; i++ )
-  {
-    param             = PokeParty_GetMemberPointer( party, i );
-    tamago_flag       = PP_Get( param, ID_PARA_tamago_flag, NULL );
-    fusei_tamago_flag = PP_Get( param, ID_PARA_fusei_tamago_flag, NULL );
-    if( ( tamago_flag == TRUE ) && ( fusei_tamago_flag == FALSE ) ) num++;
-  }
-  return num;
-}
-
-//--------------------------------------------------------------
-// 駄目タマゴの数を取得する
-static int GetPokeCount_ONLY_DAME_EGG( const POKEPARTY* party )
-{
-  int i;
-  int num = 0;
-  int max = PokeParty_GetPokeCount( party );  // 全ポケモン数
-  POKEMON_PARAM* param;
-  u32 fusei_tamago_flag;
-
-  // 駄目タマゴの数をカウント
-  for( i=0; i<max; i++ )
-  {
-    param             = PokeParty_GetMemberPointer( party, i );
-    fusei_tamago_flag = PP_Get( param, ID_PARA_fusei_tamago_flag, NULL );
-    if( fusei_tamago_flag == TRUE ) num++;
-  }
-  return num;
 }
 
 //--------------------------------------------------------------

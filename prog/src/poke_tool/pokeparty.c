@@ -29,6 +29,7 @@
 	GF_ASSERT_MSG((pos) < (party)->PokeCount, "pos(%d) >= PokeCount(%d)\n",pos, (party)->PokeCount); \
 	GF_ASSERT((pos) < (party)->PokeCountMax) \
 }
+static BOOL poke_CheckBattleEnable( const POKEMON_PARAM* pp );
 
 //============================================================================================
 //============================================================================================
@@ -170,6 +171,128 @@ int	PokeParty_GetPokeCountMax( const POKEPARTY * party )
 int	PokeParty_GetPokeCount( const POKEPARTY * party )
 {
 	return party->PokeCount;
+}
+
+//--------------------------------------------------------------
+/*
+ * @brief タマゴを除く手持ちポケモンの数を取得する
+ * @param	party	POKEPARTY構造体へのポインタ
+ * @retval	タマゴを除く手持ち数
+ */
+//--------------------------------------------------------------
+int PokeParty_GetPokeCountNotEgg( const POKEPARTY* party )
+{
+  int i;
+  int num = 0;
+  int max = PokeParty_GetPokeCount( party );  // 全ポケモン数
+  POKEMON_PARAM* param;
+  u32 tamago_flag;
+
+  // タマゴ以外のポケモン数をカウント
+  for( i=0; i<max; i++ )
+  {
+    param       = PokeParty_GetMemberPointer( party, i );
+    tamago_flag = PP_Get( param, ID_PARA_tamago_flag, NULL );
+    if( tamago_flag != TRUE ) num++;
+  }
+  return num;
+}
+
+//--------------------------------------------------------------
+/*
+ * @brief 戦える(タマゴと瀕死を除いた)ポケモン数を取得する
+ * @param	party	POKEPARTY構造体へのポインタ
+ * @retval	戦える手持ち数
+ */
+//--------------------------------------------------------------
+int PokeParty_GetPokeCountBattleEnable( const POKEPARTY* party )
+{
+  int i;
+  int num = 0;
+  int max = PokeParty_GetPokeCount( party );  // 全ポケモン数
+  POKEMON_PARAM* param;
+  u32 tamago_flag;
+  u32 hp;
+
+  // 戦えるポケモン数をカウント
+  for( i=0; i<max; i++ )
+  {
+    param       = PokeParty_GetMemberPointer( party, i );
+    if( poke_CheckBattleEnable( PokeParty_GetMemberPointer( party, i ) ) ) num++;
+  }
+  return num;
+}
+
+//--------------------------------------------------------------
+/*
+ * @brief タマゴの数(駄目タマゴを除く)を取得する
+ * @param	party	POKEPARTY構造体へのポインタ
+ * @retval	タマゴの数(駄目タマゴ除く)
+ */
+//--------------------------------------------------------------
+int PokeParty_GetPokeCountOnlyEgg( const POKEPARTY* party )
+{
+  int i;
+  int num = 0;
+  int max = PokeParty_GetPokeCount( party );  // 全ポケモン数
+  POKEMON_PARAM* param;
+  u32 tamago_flag;
+  u32 fusei_tamago_flag;
+
+  // 駄目じゃないタマゴの数をカウント
+  for( i=0; i<max; i++ )
+  {
+    param             = PokeParty_GetMemberPointer( party, i );
+    tamago_flag       = PP_Get( param, ID_PARA_tamago_flag, NULL );
+    fusei_tamago_flag = PP_Get( param, ID_PARA_fusei_tamago_flag, NULL );
+    if( ( tamago_flag == TRUE ) && ( fusei_tamago_flag == FALSE ) ) num++;
+  }
+  return num;
+}
+
+//--------------------------------------------------------------
+/*
+ * @brief 駄目タマゴの数を取得する
+ * @param	party	POKEPARTY構造体へのポインタ
+ * @retval	駄目タマゴの数
+ */
+//--------------------------------------------------------------
+int PokeParty_GetPokeCountOnlyDameEgg( const POKEPARTY* party )
+{
+  int i;
+  int num = 0;
+  int max = PokeParty_GetPokeCount( party );  // 全ポケモン数
+  POKEMON_PARAM* param;
+  u32 fusei_tamago_flag;
+
+  // 駄目タマゴの数をカウント
+  for( i=0; i<max; i++ )
+  {
+    param             = PokeParty_GetMemberPointer( party, i );
+    fusei_tamago_flag = PP_Get( param, ID_PARA_fusei_tamago_flag, NULL );
+    if( fusei_tamago_flag == TRUE ) num++;
+  }
+  return num;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief	POKEPARTYから戦闘可能なメンバのTopIndexを取得
+ * @param	party	POKEPARTY構造体へのポインタ
+ * @retval	戦闘可能なメンバのTopIndex
+ */
+//----------------------------------------------------------
+int PokeParty_GetMemberTopIdxBattleEnable( const POKEPARTY * party )
+{
+  int i;
+  int max = PokeParty_GetPokeCount( party );  // 全ポケモン数
+
+  // 戦える先頭のメンバーindexをサーチ
+  for( i=0; i<max; i++ )
+  {
+    if( poke_CheckBattleEnable( PokeParty_GetMemberPointer( party, i ) ) ) return i; 
+  }
+  return max;
 }
 
 //----------------------------------------------------------
@@ -382,6 +505,18 @@ void Debug_PokeParty_MakeParty(POKEPARTY * party)
 		PP_Setup( &poke, 392+i, 99, 0 );
 		PokeParty_Add(party, &poke);
 	}
+}
+
+/*
+ *  @brief  指定のポケモンが戦闘可能かどうか返す
+ */
+static BOOL poke_CheckBattleEnable( const POKEMON_PARAM* pp )
+{
+  u32 tamago_flag = PP_Get( pp, ID_PARA_tamago_flag, NULL );
+  u32 hp          = PP_Get( pp, ID_PARA_hp, NULL );
+  
+  if( ( tamago_flag != TRUE ) && ( 0 < hp ) ) return TRUE;
+  return FALSE;
 }
 
 // 外部参照インデックスを作る時のみ有効(ゲーム中は無効)
