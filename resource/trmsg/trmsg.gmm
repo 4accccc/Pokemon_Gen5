@@ -860,7 +860,7 @@
 どうくつから　ぬけだせるんだ！</language>
 		<language name="JPN_KANJI" width="216">ポケモンのわざ　あなをほる　は
 つかうと　一瞬で▽
-洞窟から　ぬけだせるんだ！</language>
+洞くつから　ぬけだせるんだ！</language>
 	</row>
 
 	<row id="TRID_WORKER2_02_TRMSG_FIGHT_START">
@@ -900,13 +900,13 @@
 
 	<row id="TRID_WORKER2_03_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">しょうぶには　まけたが
-こうじでは　ダレにも　まけないぞ！▼
+こうじでは　だれにも　まけないぞ！▼
 おまえにも　そういう
-ダレにも　まけないモノが　あるんだろ</language>
+だれにも　まけないモノが　あるんだろ</language>
 		<language name="JPN_KANJI" width="216">勝負には　負けたが
-工事では　ダレにも　負けないぞ！▼
+工事では　だれにも　負けないぞ！▼
 おまえにも　そういう
-ダレにも　負けないモノが　あるんだろ</language>
+だれにも　負けないモノが　あるんだろ</language>
 	</row>
 
 	<row id="TRID_WORKER2_04_TRMSG_FIGHT_START">
