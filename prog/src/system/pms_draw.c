@@ -664,7 +664,7 @@ static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* fo
       
         deco_id = PMSDAT_GetWordNumber( pms, i );
 
-        HOSAKA_Printf("deco_id=%d\n",deco_id);
+        HOSAKA_Printf("[%d]deco_id=%d\n",i, deco_id);
         
         width = PRINTSYS_GetTagWidth( buf, i, font, 0 );
         line  = PRINTSYS_GetTagLine( buf, i );

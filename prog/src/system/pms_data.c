@@ -570,7 +570,7 @@ void PMSDAT_SetDebugRandomDeco( PMS_DATA* pms, HEAPID heapID )
 
   max = get_include_word_max( pms->sentence_type, pms->sentence_id, heapID );
 
-  HOSAKA_Printf("deco max=%d *** \n",max);
+  HOSAKA_Printf("randsetdeco max=%d *** \n",max);
 
 	pms->word[1] = PMS_WORD_NULL; // ƒNƒŠƒA‚µ‚Ä‚¨‚­
   for( i=0; i<max; i++ )

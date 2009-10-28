@@ -1466,15 +1466,31 @@ u8 PRINTSYS_GetTagLine( const STRBUF* str, u8 tag_id )
 
   sp = GFL_STR_GetStringCodePointer( str );
   
+#if 0
+  HOSAKA_Printf("================\n");
+  // 一端全てプリント
   while( *sp != EOM_CODE )
   {
+    HOSAKA_Printf("tag_id=%d sp=%x \n", tag_id, *sp);
+    sp++;
+  }
+  HOSAKA_Printf("================\n");
+#endif
+  
+  sp = GFL_STR_GetStringCodePointer( str );
+  
+  while( *sp != EOM_CODE )
+  {
+//  HOSAKA_Printf("tag_id=%d sp=%x \n", tag_id, *sp);
+
     // 改行カウント
     if( *sp == CR_CODE )
     {
       line++;
     }
+    
     // タグ検出
-    else if( *sp == SPCODE_TAG_START_ )
+    if( *sp == SPCODE_TAG_START_ )
     {
       if( PRINTSYS_IsWordSetTagGroup(sp) )
       {
@@ -1483,9 +1499,15 @@ u8 PRINTSYS_GetTagLine( const STRBUF* str, u8 tag_id )
           return line;
         }
       }
+      // タグ直後の文字を頭だし
       sp = PRINTSYS_SkipTag( sp );
     }
-    sp++;
+    else
+    {
+      // 次の文字を参照
+      sp++;
+    }
+
   }
 
   GF_ASSERT( 0 ); ///< 指定タグは見つからなかった
