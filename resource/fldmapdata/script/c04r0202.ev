@@ -10,6 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c04r0202.h"
+  .include  "musical_scr_local.h"
   //.include  "../eventdata/zone_c04r0202evc.h"
 
 //--------------------------------------------------------------
@@ -37,8 +38,25 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START ev_c04r0202_mus_1st
 	
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_start_to_main )
+	DEFINE_LOCAL selfPos	// 自身の位置
+	DEFINE_LOCAL temp		// 移動処理用
+
+	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_SELF_IDX,0,selfPos)
+	
+	//一番左の位置の下まで移動
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_start_to_main_1 )
 	_OBJ_ANIME_WAIT()
+	//繰り返し処理で自分の番号の下まで移動
+	$temp = $selfPos
+	WHILE $temp > 0
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_start_to_main_2 )
+		_OBJ_ANIME_WAIT()
+		$temp -= 1
+	ENDWHILE
+	//一歩前へ
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_start_to_main_3 )
+	_OBJ_ANIME_WAIT()
+	
 	
 	_BALLOONWIN_OBJMSG_OPEN( msg_mus_01_001 , MMDL_ID_PLAYER )
 	_AB_KEYWAIT()     //キー待ち
@@ -79,12 +97,20 @@ EVENT_END
 /**************************************************************/
 //	移動　開始→待機位置
 /**************************************************************/
-_ANIME_LABEL anm_move_player_start_to_main
+_ANIME_LABEL anm_move_player_start_to_main_1
 	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA AC_WALK_U_8F,12
+	_ANIME_DATA AC_WALK_U_8F,11
 	_ANIME_DATA AC_DIR_R,1
 	_ANIME_DATA AC_WALK_R_8F,6
+	_ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL anm_move_player_start_to_main_2
+	_ANIME_DATA AC_WALK_R_8F,2
+	_ANIME_DATA ACMD_END,0
+	
+_ANIME_LABEL anm_move_player_start_to_main_3
 	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_WALK_U_8F,1
 	_ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL anm_move_player_main_to_start

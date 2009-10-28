@@ -231,3 +231,11 @@ void MUSICAL_PROGRAM_SetData_NPC( MUSICAL_PROGRAM_WORK* progWork , STAGE_INIT_WO
   }
 
 }
+
+//--------------------------------------------------------------
+//	BG”Ô†Žæ“¾
+//--------------------------------------------------------------
+const u8 MUSICAL_PROGRAM_GetBgNo( MUSICAL_PROGRAM_WORK* progWork )
+{
+  return progWork->progData->bgNo;
+}

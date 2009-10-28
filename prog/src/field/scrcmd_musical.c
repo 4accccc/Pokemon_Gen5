@@ -34,6 +34,8 @@
 
 #include "scrcmd_musical.h"
 
+#include "../../../resource/fldmapdata/script/musical_scr_local.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -152,10 +154,29 @@ VMCMD_RESULT EvCmdGetMusicalFanValue( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdGetMusicalWaitRoomValue( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
 
   u8   type = VMGetU8(core);
   u16  val   = SCRCMD_GetVMWorkValue( core, work );
   u16* ret_wk = SCRCMD_GetVMWork( core, work );
+
+  MUSICAL_EVENT_WORK *musWork = SCRIPT_GetMemberWork( sc , ID_EVSCR_MUSICAL_EVENT_WORK );
+
+  switch( type )
+  {
+  case MUSICAL_VALUE_WR_SELF_IDX:  //自分の参加番号
+    *ret_wk = MUSICAL_EVENT_GetSelfIndex( musWork );
+    break;
+  case MUSICAL_VALUE_WR_MAX_POINT: //最高評価点
+    break;
+  case MUSICAL_VALUE_WR_MIN_POINT: //最高得点
+    break;
+  case MUSICAL_VALUE_WR_GRADE_MSG: //評価メッセージの取得
+    break;
+  default:
+    GF_ASSERT_MSG( 0 , "タイプ指定が間違ってる[%d]\n",type );
+    break;
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }

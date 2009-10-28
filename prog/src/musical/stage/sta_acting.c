@@ -772,9 +772,9 @@ void  STA_ACT_LoadBg( ACTING_WORK *work , const u8 bgNo )
   GFL_ARC_CloseDataHandle(arcHandle);
   GFL_BG_LoadScreenReq(ACT_FRAME_MAIN_MASK);
 */
-//  const u8 bgIdx = MUSICAL_PROGRAM_GetBgNo( work->initWork->progWork );
+  const u8 bgIdx = MUSICAL_PROGRAM_GetBgNo( work->initWork->progWork );
   
-  STA_BG_CreateBg( work->bgSys , bgNo );
+  STA_BG_CreateBg( work->bgSys , bgIdx );
 
 }
 

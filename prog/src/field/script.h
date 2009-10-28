@@ -333,4 +333,14 @@ extern void* SCRIPT_SetSubProcWorkPointer( SCRIPT_WORK *sc );
 //--------------------------------------------------------------
 extern void SCRIPT_FreeSubProcWorkPointer( SCRIPT_WORK *sc );
 
+//--------------------------------------------------------------
+/**
+ * スクリプトイベントからスクリプトワークを取得
+ * @param	GMEVENT *event
+ * @retval  SCRIPT_WORK*
+ */
+//--------------------------------------------------------------
+extern SCRIPT_WORK* SCRIPT_GetEventWorkToScriptWork( GMEVENT *event );
+
+
 #endif	/* SCRIPT_H */

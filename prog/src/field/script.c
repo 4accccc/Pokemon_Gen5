@@ -33,7 +33,7 @@
 #include "field/eventdata_system.h" //EVENTDATA_GetSpecialScriptData
 
 #include "fieldmap.h"   //FIELDMAP_GetFldMsgBG
-
+#include "musical/musical_event.h"  //MUSICAL_EVENT_WORK
 
 #include "system/main.h"  //HEAPID_PROC
 
@@ -148,6 +148,8 @@ struct _TAG_SCRIPT_WORK
 	
 	u16 scrTempWork[TEMP_WORK_SIZE];		//ワーク(ANSWORK,TMPWORKなどの代わり)
 
+
+  MUSICAL_EVENT_WORK *musicalEventWork;
   /*
    * 未使用・もしくはいらないワーク（前作から持ってきた
 #ifndef SCRIPT_PL_NULL
@@ -409,6 +411,8 @@ static SCRIPT_WORK * SCRIPTWORK_Create( HEAPID main_heapID, HEAPID temp_heapID,
 		HideItemParamSet( sc, scr_id );
 	}
 #endif
+  //ミュージカルの制御イベントで渡される
+  sc->musicalEventWork = NULL;
 
   //チェックビット処理化
   SCREND_CHK_ClearBits();
@@ -732,6 +736,10 @@ static void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
 		return &sc->eye_hitdata[0];
   case ID_EVSCR_TRAINER1:
 		return &sc->eye_hitdata[1];
+  
+  case ID_EVSCR_MUSICAL_EVENT_WORK:
+  	GF_ASSERT_MSG( sc->musicalEventWork != NULL , "ミュージカルワークがNULL！" );
+    return sc->musicalEventWork;
 
 	};
 	
@@ -852,6 +860,19 @@ static GMEVENT * FldScript_CreateControlEvent( SCRIPT_WORK *sc )
 	return event;
 }
 
+//--------------------------------------------------------------
+/**
+ * スクリプトイベントからスクリプトワークを取得
+ * @param	GMEVENT *event
+ * @retval  SCRIPT_WORK*
+ */
+//--------------------------------------------------------------
+SCRIPT_WORK* SCRIPT_GetEventWorkToScriptWork( GMEVENT *event )
+{
+	EVENT_SCRIPT_WORK *ev_sc = GMEVENT_GetEventWork( event );
+	return ev_sc->sc;
+}
+
 //======================================================================
 //	イベントワーク
 //======================================================================
@@ -927,6 +948,20 @@ BOOL SCRIPT_SetEventWorkValue(
 	*res = value;
 	return TRUE;
 }
+//--------------------------------------------------------------
+/**
+ * スクリプト制御ワークのメンバーアドレス設定(ミュージカル
+ * @param	sc	  SCRIPT_WORK型のポインタ
+ */
+//--------------------------------------------------------------
+void SCRIPT_SetMemberWork_Musical( SCRIPT_WORK *sc, void *musEveWork )
+{
+	if( sc->magic_no != SCRIPT_MAGIC_NO ){
+		GF_ASSERT_MSG(0, "起動(確保)していないスクリプトのワークにアクセスしています！" );
+	}
+	sc->musicalEventWork = musEveWork;
+}
+
 
 //------------------------------------------------------------------
 /**

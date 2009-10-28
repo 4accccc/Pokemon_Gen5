@@ -113,6 +113,7 @@ struct _MUSICAL_EVENT_WORK
   MUSICAL_POKE_PARAM *musPoke;
 
   u8 musicalIndex[MUSICAL_POKE_MAX];
+  u8 selfIdx;
 
 };
 
@@ -181,8 +182,17 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const BOOL
         evWork->musicalIndex[swapIdx] = temp;
       }
     }
+    
+    //FIXME とりあえず非通信でプレイヤー0番を自分に
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      if( evWork->musicalIndex[i] == 0 )
+      {
+        evWork->selfIdx = i;
+      }
+    }
   }
-
+  
   return event;
 }
 
@@ -480,7 +490,7 @@ static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork )
     RTCDate date;
     MUSICAL_SHOT_DATA *shotData = evWork->shotInitWork->musShotData;
     GFL_RTC_GetDate( &date );
-    shotData->bgNo = 0;
+    shotData->bgNo = MUSICAL_PROGRAM_GetBgNo( evWork->progWork );
     shotData->year = date.year;
     shotData->month = date.month;
     shotData->day = date.day;
@@ -642,9 +652,23 @@ static const void MUSICAL_EVENT_RunScript( GMEVENT *event, MUSICAL_EVENT_WORK *e
 {
   GMEVENT *newEvent;
   SCRIPT_FLDPARAM fparam;
+  SCRIPT_WORK *scWork;
 
   newEvent = SCRIPT_SetEventScript( evWork->gsys, scriptId , NULL ,
                 HEAPID_FIELDMAP );
+  scWork = SCRIPT_GetEventWorkToScriptWork( newEvent );
+  
+  SCRIPT_SetMemberWork_Musical( scWork , evWork );
   GMEVENT_CallEvent(event, newEvent);
 }
+
+
+
+#pragma mark [>outer func
+//自分の参加番号取得
+const u8 MUSICAL_EVENT_GetSelfIndex( MUSICAL_EVENT_WORK *evWork )
+{
+  return evWork->selfIdx;
+}
+
 

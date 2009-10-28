@@ -89,6 +89,7 @@ enum{
   //TEMP HEAPID
   ID_EVSCR_WK_TEMP_HEAPID,
 
+  ID_EVSCR_MUSICAL_EVENT_WORK,  //ミュージカルワーク(控え室のみ有効
 
 	ID_EVSCR_WK_END,				//ワークの終了ID
 
@@ -218,3 +219,10 @@ extern u16 SCRIPT_GetEventWorkValue( SCRIPT_WORK *sc, GAMEDATA *gdata, u16 work_
 extern BOOL SCRIPT_SetEventWorkValue(
 		SCRIPT_WORK* sc, u16 work_no, u16 value );
 
+//--------------------------------------------------------------
+/**
+ * スクリプト制御ワークのメンバーアドレス設定(ミュージカル
+ * @param	sc	  SCRIPT_WORK型のポインタ
+ */
+//--------------------------------------------------------------
+extern void SCRIPT_SetMemberWork_Musical( SCRIPT_WORK *sc, void *musEveWork );
