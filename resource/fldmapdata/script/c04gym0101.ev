@@ -390,9 +390,10 @@ ev_trainer_btl_01:
 
 	//トレーナー戦呼び出し
 	_TRAINER_BTL_SET( TRID_PRINCE_02, 0 )
+	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利
+		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 	ELSE
 		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
@@ -425,8 +426,10 @@ ev_trainer_btl_02:
 
 	//トレーナー戦呼び出し
 	_TRAINER_BTL_SET( TRID_PRINCESS_02, 0 )
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利
+		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 	ELSE
 		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF

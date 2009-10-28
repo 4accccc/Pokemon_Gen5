@@ -75,9 +75,12 @@ EVENT_START	ev_scene_c04r0302_n_01
 
 	//Ｎ：戦闘
 	_TRAINER_BTL_SET( TRID_BOSS_03, 0 )
+	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-	IF $SCWK_ANSWER == 0 THEN
-		_TRAINER_LOSE()
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+	ELSE
+		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
 
 	//Ｎ：戦闘後メッセージ

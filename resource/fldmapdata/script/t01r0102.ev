@@ -232,7 +232,7 @@ EVENT_START	ev_t01r0102_rival_01
 
 	ELSE
 
-		//ポケモン入手後、戦闘イベント（戦闘前後でさらに分岐）
+		//【仮】ポケモン入手後、戦闘イベント（戦闘前後でさらに分岐）現状は戦闘を強制にしているため話しかけられない
 
 
 	ENDIF
@@ -261,7 +261,7 @@ EVENT_START	ev_t01r0102_support_01
 
 	ELSE
 
-		//ポケモン入手後、戦闘イベント（戦闘前後でさらに分岐）
+		//【仮】ポケモン入手後、戦闘イベント（戦闘前後でさらに分岐）現状は戦闘を強制にしているため話しかけられない
 
 
 	ENDIF
@@ -374,9 +374,15 @@ t01r0102_poke_get_yes:
 	_OBJ_DEL( T01R0102_BALL1 )
 	_OBJ_DEL( T01R0102_BALL2 )
 	_OBJ_DEL( T01R0102_BALL3 )
+
+//========================================//
+
+	//ボールのバニッシュフラグをセット（アプリ完成すれば不要かも）
 	_FLAG_SET( FV_T01R0102_BALL00 )
 	_FLAG_SET( FV_T01R0102_BALL01 )
 	_FLAG_SET( FV_T01R0102_BALL02 )
+
+//========================================//
 
 	//ブラックイン
 	_BLACK_IN()
@@ -409,17 +415,17 @@ t01r0102_poke_get_yes:
 //	_YES_NO_WIN( SCWK_ANSWER )
 //	IF $SCWK_ANSWER == VAL THEN (テンプレ）ENDIF
 
-	//サポート戦闘呼び出し　最初の３匹によって分岐
+	//サポート戦闘呼び出し　最初の３匹によって分岐　負けてもシナリオ進行
 	IF $WK_SYS_FIRST_POKE_NO == MONSNO_HUSIGIDANE THEN
+		//初期３匹で草タイプを選択
 		_TRAINER_BTL_SP_SET( TRID_SUPPORT_01, 0, SCR_BATTLE_MODE_NOLOSE )
 	ELSIF $WK_SYS_FIRST_POKE_NO == MONSNO_HITOKAGE THEN
+		//初期３匹で炎タイプを選択
 		_TRAINER_BTL_SP_SET( TRID_SUPPORT_02, 0, SCR_BATTLE_MODE_NOLOSE )
 	ELSE
+		//初期３匹で水タイプを選択
 		_TRAINER_BTL_SP_SET( TRID_SUPPORT_03, 0, SCR_BATTLE_MODE_NOLOSE )
 	ENDIF
-
-	//ゾーン曲再生
-	_BGM_NOW_MAP_RECOVER()
 
 	//【仮】勝敗によるメッセージ分岐
 	//サポート会話：つよいねー
@@ -451,11 +457,20 @@ t01r0102_poke_get_yes:
 	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_black_10 , T01R0102_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
-	//【仮】ライバル戦
-	_BLACK_OUT()
-	_DISP_FADE_END_CHECK()
-	_BLACK_IN()
-	_DISP_FADE_END_CHECK()
+	//ライバル戦呼び出し　最初の３匹によって分岐　負けてもシナリオ進行
+	IF $WK_SYS_FIRST_POKE_NO == MONSNO_HUSIGIDANE THEN
+		//初期３匹で草タイプを選択
+		_TRAINER_BTL_SP_SET( TRID_RIVAL_01, 0, SCR_BATTLE_MODE_NOLOSE )
+	ELSIF $WK_SYS_FIRST_POKE_NO == MONSNO_HITOKAGE THEN
+		//初期３匹で炎タイプを選択
+		_TRAINER_BTL_SP_SET( TRID_RIVAL_02, 0, SCR_BATTLE_MODE_NOLOSE )
+	ELSE
+		//初期３匹で水タイプを選択
+		_TRAINER_BTL_SP_SET( TRID_RIVAL_03, 0, SCR_BATTLE_MODE_NOLOSE )
+	ENDIF
+
+	//全滅する可能性もあるので回復させる
+	_TEMOTI_POKEMON_KAIFUKU()		//回復処理
 
 	//ライバル会話：フゥ　これがポケモン勝負か！
 	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_black_11 , T01R0102_RIVAL_01 )
