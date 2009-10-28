@@ -304,7 +304,7 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     // BGMフェードアウト終了待ち
     if( FIELD_BGM_CONTROL_IsFade() != TRUE )
     { 
-      FIELD_BGM_CONTROL_FadeIn( gamedata, mcw->loc_req.zone_id, 60 );
+      FIELD_BGM_CONTROL_FadeIn( gamedata, mcw->loc_req.zone_id, 0 );
       (*seq)++;
     }
     break;
@@ -384,10 +384,7 @@ static GMEVENT_RESULT EVENT_MapChangeByWarp(GMEVENT * event, int *seq, void*work
     break;
 	case 1:
     // ワープ退場イベント
-    if( FIELDMAP_GetMapControlType( fieldmap ) != FLDMAP_CTRLTYPE_NOGRID )
-    {
-      GMEVENT_CallEvent( event, EVENT_DISAPPEAR_Warp( event, gsys, fieldmap ) );
-    }
+    GMEVENT_CallEvent( event, EVENT_DISAPPEAR_Warp( event, gsys, fieldmap ) );
 		(*seq)++;
 		break;
   case 2:
