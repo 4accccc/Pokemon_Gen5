@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-28T16:28:47"/>
+	<create user="matsumiya" host="W00207" date="2009-10-28T16:33:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -485,8 +485,10 @@
 		<comment>看板分類：タウンマップ
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
-		<language name="JPN" width="256">ライモンシティ</language>
-		<language name="JPN_KANJI" width="256">ライモンシティ</language>
+		<language name="JPN" width="256">ライモンシティ
+いなずまきらめく　かがやきのまち</language>
+		<language name="JPN_KANJI" width="256">ライモンシティ
+稲妻きらめく　輝きの街</language>
 	</row>
 
 	<row id="msg_c04_sign2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
