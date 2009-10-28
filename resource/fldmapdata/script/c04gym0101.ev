@@ -366,9 +366,15 @@ EVENT_START	ev_prg_c04gym0101_scr02
 		//１台目のトレーナー有りコースターの乗車口なら
 		_CALL		ev_trainer_btl_01
 
+		//トレーナー戦後のプログラム処理へ（１人目）
+		_GYM_ELEC_SET_TR_ENC_FLG( 1 )
+
 	ELSE
 		//２台目なら
 		_CALL		ev_trainer_btl_02
+
+		//トレーナー戦後のプログラム処理へ（２人目）
+		_GYM_ELEC_SET_TR_ENC_FLG( 2 )
 
 	ENDIF
 
@@ -444,6 +450,8 @@ ev_trainer_btl_02:
 
 	//コースター（２台目）のトレーナー戦終了
 	_FLAG_SET( FE_C04GYM0101_TRBTL2 )
+
+
 
 	_RET
 
