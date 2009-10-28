@@ -509,6 +509,7 @@ void CI_pv_disp_CurSQ_PosSet( CODEIN_WORK* wk, int id )
 	pos.y = ( wk->sys.rht[ id + eHRT_NUM_0 ].rect.top  + wk->sys.rht[ id + eHRT_NUM_0 ].rect.bottom ) / 2;
 	
 	GFL_CLACT_WK_SetPos( wk->cur[ 1 ].clwk, &pos , CLSYS_DEFREND_MAIN );
+  GFL_CLACT_WK_SetAnmFrame( wk->cur[ 1 ].clwk, 0 );
 }
 
 //--------------------------------------------------------------
@@ -530,6 +531,8 @@ void CI_pv_disp_CurSQ_PosSetEx( CODEIN_WORK* wk, int id, int cur_id )
 	pos.y = ( wk->sys.rht[ id + eHRT_NUM_0 ].rect.top  + wk->sys.rht[ id + eHRT_NUM_0 ].rect.bottom ) / 2;
 	
 	GFL_CLACT_WK_SetPos( wk->cur[ cur_id ].clwk, &pos , CLSYS_DEFREND_MAIN );
+  GFL_CLACT_WK_SetAnmFrame( wk->cur[ cur_id ].clwk, 0 );
+
 }
 
 //--------------------------------------------------------------
