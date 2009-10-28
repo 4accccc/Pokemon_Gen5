@@ -91,7 +91,9 @@ ev_leader4_btl:
 	_TRAINER_BTL_SET( TRID_LEADER4_01, 0 )
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-	IF $SCWK_ANSWER == 0 THEN
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+	ELSE
 		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
 
@@ -125,9 +127,14 @@ ev_leader4_btl:
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
-//================フラグワーク操作================//
+//================================================//
+
 	//C04サポートの野球場誘導posイベントが有効
 	$WK_SCENE_C04 = 1
+
+	//ジムトレーナーの視線無効
+	_TRAINER_FLAG_SET( TRID_PRINCE_01 )
+	_TRAINER_FLAG_SET( TRID_PRINCESS_01 )
 
 //================================================//
 
@@ -313,10 +320,6 @@ EVENT_END
 
 //トレーナーの入っているコースター１台目
 ev_trainer_appear_01:
-	//トレーナー表示
-//	_FLAG_RESET( FV_C04GYM0101_TR_01 )  <<move to ev_trainer_disp_01
-//	_OBJ_ADD( C04GYM0101_TRAINER_01 )   <<move to ev_trainer_disp_01
-
 	//主人公：後ずさり
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back_01 )
 	//トレーナー：登場
@@ -332,10 +335,6 @@ ev_trainer_appear_01:
 
 //トレーナーの入っているコースター２台目
 ev_trainer_appear_02:
-	//トレーナー表示
-//	_FLAG_RESET( FV_C04GYM0101_TR_02 )  <<move to ev_trainer_disp_02
-//	_OBJ_ADD( C04GYM0101_TRAINER_02 )   <<move to ev_trainer_disp_02
-
 	//主人公：後ずさり
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back_01 )
 	//トレーナー：登場
@@ -390,8 +389,13 @@ ev_trainer_btl_01:
 	_BALLOONWIN_CLOSE()
 
 	//トレーナー戦呼び出し
-//	_TRAINER_BTL_SET( TRID_PRINCE_01, 0 )
-//	【仮】敗戦処理
+	_TRAINER_BTL_SET( TRID_PRINCE_02, 0 )
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利
+	ELSE
+		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
 
 	//トレーナー：戦闘後メッセージ
 	_BALLOONWIN_OBJMSG_OPEN( msg_c04gym0101_prince1_03 , C04GYM0101_TRAINER_01 )
@@ -420,8 +424,12 @@ ev_trainer_btl_02:
 	_BALLOONWIN_CLOSE()
 
 	//トレーナー戦呼び出し
-//	_TRAINER_BTL_SET( TRID_PRINCESS_01, 0 )
-//	【仮】敗戦処理
+	_TRAINER_BTL_SET( TRID_PRINCESS_02, 0 )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利
+	ELSE
+		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
 
 	//トレーナー：戦闘後メッセージ
 	_BALLOONWIN_OBJMSG_OPEN( msg_c04gym0101_princess1_03 , C04GYM0101_TRAINER_02 )
@@ -447,7 +455,7 @@ _ANIME_LABEL	anm_obj_gyoe
 //トレーナー：出現
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_trainer_move_01
-	_ANIME_DATA	AC_JUMP_D_1G_8F,1
+	_ANIME_DATA	AC_JUMP_D_2G_16F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
