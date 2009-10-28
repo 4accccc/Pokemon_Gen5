@@ -17,7 +17,6 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-//_EVENT_DATA		ev_c01_musical_01
 _EVENT_DATA		ev_c01_badman_01
 _EVENT_DATA		ev_c01_boy2_01
 _EVENT_DATA		ev_c01_cleaningm_01
@@ -42,35 +41,6 @@ _EVENT_DATA_END
 //ev_c01_flag_change:
 //  _END
 
-/**************************************************************/
-/*  C01 ミュージカル用イベントスクリプト                      */
-/**************************************************************/
-/*EVENT_START   ev_c01_musical_01
-
-  _TALK_OBJ_START()
-
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01_musical_01 )
-	_YES_NO_WIN( SCWK_ANSWER )
-	_BALLOONWIN_CLOSE()
-
-  IF $SCWK_ANSWER == 0 THEN
-
-    _BALLOONWIN_TALKOBJ_OPEN( msg_c01_musical_02 )
-    _AB_KEYWAIT()
-    _BALLOONWIN_CLOSE()
-
-    _MUSICAL_CALL() //ミュージカル呼び出し
-
-  ELSE
-
-    _BALLOONWIN_TALKOBJ_OPEN( msg_c01_musical_03 )
-    _AB_KEYWAIT()
-    _BALLOONWIN_CLOSE()
-
-  ENDIF
-
-EVENT_END
-*/
 /**************************************************************/
 /*  C01 BADMANの会話用イベントスクリプト                      */
 /**************************************************************/
@@ -126,6 +96,7 @@ EVENT_START   ev_c01_babygirl1_01
 		
 	ENDIF
 
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
 EVENT_END
@@ -165,6 +136,7 @@ _TALK_OBJ_START()
 		
 		//おぬし　ジムバッジの　１つも　もっておらぬ　ようじゃが
 		_BALLOONWIN_TALKOBJ_OPEN( msg_c01_stop_01 )
+		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 
 	//ジムクリア後
@@ -172,6 +144,7 @@ _TALK_OBJ_START()
 	
 		//おおう！　ひかりかがやく　ジムバッジ！
 		_BALLOONWIN_TALKOBJ_OPEN( msg_c01_stop_03 )
+		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	
 	ENDIF
@@ -282,16 +255,19 @@ EVENT_START   ev_c01_glasses_01
 			//夢の跡地に行っている
 			IF $WK_SCENE_D01R0101 >= 1 THEN
 				_BALLOONWIN_TALKOBJ_OPEN( msg_c01_glasses_02 )
+				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 			
 			ELSE
 				_BALLOONWIN_TALKOBJ_OPEN( msg_c01_glasses_01 )
-				_BALLOONWIN_CLOSE()			
-			
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+				
 			ENDIF
 		//ライバルと話している
 		ELSE
 			_BALLOONWIN_TALKOBJ_OPEN( msg_c01_glasses_02 )
+			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 			
 		ENDIF
@@ -363,6 +339,9 @@ EVENT_START   ev_c01_scene_change_01
 	//マップチェンジ
 	_MAP_CHANGE( ZONE_ID_C01R0101, 2, 7, DIR_RIGHT )
 	
+	//階段ＳＥ
+	_SE_PLAY(SEQ_SE_KAIDAN)
+	_SE_WAIT()
 
 	//========================================//
 
@@ -376,7 +355,6 @@ EVENT_START   ev_c01_scene_change_01
 	$WK_SCENE_C01R0101 = 1
 
 	//========================================//
-
 
 EVENT_END
 

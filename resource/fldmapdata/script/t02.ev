@@ -46,8 +46,8 @@ EVENT_START   ev_t02_babygirl1_01
 	_TALK_OBJ_START()
 	//ねえねえ　ポケモンじゃんけん　しようよ！
 	_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_01 )
-	_BALLOONWIN_CLOSE()
 	_YES_NO_WIN( SCWK_ANSWER )
+	_BALLOONWIN_CLOSE()
 
 	IF $SCWK_ANSWER == 0 THEN	//はい
 		_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_03 )
@@ -114,6 +114,8 @@ EVENT_START   ev_t02_babygirl1_01
 		_BALLOONWIN_CLOSE()
 	
 	ENDIF
+
+
 
 EVENT_END
 

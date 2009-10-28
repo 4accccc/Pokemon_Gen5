@@ -128,14 +128,14 @@ EVENT_END
 EVENT_START		ev_pos_d02r0101_stop
 
 	//ローカル変数定義
-    DEFINE_LOCAL  POS_X
-    DEFINE_LOCAL  POS_Z
+    DEFINE_LOCAL  LWK_POS_X
+    DEFINE_LOCAL  LWK_POS_Z
 
 	//自機座標取得
-    _PLAYER_POS_GET( POS_X,POS_Z )
+    _PLAYER_POS_GET( LWK_POS_X,LWK_POS_Z )
 
 	//座標による分岐
-    SWITCH $POS_X
+    SWITCH $LWK_POS_X
     CASE 71 THEN
         _OBJ_ANIME( D02R0101_LEADER3_01, anm_leader_tikaduku1 )
         _OBJ_ANIME_WAIT()
@@ -162,7 +162,7 @@ EVENT_START		ev_pos_d02r0101_stop
 	_OBJ_ANIME_WAIT()
 
 	//座標による分岐
-    SWITCH $POS_X
+    SWITCH $LWK_POS_X
     CASE 71 THEN
         _OBJ_ANIME( D02R0101_LEADER3_01, anm_leader_modoru1 )
         _OBJ_ANIME_WAIT()
@@ -276,6 +276,7 @@ _TALK_OBJ_START()
 	
 	//ちっ！　にげみちは　ないか！？
 	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_hakaim1_01 , D02R0101_HAKAIM_01 )
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
 	//【仮】　下っ端を探す遊びを入れる予定　未作成
@@ -284,8 +285,8 @@ _TALK_OBJ_START()
 	_TRAINER_BTL_SET( TRID_HAKAIM1_03, 0 )
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-	IF $SCWK_ANSWER == 0 THEN
-		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_LOSE THEN
+		_TRAINER_LOSE()		//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
 	
 	//自機：団員の方を向く
@@ -312,7 +313,6 @@ _TALK_OBJ_START()
 	_OBJ_ANIME_WAIT()
 	
 	//自機名！アーティ！　おつかれさん！！
-	_FLAG_RESET( FV_D02R0101_LEADER2 )
 	_PLAYER_NAME( 0 )
 	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_leader2_01 , D02R0101_LEADER2_01 )
 	_BALLOONWIN_CLOSE()
