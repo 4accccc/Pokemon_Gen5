@@ -28,12 +28,15 @@
 
 #include "print/wordset.h"    //WORDSET
 
-
 #include "trainer_eye_data.h"   //EV_TRAINER_EYE_HITDATA
 #include "field/eventdata_system.h" //EVENTDATA_GetSpecialScriptData
 
 #include "fieldmap.h"   //FIELDMAP_GetFldMsgBG
+<<<<<<< .mine
+#include "battle/battle.h"
+=======
 #include "musical/musical_event.h"  //MUSICAL_EVENT_WORK
+>>>>>>> .r10779
 
 #include "system/main.h"  //HEAPID_PROC
 
@@ -733,8 +736,10 @@ static void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
 
 
   case ID_EVSCR_TRAINER0:
+    OS_Printf( "視線データ0を返します\n" );
 		return &sc->eye_hitdata[0];
   case ID_EVSCR_TRAINER1:
+    OS_Printf( "視線データ1を返します\n" );
 		return &sc->eye_hitdata[1];
   
   case ID_EVSCR_MUSICAL_EVENT_WORK:
@@ -1040,7 +1045,7 @@ void** SCRIPT_SetSubProcWorkPointerAdrs( SCRIPT_WORK *sc )
  * 使い終わったら必ずNULLクリアすること！
  */
 //--------------------------------------------------------------
-void* SCRIPT_SetSubProcWorkPointer( SCRIPT_WORK *sc )
+void * SCRIPT_SetSubProcWorkPointer( SCRIPT_WORK *sc )
 {
   return sc->subproc_work;
 }
@@ -1129,15 +1134,19 @@ void TimeEventFlagClear( EVENTWORK * eventwork )
 //--------------------------------------------------------------
 u16 SCRIPT_GetTrainerID_ByScriptID( u16 scr_id )
 {
+#if 0 //pl
 	if( scr_id < ID_TRAINER_2VS2_OFFSET ){
-#if 0
 		return (scr_id - ID_TRAINER_OFFSET + 1);		//1オリジン
-#else //wb
-		return (scr_id - ID_TRAINER_OFFSET);		//0オリジンになりました。
-#endif
 	}else{
 		return (scr_id - ID_TRAINER_2VS2_OFFSET + 1);		//1オリジン
 	}
+#else
+	if( scr_id < ID_TRAINER_2VS2_OFFSET ){
+		return (scr_id - ID_TRAINER_OFFSET);		//0オリジン
+	}else{
+		return (scr_id - ID_TRAINER_2VS2_OFFSET);		//0オリジン
+	}
+#endif
 }
 
 //--------------------------------------------------------------
@@ -1163,37 +1172,35 @@ BOOL SCRIPT_GetTrainerLR_ByScriptID( u16 scr_id )
  * @retval  "0=シングルバトル、1=ダブルバトル"
  */
 //--------------------------------------------------------------
-#ifndef SCRIPT_PL_NULL
-BOOL CheckTrainer2vs2Type( u16 tr_id )
-{
-	if( TT_TrainerDataParaGet(tr_id, ID_TD_fight_type) == FIGHT_TYPE_1vs1 ){	//1vs1
-		OS_Printf( "trainer_type = 1vs1 " );
-		return 0;
-		//return SCR_EYE_TR_TYPE_SINGLE;
-	}
-
-	OS_Printf( "trainer_type = 2vs2 " );
-	return 1;
-	//return SCR_EYE_TR_TYPE_DOUBLE;
-}
-#else
 BOOL SCRIPT_CheckTrainer2vs2Type( u16 tr_id )
 {
-  #if 0 //wb 現状無効
-	if( TT_TrainerDataParaGet(tr_id, ID_TD_fight_type) == FIGHT_TYPE_1vs1 ){	//1vs1
+  #ifndef SCRIPT_PL_NULL
+	if( TT_TrainerDataParaGet(tr_id,ID_TD_fight_type) == FIGHT_TYPE_1vs1 ){
 		OS_Printf( "trainer_type = 1vs1 " );
-		return 0;
 		//return SCR_EYE_TR_TYPE_SINGLE;
+		return 0;
 	}
 
 	OS_Printf( "trainer_type = 2vs2 " );
-	return 1;
 	//return SCR_EYE_TR_TYPE_DOUBLE;
-  #else
-  return 0; //仮でシングル固定
+	return 1;
+  #else //wb
+  u32 rule = TT_TrainerDataParaGet( tr_id, ID_TD_fight_type );
+  
+  OS_Printf( "check 2v2 TRID=%d, type = %d\n", tr_id, rule );
+
+  switch( rule ){
+  case BTL_RULE_SINGLE:
+    return( 0 );
+  case BTL_RULE_DOUBLE:
+  case BTL_RULE_TRIPLE: //kari
+    return( 1 );
+  }
+  
+//  GF_ASSERT( 0 );
+  return( 1 );
   #endif
 }
-#endif
 
 //------------------------------------------------------------------
 /**

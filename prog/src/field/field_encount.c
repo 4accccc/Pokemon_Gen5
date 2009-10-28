@@ -422,17 +422,27 @@ static void enc_CreateBattleParam( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* 
 static void enc_CreateTrainerBattleParam(
     FIELD_ENCOUNT *enc,
     BATTLE_SETUP_PARAM *param, const HEAPID heapID,
-    TrainerID tr_id )
+    TrainerID tr_id0, TrainerID tr_id1 )
 {
   GAMESYS_WORK *gsys = enc->gsys;
   GAMEDATA *gdata = enc->gdata;
 
   BATTLE_PARAM_Init(param);
-
-  BTL_SETUP_Single_Trainer( param, gdata, NULL, BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, tr_id );
-
+  
+  if( (tr_id1 != 0) && tr_id0 != tr_id1 ){ //シングル
+    BTL_SETUP_Single_Trainer(
+        param, gdata, NULL, BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, tr_id0 );
+  }else if( tr_id0 == tr_id1 ){ //ダブル
+    BTL_SETUP_Double_Trainer(
+        param, gdata, NULL, BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, tr_id0 );
+  }else{
+    BTL_SETUP_Single_Trainer(
+        param, gdata, NULL, BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, tr_id0 );
+  }
+  
   { //対戦相手の手持ちポケモン生成
     param->partyEnemy1 = PokeParty_AllocPartyWork( heapID );
+    GF_ASSERT( param->partyEnemy1 != NULL );
     TT_EncountTrainerDataMake( param, heapID );
   }
 
@@ -454,10 +464,10 @@ static void enc_CreateTrainerBattleParam(
  */
 //--------------------------------------------------------------
 void FIELD_ENCOUNT_SetTrainerBattleParam(
-    FIELD_ENCOUNT *enc, BATTLE_SETUP_PARAM *setup, int tr_id, HEAPID heapID )
+    FIELD_ENCOUNT *enc, BATTLE_SETUP_PARAM *setup, int tr_id0, int tr_id1, HEAPID heapID )
 {
   KAGAYA_Printf( "トレーナーバトルパラム作成 HEAPID=%d\n", heapID );
-  enc_CreateTrainerBattleParam( enc, setup, heapID, tr_id );
+  enc_CreateTrainerBattleParam( enc, setup, heapID, tr_id0, tr_id1 );
 }
 
 //======================================================================

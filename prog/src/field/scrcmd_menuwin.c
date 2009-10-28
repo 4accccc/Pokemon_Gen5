@@ -748,11 +748,11 @@ VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
   STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
   STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
   GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
-///  u8 *win_open_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_OPEN_FLAG );
+//  u8 *win_open_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_OPEN_FLAG );
   u8 *msg_index      = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGINDEX );
   
   KAGAYA_Printf( "TR ID =%d, KIND ID =%d\n", tr_id, kind_id );
-
+  
   TT_TrainerMessageGet(
       tr_id, kind_id, *msgbuf, SCRCMD_WORK_GetHeapID(work) );
   

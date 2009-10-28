@@ -33,6 +33,8 @@
 
 #include "trainer_eye_data.h"
 
+#include "field_event_check.h"
+
 #if 0
 #include "battle/battle_common.h"	//↓インクルードに必要
 #include "ev_trainer.h"				//EvTrainer
@@ -185,7 +187,7 @@ static BOOL EvWaitTrainer01Move( VMHANDLE *core, void *wk )
   EV_TRAINER_EYE_HITDATA * eye0 = 
     SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
   EV_TRAINER_EYE_HITDATA * eye1 = 
-    SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
+    SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER1 );
 
   ev_eye_move0 = &eye0->ev_eye_move;
   
@@ -269,8 +271,10 @@ VMCMD_RESULT EvCmdEyeTrainerMoveDouble( VMHANDLE *core, void *wk )
   GMEVENT **ev_eye_move1;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  EV_TRAINER_EYE_HITDATA * eye0 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
-  EV_TRAINER_EYE_HITDATA * eye1 = SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
+  EV_TRAINER_EYE_HITDATA * eye0 =
+    SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER0 );
+  EV_TRAINER_EYE_HITDATA * eye1 =
+    SCRIPT_GetMemberWork( sc, ID_EVSCR_TRAINER1 );
   
   ev_eye_move0 = &eye0->ev_eye_move;
   ev_eye_move1 = &eye1->ev_eye_move;
@@ -282,6 +286,10 @@ VMCMD_RESULT EvCmdEyeTrainerMoveDouble( VMHANDLE *core, void *wk )
     return 0;
   }
   
+  if( *ev_eye_move0 == NULL || *ev_eye_move1 == NULL ){
+    OS_Printf( "視線データ異常\n" );
+  }
+
   VMCMD_SetWait( core, EvWaitTrainer01Move );
   return VMCMD_RESULT_SUSPEND;
 }
@@ -394,7 +402,7 @@ VMCMD_RESULT EvCmdTrainerBattleSet( VMHANDLE *core, void *wk )
     GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
     SCRIPT_FLDPARAM * fparam = SCRIPT_GetFieldParam( sc );
     GMEVENT *ev_battle =
-      EVENT_TrainerBattle( gsys, fparam->fieldMap, tr_id_0, flags );
+      EVENT_TrainerBattle( gsys, fparam->fieldMap, tr_id_0, tr_id_1, flags );
     SCRIPT_CallEvent( sc, ev_battle );
   }
 	return VMCMD_RESULT_SUSPEND;
@@ -439,7 +447,7 @@ VMCMD_RESULT EvCmdTrainerTalkTypeGet( VMHANDLE *core, void *wk )
 	u16 *wk1				= SCRCMD_GetVMWork( core, work );
 	u16 *wk2				= SCRCMD_GetVMWork( core, work );
 	u16 *wk3				= SCRCMD_GetVMWork( core, work );
-
+  
 	//スクリプトIDから、トレーナーIDを取得、ダブルバトルタイプか取得
 	btl_type = SCRIPT_CheckTrainer2vs2Type(
       SCRIPT_GetTrainerID_ByScriptID(*script_id) );
@@ -496,7 +504,7 @@ VMCMD_RESULT EvCmdRevengeTrainerTalkTypeGet( VMHANDLE *core, void *wk )
 	//スクリプトIDから、トレーナーIDを取得、ダブルバトルタイプか取得
 	btl_type = SCRIPT_CheckTrainer2vs2Type(
       SCRIPT_GetTrainerID_ByScriptID(*script_id) );
-
+  
 	//シングルかダブルかチェック
 	if( btl_type == 0 ){
 		//シングル
@@ -602,13 +610,10 @@ VMCMD_RESULT EvCmd2vs2BattleCheck( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys =  SCRCMD_WORK_GetGameSysWork( work );
 	u16* ret_wk	= SCRCMD_GetVMWork( core, work );
   
-#if 0
-	*ret_wk = EvPoke_Enable2vs2Battle(SaveData_GetTemotiPokemon(core->fsys->savedata));
-#else //wb kari
-  *ret_wk = FALSE; //不可
-#endif
+  *ret_wk = FIELD_EVENT_Check2vs2Battle( gsys );
 	return 0;
 }
 

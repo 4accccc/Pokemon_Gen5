@@ -138,10 +138,10 @@ GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap, BOOL vs2 )
     MMDL *mmdl;
     EYEMEET_HITDATA hit1;
     
-    event = tr_SetEventScript( fieldMap, hit0.mmdl ); //スクリプト起動
-    
     if( hit0.tr_type == SCR_EYE_TR_TYPE_SINGLE ) //シングル
     {
+      event = tr_SetEventScript( fieldMap, hit0.mmdl ); //スクリプト起動
+
       if( vs2 == FALSE || //シングル戦チェック
           treye_CheckEyeMeet(fieldMap,hit0.mmdl,&hit1) == FALSE )
       { //スクリプト用イベントデータセット シングル
@@ -158,17 +158,22 @@ GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap, BOOL vs2 )
         KAGAYA_Printf( "TRAINER EYE HIT TAG DOUBLE\n" );
       }
     }
-    else if( hit0.tr_type == SCR_EYE_TR_TYPE_DOUBLE && vs2 == TRUE ) //ダブル
+    else if( hit0.tr_type == SCR_EYE_TR_TYPE_DOUBLE )
     {
-      mmdl = tr_CheckPairTrainer( hit0.mmdl, hit0.tr_id );
-      tr_InitEyeMeetHitData( &hit1, mmdl, hit0.range, hit0.dir );
-      
-      //スクリプト用イベントデータセット ダブル
-      trEventScript_SetTrainerEyeData(
-          event, &hit0, SCR_EYE_TR_TYPE_DOUBLE, SCR_EYE_TR_0 );
-      trEventScript_SetTrainerEyeData(
-          event, &hit1, SCR_EYE_TR_TYPE_DOUBLE, SCR_EYE_TR_1 );
-      KAGAYA_Printf( "TRAINER EYE HIT DOUBLE\n" );
+      if( vs2 == TRUE ) //ダブル可能
+      {
+        event = tr_SetEventScript( fieldMap, hit0.mmdl ); //スクリプト起動
+        
+        mmdl = tr_CheckPairTrainer( hit0.mmdl, hit0.tr_id );
+        tr_InitEyeMeetHitData( &hit1, mmdl, hit0.range, hit0.dir );
+        
+        //スクリプト用イベントデータセット ダブル
+        trEventScript_SetTrainerEyeData(
+            event, &hit0, SCR_EYE_TR_TYPE_DOUBLE, SCR_EYE_TR_0 );
+        trEventScript_SetTrainerEyeData(
+            event, &hit1, SCR_EYE_TR_TYPE_DOUBLE, SCR_EYE_TR_1 );
+        KAGAYA_Printf( "TRAINER EYE HIT DOUBLE\n" );
+      }
     }
     else //対応していないトレーナータイプ
     {
@@ -441,6 +446,8 @@ GMEVENT * EVENT_SetTrainerEyeMove( FIELDMAP_WORK *fieldMap,
   work->mmdl = mmdl;
   work->fieldMap = fieldMap;
   work->fieldPlayer = FIELDMAP_GetFieldPlayer( fieldMap );
+  
+  KAGAYA_Printf( "OBJ ID %dの視線移動をセット\n", MMDL_GetOBJID(mmdl) );
   return( ev );
 }
 

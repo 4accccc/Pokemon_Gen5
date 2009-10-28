@@ -37,4 +37,4 @@ extern void ENCOUNT_WORK_Delete( ENCOUNT_WORK* wp );
 extern void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type );
 
 extern void FIELD_ENCOUNT_SetTrainerBattleParam(
-    FIELD_ENCOUNT *enc, BATTLE_SETUP_PARAM *setup, int tr_id, HEAPID heapID );
+    FIELD_ENCOUNT *enc, BATTLE_SETUP_PARAM *setup, int tr_id0, int tr_id1, HEAPID heapID );

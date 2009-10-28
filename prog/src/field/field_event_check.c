@@ -225,7 +225,8 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 
 //☆☆☆トレーナー視線チェックがここに入る
   if( !(req.debugRequest) && DEBUG_FLG_GetFlg(DEBUG_FLG_DisableTrainerEye) == FALSE ){
-    event = EVENT_CheckTrainerEye( fieldWork, FALSE );
+    BOOL flag = FIELD_EVENT_Check2vs2Battle( gsys );
+    event = EVENT_CheckTrainerEye( fieldWork, flag );
     if( event != NULL ){
       return event;
     }
@@ -2261,3 +2262,44 @@ static int checkPokeWazaGroup( GAMEDATA *gdata, u32 waza_no )
    
   return 6;
 }
+
+
+//--------------------------------------------------------------
+/**
+ * 2vs2対戦が可能かどうかチェック
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+BOOL FIELD_EVENT_Check2vs2Battle( GAMESYS_WORK *gsys )
+{
+  int i,max,count;
+  POKEMON_PARAM *pp;
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  POKEPARTY *party = GAMEDATA_GetMyPokemon( gdata );
+  
+  max = PokeParty_GetPokeCount( party );
+  
+  for( i = 0, count = 0; i < max; i++ ){
+    pp = PokeParty_GetMemberPointer( party, i );
+    
+    //たまごチェック
+    if( PP_Get(pp,ID_PARA_tamago_flag,NULL) != 0 ){
+      continue;
+    }
+    
+    //HPチェック
+    if( PP_Get(pp,ID_PARA_hp,NULL) == 0 ){
+      continue;
+    }
+
+    count++;
+  }
+  
+  if( count < 2 ){
+    return FALSE;
+  }
+  
+  return( TRUE );
+}
+
