@@ -22,10 +22,9 @@
 _EVENT_DATA		ev_d02r0101_sportsm_01
 _EVENT_DATA		ev_d02r0101_mountman_01
 _EVENT_DATA		ev_d02r0101_assistantw_01
-_EVENT_DATA		ev_d02r0101_scene_change_01
+_EVENT_DATA		ev_scene_d02r0101_stop_01
 _EVENT_DATA		ev_d02r0101_leader3_01
 _EVENT_DATA		ev_pos_d02r0101_stop
-_EVENT_DATA		ev_d02r0101_leader2_01
 _EVENT_DATA		ev_d02r0101_hakaim_01
 _EVENT_DATA		ev_init_d02r0101
 _EVENT_DATA_END
@@ -41,12 +40,10 @@ _EVENT_DATA_END
 /*  FIELD_INIT_LABEL						                  */
 /**************************************************************/
 INIT_EVENT_START	ev_init_d02r0101
-	//【杉中】コメントをお願いします。POSイベント後にリーダー位置を奥にとか？
 
+	//シーンチェンジイベント後にジムリーダーアーティをストッパーの位置に移動
 	IF $WK_SCENE_D02R0101 == 1 THEN
 		_OBJ_POS_CHANGE( D02R0101_LEADER3_01, 74, 0, 27, DIR_DOWN )
-	//↓ELSEは消しても大丈夫ですよ
-	ELSE
 	
 	ENDIF
 
@@ -76,7 +73,7 @@ EVENT_END
 /**************************************************************/
 /*  D02R0101 SCENE_CHANGE									  */
 /**************************************************************/
-EVENT_START		ev_d02r0101_scene_change_01
+EVENT_START		ev_scene_d02r0101_stop_01
 	
 	//アーティ：自機を見る
 	_OBJ_ANIME( D02R0101_LEADER3_01, anm_leader_staywalk )
@@ -257,13 +254,6 @@ _ANIME_LABEL	anm_leader_modoru5
 	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
-	
-/**************************************************************/
-/*  D02R0101 ジムリーダーアロエ会話							  */
-/**************************************************************/
-EVENT_START		ev_d02r0101_leader2_01
-
-EVENT_END
 
 /**************************************************************/
 /*  D02R0101 プラズマ団員♂会話								  */

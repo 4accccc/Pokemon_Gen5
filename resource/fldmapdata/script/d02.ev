@@ -23,7 +23,6 @@ _EVENT_DATA		ev_d02_girl2_01
 _EVENT_DATA		ev_d02_hakaim1_01
 _EVENT_DATA		ev_d02_hakaim2_01
 _EVENT_DATA		ev_d02_hakaiw_01
-_EVENT_DATA		ev_d02_leader3_01
 _EVENT_DATA		ev_pos_d02_stop
 _EVENT_DATA_END
 
@@ -60,13 +59,6 @@ EVENT_END
 /**************************************************************/
 EVENT_START    ev_d02_hakaiw_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d02_hakaiw_01 )
-EVENT_END
-
-/**************************************************************/
-/*  D02 LEADER3の会話用イベントスクリプト                     */
-/**************************************************************/
-EVENT_START    ev_d02_leader3_01
-	//【杉中】SCRID_DUMMYで対応できるならラベルを消しちゃいましょう。
 EVENT_END
 
 /**************************************************************/

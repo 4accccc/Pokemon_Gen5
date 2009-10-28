@@ -834,8 +834,7 @@ EVENT_START	ev_pos_c01gym0101_button_kusa_01
 		_SE_PLAY( SEQ_SE_FLD_44 )
 		_SE_WAIT()
 
-		//【杉中】これは仮？
-		//【仮】ＳＥ：ブッブー
+		//ＳＥ：ブッブー
 		_SE_PLAY( SEQ_SE_FLD_42 )
 		_SE_WAIT()
 		
@@ -869,7 +868,7 @@ EVENT_START	ev_pos_c01gym0101_button_honoo_01
 		_SE_PLAY( SEQ_SE_FLD_44 )
 		_SE_WAIT()
 
-		//【仮】ＳＥ：ブッブー
+		//ＳＥ：ブッブー
 		_SE_PLAY( SEQ_SE_FLD_42 )
 		_SE_WAIT()
 		
@@ -903,7 +902,7 @@ EVENT_START	ev_pos_c01gym0101_button_mizu_01
 		_SE_PLAY( SEQ_SE_FLD_44 )
 		_SE_WAIT()
 
-		//【仮】ＳＥ：ピンポーンピンポーン
+		//ＳＥ：ピンポーンピンポーン
 		_SE_PLAY( SEQ_SE_FLD_41 )
 		_SE_WAIT()
 		
@@ -974,7 +973,7 @@ EVENT_START	ev_pos_c01gym0101_button_kusa_02
 		_SE_PLAY( SEQ_SE_FLD_44 )
 		_SE_WAIT()
 
-		//【仮】ＳＥ：ピンポーンピンポーン
+		//ＳＥ：ピンポーンピンポーン
 		_SE_PLAY( SEQ_SE_FLD_41 )
 		_SE_WAIT()		
 		
@@ -1030,7 +1029,7 @@ EVENT_START	ev_pos_c01gym0101_button_honoo_02
 		_SE_PLAY( SEQ_SE_FLD_44 )
 		_SE_WAIT()
 
-		//【仮】ＳＥ：ブッブー
+		//ＳＥ：ブッブー
 		_SE_PLAY( SEQ_SE_FLD_42 )
 		_SE_WAIT()
 		
@@ -1065,7 +1064,7 @@ EVENT_START	ev_pos_c01gym0101_button_mizu_02
 		_SE_PLAY( SEQ_SE_FLD_44 )
 		_SE_WAIT()
 
-		//【仮】ＳＥ：ブッブー
+		//ＳＥ：ブッブー
 		_SE_PLAY( SEQ_SE_FLD_42 )
 		_SE_WAIT()
 		
@@ -1100,7 +1099,7 @@ EVENT_START	ev_pos_c01gym0101_button_kusa_03
 		_SE_PLAY( SEQ_SE_FLD_44 )
 		_SE_WAIT()
 
-		//【仮】ＳＥ：ブッブー
+		//ＳＥ：ブッブー
 		_SE_PLAY( SEQ_SE_FLD_42 )
 		_SE_WAIT()
 		
@@ -1135,7 +1134,7 @@ EVENT_START	ev_pos_c01gym0101_button_honoo_03
 		_SE_PLAY( SEQ_SE_FLD_44 )
 		_SE_WAIT()
 
-		//【仮】ＳＥ：ピンポーンピンポーン
+		//ＳＥ：ピンポーンピンポーン
 		_SE_PLAY( SEQ_SE_FLD_41 )
 		_SE_WAIT()
 		
@@ -1191,7 +1190,7 @@ EVENT_START	ev_pos_c01gym0101_button_mizu_03
 		_SE_PLAY( SEQ_SE_FLD_44 )
 		_SE_WAIT()
 		
-		//【仮】ＳＥ：ブッブー
+		//ＳＥ：ブッブー
 		_SE_PLAY( SEQ_SE_FLD_42 )
 		_SE_WAIT()
 		
@@ -1208,9 +1207,6 @@ EVENT_START	ev_pos_c01gym0101_button_mizu_03
 		ENDIF
 
 EVENT_END
-
-
-//【杉中】全部消しちゃってください
 
 /**************************************************************/
 /*     草ボタン１　ハズレ　スイッチオフ　ＰＯＳ発動		      */
