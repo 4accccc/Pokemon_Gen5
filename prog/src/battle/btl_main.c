@@ -596,7 +596,7 @@ static BOOL setup_alone_triple( int* seq, void* work )
 {
   enum {
     //BAG_MODE = BBAG_MODE_NORMAL,
-    BAG_MODE = BBAG_MODE_SHOOTER,    // サポートシューター
+    BAG_MODE = BBAG_MODE_SHOOTER,    // 確認用にサポートシューターにした　by soga
   };
   // server*1, client*2
   BTL_MAIN_MODULE* wk = work;
