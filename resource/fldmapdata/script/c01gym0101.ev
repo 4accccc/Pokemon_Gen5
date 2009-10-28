@@ -288,6 +288,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	
 	//オレたち　３人は！
 	_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_04 , C01GYM0101_LEADER1_01 )
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()	
 
 	//分岐処理・最初に選んだポケモンから苦手なタイプになる
@@ -304,6 +305,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	
 		//ということで　ほのおタイプの
 		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_05a , C01GYM0101_LEADER1_02 )
+		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()			
 		
 		//ほのおタイプ選択の場合
@@ -315,6 +317,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 		
 		//ということで　みずタイプの
 		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_05b , C01GYM0101_LEADER1_01 )
+		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		
 		//みずタイプ選択の場合
@@ -329,6 +332,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	
 		//ということで　くさタイプを
 		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_05c , C01GYM0101_LEADER1_03 )
+		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		
 	ENDIF
@@ -420,12 +424,12 @@ _ANIME_LABEL	anm_player_tikaduku_13
 //	ポッド・デント　左右展開
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_pod_tenkai
-	_ANIME_DATA	AC_WALK_L_16F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_dento_tenkai
-	_ANIME_DATA	AC_WALK_R_16F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -483,17 +487,17 @@ EVENT_START		ev_c01gym0101_leader1_01
 
 			//さんにんの　なかで　いちばん　つよい　オレが
 			_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20b )
+			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 		
 			//戦闘処理
 			_TRAINER_BTL_SET( TRID_LEADER1C_01, 0 )
 			//敗戦チェック
 			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-
-			//【杉中】マジックナンバー消滅キャンペーン SCR_BATTLE_RESULT_LOSE を使ってください。
-			//これ以降のトレーナー戦呼び出しにおいても同様です。
-			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_LOSE THEN
-				_TRAINER_LOSE()//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+			ELSE
+				_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 			ENDIF
 		
 			//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
@@ -522,6 +526,7 @@ EVENT_START		ev_c01gym0101_leader1_01
 			_ITEM_NAME( 0, ITEM_WAZAMASIN01 )
 			_ITEM_WAZA_NAME( 1, ITEM_WAZAMASIN01 )
 			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
+			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 			
 			//============フラグワーク操作=============//
@@ -547,6 +552,7 @@ EVENT_START		ev_c01gym0101_leader1_01
 		ELSE
 			//ざんねん　ですね　ぼくが　おあいて　したかったです
 			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_21b , C01GYM0101_LEADER1_01 )
+			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 			
 		ENDIF
@@ -554,6 +560,7 @@ EVENT_START		ev_c01gym0101_leader1_01
 	ELSE	
 		//ぼくたち　イッシュちほう　では　まだ　かけだしの　ジムリーダーです
 		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_10 , C01GYM0101_LEADER1_01 )
+		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	
 	ENDIF
@@ -577,14 +584,17 @@ EVENT_START		ev_c01gym0101_leader1_02
 
 			//さんにんの　なかで　いちばん　つよい　オレが
 			_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20a )
+			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 
 			//戦闘処理
 			_TRAINER_BTL_SET( TRID_LEADER1A_01, 0 )
 			//敗戦チェック
 			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_LOSE THEN
-			_TRAINER_LOSE()//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+			ELSE
+				_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 			ENDIF
 
 			//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
@@ -619,6 +629,7 @@ EVENT_START		ev_c01gym0101_leader1_02
 			_ITEM_NAME( 0, ITEM_WAZAMASIN01 )
 			_ITEM_WAZA_NAME( 1, ITEM_WAZAMASIN01 )
 			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
+			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 			
 			//========================================//
@@ -646,6 +657,7 @@ EVENT_START		ev_c01gym0101_leader1_02
 			
 			//なんだよーッ！　オレが　たたかいたかったのになー！！
 			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_21a , C01GYM0101_LEADER1_02 )
+			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 		
 		ENDIF
@@ -655,6 +667,7 @@ EVENT_START		ev_c01gym0101_leader1_02
 		
 		//わざマシンは　なんどだって　つかえると　いうことは
 			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_11 , C01GYM0101_LEADER1_02 )
+			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 	
 	ENDIF
@@ -698,14 +711,17 @@ EVENT_START		ev_c01gym0101_leader1_03
 		
 			//さんにんの　なかで　いちばん　つよい　オレが
 			_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20c )
+			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 
 			//戦闘処理
 			_TRAINER_BTL_SET( TRID_LEADER1B_01, 0 )
 			//敗戦チェック
 			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_LOSE THEN
-			_TRAINER_LOSE()//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+			ELSE
+				_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 			ENDIF
 
 			//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
@@ -740,6 +756,7 @@ EVENT_START		ev_c01gym0101_leader1_03
 			_ITEM_NAME( 0, ITEM_WAZAMASIN01 )
 			_ITEM_WAZA_NAME( 1, ITEM_WAZAMASIN01 )
 			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
+			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 			
 			//========================================//
@@ -765,6 +782,7 @@ EVENT_START		ev_c01gym0101_leader1_03
 		ELSE
 			//オレが　いちばん　つよいのに！　どうして　みずタイプ　なんだよ！
 			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_21c , C01GYM0101_LEADER1_03 )
+			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 
 		ENDIF
@@ -773,6 +791,7 @@ EVENT_START		ev_c01gym0101_leader1_03
 	ELSE	
 		//オレたちが　もし　１７人　きょうだい　だったら
 			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_12 , C01GYM0101_LEADER1_03 )
+			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 	
 	ENDIF

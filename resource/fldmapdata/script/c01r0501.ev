@@ -28,9 +28,6 @@ _EVENT_DATA		ev_bg_c01r0501_board_01
 _EVENT_DATA		ev_c01r0501_rival_01
 _EVENT_DATA_END
 
-//【杉中】コメントしているラベルは消しちゃいましょう。
-//！重要！ev_c01r0501_board_01 はBGイベントなのでev_bg_から始めてください
-
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
 /**************************************************************/
@@ -151,7 +148,9 @@ EVENT_END
 EVENT_START   ev_c01r0501_rival_01
 _TALK_OBJ_START()
 
+	_PLAYER_NAME( 0 )
 	_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0501_black_01 )
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 		
 	_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0501_black_02 )

@@ -21,10 +21,6 @@ _EVENT_DATA		ev_c01r0102_girl3_01
 _EVENT_DATA		ev_c01r0102_books_01
 _EVENT_DATA_END
 
-
-//【杉中】シーンチェンジがラベル名称と異なっていますゆえ、直して下さいまし
-//HGSSでは上記の命名規則だったのですが、WBでは変更になりました。俺の担当箇所を参考にしたならゴメン！
-
 /**************************************************************/
 /*  C01R0102 ＰＤＷ誘導イベント								  */
 /**************************************************************/
@@ -34,7 +30,7 @@ EVENT_START   ev_scene_c01r0102_pdwguide_01
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk )
 	_OBJ_ANIME_WAIT()
 	
-	//マコモ：！マーク
+	//マコモ：自機の方へ向く
 	_OBJ_ANIME( C01R0102_INVENTOR_01, anm_inventor_kiduku )
 	_OBJ_ANIME_WAIT()
 	
@@ -86,36 +82,30 @@ EVENT_END
 //	自機　マコモに近づく
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_player_walk
-	_ANIME_DATA	AC_WALK_R_8F,4
-	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WALK_D_8F,5
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------
 //	マコモ　気付く
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_inventor_kiduku
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	マコモ　Ｃギアの機能追加にパソコン前へ移動、帰ってくる
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_inventor_kaizou
-	_ANIME_DATA	AC_STAY_WALK_L_32F,1
+	_ANIME_DATA	AC_STAY_WALK_U_16F,1
+	_ANIME_DATA	AC_WALK_L_8F,4
 	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_U_8F,5
 	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA	AC_STAY_WALK_U_32F,1
-	_ANIME_DATA AC_STAY_JUMP_U_16F,1
-	_ANIME_DATA	AC_STAY_WALK_U_32F,1
-	_ANIME_DATA	AC_WALK_D_8F,5
-	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_STAY_WALK_U_16F,1
 	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA AC_DIR_L,1
-	_ANIME_DATA	AC_STAY_WALK_L_32F,1
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA	AC_STAY_WALK_U_16F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -130,7 +120,6 @@ _ANIME_LABEL	anm_inventor_dance
 	_ANIME_DATA AC_DIR_L,1
 	_ANIME_DATA AC_DIR_D,1
 	_ANIME_DATA AC_DIR_R,1
-	_ANIME_DATA AC_JUMP_U_2G_16F,1
 	_ANIME_DATA AC_DIR_U,1
 	_ANIME_DATA AC_DIR_L,1
 	_ANIME_DATA AC_DIR_D,1
@@ -139,7 +128,6 @@ _ANIME_LABEL	anm_inventor_dance
 	_ANIME_DATA AC_DIR_L,1
 	_ANIME_DATA AC_DIR_D,1
 	_ANIME_DATA AC_DIR_R,1
-	_ANIME_DATA AC_JUMP_D_2G_16F,2
 	_ANIME_DATA AC_DIR_U,1
 	_ANIME_DATA AC_DIR_L,1
 	_ANIME_DATA AC_DIR_D,1
@@ -148,7 +136,6 @@ _ANIME_LABEL	anm_inventor_dance
 	_ANIME_DATA AC_DIR_L,1
 	_ANIME_DATA AC_DIR_D,1
 	_ANIME_DATA AC_DIR_R,1
-	_ANIME_DATA AC_JUMP_U_2G_16F,1
 	_ANIME_DATA AC_DIR_U,1
 	_ANIME_DATA AC_DIR_L,1
 	_ANIME_DATA AC_DIR_D,1
@@ -158,7 +145,7 @@ _ANIME_LABEL	anm_inventor_dance
 	_ANIME_DATA AC_DIR_D,1
 	_ANIME_DATA AC_DIR_R,1
 	_ANIME_DATA AC_STAY_JUMP_U_16F,2
-	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -218,7 +205,5 @@ EVENT_END
 /*  C01R0102 本棚のイベントスクリプト						  */
 /**************************************************************/
 EVENT_START   ev_c01r0102_books_01
-
 	_EASY_MSG( msg_c01r0101_books_01 )
-
 EVENT_END
