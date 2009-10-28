@@ -47,6 +47,12 @@ typedef enum{
   FIELDCOMM_EXIT_ERROR,       ///<ƒGƒ‰[”­¶
 }FIELDCOMM_EXIT;
 
+typedef enum{
+  DRAW3DMODE_NORMAL,          ///<’Êí3‚c•`‰æ
+  DRAW3DMODE_CUTIN,           ///<3‚cƒJƒbƒgƒCƒ“Žž•`‰æ
+  DRAW3DMODE_MAX,
+}DRAW3DMODE;
+
 //======================================================================
 //	struct
 //======================================================================
@@ -107,3 +113,8 @@ extern void FIELDMAP_SetGoldMsgWin( FIELDMAP_WORK *fieldWork, FLDMSGWIN *msgWin 
 extern SODATEYA* FIELDMAP_GetSodateya( FIELDMAP_WORK* fieldWork );
 extern FIELDCOMM_EXIT FIELDCOMM_ExitWait(GAME_COMM_SYS_PTR game_comm);
 extern GAME_COMM_NO FIELDCOMM_CheckCommNo(GAME_COMM_SYS_PTR game_comm);
+
+extern DRAW3DMODE FIELDMAP_GetDraw3DMode(FIELDMAP_WORK *fieldWork);
+extern void FIELDMAP_SetDraw3DMode(FIELDMAP_WORK *fieldWork, DRAW3DMODE mode);
+
+

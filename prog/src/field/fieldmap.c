@@ -293,6 +293,8 @@ struct _FIELDMAP_WORK
 
   SODATEYA* sodateya;  // 育て屋
 
+  DRAW3DMODE Draw3DMode;
+
 };
 
 fx32	fldWipeScale;
@@ -372,6 +374,12 @@ static const u32 fldmapdata_fogColorTable[8];
 static const u16 fldmapdata_bgColorTable[16];
 
 static void InitGmkTmpWork(GMK_TMP_WORK *tmpWork);
+
+//3Ｄ描画モード
+static void Draw3DNormalMode( FIELDMAP_WORK * fieldWork );
+static void Draw3DCutinMode(FIELDMAP_WORK * fieldWork);
+
+typedef void (*DRAW3DMODE_FUNC)(FIELDMAP_WORK * fieldWork);
 
 //======================================================================
 //	フィールドマップ　生成　削除
@@ -680,6 +688,10 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       SCRIPT_CallFieldRecoverScript( fieldWork->gsys, fieldWork->heapID );
     }
   }
+
+  //3Ｄ描画モードは通常でセットアップ
+  fieldWork->Draw3DMode = DRAW3DMODE_NORMAL;
+
   return MAINSEQ_RESULT_NEXTSEQ;
 }
 
@@ -1806,6 +1818,27 @@ static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
   }
 #endif  //PM_DEBUG
 
+  {
+    static const DRAW3DMODE_FUNC func[] = {
+      Draw3DNormalMode,
+      Draw3DCutinMode
+    };
+
+    func[ fieldWork->Draw3DMode ](fieldWork);
+  }
+
+
+#if 0  
+  if (test_mode){
+    G3X_SetClearColor(GX_RGB(0,0,0),0,0x7fff,0,FALSE);
+
+    FLD_PRTCL_Main();
+    FLD3D_CI_Draw( fieldWork->Fld3dCiPtr );
+  
+    GFL_G3D_DRAW_End(); //描画終了（バッファスワップ）
+    return;
+  }
+
 	FIELD_FOG_Reflect( fieldWork->fog );
 	FIELD_LIGHT_Reflect( fieldWork->light );
 
@@ -1855,7 +1888,7 @@ static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
   FLD_EXP_OBJ_Draw( fieldWork->ExpObjCntPtr );
 
   if (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG){
-    if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){
+    if (/*GFL_UI_KEY_GetTrg() & PAD_BUTTON_L*/0){
       FLD3D_CI_CallCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr, 0);
     }else if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){
       FLD3D_CI_CallCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr, 1);
@@ -1864,12 +1897,29 @@ static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
           fieldWork->gsys, fieldWork->Fld3dCiPtr, fieldWork->camera_control,
           FIELDMAP_GetFieldPlayer(fieldWork),
           FIELDMAP_GetFldNoGridMapper( fieldWork ) );
+    }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_A){
+      CapFunc();
+    }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_B){
+      static const GFL_BG_SYS_HEADER sc_bg_sys_header = 
+      {
+				GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
+      };
+      GFL_BG_SetBGMode( &sc_bg_sys_header );
+      GX_SetBankForBG(GX_VRAM_BG_128_D);
+    }
+    else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){
+      static const GFL_BG_SYS_HEADER sc_bg_sys_header = 
+      {
+				GX_DISPMODE_VRAM_D,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
+      };
+      GFL_BG_SetBGMode( &sc_bg_sys_header );
+      GX_SetBankForLCDC(GX_VRAM_LCDC_D);
     }
   }
 
   FLD_PRTCL_Main();
   FLD3D_CI_Draw( fieldWork->Fld3dCiPtr );
-  
+#endif  
   GFL_G3D_DRAW_End(); //描画終了（バッファスワップ）
 
 }
@@ -2565,3 +2615,141 @@ void *GMK_TMP_WK_GetWork(FIELDMAP_WORK *fieldWork, const u32 inAssignID)
   }
   return tmpWork->Work;
 }
+
+//==================================================================
+/**
+ * 通常描画
+ *
+ * @param   fieldWork   フィールドワークポインタ
+ *
+ * @return none
+ */
+//==================================================================
+static void Draw3DNormalMode( FIELDMAP_WORK * fieldWork )
+{
+  FIELD_FOG_Reflect( fieldWork->fog );
+	FIELD_LIGHT_Reflect( fieldWork->light );
+
+	GFL_G3D_CAMERA_Switching( fieldWork->g3Dcamera );
+	GFL_G3D_LIGHT_Switching( fieldWork->g3Dlightset );
+  
+  FLDMSGBG_PrintG3D( fieldWork->fldMsgBG );
+  
+
+	FLDMAPPER_Draw( fieldWork->g3Dmapper, fieldWork->g3Dcamera );
+	FLD_WIPEOBJ_Main( fieldWork->fldWipeObj, fldWipeScale ); 
+  {
+	  MtxFx44 org_pm,pm;
+		const MtxFx44 *m;
+		m = NNS_G3dGlbGetProjectionMtx();
+/**		
+		OS_Printf("%x,%x,%x,%x\n%x,%x,%x,%x\n%x,%x,%x,%x\n%x,%x,%x,%x\n",
+				m->_00,m->_01,m->_02,m->_03,
+				m->_10,m->_11,m->_12,m->_13,
+				m->_20,m->_21,m->_22,m->_23,
+				m->_30,m->_31,m->_32,m->_33);
+//*/				
+    
+		org_pm = *m;
+		pm = org_pm;
+		pm._32 += FX_Mul( pm._22, PRO_MAT_Z_OFS );
+		NNS_G3dGlbSetProjectionMtx(&pm);
+		NNS_G3dGlbFlush();		  //　ジオメトリコマンドを転送
+    NNS_G3dGeFlushBuffer(); // 転送まち
+
+    FLDEFF_CTRL_Draw( fieldWork->fldeff_ctrl );
+  
+    GFL_BBDACT_Draw(
+        fieldWork->bbdActSys, fieldWork->g3Dcamera, fieldWork->g3Dlightset );
+
+		NNS_G3dGlbSetProjectionMtx(&org_pm);
+		NNS_G3dGlbFlush();		//　ジオメトリコマンドを転送
+  }
+
+	// フィールドマップ用制御タスクシステム
+	FLDMAPFUNC_Sys_Draw3D( fieldWork->fldmapFuncSys );
+
+	
+  FIELD_WEATHER_3DWrite( fieldWork->weather_sys );	// 天気描画処理
+
+  //フィールド拡張3ＤＯＢＪ描画
+  FLD_EXP_OBJ_Draw( fieldWork->ExpObjCntPtr );
+
+  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG){
+    if (/*GFL_UI_KEY_GetTrg() & PAD_BUTTON_L*/0){
+      FLD3D_CI_CallCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr, 0);
+    }else if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){
+      FLD3D_CI_CallCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr, 1);
+    }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_R){
+      FLD3D_CI_FlySkyCameraDebug(
+          fieldWork->gsys, fieldWork->Fld3dCiPtr, fieldWork->camera_control,
+          FIELDMAP_GetFieldPlayer(fieldWork),
+          FIELDMAP_GetFldNoGridMapper( fieldWork ) );
+    }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_B){
+      static const GFL_BG_SYS_HEADER sc_bg_sys_header = 
+      {
+				GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
+      };
+      GFL_BG_SetBGMode( &sc_bg_sys_header );
+      GX_SetBankForBG(GX_VRAM_BG_128_D);
+    }
+    else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){
+      static const GFL_BG_SYS_HEADER sc_bg_sys_header = 
+      {
+				GX_DISPMODE_VRAM_D,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
+      };
+      GFL_BG_SetBGMode( &sc_bg_sys_header );
+      GX_SetBankForLCDC(GX_VRAM_LCDC_D);
+    }
+  }
+
+  FLD_PRTCL_Main();
+  FLD3D_CI_Draw( fieldWork->Fld3dCiPtr );
+}
+
+//==================================================================
+/**
+ * フィールド3Ｄカットイン時描画
+ *
+ * @param   fieldWork   フィールドワークポインタ
+ *
+ * @return none
+ */
+//==================================================================
+static void Draw3DCutinMode(FIELDMAP_WORK * fieldWork)
+{
+  G3X_SetClearColor(GX_RGB(0,0,0),0,0x7fff,0,FALSE);
+
+  FLD_PRTCL_Main();
+  FLD3D_CI_Draw( fieldWork->Fld3dCiPtr );
+}
+
+//==================================================================
+/**
+ * 3D描画モード取得
+ *
+ * @param   fieldWork   フィールドワークポインタ
+ *
+ * @return DRAW3DMODE   描画モード
+ */
+//==================================================================
+DRAW3DMODE FIELDMAP_GetDraw3DMode(FIELDMAP_WORK *fieldWork)
+{
+  return fieldWork->Draw3DMode;
+}
+
+//==================================================================
+/**
+ * 3D描画モードセット
+ *
+ * @param   fieldWork   フィールドワークポインタ
+ * @param   DRAW3DMODE  描画モード
+ *
+ * @return  none
+ */
+//==================================================================
+void FIELDMAP_SetDraw3DMode(FIELDMAP_WORK *fieldWork, DRAW3DMODE mode)
+{
+  fieldWork->Draw3DMode = mode;
+}
+
