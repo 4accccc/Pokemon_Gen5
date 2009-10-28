@@ -302,7 +302,8 @@ void FLD_EXP_OBJ_Draw( FLD_EXP_OBJ_CNT_PTR ptr )
       for (j=0;j<obj_count;j++){
         GFL_G3D_OBJ* pObj;
         pObj = GFL_G3D_UTIL_GetObjHandle(ptr->ObjUtil, obj_idx+j);
-        GFL_G3D_DRAW_DrawObject( pObj, &ptr->Unit[i].ObjStatus[j] );
+///        GFL_G3D_DRAW_DrawObject( pObj, &ptr->Unit[i].ObjStatus[j] );
+        GFL_G3D_DRAW_DrawObjectCullingON( pObj, &ptr->Unit[i].ObjStatus[j] );
       }
     }
   }
