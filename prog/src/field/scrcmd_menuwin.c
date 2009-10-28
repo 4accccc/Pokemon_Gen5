@@ -30,6 +30,37 @@
 #define GOLD_WIN_HEIGHT (2) // 高さ(キャラクタ単位)
 #define GOLD_WIN_KETA   (6) // 所持金数値の桁数
 
+static void CloseWin(SCRCMD_WORK *work);
+
+//--------------------------------------------------------------
+/**
+ *  ウィンドウ終了
+ * @param   work    スクリプトコマンドワークポインタ
+ * @retval  none
+ */
+//--------------------------------------------------------------
+static void CloseWin(SCRCMD_WORK *work)
+{
+  FLDMSGWIN_STREAM *msgWin;
+  msgWin = SCRCMD_WORK_GetFldMsgWinStream( work );
+  FLDMSGWIN_STREAM_Delete( msgWin );
+  SCREND_CHK_SetBitOff(SCREND_CHK_WIN_OPEN);
+}
+
+//--------------------------------------------------------------
+/**
+ *スクリプト終了時ウィンドウ終了チェック
+ * @param   end_chk     チェック構造体
+ * @param   seq     サブシーケンサ
+ * @retval  BOOL    TRUEでチェック終了
+ */
+//--------------------------------------------------------------
+BOOL SCREND_CheckEndWin(SCREND_CHECK *end_check , int *seq)
+{
+  CloseWin(end_check->ScrCmdWk);
+  return  TRUE;
+}
+
 
 //======================================================================
 //  はい、いいえ　処理
@@ -210,7 +241,7 @@ static void talkMsgWin_AddWindow( SCRCMD_WORK *work )
   SCRIPT_FLDPARAM *fparam;
   GFL_MSGDATA *msgData;
   FLDMSGWIN_STREAM *msgWin;
-  u8 *win_open_flag;
+///  u8 *win_open_flag;
   
   sc = SCRCMD_WORK_GetScriptWork( work );
   fparam = SCRIPT_GetFieldParam( sc );
@@ -218,8 +249,9 @@ static void talkMsgWin_AddWindow( SCRCMD_WORK *work )
   msgWin = FLDMSGWIN_STREAM_AddTalkWin( fparam->msgBG, msgData );
   SCRCMD_WORK_SetFldMsgWinStream( work, msgWin );
   
-  win_open_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_OPEN_FLAG );
-  *win_open_flag = TRUE;  //ON;
+///  win_open_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_OPEN_FLAG );
+///  *win_open_flag = TRUE;  //ON;
+  SCREND_CHK_SetBitOn(SCREND_CHK_WIN_OPEN);
 }
 
 //--------------------------------------------------------------
@@ -256,7 +288,7 @@ VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
-  
+#if 0  
   {
     u8 *win_open_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_OPEN_FLAG );
     
@@ -264,7 +296,14 @@ VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
       talkMsgWin_AddWindow( work );
     }
   }
-  
+#else
+  {
+    if( !SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) ){
+      talkMsgWin_AddWindow( work );
+    }
+  }
+
+#endif
   {
     GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
     WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
@@ -449,7 +488,7 @@ VMCMD_RESULT EvCmdTalkMsgAllPut( VMHANDLE *core, void *wk )
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
-  
+#if 0  
   {
     u8 *win_open_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_OPEN_FLAG );
     
@@ -457,7 +496,13 @@ VMCMD_RESULT EvCmdTalkMsgAllPut( VMHANDLE *core, void *wk )
       talkMsgWin_AddWindow( work );
     }
   }
-  
+#else
+  {
+    if ( !SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) ){
+      talkMsgWin_AddWindow( work );
+    }
+  }
+#endif
   {
     GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
     WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
@@ -496,19 +541,24 @@ VMCMD_RESULT EvCmdTalkWinOpen( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdTalkWinClose( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
+#if 0  
   SCRIPT_WORK *sc;
   FLDMSGWIN_STREAM *msgWin;
   u8 *win_open_flag;
   
   sc = SCRCMD_WORK_GetScriptWork( work );
   win_open_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_OPEN_FLAG );
-  
   if( (*win_open_flag) == TRUE ){
     msgWin = SCRCMD_WORK_GetFldMsgWinStream( work );
     FLDMSGWIN_STREAM_Delete( msgWin );
   }
   
   *win_open_flag = FALSE;  //OFF;
+#else
+  if ( SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) ){
+    CloseWin(work);
+  }
+#endif
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -698,7 +748,7 @@ VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
   STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
   STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
   GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
-  u8 *win_open_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_OPEN_FLAG );
+///  u8 *win_open_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_OPEN_FLAG );
   u8 *msg_index      = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGINDEX );
   
   KAGAYA_Printf( "TR ID =%d, KIND ID =%d\n", tr_id, kind_id );

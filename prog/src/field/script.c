@@ -148,9 +148,6 @@ struct _TAG_SCRIPT_WORK
 	
 	u16 scrTempWork[TEMP_WORK_SIZE];		//ワーク(ANSWORK,TMPWORKなどの代わり)
 
-  SCREND_CHECK_WK CheckWork;
-	
-
   /*
    * 未使用・もしくはいらないワーク（前作から持ってきた
 #ifndef SCRIPT_PL_NULL
@@ -412,6 +409,9 @@ static SCRIPT_WORK * SCRIPTWORK_Create( HEAPID main_heapID, HEAPID temp_heapID,
 		HideItemParamSet( sc, scr_id );
 	}
 #endif
+
+  //チェックビット処理化
+  SCREND_CHK_ClearBits();
 
   return sc;
 }
@@ -1454,17 +1454,3 @@ static u16 searchSceneScript( GAMEDATA * gamedata, const u8 * p, u8 key )
 	}
 	return SCRIPT_NOT_EXIST_ID;								//何も見つからなかった
 }
-
-
-//------------------------------------------------------------------
-/**
- * @brief   スクリプト終了チェック構造体ポインタを返す
- * @param	sc SCRIPT_WORK
- * @retval work
- */
-//------------------------------------------------------------------
-SCREND_CHECK_WK *SCRIPT_GetScrEndChkWkPtr( SCRIPT_WORK *sc )
-{
-  return &sc->CheckWork;
-}
-

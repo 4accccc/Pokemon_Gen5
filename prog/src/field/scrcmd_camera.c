@@ -30,7 +30,7 @@
 
 static GMEVENT_RESULT WaitTraceStopEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT WaitCamMovEvt( GMEVENT* event, int* seq, void* work );
-static void EndCamera(FIELD_CAMERA *camera, SCREND_CHECK_WK *chk);
+static void EndCamera(FIELD_CAMERA *camera);
 
 //--------------------------------------------------------------
 /**
@@ -40,14 +40,14 @@ static void EndCamera(FIELD_CAMERA *camera, SCREND_CHECK_WK *chk);
  * @retval none
  */
 //--------------------------------------------------------------
-static void EndCamera(FIELD_CAMERA *camera, SCREND_CHECK_WK *chk)
+static void EndCamera(FIELD_CAMERA *camera)
 {
   //復帰パラメータをクリアする
   FIELD_CAMERA_ClearRecvCamParam(camera);
   //カメラトレース再開
   FIELD_CAMERA_RestartTrace(camera);
   //終了チェックフラグをオフ
-  chk->CameraEndCheck = 0;
+  SCREND_CHK_SetBitOff(SCREND_CHK_CAMERA);
 }
 
 //--------------------------------------------------------------
@@ -62,14 +62,9 @@ BOOL SCREND_CheckEndCamera(SCREND_CHECK *end_check , int *seq)
 {
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(end_check->gsys);
   FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( fieldWork );
-  SCREND_CHECK_WK *chk = end_check->Chk;
 
-  //カメラ終了コマンド忘れをチェック
-  if (chk->CameraEndCheck){
-    GF_ASSERT_MSG(0,"カメラ終了コマンドがコールされていません");
-    //終了処理をコール
-    EndCamera(camera, chk);
-  }
+  EndCamera(camera);
+
   return  TRUE;
 }
 
@@ -98,11 +93,7 @@ VMCMD_RESULT EvCmdCamera_Start( VMHANDLE *core, void *wk )
     SCRIPT_CallEvent( sc, call_event );
   }
   //終了チェックフラグをオン
-  {
-    SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-    SCREND_CHECK_WK *chk = SCRIPT_GetScrEndChkWkPtr( sc );
-    chk->CameraEndCheck = 1;
-  }
+  SCREND_CHK_SetBitOn(SCREND_CHK_CAMERA);
   //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
 }
@@ -121,11 +112,8 @@ VMCMD_RESULT EvCmdCamera_End( VMHANDLE *core, void *wk )
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( fieldWork );
 
-  {
-    SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-    SCREND_CHECK_WK *chk = SCRIPT_GetScrEndChkWkPtr( sc );
-    EndCamera(camera, chk);
-  }
+  EndCamera(camera);
+
   return VMCMD_RESULT_CONTINUE;
 }
 

@@ -14,6 +14,9 @@
 #include "field/fieldmap_proc.h"
 #include "field/field_msgbg.h"
 
+#include "scrend_check_bit.h"
+#include "scrcmd_work.h"      //for SCRCMD_WORK
+
 //--------------------------------------------------------------
 ///	SCRIPT_FLDPARAM スクリプト制御ワーク　フィールドパラメータ
 //--------------------------------------------------------------
@@ -26,8 +29,8 @@ typedef struct
 typedef struct
 {
   GAMESYS_WORK *gsys;
-  SCREND_CHECK_WK *Chk;
-//  SCRIPT_WORK *sc;  <<必要であれば追加
+  SCRCMD_WORK   *ScrCmdWk;
+  SCRIPT_WORK *ScrWk;
 }SCREND_CHECK;
 
 //--------------------------------------------------------------

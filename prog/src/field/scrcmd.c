@@ -6,6 +6,8 @@
  * @date  05.08.04
  *
  * 05.04.26 Hiroyuki Nakamura
+ *
+ * @note CheckEndFuncTblの並びは、scrend_check_bit.hのSCREND_CHKと1対1で対応するようにしてください
  */
 //======================================================================
 #include <gflib.h>
@@ -64,6 +66,9 @@
 //======================================================================
 //  define
 //======================================================================
+
+#define CHECK_BIT_MAX (32)
+
 //--------------------------------------------------------------
 /// レジスタ比較の結果定義
 //--------------------------------------------------------------
@@ -88,11 +93,18 @@ static const u8 ConditionTable[6][3];
 
 typedef BOOL (*SCR_END_CHECK_FUNC)(SCREND_CHECK *end_check, int *seq);
 
-#define FUNC_MAX ( NELEMS(CheckFuncTbl) )
+#define FUNC_MAX ( NELEMS(CheckEndFuncTbl) )
 
-SCR_END_CHECK_FUNC CheckFuncTbl[] = {
+typedef struct
+{
+  int CheckBit;
+}SCREND_CHECK_BITS;
+
+//※CheckEndFuncTblの並びは、scrend_check_bit.hのSCREND_CHKと1対1で対応するようにしてください
+static const SCR_END_CHECK_FUNC CheckEndFuncTbl[] = {
   SCREND_CheckEndCamera,
-  /*ここにスクリプト終了時のチェック関数を追加してください*/
+  SCREND_CheckEndWin,
+  /*ここにスクリプト終了時の終了関数を追加してください*/
   NULL,   //テーブル終了検出用
 };
 
@@ -104,8 +116,98 @@ typedef struct CHECK_WORK_tag
   int FuncMax;
 }CHECK_WORK;
 
+SCREND_CHECK_BITS ScrEndCheckBits;
+
 static GMEVENT *CreateEndCheckEvt(SCRCMD_WORK *work);
 static GMEVENT_RESULT ScrCheckEvt( GMEVENT* event, int* seq, void* work );
+static BOOL CheckEndBit(const SCREND_CHK inCheckBit);
+
+//--------------------------------------------------------------
+/**
+ * スクリプト終了時のコマンド記述忘れチェックビット初期化
+ */
+//--------------------------------------------------------------
+void SCREND_CHK_ClearBits(void)
+{
+  MI_CpuClear32( &ScrEndCheckBits, sizeof(SCREND_CHECK_BITS) );
+}
+
+//--------------------------------------------------------------
+/**
+ * スクリプト終了時のコマンド記述忘れチェックビットオン
+ */
+//--------------------------------------------------------------
+void SCREND_CHK_SetBitOn(const SCREND_CHK inCheckBit)
+{
+  if (inCheckBit >= SCREND_CHK_MAX){
+    GF_ASSERT_MSG(0,"CHECK_BIT_OVER\n");
+    return;
+  }
+
+  if ( CheckEndBit(inCheckBit) ){
+    OS_Printf("%d::already bit on\n",inCheckBit);
+    return;
+  }
+
+  ScrEndCheckBits.CheckBit |= (1 <<inCheckBit);
+}
+
+//--------------------------------------------------------------
+/**
+ * スクリプト終了時のコマンド記述忘れチェックビットオフ
+ */
+//--------------------------------------------------------------
+void SCREND_CHK_SetBitOff(const SCREND_CHK inCheckBit)
+{
+  if (inCheckBit >= SCREND_CHK_MAX){
+    GF_ASSERT_MSG(0,"CHECK_BIT_OVER\n");
+    return;
+  }
+
+  if ( !CheckEndBit(inCheckBit) ){
+    OS_Printf("%d::already bit off\n",inCheckBit);
+    return;
+  }
+#ifdef DEBUG_ONLY_FOR_saitou 
+  OS_Printf("ScrEndCheckBit off before = %d\n",ScrEndCheckBits.CheckBit);
+#endif //DEBUG_ONLY_FOR_saitou  
+
+  ScrEndCheckBits.CheckBit = 
+    ScrEndCheckBits.CheckBit & ( 0xffffffff ^ (1<<inCheckBit) );
+
+#ifdef DEBUG_ONLY_FOR_saitou 
+  OS_Printf("ScrEndCheckBit off after = %d\n",ScrEndCheckBits.CheckBit);
+#endif //DEBUG_ONLY_FOR_saitou
+}
+
+//--------------------------------------------------------------
+/**
+ * スクリプト終了時のコマンド記述忘れチェックビットをチェック
+ */
+//--------------------------------------------------------------
+BOOL SCREND_CHK_CheckBit(const SCREND_CHK inCheckBit)
+{
+  return CheckEndBit(inCheckBit);
+}
+
+//--------------------------------------------------------------
+/**
+ * スクリプト終了時のコマンド記述忘れチェックビットをチェック
+ */
+//--------------------------------------------------------------
+static BOOL CheckEndBit(const SCREND_CHK inCheckBit)
+{
+  int bit;
+  if (inCheckBit >= SCREND_CHK_MAX){
+    GF_ASSERT_MSG(0,"CHECK_BIT_OVER\n");
+    return FALSE;
+  }
+  bit = ScrEndCheckBits.CheckBit >> inCheckBit;
+  bit &= 0x1;
+  if ( bit ) return TRUE;
+
+  return FALSE;
+}
 
 //--------------------------------------------------------------
 /**
@@ -122,20 +224,33 @@ static GMEVENT_RESULT ScrCheckEvt( GMEVENT* event, int* seq, void* work )
   do{
     BOOL rc;
     //ファンクション取得
-    func = CheckFuncTbl[check_wk->Next];
+    func = CheckEndFuncTbl[check_wk->Next];
     //ファンクションはＮＵＬＬか？（終了か？）
     if (func == NULL) return GMEVENT_RES_FINISH;    //全ファンクション終了
-    //ファンクション実行
-    rc = func(&check_wk->EndCheck, &check_wk->Seq);
-    if (rc)
+
+    //ビットチェック
+    if ( CheckEndBit(check_wk->Next) )
+    {
+      GF_ASSERT_MSG(0,"%d::EndFunc Not Call\n", check_wk->Next);
+      //ファンクション実行
+      rc = func(&check_wk->EndCheck, &check_wk->Seq);
+      if (rc)
+      {
+        //ファンクション終了ならば次のファンクションへ
+        check_wk->Next++;
+        //次のファンクションのために、サブシーケンサを初期化
+        check_wk->Seq = 0;
+      }
+      else{
+        return GMEVENT_RES_CONTINUE;  //一度処理を返す
+      }
+    }
+    else
     {
       //ファンクション終了ならば次のファンクションへ
       check_wk->Next++;
       //次のファンクションのために、サブシーケンサを初期化
       check_wk->Seq = 0;
-    }
-    else{
-      return GMEVENT_RES_CONTINUE;  //一度処理を返す
     }
   }while(check_wk->Next < check_wk->FuncMax);
 
@@ -157,7 +272,6 @@ static GMEVENT *CreateEndCheckEvt(SCRCMD_WORK *work)
 
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-  SCREND_CHECK_WK *chk = SCRIPT_GetScrEndChkWkPtr( sc );
 
   work_size = sizeof(CHECK_WORK);
   //イベント作成
@@ -166,11 +280,21 @@ static GMEVENT *CreateEndCheckEvt(SCRCMD_WORK *work)
   check_wk = GMEVENT_GetEventWork( event );
   //ワークの初期化
   check_wk->EndCheck.gsys = gsys;
-  check_wk->EndCheck.Chk = chk;
-//  check_wk->EndCheck.sc = sc;
+  check_wk->EndCheck.ScrCmdWk = work;
+  check_wk->EndCheck.ScrWk = sc;
   check_wk->Next = 0;
   check_wk->Seq = 0;
   check_wk->FuncMax = FUNC_MAX;
+
+  GF_ASSERT_MSG(check_wk->FuncMax -1 <= CHECK_BIT_MAX,"チェックビットが足りません。増やしますので、担当まで連絡を。");
+
+#ifdef DEBUG_ONLY_FOR_saitou 
+  OS_Printf("ScrEndFuncNum = %d\n",check_wk->FuncMax);
+#endif //DEBUG_ONLY_FOR_saitou
+
+  if ( check_wk->FuncMax ){
+    GF_ASSERT(check_wk->FuncMax - 1 == SCREND_CHK_MAX);
+  }
   return event;
 }
 
@@ -1023,7 +1147,6 @@ static VMCMD_RESULT EvCmdCheckScrEnd( VMHANDLE * core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-  SCREND_CHECK_WK *chk = SCRIPT_GetScrEndChkWkPtr( sc );
 
   //スクリプトチェックイベント作成
   call_event = CreateEndCheckEvt(work);

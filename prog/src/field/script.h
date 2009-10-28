@@ -20,8 +20,6 @@
 
 #include "fldmmdl.h"    //MMDL
 
-#include "scrend_check_work.h"
-
 //======================================================================
 //	define
 //======================================================================
@@ -334,14 +332,5 @@ extern void* SCRIPT_SetSubProcWorkPointer( SCRIPT_WORK *sc );
  */
 //--------------------------------------------------------------
 extern void SCRIPT_FreeSubProcWorkPointer( SCRIPT_WORK *sc );
-
-//--------------------------------------------------------------
-/**
- * スクリプト終了チェック構造体ポインタを返す
- * @param	sc SCRIPT_WORK
- * @retval work
- */
-//--------------------------------------------------------------
-extern SCREND_CHECK_WK *SCRIPT_GetScrEndChkWkPtr( SCRIPT_WORK *sc );
 
 #endif	/* SCRIPT_H */

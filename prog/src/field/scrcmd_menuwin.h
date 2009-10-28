@@ -33,3 +33,5 @@ extern VMCMD_RESULT EvCmdBalloonWinTalkWrite( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBalloonWinClose( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk );
 
+extern BOOL SCREND_CheckEndWin(SCREND_CHECK *end_check , int *seq);
+
