@@ -64,6 +64,7 @@ enum {
   RSC_GRID_WIDE = 11,     // 3x2
   RSC_NOGRID_D09 = 12,     // 3x3
   RSC_GRID_BRIDGE_H03 = 13,     // 1x6
+  RSC_HYBRID = 14,     // 
 
 	//NO_GRID_SAMPLE = 2,
 	//GRID_GS_SAMPLE = 3,

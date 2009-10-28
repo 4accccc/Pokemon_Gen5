@@ -47,7 +47,10 @@ typedef struct _FIELDMAP_CTRL_HYBRID FIELDMAP_CTRL_HYBRID;
 
 extern const DEPEND_FUNCTIONS FieldMapCtrl_HybridFunctions;
 
+
+
 // èÓïÒÇÃéÊìæ
+extern FLDMAP_BASESYS_TYPE FIELDMAP_CTRL_HYBRID_GetBaseSystemType( const FIELDMAP_CTRL_HYBRID* cp_wk );
 extern FIELD_PLAYER_GRID* FIELDMAP_CTRL_HYBRID_GetFieldPlayerGrid( const FIELDMAP_CTRL_HYBRID* cp_wk );
 extern FIELD_PLAYER_NOGRID* FIELDMAP_CTRL_HYBRID_GetFieldPlayerNoGrid( const FIELDMAP_CTRL_HYBRID* cp_wk );
 

@@ -1552,8 +1552,7 @@ FLDMAP_BASESYS_TYPE FIELDMAP_GetBaseSystemType( const FIELDMAP_WORK *fieldWork )
   
   if( MAPCTRL_BASESYS_TYPE[ fieldWork->func_tbl->type ] == FLDMAP_BASESYS_MAX )
   {
-
-    return FLDMAP_BASESYS_GRID;
+    return FIELDMAP_CTRL_HYBRID_GetBaseSystemType( fieldWork->mapCtrlWork );
   }
   return MAPCTRL_BASESYS_TYPE[ fieldWork->func_tbl->type ];
 }

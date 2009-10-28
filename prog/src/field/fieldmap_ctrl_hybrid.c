@@ -113,6 +113,21 @@ FIELD_PLAYER_GRID* FIELDMAP_CTRL_HYBRID_GetFieldPlayerGrid( const FIELDMAP_CTRL_
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  フィールドベースシステムタイプの取得
+ *
+ *	@param	cp_wk   ワーク
+ *  
+ *	@return　ベースシステムタイプ
+ */
+//----------------------------------------------------------------------------- 
+FLDMAP_BASESYS_TYPE FIELDMAP_CTRL_HYBRID_GetBaseSystemType( const FIELDMAP_CTRL_HYBRID* cp_wk )
+{
+  GF_ASSERT( cp_wk );
+  return  cp_wk->base_type;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  フィールドノーグリッドプレイヤーの取得
  *
  *	@param	cp_wk   ワーク

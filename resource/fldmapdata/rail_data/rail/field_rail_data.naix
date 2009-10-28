@@ -15,10 +15,12 @@ enum {
 	NARC_field_rail_data_c3p02_dat = 1,
 	NARC_field_rail_data_d09_dat = 2,
 	NARC_field_rail_data_h01_dat = 3,
-	NARC_field_rail_data_c3_atdat = 4,
-	NARC_field_rail_data_c3p02_atdat = 5,
-	NARC_field_rail_data_d09_atdat = 6,
-	NARC_field_rail_data_h01_atdat = 7
+	NARC_field_rail_data_t01_dat = 4,
+	NARC_field_rail_data_c3_atdat = 5,
+	NARC_field_rail_data_c3p02_atdat = 6,
+	NARC_field_rail_data_d09_atdat = 7,
+	NARC_field_rail_data_h01_atdat = 8,
+	NARC_field_rail_data_t01_atdat = 9
 };
 
 /* NARC_FIELD_RAIL_DATA_NAIX_ */
