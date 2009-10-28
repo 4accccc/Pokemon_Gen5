@@ -314,7 +314,7 @@ sub get10Number
 		return hex($number);
 	}
 
-	if( $number =~ s/^0// )
+	if( $number =~ s/^[-]*0// )
 	{
 		return oct($number);
 	}
@@ -398,33 +398,33 @@ sub convData
 			
 			#LINES
 			$line = &getPeaceParamForName( \@filedata, $POINT_NAME[$i], "LINES00");
-			print( FILEOUT_POINT pack( "i", &getNameIndex( \@LINE_NAME, $line ) ) );
+			print( FILEOUT_POINT pack( "I", &getNameIndex( \@LINE_NAME, $line ) ) );
 			$line = &getPeaceParamForName( \@filedata, $POINT_NAME[$i], "LINES01");
-			print( FILEOUT_POINT pack( "i", &getNameIndex( \@LINE_NAME, $line ) ) );
+			print( FILEOUT_POINT pack( "I", &getNameIndex( \@LINE_NAME, $line ) ) );
 			$line = &getPeaceParamForName( \@filedata, $POINT_NAME[$i], "LINES02");
-			print( FILEOUT_POINT pack( "i", &getNameIndex( \@LINE_NAME, $line ) ) );
+			print( FILEOUT_POINT pack( "I", &getNameIndex( \@LINE_NAME, $line ) ) );
 			$line = &getPeaceParamForName( \@filedata, $POINT_NAME[$i], "LINES03");
-			print( FILEOUT_POINT pack( "i", &getNameIndex( \@LINE_NAME, $line ) ) );
+			print( FILEOUT_POINT pack( "I", &getNameIndex( \@LINE_NAME, $line ) ) );
 
 			#KEYS
 			$key = &getPeaceParamForName( \@filedata, $POINT_NAME[$i], "KEYS00");
-			print( FILEOUT_POINT pack( "i", &getRAIL_KeyNameToNo( $key ) ) );
+			print( FILEOUT_POINT pack( "I", &getRAIL_KeyNameToNo( $key ) ) );
 			$key = &getPeaceParamForName( \@filedata, $POINT_NAME[$i], "KEYS01");
-			print( FILEOUT_POINT pack( "i", &getRAIL_KeyNameToNo( $key ) ) );
+			print( FILEOUT_POINT pack( "I", &getRAIL_KeyNameToNo( $key ) ) );
 			$key = &getPeaceParamForName( \@filedata, $POINT_NAME[$i], "KEYS02");
-			print( FILEOUT_POINT pack( "i", &getRAIL_KeyNameToNo( $key ) ) );
+			print( FILEOUT_POINT pack( "I", &getRAIL_KeyNameToNo( $key ) ) );
 			$key = &getPeaceParamForName( \@filedata, $POINT_NAME[$i], "KEYS03");
-			print( FILEOUT_POINT pack( "i", &getRAIL_KeyNameToNo( $key ) ) );
+			print( FILEOUT_POINT pack( "I", &getRAIL_KeyNameToNo( $key ) ) );
 
 			#WIDTH_OFS
 			$width_ofs = &getPeaceParamForName( \@filedata, $POINT_NAME[$i], "WIDTH_OFS00");
-			print( FILEOUT_POINT pack( "i", $width_ofs ) );
+			print( FILEOUT_POINT pack( "I", $width_ofs ) );
 			$width_ofs = &getPeaceParamForName( \@filedata, $POINT_NAME[$i], "WIDTH_OFS01");
-			print( FILEOUT_POINT pack( "i", $width_ofs ) );
+			print( FILEOUT_POINT pack( "I", $width_ofs ) );
 			$width_ofs = &getPeaceParamForName( \@filedata, $POINT_NAME[$i], "WIDTH_OFS02");
-			print( FILEOUT_POINT pack( "i", $width_ofs ) );
+			print( FILEOUT_POINT pack( "I", $width_ofs ) );
 			$width_ofs = &getPeaceParamForName( \@filedata, $POINT_NAME[$i], "WIDTH_OFS03");
-			print( FILEOUT_POINT pack( "i", $width_ofs ) );
+			print( FILEOUT_POINT pack( "I", $width_ofs ) );
 
 
 			#POS
@@ -434,7 +434,7 @@ sub convData
 
 			#CAMERA_SET
 			$camera_set = &getPeaceParamForName( \@filedata, $POINT_NAME[$i], "CAMERA_SET");
-			print( FILEOUT_POINT pack( "i", &getNameIndex( \@CAMERA_NAME, $camera_set ) ) );
+			print( FILEOUT_POINT pack( "I", &getNameIndex( \@CAMERA_NAME, $camera_set ) ) );
 
 			#NAME
 			$len = length($POINT_NAME[$i]);
@@ -467,25 +467,25 @@ sub convData
 
 			#POINT
 			$point = &getPeaceParamForName( \@filedata, $LINE_NAME[$i], "POINT_S");
-			print( FILEOUT_LINE pack( "i", &getNameIndex( \@POINT_NAME, $point ) ) );
+			print( FILEOUT_LINE pack( "I", &getNameIndex( \@POINT_NAME, $point ) ) );
 			$point = &getPeaceParamForName( \@filedata, $LINE_NAME[$i], "POINT_E");
-			print( FILEOUT_LINE pack( "i", &getNameIndex( \@POINT_NAME, $point ) ) );
+			print( FILEOUT_LINE pack( "I", &getNameIndex( \@POINT_NAME, $point ) ) );
 
 			#KEY
 			$key = &getPeaceParamForName( \@filedata, $LINE_NAME[$i], "KEY");
-			print( FILEOUT_LINE pack( "i", &getRAIL_KeyNameToNo( $key ) ) );
+			print( FILEOUT_LINE pack( "I", &getRAIL_KeyNameToNo( $key ) ) );
 
 			#LINEPOS
 			$linepos = &getPeaceParamForName( \@filedata, $LINE_NAME[$i], "LINEPOS_SET");
-			print( FILEOUT_LINE pack( "i", &getNameIndex( \@LINEPOS_NAME, $linepos ) ) );
+			print( FILEOUT_LINE pack( "I", &getNameIndex( \@LINEPOS_NAME, $linepos ) ) );
 
 			#CAMERA_SET
 			$camera_set = &getPeaceParamForName( \@filedata, $LINE_NAME[$i], "CAMERA_SET");
-			print( FILEOUT_LINE pack( "i", &getNameIndex( \@CAMERA_NAME, $camera_set ) ) );
+			print( FILEOUT_LINE pack( "I", &getNameIndex( \@CAMERA_NAME, $camera_set ) ) );
 
 			#LINE_GRID_MAX
 			$line_grid_max = &getPeaceParamForName( \@filedata, $LINE_NAME[$i], "LINE_GRID_MAX");
-			print( FILEOUT_LINE pack( "i", &get10Number( $line_grid_max ) ) );
+			print( FILEOUT_LINE pack( "I", &get10Number( $line_grid_max ) ) );
 
 			#NAME
 			$len = length($LINE_NAME[$i]);
@@ -512,11 +512,11 @@ sub convData
 
 			#FUNCINDEX
 			$funcindex = &getPeaceParamForName( \@filedata, $LINEPOS_NAME[$i], "FUNCINDEX");
-			print( FILEOUT_LINEPOS pack( "i", &getLinePosFuncIDNameToNo( $funcindex ) ) );
+			print( FILEOUT_LINEPOS pack( "I", &getLinePosFuncIDNameToNo( $funcindex ) ) );
 
 			#FUNCDISTINDEX
       #$distfuncindex = &getPeaceParamForName( \@filedata, $LINEPOS_NAME[$i], "FUNCDISTINDEX");
-      #print( FILEOUT_LINEPOS pack( "i", &getLineDistFuncIDNameToNo( $distfuncindex ) ) );
+      #print( FILEOUT_LINEPOS pack( "I", &getLineDistFuncIDNameToNo( $distfuncindex ) ) );
 
 			#ワークデータの出力
 			$datasiz = 0;
@@ -530,15 +530,15 @@ sub convData
 					#出力
 					if( $one_datasiz == 1 )
 					{
-						print( FILEOUT_LINEPOS pack( "c", &get10Number($work_number) ) );
+						print( FILEOUT_LINEPOS pack( "C", &get10Number($work_number) ) );
 					}
 					elsif( $one_datasiz == 2 )
 					{
-						print( FILEOUT_LINEPOS pack( "s", &get10Number($work_number) ) );
+						print( FILEOUT_LINEPOS pack( "S", &get10Number($work_number) ) );
 					}
 					elsif( $one_datasiz == 4 )
 					{
-						print( FILEOUT_LINEPOS pack( "i", &get10Number($work_number) ) );
+						print( FILEOUT_LINEPOS pack( "I", &get10Number($work_number) ) );
 					}
 					$datasiz += $one_datasiz;
 
@@ -576,7 +576,7 @@ sub convData
 
 			#FUNCINDEX
 			$funcindex = &getPeaceParamForName( \@filedata, $CAMERA_NAME[$i], "FUNCINDEX");
-			print( FILEOUT_CAMERA pack( "i", &getCameraFuncIDNameToNo( $funcindex ) ) );
+			print( FILEOUT_CAMERA pack( "I", &getCameraFuncIDNameToNo( $funcindex ) ) );
 
 			#ワークデータの出力
 			$datasiz = 0;
@@ -591,15 +591,15 @@ sub convData
 					#出力
 					if( $one_datasiz == 1 )
 					{
-						print( FILEOUT_CAMERA pack( "c", &get10Number($work_number) ) );
+						print( FILEOUT_CAMERA pack( "C", &get10Number($work_number) ) );
 					}
 					elsif( $one_datasiz == 2 )
 					{
-						print( FILEOUT_CAMERA pack( "s", &get10Number($work_number) ) );
+						print( FILEOUT_CAMERA pack( "S", &get10Number($work_number) ) );
 					}
 					elsif( $one_datasiz == 4 )
 					{
-						print( FILEOUT_CAMERA pack( "i", &get10Number($work_number) ) );
+						print( FILEOUT_CAMERA pack( "I", &get10Number($work_number) ) );
 					}
 					$datasiz += $one_datasiz;
 

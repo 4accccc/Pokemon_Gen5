@@ -328,7 +328,9 @@ static void C3_SCENEAREA_Update( const FLD_SCENEAREA* cp_sys, const FLD_SCENEARE
 
 	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_DIRECT_POS );
 
-	FIELD_CAMERA_GetTargetPos( p_camera, &target);
+  target.x = cp_param->center_x;
+  target.y = cp_param->center_y;
+  target.z = cp_param->center_z;
   target_y  = target.y;
   target.y  = 0;
   
