@@ -210,6 +210,7 @@ struct _BTLV_GAUGE_WORK
 
   u32             vanish_flag   :1;
   u32             bgm_fade_flag :1;
+  u32             pinch_bgm_flag:1;
   u32                           :30;
 
   u32             now_bgm_no;
@@ -312,7 +313,7 @@ void  BTLV_GAUGE_Exit( BTLV_GAUGE_WORK *bgw )
   { 
     BTLV_GAUGE_Del( bgw, pos );
   }
-  if( PMSND_GetBGMsoundNo() == SEQ_BGM_BATTLEPINCH )
+  if( bgw->pinch_bgm_flag )
   { 
     PMSND_PopBGM();
   }
@@ -1381,7 +1382,7 @@ static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw )
     if( PMSND_CheckFadeOnBGM() == FALSE )
     { 
       bgw->bgm_fade_flag = 0;
-      if( PMSND_GetBGMsoundNo() == SEQ_BGM_BATTLEPINCH )
+      if( bgw->pinch_bgm_flag )
       { 
         PMSND_PopBGM();
         PMSND_FadeInBGM( 24 );
@@ -1392,6 +1393,7 @@ static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw )
         PMSND_PlayBGM( SEQ_BGM_BATTLEPINCH );
         PMSND_FadeInBGM( 8 );
       }
+      bgw->pinch_bgm_flag ^= 1;
     }
   }
   else
@@ -1413,10 +1415,10 @@ static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw )
       }
     }
     //勝利ジングルとかに変化していたら、ピンチBGMチェックはしないようにする
-    if( ( PMSND_GetBGMsoundNo() == SEQ_BGM_BATTLEPINCH ) || ( PMSND_GetBGMsoundNo() == bgw->now_bgm_no ) )
+    if( ( bgw->pinch_bgm_flag ) || ( PMSND_GetBGMsoundNo() == bgw->now_bgm_no ) )
     { 
-      if( ( ( PMSND_GetBGMsoundNo() == SEQ_BGM_BATTLEPINCH ) && ( pinch_flag == FALSE ) ) ||
-          ( ( PMSND_GetBGMsoundNo() != SEQ_BGM_BATTLEPINCH ) && ( pinch_flag == TRUE ) ) )
+      if( ( ( bgw->pinch_bgm_flag ) && ( pinch_flag == FALSE ) ) ||
+          ( ( bgw->pinch_bgm_flag == 0 ) && ( pinch_flag == TRUE ) ) )
       { 
         bgw->bgm_fade_flag = 1;
         PMSND_FadeOutBGM( 8 );
