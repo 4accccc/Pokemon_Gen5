@@ -303,8 +303,11 @@ int ZONEDATA_GetRailDataID(u16 zone_id)
     return NARC_field_rail_setup_C03P02_dat;
   case ZONE_ID_D09:
     return NARC_field_rail_setup_D09_dat;
+
+#ifdef DEBUG_ONLY_FOR_tomoya_takahashi
   case ZONE_ID_T01:
     return NARC_field_rail_setup_T01_dat;
+#endif
   }
   return ZONEDATA_NO_RAILDATA_ID;
 }
