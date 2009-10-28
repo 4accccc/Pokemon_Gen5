@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/21 12:53:25
+#save date:2009/10/28 16:00:22
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c05.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/21 12:53:25
+#save date:2009/10/28 16:00:22
 2
 #hold event type:
 1
@@ -507,7 +507,7 @@ DIR_DOWN
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/21 12:53:25
+#save date:2009/10/28 16:00:22
 2
 #hold event type:
 1
@@ -517,7 +517,7 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/21 12:53:25
+#save date:2009/10/28 16:00:22
 2
 #hold event type:
 1
@@ -572,7 +572,7 @@ WK_SCENE_C05_TOBRIDGE
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/21 12:53:25
+#save date:2009/10/28 16:00:22
 2
 #hold event type:
 1
@@ -584,7 +584,7 @@ DOOR_ID_C05_H02_EXIT01
 #Next Zone ID Name
 ZONE_ID_H02
 #Next Door ID Name
-DOOR_ID_H02_C05_EXIT07
+DOOR_ID_H02_C05_EXIT04
 #Door Direction
 EXIT_DIR_LEFT
 #Door Type
@@ -597,7 +597,7 @@ DOOR_ID_C05_H02_EXIT03
 #Next Zone ID Name
 ZONE_ID_H02
 #Next Door ID Name
-DOOR_ID_H02_C05_EXIT07
+DOOR_ID_H02_C05_EXIT04
 #Door Direction
 EXIT_DIR_LEFT
 #Door Type
@@ -610,7 +610,7 @@ DOOR_ID_C05_H02_EXIT02
 #Next Zone ID Name
 ZONE_ID_H02
 #Next Door ID Name
-DOOR_ID_H02_C05_EXIT07
+DOOR_ID_H02_C05_EXIT04
 #Door Direction
 EXIT_DIR_LEFT
 #Door Type
