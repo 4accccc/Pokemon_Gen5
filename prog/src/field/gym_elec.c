@@ -1213,15 +1213,6 @@ GMEVENT *GYM_ELEC_CreateMoveEvt(GAMESYS_WORK *gsys)
   //カプセルがプラットフォームに停止しているか？
   if ( IsStopCapsuleToPlatForm(gmk_sv_work, platform_idx) ){ //停止している
     u8 cap_idx = GetCapIdxByPlatformIdx(platform_idx);
-    //カプセル内トレーナーエンカウントチェック
-    if ( CheckCapTrEnc(gmk_sv_work, cap_idx) ){
-      //カプセル内トレーナーとのエンカウントイベント作成
-      event = GMEVENT_Create( gsys, NULL, TrEncEvt, 0 );
-    }else{
-      //次のプラットフォームまでの移動イベントを作成する
-      event = GMEVENT_Create( gsys, NULL, CapMoveEvt, 0 );
-    }
-
     {
       //自機が走行するレールインデックスを保存
       tmp_work->RadeRaleIdx = GetRaleIdxByPlatformIdx(gmk_sv_work, platform_idx);
@@ -1238,6 +1229,19 @@ GMEVENT *GYM_ELEC_CreateMoveEvt(GAMESYS_WORK *gsys)
         //乗降開始
         tmp_work->RideEvt = cap_idx;
       }
+    }
+    //カプセル内トレーナーエンカウントチェック
+    if ( CheckCapTrEnc(gmk_sv_work, cap_idx) ){
+      //※トレーナーイベントは内部でバトルに移行するので、ワークを保存しておかないと
+      //戻ってきたときに不具合がおきるので、このイベントだけはワークを確保する
+      int *ride_rail_idx;
+      //カプセル内トレーナーとのエンカウントイベント作成
+      event = GMEVENT_Create( gsys, NULL, TrEncEvt, sizeof(int) );
+      ride_rail_idx = GMEVENT_GetEventWork( event );
+      *ride_rail_idx = tmp_work->RadeRaleIdx;
+    }else{
+      //次のプラットフォームまでの移動イベントを作成する
+      event = GMEVENT_Create( gsys, NULL, CapMoveEvt, 0 );
     }
 
     return event;
@@ -1570,11 +1574,14 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
   u8 cap_idx;
   u8 obj_idx;
   EXP_OBJ_ANM_CNT_PTR anm;
+  int *ride_rail_idx;
 
-  GF_ASSERT(tmp->RadeRaleIdx != RIDE_NONE);
+  ride_rail_idx = work;
+
+  GF_ASSERT(*ride_rail_idx != RIDE_NONE);
 
   //レールインデックス/2でカプセルインデックスになる
-  cap_idx = tmp->RadeRaleIdx / 2;
+  cap_idx = (*ride_rail_idx) / 2;
   obj_idx = OBJ_CAP_1+cap_idx;
 
   anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ELEC_UNIT_IDX, obj_idx, ANM_CAP_OPCL);
@@ -1634,7 +1641,7 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
       //カプセル蓋アニメ止める
       FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
       //カプセル移動アニメ再開
-      anm_idx = ANM_CAP_MOV1 + tmp->RadeRaleIdx;
+      anm_idx = ANM_CAP_MOV1 + (*ride_rail_idx);
       cap_anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ELEC_UNIT_IDX, obj_idx, anm_idx);
       FLD_EXP_OBJ_ChgAnmStopFlg(cap_anm, 0);
 
@@ -1643,6 +1650,7 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
       gmk_sv_work->StopPlatformIdx[cap_idx] = PLATFORM_NO_STOP;
 
       //スクリプトコール
+      //※これより下の処理では、バトル復帰後の処理となるためtmpの中身は、初期状態となっていることに注意
       SCRIPT_CallScript( event, SCRID_PRG_C04GYM0101_SCR02,
           NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
       (*seq)++;
@@ -1650,8 +1658,11 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
     break;
   case 5:
     //乗降終了
-    tmp->RideEvt = -1;
-    tmp->RadeRaleIdx = RIDE_NONE;
+    {
+      //↓ここにくるときにセットアップ関数を通るので、明示的な代入は不要だが念のため。
+      tmp->RideEvt = -1;
+      tmp->RadeRaleIdx = RIDE_NONE;
+    }
     SetCapTrEncFlg(gmk_sv_work, cap_idx);
     return GMEVENT_RES_FINISH;
   }
