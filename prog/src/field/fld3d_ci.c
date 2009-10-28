@@ -20,6 +20,13 @@
 
 #define	PRO_MAT_Z_OFS	(20*FX32_ONE)   //プロジェクションマトリックスによるデプスバッファ操作値
 
+#ifdef PM_DEBUG
+
+#include "fieldmap.h" //for FIELDMAP_～
+#include "event_mapchange.h"
+
+#endif  //PM_DEBUG
+
 
 typedef struct FLD3D_CI_tag
 {
@@ -37,6 +44,10 @@ typedef struct FLD3D_CI_tag
   u16 MdlAnm2Wait;
   u8 PartGene;
   u8 CutInNo;
+
+  GXPlaneMask Mask;
+  u8 BgPriority[4];
+  BOOL CapEndFlg;
 }FLD3D_CI;
 
 //バイナリデータフォーマット
@@ -102,6 +113,13 @@ static void DeleteRes(RES_SETUP_DAT *outDat);
 
 static GMEVENT *CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInNo);
 
+static void PushPriority(FLD3D_CI_PTR ptr);
+static void PushDisp(FLD3D_CI_PTR ptr);
+static void PopPriority(FLD3D_CI_PTR ptr);
+static void PopDisp(FLD3D_CI_PTR ptr);
+static void ReqCapture(FLD3D_CI_PTR ptr);
+
+static void Graphic_Tcb_Capture( GFL_TCB *p_tcb, void *p_work );
 
 #ifdef PM_DEBUG
 static GMEVENT_RESULT DebugFlySkyEffEvt( GMEVENT* event, int* seq, void* work );
@@ -283,29 +301,77 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
 {
   FLD3D_CI_PTR ptr;
   FLD3D_CI_EVENT_WORK *evt_work = work;
+  GAMESYS_WORK * gsys;
+  FIELDMAP_WORK * fieldmap;
+  
   ptr = evt_work->CiPtr;
+  gsys = GMEVENT_GetGameSysWork(event);
+  fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
 
   switch(*seq){
   case 0:
+    //プライオリティの保存
+    PushPriority(ptr);
+    //表示状態の保存
+    PushDisp(ptr);
     //カットイン共通ホワイトアウト処理
     (*seq)++;
     break;
   case 1:
+    //ホワイトアウト待ち
+    if (1){
+      //キャプチャリクエスト
+      ReqCapture(ptr);
+      (*seq)++;
+    }
+    break;
+  case 2:
+    //キャプチャ終了待ち
+    if (ptr->CapEndFlg){
+      //キャプチャ終わったら、プライオリティ変更と表示変更
+      GX_SetVisiblePlane( GX_PLANEMASK_BG0|GX_PLANEMASK_BG3 );
+      GFL_BG_SetPriority( 0, 0 );
+      GFL_BG_SetPriority( 3, 3 );
+      //描画モード変更
+      {
+        static const GFL_BG_SYS_HEADER bg_sys_header = 
+          {
+            GX_DISPMODE_GRAPHICS,GX_BGMODE_3,GX_BGMODE_0,GX_BG0_AS_3D
+          };
+        GFL_BG_SetBGMode( &bg_sys_header );
+      }
+      //ＢＧセットアップ
+      G2_SetBG3ControlDCBmp(
+          GX_BG_SCRSIZE_DCBMP_256x256,
+          GX_BG_AREAOVER_XLU,
+          GX_BG_BMPSCRBASE_0x00000
+      );
+      GX_SetBankForBG(GX_VRAM_BG_128_D);
+      //アルファブレンド
+      G2_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE,
+				GX_BLEND_PLANEMASK_BG3, 0,0);
+
+      (*seq)++;
+    }
+    break;
+  case 3:
     //リソースロード
     SetupResource(ptr, &evt_work->SetupDat, ptr->CutInNo);
     {
       int size = GFL_HEAP_GetHeapFreeSize(ptr->HeapID);
       OS_Printf("START::FLD3DCUTIN_HEAP_REST %x\n",size);
     }
+    //フィールド表示モード切替
+    FIELDMAP_SetDraw3DMode(fieldmap, DRAW3DMODE_CUTIN);
     (*seq)++;
     break;
-  case 2:
+  case 4:
     //画面復帰
     if (1){
       (*seq)++;
     }
     break;
-  case 3:
+  case 5:
     {
       BOOL rc1,rc2,rc3;
       //パーティクル再生
@@ -320,16 +386,59 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       }
     }
     break;
-  case 4:
+  case 6:
+    //フィールドモード戻し
+    FIELDMAP_SetDraw3DMode(fieldmap, DRAW3DMODE_NORMAL);
     //リソース解放処理
     DeleteResource(ptr, &evt_work->SetupDat);
     (*seq)++;
     break;
-  case 5:
+  case 7:
+    //プライオリティの復帰
+    PopPriority(ptr);
+    //表示状態の復帰
+    PopDisp(ptr);
     {
       int size = GFL_HEAP_GetHeapFreeSize(ptr->HeapID);
       OS_Printf("END::FLD3DCUTIN_HEAP_REST %x\n",size);
     }
+
+    //マップ遷移を入れて、ＢＧのセットアップをする
+    {
+      GMEVENT * child;
+      int zone_id;
+      FIELD_PLAYER *fld_player;
+      PLAYER_WORK *player_work;
+      FLDMAP_CTRLTYPE map_type;
+
+      fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+      {
+        GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+        player_work = GAMEDATA_GetMyPlayerWork(gamedata);
+      }
+      zone_id = player_work->zoneID;
+
+      map_type = FIELDMAP_GetMapControlType( fieldmap );
+      
+      if (map_type == FLDMAP_CTRLTYPE_GRID){
+        VecFx32 pos;
+        //自機の座標
+        FIELD_PLAYER_GetPos( fld_player, &pos );
+        child = DEBUG_EVENT_ChangeMapPos(gsys, fieldmap,
+            zone_id, &pos, DIR_DOWN );
+      }
+      else{
+        RAIL_LOCATION rail_loc;
+        MMDL_GetRailLocation( FIELD_PLAYER_GetMMdl( fld_player ), &rail_loc );
+        child = DEBUG_EVENT_ChangeMapRailLocation(gsys, fieldmap,
+            zone_id, &rail_loc, DIR_DOWN );
+      }
+      //イベントコール
+      GMEVENT_CallEvent(event, child);
+    }
+    (*seq)++;
+    break;
+  case 8:
     //終了
     return GMEVENT_RES_FINISH;
   }
@@ -805,5 +914,107 @@ static GMEVENT_RESULT DebugFlySkyEffEvt( GMEVENT* event, int* seq, void* work )
   return GMEVENT_RES_CONTINUE;
 }
 
+//キャプチャリクエスト
+static void ReqCapture(FLD3D_CI_PTR ptr)
+{
+  ptr->CapEndFlg = FALSE;
+  GX_SetBankForLCDC(GX_VRAM_LCDC_D);
+  GFUser_VIntr_CreateTCB(Graphic_Tcb_Capture, &ptr->CapEndFlg, 0 );
+}
+
 
 #endif  //PM_DEBUG
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	Vブランクタスク
+ *
+ *	@param	GFL_TCB *p_tcb
+ *	@param	*p_work 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static void Graphic_Tcb_Capture( GFL_TCB *p_tcb, void *p_work )
+{
+  BOOL *cap_end_flg = p_work;
+  
+	GX_SetCapture(GX_CAPTURE_SIZE_256x192,  // Capture size
+                      GX_CAPTURE_MODE_A,			   // Capture mode
+                      GX_CAPTURE_SRCA_3D,						 // Blend src A
+                      GX_CAPTURE_SRCB_VRAM_0x00000,     // Blend src B
+                      GX_CAPTURE_DEST_VRAM_D_0x00000,   // Output VRAM
+                      16,             // Blend parameter for src A
+                      0);            // Blend parameter for src B
+
+  GFL_TCB_DeleteTask( p_tcb );
+  if (cap_end_flg != NULL){
+    *cap_end_flg = TRUE;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	プライオリティプッシュ
+ *
+ *	@param	ptr       カットイン管理ポインタ
+ *	@return none
+ */
+//-----------------------------------------------------------------------------
+static void PushPriority(FLD3D_CI_PTR ptr)
+{
+  int i;
+  for(i=0;i<4;i++){
+    ptr->BgPriority[i] = GFL_BG_GetPriority( i );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	表示状態プッシュ
+ *
+ *	@param	ptr       カットイン管理ポインタ
+ *	@return none
+ */
+//-----------------------------------------------------------------------------
+static void PushDisp(FLD3D_CI_PTR ptr)
+{
+  ptr->Mask = GX_GetVisiblePlane();
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	プライオリティポップ
+ *
+ *	@param	ptr       カットイン管理ポインタ
+ *	@return none
+ */
+//-----------------------------------------------------------------------------
+static void PopPriority(FLD3D_CI_PTR ptr)
+{
+  int i;
+  for(i=0;i<4;i++){
+    GFL_BG_SetPriority( i, ptr->BgPriority[i] );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	表示状態ポップ
+ *
+ *	@param	ptr       カットイン管理ポインタ
+ *	@return none
+ */
+//-----------------------------------------------------------------------------
+static void PopDisp(FLD3D_CI_PTR ptr)
+{
+  GX_SetVisiblePlane( ptr->Mask );
+  //@todo メッセージ表示等でＢＧ1を使用しているが、ＢＧ1がオンであることを期待したつくりになっているので、
+  //演出後ポップするとＢＧ1はオン状態で復帰し、ごみがでる。
+  //なので、ここではとりあえず、ＢＧ1をオフにしておく
+  GX_SetVisiblePlane(GX_PLANEMASK_BG0);
+}
+
+
+
+
