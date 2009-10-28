@@ -94,6 +94,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/event_mapchange.c \
         field/event_fieldmap_menu.c \
 				field/event_shortcut_menu.c \
+				field/event_field_proclink.c \
         field/event_battle.c \
         field/event_ircbattle.c \
         field/event_fldmmdl_control.c \

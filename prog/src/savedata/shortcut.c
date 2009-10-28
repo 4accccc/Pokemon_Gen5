@@ -251,20 +251,59 @@ u16 SHORTCUT_GetMax( const SHORTCUT *cp_wk )
  *	@param	shortcutID										
  *	@param	insert_idx							挿入されるインデックス
  *
+ *	@param	挿入されたインデックス（－1されていることがある）
+ *
  */
 //-----------------------------------------------------------------------------
-void SHORTCUT_Insert( SHORTCUT *p_wk, SHORTCUT_ID shortcutID, u8 insert_idx )
+u8 SHORTCUT_Insert( SHORTCUT *p_wk, SHORTCUT_ID shortcutID, u8 insert_idx )
 {	
 	s16 i;
 	u16 next;
+	s16 erase_idx;
+
+	/*
+	 *	メモ
+	 *
+	 *	挿入なので、上にいくときは良いが、
+	 *	一端消す場合、下へいくときは、自分の分を考慮すること
+	 *
+	 *		
+	 *	AAA	→	消すとインデックスが詰まるので・・・
+	 *			←	下にいくときは-1インデックス
+	 *	BBB
+	 *		
+	 *	CCC
+	 *
+	 *
+	 */
+
 
 	GF_ASSERT_MSG( insert_idx < SHORTCUT_ID_MAX, "インデックスが最大を超えています\n" );
 	
+	//自分のインデックスを取得
+	for( erase_idx = 0 ; erase_idx < SHORTCUT_ID_MAX ; erase_idx++ )
+	{
+		if( p_wk->data[ erase_idx ] == shortcutID  )
+		{	
+			break;
+		}
+	}
+	GF_ASSERT_MSG( erase_idx != SHORTCUT_ID_MAX, "見つからなかった\n" )
+
+
 	//タイプを消す
 	SHORTCUT_SetRegister( p_wk, shortcutID, FALSE );
 	
 	NAGI_Printf( "消した後\n" );
 	DEBUG_PrintData( p_wk );
+	
+	//消した分つまるので
+	//インデックス－1
+	if( erase_idx < insert_idx )
+	{	
+		insert_idx--;
+	}
+
 
 	//挿入の以下を１つずつずらす
 	for( i = SHORTCUT_ID_MAX-1; i >= insert_idx ; i-- )
@@ -278,6 +317,8 @@ void SHORTCUT_Insert( SHORTCUT *p_wk, SHORTCUT_ID shortcutID, u8 insert_idx )
 
 	NAGI_Printf( "挿入完了\n" );
 	DEBUG_PrintData( p_wk );
+
+	return insert_idx;
 }
 //=============================================================================
 /**

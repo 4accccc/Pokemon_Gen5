@@ -338,6 +338,18 @@ extern void BmpMenuList_DirectPosGet( BMPMENULIST_WORK * lw, u16 * pos_bak );
 //--------------------------------------------------------------------------------------------
 extern void BmpMenuList_PosGet( BMPMENULIST_WORK * lw, u16 * list_bak, u16 * cursor_bak );
 
+//----------------------------------------------------------------------------
+/**
+ * BMPリストのリスト位置、カーソル位置を設定
+ *
+ * @param	lw			BMPリストワーク
+ * @param	list		リスト位置
+ * @param	cursor	カーソル位置
+ *
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+extern void BmpMenuList_PosSet( BMPMENULIST_WORK * lw, u16 list, u16 cursor );
 //--------------------------------------------------------------------------------------------
 /**
  * BMPリストのカーソルY座標を取得

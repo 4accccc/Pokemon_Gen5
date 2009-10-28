@@ -450,9 +450,12 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
   //便利ボタンチェック
   if( req.convRequest ){
 		if(WIPE_SYS_EndCheck()){
-			event = EVENT_ShortCutMenu( gsys, fieldWork, req.heapID );
-			if( event != NULL ){
-				return event;
+			if( EVENT_ShortCutMenu_IsOpen(gsys) )
+			{	
+				event = EVENT_ShortCutMenu( gsys, fieldWork, req.heapID );
+				if( event != NULL ){
+					return event;
+				}
 			}
 		}
   }
@@ -861,9 +864,12 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
   //便利ボタンチェック
   if( req.convRequest ){
 		if(WIPE_SYS_EndCheck()){
-			event = EVENT_ShortCutMenu( gsys, fieldWork, req.heapID );
-			if( event != NULL ){
-				return event;
+			if( EVENT_ShortCutMenu_IsOpen(gsys) )
+			{	
+				event = EVENT_ShortCutMenu( gsys, fieldWork, req.heapID );
+				if( event != NULL ){
+					return event;
+				}
 			}
 		}
   }

@@ -532,6 +532,26 @@ extern void GAMEDATA_SetShortCut( GAMEDATA *gamedata, SHORTCUT_ID shortcutID, BO
 //----------------------------------------------------------------------------
 extern BOOL GAMEDATA_GetShortCut( const GAMEDATA *gamedata, SHORTCUT_ID shortcutID );
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	Yボタン用メニューのカーソルセット
+ *
+ *	@param	gamedata	ゲームデータ
+ *	@param	cursor		カーソル
+ */
+//-----------------------------------------------------------------------------
+extern void GAMEDATA_SetShortCutCursor( GAMEDATA *gamedata, SHORTCUT_CURSOR *cursor );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	Yボタン用メニューのカーソル取得
+ *
+ *	@param	gamedata	ゲームデータ
+ *	@retval	cursor		カーソル
+ */
+//-----------------------------------------------------------------------------
+extern SHORTCUT_CURSOR * GAMEDATA_GetShortCutCursor( GAMEDATA *gamedata );
+
 //============================================================================================
 //	SAVE_CONTROL_WORKへのアクセス
 //============================================================================================

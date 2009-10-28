@@ -33,3 +33,5 @@
 //=============================================================================
 extern GMEVENT * EVENT_ShortCutMenu(
 	GAMESYS_WORK *p_gamesys, FIELDMAP_WORK *p_fieldmap, HEAPID heapID );
+
+extern BOOL EVENT_ShortCutMenu_IsOpen( GAMESYS_WORK *p_gamesys );

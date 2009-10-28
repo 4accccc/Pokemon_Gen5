@@ -105,7 +105,8 @@ GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void
   wk->heapId = HEAPID_TRCARD_SYS;
 
   //データテンポラリ作成
-  wk->tcp = pp;
+	wk->tcp	= GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( TRCARD_CALL_PARAM ) );
+  *wk->tcp = *pp;
   wk->tcp->TrCardData = GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( TR_CARD_DATA ) );
   TRAINERCARD_GetSelfData( wk->tcp->TrCardData , pp->gameData , FALSE);
 
@@ -138,7 +139,6 @@ GFL_PROC_RESULT TrCardSysProc_InitComm( GFL_PROC * proc, int * seq , void *pwk, 
 GFL_PROC_RESULT TrCardSysProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   TR_CARD_SYS* wk = (TR_CARD_SYS*)mywk;
-  
   switch(*seq){
   case CARD_INIT:
     *seq = sub_CardInit(wk);
@@ -203,7 +203,10 @@ static int sub_CardInit(TR_CARD_SYS* wk)
     TrCardProc_End,
   };
 //  wk->proc = PROC_Create(&TrCardProcData,wk->tcp,wk->heapId);
-  wk->procSys = GFL_PROC_LOCAL_boot( wk->heapId );
+	if( wk->procSys == NULL )
+	{	
+		wk->procSys = GFL_PROC_LOCAL_boot( wk->heapId );
+	}
   GFL_PROC_LOCAL_CallProc( wk->procSys, NO_OVERLAY_ID, &TrCardProcData,(void*)wk->tcp);
   return CARD_WAIT;
 }
@@ -237,7 +240,10 @@ static int sub_SignInit(TR_CARD_SYS* wk)
   };
     
 //  wk->proc = PROC_Create(&MySignProcData,(void*)wk->tcp->savedata,wk->heapId);
-  wk->procSys = GFL_PROC_LOCAL_boot( wk->heapId );
+	if( wk->procSys == NULL )
+	{	
+		wk->procSys = GFL_PROC_LOCAL_boot( wk->heapId );
+	}
   GFL_PROC_LOCAL_CallProc( wk->procSys, NO_OVERLAY_ID, &MySignProcData,wk->tcp);
   return SIGN_WAIT;
 }
@@ -377,6 +383,7 @@ TRCARD_CALL_PARAM* TRAINERCASR_CreateCallParam_SelfData( GAMEDATA *gameData , HE
 {
   TRCARD_CALL_PARAM* callParam;
   callParam = GFL_HEAP_AllocMemory( heapId , sizeof( TRCARD_CALL_PARAM ) );
+	GFL_STD_MemClear( callParam, sizeof(TRCARD_CALL_PARAM) );
   callParam->TrCardData = NULL;
   callParam->gameData = gameData;
   callParam->value = 0;

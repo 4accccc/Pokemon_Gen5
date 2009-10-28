@@ -27,6 +27,15 @@ typedef enum
 	SHORTCUTMENU_INPUT_CANCEL,	//キャンセルした
 } SHORTCUTMENU_INPUT;
 
+//-------------------------------------
+///	ショートカットメニュー起動モード
+//=====================================
+typedef enum
+{
+	SHORTCUTMENU_MODE_POPUP,	//下から出てくる
+	SHORTCUTMENU_MODE_STAY,		//すでに表示されている
+} SHORTCUTMENU_MODE;
+
 
 
 //=============================================================================
@@ -47,7 +56,7 @@ typedef struct _SHORTCUTMENU_WORK SHORTCUTMENU_WORK;
 //-------------------------------------
 ///	システム
 //=====================================
-extern SHORTCUTMENU_WORK *SHORTCUTMENU_Init( HEAPID heapID );
+extern SHORTCUTMENU_WORK *SHORTCUTMENU_Init( SHORTCUTMENU_MODE mode, SHORTCUT_CURSOR *p_cursor, HEAPID heapID );
 extern void SHORTCUTMENU_Exit( SHORTCUTMENU_WORK *p_wk );
 extern void SHORTCUTMENU_Main( SHORTCUTMENU_WORK *p_wk );
 

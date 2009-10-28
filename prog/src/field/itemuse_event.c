@@ -12,12 +12,47 @@
 #include "event_mapchange.h"
 #include "arc/fieldmap/zone_id.h"
 
+//=============================================================================
+/**
+ *	共通
+ */
+//=============================================================================
+//-------------------------------------
+///	共通呼び出し用テーブル
+//=====================================
+static ItemUseEventFunc * const Event_ItemUse[ EVENT_ITEMUSE_CALL_MAX ]	=
+{	
+	&EVENT_CycleUse,
+	&EVENT_PalaceJumpUse,
+};
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	共通呼び出し
+ *
+ *	@param	EVENT_ITEMUSE_CALL_TYPE type	呼び出すアイテム
+ *	@param	*gsys				ゲームシステム
+ *	@param	*field_wk		フィールド
+ *
+ *	@return	イベント
+ */
+//-----------------------------------------------------------------------------
+GMEVENT * EVENT_FieldItemUse( EVENT_ITEMUSE_CALL_TYPE type, GAMESYS_WORK *gsys, FIELDMAP_WORK *field_wk )
+{	
+	GF_ASSERT( type < EVENT_ITEMUSE_CALL_MAX );
+	return Event_ItemUse[ type ]( field_wk, gsys );
+}
+
+
+//=============================================================================
+/**
+ *	個別呼び出し
+ */
+//=============================================================================
 typedef struct{
   GAMESYS_WORK *gameSys;
 } CYCLEUSE_STRUCT;
-
-
 
 //------------------------------------------------------------------------------
 /**
@@ -72,3 +107,5 @@ GMEVENT * EVENT_PalaceJumpUse(FIELDMAP_WORK *fieldWork,GAMESYS_WORK *gsys)
   }
   return DEBUG_EVENT_ChangeMapPos(gsys, fieldWork, jump_zone, &pos, 0);
 }
+
+

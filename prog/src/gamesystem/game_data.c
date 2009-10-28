@@ -90,6 +90,8 @@ struct _GAMEDATA{
   FIELD_BEACON_MSG_DATA *fbmData; //フィールドビーコンメッセージデータ
 
   ENCOUNT_WORK* enc_work; ///<エンカウント関連データワーク
+
+	SHORTCUT_CURSOR	shortcut_cursor;	///<ショートカット画面のカーソル
 };
 
 //==============================================================================
@@ -192,6 +194,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   
   //エンカウントワーク初期化
   gd->enc_work = ENCOUNT_WORK_Create( heapID );
+
+	//ショートカット用カーソル初期化
+	SHORTCUT_CURSOR_Init( &gd->shortcut_cursor );
 
   GAMEDATA_SaveDataLoad(gd);	//セーブデータから必要なものをロードしてくる
   return gd;
@@ -978,13 +983,40 @@ void GAMEDATA_SetShortCut( GAMEDATA *gamedata, SHORTCUT_ID shortcutID, BOOL is_o
  *  @retval	TRUEならばYBTNに登録してある	FALSEならば登録していない
  */
 //----------------------------------------------------------------------------
-extern BOOL GAMEDATA_GetShortCut( const GAMEDATA *gamedata, SHORTCUT_ID shortcutID )
+BOOL GAMEDATA_GetShortCut( const GAMEDATA *gamedata, SHORTCUT_ID shortcutID )
 {	
 	const SAVE_CONTROL_WORK*	cp_sv	= GAMEDATA_GetSaveControlWorkConst(gamedata);
 
 	const SHORTCUT *cp_shortcut	=  SaveData_GetShortCutConst( cp_sv );
 
 	return SHORTCUT_GetRegister( cp_shortcut, shortcutID );	
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	Yボタン用メニューのカーソルセット
+ *
+ *	@param	gamedata	ゲームデータ
+ *	@param	cursor		カーソル
+ */
+//-----------------------------------------------------------------------------
+void GAMEDATA_SetShortCutCursor( GAMEDATA *gamedata, SHORTCUT_CURSOR *cursor )
+{	
+	gamedata->shortcut_cursor	= *cursor;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	Yボタン用メニューのカーソル取得
+ *
+ *	@param	gamedata	ゲームデータ
+ *	@retval	cursor		カーソル
+ */
+//-----------------------------------------------------------------------------
+SHORTCUT_CURSOR * GAMEDATA_GetShortCutCursor( GAMEDATA *gamedata )
+{	
+	return &gamedata->shortcut_cursor;
 }
 
 //==============================================================================
