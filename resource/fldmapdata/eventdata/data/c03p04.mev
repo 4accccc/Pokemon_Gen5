@@ -50,7 +50,7 @@ DOOR_ID_C03P02_C03P04_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_NONE
 #position
 -8 0 -152
 #event number: 1
@@ -63,7 +63,7 @@ DOOR_ID_C03P02_C03P04_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_NONE
 #position
 -24 0 -152
 #event number: 2
@@ -76,7 +76,7 @@ DOOR_ID_C03P02_C03P04_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_NONE
 #position
 8 0 -152
 #event number: 3
@@ -89,7 +89,7 @@ DOOR_ID_C03P02_C03P04_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_NONE
 #position
 24 0 -152
 #event number: 4
@@ -102,7 +102,7 @@ DOOR_ID_C03P02_C03P04_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_NONE
 #position
 -56 0 -152
 #event number: 5
@@ -115,7 +115,7 @@ DOOR_ID_C03P02_C03P04_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_NONE
 #position
 -40 0 -152
 #event number: 6
@@ -128,7 +128,7 @@ DOOR_ID_C03P02_C03P04_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_NONE
 #position
 40 0 -152
 #event number: 7
@@ -141,7 +141,7 @@ DOOR_ID_C03P02_C03P04_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_NONE
 #position
 56 0 -152
 #event number: 8
@@ -154,7 +154,7 @@ DOOR_ID_R04_C03P04_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_NONE
 #position
 -8 0 152
 #event number: 9
@@ -167,7 +167,7 @@ DOOR_ID_R04_C03P04_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_NONE
 #position
 -56 0 152
 #event number: 10
@@ -180,7 +180,7 @@ DOOR_ID_R04_C03P04_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_NONE
 #position
 -40 0 152
 #event number: 11
@@ -193,7 +193,7 @@ DOOR_ID_R04_C03P04_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_NONE
 #position
 -24 0 152
 #event number: 12
@@ -206,7 +206,7 @@ DOOR_ID_R04_C03P04_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_NONE
 #position
 8 0 152
 #event number: 13
@@ -219,7 +219,7 @@ DOOR_ID_R04_C03P04_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_NONE
 #position
 24 0 152
 #event number: 14
@@ -232,7 +232,7 @@ DOOR_ID_R04_C03P04_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_NONE
 #position
 40 0 152
 #event number: 15
@@ -245,7 +245,7 @@ DOOR_ID_R04_C03P04_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_NONE
 #position
 56 0 152
 #Map Event List Data End

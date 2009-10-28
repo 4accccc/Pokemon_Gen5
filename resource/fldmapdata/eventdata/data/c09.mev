@@ -50,7 +50,7 @@ DOOR_ID_D09_EXIT15
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_NONE
 #position
 0 0 -408
 #event number: 1
@@ -63,7 +63,7 @@ DOOR_ID_D09_EXIT15
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_NONE
 #position
 16 0 -408
 #Map Event List Data End
