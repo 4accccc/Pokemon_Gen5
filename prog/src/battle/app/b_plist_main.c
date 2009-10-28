@@ -666,7 +666,7 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
 
 //	GFL_NET_ReloadIcon();
 //	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 14*16, FADE_PAL_ONE_SIZE );
-	{
+//	{
 /*
 		u16 * defWk = PaletteWorkDefaultWorkGet( wk->pfd, FADE_SUB_OBJ );
 		u16 * trsWk = PaletteWorkTransWorkGet( wk->pfd, FADE_SUB_OBJ );
@@ -692,7 +692,7 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
 		}
 		OS_Printf( "\n¡¡¡ pal ¡¡¡\n" );
 */
-	}
+//	}
 
 
 	PaletteFadeReq(
@@ -2028,6 +2028,8 @@ static void BPL_MsgManSet( BPLIST_WORK * wk )
 	wk->wset = WORDSET_Create( wk->dat->heap );
 	wk->que  = PRINTSYS_QUE_Create( wk->dat->heap );
 	wk->msg_buf = GFL_STR_CreateBuffer( TMP_MSG_BUF_SIZ, wk->dat->heap );
+
+	PRINTSYS_QUE_ForceCommMode( wk->que, TRUE );			// ƒeƒXƒg
 }
 
 //--------------------------------------------------------------------------------------------

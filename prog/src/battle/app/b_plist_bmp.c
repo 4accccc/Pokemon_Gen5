@@ -74,10 +74,18 @@
 #define	FCOL_P09WN		( PRINTSYS_LSB_Make(15,14,0) )		// フォントカラー：パレット９白抜
 #define	FCOL_P09BLN		( PRINTSYS_LSB_Make(10,11,0) )		// フォントカラー：パレット９青抜
 #define	FCOL_P09RN		( PRINTSYS_LSB_Make(12,13,0) )		// フォントカラー：パレット９赤抜
+/*
 #define	FCOL_P13BKN		( PRINTSYS_LSB_Make(1,2,0) )			// フォントカラー：パレット１３黒抜
 #define	FCOL_P13WN		( PRINTSYS_LSB_Make(15,2,0) )			// フォントカラー：パレット１３白抜
 #define	FCOL_P13BLN		( PRINTSYS_LSB_Make(6,5,0) )			// フォントカラー：パレット１３青抜
 #define	FCOL_P13RN		( PRINTSYS_LSB_Make(4,3,0) )			// フォントカラー：パレット１３赤抜
+*/
+#define	FCOL_P13BKN		( PRINTSYS_LSB_Make(8,9,0) )			// フォントカラー：パレット１３黒抜
+#define	FCOL_P13WN		( PRINTSYS_LSB_Make(15,14,0) )		// フォントカラー：パレット１３白抜
+#define	FCOL_P13BLN		( PRINTSYS_LSB_Make(10,11,0) )		// フォントカラー：パレット１３青抜
+#define	FCOL_P13RN		( PRINTSYS_LSB_Make(12,13,0) )		// フォントカラー：パレット１３赤抜
+
+#define	FCOL_P13TALK	( PRINTSYS_LSB_Make(1,2,0) )
 
 #define	HP_GAGE_COL_G1	( 1 )	// HPゲージカラー緑１
 #define	HP_GAGE_COL_G2	( 2 )	// HPゲージカラー緑２
@@ -372,73 +380,73 @@ static const u8 StMainPage_BmpData[][6] =
 static const u8 StWazaInfoPage_BmpData[][6] =
 {
 	{	// 技名
-		GFL_BG_FRAME0_S, WIN_P4_SKILL_PX, WIN_P4_SKILL_PY,
+		GFL_BG_FRAME1_S, WIN_P4_SKILL_PX, WIN_P4_SKILL_PY,
 		WIN_P4_SKILL_SX, WIN_P4_SKILL_SY, WIN_P4_SKILL_PAL
 	},
 	{	// PP/PP
-		GFL_BG_FRAME0_S, WIN_P4_PPNUM_PX, WIN_P4_PPNUM_PY,
+		GFL_BG_FRAME1_S, WIN_P4_PPNUM_PX, WIN_P4_PPNUM_PY,
 		WIN_P4_PPNUM_SX, WIN_P4_PPNUM_SY, WIN_P4_PPNUM_PAL
 	},
 	{	// 命中値
-		GFL_BG_FRAME0_S, WIN_P4_HITNUM_PX, WIN_P4_HITNUM_PY,
+		GFL_BG_FRAME1_S, WIN_P4_HITNUM_PX, WIN_P4_HITNUM_PY,
 		WIN_P4_HITNUM_SX, WIN_P4_HITNUM_SY, WIN_P4_HITNUM_PAL
 	},
 	{	// 威力値
-		GFL_BG_FRAME0_S, WIN_P4_POWNUM_PX, WIN_P4_POWNUM_PY,
+		GFL_BG_FRAME1_S, WIN_P4_POWNUM_PX, WIN_P4_POWNUM_PY,
 		WIN_P4_POWNUM_SX, WIN_P4_POWNUM_SY, WIN_P4_POWNUM_PAL
 	},
 	{	// 技説明
-		GFL_BG_FRAME0_S, WIN_P4_INFO_PX, WIN_P4_INFO_PY,
+		GFL_BG_FRAME1_S, WIN_P4_INFO_PX, WIN_P4_INFO_PY,
 		WIN_P4_INFO_SX, WIN_P4_INFO_SY, WIN_P4_INFO_PAL
 	},
 	{	// 分類名
-		GFL_BG_FRAME0_S, WIN_P4_BRNAME_PX, WIN_P4_BRNAME_PY,
+		GFL_BG_FRAME1_S, WIN_P4_BRNAME_PX, WIN_P4_BRNAME_PY,
 		WIN_P4_BRNAME_SX, WIN_P4_BRNAME_SY, WIN_P4_BRNAME_PAL
 	},
 
 	{	// 名前
-		GFL_BG_FRAME0_S, WIN_P4_NAME_PX, WIN_P4_NAME_PY,
+		GFL_BG_FRAME1_S, WIN_P4_NAME_PX, WIN_P4_NAME_PY,
 		WIN_P4_NAME_SX, WIN_P4_NAME_SY, WIN_P4_NAME_PAL
 	},
 	{	// PP
-		GFL_BG_FRAME0_S, WIN_P4_PP_PX, WIN_P4_PP_PY,
+		GFL_BG_FRAME1_S, WIN_P4_PP_PX, WIN_P4_PP_PY,
 		WIN_P4_PP_SX, WIN_P4_PP_SY, WIN_P4_PP_PAL
 	},
 	{	// 「めいちゅう」
-		GFL_BG_FRAME0_S, WIN_P4_HIT_PX, WIN_P4_HIT_PY,
+		GFL_BG_FRAME1_S, WIN_P4_HIT_PX, WIN_P4_HIT_PY,
 		WIN_P4_HIT_SX, WIN_P4_HIT_SY, WIN_P4_HIT_PAL
 	},
 	{	// 「いりょく」
-		GFL_BG_FRAME0_S, WIN_P4_POW_PX, WIN_P4_POW_PY,
+		GFL_BG_FRAME1_S, WIN_P4_POW_PX, WIN_P4_POW_PY,
 		WIN_P4_POW_SX, WIN_P4_POW_SY, WIN_P4_POW_PAL
 	},
 	{	// 「ぶんるい」
-		GFL_BG_FRAME0_S, WIN_P4_BUNRUI_PX, WIN_P4_BUNRUI_PY,
+		GFL_BG_FRAME1_S, WIN_P4_BUNRUI_PX, WIN_P4_BUNRUI_PY,
 		WIN_P4_BUNRUI_SX, WIN_P4_BUNRUI_SY, WIN_P4_BUNRUI_PAL
 	},
 
 	{	// 技名（スワップ）
-		GFL_BG_FRAME0_S, WIN_P4_SKILL_PX, WIN_P4_SKILL_PY,
+		GFL_BG_FRAME1_S, WIN_P4_SKILL_PX, WIN_P4_SKILL_PY,
 		WIN_P4_SKILL_SX, WIN_P4_SKILL_SY, WIN_P4_SKILL_PAL
 	},
 	{	// PP/PP（スワップ）
-		GFL_BG_FRAME0_S, WIN_P4_PPNUM_PX, WIN_P4_PPNUM_PY,
+		GFL_BG_FRAME1_S, WIN_P4_PPNUM_PX, WIN_P4_PPNUM_PY,
 		WIN_P4_PPNUM_SX, WIN_P4_PPNUM_SY, WIN_P4_PPNUM_PAL
 	},
 	{	// 命中値（スワップ）
-		GFL_BG_FRAME0_S, WIN_P4_HITNUM_PX, WIN_P4_HITNUM_PY,
+		GFL_BG_FRAME1_S, WIN_P4_HITNUM_PX, WIN_P4_HITNUM_PY,
 		WIN_P4_HITNUM_SX, WIN_P4_HITNUM_SY, WIN_P4_HITNUM_PAL
 	},
 	{	// 威力値（スワップ）
-		GFL_BG_FRAME0_S, WIN_P4_POWNUM_PX, WIN_P4_POWNUM_PY,
+		GFL_BG_FRAME1_S, WIN_P4_POWNUM_PX, WIN_P4_POWNUM_PY,
 		WIN_P4_POWNUM_SX, WIN_P4_POWNUM_SY, WIN_P4_POWNUM_PAL
 	},
 	{	// 技説明（スワップ）
-		GFL_BG_FRAME0_S, WIN_P4_INFO_PX, WIN_P4_INFO_PY,
+		GFL_BG_FRAME1_S, WIN_P4_INFO_PX, WIN_P4_INFO_PY,
 		WIN_P4_INFO_SX, WIN_P4_INFO_SY, WIN_P4_INFO_PAL
 	},
 	{	// 分類名（スワップ）
-		GFL_BG_FRAME0_S, WIN_P4_BRNAME_PX, WIN_P4_BRNAME_PY,
+		GFL_BG_FRAME1_S, WIN_P4_BRNAME_PX, WIN_P4_BRNAME_PY,
 		WIN_P4_BRNAME_SX, WIN_P4_BRNAME_SY, WIN_P4_BRNAME_PAL
 	},
 };
@@ -447,27 +455,27 @@ static const u8 StWazaInfoPage_BmpData[][6] =
 static const u8 Page5_BmpData[][6] =
 {
 	{	// 名前
-		GFL_BG_FRAME0_S, WIN_P5_NAME_PX, WIN_P5_NAME_PY,
+		GFL_BG_FRAME1_S, WIN_P5_NAME_PX, WIN_P5_NAME_PY,
 		WIN_P5_NAME_SX, WIN_P5_NAME_SY, WIN_P5_NAME_PAL
 	},
 	{	// 技１
-		GFL_BG_FRAME0_S, WIN_P5_SKILL1_PX, WIN_P5_SKILL1_PY,
+		GFL_BG_FRAME1_S, WIN_P5_SKILL1_PX, WIN_P5_SKILL1_PY,
 		WIN_P5_SKILL1_SX, WIN_P5_SKILL1_SY, WIN_P5_SKILL1_PAL
 	},
 	{	// 技２
-		GFL_BG_FRAME0_S, WIN_P5_SKILL2_PX, WIN_P5_SKILL2_PY,
+		GFL_BG_FRAME1_S, WIN_P5_SKILL2_PX, WIN_P5_SKILL2_PY,
 		WIN_P5_SKILL2_SX, WIN_P5_SKILL2_SY, WIN_P5_SKILL2_PAL
 	},
 	{	// 技３
-		GFL_BG_FRAME0_S, WIN_P5_SKILL3_PX, WIN_P5_SKILL3_PY,
+		GFL_BG_FRAME1_S, WIN_P5_SKILL3_PX, WIN_P5_SKILL3_PY,
 		WIN_P5_SKILL3_SX, WIN_P5_SKILL3_SY, WIN_P5_SKILL3_PAL
 	},
 	{	// 技４
-		GFL_BG_FRAME0_S, WIN_P5_SKILL4_PX, WIN_P5_SKILL4_PY,
+		GFL_BG_FRAME1_S, WIN_P5_SKILL4_PX, WIN_P5_SKILL4_PY,
 		WIN_P5_SKILL4_SX, WIN_P5_SKILL4_SY, WIN_P5_SKILL4_PAL
 	},
 	{	// 技５
-		GFL_BG_FRAME0_S, WIN_P5_SKILL5_PX, WIN_P5_SKILL5_PY,
+		GFL_BG_FRAME1_S, WIN_P5_SKILL5_PX, WIN_P5_SKILL5_PY,
 		WIN_P5_SKILL5_SX, WIN_P5_SKILL5_SY, WIN_P5_SKILL5_PAL
 	},
 };
@@ -529,28 +537,29 @@ static const u8 Page6_BmpData[][6] =
 static const u8 PPRcvPage_BmpData[][6] =
 {
 	{	// 名前
-		GFL_BG_FRAME0_S, WIN_P7_NAME_PX, WIN_P7_NAME_PY,
+		GFL_BG_FRAME1_S, WIN_P7_NAME_PX, WIN_P7_NAME_PY,
 		WIN_P7_NAME_SX, WIN_P7_NAME_SY, WIN_P7_NAME_PAL
 	},
 	{	// 技１
-		GFL_BG_FRAME0_S, WIN_P7_SKILL1_PX, WIN_P7_SKILL1_PY,
+		GFL_BG_FRAME1_S, WIN_P7_SKILL1_PX, WIN_P7_SKILL1_PY,
 		WIN_P7_SKILL1_SX, WIN_P7_SKILL1_SY, WIN_P7_SKILL1_PAL
 	},
 	{	// 技２
-		GFL_BG_FRAME0_S, WIN_P7_SKILL2_PX, WIN_P7_SKILL2_PY,
+		GFL_BG_FRAME1_S, WIN_P7_SKILL2_PX, WIN_P7_SKILL2_PY,
 		WIN_P7_SKILL2_SX, WIN_P7_SKILL2_SY, WIN_P7_SKILL2_PAL
 	},
 	{	// 技３
-		GFL_BG_FRAME0_S, WIN_P7_SKILL3_PX, WIN_P7_SKILL3_PY,
+		GFL_BG_FRAME1_S, WIN_P7_SKILL3_PX, WIN_P7_SKILL3_PY,
 		WIN_P7_SKILL3_SX, WIN_P7_SKILL3_SY, WIN_P7_SKILL3_PAL
 	},
 	{	// 技４
-		GFL_BG_FRAME0_S, WIN_P7_SKILL4_PX, WIN_P7_SKILL4_PY,
+		GFL_BG_FRAME1_S, WIN_P7_SKILL4_PX, WIN_P7_SKILL4_PY,
 		WIN_P7_SKILL4_SX, WIN_P7_SKILL4_SY, WIN_P7_SKILL4_PAL
 	},
 };
 
 // ページ８のBMPウィンドウデータ
+/*
 static const u8 Page8_BmpData[][6] =
 {
 	{	// 名前
@@ -582,7 +591,7 @@ static const u8 Page8_BmpData[][6] =
 		WIN_P8_WASURERU_SX, WIN_P8_WASURERU_SY, WIN_P8_WASURERU_PAL
 	},
 };
-
+*/
 
 // ポケモン名のメッセージID
 static const u32 NameMsgID_Tbl[] = {
@@ -1212,7 +1221,7 @@ static void BPL_PokeSelStrPut( BPLIST_WORK * wk, u32 midx )
 	str = GFL_MSG_CreateString( wk->mman, midx );
 //	PRINTSYS_PrintQueColor(
 //		wk->que, GFL_BMPWIN_GetBmp(wk->win[WIN_COMMENT].win), 0, 0, str, wk->dat->font, FCOL_P13WN );
-	PRINT_UTIL_PrintColor( &wk->win[WIN_COMMENT], wk->que, 0, 0, str, wk->dat->font, FCOL_P13BKN );
+	PRINT_UTIL_PrintColor( &wk->win[WIN_COMMENT], wk->que, 0, 0, str, wk->dat->font, FCOL_P13TALK );
 	GFL_STR_DeleteBuffer( str );
 
 	BAPPTOOL_PrintScreenTrans( &wk->win[WIN_COMMENT] );
@@ -1891,7 +1900,7 @@ static void BPL_WazaInfoPut( BPLIST_WORK * wk, u32 idx, u32 waza )
 	str = GFL_MSG_CreateString( man, waza );
 //	PRINTSYS_PrintQueColor(
 //		wk->que, GFL_BMPWIN_GetBmp(win), 0, 0, str, wk->dat->font, FCOL_P13BKN );
-	PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, 0, 0, str, wk->dat->font, FCOL_P13BKN );
+	PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, 0, 0, str, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_MSG_Delete( man );
 	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
@@ -2000,7 +2009,7 @@ static void BPL_WazaKindPut( BPLIST_WORK * wk, u32 idx, u32 kind )
 	}
 //	PRINTSYS_PrintQueColor(
 //		wk->que, GFL_BMPWIN_GetBmp(win), 0, 0, str, wk->dat->font, FCOL_P13BKN );
-	PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, 0, 0, str, wk->dat->font, FCOL_P13BKN );
+	PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, 0, 0, str, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
 
 	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
