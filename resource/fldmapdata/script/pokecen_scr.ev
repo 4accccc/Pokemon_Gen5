@@ -131,9 +131,9 @@ _RET
 //おじぎ
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_heal_p01_bow
-//【仮】  ジョーイさんお辞儀アニメが未対応
-  //_ANIME_DATA  AC_PC_BOW,1
-  //_ANIME_DATA  AC_WAIT_4F,1
+  _ANIME_DATA  AC_PC_BOW,1
+  _ANIME_DATA  AC_WAIT_4F,1
+/*
   _ANIME_DATA  AC_DIR_L,1
   _ANIME_DATA  AC_WAIT_4F,1
   _ANIME_DATA  AC_DIR_U,1
@@ -142,6 +142,7 @@ _ANIME_LABEL  anm_heal_p01_bow
   _ANIME_DATA  AC_WAIT_4F,1
   _ANIME_DATA  AC_DIR_D,1
   _ANIME_DATA  AC_WAIT_4F,1
+*/
   _ANIME_DATA  ACMD_END,0
 
 _ANIME_LABEL  anm_hero_azuke
