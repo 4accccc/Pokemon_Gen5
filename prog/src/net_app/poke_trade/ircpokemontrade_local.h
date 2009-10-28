@@ -403,7 +403,7 @@ struct _POKEMON_TRADE_WORK{
   GFL_G3D_CAMERA    *camera;
 
   MCSS_SYS_WORK *mcssSys;
-  MCSS_WORK     *pokeMcss[2];
+  MCSS_WORK     *pokeMcss[4];
   BOOL     mcssStop[2];
   _POKEMCSS_MOVE_WORK* pMoveMcss[2];
 
@@ -436,6 +436,7 @@ struct _POKEMON_TRADE_WORK{
   int windowNum;
   int anmCount;
   int saveStep;
+  BOOL bTouch;
   BOOL IsIrc;
   u32 connect_bit;
   BOOL connect_ok;
@@ -566,6 +567,9 @@ extern void IRC_POKETRADE_PokerusIconDisp(POKEMON_TRADE_WORK* pWork,int side,int
 extern void IRC_POKETRADE_PokeStatusIconDisp(POKEMON_TRADE_WORK* pWork, POKEMON_PARAM* pp);
 extern void IRC_POKETRADE_PokeStatusIconReset(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_SetCursorXY(POKEMON_TRADE_WORK* pWork);
+extern BOOL POKETRADE_IsMainCursorDispIn(POKEMON_TRADE_WORK* pWork,int* line);
+extern int POKETRADE_Line2RingLineIconGet(int line);
+extern void POKETRADE_ToolBarInit(POKEMON_TRADE_WORK* pWork);
 
 
 #if _TRADE_DEBUG
@@ -599,3 +603,17 @@ extern int IRC_TRADE_LINE2TRAY(int lineno);
 extern int IRC_TRADE_LINE2POKEINDEX(int lineno,int verticalindex);
 
 
+// 通常のフォントカラー
+#define	FBMP_COL_NULL		(0)
+#define	FBMP_COL_BLACK		(1)
+#define	FBMP_COL_BLK_SDW	(2)
+#define	FBMP_COL_RED		(3)
+#define	FBMP_COL_RED_SDW	(4)
+#define	FBMP_COL_GREEN		(7)
+#define	FBMP_COL_GRN_SDW	(8)
+#define	FBMP_COL_BLUE		(6)
+#define	FBMP_COL_BLUE_SDW	(5)
+#define	FBMP_COL_PINK		(9)
+#define	FBMP_COL_PNK_SDW	(10)
+#define	FBMP_COL_WHITE_SDW		(14)
+#define	FBMP_COL_WHITE		(15)

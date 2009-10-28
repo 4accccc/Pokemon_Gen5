@@ -64,7 +64,7 @@ typedef void (MODEL3D_CAMERA_FUNC)(POKEMON_TRADE_WORK* pWork);
 typedef void (MODEL3D_MOVE_FUNC)(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus);
 
 
-typedef struct 
+typedef struct
 {
   MODEL3D_CAMERA_FUNC* setCamera;
   MODEL3D_MOVE_FUNC* setMove;
@@ -79,7 +79,7 @@ typedef struct
 static void _demoInit( HEAPID heap_id )
 {
 
-  
+
   // ライト作成
   g_lightSet = GFL_G3D_LIGHT_Create( &light_setup, heap_id );
   GFL_G3D_LIGHT_Switching( g_lightSet );
@@ -113,7 +113,7 @@ static void _demoExit()
 ●trade4.mb（モンスターボールが帰ってくるシーン）
 ●trade5.mb（モンスターボールが落ちるシーン）
 ●trade3.mb（モンスターボールからポケモンになるシーン）
-  
+
  */
 //============================================================================================
 
@@ -166,10 +166,10 @@ static const GFL_G3D_UTIL_SETUP setup[] =
 {
   { res_table_reel, NELEMS(res_table_reel), obj_table_reel, NELEMS(obj_table_reel) },
   { res_table_trade1, NELEMS(res_table_trade1), obj_table_trade1, NELEMS(obj_table_trade1) },
-//  { res_table_trade_trade, NELEMS(res_table_trade_trade), obj_table_trade_normal, NELEMS(obj_table_trade_normal) },
-//  { res_table_trade_return, NELEMS(res_table_trade_return), obj_table_trade_normal, NELEMS(obj_table_trade_normal) },
-//  { res_table_trade_splash, NELEMS(res_table_trade_splash), obj_table_trade_splash, NELEMS(obj_table_trade_splash) },
-//  { res_table_trade_end, NELEMS(res_table_trade_end), obj_table_trade_normal, NELEMS(obj_table_trade_normal) },
+  //  { res_table_trade_trade, NELEMS(res_table_trade_trade), obj_table_trade_normal, NELEMS(obj_table_trade_normal) },
+  //  { res_table_trade_return, NELEMS(res_table_trade_return), obj_table_trade_normal, NELEMS(obj_table_trade_normal) },
+  //  { res_table_trade_splash, NELEMS(res_table_trade_splash), obj_table_trade_splash, NELEMS(obj_table_trade_splash) },
+  //  { res_table_trade_end, NELEMS(res_table_trade_end), obj_table_trade_normal, NELEMS(obj_table_trade_normal) },
 };
 
 
@@ -296,7 +296,7 @@ static void _moveSetTrade01(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus
     VecFx32 campos;
 
     GFL_G3D_CAMERA_GetPos( pWork->camera, &campos );
-    
+
     if(GFL_UI_KEY_GetCont() == PAD_KEY_UP){
       campos.y += FX32_ONE/2;
     }
@@ -312,27 +312,27 @@ static void _moveSetTrade01(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus
     GFL_G3D_CAMERA_SetPos( pWork->camera, &campos );
   }
 #endif
-  
+
   // カメラ更新
-//  ICA_ANIME_SetCameraStatus( pWork->icaAnime, pWork->camera );
+  //  ICA_ANIME_SetCameraStatus( pWork->icaAnime, pWork->camera );
 
   ICA_CAMERA_SetCameraPos( pWork->camera ,pWork->icaCamera );
   ICA_CAMERA_SetTargetPos( pWork->camera ,pWork->icaTarget );
 
-  
+
   if(0){
     VecFx32 campos;
     VecFx32 tarpos;
     fx32 far= 8000*FX32_ONE;
     fx32 near= FX32_ONE;
-    
+
     campos.x = 0;
     campos.y = 3*FX32_ONE;
     campos.z = 15*FX32_ONE;
     tarpos.x = 0;
     tarpos.y = 0;
     tarpos.z = 0;
-    
+
     GFL_G3D_CAMERA_SetPos( pWork->camera, &campos );
     GFL_G3D_CAMERA_SetTarget( pWork->camera, &tarpos );
     GFL_G3D_CAMERA_SetNear( pWork->camera, &near );
@@ -340,12 +340,12 @@ static void _moveSetTrade01(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus
     tarpos.x = 0;
     tarpos.y = FX32_ONE;
     tarpos.z = 0;
-    
+
     GFL_G3D_CAMERA_SetCamUp( pWork->camera, &tarpos );
   }
 
 
-  
+
   GFL_G3D_CAMERA_Switching(pWork->camera );
 
   if(0){
@@ -356,10 +356,10 @@ static void _moveSetTrade01(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus
     x = campos.x;
     y = campos.y;
     z = campos.z;
-    OS_Printf("POS X=%f Y=%f Z=%f\n",x/FX32_ONE,y/FX32_ONE,z/FX32_ONE);
-    
+    //OS_Printf("POS X=%f Y=%f Z=%f\n",x/FX32_ONE,y/FX32_ONE,z/FX32_ONE);
+
   }
-  
+
 
   {
     // 各種描画モードの設定(シェード＆アンチエイリアス＆半透明)
@@ -414,7 +414,7 @@ static void _moveSetTrade01(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus
       x = pos.x;
       y = pos.y;
       z = pos.z;
-      OS_Printf("INPOS X=%f Y=%f Z=%f\n",x/FX32_ONE,y/FX32_ONE,z/FX32_ONE);
+      //OS_Printf("INPOS X=%f Y=%f Z=%f\n",x/FX32_ONE,y/FX32_ONE,z/FX32_ONE);
     }
 
 
@@ -429,16 +429,16 @@ static void _moveSetTrade01(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus
       x = pos.x;
       y = pos.y;
       z = pos.z;
-      OS_Printf("OUTPOS X=%f Y=%f Z=%f\n",x/FX32_ONE,y/FX32_ONE,z/FX32_ONE);
+      //OS_Printf("OUTPOS X=%f Y=%f Z=%f\n",x/FX32_ONE,y/FX32_ONE,z/FX32_ONE);
     }
 
   }
-    
+
 
   // カメラ位置を求める
 
 
-  
+
 }
 
 
@@ -488,7 +488,7 @@ void IRC_POKETRADEDEMO_Init( POKEMON_TRADE_WORK* pWork )
 {
   VecFx32 campos;
   VecFx32 tarpos;
-    int i;
+  int i;
 
   pWork->unitIndex = UNIT_NULL;
   pWork->modelno = -1;
@@ -498,8 +498,8 @@ void IRC_POKETRADEDEMO_Init( POKEMON_TRADE_WORK* pWork )
   // 3D管理ユーティリティーのセットアップ
   pWork->g3dUtil = GFL_G3D_UTIL_Create( 20, 20, pWork->heapID );
 
-	//パーティクルシステムワーク初期化
-	GFL_PTC_Init(pWork->heapID);
+  //パーティクルシステムワーク初期化
+  GFL_PTC_Init(pWork->heapID);
 
   {
     void* heap;
@@ -513,9 +513,9 @@ void IRC_POKETRADEDEMO_Init( POKEMON_TRADE_WORK* pWork )
       case PTC_KIND_DEMO3:
       case PTC_KIND_DEMO6:
       case PTC_KIND_DEMO7:
-//      case PTC_KIND_DEMO8:
-//      case PTC_KIND_DEMO9:
-//      case PTC_KIND_DEMO10:
+        //      case PTC_KIND_DEMO8:
+        //      case PTC_KIND_DEMO9:
+        //      case PTC_KIND_DEMO10:
         bCamera=FALSE;
         break;
       default:
@@ -554,7 +554,7 @@ void IRC_POKETRADEDEMO_Init( POKEMON_TRADE_WORK* pWork )
     modelset[pWork->modelno].setCamera(pWork);
   }
 
-	//リソース読み込み＆登録
+  //リソース読み込み＆登録
   {
     void *resource;
     int i;
@@ -565,7 +565,7 @@ void IRC_POKETRADEDEMO_Init( POKEMON_TRADE_WORK* pWork )
     }
     GFL_PTC_SetResource(pWork->ptcOrthogonal, resource, TRUE, NULL);
   }
-  
+
 }
 
 
@@ -588,9 +588,9 @@ void IRC_POKETRADEDEMO_Main( POKEMON_TRADE_WORK* pWork )
 void IRC_POKETRADEDEMO_End( POKEMON_TRADE_WORK* pWork )
 {
   {
-  	void *heap2 ,*heap[PTC_KIND_NUM_MAX];
+    void *heap2 ,*heap[PTC_KIND_NUM_MAX];
     int i;
-//    GFL_PTC_PersonalCameraDelete(pWork->ptcOrthogonal);
+    //    GFL_PTC_PersonalCameraDelete(pWork->ptcOrthogonal);
     heap2 = GFL_PTC_GetHeapPtr(pWork->ptcOrthogonal);
     for(i=0;i<PTC_KIND_NUM_MAX;i++){
       heap[i] = GFL_PTC_GetHeapPtr(pWork->ptc[i]);
@@ -608,7 +608,7 @@ void IRC_POKETRADEDEMO_End( POKEMON_TRADE_WORK* pWork )
     GFL_G3D_CAMERA_Delete( pWork->camera );
   }
   _icaCameraDelete(pWork);
-  
+
 
   //Finalize( pWork );
   // 3D管理ユーティリティーの破棄
@@ -625,9 +625,9 @@ void IRC_POKETRADEDEMO_End( POKEMON_TRADE_WORK* pWork )
 //============================================================================================
 void IRC_POKETRADEDEMO_SetModel( POKEMON_TRADE_WORK* pWork, int modelno)
 {
-//  if(modelno != TRADE01_OBJECT){
-//    return;
-//  }
+  //  if(modelno != TRADE01_OBJECT){
+  //    return;
+  //  }
   Initialize( pWork, modelno);
 
   modelset[pWork->modelno].setCamera(pWork);
@@ -645,7 +645,7 @@ void IRC_POKETRADEDEMO_SetModel( POKEMON_TRADE_WORK* pWork, int modelno)
 
   }
 
-  
+
 }
 
 //============================================================================================
@@ -683,7 +683,7 @@ static void Initialize( POKEMON_TRADE_WORK* pWork, int modelno )
   GF_ASSERT(modelno < elementof(setup));
   {
     pWork->unitIndex = GFL_G3D_UTIL_AddUnit( pWork->g3dUtil, &setup[modelno] );
-//    pWork->objCount = setup[modelno].objCount;
+    //    pWork->objCount = setup[modelno].objCount;
   }
 
 
@@ -722,7 +722,7 @@ static void Finalize( POKEMON_TRADE_WORK* pWork )
     GFL_G3D_UTIL_DelUnit( pWork->g3dUtil, pWork->unitIndex );
   }
   pWork->unitIndex = UNIT_NULL;
-//  pWork->objCount = 0;
+  //  pWork->objCount = 0;
 
 }
 
@@ -743,7 +743,7 @@ static void Draw( POKEMON_TRADE_WORK* pWork )
   if(pWork->modelno==-1){
     return;
   }
-  
+
   modelset[pWork->modelno].setMove(pWork, &status);
 
   // TEMP: カメラ設定
@@ -795,11 +795,11 @@ static void Draw( POKEMON_TRADE_WORK* pWork )
       GFL_G3D_DRAW_DrawObject( obj, &status );
     }
   }
-//  GFL_G3D_DRAW_End();
+  //  GFL_G3D_DRAW_End();
 
   if(pWork->icaCamera){
     frame += anime_speed;
-//    ICA_ANIME_IncAnimeFrame( pWork->icaAnime, anime_speed );
+    //    ICA_ANIME_IncAnimeFrame( pWork->icaAnime, anime_speed );
     ICA_ANIME_IncAnimeFrame( pWork->icaCamera, anime_speed );
     ICA_ANIME_IncAnimeFrame( pWork->icaTarget, anime_speed );
     ICA_ANIME_IncAnimeFrame( pWork->icaBallout, anime_speed );

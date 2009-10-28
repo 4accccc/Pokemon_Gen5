@@ -48,7 +48,7 @@ static void _PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork );
 static void IRC_POKETRADE_PokeIcomPosSet(POKEMON_TRADE_WORK* pWork);
 
 
-static int _Line2RingLineIconGet(int line);
+
 static void _iconAllDrawDisable(POKEMON_TRADE_WORK* pWork);
 
 
@@ -290,7 +290,7 @@ void IRC_POKETRADE_AppMenuOpen(POKEMON_TRADE_WORK* pWork, int *menustr,int num)
   for(i=0;i<num;i++){
     pWork->appitem[i].str = GFL_STR_CreateBuffer(100, pWork->heapID);
     GFL_MSG_GetString(pWork->pMsgData, menustr[i], pWork->appitem[i].str);
-    pWork->appitem[i].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
+    pWork->appitem[i].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
   }
   pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
   for(i=0;i<num;i++){
@@ -324,9 +324,9 @@ void IRC_POKETRADE_MessageWindowOpen(POKEMON_TRADE_WORK* pWork)
 
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
 
-
- pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pMessageStrBuf, pWork->pFontHandle,
-                                        MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
+  GFL_FONTSYS_SetColor(FBMP_COL_BLACK, FBMP_COL_BLK_SDW, 15);
+  pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pMessageStrBuf, pWork->pFontHandle,
+                                                MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15 );
 
   
   BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
@@ -766,7 +766,7 @@ void IRC_POKETRADE_SetCursorXY(POKEMON_TRADE_WORK* pWork)
   int k;
   GFL_CLACTPOS apos;
 
-  k =  _Line2RingLineIconGet(pWork->MainObjCursorLine);
+  k =  POKETRADE_Line2RingLineIconGet(pWork->MainObjCursorLine);
   GFL_CLACT_WK_GetPos( pWork->markIcon[k][pWork->MainObjCursorIndex],&apos,CLSYS_DRAW_SUB);
   pWork->x = apos.x;
   pWork->y = apos.y;
@@ -922,6 +922,41 @@ static int _boxScrollNum2Line(POKEMON_TRADE_WORK* pWork)
   return line;
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   OBJカーソルが画面内にいるかどうか判定する
+ * @param   POKEMON_TRADE_WORK ワーク
+ * @param   現在の画面から得られるline
+ * @retval  TRUE 画面内にいる
+ */
+//------------------------------------------------------------------------------
+
+BOOL POKETRADE_IsMainCursorDispIn(POKEMON_TRADE_WORK* pWork,int* line)
+{
+  int linest = _boxScrollNum2Line(pWork);
+  int lineend = linest + 10;
+
+  *line = linest+2;
+  if(*line > TRADEBOX_LINEMAX){
+    *line = linest + 2 - TRADEBOX_LINEMAX;
+  }
+
+  
+  if(lineend > TRADEBOX_LINEMAX){
+    if(linest <= pWork->MainObjCursorLine && pWork->MainObjCursorLine <= TRADEBOX_LINEMAX){
+      return TRUE;
+    }
+    else if(0 <= pWork->MainObjCursorLine && pWork->MainObjCursorLine <= lineend){
+      return TRUE;
+    }
+  }
+  else{
+    if(linest <= pWork->MainObjCursorLine && pWork->MainObjCursorLine <= lineend){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
 
 //------------------------------------------------------------------------------
 /**
@@ -950,8 +985,7 @@ void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork 
     _iconAllDrawDisable(pWork);  // アイコン表示を一旦消す
   
     for(i=0;i < _LING_LINENO_MAX;i++){
-      k =  _Line2RingLineIconGet(pWork->oldLine+i);
-
+      k =  POKETRADE_Line2RingLineIconGet(pWork->oldLine+i);
       
       _createPokeIconResource(pWork, boxData,line, k );  //アイコン表示
       line++;
@@ -979,7 +1013,7 @@ static void IRC_POKETRADE_PokeIcomPosSet(POKEMON_TRADE_WORK* pWork)
   
   line = pWork->oldLine;
   for(m = 0; m < _LING_LINENO_MAX; m++,line++){
-    no = _Line2RingLineIconGet(pWork->oldLine + m);
+    no = POKETRADE_Line2RingLineIconGet(pWork->oldLine + m);
 
     if(line >= TRADEBOX_LINEMAX){
       line = line - TRADEBOX_LINEMAX;
@@ -1052,7 +1086,7 @@ static void  _PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork )
  */
 //--------------------------------------------------------------------------------------------
 
-static int _Line2RingLineIconGet(int line)
+int POKETRADE_Line2RingLineIconGet(int line)
 {
   int ret;
 
@@ -1618,7 +1652,8 @@ void IRC_POKETRADE_SetMainStatusBG(POKEMON_TRADE_WORK* pWork)
                                                                 &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_POKE_PLAYER] , FALSE );
     GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_PLAYER], TRUE );
-  
+    GFL_CLACT_WK_SetPlttOffs( pWork->curIcon[CELL_CUR_POKE_PLAYER] , POKEICON_GetPalNumGetByPPP( ppp1 ) , CLWK_PLTTOFFS_MODE_PLTT_TOP );
+
   
     cellInitData.pos_x = _POKEMON_SELECT2_CELLX;
     pWork->curIcon[CELL_CUR_POKE_FRIEND] = GFL_CLACT_WK_Create( pWork->cellUnit ,
@@ -1628,6 +1663,7 @@ void IRC_POKETRADE_SetMainStatusBG(POKEMON_TRADE_WORK* pWork)
                                                                 &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_POKE_FRIEND] , FALSE );
     GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_FRIEND], TRUE );
+    GFL_CLACT_WK_SetPlttOffs( pWork->curIcon[CELL_CUR_POKE_FRIEND] , POKEICON_GetPalNumGetByPPP( ppp2 ) , CLWK_PLTTOFFS_MODE_PLTT_TOP );
     GFL_ARC_CloseDataHandle(arcHandlePoke);
   }
 
