@@ -737,7 +737,7 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
       int shot_idx;
       int shot_dir_idx;
       {
-        //カメラとレースが生きている間は処理を進めない
+        //カメラトレースが生きている間は処理を進めない
         if ( FIELD_CAMERA_CheckTrace(camera) ){
           break;
         }
