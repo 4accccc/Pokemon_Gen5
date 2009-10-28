@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-09-16T09:56:15" source="matome5.ma"/>
+	<create user="fujiwara_maiko" host="W00194" date="2009-10-28T15:30:49" source="kakidasi3.ma"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2009-09-16T09:56:15" source="matome5.ma"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2009-10-28T15:30:49" source="kakidasi3.ma"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="7" xyz="-2.000000 -0.125000 -2.000000" whd="4.000000 0.101563 4.000000"/>
+<box_test pos_scale="7" xyz="-2.000000 -1.750000 -2.000000" whd="4.000000 0.101563 4.000000"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="sea_mizu1"
@@ -72,7 +72,7 @@
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="3"
-		fog_flag="on"
+		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -96,7 +96,7 @@
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="on"
+		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -417,7 +417,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface527" kind="mesh"
+	<node index="0" name="polySurface536" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
@@ -426,7 +426,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		translate="0.000000 -208.000000 0.000000"
 		visibility="on"
 		display_size="2"
 		vertex_size="128" polygon_size="32"

@@ -199,4 +199,3 @@
 "theater03.bin"
 "cabin01.bin"
 "ybuill01.bin"
-"museum02.bin"
