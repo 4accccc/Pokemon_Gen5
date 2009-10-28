@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-10-07T10:41:28" source="gym04_rail_04.ma"/>
+	<create user="fujiwara_maiko" host="W00194" date="2009-10-29T00:45:28" source="gym04_rail_04.ma"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -36,14 +36,14 @@
 </tex_translate_data>
 
 <tex_srt_anm_array size="2">
-	<tex_srt_anm index="0" material_name="pasted__moto_lm1">
+	<tex_srt_anm index="0" material_name="oto_lm1">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="1" material_name="moto_lm1">
+	<tex_srt_anm index="1" material_name="dfsg">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
