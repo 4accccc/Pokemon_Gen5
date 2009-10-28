@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-21T17:12:37"/>
+	<create user="matsumiya" host="W00207" date="2009-10-28T19:39:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="213"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,30 +292,76 @@
 	</lock>
 
 
-	<row id="msg_c07r0301_test1_01">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_c07r0301_test1_02">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-
 	<row id="msg_c07r0301_badman_01">
 		<comment>♂
-・金銀にいた
+・HGSS（金銀）のハナダなどにいた
 　外国人のロケット団</comment>
 		<attribute name="キャラ指定">BADMAN</attribute>
-		<language name="JPN" width="256">メンバー・オブ・ロケットだん
-……もと　ですよ　もと
-カントリーに　もどって
-ロケットだんを　ふっかつ　させる
-そう　ちかったのに
-プラズマだんに！</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">オー！　ワタシ
+メンバー・オブ・ロケットだん　ね！[BE:01:ページ切り替え（クリア）]
+ロング　アゴー
+ロケットだん　きえてなくなったよ[BE:01:ページ切り替え（クリア）]
+なので　ワタシ
+リターン　マイ　カントリー[BE:00:ページ切り替え（行送り）]
+アンド　メイク　ロケットだん！[BE:00:ページ切り替え（行送り）]
+そう　ちかいましたー！[BE:01:ページ切り替え（クリア）]
+でも　ゴー　ホームして
+けっこん　したら
+それどころじゃ　ないでーす[BE:01:ページ切り替え（クリア）]
+オー！
+しあわせ　ファミリー　ばんざーい！</language>
+		<language name="JPN_KANJI" width="256">オー！　ワタシ
+メンバー・オブ・ロケットだん　ね！[BE:01:ページ切り替え（クリア）]
+ロング　アゴー
+ロケットだん　きえてなくなったよ[BE:01:ページ切り替え（クリア）]
+なので　ワタシ
+リターン　マイ　カントリー[BE:00:ページ切り替え（行送り）]
+アンド　メイク　ロケットだん！[BE:00:ページ切り替え（行送り）]
+そう　ちかいましたー！[BE:01:ページ切り替え（クリア）]
+でも　ゴー　ホームして
+けっこん　したら
+それどころじゃ　ないでーす[BE:01:ページ切り替え（クリア）]
+オー！
+しあわせ　ファミリー　ばんざーい！</language>
+	</row>
+
+	<row id="msg_c07r0301_boy3_01">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">BOY3</attribute>
+		<language name="JPN" width="256">とうちゃん　むかし　がいこくで
+しごとを　してたんだ！[BE:01:ページ切り替え（クリア）]
+だから　ユニークな
+はなしかた　なんだよ！</language>
+		<language name="JPN_KANJI" width="256">とうちゃん　むかし　がいこくで
+しごとを　してたんだ！[BE:01:ページ切り替え（クリア）]
+だから　ユニークな
+はなしかた　なんだよ！</language>
+	</row>
+
+	<row id="msg_c07r0301_woman3_01">
+		<comment>♀
+・アイテム入手処理
+　No000「いかりまんじゅう」入手</comment>
+		<attribute name="キャラ指定">WOMAN3</attribute>
+		<language name="JPN" width="256">いらっしゃい！[BE:01:ページ切り替え（クリア）]
+そうだ！　だんなの　むかしの
+しごとなかまが　くれた　おみやげが[BE:00:ページ切り替え（行送り）]
+たくさん　あるから　わけてあげる[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">いらっしゃい！[BE:01:ページ切り替え（クリア）]
+そうだ！　だんなの　昔の
+仕事仲間が　くれた　お土産が[BE:00:ページ切り替え（行送り）]
+たくさん　あるから　わけてあげる[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c07r0301_woman3_02">
+		<comment>♀
+・アイテム入手後</comment>
+		<language name="JPN" width="256">その　いかりまんじゅう　って
+だんなの　むかしの　しごとなかまが[BE:01:ページ切り替え（クリア）]
+すきだった　たべもの　なんだって</language>
+		<language name="JPN_KANJI" width="256">その　いかりまんじゅう　って
+だんなの　昔の　仕事仲間が[BE:01:ページ切り替え（クリア）]
+好きだった　食べ物　なんだって</language>
 	</row>
 
 	<flowchart-group-list>

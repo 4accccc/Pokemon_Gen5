@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-06-25T17:23:22"/>
+	<create user="matsumiya" host="W00207" date="2009-10-28T20:12:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="286"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="248" top="176" right="950" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="527"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="694"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,11 +292,45 @@
 	</lock>
 
 
-	<row id="msg_c07r0101_test1_01">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c07r0101_oldman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・c07ジムバッジ入手前</comment>
+		<attribute name="キャラ指定">OLDMAN</attribute>
+		<language name="JPN" width="256">りそうと　しんじつが　まじりあい
+できたとされる　リュウラセンのとう……[BE:01:ページ切り替え（クリア）]
+せんねんも　むかしより　あそこに
+そびえ　わしらを　みまもっておる</language>
+		<language name="JPN_KANJI" width="256">理想と　真実が　交じり合い
+できたとされる　リュウラセンの塔……[BE:01:ページ切り替え（クリア）]
+千年も　昔より　あそこに
+そびえ　わしらを　見守っておる</language>
+	</row>
+
+	<row id="msg_c07r0101_oldman_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・c07ジムバッジ入手後から
+　d08最上階でのイベント発生前</comment>
+		<language name="JPN" width="256">まっ　まさか！[BE:01:ページ切り替え（クリア）]
+リュウラセンのとうに　はいろうとする
+ふとどきものが　いようとは……！</language>
+		<language name="JPN_KANJI" width="256">まっ　まさか！[BE:01:ページ切り替え（クリア）]
+リュウラセンの塔に　入ろうとする
+不届き者が　いようとは……！</language>
+	</row>
+
+	<row id="msg_c07r0101_oldman_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・d08最上階でのイベント発生後</comment>
+		<language name="JPN" width="256">みたぞ！[BE:01:ページ切り替え（クリア）]
+とうの　てっぺんから　はなたれた
+しろと　くろの　ひかり……！[BE:01:ページ切り替え（クリア）]
+そして　とどろく　なきごえ……[BE:01:ページ切り替え（クリア）]
+あれこそが　パッケージポケモンか！？</language>
+		<language name="JPN_KANJI" width="256">みたぞ！[BE:01:ページ切り替え（クリア）]
+塔の　てっぺんから　はなたれた
+白と　黒の　光……！[BE:01:ページ切り替え（クリア）]
+そして　とどろく　鳴き声……[BE:01:ページ切り替え（クリア）]
+あれこそが　パッケージポケモンか！？</language>
 	</row>
 
 	<flowchart-group-list>

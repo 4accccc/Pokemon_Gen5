@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-21T12:14:54"/>
+	<create user="matsumiya" host="W00207" date="2009-10-21T17:49:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -313,6 +313,7 @@
 		<comment>♀：なつき度チェック
 ・はい/いいえの選択肢
 ・はい→ポケモンリスト画面へ
+　　　　　（所有ポケモンのみで選択ウインドウ表示できるか?）
 　いいえ→終了
 
 ・仮メッセージ</comment>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-06-25T17:23:31"/>
+	<create user="matsumiya" host="W00207" date="2009-10-28T19:56:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="262"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,11 +292,73 @@
 	</lock>
 
 
-	<row id="msg_c07r0201_test1_01">
-		<comment>？？？</comment>
+	<row id="msg_c07r0201_words_01">
+		<comment>♂
+※以下のメッセージは
+　すべて杉中くんがリライト予定
+※仕様は仮なので作成は保留で
+
+・簡易会話単語「なんかいことば」カテゴリーで
+　覚えていない単語が残っているとき
+・１日１単語追加
+
+・「なんかいことば」カテゴリー全ての単語を
+　全て覚えた→msg_c09r0201_veteran_05
+
+・はい／いいえの選択肢表示
+　はい　→words_02
+　いいえ→words_03</comment>
 		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">きみ　きみ
+なんか　いい　ことば　しりたい？</language>
+		<language name="JPN_KANJI" width="256">きみ　きみ
+なんか　いい　ことば　しりたい？</language>
+	</row>
+
+	<row id="msg_c07r0201_words_02">
+		<comment>♂
+・はい選択時
+
+0＝簡易会話単語「なんかいことば」のどれか
+　（ランダムで、覚えていない単語を選択）</comment>
+		<language name="JPN" width="256">そうだね……▼
+いまの　トレンドで　いうと
+きみには　こんな　ことばが　いいね▼
+[1:1C:簡易会話単語:0]！▼
+なんか　いい　かんじで　つかってよ</language>
+		<language name="JPN_KANJI" width="256">そうだね……▼
+いまの　トレンドで　いうと
+きみには　こんな　ことばが　いいね▼
+[1:1C:簡易会話単語:0]！▼
+なんか　いい　かんじで　つかってよ</language>
+	</row>
+
+	<row id="msg_c07r0201_words_03">
+		<comment>♂
+・いいえ選択時</comment>
+		<language name="JPN" width="256">なんだい！　そんなことでは
+じだいに　とりのこされちゃうよ</language>
+		<language name="JPN_KANJI" width="256">なんだい！　そんなことでは
+じだいに　とりのこされちゃうよ</language>
+	</row>
+
+	<row id="msg_c07r0201_words_04">
+		<comment>♂
+・その日の単語を教えてもらった後</comment>
+		<language name="JPN" width="256">なんか　いい　ことばを
+なんか　いい　かんじで　つかってよ</language>
+		<language name="JPN_KANJI" width="256">なんか　いい　ことばを
+なんか　いい　かんじで　つかってよ</language>
+	</row>
+
+	<row id="msg_c07r0201_words_05">
+		<comment>♂
+・簡易会話単語「なんかいことば」カテゴリーの
+　全ての言葉を覚えたとき</comment>
+		<language name="JPN" width="256">きみ　きみ
+なんか　いい　ことば　つかってる？</language>
+		<language name="JPN_KANJI" width="256">きみ　きみ
+なんか　いい　ことば　つかってる？</language>
 	</row>
 
 	<flowchart-group-list>
