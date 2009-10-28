@@ -20,6 +20,7 @@
 #include "event_entrance_effect.h"  // EVENT_FieldDoorInAnime
 #include "event_fldmmdl_control.h"  // EVENT_PlayerOneStepAnime
 #include "field_bgm_control.h"
+#include "sound/pm_sndsys.h"
 
 
 //=======================================================================================
@@ -177,6 +178,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep(GMEVENT * event, int *s
     ++ *seq;
     break;
   case 1:
+    PMSND_PlaySE( SEQ_SE_KAIDAN );
     FIELD_BGM_CONTROL_FadeOut( gamedata, event_work->location.zone_id, 30 );
 		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, fieldmap, 0));
     ++ *seq;
