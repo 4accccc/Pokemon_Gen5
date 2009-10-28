@@ -15,6 +15,12 @@ RET_ERROR = (0xffffffff)
 #引数offs_id_fileで参照する開始スクリプトIDシンボル
 SCROFFS_START = "ID_START_SCR_OFFSET"
 
+#引数offs_id_fileで参照する開始トレーナー2v2スクリプトIDシンボル
+SCROFFS_START_TRAINER_2VS2 = "ID_TRAINER_2VS2_OFFSET"
+
+#トレーナースクリプトファイル名
+FNAME_TRAINER = "trainer.ev"
+
 #=======================================================================
 # 関数
 #=======================================================================
@@ -90,6 +96,7 @@ if( fname_ev =~ /^sp_.*.ev/ )
   #sp_～.evは特殊スクリプトなのでSCRIDを生成する必要がない
   exit 0
 end
+
 fname_id = ARGV[1]
 
 if( fname_id == nil )
@@ -127,6 +134,19 @@ file_def_h.printf( "#define _%s_DEF_H_\n\n", fname_ev_big )
 file_def_h.printf( "\/\/スクリプトデータID定義\n" )
 
 #ID定義
+count = 0
+start_id_trainer = RET_ERROR
+
+if( fname_ev.include?(FNAME_TRAINER) )
+  start_id_trainer = hfile_search(
+    file_id, SCROFFS_START_TRAINER_2VS2, nil, RET_ERROR )
+  
+  if( start_id_trainer == RET_ERROR )
+    error_end( file_ev, file_id, file_def_h, fname_def_h )
+    exit 1
+  end
+end
+
 while line = file_ev.gets
   line = line.strip
   
@@ -147,8 +167,14 @@ while line = file_ev.gets
     id_name = id_name.gsub( /\Aev_/, "" ) #先頭のev_を削除
     id_name = id_name.upcase
     
-    file_def_h.printf( "#define SCRID_%s (%d)\n", id_name, start_id )
-    start_id = start_id + 1
+    file_def_h.printf( "#define SCRID_%s (%d)\n", id_name, start_id+count )
+    
+    if( start_id_trainer != RET_ERROR )
+      file_def_h.printf( "#define SCRID_%s_2 (%d)\n",
+            id_name, start_id_trainer+count )
+    end
+    
+    count = count + 1
   end
 end
 

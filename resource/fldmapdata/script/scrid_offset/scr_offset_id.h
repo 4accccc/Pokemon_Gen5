@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2009 10/27 (Tue) 16:50
+ * @date  2009 10/28 (Wed) 16:40
  *
  * このファイルはコンバータにより自動生成されています
  */
