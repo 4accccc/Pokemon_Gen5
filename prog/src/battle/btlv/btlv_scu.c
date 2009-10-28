@@ -266,6 +266,12 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
   PaletteWorkSetEx_Arc( BTLV_EFFECT_GetPfd(), ARCID_BATTGRA, NARC_battgra_wb_msgwin_frm_NCLR, wk->heapID, FADE_MAIN_BG, 0x20,
         PALIDX_MSGWIN*16, 0 );
 
+  //BDñ ÉJÉâÅ[ÇçïÇ…Ç∑ÇÈ
+  { 
+    u16 dat = 0;
+    PaletteWorkSet( BTLV_EFFECT_GetPfd(), &dat, FADE_MAIN_BG, 0, 2 );
+  }
+
   GFL_BG_FillScreen( GFL_BG_FRAME1_M, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
   GFL_BG_FillCharacter( GFL_BG_FRAME1_M, 0x00, 1, 0 );
   {
