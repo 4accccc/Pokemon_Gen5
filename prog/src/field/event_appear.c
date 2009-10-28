@@ -15,6 +15,7 @@
 #include "field_player.h"
 #include "fieldmap_tcb.h"
 #include "fldeff_kemuri.h"
+#include "sound/pm_sndsys.h"
 
 
 //==========================================================================================
@@ -219,6 +220,8 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Fall( GMEVENT* event, int* seq, void* wo
   case 1:
     GFL_FADE_SetMasterBrightReq(
         GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 0 );
+    // SE再生(落下音)
+    PMSND_PlaySE( SEQ_SE_FLD_16 );
     ++( *seq );
     break;
   // タスクの終了待ち
@@ -229,6 +232,8 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Fall( GMEVENT* event, int* seq, void* wo
       MMDL*           mmdl = FIELD_PLAYER_GetMMdl( player );
       FLDEFF_CTRL*  fectrl = FIELDMAP_GetFldEffCtrl( ew->pFieldmap );
       FLDEFF_KEMURI_SetMMdl( mmdl, fectrl );
+      // SE再生(着地音)
+      PMSND_PlaySE( SEQ_SE_FLD_17 );
       ++( *seq );
     }
     break;
