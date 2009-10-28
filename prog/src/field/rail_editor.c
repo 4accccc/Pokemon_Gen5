@@ -1910,7 +1910,7 @@ static void RE_InitInputPoint_FreeNormal( DEBUG_RAIL_EDITOR* p_wk )
 	FLDNOGRID_MAPPER_SetActive(p_mapper, FALSE);
   FLDNOGRID_MAPPER_SetRailCameraActive(p_mapper, FALSE);
 
-	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+	FIELD_CAMERA_ChangeMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
 
 	// プレイヤー座標をハーフグリッド単位にする
 	FIELD_PLAYER_GetPos( p_player, &pos );
@@ -1970,7 +1970,7 @@ static void RE_InitInputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
 	target.y	= pl_pos.y;
 	len				= VEC_Distance( &target, &pl_pos );
 
-	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+	FIELD_CAMERA_ChangeMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
 
 	VEC_Subtract( &pl_pos, &target, &sub );
 	yaw				= FX_Atan2Idx( sub.x, sub.z );
@@ -2033,7 +2033,7 @@ static void RE_InitInputCamera_Pos( DEBUG_RAIL_EDITOR* p_wk )
 		FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_CAMERA_POS);
 
 		// 動作モード設定
-		FIELD_CAMERA_SetMode( cam, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+		FIELD_CAMERA_ChangeMode( cam, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
 	}
 
 }
@@ -2062,7 +2062,7 @@ static void RE_InitInputCamera_Target( DEBUG_RAIL_EDITOR* p_wk )
 		FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_TARGET_POS);
 
 		// 動作モード設定
-		FIELD_CAMERA_SetMode( cam, FIELD_CAMERA_MODE_CALC_TARGET_POS );
+		FIELD_CAMERA_ChangeMode( cam, FIELD_CAMERA_MODE_CALC_TARGET_POS );
 	}
 }
 //----------------------------------------------------------------------------
@@ -2160,7 +2160,7 @@ static void RE_ExitInputCamera_Target( DEBUG_RAIL_EDITOR* p_wk )
 	}
 
 	// カメラアングルモードに戻す
-	FIELD_CAMERA_SetMode( cam, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+	FIELD_CAMERA_ChangeMode( cam, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
 	FIELD_CAMERA_SetTargetPos( cam, &p_wk->camera_target );
 }
 //----------------------------------------------------------------------------

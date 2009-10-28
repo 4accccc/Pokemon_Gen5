@@ -1460,7 +1460,7 @@ static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, F
 
   if( checkConnectExitDir( cnct, req->player_dir ) )
   {
-    rememberExitRailInfo( req, fieldWork, idx, &pos );  // front_pos‚ÍˆÚ“®•‰‰×‚È‚Ì‚ÅApos‚É‚·‚é
+    rememberExitRailInfo( req, fieldWork, idx, &pos );  // front_pos‚ÍˆÚ“®•s‰Â‚È‚Ì‚ÅApos‚É‚·‚é
     return getChangeMapEvent(req, fieldWork, idx);
   }
 
