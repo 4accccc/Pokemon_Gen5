@@ -46,65 +46,74 @@ EVENT_START   ev_t02_babygirl1_01
 	_TALK_OBJ_START()
 	//ねえねえ　ポケモンじゃんけん　しようよ！
 	_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_01 )
+	_BALLOONWIN_CLOSE()
 	_YES_NO_WIN( SCWK_ANSWER )
 
-		IF $SCWK_ANSWER == 0 THEN	//はい
-			_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_03 )
-			_BALLOONWIN_CLOSE()
+	IF $SCWK_ANSWER == 0 THEN	//はい
+		_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_03 )
+		_BALLOONWIN_CLOSE()
 
-	//ローカル変数を定義
-	DEFINE_LOCAL	LWK_SCWK_JANKEN
-	DEFINE_LOCAL	LWK_JANKEN_SELECT
+		//ローカル変数を定義
+		DEFINE_LOCAL	LWK_SCWK_JANKEN
+		DEFINE_LOCAL	LWK_JANKEN_SELECT
 
-	//三択表示・くさ、みず、ほのお
-    _BMPMENU_INIT_EX( 1, 1, 0, 0, LWK_JANKEN_SELECT )
+		//三択表示・くさ、みず、ほのお
+    	_BMPMENU_INIT_EX( 1, 1, 0, 0, LWK_JANKEN_SELECT )
 
-    _BMPMENU_MAKE_LIST( msg_t01_babygirl1_10, 0 )	//『ほのお』
-    _BMPMENU_MAKE_LIST( msg_t01_babygirl1_11, 1 )	//『くさ』
-    _BMPMENU_MAKE_LIST( msg_t01_babygirl1_12, 2 )	//『みず』
+		_BMPMENU_MAKE_LIST( msg_t01_babygirl1_10, 0 )	//『ほのお』
+		_BMPMENU_MAKE_LIST( msg_t01_babygirl1_11, 1 )	//『くさ』
+		_BMPMENU_MAKE_LIST( msg_t01_babygirl1_12, 2 )	//『みず』
 
-    // メニュー表示
-    _BMPMENU_START()
+		// メニュー表示
+		_BMPMENU_START()
 
-	//勝敗決め乱数
-	_GET_RND( LWK_SCWK_JANKEN, 2 )
+		//勝敗決め乱数
+		_GET_RND( LWK_SCWK_JANKEN, 2 )
 
-	//選択結果で分岐
-	SWITCH $LWK_JANKEN_SELECT
-	CASE 0 THEN		//『ほのお』
-		IF $LWK_SCWK_JANKEN == 0 THEN
-			_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_04 )
-			_BALLOONWIN_CLOSE()
-		ELSE
-			_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_05 )
-			_BALLOONWIN_CLOSE()
-		ENDIF
+		//選択結果で分岐
+		SWITCH $LWK_JANKEN_SELECT
+		CASE 0 THEN		//『ほのお』
+			IF $LWK_SCWK_JANKEN == 0 THEN
+				_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_04 )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+			ELSE
+				_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_05 )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+			ENDIF
 	
-	CASE 1 THEN		//『くさ』
-		IF $LWK_SCWK_JANKEN == 0 THEN
-			_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_08 )
-			_BALLOONWIN_CLOSE()
-		ELSE
-			_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_09 )
-			_BALLOONWIN_CLOSE()
-		ENDIF
+		CASE 1 THEN		//『くさ』
+			IF $LWK_SCWK_JANKEN == 0 THEN
+				_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_08 )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+			ELSE
+				_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_09 )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+			ENDIF
 		
-	CASE 2 THEN		//『みず』
-		IF $LWK_SCWK_JANKEN == 0 THEN
-			_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_06 )
-			_BALLOONWIN_CLOSE()
-		ELSE
-			_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_07 )
-			_BALLOONWIN_CLOSE()
-		ENDIF
+		CASE 2 THEN		//『みず』
+			IF $LWK_SCWK_JANKEN == 0 THEN
+				_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_06 )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+			ELSE
+				_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_07 )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+			ENDIF
 		
-	    ENDSWITCH
+		ENDSWITCH
 
-		ELSE	//いいえ
-			//なんだ　がっかり……　つまんないの
-			_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_02 )
-			_BALLOONWIN_CLOSE()
-		ENDIF
+	ELSE	//いいえ
+		//なんだ　がっかり……　つまんないの
+		_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_02 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+	
+	ENDIF
 
 EVENT_END
 
@@ -343,6 +352,7 @@ EVENT_END
 /*			ライバル　ポケセン案内前ストッパ－				*/
 /************************************************************/
 EVENT_START   ev_pos_t02_rival_stop
+	
 	//ライバル：気付く
 	_OBJ_ANIME( T02_RIVAL_01, anm_rival_kiduku )
 	_OBJ_ANIME_WAIT()
