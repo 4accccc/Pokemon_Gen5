@@ -31,7 +31,6 @@ typedef enum
   FLDSKILL_IDX_NAMINORI,    // Ç»Ç›ÇÃÇË
   FLDSKILL_IDX_TAKINOBORI,    // ÇΩÇ´ÇÃÇ⁄ÇË
   FLDSKILL_IDX_KAIRIKI,    // Ç©Ç¢ÇËÇ´
-#if 0 //wb
   FLDSKILL_IDX_SORAWOTOBU,    // ÇªÇÁÇÇ∆Ç‘
   FLDSKILL_IDX_KIRIBARAI,    // Ç´ÇËÇŒÇÁÇ¢
   FLDSKILL_IDX_IWAKUDAKI,    // Ç¢ÇÌÇ≠ÇæÇ´
@@ -41,7 +40,6 @@ typedef enum
   FLDSKILL_IDX_ANAWOHORU, // Ç†Ç»ÇÇŸÇÈ
   FLDSKILL_IDX_AMAIKAORI,    // Ç†Ç‹Ç¢Ç©Ç®ÇË
   FLDSKILL_IDX_OSYABERI,    // Ç®ÇµÇ·Ç◊ÇË
-#endif
   FLDSKILL_IDX_MAX, //ç≈ëÂ
 }FLDSKILL_IDX;
 
@@ -100,7 +98,7 @@ struct _TAG_FLDSKILL_CHECK_WORK
   PLAYER_MOVE_FORM moveform;
   GAMESYS_WORK *gsys;
   MMDL *front_mmdl;
-//FIELDMAP_WORK *fieldmap;
+  FIELDMAP_WORK *fieldmap;
 };
 
 //======================================================================

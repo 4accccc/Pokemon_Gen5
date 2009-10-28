@@ -13,6 +13,7 @@
 #include "fieldmap.h"
 
 #include "field_skill.h"
+#include "fskill_amaikaori.h"
 #include "eventwork.h"
 
 #include "script.h"
@@ -73,6 +74,9 @@ static BOOL CheckPark( const FLDSKILL_CHECK_WORK *scwk );
 static BOOL CheckPokePark( const FLDSKILL_CHECK_WORK * scwk );
 static BOOL CheckMapModeUse( const FLDSKILL_CHECK_WORK * scwk );
 
+static FLDSKILL_RET SkillCheck_Amaikaori( const FLDSKILL_CHECK_WORK * scwk );
+static GMEVENT* SkillUse_Amaikaori( const FLDSKILL_USE_HEADER *head, const FLDSKILL_CHECK_WORK *scwk );
+
 static const FLDSKILL_FUNC_DATA SkillFuncTable[FLDSKILL_IDX_MAX];
 
 //======================================================================
@@ -98,7 +102,8 @@ void FLDSKILL_InitCheckWork(
   MI_CpuClear8( scwk, sizeof(FLDSKILL_CHECK_WORK) );
   scwk->zone_id = FIELDMAP_GetZoneID( fieldmap );
   scwk->gsys = FIELDMAP_GetGameSysWork( fieldmap );
-  
+  scwk->fieldmap = fieldmap;
+
   fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
   scwk->moveform = FIELD_PLAYER_GetMoveForm( fld_player );
   FIELD_PLAYER_GetFrontGridPos( fld_player, &gx, &gy, &gz );
@@ -230,7 +235,7 @@ static FLDSKILL_RET SkillCheck_Iaigiri( const FLDSKILL_CHECK_WORK * scwk)
   //コロシアム・ユニオンルームチェック
 #if 0 //wb 現状無視
   if( CheckMapModeUse(scwk) == TRUE ){
-    return FLDSKILL_RET_USE_FALSE;
+    return FLDSKILL_RET_USE_NG;
   }
 #endif
 
@@ -308,7 +313,7 @@ static FLDSKILL_RET SkillCheck_Naminori( const FLDSKILL_CHECK_WORK * scwk)
   //コロシアム・ユニオンルームチェック
 #if 0 //wb 現状無視
   if( CheckMapModeUse(scwk) == TRUE ){
-    return FLDSKILL_RET_USE_FALSE;
+    return FLDSKILL_RET_USE_NG;
   }
 #endif
 
@@ -398,7 +403,7 @@ static FLDSKILL_RET SkillCheck_Takinobori( const FLDSKILL_CHECK_WORK * scwk)
   //コロシアム・ユニオンルームチェック
 #if 0 //wb 現状無視
   if( CheckMapModeUse(scwk) == TRUE ){
-    return FLDSKILL_RET_USE_FALSE;
+    return FLDSKILL_RET_USE_NG;
   }
 #endif
 
@@ -477,7 +482,7 @@ static FLDSKILL_RET SkillCheck_Kairiki( const FLDSKILL_CHECK_WORK * scwk)
   //コロシアム・ユニオンルームチェック
 #if 0 //wb 現状無視
   if( CheckMapModeUse(scwk) == TRUE ){
-    return FLDSKILL_RET_USE_FALSE;
+    return FLDSKILL_RET_USE_NG;
   }
 #endif
 
@@ -539,6 +544,76 @@ static GMEVENT_RESULT GMEVENT_Kairiki(
   sc = SCRIPT_ChangeScript( event, SCRID_HIDEN_KAIRIKI_MENU, NULL, 0 );
   SCRIPT_SetScriptWorkParam( sc, prm0, 0, 0, 0 );
   return GMEVENT_RES_CONTINUE;
+}
+
+//======================================================================
+//  あまいかおり
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * あまいかおり使用チェック
+ * @param scwk  FLDSKILL_CHECK_WORK
+ * @retval FLDSLILL_RET
+ */
+//--------------------------------------------------------------
+static FLDSKILL_RET SkillCheck_Amaikaori( const FLDSKILL_CHECK_WORK * scwk)
+{
+  //コロシアム・ユニオンルームチェック
+#if 0 //wb 現状無視
+  if( CheckMapModeUse(scwk) == TRUE ){
+    return FLDSKILL_RET_USE_NG;
+  }
+#endif
+  return FLDSKILL_RET_USE_OK;
+}
+
+//--------------------------------------------------------------
+/**
+ * あまいかおり使用
+ * @param head FLDSKILL_USE_HEADER
+ * @parama  scwk FLDSKILL_CHECK_WORK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static GMEVENT * SkillUse_Amaikaori(
+    const FLDSKILL_USE_HEADER *head, const FLDSKILL_CHECK_WORK *scwk )
+{
+  GMEVENT *event;
+  HIDEN_SCR_WORK *hsw;
+  
+  event = EVENT_FieldSkillAmaikaori( scwk->gsys, scwk->fieldmap, head->poke_pos );
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * ダミー使用チェック
+ * @param scwk  FLDSKILL_CHECK_WORK
+ * @retval FLDSLILL_RET
+ */
+//--------------------------------------------------------------
+static FLDSKILL_RET SkillCheck_Dummy( const FLDSKILL_CHECK_WORK * scwk)
+{
+  return FLDSKILL_RET_USE_NG;
+}
+
+//--------------------------------------------------------------
+/**
+ * ダミー使用
+ * @param head FLDSKILL_USE_HEADER
+ * @parama  scwk FLDSKILL_CHECK_WORK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static GMEVENT * SkillUse_Dummy(
+    const FLDSKILL_USE_HEADER *head, const FLDSKILL_CHECK_WORK *scwk )
+{
+  GMEVENT *event;
+  HIDEN_SCR_WORK *hsw;
+  
+  //ダミーで甘い香りをあててます
+  event = EVENT_FieldSkillAmaikaori( scwk->gsys, scwk->fieldmap, head->poke_pos );
+  return event;
 }
 
 //======================================================================
@@ -717,7 +792,12 @@ static BOOL CheckMapModeUse( const FLDSKILL_CHECK_WORK * scwk )
 //  data
 //======================================================================
 //--------------------------------------------------------------
-// 使用関数テーブル
+/* 使用関数テーブル
+ *
+ * 引数として渡される FLDSKILL_USE_HEADER *head と FLDSKILL_CHECK_WORK *scwkは
+ * 呼び出し側で自動変数として定義されているので、SkillUse_XXXXで登録する
+ * イベント中でメンバの値を参照したい場合、値のコピーを取って使うこと！
+ */
 //--------------------------------------------------------------
 static const FLDSKILL_FUNC_DATA SkillFuncTable[FLDSKILL_IDX_MAX] =
 {
@@ -725,4 +805,14 @@ static const FLDSKILL_FUNC_DATA SkillFuncTable[FLDSKILL_IDX_MAX] =
   {SkillUse_Naminori,SkillCheck_Naminori},    // 01 :なみのり 
   {SkillUse_Takinobori,SkillCheck_Takinobori},    // 02 :たきのぼり
   {SkillUse_Kairiki,SkillCheck_Kairiki},    // 03 :かいりき
+  
+  {SkillUse_Dummy,SkillCheck_Dummy},    // 04 :そらをとぶ
+  {SkillUse_Dummy,SkillCheck_Dummy},    // 05 :きりばらい
+  {SkillUse_Dummy,SkillCheck_Dummy},    // 06 :いわくだき
+  {SkillUse_Dummy,SkillCheck_Dummy},    // 07 :ロッククライム
+  {SkillUse_Dummy,SkillCheck_Dummy},    // 08 :フラッシュ
+  {SkillUse_Dummy,SkillCheck_Dummy},    // 09 :テレポート
+  {SkillUse_Dummy,SkillCheck_Dummy},    // 10 :あなをほる
+  {SkillUse_Amaikaori,SkillCheck_Amaikaori},   // 11 :あまいかおり
+  {SkillUse_Dummy,SkillCheck_Dummy},    // 12 :おしゃべり
 };

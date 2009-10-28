@@ -46,10 +46,11 @@ typedef struct _ENCPOKE_FLD_PARAM
   u16 mons_item;  //アイテムチェック
 	u8  mons_egg_f; //タマゴフラグチェック
 	u8  mons_spa;  //手持ち先頭特性チェック
-  u8  mons_lv;  //モンスターLvチェック
+//  u8  mons_lv;  //モンスターLvチェック
   u8  mons_sex; //性別チェック
   u8  mons_chr; //性格チェック
-	
+	u8  spray_lv; //むしよけスプレー及び低レベルエンカウント回避チェックに用いるレベル
+
   u32 myID; //プレイヤーのトレーナーＩＤ
   MYSTATUS* my;
 

@@ -91,6 +91,8 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
     const ENCOUNT_LOCATION location, const ENCOUNT_TYPE enc_type,const BOOL fishing_f)
 {
   SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork((GAMEDATA*)gdata);
+  POKEPARTY* party = GAMEDATA_GetMyPokemon( gdata );
+  POKEMON_PARAM* pp;
 
   MI_CpuClear8(outEfp,sizeof(ENCPOKE_FLD_PARAM));
 
@@ -114,30 +116,39 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
   outEfp->myID = MyStatus_GetID(outEfp->my);
 
   //先頭ポケモンのパラメータチェック
-  {
-    POKEMON_PARAM* pp = PokeParty_GetMemberPointer( GAMEDATA_GetMyPokemon( gdata ), 0 );
+  pp = PokeParty_GetMemberPointer( party, 0 );
 
-    outEfp->mons_egg_f = PP_Get( pp, ID_PARA_tamago_flag, NULL );
-    if(!outEfp->mons_egg_f)
-    { //モンスターNo他取得
-      outEfp->mons_no = PP_Get( pp, ID_PARA_monsno, NULL);
-      outEfp->mons_item = PP_Get( pp, ID_PARA_item, NULL);
-      outEfp->mons_spa = PP_Get( pp, ID_PARA_speabino, NULL);
-      outEfp->mons_lv = PP_Get( pp, ID_PARA_level, NULL);
-      outEfp->mons_sex = PP_Get( pp, ID_PARA_sex, NULL);
-      outEfp->mons_chr = PP_GetSeikaku( pp );
+  outEfp->mons_egg_f = PP_Get( pp, ID_PARA_tamago_flag, NULL );
+  if(!outEfp->mons_egg_f)
+  { //モンスターNo他取得
+    outEfp->mons_no = PP_Get( pp, ID_PARA_monsno, NULL);
+    outEfp->mons_item = PP_Get( pp, ID_PARA_item, NULL);
+    outEfp->mons_spa = PP_Get( pp, ID_PARA_speabino, NULL);
+    outEfp->mons_sex = PP_Get( pp, ID_PARA_sex, NULL);
+    outEfp->mons_chr = PP_GetSeikaku( pp );
 
-      //特性効果発生チェック
-      efp_MonsSpaCheck( outEfp );
-    }
+    //特性効果発生チェック
+    efp_MonsSpaCheck( outEfp );
   }
+  
   //フラグチェック
   if ( !EncDataSave_CanUseSpray( EncDataSave_GetSaveDataPtr(save) ) ){
     outEfp->spray_f = TRUE;
   }
-  outEfp->enc_force_f = FALSE;
+  if( outEfp->enc_type == ENC_TYPE_FORCE ){
+    outEfp->enc_force_f = TRUE;
+    outEfp->enc_type == ENC_TYPE_NORMAL;  //強制フラグを立てたら、後はNormalタイプでエミュレート
+  }
   outEfp->companion_f = FALSE;
   outEfp->enc_double_f = FALSE;
+
+  //スプレー及び低レベルエンカウント回避チェックに用いるレベルを取得
+  if( outEfp->spa_low_lv_rm || outEfp->spray_f){
+    //手持ちの戦える一匹目のレベルを取得
+    int idx = PokeParty_GetMemberTopIdxBattleEnable( party );
+    pp = PokeParty_GetMemberPointer( party, idx );
+    outEfp->spray_lv = PP_Get( pp, ID_PARA_level, NULL);
+  }
 }
 
 //--------------------------------------------------------------
@@ -186,11 +197,11 @@ u32 ENCPOKE_GetEncountPoke( const ENCPOKE_FLD_PARAM *efp, const ENC_COMMON_DATA 
     eps_PokeLottery( efp, enc_tbl, &outPokeTbl[num] );
     if(!efp->enc_force_f){
       //特性によるレベル差戦闘回避
-      if(efp->spa_low_lv_rm && (efp->mons_lv - outPokeTbl[num].level) > 5){
+      if(efp->spa_low_lv_rm && (efp->spray_lv - outPokeTbl[num].level) >= 5){
         continue;
       }
       //スプレーチェック
-      if(efp->spray_f && (outPokeTbl[num].level < efp->mons_lv)){
+      if(efp->spray_f && (outPokeTbl[num].level <= efp->spray_lv)){
         continue;
       }
     }

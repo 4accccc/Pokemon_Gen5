@@ -19,7 +19,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA     ev_fld_ev_spray_effect_end
 _EVENT_DATA     ev_fld_ev_amaikaori_enc_failed
-_EVENT_DATA     ev_fld_ev_amaikaori_weather_failed
+_EVENT_DATA     ev_fld_ev_amaikaori_weather_error
 _EVENT_DATA_END
 
 DEFINE_LOCAL  reg_return
@@ -54,7 +54,7 @@ EVENT_START ev_fld_ev_amaikaori_enc_failed
 }
 EVENT_END
 
-EVENT_START ev_fld_ev_amaikaori_weather_failed
+EVENT_START ev_fld_ev_amaikaori_weather_error
 {
   _TALKMSG( msg_fld_ev_amaikaori_02 )
   _AB_KEYWAIT()

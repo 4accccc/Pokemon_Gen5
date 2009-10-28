@@ -156,7 +156,7 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
   encwork_AddPlayerWalkCount( ewk, fplayer);
 
 #ifdef PM_DEBUG
-  if( DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEncount) ){
+  if( enc_type != ENC_TYPE_FORCE && DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEncount) ){
     return NULL;
   }
 #endif
@@ -169,12 +169,16 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
   }
 
   //ENCPOKE_FLD_PARAM作成
-  ENCPOKE_SetEFPStruct( &fld_spa, enc->gdata, enc_loc, ENC_TYPE_NORMAL, FALSE );
-  //道具＆特性によるエンカウント率変動
-  per = ENCPOKE_EncProbManipulation( &fld_spa, enc->gdata, per);
+  ENCPOKE_SetEFPStruct( &fld_spa, enc->gdata, enc_loc, enc_type, FALSE );
 
-  if( enc_CheckEncount(enc,ewk,per) == FALSE ){ //エンカウントチェック
-    return NULL;
+  if( enc_type != ENC_TYPE_FORCE )
+  {
+    //道具＆特性によるエンカウント率変動
+    per = ENCPOKE_EncProbManipulation( &fld_spa, enc->gdata, per);
+
+    if( enc_CheckEncount(enc,ewk,per) == FALSE ){ //エンカウントチェック
+      return NULL;
+    }
   }
 
   { //移動ポケモンチェック
