@@ -1280,8 +1280,8 @@ static void DUP_FIT_SetupStartItem( FITTING_WORK *work , const u16 itemId )
     GFL_POINT subPos;
     BOOL hitOval;
     
-    pos.x = 8  +GFL_STD_MtRand0(256-( 8+ 8));
-    pos.y = 32 +GFL_STD_MtRand0(192-(32+32));
+    pos.x = 8  +GFUser_GetPublicRand0(256-( 8+ 8));
+    pos.y = 32 +GFUser_GetPublicRand0(192-(32+32));
     
     subPos.x = pos.x - LIST_CENTER_X;
     subPos.y = pos.y - LIST_CENTER_Y;

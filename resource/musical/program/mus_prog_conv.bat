@@ -10,5 +10,4 @@ PATH=c:\tools;%PROJECT_ROOT%;%PROJECT_ROOT%\tools;c:\tools\subversion\bin;c:\cyg
 
 ruby program_make.rb
 
-cp p01/mus_prog_data.narc ./
 pause

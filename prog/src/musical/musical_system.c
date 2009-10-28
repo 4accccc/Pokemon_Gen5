@@ -170,7 +170,7 @@ const u16 MUSICAL_SYSTEM_GetMusicalPokemonRandom( void )
   {
     i++;
   }
-  return musPokeArr[ GFL_STD_MtRand0(i) ];
+  return musPokeArr[ GFUser_GetPublicRand0(i) ];
 }
 
 //ミュージカル用パラメータの初期化

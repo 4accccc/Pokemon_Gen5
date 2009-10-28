@@ -204,6 +204,25 @@ const u8 MUSICAL_PROGRAM_GetConditionPoint( MUSICAL_PROGRAM_WORK* progWork , MUS
 }
 
 //--------------------------------------------------------------
+//	最高コンディションの取得
+//--------------------------------------------------------------
+const u8 MUSICAL_PROGRAM_GetMaxConditionType( MUSICAL_PROGRAM_WORK* progWork )
+{
+  u8 i;
+  u8 maxPoint = 0;
+  u8 maxIdx = 0;
+  for( i=0;i<MCT_MAX;i++ )
+  {
+    if( maxPoint < progWork->condition[i] )
+    {
+      maxPoint = progWork->condition[i];
+      maxIdx = i;
+    }
+  }
+  return maxIdx;
+}
+
+//--------------------------------------------------------------
 //	ショーパート用NPC作成
 //--------------------------------------------------------------
 void MUSICAL_PROGRAM_SetData_NPC( MUSICAL_PROGRAM_WORK* progWork , STAGE_INIT_WORK *actInitWork , const u8 musicalIdx , const u8 NPCIdx , HEAPID heapId )

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-06T21:06:38"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-10-28T18:08:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="116" top="176" right="821" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="362" top="125" right="1067" bottom="745" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,8 +271,8 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -302,15 +302,35 @@
 	<row id="msg_mus_01_001">
 		<comment>？？？</comment>
 		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">まずは　ドレスアップ！</language>
-		<language name="JPN_KANJI" width="256">まずは　ドレスアップ！</language>
+		<language name="JPN" width="256">よくきてくれたわ！　こんかいのえんもくは　
+[1:22:コンテスト名称:0]！▼
+[1:23:コンテストランク:1]の　おきゃくさんに　
+にんきがあるわ　▼
+いしきしてみても　いいかもしれないわね▼
+それじゃあ　さっそくだけど　
+ここで　ポケモンちゃんを▼
+ドレスアップしてちょうだい！</language>
+		<language name="JPN_KANJI" width="256">よくきてくれたわ！　こんかいのえんもくは　
+[1:22:コンテスト名称:0]！▼
+[1:23:コンテストランク:1]の　おきゃくさんに　
+にんきがあるわ　▼
+いしきしてみても　いいかもしれないわね▼
+それじゃあ　さっそくだけど　
+ここで　ポケモンちゃんを▼
+ドレスアップしてちょうだい！</language>
 	</row>
 
 	<row id="msg_mus_02_001">
 		<comment>？？？</comment>
 		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">ミュージカル　はじまるよ～</language>
-		<language name="JPN_KANJI" width="256">ミュージカル　始まるよ～</language>
+		<language name="JPN" width="256">そのコーディネートで　いくのね！　
+もうすぐ　ショーがはじまるから　▼
+あとは　ポケモンちゃんを　しんじて　
+みまもっていて　ちょうだい！</language>
+		<language name="JPN_KANJI" width="256">そのコーディネートで　いくのね！　
+もうすぐ　ショーがはじまるから　▼
+あとは　ポケモンちゃんを　しんじて　
+みまもっていて　ちょうだい！</language>
 	</row>
 
 	<row id="msg_mus_03_001">
@@ -318,6 +338,11 @@
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">おつかれさま～</language>
 		<language name="JPN_KANJI" width="256">お疲れさま～</language>
+	</row>
+
+	<row>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<flowchart-group-list>

@@ -1059,8 +1059,8 @@ static void STA_ACT_SetupMessage( ACTING_WORK *work )
   work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
   
   //メッセージ
-  work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_musical_00_dat , work->heapId );
-//  work->msgHandle = GFL_MSG_Construct( work->initWork->distData->messageData , work->heapId );
+//  work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_musical_00_dat , work->heapId );
+  work->msgHandle = GFL_MSG_Construct( work->initWork->distData->messageData , work->heapId );
 
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , ACT_PAL_FONT*0x20, 16*2, work->heapId );
   
@@ -1289,7 +1289,7 @@ static void STA_ACT_UpdateUseItem( ACTING_WORK *work )
     if( usePokeNum > 0 )
     {
       work->useItemCnt = ACT_USEITEM_EFF_TIME;
-      work->useItemPoke = usePokeArr[ GFL_STD_MtRand0(usePokeNum)];
+      work->useItemPoke = usePokeArr[ GFUser_GetPublicRand0(usePokeNum)];
       work->isUpdateAttention = TRUE;
     }
   }

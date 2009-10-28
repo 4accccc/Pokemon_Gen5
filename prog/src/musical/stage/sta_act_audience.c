@@ -35,7 +35,7 @@
 
 #define STA_AUDI_SURFACE (CLSYS_DEFREND_SUB)
 
-#define STA_AUDI_LOOK_DELAY (GFL_STD_MtRand0( 60 )+1)
+#define STA_AUDI_LOOK_DELAY (GFUser_GetPublicRand0( 60 )+1)
 #define STA_AUDI_BIG_ANGLE_OFFSET (64)  //å¸Ç´Ç™BIGÇ…Ç»ÇÈÇΩÇﬂÇÃà íuç∑ï™
 
 #define STA_AUDI_NO_LOOK (0xFFFF)
@@ -146,13 +146,13 @@ void	STA_AUDI_UpdateSystem( STA_AUDI_SYS *work )
   if( STA_ACT_GetCurtainHeight( work->actWork ) == 0 )
   {
     u8 i;
-    if( GFL_STD_MtRand0( 10 ) == 0 )
+    if( GFUser_GetPublicRand0( 10 ) == 0 )
     {
       const u8 changeNum = 3;
       for( i=0;i<changeNum ;i++ )
       {
-        const u8 anm = GFL_STD_MtRand0( 4 );
-        const u8 num = GFL_STD_MtRand0( STA_AUDI_NUM );
+        const u8 anm = GFUser_GetPublicRand0( 4 );
+        const u8 num = GFUser_GetPublicRand0( STA_AUDI_NUM );
         STA_AUDI_SetAudienceDir( work , &work->audience[num] , anm );
       }
     }
@@ -240,7 +240,7 @@ static void STA_AUDI_InitCell( STA_AUDI_SYS *work , STAGE_INIT_WORK *initWork )
   //åvéZåÎç∑ï‚ê≥
   while( audiTypeNumSum < STA_AUDI_NUM )
   {
-    audiTypeNum[GFL_STD_MtRand0(4)]++;
+    audiTypeNum[GFUser_GetPublicRand0(4)]++;
     audiTypeNumSum++;
   }
   
@@ -260,7 +260,7 @@ static void STA_AUDI_InitCell( STA_AUDI_SYS *work , STAGE_INIT_WORK *initWork )
   {
     for( i=0;i<STA_AUDI_NUM;i++ )
     {
-      const u8 swapIdx = GFL_STD_MtRand0(STA_AUDI_NUM);
+      const u8 swapIdx = GFUser_GetPublicRand0(STA_AUDI_NUM);
       const u8 temp = audiType[i];
       audiType[i] = audiType[swapIdx];
       audiType[swapIdx] = temp;
@@ -470,7 +470,7 @@ static void STA_AUDI_CheckAudienceState( STA_AUDI_SYS *work )
     for( i=0;i<STA_AUDI_NUM;i++ )
     {
       work->audience[i].delay = STA_AUDI_LOOK_DELAY;
-      work->audience[i].trgPoke = trgArr[GFL_STD_MtRand0(trgNum)];
+      work->audience[i].trgPoke = trgArr[GFUser_GetPublicRand0(trgNum)];
     }
   }
 }

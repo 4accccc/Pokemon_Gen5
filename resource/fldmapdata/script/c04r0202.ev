@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c04r0202.h"
   .include  "musical_scr_local.h"
+  .include  "c04r0202.h"
   //.include  "../eventdata/zone_c04r0202evc.h"
 
 //--------------------------------------------------------------
@@ -20,12 +21,19 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA    ev_init_c04r0202
 _EVENT_DATA    ev_c04r0202_mus_1st
 _EVENT_DATA    ev_c04r0202_mus_2nd
 _EVENT_DATA    ev_c04r0202_mus_3rd
 _EVENT_DATA    ev_script_test
 _EVENT_DATA_END
 
+//----------------------------------------------------------------------
+// ローカルワーク
+//----------------------------------------------------------------------
+
+DEFINE_LOCAL selfPos	// 自身の位置
+DEFINE_LOCAL retWk		// 戻り値汎用
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
@@ -33,56 +41,150 @@ _EVENT_DATA_END
 //ev_c04r0202_flag_change:
 //  _END
 
+
+//======================================================================
+// サブルーチン：キャラセット
+//======================================================================
+npc_pos_set_routine:
+{
+	//仮処理
+	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_IDX,0,retWk)
+	 SWITCH $retWk
+	 CASE 1 THEN
+		_OBJ_POS_CHANGE( C04R0202_NPC_01, 8,0,12,DIR_UP )
+	 CASE 2 THEN
+		_OBJ_POS_CHANGE( C04R0202_NPC_02, 8,0,12,DIR_UP )
+	 CASE 3 THEN
+		_OBJ_POS_CHANGE( C04R0202_NPC_03, 8,0,12,DIR_UP )
+	 ENDSWITCH
+	
+	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_IDX,1,retWk)
+	 SWITCH $retWk
+	 CASE 1 THEN
+		_OBJ_POS_CHANGE( C04R0202_NPC_01,10,0,12,DIR_UP )
+	 CASE 2 THEN
+		_OBJ_POS_CHANGE( C04R0202_NPC_02,10,0,12,DIR_UP )
+	 CASE 3 THEN
+		_OBJ_POS_CHANGE( C04R0202_NPC_03,10,0,12,DIR_UP )
+	 ENDSWITCH
+	
+	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_IDX,2,retWk)
+	 SWITCH $retWk
+	 CASE 1 THEN
+		_OBJ_POS_CHANGE( C04R0202_NPC_01,12,0,12,DIR_UP )
+	 CASE 2 THEN
+		_OBJ_POS_CHANGE( C04R0202_NPC_02,12,0,12,DIR_UP )
+	 CASE 3 THEN
+		_OBJ_POS_CHANGE( C04R0202_NPC_03,12,0,12,DIR_UP )
+	 ENDSWITCH
+	
+	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_IDX,3,retWk)
+	 SWITCH $retWk
+	 CASE 1 THEN
+		_OBJ_POS_CHANGE( C04R0202_NPC_01,14,0,12,DIR_UP )
+	 CASE 2 THEN
+		_OBJ_POS_CHANGE( C04R0202_NPC_02,14,0,12,DIR_UP )
+	 CASE 3 THEN
+		_OBJ_POS_CHANGE( C04R0202_NPC_03,14,0,12,DIR_UP )
+	 ENDSWITCH
+}
+_RET
+
+/**************************************************************/
+//	ゾーンチェンジスクリプト
+/**************************************************************/
+INIT_EVENT_START ev_init_c04r0202
+	//動かない？
+INIT_EVENT_END
+
 /**************************************************************/
 //	ミュージカル台詞　開始時
 /**************************************************************/
 EVENT_START ev_c04r0202_mus_1st
 	
-	DEFINE_LOCAL selfPos	// 自身の位置
-	DEFINE_LOCAL temp		// 移動処理用
+	DEFINE_LOCAL condition	// 演目の高いコンディション
+	_CALL npc_pos_set_routine
 
 	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_SELF_IDX,0,selfPos)
-	
-	//一番左の位置の下まで移動
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_start_to_main_1 )
-	_OBJ_ANIME_WAIT()
-	//繰り返し処理で自分の番号の下まで移動
-	$temp = $selfPos
-	WHILE $temp > 0
+
+	 SWITCH $selfPos
+	 CASE 0 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_start_to_main_1 )
+	 CASE 1 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_start_to_main_2 )
-		_OBJ_ANIME_WAIT()
-		$temp -= 1
-	ENDWHILE
-	//一歩前へ
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_start_to_main_3 )
+	 CASE 2 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_start_to_main_3 )
+	 CASE 3 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_start_to_main_4 )
+	 ENDSWITCH
 	_OBJ_ANIME_WAIT()
 	
+	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_MAX_CONDITION,0,condition)
+
+	_MUSICAL_WORD( MUSICAL_WORD_TITLE_LOCAL , 0 , 0 )
+	_MUSICAL_WORD( MUSICAL_WORD_AUDI_TYPE   , 1 , condition )
 	
-	_BALLOONWIN_OBJMSG_OPEN( msg_mus_01_001 , MMDL_ID_PLAYER )
+	_BALLOONWIN_OBJMSG_OPEN( msg_mus_01_001 , C04R0202_WOMAN1_01 )
 	_AB_KEYWAIT()     //キー待ち
 	_BALLOONWIN_CLOSE()
+
+	_BLACK_OUT( )
+	_DISP_FADE_END_CHECK()
+
 EVENT_END
 
 /**************************************************************/
 //	ミュージカル台詞　ショー前
 /**************************************************************/
 EVENT_START ev_c04r0202_mus_2nd
-	_BALLOONWIN_OBJMSG_OPEN( msg_mus_02_001 , MMDL_ID_PLAYER )
+
+	_BLACK_IN( )
+	_DISP_FADE_END_CHECK()
+
+	//記憶されてるので1回で良い？
+	//_CALL npc_pos_set_routine
+
+	_BALLOONWIN_OBJMSG_OPEN( msg_mus_02_001 , C04R0202_WOMAN1_01 )
 	_AB_KEYWAIT()     //キー待ち
 	_BALLOONWIN_CLOSE()
+
+	_BLACK_OUT( )
+	_DISP_FADE_END_CHECK()
+
 EVENT_END
 
 /**************************************************************/
 //	ミュージカル台詞　終了時
 /**************************************************************/
 EVENT_START ev_c04r0202_mus_3rd
-	_BALLOONWIN_OBJMSG_OPEN( msg_mus_03_001 , MMDL_ID_PLAYER )
+
+	_BLACK_IN( )
+	_DISP_FADE_END_CHECK()
+
+	//記憶されてるので1回で良い？
+	//_CALL npc_pos_set_routine
+
+	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_SELF_IDX,0,selfPos)
+
+	_BALLOONWIN_OBJMSG_OPEN( msg_mus_03_001 , C04R0202_WOMAN1_01 )
 	_AB_KEYWAIT()     //キー待ち
 	_BALLOONWIN_CLOSE()
 
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_main_to_start )
+	 SWITCH $selfPos
+	 CASE 0 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_main_to_start_1 )
+	 CASE 1 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_main_to_start_2 )
+	 CASE 2 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_main_to_start_3 )
+	 CASE 3 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_main_to_start_4 )
+	 ENDSWITCH
 	_OBJ_ANIME_WAIT()
 	
+	_BLACK_OUT( )
+	_DISP_FADE_END_CHECK()
+
 EVENT_END
 
 EVENT_START ev_script_test
@@ -97,26 +199,77 @@ EVENT_END
 /**************************************************************/
 //	移動　開始→待機位置
 /**************************************************************/
+//入り口から立ち位置(0～3個
 _ANIME_LABEL anm_move_player_start_to_main_1
 	_ANIME_DATA AC_DIR_U,1
 	_ANIME_DATA AC_WALK_U_8F,11
 	_ANIME_DATA AC_DIR_R,1
 	_ANIME_DATA AC_WALK_R_8F,6
-	_ANIME_DATA ACMD_END,0
-
-_ANIME_LABEL anm_move_player_start_to_main_2
-	_ANIME_DATA AC_WALK_R_8F,2
-	_ANIME_DATA ACMD_END,0
-	
-_ANIME_LABEL anm_move_player_start_to_main_3
 	_ANIME_DATA AC_DIR_U,1
 	_ANIME_DATA AC_WALK_U_8F,1
 	_ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL anm_move_player_main_to_start
+_ANIME_LABEL anm_move_player_start_to_main_2
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_WALK_U_8F,11
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_WALK_R_8F,8
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL anm_move_player_start_to_main_3
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_WALK_U_8F,11
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_WALK_R_8F,10
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL anm_move_player_start_to_main_4
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_WALK_U_8F,11
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_WALK_R_8F,12
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA ACMD_END,0
+
+
+_ANIME_LABEL anm_move_player_main_to_start_1
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_WALK_D_8F,1
 	_ANIME_DATA AC_DIR_L,1
 	_ANIME_DATA AC_WALK_L_8F,6
 	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA AC_WALK_D_8F,12
+	_ANIME_DATA AC_WALK_D_8F,11
+	_ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL anm_move_player_main_to_start_2
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_WALK_L_8F,8
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_WALK_D_8F,11
+	_ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL anm_move_player_main_to_start_3
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_WALK_L_8F,10
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_WALK_D_8F,11
+	_ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL anm_move_player_main_to_start_4
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_WALK_L_8F,12
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_WALK_D_8F,11
 	_ANIME_DATA ACMD_END,0
 

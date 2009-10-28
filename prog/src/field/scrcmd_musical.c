@@ -31,10 +31,13 @@
 #include "event_fieldmap_control.h"
 
 #include "field_sound.h"
-
+#include "message.naix"
+#include "msg/msg_musical_common.h"
 #include "scrcmd_musical.h"
 
 #include "../../../resource/fldmapdata/script/musical_scr_local.h"
+
+#include "test/ariizumi/ari_debug.h"
 
 //======================================================================
 //  define
@@ -160,18 +163,27 @@ VMCMD_RESULT EvCmdGetMusicalWaitRoomValue( VMHANDLE *core, void *wk )
   u16  val   = SCRCMD_GetVMWorkValue( core, work );
   u16* ret_wk = SCRCMD_GetVMWork( core, work );
 
-  MUSICAL_EVENT_WORK *musWork = SCRIPT_GetMemberWork( sc , ID_EVSCR_MUSICAL_EVENT_WORK );
+  MUSICAL_EVENT_WORK *evWork = SCRIPT_GetMemberWork( sc , ID_EVSCR_MUSICAL_EVENT_WORK );
 
   switch( type )
   {
   case MUSICAL_VALUE_WR_SELF_IDX:  //自分の参加番号
-    *ret_wk = MUSICAL_EVENT_GetSelfIndex( musWork );
+    *ret_wk = MUSICAL_EVENT_GetSelfIndex( evWork );
+    ARI_TPrintf("MusValWR:SelfIdx[%d]\n",*ret_wk);
     break;
   case MUSICAL_VALUE_WR_MAX_POINT: //最高評価点
     break;
   case MUSICAL_VALUE_WR_MIN_POINT: //最高得点
     break;
   case MUSICAL_VALUE_WR_GRADE_MSG: //評価メッセージの取得
+    break;
+  case MUSICAL_VALUE_WR_POS_TO_IDX: //立ち位置に対応した参加番号
+    *ret_wk = MUSICAL_EVENT_GetPosIndex( evWork , val );
+    ARI_TPrintf("MusValWR:PosIdx[%d:%d]\n",val,*ret_wk);
+    break;
+  case MUSICAL_VALUE_WR_MAX_CONDITION: //立ち位置に対応した参加番号
+    *ret_wk = MUSICAL_EVENT_GetMaxCondition( evWork  );
+    ARI_TPrintf("MusValWR:MaxCondition[%d]\n",*ret_wk);
     break;
   default:
     GF_ASSERT_MSG( 0 , "タイプ指定が間違ってる[%d]\n",type );
@@ -192,10 +204,42 @@ VMCMD_RESULT EvCmdAddMusicalGoods( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  HEAPID heapId = SCRCMD_WORK_GetHeapID( work );
+  WORDSET **wordset    = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
 
   u8   type = VMGetU8(core);
   u8   idx  = VMGetU8(core);
   u16  val  = SCRCMD_GetVMWorkValue( core, work );
+
+  MUSICAL_EVENT_WORK *evWork = SCRIPT_GetMemberWork( sc , ID_EVSCR_MUSICAL_EVENT_WORK );
+
+  switch( type )
+  {
+  case MUSICAL_WORD_TITLE:        //セーブにある演目
+    break;
+  case MUSICAL_WORD_GOODS:        //グッズ名
+    break;
+  case MUSICAL_WORD_TITLE_LOCAL:  //※現在演目
+    {
+      STRBUF * tmpBuf = MUSICAL_EVENT_CreateStr_ProgramTitle( evWork , heapId );
+      WORDSET_RegisterWord( *wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
+      GFL_STR_DeleteBuffer( tmpBuf );
+    }
+    break;
+  case MUSICAL_WORD_AUDI_TYPE:    //人気客層
+    {
+      STRBUF * tmpBuf;
+      GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_musical_common_dat , heapId );
+
+      tmpBuf = GFL_MSG_CreateString( msgHandle , MUSICAL_AUDIENCE_TYPE_01+val );
+      WORDSET_RegisterWord( *wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
+
+      GFL_STR_DeleteBuffer( tmpBuf );
+      GFL_MSG_Delete( msgHandle );
+    }
+    break;
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }

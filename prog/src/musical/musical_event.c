@@ -176,7 +176,7 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const BOOL
     {
       for( i=0;i<MUSICAL_POKE_MAX;i++ )
       {
-        u8 swapIdx = GFL_STD_MtRand0(MUSICAL_POKE_MAX);
+        u8 swapIdx = GFUser_GetPublicRand0(MUSICAL_POKE_MAX);
         u8 temp = evWork->musicalIndex[i];
         evWork->musicalIndex[i] = evWork->musicalIndex[swapIdx];
         evWork->musicalIndex[swapIdx] = temp;
@@ -211,6 +211,7 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     break;
 
   case MES_WAITROOM_FIRST:
+    MUSICAL_EVENT_InitMusical( evWork );
     MUSICAL_EVENT_RunScript( event , evWork , SCRID_C04R0202_MUS_1ST );
     evWork->state = MES_EXIT_FIELD;
     break;
@@ -232,7 +233,6 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
   //------------------------------
   case MES_INIT_MUSICAL:
     {
-      MUSICAL_EVENT_InitMusical( evWork );
       evWork->state = MES_INIT_DRESSUP;
     }
     break;
@@ -456,12 +456,12 @@ static void MUSICAL_EVENT_InitActing( MUSICAL_EVENT_WORK *evWork )
     if( evWork->musicalIndex[i] == 0 )
     {
       //プレイヤー
-      MUSICAL_STAGE_SetData_Player( evWork->actInitWork , evWork->musicalIndex[i] , evWork->musPoke );
+      MUSICAL_STAGE_SetData_Player( evWork->actInitWork , i , evWork->musPoke );
     }
     else
     {
       //NPC
-      MUSICAL_PROGRAM_SetData_NPC( evWork->progWork , evWork->actInitWork , evWork->musicalIndex[i] , evWork->musicalIndex[i]-1 , HEAPID_MUSICAL_PROC );
+      MUSICAL_PROGRAM_SetData_NPC( evWork->progWork , evWork->actInitWork , i , evWork->musicalIndex[i]-1 , HEAPID_MUSICAL_PROC );
     }
   }
 
@@ -581,8 +581,8 @@ static const BOOL MUSICAL_EVENT_InitField( GMEVENT *event, MUSICAL_EVENT_WORK *e
     break;
   case 1:
     {
-      FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( evWork->gsys );
-      GMEVENT_CallEvent(event, EVENT_FieldFadeIn(evWork->gsys, fieldWork, 0));
+      //FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( evWork->gsys );
+      //GMEVENT_CallEvent(event, EVENT_FieldFadeIn(evWork->gsys, fieldWork, 0));
       evWork->subSeq++;
     }
     break;
@@ -602,7 +602,7 @@ static const BOOL MUSICAL_EVENT_ExitField( GMEVENT *event, MUSICAL_EVENT_WORK *e
   switch( evWork->subSeq )
   {
   case 0:
-    GMEVENT_CallEvent(event, EVENT_FieldFadeOut(evWork->gsys, fieldWork, 0));
+    //GMEVENT_CallEvent(event, EVENT_FieldFadeOut(evWork->gsys, fieldWork, 0));
     evWork->subSeq++;
     break;
   case 1:
@@ -638,7 +638,9 @@ static const void MUSICAL_EVENT_JumpMusicalHall( GMEVENT *event, MUSICAL_EVENT_W
   GMEVENT *newEvent;
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( evWork->gsys );
 
-  const VecFx32 pos = { FX32_CONST(280.0f) , FX32_CONST(0.0f) , FX32_CONST(120.0f) };
+  //const VecFx32 pos = { FX32_CONST(280.0f) , FX32_CONST(0.0f) , FX32_CONST(120.0f) };
+  //末ROM用
+  const VecFx32 pos = { FX32_CONST(232.0f) , FX32_CONST(0.0f) , FX32_CONST(200.0f) };
   
   newEvent = DEBUG_EVENT_ChangeMapPos( evWork->gsys, fieldWork ,
                 ZONE_ID_C04R0201 , &pos , 2 );
@@ -669,6 +671,28 @@ static const void MUSICAL_EVENT_RunScript( GMEVENT *event, MUSICAL_EVENT_WORK *e
 const u8 MUSICAL_EVENT_GetSelfIndex( MUSICAL_EVENT_WORK *evWork )
 {
   return evWork->selfIdx;
+}
+
+//位置に対応した参加番号取得
+const u8 MUSICAL_EVENT_GetPosIndex( MUSICAL_EVENT_WORK *evWork , const u8 pos )
+{
+  return evWork->musicalIndex[pos];
+}
+
+//最高コンディションの取得
+const u8 MUSICAL_EVENT_GetMaxCondition( MUSICAL_EVENT_WORK *evWork )
+{
+  return  MUSICAL_PROGRAM_GetMaxConditionType( evWork->progWork );
+}
+
+//現在演目名取得
+STRBUF* MUSICAL_EVENT_CreateStr_ProgramTitle( MUSICAL_EVENT_WORK *evWork , HEAPID heapId )
+{
+  STRBUF *strBuf;
+  GFL_MSGDATA *msgHandle = GFL_MSG_Construct( evWork->distData->messageData , heapId );
+  strBuf = GFL_MSG_CreateString( msgHandle , 0 );
+  GFL_MSG_Delete( msgHandle );
+  return strBuf;
 }
 
 

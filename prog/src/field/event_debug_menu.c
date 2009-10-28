@@ -685,6 +685,11 @@ static const u16 JumpZoneID_ListTbl[] = {
   ZONE_ID_PALACE01,
   ZONE_ID_PALACE02,
   ZONE_ID_GT,
+  
+#if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko) | defined(DEBUG_ONLY_FOR_iwao_kazumasa)
+  ZONE_ID_C04R0201,
+  ZONE_ID_C04R0202,
+#endif
 };
 
 //--------------------------------------------------------------

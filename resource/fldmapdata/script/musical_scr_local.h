@@ -7,6 +7,13 @@
 
 //※がついているコマンドは控え室のみ有効です！
 
+//コンディションの定義
+#define MUSICAL_CONDITION_COOL (0)    //クール
+#define MUSICAL_CONDITION_CUTE (1)    //キュート
+#define MUSICAL_CONDITION_ELEGANT (2) //エレガント
+#define MUSICAL_CONDITION_UNIQUE (3)  //ユニーク
+
+
 //_GET_MUSICAL_FAN_VALUE_GIFT_TYPE で戻ってくる値
 #define MUSICAL_GIFT_TYPE_NONE  (0)  //無い
 #define MUSICAL_GIFT_TYPE_GOODS (1)  //グッズ
@@ -21,6 +28,7 @@
 #define MUSICAL_WORD_TITLE (0)        //セーブにある演目
 #define MUSICAL_WORD_GOODS (1)        //グッズ名
 #define MUSICAL_WORD_TITLE_LOCAL (2)  //※現在演目
+#define MUSICAL_WORD_AUDI_TYPE (3)  //人気客層
 
 //_MUSICAL_CALL 用
 #define MUSICAL_CALL_LOCAL (0)        //非通信
@@ -45,3 +53,7 @@
 #define MUSICAL_VALUE_WR_MAX_POINT (1) //最高評価点
 #define MUSICAL_VALUE_WR_MIN_POINT (2) //最高得点
 #define MUSICAL_VALUE_WR_GRADE_MSG (3) //評価メッセージの取得
+#define MUSICAL_VALUE_WR_POS_TO_IDX (4) //立ち位置に対応した参加番号
+#define MUSICAL_VALUE_WR_MAX_CONDITION (5) //演目の高いコンディション
+
+

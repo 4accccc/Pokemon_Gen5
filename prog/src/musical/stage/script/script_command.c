@@ -1599,9 +1599,9 @@ static void SCRIPT_TCB_EffectRepeat(  GFL_TCB *tcb, void *work )
   else if( ret == RMR_ACTION )
   {
     VecFx32 pos;
-    pos.x = ACT_POS_X_FX(effRepeat->pos.x + GFL_STD_MtRand0( effRepeat->range.x ));
-    pos.y = ACT_POS_Y_FX(effRepeat->pos.y + GFL_STD_MtRand0( effRepeat->range.y ));
-    pos.z = effRepeat->pos.z + GFL_STD_MtRand0( effRepeat->range.z );
+    pos.x = ACT_POS_X_FX(effRepeat->pos.x + GFUser_GetPublicRand0( effRepeat->range.x ));
+    pos.y = ACT_POS_Y_FX(effRepeat->pos.y + GFUser_GetPublicRand0( effRepeat->range.y ));
+    pos.z = effRepeat->pos.z + GFUser_GetPublicRand0( effRepeat->range.z );
 
     STA_EFF_CreateEmitter( effRepeat->effWork , effRepeat->emitNo , &pos );
   }
