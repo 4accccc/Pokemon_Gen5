@@ -14,8 +14,8 @@
 
 //Page1
 DEBUG_FLG_DEF( DisableEncount , "EncountOff" )
-DEBUG_FLG_DEF( TestFlg1 , "テスト1")
-DEBUG_FLG_DEF( TestFlg2 , "テスト2")
+DEBUG_FLG_DEF( DisableTrainerEye , "TrainerEyeOff")
+DEBUG_FLG_DEF( DisableEvents , "Pos & Scene Off")
 DEBUG_FLG_DEF( TestFlg3 , "テスト3")
 DEBUG_FLG_DEF( TestFlg4 , "テスト4")
 DEBUG_FLG_DEF( TestFlg5 , "テスト5")

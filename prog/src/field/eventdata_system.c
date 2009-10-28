@@ -31,6 +31,8 @@
 #include "field/zonedata.h"
 #include "field/encount_data.h"
 
+#include "debug/debug_flg.h" //DEBUG_FLG_`
+
 //============================================================================================
 //============================================================================================
 #ifdef PM_DEBUG
@@ -700,6 +702,7 @@ u16 EVENTDATA_CheckPosEvent(
 {
   const POS_EVENT_DATA* data = EVENTDATA_GetPosEvent( evdata,evwork,pos );
   
+  if ( DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEvents) ) return EVENTDATA_ID_NONE;
   if( data != NULL ){
     return data->id;
   }
@@ -720,6 +723,7 @@ u16 EVENTDATA_CheckPosEventRailLocation(
 {
   const POS_EVENT_DATA* data = EVENTDATA_GetPosEventRailLocation( evdata,evwork,pos );
   
+  if ( DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEvents) ) return EVENTDATA_ID_NONE;
   if( data != NULL ){
     return data->id;
   }

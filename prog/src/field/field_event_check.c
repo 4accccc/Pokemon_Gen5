@@ -78,6 +78,8 @@
 #include "../../../resource/fldmapdata/script/pokecen_scr_def.h" // for SCRID_PC
 #include "../../../resource/fldmapdata/script/field_ev_scr_def.h" // for SCRID_FLE_EV_SPRAY_EFFECT_END
 
+#include "debug/debug_flg.h" //DEBUG_FLG_～
+
 //======================================================================
 //======================================================================
 
@@ -215,12 +217,14 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 #endif //debug
 	
 //☆☆☆特殊スクリプト起動チェックがここに入る
-  event = SCRIPT_SearchSceneScript( gsys, req.heapID );
-  if (event) return event;
+  if (DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEvents) == FALSE) {
+    event = SCRIPT_SearchSceneScript( gsys, req.heapID );
+    if (event) return event;
+  }
 
 
 //☆☆☆トレーナー視線チェックがここに入る
-  if( !(req.debugRequest) ){
+  if( !(req.debugRequest) && DEBUG_FLG_GetFlg(DEBUG_FLG_DisableTrainerEye) == FALSE ){
     event = EVENT_CheckTrainerEye( fieldWork, FALSE );
     if( event != NULL ){
       return event;
@@ -1161,11 +1165,13 @@ static GMEVENT * DEBUG_checkKeyEvent(EV_REQUEST * req, GAMESYS_WORK * gsys, FIEL
 	
 	//マップ変更チェック
 	if( (req->key_cont & chgCont) == chgCont ){
+#if 0
     ISDPrintSetBlockingMode(1);
     GFL_HEAP_DEBUG_PrintSystemInfo();
     GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_PROC );
     GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_FIELDMAP );
     ISDPrintSetBlockingMode(0);
+#endif
 		//return DEBUG_EVENT_ChangeToNextMap(gsys, fieldWork);
 	}
 	
