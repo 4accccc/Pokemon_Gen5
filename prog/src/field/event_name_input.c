@@ -134,6 +134,19 @@ GMEVENT * EVENT_NameInput_PartyPoke(
   GMEVENT* event;
   PARTY_NAMEIN_WORK* work;
 
+  // インデックスを検査
+  {
+    GAMEDATA*  gdata = GAMESYSTEM_GetGameData( work->gsys );
+    POKEPARTY* party = GAMEDATA_GetMyPokemon( gdata );
+    int  party_count = PokeParty_GetPokeCount( party );
+    if( (party_index < 0) || (party_count <= party_index) )
+    {
+      OS_Printf( "----------------------------------------------------\n" );
+      OS_Printf( "名前入力コマンド: インデックス指定に誤りがあります。\n" );
+      OS_Printf( "----------------------------------------------------\n" );
+    }
+  }
+
   // イベント生成
   event = GMEVENT_Create( 
       gsys, NULL, EVENT_FUNC_NameInput_PartyPoke, sizeof(PARTY_NAMEIN_WORK) );
