@@ -25,4 +25,6 @@ extern BOOL MISSION_EntryAchieve(MISSION_SYSTEM *mission, const MISSION_DATA *md
 extern void MISSION_SetResult(MISSION_SYSTEM *mission, const MISSION_RESULT *cp_result);
 extern BOOL MISSION_RecvAchieve(const MISSION_SYSTEM *mission);
 extern BOOL MISSION_Talk_CheckAchieve(const MISSION_SYSTEM *mission, int talk_netid);
+extern s32 MISSION_GetPoint(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_RESULT *result);
+extern BOOL MISSION_AddPoint(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission);
 

@@ -189,6 +189,12 @@ void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm)
   MISSION_SendUpdate(intcomm, &intcomm->mission);
   //ビンゴの送信リクエストがあれば送信
   Bingo_SendUpdate(intcomm, Bingo_GetBingoSystemWork(intcomm));
+  //占拠情報送信リクエストがあれば送信
+  if(intcomm->send_occupy == TRUE){
+    if(IntrudeSend_OccupyInfo(intcomm) == TRUE){
+      intcomm->send_occupy = FALSE;
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -276,7 +282,7 @@ void Intrude_SetSendProfileBuffer(INTRUDE_COMM_SYS_PTR intcomm)
   GFL_STD_MemCopy(myst, &intcomm->send_profile.mystatus, MyStatus_GetWorkSize());
   
   occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
-  GFL_STD_MemCopy(myst, &intcomm->send_profile.occupy, sizeof(OCCUPY_INFO));
+  GFL_STD_MemCopy(occupy, &intcomm->send_profile.occupy, sizeof(OCCUPY_INFO));
   
   //侵入ステータスをセット
   Intrude_SetSendStatus(intcomm);

@@ -14,8 +14,9 @@
 //==============================================================================
 ///ミッション要求データ
 typedef struct{
-  u8 monolith_type;   ///<石版タイプ  MONOLITH_TYPE_???
-  u8 padding[3];
+  u16 zone_id;                ///<ミッション起動に使用したミニモノリスがあったゾーンID
+  u8 monolith_type;           ///<石版タイプ  MONOLITH_TYPE_???
+  u8 padding;
 }MISSION_REQ;
 
 ///ミッションデータ
@@ -24,6 +25,9 @@ typedef struct{
   u8 mission_no;              ///<ミッション番号(ミッションが無い場合はMISSION_NO_NULL)
   u8 accept_netid;            ///<ミッション受注者のNetID
   u8 target_netid;            ///<ミッション内容によってターゲットとなるプレイヤーのNetID
+  
+  u16 zone_id;                ///<ミッション起動に使用したミニモノリスがあったゾーンID
+  u8 padding[2];
 }MISSION_DATA;
 
 ///ミッション結果

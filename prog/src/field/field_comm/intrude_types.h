@@ -136,6 +136,8 @@ typedef struct _INTRUDE_COMM_SYS{
   u8 member_send_req;         ///<TRUE:参加人数の送信を行う
   
   u8 warp_town_tblno;         ///<ワープ先のテーブル番号
-  u8 padding[3];
+  u8 area_occupy_update;      ///<TRUE:侵入しているエリアの占拠情報を受信した(下画面やり取り)
+  u8 send_occupy;             ///<TRUE:自分の占拠情報を送信リクエスト
+  u8 padding;
 }INTRUDE_COMM_SYS;
 

@@ -11,6 +11,7 @@
 #include "intrude_mission.h"
 #include "intrude_comm_command.h"
 #include "msg/msg_invasion.h"
+#include "intrude_main.h"
 
 
 //==================================================================
@@ -61,6 +62,7 @@ BOOL MISSION_SetEntry(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, con
   mdata->mission_no = GFUser_GetPublicRand0(MISSION_NO_MAX);
   mdata->accept_netid = accept_netid;
   mdata->monolith_type = req->monolith_type;
+  mdata->zone_id = req->zone_id;
   
   connect_num = GFL_NET_GetConnectNum();
   target_no = GFUser_GetPublicRand0(connect_num - 1); // -1 = 受注者分
@@ -288,3 +290,66 @@ BOOL MISSION_Talk_CheckAchieve(const MISSION_SYSTEM *mission, int talk_netid)
   return FALSE;
 }
 
+//==================================================================
+/**
+ * ミッション結果から得られるミッションポイントを取得する
+ *
+ * @param   intcomm		
+ * @param   result		
+ *
+ * @retval  int		ミッションポイント
+ */
+//==================================================================
+s32 MISSION_GetPoint(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_RESULT *result)
+{
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+  s32 point;
+  
+  if(result->achieve_netid == GAMEDATA_GetIntrudeMyID(gamedata)){
+    point = 100;
+  }
+  else{
+    point = 50;
+  }
+  return point;
+}
+
+//==================================================================
+/**
+ * ミッション結果から得られるミッションポイント、占拠ポインタを加算する
+ *
+ * @param   intcomm		
+ * @param   mission		
+ *
+ * @retval  BOOL		TRUE:加算した。　FALSE:ポイントは発生しなかった
+ */
+//==================================================================
+BOOL MISSION_AddPoint(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission)
+{
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+  const MISSION_RESULT *result = &intcomm->mission.result;
+  int point;
+  
+  point = MISSION_GetPoint(intcomm, result);
+  if(point > 0){
+    OCCUPY_INFO *mine_occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
+    PALACE_TOWN_RESULT town_result;
+    
+    //ミッションポイント加算
+    mine_occupy->intrude_point += point;
+    //街の占拠情報反映
+    if(Intrude_SearchPalaceTown(result->mission_data.zone_id, &town_result) == TRUE){
+      if(result->mission_data.monolith_type == MONOLITH_TYPE_WHITE){
+        mine_occupy->town.town_occupy[town_result.tblno] = OCCUPY_TOWN_WHITE;
+      }
+      else{
+        mine_occupy->town.town_occupy[town_result.tblno] = OCCUPY_TOWN_BLACK;
+      }
+    }
+    else{
+      GF_ASSERT_MSG(0, "zone_id = %d\n", result->mission_data.zone_id);
+    }
+    return TRUE;
+  }
+  return FALSE;
+}

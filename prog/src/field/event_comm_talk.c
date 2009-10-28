@@ -27,6 +27,8 @@
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
+#include "poke_tool/status_rcv.h"
+
 
 //======================================================================
 //	define
@@ -397,6 +399,9 @@ static GMEVENT_RESULT CommMissionAchieveEvent( GMEVENT *event, int *seq, void *w
   case SEQ_END:
     IntrudeEventPrint_ExitFieldMsg(&talk->iem);
     if(intcomm != NULL){
+      if(MISSION_AddPoint(intcomm, &intcomm->mission) == TRUE){
+        intcomm->send_occupy = TRUE;
+      }
       MISSION_Init(&intcomm->mission);
     }
     return GMEVENT_RES_FINISH;
@@ -452,6 +457,7 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
 	COMMTALK_EVENT_WORK *talk = wk;
 	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData(gsys);
 	INTRUDE_COMM_SYS_PTR intcomm;
 	enum{
     SEQ_INIT,
@@ -477,16 +483,15 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
     break;
   case SEQ_MSG_INIT:
     {
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData(gsys);
-      MYSTATUS *target_myst = GAMEDATA_GetMyStatusPlayer(gdata,intcomm->mission.data.target_netid);
-      MYSTATUS *mine_myst = GAMEDATA_GetMyStatus(gdata);
+      MYSTATUS *target_myst = GAMEDATA_GetMyStatusPlayer(gdata,intcomm->mission.result.mission_data.target_netid);
+      MYSTATUS *achieve_myst = GAMEDATA_GetMyStatusPlayer(gdata,intcomm->mission.result.achieve_netid);
       int my_netid = GAMEDATA_GetIntrudeMyID(gdata);
       u16 msg_id;
       
       msg_id = MISSION_GetAchieveMsgID(&intcomm->mission, my_netid);
 
       WORDSET_RegisterPlayerName( talk->iem.wordset, 0, target_myst );
-      WORDSET_RegisterPlayerName( talk->iem.wordset, 1, mine_myst );
+      WORDSET_RegisterPlayerName( talk->iem.wordset, 1, achieve_myst );
 
       IntrudeEventPrint_StartStream(&talk->iem, msg_id);
     }
@@ -505,6 +510,13 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
   case SEQ_END:
     IntrudeEventPrint_ExitFieldMsg(&talk->iem);
     if(intcomm != NULL){
+      //※check　ミッションが一つしかないので、ここで全回復
+      if(intcomm->mission.data.target_netid == GAMEDATA_GetIntrudeMyID(gdata)){
+        STATUS_RCV_PokeParty_RecoverAll(GAMEDATA_GetMyPokemon(gdata));
+      }
+      if(MISSION_AddPoint(intcomm, &intcomm->mission) == TRUE){
+        intcomm->send_occupy = TRUE;
+      }
       MISSION_Init(&intcomm->mission);
     }
     return GMEVENT_RES_FINISH;

@@ -144,6 +144,13 @@ enum{
   INTSUB_BG_PAL_MAX = 5,
 };
 
+///街アイコン更新リクエスト
+enum{
+  TOWN_UPDATE_REQ_NONE,           ///<リクエスト無し
+  TOWN_UPDATE_REQ_NOT_EFFECT,     ///<街アイコンの更新はするが占拠エフェクトは無し
+  TOWN_UPDATE_REQ_UPDATE,         ///<街アイコンの更新＋変化があれば占拠エフェクト
+};
+
 //--------------------------------------------------------------
 //  
 //--------------------------------------------------------------
@@ -166,7 +173,10 @@ typedef struct _INTRUDE_SUBDISP{
   GFL_CLWK *act[INTSUB_ACTOR_MAX];
   
   u8 my_net_id;
-  u8 padding[3];
+  u8 town_update_req;     ///<街アイコン更新リクエスト(TOWN_UPDATE_REQ_???)
+  u8 padding[2];
+  
+  u32 senkyo_eff_bit;     ///<占拠エフェクト起動中の街(bit管理)
 }INTRUDE_SUBDISP;
 
 
@@ -207,11 +217,17 @@ static void _IntSub_ActorUpdate_LvNum(
   INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
 static void _IntSub_ActorUpdate_PointNum(
   INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
+static OCCUPY_INFO * _IntSub_GetArreaOccupy(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub);
 static u8 _IntSub_GetProfileRecvNum(INTRUDE_COMM_SYS_PTR intcomm);
 static u8 _IntSub_TownPosGet(ZONEID zone_id, GFL_CLACTPOS *dest_pos);
 static void _SetRect(int x, int y, int half_size_x, int half_size_y, GFL_RECT *rect);
 static BOOL _CheckRectHit(int x, int y, const GFL_RECT *rect);
 static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub);
+static void _IntSub_TownChangeCheck(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy, u8 update_req);
+static void _IntSub_SenkyoEff_Start(INTRUDE_SUBDISP_PTR intsub, u32 eff_bit);
+static void _IntSub_SenkyoEff_EndWatch(INTRUDE_SUBDISP_PTR intsub);
+static void _IntSub_TownActChange(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy, int town_tblno);
+static void _IntSub_TownActBitChange(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy, u32 change_bit);
 
 
 //==============================================================================
@@ -328,13 +344,7 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub)
     return;
   }
   
-  if(intcomm->intrude_status_mine.palace_area == GAMEDATA_GetIntrudeMyID(gamedata)
-      || intcomm->intrude_status_mine.palace_area == PALACE_AREA_NO_NULL){
-    area_occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
-  }
-  else{
-    area_occupy = GAMEDATA_GetOccupyInfo(gamedata, intcomm->intrude_status_mine.palace_area);
-  }
+  area_occupy = _IntSub_GetArreaOccupy(intcomm, intsub);
   
   //タッチ判定チェック
   _IntSub_TouchUpdate(intcomm, intsub);
@@ -561,6 +571,8 @@ static void _IntSub_ActorCreate_Town(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *hand
       &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
     GFL_CLACT_WK_SetDrawEnable(intsub->act[i], FALSE);  //表示OFF
   }
+  
+  intsub->town_update_req = TOWN_UPDATE_REQ_NOT_EFFECT;
 }
 
 //--------------------------------------------------------------
@@ -825,22 +837,109 @@ static void _IntSub_ActorCreate_PointNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *
 //--------------------------------------------------------------
 static void _IntSub_ActorUpdate_Town(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy)
 {
+  if(intsub->town_update_req == TOWN_UPDATE_REQ_NONE){
+    if(intcomm->area_occupy_update == TRUE){
+      intsub->town_update_req = TOWN_UPDATE_REQ_UPDATE;
+      intcomm->area_occupy_update = FALSE;
+    }
+  }
+  
+  if(intsub->town_update_req != TOWN_UPDATE_REQ_NONE && intsub->senkyo_eff_bit == 0){
+    _IntSub_TownChangeCheck(intsub, area_occupy, intsub->town_update_req);
+    intsub->town_update_req = FALSE;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 街アクターと占拠情報を比較し、変更があれば対応したアニメに変更、占拠エフェクト起動をする
+ *
+ * @param   intsub		
+ * @param   area_occupy		
+ */
+//--------------------------------------------------------------
+static void _IntSub_TownChangeCheck(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy, u8 update_req)
+{
   int i;
   GFL_CLWK *act;
+  int white_town, black_town;
+  u32 eff_bit;      //占拠エフェクト起動する必要有
+  u32 change_bit;   //街アイコンと占拠情報に相違があった
+  int anmseq;
+  
+  white_town = 0;
+  black_town = 0;
+  eff_bit = 0;
+  change_bit = 0;
   
   for(i = 0; i < INTRUDE_TOWN_MAX; i++){
     act = intsub->act[INTSUB_ACTOR_TOWN_0 + i];
-    if(area_occupy->town.town_occupy[i] == OCCUPY_TOWN_WHITE){
-      GFL_CLACT_WK_SetAnmSeqDiff(act, PALACE_ACT_ANMSEQ_TOWN_W);
-      GFL_CLACT_WK_SetDrawEnable(act, TRUE);
+    anmseq = GFL_CLACT_WK_GetAnmSeq(act);
+    switch(anmseq){
+    case PALACE_ACT_ANMSEQ_TOWN_G:
+      switch(area_occupy->town.town_occupy[i]){
+      case OCCUPY_TOWN_WHITE:
+        white_town++;
+        change_bit |= 1 << i;
+        eff_bit |= 1 << i;
+        break;
+      case OCCUPY_TOWN_BLACK:
+        black_town++;
+        change_bit |= 1 << i;
+        eff_bit |= 1 << i;
+        break;
+      }
+      break;
+    case PALACE_ACT_ANMSEQ_TOWN_W:
+      switch(area_occupy->town.town_occupy[i]){
+      case OCCUPY_TOWN_WHITE:
+        white_town++;
+        break;
+      case OCCUPY_TOWN_BLACK:
+        black_town++;
+        change_bit |= 1 << i;
+        eff_bit |= 1 << i;
+        break;
+      default:
+        change_bit |= 1 << i;
+        break;
+      }
+      break;
+    case PALACE_ACT_ANMSEQ_TOWN_B:
+      switch(area_occupy->town.town_occupy[i]){
+      case OCCUPY_TOWN_WHITE:
+        white_town++;
+        change_bit |= 1 << i;
+        eff_bit |= 1 << i;
+        break;
+      case OCCUPY_TOWN_BLACK:
+        black_town++;
+        break;
+      default:
+        change_bit |= 1 << i;
+        break;
+      }
+      break;
     }
-    else if(area_occupy->town.town_occupy[i] == OCCUPY_TOWN_BLACK){
-      GFL_CLACT_WK_SetAnmSeqDiff(act, PALACE_ACT_ANMSEQ_TOWN_B);
-      GFL_CLACT_WK_SetDrawEnable(act, TRUE);
+  }
+  
+  if(update_req == TOWN_UPDATE_REQ_NOT_EFFECT){
+    eff_bit = 0;
+  }
+  else{
+    if(white_town == INTRUDE_TOWN_MAX || black_town == INTRUDE_TOWN_MAX){
+      for(i = 0; i < INTRUDE_TOWN_MAX; i++){
+        eff_bit |= 1 << i;  //全ての街で占拠エフェクトが出るように全bitをON
+      }
     }
-    else{
-      GFL_CLACT_WK_SetDrawEnable(act, FALSE);
-    }
+  }
+  
+  if(eff_bit > 0){
+    _IntSub_SenkyoEff_Start(intsub, eff_bit);
+    intsub->senkyo_eff_bit |= eff_bit;
+  }
+  if(change_bit > 0){
+    _IntSub_TownActBitChange(intsub, area_occupy, change_bit);
   }
 }
 
@@ -855,7 +954,7 @@ static void _IntSub_ActorUpdate_Town(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SY
 //--------------------------------------------------------------
 static void _IntSub_ActorUpdate_SenkyoEff(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy)
 {
-  return;
+  _IntSub_SenkyoEff_EndWatch(intsub);
 }
 
 //--------------------------------------------------------------
@@ -1111,6 +1210,32 @@ static void _IntSub_ActorUpdate_PointNum(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COM
 //==============================================================================
 //--------------------------------------------------------------
 /**
+ * 侵入しているエリアの占拠情報ポインタを取得する
+ *
+ * @param   intcomm		
+ * @param   intsub		
+ *
+ * @retval  OCCUPY_INFO *		侵入先の占拠情報
+ */
+//--------------------------------------------------------------
+static OCCUPY_INFO * _IntSub_GetArreaOccupy(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub)
+{
+  OCCUPY_INFO *area_occupy;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
+
+  if(intcomm->intrude_status_mine.palace_area == GAMEDATA_GetIntrudeMyID(gamedata)
+      || intcomm->intrude_status_mine.palace_area == PALACE_AREA_NO_NULL){
+    area_occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
+  }
+  else{
+    area_occupy = GAMEDATA_GetOccupyInfo(gamedata, intcomm->intrude_status_mine.palace_area);
+  }
+  
+  return area_occupy;
+}
+
+//--------------------------------------------------------------
+/**
  * プロフィール受信人数を取得
  * @param   intcomm		
  * @retval  u8		プロフィール受信人数
@@ -1248,3 +1373,97 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
     return;
   }
 }
+
+//--------------------------------------------------------------
+/**
+ * 占拠エフェクト開始
+ *
+ * @param   intsub		
+ * @param   eff_bit		エフェクト対象の街(bit管理)
+ */
+//--------------------------------------------------------------
+static void _IntSub_SenkyoEff_Start(INTRUDE_SUBDISP_PTR intsub, u32 eff_bit)
+{
+  GFL_CLWK *act;
+  int i;
+  
+  for(i = 0; i < INTRUDE_TOWN_MAX; i++){
+    if(eff_bit & (1 << i)){
+      act = intsub->act[INTSUB_ACTOR_SENKYO_EFF_0 + i];
+      GFL_CLACT_WK_ResetAnm(act);
+      GFL_CLACT_WK_SetDrawEnable(act, TRUE);
+      GFL_CLACT_WK_SetAutoAnmFlag(act, TRUE);
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 占拠エフェクト終了監視
+ *
+ * @param   intsub		
+ */
+//--------------------------------------------------------------
+static void _IntSub_SenkyoEff_EndWatch(INTRUDE_SUBDISP_PTR intsub)
+{
+  int i;
+  GFL_CLWK *act;
+
+  if(intsub->senkyo_eff_bit > 0){
+    for(i = 0; i < INTRUDE_TOWN_MAX; i++){
+      if(intsub->senkyo_eff_bit & (1 << i)){
+        act = intsub->act[INTSUB_ACTOR_TOWN_0 + i];
+        if(GFL_CLACT_WK_CheckAnmActive( act ) == FALSE){
+          GFL_CLACT_WK_SetDrawEnable(act, FALSE);
+          GFL_CLACT_WK_SetAutoAnmFlag(act, FALSE);
+          intsub->senkyo_eff_bit ^= (1 << i);
+        }
+      }
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 街アイコンの表示を現在のパラメータで更新
+ *
+ * @param   intsub		
+ * @param   town_tblno		
+ */
+//--------------------------------------------------------------
+static void _IntSub_TownActChange(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy, int town_tblno)
+{
+  GFL_CLWK *act = intsub->act[INTSUB_ACTOR_TOWN_0 + town_tblno];
+  
+  if(area_occupy->town.town_occupy[town_tblno] == OCCUPY_TOWN_WHITE){
+    GFL_CLACT_WK_SetAnmSeqDiff(act, PALACE_ACT_ANMSEQ_TOWN_W);
+    GFL_CLACT_WK_SetDrawEnable(act, TRUE);
+  }
+  else if(area_occupy->town.town_occupy[town_tblno] == OCCUPY_TOWN_BLACK){
+    GFL_CLACT_WK_SetAnmSeqDiff(act, PALACE_ACT_ANMSEQ_TOWN_B);
+    GFL_CLACT_WK_SetDrawEnable(act, TRUE);
+  }
+  else{
+    GFL_CLACT_WK_SetDrawEnable(act, FALSE);
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 街アイコンの表示を現在のパラメータで更新(bit指定)
+ *
+ * @param   intsub		
+ * @param   change_bit		
+ */
+//--------------------------------------------------------------
+static void _IntSub_TownActBitChange(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy, u32 change_bit)
+{
+  int i;
+  
+  for(i = 0; i < INTRUDE_TOWN_MAX; i++){
+    if(change_bit & (1 << i)){
+      _IntSub_TownActChange(intsub, area_occupy, i);
+    }
+  }
+}
+

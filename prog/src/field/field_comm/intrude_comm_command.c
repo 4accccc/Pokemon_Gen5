@@ -37,6 +37,7 @@ static void _IntrudeRecv_MissionReq(const int netID, const int size, const void*
 static void _IntrudeRecv_MissionData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MissionAchieve(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MissionResult(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_OccupyInfo(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 //==============================================================================
@@ -59,6 +60,7 @@ const NetRecvFuncTable Intrude_CommPacketTbl[] = {
   {_IntrudeRecv_MissionData, NULL},            //INTRUDE_CMD_MISSION_DATA
   {_IntrudeRecv_MissionAchieve, NULL},         //INTRUDE_CMD_MISSION_ACHIEVE
   {_IntrudeRecv_MissionResult, NULL},          //INTRUDE_CMD_MISSION_RESULT
+  {_IntrudeRecv_OccupyInfo, NULL},             //INTRUDE_CMD_OCCUPY_INFO
 };
 SDK_COMPILER_ASSERT(NELEMS(Intrude_CommPacketTbl) == INTRUDE_CMD_NUM);
 
@@ -570,15 +572,17 @@ static void _IntrudeRecv_MissionReq(const int netID, const int size, const void*
  *
  * @param   intcomm         
  * @param   monolith_type		MONOLITH_TYPE_???
+ * @param   zone_id		      ミニモノリスがあるゾーンID
  *
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL IntrudeSend_MissionReq(INTRUDE_COMM_SYS_PTR intcomm, int monolith_type)
+BOOL IntrudeSend_MissionReq(INTRUDE_COMM_SYS_PTR intcomm, int monolith_type, u16 zone_id)
 {
   MISSION_REQ req;
   
   req.monolith_type = monolith_type;
+  req.zone_id = zone_id;
   return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
     INTRUDE_CMD_MISSION_REQ, sizeof(MISSION_REQ), &req);
 }
@@ -723,6 +727,69 @@ BOOL IntrudeSend_MissionResult(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTE
     INTRUDE_CMD_MISSION_RESULT, sizeof(MISSION_RESULT), &mission->result);
   if(ret == TRUE){
     OS_TPrintf("送信：ミッション結果\n");
+  }
+  return ret;
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：占拠情報
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_OccupyInfo(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  const OCCUPY_INFO *cp_occupy = pData;
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+  OCCUPY_INFO *dest_occupy;
+  
+  if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){ //自分のデータは受け取らない
+    return;
+  }
+  if((intcomm->recv_profile & (1 << netID)) == 0){
+    OS_TPrintf("受信：占拠情報：プロフィール未受信の為、受け取らない recv_profile=%d\n", 
+      intcomm->recv_profile);
+    return;
+  }
+  
+  OS_TPrintf("受信：占拠情報 net_id = %d\n", netID);
+  dest_occupy = GAMEDATA_GetOccupyInfo(gamedata, netID);
+  GFL_STD_MemCopy(cp_occupy, dest_occupy, sizeof(OCCUPY_INFO));
+  
+  if(netID == intcomm->intrude_status_mine.palace_area){
+    intcomm->area_occupy_update = TRUE;
+  }
+}
+
+//==================================================================
+/**
+ * データ送信：占拠情報
+ *
+ * @param   intcomm         
+ * @param   mission         ミッションデータ
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_OccupyInfo(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+  const OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
+  BOOL ret;
+  
+  ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
+    INTRUDE_CMD_OCCUPY_INFO, sizeof(OCCUPY_INFO), occupy);
+  if(ret == TRUE){
+    OS_TPrintf("送信：占拠情報\n");
   }
   return ret;
 }

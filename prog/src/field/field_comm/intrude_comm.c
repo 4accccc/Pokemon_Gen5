@@ -197,6 +197,10 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
     if(intcomm->comm_status == INTRUDE_COMM_STATUS_HARD_CONNECT){
       if( GFL_NET_HANDLE_RequestNegotiation() == TRUE ){
         GAMEDATA_SetIntrudeMyID(gamedata, GFL_NET_SystemGetCurrentID());
+        {//自分のNetIDの箇所に自分のMyStatusをコピーしておく
+          MYSTATUS *net_myst = GAMEDATA_GetMyStatusPlayer(gamedata, GFL_NET_SystemGetCurrentID());
+          MyStatus_Copy(GAMEDATA_GetMyStatus(gamedata), net_myst);
+        }
         intcomm->intrude_status_mine.palace_area = GFL_NET_SystemGetCurrentID();
         OS_TPrintf("ネゴシエーション送信\n");
         (*seq)++;

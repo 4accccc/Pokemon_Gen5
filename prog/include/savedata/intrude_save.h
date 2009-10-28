@@ -16,7 +16,8 @@
 //==============================================================================
 ///占拠情報：街
 typedef struct{
-  u16 town_occupy[INTRUDE_TOWN_MAX];     ///<街の占拠パラメータ
+  ///街の占拠値   (WHITE ---- OCCUPY_TOWN_NEUTRALITY ---- OCCUPY_TOWN_BLACK)
+  u16 town_occupy[INTRUDE_TOWN_MAX];
 }OCCUPY_INFO_TOWN;
 
 ///占拠情報

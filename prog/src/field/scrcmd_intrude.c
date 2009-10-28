@@ -42,15 +42,16 @@
 typedef struct{
   INTRUDE_EVENT_MSGWORK iem;  ///<プリント制御
   BOOL error;                 ///<TRUE:エラー発生
+  u16 zone_id;                ///<ゾーンID
   u8 monolith_type;           ///<モノリスタイプ
-  u8 padding[3];
+  u8 padding;
 }EVENT_MISSION_START;
 
 
 //==============================================================================
 //  プロトタイプ宣言
 //==============================================================================
-static GMEVENT * EVENT_Intrude_MissionStart( GAMESYS_WORK * gsys, u16 monolith_type );
+static GMEVENT * EVENT_Intrude_MissionStart( GAMESYS_WORK * gsys, u16 monolith_type, ZONEID zone_id );
 static GMEVENT_RESULT _event_IntrudeMissionStart( GMEVENT * event, int * seq, void * work );
 
 
@@ -99,10 +100,11 @@ VMCMD_RESULT EvCmdIntrudeMissionStart( VMHANDLE *core, void *wk )
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
   MMDL **mmdl = SCRIPT_GetMemberWork( scw, ID_EVSCR_TARGET_OBJ );  //話しかけ時のみ有効
   u16 obj_code = MMDL_GetOBJCode( *mmdl );
+  ZONEID zone_id = SCRCMD_WORK_GetZoneID( work );
   u16 monolith_type;
   
   monolith_type = (obj_code == BLACKMONOLITH) ? MONOLITH_TYPE_BLACK : MONOLITH_TYPE_WHITE;
-  SCRIPT_CallEvent( scw, EVENT_Intrude_MissionStart(gsys, monolith_type) );
+  SCRIPT_CallEvent( scw, EVENT_Intrude_MissionStart(gsys, monolith_type, zone_id) );
   return VMCMD_RESULT_SUSPEND;
 }
 
@@ -117,7 +119,7 @@ VMCMD_RESULT EvCmdIntrudeMissionStart( VMHANDLE *core, void *wk )
  * @retval  GMEVENT *		
  */
 //--------------------------------------------------------------
-static GMEVENT * EVENT_Intrude_MissionStart( GAMESYS_WORK * gsys, u16 monolith_type )
+static GMEVENT * EVENT_Intrude_MissionStart(GAMESYS_WORK * gsys, u16 monolith_type, ZONEID zone_id)
 {
   GMEVENT *event;
   EVENT_MISSION_START *ems;
@@ -125,6 +127,7 @@ static GMEVENT * EVENT_Intrude_MissionStart( GAMESYS_WORK * gsys, u16 monolith_t
   event = GMEVENT_Create( gsys, NULL, _event_IntrudeMissionStart, sizeof(EVENT_MISSION_START) );
   ems = GMEVENT_GetEventWork( event );
   ems->monolith_type = monolith_type;
+  ems->zone_id = zone_id;
   return event;
 }
 
@@ -176,7 +179,7 @@ static GMEVENT_RESULT _event_IntrudeMissionStart( GMEVENT * event, int * seq, vo
     break;
   case SEQ_MISSION_REQ:
     if(MISSION_RecvCheck(&intcomm->mission) == TRUE || 
-        IntrudeSend_MissionReq(intcomm, ems->monolith_type) == TRUE){
+        IntrudeSend_MissionReq(intcomm, ems->monolith_type, ems->zone_id) == TRUE){
       *seq = SEQ_RECV_WAIT;
     }
     break;
