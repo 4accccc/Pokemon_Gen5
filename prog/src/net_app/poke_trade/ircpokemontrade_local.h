@@ -274,6 +274,7 @@ typedef struct
   float   add;   ///< 変化率
   u16 sins;
   u16 wave;
+  u16 waveNum;
   VecFx32  start;      ///< 開始位置
   VecFx32  end;        ///< 終わり位置
 }_POKEMCSS_MOVE_WORK;

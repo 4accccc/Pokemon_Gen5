@@ -607,7 +607,7 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
 
 //    IRCPOKETRADE_PokeDeleteMcss(pWork, 0);
   //  IRCPOKETRADE_PokeCreateMcss(pWork, 0, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,0) );
-  MCSS_ResetVanishFlag( pWork->pokeMcss[0] );
+    MCSS_ResetVanishFlag( pWork->pokeMcss[0] );
     MCSS_SetPaletteFade( pWork->pokeMcss[0], 0, 0, 0, 0x7fff  );
 
 
@@ -654,12 +654,18 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
 
     }
     pWork->pMoveMcss[0]->wave=1;
+//    pWork->pMoveMcss[0]->waveNum=_WAVE_TIME*2;
     pWork->pMoveMcss[1]->wave=1;
+  //  pWork->pMoveMcss[1]->waveNum=_WAVE_TIME*2;
   }
 
   if(ANMCNTC(_POKE_SIDEIN_START2) == pWork->anmCount){
     _pokeMoveRenew(pWork->pMoveMcss[0],ANMCNTC(_POKE_SIDEIN_TIME2),&pWork->pMoveMcss[0]->end);
     _pokeMoveRenew(pWork->pMoveMcss[1],ANMCNTC(_POKE_SIDEIN_TIME2),&pWork->pMoveMcss[1]->end);
+
+    //pWork->pMoveMcss[0]->waveNum=_WAVE_TIME;
+//    pWork->pMoveMcss[1]->waveNum=_WAVE_TIME;
+
   }
 
   
@@ -1181,7 +1187,8 @@ static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
   pMove->nowcount++;
   if(pMove->time != pMove->nowcount)
   {
-    VecFx32 apos;
+    VecFx32 apos,aposold;
+    MCSS_SetPosition( pMove->pMcss ,&aposold );
 
     
     apos.x = _movemath(pMove->start.x, pMove->end.x ,pMove, FALSE);
@@ -1204,7 +1211,8 @@ static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
    */
 
     if(pMove->wave){
-      pMove->sins += _WAVE_TIME;
+      pMove->sins += ((aposold.x - apos.x) * 30 / FX32_ONE);
+      OS_TPrintf("%x\n",pMove->sins);
     }
     
     MCSS_SetPosition( pMove->pMcss ,&apos );

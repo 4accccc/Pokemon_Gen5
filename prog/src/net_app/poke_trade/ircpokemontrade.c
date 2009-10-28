@@ -92,6 +92,7 @@ static void _cancelPokemonSendDataNetwork(POKEMON_TRADE_WORK* pWork);
 static void _scrollMainFunc(POKEMON_TRADE_WORK* pWork,BOOL bSE, BOOL bNetSend);
 static void _recvCancelPokemon(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _PokemonReset(POKEMON_TRADE_WORK *pWork, int side );
+static void _changeMenuOpen(POKEMON_TRADE_WORK* pWork);
 
 
 
@@ -127,6 +128,30 @@ int IRC_TRADE_LINE2POKEINDEX(int lineno,int verticalindex)
   return -1;
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief   ベクトル計算
+ * @param   POKEMON_TRADE_WORK
+ * @retval  void
+ */
+//------------------------------------------------------------------
+
+static void _vectorUpMath(POKEMON_TRADE_WORK *pWork)
+{
+  u32 x,y;
+  
+
+  {
+    if(GFL_UI_TP_GetPointCont(&x,&y)){   //ベクトルを監視  // 上向き判定
+      if(pWork->y > (y + 7)){   // 上に移動した場合跳ね上げる処理
+        pWork->bUpVec = TRUE;
+      }
+      else{
+        pWork->bUpVec = FALSE;
+      }
+    }
+  }
+}
 
 //------------------------------------------------------------------
 /**
@@ -1254,6 +1279,25 @@ static void _pokeSendDataState(POKEMON_TRADE_WORK* pWork)
 //こうかんにだす、メニュー待ち
 static void _changeMenuWait(POKEMON_TRADE_WORK* pWork)
 {
+
+
+  if((pWork->pCatchCLWK != NULL) && pWork->bUpVec){ //ポケモンを上に登録
+    PMSND_PlaySystemSE(POKETRADESE_UPPOKE);
+
+    pWork->selectIndex = pWork->underSelectIndex;
+    pWork->selectBoxno = pWork->underSelectBoxno;
+    GFL_CLACT_WK_SetDrawEnable( pWork->pSelectCLWK, FALSE);
+    _CHANGE_STATE(pWork, _changeMenuOpen);
+    IRC_POKETRADE_AppMenuClose(pWork);
+    pWork->pAppTask=NULL;
+    _PokemonReset(pWork,0);
+    return;
+  }
+
+  _vectorUpMath(pWork);
+
+
+
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
     IRC_POKETRADE_AppMenuClose(pWork);
@@ -1291,7 +1335,7 @@ static void _changeMenuOpen(POKEMON_TRADE_WORK* pWork)
     int msg[]={POKETRADE_STR_01,POKETRADE_STR_02};
     IRC_POKETRADE_AppMenuOpen(pWork,msg,elementof(msg));
 
-    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 8 );
+   // G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 8 );
 
     _CHANGE_STATE(pWork, _changeMenuWait);
   }
@@ -1432,17 +1476,14 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
         _CatchPokemonPositionRewind(pWork);
       }
     }
-    pWork->bUpVec = FALSE;
     if(GFL_UI_TP_GetPointCont(&x,&y)){   //ベクトルを監視  // 上向き判定
-      if(pWork->y > (y + 10)){   // 上に移動した場合跳ね上げる処理
-        pWork->bUpVec = TRUE;
-      }
       if((y >=  2*8) && ((18*8) > y)){
         pWork->x = x;
         pWork->y = y;
       }
     }
   }
+  _vectorUpMath(pWork);
 
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
     selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
@@ -2159,10 +2200,11 @@ static void _touchStateCommon(POKEMON_TRADE_WORK* pWork)
   BOOL bDecided=FALSE;
   int backBoxNo = pWork->nowBoxno;
 
-
+  // 監視処理
   if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
     pWork->speed=0;
   }
+  _vectorUpMath(pWork);
 
   //キー処理
   _padUDLRFunc(pWork);
@@ -2179,18 +2221,47 @@ static void _touchStateCommon(POKEMON_TRADE_WORK* pWork)
       _CatchPokemonPositionRewind(pWork);
       _CatchPokemonPositionActive(pWork,pWork->pokeIcon[POKETRADE_Line2RingLineIconGet(pWork->MainObjCursorLine)][pWork->MainObjCursorIndex]);
       IRC_POKETRADE_SetCursorXY(pWork);
-//      _scrollMainFunc(pWork,FALSE,FALSE);
       IRC_POKETRADE_CursorEnable(pWork,pWork->MainObjCursorLine,pWork->MainObjCursorIndex);
       bDecided=TRUE;
     }
   }
   
 
+
+  
   if(IsTouchCLACTPosition(pWork,FALSE)){
     //bDecided=TRUE;
   }
 
 
+  if(GFL_UI_TP_GetPointCont(&x,&y)){
+    pWork->x = x;
+    pWork->y = y;
+    pWork->touchON = TRUE;
+  }
+  else{
+    if(pWork->touchON && pWork->bUpVec){
+      pWork->touchON = FALSE;
+      pWork->bUpVec = FALSE;
+      PMSND_PlaySystemSE(POKETRADESE_UPPOKE);
+      pWork->underSelectBoxno  = pWork->workBoxno;
+      pWork->underSelectIndex = pWork->workPokeIndex;
+      pWork->selectIndex = pWork->underSelectIndex;
+      pWork->selectBoxno = pWork->underSelectBoxno;
+      GFL_CLACT_WK_SetDrawEnable( pWork->pSelectCLWK, FALSE);
+      _CHANGE_STATE(pWork, _changeMenuOpen);
+      return;
+    }
+    else if(pWork->touchON && pWork->pCatchCLWK){
+      bDecided = TRUE;
+      pWork->underSelectBoxno = pWork->workBoxno;
+      pWork->underSelectIndex = pWork->workPokeIndex;
+    }
+    pWork->touchON = FALSE;
+    pWork->bUpVec = FALSE;
+  }
+
+  
   if( bDecided ){
     POKEMON_PASO_PARAM* ppp = IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, pWork->underSelectBoxno, pWork->underSelectIndex,pWork);
 
@@ -2217,11 +2288,9 @@ static void _touchStateCommon(POKEMON_TRADE_WORK* pWork)
     }
   }
 
-  if(GFL_UI_TP_GetPointCont(&x,&y)){
-    // パネルスクロール
+  if(GFL_UI_TP_GetPointCont(&x,&y)){     // パネルスクロール
     if((x >=  64) && ((192) > x)){
       if((y >=  152+12) && ((176+12) > y)){
-        if(pWork->touchON){
           pWork->speed = (x - pWork->x)*2;
           pWork->BoxScrollNum -= pWork->speed;
           if(pWork->speed > 12){
@@ -2230,24 +2299,11 @@ static void _touchStateCommon(POKEMON_TRADE_WORK* pWork)
           else{
             _scrollMainFunc(pWork,FALSE,TRUE);
           }
-        }
       }
     }
-    pWork->x = x;
-    pWork->y = y;
-    pWork->touchON = TRUE;
   }
-  else{
-    if(pWork->touchON && pWork->bUpVec){
-      PMSND_PlaySystemSE(POKETRADESE_UPPOKE);
-      pWork->underSelectBoxno  = pWork->workBoxno;
-      pWork->underSelectIndex = pWork->workPokeIndex;
-      pWork->selectIndex = pWork->underSelectIndex;
-      pWork->selectBoxno = pWork->underSelectBoxno;
-      GFL_CLACT_WK_SetDrawEnable( pWork->pSelectCLWK, FALSE);
-      _CHANGE_STATE(pWork, _changeMenuOpen);
-      return;
-    }
+
+  if(GFL_UI_TP_GetCont()==FALSE){  //慣性
     if(pWork->speed!=0){
       int k=2;
       while(k && pWork->speed){
@@ -2262,18 +2318,9 @@ static void _touchStateCommon(POKEMON_TRADE_WORK* pWork)
       pWork->BoxScrollNum -= pWork->speed;
       _scrollMainFunc(pWork,TRUE,TRUE);
     }
-    pWork->touchON = FALSE;
   }
-  {
-    pWork->bUpVec = FALSE;
-    if(GFL_UI_TP_GetPointCont(&x,&y)){   //ベクトルを監視  // 上向き判定
-      if(pWork->y > (y + 10)){   // 上に移動した場合跳ね上げる処理
-        pWork->bUpVec = TRUE;
-      }
-    }
-  }
-
-  TOUCHBAR_Main(pWork->pTouchWork);
+    
+  TOUCHBAR_Main(pWork->pTouchWork);   //タッチバー
   switch( TOUCHBAR_GetTrg(pWork->pTouchWork )){
   case TOUCHBAR_ICON_RETURN:
 
