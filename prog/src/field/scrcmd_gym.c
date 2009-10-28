@@ -63,6 +63,27 @@ VMCMD_RESULT EvCmdGymElec_PushSw( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//--------------------------------------------------------------
+/**
+ * 電気ジムカプセルトレーナー処理ご処理
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymElec_SetTrEncFlg( VMHANDLE *core, void *wk )
+{
+  u8 cap_idx;
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  cap_idx = VMGetU16( core );
+  GYM_ELEC_SetTrEncFlg(gsys, cap_idx);
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //--ノーマル--
 //--------------------------------------------------------------
 /**

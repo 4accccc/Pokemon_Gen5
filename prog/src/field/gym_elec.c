@@ -1232,13 +1232,8 @@ GMEVENT *GYM_ELEC_CreateMoveEvt(GAMESYS_WORK *gsys)
     }
     //カプセル内トレーナーエンカウントチェック
     if ( CheckCapTrEnc(gmk_sv_work, cap_idx) ){
-      //※トレーナーイベントは内部でバトルに移行するので、ワークを保存しておかないと
-      //戻ってきたときに不具合がおきるので、このイベントだけはワークを確保する
-      int *ride_rail_idx;
       //カプセル内トレーナーとのエンカウントイベント作成
-      event = GMEVENT_Create( gsys, NULL, TrEncEvt, sizeof(int) );
-      ride_rail_idx = GMEVENT_GetEventWork( event );
-      *ride_rail_idx = tmp_work->RadeRaleIdx;
+      event = GMEVENT_Create( gsys, NULL, TrEncEvt, 0 );
     }else{
       //次のプラットフォームまでの移動イベントを作成する
       event = GMEVENT_Create( gsys, NULL, CapMoveEvt, 0 );
@@ -1247,6 +1242,28 @@ GMEVENT *GYM_ELEC_CreateMoveEvt(GAMESYS_WORK *gsys)
     return event;
   }
   return NULL;
+}
+
+//--------------------------------------------------------------
+/**
+ * トレーナー戦終了フラグセット
+ * @param	      gsys            ゲームシステムポインタ
+ * @param       inCapIdx        カプセルインデックス
+ * @return      none
+ */
+//--------------------------------------------------------------
+void GYM_ELEC_SetTrEncFlg(GAMESYS_WORK *gsys, const int inCapIdx)
+{
+  GYM_ELEC_SV_WORK *gmk_sv_work;
+  
+  {
+    FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ELEC );
+  }
+  
+  SetCapTrEncFlg(gmk_sv_work, inCapIdx);
 }
 
 //--------------------------------------------------------------
@@ -1297,6 +1314,8 @@ static void SetCapTrEncFlg(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inCapIdx)
   }else if(inCapIdx == 2){
     set =1;
     evt_idx = 1;
+  }else{
+    GF_ASSERT(0);
   }
 
   if (set){
@@ -1574,14 +1593,11 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
   u8 cap_idx;
   u8 obj_idx;
   EXP_OBJ_ANM_CNT_PTR anm;
-  int *ride_rail_idx;
 
-  ride_rail_idx = work;
-
-  GF_ASSERT(*ride_rail_idx != RIDE_NONE);
+  GF_ASSERT(tmp->RadeRaleIdx != RIDE_NONE);
 
   //レールインデックス/2でカプセルインデックスになる
-  cap_idx = (*ride_rail_idx) / 2;
+  cap_idx = (tmp->RadeRaleIdx) / 2;
   obj_idx = OBJ_CAP_1+cap_idx;
 
   anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ELEC_UNIT_IDX, obj_idx, ANM_CAP_OPCL);
@@ -1641,7 +1657,7 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
       //カプセル蓋アニメ止める
       FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
       //カプセル移動アニメ再開
-      anm_idx = ANM_CAP_MOV1 + (*ride_rail_idx);
+      anm_idx = ANM_CAP_MOV1 + tmp->RadeRaleIdx;
       cap_anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ELEC_UNIT_IDX, obj_idx, anm_idx);
       FLD_EXP_OBJ_ChgAnmStopFlg(cap_anm, 0);
 
@@ -1649,14 +1665,19 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
       tmp->TaskWk[cap_idx].Timer = 0;
       gmk_sv_work->StopPlatformIdx[cap_idx] = PLATFORM_NO_STOP;
 
-      //スクリプトコール
-      //※これより下の処理では、バトル復帰後の処理となるためtmpの中身は、初期状態となっていることに注意
+      //スクリプトチェンジ
+/**
       SCRIPT_CallScript( event, SCRID_PRG_C04GYM0101_SCR02,
           NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
+*/
+      SCRIPT_ChangeScript( event, SCRID_PRG_C04GYM0101_SCR02,
+          NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
       (*seq)++;
     }
     break;
   case 5:
+    //※トレーナーバトル負けを考慮し、イベントコールからイベントチェンジに変更したので、ここには来なくなりました。
+#if 0
     //乗降終了
     {
       //↓ここにくるときにセットアップ関数を通るので、明示的な代入は不要だが念のため。
@@ -1664,6 +1685,7 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
       tmp->RadeRaleIdx = RIDE_NONE;
     }
     SetCapTrEncFlg(gmk_sv_work, cap_idx);
+#endif
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;

@@ -377,7 +377,7 @@
 
   DEF_CMD( EvCmdGymNormal_CheckUnrock, EV_SEQ_GYM_NORMAL_CHK_UNROCK )
   DEF_CMD( EvCmdGymNormal_MoveWall, EV_SEQ_GYM_NORMAL_MOVE_WALL )
-  NO_CMD()
+  DEF_CMD( EvCmdGymElec_SetTrEncFlg, EV_SEQ_GYM_ELEC_SET_TR_ENC_FLG )
   NO_CMD()
 
   DEF_CMD( EvCmdGymAnti_Init, EV_SEQ_GYM_ANTI_INIT )
