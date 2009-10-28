@@ -108,7 +108,7 @@ EVENT_START	ev_t01_rival_01
 	ELSE
 		//悪いけど　ホワイティの家まで…
 		_BALLOONWIN_TALKOBJ_OPEN( msg_t01_black_02 )
-		_AB_KEYWAIT()
+		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	ENDIF
 
@@ -163,6 +163,7 @@ EVENT_START ev_pos_t01_stopper_01
 	_OBJ_ANIME_WAIT()
 
 	//先を急ぎたいのは分かるけど…
+	_PLAYER_NAME( 0 )
 	_BALLOONWIN_OBJMSG_OPEN( msg_t01_black_01, T01_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
@@ -187,7 +188,6 @@ _ANIME_LABEL	anm_stopper_player_move_01
 _ANIME_LABEL	anm_stopper_rival_come_01
 	_ANIME_DATA	AC_WALK_R_2F,3
 	_ANIME_DATA	AC_WALK_R_4F,4
-	_ANIME_DATA	AC_STAY_JUMP_R_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
