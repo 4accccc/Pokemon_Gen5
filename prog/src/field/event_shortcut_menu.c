@@ -73,6 +73,7 @@ typedef struct
 	SHORTCUTMENU_WORK			*p_menu;		//ショートカットメニュー
 	EVENT_PROCLINK_PARAM	*p_link;		//リンクイベントパラメータ
 	HEAPID								heapID;			//ヒープID
+	BOOL									is_empty;		//メニューを空にしたフラグ
 } EVENT_SHORTCUTMENU_WORK;
 
 //=============================================================================
@@ -168,7 +169,8 @@ GMEVENT * EVENT_ShortCutMenu( GAMESYS_WORK *p_gamesys, FIELDMAP_WORK *p_fieldmap
   p_wk->p_gamesys		= p_gamesys;
   p_wk->p_event			= p_event;
   p_wk->p_fieldmap	= p_fieldmap;
-  p_wk->heapID = heapID;
+  p_wk->heapID			= heapID;
+	p_wk->is_empty		= FALSE;
 
 	//リンク用パラメータ
 	p_wk->p_link	= GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(EVENT_PROCLINK_PARAM) );
@@ -319,10 +321,16 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 		break;
 
 	case SEQ_EVENT_RETURN:
-
 		if( p_wk->p_link->result == EVENT_PROCLINK_RESULT_RETURN )
 		{
-			*p_seq	= SEQ_RESTART;
+			if( p_wk->is_empty )
+			{	
+				*p_seq	= SEQ_EXIT;
+			}
+			else
+			{	
+				*p_seq	= SEQ_RESTART;
+			}
 		}
 		else if( p_wk->p_link->result == EVENT_PROCLINK_RESULT_EXIT )
 		{	
@@ -448,7 +456,6 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
 		break;
 
 	case SEQ_EVENT_RETURN:
-
 		if( p_wk->p_link->result == EVENT_PROCLINK_RESULT_RETURN )
 		{
 			*p_seq	= SEQ_EXIT;
@@ -602,7 +609,7 @@ static CALLTYPE ShortCutMenu_SetCallType( EVENT_PROCLINK_PARAM *p_param, SHORTCU
 //-----------------------------------------------------------------------------
 static void ShortCutMenu_Init( SHORTCUTMENU_MODE mode, EVENT_SHORTCUTMENU_WORK *p_wk )
 {	
-	if( p_wk->p_menu == NULL )
+	if( p_wk->p_menu == NULL && p_wk->is_empty == FALSE )
 	{	
 		{	
 			FLDMSGBG *p_msgbg;
@@ -627,7 +634,7 @@ static void ShortCutMenu_Init( SHORTCUTMENU_MODE mode, EVENT_SHORTCUTMENU_WORK *
 //-----------------------------------------------------------------------------
 static void ShortCutMenu_Exit( EVENT_SHORTCUTMENU_WORK *p_wk )
 {	
-	if( p_wk->p_menu != NULL )
+	if( p_wk->p_menu != NULL && p_wk->is_empty == FALSE )
 	{
 		//SHORTCUTを破棄し、MSGBGを作成
 		FLDMSGBG *p_msgbg;
@@ -655,7 +662,23 @@ static void ShortCutMenu_Exit( EVENT_SHORTCUTMENU_WORK *p_wk )
 static void ShortCutMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs )
 {	
 	EVENT_SHORTCUTMENU_WORK *p_wk	= wk_adrs;
-	ShortCutMenu_Init( SHORTCUTMENU_MODE_STAY, p_wk );
+
+	GAMEDATA					*p_gdata;
+	SAVE_CONTROL_WORK	*p_sv;
+	const SHORTCUT		*cp_shortcut;
+
+	p_gdata	= GAMESYSTEM_GetGameData( p_wk->p_gamesys );
+	p_sv		= GAMEDATA_GetSaveControlWork( p_gdata );
+	cp_shortcut	= SaveData_GetShortCutConst( p_sv );
+
+	if( SHORTCUT_GetMax( cp_shortcut ) == 0 )
+	{	
+		p_wk->is_empty		=	TRUE;
+	}
+	else
+	{	
+		ShortCutMenu_Init( SHORTCUTMENU_MODE_STAY, p_wk );
+	}
 }
 //----------------------------------------------------------------------------
 /**

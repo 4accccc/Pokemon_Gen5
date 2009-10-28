@@ -845,6 +845,23 @@ static void Scroll_CreateList( SCROLL_WORK *p_wk, u16 list_bak, u16 cursor_bak, 
 		}
 	}
 
+	//カーソルの座標を修正
+	while( (cursor_bak + list_bak) >= max )
+	{	
+		if( cursor_bak > 0 )
+		{	
+			cursor_bak--;
+		}
+		else if( list_bak > 0 )
+		{	
+			list_bak--;
+		}
+		else
+		{
+			GF_ASSERT_MSG( 0, "shortcut_menuのmax=%d cursor %d list %d \n", max, cursor_bak, list_bak );
+		}
+	}
+
 	//リストメイン作成
 	{	
 		static const BMPMENULIST_HEADER sc_menulist_default	=
