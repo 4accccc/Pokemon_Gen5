@@ -56,8 +56,8 @@ void GYM_INIT_Elec(GAMESYS_WORK *gsys, const u16 inEvtFlgBtl1, const u16 inEvtFl
 //--------------------------------------------------------------
 /**
  * ノーマルジム初期化
- * @param	
- * @return
+ * @param	    gsys    ゲームシステムポインタ
+ * @return    none
  */
 //--------------------------------------------------------------
 void GYM_INIT_Normal(GAMESYS_WORK *gsys)
@@ -100,8 +100,8 @@ void GYM_INIT_Normal(GAMESYS_WORK *gsys)
 //--------------------------------------------------------------
 /**
  * アンチジム初期化
- * @param	
- * @return
+ * @param	    gsys    ゲームシステムポインタ
+ * @return    none
  */
 //--------------------------------------------------------------
 void GYM_INIT_Anti(GAMESYS_WORK *gsys)
@@ -123,8 +123,8 @@ void GYM_INIT_Anti(GAMESYS_WORK *gsys)
 //--------------------------------------------------------------
 /**
  * 飛行ジム初期化
- * @param	
- * @return
+ * @param	    gsys    ゲームシステムポインタ
+ * @return    none
  */
 //--------------------------------------------------------------
 void GYM_INIT_Fly(GAMESYS_WORK *gsys)

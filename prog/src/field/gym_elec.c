@@ -522,8 +522,9 @@ static u8 dbg_count = 0;
 //--------------------------------------------------------------
 /**
  * 現在座標からプラットホームインデックスを取得する
- * @param	
- * @return
+ * @param	    inX     Ｘ座標
+ * @param     inZ     Ｚ座標
+ * @return    u8      プラットフォームインデックス    存在しない場合はPLATFORM_NONE
  */
 //--------------------------------------------------------------
 static u8 GetPlatformIdx(const int inX, const int inZ)
@@ -541,8 +542,9 @@ static u8 GetPlatformIdx(const int inX, const int inZ)
 //--------------------------------------------------------------
 /**
  * カプセルのインデックスを渡し、セーブデータから走行中のレールインデックスを取得する
- * @param	
- * @return
+ * @param       gmk_sv_work   電気ジムセーブワークポインタ
+ * @param       inCapIdx      カプセルインデックス
+ * @return      u8            レールインデックス
  */
 //--------------------------------------------------------------
 static u8 GetRaleIdxByCapIdx(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inCapIdx)
@@ -554,8 +556,8 @@ static u8 GetRaleIdxByCapIdx(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inCapIdx)
 //--------------------------------------------------------------
 /**
  * セットアップ関数
- * @param	
- * @return
+ * @param	      fieldWork     フィールドワークポインタ
+ * @return      none
  */
 //--------------------------------------------------------------
 void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
@@ -716,8 +718,9 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
 //--------------------------------------------------------------
 /**
  * カプセル監視ＴＣＢ
- * @param	
- * @return
+ * @param	    tcb       TCBポインタ
+ * @param     work      ワークポインタ
+ * @return    none
  */
 //--------------------------------------------------------------
 static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
@@ -834,8 +837,8 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
 //--------------------------------------------------------------
 /**
  * 解放関数
- * @param	
- * @return
+ * @param	      fieldWork     フィールドワークポインタ
+ * @return      none
  */
 //--------------------------------------------------------------
 void GYM_ELEC_End(FIELDMAP_WORK *fieldWork)
@@ -855,8 +858,8 @@ void GYM_ELEC_End(FIELDMAP_WORK *fieldWork)
 //--------------------------------------------------------------
 /**
  * 動作関数
- * @param	
- * @return
+ * @param	      fieldWork     フィールドワークポインタ
+ * @return      none
  */
 //--------------------------------------------------------------
 void GYM_ELEC_Move(FIELDMAP_WORK *fieldWork)
@@ -934,8 +937,9 @@ void GYM_ELEC_Move(FIELDMAP_WORK *fieldWork)
 //--------------------------------------------------------------
 /**
  * 指定プラットホームの現在のレールインデックスを取得
- * @param	
- * @return
+ * @param	      gmk_sv_work     電気ジムセーブワークポインタ
+ * @param       inPlatformIdx   プラットフォームインデックス
+ * @return      u8              レールインデックス
  */
 //--------------------------------------------------------------
 static u8 GetRaleIdxByPlatformIdx(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inPlatformIdx)
@@ -953,8 +957,8 @@ static u8 GetRaleIdxByPlatformIdx(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inPlat
 //--------------------------------------------------------------
 /**
  * プラットフォームインデックスからカプセルインデックスを取得
- * @param	
- * @return
+ * @param	        inPlatformIdx     プラットフォームインデックス
+ * @return        u8                カプセルインデックス
  */
 //--------------------------------------------------------------
 static u8 GetCapIdxByPlatformIdx(const u8 inPlatformIdx)
@@ -968,8 +972,9 @@ static u8 GetCapIdxByPlatformIdx(const u8 inPlatformIdx)
 //--------------------------------------------------------------
 /**
  * 指定プラットホームにカプセルが停車しているかを調べる
- * @param	
- * @return
+ * @param	      gmk_sv_work     電気ジムセーブワークポインタ
+ * @param       inPlatformIdx   プラットフォームインデックス
+ * @return      BOOL    TRUEで停止
  */
 //--------------------------------------------------------------
 static BOOL IsStopCapsuleToPlatForm(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inPlatformIdx)
@@ -1001,8 +1006,10 @@ static BOOL IsStopCapsuleToPlatForm(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inPl
 //--------------------------------------------------------------
 /**
  * 指定レールの現在アニメフレームを取得
- * @param	
- * @return
+ * @param   ptr       拡張ＯＢＪ管理ポインタ
+ * @param   inObjIdx  ＯＢＪインデックス
+ * @param   inAnmIdx  アニメインデックス
+ * @return  fx32      フレーム
  */
 //--------------------------------------------------------------
 static fx32 GetAnimeFrame(FLD_EXP_OBJ_CNT_PTR ptr, const u16 inObjIdx, const u16 inAnmIdx)
@@ -1037,8 +1044,9 @@ static void SetAnimeFrame(FLD_EXP_OBJ_CNT_PTR ptr, const u16 inObjIdx, const u16
 //--------------------------------------------------------------
 /**
  * レバーの切り替えを行うイベント起動
- * @param	
- * @return
+ * @param         gsys        ゲームシステムポインタ
+ * @param         inLeverIdx  スイッチインデックス
+ * @return        event       イベントポインタ
  */
 //--------------------------------------------------------------
 GMEVENT *GYM_ELEC_ChangePoint(GAMESYS_WORK *gsys, const u8 inLeverIdx)
@@ -1069,8 +1077,10 @@ GMEVENT *GYM_ELEC_ChangePoint(GAMESYS_WORK *gsys, const u8 inLeverIdx)
 //--------------------------------------------------------------
 /**
  * レバーの切り替えイベント
- * @param	
- * @return
+ * @param     event	            イベントポインタ
+ * @param     seq               シーケンサ
+ * @param     work              ワークポインタ
+ * @return    GMEVENT_RESULT   イベント結果
  */
 //--------------------------------------------------------------
 static GMEVENT_RESULT ChangePointEvt( GMEVENT* event, int* seq, void* work )
@@ -1160,8 +1170,8 @@ static GMEVENT_RESULT ChangePointEvt( GMEVENT* event, int* seq, void* work )
 //--------------------------------------------------------------
 /**
  * プラットホーム間を移動している間のイベント
- * @param	
- * @return
+ * @param	      gsys        ゲームシステムポインタ
+ * @return      event       イベントポインタ
  */
 //--------------------------------------------------------------
 GMEVENT *GYM_ELEC_CreateMoveEvt(GAMESYS_WORK *gsys)
@@ -1238,8 +1248,9 @@ GMEVENT *GYM_ELEC_CreateMoveEvt(GAMESYS_WORK *gsys)
 //--------------------------------------------------------------
 /**
  * トレーナー戦チェック
- * @param	
- * @return
+ * @param	      gmk_sv_work     電気ジムセーブワークポインタ
+ * @param       inCapIdx        カプセルインデックス	
+ * @return      BOOL            TRUEで未戦闘
  */
 //--------------------------------------------------------------
 static BOOL CheckCapTrEnc(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inCapIdx)
@@ -1266,8 +1277,9 @@ static BOOL CheckCapTrEnc(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inCapIdx)
 //--------------------------------------------------------------
 /**
  * トレーナー戦終了フラグセット
- * @param	
- * @return
+ * @param	      gmk_sv_work     電気ジムセーブワークポインタ
+ * @param       inCapIdx        カプセルインデックス
+ * @return      none
  */
 //--------------------------------------------------------------
 static void SetCapTrEncFlg(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inCapIdx)
@@ -1291,8 +1303,10 @@ static void SetCapTrEncFlg(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inCapIdx)
 //--------------------------------------------------------------
 /**
  * カプセル移動イベント
- * @param	
- * @return
+ * @param     event	            イベントポインタ
+ * @param     seq               シーケンサ
+ * @param     work              ワークポインタ
+ * @return    GMEVENT_RESULT   イベント結果
  */
 //--------------------------------------------------------------
 static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
@@ -1539,8 +1553,10 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
 //--------------------------------------------------------------
 /**
  * トレーナー戦イベント
- * @param	
- * @return
+ * @param     event	            イベントポインタ
+ * @param     seq               シーケンサ
+ * @param     work              ワークポインタ
+ * @return    GMEVENT_RESULT   イベント結果
  */
 //--------------------------------------------------------------
 static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
@@ -1645,8 +1661,9 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
 //--------------------------------------------------------------
 /**
  * レール変更
- * @param	
- * @return
+ * @param   fieldWork         フィールドワークポインタ
+ * @param   ptr               拡張ＯＢＪ管理ポインタ
+ * @return  none
  */
 //--------------------------------------------------------------
 static void ChgRale(FIELDMAP_WORK *fieldWork, FLD_EXP_OBJ_CNT_PTR ptr)
@@ -1688,8 +1705,10 @@ static void ChgRale(FIELDMAP_WORK *fieldWork, FLD_EXP_OBJ_CNT_PTR ptr)
 //--------------------------------------------------------------
 /**
  * レールアニメ変更
- * @param	
- * @return
+ * @param   ptr         拡張ＯＢＪ管理ポインタ
+ * @param   inSw        スイッチフラグ
+ * @param   inCapIdx    カプセルインデックス
+ * @return  none
  */
 //--------------------------------------------------------------
 static void ChgRaleAnm(FLD_EXP_OBJ_CNT_PTR ptr, const u8 inSw, const u8 inCapIdx)
@@ -1726,8 +1745,10 @@ static void ChgRaleAnm(FLD_EXP_OBJ_CNT_PTR ptr, const u8 inSw, const u8 inCapIdx
 //--------------------------------------------------------------
 /**
  * 停止すべきフレームか？
- * @param	
- * @return
+ * @param	    inRaleInx       レールインデックス
+ * @param     inFrm           指定フレーム
+ * @param     outStopIdx      停止するプラットフォームインデックス格納バッファ
+ * @return    BOOL            停止すべきフレームのときTRUE
  */
 //--------------------------------------------------------------
 static BOOL CheckCapStopFrame(const u8 inRaleIdx, const fx32 inFrm, u8 *outStopIdx)
@@ -1746,8 +1767,10 @@ static BOOL CheckCapStopFrame(const u8 inRaleIdx, const fx32 inFrm, u8 *outStopI
 //--------------------------------------------------------------
 /**
  * 即レールアニメ切り替えできるか？
- * @param	
- * @return
+ * @param	    ptr             拡張ＯＢＪ管理ポインタ
+ * @param     inCapIdx        カプセルインデックス
+ * @param     inRraleIdx      レールインデックス
+ * @return    BOOL  TRUEで可
  */
 //--------------------------------------------------------------
 static BOOL CheckChangableRaleAtOnce(FLD_EXP_OBJ_CNT_PTR ptr, const u8 inCapIdx, const u8 inRaleIdx)
@@ -1775,8 +1798,9 @@ static BOOL CheckChangableRaleAtOnce(FLD_EXP_OBJ_CNT_PTR ptr, const u8 inCapIdx,
 //--------------------------------------------------------------
 /**
  * レバーの切り替えを行うイベント起動
- * @param	
- * @return
+ * @param	      gsys    ゲームシステムポインタ
+ * @param       inLeverIdx  レバーインデックス
+ * @return      BOOL TRUE 
  */
 //--------------------------------------------------------------
 BOOL test_GYM_ELEC_ChangePoint(GAMESYS_WORK *gsys, const u8 inLeverIdx)
@@ -1805,8 +1829,8 @@ BOOL test_GYM_ELEC_ChangePoint(GAMESYS_WORK *gsys, const u8 inLeverIdx)
 //--------------------------------------------------------------
 /**
  * プラットホーム間を移動している間のイベント
- * @param	
- * @return
+ * @param   gsys	ゲームシステムポインタ
+ * @return  BOOL    イベントセットした場合TRUE
  */
 //--------------------------------------------------------------
 BOOL test_GYM_ELEC_CallMoveEvt(GAMESYS_WORK *gsys)
