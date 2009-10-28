@@ -95,6 +95,7 @@ EVENT_START   ev_pos_c02_rival_01
 	//ライバルポケセンについて喋る
 	//このまま　まっすぐ　すすめば
 	_BALLOONWIN_OBJMSG_OPEN( msg_c02_black_02, C02_RIVAL_02 )
+	_LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
 	
 	//ライバルが画面端に消えていく
@@ -172,7 +173,7 @@ _ANIME_LABEL	anm_rival_01_saru
 /**************************************************************/
 EVENT_START   ev_pos_c02_boss_01
 	
-	_OBJ_ADD_EX( 625, 599, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, BOSS, MV_DMY )
+	_OBJ_ADD_EX( 636, 588, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, BOSS, MV_DMY )
 	
 	//プレイヤーがNにきづく
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_02_kiduku)
@@ -279,7 +280,7 @@ _ANIME_LABEL	anm_player_02_turn
 _ANIME_LABEL	anm_boss_01_walk_01
 
 	_ANIME_DATA	AC_WALK_R_8F,8
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 	
 	
