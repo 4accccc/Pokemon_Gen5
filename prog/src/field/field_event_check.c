@@ -706,6 +706,12 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
     if( event != NULL ){
       return event;
     }
+
+    //汎用一歩移動イベントチェック群
+    event = checkMoveEvent(&req, fieldWork);
+    if ( event != NULL) {
+      return event;
+    }
   }
 
 
