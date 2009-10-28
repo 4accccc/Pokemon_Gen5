@@ -353,7 +353,32 @@ void Intrude_SetPlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INT
   if(net_id != GFL_NET_SystemGetCurrentID()){
     Intrude_ConvertPlayerPos(intcomm, &intcomm->intrude_status_mine, target_status);
   }
-
+  
+  //侵入エリアの違いによるアクター表示・非表示設定
+  if(net_id != GFL_NET_SystemGetCurrentID()){
+    INTRUDE_STATUS *mine_st = &intcomm->intrude_status_mine;
+    
+    //お互いパレス島に居るなら表示
+    if(ZONEDATA_IsPalace(target_status->zone_id) == TRUE && ZONEDATA_IsPalace(mine_st->zone_id) == TRUE){
+      target_status->player_pack.vanish = FALSE;
+    }
+    else if(target_status->palace_area == PALACE_AREA_NO_NULL){
+      //相手プレイヤーは表フィールドにいる
+      if(mine_st->palace_area == net_id){ //侵入先が相手のROMなので表示
+        target_status->player_pack.vanish = FALSE;
+      }
+      else{ //侵入先が相手のROMでないなら非表示
+        target_status->player_pack.vanish = TRUE;
+      }
+    }
+    else if(target_status->palace_area == mine_st->palace_area){
+      //お互い裏フィールドの場合は同じ侵入先なら表示
+      target_status->player_pack.vanish = FALSE;
+    }
+    else{ //お互い裏フィールドだが侵入先が違うので非表示
+      target_status->player_pack.vanish = TRUE;
+    }
+  }
 #if 0 //違うゾーンでも表示するように変わった 2009.10.21(水)
   {//ゾーン違いによるアクター表示・非表示設定
     PLAYER_WORK *my_player = GAMEDATA_GetMyPlayerWork(GameCommSys_GetGameData(intcomm->game_comm));

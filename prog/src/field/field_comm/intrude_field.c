@@ -477,6 +477,7 @@ static void DEBUG_PalaceMapInCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
       break;
     }
     
+  #if 0 //パレス島にいるなら橋とか関係なく通信開始になった 2009.10.28(水)
     {
       VecFx32 pos;
       
@@ -487,6 +488,7 @@ static void DEBUG_PalaceMapInCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
         return;
       }
     }
+  #endif
     
     //ビーコンサーチ状態でパレスに入ってきた場合
     if(ZONEDATA_IsPalace(zone_id) == TRUE && comm_no == GAME_COMM_NO_FIELD_BEACON_SEARCH){
