@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-10-28T15:29:53" source="kakidasi3.ma"/>
+	<create user="fujiwara_maiko" host="W00194" date="2009-10-28T21:40:55" source="kakidasi5.ma"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2009-10-28T15:29:53" source="kakidasi3.ma"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2009-10-28T21:40:55" source="kakidasi5.ma"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -2734,19 +2734,19 @@
 					<mtx idx="0"/>
 					<tex st="-1.312500 19.500000"/>
 					<nrm xyz="0.998047 0.000000 0.000000"/>
-					<pos_xyz xyz="-0.234375 0.175781 0.758545"/>
+					<pos_xyz xyz="-0.234375 0.175781 0.664795"/>
 					<tex st="-16.750000 19.500000"/>
 					<pos_xy xy="-0.234375 0.457031"/>
-					<pos_xz xz="-0.234375 0.801758"/>
+					<pos_xz xz="-0.234375 0.708008"/>
 					<tex st="-1.375000 19.500000"/>
 					<pos_xy xy="-0.234375 0.175781"/>
 					<tex st="0.375000 9.937500"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_xy xy="-0.234375 0.457031"/>
-					<pos_xz xz="-0.234375 0.758545"/>
+					<pos_xz xz="-0.234375 0.664795"/>
 					<tex st="0.375000 8.187500"/>
 					<pos_xy xy="-2.006836 0.457031"/>
-					<pos_xz xz="-2.006836 0.801758"/>
+					<pos_xz xz="-2.006836 0.708008"/>
 					<tex st="-1.375000 19.500000"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_xy xy="-0.234375 0.175781"/>
@@ -3785,7 +3785,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface937" kind="mesh"
+	<node index="0" name="polySurface939" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
