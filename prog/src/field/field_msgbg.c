@@ -45,6 +45,14 @@ extern GFL_BMPWIN * TALKMSGWIN_GetBmpWin( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwi
 
 #define FLDMSGBG_CHAROFFS_TALKMSGWIN (32) ///<TALKWINMSGキャラオフセット
 
+enum
+{
+  CURSOR_FLAG_NONE = 0,
+  CURSOR_FLAG_WRITE,
+  CURSOR_FLAG_END,
+};
+
+
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -138,6 +146,10 @@ struct _TAG_FLDMSGWIN_STREAM
   const GFL_MSGDATA *msgData; //ユーザーから
   STRBUF *strBuf;
 	FLDMSGBG *fmb;
+  
+  u8 flag_cursor;
+  u8 flag_key_pause_clear;
+  KEYCURSOR_WORK cursor_work;
 };
  
 //======================================================================
@@ -145,6 +157,9 @@ struct _TAG_FLDMSGWIN_STREAM
 //======================================================================
 static void FldMenuFuncH_BmpMenuListH(
 	BMPMENULIST_HEADER *menuH, const FLDMENUFUNC_HEADER *fmenuH );
+
+static PRINTSTREAM_STATE fldMsgPrintStream_ProcPrint(
+    FLDMSGPRINT_STREAM *stm );
 
 static void keyCursor_Init( KEYCURSOR_WORK *work, HEAPID heapID );
 static void keyCursor_Delete( KEYCURSOR_WORK *work );
@@ -1346,10 +1361,11 @@ void FLDMSGPRINT_STREAM_Delete( FLDMSGPRINT_STREAM *stm )
 /**
  * FLDMSGPRINT_STREAM プリント
  * @param stm 
- * @retval BOOL TRUE=終了
+ * @retval PRINTSTREAM_STATE
  */
 //--------------------------------------------------------------
-BOOL FLDMSGPRINT_STREAM_ProcPrint( FLDMSGPRINT_STREAM *stm )
+static PRINTSTREAM_STATE fldMsgPrintStream_ProcPrint(
+    FLDMSGPRINT_STREAM *stm )
 {
   int trg,cont;
   PRINTSTREAM_STATE state;
@@ -1371,13 +1387,32 @@ BOOL FLDMSGPRINT_STREAM_ProcPrint( FLDMSGPRINT_STREAM *stm )
     }
     break;
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
-    if( (trg & PAD_BUTTON_A) ){
+    if( (trg & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
       PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
       PRINTSYS_PrintStreamReleasePause( stm->printStream );
       stm->flag_key_trg = FALSE;
     }
     break;
   case PRINTSTREAM_STATE_DONE: //終了
+    break;
+  }
+  
+  return( state );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMSGPRINT_STREAM プリント
+ * @param stm 
+ * @retval BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+BOOL FLDMSGPRINT_STREAM_ProcPrint( FLDMSGPRINT_STREAM *stm )
+{
+  PRINTSTREAM_STATE state;
+  state = fldMsgPrintStream_ProcPrint( stm );
+  
+  if( state == PRINTSTREAM_STATE_DONE ){ //終了
     return( TRUE );
   }
   
@@ -1415,6 +1450,8 @@ FLDMSGWIN_STREAM * FLDMSGWIN_STREAM_Add(
       bmppos_x, bmppos_y, bmpsize_x, bmpsize_y, fmb->deriveWin_plttNo );
   msgWin->strBuf = GFL_STR_CreateBuffer( FLDMSGBG_STRLEN, fmb->heapID );
   
+  keyCursor_Init( &msgWin->cursor_work, fmb->heapID );
+
   FLDMSGBG_SetBlendAlpha();
   return( msgWin );
 }
@@ -1440,6 +1477,7 @@ void FLDMSGWIN_STREAM_Delete( FLDMSGWIN_STREAM *msgWin )
   }
 
   GFL_STR_DeleteBuffer( msgWin->strBuf );
+  keyCursor_Delete( &msgWin->cursor_work );
 	GFL_HEAP_FreeMemory( msgWin );
 }
 
@@ -1497,11 +1535,52 @@ void FLDMSGWIN_STREAM_PrintStrBufStart(
 //--------------------------------------------------------------
 BOOL FLDMSGWIN_STREAM_Print( FLDMSGWIN_STREAM *msgWin )
 {
+#if 0
   if( FLDMSGPRINT_STREAM_ProcPrint(msgWin->msgPrintStream) == TRUE ){
     return( TRUE );
   }
   
   return( FALSE );
+#else
+  int trg,cont;
+  PRINTSTREAM_STATE state;
+  state = fldMsgPrintStream_ProcPrint( msgWin->msgPrintStream );
+  
+  trg = GFL_UI_KEY_GetTrg();
+  cont = GFL_UI_KEY_GetCont();
+
+  switch( state ){
+  case PRINTSTREAM_STATE_RUNNING: //実行中
+    msgWin->flag_cursor = CURSOR_FLAG_NONE;
+    msgWin->flag_key_pause_clear = FALSE;
+    break;
+  case PRINTSTREAM_STATE_PAUSE: //一時停止中
+    if( msgWin->flag_key_pause_clear == FALSE ){ //既にポーズクリア済みか？
+		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( msgWin->bmpwin );
+      
+      if( (trg & PAD_BUTTON_A) ){
+        if( msgWin->flag_cursor == CURSOR_FLAG_WRITE ){
+          keyCursor_Clear( &msgWin->cursor_work, bmp, 0x0f );
+          
+          msgWin->flag_key_pause_clear = TRUE;
+          msgWin->flag_cursor = CURSOR_FLAG_END;
+        }
+      }
+      
+      if( msgWin->flag_cursor != CURSOR_FLAG_END ){
+        keyCursor_Write( &msgWin->cursor_work, bmp, 0x0f );
+        msgWin->flag_cursor = CURSOR_FLAG_WRITE;
+      }
+      
+		  GFL_BMPWIN_TransVramCharacter( msgWin->bmpwin );
+    }
+    break;
+  case PRINTSTREAM_STATE_DONE: //終了
+    return( TRUE );
+  }
+  
+  return( FALSE );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -1596,13 +1675,6 @@ BOOL FLDMSGWIN_STREAM_CheckAllPrintTrans( FLDMSGWIN_STREAM *msgWin )
 //======================================================================
 //  FLDTALKMSGWIN
 //======================================================================
-enum
-{
-  CURSOR_FLAG_NONE = 0,
-  CURSOR_FLAG_WRITE,
-  CURSOR_FLAG_END,
-};
-
 //--------------------------------------------------------------
 /// FLDTALKMSGWIN
 //--------------------------------------------------------------
