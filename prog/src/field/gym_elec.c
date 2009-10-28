@@ -509,6 +509,8 @@ static void SetCapTrEncFlg(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inCapIdx);
 #ifdef PM_DEBUG
 BOOL test_GYM_ELEC_ChangePoint(GAMESYS_WORK *gsys, const u8 inLeverIdx);
 BOOL test_GYM_ELEC_CallMoveEvt(GAMESYS_WORK *gsys);
+static u8 dbg_frame_slow = 0;
+static u8 dbg_count = 0;
 #endif  //PM_DEBUG
 
 //--------------------------------------------------------------
@@ -633,21 +635,6 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
     status->trans = pos;
   }
 
-
-
-
-  //セーブされているデータで、アニメーションの頭出し
-#if 0
-  {
-    //レバー1回再生設定
-    EXP_OBJ_ANM_CNT_PTR anm;
-    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ELEC_UNIT_IDX, 4, 0);
-    FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
-    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ELEC_UNIT_IDX, 4, 1);
-    FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
-    FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_ELEC_UNIT_IDX, 4, 1, FALSE);
-  }
-#endif  
   //カプセル・スイッチ初期アニメ決定
   {
     u8 i;
@@ -718,23 +705,15 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
   //イベント未起動状態セット
   tmp->RideEvt = -1;
   tmp->RadeRaleIdx = RIDE_NONE;
-
-/**   //@todo
-  //イニット関数に入れる処理　今だけここにおく
-  {
-    gmk_sv_work->NowRaleIdx[0] = 0;
-    gmk_sv_work->NowRaleIdx[1] = 2;
-    gmk_sv_work->NowRaleIdx[2] = 4;
-    gmk_sv_work->NowRaleIdx[3] = 6;
-
-    gmk_sv_work->StopPlatformIdx[0] = PLATFORM_NO_STOP;
-    gmk_sv_work->StopPlatformIdx[1] = PLATFORM_NO_STOP;
-    gmk_sv_work->StopPlatformIdx[2] = PLATFORM_NO_STOP;
-    gmk_sv_work->StopPlatformIdx[3] = PLATFORM_NO_STOP;
-  }
-*/  
 }
 
+//--------------------------------------------------------------
+/**
+ * カプセル監視ＴＣＢ
+ * @param	
+ * @return
+ */
+//--------------------------------------------------------------
 static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
 {
   u8 i;
@@ -867,11 +846,6 @@ void GYM_ELEC_End(FIELDMAP_WORK *fieldWork)
 
 }
 
-#ifdef PM_DEBUG
-static u8 dbg_frame_slow = 0;
-static u8 dbg_count = 0;
-#endif
-
 //--------------------------------------------------------------
 /**
  * 動作関数
@@ -970,6 +944,13 @@ static u8 GetRaleIdxByPlatformIdx(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inPlat
   return rale_idx;
 }
 
+//--------------------------------------------------------------
+/**
+ * プラットフォームインデックスからカプセルインデックスを取得
+ * @param	
+ * @return
+ */
+//--------------------------------------------------------------
 static u8 GetCapIdxByPlatformIdx(const u8 inPlatformIdx)
 {
   u8 cap_idx;
@@ -1248,6 +1229,13 @@ GMEVENT *GYM_ELEC_CreateMoveEvt(GAMESYS_WORK *gsys)
   return NULL;
 }
 
+//--------------------------------------------------------------
+/**
+ * トレーナー戦チェック
+ * @param	
+ * @return
+ */
+//--------------------------------------------------------------
 static BOOL CheckCapTrEnc(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inCapIdx)
 {
   u8 check = 0;   //チェックフラグ 1でチェック処理する
@@ -1269,6 +1257,13 @@ static BOOL CheckCapTrEnc(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inCapIdx)
   return FALSE;
 }
 
+//--------------------------------------------------------------
+/**
+ * トレーナー戦終了フラグセット
+ * @param	
+ * @return
+ */
+//--------------------------------------------------------------
 static void SetCapTrEncFlg(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inCapIdx)
 {
   u8 set = 0;   //チェックフラグ 1でセット処理する
@@ -1287,7 +1282,13 @@ static void SetCapTrEncFlg(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inCapIdx)
   }
 }
 
-
+//--------------------------------------------------------------
+/**
+ * カプセル移動イベント
+ * @param	
+ * @return
+ */
+//--------------------------------------------------------------
 static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
 {
   GYM_ELEC_SV_WORK *gmk_sv_work;
@@ -1347,16 +1348,7 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       if (frame >= CAP_OPEN_FRAME){
         //カプセル開くアニメ止める
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
-#if 0        
-        //主人公カプセルに入るアニメ(上に移動)
-        {
-          MMDL * mmdl;
-          mmdl = FIELD_PLAYER_GetMMdl( FIELDMAP_GetFieldPlayer( fieldWork ) );
-          tmp->AnmTcb = MMDL_SetAcmdList( mmdl, anime_up_table);
-        }
-#endif
         //自機がカプセルに乗るスクリプトをコール
-        OS_Printf("スクリプトコール\n");
         SCRIPT_CallScript( event, SCRID_PRG_C04GYM0101_CAPSULE_IN,
           NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
         (*seq)++;
@@ -1369,18 +1361,6 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
     //SE再生
     PMSND_PlaySE(GYM_ELEC_SE_CAP_OC);
     (*seq)++;
-#if 0    
-    {
-      //主人公アニメ終了待ち
-      if( MMDL_CheckEndAcmdList(tmp->AnmTcb) ){
-        //カプセル閉まるアニメスタート
-        FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
-        //SE再生
-        PMSND_PlaySE(GYM_ELEC_SE_CAP_OC);
-        (*seq)++;
-      }
-    }
-#endif    
     break;
   case 3:
     //カプセル閉まるアニメ待ち
@@ -1487,20 +1467,7 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
     }
     break;
   case 7:
-#if 0    
-    {
-      MMDL * mmdl;
-      FIELD_PLAYER *fld_player;
-      fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
-      mmdl = FIELD_PLAYER_GetMMdl( fld_player );
-      //主人公表示
-      //MMDL_SetStatusBitVanish(mmdl, FALSE);
-      //主人公カプセルからでるアニメ
-      tmp->AnmTcb = MMDL_SetAcmdList( mmdl, anime_down_table);
-    }
-#endif
     //自機がカプセルを降りるスクリプトをコール
-    OS_Printf("スクリプトコール\n");
     SCRIPT_CallScript( event, SCRID_PRG_C04GYM0101_CAPSULE_OUT,
         NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
     (*seq)++;
@@ -1511,18 +1478,6 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
     //SE再生
     PMSND_PlaySE(GYM_ELEC_SE_CAP_OC);
     (*seq)++;
-#if 0    
-    {
-      //主人公アニメ終了待ち
-      if( MMDL_CheckEndAcmdList(tmp->AnmTcb) ){
-        //カプセル閉まるアニメスタート
-        FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
-        //SE再生
-        PMSND_PlaySE(GYM_ELEC_SE_CAP_OC);
-        (*seq)++;
-      }
-    }
-#endif
     break;
   case 9:
     //カプセル閉まるアニメ待ち
@@ -1575,7 +1530,13 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
   return GMEVENT_RES_CONTINUE;
 }
 
-//トレーナー戦イベント
+//--------------------------------------------------------------
+/**
+ * トレーナー戦イベント
+ * @param	
+ * @return
+ */
+//--------------------------------------------------------------
 static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
 {
   GYM_ELEC_SV_WORK *gmk_sv_work;
@@ -1604,6 +1565,12 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
 
   switch(*seq){
   case 0:
+    //トレーナー出現スクリプトコール
+    SCRIPT_CallScript( event, SCRID_PRG_C04GYM0101_TR_DISP_ON,
+        NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
+    (*seq)++;
+    break;
+  case 1:
     //カプセル開くアニメスタート
       {
         //フレーム頭だし
@@ -1615,7 +1582,7 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
       }
       (*seq)++;
     break;
-  case 1:
+  case 2:
     {
       fx32 frame;
       frame = GetAnimeFrame(ptr, obj_idx, ANM_CAP_OPCL);
@@ -1624,21 +1591,20 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
         //カプセル開くアニメ止める
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
         //アニメスクリプトコール
-        OS_Printf("スクリプトコール\n");
         SCRIPT_CallScript( event, SCRID_PRG_C04GYM0101_SCR01,
           NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
         (*seq)++;
       }      
     }
     break;
-  case 2:
+  case 3:
     //カプセル閉まるアニメスタート
     FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
     //SE再生
     PMSND_PlaySE(GYM_ELEC_SE_CAP_OC);
     (*seq)++;
     break;
-  case 3:
+  case 4:
     //カプセル閉まるアニメ待ち
     if( FLD_EXP_OBJ_ChkAnmEnd(anm) ){
       EXP_OBJ_ANM_CNT_PTR cap_anm;
@@ -1655,13 +1621,12 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
       gmk_sv_work->StopPlatformIdx[cap_idx] = PLATFORM_NO_STOP;
 
       //スクリプトコール
-      OS_Printf("スクリプトコール\n");
       SCRIPT_CallScript( event, SCRID_PRG_C04GYM0101_SCR02,
           NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
       (*seq)++;
     }
     break;
-  case 4:
+  case 5:
     //乗降終了
     tmp->RideEvt = -1;
     tmp->RadeRaleIdx = RIDE_NONE;
@@ -1671,6 +1636,13 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
   return GMEVENT_RES_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * レール変更
+ * @param	
+ * @return
+ */
+//--------------------------------------------------------------
 static void ChgRale(FIELDMAP_WORK *fieldWork, FLD_EXP_OBJ_CNT_PTR ptr)
 {
   u8 cap_idx;
@@ -1707,6 +1679,13 @@ static void ChgRale(FIELDMAP_WORK *fieldWork, FLD_EXP_OBJ_CNT_PTR ptr)
   }
 }
 
+//--------------------------------------------------------------
+/**
+ * レールアニメ変更
+ * @param	
+ * @return
+ */
+//--------------------------------------------------------------
 static void ChgRaleAnm(FLD_EXP_OBJ_CNT_PTR ptr, const u8 inSw, const u8 inCapIdx)
 {
   u8 obj_idx;
@@ -1738,6 +1717,13 @@ static void ChgRaleAnm(FLD_EXP_OBJ_CNT_PTR ptr, const u8 inSw, const u8 inCapIdx
 
 }
 
+//--------------------------------------------------------------
+/**
+ * 停止すべきフレームか？
+ * @param	
+ * @return
+ */
+//--------------------------------------------------------------
 static BOOL CheckCapStopFrame(const u8 inRaleIdx, const fx32 inFrm, u8 *outStopIdx)
 {
   u8 i;
@@ -1751,7 +1737,13 @@ static BOOL CheckCapStopFrame(const u8 inRaleIdx, const fx32 inFrm, u8 *outStopI
   return FALSE;
 }
 
-//即レールアニメ切り替えできるか？
+//--------------------------------------------------------------
+/**
+ * 即レールアニメ切り替えできるか？
+ * @param	
+ * @return
+ */
+//--------------------------------------------------------------
 static BOOL CheckChangableRaleAtOnce(FLD_EXP_OBJ_CNT_PTR ptr, const u8 inCapIdx, const u8 inRaleIdx)
 {
   fx32 frame;

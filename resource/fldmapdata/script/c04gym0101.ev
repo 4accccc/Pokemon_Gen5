@@ -33,6 +33,7 @@ _EVENT_DATA		ev_c04gym0101_guide_01
 _EVENT_DATA		ev_bg_c04gym0101_statue_01
 _EVENT_DATA   ev_prg_c04gym0101_capsule_in
 _EVENT_DATA   ev_prg_c04gym0101_capsule_out
+_EVENT_DATA   ev_prg_c04gym0101_tr_disp_on
 _EVENT_DATA_END
 
 
@@ -197,6 +198,40 @@ _ANIME_LABEL	anm_player_getoff_01
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+/************************************************************/
+/*			ジムギミック　カプセル内トレーナーを表示状態にする	*/
+/************************************************************/
+EVENT_START	ev_prg_c04gym0101_tr_disp_on
+  //ローカル変数定義
+	{
+    DEFINE_LOCAL  POSX
+    DEFINE_LOCAL  POSZ
+
+	//主人公位置で分岐（位置からコースターの種類を識別します）
+	_PLAYER_POS_GET( POSX, POSZ )
+	IF $POSX == 16 THEN
+		//１台目のトレーナー有りコースターの乗車口なら
+		_CALL		ev_trainer_disp_01
+	ELSE
+		//２台目なら
+		_CALL		ev_trainer_disp_02
+	ENDIF
+	}
+EVENT_END
+
+//トレーナーの入っているコースター１台目
+ev_trainer_disp_01:
+	//トレーナー表示
+	_FLAG_RESET( FV_C04GYM0101_TR_01 )
+	_OBJ_ADD( C04GYM0101_TRAINER_01 )
+	_RET
+
+//トレーナーの入っているコースター2台目
+ev_trainer_disp_02:
+	//トレーナー表示
+	_FLAG_RESET( FV_C04GYM0101_TR_02 )
+	_OBJ_ADD( C04GYM0101_TRAINER_02 )
+	_RET
 
 /************************************************************/
 /*				ジムギミック　スイッチ						*/
@@ -279,8 +314,8 @@ EVENT_END
 //トレーナーの入っているコースター１台目
 ev_trainer_appear_01:
 	//トレーナー表示
-	_FLAG_RESET( FV_C04GYM0101_TR_01 )
-	_OBJ_ADD( C04GYM0101_TRAINER_01 )
+//	_FLAG_RESET( FV_C04GYM0101_TR_01 )  <<move to ev_trainer_disp_01
+//	_OBJ_ADD( C04GYM0101_TRAINER_01 )   <<move to ev_trainer_disp_01
 
 	//主人公：後ずさり
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back_01 )
@@ -298,8 +333,8 @@ ev_trainer_appear_01:
 //トレーナーの入っているコースター２台目
 ev_trainer_appear_02:
 	//トレーナー表示
-	_FLAG_RESET( FV_C04GYM0101_TR_02 )
-	_OBJ_ADD( C04GYM0101_TRAINER_02 )
+//	_FLAG_RESET( FV_C04GYM0101_TR_02 )  <<move to ev_trainer_disp_02
+//	_OBJ_ADD( C04GYM0101_TRAINER_02 )   <<move to ev_trainer_disp_02
 
 	//主人公：後ずさり
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back_01 )
