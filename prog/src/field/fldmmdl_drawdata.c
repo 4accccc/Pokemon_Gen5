@@ -30,6 +30,7 @@ const MMDL_DRAW_PROC_LIST * const
   &DATA_MMDL_DRAWPROCLIST_ItemGetHero, //自機アイテムゲット
   &DATA_MMDL_DRAWPROCLIST_PCAzukeHero, //自機PC預け
   &DATA_MMDL_DRAWPROCLIST_BlActOnePatternLoop, //ビルボード1パターンアニメ
+  &DATA_MMDL_DRAWPROCLIST_BlActPCWoman, //PCお姉さん
 };
 
 //======================================================================
@@ -1234,6 +1235,11 @@ enum
   TEXIDX_FLIP_L_STOP,
   TEXIDX_FLIP_L_WALK0,
   TEXIDX_FLIP_L_WALK1,
+  TEXIDX_FLIP_MAX,
+  
+  //ポケセンお姉さん用
+  TEXIDX_FLIP_BOW_0 = TEXIDX_FLIP_MAX,
+  TEXIDX_FLIP_BOW_1,
 };
 static const GFL_BBDACT_ANM DATA_BlActAnmFlip_StopU[] =
 {
@@ -1530,6 +1536,59 @@ static const GFL_BBDACT_ANM * const DATA_BlActAnmFlipTbl[DRAW_STA_MAXDIR4] =
 	DATA_BlActAnmFlip_WalkD7F,
 	DATA_BlActAnmFlip_WalkL7F,
 	DATA_BlActAnmFlip_WalkR7F,
+};
+
+//--------------------------------------------------------------
+/// ポケセンお姉さん用お辞儀アニメ
+//--------------------------------------------------------------
+static const GFL_BBDACT_ANM DATA_BlActAnmFlip_PCBow[] = {
+	{TEXIDX_FLIP_D_STOP,ANMFLIP_OFF,ANMFLIP_OFF,2},
+	{TEXIDX_FLIP_BOW_0,ANMFLIP_OFF,ANMFLIP_OFF,4},
+	{TEXIDX_FLIP_BOW_1,ANMFLIP_OFF,ANMFLIP_OFF,6},
+	{TEXIDX_FLIP_BOW_0,ANMFLIP_OFF,ANMFLIP_OFF,4},
+	{TEXIDX_FLIP_D_STOP,ANMFLIP_OFF,ANMFLIP_OFF,2},
+	{GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+static const GFL_BBDACT_ANM * const DATA_BlActAnmPcwomanTbl[DRAW_STA_PCWOMAN_MAX] =
+{
+	DATA_BlActAnmFlip_StopU,//DRWA_STA_STOP
+	DATA_BlActAnmFlip_StopD,
+	DATA_BlActAnmFlip_StopL,
+	DATA_BlActAnmFlip_StopR,
+	DATA_BlActAnmFlip_WalkU32F,//DRWA_STA_WALK_32F
+	DATA_BlActAnmFlip_WalkD32F,
+	DATA_BlActAnmFlip_WalkL32F,
+	DATA_BlActAnmFlip_WalkR32F,
+	DATA_BlActAnmFlip_WalkU16F,//DRWA_STA_WALK_16F
+	DATA_BlActAnmFlip_WalkD16F,
+	DATA_BlActAnmFlip_WalkL16F,
+	DATA_BlActAnmFlip_WalkR16F,
+	DATA_BlActAnmFlip_WalkU8F,//DRWA_STA_WALK_8F
+	DATA_BlActAnmFlip_WalkD8F,
+	DATA_BlActAnmFlip_WalkL8F,
+	DATA_BlActAnmFlip_WalkR8F,
+	DATA_BlActAnmFlip_WalkU4F,//DRWA_STA_WALK_4F
+	DATA_BlActAnmFlip_WalkD4F,
+	DATA_BlActAnmFlip_WalkL4F,
+	DATA_BlActAnmFlip_WalkR4F,
+	DATA_BlActAnmFlip_WalkU2F,//DRWA_STA_WALK_2F
+	DATA_BlActAnmFlip_WalkD2F,
+	DATA_BlActAnmFlip_WalkL2F,
+	DATA_BlActAnmFlip_WalkR2F,
+	DATA_BlActAnmFlip_WalkU6F,//DRWA_STA_WALK_6F
+	DATA_BlActAnmFlip_WalkD6F,
+	DATA_BlActAnmFlip_WalkL6F,
+	DATA_BlActAnmFlip_WalkR6F,
+	DATA_BlActAnmFlip_WalkU3F,//DRWA_STA_WALK_3F
+	DATA_BlActAnmFlip_WalkD3F,
+	DATA_BlActAnmFlip_WalkL3F,
+	DATA_BlActAnmFlip_WalkR3F,
+	DATA_BlActAnmFlip_WalkU7F,//DRWA_STA_WALK_7F
+	DATA_BlActAnmFlip_WalkD7F,
+	DATA_BlActAnmFlip_WalkL7F,
+	DATA_BlActAnmFlip_WalkR7F,
+  
+  DATA_BlActAnmFlip_PCBow, //DRAW_STA_PC_BOW
 };
 
 //======================================================================
@@ -2319,6 +2378,8 @@ const MMDL_BBDACT_ANMTBL
   {DATA_BlActPCAzuke,DRAW_STA_PCAZUKE_MAX},
   //MMDL_BLACT_ANMTBLNO_SAVE
   {DATA_BlActSaveHero,DRAW_STA_SAVEHERO_MAX},
+  //MMDL_BLACT?_ANMTBLNO_PCWOMAN
+  {DATA_BlActAnmPcwomanTbl,DRAW_STA_PCWOMAN_MAX},
 };
 
 //======================================================================

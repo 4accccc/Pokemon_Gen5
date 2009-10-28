@@ -2776,11 +2776,7 @@ typedef struct
 static int AC_PcBow_0( MMDL * mmdl )
 {
 	AC_PC_BOW_WORK *work = MMDL_InitMoveCmdWork( mmdl, AC_PC_BOW_WORK_SIZE );
-#ifdef MMDL_PL_NULL
 	MMDL_SetDrawStatus( mmdl, DRAW_STA_PC_BOW );
-#else
-	MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
-#endif
 	MMDL_IncAcmdSeq( mmdl );
 	
 	return( FALSE );
@@ -2799,7 +2795,7 @@ static int AC_PcBow_1( MMDL * mmdl )
 	
 	work->frame++;
 	
-	if( work->frame >= 8 ){
+	if( work->frame >= 18 ){
 		MMDL_SetDirDisp( mmdl, DIR_DOWN );
 		MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
 		MMDL_IncAcmdSeq( mmdl );

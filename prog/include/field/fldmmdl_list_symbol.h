@@ -14,9 +14,10 @@
 #define PROC_CYCLEHERO 3 //自転車自機専用
 #define PROC_SWIMHERO 4 //波乗り自機専用
 #define PROC_BLACT_ALANM 5 //汎用ビルボードアクター常にアニメ
-#define PROC_HERO_ITEMGET 6
-#define PROC_HERO_PCAZUKE 7
-#define PROC_BLACT_ONEANMLOOP 8
+#define PROC_HERO_ITEMGET 6 //自機アイテムゲット
+#define PROC_HERO_PCAZUKE 7 //自機PC預け
+#define PROC_BLACT_ONEANMLOOP 8 //一パターンループアニメ
+#define PROC_PCWOMAN 9 //PC姉
 
 //FOOTMARK 足跡種類で指定するシンボルです。
 #define FOOTMARK_NON 0 //足跡無し
@@ -106,6 +107,7 @@
 #define ANMID_ITEMGET 9 //自機アイテムゲット
 #define ANMID_PCAZUKE 10 //自機ポケセン預け
 #define ANMID_SAVE 11 //自機レポート
+#define ANMID_PCWOMAN 12 //PC姉
 
 //SEX 性別で指定するシンボルです。
 #define SEX_MALE 0

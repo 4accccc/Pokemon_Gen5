@@ -697,7 +697,7 @@ static void DrawBlAct_Draw( MMDL *mmdl )
     return;
   }
   
-#ifdef DEBUG_ONLY_FOR_kagaya  
+#if 0
   if( MMDL_GetOBJID(mmdl) == 1 && MMDL_GetOBJCode(mmdl) == WOMAN2 ){
     KAGAYA_Printf( "きました\n" );
   }
@@ -711,78 +711,6 @@ static void DrawBlAct_Draw( MMDL *mmdl )
   GFL_BBD_SetObjectTrans(
 		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 }
-
-#if 0
-static void DrawBlAct_Draw( MMDL *mmdl )
-{
-	VecFx32 pos;
-	BOOL chg_dir = FALSE;
-	u16 dir,anm_id,status;
-	DRAW_BLACT_WORK *work;
-	GFL_BBDACT_SYS *actSys;
-	
-	work = MMDL_GetDrawProcWork( mmdl );
-  
-  if( work->actID == MMDL_BLACTID_NULL ){
-    return;
-  }
-  
-	actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
-	
-	dir = MMDL_GetDirDisp( mmdl );
-	status = MMDL_GetDrawStatus( mmdl );
-	GF_ASSERT( status < DRAW_STA_MAX );
-	anm_id = status * DIR_MAX4;
-	anm_id += dir;
-	
-	if( work->set_anm_dir != dir ){ //方向更新
-		work->set_anm_dir = dir;
-		work->set_anm_status = status;
-		GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
-		chg_dir = TRUE;
-	}else if( work->set_anm_status != status ){ //ステータス更新
-		u16 frame = 0;
-		switch( work->set_anm_status ){
-		case DRAW_STA_WALK_32F:
-		case DRAW_STA_WALK_16F:
-		case DRAW_STA_WALK_8F:
-		case DRAW_STA_WALK_4F:
-		case DRAW_STA_WALK_2F:
-			if( GFL_BBDACT_GetAnimeFrmIdx(actSys,work->actID) <= 2 ){
-				frame = 2;
-			}
-			break;
-		}
-		
-		GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
-		GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, frame );
-	}
-	
-	MMDL_GetDrawVectorPos( mmdl, &pos );
-	
-  pos.y += MMDL_BBD_OFFS_POS_Y;
-  pos.z += MMDL_BBD_OFFS_POS_Z;
-	
-	GFL_BBD_SetObjectTrans(
-		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
-
-	{
-		BOOL flag = TRUE;
-		if( chg_dir == FALSE && MMDL_CheckDrawPause(mmdl) == TRUE ){
-			flag = FALSE;
-		}
-		GFL_BBDACT_SetAnimeEnable( actSys, work->actID, flag );
-    
-    flag = TRUE; 
-    
-    if( MMDL_CheckStatusBitVanish(mmdl) == TRUE ){
-      flag = FALSE;
-    }
-    
-    GFL_BBDACT_SetDrawEnable( actSys, work->actID, flag );
-	}
-}
-#endif
 
 //--------------------------------------------------------------
 /**
@@ -844,6 +772,69 @@ static void DrawBlAct_DrawAlwaysAnime( MMDL *mmdl )
 
 //--------------------------------------------------------------
 /**
+ * 描画処理　ビルボード　PCお姉さん
+ * @param	mmdl	MMDL
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void DrawBlAct_DrawPCWoman( MMDL *mmdl )
+{
+	VecFx32 pos;
+	DRAW_BLACT_WORK *work;
+	GFL_BBDACT_SYS *actSys;
+	
+	work = MMDL_GetDrawProcWork( mmdl );
+  
+  if( work->actID == MMDL_BLACTID_NULL ){ //未登録
+    return;
+  }
+  
+	actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+  
+  {
+    u16 status = MMDL_GetDrawStatus( mmdl );
+    
+    if( status == DRAW_STA_PC_BOW ){
+      u16 init_flag = FALSE;
+      u16 dir = blact_GetDrawDir( mmdl );
+      u16 anm_idx = (status * DIR_MAX4);
+      ANMCNT_WORK *anmcnt = &work->anmcnt_work;
+      
+      if( status != anmcnt->set_anm_status ){
+        init_flag = TRUE;
+        anmcnt->set_anm_dir = dir;
+        anmcnt->set_anm_status = status;
+        anmcnt->next_walk_frmidx = 0;
+		    GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
+      }
+      
+      {
+    		BOOL flag = TRUE;
+        
+    		if( init_flag == FALSE && MMDL_CheckDrawPause(mmdl) == TRUE ){
+    			flag = FALSE;
+    		}
+    		GFL_BBDACT_SetAnimeEnable( actSys, work->actID, flag );
+        
+        flag = TRUE; 
+        if( MMDL_CheckStatusBitVanish(mmdl) == TRUE ){
+          flag = FALSE;
+        }
+        GFL_BBDACT_SetDrawEnable( actSys, work->actID, flag );
+    	}
+    }else{
+	    blactAnmControl_Update( &work->anmcnt_work, mmdl, actSys, work->actID );
+    }
+  }
+
+	MMDL_GetDrawVectorPos( mmdl, &pos );
+  blact_SetCommonOffsPos( &pos );
+  GFL_BBD_SetObjectTrans(
+		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
+}
+
+//--------------------------------------------------------------
+/**
  * 描画処理　ビルボード　汎用　取得。
  * ビルボードアクターIDを返す。
  * @param	mmdl	MMDL
@@ -878,6 +869,19 @@ const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActAlwaysAnime =
 {
 	DrawBlAct_Init,
 	DrawBlAct_DrawAlwaysAnime,
+	DrawBlAct_Delete,
+	DrawBlAct_Delete,	//本当は退避
+	DrawBlAct_Init,		//本当は復帰
+	DrawBlAct_GetBlActID,
+};
+
+//--------------------------------------------------------------
+//	描画処理　ビルボード　PCお姉さん　まとめ
+//--------------------------------------------------------------
+const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActPCWoman =
+{
+	DrawBlAct_Init,
+  DrawBlAct_DrawPCWoman,
 	DrawBlAct_Delete,
 	DrawBlAct_Delete,	//本当は退避
 	DrawBlAct_Init,		//本当は復帰
