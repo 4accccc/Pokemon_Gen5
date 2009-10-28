@@ -20,6 +20,7 @@
 #include "infowin\infowin.h"
 #include "intrude_main.h"
 #include "intrude_work.h"
+#include "intrude_mission.h"
 
 
 //==============================================================================
@@ -208,7 +209,7 @@ static void _IntSub_ActorUpdate_PointNum(
   INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
 static u8 _IntSub_GetProfileRecvNum(INTRUDE_COMM_SYS_PTR intcomm);
 static u8 _IntSub_TownPosGet(ZONEID zone_id, GFL_CLACTPOS *dest_pos);
-static void _SetRect(int x, int y, int half_size, GFL_RECT *rect);
+static void _SetRect(int x, int y, int half_size_x, int half_size_y, GFL_RECT *rect);
 static BOOL _CheckRectHit(int x, int y, const GFL_RECT *rect);
 static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub);
 
@@ -233,6 +234,21 @@ enum{
   AREA_POST_WIDTH = AREA_POST_RIGHT - AREA_POST_LEFT, ///<配置座標範囲の幅
   
   AREA_POST_Y = 8,                                    ///<配置座標Y
+};
+
+///POWER系アイコン配置座標
+enum{
+  POWER_ICON_POS_X = 0x15*8,
+  POWER_ICON_POS_Y = 8*8,
+
+  MISSION_ICON_POS_X = 0x1d*8,
+  MISSION_ICON_POS_Y = 3*8,
+
+  INCLUSION_ICON_POS_X = MISSION_ICON_POS_X,
+  INCLUSION_ICON_POS_Y = MISSION_ICON_POS_Y,
+
+  POWER_ICON_HITRANGE_HALF_X = 24, ///<パワー系アイコンのタッチ判定半径X
+  POWER_ICON_HITRANGE_HALF_Y = 8,  ///<パワー系アイコンのタッチ判定半径Y
 };
 
 
@@ -695,7 +711,7 @@ static void _IntSub_ActorCreate_Mark(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *hand
 static void _IntSub_ActorCreate_Power(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
 {
   GFL_CLWK_DATA head = {
-  	0, 0,                       //X, Y座標
+  	POWER_ICON_POS_X, POWER_ICON_POS_Y,                       //X, Y座標
   	PALACE_ACT_ANMSEQ_POWER,     //アニメーションシーケンス
   	SOFTPRI_POWER,               //ソフトプライオリティ
   	BGPRI_ACTOR_COMMON,         //BGプライオリティ
@@ -706,20 +722,27 @@ static void _IntSub_ActorCreate_Power(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *han
     intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
     &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
   GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_POWER], FALSE);  //表示OFF
+  GFL_CLACT_WK_SetAutoAnmFlag(intsub->act[INTSUB_ACTOR_POWER], TRUE);  //オートアニメON
 
   //MISSION
+  head.pos_x = MISSION_ICON_POS_X;
+  head.pos_y = MISSION_ICON_POS_Y;
   head.anmseq = PALACE_ACT_ANMSEQ_MISSION;
   intsub->act[INTSUB_ACTOR_MISSION] = GFL_CLACT_WK_Create(intsub->clunit, 
     intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
     &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
   GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_MISSION], FALSE);  //表示OFF
+  GFL_CLACT_WK_SetAutoAnmFlag(intsub->act[INTSUB_ACTOR_MISSION], TRUE);  //オートアニメON
 
   //INCLUSION
+  head.pos_x = INCLUSION_ICON_POS_X;
+  head.pos_y = INCLUSION_ICON_POS_Y;
   head.anmseq = PALACE_ACT_ANMSEQ_INCLUSION;
   intsub->act[INTSUB_ACTOR_INCLUSION] = GFL_CLACT_WK_Create(intsub->clunit, 
     intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
     &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
   GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_INCLUSION], FALSE);  //表示OFF
+  GFL_CLACT_WK_SetAutoAnmFlag(intsub->act[INTSUB_ACTOR_INCLUSION], TRUE);  //オートアニメON
 }
 
 //--------------------------------------------------------------
@@ -1021,7 +1044,13 @@ static void _IntSub_ActorUpdate_Mark(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SY
 //--------------------------------------------------------------
 static void _IntSub_ActorUpdate_Power(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy)
 {
-  return;
+  //MISSION
+  if(MISSION_RecvCheck(&intcomm->mission) == TRUE){
+    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_MISSION], TRUE);
+  }
+  else{
+    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_MISSION], FALSE);
+  }
 }
 
 //--------------------------------------------------------------
@@ -1136,16 +1165,17 @@ static u8 _IntSub_TownPosGet(ZONEID zone_id, GFL_CLACTPOS *dest_pos)
  *
  * @param   x		        中心値X
  * @param   y		        中心値Y
- * @param   half_size		半径
+ * @param   half_size		半径X
+ * @param   half_size		半径Y
  * @param   rect		    代入先
  */
 //--------------------------------------------------------------
-static void _SetRect(int x, int y, int half_size, GFL_RECT *rect)
+static void _SetRect(int x, int y, int half_size_x, int half_size_y, GFL_RECT *rect)
 {
-  rect->top = y - half_size;
-  rect->bottom = y + half_size;
-  rect->left = x - half_size;
-  rect->right = x + half_size;
+  rect->top = y - half_size_y;
+  rect->bottom = y + half_size_y;
+  rect->left = x - half_size_x;
+  rect->right = x + half_size_x;
 }
 
 //--------------------------------------------------------------
@@ -1190,9 +1220,10 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
     return;
   }
   
+  //街タッチ判定
   for(i = 0; i < PALACE_TOWN_DATA_MAX; i++){
     _SetRect(PalaceTownData[i].subscreen_x, PalaceTownData[i].subscreen_y, 
-      TOWN_ICON_HITRANGE_HALF, &rect);
+      TOWN_ICON_HITRANGE_HALF, TOWN_ICON_HITRANGE_HALF, &rect);
     if(_CheckRectHit(x, y, &rect) == TRUE){
       Intrude_SetWarpTown(game_comm, i);
       FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_TOWN_WARP);
@@ -1200,9 +1231,20 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
     }
   }
 
-  _SetRect(PALACE_ICON_POS_X, PALACE_ICON_POS_Y, PALACE_ICON_HITRANGE_HALF, &rect);
+  //パレス島タッチ判定
+  _SetRect(PALACE_ICON_POS_X, PALACE_ICON_POS_Y, 
+    PALACE_ICON_HITRANGE_HALF, PALACE_ICON_HITRANGE_HALF, &rect);
   if(_CheckRectHit(x, y, &rect) == TRUE){
     Intrude_SetWarpTown(game_comm, PALACE_TOWN_DATA_PALACE);
     FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_TOWN_WARP);
+    return;
+  }
+  
+  //ミッションアイコンタッチ判定
+  _SetRect(MISSION_ICON_POS_X, MISSION_ICON_POS_Y, 
+    POWER_ICON_HITRANGE_HALF_X, POWER_ICON_HITRANGE_HALF_Y, &rect);
+  if(_CheckRectHit(x, y, &rect) == TRUE){
+    FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_MISSION_PUT);
+    return;
   }
 }

@@ -1533,6 +1533,9 @@ static GMEVENT * checkSubScreenEvent(
   case FIELD_SUBSCREEN_ACTION_INTRUDE_TOWN_WARP:
     event = EVENT_IntrudeTownWarp(gsys, fieldWork);
     break;
+  case FIELD_SUBSCREEN_ACTION_INTRUDE_MISSION_PUT:
+    event = EVENT_IntrudeMissionPut(gsys, fieldWork, FIELDMAP_GetHeapID(fieldWork));
+    break;
     
 #if PM_DEBUG
   case FIELD_SUBSCREEN_ACTION_DEBUG_PALACEJUMP:
