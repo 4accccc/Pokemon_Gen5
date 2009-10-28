@@ -1098,7 +1098,9 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
       u16 cam_eff_idx = ShotData[shot_idx][shot_dir_idx].CamEffIdx;
       //’…’n‚r‚d
       if (tmp->NowIcaAnmFrmIdx == tmp->MaxIcaAnmFrm-1-StandSeFrm[cam_eff_idx]){
-        PMSND_PlaySE(GYM_FLY_SE_STAND);
+        if (cam_eff_idx != WALL_HIT_ANM_IDX){
+          PMSND_PlaySE(GYM_FLY_SE_STAND);
+        }
       }
       //•ÇƒqƒbƒgSE
       if ( cam_eff_idx == WALL_HIT_ANM_IDX ){
