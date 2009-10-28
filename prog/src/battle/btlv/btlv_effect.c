@@ -54,6 +54,7 @@ struct _BTLV_EFFECT_WORK
   BTLV_CLACT_WORK   *bclw;
   BTLV_GAUGE_WORK   *bgw;
   BTLV_BALL_GAUGE_WORK *bbgw[ BTLV_BALL_GAUGE_TYPE_MAX ];
+  BTLV_TIMER_WORK   *btw;
   GFL_TCB           *v_tcb;
   int               execute_flag;
   int               tcb_execute_flag;
@@ -121,6 +122,8 @@ void  BTLV_EFFECT_Init( BtlRule rule, int index, HEAPID heapID )
   bew->bcw  = BTLV_CAMERA_Init( bew->tcb_sys, heapID );
   bew->bclw = BTLV_CLACT_Init( bew->tcb_sys, heapID );
   bew->bgw  = BTLV_GAUGE_Init( heapID );
+  bew->btw  = BTLV_TIMER_Init( heapID );
+  BTLV_TIMER_Create( bew->btw, 30, 1 );
 
   BTLV_MCSS_SetOrthoMode( bew->bmw );
 
@@ -163,6 +166,7 @@ void  BTLV_EFFECT_Exit( void )
   BTLV_CAMERA_Exit( bew->bcw );
   BTLV_CLACT_Exit( bew->bclw );
   BTLV_GAUGE_Exit( bew->bgw );
+  BTLV_TIMER_Exit( bew->btw );
   GFL_PTC_Exit();
   BTLV_EFFVM_Exit( bew->vm_core );
   GFL_TCB_DeleteTask( bew->v_tcb );

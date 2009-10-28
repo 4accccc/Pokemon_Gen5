@@ -210,12 +210,13 @@ int BTLV_CLACT_AddEx( BTLV_CLACT_WORK *bclw, ARCID arcID,
   GF_ASSERT( index < BTLV_CLACT_CLWK_MAX );
 
   bclw->bccl[ index ].charID = GFL_CLGRP_CGR_Register( hdl, ncgrID, FALSE, CLSYS_DRAW_MAIN, bclw->heapID );
-  bclw->bccl[ index ].plttID = GFL_CLGRP_PLTT_RegisterComp( hdl, nclrID, CLSYS_DRAW_MAIN, 0, bclw->heapID );
+  bclw->bccl[ index ].plttID = GFL_CLGRP_PLTT_RegisterComp( hdl, nclrID, CLSYS_DRAW_MAIN,
+                                                            BTLV_OBJ_PLTT_CLACT + 0x20 * index, bclw->heapID );
   bclw->bccl[ index ].cellID = GFL_CLGRP_CELLANIM_Register( hdl, ncerID, nanrID, bclw->heapID );
 
   //パレットをPaletteWorkにロード
   PaletteWorkSet_Arc( BTLV_EFFECT_GetPfd(), arcID, nclrID, bclw->heapID, FADE_MAIN_OBJ, 0x20,
-    ( GFL_CLGRP_PLTT_GetAddr( bclw->bccl[ index ].plttID, CLSYS_DRAW_MAIN ) & 0x3ff ) / 0x20 );
+    ( GFL_CLGRP_PLTT_GetAddr( bclw->bccl[ index ].plttID, CLSYS_DRAW_MAIN ) & 0x3ff ) / 2 );
 
   CLWKAffineParam.clwkdata.pos_x = posx;
   CLWKAffineParam.clwkdata.pos_y = posy;

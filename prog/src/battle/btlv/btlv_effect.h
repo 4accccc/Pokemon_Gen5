@@ -16,6 +16,7 @@
 #include "btlv_clact.h"
 #include "btlv_gauge.h"
 #include "btlv_b_gauge.h"
+#include "btlv_timer.h"
 
 #include "btlv_efftool.h"
 #include "btlv_effvm.h"
@@ -42,6 +43,16 @@ enum{
 
 typedef struct _BTLV_EFFECT_WORK BTLV_EFFECT_WORK;
 
+//OBJパレット使用内訳
+enum{ 
+  BTLV_OBJ_PLTT_HP_GAUGE    = 0x20 * 0,   //0:HPゲージ
+  BTLV_OBJ_PLTT_TIMER       = 0x20 * 1,   //1:タイマー
+  BTLV_OBJ_PLTT_RED_TIMER   = 0x20 * 2,   //2:時間切れ迫ったタイマー
+  BTLV_OBJ_PLTT_STATUS_ICON = 0x20 * 3,   //3:状態異常アイコン
+  BTLV_OBJ_PLTT_NONE_4      = 0x20 * 4,   //4:空き
+  BTLV_OBJ_PLTT_NONE_5      = 0x20 * 5,   //5:空き
+  BTLV_OBJ_PLTT_CLACT       = 0x20 * 6,   //6:BTLV_CLACTで使用するセルアクター（10個分）
+};
 
 //--------------------------------------------
 /**

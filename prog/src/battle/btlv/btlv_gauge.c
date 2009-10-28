@@ -14,6 +14,7 @@
 #include "print/printsys.h"
 #include "font/font.naix"
 #include "poke_tool/gauge_tool.h"
+#include "app/app_menu_common.h"
 
 #include "btlv_effect.h"
 #include "btlv_gauge.h"
@@ -75,7 +76,7 @@ enum
 
 enum
 { 
-  BTLV_GAUGE_POS_AA_X = 184,
+  BTLV_GAUGE_POS_AA_X = 200,
   BTLV_GAUGE_POS_AA_Y = 120,
 
   BTLV_GAUGE_POS_BB_X = 56,
@@ -99,13 +100,13 @@ enum
   BTLV_GAUGE_POS_F_X = 48,
   BTLV_GAUGE_POS_F_Y = 76,
 
-  BTLV_GAUGE_HPNUM_X  = 24,
+  BTLV_GAUGE_HPNUM_X  = 16,
   BTLV_GAUGE_HPNUM_Y  = 13,
-  BTLV_GAUGE_MINE_HP_X   = 24,
+  BTLV_GAUGE_MINE_HP_X   = 16,
   BTLV_GAUGE_MINE_HP_Y   = 7,
-  BTLV_GAUGE_ENEMY_HP_X  = 8,
+  BTLV_GAUGE_ENEMY_HP_X  = 0,
   BTLV_GAUGE_ENEMY_HP_Y  = 7,
-  BTLV_GAUGE_EXP_X  = 16,
+  BTLV_GAUGE_EXP_X  =  8,
   BTLV_GAUGE_EXP_Y  = 21,
 
   BTLV_GAUGE_BMP_SIZE_X = 8,
@@ -113,18 +114,18 @@ enum
   BTLV_GAUGE_BMP_POS_X = 8,
   BTLV_GAUGE_BMP_POS_Y = 9,
 
-  BTLV_GAUGE_NAME1U_CHARSTART = 0x03,
-  BTLV_GAUGE_NAME1D_CHARSTART = 0x0b,
+  BTLV_GAUGE_NAME1U_CHARSTART = 0x02,
+  BTLV_GAUGE_NAME1D_CHARSTART = 0x0a,
   BTLV_GAUGE_NAME2U_CHARSTART = 0x20,
   BTLV_GAUGE_NAME2D_CHARSTART = 0x28,
 
-  BTLV_GAUGE_SEXU_CHARSTART = 0x23,
-  BTLV_GAUGE_SEXD_CHARSTART = 0x2b,
+  BTLV_GAUGE_SEXU_CHARSTART = 0x22,
+  BTLV_GAUGE_SEXD_CHARSTART = 0x2a,
 
   BTLV_GAUGE_HP_CHARSTART = 0x02,
   BTLV_GAUGE_NOWHP_CHARSTART = 0x00,
   BTLV_GAUGE_MAXHP_CHARSTART = 0x04,
-  BTLV_GAUGE_LV_CHARSTART = 0x2c,
+  BTLV_GAUGE_LV_CHARSTART = 0x2b,
   BTLV_GAUGE_EXP_CHARSTART = 0x01,
 
   BTLV_GAUGE_TYPE_3vs3_YOFFSET_E = -16,   //3vs3時のゲージY方向オフセット（相手側）
@@ -200,6 +201,11 @@ struct _BTLV_GAUGE_WORK
 
   u32             plttID;
 
+  //状態異常アイコン
+  u32             status_charID;
+  u32             status_cellID;
+  u32             status_plttID;
+
   BTLV_GAUGE_CLWK bgcl[ BTLV_GAUGE_CLWK_MAX ];
 
   u32             vanish_flag   :1;
@@ -252,9 +258,26 @@ BTLV_GAUGE_WORK*  BTLV_GAUGE_Init( HEAPID heapID )
   bgw->clunit = GFL_CLACT_UNIT_Create( BTLV_GAUGE_CLUNIT_CLWK_MAX, 0, bgw->heapID );
 
   //共通パレット読み込み
-  bgw->plttID = GFL_CLGRP_PLTT_Register( bgw->handle, NARC_battgra_wb_gauge_NCLR, CLSYS_DRAW_MAIN, 0x20, bgw->heapID );
+  bgw->plttID = GFL_CLGRP_PLTT_Register( bgw->handle, NARC_battgra_wb_gauge_NCLR,
+                                         CLSYS_DRAW_MAIN, BTLV_OBJ_PLTT_HP_GAUGE, bgw->heapID );
   PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_MAIN_OBJ,
                            GFL_CLGRP_PLTT_GetAddr( bgw->plttID, CLSYS_DRAW_MAIN ) / 2, 0x20 * 1 );
+  { 
+    ARCHANDLE*  handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), bgw->heapID );
+
+    bgw->status_charID = GFL_CLGRP_CGR_Register( handle, APP_COMMON_GetStatusIconCharArcIdx(),
+                                                 FALSE, CLSYS_DRAW_MAIN, bgw->heapID );
+    bgw->status_cellID = GFL_CLGRP_CELLANIM_Register( handle,
+                                                      APP_COMMON_GetStatusIconCellArcIdx( APP_COMMON_MAPPING_64K ),
+                                                      APP_COMMON_GetStatusIconAnimeArcIdx( APP_COMMON_MAPPING_64K ),
+                                                      bgw->heapID );
+    bgw->status_plttID = GFL_CLGRP_PLTT_Register( handle, APP_COMMON_GetStatusIconPltArcIdx(),
+                                                  CLSYS_DRAW_MAIN, BTLV_OBJ_PLTT_STATUS_ICON, bgw->heapID );
+    PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_MAIN_OBJ,
+                             GFL_CLGRP_PLTT_GetAddr( bgw->status_plttID, CLSYS_DRAW_MAIN ) / 2, 0x20 * 1 );
+    GFL_ARC_CloseDataHandle( handle );
+  }
+
 
   //パーツデータ読み込み
   { 
@@ -294,6 +317,9 @@ void  BTLV_GAUGE_Exit( BTLV_GAUGE_WORK *bgw )
     PMSND_PopBGM();
   }
   GFL_CLGRP_PLTT_Release( bgw->plttID );
+  GFL_CLGRP_CGR_Release( bgw->status_charID );
+  GFL_CLGRP_CELLANIM_Release( bgw->status_cellID );
+  GFL_CLGRP_PLTT_Release( bgw->status_plttID );
   GFL_CLACT_UNIT_Delete( bgw->clunit );
   GFL_HEAP_FreeMemory( bgw->arc_data );
   GFL_FONT_Delete( bgw->font );
@@ -1049,19 +1075,19 @@ static  void  PutNameOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, const BTL
     MI_CpuCopy16( bmp_data,
                   (void*)( (u32)obj_vram + BTLV_GAUGE_NAME1U_CHARSTART * 0x20 +
                   image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
-                  0x20 * 5 );
+                  0x20 * 6 );
     MI_CpuCopy16( &bmp_data[ BTLV_GAUGE_BMP_SIZE_X * 0x20 ],
                   (void*)( (u32)obj_vram + BTLV_GAUGE_NAME1D_CHARSTART * 0x20 +
                   image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
-                  0x20 * 5 );
-    MI_CpuCopy16( &bmp_data[ 5 * 0x20 ],
+                  0x20 * 6 );
+    MI_CpuCopy16( &bmp_data[ 6 * 0x20 ],
                   (void*)( (u32)obj_vram + BTLV_GAUGE_NAME2U_CHARSTART * 0x20 +
                   image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
-                  0x20 * 3 );
-    MI_CpuCopy16( &bmp_data[ ( BTLV_GAUGE_BMP_SIZE_X + 5 ) * 0x20 ],
+                  0x20 * 2 );
+    MI_CpuCopy16( &bmp_data[ ( BTLV_GAUGE_BMP_SIZE_X + 6 ) * 0x20 ],
                   (void*)( (u32)obj_vram + BTLV_GAUGE_NAME2D_CHARSTART * 0x20 +
                   image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
-                  0x20 * 3 );
+                  0x20 * 2 );
   }
 
   GFL_STR_DeleteBuffer( monsname );
