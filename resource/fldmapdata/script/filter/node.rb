@@ -291,17 +291,24 @@ module PmScript
 # ノード：switch構文
 #---------------------------------------------
   class SwitchNode < Node
-    def initialize( workname, case_stmts)
+    def initialize( workname, case_stmts, default_stmt)
       @workname = workname
       @case_stmts=case_stmts
+      @default_stmt = default_stmt
     end
 
     def compile( intp )
+      puts "//::SwitchStart"
       end_label = intp.get_label()
       intp.push_switch_params( [@workname, end_label] )
       put_list( intp, @case_stmts )
+      if @default_stmt != nil then
+        puts"//::SwitchDefault"
+        put_list( intp, @default_stmt )
+      end
       puts "#{end_label}:"
       intp.pop_switch_params()
+      puts "//::SwitchEnd"
     end
 
   end
@@ -318,6 +325,7 @@ module PmScript
     def compile( intp )
       hit_label = intp.get_label()
       workname, end_label = intp.get_switch_params()
+      puts "//::SwitchCase(#{@args})"
       @args.each{|cond|
         if cond == ',' then next end
 				if cond =~ /\A\$[a-zA-Z][a-zA-Z0-9_]*/

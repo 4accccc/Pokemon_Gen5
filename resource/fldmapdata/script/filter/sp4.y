@@ -364,12 +364,12 @@ rule
           }
 	#---------------------------------------------
   # 「switch」は
-  # 「SWITCH」「変数参照」「終端」「case文のならび」「ENDSWITCH」
+  # 「SWITCH」「変数参照」「終端」「case文のならび」「default文」「ENDSWITCH」
 	#---------------------------------------------
 
-  switch_stmt : SWITCH VARREF EOL case_stmt_list ENDSWITCH
+  switch_stmt : SWITCH VARREF EOL case_stmt_list default_stmt ENDSWITCH
           {
-            result = SwitchNode.new(val[1].sub(/\A\$/,""), val[3])
+            result = SwitchNode.new(val[1].sub(/\A\$/,""), val[3], val[4])
           }
 
 	#---------------------------------------------
@@ -400,6 +400,17 @@ rule
             result = CaseNode.new(val[1], val[3])
           }
 
+	#---------------------------------------------
+  # 「DEFAULT文」は下記のいずれか：
+  #
+  # 「空白」
+  # 「DEFAULT」「文の並び」
+	#---------------------------------------------
+  default_stmt :
+        | DEFAULT stmt_list
+          {
+            result = val[1]
+          }
 
 	#---------------------------------------------
 	#	「代入」は
@@ -578,6 +589,7 @@ RESERVED = {
   'INIT_EVENT_END' => :INIT_EVENT_END,
   'SWITCH' => :SWITCH,
   'CASE' => :CASE,
+  'DEFAULT' => :DEFAULT,
   'ENDSWITCH' => :ENDSWITCH,
   'WHILE' => :WHILE,
   'ENDWHILE' => :ENDWHILE,
