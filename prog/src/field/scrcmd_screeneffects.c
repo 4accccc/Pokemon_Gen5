@@ -32,6 +32,7 @@
 #include "field_bmanime_tool.h"
 
 #include "field/field_const.h"
+#include "sound/pm_sndsys.h"      //PMSND_PlaySE, PMSND_CheckPlaySE
 
 static BOOL EvWaitDispFade( VMHANDLE *core, void *wk );
 
@@ -250,9 +251,14 @@ VMCMD_RESULT EvCmdDoorAnimeSet( VMHANDLE * core, void *wk )
   u16 anime_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 anime_type = SCRCMD_GetVMWorkValue( core, wk );
   BMANIME_CONTROL_WORK * ctrl;
+  u16 seNo;
 
   ctrl = getMemory( anime_id );
   BMANIME_CTRL_SetAnime( ctrl, anime_type );
+  if( BMANIME_CTRL_GetSENo( ctrl, anime_type, &seNo) )
+  {
+    PMSND_PlaySE( seNo );
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -289,7 +295,14 @@ static BOOL EvWaitDoorAnime( VMHANDLE *core, void *wk )
 {
   BMANIME_CONTROL_WORK * ctrl;
   ctrl = getMemory( DOOR_ANIME_KEY_01 );  //Žè”²‚«
-  return BMANIME_CTRL_WaitAnime( ctrl );
+  if ( BMANIME_CTRL_WaitAnime( ctrl ) == TRUE && PMSND_CheckPlaySE() == FALSE )
+  {
+    return TRUE;
+  }
+  else
+  {
+    return FALSE;
+  }
 }
 
 
