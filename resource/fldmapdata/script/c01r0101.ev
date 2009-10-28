@@ -23,20 +23,6 @@ _EVENT_DATA		ev_c01r0101_scene_change_01
 _EVENT_DATA		ev_init_c01r0101
 _EVENT_DATA_END
 
-
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/*
- * 注意！(06.02.09現在)
- * EV_SCRIPT_WORKを確保していないので、
- * SCWK_ANSWERなどのワークは使用することが出来ない！
- * LOCALWORK0などを使用するようにする！
- *
- * 共通スクリプトについては現状使用不可！
- * 対応予定だが、ゾーンをまたいだ時に処理落ちするかも？
- * あまりつかわないかも？
- */
-/**************************************************************/
 //ev_c01r0101_flag_change:
 //  _END
 
@@ -55,7 +41,7 @@ INIT_EVENT_START	ev_init_c01r0101
 	IF $SCWK_TEMP0 == 1 THEN
 		//博士の案内イベント後
 		//サポート：位置変更
-		_OBJ_POS_CHANGE( C01R0101_BOY3_01, 7, 0, 11, DIR_UP )
+		_OBJ_POS_CHANGE( C01R0101_BOY3_01, 5, 0, 3, DIR_DOWN )
 	ELSE
 	
 	ENDIF
@@ -143,8 +129,15 @@ EVENT_START   ev_c01r0101_scene_change_01
 	_OBJ_ANIME( C01R0101_INVENTOR_01, anm_inventor_yudo3 )
 	_OBJ_ANIME_WAIT()	
 	
+	//マコモのOBJを消す
+	_OBJ_DEL( C01R0101_INVENTOR_01 )
+
+	//階段ＳＥ
+	_SE_PLAY(SEQ_SE_KAIDAN)
+	_SE_WAIT()
+
 	//mapchangeする
-	_MAP_CHANGE( ZONE_ID_C01R0102, 3, 11, DIR_RIGHT )
+	_MAP_CHANGE( ZONE_ID_C01R0102, 11, 2, DIR_LEFT )
 
 	//=========フラグワーク操作==========//
 
@@ -163,49 +156,47 @@ EVENT_END
 //--------------------------------------------------------------
 _ANIME_LABEL anm_player_yudo1
 	_ANIME_DATA		AC_WAIT_8F,1
-	_ANIME_DATA		AC_WALK_R_8F,4
-	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		AC_WALK_U_8F,4
+	_ANIME_DATA		AC_DIR_D,1
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_inventor_yudo1
-	_ANIME_DATA		AC_WALK_R_8F,4
-	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		AC_WALK_U_8F,4
+	_ANIME_DATA		AC_DIR_D,1
 	_ANIME_DATA		ACMD_END,0
 	
 //--------------------------------------------------------------
 //	発明家マコモ　自機の方へ向く、その場歩き
 //--------------------------------------------------------------
 _ANIME_LABEL anm_inventor_dir
-	_ANIME_DATA		AC_DIR_L,1
-	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		AC_DIR_D,1
+	_ANIME_DATA		AC_STAY_WALK_D_8F,1
 	_ANIME_DATA		ACMD_END,0
 
 //--------------------------------------------------------------
 //	自機・発明家マコモ　階段前まで移動
 //--------------------------------------------------------------
 _ANIME_LABEL anm_player_yudo2
-	_ANIME_DATA		AC_WAIT_8F,1
-	_ANIME_DATA		AC_WALK_R_8F,1
-	_ANIME_DATA		AC_WALK_D_8F,3
-	_ANIME_DATA		AC_WALK_R_8F,1
-	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		AC_WAIT_16F,1
+	_ANIME_DATA		AC_WALK_U_8F,3
+	_ANIME_DATA		AC_DIR_U,1
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_inventor_yudo2
-	_ANIME_DATA		AC_WALK_D_8F,3
-	_ANIME_DATA		AC_WALK_R_8F,2
-	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		AC_WALK_U_8F,3
+	_ANIME_DATA		AC_DIR_D,1
 	_ANIME_DATA		ACMD_END,0
 
 //--------------------------------------------------------------
 //	自機・発明家マコモ　階段前まで移動
 //--------------------------------------------------------------
 _ANIME_LABEL anm_player_yudo3
-	_ANIME_DATA		AC_WALK_R_8F,2
+	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		AC_WALK_R_8F,1
 	_ANIME_DATA		AC_DIR_R,1
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_inventor_yudo3
-	_ANIME_DATA		AC_WALK_R_8F,2
+	_ANIME_DATA		AC_WALK_R_8F,1
 	_ANIME_DATA		AC_DIR_R,1
 	_ANIME_DATA		ACMD_END,0

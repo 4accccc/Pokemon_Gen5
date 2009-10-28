@@ -94,6 +94,9 @@ init_flags:
 	_FLAG_SET( FV_R05_RIVAL )
 	_FLAG_SET( FV_R05_LEADER4 )
 
+	//C01R0101：発明家、誘導イベントまで非表示
+	_FLAG_SET( FV_C01R0101_INVENTOR_01 )
+
 	_RET
 
 //=====================================================================
