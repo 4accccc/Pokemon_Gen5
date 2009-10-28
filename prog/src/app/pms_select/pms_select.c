@@ -861,6 +861,7 @@ static BOOL ScenePlateSelect_Init( UI_SCENE_CNT_PTR cnt, void* work )
 static BOOL ScenePlateSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
 { 
   PMS_SELECT_MAIN_WORK* wk = work;
+  TOUCHBAR_ICON result;
 
   // デバッグボタンでアプリ終了
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG )
@@ -871,8 +872,11 @@ static BOOL ScenePlateSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
 	//タッチバーメイン処理
 	PMSSelect_TOUCHBAR_Main( wk->touchbar );
 
-  // タッチバー入力
-  switch( TOUCHBAR_GetTrg( wk->touchbar ) )
+  // タッチバー入力状態取得
+  result = TOUCHBAR_GetTrg( wk->touchbar );
+
+  // タッチバー入力判定
+  switch( result )
   {
   case TOUCHBAR_ICON_RETURN :
     UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
@@ -887,8 +891,8 @@ static BOOL ScenePlateSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
   default : GF_ASSERT(0);
   }
     
-  // @TODO とりあえずXでメニューを開く
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+  // @TODO とりあえずタッチでメニューを開く
+  if( result && (GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ) ) )
   {
     UI_SCENE_CNT_SetNextScene( cnt, PMSS_SCENE_ID_CMD_SELECT );
     return TRUE;

@@ -165,6 +165,7 @@ struct _PMSIV_EDIT {
 	GFL_BMPWIN	*win_yesno;
 	GFL_BMPWIN	**win_message;
 	GFL_CLWK	*cursor_actor[2];
+  //@TODO 消す
 	GFL_CLWK	*arrow_left_actor;
 	GFL_CLWK	*arrow_right_actor;
 	GFL_CLWK	*bar_actor;
@@ -483,7 +484,7 @@ static void setup_pal_datas( PMSIV_EDIT* wk, ARCHANDLE* p_handle )
 	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_pmsi_pms_bg_main_NCLR, PALTYPE_MAIN_BG,
 		 0, 14*0x20, HEAPID_PMS_INPUT_VIEW );
 	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_pmsi_pms_bg_sub_NCLR, PALTYPE_SUB_BG,
-		 0, 3*0x20, HEAPID_PMS_INPUT_VIEW );
+		 0, 4*0x20, HEAPID_PMS_INPUT_VIEW );
 
 	// 後の色変え用にヒープにも読み込んでおく
 	data_ptr = GFL_ARCHDL_UTIL_LoadPalette( p_handle, NARC_pmsi_pms_bgm_dat_NCLR, &palDat, HEAPID_PMS_INPUT_VIEW );

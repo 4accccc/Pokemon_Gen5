@@ -12,6 +12,9 @@
 #include "system\gfl_use.h"
 #include "system\wipe.h"
 
+//タスクメニュー
+#include "app/app_taskmenu.h"
+
 //タッチバー
 #include "ui/touchbar.h"
 
@@ -60,18 +63,22 @@ struct _PMS_INPUT_VIEW {
 	// メインとサブで２つずつ	
 	PMSIV_CELL_RES	resCell[2];
 
-	PMSIV_EDIT*			edit_wk;
+	PMSIV_EDIT*			  edit_wk;
 //	PMSIV_BUTTON*		button_wk;
 	PMSIV_CATEGORY*		category_wk;
 	PMSIV_WORDWIN*		wordwin_wk;
-	PMSIV_SUB*			  sub_wk;
+	PMSIV_SUB*			  sub_wk; // 現状SUBBGの読み込みだけに使われているようだったので全てコメントアウトした
+
   TOUCHBAR_WORK*    touchbar;
+  APP_TASKMENU_RES*   menu_res;
+  APP_TASKMENU_WORK*  menu;
 
 	u8					status;
 	u8					key_mode;
 
 	int*				p_key_mode;
 	
+  PRINT_QUE*     print_que;
 	GFL_FONT			*fontHandle;
 };
 
@@ -302,7 +309,6 @@ static void PMSIView_VintrTask( GFL_TCB *tcb, void* wk_adrs )
 //------------------------------------------------------------------
 void PMSIView_SetCommand( PMS_INPUT_VIEW* vwk, int cmd )
 {
-	GFL_TCB_FUNC *test = Cmd_Init;
 	GFL_TCB_FUNC *func_tbl[] = {
 		Cmd_Init,
 		Cmd_Quit,
@@ -472,7 +478,7 @@ static TOUCHBAR_WORK* touchbar_init( GFL_CLUNIT* clunit, HEAPID heap_id )
 			{	TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
 		},
 	};
-  // @TODO 左右、カテゴリ、イニシャル切替ボタン
+  // @TODO 左右、カテゴリ、イニシャル切替ボタンはタッチバーで管理しないほうが良さそう
 
 	//設定構造体
 	//さきほどの窓情報＋リソース情報をいれる
@@ -524,11 +530,36 @@ static void Cmd_Init( GFL_TCB *tcb, void* wk_adrs )
 	cwk->vwk->wordwin_wk = PMSIV_WORDWIN_Create( cwk->vwk, cwk->mwk, cwk->dwk );
 	PMSIV_WORDWIN_SetupGraphicDatas( cwk->vwk->wordwin_wk );
 
-	cwk->vwk->sub_wk = PMSIV_SUB_Create( cwk->vwk, cwk->mwk, cwk->dwk );
-	PMSIV_SUB_SetupGraphicDatas( cwk->vwk->sub_wk, p_handle );
+  // @TODO とりあえずここでSUB BGの展開 
+	GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_pmsi_pms_bg_sub_NSCR, FRM_SUB_BG, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_pmsi_pms_bg_sub_NCGR, FRM_SUB_BG, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
+	
+  // @TODO 背面BG展開 今展開すると何故かキャラバケする
+#if 0
+	GFL_ARCHDL_UTIL_TransVramScreen(p_handle, NARC_pmsi_pms_bg_main3_NSCR,
+		FRM_MAIN_BACK, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
+
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(p_handle, NARC_pmsi_pms_bg_main3_NCGR,
+		FRM_MAIN_BACK, 200, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
+#endif 
+
+//	cwk->vwk->sub_wk = PMSIV_SUB_Create( cwk->vwk, cwk->mwk, cwk->dwk );
+//	PMSIV_SUB_SetupGraphicDatas( cwk->vwk->sub_wk, p_handle );
 
   // タッチバー
   cwk->vwk->touchbar = touchbar_init( cwk->vwk->cellUnit, HEAPID_PMS_INPUT_VIEW );
+
+  // タスクメニュー リソース展開
+  {
+    cwk->vwk->menu_res = APP_TASKMENU_RES_Create( 
+        FRM_MAIN_BACK, PALNUM_MAIN_TASKMENU, 
+        cwk->vwk->fontHandle, 
+        cwk->vwk->print_que, 
+        HEAPID_PMS_INPUT_VIEW );
+  }
+
+  // @TODO
+  // デフォルトはエディットエリアなのでエディットエリアの初期化
 
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
@@ -590,9 +621,13 @@ static void Cmd_Quit( GFL_TCB *tcb, void* wk_adrs )
 //	  PMSIV_BUTTON_Delete( cwk->vwk->button_wk );
 			PMSIV_CATEGORY_Delete( cwk->vwk->category_wk );
 			PMSIV_WORDWIN_Delete( cwk->vwk->wordwin_wk );
-			PMSIV_SUB_Delete( cwk->vwk->sub_wk );
+//		PMSIV_SUB_Delete( cwk->vwk->sub_wk );
 
+      // タッチバー開放
       TOUCHBAR_Exit( cwk->vwk->touchbar );
+
+      // タスクメニュー リソース開放
+      APP_TASKMENU_RES_Delete( cwk->vwk->menu_res );
 
 			for(i=0; i<2; i++)
 			{
@@ -601,6 +636,8 @@ static void Cmd_Quit( GFL_TCB *tcb, void* wk_adrs )
 				GFL_CLGRP_CELLANIM_Release( cwk->vwk->resCell[i].anmIdx );
 			}
 			GFL_FONT_Delete(vwk->fontHandle);
+			
+      PRINTSYS_QUE_Delete(vwk->print_que);
 			
 			GFL_BG_FreeBGControl( FRM_MAIN_EDITAREA );
 			GFL_BG_FreeBGControl( FRM_MAIN_CATEGORY );
@@ -700,6 +737,8 @@ static void setup_bg_params( COMMAND_WORK* cwk )
 
 	//ボタンフォント読み出し
 	vwk->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , HEAPID_PMS_INPUT_VIEW );
+      
+  vwk->print_que = PRINTSYS_QUE_Create( HEAPID_PMS_INPUT_VIEW );
 }
 
 
@@ -1109,7 +1148,7 @@ static void Cmd_WordWinToCategory( GFL_TCB *tcb, void* wk_adrs )
 
 	case 1:
 		PMSIV_WORDWIN_VisibleCursor( vwk->wordwin_wk, FALSE );
-		PMSIV_SUB_VisibleArrowButton( vwk->sub_wk, FALSE );
+//		PMSIV_SUB_VisibleArrowButton( vwk->sub_wk, FALSE );
 		PMSIV_WORDWIN_StartFadeOut( vwk->wordwin_wk );
 		wk->seq++;
 		break;
@@ -1159,7 +1198,7 @@ static void Cmd_WordWinToEditArea( GFL_TCB *tcb, void* wk_adrs )
 	case 0:
 //		PMSIV_BUTTON_Appear( vwk->button_wk );
 		PMSIV_WORDWIN_VisibleCursor( vwk->wordwin_wk, FALSE );
-		PMSIV_SUB_VisibleArrowButton( vwk->sub_wk, FALSE );
+//		PMSIV_SUB_VisibleArrowButton( vwk->sub_wk, FALSE );
 		PMSIV_WORDWIN_StartFadeOut( vwk->wordwin_wk );
 		PMSIV_EDIT_ChangeSMsgWin(vwk->edit_wk,0);
 		PMSIV_EDIT_SetSystemMessage( vwk->edit_wk,PMSIV_MSG_GUIDANCE);
@@ -1215,7 +1254,7 @@ static void Cmd_WordWinToButton( GFL_TCB *tcb, void* wk_adrs )
 	case 0:
 //		PMSIV_BUTTON_Appear( vwk->button_wk );
 		PMSIV_WORDWIN_VisibleCursor( vwk->wordwin_wk, FALSE );
-		PMSIV_SUB_VisibleArrowButton( vwk->sub_wk, FALSE );
+//		PMSIV_SUB_VisibleArrowButton( vwk->sub_wk, FALSE );
 		PMSIV_WORDWIN_StartFadeOut( vwk->wordwin_wk );
 		wk->seq++;
 		break;
@@ -1339,7 +1378,7 @@ static void Cmd_ScrollWordWin( GFL_TCB *tcb, void* wk_adrs  )
 	case 1:
 		if( PMSIV_WORDWIN_WaitScroll( vwk->wordwin_wk ) )
 		{
-			PMSIV_SUB_VisibleArrowButton( vwk->sub_wk, TRUE );
+//			PMSIV_SUB_VisibleArrowButton( vwk->sub_wk, TRUE );
 			DeleteCommand( wk );
 		}
 		break;
@@ -1501,7 +1540,7 @@ static void Cmd_ButtonUpHold(GFL_TCB *tcb, void* wk_adrs)
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
 
-	PMSIV_SUB_ChangeArrowButton( vwk->sub_wk, SUB_BUTTON_UP, SUB_BUTTON_STATE_HOLD );
+//	PMSIV_SUB_ChangeArrowButton( vwk->sub_wk, SUB_BUTTON_UP, SUB_BUTTON_STATE_HOLD );
 
 	DeleteCommand( wk );
 }
@@ -1519,7 +1558,7 @@ static void Cmd_ButtonDownHold(GFL_TCB *tcb, void* wk_adrs)
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
 
-	PMSIV_SUB_ChangeArrowButton( vwk->sub_wk, SUB_BUTTON_DOWN, SUB_BUTTON_STATE_HOLD );
+//	PMSIV_SUB_ChangeArrowButton( vwk->sub_wk, SUB_BUTTON_DOWN, SUB_BUTTON_STATE_HOLD );
 
 	DeleteCommand( wk );
 }
@@ -1537,7 +1576,7 @@ static void Cmd_ButtonUpRelease(GFL_TCB *tcb, void* wk_adrs)
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
 
-	PMSIV_SUB_ChangeArrowButton( vwk->sub_wk, SUB_BUTTON_UP, SUB_BUTTON_STATE_RELEASE );
+//	PMSIV_SUB_ChangeArrowButton( vwk->sub_wk, SUB_BUTTON_UP, SUB_BUTTON_STATE_RELEASE );
 
 	DeleteCommand( wk );
 }
@@ -1555,7 +1594,7 @@ static void Cmd_ButtonDownRelease(GFL_TCB *tcb, void* wk_adrs)
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
 
-	PMSIV_SUB_ChangeArrowButton( vwk->sub_wk, SUB_BUTTON_DOWN, SUB_BUTTON_STATE_RELEASE );
+//	PMSIV_SUB_ChangeArrowButton( vwk->sub_wk, SUB_BUTTON_DOWN, SUB_BUTTON_STATE_RELEASE );
 
 	DeleteCommand( wk );
 }

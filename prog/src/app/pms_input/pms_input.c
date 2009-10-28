@@ -18,6 +18,8 @@
 
 #include "test/ariizumi/ari_debug.h"
 
+FS_EXTERN_OVERLAY(ui_common);
+
 //------------------------------------------------------
 /**
 	* 定数定義
@@ -226,9 +228,6 @@ struct _PMS_INPUT_WORK{
 	int          sub_seq;
 	SubProc      sub_proc;
 
-
-
-
 	u16           key_trg;
 	u16           key_cont;
 	u16           key_repeat;
@@ -343,6 +342,10 @@ GFL_PROC_RESULT PMSInput_Init( GFL_PROC * proc, int * seq , void *pwk, void *myw
 
 	switch( *seq ){
 	case 0:
+	
+    //オーバーレイ読み込み
+	  GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
+
 #if PMS_USE_SND
 		Snd_DataSetByScene( SND_SCENE_SUB_PMS, 0, 0 );	// サウンドデータロード(PMS)(BGM引継ぎ)
 #endif
@@ -481,6 +484,9 @@ GFL_PROC_RESULT PMSInput_Quit( GFL_PROC * proc, int * seq , void *pwk, void *myw
 
 	GFL_HEAP_DeleteHeap( HEAPID_PMS_INPUT_SYSTEM );
 	GFL_HEAP_DeleteHeap( HEAPID_PMS_INPUT_VIEW );
+
+	//オーバーレイ破棄
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -2345,8 +2351,8 @@ static void word_input_key(PMS_INPUT_WORK* wk,int* seq)
 
 		wk->word_win.touch_pos = 0xFFFF;
 		set_select_word( wk );
-		wk->next_proc = MainProc_EditArea;
 		PMSIView_SetCommand( wk->vwk, VCMD_WORDTIN_TO_EDITAREA );
+		wk->next_proc = MainProc_EditArea;
 		(*seq) = SEQ_WORD_CHANGE_NEXTPROC;
 		return;
 	}
