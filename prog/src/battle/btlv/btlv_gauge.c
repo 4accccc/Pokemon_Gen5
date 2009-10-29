@@ -658,7 +658,11 @@ void  BTLV_GAUGE_CalcHP( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos, int value )
 //============================================================================================
 void  BTLV_GAUGE_CalcEXP( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos, int value )
 { 
-  Gauge_InitCalcEXP( &bgw->bgcl[ pos ], value );
+  //3vs3では経験値メータが存在しないので、チェックする
+  if( bgw->bgcl[ pos ].exp_clwk )
+  { 
+    Gauge_InitCalcEXP( &bgw->bgcl[ pos ], value );
+  }
 }
 
 //============================================================================================
