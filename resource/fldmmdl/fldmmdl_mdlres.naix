@@ -22,7 +22,7 @@ enum {
 	NARC_fldmmdl_mdlres_shopm1_nsbtx = 8,
 	NARC_fldmmdl_mdlres_pcwoman1_nsbtx = 9,
 	NARC_fldmmdl_mdlres_pcwoman2_nsbtx = 10,
-	NARC_fldmmdl_mdlres_pcwoman3_nsbtx = 11,
+	NARC_fldmmdl_mdlres_wifisw_nsbtx = 11,
 	NARC_fldmmdl_mdlres_tree_nsbtx = 12,
 	NARC_fldmmdl_mdlres_rock_nsbtx = 13,
 	NARC_fldmmdl_mdlres_monsterball_nsbtx = 14,

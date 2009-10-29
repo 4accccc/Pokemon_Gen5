@@ -10,7 +10,7 @@ FMMDL_RESLIST_NCGIMD = \
 	shopm1.imd \
 	pcwoman1.imd \
 	pcwoman2.imd \
-	pcwoman3.imd \
+	wifisw.imd \
 	tree.imd \
 	rock.imd \
 	monsterball.imd \
