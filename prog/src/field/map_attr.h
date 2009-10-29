@@ -91,4 +91,4 @@ extern BOOL MAPATTR_VALUE_CheckSnow( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckDeepSnow( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckSnowType( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckIce( const MAPATTR_VALUE val );
-
+extern BOOL MAPATTR_VALUE_CheckMarsh( const MAPATTR_VALUE val );

@@ -15,6 +15,8 @@
 
 #include "fldeff_gyoe.h"
 
+#include "sound/pm_sndsys.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -180,6 +182,10 @@ FLDEFF_TASK * FLDEFF_GYOE_SetMMdl( FLDEFF_CTRL *fectrl,
   head.mmdl = mmdl;
   MMDL_InitCheckSameData( mmdl, &head.samedata );
   
+  if( se_play == TRUE ){
+    PMSND_PlaySE( SEQ_SE_FLD_07 );
+  }
+
   return( FLDEFF_CTRL_AddTask(fectrl,&DATA_gyoeTaskHeader,NULL,0,&head,0) );
 }
 
@@ -204,6 +210,10 @@ FLDEFF_TASK * FLDEFF_GYOE_SetMMdlNonDepend( FLDEFF_CTRL *fectrl,
   head.eff_gyoe = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_GYOE );
   head.mmdl = mmdl;
   MMDL_InitCheckSameData( mmdl, &head.samedata );
+  
+  if( se_play == TRUE ){
+    PMSND_PlaySE( SEQ_SE_FLD_07 );
+  }
   
   return( FLDEFF_CTRL_AddTask(fectrl,&DATA_gyoeTaskHeader_only,NULL,0,&head,0) );
 }

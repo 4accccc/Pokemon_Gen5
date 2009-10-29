@@ -1191,6 +1191,7 @@ BOOL FIELDMAP_SetPlayerItemCycle( FIELDMAP_WORK *fieldWork )
     }
     else if( form == PLAYER_MOVE_FORM_NORMAL )
     {
+      PMSND_PlaySE( SEQ_SE_BICYCLE );
       FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_REQBIT_CYCLE );
       return( TRUE );
     }

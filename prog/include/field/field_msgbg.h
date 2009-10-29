@@ -184,9 +184,9 @@ extern void FLDMENUFUNC_AddArcStringListData(
 extern u32 FLDMENUFUNC_GetListLengthMax( const FLDMENUFUNC_LISTDATA *listData );
 extern u32 FLDMENUFUNC_GetListMax( const FLDMENUFUNC_LISTDATA *listData );
 extern u32 FLDMENUFUNC_GetListMenuWidth(
-    const FLDMENUFUNC_LISTDATA *listData, u32 font_size );
+    const FLDMENUFUNC_LISTDATA *listData, u32 font_size, u32 font_space );
 extern u32 FLDMENUFUNC_GetListMenuHeight(
-    const FLDMENUFUNC_LISTDATA *listData, u32 font_size );
+    const FLDMENUFUNC_LISTDATA *listData, u32 font_size, u32 font_space );
 extern void FLDMENUFUNC_InputHeaderListSize(
 	FLDMENUFUNC_HEADER *head, u16 count,
 	u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y );

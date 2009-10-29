@@ -1208,17 +1208,19 @@ u32 FLDMENUFUNC_GetListMax( const FLDMENUFUNC_LISTDATA *listData )
  * 必要なメニュー横幅を取得。
  * @param listData FLDMENUFUNC_LISTDATA
  * @param font_size フォント横サイズ
+ * @param space 文字列の表示間隔
  * @retval u32 メニュー横幅 キャラ単位
  */
 //--------------------------------------------------------------
 u32 FLDMENUFUNC_GetListMenuWidth(
-    const FLDMENUFUNC_LISTDATA *listData, u32 font_size )
+    const FLDMENUFUNC_LISTDATA *listData, u32 font_size, u32 space )
 {
   u32 c,len = FLDMENUFUNC_GetListLengthMax( listData );
   len++; //カーソル分
   len *= font_size;
   c = len / 8;
   if( (len & 0x07) ){ c++; }
+  if( space ){ c += ((len*space)/8)+1; }
   return( c );
 }
 
@@ -1227,17 +1229,18 @@ u32 FLDMENUFUNC_GetListMenuWidth(
  * FLDMENUFUNC_LISTDATAに格納されているリスト数から
  * 必要なメニュー縦幅を取得。
  * @param listData FLDMENUFUNC_LISTDATA
- * @param font_size フォント横サイズ
+ * @param font_size フォント縦サイズ
+ * @param space 列の表示間隔
  * @retval u32 メニュー縦幅 キャラ単位
  */
 //--------------------------------------------------------------
 u32 FLDMENUFUNC_GetListMenuHeight(
-    const FLDMENUFUNC_LISTDATA *listData, u32 font_size )
+    const FLDMENUFUNC_LISTDATA *listData, u32 font_size, u32 space )
 {
   u32 c,len = FLDMENUFUNC_GetListMax( listData );
   len *= font_size;
   c = len / 8;
-  if( (len & 0x07) ){ c++; }
+  if( space ){ c += ((len*space)/8)+1; }
   return( c );
 }
 

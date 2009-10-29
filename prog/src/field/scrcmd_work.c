@@ -471,9 +471,9 @@ void SCRCMD_WORK_StartMenu( SCRCMD_WORK *work )
   FLDMENUFUNC_HEADER menuH = data_MenuHeader;
 
   sx = FLDMENUFUNC_GetListMenuWidth(
-      menuWork->listData, menuH.font_size_x );
+      menuWork->listData, menuH.font_size_x, menuH.msg_spc );
   sy = FLDMENUFUNC_GetListMenuHeight(
-      menuWork->listData, menuH.font_size_y );
+      menuWork->listData, menuH.font_size_y, menuH.line_spc );
   count = FLDMENUFUNC_GetListMax( menuWork->listData );
   FLDMENUFUNC_InputHeaderListSize(
       &menuH, count, menuWork->x, menuWork->y, sx, sy );

@@ -127,6 +127,7 @@ struct _TAG_FIELD_PLAYER_GRID
 static void gjiki_InitMoveStartCommon(
     FIELD_PLAYER_GRID *gjiki, u16 key_prs, PLAYER_SET set );
 static BOOL gjiki_CheckMoveStart( FIELD_PLAYER_GRID *gjiki, u16 dir );
+static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki, PLAYER_SET set, u16 dir );
 
 //キー入力処理
 static u16 gjiki_GetInputKeyDir(
@@ -392,6 +393,7 @@ void FIELD_PLAYER_GRID_Move(
   
   gjiki_InitMoveStartCommon( gjiki, key_cont, set );
   gjiki_SetMove( gjiki, set, key_trg, key_cont, dir, debug_flag );
+  gjiki_PlaySE( gjiki, set, dir );
 }
 
 //--------------------------------------------------------------
@@ -438,6 +440,45 @@ static BOOL gjiki_CheckMoveStart( FIELD_PLAYER_GRID *gjiki, u16 dir )
   }
   
   return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動開始時に鳴らすSE
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki, PLAYER_SET set, u16 dir )
+{
+  if( set == PLAYER_SET_WALK ){
+    VecFx32 pos;
+    MAPATTR attr;
+    MMDL *mmdl = FIELD_PLAYER_GetMMdl( gjiki->fld_player );
+    
+    MMDL_GetVectorPos( mmdl, &pos );
+    MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+    
+    if( MMDL_GetMapPosAttr(mmdl,&pos,&attr) == TRUE ){
+      int se;
+      MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( attr );
+      MAPATTR_VALUE val = MAPATTR_GetAttrValue( attr );
+      
+      if( (flag & MAPATTR_FLAGBIT_GRASS) ){
+        se = SEQ_SE_FLD_09;
+        if( MAPATTR_VALUE_CheckLongGrass(val) == TRUE ){
+          se = SEQ_SE_FLD_08;
+        }
+        PMSND_PlaySE( se );
+      }else{
+        if( MAPATTR_VALUE_CheckShoal(val) == TRUE ||
+            MAPATTR_VALUE_CheckPool(val) == TRUE  ||
+            MAPATTR_VALUE_CheckMarsh(val) == TRUE ){
+          PMSND_PlaySE( SEQ_SE_FLD_13 );
+        }
+      }
+    }
+  }
 }
 
 //======================================================================

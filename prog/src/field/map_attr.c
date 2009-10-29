@@ -556,3 +556,15 @@ BOOL MAPATTR_VALUE_CheckIce( const MAPATTR_VALUE val )
 {
   return( val == 0x18 );
 }
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　湿原
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckMarsh( const MAPATTR_VALUE val )
+{
+  return( val == 0x1c );
+}

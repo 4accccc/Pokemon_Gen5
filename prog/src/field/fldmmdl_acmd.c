@@ -1637,9 +1637,8 @@ static int AC_Jump_1( MMDL * mmdl )
 	MMDL_CallDrawProc( mmdl );						//1ÉtÉåÅ[ÉÄêiÇﬂÇÈ
 	MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
 	MMDL_IncAcmdSeq( mmdl );
-#if 0
-	Snd_SePlay( SE_SUTYA2 );
-#endif
+  
+  PMSND_PlaySE( SEQ_SE_FLD_10 );
 	return( TRUE );
 }
 
