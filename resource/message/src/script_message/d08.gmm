@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00207" date="2009-10-29T20:58:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="267"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,11 +292,43 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_d08_leader7_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・c07ジムバッジ取得後に
+　c07フィールドでのイベントが終了すると
+　ここに登場
+・主人公がposを踏むと
+　メッセージ表示後、倍速移動で竜の塔に</comment>
+		<attribute name="キャラ指定">LEADER
+ハチク</attribute>
+		<language name="JPN" width="256">ハチク『……ゆるせぬ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ハチク『……許せぬ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08_hakaim2_01">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">HAKAIM
+プラズマ団♂</attribute>
+		<language name="JPN" width="256">ゲーチスさまが
+つくりあげた　プラズマほう！[BE:01:ページ切り替え（クリア）]
+リュウラセンのとうを　ぶちあけたぞ！</language>
+		<language name="JPN_KANJI" width="256">ゲーチスさまが
+つくりあげた　プラズマ砲！[BE:01:ページ切り替え（クリア）]
+リュウラセンの塔を　ぶちあけたぞ！</language>
+	</row>
+
+	<row id="msg_d08_hakaiw1_01">
+		<comment>♀
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">HAKAIW
+プラズマ団♀</attribute>
+		<language name="JPN" width="256">とうの　なかに　とじこめられていた
+すうせんねんの　れきしが[BE:00:ページ切り替え（行送り）]
+いま　われわれの　ものに！</language>
+		<language name="JPN_KANJI" width="256">塔の中に　閉じ込められていた
+数千年の　歴史が[BE:00:ページ切り替え（行送り）]
+今　われわれの　ものに！</language>
 	</row>
 
 	<flowchart-group-list>
