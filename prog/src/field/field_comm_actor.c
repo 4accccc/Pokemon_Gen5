@@ -388,6 +388,7 @@ static void fldcommAct_fmmdl_SetWatchData(
 //--------------------------------------------------------------
 static u16 grid_ChangeFourDir( u16 dir )
 {
+#if 0 //4•ûŒü‚Å“ˆê
 	if( (dir>0x2000) && (dir<0x6000) ){
 		dir = DIR_LEFT;
 	}else if( (dir >= 0x6000) && (dir <= 0xa000) ){
@@ -397,6 +398,7 @@ static u16 grid_ChangeFourDir( u16 dir )
 	}else{
 		dir = DIR_UP;
 	}
+#endif
 	return( dir );
 }
 
