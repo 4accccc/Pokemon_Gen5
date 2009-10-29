@@ -340,13 +340,13 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
       }
       if( work->scrollOffset != 0 )
       {
+				PMSND_PlaySystemSE( SEQ_SE_OPEN1 );
         work->state = FMS_WAIT_MOVEIN;
       }
       else
       {
         work->state = FMS_LOOP;
       }
-      PMSND_PlaySystemSE( SEQ_SE_OPEN1 );
     }
     break;
     

@@ -76,7 +76,7 @@ struct _TAG_FMENU_EVENT_WORK
   GMEVENT *gmEvent;
   GAMESYS_WORK *gmSys;
   FIELDMAP_WORK *fieldWork;
-  
+	FIELD_MENU_ITEM_TYPE	item_type;
   FMENU_STATE state;
   
   FIELD_SUBSCREEN_MODE return_subscreen_mode;
@@ -227,6 +227,9 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
       GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
       const FIELD_MENU_ITEM_TYPE type = FIELD_SUBSCREEN_GetTopMenuItemNo( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) );
       GAMEDATA_SetSubScreenType( gameData , type );
+
+			mwk->item_type	= FIELD_SUBSCREEN_GetTopMenuItemNo( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) );
+
 			mwk->link.call	= FldMapGetProclinkToMenuItem( type );
 			mwk->state			= FMENUSTATE_CALL_PROC;
      }
@@ -397,6 +400,8 @@ static void FldMapMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void *w
 		// fieldmap.cのサブスクリーンモード読み直しでinit->exit->initをしてしまい、
 		// PRINTQUEバッファを実行する前に終えてしまう
 		//FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_TOPMENU);
+	
+		FIELD_SUBSCREEN_SetTopMenuItemNo( subscreen, mwk->item_type );
 	}
 }
 //----------------------------------------------------------------------------
@@ -410,5 +415,5 @@ static void FldMapMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void *w
 static void FldMapMenu_Close_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs )
 {	
 	FMENU_EVENT_WORK *mwk	= wk_adrs;
-	FIELD_SUBSCREEN_SetTopMenuItemNo( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) , FMIT_NONE );
+	//FIELD_SUBSCREEN_SetTopMenuItemNo( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) , mwk->item_type );
 }

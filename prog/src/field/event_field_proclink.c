@@ -167,11 +167,11 @@ static RETURNFUNC_RESULT FMenuReturnProc_WifiNote(PROCLINK_WORK* wk,void* param_
 ///	レポートと図鑑のイベント
 //=====================================
 static GMEVENT * createFMenuMsgWinEvent(
-  GAMESYS_WORK *gsys, u32 heapID, u32 strID, FLDMSGBG *msgBG, PROCLINK_CALLBACK_WORK *callback );
+  GAMESYS_WORK *gsys, u32 heapID, u32 strID, FLDMSGBG *msgBG );
 static GMEVENT_RESULT FMenuMsgWinEvent( GMEVENT *event, int *seq, void *wk );
 
 static GMEVENT * createFMenuReportEvent(
-  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u32 heapID, FLDMSGBG *msgBG, PROCLINK_CALLBACK_WORK *callback );
+  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u32 heapID, FLDMSGBG *msgBG );
 static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk );
 
 
@@ -441,6 +441,9 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
 	//=====================================
 	case SEQ_EVENT_CALL:
 		GF_ASSERT( wk->now_type < EVENT_PROCLINK_CALL_MAX );
+
+		PROCLINK_CALLBACK_Close( &wk->callback );
+
 		ProcLinkData[ wk->now_type ].event_func( wk, wk->param->data );
 		*seq	= SEQ_EVENT_WAIT;
 		break;
@@ -450,6 +453,7 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
 		break;
 
 	case SEQ_EVENT_RETURN:
+		PROCLINK_CALLBACK_Open( &wk->callback );
 		*seq	= SEQ_JUNCTION;
 		break;
 
@@ -876,7 +880,7 @@ static RETURNFUNC_RESULT FMenuReturnProc_PokeList(PROCLINK_WORK* wk,void* param_
 static void FMenuEvent_Zukan( PROCLINK_WORK* wk, u32 param )
 {	
 	GMEVENT * subevent = createFMenuMsgWinEvent( wk->param->gsys, wk->heapID,
-    FLDMAPMENU_STR08, FIELDMAP_GetFldMsgBG(wk->param->field_wk), &wk->callback );
+    FLDMAPMENU_STR08, FIELDMAP_GetFldMsgBG(wk->param->field_wk) );
   GMEVENT_CallEvent(wk->event, subevent);
 
 	wk->result	= RETURNFUNC_RESULT_RETURN;
@@ -1336,7 +1340,7 @@ static RETURNFUNC_RESULT FMenuReturnProc_Config(PROCLINK_WORK* wk,void* param_ad
 static void FMenuEvent_Report( PROCLINK_WORK* wk, u32 param )
 {	
 	GMEVENT * subevent = createFMenuReportEvent( wk->param->gsys, wk->param->field_wk, wk->heapID,
-      FIELDMAP_GetFldMsgBG(wk->param->field_wk), &wk->callback );
+      FIELDMAP_GetFldMsgBG(wk->param->field_wk ) );
   GMEVENT_CallEvent(wk->event, subevent);
 
 	wk->result	= RETURNFUNC_RESULT_RETURN;
@@ -1411,13 +1415,12 @@ typedef struct
   FLDMSGBG *msgBG;
   GFL_MSGDATA *msgData;
   FLDMSGWIN *msgWin;
-	PROCLINK_CALLBACK_WORK *callback;
 }FMENU_MSGWIN_EVENT_WORK;
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static GMEVENT * createFMenuMsgWinEvent(
-  GAMESYS_WORK *gsys, u32 heapID, u32 strID, FLDMSGBG *msgBG, PROCLINK_CALLBACK_WORK *callback )
+  GAMESYS_WORK *gsys, u32 heapID, u32 strID, FLDMSGBG *msgBG )
 {
   GMEVENT * msgEvent;
   FMENU_MSGWIN_EVENT_WORK *work;
@@ -1429,7 +1432,6 @@ static GMEVENT * createFMenuMsgWinEvent(
   work->msgBG = msgBG;
   work->heapID = heapID;
   work->strID = strID;
-	work->callback	= callback;
   return msgEvent;
 }
 
@@ -1450,7 +1452,6 @@ static GMEVENT_RESULT FMenuMsgWinEvent( GMEVENT *event, int *seq, void *wk )
     work->msgWin = FLDMSGWIN_AddTalkWin( work->msgBG, work->msgData );
     FLDMSGWIN_Print( work->msgWin, 0, 0, work->strID );
     GXS_SetMasterBrightness(-16);
-		PROCLINK_CALLBACK_Close( work->callback );
     (*seq)++;
     break;
   case 1:
@@ -1469,9 +1470,8 @@ static GMEVENT_RESULT FMenuMsgWinEvent( GMEVENT *event, int *seq, void *wk )
   case 3:
     FLDMSGWIN_Delete( work->msgWin );
     GFL_MSG_Delete( work->msgData );
-		PROCLINK_CALLBACK_Open( work->callback );
     GXS_SetMasterBrightness(0);
-    if(0){
+/*    {
       GAMESYS_WORK *gameSys = GMEVENT_GetGameSysWork( event );
       GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
       FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( gameSys );
@@ -1479,7 +1479,7 @@ static GMEVENT_RESULT FMenuMsgWinEvent( GMEVENT *event, int *seq, void *wk )
       const FIELD_MENU_ITEM_TYPE type = GAMEDATA_GetSubScreenType( gameData );
       FIELD_SUBSCREEN_SetTopMenuItemNo( FIELDMAP_GetFieldSubscreenWork(fieldWork) , type );
     }
-    return( GMEVENT_RES_FINISH );
+ */   return( GMEVENT_RES_FINISH );
   }
 
   return( GMEVENT_RES_CONTINUE );
@@ -1499,13 +1499,12 @@ typedef struct
   FLDMSGWIN *msgWin;
   GAMESYS_WORK *gsys;
   FIELDMAP_WORK *fieldWork;
-	PROCLINK_CALLBACK_WORK *callback;
 }FMENU_REPORT_EVENT_WORK;
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static GMEVENT * createFMenuReportEvent(
-  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u32 heapID, FLDMSGBG *msgBG, PROCLINK_CALLBACK_WORK *callback )
+  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u32 heapID, FLDMSGBG *msgBG )
 {
   GMEVENT * msgEvent;
   FMENU_REPORT_EVENT_WORK *work;
@@ -1518,7 +1517,6 @@ static GMEVENT * createFMenuReportEvent(
   work->heapID = heapID;
   work->gsys = gsys;
   work->fieldWork = fieldWork;
-	work->callback	= callback;
   return msgEvent;
 }
 
@@ -1572,7 +1570,6 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
         //本来ならレポート用への切り替え？
         //FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_TOPMENU);
         GXS_SetMasterBrightness(-16);
-				PROCLINK_CALLBACK_Close( work->callback );
         (*seq)++;
       }
     }
@@ -1639,8 +1636,7 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
     //本来ならメニューへの切り替え？
     //FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_TOPMENU);
     GXS_SetMasterBrightness(0);
-		PROCLINK_CALLBACK_Open( work->callback );
-    if(0){
+/*    {
       GAMESYS_WORK *gameSys = GMEVENT_GetGameSysWork( event );
       GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
       FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( gameSys );
@@ -1648,7 +1644,7 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
       const FIELD_MENU_ITEM_TYPE type = GAMEDATA_GetSubScreenType( gameData );
       FIELD_SUBSCREEN_SetTopMenuItemNo( FIELDMAP_GetFieldSubscreenWork(fieldWork) , type );
     }
-    return( GMEVENT_RES_FINISH );
+*/    return( GMEVENT_RES_FINISH );
     break;
     
     //セーブできません
@@ -1668,8 +1664,8 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
   case 22:
     FLDMSGWIN_Delete( work->msgWin );
     GFL_MSG_Delete( work->msgData );
-    //GXS_SetMasterBrightness(0);
-    if(0){
+    GXS_SetMasterBrightness(0);
+/*    {
       GAMESYS_WORK *gameSys = GMEVENT_GetGameSysWork( event );
       GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
       FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( gameSys );
@@ -1678,8 +1674,7 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
       FIELD_SUBSCREEN_SetTopMenuItemNo( FIELDMAP_GetFieldSubscreenWork(fieldWork) , type );
 
     }
-		PROCLINK_CALLBACK_Open( work->callback );
-    return( GMEVENT_RES_FINISH );
+*/    return( GMEVENT_RES_FINISH );
     break;
   }
 
