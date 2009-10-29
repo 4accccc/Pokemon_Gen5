@@ -136,7 +136,7 @@ GMEVENT * EVENT_NameInput_PartyPoke(
 
   // インデックスを検査
   {
-    GAMEDATA*  gdata = GAMESYSTEM_GetGameData( work->gsys );
+    GAMEDATA*  gdata = GAMESYSTEM_GetGameData( gsys );
     POKEPARTY* party = GAMEDATA_GetMyPokemon( gdata );
     int  party_count = PokeParty_GetPokeCount( party );
     if( (party_index < 0) || (party_count <= party_index) )
