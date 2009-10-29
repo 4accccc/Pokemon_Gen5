@@ -157,7 +157,7 @@ EVENT_START   ev_c01r0102_inventor_01
 	//重要アイテム「？？？」を所持しているか、いないかの分岐
 	
 		//重要アイテム「？？？」を持っていない場合
-		IF $WK_SCENE_T01R0102 <= 5 THEN
+		IF $WK_SCENE_D01R0101 <= 5 THEN
 		
 			//マコモ『ゆめのあとちに　いる　ふしぎなポケモン』
 			_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0102_inventor_07 )
