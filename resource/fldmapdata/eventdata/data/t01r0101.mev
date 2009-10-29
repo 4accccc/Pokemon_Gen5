@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/15 17:48:53
+#save date:2009/10/29 17:47:39
 # linked worldmap file name
 c:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t01r0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/15 17:48:53
+#save date:2009/10/29 17:47:39
 2
 #hold event type:
 1
@@ -47,7 +47,7 @@ T01R0101_SUPPORT_01
 #OBJ CODE Number
 SUPPORT
 #MOVE CODE Number
-MV_DMY
+MV_RIGHT
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -76,7 +76,7 @@ T01R0101_RIVAL_01
 #OBJ CODE Number
 RIVEL
 #MOVE CODE Number
-MV_DMY
+MV_RIGHT
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -101,7 +101,7 @@ DIR_RIGHT
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/15 17:48:53
+#save date:2009/10/29 17:47:39
 2
 #hold event type:
 1
@@ -111,7 +111,7 @@ DIR_RIGHT
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/15 17:48:53
+#save date:2009/10/29 17:47:39
 2
 #hold event type:
 1
@@ -121,7 +121,7 @@ DIR_RIGHT
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/15 17:48:53
+#save date:2009/10/29 17:47:39
 2
 #hold event type:
 1
