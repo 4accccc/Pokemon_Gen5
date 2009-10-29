@@ -52,8 +52,6 @@
 #define	FCOL_S12W		( PRINTSYS_LSB_Make(15,2,0) )	// フォントカラー：白
 //#define	FCOL_T12B		( PRINTSYS_LSB_Make(1,2,15) )	// フォントカラー：黒
 
-#define	SET_STR_SCRN_END	( 0xff )		// 転送ウィンドウ終了
-
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -198,7 +196,7 @@ static const u8 P1_PutWin[] = {
 	WIN_P1_BALL,			// 「ボール」
 	WIN_P1_BATTLE,		// 「せんとうよう」
 	WIN_P1_LASTITEM,	// 「さいごにつかったどうぐ」
-	SET_STR_SCRN_END
+	BAPPTOOL_SET_STR_SCRN_END
 };
 
 // ページ２
@@ -217,7 +215,7 @@ static const u8 P2_PutWin[] = {
 	WIN_P2_NUM6,			// 道具数６
 	WIN_P2_POCKET,		// ポケット名
 	WIN_P2_PAGENUM,		// ページ数（アイテム数）
-	SET_STR_SCRN_END
+	BAPPTOOL_SET_STR_SCRN_END
 };
 
 // ページ２（スワップ用）
@@ -236,7 +234,7 @@ static const u8 P2S_PutWin[] = {
 	WIN_P2_NUM6_S,		// 道具数６（スワップ用）
 	WIN_P2_POCKET,		// ポケット名
 	WIN_P2_PAGENUM,		// ページ数（アイテム数）
-	SET_STR_SCRN_END
+	BAPPTOOL_SET_STR_SCRN_END
 };
 
 // ページ３
@@ -245,7 +243,7 @@ static const u8 P3_PutWin[] = {
 	WIN_P3_NUM,			// 個数
 	WIN_P3_INFO,		// 説明
 	WIN_P3_USE,			// 「つかう」
-	SET_STR_SCRN_END
+	BAPPTOOL_SET_STR_SCRN_END
 };
 
 
@@ -1041,6 +1039,7 @@ void BBAGBMP_PrintMain( BBAG_WORK * wk )
 
 void BBAGBMP_SetStrScrn( BBAG_WORK * wk )
 {
+/*
 	u32	i = 0;
 
 	while(1){
@@ -1050,4 +1049,6 @@ void BBAGBMP_SetStrScrn( BBAG_WORK * wk )
 		BAPPTOOL_PrintScreenTrans( &wk->add_win[wk->putWin[i]] );
 		i++;
 	}
+*/
+	BAPPTOOL_SetStrScrn( wk->add_win, wk->putWin );
 }

@@ -203,5 +203,9 @@ extern void BAPPTOOL_MoveCursorPoint( BAPP_CURSOR_PUT_WORK * wk, const CURSORMOV
 extern void BAPPTOOL_PrintScreenTrans( PRINT_UTIL * util );
 extern void BAPPTOOL_PrintUtilTrans( PRINT_UTIL * util, PRINT_QUE * que, u32 max );
 
+#define	BAPPTOOL_SET_STR_SCRN_END		( 0xff )		// 転送ウィンドウ終了
+
+extern void BAPPTOOL_SetStrScrn( PRINT_UTIL * util, const u8 * tbl );
+
 
 #endif	// B_APP_TOOL_H

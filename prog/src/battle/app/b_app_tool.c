@@ -541,3 +541,16 @@ void BAPPTOOL_PrintUtilTrans( PRINT_UTIL * util, PRINT_QUE * que, u32 max )
 		PRINT_UTIL_Trans( &util[i], que );
 	}
 }
+
+void BAPPTOOL_SetStrScrn( PRINT_UTIL * util, const u8 * tbl )
+{
+	u32	i = 0;
+
+	while(1){
+		if( tbl[i] == BAPPTOOL_SET_STR_SCRN_END ){
+			break;
+		}
+		BAPPTOOL_PrintScreenTrans( &util[tbl[i]] );
+		i++;
+	}
+}
