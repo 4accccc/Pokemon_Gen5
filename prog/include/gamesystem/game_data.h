@@ -33,7 +33,6 @@ typedef struct _GAMEDATA GAMEDATA;
 #include "field/rail_location.h"  //RAIL_LOCATION
 #include "savedata/myitem_savedata.h"  //BAG_CURSOR MYITEM
 #include "poke_tool/pokeparty.h"
-//#include "field/field_rail_loader.h"    //FIELD_RAIL_LOADER
 //#include "field/fldmmdl.h"
 #include "field/eventwork.h"
 #include "field/field_sound_proc.h"

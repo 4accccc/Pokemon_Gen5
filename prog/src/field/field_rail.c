@@ -1068,11 +1068,24 @@ void FIELD_RAIL_WORK_SetLocation(FIELD_RAIL_WORK * work, const RAIL_LOCATION * l
   }
   else
   {
+    int line_grid;
     
     // ライン初期化
     GF_ASSERT( work->rail_dat->line_count > location->rail_index );
     line        = &work->rail_dat->line_table[ location->rail_index ];
-    line_ofs    = RAIL_GRID_TO_OFS(location->line_grid);
+
+    // line_gridはオーバーしないように調整
+    // widthは、イベント配置などで、領域外のことがある
+    if( location->line_grid >= line->line_grid_max )
+    {
+      line_grid = location->line_grid - 1;
+    }
+    else
+    {
+      line_grid = location->line_grid;
+    }
+
+    line_ofs    = RAIL_GRID_TO_OFS(line_grid);
     width_ofs   = RAIL_GRID_TO_OFS(location->width_grid);
     key         = location->key;
   }
@@ -1080,23 +1093,6 @@ void FIELD_RAIL_WORK_SetLocation(FIELD_RAIL_WORK * work, const RAIL_LOCATION * l
   line_ofs_max  = getLineOfsMax( line, work->ofs_unit, work->rail_dat );
   width_ofs_max = getLineWidthOfsMax( line, line_ofs, line_ofs_max, work->rail_dat );
 
-  /*
-  // いきなりオーバーしないように調整
-  if( MATH_ABS(width_ofs) > width_ofs_max )
-  {
-    if( width_ofs > 0 ){
-      width_ofs = width_ofs_max;
-    }else{
-      width_ofs = -width_ofs_max;
-    }
-  }
-
-  if( line_ofs >= line_ofs_max )
-  {
-    GF_ASSERT( line_ofs_max > 0 );
-    line_ofs = line_ofs_max - 1;
-  }
-  //*/
   
   setLineData( work, line, key, line_ofs, width_ofs, line_ofs_max, width_ofs_max );
 
@@ -1419,10 +1415,23 @@ void FIELD_RAIL_WORK_Update(FIELD_RAIL_WORK * work)
 		{
 			work->req_move = FALSE;
 
-
       // ロケーションの更新
       work->last_location = work->now_location;
       getRailLocation( work, &work->now_location );
+
+
+#ifdef DEBUG_ONLY_FOR_tomoya_takahashi
+      if( (work->line_ofs % RAIL_WALK_OFS) != 0 )
+      {
+        OS_TPrintf( "end l_ofs %d\n", work->line_ofs );
+        GF_ASSERT( (work->line_ofs % RAIL_WALK_OFS) == 0 );
+      }
+      if( (MATH_ABS(work->width_ofs) % RAIL_WALK_OFS) != 0 )
+      {
+        OS_TPrintf( "end w_ofs %d\n", work->width_ofs );
+        GF_ASSERT( (MATH_ABS(work->width_ofs) % RAIL_WALK_OFS) == 0 );
+      }
+#endif // DEBUG_ONLY_FOR_tomoya_takahashi
 		}
 	}
 
@@ -1842,8 +1851,30 @@ static RAIL_KEY setLine(FIELD_RAIL_WORK * work, const RAIL_LINE * line, RAIL_KEY
         work->point->name, debugGetRailKeyName(key), line->name);
   }
 
-  setLineData( work, line, key, l_ofs, w_ofs, l_ofs_max, w_ofs_max );
+  if( l_ofs < l_ofs_max )
+  {
+    // 通常
+    setLineData( work, line, key, l_ofs, w_ofs, l_ofs_max, w_ofs_max );
+  }
+  else
+  {
+    // もしも、lofsがl_ofs_maxで、次のラインがあれば、そのラインに乗る
+    const RAIL_POINT* nPoint = getRailDatPoint( work->rail_dat, line->point_e );
+    const RAIL_LINE * front = RAILPOINT_getLineByKey(nPoint, line->key, work->rail_dat);
+    
+    GF_ASSERT( key == line->key );
 
+    l_ofs -= l_ofs_max;
+
+    l_ofs_max = getLineOfsMax( front, work->ofs_unit, work->rail_dat );
+    w_ofs_max = getLineWidthOfsMax( front, l_ofs, l_ofs_max, work->rail_dat );
+
+    GF_ASSERT( l_ofs < l_ofs_max );
+    GF_ASSERT( w_ofs < w_ofs_max );
+
+    setLineData( work, front, key, l_ofs, w_ofs, l_ofs_max, w_ofs_max );
+  }
+  
   debugCheckLineData(line, work->rail_dat);
   return key;
 }
@@ -1984,9 +2015,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
   const RAIL_LINE * nLine = work->line;
   s32 nLine_ofs_max = work->line_ofs_max; // 今のLINEのオフセット最大値
 //  s32 nLine_ofs_max = getLineOfsMax( nLine, work->ofs_unit, work->rail_dat ); // 今のLINEのオフセット最大値
-  s32 nLine_ofs_limit = nLine_ofs_max-1;
   s32 ofs_max;  // 各ラインのオフセット最大値
-  s32 ofs_limit;  // 各ラインのオフセット最大値
 	s32 next_line_width_max;
 	s32 now_line_width_max;
 
@@ -2000,7 +2029,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
     //const RAIL_LINE * back = RAILPOINT_getLineByKey(nPoint, getReverseKey(key), work->rail_dat);
     TAMADA_Printf("↑");
     work->line_ofs += count_up;
-    if (work->line_ofs < nLine_ofs_max) {
+    if (work->line_ofs < nLine_ofs_max) {   // nLine_ofs_max == 次のラインのline_ofs 0
       // 今の道幅チェック オーバーしてなければ、通常の更新
       now_line_width_max = getLineWidthOfsMax( nLine, work->line_ofs, nLine_ofs_max, work->rail_dat );
       if( now_line_width_max >= MATH_ABS(work->width_ofs) )
@@ -2018,6 +2047,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
 			next_line_width_max = getLineWidthOfsMax( front, work->line_ofs - nLine_ofs_max, ofs_max, work->rail_dat );
 			if( next_line_width_max >= MATH_ABS(work->width_ofs) )
 			{
+        TOMOYA_Printf( "↑ front\n" );
 				return setLine(work, front, key,
 						/*l_ofs*/work->line_ofs - nLine_ofs_max,
 						/*w_ofs*/work->width_ofs,
@@ -2035,6 +2065,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
         // 左側ラインの範囲内かチェック
         if( (-work->width_ofs < ofs_max) && (next_line_width_max >= MATH_ABS(work->line_ofs-nLine_ofs_max)) )
         {
+          TOMOYA_Printf( "↑ left s\n" );
           return setLine(work, left, key,
               /*l_ofs*/-work->width_ofs,
               /*w_ofs*/(work->line_ofs-nLine_ofs_max),
@@ -2046,13 +2077,13 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
       { //終端の場合
         debugCheckPointData(nPoint, work->rail_dat);
         ofs_max = getLineOfsMax( left, work->ofs_unit, work->rail_dat );
-        ofs_limit = ofs_max-1;
-			  next_line_width_max = getLineWidthOfsMax( left, ofs_limit+work->width_ofs, ofs_max, work->rail_dat );
+			  next_line_width_max = getLineWidthOfsMax( left, ofs_max+work->width_ofs, ofs_max, work->rail_dat );
         // 左側ラインの範囲内かチェック
-        if( (ofs_limit+work->width_ofs < ofs_max) && (next_line_width_max >= MATH_ABS(work->line_ofs-nLine_ofs_max)) )
+        if( (ofs_max+work->width_ofs >= 0) && (next_line_width_max >= MATH_ABS(work->line_ofs-nLine_ofs_max)) )
         {
+          TOMOYA_Printf( "↑ left e\n" );
           return setLine(work, left, key,
-              /*l_ofs*/ofs_limit + work->width_ofs, //width_ofs < 0なので実質減算
+              /*l_ofs*/ofs_max + work->width_ofs, //width_ofs < 0なので実質減算
               /*w_ofs*/-(work->line_ofs-nLine_ofs_max),
               /*ofs_max*/ofs_max,
             /*w_ofs_max*/next_line_width_max); 
@@ -2070,6 +2101,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
         // 右側ラインの範囲内かチェック
         if( (work->width_ofs < ofs_max) && (next_line_width_max >= MATH_ABS(work->line_ofs-nLine_ofs_max)) )
         {
+          TOMOYA_Printf( "↑ right s\n" );
           return setLine(work, right, key,
               /*l_ofs*/work->width_ofs,
               /*w_ofs*/-(work->line_ofs-nLine_ofs_max),
@@ -2081,13 +2113,13 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
       { //終端の場合
         debugCheckPointData(nPoint, work->rail_dat);
         ofs_max = getLineOfsMax( right, work->ofs_unit, work->rail_dat );
-        ofs_limit = ofs_max - 1;
-			  next_line_width_max = getLineWidthOfsMax( right, ofs_limit - work->width_ofs, ofs_max, work->rail_dat );
+			  next_line_width_max = getLineWidthOfsMax( right, ofs_max - work->width_ofs, ofs_max, work->rail_dat );
         // 右側ラインの範囲内かチェック
-        if( ((ofs_limit - work->width_ofs) < ofs_max) && (next_line_width_max >= MATH_ABS(work->line_ofs-nLine_ofs_max)) )
+        if( ((ofs_max - work->width_ofs) >= 0) && (next_line_width_max >= MATH_ABS(work->line_ofs-nLine_ofs_max)) )
         {
+          TOMOYA_Printf( "↑ right e\n" );
           return setLine(work, right, key,
-              /*l_ofs*/ofs_limit - work->width_ofs,
+              /*l_ofs*/ofs_max - work->width_ofs,
               /*w_ofs*/(work->line_ofs-nLine_ofs_max),
               /*ofs_max*/ofs_max,
             /*w_ofs_max*/next_line_width_max);
@@ -2101,8 +2133,11 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
 			return updateLine( work, nLine, nLine_ofs_max, key );
     }
 
-    //行くあてがない…LINEそのまま、加算をとりけし
-    work->line_ofs -= count_up;
+    //行くあてがない…LINEそのまま
+    if(work->line_ofs > nLine_ofs_max)  // maxまではOK
+    {
+      work->line_ofs -= count_up;
+    }
     return RAIL_KEY_NULL;
   }
   else if (key == getReverseKey(nLine->key))
@@ -2134,6 +2169,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
 			next_line_width_max = getLineWidthOfsMax( back, ofs_max - MATH_ABS(work->line_ofs), ofs_max, work->rail_dat );
 			if( next_line_width_max >= MATH_ABS(work->width_ofs) )
 			{
+        TOMOYA_Printf( "↓ back\n" );
 	      return setLine(work, back, key,
 		        /*l_ofs*/ofs_max - MATH_ABS(work->line_ofs),	// ここには、必ず負の値が来る ofs_maxを使用する
 			      /*w_ofs*/work->width_ofs,
@@ -2147,11 +2183,11 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
       { //始端の場合
         debugCheckPointData(nPoint, work->rail_dat);
         ofs_max = getLineOfsMax( left, work->ofs_unit, work->rail_dat );
-        ofs_limit = ofs_max - 1;
 			  next_line_width_max = getLineWidthOfsMax( left, -work->width_ofs, ofs_max, work->rail_dat );
         // 左側ラインの範囲内かチェック
         if( (-work->width_ofs < ofs_max) && (next_line_width_max >= MATH_ABS(work->line_ofs)) )
         {
+          TOMOYA_Printf( "↓ left s\n" );
           return setLine(work, left, key,
               /*l_ofs*/-work->width_ofs,
               /*w_ofs*/work->line_ofs,
@@ -2163,13 +2199,13 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
       { //終端の場合
         debugCheckPointData(nPoint, work->rail_dat);
         ofs_max = getLineOfsMax( left, work->ofs_unit, work->rail_dat );
-        ofs_limit = ofs_max - 1;
-			  next_line_width_max = getLineWidthOfsMax( left, ofs_limit+work->width_ofs, ofs_max, work->rail_dat );
+			  next_line_width_max = getLineWidthOfsMax( left, ofs_max+work->width_ofs, ofs_max, work->rail_dat );
         // 左側ラインの範囲内かチェック
-        if( (ofs_limit+work->width_ofs < ofs_max) && (next_line_width_max >= MATH_ABS(work->line_ofs)) )
+        if( (ofs_max+work->width_ofs >= 0) && (next_line_width_max >= MATH_ABS(work->line_ofs)) )
         {
+          TOMOYA_Printf( "↓ left e\n" );
           return setLine(work, left, key,
-              /*l_ofs*/ofs_limit + work->width_ofs, //
+              /*l_ofs*/ofs_max + work->width_ofs, //
               /*w_ofs*/-work->line_ofs,
             /*ofs_max*/ofs_max,
             /*w_ofs_max*/next_line_width_max);
@@ -2187,6 +2223,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
         // 右側ラインの範囲内かチェック
         if( (work->width_ofs < ofs_max) && (next_line_width_max >= MATH_ABS(work->line_ofs)) )
         {
+          TOMOYA_Printf( "↓ right s\n" );
           return setLine(work, right, key,
               /*l_ofs*/work->width_ofs,
               /*w_ofs*/-work->line_ofs,
@@ -2198,13 +2235,13 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
       { //終端の場合
         debugCheckPointData(nPoint, work->rail_dat);
         ofs_max = getLineOfsMax( right, work->ofs_unit, work->rail_dat );
-        ofs_limit = ofs_max - 1;
-			  next_line_width_max = getLineWidthOfsMax( right, ofs_limit - work->width_ofs, ofs_max, work->rail_dat );
+			  next_line_width_max = getLineWidthOfsMax( right, ofs_max - work->width_ofs, ofs_max, work->rail_dat );
         // 右側ラインの範囲内かチェック
-        if( ((ofs_limit - work->width_ofs) < ofs_max) && (next_line_width_max >= MATH_ABS(work->line_ofs)) )
+        if( ((ofs_max - work->width_ofs) >= 0) && (next_line_width_max >= MATH_ABS(work->line_ofs)) )
         {
+          TOMOYA_Printf( "↓ right e\n" );
           return setLine(work, right, key,
-              /*l_ofs*/ofs_limit - work->width_ofs,
+              /*l_ofs*/ofs_max - work->width_ofs,
               /*w_ofs*/work->line_ofs,
             /*ofs_max*/ofs_max,
             /*w_ofs_max*/next_line_width_max);
@@ -2243,20 +2280,11 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
             if((work->line_ofs <= next_line_width_max) )
             {
               // ==でも、その先にいけないので、１歩下がって乗っかる
-              if( (work->width_ofs < ofs_max) )
+              if( (work->width_ofs <= ofs_max) )
               {
+                TOMOYA_Printf( "→ right s s\n" );
                 return setLine(work, right, key,
                     work->width_ofs,
-                    - work->line_ofs,
-                    ofs_max,
-                /*w_ofs_max*/next_line_width_max);
-              }
-              else if( (work->width_ofs >= ofs_max) )
-              {
-                OS_TPrintf( "RIGHT work->width_ofs < ofs_max\n" );
-
-                return setLine(work, right, key,
-                    ofs_max-RAIL_WALK_OFS,
                     - work->line_ofs,
                     ofs_max,
                 /*w_ofs_max*/next_line_width_max);
@@ -2271,20 +2299,11 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
             //右側LINEは始端からの場合
             if((work->line_ofs <= next_line_width_max) )
             {
-              if( ((ofs_max-1) - work->width_ofs) >= 0 )
+              if( (ofs_max - work->width_ofs) >= 0 )
               {
+                TOMOYA_Printf( "→ right e s\n" );
                 return setLine(work, right, key,
-                    (ofs_max-1) - work->width_ofs,
-                    work->line_ofs,
-                    ofs_max,
-                /*w_ofs_max*/next_line_width_max);
-              }
-              else if( ((ofs_max-1) - work->width_ofs) < 0 )
-              {
-                OS_TPrintf( "RIGHT ((ofs_max-1) - work->width_ofs) < 0\n" );
-                
-                return setLine(work, right, key,
-                    0,
+                    ofs_max - work->width_ofs,
                     work->line_ofs,
                     ofs_max,
                 /*w_ofs_max*/next_line_width_max);
@@ -2306,19 +2325,11 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
             //右側LINEは終端からの場合
             if( ((nLine_ofs_max - work->line_ofs) <= next_line_width_max) )
             {
-              if( (work->width_ofs < ofs_max) )
+              if( (work->width_ofs <= ofs_max) )
               {
+                TOMOYA_Printf( "→ right s e\n" );
                 return setLine(work, right, key,
                     work->width_ofs,
-                    nLine_ofs_max - work->line_ofs,
-                    ofs_max,
-                /*w_ofs_max*/next_line_width_max);
-              }
-              else if( (work->width_ofs >= ofs_max) )
-              {
-                OS_TPrintf( "RIGHT work->width_ofs == ofs_max\n" );
-                return setLine(work, right, key,
-                    ofs_max-RAIL_WALK_OFS,
                     nLine_ofs_max - work->line_ofs,
                     ofs_max,
                 /*w_ofs_max*/next_line_width_max);
@@ -2333,19 +2344,11 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
             //右側LINEは終端からの場合
             if( ((nLine_ofs_max - work->line_ofs) <= next_line_width_max) )
             {
-              if( ((ofs_max-1) - work->width_ofs) >= 0 )
+              if( (ofs_max - work->width_ofs) >= 0 )
               {
+                TOMOYA_Printf( "→ right e e\n" );
                 return setLine(work, right, key,
-                    (ofs_max-1) - work->width_ofs,
-                    - (nLine_ofs_max - work->line_ofs),
-                    ofs_max,
-                /*w_ofs_max*/next_line_width_max);
-              }
-              else if( ((ofs_max-1) - work->width_ofs) < 0 )
-              {
-                OS_TPrintf( "RIGHT ((ofs_max-1) - work->width_ofs) < 0\n" );
-                return setLine(work, right, key,
-                    0,
+                    ofs_max - work->width_ofs,
                     - (nLine_ofs_max - work->line_ofs),
                     ofs_max,
                 /*w_ofs_max*/next_line_width_max);
@@ -2393,19 +2396,11 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
             //左側LINEは始端からの場合
             if( (work->line_ofs <= next_line_width_max) )
             {
-              if( (MATH_ABS(work->width_ofs) < ofs_max) )
+              if( (MATH_ABS(work->width_ofs) <= ofs_max) )
               {
+                TOMOYA_Printf( "← left s s\n" );
                 return setLine(work, left, key,
                     MATH_ABS(work->width_ofs), 
-                    work->line_ofs,
-                    ofs_max,
-                /*w_ofs_max*/next_line_width_max);
-              }
-              else if( (MATH_ABS(work->width_ofs) >= ofs_max) )
-              {
-                OS_TPrintf( "LEFT (MATH_ABS(work->width_ofs) >= ofs_max)\n" );
-                return setLine(work, left, key,
-                    ofs_max-RAIL_WALK_OFS, 
                     work->line_ofs,
                     ofs_max,
                 /*w_ofs_max*/next_line_width_max);
@@ -2420,19 +2415,11 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
             //左側LINEは終点からの場合
             if( (work->line_ofs <= next_line_width_max) )
             {
-              if( ((ofs_max-1) - MATH_ABS(work->width_ofs)) >= 0 )
+              if( (ofs_max - MATH_ABS(work->width_ofs)) >= 0 )
               {
+                TOMOYA_Printf( "← left e s\n" );
                 return setLine(work, left, key,
-                    (ofs_max-1) - MATH_ABS(work->width_ofs),
-                    - work->line_ofs,
-                    ofs_max,
-                /*w_ofs_max*/next_line_width_max);
-              }
-              else if( ((ofs_max-1) - MATH_ABS(work->width_ofs)) < 0 )
-              {
-                OS_TPrintf( "LEFT ((ofs_max-1) - MATH_ABS(work->width_ofs)) < 0\n" );
-                return setLine(work, left, key,
-                    0,
+                    ofs_max - MATH_ABS(work->width_ofs),
                     - work->line_ofs,
                     ofs_max,
                 /*w_ofs_max*/next_line_width_max);
@@ -2454,19 +2441,11 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
             //左側LINEは始点からの場合
             if( ((nLine_ofs_max - work->line_ofs) <= next_line_width_max) )
             {
-              if( (MATH_ABS(work->width_ofs) < ofs_max) )
+              if( (MATH_ABS(work->width_ofs) <= ofs_max) )
               {
+                TOMOYA_Printf( "← left s e\n" );
                 return setLine(work, left, key,
                     MATH_ABS(work->width_ofs),
-                    - (nLine_ofs_max - work->line_ofs),
-                    ofs_max,
-                /*w_ofs_max*/next_line_width_max);
-              }
-              else if( (MATH_ABS(work->width_ofs) >= ofs_max) )
-              {
-                OS_TPrintf( "LEFT (MATH_ABS(work->width_ofs) >= ofs_max)\n" );
-                return setLine(work, left, key,
-                    ofs_max-RAIL_WALK_OFS,
                     - (nLine_ofs_max - work->line_ofs),
                     ofs_max,
                 /*w_ofs_max*/next_line_width_max);
@@ -2481,19 +2460,11 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
             //左側LINEは終端からの場合
             if( ((nLine_ofs_max - work->line_ofs) <= next_line_width_max) )
             {
-              if( ((ofs_max-1) - MATH_ABS(work->width_ofs)) >= 0 )
+              if( (ofs_max - MATH_ABS(work->width_ofs)) >= 0 )
               {
+                TOMOYA_Printf( "← left e e\n" );
                 return setLine(work, left, key,
-                    (ofs_max-1) - MATH_ABS(work->width_ofs),
-                    nLine_ofs_max - work->line_ofs,
-                    ofs_max,
-                /*w_ofs_max*/next_line_width_max);
-              }
-              else if( ((ofs_max-1) - MATH_ABS(work->width_ofs)) < 0 )
-              {
-                OS_TPrintf( "LEFT ((ofs_max-1) - MATH_ABS(work->width_ofs)) < 0\n" );
-                return setLine(work, left, key,
-                    0,
+                    ofs_max - MATH_ABS(work->width_ofs),
                     nLine_ofs_max - work->line_ofs,
                     ofs_max,
                 /*w_ofs_max*/next_line_width_max);

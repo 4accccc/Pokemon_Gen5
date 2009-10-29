@@ -428,10 +428,18 @@ u32 MMDL_HitCheckRailMove( const MMDL *mmdl, const RAIL_LOCATION* now_location, 
   // マッパー取得
   p_mapper = MMDLSYS_GetNOGRIDMapper( MMDL_GetMMdlSys( mmdl ) );
 
+  // now_locationのレールがあるか？
+  if( FIELD_RAIL_WORK_CheckLocation( cp_work->rail_wk, now_location ) == FALSE )
+  {
+    TOMOYA_Printf( "CHECK NOW LOCATION MOVE LIMIT\n" );
+    ret |= MMDL_MOVEHITBIT_LIM;
+  }
+
+
   // next_locationのレールがあるか？
   if( FIELD_RAIL_WORK_CheckLocation( cp_work->rail_wk, next_location ) == FALSE )
   {
-    TOMOYA_Printf( "CHECK LOCATION MOVE LIMIT\n" );
+    TOMOYA_Printf( "CHECK NEXT LOCATION MOVE LIMIT\n" );
     ret |= MMDL_MOVEHITBIT_LIM;
   }
 

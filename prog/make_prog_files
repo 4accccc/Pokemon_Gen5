@@ -85,7 +85,6 @@ SRCS  +=    $(SOUNDSRC) \
         field/warpdata.c \
         field/location.c \
 				field/map_matrix.c \
-        field/field_rail_loader.c \
         field/field_location.c \
         field/eventdata_system.c \
         field/field_status.c \
@@ -361,6 +360,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/fldmmdl_railmove.c \
 				field/fldmmdl_railacmd.c \
 				field/fldmmdl_railmove_0.c \
+        field/field_rail_loader.c \
 				field/event_fieldtalk.c \
 				field/event_debug_item.c \
 				field/fldmmdl_draw_0.c \

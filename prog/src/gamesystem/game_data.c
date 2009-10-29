@@ -32,7 +32,6 @@
 #include "gamesystem/pm_season.h"		//季節定義参照
 #include "field/field_subscreen.h" //FIELD_SUBSCREEN_ACTION
 #include "field/rail_location.h"    //RAIL_LOCATION
-#include "field/field_rail_loader.h"    //FIELD_RAIL_LOADER
 #include "sound/bgm_info.h"
 #include "field/map_matrix.h"     //MAP_MATRIX
 #include "field/field_status.h"   //FIELD_STATUS
@@ -65,7 +64,6 @@ struct _GAMEDATA{
 
   BGM_INFO_SYS* bgm_info_sys;	// BGM情報取得システム
 
-  FIELD_RAIL_LOADER * railLoader;   ///<フィールドレールデータ管理へのポインタ
   MMDLSYS *mmdlsys;
   EVENTWORK *eventwork;
   MAP_MATRIX * mapMatrix;     ///<マップマトリックス管理
@@ -161,9 +159,6 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   //マップマトリックス
   gd->mapMatrix = MAP_MATRIX_Create( heapID );
 
-	// railデータ読み込みシステム
-  gd->railLoader = FIELD_RAIL_LOADER_Create( heapID );
-  
   //動作モデル
   gd->mmdlsys = MMDLSYS_CreateSystem( heapID, MMDL_MDL_MAX, SaveControl_DataPtrGet(gd->sv_control_ptr,GMDATA_ID_ROCKPOS) );
   
@@ -212,7 +207,6 @@ void GAMEDATA_Delete(GAMEDATA * gamedata)
   BOX_DAT_ExitManager( gamedata->boxMng );
   GFL_HEAP_FreeMemory(gamedata->bagcursor);
   MMDLSYS_FreeSystem(gamedata->mmdlsys);
-	FIELD_RAIL_LOADER_Delete( gamedata->railLoader );
   MAP_MATRIX_Delete( gamedata->mapMatrix );
   EVENTDATA_SYS_Delete(gamedata->evdata);
   FIELD_STATUS_Delete( gamedata->fldstatus );
@@ -423,18 +417,6 @@ MYSTATUS * GAMEDATA_GetMyStatusPlayer(GAMEDATA * gamedata, u32 player_id)
 {
   GF_ASSERT(player_id < PLAYER_MAX);
   return &gamedata->playerWork[player_id].mystatus;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief FIELD_RAIL_LOADERへのポインタ取得
- * @param	gamedata	GAMEDATAへのポインタ
- * @return  FIELD_RAIL_LOADER レールデータローダーシステムへのポインタ
- */
-//--------------------------------------------------------------
-FIELD_RAIL_LOADER * GAMEDATA_GetFieldRailLoader(GAMEDATA * gamedata)
-{
-  return gamedata->railLoader;
 }
 
 //--------------------------------------------------------------
