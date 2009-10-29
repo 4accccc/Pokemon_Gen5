@@ -44,18 +44,19 @@ EVENT_END
 /*  R03R0101 WOMAN3の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_r03r0101_talkobj_woman3
-  //カウント勝負質問
-_BALLOONWIN_OBJMSG_OPEN(msg_r03r0101_woman3_01,R03R0101_WOMAN3_01)
-_YES_NO_WIN( SCWK_ANSWER )
+	//カウント勝負質問
+	_BALLOONWIN_OBJMSG_OPEN(msg_r03r0101_woman3_01,R03R0101_WOMAN3_01)
+	_YES_NO_WIN( SCWK_ANSWER )
+	_BALLOONWIN_CLOSE()
 
-//レスにより分岐
-IF $SCWK_ANSWER == 0 THEN
-  //「はい」
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r03r0101_woman3_02)
+	//レスにより分岐
+	IF $SCWK_ANSWER == 0 THEN
+	  //「はい」
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r03r0101_woman3_02)
 ELSE
-  //「いいえ」
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r03r0101_woman3_03)
-ENDIF
+	 //「いいえ」
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r03r0101_woman3_03)
+	ENDIF
 EVENT_END
 
 /**************************************************************/
