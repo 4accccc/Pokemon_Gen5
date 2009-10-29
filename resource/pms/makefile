@@ -4,7 +4,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= toru_nagihashi
+USERS	= toru_nagihashi genya_hosaka
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
@@ -37,20 +37,16 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートする
 $(WORD_DAT_FILE): $(SOURCE)
 	perl pmsconv.pl  $(INPUT_DAT_FILE) $(WORD_DAT_FILE)
 
-$(WORD_DAT_FILE): $(SOURCE)
-	perl pmsconv.pl  $(INPUT_DAT_FILE) $(WORD_DAT_FILE)
+$(SOURCE_LIST):
+	perl pmsconv.pl  $(SOURCE_LIST)
+
 endif
-
-# $(INPUT_DAT_FILE): $(SOURCE)
-
 
 clean:
 	-rm $(SOURCE_LIST)
-	-rm $(WORD_DAT_FILE)
-	-rm $(INPUT_DAT_FILE)
+	-rm $(WORD_DAT_DIR)\$(WORD_DAT_FILE)
+	-rm $(INPUT_DAT_DIR)\$(INPUT_DAT_FILE)
 
 
-$(SOURCE_LIST):
-	perl pmsconv.pl  $(SOURCE_LIST)
 
 
