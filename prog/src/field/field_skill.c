@@ -106,6 +106,11 @@ void FLDSKILL_InitCheckWork(
 
   fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
   scwk->moveform = FIELD_PLAYER_GetMoveForm( fld_player );
+  
+  if( FLDMAP_BASESYS_RAIL == FIELDMAP_GetBaseSystemType(fieldmap) ){
+    return;
+  }
+
   FIELD_PLAYER_GetFrontGridPos( fld_player, &gx, &gy, &gz );
   
   {
