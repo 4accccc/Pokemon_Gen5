@@ -542,7 +542,6 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp, BTLV_GAUGE
 //============================================================================================
 void  BTLV_GAUGE_Del( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos )
 { 
-  GF_ASSERT( bgw->bgcl[ pos ].base_clwk != NULL );
   if( bgw->bgcl[ pos ].base_clwk )
   { 
     GFL_CLGRP_CGR_Release( bgw->bgcl[ pos ].base_charID );
