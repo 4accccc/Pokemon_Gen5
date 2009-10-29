@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-29T16:27:07"/>
+	<create user="matsumiya" host="W00207" date="2009-10-29T16:27:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -319,11 +319,11 @@
 		<language name="JPN" width="256">このまま　まっすぐ　すすめば
 ポケモンセンターさ[BE:01:ページ切り替え（クリア）]
 じゃあ　オレ
-ちょいと　そうこを　みてるよ[BE:01:ページ切り替え（クリア）]</language>
+むこうの　そうこを　みてるよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">このまま　まっすぐ進めば
 ポケモンセンターさ[BE:01:ページ切り替え（クリア）]
 じゃあ　オレ
-ちょいと　倉庫街を　見てるよ[BE:01:ページ切り替え（クリア）]</language>
+向こうの　倉庫を　見てるよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02_boss_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
