@@ -515,6 +515,8 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
     { 0x00006994, 0x00006f33, 0x00006e79 },       //BTLEFF_CAMERA_POS_B
     { 0x00005ca6, 0x00005f33, 0x00013cc3 },       //BTLEFF_CAMERA_POS_C
     { 0x00006994, 0x00006f33, 0x00006e79 },       //BTLEFF_CAMERA_POS_D
+    { 0x00005ca6, 0x00005f33, 0x00013cc3 },       //BTLEFF_CAMERA_POS_E
+    { 0x00006994, 0x00006f33, 0x00006e79 },       //BTLEFF_CAMERA_POS_F
   };
   static  VecFx32 cam_target_table[]={
     { 0xfffff173, 0x00001d9a, 0x000027f6 },       //BTLEFF_CAMERA_POS_AA
@@ -523,6 +525,8 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
     { 0xfffffe61, 0x00002d9a, 0xffff59ac },       //BTLEFF_CAMERA_POS_B
     { 0xfffff173, 0x00001d9a, 0x000027f6 },       //BTLEFF_CAMERA_POS_C
     { 0xfffffe61, 0x00002d9a, 0xffff59ac },       //BTLEFF_CAMERA_POS_D
+    { 0xfffff173, 0x00001d9a, 0x000027f6 },       //BTLEFF_CAMERA_POS_E
+    { 0xfffffe61, 0x00002d9a, 0xffff59ac },       //BTLEFF_CAMERA_POS_F
   };
 
 #ifdef DEBUG_OS_PRINT
@@ -2569,24 +2573,40 @@ static  int   EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag )
     { 
       if( bevw->attack_pos & 1 )
       { 
-        if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_A ) == TRUE )
+        if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_AA ) == TRUE )
+        { 
+          return BTLV_MCSS_POS_AA;
+        }
+        else if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_A ) == TRUE )
         { 
           return BTLV_MCSS_POS_A;
         }
-        else
+        else if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_C ) == TRUE )
         { 
           return BTLV_MCSS_POS_C;
+        }
+        else
+        { 
+          return BTLV_MCSS_POS_E;
         }
       }
       else
       { 
-        if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_B ) == TRUE )
+        if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_BB ) == TRUE )
+        { 
+          return BTLV_MCSS_POS_BB;
+        }
+        else if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_B ) == TRUE )
         { 
           return BTLV_MCSS_POS_B;
         }
-        else
+        else if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_D ) == TRUE )
         { 
           return BTLV_MCSS_POS_D;
+        }
+        else
+        { 
+          return BTLV_MCSS_POS_F;
         }
       }
     }
