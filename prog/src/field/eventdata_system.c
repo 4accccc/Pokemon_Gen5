@@ -924,6 +924,10 @@ static u16 EventData_CheckTalkBoardEventBase(
     
     for( ; i < max; i++, data++ )
     {
+      if( data->type != BG_TALK_TYPE_BOARD )  
+      { // 看板だけをチェックする
+        continue;
+      }
       if( data->pos_type == EVENTDATA_POSTYPE_GRID )
       {
         if( !BGTalkData_GPOS_IsHit( data, pos ) )

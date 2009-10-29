@@ -289,6 +289,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
     
     if( id != EVENTDATA_ID_NONE ){
       event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
+      return event;
     }
   }
   
