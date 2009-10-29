@@ -149,7 +149,7 @@
 #define _POKMEON_SCALE_SIZE   (1.2)
 
 //‚ä‚ê‚éã‰º•  ‘å‚«‚¢‚Ù‚Ç‘å‚«‚­—h‚ê‚é
-#define _WAVE_NUM    (5)
+#define _WAVE_NUM    (10)
 
 //‚ä‚ê‚éŠÔŠu  ‘å‚«‚¢‚Ù‚Ç‘‚­—h‚ê‚é
 //#define _WAVE_TIME    (512)

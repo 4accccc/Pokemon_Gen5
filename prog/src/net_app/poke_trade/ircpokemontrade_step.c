@@ -442,8 +442,6 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
 
 static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
 {
-  _pokeMoveFunc(pWork->pMoveMcss[0]);
-  _pokeMoveFunc(pWork->pMoveMcss[1]);
 
 
   if(pWork->anmCount == ANMCNTC(_POKEMON_DELETE_TIME-3)){
@@ -744,6 +742,8 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
     IRC_POKETRADEDEMO_RemoveModel( pWork);
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade20);
   }
+  _pokeMoveFunc(pWork->pMoveMcss[0]);
+  _pokeMoveFunc(pWork->pMoveMcss[1]);
 }
 
 
@@ -1170,7 +1170,7 @@ static fx32 _movemath(fx32 st,fx32 en,_POKEMCSS_MOVE_WORK* pMove,BOOL bWave)
 #endif
   re = st + re * pMove->nowcount;
   if(pMove->wave && bWave){
-    re = re + FX_SinIdx(pMove->sins) * _WAVE_NUM;
+    re = en + FX_SinIdx(pMove->sins) * _WAVE_NUM;
   }
   return re;
 }
@@ -1188,11 +1188,22 @@ static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
   if(pMove->time != pMove->nowcount)
   {
     VecFx32 apos,aposold;
-    MCSS_SetPosition( pMove->pMcss ,&aposold );
+    MCSS_GetPosition( pMove->pMcss ,&aposold );
+
 
     
     apos.x = _movemath(pMove->start.x, pMove->end.x ,pMove, FALSE);
     apos.y = _movemath(pMove->start.y, pMove->end.y ,pMove, FALSE);
+
+
+    if(pMove->wave){
+      float an = FX_FX32_TO_F32(aposold.x - apos.x);
+      an = an * 374;
+      pMove->sins -= (u32)an;
+      OS_TPrintf("%x\n",pMove->sins);
+    }
+
+
     apos.z = _movemath(pMove->start.z, pMove->end.z ,pMove, TRUE);
 /*
     if(pMove->percent != 0.0f){
@@ -1210,10 +1221,6 @@ static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
     }
    */
 
-    if(pMove->wave){
-      pMove->sins += ((aposold.x - apos.x) * 30 / FX32_ONE);
-      OS_TPrintf("%x\n",pMove->sins);
-    }
     
     MCSS_SetPosition( pMove->pMcss ,&apos );
   }
