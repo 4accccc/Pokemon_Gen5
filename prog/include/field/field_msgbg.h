@@ -232,6 +232,6 @@ extern void FLDTALKMSGWIN_Delete( FLDTALKMSGWIN *tmsg );
 extern BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg );
 
 //‚»‚Ì‘¼
-extern void FLDMSGBG_SetBlendAlpha( void );
+extern void FLDMSGBG_SetBlendAlpha( BOOL set );
 
 #endif //__FLDMSGBG_H__

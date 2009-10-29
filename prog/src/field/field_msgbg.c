@@ -2021,16 +2021,17 @@ static void setBlendAlpha( BOOL on )
   	G2_SetBlendAlpha( plane1, plane2, 0, 0 );
   }
 }
+
 //--------------------------------------------------------------
 /**
  * フィールドメッセージBG ブレンドアルファセット
- * @param nothing
+ * @param set TRUE=半透明ON
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FLDMSGBG_SetBlendAlpha( void )
+void FLDMSGBG_SetBlendAlpha( BOOL set )
 {
-//  setBlendAlpha( TRUE );
+  setBlendAlpha( set );
 }
 
 //======================================================================

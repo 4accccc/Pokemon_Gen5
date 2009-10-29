@@ -307,7 +307,7 @@ void FIELD_MENU_ExitMenu( FIELD_MENU_WORK* work )
   }
   G2_SetBlendBrightnessExt( GX_BLEND_PLANEMASK_BG0 , GX_BLEND_PLANEMASK_NONE , 
                             0 , 0 , 0 );
-  FLDMSGBG_SetBlendAlpha();
+  FLDMSGBG_SetBlendAlpha( FALSE );
   GFL_TCB_DeleteTask( work->vBlankTcb );
   
   GFL_CLACT_WK_Remove( work->cellCursor );
