@@ -75,7 +75,7 @@ static GFL_PROC_RESULT DressUpProc_Init( GFL_PROC * proc, int * seq , void *pwk,
 	
 	if( pwk == NULL )
 	{
-    POKEMON_PARAM *pokePara = PP_Create( MONSNO_KOROMORI , 20 , PTL_SETUP_POW_AUTO , HEAPID_MUSICAL_DRESSUP );
+    POKEMON_PARAM *pokePara = PP_Create( MONSNO_PURUNSU , 20 , PTL_SETUP_POW_AUTO , HEAPID_MUSICAL_DRESSUP );
     MUSICAL_POKE_PARAM *musPoke = MUSICAL_SYSTEM_InitMusPoke( pokePara , HEAPID_MUSICAL_DRESSUP );
     initWork = MUSICAL_DRESSUP_CreateInitWork( HEAPID_MUSICAL_DRESSUP , musPoke , SaveControl_GetPointer() );
 	}

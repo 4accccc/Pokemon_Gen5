@@ -241,10 +241,28 @@ static void STA_POKE_UpdatePokeFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
 
 static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
 {
+  int ePosTemp;
   int ePos;
   VecFx32 pos;
   for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
   {
+    ePosTemp = ePos;
+    
+    if( pokeWork->dir == SPD_RIGHT )
+    {
+      if( ePos == MUS_POKE_EQU_HAND_R )
+      {
+        ePosTemp = MUS_POKE_EQU_HAND_L;
+//        OS_TPrintf("R->L\n");
+      }
+      else
+      if( ePos == MUS_POKE_EQU_HAND_L )
+      {
+        ePosTemp = MUS_POKE_EQU_HAND_R;
+//        OS_TPrintf("L->R\n");
+      }
+    }
+
     if( pokeWork->itemWork[ePos] != NULL )
     {
       if( pokeWork->isDrawItem == TRUE &&
@@ -253,7 +271,7 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
         //‚±‚¢‚Â‚ÍFALSE‚Å‚àÁ‚¦‚é‚Æ‚ÍŒÀ‚ç‚È‚¢‚Ì‚Åã‚Ìif‚©‚ç“Æ—§‚µ‚Ä‚é
         if( pokeWork->isEnableItem[ePos] == TRUE )
         {
-          MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( pokeWork->drawWork , ePos );
+          MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( pokeWork->drawWork , ePosTemp );
           if( equipData->isEnable == TRUE )
           {
             const BOOL flipS = ( equipData->scale.x < 0 ? TRUE : FALSE);
@@ -307,9 +325,9 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
                           equipData->scale.y /16 /4);
             MUS_ITEM_DRAW_SetDrawEnable( work->itemDrawSys , 
                             pokeWork->itemWork[ePos] , TRUE );
-    //        MUS_ITEM_DRAW_SetFlipS( work->itemDrawSys , 
-    //                    pokeWork->itemWork[ePos] ,
-    //                    flipS );
+            MUS_ITEM_DRAW_SetFlipS( work->itemDrawSys , 
+                        pokeWork->itemWork[ePos] ,
+                        flipS );
           }
         }
       }
