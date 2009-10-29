@@ -2276,6 +2276,12 @@ static void SCALEBG_Init( SCALEBG_WORK *p_wk, u16 frm, fx32 min, fx32 max, u8 sc
 	{	
 		ARCHANDLE	*p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCCOMPATIBLE, heapID );
 	
+		if( 0 < score && score < 80 )
+		{	
+			NAGI_Printf( "“_”‚ð•â³‚µ‚Ü‚µ‚½ %d\n", score );
+			score	= 80;
+		}
+
 		if( score == 100 )
 		{	
 			//“Ç‚Ýž‚Ý
@@ -2292,14 +2298,6 @@ static void SCALEBG_Init( SCALEBG_WORK *p_wk, u16 frm, fx32 min, fx32 max, u8 sc
 			GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_result_bg_04_NSCR,
 					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );	
 		}
-		else if( 80 <= score && score < 90 )
-		{	
-			//“Ç‚Ýž‚Ý
-			GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_result_bg_05_NCGR,
-					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );
-			GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_result_bg_05_NSCR,
-					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );	
-		}
 		else if( score == 0 )
 		{
 			//“Ç‚Ýž‚Ý
@@ -2310,8 +2308,13 @@ static void SCALEBG_Init( SCALEBG_WORK *p_wk, u16 frm, fx32 min, fx32 max, u8 sc
 		}
 		else
 		{	
-			GF_ASSERT(0);
+			//“Ç‚Ýž‚Ý
+			GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_result_bg_05_NCGR,
+					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );
+			GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_result_bg_05_NSCR,
+					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );	
 		}
+
 	
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
