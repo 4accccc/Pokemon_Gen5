@@ -98,7 +98,7 @@ INIT_EVENT_START	ev_init_c02gym0201
 		
 	ENDIF
 	
-	IF FLAG_ON( FH_01 ) THEN
+	IF FLAG_ON( FE_C02GYM_TRBTL2 ) THEN
 		//仕掛け本棚前のトレーナーの位置
     	_OBJ_POS_CHANGE( C02GYM0201_ASSITANTM1_01, 17, 0, 11 , DIR_LEFT)
 		
@@ -395,7 +395,7 @@ EVENT_START		ev_c02gym0201_assitantm1_01
 
 	//読んだ本の状態によって、行動が分岐
 	
-	IF $WK_SCENE_C02GYM0201 <= 4 && FLAG_OFF( FH_01) THEN
+	IF $WK_SCENE_C02GYM0201 <= 4 && FLAG_OFF( FE_C02GYM_TRBTL2) THEN
 		
 		//振り向きなし
 		_TALK_START_TURN_NOT()
@@ -406,7 +406,7 @@ EVENT_START		ev_c02gym0201_assitantm1_01
     	_LAST_KEYWAIT()
     	_TALKWIN_CLOSE()
     	
-	ELSIF $WK_SCENE_C02GYM0201 == 5 && FLAG_OFF( FH_01 ) THEN
+	ELSIF $WK_SCENE_C02GYM0201 == 5 && FLAG_OFF( FE_C02GYM_TRBTL2 ) THEN
 		
 			_TALK_OBJ_START()
 			
@@ -456,7 +456,7 @@ EVENT_START		ev_c02gym0201_assitantm1_01
 	    	ENDSWITCH
 	   		}
 	   		 
-	    	_FLAG_SET(FH_01)
+	    	_FLAG_SET(FE_C02GYM_TRBTL2)
     	
 	ELSE	
 		
