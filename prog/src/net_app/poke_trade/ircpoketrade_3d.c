@@ -187,6 +187,7 @@ static void _cameraSetReel(POKEMON_TRADE_WORK* pWork)
 
   GFL_G3D_CAMERA_SetPos( pWork->camera, &campos );
   GFL_G3D_CAMERA_SetTarget( pWork->camera, &tarpos );
+  campos.z-=FX32_ONE;
   GFL_G3D_CAMERA_SetFar( pWork->camera, &campos.z );
   tarpos.x = 0;
   tarpos.y = FX32_ONE;

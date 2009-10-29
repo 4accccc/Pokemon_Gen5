@@ -1356,8 +1356,8 @@ static void _typeAnimation(C_GEAR_WORK* pWork)
 		y *= 8;
 		//		GFL_CLACT_WK_GetPos( pWork->cellType[i], &pos , CLSYS_DEFREND_SUB);
 		//		if((pos.x != x) || (pos.y != y)){
-		pos.x = x+60;  // OBJ表示の為の補正値
-		pos.y = y-6;
+		pos.x = x+24;  // OBJ表示の為の補正値
+		pos.y = y+6;
 		GFL_CLACT_WK_SetPos(pWork->cellType[i], &pos, CLSYS_DEFREND_SUB);
 		//		}
 	}
