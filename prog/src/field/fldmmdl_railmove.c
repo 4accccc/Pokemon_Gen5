@@ -337,7 +337,6 @@ static BOOL MMdl_UpdateCurrentRailAttr( MMDL * mmdl )
 
     old_attr = FLDNOGRID_MAPPER_GetAttr( pNOGRIDMapper, &old );
     now_attr = FLDNOGRID_MAPPER_GetAttr( pNOGRIDMapper, &now );
-
   }
   
 	MMDL_SetMapAttrOld( mmdl, old_attr );
@@ -368,23 +367,25 @@ static BOOL MMdl_UpdateCurrentRailAttr( MMDL * mmdl )
 //--------------------------------------------------------------
 static void MMdl_MapAttrProc_MoveStartFirst( MMDL * mmdl )
 {
-	MMdl_UpdateCurrentRailAttr( mmdl );
+	if( MMdl_UpdateCurrentRailAttr( mmdl ) )
+  {
 	
-	if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
-		MATR now = MMDL_GetMapAttr( mmdl );
-		MATR old = MMDL_GetMapAttrOld( mmdl );
-		const OBJCODE_PARAM *prm =
-			MMDL_GetOBJCodeParam( mmdl, MMDL_GetOBJCode(mmdl) );
-		
-		MMdl_MapAttrBridgeProc_01( mmdl, now, old, prm );
-		MMdl_MapAttrGrassProc_0( mmdl, now, old, prm );
-		MMdl_MapAttrSplashProc_012( mmdl, now, old, prm );
-		MMdl_MapAttrShadowProc_0( mmdl, now, old, prm );
-		MMdl_MapAttrHeight_02( mmdl, now, old, prm );
-		MMdl_MapAttrLGrassProc_0( mmdl, now, old, prm );
-		MMdl_MapAttrNGrassProc_0( mmdl, now, old, prm );
-		MMdl_MapAttrReflect_01( mmdl, now, old, prm );
-	}
+    if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
+      MATR now = MMDL_GetMapAttr( mmdl );
+      MATR old = MMDL_GetMapAttrOld( mmdl );
+      const OBJCODE_PARAM *prm =
+        MMDL_GetOBJCodeParam( mmdl, MMDL_GetOBJCode(mmdl) );
+      
+      MMdl_MapAttrBridgeProc_01( mmdl, now, old, prm );
+      MMdl_MapAttrGrassProc_0( mmdl, now, old, prm );
+      MMdl_MapAttrSplashProc_012( mmdl, now, old, prm );
+      MMdl_MapAttrShadowProc_0( mmdl, now, old, prm );
+      MMdl_MapAttrHeight_02( mmdl, now, old, prm );
+      MMdl_MapAttrLGrassProc_0( mmdl, now, old, prm );
+      MMdl_MapAttrNGrassProc_0( mmdl, now, old, prm );
+      MMdl_MapAttrReflect_01( mmdl, now, old, prm );
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -396,27 +397,29 @@ static void MMdl_MapAttrProc_MoveStartFirst( MMDL * mmdl )
 //--------------------------------------------------------------
 static void MMdl_MapAttrProc_MoveStartSecond( MMDL * mmdl )
 {
-	MMdl_UpdateCurrentRailAttr( mmdl );
+	if( MMdl_UpdateCurrentRailAttr( mmdl ) )
+  {
 	
-	if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
-		MATR now = MMDL_GetMapAttr( mmdl );
-		MATR old = MMDL_GetMapAttrOld( mmdl );
-		const OBJCODE_PARAM *prm =
-			MMDL_GetOBJCodeParam( mmdl, MMDL_GetOBJCode(mmdl) );
+    if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
+      MATR now = MMDL_GetMapAttr( mmdl );
+      MATR old = MMDL_GetMapAttrOld( mmdl );
+      const OBJCODE_PARAM *prm =
+        MMDL_GetOBJCodeParam( mmdl, MMDL_GetOBJCode(mmdl) );
 
-		MMdl_MapAttrBridgeProc_01( mmdl, now, old, prm );
-		MMdl_MapAttrGrassProc_12( mmdl, now, old, prm );
-		MMdl_MapAttrFootMarkProc_1( mmdl, now, old, prm );
-		MMdl_MapAttrSplashProc_012( mmdl, now, old, prm );
-		MMdl_MapAttrShadowProc_1( mmdl, now, old, prm );
-		MMdl_MapAttrLGrassProc_1( mmdl, now, old, prm );
-		MMdl_MapAttrNGrassProc_1( mmdl, now, old, prm );
-		MMdl_MapAttrPoolProc_1( mmdl, now, old, prm );
-		MMdl_MapAttrSwampProc_1( mmdl, now, old, prm );
-		MMdl_MapAttrReflect_01( mmdl, now, old, prm );
-		
-		MMdl_MapAttrSEProc_1( mmdl, now, old, prm ); //描画関係ない?
-	}
+      MMdl_MapAttrBridgeProc_01( mmdl, now, old, prm );
+      MMdl_MapAttrGrassProc_12( mmdl, now, old, prm );
+      MMdl_MapAttrFootMarkProc_1( mmdl, now, old, prm );
+      MMdl_MapAttrSplashProc_012( mmdl, now, old, prm );
+      MMdl_MapAttrShadowProc_1( mmdl, now, old, prm );
+      MMdl_MapAttrLGrassProc_1( mmdl, now, old, prm );
+      MMdl_MapAttrNGrassProc_1( mmdl, now, old, prm );
+      MMdl_MapAttrPoolProc_1( mmdl, now, old, prm );
+      MMdl_MapAttrSwampProc_1( mmdl, now, old, prm );
+      MMdl_MapAttrReflect_01( mmdl, now, old, prm );
+      
+      MMdl_MapAttrSEProc_1( mmdl, now, old, prm ); //描画関係ない?
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -428,20 +431,22 @@ static void MMdl_MapAttrProc_MoveStartSecond( MMDL * mmdl )
 //--------------------------------------------------------------
 static void MMdl_MapAttrProc_MoveStartJumpSecond( MMDL * mmdl )
 {
-	MMdl_UpdateCurrentRailAttr( mmdl );
+	if( MMdl_UpdateCurrentRailAttr( mmdl ) )
+  {
 	
-	if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
-		MATR now = MMDL_GetMapAttr( mmdl );
-		MATR old = MMDL_GetMapAttrOld( mmdl );
-		const OBJCODE_PARAM *prm =
-			MMDL_GetOBJCodeParam( mmdl, MMDL_GetOBJCode(mmdl) );
+    if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
+      MATR now = MMDL_GetMapAttr( mmdl );
+      MATR old = MMDL_GetMapAttrOld( mmdl );
+      const OBJCODE_PARAM *prm =
+        MMDL_GetOBJCodeParam( mmdl, MMDL_GetOBJCode(mmdl) );
 
-		MMdl_MapAttrBridgeProc_01( mmdl, now, old, prm );
-		MMdl_MapAttrShadowProc_1( mmdl, now, old, prm );
-		MMdl_MapAttrReflect_01( mmdl, now, old, prm );
-		MMdl_MapAttrSplashProc_Jump1( mmdl, now, old, prm );
-		MMdl_MapAttrSEProc_1( mmdl, now, old, prm );//描画関係ない?
-	}
+      MMdl_MapAttrBridgeProc_01( mmdl, now, old, prm );
+      MMdl_MapAttrShadowProc_1( mmdl, now, old, prm );
+      MMdl_MapAttrReflect_01( mmdl, now, old, prm );
+      MMdl_MapAttrSplashProc_Jump1( mmdl, now, old, prm );
+      MMdl_MapAttrSEProc_1( mmdl, now, old, prm );//描画関係ない?
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -453,22 +458,24 @@ static void MMdl_MapAttrProc_MoveStartJumpSecond( MMDL * mmdl )
 //--------------------------------------------------------------
 static void MMdl_MapAttrProc_MoveEnd( MMDL * mmdl )
 {
-	MMdl_UpdateCurrentRailAttr( mmdl );
+	if( MMdl_UpdateCurrentRailAttr( mmdl ) )
+  {
 	
-	if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
-		MATR now = MMDL_GetMapAttr( mmdl );
-		MATR old = MMDL_GetMapAttrOld( mmdl );
-		const OBJCODE_PARAM *prm =
-			MMDL_GetOBJCodeParam( mmdl, MMDL_GetOBJCode(mmdl) );
-		
-		//終了　アトリビュート処理
-		MMdl_MapAttrHeight_02( mmdl, now, old, prm );
-		MMdl_MapAttrPoolProc_2( mmdl, now, old, prm );
-		MMdl_MapAttrSwampProc_2( mmdl, now, old, prm );
-		MMdl_MapAttrSplashProc_012( mmdl, now, old, prm );
-		MMdl_MapAttrReflect_2( mmdl, now, old, prm );
-		MMdl_MapAttrShadowProc_2( mmdl, now, old, prm );
-	}
+    if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
+      MATR now = MMDL_GetMapAttr( mmdl );
+      MATR old = MMDL_GetMapAttrOld( mmdl );
+      const OBJCODE_PARAM *prm =
+        MMDL_GetOBJCodeParam( mmdl, MMDL_GetOBJCode(mmdl) );
+      
+      //終了　アトリビュート処理
+      MMdl_MapAttrHeight_02( mmdl, now, old, prm );
+      MMdl_MapAttrPoolProc_2( mmdl, now, old, prm );
+      MMdl_MapAttrSwampProc_2( mmdl, now, old, prm );
+      MMdl_MapAttrSplashProc_012( mmdl, now, old, prm );
+      MMdl_MapAttrReflect_2( mmdl, now, old, prm );
+      MMdl_MapAttrShadowProc_2( mmdl, now, old, prm );
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -480,24 +487,26 @@ static void MMdl_MapAttrProc_MoveEnd( MMDL * mmdl )
 //--------------------------------------------------------------
 static void MMdl_MapAttrProc_MoveEndJump( MMDL * mmdl )
 {
-	MMdl_UpdateCurrentRailAttr( mmdl );
+	if( MMdl_UpdateCurrentRailAttr( mmdl ) )
+  {
 	
-	if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
-		MATR now = MMDL_GetMapAttr( mmdl );
-		MATR old = MMDL_GetMapAttrOld( mmdl );
-		const OBJCODE_PARAM *prm =
-			MMDL_GetOBJCodeParam( mmdl, MMDL_GetOBJCode(mmdl) );
-		
-		//終了　アトリビュート処理
-		MMdl_MapAttrHeight_02( mmdl, now, old, prm );
-		MMdl_MapAttrPoolProc_2( mmdl, now, old, prm );
-		MMdl_MapAttrSwampProc_2( mmdl, now, old, prm );
-		MMdl_MapAttrSplashProc_012( mmdl, now, old, prm );
-		MMdl_MapAttrReflect_2( mmdl, now, old, prm );
-		MMdl_MapAttrShadowProc_2( mmdl, now, old, prm );
-		MMdl_MapAttrGrassProc_12( mmdl, now, old, prm );
-		MMdl_MapAttrGroundSmokeProc_2( mmdl, now, old, prm );
-	}
+    if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
+      MATR now = MMDL_GetMapAttr( mmdl );
+      MATR old = MMDL_GetMapAttrOld( mmdl );
+      const OBJCODE_PARAM *prm =
+        MMDL_GetOBJCodeParam( mmdl, MMDL_GetOBJCode(mmdl) );
+      
+      //終了　アトリビュート処理
+      MMdl_MapAttrHeight_02( mmdl, now, old, prm );
+      MMdl_MapAttrPoolProc_2( mmdl, now, old, prm );
+      MMdl_MapAttrSwampProc_2( mmdl, now, old, prm );
+      MMdl_MapAttrSplashProc_012( mmdl, now, old, prm );
+      MMdl_MapAttrReflect_2( mmdl, now, old, prm );
+      MMdl_MapAttrShadowProc_2( mmdl, now, old, prm );
+      MMdl_MapAttrGrassProc_12( mmdl, now, old, prm );
+      MMdl_MapAttrGroundSmokeProc_2( mmdl, now, old, prm );
+    }
+  }
 }
 
 //======================================================================
