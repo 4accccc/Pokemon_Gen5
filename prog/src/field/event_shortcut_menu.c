@@ -611,6 +611,8 @@ static void ShortCutMenu_Init( SHORTCUTMENU_MODE mode, EVENT_SHORTCUTMENU_WORK *
 {	
 	if( p_wk->p_menu == NULL && p_wk->is_empty == FALSE )
 	{	
+		//ˆêuƒpƒV‚é‚Ì‚Å“Ç‚Ý‘Ö‚¦Žž‚ÍBG–Ê‚ðÁ‚·
+		GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
 		{	
 			FLDMSGBG *p_msgbg;
 
