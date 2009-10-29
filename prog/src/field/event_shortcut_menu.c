@@ -623,7 +623,7 @@ static void ShortCutMenu_Init( SHORTCUTMENU_MODE mode, EVENT_SHORTCUTMENU_WORK *
 		{	
 			GAMEDATA	*p_gdata	= GAMESYSTEM_GetGameData( p_wk->p_gamesys );
 			SHORTCUT_CURSOR	*p_cursor	= GAMEDATA_GetShortCutCursor( p_gdata );
-			p_wk->p_menu	= SHORTCUTMENU_Init( mode, p_cursor, HEAPID_FIELDMAP, HEAPID_FLD3DCUTIN );
+			p_wk->p_menu	= SHORTCUTMENU_Init( mode, p_cursor, HEAPID_PROC, HEAPID_PROC );
 		}
 	}
 }
