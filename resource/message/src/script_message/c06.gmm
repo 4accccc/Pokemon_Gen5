@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-17T14:42:19"/>
+	<create user="matsumiya" host="W00207" date="2009-10-29T18:24:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -279,7 +279,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="100"/>
+		<comment position="4" width="268"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラクター" english="キャラクター" type="string" default="" position="1" width="100">
 		</attribute>
@@ -307,9 +307,9 @@
 		</language>
 	</columns>
 
-	<dialog left="305" top="109" right="1010" bottom="729" maximized="no" rayout="Vertical2">
+	<dialog left="25" top="274" right="730" bottom="894" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="540"/>
@@ -336,25 +336,124 @@
 	</lock>
 
 
-	<row id="msg_c06_hakase2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_hakase2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・</comment>
+・GRIDX=101～104、GRIDZ=301の
+　POSを踏むとイベント開始
+・ポケモンセンターから登場すると
+　！マーク表示後にメッセージ表示
+・表示後、倍速移動で
+　主人公に隣接し次メッセージ</comment>
 		<attribute name="キャラクター">博士２</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">おお！　きみ！
+[1:00:トレーナー名:0]だろ！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">おお！　きみ！
+[1:00:トレーナー名:0]だろ！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06oldman1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_hakase2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
 		<comment>♂
-・</comment>
-		<attribute name="キャラクター">おじいさん</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+・！マーク表示後
+　次メッセージ</comment>
+		<language name="JPN" width="256">どれどれ……[BE:01:ページ切り替え（クリア）]
+その　ポケモンずかんを
+みせてくれるかね[BE:01:ページ切り替え（クリア）]
+……　……　……
+……　……　ほお！！[BE:01:ページ切り替え（クリア）]
+なるほどなあ……　アイツめ
+いいトレーナーを　みつけおったな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">どれどれ……[BE:01:ページ切り替え（クリア）]
+その　ポケモン図鑑を
+みせてくれるかね[BE:01:ページ切り替え（クリア）]
+……　……　……
+……　……　ほお！！[BE:01:ページ切り替え（クリア）]
+なるほどなあ……　アイツめ
+いいトレーナーを　みつけおったな[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c06_hakase2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
+		<comment>♂
+・表示後、次メッセージ</comment>
+		<language name="JPN" width="256">おぉ　すまない！
+ちと　こうふんしてな[BE:01:ページ切り替え（クリア）]
+わたしの　なまえも
+アララギ[BE:01:ページ切り替え（クリア）]
+そう！　きみに
+ポケモンと　ずかんを　たくした[BE:00:ページ切り替え（行送り）]
+じんぶつの　ちちおや　なんじゃ！[BE:01:ページ切り替え（クリア）]
+きみのことは　むすめから
+いろいろ　おしえてもらっていてな[BE:01:ページ切り替え（クリア）]
+ここで　こうして　あえたのは
+なんとも　うれしいかぎりじゃ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">おぉ　すまない！
+ちと　興奮してな[BE:01:ページ切り替え（クリア）]
+わたしの　名前は
+アララギ[BE:01:ページ切り替え（クリア）]
+そう！　きみに
+ポケモンと　図鑑を　託した[BE:00:ページ切り替え（行送り）]
+人物の父親　なんじゃ！[BE:01:ページ切り替え（クリア）]
+きみのことは　娘から
+いろいろ　教えてもらっていてな[BE:01:ページ切り替え（クリア）]
+ここで　こうして　会えたのは
+なんとも　うれしい　かぎりじゃ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c06_hakase2_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>・図鑑パワーアップがあれば
+・msg_c06_hakase2_03表示後に
+　また！マーク表示し、このメッセージ</comment>
+		<language name="JPN" width="256">そうだ！　きみの　ポケモンずかんを
+パワーアップ　しておこうか！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">そうだ！　きみの　ポケモン図鑑を
+パワーアップ　しておこうか！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c06_hakase2_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
+		<comment>♂
+・メッセージ表示後
+　c06のストッパーポケモンの方に移動
+※仮だけど！</comment>
+		<language name="JPN" width="256">アララギちち『おっと　そうだった……[BE:01:ページ切り替え（クリア）]
+フウロに　たのまれた
+ポケモンを　みるとするかね[BE:01:ページ切り替え（クリア）]
+ではな　[1:00:トレーナー名:0]
+ずかんのほう　よろしく　たのむぞ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ父『おっと　そうだった……[BE:01:ページ切り替え（クリア）]
+フウロに　たのまれた
+ポケモンを　みるとするかね[BE:01:ページ切り替え（クリア）]
+ではな　[1:00:トレーナー名:0]
+ずかんのほう　よろしく　たのむぞ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c06_hakase2_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・7番道路
+　ストッパーポケモンの手前で
+・？？まで
+※仮だけど！！</comment>
+		<language name="JPN" width="256">アララギ父『ふむう……
+これは　ちと　やっかいじゃな（仮）</language>
+		<language name="JPN_KANJI" width="256">アララギ父『ふむう……
+これは　ちと　やっかいじゃな（仮）</language>
+	</row>
+
+	<row id="msg_c06_stoppoke_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>ポケモン
+※仮だけど！！！</comment>
+		<attribute name="キャラクター">ストッパーポケモン</attribute>
+		<language name="JPN" width="256">……　……　……
+……　……　……[BE:01:ページ切り替え（クリア）]
+このままでは
+ピクリとも　うごきそうにない</language>
+		<language name="JPN_KANJI" width="256">……　……　……
+……　……　……[BE:01:ページ切り替え（クリア）]
+このままでは
+ピクリとも　動きそうにない</language>
 	</row>
 
 	<row id="msg_c06_boy3_01">
 		<comment>♂
-・7月ROM用</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラクター">BOY3</attribute>
 		<language name="JPN" width="256">ひこうき！　この　フォルム！
 まさに　とぶための　デザイン！[BE:01:ページ切り替え（クリア）]
@@ -368,21 +467,21 @@
 
 	<row id="msg_c06_pilot_01">
 		<comment>♂
-・7月ROM用</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラクター">PILOT</attribute>
 		<language name="JPN" width="256">この　フキヨセの　くうこうから
 とびたつのは　かもつき　ばかりさ[BE:01:ページ切り替え（クリア）]
 トレーナーが　そらを　とびたいときは
-ひでんわざ　そらをとぶが　あるもんね</language>
+そらをとぶ　って　わざがあるもんね</language>
 		<language name="JPN_KANJI" width="256">この　フキヨセの　空港から
 飛び立つのは　貨物機　ばかりさ[BE:01:ページ切り替え（クリア）]
 トレーナーが　空を　飛びたいときは
-ひでんわざ　そらをとぶが　あるもんね</language>
+そらをとぶ　って　技があるもんね</language>
 	</row>
 
 	<row id="msg_c06_girl2_01">
 		<comment>♀
-・7月ROM用</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラクター">GIRL2</attribute>
 		<language name="JPN" width="256">フウロねえちゃんの　おじいちゃん
 でんせつの　ひこうきのり　だったの[BE:01:ページ切り替え（クリア）]
@@ -398,7 +497,7 @@
 
 	<row id="msg_c06_rangerw_01">
 		<comment>♀
-・7月ROM用</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラクター">RANGERW</attribute>
 		<language name="JPN" width="256">ポケモンと　ひと　とで
 あれはてた　とちを　きりひらき[BE:00:ページ切り替え（行送り）]
@@ -414,7 +513,7 @@
 
 	<row id="msg_c06_workman_01">
 		<comment>♂
-・7月ROM用</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラクター">WORKMAN</attribute>
 		<language name="JPN" width="256">じゅうぶんに　きをつけるなら
 かっそうろで　あそんでも　かまわんぞ[BE:01:ページ切り替え（クリア）]
@@ -428,7 +527,7 @@
 
 	<row id="msg_c06_woman1_01">
 		<comment>♀
-・7月ROM用</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラクター">WOMAN1</attribute>
 		<language name="JPN" width="256">Ｎ……
 あの　ひとは　いったい……[BE:01:ページ切り替え（クリア）]
