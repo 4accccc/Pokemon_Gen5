@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-29T16:15:16"/>
+	<create user="matsumiya" host="W00207" date="2009-10-29T20:13:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -722,16 +722,10 @@
 
 ※文章修正</comment>
 		<attribute name="キャラ指定">本の内容</attribute>
-		<language name="JPN" width="256">ほんに　メモが　はさんである……！▼
-わたしが　すすめる　ほんをよむと
-カギが　ひとつ　はずれます▼
-５つの　カギを　はずすと
-わたしの　へやのとびらが　ひらきます</language>
-		<language name="JPN_KANJI" width="256">本に　メモが　挟んである……！▼
-私が　薦める本を　読むと
-カギが　一つ　外れます▼
-５つの　カギを　外すと
-私のいる　部屋の扉が　開きます</language>
+		<language name="JPN" width="256">キズぐすりに　ついて
+いがくてきに　せつめいした　ほんだ</language>
+		<language name="JPN_KANJI" width="256">キズぐすりに　ついて
+医学的に　説明した　本だ</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_02" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -739,20 +733,10 @@
 この　ほんを　よみますか？
 
 ※文章修正、お薦めの漢字を統一</comment>
-		<language name="JPN" width="256">ほんに　メモが　はさんである……！▼
-よる　ねつきが　わるいときは
-ポケモンと　いっしょに▽
-ふとんに　はいって▽
-[FF:00:色:1]えほん[FF:00:色:0]を　よんで　あげましょう▼
-つぎに　おすすめする　ほんは
-わたしが　[FF:00:色:1]すきな[FF:00:色:0]　えほんです</language>
-		<language name="JPN_KANJI" width="256">本に　メモが　挟んである……！▼
-夜　寝つきが　悪いときは
-ポケモンと　一緒に▽
-布団に　入って▽
-[FF:00:色:1]絵本[FF:00:色:0]を　読んで　あげましょう▼
-次に　お薦めする　本は
-私が　[FF:00:色:1]好きな[FF:00:色:0]　絵本です</language>
+		<language name="JPN" width="256">こどもを　げんきに　そだてる
+アドバイスが　しるされている</language>
+		<language name="JPN_KANJI" width="256">子供を　元気に　育てる
+アドバイスが　記されている</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_03" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -762,20 +746,10 @@
 ※ここでアロエの感情吐露は不要
 　トレーナー同士の対話はポケモン勝負
 　こういう形式はかえって感情移入を阻害する</comment>
-		<language name="JPN" width="256">ほんに　メモが　はさんである……！▼
-ジムリーダーである　わたしは
-なぞなぞが　だいすきです▼
-メモにも　なぞなぞが
-かかれたものが　あります▼
-そのばあい　なぞなぞを　とくと
-つぎの　ほんが　わかります</language>
-		<language name="JPN_KANJI" width="256">本に　メモが　挟んである……！▼
-ジムリーダーである　私は
-なぞなぞが　大好きです▼
-メモにも　なぞなぞが
-書かかれものが　あります▼
-その場合　なぞなぞを　解くと
-次の　本が　わかります</language>
+		<language name="JPN" width="256">ポケモンしょうぶに　かんする
+ぎじゅつが　かかれている</language>
+		<language name="JPN_KANJI" width="256">ポケモン勝負に　関する
+技術が　書かれている</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_04" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -783,16 +757,10 @@
 この　ほんを　よみますか？
 
 ※文章修正</comment>
-		<language name="JPN" width="256">ほんに　メモが　はさんである……！▼
-わたしが　すすめる　ほんをよむと
-カギが　ひとつ　はずれます▼
-５つの　カギを　はずすと
-わたしの　へやのとびらが　ひらきます</language>
-		<language name="JPN_KANJI" width="256">本に　メモが　挟んである……！▼
-私が　薦める　本を　読むと
-カギが　一つ　外れます▼
-５つの　カギを　外すと
-私のいる　部屋の扉が　開きます</language>
+		<language name="JPN" width="256">ポケモンセンターの
+しくみに　ついて　まとめてある</language>
+		<language name="JPN_KANJI" width="256">ポケモンセンターの
+仕組みについて　まとめてある</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_05" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -800,170 +768,166 @@
 この　ほんを　よみますか？
 
 ※文章修正</comment>
-		<language name="JPN" width="256">ほんに　メモが　はさんである……！▼
+		<language name="JPN" width="256">ポケモンけんきゅうの　れきしが
+わかりやすく　かかれている</language>
+		<language name="JPN_KANJI" width="256">ポケモン研究の　歴史が
+わかりやすく　書かれている</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_06" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>「ナエトルの　せいたい」
+この　ほんを　よみますか？</comment>
+		<language name="JPN" width="256">ナエトルの　せいたいが　かいてある
+つちで　できた　せなかの　こうらを▽
+さわって　しめっていたのなら▽
+その　ナエトルは　とても　げんきだ</language>
+		<language name="JPN_KANJI" width="256">ナエトルの　生態が　書いてある
+土で　できた　背中の　甲羅を▽
+触って　湿っていたのなら▽
+その　ナエトルは　とても　元気だ</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_07" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>「ポッチャマの　せいたい」
+この　ほんを　よみますか？</comment>
+		<language name="JPN" width="256">ポッチャマの　せいたいが　かいてある
+あるくのは　にがてで　こけたりするが▽
+ポッチャマの　プライドは　たかく▽　
+きにせず　どうどうと　むねをはる</language>
+		<language name="JPN_KANJI" width="256">ポッチャマの　生態が　書いてある
+歩くのは　苦手で　こけたりするが▽
+ポッチャマの　プライドは　高く▽
+気にせず　堂々と　胸を張る</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_08" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>「ヒコザルの　せいたい」
+この　ほんを　よみますか？</comment>
+		<language name="JPN" width="256">ヒコザルの　せいたいが　かいてある
+とても　みがるな　ポケモン▽
+まわりが　もえないように　おしりの▽
+ほのおを　けしてから　ねむる</language>
+		<language name="JPN_KANJI" width="256">ヒコザルの　生態が　書いてある
+とても　身軽な　ポケモン▽
+周りが　燃えないように　おしりの▽
+炎を　消してから　眠る</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_09" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>「はじめての　ポケモン」
+この　ほんを　よみますか？</comment>
+		<language name="JPN" width="256">はじめて　ポケモンを
+つかまえた　おんなのこの　どうわだ</language>
+		<language name="JPN_KANJI" width="256">初めて　ポケモンを
+捕まえた　女の子の　童話だ</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_10" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>「ポケモン　えかきうた」
+この　ほんを　よみますか？</comment>
+		<language name="JPN" width="256">えかきうたが
+たくさん　のっている</language>
+		<language name="JPN_KANJI" width="256">絵描き歌が
+たくさん　載っている</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_11" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>「３ばんどうろの　ぼうけん」
+この　ほんを　よみますか？</comment>
+		<language name="JPN" width="256">ポケモンを　つれた　しょうねんが　
+だいぼうけんする　ものがたりだ</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　連れた
+少年が　大冒険する　物語だ</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_12" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>「ポケモン　なぞなぞ　えほん」
+この　ほんを　よみますか？</comment>
+		<language name="JPN" width="256">ポケモンに　かんする
+なぞなぞが　たくさん　ある</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　関する
+なぞなぞが　たくさん　ある</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_13" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<language name="JPN" width="256">うらひょうしに　メモが　ある……！▼
+よる　ねつきが　わるいときは
+ポケモンと　いっしょに▽
+ふとんに　はいって▽
+[FF:00:色:1]えほん[FF:00:色:0]を　よんで　あげましょう▼
+つぎに　おすすめする　ほんは
+わたしが　[FF:00:色:1]すきな[FF:00:色:0]　えほんです▽
+あとがきに　メモが　あります</language>
+		<language name="JPN_KANJI" width="256">本に　メモが　挟んである……！▼
+夜　寝つきが　悪いときは
+ポケモンと　一緒に▽
+布団に　入って▽
+[FF:00:色:1]絵本[FF:00:色:0]を　読んで　あげましょう▼
+次に　お薦めする　本は
+私が　[FF:00:色:1]好きな[FF:00:色:0]　絵本です▽
+あとがきに　メモが　あります</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_14" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<language name="JPN" width="256">さいごの　ページに　メモが　ある……！▼
 ポケモンを　けんきゅう　していると
 [FF:00:色:1]ナゾ[FF:00:色:0]　ばかりです▼
 つぎは　いちれつ　おくにある
 しゃかい　ジャンルです▼
 「[FF:00:色:1]こどもを　げんきに　そだてる[FF:00:色:0]」を
-おすすめ　します</language>
+おすすめ　します▽
+うらひょうしに　メモが　あります</language>
 		<language name="JPN_KANJI" width="256">本に　メモが　挟んである……！▼
 ポケモンを　研究　していると
 [FF:00:色:1]ナゾ[FF:00:色:0]　ばかりです▼
 次は　一列　奥にある
 社会　ジャンルです▼
 「[FF:00:色:1]子供を　元気に　育てる[FF:00:色:0]」を
-お薦めします</language>
+お薦めします
+裏表紙に　メモが　あります</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_06" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
-		<comment>「ナエトルの　せいたい」
-この　ほんを　よみますか？</comment>
-		<language name="JPN" width="256">ほんに　メモが　はさんである……！▼
-ナエトルの　せいたい▼
-つちで　できた　せなかの　こうらを
-さわって　しめっていたのなら▽
-その　ナエトルは　とても　げんきだ▼</language>
-		<language name="JPN_KANJI" width="256">本に　メモが　挟んである……！▼
-ナエトルの　生態▼
-土で　できた　背中の　甲羅を
-触って　湿っていたのなら▽
-その　ナエトルは　とても　元気だ▼</language>
-	</row>
-
-	<row id="msg_c02gym0101_book_07" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
-		<comment>「ポッチャマの　せいたい」
-この　ほんを　よみますか？</comment>
-		<language name="JPN" width="256">ほんに　メモが　はさんである……！▼
-ポッチャマの　せいたい▼
-あるくのは　にがてで　こけたりするが
-ポッチャマの　プライドは　たかく▽　
-きにせず　どうどうと　むねをはる▼</language>
-		<language name="JPN_KANJI" width="256">本に　メモが　挟んである……！▼
-ポッチャマの　生態▼
-歩くのは　苦手で　こけたりするが
-ポッチャマの　プライドは　高く▽
-気にせず　堂々と　胸を張る▼</language>
-	</row>
-
-	<row id="msg_c02gym0101_book_08" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
-		<comment>「ヒコザルの　せいたい」
-この　ほんを　よみますか？</comment>
-		<language name="JPN" width="256">ほんに　メモが　はさんである……！▼
-ヒコザルの　せいたい▼
-とても　みがるな　ポケモン
-まわりが　もえないように　おしりの▽
-ほのおを　けしてから　ねむる▼
+	<row id="msg_c02gym0101_book_15" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<language name="JPN" width="256">ほんに　てがみが　はさんである……！▼
 せいかいです▼
 ここが　さいごの　ほんです
 あえることを　たのしみにしています</language>
-		<language name="JPN_KANJI" width="256">本に　メモが　挟んである……！▼
-ヒコザルの　生態▼
-とても　身軽な　ポケモン
-周りが　燃えないように　おしりの▽
-炎を　消してから　眠る▼
+		<language name="JPN_KANJI" width="256">本に　手紙が　挟んである……！▼
 正解です▼
 ここが　最後の　本です
 会えることを　楽しみにしています</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_09" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
-		<comment>「はじめての　ポケモン」
-この　ほんを　よみますか？</comment>
-		<language name="JPN" width="256">ほんに　メモが　はさんである……！▼
-ジムリーダーと　たたかうには
-わたしが　すすめる　５さつの　ほんを▽
-ほんだなの　なかから　さがしだして▽
-じゅんばんに　よむことです▼
-さいしょは　「ポケモン　えかきうた」
-このほんと　おなじ　たなに　あります</language>
-		<language name="JPN_KANJI" width="256">本に　メモが　挟んである……！▼
-ジムリーダーと　闘うには
-私が薦める　５つの本を▽
-本棚から　探し出して▽
-順番に　読むことです▼
-最初は　「ポケモン　えかきうた」
-この本と　同じ本棚に　あります</language>
-	</row>
-
-	<row id="msg_c02gym0101_book_10" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
-		<comment>「ポケモン　えかきうた」
-この　ほんを　よみますか？</comment>
+	<row id="msg_c02gym0101_book_16" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<language name="JPN" width="256">ほんに　メモが　はさんである……！▼
 せいかいです
 このように　ほんを　さがしてください▼
-つぎは　いちれつ　おくにある　
+つぎは　いちれつ　おくにある
 ポケモン　ジャンルです▼
-「[FF:00:色:1]けんきゅうの　れきし[FF:00:色:0]」という　ほんを
-おすすめ　します</language>
+「[FF:00:色:1]けんきゅうの　れきし[FF:00:色:0]」という
+ほんを　さがしてください▽
+さいごの　ページに　メモが　あります</language>
 		<language name="JPN_KANJI" width="256">本に　メモが　挟んである……！▼
 正解です
 このように　本を　探してください▼
 次は　一列　奥にある　
 ポケモン　ジャンルです▼
 「[FF:00:色:1]研究の　歴史[FF:00:色:0]」という　本を
-お薦め　します</language>
+探してください▽
+最後の　ページに　メモが　あります</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_11" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
-		<comment>「３ばんどうろの　ぼうけん」
-この　ほんを　よみますか？</comment>
-		<language name="JPN" width="256">ほんに　メモが　はさんである……！▼
-ジムリーダーと　たたかうには
-わたしが　すすめる　５さつの　ほんを▽
-ほんだなの　なかから　さがしだして▽
-じゅんばんに　よむことです▼
-さがすときの　てがかりにしてください
-ほんだなの　ジャンルは▽
-よこの　れつで　ならんでいます</language>
-		<language name="JPN_KANJI" width="256">本に　メモが　挟んである……！▼
-ジムリーダーと　闘うには
-私が薦める　５つの本を▽
-本棚から　探し出して▽
-順番に　読むことです▼
-探すときの　手がかりにしてください
-本棚の　ジャンルは▽
-横の列で　並んでいます</language>
-	</row>
-
-	<row id="msg_c02gym0101_book_12" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
-		<comment>「ポケモン　なぞなぞ　えほん」
-この　ほんを　よみますか？</comment>
-		<language name="JPN" width="256">ほんに　メモが　はさんである……！▼
+	<row id="msg_c02gym0101_book_17" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<language name="JPN" width="256">あとがきに　メモが　ある……！▼
 とても　みがるな　ポケモン
 まわりが　もえないように　おしりの▽
 ほのおを　けしてから　ねむる▽
 さて　なんでしょう？▼</language>
-		<language name="JPN_KANJI" width="256">本に　メモが　挟んである……！▼
+		<language name="JPN_KANJI" width="256">あとがきに　メモが　ある……！▼
 とても　身軽な　ポケモン
 周りが　燃えないように　おしりの▽
 炎を　消してから　眠る▽
 さて　なんでしょう？▼</language>
-	</row>
-
-	<row id="msg_c02gym0101_book_13" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c02gym0101_book_14" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c02gym0101_book_15" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c02gym0101_book_16" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c02gym0101_book_17" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_18" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
