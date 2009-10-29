@@ -1155,6 +1155,8 @@ FS_EXTERN_OVERLAY(battle);
   case SEQ_BTL_RETURN:
     BATTLE_PARAM_Release( &wk->setupParam );
     changeScene_recover( wk );
+    PMSND_StopBGM();
+    setMainProc( wk, mainProc_Setup );
     break;
 /*
   extern void BP_SETUP_Wild( BATTLE_SETUP_PARAM* bp, GAMEDATA* gameData, HEAPID heapID, const BtlRule rule,
