@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="tanoue_reiko" host="W00192" date="2009-10-22T18:11:24" source="mus_stage05.mb"/>
+	<create user="tanoue_reiko" host="W00192" date="2009-10-29T17:03:02" source="mus_stage05.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="tanoue_reiko" host="W00192" date="2009-10-22T18:11:24" source="mus_stage05.mb"/>
+<original_create user="tanoue_reiko" host="W00192" date="2009-10-29T17:03:02" source="mus_stage05.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -1310,19 +1310,19 @@
 		30e3 4dc8 666b 7fd8 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="29" name="ryuseib.1_pl" color_size="8">
-		30e3 4166 4dc8 666b 7fd8 7fff 7fff 7fff
+		30e3 666b 666b 666b 7fd8 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="30" name="ryuseib.2_pl" color_size="8">
-		30e3 4166 4dc8 666b 7fd8 7fff 7fff 7fff
+		30e3 666b 666b 666b 7fd8 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="31" name="ryuseib.3_pl" color_size="8">
-		30e3 4166 4dc8 666b 7fd8 7fff 7fff 7fff
+		30e3 666b 666b 666b 7fd8 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="32" name="ryuseib.4_pl" color_size="8">
-		30e3 4166 666b 7fd8 7fff 7fff 7fff 7fff
+		30e3 666b 666b 7fd8 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="33" name="ryuseib.5_pl" color_size="8">
-		30e3 4dc8 666b 7fd8 7fff 7fff 7fff 7fff
+		30e3 666b 666b 7fd8 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="34" name="shy_pl" color_size="8">
 		14a5 2d6b 35ad 39ce 4210 4631 5ad6 7fff
