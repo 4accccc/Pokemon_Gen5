@@ -85,10 +85,7 @@ typedef struct{
   COMM_PLAYER_PACKAGE player_pack;    ///<プレイヤー座標データパッケージ
   u16 zone_id;      ///<ゾーンID
   u8 palace_area;   ///<パレスエリア
-  u8 mission_no;    ///<ミッション番号
-  
   u8 action_status; ///<実行中のアクション(INTRUDE_ACTION_???)
-  u8 padding[3];
 }INTRUDE_STATUS;
 
 ///プロフィールデータ(送信のみに使用。受信は各々のバッファに分かれる)
@@ -126,7 +123,6 @@ typedef struct _INTRUDE_COMM_SYS{
   u8 recv_profile;            ///<プロフィール受信フラグ(bit管理)
   u8 mission_no;              ///<ミッション番号
 
-  PALACE_SYS_PTR palace;    ///<パレスシステムワークへのポインタ
 //  FIELD_COMM_MENU *commMenu_;
   u8 comm_status;
   u8 profile_req;             ///<TRUE:プロフィール要求リクエストを受けている

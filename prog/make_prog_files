@@ -108,7 +108,6 @@ SRCS  +=    $(SOUNDSRC) \
         field/field_comm/intrude_mission.c \
         field/field_comm/bingo_system.c \
         net_app/union/comm_player.c \
-				field/field_comm/palace_sys.c \
         system/mcss.c \
         system/mcss_tool.c \
         poke_tool/poke_tool.c \

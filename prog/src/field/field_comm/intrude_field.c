@@ -13,7 +13,7 @@
 #include "gamesystem/gamesystem.h"
 #include "field_comm_menu.h"
 #include "field_comm_data.h"
-#include "field/field_comm/palace_sys.h"
+#include "field/field_player.h"
 #include "test/performance.h"
 #include "system/main.h"
 #include "field/field_comm_actor.h"
@@ -143,8 +143,6 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
   
   IntrudeField_ConnectMap(fieldWork, gameSys, intcomm);
   _PalaceFieldPlayerWarp(fieldWork, gameSys, pcActor, intcomm);
-  PALACE_SYS_Update(intcomm->palace, GAMESYSTEM_GetMyPlayerWork( gameSys ), 
-    pcActor, intcomm, fieldWork, game_comm);
 }
 
 //==================================================================
@@ -206,6 +204,91 @@ BOOL IntrudeField_CheckTalkedTo(INTRUDE_COMM_SYS_PTR intcomm, u32 *hit_netid)
   
   return FALSE;
 }
+
+//==============================================================================
+//
+//  橋の特定位置まで来て、誰とも通信していないなら注意メッセージを出して自機を戻す
+//
+//==============================================================================
+typedef struct{
+  FIELDMAP_WORK *fieldWork;
+  MMDL *player_mmdl;
+  GFL_MSGDATA *msgData;
+  FLDMSGWIN *msgWin;
+  BOOL left_right;
+}DEBUG_PALACE_NGWIN;
+
+static GMEVENT_RESULT DebugPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk );
+
+GMEVENT * EVENT_DebugPalaceNGWin( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, BOOL left_right )
+{
+  DEBUG_PALACE_NGWIN *ngwin;
+  GMEVENT * event;
+  
+  event = GMEVENT_Create(gsys, NULL, DebugPalaceNGWinEvent, sizeof(DEBUG_PALACE_NGWIN));
+  
+  ngwin = GMEVENT_GetEventWork(event);
+  GFL_STD_MemClear( ngwin, sizeof(DEBUG_PALACE_NGWIN) );
+  
+  ngwin->fieldWork = fieldWork;
+  ngwin->player_mmdl = FIELD_PLAYER_GetMMdl(fld_player);
+  ngwin->left_right = left_right;
+  
+  return event;
+}
+
+static GMEVENT_RESULT DebugPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk )
+{
+  DEBUG_PALACE_NGWIN *ngwin = wk;
+  
+  switch(*seq){
+  case 0:
+    {
+      FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(ngwin->fieldWork);
+      ngwin->msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_invasion_dat );
+      ngwin->msgWin = FLDMSGWIN_AddTalkWin( msgBG, ngwin->msgData );
+      FLDMSGWIN_Print( ngwin->msgWin, 0, 0, msg_invasion_test08_01 );
+      GXS_SetMasterBrightness(-16);
+      (*seq)++;
+    }
+    break;
+  case 1:
+    if( FLDMSGWIN_CheckPrintTrans(ngwin->msgWin) == TRUE ){
+      (*seq)++;
+    } 
+    break;
+  case 2:
+    {
+      int trg = GFL_UI_KEY_GetTrg();
+      if( trg & (PAD_BUTTON_A|PAD_BUTTON_B) ){
+        (*seq)++;
+      }
+    }
+    break;
+  case 3:
+    FLDMSGWIN_Delete( ngwin->msgWin );
+    GFL_MSG_Delete( ngwin->msgData );
+    GXS_SetMasterBrightness(0);
+    (*seq)++;
+    break;
+  case 4:
+    if(MMDL_CheckPossibleAcmd(ngwin->player_mmdl) == TRUE){
+      u16 code = (ngwin->left_right == 0) ? AC_WALK_R_16F : AC_WALK_L_16F;
+      MMDL_SetAcmd(ngwin->player_mmdl, code);
+      (*seq)++;
+    }
+    break;
+  case 5:
+    if(MMDL_CheckEndAcmd(ngwin->player_mmdl) == TRUE){
+      MMDL_EndAcmd(ngwin->player_mmdl);
+      return( GMEVENT_RES_FINISH );
+    }
+    break;
+  }
+
+  return( GMEVENT_RES_CONTINUE );
+}
+
 
 //==================================================================
 /**

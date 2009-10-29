@@ -20,7 +20,6 @@
 #include "net_app/union/comm_player.h"
 #include "intrude_types.h"
 #include "intrude_comm_command.h"
-#include "palace_sys.h"
 #include "intrude_main.h"
 #include "bingo_system.h"
 

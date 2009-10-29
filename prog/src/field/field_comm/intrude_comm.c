@@ -16,9 +16,9 @@
 #include "intrude_comm_command.h"
 #include "net_app/union/comm_player.h"
 #include "field/fieldmap_proc.h"
+#include "field/field_player.h"
 #include "intrude_types.h"
 #include "intrude_comm_command.h"
-#include "palace_sys.h"
 #include "intrude_main.h"
 #include "savedata/mystatus.h"
 #include "bingo_system.h"
@@ -117,7 +117,6 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
   intcomm = GFL_HEAP_AllocClearMemory(HEAPID_APP_CONTROL, sizeof(INTRUDE_COMM_SYS));
   intcomm->game_comm = invalid_parent->game_comm;
 	intcomm->comm_status = INTRUDE_COMM_STATUS_INIT_START;
-  intcomm->palace = PALACE_SYS_Alloc(HEAPID_APP_CONTROL, intcomm->game_comm);
   intcomm->cps = CommPlayer_Init(FIELD_COMM_MEMBER_MAX, invalid_parent->gsys, HEAPID_APP_CONTROL);
   intcomm->member_num = 1;
   Intrude_InitTalkWork(intcomm, INTRUDE_NETID_NULL);
@@ -314,7 +313,6 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
   case 0:
     if(intcomm->comm_status == INTRUDE_COMM_STATUS_EXIT || NetErr_App_CheckError() == TRUE){
       CommPlayer_Exit(intcomm->cps);
-      PALACE_SYS_Free(intcomm->palace);
       GFL_HEAP_FreeMemory(intcomm);
       GFL_HEAP_FreeMemory(pwk);
       if(NetErr_App_CheckError() == TRUE){
@@ -360,7 +358,6 @@ void IntrudeComm_FieldDelete(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork
   
   intcomm->connect_map_count = 0;
   CommPlayer_Push(intcomm->cps);
-  PALACE_DEBUG_DeleteNumberAct(intcomm->palace);
 }
 
 //--------------------------------------------------------------

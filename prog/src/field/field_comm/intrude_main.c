@@ -19,7 +19,7 @@
 #include "net_app/union/comm_player.h"
 #include "intrude_types.h"
 #include "intrude_comm_command.h"
-#include "palace_sys.h"
+#include "field/field_player.h"
 #include "intrude_main.h"
 #include "bingo_system.h"
 #include "fieldmap/zone_id.h"
@@ -333,21 +333,13 @@ void Intrude_SetProfile(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INTRUDE_
 void Intrude_SetPlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INTRUDE_STATUS *sta)
 {
   INTRUDE_STATUS *target_status;
-  int mission_no;
   
   target_status = &intcomm->intrude_status[net_id];
   GFL_STD_MemCopy(sta, target_status, sizeof(INTRUDE_STATUS));
 
   //プレイヤーステータスにデータセット　※game_commに持たせているのを変えるかも
-  if(net_id == 0){
-    mission_no = target_status->mission_no;
-  }
-  else{
-    mission_no = GameCommStatus_GetPlayerStatus_MissionNo(intcomm->game_comm, 0);
-    //mission_no = GameCommStatus_GetPlayerStatus_MissionNo(game_comm, GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()));
-  }
   GameCommStatus_SetPlayerStatus(intcomm->game_comm, net_id, target_status->zone_id,
-    target_status->palace_area, target_status->zone_id);
+    target_status->palace_area);
 
   //座標変換
   if(net_id != GFL_NET_SystemGetCurrentID()){
@@ -538,17 +530,10 @@ BOOL Intrude_SetSendStatus(INTRUDE_COMM_SYS_PTR intcomm)
   PLAYER_WORK *plWork = GAMEDATA_GetMyPlayerWork( gamedata );
   ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
   INTRUDE_STATUS *ist = &intcomm->intrude_status_mine;
-  int mission_no;
   
   send_req = CommPlayer_Mine_DataUpdate(intcomm->cps, &ist->player_pack);
   if(ist->zone_id != zone_id){
     ist->zone_id = zone_id;
-    send_req = TRUE;
-  }
-  
-  mission_no = PALACE_SYS_GetMissionNo(intcomm->palace);
-  if(ist->mission_no != mission_no){
-    ist->mission_no = mission_no;
     send_req = TRUE;
   }
   

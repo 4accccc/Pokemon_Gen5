@@ -52,7 +52,7 @@ typedef struct{
   u16 old_zone_id;    ///<前までいたゾーンID
   u16 same_count;      ///<同じステータスが送られてきた回数
   u8 invasion_netid;  ///<侵入先ROM
-  u8 mission_no;
+  u8 padding;
 }GAME_COMM_PLAYER_STATUS;
 
 //--------------------------------------------------------------
@@ -534,10 +534,9 @@ static void GameCommSub_SeqSet(GAME_COMM_SUB_WORK *sub_work, u8 seq)
  * @param   comm_net_id		    このステータス対象のnetID
  * @param   zone_id		        comm_net_idのプレイヤーが今いるゾーンID
  * @param   invasion_netid		comm_net_idのプレイヤーが侵入しているROMのnetID
- * @param   mission_no        comm_net_idのミッション番号
  */
 //==================================================================
-void GameCommStatus_SetPlayerStatus(GAME_COMM_SYS_PTR gcsp, int comm_net_id, ZONEID zone_id, u8 invasion_netid, u8 mission_no)
+void GameCommStatus_SetPlayerStatus(GAME_COMM_SYS_PTR gcsp, int comm_net_id, ZONEID zone_id, u8 invasion_netid)
 {
   GAME_COMM_PLAYER_STATUS *player_status = &gcsp->player_status[comm_net_id];
   ZONEID old, now;
@@ -545,8 +544,6 @@ void GameCommStatus_SetPlayerStatus(GAME_COMM_SYS_PTR gcsp, int comm_net_id, ZON
   old = player_status->old_zone_id;
   now = player_status->zone_id;
   
-  player_status->mission_no = mission_no;
-
   if(player_status->zone_id == zone_id && player_status->invasion_netid == invasion_netid){
     return;
   }
@@ -592,22 +589,6 @@ void GameCommStatus_SetPlayerStatus(GAME_COMM_SYS_PTR gcsp, int comm_net_id, ZON
     GameCommInfo_SetQue(gcsp, comm_net_id, msg_invasion_test09_01);
     OS_TPrintf("INFO:通信接続した！ net_id = %d\n", comm_net_id);
   }
-}
-
-//==================================================================
-/**
- * 通信プレイヤーステータスからミッション番号を取得
- *
- * @param   gcsp		
- * @param   comm_net_id		
- *
- * @retval  u8		ミッション番号
- */
-//==================================================================
-u8 GameCommStatus_GetPlayerStatus_MissionNo(GAME_COMM_SYS_PTR gcsp, int comm_net_id)
-{
-  GAME_COMM_PLAYER_STATUS *player_status = &gcsp->player_status[comm_net_id];
-  return player_status->mission_no;
 }
 
 //==================================================================
