@@ -88,9 +88,14 @@ EVENT_START	ev_t01_rival_01
 		_OBJ_ANIME( T01_SUPPORT_01, anm_labo_support_move_01 )
 		_OBJ_ANIME_WAIT()
 
+		//階段SE
+		_SE_PLAY( SEQ_SE_KAIDAN )
+
 		//主人公：研究所内へ
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_labo_player_move_01 )
 		_OBJ_ANIME_WAIT()
+
+		_SE_WAIT()
 
 		//ライバル、サポートのOBJ削除
 		_OBJ_DEL( T01_RIVAL_01 )
@@ -123,10 +128,8 @@ _ANIME_LABEL	anm_labo_rival_move_01
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_labo_support_move_01
-	_ANIME_DATA	AC_WAIT_4F,3
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_R_6F,1
-	_ANIME_DATA	AC_WALK_U_6F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_VANISH_ON,1
 	_ANIME_DATA	ACMD_END,0
 

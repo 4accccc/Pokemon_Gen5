@@ -89,6 +89,10 @@ EVENT_START	ev_pos_c04_support_01
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_guide_support_enter_01 )
 	_OBJ_ANIME_WAIT()
 
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+
 	//サポート：消す
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 

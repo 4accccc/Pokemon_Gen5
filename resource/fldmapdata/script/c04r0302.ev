@@ -32,8 +32,15 @@ _EVENT_DATA_END
 /*					Ｎと戦闘（シーンチェンジ）				*/
 /************************************************************/
 EVENT_START	ev_scene_c04r0302_n_01
-	//サポート：ピョンピョン（見えないので音だけ聞こえるはず）
-	_OBJ_ANIME( C04R0302_SUPPORT_01, anm_support_jump_d )
+	//【仮】カメラ制御：サポートを中心にとらえる
+//	_CAMERA_START()		//カメラ操作開始
+
+
+
+//	_CAMERA_END()		//カメラ操作終了
+
+	//サポート：振り向く
+	_OBJ_ANIME( C04R0302_SUPPORT_01, anm_support_walk_d )
 	_OBJ_ANIME_WAIT()
 
 	//サポート：おーい
@@ -110,8 +117,8 @@ EVENT_END
 //--------------------------------------------------------------------
 //サポート：ジャンプ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_support_jump_d
-	_ANIME_DATA	AC_STAY_JUMP_D_8F,2
+_ANIME_LABEL	anm_support_walk_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------

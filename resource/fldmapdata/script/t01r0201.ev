@@ -57,6 +57,10 @@ EVENT_START	ev_scene_t01r0201_support_01
 	//サポート：消す（バニッシュフラグもたちます）
 	_OBJ_DEL( T01R0201_SUPPORT_01 )
 
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+
 //================フラグ操作==================//
 
 	//サポート宅のサポートを非表示

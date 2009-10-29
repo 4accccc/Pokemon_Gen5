@@ -168,6 +168,10 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 	//博士：消す
 	_OBJ_DEL( T01R0401_HAKASE2_01 )
 
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+
 	//頼まれたから　冒険しても　いいんだよね？
 	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_white_03,T01R0401_SUPPORT_01 )  //サポート
 	_BALLOONWIN_CLOSE()
@@ -184,6 +188,10 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 	//サポート＆ライバル：消す
 	_OBJ_DEL( T01R0401_RIVAL_01 )
 	_OBJ_DEL( T01R0401_SUPPORT_01 )
+
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
 
 //=====================フラグ操作========================//
 
@@ -304,6 +312,7 @@ _ANIME_LABEL	anm_zukan_rival_goaway_01
 	_ANIME_DATA	AC_WALK_D_6F,2
 	_ANIME_DATA	AC_WALK_L_6F,1
 	_ANIME_DATA	AC_WALK_D_6F,2
+	_ANIME_DATA	AC_VANISH_ON,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
