@@ -35,6 +35,8 @@ _EVENT_DATA ev_r01_rivel_02
 _EVENT_DATA ev_pos_r01_pokecount_01
 _EVENT_DATA ev_r01_support_02
 _EVENT_DATA ev_bg_r01_board_01
+_EVENT_DATA ev_bg_r01_board_02
+_EVENT_DATA ev_bg_r01_board_03
 _EVENT_DATA_END
 
 
@@ -200,6 +202,20 @@ EVENT_END
 /*ŠÅ”Â01                                                      */
 /**************************************************************/
 EVENT_START  ev_bg_r01_board_01
+	_EASY_MSG(msg_r01_sign1_01)
+EVENT_END
+
+/**************************************************************/
+/*ŠÅ”Â02                                                      */
+/**************************************************************/
+EVENT_START  ev_bg_r01_board_02
+	_EASY_MSG(msg_r01_sign2_01)
+EVENT_END
+
+/**************************************************************/
+/*ŠÅ”Â03                                                      */
+/**************************************************************/
+EVENT_START  ev_bg_r01_board_03
 	_EASY_MSG(msg_r01_sign3_01)
 EVENT_END
 

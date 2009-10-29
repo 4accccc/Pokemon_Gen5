@@ -12,5 +12,7 @@
 #define SCRID_POS_R01_POKECOUNT_01 (5)
 #define SCRID_R01_SUPPORT_02 (6)
 #define SCRID_BG_R01_BOARD_01 (7)
+#define SCRID_BG_R01_BOARD_02 (8)
+#define SCRID_BG_R01_BOARD_03 (9)
 
 #endif //_R01_DEF_H_
