@@ -1097,14 +1097,18 @@ static RETURNFUNC_RESULT FMenuReturnProc_Bag(PROCLINK_WORK* wk,void* param_adrs)
 			return RETURNFUNC_RESULT_RETURN;
 		}
 
+	case BAG_NEXTPROC_EVOLUTION:
+		OS_TPrintf( "i‰»‚Í¡‚Í‚È‚¢‚Ì‚Å–ß‚è‚Ü‚·\n" );
+		return RETURNFUNC_RESULT_RETURN;
+
   case BAG_NEXTPROC_RIDECYCLE:
 		/* fallthrough */
   case BAG_NEXTPROC_DROPCYCLE:
-		/* fallthrough */
+		wk->param->select_param	= EVENT_ITEMUSE_CALL_CYCLE;
+		return RETURNFUNC_RESULT_USE_ITEM;
+
 	case BAG_NEXTPROC_PALACEJUMP:
-		/* fallthrough */
-	case BAG_NEXTPROC_EVOLUTION:
-		///@todo
+		wk->param->select_param	= EVENT_ITEMUSE_CALL_PALACEJUMP;
 		return RETURNFUNC_RESULT_USE_ITEM;
 
 	case BAG_NEXTPROC_FRIENDNOTE:	
