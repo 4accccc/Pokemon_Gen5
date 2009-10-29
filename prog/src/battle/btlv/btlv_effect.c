@@ -28,8 +28,10 @@
 
 #define BTLV_EFFECT_TCB_MAX ( 16 )    //使用するTCBのMAX
 
-#define BTLV_EFFECT_BLINK_TIME  ( 3 )
-#define BTLV_EFFECT_BLINK_WAIT  ( 4 )
+#define BTLV_EFFECT_BLINK_TIME    ( 3 )
+#define BTLV_EFFECT_BLINK_WAIT    ( 3 )
+#define BTLV_EFFECT_BLINK_PHYSIC  ( 0x0842 )
+#define BTLV_EFFECT_BLINK_SPECIAL ( 0x6318 )
 
 #define BTLV_EFFECT_TRAINER_INDEX_NONE  ( 0xffffffff )
 
@@ -71,6 +73,7 @@ typedef struct
   int         seq_no;
   int         work;
   int         wait;
+  int         color;
 }BTLV_EFFECT_TCB;
 
 static  BTLV_EFFECT_WORK  *bew = NULL;
@@ -297,12 +300,12 @@ void BTLV_EFFECT_Damage( BtlvMcssPos target, WazaID waza )
   if( WAZADATA_GetDamageType( waza ) == WAZADATA_DMG_PHYSIC )
   { 
     //物理ダメージ
-    BTLV_MCSS_SetPaletteFade( bew->bmw, target, 16, 16, 0, 0x0000 );
+    bet->color = BTLV_EFFECT_BLINK_PHYSIC;
   }
   else
   { 
     //特殊ダメージ
-    BTLV_MCSS_SetPaletteFade( bew->bmw, target, 16, 16, 0, 0x7fff );
+    bet->color = BTLV_EFFECT_BLINK_SPECIAL;
   }
 
   GFL_TCB_AddTask( bew->tcb_sys, BTLV_EFFECT_TCB_Damage, bet, 0 );
@@ -780,16 +783,21 @@ static  void  BTLV_EFFECT_TCB_Damage( GFL_TCB *tcb, void *work )
   }
   switch( bet->seq_no ){
   case 0:
-    bet->seq_no ^= 1;
-    BTLV_MCSS_SetVanishFlag( bew->bmw, bet->target, BTLV_MCSS_VANISH_ON );
+    BTLV_MCSS_SetPaletteFade( bew->bmw, bet->target, 16, 16, 0, bet->color );
     bet->wait = BTLV_EFFECT_BLINK_WAIT;
+    bet->seq_no = 1;
     break;
   case 1:
-    bet->seq_no ^= 1;
+    BTLV_MCSS_SetVanishFlag( bew->bmw, bet->target, BTLV_MCSS_VANISH_ON );
+    bet->wait = BTLV_EFFECT_BLINK_WAIT;
+    bet->seq_no = 2;
+    break;
+  case 2:
+    bet->seq_no = 0;
     BTLV_MCSS_SetVanishFlag( bew->bmw, bet->target, BTLV_MCSS_VANISH_OFF );
+    BTLV_MCSS_SetPaletteFade( bew->bmw, bet->target, 0, 0, 0, 0x7fff );
     bet->wait = BTLV_EFFECT_BLINK_WAIT;
     if( --bet->work == 0 ){
-      BTLV_MCSS_SetPaletteFade( bew->bmw, bet->target, 0, 0, 0, 0x7fff );
       bew->tcb_execute_flag = 0;
       GFL_HEAP_FreeMemory( bet );
       GFL_TCB_DeleteTask( tcb );
