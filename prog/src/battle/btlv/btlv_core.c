@@ -1278,7 +1278,18 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
                       31, 3 );
   }
 
-  GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &vramBank, heapID );
+  { 
+ 	  static  const GFL_CLSYS_INIT clsysinit = {
+      0, 0,
+      0, 512,
+      4, 124,
+      4, 124,
+      0,
+      48,48,48,48,
+      16, 16,
+    };
+    GFL_CLACT_SYS_Create( &clsysinit, &vramBank, heapID );
+  }
 
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 16, 0 );
 }
