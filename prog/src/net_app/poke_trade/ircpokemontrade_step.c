@@ -1169,18 +1169,21 @@ static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
 
 
     apos.x = _movemath(pMove->start.x, pMove->end.x ,pMove, FALSE);
-    apos.y = _movemath(pMove->start.y, pMove->end.y ,pMove, FALSE);
-
 
     if(pMove->wave){
       float an = FX_FX32_TO_F32(aposold.x - apos.x);
       an = an * 374;
       pMove->sins -= (s32)an;
-      OS_TPrintf("%x\n",pMove->sins);
     }
 
 
-    apos.z = _movemath(pMove->start.z, pMove->end.z ,pMove, TRUE);
+    apos.y = _movemath(pMove->start.y, pMove->end.y ,pMove, TRUE);
+    apos.z = _movemath(pMove->start.z, pMove->end.z ,pMove, FALSE);
+    OS_TPrintf(" posy %d\n",apos.y/FX32_ONE);
+    
+
+
+    
 /*
     if(pMove->percent != 0.0f){
       if(pMove->percent < 1.0f){
