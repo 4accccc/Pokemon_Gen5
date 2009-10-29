@@ -822,7 +822,8 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
   OSTick debug_fieldmap_start_tick = OS_GetTick(); 
   OSTick debug_fieldmap_end_tick;
 #endif
-  
+
+  GFL_G3D_ClearG3dInfo();
   
   FIELD_SUBSCREEN_Draw(fieldWork->fieldSubscreenWork);
   FIELD_CAMERA_Main( fieldWork->camera_control, GFL_UI_KEY_GetCont() );
@@ -851,7 +852,16 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
 
   if( GFL_UI_KEY_GetCont() & DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK_DRAW_KEY )
   {
+    const GFL_D3D_INFO *info = GFL_G3D_GetG3dInfoPtr();
     OS_TPrintf( "draw_tick %d micro second\n", OS_TicksToMicroSeconds( debug_fieldmap_end_tick ) );
+    OS_Printf( "poly_vtx = %d, %d\n",
+        G3X_GetPolygonListRamCount(),
+        G3X_GetVtxListRamCount()
+        );
+    OS_Printf( "total poly_vtx = %d, %d\n",
+        info->TotalPolygonNum,
+        info->TotalVertexNum
+        );
   }
 #endif
 
@@ -1856,6 +1866,9 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
 #define	PRO_MAT_Z_OFS	(310)
 static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
 {
+  GFL_G3D_DRAW_Start();
+  GFL_G3D_DRAW_SetLookAt();	//カメラグローバルステート設定
+
 #ifdef PM_DEBUG  
   {
     s32 check;

@@ -305,7 +305,7 @@ void	FLDMAPPER_Draw( const FLDMAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera )
 	
 	GF_ASSERT( g3Dmapper );
 	
-	GFL_G3D_MAP_StartDraw();
+///	GFL_G3D_MAP_StartDraw();
 
 	for( i=0; i<g3Dmapper->blockNum; i++ ){
 		GFL_G3D_MAP_GetTrans( g3Dmapper->blockWk[i].g3Dmap, &org_pos );
@@ -318,7 +318,7 @@ void	FLDMAPPER_Draw( const FLDMAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera )
 	}
 
   FIELD_BMODEL_MAN_Draw( g3Dmapper->bmodel_man );
-	GFL_G3D_MAP_EndDraw();
+///	GFL_G3D_MAP_EndDraw();
 }
 
 //------------------------------------------------------------------
