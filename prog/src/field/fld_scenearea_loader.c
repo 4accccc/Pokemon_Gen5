@@ -340,15 +340,18 @@ static void C3_SCENEAREA_Update( const FLD_SCENEAREA* cp_sys, const FLD_SCENEARE
   VEC_Subtract( &pos, &target, &pos );
   VEC_Normalize( &pos, &n0 );
 
+  target.y = target_y;
+
   // 方向ベクトルから、カメラangleを求める
   camera_pos.y = FX_Mul( FX_SinIdx( cp_param->pitch ), cp_param->length );
   xz_dist      = FX_Mul( FX_CosIdx( cp_param->pitch ), cp_param->length );
   camera_pos.x = FX_Mul( n0.x, xz_dist );
   camera_pos.z = FX_Mul( n0.z, xz_dist );
   camera_pos.x += target.x;
-  camera_pos.y += target_y;
+  camera_pos.y += target.y;
   camera_pos.z += target.z;
   
+	FIELD_CAMERA_SetTargetPos( p_camera, &target );
 	FIELD_CAMERA_SetCameraPos( p_camera, &camera_pos );
 }
 
