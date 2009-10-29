@@ -52,8 +52,8 @@ typedef enum {
   PMS_DECOID_HERO = PMS_DECOID_ORG, ///< ‚Í‚¶‚ß‚Ü‚µ‚Ä
   PMS_DECOID_HERO2, ///< ‚±‚ñ‚É‚¿‚Í
   PMS_DECOID_LOVE,  ///< ‚¾‚¢‚·‚«
-  PMS_DECOID_YELL,  ///< ‚ª‚ñ‚Î‚êI 
   PMS_DECOID_FUN,   ///< ‚½‚Ì‚µ‚¢
+  PMS_DECOID_YELL,  ///< ‚ª‚ñ‚Î‚êI 
   PMS_DECOID_HAPPY, ///< ‚¤‚ê‚µ‚¢
   PMS_DECOID_TANKS, ///< ‚ ‚è‚ª‚Æ‚¤
   PMS_DECOID_HIGHEST, ///< ‚³‚¢‚±‚¤
