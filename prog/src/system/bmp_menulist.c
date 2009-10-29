@@ -773,12 +773,19 @@ static void ListScreenPut(
 			lw->hed.line_y + (line+1) * yblk*2, 
 			lw->hed.b_col );
 
+
 		y = (u8)(((line) * yblk) + lw->hed.line_y);//描画Ｙオフセット
+
+		if( lw->hed.icon != NULL ){
+			lw->hed.icon( lw, lw->hed.list[print_p-1].param,y );
+		}
+
 		LocalMsgPrint( lw, (void*)lw->hed.list[print_p-1].str, x, y );
 
 		BmpWinDataShift( lw->hed.win, BMPWIN_SHIFT_U, 
 			yblk, (u8)((lw->hed.b_col<<4)|lw->hed.b_col), 
-			(yblk*2/8 * (GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(lw->hed.win))/8)) );
+			(yblk*2/8 * (GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(lw->hed.win))/8)) );		
+		
 	}
 	//後ろを１つ多めに書く
 	len	++;
@@ -1047,12 +1054,12 @@ static void ListScrollMoveUpDown( BMPMENULIST_WORK * lw, u8 len, u8 mode )
 			(u16)(GF_BGL_BmpWinGet_SizeX( lw->hed.win ) * 8),
 			(u16)(GF_BGL_BmpWinGet_SizeY( lw->hed.win ) * 8 - ypos) );
 #else
-		GFL_BMP_Fill( GFL_BMPWIN_GetBmp(lw->hed.win),
+/*		GFL_BMP_Fill( GFL_BMPWIN_GetBmp(lw->hed.win),
 			0, ypos,
 			GFL_BMPWIN_GetPosX(lw->hed.win) * 8,
 			GFL_BMPWIN_GetPosY(lw->hed.win) * 8 - ypos,
 			lw->hed.b_col );
-#endif
+*/#endif
 	}else{
 		//データシフト
 #if 0	//old dp
@@ -1061,7 +1068,7 @@ static void ListScrollMoveUpDown( BMPMENULIST_WORK * lw, u8 len, u8 mode )
 				(u8)(len * yblk), (u8)((lw->hed.b_col<<4)|lw->hed.b_col) );
 #else	//wb
 	BmpWinDataShift( lw->hed.win, BMPWIN_SHIFT_U, 
-		(u8)(len * yblk), (u8)((lw->hed.b_col<<4)|lw->hed.b_col), 0 );
+		(u8)((len) * yblk), (u8)((lw->hed.b_col<<4)|lw->hed.b_col), 0 );
 #endif
 		//追加ライン描画
 		ListScreenPut(
@@ -1075,11 +1082,12 @@ static void ListScrollMoveUpDown( BMPMENULIST_WORK * lw, u8 len, u8 mode )
 			(u16)(GF_BGL_BmpWinGet_SizeX( lw->hed.win ) * 8),
 			(u16)lw->hed.line_y );
 #else
-		GFL_BMP_Fill( GFL_BMPWIN_GetBmp(lw->hed.win),
+/*		GFL_BMP_Fill( GFL_BMPWIN_GetBmp(lw->hed.win),
 			0, 0,
 			GFL_BMPWIN_GetPosX(lw->hed.win) * 8,
 			lw->hed.line_y, 
 			lw->hed.b_col );
+*/
 #endif
 	}
 }
@@ -1185,7 +1193,6 @@ static void BmpWinDataShift16(
 	cgxram		= GFL_BMP_GetCharacterAdrs( bmp );
 	blanch_chr	= (data<<24) | (data<<16) | (data<<8) | (data<<0);
 	xsiz		= GFL_BMP_GetSizeX( bmp ) / 8;
-	over_offs	= (GFL_BMP_GetSizeY(bmp)/8) * xsiz * GFL_BG_1CHRDATASIZ;
 #endif
 
 	if( size == 0 )
