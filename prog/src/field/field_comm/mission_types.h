@@ -41,6 +41,7 @@ typedef struct{
 typedef struct{
   MISSION_DATA data;          ///<実行しているミッション
   MISSION_RESULT result;      ///<ミッション結果
+  u32 timer;                  ///<ミッション失敗までのタイマー
   u8 data_send_req;           ///<TRUE:ミッションデータの送信を行う
   u8 result_send_req;         ///<TRUE:ミッションデータの送信を行う
   u8 parent_data_recv;        ///<TRUE:親からミッションデータを受信

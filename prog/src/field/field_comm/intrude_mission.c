@@ -14,6 +14,26 @@
 #include "intrude_main.h"
 
 
+//==============================================================================
+//  定数定義
+//==============================================================================
+///ミッション失敗までのタイム
+#define MISSION_TIME_OVER     (60/2 * 60)   // 60/2 = フィールドは1/30の為。
+
+
+//==============================================================================
+//  プロトタイプ宣言
+//==============================================================================
+static void MISSION_SendUpdate(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
+static void MISSION_SetMissionFail(MISSION_SYSTEM *mission, int fail_netid);
+
+
+
+//==============================================================================
+//
+//  
+//
+//==============================================================================
 //==================================================================
 /**
  * ミッションデータ初期化
@@ -26,6 +46,30 @@ void MISSION_Init(MISSION_SYSTEM *mission)
   GFL_STD_MemClear(mission, sizeof(MISSION_SYSTEM));
   mission->data.mission_no = MISSION_NO_NULL;
   mission->result.mission_data.mission_no = MISSION_NO_NULL;
+}
+
+//==================================================================
+/**
+ * ミッション更新処理
+ *
+ * @param   mission		
+ */
+//==================================================================
+void MISSION_Update(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
+{
+  //親機でミッション発動しているなら失敗までの秒数をカウントする
+  if(GFL_NET_IsParentMachine() == TRUE 
+      && MISSION_RecvCheck(mission) == TRUE 
+      && mission->result.mission_data.mission_no == MISSION_NO_NULL){
+    mission->timer++;
+    if(mission->timer > MISSION_TIME_OVER){
+      GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+      MISSION_SetMissionFail(mission, GAMEDATA_GetIntrudeMyID(gamedata));
+    }
+  }
+  
+  //送信リクエストがあれば送信
+  MISSION_SendUpdate(intcomm, mission);
 }
 
 //==================================================================
@@ -97,6 +141,7 @@ void MISSION_SetMissionData(MISSION_SYSTEM *mission, const MISSION_DATA *src)
   
   //親の場合、既にmisison_noはセットされているので判定の前に受信フラグをセット
   mission->parent_data_recv = TRUE;
+  mission->timer = 0;
   if(mdata->mission_no != MISSION_NO_NULL){
     return;
   }
@@ -119,7 +164,7 @@ void MISSION_SetMissionData(MISSION_SYSTEM *mission, const MISSION_DATA *src)
  * @param   mission		
  */
 //==================================================================
-void MISSION_SendUpdate(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
+static void MISSION_SendUpdate(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
 {
   if(mission->data_send_req == TRUE){
     if(IntrudeSend_MissionData(intcomm, mission) == TRUE){
@@ -187,7 +232,8 @@ u16 MISSION_GetAchieveMsgID(const MISSION_SYSTEM *mission, int my_netid)
 {
   const MISSION_RESULT *result = &mission->result;
   
-  if(result->mission_data.mission_no == MISSION_NO_NULL 
+  if(result->mission_data.mission_no == MISSION_NO_FAIL
+      || result->mission_data.mission_no == MISSION_NO_NULL 
       || result->mission_data.mission_no >= MISSION_NO_MAX){
     return msg_invasion_mission_sys002;
   }
@@ -229,6 +275,32 @@ BOOL MISSION_EntryAchieve(MISSION_SYSTEM *mission, const MISSION_DATA *mdata, in
   result->achieve_netid = achieve_netid;
   mission->result_send_req = TRUE;
   return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ミッション失敗をセット
+ *
+ * @param   mission		
+ * @param   fail_netid		
+ */
+//--------------------------------------------------------------
+static void MISSION_SetMissionFail(MISSION_SYSTEM *mission, int fail_netid)
+{
+  MISSION_RESULT *result = &mission->result;
+  MISSION_DATA *data = &mission->data;
+  
+  if(data->mission_no == MISSION_NO_NULL || result->mission_data.mission_no != MISSION_NO_NULL){
+    OS_TPrintf("MissionFailは受け入れられない %d, %d\n", 
+      data->mission_no, result->mission_data.mission_no);
+    return;
+  }
+  
+  result->mission_data = *data;
+  result->mission_data.mission_no = MISSION_NO_FAIL;
+  result->achieve_netid = fail_netid;
+  mission->result_send_req = TRUE;
+  OS_TPrintf("ミッション失敗をセット\n");
 }
 
 //==================================================================
@@ -304,6 +376,10 @@ s32 MISSION_GetPoint(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_RESULT *result)
 {
   GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
   s32 point;
+  
+  if(result->mission_data.mission_no == MISSION_NO_FAIL){
+    return 0;
+  }
   
   if(result->achieve_netid == GAMEDATA_GetIntrudeMyID(gamedata)){
     point = 100;

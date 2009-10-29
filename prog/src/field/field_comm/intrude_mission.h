@@ -13,10 +13,10 @@
 //  äOïîä÷êîêÈåæ
 //==============================================================================
 extern void MISSION_Init(MISSION_SYSTEM *mission);
+extern void MISSION_Update(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
 extern void MISSION_Set_DataSendReq(MISSION_SYSTEM *mission);
 extern BOOL MISSION_SetEntry(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, const MISSION_REQ *req, int accept_netid);
 extern void MISSION_SetMissionData(MISSION_SYSTEM *mission, const MISSION_DATA *src);
-extern void MISSION_SendUpdate(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
 extern BOOL MISSION_RecvCheck(const MISSION_SYSTEM *mission);
 extern u16 MISSION_GetMissionMsgID(const MISSION_SYSTEM *mission);
 extern u16 MISSION_GetAchieveMsgID(const MISSION_SYSTEM *mission, int my_netid);

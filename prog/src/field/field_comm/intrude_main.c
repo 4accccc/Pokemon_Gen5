@@ -185,8 +185,8 @@ void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm)
   
   //話しかけお断りの返事が貯まっているなら返事を送信する
   Intrude_CheckTalkAnswerNG(intcomm);
-  //ミッション送信リクエストがあれば送信
-  MISSION_SendUpdate(intcomm, &intcomm->mission);
+  //ミッション更新処理
+  MISSION_Update(intcomm, &intcomm->mission);
   //ビンゴの送信リクエストがあれば送信
   Bingo_SendUpdate(intcomm, Bingo_GetBingoSystemWork(intcomm));
   //占拠情報送信リクエストがあれば送信
