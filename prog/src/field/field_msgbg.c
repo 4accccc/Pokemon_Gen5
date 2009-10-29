@@ -195,6 +195,18 @@ static void debug_ROM091030_WindowColorOFF( HEAPID heapID )
   GFL_HEAP_FreeMemory( buf );
 }
 
+static void debug_ROM091030_WindowColorON( HEAPID heapID )
+{
+  u16 *buf = GFL_HEAP_AllocMemoryLo( heapID, 32 );
+  u32 offs = HW_BG_PLTT + (32*FLDMSGBG_PANO_MENU);
+  DC_FlushRange( (void*)offs, 32 );
+  MI_CpuCopy( (void*)offs, buf, 32 );
+  buf[1] = 0x7fff;
+  DC_FlushRange( (void*)buf, 32 );
+  GX_LoadBGPltt( (void*)buf, offs-HW_BG_PLTT, 32 );
+  GFL_HEAP_FreeMemory( buf );
+}
+
 //--------------------------------------------------------------
 /**
  * FLDMSGBG セットアップ
@@ -810,6 +822,7 @@ static FLDMSGWIN * fldmsgwin_Add( FLDMSGBG *fmb, GFL_MSGDATA *msgData,
 	msgWin->msgPrint = FLDMSGPRINT_SetupPrint( fmb, msgData, msgWin->bmpwin );
 	
   if( pltt_no == FLDMSGBG_PANO_FONT ){
+    debug_ROM091030_WindowColorOFF( fmb->heapID );
     setBlendAlpha( TRUE );
   }
   
@@ -988,6 +1001,7 @@ static FLDMENUFUNC * fldmenufunc_AddMenuList( FLDMSGBG *fmb,
 	BmpMenuList_SetCursorBmp( menuFunc->pMenuListWork, fmb->heapID );
   
   if( pltt_no == FLDMSGBG_PANO_FONT ){
+    debug_ROM091030_WindowColorOFF( fmb->heapID );
     setBlendAlpha( TRUE );
   }
 	return( menuFunc );
@@ -1476,6 +1490,7 @@ FLDMSGWIN_STREAM * FLDMSGWIN_STREAM_Add(
   
   keyCursor_Init( &msgWin->cursor_work, fmb->heapID );
 
+  debug_ROM091030_WindowColorOFF( fmb->heapID );
   setBlendAlpha( TRUE );
   return( msgWin );
 }
@@ -1737,6 +1752,7 @@ static void fldTalkMsgWin_Add(
   tmsg->talkMsgWinSys = fmb->talkMsgWinSys;
   tmsg->talkMsgWinIdx = idx;
   
+  debug_ROM091030_WindowColorON( fmb->heapID );
   setBlendAlpha( FALSE );
 
   switch( idx ){

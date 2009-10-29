@@ -178,7 +178,13 @@ void FIELD_PLAYER_Update( FIELD_PLAYER *fld_player )
   VecFx32 pos;
   FIELD_PLAYER_GetPos( fld_player, &pos );
 	PLAYERWORK_setPosition( fld_player->playerWork, &pos );
-
+  
+  //•ûŒü‚ðPLAYERWORK‚Ö”½‰f
+  {
+    u16 dir = FIELD_PLAYER_GetDir( fld_player );
+    PLAYERWORK_setDirection( fld_player->playerWork, dir );
+  }
+  
   // ƒŒ[ƒ‹“ÆŽ©‚ÌXVˆ—
   if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_GRID )
   {
