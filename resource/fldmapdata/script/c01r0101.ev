@@ -145,7 +145,7 @@ EVENT_START   ev_scene_c01r0101_pdwguide_01
 	//=========フラグワーク操作==========//
 
 	//発明家マコモのバニッシュフラグセット
-	_FLAG_SET( 	FV_C01R0101_INVENTOR_01 )
+	_FLAG_SET( FV_C01R0101_INVENTOR_01 )
 
 	//ＰＤＷ誘導イベント終了
 	$WK_SCENE_C01R0101 = 2

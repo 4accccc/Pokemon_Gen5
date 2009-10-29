@@ -336,13 +336,10 @@ EVENT_START   ev_scene_c01_pdwguide_01
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_yudo )
 	_OBJ_ANIME_WAIT()
 	
-	//マップチェンジ
-	_MAP_CHANGE( ZONE_ID_C01R0101, 2, 7, DIR_RIGHT )
-	
 	//階段ＳＥ
 	_SE_PLAY(SEQ_SE_KAIDAN)
-	_SE_WAIT()
-
+	_SE_WAIT()	
+	
 	//========================================//
 
 	//発明家マコモのバニッシュフラグセット
@@ -358,7 +355,10 @@ EVENT_START   ev_scene_c01_pdwguide_01
 	$WK_SCENE_C01R0101 = 1
 
 	//========================================//
-
+	
+	//マップチェンジ
+	_MAP_CHANGE( ZONE_ID_C01R0101, 7, 10, DIR_UP )
+	
 EVENT_END
 
 //--------------------------------------------------------------
