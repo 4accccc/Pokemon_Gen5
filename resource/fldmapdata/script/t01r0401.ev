@@ -134,7 +134,8 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 
 	//ポケモンずかんを手に入れた！
 	_PLAYER_NAME( 0 ) //プレイヤー名を反映
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_13,T01R0401_HAKASE2_01 ) 
+	_TALKWIN_OPEN()
+	_TALKMSG( msg_t01r0401_hakase2_13 )
 
 	//ME鳴らす
 	_ME_PLAY( SEQ_ME_KEYITEM )
@@ -142,7 +143,7 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 
 	//【保留】ここに▼なしウェイトいれる？
 	_AB_KEYWAIT()
-	_BALLOONWIN_CLOSE()
+	_TALKWIN_CLOSE()
 
 //***********************************************************//
 

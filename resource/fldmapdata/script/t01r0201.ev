@@ -121,7 +121,7 @@ EVENT_START   ev_t01r0201_middleman1_01
 
 	//【仮】図鑑入手までこのメッセージ
 	_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0201_middleman1_02 )
-	_AB_KEYWAIT()
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 EVENT_END
 
@@ -133,7 +133,7 @@ EVENT_START   ev_t01r0201_middlewoman1_01
 
 	//【仮】図鑑入手までこのメッセージ
 	_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0201_middlewoman1_02 )
-	_AB_KEYWAIT()
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 EVENT_END
 

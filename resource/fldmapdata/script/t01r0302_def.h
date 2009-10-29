@@ -5,6 +5,6 @@
 #define _T01R0302_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_T01R0302_PC (1)
+#define SCRID_BG_T01R0302_PC_01 (1)
 
 #endif //_T01R0302_DEF_H_

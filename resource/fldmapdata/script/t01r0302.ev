@@ -19,7 +19,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_t01r0302_pc
+_EVENT_DATA    ev_bg_t01r0302_pc_01
 _EVENT_DATA_END
 
 
@@ -32,11 +32,15 @@ _EVENT_DATA_END
 /************************************************************/
 /*					ライバルのパソコン						*/
 /************************************************************/
-EVENT_START   ev_t01r0302_pc
+EVENT_START   ev_bg_t01r0302_pc_01
+	_TALK_START_SE_PLAY()
+
 	_PLAYER_NAME( 0 ) //プレイヤー名を反映
-	_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0302_pc_01 )
-	_AB_KEYWAIT()
-	_BALLOONWIN_CLOSE()
+	_TALKWIN_OPEN()
+	_TALKMSG( msg_t01r0302_pc_01 )
+	_LAST_KEYWAIT()
+	_TALKWIN_CLOSE()
+
 EVENT_END
 
 

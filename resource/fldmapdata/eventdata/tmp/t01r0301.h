@@ -12,7 +12,7 @@
 #ifndef ZONE_T01R0301_EVC_H
 #define ZONE_T01R0301_EVC_H
 
-#define T01R0301_MIDDLEMAN2                0
-#define T01R0301_MIDDLEWOMAN2              1
+#define T01R0301_MIDDLEMAN2_01             0
+#define T01R0301_MIDDLEWOMAN2_01           1
 
 #endif //ZONE_T01R0301_EVC_H

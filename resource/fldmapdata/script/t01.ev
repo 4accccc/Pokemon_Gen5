@@ -103,7 +103,7 @@ EVENT_START	ev_t01_rival_01
 		//================フラグ操作==================//
 
 		//マップ遷移処理
-		_MAP_CHANGE( ZONE_ID_T01R0401, 4, 10, DIR_UP )
+		_MAP_CHANGE( ZONE_ID_T01R0401, 4, 11, DIR_UP )
 
 	ELSE
 		//悪いけど　ホワイティの家まで…
