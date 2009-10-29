@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-27T17:54:39"/>
+	<create user="matsumiya" host="W00207" date="2009-10-29T21:52:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="695"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -410,14 +410,14 @@
 助手♂</attribute>
 		<language name="JPN" width="256">ああ　こちらは
 ただの　ふるいいし　です[BE:01:ページ切り替え（クリア）]
-いせきで　みつかったのですが
+さばくあたりで　みつかったのですが
 ふるい　いがいには　まったく[BE:00:ページ切り替え（行送り）]
 かちの　ない　ものでして……[BE:01:ページ切り替え（クリア）]
 ただ　きれいなので
 てんじ　しております</language>
 		<language name="JPN_KANJI" width="256">ああ　こちらは
 ただの　ふるいいし　です[BE:01:ページ切り替え（クリア）]
-古代の城ってところで見つかったのですが
+砂漠付近で　見つかったのですが
 古い以外には　まったく[BE:00:ページ切り替え（行送り）]
 価値の　ない　ものでして……[BE:01:ページ切り替え（クリア）]
 ただ　きれいなので
