@@ -1,0 +1,27 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: gate.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_GATE_NAIX_
+#define NARC_GATE_NAIX_
+
+enum {
+	NARC_gate_gelboard01_nsbmd = 0,
+	NARC_gate_gelboard01_nsbtx = 1,
+	NARC_gate_gelboard01_1_nsbta = 2,
+	NARC_gate_gelboard01_2_nsbta = 3,
+	NARC_gate_gelboard01_3_nsbta = 4,
+	NARC_gate_gelboard01_4_nsbta = 5,
+	NARC_gate_gelboard01_5_nsbta = 6,
+	NARC_gate_gelboard01_6_nsbta = 7,
+	NARC_gate_elboard_zone_data_c04r0801_bin = 8,
+	NARC_gate_elboard_zone_data_t01_bin = 9
+};
+
+/* NARC_GATE_NAIX_ */
+#endif

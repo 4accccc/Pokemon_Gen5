@@ -9,7 +9,8 @@ SUBDIRS	=	gym_denki \
 					gym_normal \
 					gym_fly \
 					gym_anti \
-					h03
+					h03 \
+					gate
 
 .PHONY:	do-build clean
 
