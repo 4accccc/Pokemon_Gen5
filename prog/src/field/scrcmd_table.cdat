@@ -601,7 +601,7 @@
 
   DEF_CMD( EvCmdGetMusicalWaitRoomValue, EV_SEQ_GET_MUSICAL_WAITROOM_VALUE )
   DEF_CMD( EvCmdAddMusicalGoods, EV_SEQ_ADD_MUSICAL_GOODS )
-  NO_CMD()
+  DEF_CMD( EvCmdResetMusicalFanGiftFlg, EV_SEQ_RESET_MUSICAL_FAN_GIFT_FLG )
   NO_CMD()
 
   //êNì¸ä÷òA

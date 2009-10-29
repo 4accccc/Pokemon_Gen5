@@ -135,6 +135,8 @@ static void MUSICAL_EVENT_TermDressUp( MUSICAL_EVENT_WORK *evWork );
 static void MUSICAL_EVENT_InitActing( MUSICAL_EVENT_WORK *evWork );
 static void MUSICAL_EVENT_TermActing( MUSICAL_EVENT_WORK *evWork );
 static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork );
+static void MUSICAL_EVENT_SetSaveData( MUSICAL_EVENT_WORK *evWork );
+static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork );
 
 static const BOOL MUSICAL_EVENT_InitField( GMEVENT *event, MUSICAL_EVENT_WORK *evWork );
 static const BOOL MUSICAL_EVENT_ExitField( GMEVENT *event, MUSICAL_EVENT_WORK *evWork );
@@ -352,6 +354,8 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
   //諸々の開放
   //------------------------------
   case MES_TERM_MUSICAL:
+    MUSICAL_EVENT_CalcFanState( evWork );
+    MUSICAL_EVENT_SetSaveData( evWork );
     MUSICAL_EVENT_TermMusical( evWork );
     MUSICAL_EVENT_JumpMusicalHall( event , evWork );
     evWork->state = MES_FINIHS_EVENT;
@@ -605,6 +609,124 @@ static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork )
   }
 }
 
+//--------------------------------------------------------------
+//  セーブに保存するもの設定
+//--------------------------------------------------------------
+static void MUSICAL_EVENT_SetSaveData( MUSICAL_EVENT_WORK *evWork )
+{
+  //参加回数・トップ回数
+  MUSICAL_SAVE_AddEntryNum( evWork->musSave );
+
+  if( evWork->selfIdx == evWork->rankIndex[0] )
+  {
+    MUSICAL_SAVE_AddTopNum( evWork->musSave );
+  }
+  
+  //最高点
+  {
+    const u8 point = MUSICAL_EVENT_GetPoint( evWork , evWork->selfIdx );
+    MUSICAL_SAVE_SetBefPoint( evWork->musSave , point );
+  }
+
+  //コンディションの保存
+  {
+    u8 i;
+    u8 conTemp[MCT_MAX] = {0};
+    MUS_ITEM_DATA_SYS *itemDataSys = MUS_ITEM_DATA_InitSystem( HEAPID_PROC );
+    MUSICAL_POKE_PARAM *musPoke = evWork->actInitWork->musPoke[evWork->selfIdx];
+    for( i = 0 ; i < MUS_POKE_EQUIP_MAX ; i++ )
+    {
+      if( musPoke->equip[i].itemNo != MUSICAL_ITEM_INVALID )
+      {
+        const u8 conType = MUS_ITEM_DATA_GetItemConditionType( itemDataSys , musPoke->equip[i].itemNo );
+        conTemp[conType]++;
+      }
+    }
+    for( i = 0 ; i < MCT_MAX ; i++ )
+    {
+      MUSICAL_SAVE_SetBefCondition( evWork->musSave , i , conTemp[i] );
+    }
+    MUS_ITEM_DATA_ExitSystem( itemDataSys );
+  }
+}
+
+//--------------------------------------------------------------
+//  ファンの数値計算
+//--------------------------------------------------------------
+static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
+{
+  u8 i;
+  u8 num;
+  //とりあえず初期化
+  for( i=0;i<MUS_SAVE_FAN_NUM;i++ )
+  {
+    MUSICAL_FAN_STATE* fanState = MUSICAL_SAVE_GetFanState( evWork->musSave , i );
+    
+    fanState->type = MCT_MAX;
+    fanState->giftType = MUSICAL_GIFT_TYPE_NONE;
+    fanState->giftValue = 0;
+  }
+  
+  //人数計算
+  //取り合えず非通信なので1人(とりあえず水増し
+  num = 1;
+  if( evWork->selfIdx == evWork->rankIndex[0] )
+  {
+    //トップなので追加
+    num += 1;
+  }
+  {
+    const MUSICAL_CONDITION_TYPE conType = MUSICAL_PROGRAM_GetMaxConditionType( evWork->progWork );
+    for( i=0;i<num;i++ )
+    {
+      MUSICAL_FAN_STATE* fanState = MUSICAL_SAVE_GetFanState( evWork->musSave , i );
+      const u8 point = MUSICAL_EVENT_GetPoint( evWork , evWork->selfIdx );
+      OS_TPrintf("Fan[%d]",i);
+      //見た目の決定
+      fanState->type = conType; //タイプを渡す
+      OS_TPrintf("[%d]",fanState->type);
+      //贈り物の抽選
+      OS_TPrintf("[%3d/100:",point);
+      if( GFUser_GetPublicRand0(100) < point )
+      {
+        u16 itemIdx;
+        //@todo 正しい抽選ルーチン
+        for( itemIdx = 0 ; itemIdx<100 ; itemIdx++ )
+        {
+          if( MUSICAL_SAVE_ChackHaveItem( evWork->musSave , itemIdx ) == FALSE )
+          {
+            u8 j;
+            BOOL isSame = FALSE;  //すでに抽選されたか？
+            for( j=0;j<i;j++ )
+            {
+              MUSICAL_FAN_STATE* befFanState = MUSICAL_SAVE_GetFanState( evWork->musSave , j );
+              if( befFanState->giftType == MUSICAL_GIFT_TYPE_GOODS &&
+                  befFanState->giftValue == itemIdx )
+              {
+                isSame = TRUE;
+              }
+            }
+            if( isSame == FALSE )
+            {
+              fanState->giftType = MUSICAL_GIFT_TYPE_GOODS;
+              fanState->giftValue = itemIdx;
+              break;
+            }
+          }
+        }
+        //グッズが無い！
+        if( fanState->giftType == MUSICAL_GIFT_TYPE_NONE )
+        {
+          fanState->giftType = MUSICAL_GIFT_TYPE_ITEM;
+          fanState->giftValue = 92; //金の玉
+        }
+        OS_TPrintf("%d:%d",fanState->giftType,fanState->giftValue);
+      }
+      OS_TPrintf("]\n");
+    }
+  }
+}
+
 #pragma mark [>FieldFunc
 //--------------------------------------------------------------
 //  フィールドを呼ぶ
@@ -661,7 +783,7 @@ static const void MUSICAL_EVENT_JumpWaitingRoom( GMEVENT *event, MUSICAL_EVENT_W
 {
   GMEVENT *newEvent;
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( evWork->gsys );
-  const VecFx32 pos = { FX32_CONST(40.0f) , FX32_CONST(0.0f) , FX32_CONST(392.0f) };
+  const VecFx32 pos = { FX32_CONST(40.0f) , FX32_CONST(0.0f) , FX32_CONST(360.0f) };
   
   newEvent = DEBUG_EVENT_ChangeMapPos( evWork->gsys, fieldWork ,
                 ZONE_ID_C04R0202 , &pos , 0 );
@@ -694,8 +816,7 @@ static const void MUSICAL_EVENT_RunScript( GMEVENT *event, MUSICAL_EVENT_WORK *e
   SCRIPT_FLDPARAM fparam;
   SCRIPT_WORK *scWork;
 
-  newEvent = SCRIPT_SetEventScript( evWork->gsys, scriptId , NULL ,
-                HEAPID_FIELDMAP );
+  newEvent = SCRIPT_SetEventScript( evWork->gsys, scriptId , NULL , HEAPID_FIELDMAP );
   scWork = SCRIPT_GetEventWorkToScriptWork( newEvent );
   
   SCRIPT_SetMemberWork_Musical( scWork , evWork );

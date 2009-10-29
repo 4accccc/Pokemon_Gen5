@@ -25,7 +25,6 @@ _EVENT_DATA    ev_init_c04r0202
 _EVENT_DATA    ev_c04r0202_mus_1st
 _EVENT_DATA    ev_c04r0202_mus_2nd
 _EVENT_DATA    ev_c04r0202_mus_3rd
-_EVENT_DATA    ev_script_test
 _EVENT_DATA_END
 
 //----------------------------------------------------------------------
@@ -233,7 +232,9 @@ _RET
 //	ゾーンチェンジスクリプト
 /**************************************************************/
 INIT_EVENT_START ev_init_c04r0202
-	//動かない？
+	//動くけどキャラ移動はどうやろう・・・
+	//MUSICAL_EVENT_WORKにはアクセス不可
+	//フェードインキャンセルがあれば可能？
 INIT_EVENT_END
 
 /**************************************************************/
@@ -296,6 +297,8 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_c04r0202_mus_3rd
 
+	DEFINE_LOCAL isLoop		//ループチェック
+
 	_BLACK_IN( )
 	_DISP_FADE_END_CHECK()
 
@@ -308,16 +311,20 @@ EVENT_START ev_c04r0202_mus_3rd
 	_CALL grade_all_msg_routine
 
 	//個別評価
+	$isLoop = 1
 	$ownerBefPos = 5
-	$checkRank = 0		//1位のこと
 	
-	WHILE $checkRank < 4
+	//1→4位バージョン
+	$checkRank = 3		//4位のこと
+	WHILE $isLoop == 1
 		_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_RANK,checkRank,ownerPos)
-
 		_CALL grade_one_msg_routine
-
 		$ownerBefPos = $ownerPos 
-		$checkRank += 1
+		IF $checkRank == 0 THEN
+			$isLoop = 0
+		ELSE
+			$checkRank -= 1
+		ENDIF
 	ENDWHILE
 	
 	$ownerPos = 5
@@ -326,7 +333,8 @@ EVENT_START ev_c04r0202_mus_3rd
 	_BALLOONWIN_OBJMSG_OPEN( msg_mus_03_004_01 , C04R0202_WOMAN1_01 )
 	_AB_KEYWAIT()     //キー待ち
 	_BALLOONWIN_CLOSE()
-	
+	//帰りのアニメ切る
+/*	
 	 SWITCH $selfPos
 	 CASE 0 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_main_to_start_1 )
@@ -338,20 +346,12 @@ EVENT_START ev_c04r0202_mus_3rd
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_main_to_start_4 )
 	 ENDSWITCH
 	_OBJ_ANIME_WAIT()
-	
+*/	
 	_BLACK_OUT( )
 	_DISP_FADE_END_CHECK()
 
 EVENT_END
 
-EVENT_START ev_script_test
-	//スクリプトチェックダミー
-	_MUSICAL_FITTING_CALL(0)
-	_GET_MUSICAL_VALUE(0,0,0)
-	_GET_MUSICAL_FAN_VALUE(0,0,0)
-	_GET_MUSICAL_WAITROOM_VALUE(0,0,0)
-	_ADD_MUSICAL_GOODS(0)
-EVENT_END
 
 /**************************************************************/
 //	移動　開始→待機位置
@@ -359,7 +359,7 @@ EVENT_END
 //入り口から立ち位置(0～3個
 _ANIME_LABEL anm_move_player_start_to_main_1
 	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA AC_WALK_U_8F,11
+	_ANIME_DATA AC_WALK_U_8F,9
 	_ANIME_DATA AC_DIR_R,1
 	_ANIME_DATA AC_WALK_R_8F,6
 	_ANIME_DATA AC_DIR_U,1
@@ -368,7 +368,7 @@ _ANIME_LABEL anm_move_player_start_to_main_1
 
 _ANIME_LABEL anm_move_player_start_to_main_2
 	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA AC_WALK_U_8F,11
+	_ANIME_DATA AC_WALK_U_8F,9
 	_ANIME_DATA AC_DIR_R,1
 	_ANIME_DATA AC_WALK_R_8F,8
 	_ANIME_DATA AC_DIR_U,1
@@ -377,7 +377,7 @@ _ANIME_LABEL anm_move_player_start_to_main_2
 
 _ANIME_LABEL anm_move_player_start_to_main_3
 	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA AC_WALK_U_8F,11
+	_ANIME_DATA AC_WALK_U_8F,9
 	_ANIME_DATA AC_DIR_R,1
 	_ANIME_DATA AC_WALK_R_8F,10
 	_ANIME_DATA AC_DIR_U,1
@@ -386,7 +386,7 @@ _ANIME_LABEL anm_move_player_start_to_main_3
 
 _ANIME_LABEL anm_move_player_start_to_main_4
 	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA AC_WALK_U_8F,11
+	_ANIME_DATA AC_WALK_U_8F,9
 	_ANIME_DATA AC_DIR_R,1
 	_ANIME_DATA AC_WALK_R_8F,12
 	_ANIME_DATA AC_DIR_U,1
@@ -400,7 +400,7 @@ _ANIME_LABEL anm_move_player_main_to_start_1
 	_ANIME_DATA AC_DIR_L,1
 	_ANIME_DATA AC_WALK_L_8F,6
 	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA AC_WALK_D_8F,11
+	_ANIME_DATA AC_WALK_D_8F,9
 	_ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL anm_move_player_main_to_start_2
@@ -409,7 +409,7 @@ _ANIME_LABEL anm_move_player_main_to_start_2
 	_ANIME_DATA AC_DIR_L,1
 	_ANIME_DATA AC_WALK_L_8F,8
 	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA AC_WALK_D_8F,11
+	_ANIME_DATA AC_WALK_D_8F,9
 	_ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL anm_move_player_main_to_start_3
@@ -418,7 +418,7 @@ _ANIME_LABEL anm_move_player_main_to_start_3
 	_ANIME_DATA AC_DIR_L,1
 	_ANIME_DATA AC_WALK_L_8F,10
 	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA AC_WALK_D_8F,11
+	_ANIME_DATA AC_WALK_D_8F,9
 	_ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL anm_move_player_main_to_start_4
@@ -427,7 +427,7 @@ _ANIME_LABEL anm_move_player_main_to_start_4
 	_ANIME_DATA AC_DIR_L,1
 	_ANIME_DATA AC_WALK_L_8F,12
 	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA AC_WALK_D_8F,11
+	_ANIME_DATA AC_WALK_D_8F,9
 	_ANIME_DATA ACMD_END,0
 
 //オーナー移動用 初期位置から各位置へ

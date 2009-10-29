@@ -18,6 +18,7 @@ extern VMCMD_RESULT EvCmdGetMusicalValue( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGetMusicalFanValue( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGetMusicalWaitRoomValue( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdAddMusicalGoods( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdResetMusicalFanGiftFlg( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk );
 

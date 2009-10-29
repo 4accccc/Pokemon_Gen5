@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00178" date="2009-10-23T16:13:29"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-10-29T15:24:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="33" top="35" right="721" bottom="815" maximized="no" rayout="Vertical2">
+	<dialog left="1717" top="233" right="2305" bottom="1013" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="513"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<band id="0" index="1" style="0000" width="580"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="526"/>
+		<band id="2" index="3" style="0000" width="259"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="680"/>
+		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -323,6 +323,110 @@
 きがむいたら　また　はなしかけてよ</language>
 		<language name="JPN_KANJI">遠慮すること　ないのに……
 気が向いたら　また　話しかけてよ</language>
+	</row>
+
+	<row id="msg_musical_fan_cheer_01" back-color="#ff8080,,,,,#ff8080,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">汎用ファン:応援
+クール
+一般観客のメッセージです。
+要変更</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さん！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]さん！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]さん！[BE:01:ページ切り替え（クリア）]
+かんげきの　あまり
+ことばが　でてこないです……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さん！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]さん！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]さん！[BE:01:ページ切り替え（クリア）]
+感激のあまり
+言葉が　でてこないです……</language>
+	</row>
+
+	<row id="msg_musical_fan_cheer_02" back-color="#ff8080,,,,,#ff8080,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">汎用ファン:応援
+キュート</attribute>
+		<language name="JPN" width="256">ポケモン　まぶしいほど
+かがやいていました！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]さんの　センス
+あたしも　まねして　いきたいです！</language>
+		<language name="JPN_KANJI" width="256">ポケモン　まぶしいほど
+輝いていました！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]さんの　センス
+あたしも　真似していきたいです！</language>
+	</row>
+
+	<row id="msg_musical_fan_cheer_03" back-color="#ff8080,,,,,#ff8080,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">汎用ファン:応援
+エレガント</attribute>
+		<language name="JPN" width="256">また　みにきますね
+[1:00:トレーナー名:0]さん[BE:01:ページ切り替え（クリア）]
+だって　じんせい　かわるほど
+すばらしかったんですもの</language>
+		<language name="JPN_KANJI" width="256">また　観に来ますね
+[1:00:トレーナー名:0]さん[BE:01:ページ切り替え（クリア）]
+だって　人生観　変わるほど
+すばらしかったんですもの</language>
+	</row>
+
+	<row id="msg_musical_fan_cheer_04" back-color="#ff8080,,,,,#ff8080,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">汎用ファン:応援
+ユニーク</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さん！　さっきの
+ミュージカル　さいこう　でした！[BE:01:ページ切り替え（クリア）]
+なんだか　げんきが　わいてくるんです
+これからも　がんばってください！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さん！　さっきの
+ミュージカル　最高でした！[BE:01:ページ切り替え（クリア）]
+なんだか　元気が　わいてくるんです
+これからも　がんばってください！</language>
+	</row>
+
+	<row id="msg_musical_fan_gift_01" back-color="#ff8080,,,,,#ff8080,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">汎用ファン:贈り物
+クール</attribute>
+		<language name="JPN" width="256">これ　オレの　きもちです
+グッズ　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">これ　オレの　気持ちです
+グッズ　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_musical_fan_gift_02" back-color="#ff8080,,,,,#ff8080,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">汎用ファン:贈り物
+キュート</attribute>
+		<language name="JPN" width="256">もし　よろしければ
+このアクセ　つかってください！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">もし　よろしければ
+このアクセ　つかってください！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_musical_fan_gift_03" back-color="#ff8080,,,,,#ff8080,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">汎用ファン:贈り物
+エレガント</attribute>
+		<language name="JPN" width="256">この　グッズ……
+きにいってもらえると　うれしいです[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">この　グッズ……
+気に入ってもらえると　うれしいです[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_musical_fan_gift_04" back-color="#ff8080,,,,,#ff8080,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">汎用ファン:贈り物
+ユニーク</attribute>
+		<language name="JPN" width="256">もし　よろしければ
+このアクセ　つかってください！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">もし　よろしければ
+このアクセ　つかってください！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_msucail_fan_none" back-color="#ff8080,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">居ない時仮処理</attribute>
+		<language name="JPN" width="256">ほんとうはこのキャラはいません。</language>
+		<language name="JPN_KANJI" width="256">ほんとうはこのキャラはいません。</language>
+	</row>
+
+	<row id="msg_msucail_fan_get_goods" back-color="#ff8080,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">グッズ取得要</attribute>
+		<language name="JPN" width="256">[1:0A:グッズ名:0]を　もらった！</language>
+		<language name="JPN_KANJI" width="256">[1:0A:グッズ名:0]を　もらった！</language>
 	</row>
 
 	<flowchart-group-list>

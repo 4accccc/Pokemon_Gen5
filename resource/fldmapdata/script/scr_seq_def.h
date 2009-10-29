@@ -2788,6 +2788,20 @@
   .short \no
   .endm
 
+//--------------------------------------------------------------
+/**
+ *  _RESET_MUSICAL_FAN_GIFT_FLG ミュージカル：ファン贈り物フラグ落とす
+ *  @param pos  立ち位置(0～4
+ */
+//--------------------------------------------------------------
+#define _RESET_MUSICAL_FAN_GIFT_FLG( pos ) \
+    _ASM_RESET_MUSICAL_FAN_GIFT_FLG pos
+
+  .macro  _ASM_RESET_MUSICAL_FAN_GIFT_FLG pos, retVal
+  .short EV_SEQ_RESET_MUSICAL_FAN_GIFT_FLG
+  .short \pos
+  .endm
+
 //======================================================================
 //  レポート関連
 //======================================================================

@@ -9,6 +9,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_musical_scr.h"
+  .include  "musical_scr_local.h"	//ミュージカルの定義が入っています
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -18,8 +19,18 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA		ev_musical_recept_single
+_EVENT_DATA		ev_musical_fan_01
+_EVENT_DATA		ev_musical_fan_02
+_EVENT_DATA		ev_musical_fan_03
+_EVENT_DATA		ev_musical_fan_04
+_EVENT_DATA		ev_musical_fan_05
 _EVENT_DATA_END
 
+
+//----------------------------------------------------------------------
+// ローカルワーク
+//----------------------------------------------------------------------
+DEFINE_LOCAL fan_number	// ファンの番号
 
 /*************************************************************/
 /*						一人用　受付						 */
@@ -49,3 +60,92 @@ EVENT_START	ev_musical_recept_single
 
 EVENT_END
 
+/*************************************************************/
+/*						ファンの処理						 */
+/*************************************************************/
+fan_main_routine:
+{
+	DEFINE_LOCAL fan_type	// ファンの見た目
+	DEFINE_LOCAL msg_id		// メッセージID
+	DEFINE_LOCAL gift_type	// 贈り物種類
+	DEFINE_LOCAL gift_number// 贈り物番号(アイテム・グッズ
+
+	//本来見た目の処理はココでやるべきではないと思うが、仮処理
+	_GET_MUSICAL_FAN_VALUE_TYPE( fan_number , fan_type )
+	IF $fan_type == MUSICAL_FAL_TYPE_NONE THEN
+		_BALLOONWIN_TALKOBJ_OPEN( msg_msucail_fan_none )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+	ELSE
+		
+		//応援メッセージ
+		_GET_MUSICAL_FAN_VALUE_CHEER_MSG( fan_number , msg_id )
+		_PLAYER_NAME( 0 )
+		_BALLOONWIN_TALKOBJ_OPEN( msg_id )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+		
+		_GET_MUSICAL_FAN_VALUE_GIFT_TYPE( fan_number , gift_type )
+		_GET_MUSICAL_FAN_VALUE_GIFT_NUMBER( fan_number , gift_number )
+		_GET_MUSICAL_FAN_VALUE_GIFT_MSG( fan_number , msg_id )
+		
+		SWITCH $gift_type
+		CASE MUSICAL_GIFT_TYPE_NONE THEN
+			//渡すものは無い！
+			//もしくはもう渡した！
+		CASE MUSICAL_GIFT_TYPE_GOODS THEN
+			//グッズをもらう
+			//グッズ名のセット
+			_MUSICAL_WORD_GOODS_NAME( 0 , gift_number )
+			//贈るメッセージ
+			_BALLOONWIN_TALKOBJ_OPEN( msg_id )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+			
+			//仮メッセージ
+			_TALKWIN_OPEN()
+				_TALKMSG( msg_msucail_fan_get_goods )
+				_LAST_KEYWAIT()
+			_TALKWIN_CLOSE()
+			
+			//追加処理
+			_ADD_MUSICAL_GOODS( gift_number)
+			
+			//渡たすフラグ落とし
+			_RESET_MUSICAL_FAN_GIFT_FLG( fan_number )
+		CASE MUSICAL_GIFT_TYPE_ITEM THEN
+			//アイテム汎用処理をお願いします
+			//gift_number にアイテム番号入ってます。
+
+			//渡たすフラグ落とし
+			_RESET_MUSICAL_FAN_GIFT_FLG( fan_number )
+		ENDSWITCH
+		
+	ENDIF
+}
+_RET
+
+EVENT_START	ev_musical_fan_01
+	$fan_number = 0
+	_CALL fan_main_routine
+EVENT_END
+
+EVENT_START	ev_musical_fan_02
+	$fan_number = 1
+	_CALL fan_main_routine
+EVENT_END
+
+EVENT_START	ev_musical_fan_03
+	$fan_number = 2
+	_CALL fan_main_routine
+EVENT_END
+
+EVENT_START	ev_musical_fan_04
+	$fan_number = 3
+	_CALL fan_main_routine
+EVENT_END
+
+EVENT_START	ev_musical_fan_05
+	$fan_number = 4
+	_CALL fan_main_routine
+EVENT_END

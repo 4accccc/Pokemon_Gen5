@@ -42,9 +42,9 @@ typedef struct _MUSICAL_SAVE MUSICAL_SAVE;
 //ファン数値系
 typedef struct
 {
-  u8 type;          //種類
-  u8 presentType;   //プレゼント種類
-  u16 presentValue; //アイテム番号・グッズ番号
+  u8 type;          //種類(MUSICAL_CONDITION_TYPE)
+  u8 giftType;   //プレゼント種類
+  u16 giftValue; //アイテム番号・グッズ番号
 }MUSICAL_FAN_STATE;
 
 
@@ -81,6 +81,7 @@ extern void MUSICAL_SAVE_AddEntryNum( MUSICAL_SAVE *musSave );
 extern const u16 MUSICAL_SAVE_GetTopNum( const MUSICAL_SAVE *musSave );
 extern void MUSICAL_SAVE_AddTopNum( MUSICAL_SAVE *musSave );
 extern const u8 MUSICAL_SAVE_GetBefCondition( MUSICAL_SAVE *musSave , const MUSICAL_CONDITION_TYPE conType );
+extern const MUSICAL_CONDITION_TYPE MUSICAL_SAVE_GetMaxBefConditionType( MUSICAL_SAVE *musSave );
 extern void MUSICAL_SAVE_SetBefCondition( MUSICAL_SAVE *musSave , const MUSICAL_CONDITION_TYPE conType , const u8 value );
 extern const u8 MUSICAL_SAVE_GetBefPoint( const MUSICAL_SAVE *musSave );
 extern void MUSICAL_SAVE_SetBefPoint( MUSICAL_SAVE *musSave , const u8 point );

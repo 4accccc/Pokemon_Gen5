@@ -12,5 +12,10 @@
 #define ZONE_C04R0201_EVC_H
 
 #define MUSICAL_RECEPT_SINGLE              0
+#define C04R0201_FAN_01                    1
+#define C04R0201_FAN_04                    2
+#define C04R0201_FAN_05                    3
+#define C04R0201_FAN_02                    4
+#define C04R0201_FAN_03                    5
 
 #endif //ZONE_C04R0201_EVC_H

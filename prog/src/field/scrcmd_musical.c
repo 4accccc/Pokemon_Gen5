@@ -25,6 +25,9 @@
 
 #include "musical/musical_system.h"
 #include "musical/musical_event.h"
+#include "savedata/save_control.h"
+#include "savedata/musical_save.h"
+#include "savedata/musical_dist_save.h"
 
 #include "poke_tool/poke_tool.h"  //ドレスアップ仮データ用
 #include "poke_tool/monsno_def.h" //ドレスアップ仮データ用
@@ -32,10 +35,13 @@
 
 #include "field_sound.h"
 #include "message.naix"
+#include "msg/script/msg_musical_scr.h"
 #include "msg/msg_musical_common.h"
+#include "msg/msg_mus_item_name.h"
 #include "scrcmd_musical.h"
 
 #include "../../../resource/fldmapdata/script/musical_scr_local.h"
+#include "fieldmap/fldmmdl_objcode.h"
 
 #include "test/ariizumi/ari_debug.h"
 
@@ -132,6 +138,13 @@ VMCMD_RESULT EvCmdMusicalFittingCall( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * ミュージカル：ミュージカル汎用数値取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
 VMCMD_RESULT EvCmdGetMusicalValue( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
@@ -140,9 +153,35 @@ VMCMD_RESULT EvCmdGetMusicalValue( VMHANDLE *core, void *wk )
   u16  val = SCRCMD_GetVMWorkValue( core, work );
   u16* ret_wk = SCRCMD_GetVMWork( core, work );
 
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( gdata );
+  MUSICAL_SAVE* musSave = MUSICAL_SAVE_GetMusicalSave( svWork );
+
+  switch( type )
+  {
+  case MUSICAL_VALUE_JOINNUM:       //参加回数
+    *ret_wk = MUSICAL_SAVE_GetEntryNum( musSave );
+    break;
+  case MUSICAL_VALUE_TOPNUM:        //トップ回数
+    *ret_wk = MUSICAL_SAVE_GetTopNum( musSave );
+    break;
+  case MUSICAL_VALUE_LAST_POINT:    //最終評価点
+    *ret_wk = MUSICAL_SAVE_GetBefPoint( musSave );
+    break;
+  case MUSICAL_VALUE_LAST_CONDITION://最終コンディション
+    break;
+  }
+
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * ミュージカル：ミュージカルファン用数値取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
 VMCMD_RESULT EvCmdGetMusicalFanValue( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
@@ -151,9 +190,57 @@ VMCMD_RESULT EvCmdGetMusicalFanValue( VMHANDLE *core, void *wk )
   u8   type = VMGetU8(core);
   u16* ret_wk = SCRCMD_GetVMWork( core, work );
 
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( gdata );
+  MUSICAL_SAVE* musSave = MUSICAL_SAVE_GetMusicalSave( svWork );
+  MUSICAL_FAN_STATE *fanState = MUSICAL_SAVE_GetFanState( musSave , pos );
+  
+  switch( type )
+  {
+  case MUSICAL_VALUE_FAN_TYPE:        //見た目
+    switch( fanState->type )
+    {
+    case MCT_COOL:
+      *ret_wk = MIDDLEMAN1;
+      break;
+    case MCT_CUTE:
+      *ret_wk = GIRL2;
+      break;
+    case MCT_ELEGANT:
+      *ret_wk = LADY;
+      break;
+    case MCT_UNIQUE:
+      *ret_wk = BOY3;
+      break;
+    case MCT_MAX:
+      *ret_wk = MUSICAL_FAL_TYPE_NONE; // 居ないので0
+      break;
+    }
+    break;
+  case MUSICAL_VALUE_FAN_CHEER_MSG:   //応援メッセージ
+    *ret_wk = msg_musical_fan_cheer_01 + fanState->type;
+    break;
+  case MUSICAL_VALUE_FAN_GIFT_MSG:    //プレゼントメッセージ
+    *ret_wk = msg_musical_fan_gift_01 + fanState->type;
+    break;
+  case MUSICAL_VALUE_FAN_GIFT_TYPE:   //プレゼント種類
+    *ret_wk = fanState->giftType;
+    break;
+  case MUSICAL_VALUE_FAN_GIFT_NUMBER: //プレゼント番号
+    *ret_wk = fanState->giftValue;
+    break;
+  }
+
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * ミュージカル：ミュージカル控え室用数値取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
 VMCMD_RESULT EvCmdGetMusicalWaitRoomValue( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
@@ -209,14 +296,35 @@ VMCMD_RESULT EvCmdGetMusicalWaitRoomValue( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * ミュージカル：ミュージカルグッズ追加
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
 VMCMD_RESULT EvCmdAddMusicalGoods( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
+
   u16  val   = SCRCMD_GetVMWorkValue( core, work );
+
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( gdata );
+  MUSICAL_SAVE* musSave = MUSICAL_SAVE_GetMusicalSave( svWork );
+
+  MUSICAL_SAVE_AddItem( musSave , val );
 
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * ミュージカル：ミュージカル系ワードセット
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
 VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
@@ -228,16 +336,41 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
   u8   idx  = VMGetU8(core);
   u16  val  = SCRCMD_GetVMWorkValue( core, work );
 
-  MUSICAL_EVENT_WORK *evWork = SCRIPT_GetMemberWork( sc , ID_EVSCR_MUSICAL_EVENT_WORK );
-
   switch( type )
   {
   case MUSICAL_WORD_TITLE:        //セーブにある演目
+    {
+      GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+      SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( gdata );
+      MUSICAL_DIST_SAVE* musDistSave = MUSICAL_DIST_SAVE_LoadData( svWork , heapId );
+      void *msgData = MUSICAL_DIST_SAVE_GetMessageData( musDistSave , heapId , NULL );
+
+      STRBUF * tmpBuf;
+      GFL_MSGDATA *msgHandle = GFL_MSG_Construct( msgData , heapId );
+
+      tmpBuf = GFL_MSG_CreateString( msgHandle , 0 );
+      WORDSET_RegisterWord( *wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
+
+      GFL_STR_DeleteBuffer( tmpBuf );
+      GFL_MSG_Delete( msgHandle );
+      GFL_HEAP_FreeMemory( msgData );
+    }
     break;
   case MUSICAL_WORD_GOODS:        //グッズ名
+    {
+      STRBUF * tmpBuf;
+      GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_mus_item_name_dat , heapId );
+
+      tmpBuf = GFL_MSG_CreateString( msgHandle , ITEM_NAME_000+val );
+      WORDSET_RegisterWord( *wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
+
+      GFL_STR_DeleteBuffer( tmpBuf );
+      GFL_MSG_Delete( msgHandle );
+    }
     break;
   case MUSICAL_WORD_TITLE_LOCAL:  //※現在演目
     {
+      MUSICAL_EVENT_WORK *evWork = SCRIPT_GetMemberWork( sc , ID_EVSCR_MUSICAL_EVENT_WORK );
       STRBUF * tmpBuf = MUSICAL_EVENT_CreateStr_ProgramTitle( evWork , heapId );
       WORDSET_RegisterWord( *wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
       GFL_STR_DeleteBuffer( tmpBuf );
@@ -269,6 +402,28 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
     break;
   }
 
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ミュージカル：ミュージカル系ファン贈り物フラグ落とし
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdResetMusicalFanGiftFlg( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+
+  u16  pos  = SCRCMD_GetVMWorkValue( core, work );
+
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( gdata );
+  MUSICAL_SAVE* musSave = MUSICAL_SAVE_GetMusicalSave( svWork );
+  MUSICAL_FAN_STATE *fanState = MUSICAL_SAVE_GetFanState( musSave , pos );
+  
+  fanState->giftType = MUSICAL_GIFT_TYPE_NONE;
   return VMCMD_RESULT_CONTINUE;
 }
 

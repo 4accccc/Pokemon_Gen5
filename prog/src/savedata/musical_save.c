@@ -40,8 +40,13 @@ int MUSICAL_SAVE_GetWorkSize(void)
 
 void MUSICAL_SAVE_InitWork(MUSICAL_SAVE *musSave)
 {
+	u8 i;
+	GFL_STD_MemClear( musSave , sizeof( MUSICAL_SAVE ));
 	MUSICAL_SAVE_ResetBefEquip(musSave);
-	GFL_STD_MemClear( &musSave->musicalShotData , sizeof( MUSICAL_SHOT_DATA ));
+	for( i=0;i<MUS_SAVE_FAN_NUM;i++ )
+	{
+    musSave->fanState[i].type = MCT_MAX;
+  }
 }
 
 //----------------------------------------------------------
@@ -55,7 +60,7 @@ MUSICAL_SAVE* MUSICAL_SAVE_GetMusicalSave( SAVE_CONTROL_WORK *sv )
 void MUSICAL_SAVE_ResetBefEquip( MUSICAL_SAVE *musSave )
 {
 	u8 i;
-	for( i=0;i<MUS_POKE_EQUIP_MAX;i++ )
+	for( i=0;i<MUSICAL_ITEM_EQUIP_MAX;i++ )
 	{
 		musSave->befEquip.equipData[i].pos = MUS_POKE_EQU_INVALID;
 	}
@@ -107,6 +112,7 @@ void MUSICAL_SAVE_AddItem( MUSICAL_SAVE *musSave , const u8 itemNo )
   
   musSave->itemBit[arrIdx] |= (1<<bitIdx);
   musSave->itemNewBit[arrIdx] |= (1<<bitIdx);
+  OS_TPrintf("AddMusicalItem[%d][%d:%d][%d]\n",itemNo,arrIdx,bitIdx,musSave->itemBit[arrIdx]);
 }
 
 void MUSICAL_SAVE_ResetNewItem( MUSICAL_SAVE *musSave , const u8 itemNo )
@@ -158,6 +164,28 @@ void MUSICAL_SAVE_AddTopNum( MUSICAL_SAVE *musSave )
 const u8 MUSICAL_SAVE_GetBefCondition( MUSICAL_SAVE *musSave , const MUSICAL_CONDITION_TYPE conType )
 {
   return musSave->befCondition[conType];
+}
+
+const MUSICAL_CONDITION_TYPE MUSICAL_SAVE_GetMaxBefConditionType( MUSICAL_SAVE *musSave )
+{
+  u8 i;
+  u8 maxPoint = 0;
+  u8 maxPointIdx = 0;
+  
+  for( i=0;i<MCT_MAX;i++ )
+  {
+    if( musSave->befCondition[i] > maxPoint )
+    {
+      maxPoint = musSave->befCondition[i];
+      maxPointIdx = i;
+    }
+  }
+  if( maxPoint == 0 )
+  {
+    //–³‘•”õ
+    return MCT_MAX;
+  }
+  return maxPointIdx;
 }
 
 void MUSICAL_SAVE_SetBefCondition( MUSICAL_SAVE *musSave , const MUSICAL_CONDITION_TYPE conType , const u8 value )
