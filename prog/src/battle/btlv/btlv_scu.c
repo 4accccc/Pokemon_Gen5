@@ -2045,9 +2045,9 @@ static void taskDamageEffect( GFL_TCBL* tcbl, void* wk_adrs )
 void BTLV_SCU_StartDeadAct( BTLV_SCU* wk, BtlPokePos pos )
 {
   BTLV_EFFECT_DelGauge( BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos) );
-  BTLV_EFFECT_DelPokemon( BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos) );
-
+  BTLV_EFFECT_Hinshi( BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos) );
 }
+
 //=============================================================================================
 /**
  * ポケモンひんしアクション終了待ち
@@ -2060,7 +2060,7 @@ void BTLV_SCU_StartDeadAct( BTLV_SCU* wk, BtlPokePos pos )
 BOOL BTLV_SCU_WaitDeadAct( BTLV_SCU* wk )
 {
   //瀕死エフェクトが入ったらそれ待ちをいれる
-  return TRUE;
+  return !BTLV_EFFECT_CheckExecute();
 }
 
 //--------------------------------------------------------

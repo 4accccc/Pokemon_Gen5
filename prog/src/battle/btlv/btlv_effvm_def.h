@@ -365,7 +365,8 @@ ex)
 #define	EC_POKEMON_PAL_FADE					( EC_POKEMON_SET_ANM_FLAG     + 1 )
 #define	EC_POKEMON_VANISH					  ( EC_POKEMON_PAL_FADE         + 1 )
 #define	EC_POKEMON_SHADOW_VANISH	  ( EC_POKEMON_VANISH           + 1 )
-#define	EC_TRAINER_SET							( EC_POKEMON_SHADOW_VANISH    + 1 )
+#define	EC_POKEMON_DEL	            ( EC_POKEMON_SHADOW_VANISH    + 1 )
+#define	EC_TRAINER_SET							( EC_POKEMON_DEL              + 1 )
 #define	EC_TRAINER_MOVE							( EC_TRAINER_SET              + 1 )
 #define	EC_TRAINER_ANIME_SET				( EC_TRAINER_MOVE             + 1 )
 #define	EC_TRAINER_DEL							( EC_TRAINER_ANIME_SET        + 1 )
@@ -1030,6 +1031,23 @@ ex)
 	.long		\pos
 	.long		\flag
 	.endm
+
+//======================================================================
+/**
+ * @brief	ポケモン削除
+ *
+ * #param_num	1
+ * @param	index		削除するポケモンの立ち位置
+ *
+ * #param	COMBOBOX_TEXT	攻撃側	防御側
+ * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK  BTLEFF_POKEMON_SIDE_DEFENCE
+ */
+//======================================================================
+	.macro	POKEMON_DEL	pos
+	.short	EC_POKEMON_DEL
+	.long		\pos
+	.endm
+
 
 //======================================================================
 /**

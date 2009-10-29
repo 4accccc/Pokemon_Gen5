@@ -185,6 +185,7 @@ static VMCMD_RESULT VMEC_POKEMON_SET_ANM_FLAG( VMHANDLE *vmh, void *context_work
 static VMCMD_RESULT VMEC_POKEMON_PAL_FADE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_VANISH( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_SHADOW_VANISH( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_POKEMON_DEL( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_TRAINER_SET( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_TRAINER_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_TRAINER_ANIME_SET( VMHANDLE *vmh, void *context_work );
@@ -306,6 +307,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_POKEMON_PAL_FADE,
   VMEC_POKEMON_VANISH,
   VMEC_POKEMON_SHADOW_VANISH,
+  VMEC_POKEMON_DEL,
   VMEC_TRAINER_SET,
   VMEC_TRAINER_MOVE,
   VMEC_TRAINER_ANIME_SET,
@@ -1394,6 +1396,28 @@ static VMCMD_RESULT VMEC_POKEMON_SHADOW_VANISH( VMHANDLE *vmh, void *context_wor
   {
     BTLV_MCSS_SetShadowVanishFlag( BTLV_EFFECT_GetMcssWork(), position, flag );
   }
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief ポケモン削除
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_POKEMON_DEL( VMHANDLE *vmh, void *context_work )
+{
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int   position = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_POKEMON_DEL\n");
+#endif DEBUG_OS_PRINT
+
+  BTLV_EFFECT_DelPokemon( position );
 
   return bevw->control_mode;
 }

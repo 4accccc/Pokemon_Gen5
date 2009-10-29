@@ -39,6 +39,7 @@ enum{
   BTLEFF_SINGLE_TRAINER_ENCOUNT_2,
   BTLEFF_SINGLE_TRAINER_ENCOUNT_3,
   BTLEFF_BALL_THROW,
+  BTLEFF_HINSHI,
 };
 
 typedef struct _BTLV_EFFECT_WORK BTLV_EFFECT_WORK;
@@ -85,8 +86,8 @@ extern  void              BTLV_EFFECT_AddByPos( BtlvMcssPos pos, int eff_no );
 extern  void              BTLV_EFFECT_AddWazaEffect( const BTLV_WAZAEFFECT_PARAM* param );
 extern  void              BTLV_EFFECT_Stop( void );
 
-//暫定でTCBで作成したエフェクト
 extern  void              BTLV_EFFECT_Damage( BtlvMcssPos target, WazaID waza );
+extern  void              BTLV_EFFECT_Hinshi( BtlvMcssPos target );
 
 extern  BOOL              BTLV_EFFECT_CheckExecute( void );
 extern  void              BTLV_EFFECT_SetPokemon( const POKEMON_PARAM *pp, int position );
