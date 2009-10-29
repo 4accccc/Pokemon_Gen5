@@ -1,5 +1,5 @@
 #../data/d04r2601.mev
-../tmp/d04r2601.bin:../data/d04r2601.mev $(UNIQ_SCRIPTHEADER) ../tmp/d04r2601.h ../../script/d04r2601_def.h ../../zonetable/zone_id.h ../tmp/d04r0601.h ../../../../prog/include/field/eventdata_type.h ../tmp/d04r2501.h 
+../tmp/d04r2601.bin:../data/d04r2601.mev $(UNIQ_SCRIPTHEADER) ../tmp/d04r2601.h ../../script/d04r2601_def.h 
 	@echo ../data/d04r2601.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/d04r2601.h ../../script/d04r2601_def.h ../../zonetable/zone_id.h ../tmp/d04r0601.h ../../../../prog/include/field/eventdata_type.h ../tmp/d04r2501.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/d04r2601.h ../../script/d04r2601_def.h 
 
