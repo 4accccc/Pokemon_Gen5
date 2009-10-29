@@ -536,6 +536,7 @@ extern void IRC_POKETRADE_SetBgMode(SETUP_TRADE_BG_MODE type);
 extern void IRC_POKETRADE_CreatePokeIconResource(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_InitBoxCursor(POKEMON_TRADE_WORK* pWork);
 extern POKEMON_PARAM* IRC_POKEMONTRADE_GetRecvPP(POKEMON_TRADE_WORK *pWork, int index);
+extern int POKETRADE_boxScrollNum2Line(POKEMON_TRADE_WORK* pWork);
 
 extern void IRC_POKETRADE_MainObjCursorDisp(POKEMON_TRADE_WORK* pWork);
 
@@ -572,6 +573,7 @@ extern void IRC_POKETRADE_SetCursorXY(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKETRADE_IsMainCursorDispIn(POKEMON_TRADE_WORK* pWork,int* line);
 extern int POKETRADE_Line2RingLineIconGet(int line);
 extern void POKETRADE_ToolBarInit(POKEMON_TRADE_WORK* pWork);
+extern BOOL POKEMONTRADE_IsPokeLanguageMark(int monsno,int moji);
 
 
 #if _TRADE_DEBUG

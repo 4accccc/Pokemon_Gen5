@@ -788,6 +788,22 @@ static BOOL _IsPokeLanguageMark(POKEMON_TRADE_WORK* pWork,int monsno)
   }
   return FALSE;
 }
+
+
+BOOL POKEMONTRADE_IsPokeLanguageMark(int monsno,int moji)
+{
+  GF_ASSERT(monsno < elementof(MonsterHeadLangTable));
+  
+  if(moji==MonsterHeadLangTable[monsno]){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
+
+
+
 #endif
 
 
@@ -858,7 +874,6 @@ static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxDa
       }
       else if(pWork->pokeIconNo[k][i] == monsno){
         GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[k][i], TRUE );
-        OS_TPrintf("DISPON %d %d\n",k,i);
       }
       else if(pWork->pokeIconNo[k][i] != monsno){
         u8 pltNum;
@@ -884,7 +899,6 @@ static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxDa
 
         GFL_CLACT_WK_SetAutoAnmFlag( pWork->pokeIcon[k][i] , FALSE );
         GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[k][i], TRUE );
-        OS_TPrintf("DISPON2 %d %d\n",k,i);
       }
       if(!PPP_Get(ppp,ID_PARA_tamago_flag,NULL) && _IsPokeLanguageMark(pWork,monsno)){
         GFL_CLACT_WK_SetDrawEnable( pWork->markIcon[k][i], TRUE );
@@ -903,7 +917,7 @@ static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxDa
  */
 //------------------------------------------------------------------------------
 
-static int _boxScrollNum2Line(POKEMON_TRADE_WORK* pWork)
+int POKETRADE_boxScrollNum2Line(POKEMON_TRADE_WORK* pWork)
 {
   int line,i;
   
@@ -933,7 +947,7 @@ static int _boxScrollNum2Line(POKEMON_TRADE_WORK* pWork)
 
 BOOL POKETRADE_IsMainCursorDispIn(POKEMON_TRADE_WORK* pWork,int* line)
 {
-  int linest = _boxScrollNum2Line(pWork);
+  int linest = POKETRADE_boxScrollNum2Line(pWork);
   int lineend = linest + 10;
 
   *line = linest+2;
@@ -969,7 +983,7 @@ BOOL POKETRADE_IsMainCursorDispIn(POKEMON_TRADE_WORK* pWork,int* line)
 
 void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork )
 {
-  int j,k,i,line = _boxScrollNum2Line(pWork);
+  int j,k,i,line = POKETRADE_boxScrollNum2Line(pWork);
 
   if( pWork->oldLine != line ){
     pWork->oldLine = line;

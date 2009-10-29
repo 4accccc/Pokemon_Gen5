@@ -94,6 +94,7 @@ static void _recvCancelPokemon(const int netID, const int size, const void* pDat
 static void _PokemonReset(POKEMON_TRADE_WORK *pWork, int side );
 static void _changeMenuOpen(POKEMON_TRADE_WORK* pWork);
 static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch);
+static int _boxScrollLine2Num(int line);
 
 
 
@@ -140,16 +141,20 @@ int IRC_TRADE_LINE2POKEINDEX(int lineno,int verticalindex)
 static void _vectorUpMath(POKEMON_TRADE_WORK *pWork)
 {
   u32 x,y;
-  
 
   {
     if(GFL_UI_TP_GetPointCont(&x,&y)){   //ベクトルを監視  // 上向き判定
-      if(pWork->y > (y + 7)){   // 上に移動した場合跳ね上げる処理
+      if(pWork->y > (y + 6)){   // 上に移動した場合跳ね上げる処理
         pWork->bUpVec = TRUE;
       }
       else{
         pWork->bUpVec = FALSE;
       }
+      pWork->speed = (x - pWork->x)*2;
+//      if((y >=  2*8) && ((18*8) > y)){
+        pWork->x = x;
+        pWork->y = y;
+  //    }
     }
   }
 }
@@ -275,13 +280,16 @@ static void _getPokeIconPos(int index, GFL_CLACTPOS* pos)
 POKEMON_PASO_PARAM* IRCPOKEMONTRADE_GetPokeDataAddress(BOX_MANAGER* boxData , int trayNo, int index,POKEMON_TRADE_WORK* pWork)
 {
   POKEMON_PASO_PARAM* ppp;
-  if(trayNo!=BOX_MAX_TRAY){
-    return BOXDAT_GetPokeDataAddress(boxData,trayNo,index);
-  }
-  else{
-    POKEPARTY* party = pWork->pMyParty;
-    if(index < PokeParty_GetPokeCount(party)){
-      return (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst( PokeParty_GetMemberPointer( party , index ) );
+
+  if(trayNo!=-1){
+    if(trayNo!=BOX_MAX_TRAY && (index != -1)){
+      return BOXDAT_GetPokeDataAddress(boxData,trayNo,index);
+    }
+    else{
+      POKEPARTY* party = pWork->pMyParty;
+      if(index < PokeParty_GetPokeCount(party) && (index != -1)){
+        return (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst( PokeParty_GetMemberPointer( party , index ) );
+      }
     }
   }
   return NULL;
@@ -1097,7 +1105,7 @@ static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
   GFL_UI_TP_HITTBL tp_data[]={
     {_POKEMON_SELECT1_CELLY-8,_POKEMON_SELECT1_CELLY+16,_POKEMON_SELECT1_CELLX-8, _POKEMON_SELECT1_CELLX+16},
     {_POKEMON_SELECT2_CELLY-8,_POKEMON_SELECT2_CELLY+16,_POKEMON_SELECT2_CELLX-8, _POKEMON_SELECT2_CELLX+16},
-    {0,8*24,0,32*8},
+    {0,8*24,0,32*8-1},
     {GFL_UI_TP_HIT_END,0,0,0},
   };
   GFL_BG_SetVisible( GFL_BG_FRAME3_M , TRUE );
@@ -1312,27 +1320,27 @@ static void _changeMenuWait(POKEMON_TRADE_WORK* pWork)
   if(IsTouchCLACTPosition(pWork,FALSE)){
   }
 
-  if(GFL_UI_TP_GetPointCont(&x,&y)){
-    pWork->x = x;
-    pWork->y = y;
+  _vectorUpMath(pWork);
+  if(GFL_UI_TP_GetCont()){
     pWork->touchON = TRUE;
   }
   else{
     if((pWork->pCatchCLWK != NULL) && pWork->bUpVec && pWork->touchON){ //ポケモンを上に登録
       PMSND_PlaySystemSE(POKETRADESE_UPPOKE);
-
-      pWork->selectIndex = pWork->underSelectIndex;
-      pWork->selectBoxno = pWork->underSelectBoxno;
+      pWork->selectIndex = pWork->workPokeIndex;
+      pWork->selectBoxno = pWork->workBoxno;
       GFL_CLACT_WK_SetDrawEnable( pWork->pSelectCLWK, FALSE);
       _CHANGE_STATE(pWork, _changeMenuOpen);
       IRC_POKETRADE_AppMenuClose(pWork);
       pWork->pAppTask=NULL;
+      pWork->bUpVec =FALSE;
+      pWork->touchON=FALSE;
       _PokemonReset(pWork,0);
       return;
     }
+    pWork->touchON = FALSE;
   }
 
-  _vectorUpMath(pWork);
   _CatchPokemonMoveFunc(pWork);
 
 
@@ -1422,8 +1430,6 @@ static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch)
           else{
             pWork->pCatchCLWK=pCL;
           }
-          pWork->x = x;
-          pWork->y = y;
           bChange = TRUE;
         }
       }
@@ -1517,10 +1523,10 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
       }
     }
     if(GFL_UI_TP_GetPointCont(&x,&y)){   //ベクトルを監視  // 上向き判定
-      if((y >=  2*8) && ((18*8) > y)){
-        pWork->x = x;
-        pWork->y = y;
-      }
+//      if((y >=  2*8) && ((18*8) > y)){
+//        pWork->x = x;
+//        pWork->y = y;
+//      }
     }
   }
   _vectorUpMath(pWork);
@@ -1887,6 +1893,38 @@ static GFL_UI_TP_HITTBL tp_mojidata[]={
   {GFL_UI_TP_HIT_END,0,0,0},
 };
 
+#if 1
+static void _MoveSearchPoke(POKEMON_TRADE_WORK* pWork,int moji)
+{
+  int i,j,monsno;
+  BOOL bFind = FALSE;
+  int line = POKETRADE_boxScrollNum2Line(pWork);
+
+  for(i = 0;i < TRADEBOX_LINEMAX;i++){
+    line++;
+    if(line >= TRADEBOX_LINEMAX){
+      line=0;
+    }
+    for(j = 0;j < BOX_VERTICAL_NUM ;j++){
+      POKEMON_PASO_PARAM* ppp =
+        IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, IRC_TRADE_LINE2TRAY(line),
+                                           IRC_TRADE_LINE2POKEINDEX(line,j),pWork);
+      if(ppp){
+        monsno = PPP_Get(ppp,ID_PARA_monsno_egg,NULL);
+        if(POKEMONTRADE_IsPokeLanguageMark(monsno, moji)){
+
+          OS_TPrintf("みつかった BOX %d\n",line/6);
+          pWork->oldLine++;
+          pWork->BoxScrollNum = _boxScrollLine2Num(line) - 32;
+          pWork->bgscrollRenew = TRUE;
+          _scrollMainFunc(pWork,FALSE,TRUE);
+          return;
+        }
+      }
+    }
+  }
+}
+#endif
 
 // 検索文字パネル表示中
 static void _loopSearchMojiState(POKEMON_TRADE_WORK* pWork)
@@ -1901,6 +1939,7 @@ static void _loopSearchMojiState(POKEMON_TRADE_WORK* pWork)
       PMSND_PlaySystemSE(POKETRADESE_LANG_SEARCH);
       pWork->selectMoji = ans + 1;
       endflg = TRUE;
+      _MoveSearchPoke(pWork,ans);
     }
   }
 
@@ -2321,7 +2360,7 @@ static void _touchStateCommon(POKEMON_TRADE_WORK* pWork)
       if((x >=  64) && ((192) > x)){
         if((y >=  152+12) && ((176+12) > y)){
           GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_SCROLLBAR] , TRUE );
-          pWork->speed = (x - pWork->x)*2;
+      //    pWork->speed = (x - pWork->x)*2;
           pWork->BoxScrollNum -= pWork->speed;
           if(pWork->speed > 12){
             _scrollMainFunc(pWork,TRUE,TRUE);
@@ -2332,8 +2371,8 @@ static void _touchStateCommon(POKEMON_TRADE_WORK* pWork)
         }
       }
     }
-    pWork->x = x;
-    pWork->y = y;
+    //pWork->x = x;
+    //pWork->y = y;
     pWork->touchON = TRUE;
   }
 
