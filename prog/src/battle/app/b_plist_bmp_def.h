@@ -243,7 +243,7 @@
 #define	WIN_STM_SPANAME_PAL	( BPL_PAL_HPGAGE )//( BPL_PAL_SYS_FONT )
 #define	WIN_STM_SPANAME_CGX	( WIN_ST_PARAM1_CGX )
 // ì¡ê´ê‡ñæ
-#define	WIN_STM_SPAINFO_PX	( 1 )
+#define	WIN_STM_SPAINFO_PX	( 2 )
 #define	WIN_STM_SPAINFO_PY	( 11 )
 #define	WIN_STM_SPAINFO_SX	( 18 )
 #define	WIN_STM_SPAINFO_SY	( 4 )
