@@ -68,6 +68,10 @@ EVENT_START   ev_pos_r03_rival_01
 	_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_01,R03_RIVAL)
 	_BALLOONWIN_CLOSE()
 	
+	//ライバル隣接
+	_OBJ_ANIME(R03_RIVAL,anm_r03_rival_01_02)
+	_OBJ_ANIME_WAIT()
+	
 	//ライバルと戦闘（持ちタイプで分岐）
 	
 	IF $WK_SYS_FIRST_POKE_NO == MONSNO_HUSIGIDANE THEN
@@ -318,6 +322,16 @@ _ANIME_LABEL	anm_r03_rival_01
 _ANIME_LABEL	anm_r03_player_00
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------
+//	R03ライバル主人公に隣接
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_r03_rival_01_02
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	ACMD_END,0
+
 
 //--------------------------------------------------------------
 //	R03主人公一歩上に移動
