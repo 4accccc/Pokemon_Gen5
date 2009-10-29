@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/28 11:16:15
+#save date:2009/10/29 11:16:49
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d04r0301.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/28 11:16:15
+#save date:2009/10/29 11:16:49
 2
 #hold event type:
 1
@@ -14,7 +14,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d04r0301.wms
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/28 11:16:15
+#save date:2009/10/29 11:16:49
 2
 #hold event type:
 1
@@ -24,12 +24,12 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d04r0301.wms
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/28 11:16:15
+#save date:2009/10/29 11:16:49
 2
 #hold event type:
 1
 #hold event number:
-3
+2
 #event number: 0
 #Pos Event Label
 POSID_MAPCHANGE1
@@ -44,7 +44,7 @@ LOCALWORK0
 #Pos Event Size Z
 5
 #position
--24 0 72
+-24 -2 72
 #event number: 1
 #Pos Event Label
 POSID_MAPCHANGE2
@@ -59,27 +59,12 @@ LOCALWORK0
 #Pos Event Size Z
 5
 #position
--104 0 -72
-#event number: 2
-#Pos Event Label
-POSID_MAPCHANGE3
-#Pos Script Name
-SCRID_MAPCHANGE3
-#Event Trigger Work Name
-LOCALWORK0
-#Event Trigger Work Value
-0
-#Pos Event Size X
-3
-#Pos Event Size Z
-3
-#position
-120 0 -216
+-104 -2 -72
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/28 11:16:15
+#save date:2009/10/29 11:16:49
 2
 #hold event type:
 1
