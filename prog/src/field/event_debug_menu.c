@@ -57,6 +57,8 @@
 #include "eventwork.h"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
+#include "field/field_comm/intrude_field.h" //PALACE_MAP_LEN
+
 //======================================================================
 //	define
 //======================================================================
@@ -778,6 +780,10 @@ static GMEVENT_RESULT debugMenuZoneJump(GMEVENT *event, int *seq, void *wk )
         GMEVENT * mapchange_event;
         if(ret == ZONE_ID_UNION){
           mapchange_event = EVENT_ChangeMapToUnion(work->gmSys, work->fieldWork);
+        }
+        else if(ret == ZONE_ID_PALACE01){
+          VecFx32 pos = {PALACE_MAP_LEN + PALACE_MAP_LEN/2, 0, 408*FX32_ONE};
+          mapchange_event = DEBUG_EVENT_ChangeMapPos(work->gmSys, work->fieldWork, ret, &pos, 0);
         }
         else{
           mapchange_event = DEBUG_EVENT_ChangeMapDefaultPos( work->gmSys, work->fieldWork, ret );

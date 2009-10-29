@@ -31,6 +31,7 @@
 #include "field/field_comm/intrude_minimono.h"
 #include "field/field_comm/intrude_mission.h"
 #include "field/field_comm/intrude_message.h"
+#include "field/field_comm/intrude_field.h"
 #include "message.naix"
 #include "msg/msg_invasion.h"
 
@@ -220,3 +221,31 @@ static GMEVENT_RESULT _event_IntrudeMissionStart( GMEVENT * event, int * seq, vo
   return GMEVENT_RES_CONTINUE;
 }
 
+//==================================================================
+/**
+ * パレス島の初期マップ連結セッティング
+ *
+ * @param   core		仮想マシン制御構造体へのポインタ
+ * @param   wk		
+ *
+ * @retval  VMCMD_RESULT		
+ */
+//==================================================================
+VMCMD_RESULT EvCmdIntrudeConnectMapSetting( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  INTRUDE_COMM_SYS_PTR intcomm = NULL;
+  
+  if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION){
+    intcomm = GameCommSys_GetAppWork(game_comm);
+  }
+
+  IntrudeField_ConnectMapInit(fieldWork, gsys);
+  if(intcomm != NULL){
+    IntrudeField_ConnectMap(fieldWork, gsys, intcomm);
+  }
+  return VMCMD_RESULT_CONTINUE;
+}

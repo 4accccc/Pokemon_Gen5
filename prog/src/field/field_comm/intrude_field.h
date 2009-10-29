@@ -19,10 +19,9 @@ enum{
   PALACE_MAP_LEFT = 0 << FX32_SHIFT,              ///<パレスマップ左端
   PALACE_MAP_RIGHT = 3072 << FX32_SHIFT,          ///<パレスマップ右端
   PALACE_MAP_LEN = PALACE_MAP_RIGHT - PALACE_MAP_LEFT,  ///<パレスマップ幅
-
-  PALACE_MAP_RANGE_LEFT_X = PALACE_MAP_LEFT + (32 << FX32_SHIFT),
-  PALACE_MAP_RANGE_RIGHT_X = PALACE_MAP_RIGHT - (32 << FX32_SHIFT),
-
+  
+  PALACE_MAP_WARP_OFFSET = (PALACE_MAP_LEN / 4) * 3,///残りこれ以内の座標になったらワープ
+  
   PALACE_MAP_RANGE_LEN = (2056-1016) << FX32_SHIFT,     ///<パレスマップのX長
 };
 
@@ -32,6 +31,7 @@ enum{
 extern void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor);
 extern BOOL IntrudeField_CheckTalk(INTRUDE_COMM_SYS_PTR intcomm, const FIELD_PLAYER *fld_player, u32 *hit_netid);
 extern BOOL IntrudeField_CheckTalkedTo(INTRUDE_COMM_SYS_PTR intcomm, u32 *hit_netid);
+extern void IntrudeField_ConnectMapInit(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys);
 extern void IntrudeField_ConnectMap(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, INTRUDE_COMM_SYS_PTR intcomm);
 
 

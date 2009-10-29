@@ -20,6 +20,8 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_palace01
+_EVENT_DATA    ev_init_palace01
+_EVENT_DATA    ev_recover_palace01
 _EVENT_DATA_END
 
 
@@ -28,6 +30,22 @@ _EVENT_DATA_END
 /**************************************************************/
 //ev_palace01_flag_change:
 //  _END
+
+/**************************************************************/
+/*            FIELD_INIT_LABEL                              　 */
+/**************************************************************/
+INIT_EVENT_START	ev_init_palace01
+  //連結マップセッティング
+  _INTRUDE_CONNECT_MAP_SETTING()
+INIT_EVENT_END
+
+/**************************************************************/
+/*            _FIELD_RECOVER_LABEL                            */
+/**************************************************************/
+INIT_EVENT_START	ev_recover_palace01
+  //連結マップセッティング
+  _INTRUDE_CONNECT_MAP_SETTING()
+INIT_EVENT_END
 
 /**************************************************************/
 /*                                                            */

@@ -15,6 +15,8 @@
 //--------------------------------------------------------------
 //              特殊スクリプト
 //--------------------------------------------------------------
+_FIELD_INIT_LABEL	    	SCRID_INIT_PALACE01
+_FIELD_RECOVER_LABEL		SCRID_RECOVER_PALACE01
 _SP_EVENT_DATA_END
 
 

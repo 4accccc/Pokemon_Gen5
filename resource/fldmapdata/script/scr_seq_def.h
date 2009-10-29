@@ -4528,3 +4528,14 @@
   .short  EV_SEQ_INTRUDE_MISSION_START
   .endm
 
+//--------------------------------------------------------------
+/**
+ * 侵入コマンド　パレス島マップセッティング
+ */
+//--------------------------------------------------------------
+#define _INTRUDE_CONNECT_MAP_SETTING() _ASM_INTRUDE_CONNECT_MAP_SETTING
+
+  .macro  _ASM_INTRUDE_CONNECT_MAP_SETTING
+  .short  EV_SEQ_INTRUDE_CONNECT_MAP_SETTING
+  .endm
+

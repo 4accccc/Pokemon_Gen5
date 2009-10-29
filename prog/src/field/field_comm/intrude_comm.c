@@ -339,7 +339,6 @@ void IntrudeComm_FieldCreate(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork
   INTRUDE_COMM_SYS_PTR intcomm = app_work;
   FIELD_INVALID_PARENT_WORK *invalid_parent = pwk;
   
-  IntrudeField_ConnectMap(fieldWork, invalid_parent->gsys, intcomm);
   CommPlayer_Pop(intcomm->cps);
 }
 

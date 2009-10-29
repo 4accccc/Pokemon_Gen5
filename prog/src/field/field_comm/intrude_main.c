@@ -502,10 +502,20 @@ static void Intrude_ConvertPlayerPos(INTRUDE_COMM_SYS_PTR intcomm, const INTRUDE
     //双方ともパレスにいるのでパレスエリアに合わせた座標変換
     {
       fx32 offset_x, map_len;
+      int area_offset;
+      
       map_len = PALACE_MAP_LEN;
       offset_x = target->player_pack.pos.x % map_len;
-      target->player_pack.pos.x 
-        = Intrude_GetPalaceOffsetNo(intcomm, target->palace_area) * map_len + offset_x;
+      area_offset = Intrude_GetPalaceOffsetNo(intcomm, target->palace_area);
+      if(area_offset == intcomm->member_num - 1 && mine->player_pack.pos.x < PALACE_MAP_LEN){
+        //自機がダミーマップにいる場合は相手の処理
+        target->player_pack.pos.x = offset_x;
+      }
+      else{
+        target->player_pack.pos.x 
+          = area_offset * map_len + offset_x 
+          + PALACE_MAP_LEN; //左端にダミーマップを入れているため。
+      }
     }
     break;
   case CHECKSAME_SAME_REVERSE:  //表裏ゾーンにいるのでこのままでよい
