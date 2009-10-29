@@ -679,7 +679,18 @@ static void ShortCutMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void 
 	}
 	else
 	{	
-		ShortCutMenu_Init( SHORTCUTMENU_MODE_STAY, p_wk );
+		//フィールドに戻る場合
+		if( param->result == EVENT_PROCLINK_RESULT_EXIT ||
+				param->result == EVENT_PROCLINK_RESULT_ITEM ||
+				param->result == EVENT_PROCLINK_RESULT_SKILL )
+		{	
+			/* なにもしない */
+		}
+		else
+		{	
+			//メニューに戻る場合
+			ShortCutMenu_Init( SHORTCUTMENU_MODE_STAY, p_wk );
+		}
 	}
 }
 //----------------------------------------------------------------------------
