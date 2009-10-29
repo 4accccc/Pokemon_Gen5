@@ -229,12 +229,11 @@ EVENT_START   ev_pos_r02_mama_01
 	
 	//ママ「やっと　おいついた」
 	_BALLOONWIN_OBJMSG_OPEN( msg_r02_mama_02, R02_MAMA_01)
+	_BALLOONWIN_CLOSE()
 
 //【仮】ランニングシューズ入手イベントは、現在メッセージのみ。
 	_BALLOONWIN_OBJMSG_OPEN( msg_r02_mama_03, R02_MAMA_01)
-
-//-----------------------------------------------------------	
-	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 	
 	//ママがランニングシューズの説明
 	_BALLOONWIN_OBJMSG_OPEN( msg_r02_mama_04, R02_MAMA_01)
