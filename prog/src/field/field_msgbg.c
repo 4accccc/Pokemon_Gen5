@@ -1215,12 +1215,13 @@ u32 FLDMENUFUNC_GetListMax( const FLDMENUFUNC_LISTDATA *listData )
 u32 FLDMENUFUNC_GetListMenuWidth(
     const FLDMENUFUNC_LISTDATA *listData, u32 font_size, u32 space )
 {
-  u32 c,len = FLDMENUFUNC_GetListLengthMax( listData );
-  len++; //カーソル分
-  len *= font_size;
+  u32 c,len;
+  u32 num = FLDMENUFUNC_GetListLengthMax( listData );
+  num++; //カーソル分
+  len = num * font_size;
   c = len / 8;
   if( (len & 0x07) ){ c++; }
-  if( space ){ c += ((len*space)/8)+1; }
+  if( space ){ c += ((num*space)/8)+1; }
   return( c );
 }
 
@@ -1237,10 +1238,11 @@ u32 FLDMENUFUNC_GetListMenuWidth(
 u32 FLDMENUFUNC_GetListMenuHeight(
     const FLDMENUFUNC_LISTDATA *listData, u32 font_size, u32 space )
 {
-  u32 c,len = FLDMENUFUNC_GetListMax( listData );
-  len *= font_size;
+  u32 c,len;
+  u32 num = FLDMENUFUNC_GetListMax( listData );
+  len = num * font_size;
   c = len / 8;
-  if( space ){ c += ((len*space)/8)+1; }
+  if( space ){ c += ((num*space)/8)+1; }
   return( c );
 }
 
