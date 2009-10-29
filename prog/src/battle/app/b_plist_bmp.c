@@ -2547,11 +2547,12 @@ static void BPL_Page1BmpWrite( BPLIST_WORK * wk )
 
 	wk->putWin = PokeSelPutWin;
 
-	for( i=0; i<PokeParty_GetPokeCount(wk->dat->pp); i++ ){
+	for( i=0; i<TEMOTI_POKEMAX; i++ ){
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P1_POKE1+i].win), 0 );
 
 		if( wk->poke[i].mons == 0 ){
 			wk->add_win[WIN_P1_POKE1+i].transReq = TRUE;
+//			GFL_BMPWIN_TransVramCharacter( wk->add_win[WIN_P1_POKE1+i].win );
 			continue;
 		}
 
@@ -2784,6 +2785,7 @@ static void BPL_StWazaSelPageBmpWrite( BPLIST_WORK * wk )
 		waza = &wk->poke[wk->dat->sel_poke].waza[i];
 		if( waza->id == 0 ){
 			wk->add_win[WIN_STW_SKILL1+swap+i].transReq = TRUE;
+//			GFL_BMPWIN_TransVramCharacter( wk->add_win[WIN_STW_SKILL1+swap+i].win );
 			continue;
 		}
 
@@ -2866,7 +2868,6 @@ static void BPL_StMainPageBmpWrite( BPLIST_WORK * wk )
 	BPL_NamePut( wk, WIN_P3_NAME+swap, wk->dat->sel_poke, P3_NAME_PX, P3_NAME_PY );
 	BPL_P3_HPPut( wk, wk->dat->sel_poke );
 	BPL_HPGagePut( wk, WIN_P3_HPGAGE+swap, wk->dat->sel_poke, P3_HPGAGE_PX, P3_HPGAGE_PY );
-//	GFL_BMPWIN_MakeTransWindow_VBlank( wk->add_win[WIN_P3_HPGAGE+swap].win );
 	GFL_BMPWIN_TransVramCharacter( wk->add_win[WIN_P3_HPGAGE+swap].win );
 	BPL_P3_LvPut( wk, wk->dat->sel_poke );
 	BPL_P3_PowPut( wk, wk->dat->sel_poke );
