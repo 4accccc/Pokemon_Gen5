@@ -963,10 +963,12 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
   case BTLV_INPUT_SCRTYPE_DIR:
     {
       TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
+      BTLV_INPUT_SCENE_PARAM* bisp = ( BTLV_INPUT_SCENE_PARAM * )param;
 
       BTLV_INPUT_CreateDirScreen( biw, ( const BTLV_INPUT_SCENE_PARAM * )param );
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
+      ttw->pos = bisp->pos;
       GFL_TCB_AddTask( biw->tcbsys, TCB_TransformWaza2Dir, ttw, 1 );
     }
     break;
@@ -1242,6 +1244,10 @@ static  void  TCB_TransformWaza2Dir( GFL_TCB* tcb, void* work )
     break;
   }
   */
+  GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
+                                   GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+  GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
+  GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
   if( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE )
   {
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1c_NSCR,
@@ -1290,6 +1296,18 @@ static  void  TCB_TransformDir2Waza( GFL_TCB* tcb, void* work )
     break;
   }
   */
+  if( ( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE ) && ( ttw->pos != BTLV_MCSS_POS_C ) )
+  {
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0b_NSCR,
+                                     GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+  }
+  else
+  { 
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
+                                     GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+  }
+  GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
+  GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
   GFL_BG_SetScroll( GFL_BG_FRAME2_S, GFL_BG_SCROLL_X_SET, 0 );
   GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
                                    GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
