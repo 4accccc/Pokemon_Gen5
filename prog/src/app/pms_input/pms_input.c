@@ -18,8 +18,6 @@
 
 #include "test/ariizumi/ari_debug.h"
 
-FS_EXTERN_OVERLAY(ui_common);
-
 //------------------------------------------------------
 /**
 	* 定数定義
@@ -228,6 +226,9 @@ struct _PMS_INPUT_WORK{
 	int          sub_seq;
 	SubProc      sub_proc;
 
+
+
+
 	u16           key_trg;
 	u16           key_cont;
 	u16           key_repeat;
@@ -342,10 +343,6 @@ GFL_PROC_RESULT PMSInput_Init( GFL_PROC * proc, int * seq , void *pwk, void *myw
 
 	switch( *seq ){
 	case 0:
-	
-    //オーバーレイ読み込み
-	  GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
-
 #if PMS_USE_SND
 		Snd_DataSetByScene( SND_SCENE_SUB_PMS, 0, 0 );	// サウンドデータロード(PMS)(BGM引継ぎ)
 #endif
@@ -484,9 +481,6 @@ GFL_PROC_RESULT PMSInput_Quit( GFL_PROC * proc, int * seq , void *pwk, void *myw
 
 	GFL_HEAP_DeleteHeap( HEAPID_PMS_INPUT_SYSTEM );
 	GFL_HEAP_DeleteHeap( HEAPID_PMS_INPUT_VIEW );
-
-	//オーバーレイ破棄
-	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -1945,7 +1939,6 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
 		return;
 	}
 	if( wk->category_mode == CATEGORY_MODE_GROUP ){
-    // グループ
 		ret = category_touch_group(wk);
 		if(ret < 0){
 			return;
@@ -1958,7 +1951,6 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
 			return;
 		}
 	}else{
-    // イニシャル
 		ret = category_touch_initial(wk);
 		if(ret < 0){
 			return;
@@ -2048,19 +2040,19 @@ static BOOL keycheck_category_group_mode( PMS_INPUT_WORK* wk )
 		u8   left_pos;
 		u8   right_pos;
 	}next_pos_tbl[] = {
-		{ CATEGORY_GROUP_PICTURE,		CATEGORY_GROUP_TRAINER,	CATEGORY_GROUP_SKILL,	  CATEGORY_GROUP_STATUS },	// ポケモン
-		{ CATEGORY_GROUP_PICTURE,	  CATEGORY_GROUP_UNION,	  CATEGORY_GROUP_POKEMON,	CATEGORY_GROUP_SKILL },	  // ステータス
-		{ CATEGORY_GROUP_PICTURE,		CATEGORY_GROUP_GREET,	  CATEGORY_GROUP_STATUS,  CATEGORY_GROUP_POKEMON },	// わざ
-
-		{ CATEGORY_GROUP_POKEMON,	  CATEGORY_GROUP_PERSON,  	CATEGORY_GROUP_GREET,	  CATEGORY_GROUP_UNION },	  // トレーナー
-		{ CATEGORY_GROUP_STATUS,  	CATEGORY_GROUP_LIFE,	  	CATEGORY_GROUP_TRAINER,	CATEGORY_GROUP_GREET },		// ユニオン
-		{ CATEGORY_GROUP_SKILL,	    CATEGORY_GROUP_MIND,	    CATEGORY_GROUP_UNION,	  CATEGORY_GROUP_TRAINER },	// あいさつ
-
-		{ CATEGORY_GROUP_TRAINER,	  CATEGORY_GROUP_PICTURE,	  CATEGORY_GROUP_MIND,	  CATEGORY_GROUP_LIFE },		// ひと
-		{ CATEGORY_GROUP_UNION,	    CATEGORY_GROUP_PICTURE,	  CATEGORY_GROUP_PERSON,	CATEGORY_GROUP_MIND },	  // せいかつ
-		{ CATEGORY_GROUP_GREET,	    CATEGORY_GROUP_PICTURE,	  CATEGORY_GROUP_LIFE,	  CATEGORY_GROUP_PERSON },	// きもち
-
-	  { CATEGORY_GROUP_PERSON,	  CATEGORY_GROUP_POKEMON,		CATEGORY_GROUP_PICTURE,	CATEGORY_GROUP_PICTURE },	// ピクチャ
+		{ CATEGORY_POS_BACK,		CATEGORY_GROUP_SKILL2,	CATEGORY_GROUP_SKILL,	CATEGORY_GROUP_POKEMON2 },	// ポケモン
+		{ CATEGORY_POS_BACK,		CATEGORY_GROUP_STATUS,	CATEGORY_GROUP_POKEMON,	CATEGORY_GROUP_SKILL },		// ポケモン２
+		{ CATEGORY_POS_BACK,		CATEGORY_GROUP_TRAINER,	CATEGORY_GROUP_POKEMON2,CATEGORY_GROUP_POKEMON },	// わざ
+		{ CATEGORY_GROUP_POKEMON,	CATEGORY_GROUP_PERSON,	CATEGORY_GROUP_TRAINER,	CATEGORY_GROUP_STATUS },	// わざ２
+		{ CATEGORY_GROUP_POKEMON2,	CATEGORY_GROUP_GREET,	CATEGORY_GROUP_SKILL2,	CATEGORY_GROUP_TRAINER },	// ステータス
+		{ CATEGORY_GROUP_SKILL,		CATEGORY_GROUP_LIFE,	CATEGORY_GROUP_STATUS,	CATEGORY_GROUP_SKILL2 },	// トレーナー
+		{ CATEGORY_GROUP_SKILL2,	CATEGORY_GROUP_MIND,	CATEGORY_GROUP_LIFE,	CATEGORY_GROUP_GREET },		// ひと
+		{ CATEGORY_GROUP_STATUS,	CATEGORY_GROUP_NANKAI,	CATEGORY_GROUP_PERSON,	CATEGORY_GROUP_LIFE },		// あいさつ
+		{ CATEGORY_GROUP_TRAINER,	CATEGORY_GROUP_UNION,	CATEGORY_GROUP_GREET,	CATEGORY_GROUP_PERSON },	// せいかつ
+		{ CATEGORY_GROUP_PERSON,	CATEGORY_POS_BACK,		CATEGORY_GROUP_UNION,	CATEGORY_GROUP_NANKAI },	// きもち
+		{ CATEGORY_GROUP_GREET,		CATEGORY_POS_BACK,		CATEGORY_GROUP_MIND,	CATEGORY_GROUP_UNION },		// なんかいことば
+		{ CATEGORY_GROUP_LIFE,		CATEGORY_POS_BACK,		CATEGORY_GROUP_NANKAI,	CATEGORY_GROUP_MIND },		// ユニオン
+		{ CATEGORY_GROUP_MIND,		CATEGORY_GROUP_POKEMON,	CATEGORY_POS_BACK,		CATEGORY_POS_BACK },		// もどる
 	};
 
 	u32  pos = wk->category_pos;
@@ -2350,8 +2342,8 @@ static void word_input_key(PMS_INPUT_WORK* wk,int* seq)
 
 		wk->word_win.touch_pos = 0xFFFF;
 		set_select_word( wk );
-		PMSIView_SetCommand( wk->vwk, VCMD_WORDTIN_TO_EDITAREA );
 		wk->next_proc = MainProc_EditArea;
+		PMSIView_SetCommand( wk->vwk, VCMD_WORDTIN_TO_EDITAREA );
 		(*seq) = SEQ_WORD_CHANGE_NEXTPROC;
 		return;
 	}
