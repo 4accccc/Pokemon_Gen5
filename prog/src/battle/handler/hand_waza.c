@@ -1488,7 +1488,7 @@ static void handler_NayamiNoTane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
   {
     u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
 
-    BTL_HANDEX_PARAM_CHANGE_TOKUSEI* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CHANGE_TYPE, pokeID );
+    BTL_HANDEX_PARAM_CHANGE_TOKUSEI* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_CHANGE_TOKUSEI, pokeID );
 
     param->pokeID = targetPokeID;
     param->tokuseiID = POKETOKUSEI_FUMIN;
