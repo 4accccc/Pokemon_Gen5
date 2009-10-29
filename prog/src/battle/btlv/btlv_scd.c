@@ -550,10 +550,14 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
 {
   BTLV_SCD* wk = wk_adrs;
   int hit;
-  const GFL_UI_TP_HITTBL* SkillMenuTouchData = ( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE ) ?
+  int pos = BTL_MAIN_BtlPosToViewPos( wk->mainModule,
+                                       BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID( wk->bpp ) ) );
+  const GFL_UI_TP_HITTBL* SkillMenuTouchData = ( ( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE ) &&
+                                                 ( pos != BTLV_MCSS_POS_C ) ) ?
                                                 SkillMenuTouchData3vs3 :
                                                 SkillMenuTouchDataNormal;
-  const BTLV_INPUT_KEYTBL* SkillMenuKeyData = ( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE ) ?
+  const BTLV_INPUT_KEYTBL* SkillMenuKeyData = ( ( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE ) &&
+                                                ( pos != BTLV_MCSS_POS_C ) ) ?
                                                 SkillMenuKeyData3vs3 :
                                                 SkillMenuKeyDataNormal;
   //カメラワークエフェクト

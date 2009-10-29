@@ -438,6 +438,7 @@ typedef struct
 {
   BTLV_INPUT_WORK*  biw;
   int               seq_no;
+  BtlvMcssPos       pos;
 }TCB_TRANSFORM_WORK;
 
 typedef struct
@@ -906,6 +907,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       biw->tcb_execute_flag = 1;
       biw->center_button_type = bicp->center_button_type;
       ttw->biw = biw;
+      ttw->pos = bicp->pos;
 
       for( i = 0 ; i < 4 ; i++ )
       {
@@ -934,10 +936,12 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
   case BTLV_INPUT_SCRTYPE_WAZA:
     {
       TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
+      BTLV_INPUT_WAZA_PARAM* biwp = ( BTLV_INPUT_WAZA_PARAM * )param;
 
       BTLV_INPUT_CreateWazaScreen( biw, ( const BTLV_INPUT_WAZA_PARAM * )param );
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
+      ttw->pos = biwp->pos;
 
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_DIR )
       {
@@ -1082,7 +1086,7 @@ static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
     }
     else
     { 
-      if( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE )
+      if( ( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE ) && ( ttw->pos != BTLV_MCSS_POS_C ) )
       { 
         GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0e_NSCR,
                                          GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
@@ -1131,7 +1135,7 @@ static  void  TCB_TransformCommand2Waza( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
-    if( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE )
+    if( ( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE ) && ( ttw->pos != BTLV_MCSS_POS_C ) )
     {
      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0b_NSCR,
                                       GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
@@ -2231,6 +2235,7 @@ static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAN
           { 
             G2S_SetWnd0Position( pos[ biw->type ][ i ].x - 16, pos[ biw->type ][ i ].y - 16, 
                                  pos[ biw->type ][ i ].x + 16, pos[ biw->type ][ i ].y + 16 ); 
+            mask++;
           }
           else
           { 
@@ -2257,12 +2262,6 @@ static  void  BTLV_INPUT_DeletePokeIcon( BTLV_INPUT_WORK* biw )
 { 
   int i;
 
-  GXS_SetVisibleWnd( GX_WNDMASK_NONE );
-  G2S_SetWnd0InsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
-  G2S_SetWnd1InsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
-  G2S_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
-  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_NONE, 0 );
-
   for( i = 0 ; i < 3 ; i++ )
   {
     if( biw->pokeicon_wk[ i ].clwk )
@@ -2284,6 +2283,13 @@ static  void  BTLV_INPUT_DeletePokeIcon( BTLV_INPUT_WORK* biw )
     GFL_CLGRP_PLTT_Release( biw->pokeicon_plttID );
     biw->pokeicon_plttID = GFL_CLGRP_REGISTER_FAILED;
   }
+
+  GXS_SetVisibleWnd( GX_WNDMASK_NONE );
+  G2S_SetWnd0InsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
+  G2S_SetWnd1InsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
+  G2S_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
+  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_NONE, 0 );
+
 }
 
 //--------------------------------------------------------------
