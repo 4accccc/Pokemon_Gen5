@@ -650,6 +650,7 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
 
 	BattlePokeList_BmpInit( wk );
 	BattlePokeList_BmpWrite( wk, wk->page );
+	BPLIST_SetStrScrn( wk );
 
 //	wk->dat->cursor_flg = 1;
 /*
@@ -2034,7 +2035,7 @@ static void BPL_MsgManSet( BPLIST_WORK * wk )
 	wk->que  = PRINTSYS_QUE_CreateEx( 2048, wk->dat->heap );
 	wk->msg_buf = GFL_STR_CreateBuffer( TMP_MSG_BUF_SIZ, wk->dat->heap );
 
-//	PRINTSYS_QUE_ForceCommMode( wk->que, TRUE );			// テスト
+	PRINTSYS_QUE_ForceCommMode( wk->que, TRUE );			// テスト
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2737,6 +2738,7 @@ static void BPL_ContestWazaHeartPut( BPLIST_WORK * wk, u8 page )
 //--------------------------------------------------------------------------------------------
 static BOOL BPL_PageChange( BPLIST_WORK * wk, u8 next_page )
 {
+/*
 	if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
 		return FALSE;
 	}
@@ -2764,6 +2766,36 @@ static BOOL BPL_PageChange( BPLIST_WORK * wk, u8 next_page )
 	wk->page = next_page;
 
 	return TRUE;
+*/
+	switch( wk->page_chg_seq ){
+	case 0:
+		if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
+			BattlePokeList_BmpFree( wk );
+			BattlePokeList_BmpAdd( wk, next_page );
+			BattlePokeList_BmpWrite( wk, next_page );
+			wk->page_chg_seq++;
+		}
+		break;
+
+	case 1:
+		if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
+			BPL_PageChgBgScreenChg( wk, next_page );
+			GFL_BG_ClearScreenCodeVReq( GFL_BG_FRAME0_S, 0 );
+			GFL_BG_ClearScreenCodeVReq( GFL_BG_FRAME1_S, 0 );
+			BPLIST_SetStrScrn( wk );
+			BPL_ExpGagePut( wk, next_page );
+			BattlePokeList_PageObjSet( wk, next_page );
+			CursorMoveSet( wk, next_page );
+			BattlePokeList_ButtonPageScreenInit( wk, next_page );
+			BattlePokeList_ButtonPalSet( wk, next_page );
+			wk->page = next_page;
+			wk->page_chg_seq = 0;
+			return TRUE;
+		}
+		break;
+	}
+
+	return FALSE;
 }
 
 static const u32 ScreenArc[][2] =

@@ -108,8 +108,8 @@ static void BPL_WazaDelSelPageBmpWrite( BPLIST_WORK * wk );
 static void BPL_Page6BmpWrite( BPLIST_WORK * wk );
 //static void BPL_Page8BmpWrite( BPLIST_WORK * wk );
 
-
-
+static void AddDummyBmpWin( BPLIST_WORK * wk );
+static void DelDummyBmpWin( BPLIST_WORK * wk );
 
 
 //============================================================================================
@@ -207,6 +207,7 @@ static const u8 StWazaSelPage_BmpData[][6] =
 		WIN_STW_STATUS_SX, WIN_STW_STATUS_SY, WIN_STW_STATUS_PAL
 	},
 
+/*
 	{	// 名前（スワップ）
 		GFL_BG_FRAME1_S, WIN_ST_NAME_PX, WIN_ST_NAME_PY,
 		WIN_ST_NAME_SX, WIN_ST_NAME_SY, WIN_ST_NAME_PAL
@@ -227,6 +228,7 @@ static const u8 StWazaSelPage_BmpData[][6] =
 		GFL_BG_FRAME1_S, WIN_STW_SKILL4_PX, WIN_STW_SKILL4_PY,
 		WIN_STW_SKILL4_SX, WIN_STW_SKILL4_SY, WIN_STW_SKILL4_PAL
 	},
+*/
 };
 
 // ステータスメインページのBMPウィンドウデータ
@@ -321,7 +323,7 @@ static const u8 StMainPage_BmpData[][6] =
 		GFL_BG_FRAME1_S, WIN_STM_WAZACHECK_PX, WIN_STM_WAZACHECK_PY,
 		WIN_STM_WAZACHECK_SX, WIN_STM_WAZACHECK_SY, WIN_STM_WAZACHECK_PAL
 	},
-
+/*
 	{	// 名前（スワップ）
 		GFL_BG_FRAME1_S, WIN_ST_NAME_PX, WIN_ST_NAME_PY,
 		WIN_ST_NAME_SX, WIN_ST_NAME_SY, WIN_ST_NAME_PAL
@@ -374,6 +376,7 @@ static const u8 StMainPage_BmpData[][6] =
 		GFL_BG_FRAME1_S, WIN_STM_NEXTNUM_PX, WIN_STM_NEXTNUM_PY,
 		WIN_STM_NEXTNUM_SX, WIN_STM_NEXTNUM_SY, WIN_STM_NEXTNUM_PAL
 	}
+*/
 };
 
 // ステータス技詳細ページのBMPウィンドウデータ
@@ -424,7 +427,7 @@ static const u8 StWazaInfoPage_BmpData[][6] =
 		GFL_BG_FRAME1_S, WIN_P4_BUNRUI_PX, WIN_P4_BUNRUI_PY,
 		WIN_P4_BUNRUI_SX, WIN_P4_BUNRUI_SY, WIN_P4_BUNRUI_PAL
 	},
-
+/*
 	{	// 技名（スワップ）
 		GFL_BG_FRAME1_S, WIN_P4_SKILL_PX, WIN_P4_SKILL_PY,
 		WIN_P4_SKILL_SX, WIN_P4_SKILL_SY, WIN_P4_SKILL_PAL
@@ -449,6 +452,7 @@ static const u8 StWazaInfoPage_BmpData[][6] =
 		GFL_BG_FRAME1_S, WIN_P4_BRNAME_PX, WIN_P4_BRNAME_PY,
 		WIN_P4_BRNAME_SX, WIN_P4_BRNAME_SY, WIN_P4_BRNAME_PAL
 	},
+*/
 };
 
 // ページ５のBMPウィンドウデータ
@@ -657,6 +661,9 @@ void BattlePokeList_BmpAdd( BPLIST_WORK * wk, u32 page )
 	const u8 * dat;
 	u32	i;
 
+	DelDummyBmpWin( wk );
+	AddDummyBmpWin( wk );
+
 	switch( page ){
 	case BPLIST_PAGE_SELECT:		// ポケモン選択ページ
 		dat = Page1_BmpData[0];
@@ -720,6 +727,22 @@ void BattlePokeList_BmpAdd( BPLIST_WORK * wk, u32 page )
 	}
 }
 
+static void AddDummyBmpWin( BPLIST_WORK * wk )
+{
+	if( wk->bmp_swap == 1 ){
+		wk->dmy_win = GFL_BMPWIN_Create( GFL_BG_FRAME1_S, 0, 0, 32, 16, 0, GFL_BMP_CHRAREA_GET_B );
+	}
+	wk->bmp_swap ^= 1;
+}
+
+static void DelDummyBmpWin( BPLIST_WORK * wk )
+{
+	if( wk->dmy_win != NULL ){
+		GFL_BMPWIN_Delete( wk->dmy_win );
+		wk->dmy_win = NULL;
+	}
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * 追加BMPウィンドウ削除
@@ -758,6 +781,7 @@ void BattlePokeList_BmpFreeAll( BPLIST_WORK * wk )
 	for( i=0; i<WIN_MAX; i++ ){
 		GFL_BMPWIN_Delete( wk->win[i].win );
 	}
+	DelDummyBmpWin( wk );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -770,21 +794,195 @@ void BattlePokeList_BmpFreeAll( BPLIST_WORK * wk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+// ページ１の追加ウィンドウインデックス
+static const u8 PokeSelPutWin[] = {
+	WIN_P1_POKE1,		// ポケモン１
+	WIN_P1_POKE2,		// ポケモン２
+	WIN_P1_POKE3,		// ポケモン３
+	WIN_P1_POKE4,		// ポケモン４
+	WIN_P1_POKE5,		// ポケモン５
+	WIN_P1_POKE6,		// ポケモン６
+	BAPPTOOL_SET_STR_SCRN_END
+};
+
+// 入れ替えページの追加ウィンドウインデックス
+static const u8 PokeChgPutWin[] = {
+	WIN_CHG_NAME,				// 名前
+	WIN_CHG_IREKAE,			// 「いれかえる」
+	WIN_CHG_STATUS,			// 「つよさをみる」
+	WIN_CHG_WAZACHECK,	// 「わざをみる」
+	BAPPTOOL_SET_STR_SCRN_END
+};
+
+// 技選択ページの追加ウィンドウインデックス
+static const u8 WazaSelPutWin[] = {
+	WIN_STW_NAME,			// 名前
+	WIN_STW_SKILL1,		// 技１
+	WIN_STW_SKILL2,		// 技２
+	WIN_STW_SKILL3,		// 技３
+	WIN_STW_SKILL4,		// 技４
+	WIN_STW_STATUS,		// 「つよさをみる」
+	BAPPTOOL_SET_STR_SCRN_END
+};
+/*
+static const u8 WazaSelPutWinS[] = {
+	WIN_STW_NAME_S,			// 名前（スワップ）
+	WIN_STW_SKILL1_S,		// 技１（スワップ）
+	WIN_STW_SKILL2_S,		// 技２（スワップ）
+	WIN_STW_SKILL3_S,		// 技３（スワップ）
+	WIN_STW_SKILL4_S,		// 技４（スワップ）
+	WIN_STW_STATUS,		// 「つよさをみる」
+	BAPPTOOL_SET_STR_SCRN_END
+};
+*/
+
+// ステータスメインページの追加ウィンドウインデックス
+static const u8 StMainPutWin[] = {
+	WIN_P3_NAME,			// 名前
+	WIN_P3_SPANAME,		// 特性名
+	WIN_P3_SPAINFO,		// 特性説明
+	WIN_P3_ITEMNAME,	// 道具名
+	WIN_P3_HPNUM,			// HP値
+	WIN_P3_POWNUM,		// 攻撃値
+	WIN_P3_DEFNUM,		// 防御値
+	WIN_P3_AGINUM,		// 素早さ値
+	WIN_P3_SPPNUM,		// 特攻値
+	WIN_P3_SPDNUM,		// 特防値
+	WIN_P3_HPGAGE,		// HPゲージ
+	WIN_P3_LVNUM,			// レベル値
+	WIN_P3_NEXTNUM,		// 次のレベル値
+
+	WIN_P3_HP,				// 「HP」
+	WIN_P3_POW,				// 「こうげき」
+	WIN_P3_DEF,				// 「ぼうぎょ」
+	WIN_P3_AGI,				// 「すばやさ」
+	WIN_P3_SPP,				// 「とくこう」
+	WIN_P3_SPD,				// 「とくぼう」
+	WIN_P3_LV,				// 「Lv.」
+	WIN_P3_NEXT,			// 「つぎのレベルまで」
+	WIN_P3_WAZACHECK,	// 「わざをみる」
+	BAPPTOOL_SET_STR_SCRN_END
+};
+/*
+static const u8 StMainPutWinS[] = {
+	WIN_P3_NAME_S,			// 名前（スワップ）
+	WIN_P3_SPANAME_S,		// 特性名（スワップ）
+	WIN_P3_SPAINFO_S,		// 特性説明（スワップ）
+	WIN_P3_ITEMNAME_S,	// 道具名（スワップ）
+	WIN_P3_HPNUM_S,			// HP値（スワップ）
+	WIN_P3_POWNUM_S,		// 攻撃値（スワップ）
+	WIN_P3_DEFNUM_S,		// 防御値（スワップ）
+	WIN_P3_AGINUM_S,		// 素早さ値（スワップ）
+	WIN_P3_SPPNUM_S,		// 特攻値（スワップ）
+	WIN_P3_SPDNUM_S,		// 特防値（スワップ）
+	WIN_P3_HPGAGE_S,		// HPゲージ（スワップ）
+	WIN_P3_LVNUM_S,			// レベル値（スワップ）
+	WIN_P3_NEXTNUM_S,		// 次のレベル値（スワップ）
+
+	WIN_P3_HP,				// 「HP」
+	WIN_P3_POW,				// 「こうげき」
+	WIN_P3_DEF,				// 「ぼうぎょ」
+	WIN_P3_AGI,				// 「すばやさ」
+	WIN_P3_SPP,				// 「とくこう」
+	WIN_P3_SPD,				// 「とくぼう」
+	WIN_P3_LV,				// 「Lv.」
+	WIN_P3_NEXT,			// 「つぎのレベルまで」
+	WIN_P3_WAZACHECK,	// 「わざをみる」
+	BAPPTOOL_SET_STR_SCRN_END
+};
+*/
+
+// ステータス技詳細ページの追加ウィンドウインデックス
+static const u8 WazaInfoPutWin[] = {
+	WIN_P4_SKILL,			// 技名
+	WIN_P4_PPNUM,			// PP/PP
+	WIN_P4_HITNUM,		// 命中値
+	WIN_P4_POWNUM,		// 威力値
+	WIN_P4_INFO,			// 技説明
+	WIN_P4_BRNAME,		// 分類名
+
+	WIN_P4_NAME,			// 名前
+	WIN_P4_PP,				// PP
+	WIN_P4_HIT,				// 「めいちゅう」
+	WIN_P4_POW,				// 「いりょく」
+	WIN_P4_BUNRUI,		// 「ぶんるい」
+	BAPPTOOL_SET_STR_SCRN_END
+};
+/*
+static const u8 WazaInfoPutWinS[] = {
+	WIN_P4_SKILL_S,		// 技名
+	WIN_P4_PPNUM_S,		// PP/PP
+	WIN_P4_HITNUM_S,	// 命中値
+	WIN_P4_POWNUM_S,	// 威力値
+	WIN_P4_INFO_S,		// 技説明
+	WIN_P4_BRNAME_S,	// 分類名
+
+	WIN_P4_NAME,			// 名前
+	WIN_P4_PP,				// PP
+	WIN_P4_HIT,				// 「めいちゅう」
+	WIN_P4_POW,				// 「いりょく」
+	WIN_P4_BUNRUI,		// 「ぶんるい」
+	BAPPTOOL_SET_STR_SCRN_END
+};
+*/
+
+// 技忘れ選択ページの追加ウィンドウインデックス
+static const u8 WazaDelPutWin[] = {
+	WIN_P5_NAME,			// 名前
+	WIN_P5_SKILL1,		// 技１
+	WIN_P5_SKILL2,		// 技２
+	WIN_P5_SKILL3,		// 技３
+	WIN_P5_SKILL4,		// 技４
+	WIN_P5_SKILL5,		// 技５
+	BAPPTOOL_SET_STR_SCRN_END
+};
+
+// ページ６の追加ウィンドウインデックス
+static const u8 WazaDelInfoPutWin[] = {
+	WIN_P6_NAME,			// 名前
+	WIN_P6_SKILL,			// 技名
+	WIN_P6_PP,				// PP
+	WIN_P6_PPNUM,			// PP/PP
+	WIN_P6_HIT,				// 「めいちゅう」
+	WIN_P6_POW,				// 「いりょく」
+	WIN_P6_HITNUM,		// 命中値
+	WIN_P6_POWNUM,		// 威力値
+	WIN_P6_INFO,			// 技説明
+	WIN_P6_BUNRUI,		// 「ぶんるい」
+	WIN_P6_BRNAME,		// 分類名
+	WIN_P6_WASURERU,	// 「わすれる」
+	BAPPTOOL_SET_STR_SCRN_END
+};
+
+// 技回復選択ページの追加ウィンドウインデックス
+static const u8 WazaRcvPutWin[] = {
+	WIN_P7_NAME,			// 名前
+	WIN_P7_SKILL1,		// 技１
+	WIN_P7_SKILL2,		// 技２
+	WIN_P7_SKILL3,		// 技３
+	WIN_P7_SKILL4,		// 技４
+	BAPPTOOL_SET_STR_SCRN_END
+};
+
 void BattlePokeList_BmpWrite( BPLIST_WORK * wk, u32 page )
 {
 	switch( page ){
 	case BPLIST_PAGE_SELECT:		// ポケモン選択ページ
 		BPL_Page1BmpWrite( wk );
 		break;
+
 	case BPLIST_PAGE_POKE_CHG:		// ポケモン入れ替えページ
 		BPL_ChgPageBmpWrite( wk );
 		break;
+
 	case BPLIST_PAGE_MAIN:			// ステータスメインページ
 		BPL_StMainPageBmpWrite( wk );
 		break;
+
 	case BPLIST_PAGE_WAZA_SEL:		// ステータス技選択ページ
 		BPL_StWazaSelPageBmpWrite( wk );
 		break;
+
 	case BPLIST_PAGE_SKILL:			// ステータス技詳細ページ
 		BPL_StWazaInfoPageBmpWrite( wk );
 		break;
@@ -879,7 +1077,7 @@ static void BPL_NamePut( BPLIST_WORK * wk, u32 idx, u16 pos, u8 px, u8 py )
 		}
 	}
 
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
@@ -912,7 +1110,7 @@ static void BPL_LvPut( BPLIST_WORK * wk, u32 idx, u16 pos, u8 px, u8 py )
 	PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, px+8, py, wk->msg_buf, wk->nfnt, FCOL_P09WN );
 	GFL_STR_DeleteBuffer( str );
 
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
@@ -970,7 +1168,7 @@ static void BPL_HPPut( BPLIST_WORK * wk, u32 idx, u16 pos, u8 px, u8 py )
 		px+sx, py, wk->msg_buf, wk->nfnt, FCOL_P09WN );
 	GFL_STR_DeleteBuffer( str );
 
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
@@ -999,7 +1197,7 @@ static void BPL_HPGagePut( BPLIST_WORK * wk, u32 idx, u16 pos, u8 px, u8 py )
 
 	switch( GAUGETOOL_GetGaugeDottoColor( pd->hp, pd->mhp ) ){
 	case GAUGETOOL_HP_DOTTO_NULL:
-		GFL_BMPWIN_MakeTransWindow_VBlank( wk->add_win[idx].win );
+//		GFL_BMPWIN_MakeTransWindow_VBlank( wk->add_win[idx].win );
 		return;
 	case GAUGETOOL_HP_DOTTO_GREEN:		// 緑
 		col = HP_GAGE_COL_G1;
@@ -1020,7 +1218,7 @@ static void BPL_HPGagePut( BPLIST_WORK * wk, u32 idx, u16 pos, u8 px, u8 py )
 	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->add_win[idx].win), px, py+3, dot, 1, col );
 	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->add_win[idx].win), px, py+4, dot, 1, col+1 );
 
-	GFL_BMPWIN_MakeTransWindow_VBlank( wk->add_win[idx].win );
+//	GFL_BMPWIN_MakeTransWindow_VBlank( wk->add_win[idx].win );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1054,7 +1252,7 @@ static void BPL_TokuseiPut( BPLIST_WORK * wk, u32 idx, u32 pos )
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
@@ -1091,7 +1289,7 @@ static void BPL_ItemPut( BPLIST_WORK * wk, u32 idx, u32 pos )
 
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
@@ -1141,7 +1339,7 @@ static void BPL_WazaNamePut(
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[widx] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[widx] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[widx] );
 }
 
@@ -1166,7 +1364,7 @@ static void BPL_PPPut( BPLIST_WORK * wk, u16 idx, u8 px, u8 py )
 //		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[idx].win), px, py, str, wk->dat->font, FCOL_P13WN );
 	PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, px, py, str, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
@@ -1217,8 +1415,11 @@ static void BPL_PokeSelStrPut( BPLIST_WORK * wk, u32 midx )
 	BmpWinFrame_Write(
 		&wk->win[WIN_COMMENT], WINDOW_TRANS_OFF, TALK_WIN_CGX_POS, BPL_PAL_TALK_WIN );
 */
+
+/*
 	BmpWinFrame_Write(
 		wk->win[WIN_COMMENT].win, WINDOW_TRANS_OFF, TALK_WIN_CGX_POS, BPL_PAL_TALK_WIN );
+*/
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[WIN_COMMENT].win), 15 );
 
@@ -1228,7 +1429,8 @@ static void BPL_PokeSelStrPut( BPLIST_WORK * wk, u32 midx )
 	PRINT_UTIL_PrintColor( &wk->win[WIN_COMMENT], wk->que, 0, 0, str, wk->dat->font, FCOL_P13TALK );
 	GFL_STR_DeleteBuffer( str );
 
-	BAPPTOOL_PrintScreenTrans( &wk->win[WIN_COMMENT] );
+	wk->page_chg_comm = 1;
+//	BAPPTOOL_PrintScreenTrans( &wk->win[WIN_COMMENT] );
 //	BAPPTOOL_PrintQueOn( &wk->win[WIN_COMMENT] );
 }
 
@@ -1257,7 +1459,7 @@ static void BPL_StrIrekaePut( BPLIST_WORK * wk )
 		&wk->add_win[WIN_CHG_IREKAE], wk->que,
 		(WIN_CHG_IREKAE_SX*8-siz)/2, IREKAE_PY, str, wk->dat->font, FCOL_P09WN );
 	GFL_STR_DeleteBuffer( str );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_CHG_IREKAE] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_CHG_IREKAE] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_CHG_IREKAE] );
 }
 
@@ -1288,7 +1490,7 @@ static void BPL_StrCommandPut( BPLIST_WORK * wk, u32 wid, u32 mid )
 		&wk->add_win[wid], wk->que,
 		(GFL_BMPWIN_GetSizeX(win)*8-siz)/2, COMMAND_STR_PY, str, wk->dat->font, FCOL_P09WN );
 	GFL_STR_DeleteBuffer( str );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[wid] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[wid] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[wid] );
 }
 
@@ -1311,7 +1513,8 @@ static void BPL_P3_LvPut( BPLIST_WORK * wk, u32 pos )
 	u16	swap;
 
 	pd   = &wk->poke[pos];
-	swap = WIN_P3_NAME_S * wk->bmp_swap;
+//	swap = WIN_P3_NAME_S * wk->bmp_swap;
+	swap = 0;
 
 	// 「Lv.」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_000 );
@@ -1360,10 +1563,10 @@ static void BPL_P3_LvPut( BPLIST_WORK * wk, u32 pos )
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_LV] );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_LVNUM+swap] );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_NEXT] );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_NEXTNUM+swap] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_LV] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_LVNUM+swap] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_NEXT] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_NEXTNUM+swap] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_LV] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_LVNUM+swap] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_NEXT] );
@@ -1390,7 +1593,8 @@ static void BPL_P3_PowPut( BPLIST_WORK * wk, u32 pos )
 	u8	px;
 
 	pd   = &wk->poke[pos];
-	swap = WIN_P3_NAME_S * wk->bmp_swap;
+//	swap = WIN_P3_NAME_S * wk->bmp_swap;
+	swap = 0;
 
 	// 「こうげき」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_400 );
@@ -1413,8 +1617,8 @@ static void BPL_P3_PowPut( BPLIST_WORK * wk, u32 pos )
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_POW] );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_POWNUM+swap] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_POW] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_POWNUM+swap] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_POW] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_POWNUM+swap] );
 }
@@ -1439,7 +1643,8 @@ static void BPL_P3_DefPut( BPLIST_WORK * wk, u32 pos )
 	u8	px;
 
 	pd   = &wk->poke[pos];
-	swap = WIN_P3_NAME_S * wk->bmp_swap;
+//	swap = WIN_P3_NAME_S * wk->bmp_swap;
+	swap = 0;
 
 	// 「ぼうぎょ」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_500 );
@@ -1463,8 +1668,8 @@ static void BPL_P3_DefPut( BPLIST_WORK * wk, u32 pos )
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_DEF] );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_DEFNUM+swap] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_DEF] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_DEFNUM+swap] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_DEF] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_DEFNUM+swap] );
 }
@@ -1489,7 +1694,8 @@ static void BPL_P3_AgiPut( BPLIST_WORK * wk, u32 pos )
 	u8	px;
 
 	pd   = &wk->poke[pos];
-	swap = WIN_P3_NAME_S * wk->bmp_swap;
+//	swap = WIN_P3_NAME_S * wk->bmp_swap;
+	swap = 0;
 
 	// 「すばやさ」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_800 );
@@ -1513,8 +1719,8 @@ static void BPL_P3_AgiPut( BPLIST_WORK * wk, u32 pos )
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_AGI] );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_AGINUM+swap] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_AGI] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_AGINUM+swap] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_AGI] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_AGINUM+swap] );
 }
@@ -1539,7 +1745,8 @@ static void BPL_P3_SppPut( BPLIST_WORK * wk, u32 pos )
 	u8	px;
 
 	pd   = &wk->poke[pos];
-	swap = WIN_P3_NAME_S * wk->bmp_swap;
+//	swap = WIN_P3_NAME_S * wk->bmp_swap;
+	swap = 0;
 
 	// 「とくこう」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_600 );
@@ -1563,8 +1770,8 @@ static void BPL_P3_SppPut( BPLIST_WORK * wk, u32 pos )
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_SPP] );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_SPPNUM+swap] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_SPP] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_SPPNUM+swap] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_SPP] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_SPPNUM+swap] );
 }
@@ -1589,7 +1796,8 @@ static void BPL_P3_SpdPut( BPLIST_WORK * wk, u32 pos )
 	u8	px;
 
 	pd   = &wk->poke[pos];
-	swap = WIN_P3_NAME_S * wk->bmp_swap;
+//	swap = WIN_P3_NAME_S * wk->bmp_swap;
+	swap = 0;
 
 	// 「とくぼう」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_700 );
@@ -1613,8 +1821,8 @@ static void BPL_P3_SpdPut( BPLIST_WORK * wk, u32 pos )
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_SPD] );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_SPDNUM+swap] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_SPD] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_SPDNUM+swap] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_SPD] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_SPDNUM+swap] );
 }
@@ -1639,7 +1847,8 @@ static void BPL_P3_HPPut( BPLIST_WORK * wk, u32 pos )
 	u16	swap;
 
 	pd   = &wk->poke[pos];
-	swap = WIN_P3_NAME_S * wk->bmp_swap;
+//	swap = WIN_P3_NAME_S * wk->bmp_swap;
+	swap = 0;
 
 	// 「HP」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_300 );
@@ -1685,8 +1894,8 @@ static void BPL_P3_HPPut( BPLIST_WORK * wk, u32 pos )
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_HP] );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_HPNUM+swap] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_HP] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_HPNUM+swap] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_HP] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_HPNUM+swap] );
 }
@@ -1709,7 +1918,8 @@ static void BPL_P3_TokuseiInfoPut( BPLIST_WORK * wk, u32 pos )
 	u32	swap;
 
 	pd   = &wk->poke[pos];
-	swap = WIN_P3_NAME_S * wk->bmp_swap;
+//	swap = WIN_P3_NAME_S * wk->bmp_swap;
+	swap = 0;
 
 	man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_tokuseiinfo_dat, wk->dat->heap );
 	str = GFL_MSG_CreateString( man, pd->spa );
@@ -1719,7 +1929,7 @@ static void BPL_P3_TokuseiInfoPut( BPLIST_WORK * wk, u32 pos )
 		&wk->add_win[WIN_P3_SPAINFO+swap], wk->que, 0, 0, str, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_MSG_Delete( man );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_SPAINFO+swap] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_SPAINFO+swap] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_SPAINFO+swap] );
 }
 
@@ -1747,7 +1957,7 @@ static void BPL_WazaHitStrPut( BPLIST_WORK * wk, u32 idx )
 	PRINT_UTIL_PrintColor(
 		&wk->add_win[idx], wk->que, 0, 0, str, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
@@ -1799,7 +2009,7 @@ static void BPL_WazaHitNumPut( BPLIST_WORK * wk, u32 idx, u32 hit )
 		GFL_STR_DeleteBuffer( exp );
 	}
 
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
@@ -1826,7 +2036,7 @@ static void BPL_WazaPowStrPut( BPLIST_WORK * wk, u32 idx )
 //		wk->que, GFL_BMPWIN_GetBmp(win), 0, 0, str, wk->dat->font, FCOL_P13WN );
 	PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, 0, 0, str, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
@@ -1876,7 +2086,7 @@ static void BPL_WazaPowNumPut( BPLIST_WORK * wk, u32 idx, u32 pow )
 		GFL_STR_DeleteBuffer( exp );
 	}
 
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
@@ -1907,7 +2117,7 @@ static void BPL_WazaInfoPut( BPLIST_WORK * wk, u32 idx, u32 waza )
 	PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, 0, 0, str, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_MSG_Delete( man );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
@@ -1977,7 +2187,7 @@ static void BPL_WazaBunruiStrPut( BPLIST_WORK * wk, u32 idx )
 //		wk->que, GFL_BMPWIN_GetBmp(win), px, 0, str, wk->dat->font, FCOL_P13WN );
 	PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, px, 0, str, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
@@ -2016,7 +2226,7 @@ static void BPL_WazaKindPut( BPLIST_WORK * wk, u32 idx, u32 kind )
 	PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, 0, 0, str, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
 
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
@@ -2078,7 +2288,7 @@ static void BPL_WazaPPPut( BPLIST_WORK * wk, u32 idx, u32 npp, u32 mpp )
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
@@ -2148,7 +2358,7 @@ static void BPL_WasureruStrPut( BPLIST_WORK * wk, u32 idx )
 		&wk->add_win[idx], wk->que,
 		(WIN_P6_WASURERU_SX*8-siz)/2, P6_WASURERU_PY, str, wk->dat->font, FCOL_P09WN );
 	GFL_STR_DeleteBuffer( str );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
@@ -2258,7 +2468,7 @@ static void BPL_WazaButtonPPPut( BPLIST_WORK * wk, BPL_POKEWAZA * waza, u32 idx 
 
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
@@ -2304,7 +2514,7 @@ static void BPL_WazaButtonPPRcv( BPLIST_WORK * wk, BPL_POKEWAZA * waza, u32 idx 
 
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
@@ -2335,10 +2545,15 @@ static void BPL_Page1BmpWrite( BPLIST_WORK * wk )
 {
 	s32	i;
 
+	wk->putWin = PokeSelPutWin;
+
 	for( i=0; i<PokeParty_GetPokeCount(wk->dat->pp); i++ ){
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P1_POKE1+i].win), 0 );
 
-		if( wk->poke[i].mons == 0 ){ continue; }
+		if( wk->poke[i].mons == 0 ){
+			wk->add_win[WIN_P1_POKE1+i].transReq = TRUE;
+			continue;
+		}
 
 		BPL_NamePut( wk, WIN_P1_POKE1+i, i, P1_NAME_PX, P1_NAME_PY );
 
@@ -2413,6 +2628,8 @@ static void BPL_IrekaeNamePut( BPLIST_WORK * wk, u32 pos );
 //-------------------------------------------------------------------------------------------
 static void BPL_ChgPageBmpWrite( BPLIST_WORK * wk )
 {
+	wk->putWin = PokeChgPutWin;
+
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_CHG_NAME].win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_CHG_IREKAE].win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_CHG_STATUS].win), 0 );
@@ -2513,7 +2730,7 @@ static void BPL_IrekaeNamePut( BPLIST_WORK * wk, u32 pos )
 		GFL_STR_DeleteBuffer( str );
 	}
 
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_CHG_NAME] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_CHG_NAME] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_CHG_NAME] );
 }
 
@@ -2542,7 +2759,17 @@ static void BPL_StWazaSelPageBmpWrite( BPLIST_WORK * wk )
 	BPL_POKEWAZA * waza;
 	u16	i, swap;
 
-	swap  = WIN_STW_NAME_S * wk->bmp_swap;
+/*
+	if( wk->bmp_swap == 0 ){
+		wk->putWin = WazaSelPutWin;
+	}else{
+		wk->putWin = WazaSelPutWinS;
+	}
+*/
+	wk->putWin = WazaSelPutWin;
+
+//	swap  = WIN_STW_NAME_S * wk->bmp_swap;
+	swap = 0;
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_STW_NAME+swap].win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_STW_SKILL1+swap].win), 0 );
@@ -2555,7 +2782,10 @@ static void BPL_StWazaSelPageBmpWrite( BPLIST_WORK * wk )
 
 	for( i=0; i<4; i++ ){
 		waza = &wk->poke[wk->dat->sel_poke].waza[i];
-		if( waza->id == 0 ){ continue; }
+		if( waza->id == 0 ){
+			wk->add_win[WIN_STW_SKILL1+swap+i].transReq = TRUE;
+			continue;
+		}
 
 		BPL_WazaNamePut(
 			wk, waza->id, WIN_STW_SKILL1+swap+i,
@@ -2566,21 +2796,17 @@ static void BPL_StWazaSelPageBmpWrite( BPLIST_WORK * wk )
 
 	BPL_StrCommandPut( wk, WIN_STW_STATUS, mes_b_plist_02_504 );
 
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_STW_SKILL1+swap] );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_STW_SKILL2+swap] );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_STW_SKILL3+swap] );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_STW_SKILL4+swap] );
-	wk->add_win[WIN_STW_SKILL1+swap].transReq = TRUE;
-	wk->add_win[WIN_STW_SKILL2+swap].transReq = TRUE;
-	wk->add_win[WIN_STW_SKILL3+swap].transReq = TRUE;
-	wk->add_win[WIN_STW_SKILL4+swap].transReq = TRUE;
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_STW_SKILL1+swap] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_STW_SKILL2+swap] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_STW_SKILL3+swap] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_STW_SKILL4+swap] );
 
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_STW_SKILL1+swap] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_STW_SKILL2+swap] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_STW_SKILL3+swap] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_STW_SKILL4+swap] );
 
-	wk->bmp_swap ^= 1;
+//	wk->bmp_swap ^= 1;
 }
 
 #define	P3_NAME_PX		( 0 )
@@ -2601,7 +2827,17 @@ static void BPL_StMainPageBmpWrite( BPLIST_WORK * wk )
 {
 	u32	swap;
 
-	swap = WIN_P3_NAME_S * wk->bmp_swap;
+/*
+	if( wk->bmp_swap == 0 ){
+		wk->putWin = StMainPutWin;
+	}else{
+		wk->putWin = StMainPutWinS;
+	}
+*/
+	wk->putWin = StMainPutWin;
+
+//	swap = WIN_P3_NAME_S * wk->bmp_swap;
+	swap = 0;
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_LV].win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_NEXT].win), 0 );
@@ -2630,6 +2866,8 @@ static void BPL_StMainPageBmpWrite( BPLIST_WORK * wk )
 	BPL_NamePut( wk, WIN_P3_NAME+swap, wk->dat->sel_poke, P3_NAME_PX, P3_NAME_PY );
 	BPL_P3_HPPut( wk, wk->dat->sel_poke );
 	BPL_HPGagePut( wk, WIN_P3_HPGAGE+swap, wk->dat->sel_poke, P3_HPGAGE_PX, P3_HPGAGE_PY );
+//	GFL_BMPWIN_MakeTransWindow_VBlank( wk->add_win[WIN_P3_HPGAGE+swap].win );
+	GFL_BMPWIN_TransVramCharacter( wk->add_win[WIN_P3_HPGAGE+swap].win );
 	BPL_P3_LvPut( wk, wk->dat->sel_poke );
 	BPL_P3_PowPut( wk, wk->dat->sel_poke );
 	BPL_P3_DefPut( wk, wk->dat->sel_poke );
@@ -2641,7 +2879,7 @@ static void BPL_StMainPageBmpWrite( BPLIST_WORK * wk )
 	BPL_P3_TokuseiInfoPut( wk, wk->dat->sel_poke );
 	BPL_StrCommandPut( wk, WIN_P3_WAZACHECK, mes_b_plist_02_505 );
 
-	wk->bmp_swap ^= 1;
+//	wk->bmp_swap ^= 1;
 }
 
 #define	P4_NAME_PX		( 0 )
@@ -2664,7 +2902,17 @@ static void BPL_StWazaInfoPageBmpWrite( BPLIST_WORK * wk )
 	BPL_POKEWAZA * waza;
 	u32	swap;
 
-	swap = WIN_P4_SKILL_S * wk->bmp_swap;
+/*
+	if( wk->bmp_swap == 0 ){
+		wk->putWin = WazaInfoPutWin;
+	}else{
+		wk->putWin = WazaInfoPutWinS;
+	}
+*/
+	wk->putWin = WazaInfoPutWin;
+
+//	swap = WIN_P4_SKILL_S * wk->bmp_swap;
+	swap = 0;
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_NAME].win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_PP].win), 0 );
@@ -2694,7 +2942,7 @@ static void BPL_StWazaInfoPageBmpWrite( BPLIST_WORK * wk )
 	BPL_WazaKindPut( wk, WIN_P4_BRNAME+swap, waza->kind );
 	BPL_WazaPPPut( wk, WIN_P4_PPNUM+swap, waza->pp, waza->mpp );
 
-	wk->bmp_swap ^= 1;
+//	wk->bmp_swap ^= 1;
 }
 
 #define	P5_NAME_PX		( 0 )
@@ -2714,6 +2962,8 @@ static void BPL_WazaDelSelPageBmpWrite( BPLIST_WORK * wk )
 {
 	BPL_POKEWAZA * waza;
 	u32	i;
+
+	wk->putWin = WazaDelPutWin;
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P5_NAME].win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P5_SKILL1].win), 0 );
@@ -2746,11 +2996,11 @@ static void BPL_WazaDelSelPageBmpWrite( BPLIST_WORK * wk )
 		BPL_WazaButtonPPPut( wk, &tmp, WIN_P5_SKILL5 );
 	}
 
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P5_SKILL1] );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P5_SKILL2] );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P5_SKILL3] );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P5_SKILL4] );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P5_SKILL5] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P5_SKILL1] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P5_SKILL2] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P5_SKILL3] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P5_SKILL4] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P5_SKILL5] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P5_SKILL1] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P5_SKILL2] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P5_SKILL3] );
@@ -2775,6 +3025,8 @@ static void BPL_WazaDelSelPageBmpWrite( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void BPL_Page6BmpWrite( BPLIST_WORK * wk )
 {
+	wk->putWin = WazaDelInfoPutWin;
+
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P6_NAME].win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P6_PP].win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P6_PPNUM].win), 0 );
@@ -2842,6 +3094,8 @@ static void BPL_PPRcvPageBmpWrite( BPLIST_WORK * wk )
 	BPL_POKEWAZA * waza;
 	u32	i;
 
+	wk->putWin = WazaRcvPutWin;
+
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P7_NAME].win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P7_SKILL1].win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P7_SKILL2].win), 0 );
@@ -2864,10 +3118,10 @@ static void BPL_PPRcvPageBmpWrite( BPLIST_WORK * wk )
 		BPL_PokeSelStrPut( wk, mes_b_plist_m19 );
 	}
 
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P7_SKILL1] );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P7_SKILL2] );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P7_SKILL3] );
-	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P7_SKILL4] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P7_SKILL1] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P7_SKILL2] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P7_SKILL3] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P7_SKILL4] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P7_SKILL1] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P7_SKILL2] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P7_SKILL3] );
@@ -2943,7 +3197,7 @@ static void BPL_Page8BmpWrite( BPLIST_WORK * wk )
 		PRINT_UTIL_PrintColor(
 			&wk->add_win[WIN_P8_APP], wk->que, 0, 0, str, wk->dat->font, FCOL_P13WM );
 		GFL_STR_DeleteBuffer( str );
-		BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P8_APP] );
+//		BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P8_APP] );
 //		BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P8_APP] );
 	}
 
@@ -3202,4 +3456,15 @@ void BPLISTBMP_PrintMain( BPLIST_WORK * wk )
 {
 	BAPPTOOL_PrintUtilTrans( wk->win, wk->que, WIN_MAX );
 	BAPPTOOL_PrintUtilTrans( wk->add_win, wk->que, wk->bmp_add_max );
+}
+
+void BPLIST_SetStrScrn( BPLIST_WORK * wk )
+{
+	BAPPTOOL_SetStrScrn( wk->add_win, wk->putWin );
+	if( wk->page_chg_comm == 1 ){
+		BmpWinFrame_Write(
+			wk->win[WIN_COMMENT].win, WINDOW_TRANS_OFF, TALK_WIN_CGX_POS, BPL_PAL_TALK_WIN );
+		BAPPTOOL_PrintScreenTrans( &wk->win[WIN_COMMENT] );
+		wk->page_chg_comm = 0;
+	}
 }

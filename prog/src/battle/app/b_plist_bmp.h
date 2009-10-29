@@ -168,6 +168,8 @@ extern void BattlePokeList_ItemUseSkillErrMsgSet( BPLIST_WORK * wk );
 
 extern void BPLISTBMP_PrintMain( BPLIST_WORK * wk );
 
+extern void BPLIST_SetStrScrn( BPLIST_WORK * wk );
+
 
 
 #endif	// B_PLIST_BMP_H

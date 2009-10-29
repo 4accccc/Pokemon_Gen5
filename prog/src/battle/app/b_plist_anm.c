@@ -262,7 +262,7 @@ static const BUTTON_ANM ButtonScreenAnm[] =
 	{ SCR_WAZA5_PX, SCR_WAZA5_PY, BPL_BSX_WAZA, BPL_BSY_WAZA },		// 技忘れ５
 
 	{ SCR_DEL_PX, SCR_DEL_PY, BPL_BSX_DEL, BPL_BSY_DEL },			// 忘れさせる（戦闘）
-	{ SCR_DEL_PX, SCR_DEL_PY, BPL_BSX_DEL, BPL_BSY_DEL },			// 忘れさせる（コンテスト）
+//	{ SCR_DEL_PX, SCR_DEL_PY, BPL_BSX_DEL, BPL_BSY_DEL },			// 忘れさせる（コンテスト）
 
 	{ SCR_WP1_PX, SCR_WP1_PY, BPL_BSX_WP, BPL_BSY_WP },		// 技切り替え１
 	{ SCR_WP2_PX, SCR_WP2_PY, BPL_BSX_WP, BPL_BSY_WP },		// 技切り替え２
@@ -270,6 +270,7 @@ static const BUTTON_ANM ButtonScreenAnm[] =
 	{ SCR_WP4_PX, SCR_WP4_PY, BPL_BSX_WP, BPL_BSY_WP },		// 技切り替え４
 };
 
+/*
 static const u8 BtnBmpWin_Poke1[] = { WIN_P1_POKE1, 0xff };	// ポケモン１
 static const u8 BtnBmpWin_Poke2[] = { WIN_P1_POKE2, 0xff };	// ポケモン２
 static const u8 BtnBmpWin_Poke3[] = { WIN_P1_POKE3, 0xff };	// ポケモン３
@@ -302,7 +303,7 @@ static const u8 BtnBmpWin_WazaDel4[] = { WIN_P5_SKILL4, 0xff };	// 技回復４
 static const u8 BtnBmpWin_WazaDel5[] = { WIN_P5_SKILL5, 0xff };	// 技回復５
 
 static const u8 BtnBmpWin_Delete[] = { WIN_P6_WASURERU, 0xff };		// 「わすれる」
-static const u8 BtnBmpWin_DelCon[] = { WIN_P8_WASURERU, 0xff };		// 「わすれる」
+//static const u8 BtnBmpWin_DelCon[] = { WIN_P8_WASURERU, 0xff };		// 「わすれる」
 
 // ボタン上のBMPデータテーブル
 static const u8 * const ButtonBmpWinIndex[] = {
@@ -341,13 +342,14 @@ static const u8 * const ButtonBmpWinIndex[] = {
 	BtnBmpWin_WazaDel5,	// BPL_BUTTON_WAZADEL5
 
 	BtnBmpWin_Delete,	// BPL_BUTTON_WAZADEL_B
-	BtnBmpWin_DelCon,	// BPL_BUTTON_WAZADEL_C
+//	BtnBmpWin_DelCon,	// BPL_BUTTON_WAZADEL_C
 
 	NULL,				// BPL_BUTTON_WAZAPOS1
 	NULL,				// BPL_BUTTON_WAZAPOS2
 	NULL,				// BPL_BUTTON_WAZAPOS3
 	NULL,				// BPL_BUTTON_WAZAPOS4
 };
+*/
 
 static const s16 ObjMvPrmPokeSel[] = {
 	OBJ_MV_PRM0_POKESEL, OBJ_MV_PRM1_POKESEL, OBJ_MV_PRM2_POKESEL
@@ -574,7 +576,7 @@ static u16 * BPL_ButtonScreenBufGet( BPLIST_WORK * wk, u8 id, u8 num, u8 pat )
 		return wk->btn_waza[num];
 
 	case BPL_BUTTON_WAZADEL_B:	// 忘れさせる
-	case BPL_BUTTON_WAZADEL_C:	// 忘れさせる
+//	case BPL_BUTTON_WAZADEL_C:	// 忘れさせる
 		return wk->btn_del[num];
 
 	case BPL_BUTTON_CONTEST:	// コンテスト技<->戦う技
@@ -735,9 +737,9 @@ static void BPL_ButtonScreenWrite( BPLIST_WORK * wk, u8 id, u8 anm, u8 pat )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void BPL_ButtonBmpWinShift( BPLIST_WORK * wk, u8 id, u8 anm )
 {
-/*
 	const u8 * tbl;
 	u16	i;
 	u8	dir, ofs;
@@ -777,9 +779,8 @@ static void BPL_ButtonBmpWinShift( BPLIST_WORK * wk, u8 id, u8 anm )
 			GFL_BMPWIN_MakeTransWindowVReq( &wk->add_win[tbl[i]] );
 		}
 	}
-*/
 }
-
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -792,9 +793,9 @@ static void BPL_ButtonBmpWinShift( BPLIST_WORK * wk, u8 id, u8 anm )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void BPL_ButtonObjMove( BPLIST_WORK * wk, u8 id, u8 anm )
 {
-/*
 	switch( id ){
 	case BPL_BUTTON_POKE1:		// ポケモン１
 	case BPL_BUTTON_POKE2:		// ポケモン２
@@ -834,9 +835,8 @@ static void BPL_ButtonObjMove( BPLIST_WORK * wk, u8 id, u8 anm )
 		CATS_ObjectPosMoveCap( wk->cap[BPL_CA_WAZATYPE1+id-BPL_BUTTON_WAZADEL1], 0, ObjMvPrm[anm] );
 		break;
 	}
-*/
 }
-
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -878,8 +878,8 @@ void BattlePokeList_ButtonAnmMain( BPLIST_WORK * wk )
 	switch( wk->btn_seq ){
 	case 0:
 		BPL_ButtonScreenWrite( wk, wk->btn_id, 1, wk->btn_pat );
-		BPL_ButtonBmpWinShift( wk, wk->btn_id, 1 );
-		BPL_ButtonObjMove( wk, wk->btn_id, 1 );
+//		BPL_ButtonBmpWinShift( wk, wk->btn_id, 1 );
+//		BPL_ButtonObjMove( wk, wk->btn_id, 1 );
 		wk->btn_cnt = 0;
 		wk->btn_seq = 1;
 		break;
@@ -892,8 +892,8 @@ void BattlePokeList_ButtonAnmMain( BPLIST_WORK * wk )
 		}
 */
 		BPL_ButtonScreenWrite( wk, wk->btn_id, 2, wk->btn_pat );
-		BPL_ButtonBmpWinShift( wk, wk->btn_id, 2 );
-		BPL_ButtonObjMove( wk, wk->btn_id, 2 );
+//		BPL_ButtonBmpWinShift( wk, wk->btn_id, 2 );
+//		BPL_ButtonObjMove( wk, wk->btn_id, 2 );
 		wk->btn_cnt = 0;
 		wk->btn_seq = 2;
 		break;
@@ -906,8 +906,8 @@ void BattlePokeList_ButtonAnmMain( BPLIST_WORK * wk )
 		}
 */
 		BPL_ButtonScreenWrite( wk, wk->btn_id, 0, wk->btn_pat );
-		BPL_ButtonBmpWinShift( wk, wk->btn_id, 0 );
-		BPL_ButtonObjMove( wk, wk->btn_id, 0 );
+//		BPL_ButtonBmpWinShift( wk, wk->btn_id, 0 );
+//		BPL_ButtonObjMove( wk, wk->btn_id, 0 );
 		wk->btn_cnt = 0;
 //		wk->btn_seq = 3;
 		wk->btn_flg = 0;

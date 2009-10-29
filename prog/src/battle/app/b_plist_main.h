@@ -86,12 +86,14 @@ enum {
 
 	WIN_STW_STATUS,			// 「つよさをみる」
 
+/*
 	// ↓スワップ用
 	WIN_STW_NAME_S,			// 名前（スワップ）
 	WIN_STW_SKILL1_S,		// 技１（スワップ）
 	WIN_STW_SKILL2_S,		// 技２（スワップ）
 	WIN_STW_SKILL3_S,		// 技３（スワップ）
 	WIN_STW_SKILL4_S,		// 技４（スワップ）
+*/
 
 	WIN_STW_MAX
 };
@@ -122,6 +124,7 @@ enum {
 	WIN_P3_NEXT,		// 「つぎのレベルまで」
 	WIN_P3_WAZACHECK,	// 「わざをみる」
 
+/*
 	// ↓スワップ用
 	WIN_P3_NAME_S,		// 名前（スワップ）
 	WIN_P3_SPANAME_S,	// 特性名（スワップ）
@@ -136,6 +139,7 @@ enum {
 	WIN_P3_HPGAGE_S,	// HPゲージ（スワップ）
 	WIN_P3_LVNUM_S,		// レベル値（スワップ）
 	WIN_P3_NEXTNUM_S,	// 次のレベル値（スワップ）
+*/
 	WIN_P3_MAX
 };
 
@@ -153,7 +157,7 @@ enum {
 	WIN_P4_HIT,			// 「めいちゅう」
 	WIN_P4_POW,			// 「いりょく」
 	WIN_P4_BUNRUI,		// 「ぶんるい」
-
+/*
 	// ↓スワップ用
 	WIN_P4_SKILL_S,		// 技名
 	WIN_P4_PPNUM_S,		// PP/PP
@@ -161,6 +165,7 @@ enum {
 	WIN_P4_POWNUM_S,	// 威力値
 	WIN_P4_INFO_S,		// 技説明
 	WIN_P4_BRNAME_S,	// 分類名
+*/
 	WIN_P4_MAX
 };
 
@@ -202,6 +207,7 @@ enum {
 	WIN_P7_MAX
 };
 
+/*
 // ページ８の追加ウィンドウインデックス
 enum {
 	WIN_P8_NAME = 0,	// 名前
@@ -213,6 +219,7 @@ enum {
 	WIN_P8_WASURERU,	// 「わすれる」
 	WIN_P8_MAX
 };
+*/
 
 // セルアクターのID
 enum {
@@ -432,11 +439,15 @@ typedef struct {
 //	GFL_BMPWIN * win[WIN_MAX];	// BMPウィンドウデータ（通常）
 //	GFL_BMPWIN * add_win[64];		// BMPウィンドウデータ（追加）
 	PRINT_UTIL	win[WIN_MAX];	// BMPウィンドウデータ（通常）
-	PRINT_UTIL	add_win[64];	// BMPウィンドウデータ（通常）
-	u8	bmp_add_max;				// 追加したBMPの数
-	u8	bmp_swap;					// スワップ描画フラグ
+	PRINT_UTIL	add_win[64];	// BMPウィンドウデータ（追加）
+	GFL_BMPWIN * dmy_win;			// BMPウィンドウデータ（ダミー）
+	u8	bmp_add_max;					// 追加したBMPの数
+	u8	bmp_swap;							// スワップ描画フラグ
 
 	u8	init_poke;		// 入れ替え対象のポケモン位置
+
+	u8	page_chg_seq:4;
+	u8	page_chg_comm:4;
 
 	int	seq;			// メインシーケンス
 	int	ret_seq;		// 復帰シーケンス
@@ -461,6 +472,8 @@ typedef struct {
 	u32	chrRes[BPLIST_CHRRES_MAX];
 	u32	palRes[BPLIST_PALRES_MAX];
 	u32	celRes[BPLIST_CELRES_MAX];
+
+	const u8 * putWin;
 
 }BPLIST_WORK;
 

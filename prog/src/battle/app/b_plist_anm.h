@@ -47,7 +47,7 @@ enum {
 	BPL_BUTTON_WAZADEL5,	// 技忘れ５
 
 	BPL_BUTTON_WAZADEL_B,	// 忘れさせる（戦闘）
-	BPL_BUTTON_WAZADEL_C,	// 忘れさせる（コンテスト）
+//	BPL_BUTTON_WAZADEL_C,	// 忘れさせる（コンテスト）
 
 	BPL_BUTTON_WAZAPOS1,	// 技切り替え１
 	BPL_BUTTON_WAZAPOS2,	// 技切り替え２
