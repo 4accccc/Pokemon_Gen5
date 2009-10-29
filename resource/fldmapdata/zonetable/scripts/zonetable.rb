@@ -260,7 +260,7 @@ class ZoneDataFile < OutputFile
 		weather = "WEATHER_NO_#{column[@cl.cWEATHER].upcase}"
 		camera = "#{column[@cl.cCAMERA]}"
 		battle_bg = "#{column[@cl.cBATTLEBG]}"
-		if !(battle_bg =~ /^BG_ID_/) then
+		if !(battle_bg =~ /^BTL_BG_/) then
 			STDERR.puts "í“¬”wŒi‚ÌŽw’è‚ª‚¨‚©‚µ‚¢I:#{battle_bg}:#{id.upcase}\n"
 			exit 1
 		end

@@ -19,8 +19,6 @@ typedef signed long s32;
 //------------------------------------------------------------------
 
 enum {
-	BG_ID_FOREST	=	3,
-
 	MMLID_NOENTRY	=	0,
 	MMLID_SAMPLEOBJ	=	1,
 
@@ -80,6 +78,7 @@ enum {
 #include "header/maptype.h"
 #include "../../encount/encount_data_w.naix"  //エンカウントデータID定義ファイル
 #include "../eventdata/binary/eventdata.naix"      //eventdata ID 定義ファイル
+#include "../../../prog/include/battle/battle_bg_def.h"  //戦闘背景ID定義
 
 enum {
 	//event_dummy = NARC_zone_event_zone_dummy_total_bin,
