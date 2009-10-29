@@ -32,7 +32,7 @@
 //============================================================================================
 
 #define BTLV_GAUGE_CLWK_MAX ( BTLV_MCSS_POS_MAX )              //ゲージCLWKのMAX値
-#define BTLV_GAUGE_CLUNIT_CLWK_MAX ( BTLV_MCSS_POS_MAX * 4 )   //CLUNITを生成するときのCLWKのMAX値
+#define BTLV_GAUGE_CLUNIT_CLWK_MAX ( BTLV_MCSS_POS_MAX * 5 )   //CLUNITを生成するときのCLWKのMAX値
 
 ///1キャラの中に入っているゲージのドット数
 #define BTLV_GAUGE_DOTTO			(8)
@@ -108,11 +108,15 @@ enum
   BTLV_GAUGE_ENEMY_HP_Y  = 7,
   BTLV_GAUGE_EXP_X  =  8,
   BTLV_GAUGE_EXP_Y  = 21,
+  BTLV_STATUS_MINE_X     = -22,
+  BTLV_STATUS_MINE_Y     = 8,
+  BTLV_STATUS_ENEMY_X    = -38,
+  BTLV_STATUS_ENEMY_Y    = 8,
 
   BTLV_GAUGE_BMP_SIZE_X = 8,
   BTLV_GAUGE_BMP_SIZE_Y = 2,
   BTLV_GAUGE_BMP_POS_X = 8,
-  BTLV_GAUGE_BMP_POS_Y = 9,
+  BTLV_GAUGE_BMP_POS_Y = 7,
 
   BTLV_GAUGE_NAME1U_CHARSTART = 0x02,
   BTLV_GAUGE_NAME1D_CHARSTART = 0x0a,
@@ -150,6 +154,7 @@ struct _BTLV_GAUGE_CLWK
   GFL_CLWK*     hpnum_clwk;
   GFL_CLWK*     hp_clwk;
   GFL_CLWK*     exp_clwk;
+  GFL_CLWK*     status_clwk;
 
   //戦闘ゲージ本体
   u32           base_charID;
@@ -237,6 +242,7 @@ static  void  PutGaugeOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, BTLV_GAU
 static  void  PutHPNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, s32 nowHP );
 static  void  PutLVNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl );
 static  void  Gauge_LevelUp( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl );
+static  void  Gauge_SetStatus( BTLV_GAUGE_WORK* bgw, PokeSick sick, BtlvMcssPos pos );
 
 static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw );
 
@@ -290,7 +296,8 @@ BTLV_GAUGE_WORK*  BTLV_GAUGE_Init( HEAPID heapID )
   }
 
   //フォント読み込み（独自フォントになる可能性があるので　現状はデフォルトフォントを読んでおく）
-  bgw->font = GFL_FONT_Create( ARCID_FONT, NARC_font_small_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, bgw->heapID );
+  bgw->font = GFL_FONT_Create( ARCID_FONT, NARC_font_small_batt_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, bgw->heapID );
+  //bgw->font = GFL_FONT_Create( ARCID_FONT, NARC_font_small_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, bgw->heapID );
 
   //今鳴っているBGMを保存
   bgw->now_bgm_no = PMSND_GetBGMsoundNo();
@@ -450,6 +457,12 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp, BTLV_GAUGE
     bgw->bgcl[ pos ].hp_clwk = GFL_CLACT_WK_Create( bgw->clunit,
                                                     bgw->bgcl[ pos ].hp_charID, bgw->plttID, bgw->bgcl[ pos ].hp_cellID,
                                                     &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
+    bgw->bgcl[ pos ].status_clwk = GFL_CLACT_WK_Create( bgw->clunit,
+                                                        bgw->status_charID, bgw->status_plttID, bgw->status_cellID,
+                                                        &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
+    GFL_CLACT_WK_SetAutoAnmFlag( bgw->bgcl[ pos ].status_clwk, TRUE );
+    Gauge_SetStatus( bgw, BPP_GetPokeSick( bpp ), pos );
+    //Gauge_SetStatus( bgw, POKESICK_DOKU, pos );
     if( ( ( pos & 1 ) == 0 ) && ( bgw->bgcl[ pos ].gauge_type != BTLV_GAUGE_TYPE_3vs3 ) )
     { 
       bgw->bgcl[ pos ].exp_clwk = GFL_CLACT_WK_Create( bgw->clunit,
@@ -529,6 +542,7 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp, BTLV_GAUGE
 //============================================================================================
 void  BTLV_GAUGE_Del( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos )
 { 
+  GF_ASSERT( bgw->bgcl[ pos ].base_clwk != NULL );
   if( bgw->bgcl[ pos ].base_clwk )
   { 
     GFL_CLGRP_CGR_Release( bgw->bgcl[ pos ].base_charID );
@@ -542,9 +556,11 @@ void  BTLV_GAUGE_Del( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos )
     GFL_CLACT_WK_Remove( bgw->bgcl[ pos ].base_clwk );
     GFL_CLACT_WK_Remove( bgw->bgcl[ pos ].hpnum_clwk );
     GFL_CLACT_WK_Remove( bgw->bgcl[ pos ].hp_clwk );
-    bgw->bgcl[ pos ].base_clwk  = NULL;
-    bgw->bgcl[ pos ].hpnum_clwk = NULL;
-    bgw->bgcl[ pos ].hp_clwk    = NULL;
+    GFL_CLACT_WK_Remove( bgw->bgcl[ pos ].status_clwk );
+    bgw->bgcl[ pos ].base_clwk    = NULL;
+    bgw->bgcl[ pos ].hpnum_clwk   = NULL;
+    bgw->bgcl[ pos ].hp_clwk      = NULL;
+    bgw->bgcl[ pos ].status_clwk  = NULL;
 
     if( bgw->bgcl[ pos ].exp_clwk )
     { 
@@ -572,6 +588,10 @@ void  BTLV_GAUGE_SetPos( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, int pos_x, int p
   GFL_CLACTPOS  hp_pos_ofs[]={ 
     { BTLV_GAUGE_MINE_HP_X, BTLV_GAUGE_MINE_HP_Y },
     { BTLV_GAUGE_ENEMY_HP_X, BTLV_GAUGE_ENEMY_HP_Y },
+  };
+  GFL_CLACTPOS  status_pos_ofs[]={ 
+    { BTLV_STATUS_MINE_X, BTLV_STATUS_MINE_Y },
+    { BTLV_STATUS_ENEMY_X, BTLV_STATUS_ENEMY_Y },
   };
 
   if( bgw->bgcl[ pos ].gauge_type == BTLV_GAUGE_TYPE_3vs3 )
@@ -601,6 +621,10 @@ void  BTLV_GAUGE_SetPos( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, int pos_x, int p
   cl_pos.x = pos_x + hp_pos_ofs[ pos & 1 ].x;
   cl_pos.y = pos_y + hp_pos_ofs[ pos & 1 ].y;
   GFL_CLACT_WK_SetPos( bgw->bgcl[ pos ].hp_clwk, &cl_pos, CLSYS_DEFREND_MAIN );
+
+  cl_pos.x = pos_x + status_pos_ofs[ pos & 1 ].x;
+  cl_pos.y = pos_y + status_pos_ofs[ pos & 1 ].y;
+  GFL_CLACT_WK_SetPos( bgw->bgcl[ pos ].status_clwk, &cl_pos, CLSYS_DEFREND_MAIN );
 
   if( bgw->bgcl[ pos ].exp_clwk )
   { 
@@ -1052,7 +1076,7 @@ static u32 DottoOffsetCalc( s32 nowHP, s32 beHP, s32 MaxHP, u8 GaugeMax )
 static  void  PutNameOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, const BTL_POKEPARAM* bpp )
 { 
   STRBUF* monsname = GFL_STR_CreateBuffer( BUFLEN_POKEMON_NAME, bgw->heapID );
-  PRINTSYS_LSB  color = PRINTSYS_LSB_Make( 1, 2, 0 );
+  PRINTSYS_LSB  color = PRINTSYS_LSB_Make( 1, 4, 0 );
   GFL_BMP_DATA* bmp = GFL_BMP_Create( BTLV_GAUGE_BMP_SIZE_X, BTLV_GAUGE_BMP_SIZE_Y, GFL_BMP_16_COLOR, bgw->heapID );
   u8 letter, shadow, back;
 
@@ -1366,6 +1390,36 @@ static  void  Gauge_LevelUp( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl )
     break;
   }
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief   状態異常アイコンセット
+ *
+ * @param bgw   BTLV_GAUGE_WORK管理構造体へのポインタ
+ * @param bgcl  ゲージワークへのポインタ
+ */
+//--------------------------------------------------------------
+static  void  Gauge_SetStatus( BTLV_GAUGE_WORK* bgw, PokeSick sick, BtlvMcssPos pos )
+{ 
+  int sick_anm[]={  
+	  APP_COMMON_ST_ICON_NONE,				// なし（アニメ番号的にもなし）
+	  APP_COMMON_ST_ICON_MAHI,				// 麻痺
+	  APP_COMMON_ST_ICON_NEMURI,			// 眠り
+	  APP_COMMON_ST_ICON_KOORI,				// 氷
+	  APP_COMMON_ST_ICON_YAKEDO,			// 火傷
+	  APP_COMMON_ST_ICON_DOKU,				// 毒
+  };
+  if( sick == POKESICK_NULL )
+  { 
+    GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].status_clwk, FALSE );
+  }
+  else
+  { 
+    GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].status_clwk, TRUE );
+    GFL_CLACT_WK_SetAnmSeq( bgw->bgcl[ pos ].status_clwk, sick_anm[ sick ] );
+  }
+}
+
 //--------------------------------------------------------------
 /**
  * @brief   ピンチBGM再生チェック

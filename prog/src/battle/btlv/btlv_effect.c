@@ -123,7 +123,7 @@ void  BTLV_EFFECT_Init( BtlRule rule, int index, HEAPID heapID )
   bew->bclw = BTLV_CLACT_Init( bew->tcb_sys, heapID );
   bew->bgw  = BTLV_GAUGE_Init( heapID );
   bew->btw  = BTLV_TIMER_Init( heapID );
-  BTLV_TIMER_Create( bew->btw, 30, 1 );
+  //BTLV_TIMER_Create( bew->btw, 30, 1 );
 
   BTLV_MCSS_SetOrthoMode( bew->bmw );
 
