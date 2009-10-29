@@ -105,7 +105,7 @@ static GMEVENT_RESULT FSkillAmaikaoriEvent(GMEVENT * event, int * seq, void *wor
 static BOOL amaikaori_WeatherCheck( AMAIKAORI_WORK* wk )
 {
   FIELD_WEATHER* fld_weather = FIELDMAP_GetFieldWeather( wk->fieldWork );
-  u32 weather = FIELD_WEATHER_GetWeatherNo( fld_weather );
+  WEATHER_NO weather = FIELD_WEATHER_GetWeatherNo( fld_weather );
 
   if( weather == WEATHER_NO_SUNNY ){
     return TRUE;

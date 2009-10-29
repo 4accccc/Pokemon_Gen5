@@ -66,10 +66,10 @@ extern void FIELD_WEATHER_3DWrite( FIELD_WEATHER* p_sys );
 //-------------------------------------
 ///	天気システム	管理
 //=====================================
-extern void FIELD_WEATHER_Set( FIELD_WEATHER* p_sys, u32 weather_no, u32 heapID );
-extern void FIELD_WEATHER_Change( FIELD_WEATHER* p_sys, u32 weather_no );
-extern u32 FIELD_WEATHER_GetWeatherNo( const FIELD_WEATHER* cp_sys );
-extern u32 FIELD_WEATHER_GetNextWeatherNo( const FIELD_WEATHER* cp_sys );
+extern void FIELD_WEATHER_Set( FIELD_WEATHER* p_sys, WEATHER_NO weather_no, u32 heapID );
+extern void FIELD_WEATHER_Change( FIELD_WEATHER* p_sys, WEATHER_NO weather_no );
+extern WEATHER_NO FIELD_WEATHER_GetWeatherNo( const FIELD_WEATHER* cp_sys );
+extern WEATHER_NO FIELD_WEATHER_GetNextWeatherNo( const FIELD_WEATHER* cp_sys );
 
 
 #endif		// __WEATHER_H__

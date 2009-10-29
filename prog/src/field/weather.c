@@ -130,8 +130,8 @@ struct _FIELD_WEATHER{
 	// 切り替えシーケンス
 	u16		change_type;
 	u16		seq;
-	u16		now_weather;
-	u16		next_weather;
+	WEATHER_NO		now_weather;
+	WEATHER_NO		next_weather;
 
 	// 予約
 	u16		booking_weather;
@@ -380,7 +380,7 @@ void FIELD_WEATHER_3DWrite( FIELD_WEATHER* p_sys )
  *	@param	weather_no		天気ナンバー
  */
 //-----------------------------------------------------------------------------
-void FIELD_WEATHER_Set( FIELD_WEATHER* p_sys, u32 weather_no, u32 heapID )
+void FIELD_WEATHER_Set( FIELD_WEATHER* p_sys, WEATHER_NO weather_no, u32 heapID )
 {
 	int i;
 	
@@ -424,7 +424,7 @@ void FIELD_WEATHER_Set( FIELD_WEATHER* p_sys, u32 weather_no, u32 heapID )
  *	@param	weather_no		天気ナンバー
  */
 //-----------------------------------------------------------------------------
-void FIELD_WEATHER_Change( FIELD_WEATHER* p_sys, u32 weather_no )
+void FIELD_WEATHER_Change( FIELD_WEATHER* p_sys, WEATHER_NO weather_no )
 {
 
 	// 天気ナンバーチェック
@@ -461,7 +461,7 @@ void FIELD_WEATHER_Change( FIELD_WEATHER* p_sys, u32 weather_no )
  *	@return	今の天気ナンバーを取得
  */
 //-----------------------------------------------------------------------------
-u32 FIELD_WEATHER_GetWeatherNo( const FIELD_WEATHER* cp_sys )
+WEATHER_NO FIELD_WEATHER_GetWeatherNo( const FIELD_WEATHER* cp_sys )
 {
 	return cp_sys->now_weather;
 }
@@ -475,7 +475,7 @@ u32 FIELD_WEATHER_GetWeatherNo( const FIELD_WEATHER* cp_sys )
  *	@return	次の天気ナンバー
  */
 //-----------------------------------------------------------------------------
-u32 FIELD_WEATHER_GetNextWeatherNo( const FIELD_WEATHER* cp_sys )
+WEATHER_NO FIELD_WEATHER_GetNextWeatherNo( const FIELD_WEATHER* cp_sys )
 {
 	return cp_sys->next_weather;
 }
