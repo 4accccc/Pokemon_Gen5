@@ -80,12 +80,10 @@ static void SetBGMStatus( const BGM_PARAM* p_param )
 	PMSND_ChangeCaptureReverb( p_param->reverb, REVERB_SAMPLE_RATE, REVERB_VOLUME, REVERB_STOP_FRAME );
 
 	// DEBUG:
-  /*
 	OBATA_Printf( "Dungeon ISS SetBGMStatus\n" ); 
 	OBATA_Printf( "pitch  = %d\n", p_param->pitch );
 	OBATA_Printf( "tempo  = %d\n", p_param->tempo );
 	OBATA_Printf( "reverb = %d\n", p_param->reverb );
-  */
 }
 
 
@@ -184,11 +182,9 @@ static ISS_DATA* LoadIssData( HEAPID heap_id )
 		u16 offset  = GetU16( p_data, pos + 2 );
 
 		// DEBUG:
-    /*
 		OBATA_Printf( "pos[%d]     = %d\n", i, pos );
 		OBATA_Printf( "zone_id[%d] = %d\n", i, zone_id );
 		OBATA_Printf( "offset[%d]  = %d\n", i, offset );
-    */
 
 		iss_data->param[i].zoneID = GetU16( p_data, offset );
 		iss_data->param[i].pitch  = (s16)GetU16( p_data, offset + 2 );
@@ -198,7 +194,6 @@ static ISS_DATA* LoadIssData( HEAPID heap_id )
 
 
 	// DEBUG:
-  /*
 	OBATA_Printf( "------------------------LoadIssData\n" );
 	OBATA_Printf( "data_num = %d\n", data_num );
 	for( i=0; i<data_num; i++ )
@@ -208,7 +203,6 @@ static ISS_DATA* LoadIssData( HEAPID heap_id )
 		OBATA_Printf( "data[%d].tempo   = %d\n", i, iss_data->param[i].tempo ); 
 		OBATA_Printf( "data[%d].reverb  = %d\n", i, iss_data->param[i].reverb ); 
 	}
-  */
 
 	// 読み込んだデータを返す
 	return iss_data;
@@ -255,7 +249,7 @@ static const BGM_PARAM* GetBGMParam( const ISS_DATA* p_data, u16 zone_id )
 	}
 
 	// 発見できず
-  //OBATA_Printf( "指定ゾーンのBGMパラメータが設定されていません\n" );    // DEBUG:
+  OBATA_Printf( "指定ゾーンのBGMパラメータが設定されていません\n" );    // DEBUG:
 	return NULL;
 }
 
@@ -361,6 +355,13 @@ void ISS_DUNGEON_SYS_Update( ISS_DUNGEON_SYS* p_sys )
 		// 新ゾーンIDのBGMパラメータを検索
 		p_sys->pActiveParam = GetBGMParam( p_sys->pData, p_sys->nextZoneID );
 
+    // BGMパラメータが設定されていない場合 ==> システム停止
+    if( p_sys->pActiveParam == NULL )
+    {
+      ISS_DUNGEON_SYS_Off( p_sys );
+      return;
+    }
+
 		// BGMの設定を反映させる
 		SetBGMStatus( p_sys->pActiveParam );
 
@@ -369,7 +370,7 @@ void ISS_DUNGEON_SYS_Update( ISS_DUNGEON_SYS* p_sys )
 	}
 
 	// DEBUG:
-	//OBATA_Printf( "Dungeon ISS is ON\n" );
+	OBATA_Printf( "Dungeon ISS is ON\n" );
 } 
 
 //---------------------------------------------------------------------------
@@ -412,6 +413,9 @@ void ISS_DUNGEON_SYS_Off( ISS_DUNGEON_SYS* p_sys )
 	p_sys->isActive = FALSE;
 	PMSND_SetStatusBGM( 256, 0, 0 ); 
 	PMSND_DisableCaptureReverb();
+
+  // DEBUG:
+  OBATA_Printf( "ISS Dungeon System Off: set default status\n" );
 }
 
 //----------------------------------------------------------------------------
