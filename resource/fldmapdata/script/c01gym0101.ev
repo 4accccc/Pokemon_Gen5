@@ -541,10 +541,10 @@ EVENT_START		ev_c01gym0101_leader1_01
 			$WK_SCENE_C01 = 1
 			
 			//D01R0101夢ポケモンイベントOBJ表示
-			_FLAG_SET( FV_D01R0101_POKE_01 )
+			_FLAG_RESET( FV_D01R0101_POKE_01 )
 
 			//D01R0101ジム対策イベントOBJ非表示
-			_FLAG_RESET( FV_D01R0101_GIRL_01 )
+			_FLAG_SET( FV_D01R0101_GIRL_01 )
 
 			//========================================//
 
@@ -644,10 +644,10 @@ EVENT_START		ev_c01gym0101_leader1_02
 			$WK_SCENE_C01 = 1
 
 			//D01R0101夢ポケモンイベントOBJ表示
-			_FLAG_SET( FV_D01R0101_POKE_01 )
+			_FLAG_RESET( FV_D01R0101_POKE_01 )
 
 			//D01R0101ジム対策イベントOBJ非表示
-			_FLAG_RESET( FV_D01R0101_GIRL_01 )
+			_FLAG_SET( FV_D01R0101_GIRL_01 )
 
 			//========================================//
 			
@@ -771,10 +771,10 @@ EVENT_START		ev_c01gym0101_leader1_03
 			$WK_SCENE_C01 = 1
 
 			//D01R0101夢ポケモンイベントOBJ表示
-			_FLAG_SET( FV_D01R0101_POKE_01 )
+			_FLAG_RESET( FV_D01R0101_POKE_01 )
 
 			//D01R0101ジム対策イベントOBJ非表示
-			_FLAG_RESET( FV_D01R0101_GIRL_01 )
+			_FLAG_SET( FV_D01R0101_GIRL_01 )
 
 			//========================================//
 
