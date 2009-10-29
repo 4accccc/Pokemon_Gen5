@@ -735,7 +735,6 @@ static void updateFormChange( FIELD_PLAYER_NOGRID* p_player )
   if( p_player->form_change_req )
   {
     FIELD_PLAYER_ChangeMoveForm( p_player->p_player, p_player->form_change );
-    FIELD_PLAYER_SetMoveForm( p_player->p_player, p_player->form_change );
 
     p_player->form_change_req = FALSE;
   }
@@ -1497,7 +1496,7 @@ static void playerCycle_SetMove_Walk(
 	if( debug_flag == TRUE ){
 		code = AC_RAIL_WALK_U_2F;
 	}else{
-		code = AC_RAIL_WALK_U_4F;
+		code = AC_RAIL_WALK_U_2F;
 	}
   
 	code = MMDL_ChangeDirAcmdCode( dir, code );

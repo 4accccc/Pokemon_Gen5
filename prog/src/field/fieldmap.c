@@ -1162,11 +1162,11 @@ void FIELDMAP_ForceUpdate( FIELDMAP_WORK *fieldWork )
 //--------------------------------------------------------------
 BOOL FIELDMAP_SetPlayerItemCycle( FIELDMAP_WORK *fieldWork )
 {
-  FLDMAP_CTRLTYPE type;
+  FLDMAP_BASESYS_TYPE type;
   
-  type = FIELDMAP_GetMapControlType( fieldWork );
+  type = FIELDMAP_GetBaseSystemType( fieldWork );
   
-  if( type == FLDMAP_CTRLTYPE_GRID )
+  if( type == FLDMAP_BASESYS_GRID )
   {
     PLAYER_MOVE_FORM form;
     FIELD_PLAYER_GRID *gjiki;
@@ -1182,6 +1182,26 @@ BOOL FIELDMAP_SetPlayerItemCycle( FIELDMAP_WORK *fieldWork )
     else if( form == PLAYER_MOVE_FORM_NORMAL )
     {
       FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_REQBIT_CYCLE );
+      return( TRUE );
+    }
+  }
+  else
+  {
+    PLAYER_MOVE_FORM form;
+    FIELD_PLAYER_NOGRID *gjiki;
+    
+    form = FIELD_PLAYER_GetMoveForm( fieldWork->field_player );
+    gjiki = FIELDMAP_GetPlayerNoGrid( fieldWork );
+    
+    
+    if( form == PLAYER_MOVE_FORM_CYCLE )
+    {
+      FIELD_PLAYER_NOGRID_ChangeForm( gjiki, PLAYER_MOVE_FORM_NORMAL );
+      return( TRUE );
+    }
+    else if( form == PLAYER_MOVE_FORM_NORMAL )
+    {
+      FIELD_PLAYER_NOGRID_ChangeForm( gjiki, PLAYER_MOVE_FORM_CYCLE );
       return( TRUE );
     }
   }
