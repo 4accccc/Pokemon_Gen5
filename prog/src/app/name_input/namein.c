@@ -4824,9 +4824,9 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 				if( p_default != NULL )
 				{	
 					STRINPUT_SetLongStr( &p_wk->strinput, GFL_STR_GetStringCodePointer(p_default) );
+					GFL_STR_DeleteBuffer( p_default );
 				}
 
-				GFL_STR_DeleteBuffer( p_default );
 			}
 			break;
 		case KEYBOARD_INPUT_SHIFT:			//ƒVƒtƒg
