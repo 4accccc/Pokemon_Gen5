@@ -271,6 +271,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
   
 
   //看板イベントチェック
+  /*
   if( req.stepRequest ){
     u16 id;
     VecFx32 pos;
@@ -292,6 +293,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
       return event;
     }
   }
+  */
   
 //☆☆☆自機状態イベントチェック
   if( !(req.debugRequest) ){

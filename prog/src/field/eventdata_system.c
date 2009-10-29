@@ -917,6 +917,12 @@ static u16 EventData_CheckTalkBoardEventBase(
 {
   const BG_TALK_DATA *data = evdata->bg_data;
   
+  /*
+  if( data->type != BG_TALK_TYPE_BOARD )
+  { // 看板以外はチェックしない
+    continue;
+  }
+  */
   if( talk_dir == DIR_UP && data != NULL )
   {
     u16 i = 0;
@@ -924,10 +930,6 @@ static u16 EventData_CheckTalkBoardEventBase(
     
     for( ; i < max; i++, data++ )
     {
-      if( data->type != BG_TALK_TYPE_BOARD )  
-      { // 看板だけをチェックする
-        continue;
-      }
       if( data->pos_type == EVENTDATA_POSTYPE_GRID )
       {
         if( !BGTalkData_GPOS_IsHit( data, pos ) )
