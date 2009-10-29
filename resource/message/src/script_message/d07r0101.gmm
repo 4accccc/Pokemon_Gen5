@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-29T15:56:16"/>
+	<create user="matsumiya" host="W00207" date="2009-10-29T16:25:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -373,7 +373,7 @@
 穴を掘るのは　男のロマンだな</language>
 	</row>
 
-	<row id="msg_d07r0101_workman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d07r0101_workman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ
 ・春/夏/秋</comment>
@@ -389,7 +389,7 @@
 なんだか　ホッと　するんだ</language>
 	</row>
 
-	<row id="msg_d07r0101_workman_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d07r0101_workman1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ
 ・冬</comment>
@@ -399,6 +399,17 @@
 		<language name="JPN_KANJI" width="256">雪はいい……[BE:01:ページ切り替え（クリア）]
 この世界の　けがれを
 すべて　覆い隠してくれる</language>
+	</row>
+
+	<row id="msg_d07r0101_workman2_01">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">WORKMAN
+作業員</attribute>
+		<language name="JPN" width="256">ヨイのヨイ♪
+カセキが　ほしけりゃ　ネジやまさ♪</language>
+		<language name="JPN_KANJI" width="256">ヨイのヨイ♪
+カセキが　ほしけりゃ　ネジやまさ♪</language>
 	</row>
 
 	<flowchart-group-list>
