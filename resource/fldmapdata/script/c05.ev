@@ -59,13 +59,13 @@ EVENT_START   ev_pos_c05_gymleader_01
 	_OBJ_ANIME(C05_WORKMAN_01,anm_c05_workman_01)
 	_OBJ_ANIME_WAIT()
 	
-	//C05イベント（１）のキャラクターを非表示にする
-	_FLAG_SET(FV_C05_GYMLEADER_01)
-	
 	//暗転・マップ移動
 	_MAP_CHANGE( ZONE_ID_D05, 164, 474, DIR_DOWN )
 	
 	//=======================================//
+	
+	//C05イベント（１）のキャラクターを非表示にする
+	_FLAG_SET(FV_C05_GYMLEADER_01)
 	
 	//***フラグ操作：ジムリーダーとの出会いイベント終了***
 	$WK_SCENE_C05 = 1

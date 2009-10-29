@@ -47,10 +47,12 @@ EVENT_START		ev_c05gym0101_leader
 	
 		//戦闘処理
 		_TRAINER_BTL_SET( TRID_LEADER5_01, 0 )
-		//敗戦チェック
+		//結果チェック
 		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-		IF $SCWK_ANSWER == 0 THEN
-			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()
+		ELSE
+			_TRAINER_LOSE()
 		ENDIF
 	
 		//勝利後会話
