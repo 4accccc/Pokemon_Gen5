@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="tanoue_reiko" host="W00192" date="2009-10-26T17:10:15" source="mus_stage01.mb"/>
+	<create user="tanoue_reiko" host="W00192" date="2009-10-29T16:50:55" source="mus_stage01.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -17,61 +17,72 @@
 	compress_material="on" material_size="28 28"
 />
 
-<tex_pattern_list_data image_size="10" palette_size="10">
+<tex_pattern_list_data image_size="11" palette_size="11">
 	<image_name index="0" name="h02.1"/>
 	<image_name index="1" name="h02.2"/>
-	<image_name index="2" name="kaidan.1"/>
-	<image_name index="3" name="kaidan.2"/>
-	<image_name index="4" name="kaidan2.1"/>
-	<image_name index="5" name="kaidan2.2"/>
-	<image_name index="6" name="tv.1"/>
-	<image_name index="7" name="tv.2"/>
-	<image_name index="8" name="tv.3"/>
-	<image_name index="9" name="tv.4"/>
+	<image_name index="2" name="h02.3"/>
+	<image_name index="3" name="kaidan.1"/>
+	<image_name index="4" name="kaidan.2"/>
+	<image_name index="5" name="kaidan2.1"/>
+	<image_name index="6" name="kaidan2.2"/>
+	<image_name index="7" name="tv.1"/>
+	<image_name index="8" name="tv.2"/>
+	<image_name index="9" name="tv.3"/>
+	<image_name index="10" name="tv.4"/>
 	<palette_name index="0" name="h02.1_pl"/>
 	<palette_name index="1" name="h02.2_pl"/>
-	<palette_name index="2" name="kaidan.1_pl"/>
-	<palette_name index="3" name="kaidan.2_pl"/>
-	<palette_name index="4" name="kaidan2.1_pl"/>
-	<palette_name index="5" name="kaidan2.2_pl"/>
-	<palette_name index="6" name="tv.1_pl"/>
-	<palette_name index="7" name="tv.2_pl"/>
-	<palette_name index="8" name="tv.3_pl"/>
-	<palette_name index="9" name="tv.4_pl"/>
+	<palette_name index="2" name="h02.3_pl"/>
+	<palette_name index="3" name="kaidan.1_pl"/>
+	<palette_name index="4" name="kaidan.2_pl"/>
+	<palette_name index="5" name="kaidan2.1_pl"/>
+	<palette_name index="6" name="kaidan2.2_pl"/>
+	<palette_name index="7" name="tv.1_pl"/>
+	<palette_name index="8" name="tv.2_pl"/>
+	<palette_name index="9" name="tv.3_pl"/>
+	<palette_name index="10" name="tv.4_pl"/>
 </tex_pattern_list_data>
 
 <tex_pattern_data>
-	<frame_idx size="54">
-		0 39 79 118 158 197 237 276 316 355
-		395 434 474 513 553 592 632 671 711 0
+	<frame_idx size="84">
+		0 14 20 38 52 73 79 97 111 132
+		138 156 170 191 197 215 229 250 256 274
+		288 309 315 333 347 368 374 392 406 427
+		433 451 465 486 492 510 524 545 551 569
+		583 604 610 628 642 663 669 687 701 0
 		89 179 269 359 448 538 628 718 0 59
 		119 178 238 297 357 416 476 535 595 654
 		714 0 59 119 178 238 297 357 416 476
 		535 595 654 714
 	</frame_idx>
-	<image_idx size="54">
-		0 1 0 1 0 1 0 1 0 1
-		0 1 0 1 0 1 0 1 0 6
-		7 8 9 6 7 8 9 6 2 3
-		2 3 2 3 2 3 2 3 2 3
-		2 4 5 4 5 4 5 4 5 4
-		5 4 5 4
+	<image_idx size="84">
+		0 1 2 1 0 1 2 1 0 1
+		2 1 0 1 2 1 0 1 2 1
+		0 1 2 1 0 1 2 1 0 1
+		2 1 0 1 2 1 0 1 2 1
+		0 1 2 1 0 1 2 1 0 7
+		8 9 10 7 8 9 10 7 3 4
+		3 4 3 4 3 4 3 4 3 4
+		3 5 6 5 6 5 6 5 6 5
+		6 5 6 5
 	</image_idx>
-	<palette_idx size="54">
-		0 1 0 1 0 1 0 1 0 1
-		0 1 0 1 0 1 0 1 0 6
-		7 8 9 6 7 8 9 6 2 3
-		2 3 2 3 2 3 2 3 2 3
-		2 4 5 4 5 4 5 4 5 4
-		5 4 5 4
+	<palette_idx size="84">
+		0 1 2 1 0 1 2 1 0 1
+		2 1 0 1 2 1 0 1 2 1
+		0 1 2 1 0 1 2 1 0 1
+		2 1 0 1 2 1 0 1 2 1
+		0 1 2 1 0 1 2 1 0 7
+		8 9 10 7 8 9 10 7 3 4
+		3 4 3 4 3 4 3 4 3 4
+		3 5 6 5 6 5 6 5 6 5
+		6 5 6 5
 	</palette_idx>
 </tex_pattern_data>
 
 <tex_pattern_anm_array size="4">
-	<tex_pattern_anm index="0" material_name="h02_lm1" data_size="19" data_head="0"/>
-	<tex_pattern_anm index="1" material_name="tv_lm1" data_size="9" data_head="19"/>
-	<tex_pattern_anm index="2" material_name="kaidan_lm1" data_size="13" data_head="28"/>
-	<tex_pattern_anm index="3" material_name="kaidan2_lm1" data_size="13" data_head="41"/>
+	<tex_pattern_anm index="0" material_name="h02_lm1" data_size="49" data_head="0"/>
+	<tex_pattern_anm index="1" material_name="tv_lm1" data_size="9" data_head="49"/>
+	<tex_pattern_anm index="2" material_name="kaidan_lm1" data_size="13" data_head="58"/>
+	<tex_pattern_anm index="3" material_name="kaidan2_lm1" data_size="13" data_head="71"/>
 </tex_pattern_anm_array>
 
 </body>
