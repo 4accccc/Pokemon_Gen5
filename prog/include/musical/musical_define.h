@@ -121,6 +121,7 @@ typedef struct
 	MUSICAL_MCSS_PARAM mcssParam;
 	MUSICAL_POKE_EQUIP equip[MUS_POKE_EQUIP_MAX];
 	u16                point; //評価点
+	u16                conPoint[MCT_MAX]; //コンディション別評価点
 }MUSICAL_POKE_PARAM;
 
 //----------------------------------------------------------

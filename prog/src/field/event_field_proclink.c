@@ -899,7 +899,7 @@ static void FMenuEvent_Zukan( PROCLINK_WORK* wk, u32 param )
 //-----------------------------------------------------------------------------
 static void * FMenuCallProc_PokeStatus(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs )
 {	
-	PSTATUS_DATA *psData = GFL_HEAP_AllocMemory( HEAPID_PROC , sizeof(PSTATUS_DATA) );
+	PSTATUS_DATA *psData = GFL_HEAP_AllocClearMemory( HEAPID_PROC , sizeof(PSTATUS_DATA) );
   GAMEDATA *gmData = GAMESYSTEM_GetGameData(wk->param->gsys);
   SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( gmData );
 
@@ -928,6 +928,7 @@ static void * FMenuCallProc_PokeStatus(PROCLINK_WORK* wk, u32 param, EVENT_PROCL
 		default:
 			psData->page	= PPT_INFO;
 			psData->mode	= PST_MODE_NORMAL;
+			psData->canExitButton	= TRUE;
 		}
 	}
 	else if( pre == EVENT_PROCLINK_CALL_STATUS )

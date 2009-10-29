@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-10-28T18:08:32"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-10-28T21:21:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -355,6 +355,30 @@
 		<comment>ユニーク</comment>
 		<language name="JPN" font=" 1:small" width="64">おとこのこ</language>
 		<language name="JPN_KANJI">おとこのこ</language>
+	</row>
+
+	<row id="MUSICAL_AUDIENCE_CON_01">
+		<comment>コンディション１</comment>
+		<language name="JPN" font=" 1:small" width="64">クール</language>
+		<language name="JPN_KANJI">クール</language>
+	</row>
+
+	<row id="MUSICAL_AUDIENCE_CON_02">
+		<comment>コンディション２</comment>
+		<language name="JPN" font=" 1:small" width="64">キュート</language>
+		<language name="JPN_KANJI">キュート</language>
+	</row>
+
+	<row id="MUSICAL_AUDIENCE_CON_03">
+		<comment>コンディション３</comment>
+		<language name="JPN" font=" 1:small" width="64">エレガント</language>
+		<language name="JPN_KANJI">エレガント</language>
+	</row>
+
+	<row id="MUSICAL_AUDIENCE_CON_04">
+		<comment>コンディション４</comment>
+		<language name="JPN" font=" 1:small" width="64">ユニーク</language>
+		<language name="JPN_KANJI">ユニーク</language>
 	</row>
 
 	<flowchart-group-list>

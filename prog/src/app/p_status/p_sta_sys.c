@@ -84,6 +84,7 @@ static void PSTATUS_TermMessage( PSTATUS_WORK *work );
 static void PSTATUS_UpdateBarButton( PSTATUS_WORK *work );
 static void PSTATUS_UpdateUI( PSTATUS_WORK *work );
 static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work );
+static const BOOL PSTATUS_UpdateKey_Page( PSTATUS_WORK *work );
 static void PSTATUS_UpdateTP( PSTATUS_WORK *work );
 
 static const BOOL PSTATUS_ChangeData( PSTATUS_WORK *work , const BOOL isUpOder );
@@ -963,9 +964,17 @@ static void PSTATUS_UpdateBarButton( PSTATUS_WORK *work )
 //--------------------------------------------------------------------------
 static void PSTATUS_UpdateUI( PSTATUS_WORK *work )
 {
+  BOOL isChangePage;
 #if USE_DEBUGWIN_SYSTEM
   if( DEBUGWIN_IsActive() == TRUE ) return;
 #endif
+  
+  if( work->psData->mode != PST_MODE_WAZAADD )
+  {
+    //色々面倒なのでとりあえず保留
+    //技専用以外はページ切り替えを自由に(キーのみ
+    //isChangePage = PSTATUS_UpdateKey_Page( work );
+  }
   
   if( work->isActiveBarButton == TRUE &&
       PRINTSYS_QUE_IsFinished( work->printQue ) == TRUE )
@@ -978,7 +987,7 @@ static void PSTATUS_UpdateUI( PSTATUS_WORK *work )
 }
 
 //--------------------------------------------------------------------------
-//  キー操作更新
+//  キー操作更新(ページ切り替え以外
 //--------------------------------------------------------------------------
 static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
 {
@@ -1070,6 +1079,37 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
       PMSND_PlaySystemSE(PSTATUS_SND_SHORTCUT);
     }
     return TRUE;
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------------------
+//  キー操作更新(ページ切り替えのみ
+//--------------------------------------------------------------------------
+static const BOOL PSTATUS_UpdateKey_Page( PSTATUS_WORK *work )
+{
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  {
+    if( work->page < PPT_RIBBON &&
+        work->isEgg == FALSE )
+    {
+      work->page++;
+      PSTATUS_RefreshDisp( work );
+      PMSND_PlaySystemSE(PSTATUS_SND_PAGE);
+      return TRUE;
+    }
+  }
+  else
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+  {
+    if( work->page > PPT_INFO &&
+        work->isEgg == FALSE )
+    {
+      work->page--;
+      PSTATUS_RefreshDisp( work );
+      PMSND_PlaySystemSE(PSTATUS_SND_PAGE);
+      return TRUE;
+    }
   }
   return FALSE;
 }

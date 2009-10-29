@@ -186,6 +186,7 @@ void MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID heapId , MUSICAL_PROGRAM_WORK* pro
     {
       const u8 addPoint = progWork->condition[conIdx] * pokeCondition[pokeIdx][conIdx] / conditionMax[conIdx];
       musPoke->point += addPoint;
+      musPoke->conPoint[conIdx] = addPoint;
       OS_TPrintf("[%3d]",addPoint);
     }
     OS_TPrintf("Sum[%3d]\n",musPoke->point);

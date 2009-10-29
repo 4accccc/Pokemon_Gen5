@@ -12,6 +12,7 @@
 #define MUSICAL_CONDITION_CUTE (1)    //キュート
 #define MUSICAL_CONDITION_ELEGANT (2) //エレガント
 #define MUSICAL_CONDITION_UNIQUE (3)  //ユニーク
+#define MUSICAL_CONDITION_NONE (4)  //上以外のときに帰ってくる値(無かったとか対象が複数ある
 
 
 //_GET_MUSICAL_FAN_VALUE_GIFT_TYPE で戻ってくる値
@@ -29,6 +30,7 @@
 #define MUSICAL_WORD_GOODS (1)        //グッズ名
 #define MUSICAL_WORD_TITLE_LOCAL (2)  //※現在演目
 #define MUSICAL_WORD_AUDI_TYPE (3)  //人気客層
+#define MUSICAL_WORD_CONDITION (4)  //コンディション名
 
 //_MUSICAL_CALL 用
 #define MUSICAL_CALL_LOCAL (0)        //非通信
@@ -49,11 +51,15 @@
 
 //_GET_MUSICAL_WAITROOM_VALUE
 //全部※(控え室のみ有効です！)
+//しかもそれぞれドレスアップ後・ショー後のみ有効な物があるので有泉以外使用禁止
 #define MUSICAL_VALUE_WR_SELF_IDX  (0) //自分の参加番号
 #define MUSICAL_VALUE_WR_MAX_POINT (1) //最高評価点
-#define MUSICAL_VALUE_WR_MIN_POINT (2) //最高得点
-#define MUSICAL_VALUE_WR_GRADE_MSG (3) //評価メッセージの取得
-#define MUSICAL_VALUE_WR_POS_TO_IDX (4) //立ち位置に対応した参加番号
-#define MUSICAL_VALUE_WR_MAX_CONDITION (5) //演目の高いコンディション
+#define MUSICAL_VALUE_WR_MIN_POINT (2) //最低評価点
+#define MUSICAL_VALUE_WR_POINT     (3) //個人得点
+#define MUSICAL_VALUE_WR_GRADE_MSG (4) //評価メッセージの取得
+#define MUSICAL_VALUE_WR_POS_TO_IDX (5) //立ち位置に対応した参加番号
+#define MUSICAL_VALUE_WR_MAX_CONDITION (6) //演目の高いコンディション
+#define MUSICAL_VALUE_WR_POS_TO_RANK (7) //順位に対応した参加番号
+#define MUSICAL_VALUE_WR_POKE_MAX_POINT_CON (8) //最も点が高かったコンディション
 
 

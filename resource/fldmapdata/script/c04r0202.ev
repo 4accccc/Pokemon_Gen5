@@ -34,6 +34,12 @@ _EVENT_DATA_END
 
 DEFINE_LOCAL selfPos	// 自身の位置
 DEFINE_LOCAL retWk		// 戻り値汎用
+DEFINE_LOCAL point		// 得点
+DEFINE_LOCAL condition	// コンディション
+
+DEFINE_LOCAL ownerPos		//オーナーの位置
+DEFINE_LOCAL ownerBefPos	//オーナーの前回位置
+DEFINE_LOCAL checkRank 		//今向かう順位(0～3で1～4位
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
@@ -90,6 +96,139 @@ npc_pos_set_routine:
 }
 _RET
 
+//======================================================================
+// サブルーチン：全体評価
+//======================================================================
+grade_all_msg_routine:
+{
+	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_MAX_POINT,0,point)
+	
+	IF $point >= 100 THEN
+		//単独100点以上が居る
+		_BALLOONWIN_OBJMSG_OPEN( msg_mus_03_001_04 , C04R0202_WOMAN1_01 )
+	ELSIF $point == 50 THEN
+		//全員同じ(50点
+		_BALLOONWIN_OBJMSG_OPEN( msg_mus_03_001_01 , C04R0202_WOMAN1_01 )
+	ELSE
+		_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_MIN_POINT,0,point)
+		IF $point >= 40 THEN
+			//平均40以上
+			_BALLOONWIN_OBJMSG_OPEN( msg_mus_03_001_02 , C04R0202_WOMAN1_01 )
+		ELSE
+			//40以下が居る
+			_BALLOONWIN_OBJMSG_OPEN( msg_mus_03_001_03 , C04R0202_WOMAN1_01 )
+		ENDIF
+	ENDIF
+	_AB_KEYWAIT()     //キー待ち
+	_BALLOONWIN_CLOSE()
+
+}
+_RET
+
+//======================================================================
+// サブルーチン：個人評価のオーナー移動ルーチン
+// 0～3が各立ち位置・5が初期位置とする
+//======================================================================
+owner_move_routine:
+{
+	SWITCH $ownerBefPos
+	CASE 0 THEN
+		SWITCH $ownerPos
+		CASE 1 THEN
+			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_right_2 )
+		CASE 2 THEN
+			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_right_4 )
+		CASE 3 THEN
+			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_right_6 )
+		CASE 5 THEN
+			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_0_to_start )
+		ENDSWITCH
+	CASE 1 THEN
+		SWITCH $ownerPos
+		CASE 0 THEN
+			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_left_2 )
+		CASE 2 THEN
+			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_right_2 )
+		CASE 3 THEN
+			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_right_4 )
+		CASE 5 THEN
+			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_1_to_start )
+		ENDSWITCH
+	CASE 2 THEN
+		SWITCH $ownerPos
+		CASE 0 THEN
+			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_left_4 )
+		CASE 1 THEN
+			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_left_2 )
+		CASE 3 THEN
+			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_right_2 )
+		CASE 5 THEN
+			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_2_to_start )
+		ENDSWITCH
+	CASE 3 THEN
+		SWITCH $ownerPos
+		CASE 0 THEN
+			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_left_6 )
+		CASE 1 THEN
+			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_left_4 )
+		CASE 2 THEN
+			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_left_2 )
+		CASE 5 THEN
+			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_3_to_start )
+		ENDSWITCH
+	CASE 5 THEN
+		SWITCH $ownerPos
+		CASE 0 THEN
+			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_start_to_0 )
+		CASE 1 THEN
+			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_start_to_1 )
+		CASE 2 THEN
+			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_start_to_2 )
+		CASE 3 THEN
+			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_start_to_3 )
+		ENDSWITCH
+	ENDSWITCH
+	_OBJ_ANIME_WAIT()
+}
+_RET
+
+//======================================================================
+// サブルーチン：個人評価
+//======================================================================
+grade_one_msg_routine:
+{
+	_CALL owner_move_routine
+	
+	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POKE_MAX_POINT_CON,ownerPos,condition)
+	IF $condition < MUSICAL_CONDITION_NONE THEN
+		_MUSICAL_WORD( MUSICAL_WORD_CONDITION , 0 , condition )
+		_BALLOONWIN_OBJMSG_OPEN( msg_mus_03_002_01 , C04R0202_WOMAN1_01 )
+	ELSE
+		_BALLOONWIN_OBJMSG_OPEN( msg_mus_03_002_02 , C04R0202_WOMAN1_01 )
+	ENDIF
+	_AB_KEYWAIT()     //キー待ち
+	_BALLOONWIN_CLOSE()
+
+	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POINT,ownerPos,point)
+	
+	IF $point >= 100 THEN
+		_BALLOONWIN_OBJMSG_OPEN( msg_mus_03_003_01 , C04R0202_WOMAN1_01 )
+	ELSIF $point >= 50 THEN
+		_BALLOONWIN_OBJMSG_OPEN( msg_mus_03_003_02 , C04R0202_WOMAN1_01 )
+	ELSIF $point >= 40 THEN
+		_BALLOONWIN_OBJMSG_OPEN( msg_mus_03_003_03 , C04R0202_WOMAN1_01 )
+	ELSIF $point >= 30 THEN
+		_BALLOONWIN_OBJMSG_OPEN( msg_mus_03_003_04 , C04R0202_WOMAN1_01 )
+	ELSIF $point >= 20 THEN
+		_BALLOONWIN_OBJMSG_OPEN( msg_mus_03_003_05 , C04R0202_WOMAN1_01 )
+	ELSE
+		_BALLOONWIN_OBJMSG_OPEN( msg_mus_03_003_06 , C04R0202_WOMAN1_01 )
+	ENDIF
+	_AB_KEYWAIT()     //キー待ち
+	_BALLOONWIN_CLOSE()
+}
+_RET
+
 /**************************************************************/
 //	ゾーンチェンジスクリプト
 /**************************************************************/
@@ -102,7 +241,6 @@ INIT_EVENT_END
 /**************************************************************/
 EVENT_START ev_c04r0202_mus_1st
 	
-	DEFINE_LOCAL condition	// 演目の高いコンディション
 	_CALL npc_pos_set_routine
 
 	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_SELF_IDX,0,selfPos)
@@ -166,10 +304,29 @@ EVENT_START ev_c04r0202_mus_3rd
 
 	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_SELF_IDX,0,selfPos)
 
-	_BALLOONWIN_OBJMSG_OPEN( msg_mus_03_001 , C04R0202_WOMAN1_01 )
+	//全体評価
+	_CALL grade_all_msg_routine
+
+	//個別評価
+	$ownerBefPos = 5
+	$checkRank = 0		//1位のこと
+	
+	WHILE $checkRank < 4
+		_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_RANK,checkRank,ownerPos)
+
+		_CALL grade_one_msg_routine
+
+		$ownerBefPos = $ownerPos 
+		$checkRank += 1
+	ENDWHILE
+	
+	$ownerPos = 5
+	_CALL owner_move_routine
+	
+	_BALLOONWIN_OBJMSG_OPEN( msg_mus_03_004_01 , C04R0202_WOMAN1_01 )
 	_AB_KEYWAIT()     //キー待ち
 	_BALLOONWIN_CLOSE()
-
+	
 	 SWITCH $selfPos
 	 CASE 0 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_main_to_start_1 )
@@ -236,7 +393,7 @@ _ANIME_LABEL anm_move_player_start_to_main_4
 	_ANIME_DATA AC_WALK_U_8F,1
 	_ANIME_DATA ACMD_END,0
 
-
+//立ち位置から入り口(0～3個
 _ANIME_LABEL anm_move_player_main_to_start_1
 	_ANIME_DATA AC_DIR_D,1
 	_ANIME_DATA AC_WALK_D_8F,1
@@ -273,3 +430,96 @@ _ANIME_LABEL anm_move_player_main_to_start_4
 	_ANIME_DATA AC_WALK_D_8F,11
 	_ANIME_DATA ACMD_END,0
 
+//オーナー移動用 初期位置から各位置へ
+_ANIME_LABEL anm_move_owner_start_to_0
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_WALK_L_8F,3
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA ACMD_END,0
+_ANIME_LABEL anm_move_owner_start_to_1
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA ACMD_END,0
+_ANIME_LABEL anm_move_owner_start_to_2
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA ACMD_END,0
+_ANIME_LABEL anm_move_owner_start_to_3
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_WALK_R_8F,3
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA ACMD_END,0
+
+//オーナー移動用 各位置から初期位置へ
+_ANIME_LABEL anm_move_owner_0_to_start
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_WALK_R_8F,3
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_WALK_U_8F,2
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA ACMD_END,0
+_ANIME_LABEL anm_move_owner_1_to_start
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_WALK_U_8F,2
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA ACMD_END,0
+_ANIME_LABEL anm_move_owner_2_to_start
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_WALK_U_8F,2
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA ACMD_END,0
+_ANIME_LABEL anm_move_owner_3_to_start
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_WALK_L_8F,3
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_WALK_U_8F,2
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA ACMD_END,0
+
+//オーナー移動用 汎用右移動2・4・6
+_ANIME_LABEL anm_move_owner_right_2
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_WALK_R_8F,2
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA ACMD_END,0
+_ANIME_LABEL anm_move_owner_right_4
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_WALK_R_8F,4
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA ACMD_END,0
+_ANIME_LABEL anm_move_owner_right_6
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_WALK_R_8F,6
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA ACMD_END,0
+
+//オーナー移動用 汎用左移動2・4・6
+_ANIME_LABEL anm_move_owner_left_2
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_WALK_L_8F,2
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA ACMD_END,0
+_ANIME_LABEL anm_move_owner_left_4
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_WALK_L_8F,4
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA ACMD_END,0
+_ANIME_LABEL anm_move_owner_left_6
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_WALK_L_8F,6
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA ACMD_END,0

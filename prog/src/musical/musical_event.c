@@ -38,6 +38,7 @@
 #include "musical/dressup/dup_local_def.h"
 
 #include "../resource/fldmapdata/script/c04r0202_def.h"
+#include "../resource/fldmapdata/script/musical_scr_local.h"
 
 #include "musical/musical_event.h"
 
@@ -112,7 +113,10 @@ struct _MUSICAL_EVENT_WORK
   MUSICAL_PROGRAM_WORK *progWork;
   MUSICAL_POKE_PARAM *musPoke;
 
+  MUSICAL_SAVE *musSave;
+
   u8 musicalIndex[MUSICAL_POKE_MAX];
+  u8 rankIndex[MUSICAL_POKE_MAX];   //参加番号が順位順で入っている
   u8 selfIdx;
 
 };
@@ -161,7 +165,8 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const BOOL
   evWork->dupInitWork = NULL;
   evWork->actInitWork = NULL;
   evWork->shotInitWork = NULL;
-
+  evWork->musSave = MUSICAL_SAVE_GetMusicalSave( evWork->saveCtrl );
+  
   evWork->state = MES_ENTER_WAITROOM_FIRST;
   evWork->subSeq = 0;
   
@@ -565,6 +570,39 @@ static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork )
     SAVE_CONTROL_WORK *saveWork = GAMEDATA_GetSaveControlWork(gameData);
     evWork->shotInitWork->musicalSave = MUSICAL_SAVE_GetMusicalSave(saveWork);
   }
+  
+  //今後のための処理
+  //順位の確定
+  {
+    u8 i,j;
+    u8 pointArr[MUSICAL_POKE_MAX];
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      pointArr[i] = evWork->actInitWork->musPoke[i]->point;
+      evWork->rankIndex[i] = i;
+    }
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      for( j=0;j<MUSICAL_POKE_MAX-(i+1);j++ )
+      {
+        if( pointArr[j+1] > pointArr[j] )
+        {
+          const u8 tp = pointArr[j+1];
+          const u8 ti = evWork->rankIndex[j+1];
+          pointArr[j+1] = pointArr[j];
+          evWork->rankIndex[j+1] = evWork->rankIndex[j];
+          pointArr[j] = tp;
+          evWork->rankIndex[j] = ti;
+        }
+      }
+    }
+    OS_TPrintf("RANK:");
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      OS_TPrintf("[%d:%d]",pointArr[i],evWork->rankIndex[i]);
+    }
+    OS_TPrintf("\n");
+  }
 }
 
 #pragma mark [>FieldFunc
@@ -695,4 +733,76 @@ STRBUF* MUSICAL_EVENT_CreateStr_ProgramTitle( MUSICAL_EVENT_WORK *evWork , HEAPI
   return strBuf;
 }
 
+//各種評価点取得
+const u8 MUSICAL_EVENT_GetPoint( MUSICAL_EVENT_WORK *evWork , const u8 idx )
+{
+  const MUSICAL_POKE_PARAM *musPoke = evWork->actInitWork->musPoke[idx];
+  return musPoke->point;
+}
 
+const u8 MUSICAL_EVENT_GetMaxPoint( MUSICAL_EVENT_WORK *evWork )
+{
+  u8 i;
+  u8 maxPoint = 0;
+  for( i=0;i<MUSICAL_POKE_MAX;i++ )
+  {
+    const MUSICAL_POKE_PARAM *musPoke = evWork->actInitWork->musPoke[i];
+    if( maxPoint < musPoke->point )
+    {
+      maxPoint = musPoke->point;
+    }
+  }
+  return maxPoint;
+}
+
+const u8 MUSICAL_EVENT_GetMinPoint( MUSICAL_EVENT_WORK *evWork )
+{
+  u8 i;
+  u8 minPoint = 0xFF;
+  for( i=0;i<MUSICAL_POKE_MAX;i++ )
+  {
+    const MUSICAL_POKE_PARAM *musPoke = evWork->actInitWork->musPoke[i];
+    if( minPoint > musPoke->point )
+    {
+      minPoint = musPoke->point;
+    }
+  }
+  return minPoint;
+}
+
+//指定順位のキャラの位置
+const u8 MUSICAL_EVENT_GetPosToRank( MUSICAL_EVENT_WORK *evWork , const u8 idx )
+{
+  return evWork->rankIndex[idx];
+}
+
+//キャラ別のコンディション評価点の高い数値を取得
+const u8 MUSICAL_EVENT_GetMaxPointCondition( MUSICAL_EVENT_WORK *evWork , const u8 idx )
+{
+  u8 i;
+  u8 maxPoint = 0;
+  u8 maxType = 0;
+  BOOL isSame = FALSE;  //トップが同点が
+  for( i=0;i<MCT_MAX;i++ )
+  {
+    const MUSICAL_POKE_PARAM *musPoke = evWork->actInitWork->musPoke[idx];
+    if( maxPoint < musPoke->conPoint[i] )
+    {
+      isSame = FALSE;
+      maxType = i;
+      maxPoint = musPoke->conPoint[i];
+    }
+    else
+    if( maxPoint == musPoke->conPoint[i] )
+    {
+      isSame = TRUE;
+    }
+  }
+  
+  if( isSame == TRUE )
+  {
+    return MUSICAL_CONDITION_NONE;
+  }
+  
+  return maxType;
+}

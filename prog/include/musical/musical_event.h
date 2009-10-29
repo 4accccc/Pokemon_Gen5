@@ -18,3 +18,8 @@ extern const u8 MUSICAL_EVENT_GetSelfIndex( MUSICAL_EVENT_WORK *evWork );
 extern const u8 MUSICAL_EVENT_GetPosIndex( MUSICAL_EVENT_WORK *evWork , const u8 pos );
 extern const u8 MUSICAL_EVENT_GetMaxCondition( MUSICAL_EVENT_WORK *evWork );
 extern STRBUF* MUSICAL_EVENT_CreateStr_ProgramTitle( MUSICAL_EVENT_WORK *evWork , HEAPID heapId );
+extern const u8 MUSICAL_EVENT_GetPoint( MUSICAL_EVENT_WORK *evWork , const u8 idx );
+extern const u8 MUSICAL_EVENT_GetMaxPoint( MUSICAL_EVENT_WORK *evWork );
+extern const u8 MUSICAL_EVENT_GetMinPoint( MUSICAL_EVENT_WORK *evWork );
+extern const u8 MUSICAL_EVENT_GetPosToRank( MUSICAL_EVENT_WORK *evWork , const u8 idx );
+extern const u8 MUSICAL_EVENT_GetMaxPointCondition( MUSICAL_EVENT_WORK *evWork , const u8 idx );

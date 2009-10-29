@@ -172,8 +172,16 @@ VMCMD_RESULT EvCmdGetMusicalWaitRoomValue( VMHANDLE *core, void *wk )
     ARI_TPrintf("MusValWR:SelfIdx[%d]\n",*ret_wk);
     break;
   case MUSICAL_VALUE_WR_MAX_POINT: //最高評価点
+    *ret_wk = MUSICAL_EVENT_GetMaxPoint( evWork );
+    ARI_TPrintf("MusValWR:MaxPoint[%d]\n",*ret_wk);
     break;
-  case MUSICAL_VALUE_WR_MIN_POINT: //最高得点
+  case MUSICAL_VALUE_WR_MIN_POINT: //最低評価点
+    *ret_wk = MUSICAL_EVENT_GetMinPoint( evWork );
+    ARI_TPrintf("MusValWR:MinPoint[%d]\n",*ret_wk);
+    break;
+  case MUSICAL_VALUE_WR_POINT:     //個人得点
+    *ret_wk = MUSICAL_EVENT_GetPoint( evWork , val );
+    ARI_TPrintf("MusValWR:Point[%d:%d]\n",val,*ret_wk);
     break;
   case MUSICAL_VALUE_WR_GRADE_MSG: //評価メッセージの取得
     break;
@@ -181,9 +189,17 @@ VMCMD_RESULT EvCmdGetMusicalWaitRoomValue( VMHANDLE *core, void *wk )
     *ret_wk = MUSICAL_EVENT_GetPosIndex( evWork , val );
     ARI_TPrintf("MusValWR:PosIdx[%d:%d]\n",val,*ret_wk);
     break;
-  case MUSICAL_VALUE_WR_MAX_CONDITION: //立ち位置に対応した参加番号
+  case MUSICAL_VALUE_WR_MAX_CONDITION: //演目の高いコンディション
     *ret_wk = MUSICAL_EVENT_GetMaxCondition( evWork  );
     ARI_TPrintf("MusValWR:MaxCondition[%d]\n",*ret_wk);
+    break;
+  case MUSICAL_VALUE_WR_POS_TO_RANK://順位に対応した参加番号
+    *ret_wk = MUSICAL_EVENT_GetPosToRank( evWork , val );
+    ARI_TPrintf("MusValWR:PosRank[%d:%d]\n",val,*ret_wk);
+    break;
+  case MUSICAL_VALUE_WR_POKE_MAX_POINT_CON: //最も点が高かったコンディション
+    *ret_wk = MUSICAL_EVENT_GetMaxPointCondition( evWork , val );
+    ARI_TPrintf("MusValWR:MaxPointCon[%d:%d]\n",val,*ret_wk);
     break;
   default:
     GF_ASSERT_MSG( 0 , "タイプ指定が間違ってる[%d]\n",type );
@@ -233,6 +249,18 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
       GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_musical_common_dat , heapId );
 
       tmpBuf = GFL_MSG_CreateString( msgHandle , MUSICAL_AUDIENCE_TYPE_01+val );
+      WORDSET_RegisterWord( *wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
+
+      GFL_STR_DeleteBuffer( tmpBuf );
+      GFL_MSG_Delete( msgHandle );
+    }
+    break;
+  case MUSICAL_WORD_CONDITION:  //コンディション名
+    {
+      STRBUF * tmpBuf;
+      GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_musical_common_dat , heapId );
+
+      tmpBuf = GFL_MSG_CreateString( msgHandle , MUSICAL_AUDIENCE_CON_01+val );
       WORDSET_RegisterWord( *wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
 
       GFL_STR_DeleteBuffer( tmpBuf );

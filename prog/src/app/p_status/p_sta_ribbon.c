@@ -392,6 +392,8 @@ static const BOOL PSTATUS_RIBBON_UpdateKey( PSTATUS_WORK *work , PSTATUS_RIBBON_
       ribbonWork->isTouchBar = FALSE;
       PSTATUS_RIBBON_SetCursorTopBar( work , ribbonWork );
       //GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , TRUE );
+      PSTATUS_RIBBON_ClearInfo( work , ribbonWork );
+      PSTATUS_RIBBON_DispInfo( work , ribbonWork );
       work->ktst = GFL_APP_END_KEY;
       return TRUE;
     }
@@ -530,23 +532,11 @@ static void PSTATUS_RIBBON_UpdateTP( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
     {
       ribbonWork->speed++;
       PSTATUS_RIBBON_MoveBar( work , ribbonWork , ribbonWork->speed/PSTATUS_RIBBON_BAR_SPEED_RATE );
-      if( ribbonWork->sndCnt == 0 &&
-          befPos != ribbonWork->pagePos )
-      {
-        PMSND_PlaySystemSE(PSTATUS_SND_SLIDE);
-        ribbonWork->sndCnt = 4;
-      }
     }
     if( ribbonWork->speed > 0 )
     {
       ribbonWork->speed--;
       PSTATUS_RIBBON_MoveBar( work , ribbonWork , ribbonWork->speed/PSTATUS_RIBBON_BAR_SPEED_RATE );
-      if( ribbonWork->sndCnt == 0 &&
-          befPos != ribbonWork->pagePos )
-      {
-        PMSND_PlaySystemSE(PSTATUS_SND_SLIDE);
-        ribbonWork->sndCnt = 4;
-      }
     }
   }
 }
@@ -842,6 +832,7 @@ static void PSTATUS_RIBBON_CreateRibbonBarFunc( PSTATUS_WORK *work , PSTATUS_RIB
 static void PSTATUS_RIBBON_UpdatRibbon( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
 {
   u8 i;
+  BOOL isChange = FALSE;
   
   for( i=0;i<PSTATUS_RIBBON_BAR_NUM;i++ )
   {
@@ -860,6 +851,7 @@ static void PSTATUS_RIBBON_UpdatRibbon( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK
       else
       if( ribbonType != ribbonWork->ribbonDispWork[i].dispRibbonNo )
       {
+        isChange = TRUE;
         ribbonWork->ribbonDispWork[i].dispRibbonNo = ribbonType;
         PSTATUS_RIBBON_CreateRibbonBarFunc( work , ribbonWork , 
                                 &ribbonWork->ribbonDispWork[i] );
@@ -876,6 +868,14 @@ static void PSTATUS_RIBBON_UpdatRibbon( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK
       }
     }
   }
+  
+  if( isChange == TRUE &&
+  ribbonWork->sndCnt == 0 )
+  {
+    PMSND_PlaySystemSE(PSTATUS_SND_SLIDE);
+    ribbonWork->sndCnt = 4;
+  }
+      
   
   //前回idxの差分で見るとTP操作で10個飛ばしで動いたとき、変更が取れない！
 //  if( ribbonWork->selectIdx != ribbonWork->befSelectIdx )
