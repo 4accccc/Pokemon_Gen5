@@ -135,6 +135,8 @@ enum {
 #define	PALSIZ_TYPEICON			( 3 )
 #define	PALOFS_CURSOR				( PALOFS_TYPEICON + 0x20 * PALSIZ_TYPEICON )
 #define	PALSIZ_CURSOR				( 1 )
+#define	PALOFS_HPGAUGE			( PALOFS_CURSOR + 0x20 * PALSIZ_CURSOR )
+#define	PALSIZ_HPGAUGE			( 1 )
 
 
 //============================================================================================
@@ -167,44 +169,52 @@ static void BPL_ClactCursorAdd( BPLIST_WORK * wk );
 static void BPL_CursorDel( BPLIST_WORK * wk );
 
 static void CursorResLoad( BPLIST_WORK * wk );
+static void HPGaugeResLoad( BPLIST_WORK * wk );
 
 
 //============================================================================================
 //	グローバル変数
 //============================================================================================
 // リソーステーブル
-static const u32 ObjParamEz[][4] =
-{	// キャラ、パレット、セル、セルアニメ、OBJプライオリティ
-	{ BPLIST_CHRRES_ITEM, BPLIST_PALRES_ITEM, BPLIST_CELRES_ITEM, 0 },			// アイテムアイコン１
-	{ BPLIST_CHRRES_ITEM, BPLIST_PALRES_ITEM, BPLIST_CELRES_ITEM, 0 },			// アイテムアイコン２
-	{ BPLIST_CHRRES_ITEM, BPLIST_PALRES_ITEM, BPLIST_CELRES_ITEM, 0 },			// アイテムアイコン３
-	{ BPLIST_CHRRES_ITEM, BPLIST_PALRES_ITEM, BPLIST_CELRES_ITEM, 0 },			// アイテムアイコン４
-	{ BPLIST_CHRRES_ITEM, BPLIST_PALRES_ITEM, BPLIST_CELRES_ITEM, 0 },			// アイテムアイコン５
-	{ BPLIST_CHRRES_ITEM, BPLIST_PALRES_ITEM, BPLIST_CELRES_ITEM, 0 },			// アイテムアイコン６
-	{ BPLIST_CHRRES_ITEM, BPLIST_PALRES_ITEM, BPLIST_CELRES_ITEM, 0 },			// アイテムアイコン７
+static const u32 ObjParamEz[][5] =
+{	// キャラ、パレット、セル、セルアニメ、BGプライオリティ、OBJプライオリティ
+	{ BPLIST_CHRRES_ITEM, BPLIST_PALRES_ITEM, BPLIST_CELRES_ITEM, 1, 0 },			// アイテムアイコン１
+	{ BPLIST_CHRRES_ITEM, BPLIST_PALRES_ITEM, BPLIST_CELRES_ITEM, 1, 0 },			// アイテムアイコン２
+	{ BPLIST_CHRRES_ITEM, BPLIST_PALRES_ITEM, BPLIST_CELRES_ITEM, 1, 0 },			// アイテムアイコン３
+	{ BPLIST_CHRRES_ITEM, BPLIST_PALRES_ITEM, BPLIST_CELRES_ITEM, 1, 0 },			// アイテムアイコン４
+	{ BPLIST_CHRRES_ITEM, BPLIST_PALRES_ITEM, BPLIST_CELRES_ITEM, 1, 0 },			// アイテムアイコン５
+	{ BPLIST_CHRRES_ITEM, BPLIST_PALRES_ITEM, BPLIST_CELRES_ITEM, 1, 0 },			// アイテムアイコン６
+	{ BPLIST_CHRRES_ITEM, BPLIST_PALRES_ITEM, BPLIST_CELRES_ITEM, 1, 0 },			// アイテムアイコン７
 
-	{ BPLIST_CHRRES_POKE1, BPLIST_PALRES_POKE, BPLIST_CELRES_POKE, 1 },			// ポケモンアイコン１
-	{ BPLIST_CHRRES_POKE2, BPLIST_PALRES_POKE, BPLIST_CELRES_POKE, 1 },			// ポケモンアイコン２
-	{ BPLIST_CHRRES_POKE3, BPLIST_PALRES_POKE, BPLIST_CELRES_POKE, 1 },			// ポケモンアイコン３
-	{ BPLIST_CHRRES_POKE4, BPLIST_PALRES_POKE, BPLIST_CELRES_POKE, 1 },			// ポケモンアイコン４
-	{ BPLIST_CHRRES_POKE5, BPLIST_PALRES_POKE, BPLIST_CELRES_POKE, 1 },			// ポケモンアイコン５
-	{ BPLIST_CHRRES_POKE6, BPLIST_PALRES_POKE, BPLIST_CELRES_POKE, 1 },			// ポケモンアイコン６
+	{ BPLIST_CHRRES_POKE1, BPLIST_PALRES_POKE, BPLIST_CELRES_POKE, 1, 1 },			// ポケモンアイコン１
+	{ BPLIST_CHRRES_POKE2, BPLIST_PALRES_POKE, BPLIST_CELRES_POKE, 1, 1 },			// ポケモンアイコン２
+	{ BPLIST_CHRRES_POKE3, BPLIST_PALRES_POKE, BPLIST_CELRES_POKE, 1, 1 },			// ポケモンアイコン３
+	{ BPLIST_CHRRES_POKE4, BPLIST_PALRES_POKE, BPLIST_CELRES_POKE, 1, 1 },			// ポケモンアイコン４
+	{ BPLIST_CHRRES_POKE5, BPLIST_PALRES_POKE, BPLIST_CELRES_POKE, 1, 1 },			// ポケモンアイコン５
+	{ BPLIST_CHRRES_POKE6, BPLIST_PALRES_POKE, BPLIST_CELRES_POKE, 1, 1 },			// ポケモンアイコン６
 
-	{ BPLIST_CHRRES_STATUS, BPLIST_PALRES_STATUS, BPLIST_CELRES_STATUS, 1 },	// 状態異常アイコン１
-	{ BPLIST_CHRRES_STATUS, BPLIST_PALRES_STATUS, BPLIST_CELRES_STATUS, 1 },	// 状態異常アイコン２
-	{ BPLIST_CHRRES_STATUS, BPLIST_PALRES_STATUS, BPLIST_CELRES_STATUS, 1 },	// 状態異常アイコン３
-	{ BPLIST_CHRRES_STATUS, BPLIST_PALRES_STATUS, BPLIST_CELRES_STATUS, 1 },	// 状態異常アイコン４
-	{ BPLIST_CHRRES_STATUS, BPLIST_PALRES_STATUS, BPLIST_CELRES_STATUS, 1 },	// 状態異常アイコン５
-	{ BPLIST_CHRRES_STATUS, BPLIST_PALRES_STATUS, BPLIST_CELRES_STATUS, 1 },	// 状態異常アイコン６
+	{ BPLIST_CHRRES_STATUS, BPLIST_PALRES_STATUS, BPLIST_CELRES_STATUS, 1, 1 },	// 状態異常アイコン１
+	{ BPLIST_CHRRES_STATUS, BPLIST_PALRES_STATUS, BPLIST_CELRES_STATUS, 1, 1 },	// 状態異常アイコン２
+	{ BPLIST_CHRRES_STATUS, BPLIST_PALRES_STATUS, BPLIST_CELRES_STATUS, 1, 1 },	// 状態異常アイコン３
+	{ BPLIST_CHRRES_STATUS, BPLIST_PALRES_STATUS, BPLIST_CELRES_STATUS, 1, 1 },	// 状態異常アイコン４
+	{ BPLIST_CHRRES_STATUS, BPLIST_PALRES_STATUS, BPLIST_CELRES_STATUS, 1, 1 },	// 状態異常アイコン５
+	{ BPLIST_CHRRES_STATUS, BPLIST_PALRES_STATUS, BPLIST_CELRES_STATUS, 1, 1 },	// 状態異常アイコン６
 
-	{ BPLIST_CHRRES_POKETYPE1, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 0 },		// ポケモンタイプアイコン１
-	{ BPLIST_CHRRES_POKETYPE2, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 0 },		// ポケモンタイプアイコン２
-	{ BPLIST_CHRRES_WAZATYPE1, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 0 },		// 技タイプアイコン１
-	{ BPLIST_CHRRES_WAZATYPE2, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 0 },		// 技タイプアイコン２
-	{ BPLIST_CHRRES_WAZATYPE3, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 0 },		// 技タイプアイコン３
-	{ BPLIST_CHRRES_WAZATYPE4, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 0 },		// 技タイプアイコン４
-	{ BPLIST_CHRRES_WAZATYPE5, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 0 },		// 技タイプアイコン４
-	{ BPLIST_CHRRES_BUNRUI, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 0 },			// 分類アイコン
+	{ BPLIST_CHRRES_HPGAUGE, BPLIST_PALRES_HPGAUGE, BPLIST_CELRES_HPGAUGE, 2, 0 },	// ＨＰゲージ枠１
+	{ BPLIST_CHRRES_HPGAUGE, BPLIST_PALRES_HPGAUGE, BPLIST_CELRES_HPGAUGE, 2, 0 },	// ＨＰゲージ枠２
+	{ BPLIST_CHRRES_HPGAUGE, BPLIST_PALRES_HPGAUGE, BPLIST_CELRES_HPGAUGE, 2, 0 },	// ＨＰゲージ枠３
+	{ BPLIST_CHRRES_HPGAUGE, BPLIST_PALRES_HPGAUGE, BPLIST_CELRES_HPGAUGE, 2, 0 },	// ＨＰゲージ枠４
+	{ BPLIST_CHRRES_HPGAUGE, BPLIST_PALRES_HPGAUGE, BPLIST_CELRES_HPGAUGE, 2, 0 },	// ＨＰゲージ枠５
+	{ BPLIST_CHRRES_HPGAUGE, BPLIST_PALRES_HPGAUGE, BPLIST_CELRES_HPGAUGE, 2, 0 },	// ＨＰゲージ枠６
+
+	{ BPLIST_CHRRES_POKETYPE1, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },		// ポケモンタイプアイコン１
+	{ BPLIST_CHRRES_POKETYPE2, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },		// ポケモンタイプアイコン２
+	{ BPLIST_CHRRES_WAZATYPE1, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },		// 技タイプアイコン１
+	{ BPLIST_CHRRES_WAZATYPE2, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },		// 技タイプアイコン２
+	{ BPLIST_CHRRES_WAZATYPE3, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },		// 技タイプアイコン３
+	{ BPLIST_CHRRES_WAZATYPE4, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },		// 技タイプアイコン４
+	{ BPLIST_CHRRES_WAZATYPE5, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },		// 技タイプアイコン４
+	{ BPLIST_CHRRES_BUNRUI, BPLIST_PALRES_TYPE, BPLIST_CELRES_TYPE, 1, 0 },			// 分類アイコン
 };
 
 // ページ１のポケモンアイコンの座標
@@ -223,6 +233,14 @@ static const GFL_CLACTPOS P1_StatusPos[] =
 	{ 16+12, 112+24 }, { 144+12, 120+24 },
 };
 
+// ページ１のＨＰゲージ枠の座標
+static const GFL_CLACTPOS P1_HPGaugePos[] =
+{
+	{ 16+71,  16+12 }, { 144+71,  24+12 },
+	{ 16+71,  64+12 }, { 144+71,  72+12 },
+	{ 16+71, 112+12 }, { 144+71, 120+12 },
+};
+
 static const GFL_CLACTPOS P_CHG_PokePos = { 128, 72 };	// 入れ替えページのポケモンアイコンの座標
 
 static const GFL_CLACTPOS P2_PokePos = { 24, 12 };		// ページ２のポケモンアイコンの座標
@@ -235,6 +253,8 @@ static const GFL_CLACTPOS P2_PokeTypePos[] =
 };
 // ページ２のアイテム名横のアイテムアイコンの座標
 static const GFL_CLACTPOS P2_ItemIconPos = { 20, 132 };
+// ページ２のＨＰゲージ枠の座標
+static const GFL_CLACTPOS P2_HPGaugePos = { 223, 52 };
 
 static const GFL_CLACTPOS P3_PokePos = { 24, 12 };		// ページ３のポケモンアイコンの座標
 static const GFL_CLACTPOS P3_StatusPos = { 192+6, 17+3 };	// ページ３の状態異常アイコンの座標
@@ -313,6 +333,7 @@ void BattlePokeList_ObjInit( BPLIST_WORK * wk )
 	BPL_ClactTypeLoad( wk );
 //	BPL_ClactConditionLoad( wk );
 	CursorResLoad( wk );
+	HPGaugeResLoad( wk );
 	BPL_ClactAddAll( wk );
 	BPL_ClactCursorAdd( wk );
 
@@ -567,6 +588,36 @@ static void CursorResLoad( BPLIST_WORK * wk )
   GFL_ARC_CloseDataHandle( ah );
 }
 
+static void HPGaugeResLoad( BPLIST_WORK * wk )
+{
+  ARCHANDLE * ah;
+
+	ah = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), wk->dat->heap );
+
+	// キャラ
+	wk->chrRes[BPLIST_CHRRES_HPGAUGE] = GFL_CLGRP_CGR_Register(
+																				ah,
+																				APP_COMMON_GetHPBarBaseCharArcIdx(APP_COMMON_MAPPING_32K),
+																				FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
+	// パレット
+/*
+  wk->palRes[BPLIST_PALRES_HPGAUGE] = GFL_CLGRP_PLTT_RegisterEx(
+																				ah, APP_COMMON_GetHPBarBasePltArcIdx(),
+																				CLSYS_DRAW_SUB, PALOFS_HPGAUGE, 1, PALSIZ_HPGAUGE, wk->dat->heap );
+*/
+  wk->palRes[BPLIST_PALRES_HPGAUGE] = GFL_CLGRP_PLTT_Register(
+																				ah, APP_COMMON_GetHPBarBasePltArcIdx(),
+																				CLSYS_DRAW_SUB, PALOFS_HPGAUGE, wk->dat->heap );
+
+	// セル・アニメ
+  wk->celRes[BPLIST_CELRES_HPGAUGE] = GFL_CLGRP_CELLANIM_Register(
+																				ah,
+																				APP_COMMON_GetHPBarBaseCellArcIdx(APP_COMMON_MAPPING_32K),
+																				APP_COMMON_GetHPBarBaseAnimeArcIdx(APP_COMMON_MAPPING_32K),
+																				wk->dat->heap );
+
+  GFL_ARC_CloseDataHandle( ah );
+}
 
 
 
@@ -588,8 +639,8 @@ static GFL_CLWK * BPL_ClactAdd( BPLIST_WORK * wk, const u32 * res )
 	dat.pos_x = 0;
 	dat.pos_y = 0;
 	dat.anmseq = 0;
-	dat.softpri = res[3];
-	dat.bgpri = 1;
+	dat.softpri = res[4];
+	dat.bgpri = res[3];
 
 	clwk = GFL_CLACT_WK_Create(
 						wk->clunit,
@@ -1010,6 +1061,8 @@ static void BPL_Page1ObjSet( BPLIST_WORK * wk )
 		// 状態異常アイコン
 		BPL_StIconPut(
 			wk->poke[i].st, wk->clwk[BPL_CA_STATUS1+i], &P1_StatusPos[i] );
+		// ＨＰゲージ枠
+		BPL_ClactOn( wk->clwk[BPL_CA_HPGAUGE1+i], &P1_HPGaugePos[i] );
 		// アイテムアイコン
 		{
 			GFL_CLACTPOS	pos = P1_PokePos[i];
@@ -1113,6 +1166,9 @@ static void BPL_StMainPageObjSet( BPLIST_WORK * wk )
 
 	// アイテムアイコン（アイテム名の横の）
 	BPL_ItemIconPut( pd->item, wk->clwk[BPL_CA_ITEM7], &P2_ItemIconPos );
+
+	// ＨＰゲージ
+	BPL_ClactOn( wk->clwk[BPL_CA_HPGAUGE1], &P2_HPGaugePos );
 
 /*
 	BPL_POKEDATA * pd;

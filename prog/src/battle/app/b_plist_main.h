@@ -238,6 +238,13 @@ enum {
 	BPL_CA_STATUS5,
 	BPL_CA_STATUS6,
 
+	BPL_CA_HPGAUGE1,
+	BPL_CA_HPGAUGE2,
+	BPL_CA_HPGAUGE3,
+	BPL_CA_HPGAUGE4,
+	BPL_CA_HPGAUGE5,
+	BPL_CA_HPGAUGE6,
+
 	BPL_CA_POKETYPE1,
 	BPL_CA_POKETYPE2,
 
@@ -272,6 +279,7 @@ enum {
 	BPLIST_CHRRES_WAZATYPE5,		// 技タイプアイコン５
 	BPLIST_CHRRES_BUNRUI,				// 分類アイコン
 	BPLIST_CHRRES_CURSOR,				// カーソル
+	BPLIST_CHRRES_HPGAUGE,			// ＨＰゲージ
 	BPLIST_CHRRES_MAX,
 
 	// パレットリソースID
@@ -280,6 +288,7 @@ enum {
 	BPLIST_PALRES_ITEM,					// アイテムアイコン（１本）
 	BPLIST_PALRES_TYPE,					// タイプ/分類アイコン（３本）
 	BPLIST_PALRES_CURSOR,				// カーソル（１本）
+	BPLIST_PALRES_HPGAUGE,			// ＨＰゲージ（１本）
 	BPLIST_PALRES_MAX,
 
 	// セルリソースID
@@ -288,6 +297,7 @@ enum {
 	BPLIST_CELRES_ITEM,					// アイテムアイコン
 	BPLIST_CELRES_TYPE,					// タイプ/分類アイコン
 	BPLIST_CELRES_CURSOR,				// カーソル
+	BPLIST_CELRES_HPGAUGE,			// ＨＰゲージ
 	BPLIST_CELRES_MAX,
 };
 
