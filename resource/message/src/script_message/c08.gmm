@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-15T21:39:30"/>
+	<create user="matsumiya" host="W00207" date="2009-10-29T16:21:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -274,12 +274,12 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="117"/>
+		<id position="0" width="139"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="100"/>
+		<comment position="4" width="206"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラクター" english="キャラクター" type="string" default="" position="1" width="100">
 		</attribute>
@@ -336,11 +336,125 @@
 	</lock>
 
 
-	<row id="msg_c08_test1_01">
-		<comment>？？？</comment>
-		<attribute name="キャラクター">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c08_sage1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・？？？後、イベント発動
+・仮メッセージ</comment>
+		<attribute name="キャラクター">七賢者ゲーチス</attribute>
+		<language name="JPN" width="256">わたくしの　なまえは
+ゲーチス[BE:01:ページ切り替え（クリア）]
+プラズマだん　という　そしきで
+しどうしゃを　している　ものです[BE:01:ページ切り替え（クリア）]
+きょう　みなさんに
+おはなしするのは　ポケモンを[BE:00:ページ切り替え（行送り）]
+じゆうに　しましょう　ということです</language>
+		<language name="JPN_KANJI" width="256">わたくしの　名前は
+ゲーチス[BE:01:ページ切り替え（クリア）]
+プラズマ団という　組織で
+指導者を　している　ものです[BE:01:ページ切り替え（クリア）]
+今日　みなさんに　お話しするのは
+ポケモン解放について　です</language>
+	</row>
+
+	<row id="msg_c08_sage1_02" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<language name="JPN" width="256">ゲーチス『われわれ　にんげんは　
+ポケモンと　いっしょに[BE:00:ページ切り替え（行送り）]
+くらして　きました[BE:01:ページ切り替え（クリア）]
+おたがいを　もとめあい
+ひつようとしあう　パートナー[BE:00:ページ切り替え（行送り）]
+そうおもって　おられる
+ひと　ばかりでしょう[BE:01:ページ切り替え（クリア）]
+ですが
+ほんとうに　そうなのでしょうか？[BE:01:ページ切り替え（クリア）]
+われわれ　にんげんが
+そう　おもいこんでいるだけ……[BE:01:ページ切り替え（クリア）]
+そんな　ふうに
+かんがえたことは　ありませんか？</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『われわれ　人間は　
+ポケモンと　ともに[BE:00:ページ切り替え（行送り）]
+暮らしてきました[BE:01:ページ切り替え（クリア）]
+お互いを　求め合い
+必要としあう　パートナー[BE:00:ページ切り替え（行送り）]
+そう思っておられる方が　多いでしょう[BE:01:ページ切り替え（クリア）]
+ですが
+本当に　そうなのでしょうか？[BE:01:ページ切り替え（クリア）]
+われわれ　人間が
+そう　思い込んでいるだけ……[BE:01:ページ切り替え（クリア）]
+そんな　ふうに
+考えたことは　ありませんか？</language>
+	</row>
+
+	<row id="msg_c08_sage1_03" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<language name="JPN" width="256">トレーナーは
+ポケモンに　すきかって[BE:00:ページ切り替え（行送り）]
+めいれい　している……[BE:01:ページ切り替え（クリア）]
+しごとの　パートナーとしても
+こきつかっている……[BE:01:ページ切り替え（クリア）]
+そんなことはないと　だれが
+はっきりと　いいきれるのでしょうか</language>
+		<language name="JPN_KANJI" width="256">トレーナーは
+ポケモンに　好き勝手[BE:00:ページ切り替え（行送り）]
+命令している……[BE:01:ページ切り替え（クリア）]
+仕事の　パートナーとしても
+こきつかっている……[BE:01:ページ切り替え（クリア）]
+そんなことはないと　だれが
+はっきりと　言い切れるのでしょうか</language>
+	</row>
+
+	<row id="msg_c08_sage1_04" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<language name="JPN" width="256">ゲーチス『いいですか
+みなさん[BE:01:ページ切り替え（クリア）]
+ポケモンは　にんげんとは　ことなり
+みちの　かのうせいを　ひめた[BE:00:ページ切り替え（行送り）]
+いきもの　なのです[BE:01:ページ切り替え（クリア）]
+われわれが　まなぶべき　ところを
+かずおおく　もつ　そんざいなのです
+そんな　ポケモンたちに　たいし
+わたしたちの　すべきことは　なんでしょうか</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『いいですか
+みなさん[BE:01:ページ切り替え（クリア）]
+ポケモンは　人間とは　異なり
+未知の可能性を　秘めた[BE:00:ページ切り替え（行送り）]
+生き物　なのです[BE:01:ページ切り替え（クリア）]
+われわれが　学ぶべき　ところを
+数多く　持つ　存在なのです
+そんな　ポケモンたちに対し
+私たちの　すべきことは　何でしょうか</language>
+	</row>
+
+	<row id="msg_c08_sage1_05" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<language name="JPN" width="256">ゲーチス『そうです！
+ポケモンを　じゆうに　することです！！[BE:01:ページ切り替え（クリア）]
+そうしてこそ
+にんげんと　ポケモンは[BE:00:ページ切り替え（行送り）]
+はじめて　たいとうに　なれるのです[BE:01:ページ切り替え（クリア）]
+みなさん
+ポケモンと　ただしく　つきあうために[BE:00:ページ切り替え（行送り）]
+どうすべきか　よく　かんがえてください[BE:01:ページ切り替え（クリア）]
+というところで
+わたくし　ゲーチスの　はなしを[BE:00:ページ切り替え（行送り）]
+おわらせて　いただきます[BE:01:ページ切り替え（クリア）]
+ごせいちょう　かんしゃ　いたします</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『そうです！
+ポケモンを　解放することです！！[BE:01:ページ切り替え（クリア）]
+そうしてこそ
+人間と　ポケモンは[BE:00:ページ切り替え（行送り）]
+はじめて　対等になれるのです[BE:01:ページ切り替え（クリア）]
+みなさん
+ポケモンと　正しく　付き合うために[BE:00:ページ切り替え（行送り）]
+どうすべきか　よく考えてください[BE:01:ページ切り替え（クリア）]
+というところで
+わたくし　ゲーチスの　話を[BE:00:ページ切り替え（行送り）]
+終わらせて　いただきます[BE:01:ページ切り替え（クリア）]
+ご清聴　感謝いたします</language>
 	</row>
 
 	<row id="msg_c08_test2_01">
@@ -350,7 +464,61 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_c08_sign1_01">
+	<row id="msg_c08_test2_02">
+		<comment>？？？</comment>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c08_test2_03">
+		<comment>？？？</comment>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c08_test2_04">
+		<comment>？？？</comment>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c08_champion_01">
+		<comment>・BALCKver
+・WHITEver</comment>
+		<attribute name="キャラクター">CHAMPION</attribute>
+		<language name="JPN" width="256">？？？？？『そうだな
+アイリスは～
+シャガは～
+（主人公たちをほめる）</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c08_champion_02">
+		<comment>♂
+・仮メッセージ
+・主人公がジムに入っても
+　「マップを切り替えない」
+・チャンピオンのメッセージ表示
+・表示後、チャンピオン、~方面へ
+・画面外に消えるとフェードアウトで暗転
+・ジム内に切り替える</comment>
+		<language name="JPN" width="256">？？？？？『さて……[BE:01:ページ切り替え（クリア）]
+かれらの　すすむ　みち
+それを　ふさぐものを　とりのぞこうか[BE:01:ページ切り替え（クリア）]
+それこそが　チャンピオンだった
+わたしが　さいごに　やるべきこと[BE:01:ページ切り替え（クリア）]
+たとえ　でんせつの　りゅうであろうとも
+みらいを～[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">？？？？？『さて……[BE:01:ページ切り替え（クリア）]
+かれらの　すすむ　みち
+それを　ふさぐものを　とりのぞこうか[BE:01:ページ切り替え（クリア）]
+それこそが　チャンピオンだった
+わたしが　さいごに　やるべきこと[BE:01:ページ切り替え（クリア）]
+たとえ　でんせつの　りゅうであろうとも
+みらいを～[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c08_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラクター">看板：街</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-28T19:56:07"/>
+	<create user="matsumiya" host="W00207" date="2009-10-29T16:20:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,9 +292,9 @@
 	</lock>
 
 
-	<row id="msg_c07r0201_words_01">
+	<row id="msg_c07r0201_words_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-※以下のメッセージは
+※このファイルのメッセージは
 　すべて杉中くんがリライト予定
 ※仕様は仮なので作成は保留で
 
@@ -315,7 +315,7 @@
 なんか　いい　ことば　しりたい？</language>
 	</row>
 
-	<row id="msg_c07r0201_words_02">
+	<row id="msg_c07r0201_words_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・はい選択時
 
@@ -333,7 +333,7 @@
 なんか　いい　かんじで　つかってよ</language>
 	</row>
 
-	<row id="msg_c07r0201_words_03">
+	<row id="msg_c07r0201_words_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・いいえ選択時</comment>
 		<language name="JPN" width="256">なんだい！　そんなことでは
@@ -342,7 +342,7 @@
 じだいに　とりのこされちゃうよ</language>
 	</row>
 
-	<row id="msg_c07r0201_words_04">
+	<row id="msg_c07r0201_words_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・その日の単語を教えてもらった後</comment>
 		<language name="JPN" width="256">なんか　いい　ことばを
@@ -351,7 +351,7 @@
 なんか　いい　かんじで　つかってよ</language>
 	</row>
 
-	<row id="msg_c07r0201_words_05">
+	<row id="msg_c07r0201_words_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・簡易会話単語「なんかいことば」カテゴリーの
 　全ての言葉を覚えたとき</comment>
