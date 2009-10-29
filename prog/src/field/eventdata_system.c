@@ -917,7 +917,7 @@ static u16 EventData_CheckTalkBoardEventBase(
 {
   const BG_TALK_DATA *data = evdata->bg_data;
   
-  if( talk_dir != DIR_UP && data != NULL )
+  if( talk_dir == DIR_UP && data != NULL )
   {
     u16 i = 0;
     u16 max = evdata->bg_count;
