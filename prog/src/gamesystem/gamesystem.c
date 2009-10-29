@@ -35,7 +35,7 @@ enum {
   /**
    * @brief 永続情報用HEAP領域
    */
-  HEAPSIZE_WORLD = 0x18000,
+  HEAPSIZE_WORLD = 0x10000,
 
   /**
    * @brief イベント用HEAP領域
@@ -43,7 +43,7 @@ enum {
    * 個別のイベントごとに確保し、イベント終了で解放されるメモリは
    * このHEAPから確保する
    */
-	HEAPSIZE_PROC = 0x8000,
+	HEAPSIZE_PROC = 0x10000,
 
   /**
    * @brief イベントコントローラー用HEAP領域
@@ -53,9 +53,6 @@ enum {
    */
   HEAPSIZE_APP_CONTROL  =      (0x1000),
 
-  HEAPID_GAMESYS = HEAPID_WORLD,
-	//HEAPID_GAMESYS = HEAPID_PROC,
-	
 };
 
 //------------------------------------------------------------------
@@ -111,10 +108,10 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 	//パレスしながら戦闘もフィールドもするのでここで確保
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_APP_CONTROL, HEAPSIZE_APP_CONTROL );
 	
-	gsys = GFL_PROC_AllocWork(proc, work_size, HEAPID_GAMESYS);
+	gsys = GFL_PROC_AllocWork(proc, work_size, HEAPID_WORLD);
 	GFL_STD_MemClear(gsys, work_size);
 	GameSysWork = gsys;
-	GameSystem_Init(gsys, HEAPID_GAMESYS, game_init);
+	GameSystem_Init(gsys, HEAPID_WORLD, game_init);
 #if 1		/* 暫定的にプロセス登録 */
 	switch(game_init->mode){
 	case GAMEINIT_MODE_CONTINUE:
@@ -160,7 +157,7 @@ static GFL_PROC_RESULT GameMainProcEnd(GFL_PROC * proc, int * seq, void * pwk, v
 	GAMESYS_WORK * gsys = mywk;
 	GameSystem_End(gsys);
 	GFL_PROC_FreeWork(proc);
-	GFL_HEAP_DeleteHeap( HEAPID_GAMESYS );
+	GFL_HEAP_DeleteHeap( HEAPID_WORLD );
 	return GFL_PROC_RES_FINISH;
 }
 //------------------------------------------------------------------
