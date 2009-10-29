@@ -141,9 +141,9 @@ SDK_COMPILER_ASSERT(NELEMS(PalaceTownData) == PALACE_TOWN_DATA_MAX);
 
 ///パレスへワープしてきたときの出現座標
 static const VecFx32 PalaceWarpPos = {
-  1464/16,
+  1464 * FX32_ONE,
   0*FX32_ONE,
-  440/16,
+  440 * FX32_ONE,
 };
 
 //==============================================================================

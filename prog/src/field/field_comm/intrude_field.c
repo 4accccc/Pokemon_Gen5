@@ -689,14 +689,6 @@ static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
     return;
   }
   
-  //Å¶check player_workÇÃdirectionÇ…ílÇ™ì¸Ç¡ÇƒÇ¢Ç»Ç¢ÇÃÇ≈
-  if(GFL_UI_KEY_GetCont() & PAD_KEY_LEFT){
-    player_dir = DIR_LEFT;
-  }
-  else if(GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT){
-    player_dir = DIR_RIGHT;
-  }
-  
   FIELD_PLAYER_GetPos( pcActor, &pos );
   new_pos = pos;
   

@@ -174,7 +174,8 @@ typedef struct _INTRUDE_SUBDISP{
   
   u8 my_net_id;
   u8 town_update_req;     ///<街アイコン更新リクエスト(TOWN_UPDATE_REQ_???)
-  u8 padding[2];
+  u8 now_bg_pal;          ///<現在のBGのパレット番号
+  u8 padding;
   
   u32 senkyo_eff_bit;     ///<占拠エフェクト起動中の街(bit管理)
 }INTRUDE_SUBDISP;
@@ -228,6 +229,7 @@ static void _IntSub_SenkyoEff_Start(INTRUDE_SUBDISP_PTR intsub, u32 eff_bit);
 static void _IntSub_SenkyoEff_EndWatch(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_TownActChange(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy, int town_tblno);
 static void _IntSub_TownActBitChange(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy, u32 change_bit);
+static void _IntSub_BGColorUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub);
 
 
 //==============================================================================
@@ -290,7 +292,8 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
   
   intsub = GFL_HEAP_AllocClearMemory(HEAPID_FIELDMAP, sizeof(INTRUDE_SUBDISP));
   intsub->gsys = gsys;
-
+  intsub->now_bg_pal = 0xff;  //初回に必ず更新がかかるように0xff
+  
   intsub->my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   if(intsub->my_net_id > FIELD_COMM_MEMBER_MAX){
     GF_ASSERT_MSG(0, "my_net_id = %d\n", intsub->my_net_id);
@@ -348,6 +351,9 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub)
   
   //タッチ判定チェック
   _IntSub_TouchUpdate(intcomm, intsub);
+  
+  //BGスクリーンカラー変更チェック
+  _IntSub_BGColorUpdate(intcomm, intsub);
   
   //アクター更新
   _IntSub_ActorUpdate_Town(intsub, intcomm, area_occupy);
@@ -1467,3 +1473,25 @@ static void _IntSub_TownActBitChange(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *ar
   }
 }
 
+//--------------------------------------------------------------
+/**
+ * 侵入エリアを監視し、BGのカラーを変更する
+ *
+ * @param   intcomm		
+ * @param   intsub		
+ */
+//--------------------------------------------------------------
+static void _IntSub_BGColorUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub)
+{
+  int bg_pal;
+  
+  bg_pal = intcomm->intrude_status_mine.palace_area;
+  if(bg_pal == intsub->now_bg_pal){
+    return;
+  }
+  
+  GFL_BG_ChangeScreenPalette(
+    INTRUDE_FRAME_S_BACKGROUND, 0, 0, 32, 0x13, INTSUB_BG_PAL_BASE_START + bg_pal);
+  GFL_BG_LoadScreenV_Req(INTRUDE_FRAME_S_BACKGROUND);
+  intsub->now_bg_pal = bg_pal;
+}

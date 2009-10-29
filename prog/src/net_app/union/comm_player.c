@@ -355,7 +355,7 @@ BOOL CommPlayer_Mine_DataUpdate(COMM_PLAYER_SYS_PTR cps, COMM_PLAYER_PACKAGE *pa
 
   FIELD_PLAYER_GetPos(player, &pos);
   dir = FIELD_PLAYER_GetDir(player);
-
+  
   pack->dir = dir;
   pack->pos = pos;
   pack->vanish = FALSE;
