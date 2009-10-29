@@ -315,6 +315,8 @@ static MENU_RESULT  CtrlMenuState( MENU_WORK* menu , u16 key );
 static u32 get_menu_cursor_pos( const MENU_WORK* menu );
 static void SubProc_ChangeCategoryMode( PMS_INPUT_WORK* wk, int* seq );
 
+//@todo 仮用の関数	あとで消してください
+static PMS_WORD PMSI_WordToDeco( PMS_WORD word );
 
 
 //==============================================================
@@ -477,6 +479,26 @@ static void BmnCallBack( u32 buttonID, u32 event, void* wk_ptr )
 //------------------------------------------------------------------
 GFL_PROC_RESULT PMSInput_Quit( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
+	{	
+		int i;
+
+		PMS_INPUT_WORK* wk	= mywk;
+
+		//↓@todoGMM文字列をデコメに変換する処理
+		for( i = 0; i < PMS_INPUT_WORD_MAX; i++ )
+		{	
+			wk->edit_word[i]	= PMSI_WordToDeco( wk->edit_word[i] );
+		}
+		for( i = 0; i < PMS_WORD_MAX; i++ )
+		{	
+			wk->edit_pms.word[i]	= PMSI_WordToDeco( wk->edit_pms.word[i] );
+		}
+		PMSI_PARAM_WriteBackData( wk->input_param, wk->edit_word, &wk->edit_pms );
+		//↑ここまで
+	}
+
+	
+
 	DestructWork( mywk, proc );
 
 	GFL_HEAP_DeleteHeap( HEAPID_PMS_INPUT_SYSTEM );
@@ -2705,7 +2727,7 @@ static BOOL set_select_word( PMS_INPUT_WORK* wk )
 	}else{
 		word = PMSI_DATA_GetInitialEnableWordCode( wk->dwk, wk->category_pos, word_idx );
 	}
-	ARI_TPrintf(" WordSet pos=%d, idx = %d, word = %d\n",wk->edit_pos,word_idx,word);
+	OS_Printf(" WordSet pos=%d, idx = %d, word = %d\n",wk->edit_pos,word_idx,word);
 	switch( wk->input_mode ){
 	case PMSI_MODE_SINGLE:
 		wk->edit_word[0] = word;
@@ -3386,3 +3408,64 @@ GFL_TCBSYS* PMSI_GetTcbSystem( const PMS_INPUT_WORK* wk )
 {
 	return wk->tcbSys;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	仮文字をデコメに変換する関数
+ *					@todo 後ほど消してください
+ *
+ *	@param	PMS_WORD word 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static PMS_WORD PMSI_WordToDeco( PMS_WORD word )
+{	
+	// きもち
+	static const s16 deco_tbl[ PMS_DECOID_MAX ] = {
+		-1,	//1オリジン
+		1480,	//はじめまして
+		1481,	//こんにちは
+		1482,	//だいすき
+		1483,	//がんばれ！
+		1484,	//たのしい
+		1485,	//うれしい
+		1486,	//ありがとう
+		1487,	//さいこう
+		1488,	//ごめんね
+		1489,	//バイバイ
+	};
+
+	//仮に、選ばれた文字列をデコメ文字に変換する
+	
+	u32	word_bit;
+	u32	deco_bit;
+	u32 local_bit;
+	
+
+	//ビットを取り出す
+	word_bit	= word &  PMS_WORD_NUM_MASK;
+	deco_bit	= word &  (PMS_WORD_DECO_MASK << PMS_WORD_DECO_BITSHIFT);
+	local_bit	= word &  (PMS_WORD_LOCALIZE_MASK << PMS_WORD_LOCALIZE_BITSHIFT);
+
+	OS_Printf( "check word %d num %d deco %d local %d\n", word, word_bit, deco_bit, local_bit );
+	{	
+		int i;
+		for( i = 0; i < PMS_DECOID_MAX; i++ )
+		{	
+			//でこ用文字なので変換
+			if( deco_tbl[i] == word_bit )
+			{	
+				word_bit	= i;	//デコの番号
+				deco_bit	= 1 << PMS_WORD_DECO_BITSHIFT;
+
+				word	= local_bit | deco_bit | word_bit;
+				break;
+			}
+		}
+	}
+	
+	return word;
+}
+
+

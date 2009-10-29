@@ -1,33 +1,45 @@
 ##########################################################
 #	メッセージデータコンバート
 ##########################################################
+#------------------------------------------------------------------------------
+#※コンバートを行う人のユーザーIDをここに書く
+#------------------------------------------------------------------------------
+USERS	= toru_nagihashi
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
 
 SOURCE_LIST	= source.list
-WORD_DAT_FILE = ..\..\prog\src\system\pms_word.res
-INPUT_DAT_FILE = ..\..\prog\src\app\pms_input\pms_input.res
+
+WORD_DAT_DIR	= ..\..\prog\src\system
+INPUT_DAT_DIR	= ..\..\prog\src\app\pms_input
+
+WORD_DAT_FILE = pms_word.res
+INPUT_DAT_FILE = pms_input.res
 
 LANG_FLAG	= jp
 
-TARGETDIR = $(PROJECT_ARCDIR)
 
 -include $(SOURCE_LIST)
 
 ##########################################################
 #	動作部分
 ##########################################################
+do-build:	$(WORD_DAT_DIR)/$(WORD_DAT_FILE) $(INPUT_DAT_DIR)/$(INPUT_DAT_FILE)
 
-no-rule:
-	$(MAKE)	$(SOURCE_LIST)
-	$(MAKE)	$(WORD_DAT_FILE)
+$(WORD_DAT_DIR)/$(WORD_DAT_FILE): $(WORD_DAT_FILE)
+	$(COPY) $(WORD_DAT_FILE) $(WORD_DAT_DIR)
 
+$(INPUT_DAT_DIR)/$(INPUT_DAT_FILE): $(INPUT_DAT_FILE)
+	$(COPY) $(INPUT_DAT_FILE) $(INPUT_DAT_DIR)
 
-
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートする
 $(WORD_DAT_FILE): $(SOURCE)
 	perl pmsconv.pl  $(INPUT_DAT_FILE) $(WORD_DAT_FILE)
 
+$(WORD_DAT_FILE): $(SOURCE)
+	perl pmsconv.pl  $(INPUT_DAT_FILE) $(WORD_DAT_FILE)
+endif
 
 # $(INPUT_DAT_FILE): $(SOURCE)
 
