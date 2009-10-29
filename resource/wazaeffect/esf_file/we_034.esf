@@ -4,7 +4,7 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_034.spa
 #001
 %00
 ポケモン拡縮	攻撃側	往復	0.1	0.3	4	2	1
-ポケモン移動	攻撃側	往復	2	0	3	1	1
+ポケモン円移動	攻撃側	Ｙ軸左	シフトＨ＋	0	4	10:0:1	0
 制御モード変更	継続
 SE再生	SEQ_SE_W307_02	SE2	0	0	90	0	0
 SE再生	SEQ_SE_W075_05	SE1	0	0	115	0	0
