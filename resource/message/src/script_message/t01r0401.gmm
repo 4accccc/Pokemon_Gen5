@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-08T17:18:20"/>
+	<create user="matsumiya" host="W00207" date="2009-10-29T20:31:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -381,14 +381,14 @@
 ポケモンたちも　きみたちを[BE:00:ページ切り替え（行送り）]
 しんらいしはじめた　かんじだな[BE:01:ページ切り替え（クリア）]
 ところで　ポケモンに
-ニックネームを　つかるかい？</language>
+ニックネームを　つけるかい？</language>
 		<language name="JPN_KANJI" width="256">なるほどなるほど
 もう　ポケモン勝負を　したんだね[BE:01:ページ切り替え（クリア）]
 それでだろうな
 ポケモンたちも　きみたちを[BE:00:ページ切り替え（行送り）]
 信頼しはじめた……　そんな感じだな[BE:01:ページ切り替え（クリア）]
 ところで　ポケモンに
-ニックネームを　つかるかい？</language>
+ニックネームを　つけるかい？</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase2_04">
@@ -417,7 +417,7 @@
 いい　なまえ　じゃあないか！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">アララギ『なるほどなるほど[BE:01:ページ切り替え（クリア）]
 [1:02:ポケモンニックネーム:0]と　いうのか
-いい　なまえ　じゃあないか！[BE:01:ページ切り替え（クリア）]</language>
+いい　名前　じゃあないか！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase2_06">
