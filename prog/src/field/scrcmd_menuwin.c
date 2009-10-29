@@ -24,13 +24,13 @@
 #include "arc/script_message.naix"
 #include "msg/script/msg_common_scr.h"
 
-
 // 所持金表示ウィンドウ
 #define GOLD_WIN_WIDTH (14) // 幅(キャラクタ単位)
 #define GOLD_WIN_HEIGHT (2) // 高さ(キャラクタ単位)
 #define GOLD_WIN_KETA   (6) // 所持金数値の桁数
 
 static void CloseWin(SCRCMD_WORK *work);
+static void CloseBallonWin(SCRCMD_WORK *work);
 
 //--------------------------------------------------------------
 /**
@@ -49,6 +49,24 @@ static void CloseWin(SCRCMD_WORK *work)
 
 //--------------------------------------------------------------
 /**
+ *  バルーンウィンドウ終了
+ * @param   work    スクリプトコマンドワークポインタ
+ * @retval  none
+ */
+//--------------------------------------------------------------
+static void CloseBallonWin(SCRCMD_WORK *work)
+{
+  FLDTALKMSGWIN *tmsg;
+
+  tmsg = (FLDTALKMSGWIN*) SCRCMD_WORK_GetFldMsgWinStream( work );
+  FLDTALKMSGWIN_Delete( tmsg );
+
+  //ウィンドウ作成フラグオフ
+  SCREND_CHK_SetBitOff(SCREND_CHK_BALLON_WIN_OPEN);
+}
+
+//--------------------------------------------------------------
+/**
  *スクリプト終了時ウィンドウ終了チェック
  * @param   end_chk     チェック構造体
  * @param   seq     サブシーケンサ
@@ -60,6 +78,21 @@ BOOL SCREND_CheckEndWin(SCREND_CHECK *end_check , int *seq)
   CloseWin(end_check->ScrCmdWk);
   return  TRUE;
 }
+
+//--------------------------------------------------------------
+/**
+ *スクリプト終了時吹きだしウィンドウ終了チェック
+ * @param   end_chk     チェック構造体
+ * @param   seq     サブシーケンサ
+ * @retval  BOOL    TRUEでチェック終了
+ */
+//--------------------------------------------------------------
+BOOL SCREND_CheckEndBallonWin(SCREND_CHECK *end_check , int *seq)
+{
+  CloseBallonWin(end_check->ScrCmdWk);
+  return  TRUE;
+}
+
 
 
 //======================================================================
@@ -594,6 +627,16 @@ static BOOL balloonWin_Write( SCRCMD_WORK *work, u16 objID, u16 arcID, u16 msgID
     OS_Printf("スクリプトエラー 吹き出し対象のOBJが存在しません\n");
     return( FALSE );
   }
+
+  //既にビットが立っていたら新しく作らない
+  if ( SCREND_CHK_CheckBit(SCREND_CHK_BALLON_WIN_OPEN) ){
+#ifdef SCR_ASSERT_ON     
+    GF_ASSERT_MSG(0,"既にバルーンウィンドウがある\n");
+#else
+    OS_Printf("===============既にバルーンウィンドウがある===================\n");
+#endif
+    return ( FALSE );
+  }
   
   MMDL_GetVectorPos( npc, &pos );
   MMDL_GetVectorPos( jiki, &jiki_pos );
@@ -629,6 +672,11 @@ static BOOL balloonWin_Write( SCRCMD_WORK *work, u16 objID, u16 arcID, u16 msgID
   }
   
   SCRCMD_WORK_SetFldMsgWinStream( work, (FLDMSGWIN_STREAM*)tmsg );
+
+  //ウィンドウ作成フラグオン
+  {
+    SCREND_CHK_SetBitOn(SCREND_CHK_BALLON_WIN_OPEN);
+  }
   return( TRUE );
 }
 
@@ -718,10 +766,19 @@ VMCMD_RESULT EvCmdBalloonWinTalkWrite( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdBalloonWinClose( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-  FLDTALKMSGWIN *tmsg;
+
+  //ビットが立っていないならば警告を出す
+  if ( !SCREND_CHK_CheckBit(SCREND_CHK_BALLON_WIN_OPEN) ){
+#ifdef SCR_ASSERT_ON    
+    GF_ASSERT_MSG(0,"バルーンウィンドウはありません");
+#else
+    OS_Printf("==========バルーンウィンドウはありません============\n");
+#endif
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  CloseBallonWin(work);
   
-  tmsg = (FLDTALKMSGWIN*) SCRCMD_WORK_GetFldMsgWinStream( work );
-  FLDTALKMSGWIN_Delete( tmsg );
   return VMCMD_RESULT_CONTINUE;
 }
 

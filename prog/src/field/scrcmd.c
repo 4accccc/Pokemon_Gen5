@@ -105,6 +105,7 @@ typedef struct
 static const SCR_END_CHECK_FUNC CheckEndFuncTbl[] = {
   SCREND_CheckEndCamera,
   SCREND_CheckEndWin,
+  SCREND_CheckEndBallonWin,
   /*ここにスクリプト終了時の終了関数を追加してください*/
   NULL,   //テーブル終了検出用
 };
@@ -232,7 +233,11 @@ static GMEVENT_RESULT ScrCheckEvt( GMEVENT* event, int* seq, void* work )
     //ビットチェック
     if ( CheckEndBit(check_wk->Next) )
     {
+#ifdef SCR_ASSERT_ON      
       GF_ASSERT_MSG(0,"%d::EndFunc Not Call\n", check_wk->Next);
+#else
+      OS_Printf("=============%d::EndFunc Not Call===============\n",check_wk->Next);
+#endif
       //ファンクション実行
       rc = func(&check_wk->EndCheck, &check_wk->Seq);
       if (rc)
