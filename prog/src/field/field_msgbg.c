@@ -168,6 +168,8 @@ static void keyCursor_Clear(
 static void keyCursor_Write(
     KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col );
 
+static void setBlendAlpha( BOOL on );
+
 static GFL_BMPWIN * FldBmpWinFrame_Init( u32 bgFrame, HEAPID heapID,
 	u16 pos_x, u16 pos_y, u16 size_x, u16 size_y, u16 pltt_no );
 static void FldBmpWinFrame_Delete( GFL_BMPWIN *bmpwin );
@@ -178,6 +180,21 @@ static const u8 ALIGN4 skip_cursor_Character[128];
 //======================================================================
 //	FLDMSGBG	フィールドメッセージBG関連
 //======================================================================
+//--------------------------------------------------------------
+//  10月ROM用 仮対処 ウィンドウの縁カラーを無効に 0x50001a0
+//--------------------------------------------------------------
+static void debug_ROM091030_WindowColorOFF( HEAPID heapID )
+{
+  u16 *buf = GFL_HEAP_AllocMemoryLo( heapID, 32 );
+  u32 offs = HW_BG_PLTT + (32*FLDMSGBG_PANO_MENU);
+  DC_FlushRange( (void*)offs, 32 );
+  MI_CpuCopy( (void*)offs, buf, 32 );
+  buf[1] = 0;
+  DC_FlushRange( (void*)buf, 32 );
+  GX_LoadBGPltt( (void*)buf, offs-HW_BG_PLTT, 32 );
+  GFL_HEAP_FreeMemory( buf );
+}
+
 //--------------------------------------------------------------
 /**
  * FLDMSGBG セットアップ
@@ -230,6 +247,7 @@ FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
 	{	//window frame
 		BmpWinFrame_GraphicSet( fmb->bgFrame, 1,
 			FLDMSGBG_PANO_MENU, MENU_TYPE_SYSTEM, heapID );
+    debug_ROM091030_WindowColorOFF( heapID );
 	}
 	
 	{	//font
@@ -264,7 +282,7 @@ FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
   }
   
   fmb->deriveWin_plttNo = FLDMSGBG_PANO_FONT;
-  FLDMSGBG_SetBlendAlpha();
+//  FLDMSGBG_SetBlendAlpha();
 	return( fmb );
 }
 
@@ -369,6 +387,7 @@ void FLDMSGBG_ResetBGResource( FLDMSGBG *fmb )
   {	//window frame
 		BmpWinFrame_GraphicSet( fmb->bgFrame, 1,
 			FLDMSGBG_PANO_MENU, MENU_TYPE_SYSTEM, fmb->heapID );
+    debug_ROM091030_WindowColorOFF( fmb->heapID );
 	}
   
   { //TALKMSGWIN
@@ -385,7 +404,7 @@ void FLDMSGBG_ResetBGResource( FLDMSGBG *fmb )
     }
   }
 
-  FLDMSGBG_SetBlendAlpha();
+//  FLDMSGBG_SetBlendAlpha();
 }
 
 //--------------------------------------------------------------
@@ -790,7 +809,10 @@ static FLDMSGWIN * fldmsgwin_Add( FLDMSGBG *fmb, GFL_MSGDATA *msgData,
     bmppos_x, bmppos_y, bmpsize_x, bmpsize_y, pltt_no );
 	msgWin->msgPrint = FLDMSGPRINT_SetupPrint( fmb, msgData, msgWin->bmpwin );
 	
-  FLDMSGBG_SetBlendAlpha();
+  if( pltt_no == FLDMSGBG_PANO_FONT ){
+    setBlendAlpha( TRUE );
+  }
+  
 	return( msgWin );
 }
 
@@ -965,7 +987,9 @@ static FLDMENUFUNC * fldmenufunc_AddMenuList( FLDMSGBG *fmb,
 //	BmpMenuList_SetCursorString( menuFunc->pMenuListWork, 0 );
 	BmpMenuList_SetCursorBmp( menuFunc->pMenuListWork, fmb->heapID );
   
-  FLDMSGBG_SetBlendAlpha();
+  if( pltt_no == FLDMSGBG_PANO_FONT ){
+    setBlendAlpha( TRUE );
+  }
 	return( menuFunc );
 }
 //--------------------------------------------------------------
@@ -1452,7 +1476,7 @@ FLDMSGWIN_STREAM * FLDMSGWIN_STREAM_Add(
   
   keyCursor_Init( &msgWin->cursor_work, fmb->heapID );
 
-  FLDMSGBG_SetBlendAlpha();
+  setBlendAlpha( TRUE );
   return( msgWin );
 }
 
@@ -1713,7 +1737,7 @@ static void fldTalkMsgWin_Add(
   tmsg->talkMsgWinSys = fmb->talkMsgWinSys;
   tmsg->talkMsgWinIdx = idx;
   
-  FLDMSGBG_SetBlendAlpha();
+  setBlendAlpha( FALSE );
 
   switch( idx ){
   case FLDTALKMSGWIN_IDX_UPPER:
@@ -1964,20 +1988,33 @@ static void keyCursor_Write(
 //--------------------------------------------------------------
 /**
  * フィールドメッセージBG ブレンドアルファセット
+ * @param on TRUE=半透明オン FALSE=半透明オフ
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void setBlendAlpha( BOOL on )
+{
+  if( on == TRUE ){
+    int plane1 = GX_BLEND_PLANEMASK_BG1; 
+  	int plane2 = GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2|
+      GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ;
+  	G2_SetBlendAlpha( plane1, plane2, 31, 8 );
+  }else{
+    int plane1 = GX_BLEND_PLANEMASK_NONE; 
+    int plane2 = GX_BLEND_PLANEMASK_NONE; 
+  	G2_SetBlendAlpha( plane1, plane2, 0, 0 );
+  }
+}
+//--------------------------------------------------------------
+/**
+ * フィールドメッセージBG ブレンドアルファセット
  * @param nothing
  * @retval nothing
  */
 //--------------------------------------------------------------
 void FLDMSGBG_SetBlendAlpha( void )
 {
-#if 0
-  {
-    int plane1 = GX_BLEND_PLANEMASK_BG1; 
-  	int plane2 = GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2|
-      GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ;
-  	G2_SetBlendAlpha( plane1, plane2, 31, 8 );
-  }
-#endif
+//  setBlendAlpha( TRUE );
 }
 
 //======================================================================
@@ -2088,3 +2125,22 @@ static const u8 ALIGN4 skip_cursor_Character[128] = {
 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 };
 #endif
+
+/*
+パレット 0=300H
+パレット 1=7fffH
+パレット 2=62f5H
+パレット 3=3d89H
+パレット 4=3126H
+パレット 5=0H
+パレット 6=6f93H
+パレット 7=4e6cH
+パレット 8=3126H
+パレット 9=77dbH
+パレット 10=7fffH
+パレット 11=0H
+パレット 12=0H
+パレット 13=0H
+パレット 14=0H
+パレット 15=0H
+*/
