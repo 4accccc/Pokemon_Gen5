@@ -182,6 +182,7 @@ static BOOL BGTalkData_RPOS_IsHit( const BG_TALK_DATA* cp_data, const RAIL_LOCAT
 //============================================================================================
 static void PosEventData_GPOS_GetPos( const POS_EVENT_DATA* cp_data, VecFx32* p_pos );
 static BOOL PosEventData_GPOS_IsHit( const POS_EVENT_DATA* cp_data, const VecFx32* cp_pos );
+static BOOL PosEventData_GPOS_IsHit_XZ( const POS_EVENT_DATA* cp_data, const VecFx32* cp_pos );
 static void PosEventData_RPOS_GetLocation( const POS_EVENT_DATA* cp_data, RAIL_LOCATION* p_location );
 static BOOL PosEventData_RPOS_IsHit( const POS_EVENT_DATA* cp_data, const RAIL_LOCATION* cp_location );
 
@@ -635,6 +636,45 @@ const POS_EVENT_DATA * EVENTDATA_GetPosEvent(
     for( ; i < max; i++, data++ )
     {
       if( !PosEventData_GPOS_IsHit(data, pos) )
+      {
+        continue;
+      }
+      {
+        work_val = EVENTWORK_GetEventWorkAdrs( evwork, data->workID );
+        if( (*work_val) == data->param ){
+          return data;
+        }
+      }
+    }
+  }
+  return NULL;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	座標イベントチェック(xz平面ver.)
+ * @param	evdata イベントデータへのポインタ
+ * @param evwork イベントワークへのポインタ 
+ * @param pos チェックする座標
+ * @param gx_range チェックするx方向範囲(グリッド）
+ * @param gz_range チェックするz方向範囲(グリッド)
+ * @retval POS_EVENT_DATA* (NULL = イベントなし)
+ */
+//------------------------------------------------------------------
+const POS_EVENT_DATA * EVENTDATA_GetPosEvent_XZ(
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos )
+{
+  const POS_EVENT_DATA *data = evdata->pos_data;
+  
+  if( data != NULL )
+  {
+    u16 i = 0;
+    u16 *work_val;
+    u16 max = evdata->pos_count;
+
+    for( ; i < max; i++, data++ )
+    { 
+      if( !PosEventData_GPOS_IsHit_XZ(data, pos) )  // あたり判定でy軸を無視する
       {
         continue;
       }
@@ -1392,6 +1432,48 @@ static BOOL PosEventData_GPOS_IsHit( const POS_EVENT_DATA* cp_data, const VecFx3
   }
   return FALSE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  PosEvent グリッドマップ　座標あたり判定(xz平面ver.)
+ *
+ *	@param	cp_data   データ
+ *	@param	cp_pos    ３D座標
+ *
+ *	@retval TRUE  範囲内
+ *	@retval FALSE 範囲外
+ */
+//-----------------------------------------------------------------------------
+static BOOL PosEventData_GPOS_IsHit_XZ( const POS_EVENT_DATA* cp_data, const VecFx32* cp_pos )
+{
+  const POS_EVENT_DATA_GPOS* cp_gpos;
+  int gx, gz, y;
+
+  GF_ASSERT( cp_data );
+  GF_ASSERT( cp_pos );
+
+  if( cp_data->pos_type == EVENTDATA_POSTYPE_RAIL )
+  {
+    return FALSE;
+  }
+
+  cp_gpos = (const POS_EVENT_DATA_GPOS*)cp_data->pos_buf; 
+
+  gx  = SIZE_GRID_FX32(cp_pos->x);
+  gz  = SIZE_GRID_FX32(cp_pos->z);
+  y   = FX_Whole(cp_pos->y);
+  
+  if( (cp_gpos->gx <= gx) && ((cp_gpos->gx+cp_gpos->sx) > gx) )
+  {
+    if( (cp_gpos->gz <= gz) && ((cp_gpos->gz+cp_gpos->sz) > gz) )
+    {
+      // y軸判定を行わないこと以外は PosEventData_GPOS_IsHit と同じ
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
 
 //----------------------------------------------------------------------------
 /**

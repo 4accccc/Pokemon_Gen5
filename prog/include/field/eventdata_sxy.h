@@ -143,6 +143,18 @@ extern const POS_EVENT_DATA * EVENTDATA_GetPosEvent(
 
 //------------------------------------------------------------------
 /**
+ * @brief	座標イベントを取得(高さを無視するver.)
+ * @param	evdata イベントデータへのポインタ
+ * @param evwork イベントワークへのポインタ 
+ * @param pos チェックする座標
+ * @retval NULL = イベントなし
+ */
+//------------------------------------------------------------------
+extern const POS_EVENT_DATA * EVENTDATA_GetPosEvent_XZ( 
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos ); 
+
+//------------------------------------------------------------------
+/**
  * @brief	座標イベントを取得
  * @param	evdata イベントデータへのポインタ
  * @param evwork イベントワークへのポインタ 

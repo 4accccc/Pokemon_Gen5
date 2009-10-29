@@ -113,19 +113,19 @@ VMCMD_RESULT EvCmdMapChangeBySandStream( VMHANDLE *core, void *wk )
   // 流砂中心位置を求める
   {
     VecFx32 pos;
-    const POS_EVENT_DATA* event;
+    const POS_EVENT_DATA* pos_event;
     GAMEDATA *       gamedata = GAMESYSTEM_GetGameData( gsys );
     EVENTDATA_SYSTEM * evdata = GAMEDATA_GetEventData( gamedata );
     EVENTWORK *        evwork = GAMEDATA_GetEventWork( gamedata );
     FIELD_PLAYER *     player = FIELDMAP_GetFieldPlayer( fieldmap );
     FIELD_PLAYER_GetPos( player, &pos );
-    event = EVENTDATA_GetPosEvent( evdata, evwork, &pos );
-    if( event )
+    pos_event = EVENTDATA_GetPosEvent_XZ( evdata, evwork, &pos );
+    if( pos_event )
     {
-      EVENTDATA_GetPosEventCenterPos( event, &disappear_pos );
+      EVENTDATA_GetPosEventCenterPos( pos_event, &disappear_pos );
       // 直接アクセスできなくなったので上の関数に変更しました　091007 tomoya takahashi
-//      disappear_pos.x = GRID_TO_FX32( event->gx ) + FX_Div( GRID_TO_FX32( event->sx ), 2<<FX32_SHIFT );
-//      disappear_pos.z = GRID_TO_FX32( event->gz ) + FX_Div( GRID_TO_FX32( event->sz ), 2<<FX32_SHIFT );
+//      disappear_pos.x = GRID_TO_FX32( pos_event->gx ) + FX_Div( GRID_TO_FX32( pos_event->sx ), 2<<FX32_SHIFT );
+//      disappear_pos.z = GRID_TO_FX32( pos_event->gz ) + FX_Div( GRID_TO_FX32( pos_event->sz ), 2<<FX32_SHIFT );
     }
   }
   
@@ -145,7 +145,7 @@ VMCMD_RESULT EvCmdMapChangeBySandStream( VMHANDLE *core, void *wk )
     GMEVENT_CallEvent( parent_event, mapchange_event );
   }
 
-  return VMCMD_RESULT_CONTINUE;
+  return VMCMD_RESULT_SUSPEND;
 }
 
 
