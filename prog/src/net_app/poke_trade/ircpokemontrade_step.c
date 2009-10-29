@@ -602,13 +602,8 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
   if(ANMCNTC(_POKE_SIDEIN_START) == pWork->anmCount){
     GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);
     pWork->pMoveMcss[0]=NULL;
-
-//    IRCPOKETRADE_PokeDeleteMcss(pWork, 0);
-  //  IRCPOKETRADE_PokeCreateMcss(pWork, 0, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,0) );
     MCSS_ResetVanishFlag( pWork->pokeMcss[0] );
     MCSS_SetPaletteFade( pWork->pokeMcss[0], 0, 0, 0, 0x7fff  );
-
-
     {  //‰ŠúˆÊ’uİ’è
       VecFx32 apos;
       apos.x = _POKEMON_PLAYER_SIDEST_POSX;
@@ -619,18 +614,11 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       apos.y = _POKEMON_PLAYER_SIDEIN_POSY;
       apos.z = _POKEMON_PLAYER_SIDEIN_POSZ;
       pWork->pMoveMcss[0] = _pokeMoveCreate(pWork->pokeMcss[0], ANMCNTC(_POKE_SIDEIN_TIME), &apos, pWork->heapID);
-      //pWork->pMoveMcss[0]->percent = _POKE_SIDEIN_PERCENT;
-      //pWork->pMoveMcss[0]->add = _POKE_SIDEIN_PERCENTADD;
-     //MCSS_SetAnmStopFlag(pWork->pokeMcss[0]);
     }
+
     GFL_HEAP_FreeMemory(pWork->pMoveMcss[1]);
     pWork->pMoveMcss[1]=NULL;
-
-//    IRCPOKETRADE_PokeDeleteMcss(pWork, 1);
-  //  IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,1) );
-
     MCSS_ResetVanishFlag( pWork->pokeMcss[1] );
-
     {  //‰ŠúˆÊ’uİ’è
       VecFx32 apos;
       apos.x = _POKEMON_FRIEND_SIDEST_POSX;
@@ -641,29 +629,18 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       apos.y = _POKEMON_FRIEND_SIDEIN_POSY;
       apos.z = _POKEMON_FRIEND_SIDEIN_POSZ;
       pWork->pMoveMcss[1] = _pokeMoveCreate(pWork->pokeMcss[1], ANMCNTC(_POKE_SIDEIN_TIME), &apos , pWork->heapID);
-
       MCSS_GetScale( pWork->pokeMcss[1], &apos );
       apos.x *= _POKMEON_SCALE_SIZE;
       apos.y *= _POKMEON_SCALE_SIZE;
       MCSS_SetScale( pWork->pokeMcss[1], &apos );
-      //pWork->pMoveMcss[1]->percent = _POKE_SIDEIN_PERCENT;
-      //pWork->pMoveMcss[1]->add = _POKE_SIDEIN_PERCENTADD;
-      //MCSS_SetAnmStopFlag(pWork->pokeMcss[1]);
-
     }
     pWork->pMoveMcss[0]->wave=1;
-//    pWork->pMoveMcss[0]->waveNum=_WAVE_TIME*2;
     pWork->pMoveMcss[1]->wave=1;
-  //  pWork->pMoveMcss[1]->waveNum=_WAVE_TIME*2;
   }
 
   if(ANMCNTC(_POKE_SIDEIN_START2) == pWork->anmCount){
     _pokeMoveRenew(pWork->pMoveMcss[0],ANMCNTC(_POKE_SIDEIN_TIME2),&pWork->pMoveMcss[0]->end);
     _pokeMoveRenew(pWork->pMoveMcss[1],ANMCNTC(_POKE_SIDEIN_TIME2),&pWork->pMoveMcss[1]->end);
-
-    //pWork->pMoveMcss[0]->waveNum=_WAVE_TIME;
-//    pWork->pMoveMcss[1]->waveNum=_WAVE_TIME;
-
   }
 
   
@@ -1191,7 +1168,6 @@ static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
     MCSS_GetPosition( pMove->pMcss ,&aposold );
 
 
-    
     apos.x = _movemath(pMove->start.x, pMove->end.x ,pMove, FALSE);
     apos.y = _movemath(pMove->start.y, pMove->end.y ,pMove, FALSE);
 
@@ -1199,7 +1175,7 @@ static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
     if(pMove->wave){
       float an = FX_FX32_TO_F32(aposold.x - apos.x);
       an = an * 374;
-      pMove->sins -= (u32)an;
+      pMove->sins -= (s32)an;
       OS_TPrintf("%x\n",pMove->sins);
     }
 
