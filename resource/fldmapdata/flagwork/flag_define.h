@@ -142,7 +142,7 @@
 #define FE_MUSEUM_TOUNAN                   126 /* 0x007e 博物館盗難イベントフラグ。盗難イベント中にON */
 #define FE_C04_SUPPORT_GUIDE               127 /* 0x007f Ｃ04ライモンシティのサポート誘導イベントフラグ */
 #define FE_C02GYM_TRBTL1                   128 /* 0x0080 C02ノーマルジムトレーナーの対戦済みチェックフラグ（１人目） */
-#define FE_C04GYM_TRBTL2                   129 /* 0x0081 C02ノーマルジムトレーナーの対戦済みチェックフラグ（２人目） */
+#define FE_C02GYM_TRBTL2                   129 /* 0x0081 C02ノーマルジムトレーナーの対戦済みチェックフラグ（２人目） */
 		/* not used   130(0x0082) */
 		/* not used   131(0x0083) */
 		/* not used   132(0x0084) */
