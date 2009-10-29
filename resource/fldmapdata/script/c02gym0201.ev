@@ -680,12 +680,18 @@ EVENT_START		 ev_bg_c02gym0201_category_03
     		_OBJ_ANIME_WAIT() 
 			
 			_TALKWIN_OPEN()
-			_TALKMSG   ( msg_c02gym0101_switch_01)
+			_TALKMSG   ( msg_c02gym0101_book_13)
 			_LAST_KEYWAIT()
 			_TALKWIN_CLOSE()
 				
 			$WK_SCENE_C02GYM0201 = 4
-		
+			
+		ELSIF $WK_SCENE_C02GYM0201 > 3THEN 
+    		
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_book_13)
+			_LAST_KEYWAIT()
+			_TALKWIN_CLOSE()
 		ENDIF
 		
 	ENDIF
@@ -720,11 +726,18 @@ EVENT_START		 ev_bg_c02gym0201_category_04
     		_OBJ_ANIME_WAIT() 
     		
 			_TALKWIN_OPEN()
-			_TALKMSG   ( msg_c02gym0101_switch_01)
+			_TALKMSG   ( msg_c02gym0101_book_13)
 			_LAST_KEYWAIT()
 			_TALKWIN_CLOSE()
 				
 			$WK_SCENE_C02GYM0201 = 4
+		
+		ELSIF $WK_SCENE_C02GYM0201 > 3THEN 
+			
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_book_13)
+			_LAST_KEYWAIT()
+			_TALKWIN_CLOSE()
 			
 		ENDIF
 		
@@ -755,17 +768,24 @@ EVENT_START		 ev_bg_c02gym0201_category_05
 	_LAST_KEYWAIT()
 	_TALKWIN_CLOSE()
 	
-	IF $WK_SCENE_C02GYM0201  == 2 THEN 
+		IF $WK_SCENE_C02GYM0201  == 2 THEN 
 			
 			_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe )
     		_OBJ_ANIME_WAIT() 
     		
 			_TALKWIN_OPEN()
-			_TALKMSG   ( msg_c02gym0101_switch_01)
+			_TALKMSG   ( msg_c02gym0101_book_14)
 			_LAST_KEYWAIT()
 			_TALKWIN_CLOSE()
 			
 			$WK_SCENE_C02GYM0201 = 3
+			
+		ELSIF $WK_SCENE_C02GYM0201 > 2 THEN 
+			
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_book_14)
+			_LAST_KEYWAIT()
+			_TALKWIN_CLOSE()
 		
 		ENDIF
 		
@@ -795,17 +815,24 @@ EVENT_START		 ev_bg_c02gym0201_category_06
 	_LAST_KEYWAIT()
 	_TALKWIN_CLOSE()
 	
-	IF $WK_SCENE_C02GYM0201  == 2 THEN 
+		IF $WK_SCENE_C02GYM0201  == 2 THEN 
 			
 			_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe )
     		_OBJ_ANIME_WAIT() 
     		
 			_TALKWIN_OPEN()
-			_TALKMSG   ( msg_c02gym0101_switch_01)
+			_TALKMSG   ( msg_c02gym0101_book_14)
 			_LAST_KEYWAIT()
 			_TALKWIN_CLOSE()
 			
 			$WK_SCENE_C02GYM0201 = 3
+		
+		ELSIF $WK_SCENE_C02GYM0201 > 2 THEN 
+			
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_book_14)
+			_LAST_KEYWAIT()
+			_TALKWIN_CLOSE()
 		
 		ENDIF
 		
@@ -948,12 +975,19 @@ EVENT_START		 ev_bg_c02gym0201_category_11
     		_OBJ_ANIME_WAIT() 
 			
 			_TALKWIN_OPEN()
-			_TALKMSG   ( msg_c02gym0101_switch_01)
+			_TALKMSG   ( msg_c02gym0101_book_16)
 			_LAST_KEYWAIT()
 			_TALKWIN_CLOSE()
 			
 			$WK_SCENE_C02GYM0201 = 2
-    		
+    	
+    	ELSIF $WK_SCENE_C02GYM0201 > 1 THEN 
+			
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_book_16)
+			_LAST_KEYWAIT()
+			_TALKWIN_CLOSE()
+			
 		ENDIF
 		
 	ENDIF
@@ -988,12 +1022,19 @@ EVENT_START		 ev_bg_c02gym0201_category_12
     		_OBJ_ANIME_WAIT() 
 			
 			_TALKWIN_OPEN()
-			_TALKMSG   ( msg_c02gym0101_switch_01)
+			_TALKMSG   ( msg_c02gym0101_book_16)
 			_LAST_KEYWAIT()
 			_TALKWIN_CLOSE()
 			
 			$WK_SCENE_C02GYM0201 = 2
     		
+		ELSIF $WK_SCENE_C02GYM0201 > 1 THEN 
+			
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_book_16)
+			_LAST_KEYWAIT()
+			_TALKWIN_CLOSE()
+			
 		ENDIF
 		
 	ENDIF
@@ -1190,6 +1231,12 @@ EVENT_START		 ev_c02gym0201_book_01l
 			_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe )
     		_OBJ_ANIME_WAIT() 
     		
+    		_TALKWIN_OPEN()
+    		_TALKMSG   ( msg_c02gym0101_book_15)
+    		_LAST_KEYWAIT()
+			_TALKWIN_CLOSE()
+			
+			_TALKWIN_OPEN()
 			_TALKMSG   ( msg_c02gym0101_switch_03)
 			_TALKWIN_CLOSE()
 			
@@ -1240,9 +1287,15 @@ EVENT_START		 ev_c02gym0201_book_01l
     		
     		_TALKWIN_CLOSE()
 			_TALKWIN_OPEN()
-			_TALKMSG   ( msg_c02gym0101_book_12)
+			_TALKMSG   ( msg_c02gym0101_book_08)
 			_LAST_KEYWAIT()
     		_TALKWIN_CLOSE()
+    		
+    		_TALKWIN_OPEN()
+    		_TALKMSG   ( msg_c02gym0101_book_15)
+    		_LAST_KEYWAIT()
+			_TALKWIN_CLOSE()
+    		
 		ENDIF
 		
 	ENDIF
@@ -1362,12 +1415,18 @@ EVENT_START		 ev_bg_c02gym0201_category_23
     		_OBJ_ANIME_WAIT() 
     		
 			_TALKWIN_OPEN()
-			_TALKMSG   ( msg_c02gym0101_switch_01)
+			_TALKMSG   ( msg_c02gym0101_book_17)
 			_LAST_KEYWAIT()
 			_TALKWIN_CLOSE()
 			
 			$WK_SCENE_C02GYM0201 = 5
 		
+		ELSIF $WK_SCENE_C02GYM0201 > 4THEN 
+    	
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_book_17)
+			_LAST_KEYWAIT()
+			_TALKWIN_CLOSE()
 		ENDIF
 		
 	ENDIF
@@ -1402,11 +1461,18 @@ EVENT_START		 ev_bg_c02gym0201_category_24
     		_OBJ_ANIME_WAIT() 
     		
 			_TALKWIN_OPEN()
-			_TALKMSG   ( msg_c02gym0101_switch_01)
+			_TALKMSG   ( msg_c02gym0101_book_17)
 			_LAST_KEYWAIT()
 			_TALKWIN_CLOSE()
 			
 			$WK_SCENE_C02GYM0201 = 5
+		
+		ELSIF $WK_SCENE_C02GYM0201 > 4THEN 
+			
+			_TALKWIN_OPEN()
+			_TALKMSG   ( msg_c02gym0101_book_17)
+			_LAST_KEYWAIT()
+			_TALKWIN_CLOSE()
 		
 		ENDIF
 		
