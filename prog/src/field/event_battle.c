@@ -355,11 +355,11 @@ u8 FIELD_BATTLE_GetWildBattleRevengeCode(BtlResult result)
 
   static const u8 result_table[6] = {
     RES_ERR,                 //BTL_RESULT_LOSE
-    SCR_WILD_BTL_RES_WIN,    //BTL_RESULT_WIN
+    SCR_WILD_BTL_RET_WIN,    //BTL_RESULT_WIN
     RES_ERR,                 //BTL_RESULT_DRAW
-    SCR_WILD_BTL_RES_ESCAPE, //BTL_RESULT_RUN
-    SCR_WILD_BTL_RES_ESCAPE, //BTL_RESULT_RUN_ENEMY
-    SCR_WILD_BTL_RES_CAPTURE,//BTL_RESULT_CAPTURE
+    SCR_WILD_BTL_RET_ESCAPE, //BTL_RESULT_RUN
+    SCR_WILD_BTL_RET_ESCAPE, //BTL_RESULT_RUN_ENEMY
+    SCR_WILD_BTL_RET_CAPTURE,//BTL_RESULT_CAPTURE
   };
 
   SDK_COMPILER_ASSERT( BTL_COMPETITOR_WILD == 0 );
@@ -368,7 +368,7 @@ u8 FIELD_BATTLE_GetWildBattleRevengeCode(BtlResult result)
   if( result_table[result] == RES_ERR )
   {
     OS_Printf("負けた時はこのチェックは必要ないはず\n");
-    return SCR_WILD_BTL_RES_ESCAPE;
+    return SCR_WILD_BTL_RET_ESCAPE;
   }
   return result_table[result];
 }

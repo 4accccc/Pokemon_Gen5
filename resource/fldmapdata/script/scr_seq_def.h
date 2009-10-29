@@ -1932,9 +1932,9 @@
  *  @brief  野生ポケモン戦での再戦コードチェック
  *  @param ret_wk 結果格納先
  *  
- *  @retval SCR_WILD_BTL_RES_CAPTURE  捕まえた
- *  @retval SCR_WILD_BTL_RES_ESCAPE   逃げた
- *  @retval SCR_WILD_BTL_RES_WIN      倒した
+ *  @retval SCR_WILD_BTL_RET_CAPTURE  捕まえた
+ *  @retval SCR_WILD_BTL_RET_ESCAPE   逃げた
+ *  @retval SCR_WILD_BTL_RET_WIN      倒した
  */
 //--------------------------------------------------------------
 #define  _WILD_RETRY_CHECK(  ret_wk ) \

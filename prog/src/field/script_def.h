@@ -101,9 +101,9 @@
 #define SCR_WILD_BTL_FLAG_RARE    (0x0002)  //強制レアポケ戦闘
 
 ///野生ポケモン戦　再戦コードチェック
-#define SCR_WILD_BTL_RES_CAPTURE  (0) //捕まえた
-#define SCR_WILD_BTL_RES_ESCAPE   (1) //逃げた
-#define SCR_WILD_BTL_RES_WIN      (2) //倒した
+#define SCR_WILD_BTL_RET_CAPTURE  (0) //捕まえた
+#define SCR_WILD_BTL_RET_ESCAPE   (1) //逃げた
+#define SCR_WILD_BTL_RET_WIN      (2) //倒した
 
 //-----------------------------------------------------------------------------
 //曜日取得関数の戻り値
