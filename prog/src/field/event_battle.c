@@ -112,7 +112,7 @@ static void BEW_Destructor(BATTLE_EVENT_WORK * bew);
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM* bp )
+GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM* bp, BOOL sub_event_f )
 {
   GMEVENT * event;
   BATTLE_EVENT_WORK * bew;
@@ -122,6 +122,7 @@ GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BAT
 
   bew = GMEVENT_GetEventWork(event);
   BEW_Initialize( bew, gsys, bp );
+  bew->is_sub_event = sub_event_f;
 
   return event;
 }

@@ -24,7 +24,7 @@
 //  extern
 //======================================================================
 extern GMEVENT * EVENT_WildPokeBattle(
-    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM* bp );
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM* bp, BOOL sub_event_f );
 
 extern GMEVENT * EVENT_TrainerBattle(
     GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, int tr_id0, int tr_id1, u32 flags );

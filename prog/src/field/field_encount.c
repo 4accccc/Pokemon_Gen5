@@ -39,17 +39,12 @@
 //======================================================================
 //  define
 //======================================================================
-#define FENCOUNT_PL_NULL ///<PL処理無効
-
-#define DEBUG_WB_FORCE_GROUND //エンカウントデータを地上固定する
-
 #define CALC_SHIFT (8) ///<計算シフト値
 #define WALK_COUNT_GLOBAL (8) ///<エンカウントしない歩数
 #define WALK_COUNT_MAX (0xffff) ///<歩数カウント最大
 #define NEXT_PERCENT (40) ///<エンカウントする基本確率
 #define WALK_NEXT_PERCENT (5) ///<歩数カウント失敗で次の処理に進む確率
 
-#define LONG_GRASS_PERCENT (30) ///<長い草の中にいるときの加算確率
 #define CYCLE_PERCENT (30) ///<自転車に乗っているときの加算確率
 
 #define HEAPID_BTLPARAM (HEAPID_PROC) ///<バトルパラメタ用HEAPID
@@ -58,7 +53,6 @@
 /// エンカウントデータ要素
 //--------------------------------------------------------------
 #ifdef DEBUG_ONLY_FOR_kagaya
-//#define DEBUG_ENCOUNT_CHECKOFF_ATTR
 #endif
 
 //======================================================================
@@ -76,7 +70,7 @@ struct _TAG_FIELD_ENCOUNT
 //======================================================================
 //  proto
 //======================================================================
-static ENCOUNT_LOCATION enc_GetAttrLocation( FIELD_ENCOUNT *enc );
+static ENCOUNT_LOCATION enc_GetLocation( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type );
 static u32 enc_GetLocationPercent( FIELD_ENCOUNT *enc,ENCOUNT_LOCATION location );
 static BOOL enc_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_WORK* ewk, const u32 per );
 static BOOL enc_CheckEncountWalk( FIELD_ENCOUNT *enc, u32 per );
@@ -138,7 +132,7 @@ void FIELD_ENCOUNT_Delete( FIELD_ENCOUNT *enc )
 //======================================================================
 //--------------------------------------------------------------
 /**
- * エンカウントチェック
+ * エンカウントチェック(通常、ビンゴ用)
  * @param enc FIELD_ENCOUNT
  * @param enc_mode  ENCOUNT_MODE_???
  * @retval  NULL  エンカウントなし
@@ -168,14 +162,15 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
 #endif
 
   //ロケーションチェック
-  enc_loc = enc_GetAttrLocation( enc );
+  enc_loc = enc_GetLocation( enc, enc_type );
   per = enc_GetLocationPercent( enc, enc_loc );
   if( per <= 0 ){
     return( NULL ); //確率0
   }
 
   //ENCPOKE_FLD_PARAM作成
-  ENCPOKE_SetEFPStruct( &fld_spa, enc->gdata, enc_loc, enc_type, FALSE );
+  ENCPOKE_SetEFPStruct( &fld_spa, enc->gdata, enc_loc, enc_type,
+      FIELD_WEATHER_GetWeatherNo(FIELDMAP_GetFieldWeather( enc->fwork )) );
 
   if( enc_type != ENC_TYPE_FORCE )
   {
@@ -207,31 +202,28 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
   encwork_SetPlayerPos( ewk, fplayer);
 
   //エンカウントイベント生成
-  return (void*)EVENT_WildPokeBattle( enc->gsys, enc->fwork, bp );
+  return (void*)EVENT_WildPokeBattle( enc->gsys, enc->fwork, bp, FALSE );
 }
 
 //--------------------------------------------------------------
 /**
- * スクリプト　野生戦闘エンカウント
+ * スクリプト　野生イベント戦闘エンカウント
  * @param enc FIELD_ENCOUNT
  * @retval  GMEVENT*
  */
 //--------------------------------------------------------------
-void* FIELD_ENCOUNT_WildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv, u16 flags )
+void* FIELD_ENCOUNT_SetWildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv, u16 flags )
 {
   BATTLE_SETUP_PARAM* bp;
   ENCOUNT_WORK* ewk;
-  ENCOUNT_LOCATION enc_loc;
   ENC_POKE_PARAM poke_tbl[FLD_ENCPOKE_NUM_MAX];
 
   FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( enc->fwork );
   ENCPOKE_FLD_PARAM fld_spa;
 
-  //ロケーションチェック
-  enc_loc = enc_GetAttrLocation( enc );
-
   //ENCPOKE_FLD_PARAM作成
-  ENCPOKE_SetEFPStruct( &fld_spa, enc->gdata, enc_loc, ENC_TYPE_NORMAL, FALSE );
+  ENCPOKE_SetEFPStruct( &fld_spa, enc->gdata, ENC_LOCATION_NONE, ENC_TYPE_NORMAL,
+      FIELD_WEATHER_GetWeatherNo(FIELDMAP_GetFieldWeather( enc->fwork )) );
 
   //エンカウントポケモンデータ生成
   MI_CpuClear8(poke_tbl,sizeof(ENC_POKE_PARAM)*FLD_ENCPOKE_NUM_MAX);
@@ -250,7 +242,67 @@ void* FIELD_ENCOUNT_WildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv, u1
   enc_CreateBattleParam( enc, &fld_spa, bp, HEAPID_BTLPARAM, poke_tbl );
 
   //エンカウントイベント生成
-  return (void*)EVENT_WildPokeBattle( enc->gsys, enc->fwork, bp );
+  return (void*)EVENT_WildPokeBattle( enc->gsys, enc->fwork, bp, TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * エンカウントチェック(釣りエンカウト)
+ * @param enc FIELD_ENCOUNT
+ * @param enc_mode  ENCOUNT_MODE_???
+ * @retval  NULL  エンカウントなし
+ * @retval  GMEVENT*  エンカウント成功
+ */
+//--------------------------------------------------------------
+void* FIELD_ENCOUNT_CheckFishingEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
+{
+  u32 per,enc_num;
+  BATTLE_SETUP_PARAM* bp;
+  ENCOUNT_WORK* ewk;
+  ENCOUNT_LOCATION enc_loc;
+  ENC_POKE_PARAM poke_tbl[FLD_ENCPOKE_NUM_MAX];
+
+  ENCPOKE_FLD_PARAM fld_spa;
+
+  //ロケーションチェック
+  if( enc_type == ENC_TYPE_EFFECT ){
+    enc_loc = ENC_LOCATION_FISHING_SP;
+  }else{
+    enc_loc = ENC_LOCATION_FISHING;
+  }
+  per = enc_GetLocationPercent( enc, enc_loc );
+  if( per <= 0 ){
+    return( NULL ); //確率0
+  }
+
+  //ENCPOKE_FLD_PARAM作成
+  ENCPOKE_SetEFPStruct( &fld_spa, enc->gdata, enc_loc, enc_type,
+      FIELD_WEATHER_GetWeatherNo(FIELDMAP_GetFieldWeather( enc->fwork )) );
+
+  //道具＆特性によるエンカウント率変動(@todo 釣りに影響するの？)
+  per = ENCPOKE_EncProbManipulation( &fld_spa, enc->gdata, per);
+  if( enc_GetPercentRand() < per ){
+    return( NULL );
+  }
+
+  { //移動ポケモンチェック( @todo 移動ポケモンは釣りでエンカウントするの？)
+
+  }
+
+  //エンカウントデータ生成
+  MI_CpuClear8(poke_tbl,sizeof(ENC_POKE_PARAM)*FLD_ENCPOKE_NUM_MAX);
+  enc_num = ENCPOKE_GetNormalEncountPokeData( enc->encdata, &fld_spa, poke_tbl );
+
+  if( enc_num == 0 ){ //エンカウント失敗
+    return NULL;
+  }
+
+  //バトルパラメータセット
+  bp = BATTLE_PARAM_Create( HEAPID_BTLPARAM );
+  enc_CreateBattleParam( enc, &fld_spa, bp, HEAPID_BTLPARAM, poke_tbl );
+
+  //エンカウントイベント生成
+  return (void*)EVENT_WildPokeBattle( enc->gsys, enc->fwork, bp, FALSE );
 }
 
 //======================================================================
@@ -259,12 +311,12 @@ void* FIELD_ENCOUNT_WildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv, u1
 
 //--------------------------------------------------------------
 /**
- * アトリビュートからエンカウントローケーション取得
+ * アトリビュートとエンカウントタイプからエンカウントローケーション取得
  * @param
  * @retval
  */
 //--------------------------------------------------------------
-static ENCOUNT_LOCATION enc_GetAttrLocation( FIELD_ENCOUNT *enc )
+static ENCOUNT_LOCATION enc_GetLocation( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
 {
   MAPATTR attr;
   VecFx32 pos;
@@ -274,30 +326,26 @@ static ENCOUNT_LOCATION enc_GetAttrLocation( FIELD_ENCOUNT *enc )
 
   attr = FIELD_PLAYER_GetMapAttr( fplayer );
   if(MAPATTR_IsEnable(attr) == FALSE){
-    return ENC_LOCATION_ERR;
+    return ENC_LOCATION_NONE;
   }
 
   //エンカウントフラグチェック
   attr_flag = MAPATTR_GetAttrFlag(attr);
 
-#ifdef DEBUG_ENCOUNT_CHECKOFF_ATTR
-  attr_flag |= MAPATTR_FLAGBIT_ENCOUNT;
-#endif
   if((attr_flag & MAPATTR_FLAGBIT_ENCOUNT) == FALSE ){
-    return ENC_LOCATION_ERR;
+    return ENC_LOCATION_NONE;
   }
 
   //エンカウントアトリビュートチェック
   {
     MAPATTR_VALUE attr_value = MAPATTR_GetAttrValue(attr);
-#ifdef DEBUG_WB_FORCE_GROUND
-    attr_flag = 0; //@todo 仮　地上で固定
-#endif
-
     //水チェック
     if(attr_flag & MAPATTR_FLAGBIT_WATER){
+      if( enc_type == ENC_TYPE_EFFECT ) return ENC_LOCATION_WATER_SP;
       return ENC_LOCATION_WATER;
     }
+    if( enc_type == ENC_TYPE_EFFECT ) return ENC_LOCATION_GROUND_SP;
+
     //地面ハイレベル
     if( MAPATTR_VALUE_CheckEncountGrassB(attr_value) ){
       return ENC_LOCATION_GROUND_H;
@@ -442,7 +490,7 @@ static void enc_CreateBattleParam( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* 
     }
     GFL_HEAP_FreeMemory( pp );
 
-    BP_SETUP_Wild( bsp, gdata, heapID, BTL_RULE_SINGLE+efp->enc_double_f,partyEnemy, efp->land_form, efp->weather );
+    BP_SETUP_Wild( bsp, gdata, heapID, BTL_RULE_SINGLE+efp->enc_double_f,partyEnemy, 0, 0 );
   }
   BATTLE_PARAM_SetUpBattleSituation( bsp, enc->fwork );
 }

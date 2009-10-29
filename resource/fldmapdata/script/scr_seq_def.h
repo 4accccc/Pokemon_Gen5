@@ -1803,8 +1803,12 @@
  * 今後の拡張を考えてトレーナー戦処理に入れておいて下さい。
  */
 //--------------------------------------------------------------
-#define _TRAINER_WIN() \
+#define _TRAINER_WIN() _ASM_TRAINER_WIN_CALL
+
+  .macro  _ASM_TRAINER_WIN_CALL
     _ASM_TRAINER_WIN
+    //_BLACK_IN() //ここでブラックインを呼ぶ予定
+  .endm
 
   .macro  _ASM_TRAINER_WIN
   .short  EV_SEQ_TRAINER_WIN
@@ -1843,15 +1847,65 @@
 
 //--------------------------------------------------------------
 /**
- * _NORMAL_LOSE  敗北処理
+ * _WILD_BTL_SET  野生戦呼び出し(非伝説)
+ * @param mons_no エンカウントさせたいモンスターNo 
+ * @param mons_lv エンカウントさせたいモンスターレベル
+ *
+ * 非伝説と伝説系ではバトル開始時のエンカウントメッセージが変わります
+ * 非伝説「○○が飛び出してきた」 メッセージ変化は091029時点で未実装
+ */
+//--------------------------------------------------------------
+#define _WILD_BTL_SET( mons_no, mons_lv ) \
+    _ASM_WILD_BTL_SET mons_no, mons_lv, SCR_WILD_BTL_FLAG_NONE 
+
+//--------------------------------------------------------------
+/**
+ * _WILD_BTL_SET_REGEND  野生戦呼び出し(伝説系)
+ * @param mons_no エンカウントさせたいモンスターNo 
+ * @param mons_lv エンカウントさせたいモンスターレベル
+ *
+ * 非伝説と伝説系ではバトル開始時のエンカウントメッセージが変わります
+ * 伝説系「○○が現れた」 メッセージ変化は091029時点で未実装
+ */
+//--------------------------------------------------------------
+#define _WILD_BTL_SET_REGEND( mons_no, mons_lv ) \
+    _ASM_WILD_BTL_SET mons_no, mons_lv, SCR_WILD_BTL_FLAG_REGEND
+
+  .macro  _ASM_WILD_BTL_SET mons_no, mons_lv, flags
+  .short  EV_SEQ_WILD_BTL_SET
+  .short  \mons_no
+  .short  \mons_lv
+  .short  \flags
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _WILD_WIN
+ * @brief 野生戦勝利処理
+ */
+//--------------------------------------------------------------
+#define _WILD_WIN() _ASM_WILD_WIN_CALL
+
+  .macro  _ASM_WILD_WIN_CALL
+    _ASM_WILD_WIN
+    //_BLACK_IN() //ここでブラックインを呼ぶ予定
+  .endm
+
+  .macro  _ASM_WILD_WIN
+  .short  EV_SEQ_WILD_WIN
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * _WILD_LOSE  野生戦敗北処理
  * @param none
  */
 //--------------------------------------------------------------
-#define _NORMAL_LOSE() \
-  _ASM_NORMAL_LOSE
+#define _WILD_LOSE() \
+  _ASM_WILD_LOSE
 
-  .macro  _ASMNORMAL_LOSE
-  .short  EV_SEQ_LOSE
+  .macro  _ASM_WILD_LOSE
+  .short  EV_SEQ_WILD_LOSE
   .endm
 
 //--------------------------------------------------------------
@@ -1874,6 +1928,26 @@
 
 //--------------------------------------------------------------
 /**
+ *  @def  _WILD_RETRY_CHECK
+ *  @brief  野生ポケモン戦での再戦コードチェック
+ *  @param ret_wk 結果格納先
+ *  
+ *  @retval SCR_WILD_BTL_RES_CAPTURE  捕まえた
+ *  @retval SCR_WILD_BTL_RES_ESCAPE   逃げた
+ *  @retval SCR_WILD_BTL_RES_WIN      倒した
+ */
+//--------------------------------------------------------------
+#define  _WILD_RETRY_CHECK(  ret_wk ) \
+  _ASM_WILD_RETRY_CHECK  ret_wk
+
+  .macro  _ASM_WILD_RETRY_CHECK  ret_wk
+  .short  EV_SEQ_WILD_BTL_RETRY_CHECK
+  .short  \ret_wk
+  .endm
+
+#if 0
+//--------------------------------------------------------------
+/**
  *  _SEACRET_POKE_RETRY_CHECK 隠しポケモン再戦可不可チェック
  *  @param ret_wk 結果格納先 
  */
@@ -1893,6 +1967,7 @@
   .short  EV_SEQ_HAIFU_POKE_RETRY_CHECK
   .short  \ret_wk
   .endm
+#endif
 
 //--------------------------------------------------------------
 /**

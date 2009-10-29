@@ -210,6 +210,11 @@ VMCMD_RESULT EvCmdTrainerLoseCheck( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+#if 0
+/*
+ * 一応要らないと思う
+ * scrcmd_encount.c に EvCmdWildBattleRetryCheck()を定義
+ */
 //--------------------------------------------------------------
 /**
  * @brief 隠しポケモン戦闘　再戦可不可チェック
@@ -258,3 +263,4 @@ VMCMD_RESULT EvCmdHaifuPokeRetryCheck( VMHANDLE *core, void *wk )
 #endif
 }
 
+#endif

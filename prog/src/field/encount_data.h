@@ -34,15 +34,15 @@ typedef enum{
  ENC_LOCATION_FISHING,
  ENC_LOCATION_FISHING_SP,
  ENC_LOCATION_MAX,
- ENC_LOCATION_ERR = 0xFF,  //無効ID
+ ENC_LOCATION_NONE = 0xFF,  //無効ID
 }ENCOUNT_LOCATION;
 
 ///エンカウントタイプ
 typedef enum{
- ENC_TYPE_NORMAL, ///<通常エンカウント
- ENC_TYPE_EFFECT, ///<エフェクトエンカウント
- ENC_TYPE_BINGO,  ///<ビンゴエンカウント
- ENC_TYPE_FORCE,  ///<強制エンカウント(甘い香り/甘い蜜)
+ ENC_TYPE_NORMAL,   ///<通常エンカウント
+ ENC_TYPE_EFFECT,   ///<エフェクトエンカウント
+ ENC_TYPE_BINGO,    ///<ビンゴエンカウント
+ ENC_TYPE_FORCE,    ///<強制エンカウント(甘い香り/甘い蜜)
  ENC_TYPE_MAX,
 }ENCOUNT_TYPE;
 

@@ -54,7 +54,7 @@ static u8 DATA_ItemRangeTable[][PPD_ITEM_SLOT_NUM] = {
 ////////////////////////////////////////////////////////////
 //プロトタイプ
 static u32 eps_GetPercentRand( void );
-static void efp_MonsSpaCheck( ENCPOKE_FLD_PARAM* efp );
+static void efp_MonsSpaCheck( ENCPOKE_FLD_PARAM* efp, const WEATHER_NO weather );
 
 static u32 eps_GetEncountTable( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* ioEfp,ENC_COMMON_DATA* outTable);
 
@@ -88,7 +88,7 @@ static const ENC_PROB_CALC_FUNC DATA_EncProbCalcFuncTable[ENCPROB_CALCTYPE_MAX] 
  */
 //---------------------------------------------------------------------------
 void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
-    const ENCOUNT_LOCATION location, const ENCOUNT_TYPE enc_type,const BOOL fishing_f)
+    const ENCOUNT_LOCATION location, const ENCOUNT_TYPE enc_type, const WEATHER_NO weather)
 {
   SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork((GAMEDATA*)gdata);
   POKEPARTY* party = GAMEDATA_GetMyPokemon( gdata );
@@ -96,21 +96,9 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
 
   MI_CpuClear8(outEfp,sizeof(ENCPOKE_FLD_PARAM));
 
-  //エンカウトロケーションとタイプチェック
-  if(location >= ENC_LOCATION_MAX)
-  {
-    outEfp->location = ENC_LOCATION_GROUND_L;
-    GF_ASSERT_MSG(0,"Encount location error %d\n",location);
-  }else{
-    outEfp->location = location;
-  }
+  outEfp->location = location;
   outEfp->enc_type = enc_type;
-  outEfp->fishing_f = fishing_f;
-
-  //地形と天候チェック
-  outEfp->land_form = BTL_LANDFORM_GRASS;
-  outEfp->weather = BTL_WEATHER_NONE;
-
+  
   //プレイヤーのIDセット
   outEfp->my = GAMEDATA_GetMyStatus( (GAMEDATA*)gdata );
   outEfp->myID = MyStatus_GetID(outEfp->my);
@@ -128,17 +116,26 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
     outEfp->mons_chr = PP_GetSeikaku( pp );
 
     //特性効果発生チェック
-    efp_MonsSpaCheck( outEfp );
+    efp_MonsSpaCheck( outEfp, WEATHER_NO_SUNNY);
   }
   
+  //////////////////////////////
   //フラグチェック
+  
+  //釣り戦闘かどうか
+  if( location == ENC_LOCATION_FISHING || location == ENC_LOCATION_FISHING_SP ){
+    outEfp->fishing_f = TRUE;
+  }
+  //スプレーチェック
   if ( !EncDataSave_CanUseSpray( EncDataSave_GetSaveDataPtr(save) ) ){
     outEfp->spray_f = TRUE;
   }
+  //強制エンカウントチェック
   if( outEfp->enc_type == ENC_TYPE_FORCE ){
     outEfp->enc_force_f = TRUE;
-    outEfp->enc_type == ENC_TYPE_NORMAL;  //強制フラグを立てたら、後はNormalタイプでエミュレート
+    outEfp->enc_type = ENC_TYPE_NORMAL;  //強制フラグを立てたら、後はNormalタイプでエミュレート
   }
+
   outEfp->companion_f = FALSE;
   outEfp->enc_double_f = FALSE;
 
@@ -293,7 +290,7 @@ void ENCPOKE_PPSetup(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, const ENC_P
 /*
  *  @brief  特性効果発生チェック
  */
-static void efp_MonsSpaCheck( ENCPOKE_FLD_PARAM* ioEfp )
+static void efp_MonsSpaCheck( ENCPOKE_FLD_PARAM* ioEfp, const WEATHER_NO weather )
 {
   //発動率100%
   switch(ioEfp->mons_spa)
@@ -312,13 +309,13 @@ static void efp_MonsSpaCheck( ENCPOKE_FLD_PARAM* ioEfp )
     return;
   ///<砂嵐エンカウント率1/2（すながくれ他)
   case TOKUSYU_SUNAGAKURE:
-    if(ioEfp->weather == BTL_WEATHER_SAND){
+    if(weather == WEATHER_NO_STORM){
       ioEfp->spa_rate_down = TRUE;
     }
     return;
   ///<あられエンカウント率1/2（ゆきがくれ他）
   case TOKUSYU_YUKIGAKURE:
-    if(ioEfp->weather == BTL_WEATHER_SAND){
+    if( weather == WEATHER_NO_SNOW || weather == WEATHER_NO_SNOWSTORM || weather == WEATHER_NO_ARARE ){
       ioEfp->spa_rate_down = TRUE;
     }
     return;
@@ -394,6 +391,12 @@ static u32 eps_GetEncountTable( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* i
     return ioEfp->tbl_num;
   }
   //@todo 大量発生チェック
+
+  //テーブル取得
+  if( ioEfp->location >= ENC_LOCATION_MAX ){
+    GF_ASSERT_MSG(0,"GetEncountTable location error %d\n",ioEfp->location);
+    ioEfp->location = ENC_LOCATION_GROUND_L;
+  }
   switch(ioEfp->location)
   {
   case ENC_LOCATION_GROUND_L:

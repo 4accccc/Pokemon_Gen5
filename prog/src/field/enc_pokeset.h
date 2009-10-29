@@ -6,7 +6,9 @@
  */
 #pragma once
 
-#define FLD_ENCPOKE_NUM_MAX (2)
+#include "field/weather_no.h"
+
+#define FLD_ENCPOKE_NUM_MAX (2) ///<一度にエンカウントするポケモン数max
 
 ///ランダムポケモン抽選タイプ
 typedef enum{
@@ -35,8 +37,6 @@ typedef struct _ENCPOKE_FLD_PARAM
   //ロケーション他
   ENCOUNT_LOCATION  location;
   ENCOUNT_TYPE      enc_type;
-  BtlLandForm       land_form;
-  BtlWeather        weather;
 
   ENCPROB_CALCTYPE  prob_calctype;  ///<確率計算タイプ
   u8                tbl_num;  ///<エンカウトデータテーブルの要素数
@@ -81,7 +81,7 @@ typedef struct _ENCPOKE_FLD_PARAM
 }ENCPOKE_FLD_PARAM;
 
 extern void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
-    const ENCOUNT_LOCATION location, const ENCOUNT_TYPE enc_type,const BOOL fishing_f);
+    const ENCOUNT_LOCATION location, const ENCOUNT_TYPE enc_type,const WEATHER_NO weather );
 
 extern u32 ENCPOKE_EncProbManipulation(const ENCPOKE_FLD_PARAM* efp, const GAMEDATA* gdata, const u32 inProb);
 extern u32 ENCPOKE_GetEncountPoke( const ENCPOKE_FLD_PARAM *efp, const ENC_COMMON_DATA *enc_tbl, ENC_POKE_PARAM* outPokeTbl );

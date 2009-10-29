@@ -44,11 +44,28 @@ VMCMD_RESULT EvCmdWildBattleSet( VMHANDLE *core, void *wk )
     GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
     SCRIPT_FLDPARAM * fparam = SCRIPT_GetFieldParam( sc );
     GMEVENT *ev_battle =
-      (GMEVENT*)FIELD_ENCOUNT_WildEncount(
+      (GMEVENT*)FIELD_ENCOUNT_SetWildEncount(
           FIELDMAP_GetEncount( fparam->fieldMap ), mons_no, mons_lv, flags );
     SCRIPT_CallEvent( sc, ev_battle );
   }
 	return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * 野生戦勝利
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	VMCMD_RESULT_SUSPEND
+ *
+ * @todo
+ * 現状はこれが呼ばれなくても正常動作している。
+ * 勝利時にスクリプトからOBJ操作などを行い、その後フェードインする。
+ * その際のフェードイン処理などが実装される予定。
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWildWin( VMHANDLE * core, void *wk )
+{
+  return VMCMD_RESULT_SUSPEND;
 }
 
 //--------------------------------------------------------------
@@ -58,7 +75,7 @@ VMCMD_RESULT EvCmdWildBattleSet( VMHANDLE *core, void *wk )
  * @return	"1"
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdGetWildBattleRevengeCode( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdWildBattleRetryCheck( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );

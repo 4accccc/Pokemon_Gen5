@@ -616,12 +616,12 @@
   NO_CMD()
 
   //É|ÉPÉÇÉìêÌä÷òA
-  DEF_CMD( EvCmdSeacretPokeRetryCheck, EV_SEQ_SEACRET_POKE_RETRY_CHECK )
-  DEF_CMD( EvCmdHaifuPokeRetryCheck, EV_SEQ_HAIFU_POKE_RETRY_CHECK )
+  DEF_CMD( EvCmdWildBattleSet, EV_SEQ_WILD_BTL_SET )
+  DEF_CMD( EvCmdWildWin, EV_SEQ_WILD_WIN )
+  DEF_CMD( EvCmdWildLose, EV_SEQ_WILD_LOSE )
   DEF_CMD( EvCmdWildLoseCheck, EV_SEQ_WILD_LOSE_CHECK )
-  NO_CMD()
 
-  NO_CMD()
+  DEF_CMD( EvCmdWildBattleRetryCheck, EV_SEQ_WILD_BTL_RETRY_CHECK )
   NO_CMD()
   NO_CMD()
   NO_CMD()
