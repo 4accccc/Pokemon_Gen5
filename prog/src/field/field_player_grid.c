@@ -89,6 +89,16 @@ typedef enum
 #endif
 }PLAYER_MOVEHITBIT;
 
+//--------------------------------------------------------------
+/// UNDER
+//--------------------------------------------------------------
+typedef enum
+{
+  UNDER_NONE = 0, //何も無し
+  UNDER_ICE, //滑る床
+  UNDER_MAX,
+}UNDER;
+
 //======================================================================
 //  struct
 //======================================================================
@@ -98,6 +108,7 @@ typedef enum
 struct _TAG_FIELD_PLAYER_GRID
 {
   int move_state;
+  PLAYER_SET move_set;
   
   FIELD_PLAYER_GRID_MOVEBIT move_bit;
   FIELD_PLAYER_REQBIT req_bit;
@@ -114,7 +125,8 @@ struct _TAG_FIELD_PLAYER_GRID
 //  proto
 //======================================================================
 static void gjiki_InitMoveStartCommon(
-    FIELD_PLAYER_GRID *gjiki, u16 key_prs );
+    FIELD_PLAYER_GRID *gjiki, u16 key_prs, PLAYER_SET set );
+static BOOL gjiki_CheckMoveStart( FIELD_PLAYER_GRID *gjiki, u16 dir );
 
 //キー入力処理
 static u16 gjiki_GetInputKeyDir(
@@ -268,12 +280,20 @@ static void gjiki_OnMoveBit(
     FIELD_PLAYER_GRID *gjiki, FIELD_PLAYER_GRID_MOVEBIT bit );
 static void gjiki_OffMoveBit(
     FIELD_PLAYER_GRID *gjiki, FIELD_PLAYER_GRID_MOVEBIT bit );
+static BOOL gjiki_CheckMoveBit(
+    FIELD_PLAYER_GRID *gjiki, FIELD_PLAYER_GRID_MOVEBIT bit );
 static void gjiki_OnMoveBitForce( FIELD_PLAYER_GRID *gjiki );
 static void gjiki_OffMoveBitForce( FIELD_PLAYER_GRID *gjiki );
+static BOOL gjiki_CheckMoveBitForce( FIELD_PLAYER_GRID *gjiki );
 static void gjiki_OnMoveBitUnderOff( FIELD_PLAYER_GRID *gjiki );
 static void gjiki_OffMoveBitUnderOff( FIELD_PLAYER_GRID *gjiki );
 static void gjiki_OnMoveBitStep( FIELD_PLAYER_GRID *gjiki );
 static void gjiki_OffMoveBitStep( FIELD_PLAYER_GRID *gjiki );
+
+static UNDER gjiki_CheckUnder( FIELD_PLAYER_GRID *gjiki, u16 dir );
+
+static BOOL gjiki_ControlUnder(
+    FIELD_PLAYER_GRID *gjiki, u16 dir, BOOL debug );
 
 //パーツ
 
@@ -299,6 +319,8 @@ FIELD_PLAYER_GRID * FIELD_PLAYER_GRID_Init(
   gjiki->input_key_dir_x = DIR_NOT;
   gjiki->input_key_dir_z = DIR_NOT;
 
+  gjiki_OnMoveBitUnderOff( gjiki );
+  
   //復帰
   {
     PLAYER_MOVE_FORM form;
@@ -346,23 +368,29 @@ void FIELD_PLAYER_GRID_Move(
 {
   u16 dir;
   PLAYER_SET set;
-  BOOL debug_flag;
+  BOOL debug_flag = FALSE;
   
   dir = gjiki_GetInputKeyDir( gjiki, key_cont );
   
-  debug_flag = FALSE;
+  if( gjiki_CheckMoveStart(gjiki,dir) == FALSE ){
+    return;
+  }
   
-  #ifdef PM_DEBUG
+#ifdef PM_DEBUG
   if( key_cont & PAD_BUTTON_R ){
     debug_flag = TRUE;
   }
-  #endif
+#endif
   
   FIELD_PLAYER_GRID_UpdateRequest( gjiki );
   
+  if( gjiki_ControlUnder(gjiki,dir,debug_flag) == TRUE ){
+    return;
+  }
+  
   set = gjiki_GetMoveStartSet( gjiki, key_trg, key_cont, dir, debug_flag );
   
-  gjiki_InitMoveStartCommon( gjiki, key_cont );
+  gjiki_InitMoveStartCommon( gjiki, key_cont, set );
   gjiki_SetMove( gjiki, set, key_trg, key_cont, dir, debug_flag );
 }
 
@@ -375,10 +403,41 @@ void FIELD_PLAYER_GRID_Move(
  */
 //--------------------------------------------------------------
 static void gjiki_InitMoveStartCommon(
-    FIELD_PLAYER_GRID *gjiki, u16 key_prs )
+    FIELD_PLAYER_GRID *gjiki, u16 key_prs, PLAYER_SET set )
 {
+  gjiki->move_set = set;
   gjiki_SetInputKeyDir( gjiki, key_prs );
   gjiki_OffMoveBitStep( gjiki );
+  
+  if( set == PLAYER_SET_WALK ){
+    gjiki_OffMoveBitUnderOff( gjiki );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動開始チェック
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static BOOL gjiki_CheckMoveStart( FIELD_PLAYER_GRID *gjiki, u16 dir )
+{
+  MMDL *mmdl = FIELD_PLAYER_GetMMdl( gjiki->fld_player );
+  
+  if( MMDL_CheckPossibleAcmd(mmdl) == TRUE ){
+    return( TRUE ); //セット可能
+  }
+  
+  if( dir != DIR_NOT ){
+    if( gjiki->move_state == PLAYER_MOVE_HITCH ){
+      if( dir != MMDL_GetDirDisp(mmdl) ){
+        return( TRUE );
+      }
+    }
+  }
+  
+  return( FALSE );
 }
 
 //======================================================================
@@ -2239,6 +2298,24 @@ static void gjiki_OffMoveBit(
 
 //--------------------------------------------------------------
 /**
+ * FIELD_PLAYER_GRID_MOVEBIT Check
+ * @param gjiki FIELD_PLAYER_GRID
+ * @param bit FIELD_PLAYER_GRID_MOVEBIT
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static BOOL gjiki_CheckMoveBit(
+    FIELD_PLAYER_GRID *gjiki, FIELD_PLAYER_GRID_MOVEBIT bit )
+{
+  GF_ASSERT( bit < FIELD_PLAYER_GRID_MOVEBIT_BITMAX );
+  if( (gjiki->move_bit & bit) ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
  * FIELD_PLAYER_GRID_MOVEBIT 強制移動ビットON
  * @param gjiki FIELD_PLAYER_GRID
  * @param bit FIELD_PLAYER_GRID_MOVEBIT
@@ -2261,6 +2338,21 @@ static void gjiki_OnMoveBitForce( FIELD_PLAYER_GRID *gjiki )
 static void gjiki_OffMoveBitForce( FIELD_PLAYER_GRID *gjiki )
 {
   gjiki_OffMoveBit( gjiki, FIELD_PLAYER_GRID_MOVEBIT_FORCE );
+}
+
+//--------------------------------------------------------------
+/**
+ * FIELD_PLAYER_GRID_MOVEBIT 強制移動ビットチェック
+ * @param gjiki FIELD_PLAYER_GRID
+ * @retval BOOL 
+ */
+//--------------------------------------------------------------
+static BOOL gjiki_CheckMoveBitForce( FIELD_PLAYER_GRID *gjiki )
+{
+  if( gjiki_CheckMoveBit(gjiki,FIELD_PLAYER_GRID_MOVEBIT_FORCE) ){
+    return( TRUE );
+  }
+  return( FALSE );
 }
 
 //--------------------------------------------------------------
@@ -2468,6 +2560,146 @@ u16 FIELD_PLAYER_GRID_GetKeyDir( FIELD_PLAYER_GRID *gjiki, int key )
 {
   u16 dir = gjiki_GetInputKeyDir( gjiki, key );
   return( dir );
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機足元をチェックする
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static UNDER gjiki_CheckUnder( FIELD_PLAYER_GRID *gjiki, u16 dir )
+{
+  MMDL *mmdl = FIELD_PLAYER_GetMMdl( gjiki->fld_player );
+  MAPATTR attr = MMDL_GetMapAttr( mmdl );
+  
+  if( gjiki_CheckMoveBit(
+        gjiki,FIELD_PLAYER_GRID_MOVEBIT_UNDER_OFF) == FALSE ){
+    int i = 0;
+    MAPATTR_VALUE val = MAPATTR_GetAttrValue( attr );
+    
+    if( MAPATTR_VALUE_CheckIce(val) == TRUE ){
+      return( UNDER_ICE );
+    }
+  }
+  
+  return( UNDER_NONE );
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機足元が強制移動かどうか
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+BOOL FIELD_PLAYER_GRID_CheckUnderForceMove( FIELD_PLAYER *fld_player )
+{
+  FIELDMAP_WORK *fieldmap = FIELD_PLAYER_GetFieldMapWork( fld_player );
+  FIELD_PLAYER_GRID *gjiki = FIELDMAP_GetPlayerGrid( fieldmap );
+  UNDER under = gjiki_CheckUnder( gjiki, DIR_NOT );
+  
+  if( under != UNDER_NONE ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//======================================================================
+//  自機足元処理
+//======================================================================
+//--------------------------------------------------------------
+/**
+ *
+ * @param
+ * @retval
+ *
+ */
+//--------------------------------------------------------------
+static void gjiki_ClearUnderForceMove( FIELD_PLAYER_GRID *gjiki )
+{
+  if( gjiki_CheckMoveBitForce(gjiki) == TRUE ){
+    MMDL *mmdl = FIELD_PLAYER_GetMMdl( gjiki->fld_player );
+    MMDL_OffStatusBit( mmdl, MMDL_STABIT_PAUSE_DIR|MMDL_STABIT_PAUSE_ANM );
+    gjiki_OffMoveBitForce( gjiki );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ *
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static BOOL gjikiUnder_None( FIELD_PLAYER_GRID *gjiki, u16 dir )
+{
+  gjiki_ClearUnderForceMove( gjiki );
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ *
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static BOOL gjikiUnder_Ice( FIELD_PLAYER_GRID *gjiki, u16 dir )
+{
+  MAPATTR attr;
+  MMDL *mmdl = FIELD_PLAYER_GetMMdl( gjiki->fld_player );
+  u16 jiki_dir = MMDL_GetDirMove( mmdl );
+  u32 hit = gjiki_HitCheckMove( gjiki, mmdl, jiki_dir, &attr );
+	
+  if( hit != MMDL_MOVEHITBIT_NON ){ //障害物ヒット
+    gjiki_ClearUnderForceMove( gjiki );
+    gjiki_OnMoveBitUnderOff( gjiki );
+    FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_STOP );
+    return( FALSE );
+  }
+  
+  gjiki_OnMoveBitForce( gjiki );
+  
+  {
+	  u16 code = MMDL_ChangeDirAcmdCode( jiki_dir, AC_WALK_U_4F );
+    
+    MMDL_SetAcmd( mmdl, code );
+    MMDL_OnStatusBit( mmdl, MMDL_STABIT_PAUSE_DIR|MMDL_STABIT_PAUSE_ANM );
+    
+    gjiki->move_state = PLAYER_MOVE_WALK;
+    FIELD_PLAYER_SetMoveValue( gjiki->fld_player, PLAYER_MOVE_VALUE_WALK );
+	  return( TRUE );
+  }
+}
+
+static BOOL (* const data_MoveUnderFuncTbl[UNDER_MAX])(FIELD_PLAYER_GRID*,u16) =
+{
+  gjikiUnder_None,
+  gjikiUnder_Ice,
+};
+
+//--------------------------------------------------------------
+/**
+ * 自機足元処理
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static BOOL gjiki_ControlUnder(
+    FIELD_PLAYER_GRID *gjiki, u16 dir, BOOL debug )
+{
+  if( debug == FALSE ){
+    UNDER under = gjiki_CheckUnder( gjiki, dir );
+    
+    if( data_MoveUnderFuncTbl[under](gjiki,dir) == TRUE ){
+      return( TRUE );
+    }
+  }
+  
+  gjiki_OffMoveBitForce( gjiki );
+  return( FALSE );
 }
 
 //======================================================================

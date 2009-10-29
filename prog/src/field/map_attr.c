@@ -544,3 +544,15 @@ BOOL MAPATTR_VALUE_CheckSnowType( const MAPATTR_VALUE val )
   }
   return( FALSE );
 }
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　氷
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckIce( const MAPATTR_VALUE val )
+{
+  return( val == 0x18 );
+}

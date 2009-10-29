@@ -87,8 +87,8 @@ extern BOOL MAPATTR_VALUE_CheckShore( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckPool( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckShoal( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckWaterFall( const MAPATTR_VALUE val );
-BOOL MAPATTR_VALUE_CheckSnow( const MAPATTR_VALUE val );
-BOOL MAPATTR_VALUE_CheckDeepSnow( const MAPATTR_VALUE val );
-BOOL MAPATTR_VALUE_CheckSnowType( const MAPATTR_VALUE val );
-
+extern BOOL MAPATTR_VALUE_CheckSnow( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckDeepSnow( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckSnowType( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckIce( const MAPATTR_VALUE val );
 
