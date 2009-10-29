@@ -23,11 +23,12 @@ enum {
 	NARC_c_gear_c_gear_obj_NCER = 9,
 	NARC_c_gear_c_gear00_NSCR = 10,
 	NARC_c_gear_c_gear01_NSCR = 11,
-	NARC_c_gear_c_gear02_NSCR = 12,
-	NARC_c_gear_c_gear02b_NSCR = 13,
-	NARC_c_gear_c_gear03_NSCR = 14,
-	NARC_c_gear_c_gear2_obj_NANR = 15,
-	NARC_c_gear_c_gear_obj_NANR = 16
+	NARC_c_gear_c_gear01_n_NSCR = 12,
+	NARC_c_gear_c_gear02_NSCR = 13,
+	NARC_c_gear_c_gear02b_NSCR = 14,
+	NARC_c_gear_c_gear03_NSCR = 15,
+	NARC_c_gear_c_gear2_obj_NANR = 16,
+	NARC_c_gear_c_gear_obj_NANR = 17
 };
 
 /* NARC_C_GEAR_NAIX_ */

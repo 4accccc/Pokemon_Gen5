@@ -610,7 +610,7 @@ static void _gearPanelBgScreenMake(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANEL
 {
 	int ypos[2] = {PANEL_Y1,PANEL_Y2};
 	int x,y,i,j;
-	int typepos[] = {0,0x60,0x64,0x68};
+	int typepos[] = {0,0x0c,0x10,0x14};
 	int palpos[] =  {0,0x1000,0x2000,0x3000};
 	u16* pScrAddr = GFL_BG_GetScreenBufferAdrs(GEAR_BUTTON_FRAME );
 	int xscr;
@@ -626,6 +626,39 @@ static void _gearPanelBgScreenMake(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANEL
 					charpos = 0;
 				}
 				pScrAddr[scr] = palpos[type] + charpos;
+				//		NET_PRINT("x%d y%d  %d \n",x,y,palpos[type] + charpos);
+			}
+		}
+	}
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   パネルタイプをスクリーンに書き込む
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _gearPanelBgScreenMakeBase(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANELTYPE_ENUM type)
+{
+	int ypos[2] = {PANEL_Y1,PANEL_Y2};
+	int x,y,i,j;
+	int typepos[] = {0,0x18,0x18,0x18};
+	int palpos[] =  {0x7000,0x6000,0x5000,0x4000,0x4000,0x4000,0x5000,0x6000,0x7000};
+	u16* pScrAddr = GFL_BG_GetScreenBufferAdrs(GEAR_BUTTON_FRAME );
+	int xscr;
+	int yscr;
+
+	_gearXY2PanelScreen(xs,ys,&xscr,&yscr);
+	for(y = yscr, i = 0; i < PANEL_SIZEXY; y++, i++){
+		for(x = xscr, j = 0; j < PANEL_SIZEXY; x++, j++){
+			if((x >= 0) && (x < 32)){
+				int charpos = typepos[type] + i * 0x20 + j;
+				int scr = x + (y * 32);
+				if(type == CGEAR_PANELTYPE_NONE){
+					charpos = 0;
+				}
+				pScrAddr[scr] = palpos[ys] + charpos;
 				//		NET_PRINT("x%d y%d  %d \n",x,y,palpos[type] + charpos);
 			}
 		}
@@ -843,7 +876,7 @@ static void _createSubBg(C_GEAR_WORK* pWork)
 
 	//  G2S_SetBlendAlpha( GEAR_MAIN_FRAME, GEAR_BMPWIN_FRAME , 3, 16 );
 	//   G2S_SetBlendAlpha( GEAR_MAIN_FRAME, GEAR_BUTTON_FRAME , 16, 16 );
-	G2S_SetBlendAlpha( GEAR_MAIN_FRAME|GEAR_BUTTON_FRAME, GEAR_BMPWIN_FRAME , 3, 16 );
+	G2S_SetBlendAlpha( GEAR_MAIN_FRAME|GEAR_BUTTON_FRAME, GEAR_BMPWIN_FRAME , 9, 15 );
 
 }
 
@@ -1323,8 +1356,8 @@ static void _typeAnimation(C_GEAR_WORK* pWork)
 		y *= 8;
 		//		GFL_CLACT_WK_GetPos( pWork->cellType[i], &pos , CLSYS_DEFREND_SUB);
 		//		if((pos.x != x) || (pos.y != y)){
-		pos.x = x+32;  // OBJ表示の為の補正値
-		pos.y = y+16;
+		pos.x = x+60;  // OBJ表示の為の補正値
+		pos.y = y-6;
 		GFL_CLACT_WK_SetPos(pWork->cellType[i], &pos, CLSYS_DEFREND_SUB);
 		//		}
 	}
