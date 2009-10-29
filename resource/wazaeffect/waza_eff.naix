@@ -488,7 +488,8 @@ enum {
 	NARC_waza_eff_be_007_bin = 474,
 	NARC_waza_eff_be_008_bin = 475,
 	NARC_waza_eff_be_009_bin = 476,
-	NARC_waza_eff_be_010_bin = 477
+	NARC_waza_eff_be_010_bin = 477,
+	NARC_waza_eff_be_011_bin = 478
 };
 
 /* NARC_WAZA_EFF_NAIX_ */
