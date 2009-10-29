@@ -500,6 +500,7 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BTL
   wk->plistData.mode = BPL_MODE_NORMAL;
   wk->plistData.end_flg = FALSE;
   wk->plistData.sel_poke = 0;
+	wk->plistData.chg_waza = 0;
   wk->plistData.rule = BTL_MAIN_GetRule( wk->mainModule );
 
   {
@@ -585,6 +586,7 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->plistData.mode = BPL_MODE_ITEMUSE;
     wk->plistData.end_flg = FALSE;
     wk->plistData.sel_poke = 0;
+		wk->plistData.chg_waza = 0;
 
     wk->selectItemSeq = 1;
   }
