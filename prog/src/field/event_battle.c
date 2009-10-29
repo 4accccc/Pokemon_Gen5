@@ -341,6 +341,39 @@ BOOL FIELD_BATTLE_IsLoseResult(BtlResult result, BtlCompetitor competitor)
 
 //--------------------------------------------------------------
 /**
+ * @brief 野生戦　再戦コードチェック
+ * @param result  バトルシステムが返す戦闘結果
+ * @return  SCR_WILD_BTL_RES_XXXX
+ */
+//--------------------------------------------------------------
+u8 FIELD_BATTLE_GetWildBattleRevengeCode(BtlResult result)
+{
+  enum {
+    RES_ERR = 0xFF,
+  };
+
+  static const u8 result_table[6] = {
+    RES_ERR,                 //BTL_RESULT_LOSE
+    SCR_WILD_BTL_RES_WIN,    //BTL_RESULT_WIN
+    RES_ERR,                 //BTL_RESULT_DRAW
+    SCR_WILD_BTL_RES_ESCAPE, //BTL_RESULT_RUN
+    SCR_WILD_BTL_RES_ESCAPE, //BTL_RESULT_RUN_ENEMY
+    SCR_WILD_BTL_RES_CAPTURE,//BTL_RESULT_CAPTURE
+  };
+
+  SDK_COMPILER_ASSERT( BTL_COMPETITOR_WILD == 0 );
+
+  GF_ASSERT_MSG( result <= BTL_RESULT_CAPTURE, "想定外のBtlResult(%d)\n", result );
+  if( result_table[result] == RES_ERR )
+  {
+    OS_Printf("負けた時はこのチェックは必要ないはず\n");
+    return SCR_WILD_BTL_RES_ESCAPE;
+  }
+  return result_table[result];
+}
+
+//--------------------------------------------------------------
+/**
  * @brief 勝ち負け結果チェック
  * @retval  TRUE  負けた
  * @retval  FALSE その他

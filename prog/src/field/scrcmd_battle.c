@@ -88,12 +88,62 @@ VMCMD_RESULT EvCmdTrainerFlagCheck( VMHANDLE * core, void *wk )
 //======================================================================
 //--------------------------------------------------------------
 /**
- * @brief 敗北チェック
+ * @brief 野生戦敗北処理
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	VMCMD_RESULT_SUSPEND
+ *
+ * @todo  強制終了されるスクリプトに解放忘れがないか、検討
+ *
+ * @note
+ * スクリプトを強制終了し、敗北処理イベントへと遷移する。
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWildLose( VMHANDLE *core, void *wk )
+{
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+
+  call_event = EVENT_NormalLose( gsys );
+  SCRIPT_EntryNextEvent( sc, call_event );
+
+  VM_End( core );
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 野生戦敗北チェック
  * @param	core		仮想マシン制御構造体へのポインタ
  * @return  VMCMD_RESULT
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWildLoseCheck( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  BtlResult res = GAMEDATA_GetLastBattleResult(gdata);
+
+  if (FIELD_BATTLE_IsLoseResult(res, BTL_COMPETITOR_WILD) == TRUE)
+  {
+    *ret_wk = SCR_BATTLE_RESULT_LOSE;
+  } else {
+    *ret_wk = SCR_BATTLE_RESULT_WIN;
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 野生戦　再戦コードチェック
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWildBattleRevengeCheck( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
 	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );

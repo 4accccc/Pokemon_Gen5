@@ -8,6 +8,7 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "system/main.h"
+#include "system/rtc_tool.h"
 
 #include "fieldmap.h"
 #include "map_attr.h"
@@ -25,11 +26,13 @@
 #include "poke_tool/poke_personal.h"
 #include "tr_tool/tr_tool.h"
 #include "item/itemsym.h"
+#include "field/zonedata.h"
 
 #include "enc_pokeset.h"
 #include "event_battle.h"
 #include "field_encount_local.h"
 
+#include "script_def.h"
 #include "debug/debug_flg.h"
 #include "sound/wb_sound_data.sadl"
 
@@ -80,6 +83,8 @@ static BOOL enc_CheckEncountWalk( FIELD_ENCOUNT *enc, u32 per );
 
 static void enc_CreateBattleParam( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* spa,
     BATTLE_SETUP_PARAM *bsp, HEAPID heapID, const ENC_POKE_PARAM* inPokeTbl );
+
+static void BATTLE_PARAM_SetUpBattleSituation( BATTLE_SETUP_PARAM* bp, FIELDMAP_WORK* fieldWork );
 
 static u32 enc_GetPercentRand( void );
 
@@ -136,7 +141,8 @@ void FIELD_ENCOUNT_Delete( FIELD_ENCOUNT *enc )
  * エンカウントチェック
  * @param enc FIELD_ENCOUNT
  * @param enc_mode  ENCOUNT_MODE_???
- * @retval BOOL TRUE=エンカウントした
+ * @retval  NULL  エンカウントなし
+ * @retval  GMEVENT*  エンカウント成功
  */
 //--------------------------------------------------------------
 void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
@@ -186,6 +192,7 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
   }
 
   //エンカウントデータ生成
+  MI_CpuClear8(poke_tbl,sizeof(ENC_POKE_PARAM)*FLD_ENCPOKE_NUM_MAX);
   enc_num = ENCPOKE_GetNormalEncountPokeData( enc->encdata, &fld_spa, poke_tbl );
 
   if( enc_num == 0 ){ //エンカウント失敗
@@ -198,6 +205,49 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
 
   // プレイヤー座標更新＆歩数カウントクリア
   encwork_SetPlayerPos( ewk, fplayer);
+
+  //エンカウントイベント生成
+  return (void*)EVENT_WildPokeBattle( enc->gsys, enc->fwork, bp );
+}
+
+//--------------------------------------------------------------
+/**
+ * スクリプト　野生戦闘エンカウント
+ * @param enc FIELD_ENCOUNT
+ * @retval  GMEVENT*
+ */
+//--------------------------------------------------------------
+void* FIELD_ENCOUNT_WildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv, u16 flags )
+{
+  BATTLE_SETUP_PARAM* bp;
+  ENCOUNT_WORK* ewk;
+  ENCOUNT_LOCATION enc_loc;
+  ENC_POKE_PARAM poke_tbl[FLD_ENCPOKE_NUM_MAX];
+
+  FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( enc->fwork );
+  ENCPOKE_FLD_PARAM fld_spa;
+
+  //ロケーションチェック
+  enc_loc = enc_GetAttrLocation( enc );
+
+  //ENCPOKE_FLD_PARAM作成
+  ENCPOKE_SetEFPStruct( &fld_spa, enc->gdata, enc_loc, ENC_TYPE_NORMAL, FALSE );
+
+  //エンカウントポケモンデータ生成
+  MI_CpuClear8(poke_tbl,sizeof(ENC_POKE_PARAM)*FLD_ENCPOKE_NUM_MAX);
+  {
+    ENC_POKE_PARAM* poke = &poke_tbl[0];
+    poke->monsNo = mons_no;
+    poke->level = mons_lv;
+
+    if( flags & SCR_WILD_BTL_FLAG_RARE ){
+      poke->rare = TRUE;
+    }
+  }
+
+  //バトルパラメータセット
+  bp = BATTLE_PARAM_Create( HEAPID_BTLPARAM );
+  enc_CreateBattleParam( enc, &fld_spa, bp, HEAPID_BTLPARAM, poke_tbl );
 
   //エンカウントイベント生成
   return (void*)EVENT_WildPokeBattle( enc->gsys, enc->fwork, bp );
@@ -394,22 +444,7 @@ static void enc_CreateBattleParam( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* 
 
     BP_SETUP_Wild( bsp, gdata, heapID, BTL_RULE_SINGLE+efp->enc_double_f,partyEnemy, efp->land_form, efp->weather );
   }
-
-  { //2vs2時の味方AI（不要ならnull）
-    bsp->partyPartner = NULL;
-  }
-
-  { //2vs2時の２番目敵AI用（不要ならnull）
-    bsp->partyEnemy2 = NULL;
-  }
-
-  { //BGM設定
-    //デフォルト時のBGMナンバー
-//  bsp->musicDefault = SEQ_WB_BA_TEST_250KB;
-    bsp->musicDefault = SEQ_BGM_VS_NORAPOKE;
-    //ピンチ時のBGMナンバー
-    bsp->musicPinch = SEQ_BGM_BATTLEPINCH;
-  }
+  BATTLE_PARAM_SetUpBattleSituation( bsp, enc->fwork );
 }
 
 //--------------------------------------------------------------
@@ -445,14 +480,7 @@ static void enc_CreateTrainerBattleParam(
     GF_ASSERT( param->partyEnemy1 != NULL );
     TT_EncountTrainerDataMake( param, heapID );
   }
-
-  { //BGM設定
-    //デフォルト時のBGMナンバー
-//  param->musicDefault = SEQ_WB_BA_TEST_250KB;
-    param->musicDefault = SEQ_BGM_VS_NORAPOKE;
-    //ピンチ時のBGMナンバー
-    param->musicPinch = SEQ_BGM_BATTLEPINCH;
-  }
+  BATTLE_PARAM_SetUpBattleSituation( param, enc->fwork );
 }
 
 //--------------------------------------------------------------
@@ -468,6 +496,97 @@ void FIELD_ENCOUNT_SetTrainerBattleParam(
 {
   KAGAYA_Printf( "トレーナーバトルパラム作成 HEAPID=%d\n", heapID );
   enc_CreateTrainerBattleParam( enc, setup, heapID, tr_id0, tr_id1 );
+}
+
+//--------------------------------------------------------------
+/*
+ *  @brief  戦闘背景ID取得
+ */
+//--------------------------------------------------------------
+static BtlLandForm btlparam_GetBattleLandForm( FIELDMAP_WORK* fieldWork )
+{
+  u8  bg_type;
+  MAPATTR attr;
+  u16 zone_id = FIELDMAP_GetZoneID( fieldWork );
+  FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( fieldWork );
+  MAPATTR_FLAG attr_flag;
+
+  attr = FIELD_PLAYER_GetMapAttr( FIELDMAP_GetFieldPlayer( fieldWork ) );
+  bg_type = ZONEDATA_GetBattleBGType(zone_id);
+
+/*
+  BTL_LANDFORM_GRASS,   ///< 草むら
+  BTL_LANDFORM_SAND,    ///< 砂地
+  BTL_LANDFORM_SEA,     ///< 海
+  BTL_LANDFORM_RIVER,   ///< 川
+  BTL_LANDFORM_SNOW,    ///< 雪原
+  BTL_LANDFORM_CAVE,    ///< 洞窟
+  BTL_LANDFORM_ROCK,    ///< 岩場
+  BTL_LANDFORM_ROOM,    ///< 室内
+*/
+  return BTL_LANDFORM_GRASS;
+}
+
+static BtlWeather btlparam_GetBattleWeather( FIELDMAP_WORK* fieldWork )
+{
+  FIELD_WEATHER* fld_weather = FIELDMAP_GetFieldWeather( fieldWork );
+  u32 weather = FIELD_WEATHER_GetWeatherNo( fld_weather );
+
+  switch( weather )
+  {
+  case WEATHER_NO_SUNNY:
+    return BTL_WEATHER_SHINE;
+  case WEATHER_NO_RAIN:
+  case WEATHER_NO_STORM:
+  case WEATHER_NO_SPARK:
+    return BTL_WEATHER_RAIN;
+  case WEATHER_NO_SNOW:
+  case WEATHER_NO_SNOWSTORM:
+  case WEATHER_NO_ARARE:
+    return BTL_WEATHER_SNOW;
+  case WEATHER_NO_MIRAGE:
+    return BTL_WEATHER_MIST;
+  }
+  return BTL_WEATHER_NONE;
+}
+
+/*
+ *  @brief  戦闘背景/天候 など FIELDMAP_WORKを参照して決定されるデータをセットする
+ *
+ *  ＊BP_SETUP_XXXX系の関数を呼び、バトルの基本パラメータをセットした後で呼び出してください
+ *
+ *  @todo 仮処理
+ */
+static void BATTLE_PARAM_SetUpBattleSituation( BATTLE_SETUP_PARAM* bp, FIELDMAP_WORK* fieldWork )
+{
+  u16 zone_id = FIELDMAP_GetZoneID( fieldWork );
+  FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( fieldWork );
+
+  { //戦闘背景
+    u8 bg_type = ZONEDATA_GetBattleBGType(zone_id);
+    if( FIELD_PLAYER_GetMoveForm( fplayer ) == PLAYER_MOVE_FORM_SWIM ){
+      bg_type = 0;
+    }
+    bp->bgType = bg_type;
+    bp->landForm = btlparam_GetBattleLandForm( fieldWork );
+  }
+  //タイムゾーン取得
+  bp->timezone = GFL_RTC_GetTimeZone();  //@todo EVTIMEからの取得に変更予定
+
+#if 0 //BGID定義が出来たら入れる予定
+  if( bg_type == "洞窟だったら"){
+    bp->time_zone = TIMEZONE_NIGHT;
+  }
+#endif
+
+  //天候
+  bp->weather = btlparam_GetBattleWeather( fieldWork );
+ 
+  //BGM(本当はイベント進行/現在マップなどを見て決める)
+  bp->musicDefault = SEQ_BGM_VS_NORAPOKE;   ///< デフォルト時のBGMナンバー
+  bp->musicPinch = SEQ_BGM_BATTLEPINCH;     ///< ピンチ時のBGMナンバー
+
+  //エンカウントエフェクト
 }
 
 //======================================================================
@@ -486,45 +605,6 @@ static u32 enc_GetPercentRand( void )
   return( val );
 }
 
-#if 0
-//--------------------------------------------------------------
-/**
- * 歩数カウント取得
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-static int enc_GetWalkCount( FIELD_ENCOUNT *enc )
-{
-  return( GAMEDATA_GetFieldMapWalkCount(enc->gdata) );
-}
-
-//--------------------------------------------------------------
-/**
- * 歩数カウント増加
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-static void enc_AddWalkCount( FIELD_ENCOUNT *enc )
-{
-  int count = GAMEDATA_GetFieldMapWalkCount( enc->gdata );
-  if( count < WALK_COUNT_MAX ){ count++; }
-  GAMEDATA_SetFieldMapWalkCount( enc->gdata, count );
-}
-
-//--------------------------------------------------------------
-/**
- * 歩数カウントクリア
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-static void enc_ClearWalkCount( FIELD_ENCOUNT *enc )
-{
-  GAMEDATA_SetFieldMapWalkCount( enc->gdata, 0 );
-}
-#endif
 
 /**
  *  @brief  プレイヤーポジション保存

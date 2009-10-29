@@ -38,3 +38,13 @@ extern GMEVENT * EVENT_TrainerBattle(
  */
 //--------------------------------------------------------------
 extern BOOL FIELD_BATTLE_IsLoseResult(BtlResult result, BtlCompetitor competitor);
+
+//--------------------------------------------------------------
+/**
+ * @brief 野生戦　再戦コードチェック
+ * @param result  バトルシステムが返す戦闘結果
+ * @return  SCR_WILD_BTL_RES_XXXX
+ */
+//--------------------------------------------------------------
+extern u8 FIELD_BATTLE_GetWildBattleRevengeCode(BtlResult result);
+

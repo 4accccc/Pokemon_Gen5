@@ -35,6 +35,7 @@ extern void ENCOUNT_WORK_Delete( ENCOUNT_WORK* wp );
 
 //チェック
 extern void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type );
+extern void* FIELD_ENCOUNT_WildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv, u16 flags );
 
 extern void FIELD_ENCOUNT_SetTrainerBattleParam(
     FIELD_ENCOUNT *enc, BATTLE_SETUP_PARAM *setup, int tr_id0, int tr_id1, HEAPID heapID );

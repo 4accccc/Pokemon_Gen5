@@ -149,6 +149,9 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
     pp = PokeParty_GetMemberPointer( party, idx );
     outEfp->spray_lv = PP_Get( pp, ID_PARA_level, NULL);
   }
+
+  //エンカウントさせるポケモン数
+  outEfp->enc_poke_num = outEfp->enc_double_f+1;
 }
 
 //--------------------------------------------------------------
@@ -193,7 +196,7 @@ u32 ENCPOKE_GetEncountPoke( const ENCPOKE_FLD_PARAM *efp, const ENC_COMMON_DATA 
   int i;
   u32 num = 0;
 
-  for(i = 0;i < (efp->enc_double_f+1);i++){
+  for(i = 0;i < efp->enc_poke_num;i++){
     eps_PokeLottery( efp, enc_tbl, &outPokeTbl[num] );
     if(!efp->enc_force_f){
       //特性によるレベル差戦闘回避

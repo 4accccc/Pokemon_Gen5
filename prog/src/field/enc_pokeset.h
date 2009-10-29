@@ -40,7 +40,8 @@ typedef struct _ENCPOKE_FLD_PARAM
 
   ENCPROB_CALCTYPE  prob_calctype;  ///<確率計算タイプ
   u8                tbl_num;  ///<エンカウトデータテーブルの要素数
-  
+  u8                enc_poke_num; //エンカウントさせるポケモン数
+
   //手持ち先頭ポケモンのパラメータ
   u16 mons_no;  //手持ち先頭モンスターNo
   u16 mons_item;  //アイテムチェック

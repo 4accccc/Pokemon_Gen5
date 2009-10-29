@@ -30,8 +30,6 @@ extern VMCMD_RESULT EvCmdRevengeTrainerTalkTypeGet(VMHANDLE *core,void *wk);
 extern VMCMD_RESULT EvCmdTrainerTypeGet(VMHANDLE *core,void *wk);
 extern VMCMD_RESULT EvCmdTrainerBgmSet(VMHANDLE *core,void *wk);
 extern VMCMD_RESULT EvCmdTrainerWin(VMHANDLE *core,void *wk);
-extern VMCMD_RESULT EvCmdTrainerLose(VMHANDLE *core,void *wk);
-extern VMCMD_RESULT EvCmdTrainerLoseCheck(VMHANDLE *core,void *wk);
 extern VMCMD_RESULT EvCmd2vs2BattleCheck(VMHANDLE *core,void *wk);
 extern VMCMD_RESULT EvCmdDebugBattleSet(VMHANDLE *core,void *wk);
 extern VMCMD_RESULT EvCmdDebugTrainerFlagSet(VMHANDLE *core,void *wk);
