@@ -610,8 +610,9 @@ static void _gearPanelBgScreenMake(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANEL
 {
 	int ypos[2] = {PANEL_Y1,PANEL_Y2};
 	int x,y,i,j;
-	int typepos[] = {0,0x0c,0x10,0x14};
+	int typepos[] = {0,0x0c,0x10,0x14,0x18};
 	int palpos[] =  {0,0x1000,0x2000,0x3000};
+	int palpos2[] =  {0x7000,0x6000,0x5000,0x4000,0x4000,0x4000,0x5000,0x6000,0x7000};
 	u16* pScrAddr = GFL_BG_GetScreenBufferAdrs(GEAR_BUTTON_FRAME );
 	int xscr;
 	int yscr;
@@ -625,40 +626,12 @@ static void _gearPanelBgScreenMake(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANEL
 				if(type == CGEAR_PANELTYPE_NONE){
 					charpos = 0;
 				}
-				pScrAddr[scr] = palpos[type] + charpos;
-				//		NET_PRINT("x%d y%d  %d \n",x,y,palpos[type] + charpos);
-			}
-		}
-	}
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   パネルタイプをスクリーンに書き込む
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _gearPanelBgScreenMakeBase(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANELTYPE_ENUM type)
-{
-	int ypos[2] = {PANEL_Y1,PANEL_Y2};
-	int x,y,i,j;
-	int typepos[] = {0,0x18,0x18,0x18};
-	int palpos[] =  {0x7000,0x6000,0x5000,0x4000,0x4000,0x4000,0x5000,0x6000,0x7000};
-	u16* pScrAddr = GFL_BG_GetScreenBufferAdrs(GEAR_BUTTON_FRAME );
-	int xscr;
-	int yscr;
-
-	_gearXY2PanelScreen(xs,ys,&xscr,&yscr);
-	for(y = yscr, i = 0; i < PANEL_SIZEXY; y++, i++){
-		for(x = xscr, j = 0; j < PANEL_SIZEXY; x++, j++){
-			if((x >= 0) && (x < 32)){
-				int charpos = typepos[type] + i * 0x20 + j;
-				int scr = x + (y * 32);
-				if(type == CGEAR_PANELTYPE_NONE){
-					charpos = 0;
-				}
-				pScrAddr[scr] = palpos[ys] + charpos;
+        if(type==CGEAR_PANELTYPE_BASE){
+          pScrAddr[scr] = palpos2[xs] + charpos;
+        }
+        else{
+          pScrAddr[scr] = palpos[type] + charpos;
+        }
 				//		NET_PRINT("x%d y%d  %d \n",x,y,palpos[type] + charpos);
 			}
 		}
