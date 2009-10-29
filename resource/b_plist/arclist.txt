@@ -18,7 +18,3 @@
 "b_plist_anm2_lz.NSCR"
 "b_plist_lz.NCGR"
 "b_plist.NCLR"
-"b_plist_obj.NANR"
-"b_plist_obj.NCER"
-"b_plist_obj_lz.NCGR"
-"b_plist_obj.NCLR"

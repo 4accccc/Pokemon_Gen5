@@ -30,11 +30,7 @@ enum {
 	NARC_b_plist_gra_b_plist_anm_lz_NSCR = 16,
 	NARC_b_plist_gra_b_plist_anm2_lz_NSCR = 17,
 	NARC_b_plist_gra_b_plist_lz_NCGR = 18,
-	NARC_b_plist_gra_b_plist_NCLR = 19,
-	NARC_b_plist_gra_b_plist_obj_NANR = 20,
-	NARC_b_plist_gra_b_plist_obj_NCER = 21,
-	NARC_b_plist_gra_b_plist_obj_lz_NCGR = 22,
-	NARC_b_plist_gra_b_plist_obj_NCLR = 23
+	NARC_b_plist_gra_b_plist_NCLR = 19
 };
 
 /* NARC_B_PLIST_GRA_NAIX_ */
