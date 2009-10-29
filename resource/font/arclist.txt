@@ -2,6 +2,8 @@
 "large.gftr"
 "small.nftr"
 "small.gftr"
+"small_batt.nftr"
+"small_batt.gftr"
 "default.nclr"
 "talkwin.nclr"
 "systemwin.nclr"
