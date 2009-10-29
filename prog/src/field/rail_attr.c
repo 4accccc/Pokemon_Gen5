@@ -222,11 +222,13 @@ MAPATTR RAIL_ATTR_GetAttribute( const RAIL_ATTR_DATA* cp_work, const RAIL_LOCATI
 
 //      TOMOYA_Printf( "x = %d, z= %d\n", x,z );
 
-      index = (cp_lineattr->x * z) + x;
-      
-      // アトリビュートインデックスチェック
-      if( index < (cp_lineattr->x * cp_lineattr->z) )
+      // 範囲内チェック
+      if( (cp_lineattr->x > x) && (cp_lineattr->z) > z )
       {
+      
+        index = (cp_lineattr->x * z) + x;
+        
+        // アトリビュートインデックスチェック
         attr = cp_lineattr->attr[ index ];
       }
     }
