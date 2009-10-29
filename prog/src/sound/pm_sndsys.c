@@ -455,6 +455,7 @@ void	PMSND_FadeInBGM( u16 frames )
 	NNS_SndPlayerMoveVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), 127, frames);
 
 	bgmFadeCounter = frames;
+  OBATA_Printf( "===========================PMSND_FadeInBGM frame %d\n", frames );
 }
 
 //------------------------------------------------------------------
@@ -665,6 +666,7 @@ static void PMSND_SystemFadeBGM( void )
 				if( fadeStatus.volumeCounter < fadeStatus.fadeInFrame ){
 					fadeStatus.volumeCounter++;
 					NNS_SndPlayerSetVolume(pBgmHandle, fadeStatus.volumeCounter*127/fadeStatus.fadeInFrame);
+          OBATA_Printf( "------------------fade in volume %d\n", fadeStatus.volumeCounter );
 					return;
 				}
 				PMSND_ResetSystemFadeBGM();

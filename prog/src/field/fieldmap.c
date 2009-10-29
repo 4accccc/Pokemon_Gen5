@@ -102,6 +102,9 @@
 #include "sodateya.h"
 #include "system/net_err.h"
 
+#include "../../../resource/fldmapdata/script/eggevent_scr_def.h"   // TEST:
+#include "../../../resource/fldmapdata/script/sodateya_scr_def.h"   // TEST:
+
 //======================================================================
 //	DEBUG定義
 //======================================================================
@@ -851,6 +854,35 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
     OS_TPrintf( "draw_tick %d micro second\n", OS_TicksToMicroSeconds( debug_fieldmap_end_tick ) );
   }
 #endif
+
+
+  // TEST: 3Dマッパーデバッグ表示
+  {
+    int trg = GFL_UI_KEY_GetTrg();
+    if( trg & PAD_BUTTON_START )
+    {
+      FLDMAPPER_DebugPrint( fieldWork->g3Dmapper );
+    }
+  } 
+  // TEST: タマゴ孵化スクリプト呼び出し
+  /*
+  {
+    int trg = GFL_UI_KEY_GetTrg();
+    if( trg & PAD_BUTTON_START )
+    {
+      GMEVENT* event = SCRIPT_SetEventScript( gsys, SCRID_EGG_BIRTH, NULL, fieldWork->heapID );
+      GAMESYSTEM_SetEvent( gsys, event );
+    }
+  }
+  */
+  // TEST: 育て屋動作
+  {
+    int key = GFL_UI_KEY_GetCont();
+    if( key & PAD_BUTTON_SELECT )
+    {
+      SODATEYA_BreedPokemon( fieldWork->sodateya );
+    }
+  }
 
   return MAINSEQ_RESULT_CONTINUE;
 }

@@ -461,7 +461,10 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/sound_obj.c \
 				field/shortcut_menu.c \
         field/event_name_input.c \
-        field/fskill_amaikaori.c
+        field/fskill_amaikaori.c \
+        field/field_gimmick_gate.c \
+        field/gimmick_obj_elboard.c \
+        field/elboard_zone_data.c
 
 
 # フィールド天気
@@ -937,6 +940,7 @@ SRCS_OVERLAY_OBATA_DEBUG = test/obata/debug_obata_menu.c \
                            test/obata/debug_obata_ica_test.c \
                            test/obata/debug_obata_ica_test_setup.c \
                            test/obata/debug_obata_elboard.c \
+                           test/obata/debug_obata_elboard_2.c \
                            test/obata/debug_obata_elboard_setup.c
 
 #MCSライブラリ
