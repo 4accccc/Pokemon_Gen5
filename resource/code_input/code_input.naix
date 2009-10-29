@@ -26,11 +26,9 @@ enum {
 	NARC_code_input_code_NCER = 12,
 	NARC_code_input_code_button_NCER = 13,
 	NARC_code_input_code_cur_NCER = 14,
-	NARC_code_input_test_NCER = 15,
-	NARC_code_input_code_NANR = 16,
-	NARC_code_input_code_button_NANR = 17,
-	NARC_code_input_code_cur_NANR = 18,
-	NARC_code_input_test_NANR = 19
+	NARC_code_input_code_NANR = 15,
+	NARC_code_input_code_button_NANR = 16,
+	NARC_code_input_code_cur_NANR = 17
 };
 
 /* NARC_CODE_INPUT_NAIX_ */
