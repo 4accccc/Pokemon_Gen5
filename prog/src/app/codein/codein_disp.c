@@ -664,7 +664,7 @@ void CI_pv_disp_BtnUpdate( CODEIN_WORK* wk )
 			else if ( wk->btn[ i ].move_wk.wait == 2 ){
 				//CATS_ObjectAnimeSeqSetCap( wk->btn[ i ].cap, 2 );
 				GFL_CLACT_WK_SetAnmSeq( wk->btn[ i ].clwk, 2 );
-				FontOamPosSet( wk->sys.bmp_obj[ i ], ox, oy-1);
+				FontOamPosSet( wk->sys.bmp_obj[ i ], ox, oy-0);
 			}
 			else if ( wk->btn[ i ].move_wk.wait == 10 ){
 				//CATS_ObjectAnimeSeqSetCap( wk->btn[ i ].cap, 0 );
