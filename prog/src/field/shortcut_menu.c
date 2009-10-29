@@ -76,7 +76,7 @@ enum
 //-------------------------------------
 ///	OBJ
 //=====================================
-#define OBJ_CLWK_MAX	(128)
+#define OBJ_CLWK_MAX	(8)
 #define OBJ_UNIT_PRI	(0)
 
 enum
@@ -134,7 +134,7 @@ enum
 //=====================================
 typedef struct 
 {
-	BMP_MENULIST_DATA	*p_data;
+	BMP_MENULIST_DATA	*p_data;									//4
 	BMPMENULIST_WORK	*p_list;
 	GFL_BMPWIN				*p_bmpwin;
 	PRINT_QUE					*p_que;		//プリントキュー
@@ -155,20 +155,20 @@ typedef struct
 //=====================================
 struct _SHORTCUTMENU_WORK
 {
-	SCROLL_WORK	scroll;	//スクロール管理
+	SCROLL_WORK	scroll;	//スクロール管理			
+																						//44
+	GFL_CLUNIT	*p_unit;	//OBJユニット			4
+	u16					res[RESID_MAX];		//リソース 8
+	GFL_CLWK		*p_clwk;	//挿入用カーソル 4
 
-	GFL_CLUNIT	*p_unit;	//OBJユニット
-	u16					res[RESID_MAX];		//リソース
-	GFL_CLWK		*p_clwk;	//挿入用カーソル
-
-	GFL_MSGDATA *p_msg;		//メッセージデータ
-	GFL_FONT		*p_font;	//フォント
-	PRINT_QUE		*p_que;		//プリントキュー
-	u16									seq;				//メインシーケンス
-	u16									cnt;				//カウンター		
-	SHORTCUTMENU_INPUT	input;			//実行した入力
-	SHORTCUT_ID					shortcutID;	//選んだショートカットID
-	SHORTCUT_CURSOR			*p_cursor;	//カーソル
+	GFL_MSGDATA *p_msg;		//メッセージデータ 4
+	GFL_FONT		*p_font;	//フォント       4
+	PRINT_QUE		*p_que;		//プリントキュー 4
+	u16									seq;				//メインシーケンス 2
+	u16									cnt;				//カウンター		 2
+	SHORTCUTMENU_INPUT	input;			//実行した入力 4
+	SHORTCUT_ID					shortcutID;	//選んだショートカットID 4
+	SHORTCUT_CURSOR			*p_cursor;	//カーソル 4
 };
 
 //=============================================================================
@@ -199,20 +199,25 @@ static void Scroll_DeleteList( SCROLL_WORK *p_wk, u16 *p_list_bak, u16 *p_cursor
  *
  *	@param	mode						起動モード
  *	@param	p_cursor				カーソル
- *	@param	HEAPID heapID		ヒープID
+ *	@param	HEAPID heapID		システム用ヒープID	1029にフィールドメモリが足りなくなったので分割
+ *	@param	HEAPID heapID		リソース用ヒープID
  *
  *	@return	ワーク
  */
 //-----------------------------------------------------------------------------
-SHORTCUTMENU_WORK *SHORTCUTMENU_Init( SHORTCUTMENU_MODE mode, SHORTCUT_CURSOR *p_cursor, HEAPID heapID )
+SHORTCUTMENU_WORK *SHORTCUTMENU_Init( SHORTCUTMENU_MODE mode, SHORTCUT_CURSOR *p_cursor, HEAPID sys_heapID, HEAPID res_heapID )
 {	
 	//メインワーク作成
 	SHORTCUTMENU_WORK	*p_wk;
-	p_wk	= GFL_HEAP_AllocMemory( heapID, sizeof(SHORTCUTMENU_WORK) );
+
+	p_wk	= GFL_HEAP_AllocMemory( res_heapID, sizeof(SHORTCUTMENU_WORK) );
 	GFL_STD_MemClear( p_wk, sizeof(SHORTCUTMENU_WORK) );
 	p_wk->input				= SHORTCUTMENU_INPUT_NONE;
 	p_wk->shortcutID	= SHORTCUT_ID_NULL;
 	p_wk->p_cursor		= p_cursor;
+
+	NAGI_Printf( "ショートカットメニュー確保前　SYS=0x%x RES=0x%x \n",
+			GFL_HEAP_GetHeapFreeSize( sys_heapID ), GFL_HEAP_GetHeapFreeSize( res_heapID ));
 
 	//BG初期化
 	{	
@@ -232,24 +237,24 @@ SHORTCUTMENU_WORK *SHORTCUTMENU_Init( SHORTCUTMENU_MODE mode, SHORTCUT_CURSOR *p
 
 	//OBJ初期化
 	{	
-		p_wk->p_unit	= GFL_CLACT_UNIT_Create( OBJ_CLWK_MAX, OBJ_UNIT_PRI, heapID );
+		p_wk->p_unit	= GFL_CLACT_UNIT_Create( OBJ_CLWK_MAX, OBJ_UNIT_PRI, res_heapID );
 	}
 
 	//リソース読みこみ
 	{	
-		ARCHANDLE	*p_handle	= GFL_ARC_OpenDataHandle( ARCID_SHORTCUT_MENU_GRA, heapID );
+		ARCHANDLE	*p_handle	= GFL_ARC_OpenDataHandle( ARCID_SHORTCUT_MENU_GRA, res_heapID );
 
 		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_fld_shortcut_menu_gra_bg_NCLR,
-				PALTYPE_MAIN_BG, PLT_BG_SCROLL_M*0x20, 0x20*2, heapID );
+				PALTYPE_MAIN_BG, PLT_BG_SCROLL_M*0x20, 0x20*2, res_heapID );
 
 		p_wk->res[RESID_PLT]	= GFL_CLGRP_PLTT_Register( p_handle, 
-				NARC_fld_shortcut_menu_gra_obj_NCLR, CLSYS_DRAW_MAIN, PLT_OBJ_M	*0x20, heapID );
+				NARC_fld_shortcut_menu_gra_obj_NCLR, CLSYS_DRAW_MAIN, PLT_OBJ_M	*0x20, res_heapID );
 
 		p_wk->res[RESID_CHR]	= GFL_CLGRP_CGR_Register( p_handle,
-				NARC_fld_shortcut_menu_gra_obj_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
+				NARC_fld_shortcut_menu_gra_obj_NCGR, FALSE, CLSYS_DRAW_MAIN, res_heapID );
 
 		p_wk->res[RESID_CEL]	= GFL_CLGRP_CELLANIM_Register( p_handle,
-				NARC_fld_shortcut_menu_gra_obj_NCER, NARC_fld_shortcut_menu_gra_obj_NANR, heapID );
+				NARC_fld_shortcut_menu_gra_obj_NCER, NARC_fld_shortcut_menu_gra_obj_NANR, res_heapID );
 
 
 		GFL_ARC_CloseDataHandle( p_handle );
@@ -261,22 +266,23 @@ SHORTCUTMENU_WORK *SHORTCUTMENU_Init( SHORTCUTMENU_MODE mode, SHORTCUT_CURSOR *p
 		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
 		cldata.pos_x	= 128;
 		cldata.pos_y	= 96;
-		p_wk->p_clwk	= GFL_CLACT_WK_Create( p_wk->p_unit, p_wk->res[RESID_CHR], p_wk->res[RESID_PLT], p_wk->res[RESID_CEL], &cldata, CLSYS_DRAW_MAIN, heapID );
+		p_wk->p_clwk	= GFL_CLACT_WK_Create( p_wk->p_unit, p_wk->res[RESID_CHR], p_wk->res[RESID_PLT], p_wk->res[RESID_CEL], &cldata, CLSYS_DRAW_MAIN, res_heapID );
 		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, FALSE );
 	}
 
 	//共通モジュール初期化
 	{	
-		p_wk->p_msg		= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_shortcut_menu_dat, heapID );
-		p_wk->p_font	= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
-		p_wk->p_que		= PRINTSYS_QUE_Create( heapID );
+		p_wk->p_msg		= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_shortcut_menu_dat, res_heapID );
+		p_wk->p_font	= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, sys_heapID );
+		p_wk->p_que		= PRINTSYS_QUE_Create( res_heapID );
 	}
+	NAGI_Printf( "共通モジュール確保後　0x%x\n", GFL_HEAP_GetHeapFreeSize( sys_heapID ));
 
 	//モジュール初期化
 	{	
 		SAVE_CONTROL_WORK *p_sv_ptr	= SaveControl_GetPointer();
 		SHORTCUT *p_shortcut_sv = SaveData_GetShortCut( p_sv_ptr );
-		SCROLL_Init( &p_wk->scroll, p_wk->p_cursor, p_wk->p_msg, p_wk->p_font, p_wk->p_que, p_shortcut_sv, p_wk->p_clwk, heapID );
+		SCROLL_Init( &p_wk->scroll, p_wk->p_cursor, p_wk->p_msg, p_wk->p_font, p_wk->p_que, p_shortcut_sv, p_wk->p_clwk, sys_heapID );
 		SCROLL_PrintMain( &p_wk->scroll );
 	}
 
@@ -301,6 +307,8 @@ SHORTCUTMENU_WORK *SHORTCUTMENU_Init( SHORTCUTMENU_MODE mode, SHORTCUT_CURSOR *p
 		break;
 	}
 
+	NAGI_Printf( "ショートカットメニュー確保後　SYS=0x%x RES=0x%x \n",
+			GFL_HEAP_GetHeapFreeSize( sys_heapID ), GFL_HEAP_GetHeapFreeSize( res_heapID ));
 
 	return p_wk;
 }
@@ -536,6 +544,7 @@ static void SCROLL_Init( SCROLL_WORK *p_wk, const SHORTCUT_CURSOR	*cp_cursor, GF
 			PLT_BG_SCROLL_M, GFL_BMP_CHRAREA_GET_B );
 	GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
 
+
 	//PRINT_UTILセットアップ
 	PRINT_UTIL_Setup( &p_wk->util, p_wk->p_bmpwin );
 
@@ -620,14 +629,16 @@ static void SCROLL_Main( SCROLL_WORK *p_wk )
 		}
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
 		{
-			//Yでも決定
-			u16 pos;
-			BmpMenuList_DirectPosGet( p_wk->p_list, &pos );
-			select	= BmpMenuList_PosParamGet( p_wk->p_list, pos );
+			//Yはキャンセルになりました
+			//u16 pos;
+			//BmpMenuList_DirectPosGet( p_wk->p_list, &pos );
+			//select	= BmpMenuList_PosParamGet( p_wk->p_list, pos );
+
+			select	= BMPMENULIST_CANCEL;
 		}
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT && p_wk->mode == SCROLL_MOVE_INSERT  )
 		{
-			//Yでも決定
+			//SELECTでも挿入決定
 			u16 pos;
 			BmpMenuList_DirectPosGet( p_wk->p_list, &pos );
 			select	= BmpMenuList_PosParamGet( p_wk->p_list, pos );

@@ -56,7 +56,7 @@ typedef struct _SHORTCUTMENU_WORK SHORTCUTMENU_WORK;
 //-------------------------------------
 ///	ƒVƒXƒeƒ€
 //=====================================
-extern SHORTCUTMENU_WORK *SHORTCUTMENU_Init( SHORTCUTMENU_MODE mode, SHORTCUT_CURSOR *p_cursor, HEAPID heapID );
+extern SHORTCUTMENU_WORK *SHORTCUTMENU_Init( SHORTCUTMENU_MODE mode, SHORTCUT_CURSOR *p_cursor, HEAPID sys_heapID, HEAPID res_heapID );
 extern void SHORTCUTMENU_Exit( SHORTCUTMENU_WORK *p_wk );
 extern void SHORTCUTMENU_Main( SHORTCUTMENU_WORK *p_wk );
 

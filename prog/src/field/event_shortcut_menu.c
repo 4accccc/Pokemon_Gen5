@@ -72,7 +72,7 @@ typedef struct
 	FIELDMAP_WORK					*p_fieldmap;//フィールドワーク
 	SHORTCUTMENU_WORK			*p_menu;		//ショートカットメニュー
 	EVENT_PROCLINK_PARAM	*p_link;		//リンクイベントパラメータ
-	HEAPID								heapID;			//ヒープID
+	HEAPID								heapID;			//常駐ヒープID
 	BOOL									is_empty;		//メニューを空にしたフラグ
 } EVENT_SHORTCUTMENU_WORK;
 
@@ -623,7 +623,7 @@ static void ShortCutMenu_Init( SHORTCUTMENU_MODE mode, EVENT_SHORTCUTMENU_WORK *
 		{	
 			GAMEDATA	*p_gdata	= GAMESYSTEM_GetGameData( p_wk->p_gamesys );
 			SHORTCUT_CURSOR	*p_cursor	= GAMEDATA_GetShortCutCursor( p_gdata );
-			p_wk->p_menu	= SHORTCUTMENU_Init( mode, p_cursor, p_wk->heapID );
+			p_wk->p_menu	= SHORTCUTMENU_Init( mode, p_cursor, HEAPID_FIELDMAP, HEAPID_FLD3DCUTIN );
 		}
 	}
 }
