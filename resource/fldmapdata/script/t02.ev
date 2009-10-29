@@ -40,20 +40,21 @@ _EVENT_DATA_END
 /*  BABYGIRL1_1	じゃんけん少女								  */
 /**************************************************************/
 EVENT_START   ev_t02_babygirl1_01
-_TALK_OBJ_START()
+	_TALK_OBJ_START()
+	
 	//ねえねえ　ポケモンじゃんけん　しようよ！
 	_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_01 )
 	_YES_NO_WIN( SCWK_ANSWER )
 	_BALLOONWIN_CLOSE()
 
 	IF $SCWK_ANSWER == 0 THEN	//はい
-		_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_03 )
-		_BALLOONWIN_CLOSE()
-
+		
 		//ローカル変数を定義
 		DEFINE_LOCAL	LWK_SCWK_JANKEN
 		DEFINE_LOCAL	LWK_JANKEN_SELECT
 
+		_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_03 )
+		
 		//三択表示・くさ、みず、ほのお
     	_BMPMENU_INIT_EX( 1, 1, 0, 0, LWK_JANKEN_SELECT )
 
@@ -63,7 +64,8 @@ _TALK_OBJ_START()
 
 		// メニュー表示
 		_BMPMENU_START()
-
+		_BALLOONWIN_CLOSE()
+		
 		//勝敗決め乱数
 		_GET_RND( LWK_SCWK_JANKEN, 2 )
 
@@ -114,8 +116,6 @@ _TALK_OBJ_START()
 	
 	ENDIF
 
-
-
 EVENT_END
 
 /**************************************************************/
@@ -138,7 +138,6 @@ EVENT_END
 EVENT_START   ev_t02_oldwoman1_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01_oldwoman1_01 )
 EVENT_END
-
 
 /**************************************************************/
 /*  T02 BIGMAN_01の会話用イベントスクリプト*/
@@ -176,32 +175,49 @@ EVENT_START   ev_pos_t02_hakai_stop
 	
 	//したっぱ：自機前に移動
 	_PLAYER_POS_GET( LWK_HERO1_X,LWK_HERO1_Z )		//主人公位置取得
-	IF $LWK_HERO1_Z == 649 THEN
-		//Z軸が649なら
-		_OBJ_ANIME( T02_HAKAIW_01, anm_hakai_idoa )
-	//ELSIF $HERO1_Z == 651 THEN
-		//Z軸が651なら
-		//_OBJ_ANIME( T02_HAKAIW_01, anm_hakai_idob )
-	//ELSIF $HERO1_Z == 652 THEN
-		//Z軸が652なら
-		//_OBJ_ANIME( T02_HAKAIW_01, anm_hakai_idoc )
+	IF $LWK_HERO1_Z == 646 THEN
+		//Z軸が646なら
+		_OBJ_ANIME( T02_HAKAIW_01, anm_hakai_tikaduku646 )
+		_OBJ_ANIME_WAIT()
+	
+	ELSIF $LWK_HERO1_Z == 648 THEN
+		//Z軸が648なら
+		_OBJ_ANIME( T02_HAKAIW_01, anm_hakai_tikaduku648 )
+		_OBJ_ANIME_WAIT()
+		
 	ELSE
 		//Z軸が650なら
-		_OBJ_ANIME( T02_HAKAIW_01, anm_hakai_idod )
-	ENDIF
-	_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( T02_HAKAIW_01, anm_hakai_tikaduku650 )
+		_OBJ_ANIME_WAIT()
 	
+	ENDIF
+
 	//したっぱ：メッセージ
 	_BALLOONWIN_OBJMSG_OPEN( msg_t02_hakaiw_stop_02,T02_HAKAIW_01 )
 	_BALLOONWIN_CLOSE()
 	
 	//したっぱ：主人公押し出し
+	_OBJ_ANIME( T02_HAKAIW_01, anm_hakai_push )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
 	_OBJ_ANIME_WAIT()
 	
 	//したっぱ：元の場所に戻る
-	_OBJ_ANIME( T02_HAKAIW_01, anm_hakai_modoru )
-	_OBJ_ANIME_WAIT()
+	IF $LWK_HERO1_Z == 646 THEN
+		//Z軸が646なら
+		_OBJ_ANIME( T02_HAKAIW_01, anm_hakai_modoru646 )
+		_OBJ_ANIME_WAIT()
+	
+	ELSIF $LWK_HERO1_Z == 648 THEN
+		//Z軸が648なら
+		_OBJ_ANIME( T02_HAKAIW_01, anm_hakai_modoru648 )
+		_OBJ_ANIME_WAIT()
+		
+	ELSE
+		//Z軸が650なら
+		_OBJ_ANIME( T02_HAKAIW_01, anm_hakai_modoru650 )
+		_OBJ_ANIME_WAIT()
+	
+	ENDIF
 
 EVENT_END
 
@@ -215,25 +231,21 @@ _ANIME_LABEL anm_hakai_kiduku
 //--------------------------------------------------------------
 //	団員♀　自機前に移動a
 //--------------------------------------------------------------
-_ANIME_LABEL anm_hakai_idoa
+_ANIME_LABEL anm_hakai_tikaduku646
 	_ANIME_DATA		AC_WALK_L_8F,1
-	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		AC_WALK_U_4F,3
 	_ANIME_DATA		AC_DIR_R,1
 	_ANIME_DATA		ACMD_END,0
 	
-_ANIME_LABEL anm_hakai_idob
-	_ANIME_DATA		AC_WALK_D_8F,1
-	_ANIME_DATA		AC_DIR_R,1
-	_ANIME_DATA		ACMD_END,0
-
-_ANIME_LABEL anm_hakai_idoc
-	_ANIME_DATA		AC_WALK_D_8F,2
-	_ANIME_DATA		AC_DIR_R,1
-	_ANIME_DATA		ACMD_END,0
-
-_ANIME_LABEL anm_hakai_idod
+_ANIME_LABEL anm_hakai_tikaduku648
 	_ANIME_DATA		AC_WALK_L_8F,1
-	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_WALK_U_4F,1
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_hakai_tikaduku650
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_WALK_D_4F,1
 	_ANIME_DATA		AC_DIR_R,1
 	_ANIME_DATA		ACMD_END,0
 
@@ -242,16 +254,35 @@ _ANIME_LABEL anm_hakai_idod
 //--------------------------------------------------------------
 _ANIME_LABEL anm_player_back
 	_ANIME_DATA		AC_DIR_PAUSE_ON,1
-	_ANIME_DATA		AC_JUMP_R_1G_8F,1
+	_ANIME_DATA		AC_WALK_R_16F,1
 	_ANIME_DATA		AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_hakai_push
+	_ANIME_DATA		AC_WALK_R_16F,1
 	_ANIME_DATA		ACMD_END,0
 
 //--------------------------------------------------------------
 //	団員♀　元に戻る
 //--------------------------------------------------------------
-_ANIME_LABEL anm_hakai_modoru
-	_ANIME_DATA		AC_WALK_D_8F,1
-	_ANIME_DATA		AC_WALK_R_8F,1
+_ANIME_LABEL anm_hakai_modoru646
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_WALK_D_4F,3
+	_ANIME_DATA		AC_WALK_R_4F,1
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_hakai_modoru648
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_WALK_D_4F,1
+	_ANIME_DATA		AC_WALK_R_4F,1
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_hakai_modoru650
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_WALK_U_4F,1
+	_ANIME_DATA		AC_WALK_R_4F,1
 	_ANIME_DATA		AC_DIR_R,1
 	_ANIME_DATA		ACMD_END,0
 	
@@ -364,15 +395,23 @@ EVENT_START   ev_pos_t02_rival_stop
 
 	//ライバル：自機前に移動
 	_PLAYER_POS_GET( LWK_HERO_X,LWK_HERO_Z )		//主人公位置取得
-	IF $LWK_HERO_Z == 649 THEN
-		//Z軸が649なら
-		_OBJ_ANIME( T02_RIVAL_01, anm_rival_tikaduku649 )
-	ELSE
-		//Z軸が650なら
-		_OBJ_ANIME( T02_RIVAL_01, anm_rival_tikaduku650 )
-	ENDIF
 	
-	_OBJ_ANIME_WAIT()
+	//Z軸が647なら
+	IF $LWK_HERO_Z == 647 THEN
+		_OBJ_ANIME( T02_RIVAL_01, anm_rival_tikaduku647 )
+		_OBJ_ANIME_WAIT()
+		
+	//Z軸が649なら
+	ELSIF $LWK_HERO_Z == 649 THEN
+		_OBJ_ANIME( T02_RIVAL_01, anm_rival_tikaduku649 )
+		_OBJ_ANIME_WAIT()
+	
+	//Z軸が650なら
+	ELSE
+		_OBJ_ANIME( T02_RIVAL_01, anm_rival_tikaduku650 )
+		_OBJ_ANIME_WAIT()
+	
+	ENDIF
 	
 	//おい　ポケモンセンターの　まえで　はかせが
 	_BALLOONWIN_OBJMSG_OPEN( msg_t02_black_01 , T02_RIVAL_01 )
@@ -384,8 +423,22 @@ EVENT_START   ev_pos_t02_rival_stop
 	_OBJ_ANIME_WAIT()
 	
 	//ライバルを戻す
-	_OBJ_ANIME( T02_RIVAL_01, anm_rival_modoru649 )
-	_OBJ_ANIME_WAIT()
+	//Z軸が647なら
+	IF $LWK_HERO_Z == 647 THEN
+		_OBJ_ANIME( T02_RIVAL_01, anm_rival_modoru647 )
+		_OBJ_ANIME_WAIT()
+		
+	//Z軸が649なら
+	ELSIF $LWK_HERO_Z == 649 THEN
+		_OBJ_ANIME( T02_RIVAL_01, anm_rival_modoru649 )
+		_OBJ_ANIME_WAIT()
+	
+	//Z軸が650なら
+	ELSE
+		_OBJ_ANIME( T02_RIVAL_01, anm_rival_modoru650 )
+		_OBJ_ANIME_WAIT()
+
+	ENDIF
 
 EVENT_END
 
@@ -399,17 +452,24 @@ _ANIME_LABEL anm_rival_kiduku
 //--------------------------------------------------------------
 //	ライバル　近づく　Grid649
 //--------------------------------------------------------------
+_ANIME_LABEL anm_rival_tikaduku647
+	_ANIME_DATA		AC_WALK_L_4F,1
+	_ANIME_DATA		AC_WALK_U_4F,1
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+	
 _ANIME_LABEL anm_rival_tikaduku649
-	_ANIME_DATA		AC_WALK_L_8F,1
-	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_WALK_L_4F,1
+	_ANIME_DATA		AC_WALK_D_4F,1
 	_ANIME_DATA		AC_DIR_R,1
 	_ANIME_DATA		ACMD_END,0
 	
 _ANIME_LABEL anm_rival_tikaduku650
-	_ANIME_DATA		AC_WALK_L_8F,1
-	_ANIME_DATA		AC_WALK_D_8F,2
+	_ANIME_DATA		AC_WALK_L_4F,1
+	_ANIME_DATA		AC_WALK_D_4F,2
 	_ANIME_DATA		AC_DIR_R,1
 	_ANIME_DATA		ACMD_END,0
+
 //--------------------------------------------------------------
 //	ライバル　押す
 //--------------------------------------------------------------
@@ -429,6 +489,11 @@ _ANIME_LABEL anm_player_modoru
 //--------------------------------------------------------------
 //	ライバル　戻る　Grid649
 //--------------------------------------------------------------
+_ANIME_LABEL anm_rival_modoru647
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+	
 _ANIME_LABEL anm_rival_modoru649
 	_ANIME_DATA		AC_WALK_U_8F,1
 	_ANIME_DATA		AC_DIR_R,1
@@ -776,12 +841,16 @@ _ANIME_LABEL anm_rival_bye
 /************************************************************/
 EVENT_START   ev_t02_boodle_01
 
+	//【仮】セリフ予定なければ、SCRID_DUMMYにします。
+
 EVENT_END
 
 /************************************************************/
 /*						ゲーチス							*/
 /************************************************************/
 EVENT_START   ev_t02_sage_01
+
+	//【仮】セリフ予定なければ、SCRID_DUMMYにします。
 
 EVENT_END
 
@@ -790,12 +859,16 @@ EVENT_END
 /************************************************************/
 EVENT_START   ev_t02_rival_02
 
+	//【仮】セリフ予定なければ、SCRID_DUMMYにします。
+
 EVENT_END
 
 /************************************************************/
 /*						N									*/
 /************************************************************/
 EVENT_START   ev_t02_n_01
+
+	//【仮】セリフ予定なければ、SCRID_DUMMYにします。
 
 EVENT_END
 
@@ -812,4 +885,5 @@ EVENT_END
 EVENT_START   ev_bg_t02_sign2_01
 	_EASY_MSG( msg_t02_sign2_01 )
 EVENT_END
+
 
