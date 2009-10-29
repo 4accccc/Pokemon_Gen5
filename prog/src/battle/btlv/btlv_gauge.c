@@ -658,11 +658,7 @@ void  BTLV_GAUGE_CalcHP( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos, int value )
 //============================================================================================
 void  BTLV_GAUGE_CalcEXP( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos, int value )
 { 
-  //3vs3では経験値メータが存在しないので、チェックする
-  if( bgw->bgcl[ pos ].exp_clwk )
-  { 
-    Gauge_InitCalcEXP( &bgw->bgcl[ pos ], value );
-  }
+  Gauge_InitCalcEXP( &bgw->bgcl[ pos ], value );
 }
 
 //============================================================================================
@@ -1207,23 +1203,26 @@ static  void  PutGaugeOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, BTLV_GAU
 		break;
 	
 	case BTLV_GAUGE_REQ_EXP:
-    GFL_CLACT_WK_GetImgProxy( bgcl->exp_clwk, &image );
-		PutGaugeProc( bgcl->exp_max, bgcl->exp, bgcl->exp_add, &bgcl->exp_work, gauge_chr, BTLV_GAUGE_EXP_CHARMAX );
-		level = bgcl->level;
-		if( level == 100 ) 
-    {
-			for( i = 0; i < BTLV_GAUGE_EXP_CHARMAX ; i++ ) 
+    if( bgcl->exp_clwk )
+    { 
+      GFL_CLACT_WK_GetImgProxy( bgcl->exp_clwk, &image );
+		  PutGaugeProc( bgcl->exp_max, bgcl->exp, bgcl->exp_add, &bgcl->exp_work, gauge_chr, BTLV_GAUGE_EXP_CHARMAX );
+		  level = bgcl->level;
+		  if( level == 100 ) 
       {
-				gauge_chr[ i ] = 0;
-			}
-		}
-		
-		for(i = 0; i < BTLV_GAUGE_EXP_CHARMAX; i++){
-			MI_CpuCopy16( &bgw->parts_address[ GP_EXPBAR + ( gauge_chr[ i ] << 5 ) ],
-                    (void*)( (u32)obj_vram + ( i + BTLV_GAUGE_EXP_CHARSTART ) * 0x20 +
-                    image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
-                    0x20 );
-		}
+			  for( i = 0; i < BTLV_GAUGE_EXP_CHARMAX ; i++ ) 
+        {
+				  gauge_chr[ i ] = 0;
+			  }
+		  }
+
+		  for(i = 0; i < BTLV_GAUGE_EXP_CHARMAX; i++){
+			  MI_CpuCopy16( &bgw->parts_address[ GP_EXPBAR + ( gauge_chr[ i ] << 5 ) ],
+                      (void*)( (u32)obj_vram + ( i + BTLV_GAUGE_EXP_CHARSTART ) * 0x20 +
+                      image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
+                      0x20 );
+		  }
+    }
 		break;
 	}
 }
