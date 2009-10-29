@@ -308,18 +308,14 @@ GMEVENT * EVENT_ProcLink( EVENT_PROCLINK_PARAM *param, HEAPID heapID )
 
 	//アイテム使用検査ワーク設定
 	{	
-		VecFx32 aPos;
 		const VecFx32 *pPos;
 		GAMEDATA* pGameData = GAMESYSTEM_GetGameData(wk->param->gsys);
 		PLAYER_WORK *playerWork = GAMEDATA_GetMyPlayerWork( pGameData );
-		FLDMAPPER *g3Dmapper = FIELDMAP_GetFieldG3Dmapper(wk->param->field_wk);
 		FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer(wk->param->field_wk);
 
-		//FIXME 前面のアトリビュート取得
 		pPos = PLAYERWORK_getPosition( playerWork );
-		wk->icwk.NowAttr = MAPATTR_GetAttribute(g3Dmapper, pPos);
-		FIELD_PLAYER_GetDirPos(fld_player, FIELD_PLAYER_GetDir(fld_player), &aPos);
-		wk->icwk.FrontAttr = MAPATTR_GetAttribute(g3Dmapper, &aPos);
+		wk->icwk.NowAttr = FIELD_PLAYER_GetMapAttr(fld_player);
+		wk->icwk.FrontAttr =FIELD_PLAYER_GetDirMapAttr(fld_player, FIELD_PLAYER_GetDir(fld_player));
 		wk->icwk.gsys = wk->param->gsys;
 		//ゾーンＩＤ
 		wk->icwk.zone_id = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(pGameData ));
@@ -769,7 +765,7 @@ static RETURNFUNC_RESULT FMenuReturnProc_PokeList(PROCLINK_WORK* wk,void* param_
   switch( plData->ret_mode )
   {
   case PL_RET_NORMAL:      // 通常
-		if( plData->mode == PL_MODE_WAZASET ) 
+		if( plData->mode == PL_MODE_WAZASET || wk->param->call == EVENT_PROCLINK_CALL_BAG ) 
 		{	
 			wk->next_type	= EVENT_PROCLINK_CALL_BAG;
 			return RETURNFUNC_RESULT_NEXT;
@@ -809,7 +805,7 @@ static RETURNFUNC_RESULT FMenuReturnProc_PokeList(PROCLINK_WORK* wk,void* param_
   case PL_RET_TAKINOBORI:  // メニュー 技：たきのぼり
   case PL_RET_KIRIBARAI:   // メニュー 技：きりばらい
   case PL_RET_KAIRIKI:     // メニュー 技：かいりき
-	case PL_RET_SORAWOTOBU:  // メニュー 技：そらをとぶ
+
   case PL_RET_IWAKUDAKI:   // メニュー 技：いわくだき
   case PL_RET_ROCKCLIMB:   // メニュー 技：ロッククライム
   case PL_RET_FLASH:       // メニュー 技：フラッシュ
@@ -819,6 +815,10 @@ static RETURNFUNC_RESULT FMenuReturnProc_PokeList(PROCLINK_WORK* wk,void* param_
   case PL_RET_OSYABERI:    // メニュー 技：おしゃべり
 		wk->param->select_param	= plData->ret_mode-PL_RET_IAIGIRI;
     return RETURNFUNC_RESULT_USE_SKILL;
+
+	case PL_RET_SORAWOTOBU:  // メニュー 技：そらをとぶ
+    wk->next_type	= EVENT_PROCLINK_CALL_TOWNMAP;
+    return RETURNFUNC_RESULT_NEXT;
 
   default:
 		GF_ASSERT(0);
@@ -905,6 +905,7 @@ static void * FMenuCallProc_PokeStatus(PROCLINK_WORK* wk, u32 param, EVENT_PROCL
 
 	psData->ppt = PST_PP_TYPE_POKEPARTY;
 	psData->game_data = gmData;
+	psData->isExitRequest	= FALSE;
 
 	if( pre == EVENT_PROCLINK_CALL_POKELIST )
 	{	
@@ -923,6 +924,7 @@ static void * FMenuCallProc_PokeStatus(PROCLINK_WORK* wk, u32 param, EVENT_PROCL
 			psData->waza = plData->waza;
 			psData->mode	= PST_MODE_WAZAADD;
 			psData->page	= PPT_SKILL;
+			psData->canExitButton	= FALSE;
 			break;
 
 		default:
@@ -939,6 +941,7 @@ static void * FMenuCallProc_PokeStatus(PROCLINK_WORK* wk, u32 param, EVENT_PROCL
 		psData->max		= PokeParty_GetPokeCount( GAMEDATA_GetMyPokemon( gmData ) );	
 		psData->pos		= 0;
 		psData->mode	= PST_MODE_NORMAL;
+		psData->canExitButton	= TRUE;
 		if( param != EVENT_PROCLINK_DATA_NONE )
 		{	
 			psData->page	= param;
@@ -1155,7 +1158,7 @@ static void * FMenuCallProc_TrainerCard(PROCLINK_WORK* wk, u32 param, EVENT_PROC
 static RETURNFUNC_RESULT FMenuReturnProc_TrainerCard(PROCLINK_WORK* wk,void* param_adrs)
 {	
 	TRCARD_CALL_PARAM *	tr_param	= param_adrs;
-	return RETURNFUNC_RESULT_EXIT;
+	return RETURNFUNC_RESULT_RETURN;
 }
 //-------------------------------------
 ///	タウンマップ
@@ -1178,6 +1181,18 @@ static void * FMenuCallProc_TownMap(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK
 	town_param							= GFL_HEAP_AllocClearMemory( HEAPID_PROC , sizeof(TOWNMAP_PARAM) );
 	town_param->mode				= TOWNMAP_MODE_MAP;
 	town_param->p_gamesys	= wk->param->gsys;
+
+
+	if( wk->param->call == EVENT_PROCLINK_CALL_POKELIST )
+	{	
+		//リストから呼ばれるときは、空を飛ぶ
+		town_param->mode				= TOWNMAP_MODE_SKY;
+	}
+	else
+	{	
+		//それ以外はタウンマップ
+		town_param->mode				= TOWNMAP_MODE_MAP;
+	}
 
 	return town_param;
 }
@@ -1215,20 +1230,44 @@ static RETURNFUNC_RESULT FMenuReturnProc_TownMap(PROCLINK_WORK* wk,void* param_a
 	}
 	else 
 	{	
-		//バッグから呼ばれた
-		switch( param->select )
+		if( wk->param->call == EVENT_PROCLINK_CALL_BAG )
 		{	
-		case TOWNMAP_SELECT_RETURN:	//何もせず戻る
-			wk->next_type	= EVENT_PROCLINK_CALL_BAG;
-			return RETURNFUNC_RESULT_NEXT;
-		case TOWNMAP_SELECT_CLOSE:		//何もせず終了する
-			return RETURNFUNC_RESULT_EXIT;
-		default:
-			GF_ASSERT(0);
-			return RETURNFUNC_RESULT_EXIT;
-		}
 
+			//バッグから呼ばれた
+			switch( param->select )
+			{	
+			case TOWNMAP_SELECT_RETURN:	//何もせず戻る
+				wk->next_type	= EVENT_PROCLINK_CALL_BAG;
+				return RETURNFUNC_RESULT_NEXT;
+			case TOWNMAP_SELECT_CLOSE:		//何もせず終了する
+				return RETURNFUNC_RESULT_EXIT;
+			default:
+				GF_ASSERT(0);
+				return RETURNFUNC_RESULT_EXIT;
+			}
+		}
+		else if( wk->param->call == EVENT_PROCLINK_CALL_POKELIST )
+		{	
+			//リストから呼ばれた
+			switch( param->select )
+			{	
+			case TOWNMAP_SELECT_RETURN:	//何もせず戻る
+				wk->next_type	= EVENT_PROCLINK_CALL_POKELIST;
+				return RETURNFUNC_RESULT_NEXT;
+			case TOWNMAP_SELECT_CLOSE:		//何もせず終了する
+				return RETURNFUNC_RESULT_EXIT;
+			case TOWNMAP_SELECT_SKY:	//空を飛ぶ
+				wk->param->select_param	= PL_RET_SORAWOTOBU;
+				return RETURNFUNC_RESULT_USE_SKILL;
+	
+			default:
+				GF_ASSERT(0);
+				return RETURNFUNC_RESULT_EXIT;
+			}
+		}
 	}
+
+	return RETURNFUNC_RESULT_EXIT;
 }
 //-------------------------------------
 ///	コンフィグ

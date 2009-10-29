@@ -385,13 +385,18 @@ static void FldMapMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void *w
 	{	
 		if( FIELD_SUBSCREEN_GetMode(subscreen) != mwk->return_subscreen_mode )
 		{	
-			FIELD_SUBSCREEN_Change(subscreen, mwk->return_subscreen_mode );
+			FIELD_SUBSCREEN_ChangeForce(subscreen, mwk->return_subscreen_mode );
 		}
 	}
 	else
 	{	
 		//メニューに戻る場合
-		FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_TOPMENU);
+		//fieldmap.c終了時にサブスクリーンモードをgamedataに保存し、
+		//初期化時にわたしているので、ここで再度メニューをする必要はない。
+		//してしまうと、
+		// fieldmap.cのサブスクリーンモード読み直しでinit->exit->initをしてしまい、
+		// PRINTQUEバッファを実行する前に終えてしまう
+		//FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_TOPMENU);
 	}
 }
 //----------------------------------------------------------------------------
