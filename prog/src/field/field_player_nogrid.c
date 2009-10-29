@@ -879,11 +879,11 @@ static PLAYER_SET player_CheckMoveStart_Walk(
 	
 	{
 		u32 hit = MMDL_HitCheckRailMoveDir( mmdl, dir );
-		
+
 		if( debug_flag == TRUE )
     {
-			if( hit != MMDL_MOVEHITBIT_NON &&
-          !(hit&MMDL_MOVEHITBIT_OUTRANGE) )
+      // アトリビュートムシ
+			if( hit & MMDL_MOVEHITBIT_ATTR )
       {
 				hit = MMDL_MOVEHITBIT_NON;
 			}
@@ -1309,8 +1309,8 @@ static PLAYER_SET playerCycle_CheckMoveStart_Walk(
 		
 		if( debug_flag == TRUE )
     {
-			if( hit != MMDL_MOVEHITBIT_NON &&
-          !(hit&MMDL_MOVEHITBIT_OUTRANGE) )
+      // アトリビュートムシ
+			if( hit & MMDL_MOVEHITBIT_ATTR )
       {
 				hit = MMDL_MOVEHITBIT_NON;
 			}
