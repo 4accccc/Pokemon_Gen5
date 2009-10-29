@@ -150,8 +150,17 @@ static void _vectorUpMath(POKEMON_TRADE_WORK *pWork)
       else{
         pWork->bUpVec = FALSE;
       }
+      if(pWork->pCatchCLWK){
+        GFL_CLACTPOS pos;
+        GFL_CLACT_WK_GetPos( pWork->pCatchCLWK, &pos, CLSYS_DRAW_SUB);
+        if(GFL_STD_Abs(pos.x - x)+GFL_STD_Abs(pos.y - y) < 10){
+          pWork->bUpVec = FALSE;
+        }
+      }
+      if((y >=  2*8) && ((18*8) > y)){
         pWork->x = x;
         pWork->y = y;
+      }
     }
   }
 }
@@ -1455,23 +1464,15 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
     }
     break;
   default:
-/*    if(GFL_UI_KEY_GetTrg()==PAD_KEY_LEFT){
-      if(pWork->pokemonselectno == 1){
-        pWork->pokemonselectno = 0;
-        bChange=TRUE;
-      }
-    }
-    else if(GFL_UI_KEY_GetTrg()==PAD_KEY_RIGHT){
-      if(pWork->pokemonselectno == 0){
-        pWork->pokemonselectno = 1;
-        bChange=TRUE;
-      }
-    }*/
     break;
   }
-/*
+
+  _CatchPokemonMoveFunc(pWork);
+  
   if(GFL_UI_TP_GetPointTrg(&x, &y)==TRUE){
-    if(IsTouchCLACTPosition(pWork)){
+    if(IsTouchCLACTPosition(pWork,TRUE)){
+      pWork->x = x;
+      pWork->y = y;
       PMSND_PlaySystemSE(POKETRADESE_CUR);
       bChange = TRUE;
     }
@@ -1481,7 +1482,7 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
       }
     }
   }
-*/
+
   if(bChange){
     POKEMON_PASO_PARAM* ppp =
       IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox,
@@ -1494,17 +1495,8 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
     return;
   }
 
-  // ついてくる
-  if(pWork->pCatchCLWK != NULL){  //タッチパネル操作中のアイコン移動
-    u32 x,y;
-    GFL_CLACTPOS pos;
-    if(GFL_UI_TP_GetPointCont(&x,&y)){
-      pos.x = x;
-      pos.y = y;
-      GFL_CLACT_WK_SetPos( pWork->pCatchCLWK, &pos, CLSYS_DRAW_SUB);
-    }
-  }
 
+  _CatchPokemonMoveFunc(pWork);
 
   if(bExit==FALSE){
     u32 x,y;
@@ -1580,7 +1572,7 @@ static void _dispSubState(POKEMON_TRADE_WORK* pWork)
   }
 
   GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], FALSE );
-
+  _CatchPokemonPositionRewind(pWork);
   _CHANGE_STATE(pWork,_dispSubStateWait);
 }
 
@@ -1955,11 +1947,6 @@ static void _loopSearchMojiState(POKEMON_TRADE_WORK* pWork)
     break;
   default:
     break;
-  }
-  if(GFL_UI_KEY_GetTrg()==PAD_BUTTON_CANCEL ){
-    PMSND_PlaySystemSE(POKETRADESE_LANG_CANCEL);
-    pWork->selectMoji = 0;
-    endflg = TRUE;
   }
 
   if(endflg){
