@@ -2035,7 +2035,7 @@ static void BPL_MsgManSet( BPLIST_WORK * wk )
 	wk->que  = PRINTSYS_QUE_CreateEx( 2048, wk->dat->heap );
 	wk->msg_buf = GFL_STR_CreateBuffer( TMP_MSG_BUF_SIZ, wk->dat->heap );
 
-	PRINTSYS_QUE_ForceCommMode( wk->que, TRUE );			// テスト
+//	PRINTSYS_QUE_ForceCommMode( wk->que, TRUE );			// テスト
 }
 
 //--------------------------------------------------------------------------------------------
