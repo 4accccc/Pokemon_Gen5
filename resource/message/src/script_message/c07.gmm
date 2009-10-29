@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-29T16:05:49"/>
+	<create user="matsumiya" host="W00207" date="2009-10-29T21:16:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -336,11 +336,27 @@
 	</lock>
 
 
-	<row id="msg_c07_hakaim1_01">
+	<row id="msg_c07_leader7_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・c07ジムバッジ取得後に
+　ポケモンジム前のposを踏むと
+　ジムから登場、主人公を押しのけ
+　メッセージ表示！
+・主人公がposを踏むと
+　メッセージ表示後、倍速移動で竜の塔に</comment>
+		<attribute name="キャラクター">LEADER7
+ハチク</attribute>
+		<language name="JPN" width="256">ハチク『……！[BE:01:ページ切り替え（クリア）]
+塔が　壊された！？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ハチク『……！[BE:01:ページ切り替え（クリア）]
+塔が　壊された！？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c07_hakaim1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・c07ジムバッジ取得後から
-　d08リュウラセンの塔イベント後マデ
-　出現</comment>
+　d08リュウラセンの塔イベント後まで表示
+・d08の近くに配置</comment>
 		<attribute name="キャラクター">HAKAIM
 プラズマ団♂</attribute>
 		<language name="JPN" width="256">われわれ　プラズマ団の　王が
@@ -349,86 +365,118 @@
 英雄としての　力を　得るのだ！</language>
 	</row>
 
-	<row id="msg_c07_hakaim2_01">
+	<row id="msg_c07_hakaim2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・c07ジムバッジ取得後から
-　d08リュウラセンの塔イベント後マデ
-　出現</comment>
+　d08リュウラセンの塔イベント後まで表示
+・d08の近くに配置</comment>
 		<attribute name="キャラクター">HAKAIM
 プラズマ団♂</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">われわれ　プラズマ団の　王が
-英雄としての　力を　得るのだ！</language>
+		<language name="JPN" width="256">でんせつに　のこる　えいゆうのちから！
+それこそが　パッケージポケモン！</language>
+		<language name="JPN_KANJI" width="256">伝説に　残る　英雄の力！
+それこそが　パッケージポケモン！</language>
 	</row>
 
-	<row id="msg_c07_hakaim3_01">
+	<row id="msg_c07_hakaiw1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・c07ジムバッジ取得後から
-　d08リュウラセンの塔イベント後マデ
-　出現</comment>
-		<attribute name="キャラクター">HAKAIM
-プラズマ団♂</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">われわれ　プラズマ団の　王が
-英雄としての　力を　得るのだ！</language>
-	</row>
-
-	<row id="msg_c07_hakaim4_01">
-		<comment>♂
-・c07ジムバッジ取得後から
-　d08リュウラセンの塔イベント後マデ
-　出現</comment>
-		<attribute name="キャラクター">HAKAIM
-プラズマ団♂</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">われわれ　プラズマ団の　王が
-英雄としての　力を　得るのだ！</language>
-	</row>
-
-	<row id="msg_c07_hakaiw1_01">
-		<comment>♂
-・c07ジムバッジ取得後から
-　d08リュウラセンの塔イベント後マデ
-　出現</comment>
+　d08リュウラセンの塔イベント後まで表示
+・d08の近くに配置</comment>
 		<attribute name="キャラクター">HAKAIW
 プラズマ団♀</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">われわれ　プラズマ団の　王が
-英雄としての　力を　得るのだ！</language>
+		<language name="JPN" width="256">リュウラセンの塔……[BE:01:ページ切り替え（クリア）]
+そこに　秘められた　力を
+われわれが　手に入れる！</language>
+		<language name="JPN_KANJI" width="256">リュウラセンの塔……[BE:01:ページ切り替え（クリア）]
+そこに　秘められた　力を
+われわれが　手に入れる！</language>
 	</row>
 
-	<row id="msg_c07_test1_01">
-		<comment>♀</comment>
-		<attribute name="キャラクター">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c07_girl2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ
+※WHITEverとBALCKveで
+　内容を変える</comment>
+		<attribute name="キャラクター">GIRL2
+少女（活発）</attribute>
+		<language name="JPN" width="256">ふたごの　えいゆう……
+あには　しんじつを　もとめ[BE:01:ページ切り替え（クリア）]
+おとうとは　りそうを　もとめて
+それぞれ　２ひきの　ポケモンと　ともに[BE:00:ページ切り替え（行送り）]
+ずっとずっと　たたかいつづけた……[BE:01:ページ切り替え（クリア）]
+でんせつが　ほんとうだとすると
+かなしい　きょうだいゲンカ　よね……</language>
+		<language name="JPN_KANJI" width="256">双子の　英雄……
+兄は　真実を　求め[BE:01:ページ切り替え（クリア）]
+弟は　理想を　求めて　それぞれ[BE:00:ページ切り替え（行送り）]
+２匹の　ポケモンと　ともに[BE:00:ページ切り替え（行送り）]
+ずっとずっと　闘いつづけた……[BE:01:ページ切り替え（クリア）]
+伝説が　本当だとすると
+悲しい　兄弟ゲンカ　よね……</language>
 	</row>
 
-	<row id="msg_c07_test2_01">
-		<comment>♀</comment>
-		<attribute name="キャラクター">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c07_ambrella_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ</comment>
+		<attribute name="キャラクター">AMBRELLA
+パラソル</attribute>
+		<language name="JPN" width="256">かぜや　ゆきに　さらされても
+かわらず　そびえる　とう……[BE:01:ページ切り替え（クリア）]
+その　そんざいは
+ひとに　なにを　つたえるのでしょう</language>
+		<language name="JPN_KANJI" width="256">風雪に　さらされても
+変わらず　そびえる　塔……[BE:01:ページ切り替え（クリア）]
+その存在は
+人に　何を伝えるのでしょう</language>
 	</row>
 
-	<row id="msg_c07_test3_01">
-		<comment>♂</comment>
-		<attribute name="キャラクター">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c07_man3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ
+※WHITEverとBALCKveで
+　内容を変える</comment>
+		<attribute name="キャラクター">MAN3</attribute>
+		<language name="JPN" width="256">パッケージポケモンは
+えいゆうをたすけ　くにをつくった[BE:01:ページ切り替え（クリア）]
+だが　そのはんめん
+もうひとりの　えいゆうを[BE:00:ページ切り替え（行送り）]
+ほろぼそうとも　したんだぞ……！</language>
+		<language name="JPN_KANJI" width="256">パッケージポケモンは
+英雄を助け　国をつくった[BE:01:ページ切り替え（クリア）]
+だが　その反面
+もう一人の　英雄を[BE:00:ページ切り替え（行送り）]
+滅ぼそうとも　したんだぞ……！</language>
 	</row>
 
-	<row id="msg_c07_fighterm_01">
-		<comment>♂</comment>
+	<row id="msg_c07_fighterm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
 		<attribute name="キャラクター">FIGHTERM
 格闘家</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ジムリーダー　ハチクさまの
+ちんちゃくれいせい　っぷり……[BE:01:ページ切り替え（クリア）]
+ファイティング　コンピュータとよぶ
+ひとが　いるのも　なっとくだよ</language>
+		<language name="JPN_KANJI" width="256">ジムリーダー　ハチクさまの
+沈着冷静っぷり……[BE:01:ページ切り替え（クリア）]
+ファイティング　コンピュータとよぶ
+人が　いるのも　納得だよ</language>
 	</row>
 
 	<row id="msg_c07_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラクター">看板：街</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c07_sign2_01" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c07_sign3_01" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
