@@ -150,11 +150,8 @@ static void _vectorUpMath(POKEMON_TRADE_WORK *pWork)
       else{
         pWork->bUpVec = FALSE;
       }
-      pWork->speed = (x - pWork->x)*2;
-//      if((y >=  2*8) && ((18*8) > y)){
         pWork->x = x;
         pWork->y = y;
-  //    }
     }
   }
 }
@@ -2360,7 +2357,8 @@ static void _touchStateCommon(POKEMON_TRADE_WORK* pWork)
       if((x >=  64) && ((192) > x)){
         if((y >=  152+12) && ((176+12) > y)){
           GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_SCROLLBAR] , TRUE );
-      //    pWork->speed = (x - pWork->x)*2;
+          pWork->speed = (x - pWork->xspeed)*2;
+          pWork->xspeed = x;
           pWork->BoxScrollNum -= pWork->speed;
           if(pWork->speed > 12){
             _scrollMainFunc(pWork,TRUE,TRUE);
@@ -2374,6 +2372,10 @@ static void _touchStateCommon(POKEMON_TRADE_WORK* pWork)
     //pWork->x = x;
     //pWork->y = y;
     pWork->touchON = TRUE;
+    pWork->xspeed = x;
+  }
+  else{
+    pWork->xspeed=0;
   }
 
   if(GFL_UI_TP_GetCont()==FALSE){  //Šµ«

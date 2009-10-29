@@ -2866,6 +2866,7 @@ static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
 			for(j=0;j < 30;j++){
 //				int monsno =GFUser_GetPublicRand(MONSNO_END-1)+1;
         int monsno = i+10;
+        monsno = GFUser_GetPublicRand(300);
 				OS_TPrintf("%d  %d %dì¬\n",monsno, i, j);
 				PP_Setup(pp,  monsno , 30, PTL_SETUP_ID_AUTO);
 

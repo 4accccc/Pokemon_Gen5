@@ -475,6 +475,7 @@ struct _POKEMON_TRADE_WORK{
   BOOL bParent;
   BOOL bTouchReset;
 
+  short xspeed;
   short speed;   ///< スクロール慣性速度
   short BoxScrollNum;   ///< ドット単位で位置を管理  8*20がBOX 8*12がてもち BOX_MAX_TRAY => 2880+96=2976
   short FriendBoxScrollNum;   ///< 上記の相手側の値
