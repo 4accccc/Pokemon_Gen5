@@ -235,6 +235,13 @@ void FIELD_PLAYER_UpdateMoveStatus( FIELD_PLAYER *fld_player )
   
   fld_player->move_state = PLAYER_MOVE_STATE_OFF;
   
+  if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_GRID ){
+    if( FIELD_PLAYER_GRID_CheckUnderForceMove(fld_player) == TRUE ){
+      fld_player->move_state = PLAYER_MOVE_STATE_ON;
+      return;
+    }
+  }
+
   if( MMDL_CheckPossibleAcmd(fmmdl) == FALSE ){ //“®ì’†
     switch( value ){
     case PLAYER_MOVE_VALUE_STOP:
@@ -666,6 +673,11 @@ PLAYER_DRAW_FORM FIELD_PLAYER_GetOBJCodeToDrawForm( int sex, u16 code )
 BOOL FIELD_PLAYER_CheckChangeEventDrawForm( FIELD_PLAYER *fld_player )
 {
   PLAYER_MOVE_FORM form = FIELD_PLAYER_GetMoveForm( fld_player );
+  
+  if( FLDMAP_BASESYS_RAIL ==
+      FIELDMAP_GetBaseSystemType(fld_player->fieldWork) ){
+    return( FALSE );
+  }
   
   switch( form ){
   case PLAYER_MOVE_FORM_SWIM:
