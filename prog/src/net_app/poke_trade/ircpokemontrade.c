@@ -1772,16 +1772,16 @@ static BOOL _PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork)
 #if PM_DEBUG
     if(!GFL_NET_IsInit()){
       const STRCODE *name;
+      POKEMON_PARAM* pp2; 
 
-      pp = PP_Create(MONSNO_ONOKKUSU, 100, 123456, GFL_HEAPID_APP);
+      pp2 = PP_Create(MONSNO_ONOKKUSU, 100, 123456, GFL_HEAPID_APP);
       name = MyStatus_GetMyName( pWork->pMy );
-      PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
-      PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( pWork->pMy ) );
-      _Pokemonset(pWork,1,pp); 
-      GFL_HEAP_FreeMemory(pp);
-
+      PP_Put( pp2 , ID_PARA_oyaname_raw , (u32)name );
+      PP_Put( pp2 , ID_PARA_oyasex , MyStatus_GetMySex( pWork->pMy ) );
+      _Pokemonset(pWork,1,pp2); 
+      GFL_STD_MemCopy(pp2,pWork->recvPoke[1],POKETOOL_GetWorkSize());
+      GFL_HEAP_FreeMemory(pp2);
       GFL_STD_MemCopy(pp,pWork->recvPoke[0],POKETOOL_GetWorkSize());
-      GFL_STD_MemCopy(pp,pWork->recvPoke[1],POKETOOL_GetWorkSize());
 
     }
 #endif
