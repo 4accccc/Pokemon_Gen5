@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-09-14T12:37:44"/>
+	<create user="iwao_kazumasa" host="W00203" date="2009-10-27T18:46:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,13 +294,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1610" top="160" right="2251" bottom="781" maximized="no" rayout="Vertical2">
+	<dialog left="381" top="474" right="1086" bottom="1102" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="466"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="633"/>
-		<band id="3" index="3" style="0000" width="633"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -607,7 +607,7 @@
 	</row>
 
 	<row id="ITEM_NAME_068">
-		<language name="JPN" width="256">バラの花束</language>
+		<language name="JPN" width="256">バラの花</language>
 	</row>
 
 	<row id="ITEM_NAME_069">

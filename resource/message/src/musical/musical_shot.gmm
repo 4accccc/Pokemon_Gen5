@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-09-17T16:09:23"/>
+	<create user="iwao_kazumasa" host="W00203" date="2009-10-29T17:45:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1586" top="161" right="2275" bottom="781" maximized="no" rayout="Vertical2">
+	<dialog left="381" top="392" right="881" bottom="1012" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="786" top="163" right="1259" bottom="561" visible="no"/>
-		<band id="0" index="0" style="0000" width="514"/>
+		<band id="0" index="0" style="0000" width="492"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="681"/>
-		<band id="3" index="3" style="0000" width="681"/>
+		<band id="2" index="2" style="0000" width="325"/>
+		<band id="3" index="3" style="0000" width="591"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -340,8 +340,10 @@
 	</row>
 
 	<row id="MUSICAL_SHOT_INFO_01">
-		<language name="JPN" width="240">この しゃしんを　ほぞんしますか？</language>
-		<language name="JPN_KANJI">この　写真を　保存しますか？</language>
+		<language name="JPN" width="240">こんかい　ミュージカルの　しゃしんです
+しゃしんを　ロビーに　かざりますか？</language>
+		<language name="JPN_KANJI">今回の　ミュージカルの　写真です
+写真を　ロビーに　飾りますか？</language>
 	</row>
 
 	<row id="MUSICAL_SHOT_INFO_02">

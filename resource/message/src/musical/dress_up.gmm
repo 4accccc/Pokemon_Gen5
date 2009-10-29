@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-10-29T18:00:25"/>
+	<create user="iwao_kazumasa" host="W00203" date="2009-10-29T19:16:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1548" top="186" right="2253" bottom="814" maximized="no" rayout="Vertical2">
+	<dialog left="591" top="450" right="1091" bottom="1078" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="161" right="1280" bottom="559" visible="yes"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="492"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="325"/>
+		<band id="3" index="3" style="0000" width="591"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -336,15 +336,15 @@
 	<row id="DUP_MSG_01">
 		<comment>ポケモン名がまだ仮のところがあるので、直打ち中</comment>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]を　きせかえて
-コーディネート　しましょう！</language>
+ドレスアップ　しましょう！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]を　着せ替えて
-コーディネート　しましょう！</language>
+ドレスアップ　しましょう！</language>
 	</row>
 
 	<row id="DUP_MSG_02">
-		<language name="JPN" width="256">この　コーディネートで
+		<language name="JPN" width="256">この　いしょうで
 さんかしますか？</language>
-		<language name="JPN_KANJI" width="256">この　コーディネートで
+		<language name="JPN_KANJI" width="256">この　衣装で
 参加しますか？</language>
 	</row>
 
