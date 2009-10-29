@@ -51,6 +51,9 @@
 #define ALLOC_CHAR_SIZE ( 0xa00 )   //BG_FRAME2_Sで対象選択枠用キャラエリアをAllocするサイズ
                                     /** @TODO ポケモンリストが正規になったらいらなくなる */
 
+#define STANDBY_FADE        ( 8 )
+#define STANDBY_FADE_COLOR  ( 0x0842 )
+
 //PP表示用カラー定義
 #define MSGCOLOR_PP_WHITE   ( PRINTSYS_LSB_Make( 1, 2, 0 ) )
 #define MSGCOLOR_PP_YELLOW  ( PRINTSYS_LSB_Make( 3, 4, 0 ) )
@@ -878,6 +881,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
       GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
       GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
+      PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, 0x0002, 1, STANDBY_FADE, STANDBY_FADE, STANDBY_FADE_COLOR, biw->tcbsys );
     }
     else
     {
@@ -897,6 +901,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       {
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformWaza2Standby, ttw, 1 );
       }
+      PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, 0x0002, 1, 0, STANDBY_FADE, STANDBY_FADE_COLOR, biw->tcbsys );
     }
     break;
   case BTLV_INPUT_SCRTYPE_COMMAND:
@@ -1107,6 +1112,7 @@ static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
+    PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, 0x0002, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
     ttw->seq_no++;
     break;
   case 1:
