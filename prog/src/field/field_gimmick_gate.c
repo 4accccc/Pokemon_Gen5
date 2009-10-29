@@ -36,13 +36,40 @@
 typedef struct
 {
   u16 zone_id;
+  u8  gimmick_id;
   u32 dat_id; 
 } ENTRY_DATA;
 
 static const ENTRY_DATA entry_table[] = 
 {
-  { ZONE_ID_C04R0801, NARC_gate_elboard_zone_data_c04r0801_bin },
+  { ZONE_ID_C04R0601, FLD_GIMMICK_C04R0601, NARC_gate_elboard_zone_data_c04r0601_bin },
+  { ZONE_ID_C08R0601, FLD_GIMMICK_C08R0601, NARC_gate_elboard_zone_data_c08r0601_bin },
+  { ZONE_ID_R13R0201, FLD_GIMMICK_R13R0201, NARC_gate_elboard_zone_data_r13r0201_bin },
+  { ZONE_ID_R02R0101, FLD_GIMMICK_R02R0101, NARC_gate_elboard_zone_data_r02r0101_bin },
+  { ZONE_ID_C04R0701, FLD_GIMMICK_C04R0701, NARC_gate_elboard_zone_data_c04r0701_bin },
+  { ZONE_ID_C04R0801, FLD_GIMMICK_C04R0801, NARC_gate_elboard_zone_data_c04r0801_bin },
+  { ZONE_ID_C02R0701, FLD_GIMMICK_C02R0701, NARC_gate_elboard_zone_data_c02r0701_bin },
+  { ZONE_ID_R14R0101, FLD_GIMMICK_R14R0101, NARC_gate_elboard_zone_data_r14r0101_bin },
+  { ZONE_ID_C08R0501, FLD_GIMMICK_C08R0501, NARC_gate_elboard_zone_data_c08r0501_bin },
+  { ZONE_ID_C08R0701, FLD_GIMMICK_C08R0701, NARC_gate_elboard_zone_data_c08r0701_bin },
+  { ZONE_ID_H01R0101, FLD_GIMMICK_H01R0101, NARC_gate_elboard_zone_data_h01r0101_bin },
+  { ZONE_ID_H01R0201, FLD_GIMMICK_H01R0201, NARC_gate_elboard_zone_data_h01r0201_bin },
+  { ZONE_ID_C03R0601, FLD_GIMMICK_C03R0601, NARC_gate_elboard_zone_data_c03r0601_bin },
 };
+// フィールドマップに対応するギミックIDを取得する
+static u8 GetGimmickID( FIELDMAP_WORK* fieldmap )
+{
+  int i;
+  u16 zone_id = FIELDMAP_GetZoneID( fieldmap );
+  for( i=0; i<NELEMS(entry_table); i++ )
+  {
+    if( entry_table[i].zone_id == zone_id )
+    {
+      return entry_table[i].gimmick_id;
+    }
+  }
+  return 0;
+}
 
 
 //==========================================================================================
@@ -193,7 +220,7 @@ static char* news_plt_name[NEWS_NUM] =
 //==========================================================================================
 typedef struct
 { 
-  HEAPID         heapID;  // 使用するヒープID
+  HEAPID        heapID;   // 使用するヒープID
   GOBJ_ELBOARD* elboard;  // 電光掲示板管理オブジェクト
 } GATEWORK;
 
@@ -256,7 +283,7 @@ void GATE_GIMMICK_End( FIELDMAP_WORK* fieldmap )
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
   SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork( gdata );
   GIMMICKWORK*  gmkwork = SaveData_GetGimmickWork( sv );
-  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GATE );
+  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, GetGimmickID(fieldmap) );
   GATEWORK*        work = (GATEWORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
 
   // ギミック状態をセーブ
@@ -285,7 +312,7 @@ void GATE_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
   SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork( gdata );
   GIMMICKWORK*  gmkwork = SaveData_GetGimmickWork( sv );
-  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GATE );
+  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, GetGimmickID(fieldmap) );
   GATEWORK*        work = (GATEWORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
 
   // 電光掲示板メイン処理
@@ -312,7 +339,7 @@ static void GimmickSave( FIELDMAP_WORK* fieldmap )
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
   SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork( gdata );
   GIMMICKWORK*  gmkwork = SaveData_GetGimmickWork( sv );
-  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GATE );
+  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, GetGimmickID(fieldmap) );
   GATEWORK*        work = (GATEWORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
 
   // 掲示板の動作フレーム数を記憶
@@ -336,12 +363,12 @@ static void GimmickLoad( GATEWORK* work, FIELDMAP_WORK* fieldmap )
   u32*         gmk_save = NULL;
 
   // 有効なセーブデータがある場合
-  if( GIMMICKWORK_GetAssignID( gmkwork ) == FLD_GIMMICK_GATE )
+  if( GIMMICKWORK_GetAssignID( gmkwork ) == GetGimmickID(fieldmap) )
   {
     u32 frame;
 
     // セーブデータ取得
-    gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GATE );
+    gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, GetGimmickID(fieldmap) );
     frame    = gmk_save[1];
     GOBJ_ELBOARD_SetFrame( work->elboard, frame << FX32_SHIFT );
   }
@@ -349,7 +376,7 @@ static void GimmickLoad( GATEWORK* work, FIELDMAP_WORK* fieldmap )
   else
   {
     // 新規セーブデータを作成
-    gmk_save = (u32*)GIMMICKWORK_Assign( gmkwork, FLD_GIMMICK_GATE );
+    gmk_save = (u32*)GIMMICKWORK_Assign( gmkwork, GetGimmickID(fieldmap) );
   }
 
   // ギミック管理ワークのアドレスを記憶
