@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-11T14:15:51"/>
+	<create user="matsumiya" host="W00207" date="2009-10-29T15:36:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -310,10 +310,10 @@
 		<comment>♀
 ・仮メッセージ
 ・何も条件を満たしていない</comment>
-		<language name="JPN" width="256">アクセサリーを　イヤがる
+		<language name="JPN" width="256">グッズを　イヤがる
 ポケモンが　いても　ゆるしてあげてね[BE:01:ページ切り替え（クリア）]
 だって　ポケモン　なんですもの</language>
-		<language name="JPN_KANJI" width="256">アクセサリーを　嫌がる
+		<language name="JPN_KANJI" width="256">グッズを　嫌がる
 ポケモンが　いても　許してあげてね[BE:01:ページ切り替え（クリア）]
 だって　ポケモン　なんですもの</language>
 	</row>
@@ -348,10 +348,10 @@
 ・誕生日</comment>
 		<language name="JPN" width="256">ハッピー　バースデイ！！[BE:01:ページ切り替え（クリア）]
 わたしからは　この　ハッピーな
-アクセサリーを　アナタに　プレゼントよ！</language>
+グッズを　アナタに　プレゼントよ！</language>
 		<language name="JPN_KANJI" width="256">ハッピー　バースデイ！！[BE:01:ページ切り替え（クリア）]
 わたしからは　この　ハッピーな
-アクセサリーを　アナタに　プレゼントよ！</language>
+グッズを　アナタに　プレゼントよ！</language>
 	</row>
 
 	<row id="msg_c04r0201_man2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -360,11 +360,11 @@
 		<attribute name="キャラ指定">MAN2
 ＝スタイリスト</attribute>
 		<language name="JPN" width="256">そうそう　そうなんだよ！
-きみが　えらぶ　アクセサリー！[BE:01:ページ切り替え（クリア）]
+きみが　えらぶ　グッズ！[BE:01:ページ切り替え（クリア）]
 チャーミングな　ポケモンを
 いっそう　チャーミングに　してるさ</language>
 		<language name="JPN_KANJI" width="256">そうそう　そうなんだよ！
-きみが　選ぶ　アクセサリー！[BE:01:ページ切り替え（クリア）]
+きみが　選ぶ　グッズ！[BE:01:ページ切り替え（クリア）]
 チャーミングな　ポケモンを
 いっそう　チャーミングに　してるさ</language>
 	</row>
@@ -398,11 +398,11 @@
 ＝スタイリストその2</attribute>
 		<language name="JPN" width="256">スタイリストからの　アドバイス！[BE:01:ページ切り替え（クリア）]
 おんがくの　ふんいきに　あった
-アクセサリーで　ドレスアップすると[BE:00:ページ切り替え（行送り）]
+グッズで　ドレスアップすると[BE:00:ページ切り替え（行送り）]
 おきゃくさんも　だいまんぞく　だね！</language>
 		<language name="JPN_KANJI" width="256">スタイリストからの　アドバイス！[BE:01:ページ切り替え（クリア）]
 音楽の　雰囲気に　あった
-アクセサリーで　ドレスアップすると[BE:00:ページ切り替え（行送り）]
+グッズで　ドレスアップすると[BE:00:ページ切り替え（行送り）]
 お客さんも　大満足　だね！</language>
 	</row>
 
