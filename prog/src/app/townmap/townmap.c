@@ -1459,9 +1459,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 
 			PLACE_SetVisible( &p_wk->place, FALSE );
 
-			APPBAR_SetActive( &p_wk->appbar, TOUCHBAR_ICON_SCALEUP, FALSE );
-			APPBAR_SetActive( &p_wk->appbar, TOUCHBAR_ICON_SCALEDOWN, TRUE );
-
+			PMSND_PlaySE( TOWNMAP_SE_SCALEUP );
 
 			p_wk->is_scale	= TRUE;
 		}
@@ -1498,8 +1496,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 			
 			PLACE_SetVisible( &p_wk->place, FALSE );
 
-			APPBAR_SetActive( &p_wk->appbar, TOUCHBAR_ICON_SCALEUP, TRUE );
-			APPBAR_SetActive( &p_wk->appbar, TOUCHBAR_ICON_SCALEDOWN, FALSE );
+			PMSND_PlaySE( TOWNMAP_SE_SCALEDOWN );
 
 			p_wk->is_scale	= FALSE;
 		}
@@ -1589,7 +1586,7 @@ static void APPBAR_Init( APPBAR_WORK *p_wk, TOWNMAP_MODE mode, GFL_CLUNIT* p_uni
 		touchbar_icon_tbl[3].noactive_anmseq	=		11;				//ノンアクティブのときのアニメ
 		touchbar_icon_tbl[3].push_anmseq	=		9;						//押したときのアニメ（STOPになっていること）
 		touchbar_icon_tbl[3].key	=		0;		//キーで押したときに動作させたいならば、ボタン番号
-		touchbar_icon_tbl[3].se		=		TOWNMAP_SE_SCALEUP;		//押したときにSEならしたいならば、SEの番号	
+		touchbar_icon_tbl[3].se		=		0;		//押したときにSEならしたいならば、SEの番号	
 
 		//縮小アイコン
 		touchbar_icon_tbl[4].cg_idx		=  p_wk->res[APPBAR_RES_SCALE_CHR];				//キャラリソース
@@ -1599,7 +1596,7 @@ static void APPBAR_Init( APPBAR_WORK *p_wk, TOWNMAP_MODE mode, GFL_CLUNIT* p_uni
 		touchbar_icon_tbl[4].noactive_anmseq=	12;						//ノンアクティブのときのアニメ
 		touchbar_icon_tbl[4].push_anmseq		=	10;						//押したときのアニメ（STOPになっていること）
 		touchbar_icon_tbl[4].key	=	0;		//キーで押したときに動作させたいならば、ボタン番号
-		touchbar_icon_tbl[4].se		=	TOWNMAP_SE_SCALEDOWN;			//押したときにSEならしたいならば、SEの番号	
+		touchbar_icon_tbl[4].se		=	0;			//押したときにSEならしたいならば、SEの番号	
 
 		//設定構造体
 		//さきほどの窓情報＋リソース情報をいれる
@@ -1681,6 +1678,18 @@ static void APPBAR_Main( APPBAR_WORK *p_wk )
 	{	
 		GAMEDATA_SetShortCut( p_wk->p_gamedata, SHORTCUT_ID_TOWNMAP, FALSE );
 	}
+
+	if( TOUCHBAR_GetTrg( p_wk->p_touchbar ) == TOUCHBAR_ICON_SCALEUP )
+	{	
+		APPBAR_SetActive( p_wk, TOUCHBAR_ICON_SCALEUP, FALSE );
+		APPBAR_SetActive( p_wk, TOUCHBAR_ICON_SCALEDOWN, TRUE );
+	}
+	else if( TOUCHBAR_GetTrg( p_wk->p_touchbar ) == TOUCHBAR_ICON_SCALEDOWN )
+	{	
+		APPBAR_SetActive( p_wk, TOUCHBAR_ICON_SCALEUP, TRUE );
+		APPBAR_SetActive( p_wk, TOUCHBAR_ICON_SCALEDOWN, FALSE );
+	}
+	
 }
 //----------------------------------------------------------------------------
 /**
@@ -1706,7 +1715,23 @@ static void APPBAR_SetActive( APPBAR_WORK *p_wk, TOUCHBAR_ICON icon, BOOL is_act
 //-----------------------------------------------------------------------------
 static TOUCHBAR_ICON APPBAR_GetTrg( const APPBAR_WORK *cp_wk )
 {	
-	return TOUCHBAR_GetTrg( cp_wk->p_touchbar );
+	TOUCHBAR_ICON	icon;
+
+	icon	= TOUCHBAR_GetTouch( cp_wk->p_touchbar );
+	if( icon == TOUCHBAR_ICON_SCALEUP ||
+			icon == TOUCHBAR_ICON_SCALEDOWN )
+	{	
+		return icon;
+	}
+	icon	= TOUCHBAR_GetTrg( cp_wk->p_touchbar );
+
+	if( !(icon == TOUCHBAR_ICON_SCALEUP ||
+				icon == TOUCHBAR_ICON_SCALEDOWN) )
+	{	
+		return icon;
+	}
+
+	return TOUCHBAR_SELECT_NONE;
 }
 //=============================================================================
 /**

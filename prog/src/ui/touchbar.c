@@ -39,15 +39,10 @@ typedef enum
 enum
 {
 	TOUCHBAR_SEQ_MAIN,	//タッチ待ち
+	TOUCHBAR_SEQ_ANM_TRG,		//ボタンアニメ
 	TOUCHBAR_SEQ_ANM,		//ボタンアニメ
 	TOUCHBAR_SEQ_TRG,		//トリガ
 } ;
-
-//-------------------------------------
-///	サウンド定義
-//=====================================
-#define TOUCHBAR_SE_DECIDE	(SEQ_SE_DECIDE1)
-#define TOUCHBAR_SE_Y_REG		(SEQ_SE_SYS_07)
 
 //-------------------------------------
 ///	動作関数タイプ
@@ -342,13 +337,17 @@ void TOUCHBAR_Main( TOUCHBAR_WORK *p_wk )
 				if( ICON_Main( &p_wk->icon[ i ] ) )
 				{	
 					p_wk->trg	= i;
-					p_wk->seq	= TOUCHBAR_SEQ_ANM;
+					p_wk->seq	= TOUCHBAR_SEQ_ANM_TRG;
 					break;
 				}
 			}
 		}
 		break;
 
+	case TOUCHBAR_SEQ_ANM_TRG:	//アニメ前の１Fを得るため
+			p_wk->seq	 = TOUCHBAR_SEQ_ANM;
+		/* fallthrough */
+	
 	case TOUCHBAR_SEQ_ANM:
 		//動作
 		if( ICON_IsMoveEnd( &p_wk->icon[ p_wk->trg ] ) )
@@ -366,7 +365,7 @@ void TOUCHBAR_Main( TOUCHBAR_WORK *p_wk )
 	}
 //----------------------------------------------------------------------------
 /**
- *	@brief	TOUCHBAR	選択されたものを取得
+ *	@brief	TOUCHBAR	選択されたものを取得	アニメ後の１F
  *
  *	@param	const TOUCHBAR_WORK *cp_wk ワーク
  *
@@ -377,6 +376,24 @@ TOUCHBAR_ICON TOUCHBAR_GetTrg( const TOUCHBAR_WORK *cp_wk )
 {	
 
 	if( cp_wk->seq	== TOUCHBAR_SEQ_TRG && cp_wk->trg != TOUCHBAR_SELECT_NONE )
+	{	
+		return ICON_GetType( &cp_wk->icon[ cp_wk->trg ] );
+	}
+
+	return TOUCHBAR_SELECT_NONE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	TOUCHBAR	選択されたものを取得	アニメ前の１F
+ *
+ *	@param	const TOUCHBAR_WORK *cp_wk ワーク
+ *
+ *	@return	TOUCHBAR_SELECT列挙
+ */
+//-----------------------------------------------------------------------------
+TOUCHBAR_ICON TOUCHBAR_GetTouch( const TOUCHBAR_WORK *cp_wk )
+{	
+	if( cp_wk->seq	== TOUCHBAR_SEQ_ANM_TRG && cp_wk->trg != TOUCHBAR_SELECT_NONE )
 	{	
 		return ICON_GetType( &cp_wk->icon[ cp_wk->trg ] );
 	}
@@ -1040,6 +1057,11 @@ static void ICON_SetActive( ICON_WORK *p_wk, BOOL is_active )
 
 	if( is_active )
 	{	
+		//アクティブになった瞬間にアニメ開始にならないようにする
+		if( p_wk->now_anmseq == p_wk->data.push_anmseq )
+		{	
+			p_wk->now_anmseq	= p_wk->data.active_anmseq;
+		}	
 		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, p_wk->now_anmseq );
 	}
 	else

@@ -90,6 +90,12 @@ typedef enum
 //アイコンの最大登録個数
 #define APBAR_ICON_REGISTER_MAX			(8)
 
+//-------------------------------------
+///	デフォルトで使用するサウンド定義
+//=====================================
+#define TOUCHBAR_SE_DECIDE	(SEQ_SE_DECIDE1)
+#define TOUCHBAR_SE_Y_REG		(SEQ_SE_SYS_07)
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -161,8 +167,16 @@ extern void TOUCHBAR_Exit( TOUCHBAR_WORK *p_wk );
 extern void TOUCHBAR_Main( TOUCHBAR_WORK *p_wk );
 //-------------------------------------
 ///	アイコントリガー情報	何もしてない場合TOUCHBAR_SELECT_NONE
+//		ボタンのアニメが終わってから１Fのみ返します
 //=====================================
 extern TOUCHBAR_ICON TOUCHBAR_GetTrg( const TOUCHBAR_WORK *cp_wk );
+
+//-------------------------------------
+///	アイコントリガー情報	何もしてない場合TOUCHBAR_SELECT_NONE
+//		ボタンを触った瞬間に１Fのみ返します
+//=====================================
+extern TOUCHBAR_ICON TOUCHBAR_GetTouch( const TOUCHBAR_WORK *cp_wk );
+
 //-------------------------------------
 ///	全体の設定
 //(内部ではすべてのICONを設定しているだけなので、全体のフラグと個別のフラグは重複しています)
