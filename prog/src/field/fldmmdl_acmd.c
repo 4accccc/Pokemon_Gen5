@@ -2941,7 +2941,7 @@ static int AC_HeroWaitAnmFrame_1( MMDL *mmdl )
 //--------------------------------------------------------------
 static int AC_HeroBanzai_0( MMDL * mmdl )
 {
-  AC_InitHeroWaitAnmWork( mmdl, DRAW_STA_PCAZUKE_ANM0, 21 );
+  AC_InitHeroWaitAnmWork( mmdl, DRAW_STA_PCAZUKE_ANM0, 40 );
 	MMDL_IncAcmdSeq( mmdl );
 	return( FALSE );
 }
@@ -2955,10 +2955,21 @@ static int AC_HeroBanzai_0( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_HeroBanzaiUke_0( MMDL * mmdl )
 {
-  AC_InitHeroWaitAnmWork( mmdl, DRAW_STA_PCAZUKE_ANM1, 21 );
+  AC_InitHeroWaitAnmWork( mmdl, DRAW_STA_PCAZUKE_ANM1, 40 );
 	MMDL_IncAcmdSeq( mmdl );
 	return( FALSE );
 }
+
+//======================================================================
+//  自機アイテムゲット
+//======================================================================
+//--------------------------------------------------------------
+/// ITEMGET
+//--------------------------------------------------------------
+typedef struct
+{
+  int frame;
+}AC_HERO_ITEMGET_WORK;
 
 //--------------------------------------------------------------
 /**
@@ -2969,8 +2980,45 @@ static int AC_HeroBanzaiUke_0( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_HeroItemGet_0( MMDL * mmdl )
 {
-  AC_InitHeroWaitAnmWork( mmdl, DRAW_STA_PCAZUKE_ANM0, 2 );
+  AC_HERO_ITEMGET_WORK *work;
+  work = MMDL_InitMoveCmdWork( mmdl, sizeof(AC_HERO_ITEMGET_WORK) );
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_ITEMGET_ANM );
 	MMDL_IncAcmdSeq( mmdl );
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_HERO_ITEM_GET 1
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再起
+ */
+//--------------------------------------------------------------
+static int AC_HeroItemGet_1( MMDL * mmdl )
+{
+  int no;
+  AC_HERO_ITEMGET_WORK *work;
+  VecFx32 offs = {0,0,0};
+  fx32 y[10] = {
+    NUM_FX32(0), NUM_FX32(0), NUM_FX32(0), NUM_FX32(0), NUM_FX32(0),
+    NUM_FX32(4), NUM_FX32(4), NUM_FX32(3), NUM_FX32(1), 0 };
+  
+  work = MMDL_GetMoveCmdWork( mmdl );
+
+  no = work->frame;
+  if( no >= 10 ){
+    no = 9;
+  }
+  
+  offs.y = y[no];
+  MMDL_SetVectorDrawOffsetPos( mmdl, &offs );
+  
+  work->frame++;
+
+  if( work->frame >= 20 ){
+    MMDL_IncAcmdSeq( mmdl );
+  }
+  
 	return( FALSE );
 }
 
@@ -5418,7 +5466,7 @@ int (* const DATA_AC_MarkGyoeTWait_Tbl[])( MMDL * ) =
 int (* const DATA_AC_HeroItemGet_Tbl[])( MMDL * ) =
 {
 	AC_HeroItemGet_0,
-	AC_HeroWaitAnmFrame_1,
+  AC_HeroItemGet_1,
 	AC_End,
 };
 
