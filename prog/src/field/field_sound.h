@@ -20,6 +20,21 @@
 //======================================================================
 //  define
 //======================================================================
+//--------------------------------------------------------------
+/// フィールドBGM退避回数
+//
+// フィールドBGM階層
+//                    ____ME(jingle
+//          ____EVENT(event,trainer...
+//  ____BASE(field
+//--------------------------------------------------------------
+typedef enum
+{
+  FSND_PUSHCOUNT_NONE = 0, ///<退避なし
+  FSND_PUSHCOUNT_BASEBGM = 1, ///<ベースBGM退避中
+  FSND_PUSHCOUNT_EVENTBGM, ///<イベントBGM退避中
+  FSND_PUSHCOUNT_OVER, ///<退避数オーバー
+}FSND_PUSHCOUNT;
 
 //======================================================================
 //  struct  
@@ -55,6 +70,7 @@ extern u32 FIELD_SOUND_GetFieldBGMNo(
 extern u32 FIELD_SOUND_GetTrainerEyeBgmNo( u32 trtype );
 
 //フィールドBGM BGM退避、復帰
+extern FSND_PUSHCOUNT FIELD_SOUND_GetBGMPushCount( const FIELD_SOUND *fsnd );
 extern void FIELD_SOUND_PushBGM( FIELD_SOUND *fsnd );
 extern void FIELD_SOUND_PopBGM( FIELD_SOUND *fsnd );
 extern void FIELD_SOUND_ForcePopBGM( FIELD_SOUND *fsnd );
