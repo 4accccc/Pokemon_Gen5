@@ -86,11 +86,11 @@
 // 座標に関する事
 //絵コンテ２番の移動の中心
 #define _POKEMON_PLAYER_CENTER_POSX _MCSS_POS_X(  0)   // 自分のポケモンが真ん中に移動する際のX
-#define _POKEMON_PLAYER_CENTER_POSY _MCSS_POS_Y(-28)   // 自分のポケモンが真ん中に移動する際のY
+#define _POKEMON_PLAYER_CENTER_POSY _MCSS_POS_Y(-23)   // 自分のポケモンが真ん中に移動する際のY
 #define _POKEMON_PLAYER_CENTER_POSZ _MCSS_POS_Z( 10)   // 自分のポケモンが真ん中に移動する際のZ
 
 #define _POKEMON_FRIEND_CENTER_POSX _MCSS_POS_X(  0)   // 相手のポケモンが真ん中に移動する際のX
-#define _POKEMON_FRIEND_CENTER_POSY _MCSS_POS_Y(-28)   // 相手のポケモンが真ん中に移動する際のY
+#define _POKEMON_FRIEND_CENTER_POSY _MCSS_POS_Y(-23)   // 相手のポケモンが真ん中に移動する際のY
 #define _POKEMON_FRIEND_CENTER_POSZ _MCSS_POS_Z(-10)   // 相手のポケモンが真ん中に移動する際のZ
 
 
@@ -149,7 +149,7 @@
 #define _POKMEON_SCALE_SIZE   (1.2)
 
 //ゆれる上下幅  大きいほど大きく揺れる
-#define _WAVE_NUM    (10)
+#define _WAVE_NUM    (8)
 
 //ゆれる間隔  大きいほど早く揺れる
-//#define _WAVE_TIME    (512)
+//#define _WAVE_TIME    (500)
