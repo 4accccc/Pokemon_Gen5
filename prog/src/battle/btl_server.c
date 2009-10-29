@@ -29,6 +29,7 @@
 
 #include "btl_server.h"
 
+#define SOGA_DEBUG  //暫定でsogaがデバッグした箇所
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
@@ -398,8 +399,45 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
       case SVFLOW_RESULT_POKE_CHANGE:
         BTL_Printf("入れ替えリクエストで終わった\n");
         if( server->giveupClientCnt ){
+          //2vs2or3vs3で場にポケモンが残っていても、
+          //空きがあって、控えがいないとgiveupClientCntが0以外になって戦闘終了してしまうので
+          //場のポケモンの数を数えて、正しく終われるようにする by soga
+#ifdef SOGA_DEBUG
+          int playerFront = 0;
+          int enemyFront = 0;
+          int pos;
+          const BTL_POKEPARAM*  bpp;
+
+          for( pos = BTLV_MCSS_POS_A ; pos <= BTLV_MCSS_POS_F ; pos++ )
+          { 
+            bpp = BTL_POKECON_GetFrontPokeDataConst( server->pokeCon, BTL_MAIN_ViewPosToBtlPos( server->mainModule, pos ) );
+            if( bpp )
+            { 
+              if( BPP_IsDead( bpp ) == FALSE )
+              { 
+                if( pos & 1 )
+                { 
+                  enemyFront++;
+                }
+                else
+                { 
+                  playerFront++;
+                }
+              }
+            }
+          }
+          if( ( playerFront ) && ( enemyFront ) )
+          { 
+            (*seq) = 0;
+          }
+          else
+          { 
+            (*seq) = 3;
+          }
+#else
           BTL_Printf("どちらか負け確定\n");
           (*seq) = 3;
+#endif
         }else{
           // 空き位置があり、入場可能なポケモンがいる場合
           GF_ASSERT( server->changePokeCnt );
