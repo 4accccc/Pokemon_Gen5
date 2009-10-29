@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-29T13:53:49"/>
+	<create user="matsumiya" host="W00207" date="2009-10-29T16:15:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="535"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="689"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -763,15 +763,19 @@
 　トレーナー同士の対話はポケモン勝負
 　こういう形式はかえって感情移入を阻害する</comment>
 		<language name="JPN" width="256">ほんに　メモが　はさんである……！▼
-わたしは　ナゾナゾが　だいすきです▼
-ポケモンの　けんきゅうと　おなじで
-わからないと　しりたい　ときたいと▽
-おもってしまいます</language>
+ジムリーダーである　わたしは
+なぞなぞが　だいすきです▼
+メモにも　なぞなぞが
+かかれたものが　あります▼
+そのばあい　なぞなぞを　とくと
+つぎの　ほんが　わかります</language>
 		<language name="JPN_KANJI" width="256">本に　メモが　挟んである……！▼
-私は　ナゾナゾが　大好きです▼
-ポケモンの　研究と　同じで
-分からないと　知りたい　解きたいと▽
-思ってしまいます</language>
+ジムリーダーである　私は
+なぞなぞが　大好きです▼
+メモにも　なぞなぞが
+書かかれものが　あります▼
+その場合　なぞなぞを　解くと
+次の　本が　わかります</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_04" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -834,12 +838,12 @@
 ポッチャマの　せいたい▼
 あるくのは　にがてで　こけたりするが
 ポッチャマの　プライドは　たかく▽　
-きにせず　どうどうと　むねを　はる▼</language>
+きにせず　どうどうと　むねをはる▼</language>
 		<language name="JPN_KANJI" width="256">本に　メモが　挟んである……！▼
 ポッチャマの　生態▼
 歩くのは　苦手で　こけたりするが
-ポッチャマの　プライドは　高く▽　
-気にせず　堂々と　胸を　張る▼</language>
+ポッチャマの　プライドは　高く▽
+気にせず　堂々と　胸を張る▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_08" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -867,15 +871,19 @@
 		<comment>「はじめての　ポケモン」
 この　ほんを　よみますか？</comment>
 		<language name="JPN" width="256">ほんに　メモが　はさんである……！▼
-わたしに　あう　じょうけんは　
+ジムリーダーと　たたかうには
 わたしが　すすめる　５さつの　ほんを▽
 ほんだなの　なかから　さがしだして▽
-じゅんばんに　よむことです</language>
+じゅんばんに　よむことです▼
+さいしょは　「ポケモン　えかきうた」
+このほんと　おなじ　たなに　あります</language>
 		<language name="JPN_KANJI" width="256">本に　メモが　挟んである……！▼
-私に会う　条件は　
+ジムリーダーと　闘うには
 私が薦める　５つの本を▽
 本棚から　探し出して▽
-順番に　読むことです</language>
+順番に　読むことです▼
+最初は　「ポケモン　えかきうた」
+この本と　同じ本棚に　あります</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_10" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -899,14 +907,7 @@
 
 	<row id="msg_c02gym0101_book_11" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>「３ばんどうろの　ぼうけん」
-この　ほんを　よみますか？
-
-※文章リライト済み
-　×私と会う～（誰のことかわかりにくい）
-　○ジムリーダーと闘う（本来の目的を明示）
-
-　×下さい
-　○ください</comment>
+この　ほんを　よみますか？</comment>
 		<language name="JPN" width="256">ほんに　メモが　はさんである……！▼
 ジムリーダーと　たたかうには
 わたしが　すすめる　５さつの　ほんを▽
@@ -916,7 +917,7 @@
 ほんだなの　ジャンルは▽
 よこの　れつで　ならんでいます</language>
 		<language name="JPN_KANJI" width="256">本に　メモが　挟んである……！▼
-ジムリーダーと　闘うには　
+ジムリーダーと　闘うには
 私が薦める　５つの本を▽
 本棚から　探し出して▽
 順番に　読むことです▼
