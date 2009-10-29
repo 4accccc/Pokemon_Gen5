@@ -38,8 +38,7 @@ typedef struct
   u16 zone_id;
   u8  gimmick_id;
   u32 dat_id; 
-} ENTRY_DATA;
-
+} ENTRY_DATA; 
 static const ENTRY_DATA entry_table[] = 
 {
   { ZONE_ID_C04R0601, FLD_GIMMICK_C04R0601, NARC_gate_elboard_zone_data_c04r0601_bin },
@@ -56,7 +55,13 @@ static const ENTRY_DATA entry_table[] =
   { ZONE_ID_H01R0201, FLD_GIMMICK_H01R0201, NARC_gate_elboard_zone_data_h01r0201_bin },
   { ZONE_ID_C03R0601, FLD_GIMMICK_C03R0601, NARC_gate_elboard_zone_data_c03r0601_bin },
 };
-// フィールドマップに対応するギミックIDを取得する
+//------------------------------------------------------------------------------------------
+/**
+ * @brief フィールドマップに対応するギミックIDを取得する
+ * @param fieldmap フィールドマップ
+ * @return 指定したゾーンに対応するギミックID
+ */
+//------------------------------------------------------------------------------------------
 static u8 GetGimmickID( FIELDMAP_WORK* fieldmap )
 {
   int i;
@@ -68,6 +73,10 @@ static u8 GetGimmickID( FIELDMAP_WORK* fieldmap )
       return entry_table[i].gimmick_id;
     }
   }
+
+  OS_Printf( "==============================================================\n" );
+  OS_Printf( "電光掲示板が登録されていないゾーンでギミックが動作しています。\n" );
+  OS_Printf( "==============================================================\n" );
   return 0;
 }
 
