@@ -20,8 +20,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_mapchange1
-_EVENT_DATA    ev_mapchange2
+_EVENT_DATA    ev_d04r0201_sandstream_1
 _EVENT_DATA_END
 
 
@@ -34,10 +33,6 @@ _EVENT_DATA_END
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
-EVENT_START ev_mapchange1
-	_MAP_CHANGE_SAND_STREAM( ZONE_ID_D04R0301, 48, 15 )
-EVENT_END
-
-EVENT_START ev_mapchange2
-	_MAP_CHANGE_SAND_STREAM( ZONE_ID_D04R0301, 48, 22 )
-EVENT_END
+EVENT_START ev_d04r0201_sandstream_1
+	_MAP_CHANGE_SAND_STREAM( ZONE_ID_D04R0301, 22, 17 )
+EVENT_END 

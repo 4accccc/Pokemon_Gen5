@@ -22,7 +22,6 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_mapchange1
 _EVENT_DATA    ev_mapchange2
-_EVENT_DATA    ev_mapchange3
 _EVENT_DATA_END
 
 
@@ -36,13 +35,9 @@ _EVENT_DATA_END
 /*                                                            */
 /**************************************************************/
 EVENT_START ev_mapchange1
-	_MAP_CHANGE_SAND_STREAM( ZONE_ID_D04R0401, 28, 20 )
+	_MAP_CHANGE_SAND_STREAM( ZONE_ID_D04R0401, 27, 9 )
 EVENT_END
 
 EVENT_START ev_mapchange2
-	_MAP_CHANGE_SAND_STREAM( ZONE_ID_D04R0401, 34, 24 )
-EVENT_END
-
-EVENT_START ev_mapchange3
-	_MAP_CHANGE_SAND_STREAM( ZONE_ID_D04R0401, 44, 28 )
-EVENT_END
+	_MAP_CHANGE_SAND_STREAM( ZONE_ID_D04R0401, 21, 19 )
+EVENT_END 
