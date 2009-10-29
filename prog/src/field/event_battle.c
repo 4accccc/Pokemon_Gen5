@@ -163,7 +163,6 @@ GMEVENT * EVENT_TrainerBattle(
   }
 
   BEW_Initialize( bew, gsys, bp );
-  bew->bgm_pushed_flag = TRUE; //視線イベントBGM時に退避済み
   bew->is_sub_event = TRUE;   //スクリプトから呼ばれる＝トップレベルのイベントでない
   if ( (flags & SCR_BATTLE_MODE_NOLOSE) != 0 )
   {
@@ -194,14 +193,25 @@ static GMEVENT_RESULT fieldBattleEvent(
   GAMESYS_WORK * gsys = bew->gsys;
   GAMEDATA * gamedata = bew->gamedata;
   FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FIELD_SOUND * fsnd = GAMEDATA_GetFieldSound( gamedata );
 
   switch (*seq) {
   case 0:
     // 戦闘用ＢＧＭセット
-    if( bew->bgm_pushed_flag == FALSE ){
-      FIELD_SOUND_PushBGM( GAMEDATA_GetFieldSound( gamedata ) );
-      bew->bgm_pushed_flag = TRUE;
+    switch ( FIELD_SOUND_GetBGMPushCount( fsnd ) )
+    {
+    case FSND_PUSHCOUNT_NONE: 
+      //通常フィールドBGM階層をPush
+      FIELD_SOUND_PushBGM( fsnd );
+      break;
+    case FSND_PUSHCOUNT_BASEBGM:
+      //イベントBGM階層なので何もしない（ここにくるまでにPushされている）
+      break;
+    case FSND_PUSHCOUNT_EVENTBGM:
+    case FSND_PUSHCOUNT_OVER:
+      GF_ASSERT_MSG(0, "EventBattle:BGM階層を重ねすぎています！！\n");
     }
+    bew->bgm_pushed_flag = TRUE;
     PMSND_PlayBGM( bew->battle_param->musicDefault );
     //エンカウントエフェクト
     GMEVENT_CallEvent( event,
@@ -237,7 +247,7 @@ static GMEVENT_RESULT fieldBattleEvent(
     break;
   case 6:
     if (bew->bgm_pushed_flag == TRUE) {
-      FIELD_SOUND_PopBGM( GAMEDATA_GetFieldSound( gamedata ) );
+      FIELD_SOUND_PopBGM( fsnd );
       bew->bgm_pushed_flag = FALSE;
     }
 
@@ -312,6 +322,11 @@ BOOL FIELD_BATTLE_IsLoseResult(BtlResult result, BtlCompetitor competitor)
     { RES_WIN,    RES_ERR,    RES_WIN },    //BTL_RESULT_RUN_ENEMY
     { RES_WIN,    RES_ERR,    RES_ERR },    //BTL_RESULT_CAPTURE
   };
+
+  SDK_COMPILER_ASSERT( BTL_COMPETITOR_WILD == 0 );
+  SDK_COMPILER_ASSERT( BTL_COMPETITOR_TRAINER == 1 );
+  SDK_COMPILER_ASSERT( BTL_COMPETITOR_COMM == 2 );
+  SDK_COMPILER_ASSERT( BTL_RESULT_CAPTURE == 5 );
 
   u8 lose_flag;
   GF_ASSERT_MSG( result <= BTL_RESULT_CAPTURE, "想定外のBtlResult(%d)\n", result );
