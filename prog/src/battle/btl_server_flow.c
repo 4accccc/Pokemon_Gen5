@@ -5119,6 +5119,9 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_
       enemyLv = BPP_GetValue( deadPoke, BPP_LEVEL );
       result[i].exp = getexp_calc_adjust_level( result[i].exp, myLv, enemyLv );
 
+#ifndef SOGA_DEBUG
+      //現状ポケモンに正しいIDと親の名前がはいっていないため、常に「おおめに」になってしまうため、
+      //不本意ながら10末Verではこの処理を外しておく
       // 他人が親ならボーナス
       if( !PP_IsMatchOya(pp, status) )
       {
@@ -5130,6 +5133,7 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_
         result[i].exp = BTL_CALC_MulRatio( result[i].exp, ratio );
         result[i].fBonus = TRUE;
       }
+#endif
       // しあわせタマゴ持ってたらボーナス
       if( BPP_GetItem(bpp) == ITEM_SIAWASETAMAGO ){
         result[i].exp = BTL_CALC_MulRatio( result[i].exp, FX32_CONST(1.5f) );
