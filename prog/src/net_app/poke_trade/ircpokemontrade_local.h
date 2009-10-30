@@ -84,6 +84,7 @@ typedef enum
 #define _BRIGHTNESS_SYNC (2)  // フェードのＳＹＮＣは要調整
 
 
+
 //パレットの定義はあっても良いと
 #define _FONT_PARAM_LETTER_BLUE (0x5)
 #define _FONT_PARAM_SHADOW_BLUE (0x6)
@@ -111,6 +112,8 @@ typedef enum
 #define PLTID_OBJ_POKEITEM_S (_OBJPLT_POKEICON_GRAY+_OBJPLT_COMMON+_OBJPLT_BOX+_OBJPLT_POKEICON+1) //15本目
 
 
+#define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット ef0
+#define _STATUS_MSG_PAL   (11)  // メッセージフォント
 //メッセージ系は上下共通 BG
 #define _BUTTON_MSG_PAL   (14)  // メッセージフォント
 #define _BUTTON_WIN_PAL   (15)  // ウインドウ
@@ -412,6 +415,7 @@ struct _POKEMON_TRADE_WORK{
   GFL_ARCUTIL_TRANSINFO subchar;
   GFL_ARCUTIL_TRANSINFO subchar1;
   GFL_ARCUTIL_TRANSINFO subchar2;
+  GFL_ARCUTIL_TRANSINFO subcharMain;
   u32 cellRes[CEL_RESOURCE_MAX];
 
   //	GAMESYS_WORK* pGameSys;
@@ -429,6 +433,7 @@ struct _POKEMON_TRADE_WORK{
   u32 pokeIconNcgRes[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
   GFL_CLWK* pokeIcon[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
   GFL_CLWK* markIcon[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
+  GFL_CLWK* searchIcon[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
   u32 pokeIconNo[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
   u32 pokeIconForm[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
   u8 pokeIconLine[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
@@ -454,7 +459,7 @@ struct _POKEMON_TRADE_WORK{
   GFL_CLWK* pSelectCLWK;   ///<選んでるポケモンCLACT   こちらは何を選択しているかに使う
   GFL_CLWK* pCatchCLWK;   ///<つかんでるポケモンCLACT  こちらはタッチ時に移動するために使う
   GFL_CLACTPOS aCatchOldPos;  //つかんでるポケモンの前の位置
-  
+  BOOL bStatusDisp;
 
   int MainObjCursorLine;   //OBJカーソルライン
   int MainObjCursorIndex;  //OBJカーソルインデックス
@@ -575,6 +580,9 @@ extern BOOL POKETRADE_IsMainCursorDispIn(POKEMON_TRADE_WORK* pWork,int* line);
 extern int POKETRADE_Line2RingLineIconGet(int line);
 extern void POKETRADE_ToolBarInit(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKEMONTRADE_IsPokeLanguageMark(int monsno,int moji);
+extern void IRC_POKETRADE_StatusWindowMessagePaletteTrans(POKEMON_TRADE_WORK* pWork, int palno, int palType);
+extern void IRC_POKETRADE_GraphicInitSubDispStatusDisp(POKEMON_TRADE_WORK* pWork);
+extern void IRC_POKETRADE_GraphicEndSubDispStatusDisp(POKEMON_TRADE_WORK* pWork);
 
 
 #if _TRADE_DEBUG

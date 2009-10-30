@@ -13,3 +13,4 @@
 #define    NANR_wb_trade_obj01_CellAnime7    7 // 
 #define    NANR_wb_trade_obj01_CellAnime8    8 // 
 #define    NANR_wb_trade_obj01_CellAnime9    9 // 
+#define    NANR_wb_trade_obj01_CellAnime10    10 // 

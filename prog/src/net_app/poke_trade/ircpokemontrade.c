@@ -151,11 +151,16 @@ static void _vectorUpMath(POKEMON_TRADE_WORK *pWork)
         pWork->bUpVec = FALSE;
       }
       if(pWork->pCatchCLWK){
-        GFL_CLACTPOS pos;
-        GFL_CLACT_WK_GetPos( pWork->pCatchCLWK, &pos, CLSYS_DRAW_SUB);
-        if(GFL_STD_Abs(pos.x - x)+GFL_STD_Abs(pos.y - y) < 10){
+        //GFL_CLACTPOS pos;
+        //GFL_CLACT_WK_GetPos( pWork->pCatchCLWK, &pos, CLSYS_DRAW_SUB);
+//        aCatchOldPos
+        if(GFL_STD_Abs(pWork->aCatchOldPos.x - x)+GFL_STD_Abs(pWork->aCatchOldPos.y - y) < 10){
           pWork->bUpVec = FALSE;
         }
+        if(GFL_STD_Abs(pWork->aCatchOldPos.x - x) > 6  && GFL_STD_Abs(pWork->aCatchOldPos.y - y) > 6){
+          pWork->bStatusDisp = FALSE;
+        }
+
       }
       if((y >=  2*8) && ((18*8) > y)){
         pWork->x = x;
@@ -901,21 +906,22 @@ static void _changePokemonMyStDisp(POKEMON_TRADE_WORK* pWork,int pageno,int left
   int xwinpos[]={0,16};
   int xdotpos[]={0,128};
   {
-    GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
-                                  0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
-    GFL_FONTSYS_SetColor( FBMP_COL_WHITE, FBMP_COL_WHITE_SDW, 0x0 );
+ //   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
+   //                               0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
+
+    IRC_POKETRADE_StatusWindowMessagePaletteTrans(pWork,_STATUS_MSG_PAL,PALTYPE_SUB_BG);
+
     if(pWork->MyInfoWin){
       GFL_BMPWIN_Delete(pWork->MyInfoWin);
     }
     pWork->MyInfoWin =
       GFL_BMPWIN_Create(GFL_BG_FRAME2_S,
-                        xwinpos[leftright], 0, 16 , 18, _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+                        xwinpos[leftright], 0, 16 , 18, _STATUS_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
   }
+  GFL_FONTSYS_SetColor( 0xe, 0xf, 0x0 );
   bEgg = PP_Get(pp,ID_PARA_tamago_flag,NULL);
 
   if(pageno == 0){  //‚±‚¤‚°‚«‚Æ‚©
-    TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, TRUE);
-    TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, FALSE);
 
     _pokeNickNameMsgDisp(pp,pWork->MyInfoWin, 32, 0, bEgg,pWork);
     if(bEgg==FALSE){
@@ -933,26 +939,18 @@ static void _changePokemonMyStDisp(POKEMON_TRADE_WORK* pWork,int pageno,int left
     }
   }
   else{
-    TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, FALSE);
-    TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, TRUE);
     UITemplate_BALLICON_DeleteCLWK(&pWork->aBallIcon[UI_BALL_SUBSTATUS]);
     IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
     IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
     if(bEgg==FALSE){
-      GFL_FONTSYS_SetColor( FBMP_COL_BLUE, FBMP_COL_BLUE_SDW, 0 );
       _pokeTechniqueMsgDisp(pp, pWork->MyInfoWin, 2*8,0, pWork);
-      GFL_FONTSYS_SetColor( FBMP_COL_WHITE, FBMP_COL_WHITE_SDW, 0x0 );
 
       _pokeTechniqueListMsgDisp(pp, pWork->MyInfoWin, 2*8,2*8, pWork);
       GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_37, pWork->pStrBuf );
-      GFL_FONTSYS_SetColor( FBMP_COL_BLUE, FBMP_COL_BLUE_SDW, 0 );
       PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 2*8, 10*8, pWork->pStrBuf, pWork->pFontHandle);
-      GFL_FONTSYS_SetColor( FBMP_COL_WHITE, FBMP_COL_WHITE_SDW, 0x0 );
       _pokePersonalMsgDisp(pp, pWork->MyInfoWin, 2*8, 12*8, pWork);
-      GFL_FONTSYS_SetColor( FBMP_COL_BLUE, FBMP_COL_BLUE_SDW, 0 );
       GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_38, pWork->pStrBuf );
       PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 2*8, 14*8, pWork->pStrBuf, pWork->pFontHandle);
-      GFL_FONTSYS_SetColor( FBMP_COL_WHITE, FBMP_COL_WHITE_SDW, 0x0 );
       _pokeAttributeMsgDisp(pp, pWork->MyInfoWin, 2*8, 16*8, pWork);
     }
   }
@@ -1111,7 +1109,7 @@ static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
   GFL_UI_TP_HITTBL tp_data[]={
     {_POKEMON_SELECT1_CELLY-8,_POKEMON_SELECT1_CELLY+16,_POKEMON_SELECT1_CELLX-8, _POKEMON_SELECT1_CELLX+16},
     {_POKEMON_SELECT2_CELLY-8,_POKEMON_SELECT2_CELLY+16,_POKEMON_SELECT2_CELLX-8, _POKEMON_SELECT2_CELLX+16},
-    {0,8*24,0,32*8-1},
+//    {0,8*24,0,32*8-1},
     {GFL_UI_TP_HIT_END,0,0,0},
   };
   GFL_BG_SetVisible( GFL_BG_FRAME3_M , TRUE );
@@ -1150,9 +1148,6 @@ static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
   default:
     break;
   }
-  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL){ /// –ß‚éˆ—
-    bReturn=TRUE;
-  }
 
   if(bReturn){
     // Á‚·
@@ -1170,7 +1165,7 @@ static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
     GFL_BMPWIN_ClearScreen(pWork->MyInfoWin);
     GFL_BMPWIN_Delete(pWork->MyInfoWin);
     pWork->MyInfoWin = NULL;
-
+    IRC_POKETRADE_GraphicEndSubDispStatusDisp(pWork);
     IRC_POKETRADE_GraphicInitMainDisp(pWork);
     IRC_POKETRADEDEMO_SetModel( pWork, REEL_PANEL_OBJECT);
     GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
@@ -1201,26 +1196,34 @@ static void _pokemonStatusStart(POKEMON_TRADE_WORK* pWork)
   _changePokemonStatusDisp(pWork);
 
   IRC_POKETRADE_SetMainStatusBG(pWork);  // ”wŒiBG‚Æ
+  IRC_POKETRADE_GraphicInitSubDispStatusDisp(pWork);
   GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+  GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
 
-  {
-    G2S_SetWnd0InsidePlane(
+  G2S_BlendNone();
+  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1| GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_OBJ , 8 );
+ {
+    G2S_SetWnd1InsidePlane(
       GX_WND_PLANEMASK_OBJ,
       FALSE );
+    G2S_SetWnd1Position( 128-8*10, 0, 128+8*10, 33 );
+    G2S_SetWnd0InsidePlane(
+//      GX_WND_PLANEMASK_BG0|
+      GX_WND_PLANEMASK_OBJ,
+      FALSE );
+    G2S_SetWnd0Position( 1, 8*20, 0x0, 192 );
     G2S_SetWndOutsidePlane(
-      GX_WND_PLANEMASK_BG0|
       GX_WND_PLANEMASK_BG1|
       GX_WND_PLANEMASK_BG2|
       GX_WND_PLANEMASK_BG3|
       GX_WND_PLANEMASK_OBJ,
       TRUE );
-
-
-    G2S_SetWnd0Position( 128-8*10, 0, 128+8*10, 33 );
-    GXS_SetVisibleWnd( GX_WNDMASK_W0 );
+    GXS_SetVisibleWnd( GX_WNDMASK_W0|GX_WNDMASK_W1 );
   }
+  //G2S_BlendNone();
+  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_RETURN ,TRUE );
 
-
+  
   _CHANGE_STATE(pWork, _pokemonStatusWait);
 
 }
@@ -1260,6 +1263,7 @@ static void _networkFriendsStandbyWait2(POKEMON_TRADE_WORK* pWork)
     GFL_BG_SetVisible( GFL_BG_FRAME2_M , TRUE );
     GFL_BG_SetVisible( GFL_BG_FRAME3_M , TRUE );
   }
+  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, FALSE);
 
   _CHANGE_STATE(pWork,_changePokemonSendData);
 
@@ -1378,7 +1382,7 @@ static void _changeMenuWait(POKEMON_TRADE_WORK* pWork)
 static void _changeMenuOpen(POKEMON_TRADE_WORK* pWork)
 {
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE );
-  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
+  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, FALSE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, FALSE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_RETURN ,FALSE );
@@ -1387,7 +1391,7 @@ static void _changeMenuOpen(POKEMON_TRADE_WORK* pWork)
 
   if( _PokemonsetAndSendData(pWork) )
   {
-    int msg[]={POKETRADE_STR_01,POKETRADE_STR_02};
+    int msg[]={POKETRADE_STR_01,POKETRADE_STR_06};
     IRC_POKETRADE_AppMenuOpen(pWork,msg,elementof(msg));
 
     G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 8 );
@@ -1564,6 +1568,8 @@ static void _dispSubState(POKEMON_TRADE_WORK* pWork)
 
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, FALSE);
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE);
+  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, TRUE);
+  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, TRUE);
 
   {
     int msg[]={POKETRADE_STR_03,POKETRADE_STR_02};
@@ -1977,7 +1983,7 @@ static void _startSearchMojiState(POKEMON_TRADE_WORK* pWork)
   GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_52, pWork->pMessageStrBuf );
   IRC_POKETRADE_MessageWindowOpen(pWork);
 
-  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE );
+//  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE );
 
   G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 8 );
 
@@ -1995,7 +2001,7 @@ static void _startSearchMojiState(POKEMON_TRADE_WORK* pWork)
       TRUE );
 
 
-    G2S_SetWnd0Position( 0, 8*21, 8*32-1, 8*24-1 );
+    G2S_SetWnd0Position( 0, 8*20, 0xff, 192 );
     GXS_SetVisibleWnd( GX_WNDMASK_W0 );
   }
   
@@ -2262,7 +2268,7 @@ static void _touchState(POKEMON_TRADE_WORK* pWork)
 
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
-  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
+//  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, FALSE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, FALSE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_RETURN ,TRUE );
@@ -2334,7 +2340,7 @@ static void _touchStateCommon(POKEMON_TRADE_WORK* pWork)
   
 
   if(IsTouchCLACTPosition(pWork,FALSE)){
-    //bDecided=TRUE;
+    pWork->bStatusDisp=TRUE;
   }
 
 
@@ -2357,10 +2363,13 @@ static void _touchStateCommon(POKEMON_TRADE_WORK* pWork)
        _PokemonsetAndSendData(pWork);
 
     }
-    else if(pWork->touchON && pWork->pCatchCLWK ){
+    else if(pWork->touchON && pWork->pCatchCLWK && pWork->bStatusDisp){
       bDecided = TRUE;
       pWork->underSelectBoxno = pWork->workBoxno;
       pWork->underSelectIndex = pWork->workPokeIndex;
+    }
+    else{
+      _CatchPokemonPositionRewind(pWork);
     }
     pWork->touchON = FALSE;
     pWork->bUpVec = FALSE;
@@ -2479,7 +2488,7 @@ void POKETRADE_ToolBarInit(POKEMON_TRADE_WORK* pWork)
     },
     {
       TOUCHBAR_ICON_CUR_R,
-      {	TOUCHBAR_ICON_X_00, TOUCHBAR_ICON_Y },
+      {	TOUCHBAR_ICON_X_01, TOUCHBAR_ICON_Y },
     },
     {
       TOUCHBAR_ICON_CUTSOM1,
@@ -2584,7 +2593,7 @@ static void _dispSystemHeapInit(POKEMON_TRADE_WORK* pWork)
   IRC_POKETRADE_3DGraphicSetUp( pWork );
 
   //ƒZƒ‹ŒnƒVƒXƒeƒ€‚Ìì¬
-  pWork->cellUnit = GFL_CLACT_UNIT_Create( 240 , 0 , pWork->heapID );
+  pWork->cellUnit = GFL_CLACT_UNIT_Create( 340 , 0 , pWork->heapID );
 
   pWork->mcssSys = MCSS_Init( 4 , pWork->heapID );
   MCSS_SetTextureTransAdrs( pWork->mcssSys , 0x30000 );

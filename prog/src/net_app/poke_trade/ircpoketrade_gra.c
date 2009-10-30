@@ -29,9 +29,9 @@
 #include "ircbattle.naix"
 #include "trade.naix"
 #include "tradedemo.naix"
+#include "app_menu_common.naix"
 
 
-#define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット
 
 
 #define _CLACT_SOFTPRI_POKESEL  (2)
@@ -130,6 +130,54 @@ void IRC_POKETRADE_MainGraphicExit(POKEMON_TRADE_WORK* pWork)
 
 //------------------------------------------------------------------
 /**
+ * @brief   ステータス表示時の下画面初期化
+ * @param   POKEMON_TRADE_WORK   ワークポインタ
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+void IRC_POKETRADE_GraphicInitSubDispStatusDisp(POKEMON_TRADE_WORK* pWork)
+{
+	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
+
+	//GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_trade_wb_trade_bg_NCLR,
+		//																PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
+
+
+	// サブ画面BGキャラ転送
+  pWork->subcharMain =
+    GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_trade_wb_trade_bg01_NCGR,
+                                                 GFL_BG_FRAME0_S, 0, 0, pWork->heapID);
+
+  GFL_ARCHDL_UTIL_TransVramScreen(p_handle,NARC_trade_wb_trade_bg01_touch_NSCR,GFL_BG_FRAME0_S, 0,0,0,pWork->heapID);
+
+	GFL_ARC_CloseDataHandle( p_handle );
+
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   ステータス表示時の下画面開放
+ * @param   POKEMON_TRADE_WORK   ワークポインタ
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+void IRC_POKETRADE_GraphicEndSubDispStatusDisp(POKEMON_TRADE_WORK* pWork)
+{
+  if(pWork->subcharMain){
+    GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subcharMain),
+                             GFL_ARCUTIL_TRANSINFO_GetSize( pWork->subcharMain ));
+    
+  }
+
+  pWork->subcharMain = 0;
+}
+
+
+
+//------------------------------------------------------------------
+/**
  * @brief   初期化時の下画面グラフィック初期化
  * @param   POKEMON_TRADE_WORK   ワークポインタ
  * @retval  none
@@ -165,6 +213,8 @@ void IRC_POKETRADE_GraphicInitSubDisp(POKEMON_TRADE_WORK* pWork)
 			pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID );
 
 }
+
+
 
 //------------------------------------------------------------------
 /**
@@ -671,10 +721,23 @@ void IRC_POKETRADE_CreatePokeIconResource(POKEMON_TRADE_WORK* pWork)
                                                         pWork->cellRes[PAL_SCROLLBAR],
                                                         pWork->cellRes[ANM_SCROLLBAR],
                                                         &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+        cellInitData.anmseq = 10;
+        cellInitData.softpri = _CLACT_SOFTPRI_SELECT;
+        pWork->searchIcon[line][i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                                        pWork->cellRes[CHAR_SCROLLBAR],
+                                                        pWork->cellRes[PAL_SCROLLBAR],
+                                                        pWork->cellRes[ANM_SCROLLBAR],
+                                                        &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+
+
+        
 
         GFL_CLACT_WK_SetAutoAnmFlag( pWork->pokeIcon[line][i] , FALSE );
         GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[line][i], FALSE );
         GFL_CLACT_WK_SetDrawEnable( pWork->markIcon[line][i], FALSE );
+        GFL_CLACT_WK_SetAutoAnmFlag( pWork->markIcon[line][i] , TRUE );
+        GFL_CLACT_WK_SetDrawEnable( pWork->searchIcon[line][i], FALSE );
+        GFL_CLACT_WK_SetAutoAnmFlag( pWork->searchIcon[line][i] , TRUE );
       }
     }
     GFL_ARC_CloseDataHandle(arcHandlePoke);
@@ -703,6 +766,10 @@ static void _deletePokeIconResource(POKEMON_TRADE_WORK* pWork, int line)
 		if(pWork->markIcon[line][i]){
 			GFL_CLACT_WK_Remove(pWork->markIcon[line][i]);
 			pWork->markIcon[line][i]=NULL;
+		}
+		if(pWork->searchIcon[line][i]){
+			GFL_CLACT_WK_Remove(pWork->searchIcon[line][i]);
+			pWork->searchIcon[line][i]=NULL;
 		}
 		if(pWork->pokeIconNcgRes[line][i]){
 			GFL_CLGRP_CGR_Release(pWork->pokeIconNcgRes[line][i]);
@@ -901,7 +968,7 @@ static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxDa
         GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[k][i], TRUE );
       }
       if(!PPP_Get(ppp,ID_PARA_tamago_flag,NULL) && _IsPokeLanguageMark(pWork,monsno)){
-        GFL_CLACT_WK_SetDrawEnable( pWork->markIcon[k][i], TRUE );
+        GFL_CLACT_WK_SetDrawEnable( pWork->searchIcon[k][i], TRUE );
       }
     }
   }
@@ -991,6 +1058,7 @@ void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork 
     for(j=0;j<_LING_LINENO_MAX;j++){
       for(i=0;i<BOX_VERTICAL_NUM;i++){
         GFL_CLACT_WK_SetDrawEnable(pWork->markIcon[j][i],FALSE);
+        GFL_CLACT_WK_SetDrawEnable(pWork->searchIcon[j][i],FALSE);
       }
     }
 
@@ -1056,6 +1124,7 @@ static void IRC_POKETRADE_PokeIcomPosSet(POKEMON_TRADE_WORK* pWork)
       GFL_CLACT_WK_SetPos(pWork->pokeIcon[no][i], &apos, CLSYS_DRAW_SUB);
       apos.y = y + 3;
       GFL_CLACT_WK_SetPos(pWork->markIcon[no][i], &apos, CLSYS_DRAW_SUB);
+      GFL_CLACT_WK_SetPos(pWork->searchIcon[no][i], &apos, CLSYS_DRAW_SUB);
     }
   }
 }
@@ -2068,3 +2137,28 @@ void IRC_POKETRADE_PokeStatusIconReset(POKEMON_TRADE_WORK* pWork)
     IRC_POKETRADE_ItemIconReset(pIM);
   }
 }
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモンステータスウインドウ用のパレットを合成する
+ * @param   POKEMON_TRADE_WORK
+ * @param   palno      パレットを送る番号
+ * @param   palType   パレット転送タイプ MAINかSUB
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void IRC_POKETRADE_StatusWindowMessagePaletteTrans(POKEMON_TRADE_WORK* pWork, int palno, int palType)
+{
+
+  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, palType,
+                                0x20*palno, 0x20, pWork->heapID);
+  GFL_ARC_UTIL_TransVramPaletteEx(APP_COMMON_GetArcId() ,
+                                  NARC_app_menu_common_task_menu_NCLR , palType,
+                                  0xe*2 ,0x20*palno+0xe*2, 2*2 ,pWork->heapID);
+  
+}
+
+
