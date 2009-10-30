@@ -1510,11 +1510,8 @@ static void BPL_P3_LvPut( BPLIST_WORK * wk, u32 pos )
 	STRBUF * str;
 	STRBUF * exp;
 	u16	px;
-	u16	swap;
 
 	pd   = &wk->poke[pos];
-//	swap = WIN_P3_NAME_S * wk->bmp_swap;
-	swap = 0;
 
 	// 「Lv.」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_000 );
@@ -1530,9 +1527,9 @@ static void BPL_P3_LvPut( BPLIST_WORK * wk, u32 pos )
 		wk->wset, 0, pd->lv, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
 	WORDSET_ExpandStr( wk->wset, exp, str );
 //	PRINTSYS_PrintQueColor(
-//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_LVNUM+swap].win), 0, 0, exp, wk->dat->font, FCOL_P13WN );
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_LVNUM].win), 0, 0, exp, wk->dat->font, FCOL_P13WN );
 	PRINT_UTIL_PrintColor(
-		&wk->add_win[WIN_P3_LVNUM+swap], wk->que, 0, 0, exp, wk->dat->font, FCOL_P13WN );
+		&wk->add_win[WIN_P3_LVNUM], wk->que, 0, 0, exp, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 	// 「つぎのレベルまで」
@@ -1554,23 +1551,23 @@ static void BPL_P3_LvPut( BPLIST_WORK * wk, u32 pos )
 			wk->wset, 0, 0, 6, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
 	}
 	WORDSET_ExpandStr( wk->wset, exp, str );
-	px = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_NEXTNUM+swap].win ) * 8
+	px = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_NEXTNUM].win ) * 8
 			- PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
 //	PRINTSYS_PrintQueColor(
-//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_NEXTNUM+swap].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_NEXTNUM].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
 	PRINT_UTIL_PrintColor(
-		&wk->add_win[WIN_P3_NEXTNUM+swap], wk->que, px, 0, exp, wk->dat->font, FCOL_P13BKN );
+		&wk->add_win[WIN_P3_NEXTNUM], wk->que, px, 0, exp, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
 //	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_LV] );
-//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_LVNUM+swap] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_LVNUM] );
 //	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_NEXT] );
-//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_NEXTNUM+swap] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_NEXTNUM] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_LV] );
-//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_LVNUM+swap] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_LVNUM] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_NEXT] );
-//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_NEXTNUM+swap] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_NEXTNUM] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1588,13 +1585,10 @@ static void BPL_P3_PowPut( BPLIST_WORK * wk, u32 pos )
 	BPL_POKEDATA * pd;
 	STRBUF * str;
 	STRBUF * exp;
-	u16	swap;
 	u8	siz;
 	u8	px;
 
 	pd   = &wk->poke[pos];
-//	swap = WIN_P3_NAME_S * wk->bmp_swap;
-	swap = 0;
 
 	// 「こうげき」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_400 );
@@ -1609,18 +1603,18 @@ static void BPL_P3_PowPut( BPLIST_WORK * wk, u32 pos )
 		wk->wset, 0, pd->pow, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
 	WORDSET_ExpandStr( wk->wset, exp, str );
 	siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
-	px  = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_POWNUM+swap].win ) * 8 - siz;
+	px  = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_POWNUM].win ) * 8 - siz;
 //	PRINTSYS_PrintQueColor(
-//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_POWNUM+swap].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_POWNUM].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
 	PRINT_UTIL_PrintColor(
-		&wk->add_win[WIN_P3_POWNUM+swap], wk->que, px, 0, exp, wk->dat->font, FCOL_P13BKN );
+		&wk->add_win[WIN_P3_POWNUM], wk->que, px, 0, exp, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
 //	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_POW] );
-//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_POWNUM+swap] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_POWNUM] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_POW] );
-//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_POWNUM+swap] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_POWNUM] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1638,13 +1632,10 @@ static void BPL_P3_DefPut( BPLIST_WORK * wk, u32 pos )
 	BPL_POKEDATA * pd;
 	STRBUF * str;
 	STRBUF * exp;
-	u16	swap;
 	u8	siz;
 	u8	px;
 
 	pd   = &wk->poke[pos];
-//	swap = WIN_P3_NAME_S * wk->bmp_swap;
-	swap = 0;
 
 	// 「ぼうぎょ」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_500 );
@@ -1660,18 +1651,18 @@ static void BPL_P3_DefPut( BPLIST_WORK * wk, u32 pos )
 		wk->wset, 0, pd->def, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
 	WORDSET_ExpandStr( wk->wset, exp, str );
 	siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
-	px  = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_DEFNUM+swap].win ) * 8 - siz;
+	px  = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_DEFNUM].win ) * 8 - siz;
 //	PRINTSYS_PrintQueColor(
-//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_DEFNUM+swap].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_DEFNUM].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
 	PRINT_UTIL_PrintColor(
-		&wk->add_win[WIN_P3_DEFNUM+swap], wk->que, px, 0, exp, wk->dat->font, FCOL_P13BKN );
+		&wk->add_win[WIN_P3_DEFNUM], wk->que, px, 0, exp, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
 //	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_DEF] );
-//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_DEFNUM+swap] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_DEFNUM] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_DEF] );
-//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_DEFNUM+swap] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_DEFNUM] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1689,13 +1680,10 @@ static void BPL_P3_AgiPut( BPLIST_WORK * wk, u32 pos )
 	BPL_POKEDATA * pd;
 	STRBUF * str;
 	STRBUF * exp;
-	u16	swap;
 	u8	siz;
 	u8	px;
 
 	pd   = &wk->poke[pos];
-//	swap = WIN_P3_NAME_S * wk->bmp_swap;
-	swap = 0;
 
 	// 「すばやさ」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_800 );
@@ -1711,18 +1699,18 @@ static void BPL_P3_AgiPut( BPLIST_WORK * wk, u32 pos )
 		wk->wset, 0, pd->agi, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
 	WORDSET_ExpandStr( wk->wset, exp, str );
 	siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
-	px  = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_AGINUM+swap].win ) * 8 - siz;
+	px  = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_AGINUM].win ) * 8 - siz;
 //	PRINTSYS_PrintQueColor(
-//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_AGINUM+swap].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_AGINUM].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
 	PRINT_UTIL_PrintColor(
-		&wk->add_win[WIN_P3_AGINUM+swap], wk->que, px, 0, exp, wk->dat->font, FCOL_P13BKN );
+		&wk->add_win[WIN_P3_AGINUM], wk->que, px, 0, exp, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
 //	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_AGI] );
-//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_AGINUM+swap] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_AGINUM] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_AGI] );
-//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_AGINUM+swap] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_AGINUM] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1740,13 +1728,10 @@ static void BPL_P3_SppPut( BPLIST_WORK * wk, u32 pos )
 	BPL_POKEDATA * pd;
 	STRBUF * str;
 	STRBUF * exp;
-	u16	swap;
 	u8	siz;
 	u8	px;
 
 	pd   = &wk->poke[pos];
-//	swap = WIN_P3_NAME_S * wk->bmp_swap;
-	swap = 0;
 
 	// 「とくこう」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_600 );
@@ -1762,18 +1747,18 @@ static void BPL_P3_SppPut( BPLIST_WORK * wk, u32 pos )
 		wk->wset, 0, pd->spp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
 	WORDSET_ExpandStr( wk->wset, exp, str );
 	siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
-	px  = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_SPPNUM+swap].win ) * 8 - siz;
+	px  = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_SPPNUM].win ) * 8 - siz;
 //	PRINTSYS_PrintQueColor(
-//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPPNUM+swap].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPPNUM].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
 	PRINT_UTIL_PrintColor(
-		&wk->add_win[WIN_P3_SPPNUM+swap], wk->que, px, 0, exp, wk->dat->font, FCOL_P13BKN );
+		&wk->add_win[WIN_P3_SPPNUM], wk->que, px, 0, exp, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
 //	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_SPP] );
-//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_SPPNUM+swap] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_SPPNUM] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_SPP] );
-//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_SPPNUM+swap] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_SPPNUM] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1791,13 +1776,10 @@ static void BPL_P3_SpdPut( BPLIST_WORK * wk, u32 pos )
 	BPL_POKEDATA * pd;
 	STRBUF * str;
 	STRBUF * exp;
-	u16	swap;
 	u8	siz;
 	u8	px;
 
 	pd   = &wk->poke[pos];
-//	swap = WIN_P3_NAME_S * wk->bmp_swap;
-	swap = 0;
 
 	// 「とくぼう」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_700 );
@@ -1813,18 +1795,18 @@ static void BPL_P3_SpdPut( BPLIST_WORK * wk, u32 pos )
 		wk->wset, 0, pd->spd, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
 	WORDSET_ExpandStr( wk->wset, exp, str );
 	siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
-	px  = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_SPDNUM+swap].win ) * 8 - siz;
+	px  = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_SPDNUM].win ) * 8 - siz;
 //	PRINTSYS_PrintQueColor(
-//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPDNUM+swap].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPDNUM].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
 	PRINT_UTIL_PrintColor(
-		&wk->add_win[WIN_P3_SPDNUM+swap], wk->que, px, 0, exp, wk->dat->font, FCOL_P13BKN );
+		&wk->add_win[WIN_P3_SPDNUM], wk->que, px, 0, exp, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
 //	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_SPD] );
-//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_SPDNUM+swap] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_SPDNUM] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_SPD] );
-//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_SPDNUM+swap] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_SPDNUM] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1844,11 +1826,8 @@ static void BPL_P3_HPPut( BPLIST_WORK * wk, u32 pos )
 	STRBUF * exp;
 	u32	sra_siz, tmp_siz;
 	u16	px;
-	u16	swap;
 
 	pd   = &wk->poke[pos];
-//	swap = WIN_P3_NAME_S * wk->bmp_swap;
-	swap = 0;
 
 	// 「HP」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_300 );
@@ -1862,9 +1841,9 @@ static void BPL_P3_HPPut( BPLIST_WORK * wk, u32 pos )
 	sra_siz = PRINTSYS_GetStrWidth( str, wk->dat->font, 0 );
 	px = (GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_HPNUM].win )*8-sra_siz)/2;
 //	PRINTSYS_PrintQueColor(
-//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_HPNUM+swap].win), px, 0, str, wk->dat->font, FCOL_P13BKN );
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_HPNUM].win), px, 0, str, wk->dat->font, FCOL_P13BKN );
 	PRINT_UTIL_PrintColor(
-		&wk->add_win[WIN_P3_HPNUM+swap], wk->que, px, 0, str, wk->dat->font, FCOL_P13BKN );
+		&wk->add_win[WIN_P3_HPNUM], wk->que, px, 0, str, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 	// HP値
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_301 );
@@ -1874,10 +1853,10 @@ static void BPL_P3_HPPut( BPLIST_WORK * wk, u32 pos )
 	WORDSET_ExpandStr( wk->wset, exp, str );
 	tmp_siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
 //	PRINTSYS_PrintQueColor(
-//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_HPNUM+swap].win),
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_HPNUM].win),
 //		px-tmp_siz, 0, exp, wk->dat->font, FCOL_P13BKN );
 	PRINT_UTIL_PrintColor(
-		&wk->add_win[WIN_P3_HPNUM+swap], wk->que, px-tmp_siz, 0, exp, wk->dat->font, FCOL_P13BKN );
+		&wk->add_win[WIN_P3_HPNUM], wk->que, px-tmp_siz, 0, exp, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 	// 最大HP値
@@ -1887,17 +1866,17 @@ static void BPL_P3_HPPut( BPLIST_WORK * wk, u32 pos )
 		wk->wset, 0, pd->mhp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
 	WORDSET_ExpandStr( wk->wset, exp, str );
 //	PRINTSYS_PrintQueColor(
-//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_HPNUM+swap].win),
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_HPNUM].win),
 //		px+sra_siz, 0, exp, wk->dat->font, FCOL_P13BKN );
 	PRINT_UTIL_PrintColor(
-		&wk->add_win[WIN_P3_HPNUM+swap], wk->que, px+sra_siz, 0, exp, wk->dat->font, FCOL_P13BKN );
+		&wk->add_win[WIN_P3_HPNUM], wk->que, px+sra_siz, 0, exp, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
 //	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_HP] );
-//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_HPNUM+swap] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_HPNUM] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_HP] );
-//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_HPNUM+swap] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_HPNUM] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1915,22 +1894,19 @@ static void BPL_P3_TokuseiInfoPut( BPLIST_WORK * wk, u32 pos )
 	BPL_POKEDATA * pd;
 	GFL_MSGDATA * man;
 	STRBUF * str;
-	u32	swap;
 
 	pd   = &wk->poke[pos];
-//	swap = WIN_P3_NAME_S * wk->bmp_swap;
-	swap = 0;
 
 	man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_tokuseiinfo_dat, wk->dat->heap );
 	str = GFL_MSG_CreateString( man, pd->spa );
 //	PRINTSYS_PrintQueColor(
-//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPAINFO+swap].win), 0, 0, str, wk->dat->font, FCOL_P13BKN );
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPAINFO].win), 0, 0, str, wk->dat->font, FCOL_P13BKN );
 	PRINT_UTIL_PrintColor(
-		&wk->add_win[WIN_P3_SPAINFO+swap], wk->que, 0, 0, str, wk->dat->font, FCOL_P13BKN );
+		&wk->add_win[WIN_P3_SPAINFO], wk->que, 0, 0, str, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_MSG_Delete( man );
-//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_SPAINFO+swap] );
-//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_SPAINFO+swap] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_SPAINFO] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_SPAINFO] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2758,57 +2734,45 @@ static void BPL_IrekaeNamePut( BPLIST_WORK * wk, u32 pos )
 static void BPL_StWazaSelPageBmpWrite( BPLIST_WORK * wk )
 {
 	BPL_POKEWAZA * waza;
-	u16	i, swap;
+	u16	i;
 
-/*
-	if( wk->bmp_swap == 0 ){
-		wk->putWin = WazaSelPutWin;
-	}else{
-		wk->putWin = WazaSelPutWinS;
-	}
-*/
 	wk->putWin = WazaSelPutWin;
 
-//	swap  = WIN_STW_NAME_S * wk->bmp_swap;
-	swap = 0;
-
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_STW_NAME+swap].win), 0 );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_STW_SKILL1+swap].win), 0 );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_STW_SKILL2+swap].win), 0 );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_STW_SKILL3+swap].win), 0 );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_STW_SKILL4+swap].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_STW_NAME].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_STW_SKILL1].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_STW_SKILL2].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_STW_SKILL3].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_STW_SKILL4].win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_STW_STATUS].win), 0 );
 
-	BPL_NamePut( wk, WIN_STW_NAME+swap, wk->dat->sel_poke, STW_NAME_PX, STW_NAME_PY );
+	BPL_NamePut( wk, WIN_STW_NAME, wk->dat->sel_poke, STW_NAME_PX, STW_NAME_PY );
 
 	for( i=0; i<4; i++ ){
 		waza = &wk->poke[wk->dat->sel_poke].waza[i];
 		if( waza->id == 0 ){
-			wk->add_win[WIN_STW_SKILL1+swap+i].transReq = TRUE;
-//			GFL_BMPWIN_TransVramCharacter( wk->add_win[WIN_STW_SKILL1+swap+i].win );
+			wk->add_win[WIN_STW_SKILL1+i].transReq = TRUE;
+//			GFL_BMPWIN_TransVramCharacter( wk->add_win[WIN_STW_SKILL1+i].win );
 			continue;
 		}
 
 		BPL_WazaNamePut(
-			wk, waza->id, WIN_STW_SKILL1+swap+i,
+			wk, waza->id, WIN_STW_SKILL1+i,
 			WazaMsgID_Tbl[i], STW_WAZANAME_PY, FCOL_P09WN );
 
-		BPL_WazaButtonPPPut( wk, waza, WIN_STW_SKILL1+swap+i );
+		BPL_WazaButtonPPPut( wk, waza, WIN_STW_SKILL1+i );
 	}
 
 	BPL_StrCommandPut( wk, WIN_STW_STATUS, mes_b_plist_02_504 );
 
-//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_STW_SKILL1+swap] );
-//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_STW_SKILL2+swap] );
-//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_STW_SKILL3+swap] );
-//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_STW_SKILL4+swap] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_STW_SKILL1] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_STW_SKILL2] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_STW_SKILL3] );
+//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_STW_SKILL4] );
 
-//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_STW_SKILL1+swap] );
-//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_STW_SKILL2+swap] );
-//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_STW_SKILL3+swap] );
-//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_STW_SKILL4+swap] );
-
-//	wk->bmp_swap ^= 1;
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_STW_SKILL1] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_STW_SKILL2] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_STW_SKILL3] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_STW_SKILL4] );
 }
 
 #define	P3_NAME_PX		( 0 )
@@ -2827,19 +2791,7 @@ static void BPL_StWazaSelPageBmpWrite( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void BPL_StMainPageBmpWrite( BPLIST_WORK * wk )
 {
-	u32	swap;
-
-/*
-	if( wk->bmp_swap == 0 ){
-		wk->putWin = StMainPutWin;
-	}else{
-		wk->putWin = StMainPutWinS;
-	}
-*/
 	wk->putWin = StMainPutWin;
-
-//	swap = WIN_P3_NAME_S * wk->bmp_swap;
-	swap = 0;
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_LV].win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_NEXT].win), 0 );
@@ -2851,36 +2803,34 @@ static void BPL_StMainPageBmpWrite( BPLIST_WORK * wk )
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_HP].win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_WAZACHECK].win), 0 );
 
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_NAME+swap ].win), 0 );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_HPGAGE+swap].win), 0 );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_LVNUM+swap].win), 0 );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_NEXTNUM+swap].win), 0 );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_POWNUM+swap].win), 0 );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_DEFNUM+swap].win), 0 );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_AGINUM+swap].win), 0 );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPPNUM+swap].win), 0 );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPDNUM+swap].win), 0 );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_HPNUM+swap].win), 0 );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPANAME+swap].win), 0 );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPAINFO+swap].win), 0 );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_ITEMNAME+swap].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_NAME].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_HPGAGE].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_LVNUM].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_NEXTNUM].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_POWNUM].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_DEFNUM].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_AGINUM].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPPNUM].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPDNUM].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_HPNUM].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPANAME].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPAINFO].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_ITEMNAME].win), 0 );
 
-	BPL_NamePut( wk, WIN_P3_NAME+swap, wk->dat->sel_poke, P3_NAME_PX, P3_NAME_PY );
+	BPL_NamePut( wk, WIN_P3_NAME, wk->dat->sel_poke, P3_NAME_PX, P3_NAME_PY );
 	BPL_P3_HPPut( wk, wk->dat->sel_poke );
-	BPL_HPGagePut( wk, WIN_P3_HPGAGE+swap, wk->dat->sel_poke, P3_HPGAGE_PX, P3_HPGAGE_PY );
-	GFL_BMPWIN_TransVramCharacter( wk->add_win[WIN_P3_HPGAGE+swap].win );
+	BPL_HPGagePut( wk, WIN_P3_HPGAGE, wk->dat->sel_poke, P3_HPGAGE_PX, P3_HPGAGE_PY );
+	GFL_BMPWIN_TransVramCharacter( wk->add_win[WIN_P3_HPGAGE].win );
 	BPL_P3_LvPut( wk, wk->dat->sel_poke );
 	BPL_P3_PowPut( wk, wk->dat->sel_poke );
 	BPL_P3_DefPut( wk, wk->dat->sel_poke );
 	BPL_P3_AgiPut( wk, wk->dat->sel_poke );
 	BPL_P3_SppPut( wk, wk->dat->sel_poke );
 	BPL_P3_SpdPut( wk, wk->dat->sel_poke );
-	BPL_TokuseiPut( wk, WIN_P3_SPANAME+swap, wk->dat->sel_poke );
-	BPL_ItemPut( wk, WIN_P3_ITEMNAME+swap, wk->dat->sel_poke );
+	BPL_TokuseiPut( wk, WIN_P3_SPANAME, wk->dat->sel_poke );
+	BPL_ItemPut( wk, WIN_P3_ITEMNAME, wk->dat->sel_poke );
 	BPL_P3_TokuseiInfoPut( wk, wk->dat->sel_poke );
 	BPL_StrCommandPut( wk, WIN_P3_WAZACHECK, mes_b_plist_02_505 );
-
-//	wk->bmp_swap ^= 1;
 }
 
 #define	P4_NAME_PX		( 0 )
@@ -2901,49 +2851,36 @@ static void BPL_StMainPageBmpWrite( BPLIST_WORK * wk )
 static void BPL_StWazaInfoPageBmpWrite( BPLIST_WORK * wk )
 {
 	BPL_POKEWAZA * waza;
-	u32	swap;
 
-/*
-	if( wk->bmp_swap == 0 ){
-		wk->putWin = WazaInfoPutWin;
-	}else{
-		wk->putWin = WazaInfoPutWinS;
-	}
-*/
 	wk->putWin = WazaInfoPutWin;
-
-//	swap = WIN_P4_SKILL_S * wk->bmp_swap;
-	swap = 0;
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_NAME].win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_PP].win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_HIT].win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_POW].win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_BUNRUI].win), 0 );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_PPNUM+swap].win), 0 );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_SKILL+swap].win), 0 );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_HITNUM+swap].win), 0 );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_POWNUM+swap].win), 0 );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_BRNAME+swap].win), 0 );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_INFO+swap].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_PPNUM].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_SKILL].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_HITNUM].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_POWNUM].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_BRNAME].win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_INFO].win), 0 );
 
 	waza = &wk->poke[wk->dat->sel_poke].waza[wk->dat->sel_wp];
 
 	BPL_NamePut( wk, WIN_P4_NAME, wk->dat->sel_poke, P4_NAME_PX, P4_NAME_PY );
 	BPL_PPPut( wk, WIN_P4_PP, P4_PP_PX, P4_PP_PY );
 	BPL_WazaNamePut(
-		wk, waza->id, WIN_P4_SKILL+swap, 
+		wk, waza->id, WIN_P4_SKILL, 
 		WazaMsgID_Tbl[wk->dat->sel_wp], P4_WAZANAME_PY, FCOL_P13WN );
 	BPL_WazaHitStrPut( wk, WIN_P4_HIT );
-	BPL_WazaHitNumPut( wk, WIN_P4_HITNUM+swap, waza->hit );
+	BPL_WazaHitNumPut( wk, WIN_P4_HITNUM, waza->hit );
 	BPL_WazaPowStrPut( wk, WIN_P4_POW );
-	BPL_WazaPowNumPut( wk, WIN_P4_POWNUM+swap, waza->pow );
-	BPL_WazaInfoPut( wk, WIN_P4_INFO+swap, waza->id );
+	BPL_WazaPowNumPut( wk, WIN_P4_POWNUM, waza->pow );
+	BPL_WazaInfoPut( wk, WIN_P4_INFO, waza->id );
 	BPL_WazaBunruiStrPut( wk, WIN_P4_BUNRUI );
-	BPL_WazaKindPut( wk, WIN_P4_BRNAME+swap, waza->kind );
-	BPL_WazaPPPut( wk, WIN_P4_PPNUM+swap, waza->pp, waza->mpp );
-
-//	wk->bmp_swap ^= 1;
+	BPL_WazaKindPut( wk, WIN_P4_BRNAME, waza->kind );
+	BPL_WazaPPPut( wk, WIN_P4_PPNUM, waza->pp, waza->mpp );
 }
 
 #define	P5_NAME_PX		( 0 )
