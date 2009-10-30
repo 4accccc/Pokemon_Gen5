@@ -15,6 +15,7 @@
 #include "font/font.naix"
 #include "poke_tool/gauge_tool.h"
 #include "app/app_menu_common.h"
+#include "print/str_tool.h"
 
 #include "btlv_effect.h"
 #include "btlv_gauge.h"
@@ -1312,6 +1313,7 @@ static  void  PutHPNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, s32 nowH
 //--------------------------------------------------------------
 static  void  PutLVNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl )
 { 
+#if 0
   int i;
   u16 level[ BTLV_GAUGE_NUM_MAX ];
   int lv;
@@ -1351,6 +1353,42 @@ static  void  PutLVNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl )
                   image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
 			            0x20);
   }
+#else
+  STRBUF* num = GFL_STR_CreateBuffer( 4, bgw->heapID );
+  PRINTSYS_LSB  color = PRINTSYS_LSB_Make( 1, 4, 0 );
+  GFL_BMP_DATA* bmp = GFL_BMP_Create( 3, BTLV_GAUGE_BMP_SIZE_Y, GFL_BMP_16_COLOR, bgw->heapID );
+  u8 letter, shadow, back;
+
+  GFL_BMP_Clear( bmp, 0 );
+
+  STRTOOL_SetNumber( num, bgcl->level, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
+
+  GFL_FONTSYS_GetColor( &letter, &shadow, &back );
+  GFL_FONTSYS_SetColor( PRINTSYS_LSB_GetL( color ), PRINTSYS_LSB_GetS( color ), PRINTSYS_LSB_GetB( color ) );
+  PRINTSYS_Print( bmp, 0, BTLV_GAUGE_BMP_POS_Y, num, bgw->font );
+  GFL_FONTSYS_SetColor( letter, shadow, back );
+
+  { 
+	  void *obj_vram;
+	  NNSG2dImageProxy image;
+    u8* bmp_data = GFL_BMP_GetCharacterAdrs( bmp );
+
+	  obj_vram = G2_GetOBJCharPtr();
+    GFL_CLACT_WK_GetImgProxy( bgcl->base_clwk, &image );
+
+    MI_CpuCopy16( bmp_data,
+                  (void*)( (u32)obj_vram + 0x24 * 0x20 +
+                  image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
+                  0x20 * 3 );
+    MI_CpuCopy16( &bmp_data[ 3 * 0x20 ],
+                  (void*)( (u32)obj_vram + 0x2c * 0x20 +
+                  image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
+                  0x20 * 3 );
+  }
+
+  GFL_STR_DeleteBuffer( num );
+  GFL_BMP_Delete( bmp );
+#endif
 }
 
 //--------------------------------------------------------------
