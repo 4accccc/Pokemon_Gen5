@@ -1084,6 +1084,7 @@ GMEVENT * FIELD_EVENT_CheckHybrid( GAMESYS_WORK *gsys, void *work )
 //--------------------------------------------------------------
 static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldWork)
 {
+  GFL_STD_MemClear( req, sizeof(EV_REQUEST) );
   req->heapID = FIELDMAP_GetHeapID(fieldWork);
   req->gsys = gsys;
   req->gamedata = GAMESYSTEM_GetGameData(gsys);
@@ -1112,12 +1113,15 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
   // アトリビュート取得
   req->mapattr = FIELD_PLAYER_GetMapAttr( req->field_player );
 
-  req->talkRequest = ((req->key_trg & PAD_BUTTON_A) != 0);
+  if (req->player_state == PLAYER_MOVE_STATE_END || req->player_state == PLAYER_MOVE_STATE_OFF )
+  {
+    req->talkRequest = ((req->key_trg & PAD_BUTTON_A) != 0);
 
-  req->menuRequest = ((req->key_trg & PAD_BUTTON_X) != 0);
+    req->menuRequest = ((req->key_trg & PAD_BUTTON_X) != 0);
 
-	//作成中だと止まったりするので、一時的に入力不可にします
- 	req->convRequest = ((req->key_trg & PAD_BUTTON_Y) != 0);
+    //作成中だと止まったりするので、一時的に入力不可にします
+    req->convRequest = ((req->key_trg & PAD_BUTTON_Y) != 0);
+  }
   
   req->moveRequest = 0;
 
