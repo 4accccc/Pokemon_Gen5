@@ -94,6 +94,7 @@ typedef enum
 ///	デフォルトで使用するサウンド定義
 //=====================================
 #define TOUCHBAR_SE_DECIDE	(SEQ_SE_DECIDE1)
+#define TOUCHBAR_SE_CANCEL	(SEQ_SE_CANCEL1)
 #define TOUCHBAR_SE_Y_REG		(SEQ_SE_SYS_07)
 
 //=============================================================================
