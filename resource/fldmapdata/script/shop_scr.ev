@@ -63,6 +63,7 @@ sub_shop_main:
   DEFINE_LOCAL  i_loop
 
   //‚æ‚¤‚±‚»
+  _TALKWIN_OPEN()
   _TALKMSG( msg_shop_01 )
 
   $i_seq = SEQ_MENU
@@ -133,6 +134,7 @@ sub_shop_buy:
   $ret_mode = SCR_PROC_RETMODE_NORMAL
   _CALL_SHOP_PROC_BUY( lwk_shop_id, ret_mode )
   
+  _TALKWIN_OPEN()
   IF $ret_mode == SCR_PROC_RETMODE_EXIT THEN
     $reg_return = SEQ_EXIT
   ELSE
@@ -160,6 +162,7 @@ sub_shop_sell:
   _BLACK_IN()
   _DISP_FADE_END_CHECK()
 
+  _TALKWIN_OPEN()
   IF $ret_mode == SCR_PROC_RETMODE_EXIT THEN
     $reg_return = SEQ_EXIT
   ELSE
