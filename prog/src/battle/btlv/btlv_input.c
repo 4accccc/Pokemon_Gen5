@@ -689,6 +689,9 @@ void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
 
   //メインループはTCBで行う
   biw->main_loop = GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), BTLV_INPUT_MainTCB, biw, 0 );
+
+  //OBJカーソル表示処理をする
+  biw->cursor_decide = 1;
 }
 
 //============================================================================================
