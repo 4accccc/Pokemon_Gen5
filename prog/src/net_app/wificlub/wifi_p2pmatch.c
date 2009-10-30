@@ -6452,7 +6452,7 @@ static BOOL WifiP2P_CheckLobbyBgm( void )
 static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
 {
   u32	ret;
-  int status,friendNo,message = 0,vchat;
+  int status,friendNo,message = 0,vchat,fst;
   u16 mainCursor;
   int checkMatch;
   MCR_MOVEOBJ* p_npc;
@@ -6601,16 +6601,16 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
 
 #if 1  //最初はサーバでなく 自分がサーバになって相手に繋いでもらう
         // もしくはランダムマッチなので相互に親子が分かれる
-        if( WifiDwc_getFriendStatus(friendNo - 1) == DWC_STATUS_ONLINE )
+        fst = WifiDwc_getFriendStatus(friendNo - 1);
+        
+        if(( fst == DWC_STATUS_ONLINE || fst == DWC_STATUS_MATCH_SC_SV) && (WIFI_STATUS_TRADE!=status))
         {
           NET_PRINT( "wifi接続先 %d %d\n", friendNo - 1,status );
-          
-          status = WIFI_STATUS_LOGIN_WAIT;
-
+            status = WIFI_STATUS_LOGIN_WAIT;
           if( WifiP2PMatch_CommWifiBattleStart( wk, -1, status ) ){
-
-            WIFI_STATUS_SetVChatMac(wk->pMatch, WifiFriendMatchStatusGet( friendNo - 1 ));
-
+            if(status==WIFI_STATUS_LOGIN_WAIT){
+              WIFI_STATUS_SetVChatMac(wk->pMatch, WifiFriendMatchStatusGet( friendNo - 1 ));
+            }
             wk->cancelEnableTimer = _CANCELENABLE_TIMER;
             _commStateChange(status);
             _myStatusChange(wk, status);  // 接続中になる
@@ -6618,10 +6618,10 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
             WifiP2PMatchMessagePrint(wk,msg_wifilobby_014, FALSE);
             GF_ASSERT( wk->timeWaitWork == NULL );
             wk->timeWaitWork = TimeWaitIconAdd( wk->MsgWin, COMM_TALK_WIN_CGX_NUM );
-//            if(status != WIFI_STATUS_VCT){
-//              _CHANGESTATE(wk,WIFIP2PMATCH_MODE_MATCH_LOOP);
-//            }
-//            else
+            if(status != WIFI_STATUS_VCT){
+              _CHANGESTATE(wk,WIFIP2PMATCH_MODE_MATCH_LOOP);
+            }
+            else
             {
               wk->cancelEnableTimer = _CANCELENABLE_TIMER;
               _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECT_INIT2);
@@ -6635,8 +6635,27 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
           }
 
         }
-        else
-        {
+        else if( ( fst == DWC_STATUS_ONLINE || fst == DWC_STATUS_MATCH_SC_SV) && (WIFI_STATUS_TRADE==status) ){
+          if( WifiP2PMatch_CommWifiBattleStart( wk, friendNo - 1, status ) ){
+            wk->cancelEnableTimer = _CANCELENABLE_TIMER;
+            _commStateChange(status);
+            _myStatusChange(wk, status);  // 接続中になる
+            _friendNameExpand(wk, friendNo - 1);
+            WifiP2PMatchMessagePrint(wk,msg_wifilobby_014, FALSE);
+            GF_ASSERT( wk->timeWaitWork == NULL );
+            wk->timeWaitWork = TimeWaitIconAdd( wk->MsgWin, COMM_TALK_WIN_CGX_NUM );
+            _CHANGESTATE(wk,WIFIP2PMATCH_MODE_MATCH_LOOP);
+            message = 1;
+          }else{
+            _friendNameExpand(wk, friendNo - 1);
+            WifiP2PMatchMessagePrint(wk, msg_wifilobby_013, FALSE);
+            _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT);
+            message = 1;
+          }
+
+
+        }
+        else{
           _friendNameExpand(wk, friendNo - 1);
           WifiP2PMatchMessagePrint(wk, msg_wifilobby_013, FALSE);
           _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT);
