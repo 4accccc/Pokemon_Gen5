@@ -265,7 +265,7 @@ void TALKMSGWIN_SystemDraw3D( TALKMSGWIN_SYS* tmsgwinSys )
 {
 	int i;
 
-	G3X_Reset();
+//	G3X_Reset();    <<remove@091030 saito
 
 	settingCamera(tmsgwinSys, 1);
 
