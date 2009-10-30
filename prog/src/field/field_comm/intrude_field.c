@@ -363,7 +363,7 @@ GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
     FIELD_PLAYER_GetPos( pcActor, &pos );
     pos.x >>= FX32_SHIFT;
     pos.z >>= FX32_SHIFT;
-    if(GFL_NET_GetConnectNum() <= 1 && ((pos.x <= 888 && pos.x >= 888-32) || (pos.x >= 2184 && pos.x <= 2184+32)) && (pos.z >= 440 && pos.z <= 504)){
+    if(GFL_NET_GetConnectNum() <= 1 && ((pos.x <= 4008 && pos.x >= 4008-32) || (pos.x >= 5192 && pos.x <= 5192+32)) && (pos.z >= 440 && pos.z <= 504)){
       left_right = pos.x <= 888 ? 0 : 1;
       return EVENT_DebugPalaceNGWin( gameSys, fieldWork, pcActor, left_right );
     }
