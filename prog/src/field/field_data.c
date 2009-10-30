@@ -189,7 +189,7 @@ const SCENE_DATA resistMapTbl[] = {
 		{
 			FLDMAPPER_FILETYPE_RANDOM,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
-      3,3,
+      2,2,
       FLDMAPPER_MODE_SCROLL_XZ, 
 			ARCID_FLDMAP_LANDDATA,
 
