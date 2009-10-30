@@ -1052,7 +1052,10 @@ void MMDL_SAVEDATA_Save(
 {
 	u32 no = 0;
 	MMDL *mmdl;
-	MMDL_SAVEWORK *save = savedata->SaveWorkBuf;
+	MMDL_SAVEWORK *save;
+  //セーブ前にバッファをクリア
+  MMDL_SAVEDATA_Init(savedata);
+  save = savedata->SaveWorkBuf;
 	
 	while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE ){
 		MMdl_SaveData_SaveMMdl( mmdl, save );
