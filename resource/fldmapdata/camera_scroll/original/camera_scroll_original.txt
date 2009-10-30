@@ -1,2 +1,1 @@
 original_C03.bin
-original_original_camera_scroll.bin
