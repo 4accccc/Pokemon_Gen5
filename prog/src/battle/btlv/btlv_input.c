@@ -2151,7 +2151,7 @@ static  void  BTLV_INPUT_ClearScreen( BTLV_INPUT_WORK* biw )
   }
 
   //攻撃対象選択
-	GFL_BG_FillScreen( GFL_BG_FRAME2_S, 0, 0, 2, 32, 14, 0 );
+	GFL_BG_FillScreen( GFL_BG_FRAME2_S, 0, 0, 2, 32, 32, 0 );
 }
 
 //--------------------------------------------------------------
@@ -2221,11 +2221,14 @@ static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAN
                              GFL_CLGRP_PLTT_GetAddr( biw->pokeicon_plttID, CLSYS_DRAW_SUB ) / 2, 0x20 * 3 );
 
     //ウインドウマスクでアイコンを暗くする実験
-    GXS_SetVisibleWnd( GX_WNDMASK_W0 | GX_WNDMASK_W1 );
-    G2S_SetWnd0InsidePlane( GX_WND_PLANEMASK_ALL, TRUE );
-    G2S_SetWnd1InsidePlane( GX_WND_PLANEMASK_ALL, TRUE );
-    G2S_SetWndOutsidePlane( GX_WND_PLANEMASK_ALL, FALSE );
-    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_OBJ, -8 );
+    if( max > 1 )
+    { 
+      GXS_SetVisibleWnd( GX_WNDMASK_W0 | GX_WNDMASK_W1 );
+      G2S_SetWnd0InsidePlane( GX_WND_PLANEMASK_ALL, TRUE );
+      G2S_SetWnd1InsidePlane( GX_WND_PLANEMASK_ALL, TRUE );
+      G2S_SetWndOutsidePlane( GX_WND_PLANEMASK_ALL, FALSE );
+      G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_OBJ, -8 );
+    }
 
     for( i = 0; i < max ; i++ ){
       if( bicp->mons_no[ i ] )
