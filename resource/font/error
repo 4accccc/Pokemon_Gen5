@@ -5,6 +5,8 @@ fileID:  byte(s) name
      1:   250228 /large.gftr
      2:   161524 /small.nftr
      3:   163632 /small.gftr
-     4:       90 /default.nclr
-     5:       90 /talkwin.nclr
-     6:       90 /systemwin.nclr
+     4:   176788 /small_batt.nftr
+     5:   178860 /small_batt.gftr
+     6:       90 /default.nclr
+     7:       90 /talkwin.nclr
+     8:       90 /systemwin.nclr
