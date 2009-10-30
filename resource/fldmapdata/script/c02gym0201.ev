@@ -350,8 +350,9 @@ EVENT_START		 ev_bg_c02gym0201_statue_01
 	
 	//ジムバッジを取得している場合
 	ELSE
-		_TALK_OBJ_START()
+		
 		_PLAYER_NAME( 0 )
+		_TALKWIN_OPEN()
 		_TALKMSG   ( msg_c02gym0101_statue_02)
     	_LAST_KEYWAIT()
     	_TALKWIN_CLOSE()
@@ -377,8 +378,8 @@ EVENT_START		ev_bg_c02gym0201_statue_02
 	//ジムバッジを取得している場合
 	ELSE
 		
-		_TALK_OBJ_START()
 		_PLAYER_NAME( 0 )
+		_TALKWIN_OPEN()
 		_TALKMSG   ( msg_c02gym0101_statue_02)
     	_LAST_KEYWAIT()
    		_TALKWIN_CLOSE()
