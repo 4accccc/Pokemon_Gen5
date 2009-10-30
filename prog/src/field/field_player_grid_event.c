@@ -319,11 +319,10 @@ static GMEVENT_RESULT event_Kairki( GMEVENT *event, int *seq, void *wk )
       
       MMDL_SetStatusBitHeightGetOFF( work->mmdl, TRUE );
       MMDL_SetStatusBitFellowHit( work->mmdl, FALSE );
-
+      
+      PMSND_PlaySE( SEQ_SE_FLD_04 );
       (*seq)++;
     }
-
-    PMSND_PlaySE( SEQ_SE_FLD_04 );
     break;
   case 2: //‰ö—ÍŒŠ‚Í‚Ü‚è
     {
