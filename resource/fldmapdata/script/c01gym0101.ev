@@ -73,7 +73,7 @@ INIT_EVENT_START	ev_init_c01gym0101
 		IF $WK_SCENE_C01GYM0101 == 1 THEN
 
 			//くさタイプ選択の場合
-			IF $WK_SYS_FIRST_POKE_NO  == MONSNO_HUSIGIDANE THEN
+			IF $WK_SYS_FIRST_POKE_NO  == MONSNO_KUSAHEBI THEN
 		
 				//コーンの位置を変更する
 				_OBJ_POS_CHANGE( C01GYM0101_LEADER1_01, 11, 1, 3, DIR_DOWN )
@@ -83,7 +83,7 @@ INIT_EVENT_START	ev_init_c01gym0101
 				_OBJ_POS_CHANGE( C01GYM0101_LEADER1_03, 13, 1, 3, DIR_DOWN )
 
 			//ほのおタイプ選択の場合
-			ELSIF $WK_SYS_FIRST_POKE_NO  == MONSNO_HITOKAGE THEN
+			ELSIF $WK_SYS_FIRST_POKE_NO  == MONSNO_HOTTON THEN
 
 				//コーンの位置を変更する
 				_OBJ_POS_CHANGE( C01GYM0101_LEADER1_01, 12, 1, 4, DIR_DOWN )
@@ -294,7 +294,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	//分岐処理・最初に選んだポケモンから苦手なタイプになる
 
 		//くさタイプ選択の場合
-	IF $WK_SYS_FIRST_POKE_NO  == MONSNO_HUSIGIDANE THEN
+	IF $WK_SYS_FIRST_POKE_NO  == MONSNO_KUSAHEBI THEN
 		
 		//ポッド：自機の前に移動
 		_OBJ_ANIME( C01GYM0101_LEADER1_02, anm_pod_move )	
@@ -309,7 +309,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 		_BALLOONWIN_CLOSE()			
 		
 		//ほのおタイプ選択の場合
-	ELSIF $WK_SYS_FIRST_POKE_NO  == MONSNO_HITOKAGE THEN
+	ELSIF $WK_SYS_FIRST_POKE_NO  == MONSNO_HOTTON THEN
 		
 		//コーン：一歩前へ
 		_OBJ_ANIME( C01GYM0101_LEADER1_01, anm_leader_walk )
@@ -483,7 +483,7 @@ EVENT_START		ev_c01gym0101_leader1_01
 
 		//炎タイプを選択している場合
 		
-		IF $WK_SYS_FIRST_POKE_NO == MONSNO_HITOKAGE THEN
+		IF $WK_SYS_FIRST_POKE_NO == MONSNO_HOTTON THEN
 
 			//さんにんの　なかで　いちばん　つよい　オレが
 			_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20b )
@@ -583,7 +583,7 @@ EVENT_START		ev_c01gym0101_leader1_02
 		//分岐：草タイプを選択しているか、いないか
 
 			//草タイプを選択している場合
-		IF $WK_SYS_FIRST_POKE_NO == MONSNO_HUSIGIDANE THEN
+		IF $WK_SYS_FIRST_POKE_NO == MONSNO_KUSAHEBI THEN
 
 			//さんにんの　なかで　いちばん　つよい　オレが
 			_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20a )
@@ -713,7 +713,7 @@ EVENT_START		ev_c01gym0101_leader1_03
 		//分岐：水タイプを選択しているか、いないか
 
 		//水タイプを選択している場合
-		IF $WK_SYS_FIRST_POKE_NO == MONSNO_ZENIGAME THEN
+		IF $WK_SYS_FIRST_POKE_NO == MONSNO_SUIKKO THEN
 		
 			//さんにんの　なかで　いちばん　つよい　オレが
 			_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20c )

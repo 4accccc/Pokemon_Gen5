@@ -59,29 +59,29 @@ _TALK_OBJ_START()
 		ENDIF
 		
 		//最初に選択した三匹で台詞内にセットする名前を変える
-		IF $WK_SYS_FIRST_POKE_NO == MONSNO_HUSIGIDANE THEN
+		IF $WK_SYS_FIRST_POKE_NO == MONSNO_KUSAHEBI THEN
 			//最初の３匹で草タイプを選択した時の処理
 			
 			//0に選択ポケモンの名前をセット
-			_MONS_NAME(0,MONSNO_HUSIGIDANE)
+			_MONS_NAME(0,MONSNO_KUSAHEBI)
 			//1に有効ポケモンの名前をセット
 			_MONS_NAME(1,MONSNO_WANINOKO)
 				
-		ELSIF $WK_SYS_FIRST_POKE_NO == MONSNO_HITOKAGE THEN	
+		ELSIF $WK_SYS_FIRST_POKE_NO == MONSNO_HOTTON THEN	
 			//最初の３匹で炎タイプを選択した時の処理
 			
 			//0に選択ポケモンの名前をセット
-			_MONS_NAME(0,MONSNO_HITOKAGE)
+			_MONS_NAME(0,MONSNO_HOTTON)
 			//1に有効ポケモンの名前をセット
-			_MONS_NAME(1,MONSNO_HUSIGIDANE)
+			_MONS_NAME(1,MONSNO_TIKORIITA)
 			
 		ELSE
 			//最初の３匹で水タイプを選択した時の処理
 			
 			//0に選択ポケモンの名前をセット
-			_MONS_NAME(0,MONSNO_WANINOKO)
+			_MONS_NAME(0,MONSNO_SUIKKO)
 			//1に有効ポケモンの名前をセット
-			_MONS_NAME(1,MONSNO_HITOKAGE)
+			_MONS_NAME(1,MONSNO_HINOARASI)
 				
 		ENDIF
 		
@@ -110,23 +110,23 @@ EVENT_END
 ev_d01r0101_pokecount:
 
 	//最初に選択した三匹で台詞内にセットする名前・タイプを変える
-	IF $WK_SYS_FIRST_POKE_NO == MONSNO_HUSIGIDANE THEN
+	IF $WK_SYS_FIRST_POKE_NO == MONSNO_KUSAHEBI THEN
 		//最初の３匹で草タイプを選択した時の処理
 		
 		//0に選択ポケモンの名前をセット
-		_MONS_NAME(0,MONSNO_HUSIGIDANE)
+		_MONS_NAME(0,MONSNO_KUSAHEBI)
 		//1に有効ポケモンの名前をセット
 		_MONS_NAME(1,MONSNO_WANINOKO)
 		//手持ち苦手タイプ名セット
 		_POKETYPE_NAME(2,POKETYPE_HONOO)
 			
-	ELSIF $WK_SYS_FIRST_POKE_NO == MONSNO_HITOKAGE THEN	
+	ELSIF $WK_SYS_FIRST_POKE_NO == MONSNO_HOTTON THEN	
 		//最初の３匹で炎タイプを選択した時の処理
 		
 		//0に選択ポケモンの名前をセット
-		_MONS_NAME(0,MONSNO_HITOKAGE)
+		_MONS_NAME(0,MONSNO_HOTTON)
 		//1に有効ポケモンの名前をセット
-		_MONS_NAME(1,MONSNO_HUSIGIDANE)
+		_MONS_NAME(1,MONSNO_TIKORIITA)
 		//手持ち苦手タイプ名セット
 		_POKETYPE_NAME(2, POKETYPE_MIZU)
 		
@@ -135,9 +135,9 @@ ev_d01r0101_pokecount:
 		//最初の３匹で水タイプを選択した時の処理
 		
 		//0に選択ポケモンの名前をセット
-		_MONS_NAME(0,MONSNO_WANINOKO)
+		_MONS_NAME(0,MONSNO_SUIKKO)
 		//1に有効ポケモンの名前をセット
-		_MONS_NAME(1,MONSNO_HITOKAGE)
+		_MONS_NAME(1,MONSNO_HINOARASI)
 		//手持ち苦手タイプ名セット
 		_POKETYPE_NAME(2,POKETYPE_KUSA)
 				
@@ -168,13 +168,13 @@ ev_d01r0101_pokecount:
 		ELSE
 		//手持ちに空きがあれば持ちタイプに合わせてポケモンを渡す
 			
-			IF $WK_SYS_FIRST_POKE_NO == MONSNO_HUSIGIDANE THEN
+			IF $WK_SYS_FIRST_POKE_NO == MONSNO_KUSAHEBI THEN
 				//最初の３匹で草タイプを選択した時の処理
 				_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_06,D01R0101_GIRL_01)
 				_BALLOONWIN_CLOSE()
 				_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_WANINOKO, 0, 0, 5, 0 )
 				
-			ELSIF $WK_SYS_FIRST_POKE_NO == MONSNO_HITOKAGE THEN	
+			ELSIF $WK_SYS_FIRST_POKE_NO == MONSNO_HOTTON THEN	
 				//最初の３匹で炎タイプを選択した時の処理
 				_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_07,D01R0101_GIRL_01)
 				_BALLOONWIN_CLOSE()
