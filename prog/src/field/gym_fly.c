@@ -480,11 +480,6 @@ static void ShakeCameraRequest(GYM_FLY_TMP *tmp);
 static void InitShakeCamera(CAM_SHAKE *shake);
 static void ShakeCameraFunc(CAM_SHAKE *shake, FIELD_CAMERA * camera);
 
-
-#ifdef PM_DEBUG
-BOOL test_GYM_FLY_Shot(GAMESYS_WORK *gsys);
-#endif
-
 //--------------------------------------------------------------
 /**
  * セットアップ関数
@@ -632,74 +627,6 @@ GMEVENT *GYM_FLY_CreateShotEvt(GAMESYS_WORK *gsys)
 
   return event;
 }
-#ifdef PM_DEBUG
-//--------------------------------------------------------------
-/**
- * 実験イベント起動
- * @param	      gsys    ゲームシステムポインタ
- * @return      BOOL
- */
-//--------------------------------------------------------------
-BOOL test_GYM_FLY_Shot(GAMESYS_WORK *gsys)
-{
-  u8 shot_idx;
-  u16 dir; 
-  GYM_FLY_SV_WORK *gmk_sv_work;
-  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
-  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
-  GYM_FLY_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_FLY_TMP_ASSIGN_ID);
-  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-  GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
-
-  gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_FLY );
-
-  {
-    int x,z;
-    VecFx32 pos;
-    FIELD_PLAYER *fld_player;
-    fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
-    FIELD_PLAYER_GetPos( fld_player, &pos );
-    x = pos.x / FIELD_CONST_GRID_FX32_SIZE;
-    z = pos.z / FIELD_CONST_GRID_FX32_SIZE;
-    //自機の向きを取得
-    dir = FIELD_PLAYER_GetDir( fld_player );
-
-    switch( dir ){
-    case DIR_UP:
-      z-=2;
-      break;
-    case DIR_DOWN:
-      z+=2;
-      break;
-    case DIR_LEFT:
-      x-=2;
-      break;
-    case DIR_RIGHT:
-      x+=2;
-      break;
-    }
-    //自機の位置から、大砲番号を調べる
-    shot_idx = GetCanIdx(x,z);
-  }
-
-  //大砲が見つからない場合は終了
-  if (shot_idx >= CANNON_NUM_MAX){
-    return FALSE;
-  }
-
-  {
-    //イベントセット
-    GMEVENT * event = GMEVENT_Create( gsys, NULL, ShotEvt, 0/*sizeof(ENCEFF_WORK)*/ );
-    GAMESYSTEM_SetEvent(gsys, event);
-    //打ち出しインデックスをセット
-    tmp->ShotIdx = shot_idx;
-    //打ち出し方向をセット
-    tmp->ShotDir = dir;
-  }
-  return TRUE;
-  
-}
-#endif  //PM_DEBUG
 
 //--------------------------------------------------------------
 /**
