@@ -109,6 +109,8 @@ BMPMENU_WORK * BmpMenu_AddNoTrans( const BMPMENU_HEADER *dat,
 	mw->px = px;
 	mw->py = py;
 
+  BmpCursor_SetCursorBitmap( mw->cursor,  heap_id );
+
 #if 0
 	mw->sx = FontHeaderGet( dat->font, FONT_HEADER_SIZE_X )
 		+ FontHeaderGet( dat->font, FONT_HEADER_SPACE_X );
@@ -641,7 +643,7 @@ BMPMENU_WORK * BmpMenu_YesNoSelectInit(	const BMPWIN_YESNO_DAT *data, u16 cgx, u
 	GFL_STD_MemClear(&hed,sizeof(BMPMENU_HEADER));
 
 	hed.menu     = ld;
-	hed.win      = GFL_BMPWIN_Create( data->frmnum , data->pos_x, data->pos_y, 6, 4, data->palnum, GFL_BMP_CHRAREA_GET_B );
+	hed.win      = GFL_BMPWIN_Create( data->frmnum , data->pos_x, data->pos_y, 7, 4, data->palnum, GFL_BMP_CHRAREA_GET_B );
 	hed.x_max    = 1;
 	hed.y_max    = 2;
 	hed.line_spc = 1;
@@ -658,7 +660,7 @@ BMPMENU_WORK * BmpMenu_YesNoSelectInit(	const BMPWIN_YESNO_DAT *data, u16 cgx, u
 
 	//	GFL_BG_BmpWinAddEx( ini, hed.win, data );
 	//BmpMenuWinWrite( hed.win, WINDOW_TRANS_OFF, cgx, pal );
-	pWk = BmpMenu_AddEx( &hed, 8, 0, pos, heap, PAD_BUTTON_CANCEL );
+	pWk = BmpMenu_AddEx( &hed, 14, 0, pos, heap, PAD_BUTTON_CANCEL );
 	GFL_BMPWIN_MakeScreen(hed.win);
 	BmpWinFrame_Write( hed.win, WINDOW_TRANS_ON, cgx, pal );
 
