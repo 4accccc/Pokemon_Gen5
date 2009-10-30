@@ -127,9 +127,10 @@ _RET
 sub_shop_buy:
 {
   DEFINE_LOCAL  ret_mode
+  
+  _TALKWIN_CLOSE()
 
   $ret_mode = SCR_PROC_RETMODE_NORMAL
-
   _CALL_SHOP_PROC_BUY( lwk_shop_id, ret_mode )
   
   IF $ret_mode == SCR_PROC_RETMODE_EXIT THEN
