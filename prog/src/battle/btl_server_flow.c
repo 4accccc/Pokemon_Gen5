@@ -3909,6 +3909,10 @@ static void scproc_Fight_Damage_Drain( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POK
       damage = TargetPokeRec_GetDamage( targets, bpp );
       total_damage += damage;
       recoverHP = (WAZADATA_GetDrainRatio(waza) * damage) / 100;
+#ifdef SOGA_DEBUG
+      //ç≈í·Ç≈Ç‡1ÇÕâÒïúÇ∑ÇÈÇÊÇ§Ç…Ç∑ÇÈ
+      if( recoverHP == 0 ) recoverHP = 1;
+#endif
       if( scproc_DrainCore(wk, attacker, bpp, recoverHP) )
       {
         scPut_Message_Set( wk, bpp, BTL_STRID_SET_Drain );
@@ -6964,6 +6968,14 @@ static u32 scEvent_CalcKickBack( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
   u8 ratio = WAZADATA_GetReactionRatio( waza );
   u8 ratio_ex = 0;
   u8 fail_flag = FALSE;
+
+#ifdef SOGA_DEBUG
+  //ÉhÉåÉCÉìånÇÕîΩìÆÇ…Ç»ÇÁÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
+  if( WAZADATA_GetCategory(waza) == WAZADATA_CATEGORY_DRAIN )
+  { 
+    return 0;
+  }
+#endif
 
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetValue( BTL_EVAR_RATIO, ratio );
