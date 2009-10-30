@@ -872,8 +872,8 @@ static void PSTATUS_RIBBON_UpdatRibbon( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK
   if( isChange == TRUE &&
   ribbonWork->sndCnt == 0 )
   {
-    PMSND_PlaySystemSE(PSTATUS_SND_SLIDE);
-    ribbonWork->sndCnt = 4;
+    PMSND_PlaySE_byPlayerID(PSTATUS_SND_SLIDE,SEPLAYER_SE1);
+    ribbonWork->sndCnt = 3;
   }
       
   

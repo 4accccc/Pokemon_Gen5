@@ -19,7 +19,7 @@
 
 #include "mb_test.naix"
 #include "message_dl.naix"
-#include "../prog/arc/font/font.naix"
+#include "font.naix"
 //======================================================================
 //	define
 //======================================================================
