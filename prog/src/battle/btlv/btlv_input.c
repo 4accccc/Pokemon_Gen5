@@ -1337,6 +1337,7 @@ static  void  TCB_TransformDir2Waza( GFL_TCB* tcb, void* work )
   GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
                                    GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
   GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
+  GFL_CLACT_UNIT_SetDrawEnable( ttw->biw->wazatype_clunit, TRUE );
   ttw->biw->tcb_execute_flag = 0;
   GFL_HEAP_FreeMemory( ttw );
   GFL_TCB_DeleteTask( tcb );
