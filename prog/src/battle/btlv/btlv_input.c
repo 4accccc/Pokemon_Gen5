@@ -1191,6 +1191,24 @@ static  void  TCB_TransformWaza2Command( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
+    if( ttw->biw->center_button_type == BTLV_INPUT_CENTER_BUTTON_ESCAPE )
+    { 
+      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
+                                       GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+    }
+    else
+    { 
+      if( ( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE ) && ( ttw->pos != BTLV_MCSS_POS_C ) )
+      { 
+        GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0e_NSCR,
+                                         GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+      }
+      else
+      { 
+        GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0d_NSCR,
+                                         GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+      }
+    }
     SetupScrollUp( ttw->biw, TTW2C_START_SCROLL_X, TTW2C_START_SCROLL_Y, TTW2C_SCROLL_SPEED, TTW2C_SCROLL_COUNT );
     SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_BACKWARD );
     SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_VANISH );
