@@ -695,8 +695,13 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
 //--------------------------------------------------------------
 static BOOL OneselfSeq_Leave(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
-  unisys->finish = TRUE;
-  return TRUE;
+  switch(*seq){
+  case 0:
+    unisys->finish = TRUE;
+    (*seq)++;
+    break;
+  }
+  return FALSE;
 }
 
 //--------------------------------------------------------------

@@ -268,7 +268,10 @@ void GameCommSys_Main(GAME_COMM_SYS_PTR gcsp)
     if(func_tbl->exit_wait_func == NULL || func_tbl->exit_wait_func(&sub_work->func_seq, gcsp->parent_work, gcsp->app_work) == TRUE){
       GameCommSub_SeqSet(sub_work, GCSSEQ_FINISH);
     }
-    break;
+    else{
+      break;
+    }
+    //break;
   case GCSSEQ_FINISH:
     if(NetErr_App_CheckError() == TRUE){
       return; //エラー発生による強制終了だった場合はエラー画面が表示されるまで待つ

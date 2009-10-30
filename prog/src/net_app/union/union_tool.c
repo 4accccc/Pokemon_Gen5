@@ -54,12 +54,18 @@ BOOL UnionTool_CheckWayOut(FIELDMAP_WORK *fieldWork)
 {
   VecFx32 pos;
   FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldWork);
+  GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork(fieldWork);
+  PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork(gsys);
   int i;
   
   FIELD_PLAYER_GetPos(player, &pos);
   pos.x >>= FX32_SHIFT;
   pos.z >>= FX32_SHIFT;
 
+  if(PLAYERWORK_getDirection( plWork ) == DIR_UP){
+    return FALSE;
+  }
+  
   for(i = 0; i < NELEMS(UnionWayOutPos); i++){
     if(pos.x == UnionWayOutPos[i].x && pos.z == UnionWayOutPos[i].z){
       return TRUE;
