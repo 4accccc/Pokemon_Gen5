@@ -1433,7 +1433,21 @@ void FIELD_RAIL_WORK_Update(FIELD_RAIL_WORK * work)
         //GF_ASSERT( (MATH_ABS(work->width_ofs) % RAIL_WALK_OFS) == 0 );
       }
 #endif // DEBUG_ONLY_FOR_tomoya_takahashi
+
+      // line_ofs‚Ì’²®
+      if( (work->line_ofs % RAIL_WALK_OFS) != 0 )
+      {
+        if( (work->line_ofs % RAIL_WALK_OFS) > (RAIL_WALK_OFS/2) )
+        {
+          work->line_ofs += RAIL_WALK_OFS - (work->line_ofs % RAIL_WALK_OFS);
+        }
+        else
+        {
+          work->line_ofs -= (work->line_ofs % RAIL_WALK_OFS);
+        }
+      }
 		}
+
 	}
 
 }
