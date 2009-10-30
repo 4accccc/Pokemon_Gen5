@@ -266,6 +266,7 @@ static void _windowRewrite(FIELD_ITEMMENU_WORK* pWork)
   ITEMDISP_upMessageRewrite(pWork);
   ITEMDISP_WazaInfoWindowChange(pWork);
   ITEMDISP_CellMessagePrint(pWork);
+  BTN_DrawCheckBox( pWork );
   pWork->bChange = TRUE;
 }
 
@@ -848,10 +849,12 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       KTST_SetDraw( pWork, (GFL_UI_CheckTouchOrKey == GFL_APP_END_KEY) ); 
       _CHANGE_STATE(pWork, _itemKindSelectMenu);
     }
-    else if(BAG_MENU_TOUROKU==pWork->ret_code2){  //とうろく
-      GFL_SOUND_PlaySE( SE_BAG_REGIST_Y );
-        // @TODO 登録処理
-        // @TODO なくなる？
+    else if( BAG_MENU_TOUROKU==pWork->ret_code2 || BAG_MENU_KAIZYO==pWork->ret_code2 ){  //とうろく
+      SHORTCUT_SetEventItem( pWork, pWork->curpos );
+      _CHANGE_STATE(pWork, _itemKindSelectMenu);
+    }
+    else if(BAG_MENU_KAIZYO==pWork->ret_code2){  //解除
+      SHORTCUT_SetEventItem( pWork, pWork->curpos );
       _CHANGE_STATE(pWork, _itemKindSelectMenu);
     }
     else if(pWork->ret_item == ITEM_TAUNMAPPU){
@@ -2172,7 +2175,7 @@ static void SHORTCUT_SetEventItem( FIELD_ITEMMENU_WORK* pWork, int pos )
       ITEMMENU_AddCnvButtonItem(pWork,item->id);
     }
 
-    GFL_SOUND_PlaySE( SE_BAG_REGIST_Y );
+    GFL_SOUND_PlaySE( SE_BAG_REGIST_Y ); // 登録音
 
     _windowRewrite(pWork);
   }
@@ -2704,7 +2707,6 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     pWork->pocketno = pocketno;
     // ソートボタン表示切替
     SORT_ModeReset( pWork );
-    BTN_DrawCheckBox( pWork );
     _windowRewrite(pWork);
     
     KTST_SetDraw( pWork, FALSE );

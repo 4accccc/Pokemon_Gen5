@@ -1105,12 +1105,8 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
         pWork->nListEnable[ i ] = 1;
       }
       GFL_HEAP_FreeMemory( itemdata );
-
     }
   }
-
-
-
 }
 
 
@@ -1160,17 +1156,23 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
       dest_adrs += (4)*32;
       GX_LoadOBJ(&charbuff[(12*32)], dest_adrs, (32*4));
 
-      if(pWork->nListEnable[i]){
-        if(pWork->pocketno == BAG_POKE_EVENT){
+      if(pWork->nListEnable[i])
+      {
+        // u‚½‚¢‚¹‚Â‚È‚à‚Ìv‚Ì‚Ý•\Ž¦
+        if(pWork->pocketno == BAG_POKE_EVENT)
+        {
           GFL_CLACT_WK_SetAnmSeq( pWork->listMarkCell[i] , pWork->nListEnable[i]-1 );
           GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i] , TRUE );
         }
-        else{
+        else
+        {
           GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i] , FALSE );
         }
+
         GFL_CLACT_WK_SetDrawEnable( pWork->listCell[i] , TRUE );
       }
-      else{
+      else
+      {
         GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i] , FALSE );
         GFL_CLACT_WK_SetDrawEnable( pWork->listCell[i] , FALSE );
       }
