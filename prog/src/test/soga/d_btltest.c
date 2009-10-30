@@ -91,6 +91,7 @@ typedef struct
   fx32                scale;
   fx32                scale_value;
   BTLV_BALL_GAUGE_WORK* bbgw[ 2 ];
+  u8                  cursor_flag;
 }SOGA_WORK;
 
 static  void  MoveCamera( SOGA_WORK *wk );
@@ -258,7 +259,7 @@ static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void
 
   wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
-  wk->biw = BTLV_INPUT_Init( BTLV_INPUT_TYPE_SINGLE, wk->font, wk->heapID );
+  wk->biw = BTLV_INPUT_Init( BTLV_INPUT_TYPE_SINGLE, wk->font, &wk->cursor_flag, wk->heapID );
 
   //フェードイン
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, 2 );
