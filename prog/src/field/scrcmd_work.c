@@ -479,7 +479,8 @@ void SCRCMD_WORK_StartMenu( SCRCMD_WORK *work )
       &menuH, count, menuWork->x, menuWork->y, sx, sy );
 
 	menuWork->menuFunc = FLDMENUFUNC_AddEventMenuList(
-      work->head.fldMsgBG, &menuH, menuWork->listData, 0, 0 );
+      work->head.fldMsgBG, &menuH, menuWork->listData, 0, 0,
+      menuWork->cancel );
 }
 
 //--------------------------------------------------------------
@@ -509,10 +510,11 @@ BOOL SCRCMD_WORK_ProcMenu( SCRCMD_WORK *work )
   if( ret != FLDMENUFUNC_CANCEL ){	//Œˆ’è
     *(menuWork->ret) = ret;
   }else{
+#if 0
     if( menuWork->cancel == FALSE ){ //BƒLƒƒƒ“ƒZƒ‹—LŒø‚Å‚Í‚È‚¢
       return( FALSE );
     }
-
+#endif
     *(menuWork->ret) = EV_WIN_B_CANCEL;
   }
   
