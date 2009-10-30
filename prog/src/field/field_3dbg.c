@@ -207,9 +207,6 @@ void FIELD_3DBG_Write( FIELD_3DBG* p_sys )
 	// 描画処理
 	// NNS系のジオメトリコマンド展開
 	NNS_G3dGeFlushBuffer();
-	
-	// リセット
-	G3X_Reset();
 
 	// 射影行列設定
 	G3_MtxMode( GX_MTXMODE_PROJECTION );
@@ -814,35 +811,31 @@ static void FIELD_3DBG_PLANE_SetData( FIELD_3DPLANE* p_wk, const FIELD_3DBG* cp_
 //-----------------------------------------------------------------------------
 static void FIELD_3DBG_PLANE_Write( const FIELD_3DPLANE* cp_wk )
 {
-	if( !(GFL_UI_KEY_GetCont() & PAD_BUTTON_R) ){
-	
-		// texture変換設定
-		G3_MtxMode( GX_MTXMODE_TEXTURE );
-		G3_Identity();
-		G3_MultMtx33( &cp_wk->tex_mtx );
+  // texture変換設定
+  G3_MtxMode( GX_MTXMODE_TEXTURE );
+  G3_Identity();
+  G3_MultMtx33( &cp_wk->tex_mtx );
 
-		// 平面の描画
-		G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
-		G3_Scale( cp_wk->base_scale, cp_wk->base_scale, cp_wk->base_scale );
+  // 平面の描画
+  G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
+  G3_Scale( cp_wk->base_scale, cp_wk->base_scale, cp_wk->base_scale );
 
-		G3_Begin( GX_BEGIN_QUADS );
+  G3_Begin( GX_BEGIN_QUADS );
 
-		//平面ポリゴンなので法線ベクトルは4頂点で共用
-		G3_TexCoord( cp_wk->u0, cp_wk->v0 );
-		G3_Vtx( -cp_wk->size_half_x, cp_wk->size_half_y, -cp_wk->z );
+  //平面ポリゴンなので法線ベクトルは4頂点で共用
+  G3_TexCoord( cp_wk->u0, cp_wk->v0 );
+  G3_Vtx( -cp_wk->size_half_x, cp_wk->size_half_y, -cp_wk->z );
 
-		G3_TexCoord( cp_wk->u0, cp_wk->v1 );
-		G3_Vtx( -cp_wk->size_half_x, -cp_wk->size_half_y, -cp_wk->z );
+  G3_TexCoord( cp_wk->u0, cp_wk->v1 );
+  G3_Vtx( -cp_wk->size_half_x, -cp_wk->size_half_y, -cp_wk->z );
 
-		G3_TexCoord( cp_wk->u1, cp_wk->v1 );
-		G3_Vtx( cp_wk->size_half_x, -cp_wk->size_half_y, -cp_wk->z );
+  G3_TexCoord( cp_wk->u1, cp_wk->v1 );
+  G3_Vtx( cp_wk->size_half_x, -cp_wk->size_half_y, -cp_wk->z );
 
-		G3_TexCoord( cp_wk->u1, cp_wk->v0 );
-		G3_Vtx( cp_wk->size_half_x, cp_wk->size_half_y, -cp_wk->z );
+  G3_TexCoord( cp_wk->u1, cp_wk->v0 );
+  G3_Vtx( cp_wk->size_half_x, cp_wk->size_half_y, -cp_wk->z );
 
-		G3_End();
-	}
-
+  G3_End();
 }
 
 //----------------------------------------------------------------------------
