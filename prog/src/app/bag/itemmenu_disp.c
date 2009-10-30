@@ -693,7 +693,11 @@ void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
   GFL_BMPWIN_Delete(pWork->winSellGold);
 
   GFL_CLACT_WK_Remove( pWork->scrollCur );
-  GFL_CLACT_WK_Remove( pWork->cellicon );
+  
+  if(pWork->cellicon!=NULL){
+    GFL_CLACT_WK_Remove( pWork->cellicon );
+  }
+
   GFL_CLGRP_CGR_Release( pWork->objRes[_CLACT_CHR] );
   GFL_CLGRP_PLTT_Release( pWork->objRes[_CLACT_PLT] );
   GFL_CLGRP_CELLANIM_Release( pWork->objRes[_CLACT_ANM] );
@@ -1206,7 +1210,7 @@ void ITEMDISP_scrollCursorMove(FIELD_ITEMMENU_WORK* pWork)
     }
     GFL_CLACT_WK_GetPos( pWork->scrollCur , &pos, CLWK_SETSF_NONE );
     pos.y = y;
-    GFL_CLACT_WK_SetPos( pWork->scrollCur ,  &pos, CLWK_SETSF_NONE );
+    GFL_CLACT_WK_SetPos( pWork->scrollCur , &pos, CLWK_SETSF_NONE );
   }
 }
 
