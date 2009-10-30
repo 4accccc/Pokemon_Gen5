@@ -683,10 +683,10 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
   if(unisys == NULL){
     //ƒ†ƒjƒIƒ“I—¹
     VecFx32 pos;
-    pos.x = 72 << FX32_SHIFT;
+    pos.x = 104 << FX32_SHIFT;
     pos.y = 48;
     pos.z = 88 << FX32_SHIFT;
-    return DEBUG_EVENT_ChangeMapPos(gsys, fieldWork, ZONE_ID_T02PC0101, &pos, 0);
+    return DEBUG_EVENT_ChangeMapPos(gsys, fieldWork, ZONE_ID_C01PC0101, &pos, 0);
   }
   
   if(UnionMain_GetFinishReq(unisys) == TRUE){
