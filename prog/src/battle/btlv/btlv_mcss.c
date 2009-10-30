@@ -530,6 +530,20 @@ void  BTLV_MCSS_SetShadowVanishFlag( BTLV_MCSS_WORK *bmw, int position, u8 flag 
 
 //============================================================================================
 /**
+ * @brief アニメーションフレームスピードセット
+ *
+ * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
+ * @param[in] position  セットするMCSSの立ち位置
+ * @param[in] speed     セットするスピード
+ */
+//============================================================================================
+void  BTLV_MCSS_SetAnmSpeed( BTLV_MCSS_WORK *bmw, int position, fx32 speed )
+{ 
+  //MCSS_SetAnmSpeed( bmw->mcss[ position ], speed );
+}
+
+//============================================================================================
+/**
  * @brief ポケモン移動
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
@@ -717,7 +731,16 @@ void  BTLV_MCSS_MoveCircle( BTLV_MCSS_WORK *bmw, BTLV_MCSS_MOVE_CIRCLE_PARAM* bm
   //ポケモンの向きによって、＋－を決定
   if( bmmcp_p->position & 1 )
   { 
-    bmmcp_p->shift ^= 1;
+    if( ( ( bmmcp_p->axis == BTLEFF_AXIS_X_L ) || ( bmmcp_p->axis == BTLEFF_AXIS_X_R ) ||
+          ( bmmcp_p->axis == BTLEFF_AXIS_Z_L ) || ( bmmcp_p->axis == BTLEFF_AXIS_Z_R ) ) &&
+        ( ( bmmcp->shift == BTLEFF_SHIFT_V_P ) || ( bmmcp->shift == BTLEFF_SHIFT_V_M ) ) )
+    { 
+      ; 
+    }
+    else
+    { 
+      bmmcp_p->shift ^= 1;
+    }
   }
   if( bmmcp_p->axis & 1 )
   { 
