@@ -109,6 +109,17 @@ enum
   BAR_ICON_INPUT_U, ///< ”’l“ü—Íã
   BAR_ICON_INPUT_D, ///< ”’l“ü—Í‰º
   BAR_ICON_MAX,
+
+  BAR_ICON_ANM_EXIT     = 0,
+  BAR_ICON_ANM_RETURN   = 1,
+  BAR_ICON_ANM_LEFT     = 4,
+  BAR_ICON_ANM_RIGHT    = 5,
+  BAR_ICON_ANM_CHECKBOX = 6,
+  BAR_ICON_ANM_EXIT_OFF   = 14,
+  BAR_ICON_ANM_LEFT_OFF   = 18,
+  BAR_ICON_ANM_RIGHT_OFF  = 19,
+  BAR_ICON_ANM_CHECKBOX_OFF  = 20,
+  BAR_ICON_ANM_MAX,
 };
 
 //--------------------------------------------------------------

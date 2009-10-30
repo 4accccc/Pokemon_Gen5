@@ -694,9 +694,9 @@ void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
 
   GFL_CLACT_WK_Remove( pWork->scrollCur );
   
-  if(pWork->cellicon!=NULL){
-    GFL_CLACT_WK_Remove( pWork->cellicon );
-  }
+ if(pWork->cellicon!=NULL){
+  GFL_CLACT_WK_Remove( pWork->cellicon );
+ }
 
   GFL_CLGRP_CGR_Release( pWork->objRes[_CLACT_CHR] );
   GFL_CLGRP_PLTT_Release( pWork->objRes[_CLACT_PLT] );
@@ -962,11 +962,11 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
     cellInitData.anmseq = 1;
 
     pWork->clwkCur = GFL_CLACT_WK_Create(
-      pWork->cellUnit ,
+      pWork->cellUnit,
       pWork->cellRes[_NCG_CUR], pWork->cellRes[_PLT_CUR],  pWork->cellRes[_ANM_CUR],
-      &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
+      &cellInitData ,CLSYS_DEFREND_MAIN, pWork->heapID );
 
-    GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur , TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, TRUE );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkCur, TRUE );
   
     // タッチ起動 > カーソルをOFF
@@ -1247,7 +1247,7 @@ void ITEMDISP_scrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork, int num)
   }
 
   // カーソルを表示
-  GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, TRUE );
+//  GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, TRUE );
 }
 
 //------------------------------------------------------------------------------

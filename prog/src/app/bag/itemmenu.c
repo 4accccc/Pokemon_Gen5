@@ -132,6 +132,7 @@ static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork );
 static void InputNum_Start( FIELD_ITEMMENU_WORK* pWork, BAG_INPUT_MODE mode );
 static void InputNum_Exit( FIELD_ITEMMENU_WORK* pWork );
 static void InputNum_Proc( FIELD_ITEMMENU_WORK* pWork );
+static void InputNum_ButtonState( FIELD_ITEMMENU_WORK* pWork, BOOL on_off );
 static void SORT_Type( FIELD_ITEMMENU_WORK* pWork );
 static void SORT_ABC( FIELD_ITEMMENU_WORK* pWork );
 static u16 SORT_GetABCPrio( u16 item_no );
@@ -139,7 +140,6 @@ static void SORT_Button( FIELD_ITEMMENU_WORK* pWork );
 static void SORT_ModeReset( FIELD_ITEMMENU_WORK* pWork );
 static void SORT_Draw( FIELD_ITEMMENU_WORK* pWork );
 static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off );
-static void BTN_StateChange( FIELD_ITEMMENU_WORK* pWork, BOOL on_off );
 static void SHORTCUT_SetEventItem( FIELD_ITEMMENU_WORK* pWork, int pos );
 static void SHORTCUT_SetPocket( FIELD_ITEMMENU_WORK* pWork );
 static void BTN_DrawCheckBox( FIELD_ITEMMENU_WORK* pWork );
@@ -446,6 +446,7 @@ static BOOL _posplus(FIELD_ITEMMENU_WORK* pWork, int length)
     bChange = TRUE;
   }
   else if((pWork->curpos!=5) && ((pWork->curpos+1) < length)){
+    //リストの終端まで来たのでカーソルが移動
     pWork->curpos++;
     bChange = TRUE;
   }
@@ -496,8 +497,12 @@ static BOOL _posminus(FIELD_ITEMMENU_WORK* pWork, int length)
 
 static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
 {
+  enum
+  {
+    Y_MAX = _SCROLL_BOTTOM_Y - _SCROLL_TOP_Y,
+  };
+  
   u32 x,y,i;
-  int ymax = _SCROLL_BOTTOM_Y - _SCROLL_TOP_Y;
 
   if(GFL_UI_TP_GetPointCont(&x, &y) == TRUE){
     // 範囲判定
@@ -510,14 +515,18 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
 
     {
       int length = ITEMMENU_GetItemPocketNumber( pWork);
-      int num = (length * (y-_SCROLL_TOP_Y)) / ymax;
+      int num = (length * (y-_SCROLL_TOP_Y)) / Y_MAX;
       int prelistpos = pWork->oamlistpos;
 
       pWork->curpos = 0;
       pWork->oamlistpos = -1;
+        
+      HOSAKA_Printf( "===== length=%d num=%d \n", length, num );
+
       for(i = 0 ; i < num ; i++)
       {
         _posplus(pWork, length);
+        HOSAKA_Printf( "[%d] curpos=%d \n", i, pWork->curpos );
       }
 
       // リストが移動した時のみSE
@@ -676,11 +685,12 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
   }
 
   if( _itemScrollCheck(pWork) ){   // スクロールバーの操作
-    KTST_SetDraw( pWork, FALSE );
     ITEMDISP_scrollCursorMove(pWork);
-    bChange = TRUE;
+
+    // 負荷軽減のためセルメッセージだけ更新
+//  ITEMDISP_CellMessagePrint(pWork);
   }
-  else if(_itemMovePositionTouchItem(pWork)){
+  else if(_itemMovePositionTouchItem(pWork)){ // アイテム移動モード時のアイテム部分タッチ処理
     ITEMDISP_scrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
     bChange = TRUE;
   }
@@ -1031,14 +1041,13 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     _CHANGE_STATE(pWork,_itemMovePosition);
     return;
   }
-
   // タッチスクロール
-  if( _itemScrollCheck(pWork) )
+  else if( _itemScrollCheck(pWork) )
   {
-    KTST_SetDraw( pWork, FALSE );
     ITEMDISP_scrollCursorMove(pWork);
     bChange = TRUE;
   }
+  // キー操作
   else if( _keyMoveCheck(pWork) )
   {
     ITEMDISP_scrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
@@ -1178,7 +1187,7 @@ static void _itemTrashEndWait(FIELD_ITEMMENU_WORK* pWork)
   // @TODO タッチ
   if(PAD_BUTTON_DECIDE == GFL_UI_KEY_GetTrg()){
     GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
-    BTN_StateChange( pWork, TRUE );
+    InputNum_ButtonState( pWork, TRUE );
     _CHANGE_STATE(pWork,_itemKindSelectMenu);
   }
 }
@@ -1239,7 +1248,7 @@ static void _itemTrashYesNoWait(FIELD_ITEMMENU_WORK* pWork)
       _CHANGE_STATE(pWork,_itemTrashYesWait);
     }
     else{
-      BTN_StateChange( pWork, TRUE );
+      InputNum_ButtonState( pWork, TRUE );
       _CHANGE_STATE(pWork,_itemKindSelectMenu);
     }
   }
@@ -1261,6 +1270,32 @@ static void _itemTrashYesNo(FIELD_ITEMMENU_WORK* pWork)
   _CHANGE_STATE(pWork,_itemTrashYesNoWait);
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイテムを捨てる為の表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _itemTrash(FIELD_ITEMMENU_WORK* pWork)
+{
+  pWork->InputNum = 1;  //初期化
+
+  InputNum_ButtonState( pWork, FALSE );
+
+  // 数値入力開始
+  InputNum_Start( pWork, BAG_INPUT_MODE_TRASH );
+
+  GFL_MSG_GetString( pWork->MsgManager, msg_bag_054, pWork->pStrBuf );
+  WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
+  WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+  ITEMDISP_ItemInfoWindowDisp( pWork );
+    
+  //@TODO リストとBAR双方にOBJが使われているためバッティングする。OAMの半透明を切替る必要あり
+//  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 /*| GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1*/ | GX_BLEND_PLANEMASK_OBJ , -8 );
+
+  _CHANGE_STATE(pWork,_itemTrashWait);
+}
 
 //------------------------------------------------------------------------------
 /**
@@ -1298,40 +1333,15 @@ static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork)
     GFL_SOUND_PlaySE( SE_BAG_CANCEL );
 
     InputNum_Exit( pWork );
+  
+    InputNum_ButtonState( pWork, TRUE );
+    
     //@TODO ここでパッシブ解除していいのか？
     G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 0 );
 
     _CHANGE_STATE(pWork,_itemKindSelectMenu);
   }
 }
-
-//------------------------------------------------------------------------------
-/**
- * @brief   アイテムを捨てる為の表示
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _itemTrash(FIELD_ITEMMENU_WORK* pWork)
-{
-  pWork->InputNum = 1;  //初期化
-
-  BTN_StateChange( pWork, FALSE );
-
-  // 数値入力開始
-  InputNum_Start( pWork, BAG_INPUT_MODE_TRASH );
-
-  GFL_MSG_GetString( pWork->MsgManager, msg_bag_054, pWork->pStrBuf );
-  WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
-  WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-  ITEMDISP_ItemInfoWindowDisp( pWork );
-    
-  //@TODO リストとBAR双方にOBJが使われているためバッティングする。OAMの半透明を切替る必要あり
-//  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 /*| GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1*/ | GX_BLEND_PLANEMASK_OBJ , -8 );
-
-  _CHANGE_STATE(pWork,_itemTrashWait);
-}
-
 
 //=============================================================================
 //
@@ -1351,7 +1361,7 @@ static void _itemTrash(FIELD_ITEMMENU_WORK* pWork)
 //-----------------------------------------------------------------------------
 static void _itemSellInit( FIELD_ITEMMENU_WORK* pWork )
 {
-  BTN_StateChange( pWork, FALSE );
+  InputNum_ButtonState( pWork, FALSE );
   
   // 買えないもの判定
   {
@@ -1587,7 +1597,7 @@ static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork )
   // おこづかい表示終了
   ITEMDISP_GoldDispOut( pWork );
 
-  BTN_StateChange( pWork, TRUE );
+  InputNum_ButtonState( pWork, TRUE );
 
   _CHANGE_STATE( pWork, _itemKindSelectMenu );
 }
@@ -1750,6 +1760,42 @@ static void InputNum_Proc( FIELD_ITEMMENU_WORK* pWork )
     }
 
     ITEMDISP_InputNumDisp(pWork,pWork->InputNum);
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  ボタンの状態変化
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork
+ *	@param	on_off 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void InputNum_ButtonState( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
+{
+  if( on_off )
+  {
+    // 押せる表現
+
+    // ソートボタン
+    SORT_ModeReset( pWork );
+    // バーアイコン
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[ BAR_ICON_LEFT ],  BAR_ICON_ANM_LEFT );
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[ BAR_ICON_RIGHT ], BAR_ICON_ANM_RIGHT );
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[ BAR_ICON_EXIT ],  BAR_ICON_ANM_EXIT );
+  }
+  else
+  {
+    // 押せない表現
+    
+    // ソートボタン
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 4 );
+    // バーアイコン各種
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[ BAR_ICON_LEFT ],  BAR_ICON_ANM_LEFT_OFF );
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[ BAR_ICON_RIGHT ], BAR_ICON_ANM_RIGHT_OFF );
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[ BAR_ICON_EXIT ],  BAR_ICON_ANM_EXIT_OFF );
   }
 }
 
@@ -2096,6 +2142,12 @@ static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
     GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
   }
 
+  // アイテム0個は強制的にカーソルを出さない
+  if( ITEMMENU_GetItemPocketNumber(pWork) == 0 )
+  {
+    on_off = FALSE;
+  }
+
   // カーソルを消す
   GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, on_off );
 
@@ -2103,31 +2155,6 @@ static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , on_off );
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1 , on_off );
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG2 , on_off );
-}
-
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  ボタンの状態変化
- *
- *	@param	FIELD_ITEMMENU_WORK* pWork
- *	@param	on_off 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void BTN_StateChange( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
-{
-  if( on_off )
-  {
-    // ソートボタン復帰
-    SORT_ModeReset( pWork );
-  }
-  else
-  {
-    // ソートボタンを押せない表現に
-    GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 4 );
-  }
 }
 
 //-----------------------------------------------------------------------------
@@ -2747,6 +2774,10 @@ static void	_VBlank( GFL_TCB *tcb, void *work )
 static void _startState(FIELD_ITEMMENU_WORK* pWork)
 {
   ITEMDISP_SetVisible();
+  
+  // 初期化
+  KTST_SetDraw( pWork ,GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY );
+
   if (GFL_FADE_CheckFade() == FALSE) {
     _CHANGE_STATE(pWork, _itemKindSelectMenu);
   }
