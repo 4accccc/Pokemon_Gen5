@@ -244,7 +244,10 @@ void DEBUG_PerformanceInit(void)
 {
 	GFL_STD_MemClear(&pfm_sys, sizeof(PERFORMANCE_SYSTEM));
   if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER ){
-  	pfm_sys.on_off = TRUE;	//デフォルトで表示ON
+#if DEBUG_ONLY_FOR_none
+#else
+    pfm_sys.on_off = TRUE;	//デフォルトで表示ON
+#endif
   }
 }
 
