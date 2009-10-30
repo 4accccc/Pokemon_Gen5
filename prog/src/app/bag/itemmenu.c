@@ -2822,7 +2822,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   pWork->pStrBuf = GFL_STR_CreateBuffer(200,pWork->heapID);
   pWork->pExpStrBuf = GFL_STR_CreateBuffer(200,pWork->heapID);
   pWork->WordSet    = WORDSET_Create( pWork->heapID );
-  pWork->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr ,
+  pWork->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr ,
                                        GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
 
   ITEMDISP_upMessageCreate(pWork);
