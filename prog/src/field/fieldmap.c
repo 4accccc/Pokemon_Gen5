@@ -2804,7 +2804,7 @@ extern void ENCEFF_Draw3D(void);
 //==================================================================
 static void Draw3DScrnTexMode(FIELDMAP_WORK * fieldWork)
 {
-  G3X_SetClearColor(GX_RGB(0,0,0),0,0x7fff,0,FALSE);
+  G3X_SetClearColor(GX_RGB(31,31,31),31,0x7fff,0,FALSE);
 
 	ENCEFF_Draw3D();
 }
