@@ -502,6 +502,7 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BTL
   wk->plistData.sel_poke = 0;
 	wk->plistData.chg_waza = 0;
   wk->plistData.rule = BTL_MAIN_GetRule( wk->mainModule );
+  wk->plistData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
 
   {
     u32 i, max = BTL_POKESELECT_RESULT_GetCount( result );
@@ -579,6 +580,7 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->bagData.reserved_energy = reserved_energy;
     wk->bagData.end_flg = FALSE;
     wk->bagData.ret_item = ITEM_DUMMY_DATA;
+    wk->bagData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
 
     wk->plistData.pp = BTL_MAIN_GetPlayerPokeParty( wk->mainModule );
     wk->plistData.font = wk->fontHandle;
@@ -587,6 +589,7 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->plistData.end_flg = FALSE;
     wk->plistData.sel_poke = 0;
 		wk->plistData.chg_waza = 0;
+    wk->plistData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
 
     wk->selectItemSeq = 1;
   }

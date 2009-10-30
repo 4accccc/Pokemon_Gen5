@@ -100,7 +100,7 @@ typedef struct
 
 #define BTLV_INPUT_NOMOVE ( -128 )
 
-extern  BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, GFL_FONT* font, HEAPID heapID );
+extern  BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, GFL_FONT* font, u8* cursor_flag, HEAPID heapID );
 extern	void			        BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw );
 extern	void			        BTLV_INPUT_Main( BTLV_INPUT_WORK* biw );
 extern  void              BTLV_INPUT_InitBG( BTLV_INPUT_WORK* biw );

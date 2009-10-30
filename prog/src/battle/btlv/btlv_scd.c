@@ -116,6 +116,7 @@ struct _BTLV_SCD {
   s8                fadeValue;
   s8                fadeValueEnd;
   s8                fadeStep;
+  u8                cursor_flag;    //下画面カーソルフラグ
 
   BtlAction  selActionResult;
   const BTLV_CORE* vcore;
@@ -173,6 +174,8 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
   wk->strbuf = GFL_STR_CreateBuffer( 128, heapID );
   wk->pokesel_param = NULL;
 
+  wk->cursor_flag = 0;
+
   wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
 
   spstack_init( wk );
@@ -189,7 +192,7 @@ void BTLV_SCD_Init( BTLV_SCD* wk )
     wk->biw = BTLV_INPUT_Init( BTLV_INPUT_TYPE_SINGLE, wk->font, wk->heapID );
   }
 #endif
-    wk->biw = BTLV_INPUT_Init( BTL_MAIN_GetRule( wk->mainModule ), wk->font, wk->heapID );
+    wk->biw = BTLV_INPUT_Init( BTL_MAIN_GetRule( wk->mainModule ), wk->font, &wk->cursor_flag, wk->heapID );
 
   ///<obj
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
@@ -1274,7 +1277,13 @@ static void printCommWait( BTLV_SCD* wk )
   PRINT_UTIL_Print( &wk->printUtil, wk->printQue, drawX, drawY, wk->strbuf, wk->font );
 }
 
-
+//=============================================================================================
+//  カーソルフラグポインタ取得
+//=============================================================================================
+u8* BTLV_SCD_GetCursorFlagPtr( BTLV_SCD* wk )
+{ 
+  return &wk->cursor_flag;
+}
 
 //=============================================================================================
 //  決定音再生

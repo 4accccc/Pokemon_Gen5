@@ -375,13 +375,12 @@ struct _BTLV_INPUT_WORK
   u32                   tcb_execute_flag    :1;
   u32                   tcb_execute_count   :3;
   u32                   center_button_type  :1;
-  u32                   cursor_mode         :1;
   u32                   cursor_pos          :4;
   u32                   old_cursor_pos      :4;
   u32                   cursor_decide       :1;
   u32                   trainer_flag        :1;
   u32                   fade_flag           :2;
-  u32                                       :14;
+  u32                                       :15;
 
   //OBJリソース
   u32                   objcharID;
@@ -435,6 +434,8 @@ struct _BTLV_INPUT_WORK
   u32                   alloc_char_area;
 
   u8                    button_exist[ BTLV_INPUT_BUTTON_MAX ];  //押せるボタンかどうかチェック
+
+  u8                    *cursor_mode;
 };
 
 typedef struct
@@ -546,14 +547,15 @@ static  inline  void  SePlaySelect( void );
 /**
  *  @brief  システム初期化
  *
- *  @param[in]  type    インターフェースタイプ
- *  @param[in]  font    使用するフォント
- *  @param[in]  heapID  ヒープID
+ *  @param[in]  type          インターフェースタイプ
+ *  @param[in]  font          使用するフォント
+ *  @param[in]  cursor_flag   カーソル表示するかどうかフラグのポインタ（他のアプリとも共用するため）
+ *  @param[in]  heapID        ヒープID
  *
  *  @retval システム管理構造体のポインタ
  */
 //============================================================================================
-BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, GFL_FONT* font, HEAPID heapID )
+BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
 {
   BTLV_INPUT_WORK *biw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_INPUT_WORK ) );
 
@@ -565,6 +567,8 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, GFL_FONT* font, HEAPID 
   biw->font = font;
 
   biw->type = type;
+
+  biw->cursor_mode = cursor_flag;
 
   biw->old_cursor_pos = CURSOR_NOMOVE;
 
@@ -2565,7 +2569,7 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL*
 
   if( hit != GFL_UI_TP_HIT_NONE )
   { 
-    biw->cursor_mode = 0;
+    *(biw->cursor_mode) = 0;
     biw->cursor_pos = 0;
     biw->old_cursor_pos = CURSOR_NOMOVE;
     BTLV_INPUT_PutCursorOBJ( biw, tp_tbl, key_tbl );
@@ -2574,7 +2578,7 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL*
 
   if( trg )
   { 
-    if( biw->cursor_mode )
+    if( *(biw->cursor_mode) )
     { 
       s8 move_pos = BTLV_INPUT_NOMOVE;
       const BTLV_INPUT_KEYTBL* tbl = &key_tbl[ biw->cursor_pos ];
@@ -2629,7 +2633,7 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL*
     }
     else
     { 
-      biw->cursor_mode = 1;
+      *(biw->cursor_mode) = 1;
     }
     BTLV_INPUT_PutCursorOBJ( biw, tp_tbl, key_tbl );
   }
@@ -2692,7 +2696,7 @@ static  void  BTLV_INPUT_PutCursorOBJ( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HIT
         pos.y = hit->rect.bottom;
         break;
       }
-      GFL_CLACT_WK_SetDrawEnable( biw->cursor[ i ].clwk, biw->cursor_mode );
+      GFL_CLACT_WK_SetDrawEnable( biw->cursor[ i ].clwk, *(biw->cursor_mode) );
       GFL_CLACT_WK_SetPos( biw->cursor[ i ].clwk, &pos, CLSYS_DEFREND_SUB );
     }
     else
