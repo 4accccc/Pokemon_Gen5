@@ -42,7 +42,7 @@ typedef enum{
 
 #define PPD_ITEM_SLOT_NUM (3) //パーソナルのアイテムスロット数
 
-//アイテムを持たせる確率定義
+///@todo アイテムを持たせる確率定義 ビンゴがなくなる場合、変更が必要かも
 static u8 DATA_ItemRangeTable[][PPD_ITEM_SLOT_NUM] = {
    {50,5,0},  //通常
    {60,20,0}, //通常ふくがん
