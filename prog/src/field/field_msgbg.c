@@ -1068,7 +1068,7 @@ FLDMENUFUNC * FLDMENUFUNC_AddEventMenuList( FLDMSGBG *fmb,
   menuFunc = fldmenufunc_AddMenuList( fmb, pMenuHead, pMenuListData,
     list_pos, cursor_pos, fmb->deriveWin_plttNo );
   
-  if( cancel == TRUE ){
+  if( cancel == FALSE ){
     BmpMenuList_SetCancelMode(
         menuFunc->pMenuListWork, BMPMENULIST_CANCELMODE_NOT );
   }
