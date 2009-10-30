@@ -141,7 +141,7 @@ static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk )
 		work->g3DicaEff = GFL_G3D_CreateResourceArc(ARCID_CAPTEX, NARC_texViewTest_effect1_nsbca);
 		{
 			HEAPID heapID = FIELDMAP_GetHeapID(work->fieldWork);
-			work->g3DtexEff = GFL_SCRNTEX_CreateG3DresTex(heapID, SCRNTEX_VRAM_C);
+			work->g3DtexEff = GFL_SCRNTEX_CreateG3DresTex(heapID, SCRNTEX_VRAM_D);
 		}
 		// レンダー作成
 		work->g3DrndEff = GFL_G3D_RENDER_Create(work->g3DmdlEff, 0, work->g3DtexEff); 
@@ -152,7 +152,7 @@ static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk )
 		GFL_G3D_OBJECT_EnableAnime(work->g3DobjEff, 0); 
 
 		// スクリーンテクスチャ作成
-		GFL_SCRNTEX_Load(SCRNTEX_VRAM_D, SCRNTEX_VRAM_C);	// 他VRAMバンクへの転送はなし
+		GFL_SCRNTEX_Load(SCRNTEX_VRAM_D, SCRNTEX_VRAM_D);	// 他VRAMバンクへの転送はなし
 
 		work->dMode = FIELDMAP_GetDraw3DMode(work->fieldWork);
 		FIELDMAP_SetDraw3DMode(work->fieldWork, DRAW3DMODE_SCRNTEX);
