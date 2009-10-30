@@ -300,7 +300,12 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
 
 		(*seq)++;
 		break;
-  case 2:
+	case 2:
+		//フィールドマップを開始待ち
+		GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
+		(*seq) ++;
+		break;
+  case 3:
     // BGMフェードアウト終了待ち
     if( FIELD_BGM_CONTROL_IsFade() != TRUE )
     { 
@@ -308,11 +313,6 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
       (*seq)++;
     }
     break;
-	case 3:
-		//フィールドマップを開始待ち
-		GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
-		(*seq) ++;
-		break;
   case 4:
 		return GMEVENT_RES_FINISH; 
 	}
