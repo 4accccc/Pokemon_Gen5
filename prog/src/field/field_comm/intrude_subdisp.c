@@ -1286,7 +1286,8 @@ static u8 _IntSub_TownPosGet(ZONEID zone_id, GFL_CLACTPOS *dest_pos)
   int i;
   
   for(i = 0; i < PALACE_TOWN_DATA_MAX; i++){
-    if(PalaceTownData[i].reverse_zone_id == zone_id){
+    if(PalaceTownData[i].reverse_zone_id == zone_id
+        || PalaceTownData[i].front_zone_id == zone_id){
       dest_pos->x = PalaceTownData[i].subscreen_x;
       dest_pos->y = PalaceTownData[i].subscreen_y;
       return i;
