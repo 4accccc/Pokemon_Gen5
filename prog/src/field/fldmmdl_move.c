@@ -1586,7 +1586,6 @@ static int MMdl_GetMapPosGridData(
 BOOL MMDL_GetMapPosAttr(
 	const MMDL *fmmdl, const VecFx32 *pos, u32 *attr )
 {
-#if 1
 	FLDMAPPER_GRIDINFODATA gridData;
 	*attr = 0;
 	
@@ -1594,15 +1593,6 @@ BOOL MMDL_GetMapPosAttr(
 		*attr = gridData.attr;
 		return( TRUE );
 	}
-#else
-	FLDMAPPER_GRIDINFO GridInfo;
-  *attr = 0;
-
-  if( MMdl_GetMapGridInfo( fmmdl, pos, &GridInfo) == TRUE){
-    *attr = GridInfo.gridData[0].attr;
-    return ( TRUE );
-  }
-#endif
 	return( FALSE );
 }
 
@@ -1807,16 +1797,18 @@ BOOL MMDL_UpdateCurrentMapAttr( MMDL * fmmdl )
   if( MMDL_CheckMoveBitAttrGetOFF(fmmdl) == FALSE ){
     VecFx32 pos;
 		int gx = MMDL_GetOldGridPosX( fmmdl );
+		int gy = MMDL_GetOldGridPosY( fmmdl );
 		int gz = MMDL_GetOldGridPosZ( fmmdl );
     
     pos.x = GRID_SIZE_FX32( gx );
-    pos.y = 0;
+    pos.y = GRID_SIZE_FX32( gy );
     pos.z = GRID_SIZE_FX32( gz );
     MMDL_GetMapPosAttr( fmmdl, &pos, &old_attr );
     
     gx = MMDL_GetGridPosX( fmmdl );
     gz = MMDL_GetGridPosZ( fmmdl );
     MMDL_TOOL_GetCenterGridPos( gx, gz, &pos );
+    pos.y = MMDL_GetVectorPosY( fmmdl );
     MMDL_GetMapPosAttr( fmmdl, &pos, &now_attr );
   }
   
