@@ -29,6 +29,7 @@
 #include "field_comm\intrude_main.h"
 #include "field_comm\intrude_comm_command.h"
 #include "field/field_comm/intrude_minimono.h"
+#include "field/field_comm/intrude_monolith.h"
 #include "field/field_comm/intrude_mission.h"
 #include "field/field_comm/intrude_message.h"
 #include "field/field_comm/intrude_field.h"
@@ -247,5 +248,8 @@ VMCMD_RESULT EvCmdIntrudeConnectMapSetting( VMHANDLE *core, void *wk )
   if(intcomm != NULL){
     IntrudeField_ConnectMap(fieldWork, gsys, intcomm);
   }
+  
+  MONOLITH_AddConnectAllMap(fieldWork);
+
   return VMCMD_RESULT_CONTINUE;
 }

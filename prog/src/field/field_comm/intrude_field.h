@@ -23,6 +23,11 @@ enum{
   PALACE_MAP_WARP_OFFSET = (PALACE_MAP_LEN / 4) * 3,///残りこれ以内の座標になったらワープ
   
   PALACE_MAP_RANGE_LEN = (2056-1016) << FX32_SHIFT,     ///<パレスマップのX長
+  
+  PALACE_MAP_MONOLITH_X = 1496 << FX32_SHIFT,       ///<モノリス配置開始座標X
+  PALACE_MAP_MONOLITH_Y = 0,
+  PALACE_MAP_MONOLITH_Z = 488 << FX32_SHIFT,
+  PALACE_MAP_MONOLITH_NUM = 3,                      ///<モノリスの連続設置数
 };
 
 //==============================================================================

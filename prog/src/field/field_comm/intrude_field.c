@@ -307,6 +307,7 @@ GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
   ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
   VecFx32 pos;
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gameSys);
+  int i;
   
   if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION || intcomm == NULL){
     return NULL;
@@ -324,29 +325,34 @@ GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
   
   FIELD_PLAYER_GetPos( pcActor, &pos );
   //T01へワープ
-  if(pos.x >= FX32_CONST(1496) && pos.x <= FX32_CONST(1528) 
-      && pos.z >= FX32_CONST(504) && pos.z <= FX32_CONST(504)){
-    pos.x = 12536 << FX32_SHIFT;
-    pos.y = 0;
-    pos.z = 12120 << FX32_SHIFT;
-    
-    if(intcomm != NULL 
-        && GFL_NET_GetConnectNum() > 1 
-        && GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gameSys)) == GAME_COMM_NO_INVASION
-        && GFL_NET_IsParentMachine() == TRUE
-        && intcomm->intrude_status_mine.palace_area == GFL_NET_SystemGetCurrentID()){
-      //親が通信状態で自分の街に入る場合は切断
-      return DEBUG_EVENT_ChangeMapPosCommEnd(gameSys, fieldWork, ZONE_ID_T01, &pos, intcomm);
+  for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
+    if(pos.x >= FX32_CONST(1624) + PALACE_MAP_LEN*i && pos.x <= FX32_CONST(1672) + PALACE_MAP_LEN*i
+        && pos.z >= FX32_CONST(504) && pos.z <= FX32_CONST(504)){
+      pos.x = 12536 << FX32_SHIFT;
+      pos.y = 0;
+      pos.z = 12120 << FX32_SHIFT;
+      
+      if(intcomm != NULL 
+          && GFL_NET_GetConnectNum() > 1 
+          && GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gameSys)) == GAME_COMM_NO_INVASION
+//          && GFL_NET_IsParentMachine() == TRUE
+          && intcomm->intrude_status_mine.palace_area == GFL_NET_SystemGetCurrentID()){
+        //親が通信状態で自分の街に入る場合は切断
+        return DEBUG_EVENT_ChangeMapPosCommEnd(gameSys, fieldWork, ZONE_ID_T01, &pos, intcomm);
+      }
+      return DEBUG_EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_T01, &pos, 0);
     }
-    return DEBUG_EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_T01, &pos, 0);
   }
   //ビンゴマップへワープ
-  if(pos.x >= FX32_CONST(1480) && pos.x <= FX32_CONST(1528) 
-      && pos.z >= FX32_CONST(248) && pos.z <= FX32_CONST(264)){
-    pos.x = 472 << FX32_SHIFT;
-    pos.y = 0;
-    pos.z = 504 << FX32_SHIFT;
-    return DEBUG_EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_PALACE02, &pos, 0);
+  for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
+    if(pos.x >= FX32_CONST(1480) + PALACE_MAP_LEN*i
+        && pos.x <= FX32_CONST(1528) + PALACE_MAP_LEN*i 
+        && pos.z >= FX32_CONST(248) && pos.z <= FX32_CONST(280)){
+      pos.x = 472 << FX32_SHIFT;
+      pos.y = 0;
+      pos.z = 504 << FX32_SHIFT;
+      return DEBUG_EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_PALACE02, &pos, 0);
+    }
   }
   
   {//自機の座標を監視し、誰とも通信していないのにパレスの橋の一定位置まで来たら

@@ -22,6 +22,7 @@
 _EVENT_DATA    ev_palace01
 _EVENT_DATA    ev_init_palace01
 _EVENT_DATA    ev_recover_palace01
+_EVENT_DATA    ev_palace01_monolith
 _EVENT_DATA_END
 
 
@@ -54,3 +55,9 @@ ev_palace01:
   //Ç∆ÇËÇ†Ç¶Ç∏ç≈èâÇÃÉâÉxÉãÇæÇØê∂ê¨ÇµÇƒÇ¢ÇÈ
   _END
 
+/**************************************************************/
+/*  ÉÇÉmÉäÉX                                              */
+/**************************************************************/
+EVENT_START ev_palace01_monolith
+  _EASY_MSG( msg_palace01_monlith )
+EVENT_END
