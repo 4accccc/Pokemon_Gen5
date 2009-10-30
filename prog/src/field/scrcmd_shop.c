@@ -225,6 +225,7 @@ VMCMD_RESULT EvCmdCallShopProcBuy( VMHANDLE* core, void* wk )
   }else{
     //固定ショップ呼び出し
     sbw->shopType = shop_id;
+    sbw->shopId   = shop_id;
   }
 
   // ショップ呼び出し
@@ -434,8 +435,11 @@ static void shop_call_init( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type,
   init_work( wk );
 
   // 品揃え読み込み
-  shop_item_set( wk, type, id, MyStatus_GetBadgeCount(my));
-  
+  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_SELECT){
+    shop_item_set( wk, type, id, 8);
+  }else{
+    shop_item_set( wk, type, id, MyStatus_GetBadgeCount(my));
+  }
   bg_trans( wk );     // BG転送
   bmpwin_init( wk );  // BMPWIN初期化
   obj_init( wk );     // OAM初期化
@@ -446,6 +450,24 @@ static void shop_call_init( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type,
  
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	どうぐ所持の最大数を返す
+ *
+ * @param   item	
+ *
+ * @retval  int		アイテムナンバー
+ */
+//----------------------------------------------------------------------------------
+static int get_item_max( int item )
+{
+  // 
+  if(item>=ITEM_WAZAMASIN01 && item < ITEM_HIDENMASIN01){
+    return 99;
+  }
+  
+  return 999;
+}
 
 //----------------------------------------------------------------------------------
 /**
@@ -459,7 +481,7 @@ static void shop_call_init( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type,
 static int can_player_buy_item( SHOP_BUY_APP_WORK *wk )
 {
   int gold = MyStatus_GetGold(wk->mystatus);
-  
+  int num  = MYITEM_GetItemNum( wk->myitem, wk->selectitem, wk->heapId );
 
   // もちきれないですよ！
   if(MYITEM_AddCheck( wk->myitem, wk->selectitem, 1, wk->heapId )==FALSE)
@@ -489,6 +511,13 @@ static int can_player_buy_item( SHOP_BUY_APP_WORK *wk )
     wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
     wk->next = SHOPBUY_SEQ_SELECT;
     wk->buy_max = gold/wk->price;
+    if(wk->buy_max>99){   // 買える最大数は９９個
+      wk->buy_max = 99;
+     }
+     // 持てる最大数を算出
+    if(wk->buy_max+num > MYITEM_GetItemMax( wk->selectitem ) ){
+      wk->buy_max = MYITEM_GetItemMax( wk->selectitem ) - num;
+    }
   }
   return 1;
 }
@@ -1367,7 +1396,6 @@ static BOOL printBuyMsgCallBack( u32 param )
   if(param==1){
     PMSND_PlaySE( SEQ_SE_SYS_22 );
   }
-  OS_Printf("param==%d", param);
 
   return FALSE;
 }
@@ -1511,6 +1539,16 @@ static int price_key_control( SHOP_BUY_APP_WORK *wk )
     }
   }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
     if(NumArroundCheck( &wk->item_multi, wk->buy_max, -1 )!=APP_NUMSEL_NONE){
+      PMSND_PlaySE( SEQ_SE_SELECT1 );
+      print_multiitem_price( wk, wk->item_multi, wk->price );
+    }
+  }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT){
+    if(NumArroundCheck( &wk->item_multi, wk->buy_max, -10 )!=APP_NUMSEL_NONE){
+      PMSND_PlaySE( SEQ_SE_SELECT1 );
+      print_multiitem_price( wk, wk->item_multi, wk->price );
+    }
+  }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT){
+    if(NumArroundCheck( &wk->item_multi, wk->buy_max,  10 )!=APP_NUMSEL_NONE){
       PMSND_PlaySE( SEQ_SE_SELECT1 );
       print_multiitem_price( wk, wk->item_multi, wk->price );
     }
