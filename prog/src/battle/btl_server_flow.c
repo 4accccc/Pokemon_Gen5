@@ -2193,7 +2193,12 @@ static void scproc_MemberChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u8
     u8 clientID, posIdx;
     u8 outPokeID = BPP_GetID( outPoke );
 
+#ifdef SOGA_DEBUG
+    //pos‚ÌŒ^‚©‚ç‚·‚é‚Æ‚±‚Á‚¿‚ÌŠÖ”‚Á‚Û‚¢
+    pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, outPokeID );
+#else
     pos = BTL_MAINUTIL_PokeIDtoSide( outPokeID );
+#endif
     BTL_MAIN_BtlPosToClientID_and_PosIdx( wk->mainModule, pos, &clientID, &posIdx );
 
     scproc_MemberIn( wk, clientID, posIdx, nextPokeIdx, FALSE );
