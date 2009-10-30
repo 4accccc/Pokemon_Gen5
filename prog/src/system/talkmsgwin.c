@@ -267,6 +267,7 @@ void TALKMSGWIN_SystemDraw3D( TALKMSGWIN_SYS* tmsgwinSys )
 
 //	G3X_Reset();    <<remove@091030 saito
 
+  NNS_G3dGeFlushBuffer(); // ˆÈ‰º‚Ìˆ—‚Å3‚cŠÖ˜A‚Ì‚r‚c‚jŠÖ”‚ðƒR[ƒ‹‚µ‚Ä‚é‚Ì‚ÅA“]‘—‚Ü‚¿‚·‚é
 	settingCamera(tmsgwinSys, 1);
 
 	for( i=0; i<TALKMSGWIN_NUM; i++ ){ 
@@ -1062,7 +1063,8 @@ static void settingCamera( TALKMSGWIN_SYS* tmsgwinSys, int mode )
 	VEC_Set(&up, 0, FX32_ONE, 0);
 	VEC_Set(&target, 0, 0, 0);
 
-	if( mode == 0 ){
+	if( mode == 0 )
+  {
 		//•ÏŠ·¸“x‚ðã‚°‚é‚½‚ßnear‚Ì‹——£‚ð‚Æ‚é
 		fx32 near = 64* FX32_ONE;
 
@@ -1072,7 +1074,9 @@ static void settingCamera( TALKMSGWIN_SYS* tmsgwinSys, int mode )
 		GFL_G3D_CAMERA_SetNear(tmsgwinSys->setup.g3Dcamera, &near);
 
 		GFL_G3D_CAMERA_Switching(tmsgwinSys->setup.g3Dcamera);
-	} else {
+	}
+  else
+  {
 		G3_LookAt(&pos, &up, &target, NULL);
 	}
 }
