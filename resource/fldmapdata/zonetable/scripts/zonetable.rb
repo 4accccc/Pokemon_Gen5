@@ -42,6 +42,7 @@ class ColumnID
 	attr :cBGM_WINTER, true
 	attr :cWEATHER, true
 	attr :cCAMERA, true
+	attr :cCAMERA_AREA, true
 	attr :cBATTLEBG, true
 	attr :cNAME, true
 	attr :cPLACENAMEFLAG, true
@@ -95,6 +96,8 @@ class ColumnID
 				@cWEATHER = c_count
 			when "CAMERA"
 				@cCAMERA = c_count
+			when "CAMERA_AREA"
+				@cCAMERA_AREA = c_count
 			when "BATTLE_BG"
 				@cBATTLEBG = c_count
 			when "PLACE_NAME"
@@ -259,6 +262,14 @@ class ZoneDataFile < OutputFile
 		bgm_winter = column[@cl.cBGM_WINTER]
 		weather = "WEATHER_NO_#{column[@cl.cWEATHER].upcase}"
 		camera = "#{column[@cl.cCAMERA]}"
+		camera_area = "#{column[@cl.cCAMERA_AREA]}"
+    if camera_area == "○"
+      camera_area = matrixId  #マップマトリクスIDと同じID
+    elsif camera_area == "×"
+      camera_area = "camera_area_dummy"
+    else
+      camera_area = "NARC_camera_scroll_original_#{column[@cl.cCAMERA_AREA]}_bin"
+    end
 		battle_bg = "#{column[@cl.cBATTLEBG]}"
 		if !(battle_bg =~ /^BTL_BG_/) then
 			STDERR.puts "戦闘背景の指定がおかしい！:#{battle_bg}:#{id.upcase}\n"
@@ -309,6 +320,8 @@ class ZoneDataFile < OutputFile
 		#{dash_flag},
 		#{escape_flag},
 		#{fly_flag},
+		#{camera_area}, // camera_area
+		0, // padding
 		#{column[@cl.cSX]},
 		#{column[@cl.cSY]},
 		#{column[@cl.cSZ]},

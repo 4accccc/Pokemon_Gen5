@@ -360,9 +360,12 @@ static void zoneChange_SetBGM( GAMEDATA *gdata, u32 zone_id );
 static void zoneChange_SetWeather( FIELDMAP_WORK *fieldWork, u32 zone_id );
 static void zoneChange_SetZoneFogLight( FIELDMAP_WORK *fieldWork, u32 zone_id );
 static void zoneChange_UpdatePlayerWork( GAMEDATA *gdata, u32 zone_id );
+static void zoneChange_SetCameraArea( FIELDMAP_WORK* fieldWork, u32 zone_id );
+
 
 //etc
 static void fldmap_ClearMapCtrlWork( FIELDMAP_WORK *fieldWork );
+static void setupCameraArea( FIELDMAP_WORK *fieldWork, u32 zone_id, HEAPID heapID );
 
 //data
 static const GFL_DISP_VRAM fldmapdata_dispVram;
@@ -565,9 +568,15 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   FLDMAPPER_ResistData( fieldWork->g3Dmapper, &fieldWork->map_res );
 
   //NOGRIDマップデータ登録
-  if (ZONEDATA_GetRailDataID(fieldWork->map_id) != ZONEDATA_NO_RAILDATA_ID ){
-    FLDNOGRID_MAPPER_ResistDataArc( fieldWork->nogridMapper, ZONEDATA_GetRailDataID( fieldWork->map_id ), fieldWork->heapID );  
+  {
+    u32 raildata = ZONEDATA_GetRailDataID(fieldWork->map_id);
+    if ( raildata != ZONEDATA_NO_RAILDATA_ID ){
+      FLDNOGRID_MAPPER_ResistDataArc( fieldWork->nogridMapper, raildata, fieldWork->heapID );  
+    }
   }
+  
+  //CAMERA_AREAの反映
+  setupCameraArea( fieldWork, fieldWork->map_id, fieldWork->heapID );
   
   //動作モデル初期化
   fldmapMain_MMDL_Init(fieldWork);
@@ -2314,6 +2323,9 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	
 	//天候リクエスト
 	zoneChange_SetWeather( fieldWork, new_zone_id );
+
+  //カメラエリアの設定
+  zoneChange_SetCameraArea( fieldWork, new_zone_id );
 	
 	//PLAYER_WORK更新
 	zoneChange_UpdatePlayerWork( gdata, new_zone_id );
@@ -2418,6 +2430,19 @@ static void zoneChange_UpdatePlayerWork( GAMEDATA *gdata, u32 zone_id )
 	PLAYERWORK_setZoneID( player, zone_id );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゾーン切り替え時の処理　カメラエリア更新
+ *
+ *	@param	fieldWork   FIELDMAP_WORK
+ *	@param	zone_id     次のゾーン
+ */
+//-----------------------------------------------------------------------------
+static void zoneChange_SetCameraArea( FIELDMAP_WORK* fieldWork, u32 zone_id )
+{
+  setupCameraArea( fieldWork, zone_id, fieldWork->heapID );
+}
+
 //======================================================================
 //	フィールドマップ　その他
 //======================================================================
@@ -2431,6 +2456,38 @@ static void zoneChange_UpdatePlayerWork( GAMEDATA *gdata, u32 zone_id )
 static void fldmap_ClearMapCtrlWork( FIELDMAP_WORK *fieldWork )
 {
 	fieldWork->mapCtrlWork = NULL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラエリアの設定
+ *
+ *	@param	fieldWork
+ *	@param	heapID 
+ */
+//-----------------------------------------------------------------------------
+static void setupCameraArea( FIELDMAP_WORK *fieldWork, u32 zone_id, HEAPID heapID )
+{
+  u32 cameraarea = ZONEDATA_GetCameraAreaID(zone_id);
+
+  if ( cameraarea != ZONEDATA_NO_CAMERA_AREA_ID )
+  {
+    FIELD_CAMERA_AREA_SET* p_rect;
+    p_rect = GFL_ARC_UTIL_Load( ARCID_FLD_CAMSCRLL, 
+        cameraarea, 
+        FALSE, heapID );
+
+    TOMOYA_Printf( "camera area rect x_min[%d] x_max[%d] z_min[%d] z_max[%d]\n", 
+        p_rect->buff[0].rect.x_min, p_rect->buff[0].rect.x_max,
+        p_rect->buff[0].rect.z_min, p_rect->buff[0].rect.z_max );
+    
+    FIELD_CAMERA_SetCameraArea( fieldWork->camera_control, p_rect );
+    GFL_HEAP_FreeMemory( p_rect );
+  }
+  else
+  {
+    FIELD_CAMERA_ClearCameraArea( fieldWork->camera_control );
+  }
 }
 
 

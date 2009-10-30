@@ -25,15 +25,6 @@
  *					定数宣言
 */
 //-----------------------------------------------------------------------------
-//======================================================================
-//	範囲情報
-//======================================================================
-static FIELD_CAMERA_AREA s_FIELD_CAMERA_AREA = 
-{
-  FIELD_CAMERA_AREA_RECT,
-  FIELD_CAMERA_AREA_CONT_TARGET,
-};
-
 
 //-------------------------------------
 ///	レールチェックの高さ範囲
@@ -206,27 +197,6 @@ static void mapCtrlHybrid_Create( FIELDMAP_WORK* p_fieldmap, VecFx32* p_pos, u16
     MMDL* p_mmdl = FIELD_PLAYER_GetMMdl( p_wk->p_player );
     FIELDMAP_SetNowPosTarget( p_fieldmap, MMDL_GetVectorPosAddress( p_mmdl ) );
   }
-
-
-  //  カメラ範囲
-  if( (ZONEDATA_GetMatrixID( FIELDMAP_GetZoneID( p_fieldmap ) ) > 0) )
-  {
-
-    FIELD_CAMERA_RECT* p_rect;
-    p_rect = GFL_ARC_UTIL_Load( ARCID_FLD_CAMSCRLL, 
-        ZONEDATA_GetMatrixID( FIELDMAP_GetZoneID( p_fieldmap ) ), 
-        FALSE, heapID );
-    s_FIELD_CAMERA_AREA.rect = *p_rect;
-    TOMOYA_Printf( "xmin[0x%x] xmax[0x%x] zmin[0x%x] zmax[0x%x]\n", 
-        p_rect->x_min, p_rect->x_max, p_rect->z_min, p_rect->z_max );
-    FIELD_CAMERA_SetCameraArea( FIELDMAP_GetFieldCamera( p_fieldmap ), &s_FIELD_CAMERA_AREA );
-
-    GFL_HEAP_FreeMemory( p_rect );
-  }
-  else
-  {
-    FIELD_CAMERA_ClearCameraArea( FIELDMAP_GetFieldCamera( p_fieldmap ) );
-  }
 }
 
 //----------------------------------------------------------------------------
@@ -241,8 +211,6 @@ static void mapCtrlHybrid_Delete( FIELDMAP_WORK* p_fieldmap )
 	p_wk = FIELDMAP_GetMapCtrlWork( p_fieldmap );
 	FIELD_PLAYER_GRID_Delete( p_wk->p_player_grid );
 	FIELD_PLAYER_NOGRID_Delete( p_wk->p_player_nogrid );
-
-  FIELD_CAMERA_ClearCameraArea( FIELDMAP_GetFieldCamera( p_fieldmap ) );
 
 	GFL_HEAP_FreeMemory( p_wk );
 }

@@ -1875,22 +1875,24 @@ static RAIL_KEY setLine(FIELD_RAIL_WORK * work, const RAIL_LINE * line, RAIL_KEY
   // 次のラインに乗れるか調べる
   if( (l_ofs >= l_ofs_max) || (l_ofs < 0) )
   {
+    const RAIL_LINE* next_line;
+    
     // 次のラインを取得
     if( (l_ofs >= l_ofs_max) )
     {
       // もしも、lofs以上でl_ofs_maxで、次のラインがあれば、そのラインに乗る
       const RAIL_POINT* nPoint = getRailDatPoint( work->rail_dat, line->point_e );
-      line = RAILPOINT_getLineByKey(nPoint, line->key, work->rail_dat);
+      next_line = RAILPOINT_getLineByKey(nPoint, line->key, work->rail_dat);
     }
     else
     {
       // もしも、lofsが０未満で、次のラインがあれば、そのラインに乗る
       const RAIL_POINT* nPoint = getRailDatPoint( work->rail_dat, line->point_s );
-      line = RAILPOINT_getLineByKey(nPoint, getReverseKey(line->key), work->rail_dat);
+      next_line = RAILPOINT_getLineByKey(nPoint, getReverseKey(line->key), work->rail_dat);
     }
 
     // ないときは、移動不可能or通常設定
-    if( line == NULL )
+    if( next_line == NULL )
     {
       // 移動不可能！！！！！！
       if( l_ofs > l_ofs_max )
@@ -1901,6 +1903,10 @@ static RAIL_KEY setLine(FIELD_RAIL_WORK * work, const RAIL_LINE * line, RAIL_KEY
     }
     else
     {
+
+      //  次のラインに乗る！
+      line = next_line;
+
       // 計算
       if( (l_ofs >= l_ofs_max) )
       {

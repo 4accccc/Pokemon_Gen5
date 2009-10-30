@@ -79,13 +79,16 @@ enum {
 #include "../../encount/encount_data_w.naix"  //エンカウントデータID定義ファイル
 #include "../eventdata/binary/eventdata.naix"      //eventdata ID 定義ファイル
 #include "../../../prog/include/battle/battle_bg_def.h"  //戦闘背景ID定義
+#include "../camera_scroll/camera_scroll.naix"//カメラエリアデータ
 
 enum {
 	//event_dummy = NARC_zone_event_zone_dummy_total_bin,
 	//event_dummy = 0xd000,
 	event_dummy = NARC_eventdata_dummy_data,
 
-	enc_dummy = 0xffff
+	enc_dummy = 0xffff,
+
+	camera_area_dummy = 0xffff,
 };
 
 //pokemon_wb/prog/include/field/weather_no.hから暫定こぴー。

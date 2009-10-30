@@ -7,13 +7,11 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-#include ../land_data/users_def
-USERS	= tomoya_takahashi
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
-targetname = 
+targetname = camera_scroll
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -23,7 +21,7 @@ TARGETDIR = $(PROJECT_ARCDIR)/fieldmap/
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-SUBDIRS	= indoor original
+SUBDIRS	= original
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
@@ -32,30 +30,22 @@ include	$(PROJECT_RSCDIR)\macro_define
 #情報
 LIST_FILE 	= list.txt
 
-#マップマトリックス
-MAP_MATRIX = ../map_matrix/map_matrix.xls
-MAP_MATRIX_FILE = map_matrix.txt
 
-#エクセルコンバーター
-CSV_CVTR	= $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
+#binフォルダ
+BINDIR = ../land_data/land_camera/
+BIN2DIR = original/
 
-#imdフォルダ
-IMD_FOLDER = ../land_data/land_res/
-IMD_FILE = $(wildcard $(IMD_FOLDER)*.imd)
+BINDATA = $(wildcard $(BINDIR)*.bin)
+BIN2DATA = $(wildcard $(BIN2DIR)*.bin)
 
-
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-# サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: 
-
-endif
+BINLIST = $(BINDIR)$(LIST_FILE)
 
 .PHONY:	do-build clean subdir
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir 
+do-build:	subdir $(TARGETDIR)/$(targetname).narc
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -66,15 +56,17 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).naix $(TARGETDIR)
 
 
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: Makefile $(IMD_FILE) $(MAP_MATRIX)
+$(targetname).narc: Makefile $(BINDATA) $(BIN2DATA) $(BINLIST)
+	$(COPY) $(BINDIR)*.bin ./
+	$(COPY) $(BINLIST) ./
 
-	$(CSV_CVTR) -o $(MAP_MATRIX_FILE) -p 1 $(MAP_MATRIX)
-	perl conv.pl $(MAP_MATRIX_FILE) $(IMD_FOLDER) $(LIST_FILE)
+	-ls original/*.bin >> $(LIST_FILE)
+	perl list_make.pl $(LIST_FILE)
 	nnsarc -r -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix
-endif
+	rm -f *.bin
+	rm -f $(LIST_FILE)
 
 #------------------------------------------------------------------------------
 #	make clean ルール

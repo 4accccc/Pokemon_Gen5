@@ -55,13 +55,8 @@ close( FILEIN );
 &LoadHeader( $ARGV[1] );
 
 
-
-#入力ファイル情報の取得
-$TAGNAME    = 0;   #タグ名
-$AREA_TYPE  = 0;   #カメラ範囲タイプ
-$CONT_TYPE  = 0;   #座標管理タイプ
-@PARAM      = undef;  #パラメータ
-
+#データ数を計算
+$DATANUM = 0;
 $data_in = 0;
 foreach $data ( @input_file )
 {
@@ -86,63 +81,106 @@ foreach $data ( @input_file )
     }
     else
     {
+      $DATANUM ++;
+    }
+  }
+}
 
-      #入力＋出力
-      $TAGNAME    = $data_array[0];
-      $AREA_TYPE  = &getCameraAreaType( $data_array[1] );
-      $CONT_TYPE  = &getCameraContType( $data_array[2] );
 
-      for( $i=0; $i<$PARAM_MAX; $i++ )
+#出力
+$filename = $ARGV[0];
+$filename =~ s/\.txt//g;
+open( FILEOUT, ">original_".$filename.".bin" );
+binmode( FILEOUT );
+{
+  print( FILEOUT pack( "I", $DATANUM ) ); 
+
+  
+  #入力ファイル情報の取得
+  $TAGNAME    = 0;   #タグ名
+  $AREA_TYPE  = 0;   #カメラ範囲タイプ
+  $CONT_TYPE  = 0;   #座標管理タイプ
+  @PARAM      = undef;  #パラメータ
+
+  $data_in = 0;
+  foreach $data ( @input_file )
+  {
+    $data =~ s/\r\n//;
+    $data =~ s/\n//;
+    
+    @data_array = split( /\t/, $data );
+    
+    if( $data_in == 0 )
+    {
+      if( $data_array[0] =~ /#START/ )
       {
-        if( $data_array[3+$i] =~ /0x/ )
-        {
-          $PARAM[$i] = oct( $data_array[3+$i] );
-        }
-        else
-        {
-          $PARAM[$i] = $data_array[3+$i];
-        }
+        $data_in = 1;
       }
+    }
+    elsif( $data_in == 1 )
+    {
 
-
-
-      #出力
-      open( FILEOUT, ">".$TAGNAME.".bin" );
-      binmode( FILEOUT );
-
-      print( FILEOUT pack( "I", $AREA_TYPE ) ); 
-      print( FILEOUT pack( "I", $CONT_TYPE ) ); 
-
-      if( $AREA_TYPE_DEF[ $AREA_TYPE ] eq "FIELD_CAMERA_AREA_RECT"  )
+      if( $data_array[0] =~ /#END/ )
       {
-        for( $i=0; $i<@RECT_PARAM_BYTE; $i++ )
-        {
-          print( FILEOUT pack( $RECT_PARAM_BYTE[$i], $PARAM[$i] ) ); 
-        }
-
-        #あまりバイト
-        for( $i=0; $i<$RECT_PARAM_FOOTER_BYTE; $i++ )
-        {
-          print( FILEOUT pack( "c", 0 ) ); 
-        }
+        $data_in = 2;
       }
       else
       {
-        for( $i=0; $i<@CIRCLE_PARAM_BYTE; $i++ )
+
+        #入力＋出力
+        $TAGNAME    = $data_array[0];
+        $AREA_TYPE  = &getCameraAreaType( $data_array[1] );
+        $CONT_TYPE  = &getCameraContType( $data_array[2] );
+
+        for( $i=0; $i<$PARAM_MAX; $i++ )
         {
-          print( FILEOUT pack( $CIRCLE_PARAM_BYTE[$i], $PARAM[$i] ) ); 
+          if( $data_array[3+$i] =~ /0x/ )
+          {
+            $PARAM[$i] = oct( $data_array[3+$i] );
+          }
+          else
+          {
+            $PARAM[$i] = $data_array[3+$i];
+          }
         }
 
-        #あまりバイト
-        for( $i=0; $i<$CIRCLE_PARAM_FOOTER_BYTE; $i++ )
+
+
+
+        print( FILEOUT pack( "I", $AREA_TYPE ) ); 
+        print( FILEOUT pack( "I", $CONT_TYPE ) ); 
+
+        if( $AREA_TYPE_DEF[ $AREA_TYPE ] eq "FIELD_CAMERA_AREA_RECT"  )
         {
-          print( FILEOUT pack( "c", 0 ) ); 
+          for( $i=0; $i<@RECT_PARAM_BYTE; $i++ )
+          {
+            print( FILEOUT pack( $RECT_PARAM_BYTE[$i], $PARAM[$i] ) ); 
+          }
+
+          #あまりバイト
+          for( $i=0; $i<$RECT_PARAM_FOOTER_BYTE; $i++ )
+          {
+            print( FILEOUT pack( "c", 0 ) ); 
+          }
         }
+        else
+        {
+          for( $i=0; $i<@CIRCLE_PARAM_BYTE; $i++ )
+          {
+            print( FILEOUT pack( $CIRCLE_PARAM_BYTE[$i], $PARAM[$i] ) ); 
+          }
+
+          #あまりバイト
+          for( $i=0; $i<$CIRCLE_PARAM_FOOTER_BYTE; $i++ )
+          {
+            print( FILEOUT pack( "c", 0 ) ); 
+          }
+        }
+        
       }
-      
-      close( FILEOUT );
     }
   }
+  close( FILEOUT );
 }
 
 

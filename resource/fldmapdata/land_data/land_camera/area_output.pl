@@ -126,7 +126,13 @@ print( "area min_x $area_min_x  max_x $area_max_x  min_z $area_min_z max_z $area
 #出力
 open( FILEOUT, ">".$ARGV[3].".bin" );
 
+#カメラデータとして出力
 binmode( FILEOUT );
+
+print( FILEOUT pack( "I", 1 ) );    #tblnum
+
+print( FILEOUT pack( "I", 1 ) );    #FIELD_CAMERA_AREA_RECT 
+print( FILEOUT pack( "I", 0 ) );    #FIELD_CAMERA_AREA_CONT_TARGET 
 
 print( FILEOUT pack( "i", $area_min_x ) );
 print( FILEOUT pack( "i", $area_max_x ) );

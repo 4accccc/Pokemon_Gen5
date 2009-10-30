@@ -31,8 +31,8 @@ include	$(PROJECT_RSCDIR)\macro_define
 #------------------------------------------------------------------------------
 #データ
 #------------------------------------------------------------------------------
-XLSFILE = original_camera_scroll.xls
-XLS_CSV_FILE = original_camera_scroll.txt
+XLSFILE = $(wildcard *.xls)
+XLS_CSV_FILE = $(XLSFILE:.xls=.txt)
 #エクセルコンバーター
 CSV_CVTR	= $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
 
@@ -52,8 +52,13 @@ HEADERDUMMY_TARGET = headerdummy.txt
 ifeq	($(CONVERTUSER),true)	
 
 
-.SUFFIXES:
+.SUFFIXES: .xls .txt
 
+#エクセルコンバート
+.xls.txt:
+	$(CSV_CVTR) -o $*.txt -p 1 $<
+	perl conv.pl $*.txt $(HEADERDIR)field_camera.h
+	
 endif
 
 
@@ -63,32 +68,30 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	subdir $(targetname).txt
 
 subdir:
 	@$(MAKE_SUBDIR)
 
-# narc のコピーだけ実行する
-$(TARGETDIR)/$(targetname).narc: $(HEADERDUMMY_TARGET) $(targetname).narc 
-	$(COPY) $(targetname).narc $(TARGETDIR)
-	$(COPY) $(targetname).naix $(TARGETDIR)
-
+	
 
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(XLSFILE) $(HEADERDUMMY_TARGET)
-	$(CSV_CVTR) -o $(XLS_CSV_FILE) -p 1 $(XLSFILE)
-	perl conv.pl $(XLS_CSV_FILE) $(HEADERDIR)field_camera.h
-	-ls *.bin > $(LIST_FILE)
-	$(ARCLIST_MAKE) $(LIST_FILE)
-	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
-	$(NAIXCUT) $(targetname).naix
-	-rm	-rf $(LIST_FILE)
+$(targetname).txt: $(HEADERDUMMY_TARGET) $(XLS_CSV_FILE)
+	-ls *.bin > $(targetname).txt
 
 $(HEADERDUMMY_TARGET):$(HEADERDIR)field_camera.h
 	rm -f *.bin
 	echo このファイルは、headerが更新されたときにbinを作り直すために用意されています。 > $(HEADERDUMMY_TARGET)
+
+
+else
+
+
+#そうではない一般
+$(targetname).txt: $(XLSFILE) $(HEADERDUMMY_TARGET)
+	-ls *.bin > $(targetname).txt
 endif
 
 #------------------------------------------------------------------------------
@@ -99,12 +102,12 @@ clean:
 	@$(MAKE_SUBDIR)
 	rm -f $(TARGETDIR)/$(targetname).narc
 	rm -f $(TARGETDIR)/$(targetname).naix
+	rm -f $(targetname).txt
 
 #コンバート対象者のみ、中間ファイル削除
 ifeq	($(CONVERTUSER),true)	
 	rm -f *.bin
-	rm -f $(targetname).narc
-	rm -f $(targetname).naix
+	rm -f *.txt
 endif
 
 

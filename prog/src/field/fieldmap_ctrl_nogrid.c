@@ -9,7 +9,6 @@
 #include "system/gfl_use.h"
 
 #include "arc/fieldmap/field_rail_data.naix"
-#include "arc/fieldmap/camera_scroll_original.naix"
 #include "arc/fieldmap/zone_id.h"
 
 #include "fieldmap.h"
@@ -124,21 +123,6 @@ static void mapCtrlNoGrid_Create(
 
 	FIELD_PLAYER_SetPos( fld_player, pos );
 	FIELD_PLAYER_SetDir( fld_player, dir );
-
-
-
-  //  ÉJÉÅÉâîÕàÕ
-  if( FIELDMAP_GetZoneID( fieldWork ) == ZONE_ID_C03 )
-  {
-    FIELD_CAMERA_AREA * p_area = GFL_ARC_UTIL_Load( ARCID_CAMERA_ORG_SCRL, 
-        NARC_camera_scroll_original_C03_bin,
-        FALSE, FIELDMAP_GetHeapID(fieldWork) );
-
-    FIELD_CAMERA_SetCameraArea( FIELDMAP_GetFieldCamera( fieldWork ), p_area );
-
-    GFL_HEAP_FreeMemory( p_area );
-  }
-
 }
 
 //--------------------------------------------------------------

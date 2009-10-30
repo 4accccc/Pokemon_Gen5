@@ -217,6 +217,21 @@ u8 ZONEDATA_GetCameraID(u16 zone_id)
 	getZoneData(&zdbuf, zone_id);
 	return zdbuf.camera_id;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラエリア指定IDの取得
+ *	@param	zone_id ゾーン指定ID
+ *	@return カメラエリア指定ID
+ */
+//-----------------------------------------------------------------------------
+u16 ZONEDATA_GetCameraAreaID(u16 zone_id)
+{
+	ZONEDATA zdbuf;
+	getZoneData(&zdbuf, zone_id);
+	return zdbuf.camera_area;
+}
+
 //------------------------------------------------------------------
 /**
  * @brief	BGM指定IDの取得

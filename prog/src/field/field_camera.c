@@ -124,7 +124,9 @@ struct _FIELD_CAMERA {
   u16         fovy;
   u16         globl_angle_yaw;  ///<カメラ座標、ターゲット座標計算後のカメラアングルYaw　カメラモードにも左右されず、常にFIELD_CAMERA_MODE_CALC_CAMERA_POSのアングルを返す
 
-  FIELD_CAMERA_AREA camera_area;  // カメラ可動範囲
+  // カメラ可動範囲
+  FIELD_CAMERA_AREA camera_area[FIELD_CAMERA_AREA_DATA_MAX];  
+  u32               camera_area_num;
   
 #ifdef PM_DEBUG
   u32 debug_subscreen_type;
@@ -517,9 +519,14 @@ static void calcAnglePos( const VecFx32* cp_target, VecFx32* p_pos, u16 yaw, u16
 //------------------------------------------------------------------
 static void updateAngleCameraPos(FIELD_CAMERA * camera)
 {
+  int i;
   // 
   camera->target_write = camera->target;
-  cameraArea_UpdateTarget( &camera->camera_area, &camera->target_write );
+
+  for( i=0; i<camera->camera_area_num; i++ )
+  {
+    cameraArea_UpdateTarget( &camera->camera_area[i], &camera->target_write );
+  }
   
   // カメラポジション計算
 	calcAnglePos( &camera->target_write, &camera->camPos,
@@ -527,13 +534,22 @@ static void updateAngleCameraPos(FIELD_CAMERA * camera)
 
   // 
   camera->campos_write = camera->camPos;
-  cameraArea_UpdateCamPos( &camera->camera_area, &camera->campos_write );
+
+  for( i=0; i<camera->camera_area_num; i++ )
+  {
+    cameraArea_UpdateCamPos( &camera->camera_area[i], &camera->campos_write );
+  }
 }
 static void updateAngleTargetPos(FIELD_CAMERA * camera)
 { 
+  int i;
   // 
   camera->campos_write = camera->camPos;
-  cameraArea_UpdateCamPos( &camera->camera_area, &camera->campos_write );
+  for( i=0; i<camera->camera_area_num; i++ )
+  {
+    cameraArea_UpdateCamPos( &camera->camera_area[i], &camera->campos_write );
+  }
+    
 
   // ターゲットポジション計算
 	calcAnglePos( &camera->campos_write, &camera->target,
@@ -541,7 +557,11 @@ static void updateAngleTargetPos(FIELD_CAMERA * camera)
 
   // 
   camera->target_write = camera->target;
-  cameraArea_UpdateTarget( &camera->camera_area, &camera->target_write );
+
+  for( i=0; i<camera->camera_area_num; i++ )
+  {
+    cameraArea_UpdateTarget( &camera->camera_area[i], &camera->target_write );
+  }
 }
 
 	
@@ -549,13 +569,22 @@ static void updateAngleTargetPos(FIELD_CAMERA * camera)
 //------------------------------------------------------------------
 static void updateCameraArea(FIELD_CAMERA * camera)
 {
+  int i;
+  
   // 
   camera->campos_write = camera->camPos;
-  cameraArea_UpdateCamPos( &camera->camera_area, &camera->campos_write );
+
+  for( i=0; i<camera->camera_area_num; i++ )
+  {
+    cameraArea_UpdateCamPos( &camera->camera_area[i], &camera->campos_write );
+  }
 
   // 
   camera->target_write = camera->target;
-  cameraArea_UpdateTarget( &camera->camera_area, &camera->target_write );
+  for( i=0; i<camera->camera_area_num; i++ )
+  {
+    cameraArea_UpdateTarget( &camera->camera_area[i], &camera->target_write );
+  }
 }
 	
 //------------------------------------------------------------------
@@ -1545,9 +1574,11 @@ BOOL FIELD_CAMERA_CheckTrace(FIELD_CAMERA * camera_ptr)
  *	@param	cp_area     エリア情報
  */
 //-----------------------------------------------------------------------------
-void FIELD_CAMERA_SetCameraArea( FIELD_CAMERA * camera, const FIELD_CAMERA_AREA* cp_area )
+void FIELD_CAMERA_SetCameraArea( FIELD_CAMERA * camera, const FIELD_CAMERA_AREA_SET* cp_area )
 {
-  GFL_STD_MemCopy( cp_area, &camera->camera_area, sizeof(FIELD_CAMERA_AREA) );
+  GF_ASSERT( cp_area->num < FIELD_CAMERA_AREA_DATA_MAX );
+  GFL_STD_MemCopy( cp_area->buff, camera->camera_area, sizeof(FIELD_CAMERA_AREA) * cp_area->num );
+  camera->camera_area_num = cp_area->num;
 }
 
 //----------------------------------------------------------------------------
@@ -1560,7 +1591,23 @@ void FIELD_CAMERA_SetCameraArea( FIELD_CAMERA * camera, const FIELD_CAMERA_AREA*
 void FIELD_CAMERA_ClearCameraArea( FIELD_CAMERA * camera )
 {
   GF_ASSERT( camera );
-  camera->camera_area.area_type = FIELD_CAMERA_AREA_NONE;
+  GFL_STD_MemClear( camera->camera_area, sizeof(FIELD_CAMERA_AREA) * FIELD_CAMERA_AREA_DATA_MAX );
+  camera->camera_area_num = 0;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ可動エリアの数を取得
+ *
+ *	@param	camera  カメラ
+ *
+ *	@return カメラ可動エリアの数
+ */
+//-----------------------------------------------------------------------------
+u32 FIELD_CAMERA_GetCameraAreaNum( const FIELD_CAMERA * camera )
+{
+  GF_ASSERT( camera );
+  return camera->camera_area_num;
 }
 
 //----------------------------------------------------------------------------
@@ -1572,10 +1619,11 @@ void FIELD_CAMERA_ClearCameraArea( FIELD_CAMERA * camera )
  *	@return 範囲タイプ
  */
 //-----------------------------------------------------------------------------
-FIELD_CAMERA_AREA_TYPE FIELD_CAMERA_GetCameraAreaType( const FIELD_CAMERA * camera )
+FIELD_CAMERA_AREA_TYPE FIELD_CAMERA_GetCameraAreaType( const FIELD_CAMERA * camera, u32 idx )
 {
   GF_ASSERT( camera );
-  return camera->camera_area.area_type;
+  GF_ASSERT( camera->camera_area_num > idx );
+  return camera->camera_area[idx].area_type;
 }
 
 //----------------------------------------------------------------------------
@@ -1587,10 +1635,11 @@ FIELD_CAMERA_AREA_TYPE FIELD_CAMERA_GetCameraAreaType( const FIELD_CAMERA * came
  *	@return 管理座標タイプ
  */
 //-----------------------------------------------------------------------------
-FIELD_CAMERA_AREA_CONT FIELD_CAMERA_GetCameraAreaCont( const FIELD_CAMERA * camera )
+FIELD_CAMERA_AREA_CONT FIELD_CAMERA_GetCameraAreaCont( const FIELD_CAMERA * camera, u32 idx )
 {
   GF_ASSERT( camera );
-  return camera->camera_area.area_cont;
+  GF_ASSERT( camera->camera_area_num > idx );
+  return camera->camera_area[idx].area_cont;
 }
 
 //----------------------------------------------------------------------------
@@ -1604,6 +1653,7 @@ FIELD_CAMERA_AREA_CONT FIELD_CAMERA_GetCameraAreaCont( const FIELD_CAMERA * came
 static void cameraArea_UpdateTarget( const FIELD_CAMERA_AREA * cp_area, VecFx32* p_target )
 {
   VecFx32* p_pos;
+  int i;
 
   GF_ASSERT( cp_area->area_type < FIELD_CAMERA_AREA_MAX );
   GF_ASSERT( cp_area->area_cont < FIELD_CAMERA_AREA_CONT_MAX );

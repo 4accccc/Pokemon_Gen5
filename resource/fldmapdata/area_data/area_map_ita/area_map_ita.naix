@@ -11,8 +11,7 @@
 #define NARC_AREA_MAP_ITA_NAIX_
 
 enum {
-	NARC_area_map_ita_area_ita_00_nsbta = 0,
-	NARC_area_map_ita_in00_dun_ita_nsbta = 1
+	NARC_area_map_ita_area_ita_00_nsbta = 0
 };
 
 /* NARC_AREA_MAP_ITA_NAIX_ */

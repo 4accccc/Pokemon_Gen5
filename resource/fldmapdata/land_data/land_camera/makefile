@@ -55,27 +55,25 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(targetname).narc
+do-build:	subdir $(targetname).txt
 
 subdir:
 	@$(MAKE_SUBDIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: Makefile $(IMD_FILE) $(MAP_MATRIX)
+$(targetname).txt: Makefile $(IMD_FILE) $(MAP_MATRIX)
 
 	$(CSV_CVTR) -o $(MAP_MATRIX_FILE) -p 1 $(MAP_MATRIX)
 	perl conv.pl $(MAP_MATRIX_FILE) $(IMD_FOLDER) $(LIST_FILE)
-	nnsarc -r -l -n -i $(targetname) -S $(LIST_FILE)
-	$(NAIXCUT) $(targetname).naix
+	ls *.bin > $(targetname).txt
 
 else
 
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: Makefile $(BIN_FILE)
 
-	nnsarc -r -l -n -i $(targetname) -S $(LIST_FILE)
-	$(NAIXCUT) $(targetname).naix
+	ls *.bin > $(targetname).txt
 
 endif
 
@@ -91,5 +89,6 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 endif
 	-rm -f $(targetname).narc
 	-rm -f $(targetname).naix
+	-rm -f $(targetname).txt
 
 

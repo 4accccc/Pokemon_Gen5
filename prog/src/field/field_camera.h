@@ -51,10 +51,15 @@ typedef enum
  *			カメラ可動範囲
  */
 //-----------------------------------------------------------------------------
+// カメラ可動範囲、設定最大数
+#define FIELD_CAMERA_AREA_DATA_MAX   ( 4 )
+
 // 範囲タイプ
 typedef enum
 {
 // conv.pl用定義 [CAMERA_AREA]
+// resource/fldmapdata/camera_scroll/で直値指定しています。
+// 基本下に追加して言ってください。
   FIELD_CAMERA_AREA_NONE,     // 範囲なし
   FIELD_CAMERA_AREA_RECT,     // 矩形範囲
   FIELD_CAMERA_AREA_CIRCLE,   // 円範囲
@@ -66,6 +71,8 @@ typedef enum
 typedef enum
 {
 // conv.pl用定義 [CAMERA_CONT]
+// resource/fldmapdata/camera_scroll/で直値指定しています。
+// 基本下に追加して言ってください。
   FIELD_CAMERA_AREA_CONT_TARGET,   // カメラターゲットの管理
   FIELD_CAMERA_AREA_CONT_CAMERA,   // カメラ座標の管理
 
@@ -117,6 +124,16 @@ typedef struct {
   } ;
   
 } FIELD_CAMERA_AREA;
+
+
+//-------------------------------------
+///	カメラ可動範囲セット
+//=====================================
+typedef struct {
+  // 個数
+  u32 num;
+  FIELD_CAMERA_AREA buff[];
+} FIELD_CAMERA_AREA_SET;
 
 
 //============================================================================================
@@ -298,10 +315,11 @@ extern void FIELD_CAMERA_FreeCamera(FIELD_CAMERA * camera);
  *      カメラ可動範囲
  */
 //-----------------------------------------------------------------------------
-extern void FIELD_CAMERA_SetCameraArea( FIELD_CAMERA * camera, const FIELD_CAMERA_AREA* cp_area );
+extern void FIELD_CAMERA_SetCameraArea( FIELD_CAMERA * camera, const FIELD_CAMERA_AREA_SET* cp_area );
 extern void FIELD_CAMERA_ClearCameraArea( FIELD_CAMERA * camera );
-extern FIELD_CAMERA_AREA_TYPE FIELD_CAMERA_GetCameraAreaType( const FIELD_CAMERA * camera );
-extern FIELD_CAMERA_AREA_CONT FIELD_CAMERA_GetCameraAreaCont( const FIELD_CAMERA * camera );
+extern u32 FIELD_CAMERA_GetCameraAreaNum( const FIELD_CAMERA * camera );
+extern FIELD_CAMERA_AREA_TYPE FIELD_CAMERA_GetCameraAreaType( const FIELD_CAMERA * camera, u32 idx );
+extern FIELD_CAMERA_AREA_CONT FIELD_CAMERA_GetCameraAreaCont( const FIELD_CAMERA * camera, u32 idx );
 
 
 //-----------------------------------------------------------------------------

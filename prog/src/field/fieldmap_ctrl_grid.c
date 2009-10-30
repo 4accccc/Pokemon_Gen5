@@ -26,11 +26,6 @@
 //======================================================================
 //	範囲情報
 //======================================================================
-static FIELD_CAMERA_AREA s_FIELD_CAMERA_AREA = 
-{
-  FIELD_CAMERA_AREA_RECT,
-  FIELD_CAMERA_AREA_CONT_TARGET,
-};
  
 
 
@@ -157,27 +152,6 @@ static void mapCtrlGrid_Create(
 	}
   
 	FIELDMAP_SetMapCtrlWork( fieldWork, gridWork );
-
-
-  //  カメラ範囲
-  if( (ZONEDATA_GetMatrixID( FIELDMAP_GetZoneID( fieldWork ) ) > 0) && (gym_check( FIELDMAP_GetZoneID( fieldWork ) ) == FALSE) )
-  {
-
-    FIELD_CAMERA_RECT* p_rect;
-    p_rect = GFL_ARC_UTIL_Load( ARCID_FLD_CAMSCRLL, 
-        ZONEDATA_GetMatrixID( FIELDMAP_GetZoneID( fieldWork ) ), 
-        FALSE, heapID );
-    s_FIELD_CAMERA_AREA.rect = *p_rect;
-    TOMOYA_Printf( "xmin[0x%x] xmax[0x%x] zmin[0x%x] zmax[0x%x]\n", 
-        p_rect->x_min, p_rect->x_max, p_rect->z_min, p_rect->z_max );
-    FIELD_CAMERA_SetCameraArea( FIELDMAP_GetFieldCamera( fieldWork ), &s_FIELD_CAMERA_AREA );
-
-    GFL_HEAP_FreeMemory( p_rect );
-  }
-  else
-  {
-    FIELD_CAMERA_ClearCameraArea( FIELDMAP_GetFieldCamera( fieldWork ) );
-  }
 }
 
 //--------------------------------------------------------------
@@ -192,7 +166,6 @@ static void mapCtrlGrid_Delete( FIELDMAP_WORK *fieldWork )
 	FIELDMAP_CTRL_GRID *gridWork;
 	gridWork = FIELDMAP_GetMapCtrlWork( fieldWork );
 	FIELD_PLAYER_GRID_Delete( gridWork->gridPlayer );
-  FIELD_CAMERA_ClearCameraArea( FIELDMAP_GetFieldCamera( fieldWork ) );
 	GFL_HEAP_FreeMemory( gridWork );
 }
 
@@ -308,35 +281,4 @@ void FIELDMAP_CTRL_GRID_SetPlayerPause( FIELDMAP_WORK *fieldMap, BOOL flag )
 
 
 
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  ぞーんIDからジムチェック
- *
- *	@param	zone_id 
- *
- *	@return
- */
-//-----------------------------------------------------------------------------
-static BOOL gym_check( u16 zone_id )
-{
-  switch( zone_id )
-  {
-  case ZONE_ID_C01GYM0101:
-  case ZONE_ID_C02GYM0101:
-  case ZONE_ID_C03GYM0101:
-  case ZONE_ID_C04GYM0101:
-  case ZONE_ID_C05GYM0101:
-  case ZONE_ID_C06GYM0101:
-  case ZONE_ID_C07GYM0101:
-  case ZONE_ID_C08GYM0101:
-  case ZONE_ID_C02GYM0201:
-  case ZONE_ID_C02GYM0202:   
-  case ZONE_ID_C02GYM0203:   
-  case ZONE_ID_PALACE01:   
-    return TRUE;
-  }
-
-  return FALSE;
-}
 

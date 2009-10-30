@@ -179,7 +179,6 @@
   ARCID_GYM_ELEC "fieldmap/gym_elec.narc"  #電気ジム
   ARCID_FLD_CAMSCRLL "fieldmap/camera_scroll.narc"  #カメラスクロール範囲
 	ARCID_MUSICAL_SHOT		"musical_shot.narc"		#ミュージカルショット
-	ARCID_CAMERA_ORG_SCRL	"fieldmap/camera_scroll_original.narc"		#カメラスクロール範囲独自情報
 	ARCID_FLD_RAILSETUP	"fieldmap/field_rail_setup.narc"		#レールセットアップ情報
   ARCID_PC_RECOVERY "pc_recovery_anime.narc" # ポケセン回復アニメーション
   ARCID_GYM_NORMAL "fieldmap/gym_normal.narc"  #ノーマルジム
