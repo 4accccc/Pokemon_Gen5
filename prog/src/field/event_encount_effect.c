@@ -157,7 +157,7 @@ static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk )
 		work->dMode = FIELDMAP_GetDraw3DMode(work->fieldWork);
 		FIELDMAP_SetDraw3DMode(work->fieldWork, DRAW3DMODE_SCRNTEX);
 
-    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, 4 );
+    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, 3 );
     (*seq)++;
     break;
 	case 5:
