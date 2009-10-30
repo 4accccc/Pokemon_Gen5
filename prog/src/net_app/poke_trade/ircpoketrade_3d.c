@@ -629,6 +629,8 @@ void IRC_POKETRADEDEMO_SetModel( POKEMON_TRADE_WORK* pWork, int modelno)
   //  if(modelno != TRADE01_OBJECT){
   //    return;
   //  }
+
+  
   Initialize( pWork, modelno);
 
   modelset[pWork->modelno].setCamera(pWork);
@@ -662,6 +664,9 @@ void IRC_POKETRADEDEMO_RemoveModel( POKEMON_TRADE_WORK* pWork)
   Finalize(pWork);
   _icaCameraDelete(pWork);
   pWork->modelno = -1;
+
+  IRC_POKETRADEDEMO_End(pWork);
+  IRC_POKETRADEDEMO_Init(pWork);
 }
 
 

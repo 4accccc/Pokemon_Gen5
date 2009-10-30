@@ -1571,7 +1571,7 @@ static void _dispSubState(POKEMON_TRADE_WORK* pWork)
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, TRUE);
 
   {
-    int msg[]={POKETRADE_STR_03,POKETRADE_STR_02};
+    int msg[]={POKETRADE_STR_03,POKETRADE_STR_06};
     IRC_POKETRADE_AppMenuOpen(pWork,msg,elementof(msg));
   }
 
@@ -2267,7 +2267,7 @@ static void _touchState(POKEMON_TRADE_WORK* pWork)
 
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
-//  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
+  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, FALSE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, FALSE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_RETURN ,TRUE );
@@ -2959,16 +2959,19 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
   for(i=0;i<PLT_RESOURCE_MAX;i++){
     if(pWork->cellRes[i]!=0){
       GFL_CLGRP_PLTT_Release(pWork->cellRes[i]);
+      pWork->cellRes[i]=0;
     }
   }
   for( ;i<CHAR_RESOURCE_MAX;i++){
     if(pWork->cellRes[i]!=0){
       GFL_CLGRP_CGR_Release(pWork->cellRes[i]);
+      pWork->cellRes[i]=0;
     }
   }
   for( ;i<ANM_RESOURCE_MAX;i++){
     if(pWork->cellRes[i]!=0){
       GFL_CLGRP_CELLANIM_Release(pWork->cellRes[i]);
+      pWork->cellRes[i]=0;
     }
   }
 

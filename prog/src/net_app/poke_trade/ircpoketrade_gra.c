@@ -786,12 +786,18 @@ void IRC_POKETRADE_AllDeletePokeIconResource(POKEMON_TRADE_WORK* pWork)
     _deletePokeIconResource(pWork,i);
   }
 
-  GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_POKEICON] );
-
-  GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_POKEICON_GRAY]);
-
-  GFL_CLGRP_CELLANIM_Release(pWork->cellRes[ANM_POKEICON] );
-
+  if(pWork->cellRes[PLT_POKEICON]!=0){
+    GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_POKEICON] );
+    pWork->cellRes[PLT_POKEICON]=0;
+  }
+  if(pWork->cellRes[PLT_POKEICON_GRAY]!=0){
+    GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_POKEICON_GRAY]);
+    pWork->cellRes[PLT_POKEICON_GRAY]=0;
+  }
+  if(pWork->cellRes[ANM_POKEICON]!=0){
+    GFL_CLGRP_CELLANIM_Release(pWork->cellRes[ANM_POKEICON] );
+    pWork->cellRes[ANM_POKEICON]=0;
+  }
   
   GFL_HEAP_FreeMemory(pWork->pCharMem);
   pWork->pCharMem = NULL;
