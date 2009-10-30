@@ -287,13 +287,13 @@ def convert_line( no, line, wfile, idxfile, symfile, sel_res )
 	end
 	ary = Array( ret )
 	wfile.write( ary.pack("C*") )
-	
+  
 	#âeï\é¶ 1 (7)
 	word = str[RBDEF_NUM_SHADOW]
 	if( word != "Åõ" )
-		ret = 1
+		ret = 0 
 	else
-		ret = 0
+		ret = 1
 	end
 	ary = Array( ret )
 	wfile.write( ary.pack("C*") )
