@@ -200,4 +200,5 @@
 	$VERSION_BLACK	ARCID_ENCOUNT	"encount_data_b.narc"	#ブラック版エンカウントデータ
   ARCID_H03_GIMMICK "h03.narc" # H03ギミック
 	ARCID_SHORTCUT_MENU_GRA	"fld_shortcut_menu_gra.narc"	#フィールドショートカットメニュー用グラフィック
+	ARCID_CAPTEX	"texViewTest.narc"	#キャプチャテクスチャテストデータ
   ARCID_GATE_GIMMICK "gate.narc" # ゲートギミック

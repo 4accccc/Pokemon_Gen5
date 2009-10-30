@@ -24,6 +24,7 @@ extern u16								DWS_GetCamAngleV(DWS_SYS* dws);
 extern void								DWS_SetG3DcamTarget(DWS_SYS* dws, VecFx32* t);
 extern void								DWS_CamAdjustOn(DWS_SYS* dws);
 extern void								DWS_CamAdjustOff(DWS_SYS* dws);
+extern void	DWS_SetCamStatus(DWS_SYS* dws, u16 angleH, u16 angleV, fx32 length );
 
 extern void	DWS_DrawLocalOriginPlane(DWS_SYS* dws, fx32 scale, GXRgb color);
 extern void	DWS_DrawLocalOriginBumpPlane(DWS_SYS* dws, fx32 scale, GXRgb col1, GXRgb col2, int div);

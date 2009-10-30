@@ -108,7 +108,7 @@ static const GFL_DISP_VRAM dispVram = {
 	GX_VRAM_OBJEXTPLTT_NONE,				//メイン2DエンジンのOBJ拡張パレットにに割り当て
 	GX_VRAM_SUB_OBJ_NONE,						//サブ2DエンジンのOBJに割り当て
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,		//サブ2DエンジンのOBJ拡張パレットにに割り当て
-	GX_VRAM_TEX_01_AB,							//テクスチャイメージスロットに割り当て
+	GX_VRAM_TEX_012_ABD,						//テクスチャイメージスロットに割り当て
 	GX_VRAM_TEXPLTT_0_G,						//テクスチャパレットスロットに割り当て
 	GX_OBJVRAMMODE_CHAR_1D_128K,		// メインOBJマッピングモード
 	GX_OBJVRAMMODE_CHAR_1D_32K,			// サブOBJマッピングモード
@@ -177,11 +177,22 @@ static void g3Dsys_setup( void )
 DWS_SYS* DWS_SYS_Setup(HEAPID heapID)
 {
 	DWS_SYS* dws = GFL_HEAP_AllocClearMemory(heapID, sizeof(DWS_SYS));
-
 	dws->heapID = heapID;
+
+	// VRAM全クリア
+  GX_SetBankForLCDC(GX_VRAM_LCDC_ALL);
+  MI_CpuClearFast((void *)HW_LCDC_VRAM, HW_LCDC_VRAM_SIZE);
+  (void)GX_DisableBankForLCDC();
+
+  MI_CpuFillFast((void *)HW_OAM, 192, HW_OAM_SIZE);   // clear OAM
+  MI_CpuClearFast((void *)HW_PLTT, HW_PLTT_SIZE);     // clear the standard palette
+
+  MI_CpuFillFast((void *)HW_DB_OAM, 192, HW_DB_OAM_SIZE);     // clear OAM
+  MI_CpuClearFast((void *)HW_DB_PLTT, HW_DB_PLTT_SIZE);       // clear the standard palette
 
 	//VRAM設定
 	GFL_DISP_SetBank(&dispVram);
+	GFL_BG_SetBackGroundColor(GFL_BG_FRAME3_M, 0x0b50);
 
 	//ＢＧシステム起動
 	GFL_BG_Init(dws->heapID);
@@ -356,6 +367,12 @@ void							DWS_CamAdjustOff(DWS_SYS* dws)
 {
 	GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_SUB);
 	dws->cameraAdjustOn = FALSE;
+}
+void	DWS_SetCamStatus(DWS_SYS* dws, u16 angleH, u16 angleV, fx32 length )
+{
+	dws->cameraAngleH = angleH;
+	dws->cameraAngleV = angleV;
+	dws->cameraLength = length;
 }
 
 //------------------------------------------------------------------
