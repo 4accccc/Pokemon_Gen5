@@ -243,6 +243,9 @@ static void Performance_AllOffOam(void);
 void DEBUG_PerformanceInit(void)
 {
 	GFL_STD_MemClear(&pfm_sys, sizeof(PERFORMANCE_SYSTEM));
+#if DEBUG_ONLY_FOR_none
+  return;
+#endif
   if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER ){
 #if DEBUG_ONLY_FOR_none
 #else
@@ -337,6 +340,9 @@ void DEBUG_PerformanceEndLine(PERFORMANCE_ID id)
 //--------------------------------------------------------------
 void DEBUG_PerformanceSetActive(BOOL isActive)
 {
+#if DEBUG_ONLY_FOR_none
+  return;
+#endif
   if( (OS_GetConsoleType() & OS_CONSOLE_NITRO) && isActive == TRUE ){
     return;
   }
