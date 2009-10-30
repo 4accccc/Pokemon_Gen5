@@ -51,7 +51,7 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
   {
     ZONE_ID_C07, 
     ZONE_ID_PLC07, 
-    2*8, 0xa*8,
+    7*8, 3*8,
     {
       2792/16, 3112/16, 32,
       2792/16, 2888/16, 32,
@@ -62,7 +62,7 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
   {
     ZONE_ID_C08, 
     ZONE_ID_PLC08, 
-    0x1e*8, 0xa*8,
+    0x10*8, 3*8,
     {
       6632/16, 2856/16, 33,
       6952/16, 2792/16, 33,
@@ -84,7 +84,7 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
   {
     ZONE_ID_T03, 
     ZONE_ID_PLT03, 
-    7*8, 0x11*8,
+    2*8, 0xa*8,
     {
       10552/16, 2824/16, 80,
       10488/16,3000/16, 0, 
@@ -95,7 +95,7 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
   {
     ZONE_ID_T04, 
     ZONE_ID_PLT04, 
-    0x10*8, 0x11*8,
+    0x1e*8, 0xa*8,
     {
       11640/16, 4824/16, 16,
       11816/16,4888/16, 0, 
@@ -106,7 +106,7 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
   {
     ZONE_ID_C05, 
     ZONE_ID_PLC05, 
-    0x10*8, 3*8,
+    7*8, 0x11*8,
     {
       3752/16,6952/16, 0, 
       3320/16,6920/16, 0, 
@@ -117,7 +117,7 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
   {
     ZONE_ID_C04, 
     ZONE_ID_PLC04, 
-    7*8, 3*8,
+    0x10*8, 0x11*8,
     {
       6936/16, 7448/16, 16,
       6856/16, 7000/16, 16,
