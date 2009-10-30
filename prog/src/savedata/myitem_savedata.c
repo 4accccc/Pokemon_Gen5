@@ -765,6 +765,23 @@ ITEM_ST * MYITEM_PosItemGet( MYITEM_PTR myitem, u16 pocket, u16 pos )
 
 //------------------------------------------------------------------
 /**
+ * @brief		１つのアイテムの最大所持数を取得
+ *
+ * @param		pocket	ポケット
+ *
+ * @return	１つのアイテムの最大所持数
+ */
+//------------------------------------------------------------------
+u32 MYITEM_GetItemMax( u16 item )
+{
+	if( ITEM_CheckWazaMachine( item ) == TRUE ){
+		return ITEM_MAX_WAZAMACHINE;
+	}
+	return ITEM_MAX_NORMAL;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	バッグのカーソル位置データ確保
  * @param	heapID	ヒープID
  * @return	カーソル位置データ

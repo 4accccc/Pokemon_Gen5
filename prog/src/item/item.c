@@ -464,6 +464,24 @@ static s32 ItemParamRcvGet( ITEMPARAM_RCV * rcv, u16 param )
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief		技マシンかどうか
+ *
+ * @param		item  アイテム番号
+ *
+ * @retval	"TRUE = 技マシン"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
+BOOL ITEM_CheckWazaMachine( u16 item )
+{
+  if( item < ITEM_WAZAMASIN01 || item > ITEM_HIDENMASIN08 ){
+    return FALSE;
+  }
+	return TRUE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * 技マシンで覚えられる技を取得
  *
  * @param item  アイテム番号
@@ -473,7 +491,7 @@ static s32 ItemParamRcvGet( ITEMPARAM_RCV * rcv, u16 param )
 //--------------------------------------------------------------------------------------------
 const u16 ITEM_GetWazaNo( u16 item )
 {
-  if( item < ITEM_WAZAMASIN01 || item > ITEM_HIDENMASIN08 ){
+	if( ITEM_CheckWazaMachine( item ) == FALSE ){
     return 0;
   }
   item -= ITEM_WAZAMASIN01;
@@ -514,7 +532,7 @@ BOOL ITEM_CheckHidenWaza( u16 waza )
 //--------------------------------------------------------------------------------------------
 u8 ITEM_GetWazaMashineNo( u16 item )
 {
-  if( item < ITEM_WAZAMASIN01 || item > ITEM_HIDENMASIN08 ){
+	if( ITEM_CheckWazaMachine( item ) == FALSE ){
     return 0;
   }
   return ( item - ITEM_WAZAMASIN01 );
