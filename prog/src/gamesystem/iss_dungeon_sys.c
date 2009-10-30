@@ -39,98 +39,54 @@ typedef struct
 	u16 tempo;	// テンポ
 	u16 reverb;	// リバーブ
 
-} BGM_PARAM;
+} BGM_PARAM; 
 
-//------------------------------------------------------------------
-/**
- * @brief BGMパラメータに関する, 非公開関数のプロトタイプ宣言
- */
-//------------------------------------------------------------------
-
-// 指定パラメータを反映させる
-static void SetBGMStatus( const BGM_PARAM* p_param );
-
-
-//=====================================================================================================
-/**
- * @brief BGMパラメータに関する, 非公開関数の実装
- */ 
-//=====================================================================================================
-
-//------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
 /**
  * @brief 指定パラメータを反映させる
  *
  * @param 設定するパラメータ
  */
-//------------------------------------------------------------------
-static void SetBGMStatus( const BGM_PARAM* p_param )
+//------------------------------------------------------------------------------------------
+static void SetBGMStatus( const BGM_PARAM* param )
 {
-	if( !p_param ) return;
+	if( !param ) return;
 
   // テンポ
-	PMSND_SetStatusBGM( p_param->tempo, PMSND_NOEFFECT, 0 );
+	PMSND_SetStatusBGM( param->tempo, PMSND_NOEFFECT, 0 );
 
   // ピッチ
-	NNS_SndPlayerSetTrackPitch( PMSND_GetBGMhandlePointer(), PITCH_TRACK_MASK, p_param->pitch );
+	NNS_SndPlayerSetTrackPitch( PMSND_GetBGMhandlePointer(), PITCH_TRACK_MASK, param->pitch );
 
   // リバーブ
-  if( p_param->reverb == 0 )
+  if( param->reverb == 0 )
   {
     PMSND_DisableCaptureReverb();
   }
   else
   {
     PMSND_EnableCaptureReverb( 
-        p_param->reverb, REVERB_SAMPLE_RATE, REVERB_VOLUME, REVERB_STOP_FRAME );
+        param->reverb, REVERB_SAMPLE_RATE, REVERB_VOLUME, REVERB_STOP_FRAME );
   }
 
 	// DEBUG:
-	OBATA_Printf( "Dungeon ISS SetBGMStatus\n" ); 
-	OBATA_Printf( "pitch  = %d\n", p_param->pitch );
-	OBATA_Printf( "tempo  = %d\n", p_param->tempo );
-	OBATA_Printf( "reverb = %d\n", p_param->reverb );
+	OBATA_Printf( "ISS-D: Set BGM status\n" );
+	OBATA_Printf( "- pitch  = %d\n", param->pitch );
+	OBATA_Printf( "- tempo  = %d\n", param->tempo );
+	OBATA_Printf( "- reverb = %d\n", param->reverb );
 }
 
 
-//=====================================================================================================
-/**
- * @brief ダンジョンISSデータ
- */
-//=====================================================================================================
+//========================================================================================== 
+// ■ダンジョンISSデータ
+//========================================================================================== 
 typedef struct
 {
 	u8         dataNum;	// 保持情報数
-	BGM_PARAM* param;	// パラメータ配列
-}
-ISS_DATA;
+	BGM_PARAM* param;	  // パラメータ配列
+} BGM_PARAMSET;
 
-//------------------------------------------------------------------
-/**
- * @brief ダンジョンISSデータに関する, 非公開関数のプロトタイプ宣言
- */
-//------------------------------------------------------------------
-
-// リトルエンディアンのu16値取得関数
-static u16 GetU16( u8* data, int pos );
-
-// データを読み込む
-static ISS_DATA* LoadIssData( HEAPID heap_id );
-
-// データを破棄する
-static void UnloadIssData( ISS_DATA* p_data );
-
-// 指定ゾーンIDのBGMパラメータを取得する
-static const BGM_PARAM* GetBGMParam( const ISS_DATA* p_data, u16 zone_id );
-
-
-//=====================================================================================================
-/** 
- * @brief ダンジョンISSデータに関する, 非公開関数の実装
- */
-//=====================================================================================================
-
-//---------------------------------------------------------------------------- 
+//------------------------------------------------------------------------------------------
 /**
  * @brief data + pos の位置から始まる2バイトを, 
  *        リトルエンディアンで並んだu16のデータとして解釈し値を取得する
@@ -140,7 +96,7 @@ static const BGM_PARAM* GetBGMParam( const ISS_DATA* p_data, u16 zone_id );
  *
  * @return u16
  */
-//---------------------------------------------------------------------------- 
+//------------------------------------------------------------------------------------------
 static u16 GetU16( u8* data, int pos )
 {
 	u16 lower = (u16)( data[ pos ] );
@@ -150,7 +106,7 @@ static u16 GetU16( u8* data, int pos )
 	return value;
 }
 
-//----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
 /**
  * @brief データを読み込む
  *
@@ -158,99 +114,94 @@ static u16 GetU16( u8* data, int pos )
  *
  * @return 読み込んだデータ
  */
-//----------------------------------------------------------------------------
-static ISS_DATA* LoadIssData( HEAPID heap_id )
+//-----------------------------------------------------------------------------------------
+static BGM_PARAMSET* LoadParamset( HEAPID heap_id )
 {
 	int i;
-	ISS_DATA* iss_data;
+	BGM_PARAMSET* paramset;
 	u32 size;
-	u8* p_data;
+	u8* data;
 	u8 data_num;
 
 	// 本体を作成
-	iss_data = (ISS_DATA*)GFL_HEAP_AllocMemory( heap_id, sizeof( ISS_DATA ) );
+	paramset = (BGM_PARAMSET*)GFL_HEAP_AllocMemory( heap_id, sizeof( BGM_PARAMSET ) );
 
 	// データ読み込み
-	p_data = (u8*)GFL_ARC_UTIL_LoadEx( ARCID_ISS_UNIT, NARC_iss_dungeon_bin, FALSE, heap_id, &size );
+	data = (u8*)GFL_ARC_UTIL_LoadEx( ARCID_ISS_UNIT, NARC_iss_dungeon_bin, FALSE, heap_id, &size );
 
 	// データ数を取得
-	data_num = p_data[0];
+	data_num = data[0];
 
 	// バッファ確保
-	iss_data->dataNum = data_num; 
-	iss_data->param   = (BGM_PARAM*)GFL_HEAP_AllocMemory( heap_id, sizeof( BGM_PARAM ) * data_num );
+	paramset->dataNum = data_num; 
+	paramset->param   = (BGM_PARAM*)GFL_HEAP_AllocMemory( heap_id, sizeof( BGM_PARAM ) * data_num );
 
 	// 各データを取得
 	for( i=0; i<data_num; i++ )
 	{
-		int pos     = 1 + ( sizeof( u16 ) + sizeof( u16 ) ) * i;
-		u16 zone_id = GetU16( p_data, pos );
-		u16 offset  = GetU16( p_data, pos + 2 );
+		int pos     = 1 + ( sizeof(u16) + sizeof(u16) ) * i;
+		u16 zone_id = GetU16( data, pos );
+		u16 offset  = GetU16( data, pos + 2 );
 
-		// DEBUG:
-		OBATA_Printf( "pos[%d]     = %d\n", i, pos );
-		OBATA_Printf( "zone_id[%d] = %d\n", i, zone_id );
-		OBATA_Printf( "offset[%d]  = %d\n", i, offset );
-
-		iss_data->param[i].zoneID = GetU16( p_data, offset );
-		iss_data->param[i].pitch  = (s16)GetU16( p_data, offset + 2 );
-		iss_data->param[i].tempo  = GetU16( p_data, offset + 4 );
-		iss_data->param[i].reverb = GetU16( p_data, offset + 6 );
+		paramset->param[i].zoneID = GetU16( data, offset );
+		paramset->param[i].pitch  = (s16)GetU16( data, offset + 2 );
+		paramset->param[i].tempo  = GetU16( data, offset + 4 );
+		paramset->param[i].reverb = GetU16( data, offset + 6 );
 	} 
 
 
 	// DEBUG:
-	OBATA_Printf( "------------------------LoadIssData\n" );
-	OBATA_Printf( "data_num = %d\n", data_num );
+	OBATA_Printf( "ISS-D: Load BGM parameters\n" );
+	OBATA_Printf( "- data_num = %d\n", data_num );
 	for( i=0; i<data_num; i++ )
 	{ 
-		OBATA_Printf( "data[%d].zone_id = %d\n", i, iss_data->param[i].zoneID ); 
-		OBATA_Printf( "data[%d].pitch   = %d\n", i, iss_data->param[i].pitch ); 
-		OBATA_Printf( "data[%d].tempo   = %d\n", i, iss_data->param[i].tempo ); 
-		OBATA_Printf( "data[%d].reverb  = %d\n", i, iss_data->param[i].reverb ); 
+		OBATA_Printf( "- data[%d].zone_id = %d\n", i, paramset->param[i].zoneID ); 
+		OBATA_Printf( "- data[%d].pitch   = %d\n", i, paramset->param[i].pitch ); 
+		OBATA_Printf( "- data[%d].tempo   = %d\n", i, paramset->param[i].tempo ); 
+		OBATA_Printf( "- data[%d].reverb  = %d\n", i, paramset->param[i].reverb ); 
 	}
 
 	// 読み込んだデータを返す
-	return iss_data;
+	return paramset;
 }
 
-//----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
 /**
  * @brief データを破棄する
  *
- * @param p_data 破棄するデータ
+ * @param paramset 破棄するデータ
  */
-//----------------------------------------------------------------------------
-static void UnloadIssData( ISS_DATA* p_data )
+//-----------------------------------------------------------------------------------------
+static void UnloadIssData( BGM_PARAMSET* paramset )
 { 
 	// パラメータ配列を破棄
-	GFL_HEAP_FreeMemory( p_data->param );
+	GFL_HEAP_FreeMemory( paramset->param );
 
 	// 本体を破棄
-	GFL_HEAP_FreeMemory( p_data );
+	GFL_HEAP_FreeMemory( paramset );
 }
 
-//----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
 /**
  * @brief 指定ゾーンIDのBGMパラメータを取得する
  *
- * @param p_data  検索元データ
- * @param zone_id 検索対象ゾーンID
+ * @param paramset 検索元データ
+ * @param zone_id  検索対象ゾーンID
  *
  * @return 指定ゾーンIDのパラメータ(存在しない場合, NULL)
  */
-//----------------------------------------------------------------------------
-static const BGM_PARAM* GetBGMParam( const ISS_DATA* p_data, u16 zone_id )
+//-----------------------------------------------------------------------------------------
+static const BGM_PARAM* GetBGMParam( const BGM_PARAMSET* paramset, u16 zone_id )
 {
 	int i;
 
 	// 指定ゾーンIDを検索
-	for( i=0; i<p_data->dataNum; i++ )
+	for( i=0; i<paramset->dataNum; i++ )
 	{
 		// 発見
-		if( p_data->param[i].zoneID == zone_id )
+		if( paramset->param[i].zoneID == zone_id )
 		{
-			return &p_data->param[i];
+			return &paramset->param[i];
 		}
 	}
 
@@ -260,11 +211,9 @@ static const BGM_PARAM* GetBGMParam( const ISS_DATA* p_data, u16 zone_id )
 }
 
 
-//=====================================================================================================
-/**
- * @breif ダンジョンISSシステム構造体
- */
-//=====================================================================================================
+//========================================================================================== 
+// ■ダンジョンISSシステム管理ワーク
+//========================================================================================== 
 struct _ISS_DUNGEON_SYS
 {
 	// 使用するヒープID
@@ -281,20 +230,21 @@ struct _ISS_DUNGEON_SYS
 	u16 nextZoneID;
 
 	// データ
-	ISS_DATA* pData;
+	BGM_PARAMSET* paramset;
 
 	// 現在の設定データ
 	const BGM_PARAM* pActiveParam;
+
+  // デフォルト・パラメータ
+  BGM_PARAM defaultParam;
 };
 
 
-//=====================================================================================================
-/**
- * 公開関数の実装
- */
-//===================================================================================================== 
+//========================================================================================== 
+// ■公開関数
+//========================================================================================== 
 
-//----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
 /**
  * @brief  ダンジョンISSシステムを作成する
  *
@@ -303,13 +253,13 @@ struct _ISS_DUNGEON_SYS
  * 
  * @return ダンジョンISSシステム
  */
-//----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
 ISS_DUNGEON_SYS* ISS_DUNGEON_SYS_Create( PLAYER_WORK* p_player, HEAPID heap_id )
 {
 	ISS_DUNGEON_SYS* p_sys;
 
 	// メモリ確保
-	p_sys = (ISS_DUNGEON_SYS*)GFL_HEAP_AllocMemory( heap_id, sizeof( ISS_DUNGEON_SYS ) );
+	p_sys = (ISS_DUNGEON_SYS*)GFL_HEAP_AllocMemory( heap_id, sizeof(ISS_DUNGEON_SYS) );
 
 	// 初期化
 	p_sys->heapID        = heap_id;
@@ -317,8 +267,12 @@ ISS_DUNGEON_SYS* ISS_DUNGEON_SYS_Create( PLAYER_WORK* p_player, HEAPID heap_id )
 	p_sys->isActive      = FALSE;
 	p_sys->currentZoneID = INVALID_ZONE_ID;
 	p_sys->nextZoneID    = INVALID_ZONE_ID;
-	p_sys->pData         = LoadIssData( heap_id );
+	p_sys->paramset      = LoadParamset( heap_id );
 	p_sys->pActiveParam  = NULL;
+  p_sys->defaultParam.zoneID = INVALID_ZONE_ID;
+  p_sys->defaultParam.pitch  = 0;
+  p_sys->defaultParam.tempo  = 256;
+  p_sys->defaultParam.reverb = 0;
 
 	// DEBUG:
 	OBATA_Printf( "ISS-D: Create\n" );
@@ -327,20 +281,20 @@ ISS_DUNGEON_SYS* ISS_DUNGEON_SYS_Create( PLAYER_WORK* p_player, HEAPID heap_id )
 	return p_sys;
 }
 
-//----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
 /**
  * @brief  ダンジョンISSシステムを破棄する
  *
  * @param p_sys 破棄するダンジョンISSシステム
  */
-//----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
 void ISS_DUNGEON_SYS_Delete( ISS_DUNGEON_SYS* p_sys )
 {
 	// システム停止
 	ISS_DUNGEON_SYS_Off( p_sys );
 	
 	// データを破棄
-	UnloadIssData( p_sys->pData );
+	UnloadIssData( p_sys->paramset );
 
 	// 本体を破棄
 	GFL_HEAP_FreeMemory( p_sys );
@@ -364,8 +318,11 @@ void ISS_DUNGEON_SYS_Update( ISS_DUNGEON_SYS* p_sys )
 	// ゾーン切り替えが通知された場合
 	if( p_sys->currentZoneID != p_sys->nextZoneID )
 	{
+		// 更新
+		p_sys->currentZoneID = p_sys->nextZoneID;
+
 		// 新ゾーンIDのBGMパラメータを検索
-		p_sys->pActiveParam = GetBGMParam( p_sys->pData, p_sys->nextZoneID );
+		p_sys->pActiveParam = GetBGMParam( p_sys->paramset, p_sys->nextZoneID );
 
     // BGMパラメータが設定されていない場合 ==> システム停止
     if( p_sys->pActiveParam == NULL )
@@ -375,61 +332,60 @@ void ISS_DUNGEON_SYS_Update( ISS_DUNGEON_SYS* p_sys )
     }
 
 		// BGMの設定を反映させる
-		SetBGMStatus( p_sys->pActiveParam );
-
-		// 更新
-		p_sys->currentZoneID = p_sys->nextZoneID;
-	}
-
-	// DEBUG:
-	OBATA_Printf( "ISS-D: Update\n" );
+		SetBGMStatus( p_sys->pActiveParam ); 
+	} 
 } 
 
-//---------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
 /**
  * @brief ゾーン切り替えを通知する
  *
  * @param p_sys        通知対象のダンジョンISSシステム
  * @param next_zone_id 新しいゾーンID
  */
-//---------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
 void ISS_DUNGEON_SYS_ZoneChange( ISS_DUNGEON_SYS* p_sys, u16 next_zone_id )
 { 
 	p_sys->nextZoneID = next_zone_id; 
 
   // DEBUG:
   OBATA_Printf( "ISS-D: ZoneChange\n" );
+  OBATA_Printf( "- next zone id = %d\n", next_zone_id );
 }
 
-//----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
 /**
  * @brief システムを起動する
  *
  * @param p_sys 起動するシステム
  */
-//----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
 void ISS_DUNGEON_SYS_On( ISS_DUNGEON_SYS* p_sys )
 {
+  // 起動
 	p_sys->isActive = TRUE;
+
+  // パラメータ設定
 	SetBGMStatus( p_sys->pActiveParam );
 
   // DEBUG:
   OBATA_Printf( "ISS-D: On\n" );
 }
 
-//----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
 /**
  * @brief システムを停止させる
  *
  * @param p_sys 停止させるシステム
  */
-//----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
 void ISS_DUNGEON_SYS_Off( ISS_DUNGEON_SYS* p_sys )
 {
-	// 停止し, パラメータをデフォルトに戻す
+	// 停止
 	p_sys->isActive = FALSE;
-	PMSND_SetStatusBGM( 256, 0, 0 ); 
-	PMSND_DisableCaptureReverb();
+
+  // デフォルト・パラメータに戻す
+  SetBGMStatus( &p_sys->defaultParam );
 
   // DEBUG:
   OBATA_Printf( "ISS-D: Off\n" );
