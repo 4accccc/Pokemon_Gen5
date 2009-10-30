@@ -425,7 +425,7 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, in
     {
       BTLV_MCSS_SetPosition( bew->bmw, position, pos_x, pos_y, pos_z );
     }
-    BTLV_MCSS_SetShadowVanishFlag( bew->bmw, position, 1 );
+    //BTLV_MCSS_SetShadowVanishFlag( bew->bmw, position, 1 );
     bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] = position;
   }
   else
