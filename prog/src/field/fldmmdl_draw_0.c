@@ -31,7 +31,7 @@ typedef struct
   u8 set_anm_dir;
   u8 set_anm_status;
   u8 next_walk_frmidx;
-  u8 dmy;
+  u8 next_set_frame;
 }ANMCNT_WORK;
 
 //--------------------------------------------------------------
@@ -85,6 +85,10 @@ static void blactAnmControl_Update( ANMCNT_WORK *work,
   u16 status = MMDL_GetDrawStatus( mmdl );
   u16 anm_idx = (status * DIR_MAX4) + dir;
   
+  if( work->next_set_frame && status == work->set_anm_status ){
+    work->next_set_frame = 0;
+  }
+
   if( dir != work->set_anm_dir ) //方向更新
   {
     init_flag = TRUE;
@@ -96,25 +100,53 @@ static void blactAnmControl_Update( ANMCNT_WORK *work,
   else if( status != work->set_anm_status ) //ステータス更新
   {
     init_flag = TRUE;
-    
+     
     if( status == DRAW_STA_STOP ) //停止タイプ
     {
-      work->next_walk_frmidx = GFL_BBDACT_GetAnimeFrmIdx( actSys, actID );
-      
-      {
-        u8 tbl[4] = {0,2,2,0};
+      if( work->set_anm_status == DRAW_STA_STOP ){ //停止アニメ中
+        work->next_set_frame = 0;
+        work->next_walk_frmidx = GFL_BBDACT_GetAnimeFrmIdx( actSys, actID );
         
-        if( work->next_walk_frmidx >= 4 ){
-          work->next_walk_frmidx = 0;
+        {
+          u8 tbl[4] = {0,2,2,0};
+        
+          if( work->next_walk_frmidx >= 4 ){
+            work->next_walk_frmidx = 0;
+          }
+        
+          work->next_walk_frmidx = tbl[work->next_walk_frmidx];
         }
-        
-        work->next_walk_frmidx = tbl[work->next_walk_frmidx];
-      }
       
-		  GFL_BBDACT_SetAnimeIdx( actSys, actID, anm_idx );
+		    GFL_BBDACT_SetAnimeIdx( actSys, actID, anm_idx );
+        work->set_anm_status = status;
+      }else if( work->next_set_frame == 0 ){ //停止アニメ以外 １frame後に
+        init_flag = FALSE;
+        work->next_set_frame++;
+      }else{
+         work->next_set_frame = 0;
+         work->next_walk_frmidx = GFL_BBDACT_GetAnimeFrmIdx( actSys, actID );
+        
+        {
+          u8 tbl[4] = {0,2,2,0};
+        
+          if( work->next_walk_frmidx >= 4 ){
+            work->next_walk_frmidx = 0;
+          }
+        
+          work->next_walk_frmidx = tbl[work->next_walk_frmidx];
+        }
+      
+		    GFL_BBDACT_SetAnimeIdx( actSys, actID, anm_idx );
+        work->set_anm_status = status;
+      }
     }
     else //歩きタイプ
     {
+      if( work->next_set_frame ){
+        work->next_set_frame = 0;
+        work->set_anm_status = DRAW_STA_WALK;
+      }
+
       if( work->set_anm_status != DRAW_STA_STOP ) //移動系アニメを行っていた
       {
         work->next_walk_frmidx =
@@ -133,9 +165,8 @@ static void blactAnmControl_Update( ANMCNT_WORK *work,
       GF_ASSERT( work->next_walk_frmidx < 4 );
 		  GFL_BBDACT_SetAnimeIdx( actSys, actID, anm_idx );
       GFL_BBDACT_SetAnimeFrmIdx( actSys, actID, work->next_walk_frmidx );
+      work->set_anm_status = status;
     }
-    
-    work->set_anm_status = status;
   }
   
   {
@@ -545,7 +576,7 @@ static void DrawCycleHero_Draw( MMDL *mmdl )
 const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_CycleHero =
 {
   DrawHero_Init,
-	DrawCycleHero_Draw,
+	DrawHero_Draw,
 	DrawHero_Delete,
 	DrawHero_Delete,	//退避
 	DrawHero_Init,    //本当は復帰
