@@ -108,6 +108,8 @@ INIT_EVENT_START  ev_init_debug_script
 	_CALL	init_flags
   //全滅時の戻り先設定：デバッグゲーム開始時はC01から（T02はイベントがあるため）
   _SET_WARP_ID( WARP_ID_C01 )
+  //CGear入手済みにする
+	_FLAG_SET( FE_CGEAR_GET )
   //メニュー項目「ポケモン」をON
 	_FLAG_SET( SYS_FLAG_FIRST_POKE_GET )
   //メニュー項目「ずかん」をON

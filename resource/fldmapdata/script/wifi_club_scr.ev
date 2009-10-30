@@ -53,7 +53,7 @@ sub_club_counter_main:
   DEFINE_LOCAL  i_loop
 
   //C-Gear取得チェック
-  IF FLAG_ON( FE_CGEAR_GET ) THEN
+  IF FLAG_OFF( FE_CGEAR_GET ) THEN
     _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_err01 ) //また後でお越しください
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()

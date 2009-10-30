@@ -227,7 +227,6 @@ EVENT_START ev_union
   DEFINE_LOCAL ret
 
   // ƒ[ƒJƒ‹•Ï”‚Ì‰Šú‰»
-  _FLAG_SET( FE_CGEAR_GET )
   _FLAG_CHECK( FE_CGEAR_GET, have_cgear )
   $room_in    = FALSE
   $explain    = FALSE
