@@ -1612,9 +1612,11 @@ static void WH_StateOutStartScan(void *arg)
 
 
 //			WH_TRACE("‹­“x %d\n",WMSP_GetRssi8(bd->rssi));
+#if 0
 			if(WMSP_GetRssi8(bd->rssi) < 30){
 				continue;
 			}
+#endif
 
 
 			WH_TRACE(" parent: MAC=%02x%02x%02x%02x%02x%02x ",
