@@ -86,15 +86,6 @@ enum {
 
 	WIN_STW_STATUS,			// 「つよさをみる」
 
-/*
-	// ↓スワップ用
-	WIN_STW_NAME_S,			// 名前（スワップ）
-	WIN_STW_SKILL1_S,		// 技１（スワップ）
-	WIN_STW_SKILL2_S,		// 技２（スワップ）
-	WIN_STW_SKILL3_S,		// 技３（スワップ）
-	WIN_STW_SKILL4_S,		// 技４（スワップ）
-*/
-
 	WIN_STW_MAX
 };
 
@@ -124,22 +115,6 @@ enum {
 	WIN_P3_NEXT,		// 「つぎのレベルまで」
 	WIN_P3_WAZACHECK,	// 「わざをみる」
 
-/*
-	// ↓スワップ用
-	WIN_P3_NAME_S,		// 名前（スワップ）
-	WIN_P3_SPANAME_S,	// 特性名（スワップ）
-	WIN_P3_SPAINFO_S,	// 特性説明（スワップ）
-	WIN_P3_ITEMNAME_S,	// 道具名（スワップ）
-	WIN_P3_HPNUM_S,		// HP値（スワップ）
-	WIN_P3_POWNUM_S,	// 攻撃値（スワップ）
-	WIN_P3_DEFNUM_S,	// 防御値（スワップ）
-	WIN_P3_AGINUM_S,	// 素早さ値（スワップ）
-	WIN_P3_SPPNUM_S,	// 特攻値（スワップ）
-	WIN_P3_SPDNUM_S,	// 特防値（スワップ）
-	WIN_P3_HPGAGE_S,	// HPゲージ（スワップ）
-	WIN_P3_LVNUM_S,		// レベル値（スワップ）
-	WIN_P3_NEXTNUM_S,	// 次のレベル値（スワップ）
-*/
 	WIN_P3_MAX
 };
 
@@ -157,15 +132,7 @@ enum {
 	WIN_P4_HIT,			// 「めいちゅう」
 	WIN_P4_POW,			// 「いりょく」
 	WIN_P4_BUNRUI,		// 「ぶんるい」
-/*
-	// ↓スワップ用
-	WIN_P4_SKILL_S,		// 技名
-	WIN_P4_PPNUM_S,		// PP/PP
-	WIN_P4_HITNUM_S,	// 命中値
-	WIN_P4_POWNUM_S,	// 威力値
-	WIN_P4_INFO_S,		// 技説明
-	WIN_P4_BRNAME_S,	// 分類名
-*/
+
 	WIN_P4_MAX
 };
 

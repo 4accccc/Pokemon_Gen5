@@ -288,7 +288,6 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
 //	wk->dat->energy = 7;
 //	wk->dat->reserved_energy = 3;
 
-	wk->cursor_flg = FALSE;
 
 /*
 	if( BattleWorkFightTypeGet(wk->dat->bw) & FIGHT_TYPE_GET_DEMO ){
@@ -378,6 +377,13 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
 
 	BattleBag_ObjInit( wk );
 	BattleBag_PageObjSet( wk, wk->page );
+
+	if( *wk->dat->cursor_flg == 1 ){
+		wk->cursor_flg = TRUE;
+	}else{
+		wk->cursor_flg = FALSE;
+	}
+	BAPPTOOL_VanishCursor( wk->cpwk, wk->cursor_flg );
 
 	BBAGUI_Init( wk, wk->page, 0 );
 
@@ -496,12 +502,15 @@ static int BBAG_SeqPokeSelect( BBAG_WORK * wk )
 			BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
 			return SEQ_BBAG_ENDSET;
 
+		case CURSORMOVE_CURSOR_MOVE:		// 移動
+			PMSND_PlaySE( SEQ_SE_SELECT1 );
+			break;
+
 		case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
 		case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
 		case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
 		case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
 		case CURSORMOVE_CURSOR_ON:			// カーソル表示
-		case CURSORMOVE_CURSOR_MOVE:		// 移動
 		case CURSORMOVE_NONE:						// 動作なし
 			break;
 		}
@@ -575,10 +584,13 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
 		}
 		break;
 
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
+		PMSND_PlaySE( SEQ_SE_SELECT1 );
+		break;
+
 	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
 	case CURSORMOVE_CURSOR_ON:			// カーソル表示
-	case CURSORMOVE_CURSOR_MOVE:		// 移動
 	case CURSORMOVE_NONE:						// 動作なし
 		break;
 
@@ -693,12 +705,15 @@ static int BBAG_SeqUseSelect( BBAG_WORK * wk )
 		BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
 		return SEQ_BBAG_BUTTON_WAIT;
 
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
+		PMSND_PlaySE( SEQ_SE_SELECT1 );
+		break;
+
 	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
 	case CURSORMOVE_CURSOR_ON:			// カーソル表示
-	case CURSORMOVE_CURSOR_MOVE:		// 移動
 	case CURSORMOVE_NONE:						// 動作なし
 			break;
 	}
@@ -1008,6 +1023,11 @@ static BOOL BBAG_SeqEnd( GFL_TCB * tcb, BBAG_WORK * wk )
 	}
 
 	wk->dat->end_flg = 1;
+	if( wk->cursor_flg == TRUE ){
+		*wk->dat->cursor_flg = 1;
+	}else{
+		*wk->dat->cursor_flg = 0;
+	}
 
 	BBAGANM_ButtonExit( wk );
 

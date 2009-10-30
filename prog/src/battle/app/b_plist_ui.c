@@ -207,6 +207,8 @@ static void CallBack_Off( void * work, int nowPos, int oldPos )
 static void CallBack_Touch( void * work, int nowPos, int oldPos )
 {
 	BPLIST_WORK * wk = work;
+
+	VanishCursor( wk, FALSE );
 }
 
 static void CallBack_Move( void * work, int nowPos, int oldPos )

@@ -436,9 +436,6 @@ void BattlePokeList_TaskAdd( BPLIST_DATA * dat )
 // CLIENT_TYPE_A : 前衛
 // CLIENT_TYPE_C : 後衛
 
-//	wk->cursor_flg = FALSE;
-
-
 /*** テスト ***/
 //	wk->dat->mode = BPL_MODE_NORMAL;			// 通常のポケモン選択
 //	wk->dat->mode = BPL_MODE_NO_CANCEL;		// キャンセル不可
@@ -658,6 +655,13 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
 		BAPP_CursorMvWkSetFlag( wk->cmv_wk, 1 );
 	}
 */
+	if( *wk->dat->cursor_flg == 1 ){
+		wk->cursor_flg = TRUE;
+	}else{
+		wk->cursor_flg = FALSE;
+	}
+	BAPPTOOL_VanishCursor( wk->cpwk, wk->cursor_flg );
+
 	// マルチのときの初期位置補正
 	if( wk->page == BPLIST_PAGE_SELECT &&
 		BattlePokeList_MultiPosCheck( wk, 0 ) == TRUE ){
@@ -1120,12 +1124,15 @@ static int BPL_SeqWazaDelSelect( BPLIST_WORK * wk )
 		wk->ret_seq = SEQ_BPL_ENDSET;
 		return SEQ_BPL_BUTTON_WAIT;
 
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
+		PMSND_PlaySE( SEQ_SE_SELECT1 );
+		break;
+
 	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
 	case CURSORMOVE_CURSOR_ON:			// カーソル表示
-	case CURSORMOVE_CURSOR_MOVE:		// 移動
 	case CURSORMOVE_NONE:						// 動作なし
 		break;
 	}
@@ -1216,12 +1223,15 @@ static int BPL_SeqWazaDelMain( BPLIST_WORK * wk )
 		wk->ret_seq = SEQ_BPL_PAGECHG_WAZASET_S;
 		return SEQ_BPL_BUTTON_WAIT;
 
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
+		PMSND_PlaySE( SEQ_SE_SELECT1 );
+		break;
+
 	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
 	case CURSORMOVE_CURSOR_ON:			// カーソル表示
-	case CURSORMOVE_CURSOR_MOVE:		// 移動
 	case CURSORMOVE_NONE:						// 動作なし
 		break;
 	}
@@ -1336,12 +1346,15 @@ static int BPL_SeqWazaRcvSelect( BPLIST_WORK * wk )
 		wk->ret_seq = SEQ_BPL_PAGE1_CHG;
 		return SEQ_BPL_BUTTON_WAIT;
 
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
+		PMSND_PlaySE( SEQ_SE_SELECT1 );
+		break;
+
 	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
 	case CURSORMOVE_CURSOR_ON:			// カーソル表示
-	case CURSORMOVE_CURSOR_MOVE:		// 移動
 	case CURSORMOVE_NONE:						// 動作なし
 		break;
 	}
@@ -1765,6 +1778,11 @@ static BOOL BPL_SeqEnd( GFL_TCB * tcb, BPLIST_WORK * wk )
 	}
 
 	wk->dat->end_flg = 1;
+	if( wk->cursor_flg == TRUE ){
+		*wk->dat->cursor_flg = 1;
+	}else{
+		*wk->dat->cursor_flg = 0;
+	}
 //	wk->dat->cursor_flg = BAPP_CursorMvWkGetFlag( wk->cmv_wk );
 
 	BPL_MsgManExit( wk );
@@ -2190,12 +2208,15 @@ static u8 BPL_PokemonSelect( BPLIST_WORK * wk )
 		wk->dat->sel_poke = BPL_SEL_EXIT;
 		return TRUE;
 
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
+		PMSND_PlaySE( SEQ_SE_SELECT1 );
+		break;
+
 	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
 	case CURSORMOVE_CURSOR_ON:			// カーソル表示
-	case CURSORMOVE_CURSOR_MOVE:		// 移動
 	case CURSORMOVE_NONE:						// 動作なし
 		break;
 	}
@@ -2243,12 +2264,15 @@ static u8 BPL_IrekaeSelect( BPLIST_WORK * wk )
 		ret = BPLIST_UI_CHG_RETURN;
 		break;
 
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
+		PMSND_PlaySE( SEQ_SE_SELECT1 );
+		break;
+
 	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
 	case CURSORMOVE_CURSOR_ON:			// カーソル表示
-	case CURSORMOVE_CURSOR_MOVE:		// 移動
 	case CURSORMOVE_NONE:						// 動作なし
 		ret = 0xff;
 		break;
@@ -2297,12 +2321,15 @@ static u8 BPL_StatusMainSelect( BPLIST_WORK * wk )
 		ret = BPLIST_UI_STATUS_RETURN;
 		break;
 
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
+		PMSND_PlaySE( SEQ_SE_SELECT1 );
+		break;
+
 	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
 	case CURSORMOVE_CURSOR_ON:			// カーソル表示
-	case CURSORMOVE_CURSOR_MOVE:		// 移動
 	case CURSORMOVE_NONE:						// 動作なし
 		ret = 0xff;
 		break;
@@ -2355,12 +2382,15 @@ static u8 BPL_StWazaSelect( BPLIST_WORK * wk )
 		ret = BPLIST_UI_WAZA_RETURN;
 		break;
 
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
+		PMSND_PlaySE( SEQ_SE_SELECT1 );
+		break;
+
 	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
 	case CURSORMOVE_CURSOR_ON:			// カーソル表示
-	case CURSORMOVE_CURSOR_MOVE:		// 移動
 	case CURSORMOVE_NONE:						// 動作なし
 		ret = 0xff;
 		break;
@@ -2410,12 +2440,15 @@ static u8 BPL_StInfoWazaSelect( BPLIST_WORK * wk )
 		ret = BPLIST_UI_WAZAINFO_RETURN;
 		break;
 
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
+		PMSND_PlaySE( SEQ_SE_SELECT1 );
+		break;
+
 	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
 	case CURSORMOVE_CURSOR_ON:			// カーソル表示
-	case CURSORMOVE_CURSOR_MOVE:		// 移動
 	case CURSORMOVE_NONE:						// 動作なし
 		ret = 0xff;
 		break;
