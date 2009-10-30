@@ -251,7 +251,7 @@ typedef enum
 //--------------------------------------------------------------
 typedef enum
 {
-	MMDL_SHADOW_NON = 0,			///<‰e–³‚µ
+	MMDL_SHADOW_NON,			///<‰e–³‚µ
 	MMDL_SHADOW_ON,				///<‰eƒAƒŠ
 }MMDL_SHADOWTYPE;
 
