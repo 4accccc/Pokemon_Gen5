@@ -412,6 +412,7 @@ static void APP_TASKMENU_UpdateKey( APP_TASKMENU_WORK *work )
       {
         work->cursorPos--;
       }
+      work->transAnmCnt = 0;
       PMSND_PlaySystemSE( APP_TASKMENU_SND_CURSOR );
     }
     else
@@ -425,6 +426,7 @@ static void APP_TASKMENU_UpdateKey( APP_TASKMENU_WORK *work )
       {
         work->cursorPos++;
       }
+      work->transAnmCnt = 0;
       PMSND_PlaySystemSE( APP_TASKMENU_SND_CURSOR );
     }
     else
