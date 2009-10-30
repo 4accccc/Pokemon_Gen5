@@ -1166,6 +1166,7 @@ static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
     GFL_BMPWIN_Delete(pWork->MyInfoWin);
     pWork->MyInfoWin = NULL;
     IRC_POKETRADE_GraphicEndSubDispStatusDisp(pWork);
+    GFL_BG_SetVisible( GFL_BG_FRAME0_S , FALSE );
     IRC_POKETRADE_GraphicInitMainDisp(pWork);
     IRC_POKETRADEDEMO_SetModel( pWork, REEL_PANEL_OBJECT);
     GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
@@ -1200,15 +1201,14 @@ static void _pokemonStatusStart(POKEMON_TRADE_WORK* pWork)
   GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
   GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
 
-  G2S_BlendNone();
-  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1| GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_OBJ , 8 );
+  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 8 );
  {
     G2S_SetWnd1InsidePlane(
       GX_WND_PLANEMASK_OBJ,
       FALSE );
     G2S_SetWnd1Position( 128-8*10, 0, 128+8*10, 33 );
     G2S_SetWnd0InsidePlane(
-//      GX_WND_PLANEMASK_BG0|
+      GX_WND_PLANEMASK_BG0|
       GX_WND_PLANEMASK_OBJ,
       FALSE );
     G2S_SetWnd0Position( 1, 8*20, 0x0, 192 );
@@ -1260,8 +1260,7 @@ static void _networkFriendsStandbyWait2(POKEMON_TRADE_WORK* pWork)
   {
     int msg[]={POKETRADE_STR_05, POKETRADE_STR_04, POKETRADE_STR_06};
     IRC_POKETRADE_AppMenuOpen(pWork,msg,elementof(msg));
-    GFL_BG_SetVisible( GFL_BG_FRAME2_M , TRUE );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_M , TRUE );
+    GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
   }
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, FALSE);
 
