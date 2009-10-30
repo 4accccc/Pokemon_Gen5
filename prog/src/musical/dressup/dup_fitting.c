@@ -1677,7 +1677,78 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
   }
   if( work->tpIsTrg || work->tpIsTouch )
   {
-    if( work->tpIsTrg && 
+    BOOL hitMinOval = FALSE;
+    BOOL hitMaxOval = FALSE;
+    
+    //取り合えずInfoBarとチェックボタンにかぶらない処理
+    if( work->tpy > 192-16 )
+    {
+      work->tpy = 192-16;
+    }
+    if( work->tpy < 16 )
+    {
+      work->tpy = 16;
+    }
+    
+    if( work->holdItemType == IG_FIELD && work->holdItem != NULL )
+    {
+      //アイテム保持中の処理
+      DUP_FIT_UpdateTpHoldingItem( work , TRUE );
+    }
+    else if( work->tpIsTrg == TRUE )
+    {
+      isTouchEquip = DUP_FIT_UpdateTpHoldItem(work,work->itemGroupEquip ,IG_EQUIP);
+      if( isTouchEquip == TRUE )
+      {
+        //装備との当たり判定
+        DUP_FIT_ITEMGROUP_RemoveItem( work->itemGroupEquip , work->holdItem );
+        DUP_FIT_ITEMGROUP_AddItem( work->itemGroupField , work->holdItem );
+        //座標あわせと深度設定
+        DUP_FIT_UpdateTpHoldingItem( work , FALSE );
+      }
+      else
+      {
+        isTouchSort = DUP_FIT_UpdateTpPokeCheck( work );
+      }
+    }
+    if( isTouchEquip == FALSE && isTouchSort == FALSE && 
+        ( (work->holdItem == NULL && work->tpIsTrg == TRUE ) || work->holdItemType == IG_LIST ) )
+    {
+      //アイテムリストの中か？
+      //X座標には比をかけてYのサイズで計算する
+      const s16 subX = work->tpx - LIST_CENTER_X;
+      const s16 subY = work->tpy - LIST_CENTER_Y;
+      //内側の円に居るか？
+      hitMinOval = DUP_FIT_CheckPointInOval( subX,subY,LIST_TPHIT_MIN_Y,LIST_TPHIT_RATIO_MIN );
+      hitMaxOval = DUP_FIT_CheckPointInOval( subX,subY,LIST_TPHIT_MAX_Y,LIST_TPHIT_RATIO_MAX );
+      if( hitMinOval == FALSE && hitMaxOval == TRUE )
+      {
+        isTouchList = TRUE;
+        DUP_FIT_UpdateTpList( work , subX , subY );
+      }
+      else if( (hitMinOval == FALSE && hitMaxOval == FALSE )||
+           (hitMinOval == TRUE && hitMaxOval == TRUE ))
+      {
+        //リストから引っ張り出す判定
+        if( DUP_FIT_ITEMGROUP_IsItemMax(work->itemGroupField) == FALSE )
+        {
+          //円の内側も許可
+          if( work->holdItemType == IG_LIST &&
+            work->holdItem != NULL && 
+            MATH_ABS(work->listSpeed) < DEG_TO_U16(2) )
+          {
+            ARI_TPrintf("[%d]\n",U16_TO_DEG(MATH_ABS(work->listSpeed)));
+            DUP_FIT_CreateItemListToField( work );
+          }
+        }
+      }
+      if( isTouchList == FALSE && work->tpIsTrg == TRUE )
+      {
+        //フィールドから拾う判定
+        DUP_FIT_UpdateTpHoldItem(work,work->itemGroupField ,IG_FIELD);
+      }
+    }
+    if( work->tpIsTrg && work->holdItem == NULL &&
         work->tpy > FIT_CHECK_BUTTON_TOP &&
         work->tpx > FIT_CHECK_BUTTON_LEFT &&
         work->tpx < FIT_CHECK_BUTTON_RIGHT )
@@ -1686,80 +1757,6 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
       work->state = DUS_GO_CHECK;
       work->animeCnt = 0;
       PMSND_PlaySE( DUP_SE_DECIDE );
-    }
-    else
-    {
-      BOOL hitMinOval = FALSE;
-      BOOL hitMaxOval = FALSE;
-      
-      //取り合えずInfoBarとチェックボタンにかぶらない処理
-      if( work->tpy > 192-16 )
-      {
-        work->tpy = 192-16;
-      }
-      if( work->tpy < 16 )
-      {
-        work->tpy = 16;
-      }
-      
-      if( work->holdItemType == IG_FIELD && work->holdItem != NULL )
-      {
-        //アイテム保持中の処理
-        DUP_FIT_UpdateTpHoldingItem( work , TRUE );
-      }
-      else if( work->tpIsTrg == TRUE )
-      {
-        isTouchEquip = DUP_FIT_UpdateTpHoldItem(work,work->itemGroupEquip ,IG_EQUIP);
-        if( isTouchEquip == TRUE )
-        {
-          //装備との当たり判定
-          DUP_FIT_ITEMGROUP_RemoveItem( work->itemGroupEquip , work->holdItem );
-          DUP_FIT_ITEMGROUP_AddItem( work->itemGroupField , work->holdItem );
-          //座標あわせと深度設定
-          DUP_FIT_UpdateTpHoldingItem( work , FALSE );
-        }
-        else
-        {
-          isTouchSort = DUP_FIT_UpdateTpPokeCheck( work );
-        }
-      }
-      if( isTouchEquip == FALSE && isTouchSort == FALSE && 
-          ( (work->holdItem == NULL && work->tpIsTrg == TRUE ) || work->holdItemType == IG_LIST ) )
-      {
-        //アイテムリストの中か？
-        //X座標には比をかけてYのサイズで計算する
-        const s16 subX = work->tpx - LIST_CENTER_X;
-        const s16 subY = work->tpy - LIST_CENTER_Y;
-        //内側の円に居るか？
-        hitMinOval = DUP_FIT_CheckPointInOval( subX,subY,LIST_TPHIT_MIN_Y,LIST_TPHIT_RATIO_MIN );
-        hitMaxOval = DUP_FIT_CheckPointInOval( subX,subY,LIST_TPHIT_MAX_Y,LIST_TPHIT_RATIO_MAX );
-        if( hitMinOval == FALSE && hitMaxOval == TRUE )
-        {
-          isTouchList = TRUE;
-          DUP_FIT_UpdateTpList( work , subX , subY );
-        }
-        else if( (hitMinOval == FALSE && hitMaxOval == FALSE )||
-             (hitMinOval == TRUE && hitMaxOval == TRUE ))
-        {
-          //リストから引っ張り出す判定
-          if( DUP_FIT_ITEMGROUP_IsItemMax(work->itemGroupField) == FALSE )
-          {
-            //円の内側も許可
-            if( work->holdItemType == IG_LIST &&
-              work->holdItem != NULL && 
-              MATH_ABS(work->listSpeed) < DEG_TO_U16(2) )
-            {
-              ARI_TPrintf("[%d]\n",U16_TO_DEG(MATH_ABS(work->listSpeed)));
-              DUP_FIT_CreateItemListToField( work );
-            }
-          }
-        }
-        if( isTouchList == FALSE && work->tpIsTrg == TRUE )
-        {
-          //フィールドから拾う判定
-          DUP_FIT_UpdateTpHoldItem(work,work->itemGroupField ,IG_FIELD);
-        }
-      }
     }
   }
   else
@@ -1892,6 +1889,8 @@ static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY )
         else
         {
           //タッチはしたけどholdItemがNULLだったら暗いアイテム
+          //でもリストタッチ扱い
+          work->holdItemType = IG_LIST;
           PMSND_PlaySE( DUP_SE_LIST_NO_GOODS );
         }
       }
