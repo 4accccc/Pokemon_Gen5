@@ -243,7 +243,6 @@ static void DEBUGWIN_OpenDebugWindow( void )
   GFL_STD_MemCopy16(GFL_DISPUT_GetCgxPtr(debWork->frmnum), debWork->charTempArea, DEBUGWIN_CHAR_TEMP_AREA);
   GFL_STD_MemCopy16(GFL_DISPUT_GetScrPtr(debWork->frmnum), debWork->scrnTempArea, DEBUGWIN_SCRN_TEMP_AREA);
   GFL_STD_MemCopy16(GFL_DISPUT_GetPltPtr(debWork->frmnum), debWork->plttTempArea, DEBUGWIN_PLTT_TEMP_AREA);
-
   //Fontカラーの退避
   GFL_FONTSYS_GetColor( &debWork->fontColBkup[0] ,
                         &debWork->fontColBkup[1] ,
@@ -262,20 +261,22 @@ static void DEBUGWIN_OpenDebugWindow( void )
   //スクリーンの作成
   {
     u8 x,y;
+    u16 *buf = GFL_HEAP_AllocMemory( HEAPID_DEBUGWIN , sizeof( u16 )*32*DEBUGWIN_HEIGHT );
     for( y=0;y<DEBUGWIN_HEIGHT;y++ )
     {
       for( x=0;x<DEBUGWIN_WIDTH;x++ )
       {
-        u16 buf = x+y*DEBUGWIN_WIDTH;
-        GFL_BG_WriteScreen( debWork->frmnum , &buf , x,y,1,1 );
+        buf[x+y*32] = x+y*DEBUGWIN_WIDTH;
       }
       for( x=DEBUGWIN_WIDTH;x<32;x++ )
       {
-        u16 buf = DEBUGWIN_HEIGHT*DEBUGWIN_WIDTH;
-        GFL_BG_WriteScreen( debWork->frmnum , &buf , x,y,1,1 );
+        buf[x+y*32] = DEBUGWIN_HEIGHT*DEBUGWIN_WIDTH;
       }
     }
-    GFL_BG_LoadScreenV_Req(debWork->frmnum);
+    DC_FlushRange(buf, sizeof( u16 )*32*DEBUGWIN_HEIGHT);
+    GFL_STD_MemCopy16(buf, GFL_DISPUT_GetScrPtr(debWork->frmnum), sizeof( u16 )*32*DEBUGWIN_HEIGHT);
+    
+    GFL_HEAP_FreeMemory( buf );
   }
   
   //パレットの作成
