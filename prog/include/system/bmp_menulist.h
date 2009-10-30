@@ -113,6 +113,11 @@ enum {
 	BMPMENULIST_MOVE_DOWN_SKIP,	// 下へ移動（スキップ）
 };
 
+//キャンセルモード
+typedef enum {
+  BMPMENULIST_CANCELMODE_USE, //Bキャンセル使う
+  BMPMENULIST_CANCELMODE_NOT, //Bキャンセル無効
+}BMPMENULIST_CANCELMODE;
 
 /********************************************************************/
 /**
@@ -431,5 +436,9 @@ extern void BmpMenuList_SetCursorBmp( BMPMENULIST_WORK *lw, u32 heapID );
 //--------------------------------------------------------------
 extern void* BmpMenuList_GetWorkPtr( BMPMENULIST_WORK *lw );
 
+//--------------------------------------------------------------
+/// キャンセルモードセット
+//--------------------------------------------------------------
+extern void BmpMenuList_SetCancelMode( BMPMENULIST_WORK *lw, BMPMENULIST_CANCELMODE mode );
 
 #endif //__BMP_LIST_H__

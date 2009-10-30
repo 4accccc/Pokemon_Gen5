@@ -64,7 +64,7 @@ ev_easy_item_event:
     IF FLAG_ON($SCWK_PARAM2) THEN
       //再会話メッセージ
       _BALLOONWIN_TALKOBJ_OPEN_ARC( SCWK_PARAM6, SCWK_PARAM5 )
-      _AB_KEYWAIT()
+      _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
 
     ELSE
@@ -145,7 +145,7 @@ ev_item_event_fail_sub:
 	//「ざんねん！バッグがいっぱいだ！」
   _TALKWIN_OPEN()
 	_TALKMSG(		msg_event_item_get_03 )
-	_AB_KEYWAIT() //_LAST_KEYWAIT
+	_LAST_KEYWAIT() //_LAST_KEYWAIT
   _TALKWIN_CLOSE()
 	_RET
 

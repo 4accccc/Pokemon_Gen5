@@ -62,6 +62,8 @@ struct _BMPMENULIST_WORK {
 	u8	work;		//移動方向（使ってないようなので）
 
 	HEAPID	heapID;		// メモリ取得モード
+  u8  cancel_mode; // キャンセル
+  u16 padding; //long padding
 };
 
 /********************************************************************/
@@ -166,9 +168,11 @@ u32 BmpMenuList_Main( BMPMENULIST_WORK * lw )
 		PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
 		return lw->hed.list[lw->lp + lw->cp].param;
 	}
-	if( trg & PAD_BUTTON_CANCEL ){
-		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
-		return BMPMENULIST_CANCEL;
+	if( lw->cancel_mode == BMPMENULIST_CANCELMODE_USE ){
+    if( trg & PAD_BUTTON_CANCEL ){
+		  PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
+		  return BMPMENULIST_CANCEL;
+    }
 	}
 	if( repeat & PAD_KEY_UP ){
 		if( ListMoveUpDownCheck( lw, 1, 1, LIST_UP ) == 0 ){
@@ -1388,4 +1392,12 @@ void BmpMenuList_SetCursorBmp( BMPMENULIST_WORK *lw, u32 heapID )
 void* BmpMenuList_GetWorkPtr( BMPMENULIST_WORK *lw )
 {
 	return lw->hed.work;
+}
+
+//--------------------------------------------------------------
+/// キャンセルモードセット
+//--------------------------------------------------------------
+void BmpMenuList_SetCancelMode( BMPMENULIST_WORK *lw, BMPMENULIST_CANCELMODE mode )
+{
+  lw->cancel_mode = mode;
 }

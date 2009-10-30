@@ -39,7 +39,7 @@ typedef enum
 typedef enum
 {
   FLDMENUFUNC_YESNO_YES = 0, ///<‚Í‚¢
-  FLDMENUFUNC_YESNO_NO, ///<‚¢‚¢‚¦orƒLƒƒƒ“ƒZƒ‹
+  FLDMENUFUNC_YESNO_NO, ///<‚¢‚¢‚¦
   
   FLDMENUFUNC_YESNO_NULL, ///<‘I‘ð’†
 }FLDMENUFUNC_YESNO;

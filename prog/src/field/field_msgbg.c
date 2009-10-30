@@ -127,7 +127,7 @@ struct _TAG_FLDMENUFUNC
 
 //--------------------------------------------------------------
 /// FLDMSGPRINT_STREAM
-//--------------------------------------------------------------
+//---------:-----------------------------------------------------
 struct _TAG_FLDMSGPRINT_STREAM
 {
   u8 flag_key_trg;
@@ -1330,6 +1330,9 @@ FLDMENUFUNC * FLDMENUFUNC_AddYesNoMenu(
 	FLDMENUFUNC_InputHeaderListSize( &menuH, max, 24, 10, 7, 4 );
   menuFunc = fldmenufunc_AddMenuList( fmb, &menuH, listData,
       0, cursor_pos, fmb->deriveWin_plttNo );
+  BmpMenuList_SetCancelMode( //Bキャンセル無効に
+      menuFunc->pMenuListWork, BMPMENULIST_CANCELMODE_NOT );
+  
   return( menuFunc );
 }
 
@@ -1344,12 +1347,8 @@ FLDMENUFUNC_YESNO FLDMENUFUNC_ProcYesNoMenu( FLDMENUFUNC *menuFunc )
 {
   u32 ret = FLDMENUFUNC_ProcMenu( menuFunc );
   
-  if( ret == FLDMENUFUNC_NULL ){
-    return( FLDMENUFUNC_YESNO_NULL );
-  }
-  
-  if( ret == FLDMENUFUNC_CANCEL ){
-    return( FLDMENUFUNC_YESNO_NO );
+  if( ret == FLDMENUFUNC_NULL || ret == FLDMENUFUNC_CANCEL ){
+    return( FLDMENUFUNC_YESNO_NULL ); //無し or B押しは無効
   }
   
   return( ret );
@@ -1602,7 +1601,7 @@ BOOL FLDMSGWIN_STREAM_Print( FLDMSGWIN_STREAM *msgWin )
     if( msgWin->flag_key_pause_clear == FALSE ){ //既にポーズクリア済みか？
 		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( msgWin->bmpwin );
       
-      if( (trg & PAD_BUTTON_A) ){
+      if( (trg & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
         if( msgWin->flag_cursor == CURSOR_FLAG_WRITE ){
           keyCursor_Clear( &msgWin->cursor_work, bmp, 0x0f );
           
@@ -1891,7 +1890,7 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
           tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
 		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
       
-      if( (trg & PAD_BUTTON_A) ){
+      if( (trg & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
         PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
         PRINTSYS_PrintStreamReleasePause( stream );
         

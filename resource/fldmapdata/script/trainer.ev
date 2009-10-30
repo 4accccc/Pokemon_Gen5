@@ -300,7 +300,7 @@ ev_trainer_talk_after:
 EVENT_END
 
 EVENT_START   ev_trainer_talk_after_normal
-  _TALK_START_SE_PLAY()
+//  _TALK_START_SE_PLAY() //既に鳴っている
   
   //メッセージを取得
   _TRAINER_TALK_TYPE_GET(  SCWK_PARAM0,SCWK_PARAM1,SCWK_PARAM2 )
