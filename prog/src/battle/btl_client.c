@@ -25,6 +25,8 @@
 
 #include "btl_client.h"
 
+#define SOGA_DEBUG  //暫定でsogaがデバッグした箇所
+
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
 /*--------------------------------------------------------------------------*/
@@ -1822,6 +1824,9 @@ static BOOL scProc_ACT_WazaIchigeki( BTL_CLIENT* wk, int* seq, const int* args )
     if( BTLV_WaitDeadAct( wk->viewCore ) )
     {
       BTLV_StartMsgStd( wk->viewCore, BTL_STRID_STD_Ichigeki, args );
+#ifdef SOGA_DEBUG
+      (*seq)++;
+#endif
     }
     break;
 

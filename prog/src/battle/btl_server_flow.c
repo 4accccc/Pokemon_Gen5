@@ -31,6 +31,8 @@
 
 #include "btl_server_flow.h"
 
+#define SOGA_DEBUG  //暫定でsogaがデバッグした箇所
+
 //--------------------------------------------------------
 /**
  *    サーバフロー処理フラグ
@@ -5760,6 +5762,10 @@ static void scPut_Ichigeki( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target )
   BPP_HpZero( target );
   SCQUE_PUT_OP_HpZero( wk->que, pokeID );
   SCQUE_PUT_ACT_WazaIchigeki( wk->que, pokeID );
+#ifdef SOGA_DEBUG
+  //一撃必殺で倒しても戦闘終了しないので、この処理が必要？
+  BTL_POSPOKE_PokeOut( &wk->pospokeWork, BPP_GetID(target) );
+#endif
 }
 //--------------------------------------------------------------------------
 /**
