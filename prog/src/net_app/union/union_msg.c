@@ -134,7 +134,7 @@ static const FLDMENUFUNC_HEADER MenuHeader_MainMenu =
 	15,		//表示背景色
 	2,		//表示文字影色
 	0,		//文字間隔Ｘ
-	1,		//文字間隔Ｙ
+	0,		//文字間隔Ｙ
 	FLDMENUFUNC_SKIP_NON,	//ページスキップタイプ
 	12,		//文字サイズX(ドット
 	16,		//文字サイズY(ドット
