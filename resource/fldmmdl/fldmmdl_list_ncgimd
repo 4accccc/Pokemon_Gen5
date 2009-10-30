@@ -5,8 +5,12 @@ FMMDL_RESLIST_NCGIMD = \
 	heroine.imd \
 	cycleheroine.imd \
 	swimheroine.imd \
+	rivel.imd \
+	babyboy1.imd \
+	babygirl1.imd \
 	boy1.imd \
 	girl1.imd \
+	hakase2.imd \
 	shopm1.imd \
 	pcwoman1.imd \
 	pcwoman2.imd \
@@ -16,6 +20,7 @@ FMMDL_RESLIST_NCGIMD = \
 	monsterball.imd \
 	obj_kabi32.imd \
 	accordion.imd \
+	support.imd \
 	none.imd \
 	gethero.imd \
 	getheroine.imd \
