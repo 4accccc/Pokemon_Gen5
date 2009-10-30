@@ -138,5 +138,31 @@ void GFL_SCRNTEX_Load(SCRNTEX_VRAM capVram, SCRNTEX_VRAM texVram)
 	GX_SetBankForTex(vTex); 
 }
 
+//--------------------------------------------------------------------------------------------
+//
+//
+// 画面描画(カメラターゲット = 原点)
+//
+//
+//--------------------------------------------------------------------------------------------
+void GFL_SCRNTEX_DrawDefault(GFL_G3D_OBJ* g3Dobj)
+{
+	VecFx32 camP = { 0, 0, 0x210 * FX32_ONE };
+	VecFx32 camT = { 0, 0, 0 };
+	VecFx32 camU = { 0, FX32_ONE, 0 };
+	GFL_G3D_OBJSTATUS status = {
+		{ 0, 0, 0 },																				//座標
+		{ FX32_ONE, FX32_ONE, FX32_ONE },										//スケール
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	//回転
+	};
+  fx16    s = FX_SinIdx(0x4000);
+  fx16    c = FX_CosIdx(0x4000);
+
+	NNS_G3dGlbLookAt(&camP, &camU, &camT);
+
+	MTX_RotX33(&status.rotate, s, c);
+	GFL_G3D_DRAW_DrawObject(g3Dobj, &status);
+}
+
 
 

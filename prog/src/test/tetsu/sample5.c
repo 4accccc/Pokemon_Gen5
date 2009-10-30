@@ -42,9 +42,6 @@ typedef struct {
 
 	int									seq;
 
-//	GFL_G3D_UTIL*				g3Dutil;
-//	u16									g3DutilUnitIdx;
-
 	GFL_G3D_RES*				g3Dmdl;
 	GFL_G3D_RES*				g3Dtex;
 	GFL_G3D_RND*				g3Drnd;
@@ -280,6 +277,7 @@ static BOOL	sample5(Sample5_WORK* sw)
 		return FALSE;
 
 	case 10:
+#if 0
 		DWS_SetCamStatus(sw->dws, 0, 0, 0x210 * FX32_ONE);
 
 		//３Ｄ描画
@@ -296,7 +294,11 @@ static BOOL	sample5(Sample5_WORK* sw)
 			GFL_G3D_DRAW_DrawObject(sw->g3DobjBase, &g3DobjStatus);
 		}
 		GFL_G3D_DRAW_End();				//描画終了（バッファスワップ）					
-
+#else
+		GFL_G3D_DRAW_Start();			//描画開始
+		GFL_SCRNTEX_DrawDefault(sw->g3DobjBase);
+		GFL_G3D_DRAW_End();				//描画終了（バッファスワップ）					
+#endif
 		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ){
 			if(GFL_G3D_OBJECT_IncAnimeFrame(sw->g3DobjBase, 0, FX32_ONE) == FALSE){
 				sw->seq = 1;

@@ -381,6 +381,7 @@ static void InitGmkTmpWork(GMK_TMP_WORK *tmpWork);
 //3Ｄ描画モード
 static void Draw3DNormalMode( FIELDMAP_WORK * fieldWork );
 static void Draw3DCutinMode(FIELDMAP_WORK * fieldWork);
+static void Draw3DScrnTexMode(FIELDMAP_WORK * fieldWork);
 
 typedef void (*DRAW3DMODE_FUNC)(FIELDMAP_WORK * fieldWork);
 
@@ -1887,7 +1888,8 @@ static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
   {
     static const DRAW3DMODE_FUNC func[] = {
       Draw3DNormalMode,
-      Draw3DCutinMode
+      Draw3DCutinMode,
+      Draw3DScrnTexMode
     };
 
     func[ fieldWork->Draw3DMode ](fieldWork);
@@ -2788,6 +2790,23 @@ static void Draw3DCutinMode(FIELDMAP_WORK * fieldWork)
 
   FLD_PRTCL_Main();
   FLD3D_CI_Draw( fieldWork->Fld3dCiPtr );
+}
+
+//==================================================================
+/**
+ * フィールドスクリーンキャプチャ描画
+ *
+ * @param   fieldWork   フィールドワークポインタ
+ *
+ * @return none
+ */
+extern void ENCEFF_Draw3D(void);
+//==================================================================
+static void Draw3DScrnTexMode(FIELDMAP_WORK * fieldWork)
+{
+  G3X_SetClearColor(GX_RGB(0,0,0),0,0x7fff,0,FALSE);
+
+	ENCEFF_Draw3D();
 }
 
 //==================================================================

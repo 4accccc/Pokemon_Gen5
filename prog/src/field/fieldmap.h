@@ -50,6 +50,7 @@ typedef enum{
 typedef enum{
   DRAW3DMODE_NORMAL,          ///<通常3Ｄ描画
   DRAW3DMODE_CUTIN,           ///<3Ｄカットイン時描画
+  DRAW3DMODE_SCRNTEX,         ///<スクリーンキャプチャテクスチャ描画
   DRAW3DMODE_MAX,
 }DRAW3DMODE;
 
