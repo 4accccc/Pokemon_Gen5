@@ -665,8 +665,8 @@ void IRC_POKETRADEDEMO_RemoveModel( POKEMON_TRADE_WORK* pWork)
   _icaCameraDelete(pWork);
   pWork->modelno = -1;
 
-  IRC_POKETRADEDEMO_End(pWork);
-  IRC_POKETRADEDEMO_Init(pWork);
+//  IRC_POKETRADEDEMO_End(pWork);
+//  IRC_POKETRADEDEMO_Init(pWork);
 }
 
 
