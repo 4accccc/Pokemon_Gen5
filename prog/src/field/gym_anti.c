@@ -319,6 +319,8 @@ void GYM_ANTI_Setup(FIELDMAP_WORK *fieldWork)
       u8 obj_idx = OBJ_SW_1+i;
       GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_ANTI_UNIT_IDX, obj_idx);
       status->trans = pos[i];
+      //カリングする
+      FLD_EXP_OBJ_SetCulling(ptr, GYM_ANTI_UNIT_IDX, obj_idx, TRUE);
     }
   }
 
@@ -334,6 +336,8 @@ void GYM_ANTI_Setup(FIELDMAP_WORK *fieldWork)
       u8 obj_idx = OBJ_DOOR_1+i;
       GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_ANTI_UNIT_IDX, obj_idx);
       status->trans = pos[i];
+      //カリングする
+      FLD_EXP_OBJ_SetCulling(ptr, GYM_ANTI_UNIT_IDX, obj_idx, TRUE);
     }
   }
 
