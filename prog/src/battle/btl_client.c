@@ -495,7 +495,10 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
       }
 
       wk->shooterCost[ wk->procPokeIdx ] = 0;
+#ifndef SOGA_DEBUG
+      //ここだと常にインクリメントされてしまう
       wk->checkedPokeCnt++;
+#endif
     }
     break;
 
@@ -604,6 +607,10 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
     }
     else{
       (*seq) = SEQ_CHECK_UNSEL_ACTION;
+#ifdef SOGA_DEBUG
+        //コマンド入力の終了でインクリメントする
+        wk->checkedPokeCnt++;
+#endif
     }
     break;
 
