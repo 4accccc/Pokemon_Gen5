@@ -684,11 +684,13 @@ static void MMdl_MapAttrShadowProc_1(
 		if( MMDLSYS_CheckJoinShadow(fos) == FALSE ){
 			return;
 		}
-    
-		if( MMDL_CheckStatusBit(fmmdl,MMDL_STABIT_SHADOW_SET) == 0 ){
-      FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( fmmdl );
-      FLDEFF_SHADOW_SetMMdl( fmmdl, fectrl );
-			MMDL_OnStatusBit( fmmdl, MMDL_STABIT_SHADOW_SET );
+
+    if( prm->shadow_type == MMDL_SHADOW_ON ){
+		  if( MMDL_CheckStatusBit(fmmdl,MMDL_STABIT_SHADOW_SET) == 0 ){
+        FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( fmmdl );
+        FLDEFF_SHADOW_SetMMdl( fmmdl, fectrl );
+			  MMDL_OnStatusBit( fmmdl, MMDL_STABIT_SHADOW_SET );
+      }
     }
   }
 }

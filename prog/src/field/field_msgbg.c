@@ -1006,6 +1006,7 @@ static FLDMENUFUNC * fldmenufunc_AddMenuList( FLDMSGBG *fmb,
   }
 	return( menuFunc );
 }
+
 //--------------------------------------------------------------
 /**
  * FLDMENUFUNC メニュー追加
@@ -1043,6 +1044,29 @@ FLDMENUFUNC * FLDMENUFUNC_AddMenu( FLDMSGBG *fmb,
 	FLDMENUFUNC_LISTDATA *pMenuListData )
 {
   return( FLDMENUFUNC_AddMenuList(fmb,pMenuHead,pMenuListData,0,0) );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMENUFUNC メニュー追加　イベント用
+ * @param	fmb	FLDMSGBG
+ * @param	pMenuHead FLDMENUFUNC_HEADER
+ * @param	pMenuListData  FLDMENUFUNC_LISTDATA* Delete時に自動開放される
+ * @param list_pos リスト初期位置
+ * @param cursor_pos カーソル初期位置
+ * @retval	FLDMENUFUNC*
+ * @note メニューカラーは派生ウィンドウのカラーを継続する
+ */
+//--------------------------------------------------------------
+FLDMENUFUNC * FLDMENUFUNC_AddEventMenuList( FLDMSGBG *fmb,
+	const FLDMENUFUNC_HEADER *pMenuHead,
+	FLDMENUFUNC_LISTDATA *pMenuListData,
+  u16 list_pos, u16 cursor_pos )
+{
+	FLDMENUFUNC *menuFunc;
+  menuFunc = fldmenufunc_AddMenuList( fmb, pMenuHead, pMenuListData,
+    list_pos, cursor_pos, fmb->deriveWin_plttNo );
+  return( menuFunc );
 }
 
 //--------------------------------------------------------------

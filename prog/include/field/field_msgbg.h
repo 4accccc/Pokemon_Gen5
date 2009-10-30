@@ -169,6 +169,10 @@ extern FLDMENUFUNC * FLDMENUFUNC_AddMenuList( FLDMSGBG *fmb,
 extern FLDMENUFUNC * FLDMENUFUNC_AddMenu( FLDMSGBG *fmb,
 	const FLDMENUFUNC_HEADER *pMenuHead,
 	FLDMENUFUNC_LISTDATA *pMenuListData );
+extern FLDMENUFUNC * FLDMENUFUNC_AddEventMenuList( FLDMSGBG *fmb,
+	const FLDMENUFUNC_HEADER *pMenuHead,
+	FLDMENUFUNC_LISTDATA *pMenuListData,
+  u16 list_pos, u16 cursor_pos );
 extern void FLDMENUFUNC_DeleteMenu( FLDMENUFUNC *menuFunc );
 extern u32 FLDMENUFUNC_ProcMenu( FLDMENUFUNC *menuFunc );
 extern FLDMENUFUNC_LISTDATA * FLDMENUFUNC_CreateListData( int max, HEAPID heapID );
