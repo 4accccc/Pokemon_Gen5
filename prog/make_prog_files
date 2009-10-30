@@ -216,6 +216,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/scrcmd_camera.c \
         app/bag/bag_param.c\
         field/event_poke_status.c \
+        system/screentex.c \
         debug/debug_flg.c
 
 
