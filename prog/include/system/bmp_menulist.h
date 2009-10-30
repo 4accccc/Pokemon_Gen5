@@ -175,7 +175,7 @@ extern u8		BmpListSetExpand
  */
 //--------------------------------------------------------------------------------------------
 extern BMPMENULIST_WORK * BmpMenuList_Set(
-						const BMPMENULIST_HEADER * bmplist, u16 list_p, u16 cursor_p, u8 mode );
+						const BMPMENULIST_HEADER * bmplist, u16 list_p, u16 cursor_p, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**

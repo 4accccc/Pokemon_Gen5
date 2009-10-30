@@ -61,7 +61,7 @@ struct _BMPMENULIST_WORK {
 	u8	cur_actID;	//
 	u8	work;		//移動方向（使ってないようなので）
 
-	u8	mode;		// メモリ取得モード
+	HEAPID	heapID;		// メモリ取得モード
 };
 
 /********************************************************************/
@@ -96,22 +96,22 @@ static void BmpWinDataShift(
  */
 //--------------------------------------------------------------------------------------------
 BMPMENULIST_WORK * BmpMenuList_Set(
-	const BMPMENULIST_HEADER * bmplist, u16 list_p, u16 cursor_p, u8 mode )
+	const BMPMENULIST_HEADER * bmplist, u16 list_p, u16 cursor_p, HEAPID heapID )
 {
 	BMPMENULIST_WORK * lw;
 	
-	lw = GFL_HEAP_AllocClearMemory( mode, sizeof(BMPMENULIST_WORK) );
+	lw = GFL_HEAP_AllocClearMemory( heapID, sizeof(BMPMENULIST_WORK) );
 
 	// 基本設定
 	lw->hed       = *bmplist;
-	lw->cursor    = BmpCursor_Create( mode );
+	lw->cursor    = BmpCursor_Create( heapID );
 	lw->lp        = list_p;
 	lw->cp        = cursor_p;
 	lw->seq       = 0;
 	lw->scrwork   = 0;
 	lw->cur_actID = 0xff;
 	lw->work      = 0;
-	lw->mode      = mode;
+	lw->heapID    = heapID;
 
 	// テンポラリ初期化
 	lw->tmp.f_col   = lw->hed.f_col;	// 表示文字色
