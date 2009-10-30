@@ -491,6 +491,8 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
     //デフォルトでソート
     const u32 startAngle = work->listTotalMove + 0x18000;
     u16 startIdx;
+    work->listSeWaitCnt = 10; //鳴るのを妨害
+
     if( startAngle >= work->totalItemNum * LIST_ONE_ANGLE )
     {
       startIdx = (startAngle-(work->totalItemNum * LIST_ONE_ANGLE)) / LIST_ONE_ANGLE;
@@ -588,6 +590,7 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
       work->state = DUS_FITTING_MAIN;
     }
     //初回回転アニメのためフェードイン中でも動かす
+    PMSND_PlaySE(DUP_SE_FIRST_LIST_OPEN);
     if( work->isSortAnime == TRUE )
     {
       DUP_FIT_UpdateSortAnime( work );
@@ -1503,7 +1506,7 @@ static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 move
       work->listSeWaitCnt == 0 )
   {
     work->listSeWaitCnt = DUP_LIST_ROTATE_SE_WAIT_CNT;
-    PMSND_PlaySE(SEQ_SE_MSCL_03);
+    PMSND_PlaySE(DUP_SE_LIST_ROTATE);
   }
   
   while( item != NULL )

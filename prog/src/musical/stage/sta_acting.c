@@ -281,7 +281,6 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   {
     work->useItemFlg[i] = FALSE;
   }
-
   STA_ACT_SetupGraphic( work );
   STA_ACT_SetupBg( work );
   STA_ACT_SetupMessage( work);
@@ -1334,7 +1333,8 @@ static void STA_ACT_UpdateUseItem( ACTING_WORK *work )
 static void STA_ACT_InitTransEffect( ACTING_WORK *work )
 {
   u8 i;
-  for( i=0;i<MUSICAL_POKE_MAX;i++ )
+//  for( i=0;i<MUSICAL_POKE_MAX;i++ )
+  for( i=0;i<1;i++ )
   {
     //TODO ステータスでエフェクトの種類変わる？
     work->transEffWork[i] = STA_EFF_CreateEffect( work->effSys , NARC_stage_gra_mus_eff_trans_1_spa );
@@ -1344,7 +1344,8 @@ static void STA_ACT_InitTransEffect( ACTING_WORK *work )
 static void STA_ACT_TermTransEffect( ACTING_WORK *work )
 {
   u8 i;
-  for( i=0;i<MUSICAL_POKE_MAX;i++ )
+//  for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    for( i=0;i<1;i++ )
   {
     STA_EFF_DeleteEffect( work->effSys , work->transEffWork[i] );
   }
@@ -1362,7 +1363,8 @@ void STA_ACT_PlayTransEffect( ACTING_WORK *work , const u8 idx )
   pos.z = FX32_CONST(180.0f);
   for( i=0;i<3;i++ )
   {
-    STA_EFF_CreateEmitter( work->transEffWork[idx] , i , &pos );
+    //STA_EFF_CreateEmitter( work->transEffWork[idx] , i , &pos );
+    STA_EFF_CreateEmitter( work->transEffWork[0] , i , &pos );
   }
   
   PMSND_PlaySE( STA_SE_TRANS_SE );

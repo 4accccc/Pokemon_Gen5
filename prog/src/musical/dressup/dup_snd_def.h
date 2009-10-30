@@ -18,6 +18,8 @@
 //ドレスアップ終了時キラキラ音
 #define DUP_SE_KIRAKIRA (SEQ_SE_DECIDE3)
 
+//最初のカーテン開く音
+#define DUP_SE_FIRST_LIST_OPEN (SEQ_SE_DECIDE3)
 //リスト回転音
 #define DUP_SE_LIST_ROTATE (SEQ_SE_MSCL_03)
 //↑を鳴らすための速度と連続防止カウント数

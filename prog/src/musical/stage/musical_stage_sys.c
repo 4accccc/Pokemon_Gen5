@@ -79,19 +79,19 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
   if( pwk == NULL )
   {
     work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_STAGE , NULL );
-    MUSICAL_STAGE_SetData_NPC( work->actInitWork , 0 , MONSNO_ONOKKUSU , HEAPID_MUSICAL_STAGE );
+    MUSICAL_STAGE_SetData_NPC( work->actInitWork , 0 , MONSNO_PIKATYUU , HEAPID_MUSICAL_STAGE );
     MUSICAL_STAGE_SetData_NPC( work->actInitWork , 1 , MONSNO_PURUNSU , HEAPID_MUSICAL_STAGE );
-    MUSICAL_STAGE_SetData_NPC( work->actInitWork , 2 , MONSNO_PIKATYUU  , HEAPID_MUSICAL_STAGE );
+    MUSICAL_STAGE_SetData_NPC( work->actInitWork , 2 , MONSNO_ONOKKUSU  , HEAPID_MUSICAL_STAGE );
     MUSICAL_STAGE_SetData_NPC( work->actInitWork , 3 , MONSNO_WARUBIARU , HEAPID_MUSICAL_STAGE );
     
-    MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_HAND_R , 13 , 0 , 0 );
-    MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_HAND_L  , 30 , 0 , 1 );
+    MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_HAND_R , 19 , 0 , 0 );
+    MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_HAND_L  , 19 , 0 , 1 );
     MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_HEAD  , 16 , 0 , 2 );
 
     MUSICAL_STAGE_SetEquip( work->actInitWork , 1 , MUS_POKE_EQU_EAR_L , 7 , 0 , 0 );
     MUSICAL_STAGE_SetEquip( work->actInitWork , 1 , MUS_POKE_EQU_BODY  , 9 , 0 , 1 );
-    MUSICAL_STAGE_SetEquip( work->actInitWork , 1 , MUS_POKE_EQU_HAND_R , 13 , 0 , 2 );
-    MUSICAL_STAGE_SetEquip( work->actInitWork , 1 , MUS_POKE_EQU_HAND_L  , 30 , 0 , 3 );
+    MUSICAL_STAGE_SetEquip( work->actInitWork , 1 , MUS_POKE_EQU_HAND_R , 19 , 0 , 2 );
+    MUSICAL_STAGE_SetEquip( work->actInitWork , 1 , MUS_POKE_EQU_HAND_L  , 19 , 0 , 3 );
 
     MUSICAL_STAGE_SetEquip( work->actInitWork , 2 , MUS_POKE_EQU_HAND_R , 31 , 0 , 0 );
     MUSICAL_STAGE_SetEquip( work->actInitWork , 2 , MUS_POKE_EQU_HAND_L  , 30 , 0 , 1 );

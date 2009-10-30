@@ -214,6 +214,7 @@ void	STA_BG_CreateBg( STA_BG_SYS* work , const u8 bgNo )
   {
     GFL_G3D_OBJECT_EnableAnime( work->g3dobj , i );
   }
+
 }
 
 void	STA_BG_DeleteBg( STA_BG_SYS* work )
