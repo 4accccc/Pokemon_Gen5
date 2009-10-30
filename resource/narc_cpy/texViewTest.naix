@@ -1,0 +1,21 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: texViewTest.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2009-10-30T11:34:29
+ *****************************************************************************/
+
+#ifndef NARC_TEXVIEWTEST_NAIX_
+#define NARC_TEXVIEWTEST_NAIX_
+
+enum {
+	NARC_texViewTest_texViewTest_nsbmd = 0,
+	NARC_texViewTest_texViewTest_nsbtx = 1,
+	NARC_texViewTest_effect1_nsbmd = 2,
+	NARC_texViewTest_effect1_nsbca = 3
+};
+
+/* NARC_TEXVIEWTEST_NAIX_ */
+#endif
