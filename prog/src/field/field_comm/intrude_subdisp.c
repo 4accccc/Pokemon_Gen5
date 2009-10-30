@@ -263,7 +263,7 @@ enum{
   MISSION_ICON_POS_X = 0x1d*8,
   MISSION_ICON_POS_Y = 3*8,
 
-  INCLUSION_ICON_POS_X = MISSION_ICON_POS_X,
+  INCLUSION_ICON_POS_X = 24,
   INCLUSION_ICON_POS_Y = MISSION_ICON_POS_Y,
 
   POWER_ICON_HITRANGE_HALF_X = 24, ///<パワー系アイコンのタッチ判定半径X
@@ -1156,6 +1156,15 @@ static void _IntSub_ActorUpdate_Power(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_S
   }
   else{
     GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_MISSION], FALSE);
+  }
+  
+  //INCLUSION
+  if(ZONEDATA_IsPalaceField(intcomm->intrude_status_mine.zone_id) == TRUE
+      || ZONEDATA_IsPalace(intcomm->intrude_status_mine.zone_id) == TRUE){
+    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_INCLUSION], FALSE);
+  }
+  else{
+    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_INCLUSION], TRUE);
   }
 }
 
