@@ -41,6 +41,9 @@
 
 #include "arc/shop_gra.naix"
 
+#ifdef PM_DEBUG
+#define SHOP_DEBUG_COMMAND  // LRでお金が手に入る。SELECTでバッジ８つのショップになる
+#endif
 
 //====================================================================
 // ■定数宣言
@@ -435,11 +438,16 @@ static void shop_call_init( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type,
   init_work( wk );
 
   // 品揃え読み込み
+#ifdef SHOP_DEBUG_COMMAND
   if(GFL_UI_KEY_GetCont()&PAD_BUTTON_SELECT){
     shop_item_set( wk, type, id, 8);
   }else{
     shop_item_set( wk, type, id, MyStatus_GetBadgeCount(my));
   }
+#else
+    shop_item_set( wk, type, id, MyStatus_GetBadgeCount(my));
+#endif
+
   bg_trans( wk );     // BG転送
   bmpwin_init( wk );  // BMPWIN初期化
   obj_init( wk );     // OAM初期化
@@ -613,6 +621,7 @@ static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, i
     }
     break;
   case SHOPBUY_SEQ_BUY:
+    PMSND_PlaySE( SEQ_SE_SYS_22 );
     ShopPrintMsg( wk, mes_shop_02_04, wk->selectitem );
     Mystatus_SubGold( wk->mystatus, wk->price*wk->item_multi);
     MYITEM_AddItem( wk->myitem, wk->selectitem, wk->item_multi, wk->heapId);
@@ -759,11 +768,14 @@ static void init_work( SHOP_BUY_APP_WORK *wk )
   // 会話ウインドウ用タスク登録
   wk->pMsgTcblSys = GFL_TCBL_Init( wk->heapId, wk->heapId , 32 , 32 );
 
+#ifdef SHOP_DEBUG_COMMAND
+
   if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L){
     MyStatus_SetGold(wk->mystatus, 999999);
   }else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
     MyStatus_SetGold(wk->mystatus, 5000);
   }
+#endif
 }
 
 
@@ -1394,7 +1406,7 @@ static void bmpwin_list_exit( SHOP_BUY_APP_WORK *wk )
 static BOOL printBuyMsgCallBack( u32 param )
 {
   if(param==1){
-    PMSND_PlaySE( SEQ_SE_SYS_22 );
+//    PMSND_PlaySE( SEQ_SE_SYS_22 );
   }
 
   return FALSE;
