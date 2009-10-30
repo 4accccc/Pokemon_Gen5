@@ -1356,10 +1356,12 @@ void STA_ACT_PlayTransEffect( ACTING_WORK *work , const u8 idx )
   //TODO エフェクトの種類変わったら再生エミッタも変わる。今は3個
   u8 i;
   VecFx32 pos;
-  const VecFx32 *ofs = STA_POKE_GetRotOffset( work->pokeSys , work->pokeWork[idx] );
+  //const VecFx32 *ofs = STA_POKE_GetRotOffset( work->pokeSys , work->pokeWork[idx] );
   STA_POKE_GetPosition( work->pokeSys , work->pokeWork[idx] , &pos );
-  pos.x = ACT_POS_X_FX(pos.x + ofs->x );
-  pos.y = ACT_POS_Y_FX(pos.y + ofs->y );
+//  pos.x = ACT_POS_X_FX(pos.x + ofs->x );
+//  pos.y = ACT_POS_Y_FX(pos.y + ofs->y );
+  pos.x = ACT_POS_X_FX(pos.x );
+  pos.y = ACT_POS_Y_FX(pos.y + FX32_CONST(-32.0f) );
   pos.z = FX32_CONST(180.0f);
   for( i=0;i<3;i++ )
   {

@@ -208,6 +208,7 @@ typedef enum
   DUS_WAIT_COMM_STRM,
   DUS_RETURN_FITTING,
   
+  DUS_FADEIN_WAIT_SND,
   DUS_FADEIN_WAIT,
   DUS_FADEOUT_WAIT,
   DUS_WAIT_END_EFFECT,
@@ -450,7 +451,7 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
 
   work->heapId = heapId;
   work->initWork = initWork;
-  work->state = DUS_FADEIN_WAIT;
+  work->state = DUS_FADEIN_WAIT_SND;
   work->animeCnt = 0;
   work->tpIsTrg = FALSE;
   work->tpIsTouch = FALSE;
@@ -572,6 +573,10 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
   FITTING_RETURN ret = FIT_RET_CONTINUE;
   switch( work->state )
   {
+  case DUS_FADEIN_WAIT_SND:
+    PMSND_PlaySE(DUP_SE_FIRST_LIST_OPEN);
+    work->state = DUS_FADEIN_WAIT;
+    //  break through
   case DUS_FADEIN_WAIT:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
@@ -590,7 +595,6 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
       work->state = DUS_FITTING_MAIN;
     }
     //初回回転アニメのためフェードイン中でも動かす
-    PMSND_PlaySE(DUP_SE_FIRST_LIST_OPEN);
     if( work->isSortAnime == TRUE )
     {
       DUP_FIT_UpdateSortAnime( work );

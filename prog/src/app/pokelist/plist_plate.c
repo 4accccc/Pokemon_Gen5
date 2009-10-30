@@ -938,6 +938,8 @@ void PLIST_PLATE_ResetParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , PO
   plateWork->pp = pp;
   plateWork->isUpdateStr = FALSE;
   plateWork->isEgg =  PP_Get( plateWork->pp , ID_PARA_tamago_flag , NULL );
+  plateWork->dispHp = PP_Get( plateWork->pp , ID_PARA_hp , NULL );
+  plateWork->nowHp = plateWork->dispHp;
 
   GFL_CLACT_WK_Remove( plateWork->pokeIcon );
   GFL_CLGRP_CGR_Release( plateWork->pokeIconNcgRes );
