@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/28 22:44:15
+#save date:2009/10/30 16:42:35
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d02.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/28 22:44:15
+#save date:2009/10/30 16:42:35
 2
 #hold event type:
 1
@@ -138,7 +138,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_D02R0101_LEADER2
+FV_D02_LEADER2
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
@@ -159,7 +159,7 @@ DIR_LEFT
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/28 22:44:15
+#save date:2009/10/30 16:42:35
 2
 #hold event type:
 1
@@ -169,7 +169,7 @@ DIR_LEFT
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/28 22:44:15
+#save date:2009/10/30 16:42:35
 2
 #hold event type:
 1
@@ -194,7 +194,7 @@ WK_SCENE_D02
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/28 22:44:15
+#save date:2009/10/30 16:42:35
 2
 #hold event type:
 1
