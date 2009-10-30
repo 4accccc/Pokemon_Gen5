@@ -495,7 +495,8 @@ static void APP_TASKMENU_UpdateTP( APP_TASKMENU_WORK *work )
     }
     else
     {
-      PMSND_PlaySystemSE( APP_TASKMENU_SND_CANCEL );
+			// @todo 後ほど、RETURNマークがついているものだけCANCELにする
+      PMSND_PlaySystemSE( APP_TASKMENU_SND_DECIDE );
     }
   }
 }
