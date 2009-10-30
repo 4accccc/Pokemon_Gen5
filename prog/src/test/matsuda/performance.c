@@ -248,7 +248,6 @@ void DEBUG_PerformanceInit(void)
 #endif
   if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER ){
     pfm_sys.on_off = TRUE;	//デフォルトで表示ON
-#endif
   }
 }
 
