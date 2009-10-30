@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-26T19:52:02"/>
+	<create user="matsumiya" host="W00207" date="2009-10-30T11:49:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -447,15 +447,15 @@
 そんな　じつりょく　では
 このさき　きっと　くろうするわい[BE:01:ページ切り替え（クリア）]
 わるいことは　いわん
-このまちの　ジムリーダーと　たたかい[BE:00:ページ切り替え（行送り）]
-じぶんの　じつりょくを　ためすんじゃ！</language>
+このまちの　ジムリーダーに　いどみ[BE:00:ページ切り替え（行送り）]
+じぶんの　じつりょくを　ためせ！</language>
 		<language name="JPN_KANJI" width="256">おぬし　ジムバッジの　１つも
 持っておらぬようじゃが[BE:01:ページ切り替え（クリア）]
 そんな　実力では
 この先　きっと　苦労するわい[BE:01:ページ切り替え（クリア）]
 悪いことは　いわん
-この街の　ジムリーダーと　戦い[BE:00:ページ切り替え（行送り）]
-自分の　実力を　試すんじゃ！</language>
+この街の　ジムリーダーに　挑み[BE:00:ページ切り替え（行送り）]
+自分の　実力を　試せ！</language>
 	</row>
 
 	<row id="msg_c01_stop_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -604,8 +604,10 @@
 	<row id="msg_c01_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
-		<language name="JPN" width="256">ここは　サンヨウシティ</language>
-		<language name="JPN_KANJI" width="256">ここは　サンヨウシティ</language>
+		<language name="JPN" width="256">ここは　サンヨウシティ
+サンヨウとは　３つならぶ　ほしのこと</language>
+		<language name="JPN_KANJI" width="256">ここは　サンヨウシティ
+サンヨウとは　３つ並ぶ　星のこと</language>
 	</row>
 
 	<row id="msg_c01_sign2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">

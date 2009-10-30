@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-26T20:30:29"/>
+	<create user="matsumiya" host="W00207" date="2009-10-30T15:23:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="696"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -386,10 +386,12 @@
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
-		<language name="JPN" width="256">カミツレ『そうね　つよいんじゃない？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">カミツレ『アデクさんの　こと？
+そうね　つよいんじゃない？[BE:01:ページ切り替え（クリア）]
 だって　チャンピオンだもの
 ただしくは　「もと」チャンピオンだけど[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">カミツレ『そうね　強いんじゃない？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">カミツレ『アデクさんの　こと？
+そうね　強いんじゃない？[BE:01:ページ切り替え（クリア）]
 だって　チャンピオンだもの
 ただしくは　「元」チャンピオンだけど[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -408,10 +410,10 @@
 ・ｃ04でカミツレ～に
 　配置</comment>
 		<attribute name="キャラ指定">CHAMPION</attribute>
-		<language name="JPN" width="256">？？？？？『どうした
+		<language name="JPN" width="256">アデク『どうした
 そこの　しょうねん[BE:00:ページ切り替え（行送り）]
 なにを　さわぐ？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">？？？？？『どうした
+		<language name="JPN_KANJI" width="256">アデク『どうした
 そこの　少年　何を騒ぐ？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -434,14 +436,14 @@
 　メッセージ表示
 ・続けて</comment>
 		<attribute name="キャラ指定">CHAMPION</attribute>
-		<language name="JPN" width="256">？？？？？『シンオウや　ホウエンの
+		<language name="JPN" width="256">アデク『シンオウや　ホウエンの
 チャンピオンのように[BE:00:ページ切り替え（行送り）]
 わかくて　かっこよくない……と[BE:00:ページ切り替え（行送り）]
 にんきが　でないからな……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">？？？？？『シンオウや　ホウエンの
+		<language name="JPN_KANJI" width="256">アデク『シンオウや　ホウエンの
 チャンピオンのように[BE:00:ページ切り替え（行送り）]
 わかくて　かっこよくない……と[BE:00:ページ切り替え（行送り）]
-人気が　でないからな……[BE:01:ページ切り替え（クリア）]</language>
+人気が　でないからなあ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r05_black_09" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -459,14 +461,14 @@
 		<comment>♂
 ・続けて</comment>
 		<attribute name="キャラ指定">CHAMPION</attribute>
-		<language name="JPN" width="256">？？？？？『すまないが
+		<language name="JPN" width="256">アデク『すまないが
 おおごえを　ださないでくれ[BE:00:ページ切り替え（行送り）]
 こどもたちが　おびえてしまう……[BE:01:ページ切り替え（クリア）]
 そうだな……　きみが　
 どういう　にんげんかも　しらずに[BE:00:ページ切り替え（行送り）]
 ちゃかして　わるかった[BE:01:ページ切り替え（クリア）]
 このとおり　あやまる[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">？？？？？『すまないが
+		<language name="JPN_KANJI" width="256">アデク『すまないが
 大声を　出さないでくれ[BE:00:ページ切り替え（行送り）]
 子供たちが　おびえてしまう……[BE:01:ページ切り替え（クリア）]
 そうだな
@@ -520,11 +522,11 @@
 ・この動作モデルは
 　c05ジムバッジ取得で削除</comment>
 		<attribute name="キャラ指定">CHAMPION</attribute>
-		<language name="JPN" width="255">チャンプ『さあさ！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="255">アデク『さあさ！[BE:01:ページ切り替え（クリア）]
 つよい　トレーナーになるには
 ポケモンと　なかよしに　なるのが[BE:00:ページ切り替え（行送り）]
 いちばんだよ　おまえたち！</language>
-		<language name="JPN_KANJI" width="256">チャンプ『さあさ！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">アデク『さあさ！[BE:01:ページ切り替え（クリア）]
 強い　トレーナーになるには
 ポケモンと　仲良しになるのが[BE:00:ページ切り替え（行送り）]
 一番だよ　おまえたち！</language>
