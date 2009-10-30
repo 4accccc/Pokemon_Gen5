@@ -182,7 +182,7 @@ void FIELD_PLAYER_Update( FIELD_PLAYER *fld_player )
   //•ûŒü‚ğPLAYERWORK‚Ö”½‰f
   {
     u16 dir = FIELD_PLAYER_GetDir( fld_player );
-    PLAYERWORK_setDirection( fld_player->playerWork, dir );
+    PLAYERWORK_setDirection_Type( fld_player->playerWork, dir );
   }
   
   // ƒŒ[ƒ‹“Æ©‚ÌXVˆ—

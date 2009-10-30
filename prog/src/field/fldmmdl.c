@@ -469,9 +469,9 @@ MMDL * MMDLSYS_AddMMdl(
 	mmdl = MMdlSys_SearchSpaceMMdl( fos );
 	GF_ASSERT( mmdl != NULL );
 	
+	MMdl_SetHeaderBefore( mmdl, head, NULL );
 	MMdl_InitWork( mmdl, fos );
 	MMDL_SetZoneID( mmdl, zone_id );
-	MMdl_SetHeaderBefore( mmdl, head, NULL );
   
   if( mmdl_rockpos_CheckPos(mmdl) == TRUE ){
     MMDL_OnStatusBit( mmdl,
@@ -1928,6 +1928,15 @@ u32 MMDL_GetDirHeader( const MMDL * mmdl )
 //--------------------------------------------------------------
 void MMDL_SetForceDirDisp( MMDL * mmdl, u16 dir )
 {
+#ifdef DEBUG_ONLY_FOR_kagaya
+  if( MMDL_GetOBJID(mmdl) != MMDL_ID_PLAYER ){
+    if( MMDL_GetMoveCode(mmdl) == MV_DMY ){
+      OS_Printf( "動作モデル　方向セット ID %d DIR %d\n",
+      MMDL_GetOBJID(mmdl), dir );
+    }
+  }
+#endif
+
 	mmdl->dir_disp_old = mmdl->dir_disp;
 	mmdl->dir_disp = dir;
 }
@@ -1942,6 +1951,15 @@ void MMDL_SetForceDirDisp( MMDL * mmdl, u16 dir )
 //--------------------------------------------------------------
 void MMDL_SetDirDisp( MMDL * mmdl, u16 dir )
 {
+#ifdef DEBUG_ONLY_FOR_kagaya
+  if( MMDL_GetOBJID(mmdl) != MMDL_ID_PLAYER ){
+    if( MMDL_GetMoveCode(mmdl) == MV_DMY ){
+      OS_Printf( "動作モデル　方向セット ID %d DIR %d\n",
+      MMDL_GetOBJID(mmdl), dir );
+    }
+  }
+#endif
+
 	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_PAUSE_DIR) == 0 ){
 		mmdl->dir_disp_old = mmdl->dir_disp;
 		mmdl->dir_disp = dir;
@@ -4629,6 +4647,12 @@ void MMDL_MoveInitProcDummy( MMDL * mmdl )
 //--------------------------------------------------------------
 void MMDL_MoveProcDummy( MMDL * mmdl )
 {
+  if( MMDL_GetOBJID(mmdl) != MMDL_ID_PLAYER ){
+    if( MMDL_GetDirDisp(mmdl) != DIR_UP ){
+      OS_Printf( "動作モデル ID %d DIR %d\n",
+          MMDL_GetOBJID(mmdl), MMDL_GetDirDisp(mmdl) );
+    }
+  }
 }
 
 //--------------------------------------------------------------

@@ -137,8 +137,10 @@ void FIELD_COMM_ACTOR_CTRL_AddActor(
     const u16 *watch_dir, const VecFx32 *watch_pos, const BOOL *watch_vanish )
 {
   int i;
+  u16 dir;
   FIELD_COMM_ACTOR *act = act_ctrl->act_tbl;
   
+  dir = grid_ChangeFourDir( *watch_dir ); //Šp“x->Žl•ûŒü
   for( i = 0; i < act_ctrl->max; i++, act++ ){
     if( act->fmmdl == NULL ){
       act->fmmdl = fldcommAct_fmmdl_Add(
@@ -388,7 +390,6 @@ static void fldcommAct_fmmdl_SetWatchData(
 //--------------------------------------------------------------
 static u16 grid_ChangeFourDir( u16 dir )
 {
-#if 0 //4•ûŒü‚Å“ˆê
 	if( (dir>0x2000) && (dir<0x6000) ){
 		dir = DIR_LEFT;
 	}else if( (dir >= 0x6000) && (dir <= 0xa000) ){
@@ -398,7 +399,6 @@ static u16 grid_ChangeFourDir( u16 dir )
 	}else{
 		dir = DIR_UP;
 	}
-#endif
 	return( dir );
 }
 
