@@ -185,11 +185,11 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
 {
 	GAMESTART_FIRST_WORK *work = GFL_PROC_AllocWork( proc , sizeof(GAMESTART_FIRST_WORK) , GFL_HEAPID_APP );
 	SaveControl_ClearData(SaveControl_GetPointer());	//セーブデータクリア
-	//@todo 正しい値に
-	work->nameInParam = NAMEIN_AllocParam( GFL_HEAPID_APP , NAMEIN_MYNAME , 0 , 0, NAMEIN_PERSON_LENGTH , NULL );
 	work->selModeParam.type = SMT_START_GAME;
 	work->selModeParam.configSave = SaveData_GetConfig( SaveControl_GetPointer() );
 	work->selModeParam.mystatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
+	//主人公の性別は、性別設定が終わってから入れる
+	work->nameInParam = NAMEIN_AllocParam( GFL_HEAPID_APP , NAMEIN_MYNAME , 0, 0, NAMEIN_PERSON_LENGTH , NULL );
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -209,6 +209,7 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
 		break;
 	case 1:
 	  //名前入力
+		work->nameInParam->hero_sex	= MyStatus_GetMySex(work->selModeParam.mystatus);
 		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &NameInputProcData,(void*)work->nameInParam);
 		(*seq)++;
 		break;
