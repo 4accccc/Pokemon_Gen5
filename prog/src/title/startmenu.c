@@ -129,6 +129,10 @@ typedef struct
   u32     anmIdx;
 
   START_MENU_ITEM_WORK itemWork[SMI_MAX];
+  
+  u16 anmCnt;
+  u16 transBuf;
+  
 }START_MENU_WORK;
 
 //項目設定情報
@@ -158,6 +162,8 @@ static void START_MENU_InitGraphic( START_MENU_WORK *work );
 static void START_MENU_InitBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane );
 
 static void START_MENU_CreateMenuItem( START_MENU_WORK *work );
+
+static void START_MENU_UpdatePalletAnime( START_MENU_WORK *work );
 
 //メニュー項目用機能関数
 static BOOL START_MENU_ITEM_TempCheck( START_MENU_WORK *work );
@@ -220,6 +226,8 @@ static GFL_PROC_RESULT START_MENU_ProcInit( GFL_PROC * proc, int * seq, void * p
   }
   work->mystatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
   work->state = SMS_FADE_IN;
+  work->anmCnt = 0;
+
   START_MENU_InitGraphic( work );
 
   //フォント用パレット
@@ -367,6 +375,8 @@ static GFL_PROC_RESULT START_MENU_ProcMain( GFL_PROC * proc, int * seq, void * p
 
   //OBJの更新
   GFL_CLACT_SYS_Main();
+
+  START_MENU_UpdatePalletAnime( work );
 
   return GFL_PROC_RES_CONTINUE;
 }
@@ -572,6 +582,48 @@ static void START_MENU_ChangeActiveItem( START_MENU_WORK *work , const u8 newIte
             START_MENU_FRAMECHR1, START_MENU_PLT_NOSEL);
   }
 }
+
+
+//--------------------------------------------------------------
+//	パレットアニメーションの更新
+//--------------------------------------------------------------
+//プレートのアニメ。sin使うので0～0xFFFFのループ
+#define START_MENU_ANIME_VALUE (0x400)
+#define START_MENU_ANIME_S_R (25)
+#define START_MENU_ANIME_S_G (30)
+#define START_MENU_ANIME_S_B (29)
+#define START_MENU_ANIME_E_R ( 5)
+#define START_MENU_ANIME_E_G (15)
+#define START_MENU_ANIME_E_B (21)
+//プレートのアニメする色
+#define START_MENU_ANIME_COL (0x6)
+
+static void START_MENU_UpdatePalletAnime( START_MENU_WORK *work )
+{
+  //プレートアニメ
+  if( work->anmCnt + START_MENU_ANIME_VALUE >= 0x10000 )
+  {
+    work->anmCnt = work->anmCnt+START_MENU_ANIME_VALUE-0x10000;
+  }
+  else
+  {
+    work->anmCnt += START_MENU_ANIME_VALUE;
+  }
+  {
+    //1～0に変換
+    const fx16 cos = (FX_CosIdx(work->anmCnt)+FX16_ONE)/2;
+    const u8 r = START_MENU_ANIME_S_R + (((START_MENU_ANIME_E_R-START_MENU_ANIME_S_R)*cos)>>FX16_SHIFT);
+    const u8 g = START_MENU_ANIME_S_G + (((START_MENU_ANIME_E_G-START_MENU_ANIME_S_G)*cos)>>FX16_SHIFT);
+    const u8 b = START_MENU_ANIME_S_B + (((START_MENU_ANIME_E_B-START_MENU_ANIME_S_B)*cos)>>FX16_SHIFT);
+    
+    work->transBuf = GX_RGB(r, g, b);
+    
+    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN ,
+                                        START_MENU_PLT_SEL * 32 + START_MENU_ANIME_COL*2 ,
+                                        &work->transBuf , 2 );
+  }
+}
+
 
 #pragma mark MenuSelectFunc
 

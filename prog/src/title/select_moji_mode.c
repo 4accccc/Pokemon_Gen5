@@ -94,6 +94,9 @@ typedef struct
   GFL_FONT   *fontHandle;
   GFL_BMPWIN *strWin;
   GFL_BMPWIN *itemWin[SEL_MODE_ITEM_NUM];
+  
+  u16 anmCnt;
+  u16 transBuf;
 }SEL_MODE_WORK;
 
 
@@ -115,6 +118,7 @@ static void SEL_MODE_ExitItem( SEL_MODE_WORK *work );
 static const SELECT_MODE_UI_RETURN SEL_MODE_UpdateUI( SEL_MODE_WORK *work );
 
 static void SEL_MODE_DrawWinFrame( SEL_MODE_WORK *work );
+static void SEL_MODE_UpdatePalletAnime( SEL_MODE_WORK *work );
 
 const GFL_PROC_DATA SelectModeProcData = {
   SEL_MODE_ProcInit,
@@ -142,6 +146,7 @@ static GFL_PROC_RESULT SEL_MODE_ProcInit( GFL_PROC * proc, int * seq, void * pwk
   {
     work->state = SMS_COMM;
   }
+  work->anmCnt = 0;
 
   SEL_MODE_InitGraphic( work );
   SEL_MODE_InitItem( work );
@@ -245,6 +250,9 @@ static GFL_PROC_RESULT SEL_MODE_ProcMain( GFL_PROC * proc, int * seq, void * pwk
 
     break;
   }
+  
+  SEL_MODE_UpdatePalletAnime( work );
+  
   return GFL_PROC_RES_CONTINUE;
 }
 
@@ -505,4 +513,45 @@ static const SELECT_MODE_UI_RETURN  SEL_MODE_UpdateUI( SEL_MODE_WORK *work )
     }
   }
   return SMUR_CONTINUE;
+}
+
+
+//--------------------------------------------------------------
+//	パレットアニメーションの更新
+//--------------------------------------------------------------
+//プレートのアニメ。sin使うので0～0xFFFFのループ
+#define SEL_MODE_ANIME_VALUE (0x400)
+#define SEL_MODE_ANIME_S_R (25)
+#define SEL_MODE_ANIME_S_G (30)
+#define SEL_MODE_ANIME_S_B (29)
+#define SEL_MODE_ANIME_E_R ( 5)
+#define SEL_MODE_ANIME_E_G (15)
+#define SEL_MODE_ANIME_E_B (21)
+//プレートのアニメする色
+#define SEL_MODE_ANIME_COL (0x6)
+
+static void SEL_MODE_UpdatePalletAnime( SEL_MODE_WORK *work )
+{
+  //プレートアニメ
+  if( work->anmCnt + SEL_MODE_ANIME_VALUE >= 0x10000 )
+  {
+    work->anmCnt = work->anmCnt+SEL_MODE_ANIME_VALUE-0x10000;
+  }
+  else
+  {
+    work->anmCnt += SEL_MODE_ANIME_VALUE;
+  }
+  {
+    //1～0に変換
+    const fx16 cos = (FX_CosIdx(work->anmCnt)+FX16_ONE)/2;
+    const u8 r = SEL_MODE_ANIME_S_R + (((SEL_MODE_ANIME_E_R-SEL_MODE_ANIME_S_R)*cos)>>FX16_SHIFT);
+    const u8 g = SEL_MODE_ANIME_S_G + (((SEL_MODE_ANIME_E_G-SEL_MODE_ANIME_S_G)*cos)>>FX16_SHIFT);
+    const u8 b = SEL_MODE_ANIME_S_B + (((SEL_MODE_ANIME_E_B-SEL_MODE_ANIME_S_B)*cos)>>FX16_SHIFT);
+    
+    work->transBuf = GX_RGB(r, g, b);
+    
+    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN ,
+                                        SEL_MODE_PLT_SEL * 32 + SEL_MODE_ANIME_COL*2 ,
+                                        &work->transBuf , 2 );
+  }
 }
