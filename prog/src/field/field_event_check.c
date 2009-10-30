@@ -1720,7 +1720,7 @@ static GMEVENT * checkNormalEncountEvent( const EV_REQUEST * req, GAMESYS_WORK *
     return NULL;
   }
 #endif
-  enc_type = (ZONEDATA_IsBingo( req->map_id ) == TRUE) ? ENC_TYPE_BINGO : ENC_TYPE_NORMAL;
+  enc_type = ENC_TYPE_NORMAL; //(ZONEDATA_IsBingo( req->map_id ) == TRUE) ? ENC_TYPE_BINGO : ENC_TYPE_NORMAL;
   return (GMEVENT*)FIELD_ENCOUNT_CheckEncount(encount, enc_type);
 }
 
