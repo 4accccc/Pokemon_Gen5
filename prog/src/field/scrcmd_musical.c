@@ -112,7 +112,7 @@ VMCMD_RESULT EvCmdMusicalCall( VMHANDLE *core, void *wk )
   
   {
     FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-    PMSND_StopBGM();
+  //  PMSND_StopBGM();
   //  FIELD_SOUND_PushBGM( fsnd );
   //  PMSND_FadeOutBGM( 30 );
   }

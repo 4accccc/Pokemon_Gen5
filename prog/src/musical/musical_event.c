@@ -245,7 +245,6 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     break;
 
   case MES_INIT_DRESSUP:
-    PMSND_StopBGM();
     MUSICAL_EVENT_InitDressUp( evWork );
     GAMESYSTEM_CallProc( evWork->gsys , NO_OVERLAY_ID, &DressUp_ProcData, evWork->dupInitWork );
     evWork->state = MES_TERM_DRESSUP;
@@ -291,7 +290,6 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
   //ショーパート
   //------------------------------
   case MES_INIT_ACTING:
-    PMSND_StopBGM();
     MUSICAL_EVENT_InitActing( evWork );
     GAMESYSTEM_CallProc( evWork->gsys , NO_OVERLAY_ID, &MusicalStage_ProcData, evWork->actInitWork );
     evWork->state = MES_TERM_ACTING;
@@ -736,18 +734,26 @@ static const BOOL MUSICAL_EVENT_InitField( GMEVENT *event, MUSICAL_EVENT_WORK *e
   switch( evWork->subSeq )
   {
   case 0:
-    GMEVENT_CallEvent(event, EVENT_FieldOpen(evWork->gsys));
+    PMSND_PopBGM();
     evWork->subSeq++;
     break;
   case 1:
+    PMSND_FadeInBGM( 30 );
+    GMEVENT_CallEvent(event, EVENT_FieldOpen(evWork->gsys));
+    evWork->subSeq++;
+    break;
+  case 2:
     {
       //FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( evWork->gsys );
       //GMEVENT_CallEvent(event, EVENT_FieldFadeIn(evWork->gsys, fieldWork, 0));
       evWork->subSeq++;
     }
     break;
-  case 2:
-    return TRUE;
+  case 3:
+    if( PMSND_CheckFadeOnBGM() == FALSE )
+    {
+      return TRUE;
+    }
     break;
   }
   return FALSE;
@@ -766,10 +772,15 @@ static const BOOL MUSICAL_EVENT_ExitField( GMEVENT *event, MUSICAL_EVENT_WORK *e
     evWork->subSeq++;
     break;
   case 1:
+    PMSND_FadeOutBGM( 30 );
     GMEVENT_CallEvent(event, EVENT_FieldClose(evWork->gsys, fieldWork));
     evWork->subSeq++;
     break;
   case 2:
+    if( PMSND_CheckFadeOnBGM() == FALSE )
+    {
+      PMSND_PushBGM();
+    }
     return TRUE;
     break;
   }
