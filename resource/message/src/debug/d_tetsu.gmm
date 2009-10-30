@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="watanabe" host="W00138" date="2009-06-03T19:01:37"/>
+	<create user="watanabe" host="W00138" date="2009-10-27T16:38:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,7 +260,7 @@
 		</language>
 	</columns>
 
-	<dialog left="460" top="346" right="1165" bottom="966" maximized="no" rayout="Vertical2">
+	<dialog left="368" top="238" right="1073" bottom="858" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -329,8 +329,13 @@
 	</row>
 
 	<row id="DEBUG_TETSU_MENU4">
-		<language name="JPN" width="112">■みていぎサンプル</language>
-		<language name="JPN_KANJI" width="96">■未定義サンプル</language>
+		<language name="JPN" width="150">■ワイプサンプル</language>
+		<language name="JPN_KANJI" width="150">■ワイプサンプル</language>
+	</row>
+
+	<row id="DEBUG_TETSU_MENU5">
+		<language name="JPN" width="200">■キャプチャテクスチャサンプル</language>
+		<language name="JPN_KANJI" width="200">■キャプチャテクスチャサンプル</language>
 	</row>
 
 	<flowchart-group-list>
