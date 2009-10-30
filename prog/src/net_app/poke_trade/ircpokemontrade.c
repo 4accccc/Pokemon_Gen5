@@ -2344,7 +2344,7 @@ static void _touchStateCommon(POKEMON_TRADE_WORK* pWork)
 
 
   if( !GFL_UI_TP_GetCont() ){
-    if(pWork->touchON && pWork->bUpVec){
+    if(pWork->touchON && pWork->bUpVec && pWork->pCatchCLWK){
       pWork->touchON = FALSE;
       pWork->bUpVec = FALSE;
       PMSND_PlaySystemSE(POKETRADESE_UPPOKE);
@@ -2810,6 +2810,7 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   //オーバーレイ読み込み
   GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
   GFL_OVERLAY_Load( FS_OVERLAY_ID(app_mail));
+//  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0xd300 ); //ほぼマックス
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x130000 ); //ほぼマックス
   GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
   {
