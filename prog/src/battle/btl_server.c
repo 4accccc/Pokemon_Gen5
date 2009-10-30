@@ -406,9 +406,10 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
           int playerFront = 0;
           int enemyFront = 0;
           int pos;
+          int max = ( BTL_MAIN_GetRule( server->mainModule ) == BTL_RULE_TRIPLE ) ? BTLV_MCSS_POS_F : BTLV_MCSS_POS_D;
           const BTL_POKEPARAM*  bpp;
 
-          for( pos = BTLV_MCSS_POS_A ; pos <= BTLV_MCSS_POS_F ; pos++ )
+          for( pos = BTLV_MCSS_POS_A ; pos <= max ; pos++ )
           { 
             bpp = BTL_POKECON_GetFrontPokeDataConst( server->pokeCon, BTL_MAIN_ViewPosToBtlPos( server->mainModule, pos ) );
             if( bpp )
