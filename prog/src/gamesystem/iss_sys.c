@@ -358,20 +358,19 @@ void BGMChangeCheck( ISS_SYS* p_sys )
 		}
 	} 
 
-	// ダンジョンISSのBGMだったら, 停止中のダンジョンISSシステムを起動する
-	if( iss_type == ISS_TYPE_DUNGEON )
-	{
-		if( ISS_DUNGEON_SYS_IsOn( p_sys->pIssDungeonSys ) != TRUE )
-		{
-			ISS_DUNGEON_SYS_On( p_sys->pIssDungeonSys );
-		}
-	}
-	// ダンジョンISSのBGMでなかったら, 起動中のダンジョンISSシステムを停止する
-	else
-	{
-		if( ISS_DUNGEON_SYS_IsOn( p_sys->pIssDungeonSys ) == TRUE )
-		{
-			ISS_DUNGEON_SYS_Off( p_sys->pIssDungeonSys );
-		}
-	} 
+	// ダンジョンISS
+  if( p_sys->bgmNo != bgm_no )
+  {
+    if( iss_type == ISS_TYPE_DUNGEON )
+    { // 起動
+      ISS_DUNGEON_SYS_On( p_sys->pIssDungeonSys );
+    }
+    else
+    { // 停止
+      ISS_DUNGEON_SYS_Off( p_sys->pIssDungeonSys );
+    } 
+  }
+
+  // BGM番号を記憶
+  p_sys->bgmNo = bgm_no;
 }

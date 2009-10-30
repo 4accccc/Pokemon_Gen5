@@ -1,26 +1,22 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * @file   iss_dungeon_sys.h
  * @brief  ダンジョンISSユニット
  * @author obata_toshihiro
  * @date   2009.07.16
  */
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
 #include <gflib.h>
 #include "iss_dungeon_sys.h"
 #include "../field/field_sound.h"
 #include "gamesystem/playerwork.h"
 #include "arc/arc_def.h"
 #include "arc/iss.naix"
-#include "arc/fieldmap/zone_id.h"	// TEMP:
 
 
-//=====================================================================================================
-/**
- * @brief 定数・マクロ
- */
-//===================================================================================================== 
-
+//==========================================================================================
+// ■定数・マクロ
+//========================================================================================== 
 // 無効なゾーンID
 #define INVALID_ZONE_ID (0xffff)
 
@@ -33,19 +29,17 @@
 #define REVERB_STOP_FRAME  (0)		// 停止までのフレーム数
 
 
-//=====================================================================================================
-/**
- * @brief BGMパラメータ
- */ 
-//=====================================================================================================
+//========================================================================================== 
+// ■BGMパラメータ
+//========================================================================================== 
 typedef struct
 {
 	u16 zoneID;	// ゾーンID
 	s16 pitch;	// ピッチ(キー)
 	u16 tempo;	// テンポ
 	u16 reverb;	// リバーブ
-}
-BGM_PARAM;
+
+} BGM_PARAM;
 
 //------------------------------------------------------------------
 /**
@@ -74,10 +68,22 @@ static void SetBGMStatus( const BGM_PARAM* p_param )
 {
 	if( !p_param ) return;
 
-	// 反映
+  // テンポ
 	PMSND_SetStatusBGM( p_param->tempo, PMSND_NOEFFECT, 0 );
+
+  // ピッチ
 	NNS_SndPlayerSetTrackPitch( PMSND_GetBGMhandlePointer(), PITCH_TRACK_MASK, p_param->pitch );
-	PMSND_ChangeCaptureReverb( p_param->reverb, REVERB_SAMPLE_RATE, REVERB_VOLUME, REVERB_STOP_FRAME );
+
+  // リバーブ
+  if( p_param->reverb == 0 )
+  {
+    PMSND_DisableCaptureReverb();
+  }
+  else
+  {
+    PMSND_EnableCaptureReverb( 
+        p_param->reverb, REVERB_SAMPLE_RATE, REVERB_VOLUME, REVERB_STOP_FRAME );
+  }
 
 	// DEBUG:
 	OBATA_Printf( "Dungeon ISS SetBGMStatus\n" ); 
@@ -248,8 +254,8 @@ static const BGM_PARAM* GetBGMParam( const ISS_DATA* p_data, u16 zone_id )
 		}
 	}
 
-	// 発見できず
-  OBATA_Printf( "指定ゾーンのBGMパラメータが設定されていません\n" );    // DEBUG:
+	// DEBUG: BGMパラメータ発見できず
+  OBATA_Printf( "ISS-D: BGM param is not found\n" );
 	return NULL;
 }
 
@@ -314,6 +320,9 @@ ISS_DUNGEON_SYS* ISS_DUNGEON_SYS_Create( PLAYER_WORK* p_player, HEAPID heap_id )
 	p_sys->pData         = LoadIssData( heap_id );
 	p_sys->pActiveParam  = NULL;
 
+	// DEBUG:
+	OBATA_Printf( "ISS-D: Create\n" );
+
 	// 作成したダンジョンISSシステムを返す
 	return p_sys;
 }
@@ -335,6 +344,9 @@ void ISS_DUNGEON_SYS_Delete( ISS_DUNGEON_SYS* p_sys )
 
 	// 本体を破棄
 	GFL_HEAP_FreeMemory( p_sys );
+
+	// DEBUG:
+	OBATA_Printf( "ISS-D: Delete\n" );
 }
 
 //----------------------------------------------------------------------------
@@ -370,7 +382,7 @@ void ISS_DUNGEON_SYS_Update( ISS_DUNGEON_SYS* p_sys )
 	}
 
 	// DEBUG:
-	OBATA_Printf( "Dungeon ISS is ON\n" );
+	OBATA_Printf( "ISS-D: Update\n" );
 } 
 
 //---------------------------------------------------------------------------
@@ -384,6 +396,9 @@ void ISS_DUNGEON_SYS_Update( ISS_DUNGEON_SYS* p_sys )
 void ISS_DUNGEON_SYS_ZoneChange( ISS_DUNGEON_SYS* p_sys, u16 next_zone_id )
 { 
 	p_sys->nextZoneID = next_zone_id; 
+
+  // DEBUG:
+  OBATA_Printf( "ISS-D: ZoneChange\n" );
 }
 
 //----------------------------------------------------------------------------
@@ -396,8 +411,10 @@ void ISS_DUNGEON_SYS_ZoneChange( ISS_DUNGEON_SYS* p_sys, u16 next_zone_id )
 void ISS_DUNGEON_SYS_On( ISS_DUNGEON_SYS* p_sys )
 {
 	p_sys->isActive = TRUE;
-	PMSND_EnableCaptureReverb( 0, REVERB_SAMPLE_RATE, REVERB_VOLUME, REVERB_STOP_FRAME );
 	SetBGMStatus( p_sys->pActiveParam );
+
+  // DEBUG:
+  OBATA_Printf( "ISS-D: On\n" );
 }
 
 //----------------------------------------------------------------------------
@@ -415,7 +432,7 @@ void ISS_DUNGEON_SYS_Off( ISS_DUNGEON_SYS* p_sys )
 	PMSND_DisableCaptureReverb();
 
   // DEBUG:
-  OBATA_Printf( "ISS Dungeon System Off: set default status\n" );
+  OBATA_Printf( "ISS-D: Off\n" );
 }
 
 //----------------------------------------------------------------------------
@@ -429,5 +446,5 @@ void ISS_DUNGEON_SYS_Off( ISS_DUNGEON_SYS* p_sys )
 //----------------------------------------------------------------------------
 BOOL ISS_DUNGEON_SYS_IsOn( const ISS_DUNGEON_SYS* p_sys )
 {
-	return p_sys->isActive;
+	return p_sys->isActive; 
 }
