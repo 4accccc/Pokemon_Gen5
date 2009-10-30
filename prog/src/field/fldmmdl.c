@@ -3084,10 +3084,22 @@ void MMDLSYS_PlayProc( MMDLSYS *mmdlsys )
  * @retval	nothing
  */
 //--------------------------------------------------------------
+#include "field/field_comm/intrude_types.h"
+#include "field/field_comm/intrude_main.h"  //Intrude_ObjPauseCheck
 void MMDLSYS_PauseMoveProc( MMDLSYS *mmdlsys )
 {
 	u32 no = 0;
 	MMDL *mmdl;
+
+#if 1
+  FIELDMAP_WORK *fieldMap = mmdlsys->fieldMapWork;
+  if( fieldMap != NULL ){
+    GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldMap );
+    if(Intrude_ObjPauseCheck(gsys) == FALSE){
+      return;
+    }
+  }
+#endif
 	
 	while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE ){
 		MMDL_OnStatusBitMoveProcPause( mmdl );
