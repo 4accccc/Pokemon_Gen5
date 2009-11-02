@@ -54,28 +54,23 @@ GFL_G3D_UTIL_RES res_table[] =
 {
   // ボールのモデル
   {ARCID_PC_RECOVERY, NARC_pc_recovery_anime_pc_mb_nsbmd, GFL_G3D_UTIL_RESARC},
-  {ARCID_PC_RECOVERY, NARC_pc_recovery_anime_pc_mb_nsbmd, GFL_G3D_UTIL_RESARC},
-  {ARCID_PC_RECOVERY, NARC_pc_recovery_anime_pc_mb_nsbmd, GFL_G3D_UTIL_RESARC},
-  {ARCID_PC_RECOVERY, NARC_pc_recovery_anime_pc_mb_nsbmd, GFL_G3D_UTIL_RESARC},
-  {ARCID_PC_RECOVERY, NARC_pc_recovery_anime_pc_mb_nsbmd, GFL_G3D_UTIL_RESARC},
-  {ARCID_PC_RECOVERY, NARC_pc_recovery_anime_pc_mb_nsbmd, GFL_G3D_UTIL_RESARC},
   // ボールのアニメーション
   {ARCID_PC_RECOVERY, NARC_pc_recovery_anime_pc_mb_nsbtp, GFL_G3D_UTIL_RESARC},
 };
 // アニメーションテーブル
 GFL_G3D_UTIL_ANM ball_anm_table[] = 
 {
-  {6, 0},
+  {1, 0},
 };
 // オブジェクト設定テーブル
 GFL_G3D_UTIL_OBJ obj_table[] = 
 {
   {0, 0, 0, ball_anm_table, NELEMS(ball_anm_table)},
-  {1, 0, 1, ball_anm_table, NELEMS(ball_anm_table)},
-  {2, 0, 2, ball_anm_table, NELEMS(ball_anm_table)},
-  {3, 0, 3, ball_anm_table, NELEMS(ball_anm_table)},
-  {4, 0, 4, ball_anm_table, NELEMS(ball_anm_table)},
-  {5, 0, 5, ball_anm_table, NELEMS(ball_anm_table)},
+  {0, 0, 0, ball_anm_table, NELEMS(ball_anm_table)},
+  {0, 0, 0, ball_anm_table, NELEMS(ball_anm_table)},
+  {0, 0, 0, ball_anm_table, NELEMS(ball_anm_table)},
+  {0, 0, 0, ball_anm_table, NELEMS(ball_anm_table)},
+  {0, 0, 0, ball_anm_table, NELEMS(ball_anm_table)},
 };
 // 3Dセットアップテーブル
 GFL_G3D_UTIL_SETUP setup = 
