@@ -54,15 +54,16 @@ typedef enum
 // カメラ可動範囲、設定最大数
 #define FIELD_CAMERA_AREA_DATA_MAX   ( 4 )
 
-// 範囲タイプ
+// 範囲判定タイプ
 typedef enum
 {
 // conv.pl用定義 [CAMERA_AREA]
 // resource/fldmapdata/camera_scroll/で直値指定しています。
-// 基本下に追加して言ってください。
+// 基本下に追加してください。
   FIELD_CAMERA_AREA_NONE,     // 範囲なし
-  FIELD_CAMERA_AREA_RECT,     // 矩形範囲
-  FIELD_CAMERA_AREA_CIRCLE,   // 円範囲
+  FIELD_CAMERA_AREA_RECT,     // 矩形範囲外判定
+  FIELD_CAMERA_AREA_CIRCLE,   // 円範囲外判定
+  FIELD_CAMERA_AREA_RECT_IN, // 矩形囲内判定
 
   FIELD_CAMERA_AREA_MAX,   // システム内で使用
 } FIELD_CAMERA_AREA_TYPE;
@@ -72,10 +73,9 @@ typedef enum
 {
 // conv.pl用定義 [CAMERA_CONT]
 // resource/fldmapdata/camera_scroll/で直値指定しています。
-// 基本下に追加して言ってください。
-  FIELD_CAMERA_AREA_CONT_TARGET,   // カメラターゲットの管理
-  FIELD_CAMERA_AREA_CONT_CAMERA,   // カメラ座標の管理
-
+// 基本下に追加してください。
+  FIELD_CAMERA_AREA_CONT_TARGET,   // カメラターゲットが範囲内にあるか管理
+  FIELD_CAMERA_AREA_CONT_CAMERA,   // カメラ座標が範囲内にあるか管理
 
   FIELD_CAMERA_AREA_CONT_MAX,   // システム内で使用
 } FIELD_CAMERA_AREA_CONT;

@@ -195,12 +195,14 @@ static void cameraArea_UpdateTarget( const FIELD_CAMERA_AREA * cp_area, VecFx32*
 static void cameraArea_UpdateCamPos( const FIELD_CAMERA_AREA * cp_area, VecFx32* p_camera );
 static BOOL cameraArea_IsAreaRect( const FIELD_CAMERA_AREA* cp_area, const VecFx32* cp_pos, VecFx32* p_pos );
 static BOOL cameraArea_IsAreaCircle( const FIELD_CAMERA_AREA* cp_area, const VecFx32* cp_pos, VecFx32* p_pos );
+static BOOL cameraArea_IsAreaRectIn( const FIELD_CAMERA_AREA* cp_area, const VecFx32* cp_pos, VecFx32* p_pos );
 
 static BOOL (*pIsAreaFunc[])( const FIELD_CAMERA_AREA* cp_area, const VecFx32* cp_pos, VecFx32* p_pos ) = 
 {
   NULL,
   cameraArea_IsAreaRect,
   cameraArea_IsAreaCircle,
+  cameraArea_IsAreaRectIn,
 };
 
 //------------------------------------------------------------------
@@ -1697,7 +1699,7 @@ static void cameraArea_UpdateCamPos( const FIELD_CAMERA_AREA * cp_area, VecFx32*
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  カメラ可動範囲計算　矩形
+ *	@brief  カメラ可動範囲計算　矩形範囲外　ストップ
  *
  *	@param	cp_area   矩形情報
  *	@param  cp_pos	  現在座標
@@ -1748,7 +1750,7 @@ static BOOL cameraArea_IsAreaRect( const FIELD_CAMERA_AREA* cp_area, const VecFx
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  カメラ可動範囲計算　円
+ *	@brief  カメラ可動範囲計算　円範囲外　ストップ
  *
  *	@param	cp_area   円情報
  *	@param	cp_pos    現在座標
@@ -1860,6 +1862,95 @@ static BOOL cameraArea_IsAreaCircle( const FIELD_CAMERA_AREA* cp_area, const Vec
     p_pos->x = FX_Mul( FX_SinIdx( rot_now ), len ) + center.x;
     p_pos->z = FX_Mul( FX_CosIdx( rot_now ), len ) + center.z;
     p_pos->y = pos_save.y;
+  }
+
+  return ret;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ可動範囲計算　矩形　範囲内　ストップ
+ *
+ *	@param	cp_area   矩形情報
+ *	@param	cp_pos    現在座標
+ *	@param	p_pos     計算後座標
+ *
+ *	@retval TRUE  カメラ動作範囲外だった
+ *	@retval FALSE カメラ動作範囲内だった
+ */
+//-----------------------------------------------------------------------------
+static BOOL cameraArea_IsAreaRectIn( const FIELD_CAMERA_AREA* cp_area, const VecFx32* cp_pos, VecFx32* p_pos )
+{
+  VecFx32 pos_data = *cp_pos;
+  BOOL ret = FALSE;
+  fx32 dist_min;
+  u32 area_type;
+  enum
+  {
+    AREA_X_MIN,
+    AREA_X_MAX,
+    AREA_Z_MIN,
+    AREA_Z_MAX,
+
+    AREA_NUM,
+  };
+
+  // Y座標設定
+  p_pos->x = pos_data.x;
+  p_pos->z = pos_data.z;
+  p_pos->y = pos_data.y;
+  
+  // X方向範囲内？
+  if( (FX32_CONST(cp_area->rect.x_min) < pos_data.x) && (FX32_CONST(cp_area->rect.x_max) > pos_data.x) )
+  {
+    if( (FX32_CONST(cp_area->rect.z_min) < pos_data.z) && (FX32_CONST(cp_area->rect.z_max) > pos_data.z) )
+    {
+      ret = TRUE;
+
+      // XorZ一番近いところに戻す
+      dist_min  = p_pos->x - FX32_CONST(cp_area->rect.x_min);
+      area_type = AREA_X_MIN;
+
+      if( dist_min > FX32_CONST(cp_area->rect.x_max) - p_pos->x )
+      {
+        dist_min  = FX32_CONST(cp_area->rect.x_max) - p_pos->x;
+        area_type = AREA_X_MAX;
+      }
+
+      if( dist_min > p_pos->z - FX32_CONST(cp_area->rect.z_min) )
+      {
+        dist_min  = p_pos->z - FX32_CONST(cp_area->rect.z_min);
+        area_type = AREA_Z_MIN;
+      }
+
+      if( dist_min > FX32_CONST(cp_area->rect.z_max) - p_pos->z )
+      {
+        dist_min  = FX32_CONST(cp_area->rect.z_max) - p_pos->z;
+        area_type = AREA_Z_MAX;
+      }
+
+
+      // 一番近いところの座標を設定
+      switch( area_type )
+      {
+      case AREA_X_MIN:
+        p_pos->x = FX32_CONST(cp_area->rect.x_min);
+        break;
+      case AREA_X_MAX:
+        p_pos->x = FX32_CONST(cp_area->rect.x_max);
+        break;
+      case AREA_Z_MIN:
+        p_pos->z = FX32_CONST(cp_area->rect.z_min);
+        break;
+      case AREA_Z_MAX:
+        p_pos->z = FX32_CONST(cp_area->rect.z_max);
+        break;
+      default:
+        GF_ASSERT(0);
+        break;
+      }
+    }
   }
 
   return ret;

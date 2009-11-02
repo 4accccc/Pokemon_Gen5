@@ -91,6 +91,7 @@ foreach $one ( @map_matrix )
 
       #エリア情報の出力             ファイル名          　横幅　　　　縦幅　　　　　マトリクスID　
       $cmd = "perl area_output.pl ".$ARGV[1].$data[3]." ".$data[1]." ".$data[2]." ".$data[0]." 72 40";
+      #$cmd = "perl area_output.pl ".$ARGV[1].$data[3]." ".$data[1]." ".$data[2]." ".$data[0]." 168 168";
       if( system( $cmd ) )
       {
         close( FILEOUT );
