@@ -32,7 +32,7 @@ typedef struct _MSGSEARCH_WORK MSGSEARCH_WORK;
 typedef struct 
 {
 	s32 msg_idx;			//-1‚¾‚ÆŒ©‚Â‚©‚ç‚È‚©‚Á‚½
-	s32 str_idx;			//-1
+	s32 str_idx;			//-1‚¾‚ÆŒ©‚Â‚©‚ç‚È‚©‚Á‚½
 } MSGSEARCH_RESULT;
 
 
