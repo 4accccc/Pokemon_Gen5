@@ -48,9 +48,9 @@ struct _ISS_SYS
 	BOOL surfing;
 
 	// ŠeISSƒVƒXƒeƒ€
-	ISS_CITY_SYS*    pIssCitySys;		// ŠX
-	ISS_ROAD_SYS*    pIssRoadSys;		// “¹˜H
-	ISS_DUNGEON_SYS* pIssDungeonSys;	// ƒ_ƒ“ƒWƒ‡ƒ“ 
+	ISS_CITY_SYS*    issC;	// ŠX
+	ISS_ROAD_SYS*    issR;	// “¹˜H
+	ISS_DUNGEON_SYS* issD;	// ƒ_ƒ“ƒWƒ‡ƒ“ 
 
 	// Ä¶’†‚ÌBGM”Ô†
 	u16 bgmNo; 
@@ -108,9 +108,9 @@ ISS_SYS* ISS_SYS_Create( GAMEDATA* p_gdata, HEAPID heap_id )
 	p_sys->pGameData      = p_gdata;
 	p_sys->cycle          = FALSE;
 	p_sys->surfing        = FALSE;
-	p_sys->pIssCitySys    = ISS_CITY_SYS_Create( p_player, heap_id );
-	p_sys->pIssRoadSys    = ISS_ROAD_SYS_Create( p_player, heap_id );
-	p_sys->pIssDungeonSys = ISS_DUNGEON_SYS_Create( p_player, heap_id );
+	p_sys->issC    = ISS_CITY_SYS_Create( p_player, heap_id );
+	p_sys->issR    = ISS_ROAD_SYS_Create( p_player, heap_id );
+	p_sys->issD = ISS_DUNGEON_SYS_Create( p_player, heap_id );
 	p_sys->bgmNo          = INVALID_BGM_NO;
 	p_sys->frame          = 0;
 
@@ -128,9 +128,9 @@ ISS_SYS* ISS_SYS_Create( GAMEDATA* p_gdata, HEAPID heap_id )
 void ISS_SYS_Delete( ISS_SYS* p_sys )
 {
 	// ŠeISSƒVƒXƒeƒ€‚ð”jŠü
-	ISS_CITY_SYS_Delete( p_sys->pIssCitySys );
-	ISS_ROAD_SYS_Delete( p_sys->pIssRoadSys );
-	ISS_DUNGEON_SYS_Delete( p_sys->pIssDungeonSys );
+	ISS_CITY_SYS_Delete( p_sys->issC );
+	ISS_ROAD_SYS_Delete( p_sys->issR );
+	ISS_DUNGEON_SYS_Delete( p_sys->issD );
 
 	// –{‘Ì‚ð”jŠü
 	GFL_HEAP_FreeMemory( p_sys );
@@ -160,48 +160,13 @@ void ISS_SYS_Update( ISS_SYS* p_sys )
 	BGMChangeCheck( p_sys );
 
 	// ŠXISS
-	ISS_CITY_SYS_Update( p_sys->pIssCitySys );
+	ISS_CITY_SYS_Update( p_sys->issC );
 
 	// “¹˜HISS(ŽålŒö‚ª30fps‚Å“®ì‚·‚é‚½‚ß, “¹˜HISS‚à‚»‚ê‚É‡‚í‚¹‚é)
-	if( p_sys->frame % 2 == 0 ) ISS_ROAD_SYS_Update( p_sys->pIssRoadSys ); 
+	if( p_sys->frame % 2 == 0 ) ISS_ROAD_SYS_Update( p_sys->issR ); 
 	
 	// ƒ_ƒ“ƒWƒ‡ƒ“ISS
-	ISS_DUNGEON_SYS_Update( p_sys->pIssDungeonSys );
-
-
-	// TEMP:
-	/*
-	{
-		static int tempo = 256;
-		static int pitch = 0;
-		int key = GFL_UI_KEY_GetCont();
-
-		if( key & PAD_BUTTON_L )
-		{
-			if( key & PAD_KEY_LEFT )
-			{
-				tempo -= 1;
-				if( tempo < 0 ) tempo = 0;
-			}
-			if( key & PAD_KEY_RIGHT )
-			{
-				tempo += 1;
-			}
-			if( key & PAD_KEY_UP )
-			{
-				pitch += 1;
-			}
-			if( key & PAD_KEY_DOWN )
-			{
-				pitch -= 1;
-			}
-		}
-		PMSND_SetStatusBGM( tempo, pitch, 0 );
-
-		OBATA_Printf( "tempo = %d\n", tempo );
-		OBATA_Printf( "pitch = %d\n", pitch );
-	}
-	*/
+	ISS_DUNGEON_SYS_Update( p_sys->issD );
 }
 	
 
@@ -223,10 +188,10 @@ void ISS_SYS_ZoneChange( ISS_SYS* p_sys, u16 next_zone_id )
 	if( p_sys->cycle | p_sys->surfing ) return;
 
 	// ŠXISS
-	ISS_CITY_SYS_ZoneChange( p_sys->pIssCitySys, next_zone_id );
+	ISS_CITY_SYS_ZoneChange( p_sys->issC, next_zone_id );
 
 	// ƒ_ƒ“ƒWƒ‡ƒ“ISS
-	ISS_DUNGEON_SYS_ZoneChange( p_sys->pIssDungeonSys, next_zone_id );
+	ISS_DUNGEON_SYS_ZoneChange( p_sys->issD, next_zone_id );
 
 	// DEBUG:
 	//OBATA_Printf( "ISS_SYS_ZoneChange()\n" );
@@ -257,9 +222,9 @@ void CycleCheck( ISS_SYS* p_sys )
 	if( ( p_sys->cycle == FALSE ) && ( form == PLAYER_MOVE_FORM_CYCLE ) )
 	{
 		p_sys->cycle = TRUE;
-		ISS_CITY_SYS_Off( p_sys->pIssCitySys );
-		ISS_ROAD_SYS_Off( p_sys->pIssRoadSys );
-		ISS_DUNGEON_SYS_Off( p_sys->pIssDungeonSys );
+		ISS_CITY_SYS_Off( p_sys->issC );
+		ISS_ROAD_SYS_Off( p_sys->issR );
+		ISS_DUNGEON_SYS_Off( p_sys->issD );
 	}
 
 	// Ž©“]ŽÔ‚©‚ç~‚è‚é‚Ì‚ðŒŸo‚µ‚½‚ç, ƒ][ƒ“Ø‚è‘Ö‚¦Žž‚Æ“¯‚¶ˆ—
@@ -288,9 +253,9 @@ void SurfingCheck( ISS_SYS* p_sys )
 	if( ( p_sys->surfing == FALSE ) && ( form == PLAYER_MOVE_FORM_SWIM ) )
 	{
 		p_sys->surfing = TRUE;
-		ISS_CITY_SYS_Off( p_sys->pIssCitySys );
-		ISS_ROAD_SYS_Off( p_sys->pIssRoadSys );
-		ISS_DUNGEON_SYS_Off( p_sys->pIssDungeonSys );
+		ISS_CITY_SYS_Off( p_sys->issC );
+		ISS_ROAD_SYS_Off( p_sys->issR );
+		ISS_DUNGEON_SYS_Off( p_sys->issD );
 	}
 
 	// Ž©“]ŽÔ‚©‚ç~‚è‚é‚Ì‚ðŒŸo‚µ‚½‚ç, ƒ][ƒ“Ø‚è‘Ö‚¦Žž‚Æ“¯‚¶ˆ—
@@ -312,64 +277,40 @@ void BGMChangeCheck( ISS_SYS* p_sys )
 {
 	PLAYER_WORK*  p_player       = GAMEDATA_GetMyPlayerWork( p_sys->pGameData );
 	BGM_INFO_SYS* p_bgm_info_sys = GAMEDATA_GetBGMInfoSys( p_sys->pGameData );
-	int           bgm_no;
-	int           iss_type;
+	int bgm_no, iss_type;
 
 	// ŽŸ‚ÉÄ¶—\’è‚ÌBGM‚ÌISSƒ^ƒCƒv‚ðŽæ“¾
 	// (ŽŸ‚ÌBGM‚ªŽw’è‚³‚ê‚Ä‚¢‚È‚¢ê‡, Œ»ÝÄ¶’†‚ÌBGM‚ÌISSƒ^ƒCƒv‚ðŽæ“¾‚·‚é)
 	bgm_no   = PMSND_GetBGMsoundNo();
 	iss_type = BGM_INFO_GetIssType( p_bgm_info_sys, bgm_no ); 
 
-	// “¹˜HISS‚ÌBGM‚Å‚È‚©‚Á‚½‚ç, ‹N“®’†‚Ì“¹˜HISSƒVƒXƒeƒ€‚ð’âŽ~‚·‚é
-	if( iss_type != ISS_TYPE_LOAD )
-	{
-		if( ISS_ROAD_SYS_IsOn( p_sys->pIssRoadSys ) == TRUE )
-		{
-			ISS_ROAD_SYS_Off( p_sys->pIssRoadSys );
-			FIELD_SOUND_ChangeBGMActionVolume( 127 );
+  // BGM‚É•Ï‰»‚ª‚È‚¯‚ê‚Î‰½‚à‚µ‚È‚¢
+  if( p_sys->bgmNo == bgm_no ) return;
 
-			// DEBUG:
-			OBATA_Printf( "BGM change ==> ISS road system off\n" ); 
-		}
-	}
-	// “¹˜HISS‚ÌBGM‚¾‚Á‚½‚ç, ’âŽ~’†‚Ì“¹˜HISSƒVƒXƒeƒ€‚ð‹N“®‚·‚é
-	else
-	{
-		if( ISS_ROAD_SYS_IsOn( p_sys->pIssRoadSys ) != TRUE )
-		{
-			ISS_ROAD_SYS_On( p_sys->pIssRoadSys );
-		}
-	}
-
-	// ŠXISS‚ÌBGM‚¾‚Á‚½‚ç, ’âŽ~’†‚ÌŠXISSƒVƒXƒeƒ€‚ð‹N“®‚·‚é
-	if( iss_type == ISS_TYPE_CITY )
-	{
-		if( ISS_CITY_SYS_IsOn( p_sys->pIssCitySys ) != TRUE )
-		{
-			ISS_CITY_SYS_On( p_sys->pIssCitySys );
-		}
-	}
-	// ŠXISS‚ÌBGM‚Å‚È‚©‚Á‚½‚ç, ‹N“®’†‚ÌŠXISSƒVƒXƒeƒ€‚ð’âŽ~‚·‚é
-	else
-	{
-		if( ISS_CITY_SYS_IsOn( p_sys->pIssCitySys ) == TRUE )
-		{
-			ISS_CITY_SYS_Off( p_sys->pIssCitySys );
-		}
-	} 
-
-	// ƒ_ƒ“ƒWƒ‡ƒ“ISS
-  if( p_sys->bgmNo != bgm_no )
+  // ŠeISSƒVƒXƒeƒ€‚Ì‹N“®ó‘Ô‚ð•ÏX
+  switch( iss_type )
   {
-    if( iss_type == ISS_TYPE_DUNGEON )
-    { // ‹N“®
-      ISS_DUNGEON_SYS_On( p_sys->pIssDungeonSys );
-    }
-    else
-    { // ’âŽ~
-      ISS_DUNGEON_SYS_Off( p_sys->pIssDungeonSys );
-    } 
-  }
+  case ISS_TYPE_LOAD:  // “¹˜H
+      ISS_ROAD_SYS_On( p_sys->issR );
+      ISS_CITY_SYS_Off( p_sys->issC );
+      ISS_DUNGEON_SYS_Off( p_sys->issD );
+    break;
+  case ISS_TYPE_CITY:  // ŠX
+      ISS_ROAD_SYS_Off( p_sys->issR );
+      ISS_CITY_SYS_On( p_sys->issC );
+      ISS_DUNGEON_SYS_Off( p_sys->issD );
+    break;
+  case ISS_TYPE_DUNGEON:  // ƒ_ƒ“ƒWƒ‡ƒ“
+      ISS_ROAD_SYS_Off( p_sys->issR );
+      ISS_CITY_SYS_Off( p_sys->issC );
+      ISS_DUNGEON_SYS_On( p_sys->issD );
+    break;
+  default:  // ‚»‚Ì‘¼
+      ISS_ROAD_SYS_Off( p_sys->issR );
+      ISS_CITY_SYS_Off( p_sys->issC );
+      ISS_DUNGEON_SYS_Off( p_sys->issD );
+    break;
+  } 
 
   // BGM”Ô†‚ð‹L‰¯
   p_sys->bgmNo = bgm_no;

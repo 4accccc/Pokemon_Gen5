@@ -2,18 +2,17 @@
 	Archive file index definition.
 	File: iss.naix
 
-	This file was created by NINTENDO NITRO-System Archiver.
+	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2009-10-29T22:50:51
+
  *****************************************************************************/
 
 #ifndef NARC_ISS_NAIX_
 #define NARC_ISS_NAIX_
 
 enum {
-	NARC_iss_city_bin = 0,
-	NARC_iss_dungeon_bin = 1,
-	NARC_iss_3d_sound_h01_bin = 2
+	NARC_iss_dungeon_bin = 0,
+	NARC_iss_3d_sound_h01_bin = 1
 };
 
 /* NARC_ISS_NAIX_ */
