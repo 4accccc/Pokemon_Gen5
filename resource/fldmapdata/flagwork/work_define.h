@@ -124,7 +124,7 @@
 #define WK_SCENE_T01                     16512 /* 0x4080 カノコタウン（フィールド）：イベント用ワーク */
 #define WK_SCENE_T01R0102                16513 /* 0x4081 主人公宅２階：イベント用ワーク */
 #define WK_SCENE_C01GYM0101              16514 /* 0x4082 C01ジム（三色ジム）：イベント用ワーク */
-#define WK_SCENE_D01R0101                16515 /* 0x4083 廃墟：イベント用ワーク */
+#define WK_SCENE_D01R0101                16515 /* 0x4083 廃墟：ジム対策イベント用ワーク */
 #define WK_SCENE_C02GYM0101              16516 /* 0x4084 博物館：イベント用ワーク */
 #define WK_SCENE_T01R0101                16517 /* 0x4085 自宅１階：イベント用ワーク */
 #define WK_SCENE_C01R0102                16518 /* 0x4086 C01発明家の家２階：イベント用ワーク */
@@ -141,7 +141,7 @@
 #define WK_SCENE_C05_TOBRIDGE            16529 /* 0x4091 C05：H02側ストッパー用ワーク */
 #define WK_SCENE_C02                     16530 /* 0x4092 C02フィールド：イベント用ワーク */
 #define WK_SCENE_R05                     16531 /* 0x4093 ５番道路：イベント用ワーク */
-		/* not used 16532(0x4094) */
+#define WK_SCENE_D01R0101_POKE           16532 /* 0x4094 廃墟：夢ポケモン探しイベント用ワーク */
 		/* not used 16533(0x4095) */
 		/* not used 16534(0x4096) */
 		/* not used 16535(0x4097) */
