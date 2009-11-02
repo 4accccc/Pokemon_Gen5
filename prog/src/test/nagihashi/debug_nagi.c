@@ -38,6 +38,7 @@
 #include "debug_template.h"
 #include "debug_poke2dcheck.h"
 #include "app/name_input.h"
+#include "net_app/wifibattlematch.h"
 
 #include "savedata/irc_compatible_savedata.h"
 #include "savedata/shortcut.h"
@@ -57,6 +58,7 @@
 ///	エクスターン
 //=====================================
 FS_EXTERN_OVERLAY( compatible_irc_sys );
+FS_EXTERN_OVERLAY( wifibattlematch );
 
 //-------------------------------------
 ///	個数
@@ -172,6 +174,7 @@ typedef struct
 	TEMPLATE_PARAM				template_param;
 	NAMEIN_PARAM					*p_namein_param;
 	CONFIG_PANEL_PARAM		config_param;
+	WIFIBATTLEMATCH_PARAM	wifibattlematch_param;
 } DEBUG_NAGI_MAIN_WORK;
 
 //-------------------------------------
@@ -246,6 +249,7 @@ static void LISTDATA_Return( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_NextListHome( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_NextListPage1( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_FullShortCutData( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_CallWifiBattleMatch( DEBUG_NAGI_MAIN_WORK *p_wk );
 //3d
 static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_3D_Exit( GRAPHIC_3D_WORK *p_wk );
@@ -322,6 +326,7 @@ enum
 	LISTDATA_SEQ_PROC_POKE2DCHECK,
 	LISTDATA_SEQ_PROC_NAMEIN,
 	LISTDATA_SEQ_SHORTCUTDATA_FULL,
+	LISTDATA_SEQ_PROC_WIFIBATTLEMATCH,
 
 	LISTDATA_SEQ_MAX,
 };
@@ -347,6 +352,7 @@ static const LISTDATA_FUNCTION	sc_list_funciton[]	=
 	LISTDATA_CallProcPoke2DCheck,
 	LISTDATA_CallProcNamin,
 	LISTDATA_FullShortCutData,
+	LISTDATA_CallWifiBattleMatch,
 };
 
 //-------------------------------------
@@ -354,6 +360,11 @@ static const LISTDATA_FUNCTION	sc_list_funciton[]	=
 //=====================================
 static const LIST_SETUP_TBL sc_list_data_home[]	=
 {	
+#if 1
+	{	
+		L"WIFIバトルマッチ", LISTDATA_SEQ_PROC_WIFIBATTLEMATCH,
+	},
+#endif 
 	{	
 		L"相性診断（ひとり）", LISTDATA_SEQ_PROC_COMPATIBLE_DEBUG
 	},
@@ -395,7 +406,7 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 		L"運命値チェック", LISTDATA_SEQ_PROC_NAME_DEBUG,
 	},
 #endif
-#if 1
+#if 0
 	{	
 		L"ランキング", LISTDATA_SEQ_PROC_RANKING_DEBUG,
 	},
@@ -406,7 +417,7 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 		L"ランクデータフル",	LISTDATA_SEQ_RANKDATA_FULL,
 	},
 #endif
-#if 1
+#if 0
 	{	
 		L"タウンマップ", LISTDATA_SEQ_PROC_TOWNMAP,
 	},
@@ -1110,6 +1121,42 @@ static void LISTDATA_FullShortCutData( DEBUG_NAGI_MAIN_WORK *p_wk )
 	{	
 		SHORTCUT_SetRegister( p_sv, i, TRUE );
 	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	バトルマッチ画面へ飛ぶ
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void LISTDATA_CallWifiBattleMatch( DEBUG_NAGI_MAIN_WORK *p_wk )
+{	
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+	{	
+		p_wk->wifibattlematch_param.mode	= WIFIBATTLEMATCH_MODE_RANDOM_FREE;
+	}
+	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+	{	
+
+		p_wk->wifibattlematch_param.mode	= WIFIBATTLEMATCH_MODE_RANDOM_RATE;
+	}
+	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+	{	
+
+		p_wk->wifibattlematch_param.mode	= WIFIBATTLEMATCH_MODE_WIFI_LIMIT;
+	}
+	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
+	{	
+
+		p_wk->wifibattlematch_param.mode	= WIFIBATTLEMATCH_MODE_WIFI_NOLIMIT;
+	}
+	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
+	{	
+
+		p_wk->wifibattlematch_param.mode	= WIFIBATTLEMATCH_MODE_LIVE;
+	}
+
+	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(wifibattlematch), &WifiBattleMaptch_ProcData, &p_wk->wifibattlematch_param );
 }
 //=============================================================================
 /**

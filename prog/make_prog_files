@@ -1003,3 +1003,10 @@ SRCS_OVERLAY_CAMERA_TEST = test/ariizumi/camera_system.c \
 SRCS_OVERLAY_WAZA_OSHIE = app/waza_oshie/wo_main.c
 
 
+# WIFIバトルマッチング
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_IRC
+SRCS_OVERLAY_WIFIBATTLEMATCH = net_app/wifi_match/wifibattlematch.c \
+                net_app/wifi_match/wifibattlematch_graphic.c
+
