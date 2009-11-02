@@ -144,6 +144,9 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
         
 		// レコードコーナー用ヒープ作成
 		GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WORLDTRADE, 0x70000 );
+
+
+
 #if PL_G292_090323_FIX
 		DwcOverlayStart();
 		DpwCommonOverlayStart();
@@ -323,7 +326,6 @@ static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * p
 			_wtHeapHandle = wk->heapHandle;
 			// wifiメモリ管理関数呼び出し
 			DWC_SetMemFunc( AllocFunc, FreeFunc );
-
 			*seq = SEQ_INIT;
 		}
 		break;
@@ -1146,6 +1148,7 @@ static void InitDpw( void *heapPtr, NNSFndHeapHandle heapHandle, DWCAllocEx allo
 	// wifiメモリ管理関数呼び出し
 	DWC_SetMemFunc( alloc, free );
 
+	;
 
 }
 

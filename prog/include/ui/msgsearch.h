@@ -55,6 +55,6 @@ extern u32 MSGSEARCH_SearchNum( const MSGSEARCH_WORK *cp_wk, const STRBUF *cp_bu
 //-------------------------------------
 ///	•¶Žš—ñŠÖŒW
 //=====================================
-extern STRBUF *MSGSEARCH_CreateString( const MSGSEARCH_WORK	*cp_wk, const MSGSEARCH_RESULT *cp_result_tbl );
-extern void MSGSEARCH_GetString( const MSGSEARCH_WORK *cp_wk, const MSGSEARCH_RESULT *cp_result_tbl, STRBUF *p_str );
+extern STRBUF *MSGSEARCH_CreateString( const MSGSEARCH_WORK *cp_wk, const MSGSEARCH_RESULT *cp_result );
+extern void MSGSEARCH_GetString( const MSGSEARCH_WORK *cp_wk, const MSGSEARCH_RESULT *cp_result, STRBUF *p_str );
 

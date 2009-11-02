@@ -245,12 +245,12 @@ u32 MSGSEARCH_SearchNum( const MSGSEARCH_WORK *cp_wk, const STRBUF *cp_buf )
  *	@brief	MSG検索	検索結果から文字列を作成する
  *
  *	@param	const MSGSEARCH_WORK *cp_wk				ワーク
- *	@param	MSGSEARCH_RESULT *cp_result_tbl		検索結果テーブル
+ *	@param	MSGSEARCH_RESULT *cp_result				検索結果
  *
  *	@return	STRBUF
  */
 //-----------------------------------------------------------------------------
-STRBUF *MSGSEARCH_CreateString( const MSGSEARCH_WORK *cp_wk, const MSGSEARCH_RESULT *cp_result_tbl )
+STRBUF *MSGSEARCH_CreateString( const MSGSEARCH_WORK *cp_wk, const MSGSEARCH_RESULT *cp_result )
 {	
 	GF_ASSERT_MSG( 0 <= cp_result_tbl->msg_idx && cp_result_tbl->msg_idx < cp_wk->msg_max, "登録されたメッセージテーブルをオーバーしています　%d < %d", cp_result_tbl->msg_idx, cp_wk->msg_max );
 	return	GFL_MSG_CreateString( cp_wk->p_msg_tbl[ cp_result_tbl->msg_idx ], cp_result_tbl->str_idx );
@@ -261,11 +261,11 @@ STRBUF *MSGSEARCH_CreateString( const MSGSEARCH_WORK *cp_wk, const MSGSEARCH_RES
  *	@brief	MSG検索	検索結果から文字列を受け取る
  *
  *	@param	const MSGSEARCH_WORK *cp_wk				ワーク
- *	@param	MSGSEARCH_RESULT *cp_result_tbl		検索結果テーブル
+ *	@param	MSGSEARCH_RESULT *cp_result				検索結果
  *	@param	*p_str														文字列受け取りバッファ
  */
 //-----------------------------------------------------------------------------
-void MSGSEARCH_GetString( const MSGSEARCH_WORK *cp_wk, const MSGSEARCH_RESULT *cp_result_tbl, STRBUF *p_str )
+void MSGSEARCH_GetString( const MSGSEARCH_WORK *cp_wk, const MSGSEARCH_RESULT *cp_result, STRBUF *p_str )
 {	
 	GF_ASSERT_MSG( 0 <= cp_result_tbl->msg_idx && cp_result_tbl->msg_idx < cp_wk->msg_max, "登録されたメッセージテーブルをオーバーしています　%d < %d", cp_result_tbl->msg_idx, cp_wk->msg_max );
 	GFL_MSG_GetString( cp_wk->p_msg_tbl[ cp_result_tbl->msg_idx ], cp_result_tbl->str_idx, p_str );
