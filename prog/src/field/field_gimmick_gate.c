@@ -472,7 +472,7 @@ static BOOL LoadGateData( ELBOARD_ZONE_DATA* buf, FIELDMAP_WORK* fieldmap )
     if( entry_table[i].zone_id == zone_id )
     {
       // 電光掲示板データを読み込む
-      ELBOARD_ZONE_DATA_Load( buf, ARCID_GATE_GIMMICK, entry_table[i].dat_id ); 
+      ELBOARD_ZONE_DATA_Load( buf, ARCID_GATE_GIMMICK, entry_table[i].dat_id );
       return TRUE;
     }
   } 
@@ -531,7 +531,7 @@ static void AddNews_DATE( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
   news.texName    = news_tex_name[NEWS_DATE];
   news.pltName    = news_plt_name[NEWS_DATE];
   news.msgArcID   = ARCID_MESSAGE;
-  news.msgDatID   = data->arcDatID;
+  news.msgDatID   = NARC_message_gate_dat;
   news.msgStrID   = data->msgID_date;
 
   // ニュースを追加
@@ -555,7 +555,7 @@ static void AddNews_WEATHER( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* dat
   news.texName    = news_tex_name[NEWS_WEATHER];
   news.pltName    = news_plt_name[NEWS_WEATHER];
   news.msgArcID   = ARCID_MESSAGE;
-  news.msgDatID   = data->arcDatID;
+  news.msgDatID   = NARC_message_gate_dat;
   news.msgStrID   = data->msgID_weather;
 
   // ニュースを追加
@@ -623,19 +623,19 @@ static void AddNews_INFO( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
   news[0].texName    = news_tex_name[NEWS_INFO_A];
   news[0].pltName    = news_plt_name[NEWS_INFO_A];
   news[0].msgArcID   = ARCID_MESSAGE;
-  news[0].msgDatID   = data->arcDatID;
+  news[0].msgDatID   = NARC_message_gate_dat;
 
   news[1].animeIndex = news_anm_index[NEWS_INFO_B];
   news[1].texName    = news_tex_name[NEWS_INFO_B];
   news[1].pltName    = news_plt_name[NEWS_INFO_B];
   news[1].msgArcID   = ARCID_MESSAGE;
-  news[1].msgDatID   = data->arcDatID;
+  news[1].msgDatID   = NARC_message_gate_dat;
 
   news[2].animeIndex = news_anm_index[NEWS_INFO_C];
   news[2].texName    = news_tex_name[NEWS_INFO_C];
   news[2].pltName    = news_plt_name[NEWS_INFO_C];
   news[2].msgArcID   = ARCID_MESSAGE;
-  news[2].msgDatID   = data->arcDatID;
+  news[2].msgDatID   = NARC_message_gate_dat;
 
   // ニュースを追加
   for( i=0; i<LOCAL_INFO_NUM; i++ )
@@ -674,7 +674,7 @@ static void AddNews_CM( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
   news.texName    = news_tex_name[NEWS_CM];
   news.pltName    = news_plt_name[NEWS_CM];
   news.msgArcID   = ARCID_MESSAGE;
-  news.msgDatID   = data->arcDatID;
+  news.msgDatID   = NARC_message_gate_dat;
   
   // ニュースを追加
   GOBJ_ELBOARD_AddNews( elboard, &news );

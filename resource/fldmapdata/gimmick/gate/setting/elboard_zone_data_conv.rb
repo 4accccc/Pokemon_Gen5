@@ -36,36 +36,6 @@ def GetZoneID( zone )
 end
 
 #-------------------------------------------------------------------------------------
-# @brief gmmファイルのアーカイブ内インデックス(ARCDATID)を取得する
-# @param gmm_filename gmmファイル名
-# @return 指定したgmmファイルのアーカイブ内インデックス
-#-------------------------------------------------------------------------------------
-def GetArcDatID( gmm_filename )
-
-  # インデックス名を作成
-  index_name = "NARC_message_" + File.basename(gmm_filename, ".gmm") + "_dat"
-
-  # 定義ファイルを開く
-  def_filename = ENV["PROJECT_RSCDIR"] + "message/message.naix"
-  file = File.open( def_filename, "r" )
-
-  # インデックス名を検索
-  file.each do |line|
-    if line.index(index_name) != nil then
-      i0 = line.index("=") + 1
-      i1 = line.index(",") - 1
-      val = line[i0..i1].to_i
-      return val
-    end
-  end
-  file.close
-
-  # 指定ファイルのインデックス名が定義されていない場合
-  abort("インデックス:#{index_name}は定義されていません")
-
-end
-
-#-------------------------------------------------------------------------------------
 # @brief メッセージIDを取得する
 # @param gmm_filename gmmファイル名
 # @param msg_id       メッセージIDを表す文字列
@@ -126,6 +96,8 @@ end
 # @param ARGV[0] コンバート対象ファイル名(エクセルのタブ区切りデータ)
 # @param ARGV[1] バイナリデータの出力先ディレクトリ
 #-------------------------------------------------------------------------------------
+# .gmmファイル名
+GMM_FILENAME = "gate.gmm"
 
 # データインデックス
 ROW_ZONE_ID        = 0   # ゾーンID
@@ -133,26 +105,25 @@ ROW_X              = 1   # x座標
 ROW_Y              = 2   # y座標
 ROW_Z              = 3   # z座標
 ROW_DIR            = 4   # 向き
-ROW_GMM_FILENAME   = 5   # gmmファイル名
-ROW_MSG_ID_DATE    = 6   # 日付
-ROW_MSG_ID_WEATHER = 7   # 天気
-ROW_MSG_ID_INFO_A  = 8   # 情報A
-ROW_MSG_ID_INFO_B  = 9   # 情報B
-ROW_MSG_ID_INFO_C  = 10  # 情報C
-ROW_MSG_ID_INFO_D  = 11  # 情報D
-ROW_MSG_ID_INFO_E  = 12  # 情報E
-ROW_MSG_ID_INFO_F  = 13  # 情報F
-ROW_MSG_ID_INFO_G  = 14  # 情報G
-ROW_MSG_ID_INFO_H  = 15  # 情報H
-ROW_MSG_ID_INFO_I  = 16  # 情報I
-ROW_MSG_ID_CM_MON  = 17  # CM月
-ROW_MSG_ID_CM_TUE  = 18  # CM火
-ROW_MSG_ID_CM_WED  = 19  # CM水
-ROW_MSG_ID_CM_THU  = 20  # CM木
-ROW_MSG_ID_CM_FRI  = 21  # CM金
-ROW_MSG_ID_CM_SAT  = 22  # CM土
-ROW_MSG_ID_CM_SUN  = 23  # CM日
-
+ROW_MSG_ID_DATE    = 5   # 日付
+ROW_MSG_ID_WEATHER = 6   # 天気
+ROW_MSG_ID_INFO_A  = 7   # 情報A
+ROW_MSG_ID_INFO_B  = 8   # 情報B
+ROW_MSG_ID_INFO_C  = 9   # 情報C
+ROW_MSG_ID_INFO_D  = 10  # 情報D
+ROW_MSG_ID_INFO_E  = 11  # 情報E
+ROW_MSG_ID_INFO_F  = 12  # 情報F
+ROW_MSG_ID_INFO_G  = 13  # 情報G
+ROW_MSG_ID_INFO_H  = 14  # 情報H
+ROW_MSG_ID_INFO_I  = 15  # 情報I
+ROW_MSG_ID_CM_MON  = 16  # CM月
+ROW_MSG_ID_CM_TUE  = 17  # CM火
+ROW_MSG_ID_CM_WED  = 18  # CM水
+ROW_MSG_ID_CM_THU  = 19  # CM木
+ROW_MSG_ID_CM_FRI  = 20  # CM金
+ROW_MSG_ID_CM_SAT  = 21  # CM土
+ROW_MSG_ID_CM_SUN  = 22  # CM日
+                     23
 # 出力ファイル名のリスト
 bin_file_list = Array.new
 
@@ -172,25 +143,24 @@ file.close
   out_data << in_data[ROW_Y].to_i
   out_data << in_data[ROW_Z].to_i
   out_data << GetDir(in_data[ROW_DIR])
-  out_data << GetArcDatID(in_data[ROW_GMM_FILENAME])
-  out_data << GetMsgID(in_data[ROW_GMM_FILENAME], in_data[ROW_MSG_ID_DATE])
-  out_data << GetMsgID(in_data[ROW_GMM_FILENAME], in_data[ROW_MSG_ID_WEATHER])
-  out_data << GetMsgID(in_data[ROW_GMM_FILENAME], in_data[ROW_MSG_ID_INFO_A])
-  out_data << GetMsgID(in_data[ROW_GMM_FILENAME], in_data[ROW_MSG_ID_INFO_B])
-  out_data << GetMsgID(in_data[ROW_GMM_FILENAME], in_data[ROW_MSG_ID_INFO_C])
-  out_data << GetMsgID(in_data[ROW_GMM_FILENAME], in_data[ROW_MSG_ID_INFO_D])
-  out_data << GetMsgID(in_data[ROW_GMM_FILENAME], in_data[ROW_MSG_ID_INFO_E])
-  out_data << GetMsgID(in_data[ROW_GMM_FILENAME], in_data[ROW_MSG_ID_INFO_F])
-  out_data << GetMsgID(in_data[ROW_GMM_FILENAME], in_data[ROW_MSG_ID_INFO_G])
-  out_data << GetMsgID(in_data[ROW_GMM_FILENAME], in_data[ROW_MSG_ID_INFO_H])
-  out_data << GetMsgID(in_data[ROW_GMM_FILENAME], in_data[ROW_MSG_ID_INFO_I])
-  out_data << GetMsgID(in_data[ROW_GMM_FILENAME], in_data[ROW_MSG_ID_CM_MON])
-  out_data << GetMsgID(in_data[ROW_GMM_FILENAME], in_data[ROW_MSG_ID_CM_TUE])
-  out_data << GetMsgID(in_data[ROW_GMM_FILENAME], in_data[ROW_MSG_ID_CM_WED])
-  out_data << GetMsgID(in_data[ROW_GMM_FILENAME], in_data[ROW_MSG_ID_CM_THU])
-  out_data << GetMsgID(in_data[ROW_GMM_FILENAME], in_data[ROW_MSG_ID_CM_FRI])
-  out_data << GetMsgID(in_data[ROW_GMM_FILENAME], in_data[ROW_MSG_ID_CM_SAT])
-  out_data << GetMsgID(in_data[ROW_GMM_FILENAME], in_data[ROW_MSG_ID_CM_SUN])
+  out_data << GetMsgID(GMM_FILENAME, in_data[ROW_MSG_ID_DATE])
+  out_data << GetMsgID(GMM_FILENAME, in_data[ROW_MSG_ID_WEATHER])
+  out_data << GetMsgID(GMM_FILENAME, in_data[ROW_MSG_ID_INFO_A])
+  out_data << GetMsgID(GMM_FILENAME, in_data[ROW_MSG_ID_INFO_B])
+  out_data << GetMsgID(GMM_FILENAME, in_data[ROW_MSG_ID_INFO_C])
+  out_data << GetMsgID(GMM_FILENAME, in_data[ROW_MSG_ID_INFO_D])
+  out_data << GetMsgID(GMM_FILENAME, in_data[ROW_MSG_ID_INFO_E])
+  out_data << GetMsgID(GMM_FILENAME, in_data[ROW_MSG_ID_INFO_F])
+  out_data << GetMsgID(GMM_FILENAME, in_data[ROW_MSG_ID_INFO_G])
+  out_data << GetMsgID(GMM_FILENAME, in_data[ROW_MSG_ID_INFO_H])
+  out_data << GetMsgID(GMM_FILENAME, in_data[ROW_MSG_ID_INFO_I])
+  out_data << GetMsgID(GMM_FILENAME, in_data[ROW_MSG_ID_CM_MON])
+  out_data << GetMsgID(GMM_FILENAME, in_data[ROW_MSG_ID_CM_TUE])
+  out_data << GetMsgID(GMM_FILENAME, in_data[ROW_MSG_ID_CM_WED])
+  out_data << GetMsgID(GMM_FILENAME, in_data[ROW_MSG_ID_CM_THU])
+  out_data << GetMsgID(GMM_FILENAME, in_data[ROW_MSG_ID_CM_FRI])
+  out_data << GetMsgID(GMM_FILENAME, in_data[ROW_MSG_ID_CM_SAT])
+  out_data << GetMsgID(GMM_FILENAME, in_data[ROW_MSG_ID_CM_SUN])
   # バイナリデータを出力
   filename = ARGV[1] + "/elboard_zone_data_" + in_data[ROW_ZONE_ID].downcase + ".bin"
   file = File.open( filename, "wb" )

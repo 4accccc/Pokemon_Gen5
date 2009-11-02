@@ -20,7 +20,6 @@ typedef struct
   u32 y;              // y座標
   u32 z;              // z座標
   u32 dir;            // 向き
-  u32 arcDatID;       // アーカイブ内インデックス(アーカイブIDは ARCID_MESSAGE で固定)
   u32 msgID_date;     // 日付に使用するメッセージID
   u32 msgID_weather;  // 天気に使用するメッセージID
   u32 msgID_infoA;    // 地域情報(A)に使用するメッセージID

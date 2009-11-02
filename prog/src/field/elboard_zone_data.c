@@ -25,7 +25,7 @@
 //-----------------------------------------------------------------------------------
 BOOL ELBOARD_ZONE_DATA_Load( ELBOARD_ZONE_DATA* buf, ARCID arc_id, ARCDATID dat_id )
 {
-  // 直接構造体に放り込む
+  // 構造体へダイレクトに放り込む
   GFL_ARC_LoadDataOfs( buf, arc_id, dat_id, 0, sizeof(ELBOARD_ZONE_DATA) );
 
   // DEBUG:
@@ -35,7 +35,6 @@ BOOL ELBOARD_ZONE_DATA_Load( ELBOARD_ZONE_DATA* buf, ARCID arc_id, ARCDATID dat_
   OBATA_Printf( "y = %d\n", buf->y );
   OBATA_Printf( "z = %d\n", buf->z );
   OBATA_Printf( "dir = %d\n", buf->dir );
-  OBATA_Printf( "arcDatID = %d\n", buf->arcDatID );
   OBATA_Printf( "msgID_date = %d\n", buf->msgID_date );
   OBATA_Printf( "msgID_weather = %d\n", buf->msgID_weather );
   OBATA_Printf( "msgID_infoA = %d\n", buf->msgID_infoA );
