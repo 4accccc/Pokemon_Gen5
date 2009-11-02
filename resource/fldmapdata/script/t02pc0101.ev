@@ -30,11 +30,19 @@ _EVENT_DATA_END
 /*					FIELD_INIT_LABEL						*/
 /************************************************************/
 INIT_EVENT_START	ev_init_t02pc0101
-	//イベント状況によりOBJの表示位置変更
-	IF $WK_SCENE_T02PC0101 == 1 THEN
-		//博士の案内イベント後
-		//サポート：位置変更
-		_OBJ_POS_CHANGE( T02PC0101_SUPPORT_01, 9, 0, 15, DIR_RIGHT )
+
+	//演説イベントが終わっていない場合
+	IF $WK_SCENE_T02 <= 1 THEN
+		//イベント状況によりOBJの表示位置変更
+		IF $WK_SCENE_T02PC0101 == 1 THEN
+			//博士の案内イベント後
+			//サポート：位置変更
+			_OBJ_POS_CHANGE( T02PC0101_SUPPORT_01, 9, 0, 15, DIR_RIGHT )
+		ELSE
+	
+		ENDIF
+
+	//演説イベントが終わっている場合
 	ELSE
 	
 	ENDIF
