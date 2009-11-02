@@ -27,6 +27,7 @@
 //archive
 #include "arc_def.h"
 //#include "config_gra.naix"
+#include "ui/msgsearch.h"
 
 //	print
 #include "font/font.naix"
@@ -38,6 +39,21 @@
 //	mine
 #include "debug_template.h"
 
+
+static const u16 PMS_SrcFileID[] = {
+	NARC_message_monsname_dat,
+	NARC_message_wazaname_dat,
+	NARC_message_typename_dat,
+	NARC_message_tokusei_dat,
+	NARC_message_pms_word06_dat,
+	NARC_message_pms_word07_dat,
+	NARC_message_pms_word08_dat,
+	NARC_message_pms_word09_dat,
+	NARC_message_pms_word10_dat,
+	NARC_message_pms_word11_dat,
+	NARC_message_pms_word12_dat,
+};
+
 FS_EXTERN_OVERLAY(ui_common);
 FS_EXTERN_OVERLAY(ui_debug);
 
@@ -47,10 +63,40 @@ FS_EXTERN_OVERLAY(ui_debug);
 */
 //=============================================================================
 //-------------------------------------
+///	ユニコードデバッグプリント
+//=====================================
+static inline void DEBUG_STRBUF_Print( const STRBUF *cp_str )
+{	
+	int i;	
+	char str[3]	= {0};
+	int			len;
+	const STRCODE	*cp_code;
+
+	len			= GFL_STR_GetBufferLength(cp_str);
+	cp_code	= GFL_STR_GetStringCodePointer( cp_str );
+
+	for( i = 0; i < len; i++ )
+	{
+		STD_ConvertCharUnicodeToSjis( str, cp_code[i]);
+		NAGI_Printf( "%s ", str );
+	}
+	NAGI_Printf("\n");
+}
+
+// 処理時間の表示
+
+static OSTick s_DUN_TICK_DRAW_start;
+
+
+#define TICK_DRAW_PrintStart	(s_DUN_TICK_DRAW_start = OS_GetTick())
+#define TICK_DRAW_PrintEnd		NAGI_Printf("line[%d] time=%dmicro\n",__LINE__,OS_TicksToMicroSeconds(OS_GetTick() - s_DUN_TICK_DRAW_start) )
+
+//-------------------------------------
 ///	フレーム
 //=====================================
 enum
 {	
+	BG_FRAME_SKB_M	= GFL_BG_FRAME2_M,
 	BG_FRAME_BAR_M	= GFL_BG_FRAME1_M,
 	BG_FRAME_POKEMON_M	= GFL_BG_FRAME2_M,
 };
@@ -61,6 +107,8 @@ enum
 {	
 	//メインBG
 	PLTID_BG_POKEMON_M		= 0,
+	PLTID_BG_SKB01_M			= 1,
+	PLTID_BG_SKB02_M			= 2,
 	PLTID_BG_TOUCHBAR_M		= 13,
 	PLTID_BG_INFOWIN_M		= 15,
 
@@ -79,6 +127,13 @@ enum
 
 	OBJRESID_MAX,
 } ;
+//-------------------------------------
+///	メッセージsearch用
+//=====================================
+#define STRBUF_LEN	512
+#define MSGSEARCH_RESULT_MAX	(10)
+#define MSGDATA_MAX	(11)
+
 
 //=============================================================================
 /**
@@ -125,6 +180,12 @@ typedef struct
 	//共通で使うタスクシステム
 	GFL_TCBLSYS		*p_tcbl;
 
+	//メッセージsearchで必要
+	MSGSEARCH_WORK	*p_search;
+	GFL_SKB					*p_skb;
+	STRBUF					*p_strbuf;
+	MSGSEARCH_RESULT result_tbl[MSGSEARCH_RESULT_MAX];
+	GFL_MSGDATA			*p_msg[ MSGDATA_MAX ];
 }TEMPLATE_WORK;
 //=============================================================================
 /**
@@ -159,6 +220,7 @@ static void SEQ_End( SEQ_WORK *p_wk );
 static void SEQFUNC_FadeOut( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 static void SEQFUNC_FadeIn( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
+static void SEQFUNC_Search( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 //=============================================================================
 /**
  *					外部公開
@@ -209,7 +271,7 @@ static GFL_PROC_RESULT DEBUG_TEMPLATE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 	p_param	= p_param_adrs;
 
 	//ヒープ作成
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_NAGI_DEBUG_SUB, 0x30000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_NAGI_DEBUG_SUB, 0x40000 );
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(TEMPLATE_WORK), HEAPID_NAGI_DEBUG_SUB );
 	GFL_STD_MemClear( p_wk, sizeof(TEMPLATE_WORK) );
@@ -609,12 +671,6 @@ static void SEQFUNC_FadeIn( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 //-----------------------------------------------------------------------------
 static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 {	
-	enum
-	{
-		SEQ_FADEIN_START,
-		SEQ_FADEIN_WAIT,
-		SEQ_EXIT,
-	};	
 
 	TEMPLATE_WORK	*p_wk	= p_param;
 
@@ -622,5 +678,118 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 	{
 		SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
 	}
+
+	if( GFL_UI_KEY_GetTrg() )
+	{	
+		SEQ_SetNext( p_seqwk, SEQFUNC_Search );
+	}
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	設定画面デバッグ
+ *
+ *	@param	SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_param				ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_Search( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
+{	
+	enum
+	{	
+		SEQ_INIT,
+		SEQ_MAIN,
+		SEQ_EXIT,
+	};
+	TEMPLATE_WORK	*p_wk	= p_param;
+
+
+	switch( *p_seq )
+	{	
+	case SEQ_INIT:
+		{
+			int i;
+		 	static const GFL_SKB_SETUP setup = {
+				STRBUF_LEN, GFL_SKB_STRTYPE_STRBUF,
+				GFL_SKB_MODE_KATAKANA, TRUE, 0,
+				BG_FRAME_SKB_M, PLTID_BG_SKB01_M, PLTID_BG_SKB02_M,
+			};
+			for( i = 0; i < MSGDATA_MAX; i++ )
+			{	
+				p_wk->p_msg[i]	= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, PMS_SrcFileID[i], HEAPID_NAGI_DEBUG_SUB );
+			}
+			GFL_BG_SetVisible( BG_FRAME_BAR_M, FALSE );
+			p_wk->p_strbuf	= GFL_STR_CreateBuffer( STRBUF_LEN, HEAPID_NAGI_DEBUG_SUB );
+			p_wk->p_skb			= GFL_SKB_Create( (void*)(p_wk->p_strbuf), &setup, HEAPID_NAGI_DEBUG_SUB );
+			p_wk->p_search	= MSGSEARCH_Init( p_wk->p_msg, MSGDATA_MAX, HEAPID_NAGI_DEBUG_SUB );
+
+		}
+		*p_seq	= SEQ_MAIN;
+		break;
+
+	case SEQ_MAIN:
+		{	
+			BOOL is_search	= FALSE;
+			GflSkbReaction reaction = GFL_SKB_Main( p_wk->p_skb );
+			
+		 	switch( reaction ){
+			case GFL_SKB_REACTION_QUIT:
+				*p_seq	= SEQ_EXIT;
+				break;
+			case GFL_SKB_REACTION_INPUT:
+				break;
+			case GFL_SKB_REACTION_PAGE:
+				break;
+			case GFL_SKB_REACTION_NONE:
+				if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+					is_search = TRUE;
+				}
+				break;
+			}
+
+			if( is_search )
+			{	
+				u32	max;
+				int i;
+				STRBUF *p_str;
+
+				GFL_SKB_PickStr( p_wk->p_skb );
+
+				TICK_DRAW_PrintStart;
+				max	= MSGSEARCH_SearchAll( p_wk->p_search, p_wk->p_strbuf, p_wk->result_tbl, MSGSEARCH_RESULT_MAX );
+				//max	= MSGSEARCH_Search( p_wk->p_search, 0, 0, p_wk->p_strbuf, p_wk->result_tbl, MSGSEARCH_RESULT_MAX );
+				TICK_DRAW_PrintEnd;
+
+				NAGI_Printf( "検索最大数 max=%d\n", max );
+				NAGI_Printf( "検索文字=" );
+				DEBUG_STRBUF_Print( p_wk->p_strbuf );
+
+				for( i = 0; i < max; i++ )
+				{	
+					p_str	= MSGSEARCH_CreateString( p_wk->p_search, &p_wk->result_tbl[i] );
+					DEBUG_STRBUF_Print( p_str );
+					GFL_STR_DeleteBuffer( p_str );
+				}
+			}
+		}
+		break;
+
+	case SEQ_EXIT:
+
+		GFL_STR_DeleteBuffer( p_wk->p_strbuf );
+		MSGSEARCH_Exit( p_wk->p_search );
+		GFL_SKB_Delete( p_wk->p_skb );
+		{	
+			int i;
+			for( i = 0; i < MSGDATA_MAX; i++ )
+			{	
+				GFL_MSG_Delete( p_wk->p_msg[i] );
+			}
+		}
+		GFL_BG_SetVisible( BG_FRAME_BAR_M, TRUE );
+		SEQ_SetNext( p_seqwk, SEQFUNC_Main );
+		break;
+	}
+}

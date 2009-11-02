@@ -521,7 +521,8 @@ SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample/g3d_mapper.c \
 SRCS_OVERLAY_UI_COMMON = ui/ui_scene.c \
                          ui/ui_easy_clwk.c \
                          ui/touchbar.c \
-                         ui/print_tool.c
+                         ui/print_tool.c \
+												 ui/msgsearch.c
 
 # コンフィグ画面
 #===> SRCS_OVERLAY_UI_COMMON
