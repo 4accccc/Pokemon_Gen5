@@ -187,8 +187,7 @@ EVENT_END
 //主人公：乗車
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_ride_01
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_JUMP_U_1G_8F,1
+	_ANIME_DATA	AC_JUMP_U_2G_16F,1
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -205,8 +204,7 @@ EVENT_END
 //主人公：降車
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_getoff_01
-	_ANIME_DATA	AC_JUMP_D_1G_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_JUMP_D_2G_16F,1
 	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
@@ -570,6 +568,8 @@ EVENT_START	ev_bg_c04gym0101_statue_01
 	_TALK_OBJ_START()
 
 	_TALKWIN_OPEN()
+
+	_PLAYER_NAME( 0 )		//主人公名取得
 
 	//バッジフラグ取得
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_04 )
