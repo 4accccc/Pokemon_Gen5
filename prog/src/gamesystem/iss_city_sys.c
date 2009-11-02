@@ -200,7 +200,7 @@ void ISS_CITY_SYS_Off( ISS_CITY_SYS* sys )
 {
 	sys->isActive     = FALSE;
   sys->activeUnitNo = INVALID_UNIT_NO;
-  FIELD_SOUND_ChangeBGMActionVolume( MAX_VOLUME );
+  FIELD_SOUND_ChangeBGMActionVolume(0);
 
   // DEBUG:
   OBATA_Printf( "ISS-C: Off\n" );
