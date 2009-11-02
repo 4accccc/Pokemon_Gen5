@@ -81,12 +81,12 @@ FS_EXTERN_OVERLAY( bag );
  *	@param	GAMEDATA* gmData  ゲームデータ
  *	@param	ITEMCHECK_WORK* icwk アイテムチェックワーク
  *	@param	mode バッグ起動モード
+ *	@param  heap_id ヒープID
  *
  *	@retval BAG_PARAM* バッグパラメータ(ALLOC済み)
  */
 //-----------------------------------------------------------------------------
-extern BAG_PARAM* BAG_CreateParam( GAMEDATA* gmData, const ITEMCHECK_WORK* icwk, BAG_MODE mode );
-
+extern BAG_PARAM* BAG_CreateParam( GAMEDATA* gmData, const ITEMCHECK_WORK* icwk, BAG_MODE mode, HEAPID heap_id );
 
 
 

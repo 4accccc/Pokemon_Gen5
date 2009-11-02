@@ -40,18 +40,19 @@
  *	@param	GAMEDATA* gmData  ゲームデータ
  *	@param	ITEMCHECK_WORK* icwk アイテムチェックワーク
  *	@param	mode バッグ起動モード
+ *	@param  heap_id ヒープID
  *
  *	@retval BAG_PARAM* バッグパラメータ(ALLOC済み)
  */
 //-----------------------------------------------------------------------------
-BAG_PARAM* BAG_CreateParam( GAMEDATA* gmData, const ITEMCHECK_WORK* icwk, BAG_MODE mode )
+BAG_PARAM* BAG_CreateParam( GAMEDATA* gmData, const ITEMCHECK_WORK* icwk, BAG_MODE mode, HEAPID heap_id )
 {
   SAVE_CONTROL_WORK* saveControl;
   BAG_PARAM * bag;
 
   saveControl = GAMEDATA_GetSaveControlWork( gmData );
 
-  bag = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(BAG_PARAM));
+  bag = GFL_HEAP_AllocClearMemory( heap_id, sizeof(BAG_PARAM));
 
   bag->p_gamedata   = gmData;
   bag->p_config     = SaveData_GetConfig( saveControl );

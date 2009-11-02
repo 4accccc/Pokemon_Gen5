@@ -251,7 +251,7 @@ VMCMD_RESULT EvCmdCallBagProc( VMHANDLE *core, void *wk )
   }else{
     mode = BAG_MODE_FIELD;
   }
-  bp = BAG_CreateParam( SCRCMD_WORK_GetGameData( work ), NULL, mode );
+  bp = BAG_CreateParam( SCRCMD_WORK_GetGameData( work ), NULL, mode,  HEAPID_PROC );
   bcw = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(BAG_CALLBACK_WORK) );
   bcw->ret_mode = ret_mode;
   bcw->ret_item = ret_item;

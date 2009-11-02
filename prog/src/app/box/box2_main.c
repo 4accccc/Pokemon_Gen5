@@ -3435,7 +3435,7 @@ int BOX2MAIN_BagCall( BOX2_SYS_WORK * syswk )
 */
 //	FS_EXTERN_OVERLAY(bag);
 
-	BAG_PARAM * wk = BAG_CreateParam( syswk->dat->gamedata, NULL, BAG_MODE_POKELIST );
+	BAG_PARAM * wk = BAG_CreateParam( syswk->dat->gamedata, NULL, BAG_MODE_POKELIST, HEAPID_BOX_SYS );
 
 /*
 	wk = GFL_HEAP_AllocClearMemory( HEAPID_BOX_SYS, sizeof(BAG_PARAM) );
