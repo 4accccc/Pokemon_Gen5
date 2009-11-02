@@ -27,6 +27,7 @@
 
 // 最大音量
 #define MAX_VOLUME (127)
+#define INVALID_VOLUME (0xffff)
 
 
 //===========================================================================================
@@ -84,7 +85,7 @@ ISS_CITY_SYS* ISS_CITY_SYS_Create( PLAYER_WORK* p_player, HEAPID heap_id )
 	sys->pPlayer      = p_player;
 	sys->isActive     = FALSE;
 	sys->activeUnitNo = INVALID_UNIT_NO;
-  sys->volume       = MAX_VOLUME;
+  sys->volume       = INVALID_VOLUME;
 	sys->unitNum      = 0;
 	sys->unit         = NULL;
 
@@ -160,6 +161,8 @@ void ISS_CITY_SYS_ZoneChange( ISS_CITY_SYS* sys, u16 next_zone_id )
 		if( ISS_C_UNIT_GetZoneID( sys->unit[i] ) == next_zone_id )
 		{ 
 			sys->activeUnitNo = i;
+      sys->isActive = TRUE;
+      sys->volume = INVALID_VOLUME;
       // DEBUG:
       OBATA_Printf( "ISS-C: change unit index = %d\n", i );
 			return;
@@ -178,12 +181,8 @@ void ISS_CITY_SYS_ZoneChange( ISS_CITY_SYS* sys, u16 next_zone_id )
  */
 //------------------------------------------------------------------------------------------
 void ISS_CITY_SYS_On( ISS_CITY_SYS* sys )
-{
-	// すでに起動している場合, 何もしない
-  if( sys->isActive == TRUE ) return;
-
+{ 
   // 起動し, ISSユニットを更新する
-  sys->isActive = TRUE;
   ISS_CITY_SYS_ZoneChange( sys, PLAYERWORK_getZoneID( sys->pPlayer ) );
 
   // DEBUG:
@@ -201,7 +200,7 @@ void ISS_CITY_SYS_Off( ISS_CITY_SYS* sys )
 {
 	sys->isActive     = FALSE;
   sys->activeUnitNo = INVALID_UNIT_NO;
-  FIELD_SOUND_ChangeBGMActionVolume( 127 );  // デフォルトに戻す
+  FIELD_SOUND_ChangeBGMActionVolume( MAX_VOLUME );
 
   // DEBUG:
   OBATA_Printf( "ISS-C: Off\n" );
