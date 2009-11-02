@@ -25,21 +25,36 @@ class SEQNAMEConv < GmmRead
   
     ### ROWタグ文字列
   
-
+  
+  
 
   ##SEQからROWデータを作る
   def SeqRowAdd()
-    
+    gmmno = 0
     @ConvFileLineTmp = @TmplateFileLine
     #サウンドシーケンスのみ取り出し整形してgmmに出力
     @ConvFileLine.each{ |line|
     
       divline = line.split(nil)
       seqname = divline[1]
-
+      
       #「SEQ_」がついている定義名のみ取り出す
       if seqname=~/^SEQ_/ then
-
+        gmmend = divline[2].to_i
+        gmmend = gmmend - 1
+        for xn in gmmno..gmmend
+          
+tbufdmy = <<"EOFZ"
+          <row id="msg_seq_#{xn}">
+          <language name="JPN" width="256">dmy</language>
+          <language name="JPN_KANJI" width="256">dmy</language>
+          </row>
+EOFZ
+          tbufdmy = NKF.nkf("-w",tbufdmy)
+          @ConvFileLineTmp.push(tbufdmy)
+          
+        end
+        gmmno = divline[2].to_i + 1
         #出力用に名前を加工
         seqidname   = "msg_"+seqname.downcase
         msgstr  = seqname.sub(/SEQ_SE_/,"")

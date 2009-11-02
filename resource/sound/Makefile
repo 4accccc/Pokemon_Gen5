@@ -42,7 +42,7 @@ $(TARGETDIR)/$(TARGETFILENAME):	$(TARGETFILENAME)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 
-$(TARGETFILENAME) : wb_sound_data.sadl
+$(TARGETFILENAME) : wb_sound_data.sadl gmm_make.rb
 	ruby gmm_make.rb ../message/template.gmm wb_sound_data.sadl $(TARGETFILENAME)
 
 endif
