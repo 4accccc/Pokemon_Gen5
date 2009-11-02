@@ -23,11 +23,11 @@
 #ifndef ZONE_C02_EVC_H
 #define ZONE_C02_EVC_H
 
-#define C02_ACCORDION                      0
-#define C02_BACKPACKER                     1
-#define C02_WOMAN2                         2
-#define C02_MAN2                           3
-#define C02_MIDDLEWOMAN2                   4
+#define C02_ACCORDION_01                   0
+#define C02_BACKPACKER_01                  1
+#define C02_WOMAN2_01                      2
+#define C02_MAN2_01                        3
+#define C02_MIDDLEWOMAN2_01                4
 #define C02_LEADER02_01                    5
 #define C02_LEADER3_01                     6
 #define C02_RIVAL_02                       7

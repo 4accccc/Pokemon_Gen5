@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/01 12:16:31
+#save date:2009/11/02 18:55:17
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02R0601.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/01 12:16:31
+#save date:2009/11/02 18:55:17
 2
 #hold event type:
 1
@@ -14,7 +14,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02R0601.wms
 #type
 1
 #ID name
-C02R0601_WAITRESS
+C02R0601_WAITRESS_01
 #OBJ CODE Number
 WAITRESS
 #MOVE CODE Number
@@ -24,7 +24,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C02R0601_TALKOBJ_WAITRESS
+SCRID_C02R0601_WAITRESS_01
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
@@ -43,7 +43,7 @@ DIR_LEFT
 #type
 1
 #ID name
-C02R0601_BIGMAN
+C02R0601_BIGMAN_01
 #OBJ CODE Number
 MAN3
 #MOVE CODE Number
@@ -53,7 +53,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C02R0601_TALKOBJ_BIGMAN
+SCRID_C02R0601_BIGMAN_01
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
@@ -72,7 +72,7 @@ DIR_RIGHT
 #type
 1
 #ID name
-C02R0601_MIDDLEMAN2
+C02R0601_MIDDLEMAN2_01
 #OBJ CODE Number
 MIDDLEMAN2
 #MOVE CODE Number
@@ -82,7 +82,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C02R0601_TALKOBJ_MIDDLEMAN2
+SCRID_C02R0601_MIDDLEMAN2_01
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number
@@ -101,7 +101,7 @@ DIR_UP
 #type
 1
 #ID name
-C02R0601_WOMAN3
+C02R0601_WOMAN3_01
 #OBJ CODE Number
 WOMAN3
 #MOVE CODE Number
@@ -111,7 +111,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C02R0601_TALKOBJ_WOMAN3
+SCRID_C02R0601_WOMAN3_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -130,7 +130,7 @@ DIR_DOWN
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/01 12:16:31
+#save date:2009/11/02 18:55:17
 2
 #hold event type:
 1
@@ -140,7 +140,7 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/01 12:16:31
+#save date:2009/11/02 18:55:17
 2
 #hold event type:
 1
@@ -150,7 +150,7 @@ DIR_DOWN
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/01 12:16:31
+#save date:2009/11/02 18:55:17
 2
 #hold event type:
 1

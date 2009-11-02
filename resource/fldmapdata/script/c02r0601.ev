@@ -18,10 +18,10 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c02r0601_talkobj_waitress
-_EVENT_DATA    ev_c02r0601_talkobj_woman3
-_EVENT_DATA    ev_c02r0601_talkobj_middleman2
-_EVENT_DATA    ev_c02r0601_talkobj_bigman
+_EVENT_DATA    ev_c02r0601_waitress_01
+_EVENT_DATA    ev_c02r0601_woman3_01
+_EVENT_DATA    ev_c02r0601_middleman2_01
+_EVENT_DATA    ev_c02r0601_bigman_01
 _EVENT_DATA_END
 
 
@@ -34,39 +34,35 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C02R0601 WAITRESSの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c02r0601_talkobj_waitress
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c02r0601_waitress_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c02r0601_waitress_01
+  
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_waitress_01 )
+ 
 EVENT_END
 
 /**************************************************************/
 /*  C02R0601 WOMAN3の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c02r0601_talkobj_woman3
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c02r0601_woman3_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c02r0601_woman3_01
+  
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_woman3_01 )
+  
 EVENT_END
 
 /**************************************************************/
 /*  C02R0601 MIDDLEMAN2の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c02r0601_talkobj_middleman2
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c02r0601_middleman2_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c02r0601_middleman2_01
+
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_middleman2_01 )
+  
 EVENT_END
 
 /**************************************************************/
 /*  C02R0601 BIGMANの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c02r0601_talkobj_bigman
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c02r0601_bigman_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c02r0601_bigman_01
+  
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_bigman_01 )
+  
 EVENT_END

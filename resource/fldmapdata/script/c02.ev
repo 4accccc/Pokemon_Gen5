@@ -19,12 +19,12 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c02_talkobj_woman2
-_EVENT_DATA    ev_c02_talkobj_man2
-_EVENT_DATA    ev_c02_talkobj_middlewoman2
-_EVENT_DATA    ev_c02_talkobj_backpacker
-_EVENT_DATA    ev_c02_talkobj_accordion
-_EVENT_DATA    ev_c02_talkobj_sign1
+_EVENT_DATA    ev_c02_woman2_01
+_EVENT_DATA    ev_c02_man2_01
+_EVENT_DATA    ev_c02_middlewoman2_01
+_EVENT_DATA    ev_c02_backpacker_01
+_EVENT_DATA    ev_c02_accordion_01
+_EVENT_DATA    ev_c02_sign1_01
 _EVENT_DATA		ev_pos_c02_leader02_01
 _EVENT_DATA		ev_init_c02
 _EVENT_DATA		ev_c02_leader02_01
@@ -66,6 +66,8 @@ INIT_EVENT_END
 EVENT_START   ev_pos_c02_rival_01
 	
 	//ライバルを配置
+	//初期状態では、博物館前に配置されている（後のイベントで使用する為）
+	//ポスを踏んだとき、ポケセン案内イベントの位置に配置し直す。
 	_OBJ_POS_CHANGE( C02_RIVAL_02, 657, 0, 600, DIR_RIGHT )
 	
 	//主人公がライバルに気づく
@@ -246,15 +248,16 @@ EVENT_END
 //Nとの戦闘
 ev_boss_btl:
 
-	_TRAINER_BTL_SET( TRID_BOSS_02, 0 )
-	//敗戦チェック
-	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-	IF $SCWK_ANSWER == 0 THEN
-		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
-	ENDIF
-
+//戦闘処理
+		_TRAINER_BTL_SET ( TRID_BOSS_02, 0 )
+		//敗戦チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+		ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+		ENDIF	
 _RET
-EVENT_END
 
 //--------------------------------------------------------------------
 //主人公:画面外からやってくる、Nに気づく                             
@@ -664,72 +667,62 @@ _ANIME_LABEL	anm_support_back
 /**************************************************************/
 EVENT_START   ev_c02_leader02_01
 	
-	_TALK_OBJ_START()
-	//アロエ『こっちの　ほうには
-    _BALLOONWIN_OBJMSG_OPEN( msg_c02_leader2_07, C02_LEADER02_01 )
-    _LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02_leader2_07 )
 
 EVENT_END
 
 /**************************************************************/
 /*  C02 WOMAN2の会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c02_talkobj_woman2
-	_TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c02_woman2_01 )
-	_AB_KEYWAIT()
-  	_BALLOONWIN_CLOSE()
+EVENT_START   ev_c02_woman2_01
+
+  	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02_woman2_01 )
+
 EVENT_END
 
 /**************************************************************/
 /*  C02 MAN2の会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c02_talkobj_man2
-	_TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c02_man2_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c02_man2_01
+  
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02_man2_01 )
+  
 EVENT_END
 
 /**************************************************************/
 /*  C02 MIDDLEWOMAN2の会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c02_talkobj_middlewoman2
-	_TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c02_middlewoman2_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c02_middlewoman2_01
+  
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02_middlewoman2_01 )
+  
 EVENT_END
 
 /**************************************************************/
 /*  C02 BACKPAXKERWの会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c02_talkobj_backpacker
-	_TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c02_backpackerw_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c02_backpacker_01
+  
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02_backpackerw_01 )
+  
 EVENT_END
 
 /**************************************************************/
 /*  C02 ISSの会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c02_talkobj_accordion
-	_TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c02_accordion_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c02_accordion_01
+
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02_accordion_01 )
+
 EVENT_END
 
 /**************************************************************/
 /*  C02 SIGNの会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c02_talkobj_sign1
-	_TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c02_sign1_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c02_sign1_01
+
+  _EASY_MSG( msg_c02_sign1_01 )	//簡易メッセージＢＧ用
+
 EVENT_END
 
 

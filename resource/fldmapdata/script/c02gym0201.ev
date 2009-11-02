@@ -47,21 +47,9 @@ _EVENT_DATA    ev_bg_c02gym0201_category_21
 _EVENT_DATA    ev_bg_c02gym0201_category_22
 _EVENT_DATA    ev_bg_c02gym0201_category_23
 _EVENT_DATA    ev_bg_c02gym0201_category_24
-_EVENT_DATA  ev_c02gym0201_book_01a
-_EVENT_DATA  ev_c02gym0201_book_01b
-_EVENT_DATA  ev_c02gym0201_book_01c
 _EVENT_DATA  ev_c02gym0201_book_01d
-_EVENT_DATA  ev_c02gym0201_book_01e
-_EVENT_DATA  ev_c02gym0201_book_01f
-_EVENT_DATA  ev_c02gym0201_book_01g
 _EVENT_DATA  ev_c02gym0201_book_01h
-_EVENT_DATA  ev_c02gym0201_book_01i
-_EVENT_DATA  ev_c02gym0201_book_01j
-_EVENT_DATA  ev_c02gym0201_book_01k
 _EVENT_DATA  ev_c02gym0201_book_01l
-_EVENT_DATA  ev_c02gym0201_book_01m
-_EVENT_DATA  ev_c02gym0201_book_01n
-_EVENT_DATA  ev_c02gym0201_book_01o
 _EVENT_DATA  ev_c02gym0201_book_01p
 _EVENT_DATA  ev_init_c02gym0201
 _EVENT_DATA_END
@@ -132,9 +120,11 @@ INIT_EVENT_END
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
-ev_c02gym0201:
+INIT_EVENT_START	ev_c02gym0201
+
   //とりあえず最初のラベルだけ生成している
-  _END
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*     サングラス:おいしい水をくれる               　　　　　*/
@@ -399,7 +389,7 @@ EVENT_START		ev_c02gym0201_assitantm1_01
 	IF $WK_SCENE_C02GYM0201 <= 4 && FLAG_OFF( FE_C02GYM_TRBTL2) THEN
 		
 		//振り向きなし
-		_TALK_START_TURN_NOT()
+		_TALKWIN_OPEN()
 		
 		//前段階の本（カテゴリー3を読んでいない場合）
 		_TALKMSG   ( msg_c02gym0101_girl3_01)
@@ -505,7 +495,8 @@ EVENT_START		ev_c02gym0201_assitantm2_01
 	//前段階の本を読んでいない場合、本に夢中で本棚からどいてくれない		
 		
 		//振り向きなし
-		_TALK_START_TURN_NOT()
+		_TALKWIN_OPEN()
+		
 		//前段階の本（カテゴリー3を読んでいない場合）
 		_TALKMSG   ( msg_c02gym0101_assitantw_01)
     	
@@ -1479,57 +1470,6 @@ EVENT_START		 ev_bg_c02gym0201_category_24
 		
 	ENDIF
 	
-EVENT_END
-
-/**************************************************************/
-/*     仕掛け本棚_透明OBJ						    		 */
-/**************************************************************/
-//中身は作らない。当たり判定を持たす為だけのダミー
-EVENT_START	ev_c02gym0201_book_01a
-
-EVENT_END
-
-EVENT_START	ev_c02gym0201_book_01b
-
-EVENT_END
-
-EVENT_START	ev_c02gym0201_book_01c
-
-EVENT_END
-
-EVENT_START	ev_c02gym0201_book_01e
-
-EVENT_END
-
-EVENT_START	ev_c02gym0201_book_01f
-
-EVENT_END
-
-EVENT_START	ev_c02gym0201_book_01g
-
-EVENT_END
-
-EVENT_START	ev_c02gym0201_book_01i
-
-EVENT_END
-
-EVENT_START	ev_c02gym0201_book_01j
-
-EVENT_END
-
-EVENT_START	ev_c02gym0201_book_01k
-
-EVENT_END
-
-EVENT_START	ev_c02gym0201_book_01m
-
-EVENT_END
-
-EVENT_START	ev_c02gym0201_book_01n
-
-EVENT_END
-EVENT_START	ev_c02gym0201_book_01o
-
 EVENT_END
 
 //--------------------------------------------------------------------
