@@ -71,7 +71,7 @@ $(targetname).txt: Makefile $(IMD_FILE) $(MAP_MATRIX)
 else
 
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: Makefile $(BIN_FILE)
+$(targetname).txt: Makefile $(BIN_FILE)
 
 	ls *.bin > $(targetname).txt
 
