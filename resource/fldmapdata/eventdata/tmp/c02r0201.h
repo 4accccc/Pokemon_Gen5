@@ -12,7 +12,7 @@
 #ifndef ZONE_C02R0201_EVC_H
 #define ZONE_C02R0201_EVC_H
 
-#define C02R0201_MUSICIAN                  0
-#define C02R0201_BABYBOY1                  1
+#define C02R0201_MUSICIAN_01               0
+#define C02R0201_BABYBOY1_01               1
 
 #endif //ZONE_C02R0201_EVC_H

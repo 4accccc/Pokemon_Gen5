@@ -11,8 +11,8 @@
 #ifndef ZONE_R02_EVC_H
 #define ZONE_R02_EVC_H
 
-#define R02_BOY2                           0
-#define R02_GIRL2                          1
+#define R02_BOY2_01                        0
+#define R02_GIRL2_01                       1
 #define R02_RIVAL_01                       2
 #define R02_ROCK_01                        3
 #define R02_MAMA_01                        4

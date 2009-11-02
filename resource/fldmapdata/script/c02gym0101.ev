@@ -20,8 +20,8 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c02gym0101
-_EVENT_DATA    ev_c02gym0101_counter1_01
-_EVENT_DATA    ev_c02gym0101_counter2_01
+_EVENT_DATA    ev_c02gym0101_informationw_01
+_EVENT_DATA    ev_c02gym0101_informationw_02
 _EVENT_DATA    ev_c02gym0101_ad_01
 _EVENT_DATA    ev_c02gym0101_suppot_01
 _EVENT_DATA    ev_c02gym0101_rival_01
@@ -77,7 +77,7 @@ ev_c02gym0101:
 /**************************************************************/
 /*     博物館受付嬢 1                　　　　　　　　　　　　　*/
 /**************************************************************/
-EVENT_START		 ev_c02gym0101_counter1_01
+EVENT_START		 ev_c02gym0101_informationw_01
 	
 	//盗難イベント中？
 	IF FLAG_ON( FE_MUSEUM_TOUNAN ) THEN
@@ -98,7 +98,7 @@ EVENT_END
 /**************************************************************/
 /*     博物館受付嬢 2                　　　　　　　　　　　　　*/
 /**************************************************************/
-EVENT_START		ev_c02gym0101_counter2_01
+EVENT_START		ev_c02gym0101_informationw_02
 	
 	//盗難イベント中？
 	IF FLAG_ON( FE_MUSEUM_TOUNAN ) THEN
@@ -119,6 +119,7 @@ EVENT_END
 /**************************************************************/
 /*     副館長												　*/
 /**************************************************************/
+//【仮】副館長のOBJコードは仮。イベント命名も仮です。
 EVENT_START		ev_c02gym0101_ad_01
 	
 	//バッジを入手しているかどうか、チェック
@@ -152,7 +153,7 @@ EVENT_END
 EVENT_START		ev_pos_c02gym0101_ad_01
 
 	//博物館案内イベント
-	
+		
 		//うーむ！　この　骨格標本は　いつみても……　ホレボレしますな
 		_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_ad_01, C02GYM0101_AD_01 )
 		
@@ -176,9 +177,6 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		
 		//どうも　わたくし　副館長の　？？？　です　せっかく　いたしたのです～
 		_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_ad_02, C02GYM0101_AD_01 )
-		_TIME_WAIT  ( 8 ) 
-		_OBJ_ANIME_WAIT()
-		
 		_BALLOONWIN_CLOSE()
 		
 		//副館長：主人公の前まで来る
@@ -203,9 +201,6 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		//副館長：骨（大）の説明
 		//骨格……　大昔の　ポケモン……
 		_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_ad_03, C02GYM0101_AD_01 )
-		_TIME_WAIT  ( 8 ) 
-		_OBJ_ANIME_WAIT()
-		
 		_BALLOONWIN_CLOSE()
 		
 		//副館長：展示物（隕石）まで移動
@@ -218,9 +213,6 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		//副館長：隕石の説明
 		//この　石は　すごいですよ
 		_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_ad_04, C02GYM0101_AD_01 )
-		_TIME_WAIT  ( 8 ) 
-		_OBJ_ANIME_WAIT()
-		
 		_BALLOONWIN_CLOSE()
 		
 		//副館長：展示物（石）まで移動
@@ -233,9 +225,6 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		//副館長：石の説明
 		//ああ　こちらは　ただの　ふるいいし　です
 		_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_ad_05, C02GYM0101_AD_01 )
-		_TIME_WAIT  ( 8 ) 
-		_OBJ_ANIME_WAIT()
-		
 		_BALLOONWIN_CLOSE()
 		
 		//副館長：ジムまで移動
@@ -248,8 +237,6 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		//副館長：ジムの説明
 		//あの扉の　先が　ポケモンジムと　なっております
 		_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_ad_06, C02GYM0101_AD_01 )
-		_TIME_WAIT  ( 8 ) 
-		
 		_BALLOONWIN_CLOSE()
 		
 		//==============フラグワーク操作==============//

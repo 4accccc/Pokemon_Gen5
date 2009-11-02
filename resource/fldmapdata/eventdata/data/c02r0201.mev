@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/05 18:52:07
+#save date:2009/11/02 21:00:43
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02R0201.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/05 18:52:07
+#save date:2009/11/02 21:00:43
 2
 #hold event type:
 1
@@ -14,7 +14,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02R0201.wms
 #type
 1
 #ID name
-C02R0201_MUSICIAN
+C02R0201_MUSICIAN_01
 #OBJ CODE Number
 MUSICIAN
 #MOVE CODE Number
@@ -43,7 +43,7 @@ DIR_UP
 #type
 1
 #ID name
-C02R0201_BABYBOY1
+C02R0201_BABYBOY1_01
 #OBJ CODE Number
 BABYBOY1
 #MOVE CODE Number
@@ -72,7 +72,7 @@ DIR_DOWN
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/05 18:52:07
+#save date:2009/11/02 21:00:43
 2
 #hold event type:
 1
@@ -82,7 +82,7 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/05 18:52:07
+#save date:2009/11/02 21:00:43
 2
 #hold event type:
 1
@@ -92,7 +92,7 @@ DIR_DOWN
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/05 18:52:07
+#save date:2009/11/02 21:00:43
 2
 #hold event type:
 1
