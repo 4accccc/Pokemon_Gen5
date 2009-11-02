@@ -74,11 +74,8 @@ $(targetname).narc: Makefile $(BINDATA) $(BIN2DATA) $(BINLIST)
 #------------------------------------------------------------------------------
 clean:
 	@$(MAKE_SUBDIR)
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
-	rm -f *.bin
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
-endif
 	rm -f $(TARGETDIR)/$(targetname).narc
 	rm -f $(TARGETDIR)/$(targetname).naix
 
