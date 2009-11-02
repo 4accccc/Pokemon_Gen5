@@ -252,8 +252,8 @@ u32 MSGSEARCH_SearchNum( const MSGSEARCH_WORK *cp_wk, const STRBUF *cp_buf )
 //-----------------------------------------------------------------------------
 STRBUF *MSGSEARCH_CreateString( const MSGSEARCH_WORK *cp_wk, const MSGSEARCH_RESULT *cp_result )
 {	
-	GF_ASSERT_MSG( 0 <= cp_result_tbl->msg_idx && cp_result_tbl->msg_idx < cp_wk->msg_max, "登録されたメッセージテーブルをオーバーしています　%d < %d", cp_result_tbl->msg_idx, cp_wk->msg_max );
-	return	GFL_MSG_CreateString( cp_wk->p_msg_tbl[ cp_result_tbl->msg_idx ], cp_result_tbl->str_idx );
+	GF_ASSERT_MSG( 0 <= cp_result->msg_idx && cp_result->msg_idx < cp_wk->msg_max, "登録されたメッセージテーブルをオーバーしています　%d < %d", cp_result->msg_idx, cp_wk->msg_max );
+	return	GFL_MSG_CreateString( cp_wk->p_msg_tbl[ cp_result->msg_idx ], cp_result->str_idx );
 }
 
 //----------------------------------------------------------------------------
@@ -267,8 +267,8 @@ STRBUF *MSGSEARCH_CreateString( const MSGSEARCH_WORK *cp_wk, const MSGSEARCH_RES
 //-----------------------------------------------------------------------------
 void MSGSEARCH_GetString( const MSGSEARCH_WORK *cp_wk, const MSGSEARCH_RESULT *cp_result, STRBUF *p_str )
 {	
-	GF_ASSERT_MSG( 0 <= cp_result_tbl->msg_idx && cp_result_tbl->msg_idx < cp_wk->msg_max, "登録されたメッセージテーブルをオーバーしています　%d < %d", cp_result_tbl->msg_idx, cp_wk->msg_max );
-	GFL_MSG_GetString( cp_wk->p_msg_tbl[ cp_result_tbl->msg_idx ], cp_result_tbl->str_idx, p_str );
+	GF_ASSERT_MSG( 0 <= cp_result->msg_idx && cp_result->msg_idx < cp_wk->msg_max, "登録されたメッセージテーブルをオーバーしています　%d < %d", cp_result->msg_idx, cp_wk->msg_max );
+	GFL_MSG_GetString( cp_wk->p_msg_tbl[ cp_result->msg_idx ], cp_result->str_idx, p_str );
 }
 //=============================================================================
 /**
