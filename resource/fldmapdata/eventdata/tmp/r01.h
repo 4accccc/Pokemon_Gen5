@@ -11,7 +11,7 @@
 #define R01_GIRL1_01                       0
 #define R01_MAN1_01                        1
 #define R01_RIVAL_01                       2
-#define R01_HEROINE_01                     3
+#define R01_SUPPORT_01                     3
 #define R01_HAKASE2_01                     4
 #define R01_PRINCE_01                      5
 #define R01_SUPPORT_02                     6

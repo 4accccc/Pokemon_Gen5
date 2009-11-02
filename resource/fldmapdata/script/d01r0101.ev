@@ -162,8 +162,13 @@ ev_d01r0101_pokecount:
 		IF $POKE_COUNT == 6 THEN
 			_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_03,D01R0101_GIRL_01)
 			_BALLOONWIN_CLOSE()
+			
+			//======================================//
+			
 			//1回目の会話は繰り返さない用フラグ
 			$WK_SCENE_D01R0101 = 1
+			
+			//======================================//
 				
 		ELSE
 		//手持ちに空きがあれば持ちタイプに合わせてポケモンを渡す
@@ -223,8 +228,13 @@ ev_d01r0101_pokecount:
 			_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_10,D01R0101_GIRL_01)
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
+			
+			//======================================//
+			
 			//対策ポケモン受け取り済フラグ
 			$WK_SCENE_D01R0101 = 2
+			
+			//======================================//
 		ENDIF
 		}
 
@@ -233,8 +243,13 @@ ev_d01r0101_pokecount:
 		_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_04,D01R0101_GIRL_01)
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
+		
+		//======================================//
+		
 		//1回目の会話は繰り返さない用フラグ
 		$WK_SCENE_D01R0101 = 1
+		
+		//======================================//
 	
 	ENDIF
 
@@ -262,8 +277,17 @@ EVENT_START   ev_pos_d01r0101_support_01
 	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_02)
 	_OBJ_ANIME_WAIT()
 	
+	//======================================//
+	
 	//ポケモンの鳴き声に気づくPOS起動
-	$WK_SCENE_D01R0101 = 3
+	$WK_SCENE_D01R0101_POKE = 1
+	
+	//D01R0101夢ポケモンイベントOBJ表示
+	_FLAG_RESET( FV_D01R0101_POKE_01 )
+	_OBJ_ADD(D01R0101_POKE_01)
+	
+	
+	//======================================//
 
 EVENT_END
 
@@ -275,19 +299,19 @@ EVENT_START   ev_d01r0101_support_02
 	//状況ごとに話すことを変える
 
 	//イベント進行前
-	IF $WK_SCENE_D01R0101 == 3 THEN
+	IF $WK_SCENE_D01R0101_POKE == 1 THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d01r0101_white_02)
 
 	//物音に気づいた後
-	ELSIF $WK_SCENE_D01R0101 == 4 THEN
+	ELSIF $WK_SCENE_D01R0101_POKE == 2 THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d01r0101_white_03)
 
 	//夢アイテム取得前
-	ELSIF $WK_SCENE_D01R0101 == 5 THEN
+	ELSIF $WK_SCENE_D01R0101_POKE == 3 THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d01r0101_white_04)
 
 	//夢アイテム取得後
-	ELSIF $WK_SCENE_D01R0101 == 6 THEN
+	ELSIF $WK_SCENE_D01R0101_POKE == 4 THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d01r0101_white_05)
 
 	//例外処理では夢の話をする
@@ -309,8 +333,12 @@ EVENT_START   ev_pos_d01r0101_support_03
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
+	//======================================//
+	
 	//ポケモンの鳴き声を聞くPOS起動
-	$WK_SCENE_D01R0101 = 4
+	$WK_SCENE_D01R0101_POKE = 2
+	
+	//======================================//
 
 EVENT_END
 
@@ -328,13 +356,15 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_OBJ_ANIME(D01R0101_POKE_01,anm_d01r0101_pokemon_01)
 	_OBJ_ANIME_WAIT()
 	
+	//======================================//
 	//だいじなもの出現
 	_FLAG_RESET(FV_D01R0101_ITEM_01)
 	_OBJ_ADD(D01R0101_ITEM_01)
 	
+	//======================================//
+	
 	//夢ポケモン非表示
 	_OBJ_DEL(D01R0101_POKE_01)
-	_FLAG_SET(FV_D01R0101_POKE_01)
 	
 	//サポートアイテムについて話す
 	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_04)
@@ -343,8 +373,15 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
+	//======================================//
+	
 	//アイテム拾う前フラグ起動
-	$WK_SCENE_D01R0101 = 5
+	$WK_SCENE_D01R0101_POKE = 3
+	
+	//夢ポケモン非表示
+	_FLAG_SET(FV_D01R0101_POKE_01)
+	
+	//======================================//
 
 EVENT_END
 
@@ -358,7 +395,6 @@ EVENT_START   ev_d01r0101_item_01
 
 	//【仮】アイテム入手処理仮：だいじなもの非表示
 	_OBJ_DEL(D01R0101_ITEM_01)
-	_FLAG_RESET(D01R0101_ITEM_01)
 
 	//サポート駆け寄って来る
 	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_05)
@@ -366,9 +402,17 @@ EVENT_START   ev_d01r0101_item_01
 	_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_white_05,D01R0101_SUPPORT)
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
+	
+	//======================================//
 
 	//夢イベント終了フラグ起動
-	$WK_SCENE_D01R0101 = 6
+	$WK_SCENE_D01R0101_POKE = 4
+	
+	//夢アイテム非表示
+	_FLAG_RESET(D01R0101_ITEM_01)
+	
+	//======================================//
+	
 EVENT_END
 
 //--------------------------------------------------------------

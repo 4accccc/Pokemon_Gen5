@@ -124,14 +124,14 @@ ev_dummy_end:
 	_BALLOONWIN_CLOSE()
 
 //サポート、アニメ＋メッセージ
-	_BALLOONWIN_OBJMSG_OPEN( msg_r01_white_01,R01_HEROINE_01 )
+	_BALLOONWIN_OBJMSG_OPEN( msg_r01_white_01,R01_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
 
-	_OBJ_ANIME( R01_HEROINE_01,anm_R01_pokeget5 )
+	_OBJ_ANIME( R01_SUPPORT_01,anm_R01_pokeget5 )
 	_OBJ_ANIME_WAIT()
 
 	_PLAYER_NAME( 0 ) //プレイヤー名を反映
-	_BALLOONWIN_OBJMSG_OPEN( msg_r01_white_02,R01_HEROINE_01 )
+	_BALLOONWIN_OBJMSG_OPEN( msg_r01_white_02,R01_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
 
 //ライバル
@@ -139,7 +139,7 @@ ev_dummy_end:
 	_BALLOONWIN_CLOSE()
 
 //サポート
-	_BALLOONWIN_OBJMSG_OPEN( msg_r01_white_03,R01_HEROINE_01 )
+	_BALLOONWIN_OBJMSG_OPEN( msg_r01_white_03,R01_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
 
 //ライバル
@@ -147,16 +147,16 @@ ev_dummy_end:
 	_BALLOONWIN_CLOSE()
 
 //サポート
-	_BALLOONWIN_OBJMSG_OPEN( msg_r01_white_04,R01_HEROINE_01 ) //本来であればポケモン名
+	_BALLOONWIN_OBJMSG_OPEN( msg_r01_white_04,R01_SUPPORT_01 ) //本来であればポケモン名
 	_BALLOONWIN_CLOSE()
 
 //ライバル、サポート退場アニメ
 	_OBJ_ANIME( R01_RIVAL_01,anm_R01_pokeget6 )
-	_OBJ_ANIME( R01_HEROINE_01,anm_R01_pokeget7 )
+	_OBJ_ANIME( R01_SUPPORT_01,anm_R01_pokeget7 )
 	_OBJ_ANIME_WAIT()
 
 	_OBJ_DEL( R01_RIVAL_01 )
-	_OBJ_DEL( R01_HEROINE_01 )
+	_OBJ_DEL( R01_SUPPORT_01 )
 
 //==================================//
 

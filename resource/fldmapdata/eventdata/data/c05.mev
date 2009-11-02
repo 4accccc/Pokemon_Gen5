@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/29 22:03:05
+#save date:2009/11/02 18:39:47
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c05.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/29 22:03:05
+#save date:2009/11/02 18:39:47
 2
 #hold event type:
 1
@@ -486,7 +486,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C05_BUSINESSMAN_01
 #Event Script Name
 SCRID_C05_BUSINESSMAN_01
 #Direction Type Number
@@ -507,7 +507,7 @@ DIR_DOWN
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/29 22:03:05
+#save date:2009/11/02 18:39:47
 2
 #hold event type:
 1
@@ -517,7 +517,7 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/29 22:03:05
+#save date:2009/11/02 18:39:47
 2
 #hold event type:
 1
@@ -572,7 +572,7 @@ WK_SCENE_C05_TOBRIDGE
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/29 22:03:05
+#save date:2009/11/02 18:39:47
 2
 #hold event type:
 1
