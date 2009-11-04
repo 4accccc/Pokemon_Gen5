@@ -84,7 +84,7 @@ EVENT_START    ev_pos_d02_stop
 	//============フラグワーク操作=============//
 
 	//アーティ、バニッシュフラグセット
-	_FLAG_SET( FV_D02_LEADER2 )
+	_FLAG_SET( FV_D02_LEADER3 )
 
 	//アーティストッパーイベント終了
 	$WK_SCENE_D02 = 1
