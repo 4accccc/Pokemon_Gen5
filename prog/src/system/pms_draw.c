@@ -50,6 +50,7 @@ typedef struct {
   u32  obj_nce;
 } PMS_DRAW_OBJ;
 
+
 //--------------------------------------------------------------
 ///	メインワーク
 //==============================================================
@@ -122,7 +123,7 @@ PMS_DRAW_WORK* PMS_DRAW_Init( GFL_CLUNIT* clunit, CLSYS_DRAW_TYPE vram_type, PRI
   wk->font        = font;
   wk->unit_num    = id_max;
 
-  // ユニット初期化
+  // 表示ユニットメモリ確保
   wk->unit = GFL_HEAP_AllocClearMemory( heap_id, sizeof(PMS_DRAW_UNIT) *id_max );
   GFL_STD_MemClear( wk->unit, sizeof(PMS_DRAW_UNIT) * id_max );
 
