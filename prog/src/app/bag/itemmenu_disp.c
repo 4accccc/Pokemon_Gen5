@@ -1725,7 +1725,7 @@ BOOL ITEMDISP_MessageEndCheck(FIELD_ITEMMENU_WORK* pWork)
       pWork->pStream = NULL;
       break;
     case PRINTSTREAM_STATE_PAUSE:
-      if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
+      if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE || GFL_UI_TP_GetTrg() ){
         PRINTSYS_PrintStreamReleasePause( pWork->pStream );
       }
       break;

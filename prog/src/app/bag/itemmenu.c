@@ -534,7 +534,6 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
       {
         GFL_SOUND_PlaySE( SE_BAG_SRIDE );
       }
-
     }
 
     KTST_SetDraw( pWork, FALSE );
@@ -1785,6 +1784,7 @@ static void InputNum_ButtonState( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
     GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[ BAR_ICON_LEFT ],  BAR_ICON_ANM_LEFT );
     GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[ BAR_ICON_RIGHT ], BAR_ICON_ANM_RIGHT );
     GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[ BAR_ICON_EXIT ],  BAR_ICON_ANM_EXIT );
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[ BAR_ICON_CHECK_BOX ],  BAR_ICON_ANM_CHECKBOX );
   }
   else
   {
@@ -1793,9 +1793,10 @@ static void InputNum_ButtonState( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
     // ソートボタン
     GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 4 );
     // バーアイコン各種
-    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[ BAR_ICON_LEFT ],  BAR_ICON_ANM_LEFT_OFF );
-    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[ BAR_ICON_RIGHT ], BAR_ICON_ANM_RIGHT_OFF );
-    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[ BAR_ICON_EXIT ],  BAR_ICON_ANM_EXIT_OFF );
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[ BAR_ICON_LEFT ],      BAR_ICON_ANM_LEFT_OFF );
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[ BAR_ICON_RIGHT ],     BAR_ICON_ANM_RIGHT_OFF );
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[ BAR_ICON_EXIT ],      BAR_ICON_ANM_EXIT_OFF );
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[ BAR_ICON_CHECK_BOX ], BAR_ICON_ANM_CHECKBOX_OFF );
   }
 }
 
