@@ -53,10 +53,15 @@
 	@echo convert ncg_imd girl1
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/girl1.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
 
-#hakase2.imd
-./mmdl_res/hakase2.imd: ./mmdl_nchara/hakase2.ncg ./mmdl_nchara/hakase2.ncl
-	@echo convert ncg_imd hakase2
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/hakase2.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+#oldman1.imd
+./mmdl_res/oldman1.imd: ./mmdl_nchara/oldman1.ncg ./mmdl_nchara/oldman1.ncl
+	@echo convert ncg_imd oldman1
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/oldman1.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+
+#oldwoman1.imd
+./mmdl_res/oldwoman1.imd: ./mmdl_nchara/oldwoman1.ncg ./mmdl_nchara/oldwoman1.ncl
+	@echo convert ncg_imd oldwoman1
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/oldwoman1.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
 
 #shopm1.imd
 ./mmdl_res/shopm1.imd: ./mmdl_nchara/shopm1.ncg ./mmdl_nchara/shopm1.ncl
@@ -73,10 +78,30 @@
 	@echo convert ncg_imd pcwoman2
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pcwoman2.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
 
+#pcwoman3.imd
+./mmdl_res/pcwoman3.imd: ./mmdl_nchara/pcwoman3.ncg ./mmdl_nchara/pcwoman3.ncl
+	@echo convert ncg_imd pcwoman3
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pcwoman3.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+
+#wifism.imd
+./mmdl_res/wifism.imd: ./mmdl_nchara/wifism.ncg ./mmdl_nchara/wifism.ncl
+	@echo convert ncg_imd wifism
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/wifism.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+
 #wifisw.imd
 ./mmdl_res/wifisw.imd: ./mmdl_nchara/wifisw.ncg ./mmdl_nchara/wifisw.ncl
 	@echo convert ncg_imd wifisw
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/wifisw.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+
+#hakase1.imd
+./mmdl_res/hakase1.imd: ./mmdl_nchara/hakase1.ncg ./mmdl_nchara/hakase1.ncl
+	@echo convert ncg_imd hakase1
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/hakase1.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+
+#hakase2.imd
+./mmdl_res/hakase2.imd: ./mmdl_nchara/hakase2.ncg ./mmdl_nchara/hakase2.ncl
+	@echo convert ncg_imd hakase2
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/hakase2.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
 
 #tree.imd
 ./mmdl_res/tree.imd: ./mmdl_nchara/tree.ncg ./mmdl_nchara/tree.ncl
