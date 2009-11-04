@@ -1054,7 +1054,7 @@ FLDMENUFUNC * FLDMENUFUNC_AddMenu( FLDMSGBG *fmb,
  * @param	pMenuListData  FLDMENUFUNC_LISTDATA* Delete時に自動開放される
  * @param list_pos リスト初期位置
  * @param cursor_pos カーソル初期位置
- * @param cancel TRUE=キャンセル不可
+ * @param cancel TRUE=キャンセル可
  * @retval	FLDMENUFUNC*
  * @note メニューカラーは派生ウィンドウのカラーを継続する
  */
@@ -1361,10 +1361,11 @@ FLDMENUFUNC * FLDMENUFUNC_AddYesNoMenu(
 	FLDMENUFUNC_InputHeaderListSize( &menuH, max, 24, 10, 7, 4 );
   menuFunc = fldmenufunc_AddMenuList( fmb, &menuH, listData,
       0, cursor_pos, fmb->deriveWin_plttNo );
-#if 0
-  BmpMenuList_SetCancelMode( //Bキャンセル無効に
+  
+#if 0 //Bキャンセル無効
+  BmpMenuList_SetCancelMode(
       menuFunc->pMenuListWork, BMPMENULIST_CANCELMODE_NOT );
-#else
+#else //Bキャンセル有効
   BmpMenuList_SetCancelMode(
       menuFunc->pMenuListWork, BMPMENULIST_CANCELMODE_USE );
 #endif
@@ -1383,8 +1384,12 @@ FLDMENUFUNC_YESNO FLDMENUFUNC_ProcYesNoMenu( FLDMENUFUNC *menuFunc )
 {
   u32 ret = FLDMENUFUNC_ProcMenu( menuFunc );
   
-  if( ret == FLDMENUFUNC_NULL || ret == FLDMENUFUNC_CANCEL ){
-    return( FLDMENUFUNC_YESNO_NULL ); //無し or B押しは無効
+  if( ret == FLDMENUFUNC_NULL ){
+    return( FLDMENUFUNC_YESNO_NULL ); //無し
+  }
+  
+  if( ret == FLDMENUFUNC_CANCEL ){ //キャンセルはNOに
+    return( FLDMENUFUNC_YESNO_NO );
   }
   
   return( ret );
