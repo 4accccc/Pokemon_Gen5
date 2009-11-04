@@ -200,7 +200,6 @@ void PMSIV_SUB_Delete( PMSIV_SUB* wk )
 //------------------------------------------------------------------
 void PMSIV_SUB_SetupGraphicDatas( PMSIV_SUB* wk, ARCHANDLE* p_handle )
 {
-//	ArcUtil_HDL_ScrnSet( p_handle, NARC_pmsi_bg_sub_lz_nscr, wk->bgl, FRM_SUB_BG, 0, 0, TRUE, HEAPID_PMS_INPUT_VIEW );
 	GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_pmsi_pms_bg_sub_NSCR, FRM_SUB_BG, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 	
 	load_scrn_datas( wk, p_handle );
@@ -252,8 +251,7 @@ static void load_scrn_datas( PMSIV_SUB* wk, ARCHANDLE* p_handle )
 
 	for(i=0; i<NELEMS(dat_id); i++)
 	{
-//		loadPtr = ArcUtil_HDL_ScrnDataGet(p_handle, dat_id[i], TRUE, &scrnData, HEAPID_PMS_INPUT_VIEW);
-		loadPtr = GFL_ARCHDL_UTIL_LoadScreen( p_handle, dat_id[i], FALSE, &scrnData, HEAPID_PMS_INPUT_VIEW);
+		loadPtr = GFL_ARCHDL_UTIL_LoadScreen( p_handle, dat_id[i], FALSE, &scrnData, HEAPID_PMS_INPUT_VIEW );
 		if( loadPtr )
 		{
 			MI_CpuCopy16( scrnData->rawData, wk->button_scrn[i], MODEBUTTON_SCRN_SIZE*2 );

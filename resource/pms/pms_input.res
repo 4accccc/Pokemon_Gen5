@@ -260,13 +260,6 @@ static const u16 PMS_CategoryTable_01[] = {
 	 152,	//チコリータ
 	 308,	//チャーレム
 	 510,	//チュリネ
-	PMS_WORDID_END
-};
-
-#define  PMS_Category_01_MaxNum	(242)
-
-// ポケモン２
-static const u16 PMS_CategoryTable_02[] = {
 	 170,	//チョンチー
 	 526,	//チラーミィ
 	 527,	//チラチーノ
@@ -608,10 +601,10 @@ static const u16 PMS_CategoryTable_02[] = {
 	PMS_WORDID_END
 };
 
-#define  PMS_Category_02_MaxNum	(338)
+#define  PMS_Category_01_MaxNum	(580)
 
 // わざ
-static const u16 PMS_CategoryTable_03[] = {
+static const u16 PMS_CategoryTable_02[] = {
 	 668,	//１０まんボルト
 	 942,	//アームハンマー
 	 814,	//アイアンテール
@@ -899,13 +892,6 @@ static const u16 PMS_CategoryTable_03[] = {
 	 716,	//ドわすれ
 	 952,	//とんぼがえり
 	 684,	//ナイトヘッド
-	PMS_WORDID_END
-};
-
-#define  PMS_Category_03_MaxNum	(287)
-
-// わざ２
-static const u16 PMS_CategoryTable_04[] = {
 	 628,	//なきごえ
 	 957,	//なげつける
 	 886,	//なまける
@@ -1086,10 +1072,10 @@ static const u16 PMS_CategoryTable_04[] = {
 	PMS_WORDID_END
 };
 
-#define  PMS_Category_04_MaxNum	(177)
+#define  PMS_Category_02_MaxNum	(464)
 
 // ステータス
-static const u16 PMS_CategoryTable_05[] = {
+static const u16 PMS_CategoryTable_03[] = {
 	1184,	//アイスボディ
 	1068,	//あく
 	1070,	//あくしゅう
@@ -1231,10 +1217,10 @@ static const u16 PMS_CategoryTable_05[] = {
 	PMS_WORDID_END
 };
 
-#define  PMS_Category_05_MaxNum	(138)
+#define  PMS_Category_03_MaxNum	(138)
 
 // トレーナー
-static const u16 PMS_CategoryTable_06[] = {
+static const u16 PMS_CategoryTable_04[] = {
 	1193,	//あいしょう
 	1194,	//いちばん
 	1195,	//かくご
@@ -1276,10 +1262,10 @@ static const u16 PMS_CategoryTable_06[] = {
 	PMS_WORDID_END
 };
 
-#define  PMS_Category_06_MaxNum	(38)
+#define  PMS_Category_04_MaxNum	(38)
 
 // ひと
-static const u16 PMS_CategoryTable_07[] = {
+static const u16 PMS_CategoryTable_05[] = {
 	1231,	//あいて
 	1232,	//あたし
 	1233,	//あなた
@@ -1321,10 +1307,10 @@ static const u16 PMS_CategoryTable_07[] = {
 	PMS_WORDID_END
 };
 
-#define  PMS_Category_07_MaxNum	(38)
+#define  PMS_Category_05_MaxNum	(38)
 
 // あいさつ
-static const u16 PMS_CategoryTable_08[] = {
+static const u16 PMS_CategoryTable_06[] = {
 	1375,	//……
 	1275,	//あーあ
 	1276,	//あーん
@@ -1435,10 +1421,10 @@ static const u16 PMS_CategoryTable_08[] = {
 	PMS_WORDID_END
 };
 
-#define  PMS_Category_08_MaxNum	(107)
+#define  PMS_Category_06_MaxNum	(107)
 
 // せいかつ
-static const u16 PMS_CategoryTable_09[] = {
+static const u16 PMS_CategoryTable_07[] = {
 	1376,	//アイドル
 	1377,	//あした
 	1378,	//あそび
@@ -1546,10 +1532,10 @@ static const u16 PMS_CategoryTable_09[] = {
 	PMS_WORDID_END
 };
 
-#define  PMS_Category_09_MaxNum	(104)
+#define  PMS_Category_07_MaxNum	(104)
 
 // きもち
-static const u16 PMS_CategoryTable_10[] = {
+static const u16 PMS_CategoryTable_08[] = {
 	1486,	//ありがとう
 	1485,	//うれしい
 	1483,	//がんばれ！
@@ -1563,10 +1549,10 @@ static const u16 PMS_CategoryTable_10[] = {
 	PMS_WORDID_END
 };
 
-#define  PMS_Category_10_MaxNum	(10)
+#define  PMS_Category_08_MaxNum	(10)
 
 // なんかいことば
-static const u16 PMS_CategoryTable_11[] = {
+static const u16 PMS_CategoryTable_09[] = {
 	1490,	//アースカラー
 	1491,	//インプラント
 	1492,	//おうごんひ
@@ -1602,10 +1588,10 @@ static const u16 PMS_CategoryTable_11[] = {
 	PMS_WORDID_END
 };
 
-#define  PMS_Category_11_MaxNum	(32)
+#define  PMS_Category_09_MaxNum	(32)
 
 // ユニオン
-static const u16 PMS_CategoryTable_12[] = {
+static const u16 PMS_CategoryTable_10[] = {
 	1530,	//おえかき
 	1532,	//ゲット
 	1528,	//コロシアム
@@ -1632,7 +1618,7 @@ static const u16 PMS_CategoryTable_12[] = {
 	PMS_WORDID_END
 };
 
-#define  PMS_Category_12_MaxNum	(23)
+#define  PMS_Category_10_MaxNum	(23)
 
 //----------------------------------------------------------------
 /**

@@ -37,7 +37,10 @@ enum {
 	FRM_MAIN_CATEGORY =  GFL_BG_FRAME1_M,
 	FRM_MAIN_WORDWIN  =  GFL_BG_FRAME2_M,
 	FRM_MAIN_BUTTON   =  GFL_BG_FRAME0_M,
-	FRM_MAIN_BACK	  =  GFL_BG_FRAME3_M,
+
+	FRM_MAIN_BACK	    = GFL_BG_FRAME3_M,
+  FRM_MAIN_BAR      = FRM_MAIN_BACK,
+  FRM_MAIN_TASKMENU = FRM_MAIN_WORDWIN,
 
 	FRM_SUB_EDITAREA = GFL_BG_FRAME0_S,
 	FRM_SUB_BG = GFL_BG_FRAME1_S,
@@ -55,20 +58,27 @@ enum {
 };
 //------------------------------------------------
 /**
-	* パレット割り振り
+	* BGパレット割り振り
 	*/ 
 //------------------------------------------------
 enum {
 	PALNUM_MAIN_EDITAREA = 0x00,
-	PALNUM_MAIN_YESNO	 = 0x03,
-	PALNUM_MAIN_CATEGORY = 0x0b,
-	PALNUM_MAIN_WORDWIN  = 0x0c,
-	PALNUM_MAIN_BUTTON   = 0x0d,
+	PALNUM_MAIN_YESNO	 = 0x03, //@TODO 消す
+	PALNUM_MAIN_TASKMENU = 0x08,
+	PALNUM_MAIN_TOUCHBAR = 0x0a,
+  PALNUM_MAIN_CATEGORY = 0x0c,
+	PALNUM_MAIN_WORDWIN  = 0x0d,
 	PALNUM_MAIN_SYSWIN   = 0x0e,
 	PALNUM_MAIN_TALKWIN  = 0x0f,
+	
+  PALNUM_MAIN_BUTTON = 0x0a, // @TODO 使ってないので消す
 
-	PALNUM_TRANS_MAX = PALNUM_MAIN_BUTTON,
+  PALNUM_OBJ_M_COMMON  = 0x0, ///< 3本使用
+
+  PALNUM_OBJ_M_PMSDRAW = 0x5, ///< 5本使用
+  PALNUM_OBJ_M_TOUCHBAR = 0xa, ///< 3本使用
 };
+
 
 //------------------------------------------------
 /**
@@ -199,8 +209,6 @@ extern void PMSIV_EDIT_ChangeSMsgWin(PMSIV_EDIT* wk,u8 mode);
 extern void PMSIV_EDIT_SetSystemMessage( PMSIV_EDIT* wk, u32 msg_type );
 extern void PMSIV_EDIT_DispYesNoWin( PMSIV_EDIT* wk, int cursor_pos );
 extern int  PMSIV_EDIT_WaitYesNoBtn( PMSIV_EDIT* wk);
-extern void PMSIV_EDIT_MoveYesNoCursor( PMSIV_EDIT* wk,int pos);
-extern void PMSIV_EDIT_EraseYesNoWin( PMSIV_EDIT* wk );
 extern void PMSIV_EDIT_StopArrow( PMSIV_EDIT* wk );
 extern void PMSIV_EDIT_ActiveArrow( PMSIV_EDIT* wk );
 

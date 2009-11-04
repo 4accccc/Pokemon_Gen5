@@ -248,6 +248,8 @@ typedef struct
   UI_SCENE_CNT_PTR          cntScene;
   void*                     subproc_work;   ///< サブPROC用ワーク保存領域
 
+  BOOL bProcChange; ///< PROC切替フラグ
+
 } PMS_SELECT_MAIN_WORK;
 
 
@@ -374,6 +376,7 @@ static GFL_PROC_RESULT PMSSelectProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 
   return GFL_PROC_RES_FINISH;
 }
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  PROC 終了処理
@@ -428,21 +431,36 @@ static GFL_PROC_RESULT PMSSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
 static GFL_PROC_RESULT PMSSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
 	PMS_SELECT_MAIN_WORK* wk = mywk;
+  
+  if( wk->bProcChange )
+  {
+	  GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
+    wk->bProcChange = FALSE;
+    HOSAKA_Printf("return! \n");
+  }
 	
   // SCENE
   if( UI_SCENE_CNT_Main( wk->cntScene ) )
   {
     return GFL_PROC_RES_FINISH;
   }
+    
+  // PROC
+  if( wk->bProcChange )
+  {
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
+    HOSAKA_Printf("call! \n");
+    return GFL_PROC_RES_CONTINUE;
+  }
 
-	//PRINT_QUE
+	// PRINT_QUE
 	PRINTSYS_QUE_Main( wk->print_que );
 
 #ifdef PMS_SELECT_PMSDRAW
   PMSSelect_PMSDRAW_Proc( wk );
 #endif //PMS_SELECT_PMSDRAW
 
-	//2D描画
+	// 2D描画
 	PMS_SELECT_GRAPHIC_2D_Draw( wk->graphic );
 
   return GFL_PROC_RES_CONTINUE;
@@ -942,7 +960,7 @@ static BOOL SceneCmdSelect_Init( UI_SCENE_CNT_PTR cnt, void* work )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  プレートに対するコマンド選択
+ *	@brief  プレートに対するコマンド選択 主処理
  *
  *	@param	UI_SCENE_CNT_PTR cnt
  *	@param	work 
@@ -986,7 +1004,7 @@ static BOOL SceneCmdSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  プレートに対するコマンド選択 後処理
  *
  *	@param	UI_SCENE_CNT_PTR cnt
  *	@param	work 
@@ -1019,22 +1037,23 @@ static BOOL SceneCallEdit_Main( UI_SCENE_CNT_PTR cnt, void* work )
   PMS_SELECT_MAIN_WORK* wk = work;
 
   PMSSelect_GRAPHIC_UnLoad( wk );
-
+  
   //@TODO セーブポインタグローバル参照
   pmsi = PMSI_PARAM_Create(PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT, SaveControl_GetPointer(), wk->heapID );
 
   // PROC切替 入力画面呼び出し
   GFL_PROC_SysCallProc( NO_OVERLAY_ID, &ProcData_PMSInput, pmsi );
   wk->subproc_work = pmsi;
- 
-  HOSAKA_Printf("call! \n");
+
+  // PROC切替フラグON
+  wk->bProcChange = TRUE;
 
   return TRUE;
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  編集画面終了
  *
  *	@param	UI_SCENE_CNT_PTR cnt
  *	@param	work 
@@ -1050,7 +1069,6 @@ static BOOL SceneCallEdit_End( UI_SCENE_CNT_PTR cnt, void* work )
   switch( seq )
   {
   case 0:
-    HOSAKA_Printf("return! \n");
     PMSI_PARAM_Delete( wk->subproc_work );
     PMSSelect_GRAPHIC_Load( wk );
 

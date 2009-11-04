@@ -238,17 +238,24 @@ void PMSIV_CATEGORY_SetupGraphicDatas( PMSIV_CATEGORY* wk, ARCHANDLE* p_handle )
 		FRM_MAIN_CATEGORY, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 	charpos /= 0x20;
 
+  HOSAKA_Printf("BG FRM_MAIN_CATEGORY base charpos=%d \n", charpos);
+
 	//TODO こいつはキャラのアドレスを固定してやらないと、解放後に上書きされるかも
 	//BMPWINを保持するように変更
 	charpos = setup_group_window( wk, charpos );
-	charpos = setup_initial_window( wk, charpos );
-	setup_back_window( wk, charpos );
+  
+  HOSAKA_Printf("BG FRM_MAIN_CATEGORY group charpos=%d \n", charpos);
+	
+  charpos = setup_initial_window( wk, charpos );
+  
+  HOSAKA_Printf("BG FRM_MAIN_CATEGORY initial charpos=%d \n", charpos);
+	
+  setup_back_window( wk, charpos );
 
 	GFL_BG_SetScroll( FRM_MAIN_CATEGORY, GFL_BG_SCROLL_X_SET, GROUPMODE_BG_XOFS );
 	GFL_BG_SetScroll( FRM_MAIN_CATEGORY, GFL_BG_SCROLL_Y_SET, CATEGORY_BG_DISABLE_YOFS );
 
 	setup_actor( wk );
-
 
 	// 選択できない状態ということを示すため、輝度を落としておく
 	G2_SetBlendBrightness( FRM_MAIN_CATEGORY_BLENDMASK, HARD_WINDOW_BLDY );
@@ -285,18 +292,14 @@ static u32 setup_group_window( PMSIV_CATEGORY* wk, u32 charpos )
 			y += (CATEGORY_WIN_HEIGHT + CATEGORY_WIN_Y_MARGIN);
 		}
 
-		
-
 		if( PMSI_DATA_GetGroupEnableWordCount(wk->dwk, i) )
 		{
 			str = GFL_MSG_CreateString( msgman, pms_category_01+i );
-//			print_color = GF_PRINTCOLOR_MAKE(CATEGORY_WIN_COL_LETTER, CATEGORY_WIN_COL_SHADOW, CATEGORY_WIN_COL_GROUND);
 			GFL_FONTSYS_SetColor( CATEGORY_WIN_COL_LETTER, CATEGORY_WIN_COL_SHADOW, CATEGORY_WIN_COL_GROUND );
 		}
 		else
 		{
 			str = GFL_MSG_CreateString( msgman, pms_category_unknown );
-//			print_color = GF_PRINTCOLOR_MAKE(CATEGORY_WIN_UNKNOWN_COL_LETTER, CATEGORY_WIN_UNKNOWN_COL_SHADOW, CATEGORY_WIN_COL_GROUND);
 			GFL_FONTSYS_SetColor( CATEGORY_WIN_UNKNOWN_COL_LETTER, CATEGORY_WIN_UNKNOWN_COL_SHADOW, CATEGORY_WIN_COL_GROUND );
 		}
 
@@ -304,24 +307,16 @@ static u32 setup_group_window( PMSIV_CATEGORY* wk, u32 charpos )
 		win = GFL_BMPWIN_Create( FRM_MAIN_CATEGORY, x, y, 
 						CATEGORY_WIN_WIDTH, CATEGORY_WIN_HEIGHT, 
 						PALNUM_MAIN_CATEGORY,GFL_BMP_CHRAREA_GET_B );
-//		GF_BGL_BmpWinAdd(	&win, FRM_MAIN_CATEGORY, 
-//						x, y, CATEGORY_WIN_WIDTH, CATEGORY_WIN_HEIGHT,
-//						PALNUM_MAIN_CATEGORY, charpos );
 
 		GFL_BMP_Clear(GFL_BMPWIN_GetBmp(win),CATEGORY_WIN_COL_GROUND);
-//		GF_BGL_BmpWinDataFill( &win, CATEGORY_WIN_COL_GROUND );
 
 		print_xpos = ((CATEGORY_WIN_WIDTH*8)-PRINTSYS_GetStrWidth( str,fontHandle, 0))/2;
-//		GF_STR_PrintColor( &win, PMSI_FONT_CATEGORY, str, print_xpos, 0, MSG_NO_PUT, print_color, NULL );
 		PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), print_xpos, 0, str,fontHandle );
 
-//		GF_BGL_BmpWinMakeScrn(&win);
 		GFL_BMPWIN_MakeScreen( win );
-		//GF_BGL_BmpWinCgxOn(&win);
 		GFL_BMPWIN_TransVramCharacter( win );
 
 		GFL_STR_DeleteBuffer(str);
-//		GFL_BMPWIN_Delete(win);
 		wk->winGroup[i] = win;
 
 		charpos += CATEGORY_WIN_CHARSIZE;
@@ -541,6 +536,8 @@ void PMSIV_CATEGORY_StartEnableBG( PMSIV_CATEGORY* wk )
 
 	PMSIV_TOOL_SetupBrightWork( &(wk->blend_work),
 			FRM_MAIN_CATEGORY_BLENDMASK, HARD_WINDOW_BLDY, 0, BRIGHT_EFFECT_WAIT );
+  
+  HOSAKA_Printf("PMSIV_CATEGORY_StartEnableBG \n");
 }
 
 //------------------------------------------------------------------
@@ -587,6 +584,7 @@ void PMSIV_CATEGORY_StartDisableBG( PMSIV_CATEGORY* wk )
 	PMSIV_TOOL_SetupScrollWork( &(wk->scroll_work), FRM_MAIN_CATEGORY, PMSIV_TOOL_SCROLL_DIRECTION_Y,
 				 CATEGORY_BG_DISABLE_EFF_VECTOR, ENABLE_MOVE_FRAMES );
 
+  HOSAKA_Printf("PMSIV_CATEGORY_StartDisableBG \n");
 }
 
 //------------------------------------------------------------------
@@ -746,8 +744,8 @@ void PMSIV_CATEGORY_ChangeModeBG( PMSIV_CATEGORY* wk )
 		xofs = INITIALMODE_BG_XOFS;
 	}
 
-
 	GFL_BG_SetScroll( FRM_MAIN_CATEGORY, GFL_BG_SCROLL_X_SET, xofs );
+
 }
 
 

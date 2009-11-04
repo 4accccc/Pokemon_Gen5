@@ -489,6 +489,8 @@ void PMSIV_WORDWIN_MoveCursor( PMSIV_WORDWIN* wk, u32 pos )
 void PMSIV_WORDWIN_StartScroll( PMSIV_WORDWIN* wk, int vector )
 {
 	int next_v_line, next_word_idx, i, v_line, word_idx, write_word_max, scroll_wait;
+  
+  HOSAKA_Printf("PMSIV_WORDWIN_StartScroll \n" );
 
 	clear_scroll_area( wk, vector );
 
