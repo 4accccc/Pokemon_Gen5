@@ -120,7 +120,7 @@ void H03_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   LoadGimmick( work, fieldmap );
 
   // ギミック管理ワークのアドレスを保存(セーブデータをクリア)
-  gmk_save    = (u32*)GIMMICKWORK_Assign( gmkwork, FLD_GIMMICK_H03 );
+  gmk_save    = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H03 );
   gmk_save[0] = (int)work;
 }
 
@@ -325,8 +325,7 @@ static void LoadGimmick( H03WORK* work, FIELDMAP_WORK* fieldmap )
   GIMMICKWORK*  gmkwork = SaveData_GetGimmickWork( sv );
   u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H03 );
 
-  // 有効なセーブデータが存在する場合にのみ復帰処理を行う
-  if( GIMMICKWORK_GetAssignID( gmkwork ) == FLD_GIMMICK_H03 )
+  // セーブ処理
   {
     // 各音源オブジェクトのアニメーションフレーム数を復帰
     for( i=0; i<SOBJ_NUM; i++ )

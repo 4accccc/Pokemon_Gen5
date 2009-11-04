@@ -153,17 +153,12 @@ void H01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   // ギミック管理ワークを作成
   h01work = GFL_HEAP_AllocMemory( heap_id, sizeof( H01WORK ) );
 
-  // セーブデータをチェック
-  if( GIMMICKWORK_GetAssignID( gmkwork ) == FLD_GIMMICK_H01 )
+  // ロード処理
   {
     work_adrs = (int)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H01 );
     frame[0] = *( (u16*)( work_adrs + 4 ) );
     frame[1] = *( (u16*)( work_adrs + 6 ) );
     frame[2] = *( (u16*)( work_adrs + 8 ) );
-  }
-  else  // 初回セットアップ時
-  {
-    work_adrs = (int)GIMMICKWORK_Assign( gmkwork, FLD_GIMMICK_H01 );
   }
 
   // ギミックワークに管理ワークのアドレスを保存
@@ -252,7 +247,7 @@ void H01_GIMMICK_End( FIELDMAP_WORK* fieldmap )
   H01WORK*        h01work = (H01WORK*)( *( (H01WORK**)work_adrs ) );
 
   // 仕掛け用ワークを初期化
-  work_adrs = (int)GIMMICKWORK_Assign( gmkwork, FLD_GIMMICK_H01 );
+  work_adrs = (int)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H01 );
 
   // データを保存
   ofs = 4;
