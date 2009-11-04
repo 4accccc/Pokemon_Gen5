@@ -1202,8 +1202,12 @@ static void AcStayWalkWorkInit( MMDL * mmdl, int dir, s16 wait, u16 draw )
 	work = MMDL_InitMoveCmdWork( mmdl, AC_WALK_WORK_SIZE );
 	
 	work->draw_state = draw;
+#if 0 //old
 	work->wait = wait + FRAME_1;	//FRAME_1=動作->アニメへの1フレーム
-	
+#else //wb 091030 アニメ関数内部で処理
+	work->wait = wait;
+#endif
+
 	MMDL_SetDirDisp( mmdl, dir );
 	MMDL_SetDrawStatus( mmdl, draw );
 	MMDL_UpdateGridPosCurrent( mmdl );
@@ -1232,7 +1236,7 @@ static int AC_StayWalk_1( MMDL * mmdl )
 	MMDL_OnStatusBit( mmdl, MMDL_STABIT_ACMD_END );
 	MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
 	MMDL_IncAcmdSeq( mmdl );
-	return( TRUE );
+	return( FALSE );
 }
 
 //======================================================================
