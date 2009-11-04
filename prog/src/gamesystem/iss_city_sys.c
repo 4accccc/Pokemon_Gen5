@@ -47,7 +47,7 @@ struct _ISS_CITY_SYS
   int  volume;        // 音量
 
 	// ISSユニット情報
-	u8    unitNum;		// ユニット数
+	u8        unitNum;		// ユニット数
 	ISS_C_UNIT** unit;		// ユニット配列
 };
 
@@ -57,6 +57,7 @@ struct _ISS_CITY_SYS
 //===========================================================================================
 static void LoadUnitData( ISS_CITY_SYS* sys );
 static void UpdateVolume( ISS_CITY_SYS* sys );
+static BOOL ChangeUnit( ISS_CITY_SYS* sys, u16 zone_id );
 
 
 //===========================================================================================
@@ -142,35 +143,32 @@ void ISS_CITY_SYS_Update( ISS_CITY_SYS* sys )
   UpdateVolume( sys );
 }
 	
-//---------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
 /**
  * @brief ゾーン切り替えを通知する
  *
  * @param sys        通知対象の街ISSシステム
  * @param next_zone_id 新しいゾーンID
  */
-//---------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
 void ISS_CITY_SYS_ZoneChange( ISS_CITY_SYS* sys, u16 next_zone_id )
-{
-	int i;
+{ 
+  BOOL found;
 
-	// 新しいゾーンIDを持つユニットを探す
-	for( i=0; i<sys->unitNum; i++ )
-	{
-		// 発見 ==> ユニット番号を更新
-		if( ISS_C_UNIT_GetZoneID( sys->unit[i] ) == next_zone_id )
-		{ 
-			sys->activeUnitNo = i;
-      sys->isActive = TRUE;
-      sys->volume = INVALID_VOLUME;
-      // DEBUG:
-      OBATA_Printf( "ISS-C: change unit index = %d\n", i );
-			return;
-		}
-	}
+  // 停止中なら, 何もしない
+  if( sys->isActive != TRUE ) return;
 
-	// 指定ゾーンIDにISSユニットが存在しない場合 ==> システム停止
-  ISS_CITY_SYS_Off( sys );
+  // ユニットを切り替える
+  found = ChangeUnit( sys, next_zone_id );
+
+	// 指定ゾーンIDにISSユニットが存在しない場合 ==> 音量0
+  if( found != TRUE )
+  {
+    sys->activeUnitNo = INVALID_UNIT_NO;
+  }
+
+  // 音量を調整
+  ISS_CITY_SYS_Update( sys );
 }
 
 //------------------------------------------------------------------------------------------
@@ -182,8 +180,27 @@ void ISS_CITY_SYS_ZoneChange( ISS_CITY_SYS* sys, u16 next_zone_id )
 //------------------------------------------------------------------------------------------
 void ISS_CITY_SYS_On( ISS_CITY_SYS* sys )
 { 
-  // 起動し, ISSユニットを更新する
-  ISS_CITY_SYS_ZoneChange( sys, PLAYERWORK_getZoneID( sys->pPlayer ) );
+  u16 zone_id;
+  BOOL found;
+
+  // すでに起動しているなら, 何もしない
+  if( sys->isActive == TRUE ) return;
+
+  // ゾーンIDを取得
+  zone_id = PLAYERWORK_getZoneID( sys->pPlayer );
+
+  // システム起動
+  sys->isActive = TRUE;
+  sys->volume = INVALID_VOLUME;
+
+  // ユニットを切り替える
+  found = ChangeUnit( sys, zone_id );
+
+	// 指定ゾーンIDにISSユニットが存在しない場合 ==> システム停止
+  if( found != TRUE )
+  {
+    ISS_CITY_SYS_Off( sys );
+  }
 
   // DEBUG:
   OBATA_Printf( "ISS-C: On\n" );
@@ -200,7 +217,7 @@ void ISS_CITY_SYS_Off( ISS_CITY_SYS* sys )
 {
 	sys->isActive     = FALSE;
   sys->activeUnitNo = INVALID_UNIT_NO;
-  FIELD_SOUND_ChangeBGMActionVolume(0);
+  FIELD_SOUND_ChangeBGMActionVolume(127);
 
   // DEBUG:
   OBATA_Printf( "ISS-C: Off\n" );
@@ -276,4 +293,34 @@ static void UpdateVolume( ISS_CITY_SYS* sys )
     // DEBUG:
     OBATA_Printf( "ISS-C: Update volume = %d\n", new_volume );
   }
+}
+
+//-------------------------------------------------------------------------------------------
+/**
+ * @brief 指定したゾーンに配置されたユニットに切り替える
+ *
+ * @param sys     ユニットを切り替えるシステム
+ * @param zone_id 切り替え先のゾーンID
+ *
+ * @return 指定したゾーンにユニットが配置されている場合, TRUE
+ */
+//-------------------------------------------------------------------------------------------
+static BOOL ChangeUnit( ISS_CITY_SYS* sys, u16 zone_id )
+{
+	int i;
+  BOOL found = FALSE; // 指定ゾーンのユニットが見つかったかどうか
+
+	for( i=0; i<sys->unitNum; i++ )
+	{
+		// 発見 ==> ユニット番号を更新
+		if( ISS_C_UNIT_GetZoneID( sys->unit[i] ) == zone_id )
+		{ 
+			sys->activeUnitNo = i;
+      found = TRUE;
+      // DEBUG:
+      OBATA_Printf( "ISS-C: change unit index = %d\n", sys->activeUnitNo );
+      break;
+		}
+	}
+  return found;
 }
