@@ -302,7 +302,7 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   DEBUGWIN_InitProc( ACT_FRAME_MAIN_CURTAIN , work->fontHandle );
   DEBUGWIN_ChangeLetterColor( 31,31,31 );
 #endif  //USE_DEBUGWIN_SYSTEM
-//  OS_TPrintf("FreeHeap:[%x]\n", GFL_HEAP_GetHeapFreeSize( work->heapId ) );
+//  ARI_TPrintf("FreeHeap:[%x]\n", GFL_HEAP_GetHeapFreeSize( work->heapId ) );
   return work;
 }
 
@@ -1088,7 +1088,7 @@ void STA_ACT_ShowMessage( ACTING_WORK *work , const u16 msgNo , const u8 msgSpd 
   {
     //デバッグ時にした画面の文字切り替えにで文字がバグる事があったため
 //    GF_ASSERT_MSG( NULL , "Message is not finish!!\n" )
-    OS_TPrintf( NULL , "Message is not finish!!\n" );
+    ARI_TPrintf( NULL , "Message is not finish!!\n" );
     PRINTSYS_PrintStreamDelete( work->printHandle );
     work->printHandle = NULL;
   }
@@ -1200,7 +1200,7 @@ void  STA_ACT_StartBgm( ACTING_WORK *work )
                                work->heapId , 
                                work->initWork->distData->strmData , 
                                work->initWork->distData->strmDataSize );
-  OS_TPrintf("[%d]\n",work->initWork->distData->strmDataSize);
+  ARI_TPrintf("[%d]\n",work->initWork->distData->strmDataSize);
   SND_STRM_Play();
 }
 
@@ -1300,7 +1300,7 @@ static void STA_ACT_UpdateUseItem( ACTING_WORK *work )
       const u8 usePos = MUS_COMM_GetUseButtonPos( work->initWork->commWork , i );
       if( usePos != MUS_POKE_EQU_INVALID )
       {
-        OS_TPrintf("Use item!![%d][%d]\n",i,usePos);
+        ARI_TPrintf("Use item!![%d][%d]\n",i,usePos);
         STA_POKE_UseItemFunc( work->pokeSys , work->pokeWork[i] , usePos );
         MUS_COMM_ResetUseButtonPos( work->initWork->commWork , i );
       }

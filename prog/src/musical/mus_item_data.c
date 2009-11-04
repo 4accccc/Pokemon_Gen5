@@ -78,7 +78,7 @@ MUS_ITEM_DATA_SYS* MUS_ITEM_DATA_InitSystem( HEAPID heapId )
     u8 i;
     for( i=0;i<33;i++ )
     {
-      OS_TPrintf("[%2d][%2d][%3d][%3d][%3d][%1d][%1d][%1d]\n",i,
+      ARI_TPrintf("[%2d][%2d][%3d][%3d][%3d][%1d][%1d][%1d]\n",i,
           sysWork->dataArr[i].texSize,
           sysWork->dataArr[i].ofsX,
           sysWork->dataArr[i].ofsY,

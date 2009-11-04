@@ -11,8 +11,8 @@
 #define ARI_DEBUG_H__
 
 //デバッグ有無のフラグ
-#if DEBUG_ONLY_FOR_ariizumi_nobuhiko | DEBUG_ONLY_FOR_ohno | DEBUG_ONLY_FOR_matsuda
-#define DEB_ARI 1
+#if DEBUG_ONLY_FOR_ariizumi_nobuhiko | DEBUG_ONLY_FOR_ohno | DEBUG_ONLY_FOR_matsuda | DEBUG_ONLY_FOR_iwao_kazumasa
+#define DEB_ARI 0
 #else
 #define DEB_ARI 0
 #endif

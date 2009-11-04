@@ -1277,7 +1277,7 @@ static void DUP_FIT_SetupStartItem( FITTING_WORK *work , const u16 itemId )
   if( itemState == NULL )
   {
     //アイテムが捨てられた・・・？
-    OS_TPrintf("ItemId[%d] is not found...\n",itemId);
+    ARI_TPrintf("ItemId[%d] is not found...\n",itemId);
     return;
   }
   
@@ -1398,7 +1398,7 @@ static void DUP_FIT_FittingMain(  FITTING_WORK *work )
   if(GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
   {
     FIT_ITEM_WORK *item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupList );
-    OS_TPrintf("---DumpResIdx---\n");
+    ARI_TPrintf("---DumpResIdx---\n");
     while( item != NULL )
     {
       MUS_ITEM_DRAW_Debug_DumpResData( work->itemDrawSys,DUP_FIT_ITEM_GetItemDrawWork( item ) );
@@ -1406,7 +1406,7 @@ static void DUP_FIT_FittingMain(  FITTING_WORK *work )
       item = DUP_FIT_ITEM_GetNextItem(item);
     }
     MUS_ITEM_DRAW_Debug_DumpResData( work->itemDrawSys,work->shadowItem );
-    OS_TPrintf("---DumpResIdx---\n");
+    ARI_TPrintf("---DumpResIdx---\n");
   }
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A &&
       work->isDemo == FALSE )
@@ -1737,7 +1737,7 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
             work->holdItem != NULL && 
             MATH_ABS(work->listSpeed) < DEG_TO_U16(2) )
           {
-            ARI_TPrintf("[%d]\n",U16_TO_DEG(MATH_ABS(work->listSpeed)));
+            DUP_TPrintf("[%d]\n",U16_TO_DEG(MATH_ABS(work->listSpeed)));
             DUP_FIT_CreateItemListToField( work );
           }
         }
@@ -1981,7 +1981,7 @@ static const BOOL DUP_FIT_UpdateTpHoldItem( FITTING_WORK *work , FIT_ITEM_GROUP 
       const GFL_POINT *itemPos = DUP_FIT_ITEM_GetPosition( item );
       work->holdItem = item;
       work->holdItemType = IG_FIELD;
-      ARI_TPrintf("Item Hold[%d]\n",DUP_FIT_ITEM_GetItemState(item)->itemId);
+      DUP_TPrintf("Item Hold[%d]\n",DUP_FIT_ITEM_GetItemState(item)->itemId);
 
       PMSND_PlaySE( DUP_SE_LIST_TOUCH_GOODS );
 
@@ -2535,7 +2535,7 @@ static void DUP_FIT_UpdateSwingItem( FITTING_WORK *work )
           work->listSwingSpeed += accSpeed/3;
         }
       }
-      //ARI_TPrintf("[%d][%d]\n",work->listSwingAngle,work->listSwingSpeed);
+      //DUP_TPrintf("[%d][%d]\n",work->listSwingAngle,work->listSwingSpeed);
       //停止条件。速度＆加速度が一定以下
       if( MATH_ABS(work->listSwingAngle) < 0x200 &&
           MATH_ABS(work->listSwingSpeed) < 0x200 )
@@ -2794,7 +2794,7 @@ static void DUP_FIT_SortItemIdx( FITTING_WORK *work , const MUS_POKE_EQUIP_USER 
   {
     u16 biggerPri;
     biggerPri = DUP_FIT_CalcSortPriority( work , work->itemState[i] , ePos );
-    OS_TPrintf("[%2d:%4d]\n",work->itemState[i]->itemId,biggerPri);
+    ARI_TPrintf("[%2d:%4d]\n",work->itemState[i]->itemId,biggerPri);
   }
 #endif
 }
@@ -2960,7 +2960,7 @@ static void DUP_CHECK_UpdateTpMain( FITTING_WORK *work )
       if( DUP_FIT_ITEM_CheckHit( item , work->tpx,work->tpy ) == TRUE )
       {
         work->holdItem = item;
-        ARI_TPrintf("Equip Item Hold[%d]\n",DUP_FIT_ITEM_GetItemState(item)->itemId);
+        DUP_TPrintf("Equip Item Hold[%d]\n",DUP_FIT_ITEM_GetItemState(item)->itemId);
       }
       item = DUP_FIT_ITEM_GetNextItem(item);
     }

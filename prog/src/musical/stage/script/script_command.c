@@ -26,7 +26,7 @@
 #pragma mark [> define
 
 #if defined(DEBUG_ONLY_FOR_iwao_kazumasa)
-#define SCRIPT_TPrintf OS_TPrintf
+#define SCRIPT_TPrintf ARI_TPrintf
 #define SCRIPT_Printf OS_Printf
 #else
 #define SCRIPT_TPrintf ARI_TPrintf
@@ -288,7 +288,7 @@ SCRIPT_FUNC_DEF( Label )
   STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
   const s32 value = ScriptFunc_GetValueS32();
   SCRIPT_PRINT_LABEL(Label);
-  OS_TPrintf("     LabelCommand[%d]\n",value);
+  ARI_TPrintf("     LabelCommand[%d]\n",value);
   return SFT_CONTINUE;
 }
 
@@ -1145,7 +1145,7 @@ SCRIPT_FUNC_DEF( PokeActionComeNearToTop )
   }
   
   topPoke = GFUser_GetPublicRand0(4);
-  OS_TPrintf("Top[%d]\n",topPoke);
+  ARI_TPrintf("Top[%d]\n",topPoke);
   //相対位置のチェック
   {
     u8 i;

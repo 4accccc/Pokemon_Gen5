@@ -13,6 +13,14 @@
 #include "savedata/musical_save.h"
 #include "musical/comm/mus_comm_func.h"
 
+#if 0
+#define DUP_TPrintf(...) (void)((ARI_TPrintf(__VA_ARGS__)))
+#define DUP_Printf(...)  (void)((OS_Printf(__VA_ARGS__)))
+#else
+#define DUP_TPrintf(...) ((void)0)
+#define DUP_Printf(...)  ((void)0)
+#endif //DEB_ARI
+
 struct _DRESSUP_INIT_WORK
 {
   MUS_COMM_WORK *commWork;

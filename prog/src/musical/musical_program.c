@@ -17,6 +17,7 @@
 #include "musical/musical_stage_sys.h"
 #include "musical/mus_item_data.h"
 #include "musical/stage/sta_local_def.h"
+#include "test/ariizumi/ari_debug.h"
 
 //======================================================================
 //	define
@@ -95,13 +96,13 @@ MUSICAL_PROGRAM_WORK* MUSICAL_PROGRAM_InitProgramData( HEAPID heapId , MUSICAL_D
     progWork->condition[i] = 0;
   }
   
-  OS_TPrintf("--Condition--\n");
-  OS_TPrintf("Cool   [%3d]\n",progWork->progData->condition[0]);
-  OS_TPrintf("Cute   [%3d]\n",progWork->progData->condition[1]);
-  OS_TPrintf("Elegant[%3d]\n",progWork->progData->condition[2]);
-  OS_TPrintf("Unique [%3d]\n",progWork->progData->condition[3]);
-  OS_TPrintf("Random [%3d]\n",progWork->progData->condition[4]);
-  OS_TPrintf("--Condition--\n");
+  ARI_TPrintf("--Condition--\n");
+  ARI_TPrintf("Cool   [%3d]\n",progWork->progData->condition[0]);
+  ARI_TPrintf("Cute   [%3d]\n",progWork->progData->condition[1]);
+  ARI_TPrintf("Elegant[%3d]\n",progWork->progData->condition[2]);
+  ARI_TPrintf("Unique [%3d]\n",progWork->progData->condition[3]);
+  ARI_TPrintf("Random [%3d]\n",progWork->progData->condition[4]);
+  ARI_TPrintf("--Condition--\n");
   
 
   //データからワークへコピー
@@ -124,12 +125,12 @@ MUSICAL_PROGRAM_WORK* MUSICAL_PROGRAM_InitProgramData( HEAPID heapId , MUSICAL_D
       point -= val;
     }
   }
-  OS_TPrintf("--FinalCondition--\n");
-  OS_TPrintf("Cool   [%3d]\n",progWork->condition[0]);
-  OS_TPrintf("Cute   [%3d]\n",progWork->condition[1]);
-  OS_TPrintf("Elegant[%3d]\n",progWork->condition[2]);
-  OS_TPrintf("Unique [%3d]\n",progWork->condition[3]);
-  OS_TPrintf("--FinalCondition--\n");
+  ARI_TPrintf("--FinalCondition--\n");
+  ARI_TPrintf("Cool   [%3d]\n",progWork->condition[0]);
+  ARI_TPrintf("Cute   [%3d]\n",progWork->condition[1]);
+  ARI_TPrintf("Elegant[%3d]\n",progWork->condition[2]);
+  ARI_TPrintf("Unique [%3d]\n",progWork->condition[3]);
+  ARI_TPrintf("--FinalCondition--\n");
 
   return progWork;
 }
@@ -181,15 +182,15 @@ void MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID heapId , MUSICAL_PROGRAM_WORK* pro
   for( pokeIdx = 0 ; pokeIdx < MUSICAL_POKE_MAX ; pokeIdx++ )
   {
     MUSICAL_POKE_PARAM *musPoke = actInitWork->musPoke[pokeIdx];
-    OS_TPrintf("Poke[%d]:",pokeIdx);
+    ARI_TPrintf("Poke[%d]:",pokeIdx);
     for( conIdx=0;conIdx<MCT_MAX;conIdx++ )
     {
       const u8 addPoint = progWork->condition[conIdx] * pokeCondition[pokeIdx][conIdx] / conditionMax[conIdx];
       musPoke->point += addPoint;
       musPoke->conPoint[conIdx] = addPoint;
-      OS_TPrintf("[%3d]",addPoint);
+      ARI_TPrintf("[%3d]",addPoint);
     }
-    OS_TPrintf("Sum[%3d]\n",musPoke->point);
+    ARI_TPrintf("Sum[%3d]\n",musPoke->point);
   }
   
   
@@ -234,7 +235,7 @@ void MUSICAL_PROGRAM_SetData_NPC( MUSICAL_PROGRAM_WORK* progWork , STAGE_INIT_WO
   {
     const u16 monsno = MUSICAL_SYSTEM_GetMusicalPokemonRandom();
     MUSICAL_STAGE_SetData_NPC( actInitWork , musicalIdx , monsno , heapId );
-    OS_TPrintf("monsno:[%d]\n",monsno);
+    ARI_TPrintf("monsno:[%d]\n",monsno);
   }
   else
   {

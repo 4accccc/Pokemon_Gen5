@@ -24,6 +24,7 @@
 #include "print/wordset.h"
 #include "system/bmp_winframe.h"
 #include "system/wipe.h"
+#include "test/ariizumi/ari_debug.h"
 #include "mus_shot_info.h"
 #include "mus_shot_snd_def.h"
 
@@ -361,7 +362,7 @@ static void MUS_SHOT_INFO_DispMessage( MUS_SHOT_INFO_WORK *work , const u16 msgI
 {
   if( work->printHandle != NULL )
   {
-    OS_TPrintf( NULL , "Message is not finish!!\n" );
+    ARI_TPrintf( NULL , "Message is not finish!!\n" );
     PRINTSYS_PrintStreamDelete( work->printHandle );
     work->printHandle = NULL;
   }

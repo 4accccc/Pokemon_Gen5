@@ -170,7 +170,7 @@ void	STA_EFF_DeleteEmitter( STA_EFF_WORK *effWork , const u16 emitNo )
 	}
 	else
 	{
-		OS_TPrintf("Stage effect emitter[%d] is NULL!!\n",emitNo);
+		ARI_TPrintf("Stage effect emitter[%d] is NULL!!\n",emitNo);
 	}
 }
 
@@ -182,6 +182,6 @@ void	STA_EFF_SetPosition( STA_EFF_WORK *effWork , const u16 emitNo , VecFx32 *po
 	}
 	else
 	{
-		OS_TPrintf("Stage effect emitter[%d] is NULL!!\n",emitNo);
+		ARI_TPrintf("Stage effect emitter[%d] is NULL!!\n",emitNo);
 	}
 }

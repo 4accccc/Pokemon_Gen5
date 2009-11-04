@@ -253,13 +253,13 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
       if( ePos == MUS_POKE_EQU_HAND_R )
       {
         ePosTemp = MUS_POKE_EQU_HAND_L;
-//        OS_TPrintf("R->L\n");
+//        ARI_TPrintf("R->L\n");
       }
       else
       if( ePos == MUS_POKE_EQU_HAND_L )
       {
         ePosTemp = MUS_POKE_EQU_HAND_R;
-//        OS_TPrintf("L->R\n");
+//        ARI_TPrintf("L->R\n");
       }
     }
 

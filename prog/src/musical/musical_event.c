@@ -36,6 +36,7 @@
 #include "musical/stage/sta_acting.h"
 #include "musical/stage/sta_local_def.h"
 #include "musical/dressup/dup_local_def.h"
+#include "test/ariizumi/ari_debug.h"
 
 #include "../resource/fldmapdata/script/c04r0202_def.h"
 #include "../resource/fldmapdata/script/musical_scr_local.h"
@@ -598,12 +599,12 @@ static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork )
         }
       }
     }
-    OS_TPrintf("RANK:");
+    ARI_TPrintf("RANK:");
     for( i=0;i<MUSICAL_POKE_MAX;i++ )
     {
-      OS_TPrintf("[%d:%d]",pointArr[i],evWork->rankIndex[i]);
+      ARI_TPrintf("[%d:%d]",pointArr[i],evWork->rankIndex[i]);
     }
-    OS_TPrintf("\n");
+    ARI_TPrintf("\n");
   }
 }
 
@@ -679,12 +680,12 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
     {
       MUSICAL_FAN_STATE* fanState = MUSICAL_SAVE_GetFanState( evWork->musSave , i );
       const u8 point = MUSICAL_EVENT_GetPoint( evWork , evWork->selfIdx );
-      OS_TPrintf("Fan[%d]",i);
+      ARI_TPrintf("Fan[%d]",i);
       //見た目の決定
       fanState->type = conType; //タイプを渡す
-      OS_TPrintf("[%d]",fanState->type);
+      ARI_TPrintf("[%d]",fanState->type);
       //贈り物の抽選
-      OS_TPrintf("[%3d/100:",point);
+      ARI_TPrintf("[%3d/100:",point);
       if( GFUser_GetPublicRand0(100) < point )
       {
         u16 itemIdx;
@@ -718,9 +719,9 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
           fanState->giftType = MUSICAL_GIFT_TYPE_ITEM;
           fanState->giftValue = 92; //金の玉
         }
-        OS_TPrintf("%d:%d",fanState->giftType,fanState->giftValue);
+        ARI_TPrintf("%d:%d",fanState->giftType,fanState->giftValue);
       }
-      OS_TPrintf("]\n");
+      ARI_TPrintf("]\n");
     }
   }
 }

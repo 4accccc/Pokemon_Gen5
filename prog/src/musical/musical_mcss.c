@@ -512,8 +512,8 @@ void	MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb 
 						const s32 ofsy = mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc.index].pHierDataArray[node].posY;
 						const fx32 itemOfsx = mcss->musInfo[clIdx].ofsX*FX_CosIdx(anim_SRT.rotZ) - mcss->musInfo[clIdx].ofsY*FX_SinIdx(anim_SRT.rotZ);
 						const fx32 itemOfsy = mcss->musInfo[clIdx].ofsX*FX_SinIdx(anim_SRT.rotZ) + mcss->musInfo[clIdx].ofsY*FX_CosIdx(anim_SRT.rotZ);
-						//OS_TPrintf("mcss[%d:%d]\n",(int)F32_CONST(pos.x),(int)F32_CONST(pos.y));
-						//OS_TPrintf("mcss[%d:%d]:[%d:%d]:[%d:%d]\n",ofsx,ofsy,(int)F32_CONST(itemOfsx),(int)F32_CONST(itemOfsy),anim_SRT.px,anim_SRT.py);
+						//ARI_TPrintf("mcss[%d:%d]\n",(int)F32_CONST(pos.x),(int)F32_CONST(pos.y));
+						//ARI_TPrintf("mcss[%d:%d]:[%d:%d]:[%d:%d]\n",ofsx,ofsy,(int)F32_CONST(itemOfsx),(int)F32_CONST(itemOfsy),anim_SRT.px,anim_SRT.py);
 						cellData.pos = pos;
 						cellData.pos.y = -cellData.pos.y;
 						cellData.ofs.x	= FX_Mul( FX32_CONST(ofsx + anim_SRT.px) + itemOfsx , mcss->scale.x/16 );
@@ -1051,7 +1051,7 @@ static	void	MUS_MCSS_LoadResource( MUS_MCSS_SYS_WORK *mcss_sys, int count, MUS_M
 		int i;
 		for( i=0;i<12;i++ )
 		{
-			OS_TPrintf("[%2d][%d][%d][%d][%d][%d]\n",i
+			ARI_TPrintf("[%2d][%d][%d][%d][%d][%d]\n",i
 								,mcss->musInfo[i].objNo
 								,mcss->musInfo[i].pltNo
 								,mcss->musInfo[i].ofsX

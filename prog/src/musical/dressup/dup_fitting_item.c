@@ -14,6 +14,7 @@
 #include "musical_item.naix"
 
 #include "test/ariizumi/ari_debug.h"
+#include "dup_local_def.h"
 #include "musical/mus_item_draw.h"
 #include "musical/dressup/dup_fitting_item.h"
 
@@ -86,7 +87,7 @@ void DUP_FIT_ITEMGROUP_DeleteGroup( FIT_ITEM_GROUP* group )
 {
 	if( group->num > 0 )
 	{
-		ARI_TPrintf("DressUp ItemGroup Delete: Item is not release yet[least %d]\n",group->num);
+		DUP_TPrintf("DressUp ItemGroup Delete: Item is not release yet[least %d]\n",group->num);
 	}
 	GFL_HEAP_FreeMemory( group );
 }
@@ -115,7 +116,7 @@ void DUP_FIT_ITEMGROUP_AddItem( FIT_ITEM_GROUP *group , FIT_ITEM_WORK *item )
 	}
 	item->next = NULL;
 	group->num++;
-	ARI_TPrintf("group add[%d]\n",group->num);
+	DUP_TPrintf("group add[%d]\n",group->num);
 }
 void DUP_FIT_ITEMGROUP_AddItemTop( FIT_ITEM_GROUP *group , FIT_ITEM_WORK *item )
 {
@@ -138,7 +139,7 @@ void DUP_FIT_ITEMGROUP_AddItemTop( FIT_ITEM_GROUP *group , FIT_ITEM_WORK *item )
 		group->start = item;
 	}
 	group->num++;
-	ARI_TPrintf("group add[%d]\n",group->num);
+	DUP_TPrintf("group add[%d]\n",group->num);
 }
 
 void DUP_FIT_ITEMGROUP_RemoveItem( FIT_ITEM_GROUP *group , FIT_ITEM_WORK *item )
@@ -171,7 +172,7 @@ void DUP_FIT_ITEMGROUP_RemoveItem( FIT_ITEM_GROUP *group , FIT_ITEM_WORK *item )
 	}
 	listItem->next = NULL;
 	group->num--;
-	ARI_TPrintf("groupe remove[%d]\n",group->num);
+	DUP_TPrintf("groupe remove[%d]\n",group->num);
 }
 
 //--------------------------------------------------------------
@@ -371,14 +372,14 @@ void	DUP_FIT_ITEM_DumpList( FIT_ITEM_GROUP *group , u8 dispIdx )
 {
 	int	i = 0;
 	FIT_ITEM_WORK *listItem = group->start;
-	ARI_TPrintf("DUMP ITEM LIST[%d] [Num:%d]\n",dispIdx,group->num);
+	DUP_TPrintf("DUMP ITEM LIST[%d] [Num:%d]\n",dispIdx,group->num);
 	while( listItem != NULL )
 	{
-		ARI_TPrintf("[id:%2d][itemId:%2d]\n",i,listItem->itemState->itemId);
+		DUP_TPrintf("[id:%2d][itemId:%2d]\n",i,listItem->itemState->itemId);
 		listItem = listItem->next;
 		i++;
 	}
-	ARI_TPrintf("DUMP ITEM LIST[%d] FNISH\n");
+	DUP_TPrintf("DUMP ITEM LIST[%d] FNISH\n");
 	
 }
 #endif

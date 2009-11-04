@@ -17,6 +17,7 @@
 #include "mus_shot_info.h"
 
 #include "poke_tool/monsno_def.h"
+#include "test/ariizumi/ari_debug.h"
 
 //======================================================================
 //  define
@@ -99,7 +100,7 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
 
   work = GFL_PROC_AllocWork( proc, sizeof(SHOT_LOCAL_WORK), HEAPID_MUSICAL_SHOT );
   work->heapId = HEAPID_MUSICAL_SHOT;
-  OS_TPrintf("MUS_SHOT_DATA_SIZE[%d]\n",sizeof(MUSICAL_SHOT_DATA));
+  ARI_TPrintf("MUS_SHOT_DATA_SIZE[%d]\n",sizeof(MUSICAL_SHOT_DATA));
   if( pwk == NULL )
   {
     work->shotInitWork = GFL_HEAP_AllocMemory( HEAPID_MUSICAL_SHOT , sizeof( MUS_SHOT_INIT_WORK ));

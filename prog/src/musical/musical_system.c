@@ -27,6 +27,7 @@
 #include "musical/stage/sta_acting.h"
 #include "musical/stage/sta_local_def.h"
 #include "musical/dressup/dup_local_def.h"
+#include "test/ariizumi/ari_debug.h"
 #include "poke_tool/monsno_def.h"
 
 //======================================================================
@@ -558,7 +559,7 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
   case MPS_INIT_ACTING:
     {
       u8 ePos,i;
-      OS_TPrintf("FreeHeap:[%x][%x]\n", 
+      ARI_TPrintf("FreeHeap:[%x][%x]\n", 
           GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ) ,
           GFI_HEAP_GetHeapAllocatableSize( GFL_HEAPID_APP ) );
       work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_PROC , work->commWork );

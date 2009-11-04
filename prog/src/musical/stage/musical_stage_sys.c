@@ -18,6 +18,7 @@
 
 #include "musical/stage/sta_local_def.h"
 #include "musical/stage/sta_acting.h"
+#include "test/ariizumi/ari_debug.h"
 
 //======================================================================
 //  define
@@ -67,7 +68,7 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
   int ePos;
   STAGE_LOCAL_WORK *work;
 /*
-  OS_TPrintf("FreeHeap:[%x][%x]\n", 
+  ARI_TPrintf("FreeHeap:[%x][%x]\n", 
       GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ) ,
       GFI_HEAP_GetHeapAllocatableSize( GFL_HEAPID_APP ) );
 */
@@ -150,7 +151,7 @@ static GFL_PROC_RESULT MusicalStageProc_Main( GFL_PROC * proc, int * seq , void 
   case STA_SEQ_INIT_ACTING:
     work->actWork = STA_ACT_InitActing( work->actInitWork , HEAPID_MUSICAL_STAGE );
     *seq = STA_SEQ_LOOP_ACTING;
-	OS_TPrintf("HEAP[%x]\n",GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ));
+	ARI_TPrintf("HEAP[%x]\n",GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ));
     break;
     
   case STA_SEQ_LOOP_ACTING:

@@ -16,6 +16,7 @@
 #include "musical/musical_dressup_sys.h"
 #include "dup_local_def.h"
 #include "dup_fitting.h"
+#include "test/ariizumi/ari_debug.h"
 
 //======================================================================
 //	define
@@ -116,7 +117,7 @@ static GFL_PROC_RESULT DressUpProc_Main( GFL_PROC * proc, int * seq , void *pwk,
 	case DUP_SEQ_INIT_FITTING:
 		work->fitWork = DUP_FIT_InitFitting(work->fitInitWork,HEAPID_MUSICAL_DRESSUP);
 		*seq = DUP_SEQ_LOOP_FITTING;
-		OS_TPrintf("HEAP[%x]\n",GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ));
+		ARI_TPrintf("HEAP[%x]\n",GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ));
 		break;
 		
 	case DUP_SEQ_LOOP_FITTING:
