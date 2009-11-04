@@ -1025,7 +1025,7 @@ static void * FMenuCallProc_Bag(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_CAL
 	{	
 	case EVENT_PROCLINK_CALL_BAG:
 		//バッグを最初に呼び出したとき
-		bag = BAG_CreateParam( gmData, &wk->icwk, BAG_MODE_FIELD, wk->heapID );
+		bag = BAG_CreateParam( gmData, &wk->icwk, BAG_MODE_FIELD, HEAPID_PROC );
 		if( param != EVENT_PROCLINK_DATA_NONE )
 		{	
 			MYITEM_FieldBagPocketSet( bag->p_bagcursor, param );
@@ -1038,17 +1038,17 @@ static void * FMenuCallProc_Bag(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_CAL
 			if( plData->ret_mode == PL_RET_ITEMSET )
 			{	
 				//もたせるでバッグ画面へ
-				bag = BAG_CreateParam( gmData, &wk->icwk, BAG_MODE_POKELIST, wk->heapID );
+				bag = BAG_CreateParam( gmData, &wk->icwk, BAG_MODE_POKELIST, HEAPID_PROC );
 			}
 			else if( plData->ret_mode == PL_RET_BAG )
 			{	
 				//アイテムー＞リストー＞アイテム
-				bag = BAG_CreateParam( gmData, &wk->icwk, BAG_MODE_FIELD, wk->heapID );
+				bag = BAG_CreateParam( gmData, &wk->icwk, BAG_MODE_FIELD, HEAPID_PROC );
 			}
 			else
 			{	
 				//アイテムー＞リストー＞アイテム
-				bag = BAG_CreateParam( gmData, &wk->icwk, BAG_MODE_FIELD, wk->heapID );
+				bag = BAG_CreateParam( gmData, &wk->icwk, BAG_MODE_FIELD, HEAPID_PROC );
 			}
 		}
 		break;
@@ -1059,7 +1059,7 @@ static void * FMenuCallProc_Bag(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_CAL
 	case EVENT_PROCLINK_CALL_WIFINOTE:
 		/* fallthrough */
 	default:
-		bag = BAG_CreateParam( gmData, &wk->icwk, BAG_MODE_FIELD, wk->heapID );
+		bag = BAG_CreateParam( gmData, &wk->icwk, BAG_MODE_FIELD, HEAPID_PROC );
 	}
 
 	return bag;
