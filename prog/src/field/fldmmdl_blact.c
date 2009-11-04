@@ -233,11 +233,19 @@ void MMDL_BLACTCONT_Setup( MMDLSYS *mmdlsys,
 	BBDResUnitIndex_Init( pBlActCont, res_max );
   BlActAddReserve_Init( pBlActCont );
   
-  { //Scale
-    VecFx32 scale =
-    {MMDL_BBD_GLOBAL_SCALE,MMDL_BBD_GLOBAL_SCALE,MMDL_BBD_GLOBAL_SCALE};
+  { //Parameter
     GFL_BBD_SYS *bbdSys = GFL_BBDACT_GetBBDSystem( pBbdActSys );
-    GFL_BBD_SetScale( bbdSys, &scale );
+
+    { //Scale
+      VecFx32 scale =
+      {MMDL_BBD_GLOBAL_SCALE,MMDL_BBD_GLOBAL_SCALE,MMDL_BBD_GLOBAL_SCALE};
+      GFL_BBD_SetScale( bbdSys, &scale );
+    }
+    
+    { //Poligon ID
+      u8 id = 0;
+      GFL_BBD_SetPolID( bbdSys, &id );
+    }
   }
 }
 
