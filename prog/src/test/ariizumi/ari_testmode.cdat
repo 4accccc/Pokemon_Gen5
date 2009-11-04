@@ -76,6 +76,7 @@ static BOOL TESTMODE_ITEM_SelectFuncShot( TESTMODE_WORK *work , const int idx )
 #include "app/wifi_note.h"
 #include "app/pokelist.h"
 #include "app/p_status.h"
+#include "app/local_tvt_sys.h"
 #include "test/ariizumi/musical_editor.h"
 FS_EXTERN_OVERLAY(pmsinput);
 FS_EXTERN_OVERLAY(pokelist);
@@ -95,6 +96,7 @@ static BOOL TESTMODE_ITEM_SelectMusicalEditor( TESTMODE_WORK *work , const int i
 FS_EXTERN_OVERLAY(camera_test);
 static BOOL TESTMODE_ITEM_SelectDebCameraTest( TESTMODE_WORK *work , const int idx );
 #endif
+static BOOL TESTMODE_ITEM_SelectDebLocalTvt( TESTMODE_WORK *work , const int idx );
 
 static TESTMODE_MENU_LIST menuAriizumi[] = 
 {
@@ -110,6 +112,7 @@ static TESTMODE_MENU_LIST menuAriizumi[] =
 #if USE_CAMERA_TEST
 	{L"カメラテスト"			,TESTMODE_ITEM_SelectDebCameraTest },
 #endif
+	{L"LocalTVT"			,TESTMODE_ITEM_SelectDebLocalTvt },
 	
 	{L"もどる"				,TESTMODE_ITEM_BackTopMenu },
 };
@@ -164,3 +167,9 @@ static BOOL TESTMODE_ITEM_SelectDebCameraTest( TESTMODE_WORK *work , const int i
 	return TRUE;
 }
 #endif //USE_CAMERA_TEST
+
+static BOOL TESTMODE_ITEM_SelectDebLocalTvt( TESTMODE_WORK *work , const int idx )
+{
+  TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(local_tvt), &LocalTvt_ProcData, NULL);
+  return TRUE;
+}

@@ -1003,6 +1003,13 @@ SRCS_OVERLAY_CAMERA_TEST = test/ariizumi/camera_system.c \
 SRCS_OVERLAY_WAZA_OSHIE = app/waza_oshie/wo_main.c
 
 
+# TVトランシーバー(非通信)
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_IRC
+SRCS_OVERLAY_LOCAL_TVT = app/local_tvt/local_tvt_sys.c \
+		app/local_tvt/local_tvt_chara.c 
+
 # WIFIバトルマッチング
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS

@@ -201,4 +201,5 @@
 	ARCID_SHORTCUT_MENU_GRA	"fld_shortcut_menu_gra.narc"	#フィールドショートカットメニュー用グラフィック
 	ARCID_CAPTEX	"texViewTest.narc"	#キャプチャテクスチャテストデータ
   ARCID_GATE_GIMMICK "gate.narc" # ゲートギミック
+  ARCID_LOCAL_TVT "local_tvt.narc" # ローカルTVトランシーバー
   ARCID_ISS_CITY "iss_city.narc" # 街ISSデータ

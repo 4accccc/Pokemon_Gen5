@@ -92,7 +92,8 @@ SUBDIRS	=	wmi \
 			sodateya \
 			shopdata \
 			fld_shortcut_menu \
-			trtype_bgm
+			trtype_bgm \
+			local_tvt
 
 include $(RESOURCE_MACRO)
 

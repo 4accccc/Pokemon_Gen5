@@ -1,0 +1,34 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: local_tvt.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_LOCAL_TVT_NAIX_
+#define NARC_LOCAL_TVT_NAIX_
+
+enum {
+	NARC_local_tvt_back_01_NCLR = 0,
+	NARC_local_tvt_back_02_NCLR = 1,
+	NARC_local_tvt_chara_01_NCLR = 2,
+	NARC_local_tvt_chara_02_NCLR = 3,
+	NARC_local_tvt_chara_03_NCLR = 4,
+	NARC_local_tvt_back_01_01_NCGR = 5,
+	NARC_local_tvt_back_01_02_NCGR = 6,
+	NARC_local_tvt_back_02_01_NCGR = 7,
+	NARC_local_tvt_back_02_02_NCGR = 8,
+	NARC_local_tvt_chara_01_01_NCGR = 9,
+	NARC_local_tvt_chara_01_02_NCGR = 10,
+	NARC_local_tvt_chara_02_01_NCGR = 11,
+	NARC_local_tvt_chara_02_02_NCGR = 12,
+	NARC_local_tvt_chara_03_01_NCGR = 13,
+	NARC_local_tvt_chara_03_02_NCGR = 14,
+	NARC_local_tvt_dummy_NCGR = 15,
+	NARC_local_tvt_local_tvt_scr_NSCR = 16
+};
+
+/* NARC_LOCAL_TVT_NAIX_ */
+#endif
