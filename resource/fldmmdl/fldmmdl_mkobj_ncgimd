@@ -168,3 +168,8 @@
 	@echo convert ncg_imd whitemonolith
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/whitemonolith.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
 
+#mama.imd
+./mmdl_res/mama.imd: ./mmdl_nchara/mama.ncg ./mmdl_nchara/mama.ncl
+	@echo convert ncg_imd mama
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/mama.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+

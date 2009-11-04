@@ -44,7 +44,8 @@ enum {
 	NARC_fldmmdl_mdlres_blackstone_nsbtx = 30,
 	NARC_fldmmdl_mdlres_whitestone_nsbtx = 31,
 	NARC_fldmmdl_mdlres_blackmonolith_nsbtx = 32,
-	NARC_fldmmdl_mdlres_whitemonolith_nsbtx = 33
+	NARC_fldmmdl_mdlres_whitemonolith_nsbtx = 33,
+	NARC_fldmmdl_mdlres_mama_nsbtx = 34
 };
 
 /* NARC_FLDMMDL_MDLRES_NAIX_ */

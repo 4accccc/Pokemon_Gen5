@@ -32,4 +32,5 @@ FMMDL_RESLIST_NCGIMD = \
 	blackstone.imd \
 	whitestone.imd \
 	blackmonolith.imd \
-	whitemonolith.imd
+	whitemonolith.imd \
+	mama.imd

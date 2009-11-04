@@ -165,6 +165,7 @@
 #define WHITESTONE (0xa0) //160 石（白）
 #define BLACKMONOLITH (0xa1) //161 モノリス（黒）
 #define WHITEMONOLITH (0xa2) //162 モノリス（白）
-#define OBJCODEMAX (0xa3) //163 最大
+#define MAMA (0xa3) //163 ママ
+#define OBJCODEMAX (0xa4) //164 最大
 
 #endif
