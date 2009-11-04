@@ -95,3 +95,4 @@
 "nsbmdfiles/chushion01.nsbmd"
 "nsbmdfiles/chushion02.nsbmd"
 "nsbmdfiles/gelboard01.nsbmd"
+"nsbmdfiles/m_gym02_light.nsbmd"

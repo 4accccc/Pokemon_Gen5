@@ -35,13 +35,14 @@ enum {
 	NARC_buildmodel_anime_elboard_test_nsbta = 21,
 	NARC_buildmodel_anime_fireplace_02_nsbta = 22,
 	NARC_buildmodel_anime_fountain_01_nsbta = 23,
-	NARC_buildmodel_anime_machine_l02_nsbta = 24,
-	NARC_buildmodel_anime_t1_labo_01_nsbca = 25,
-	NARC_buildmodel_anime_time_anime1_nsbtp = 26,
-	NARC_buildmodel_anime_time_anime2_nsbtp = 27,
-	NARC_buildmodel_anime_time_anime3_nsbtp = 28,
-	NARC_buildmodel_anime_time_anime4_nsbtp = 29,
-	NARC_buildmodel_anime_trailer_01test_nsbca = 30
+	NARC_buildmodel_anime_m_gym02_light_nsbca = 24,
+	NARC_buildmodel_anime_machine_l02_nsbta = 25,
+	NARC_buildmodel_anime_t1_labo_01_nsbca = 26,
+	NARC_buildmodel_anime_time_anime1_nsbtp = 27,
+	NARC_buildmodel_anime_time_anime2_nsbtp = 28,
+	NARC_buildmodel_anime_time_anime3_nsbtp = 29,
+	NARC_buildmodel_anime_time_anime4_nsbtp = 30,
+	NARC_buildmodel_anime_trailer_01test_nsbca = 31
 };
 
 /* NARC_BUILDMODEL_ANIME_NAIX_ */
