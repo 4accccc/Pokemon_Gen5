@@ -22,11 +22,8 @@
 #include "field/field_msgbg.h"
 
 #include "sound/pm_sndsys.h"
-#include "sound/wb_sound_data.sadl"
 
-/*
-extern GFL_BMPWIN * TALKMSGWIN_GetBmpWin( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx );
-*/
+#include "gamesystem\msgspeed.h"
 
 //======================================================================
 //	define
@@ -52,6 +49,7 @@ enum
   CURSOR_FLAG_END,
 };
 
+#define MSGWAIT_FAST (-2)
 
 //======================================================================
 //	typedef struct
@@ -127,11 +125,12 @@ struct _TAG_FLDMENUFUNC
 
 //--------------------------------------------------------------
 /// FLDMSGPRINT_STREAM
-//---------:-----------------------------------------------------
+//--------------------------------------------------------------
 struct _TAG_FLDMSGPRINT_STREAM
 {
   u8 flag_key_trg;
   u8 flag_key_cont;
+  int msg_wait;
   PRINT_STREAM *printStream;
 };
 
@@ -1417,6 +1416,8 @@ FLDMSGPRINT_STREAM * FLDMSGPRINT_STREAM_SetupPrint(
   FLDMSGPRINT_STREAM *stm = GFL_HEAP_AllocClearMemory(
       fmb->heapID, sizeof(FLDMSGPRINT_STREAM) );
   
+  stm->msg_wait = wait;
+  
   stm->printStream = PRINTSYS_PrintStream(
       bmpwin, x, y,
       strbuf, fmb->fontHandle,
@@ -1464,9 +1465,9 @@ static PRINTSTREAM_STATE fldMsgPrintStream_ProcPrint(
     }
     
     if( stm->flag_key_trg == TRUE && (cont & PAD_BUTTON_A) ){
-      PRINTSYS_PrintStreamShortWait( stm->printStream, 0 );
+      PRINTSYS_PrintStreamShortWait( stm->printStream, MSGWAIT_FAST );
     }else{
-      PRINTSYS_PrintStreamShortWait( stm->printStream, 2 );
+      PRINTSYS_PrintStreamShortWait( stm->printStream, stm->msg_wait );
     }
     break;
   case PRINTSTREAM_STATE_PAUSE: //ˆêŽž’âŽ~’†
@@ -1586,7 +1587,7 @@ void FLDMSGWIN_STREAM_PrintStart(
   GFL_MSG_GetString( msgWin->msgData, strID, msgWin->strBuf );
   
   msgWin->msgPrintStream = FLDMSGPRINT_STREAM_SetupPrint(
-  	msgWin->fmb, msgWin->strBuf, msgWin->bmpwin, x, y, 4 );
+  	msgWin->fmb, msgWin->strBuf, msgWin->bmpwin, x, y, MSGSPEED_GetWait() );
 }
 
 //--------------------------------------------------------------
@@ -1607,7 +1608,7 @@ void FLDMSGWIN_STREAM_PrintStrBufStart(
   }
   
   msgWin->msgPrintStream = FLDMSGPRINT_STREAM_SetupPrint(
-  	msgWin->fmb, strBuf, msgWin->bmpwin, x, y, 2 );
+  	msgWin->fmb, strBuf, msgWin->bmpwin, x, y, MSGSPEED_GetWait() );
 }
 
 //--------------------------------------------------------------
@@ -1920,9 +1921,9 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
     }
     
     if( tmsg->flag_key_trg == TRUE && (cont & PAD_BUTTON_A) ){
-      PRINTSYS_PrintStreamShortWait( stream, 0 );
+      PRINTSYS_PrintStreamShortWait( stream, MSGWAIT_FAST );
     }else{
-      PRINTSYS_PrintStreamShortWait( stream, 2 );
+      PRINTSYS_PrintStreamShortWait( stream, MSGSPEED_GetWait() );
     }
     break;
   case PRINTSTREAM_STATE_PAUSE: //ˆêŽž’âŽ~’†
