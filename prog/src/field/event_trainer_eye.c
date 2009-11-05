@@ -571,7 +571,7 @@ static int eyeMeetMove_GyoeSet( EV_EYEMEET_MOVE_WORK *work )
 {
   FLDEFF_CTRL *fectrl =  FIELDMAP_GetFldEffCtrl( work->fieldMap );
   work->task_gyoe = FLDEFF_GYOE_SetMMdl(
-      fectrl, work->mmdl, FLDEFF_GYOETYPE_GYOE, TRUE  );
+      fectrl, work->mmdl, FLDEFF_GYOETYPE_GYOE, FALSE ); //SE‚Í–Â‚ç‚³‚È‚¢
   work->seq_no = SEQNO_TRMOVE_GYOE_WAIT;
   return( FALSE );
 }
