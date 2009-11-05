@@ -1,0 +1,21 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: wifimatch_gra.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_WIFIMATCH_GRA_NAIX_
+#define NARC_WIFIMATCH_GRA_NAIX_
+
+enum {
+	NARC_wifimatch_gra_bg_NCLR = 0,
+	NARC_wifimatch_gra_obj_NCLR = 1,
+	NARC_wifimatch_gra_bg_back_NCGR = 2,
+	NARC_wifimatch_gra_back_NSCR = 3
+};
+
+/* NARC_WIFIMATCH_GRA_NAIX_ */
+#endif
