@@ -1408,6 +1408,10 @@ BOOL FLDMAPPER_CheckOutRange( const FLDMAPPER* g3Dmapper, const VecFx32* pos )
 	if( g3Dmapper->blocks == NULL ){
 		return TRUE;
 	}
+	if( g3Dmapper->mode == FLDMAPPER_MODE_SCROLL_XZ_LOOP )
+  {
+    return FALSE;
+  }
 
 	widthx = g3Dmapper->sizex * g3Dmapper->blockWidth;
 	widthz = g3Dmapper->sizez * g3Dmapper->blockWidth;
