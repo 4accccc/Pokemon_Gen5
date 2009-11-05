@@ -1465,10 +1465,13 @@ static PRINTSTREAM_STATE fldMsgPrintStream_ProcPrint(
     }
     
     if( stm->flag_key_trg == TRUE && (cont & PAD_BUTTON_A) ){
-      PRINTSYS_PrintStreamShortWait( stm->printStream, MSGWAIT_FAST );
-    }else{
+      PRINTSYS_PrintStreamShortWait( stm->printStream, 0 );
+    }
+#if 0
+    else{
       PRINTSYS_PrintStreamShortWait( stm->printStream, stm->msg_wait );
     }
+#endif
     break;
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
     if( (trg & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
@@ -1921,10 +1924,13 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
     }
     
     if( tmsg->flag_key_trg == TRUE && (cont & PAD_BUTTON_A) ){
-      PRINTSYS_PrintStreamShortWait( stream, MSGWAIT_FAST );
-    }else{
+      PRINTSYS_PrintStreamShortWait( stream, 0 );
+    }
+#if 0
+    else{
       PRINTSYS_PrintStreamShortWait( stream, MSGSPEED_GetWait() );
     }
+#endif
     break;
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
     if( tmsg->flag_key_pause_clear == FALSE ){ //既にポーズクリア済みか？
