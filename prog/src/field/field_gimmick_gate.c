@@ -225,8 +225,9 @@ static char* news_plt_name[NEWS_NUM] =
 //==========================================================================================
 typedef struct
 { 
-  HEAPID        heapID;   // 使用するヒープID
-  GOBJ_ELBOARD* elboard;  // 電光掲示板管理オブジェクト
+  HEAPID                       heapID;  // 使用するヒープID
+  GOBJ_ELBOARD*               elboard;  // 電光掲示板管理オブジェクト
+  u16 weatherZoneID[WEATHER_ZONE_NUM];  // 天気を表示するゾーン
 } GATEWORK;
 
 
@@ -469,9 +470,6 @@ static GATEWORK* CreateGateWork( FIELDMAP_WORK* fieldmap )
   work = (GATEWORK*)GFL_HEAP_AllocMemory( heap_id, sizeof(GATEWORK) );
   GFL_STD_MemClear( work, sizeof(GATEWORK) );
 
-  // ヒープIDを記憶
-  work->heapID = heap_id;
-
   // 電光掲示板データを取得
   if( !LoadGateData( &elboard_data, fieldmap ) )
   {
@@ -488,13 +486,22 @@ static GATEWORK* CreateGateWork( FIELDMAP_WORK* fieldmap )
   // 電光掲示板管理ワークを作成
   {
     ELBOARD_PARAM param;
-    param.heapID       = work->heapID;
+    param.heapID       = heap_id;
     param.maxNewsNum   = NEWS_NUM;
     param.dispSize     = DISPLAY_SIZE;
     param.newsInterval = NEWS_INTERVAL;
     param.g3dObj       = FLD_EXP_OBJ_GetUnitObj( exobj_cnt, EXPOBJ_UNIT_ELBOARD, OBJ_ELBOARD );
-    work->elboard = GOBJ_ELBOARD_Create( &param );
+    work->elboard      = GOBJ_ELBOARD_Create( &param );
   } 
+
+  // ヒープIDを記憶
+  work->heapID = heap_id;
+
+  // 天気を表示するゾーンを記憶
+  work->weatherZoneID[0] = elboard_data.zoneID_weather_1;
+  work->weatherZoneID[1] = elboard_data.zoneID_weather_2;
+  work->weatherZoneID[2] = elboard_data.zoneID_weather_3;
+  work->weatherZoneID[3] = elboard_data.zoneID_weather_4;
   return work;
 }
 
