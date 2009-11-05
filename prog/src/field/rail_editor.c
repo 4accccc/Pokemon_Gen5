@@ -1373,6 +1373,19 @@ static void RE_Reflect_Rail( DEBUG_RAIL_EDITOR* p_wk )
   FLDNOGRID_MAPPER_DEBUG_LoadRailBynary( p_nogridMapper, p_setdata, (p_wk->p_recv->rail_size  - 8) );
 
 	// ロケーション設定
+  {
+    const FIELD_RAIL_LOADER* cp_loader = FLDNOGRID_MAPPER_GetRailLoader( p_nogridMapper );
+    const RAIL_SETTING* cp_setting = FIELD_RAIL_LOADER_GetData( cp_loader );
+    
+    // ラインインデックスが範囲内？
+    if( cp_setting->line_count <= location.rail_index )
+    {
+      location.rail_index = 0;
+    }
+    // グリッドを０に戻す
+    location.width_grid = 0;
+    location.line_grid = 0;
+  }
 	FIELD_PLAYER_NOGRID_SetLocation( p_wk->p_railplayer, &location );
 
 	// 描画反映

@@ -63,21 +63,7 @@ typedef struct _RAIL_LINE RAIL_LINE;
 #define RAIL_CAMERA_SET_WORK_SIZ	(32)
 typedef struct _RAIL_CAMERA_SET{
   u32 func_index;
-	union
-	{
-		struct
-		{
-			u32 param0;
-			u32 param1;
-			u32 param2;
-			u32 param3;
-			u32 param4;
-			u32 param5;
-			u32 param6;
-			u32 param7;
-		};
-		u8 work[RAIL_CAMERA_SET_WORK_SIZ];
-	};
+	u8 work[RAIL_CAMERA_SET_WORK_SIZ];
 }RAIL_CAMERA_SET;
 
 //------------------------------------------------------------------
@@ -88,21 +74,7 @@ typedef struct _RAIL_CAMERA_SET{
 typedef struct _RAIL_LINEPOS_SET{
   u32 func_index;
   //u32 func_dist_index;  // lineÉfÅ[É^Ç…line_grid_maxÇì¸ÇÍÇΩÇÃÇ≈îpé~
-	union
-	{
-		struct
-		{
-			u32 param0;
-			u32 param1;
-			u32 param2;
-			u32 param3;
-			u32 param4;
-			u32 param5;
-			u32 param6;
-			u32 param7;
-		};
-		u8 work[RAIL_CAMERA_SET_WORK_SIZ];
-	};
+	u8 work[RAIL_CAMERA_SET_WORK_SIZ];
 }RAIL_LINEPOS_SET;
 
 
