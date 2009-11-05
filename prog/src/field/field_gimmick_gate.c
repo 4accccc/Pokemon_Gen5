@@ -577,10 +577,14 @@ static void AddNews_DATE( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
   HEAPID heap_id; 
   NEWS_PARAM news;
   WORDSET* wordset;
+  RTCDate date;
 
   // ワードセット作成
   heap_id = GOBJ_ELBOARD_GetHeapID( elboard );
   wordset = WORDSET_Create( heap_id );
+  RTC_GetDate( &date );
+  WORDSET_RegisterNumber( wordset, 0, date.month, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
+  WORDSET_RegisterNumber( wordset, 1, date.day,   2, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
 
   // ニュースパラメータを作成
   news.animeIndex = news_anm_index[NEWS_DATE];
@@ -589,7 +593,7 @@ static void AddNews_DATE( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
   news.msgArcID   = ARCID_MESSAGE;
   news.msgDatID   = NARC_message_gate_dat;
   news.msgStrID   = data->msgID_date;
-  news.wordset    = NULL;
+  news.wordset    = wordset;
 
   // ニュースを追加
   GOBJ_ELBOARD_AddNews( elboard, &news );
