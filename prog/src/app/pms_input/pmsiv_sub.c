@@ -165,7 +165,7 @@ PMSIV_SUB*  PMSIV_SUB_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, co
 	wk->vwk = vwk;
 	wk->mwk = mwk;
 	wk->dwk = dwk;
-	wk->actsys = PMSIView_GetActSys(vwk);
+	wk->actsys = PMSIView_GetCellUnit(vwk);
 
 	wk->up_button = NULL;
 	wk->down_button = NULL;

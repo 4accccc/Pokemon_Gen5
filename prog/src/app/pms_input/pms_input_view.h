@@ -180,7 +180,7 @@ typedef struct
 }PMSIV_CELL_RES;
 
 extern GFL_TCB* PMSIView_AddVTask( GFL_TCB_FUNC func, void* wk, int pri );
-extern GFL_CLUNIT*  PMSIView_GetActSys( PMS_INPUT_VIEW* vwk );
+extern GFL_CLUNIT*  PMSIView_GetCellUnit( PMS_INPUT_VIEW* vwk );
 extern GFL_FONT*  PMSIView_GetFontHandle( PMS_INPUT_VIEW* vwk );
 extern PRINT_QUE* PMSIView_GetPrintQue( PMS_INPUT_VIEW* vwk );
 //extern NNSG2dImageProxy*  PMSIView_GetObjImageProxy( PMS_INPUT_VIEW* vwk, int lcd );

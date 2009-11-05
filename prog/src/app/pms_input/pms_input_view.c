@@ -12,9 +12,6 @@
 #include "system\gfl_use.h"
 #include "system\wipe.h"
 
-//タッチバー
-#include "ui/touchbar.h"
-
 #include "savedata\save_control.h"
 #include "print\printsys.h"
 
@@ -65,8 +62,6 @@ struct _PMS_INPUT_VIEW {
 	PMSIV_WORDWIN*		wordwin_wk;
 	PMSIV_SUB*			  sub_wk; // 現状SUBBGの読み込みだけに使われているようだったので全てコメントアウトした
   PMSIV_MENU*       menu_wk;
-
-  TOUCHBAR_WORK*    touchbar;
 
 	u8					status;
 	u8					key_mode;
@@ -450,52 +445,6 @@ static void DeleteCommand( COMMAND_WORK* cwk )
 //==============================================================================================
 //==============================================================================================
 
-//-----------------------------------------------------------------------------
-/**
- *	@brief  タッチバーの設定
- *
- *	@param	GFL_CLUNIT* unit
- *	@param	heap_id 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static TOUCHBAR_WORK* touchbar_init( GFL_CLUNIT* clunit, HEAPID heap_id )
-{
-  TOUCHBAR_WORK* wk;
-
-  //アイコンの設定
-	//数分作る
-	TOUCHBAR_SETUP	touchbar_setup = {0};
-
-	TOUCHBAR_ITEM_ICON touchbar_icon_tbl[]	=
-	{	
-		{	
-			TOUCHBAR_ICON_RETURN,
-			{	TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
-		},
-	};
-  // @TODO 左右、カテゴリ、イニシャル切替ボタンはタッチバーで管理しないほうが良さそう
-
-	//設定構造体
-	//さきほどの窓情報＋リソース情報をいれる
-	touchbar_setup.p_item		= touchbar_icon_tbl;				//上の窓情報
-	touchbar_setup.item_num	= NELEMS(touchbar_icon_tbl);//いくつ窓があるか
-	touchbar_setup.p_unit		= clunit;										//OBJ読み込みのためのCLUNIT
-	touchbar_setup.bar_frm	= FRM_MAIN_BAR;					//BG読み込みのためのBG面
-	touchbar_setup.bg_plt		= PALNUM_MAIN_TOUCHBAR;			//BGﾊﾟﾚｯﾄ
-	touchbar_setup.obj_plt	= PALNUM_OBJ_M_TOUCHBAR;		//OBJﾊﾟﾚｯﾄ
-	touchbar_setup.mapping	= APP_COMMON_MAPPING_64K;	//マッピングモード
-  touchbar_setup.is_notload_bg = TRUE;
-
-  wk = TOUCHBAR_Init( &touchbar_setup, heap_id );
-
-  // 一端全部消しておく
-  TOUCHBAR_SetVisibleAll( wk, FALSE );
-
-  return wk;
-}
-
 //----------------------------------------------------------------------------------------------
 /**
 	* 描画コマンド：画面構築
@@ -549,9 +498,6 @@ static void Cmd_Init( GFL_TCB *tcb, void* wk_adrs )
 
 //	cwk->vwk->sub_wk = PMSIV_SUB_Create( cwk->vwk, cwk->mwk, cwk->dwk );
 //	PMSIV_SUB_SetupGraphicDatas( cwk->vwk->sub_wk, p_handle );
-
-  // タッチバー
-  cwk->vwk->touchbar = touchbar_init( cwk->vwk->cellUnit, HEAPID_PMS_INPUT_VIEW );
 
   // メニュー
   cwk->vwk->menu_wk = PMSIV_MENU_Create( cwk->vwk, cwk->mwk, cwk->dwk );
@@ -626,9 +572,6 @@ static void Cmd_Quit( GFL_TCB *tcb, void* wk_adrs )
 			PMSIV_CATEGORY_Delete( cwk->vwk->category_wk );
 			PMSIV_WORDWIN_Delete( cwk->vwk->wordwin_wk );
 //		PMSIV_SUB_Delete( cwk->vwk->sub_wk );
-
-      // タッチバー開放
-      TOUCHBAR_Exit( cwk->vwk->touchbar );
 
 			for(i=0; i<2; i++)
 			{
@@ -942,6 +885,7 @@ static void Cmd_EditAreaToCategory( GFL_TCB *tcb, void* wk_adrs )
 	
 	switch( wk->seq ){
 	case 0:
+    HOSAKA_Printf("Cmd_EditAreaToCategory\n");
 		PMSIV_EDIT_StopCursor( vwk->edit_wk );
 		PMSIV_EDIT_StopArrow( vwk->edit_wk );
 		PMSIV_EDIT_ChangeSMsgWin(vwk->edit_wk,1);
@@ -1065,7 +1009,8 @@ static void Cmd_CategoryToEditArea( GFL_TCB *tcb, void* wk_adrs )
 
 	switch( wk->seq ){
 	case 0:
-//		PMSIV_BUTTON_Appear( vwk->button_wk );
+    HOSAKA_Printf("Cmd_CategoryToEditArea\n");
+//	PMSIV_BUTTON_Appear( vwk->button_wk );
     PMSIV_MENU_SetupEdit( vwk->menu_wk );
 		PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, FALSE );
 		PMSIV_CATEGORY_StartDisableBG( vwk->category_wk );
@@ -1653,7 +1598,7 @@ int PMSIView_WaitYesNo(PMS_INPUT_VIEW* wk)
 // 下請けモジュールへの情報提供
 //==============================================================================================
 
-GFL_CLUNIT*  PMSIView_GetActSys( PMS_INPUT_VIEW* vwk )
+GFL_CLUNIT*  PMSIView_GetCellUnit( PMS_INPUT_VIEW* vwk )
 {
 	return vwk->cellUnit;
 }
