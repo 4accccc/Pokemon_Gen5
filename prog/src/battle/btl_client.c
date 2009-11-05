@@ -25,8 +25,6 @@
 
 #include "btl_client.h"
 
-#define SOGA_DEBUG  //暫定でsogaがデバッグした箇所
-
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
 /*--------------------------------------------------------------------------*/
@@ -495,10 +493,6 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
       }
 
       wk->shooterCost[ wk->procPokeIdx ] = 0;
-#ifndef SOGA_DEBUG
-      //ここだと常にインクリメントされてしまう
-      wk->checkedPokeCnt++;
-#endif
     }
     break;
 
@@ -598,6 +592,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
   case SEQ_CHECK_DONE:
     BTLV_UI_Restart( wk->viewCore );
     wk->procPokeIdx++;
+    wk->checkedPokeCnt++;
     if( wk->procPokeIdx >= wk->numCoverPos )
     {
       BTL_Printf("カバー位置数(%d)終了、アクション送信へ\n", wk->numCoverPos);
@@ -607,10 +602,6 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
     }
     else{
       (*seq) = SEQ_CHECK_UNSEL_ACTION;
-#ifdef SOGA_DEBUG
-        //コマンド入力の終了でインクリメントする
-        wk->checkedPokeCnt++;
-#endif
     }
     break;
 
@@ -1831,9 +1822,7 @@ static BOOL scProc_ACT_WazaIchigeki( BTL_CLIENT* wk, int* seq, const int* args )
     if( BTLV_WaitDeadAct( wk->viewCore ) )
     {
       BTLV_StartMsgStd( wk->viewCore, BTL_STRID_STD_Ichigeki, args );
-#ifdef SOGA_DEBUG
       (*seq)++;
-#endif
     }
     break;
 
