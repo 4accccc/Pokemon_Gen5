@@ -461,7 +461,7 @@ extern u8 PRINTSYS_GetTagLine( const STRBUF* str, u8 tag_id );
  * @param   margin  字間スペース（ドット）
  *
  * @retval  u8      X座標（ドット）
- * 
+ *
  * @note  add by genya hosaka
  */
 //=============================================================================================
@@ -575,8 +575,8 @@ typedef enum {
 typedef enum {
   PRINTSYS_CTRL_GENERAL_COLOR        = (0x0000), ///< 色変更
   PRINTSYS_CTRL_GENERAL_RESET_COLOR  = (0x0001), ///< 色変更
-  PRINTSYS_CTRL_GENERAL_X_RIGHTFIT   = (0x0002), ///< Ｘ座標右寄せ
-  PRINTSYS_CTRL_GENERAL_X_CENTERING  = (0x0003), ///< Ｘ座標センタリング
+  PRINTSYS_CTRL_GENERAL_X_CENTERING  = (0x0002), ///< Ｘ座標右寄せ
+  PRINTSYS_CTRL_GENERAL_X_RIGHTFIT   = (0x0003), ///< Ｘ座標センタリング
   PRINTSYS_CTRL_GENERAL_X_ADD        = (0x0004), ///< Ｘ座標を加算
 }PrintSysGenCtrlCode;
 
