@@ -57,6 +57,7 @@ extern MAPATTR RAIL_ATTR_GetAttribute( const RAIL_ATTR_DATA* cp_work, const RAIL
 
 // レールマップ用アトリビュートVALUEチェック
 extern BOOL RAIL_ATTR_VALUE_CheckSlipDown( const MAPATTR_VALUE val );
+extern BOOL RAIL_ATTR_VALUE_CheckHybridBaseSystemChange( const MAPATTR_VALUE val );
 
 
 #ifdef PM_DEBUG

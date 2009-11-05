@@ -257,6 +257,25 @@ BOOL RAIL_ATTR_VALUE_CheckSlipDown( const MAPATTR_VALUE val )
   return FALSE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ハイブリッドマップ　ベースシステムの変更アトリビュート
+ *
+ *	@param	val   
+ *
+ *	@retval TRUE
+ *  @retval FALSE
+ */
+//-----------------------------------------------------------------------------
+BOOL RAIL_ATTR_VALUE_CheckHybridBaseSystemChange( const MAPATTR_VALUE val )
+{
+  if( (val == 0xa3) )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
 
 
 #ifdef PM_DEBUG

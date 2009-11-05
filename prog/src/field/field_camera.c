@@ -164,6 +164,7 @@ static void traceUpdate(FIELD_CAMERA * camera);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void loadCameraParameters(FIELD_CAMERA * camera);
+static void loadInitialParameter( const FIELD_CAMERA* camera, FLD_CAMERA_PARAM * result );
 
 static void ControlParameter( FIELD_CAMERA * camera, u16 key_cont );
 static void ControlParameter_CalcCamera( FIELD_CAMERA * camera, u16 key_cont );
@@ -400,6 +401,18 @@ void FIELD_CAMERA_ChangeMode( FIELD_CAMERA * camera, FIELD_CAMERA_MODE mode )
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラにZONEのデフォルトパラメータを設定する。
+ *
+ *	@param	camera  カメラ
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_SetDefaultParameter( FIELD_CAMERA * camera )
+{
+  loadCameraParameters( camera );
+}
+
 
 //============================================================================================
 //
@@ -412,21 +425,11 @@ void FIELD_CAMERA_ChangeMode( FIELD_CAMERA * camera, FIELD_CAMERA_MODE mode )
 //------------------------------------------------------------------
 static void loadCameraParameters(FIELD_CAMERA * camera)
 {
-  enum {
-    FILE_ID = NARC_field_camera_data_field_camera_bin,
-    ARC_ID  = ARCID_FIELD_CAMERA,
-  };
   FLD_CAMERA_PARAM param;
-  ARCHANDLE * handle = GFL_ARC_OpenDataHandle(ARC_ID, camera->heapID);
-  u16 size = GFL_ARC_GetDataSizeByHandle(handle, FILE_ID);
-  if ( camera->type * sizeof(FLD_CAMERA_PARAM) >= size )
-  {
-    OS_TPrintf("カメラタイプ（%d）が指定できません\n", camera->type);
-    GF_ASSERT(0);
-    camera->type = 0;
-  }
-  GFL_ARC_LoadDataOfsByHandle(handle, FILE_ID,
-      camera->type * sizeof(FLD_CAMERA_PARAM), sizeof(FLD_CAMERA_PARAM), &param);
+
+  // パラメータ読み込み
+  loadInitialParameter( camera, &param );
+  
 #if 1
   TOMOYA_Printf("FIELD CAMERA INIT INFO\n");
   TOMOYA_Printf("FIELD CAMERA TYPE =%d\n",camera->type);
@@ -460,6 +463,32 @@ static void loadCameraParameters(FIELD_CAMERA * camera)
     GFL_G3D_CAMERA_SetfovySin( camera->g3Dcamera, FX_SinIdx( camera->fovy ) );
     GFL_G3D_CAMERA_SetfovyCos( camera->g3Dcamera, FX_CosIdx( camera->fovy ) );
   }
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デフォルトパラメータの取得
+ *
+ *	@param	camera
+ *	@param	result 
+ */
+//-----------------------------------------------------------------------------
+static void loadInitialParameter( const FIELD_CAMERA* camera, FLD_CAMERA_PARAM * result )
+{
+  enum {
+    FILE_ID = NARC_field_camera_data_field_camera_bin,
+    ARC_ID  = ARCID_FIELD_CAMERA,
+  };
+  ARCHANDLE * handle = GFL_ARC_OpenDataHandle(ARC_ID, camera->heapID);
+  u16 size = GFL_ARC_GetDataSizeByHandle(handle, FILE_ID);
+  if ( camera->type * sizeof(FLD_CAMERA_PARAM) >= size )
+  {
+    OS_TPrintf("カメラタイプ（%d）が指定できません\n", camera->type);
+    GF_ASSERT(0);
+  }
+  GFL_ARC_LoadDataOfsByHandle(handle, FILE_ID,
+      camera->type * sizeof(FLD_CAMERA_PARAM), sizeof(FLD_CAMERA_PARAM), result);
 
 	GFL_ARC_CloseDataHandle(handle);
 }
@@ -1282,21 +1311,8 @@ const VecFx32* FIELD_CAMERA_DEBUG_GetDefaultTarget( const FIELD_CAMERA* camera )
 //----------------------------------------------------------------------------- 
 void FIELD_CAMERA_GetInitialParameter( const FIELD_CAMERA* camera, FLD_CAMERA_PARAM * result)
 {
-  enum {
-    FILE_ID = NARC_field_camera_data_field_camera_bin,
-    ARC_ID  = ARCID_FIELD_CAMERA,
-  };
-  ARCHANDLE * handle = GFL_ARC_OpenDataHandle(ARC_ID, camera->heapID);
-  u16 size = GFL_ARC_GetDataSizeByHandle(handle, FILE_ID);
-  if ( camera->type * sizeof(FLD_CAMERA_PARAM) >= size )
-  {
-    OS_TPrintf("カメラタイプ（%d）が指定できません\n", camera->type);
-    GF_ASSERT(0);
-  }
-  GFL_ARC_LoadDataOfsByHandle(handle, FILE_ID,
-      camera->type * sizeof(FLD_CAMERA_PARAM), sizeof(FLD_CAMERA_PARAM), result);
-
-	GFL_ARC_CloseDataHandle(handle);
+  // パラメータ読み込み
+  loadInitialParameter( camera, result );
 }
 
 #endif  //PM_DEBUG

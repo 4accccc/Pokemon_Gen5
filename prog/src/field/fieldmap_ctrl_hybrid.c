@@ -46,6 +46,9 @@ struct _FIELDMAP_CTRL_HYBRID
   FIELD_PLAYER*         p_player;
 	FIELD_PLAYER_GRID*    p_player_grid;
 	FIELD_PLAYER_NOGRID*  p_player_nogrid;
+
+
+  BOOL last_move;
 };
 
 
@@ -273,35 +276,53 @@ static void mapCtrlHybrid_Main_Grid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
 {
   int key_trg = GFL_UI_KEY_GetTrg();
   int key_cont = GFL_UI_KEY_GetCont();
+  MAPATTR attr;
+  MAPATTR_VALUE value;
 
 	FIELD_PLAYER_GRID_Move( p_wk->p_player_grid, key_trg, key_cont );
 
   // 動作できないとき、レール動作への遷移を試みる
-  if( FIELD_PLAYER_GetMoveValue( p_wk->p_player ) == PLAYER_MOVE_VALUE_STOP )
+  if( (FIELD_PLAYER_GetMoveValue( p_wk->p_player ) == PLAYER_MOVE_VALUE_STOP) && (p_wk->last_move == TRUE) )
   {
-    FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_fieldmap );
-    const FIELD_RAIL_MAN* cp_railman = FLDNOGRID_MAPPER_GetRailMan( p_mapper );
-    RAIL_LOCATION location;
-    VecFx32 hitpos;
-    VecFx32 startpos, endpos;
-    BOOL result;
+    // アトリビュートの取得
+    attr = FIELD_PLAYER_GetMapAttr( p_wk->p_player );
+    value = MAPATTR_GetAttrValue( attr );
 
-    // 開始ポジション
-    FIELD_PLAYER_GetPos( p_wk->p_player, &startpos );
-    VEC_Set( &endpos, startpos.x, 
-        startpos.y + FIELDMAP_CTRL_HYBRID_RAILPLANE_CHECK_Y,
-        startpos.z );
-    startpos.y -= FIELDMAP_CTRL_HYBRID_RAILPLANE_CHECK_Y;
-
-    // レール上の位置を取得、設定し、試す
-    result = FIELD_RAIL_MAN_Calc3DVecRailLocation( cp_railman, &startpos, &endpos, &location, &hitpos );
-
-    if( result == TRUE )
+    if( RAIL_ATTR_VALUE_CheckHybridBaseSystemChange( value ) )
     {
-      // レールに変更
-      mapCtrlHybrid_ChangeBaseSystem( p_fieldmap, p_wk, FLDMAP_BASESYS_RAIL, &location );
+    
+      FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_fieldmap );
+      const FIELD_RAIL_MAN* cp_railman = FLDNOGRID_MAPPER_GetRailMan( p_mapper );
+      RAIL_LOCATION location;
+      VecFx32 hitpos;
+      VecFx32 startpos, endpos;
+      BOOL result;
+
+      // 開始ポジション
+      FIELD_PLAYER_GetPos( p_wk->p_player, &startpos );
+      VEC_Set( &endpos, startpos.x, 
+          startpos.y + FIELDMAP_CTRL_HYBRID_RAILPLANE_CHECK_Y,
+          startpos.z );
+      startpos.y -= FIELDMAP_CTRL_HYBRID_RAILPLANE_CHECK_Y;
+
+      // レール上の位置を取得、設定し、試す
+      result = FIELD_RAIL_MAN_Calc3DVecRailLocation( cp_railman, &startpos, &endpos, &location, &hitpos );
+
+      if( result == TRUE )
+      {
+        // レールに変更
+        mapCtrlHybrid_ChangeBaseSystem( p_fieldmap, p_wk, FLDMAP_BASESYS_RAIL, &location );
+      }
     }
+
+    p_wk->last_move = FALSE;
   }
+  // 移動したら、移動したことを設定
+  else if( (FIELD_PLAYER_GetMoveValue( p_wk->p_player ) == PLAYER_MOVE_VALUE_WALK) )
+  {
+    p_wk->last_move = TRUE;
+  }
+
 }
 
 //----------------------------------------------------------------------------
@@ -313,20 +334,35 @@ static void mapCtrlHybrid_Main_Rail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
 {
   int key_trg = GFL_UI_KEY_GetTrg();
   int key_cont = GFL_UI_KEY_GetCont();
+  MAPATTR attr;
+  MAPATTR_VALUE value;
 
   FIELD_PLAYER_NOGRID_Move( p_wk->p_player_nogrid, key_trg, key_cont );
 
-  // 動作できないとき、グリッド動作への遷移を試みる
-  if( FIELD_PLAYER_NOGRID_IsHitch( p_wk->p_player_nogrid ) )
+  // 動作できないとき、レール動作への遷移を試みる
+  if( FIELD_PLAYER_GetMoveValue( p_wk->p_player ) == PLAYER_MOVE_VALUE_STOP )
   {
-    VecFx32 pos;
 
-    FIELD_PLAYER_GetPos( p_wk->p_player, &pos );
+    // アトリビュートの取得
+    attr = FIELD_PLAYER_GetMapAttr( p_wk->p_player );
+    value = MAPATTR_GetAttrValue( attr );
     
-    // 移動可能なグリッドか？
-    
-    // グリッドに変更
-    mapCtrlHybrid_ChangeBaseSystem( p_fieldmap, p_wk, FLDMAP_BASESYS_GRID, &pos );
+    if( RAIL_ATTR_VALUE_CheckHybridBaseSystemChange( value ) )
+    {
+      VecFx32 pos;
+
+      FIELD_PLAYER_GetPos( p_wk->p_player, &pos );
+      
+      // グリッドに変更
+      mapCtrlHybrid_ChangeBaseSystem( p_fieldmap, p_wk, FLDMAP_BASESYS_GRID, &pos );
+    }
+
+    p_wk->last_move = FALSE;
+  }
+  // 移動したら、移動したことを設定
+  else if( (FIELD_PLAYER_GetMoveValue( p_wk->p_player ) == PLAYER_MOVE_VALUE_WALK) )
+  {
+    p_wk->last_move = TRUE;
   }
 }
 
@@ -386,6 +422,9 @@ static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
     FLDNOGRID_MAPPER_UnBindCameraWork( p_mapper );
     FIELD_CAMERA_ChangeMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
     FIELD_CAMERA_BindDefaultTarget( p_camera );
+
+    // カメラ状態をデフォルト値に戻す
+    FIELD_CAMERA_SetDefaultParameter( p_camera );
   }
   else
   {
