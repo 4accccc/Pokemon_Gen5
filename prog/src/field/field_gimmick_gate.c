@@ -344,7 +344,7 @@ void GATE_GIMMICK_Elboard_SetupNormalNews( FIELDMAP_WORK* fieldmap )
 {
   GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
-  GIMMICKWORK*  gmkwork = GAME_DATA_GetGimmickWork( gdata );
+  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork( gdata );
   int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
   u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, gmk_id );
   GATEWORK*        work = (GATEWORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
@@ -574,8 +574,13 @@ static void SetElboardPos( GFL_G3D_OBJSTATUS* status, ELBOARD_ZONE_DATA* data )
 //------------------------------------------------------------------------------------------
 static void AddNews_DATE( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
 {
+  HEAPID heap_id; 
   NEWS_PARAM news;
   WORDSET* wordset;
+
+  // ワードセット作成
+  heap_id = GOBJ_ELBOARD_GetHeapID( elboard );
+  wordset = WORDSET_Create( heap_id );
 
   // ニュースパラメータを作成
   news.animeIndex = news_anm_index[NEWS_DATE];
@@ -588,6 +593,9 @@ static void AddNews_DATE( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
 
   // ニュースを追加
   GOBJ_ELBOARD_AddNews( elboard, &news );
+
+  // ワードセット破棄
+  WORDSET_Delete( wordset );
 }
 
 //------------------------------------------------------------------------------------------
