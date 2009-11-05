@@ -26,11 +26,11 @@
 	*/
 //-------------------------------------------------------------
 enum {
-	INITIAL_WRITE_X_MARGIN = 13,		// ‚P•¶Žš‚²‚Æ‚Ì•`‰æ•
-	INITIAL_WRITE_Y_MARGIN = 16,		// ‚P•¶Žš‚²‚Æ‚Ì•`‰æ‚‚³
+	INITIAL_WRITE_X_MARGIN = 8*3,//13,		// ‚P•¶Žš‚²‚Æ‚Ì•`‰æ•
+	INITIAL_WRITE_Y_MARGIN = 16+8//16,		// ‚P•¶Žš‚²‚Æ‚Ì•`‰æ‚‚³
 };
 
-#define INITIAL_XPOS(n)	((n)*INITIAL_WRITE_X_MARGIN)
+#define INITIAL_XPOS(n)	( (n)*INITIAL_WRITE_X_MARGIN + ( ((n)>=6) ? -16 : 0 ) ) ///< 6ˆÈã‚Í¶‚ÉŠñ‚¹‚é‚±‚Æ‚Åƒ}[ƒWƒ“‚ð•\Œ»
 #define INITIAL_YPOS(n)	((n)*INITIAL_WRITE_Y_MARGIN)
 
 #if 0
@@ -114,66 +114,63 @@ static const struct {
 	u8			col_bottom;
 }InitialParamTbl[] = {
 
-	{ L'‚ ',  INITIAL_XPOS(0),  INITIAL_YPOS(0), INI_BACK,    INI_KA,      INI_YO,    INI_I,     INI_A,   INI_TA, },
-	{ L'‚¢',  INITIAL_XPOS(1),  INITIAL_YPOS(0), INI_BACK,    INI_KI,      INI_A,     INI_U,     INI_I,   INI_TI, },
-	{ L'‚¤',  INITIAL_XPOS(2),  INITIAL_YPOS(0), INI_BACK,    INI_KU,      INI_I,     INI_E,     INI_U,   INI_TU, },
-	{ L'‚¦',  INITIAL_XPOS(3),  INITIAL_YPOS(0), INI_BACK,    INI_KE,      INI_U,     INI_O,     INI_E,   INI_TE, },
-	{ L'‚¨',  INITIAL_XPOS(4),  INITIAL_YPOS(0), INI_BACK,    INI_KO,      INI_E,     INI_NA,    INI_O,   INI_TO, },
-	{ L'‚©',  INITIAL_XPOS(0),  INITIAL_YPOS(1), INI_A,       INI_SA,      INI_OTHER, INI_KI,    INI_A,   INI_TA, },
-	{ L'‚«',  INITIAL_XPOS(1),  INITIAL_YPOS(1), INI_I,       INI_SI,      INI_KA,    INI_KU,    INI_I,   INI_TI, },
-	{ L'‚­',  INITIAL_XPOS(2),  INITIAL_YPOS(1), INI_U,       INI_SU,      INI_KI,    INI_KE,    INI_U,   INI_TU, },
-	{ L'‚¯',  INITIAL_XPOS(3),  INITIAL_YPOS(1), INI_E,       INI_SE,      INI_KU,    INI_KO,    INI_E,   INI_TE, },
-	{ L'‚±',  INITIAL_XPOS(4),  INITIAL_YPOS(1), INI_O,       INI_SO,      INI_KE,    INI_HA,    INI_O,   INI_TO, },
-	{ L'‚³',  INITIAL_XPOS(0),  INITIAL_YPOS(2), INI_KA,      INI_TA,      INI_MO,    INI_SI,    INI_A,   INI_TA, },
-	{ L'‚µ',  INITIAL_XPOS(1),  INITIAL_YPOS(2), INI_KI,      INI_TI,      INI_SA,    INI_SU,    INI_I,   INI_TI, },
-	{ L'‚·',  INITIAL_XPOS(2),  INITIAL_YPOS(2), INI_KU,      INI_TU,      INI_SI,    INI_SE,    INI_U,   INI_TU, },
-	{ L'‚¹',  INITIAL_XPOS(3),  INITIAL_YPOS(2), INI_KE,      INI_TE,      INI_SU,    INI_SO,    INI_E,   INI_TE, },
-	{ L'‚»',  INITIAL_XPOS(4),  INITIAL_YPOS(2), INI_KO,      INI_TO,      INI_SE,    INI_MA,    INI_O,   INI_TO, },
-	{ L'‚½',  INITIAL_XPOS(0),  INITIAL_YPOS(3), INI_SA,      INI_BACK,    INI_RO,    INI_TI,    INI_A,   INI_TA, },
-	{ L'‚¿',  INITIAL_XPOS(1),  INITIAL_YPOS(3), INI_SI,      INI_BACK,    INI_TA,    INI_TU,    INI_I,   INI_TI, },
-	{ L'‚Â',  INITIAL_XPOS(2),  INITIAL_YPOS(3), INI_SU,      INI_BACK,    INI_TI,    INI_TE,    INI_U,   INI_TU, },
-	{ L'‚Ä',  INITIAL_XPOS(3),  INITIAL_YPOS(3), INI_SE,      INI_BACK,    INI_TU,    INI_TO,    INI_E,   INI_TE, },
-	{ L'‚Æ',  INITIAL_XPOS(4),  INITIAL_YPOS(3), INI_SO,      INI_BACK,    INI_TE,    INI_RA,    INI_O,   INI_TO, },
-	{ L'‚È',  INITIAL_XPOS(6),  INITIAL_YPOS(0), INI_BACK,    INI_HA,      INI_O,     INI_NI,    INI_NA,  INI_RA, },
-	{ L'‚É',  INITIAL_XPOS(7),  INITIAL_YPOS(0), INI_BACK,    INI_HI,      INI_NA,    INI_NU,    INI_NI,  INI_RI, },
-	{ L'‚Ê',  INITIAL_XPOS(8),  INITIAL_YPOS(0), INI_BACK,    INI_HU,      INI_NI,    INI_NE,    INI_NU,  INI_RU, },
-	{ L'‚Ë',  INITIAL_XPOS(9),  INITIAL_YPOS(0), INI_BACK,    INI_HE,      INI_NU,    INI_NO,    INI_NE,  INI_RE, },
-	{ L'‚Ì',  INITIAL_XPOS(10), INITIAL_YPOS(0), INI_BACK,    INI_HO,      INI_NE,    INI_YA,    INI_NO,  INI_RO, },
-	{ L'‚Í',  INITIAL_XPOS(6),  INITIAL_YPOS(1), INI_NA,      INI_MA,      INI_KO,    INI_HI,    INI_NA,  INI_RA, },
-	{ L'‚Ð',  INITIAL_XPOS(7),  INITIAL_YPOS(1), INI_NI,      INI_MI,      INI_HA,    INI_HU,    INI_NI,  INI_RI, },
-	{ L'‚Ó',  INITIAL_XPOS(8),  INITIAL_YPOS(1), INI_NU,      INI_MU,      INI_HI,    INI_HE,    INI_NU,  INI_RU, },
-	{ L'‚Ö',  INITIAL_XPOS(9),  INITIAL_YPOS(1), INI_NE,      INI_ME,      INI_HU,    INI_HO,    INI_NE,  INI_RE, },
-	{ L'‚Ù',  INITIAL_XPOS(10), INITIAL_YPOS(1), INI_NO,      INI_MO,      INI_HE,    INI_WA,    INI_NO,  INI_RO, },
-	{ L'‚Ü',  INITIAL_XPOS(6),  INITIAL_YPOS(2), INI_HA,      INI_RA,      INI_SO,    INI_MI,    INI_NA,  INI_RA, },
-	{ L'‚Ý',  INITIAL_XPOS(7),  INITIAL_YPOS(2), INI_HI,      INI_RI,      INI_MA,    INI_MU,    INI_NI,  INI_RI, },
-	{ L'‚Þ',  INITIAL_XPOS(8),  INITIAL_YPOS(2), INI_HU,      INI_RU,      INI_MI,    INI_ME,    INI_NU,  INI_RU, },
-	{ L'‚ß',  INITIAL_XPOS(9),  INITIAL_YPOS(2), INI_HE,      INI_RE,      INI_MU,    INI_MO,    INI_NE,  INI_RE, },
-	{ L'‚à',  INITIAL_XPOS(10), INITIAL_YPOS(2), INI_HO,      INI_RO,      INI_ME,    INI_SA,    INI_NO,  INI_RO, },
-#if 1
-	{ L'‚â',  INITIAL_XPOS(12), INITIAL_YPOS(0), INI_BACK,    INI_WA,      INI_NO,    INI_YU,    INI_YA,  INI_WA, },
-	{ L'‚ä',  INITIAL_XPOS(13), INITIAL_YPOS(0), INI_BACK,    INI_OTHER,   INI_YA,    INI_YO,    INI_YU,  INI_OTHER, },
-	{ L'‚æ',  INITIAL_XPOS(14), INITIAL_YPOS(0), INI_BACK,    INI_BACK,    INI_YU,    INI_A,     INI_YO,  INI_YO, },
-	{ L'‚ç',  INITIAL_XPOS(6),  INITIAL_YPOS(3), INI_MA,      INI_BACK,    INI_TO,    INI_RI,    INI_NA,  INI_RA, },
-	{ L'‚è',  INITIAL_XPOS(7),  INITIAL_YPOS(3), INI_MI,      INI_BACK,    INI_RA,    INI_RU,    INI_NI,  INI_RI, },
-	{ L'‚é',  INITIAL_XPOS(8),  INITIAL_YPOS(3), INI_MU,      INI_BACK,    INI_RI,    INI_RE,    INI_NU,  INI_RU, },
-	{ L'‚ê',  INITIAL_XPOS(9),  INITIAL_YPOS(3), INI_ME,      INI_BACK,    INI_RU,    INI_RO,    INI_NE,  INI_RE, },
-	{ L'‚ë',  INITIAL_XPOS(10), INITIAL_YPOS(3), INI_MO,      INI_BACK,    INI_RE,    INI_TA,    INI_NO,  INI_RO, },
-#else
-	{ L'‚ç',  INITIAL_XPOS(6),  INITIAL_YPOS(3), INI_MA,      INI_BACK,    INI_TO,    INI_RI,    INI_NA,  INI_RA, },
-	{ L'‚è',  INITIAL_XPOS(7),  INITIAL_YPOS(3), INI_MI,      INI_BACK,    INI_RA,    INI_RU,    INI_NI,  INI_RI, },
-	{ L'‚é',  INITIAL_XPOS(8),  INITIAL_YPOS(3), INI_MU,      INI_BACK,    INI_RI,    INI_RE,    INI_NU,  INI_RU, },
-	{ L'‚ê',  INITIAL_XPOS(9),  INITIAL_YPOS(3), INI_ME,      INI_BACK,    INI_RU,    INI_RO,    INI_NE,  INI_RE, },
-	{ L'‚ë',  INITIAL_XPOS(10), INITIAL_YPOS(3), INI_MO,      INI_BACK,    INI_RE,    INI_TA,    INI_NO,  INI_RO, },
-	{ L'‚â',  INITIAL_XPOS(12), INITIAL_YPOS(0), INI_BACK,    INI_WA,      INI_NO,    INI_YU,    INI_YA,  INI_WA, },
-	{ L'‚ä',  INITIAL_XPOS(13), INITIAL_YPOS(0), INI_BACK,    INI_OTHER,   INI_YA,    INI_YO,    INI_YU,  INI_OTHER, },
-	{ L'‚æ',  INITIAL_XPOS(14), INITIAL_YPOS(0), INI_BACK,    INI_BACK,    INI_YU,    INI_A,     INI_YO,  INI_YO, },
-#endif
-	{ L'‚í',  INITIAL_XPOS(12), INITIAL_YPOS(1), INI_YA,      INI_BACK,    INI_HO,    INI_OTHER, INI_YA,  INI_WA, },
-	{ L'I',  INITIAL_XPOS(13), INITIAL_YPOS(1), INI_YU,      INI_BACK,    INI_WA,    INI_KA,    INI_YU,  INI_OTHER },
+	{ L'‚ ',  INITIAL_XPOS(0),  INITIAL_YPOS(0), INI_BACK,  INI_KA,    INI_HO,    INI_I,     INI_A,   INI_NA, },
+	{ L'‚¢',  INITIAL_XPOS(1),  INITIAL_YPOS(0), INI_BACK,  INI_KI,    INI_A,     INI_U,     INI_I,   INI_NI, },
+	{ L'‚¤',  INITIAL_XPOS(2),  INITIAL_YPOS(0), INI_BACK,  INI_KU,    INI_I,     INI_E,     INI_U,   INI_NU, },
+	{ L'‚¦',  INITIAL_XPOS(3),  INITIAL_YPOS(0), INI_BACK,  INI_KE,    INI_U,     INI_O,     INI_E,   INI_NE, },
+	{ L'‚¨',  INITIAL_XPOS(4),  INITIAL_YPOS(0), INI_BACK,  INI_KO,    INI_E,     INI_HA,    INI_O,   INI_NO, },
 
+	{ L'‚©',  INITIAL_XPOS(0),  INITIAL_YPOS(1), INI_A,     INI_SA,    INI_MO,    INI_KI,    INI_A,   INI_NA, },
+	{ L'‚«',  INITIAL_XPOS(1),  INITIAL_YPOS(1), INI_I,     INI_SI,    INI_KA,    INI_KU,    INI_I,   INI_NI, },
+	{ L'‚­',  INITIAL_XPOS(2),  INITIAL_YPOS(1), INI_U,     INI_SU,    INI_KI,    INI_KE,    INI_U,   INI_NU, },
+	{ L'‚¯',  INITIAL_XPOS(3),  INITIAL_YPOS(1), INI_E,     INI_SE,    INI_KU,    INI_KO,    INI_E,   INI_NE, },
+	{ L'‚±',  INITIAL_XPOS(4),  INITIAL_YPOS(1), INI_O,     INI_SO,    INI_KE,    INI_MA,    INI_O,   INI_NO, },
 
+	{ L'‚³',  INITIAL_XPOS(0),  INITIAL_YPOS(2), INI_KA,    INI_TA,    INI_YO,    INI_SI,    INI_A,   INI_NA, },
+	{ L'‚µ',  INITIAL_XPOS(1),  INITIAL_YPOS(2), INI_KI,    INI_TI,    INI_SA,    INI_SU,    INI_I,   INI_NI, },
+	{ L'‚·',  INITIAL_XPOS(2),  INITIAL_YPOS(2), INI_KU,    INI_TU,    INI_SI,    INI_SE,    INI_U,   INI_NU, },
+	{ L'‚¹',  INITIAL_XPOS(3),  INITIAL_YPOS(2), INI_KE,    INI_TE,    INI_SU,    INI_SO,    INI_E,   INI_NE, },
+	{ L'‚»',  INITIAL_XPOS(4),  INITIAL_YPOS(2), INI_KO,    INI_TO,    INI_SE,    INI_YA,    INI_O,   INI_NO, },
+
+	{ L'‚½',  INITIAL_XPOS(0),  INITIAL_YPOS(3), INI_SA,    INI_NA,    INI_RO,    INI_TI,    INI_A,   INI_NA, },
+	{ L'‚¿',  INITIAL_XPOS(1),  INITIAL_YPOS(3), INI_SI,    INI_NI,    INI_TA,    INI_TU,    INI_I,   INI_NI, },
+	{ L'‚Â',  INITIAL_XPOS(2),  INITIAL_YPOS(3), INI_SU,    INI_NU,    INI_TI,    INI_TE,    INI_U,   INI_NU, },
+	{ L'‚Ä',  INITIAL_XPOS(3),  INITIAL_YPOS(3), INI_SE,    INI_NE,    INI_TU,    INI_TO,    INI_E,   INI_NE, },
+	{ L'‚Æ',  INITIAL_XPOS(4),  INITIAL_YPOS(3), INI_SO,    INI_NO,    INI_TE,    INI_RA,    INI_O,   INI_NO, },
+
+	{ L'‚È',  INITIAL_XPOS(0),  INITIAL_YPOS(4), INI_TA,    INI_BACK,  INI_OTHER, INI_NI,    INI_A,  INI_NA, },
+	{ L'‚É',  INITIAL_XPOS(1),  INITIAL_YPOS(4), INI_TI,    INI_BACK,  INI_NA,    INI_NU,    INI_I,  INI_NI, },
+	{ L'‚Ê',  INITIAL_XPOS(2),  INITIAL_YPOS(4), INI_TU,    INI_BACK,  INI_NI,    INI_NE,    INI_U,  INI_NU, },
+	{ L'‚Ë',  INITIAL_XPOS(3),  INITIAL_YPOS(4), INI_TE,    INI_BACK,  INI_NU,    INI_NO,    INI_E,  INI_NE, },
+	{ L'‚Ì',  INITIAL_XPOS(4),  INITIAL_YPOS(4), INI_TO,    INI_BACK,  INI_NE,    INI_WA,    INI_O,  INI_NO, },
+
+  // X‰üs
+
+	{ L'‚Í',  INITIAL_XPOS(6),  INITIAL_YPOS(0), INI_BACK,  INI_MA,    INI_O,     INI_HI,   INI_HA,  INI_WA, },
+	{ L'‚Ð',  INITIAL_XPOS(7),  INITIAL_YPOS(0), INI_BACK,  INI_MI,    INI_HA,    INI_HU,   INI_HI,  INI_OTHER, },
+	{ L'‚Ó',  INITIAL_XPOS(8),  INITIAL_YPOS(0), INI_BACK,  INI_MU,    INI_HI,    INI_HE,   INI_HU,  INI_RU, },
+	{ L'‚Ö',  INITIAL_XPOS(9),  INITIAL_YPOS(0), INI_BACK,  INI_ME,    INI_HU,    INI_HO,   INI_HE,  INI_RE, },
+	{ L'‚Ù',  INITIAL_XPOS(10), INITIAL_YPOS(0), INI_BACK,  INI_MO,    INI_HE,    INI_A,    INI_HO,  INI_RO, },
+
+	{ L'‚Ü',  INITIAL_XPOS(6),  INITIAL_YPOS(1), INI_HA,    INI_YA,    INI_KO,    INI_MI,   INI_HA,  INI_WA, },
+	{ L'‚Ý',  INITIAL_XPOS(7),  INITIAL_YPOS(1), INI_HI,    INI_YU,    INI_MA,    INI_MU,   INI_HI,  INI_OTHER, },
+	{ L'‚Þ',  INITIAL_XPOS(8),  INITIAL_YPOS(1), INI_HU,    INI_YO,    INI_MI,    INI_ME,   INI_HU,  INI_RU, },
+	{ L'‚ß',  INITIAL_XPOS(9),  INITIAL_YPOS(1), INI_HE,    INI_RE,    INI_MU,    INI_MO,   INI_HE,  INI_RE, },
+	{ L'‚à',  INITIAL_XPOS(10), INITIAL_YPOS(1), INI_HO,    INI_RO,    INI_ME,    INI_KA,   INI_HO,  INI_RO, },
+
+	{ L'‚â',  INITIAL_XPOS(6), INITIAL_YPOS(2), INI_MA,     INI_RA,    INI_SO,    INI_YU,   INI_HA,  INI_WA, },
+	{ L'‚ä',  INITIAL_XPOS(7), INITIAL_YPOS(2), INI_MI,     INI_RI,    INI_YA,    INI_YO,   INI_HI,  INI_OTHER, },
+	{ L'‚æ',  INITIAL_XPOS(8), INITIAL_YPOS(2), INI_MU,     INI_RU,    INI_YU,    INI_SA,   INI_HU,  INI_RU, },
+
+	{ L'‚ç',  INITIAL_XPOS(6),  INITIAL_YPOS(3), INI_YA,    INI_WA,    INI_TO,    INI_RI,    INI_HA,  INI_WA, },
+	{ L'‚è',  INITIAL_XPOS(7),  INITIAL_YPOS(3), INI_YU,    INI_OTHER, INI_RA,    INI_RU,    INI_HI,  INI_OTHER, },
+	{ L'‚é',  INITIAL_XPOS(8),  INITIAL_YPOS(3), INI_YO,    INI_BACK,  INI_RI,    INI_RE,    INI_HU,  INI_RU, },
+	{ L'‚ê',  INITIAL_XPOS(9),  INITIAL_YPOS(3), INI_ME,    INI_BACK,  INI_RU,    INI_RO,    INI_HE,  INI_RE, },
+	{ L'‚ë',  INITIAL_XPOS(10), INITIAL_YPOS(3), INI_MO,    INI_BACK,  INI_RE,    INI_TA,    INI_HO,  INI_RO, },
+	
+  { L'‚í',  INITIAL_XPOS(6), INITIAL_YPOS(4), INI_RA,     INI_BACK,  INI_NO,    INI_OTHER, INI_HA,  INI_WA, },
+	{ L'I',  INITIAL_XPOS(7), INITIAL_YPOS(4), INI_RI,     INI_BACK,  INI_WA,    INI_NA,    INI_HI,  INI_OTHER },
 };
-
 
 
 

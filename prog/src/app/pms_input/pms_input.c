@@ -2144,6 +2144,7 @@ static BOOL keycheck_category_initial_mode( PMS_INPUT_WORK* wk )
 	{
 		int  next_pos = CATEGORY_POS_DISABLE;
 
+    // @TODO ‚±‚ê‚Í‰½‚Ì‚½‚ß‚Ì while?
 		do
 		{
 			if( wk->key_repeat & PAD_KEY_UP )

@@ -51,10 +51,10 @@ enum {
 
 	CATEGORY_WIN_ROWS = 3,
 
-	INITIAL_WIN_XORG = 34,
-	INITIAL_WIN_YORG = 10,
-	INITIAL_WIN_WIDTH = 25,
-	INITIAL_WIN_HEIGHT = 8,
+	INITIAL_WIN_XORG = 1,     ///< キャラ単位
+	INITIAL_WIN_YORG = 8,     ///< キャラ単位
+	INITIAL_WIN_WIDTH = 30,
+	INITIAL_WIN_HEIGHT = 14,
 	INITIAL_WIN_CHARSIZE = INITIAL_WIN_WIDTH*INITIAL_WIN_HEIGHT,
 
 	BACK_WIN_WIDTH = 8,
@@ -90,10 +90,8 @@ enum {
 	CATEGORY_CURSOR_BACK_XPOS = 28*8,//((CATEGORY_BACK_WIN_XORG*8)+ (CATEGORY_WIN_WIDTH*8)/2),
 	CATEGORY_CURSOR_BACK_YPOS = 22*8,//((CATEGORY_BACK_WIN_YORG*8)+ (CATEGORY_WIN_HEIGHT*8)/2) - CATEGORY_BG_ENABLE_YOFS,
 
-	INITIAL_CURSOR_OX = ((INITIAL_WIN_XORG-32)*8-GROUPMODE_BG_XOFS) + 6,
+	INITIAL_CURSOR_OX = ((INITIAL_WIN_XORG)*8-GROUPMODE_BG_XOFS) + 6,
 	INITIAL_CURSOR_OY = ((INITIAL_WIN_YORG*8)-CATEGORY_BG_ENABLE_YOFS) + 8,
-
-
 };
 
 enum {
@@ -149,7 +147,6 @@ struct _PMSIV_CATEGORY {
 //==============================================================
 static u32 setup_group_window( PMSIV_CATEGORY* wk, u32 charpos );
 static u32 setup_initial_window( PMSIV_CATEGORY* wk, u32 charpos );
-static u32 setup_back_window( PMSIV_CATEGORY* wk, u32 charpos );
 static void setup_actor( PMSIV_CATEGORY* wk );
 
 
@@ -213,14 +210,16 @@ void PMSIV_CATEGORY_Delete( PMSIV_CATEGORY* wk )
 }
 
 
-//------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 /**
-	* 
-	*
-	* @param   wk		
-	*
-	*/
-//------------------------------------------------------------------
+ *	@brief  カテゴリ グラフィック初期化
+ *
+ *	@param	PMSIV_CATEGORY* wk
+ *	@param	p_handle 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 void PMSIV_CATEGORY_SetupGraphicDatas( PMSIV_CATEGORY* wk, ARCHANDLE* p_handle )
 {
 	u32 charpos;
@@ -248,8 +247,6 @@ void PMSIV_CATEGORY_SetupGraphicDatas( PMSIV_CATEGORY* wk, ARCHANDLE* p_handle )
   charpos = setup_initial_window( wk, charpos );
   
   HOSAKA_Printf("BG FRM_MAIN_CATEGORY initial charpos=%d \n", charpos);
-	
-//  setup_back_window( wk, charpos );
 
 	GFL_BG_SetScroll( FRM_MAIN_CATEGORY, GFL_BG_SCROLL_X_SET, GROUPMODE_BG_XOFS );
 	GFL_BG_SetScroll( FRM_MAIN_CATEGORY, GFL_BG_SCROLL_Y_SET, CATEGORY_BG_DISABLE_YOFS );
@@ -267,6 +264,16 @@ void PMSIV_CATEGORY_SetupGraphicDatas( PMSIV_CATEGORY* wk, ARCHANDLE* p_handle )
 }
 
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	PMSIV_CATEGORY* wk
+ *	@param	charpos 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static u32 setup_group_window( PMSIV_CATEGORY* wk, u32 charpos )
 {
 	int i, x, y;
@@ -311,6 +318,7 @@ static u32 setup_group_window( PMSIV_CATEGORY* wk, u32 charpos )
 		print_xpos = ((CATEGORY_WIN_WIDTH*8)-PRINTSYS_GetStrWidth( str,fontHandle, 0))/2;
 		PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), print_xpos, 0, str,fontHandle );
 
+    // デフォルトはグループモードのため、生成と同時に転送
 		GFL_BMPWIN_MakeScreen( win );
 		GFL_BMPWIN_TransVramCharacter( win );
 
@@ -327,6 +335,16 @@ static u32 setup_group_window( PMSIV_CATEGORY* wk, u32 charpos )
 }
 
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	PMSIV_CATEGORY* wk
+ *	@param	charpos 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static u32 setup_initial_window( PMSIV_CATEGORY* wk, u32 charpos )
 {
 	GFL_BMPWIN  *win;
@@ -337,9 +355,6 @@ static u32 setup_initial_window( PMSIV_CATEGORY* wk, u32 charpos )
 
 	GF_ASSERT(charpos < (1024-INITIAL_WIN_CHARSIZE));
 
-//	GF_BGL_BmpWinAdd( &win, FRM_MAIN_CATEGORY, 
-//					INITIAL_WIN_XORG, INITIAL_WIN_YORG, INITIAL_WIN_WIDTH, INITIAL_WIN_HEIGHT,
-//					PALNUM_MAIN_CATEGORY, charpos );
 	win = GFL_BMPWIN_Create( FRM_MAIN_CATEGORY, INITIAL_WIN_XORG, INITIAL_WIN_YORG, 
 					INITIAL_WIN_WIDTH, INITIAL_WIN_HEIGHT, 
 					PALNUM_MAIN_CATEGORY,GFL_BMP_CHRAREA_GET_B );
@@ -348,7 +363,6 @@ static u32 setup_initial_window( PMSIV_CATEGORY* wk, u32 charpos )
 
 	buf = GFL_STR_CreateBuffer(4, HEAPID_PMS_INPUT_VIEW);
 
-//	GF_BGL_BmpWinDataFill( &win, CATEGORY_WIN_COL_GROUND );
 	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(win),CATEGORY_WIN_COL_GROUND);
 
 	initial_max = PMSI_INITIAL_DAT_GetInitialMax();
@@ -359,73 +373,23 @@ static u32 setup_initial_window( PMSIV_CATEGORY* wk, u32 charpos )
 
 		if( PMSI_DATA_GetInitialEnableWordCount(wk->dwk, i) )
 		{
-//			print_color = GF_PRINTCOLOR_MAKE(CATEGORY_WIN_COL_LETTER, CATEGORY_WIN_COL_SHADOW, CATEGORY_WIN_COL_GROUND);
 			GFL_FONTSYS_SetColor( CATEGORY_WIN_COL_LETTER, CATEGORY_WIN_COL_SHADOW, CATEGORY_WIN_COL_GROUND );
 		}
 		else
 		{
-//			print_color = GF_PRINTCOLOR_MAKE(CATEGORY_WIN_UNKNOWN_COL_LETTER, CATEGORY_WIN_UNKNOWN_COL_SHADOW, CATEGORY_WIN_COL_GROUND);
 			GFL_FONTSYS_SetColor( CATEGORY_WIN_UNKNOWN_COL_LETTER, CATEGORY_WIN_UNKNOWN_COL_SHADOW, CATEGORY_WIN_COL_GROUND );
 		}
-
 		
-//		GF_STR_PrintColor( &win, PMSI_FONT_CATEGORY, buf, 
-//					x, y, MSG_NO_PUT,print_color,NULL);
 		PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), x, y, buf,fontHandle );
 	}
 
-	GFL_BMPWIN_TransVramCharacter(win);
-	GFL_BMPWIN_MakeScreen(win);
+	  GFL_BMPWIN_TransVramCharacter(win);
+//	GFL_BMPWIN_MakeScreen(win);
 
 	GFL_STR_DeleteBuffer(buf);
-//	GFL_BMPWIN_Delete(win);
+
 	wk->winInitial = win;
 
-	return charpos;
-}
-
-static u32 setup_back_window( PMSIV_CATEGORY* wk, u32 charpos )
-{
-#if 0	//元がコメントアウト
-	static const struct {
-		u16  x;
-		u16  y;
-	}winpos_tbl[] = {
-		{ CATEGORY_BACK_WIN_XORG, CATEGORY_BACK_WIN_YORG },
-		{ INITIAL_BACK_WIN_XORG, INITIAL_BACK_WIN_YORG },
-	};
-	GF_BGL_BMPWIN  win;
-	MSGDATA_MANAGER* msgman;
-	STRBUF* str;
-	int i, print_xpos;
-
-	msgman = MSGMAN_Create( MSGMAN_TYPE_DIRECT, ARC_MSG, NARC_msg_pms_category_dat, HEAPID_PMS_INPUT_VIEW );
-	str = MSGMAN_AllocString( msgman, pms_category_back);
-	print_xpos = ((BACK_WIN_WIDTH*8)-FontProc_GetPrintStrWidth(PMSI_FONT_CATEGORY,str,0))/2;
-
-	for(i=0; i<NELEMS(winpos_tbl); i++)
-	{
-		GF_ASSERT(charpos < (1024-BACK_WIN_CHARSIZE));
-
-		GF_BGL_BmpWinAdd( &win, FRM_MAIN_CATEGORY, winpos_tbl[i].x, winpos_tbl[i].y,
-					BACK_WIN_WIDTH, BACK_WIN_HEIGHT, PALNUM_MAIN_CATEGORY, charpos );
-
-		GF_BGL_BmpWinDataFill( &win, CATEGORY_WIN_COL_GROUND );
-		GF_STR_PrintColor( &win, PMSI_FONT_CATEGORY, str, print_xpos, 0, MSG_NO_PUT,
-					GF_PRINTCOLOR_MAKE(CATEGORY_WIN_COL_LETTER, CATEGORY_WIN_COL_SHADOW, CATEGORY_WIN_COL_GROUND),
-					NULL);
-
-		GF_BGL_BmpWinMakeScrn(&win);
-		GF_BGL_BmpWinCgxOn(&win);
-
-//		GF_BGL_BmpWinDel(&win);
-
-		charpos += BACK_WIN_CHARSIZE;
-	}
-
-	STRBUF_Delete(str);
-	MSGMAN_Delete(msgman);
-#endif
 	return charpos;
 }
 
