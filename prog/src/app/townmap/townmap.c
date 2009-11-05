@@ -3618,8 +3618,10 @@ static void PLACEWND_Main( PLACEWND_WORK *p_wk )
 		p_wk->is_start	= FALSE;
 
 		//OBJアニメ開始
+		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, 0 );
+		GFL_CLACT_WK_StartAnm( p_wk->p_clwk ); 
 		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, TRUE );
-		GFL_CLACT_WK_ResetAnm( p_wk->p_clwk );
+
 		//フォントは消す
 		MSGWND_Clear( &p_wk->msgwnd );
 
@@ -3640,6 +3642,8 @@ static void PLACEWND_Main( PLACEWND_WORK *p_wk )
 
 			//文字描画
 			MSGWND_Print( &p_wk->msgwnd, ZONEDATA_GetPlaceNameID( zoneID ), PLACEWND_STR_X, PLACEWND_STR_Y );
+			//アニメストップ
+			GFL_CLACT_WK_StopAnm( p_wk->p_clwk ); 
 
 			//メイン処理終了
 			p_wk->is_update	= FALSE;
