@@ -32,7 +32,7 @@ include	$(PROJECT_RSCDIR)\macro_define
 #データ
 #------------------------------------------------------------------------------
 XLSFILE = $(wildcard *.xls)
-XLS_CSV_FILE = $(XLSFILE:.xls=.txt)
+XLS_CSV_FILE = $(XLSFILE:.xls=.bin)
 #エクセルコンバーター
 CSV_CVTR	= $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
 
@@ -52,10 +52,10 @@ HEADERDUMMY_TARGET = headerdummy.txt
 ifeq	($(CONVERTUSER),true)	
 
 
-.SUFFIXES: .xls .txt
+.SUFFIXES: .xls .bin
 
 #エクセルコンバート
-.xls.txt:
+.xls.bin:
 	$(CSV_CVTR) -o $*.txt -p 1 $<
 	perl conv.pl $*.txt $(HEADERDIR)field_camera.h
 	
