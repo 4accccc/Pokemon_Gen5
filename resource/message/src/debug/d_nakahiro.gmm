@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2009-10-21T15:34:06"/>
+	<create user="hiro_nakamura" host="W00144" date="2009-11-05T13:37:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -343,6 +343,31 @@
 	<row id="pokename">
 		<language name="JPN" width="256">デバッグポケ</language>
 		<language name="JPN_KANJI" width="256">デバッグポケ</language>
+	</row>
+
+	<row id="top_menu00">
+		<language name="JPN" width="256">ボックスせいり</language>
+		<language name="JPN_KANJI" width="256">ボックスせいり</language>
+	</row>
+
+	<row id="top_menu01">
+		<language name="JPN" width="256">ボックスつれていく</language>
+		<language name="JPN_KANJI" width="256">ボックスつれていく</language>
+	</row>
+
+	<row id="top_menu02">
+		<language name="JPN" width="256">ボックスあずける</language>
+		<language name="JPN_KANJI" width="256">ボックスあずける</language>
+	</row>
+
+	<row id="top_menu03">
+		<language name="JPN" width="256">ボックスもちもの</language>
+		<language name="JPN_KANJI" width="256">ボックスもちもの</language>
+	</row>
+
+	<row id="top_menu10">
+		<language name="JPN" width="256">ムービー</language>
+		<language name="JPN_KANJI" width="256">ムービー</language>
 	</row>
 
 	<flowchart-group-list>
