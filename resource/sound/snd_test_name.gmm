@@ -7172,13 +7172,13 @@
 		<language name="JPN" width="256">W063-02</language>
 		<language name="JPN_KANJI" width="256">W063-02</language>
 	</row>
-	<row id="msg_seq_se_dmy_008">
-		<language name="JPN" width="256">DMY-008</language>
-		<language name="JPN_KANJI" width="256">DMY-008</language>
+	<row id="msg_seq_se_w096_01">
+		<language name="JPN" width="256">W096-01</language>
+		<language name="JPN_KANJI" width="256">W096-01</language>
 	</row>
-	<row id="msg_seq_se_dmy_009">
-		<language name="JPN" width="256">DMY-009</language>
-		<language name="JPN_KANJI" width="256">DMY-009</language>
+	<row id="msg_seq_se_w100_01">
+		<language name="JPN" width="256">W100-01</language>
+		<language name="JPN_KANJI" width="256">W100-01</language>
 	</row>
 	<row id="msg_seq_se_dmy_010">
 		<language name="JPN" width="256">DMY-010</language>
