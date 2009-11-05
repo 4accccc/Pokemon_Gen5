@@ -104,8 +104,7 @@ void H03_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
   GAMESYS_WORK*            gsys = FIELDMAP_GetGameSysWork( fieldmap );
   GAMEDATA*               gdata = GAMESYSTEM_GetGameData( gsys );
-  SAVE_CONTROL_WORK*         sv = GAMEDATA_GetSaveControlWork( gdata );
-  GIMMICKWORK*          gmkwork = SaveData_GetGimmickWork( sv );
+  GIMMICKWORK*          gmkwork = GAMEDATA_GetGimmickWork(gdata);
 
   // 拡張オブジェクトのユニットを追加
   FLD_EXP_OBJ_AddUnit( exobj_cnt, &setup, EXPOBJ_UNIT_IDX );
@@ -136,8 +135,7 @@ void H03_GIMMICK_End( FIELDMAP_WORK* fieldmap )
   int i;
   GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
-  SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork( gdata );
-  GIMMICKWORK*  gmkwork = SaveData_GetGimmickWork( sv );
+  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
   u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H03 );
   H03WORK*         work = (H03WORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
 
@@ -169,8 +167,7 @@ void H03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   int i;
   GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
-  SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork( gdata );
-  GIMMICKWORK*  gmkwork = SaveData_GetGimmickWork( sv );
+  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
   u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H03 );
   H03WORK*         work = (H03WORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
 
@@ -295,8 +292,7 @@ static void SaveGimmick( H03WORK* work, FIELDMAP_WORK* fieldmap )
   int i;
   GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
-  SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork( gdata );
-  GIMMICKWORK*  gmkwork = SaveData_GetGimmickWork( sv );
+  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
   u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H03 );
 
   // セーブ(各音源オブジェクトのアニメーションフレーム数)
@@ -321,8 +317,7 @@ static void LoadGimmick( H03WORK* work, FIELDMAP_WORK* fieldmap )
   int i;
   GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
-  SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork( gdata );
-  GIMMICKWORK*  gmkwork = SaveData_GetGimmickWork( sv );
+  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
   u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H03 );
 
   // セーブ処理

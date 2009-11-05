@@ -142,8 +142,7 @@ void H01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldmap ); 
   GAMESYS_WORK*      gsys = FIELDMAP_GetGameSysWork( fieldmap );
   GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
-  SAVE_CONTROL_WORK*   sv = GAMEDATA_GetSaveControlWork( gdata );
-  GIMMICKWORK*    gmkwork = SaveData_GetGimmickWork( sv );
+  GIMMICKWORK*    gmkwork = GAMEDATA_GetGimmickWork(gdata);
   u16 frame[SOUNDOBJ_NUM] = {0, 0, 0};
   SOUNDOBJ* sobj;
   GFL_G3D_OBJSTATUS* status;
@@ -240,8 +239,7 @@ void H01_GIMMICK_End( FIELDMAP_WORK* fieldmap )
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldmap ); 
   GAMESYS_WORK*      gsys = FIELDMAP_GetGameSysWork( fieldmap );
   GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
-  SAVE_CONTROL_WORK*   sv = GAMEDATA_GetSaveControlWork( gdata );
-  GIMMICKWORK*    gmkwork = SaveData_GetGimmickWork( sv );
+  GIMMICKWORK*    gmkwork = GAMEDATA_GetGimmickWork(gdata);
   int                 ofs = 0;
   int           work_adrs = (int)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H01 );
   H01WORK*        h01work = (H01WORK*)( *( (H01WORK**)work_adrs ) );
@@ -285,8 +283,7 @@ void H01_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   int i;
   GAMESYS_WORK*      gsys = FIELDMAP_GetGameSysWork( fieldmap );
   GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
-  SAVE_CONTROL_WORK*   sv = GAMEDATA_GetSaveControlWork( gdata );
-  GIMMICKWORK*    gmkwork = SaveData_GetGimmickWork( sv );
+  GIMMICKWORK*    gmkwork = GAMEDATA_GetGimmickWork(gdata);
   int           work_adrs = (int)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H01 );
   H01WORK*        h01work = (H01WORK*)( *( (H01WORK**)work_adrs ) );
 

@@ -291,7 +291,7 @@ void GYM_ANTI_Setup(FIELDMAP_WORK *fieldWork)
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-    GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ANTI );
   }
 
@@ -437,7 +437,7 @@ GMEVENT *GYM_ANTI_SwOnOff(GAMESYS_WORK *gsys, const u8 inSwIdx, const u8 inSwSta
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   GYM_ANTI_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ANTI_TMP_ASSIGN_ID);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-  GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+  GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
 
   gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ANTI );
 
@@ -473,7 +473,7 @@ GMEVENT *GYM_ANTI_OpenDoor(GAMESYS_WORK *gsys, const u8 inDoorIdx)
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   GYM_ANTI_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ANTI_TMP_ASSIGN_ID);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-  GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+  GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
 
   gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ANTI );
 
@@ -510,7 +510,7 @@ static GMEVENT_RESULT PushSwEvt( GMEVENT* event, int* seq, void* work )
 
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-    GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ANTI );
   }
   
@@ -575,7 +575,7 @@ static GMEVENT_RESULT OpenDoorEvt( GMEVENT* event, int* seq, void* work )
 
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-    GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ANTI );
   }
   
@@ -632,7 +632,7 @@ static BOOL test_GYM_ANTI_SwOn(GAMESYS_WORK *gsys, const u8 inSwIdx)
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   GYM_ANTI_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ANTI_TMP_ASSIGN_ID);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-  GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+  GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
 
   gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ANTI );
 
@@ -662,7 +662,7 @@ static BOOL test_GYM_ANTI_OpenDoor(GAMESYS_WORK *gsys, const u8 inDoorIdx)
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   GYM_ANTI_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ANTI_TMP_ASSIGN_ID);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-  GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+  GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
 
   gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ANTI );
 

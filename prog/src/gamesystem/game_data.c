@@ -40,6 +40,10 @@
 #include "savedata/shortcut.h"		//SHORTCUT_SetRegister
 
 #include "field/fldmmdl.h"      //MMDLSYS
+
+#include "savedata/gimmickwork_local.h"
+#include "savedata/gimmickwork.h"
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -90,6 +94,8 @@ struct _GAMEDATA{
   ENCOUNT_WORK* enc_work; ///<エンカウント関連データワーク
 
 	SHORTCUT_CURSOR	shortcut_cursor;	///<ショートカット画面のカーソル
+
+  GIMMICKWORK GimmickWork;      //ギミックワーク
 };
 
 //==============================================================================
@@ -1034,6 +1040,10 @@ static void GAMEDATA_SaveDataLoad(GAMEDATA *gamedata)
     OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
     SaveData_OccupyInfoLoad(gamedata->sv_control_ptr, occupy);
   }
+
+  { //GIMMICK_WORK
+    SaveData_LoadGimmickWork(gamedata->sv_control_ptr, &gamedata->GimmickWork);
+  }
 }
 
 //--------------------------------------------------------------
@@ -1062,6 +1072,10 @@ static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata)
   { //OCCUPY_INFO
     OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
     SaveData_OccupyInfoUpdate(gamedata->sv_control_ptr, occupy);
+  }
+
+  { //GIMMICK_WORK
+    SaveData_SaveGimmickWork(&gamedata->GimmickWork, gamedata->sv_control_ptr);
   }
 }
 
@@ -1140,3 +1154,16 @@ const SAVE_CONTROL_WORK* GAMEDATA_GetSaveControlWorkConst(const GAMEDATA * gamed
 {
   return gamedata->sv_control_ptr;
 }
+
+//----------------------------------------------------------
+/**
+ * @brief   ギミックデータへのポインタ取得
+ * @param	  gamedata			GAMEDATAへのポインタ
+ * @return	ギミックデータへのポインタ
+ */
+//----------------------------------------------------------
+GIMMICKWORK * GAMEDATA_GetGimmickWork(GAMEDATA * gamedata)
+{
+	return &gamedata->GimmickWork;
+}
+

@@ -239,8 +239,7 @@ void GATE_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
   GAMESYS_WORK*            gsys = FIELDMAP_GetGameSysWork( fieldmap );
   GAMEDATA*               gdata = GAMESYSTEM_GetGameData( gsys );
-  SAVE_CONTROL_WORK*         sv = GAMEDATA_GetSaveControlWork( gdata );
-  GIMMICKWORK*          gmkwork = SaveData_GetGimmickWork( sv );
+  GIMMICKWORK*          gmkwork = GAMEDATA_GetGimmickWork(gdata);
 
   // 拡張オブジェクトのユニットを追加
   FLD_EXP_OBJ_AddUnit( exobj_cnt, &unit[UNIT_ELBOARD], EXPOBJ_UNIT_ELBOARD );
@@ -264,8 +263,7 @@ void GATE_GIMMICK_End( FIELDMAP_WORK* fieldmap )
   int i;
   GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
-  SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork( gdata );
-  GIMMICKWORK*  gmkwork = SaveData_GetGimmickWork( sv );
+  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
   int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
   u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, gmk_id );
   GATEWORK*        work = (GATEWORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
@@ -294,8 +292,7 @@ void GATE_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
 {
   GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
-  SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork( gdata );
-  GIMMICKWORK*  gmkwork = SaveData_GetGimmickWork( sv );
+  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
   int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
   u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, gmk_id );
   GATEWORK*        work = (GATEWORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
@@ -322,8 +319,7 @@ static void GimmickSave( FIELDMAP_WORK* fieldmap )
 {
   GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
-  SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork( gdata );
-  GIMMICKWORK*  gmkwork = SaveData_GetGimmickWork( sv );
+  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
   int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
   u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, gmk_id );
   GATEWORK*        work = (GATEWORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
@@ -344,8 +340,7 @@ static void GimmickLoad( GATEWORK* work, FIELDMAP_WORK* fieldmap )
 {
   GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
-  SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork( gdata );
-  GIMMICKWORK*  gmkwork = SaveData_GetGimmickWork( sv );
+  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
   int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
   u32*         gmk_save = NULL;
   u32             frame = 0;
@@ -500,6 +495,8 @@ static void AddNews_DATE( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
   news.msgArcID   = ARCID_MESSAGE;
   news.msgDatID   = NARC_message_gate_dat;
   news.msgStrID   = data->msgID_date;
+
+  OS_Printf("%d %d %d\n",news.msgArcID, news.msgDatID, news.msgStrID);
 
   // ニュースを追加
   GOBJ_ELBOARD_AddNews( elboard, &news );

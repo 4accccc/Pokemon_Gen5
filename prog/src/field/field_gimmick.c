@@ -126,14 +126,13 @@ void FLDGMK_SetUpFieldGimmick(FIELDMAP_WORK *fieldWork)
 
   GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
-  SAVE_CONTROL_WORK* sv= GAMEDATA_GetSaveControlWork(gamedata);
 	
 	//ギミックワーク取得
-	work = SaveData_GetGimmickWork(sv);
+	work = GAMEDATA_GetGimmickWork(gamedata);
 	//ギミックコードを取得
 	id = GIMMICKWORK_GetAssignID(work);
 	
-	if (id == FLD_GIMMICK_NONE){
+	if (id == GIMMICK_NO_ASSIGN){
 		return;					//ギミック無し
 	}
 	//ギミックセットアップ
@@ -156,14 +155,13 @@ void FLDGMK_EndFieldGimmick(FIELDMAP_WORK *fieldWork)
 
   GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
-  SAVE_CONTROL_WORK* sv= GAMEDATA_GetSaveControlWork(gamedata);
 	
   //ギミックワーク取得
-	work = SaveData_GetGimmickWork(sv);
+	work = GAMEDATA_GetGimmickWork(gamedata);;
 	//ギミックコードを取得
 	id = GIMMICKWORK_GetAssignID(work);
 	
-	if (id == FLD_GIMMICK_NONE){
+	if (id == GIMMICK_NO_ASSIGN){
 		return;					//ギミック無し
 	}
 	//ギミック終了
@@ -188,14 +186,13 @@ void FLDGMK_MoveFieldGimmick(FIELDMAP_WORK *fieldWork)
 
   GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
-  SAVE_CONTROL_WORK* sv= GAMEDATA_GetSaveControlWork(gamedata);
 	
 	//ギミックワーク取得
-	work = SaveData_GetGimmickWork(sv);
+	work = GAMEDATA_GetGimmickWork(gamedata);
 	//ギミックコードを取得
 	id = GIMMICKWORK_GetAssignID(work);
 	
-	if (id == FLD_GIMMICK_NONE){
+	if (id == GIMMICK_NO_ASSIGN){
 		return;					//ギミック無し
 	}
 
@@ -232,7 +229,7 @@ BOOL FLDGMK_FieldGimmickHitCheck(	FIELDSYS_WORK *fsys,
 	//ギミックコードを取得
 	id = GIMMICKWORK_GetAssignID(work);
 	
-	if (id == FLD_GIMMICK_NONE){
+	if (id == GIMMICK_NO_ASSIGN){
 		return FALSE;					//ギミック無し
 	}
 	//ギミック終了
@@ -264,10 +261,9 @@ BOOL FLDGMK_GimmickCodeCheck(FIELDMAP_WORK *fieldWork, int gimmick_id)
 
   GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
-  SAVE_CONTROL_WORK* sv= GAMEDATA_GetSaveControlWork(gamedata);
 	
 	//ギミックワーク取得
-	work = SaveData_GetGimmickWork(sv);
+	work = GAMEDATA_GetGimmickWork(gamedata);
 	//ギミックコードを取得
 	id = GIMMICKWORK_GetAssignID(work);
 

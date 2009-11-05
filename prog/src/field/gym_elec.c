@@ -76,6 +76,13 @@
 #define UP_SE_FRM2  (1036288)
 #define DOWN_SE_FRM2  (1294336)
 
+#define SPD_LV5 (FX32_ONE * 8 * 4)
+#define SPD_LV4 (FX32_ONE * 8 * 3)
+#define SPD_LV3 (FX32_ONE * 8 * 2)
+#define SPD_LV2 (FX32_ONE * 8 * 1)
+
+#define PITCH_MAX (32768)
+#define PITCH_WIDTH (16)
 
 static const VecFx32 CapPos[CAPSULE_NUM_MAX] = {
   {CAP1_X,OBJ3D_Y,CAP1_Z},
@@ -108,21 +115,21 @@ typedef struct ELEC_GYM_TASK_WK_tag
 //ジム内部中の一時ワーク
 typedef struct GYM_ELEC_TMP_tag
 {
-  GFL_TCB * MoveTcbPtr;     //カプセル追従ＴＣＢ
   GFL_TCB * CapStopTcbPtr;   //カプセル停止制御ＴＣＢ
   u8 RadeRaleIdx;          //自機が走行しているレールインデックス
-  u8 LeverIdx;              //操作しようとしているレバーインデックス
-  u8 ChgingSw;
+  s8 LeverIdx;              //操作しようとしているレバーインデックス(イベント中以外は-1)
+  u8 ChgingSw;            //イベント中のみ使用
   s8 RideEvt;            //乗降イベント中カプセル番号
   ELEC_GYM_TASK_WK  TaskWk[CAPSULE_NUM_MAX];
   ICA_ANIME* IcaAnmPtr;
   u8 FramePosDat[FRAME_POS_SIZE+HEADER_SIZE];
   BOOL AltoMove;
 
-  GFL_TCB *PlayerBack;
-  GFL_TCB *TrGo;
-  GFL_TCB * AnmTcb;
+  u8 RaleChgReq[CAPSULE_NUM_MAX];
+  u8 NowRaleIdx[CAPSULE_NUM_MAX];     //現在走行しているレールのインデックス(スイッチ非依存)
+  s8 StopPlatformIdx[CAPSULE_NUM_MAX];  //PLATFORM_NO_STOP (-1)　を使用するのでマイナス値を使用できるように。
 
+  int Pitch;
 }GYM_ELEC_TMP;
 
 typedef struct STOP_DAT_tag
@@ -490,10 +497,10 @@ static const MMDL_ACMD_LIST anime_down_table[] = {
 
 
 static u8 GetPlatformIdx(const int inX, const int inZ);
-static u8 GetRaleIdxByCapIdx(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inCapIdx);
-static u8 GetRaleIdxByPlatformIdx(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inPlatformIdx);
+static u8 GetRaleIdxByCapIdx(GYM_ELEC_TMP *tmp, const u8 inCapIdx);
+static u8 GetRaleIdxByPlatformIdx(GYM_ELEC_TMP *tmp, const u8 inPlatformIdx);
 static u8 GetCapIdxByPlatformIdx(const u8 inPlatformIdx);
-static BOOL IsStopCapsuleToPlatForm(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inPlatformIdx);
+static BOOL IsStopCapsuleToPlatForm(GYM_ELEC_TMP *tmp, const u8 inPlatformIdx);
 static fx32 GetAnimeFrame(FLD_EXP_OBJ_CNT_PTR ptr, const u16 inObjIdx, const u16 inAnmIdx);
 static void SetAnimeFrame
          (FLD_EXP_OBJ_CNT_PTR ptr, const u16 inObjIdx, const u16 inAnmIdx, const int inFrame);
@@ -519,6 +526,17 @@ static u8 dbg_frame_slow = 0;
 static u8 dbg_count = 0;
 #endif  //PM_DEBUG
 
+static void
+getJntSRTAnmResult_(const NNSG3dResJntAnm* pJntAnm, 
+                    u32                    dataIdx, 
+                    fx32                   Frame,
+                    VecFx32 *outVec);
+static void
+getTransData_(fx32* pVal,
+              fx32 Frame,
+              const u32* pData,
+              const NNSG3dResJntAnm* pJntAnm);
+
 //--------------------------------------------------------------
 /**
  * 現在座標からプラットホームインデックスを取得する
@@ -542,15 +560,15 @@ static u8 GetPlatformIdx(const int inX, const int inZ)
 //--------------------------------------------------------------
 /**
  * カプセルのインデックスを渡し、セーブデータから走行中のレールインデックスを取得する
- * @param       gmk_sv_work   電気ジムセーブワークポインタ
+ * @param       tmp   電気ジムテンポラリワークポインタ
  * @param       inCapIdx      カプセルインデックス
  * @return      u8            レールインデックス
  */
 //--------------------------------------------------------------
-static u8 GetRaleIdxByCapIdx(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inCapIdx)
+static u8 GetRaleIdxByCapIdx(GYM_ELEC_TMP *tmp, const u8 inCapIdx)
 {
   //レールインデックス取得
-  return gmk_sv_work->NowRaleIdx[inCapIdx];
+  return tmp->NowRaleIdx[inCapIdx];
 }
 
 //--------------------------------------------------------------
@@ -567,7 +585,7 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-    GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ELEC );
   }
 
@@ -698,6 +716,7 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
     }
   }
   
+  //@todo
   //レールアニメリ変更クエスト消化ＴＣＢ作成
   ;
   //リクエストチェック後ＴＣＢ実行
@@ -708,6 +727,18 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
     GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( fieldWork );
     // TCBを追加
     tmp->CapStopTcbPtr = GFL_TCB_AddTask( tcbsys, CapStopTcbFunc, fieldWork, 0 );
+  }
+
+  //メンバ初期化
+  {
+    int i;
+    for (i=0;i<CAPSULE_NUM_MAX;i++)
+    {
+      tmp->RaleChgReq[i] = 0;
+      tmp->NowRaleIdx[i] = (i*2)+gmk_sv_work->LeverSw[i];
+      tmp->StopPlatformIdx[i] = PLATFORM_NO_STOP;
+    }
+    tmp->LeverIdx = -1;   //初期化
   }
 
   //イベント未起動状態セット
@@ -736,14 +767,14 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
   tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ELEC_TMP_ASSIGN_ID);
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-    GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ELEC );
   }
 
   //----リクエスト消化部----
   for (i=0;i<CAPSULE_NUM_MAX;i++){
     //リクエストチェック
-    if ( gmk_sv_work->RaleChgReq[i] ){
+    if ( tmp->RaleChgReq[i] ){
       //現在のスイッチの逆がチェックすべきスイッチ
       u8 old_sw = (gmk_sv_work->LeverSw[i] +1 ) % 2;
       u8 obj_idx = OBJ_CAP_1+i;
@@ -754,9 +785,9 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
         //アニメ切り替え
         ChgRaleAnm(obj_cnt_ptr, old_sw, i);
         //走行レール保存
-        gmk_sv_work->NowRaleIdx[i] = (i*2)+gmk_sv_work->LeverSw[i];
+        tmp->NowRaleIdx[i] = (i*2)+gmk_sv_work->LeverSw[i];
         //リクエストフラグを落とす
-        gmk_sv_work->RaleChgReq[i] = 0;
+        tmp->RaleChgReq[i] = 0;
       }
     }
   }
@@ -764,7 +795,7 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
   //----カプセル停止制御部----
   for(i=0;i<CAPSULE_NUM_MAX;i++){
     u8 obj_idx = OBJ_CAP_1+i;
-    u8 rale_idx = gmk_sv_work->NowRaleIdx[i];
+    u8 rale_idx = tmp->NowRaleIdx[i];
     u8 anm_idx = ANM_CAP_MOV1 + rale_idx;
     EXP_OBJ_ANM_CNT_PTR anm = FLD_EXP_OBJ_GetAnmCnt( obj_cnt_ptr, GYM_ELEC_UNIT_IDX, obj_idx, anm_idx);
 
@@ -783,9 +814,12 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
         //自分が乗っているカプセルのときはループＳＥ再生
         if ( (tmp->RadeRaleIdx != RIDE_NONE)&&(i == tmp->RadeRaleIdx / 2) ){
           //ループＳＥスタート
+#if 0
           PMSND_PlaySE(GYM_ELEC_SE_DRIVE);
+#endif          
+          PMSND_PlaySE_byPlayerID( GYM_ELEC_SE_DRIVE, SEPLAYER_SE1 );
         }
-        gmk_sv_work->StopPlatformIdx[i] = PLATFORM_NO_STOP;
+        tmp->StopPlatformIdx[i] = PLATFORM_NO_STOP;
       }
     }else{
       u8 stop_idx;
@@ -801,7 +835,7 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
         }
         //指定時間とめるためタイマーをセット
         tmp->TaskWk[i].Timer = STOP_TIME;
-        gmk_sv_work->StopPlatformIdx[i] = RaleStopPlatform[rale_idx][stop_idx];
+        tmp->StopPlatformIdx[i] = RaleStopPlatform[rale_idx][stop_idx];
       }
     }
 //    OS_Printf("%d::stop_plat %d\n",i, gmk_sv_work->StopPlatformIdx[i]);
@@ -867,14 +901,16 @@ void GYM_ELEC_Move(FIELDMAP_WORK *fieldWork)
   int i;
   GYM_ELEC_SV_WORK *gmk_sv_work;
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  GYM_ELEC_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ELEC_TMP_ASSIGN_ID);
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-    GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ELEC );
   }
 #ifdef PM_DEBUG
   //テスト
   {
+#if 0    
     if (GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT ){
       FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
       GYM_ELEC_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ELEC_TMP_ASSIGN_ID);
@@ -887,7 +923,7 @@ void GYM_ELEC_Move(FIELDMAP_WORK *fieldWork)
       }
       ChgRale(fieldWork, ptr);
     }
-
+#endif
     if ( GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG ){
       dbg_frame_slow = 1;
     }else{
@@ -910,8 +946,8 @@ void GYM_ELEC_Move(FIELDMAP_WORK *fieldWork)
         u8 obj_idx;
         u8 anm_idx;
         obj_idx = OBJ_CAP_1 + i;
-        anm_idx = ANM_CAP_MOV1 + gmk_sv_work->NowRaleIdx[i];
-        OS_Printf("now_rale = %d\n", gmk_sv_work->NowRaleIdx[i]);
+        anm_idx = ANM_CAP_MOV1 + tmp->NowRaleIdx[i];
+        OS_Printf("now_rale = %d\n", tmp->NowRaleIdx[i]);
         OS_Printf("%d now_frm = %d\n", i,GetAnimeFrame(ptr, obj_idx, anm_idx));
       }
     }
@@ -929,7 +965,7 @@ void GYM_ELEC_Move(FIELDMAP_WORK *fieldWork)
     u8 obj_idx;
     u8 anm_idx;
     obj_idx = OBJ_CAP_1 + i;
-    anm_idx = ANM_CAP_MOV1 + gmk_sv_work->NowRaleIdx[i];
+    anm_idx = ANM_CAP_MOV1 + tmp->NowRaleIdx[i];
     gmk_sv_work->CapDat[i].AnmFrame = GetAnimeFrame(ptr, obj_idx, anm_idx);
   }
 }
@@ -937,19 +973,19 @@ void GYM_ELEC_Move(FIELDMAP_WORK *fieldWork)
 //--------------------------------------------------------------
 /**
  * 指定プラットホームの現在のレールインデックスを取得
- * @param	      gmk_sv_work     電気ジムセーブワークポインタ
+ * @param	      tmp     電気ジムテンポラリワークポインタ
  * @param       inPlatformIdx   プラットフォームインデックス
  * @return      u8              レールインデックス
  */
 //--------------------------------------------------------------
-static u8 GetRaleIdxByPlatformIdx(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inPlatformIdx)
+static u8 GetRaleIdxByPlatformIdx(GYM_ELEC_TMP *tmp, const u8 inPlatformIdx)
 {
   u8 cap_idx;
   u8 rale_idx;
   //指定プラットフォームに停車するカプセルを取得
   cap_idx = GetCapIdxByPlatformIdx(inPlatformIdx);
   //取得したカプセルが走行しているレールインデックスを取得
-  rale_idx = GetRaleIdxByCapIdx(gmk_sv_work, cap_idx);
+  rale_idx = GetRaleIdxByCapIdx(tmp, cap_idx);
 
   return rale_idx;
 }
@@ -972,12 +1008,12 @@ static u8 GetCapIdxByPlatformIdx(const u8 inPlatformIdx)
 //--------------------------------------------------------------
 /**
  * 指定プラットホームにカプセルが停車しているかを調べる
- * @param	      gmk_sv_work     電気ジムセーブワークポインタ
+ * @param	      tmp     電気ジムテンポラリワークポインタ
  * @param       inPlatformIdx   プラットフォームインデックス
  * @return      BOOL    TRUEで停止
  */
 //--------------------------------------------------------------
-static BOOL IsStopCapsuleToPlatForm(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inPlatformIdx)
+static BOOL IsStopCapsuleToPlatForm(GYM_ELEC_TMP *tmp, const u8 inPlatformIdx)
 {
   u8 i;
   u8 cap_idx;
@@ -986,8 +1022,8 @@ static BOOL IsStopCapsuleToPlatForm(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inPl
   //指定プラットホームのカプセルインデックスを取得
   cap_idx = GetCapIdxByPlatformIdx(inPlatformIdx);
   //取得カプセルインデックスの停車プラットホームを取得
-  platform_idx = gmk_sv_work->StopPlatformIdx[cap_idx];
-  OS_Printf("%d %d %d\n",platform_idx, cap_idx, gmk_sv_work->StopPlatformIdx[cap_idx]);
+  platform_idx = tmp->StopPlatformIdx[cap_idx];
+  OS_Printf("%d %d %d\n",platform_idx, cap_idx, tmp->StopPlatformIdx[cap_idx]);
   if (platform_idx == PLATFORM_NO_STOP){
     //停車していない
     return FALSE;
@@ -1057,7 +1093,7 @@ GMEVENT *GYM_ELEC_ChangePoint(GAMESYS_WORK *gsys, const u8 inLeverIdx)
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   GYM_ELEC_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ELEC_TMP_ASSIGN_ID);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-  GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+  GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
 
   gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ELEC );
 
@@ -1093,7 +1129,7 @@ static GMEVENT_RESULT ChangePointEvt( GMEVENT* event, int* seq, void* work )
 
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-    GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ELEC );
   }
   
@@ -1160,6 +1196,7 @@ static GMEVENT_RESULT ChangePointEvt( GMEVENT* event, int* seq, void* work )
         OS_Printf("アニメ終了\n");
         //路線ポイント切り替え（アニメ切り替え）
         ChgRale(fieldWork, ptr);
+        tmp->LeverIdx = -1;   //操作終了
         return GMEVENT_RES_FINISH;
       }
     }
@@ -1183,7 +1220,7 @@ GMEVENT *GYM_ELEC_CreateMoveEvt(GAMESYS_WORK *gsys)
   GYM_ELEC_SV_WORK *gmk_sv_work;
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-  GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+  GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
   gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ELEC );
   tmp_work = GMK_TMP_WK_GetWork(fieldWork, GYM_ELEC_TMP_ASSIGN_ID);
 
@@ -1211,11 +1248,11 @@ GMEVENT *GYM_ELEC_CreateMoveEvt(GAMESYS_WORK *gsys)
   }
   
   //カプセルがプラットフォームに停止しているか？
-  if ( IsStopCapsuleToPlatForm(gmk_sv_work, platform_idx) ){ //停止している
+  if ( IsStopCapsuleToPlatForm(tmp_work, platform_idx) ){ //停止している
     u8 cap_idx = GetCapIdxByPlatformIdx(platform_idx);
     {
       //自機が走行するレールインデックスを保存
-      tmp_work->RadeRaleIdx = GetRaleIdxByPlatformIdx(gmk_sv_work, platform_idx);
+      tmp_work->RadeRaleIdx = GetRaleIdxByPlatformIdx(tmp_work, platform_idx);
       OS_Printf("RideRaleIdx %d\n",tmp_work->RadeRaleIdx);
       //カプセル移動アニメを停止
       {
@@ -1259,7 +1296,7 @@ void GYM_ELEC_SetTrEncFlg(GAMESYS_WORK *gsys, const int inCapIdx)
   {
     FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-    GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ELEC );
   }
   
@@ -1354,7 +1391,7 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
 
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-    GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ELEC );
   }
 
@@ -1425,13 +1462,14 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
 
       //タイマークリア
       tmp->TaskWk[cap_idx].Timer = 0;
-      gmk_sv_work->StopPlatformIdx[cap_idx] = PLATFORM_NO_STOP;
+      tmp->StopPlatformIdx[cap_idx] = PLATFORM_NO_STOP;
 
       //乗降終了
       tmp->RideEvt = -1;
 
       //ループＳＥスタート
-      PMSND_PlaySE(GYM_ELEC_SE_DRIVE);
+      //PMSND_PlaySE(GYM_ELEC_SE_DRIVE);
+      PMSND_PlaySE_byPlayerID( GYM_ELEC_SE_DRIVE, SEPLAYER_SE1 );
 
       //自機自動移動開始
       tmp->AltoMove = TRUE;
@@ -1441,7 +1479,7 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
     break;
   case 4:
     //プラットホーム到着待ち
-    if( gmk_sv_work->StopPlatformIdx[cap_idx] != PLATFORM_NO_STOP ){
+    if( tmp->StopPlatformIdx[cap_idx] != PLATFORM_NO_STOP ){
       //プレーヤ入力待ち
       if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){   //入力あり
         (*seq)++;
@@ -1495,7 +1533,7 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
           {
             u8 platform_idx;
             VecFx32 pos = {0,OBJ3D_Y,0};
-            platform_idx = gmk_sv_work->StopPlatformIdx[cap_idx];
+            platform_idx = tmp->StopPlatformIdx[cap_idx];
             pos.x = PlatformXZ[platform_idx][0] * FIELD_CONST_GRID_FX32_SIZE;
             pos.x += GRID_HALF_SIZE;
             pos.z = (PlatformXZ[platform_idx][1]-2) * FIELD_CONST_GRID_FX32_SIZE;
@@ -1536,7 +1574,7 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
 
       //タイマークリア
       tmp->TaskWk[cap_idx].Timer = 0;
-      gmk_sv_work->StopPlatformIdx[cap_idx] = PLATFORM_NO_STOP;
+      tmp->StopPlatformIdx[cap_idx] = PLATFORM_NO_STOP;
 
       ICA_ANIME_Delete( tmp->IcaAnmPtr );
       
@@ -1553,6 +1591,7 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
     u8 anm_idx = ANM_CAP_MOV1 + tmp->RadeRaleIdx;
     fx32 frm = GetAnimeFrame(ptr, obj_idx, anm_idx);
     if (frm == UP_SE_FRM1){
+      PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
       //昇りＳＥスタート
       PMSND_PlaySE(GYM_ELEC_SE_RISE);
     }else if(frm == DOWN_SE_FRM1){
@@ -1563,12 +1602,75 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
     u8 anm_idx = ANM_CAP_MOV1 + tmp->RadeRaleIdx;
     fx32 frm = GetAnimeFrame(ptr, obj_idx, anm_idx);
     if (frm == UP_SE_FRM2){
+      PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
       //昇りＳＥスタート
       PMSND_PlaySE(GYM_ELEC_SE_RISE);
     }else if(frm == DOWN_SE_FRM2){
       //下りＳＥスタート
       PMSND_PlaySE(GYM_ELEC_SE_DROP);
     };
+  }
+
+  //アニメデータ取得
+  {
+    fx32 now_frm,next_frm;
+    VecFx32 now,next, dst;
+    fx32 len;
+    NNSG3dAnmObj* anm_obj_ptr;
+    GFL_G3D_ANM*  gfl_anm;
+    GFL_G3D_OBJ* g3Dobj = FLD_EXP_OBJ_GetUnitObj(ptr, GYM_ELEC_UNIT_IDX, obj_idx);
+    u8 anm_idx = ANM_CAP_MOV1 + tmp->RadeRaleIdx;
+    EXP_OBJ_ANM_CNT_PTR anm_ptr = FLD_EXP_OBJ_GetAnmCnt(ptr, GYM_ELEC_UNIT_IDX, obj_idx, anm_idx);
+    fx32 last_frm = FLD_EXP_OBJ_GetAnimeLastFrame(anm_ptr );
+
+    now_frm = GetAnimeFrame(ptr, obj_idx, anm_idx);
+    next_frm = now_frm+FX32_ONE;
+    if ( next_frm >= last_frm) next_frm = 0;
+
+//    OS_Printf("%x, %x, %x\n",now_frm, next_frm, last_frm);
+
+    gfl_anm = GFL_G3D_OBJECT_GetG3Danm( g3Dobj, anm_idx );
+    anm_obj_ptr = GFL_G3D_ANIME_GetAnmObj( gfl_anm );
+    getJntSRTAnmResult_(anm_obj_ptr->resAnm,
+                        0,
+                        now_frm,
+                        &now);
+    getJntSRTAnmResult_(anm_obj_ptr->resAnm,
+                        0,
+                        next_frm,
+                        &next);
+
+    VEC_Subtract( &now, &next ,&dst );
+    len = VEC_Mag( &dst );
+    OS_Printf("len = %x\n",len);
+    if ( len >=SPD_LV5 ){
+//      OS_Printf("11111\n");
+      tmp->Pitch = PITCH_WIDTH*4;
+    }else if ( len >=SPD_LV4 ){
+//      OS_Printf("1111\n");
+      tmp->Pitch = PITCH_WIDTH*3;
+    }else if ( len >=SPD_LV3 ){
+//      OS_Printf("111\n");
+      tmp->Pitch = PITCH_WIDTH*2;
+    }else if( len >= SPD_LV2 ){
+//      OS_Printf("11\n");
+      tmp->Pitch = PITCH_WIDTH*1;
+    }else{
+//      OS_Printf("1\n");
+      tmp->Pitch = 0;
+    }
+  }
+
+  //ピッチ変更
+  {
+    NNSSndHandle* snd_handle;
+    if ( GFL_UI_KEY_GetCont() & PAD_BUTTON_START ){
+      tmp->Pitch++;
+      if (tmp->Pitch >= PITCH_MAX) tmp->Pitch = 0;
+      OS_Printf("pitch = %d\n",tmp->Pitch);
+    }
+    snd_handle = PMSND_GetSE_SndHandle( SEPLAYER_SE1 );
+    NNS_SndPlayerSetTrackPitch(snd_handle, 0xffff, tmp->Pitch);
   }
   return GMEVENT_RES_CONTINUE;
 }
@@ -1604,7 +1706,7 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
 
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-    GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ELEC );
   }
 
@@ -1663,7 +1765,7 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
 
       //タイマークリア
       tmp->TaskWk[cap_idx].Timer = 0;
-      gmk_sv_work->StopPlatformIdx[cap_idx] = PLATFORM_NO_STOP;
+      tmp->StopPlatformIdx[cap_idx] = PLATFORM_NO_STOP;
 
       //スクリプトチェンジ
 /**
@@ -1707,9 +1809,15 @@ static void ChgRale(FIELDMAP_WORK *fieldWork, FLD_EXP_OBJ_CNT_PTR ptr)
   GYM_ELEC_SV_WORK *gmk_sv_work;
   GYM_ELEC_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ELEC_TMP_ASSIGN_ID);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-  GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
-
+  GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
   gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ELEC );
+
+  if(tmp->LeverIdx == -1)
+  {
+    GF_ASSERT(0);
+    return;
+  }
+
   //操作しようとしているレバーのスイッチがどちらに入っているかを調べる  
   sw = gmk_sv_work->LeverSw[tmp->LeverIdx];
   obj = OBJ_CAP_1+tmp->LeverIdx;
@@ -1718,19 +1826,19 @@ static void ChgRale(FIELDMAP_WORK *fieldWork, FLD_EXP_OBJ_CNT_PTR ptr)
   //セーブデータのスイッチ切り替え
   gmk_sv_work->LeverSw[tmp->LeverIdx] = (gmk_sv_work->LeverSw[tmp->LeverIdx]+1)%2;
   //すぐにレールアニメを切り替えられるならば変える
-  if ( CheckChangableRaleAtOnce(ptr, cap_idx, gmk_sv_work->NowRaleIdx[tmp->LeverIdx]) ){
+  if ( CheckChangableRaleAtOnce(ptr, cap_idx, tmp->NowRaleIdx[tmp->LeverIdx]) ){
     ChgRaleAnm(ptr, sw, tmp->LeverIdx);
     //走行レール保存
-    gmk_sv_work->NowRaleIdx[tmp->LeverIdx] =
+    tmp->NowRaleIdx[tmp->LeverIdx] =
       (tmp->LeverIdx*2)+gmk_sv_work->LeverSw[tmp->LeverIdx];
   }else{
     //変えられない場合はリクエストを出す
-    if (gmk_sv_work->RaleChgReq[tmp->LeverIdx]){
+    if (tmp->RaleChgReq[tmp->LeverIdx]){
       //既にリクエストされているならば、リクエストをキャンセル
-      gmk_sv_work->RaleChgReq[tmp->LeverIdx] = 0;
+      tmp->RaleChgReq[tmp->LeverIdx] = 0;
     }else{
       //リクエストされていないならば、リクエストする
-      gmk_sv_work->RaleChgReq[tmp->LeverIdx] = 1;
+      tmp->RaleChgReq[tmp->LeverIdx] = 1;
     }
   }
 }
@@ -1843,7 +1951,7 @@ BOOL test_GYM_ELEC_ChangePoint(GAMESYS_WORK *gsys, const u8 inLeverIdx)
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   GYM_ELEC_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ELEC_TMP_ASSIGN_ID);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-  GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+  GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
 
   gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ELEC );
 
@@ -1874,20 +1982,20 @@ BOOL test_GYM_ELEC_CallMoveEvt(GAMESYS_WORK *gsys)
   GYM_ELEC_SV_WORK *gmk_sv_work;
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-  GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+  GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
   gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ELEC );
   tmp_work = GMK_TMP_WK_GetWork(fieldWork, GYM_ELEC_TMP_ASSIGN_ID);
 
   platform_idx = 8;
 
   //カプセルがプラットフォームに停止しているか？
-  if ( IsStopCapsuleToPlatForm(gmk_sv_work, platform_idx) ){ //停止している
+  if ( IsStopCapsuleToPlatForm(tmp_work, platform_idx) ){ //停止している
     //次のプラットフォームまでの移動イベントを作成する
     GMEVENT * event = GMEVENT_Create( gsys, NULL, CapMoveEvt, 0 );
     GAMESYSTEM_SetEvent(gsys, event);
 
     //自機が走行するレールインデックスを保存
-    tmp_work->RadeRaleIdx = GetRaleIdxByPlatformIdx(gmk_sv_work, platform_idx);
+    tmp_work->RadeRaleIdx = GetRaleIdxByPlatformIdx(tmp_work, platform_idx);
     //カプセル移動アニメを停止
     {
       FLD_EXP_OBJ_CNT_PTR obj_cnt_ptr;
@@ -1907,3 +2015,227 @@ BOOL test_GYM_ELEC_CallMoveEvt(GAMESYS_WORK *gsys)
 
 #endif  //PM_DEBUG
 
+
+/*---------------------------------------------------------------------------*
+    getJntSRTAnmResult_
+
+    pResultにrotation, translation, flagをセット
+    pS_invSにスケールとスケールの逆数をセット
+ *---------------------------------------------------------------------------*/
+static void
+getJntSRTAnmResult_(const NNSG3dResJntAnm* pJntAnm, 
+                    u32                    dataIdx, 
+                    fx32                   Frame,
+                    VecFx32 *outVec)
+{
+  NNSG3dResJntAnmSRTTag* pAnmSRTTag;
+  NNSG3dJntAnmSRTTag     tag;
+  const u32*             pData;
+  fx32                   pS_invS[6]; // ポインタ引数からローカル配列に変更
+
+  {
+    const u16* ofsTag = (const u16*)((u8*) pJntAnm + sizeof(NNSG3dResJntAnm));
+    // アニメリソース内のdataIdx番目のデータのSRTタグを取得
+    pAnmSRTTag = (NNSG3dResJntAnmSRTTag*)((u8*) pJntAnm + ofsTag[dataIdx]);
+
+    tag = (NNSG3dJntAnmSRTTag)pAnmSRTTag->tag;
+  }
+
+  // pAnmSRTTagに続く領域にpAnmSRTTagの値に従った可変長のデータが格納されている
+  pData = (const u32*)((const u8*)pAnmSRTTag + sizeof(NNSG3dResJntAnmSRTTag));
+
+  // res_struct.hのNNSG3dResJntAnmSRTについてのコメントを参照のこと
+    
+  // Translationの取得
+  if (!(tag & (NNS_G3D_JNTANM_SRTINFO_IDENTITY_T | NNS_G3D_JNTANM_SRTINFO_BASE_T)))
+  {
+    // TX
+    if (!(tag & NNS_G3D_JNTANM_SRTINFO_CONST_TX))
+    {
+      // TXを取り出す関数呼び出し
+      // データのオフセットはpAnmSRTTagからのものになる
+      fx32 x;
+      getTransData_(&x, Frame, pData, pJntAnm);
+      OS_Printf("X= %d::%x\n",x,x);
+      outVec->x = x;
+
+      // NNSG3dJntAnmTInfoと配列へのオフセットデータの分
+      pData += 2;
+    }
+    // TY
+    if (!(tag & NNS_G3D_JNTANM_SRTINFO_CONST_TY))
+    {
+      // TYを取り出す関数呼び出し
+      // データのオフセットはpAnmSRTTagからのものになる
+      fx32 y;
+      getTransData_(&y, Frame, pData, pJntAnm);
+      OS_Printf("Y= %d::%x\n",y,y);
+      outVec->y = y;
+          
+      // NNSG3dJntAnmTInfoと配列へのオフセットデータの分
+      pData += 2;
+    }
+    // TZ
+    if (!(tag & NNS_G3D_JNTANM_SRTINFO_CONST_TZ))
+    {
+      // TZを取り出す関数呼び出し
+      // データのオフセットはpAnmSRTTagからのものになる
+      fx32 z;
+      getTransData_(&z, Frame, pData, pJntAnm);
+      OS_Printf("Z= %d::%x\n",z,z);
+      outVec->z = z;
+
+      // NNSG3dJntAnmTInfoと配列へのオフセットデータの分
+      pData += 2;
+    }
+  }
+}
+
+/*---------------------------------------------------------------------------*
+    getTransData_
+
+    translationデータを取得し、*pValに入れる
+ *---------------------------------------------------------------------------*/
+static void
+getTransData_(fx32* pVal,
+              fx32 Frame,
+              const u32* pData,
+              const NNSG3dResJntAnm* pJntAnm)
+{
+    u32 frame = (u32)FX_Whole(Frame);
+    const void* pArray = (const void*)((const u8*)pJntAnm + *(pData + 1));
+    NNSG3dJntAnmTInfo info = (NNSG3dJntAnmTInfo)*pData;
+    u32 last_interp;
+    u32 idx;
+    u32 idx_sub;
+
+    NNS_G3D_NULL_ASSERT(pVal);
+    NNS_G3D_NULL_ASSERT(pArray);
+
+    if (!(info & NNS_G3D_JNTANM_TINFO_STEP_MASK))
+    {
+        // NNS_G3D_JNTANM_TINFO_STEP1が選択されている
+        idx = frame;
+        goto TRANS_NONINTERP;
+    }
+
+    // last_interp以降は1コマずつデータが入っている
+    // last_interpは2の倍数か4の倍数である。
+    last_interp = ((u32)info & NNS_G3D_JNTANM_TINFO_LAST_INTERP_MASK) >>
+                                    NNS_G3D_JNTANM_TINFO_LAST_INTERP_SHIFT;
+
+    if (info & NNS_G3D_JNTANM_TINFO_STEP_2)
+    {
+        // NNS_G3D_JNTANM_TINFO_STEP_2が選択されている
+        if (frame & 1)
+        {
+            if (frame > last_interp)
+            {
+                // 最終フレーム以外ありえない
+                idx = (last_interp >> 1) + 1;
+                goto TRANS_NONINTERP;
+            }
+            else
+            {
+                // 奇数で最終フレームでないので50:50の補間処理がいる。
+                idx = frame >> 1;
+                goto TRANS_INTERP_2;
+            }
+        }
+        else
+        {
+            // 偶数フレームなので補間処理はいらない
+            idx = frame >> 1;
+            goto TRANS_NONINTERP;
+        }
+    }
+    else
+    {
+        // NNS_G3D_JNTANM_TINFO_STEP_4が選択されている
+        if (frame & 3)
+        {
+            if (frame > last_interp)
+            {
+                idx = (last_interp >> 2) + (frame & 3);
+                goto TRANS_NONINTERP;
+            }
+
+            // 補間処理あり
+            if (frame & 1)
+            {
+                fx32 v, v_sub;
+                if (frame & 2)
+                {
+                    // 3:1の位置で補間
+                    idx_sub = (frame >> 2);
+                    idx = idx_sub + 1;
+                }
+                else
+                {
+                    // 1:3の位置で補間
+                    idx = (frame >> 2);
+                    idx_sub = idx + 1;
+                }
+                
+                // 1:3, 3:1の場合の補間
+                if (info & NNS_G3D_JNTANM_TINFO_FX16ARRAY)
+                {
+                    const fx16* p_fx16 = (const fx16*)pArray;
+
+                    v = *(p_fx16 + idx);
+                    v_sub = *(p_fx16 + idx_sub);
+                    *pVal = (v + v + v + v_sub) >> 2; // v:v_subを3:1でブレンド
+                }
+                else
+                {
+                    const fx32* p_fx32 = (const fx32*)pArray;
+
+                    v = *(p_fx32 + idx);
+                    v_sub = *(p_fx32 + idx_sub);
+                    // v:v_subを3:1でブレンド。オーバーフローを避けるためfx64で計算
+                    *pVal = (fx32)(((fx64)v + v + v + v_sub) >> 2);
+                }
+                return;
+            }
+            else
+            {
+                // 50:50の補間になる
+                idx = frame >> 2;
+                goto TRANS_INTERP_2;
+            }
+        }
+        else
+        {
+            // フレームは丁度4の倍数になっている。
+            idx = frame >> 2;
+            goto TRANS_NONINTERP;
+        }
+    }
+    NNS_G3D_ASSERT(0);
+TRANS_INTERP_2:
+    if (info & NNS_G3D_JNTANM_TINFO_FX16ARRAY)
+    {
+        const fx16* p_fx16 = (const fx16*)pArray;
+
+        *pVal = (*(p_fx16 + idx) + *(p_fx16 + idx + 1)) >> 1;
+    }
+    else
+    {
+        const fx32* p_fx32 = (const fx32*)pArray;
+
+        fx32 v1 = *(p_fx32 + idx) >> 1;
+        fx32 v2 = *(p_fx32 + idx + 1) >> 1;
+        *pVal = v1 + v2;
+    }
+    return;
+TRANS_NONINTERP:
+    if (info & NNS_G3D_JNTANM_TINFO_FX16ARRAY)
+    {
+        *pVal = *((const fx16*)pArray + idx);
+    }
+    else
+    {
+        *pVal = *((const fx32*)pArray + idx);
+    }
+    return;
+}

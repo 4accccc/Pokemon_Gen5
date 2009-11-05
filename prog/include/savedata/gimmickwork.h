@@ -16,6 +16,8 @@
 
 #include "savedata/save_control.h"
 
+#define GIMMICK_NO_ASSIGN (0xffffffff)
+
 //============================================================================================
 //============================================================================================
 //---------------------------------------------------------------------------
@@ -40,7 +42,9 @@ extern int GIMMICKWORK_GetAssignID(const GIMMICKWORK * gimmick);
 
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
-extern GIMMICKWORK * SaveData_GetGimmickWork(SAVE_CONTROL_WORK * sv);
+//extern GIMMICKWORK * SaveData_GetGimmickWork(SAVE_CONTROL_WORK * sv);
 
+extern void SaveData_SaveGimmickWork(const GIMMICKWORK * inGimmick, SAVE_CONTROL_WORK * sv);
+extern void SaveData_LoadGimmickWork(SAVE_CONTROL_WORK * sv, GIMMICKWORK * outGimmick);
 
 #endif	/* __GIMMICKWORK_H__ */

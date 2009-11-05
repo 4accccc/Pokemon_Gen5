@@ -9,7 +9,7 @@
 //============================================================================================
 #include <gflib.h>
 #include "savedata/save_tbl.h"
-#include "gimmickwork_local.h"
+#include "savedata/gimmickwork_local.h"
 #include "savedata/gimmickwork.h"
 
 //============================================================================================
@@ -34,6 +34,7 @@ int GIMMICKWORK_GetWorkSize(void)
 void GIMMICKWORK_Init(GIMMICKWORK * gimmick)
 {
 	MI_CpuClear8(gimmick, sizeof(GIMMICKWORK));
+  gimmick->id = GIMMICK_NO_ASSIGN;
 }
 
 //---------------------------------------------------------------------------
@@ -45,6 +46,9 @@ void GIMMICKWORK_Init(GIMMICKWORK * gimmick)
 //---------------------------------------------------------------------------
 void * GIMMICKWORK_Assign(GIMMICKWORK * gimmick, int gimmick_id)
 {
+  if (gimmick->id != GIMMICK_NO_ASSIGN){
+    GF_ASSERT_MSG(0,"二重アサイン %d => %d",gimmick->id, gimmick_id);
+  }
 	GIMMICKWORK_Init(gimmick);
 	gimmick->id = gimmick_id;
 	return gimmick->work;
@@ -59,7 +63,7 @@ void * GIMMICKWORK_Assign(GIMMICKWORK * gimmick, int gimmick_id)
 //---------------------------------------------------------------------------
 void * GIMMICKWORK_Get(GIMMICKWORK * gimmick, int gimmick_id)
 {
-	GF_ASSERT(gimmick->id == gimmick_id);
+	GF_ASSERT_MSG(gimmick->id == gimmick_id," %d  %d\n",gimmick->id,gimmick_id);
 	return gimmick->work;
 }
 
@@ -74,7 +78,7 @@ int GIMMICKWORK_GetAssignID(const GIMMICKWORK * gimmick)
 {
 	return gimmick->id;
 }
-
+#if 0
 //----------------------------------------------------------
 /**
  * @brief	データへのポインタ取得
@@ -86,5 +90,35 @@ GIMMICKWORK * SaveData_GetGimmickWork(SAVE_CONTROL_WORK * sv)
 {
 	return SaveControl_DataPtrGet(sv, GMDATA_ID_GIMMICK_WORK);
 }
+#endif
+//----------------------------------------------------------
+/**
+ * @brief	ギミックワークへデータをコピー
+ * @param	sv			セーブデータ保持ワークへのポインタ
+ * @return	ギミックセーブデータへのポインタ
+ */
+//----------------------------------------------------------
+void SaveData_SaveGimmickWork(const GIMMICKWORK * inGimmick, SAVE_CONTROL_WORK * sv)
+{
+  GIMMICKWORK *gimmick;
+  gimmick = SaveControl_DataPtrGet(sv, GMDATA_ID_GIMMICK_WORK);
+	MI_CpuCopy32(inGimmick, gimmick, sizeof(GIMMICKWORK));
+}
+
+//----------------------------------------------------------
+/**
+ * @brief	ギミックワークへデータをコピー
+ * @param	sv			セーブデータ保持ワークへのポインタ
+ * @return	ギミックセーブデータへのポインタ
+ */
+//----------------------------------------------------------
+void SaveData_LoadGimmickWork(SAVE_CONTROL_WORK * sv, GIMMICKWORK * outGimmick)
+{
+  GIMMICKWORK *gimmick;
+  gimmick = SaveControl_DataPtrGet(sv, GMDATA_ID_GIMMICK_WORK);
+	MI_CpuCopy32(gimmick, outGimmick, sizeof(GIMMICKWORK));
+}
+
+
 
 

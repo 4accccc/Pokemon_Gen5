@@ -580,7 +580,7 @@ GMEVENT *GYM_FLY_CreateShotEvt(GAMESYS_WORK *gsys)
   GYM_FLY_SV_WORK *gmk_sv_work;
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-  GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+  GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
   gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_FLY );
   tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_FLY_TMP_ASSIGN_ID);
 
@@ -649,7 +649,7 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
 
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-    GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_FLY );
   }
 

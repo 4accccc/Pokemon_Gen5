@@ -139,7 +139,7 @@ void GYM_NORMAL_Setup(FIELDMAP_WORK *fieldWork)
 
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-    GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, gmk_id );
   }
 
@@ -240,7 +240,7 @@ void GYM_NORMAL_Unrock(FIELDMAP_WORK *fieldWork)
   GYM_NORMAL_SV_WORK *gmk_sv_work;
   GYM_NORMAL_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_NORMAL_TMP_ASSIGN_ID);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-  GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+  GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
   gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_NORM );
 
   gmk_sv_work->GmkUnrock = TRUE;
@@ -258,7 +258,7 @@ BOOL GYM_NORMAL_CheckRock(FIELDMAP_WORK *fieldWork)
   GYM_NORMAL_SV_WORK *gmk_sv_work;
   GYM_NORMAL_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_NORMAL_TMP_ASSIGN_ID);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-  GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+  GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
   gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_NORM );
 
   return gmk_sv_work->GmkUnrock;
@@ -308,7 +308,7 @@ BOOL test_GYM_NORMAL_WallAnm(GAMESYS_WORK *gsys, const u8 inWallIdx)
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   GYM_NORMAL_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_NORMAL_TMP_ASSIGN_ID);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-  GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+  GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
 
   gmk_id = FLD_GIMMICK_GYM_NORM;
 
@@ -347,7 +347,7 @@ static GMEVENT_RESULT WallAnmEvt( GMEVENT* event, int* seq, void* work )
 
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-    GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, gmk_id );
   }
   

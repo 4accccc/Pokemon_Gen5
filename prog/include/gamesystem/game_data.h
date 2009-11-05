@@ -43,6 +43,7 @@ typedef struct _GAMEDATA GAMEDATA;
 #include "savedata/box_savedata.h"      //BOX_MANAGER
 #include "savedata/intrude_save.h"      //OCCUPY_INFO
 #include "system/shortcut_data.h"			//SHORTCUT_ID
+#include "savedata/gimmickwork.h"
 
 //============================================================================================
 //============================================================================================
@@ -571,3 +572,12 @@ extern SAVE_CONTROL_WORK * GAMEDATA_GetSaveControlWork(GAMEDATA * gamedata);
  */
 //------------------------------------------------------------------
 extern const SAVE_CONTROL_WORK* GAMEDATA_GetSaveControlWorkConst(const GAMEDATA * gamedata);
+
+//----------------------------------------------------------
+/**
+ * @brief   ギミックデータへのポインタ取得
+ * @param	  gamedata			GAMEDATAへのポインタ
+ * @return	ギミックデータへのポインタ
+ */
+//----------------------------------------------------------
+extern GIMMICKWORK * GAMEDATA_GetGimmickWork(GAMEDATA * gamedata);

@@ -944,9 +944,8 @@ void MAPCHANGE_setPlayerVanish(FIELDMAP_WORK * fieldmap, BOOL vanish_flag)
 static void AssignGimmickID(GAMEDATA * gamedata, int inZoneID)
 {
   GIMMICKWORK *work;
-  SAVE_CONTROL_WORK* sv= GAMEDATA_GetSaveControlWork(gamedata);
   //ギミックワーク取得
-	work = SaveData_GetGimmickWork(sv);
+	work = GAMEDATA_GetGimmickWork(gamedata);
 
   //マップジャンプのときのみ初期化する（歩いてゾーンが切り替わった場合は初期化しない）
 	GIMMICKWORK_Init(work);
