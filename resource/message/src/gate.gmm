@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2009-11-02T11:36:43"/>
+	<create user="matsumiya" host="W00207" date="2009-11-05T13:03:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -350,29 +350,29 @@
 	<row id="msg_gate_common_02_01">
 		<comment>各ゲート共通メッセージ
 ・臨時ニュース/チャンピオン情報</comment>
-		<language name="JPN" width="256">てすと～～～～～～～～～～～～～/</language>
-		<language name="JPN_KANJI" width="256">テスト～～～～～～～～/</language>
+		<language name="JPN" width="256">英数字/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/1234567890</language>
+		<language name="JPN_KANJI" width="256">英数字/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/1234567890</language>
 	</row>
 
 	<row id="msg_gate_common_03_01">
 		<comment>各ゲート共通メッセージ
 ・臨時ニュース/プラズマ団情報</comment>
-		<language name="JPN" width="256">test==========================/</language>
-		<language name="JPN_KANJI" width="256">TEST==================================/</language>
+		<language name="JPN" width="256">記号/○●◎▽▼□■☆★×♪１２３４５６７８９０＜＞＊</language>
+		<language name="JPN_KANJI" width="256">記号/○●◎▽▼□■☆★×♪１２３４５６７８９０＜＞＊</language>
 	</row>
 
 	<row id="msg_gate_common_04_01">
 		<comment>各ゲート共通メッセージ
 ・臨時ニュース/主人公情報</comment>
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">ひらがな/あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやいゆえおわをん</language>
+		<language name="JPN_KANJI" width="256">ひらがな/あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやいゆえおわをん</language>
 	</row>
 
 	<row id="msg_gate_common_05_01">
 		<comment>各ゲート共通メッセージ
 ・一言CM</comment>
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">漢字/猿 凹 渦 靴 稼 拐 涯 垣 殻 潟 喝 褐 缶 頑 挟 矯 襟 隅 渓 蛍 嫌</language>
+		<language name="JPN_KANJI" width="256">漢字/猿 凹 渦 靴 稼 拐 涯 垣 殻 潟 喝 褐 缶 頑 挟 矯 襟 隅 渓 蛍 嫌</language>
 	</row>
 
 	<row id="msg_gate_01_01">
