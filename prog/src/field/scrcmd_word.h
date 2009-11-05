@@ -25,6 +25,7 @@ extern VMCMD_RESULT EvCmdSodateyaPokeMonsName(VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdSodateyaPokeNickName(VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdNumber(VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdNickName( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdPlaceName( VMHANDLE* core, void* wk );
 
 #endif	/* __ASM_NO_DEF_ */
 

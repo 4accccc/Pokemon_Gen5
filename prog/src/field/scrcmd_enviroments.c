@@ -160,6 +160,28 @@ VMCMD_RESULT EvCmdGetWeek( VMHANDLE * core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * @brief 日付の取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param  wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ * @todo  RTCから直接取得しているが、本当にそれでよいのか？検討する
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetDate( VMHANDLE * core, void *wk )
+{
+  RTCDate now_date;
+  u16 *ret_month = SCRCMD_GetVMWork( core, wk ); // 第一引数
+  u16 *ret_day   = SCRCMD_GetVMWork( core, wk ); // 第二引数
+
+  GFL_RTC_GetDate( &now_date );
+  *ret_month = now_date.month;
+  *ret_day   = now_date.day;
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
  * バッジフラグの取得
  * @param  core    仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ

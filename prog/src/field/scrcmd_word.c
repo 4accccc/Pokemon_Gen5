@@ -331,3 +331,15 @@ VMCMD_RESULT EvCmdNickName( VMHANDLE *core, void *wk )
   WORDSET_RegisterPokeNickName( *wordset, idx, pp );
 	return VMCMD_RESULT_CONTINUE;
 }
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 地名を表示する
+ * @param  core  仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//------------------------------------------------------------------------------------------
+VMCMD_RESULT EvCmdPlaceName( VMHANDLE *core, void *wk )
+{ 
+	return VMCMD_RESULT_CONTINUE;
+}

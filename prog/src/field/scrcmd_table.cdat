@@ -186,7 +186,7 @@
 
   DEF_CMD( EvCmdPokeTypeName, EV_SEQ_POKETYPE_NAME )
   DEF_CMD( EvCmdMonsName, EV_SEQ_MONS_NAME )
-  NO_CMD()
+  DEF_CMD( EvCmdMonsName, EV_SEQ_PLACE_NAME )
   NO_CMD()
 
   DEF_CMD( EvCmdSodateyaPokeNickName, EV_SEQ_SODATEYA_NICK_NAME )
@@ -399,7 +399,7 @@
   DEF_CMD( EvCmdGetTimeZone, EV_SEQ_GET_TIMEZONE )
   DEF_CMD( EvCmdGetTrainerCardRank, EV_SEQ_GET_TRAINER_CARD_RANK )
   DEF_CMD( EvCmdGetWeek, EV_SEQ_GET_WEEK )
-  NO_CMD()
+  DEF_CMD( EvCmdGetDate, EV_SEQ_GET_DATE )
 
   NO_CMD()
   NO_CMD()
@@ -623,6 +623,12 @@
 
   DEF_CMD( EvCmdWildBattleRetryCheck, EV_SEQ_WILD_BTL_RETRY_CHECK )
   NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  // ÉQÅ[Égä÷òA
+  DEF_CMD( EvCmdElboard_SetNormalNews, EV_SEQ_ELBOARD_SET_NORMAL_NEWS )
+  DEF_CMD( EvCmdElboard_AddSpecialNews, EV_SEQ_ELBOARD_ADD_SPECIAL_NEWS )
   NO_CMD()
   NO_CMD()
 

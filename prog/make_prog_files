@@ -467,7 +467,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fskill_amaikaori.c \
         field/field_gimmick_gate.c \
         field/gimmick_obj_elboard.c \
-        field/elboard_zone_data.c
+        field/elboard_zone_data.c \
+        field/scrcmd_gate.c
 
 
 # フィールド天気

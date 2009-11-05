@@ -1438,6 +1438,23 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _PLACE_NAME
+ * @brief 地名を指名タグにセット
+ * @param idx     セットするタグナンバー
+ * @param zone_id セットする地名のゾーンID
+ */
+//--------------------------------------------------------------
+#define _PLACE_NAME( idx, zone_id ) \
+    _ASM_PLACE_NAME idx, zone_id
+
+    .macro  _ASM_PLACE_NAME idx, zone_id
+    .short  EV_SEQ_PLACE_NAME
+    .byte   \idx
+    .short  \zone_id
+    .endm
+
+//--------------------------------------------------------------
+/**
  *  ポケット名を指定タグにセット
  * @param idx セットするタグナンバー
  * @param pocket_id   バッグのポケット名を指すID
@@ -1943,6 +1960,34 @@
   .macro  _ASM_WILD_RETRY_CHECK  ret_wk
   .short  EV_SEQ_WILD_BTL_RETRY_CHECK
   .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @def _ELBOARD_SET_NORMAL_NEWS
+ *  @brief 電光掲示板に平常時のニュースを設定
+ */
+//--------------------------------------------------------------
+#define _ELBOARD_SET_NORMAL_NEWS() \
+    _ASM_ELBOARD_SET_NORMAL_NEWS
+
+  .macro  _ASM_ELBOARD_SET_NORMAL_NEWS
+  .short  EV_SEQ_ELBOARD_SET_NORMAL_NEWS
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @def _ELBOARD_ADD_SPECIAL_NEWS
+ *  @brief 電光掲示板に臨時ニュースを追加
+ *  @param strID ニュースに使用するメッセージを指定
+ */
+//--------------------------------------------------------------
+#define _ELBOARD_ADD_SPECIAL_NEWS( strID ) \
+    _ASM_ELBOARD_ADD_SPECIAL_NEWS strID
+
+  .macro  _ASM_ELBOARD_ADD_SPECIAL_NEWS strID
+  .short  EV_SEQ_ELBOARD_ADD_SPECIAL_NEWS
+  .short  \strID
   .endm
 
 #if 0
@@ -3054,6 +3099,23 @@
   .macro  _ASM_GET_WEEK ret_wk
   .short  EV_SEQ_GET_WEEK
   .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _GET_DATE
+ * @brief 日付の取得
+ * @param ret_month 月を受け取るワーク
+ * @param ret_day   日を受け取るワーク
+ */
+//--------------------------------------------------------------
+#define _GET_DATE( ret_month, ret_day ) \
+    _ASM_GET_DATE ret_month, ret_day
+
+  .macro  _ASM_GET_DATE ret_month, ret_day
+  .short  EV_SEQ_GET_DATE
+  .short  \ret_month
+  .short  \ret_day
   .endm
 
 //--------------------------------------------------------------
