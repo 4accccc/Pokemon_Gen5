@@ -1,4 +1,4 @@
-//=============================================================================
+////=============================================================================
 /**
  *
  *	@file		pmsiv_menu.c
@@ -35,12 +35,16 @@
 enum
 { 
   // エディットモードの配置
-  TASKMENU_WIN_EDIT_X = 24,
-  TASKMENU_WIN_EDIT_Y = 18,
   TASKMENU_WIN_EDIT_H = APP_TASKMENU_PLATE_HEIGHT,
   TASKMENU_WIN_EDIT_W = 9,
+  TASKMENU_WIN_EDIT_X = 24,
+  TASKMENU_WIN_EDIT_Y = 18,
 
   // カテゴリ・イニシャルモードの配置
+  TASKMENU_WIN_INITIAL_H = APP_TASKMENU_PLATE_HEIGHT,
+  TASKMENU_WIN_INITIAL_W = 9,
+  TASKMENU_WIN_INITIAL_X = 6,
+  TASKMENU_WIN_INITIAL_Y = 21,
 };
 
 //--------------------------------------------------------------
@@ -204,6 +208,8 @@ void PMSIV_MENU_SetupEdit( PMSIV_MENU* wk )
 {
   int i;
     
+  PMSIV_MENU_Clear( wk );
+    
   for( i=0; i<TASKMENU_WIN_EDIT_MAX; i++ )
   {
     if( wk->menu_item[i].str != NULL )
@@ -214,7 +220,7 @@ void PMSIV_MENU_SetupEdit( PMSIV_MENU* wk )
 
 		wk->menu_item[i].str			= GFL_MSG_CreateString( wk->msgman, str_decide + i );
 		wk->menu_item[i].msgColor	= APP_TASKMENU_ITEM_MSGCOLOR;
-		wk->menu_item[i].type			= APP_TASKMENU_WIN_TYPE_NORMAL+i;
+		wk->menu_item[i].type			= APP_TASKMENU_WIN_TYPE_NORMAL + (i==TASKMENU_WIN_EDIT_CANCEL);
 
     if( wk->menu_win[i] != NULL )
     {
@@ -227,11 +233,64 @@ void PMSIV_MENU_SetupEdit( PMSIV_MENU* wk )
         TASKMENU_WIN_EDIT_Y + TASKMENU_WIN_EDIT_H * i, 
         TASKMENU_WIN_EDIT_W,
         HEAPID_PMS_INPUT_VIEW );
+      
+    HOSAKA_Printf("create win[%d] \n",i);
   }
 
   GFL_BG_LoadScreenReq( FRM_MAIN_TASKMENU );
 
   HOSAKA_Printf("PMSIV_MENU_SetupEdit\n");
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  カテゴリーモードのセットアップ
+ *
+ *	@param	PMSIV_MENU* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void PMSIV_MENU_SetupCategory( PMSIV_MENU* wk )
+{
+  int i;
+    
+  PMSIV_MENU_Clear( wk );
+	  
+  if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_GROUP )
+	{
+    // グループはメニューなしなので何もせず抜ける
+    return;
+  }
+
+  for( i=0; i<TASKMENU_WIN_INITIAL_MAX; i++ )
+  {
+    if( wk->menu_item[i].str != NULL )
+    {
+      GFL_STR_DeleteBuffer( wk->menu_item[i].str );
+      wk->menu_item[i].str = NULL;
+    }
+
+		wk->menu_item[i].str			= GFL_MSG_CreateString( wk->msgman, select01_01 + i );
+		wk->menu_item[i].msgColor	= APP_TASKMENU_ITEM_MSGCOLOR;
+		wk->menu_item[i].type			= APP_TASKMENU_WIN_TYPE_NORMAL + (i==TASKMENU_WIN_INITIAL_CANCEL);
+
+    if( wk->menu_win[i] != NULL )
+    {
+      APP_TASKMENU_WIN_Delete( wk->menu_win[i] );
+      wk->menu_win[i] = NULL;
+    }
+
+    wk->menu_win[i] = APP_TASKMENU_WIN_Create( wk->menu_res, &wk->menu_item[i], 
+        TASKMENU_WIN_INITIAL_X + TASKMENU_WIN_INITIAL_W * i,
+        TASKMENU_WIN_INITIAL_Y, 
+        TASKMENU_WIN_INITIAL_W,
+        HEAPID_PMS_INPUT_VIEW );
+  }
+
+  GFL_BG_LoadScreenReq( FRM_MAIN_TASKMENU );
+
+  HOSAKA_Printf("PMSIV_MENU_SetupCategory\n");
 }
 
 //=============================================================================
@@ -264,7 +323,6 @@ static TOUCHBAR_WORK* touchbar_init( GFL_CLUNIT* clunit, HEAPID heap_id )
 			{	TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
 		},
 	};
-  // @TODO 左右、カテゴリ、イニシャル切替ボタンはタッチバーで管理しないほうが良さそう
 
 	//設定構造体
 	//さきほどの窓情報＋リソース情報をいれる

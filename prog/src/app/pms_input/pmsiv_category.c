@@ -81,7 +81,6 @@ enum {
 	ENABLE_MOVE_FRAMES = PMSI_FRAMES(3),
 	MODECHANGE_MOVE_FRAMES = PMSI_FRAMES(8),
 
-
 	// OBJ pos
 	CATEGORY_CURSOR_OX = ( (CATEGORY_WIN_XORG*8) + ((CATEGORY_WIN_WIDTH*8)/2) ) - GROUPMODE_BG_XOFS,
 	CATEGORY_CURSOR_OY = ( (CATEGORY_WIN_YORG*8) + ((CATEGORY_WIN_HEIGHT*8)/2) ) - CATEGORY_BG_ENABLE_YOFS,
@@ -250,7 +249,7 @@ void PMSIV_CATEGORY_SetupGraphicDatas( PMSIV_CATEGORY* wk, ARCHANDLE* p_handle )
   
   HOSAKA_Printf("BG FRM_MAIN_CATEGORY initial charpos=%d \n", charpos);
 	
-  setup_back_window( wk, charpos );
+//  setup_back_window( wk, charpos );
 
 	GFL_BG_SetScroll( FRM_MAIN_CATEGORY, GFL_BG_SCROLL_X_SET, GROUPMODE_BG_XOFS );
 	GFL_BG_SetScroll( FRM_MAIN_CATEGORY, GFL_BG_SCROLL_Y_SET, CATEGORY_BG_DISABLE_YOFS );
@@ -263,7 +262,6 @@ void PMSIV_CATEGORY_SetupGraphicDatas( PMSIV_CATEGORY* wk, ARCHANDLE* p_handle )
 	G2_SetWndOutsidePlane(GX_WND_PLANEMASK_ALL^FRM_MAIN_CATEGORY_WNDMASK, TRUE);
 	G2_SetWnd0Position(0,0,255,160);
 	GX_SetVisibleWnd( GX_WNDMASK_W0 );
-
 
 	GFL_BG_LoadScreenReq( FRM_MAIN_CATEGORY );
 }
@@ -555,15 +553,22 @@ BOOL PMSIV_CATEGORY_WaitEnableBG( PMSIV_CATEGORY* wk )
 	case 0:
 		if( PMSIV_TOOL_WaitBright( (&wk->blend_work) ) )
 		{
+      return TRUE;
+#if 0
 			PMSIV_TOOL_SetupScrollWork( &(wk->scroll_work), 
 					FRM_MAIN_CATEGORY, PMSIV_TOOL_SCROLL_DIRECTION_Y,
 					CATEGORY_BG_ENABLE_EFF_VECTOR, ENABLE_MOVE_FRAMES );
 			wk->eff_seq++;
-		}
+#endif
+    }
 		break;
 
+#if 0
 	case 1:
 		return PMSIV_TOOL_WaitScroll( &(wk->scroll_work) );
+#endif 
+
+  default : GF_ASSERT(0);
 	}
 
 	return FALSE;
@@ -600,7 +605,7 @@ BOOL PMSIV_CATEGORY_WaitDisableBG( PMSIV_CATEGORY* wk )
 {
 	switch( wk->eff_seq ){
 	case 0:
-		if( PMSIV_TOOL_WaitScroll(&(wk->scroll_work)) )
+	if( PMSIV_TOOL_WaitScroll(&(wk->scroll_work)) )
 		{
 			PMSIV_TOOL_SetupBrightWork( &(wk->blend_work), FRM_MAIN_CATEGORY_BLENDMASK, 0, HARD_WINDOW_BLDY, BRIGHT_EFFECT_WAIT );
 			wk->eff_seq++;
@@ -744,14 +749,13 @@ void PMSIV_CATEGORY_ChangeModeBG( PMSIV_CATEGORY* wk )
 		xofs = INITIALMODE_BG_XOFS;
 	}
 
-	GFL_BG_SetScroll( FRM_MAIN_CATEGORY, GFL_BG_SCROLL_X_SET, xofs );
-
+	GFL_BG_SetScrollReq( FRM_MAIN_CATEGORY, GFL_BG_SCROLL_X_SET, xofs );
 }
 
 
 //------------------------------------------------------------------
 /**
-	* カテゴリモードに応じてＢＧオフセット変更（エフェクトあり）
+	* カテゴリモードに応じてＢＧ変更(Vブランク転送)
 	*
 	* @param   wk		
 	*
@@ -759,6 +763,36 @@ void PMSIV_CATEGORY_ChangeModeBG( PMSIV_CATEGORY* wk )
 //------------------------------------------------------------------
 void PMSIV_CATEGORY_StartModeChange( PMSIV_CATEGORY* wk )
 {
+  ARCHANDLE* p_handle;
+
+	p_handle = GFL_ARC_OpenDataHandle( ARCID_PMSI_GRAPHIC, HEAPID_PMS_INPUT_VIEW );
+
+	if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_GROUP )
+	{
+    int i;
+
+	  GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(p_handle, NARC_pmsi_pms_bg_main1_NSCR,
+		  FRM_MAIN_CATEGORY, 0, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
+	
+    for(i=0; i<CATEGORY_GROUP_MAX; i++)
+	  {
+      GFL_BMPWIN_MakeScreen( wk->winGroup[i] );
+    }
+  }
+  else
+  {
+	  GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(p_handle, NARC_pmsi_pms_bg_main01_NSCR,
+		  FRM_MAIN_CATEGORY, 0, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
+	  
+    GFL_BMPWIN_MakeScreen( wk->winInitial );
+  }
+	
+  GFL_ARC_CloseDataHandle( p_handle );
+
+	GFL_BG_LoadScreenV_Req( FRM_MAIN_CATEGORY );
+  
+#if 0
+  // スクロール
 	int vector;
 
 	if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_GROUP )
@@ -772,10 +806,12 @@ void PMSIV_CATEGORY_StartModeChange( PMSIV_CATEGORY* wk )
 
 	PMSIV_TOOL_SetupScrollWork( &(wk->scroll_work), FRM_MAIN_CATEGORY, PMSIV_TOOL_SCROLL_DIRECTION_X,
 				 vector, MODECHANGE_MOVE_FRAMES );
+#endif
 
 }
 
 BOOL PMSIV_CATEGORY_WaitModeChange( PMSIV_CATEGORY* wk )
 {
-	return PMSIV_TOOL_WaitScroll( &(wk->scroll_work) );
+  return TRUE;
+//	return PMSIV_TOOL_WaitScroll( &(wk->scroll_work) );
 }

@@ -121,7 +121,7 @@ struct _PMSIV_SUB {
 	GFL_CLWK		*down_button;
 	CELL_ANIM_PACK     clpack;
 
-	u16		button_scrn[SCRN_ID_MAX][MODEBUTTON_SCRN_SIZE];
+//	u16		button_scrn[SCRN_ID_MAX][MODEBUTTON_SCRN_SIZE];
 
 	GFL_TCB		*changeButtonTask;
 
@@ -235,6 +235,7 @@ void PMSIV_SUB_SetupGraphicDatas( PMSIV_SUB* wk, ARCHANDLE* p_handle )
 }
 static void load_scrn_datas( PMSIV_SUB* wk, ARCHANDLE* p_handle )
 {
+#if 0
 	static const u16 dat_id[] = {
 		NARC_pmsi_pms_bg_sub_a1_NSCR,
 		NARC_pmsi_pms_bg_sub_a2_NSCR,
@@ -259,6 +260,7 @@ static void load_scrn_datas( PMSIV_SUB* wk, ARCHANDLE* p_handle )
 			GFL_HEAP_FreeMemory( loadPtr );
 		}
 	}
+#endif
 }
 
 static void setup_cgx_datas( PMSIV_SUB* wk, ARCHANDLE* p_handle )
@@ -514,6 +516,7 @@ typedef struct {
 //------------------------------------------------------------------
 void PMSIV_SUB_ChangeCategoryButton( PMSIV_SUB* wk )
 {
+#if 0
 	CHANGE_BUTTON_WORK* twk = GFL_HEAP_AllocMemory(HEAPID_PMS_INPUT_VIEW, sizeof(CHANGE_BUTTON_WORK));
 
 	if( twk )
@@ -557,15 +560,18 @@ void PMSIV_SUB_ChangeCategoryButton( PMSIV_SUB* wk )
 	{
 		wk->changeButtonTask = NULL;
 	}
+#endif
 }
 
 BOOL PMSIV_SUB_WaitChangeCategoryButton( PMSIV_SUB* wk )
 {
-	return (wk->changeButtonTask == NULL);
+  return TRUE;
+//	return (wk->changeButtonTask == NULL);
 }
 
 static void ChangeButtonTask( GFL_TCB *tcb, void* wk_adrs )
 {
+#if 0
 	enum {
 		ANM_WAIT1 = 2,
 		ANM_WAIT2 = 4,
@@ -619,6 +625,7 @@ static void ChangeButtonTask( GFL_TCB *tcb, void* wk_adrs )
 		GFL_HEAP_FreeMemory(wk_adrs);
 		GFL_TCB_DeleteTask(tcb);
 	}
+#endif
 }
 
 

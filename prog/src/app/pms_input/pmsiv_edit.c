@@ -165,11 +165,13 @@ struct _PMSIV_EDIT {
 	GFL_BMPWIN	*win_yesno;
 	GFL_BMPWIN	**win_message;
 	GFL_CLWK	*cursor_actor[2];
-  //@TODO 消す
+#if 0
+  // 会話文選択バー・ボタン
 	GFL_CLWK	*arrow_left_actor;
 	GFL_CLWK	*arrow_right_actor;
 	GFL_CLWK	*bar_actor;
 	GFL_CLWK	*btn_actor;
+#endif
 
 	GFL_MSGDATA		*msgman;
 	STRBUF			*tmpbuf;
@@ -243,10 +245,12 @@ PMSIV_EDIT*  PMSIV_EDIT_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, 
 
 	wk->cursor_actor[0] = NULL;
 	wk->cursor_actor[1] = NULL;
+#if 0
 	wk->arrow_left_actor = NULL;
 	wk->arrow_right_actor = NULL;
 	wk->bar_actor = NULL;
 	wk->btn_actor = NULL;
+#endif
 	wk->hBlankTask = NULL;
 
 	wk->tmpbuf = GFL_STR_CreateBuffer( STR_TMPBUF_LEN, HEAPID_PMS_INPUT_VIEW );
@@ -283,6 +287,7 @@ void PMSIV_EDIT_Delete( PMSIV_EDIT* wk )
 	{
 		GFL_CLACT_WK_Remove( wk->cursor_actor[1] );
 	}
+#if 0
 	if( wk->arrow_left_actor )
 	{
 		GFL_CLACT_WK_Remove( wk->arrow_left_actor );
@@ -299,6 +304,7 @@ void PMSIV_EDIT_Delete( PMSIV_EDIT* wk )
 	{
 		GFL_CLACT_WK_Remove( wk->btn_actor );
 	}
+#endif
 	if( wk->msgman )
 	{
 		GFL_MSG_Delete( wk->msgman );
@@ -565,6 +571,7 @@ static void setup_obj( PMSIV_EDIT* wk )
 
 	set_cursor_anm( wk, TRUE );
 
+#if 0
 	wk->arrow_left_actor = PMSIView_AddActor( wk->vwk, &header, LEFT_ARROW_OBJ_XPOS, LEFT_ARROW_OBJ_YPOS,
 			ACTPRI_EDITAREA_ARROW, NNS_G2D_VRAM_TYPE_2DMAIN );
 
@@ -592,6 +599,8 @@ static void setup_obj( PMSIV_EDIT* wk )
 		GFL_CLACT_WK_SetDrawEnable( wk->bar_actor, FALSE );
 		GFL_CLACT_WK_SetDrawEnable( wk->btn_actor, FALSE );
 	}
+
+#endif
 
 }
 
@@ -967,6 +976,7 @@ void PMSIV_EDIT_VisibleCursor( PMSIV_EDIT* wk, BOOL flag )
 
 void PMSIV_EDIT_StopArrow( PMSIV_EDIT* wk )
 {
+#if 0
 	if( PMSI_GetInputMode( wk->mwk ) == PMSI_MODE_SENTENCE )
 	{
 		GFL_CLACT_WK_SetDrawEnable( wk->arrow_left_actor, FALSE );
@@ -974,9 +984,11 @@ void PMSIV_EDIT_StopArrow( PMSIV_EDIT* wk )
 		GFL_CLACT_WK_SetDrawEnable( wk->btn_actor, FALSE );
 		GFL_CLACT_WK_SetDrawEnable( wk->bar_actor, FALSE );
 	}
+#endif
 }
 void PMSIV_EDIT_ActiveArrow( PMSIV_EDIT* wk )
 {
+#if 0
 	if( PMSI_GetInputMode( wk->mwk ) == PMSI_MODE_SENTENCE )
 	{
 		GFL_CLACT_WK_SetDrawEnable( wk->arrow_left_actor, TRUE );
@@ -987,6 +999,7 @@ void PMSIV_EDIT_ActiveArrow( PMSIV_EDIT* wk )
 		GFL_CLACT_WK_SetAnmSeq( wk->arrow_left_actor, ANM_EDITAREA_SCR_L01 );
 		GFL_CLACT_WK_SetAnmSeq( wk->arrow_right_actor, ANM_EDITAREA_SCR_R01 );
 	}
+#endif
 }
 
 

@@ -320,6 +320,7 @@ extern PMSIV_MENU* PMSIV_MENU_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK*
 extern void PMSIV_MENU_Delete( PMSIV_MENU* wk );
 extern void PMSIV_MENU_Clear( PMSIV_MENU* wk );
 extern void PMSIV_MENU_SetupEdit( PMSIV_MENU* wk );
+extern void PMSIV_MENU_SetupCategory( PMSIV_MENU* wk );
 
 
 #endif

@@ -485,8 +485,6 @@ static void Cmd_Init( GFL_TCB *tcb, void* wk_adrs )
 	GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_pmsi_pms_bg_sub_NSCR, FRM_SUB_BG, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_pmsi_pms_bg_sub_NCGR, FRM_SUB_BG, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 	
-  // @TODO ”w–ÊBG“WŠJ ¡“WŠJ‚·‚é‚Æ‰½ŒÌ‚©ƒLƒƒƒ‰ƒoƒP‚·‚é
-#if 1
 	GFL_ARCHDL_UTIL_TransVramScreen(p_handle, NARC_pmsi_pms_bg_main3_NSCR,
 		FRM_MAIN_BACK, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 
@@ -494,7 +492,6 @@ static void Cmd_Init( GFL_TCB *tcb, void* wk_adrs )
 		FRM_MAIN_BACK, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 
 	GFL_BG_LoadScreenReq( FRM_MAIN_BACK );
-#endif 
 
 //	cwk->vwk->sub_wk = PMSIV_SUB_Create( cwk->vwk, cwk->mwk, cwk->dwk );
 //	PMSIV_SUB_SetupGraphicDatas( cwk->vwk->sub_wk, p_handle );
@@ -890,7 +887,7 @@ static void Cmd_EditAreaToCategory( GFL_TCB *tcb, void* wk_adrs )
 		PMSIV_EDIT_StopArrow( vwk->edit_wk );
 		PMSIV_EDIT_ChangeSMsgWin(vwk->edit_wk,1);
 		PMSIV_EDIT_SetSystemMessage( vwk->edit_wk,PMSIV_MSG_GUIDANCE);
-    PMSIV_MENU_Clear( vwk->menu_wk );
+    PMSIV_MENU_SetupCategory( vwk->menu_wk );
 //		PMSIV_BUTTON_Hide( vwk->button_wk );
 		PMSIV_CATEGORY_StartEnableBG( vwk->category_wk );
 		PMSIV_EDIT_ScrollSet( vwk->edit_wk,0);
@@ -927,10 +924,13 @@ static void Cmd_ChangeCategoryModeDisable( GFL_TCB *tcb, void* wk_adrs )
 //		PMSIV_SUB_ChangeCategoryButton( vwk->sub_wk );
 //		PMSIV_BUTTON_ChangeCategoryButton( vwk->button_wk );
 		wk->seq++;
-		break;
+//		break;
 
 	case 1:
-		PMSIV_CATEGORY_StartModeChange( vwk->category_wk );
+    PMSIV_CATEGORY_StartModeChange( vwk->category_wk );
+		PMSIV_CATEGORY_ChangeModeBG( vwk->category_wk );
+
+    PMSIV_MENU_SetupCategory( vwk->menu_wk );
 		wk->seq++;
 		break;
 
@@ -940,7 +940,6 @@ static void Cmd_ChangeCategoryModeDisable( GFL_TCB *tcb, void* wk_adrs )
 //		&&	PMSIV_BUTTON_WaitChangeCategoryButton( vwk->button_wk )
 		)
 		{
-			PMSIV_CATEGORY_ChangeModeBG( vwk->category_wk );
 			DeleteCommand( wk );
 		}
 		break;
@@ -970,13 +969,15 @@ static void Cmd_ChangeCategoryModeEnable( GFL_TCB *tcb, void* wk_adrs )
 	case 1:
 		PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, FALSE );
 		PMSIV_CATEGORY_StartModeChange( vwk->category_wk );
+		PMSIV_CATEGORY_ChangeModeBG( vwk->category_wk );
+
+    PMSIV_MENU_SetupCategory( vwk->menu_wk );
 		wk->seq++;
 		break;
 
 	case 2:
 		if( PMSIV_CATEGORY_WaitModeChange( vwk->category_wk ) )
 		{
-			PMSIV_CATEGORY_ChangeModeBG( vwk->category_wk );
 			wk->seq++;
 		}
 		break;
@@ -1091,6 +1092,7 @@ static void Cmd_WordWinToCategory( GFL_TCB *tcb, void* wk_adrs )
 	case 0:
 //		PMSIV_SUB_ChangeCategoryButton( vwk->sub_wk );
 //		PMSIV_BUTTON_ChangeCategoryButton( vwk->button_wk );
+    PMSIV_MENU_SetupCategory( vwk->menu_wk );
 		wk->seq++;
 		break;
 
@@ -1145,6 +1147,7 @@ static void Cmd_WordWinToEditArea( GFL_TCB *tcb, void* wk_adrs )
 	switch( wk->seq ){
 	case 0:
 //		PMSIV_BUTTON_Appear( vwk->button_wk );
+    PMSIV_MENU_SetupEdit( vwk->menu_wk );
 		PMSIV_WORDWIN_VisibleCursor( vwk->wordwin_wk, FALSE );
 //		PMSIV_SUB_VisibleArrowButton( vwk->sub_wk, FALSE );
 		PMSIV_WORDWIN_StartFadeOut( vwk->wordwin_wk );
