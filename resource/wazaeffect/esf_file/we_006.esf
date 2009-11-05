@@ -5,7 +5,7 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_006.spa
 %00
 パーティクルデータロード	w_006
 制御モード変更	継続
-SE再生	SEQ_SE_W006_03	SE1	10	0	90	0	0
+SE再生	SEQ_SE_W006_03	SE1	10	0	0	0	0
 SE再生	SEQ_SE_W006_01	SE2	0	0	120	0	0
 SEパン	SE1	追従	攻撃側	防御側	0	20:0:0
 SEパン	SE2	追従	攻撃側	防御側	0	20:0:0
