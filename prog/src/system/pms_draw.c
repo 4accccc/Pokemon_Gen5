@@ -398,7 +398,7 @@ static u32 _obj_get_ncer( CLSYS_DRAW_TYPE vram_type )
 	case GX_OBJVRAMMODE_CHAR_1D_64K:
 		return NARC_pmsi_pms2_obj_dekome_64k_NCER;
 	case GX_OBJVRAMMODE_CHAR_1D_128K:
-//		return NARC_pmsi_pms2_obj_dekome_128k_NCER;
+		return NARC_pmsi_pms2_obj_dekome_128k_NCER;
 	default:
 		GF_ASSERT(0);	//非対応のマッピングモード
 	}
@@ -434,7 +434,7 @@ static u32 _obj_get_nanr( CLSYS_DRAW_TYPE vram_type )
 	case GX_OBJVRAMMODE_CHAR_1D_64K:
 		return NARC_pmsi_pms2_obj_dekome_64k_NANR;
 	case GX_OBJVRAMMODE_CHAR_1D_128K:
-//		return NARC_pmsi_pms2_obj_dekome_128k_NANR;
+		return NARC_pmsi_pms2_obj_dekome_128k_NANR;
 	default:
 		GF_ASSERT(0);	//非対応のマッピングモード
 	}
