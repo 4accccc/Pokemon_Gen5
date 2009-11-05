@@ -42,10 +42,10 @@
 #define PLAYERINFO_POKEICON_DIFF_X		(32)
 #define PLAYERINFO_POKEICON_Y					(176)
 
-#define PLAYERINFO_TRAINER_CUP_X			(32)
-#define PLAYERINFO_TRAINER_CUP_Y			(176)
-#define PLAYERINFO_TRAINER_RND_X			(32)
-#define PLAYERINFO_TRAINER_RND_Y			(176)
+#define PLAYERINFO_TRAINER_CUP_X			(40)
+#define PLAYERINFO_TRAINER_CUP_Y			(112)
+#define PLAYERINFO_TRAINER_RND_X			(40)
+#define PLAYERINFO_TRAINER_RND_Y			(64)
 //=============================================================================
 /**
  *					ç\ë¢ëÃêÈåæ
@@ -140,6 +140,8 @@ extern void PLAYERINFO_DEBUG_CreateData( WIFIBATTLEMATCH_MODE mode, void *p_data
 #define MATCHINFO_PLT_OBJ_PMS	(0)
 #define MATCHINFO_PLT_OBJ_TRAINER	(MATCHINFO_PLT_OBJ_PMS+PMS_DRAW_OBJ_PLTT_NUM)
 
+#define MATCHINFO_TRAINER_X			(28)
+#define MATCHINFO_TRAINER_Y			(20)
 //=============================================================================
 /**
  *					ç\ë¢ëÃêÈåæ

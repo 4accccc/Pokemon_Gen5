@@ -59,15 +59,15 @@ enum
 };
 enum
 {	
-	RESID_POKEICON_CGR_TOP,
-	RESID_POKEICON_CGR_END	= RESID_POKEICON_CGR_TOP+TEMOTI_POKEMAX,
-	RESID_POKEICON_CELL_TOP,
-	RESID_POKEICON_CELL_END	= RESID_POKEICON_CELL_TOP+TEMOTI_POKEMAX,
-	RESID_POKEICON_PLT,
-	RESID_TRAINER_PLT,
-	RESID_TRAINER_CGR,
-	RESID_TRAINER_CELL,
-	RESID_MAX,
+	PLAYERINFO_RESID_POKEICON_CGR_TOP,
+	PLAYERINFO_RESID_POKEICON_CGR_END	= PLAYERINFO_RESID_POKEICON_CGR_TOP+TEMOTI_POKEMAX,
+	PLAYERINFO_RESID_POKEICON_CELL_TOP,
+	PLAYERINFO_RESID_POKEICON_CELL_END	= PLAYERINFO_RESID_POKEICON_CELL_TOP+TEMOTI_POKEMAX,
+	PLAYERINFO_RESID_POKEICON_PLT,
+	PLAYERINFO_RESID_TRAINER_PLT,
+	PLAYERINFO_RESID_TRAINER_CGR,
+	PLAYERINFO_RESID_TRAINER_CELL,
+	PLAYERINFO_RESID_MAX,
 };
 
 //=============================================================================
@@ -84,7 +84,7 @@ struct _PLAYERINFO_WORK
 	GFL_BMPWIN	*p_bmpwin[ PLAYERINFO_BMPWIN_MAX ];
 	PRINT_UTIL	print_util[ PLAYERINFO_BMPWIN_MAX ];
 	GFL_CLWK		*p_clwk[ PLAYERINFO_CLWK_MAX ];
-	u32					res[RESID_MAX];
+	u32					res[PLAYERINFO_RESID_MAX];
 	u32					clwk_max;
 	WIFIBATTLEMATCH_MODE mode;
 };
@@ -145,6 +145,13 @@ PLAYERINFO_WORK	* PLAYERINFO_Init( WIFIBATTLEMATCH_MODE mode, const void *cp_dat
 			const PLAYERINFO_RANDOMMATCH_DATA *cp_data	= cp_data_adrs;
 			PlayerInfo_Bmpwin_Rnd_Create( p_wk, mode, cp_data_adrs, p_my, p_font, p_que, p_msg, p_word, heapID );
 			PlayerInfo_TRAINER_Cleate( p_wk, cp_data->trainerID, p_unit, heapID );
+
+			{	
+				GFL_CLACTPOS	pos;
+				pos.x	= PLAYERINFO_TRAINER_RND_X;
+				pos.y = PLAYERINFO_TRAINER_RND_Y;
+				GFL_CLACT_WK_SetPos( p_wk->p_clwk[ PLAYERINFO_CLWK_TRAINER ], &pos, CLSYS_DRAW_SUB );
+			}
 		}
 		break;
 
@@ -156,6 +163,13 @@ PLAYERINFO_WORK	* PLAYERINFO_Init( WIFIBATTLEMATCH_MODE mode, const void *cp_dat
 			PlayerInfo_Bmpwin_Wifi_Create( p_wk, mode, cp_data, p_my, p_font, p_que, p_msg, p_word, heapID );
 			PlayerInfo_POKEICON_Create( p_wk, mode, cp_data->poke, cp_data->form, p_unit, heapID );
 			PlayerInfo_TRAINER_Cleate( p_wk, cp_data->trainerID, p_unit, heapID );
+
+			{	
+				GFL_CLACTPOS	pos;
+				pos.x	= PLAYERINFO_TRAINER_CUP_X;
+				pos.y = PLAYERINFO_TRAINER_CUP_Y;
+				GFL_CLACT_WK_SetPos( p_wk->p_clwk[ PLAYERINFO_CLWK_TRAINER ], &pos, CLSYS_DRAW_SUB );
+			}
 		}
 		break;
 
@@ -165,6 +179,13 @@ PLAYERINFO_WORK	* PLAYERINFO_Init( WIFIBATTLEMATCH_MODE mode, const void *cp_dat
 			PlayerInfo_Bmpwin_Live_Create( p_wk, mode, cp_data, p_my, p_font, p_que, p_msg, p_word, heapID );
 			PlayerInfo_POKEICON_Create( p_wk, mode, cp_data->poke, cp_data->form, p_unit, heapID );
 			PlayerInfo_TRAINER_Cleate( p_wk, cp_data->trainerID, p_unit, heapID );
+
+			{	
+				GFL_CLACTPOS	pos;
+				pos.x	= PLAYERINFO_TRAINER_CUP_X;
+				pos.y = PLAYERINFO_TRAINER_CUP_Y;
+				GFL_CLACT_WK_SetPos( p_wk->p_clwk[ PLAYERINFO_CLWK_TRAINER ], &pos, CLSYS_DRAW_SUB );
+			}
 		}
 		break;
 	}
@@ -850,7 +871,7 @@ static void PlayerInfo_POKEICON_Create( PLAYERINFO_WORK * p_wk, WIFIBATTLEMATCH_
 
 		p_handle	= GFL_ARC_OpenDataHandle( ARCID_POKEICON, heapID );
 
-		p_wk->res[ RESID_POKEICON_PLT ]	= GFL_CLGRP_PLTT_RegisterComp( p_handle,
+		p_wk->res[ PLAYERINFO_RESID_POKEICON_PLT ]	= GFL_CLGRP_PLTT_RegisterComp( p_handle,
         POKEICON_GetPalArcIndex(), CLSYS_DRAW_SUB, PLAYERINFO_PLT_OBJ_POKEICON*0x20, heapID );
 
 		p_wk->clwk_max	= 0;
@@ -858,10 +879,10 @@ static void PlayerInfo_POKEICON_Create( PLAYERINFO_WORK * p_wk, WIFIBATTLEMATCH_
 		{
 			if( cp_poke[i] != 0 )
 			{	
-				p_wk->res[ RESID_POKEICON_CGR_TOP + i ]		= GFL_CLGRP_CGR_Register( 
+				p_wk->res[ PLAYERINFO_RESID_POKEICON_CGR_TOP + i ]		= GFL_CLGRP_CGR_Register( 
 						p_handle, POKEICON_GetCgxArcIndexByMonsNumber( cp_poke[i], cp_form[i], FALSE ),
 						FALSE, CLSYS_DRAW_SUB, heapID ); 
-				p_wk->res[ RESID_POKEICON_CELL_TOP + i ]	= GFL_CLGRP_CELLANIM_Register( 
+				p_wk->res[ PLAYERINFO_RESID_POKEICON_CELL_TOP + i ]	= GFL_CLGRP_CELLANIM_Register( 
 						p_handle, POKEICON_GetCellArcIndex(), POKEICON_GetAnmArcIndex(), heapID ); 
 				p_wk->clwk_max++;
 			}
@@ -881,9 +902,9 @@ static void PlayerInfo_POKEICON_Create( PLAYERINFO_WORK * p_wk, WIFIBATTLEMATCH_
 		{	
 			clwk_data.pos_x	= PLAYERINFO_POKEICON_START_X + PLAYERINFO_POKEICON_DIFF_X*i;
 			p_wk->p_clwk[i]	= GFL_CLACT_WK_Create( p_unit,
-					p_wk->res[ RESID_POKEICON_CGR_TOP + i ],
-					p_wk->res[ RESID_POKEICON_PLT ],
-					p_wk->res[ RESID_POKEICON_CELL_TOP + i ],
+					p_wk->res[ PLAYERINFO_RESID_POKEICON_CGR_TOP + i ],
+					p_wk->res[ PLAYERINFO_RESID_POKEICON_PLT ],
+					p_wk->res[ PLAYERINFO_RESID_POKEICON_CELL_TOP + i ],
 					&clwk_data,
 					CLSYS_DRAW_SUB,
 					heapID );
@@ -920,11 +941,11 @@ static void PlayerInfo_POKEICON_Delete( PLAYERINFO_WORK * p_wk )
 
 		for( i = 0; i < p_wk->clwk_max; i++ )
 		{	
-			GFL_CLGRP_CGR_Release( p_wk->res[ RESID_POKEICON_CGR_TOP + i ] );
-			GFL_CLGRP_CELLANIM_Release( p_wk->res[ RESID_POKEICON_CELL_TOP + i ] );
+			GFL_CLGRP_CGR_Release( p_wk->res[ PLAYERINFO_RESID_POKEICON_CGR_TOP + i ] );
+			GFL_CLGRP_CELLANIM_Release( p_wk->res[ PLAYERINFO_RESID_POKEICON_CELL_TOP + i ] );
 		}	
 
-		GFL_CLGRP_PLTT_Release( p_wk->res[ RESID_POKEICON_PLT ] );
+		GFL_CLGRP_PLTT_Release( p_wk->res[ PLAYERINFO_RESID_POKEICON_PLT ] );
 	
 	}
 }
@@ -947,16 +968,16 @@ static void PlayerInfo_TRAINER_Cleate( PLAYERINFO_WORK * p_wk, u32 trainerID, GF
 
 		p_handle	= GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), heapID );
 
-		p_wk->res[ RESID_TRAINER_PLT ]	= GFL_CLGRP_PLTT_Register( p_handle,
+		p_wk->res[ PLAYERINFO_RESID_TRAINER_PLT ]	= GFL_CLGRP_PLTT_Register( p_handle,
         APP_COMMON_GetNull4x4PltArcIdx(), CLSYS_DRAW_SUB, PLAYERINFO_PLT_OBJ_TRAINER*0x20, heapID );
 
-		p_wk->res[ RESID_TRAINER_CGR ]		= GFL_CLGRP_CGR_Register( 
+		p_wk->res[ PLAYERINFO_RESID_TRAINER_CGR ]		= GFL_CLGRP_CGR_Register( 
 				p_handle, APP_COMMON_GetNull4x4CharArcIdx(),
 				FALSE, CLSYS_DRAW_SUB, heapID ); 
 
-		p_wk->res[ RESID_TRAINER_CELL ]	= GFL_CLGRP_CELLANIM_Register( 
-				p_handle, APP_COMMON_GetStatusIconCellArcIdx(APP_COMMON_MAPPING_128K), 
-				APP_COMMON_GetStatusIconAnimeArcIdx(APP_COMMON_MAPPING_128K), heapID ); 
+		p_wk->res[ PLAYERINFO_RESID_TRAINER_CELL ]	= GFL_CLGRP_CELLANIM_Register( 
+				p_handle, APP_COMMON_GetNull4x4CellArcIdx(APP_COMMON_MAPPING_128K), 
+				APP_COMMON_GetNull4x4AnimeArcIdx(APP_COMMON_MAPPING_128K), heapID ); 
 
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
@@ -969,9 +990,9 @@ static void PlayerInfo_TRAINER_Cleate( PLAYERINFO_WORK * p_wk, u32 trainerID, GF
 		clwk_data.pos_y		= 0;
 		clwk_data.pos_x		= 0;
 		p_wk->p_clwk[PLAYERINFO_CLWK_TRAINER]	= GFL_CLACT_WK_Create( p_unit,
-				p_wk->res[ RESID_TRAINER_CGR ],
-				p_wk->res[ RESID_TRAINER_PLT ],
-				p_wk->res[ RESID_TRAINER_CELL ],
+				p_wk->res[ PLAYERINFO_RESID_TRAINER_CGR ],
+				p_wk->res[ PLAYERINFO_RESID_TRAINER_PLT ],
+				p_wk->res[ PLAYERINFO_RESID_TRAINER_CELL ],
 				&clwk_data,
 				CLSYS_DRAW_SUB,
 				heapID );
@@ -998,9 +1019,9 @@ static void PlayerInfo_TRAINER_Delete( PLAYERINFO_WORK * p_wk )
 
 	//リソース破棄
 	{	
-		GFL_CLGRP_CGR_Release( p_wk->res[ RESID_TRAINER_CGR ] );
-		GFL_CLGRP_CELLANIM_Release( p_wk->res[ RESID_TRAINER_CELL ] );
-		GFL_CLGRP_PLTT_Release( p_wk->res[ RESID_POKEICON_PLT ] );
+		GFL_CLGRP_CGR_Release( p_wk->res[ PLAYERINFO_RESID_TRAINER_CGR ] );
+		GFL_CLGRP_CELLANIM_Release( p_wk->res[ PLAYERINFO_RESID_TRAINER_CELL ] );
+		GFL_CLGRP_PLTT_Release( p_wk->res[ PLAYERINFO_RESID_TRAINER_PLT ] );
 	}
 }
 
@@ -1124,7 +1145,10 @@ enum
 };
 enum
 {	
-	MATCHINFO_CLWK_MAX	= 6,
+	MATCHINFO_RESID_TRAINER_PLT,
+	MATCHINFO_RESID_TRAINER_CGR,
+	MATCHINFO_RESID_TRAINER_CELL,
+	MATCHINFO_RESID_MAX,
 };
 //=============================================================================
 /**
@@ -1138,8 +1162,9 @@ struct _MATCHINFO_WORK
 {	
 	GFL_BMPWIN		*p_bmpwin[ MATCHINFO_BMPWIN_MAX ];
 	PRINT_UTIL		print_util[ MATCHINFO_BMPWIN_MAX ];
-	GFL_CLWK			*p_clwk[ MATCHINFO_CLWK_MAX ];
+	GFL_CLWK			*p_clwk;
 	PMS_DRAW_WORK	*p_pms;
+	u16 res[MATCHINFO_RESID_MAX];
 };
 //=============================================================================
 /**
@@ -1152,6 +1177,12 @@ struct _MATCHINFO_WORK
 static void MatchInfo_Bmpwin_Create( MATCHINFO_WORK * p_wk, const MATCHINFO_DATA *cp_data, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID );
 static BOOL MatchInfo_Bmpwin_PrintMain( MATCHINFO_WORK * p_wk, PRINT_QUE *p_que );
 static void MatchInfo_Bmpwin_Delete( MATCHINFO_WORK * p_wk );
+//-------------------------------------
+///	CLWK
+//=====================================
+static void MatchInfo_TRAINER_Create( MATCHINFO_WORK * p_wk, u32 trainerID, GFL_CLUNIT *p_unit, HEAPID heapID );
+static void MatchInfo_TRAINER_Delete( MATCHINFO_WORK * p_wk );
+
 //=============================================================================
 /**
  *					データ
@@ -1186,6 +1217,7 @@ MATCHINFO_WORK	* MATCHINFO_Init( const MATCHINFO_DATA *cp_data, GFL_CLUNIT *p_un
 	
 
 	MatchInfo_Bmpwin_Create( p_wk, cp_data, p_font, p_que, p_msg, p_word, heapID );
+	MatchInfo_TRAINER_Create( p_wk, cp_data->trainerID, p_unit, heapID );
 
 	return p_wk;
 }
@@ -1198,6 +1230,7 @@ MATCHINFO_WORK	* MATCHINFO_Init( const MATCHINFO_DATA *cp_data, GFL_CLUNIT *p_un
 //-----------------------------------------------------------------------------
 void MATCHINFO_Exit( MATCHINFO_WORK *p_wk )
 {	
+	MatchInfo_TRAINER_Delete( p_wk );
 	MatchInfo_Bmpwin_Delete( p_wk );
 
 	PMS_DRAW_Exit( p_wk->p_pms );
@@ -1433,5 +1466,84 @@ static void MatchInfo_Bmpwin_Delete( MATCHINFO_WORK * p_wk )
 		{	
 			GFL_BMPWIN_Delete( p_wk->p_bmpwin[i] );
 		}
+	}
+}
+//=============================================================================
+/**
+ *					CLWK
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	対戦相手の見た目を作成
+ *
+ *	@param	MATCHINFO_WORK * p_wk	ワーク
+ *	@param	trainerID			見た目
+ *	@param	*p_unit				ユニット
+ *	@param	heapID				ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void MatchInfo_TRAINER_Create( MATCHINFO_WORK * p_wk, u32 trainerID, GFL_CLUNIT *p_unit, HEAPID heapID )
+{	
+	//リソース読みこみ
+	{	
+		ARCHANDLE	*p_handle;
+
+		p_handle	= GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), heapID );
+
+		p_wk->res[ MATCHINFO_RESID_TRAINER_PLT ]	= GFL_CLGRP_PLTT_Register( p_handle,
+        APP_COMMON_GetNull4x4PltArcIdx(), CLSYS_DRAW_MAIN, MATCHINFO_PLT_OBJ_TRAINER*0x20, heapID );
+
+		p_wk->res[ MATCHINFO_RESID_TRAINER_CGR ]		= GFL_CLGRP_CGR_Register( 
+				p_handle, APP_COMMON_GetNull4x4CharArcIdx(),
+				FALSE, CLSYS_DRAW_MAIN, heapID ); 
+
+		p_wk->res[ MATCHINFO_RESID_TRAINER_CELL ]	= GFL_CLGRP_CELLANIM_Register( 
+				p_handle, APP_COMMON_GetNull4x4CellArcIdx(APP_COMMON_MAPPING_128K), 
+				APP_COMMON_GetNull4x4AnimeArcIdx(APP_COMMON_MAPPING_128K), heapID ); 
+
+		GFL_ARC_CloseDataHandle( p_handle );
+	}
+
+	//CLWK
+	{	
+		GFL_CLWK_DATA	clwk_data;
+
+		GFL_STD_MemClear( &clwk_data, sizeof(GFL_CLWK_DATA) );
+		clwk_data.pos_x		= MATCHINFO_TRAINER_X;
+		clwk_data.pos_y		= MATCHINFO_TRAINER_Y;
+		p_wk->p_clwk	= GFL_CLACT_WK_Create( p_unit,
+				p_wk->res[ MATCHINFO_RESID_TRAINER_CGR ],
+				p_wk->res[ MATCHINFO_RESID_TRAINER_PLT ],
+				p_wk->res[ MATCHINFO_RESID_TRAINER_CELL ],
+				&clwk_data,
+				CLSYS_DRAW_MAIN,
+				heapID );
+
+
+	 	CLWK_TransNSBTX( p_wk->p_clwk, 
+				ARCID_MMDL_RES, trainerID, 3, NSBTX_DEF_SX, NSBTX_DEF_SY, 0, CLSYS_DRAW_MAIN, heapID );
+	}
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	対戦相手の見た目を破棄
+ *
+ *	@param	MATCHINFO_WORK * p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void MatchInfo_TRAINER_Delete( MATCHINFO_WORK * p_wk )
+{	
+	//CLWK破棄
+	{	
+		GFL_CLACT_WK_Remove( p_wk->p_clwk );
+	}
+
+	//リソース破棄
+	{	
+		GFL_CLGRP_CGR_Release( p_wk->res[ MATCHINFO_RESID_TRAINER_CGR ] );
+		GFL_CLGRP_CELLANIM_Release( p_wk->res[ MATCHINFO_RESID_TRAINER_CELL ] );
+		GFL_CLGRP_PLTT_Release( p_wk->res[ MATCHINFO_RESID_TRAINER_PLT ] );
 	}
 }
