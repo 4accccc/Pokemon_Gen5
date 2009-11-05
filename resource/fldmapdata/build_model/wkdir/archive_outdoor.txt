@@ -174,3 +174,4 @@
 "nsbmdfiles/badgegate_08.nsbmd"
 "nsbmdfiles/badgegate_09.nsbmd"
 "nsbmdfiles/badgegate_10.nsbmd"
+"nsbmdfiles/door_c01gym.nsbmd"
