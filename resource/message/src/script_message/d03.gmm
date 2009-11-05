@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00207" date="2009-11-05T16:54:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,11 +292,27 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_d03_boy3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">BOY3
+少年（聡明）</attribute>
+		<language name="JPN" width="256">じゅくがえりの　ボクは　しってます[BE:01:ページ切り替え（クリア）]
+さばくは　どうくつと　おなじで
+あちこちから　ポケモンが　でてきます</language>
+		<language name="JPN_KANJI" width="256">じゅくがえりの　ボクは　知ってます[BE:01:ページ切り替え（クリア）]
+砂漠は　洞くつと　同じで
+あちこちから　ポケモンが　でてきます</language>
+	</row>
+
+	<row id="msg_d03_sign1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">看板</attribute>
+		<language name="JPN" width="256">このさき　デザートリゾート
+いわゆる　ひとつの　さばくです</language>
+		<language name="JPN_KANJI" width="256">この先　デザートリゾート
+いわゆる　ひとつの　砂漠です</language>
 	</row>
 
 	<flowchart-group-list>

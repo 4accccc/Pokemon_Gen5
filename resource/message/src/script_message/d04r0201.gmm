@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-26T22:11:52"/>
+	<create user="matsumiya" host="W00207" date="2009-11-05T16:52:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,13 +229,13 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="171"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="177"/>
+		<comment position="4" width="211"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="248" top="177" right="949" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="526"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="539"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="693"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,35 +292,57 @@
 	</lock>
 
 
-	<row id="msg_d04r0201_00_01">
-		<comment>♂
+	<row id="msg_d04r0201_backpackerw_01">
+		<comment>♀
 ・カセキ選択イベント
-・アイテム名による選択肢</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+・アイテム名による選択肢
+　選択後、アイテム入手処理
+　そして選んだアイテムに対応した
+　メッセージを表示</comment>
+		<attribute name="キャラ指定">BACKPACKERW
+バックパッカー♀</attribute>
+		<language name="JPN" width="256">ここって　ステキだよね！　だって
+いいものを　２つも　みつけたんだ！[BE:01:ページ切り替え（クリア）]
+なにを　みつけたか
+うれしいから　おしえてあげるね[BE:01:ページ切り替え（クリア）]
+なんと！
+ポケモンの　カセキ　なんです！[BE:01:ページ切り替え（クリア）]
+でね　あたし
+にもつが　いっぱい　なんだ！[BE:01:ページ切り替え（クリア）]
+よければ　あなた　どちらか
+すきな　カセキを　もらってくれない？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ここって　ステキだよね！　だって
+いいものを　２つも　みつけたんだ！[BE:01:ページ切り替え（クリア）]
+なにを　見つけたか
+うれしいから　教えてあげるね[BE:01:ページ切り替え（クリア）]
+なんと！
+ポケモンの　カセキ　なんです！[BE:01:ページ切り替え（クリア）]
+でね　あたし
+荷物が　いっぱい　なんだ！[BE:01:ページ切り替え（クリア）]
+よければ　あなた　どちらか
+好きな　カセキを　もらってくれない？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d04r0201_00_02">
-		<comment>♂
-・アイテム１選択</comment>
-		<language name="JPN" width="256">カセキその１　なんだね
+	<row id="msg_d04r0201_backpackerw_02">
+		<comment>♀
+・アイテム１選択時</comment>
+		<language name="JPN" width="256">カセキその１　なんだ
 それは（ポケモンの　とくちょう）</language>
-		<language name="JPN_KANJI" width="256">カセキその１　なんだね
+		<language name="JPN_KANJI" width="256">カセキその１　なんだ
 それは（ポケモンの　特徴）</language>
 	</row>
 
-	<row id="msg_d04r0201_00_03">
-		<comment>♂
-・アイテム２選択</comment>
-		<language name="JPN" width="256">カセキその２　なんだね
+	<row id="msg_d04r0201_backpackerw_03">
+		<comment>♀
+・アイテム２選択時</comment>
+		<language name="JPN" width="256">カセキその２　なんだ
 それは（ポケモンの　とくちょう）</language>
-		<language name="JPN_KANJI" width="256">カセキその２　なんだね
+		<language name="JPN_KANJI" width="256">カセキその２　なんだ
 それは（ポケモンの　特徴）</language>
 	</row>
 
-	<row id="msg_d04r0201_00_04">
-		<comment>♂
+	<row id="msg_d04r0201_backpackerw_04">
+		<comment>♀
 ・キャンセル時</comment>
 		<language name="JPN" width="256">あれれ……
 えんりょ　しなくて　いいのに</language>
@@ -328,26 +350,49 @@
 遠慮しなくて　いいのに</language>
 	</row>
 
-	<row id="msg_d04r0201_00_05">
-		<comment>♂
-・キャンセル後、再度話しかけ</comment>
+	<row id="msg_d04r0201_backpackerw_05">
+		<comment>♀
+・キャンセル後、再度話しかけ
+・アイテム名による選択肢</comment>
 		<language name="JPN" width="256">やっぱり　カセキが　きになる？[BE:01:ページ切り替え（クリア）]
 いいよ！　どちらか
-すきな　カセキを　えらびなよ</language>
+えらんだ　カセキを　あげるから！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">やっぱり　カセキが　気になる？[BE:01:ページ切り替え（クリア）]
 いいよ！　どちらか
-好きな　カセキを　選びなよ</language>
+選んだ　カセキを　あげるから！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d04r0201_00_06">
-		<comment>♂
+	<row id="msg_d04r0201_backpackerw_06">
+		<comment>♀
 ・カセキ入手後、再度話しかけ</comment>
 		<language name="JPN" width="256">シッポウシティの　はくぶつかん[BE:01:ページ切り替え（クリア）]
 あそこでなら　カセキを　ふくげんして
-ポケモンに　もどせるって　はなしだ</language>
+ポケモンに　もどせるって　はなしよ[BE:01:ページ切り替え（クリア）]
+なんたって　アロエさんは
+ホネや　カセキが　だいすき　だもんね！</language>
 		<language name="JPN_KANJI" width="256">シッポウシティの　博物館[BE:01:ページ切り替え（クリア）]
 あそこでなら　カセキを　復元して
-ポケモンに　戻せるって　話だ</language>
+ポケモンに　戻せるって　話だよ[BE:01:ページ切り替え（クリア）]
+なんたって　アロエさんは
+ホネや　カセキが　大好きだもんね！</language>
+	</row>
+
+	<row id="msg_d04r0201_kaseki_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>選択肢ウインドウ用</comment>
+		<language name="JPN" width="256">カセキその１</language>
+		<language name="JPN_KANJI" width="256">カセキその１</language>
+	</row>
+
+	<row id="msg_d04r0201_kaseki_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>選択肢ウインドウ用</comment>
+		<language name="JPN" width="256">カセキその２</language>
+		<language name="JPN_KANJI" width="256">カセキその２</language>
+	</row>
+
+	<row id="msg_d04r0201_kaseki_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>選択肢ウインドウ用</comment>
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
 	<flowchart-group-list>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00207" date="2009-11-05T16:29:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,13 +229,13 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="195"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="247"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,11 +292,47 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_d04r0101_sunglasses_01">
+		<comment>♂
+・d03r0101で、じてんしゃをくれた人</comment>
+		<attribute name="キャラ指定">SUNGLASSES
+サングラス</attribute>
+		<language name="JPN" width="256">おう！
+おいしいみずを　くれた　ひと[BE:01:ページ切り替え（クリア）]
+なんでも　この　こだいのしろは
+おおむかしの　えいゆうが[BE:00:ページ切り替え（行送り）]
+パッケージポケモンを　したがえて
+つくった　くにの　あとち　らしいね</language>
+		<language name="JPN_KANJI" width="256">おう！
+おいしいみずを　くれた　人[BE:01:ページ切り替え（クリア）]
+なんでも　この　古代の城は
+大昔の　英雄が[BE:00:ページ切り替え（行送り）]
+パッケージポケモンを　従えて
+つくった　国の　跡地　らしいね</language>
+	</row>
+
+	<row id="msg_d04r0101_sunglasses_02">
+		<comment>♂
+・d08竜の塔でのイベント後
+　いける範囲が広がっていることをアナウンス
+・posを踏むと、主人公に隣接して
+　メッセージ表示
+・d04r0601のイベント終了まで
+　メッセージ繰り返し
+・d04r0601のイベント終了後は
+　sunglasses_01を表示</comment>
+		<language name="JPN" width="256">おう！
+おいしいみずを　くれた　人[BE:01:ページ切り替え（クリア）]
+こだいのしろを　おおう　すな　だが
+すこしずつ　したに　おちているので[BE:01:ページ切り替え（クリア）]
+いままで　いけなかった
+ばしょにも　すすめるらしいな！</language>
+		<language name="JPN_KANJI" width="256">おう！
+おいしいみずを　くれた　人[BE:01:ページ切り替え（クリア）]
+古代の城を　おおう　砂だが
+少しずつ　下に　落ちているので[BE:01:ページ切り替え（クリア）]
+今まで　行けなかった
+場所にも　進めるらしいな！</language>
 	</row>
 
 	<flowchart-group-list>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-07T14:27:35"/>
+	<create user="matsumiya" host="W00207" date="2009-11-05T17:25:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="696"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -296,21 +296,28 @@
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">TRAINERM</attribute>
-		<language name="JPN" width="256">チャンピオン不在の　ポケモンリーグ……
-それでも　オレは　挑戦したいのだ！</language>
-		<language name="JPN_KANJI" width="256">チャンピオン不在の　ポケモンリーグ……
-それでも　オレは　挑戦したいのだ！</language>
+		<language name="JPN" width="256">はてさて
+じてんしゃで　さばくを　こえる……[BE:01:ページ切り替え（クリア）]
+そんな　チャレンジを　こころみる
+オレの　ともだちは　きっと　すごいな</language>
+		<language name="JPN_KANJI" width="256">はてさて
+じてんしゃで　砂漠を　越える……[BE:01:ページ切り替え（クリア）]
+そんな　チャレンジを　試みる
+オレの　友達は　きっと　すごいな</language>
 	</row>
 
 	<row id="msg_c04r0501_lady_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">LADY</attribute>
-		<language name="JPN" width="256">ミュージカルを　観ましたか？[BE:01:ページ切り替え（クリア）]
-自分のポケモンが　舞台に　あがるなんて
-言葉にできない　感動体験ですよ</language>
-		<language name="JPN_KANJI" width="256">ミュージカルを　観ましたか？[BE:01:ページ切り替え（クリア）]
-自分のポケモンが　舞台に　あがるなんて
+		<language name="JPN" width="256">ミュージカルを　みましたか？[BE:01:ページ切り替え（クリア）]
+じぶんの　ポケモンが
+ぶたいの　うえで……[BE:01:ページ切り替え（クリア）]
+ことばに　できない
+かんどうの　たいけん　ですよ</language>
+		<language name="JPN_KANJI" width="256">ミュージカルは
+ご覧に　なりましたか？[BE:01:ページ切り替え（クリア）]
+自分のポケモンが　舞台の上で……
 言葉にできない　感動体験ですよ</language>
 	</row>
 
