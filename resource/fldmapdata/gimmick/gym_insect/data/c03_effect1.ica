@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ica version="1.6.0">
+
+<head>
+	<create user="fujiwara_maiko" host="W00194" date="2009-11-05T20:40:09" source="c03_effect1.mb"/>
+	<title>Character Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<node_anm_info
+	frame_size="31"
+	scaling_rule="standard"
+	magnify="1.000000"
+	tool_start_frame="0"
+	tool_end_frame="30"
+	interpolation="frame"
+	compress_node="merge" node_size="1 1"
+	frame_step_mode="1"
+	tolerance_scale="0.100000"
+	tolerance_rotate="0.100000"
+	tolerance_translate="0.100000"
+/>
+
+<node_scale_data size="62">
+	0.500000 0.532227 0.562744 0.592041 0.620361 0.648193 0.676025 0.704346 0.733398 0.763916
+	0.796387 0.830811 0.867920 0.908203 0.952148 1.000000 1.052246 1.108398 1.167969 1.230713
+	1.296387 1.364014 1.433594 1.504395 1.575928 1.648193 1.720215 1.791992 1.862793 1.932373
+	2.000000 0.000000 0.070801 0.148682 0.231934 0.318848 0.407471 0.496094 0.582764 0.666016
+	0.743896 0.814697 0.876709 0.927979 0.966797 0.991455 1.000000 0.991455 0.966797 0.927979
+	0.876709 0.814697 0.743896 0.666016 0.582764 0.496094 0.407471 0.318848 0.231934 0.148682
+	0.070801 0.000000
+</node_scale_data>
+
+<node_rotate_data size="1">
+	0.000000
+</node_rotate_data>
+
+<node_translate_data size="1">
+	0.000000
+</node_translate_data>
+
+<node_anm_array size="1">
+	<node_anm index="0">
+		<scale_x frame_step="1" data_size="31" data_head="0"/>
+		<scale_y frame_step="1" data_size="31" data_head="31"/>
+		<scale_z frame_step="1" data_size="1" data_head="15"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="0"/>
+		<translate_y frame_step="1" data_size="1" data_head="0"/>
+		<translate_z frame_step="1" data_size="1" data_head="0"/>
+	</node_anm>
+</node_anm_array>
+
+</body>
+
+</ica>
