@@ -631,6 +631,7 @@ APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateEx( const APP_TASKMENU_RES *res, 
 void APP_TASKMENU_WIN_Delete( APP_TASKMENU_WIN_WORK *wk )
 {	
 	//BMPWINíœ
+	GFL_BMPWIN_ClearScreen( wk->bmpwin );
 	GFL_BMPWIN_Delete( wk->bmpwin );
 	//ƒ[ƒNíœ
 	GFL_HEAP_FreeMemory( wk );
