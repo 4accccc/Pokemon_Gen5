@@ -12,9 +12,6 @@
 #include "system\gfl_use.h"
 #include "system\wipe.h"
 
-//タスクメニュー
-#include "app/app_taskmenu.h"
-
 //タッチバー
 #include "ui/touchbar.h"
 
@@ -43,15 +40,6 @@ enum {
 };
 
 
-//--------------------------------------------------------------
-///	タスクメニューウィンドウ
-//==============================================================
-typedef enum {
-  TASKMENU_WIN_DECIDE,
-  TASKMENU_WIN_CANCEL,
-  TASKMENU_WIN_MAX,
-} TASKMENU_WIN;
-
 //------------------------------------------------------
 /**
 	*  描画メインワーク
@@ -76,11 +64,9 @@ struct _PMS_INPUT_VIEW {
 	PMSIV_CATEGORY*		category_wk;
 	PMSIV_WORDWIN*		wordwin_wk;
 	PMSIV_SUB*			  sub_wk; // 現状SUBBGの読み込みだけに使われているようだったので全てコメントアウトした
+  PMSIV_MENU*       menu_wk;
 
   TOUCHBAR_WORK*    touchbar;
-  APP_TASKMENU_RES*   menu_res;
-  APP_TASKMENU_ITEMWORK* menu_item[ TASKMENU_WIN_MAX ];
-  APP_TASKMENU_WIN_WORK* menu_win[ TASKMENU_WIN_MAX ];
 
 	u8					status;
 	u8					key_mode;
@@ -476,6 +462,8 @@ static void DeleteCommand( COMMAND_WORK* cwk )
 //-----------------------------------------------------------------------------
 static TOUCHBAR_WORK* touchbar_init( GFL_CLUNIT* clunit, HEAPID heap_id )
 {
+  TOUCHBAR_WORK* wk;
+
   //アイコンの設定
 	//数分作る
 	TOUCHBAR_SETUP	touchbar_setup = {0};
@@ -500,8 +488,12 @@ static TOUCHBAR_WORK* touchbar_init( GFL_CLUNIT* clunit, HEAPID heap_id )
 	touchbar_setup.mapping	= APP_COMMON_MAPPING_64K;	//マッピングモード
   touchbar_setup.is_notload_bg = TRUE;
 
-	return TOUCHBAR_Init( &touchbar_setup, heap_id );
+  wk = TOUCHBAR_Init( &touchbar_setup, heap_id );
 
+  // 一端全部消しておく
+  TOUCHBAR_SetVisibleAll( wk, FALSE );
+
+  return wk;
 }
 
 //----------------------------------------------------------------------------------------------
@@ -540,7 +532,7 @@ static void Cmd_Init( GFL_TCB *tcb, void* wk_adrs )
 	cwk->vwk->wordwin_wk = PMSIV_WORDWIN_Create( cwk->vwk, cwk->mwk, cwk->dwk );
 	PMSIV_WORDWIN_SetupGraphicDatas( cwk->vwk->wordwin_wk );
 
-  // @TODO とりあえずここでSUB BGの展開 
+  // SUB BGの展開 
 	GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_pmsi_pms_bg_sub_NSCR, FRM_SUB_BG, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_pmsi_pms_bg_sub_NCGR, FRM_SUB_BG, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 	
@@ -561,31 +553,16 @@ static void Cmd_Init( GFL_TCB *tcb, void* wk_adrs )
   // タッチバー
   cwk->vwk->touchbar = touchbar_init( cwk->vwk->cellUnit, HEAPID_PMS_INPUT_VIEW );
 
-  // タスクメニュー
-  {
-    int i;
-    
-    // リソース展開
-    cwk->vwk->menu_res = APP_TASKMENU_RES_Create( 
-        FRM_MAIN_TASKMENU, PALNUM_MAIN_TASKMENU, 
-        cwk->vwk->fontHandle, 
-        cwk->vwk->print_que, 
-        HEAPID_PMS_INPUT_VIEW );
+  // メニュー
+  cwk->vwk->menu_wk = PMSIV_MENU_Create( cwk->vwk, cwk->mwk, cwk->dwk );
 
-    for( i=0; i<TASKMENU_WIN_MAX; i++ )
-    {
- //     cwk->vwk->menu_item = 
-//      APP_TASKMENU_WIN_Create( cwk->vwk->menu_res,  );
-    }
-  
-//    GFL_BG_SetVisible( FRM_MAIN_TASKMENU, TRUE );
-  
-  }
+  // ボタン表示
+  PMSIV_MENU_SetupEdit( cwk->vwk->menu_wk );
+  GFL_BG_SetVisible( FRM_MAIN_TASKMENU, TRUE );
 
   // @TODO
   // デフォルトはエディットエリアなのでエディットエリアの初期化
 	
-
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	GX_DispOn();
@@ -594,6 +571,7 @@ static void Cmd_Init( GFL_TCB *tcb, void* wk_adrs )
 
 	DeleteCommand(cwk);
 }
+
 //------------------------------------------------------------------
 /**
 	* OBJグラフィックデータ転送
@@ -642,6 +620,7 @@ static void Cmd_Quit( GFL_TCB *tcb, void* wk_adrs )
 		{
 			int i;
 
+      PMSIV_MENU_Delete( cwk->vwk->menu_wk );
 			PMSIV_EDIT_Delete( cwk->vwk->edit_wk );
 //	  PMSIV_BUTTON_Delete( cwk->vwk->button_wk );
 			PMSIV_CATEGORY_Delete( cwk->vwk->category_wk );
@@ -650,9 +629,6 @@ static void Cmd_Quit( GFL_TCB *tcb, void* wk_adrs )
 
       // タッチバー開放
       TOUCHBAR_Exit( cwk->vwk->touchbar );
-
-      // タスクメニュー リソース開放
-      APP_TASKMENU_RES_Delete( cwk->vwk->menu_res );
 
 			for(i=0; i<2; i++)
 			{
@@ -970,6 +946,7 @@ static void Cmd_EditAreaToCategory( GFL_TCB *tcb, void* wk_adrs )
 		PMSIV_EDIT_StopArrow( vwk->edit_wk );
 		PMSIV_EDIT_ChangeSMsgWin(vwk->edit_wk,1);
 		PMSIV_EDIT_SetSystemMessage( vwk->edit_wk,PMSIV_MSG_GUIDANCE);
+    PMSIV_MENU_Clear( vwk->menu_wk );
 //		PMSIV_BUTTON_Hide( vwk->button_wk );
 		PMSIV_CATEGORY_StartEnableBG( vwk->category_wk );
 		PMSIV_EDIT_ScrollSet( vwk->edit_wk,0);
@@ -1089,6 +1066,7 @@ static void Cmd_CategoryToEditArea( GFL_TCB *tcb, void* wk_adrs )
 	switch( wk->seq ){
 	case 0:
 //		PMSIV_BUTTON_Appear( vwk->button_wk );
+    PMSIV_MENU_SetupEdit( vwk->menu_wk );
 		PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, FALSE );
 		PMSIV_CATEGORY_StartDisableBG( vwk->category_wk );
 		PMSIV_EDIT_ChangeSMsgWin(vwk->edit_wk,0);
@@ -1684,6 +1662,12 @@ GFL_FONT*  PMSIView_GetFontHandle( PMS_INPUT_VIEW* vwk )
 {
 	return vwk->fontHandle;
 }
+
+PRINT_QUE* PMSIView_GetPrintQue( PMS_INPUT_VIEW* vwk )
+{
+  return vwk->print_que;
+}
+
 /*
 NNSG2dImageProxy* PMSIView_GetObjImageProxy( PMS_INPUT_VIEW* vwk, int lcd )
 {

@@ -800,11 +800,11 @@ SRCS_OVERLAY_OHNO_DEBUGAPP  = test/ohno/debug_ohno.c \
 SRCS_OVERLAY_PMSINPUT = app/pms_input/pms_input_data.c \
         app/pms_input/pms_input_view.c \
         app/pms_input/pmsi_initial_data.c \
-        app/pms_input/pmsiv_button.c \
         app/pms_input/pmsiv_category.c \
         app/pms_input/pmsiv_edit.c \
         app/pms_input/pmsiv_sub.c \
         app/pms_input/pmsiv_tool.c \
+        app/pms_input/pmsiv_menu.c \
         app/pms_input/pms_input.c \
         app/pms_input/pmsiv_wordwin.c \
         app/pms_select/pms_select.c \

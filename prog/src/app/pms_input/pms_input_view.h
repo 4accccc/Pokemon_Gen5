@@ -36,11 +36,11 @@ enum {
 	FRM_MAIN_EDITAREA =  GFL_BG_FRAME0_M,
 	FRM_MAIN_CATEGORY =  GFL_BG_FRAME1_M,
 	FRM_MAIN_WORDWIN  =  GFL_BG_FRAME2_M,
-	FRM_MAIN_BUTTON   =  GFL_BG_FRAME0_M,
+	FRM_MAIN_BACK	    =  GFL_BG_FRAME3_M,
 
-	FRM_MAIN_BACK	    = GFL_BG_FRAME3_M,
-  FRM_MAIN_BAR      = FRM_MAIN_BACK,
-  FRM_MAIN_TASKMENU = FRM_MAIN_WORDWIN,
+	FRM_MAIN_BUTTON   =  GFL_BG_FRAME0_M,
+  FRM_MAIN_TASKMENU =  GFL_BG_FRAME0_M,
+  FRM_MAIN_BAR      =  GFL_BG_FRAME3_M,
 
 	FRM_SUB_EDITAREA = GFL_BG_FRAME0_S,
 	FRM_SUB_BG = GFL_BG_FRAME1_S,
@@ -181,7 +181,8 @@ typedef struct
 
 extern GFL_TCB* PMSIView_AddVTask( GFL_TCB_FUNC func, void* wk, int pri );
 extern GFL_CLUNIT*  PMSIView_GetActSys( PMS_INPUT_VIEW* vwk );
-GFL_FONT*  PMSIView_GetFontHandle( PMS_INPUT_VIEW* vwk );
+extern GFL_FONT*  PMSIView_GetFontHandle( PMS_INPUT_VIEW* vwk );
+extern PRINT_QUE* PMSIView_GetPrintQue( PMS_INPUT_VIEW* vwk );
 //extern NNSG2dImageProxy*  PMSIView_GetObjImageProxy( PMS_INPUT_VIEW* vwk, int lcd );
 //extern NNSG2dImagePaletteProxy*  PMSIView_GetObjPaletteProxy( PMS_INPUT_VIEW* vwk, int lcd );
 extern void PMSIView_SetupDefaultActHeader( PMS_INPUT_VIEW* vwk, PMSIV_CELL_RES* header, u32 lcd, u32 bgpri );
@@ -309,5 +310,16 @@ extern void PMSIV_SUB_ChangeCategoryButton( PMSIV_SUB* wk );
 extern BOOL PMSIV_SUB_WaitChangeCategoryButton( PMSIV_SUB* wk );
 extern void PMSIV_SUB_VisibleArrowButton( PMSIV_SUB* wk, BOOL flag );
 extern void PMSIV_SUB_ChangeArrowButton( PMSIV_SUB* wk, int pos, int state );
+
+//==============================================================
+// タスクメニュー管理モジュール
+//==============================================================
+typedef struct _PMSIV_MENU PMSIV_MENU;
+
+extern PMSIV_MENU* PMSIV_MENU_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, const PMS_INPUT_DATA* dwk );
+extern void PMSIV_MENU_Delete( PMSIV_MENU* wk );
+extern void PMSIV_MENU_Clear( PMSIV_MENU* wk );
+extern void PMSIV_MENU_SetupEdit( PMSIV_MENU* wk );
+
 
 #endif
