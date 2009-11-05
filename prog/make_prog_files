@@ -1012,9 +1012,8 @@ SRCS_OVERLAY_LOCAL_TVT = app/local_tvt/local_tvt_sys.c \
 		app/local_tvt/local_tvt_chara.c 
 
 # WIFIバトルマッチング
-#===> SRCS_OVERLAY_DEV_WIFI
-#===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_IRC
+#===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_WIFIBATTLEMATCH = net_app/wifi_match/wifibattlematch.c \
-                net_app/wifi_match/wifibattlematch_graphic.c
+                net_app/wifi_match/wifibattlematch_graphic.c \
+								net_app/wifi_match/wifibattlematch_view.c
 

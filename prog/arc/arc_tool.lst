@@ -203,3 +203,4 @@
   ARCID_GATE_GIMMICK "gate.narc" # ゲートギミック
   ARCID_LOCAL_TVT "local_tvt.narc" # ローカルTVトランシーバー
   ARCID_ISS_CITY "iss_city.narc" # 街ISSデータ
+	ARCID_WIFIMATCH_GRA	"wifimatch_gra.narc"	#WIFIランダム対戦グラフィック

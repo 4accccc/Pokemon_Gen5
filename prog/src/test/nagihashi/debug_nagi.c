@@ -1131,26 +1131,26 @@ static void LISTDATA_FullShortCutData( DEBUG_NAGI_MAIN_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void LISTDATA_CallWifiBattleMatch( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+	p_wk->wifibattlematch_param.mode	= WIFIBATTLEMATCH_MODE_RANDOM_RATE;
+	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
 	{	
 		p_wk->wifibattlematch_param.mode	= WIFIBATTLEMATCH_MODE_RANDOM_FREE;
 	}
-	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+	else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
 	{	
-
 		p_wk->wifibattlematch_param.mode	= WIFIBATTLEMATCH_MODE_RANDOM_RATE;
 	}
-	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+	else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
 	{	
 
 		p_wk->wifibattlematch_param.mode	= WIFIBATTLEMATCH_MODE_WIFI_LIMIT;
 	}
-	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
+	else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y )
 	{	
 
 		p_wk->wifibattlematch_param.mode	= WIFIBATTLEMATCH_MODE_WIFI_NOLIMIT;
 	}
-	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
+	else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT )
 	{	
 
 		p_wk->wifibattlematch_param.mode	= WIFIBATTLEMATCH_MODE_LIVE;

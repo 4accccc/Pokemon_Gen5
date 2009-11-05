@@ -92,6 +92,7 @@ SUBDIRS	=	wmi \
 			sodateya \
 			shopdata \
 			fld_shortcut_menu \
+			wifi_match \
 			trtype_bgm \
 			local_tvt
 

@@ -2,7 +2,7 @@
 /**
  *
  *	@file		graphic.c
- *	@brief	グラフィック設定
+ *	@brief	グラフィック基本設定
  *	@author	Toru=Nagihashi
  *	@data		2009.09.30
  *	@version {1.0}
@@ -97,7 +97,7 @@ static const GFL_DISP_VRAM sc_vramSetTable =
 //=====================================
 static const GFL_BG_SYS_HEADER sc_bgsys_header	=
 {	
-	GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D	//グラフィックモード、メインBG面設定、サブBG面設定、BG0面設定
+	GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_2D	//グラフィックモード、メインBG面設定、サブBG面設定、BG0面設定
 };
 //-------------------------------------
 ///	BG面設定

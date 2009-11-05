@@ -718,7 +718,7 @@ static void SEQFUNC_Search( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 			};
 			for( i = 0; i < MSGDATA_MAX; i++ )
 			{	
-				p_wk->p_msg[i]	= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, PMS_SrcFileID[i], HEAPID_NAGI_DEBUG_SUB );
+				p_wk->p_msg[i]	= GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_MESSAGE, PMS_SrcFileID[i], HEAPID_NAGI_DEBUG_SUB );
 			}
 			GFL_BG_SetVisible( BG_FRAME_BAR_M, FALSE );
 			p_wk->p_strbuf	= GFL_STR_CreateBuffer( STRBUF_LEN, HEAPID_NAGI_DEBUG_SUB );

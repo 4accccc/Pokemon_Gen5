@@ -40,6 +40,7 @@ typedef enum
 typedef struct 
 {
 	WIFIBATTLEMATCH_MODE	mode;
+	const MYSTATUS				*p_my;
 } WIFIBATTLEMATCH_PARAM;
 
 

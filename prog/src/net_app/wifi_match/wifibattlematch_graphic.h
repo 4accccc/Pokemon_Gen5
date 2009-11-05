@@ -2,7 +2,7 @@
 /**
  *
  *	@file		graphic.h
- *	@brief	グラフィック設定
+ *	@brief	グラフィック基本設定
  *	@author	Toru=Nagihashi
  *	@date		2009.09.30
  *
