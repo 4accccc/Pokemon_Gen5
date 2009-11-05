@@ -167,4 +167,12 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/door_t1_02.nsbmd \
 	$(RESDIR)/monolith_01.nsbmd \
 	$(RESDIR)/time_anime.nsbmd \
+	$(RESDIR)/badgegate_03.nsbmd \
+	$(RESDIR)/badgegate_04.nsbmd \
+	$(RESDIR)/badgegate_05.nsbmd \
+	$(RESDIR)/badgegate_06.nsbmd \
+	$(RESDIR)/badgegate_07.nsbmd \
+	$(RESDIR)/badgegate_08.nsbmd \
+	$(RESDIR)/badgegate_09.nsbmd \
+	$(RESDIR)/badgegate_10.nsbmd \
 

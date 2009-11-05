@@ -97,4 +97,6 @@ DEP_INDOOR	=	\
 	$(RESDIR)/chushion02.nsbmd \
 	$(RESDIR)/gelboard01.nsbmd \
 	$(RESDIR)/m_gym02_light.nsbmd \
+	$(RESDIR)/mball01.nsbmd \
+	$(RESDIR)/pcev01.nsbmd \
 

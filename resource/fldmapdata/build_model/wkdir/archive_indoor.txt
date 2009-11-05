@@ -96,3 +96,5 @@
 "nsbmdfiles/chushion02.nsbmd"
 "nsbmdfiles/gelboard01.nsbmd"
 "nsbmdfiles/m_gym02_light.nsbmd"
+"nsbmdfiles/mball01.nsbmd"
+"nsbmdfiles/pcev01.nsbmd"
