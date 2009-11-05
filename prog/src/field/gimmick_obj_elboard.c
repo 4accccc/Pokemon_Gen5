@@ -9,7 +9,6 @@
  */
 ////////////////////////////////////////////////////////////////////////////////////
 #include <gflib.h>
-#include "fieldmap.h"
 #include "gimmick_obj_elboard.h"
 #include "system/el_scoreboard.h"
 #include "print/printsys.h"  // for PRINTSYS_GetStrWidth
@@ -25,6 +24,7 @@
 #define MARGIN_SIZE  (1)  // 文字間スペース幅
 #define TEX_WIDTH (1024)  // テクスチャの幅
 #define TEX_HEIGHT  (16)  // テクスチャの高さ
+#define MAX_STRLEN  (60)  // ニュース1つあたりの最大文字数
 
 
 //==================================================================================
@@ -65,7 +65,7 @@ struct _GOBJ_ELBOARD
 //==================================================================================
 // ■非公開関数のプロトタイプ宣言
 //==================================================================================
-static NEWS* NewsCreate( GOBJ_ELBOARD* elboard, NEWS_PARAM* param, int index );
+static NEWS* NewsCreate( GOBJ_ELBOARD* elboard, const NEWS_PARAM* param, int index );
 static void NewsDelete( NEWS* news );
 static void NewsMove_Start( NEWS* news );
 static void NewsMove_Update( GOBJ_ELBOARD* elboard, NEWS* news, fx32 frame );
@@ -131,7 +131,7 @@ GOBJ_ELBOARD* GOBJ_ELBOARD_Create( ELBOARD_PARAM* param )
  * @param news_param 追加するニュース
  */
 //----------------------------------------------------------------------------------
-void GOBJ_ELBOARD_AddNews( GOBJ_ELBOARD* elboard, NEWS_PARAM* news_param )
+void GOBJ_ELBOARD_AddNews( GOBJ_ELBOARD* elboard, const NEWS_PARAM* news_param )
 {
   // すでに最大数を登録済み ==> 登録しない
   if( elboard->maxNewsNum <= elboard->newsNum )
@@ -333,15 +333,13 @@ void GOBJ_ELBOARD_SetFrame( GOBJ_ELBOARD* elboard, fx32 frame )
  * @return 作成したニュース
  */
 //----------------------------------------------------------------------------------
-static NEWS* NewsCreate( GOBJ_ELBOARD* elboard, NEWS_PARAM* param, int index )
+static NEWS* NewsCreate( GOBJ_ELBOARD* elboard, const NEWS_PARAM* param, int index )
 {
   NEWS* news;
   u32 str_width; // 文字列の幅
 
   // インスタンス生成
   news = GFL_HEAP_AllocMemory( elboard->heapID, sizeof(NEWS) );
-
-  // オブジェ・アニメを記憶
 
   // テクスチャを作成
   {
@@ -353,7 +351,18 @@ static NEWS* NewsCreate( GOBJ_ELBOARD* elboard, NEWS_PARAM* param, int index )
     // 描画する文字列を取得
     msg = GFL_MSG_Create( 
         GFL_MSG_LOAD_NORMAL, param->msgArcID, param->msgDatID, elboard->heapID );
-    strbuf = GFL_MSG_CreateString( msg, param->msgStrID );
+    if( param->wordset )
+    { // WORDSET展開
+      STRBUF* strbuf_msg;
+      strbuf = GFL_STR_CreateBuffer( MAX_STRLEN, elboard->heapID );
+      strbuf_msg = GFL_MSG_CreateString( msg, param->msgStrID );
+      WORDSET_ExpandStr( param->wordset, strbuf, strbuf_msg );
+      GFL_HEAP_FreeMemory( strbuf_msg );
+    }
+    else
+    { // メッセージをそのまま使用
+      strbuf = GFL_MSG_CreateString( msg, param->msgStrID );
+    }
     str_width = PRINTSYS_GetStrWidth( strbuf, elboard->font, MARGIN_SIZE );// 文字列の幅を取得
     // 描画先テクスチャを取得
     rnd = GFL_G3D_OBJECT_GetG3Drnd( elboard->g3dObj );

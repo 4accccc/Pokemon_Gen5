@@ -38,6 +38,10 @@ typedef struct
   u32 msgID_cmFri;    // 一言CM(金)に使用するメッセージID
   u32 msgID_cmSat;    // 一言CM(土)に使用するメッセージID
   u32 msgID_cmSun;    // 一言CM(日)に使用するメッセージID
+  u32 zoneID_weather_1; // 天気を表示するゾーン
+  u32 zoneID_weather_2; // 天気を表示するゾーン
+  u32 zoneID_weather_3; // 天気を表示するゾーン
+  u32 zoneID_weather_4; // 天気を表示するゾーン
 
 } ELBOARD_ZONE_DATA;
 

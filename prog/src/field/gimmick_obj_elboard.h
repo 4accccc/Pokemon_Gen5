@@ -9,6 +9,8 @@
  *
  */
 ////////////////////////////////////////////////////////////////////////////////////
+#include "fieldmap.h"
+#include "print/wordset.h"
 
 
 //==================================================================================
@@ -41,6 +43,7 @@ typedef struct
   ARCID     msgArcID;  // ニュースの引用元アーカイブ
   ARCDATID  msgDatID;  // ニュースの引用元アーカイブ内インデックス
   u32       msgStrID;  // ニュースのメッセージID
+  WORDSET*   wordset;  // 展開するワードセット(不要ならNULL)
 } NEWS_PARAM;
 
 
@@ -73,7 +76,7 @@ GOBJ_ELBOARD* GOBJ_ELBOARD_Create( ELBOARD_PARAM* param );
  * @param news_param 追加するニュース
  */
 //----------------------------------------------------------------------------------
-void GOBJ_ELBOARD_AddNews( GOBJ_ELBOARD* elboard, NEWS_PARAM* news_param );
+void GOBJ_ELBOARD_AddNews( GOBJ_ELBOARD* elboard, const NEWS_PARAM* news_param );
 
 
 //==================================================================================

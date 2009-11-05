@@ -53,6 +53,10 @@ BOOL ELBOARD_ZONE_DATA_Load( ELBOARD_ZONE_DATA* buf, ARCID arc_id, ARCDATID dat_
   OBATA_Printf( "msgID_cmFri = %d\n", buf->msgID_cmFri );
   OBATA_Printf( "msgID_cmSat = %d\n", buf->msgID_cmSat );
   OBATA_Printf( "msgID_cmSun = %d\n", buf->msgID_cmSun ); 
+  OBATA_Printf( "zoneID_weather_1 = %d\n", buf->zoneID_weather_1 ); 
+  OBATA_Printf( "zoneID_weather_2 = %d\n", buf->zoneID_weather_2 ); 
+  OBATA_Printf( "zoneID_weather_3 = %d\n", buf->zoneID_weather_3 ); 
+  OBATA_Printf( "zoneID_weather_4 = %d\n", buf->zoneID_weather_4 ); 
   OBATA_Printf( "-----------------------------------------------------------\n" );
   return TRUE;
 }

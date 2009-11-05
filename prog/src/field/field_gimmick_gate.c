@@ -14,7 +14,6 @@
  */ 
 //////////////////////////////////////////////////////////////////////////////////////////// 
 #include <gflib.h> 
-#include "fieldmap.h" 
 #include "field_gimmick_gate.h" 
 #include "arc/arc_def.h" 
 #include "arc/gate.naix"
@@ -22,10 +21,10 @@
 
 #include "field/gimmick_obj_elboard.h"
 #include "savedata/gimmickwork.h"
-#include "field_gimmick_def.h"
 #include "gimmick_obj_elboard.h"
 #include "elboard_zone_data.h"
 #include "arc/gate.naix"
+#include "field_gimmick_def.h"
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"
 
 
@@ -35,24 +34,47 @@
 typedef struct
 {
   u16 zone_id;
+  int gimmick_id;
   u32 dat_id; 
 } ENTRY_DATA; 
 static const ENTRY_DATA entry_table[] = 
 {
-  { ZONE_ID_C04R0601, NARC_gate_elboard_zone_data_c04r0601_bin },
-  { ZONE_ID_C08R0601, NARC_gate_elboard_zone_data_c08r0601_bin },
-  { ZONE_ID_R13R0201, NARC_gate_elboard_zone_data_r13r0201_bin },
-  { ZONE_ID_R02R0101, NARC_gate_elboard_zone_data_r02r0101_bin },
-  { ZONE_ID_C04R0701, NARC_gate_elboard_zone_data_c04r0701_bin },
-  { ZONE_ID_C04R0801, NARC_gate_elboard_zone_data_c04r0801_bin },
-  { ZONE_ID_C02R0701, NARC_gate_elboard_zone_data_c02r0701_bin },
-  { ZONE_ID_R14R0101, NARC_gate_elboard_zone_data_r14r0101_bin },
-  { ZONE_ID_C08R0501, NARC_gate_elboard_zone_data_c08r0501_bin },
-  { ZONE_ID_C08R0701, NARC_gate_elboard_zone_data_c08r0701_bin },
-  { ZONE_ID_H01R0101, NARC_gate_elboard_zone_data_h01r0101_bin },
-  { ZONE_ID_H01R0201, NARC_gate_elboard_zone_data_h01r0201_bin },
-  { ZONE_ID_C03R0601, NARC_gate_elboard_zone_data_c03r0601_bin },
+  { ZONE_ID_C04R0601, FLD_GIMMICK_C04R0601, NARC_gate_elboard_zone_data_c04r0601_bin },
+  { ZONE_ID_C08R0601, FLD_GIMMICK_C08R0601, NARC_gate_elboard_zone_data_c08r0601_bin },
+  { ZONE_ID_R13R0201, FLD_GIMMICK_R13R0201, NARC_gate_elboard_zone_data_r13r0201_bin },
+  { ZONE_ID_R02R0101, FLD_GIMMICK_R02R0101, NARC_gate_elboard_zone_data_r02r0101_bin },
+  { ZONE_ID_C04R0701, FLD_GIMMICK_C04R0701, NARC_gate_elboard_zone_data_c04r0701_bin },
+  { ZONE_ID_C04R0801, FLD_GIMMICK_C04R0801, NARC_gate_elboard_zone_data_c04r0801_bin },
+  { ZONE_ID_C02R0701, FLD_GIMMICK_C02R0701, NARC_gate_elboard_zone_data_c02r0701_bin },
+  { ZONE_ID_R14R0101, FLD_GIMMICK_R14R0101, NARC_gate_elboard_zone_data_r14r0101_bin },
+  { ZONE_ID_C08R0501, FLD_GIMMICK_C08R0501, NARC_gate_elboard_zone_data_c08r0501_bin },
+  { ZONE_ID_C08R0701, FLD_GIMMICK_C08R0701, NARC_gate_elboard_zone_data_c08r0701_bin },
+  { ZONE_ID_H01R0101, FLD_GIMMICK_H01R0101, NARC_gate_elboard_zone_data_h01r0101_bin },
+  { ZONE_ID_H01R0201, FLD_GIMMICK_H01R0201, NARC_gate_elboard_zone_data_h01r0201_bin },
+  { ZONE_ID_C03R0601, FLD_GIMMICK_C03R0601, NARC_gate_elboard_zone_data_c03r0601_bin },
 };
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 指定したギミックIDが登録されているかどうか判定する
+ *
+ * @param gmk_id 判定対象ギミックID
+ *
+ * @return 登録されている場合 TRUE
+ */
+//------------------------------------------------------------------------------------------
+static BOOL IsGimmickIDEntried( int gmk_id )
+{
+  int i;
+  for( i=0; i<NELEMS(entry_table); i++ )
+  {
+    if( entry_table[i].gimmick_id == gmk_id )
+    {
+      return TRUE;  // 発見
+    }
+  }
+  return FALSE; // 未発見
+}
 
 
 //==========================================================================================
@@ -250,6 +272,9 @@ void GATE_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   // ギミック状態の復帰
   GimmickLoad( work, fieldmap );
 
+  // TEMP: 通常ニュースを放送
+  GATE_GIMMICK_Elboard_SetupNormalNews( fieldmap );
+
   OBATA_Printf( "GATE_GIMMICK_Setup\n" );
 }
 
@@ -301,6 +326,77 @@ void GATE_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   GOBJ_ELBOARD_Main( work->elboard, FX32_ONE ); 
 
   OBATA_Printf( "GATE_GIMMICK_Move\n" );
+}
+
+
+//==========================================================================================
+// ■ 掲示板
+//==========================================================================================
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 掲示板に平常通りのニュースを設定する
+ *
+ * @param fieldmap フィールドマップ
+ */
+//------------------------------------------------------------------------------------------
+void GATE_GIMMICK_Elboard_SetupNormalNews( FIELDMAP_WORK* fieldmap )
+{
+  GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
+  GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork( gdata );
+  GIMMICKWORK*  gmkwork = SaveData_GetGimmickWork( sv );
+  int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
+  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, gmk_id );
+  GATEWORK*        work = (GATEWORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
+  ELBOARD_ZONE_DATA elboard_data;
+
+  // 電光掲示板が登録されていない場所で呼ばれたら何もしない
+  if( IsGimmickIDEntried( gmk_id ) != TRUE )
+  {
+    return;
+  }
+
+  // 電光掲示板データを取得
+  if( !LoadGateData( &elboard_data, fieldmap ) )
+  {
+    // データが取得できなかったら, 以降の処理を中断
+    return;
+  }
+
+  // ニュースを追加
+  AddNews_DATE( work->elboard, &elboard_data );     // 日付
+  AddNews_WEATHER( work->elboard, &elboard_data );  // 天気
+  AddNews_INFO( work->elboard, &elboard_data );     // 地域情報
+  AddNews_CM( work->elboard, &elboard_data );       // 一言CM
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 掲示板に指定したニュースを追加する
+ *
+ * @param fieldmap フィールドマップ
+ * @param news     追加するニュース
+ */
+//------------------------------------------------------------------------------------------
+void GATE_GIMMICK_Elboard_AddSpecailNews( FIELDMAP_WORK* fieldmap, const NEWS_PARAM* news )
+{
+  GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
+  GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork( gdata );
+  GIMMICKWORK*  gmkwork = SaveData_GetGimmickWork( sv );
+  int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
+  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, gmk_id );
+  GATEWORK*        work = (GATEWORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
+
+  // 電光掲示板が登録されていない場所で呼ばれたら何もしない
+  if( IsGimmickIDEntried( gmk_id ) != TRUE )
+  {
+    return;
+  }
+
+  // ニュースを追加
+  GOBJ_ELBOARD_AddNews( work->elboard, news );
 }
 
 
@@ -400,13 +496,7 @@ static GATEWORK* CreateGateWork( FIELDMAP_WORK* fieldmap )
     param.newsInterval = NEWS_INTERVAL;
     param.g3dObj       = FLD_EXP_OBJ_GetUnitObj( exobj_cnt, EXPOBJ_UNIT_ELBOARD, OBJ_ELBOARD );
     work->elboard = GOBJ_ELBOARD_Create( &param );
-  }
-  // ニュースを追加
-  AddNews_DATE( work->elboard, &elboard_data );
-  AddNews_WEATHER( work->elboard, &elboard_data );
-  AddNews_INFO( work->elboard, &elboard_data );
-  AddNews_CM( work->elboard, &elboard_data );
-
+  } 
   return work;
 }
 
@@ -495,6 +585,7 @@ static void AddNews_DATE( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
   news.msgArcID   = ARCID_MESSAGE;
   news.msgDatID   = NARC_message_gate_dat;
   news.msgStrID   = data->msgID_date;
+  news.wordset    = NULL;
 
   OS_Printf("%d %d %d\n",news.msgArcID, news.msgDatID, news.msgStrID);
 
@@ -521,6 +612,7 @@ static void AddNews_WEATHER( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* dat
   news.msgArcID   = ARCID_MESSAGE;
   news.msgDatID   = NARC_message_gate_dat;
   news.msgStrID   = data->msgID_weather;
+  news.wordset    = NULL;
 
   // ニュースを追加
   GOBJ_ELBOARD_AddNews( elboard, &news );
@@ -588,18 +680,21 @@ static void AddNews_INFO( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
   news[0].pltName    = news_plt_name[NEWS_INFO_A];
   news[0].msgArcID   = ARCID_MESSAGE;
   news[0].msgDatID   = NARC_message_gate_dat;
+  news[0].wordset    = NULL;
 
   news[1].animeIndex = news_anm_index[NEWS_INFO_B];
   news[1].texName    = news_tex_name[NEWS_INFO_B];
   news[1].pltName    = news_plt_name[NEWS_INFO_B];
   news[1].msgArcID   = ARCID_MESSAGE;
   news[1].msgDatID   = NARC_message_gate_dat;
+  news[1].wordset    = NULL;
 
   news[2].animeIndex = news_anm_index[NEWS_INFO_C];
   news[2].texName    = news_tex_name[NEWS_INFO_C];
   news[2].pltName    = news_plt_name[NEWS_INFO_C];
   news[2].msgArcID   = ARCID_MESSAGE;
   news[2].msgDatID   = NARC_message_gate_dat;
+  news[2].wordset    = NULL;
 
   // ニュースを追加
   for( i=0; i<LOCAL_INFO_NUM; i++ )
@@ -639,6 +734,7 @@ static void AddNews_CM( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
   news.pltName    = news_plt_name[NEWS_CM];
   news.msgArcID   = ARCID_MESSAGE;
   news.msgDatID   = NARC_message_gate_dat;
+  news.wordset    = NULL;
   
   // ニュースを追加
   GOBJ_ELBOARD_AddNews( elboard, &news );
