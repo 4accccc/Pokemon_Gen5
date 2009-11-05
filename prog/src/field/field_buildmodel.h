@@ -143,6 +143,8 @@ typedef struct _FIELD_BMODEL FIELD_BMODEL;
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj);
+extern FIELD_BMODEL * FIELD_BMODEL_Create_Direct(
+    FIELD_BMODEL_MAN * man, BMODEL_ID bmodel_id, const GFL_G3D_OBJSTATUS* status );
 extern void FIELD_BMODEL_Delete(FIELD_BMODEL * bmodel);
 extern void FIELD_BMODEL_SetAnime(FIELD_BMODEL * bmodel, u32 idx, BMANM_REQUEST req);
 extern BOOL FIELD_BMODEL_GetAnimeStatus(FIELD_BMODEL * bmodel, u32 idx);

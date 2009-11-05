@@ -51,7 +51,7 @@ enum {
 //------------------------------------------------------------------
 enum { GLOBAL_OBJ_ANMCOUNT	= 4 };
 
-enum { BMODEL_USE_MAX = 4 };
+enum { BMODEL_USE_MAX = 6 };
 
 enum{ 
   FILEID_BMODEL_ANIMEDATA = NARC_buildmodel_info_buildmodel_anime_bin,
@@ -1707,6 +1707,33 @@ FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man, const G3DMAPOBJST * o
 
   GF_ASSERT( status->id < man->objRes_Count );
   objRes = &man->objRes[status->id];
+  OBJHND_initialize( man, &bmodel->objHdl, objRes );
+  return bmodel;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 登録済みのリソースを利用して配置モデルを作成する
+ * @param man       配置モデルマネージャ
+ * @param bmodel_id 作成する配置モデルのID
+ * @param status    表示ステータス
+ * @return 作成した配置モデル
+ */
+//------------------------------------------------------------------
+FIELD_BMODEL * FIELD_BMODEL_Create_Direct(
+    FIELD_BMODEL_MAN * man, BMODEL_ID bmodel_id, const GFL_G3D_OBJSTATUS* status )
+{
+  FIELD_BMODEL* bmodel = NULL;
+  const OBJ_RES * objRes;
+  u8 entryNo;
+
+  // インスタンス生成
+  bmodel = GFL_HEAP_AllocMemory( man->heapID, sizeof(FIELD_BMODEL) );
+  // 表示ステータス設定
+  bmodel->g3dObjStatus = *status;
+  // モデル制御オブジェクトを作成
+  entryNo = man->BMIDToEntryTable[bmodel_id];
+  objRes = &(man->objRes[entryNo]);
   OBJHND_initialize( man, &bmodel->objHdl, objRes );
   return bmodel;
 }
