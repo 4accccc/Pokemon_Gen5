@@ -40,7 +40,7 @@ INIT_EVENT_START ev_init_r02r0101
   // 臨時ニュース
   _GET_DATE( month, day )
   _NUMBER( 0, month, 2 )
-  _NUMBER( 0, day,   2 )
+  _NUMBER( 1, day,   2 )
   _ELBOARD_ADD_SPECIAL_NEWS( msg_gate_common_01_01 )  // 日付
   _ELBOARD_ADD_SPECIAL_NEWS( msg_gate_common_04_01 )  // ニュース1
   _ELBOARD_ADD_SPECIAL_NEWS( msg_gate_common_03_01 )  // ニュース2

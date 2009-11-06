@@ -668,5 +668,37 @@ SCRIPTFILES += \
 	sp_n01r0501.ev \
 	n01r0502.ev \
 	sp_n01r0502.ev \
+	r07r0102.ev \
+	sp_r07r0102.ev \
+	r07r0103.ev \
+	sp_r07r0103.ev \
+	r07r0104.ev \
+	sp_r07r0104.ev \
+	r07r0105.ev \
+	sp_r07r0105.ev \
+	c05gym0201.ev \
+	sp_c05gym0201.ev \
+	c06gym0201.ev \
+	sp_c06gym0201.ev \
+	c04r0203.ev \
+	sp_c04r0203.ev \
+	c04r0103.ev \
+	sp_c04r0103.ev \
+	c04r0104.ev \
+	sp_c04r0104.ev \
+	c04r0105.ev \
+	sp_c04r0105.ev \
+	c04r0106.ev \
+	sp_c04r0106.ev \
+	c04r0107.ev \
+	sp_c04r0107.ev \
+	c04r0108.ev \
+	sp_c04r0108.ev \
+	c04r0109.ev \
+	sp_c04r0109.ev \
+	c04r0110.ev \
+	sp_c04r0110.ev \
+	c04r0111.ev \
+	sp_c04r0111.ev \
 
 #©“®¶¬ƒtƒ@ƒCƒ‹ zone_script.list ––”ö
