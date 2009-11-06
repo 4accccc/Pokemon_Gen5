@@ -2252,6 +2252,9 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
       }
       break;
   case 3:
+    if( BTLV_IsJustDoneMsg(wk->viewCore) ){
+      PMSND_PlayBGM( WAVE_ME_WB_LVUP );
+    }
     if( BTLV_WaitMsg(wk->viewCore) ){
       return TRUE;
     }

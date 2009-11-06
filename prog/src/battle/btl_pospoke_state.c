@@ -181,7 +181,16 @@ u8 BTL_POSPOKE_GetClientEmptyPos( const BTL_POSPOKE_WORK* wk, u8 clientID, u8* p
   }
   return cnt;
 }
-
+//=============================================================================================
+/**
+ * 指定ポケモンが戦闘の場に出ているか判定
+ *
+ * @param   wk
+ * @param   pokeID
+ *
+ * @retval  BOOL    出ている場合はTRUE
+ */
+//=============================================================================================
 BOOL BTL_POSPOKE_IsExistPokemon( const BTL_POSPOKE_WORK* wk, u8 pokeID )
 {
   u32 i;

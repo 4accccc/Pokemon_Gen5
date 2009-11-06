@@ -193,6 +193,9 @@ struct _BTL_SVFLOW_WORK {
   u8      wazaEff_TargetPokeID;
   u8      escapeClientID;
   u8      getPokePos;
+  u8      numDeadPoke;
+  u8      numRelivePoke;
+  u8      relivedPokeID[ BTL_POKEID_MAX ];
   u8      pokeDeadFlag[ BTL_POKEID_MAX ];
 
 
@@ -548,6 +551,9 @@ static void Hem_PopState( HANDLER_EXHIBISION_MANAGER* wk, u32 state );
 static u16 Hem_GetStackPtr( const HANDLER_EXHIBISION_MANAGER* wk );
 static BTL_HANDEX_PARAM_HEADER* Hem_ReadWork( HANDLER_EXHIBISION_MANAGER* wk );
 static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );
+static void relivePokeRec_Init( BTL_SVFLOW_WORK* wk );
+static void relivePokeRec_Add( BTL_SVFLOW_WORK* wk, u8 pokeID );
+static BOOL relivePokeRec_CheckNecessaryPokeIn( BTL_SVFLOW_WORK* wk );
 static BOOL scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID );
 static u8 scproc_HandEx_TokWinIn( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_TokWinOut( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
@@ -651,7 +657,6 @@ SvflowResult BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk )
     {
       if( !BPP_IsDead(cw->member[posIdx]) )
       {
-        // @@@ 先々は、戦闘開始時のMemberInと途中入れ替えのMemberInでは演出を別ける必要アリ。
         BTL_Printf("client(%d, posIdx=%d poke...In!\n", i, posIdx);
         scproc_MemberIn( wk, i, posIdx, posIdx, TRUE );
       }
@@ -660,18 +665,29 @@ SvflowResult BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk )
 
   scproc_AfterMemberIn( wk );
 
-  // @@@ しぬこともあるかも
+  // @@@ しぬこともあるかも?
   return SVFLOW_RESULT_DEFAULT;
 }
 
+//--------------------------------------------------------------------------
+/**
+ * サーバコマンド生成（通常の１ターン分コマンド生成）
+ *
+ * @param   wk
+ *
+ * @retval  SvflowResult
+ */
+//--------------------------------------------------------------------------
 SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
 {
   u8 numActPoke, alivePokeBefore, alivePokeAfter;
-  u8 fFirstFight, i;
+  u8 i;
 
   SCQUE_Init( wk->que );
+  relivePokeRec_Init( wk );
   wk->numActOrder = 0;
-  fFirstFight = TRUE;
+  wk->numDeadPoke = 0;
+
 
   FlowFlg_ClearAll( wk );
   BTL_EVENT_StartTurn();
@@ -694,7 +710,6 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
     }
   }
 
-
   // 全アクション処理し終えた
   if( i == wk->numActOrder )
   {
@@ -704,9 +719,12 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
     scproc_TurnCheck( wk );
 
     // 死亡・生き返りなどでポケ交換の必要があるかチェック
-    if( reqChangePokeForServer(wk) ){
-      BTL_Printf("誰か死んだで\n");
-      return SVFLOW_RESULT_POKE_CHANGE;
+    if( relivePokeRec_CheckNecessaryPokeIn(wk)
+    ||  (wk->numDeadPoke != 0)
+    ){
+      BTL_Printf("新ポケ入場の必要あります\n");
+      reqChangePokeForServer( wk );
+      return SVFLOW_RESULT_POKE_IN_REQ;
     }
     return SVFLOW_RESULT_DEFAULT;
   }
@@ -717,6 +735,127 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
     reqChangePokeForServer( wk );
     return wk->flowResult;
   }
+}
+//--------------------------------------------------------------------------
+/**
+ * サーバコマンド生成（ポケモン死亡・生き返りによるターン最初の入場処理）
+ *
+ * @param   wk
+ *
+ * @retval  SvflowResult
+ */
+//--------------------------------------------------------------------------
+SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk )
+{
+  const BTL_ACTION_PARAM* action;
+  SVCL_WORK* clwk;
+  u16 clientID, posIdx;
+  int i, j, actionCnt;
+
+  BTL_Printf("空き位置にポケモン投入後のサーバーコマンド生成\n");
+
+  SCQUE_Init( wk->que );
+  scproc_SetFlyingFlag( wk );
+  BTL_SERVER_InitChangePokemonReq( wk->server );
+
+  wk->numDeadPoke = 0;
+  wk->flowResult =  SVFLOW_RESULT_DEFAULT;
+
+  wk->numActOrder = sortClientAction( wk, wk->actOrder, NELEMS(wk->actOrder) );
+  wk->numEndActOrder = 0;
+  for(i=0; i<wk->numActOrder; i++)
+  {
+    action = &wk->actOrder[i].action;
+    if( action->gen.cmd != BTL_ACTION_CHANGE ){ continue; }
+    if( action->change.depleteFlag ){ continue; }
+
+    BTL_Printf("クライアント_%d の位置_%d へ、%d番目のポケを出す\n",
+          i, action->change.posIdx, action->change.memberIdx );
+    scproc_MemberIn( wk, i, action->change.posIdx, action->change.memberIdx, FALSE );
+  }
+
+  scproc_AfterMemberIn( wk );
+
+  return ( wk->numDeadPoke == 0)?  SVFLOW_RESULT_DEFAULT : SVFLOW_RESULT_POKE_IN_REQ;
+}
+//--------------------------------------------------------------------------
+/**
+ * サーバコマンド生成（ターン途中のポケモン入れ替え選択後）
+ *
+ * @param   wk
+ *
+ * @retval  SvflowResult
+ */
+//--------------------------------------------------------------------------
+SvflowResult BTL_SVFLOW_StartAfterPokeChange( BTL_SVFLOW_WORK* wk )
+{
+  const BTL_ACTION_PARAM* action;
+  SVCL_WORK* clwk;
+  u16 clientID, posIdx;
+  int i, j, actionCnt;
+
+  BTL_Printf("ひんしポケモン入れ替え選択後のサーバーコマンド生成\n");
+
+  SCQUE_Init( wk->que );
+  scproc_SetFlyingFlag( wk );
+
+  wk->flowResult =  SVFLOW_RESULT_DEFAULT;
+  BTL_SERVER_InitChangePokemonReq( wk->server );
+
+  for(i=0; i<BTL_CLIENT_MAX; ++i)
+  {
+    clwk = BTL_SERVER_GetClientWork( wk->server, i );
+    if( clwk == NULL ){
+      continue;
+    }
+    actionCnt = BTL_SVCL_GetNumActPoke( clwk );
+
+    for(j=0; j<actionCnt; ++j)
+    {
+      action = BTL_SVCL_GetPokeAction( clwk, j );
+      if( action->gen.cmd != BTL_ACTION_CHANGE ){ continue; }
+      if( action->change.depleteFlag ){ continue; }
+
+      BTL_Printf("クライアント(%d)のポケモン(位置%d) を、%d番目のポケといれかえる\n",
+            i, action->change.posIdx, action->change.memberIdx );
+
+      scproc_MemberIn( wk, i, action->change.posIdx, action->change.memberIdx, FALSE );
+    }
+  }
+
+  {
+    scproc_AfterMemberIn( wk );
+    #if 0
+    if( fNewPokeIn )
+    {
+      // @@@ この辺は BTL_SVFLOW_Start と一緒なのでひとまとめにする
+      for(i=wk->numEndActOrder; i<wk->numActOrder; i++)
+      {
+        ActOrder_Proc( wk, &wk->actOrder[i] );
+        if( wk->flowResult !=  SVFLOW_RESULT_DEFAULT ){
+          wk->numEndActOrder = i+1;
+          break;
+        }
+      }
+      if( i==wk->numActOrder )
+      {
+        BTL_Printf("全クライアントの処理を最後まで行った\n");
+        // 死んだポケモンがいる場合の処理
+        if( reqChangePokeForServer(wk) ){
+          BTL_Printf("…しんだポケがいる\n");
+          return SVFLOW_RESULT_POKE_CHANGE;
+        }
+      }
+      else{
+        reqChangePokeForServer( wk );
+        BTL_Printf("全クライアントの処理を最後まで行えない ... result=%d\n", wk->flowResult);
+        return wk->flowResult;
+      }
+    }
+    #endif
+  }
+
+  return SVFLOW_RESULT_DEFAULT;
 }
 
 //----------------------------------------------------------------------------------
@@ -731,51 +870,25 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
 static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk )
 {
   u8 posAry[ BTL_POSIDX_MAX ];
-  u8 pos_cnt, clientID, i;
+  u8 empty_pos_cnt, clientID, i;
   u8 result = FALSE;
 
   SVCL_WORK* clwk;
   for(clientID=0; clientID<BTL_CLIENT_MAX; ++clientID)
   {
-    // 空いている位置の数を取得
-    pos_cnt = BTL_POSPOKE_GetClientEmptyPos( &wk->pospokeWork, clientID, posAry );
-    BTL_Printf( "クライアント[%d]   空いている位置の数=%d\n", clientID, pos_cnt );
-    if( pos_cnt )
+    empty_pos_cnt = BTL_POSPOKE_GetClientEmptyPos( &wk->pospokeWork, clientID, posAry );
+    BTL_Printf( "クライアント[%d]   空いている位置の数=%d\n", clientID, empty_pos_cnt );
+    if( empty_pos_cnt )
     {
-      // 繰り出せるポケ数をカウント
-      const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID );
-      u8 member_cnt = BTL_PARTY_GetMemberCount( party );
-      u8 bench_poke_cnt = 0;
-      const BTL_POKEPARAM* bpp;
-      for(i=0; i<member_cnt; ++i)
+      // 空いている位置を全てサーバへ通知
+      BTL_Printf( "  空いてる位置の数=%d  pos=", empty_pos_cnt );
+      for(i=0; i<empty_pos_cnt; ++i)
       {
-        bpp = BTL_PARTY_GetMemberDataConst( party, i );
-        if( !BTL_POSPOKE_IsExistPokemon(&wk->pospokeWork, BPP_GetID(bpp))
-        &&  !BPP_IsDead(bpp)
-        ){
-          ++bench_poke_cnt;
-        }
+        BTL_SERVER_RequestChangePokemon( wk->server, posAry[i] );
+        BTL_PrintfSimple( "%d,", posAry[i] );
       }
-
-      // 繰り出せるポケがいるならサーバへ通知
-      if( bench_poke_cnt )
-      {
-        u8 put_cnt = (bench_poke_cnt > pos_cnt)?  pos_cnt : bench_poke_cnt;
-        BTL_Printf( "  控えポケの数=%d, 出すべきポケ数=%d  pos=", bench_poke_cnt, put_cnt );
-        for(i=0; i<put_cnt; ++i)
-        {
-          BTL_SERVER_RequestChangePokemon( wk->server, posAry[i] );
-          BTL_PrintfSimple( "%d", posAry[i] );
-        }
-        BTL_PrintfSimple( "\n" );
-        result = TRUE;
-      }
-      // もう戦えるポケがいない場合も通知
-      else{
-        BTL_Printf("Client[%d]にはもう戦えるポケがいないことを通知\n", clientID);
-        BTL_SERVER_NotifyGiveupClientID( wk->server, clientID );
-        result = TRUE;
-      }
+      BTL_PrintfSimple( "\n" );
+      result = TRUE;
     }
   }
   return result;
@@ -916,78 +1029,6 @@ static void clear_poke_actflags( BTL_SVFLOW_WORK* wk )
   {
     scPut_ActFlag_Clear( wk, bpp );
   }
-}
-//--------------------------------------------------------------------------
-/**
- * １ターン分サーバコマンド生成（ポケモン選択後）
- *
- * @param   wk
- *
- * @retval  SvflowResult
- */
-//--------------------------------------------------------------------------
-SvflowResult BTL_SVFLOW_StartAfterPokeSelect( BTL_SVFLOW_WORK* wk )
-{
-  const BTL_ACTION_PARAM* action;
-  SVCL_WORK* clwk;
-  u16 clientID, posIdx;
-  int i, j, actionCnt;
-
-  BTL_Printf("ひんしポケモン入れ替え選択後のサーバーコマンド生成\n");
-
-  SCQUE_Init( wk->que );
-  scproc_SetFlyingFlag( wk );
-
-  wk->flowResult =  SVFLOW_RESULT_DEFAULT;
-  BTL_SERVER_InitChangePokemonReq( wk->server );
-
-  for(i=0; i<BTL_CLIENT_MAX; ++i)
-  {
-    clwk = BTL_SERVER_GetClientWork( wk->server, i );
-    if( clwk == NULL ){
-      continue;
-    }
-    actionCnt = BTL_SVCL_GetNumActPoke( clwk );
-
-    for(j=0; j<actionCnt; ++j)
-    {
-      action = BTL_SVCL_GetPokeAction( clwk, j );
-      if( action->gen.cmd != BTL_ACTION_CHANGE ){ continue; }
-      if( action->change.depleteFlag ){ continue; }
-
-      BTL_Printf("クライアント(%d)のポケモン(位置%d) を、%d番目のポケといれかえる\n",
-            i, action->change.posIdx, action->change.memberIdx );
-
-      scproc_MemberIn( wk, i, action->change.posIdx, action->change.memberIdx, FALSE );
-    }
-  }
-  scproc_AfterMemberIn( wk );
-
-  // @@@ この辺は BTL_SVFLOW_Start と一緒なのでひとまとめにする
-  for(i=wk->numEndActOrder; i<wk->numActOrder; i++)
-  {
-    ActOrder_Proc( wk, &wk->actOrder[i] );
-    if( wk->flowResult !=  SVFLOW_RESULT_DEFAULT ){
-      wk->numEndActOrder = i+1;
-      break;
-    }
-  }
-  if( i==wk->numActOrder )
-  {
-    BTL_Printf("全クライアントの処理を最後まで行った\n");
-    // 死んだポケモンがいる場合の処理
-    if( reqChangePokeForServer(wk) ){
-      BTL_Printf("…しんだポケがいる\n");
-      return SVFLOW_RESULT_POKE_CHANGE;
-    }
-  }
-  else{
-    reqChangePokeForServer( wk );
-    BTL_Printf("全クライアントの処理を最後まで行えない ... result=%d\n", wk->flowResult);
-    return wk->flowResult;
-  }
-
-  return SVFLOW_RESULT_DEFAULT;
 }
 //----------------------------------------------------------------------------------
 /**
@@ -1651,24 +1692,37 @@ static void scproc_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 nex
     BTL_POSPOKE_PokeIn( &wk->pospokeWork, pos, BPP_GetID(bpp), wk->pokeCon );
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * サーバーフロー：新しく場に入場したポケモン処理
+ *
+ * @param   wk
+ *
+ */
+//----------------------------------------------------------------------------------
 static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
 {
   FRONT_POKE_SEEK_WORK fps;
   BTL_POKEPARAM* bpp;
+//  BOOL fExistNewPoke = FALSE;
+
   u32 hem_state = Hem_PushState( &wk->HEManager );
 
   FRONT_POKE_SEEK_InitWork( &fps, wk );
   while( FRONT_POKE_SEEK_GetNext(&fps, wk, &bpp) )
   {
-    BTL_Printf(" After MemberIn pokeID=%d\n", BPP_GetID(bpp) );
     if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_MEMBERIN_EFFECT) )
     {
+      BTL_Printf(" After MemberIn pokeID=%d\n", BPP_GetID(bpp) );
       scEvent_MemberIn( wk, bpp );
       scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       BPP_CONTFLAG_Clear( bpp, BPP_CONTFLG_MEMBERIN_EFFECT );
+//      fExistNewPoke = TRUE;
     }
   }
   Hem_PopState( &wk->HEManager, hem_state );
+
+//  return fExistNewPoke;
 }
 //----------------------------------------------------------------------------------
 /**
@@ -1722,7 +1776,7 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
     { ITEM_PRM_PANIC_RCV,     ItemEff_KonranRcv     },   // 混乱回復
     { ITEM_PRM_MEROMERO_RCV,  ItemEff_MeromeroRcv   },   // メロメロ回復
     { ITEM_PRM_ABILITY_GUARD, ItemEff_EffectGuard   },   // 能力ガード
-//    { ITEM_PRM_DEATH_RCV,     ItemEff_Relive        },   // 瀕死回復
+    { ITEM_PRM_DEATH_RCV,     ItemEff_Relive        },   // 瀕死回復
     { ITEM_PRM_ATTACK_UP,     ItemEff_AttackRank    },   // 攻撃力アップ
     { ITEM_PRM_DEFENCE_UP,    ItemEff_DefenceRank   },   // 防御力アップ
     { ITEM_PRM_SP_ATTACK_UP,  ItemEff_SPAttackRank  },   // 特攻アップ
@@ -1927,6 +1981,8 @@ static u8 ItemEff_Relive( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, i
     HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Relive );
     HANDEX_STR_AddArg( &param->exStr, pokeID );
 
+    // 当ターンに生き返ったポケモンを記録
+    relivePokeRec_Add( wk, pokeID );
     return TRUE;
   }
   return FALSE;
@@ -4975,6 +5031,7 @@ static void scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke )
     {
       BTL_Printf("ポケ[ID=%d]しにます\n", pokeID);
       wk->pokeDeadFlag[pokeID] = 1;
+      wk->numDeadPoke++;
 
       // @@@ みがわり出てたら画面から消すコマンド生成？
 
@@ -8753,6 +8810,49 @@ void* BTL_SVFLOW_HANDLERWORK_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibitio
 {
   return Hem_PushWork( &wk->HEManager, eq_type, userPokeID );
 }
+//---------------------------------------------------------------------------------------------
+// 当ターン生き返りポケレコード
+//---------------------------------------------------------------------------------------------
+
+// 初期化
+static void relivePokeRec_Init( BTL_SVFLOW_WORK* wk )
+{
+  wk->numRelivePoke = 0;
+}
+
+// 生き返り記録追加
+static void relivePokeRec_Add( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+  u32 i;
+  for(i=0; i<wk->numRelivePoke; ++i)
+  {
+    if( wk->relivedPokeID[i] == pokeID ){
+      return;
+    }
+  }
+
+  if( i < NELEMS(wk->relivedPokeID) ){
+    wk->relivedPokeID[i] = pokeID;
+  }
+}
+
+// ターン終了時、ポケモン入場の必要があるか判定
+static BOOL relivePokeRec_CheckNecessaryPokeIn( BTL_SVFLOW_WORK* wk )
+{
+  u32 i;
+  u8 pos[ BTL_POSIDX_MAX ];
+  u8 clientID;
+  for(i=0; i<wk->numRelivePoke; ++i)
+  {
+    clientID = BTL_MAINUTIL_PokeIDtoClientID( wk->relivedPokeID[i] );
+    // １個所でも空き位置があれば入場させる必要アリ
+    if( BTL_POSPOKE_GetClientEmptyPos(&wk->pospokeWork, clientID, pos) ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
 
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------

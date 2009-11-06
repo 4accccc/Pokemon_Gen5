@@ -12,18 +12,6 @@
 #include "btl_common.h"
 #include "btl_main.h"
 
-/**
- * 状態コード
- */
-typedef enum {
-
-  POSPOKE_EMPTY = 0,    ///< 管理外（シングル戦で２体目の位置などは管理外になる）
-  POSPOKE_EXIST,        ///< 生きているポケモンが存在する
-  POSPOKE_DEAD,         ///<
-
-}BtlPosPokeState;
-
-
 typedef struct {
   u8  fEnable;
   u8  clientID;
@@ -34,7 +22,6 @@ typedef struct {
  * 状態保持構造体
  */
 typedef struct {
-//  BtlPosPokeState  state[ BTL_POS_MAX ];
   BTL_POSPOKE_STATE  state[ BTL_POS_MAX ];
 }BTL_POSPOKE_WORK;
 

@@ -54,7 +54,7 @@ typedef union {
     u32 cmd         : 3;
     u32 posIdx      : 3;  // 入れ替え対象位置ID
     u32 memberIdx   : 3;  // 選ばれたポケモンのパーティ内インデックス
-    u32 depleteFlag : 1;
+    u32 depleteFlag : 1;  // 入れ替えるポケモンがもういないことを通知するフラグ
     u32 _2          : 22;
   }change;
 

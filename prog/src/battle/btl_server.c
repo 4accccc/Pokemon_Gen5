@@ -94,7 +94,10 @@ static inline void setup_client_members( SVCL_WORK* client, BTL_PARTY* party, u8
 static void setMainProc( BTL_SERVER* sv, ServerMainProc mainProc );
 static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq );
-static BOOL ServerMain_SelectPokemon( BTL_SERVER* server, int* seq );
+static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq );
+static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq );
+static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq );
+static BOOL checkBattleShowdown( BTL_SERVER* server );
 static void SetAdapterCmd( BTL_SERVER* server, BtlAdapterCmd cmd );
 static void SetAdapterCmdEx( BTL_SERVER* server, BtlAdapterCmd cmd, const void* sendData, u32 dataSize );
 static BOOL WaitAdapterCmd( BTL_SERVER* server );
@@ -323,7 +326,6 @@ static void setMainProc( BTL_SERVER* sv, ServerMainProc mainProc )
 //----------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------
 
-
 static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
 {
   switch( *seq ){
@@ -396,8 +398,12 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
       case SVFLOW_RESULT_DEFAULT:
         (*seq)=0;
         break;
+      case SVFLOW_RESULT_POKE_IN_REQ:
+        BTL_Printf("新ポケ入場リクエスト受け付け\n");
+        setMainProc( server, ServerMain_SelectPokemonIn );
+        break;
       case SVFLOW_RESULT_POKE_CHANGE:
-        BTL_Printf("入れ替えリクエストで終わった\n");
+        BTL_Printf("入れ替えリクエスト受け付け\n");
         if( server->giveupClientCnt ){
           //2vs2or3vs3で場にポケモンが残っていても、
           //空きがあって、控えがいないとgiveupClientCntが0以外になって戦闘終了してしまうので
@@ -410,29 +416,29 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
           const BTL_POKEPARAM*  bpp;
 
           for( pos = BTLV_MCSS_POS_A ; pos <= max ; pos++ )
-          { 
+          {
             bpp = BTL_POKECON_GetFrontPokeDataConst( server->pokeCon, BTL_MAIN_ViewPosToBtlPos( server->mainModule, pos ) );
             if( bpp )
-            { 
+            {
               if( BPP_IsDead( bpp ) == FALSE )
-              { 
+              {
                 if( pos & 1 )
-                { 
+                {
                   enemyFront++;
                 }
                 else
-                { 
+                {
                   playerFront++;
                 }
               }
             }
           }
           if( ( playerFront ) && ( enemyFront ) )
-          { 
+          {
             (*seq) = 0;
           }
           else
-          { 
+          {
             (*seq) = 3;
           }
 #else
@@ -440,10 +446,10 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
           (*seq) = 3;
 #endif
         }else{
-          // 空き位置があり、入場可能なポケモンがいる場合
+          // 空き位置がある場合、入れ替えリクエストへ
           GF_ASSERT( server->changePokeCnt );
           BTL_Printf("死んだポケ入れ替え\n");
-          setMainProc( server, ServerMain_SelectPokemon );
+          setMainProc( server, ServerMain_SelectPokemonChange );
         }
         break;
       case SVFLOW_RESULT_POKE_GET:
@@ -482,11 +488,21 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
   return FALSE;
 }
 
-static BOOL ServerMain_SelectPokemon( BTL_SERVER* server, int* seq )
+//----------------------------------------------------------------------------------
+/**
+ * サーバメインループ：死亡・生き返りで空き位置にポケモンを投入した直後の処理
+ *
+ * @param   server
+ * @param   seq
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq )
 {
   switch( *seq ){
   case 0:
-    BTL_Printf("負けたクライアントいないので次のポケモン選択へ  交替されるポケ数=%d\n", server->changePokeCnt);
+    BTL_Printf("入場ポケモン選択へ  交替されるポケ数=%d\n", server->changePokeCnt);
     SetAdapterCmdEx( server, BTL_ACMD_SELECT_POKEMON, server->changePokePos,
         server->changePokeCnt*sizeof(server->changePokePos[0]) );
     (*seq)++;
@@ -495,9 +511,62 @@ static BOOL ServerMain_SelectPokemon( BTL_SERVER* server, int* seq )
   case 1:
     if( WaitAdapterCmd(server) )
     {
+      BTL_Printf("入場ポケモン選択し終わった\n");
+      ResetAdapterCmd( server );
+      if( checkBattleShowdown(server) ){
+        BTL_Printf("決着がついた！\n");
+        setMainProc( server, ServerMain_ExitBattle );
+        return FALSE;
+      }
+      else{
+        SCQUE_Init( server->que );
+        server->flowResult = BTL_SVFLOW_StartAfterPokeIn( server->flowWork );
+        BTL_Printf("サーバー処理結果=%d\n", server->flowResult );
+        SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
+        (*seq)++;
+      }
+    }
+    break;
+
+  case 2:
+    if( WaitAdapterCmd(server) )
+    {
+      ResetAdapterCmd( server );
+      BTL_MAIN_SyncServerCalcData( server->mainModule );
+
+      if( server->flowResult != SVFLOW_RESULT_POKE_IN_REQ )
+      {
+        setMainProc( server, ServerMain_SelectAction );
+      }
+      else
+      {
+        (*seq) = 0;
+      }
+    }
+    break;
+  }
+
+  return FALSE;
+}
+
+
+static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    BTL_Printf("入れ替えポケモン選択へ  交替されるポケ数=%d\n", server->changePokeCnt);
+    SetAdapterCmdEx( server, BTL_ACMD_SELECT_POKEMON, server->changePokePos,
+        server->changePokeCnt*sizeof(server->changePokePos[0]) );
+    (*seq)++;
+    break;
+
+  case 1:
+    if( WaitAdapterCmd(server) )
+    {
+      BTL_Printf("入れ替えポケモン選択し終わった\n");
       ResetAdapterCmd( server );
       SCQUE_Init( server->que );
-      server->flowResult = BTL_SVFLOW_StartAfterPokeSelect( server->flowWork );
+      server->flowResult = BTL_SVFLOW_StartAfterPokeChange( server->flowWork );
       BTL_Printf("サーバー処理結果=%d\n", server->flowResult );
       SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
       (*seq)++;
@@ -510,18 +579,79 @@ static BOOL ServerMain_SelectPokemon( BTL_SERVER* server, int* seq )
       ResetAdapterCmd( server );
       BTL_MAIN_SyncServerCalcData( server->mainModule );
 
-      if( server->flowResult == SVFLOW_RESULT_POKE_CHANGE )
+      if( server->flowResult != SVFLOW_RESULT_POKE_IN_REQ )
       {
-        (*seq) = 0;
+        setMainProc( server, ServerMain_SelectAction );
       }
       else
       {
-        setMainProc( server, ServerMain_SelectAction );
+        setMainProc( server, ServerMain_SelectPokemonIn );
       }
     }
     break;
   }
 
+  return FALSE;
+}
+
+static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
+{
+  // @todo 本来は勝ちor負け、野生orトレーナー戦などで分岐する
+  switch( *seq ){
+  case 0:
+    PMSND_PlayBGM( SEQ_BGM_WIN1 );
+    (*seq)++;
+    break;
+  case 1:
+    {
+      u8 touch = ( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_A) != 0);
+      u8 bgm_end = !PMSND_CheckPlayBGM();
+      if( touch || bgm_end ){
+        return TRUE;
+      }
+    }
+    break;
+  }
+  return FALSE;
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * 戦闘の決着がついた状態か判定
+ *
+ * @param   server
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL checkBattleShowdown( BTL_SERVER* server )
+{
+  u8  pokeExist[2];
+  u32 i;
+
+  pokeExist[0] = pokeExist[1] = FALSE;
+
+  for(i=0; i<BTL_CLIENT_MAX; ++i)
+  {
+    if( BTL_POKECON_IsExsitClient(server->pokeCon, i) )
+    {
+      BTL_PARTY* party = BTL_POKECON_GetPartyData( server->pokeCon, i );
+      u8 side = BTL_MAIN_GetClientSide( server->mainModule, i );
+      if( BTL_PARTY_GetAliveMemberCount(party) )
+      {
+        BTL_Printf("クライアント_%d (SIDE:%d) のポケはまだ何体か生きている\n", i, side);
+        pokeExist[ side] = TRUE;
+      }
+      else{
+        BTL_Printf("クライアント_%d (SIDE:%d) のポケは全滅した\n", i, side);
+      }
+    }
+  }
+
+  if( (pokeExist[0] == FALSE) || (pokeExist[1] == FALSE) ){
+    return TRUE;
+  }
   return FALSE;
 }
 

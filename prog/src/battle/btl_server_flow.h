@@ -28,6 +28,7 @@
 typedef enum {
   SVFLOW_RESULT_DEFAULT = 0,  ///< そのまま続行
   SVFLOW_RESULT_POKE_CHANGE,  ///< ポケモン入れ替えフェーズ->バトル継続
+  SVFLOW_RESULT_POKE_IN_REQ,  ///< ポケモン死亡->新ポケ選択へ
   SVFLOW_RESULT_BTL_QUIT,     ///< バトル終了（決着）
   SVFLOW_RESULT_POKE_GET,     ///< バトル終了（ポケモン捕獲）
 }SvflowResult;
@@ -81,7 +82,8 @@ extern void BTL_SVFLOW_QuitSystem( BTL_SVFLOW_WORK* wk );
 
 extern SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk );
 extern SvflowResult BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk );
-extern SvflowResult BTL_SVFLOW_StartAfterPokeSelect( BTL_SVFLOW_WORK* wk );
+extern SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk );
+extern SvflowResult BTL_SVFLOW_StartAfterPokeChange( BTL_SVFLOW_WORK* wk );
 
 
 
