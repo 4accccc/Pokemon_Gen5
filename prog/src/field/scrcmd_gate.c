@@ -13,6 +13,9 @@
 #include "scrcmd_gate.h"
 #include "field_gimmick_gate.h"
 #include "gimmick_obj_elboard.h"
+#include "scrcmd_work.h"
+#include "script_local.h"
+#include "scrcmd.h"
 
 
 //---------------------------------------------------------------------------------------
@@ -25,13 +28,11 @@
 //---------------------------------------------------------------------------------------
 VMCMD_RESULT EvCmdElboard_SetNormalNews( VMHANDLE *core, void *wk )
 {
-  /*
-  SCRCMD_WORK*      work = (SCRCMD_WORK*)wk;
-  GAMESYS_WORK*     gsys = SCRCMD_WORK_getGameData( work );
-  FIELMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
 
   GATE_GIMMICK_Elboard_SetupNormalNews( fieldmap );
-  */
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -45,13 +46,31 @@ VMCMD_RESULT EvCmdElboard_SetNormalNews( VMHANDLE *core, void *wk )
 //---------------------------------------------------------------------------------------
 VMCMD_RESULT EvCmdElboard_AddSpecialNews( VMHANDLE *core, void *wk )
 { 
-  /*
-  SCRCMD_WORK*      work = (SCRCMD_WORK*)wk;
-  GAMESYS_WORK*     gsys = SCRCMD_WORK_getGameData( work );
-  FIELMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  NEWS_PARAM news;
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  u16              str_id = SCRCMD_GetVMWorkValue( core, work );   // コマンド第一引数
+  SCRIPT_WORK*   scr_work = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET**       wordset = SCRIPT_GetMemberWork( scr_work, ID_EVSCR_WORDSET );
 
-  GATE_GIMMICK_Elboard_AddSpecialNews( fieldmap, &news );
-  */
+  GATE_GIMMICK_Elboard_AddSpecialNews( fieldmap, str_id, *wordset );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//---------------------------------------------------------------------------------------
+/**
+ * @brief 臨時ニュースを追加する
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param  wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//---------------------------------------------------------------------------------------
+VMCMD_RESULT EvCmdElboard_Recovery( VMHANDLE *core, void *wk )
+{ 
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  GATE_GIMMICK_Elboard_Recovery( fieldmap );
   return VMCMD_RESULT_CONTINUE;
 }

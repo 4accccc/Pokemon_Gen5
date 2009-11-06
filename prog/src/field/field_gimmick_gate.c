@@ -225,9 +225,10 @@ static char* news_plt_name[NEWS_NUM] =
 //==========================================================================================
 typedef struct
 { 
-  HEAPID                       heapID;  // 使用するヒープID
-  GOBJ_ELBOARD*               elboard;  // 電光掲示板管理オブジェクト
+  HEAPID        heapID;   // 使用するヒープID
+  GOBJ_ELBOARD* elboard;  // 電光掲示板管理オブジェクト
   u16 weatherZoneID[WEATHER_ZONE_NUM];  // 天気を表示するゾーン
+  u32 recoveryFrame;  // 復帰フレーム
 } GATEWORK;
 
 
@@ -270,11 +271,11 @@ void GATE_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   // ギミック管理ワークを作成
   work = CreateGateWork( fieldmap );
 
-  // ギミック状態の復帰
+  // ギミックのセーブデータを読み込む
   GimmickLoad( work, fieldmap );
 
   // TEMP: 通常ニュースを放送
-  GATE_GIMMICK_Elboard_SetupNormalNews( fieldmap );
+  //GATE_GIMMICK_Elboard_SetupNormalNews( fieldmap );
 
   OBATA_Printf( "GATE_GIMMICK_Setup\n" );
 }
@@ -357,6 +358,18 @@ void GATE_GIMMICK_Elboard_SetupNormalNews( FIELDMAP_WORK* fieldmap )
     return;
   }
 
+  // すでに他のニュースが登録されている場合
+  {
+    int num = GOBJ_ELBOARD_GetNewsNum( work->elboard );
+    if( num != 0 )
+    {
+      OBATA_Printf( "======================================\n" );
+      OBATA_Printf( "すでに他のニュースが設定されています。\n" );
+      OBATA_Printf( "======================================\n" );
+      return;
+    }
+  }
+
   // 電光掲示板データを取得
   if( !LoadGateData( &elboard_data, fieldmap ) )
   {
@@ -376,10 +389,12 @@ void GATE_GIMMICK_Elboard_SetupNormalNews( FIELDMAP_WORK* fieldmap )
  * @brief 掲示板に指定したニュースを追加する
  *
  * @param fieldmap フィールドマップ
- * @param news     追加するニュース
+ * @param str_id   追加するニュースのメッセージ番号
+ * @param wordset  指定メッセージに展開するワードセット
  */
 //------------------------------------------------------------------------------------------
-void GATE_GIMMICK_Elboard_AddSpecailNews( FIELDMAP_WORK* fieldmap, const NEWS_PARAM* news )
+void GATE_GIMMICK_Elboard_AddSpecialNews( 
+    FIELDMAP_WORK* fieldmap, u32 str_id, WORDSET* wordset )
 {
   GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
@@ -395,7 +410,53 @@ void GATE_GIMMICK_Elboard_AddSpecailNews( FIELDMAP_WORK* fieldmap, const NEWS_PA
   }
 
   // ニュースを追加
-  GOBJ_ELBOARD_AddNews( work->elboard, news );
+  {
+    int index;
+    NEWS_PARAM news;
+
+    index = GOBJ_ELBOARD_GetNewsNum( work->elboard );
+    if( MAX_NEWS_NUM <= index )
+    {
+      OBATA_Printf( "==========================================\n" );
+      OBATA_Printf( "すでに最大数のニュースが設定されています。\n" );
+      OBATA_Printf( "==========================================\n" );
+      return;
+    }
+    news.animeIndex = news_anm_index[index];
+    news.texName    = news_tex_name[index];
+    news.pltName    = news_plt_name[index];
+    news.msgArcID   = ARCID_MESSAGE;
+    news.msgDatID   = NARC_message_gate_dat;
+    news.msgStrID   = str_id;
+    news.wordset    = wordset;
+    GOBJ_ELBOARD_AddNews( work->elboard, &news );
+  }
+
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 掲示板の状態を復帰させる(復帰ポイントは自動的に記憶)
+ *
+ * @param fieldmap フィールドマップ
+ */
+//------------------------------------------------------------------------------------------
+void GATE_GIMMICK_Elboard_Recovery( FIELDMAP_WORK* fieldmap )
+{
+  GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
+  GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
+  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork( gdata );
+  int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
+  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, gmk_id );
+  GATEWORK*        work = (GATEWORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
+
+  // 電光掲示板が登録されていない場所で呼ばれたら何もしない
+  if( IsGimmickIDEntried( gmk_id ) != TRUE )
+  {
+    return;
+  } 
+  // 掲示板復帰処理
+  GOBJ_ELBOARD_SetFrame( work->elboard, work->recoveryFrame << FX32_SHIFT );
 }
 
 
@@ -420,12 +481,12 @@ static void GimmickSave( FIELDMAP_WORK* fieldmap )
   GATEWORK*        work = (GATEWORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
 
   // 掲示板の動作フレーム数を記憶
-  gmk_save[1] = GOBJ_ELBOARD_GetFrame( work->elboard ) >> FX32_SHIFT;
+  gmk_save[1] = GOBJ_ELBOARD_GetFrame( work->elboard ) >> FX32_SHIFT; // 掲示板の復帰ポイント
 }
 
 //------------------------------------------------------------------------------------------
 /**
- * @brief ギミック状態を復帰する
+ * @brief ギミックのセーブデータを読み込む
  *
  * @param work     ギミック管理ワーク
  * @param fieldmap 依存するフィールドマップ
@@ -438,12 +499,10 @@ static void GimmickLoad( GATEWORK* work, FIELDMAP_WORK* fieldmap )
   GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
   int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
   u32*         gmk_save = NULL;
-  u32             frame = 0;
 
   // セーブデータ取得
   gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, gmk_id );
-  frame    = gmk_save[1];
-  GOBJ_ELBOARD_SetFrame( work->elboard, frame << FX32_SHIFT );
+  work->recoveryFrame = gmk_save[1];  // 掲示板の復帰ポイント
 
   // ギミック管理ワークのアドレスを記憶
   gmk_save[0] = (int)work; 

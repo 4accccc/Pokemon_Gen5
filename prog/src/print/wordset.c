@@ -655,6 +655,27 @@ void WORDSET_RegisterItemPocketName( WORDSET* wordset, u32 bufID, u32 pocketID )
   }
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief 指定バッファに地名を登録
+ *
+ * @param bufID  バッファID
+ * @param zoneID ゾーンID
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterPlaceName( WORDSET* wordset, u32 bufID, u32 zoneID )
+{
+  GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
+      ARCID_MESSAGE, NARC_message_place_name_dat, wordset->heapID );
+
+  if( msg )
+  {
+    GFL_MSG_GetString( msg, zoneID, wordset->tmpBuf );
+    RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+    GFL_MSG_Delete(msg);
+  }
+}
+
 
 
 

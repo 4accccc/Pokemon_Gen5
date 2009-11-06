@@ -15,3 +15,4 @@
 //=======================================================================================
 extern VMCMD_RESULT EvCmdElboard_SetNormalNews( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdElboard_AddSpecialNews( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdElboard_Recovery( VMHANDLE *core, void *wk );

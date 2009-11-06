@@ -5,6 +5,7 @@
 #define _R02R0101_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_R02R0101_WOMAN1_01 (1)
+#define SCRID_INIT_R02R0101 (1)
+#define SCRID_R02R0101_WOMAN1_01 (2)
 
 #endif //_R02R0101_DEF_H_

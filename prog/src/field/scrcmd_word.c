@@ -341,5 +341,12 @@ VMCMD_RESULT EvCmdNickName( VMHANDLE *core, void *wk )
 //------------------------------------------------------------------------------------------
 VMCMD_RESULT EvCmdPlaceName( VMHANDLE *core, void *wk )
 { 
+  SCRCMD_WORK* work = wk;
+  SCRIPT_WORK*   sc = SCRCMD_WORK_GetScriptWork( work );
+	WORDSET** wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+	u16           idx = SCRCMD_GetVMWorkValue( core, work );  // ëÊàÍà¯êî
+	u16       zone_id = SCRCMD_GetVMWorkValue( core, work );  // ëÊìÒà¯êî
+
+  WORDSET_RegisterPlaceName( *wordset, idx, zone_id );
 	return VMCMD_RESULT_CONTINUE;
 }

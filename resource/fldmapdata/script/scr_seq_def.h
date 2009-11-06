@@ -1990,6 +1990,20 @@
   .short  \strID
   .endm
 
+//--------------------------------------------------------------
+/**
+ *  @def _ELBOARD_RECOVERY
+ *  @brief 電光掲示板の状態を復帰(画面復帰時に使用)
+ */
+//--------------------------------------------------------------
+#define _ELBOARD_RECOVERY() \
+    _ASM_ELBOARD_RECOVERY
+
+  .macro  _ASM_ELBOARD_RECOVERY
+  .short  EV_SEQ_ELBOARD_RECOVERY
+  .endm
+
+
 #if 0
 //--------------------------------------------------------------
 /**

@@ -629,7 +629,7 @@
   // ÉQÅ[Égä÷òA
   DEF_CMD( EvCmdElboard_SetNormalNews, EV_SEQ_ELBOARD_SET_NORMAL_NEWS )
   DEF_CMD( EvCmdElboard_AddSpecialNews, EV_SEQ_ELBOARD_ADD_SPECIAL_NEWS )
-  NO_CMD()
+  DEF_CMD( EvCmdElboard_Recovery, EV_SEQ_ELBOARD_RECOVERY )
   NO_CMD()
 
   END_CMD

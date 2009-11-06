@@ -39,7 +39,18 @@ void GATE_GIMMICK_Elboard_SetupNormalNews( FIELDMAP_WORK* fieldmap );
  * @brief 掲示板に指定したニュースを追加する
  *
  * @param fieldmap フィールドマップ
- * @param news     追加するニュース
+ * @param str_id   追加するニュースのメッセージ番号
+ * @param wordset  指定メッセージに展開するワードセット
  */
 //------------------------------------------------------------------------------------------
-void GATE_GIMMICK_Elboard_AddSpecailNews( FIELDMAP_WORK* fieldmap, const NEWS_PARAM* news );
+void GATE_GIMMICK_Elboard_AddSpecialNews( 
+    FIELDMAP_WORK* fieldmap, u32 str_id, WORDSET* wordset );
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 掲示板の状態を復帰させる(復帰ポイントは自動的に記憶)
+ *
+ * @param fieldmap フィールドマップ
+ */
+//------------------------------------------------------------------------------------------
+void GATE_GIMMICK_Elboard_Recovery( FIELDMAP_WORK* fieldmap );
