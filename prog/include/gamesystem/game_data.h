@@ -4,28 +4,13 @@
  * @brief	ゲーム進行データ管理
  * @date	2008.11.04
  *
- * 基本的にゲーム進行データはセーブデータとして存在するが、
- * 通信時の複数プレイヤー情報やフィールドマップ情報などセーブデータに
- * のるとは限らない情報もある。
- * そのようなセーブデータ・非セーブデータへ並列にアクセスするインターフェイスを
- * 各パートごとに構成するとパートごとにアクセス手法が違ったり、また同じ機能の
- * ものが複数存在するなどプログラム全体の複雑さが増してしまう可能性が高い。
- * それを避けるため、共通インターフェイスを作ることによって簡略化する試み
- * …試みなので途中で方針を変えるかも。
  */
 //============================================================================================
 #pragma once
 
 //============================================================================================
 //============================================================================================
-//------------------------------------------------------------------
-/**
- * @brief	GAMEDATA型定義
- *
- * _GAMEDATAの実体はgame_data.c内に定義されている
- */
-//------------------------------------------------------------------
-typedef struct _GAMEDATA GAMEDATA;
+#include "gamesystem/gamedata_def.h"
 
 #include "gamesystem/playerwork.h"
 #include "field/eventdata_system.h"
@@ -33,11 +18,11 @@ typedef struct _GAMEDATA GAMEDATA;
 #include "field/rail_location.h"  //RAIL_LOCATION
 #include "savedata/myitem_savedata.h"  //BAG_CURSOR MYITEM
 #include "poke_tool/pokeparty.h"
-//#include "field/fldmmdl.h"
+
 #include "field/eventwork.h"
 #include "field/field_sound_proc.h"
 #include "sound/bgm_info.h"
-//#include "field/field_status.h"
+
 #include "field/field_beacon_message.h" //FIELD_BEACON_MSG_DATA
 #include "field/field_encount.h" //ENCOUNT_WORK
 #include "savedata/box_savedata.h"      //BOX_MANAGER
@@ -47,12 +32,6 @@ typedef struct _GAMEDATA GAMEDATA;
 
 //============================================================================================
 //============================================================================================
-enum {
-	PLAYER_MAX = 5,
-	
-	PLAYER_ID_MINE = PLAYER_MAX - 1,    ///<自分自身のプレイヤーID
-};
-
 enum {
   OCCUPY_ID_MAX = FIELD_COMM_MEMBER_MAX + 1,
 
@@ -80,26 +59,68 @@ extern GAMEDATA * GAMEDATA_Create(HEAPID heapID);
 extern void GAMEDATA_Delete(GAMEDATA * gamedata);
 
 //============================================================================================
-//	PLAYER_WORKへのアクセス
+//    セーブ処理
+//============================================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   ゲームデータが持つ情報を元にセーブを実行
+ *
+ * @param   gamedata		ゲームデータへのポインタ
+ *
+ * @retval  セーブ結果
+ */
+//--------------------------------------------------------------
+extern SAVE_RESULT GAMEDATA_Save(GAMEDATA *gamedata);
+
+//--------------------------------------------------------------
+/**
+ * @brief   ゲームデータが持つ情報を元に分割セーブを開始
+ *
+ * @param   gamedata		ゲームデータへのポインタ
+ *
+ * @retval  none
+ */
+//--------------------------------------------------------------
+extern void GAMEDATA_SaveAsyncStart(GAMEDATA *gamedata);
+
+//--------------------------------------------------------------
+/**
+ * @brief   ゲームデータが持つ情報を元に分割セーブを実行
+ *
+ * @param   gamedata		ゲームデータへのポインタ
+ *
+ * @retval  セーブ結果
+ */
+//--------------------------------------------------------------
+extern SAVE_RESULT GAMEDATA_SaveAsyncMain(GAMEDATA *gamedata);
+
+//============================================================================================
+//	SAVE_CONTROL_WORKへのアクセス
 //============================================================================================
 //------------------------------------------------------------------
 /**
- * @brief	プレイヤーデータを取得する
- * @param	gamedata	GAMEDATAへのポインタ
- * @param	player_id	プレイヤー指定ID
- * @return	PLAYER_WORK	プレイヤーデータへのポインタ
+ * @brief	  セーブコントロールワークを取得する
+ * @param	  gamedata			GAMEDATAへのポインタ
+ * @return	SAVE_CONTROL_WORK	のポインタ
  */
 //------------------------------------------------------------------
-extern PLAYER_WORK * GAMEDATA_GetPlayerWork(GAMEDATA * gamedata, u32 player_id);
+extern SAVE_CONTROL_WORK * GAMEDATA_GetSaveControlWork(GAMEDATA * gamedata);
+
 //------------------------------------------------------------------
 /**
- * @brief	自分のプレイヤーデータを取得する
- * @param	gamedata	GAMEDATAへのポインタ
- * @return	PLAYER_WORK	自分のプレイヤーデータへのポインタ
+ * @brief	  セーブコントロールワークを取得する	CONST版
+ * @param	  gamedata			GAMEDATAへのポインタ
+ * @return	SAVE_CONTROL_WORK	のポインタ
  */
 //------------------------------------------------------------------
-extern PLAYER_WORK * GAMEDATA_GetMyPlayerWork(GAMEDATA * gamedata);
+extern const SAVE_CONTROL_WORK* GAMEDATA_GetSaveControlWorkConst(const GAMEDATA * gamedata);
 
+
+
+
+
+//============================================================================================
+//============================================================================================
 //--------------------------------------------------------------
 /**
  * @brief   OCCUPY_INFOへのポインタ取得(プレイヤーID指定)
@@ -251,15 +272,6 @@ extern MYSTATUS * GAMEDATA_GetMyStatusPlayer(GAMEDATA * gamedata, u32 player_id)
 
 //--------------------------------------------------------------
 /**
- * @brief BGM_INFO_SYSへのポインタ取得
- * @param gamedata    GAMEDATAへのポインタ
- * preturn BGM_INFO_SYS BGM情報取得システムへのポインタ
- */
-//--------------------------------------------------------------
-extern BGM_INFO_SYS * GAMEDATA_GetBGMInfoSys(GAMEDATA * gamedata);
-
-//--------------------------------------------------------------
-/**
  * @brief	季節の取得
  * @param   gamedata		GAMEDATAへのポインタ
  * @return	u8	季節ID（gamesystem/pm_season.h参照）
@@ -348,39 +360,6 @@ extern u8 GAMEDATA_GetAndAddFrameSpritCount(GAMEDATA *gamedata);
 //------------------------------------------------------------------
 extern BOOL GAMEDATA_IsFrameSpritMode(GAMEDATA *gamedata);
 
-
-//--------------------------------------------------------------
-/**
- * @brief   ゲームデータが持つ情報を元にセーブを実行
- *
- * @param   gamedata		ゲームデータへのポインタ
- *
- * @retval  セーブ結果
- */
-//--------------------------------------------------------------
-extern SAVE_RESULT GAMEDATA_Save(GAMEDATA *gamedata);
-
-//--------------------------------------------------------------
-/**
- * @brief   ゲームデータが持つ情報を元に分割セーブを開始
- *
- * @param   gamedata		ゲームデータへのポインタ
- *
- * @retval  none
- */
-//--------------------------------------------------------------
-extern void GAMEDATA_SaveAsyncStart(GAMEDATA *gamedata);
-
-//--------------------------------------------------------------
-/**
- * @brief   ゲームデータが持つ情報を元に分割セーブを実行
- *
- * @param   gamedata		ゲームデータへのポインタ
- *
- * @retval  セーブ結果
- */
-//--------------------------------------------------------------
-extern SAVE_RESULT GAMEDATA_SaveAsyncMain(GAMEDATA *gamedata);
 
 //--------------------------------------------------------------
 /**
@@ -552,27 +531,6 @@ extern void GAMEDATA_SetShortCutCursor( GAMEDATA *gamedata, SHORTCUT_CURSOR *cur
 //-----------------------------------------------------------------------------
 extern SHORTCUT_CURSOR * GAMEDATA_GetShortCutCursor( GAMEDATA *gamedata );
 
-//============================================================================================
-//	SAVE_CONTROL_WORKへのアクセス
-//============================================================================================
-//------------------------------------------------------------------
-/**
- * @brief	  セーブコントロールワークを取得する
- * @param	  gamedata			GAMEDATAへのポインタ
- * @return	SAVE_CONTROL_WORK	のポインタ
- */
-//------------------------------------------------------------------
-extern SAVE_CONTROL_WORK * GAMEDATA_GetSaveControlWork(GAMEDATA * gamedata);
-
-//------------------------------------------------------------------
-/**
- * @brief	  セーブコントロールワークを取得する	CONST版
- * @param	  gamedata			GAMEDATAへのポインタ
- * @return	SAVE_CONTROL_WORK	のポインタ
- */
-//------------------------------------------------------------------
-extern const SAVE_CONTROL_WORK* GAMEDATA_GetSaveControlWorkConst(const GAMEDATA * gamedata);
-
 //----------------------------------------------------------
 /**
  * @brief   ギミックデータへのポインタ取得
@@ -581,3 +539,4 @@ extern const SAVE_CONTROL_WORK* GAMEDATA_GetSaveControlWorkConst(const GAMEDATA 
  */
 //----------------------------------------------------------
 extern GIMMICKWORK * GAMEDATA_GetGimmickWork(GAMEDATA * gamedata);
+

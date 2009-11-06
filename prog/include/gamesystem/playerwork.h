@@ -11,6 +11,8 @@
 extern "C" {
 #endif
 
+#include "gamedata_def.h"
+
 #include "savedata/mystatus.h"
 #include "savedata/mystatus_local.h"
 #include "field/location.h"
@@ -19,6 +21,12 @@ extern "C" {
 //  define
 //======================================================================
 typedef u16 ZONEID; ///<ZONEID
+
+enum {
+	PLAYER_MAX = 5,
+	
+	PLAYER_ID_MINE = PLAYER_MAX - 1,    ///<自分自身のプレイヤーID
+};
 
 //--------------------------------------------------------------
 /// PLAYER_MOVE_FORM
@@ -55,6 +63,24 @@ typedef struct {
 //======================================================================
 //  extern
 //======================================================================
+//------------------------------------------------------------------
+/**
+ * @brief	プレイヤーデータを取得する
+ * @param	gamedata	GAMEDATAへのポインタ
+ * @param	player_id	プレイヤー指定ID
+ * @return	PLAYER_WORK	プレイヤーデータへのポインタ
+ */
+//------------------------------------------------------------------
+extern PLAYER_WORK * GAMEDATA_GetPlayerWork(GAMEDATA * gamedata, u32 player_id);
+//------------------------------------------------------------------
+/**
+ * @brief	自分のプレイヤーデータを取得する
+ * @param	gamedata	GAMEDATAへのポインタ
+ * @return	PLAYER_WORK	自分のプレイヤーデータへのポインタ
+ */
+//------------------------------------------------------------------
+extern PLAYER_WORK * GAMEDATA_GetMyPlayerWork(GAMEDATA * gamedata);
+
 //--------------------------------------------------------------
 /**
  * @brief	プレイヤーワークの初期化

@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
+#include "gamesystem/gamedata_def.h"
 #include "../../../resource/sound/bgm_info/iss_type.h"
 
 
@@ -21,6 +22,19 @@
 //====================================================================================
 typedef struct _BGM_INFO_SYS_WORK BGM_INFO_SYS;
 
+
+//--------------------------------------------------------------
+/**
+ * @brief BGM_INFO_SYSへのポインタ取得
+ * @param gamedata    GAMEDATAへのポインタ
+ * @return BGM_INFO_SYS BGM情報取得システムへのポインタ
+ *
+ * @note
+ * 実態はsrc/gamesystem/game_data.cにあるが、情報隠蔽を
+ * 考慮してBGM_INFO_SYSを扱うヘッダに配置している
+ */
+//--------------------------------------------------------------
+extern BGM_INFO_SYS * GAMEDATA_GetBGMInfoSys(GAMEDATA * gamedata);
 
 //====================================================================================
 /**
