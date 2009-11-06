@@ -484,18 +484,6 @@ static const GFL_G3D_UTIL_SETUP Setup = {
 	NELEMS(g3Dutil_objTbl),		//オブジェクト数
 };
 
-static const MMDL_ACMD_LIST anime_up_table[] = {
-  AC_WALK_U_8F, 2,
-  ACMD_END, 0
-};
-
-static const MMDL_ACMD_LIST anime_down_table[] = {
-  AC_WALK_D_8F, 2,
-  ACMD_END, 0
-};
-
-
-
 static u8 GetPlatformIdx(const int inX, const int inZ);
 static u8 GetRaleIdxByCapIdx(GYM_ELEC_TMP *tmp, const u8 inCapIdx);
 static u8 GetRaleIdxByPlatformIdx(GYM_ELEC_TMP *tmp, const u8 inPlatformIdx);
@@ -592,8 +580,6 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
   //汎用ワーク確保
   GMK_TMP_WK_AllocWork
       (fieldWork, GYM_ELEC_TMP_ASSIGN_ID, FIELDMAP_GetHeapID(fieldWork), sizeof(GYM_ELEC_TMP));
-  //ギミックワークにアクセス
-  ;  
   //必要なリソースの用意
   FLD_EXP_OBJ_AddUnit(ptr, &Setup, GYM_ELEC_UNIT_IDX );  
   //座標セット　カプセル
@@ -1768,16 +1754,13 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
       tmp->StopPlatformIdx[cap_idx] = PLATFORM_NO_STOP;
 
       //スクリプトチェンジ
-/**
-      SCRIPT_CallScript( event, SCRID_PRG_C04GYM0101_SCR02,
-          NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
-*/
       SCRIPT_ChangeScript( event, SCRID_PRG_C04GYM0101_SCR02,
           NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
       (*seq)++;
     }
     break;
   case 5:
+    GF_ASSERT(0);   //イベントチェンジしているので、ここには来ない
     //※トレーナーバトル負けを考慮し、イベントコールからイベントチェンジに変更したので、ここには来なくなりました。
 #if 0
     //乗降終了
