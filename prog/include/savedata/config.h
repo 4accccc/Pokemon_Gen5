@@ -184,7 +184,6 @@ static inline void CONFIG_SetKeyConfig(INPUTMODE mode)
 //  ÇÕÇ»ÇµÇÃÇÕÇ‚Ç≥
 extern MSGSPEED CONFIG_GetMsgSpeed(const CONFIG * cfg);
 extern void CONFIG_SetMsgSpeed(CONFIG * cfg, MSGSPEED speed);
-extern u8 CONFIG_GetMsgPrintSpeed( const CONFIG * cfg );
 
 //  ÇπÇÒÇ∆Ç§Å@ÉAÉjÉÅ
 extern WAZAEFF_MODE CONFIG_GetWazaEffectMode(const CONFIG * cfg);
