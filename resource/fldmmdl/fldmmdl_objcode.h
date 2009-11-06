@@ -62,7 +62,7 @@
 #define OL (0x39) //57 ＯＬ
 #define CLOWN (0x3a) //58 ピエロ
 #define DANCER (0x3b) //59 ダンサー
-#define JUGGLING (0x3c) //60 ジャグラー
+#define JUGGLING (0x3c) //60 ピエロ
 #define MUSICIAN (0x3d) //61 ミュージシャン
 #define BASEBALLM (0x3e) //62 野球選手
 #define SOCCERM (0x3f) //63 サッカー選手
