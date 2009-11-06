@@ -43,9 +43,10 @@ enum {
 	VCMD_SCROLL_WORDWIN,		///< 単語ウィンドウスクロール
 
 	VCMD_DISP_MESSAGE_DEFAULT,	///< 初期メッセージ表示
-	VCMD_DISP_MESSAGE_OK,		///< これでいいですか？メッセージ＆メニュー
-	VCMD_DISP_MESSAGE_CANCEL,	///< やめますか？メッセージ＆メニュー
+//	VCMD_DISP_MESSAGE_OK,		///< これでいいですか？メッセージ＆メニュー
+//	VCMD_DISP_MESSAGE_CANCEL,	///< やめますか？メッセージ＆メニュー
 	VCMD_DISP_MESSAGE_WARN,		///< なにかことばをいれてください！メッセージ
+  VCMD_TASKMENU_DECIDE,     ///< タスクメニュー決定演出
 	VCMD_MOVE_MENU_CURSOR,		///< メニューカーソル移動
 	VCMD_ERASE_MENU,			///< メニュー表示消去
 

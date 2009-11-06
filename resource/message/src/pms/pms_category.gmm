@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-10-29T18:40:31"/>
+	<create user="genya_hosaka" host="W00159" date="2009-10-26T20:44:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="118" top="176" right="823" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -339,8 +339,8 @@
 	</row>
 
 	<row id="pms_category_02">
-		<language name="JPN" font=" 1:small" width="72">ポケモン２</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモン２</language>
+		<language name="JPN" font=" 1:small" width="72">ステータス</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ステータス</language>
 	</row>
 
 	<row id="pms_category_03">
@@ -349,18 +349,18 @@
 	</row>
 
 	<row id="pms_category_04">
-		<language name="JPN" font=" 1:small" width="72">わざ２</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">わざ２</language>
+		<language name="JPN" font=" 1:small" width="72">トレーナー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">トレーナー</language>
 	</row>
 
 	<row id="pms_category_05">
-		<language name="JPN" font=" 1:small" width="72">ステータス</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">ステータス</language>
+		<language name="JPN" font=" 1:small" width="72">ユニオン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ユニオン</language>
 	</row>
 
 	<row id="pms_category_06">
-		<language name="JPN" font=" 1:small" width="72">トレーナー</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">トレーナー</language>
+		<language name="JPN" font=" 1:small" width="72">あいさつ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">あいさつ</language>
 	</row>
 
 	<row id="pms_category_07">
@@ -369,13 +369,13 @@
 	</row>
 
 	<row id="pms_category_08">
-		<language name="JPN" font=" 1:small" width="72">あいさつ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">あいさつ</language>
+		<language name="JPN" font=" 1:small" width="72">せいかつ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">せいかつ</language>
 	</row>
 
 	<row id="pms_category_09">
-		<language name="JPN" font=" 1:small" width="72">せいかつ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">せいかつ</language>
+		<language name="JPN" font=" 1:small" width="72">きもち</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">きもち</language>
 	</row>
 
 	<row id="pms_category_10">
@@ -383,12 +383,12 @@
 		<language name="JPN_KANJI" font=" 1:small" width="72">ピクチャ</language>
 	</row>
 
-	<row id="pms_category_11">
-		<language name="JPN" font=" 1:small" width="72">なんかい</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">なんかい</language>
+	<row id="pms_category_11" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" font=" 1:small" width="72">なんかいことば</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">なんかいことば</language>
 	</row>
 
-	<row id="pms_category_12">
+	<row id="pms_category_12" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="72">ユニオン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ユニオン</language>
 	</row>

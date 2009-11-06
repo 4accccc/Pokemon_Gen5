@@ -4,6 +4,8 @@
 	* @bfief	簡易会話入力画面
 	* @author	taya
 	* @date	06.01.24
+  *
+  * @TODO メッセージ系の描画コマンドは消していい
 	*/
 //============================================================================================
 #include <gflib.h>
@@ -120,10 +122,12 @@ static void Cmd_MoveButtonCursor( GFL_TCB *tcb, void* wk_adrs );
 static void Cmd_MoveCategoryCursor( GFL_TCB *tcb, void* wk_adrs );
 static void Cmd_MoveWordWinCursor( GFL_TCB *tcb, void* wk_adrs  );
 static void Cmd_ScrollWordWin( GFL_TCB *tcb, void* wk_adrs  );
+
 static void Cmd_DispMessageDefault( GFL_TCB *tcb, void* wk_adrs );
-static void Cmd_DispMessageOK( GFL_TCB *tcb, void* wk_adrs );
-static void Cmd_DispMessageCancel( GFL_TCB *tcb, void* wk_adrs );
+//static void Cmd_DispMessageOK( GFL_TCB *tcb, void* wk_adrs );
+//static void Cmd_DispMessageCancel( GFL_TCB *tcb, void* wk_adrs );
 static void Cmd_DispMessageWarn( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_TaskMenuSetDecide( GFL_TCB *tcb, void* wk_adrs );
 static void Cmd_MoveMenuCursor( GFL_TCB *tcb, void* wk_adrs );
 static void Cmd_EraseMenu( GFL_TCB *tcb, void* wk_adrs );
 static void Cmd_ButtonUpHold(GFL_TCB *tcb, void* wk_adrs);
@@ -329,9 +333,10 @@ void PMSIView_SetCommand( PMS_INPUT_VIEW* vwk, int cmd )
 		Cmd_ScrollWordWin,
 
 		Cmd_DispMessageDefault,
-		Cmd_DispMessageOK,
-		Cmd_DispMessageCancel,
+//		Cmd_DispMessageOK,
+//		Cmd_DispMessageCancel,
 		Cmd_DispMessageWarn,
+    Cmd_TaskMenuSetDecide,
 		Cmd_MoveMenuCursor,
 		Cmd_EraseMenu,
 
@@ -1364,6 +1369,8 @@ static void Cmd_DispMessageDefault( GFL_TCB *tcb, void* wk_adrs )
 
 	DeleteCommand( wk );
 }
+
+#if 0
 //----------------------------------------------------------------------------------------------
 /**
 	* 描画コマンド：これでいいですか？メッセージ表示
@@ -1389,8 +1396,7 @@ static void Cmd_DispMessageOK( GFL_TCB *tcb, void* wk_adrs )
 	}else{
 		PMSIV_EDIT_StopCursor( vwk->edit_wk );
 	}
-  PMSIV_MENU_TaskMenuSetDecide( vwk->menu_wk, PMSI_GetButtonCursorPos(wk->mwk), TRUE );
-//	PMSIV_EDIT_DispYesNoWin( vwk->edit_wk, PMSI_GetMenuCursorPos(wk->mwk) );
+	PMSIV_EDIT_DispYesNoWin( vwk->edit_wk, PMSI_GetMenuCursorPos(wk->mwk) );
 
 	DeleteCommand( wk );
 }
@@ -1419,11 +1425,11 @@ static void Cmd_DispMessageCancel( GFL_TCB *tcb, void* wk_adrs )
 	}else{
 		PMSIV_EDIT_StopCursor( vwk->edit_wk );
 	}
-  PMSIV_MENU_TaskMenuSetDecide( vwk->menu_wk, PMSI_GetButtonCursorPos(wk->mwk), TRUE );
-//	PMSIV_EDIT_DispYesNoWin( vwk->edit_wk, PMSI_GetMenuCursorPos(wk->mwk) );
+	PMSIV_EDIT_DispYesNoWin( vwk->edit_wk, PMSI_GetMenuCursorPos(wk->mwk) );
 
 	DeleteCommand( wk );
 }
+#endif
 //----------------------------------------------------------------------------------------------
 /**
 	* 描画コマンド：何かことばを入れてください！メッセージ表示
@@ -1441,6 +1447,27 @@ static void Cmd_DispMessageWarn( GFL_TCB *tcb, void* wk_adrs )
 	PMSIV_EDIT_SetSystemMessage( vwk->edit_wk, PMSIV_MSG_WARN_INPUT );
 	DeleteCommand( wk );
 }
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  タスクメニュー決定演出
+ *
+ *	@param	GFL_TCB tcb
+ *	@param	wk_adrs 
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+static void Cmd_TaskMenuSetDecide( GFL_TCB *tcb, void* wk_adrs )
+{
+	COMMAND_WORK* wk = wk_adrs;
+	PMS_INPUT_VIEW* vwk = wk->vwk;
+
+  PMSIV_MENU_TaskMenuSetDecide( vwk->menu_wk, PMSI_GetButtonCursorPos(wk->mwk), TRUE );
+
+  DeleteCommand( wk );
+}
+
+
 //----------------------------------------------------------------------------------------------
 /**
 	* 描画コマンド：はい／いいえカーソル移動
@@ -1597,9 +1624,15 @@ void PMSIView_GetSentenceWordArea( PMS_INPUT_VIEW* wk ,GFL_UI_TP_HITTBL* tbl,u8 
 	PMSIV_EDIT_GetSentenceWordPos( wk->edit_wk ,tbl,idx);
 }
 
+//-----------------------------------------------------------------------------
 /**
-	*	@brief	YesNoボタン待ち
-	*/
+ *	@brief  タスクメニュー 決定アニメ終了待ち
+ *
+ *	@param	wk  ワーク
+ *
+ *	@retval -1:アニメ中 1:終了
+ */
+//-----------------------------------------------------------------------------
 int PMSIView_WaitYesNo(PMS_INPUT_VIEW* wk)
 {
   if( PMSIV_MENU_TaskMenuIsFinish( wk->menu_wk, PMSI_GetButtonCursorPos( wk->main_wk ) ) )
