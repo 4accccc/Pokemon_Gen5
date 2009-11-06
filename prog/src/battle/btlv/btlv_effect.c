@@ -57,6 +57,7 @@ struct _BTLV_EFFECT_WORK
   BTLV_GAUGE_WORK   *bgw;
   BTLV_BALL_GAUGE_WORK *bbgw[ BTLV_BALL_GAUGE_TYPE_MAX ];
   BTLV_TIMER_WORK   *btw;
+  BTLV_BG_WORK      *bbw;
   GFL_TCB           *v_tcb;
   int               execute_flag;
   int               tcb_execute_flag;
@@ -126,6 +127,7 @@ void  BTLV_EFFECT_Init( BtlRule rule, int index, HEAPID heapID )
   bew->bclw = BTLV_CLACT_Init( bew->tcb_sys, heapID );
   bew->bgw  = BTLV_GAUGE_Init( heapID );
   bew->btw  = BTLV_TIMER_Init( heapID );
+  bew->bbw  = BTLV_BG_Init( bew->tcb_sys, heapID );
   //BTLV_TIMER_Create( bew->btw, 30, 1 );
 
   BTLV_MCSS_SetOrthoMode( bew->bmw );
@@ -170,6 +172,7 @@ void  BTLV_EFFECT_Exit( void )
   BTLV_CLACT_Exit( bew->bclw );
   BTLV_GAUGE_Exit( bew->bgw );
   BTLV_TIMER_Exit( bew->btw );
+  BTLV_BG_Exit( bew->bbw );
   GFL_PTC_Exit();
   BTLV_EFFVM_Exit( bew->vm_core );
   GFL_TCB_DeleteTask( bew->v_tcb );
@@ -767,6 +770,18 @@ PALETTE_FADE_PTR  BTLV_EFFECT_GetPfd( void )
 BTLV_CLACT_WORK *BTLV_EFFECT_GetCLWK( void )
 {
   return bew->bclw;
+}
+
+//============================================================================================
+/**
+ * @brief  エフェクトで使用されているBTLV_BG_WORK管理構造体のポインタを取得
+ *
+ * @retval bbw BTLV_BG_WORK管理構造体
+ */
+//============================================================================================
+BTLV_BG_WORK *BTLV_EFFECT_GetBGWork( void )
+{
+  return bew->bbw;
 }
 
 //============================================================================================

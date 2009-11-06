@@ -17,6 +17,7 @@
 #include "btlv_gauge.h"
 #include "btlv_b_gauge.h"
 #include "btlv_timer.h"
+#include "btlv_bg.h"
 
 #include "btlv_efftool.h"
 #include "btlv_effvm.h"
@@ -116,6 +117,7 @@ extern  VMHANDLE*         BTLV_EFFECT_GetVMHandle( void );
 extern  GFL_TCBSYS*       BTLV_EFFECT_GetTCBSYS( void );
 extern  PALETTE_FADE_PTR  BTLV_EFFECT_GetPfd( void );
 extern  BTLV_CLACT_WORK*  BTLV_EFFECT_GetCLWK( void );
+extern  BTLV_BG_WORK*     BTLV_EFFECT_GetBGWork( void );
 
 #ifdef PM_DEBUG
 extern  void        BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position );

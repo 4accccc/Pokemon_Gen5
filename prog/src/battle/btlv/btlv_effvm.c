@@ -1624,16 +1624,18 @@ static VMCMD_RESULT VMEC_BG_LOAD( VMHANDLE *vmh, void *context_work )
 static VMCMD_RESULT VMEC_BG_SCROLL( VMHANDLE *vmh, void *context_work )
 { 
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  int type        = ( int )VMGetU32( vmh );
-  int move_pos_x  = ( int )VMGetU32( vmh );
-  int move_pos_y  = ( int )VMGetU32( vmh );
-  int frame       = ( int )VMGetU32( vmh );
-  int wait        = ( int )VMGetU32( vmh );
-  int count       = ( int )VMGetU32( vmh );
+  int type  = ( int )VMGetU32( vmh );
+  int scr_x = ( int )VMGetU32( vmh );
+  int scr_y = ( int )VMGetU32( vmh );
+  int frame = ( int )VMGetU32( vmh );
+  int wait  = ( int )VMGetU32( vmh );
+  int count = ( int )VMGetU32( vmh );
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_BG_SCROLL\n");
 #endif DEBUG_OS_PRINT
+
+  BTLV_BG_MovePosition( BTLV_EFFECT_GetBGWork(), type, scr_x, scr_y, frame, wait, count );
 
   return bevw->control_mode;
 }
@@ -2439,6 +2441,16 @@ static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work )
       {
         return FALSE;
       }
+    }
+  }
+
+  //BGˆÚ“®I—¹H
+  if( ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_ALL ) ||
+      ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_BG ) )
+  {
+    if( BTLV_BG_CheckTCBExecute( BTLV_EFFECT_GetBGWork() ) == TRUE )
+    {
+      return FALSE;
     }
   }
 
