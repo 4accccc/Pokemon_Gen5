@@ -127,7 +127,7 @@ static void Cmd_DispMessageDefault( GFL_TCB *tcb, void* wk_adrs );
 //static void Cmd_DispMessageOK( GFL_TCB *tcb, void* wk_adrs );
 //static void Cmd_DispMessageCancel( GFL_TCB *tcb, void* wk_adrs );
 static void Cmd_DispMessageWarn( GFL_TCB *tcb, void* wk_adrs );
-static void Cmd_TaskMenuSetDecide( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_TaskMenuDecide( GFL_TCB *tcb, void* wk_adrs );
 static void Cmd_MoveMenuCursor( GFL_TCB *tcb, void* wk_adrs );
 static void Cmd_EraseMenu( GFL_TCB *tcb, void* wk_adrs );
 static void Cmd_ButtonUpHold(GFL_TCB *tcb, void* wk_adrs);
@@ -336,7 +336,7 @@ void PMSIView_SetCommand( PMS_INPUT_VIEW* vwk, int cmd )
 //		Cmd_DispMessageOK,
 //		Cmd_DispMessageCancel,
 		Cmd_DispMessageWarn,
-    Cmd_TaskMenuSetDecide,
+    Cmd_TaskMenuDecide,
 		Cmd_MoveMenuCursor,
 		Cmd_EraseMenu,
 
@@ -1457,7 +1457,7 @@ static void Cmd_DispMessageWarn( GFL_TCB *tcb, void* wk_adrs )
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-static void Cmd_TaskMenuSetDecide( GFL_TCB *tcb, void* wk_adrs )
+static void Cmd_TaskMenuDecide( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -1641,6 +1641,7 @@ int PMSIView_WaitYesNo(PMS_INPUT_VIEW* wk)
   }
 
   return -1; // I—¹‚µ‚Ä‚¢‚È‚¢
+
 //	return PMSIV_EDIT_WaitYesNoBtn(wk->edit_wk);
 }
 

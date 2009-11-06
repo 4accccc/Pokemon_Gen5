@@ -181,11 +181,11 @@ PMSIV_MENU* PMSIV_MENU_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, c
 //-----------------------------------------------------------------------------
 void PMSIV_MENU_Delete( PMSIV_MENU* wk )
 {
+  // メニュークリア
+  PMSIV_MENU_Clear( wk );
+
   // タッチバー開放
   TOUCHBAR_Exit( wk->touchbar );
-
-  // タスクメニュー開放
-  PMSIV_MENU_Clear( wk );
 
   // タスクメニュー リソース開放
   APP_TASKMENU_RES_Delete( wk->menu_res );
@@ -258,6 +258,9 @@ void PMSIV_MENU_Clear( PMSIV_MENU* wk )
   }
  
   GFL_BG_LoadScreenReq( FRM_MAIN_TASKMENU );
+
+  // 全部消す
+  TOUCHBAR_SetVisibleAll( wk->touchbar, FALSE );
 }
 
 //-----------------------------------------------------------------------------
@@ -323,6 +326,9 @@ void PMSIV_MENU_SetupCategory( PMSIV_MENU* wk )
   PMSIV_MENU_Clear( wk );
   
   GFL_CLACT_WK_SetDrawEnable( wk->clwk_icon[ MENU_CLWKICON_CATEGORY_CHANGE ], TRUE );
+  
+  // 表示
+  TOUCHBAR_SetVisibleAll( wk->touchbar, TRUE );
 	  
   if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_GROUP )
 	{
@@ -385,6 +391,7 @@ void PMSIV_MENU_TaskMenuSetActive( PMSIV_MENU* wk, u8 pos, BOOL is_on )
   GF_ASSERT( pos < TASKMENU_WIN_MAX );
   GF_ASSERT( wk->menu_win[pos] != NULL );
 
+  // 一端全てを非アクティブに
   for( i=0; i<TASKMENU_WIN_MAX; i++ )
   {
     if( wk->menu_win[i] != NULL )
@@ -409,8 +416,19 @@ void PMSIV_MENU_TaskMenuSetActive( PMSIV_MENU* wk, u8 pos, BOOL is_on )
 //-----------------------------------------------------------------------------
 void PMSIV_MENU_TaskMenuSetDecide( PMSIV_MENU* wk, u8 pos, BOOL is_on )
 { 
+  int i;
+
   GF_ASSERT( pos < TASKMENU_WIN_MAX );
   GF_ASSERT( wk->menu_win[pos] != NULL );
+  
+  // 一端全てを非アクティブに
+  for( i=0; i<TASKMENU_WIN_MAX; i++ )
+  {
+    if( wk->menu_win[i] != NULL )
+    {
+      APP_TASKMENU_WIN_SetActive( wk->menu_win[ i ], FALSE );
+    }
+  }
 
   APP_TASKMENU_WIN_SetDecide( wk->menu_win[ pos ], is_on );
 }
@@ -457,8 +475,8 @@ static void _clwk_create( PMSIV_MENU* wk )
 
 	p_handle = GFL_ARC_OpenDataHandle( ARCID_PMSI_GRAPHIC, HEAPID_PMS_INPUT_VIEW );
 
-  wk->resCell.pltIdx = GFL_CLGRP_PLTT_Register( p_handle, NARC_pmsi_pms2_obj_main_NCLR, CLSYS_DRAW_MAIN,
-      0x20*PALNUM_OBJ_M_MENU, HEAPID_PMS_INPUT_VIEW );
+  wk->resCell.pltIdx = GFL_CLGRP_PLTT_RegisterEx( p_handle, NARC_pmsi_pms2_obj_main_NCLR, CLSYS_DRAW_MAIN,
+      0x20*PALNUM_OBJ_M_MENU, 0, PALLINE_NUM_OBJ_M_MENU, HEAPID_PMS_INPUT_VIEW );
 
   wk->resCell.ncgIdx = GFL_CLGRP_CGR_Register( p_handle, NARC_pmsi_pms2_obj_main_NCGR, FALSE, CLSYS_DRAW_MAIN, HEAPID_PMS_INPUT_VIEW );
   wk->resCell.anmIdx = GFL_CLGRP_CELLANIM_Register( p_handle, NARC_pmsi_pms2_obj_main_NCER, NARC_pmsi_pms2_obj_main_NANR, HEAPID_PMS_INPUT_VIEW );
@@ -505,7 +523,7 @@ static void _clwk_delete( PMSIV_MENU* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  アイコンのアニメシーケンスを取得
+ *	@brief  アイコンのアニメシーケンスを設定
  *
  *	@param	iconIdx   アニメーションIDX
  *	@param	is_on     TRUE:ONアニメ, FALSE:OFFアニメ

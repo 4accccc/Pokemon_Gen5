@@ -349,7 +349,8 @@ GFL_PROC_RESULT PMSInput_Init( GFL_PROC * proc, int * seq , void *pwk, void *myw
 	  GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
 
 #if PMS_USE_SND
-		Snd_DataSetByScene( SND_SCENE_SUB_PMS, 0, 0 );	// サウンドデータロード(PMS)(BGM引継ぎ)
+    ///@TODO データはどうなってる？ 
+//		Snd_DataSetByScene( SND_SCENE_SUB_PMS, 0, 0 );	// サウンドデータロード(PMS)(BGM引継ぎ)
 #endif
 		GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_PMS_INPUT_SYSTEM, HEAPSIZE_SYS );
 		GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_PMS_INPUT_VIEW, HEAPSIZE_VIEW );
@@ -653,14 +654,15 @@ static void ChangeMainProc( PMS_INPUT_WORK* wk, MainProc main_proc )
 		wk->cb_ktchg_func = NULL;
 	}
 }
+
 static void ChangeMainProc_ToCommandButtonArea( PMS_INPUT_WORK* wk )
 {
 	ChangeMainProc( wk, MainProc_CommandButton );
 }
 
 /*
-	*	@brief	キー/タッチの切替
-	*/
+ *	@brief	キー/タッチの切替
+ */
 static int KeyStatusChange(PMS_INPUT_WORK* wk,int* seq)
 {
 	if(wk->key_mode == GFL_APP_KTST_TOUCH){
@@ -757,7 +759,7 @@ static GFL_PROC_RESULT mp_input_single_key(PMS_INPUT_WORK* wk,int *seq )
 		if( wk->key_trg & (PAD_KEY_DOWN | PAD_BUTTON_START))
 		{
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_MOVE_CURSOR);
+			GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 
 			wk->cmd_button_pos = BUTTON_POS_DECIDE;
@@ -769,7 +771,7 @@ static GFL_PROC_RESULT mp_input_single_key(PMS_INPUT_WORK* wk,int *seq )
 		if( wk->key_trg & PAD_BUTTON_B )
 		{
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_CANCEL);
+			GFL_SOUND_PlaySE(SOUND_CANCEL);
 #endif //PMS_USE_SND
 
 			SetSubProc( wk, SubProc_CommandCancel );
@@ -778,7 +780,7 @@ static GFL_PROC_RESULT mp_input_single_key(PMS_INPUT_WORK* wk,int *seq )
 		if( wk->key_trg & PAD_BUTTON_A )
 		{
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_DECIDE);
+			GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
 
 			wk->category_pos = 0;
@@ -795,7 +797,7 @@ static GFL_PROC_RESULT mp_input_single_key(PMS_INPUT_WORK* wk,int *seq )
 		if( wk->key_trg & PAD_KEY_UP )
 		{
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_MOVE_CURSOR);
+			GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 
 			if(wk->cmd_button_pos){
@@ -810,7 +812,7 @@ static GFL_PROC_RESULT mp_input_single_key(PMS_INPUT_WORK* wk,int *seq )
 			break;
 		}else if( wk->key_trg & (PAD_KEY_DOWN) ){
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_MOVE_CURSOR);
+			GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 			
       if(wk->cmd_button_pos){
@@ -827,7 +829,7 @@ static GFL_PROC_RESULT mp_input_single_key(PMS_INPUT_WORK* wk,int *seq )
 
 		if( wk->key_trg & PAD_BUTTON_START ){
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_MOVE_CURSOR);
+			GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 			wk->cmd_button_pos = BUTTON_POS_DECIDE;
 			PMSIView_SetCommand( wk->vwk, VCMD_MOVE_BUTTON_CURSOR );
@@ -835,7 +837,7 @@ static GFL_PROC_RESULT mp_input_single_key(PMS_INPUT_WORK* wk,int *seq )
 		}
 		if( wk->key_trg & PAD_BUTTON_A ){
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_DECIDE);
+			GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
 
 			if( wk->cmd_button_pos == BUTTON_POS_DECIDE ){
@@ -849,7 +851,7 @@ static GFL_PROC_RESULT mp_input_single_key(PMS_INPUT_WORK* wk,int *seq )
 
 			if( wk->key_trg & PAD_BUTTON_B ){
 #if PMS_USE_SND
-				Snd_SePlay(SOUND_DECIDE);
+				GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
 				(*seq) = SEQ_EDW_TO_SUBPROC_CANCEL;
 				break;
@@ -977,7 +979,7 @@ static GFL_PROC_RESULT mp_input_touch(PMS_INPUT_WORK* wk,int *seq )
 		case 0:	//決定
 		case 1:	//やめる
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_DECIDE);
+			GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
 			*seq = SEQ_EDW_TO_SUBPROC_OK+ret;
 			break;
@@ -1049,7 +1051,7 @@ static GFL_PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 		if( wk->key_trg & (PAD_KEY_DOWN|PAD_BUTTON_START) )
 		{
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_MOVE_CURSOR);
+			GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 
 			wk->cmd_button_pos = BUTTON_POS_DECIDE;
@@ -1062,7 +1064,7 @@ static GFL_PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 			if( wk->edit_pos != 0 )
 			{
 #if PMS_USE_SND
-				Snd_SePlay(SOUND_MOVE_CURSOR);
+				GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 				wk->edit_pos = 0;
 				PMSIView_SetCommand( wk->vwk, VCMD_MOVE_EDITAREA_CURSOR );
@@ -1074,7 +1076,7 @@ static GFL_PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 			if( wk->edit_pos == 0 )
 			{
 #if PMS_USE_SND
-				Snd_SePlay(SOUND_MOVE_CURSOR);
+				GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif /PMS_USE_SND
 				wk->edit_pos = 1;
 				PMSIView_SetCommand( wk->vwk, VCMD_MOVE_EDITAREA_CURSOR );
@@ -1084,7 +1086,7 @@ static GFL_PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 		if( wk->key_trg & PAD_BUTTON_B )
 		{
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_CANCEL);
+			GFL_SOUND_PlaySE(SOUND_CANCEL);
 #endif //PMS_USE_SND
 
 			SetSubProc( wk, SubProc_CommandCancel );
@@ -1093,7 +1095,7 @@ static GFL_PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 		if( wk->key_trg & PAD_BUTTON_A )
 		{
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_DECIDE);
+			GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
 
 			wk->category_pos = 0;
@@ -1112,7 +1114,7 @@ static GFL_PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 		if( wk->key_trg & PAD_KEY_UP )
 		{
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_MOVE_CURSOR);
+			GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 			
       if(wk->cmd_button_pos){
@@ -1127,7 +1129,7 @@ static GFL_PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 			break;
 		}else if( wk->key_trg & (PAD_KEY_DOWN) ){
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_MOVE_CURSOR);
+			GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 			
       if(wk->cmd_button_pos){
@@ -1144,7 +1146,7 @@ static GFL_PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 
 		if( wk->key_trg & PAD_BUTTON_START ){
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_MOVE_CURSOR);
+			GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 			wk->cmd_button_pos = BUTTON_POS_DECIDE;
 			PMSIView_SetCommand( wk->vwk, VCMD_MOVE_BUTTON_CURSOR );
@@ -1153,7 +1155,7 @@ static GFL_PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 
 		if( wk->key_trg & PAD_BUTTON_A ){
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_DECIDE);
+			GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
 
 			if( wk->cmd_button_pos == BUTTON_POS_DECIDE ){
@@ -1167,7 +1169,7 @@ static GFL_PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 
 			if( wk->key_trg & PAD_BUTTON_B ){
 #if PMS_USE_SND
-				Snd_SePlay(SOUND_DECIDE);
+				GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
 				(*seq) = SEQ_EDW_TO_SUBPROC_CANCEL;
 				break;
@@ -1246,7 +1248,7 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 			if( (wk->sentence_edit_pos_max) && (wk->edit_pos != 0) )
 			{
 #if PMS_USE_SND
-				Snd_SePlay(SOUND_MOVE_CURSOR);
+				GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 				wk->edit_pos--;
 				PMSIView_SetCommand( wk->vwk, VCMD_MOVE_EDITAREA_CURSOR );
@@ -1256,7 +1258,7 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 		if( wk->key_trg & PAD_KEY_DOWN )
 		{
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_MOVE_CURSOR);
+			GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 
 			if( (wk->sentence_edit_pos_max) && (wk->edit_pos < (wk->sentence_edit_pos_max-1)) )
@@ -1276,7 +1278,7 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 		||	( (wk->key_trg & PAD_BUTTON_A) && (wk->sentence_edit_pos_max==0) )
 		){
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_MOVE_CURSOR);
+			GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 
 			wk->cmd_button_pos = BUTTON_POS_DECIDE;
@@ -1287,7 +1289,7 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 		if( wk->key_repeat & PAD_KEY_LEFT )
 		{
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_CHANGE_SENTENCE);
+			GFL_SOUND_PlaySE(SOUND_CHANGE_SENTENCE);
 #endif //PMS_USE_SND
 
 			wk->edit_pos = 0;
@@ -1299,7 +1301,7 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 		if( wk->key_repeat & PAD_KEY_RIGHT )
 		{
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_CHANGE_SENTENCE);
+			GFL_SOUND_PlaySE(SOUND_CHANGE_SENTENCE);
 #endif //PMS_USE_SND
 
 			wk->edit_pos = 0;
@@ -1312,7 +1314,7 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 		if( wk->key_trg & PAD_BUTTON_B )
 		{
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_CANCEL);
+			GFL_SOUND_PlaySE(SOUND_CANCEL);
 #endif //PMS_USE_SND
 			SetSubProc( wk, SubProc_CommandCancel );
 			break;
@@ -1320,7 +1322,7 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 		if( wk->key_trg & PAD_BUTTON_A )
 		{
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_DECIDE);
+			GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
 
 			wk->category_pos = 0;
@@ -1344,7 +1346,7 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 		if( wk->key_trg & PAD_KEY_UP )
 		{
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_MOVE_CURSOR);
+			GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 
       if(wk->cmd_button_pos){
@@ -1359,7 +1361,7 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 			break;
 		}else if( wk->key_trg & (PAD_KEY_DOWN) ){
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_MOVE_CURSOR);
+			GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 			
       if(wk->cmd_button_pos){
@@ -1376,7 +1378,7 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 
 		if( wk->key_trg & PAD_BUTTON_START ){
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_MOVE_CURSOR);
+			GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 			wk->cmd_button_pos = BUTTON_POS_DECIDE;
 			PMSIView_SetCommand( wk->vwk, VCMD_MOVE_BUTTON_CURSOR );
@@ -1384,7 +1386,7 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 		}
 		if( wk->key_trg & PAD_BUTTON_A ){
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_DECIDE);
+			GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
 
 			if( wk->cmd_button_pos == BUTTON_POS_DECIDE ){
@@ -1398,7 +1400,7 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 
 			if( wk->key_trg & PAD_BUTTON_B ){
 #if PMS_USE_SND
-				Snd_SePlay(SOUND_DECIDE);
+				GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
 				(*seq) = SEQ_EDS_TO_SUBPROC_CANCEL;
 				break;
@@ -1471,13 +1473,13 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 		case 0:	//決定
 		case 1:	//やめる
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_DECIDE);
+			GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
 			*seq = SEQ_EDS_TO_SUBPROC_OK+ret;
 			break;
 		case 2:	//スクロールボタン
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_CHANGE_SENTENCE);
+			GFL_SOUND_PlaySE(SOUND_CHANGE_SENTENCE);
 #endif //PMS_USE_SND
 
 			wk->edit_pos = 0;
@@ -1487,7 +1489,7 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 			break;
 		case 3:
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_CHANGE_SENTENCE);
+			GFL_SOUND_PlaySE(SOUND_CHANGE_SENTENCE);
 #endif //PMS_USE_SND
 
 			wk->edit_pos = 0;
@@ -1509,7 +1511,7 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 		{
 			if( (wk->sentence_edit_pos_max) && (wk->edit_pos != 0) )
 			{
-				Snd_SePlay(SOUND_MOVE_CURSOR);
+				GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 				wk->edit_pos--;
 				PMSIView_SetCommand( wk->vwk, VCMD_MOVE_EDITAREA_CURSOR );
 			}
@@ -1517,7 +1519,7 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 		}
 		if( wk->key_trg & PAD_KEY_DOWN )
 		{
-			Snd_SePlay(SOUND_MOVE_CURSOR);
+			GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 
 			if( (wk->sentence_edit_pos_max) && (wk->edit_pos < (wk->sentence_edit_pos_max-1)) )
 			{
@@ -1535,7 +1537,7 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 		if( (wk->key_trg & PAD_BUTTON_START)
 		||	( (wk->key_trg & PAD_BUTTON_A) && (wk->sentence_edit_pos_max==0) )
 		){
-			Snd_SePlay(SOUND_MOVE_CURSOR);
+			GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 
 			wk->cmd_button_pos = BUTTON_POS_DECIDE;
 			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_BUTTON );
@@ -1544,7 +1546,7 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 		}
 		if( wk->key_repeat & PAD_KEY_LEFT )
 		{
-			Snd_SePlay(SOUND_CHANGE_SENTENCE);
+			GFL_SOUND_PlaySE(SOUND_CHANGE_SENTENCE);
 
 			wk->edit_pos = 0;
 			sentence_decrement( &wk->sentence_wk, &wk->edit_pms );
@@ -1554,7 +1556,7 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 		}
 		if( wk->key_repeat & PAD_KEY_RIGHT )
 		{
-			Snd_SePlay(SOUND_CHANGE_SENTENCE);
+			GFL_SOUND_PlaySE(SOUND_CHANGE_SENTENCE);
 
 			wk->edit_pos = 0;
 			sentence_increment( &wk->sentence_wk, &wk->edit_pms );
@@ -1565,13 +1567,13 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 
 		if( wk->key_trg & PAD_BUTTON_B )
 		{
-			Snd_SePlay(SOUND_CANCEL);
+			GFL_SOUND_PlaySE(SOUND_CANCEL);
 			SetSubProc( wk, SubProc_CommandCancel );
 			break;
 		}
 		if( wk->key_trg & PAD_BUTTON_A )
 		{
-			Snd_SePlay(SOUND_DECIDE);
+			GFL_SOUND_PlaySE(SOUND_DECIDE);
 
 			wk->category_pos = 0;
 			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_CATEGORY );
@@ -1663,7 +1665,7 @@ static GFL_PROC_RESULT MainProc_CommandButton( PMS_INPUT_WORK* wk, int* seq )
 			if( wk->key_trg & PAD_KEY_UP )
 			{
 #if PMS_USE_SND
-				Snd_SePlay(SOUND_MOVE_CURSOR);
+				GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 
         if(wk->cmd_button_pos){
@@ -1678,7 +1680,7 @@ static GFL_PROC_RESULT MainProc_CommandButton( PMS_INPUT_WORK* wk, int* seq )
         break;
       }else if( wk->key_trg & (PAD_KEY_DOWN) ){
 #if PMS_USE_SND
-        Snd_SePlay(SOUND_MOVE_CURSOR);
+        GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
         
         if(wk->cmd_button_pos){
@@ -1696,7 +1698,7 @@ static GFL_PROC_RESULT MainProc_CommandButton( PMS_INPUT_WORK* wk, int* seq )
 			if( wk->key_trg & PAD_BUTTON_START )
 			{
 #if PMS_USE_SND
-				Snd_SePlay(SOUND_MOVE_CURSOR);
+				GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 				wk->cmd_button_pos = BUTTON_POS_DECIDE;
 				PMSIView_SetCommand( wk->vwk, VCMD_MOVE_BUTTON_CURSOR );
@@ -1707,7 +1709,7 @@ static GFL_PROC_RESULT MainProc_CommandButton( PMS_INPUT_WORK* wk, int* seq )
 			if( wk->key_trg & PAD_BUTTON_A )
 			{
 #if PMS_USE_SND
-				Snd_SePlay(SOUND_DECIDE);
+				GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
 
 				if( wk->cmd_button_pos == BUTTON_POS_DECIDE )
@@ -1725,7 +1727,7 @@ static GFL_PROC_RESULT MainProc_CommandButton( PMS_INPUT_WORK* wk, int* seq )
 			if( wk->key_trg & PAD_BUTTON_B )
 			{
 #if PMS_USE_SND
-				Snd_SePlay(SOUND_DECIDE);
+				GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
 				(*seq) = SEQ_TO_SUBPROC_CANCEL;
 				break;
@@ -1810,7 +1812,7 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
 	||	(wk->key_trg & PAD_BUTTON_SELECT)
 	){
 #if PMS_USE_SND
-		Snd_SePlay(SOUND_CHANGE_CATEGORY);
+		GFL_SOUND_PlaySE(SOUND_CHANGE_CATEGORY);
 #endif //PMS_USE_SND
 		wk->category_mode ^= 1;
 		wk->category_pos = 0;
@@ -1822,7 +1824,7 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
 	if( wk->key_trg & PAD_BUTTON_B )
 	{
 #if PMS_USE_SND
-		Snd_SePlay(SOUND_CANCEL);
+		GFL_SOUND_PlaySE(SOUND_CANCEL);
 #endif //PMS_USE_SND
 
 		PMSIView_SetCommand( wk->vwk, VCMD_CATEGORY_TO_EDITAREA );
@@ -1833,7 +1835,7 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
 	if( wk->key_trg & PAD_BUTTON_A ){
 		if( wk->category_pos == CATEGORY_POS_BACK ){
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_CANCEL);
+			GFL_SOUND_PlaySE(SOUND_CANCEL);
 #endif //PMS_USE_SND
 
 			PMSIView_SetCommand( wk->vwk, VCMD_CATEGORY_TO_EDITAREA );
@@ -1841,7 +1843,7 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
 			*seq = SEQ_CA_NEXTPROC;
 		}else if( check_category_enable( wk ) ){
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_DECIDE);
+			GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
 
 			setup_wordwin_params( &wk->word_win, wk );
@@ -1850,14 +1852,14 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
 			*seq = SEQ_CA_NEXTPROC;
 		}else{
 #if PMS_USE_SND
-			Snd_SePlay( SOUND_DISABLE_CATEGORY );
+			GFL_SOUND_PlaySE( SOUND_DISABLE_CATEGORY );
 #endif //PMS_USE_SND
 		}
 		return;
 	}
 	if( check_category_cursor_move( wk ) ){
 #if PMS_USE_SND
-		Snd_SePlay(SOUND_MOVE_CURSOR);
+		GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 		PMSIView_SetCommand( wk->vwk, VCMD_MOVE_CATEGORY_CURSOR );
 		return;
@@ -1986,7 +1988,7 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
 	switch(ret){
 	case 1:
 #if PMS_USE_SND
-		Snd_SePlay(SOUND_CANCEL);
+		GFL_SOUND_PlaySE(SOUND_CANCEL);
 #endif //PMS_USE_SND
 
 		PMSIView_SetCommand( wk->vwk, VCMD_CATEGORY_TO_EDITAREA );
@@ -1995,7 +1997,7 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
 		return;
 	case 2:
 #if PMS_USE_SND
-		Snd_SePlay(SOUND_CHANGE_CATEGORY);
+		GFL_SOUND_PlaySE(SOUND_CHANGE_CATEGORY);
 #endif //PMS_USE_SND
 		wk->category_mode ^= 1;
 		wk->category_pos = 0;
@@ -2012,7 +2014,7 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
 		wk->category_pos = ret;
 		if(PMSI_DATA_GetGroupEnableWordCount( wk->dwk, wk->category_pos ) == 0){
 #if PMS_USE_SND
-			Snd_SePlay( SOUND_DISABLE_CATEGORY );
+			GFL_SOUND_PlaySE( SOUND_DISABLE_CATEGORY );
 #endif //PMS_USE_SND
 			return;
 		}
@@ -2025,13 +2027,13 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
 		wk->category_pos = ini_idx[ret];
 		if(PMSI_DATA_GetInitialEnableWordCount( wk->dwk, wk->category_pos ) == 0 ){
 #if PMS_USE_SND
-			Snd_SePlay( SOUND_DISABLE_CATEGORY );
+			GFL_SOUND_PlaySE( SOUND_DISABLE_CATEGORY );
 #endif //PMS_USE_SND
 			return;
 		}
 	}
 #if PMS_USE_SND
-	Snd_SePlay(SOUND_DECIDE);
+	GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
 
 	setup_wordwin_params( &wk->word_win, wk );
@@ -2334,7 +2336,7 @@ static void word_input_key(PMS_INPUT_WORK* wk,int* seq)
 	||	(wk->key_trg & PAD_BUTTON_SELECT)
 	){
 #if PMS_USE_SND
-		Snd_SePlay(SOUND_CHANGE_CATEGORY);
+		GFL_SOUND_PlaySE(SOUND_CHANGE_CATEGORY);
 #endif //PMS_USE_SND
 		wk->category_pos = 0;
 		wk->category_mode ^= 1;
@@ -2358,14 +2360,14 @@ static void word_input_key(PMS_INPUT_WORK* wk,int* seq)
 		switch( result ){
 		case WORDWIN_RESULT_CURSOR_MOVE:
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_MOVE_CURSOR);
+			GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 			PMSIView_SetCommand( wk->vwk, VCMD_MOVE_WORDWIN_CURSOR );
 			return;
 
 		case WORDWIN_RESULT_SCROLL:
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_MOVE_CURSOR);
+			GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 			PMSIView_SetCommand( wk->vwk, VCMD_SCROLL_WORDWIN );
 			(*seq) = SEQ_WORD_SCROLL_WAIT;
@@ -2373,7 +2375,7 @@ static void word_input_key(PMS_INPUT_WORK* wk,int* seq)
 
 		case WORDWIN_RESULT_SCROLL_AND_CURSOR_MOVE:
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_MOVE_CURSOR);
+			GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 			PMSIView_SetCommand( wk->vwk, VCMD_SCROLL_WORDWIN );
 			(*seq) = SEQ_WORD_SCROLL_WAIT_AND_CURSOR_MOVE;
@@ -2384,7 +2386,7 @@ static void word_input_key(PMS_INPUT_WORK* wk,int* seq)
 	if( wk->key_trg & PAD_BUTTON_B )
 	{
 #if PMS_USE_SND
-		Snd_SePlay(SOUND_CANCEL);
+		GFL_SOUND_PlaySE(SOUND_CANCEL);
 #endif //PMS_USE_SND
 
 		PMSIView_SetCommand( wk->vwk, VCMD_WORDWIN_TO_CATEGORY );
@@ -2396,7 +2398,7 @@ static void word_input_key(PMS_INPUT_WORK* wk,int* seq)
 	{
 		if(wk->word_win.back_f){
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_CANCEL);
+			GFL_SOUND_PlaySE(SOUND_CANCEL);
 #endif //PMS_USE_SND
 
 			PMSIView_SetCommand( wk->vwk, VCMD_WORDWIN_TO_CATEGORY );
@@ -2405,7 +2407,7 @@ static void word_input_key(PMS_INPUT_WORK* wk,int* seq)
 			return;
 		}
 #if PMS_USE_SND
-		Snd_SePlay(SOUND_DECIDE);
+		GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
 
 		wk->word_win.touch_pos = 0xFFFF;
@@ -2476,7 +2478,7 @@ static void word_input_touch(PMS_INPUT_WORK* wk,int* seq)
 	switch(ret){
 	case 1:
 #if PMS_USE_SND
-		Snd_SePlay(SOUND_CANCEL);
+		GFL_SOUND_PlaySE(SOUND_CANCEL);
 #endif //PMS_USE_SND
 
 		PMSIView_SetCommand( wk->vwk, VCMD_WORDWIN_TO_CATEGORY );
@@ -2485,7 +2487,7 @@ static void word_input_touch(PMS_INPUT_WORK* wk,int* seq)
 		return;
 	case 2:
 #if PMS_USE_SND
-		Snd_SePlay(SOUND_CHANGE_CATEGORY);
+		GFL_SOUND_PlaySE(SOUND_CHANGE_CATEGORY);
 #endif //PMS_USE_SND
 		wk->category_pos = 0;
 		wk->category_mode ^= 1;
@@ -2499,7 +2501,7 @@ static void word_input_touch(PMS_INPUT_WORK* wk,int* seq)
 	switch( ret ){
 	case WORDWIN_RESULT_SELECT:
 #if PMS_USE_SND
-		Snd_SePlay(SOUND_DECIDE);
+		GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
 
 		set_select_word( wk );
@@ -2509,14 +2511,14 @@ static void word_input_touch(PMS_INPUT_WORK* wk,int* seq)
 		return;
 	case WORDWIN_RESULT_CURSOR_MOVE:
 #if PMS_USE_SND
-		Snd_SePlay(SOUND_MOVE_CURSOR);
+		GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 		PMSIView_SetCommand( wk->vwk, VCMD_MOVE_WORDWIN_CURSOR );
 		return;
 
 	case WORDWIN_RESULT_SCROLL:
 #if PMS_USE_SND
-		Snd_SePlay(SOUND_MOVE_CURSOR);
+		GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 		PMSIView_SetCommand( wk->vwk, VCMD_SCROLL_WORDWIN );
 		(*seq) = SEQ_WORD_SCROLL_WAIT;
@@ -2524,7 +2526,7 @@ static void word_input_touch(PMS_INPUT_WORK* wk,int* seq)
 
 	case WORDWIN_RESULT_SCROLL_AND_CURSOR_MOVE:
 #if PMS_USE_SND
-		Snd_SePlay(SOUND_MOVE_CURSOR);
+		GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
 		PMSIView_SetCommand( wk->vwk, VCMD_SCROLL_WORDWIN );
 		(*seq) = SEQ_WORD_SCROLL_WAIT_AND_CURSOR_MOVE;
@@ -2917,7 +2919,12 @@ static void SubProc_CommandOK( PMS_INPUT_WORK* wk, int* seq )
 		}
 		else
 		{
-			SetSubProc( wk, SubProc_CommandCancel );
+      // 無効なボタンタッチ音
+      GFL_SOUND_PlaySE( SOUND_DISABLE_BUTTON );
+
+			PMSIView_SetCommand( wk->vwk, VCMD_ERASE_MENU );
+			(*seq) = SEQ_RETURN;
+//			SetSubProc( wk, SubProc_CommandCancel );
 		}
 		break;
 
@@ -2927,21 +2934,21 @@ static void SubProc_CommandOK( PMS_INPUT_WORK* wk, int* seq )
 		{
 			switch( CtrlMenuState(&(wk->menu), wk->key_trg) ){
 			case MENU_RESULT_MOVE:
-				Snd_SePlay(SOUND_MOVE_CURSOR);
+				GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 
 				PMSIView_SetCommand( wk->vwk, VCMD_MOVE_MENU_CURSOR );
 				break;
 
 			case MENU_RESULT_POS_NO:
 			case MENU_RESULT_CANCEL:
-				Snd_SePlay(SOUND_CANCEL);
+				GFL_SOUND_PlaySE(SOUND_CANCEL);
 
 				PMSIView_SetCommand( wk->vwk, VCMD_ERASE_MENU );
 				(*seq) = SEQ_RETURN;
 				break;
 
 			case MENU_RESULT_POS_YES:
-				Snd_SePlay(SOUND_DECIDE);
+				GFL_SOUND_PlaySE(SOUND_DECIDE);
 				if( wk->input_mode == PMSI_MODE_SENTENCE )
 				{
 					PMSDAT_ClearUnnecessaryWord( &(wk->edit_pms) );
@@ -2957,7 +2964,7 @@ static void SubProc_CommandOK( PMS_INPUT_WORK* wk, int* seq )
 		switch(ret){
 		case 0:
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_CANCEL);
+			GFL_SOUND_PlaySE(SOUND_CANCEL);
 #endif //PMS_USE_SND
 
 			PMSIView_SetCommand( wk->vwk, VCMD_ERASE_MENU );
@@ -2965,7 +2972,7 @@ static void SubProc_CommandOK( PMS_INPUT_WORK* wk, int* seq )
 			break;
 		case 1:
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_DECIDE);
+			GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
 			if( wk->input_mode == PMSI_MODE_SENTENCE )
 			{
@@ -3031,7 +3038,7 @@ static void SubProc_CommandCancel( PMS_INPUT_WORK* wk, int* seq )
 		switch(ret){
 		case 0:
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_CANCEL);
+			GFL_SOUND_PlaySE(SOUND_CANCEL);
 #endif //PMS_USE_SND
 
 			PMSIView_SetCommand( wk->vwk, VCMD_ERASE_MENU );
@@ -3039,7 +3046,7 @@ static void SubProc_CommandCancel( PMS_INPUT_WORK* wk, int* seq )
 			break;
 		case 1:
 #if PMS_USE_SND
-			Snd_SePlay(SOUND_DECIDE);
+			GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
 			ChangeMainProc( wk, MainProc_Quit );
 			(*seq) = SEQ_RETURN;
@@ -3173,7 +3180,7 @@ static void SubProc_ChangeCategoryMode( PMS_INPUT_WORK* wk, int* seq )
 
 	case 0:
 #if PMS_USE_SND
-		Snd_SePlay(SOUND_CHANGE_CATEGORY);
+		GFL_SOUND_PlaySE(SOUND_CHANGE_CATEGORY);
 #endif //PMS_USE_SND
 		wk->category_mode ^= 1;
 		PMSIView_SetCommand( wk->vwk, VCMD_CHANGE_CATEGORY_MODE_DISABLE );

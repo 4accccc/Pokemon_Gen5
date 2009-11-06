@@ -12,7 +12,7 @@
 
 #include "sound\pm_sndsys.h"
 
-#define PMS_USE_SND (0)
+#define PMS_USE_SND (1)
 
 #if PMS_USE_SND
 #define  SOUND_MOVE_CURSOR		(SEQ_SE_DP_SELECT)		// カーソル移動
@@ -23,11 +23,14 @@
 
 #define  SOUND_CHANGE_SENTENCE	(SEQ_SE_DP_SELECT)		// 文章変更
 
-#define  SOUND_CHANGE_CATEGORY	(SEQ_SE_DP_BUTTON9)		// カテゴリ変更
+#define  SOUND_CHANGE_CATEGORY	(SEQ_SE_DECIDE1)		// カテゴリ変更
+//#define  SOUND_CHANGE_CATEGORY	(SEQ_SE_DP_BUTTON9)		// カテゴリ変更
 
-#define  SOUND_DISABLE_CATEGORY	(SEQ_SE_DP_CUSTOM06)	// 無効なカテゴリ選択
+#define  SOUND_DISABLE_CATEGORY	(SEQ_SE_DECIDE2)	// 無効なカテゴリ選択
+//#define  SOUND_DISABLE_CATEGORY	(SEQ_SE_DP_CUSTOM06)	// 無効なカテゴリ選択
 
-#define  SOUND_DISABLE_BUTTON	(SEQ_SE_DP_CUSTOM06)	// 無効なボタンタッチ
+#define  SOUND_DISABLE_BUTTON	(SEQ_SE_DECIDE3)	// 無効なボタンタッチ
+//#define  SOUND_DISABLE_BUTTON	(SEQ_SE_DP_CUSTOM06)	// 無効なボタンタッチ
 
 #endif //PMS_USE_SND
 
