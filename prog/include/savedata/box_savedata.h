@@ -30,6 +30,8 @@ typedef struct _BOX_TRAY_DATA BOX_TRAY_DATA;
 //------------------------------------------------------------
 #define BOX_MAX_RAW				(5)
 #define BOX_MAX_COLUMN			(6)
+#define BOX_MIN_TRAY			(8)
+#define BOX_MED_TRAY			(16)
 #define BOX_MAX_TRAY			(24)
 #define BOX_TRAYNAME_MAXLEN		(8)
 #define BOX_TRAYNAME_BUFSIZE	(20)	// 日本語８文字＋EOM。海外版用の余裕も見てこの程度。
@@ -37,12 +39,14 @@ typedef struct _BOX_TRAY_DATA BOX_TRAY_DATA;
 
 
 #define BOX_NORMAL_WALLPAPER_MAX	(16)
-#define BOX_EX_WALLPAPER_MAX		(8)
+#define BOX_EX_WALLPAPER_MAX			(8)
+#define BOX_TOTAL_WALLPAPER_MAX		(BOX_NORMAL_WALLPAPER_MAX+BOX_EX_WALLPAPER_MAX)
+/*
 #define BOX_PL_EX_WALLPAPER_MAX		(8)	//プラチナで追加された秘密壁紙
 #define BOX_GS_EX_WALLPAPER_MAX		(8)	//金銀で追加された秘密壁紙
-#define BOX_TOTAL_WALLPAPER_MAX		(BOX_NORMAL_WALLPAPER_MAX+BOX_EX_WALLPAPER_MAX)
 #define BOX_TOTAL_WALLPAPER_MAX_PL	(BOX_NORMAL_WALLPAPER_MAX+BOX_EX_WALLPAPER_MAX+BOX_PL_EX_WALLPAPER_MAX)
 #define BOX_TOTAL_WALLPAPER_MAX_GS	(BOX_NORMAL_WALLPAPER_MAX+BOX_EX_WALLPAPER_MAX+BOX_PL_EX_WALLPAPER_MAX+BOX_GS_EX_WALLPAPER_MAX)
+*/
 
 #define BOXDAT_TRAYNUM_CURRENT		(0xffffffff)	///< トレイナンバーを引数に取る関数で指定すると、カレントを指定したことになる。
 #define BOXDAT_TRAYNUM_ERROR		(BOX_MAX_TRAY)	///< 空きのあるトレイサーチで、見つからなかった時などの戻り値
@@ -171,6 +175,9 @@ extern void BOXDAT_ClearPokemon( BOX_MANAGER* box, u32 trayNum, u32 pos );
 //------------------------------------------------------------------
 extern u32 BOXDAT_GetPokeExistCountTotal( const BOX_MANAGER* box );
 extern u32 BOXDAT_GetPokeExistCount2Total( const BOX_MANAGER* box );
+
+extern u32 BOXDAT_GetTrayMax( const BOX_MANAGER * box );
+extern u32 BOXDAT_AddTrayMax( BOX_MANAGER * box );
 
 extern u32 BOXDAT_GetEmptySpaceTotal( const BOX_MANAGER* box );
 extern u32 BOXDAT_GetEmptySpaceTray( const BOX_MANAGER* box, u32 trayNum );

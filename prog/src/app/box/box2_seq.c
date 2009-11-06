@@ -3926,6 +3926,7 @@ static int MainSeq_ArrangeWallPaperChgEnd( BOX2_SYS_WORK * syswk )
 static int MainSeq_ArrangeWallPaperChange( BOX2_SYS_WORK * syswk )
 {
 	BOX2MAIN_WallPaperChange( syswk, syswk->app->wallpaper_pos );
+/*
 	// 追加壁紙はプラチナ以降の番号を使用している
 	if( syswk->app->wallpaper_pos < BOX_NORMAL_WALLPAPER_MAX ){
 		BOXDAT_SetWallPaperNumber( syswk->dat->sv_box, syswk->tray, syswk->app->wallpaper_pos );
@@ -3934,6 +3935,8 @@ static int MainSeq_ArrangeWallPaperChange( BOX2_SYS_WORK * syswk )
 			syswk->dat->sv_box, syswk->tray,
 			syswk->app->wallpaper_pos - BOX_NORMAL_WALLPAPER_MAX + BOX_TOTAL_WALLPAPER_MAX_PL );
 	}
+*/
+	BOXDAT_SetWallPaperNumber( syswk->dat->sv_box, syswk->tray, syswk->app->wallpaper_pos );
 	BOX2OBJ_WallPaperCursorSet( syswk );
 	BOX2OBJ_TrayIconCgxMake( syswk, syswk->tray );
 

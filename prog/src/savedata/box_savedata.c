@@ -39,12 +39,13 @@ struct _BOX_TRAY_DATA
 struct _BOX_SAVEDATA{
 //	BOX_TRAY_DATA		btd[BOX_MAX_TRAY];  //WBよりトレーが個別のセーブになります。
 	//ここより下のデータが２５６バイトアライメントされたところにマッピングされる
-	u32					currentTrayNumber;								//4
-	u32					UseBoxBits;										//4
-	STRCODE				trayName[BOX_MAX_TRAY][BOX_TRAYNAME_BUFSIZE];	//2*20*24 = 960
-	u8					wallPaper[BOX_MAX_TRAY];						//24
-	u8					daisukiBitFlag;									//1
-	u8					dummy[3];		//アライメントダミー			//3
+	u32			currentTrayNumber;								//4
+	u32			UseBoxBits;										//4
+	STRCODE	trayName[BOX_MAX_TRAY][BOX_TRAYNAME_BUFSIZE];	//2*20*24 = 960
+	u8			wallPaper[BOX_MAX_TRAY];						//24
+	u8			daisukiBitFlag;									//1
+	u8			trayMax;					// 開放されてるトレイ数
+	u8			dummy[2];					// アライメントダミー			//2
 	
 	//以下昔の情報
 	//ポケモンデータが0x1000*18	バイト = 0x12000
@@ -146,6 +147,8 @@ static void boxdata_init( BOX_SAVEDATA* boxdat )
 
 	boxdat->currentTrayNumber = 0;
 
+	// 開放されてるトレイ数
+	boxdat->trayMax = BOX_MIN_TRAY;
 }
 
 static BOX_SAVEDATA* BOXDAT_GetBoxSaveData( const BOX_MANAGER *boxData )
@@ -180,12 +183,22 @@ BOOL BOXDAT_PutPokemon( BOX_MANAGER* box, const POKEMON_PASO_PARAM* poke )
 			return TRUE;
 		}
 
-		if( ++b >= BOX_MAX_TRAY )
+//		if( ++b >= BOX_MAX_TRAY )
+		if( ++b >= boxData->trayMax )
 		{
 			b = 0;
 		}
 
 	}while( b != boxData->currentTrayNumber );
+
+	// 開放されていないトレイをチェック
+	if( boxData->trayMax != BOX_MAX_TRAY ){
+		BOXDAT_PutPokemonBox( box, boxData->trayMax, poke );
+		//SaveData_RequestTotalSave();	//金銀で変更
+		BOXDAT_SetTrayUseBit( box, boxData->trayMax );
+		boxData->trayMax += BOX_MIN_TRAY;
+		return TRUE;
+	}
 
 	return FALSE;
 }
@@ -249,17 +262,13 @@ BOOL BOXDAT_PutPokemonPos( BOX_MANAGER* box, u32 trayNum, u32 pos, const POKEMON
 		trayNum = boxData->currentTrayNumber;
 	}
 
-	if(	(trayNum < BOX_MAX_TRAY)
-	&&	(pos < BOX_MAX_POS)
-	){
+	if(	( trayNum < boxData->trayMax ) && ( pos < BOX_MAX_POS ) ){
     BOX_TRAY_DATA *trayData = BOXTRAYDAT_GetTrayData(box,trayNum);
 		trayData->ppp[pos] = *poke;
 		//SaveData_RequestTotalSave();	金銀で変更
 		BOXDAT_SetTrayUseBit( box, trayNum);	
 		return TRUE;
-	}
-	else
-	{
+	}else{
 		GF_ASSERT(0);
 	}
 	return FALSE;
@@ -332,6 +341,41 @@ u32 BOXDAT_GetCureentTrayNumber( const BOX_MANAGER* box )
   BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 	return boxData->currentTrayNumber;
 }
+
+//------------------------------------------------------------------
+/**
+ * 開放されているトレイ数を返す
+ *
+ * @param   box		ボックスデータポインタ
+ *
+ * @retval  u32		トレイ数
+ */
+//------------------------------------------------------------------
+u32 BOXDAT_GetTrayMax( const BOX_MANAGER * box )
+{
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
+	return boxData->trayMax;
+}
+
+//------------------------------------------------------------------
+/**
+ * トレイを開放する
+ *
+ * @param   box		ボックスデータポインタ
+ *
+ * @retval  u32		トレイ数
+ */
+//------------------------------------------------------------------
+u32 BOXDAT_AddTrayMax( BOX_MANAGER * box )
+{
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
+
+	if( boxData->trayMax != BOX_MAX_TRAY ){
+		boxData->trayMax += BOX_MIN_TRAY;
+	}
+	return boxData->trayMax;
+}
+
 //------------------------------------------------------------------
 /**
  * １つでも空きのあるトレイナンバーを返す（カレントから検索開始する）
@@ -358,7 +402,7 @@ u32 BOXDAT_GetEmptyTrayNumber( const BOX_MANAGER* box )
 				return tray;
 			}
 		}
-		if( ++tray >= BOX_MAX_TRAY )
+		if( ++tray >= boxData->trayMax )
 		{
 			tray = 0;
 		}
@@ -366,6 +410,13 @@ u32 BOXDAT_GetEmptyTrayNumber( const BOX_MANAGER* box )
 		{
 			break;
 		}
+	}
+
+	// 開放されていないトレイをチェック
+	if( boxData->trayMax != BOX_MAX_TRAY ){
+		tray = boxData->trayMax;
+		boxData->trayMax += BOX_MIN_TRAY;
+		return tray;
 	}
 
 	return BOXDAT_TRAYNUM_ERROR;
@@ -407,7 +458,7 @@ BOOL BOXDAT_GetEmptyTrayNumberAndPos( const BOX_MANAGER* box, int* trayNum, int*
 				return TRUE;
 			}
 		}
-		if( ++t >= BOX_MAX_TRAY )
+		if( ++t >= boxData->trayMax )
 		{
 			t = 0;
 		}
@@ -416,6 +467,14 @@ BOOL BOXDAT_GetEmptyTrayNumberAndPos( const BOX_MANAGER* box, int* trayNum, int*
 			break;
 		}
 		p = 0;
+	}
+
+	// 開放されていないトレイをチェック
+	if( boxData->trayMax != BOX_MAX_TRAY ){
+		*trayNum = boxData->trayMax;
+		*pos = 0;
+		boxData->trayMax += BOX_MIN_TRAY;
+		return TRUE;
 	}
 
 	return BOXDAT_TRAYNUM_ERROR;
@@ -509,6 +568,7 @@ void BOXDAT_SetCureentTrayNumber( BOX_MANAGER* box, u32 num )
 		GF_ASSERT(0);
 	}
 }
+
 //------------------------------------------------------------------
 /**
  * 指定トレイの壁紙ナンバーを返す
@@ -543,6 +603,7 @@ u32 BOXDAT_GetWallPaperNumber( const BOX_MANAGER* box, u32 trayNum )
  * @retval	"FALSE = 無効"
  */
 //------------------------------------------------------------------
+/*
 static BOOL WallPaperNumberCheck( u32 num )
 {
 	if( num < BOX_NORMAL_WALLPAPER_MAX ||
@@ -551,6 +612,7 @@ static BOOL WallPaperNumberCheck( u32 num )
 	}
 	return FALSE;
 }
+*/
 
 //------------------------------------------------------------------
 /**
@@ -570,7 +632,8 @@ void BOXDAT_SetWallPaperNumber( BOX_MANAGER* box, u32 trayNum, u32 wallPaperNumb
 		trayNum = boxData->currentTrayNumber;
 	}
 
-	if(	trayNum < BOX_MAX_TRAY && WallPaperNumberCheck(wallPaperNumber) == TRUE ){
+//	if(	trayNum < BOX_MAX_TRAY && WallPaperNumberCheck(wallPaperNumber) == TRUE ){
+	if(	trayNum < BOX_MAX_TRAY ){
 		boxData->wallPaper[trayNum] = wallPaperNumber;
 		//SaveData_RequestTotalSave();	金銀で削除　ポケモン以外のデータはいかなる場合も書くのでこの関数でリクエストしなくてＯＫ	
 	}else{

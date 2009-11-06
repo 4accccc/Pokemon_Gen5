@@ -844,11 +844,11 @@ void BOX2MAIN_YesNoWinSet( BOX2_SYS_WORK * syswk, u32 pos )
   wk.heapId   = HEAPID_BOX_APP;
   wk.itemNum  = 2;
   wk.itemWork = syswk->app->ynList;
-  wk.posType  = ATPT_LEFT_UP;
-  wk.charPosX = 24;
-  wk.charPosY = 12;
-	wk.w        = 8;
-	wk.h        = 4;
+  wk.posType  = ATPT_RIGHT_DOWN;
+  wk.charPosX = 32;
+  wk.charPosY = 18;
+	wk.w        = APP_TASKMENU_PLATE_WIDTH_YN_WIN;
+	wk.h        = APP_TASKMENU_PLATE_HEIGHT_YN_WIN;
 
 	syswk->app->ynWork = APP_TASKMENU_OpenMenu( &wk, syswk->app->ynRes );
 }
@@ -2860,12 +2860,15 @@ void BOX2MAIN_WallPaperChange( BOX2_SYS_WORK * syswk, u32 id )
 //--------------------------------------------------------------------------------------------
 u32 BOX2MAIN_GetWallPaperNumber( BOX2_SYS_WORK * syswk, u32 num )
 {
+/*
 	u32	wp = BOXDAT_GetWallPaperNumber( syswk->dat->sv_box, num );
 
 	if( wp >= BOX_NORMAL_WALLPAPER_MAX ){
 		return ( wp - BOX_TOTAL_WALLPAPER_MAX_PL + BOX_NORMAL_WALLPAPER_MAX );
 	}
 	return wp;
+*/
+	return BOXDAT_GetWallPaperNumber( syswk->dat->sv_box, num );
 }
 
 
