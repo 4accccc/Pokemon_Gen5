@@ -2112,6 +2112,22 @@ const BTL_POKEPARAM* BTL_POKECON_GetPokeParamConst( const BTL_POKE_CONTAINER* wk
 
   return wk->pokeParam[ pokeID ];
 }
+
+//=============================================================================================
+/**
+ * 存在するクライアントIDか判定
+ *
+ * @param   wk
+ * @param   clientID
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_POKECON_IsExsitClient( const BTL_POKE_CONTAINER* wk, u8 clientID )
+{
+  return PokeCon_IsExistClient( wk, clientID );
+}
+
 //=============================================================================================
 /**
  * 戦闘に出ているポケモンかどうかを判定

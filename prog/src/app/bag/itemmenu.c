@@ -1,9 +1,9 @@
 //============================================================================================
 /**
- * @file	  itemmenu.h
- * @brief	  アイテムメニュー
- * @author	k.ohno
- * @date	  2009.06.30
+ * @file    itemmenu.h
+ * @brief   アイテムメニュー
+ * @author  k.ohno
+ * @date    2009.06.30
  */
 //============================================================================================
 
@@ -37,7 +37,7 @@
 #include "savedata/mystatus.h"
 #include "savedata/encount_sv.h"
 
-#include "system/main.h"			//GFL_HEAPID_APP参照
+#include "system/main.h"      //GFL_HEAPID_APP参照
 
 //============================================================================================
 //============================================================================================
@@ -61,30 +61,30 @@ static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
 
 #include "bag_btnpos.h"  //バッグの絵のタッチエリア
 
-  {	21*_1CHAR,  24*_1CHAR,   0*_1CHAR,  3*_1CHAR },  //左
-  {	21*_1CHAR,  24*_1CHAR,  15*_1CHAR, 18*_1CHAR },  //右
-  
-  {	21*_1CHAR,  24*_1CHAR,  19*_1CHAR, 22*_1CHAR },  //ソート
-  {	21*_1CHAR,  24*_1CHAR,  22*_1CHAR, 24*_1CHAR },  //チェックボタン
+  { 21*_1CHAR,  24*_1CHAR,   0*_1CHAR,  3*_1CHAR },  //左
+  { 21*_1CHAR,  24*_1CHAR,  15*_1CHAR, 18*_1CHAR },  //右
 
-  {	21*_1CHAR,  24*_1CHAR,  26*_1CHAR, 28*_1CHAR },  //x
-  {	21*_1CHAR,  24*_1CHAR,  30*_1CHAR, 32*_1CHAR },  //リターン
+  { 21*_1CHAR,  24*_1CHAR,  19*_1CHAR, 22*_1CHAR },  //ソート
+  { 21*_1CHAR,  24*_1CHAR,  22*_1CHAR, 24*_1CHAR },  //チェックボタン
 
-  {	1*_1CHAR+4,   4*_1CHAR+3,  18*_1CHAR, 28*_1CHAR },  //アイテム一覧エリア1
-  {	4*_1CHAR+4,   7*_1CHAR+3,  18*_1CHAR, 28*_1CHAR },  //アイテム一覧エリア2
-  {	7*_1CHAR+4,  11*_1CHAR+3,  18*_1CHAR, 28*_1CHAR },  //アイテム一覧エリア3
+  { 21*_1CHAR,  24*_1CHAR,  26*_1CHAR, 28*_1CHAR },  //x
+  { 21*_1CHAR,  24*_1CHAR,  30*_1CHAR, 32*_1CHAR },  //リターン
+
+  { 1*_1CHAR+4,   4*_1CHAR+3,  18*_1CHAR, 28*_1CHAR },  //アイテム一覧エリア1
+  { 4*_1CHAR+4,   7*_1CHAR+3,  18*_1CHAR, 28*_1CHAR },  //アイテム一覧エリア2
+  { 7*_1CHAR+4,  11*_1CHAR+3,  18*_1CHAR, 28*_1CHAR },  //アイテム一覧エリア3
   {11*_1CHAR+4,  14*_1CHAR+3,  18*_1CHAR, 28*_1CHAR },  //アイテム一覧エリア4
   {14*_1CHAR+4,  17*_1CHAR+3,  18*_1CHAR, 28*_1CHAR },  //アイテム一覧エリア5
   {17*_1CHAR+4,  20*_1CHAR+3,  18*_1CHAR, 28*_1CHAR },  //アイテム一覧エリア6
 
-  {	1*_1CHAR+4,   4*_1CHAR+3,  15*_1CHAR, 18*_1CHAR },  //だいじなものチェックエリア1
-  {	4*_1CHAR+4,   7*_1CHAR+3,  15*_1CHAR, 18*_1CHAR },  //だいじなものチェックエリア2
-  {	7*_1CHAR+4,  11*_1CHAR+3,  15*_1CHAR, 18*_1CHAR },  //だいじなものチェックエリア3
+  { 1*_1CHAR+4,   4*_1CHAR+3,  15*_1CHAR, 18*_1CHAR },  //だいじなものチェックエリア1
+  { 4*_1CHAR+4,   7*_1CHAR+3,  15*_1CHAR, 18*_1CHAR },  //だいじなものチェックエリア2
+  { 7*_1CHAR+4,  11*_1CHAR+3,  15*_1CHAR, 18*_1CHAR },  //だいじなものチェックエリア3
   {11*_1CHAR+4,  14*_1CHAR+3,  15*_1CHAR, 18*_1CHAR },  //だいじなものチェックエリア4
   {14*_1CHAR+4,  17*_1CHAR+3,  15*_1CHAR, 18*_1CHAR },  //だいじなものチェックエリア5
   {17*_1CHAR+4,  20*_1CHAR+3,  15*_1CHAR, 18*_1CHAR },  //だいじなものチェックエリア6
 
-  {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
+  {GFL_UI_TP_HIT_END,0,0,0},     //終了データ
 };
 
 
@@ -153,7 +153,7 @@ int ITEMMENU_GetPosCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
 BOOL ITEMMENU_AddCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
 void ITEMMENU_RemoveCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
 static void _BttnCallBack( u32 bttnid, u32 event, void* p_work );
-static void	_VBlank( GFL_TCB *tcb, void *work );
+static void _VBlank( GFL_TCB *tcb, void *work );
 static void _startState(FIELD_ITEMMENU_WORK* pWork);
 
 #ifdef PM_DEBUG
@@ -192,18 +192,18 @@ static void _changeStateDebug(FIELD_ITEMMENU_WORK* pWork,StateFunc state, int li
 #endif
 
 
-#define	FBMP_COL_NULL		(0)
-#define	FBMP_COL_BLACK		(1)
-#define	FBMP_COL_BLK_SDW	(2)
-#define	FBMP_COL_RED		(3)
-#define	FBMP_COL_RED_SDW	(4)
-#define	FBMP_COL_GREEN		(5)
-#define	FBMP_COL_GRN_SDW	(6)
-#define	FBMP_COL_BLUE		(7)
-#define	FBMP_COL_BLU_SDW	(8)
-#define	FBMP_COL_PINK		(9)
-#define	FBMP_COL_PNK_SDW	(10)
-#define	FBMP_COL_WHITE		(15)
+#define FBMP_COL_NULL   (0)
+#define FBMP_COL_BLACK    (1)
+#define FBMP_COL_BLK_SDW  (2)
+#define FBMP_COL_RED    (3)
+#define FBMP_COL_RED_SDW  (4)
+#define FBMP_COL_GREEN    (5)
+#define FBMP_COL_GRN_SDW  (6)
+#define FBMP_COL_BLUE   (7)
+#define FBMP_COL_BLU_SDW  (8)
+#define FBMP_COL_PINK   (9)
+#define FBMP_COL_PNK_SDW  (10)
+#define FBMP_COL_WHITE    (15)
 #define _BMPMENULIST_FONTSIZE   (16)
 
 
@@ -211,40 +211,40 @@ static void _changeStateDebug(FIELD_ITEMMENU_WORK* pWork,StateFunc state, int li
 
 ///選択メニューのリスト
 static BMPMENULIST_HEADER _itemMenuListHeader = {
-  NULL,			// 表示文字データポインタ
-  NULL,					// カーソル移動ごとのコールバック関数
-  NULL,					// 一列表示ごとのコールバック関数
+  NULL,     // 表示文字データポインタ
+  NULL,         // カーソル移動ごとのコールバック関数
+  NULL,         // 一列表示ごとのコールバック関数
   NULL,                      // GF_BGL_BMPWIN* win
   9,// リスト項目数
   9,// 表示最大項目数
-  0,						// ラベル表示Ｘ座標
-  16,						// 項目表示Ｘ座標
-  0,						// カーソル表示Ｘ座標
-  0,						// 表示Ｙ座標
-  FBMP_COL_BLACK,			// 文字色
-  FBMP_COL_WHITE,			// 背景色
-  FBMP_COL_BLK_SDW,		// 文字影色
-  0,						// 文字間隔Ｘ
-  18,						// 文字間隔Ｙ
-  BMPMENULIST_NO_SKIP,		// ページスキップタイプ
-  0,//FONT_SYSTEM,				// 文字指定
-  0,						// ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
+  0,            // ラベル表示Ｘ座標
+  16,           // 項目表示Ｘ座標
+  0,            // カーソル表示Ｘ座標
+  0,            // 表示Ｙ座標
+  FBMP_COL_BLACK,     // 文字色
+  FBMP_COL_WHITE,     // 背景色
+  FBMP_COL_BLK_SDW,   // 文字影色
+  0,            // 文字間隔Ｘ
+  18,           // 文字間隔Ｙ
+  BMPMENULIST_NO_SKIP,    // ページスキップタイプ
+  0,//FONT_SYSTEM,        // 文字指定
+  0,            // ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
   NULL,                   // work
-  _BMPMENULIST_FONTSIZE,			//文字サイズX(ドット
-  _BMPMENULIST_FONTSIZE,			//文字サイズY(ドット
-  NULL,		//表示に使用するメッセージバッフ
-  NULL,		//表示に使用するプリントユーティ
-  NULL,		//表示に使用するプリントキュー
-  NULL,		//表示に使用するフォントハンドル
+  _BMPMENULIST_FONTSIZE,      //文字サイズX(ドット
+  _BMPMENULIST_FONTSIZE,      //文字サイズY(ドット
+  NULL,   //表示に使用するメッセージバッフ
+  NULL,   //表示に使用するプリントユーティ
+  NULL,   //表示に使用するプリントキュー
+  NULL,   //表示に使用するフォントハンドル
 };
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ウィンドウ描画初期化
+ *  @brief  ウィンドウ描画初期化
  *
- *	@param	pWork
+ *  @param  pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _windowCreate(FIELD_ITEMMENU_WORK* pWork)
@@ -254,11 +254,11 @@ static void _windowCreate(FIELD_ITEMMENU_WORK* pWork)
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ウィンドウ再描画
+ *  @brief  ウィンドウ再描画
  *
- *	@param	pWork
+ *  @param  pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _windowRewrite(FIELD_ITEMMENU_WORK* pWork)
@@ -292,13 +292,13 @@ ITEM_ST* ITEMMENU_GetItem(FIELD_ITEMMENU_WORK* pWork, int no)
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  アイテムの売値を取得
+ *  @brief  アイテムの売値を取得
  *
- *	@param	int item_no 売るアイテムNO
- *	@param	input_num   売る個数
- *	@param	heapID      ヒープID
+ *  @param  int item_no 売るアイテムNO
+ *  @param  input_num   売る個数
+ *  @param  heapID      ヒープID
  *
- *	@retval s32 売値
+ *  @retval s32 売値
  */
 //-----------------------------------------------------------------------------
 s32 ITEMMENU_SellPrice( int item_no, int input_num, HEAPID heapID )
@@ -352,13 +352,13 @@ int ITEMMENU_GetItemPocketNumber(FIELD_ITEMMENU_WORK* pWork)
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  アイテムデータ交換
+ *  @brief  アイテムデータ交換
  *
- *	@param	pWork
- *	@param	no1
- *	@param	no2 
+ *  @param  pWork
+ *  @param  no1
+ *  @param  no2
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _ItemChangeSingle(FIELD_ITEMMENU_WORK* pWork, int no1, int no2 )
@@ -372,13 +372,13 @@ static void _ItemChangeSingle(FIELD_ITEMMENU_WORK* pWork, int no1, int no2 )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  アイテム交換処理
+ *  @brief  アイテム交換処理
  *
- *	@param	pWork
- *	@param	no1
- *	@param	no2 
+ *  @param  pWork
+ *  @param  no1
+ *  @param  no2
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _ItemChange(FIELD_ITEMMENU_WORK* pWork, int no1, int no2 )
@@ -410,7 +410,7 @@ static void _ItemChange(FIELD_ITEMMENU_WORK* pWork, int no1, int no2 )
 static void _pocketCursorChange(FIELD_ITEMMENU_WORK* pWork,int oldpocket, int newpocket)
 {
   s16 cur,scr;
-    
+
   MYITEM_FieldBagPocketSet(pWork->pBagCursor, oldpocket);
   MYITEM_FieldBagCursorSet(pWork->pBagCursor, oldpocket, pWork->curpos, pWork->oamlistpos+1 );
   MYITEM_FieldBagCursorGet(pWork->pBagCursor, newpocket, &cur, &scr );
@@ -423,12 +423,12 @@ static void _pocketCursorChange(FIELD_ITEMMENU_WORK* pWork,int oldpocket, int ne
 }
 //-----------------------------------------------------------------------------
 /**
- *	@brief  下キーが押された時の処理
+ *  @brief  下キーが押された時の処理
  *
- *	@param	pWork
- *	@param	length
+ *  @param  pWork
+ *  @param  length
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 static BOOL _posplus(FIELD_ITEMMENU_WORK* pWork, int length)
@@ -457,12 +457,12 @@ static BOOL _posplus(FIELD_ITEMMENU_WORK* pWork, int length)
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  上キーが押された時の処理
+ *  @brief  上キーが押された時の処理
  *
- *	@param	pWork
- *	@param	length
+ *  @param  pWork
+ *  @param  length
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 static BOOL _posminus(FIELD_ITEMMENU_WORK* pWork, int length)
@@ -483,7 +483,7 @@ static BOOL _posminus(FIELD_ITEMMENU_WORK* pWork, int length)
     pWork->curpos--;
     bChange = TRUE;
   }
-  
+
   return bChange;
 }
 
@@ -501,7 +501,7 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
   {
     Y_MAX = _SCROLL_BOTTOM_Y - _SCROLL_TOP_Y,
   };
-  
+
   u32 x,y,i;
 
   if(GFL_UI_TP_GetPointCont(&x, &y) == TRUE){
@@ -520,7 +520,7 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
 
       pWork->curpos = 0;
       pWork->oamlistpos = -1;
-        
+
       HOSAKA_Printf( "===== length=%d num=%d \n", length, num );
 
       for(i = 0 ; i < num ; i++)
@@ -671,7 +671,7 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
   BOOL bChange=FALSE;
   u32 trg = GFL_UI_KEY_GetTrg();
 
- 	GFL_UI_KEY_SetRepeatSpeed(1, 6);
+  GFL_UI_KEY_SetRepeatSpeed(1, 6);
 
   if((trg == PAD_BUTTON_A) || (trg == PAD_BUTTON_SELECT)){  //反映
     MYITEM_ITEM_STCopy(pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, FALSE);
@@ -704,11 +704,11 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  スプレー使用チェック
+ *  @brief  スプレー使用チェック
  *
- *	@param	u16 item_id 
+ *  @param  u16 item_id
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL _check_spray( u16 item_id )
@@ -720,11 +720,11 @@ static BOOL _check_spray( u16 item_id )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  バッグ内で使うアイテムか判定
+ *  @brief  バッグ内で使うアイテムか判定
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval TURE:バッグ内で使うアイテム
+ *  @retval TURE:バッグ内で使うアイテム
  */
 //-----------------------------------------------------------------------------
 static BOOL BAG_IsInnerItem( u16 item_id )
@@ -740,11 +740,11 @@ static BOOL BAG_IsInnerItem( u16 item_id )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  バッグ内で使うアイテム処理
+ *  @brief  バッグ内で使うアイテム処理
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _itemInnerUse( FIELD_ITEMMENU_WORK* pWork )
@@ -794,11 +794,11 @@ static void _itemInnerUse( FIELD_ITEMMENU_WORK* pWork )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  アイテム使用メッセージウェイト
+ *  @brief  アイテム使用メッセージウェイト
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _itemInnerUseWait( FIELD_ITEMMENU_WORK* pWork )
@@ -806,7 +806,7 @@ static void _itemInnerUseWait( FIELD_ITEMMENU_WORK* pWork )
   if(!ITEMDISP_MessageEndCheck(pWork)){
     return;
   }
-  
+
   // 入力待ち
   if( ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ) || GFL_UI_TP_GetTrg() )
   {
@@ -855,7 +855,7 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     }
     else if(BAG_MENU_YAMERU==pWork->ret_code2){  //やめる
       // タッチ遷移なら非表示に
-      KTST_SetDraw( pWork, (GFL_UI_CheckTouchOrKey == GFL_APP_END_KEY) ); 
+      KTST_SetDraw( pWork, (GFL_UI_CheckTouchOrKey == GFL_APP_END_KEY) );
       _CHANGE_STATE(pWork, _itemKindSelectMenu);
     }
     else if( BAG_MENU_TOUROKU==pWork->ret_code2 || BAG_MENU_KAIZYO==pWork->ret_code2 ){  //とうろく
@@ -887,7 +887,7 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       else
       {
         // 通常の「つかう」はWBではバッグを抜けた後に使う処理
-        pWork->ret_code = BAG_NEXTPROC_ITEMUSE;  
+        pWork->ret_code = BAG_NEXTPROC_ITEMUSE;
         _CHANGE_STATE(pWork,NULL);
       }
     }
@@ -969,10 +969,10 @@ static void _itemSelectState(FIELD_ITEMMENU_WORK* pWork)
 
 static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
 {
-  u32	ret=0;
+  u32 ret=0;
   BOOL bChange=FALSE;
 
- 	GFL_UI_KEY_SetRepeatSpeed(1, 6);
+  GFL_UI_KEY_SetRepeatSpeed(1, 6);
 
   GFL_BMN_Main( pWork->pButton );
 
@@ -980,7 +980,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     // 終了時はキー無効
     return;
   }
-  
+
   // カーソルなしの状態から入力があった場合、カーソルを表示して抜ける
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
   {
@@ -1222,10 +1222,10 @@ static void _itemTrashYesNoWait(FIELD_ITEMMENU_WORK* pWork)
 {
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
-    
+
     // YESNOの後始末
     ITEMDISP_YesNoExit(pWork);
-    
+
     GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
 
     if(selectno==0){
@@ -1289,7 +1289,7 @@ static void _itemTrash(FIELD_ITEMMENU_WORK* pWork)
   WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
   ITEMDISP_ItemInfoWindowDisp( pWork );
-    
+
   //@TODO リストとBAR双方にOBJが使われているためバッティングする。OAMの半透明を切替る必要あり
 //  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 /*| GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1*/ | GX_BLEND_PLANEMASK_OBJ , -8 );
 
@@ -1332,9 +1332,9 @@ static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork)
     GFL_SOUND_PlaySE( SE_BAG_CANCEL );
 
     InputNum_Exit( pWork );
-  
+
     InputNum_ButtonState( pWork, TRUE );
-    
+
     //@TODO ここでパッシブ解除していいのか？
     G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 0 );
 
@@ -1351,17 +1351,17 @@ static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork)
 //=============================================================================
 //-----------------------------------------------------------------------------
 /**
- *	@brief  売るシーケンス 初期化
+ *  @brief  売るシーケンス 初期化
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _itemSellInit( FIELD_ITEMMENU_WORK* pWork )
 {
   InputNum_ButtonState( pWork, FALSE );
-  
+
   // 買えないもの判定
   {
     s32 val;
@@ -1385,7 +1385,7 @@ static void _itemSellInit( FIELD_ITEMMENU_WORK* pWork )
   }
 
   pWork->InputNum = 1;  //初期化
-  
+
   // おこづかい表示開始
   ITEMDISP_GoldDispIn( pWork );
 
@@ -1416,11 +1416,11 @@ static void _itemSellInit( FIELD_ITEMMENU_WORK* pWork )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  売るシーケンス 入力待ち
+ *  @brief  売るシーケンス 入力待ち
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _itemSellInputWait( FIELD_ITEMMENU_WORK* pWork )
@@ -1459,11 +1459,11 @@ static void _itemSellInputWait( FIELD_ITEMMENU_WORK* pWork )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  売るシーケンス YESNO開始
+ *  @brief  売るシーケンス YESNO開始
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _itemSellYesnoInit( FIELD_ITEMMENU_WORK* pWork )
@@ -1477,7 +1477,7 @@ static void _itemSellYesnoInit( FIELD_ITEMMENU_WORK* pWork )
 
     // 売値を取得
     val = ITEMMENU_SellPrice( pWork->ret_item, pWork->InputNum, pWork->heapID );
-  
+
     GFL_MSG_GetString( pWork->MsgManager, mes_shop_095, pWork->pStrBuf );
     WORDSET_RegisterNumber(pWork->WordSet, 0, val,
                              6, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
@@ -1490,11 +1490,11 @@ static void _itemSellYesnoInit( FIELD_ITEMMENU_WORK* pWork )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  売るシーケンス YESNO選択まち
+ *  @brief  売るシーケンス YESNO選択まち
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _itemSellYesnoInput( FIELD_ITEMMENU_WORK* pWork )
@@ -1531,7 +1531,7 @@ static void _itemSellYesnoInput( FIELD_ITEMMENU_WORK* pWork )
 
           // タスクバーおこづかい表示しなおし
           ITEMDISP_GoldDispWrite( pWork );
-  
+
           // 再描画
           _windowRewrite(pWork);
 
@@ -1560,11 +1560,11 @@ static void _itemSellYesnoInput( FIELD_ITEMMENU_WORK* pWork )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  売るシーケンス 売った後のメッセージウィエト
+ *  @brief  売るシーケンス 売った後のメッセージウィエト
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _itemSellEndMsgWait( FIELD_ITEMMENU_WORK* pWork )
@@ -1582,17 +1582,17 @@ static void _itemSellEndMsgWait( FIELD_ITEMMENU_WORK* pWork )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  売るシーケンス 終了
+ *  @brief  売るシーケンス 終了
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork )
 {
   GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
-  
+
   // おこづかい表示終了
   ITEMDISP_GoldDispOut( pWork );
 
@@ -1603,11 +1603,11 @@ static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  数値入力 開始
+ *  @brief  数値入力 開始
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void InputNum_Start( FIELD_ITEMMENU_WORK* pWork, BAG_INPUT_MODE mode )
@@ -1624,18 +1624,18 @@ static void InputNum_Start( FIELD_ITEMMENU_WORK* pWork, BAG_INPUT_MODE mode )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  数値入力 終了
+ *  @brief  数値入力 終了
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void InputNum_Exit( FIELD_ITEMMENU_WORK* pWork )
 {
   // 数値入力フレームクリア
   GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
-  
+
   // アイコン非表示
   GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[ BAR_ICON_INPUT_U ], FALSE );
   GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[ BAR_ICON_INPUT_D ], FALSE );
@@ -1643,11 +1643,11 @@ static void InputNum_Exit( FIELD_ITEMMENU_WORK* pWork )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  数値入力 主処理
+ *  @brief  数値入力 主処理
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void InputNum_Proc( FIELD_ITEMMENU_WORK* pWork )
@@ -1655,8 +1655,8 @@ static void InputNum_Proc( FIELD_ITEMMENU_WORK* pWork )
   ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
   int backup = pWork->InputNum;
   int tp_result;
-  
-  const GFL_UI_TP_HITTBL tp_tbl[] = 
+
+  const GFL_UI_TP_HITTBL tp_tbl[] =
   {
     {
       // 上ボタン
@@ -1673,7 +1673,7 @@ static void InputNum_Proc( FIELD_ITEMMENU_WORK* pWork )
       GFL_UI_TP_HIT_END,0,0,0,
     }
   };
-  
+
   // タッチ入力
   tp_result = GFL_UI_TP_HitCont( tp_tbl );
 
@@ -1733,7 +1733,7 @@ static void InputNum_Proc( FIELD_ITEMMENU_WORK* pWork )
       pWork->InputNum -= 10;
     }
   }
-  
+
   // カンストチェック
   if(item->no < pWork->InputNum){
     pWork->InputNum = item->no;
@@ -1741,7 +1741,7 @@ static void InputNum_Proc( FIELD_ITEMMENU_WORK* pWork )
   else if(pWork->InputNum < 1){
     pWork->InputNum = 1;
   }
-  
+
   // 表示更新
   if(pWork->InputNum != backup)
   {
@@ -1764,12 +1764,12 @@ static void InputNum_Proc( FIELD_ITEMMENU_WORK* pWork )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ボタンの状態変化
+ *  @brief  ボタンの状態変化
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork
- *	@param	on_off 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
+ *  @param  on_off
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void InputNum_ButtonState( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
@@ -1789,7 +1789,7 @@ static void InputNum_ButtonState( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
   else
   {
     // 押せない表現
-    
+
     // ソートボタン
     GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 4 );
     // バーアイコン各種
@@ -1802,7 +1802,7 @@ static void InputNum_ButtonState( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
 
 #include "item/itemtype_def.h"
 //--------------------------------------------------------------
-///	種類別ソート用ワーク
+/// 種類別ソート用ワーク
 //==============================================================
 typedef struct {
   ITEM_ST st;
@@ -1811,12 +1811,12 @@ typedef struct {
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  MATH_QSort用関数 ポケット内のアイテム種類ソート
+ *  @brief  MATH_QSort用関数 ポケット内のアイテム種類ソート
  *
- *	@param	elem1
- *	@param	elem2 
+ *  @param  elem1
+ *  @param  elem2
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static s32 QSort_Type( void* elem1, void* elem2 )
@@ -1824,12 +1824,12 @@ static s32 QSort_Type( void* elem1, void* elem2 )
   ITEM_SORTDATA_TYPE* p1 = (ITEM_SORTDATA_TYPE*)elem1;
   ITEM_SORTDATA_TYPE* p2 = (ITEM_SORTDATA_TYPE*)elem2;
 
-	if( p1->type == p2->type )
-	{
+  if( p1->type == p2->type )
+  {
     // 種類が一致した場合は純粋なID比較
-	  if( p1->st.id == p2->st.id )
+    if( p1->st.id == p2->st.id )
     {
-		  return 0;
+      return 0;
     }
     else if( p1->st.id > p2->st.id )
     {
@@ -1839,25 +1839,25 @@ static s32 QSort_Type( void* elem1, void* elem2 )
     {
       return -1;
     }
-	}
-	else if( p1->type > p2->type )
-	{
-		return 1;
-	}
-	else
-	{
-		return -1;
-	}
+  }
+  else if( p1->type > p2->type )
+  {
+    return 1;
+  }
+  else
+  {
+    return -1;
+  }
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  MATH_QSort用関数 ポケット内のアイテム昇順ソート 
+ *  @brief  MATH_QSort用関数 ポケット内のアイテム昇順ソート
  *
- *	@param	void* elem1
- *	@param	elem2 
+ *  @param  void* elem1
+ *  @param  elem2
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static s32 QSort_ABC( void* elem1, void* elem2 )
@@ -1867,40 +1867,40 @@ static s32 QSort_ABC( void* elem1, void* elem2 )
   u16 prio1 = SORT_GetABCPrio( p1->id );
   u16 prio2 = SORT_GetABCPrio( p2->id );
 
-	if( prio1 == prio2 )
-	{
+  if( prio1 == prio2 )
+  {
     return 0;
   }
-	else if( prio1 > prio2 )
-	{
-		return 1;
-	}
-	else
-	{
-		return -1;
-	}
+  else if( prio1 > prio2 )
+  {
+    return 1;
+  }
+  else
+  {
+    return -1;
+  }
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ポケット内のアイテムを種別ソート
+ *  @brief  ポケット内のアイテムを種別ソート
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
-{ 
+{
   int i;
   int length;
   ITEM_SORTDATA_TYPE sort[ BAG_MYITEM_MAX ];
   ITEM_ST item[ BAG_MYITEM_MAX ];
 
   //取得
-  MYITEM_ITEM_STCopy(pWork->pMyItem, item, pWork->pocketno, TRUE);  
+  MYITEM_ITEM_STCopy(pWork->pMyItem, item, pWork->pocketno, TRUE);
   length = ITEMMENU_GetItemPocketNumber( pWork );
- 
+
   HOSAKA_Printf("種別ソート length=%d \n", length );
 
   // ソート用データ生成
@@ -1909,8 +1909,8 @@ static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
     sort[i].type  = ITEM_GetParam( item[i].id, ITEM_PRM_ITEM_TYPE, pWork->heapID );
 
     GFL_STD_MemCopy(
-        &item[i], 
-        &sort[i].st, 
+        &item[i],
+        &sort[i].st,
         sizeof(ITEM_ST) );
   }
 
@@ -1946,8 +1946,8 @@ static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
   for( i=0; i<length; i++ )
   {
     GFL_STD_MemCopy(
-        &sort[i].st, 
-        &item[i], 
+        &sort[i].st,
+        &item[i],
         sizeof(ITEM_ST) );
   }
 
@@ -1958,11 +1958,11 @@ static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ポケット内のアイテムをABCソート
+ *  @brief  ポケット内のアイテムをABCソート
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void SORT_ABC( FIELD_ITEMMENU_WORK* pWork )
@@ -1972,9 +1972,9 @@ static void SORT_ABC( FIELD_ITEMMENU_WORK* pWork )
   ITEM_ST item[ BAG_MYITEM_MAX ];
 
   //取得
-  MYITEM_ITEM_STCopy(pWork->pMyItem, item, pWork->pocketno, TRUE);  
+  MYITEM_ITEM_STCopy(pWork->pMyItem, item, pWork->pocketno, TRUE);
   length = ITEMMENU_GetItemPocketNumber( pWork );
- 
+
   HOSAKA_Printf("ABCソート length=%d \n", length );
 
 #ifdef PM_DEBUG
@@ -1989,7 +1989,7 @@ static void SORT_ABC( FIELD_ITEMMENU_WORK* pWork )
     }
   }
 #endif
-  
+
   // @TODO もしスタックを使い切ったらバッファ確保を考える
   MATH_QSort( (void*)item, length, sizeof(ITEM_ST), QSort_ABC, NULL );
 
@@ -2014,15 +2014,15 @@ static void SORT_ABC( FIELD_ITEMMENU_WORK* pWork )
 #include "itemsort_abc_def.h"
 //-----------------------------------------------------------------------------
 /**
- *	@brief  50音ソート用プライオリティを取得
+ *  @brief  50音ソート用プライオリティを取得
  *
- *	@param	u16 item_no 
+ *  @param  u16 item_no
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static u16 SORT_GetABCPrio( u16 item_no )
-{ 
+{
   GF_ASSERT( item_no-1 < ITEM_DATA_MAX && item_no != ITEM_DUMMY_DATA );
 
   // itemsort_abc_def.h で定義
@@ -2031,11 +2031,11 @@ static u16 SORT_GetABCPrio( u16 item_no )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ソートボタン処理
+ *  @brief  ソートボタン処理
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void SORT_Button( FIELD_ITEMMENU_WORK* pWork )
@@ -2062,7 +2062,7 @@ static void SORT_Button( FIELD_ITEMMENU_WORK* pWork )
   {
     // モードチェンジ
     pWork->sort_mode ^= 1;
-  } 
+  }
 
   // 再描画
   _windowRewrite( pWork );
@@ -2072,11 +2072,11 @@ static void SORT_Button( FIELD_ITEMMENU_WORK* pWork )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ソート モードをリセット（ポケット変更時など）
+ *  @brief  ソート モードをリセット（ポケット変更時など）
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void SORT_ModeReset( FIELD_ITEMMENU_WORK* pWork )
@@ -2098,11 +2098,11 @@ static void SORT_ModeReset( FIELD_ITEMMENU_WORK* pWork )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ソート アイコン監視
+ *  @brief  ソート アイコン監視
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void SORT_Draw( FIELD_ITEMMENU_WORK* pWork )
@@ -2124,16 +2124,16 @@ static void SORT_Draw( FIELD_ITEMMENU_WORK* pWork )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  キーステータスによる表示切替
+ *  @brief  キーステータスによる表示切替
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork
- *	@param	on_off TRUE:表示(キー操作) FALSE:非表示（タッチ操作）
+ *  @param  FIELD_ITEMMENU_WORK* pWork
+ *  @param  on_off TRUE:表示(キー操作) FALSE:非表示（タッチ操作）
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
-{ 
+{
   if( on_off )
   {
     GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
@@ -2160,24 +2160,24 @@ static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ショートカット設定
+ *  @brief  ショートカット設定
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork
- *	@param	pos 表示上の位置
+ *  @param  FIELD_ITEMMENU_WORK* pWork
+ *  @param  pos 表示上の位置
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void SHORTCUT_SetEventItem( FIELD_ITEMMENU_WORK* pWork, int pos )
 {
   // 表示上の位置から実体の位置へ座標変換
   pos += pWork->oamlistpos + 1;
-  
+
   if(pWork->pocketno == BAG_POKE_EVENT){
     int length = ITEMMENU_GetItemPocketNumber( pWork );
     ITEM_ST * item = ITEMMENU_GetItem( pWork, pos );
     SHORTCUT_ID shortcut_id = SHORTCUT_DATA_GetItemToShortcutID( item->id );
-  
+
     if(length <= pos){
       return;
     }
@@ -2193,7 +2193,7 @@ static void SHORTCUT_SetEventItem( FIELD_ITEMMENU_WORK* pWork, int pos )
         return;
       }
     }
-      
+
     if(ITEMMENU_GetPosCnvButtonItem(pWork,item->id)!=-1){//チェックつき
       GAMEDATA_SetShortCut( pWork->gamedata, shortcut_id, FALSE );
       ITEMMENU_RemoveCnvButtonItem(pWork,item->id);
@@ -2211,11 +2211,11 @@ static void SHORTCUT_SetEventItem( FIELD_ITEMMENU_WORK* pWork, int pos )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ポケット位置からショートカットIDを取得
+ *  @brief  ポケット位置からショートカットIDを取得
  *
- *	@param	int pocketno 
+ *  @param  int pocketno
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static SHORTCUT_ID SHORTCUT_GetPocket( int pocketno )
@@ -2247,11 +2247,11 @@ static SHORTCUT_ID SHORTCUT_GetPocket( int pocketno )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ポケットのYボタン登録
+ *  @brief  ポケットのYボタン登録
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 static void SHORTCUT_SetPocket( FIELD_ITEMMENU_WORK* pWork )
@@ -2271,11 +2271,11 @@ static void SHORTCUT_SetPocket( FIELD_ITEMMENU_WORK* pWork )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  チェックボックス描画
+ *  @brief  チェックボックス描画
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void BTN_DrawCheckBox( FIELD_ITEMMENU_WORK* pWork )
@@ -2293,13 +2293,13 @@ static void BTN_DrawCheckBox( FIELD_ITEMMENU_WORK* pWork )
 /**
  * アイテム使用エラーメッセージセット
  *
- * @param	myst	プレーヤーデータ
- * @param	buf		メッセージ展開場所
- * @param	item	アイテム番号
- * @param	err		エラーID
- * @param	heap	ヒープID
+ * @param myst  プレーヤーデータ
+ * @param buf   メッセージ展開場所
+ * @param item  アイテム番号
+ * @param err   エラーID
+ * @param heap  ヒープID
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 static void BAG_ItemUseErrorMsgSet( MYSTATUS * myst, STRBUF * buf, u16 item, u32 err, FIELD_ITEMMENU_WORK * pWork )
@@ -2308,16 +2308,16 @@ static void BAG_ItemUseErrorMsgSet( MYSTATUS * myst, STRBUF * buf, u16 item, u32
   STRBUF * str;
 
   switch( err ){
-  case ITEMCHECK_ERR_CYCLE_OFF:		// 自転車を降りれない
+  case ITEMCHECK_ERR_CYCLE_OFF:   // 自転車を降りれない
     GFL_MSG_GetString( pWork->MsgManager, msg_bag_058, buf );
     break;
-  case ITEMCHECK_ERR_COMPANION:		// 使用不可・連れ歩き
+  case ITEMCHECK_ERR_COMPANION:   // 使用不可・連れ歩き
     GFL_MSG_GetString( pWork->MsgManager, msg_bag_err_pair, buf );
     break;
-  case ITEMCHECK_ERR_DISGUISE:		// 使用不可・ロケット団変装中
+  case ITEMCHECK_ERR_DISGUISE:    // 使用不可・ロケット団変装中
     GFL_MSG_GetString( pWork->MsgManager, msg_bag_err_disguise, buf );
     break;
-  default:							// 使用不可・博士の言葉
+  default:              // 使用不可・博士の言葉
     wset = WORDSET_Create( pWork->heapID );
     str  = GFL_MSG_CreateString( pWork->MsgManager, msg_bag_059 );
     WORDSET_RegisterPlayerName( wset, 0, myst );
@@ -2332,15 +2332,15 @@ static void BAG_ItemUseErrorMsgSet( MYSTATUS * myst, STRBUF * buf, u16 item, u32
 /**
  * 会話（風）メッセージ表示
  *
- * @param	pWork		バッグ画面ワーク
- * @param	type	BAG_TALK_FULL=画面一杯, BAG_TALK_MINI=画面2/3
+ * @param pWork   バッグ画面ワーク
+ * @param type  BAG_TALK_FULL=画面一杯, BAG_TALK_MINI=画面2/3
  *
- * @return	メッセージID
+ * @return  メッセージID
  */
 //--------------------------------------------------------------------------------------------
 u8 Bag_TalkMsgPrint( BAG_WORK * pWork, int type )
 {
-  u8	idx;
+  u8  idx;
   GF_BGL_BMPWIN *win;
   if(type==BAG_TALK_FULL){
     win = &pWork->win[WIN_TALK];
@@ -2357,8 +2357,8 @@ u8 Bag_TalkMsgPrint( BAG_WORK * pWork, int type )
   MsgPrintSkipFlagSet( MSG_SKIP_ON );
   MsgPrintAutoFlagSet( MSG_AUTO_OFF );
 
-  idx = GF_STR_PrintSimple(	win, FONT_TALK,pWork->expb, 0, 0,
-                            CONFIG_GetMsgPrintSpeed( pWork->cfg ), BAG_TalkMsgCallBack );
+  idx = GF_STR_PrintSimple( win, FONT_TALK,pWork->expb, 0, 0,
+                            MSGSPEED_GetWait, BAG_TalkMsgCallBack );
 
   return idx;
 }
@@ -2367,15 +2367,15 @@ u8 Bag_TalkMsgPrint( BAG_WORK * pWork, int type )
 /**
  * メニュー：つかう
  *
- * @param	pWork		バッグ画面のワーク
+ * @param pWork   バッグ画面のワーク
  *
- * @return	移行するメインシーケンス
+ * @return  移行するメインシーケンス
  */
 //--------------------------------------------------------------------------------------------
 static int Bag_MenuUse( FIELD_ITEMMENU_WORK * pWork )
 {
-  ITEMCHECK_FUNC	check;
-  s32	id;
+  ITEMCHECK_FUNC  check;
+  s32 id;
 
   // どうぐ使用処理取得
   id    = ITEM_GetParam( pWork->ret_item, ITEM_PRM_FIELD, pWork->heapID );
@@ -2384,7 +2384,7 @@ static int Bag_MenuUse( FIELD_ITEMMENU_WORK * pWork )
 
   // どうぐ使用チェック
   if( check != NULL ){
-    u32	ret = check( &pWork->icpWork );
+    u32 ret = check( &pWork->icpWork );
     if( ret != ITEMCHECK_TRUE ){
       BAG_ItemUseErrorMsgSet( pWork->mystatus, pWork->expb, pWork->ret_item, ret, pWork );
       pWork->midx = Bag_TalkMsgPrint( pWork, BAG_TALK_FULL );
@@ -2401,33 +2401,33 @@ static int Bag_MenuUse( FIELD_ITEMMENU_WORK * pWork )
 //--------------------------------------------------------------------------------------------
 /**
  * Useメニュー作成
- * @param	pWork		バッグ画面のワーク
- * @return	none
+ * @param pWork   バッグ画面のワーク
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 
 #if 0
 
 int (*MenuFuncTbl[])( FIELD_ITEMMENU_WORK *pWork)={
-  //Bag_MenuUse,		// つかう
-  //Bag_MenuUse,		// おりる
-  //Bag_MenuUse,		// みる
-  //Bag_MenuUse,		// うめる
-  //Bag_MenuUse,		// ひらく
-  //Bag_MenuSub,		// すてる
-  //Bag_MenuCnvSet,		// とうろく
-  //Bag_MenuCnvDel,		// かいじょ
-  //Bag_MenuSet,		// もたせる
-  //Bag_MenuTag,		// タグをみる
-  //Bag_MenuKettei,		// けってい
-  NULL,				// やめる
-  //Bag_MenuItemMove,	// いどう
-  NULL,				// うる
-  //Bag_MenuPlanterUse,	// つかう（木の実プランター用）
-  //Bag_MenuUse,		// とめる
+  //Bag_MenuUse,    // つかう
+  //Bag_MenuUse,    // おりる
+  //Bag_MenuUse,    // みる
+  //Bag_MenuUse,    // うめる
+  //Bag_MenuUse,    // ひらく
+  //Bag_MenuSub,    // すてる
+  //Bag_MenuCnvSet,   // とうろく
+  //Bag_MenuCnvDel,   // かいじょ
+  //Bag_MenuSet,    // もたせる
+  //Bag_MenuTag,    // タグをみる
+  //Bag_MenuKettei,   // けってい
+  NULL,       // やめる
+  //Bag_MenuItemMove, // いどう
+  NULL,       // うる
+  //Bag_MenuPlanterUse, // つかう（木の実プランター用）
+  //Bag_MenuUse,    // とめる
 };
 
-#endif 
+#endif
 
 #if 1
 
@@ -2442,9 +2442,9 @@ static BOOL BAGMAIN_NPlanterUseCheck( u16 pocket, u16 item )
 
 static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
 {
-  int	 i;
+  int  i;
   void * itemdata;
-  u8	pocket;
+  u8  pocket;
   ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
 
   if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
@@ -2485,9 +2485,9 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
         {
           tbl[BAG_MENU_USE] = BAG_MENU_HIRAKU;
         }
-        //			else if( pWork->ret_item == ITEM_gbPUREIYAA && Snd_GameBoyFlagCheck() == 1 )
-        //		{
-        //		tbl[BAG_MENU_USE] = BAG_MENU_TOMERU;
+        //      else if( pWork->ret_item == ITEM_gbPUREIYAA && Snd_GameBoyFlagCheck() == 1 )
+        //    {
+        //    tbl[BAG_MENU_USE] = BAG_MENU_TOMERU;
         //}
         else
         {
@@ -2557,7 +2557,7 @@ static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* pWork)
 
 
   {
-    u8	tbl[BAG_MENUTBL_MAX]={255, 255, 255, 255, 255};
+    u8  tbl[BAG_MENUTBL_MAX]={255, 255, 255, 255, 255};
     int strtbl[]={msg_bag_001,msg_bag_007,msg_bag_017,mes_bag_104,mes_bag_105,
       msg_bag_002,msg_bag_003,msg_bag_019,msg_bag_004,msg_bag_005,msg_bag_006,
       msg_bag_009, msg_bag_094, mes_shop_103,msg_bag_001,msg_bag_menu_ex_01};
@@ -2582,7 +2582,7 @@ static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* pWork)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	便利登録されていたら順番を返す
+ *  @brief  便利登録されていたら順番を返す
  */
 //-----------------------------------------------------------------------------
 
@@ -2599,7 +2599,7 @@ int ITEMMENU_GetPosCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	チェックを追加
+ *  @brief  チェックを追加
  */
 //-----------------------------------------------------------------------------
 
@@ -2617,7 +2617,7 @@ BOOL ITEMMENU_AddCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	チェックを消す
+ *  @brief  チェックを消す
  */
 //-----------------------------------------------------------------------------
 
@@ -2634,11 +2634,11 @@ void ITEMMENU_RemoveCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ボタンイベントコールバック
+ *  @brief  ボタンイベントコールバック
  *
- *	@param	bttnid		ボタンID
- *	@param	event		イベント種類
- *	@param	p_work		ワーク
+ *  @param  bttnid    ボタンID
+ *  @param  event   イベント種類
+ *  @param  p_work    ワーク
  */
 //-----------------------------------------------------------------------------
 static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
@@ -2652,7 +2652,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     return;
   }
 
-  
+
   if(BAG_POKE_MAX > bttnid){
     int id2no[]={1,2,3,4,0};
     pocketno = id2no[bttnid];  //どうぐのあたりが広い為、順番を最後にしている
@@ -2707,7 +2707,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
           return;
         }
       }
-      
+
       _ItemChange(pWork, nowno, ITEMMENU_GetItemIndex(pWork));
       //      ITEMDISP_scrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
       _windowRewrite(pWork);
@@ -2728,7 +2728,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     int no = bttnid - BUTTONID_CHECK_AREA;
     SHORTCUT_SetEventItem( pWork, no );
   }
-  
+
   if(pocketno != -1){
     // ポケットカーソル移動
     _pocketCursorChange(pWork, pWork->pocketno, pocketno);
@@ -2736,7 +2736,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     // ソートボタン表示切替
     SORT_ModeReset( pWork );
     _windowRewrite(pWork);
-    
+
     KTST_SetDraw( pWork, FALSE );
   }
 
@@ -2751,11 +2751,11 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void	_VBlank( GFL_TCB *tcb, void *work )
+static void _VBlank( GFL_TCB *tcb, void *work )
 {
   FIELD_ITEMMENU_WORK* pWork = work;
 
-  GFL_CLACT_SYS_VBlankFunc();	//セルアクターVBlank
+  GFL_CLACT_SYS_VBlankFunc(); //セルアクターVBlank
   if(pWork->bChange){
     ITEMDISP_CellVramTrans(pWork);
     pWork->bChange = FALSE;
@@ -2765,17 +2765,17 @@ static void	_VBlank( GFL_TCB *tcb, void *work )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *  @brief
  *
- *	@param	pWork
+ *  @param  pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _startState(FIELD_ITEMMENU_WORK* pWork)
 {
   ITEMDISP_SetVisible();
-  
+
   // 初期化
   KTST_SetDraw( pWork ,GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY );
 
@@ -2802,7 +2802,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ITEMMENU, 0x28000 );
   pWork = GFL_PROC_AllocWork( proc, sizeof(FIELD_ITEMMENU_WORK), HEAPID_ITEMMENU );
   GFL_STD_MemClear( pWork, sizeof(FIELD_ITEMMENU_WORK) );
-  
+
   //-------------------------------------
   // メンバ初期化
   //-------------------------------------
@@ -2879,7 +2879,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
   ITEMDISP_BarMessageCreate( pWork );
 
-	pWork->pAppTaskRes	= APP_TASKMENU_RES_Create( GFL_BG_FRAME3_M, _SUBLIST_NORMAL_PAL,pWork->fontHandle, pWork->SysMsgQue, pWork->heapID  );
+  pWork->pAppTaskRes  = APP_TASKMENU_RES_Create( GFL_BG_FRAME3_M, _SUBLIST_NORMAL_PAL,pWork->fontHandle, pWork->SysMsgQue, pWork->heapID  );
 
   // ネットワーク初期化
   GFL_NET_ChangeIconPosition(256-16, 0);
@@ -2942,7 +2942,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
   MYITEM_FieldBagPocketSet(pWork->pBagCursor, pWork->pocketno);
   MYITEM_FieldBagCursorSet(pWork->pBagCursor, pWork->pocketno, pWork->curpos, pWork->oamlistpos+1 );
 
-	APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
+  APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
 
   ITEMDISP_upMessageDelete(pWork);
   ITEMDISP_graphicDelete(pWork);

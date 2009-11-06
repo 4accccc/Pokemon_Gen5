@@ -165,11 +165,11 @@ typedef struct _CONFIG_MAIN_DAT
   u32 wincgx_f;
 
   CONFIG_PARAM  param;
-  CONFIG				*save;
+  CONFIG        *save;
 
   ///メッセージリソース
   GFL_MSGDATA*  pMsg;
-  
+
   void* pScrBuf;
   NNSG2dScreenData* pScr01;
 
@@ -221,7 +221,7 @@ static GFL_PROC_RESULT ConfigProc_End( GFL_PROC *proc,int *seq, void *pwk, void 
 //================================================================
 ///データ定義エリア
 //================================================================
-const GFL_PROC_DATA ConfigPanelProcData = 
+const GFL_PROC_DATA ConfigPanelProcData =
 {
   ConfigProc_Init,
   ConfigProc_Main,
@@ -248,16 +248,16 @@ GFL_PROC_RESULT ConfigProc_Init( GFL_PROC *proc,int *seq, void *pwk, void *work)
 {
   CONFIG_MAIN_DAT *wk = NULL;
   CONFIG * sp;
-  
+
   sp = (CONFIG*)pwk;
 
   //ヒープ作成
   GFL_HEAP_CreateHeap(GFL_HEAPID_APP,HEAPID_CONFIG,0x10000 + 0x8000);
-  
+
   wk = GFL_PROC_AllocWork( proc,sizeof(CONFIG_MAIN_DAT),HEAPID_CONFIG);
   GFL_STD_MemFill(wk,0,sizeof(CONFIG_MAIN_DAT));
-  
-  
+
+
   wk->heapID = HEAPID_CONFIG;
   if (sp == NULL) {
     //とりあえず
@@ -332,7 +332,7 @@ GFL_PROC_RESULT ConfigProc_End( GFL_PROC *proc,int *seq, void *pwk, void *work)
   //ワークエリア解放
   GFL_PROC_FreeWork(proc);
 
-  
+
   GFL_HEAP_DeleteHeap(wk->heapID);
 
   return GFL_PROC_RES_FINISH;
@@ -375,7 +375,7 @@ GFL_PROC_RESULT ConfigProc_Main( GFL_PROC *proc,int *seq, void *pwk, void *work)
       (GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL) ){
 
       result = ConfigDiffParam( wk );
-      
+
       // 変更があったかチェック
       if( result == TRUE ){
         wk->seq = CONFIG_SEQ_SETCHECKINIT;
@@ -392,7 +392,7 @@ GFL_PROC_RESULT ConfigProc_Main( GFL_PROC *proc,int *seq, void *pwk, void *work)
     if((GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE) && (wk->line == (MENU_LINE_MAX-1)))
     {
       result = ConfigDiffParam( wk );
-      
+
       // 変更があったかチェック
       if( result == TRUE )
       {
@@ -416,7 +416,7 @@ GFL_PROC_RESULT ConfigProc_Main( GFL_PROC *proc,int *seq, void *pwk, void *work)
     ConfigKeyIn(wk);
 
     return GFL_PROC_RES_CONTINUE;
-    
+
   case CONFIG_SEQ_SETCHECKINIT:
     // 反映させるか聞く
     MsgPrintSkipFlagSet(MSG_SKIP_ON); // スキップできる
@@ -431,7 +431,7 @@ GFL_PROC_RESULT ConfigProc_Main( GFL_PROC *proc,int *seq, void *pwk, void *work)
       wk->seq = CONFIG_SEQ_SETWAIT;
     }
     return GFL_PROC_RES_CONTINUE;
-    
+
   case CONFIG_SEQ_SETWAIT:
     // 選択してもらう
     yesno_res = ConfigYesNoWinMain( wk );
@@ -450,7 +450,7 @@ GFL_PROC_RESULT ConfigProc_Main( GFL_PROC *proc,int *seq, void *pwk, void *work)
       wk->seq = CONFIG_SEQ_FADEOUT;
     }
     return GFL_PROC_RES_CONTINUE;
-  
+
   case CONFIG_SEQ_FADEOUT:
 #if 0
     //add pl MSGフリーズ対策 メッセージ表示タスク強制停止 080701 kaga
@@ -458,7 +458,7 @@ GFL_PROC_RESULT ConfigProc_Main( GFL_PROC *proc,int *seq, void *pwk, void *work)
       GF_STR_PrintForceStop( wk->msg_no );
     }
 #endif
-    
+
     WIPE_SYS_Start(WIPE_PATTERN_M,
         WIPE_TYPE_FADEOUT,
         WIPE_TYPE_FADEOUT,0x0000,COMM_BRIGHTNESS_SYNC,1,wk->heapID
@@ -538,14 +538,14 @@ static int ConfigInitCommon(CONFIG_MAIN_DAT *wk)
 {
   switch(wk->sub_seq){
   case 0:
-  
+
     GFL_DISP_GX_InitVisibleControl();
     GFL_DISP_GXS_InitVisibleControl();
 
     //Bankセット
     ConfigVramBankSet();
 
-		GFL_DISP_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
+    GFL_DISP_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
 
     WIPE_ResetWndMask(WIPE_DISP_MAIN);
     WIPE_ResetWndMask(WIPE_DISP_SUB);
@@ -581,7 +581,7 @@ static int ConfigInitCommon(CONFIG_MAIN_DAT *wk)
     wk->vintr_tcb = GFUser_VIntr_CreateTCB(ConfigVBlank, wk, 0 );
     wk->sub_seq = 0;
     return 1;
-    
+
   }
   ++wk->sub_seq;
   return 0;
@@ -595,7 +595,7 @@ static int ConfigInitCommon(CONFIG_MAIN_DAT *wk)
 static int ConfigReleaseCommon(CONFIG_MAIN_DAT *wk)
 {
   int i = 0,j = 0;
-  
+
   switch(wk->sub_seq){
   case 0:
     //Bmpウィンドウ破棄
@@ -615,7 +615,7 @@ static int ConfigReleaseCommon(CONFIG_MAIN_DAT *wk)
     break;
   case 1:
     GFL_TCB_DeleteTask(wk->vintr_tcb);
-  
+
     GFL_DISP_GX_InitVisibleControl();
     GFL_DISP_GXS_InitVisibleControl();
     GX_SetVisiblePlane(0);
@@ -644,7 +644,7 @@ static void ConfigBGLInit(CONFIG_MAIN_DAT* wk)
     };
     GFL_BG_SetBGMode(&BGsys_data);
   }
-  
+
   {
   GFL_BG_BGCNT_HEADER TextBgCntDat[] = {
     { //MAIN BG0  選択枠線
@@ -711,15 +711,15 @@ static void Config2DGraInit(CONFIG_MAIN_DAT* wk)
   void* pSrc;
   NNSG2dCharacterData* pChar;
   NNSG2dPaletteData*  pPal;
-  
+
   handle = GFL_ARC_OpenDataHandle(ARCID_CONFIG_GRA,wk->heapID);
 
   //キャラクタ転送
   size = GFL_ARC_GetDataSizeByHandle(handle,NARC_config_gra_config01_ncgr);
   pSrc = GFL_HEAP_AllocMemoryLo(wk->heapID,size);
   GFL_ARC_LoadDataByHandle(handle,NARC_config_gra_config01_ncgr,(void*)pSrc);
-  
-  NNS_G2dGetUnpackedCharacterData(pSrc,&pChar); 
+
+  NNS_G2dGetUnpackedCharacterData(pSrc,&pChar);
   GFL_BG_LoadCharacter(GFL_BG_FRAME0_M,pChar->pRawData,pChar->szByte,0);
   GFL_BG_LoadCharacter(GFL_BG_FRAME0_S,pChar->pRawData,pChar->szByte,0);
   GFL_HEAP_FreeMemory(pSrc);
@@ -738,13 +738,13 @@ static void Config2DGraInit(CONFIG_MAIN_DAT* wk)
   size = GFL_ARC_GetDataSizeByHandle(handle,NARC_config_gra_config01_nscr);
   wk->pScrBuf = GFL_HEAP_AllocMemory(wk->heapID,size);
   GFL_ARC_LoadDataByHandle(handle,NARC_config_gra_config01_nscr,(void*)wk->pScrBuf);
-  NNS_G2dGetUnpackedScreenData(wk->pScrBuf,&(wk->pScr01)); 
+  NNS_G2dGetUnpackedScreenData(wk->pScrBuf,&(wk->pScr01));
 
   GFL_ARC_CloseDataHandle( handle );
-  
+
   GFL_BG_FillScreen(GFL_BG_FRAME2_M,0x0001,0,0,32,32,GFL_BG_SCRWRT_PALIN );
   GFL_BG_FillScreen(GFL_BG_FRAME0_S,0x0001,0,0,32,32,GFL_BG_SCRWRT_PALIN );
-  
+
   //BG描画
   GFL_BG_WriteScreenFree(GFL_BG_FRAME0_M,
       0,0,32,2,
@@ -752,7 +752,7 @@ static void Config2DGraInit(CONFIG_MAIN_DAT* wk)
       0,0,
       wk->pScr01->screenWidth/8,wk->pScr01->screenHeight/8);
   GFL_BG_SetScroll(GFL_BG_FRAME0_M,GFL_BG_SCROLL_Y_SET,-MENU_WIN_OFSY);
-  
+
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_M);
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME0_M);
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME0_S);
@@ -794,16 +794,16 @@ static void ConfigBmpWinInit(CONFIG_MAIN_DAT* wk)
       BMPL_MENU_WIN_CGX, MENU_TYPE_SYSTEM, wk->heapID);
   BmpWinFrame_CgxSet(BMPL_MENU_FRM,
       BMPL_TALK_WIN_CGX, MENU_TYPE_SYSTEM, wk->heapID);
-  
+
   //フォント用パレットセット
   //フォントパレット転送
-  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 
+  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
     0x20*FONT_SYS_PAL, 0x20, HEAPID_CONFIG);
-  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, 
+  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
     0x20*FONT_SYS_PAL, 0x20, HEAPID_CONFIG);
-  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 
+  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
     0x20*FONT_TALK_PAL, 0x20, HEAPID_CONFIG);
-  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, 
+  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
     0x20*FONT_TALK_PAL, 0x20, HEAPID_CONFIG);
 
 
@@ -817,7 +817,7 @@ static void ConfigBmpWinInit(CONFIG_MAIN_DAT* wk)
   GFL_BMPWIN_MakeScreen(wk->win[WIN_SUM]);
   GFL_BMPWIN_MakeScreen(wk->win[WIN_MENU]);
   GFL_BMPWIN_MakeScreen(wk->win[WIN_TITLE]);
-  
+
   //ウィンドウ描画
   BmpWinFrame_Write( wk->win[WIN_MENU], WINDOW_TRANS_ON, BMPL_MENU_WIN_CGX, BMPL_MENU_WIN_PAL );
   BmpWinFrame_Write( wk->win[WIN_SUM], WINDOW_TRANS_ON, BMPL_TALK_WIN_CGX, BMPL_TALK_WIN_PAL);
@@ -831,7 +831,7 @@ static void ConfigBmpWinInit(CONFIG_MAIN_DAT* wk)
 static void ConfigBmpWinRelease(CONFIG_MAIN_DAT* wk)
 {
   u16 i;
-  
+
   //ウィンドウクリア
   BmpWinFrame_Clear(wk->win[WIN_MENU], WINDOW_TRANS_ON);
   BmpWinFrame_Clear(wk->win[WIN_SUM], WINDOW_TRANS_ON);
@@ -869,7 +869,7 @@ static void ConfigBmpWinWriteFirst(CONFIG_MAIN_DAT* wk)
   GFL_BMP_DATA * title_bmp;
 
   title_bmp = GFL_BMPWIN_GetBmp(wk->win[WIN_TITLE]);
-  
+
   buf = GFL_STR_CreateBuffer(SUM_STRSIZ,wk->heapID);
 
   //せっていをかえる
@@ -878,13 +878,13 @@ static void ConfigBmpWinWriteFirst(CONFIG_MAIN_DAT* wk)
   ofs = 2;
   GFL_FONTSYS_SetColor(FBMP_COL_BLACK,FBMP_COL_BLK_SDW,FBMP_COL_NULL);
   PRINTSYS_Print( title_bmp, ofs, 2, buf, wk->hSysFont);
-  
+
   //メニュー
   ofs = 4;
   for(i = 0;i < MENU_LINE_MAX;i++){
     GFL_STR_ClearBuffer(buf);
     GFL_MSG_GetString(wk->pMsg,menu_str[i],buf);
-  
+
     GFL_FONTSYS_SetDefaultColor();
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->win[WIN_MENU]), ofs, 16*i, buf, wk->hSysFont);
   }
@@ -894,7 +894,7 @@ static void ConfigBmpWinWriteFirst(CONFIG_MAIN_DAT* wk)
 
   //サムネイル
   ConfigBmpWinWriteSum( wk, 0, TRUE );
-  
+
   GFL_BMPWIN_TransVramCharacter(wk->win[WIN_TITLE]);
   GFL_BMPWIN_TransVramCharacter(wk->win[WIN_MENU]);
 
@@ -930,7 +930,7 @@ static void ConfigMenuStrGet(CONFIG_MAIN_DAT* wk)
     mes_config_sm05_00,
 #if USE_KANJI_MODE
     mes_config_sm07_01,
-#else 
+#else
     mes_config_sm06_00,
 #endif
     0,
@@ -977,7 +977,7 @@ static void ConfigBmpWinWriteMenu(CONFIG_MAIN_DAT* wk,u16 idx)
   if(idx == MENU_WIN){
     GFL_FONTSYS_SetColor(FBMP_COL_RED,FBMP_COL_RED_SDW,FBMP_COL_WHITE);
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->win[WIN_MENU]),
-        1*MENU_SEL_DSIZ+MENU_SEL_OFSX, 
+        1*MENU_SEL_DSIZ+MENU_SEL_OFSX,
         MENU_SEL_ASIZY*idx+MENU_SEL_OFSY,
         wk->menu[idx].dat[wk->menu[idx].sel], wk->hSysFont);
     GFL_BMPWIN_TransVramCharacter(wk->win[WIN_MENU]);
@@ -1017,7 +1017,7 @@ static void ConfigBmpWinWriteMenu(CONFIG_MAIN_DAT* wk,u16 idx)
               MENU_SEL_ASIZY*idx+MENU_SEL_OFSY,
               wk->menu[idx].dat[i],
               wk->hSysFont);
-      
+
       x_ofs += PRINTSYS_GetStrWidth(wk->menu[idx].dat[i], wk->hSysFont, 0) + 12;
     }else{
       PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->win[WIN_MENU]),
@@ -1053,7 +1053,7 @@ static void ConfigBmpWinWriteMessege( CONFIG_MAIN_DAT* wk, u16 msg_idx, BOOL all
   }
 
   // 現在のメッセージスピード設定
-  msg_speed = CONFIG_GetMsgPrintSpeed( wk->save );
+  msg_speed = MSGSPEED_GetWait();
 
   // BMPのクリーン
   //GF_BGL_BmpWinDataFill( &(wk->win[WIN_SUM]), FBMP_COL_WHITE);
@@ -1121,15 +1121,15 @@ static BOOL ConfigBmpWinWriteMessegeEndCheck( const CONFIG_MAIN_DAT* cp_wk )
 static void ConfigKeyIn(CONFIG_MAIN_DAT* wk)
 {
   CONFIG_MENU *mp;
-  
+
   mp = &(wk->menu[wk->line]);
   if(wk->line != MENU_MAX){ //決定ラインの時は左右キー入力無効
     if(GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT){
-      mp->sel = (mp->sel+1)%mp->num;  
+      mp->sel = (mp->sel+1)%mp->num;
       ConfigBmpWinWriteMenu(wk,wk->line);
       Snd_PlaySE(SEQ_SE_DP_SELECT);
     }else if(GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT){
-      mp->sel = (mp->sel+mp->num-1)%mp->num;  
+      mp->sel = (mp->sel+mp->num-1)%mp->num;
       ConfigBmpWinWriteMenu(wk,wk->line);
       Snd_PlaySE(SEQ_SE_DP_SELECT);
     }
@@ -1197,12 +1197,12 @@ static void ConfigYesNoWinInit( CONFIG_MAIN_DAT* p_wk )
     BMPL_YESNO_CSX, BMPL_YESNO_CSY,
     BMPL_YESNO_PAL, BMPL_YESNO_CGX
   };
-  p_wk->pYesNoWork = BmpYesNoSelectInit( p_wk->bgl, &c_data, 
+  p_wk->pYesNoWork = BmpYesNoSelectInit( p_wk->bgl, &c_data,
       BMPL_MENU_WIN_CGX, BMPL_MENU_WIN_PAL, p_wk->heapID );
 #endif
   static const BMPWIN_YESNO_DAT c_data =
   {
-    BMPL_YESNO_FRM , 
+    BMPL_YESNO_FRM ,
     BMPL_YESNO_CX , BMPL_YESNO_CY ,
     BMPL_YESNO_PAL, BMPL_YESNO_CGX ,
   };
@@ -1251,7 +1251,7 @@ static void ConfigBmpWinWriteSum( CONFIG_MAIN_DAT* wk,u16 line, BOOL allput )
 #endif
     mes_config_comment10,
   };
-  
+
   //サムネイル
   ConfigBmpWinWriteMessege( wk, line_msg[line], allput );
 }

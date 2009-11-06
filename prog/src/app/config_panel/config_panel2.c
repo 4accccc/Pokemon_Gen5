@@ -16,6 +16,7 @@
 #include "system/main.h"  //HEAPID
 #include "system/bmp_winframe.h"
 #include "sound/pm_sndsys.h"
+#include "gamesystem/msgspeed.h"
 
 //module
 #include "app/app_menu_common.h"
@@ -3643,7 +3644,7 @@ static BOOL CONFIGPARAM_IsItemSetting( const CONFIG_PARAM *cp_wk, CONFIG_ITEM it
 //-----------------------------------------------------------------------------
 static int CONFIGPARAM_GetMsgSpeed( const CONFIG_PARAM *cp_wk )
 {
-  return CONFIG_GetMsgPrintSpeed( cp_wk->p_savedata );
+  return MSGSPEED_GetWait();
 }
 //----------------------------------------------------------------------------
 /**

@@ -1,9 +1,9 @@
 //============================================================================================
 /**
- * @file	wifi_p2pmatch.c
- * @bfief	WIFIP2Pマッチング画面
- * @author	k.ohno
- * @date	06.04.07
+ * @file  wifi_p2pmatch.c
+ * @bfief WIFIP2Pマッチング画面
+ * @author  k.ohno
+ * @date  06.04.07
  */
 //============================================================================================
 
@@ -37,7 +37,7 @@
 #include "font/font.naix"
 #include "print/str_tool.h"
 
-#include "wifip2pmatch.naix"			// グラフィックアーカイブ定義
+#include "wifip2pmatch.naix"      // グラフィックアーカイブ定義
 #include "comm_command_wfp2pmf.h"  //２Ｄフィールド
 #include "comm_command_wfp2pmf_func.h"  //２Ｄフィールド
 #include "msg/msg_wifi_lobby.h"
@@ -68,18 +68,18 @@
 #define _SE_DESIDE (0)
 #define _SE_OFFER (0)
 #define _SE_TBLCHANGE (0)
-#define	FBMP_COL_NULL		(0)
-#define	FBMP_COL_BLACK		(1)
-#define	FBMP_COL_BLK_SDW	(2)
-#define	FBMP_COL_RED		(3)
-#define	FBMP_COL_RED_SDW	(4)
-#define	FBMP_COL_GREEN		(5)
-#define	FBMP_COL_GRN_SDW	(6)
-#define	FBMP_COL_BLUE		(7)
-#define	FBMP_COL_BLU_SDW	(8)
-#define	FBMP_COL_PINK		(9)
-#define	FBMP_COL_PNK_SDW	(10)
-#define	FBMP_COL_WHITE		(15)
+#define FBMP_COL_NULL   (0)
+#define FBMP_COL_BLACK    (1)
+#define FBMP_COL_BLK_SDW  (2)
+#define FBMP_COL_RED    (3)
+#define FBMP_COL_RED_SDW  (4)
+#define FBMP_COL_GREEN    (5)
+#define FBMP_COL_GRN_SDW  (6)
+#define FBMP_COL_BLUE   (7)
+#define FBMP_COL_BLU_SDW  (8)
+#define FBMP_COL_PINK   (9)
+#define FBMP_COL_PNK_SDW  (10)
+#define FBMP_COL_WHITE    (15)
 #define BGM_FADE_VCHAT_TIME (0)
 #define BGM_WIFILOBBY_VOL (0)
 #define BGM_FADEIN_START_VOL_NOW (0)
@@ -111,11 +111,11 @@ static void CommInfoFinalize(void){}
 static void Snd_SePlay(int a){}
 static void Snd_BgmFadeOut( int a, int b){}
 static void Snd_BgmFadeIn( int a, int b, int c){}
-static void	FONTOAM_OAMDATA_Delete( void* x){}
+static void FONTOAM_OAMDATA_Delete( void* x){}
 
 
 
-#define	COMM_BRIGHTNESS_SYNC	( 1 )	// 基本の輝度変更Sync数
+#define COMM_BRIGHTNESS_SYNC  ( 1 ) // 基本の輝度変更Sync数
 #define _BMPMENULIST_FONTSIZE   (12)
 
 // WIFI2DMAPシステムオーバーレイ
@@ -124,20 +124,20 @@ static void	FONTOAM_OAMDATA_Delete( void* x){}
 // WIFI　対戦AUTOﾓｰﾄﾞデバック
 #ifdef _WIFI_DEBUG_TUUSHIN
 extern WIFI_DEBUG_BATTLE_WK WIFI_DEBUG_BATTLE_Work;
-#endif	//_WIFI_DEBUG_TUUSHIN
+#endif  //_WIFI_DEBUG_TUUSHIN
 
 
 //-------------------------------------
-///	マッチング用拡張ヒープサイズ
+/// マッチング用拡張ヒープサイズ
 //=====================================
-#define WIFI_P2PMATCH_EXHEAP_SIZE	( 0x10000 )
+#define WIFI_P2PMATCH_EXHEAP_SIZE ( 0x10000 )
 
 
 
 
-///	ＢＧパレット定義 2005/09/15
+/// ＢＧパレット定義 2005/09/15
 //
-//	0 ～ 5  : フィールドマップＢＧ用
+//  0 ～ 5  : フィールドマップＢＧ用
 //  6       : 天候
 //  7       : 地名ウインドウ
 //  8       : 看板ウインドウ（マップ、標識など）
@@ -146,159 +146,159 @@ extern WIFI_DEBUG_BATTLE_WK WIFI_DEBUG_BATTLE_Work;
 //  11      : メニューウインドウ
 //  12      : メッセージフォント
 //  13      : システムフォント
-//	14		: 未使用（ローカライズ用）
-//	15		: デバッグ用（製品版では未使用）
-#define FLD_WEATHER_PAL      (  6 )			//  天候
+//  14    : 未使用（ローカライズ用）
+//  15    : デバッグ用（製品版では未使用）
+#define FLD_WEATHER_PAL      (  6 )     //  天候
 #define FLD_PLACENAME_PAL    (  7 )         //  地名ウインドウ
 #define FLD_BOARD1FRAME_PAL  (  8 )         //  看板ウインドウ（マップ、標識など）
 #define FLD_BOARD2FRAME_PAL  (  9 )         //  看板ウインドウ（枠、フォント）
 #define FLD_MESFRAME_PAL     ( 10 )         //  メッセージウインドウ
 #define FLD_MENUFRAME_PAL    ( 11 )         //  メニューウインドウ
 #define FLD_MESFONT_PAL      ( 12 )         //  メッセージフォント
-#define FLD_SYSFONT_PAL	     ( 13 )         //  システムフォント
-#define FLD_LOCALIZE_PAL     ( 14 )         //	未使用（ローカライズ用）
-#define FLD_DEBUG_PAL        ( 15 )         //	デバッグ用（製品版では未使用）
+#define FLD_SYSFONT_PAL      ( 13 )         //  システムフォント
+#define FLD_LOCALIZE_PAL     ( 14 )         //  未使用（ローカライズ用）
+#define FLD_DEBUG_PAL        ( 15 )         //  デバッグ用（製品版では未使用）
 
 /*********************************************************************************************
-	メイン画面のCGX割り振り		2006/01/12
+  メイン画面のCGX割り振り   2006/01/12
 
-		ウィンドウ枠	：	409 - 511
-			会話、メニュー、地名、看板
+    ウィンドウ枠  ：  409 - 511
+      会話、メニュー、地名、看板
 
-		BMPウィンドウ１	：	297 - 408
-			会話（最大）、看板、残りボール数
+    BMPウィンドウ１ ：  297 - 408
+      会話（最大）、看板、残りボール数
 
-		BMPウィンドウ２	：	55 - 296
-			メニュー（最大）、はい/いいえ、地名
+    BMPウィンドウ２ ：  55 - 296
+      メニュー（最大）、はい/いいえ、地名
 
  *********************************************************************************************/
 
 /*********************************************************************************************
-	ウィンドウ枠
+  ウィンドウ枠
  *********************************************************************************************/
 // 会話ウィンドウキャラ
-#define	TALK_WIN_CGX_SIZE	( 18+12 )
-#define	TALK_WIN_CGX_NUM	( 512 - TALK_WIN_CGX_SIZE )
-#define	TALK_WIN_PAL		( 10 )
+#define TALK_WIN_CGX_SIZE ( 18+12 )
+#define TALK_WIN_CGX_NUM  ( 512 - TALK_WIN_CGX_SIZE )
+#define TALK_WIN_PAL    ( 10 )
 
 // メニューウィンドウキャラ
-#define	MENU_WIN_CGX_SIZE	( 9 )
-#define	MENU_WIN_CGX_NUM	( TALK_WIN_CGX_NUM - MENU_WIN_CGX_SIZE )
-#define	MENU_WIN_PAL		( 11 )
+#define MENU_WIN_CGX_SIZE ( 9 )
+#define MENU_WIN_CGX_NUM  ( TALK_WIN_CGX_NUM - MENU_WIN_CGX_SIZE )
+#define MENU_WIN_PAL    ( 11 )
 
 // 地名ウィンドウキャラ
-#define	PLACE_WIN_CGX_SIZE	( 10 )
-#define	PLACE_WIN_CGX_NUM	( MENU_WIN_CGX_NUM - PLACE_WIN_CGX_SIZE )
-#define	PLACE_WIN_PAL		( 7 )
+#define PLACE_WIN_CGX_SIZE  ( 10 )
+#define PLACE_WIN_CGX_NUM ( MENU_WIN_CGX_NUM - PLACE_WIN_CGX_SIZE )
+#define PLACE_WIN_PAL   ( 7 )
 
 // 看板ウィンドウキャラ
-#define	BOARD_WIN_CGX_SIZE	( 18+12 + 24 )
-#define	BOARD_WIN_CGX_NUM	( PLACE_WIN_CGX_NUM - BOARD_WIN_CGX_SIZE )
-#define	BOARD_WIN_PAL		( FLD_BOARD2FRAME_PAL )
+#define BOARD_WIN_CGX_SIZE  ( 18+12 + 24 )
+#define BOARD_WIN_CGX_NUM ( PLACE_WIN_CGX_NUM - BOARD_WIN_CGX_SIZE )
+#define BOARD_WIN_PAL   ( FLD_BOARD2FRAME_PAL )
 
 /*********************************************************************************************
-	BMPウィンドウ
+  BMPウィンドウ
  *********************************************************************************************/
 // 会話ウィンドウ（メイン）
-#define	FLD_MSG_WIN_PX		( 2 )
-#define	FLD_MSG_WIN_PY		( 19 )
-#define	FLD_MSG_WIN_SX		( 27 )
-#define	FLD_MSG_WIN_SY		( 4 )
-#define	FLD_MSG_WIN_PAL		( FLD_MESFONT_PAL )
-#define	FLD_MSG_WIN_CGX		( BOARD_WIN_CGX_NUM - ( FLD_MSG_WIN_SX * FLD_MSG_WIN_SY ) )
+#define FLD_MSG_WIN_PX    ( 2 )
+#define FLD_MSG_WIN_PY    ( 19 )
+#define FLD_MSG_WIN_SX    ( 27 )
+#define FLD_MSG_WIN_SY    ( 4 )
+#define FLD_MSG_WIN_PAL   ( FLD_MESFONT_PAL )
+#define FLD_MSG_WIN_CGX   ( BOARD_WIN_CGX_NUM - ( FLD_MSG_WIN_SX * FLD_MSG_WIN_SY ) )
 
 // 看板ウィンドウ（メイン）（会話と同じ位置（会話より小さい））
-#define	FLD_BOARD_WIN_PX	( 9 )
-#define	FLD_BOARD_WIN_PY	( 19 )
-#define	FLD_BOARD_WIN_SX	( 20 )
-#define	FLD_BOARD_WIN_SY	( 4 )
-#define	FLD_BOARD_WIN_PAL	( FLD_BOARD2FRAME_PAL )
-#define	FLD_BOARD_WIN_CGX	( FLD_MSG_WIN_CGX )
+#define FLD_BOARD_WIN_PX  ( 9 )
+#define FLD_BOARD_WIN_PY  ( 19 )
+#define FLD_BOARD_WIN_SX  ( 20 )
+#define FLD_BOARD_WIN_SY  ( 4 )
+#define FLD_BOARD_WIN_PAL ( FLD_BOARD2FRAME_PAL )
+#define FLD_BOARD_WIN_CGX ( FLD_MSG_WIN_CGX )
 
 // 残りボール数（会話と同じ位置（会話より小さい））
-#define	FLD_BALL_WIN_PX		( 1 )
-#define	FLD_BALL_WIN_PY		( 1 )
-#define	FLD_BALL_WIN_SX		( 12 )
-#define	FLD_BALL_WIN_SY		( 4 )
-#define	FLD_BALL_WIN_PAL	( FLD_SYSFONT_PAL )
-#define	FLD_BALL_WIN_CGX	( FLD_MSG_WIN_CGX )
+#define FLD_BALL_WIN_PX   ( 1 )
+#define FLD_BALL_WIN_PY   ( 1 )
+#define FLD_BALL_WIN_SX   ( 12 )
+#define FLD_BALL_WIN_SY   ( 4 )
+#define FLD_BALL_WIN_PAL  ( FLD_SYSFONT_PAL )
+#define FLD_BALL_WIN_CGX  ( FLD_MSG_WIN_CGX )
 
 // メニューウィンドウ（メイン）
-#define	FLD_MENU_WIN_PX		( 20 )
-#define	FLD_MENU_WIN_PY		( 1 )
-#define	FLD_MENU_WIN_SX		( 11 )
-#define	FLD_MENU_WIN_SY		( 22 )
-#define	FLD_MENU_WIN_PAL	( FLD_SYSFONT_PAL )
-#define	FLD_MENU_WIN_CGX	( FLD_MSG_WIN_CGX - ( FLD_MENU_WIN_SX * FLD_MENU_WIN_SY ) )
+#define FLD_MENU_WIN_PX   ( 20 )
+#define FLD_MENU_WIN_PY   ( 1 )
+#define FLD_MENU_WIN_SX   ( 11 )
+#define FLD_MENU_WIN_SY   ( 22 )
+#define FLD_MENU_WIN_PAL  ( FLD_SYSFONT_PAL )
+#define FLD_MENU_WIN_CGX  ( FLD_MSG_WIN_CGX - ( FLD_MENU_WIN_SX * FLD_MENU_WIN_SY ) )
 
 // はい/いいえウィンドウ（メイン）（メニューと同じ位置（メニューより小さい））
-#define	FLD_YESNO_WIN_PX	( 25 )
-#define	FLD_YESNO_WIN_PY	( 13 )
-#define	FLD_YESNO_WIN_SX	( 6 )
-#define	FLD_YESNO_WIN_SY	( 4 )
-#define	FLD_YESNO_WIN_PAL	( FLD_SYSFONT_PAL )
-#define	FLD_YESNO_WIN_CGX	( FLD_MSG_WIN_CGX - ( FLD_YESNO_WIN_SX * FLD_YESNO_WIN_SY ) )
+#define FLD_YESNO_WIN_PX  ( 25 )
+#define FLD_YESNO_WIN_PY  ( 13 )
+#define FLD_YESNO_WIN_SX  ( 6 )
+#define FLD_YESNO_WIN_SY  ( 4 )
+#define FLD_YESNO_WIN_PAL ( FLD_SYSFONT_PAL )
+#define FLD_YESNO_WIN_CGX ( FLD_MSG_WIN_CGX - ( FLD_YESNO_WIN_SX * FLD_YESNO_WIN_SY ) )
 
 // 地名ウィンドウ（メニューと同じ位置（メニューより小さい））
-#define FLD_PLACE_WIN_PX	( 0 )
-#define FLD_PLACE_WIN_PY	( 0 )
-#define	FLD_PLACE_WIN_SX	( 32 )
-#define	FLD_PLACE_WIN_SY	( 3 )
-#define	FLD_PLACE_WIN_CGX	( FLD_MSG_WIN_CGX - ( FLD_PLACE_WIN_SX * FLD_PLACE_WIN_SY ) )
+#define FLD_PLACE_WIN_PX  ( 0 )
+#define FLD_PLACE_WIN_PY  ( 0 )
+#define FLD_PLACE_WIN_SX  ( 32 )
+#define FLD_PLACE_WIN_SY  ( 3 )
+#define FLD_PLACE_WIN_CGX ( FLD_MSG_WIN_CGX - ( FLD_PLACE_WIN_SX * FLD_PLACE_WIN_SY ) )
 
 
 
 // メッセージウィンドウ（サブ）
-#define	FLD_MSG_WIN_S_PX	( 2  )
-#define	FLD_MSG_WIN_S_PY	( 19 )
-#define	FLD_MSG_WIN_S_PAL	( FLD_MESFONT_PAL )
-#define	FLD_MSG_WIN_S_CGX	( MENU_WIN_CGX_NUM - ( FLD_MSG_WIN_SX * FLD_MSG_WIN_SY ) )
+#define FLD_MSG_WIN_S_PX  ( 2  )
+#define FLD_MSG_WIN_S_PY  ( 19 )
+#define FLD_MSG_WIN_S_PAL ( FLD_MESFONT_PAL )
+#define FLD_MSG_WIN_S_CGX ( MENU_WIN_CGX_NUM - ( FLD_MSG_WIN_SX * FLD_MSG_WIN_SY ) )
 
 // 看板ウィンドウ（サブ）
-#define	FLD_BOARD_WIN_S_PX	( 9 )
-#define	FLD_BOARD_WIN_S_PY	( 19 )
-#define	FLD_BOARD_WIN_S_SX	( 21 )
-#define	FLD_BOARD_WIN_S_SY	( 4 )
-#define	FLD_BOARD_WIN_S_PAL	( FLD_BOARD2FRAME_PAL )
-#define	FLD_BOARD_WIN_S_CGX	( FLD_MSG_WIN_S_CGX )
+#define FLD_BOARD_WIN_S_PX  ( 9 )
+#define FLD_BOARD_WIN_S_PY  ( 19 )
+#define FLD_BOARD_WIN_S_SX  ( 21 )
+#define FLD_BOARD_WIN_S_SY  ( 4 )
+#define FLD_BOARD_WIN_S_PAL ( FLD_BOARD2FRAME_PAL )
+#define FLD_BOARD_WIN_S_CGX ( FLD_MSG_WIN_S_CGX )
 
 // メニューウィンドウ（サブ）
-#define	FLD_MENU_WIN_S_PX	( 25 )
-#define	FLD_MENU_WIN_S_PY	( 1 )
-#define	FLD_MENU_WIN_S_SX	( 6 )
-#define	FLD_MENU_WIN_S_SY	( 16 )
-#define	FLD_MENU_WIN_S_PAL	( FLD_SYSFONT_PAL )
-#define	FLD_MENU_WIN_S_CGX	( MENU_WIN_CGX_NUM - ( FLD_MENU_WIN_SX * FLD_MENU_WIN_SY ) )
+#define FLD_MENU_WIN_S_PX ( 25 )
+#define FLD_MENU_WIN_S_PY ( 1 )
+#define FLD_MENU_WIN_S_SX ( 6 )
+#define FLD_MENU_WIN_S_SY ( 16 )
+#define FLD_MENU_WIN_S_PAL  ( FLD_SYSFONT_PAL )
+#define FLD_MENU_WIN_S_CGX  ( MENU_WIN_CGX_NUM - ( FLD_MENU_WIN_SX * FLD_MENU_WIN_SY ) )
 
 
 
-///	ビットマップ転送関数用定義
+/// ビットマップ転送関数用定義
 //------------------------------------------------------------------
-#define	FBMP_TRANS_OFF	(0)
-#define	FBMP_TRANS_ON	(1)
-///	文字表示転送関数用定義
+#define FBMP_TRANS_OFF  (0)
+#define FBMP_TRANS_ON (1)
+/// 文字表示転送関数用定義
 //------------------------------------------------------------------
-#define	FBMPMSG_WAITON_SKIPOFF	(0)
-#define	FBMPMSG_WAITON_SKIPON	(1)
-#define	FBMPMSG_WAITOFF			(2)
+#define FBMPMSG_WAITON_SKIPOFF  (0)
+#define FBMPMSG_WAITON_SKIPON (1)
+#define FBMPMSG_WAITOFF     (2)
 
 //-------------------------------------------------------------------------
-///	文字表示色定義(default)	-> gflib/fntsys.hへ移動
+/// 文字表示色定義(default) -> gflib/fntsys.hへ移動
 //------------------------------------------------------------------
 
-#define WINCLR_COL(col)	(((col)<<4)|(col))
+#define WINCLR_COL(col) (((col)<<4)|(col))
 
 //-------------------------------------------------------------------------
-///	文字表示スピード定義(default)
+/// 文字表示スピード定義(default)
 //------------------------------------------------------------------
-#define	FBMP_MSG_SPEED_SLOW		(8)
-#define	FBMP_MSG_SPEED_NORMAL	(4)
-#define	FBMP_MSG_SPEED_FAST		(1)
+#define FBMP_MSG_SPEED_SLOW   (8)
+#define FBMP_MSG_SPEED_NORMAL (4)
+#define FBMP_MSG_SPEED_FAST   (1)
 
 
 
 //============================================================================================
-//	定数定義
+//  定数定義
 //============================================================================================
 enum {
   SEQ_IN = 0,
@@ -328,9 +328,9 @@ typedef struct{  // スクリーン用RECT構造体
   u8 rb_y;
 } _SCR_RECT;
 
-#define WF_CLACT_WKNUM	( 8 )
-#define WF_CLACT_RESNUM	( 1 )
-#define WF_FONTOAM_NUM	( 1 )
+#define WF_CLACT_WKNUM  ( 8 )
+#define WF_CLACT_RESNUM ( 1 )
+#define WF_FONTOAM_NUM  ( 1 )
 
 #define _PRINTTASK_MAX (8)
 #define _TIMING_GAME_CHECK  (13)// つながった直後
@@ -343,36 +343,36 @@ typedef struct{  // スクリーン用RECT構造体
 
 
 // ユーザー表示面の設定
-#define WIFIP2PMATCH_PLAYER_DISP_X	( 1 )
-#define WIFIP2PMATCH_PLAYER_DISP_Y	( 1 )
-#define WIFIP2PMATCH_PLAYER_DISP_SIZX	( 28 )
-#define WIFIP2PMATCH_PLAYER_DISP_SIZY	( 2 )
-#define WIFIP2PMATCH_PLAYER_DISP_NAME_X	( 32 )
-#define WIFIP2PMATCH_PLAYER_DISP_ST_X	( 102 )
-#define WIFIP2PMATCH_PLAYER_DISP_WINSIZ	(WIFIP2PMATCH_PLAYER_DISP_SIZX*WIFIP2PMATCH_PLAYER_DISP_SIZY)
+#define WIFIP2PMATCH_PLAYER_DISP_X  ( 1 )
+#define WIFIP2PMATCH_PLAYER_DISP_Y  ( 1 )
+#define WIFIP2PMATCH_PLAYER_DISP_SIZX ( 28 )
+#define WIFIP2PMATCH_PLAYER_DISP_SIZY ( 2 )
+#define WIFIP2PMATCH_PLAYER_DISP_NAME_X ( 32 )
+#define WIFIP2PMATCH_PLAYER_DISP_ST_X ( 102 )
+#define WIFIP2PMATCH_PLAYER_DISP_WINSIZ (WIFIP2PMATCH_PLAYER_DISP_SIZX*WIFIP2PMATCH_PLAYER_DISP_SIZY)
 
 
 //FRAME3
-#define	_CGX_BOTTOM	( 512 )							// 会話ウィンドウキャラ
-#define _CGX_TITLE_BOTTOM	(_CGX_BOTTOM - 18*3)	// タイトルウィンドウ
-#define _CGX_USER_BOTTOM	(_CGX_TITLE_BOTTOM - WIFIP2PMATCH_PLAYER_DISP_WINSIZ)	// ユーザーウィンドウ
+#define _CGX_BOTTOM ( 512 )             // 会話ウィンドウキャラ
+#define _CGX_TITLE_BOTTOM (_CGX_BOTTOM - 18*3)  // タイトルウィンドウ
+#define _CGX_USER_BOTTOM  (_CGX_TITLE_BOTTOM - WIFIP2PMATCH_PLAYER_DISP_WINSIZ) // ユーザーウィンドウ
 
 // FRAME1に転送するユーザーデータ背景
-#define _CGX_USET_BACK_BOTTOM	( MENU_WIN_CGX_NUM - WIFIP2PMATCH_PLAYER_DISP_WINSIZ )
+#define _CGX_USET_BACK_BOTTOM ( MENU_WIN_CGX_NUM - WIFIP2PMATCH_PLAYER_DISP_WINSIZ )
 
 // FRAME1に転送するICONデータ
-#define PLAYER_DISP_ICON_PLTTOFS	(8)
+#define PLAYER_DISP_ICON_PLTTOFS  (8)
 #define PLAYER_DISP_ICON_PLTTOFS_SUB (13)
-#define PLAYER_DISP_ICON_PLTTNUM	(2)
-#define PLAYER_DISP_ICON_CG_SIZX	(12)
-#define PLAYER_DISP_ICON_CG_SIZY	(4)
-#define PLAYER_DISP_ICON_CGX		( 0 )
-#define PLAYER_DISP_ICON_SCRN_X	( 2 )
-#define PLAYER_DISP_ICON_SCRN_Y	( 2 )
-#define PLAYER_DISP_ICON_POS_X	( 2 )
-#define PLAYER_DISP_ICON_POS_Y	( 1 )
-#define PLAYER_DISP_VCTICON_POS_X	( 26 )
-#define PLAYER_DISP_VCTICON_POS_Y	( 1 )
+#define PLAYER_DISP_ICON_PLTTNUM  (2)
+#define PLAYER_DISP_ICON_CG_SIZX  (12)
+#define PLAYER_DISP_ICON_CG_SIZY  (4)
+#define PLAYER_DISP_ICON_CGX    ( 0 )
+#define PLAYER_DISP_ICON_SCRN_X ( 2 )
+#define PLAYER_DISP_ICON_SCRN_Y ( 2 )
+#define PLAYER_DISP_ICON_POS_X  ( 2 )
+#define PLAYER_DISP_ICON_POS_Y  ( 1 )
+#define PLAYER_DISP_VCTICON_POS_X ( 26 )
+#define PLAYER_DISP_VCTICON_POS_Y ( 1 )
 enum{
   PLAYER_DISP_ICON_IDX_NONE00,
   PLAYER_DISP_ICON_IDX_VCTNOT,
@@ -389,74 +389,74 @@ enum{
 };
 
 
-// 会話ウィンドウ	FRAME2
+// 会話ウィンドウ FRAME2
 #define COMM_MESFRAME_PAL     ( 10 )         //  メッセージウインドウ
 #define COMM_MENUFRAME_PAL    ( 11 )         //  メニューウインドウ
 #define COMM_MESFONT_PAL      ( 12 )         //  メッセージフォント
-#define COMM_SYSFONT_PAL	  ( 13 )         //  システムフォント
-#define	COMM_TALK_WIN_CGX_SIZE	( 18+12 )
-//#define	COMM_TALK_WIN_CGX_NUM	( 512 - COMM_TALK_WIN_CGX_SIZE)
-#define	COMM_TALK_WIN_CGX_NUM	( 48 )
+#define COMM_SYSFONT_PAL    ( 13 )         //  システムフォント
+#define COMM_TALK_WIN_CGX_SIZE  ( 18+12 )
+//#define COMM_TALK_WIN_CGX_NUM ( 512 - COMM_TALK_WIN_CGX_SIZE)
+#define COMM_TALK_WIN_CGX_NUM ( 48 )
 
-#define	COMM_MSG_WIN_PX		( 2 )
-#define	COMM_MSG_WIN_PY		( 19 )
-#define	COMM_MSG_WIN_SX		( 27 )
-#define	COMM_MSG_WIN_SY		( 4 )
-#define	COMM_MSG_WIN_PAL		( COMM_MESFONT_PAL )
-#define	COMM_MSG_WIN_CGX		( (COMM_TALK_WIN_CGX_NUM - 73) - ( COMM_MSG_WIN_SX * COMM_MSG_WIN_SY ) )
+#define COMM_MSG_WIN_PX   ( 2 )
+#define COMM_MSG_WIN_PY   ( 19 )
+#define COMM_MSG_WIN_SX   ( 27 )
+#define COMM_MSG_WIN_SY   ( 4 )
+#define COMM_MSG_WIN_PAL    ( COMM_MESFONT_PAL )
+#define COMM_MSG_WIN_CGX    ( (COMM_TALK_WIN_CGX_NUM - 73) - ( COMM_MSG_WIN_SX * COMM_MSG_WIN_SY ) )
 
-#define	COMM_SYS_WIN_PX		( 4 )
-#define	COMM_SYS_WIN_PY		( 4 )
-#define	COMM_SYS_WIN_SX		( 23 )
-#define	COMM_SYS_WIN_SY		( 16 )
-#define	COMM_SYS_WIN_PAL		( COMM_MESFONT_PAL )
-#define	COMM_SYS_WIN_CGX		( MENU_WIN_CGX_NUM - ( COMM_SYS_WIN_SX * COMM_SYS_WIN_SY ) )	// 通信システムウィンドウ転送先
+#define COMM_SYS_WIN_PX   ( 4 )
+#define COMM_SYS_WIN_PY   ( 4 )
+#define COMM_SYS_WIN_SX   ( 23 )
+#define COMM_SYS_WIN_SY   ( 16 )
+#define COMM_SYS_WIN_PAL    ( COMM_MESFONT_PAL )
+#define COMM_SYS_WIN_CGX    ( MENU_WIN_CGX_NUM - ( COMM_SYS_WIN_SX * COMM_SYS_WIN_SY ) )  // 通信システムウィンドウ転送先
 
 
 // YesNoWin
-#define YESNO_WIN_CGX	((COMM_SYS_WIN_CGX - (FLD_YESNO_WIN_SX*FLD_YESNO_WIN_SY)))
-#define FRAME1_YESNO_WIN_CGX	((_CGX_USET_BACK_BOTTOM - (FLD_YESNO_WIN_SX*FLD_YESNO_WIN_SY)))
+#define YESNO_WIN_CGX ((COMM_SYS_WIN_CGX - (FLD_YESNO_WIN_SX*FLD_YESNO_WIN_SY)))
+#define FRAME1_YESNO_WIN_CGX  ((_CGX_USET_BACK_BOTTOM - (FLD_YESNO_WIN_SX*FLD_YESNO_WIN_SY)))
 
 
 // メインメッセージキャラ
 #define _NUKI_FONT_PALNO  (13)
-#define	_COL_N_BLACK	( GFL_FONTSYS_SetColor( 1, 2, 0 ) )		// フォントカラー：黒
-#define	_COL_N_WHITE	( GFL_FONTSYS_SetColor( 15, 14, 0 ) )		// フォントカラー：白
-#define	_COL_N_RED	    ( GFL_FONTSYS_SetColor( 3, 4, 0 ) )		// フォントカラー：青
-#define	_COL_N_BLUE	    ( GFL_FONTSYS_SetColor( 5, 6, 0 ) )		// フォントカラー：赤
-#define	_COL_N_GRAY  	( GFL_FONTSYS_SetColor( 2, 14, 0 ) )		// フォントカラー：灰
+#define _COL_N_BLACK  ( GFL_FONTSYS_SetColor( 1, 2, 0 ) )   // フォントカラー：黒
+#define _COL_N_WHITE  ( GFL_FONTSYS_SetColor( 15, 14, 0 ) )   // フォントカラー：白
+#define _COL_N_RED      ( GFL_FONTSYS_SetColor( 3, 4, 0 ) )   // フォントカラー：青
+#define _COL_N_BLUE     ( GFL_FONTSYS_SetColor( 5, 6, 0 ) )   // フォントカラー：赤
+#define _COL_N_GRAY   ( GFL_FONTSYS_SetColor( 2, 14, 0 ) )    // フォントカラー：灰
 
 // 名前表示BMP（上画面）
-#define WIFIP2PMATCH_NAME_BMP_W	 ( 16 )
-#define WIFIP2PMATCH_NAME_BMP_H	 (  2 )
+#define WIFIP2PMATCH_NAME_BMP_W  ( 16 )
+#define WIFIP2PMATCH_NAME_BMP_H  (  2 )
 #define WIFIP2PMATCH_NAME_BMP_SIZE (WIFIP2PMATCH_NAME_BMP_W * WIFIP2PMATCH_NAME_BMP_H)
 
 // 会話ウインドウ表示位置定義
-#define WIFIP2PMATCH_TALK_X		(  2 )
-#define WIFIP2PMATCH_TALK_Y		(  19 )
+#define WIFIP2PMATCH_TALK_X   (  2 )
+#define WIFIP2PMATCH_TALK_Y   (  19 )
 
-#define WIFIP2PMATCH_TITLE_X		(   3  )
-#define WIFIP2PMATCH_TITLE_Y		(   1  )
-#define WIFIP2PMATCH_TITLE_W		(  26  )
-#define WIFIP2PMATCH_TITLE_H		(   2  )
+#define WIFIP2PMATCH_TITLE_X    (   3  )
+#define WIFIP2PMATCH_TITLE_Y    (   1  )
+#define WIFIP2PMATCH_TITLE_W    (  26  )
+#define WIFIP2PMATCH_TITLE_H    (   2  )
 
 
-#define WIFIP2PMATCH_MSG_WIN_OFFSET 		(1 + TALK_WIN_CGX_SIZ     + MENU_WIN_CGX_SIZ)
-#define WIFIP2PMATCH_TITLE_WIN_OFFSET		( WIFIP2PMATCH_MSG_WIN_OFFSET   + FLD_MSG_WIN_SX*FLD_MSG_WIN_SY )
-#define WIFIP2PMATCH_NAME_WIN_OFFSET		( WIFIP2PMATCH_TITLE_WIN_OFFSET + WIFIP2PMATCH_TITLE_W*WIFIP2PMATCH_TITLE_H )
-#define WIFIP2PMATCH_YESNO_WIN_OFFSET		( WIFIP2PMATCH_NAME_WIN_OFFSET  + WIFIP2PMATCH_NAME_BMP_SIZE*5 )
+#define WIFIP2PMATCH_MSG_WIN_OFFSET     (1 + TALK_WIN_CGX_SIZ     + MENU_WIN_CGX_SIZ)
+#define WIFIP2PMATCH_TITLE_WIN_OFFSET   ( WIFIP2PMATCH_MSG_WIN_OFFSET   + FLD_MSG_WIN_SX*FLD_MSG_WIN_SY )
+#define WIFIP2PMATCH_NAME_WIN_OFFSET    ( WIFIP2PMATCH_TITLE_WIN_OFFSET + WIFIP2PMATCH_TITLE_W*WIFIP2PMATCH_TITLE_H )
+#define WIFIP2PMATCH_YESNO_WIN_OFFSET   ( WIFIP2PMATCH_NAME_WIN_OFFSET  + WIFIP2PMATCH_NAME_BMP_SIZE*5 )
 
 
 // VIEW面
 enum{
-  MCV_BTTN_FRIEND_TYPE_NONE,	// 設定していない
-  MCV_BTTN_FRIEND_TYPE_RES,	// 予約
-  MCV_BTTN_FRIEND_TYPE_IN,		// 登録済み
-  MCV_BTTN_FRIEND_TYPE_MAX,	// タイプ最大値
+  MCV_BTTN_FRIEND_TYPE_NONE,  // 設定していない
+  MCV_BTTN_FRIEND_TYPE_RES, // 予約
+  MCV_BTTN_FRIEND_TYPE_IN,    // 登録済み
+  MCV_BTTN_FRIEND_TYPE_MAX, // タイプ最大値
 };
-#define MCV_PAL_BACK		( 0 )	// 背景パレットの開始位置
-#define MCV_PAL_FRMNO		( 0 )	// 背景のバットパレット開始位置
-#define MCV_PAL_BTTN		( 4 )	// ボタンパレットの開始位置
+#define MCV_PAL_BACK    ( 0 ) // 背景パレットの開始位置
+#define MCV_PAL_FRMNO   ( 0 ) // 背景のバットパレット開始位置
+#define MCV_PAL_BTTN    ( 4 ) // ボタンパレットの開始位置
 enum{
   MCV_PAL_BACK_0 = 0,
   MCV_PAL_BACK_1,
@@ -469,57 +469,57 @@ enum{
   MCV_PAL_BTTN_NONE,
   MCV_PAL_BTTNST_GIRL,
   MCV_PAL_BTTNST_MAN,
-  MCV_PAL_BTTN_NUM	// 今のところ余りは
+  MCV_PAL_BTTN_NUM  // 今のところ余りは
     // MCV_PAL_BTTN+MCV_PAL_BTTN_NUM～(PLAYER_DISP_ICON_PLTTOFS_SUB-1まで
 };
 // アイコンの転送位置
-#define MCV_ICON_CGX	(0)
-#define MCV_ICON_CGSIZ	(48)
-#define MCV_ICON_PAL		(PLAYER_DISP_ICON_PLTTOFS_SUB)
+#define MCV_ICON_CGX  (0)
+#define MCV_ICON_CGSIZ  (48)
+#define MCV_ICON_PAL    (PLAYER_DISP_ICON_PLTTOFS_SUB)
 
-#define MCV_CGX_BTTN2	(MCV_ICON_CGX+MCV_ICON_CGSIZ)	// FRAME2ユーザーデータ
-#define MCV_CGX_BACK	(0)// FRAME0背景
-#define MCV_SYSFONT_PAL	( 15 )	// システムフォント
+#define MCV_CGX_BTTN2 (MCV_ICON_CGX+MCV_ICON_CGSIZ) // FRAME2ユーザーデータ
+#define MCV_CGX_BACK  (0)// FRAME0背景
+#define MCV_SYSFONT_PAL ( 15 )  // システムフォント
 // WIN設定
-#define MCV_NAMEWIN_CGX		( 1 )	// 名前ウィンドウ開始位置
-#define MCV_NAMEWIN_DEFX	( 4 )	// 基本位置
-#define MCV_NAMEWIN_DEFY	( 1 )
-#define MCV_NAMEWIN_OFSX	( 16 )	// 位置の移動値
-#define MCV_NAMEWIN_OFSY	( 6 )
-#define MCV_NAMEWIN_SIZX	( 9 )	// サイズ
-#define MCV_NAMEWIN_SIZY	( 3 )
-#define MCV_NAMEWIN_CGSIZ	( MCV_NAMEWIN_SIZX*MCV_NAMEWIN_SIZY )	// CGサイズ
-#define MCV_NAMEWIN_CGALLSIZ	((MCV_NAMEWIN_CGSIZ*WCR_MAPDATA_1BLOCKOBJNUM)+MCV_NAMEWIN_CGX)// CGそうサイズ
+#define MCV_NAMEWIN_CGX   ( 1 ) // 名前ウィンドウ開始位置
+#define MCV_NAMEWIN_DEFX  ( 4 ) // 基本位置
+#define MCV_NAMEWIN_DEFY  ( 1 )
+#define MCV_NAMEWIN_OFSX  ( 16 )  // 位置の移動値
+#define MCV_NAMEWIN_OFSY  ( 6 )
+#define MCV_NAMEWIN_SIZX  ( 9 ) // サイズ
+#define MCV_NAMEWIN_SIZY  ( 3 )
+#define MCV_NAMEWIN_CGSIZ ( MCV_NAMEWIN_SIZX*MCV_NAMEWIN_SIZY ) // CGサイズ
+#define MCV_NAMEWIN_CGALLSIZ  ((MCV_NAMEWIN_CGSIZ*WCR_MAPDATA_1BLOCKOBJNUM)+MCV_NAMEWIN_CGX)// CGそうサイズ
 
-#define MCV_STATUSWIN_CGX	( MCV_NAMEWIN_CGALLSIZ+1 )
-#define MCV_STATUSWIN_DEFX	( 1 )	// 基本位置
-#define MCV_STATUSWIN_DEFY	( 1 )
-#define MCV_STATUSWIN_VCHATX ( 12 )	// VCHAT位置
-#define MCV_STATUSWIN_OFSX	( 16 )	// 位置の移動値
-#define MCV_STATUSWIN_OFSY	( 6 )
-#define MCV_STATUSWIN_SIZX	( 2 )	// サイズ
-#define MCV_STATUSWIN_SIZY	( 3 )
-#define MCV_STATUSWIN_CGSIZ	( MCV_STATUSWIN_SIZX*MCV_STATUSWIN_SIZY )	// CGサイズ
+#define MCV_STATUSWIN_CGX ( MCV_NAMEWIN_CGALLSIZ+1 )
+#define MCV_STATUSWIN_DEFX  ( 1 ) // 基本位置
+#define MCV_STATUSWIN_DEFY  ( 1 )
+#define MCV_STATUSWIN_VCHATX ( 12 ) // VCHAT位置
+#define MCV_STATUSWIN_OFSX  ( 16 )  // 位置の移動値
+#define MCV_STATUSWIN_OFSY  ( 6 )
+#define MCV_STATUSWIN_SIZX  ( 2 ) // サイズ
+#define MCV_STATUSWIN_SIZY  ( 3 )
+#define MCV_STATUSWIN_CGSIZ ( MCV_STATUSWIN_SIZX*MCV_STATUSWIN_SIZY ) // CGサイズ
 
-#define MCV_USERWIN_CGX		( 1 )
-#define MCV_USERWIN_X		( 1 )
-#define MCV_USERWIN_Y		( 1 )
-#define MCV_USERWIN_SIZX	( 30 )
-#define MCV_USERWIN_SIZY	( 21 )
+#define MCV_USERWIN_CGX   ( 1 )
+#define MCV_USERWIN_X   ( 1 )
+#define MCV_USERWIN_Y   ( 1 )
+#define MCV_USERWIN_SIZX  ( 30 )
+#define MCV_USERWIN_SIZY  ( 21 )
 
 
-#define MCV_BUTTON_SIZX	( 16 )
-#define MCV_BUTTON_SIZY	( 6 )
-#define MCV_BUTTON_DEFX	(0)
-#define MCV_BUTTON_DEFY	(0)
-#define MCV_BUTTON_OFSX	(16)
-#define MCV_BUTTON_OFSY	(6)
+#define MCV_BUTTON_SIZX ( 16 )
+#define MCV_BUTTON_SIZY ( 6 )
+#define MCV_BUTTON_DEFX (0)
+#define MCV_BUTTON_DEFY (0)
+#define MCV_BUTTON_OFSX (16)
+#define MCV_BUTTON_OFSY (6)
 
-#define MCV_BUTTON_ICON_OFS_X	( 1 )
-#define MCV_BUTTON_VCTICON_OFS_X	( 13 )
-#define MCV_BUTTON_ICON_OFS_Y	( 1 )
+#define MCV_BUTTON_ICON_OFS_X ( 1 )
+#define MCV_BUTTON_VCTICON_OFS_X  ( 13 )
+#define MCV_BUTTON_ICON_OFS_Y ( 1 )
 
-#define MCV_BUTTON_FRAME_NUM	(4)	// ボタンアニメフレーム数
+#define MCV_BUTTON_FRAME_NUM  (4) // ボタンアニメフレーム数
 
 enum{
   MCV_BUTTON_TYPE_GIRL,
@@ -528,148 +528,148 @@ enum{
 };
 
 enum{
-  MCV_USERDISP_OFF,	// ユーザー表示OFF
-  MCV_USERDISP_INIT,	// ユーザー表示初期化
-  MCV_USERDISP_ON,	// ユーザー表示ON
-  MCV_USERDISP_ONEX,	// ユーザー表示強制ON
+  MCV_USERDISP_OFF, // ユーザー表示OFF
+  MCV_USERDISP_INIT,  // ユーザー表示初期化
+  MCV_USERDISP_ON,  // ユーザー表示ON
+  MCV_USERDISP_ONEX,  // ユーザー表示強制ON
 };
 
 // PAGE 1
-#define MCV_USERD_NAME_X	( 32 )
-#define MCV_USERD_NAME_Y	( 8 )
-#define MCV_USERD_ST_X	( 104 )
-#define MCV_USERD_ST_Y	( 8 )
-#define MCV_USERD_GR_X	( 8 )
-#define MCV_USERD_GR_Y	( 32 )
-#define MCV_USERD_VS_X	( 8 )
-#define MCV_USERD_VS_Y	( 56 )
-#define MCV_USERD_VS_WIN_X	( 120 )
-#define MCV_USERD_VS_WIN_Y	( 56 )
-#define MCV_USERD_VS_LOS_X	( 184 )
-#define MCV_USERD_TR_X		( 8 )
-#define MCV_USERD_TR_Y		( 80 )
-#define MCV_USERD_TRNUM_X	( 152 )
-#define MCV_USERD_DAY_X		( 8 )
-#define MCV_USERD_DAY_Y		( 128 )
-#define MCV_USERD_DAYNUM_X	( 152 )
-#define MCV_USERD_ICON_X	( 2 )
-#define MCV_USERD_VCTICON_X	( 28 )
-#define MCV_USERD_ICON_Y	( 2 )
+#define MCV_USERD_NAME_X  ( 32 )
+#define MCV_USERD_NAME_Y  ( 8 )
+#define MCV_USERD_ST_X  ( 104 )
+#define MCV_USERD_ST_Y  ( 8 )
+#define MCV_USERD_GR_X  ( 8 )
+#define MCV_USERD_GR_Y  ( 32 )
+#define MCV_USERD_VS_X  ( 8 )
+#define MCV_USERD_VS_Y  ( 56 )
+#define MCV_USERD_VS_WIN_X  ( 120 )
+#define MCV_USERD_VS_WIN_Y  ( 56 )
+#define MCV_USERD_VS_LOS_X  ( 184 )
+#define MCV_USERD_TR_X    ( 8 )
+#define MCV_USERD_TR_Y    ( 80 )
+#define MCV_USERD_TRNUM_X ( 152 )
+#define MCV_USERD_DAY_X   ( 8 )
+#define MCV_USERD_DAY_Y   ( 128 )
+#define MCV_USERD_DAYNUM_X  ( 152 )
+#define MCV_USERD_ICON_X  ( 2 )
+#define MCV_USERD_VCTICON_X ( 28 )
+#define MCV_USERD_ICON_Y  ( 2 )
 
 // PAGE2
-#define MCV_USERD_BTTW_TITLE_X		(8)
-#define MCV_USERD_BTTW_TITLE_Y		(0)
-#define MCV_USERD_BTTW_LAST_X		(8)
-#define MCV_USERD_BTTW_LAST_Y		(24)
-#define MCV_USERD_BTTW_LASTNUM_X	(64)
-#define MCV_USERD_BTTW_LASTNUM_Y	(24)
-#define MCV_USERD_BTTW_MAX_X		(8)
-#define MCV_USERD_BTTW_MAX_Y		(48)
-#define MCV_USERD_BTTW_MAXNUM_X		(64)
-#define MCV_USERD_BTTW_MAXNUM_Y		(48)
+#define MCV_USERD_BTTW_TITLE_X    (8)
+#define MCV_USERD_BTTW_TITLE_Y    (0)
+#define MCV_USERD_BTTW_LAST_X   (8)
+#define MCV_USERD_BTTW_LAST_Y   (24)
+#define MCV_USERD_BTTW_LASTNUM_X  (64)
+#define MCV_USERD_BTTW_LASTNUM_Y  (24)
+#define MCV_USERD_BTTW_MAX_X    (8)
+#define MCV_USERD_BTTW_MAX_Y    (48)
+#define MCV_USERD_BTTW_MAXNUM_X   (64)
+#define MCV_USERD_BTTW_MAXNUM_Y   (48)
 
 // PAGE3
-#define MCV_USERD_BTFC_TITLE_X			(8)
-#define MCV_USERD_BTFC_TITLE_Y			(0)
-#define MCV_USERD_BTFC_LV50_X			(8)
-#define MCV_USERD_BTFC_LV50_Y			(24)
-#define MCV_USERD_BTFC_LV50K_X			(136)
-#define MCV_USERD_BTFC_LV50K_Y			(24)
-#define MCV_USERD_BTFC_LV50LAST_X		(8)
-#define MCV_USERD_BTFC_LV50LAST_Y		(48)
-#define MCV_USERD_BTFC_LV50LASTNUM_X	(64)
-#define MCV_USERD_BTFC_LV50LASTNUM_Y	(48)
-#define MCV_USERD_BTFC_LV50LASTTRNUM_X	(184)
-#define MCV_USERD_BTFC_LV50LASTTRNUM_Y	(48)
-#define MCV_USERD_BTFC_LV50MAX_X		(8)
-#define MCV_USERD_BTFC_LV50MAX_Y		(64)
-#define MCV_USERD_BTFC_LV50MAXNUM_X		(64)
-#define MCV_USERD_BTFC_LV50MAXNUM_Y		(64)
-#define MCV_USERD_BTFC_LV50MAXTRNUM_X	(184)
-#define MCV_USERD_BTFC_LV50MAXTRNUM_Y	(64)
-#define MCV_USERD_BTFC_OPN_X			(8)
-#define MCV_USERD_BTFC_OPN_Y			(88)
-#define MCV_USERD_BTFC_OPNK_X			(136)
-#define MCV_USERD_BTFC_OPNK_Y			(88)
-#define MCV_USERD_BTFC_OPNLAST_X		(8)
-#define MCV_USERD_BTFC_OPNLAST_Y		(112)
-#define MCV_USERD_BTFC_OPNLASTNUM_X	(64)
-#define MCV_USERD_BTFC_OPNLASTNUM_Y	(112)
-#define MCV_USERD_BTFC_OPNLASTTRNUM_X	(184)
-#define MCV_USERD_BTFC_OPNLASTTRNUM_Y	(112)
-#define MCV_USERD_BTFC_OPNMAX_X		(8)
-#define MCV_USERD_BTFC_OPNMAX_Y		(128)
-#define MCV_USERD_BTFC_OPNMAXNUM_X		(64)
-#define MCV_USERD_BTFC_OPNMAXNUM_Y		(128)
-#define MCV_USERD_BTFC_OPNMAXTRNUM_X	(184)
-#define MCV_USERD_BTFC_OPNMAXTRNUM_Y	(128)
+#define MCV_USERD_BTFC_TITLE_X      (8)
+#define MCV_USERD_BTFC_TITLE_Y      (0)
+#define MCV_USERD_BTFC_LV50_X     (8)
+#define MCV_USERD_BTFC_LV50_Y     (24)
+#define MCV_USERD_BTFC_LV50K_X      (136)
+#define MCV_USERD_BTFC_LV50K_Y      (24)
+#define MCV_USERD_BTFC_LV50LAST_X   (8)
+#define MCV_USERD_BTFC_LV50LAST_Y   (48)
+#define MCV_USERD_BTFC_LV50LASTNUM_X  (64)
+#define MCV_USERD_BTFC_LV50LASTNUM_Y  (48)
+#define MCV_USERD_BTFC_LV50LASTTRNUM_X  (184)
+#define MCV_USERD_BTFC_LV50LASTTRNUM_Y  (48)
+#define MCV_USERD_BTFC_LV50MAX_X    (8)
+#define MCV_USERD_BTFC_LV50MAX_Y    (64)
+#define MCV_USERD_BTFC_LV50MAXNUM_X   (64)
+#define MCV_USERD_BTFC_LV50MAXNUM_Y   (64)
+#define MCV_USERD_BTFC_LV50MAXTRNUM_X (184)
+#define MCV_USERD_BTFC_LV50MAXTRNUM_Y (64)
+#define MCV_USERD_BTFC_OPN_X      (8)
+#define MCV_USERD_BTFC_OPN_Y      (88)
+#define MCV_USERD_BTFC_OPNK_X     (136)
+#define MCV_USERD_BTFC_OPNK_Y     (88)
+#define MCV_USERD_BTFC_OPNLAST_X    (8)
+#define MCV_USERD_BTFC_OPNLAST_Y    (112)
+#define MCV_USERD_BTFC_OPNLASTNUM_X (64)
+#define MCV_USERD_BTFC_OPNLASTNUM_Y (112)
+#define MCV_USERD_BTFC_OPNLASTTRNUM_X (184)
+#define MCV_USERD_BTFC_OPNLASTTRNUM_Y (112)
+#define MCV_USERD_BTFC_OPNMAX_X   (8)
+#define MCV_USERD_BTFC_OPNMAX_Y   (128)
+#define MCV_USERD_BTFC_OPNMAXNUM_X    (64)
+#define MCV_USERD_BTFC_OPNMAXNUM_Y    (128)
+#define MCV_USERD_BTFC_OPNMAXTRNUM_X  (184)
+#define MCV_USERD_BTFC_OPNMAXTRNUM_Y  (128)
 
 
 // PAGE4
-#define MCV_USERD_BTKS_TITLE_X		(8)
-#define MCV_USERD_BTKS_TITLE_Y		(0)
-#define MCV_USERD_BTKS_K_X			(136)
-#define MCV_USERD_BTKS_K_Y			(24)
-#define MCV_USERD_BTKS_LAST_X		(8)
-#define MCV_USERD_BTKS_LAST_Y		(48)
-#define MCV_USERD_BTKS_LASTNUM_X	(64)
-#define MCV_USERD_BTKS_LASTNUM_Y	(48)
-#define MCV_USERD_BTKS_LASTCPNUM_X	(184)
-#define MCV_USERD_BTKS_LASTCPNUM_Y	(48)
-#define MCV_USERD_BTKS_MAX_X		(8)
-#define MCV_USERD_BTKS_MAX_Y		(80)
-#define MCV_USERD_BTKS_MAXNUM_X		(64)
-#define MCV_USERD_BTKS_MAXNUM_Y		(80)
-#define MCV_USERD_BTKS_MAXCPNUM_X	(184)
-#define MCV_USERD_BTKS_MAXCPNUM_Y	(80)
+#define MCV_USERD_BTKS_TITLE_X    (8)
+#define MCV_USERD_BTKS_TITLE_Y    (0)
+#define MCV_USERD_BTKS_K_X      (136)
+#define MCV_USERD_BTKS_K_Y      (24)
+#define MCV_USERD_BTKS_LAST_X   (8)
+#define MCV_USERD_BTKS_LAST_Y   (48)
+#define MCV_USERD_BTKS_LASTNUM_X  (64)
+#define MCV_USERD_BTKS_LASTNUM_Y  (48)
+#define MCV_USERD_BTKS_LASTCPNUM_X  (184)
+#define MCV_USERD_BTKS_LASTCPNUM_Y  (48)
+#define MCV_USERD_BTKS_MAX_X    (8)
+#define MCV_USERD_BTKS_MAX_Y    (80)
+#define MCV_USERD_BTKS_MAXNUM_X   (64)
+#define MCV_USERD_BTKS_MAXNUM_Y   (80)
+#define MCV_USERD_BTKS_MAXCPNUM_X (184)
+#define MCV_USERD_BTKS_MAXCPNUM_Y (80)
 
 // PAGE5
-#define MCV_USERD_BTST_TITLE_X		(8)
-#define MCV_USERD_BTST_TITLE_Y		(0)
-#define MCV_USERD_BTST_K_X			(8)
-#define MCV_USERD_BTST_K_Y			(24)
-#define MCV_USERD_BTST_LAST_X		(8)
-#define MCV_USERD_BTST_LAST_Y		(48)
-#define MCV_USERD_BTST_LASTNUM_X	(64)
-#define MCV_USERD_BTST_LASTNUM_Y	(48)
-#define MCV_USERD_BTST_MAX_X		(8)
-#define MCV_USERD_BTST_MAX_Y		(80)
-#define MCV_USERD_BTST_MAXNUM_X		(64)
-#define MCV_USERD_BTST_MAXNUM_Y		(80)
+#define MCV_USERD_BTST_TITLE_X    (8)
+#define MCV_USERD_BTST_TITLE_Y    (0)
+#define MCV_USERD_BTST_K_X      (8)
+#define MCV_USERD_BTST_K_Y      (24)
+#define MCV_USERD_BTST_LAST_X   (8)
+#define MCV_USERD_BTST_LAST_Y   (48)
+#define MCV_USERD_BTST_LASTNUM_X  (64)
+#define MCV_USERD_BTST_LASTNUM_Y  (48)
+#define MCV_USERD_BTST_MAX_X    (8)
+#define MCV_USERD_BTST_MAX_Y    (80)
+#define MCV_USERD_BTST_MAXNUM_X   (64)
+#define MCV_USERD_BTST_MAXNUM_Y   (80)
 
 // PAGE6
-#define MCV_USERD_BTRT_TITLE_X		(8)
-#define MCV_USERD_BTRT_TITLE_Y		(0)
-#define MCV_USERD_BTRT_LAST_X		(8)
-#define MCV_USERD_BTRT_LAST_Y		(24)
-#define MCV_USERD_BTRT_LASTNUM_X	(64)
-#define MCV_USERD_BTRT_LASTNUM_Y	(24)
-#define MCV_USERD_BTRT_MAX_X		(8)
-#define MCV_USERD_BTRT_MAX_Y		(48)
-#define MCV_USERD_BTRT_MAXNUM_X		(64)
-#define MCV_USERD_BTRT_MAXNUM_Y		(48)
+#define MCV_USERD_BTRT_TITLE_X    (8)
+#define MCV_USERD_BTRT_TITLE_Y    (0)
+#define MCV_USERD_BTRT_LAST_X   (8)
+#define MCV_USERD_BTRT_LAST_Y   (24)
+#define MCV_USERD_BTRT_LASTNUM_X  (64)
+#define MCV_USERD_BTRT_LASTNUM_Y  (24)
+#define MCV_USERD_BTRT_MAX_X    (8)
+#define MCV_USERD_BTRT_MAX_Y    (48)
+#define MCV_USERD_BTRT_MAXNUM_X   (64)
+#define MCV_USERD_BTRT_MAXNUM_Y   (48)
 
 // PAGE7
-#define MCV_USERD_MINI_TITLE_X		(8)
-#define MCV_USERD_MINI_TITLE_Y		(0)
-#define MCV_USERD_MINI_BC_X			(8)		// たまいれ
-#define MCV_USERD_MINI_BC_Y			(24)
-#define MCV_USERD_MINI_BCNUM_X		(136)	// たまいれ　かず
-#define MCV_USERD_MINI_BCNUM_Y		(24)
-#define MCV_USERD_MINI_BB_X			(8)		// たまのり
-#define MCV_USERD_MINI_BB_Y			(48)
-#define MCV_USERD_MINI_BBNUM_X		(136)	// たまのり　かず
-#define MCV_USERD_MINI_BBNUM_Y		(48)
-#define MCV_USERD_MINI_BL_X			(8)		// ふうせん
-#define MCV_USERD_MINI_BL_Y			(72)
-#define MCV_USERD_MINI_BLNUM_X		(136)	// ふうせん　かず
-#define MCV_USERD_MINI_BLNUM_Y		(72)
+#define MCV_USERD_MINI_TITLE_X    (8)
+#define MCV_USERD_MINI_TITLE_Y    (0)
+#define MCV_USERD_MINI_BC_X     (8)   // たまいれ
+#define MCV_USERD_MINI_BC_Y     (24)
+#define MCV_USERD_MINI_BCNUM_X    (136) // たまいれ　かず
+#define MCV_USERD_MINI_BCNUM_Y    (24)
+#define MCV_USERD_MINI_BB_X     (8)   // たまのり
+#define MCV_USERD_MINI_BB_Y     (48)
+#define MCV_USERD_MINI_BBNUM_X    (136) // たまのり　かず
+#define MCV_USERD_MINI_BBNUM_Y    (48)
+#define MCV_USERD_MINI_BL_X     (8)   // ふうせん
+#define MCV_USERD_MINI_BL_Y     (72)
+#define MCV_USERD_MINI_BLNUM_X    (136) // ふうせん　かず
+#define MCV_USERD_MINI_BLNUM_Y    (72)
 
 // フロンティア非表示スクリーン描画
-#define MCV_USERD_NOFR_SCRN_X		( 0x1a )
-#define MCV_USERD_NOFR_SCRN_Y		( 0 )
-#define MCV_USERD_NOFR_SCRN_SIZX	( 0x1 )
-#define MCV_USERD_NOFR_SCRN_SIZY	( 0x1 )
+#define MCV_USERD_NOFR_SCRN_X   ( 0x1a )
+#define MCV_USERD_NOFR_SCRN_Y   ( 0 )
+#define MCV_USERD_NOFR_SCRN_SIZX  ( 0x1 )
+#define MCV_USERD_NOFR_SCRN_SIZY  ( 0x1 )
 
 //  フロンティアタイプ
 enum{
@@ -682,7 +682,7 @@ enum{
   MCV_FRONTIOR_NUM,
 } ;
 
-#define VRANTRANSFERMAN_NUM	(32)	// VramTransferManagerタスク数
+#define VRANTRANSFERMAN_NUM (32)  // VramTransferManagerタスク数
 
 
 enum{
@@ -700,31 +700,31 @@ enum{
   MCV_USERD_BTTN_MODE_NOBACK,
 };
 
-#define MCV_USERD_BTTN_RESCONTID	( 30 )	// リソースID
-#define MCV_USERD_BTTN_BGPRI		(0)		// BG優先順位
-#define MCV_USERD_BTTN_PRI			(128)		// BG優先順位
-#define MCV_USERD_BTTN_Y			(172)	// ボタンY位置
-#define MCV_USERD_BTTN_LEFT_X		(40)	// ←
-#define MCV_USERD_BTTN_BACK_X		(128)	// もどる
-#define MCV_USERD_BTTN_RIGHT_X		(224)	// →
-#define MCV_USERD_BTTN_FONT_X		( -18 )	// もどる　文字位置
-#define MCV_USERD_BTTN_FONT_Y		( -8 )	// もどる　文字位置
-#define MCV_USERD_BTTN_FONT_SIZX	( 8 )	// もどる　文字描画範囲
-#define MCV_USERD_BTTN_FONT_SIZY	( 2 )	// もどる　文字描画範囲
-#define MCV_USERD_BTTN_FONT_CGXOFS	( 0 )	// CGXオフセット
-#define MCV_USERD_BTTN_FONT_COL		( 0 )	// カラーパレット
-#define MCV_USERD_BTTN_FONT_OAMPRI	( 0 )
-#define MCV_USERD_BTTN_LEFT_SIZX	( 56 )	// ←サイズ
-#define MCV_USERD_BTTN_BACK_SIZX	( 96 )	// もどるサイズ
-#define MCV_USERD_BTTN_RIGHT_SIZX	( 56 )	// →さいず
-#define MCV_USERD_BTTN_SIZY			( 32 )	// 縦さいず
-#define MCV_USERD_BTTN_LEFT_HIT_X	( 8 )	// ←あたり判定用X
-#define MCV_USERD_BTTN_BACK_HIT_X	( 80 )	// ←あたり判定用X
-#define MCV_USERD_BTTN_RIGHT_HIT_X	( 192 )	// ←あたり判定用X
-#define MCV_USERD_BTTN_RIGHT_HIT_Y	( 160 )	// ←あたり判定用Y
-#define MCV_USERD_BTTN_ANMPUSHOK	( 3 )	// 押したと判断するボタンのアニメ
-#define MCV_USERD_BTTN_ANMMAX		( 5 )	// アニメ内フレーム数
-#define MCV_USERD_BTTN_ANMMAX_0ORG	( MCV_USERD_BTTN_ANMMAX-1 )	// アニメ内フレーム数
+#define MCV_USERD_BTTN_RESCONTID  ( 30 )  // リソースID
+#define MCV_USERD_BTTN_BGPRI    (0)   // BG優先順位
+#define MCV_USERD_BTTN_PRI      (128)   // BG優先順位
+#define MCV_USERD_BTTN_Y      (172) // ボタンY位置
+#define MCV_USERD_BTTN_LEFT_X   (40)  // ←
+#define MCV_USERD_BTTN_BACK_X   (128) // もどる
+#define MCV_USERD_BTTN_RIGHT_X    (224) // →
+#define MCV_USERD_BTTN_FONT_X   ( -18 ) // もどる　文字位置
+#define MCV_USERD_BTTN_FONT_Y   ( -8 )  // もどる　文字位置
+#define MCV_USERD_BTTN_FONT_SIZX  ( 8 ) // もどる　文字描画範囲
+#define MCV_USERD_BTTN_FONT_SIZY  ( 2 ) // もどる　文字描画範囲
+#define MCV_USERD_BTTN_FONT_CGXOFS  ( 0 ) // CGXオフセット
+#define MCV_USERD_BTTN_FONT_COL   ( 0 ) // カラーパレット
+#define MCV_USERD_BTTN_FONT_OAMPRI  ( 0 )
+#define MCV_USERD_BTTN_LEFT_SIZX  ( 56 )  // ←サイズ
+#define MCV_USERD_BTTN_BACK_SIZX  ( 96 )  // もどるサイズ
+#define MCV_USERD_BTTN_RIGHT_SIZX ( 56 )  // →さいず
+#define MCV_USERD_BTTN_SIZY     ( 32 )  // 縦さいず
+#define MCV_USERD_BTTN_LEFT_HIT_X ( 8 ) // ←あたり判定用X
+#define MCV_USERD_BTTN_BACK_HIT_X ( 80 )  // ←あたり判定用X
+#define MCV_USERD_BTTN_RIGHT_HIT_X  ( 192 ) // ←あたり判定用X
+#define MCV_USERD_BTTN_RIGHT_HIT_Y  ( 160 ) // ←あたり判定用Y
+#define MCV_USERD_BTTN_ANMPUSHOK  ( 3 ) // 押したと判断するボタンのアニメ
+#define MCV_USERD_BTTN_ANMMAX   ( 5 ) // アニメ内フレーム数
+#define MCV_USERD_BTTN_ANMMAX_0ORG  ( MCV_USERD_BTTN_ANMMAX-1 ) // アニメ内フレーム数
 
 // FONTOAMY座標アニメデータ
 static const s8 c_MCV_USER_BTTN_FONT_YANM[ MCV_USERD_BTTN_ANMMAX ] = {
@@ -749,52 +749,52 @@ static const u8 c_MCV_USER_BTTN_ANM_RELEASE[ MCV_USERD_BTTN_NUM ] = {
   MCV_USERD_BTTN_ANM_RIGHT_RELEASE,
 };
 
-static const GFL_UI_TP_HITTBL	c_MCV_USER_BTTN_OAM_Hit[ ] = {
-  {	// ←
+static const GFL_UI_TP_HITTBL c_MCV_USER_BTTN_OAM_Hit[ ] = {
+  { // ←
     MCV_USERD_BTTN_RIGHT_HIT_Y, MCV_USERD_BTTN_RIGHT_HIT_Y+MCV_USERD_BTTN_SIZY,
     MCV_USERD_BTTN_LEFT_HIT_X, MCV_USERD_BTTN_LEFT_HIT_X+MCV_USERD_BTTN_LEFT_SIZX,
   },
-  {	// もどる
+  { // もどる
     MCV_USERD_BTTN_RIGHT_HIT_Y, MCV_USERD_BTTN_RIGHT_HIT_Y+MCV_USERD_BTTN_SIZY,
     MCV_USERD_BTTN_BACK_HIT_X, MCV_USERD_BTTN_BACK_HIT_X+MCV_USERD_BTTN_BACK_SIZX,
   },
-  {	// →
+  { // →
     MCV_USERD_BTTN_RIGHT_HIT_Y, MCV_USERD_BTTN_RIGHT_HIT_Y+MCV_USERD_BTTN_SIZY,
     MCV_USERD_BTTN_RIGHT_HIT_X, MCV_USERD_BTTN_RIGHT_HIT_X+MCV_USERD_BTTN_RIGHT_SIZX,
   },
-  {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
+  {GFL_UI_TP_HIT_END,0,0,0},     //終了データ
 };
 enum{
-  MCV_USERD_BTTN_RET_NONE,	// 何の反応もなし
-  MCV_USERD_BTTN_RET_LEFT,	// 左がおされた
-  MCV_USERD_BTTN_RET_BACK,	// もどるがおされた
-  MCV_USERD_BTTN_RET_RIGHT,	// 右がおされた
+  MCV_USERD_BTTN_RET_NONE,  // 何の反応もなし
+  MCV_USERD_BTTN_RET_LEFT,  // 左がおされた
+  MCV_USERD_BTTN_RET_BACK,  // もどるがおされた
+  MCV_USERD_BTTN_RET_RIGHT, // 右がおされた
 };
 
 
 static GFL_DISP_VRAM _defVBTbl = {
-  GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
-  GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+  GX_VRAM_BG_128_A,       // メイン2DエンジンのBG
+  GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
 
-  GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
-  GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+  GX_VRAM_SUB_BG_128_C,     // サブ2DエンジンのBG
+  GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
 
-  //        GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
-  GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
-  GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+  //        GX_VRAM_OBJ_64_E,       // メイン2DエンジンのOBJ
+  GX_VRAM_OBJ_128_B,        // メイン2DエンジンのOBJ
+  GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
 
-  GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
-  GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+  GX_VRAM_SUB_OBJ_16_I,     // サブ2DエンジンのOBJ
+  GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
 
-  GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
-  GX_VRAM_TEXPLTT_NONE,			// テクスチャパレットスロット
+  GX_VRAM_TEX_NONE,       // テクスチャイメージスロット
+  GX_VRAM_TEXPLTT_NONE,     // テクスチャパレットスロット
 
   GX_OBJVRAMMODE_CHAR_1D_128K,
   GX_OBJVRAMMODE_CHAR_1D_32K,
 
 };
 
-#ifdef WFP2P_DEBUG	// 人をいっぱい出す
+#ifdef WFP2P_DEBUG  // 人をいっぱい出す
 //#define WFP2PM_MANY_OBJ
 #endif
 
@@ -814,7 +814,7 @@ static void _debugChangeState(WIFIP2PMATCH_WORK* wk, int state, int line)
 static int _seqBackup;
 
 //============================================================================================
-//	プロトタイプ宣言
+//  プロトタイプ宣言
 //============================================================================================
 static WIFI_STATUS* WifiFriendMatchStatusGet( u32 idx );
 static u8 WifiDwc_getFriendStatus( int idx );
@@ -870,7 +870,7 @@ static void MCVSys_Exit( WIFIP2PMATCH_WORK *wk );
 static u32 MCVSys_Updata( WIFIP2PMATCH_WORK *wk, u32 heapID );
 static void MCVSys_UpdataBttn( WIFIP2PMATCH_WORK *wk );
 static BOOL MCVSys_UserDispEndCheck( WIFIP2PMATCH_WORK *wk, u32 oambttn_ret );
-static u32	MCVSys_UserDispGetFriend( const WIFIP2PMATCH_WORK* cp_wk );
+static u32  MCVSys_UserDispGetFriend( const WIFIP2PMATCH_WORK* cp_wk );
 static void MCVSys_UserDispOn( WIFIP2PMATCH_WORK *wk, u32 friendNo, u32 heapID );
 static void MCVSys_UserDispOff( WIFIP2PMATCH_WORK *wk );
 static void MCVSys_UserDispPageChange( WIFIP2PMATCH_WORK *wk, u32 oambttn_ret );
@@ -1044,7 +1044,7 @@ static void _deleteFriendList(int deletedIndex,int srcIndex, void* pWork)
 
 // レコードコーナーメインシーケンス用関数配列定義
 static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
-  WifiP2PMatch_MainInit,	// WIFIP2PMATCH_MODE_INIT  = 0,
+  WifiP2PMatch_MainInit,  // WIFIP2PMATCH_MODE_INIT  = 0,
   _normalConnectYesNo,    // WIFIP2PMATCH_NORMALCONNECT_YESNO
   _normalConnectWait,     // WIFIP2PMATCH_NORMALCONNECT_WAIT
   _differMachineInit,     // WIFIP2PMATCH_DIFFER_MACHINE_INIT
@@ -1078,7 +1078,7 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   WifiP2PMatch_BattleConnectWait,     // WIFIP2PMATCH_MODE_BATTLE_CONNECT_WAIT
   WifiP2PMatch_BattleConnect,        // WIFIP2PMATCH_MODE_BATTLE_CONNECT
   WifiP2PMatch_MainReturn,            // WIFIP2PMATCH_MODE_MAIN_MENU
-  WifiP2PMatch_EndWait,			    // WIFIP2PMATCH_MODE_END_WAIT,
+  WifiP2PMatch_EndWait,         // WIFIP2PMATCH_MODE_END_WAIT,
   WifiP2PMatch_CheckAndEnd,          //  WIFIP2PMATCH_MODE_CHECK_AND_END
   _parentModeSelectMenuInit,  // WIFIP2PMATCH_MODE_SELECT_INIT
   _parentModeSelectMenuWait,  // WIFIP2PMATCH_MODE_SELECT_WAIT
@@ -1159,7 +1159,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
   TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
   WB_NET_WIFICLUB,  //GameServiceID
 #if GFL_NET_IRC
-  IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間
+  IRC_TIMEOUT_STANDARD, // 赤外線タイムアウト時間
 #endif
     0,//MP親最大サイズ 512まで
     0,//dummy
@@ -1187,7 +1187,7 @@ static BOOL _frontierInCheck( WIFIP2PMATCH_WORK * wk )
 // ミニゲームフラグが立っているかチェック
 static BOOL _miniGameInCheck( WIFIP2PMATCH_WORK * wk )
 {
-  return TRUE;	// ミニゲームは常に見える状態にする
+  return TRUE;  // ミニゲームは常に見える状態にする
 }
 
 // 自分ステータスを取得する
@@ -1344,8 +1344,8 @@ static int _convertState(int state)
 //--------------------------------------------------------------------------------------------
 /**
  * ステータスにあわせて通信ステートも変更する
- * @param	status
- * @return	none
+ * @param status
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 
@@ -1358,7 +1358,7 @@ static void _commStateChange(int status)
   }
   else if( (status == WIFI_STATUS_FRONTIER_WAIT) || (status == WIFI_STATUS_FRONTIER) || (status == WIFI_STATUS_VCT) ){
     GFL_NET_SetWifiBothNet(FALSE);
-    //		GFL_NET_StateChangeWiFiFactory();
+    //    GFL_NET_StateChangeWiFiFactory();
   }
   else{
     GFL_NET_SetWifiBothNet(TRUE); // wifiの通信を非同期から同期に
@@ -1369,21 +1369,21 @@ static void _commStateChange(int status)
 }
 
 //============================================================================================
-//	プロセス関数
+//  プロセス関数
 //============================================================================================
 
 static void _graphicInit(WIFIP2PMATCH_WORK * wk)
 {
   ARCHANDLE* p_handle;
 
-  // sys_VBlankFuncChange( NULL, NULL );	// VBlankセット
-  //    sys_HBlankIntrStop();	//HBlank割り込み停止
+  // sys_VBlankFuncChange( NULL, NULL );  // VBlankセット
+  //    sys_HBlankIntrStop(); //HBlank割り込み停止
   // Vblank期間中のBG転送終了
   if(wk->vblankFunc){
     GFL_TCB_DeleteTask( wk->vblankFunc );
   }
 
-  GFL_DISP_GX_SetVisibleControlDirect(0);		//全BG&OBJの表示OFF
+  GFL_DISP_GX_SetVisibleControlDirect(0);   //全BG&OBJの表示OFF
   GFL_DISP_GXS_SetVisibleControlDirect(0);
   GX_SetVisiblePlane( 0 );
   GXS_SetVisiblePlane( 0 );
@@ -1439,10 +1439,10 @@ static void _graphicInit(WIFIP2PMATCH_WORK * wk)
 /**
  * プロセス関数：初期化
  *
- * @param	proc	プロセスデータ
- * @param	seq		シーケンス
+ * @param proc  プロセスデータ
+ * @param seq   シーケンス
  *
- * @return	処理状況
+ * @return  処理状況
  */
 //--------------------------------------------------------------------------------------------
 static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
@@ -1455,9 +1455,9 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
   case 0:
 
     // 通信拡張ヒープのメモリ確保
-    // 080611	tomoya 追加
+    // 080611 tomoya 追加
     if(GFL_NET_IsInit()){       // 接続中
-      switch( pParentWork->seq ){	// 1つ前の遊びで通信拡張ヒープを破棄していたら再確保
+      switch( pParentWork->seq ){ // 1つ前の遊びで通信拡張ヒープを破棄していたら再確保
       case WIFI_P2PMATCH_END:
       case WIFI_P2PMATCH_UTIL:
       case WIFI_P2PMATCH_DPW_END:
@@ -1482,7 +1482,7 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
     }
 
     // wifi_2dmapオーバーレイ読込み
-    //		GFL_OVERLAY_Load( FS_OVERLAY_ID(wifi_2dmapsys));
+    //    GFL_OVERLAY_Load( FS_OVERLAY_ID(wifi_2dmapsys));
 
     if(pParentWork->seq == WIFI_P2PMATCH_DPW){ // 世界対戦なら
       GFL_HEAP_CreateHeapLo( GFL_HEAPID_APP, HEAPID_WIFIP2PMATCH, 0x70000 );
@@ -1528,8 +1528,8 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
       GFL_NET_ReloadIcon();  // 接続中なのでアイコン表示
     }
     // タッチパネル開始
-    //		result = InitTPNoBuff( 4 );
-    //		GF_ASSERT( result == TP_OK );
+    //    result = InitTPNoBuff( 4 );
+    //    GF_ASSERT( result == TP_OK );
 
     (*seq)++;
     break;
@@ -1549,10 +1549,10 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
 /**
  * プロセス関数：メイン
  *
- * @param	proc	プロセスデータ
- * @param	seq		シーケンス
+ * @param proc  プロセスデータ
+ * @param seq   シーケンス
  *
- * @return	処理状況
+ * @return  処理状況
  */
 //--------------------------------------------------------------------------------------------
 
@@ -1574,7 +1574,7 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Main( GFL_PROC * proc, int * seq, void *
 
 #ifdef _WIFI_DEBUG_TUUSHIN
     if( WIFI_DEBUG_BATTLE_Work.DEBUG_WIFI_MODE != _WIFI_DEBUG_NONE ){
-      GFL_UI_KEY_GetTrg() |= PAD_KEY_DOWN;	//  したおしっぱ
+      GFL_UI_KEY_GetTrg() |= PAD_KEY_DOWN;  //  したおしっぱ
       sys.cont |= PAD_KEY_DOWN;
       GFL_UI_KEY_GetTrg() |= PAD_BUTTON_A;
       sys.cont |= PAD_BUTTON_A;
@@ -1607,8 +1607,8 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Main( GFL_PROC * proc, int * seq, void *
   }
 #if 1
   if(wk->clactSet){
-    GFL_CLACT_SYS_Main();			// セルアクター常駐関数
-    //      CLACT_Draw( wk->clactSet );									// セルアクター常駐関数
+    GFL_CLACT_SYS_Main();     // セルアクター常駐関数
+    //      CLACT_Draw( wk->clactSet );                 // セルアクター常駐関数
   }
 #endif
   if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == TRUE ){
@@ -1620,20 +1620,20 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Main( GFL_PROC * proc, int * seq, void *
   return GFL_PROC_RES_CONTINUE;
 }
 
-#define DEFAULT_NAME_MAX		18
+#define DEFAULT_NAME_MAX    18
 
 //--------------------------------------------------------------------------------------------
 /**
  * グラフィックにかかわる部分の終了処理
- * @param	wk	WIFIP2PMATCH_WORK
- * @return	none
+ * @param wk  WIFIP2PMATCH_WORK
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 static void _graphicEnd(WIFIP2PMATCH_WORK* wk)
 {
   int i;
 
-  //    sys_VBlankFuncChange( NULL, NULL );	// VBlankReset
+  //    sys_VBlankFuncChange( NULL, NULL ); // VBlankReset
   // Vblank期間中のBG転送終了
   if(wk->vblankFunc){
     GFL_TCB_DeleteTask( wk->vblankFunc );
@@ -1689,7 +1689,7 @@ static void _graphicEnd(WIFIP2PMATCH_WORK* wk)
   //    UnionRoomView_ObjInit( (COMM_UNIONROOM_VIEW*)GFL_PROC_GetParentWork( proc ) );
 
   // タッチパネルシステム終了
-  //	StopTP();
+  //  StopTP();
 
 
   // メッセージマネージャー・ワードセットマネージャー解放
@@ -1700,7 +1700,7 @@ static void _graphicEnd(WIFIP2PMATCH_WORK* wk)
   GFL_FONT_Delete(wk->fontHandle);
 
   // オーバーレイ破棄
-  //	GFL_OVERLAY_Unload( FS_OVERLAY_ID(wifi_2dmapsys) );
+  //  GFL_OVERLAY_Unload( FS_OVERLAY_ID(wifi_2dmapsys) );
 }
 
 
@@ -1708,10 +1708,10 @@ static void _graphicEnd(WIFIP2PMATCH_WORK* wk)
 /**
  * プロセス関数：終了
  *
- * @param	proc	プロセスデータ
- * @param	seq		シーケンス
+ * @param proc  プロセスデータ
+ * @param seq   シーケンス
  *
- * @return	処理状況
+ * @return  処理状況
  */
 //--------------------------------------------------------------------------------------------
 static GFL_PROC_RESULT WifiP2PMatchProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
@@ -1738,10 +1738,10 @@ static GFL_PROC_RESULT WifiP2PMatchProc_End( GFL_PROC * proc, int * seq, void * 
   // ワーク解放
   FreeWork( wk );
 
-  GFL_PROC_FreeWork( proc );				// GFL_PROCワーク開放
+  GFL_PROC_FreeWork( proc );        // GFL_PROCワーク開放
 
   // タッチパネル停止
-  //	StopTP();
+  //  StopTP();
 
 #if WB_TEMP_FIX
   // VramTransferマネージャ破棄
@@ -1789,9 +1789,9 @@ static GFL_PROC_RESULT WifiP2PMatchProc_End( GFL_PROC * proc, int * seq, void * 
 /**
  * VBlank関数
  *
- * @param	none
+ * @param none
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 //#if 0
@@ -1810,11 +1810,11 @@ static void VBlankFunc( GFL_TCB *tcb , void * work )
 
   // _retry関数内でマスター輝度を設定して、
   // きれいに復帰できるようにするためここで復帰
-  //	if( wk->brightness_reset == TRUE ){
-  //		WIPE_ResetBrightness( WIPE_DISP_MAIN );
-  //		WIPE_ResetBrightness( WIPE_DISP_SUB );
-  //		wk->brightness_reset = FALSE;
-  //	}
+  //  if( wk->brightness_reset == TRUE ){
+  //    WIPE_ResetBrightness( WIPE_DISP_MAIN );
+  //    WIPE_ResetBrightness( WIPE_DISP_SUB );
+  //    wk->brightness_reset = FALSE;
+  //  }
 
   // OS_SetIrqCheckFlag( OS_IE_V_BLANK );
 
@@ -1827,9 +1827,9 @@ static void VBlankFunc( GFL_TCB *tcb , void * work )
 /**
  * VRAM設定
  *
- * @param	none
+ * @param none
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 static void VramBankSet(void)
@@ -1841,9 +1841,9 @@ static void VramBankSet(void)
 /**
  * BG設定
  *
- * @param	ini		BGLデータ
+ * @param ini   BGLデータ
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 static void BgInit(HEAPID heapID )
@@ -1987,23 +1987,23 @@ static void WindowSet(void)
   GXS_SetVisibleWnd( GX_WNDMASK_NONE );
   /*
     GX_SetVisibleWnd( GX_WNDMASK_W0 );
-	G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_NONE, 1 );
-	G2_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE, 1 );
-	G2_SetWnd0Position( 0, 255, 0, 192 );
+  G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_NONE, 1 );
+  G2_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE, 1 );
+  G2_SetWnd0Position( 0, 255, 0, 192 );
 
-	GXS_SetVisibleWnd( GX_WNDMASK_W0 );
-	G2S_SetWnd0InsidePlane( GX_WND_PLANEMASK_NONE, 1 );
-	G2S_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE, 1 );
-	G2S_SetWnd0Position( 0, 255, 0, 192 );
+  GXS_SetVisibleWnd( GX_WNDMASK_W0 );
+  G2S_SetWnd0InsidePlane( GX_WND_PLANEMASK_NONE, 1 );
+  G2S_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE, 1 );
+  G2S_SetWnd0Position( 0, 255, 0, 192 );
    */
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	生成した動作オブジェクトワークを設定する
+ *  @brief  生成した動作オブジェクトワークを設定する
  *
- *	@param	wk		ワーク
- *	@param	p_obj	オブジェクトワーク
+ *  @param  wk    ワーク
+ *  @param  p_obj オブジェクトワーク
  */
 //-----------------------------------------------------------------------------
 static void MCRSYS_SetMoveObjWork( WIFIP2PMATCH_WORK* wk, MCR_MOVEOBJ* p_obj )
@@ -2020,10 +2020,10 @@ static void MCRSYS_SetMoveObjWork( WIFIP2PMATCH_WORK* wk, MCR_MOVEOBJ* p_obj )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	引数のOBJが入っているワークをNULLにする
+ *  @brief  引数のOBJが入っているワークをNULLにする
  *
- *	@param	wk		ワーク
- *	@param	p_obj	NULLを入れてほしいワークに入っているポインタ
+ *  @param  wk    ワーク
+ *  @param  p_obj NULLを入れてほしいワークに入っているポインタ
  */
 //-----------------------------------------------------------------------------
 static void MCRSYS_DelMoveObjWork( WIFIP2PMATCH_WORK* wk, MCR_MOVEOBJ* p_obj )
@@ -2041,12 +2041,12 @@ static void MCRSYS_DelMoveObjWork( WIFIP2PMATCH_WORK* wk, MCR_MOVEOBJ* p_obj )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	friendNOのオブジェクトワークを取得する
+ *  @brief  friendNOのオブジェクトワークを取得する
  *
- *	@param	wk			ワーク
- *	@param	friendNo	friendNO
+ *  @param  wk      ワーク
+ *  @param  friendNo  friendNO
  *
- *	@return	オブジェクトワーク
+ *  @return オブジェクトワーク
  */
 //-----------------------------------------------------------------------------
 static MCR_MOVEOBJ* MCRSYS_GetMoveObjWork( WIFIP2PMATCH_WORK* wk, u32 friendNo )
@@ -2065,11 +2065,11 @@ static MCR_MOVEOBJ* MCRSYS_GetMoveObjWork( WIFIP2PMATCH_WORK* wk, u32 friendNo )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	アイコンデータ読込み
+ *  @brief  アイコンデータ読込み
  *
- *	@param	p_data		データ格納先
- *	@param	p_handle	ハンドル
- *	@param	heapID		ヒープID
+ *  @param  p_data    データ格納先
+ *  @param  p_handle  ハンドル
+ *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
 static void WifiP2PMatchFriendListIconLoad( WIFIP2PMATCH_ICON* p_data, ARCHANDLE* p_handle, u32 heapID )
@@ -2106,9 +2106,9 @@ static void WifiP2PMatchFriendListIconLoad( WIFIP2PMATCH_ICON* p_data, ARCHANDLE
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	Iconデータはき
+ *  @brief  Iconデータはき
  *
- *	@param	p_data	ワーク
+ *  @param  p_data  ワーク
  */
 //-----------------------------------------------------------------------------
 static void WifiP2PMatchFriendListIconRelease( WIFIP2PMATCH_ICON* p_data )
@@ -2125,14 +2125,14 @@ static void WifiP2PMatchFriendListIconRelease( WIFIP2PMATCH_ICON* p_data )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	アイコンを書き込む
+ *  @brief  アイコンを書き込む
  *
- *	@param	p_data		データ
- *	@param	frm			フレーム
- *	@param	cx			キャラクタｘ座標
- *	@param	cy			キャラクタｙ座標
- *	@param	icon_type	アイコンタイプ
- *	@param	col			0=灰 1=赤
+ *  @param  p_data    データ
+ *  @param  frm     フレーム
+ *  @param  cx      キャラクタｘ座標
+ *  @param  cy      キャラクタｙ座標
+ *  @param  icon_type アイコンタイプ
+ *  @param  col     0=灰 1=赤
  */
 //-----------------------------------------------------------------------------
 static void WifiP2PMatchFriendListIconWrite(WIFIP2PMATCH_ICON* p_data, u32 frm, u8 cx, u8 cy, u32 icon_type, u32 col )
@@ -2159,14 +2159,14 @@ static void WifiP2PMatchFriendListIconWrite(WIFIP2PMATCH_ICON* p_data, u32 frm, 
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	Icon書き込み
+ *  @brief  Icon書き込み
  *
- *	@param	p_data		データ
- *	@param	frm			フレーム
- *	@param	cx			キャラクタｘ座標
- *	@param	cy			キャラクタｙ座標
- *	@param	status		状態
- *	@param	vctIcon		ボイスチャットONOFFフラグ
+ *  @param  p_data    データ
+ *  @param  frm     フレーム
+ *  @param  cx      キャラクタｘ座標
+ *  @param  cy      キャラクタｙ座標
+ *  @param  status    状態
+ *  @param  vctIcon   ボイスチャットONOFFフラグ
  */
 //-----------------------------------------------------------------------------
 static void WifiP2PMatchFriendListStIconWrite(  WIFIP2PMATCH_ICON* p_data, u32 frm, u8 cx, u8 cy, u32 status )
@@ -2225,7 +2225,7 @@ static void WifiP2PMatchFriendListStIconWrite(  WIFIP2PMATCH_ICON* p_data, u32 f
     scrn_idx = PLAYER_DISP_ICON_IDX_NORMAL;
     break;
 
-  case WIFI_STATUS_NONE:		// 何も無い
+  case WIFI_STATUS_NONE:    // 何も無い
     scrn_idx = PLAYER_DISP_ICON_IDX_NONE;
     break;
 
@@ -2297,19 +2297,19 @@ static GFL_BMPWIN* _BmpWinDel(GFL_BMPWIN* pBmpWin)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ビットマップにアイコンデータを書き込む
+ *  @brief  ビットマップにアイコンデータを書き込む
  *
- *	@param	p_bmp		ビットマップ
- *	@param	p_data		アイコンデータ
- *	@param	x			書き込みｘ座標
- *	@param	y			書き込みｙ座標
- *	@param	icon_type	アイコンタイプ
- *	@param	col			カラー
+ *  @param  p_bmp   ビットマップ
+ *  @param  p_data    アイコンデータ
+ *  @param  x     書き込みｘ座標
+ *  @param  y     書き込みｙ座標
+ *  @param  icon_type アイコンタイプ
+ *  @param  col     カラー
  */
 //-----------------------------------------------------------------------------
 static void WifiP2PMatchFriendListBmpIconWrite(  GFL_BMPWIN* p_bmp, WIFIP2PMATCH_ICON* p_data, u16 x, u16 y, u32 icon_type, u32 col,int pal )
 {
-  //	int pal;
+  //  int pal;
 
   // 書き込み
   _BmpWinPrint_Rap( p_bmp,
@@ -2320,8 +2320,8 @@ static void WifiP2PMatchFriendListBmpIconWrite(  GFL_BMPWIN* p_bmp, WIFIP2PMATCH
                     PLAYER_DISP_ICON_SCRN_X*8, PLAYER_DISP_ICON_SCRN_Y*8,
                     HEAPID_WIFIP2PMATCH);
 
-  //	// パレットNo取得
-  //	pal = WifiP2PMatchBglFrmIconPalGet( p_bmp->frmnum );
+  //  // パレットNo取得
+  //  pal = WifiP2PMatchBglFrmIconPalGet( p_bmp->frmnum );
 
   // パレットナンバーをあわせる
   GFL_BMPWIN_SetPalette( p_bmp, pal+col );
@@ -2329,13 +2329,13 @@ static void WifiP2PMatchFriendListBmpIconWrite(  GFL_BMPWIN* p_bmp, WIFIP2PMATCH
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ビットマップにアイコンデータを書き込む
+ *  @brief  ビットマップにアイコンデータを書き込む
  *
- *	@param	p_bmp		ビットマップ
- *	@param	p_data		アイコンデータ
- *	@param	x			書き込みｘ座標
- *	@param	y			書き込みｙ座標
- *	@param	status		状態
+ *  @param  p_bmp   ビットマップ
+ *  @param  p_data    アイコンデータ
+ *  @param  x     書き込みｘ座標
+ *  @param  y     書き込みｙ座標
+ *  @param  status    状態
  */
 //-----------------------------------------------------------------------------
 static void WifiP2PMatchFriendListBmpStIconWrite( GFL_BMPWIN* p_bmp, WIFIP2PMATCH_ICON* p_data, u16 x, u16 y, u32 status,int pal )
@@ -2411,11 +2411,11 @@ static void WifiP2PMatchFriendListBmpStIconWrite( GFL_BMPWIN* p_bmp, WIFIP2PMATC
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	frmのアイコンパレットナンバーを返す
+ *  @brief  frmのアイコンパレットナンバーを返す
  *
- *	@param	frm		BGL　FRAME
+ *  @param  frm   BGL　FRAME
  *
- *	@return パレットNO
+ *  @return パレットNO
  */
 //-----------------------------------------------------------------------------
 static int WifiP2PMatchBglFrmIconPalGet( u32 frm )
@@ -2428,13 +2428,13 @@ static int WifiP2PMatchBglFrmIconPalGet( u32 frm )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	フレンドリスト開始宣言
+ *  @brief  フレンドリスト開始宣言
  */
 //-----------------------------------------------------------------------------
 static int WifiP2PMatchFriendListStart( void )
 {
-  //	WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK,
-  //					COMM_BRIGHTNESS_SYNC, 1, HEAPID_WIFIP2PMATCH);
+  //  WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK,
+  //          COMM_BRIGHTNESS_SYNC, 1, HEAPID_WIFIP2PMATCH);
   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT,
                               0,16,COMM_BRIGHTNESS_SYNC);
 
@@ -2444,14 +2444,14 @@ static int WifiP2PMatchFriendListStart( void )
   return WIFIP2PMATCH_FRIENDLIST_INIT;
 }
 
-#define TALK_MESSAGE_BUF_NUM	( 190*2 )
-#define TITLE_MESSAGE_BUF_NUM	( 90*2 )
+#define TALK_MESSAGE_BUF_NUM  ( 190*2 )
+#define TITLE_MESSAGE_BUF_NUM ( 90*2 )
 
 //------------------------------------------------------------------
 /**
  * ワーク初期化
  *
- * @param   wk		WIFIP2PMATCH_WORK*
+ * @param   wk    WIFIP2PMATCH_WORK*
  *
  * @retval  none
  */
@@ -2499,9 +2499,9 @@ static void FreeWork( WIFIP2PMATCH_WORK *wk )
 /**
  * BG解放
  *
- * @param	ini		BGLデータ
+ * @param ini   BGLデータ
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 static void BgExit( void )
@@ -2518,9 +2518,9 @@ static void BgExit( void )
 /**
  * グラフィックデータセット
  *
- * @param	wk		ポケモンリスト画面のワーク
+ * @param wk    ポケモンリスト画面のワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 
@@ -2570,15 +2570,15 @@ static void BgGraphicSet( WIFIP2PMATCH_WORK * wk, ARCHANDLE* p_handle )
 
 
 //** CharManager PlttManager用 **//
-#define WIFIP2PMATCH_CHAR_CONT_NUM				(20)
-#define WIFIP2PMATCH_CHAR_VRAMTRANS_MAIN_SIZE		(128*1024)
-#define WIFIP2PMATCH_CHAR_VRAMTRANS_SUB_SIZE		(16*1024)
-#define WIFIP2PMATCH_PLTT_CONT_NUM				(20)
+#define WIFIP2PMATCH_CHAR_CONT_NUM        (20)
+#define WIFIP2PMATCH_CHAR_VRAMTRANS_MAIN_SIZE   (128*1024)
+#define WIFIP2PMATCH_CHAR_VRAMTRANS_SUB_SIZE    (16*1024)
+#define WIFIP2PMATCH_PLTT_CONT_NUM        (20)
 
 //-------------------------------------
 //
-//	キャラクタマネージャー
-//	パレットマネージャーの初期化
+//  キャラクタマネージャー
+//  パレットマネージャーの初期化
 //
 //=====================================
 static void char_pltt_manager_init(void)
@@ -2611,7 +2611,7 @@ static void char_pltt_manager_init(void)
 /**
  * セルアクター初期化
  *
- * @param   wk		レーダー構造体のポインタ
+ * @param   wk    レーダー構造体のポインタ
  *
  * @retval  none
  */
@@ -2628,10 +2628,10 @@ static void InitCellActor(WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle)
   // レンダラ用OAMマネージャ作成
   // ここで作成したOAMマネージャをみんなで共有する
   REND_OAMInit(
-    0, 126,		// メイン画面OAM管理領域
-    0, 32,		// メイン画面アフィン管理領域
-    0, 126,		// サブ画面OAM管理領域
-    0, 32,		// サブ画面アフィン管理領域
+    0, 126,   // メイン画面OAM管理領域
+    0, 32,    // メイン画面アフィン管理領域
+    0, 126,   // サブ画面OAM管理領域
+    0, 32,    // サブ画面アフィン管理領域
     HEAPID_WIFIP2PMATCH);
 
 
@@ -2642,7 +2642,7 @@ static void InitCellActor(WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle)
 
 
   //リソースマネージャー初期化
-  for(i=0;i<CLACT_RESOURCE_NUM;i++){		//リソースマネージャー作成
+  for(i=0;i<CLACT_RESOURCE_NUM;i++){    //リソースマネージャー作成
     wk->resMan[i] = CLACT_U_ResManagerInit(WF_CLACT_RESNUM, i, HEAPID_WIFIP2PMATCH);
   }
 #endif
@@ -2659,7 +2659,7 @@ static void InitCellActor(WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle)
 
 
   // FontOAMシステム作成
-  //	wk->fontoam = FONTOAM_SysInit( WF_FONTOAM_NUM, HEAPID_WIFIP2PMATCH );  //@@OO
+  //  wk->fontoam = FONTOAM_SysInit( WF_FONTOAM_NUM, HEAPID_WIFIP2PMATCH );  //@@OO
 
 
 #if 0
@@ -2694,29 +2694,29 @@ static void InitCellActor(WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle)
 
   // Chara転送
   CLACT_U_CharManagerSetAreaCont( wk->resObjTbl[MAIN_LCD][CLACT_U_CHAR_RES] );
-  //	CLACT_U_CharManagerSet( wk->resObjTbl[SUB_LCD][CLACT_U_CHAR_RES] );
+  //  CLACT_U_CharManagerSet( wk->resObjTbl[SUB_LCD][CLACT_U_CHAR_RES] );
 
   // パレット転送
   CLACT_U_PlttManagerSetCleanArea( wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES] );
-  //	CLACT_U_PlttManagerSet( wk->resObjTbl[SUB_LCD][CLACT_U_PLTT_RES] );
+  //  CLACT_U_PlttManagerSet( wk->resObjTbl[SUB_LCD][CLACT_U_PLTT_RES] );
 
 #endif
 
 }
 
-#define TRAINER_NAME_POS_X		( 24 )
-#define TRAINER_NAME_POS_Y		( 32 )
-#define TRAINER_NAME_POS_SPAN	( 32 )
+#define TRAINER_NAME_POS_X    ( 24 )
+#define TRAINER_NAME_POS_Y    ( 32 )
+#define TRAINER_NAME_POS_SPAN ( 32 )
 
-#define TRAINER_NAME_WIN_X		(  3 )
-#define TRAINER1_NAME_WIN_Y		(  6 )
-#define TRAINER2_NAME_WIN_Y		(  7 )
+#define TRAINER_NAME_WIN_X    (  3 )
+#define TRAINER1_NAME_WIN_Y   (  6 )
+#define TRAINER2_NAME_WIN_Y   (  7 )
 
 //------------------------------------------------------------------
 /**
  * セルアクター登録
  *
- * @param   wk			WIFIP2PMATCH_WORK*
+ * @param   wk      WIFIP2PMATCH_WORK*
  *
  * @retval  none
  */
@@ -2735,29 +2735,29 @@ static void SetCellActor(WIFIP2PMATCH_WORK *wk)
                      NULL,NULL);
 
   /*
-	CLACT_U_MakeHeader(&wk->clActHeader_s, 1, 1, 1, 1, CLACT_U_HEADER_DATA_NONE, CLACT_U_HEADER_DATA_NONE,
-	0, 0,
-	wk->resMan[CLACT_U_CHAR_RES],
-	wk->resMan[CLACT_U_PLTT_RES],
-	wk->resMan[CLACT_U_CELL_RES],
-	wk->resMan[CLACT_U_CELLANM_RES],
-	NULL,NULL);
+  CLACT_U_MakeHeader(&wk->clActHeader_s, 1, 1, 1, 1, CLACT_U_HEADER_DATA_NONE, CLACT_U_HEADER_DATA_NONE,
+  0, 0,
+  wk->resMan[CLACT_U_CHAR_RES],
+  wk->resMan[CLACT_U_PLTT_RES],
+  wk->resMan[CLACT_U_CELL_RES],
+  wk->resMan[CLACT_U_CELLANM_RES],
+  NULL,NULL);
    */
   {
     //登録情報格納
     CLACT_ADD add;
 
-    add.ClActSet	= wk->clactSet;
-    add.ClActHeader	= &wk->clActHeader_m;
+    add.ClActSet  = wk->clactSet;
+    add.ClActHeader = &wk->clActHeader_m;
 
-    add.mat.z		= 0;
-    add.sca.x		= FX32_ONE;
-    add.sca.y		= FX32_ONE;
-    add.sca.z		= FX32_ONE;
-    add.rot			= 0;
-    add.pri			= 1;
-    add.DrawArea	= NNS_G2D_VRAM_TYPE_2DMAIN;
-    add.heap		= HEAPID_WIFIP2PMATCH;
+    add.mat.z   = 0;
+    add.sca.x   = FX32_ONE;
+    add.sca.y   = FX32_ONE;
+    add.sca.z   = FX32_ONE;
+    add.rot     = 0;
+    add.pri     = 1;
+    add.DrawArea  = NNS_G2D_VRAM_TYPE_2DMAIN;
+    add.heap    = HEAPID_WIFIP2PMATCH;
 
     //セルアクター表示開始
     // サブ画面用(矢印の登録）
@@ -2773,8 +2773,8 @@ static void SetCellActor(WIFIP2PMATCH_WORK *wk)
 
   }
 #endif
-  GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_OBJ, VISIBLE_ON );	//メイン画面OBJ面ＯＮ
-  //	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );	//サブ画面OBJ面ＯＮ
+  GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_OBJ, VISIBLE_ON ); //メイン画面OBJ面ＯＮ
+  //  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON ); //サブ画面OBJ面ＯＮ
 }
 
 
@@ -2802,13 +2802,13 @@ static void MainMenuMsgInit(WIFIP2PMATCH_WORK *wk)
 
 
 // はい・いいえBMP（下画面）
-#define YESNO_WIN_FRAME_CHAR	( 1 + TALK_WIN_CGX_SIZ )
-#define YESNO_CHARA_OFFSET		( 1 + TALK_WIN_CGX_SIZ + MENU_WIN_CGX_SIZ + FLD_MSG_WIN_SX*FLD_MSG_WIN_SY )
-#define YESNO_WINDOW_X			( 22 )
-#define YESNO_WINDOW_Y1			(  7 )
-#define YESNO_WINDOW_Y2			( 13 )
-#define YESNO_CHARA_W			(  8 )
-#define YESNO_CHARA_H			(  4 )
+#define YESNO_WIN_FRAME_CHAR  ( 1 + TALK_WIN_CGX_SIZ )
+#define YESNO_CHARA_OFFSET    ( 1 + TALK_WIN_CGX_SIZ + MENU_WIN_CGX_SIZ + FLD_MSG_WIN_SX*FLD_MSG_WIN_SY )
+#define YESNO_WINDOW_X      ( 22 )
+#define YESNO_WINDOW_Y1     (  7 )
+#define YESNO_WINDOW_Y2     ( 13 )
+#define YESNO_CHARA_W     (  8 )
+#define YESNO_CHARA_H     (  4 )
 
 /* static const NET_BMPWIN_DAT TouchYesNoBmpDat[2]={
  *     {
@@ -2899,7 +2899,7 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
   if(GFL_NET_IsInit()){       // 接続中
 
     _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
-    //		WIFI_STATUS_SetVChatStatus(pMatch, wk->pMatch->myMatchStatus.vchat_org);  @@OO
+    //    WIFI_STATUS_SetVChatStatus(pMatch, wk->pMatch->myMatchStatus.vchat_org);  @@OO
 
 
 
@@ -2909,7 +2909,7 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
     if( (status == WIFI_STATUS_TRADE) ||
         (status == WIFI_STATUS_FRONTIER)
         )
-    {	// 交換中orポフィンなら
+    { // 交換中orポフィンなら
 
       // 080605 tomoya BTS:249の対処のため
       // 親の通信リセット処理後直ぐに接続してしまうのを回避
@@ -2917,7 +2917,7 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
       _myStatusChange(wk, WIFI_STATUS_LOGIN_WAIT);
 
       //            CommInfoFinalize();    @@OO
-      GFL_NET_StateWifiMatchEnd(TRUE);	// マッチングを切る
+      GFL_NET_StateWifiMatchEnd(TRUE);  // マッチングを切る
       //            wk->pMatch = GFL_NET_StateGetMatchWork();   // もっと上の場所に移動する@@OO
       //            wk->pMatch =
       //            wk->pMatch->myMatchStatus.vchat = wk->pMatch->myMatchStatus.vchat_org;
@@ -3053,7 +3053,7 @@ static int _differMachineInit( WIFIP2PMATCH_WORK *wk, int seq )
       BmpMenu_YesNoSelectInit(
         &_yesNoBmpDatSys2,
         MENU_WIN_CGX_NUM, MENU_WIN_PAL,
-        1, HEAPID_WIFIP2PMATCH );	// いいえ　から始まる
+        1, HEAPID_WIFIP2PMATCH ); // いいえ　から始まる
     _CHANGESTATE(wk,WIFIP2PMATCH_DIFFER_MACHINE_NEXT);
   }
 
@@ -3085,7 +3085,7 @@ static int _differMachineNext( WIFIP2PMATCH_WORK *wk, int seq )
         BmpMenu_YesNoSelectInit(
           &_yesNoBmpDatSys2,
           MENU_WIN_CGX_NUM, MENU_WIN_PAL,
-          1, HEAPID_WIFIP2PMATCH );	// いいえ　から始める
+          1, HEAPID_WIFIP2PMATCH ); // いいえ　から始める
       _CHANGESTATE(wk,WIFIP2PMATCH_DIFFER_MACHINE_ONEMORE);
     }
     else{  // いいえを選択した場合
@@ -3252,13 +3252,13 @@ static void _makeMyMatchStatus(WIFIP2PMATCH_WORK* wk, int status)
   }
 #endif
 
-  //	wk->pMatch->myMatchStatus.version = MyStatus_GetRomCode(pMyStatus);
+  //  wk->pMatch->myMatchStatus.version = MyStatus_GetRomCode(pMyStatus);
   //  wk->pMatch->myMatchStatus.regionCode = MyStatus_GetRegionCode(pMyStatus);
 
-  //	wk->pMatch->myMatchStatus.pokemonZukan = ZukanWork_GetZenkokuZukanFlag(pZukan);
+  //  wk->pMatch->myMatchStatus.pokemonZukan = ZukanWork_GetZenkokuZukanFlag(pZukan);
   //    wk->pMatch->myMatchStatus.status = status;
   //    wk->pMatch->myMatchStatus.status = WIFI_STATUS_UNKNOWN;
-  _myStatusChange_not_send(wk, status);	// BGM状態などを調整
+  _myStatusChange_not_send(wk, status); // BGM状態などを調整
   //  wk->pMatch->myMatchStatus.regulation = _REGULATION_BATTLE_TOWER;
   //#if MYSTATUS_GETTRAINERVIEW_COMPLETION
   //  wk->pMatch->myMatchStatus.trainer_view = MyStatus_GetTrainerView(pMyStatus);
@@ -3596,7 +3596,7 @@ static int _retryWait( WIFIP2PMATCH_WORK *wk, int seq )
   }
   else
   {  // いいえを選択した場合
-    _myStatusChange(wk, WIFI_STATUS_LOGIN_WAIT);	// VCHATの状態を元に戻すため
+    _myStatusChange(wk, WIFI_STATUS_LOGIN_WAIT);  // VCHATの状態を元に戻すため
     //GFL_NET_StateWifiLogout();
     GFL_NET_Exit(NULL);
     //@@OO     CommInfoFinalize();   //Info初期化
@@ -3626,8 +3626,8 @@ static int _retry( WIFIP2PMATCH_WORK *wk, int seq )
     {
 
       // ブラックアウト
-      //			WIPE_SetBrightness( WIPE_DISP_MAIN, WIPE_FADE_BLACK );
-      //			WIPE_SetBrightness( WIPE_DISP_SUB, WIPE_FADE_BLACK );
+      //      WIPE_SetBrightness( WIPE_DISP_MAIN, WIPE_FADE_BLACK );
+      //      WIPE_SetBrightness( WIPE_DISP_SUB, WIPE_FADE_BLACK );
       GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT,16,16,0);
 
       WIFI_MCR_Dest( &wk->matchroom );
@@ -3664,8 +3664,8 @@ static int _retry( WIFIP2PMATCH_WORK *wk, int seq )
     // ブライトネス状態リセっト
     // MCR画面破棄時に暗くした物を解除
     wk->brightness_reset = TRUE;
-    //		WIPE_ResetBrightness( WIPE_DISP_MAIN );
-    //		WIPE_ResetBrightness( WIPE_DISP_SUB );
+    //    WIPE_ResetBrightness( WIPE_DISP_MAIN );
+    //    WIPE_ResetBrightness( WIPE_DISP_SUB );
 
     if( wk->menulist){
       GFL_BMPWIN_Delete(wk->ListWin);
@@ -3918,7 +3918,7 @@ static int _firstConnectEndMsgWait( WIFIP2PMATCH_WORK *wk, int seq )
  * @retval  none
  */
 //------------------------------------------------------------------
-static void	_userDataInfoDisp(WIFIP2PMATCH_WORK * wk)
+static void _userDataInfoDisp(WIFIP2PMATCH_WORK * wk)
 {
   int col,sex, vct_icon;
   int msg_id;
@@ -3996,7 +3996,7 @@ static void	_userDataInfoDisp(WIFIP2PMATCH_WORK * wk)
  * @retval  none
  */
 //------------------------------------------------------------------
-static void	_lineCallBack(BMPMENULIST_WORK * lw, u32 param, u8 y)
+static void _lineCallBack(BMPMENULIST_WORK * lw, u32 param, u8 y)
 {
   WIFIP2PMATCH_WORK* wk = (WIFIP2PMATCH_WORK*)BmpListParamGet(lw, BMPMENULIST_ID_WORK);
   //    int gmmNo = 0,col = _COL_N_BLACK;
@@ -4113,7 +4113,7 @@ static void	_lineCallBack(BMPMENULIST_WORK * lw, u32 param, u8 y)
  * @retval  none
  */
 //------------------------------------------------------------------
-static void	_iconDisp(WIFIP2PMATCH_WORK * wk, int status, int vctIcon, int x,int y,int x2)
+static void _iconDisp(WIFIP2PMATCH_WORK * wk, int status, int vctIcon, int x,int y,int x2)
 {
   u16 btl[]={ 0x17,0x18,0xc18,0x20 };  //ばとる
   u16 chg[]={ 0x25,0x26,0x2a,0xc25 };  //こうかん
@@ -4202,7 +4202,7 @@ static void	_iconDisp(WIFIP2PMATCH_WORK * wk, int status, int vctIcon, int x,int
  * @retval  none
  */
 //------------------------------------------------------------------
-static void	_iconMenuDisp(WIFIP2PMATCH_WORK * wk, int toppos)
+static void _iconMenuDisp(WIFIP2PMATCH_WORK * wk, int toppos)
 {
   u16* pData;
   // 0x06-----------なし
@@ -4254,7 +4254,7 @@ static void _curCallBack(BMPMENULIST_WORK * wk,u32 param,u8 mode)
 
 //------------------------------------------------------------------
 /**
- * $brief   フレンドリスト表示初期化   
+ * $brief   フレンドリスト表示初期化
  *
  * @param   wk
  *
@@ -4294,7 +4294,7 @@ static void _userDataDisp(WIFIP2PMATCH_WORK* wk)
 
 
   // システムウィンドウ設定
-  //	BmpMenuWinWrite( wk->MyInfoWinBack, WINDOW_TRANS_ON, MENU_WIN_CGX_NUM, MENU_WIN_PAL );
+  //  BmpMenuWinWrite( wk->MyInfoWinBack, WINDOW_TRANS_ON, MENU_WIN_CGX_NUM, MENU_WIN_PAL );
   //    GFL_BMPWIN_MakeFrameScreen(wk->MyInfoWinBack, MENU_WIN_CGX_NUM, MENU_WIN_PAL);
   BmpWinFrame_CgxSet(GFL_BG_FRAME1_M,COMM_TALK_WIN_CGX_NUM, MENU_TYPE_SYSTEM, HEAPID_WIFIP2PMATCH);
   BmpWinFrame_Write( wk->MyInfoWinBack, WINDOW_TRANS_ON, COMM_TALK_WIN_CGX_NUM, COMM_MESFRAME_PAL );
@@ -4346,7 +4346,7 @@ static void DEBUG_DummyObjIn( WIFIP2PMATCH_WORK *wk, int num )
 
     // みんな飛び跳ねる
     WIFI_MCR_NpcMoveSet( &wk->matchroom, p_moveobj, MCR_NPC_MOVE_JUMP );
-    MCRSYS_SetMoveObjWork( wk, p_moveobj );	// 登録したワークを保存しておく
+    MCRSYS_SetMoveObjWork( wk, p_moveobj ); // 登録したワークを保存しておく
 
   }
 }
@@ -4372,7 +4372,7 @@ static BOOL WIFIP2PModeCheck( int friendIndex ,void* pWork)
   targetSt = WIFI_STATUS_GetWifiMode(p_status);
 
   OS_TPrintf("%d %d\n",mySt, targetSt);
-  
+
   if((mySt == WIFI_STATUS_DBATTLE50_WAIT)&&(targetSt == WIFI_STATUS_DBATTLE50)){
     return TRUE;
   }
@@ -4467,7 +4467,7 @@ static int WifiP2PMatch_FriendListInit( WIFIP2PMATCH_WORK *wk, int seq )
 
   _myVChatStatusOrgSet(wk);
 
-  //    _timeWaitIconDel(wk);		timeWait内でMsgWinを破棄しているということはメッセージ終了でもOK↓
+  //    _timeWaitIconDel(wk);   timeWait内でMsgWinを破棄しているということはメッセージ終了でもOK↓
   EndMessageWindowOff(wk);
 
   GFL_CLACT_SYS_Delete();//
@@ -4500,7 +4500,7 @@ static int WifiP2PMatch_FriendListInit( WIFIP2PMATCH_WORK *wk, int seq )
 
     OS_TPrintf("自分を出す--\n");
     p_moveobj = WIFI_MCR_SetPlayer( &wk->matchroom, obj_code );
-    MCRSYS_SetMoveObjWork( wk, p_moveobj );	// 登録したワークを保存しておく
+    MCRSYS_SetMoveObjWork( wk, p_moveobj ); // 登録したワークを保存しておく
 #ifdef WFP2PM_MANY_OBJ
     DEBUG_DummyObjIn( wk, wk->friend_num );
 #endif
@@ -4524,7 +4524,7 @@ static int WifiP2PMatch_FriendListInit( WIFIP2PMATCH_WORK *wk, int seq )
   // WIFI　対戦AUTOﾓｰﾄﾞデバック
 #ifndef _WIFI_DEBUG_TUUSHIN
   _myStatusChange(wk, WIFI_STATUS_LOGIN_WAIT);
-#else	//_WIFI_DEBUG_TUUSHIN
+#else //_WIFI_DEBUG_TUUSHIN
 
   if( WIFI_DEBUG_BATTLE_Work.DEBUG_WIFI_BATTLE == FALSE ){
 
@@ -4543,10 +4543,10 @@ static int WifiP2PMatch_FriendListInit( WIFIP2PMATCH_WORK *wk, int seq )
     WIFI_DEBUG_BATTLE_Work.DEBUG_WIFI_BATTLE = FALSE;
     _myStatusChange(wk, WIFI_STATUS_LOGIN_WAIT);
   }
-#endif	//_WIFI_DEBUG_TUUSHIN
+#endif  //_WIFI_DEBUG_TUUSHIN
 
   // 通信状態を元に戻す
-  //	GFL_NET_StateChangeWiFiLogin(); //@@OO
+  //  GFL_NET_StateChangeWiFiLogin(); //@@OO
   _commStateChange(WIFI_STATUS_LOGIN_WAIT);
   GFL_NET_ChangeInitStruct(&aGFLNetInit);
 
@@ -4555,7 +4555,7 @@ static int WifiP2PMatch_FriendListInit( WIFIP2PMATCH_WORK *wk, int seq )
   // 080605 tomoya BTS:249の対処のため
   // 親の通信リセット処理後直ぐに接続してしまうのを回避
   // （接続されてもVCHATの状態のまま、FriendListシーケンスに移行させる）
-  //	mydwc_ResetNewPlayer();	// ちなみにmydwc_returnLobby内でも初期化してる
+  //  mydwc_ResetNewPlayer(); // ちなみにmydwc_returnLobby内でも初期化してる
 #if 0
   CLACT_SetDrawFlag( wk->MainActWork[_CLACT_LINE_CUR], 1 );
 #endif
@@ -4563,8 +4563,8 @@ static int WifiP2PMatch_FriendListInit( WIFIP2PMATCH_WORK *wk, int seq )
   GFL_ARC_CloseDataHandle( p_handle );
 
   // ワイプイン
-  //	WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_BLACK,
-  //					COMM_BRIGHTNESS_SYNC, 1, HEAPID_WIFIP2PMATCH);
+  //  WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_BLACK,
+  //          COMM_BRIGHTNESS_SYNC, 1, HEAPID_WIFIP2PMATCH);
   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT,
                               16,0,COMM_BRIGHTNESS_SYNC);
 
@@ -4606,11 +4606,11 @@ static BOOL _checkParentNewPlayer( WIFIP2PMATCH_WORK *wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	友達の出入りを管理する
+ *  @brief  友達の出入りを管理する
  *
- *	@param	wk	ワーク
+ *  @param  wk  ワーク
  *
- *	@retval	今の友達の数
+ *  @retval 今の友達の数
  */
 //-----------------------------------------------------------------------------
 static int MCRSYS_ContFiendInOut( WIFIP2PMATCH_WORK* wk )
@@ -4625,7 +4625,7 @@ static int MCRSYS_ContFiendInOut( WIFIP2PMATCH_WORK* wk )
 
   // 最新版の友達数と、友達ナンバー配列を作成
   friend_num = _readFriendMatchStatus( wk );
-  //	wk->friendMatchReadCount = friend_num;
+  //  wk->friendMatchReadCount = friend_num;
 
   in_flag = FALSE;
   out_flag = FALSE;
@@ -4655,7 +4655,7 @@ static int MCRSYS_ContFiendInOut( WIFIP2PMATCH_WORK* wk )
           WIFI_MCR_DelPeopleReq( &wk->matchroom, p_obj );
           MCRSYS_DelMoveObjWork( wk, p_obj );
           MCVSys_BttnDel( wk, wk->index2NoBackUp[i] );
-          WifiP2PMatch_UserDispOff_Target( wk, wk->index2NoBackUp[i], HEAPID_WIFIP2PMATCH );	// その人がした画面に詳細表示されているなら消す
+          WifiP2PMatch_UserDispOff_Target( wk, wk->index2NoBackUp[i], HEAPID_WIFIP2PMATCH );  // その人がした画面に詳細表示されているなら消す
           out_flag = TRUE;
         }
       }
@@ -4688,7 +4688,7 @@ static int MCRSYS_ContFiendInOut( WIFIP2PMATCH_WORK* wk )
           // オブジェが登録できなかったので予約登録
           // （これだとボタンを押すことが出来ない）
           MCVSys_BttnSet( wk, wk->index2No[i], MCV_BTTN_FRIEND_TYPE_RES );
-          wk->index2No[i] = 0;	// 入ってきたのはなかったことにする
+          wk->index2No[i] = 0;  // 入ってきたのはなかったことにする
         }
       }
     }
@@ -4713,9 +4713,9 @@ static int MCRSYS_ContFiendInOut( WIFIP2PMATCH_WORK* wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	友達の状態変化を表示
+ *  @brief  友達の状態変化を表示
  *
- *	@param	wk	ワーク
+ *  @param  wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static void MCRSYS_ContFriendStatus( WIFIP2PMATCH_WORK* wk, u32 heapID )
@@ -4737,9 +4737,9 @@ static void MCRSYS_ContFriendStatus( WIFIP2PMATCH_WORK* wk, u32 heapID )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	友達オブジェクトの登録破棄管理
+ *  @brief  友達オブジェクトの登録破棄管理
  *
- *	@param	wk	ワーク
+ *  @param  wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static void MCRSYS_SetFriendObj( WIFIP2PMATCH_WORK* wk, u32 heapID )
@@ -4762,7 +4762,7 @@ static void MCRSYS_SetFriendObj( WIFIP2PMATCH_WORK* wk, u32 heapID )
 
 static int WifiP2PMatch_FriendList( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  u32	ret = MCR_RET_NONE;
+  u32 ret = MCR_RET_NONE;
   int checkMatch;
   u32 check_friend;
   MCR_MOVEOBJ* p_obj;
@@ -4816,14 +4816,14 @@ static int WifiP2PMatch_FriendList( WIFIP2PMATCH_WORK *wk, int seq )
         Snd_SePlay(_SE_DESIDE);
         _userDataInfoDisp(wk);
         _CHANGESTATE(wk,WIFIP2PMATCH_VCHATWIN_WAIT);
-        WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );	// した画面初期化
+        WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
         return seq;
       }
     }
 
 
     // した画面も動かない
-    check_friend = MCVSys_Updata( wk, HEAPID_WIFIP2PMATCH );	// した画面も動かす
+    check_friend = MCVSys_Updata( wk, HEAPID_WIFIP2PMATCH );  // した画面も動かす
     p_obj = MCRSYS_GetMoveObjWork( wk, check_friend );
     if( check_friend != 0 ){
       if( p_obj ){
@@ -4872,7 +4872,7 @@ static int WifiP2PMatch_FriendList( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_INIT);
     return seq;
   }
-  if((wk->preConnect == -1) && (GFL_NET_DWC_IsNewPlayer() != -1)){	// 通常のコネクト開始
+  if((wk->preConnect == -1) && (GFL_NET_DWC_IsNewPlayer() != -1)){  // 通常のコネクト開始
     wk->preConnect = GFL_NET_DWC_IsNewPlayer();
     _friendNameExpand(wk, wk->preConnect);
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_043, FALSE);
@@ -4882,11 +4882,11 @@ static int WifiP2PMatch_FriendList( WIFIP2PMATCH_WORK *wk, int seq )
     NET_PRINT( "Connect VCHAT set\n" );
 
     // つながった人のデータ表示
-    //		WifiP2PMatch_UserDispOn( wk, wk->preConnect+1, HEAPID_WIFIP2PMATCH );
+    //    WifiP2PMatch_UserDispOn( wk, wk->preConnect+1, HEAPID_WIFIP2PMATCH );
 
     wk->localTime = 0;
   }
-  else if((wk->preConnect != -1) && (GFL_NET_DWC_IsNewPlayer() == -1)){	// 自分的には新しくコネクトしてきたのに、実際はコネクトしてきていなかったとき？
+  else if((wk->preConnect != -1) && (GFL_NET_DWC_IsNewPlayer() == -1)){ // 自分的には新しくコネクトしてきたのに、実際はコネクトしてきていなかったとき？
 
     // ボイスチャット設定
     GFL_NET_DWC_SetVChat(FALSE);// ボイスチャットとBGM音量の関係を整理 tomoya takahashi
@@ -4898,7 +4898,7 @@ static int WifiP2PMatch_FriendList( WIFIP2PMATCH_WORK *wk, int seq )
   }
 
   // VCHAT　ON　状態なのに、新しいコネクトが-1ならVCHATをOFFにする
-  // 080615	tomoya
+  // 080615 tomoya
   if( (GFL_NET_DWC_IsVChat() == TRUE) && (GFL_NET_DWC_IsNewPlayer() == -1) ){
     GFL_NET_DWC_SetVChat(FALSE);// ボイスチャットとBGM音量の関係を整理 tomoya takahashi
   }
@@ -4912,16 +4912,16 @@ static int WifiP2PMatch_FriendList( WIFIP2PMATCH_WORK *wk, int seq )
 
     // CANCELボタンでも待機状態をクリア
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
-      if(_modeWait(status)){	// 待ち状態のとき
+      if(_modeWait(status)){  // 待ち状態のとき
         Snd_SePlay(_SE_DESIDE);
         _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_REL_INIT);
-        WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );	// した画面初期化
+        WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
         return seq;
       }
     }
 
     ret = WIFI_MCR_Main( &wk->matchroom );
-    WIFI_MCR_PCAnmMain( &wk->matchroom );	// パソコンアニメメイン
+    WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
     //        ret = BmpListMain(wk->lw);
   }
   switch(ret){
@@ -4929,38 +4929,38 @@ static int WifiP2PMatch_FriendList( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
   case MCR_RET_CANCEL:
     Snd_SePlay(_SE_DESIDE);
-    if(_modeWait(status)){	// 待ち状態のとき
+    if(_modeWait(status)){  // 待ち状態のとき
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_REL_INIT);
     }
-    else{	// それか終了チェックへ
+    else{ // それか終了チェックへ
       wk->endSeq = WIFI_P2PMATCH_END;
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_EXIT_YESNO);
       WifiP2PMatchMessagePrint(wk, dwc_message_0010, TRUE);
       //        wk->localTime=0;
       ret = BMPMENULIST_CANCEL;
     }
-    WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );	// した画面初期化
+    WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
     return seq;
 
   case MCR_RET_MYSELECT:
     //        wk->localTime=0;
     Snd_SePlay(_SE_DESIDE);
     if(_modeWait(status)){
-      WIFI_MCR_PCAnmStart( &wk->matchroom );	// pcアニメ開始
+      WIFI_MCR_PCAnmStart( &wk->matchroom );  // pcアニメ開始
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_REL_INIT);
     }
     else{  // 募集の行で選択したとき
       if(status == WIFI_STATUS_LOGIN_WAIT){
 
         // 自分の状態が、マッチングまでいっているかチェックする
-        // 080628	tomoya
+        // 080628 tomoya
         if( GFL_NET_StateIsWifiLoginMatchState() == TRUE ){
-          WIFI_MCR_PCAnmStart( &wk->matchroom );	// pcアニメ開始
+          WIFI_MCR_PCAnmStart( &wk->matchroom );  // pcアニメ開始
           _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_INIT);
         }
       }
     }
-    WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );	// した画面初期化
+    WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
     return seq;
     break;
 
@@ -4972,7 +4972,7 @@ static int WifiP2PMatch_FriendList( WIFIP2PMATCH_WORK *wk, int seq )
     else{  // 人の名前ー＞マッチングへ
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_MATCH_INIT);
     }
-    WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );	// した画面初期化
+    WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
     return seq;
     break;
 
@@ -5022,8 +5022,8 @@ static int WifiP2PMatch_VCTConnectInit2( WIFIP2PMATCH_WORK *wk, int seq )       
 
   // VChatフラグを取得
   p_status = WifiFriendMatchStatusGet( wk->friendNo - 1 );
-  vchat	= WIFI_STATUS_GetVChatStatus(p_status);
-  status	= _WifiMyStatusGet( wk, p_status );
+  vchat = WIFI_STATUS_GetVChatStatus(p_status);
+  status  = _WifiMyStatusGet( wk, p_status );
 
   wk->cancelEnableTimer--;
   if(wk->cancelEnableTimer < 0  ){
@@ -5063,13 +5063,13 @@ static int WifiP2PMatch_VCTConnectInit2( WIFIP2PMATCH_WORK *wk, int seq )       
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
   }
   else if(GFL_NET_StateGetWifiStatus()==GFL_NET_STATE_MATCHED){  // つながった
-    //    _timeWaitIconDel(wk);		timeWait内でMsgWinを破棄しているということはメッセージ終了でもOK↓
+    //    _timeWaitIconDel(wk);   timeWait内でMsgWinを破棄しているということはメッセージ終了でもOK↓
     EndMessageWindowOff(wk);
     // VCT接続開始 + 接続MACは消去
     WIFI_STATUS_ResetVChatMac(wk->pMatch);
     _myStatusChange(wk, WIFI_STATUS_VCT);  // VCT中になる
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECT);
-    WifiList_SetLastPlayDate( wk->pList, wk->friendNo - 1);	// 最後に遊んだ日付は、VCTがつながったときに設定する
+    WifiList_SetLastPlayDate( wk->pList, wk->friendNo - 1); // 最後に遊んだ日付は、VCTがつながったときに設定する
   }
 
   return seq;
@@ -5085,7 +5085,7 @@ static int WifiP2PMatch_VCTConnectInit2( WIFIP2PMATCH_WORK *wk, int seq )       
 static int WifiP2PMatch_VCTConnectInit( WIFIP2PMATCH_WORK *wk, int seq )        // WIFIP2PMATCH_MODE_VCT_CONNECT_INIT
 {
 
-  // 080703	tomoya takahashi
+  // 080703 tomoya takahashi
   // やはりはまるときはあるようなので、
   //　すぐに次にいくように修正する
   _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
@@ -5093,7 +5093,7 @@ static int WifiP2PMatch_VCTConnectInit( WIFIP2PMATCH_WORK *wk, int seq )        
   _myStatusChange(wk, WIFI_STATUS_VCT);  // VCT中になる
   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECT_WAIT);
 
-  WifiList_SetLastPlayDate( wk->pList, GFL_NET_DWC_GetFriendIndex());	// 最後に遊んだ日付は、VCTがつながったときに設定する
+  WifiList_SetLastPlayDate( wk->pList, GFL_NET_DWC_GetFriendIndex()); // 最後に遊んだ日付は、VCTがつながったときに設定する
 
 #if 0
   if(GFL_NET_StateGetWifiStatus()==GFL_NET_STATE_MATCHED){  // つながった
@@ -5138,7 +5138,7 @@ static int WifiP2PMatch_VCTConnectWait( WIFIP2PMATCH_WORK *wk, int seq )        
   // 080624　追加
   // statusをチェック
   p_status = WifiFriendMatchStatusGet( GFL_NET_DWC_GetFriendIndex() );
-  status	= _WifiMyStatusGet( wk, p_status );
+  status  = _WifiMyStatusGet( wk, p_status );
   if( (status != WIFI_STATUS_LOGIN_WAIT) && (status != WIFI_STATUS_VCT) ){
     _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_013, FALSE);
@@ -5186,7 +5186,7 @@ static int WifiP2PMatch_VCTConnect( WIFIP2PMATCH_WORK *wk, int seq )
 
   // VChatフラグを取得
   p_status = WifiFriendMatchStatusGet( GFL_NET_DWC_GetFriendIndex() );
-  status	= _WifiMyStatusGet( wk, p_status );
+  status  = _WifiMyStatusGet( wk, p_status );
 
   // 友達が現れたら出す
   MCRSYS_SetFriendObj( wk, HEAPID_WIFIP2PMATCH );
@@ -5286,7 +5286,7 @@ static int WifiP2PMatch_VCTConnectEndWait( WIFIP2PMATCH_WORK *wk, int seq )
        || !GFL_NET_IsConnectMember(GFL_NET_NETID_SERVER)){
 
       // ユーザーデータOFF
-      //			WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );
+      //      WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );
       //
       EndMessageWindowOff(wk);
 
@@ -5339,7 +5339,7 @@ static int WifiP2PMatch_VCTDisconnect(WIFIP2PMATCH_WORK *wk, int seq)
 
 
   // ユーザーデータOFF
-  //	WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );
+  //  WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );
 
   status = _WifiMyStatusGet( wk, wk->pMatch );
 
@@ -5400,7 +5400,7 @@ static int WifiP2PMatch_BattleDisconnect(WIFIP2PMATCH_WORK *wk, int seq)
 static int WifiP2PMatch_Disconnect(WIFIP2PMATCH_WORK *wk, int seq)
 {
   // ユーザーデータOFF
-  //	WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );
+  //  WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );
   //
   // エラーチェック
   if( GFL_NET_StateIsWifiError() ){
@@ -5461,7 +5461,7 @@ static int WifiP2PMatch_BattleConnect( WIFIP2PMATCH_WORK *wk, int seq )        /
 /**
  * $brief   カーソル位置を変更する
  *
- * @param   act		アクターのポインタ
+ * @param   act   アクターのポインタ
  * @param   x
  * @param   y
  *
@@ -5521,7 +5521,7 @@ static int WifiP2PMatch_CheckAndEnd( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _parentModeSelectRelInit( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  WIFI_MCR_PCAnmMain( &wk->matchroom );	// パソコンアニメメイン
+  WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
   WifiP2PMatchMessagePrint(wk, msg_wifilobby_007, FALSE);
   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_REL_YESNO);
   return seq;
@@ -5538,7 +5538,7 @@ static int _parentModeSelectRelInit( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _parentModeSelectRelYesNo( WIFIP2PMATCH_WORK* wk, int seq )
 {
-  WIFI_MCR_PCAnmMain( &wk->matchroom );	// パソコンアニメメイン
+  WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
   if( PRINTSYS_QUE_IsFinished(wk->SysMsgQue) ){
     // はいいいえウインドウを出す
     wk->pYesNoWork =
@@ -5565,7 +5565,7 @@ static int _parentModeSelectRelWait( WIFIP2PMATCH_WORK* wk, int seq )
   int i;
   int ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
 
-  WIFI_MCR_PCAnmMain( &wk->matchroom );	// パソコンアニメメイン
+  WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
 
   if((wk->preConnect == -1) && (GFL_NET_DWC_IsNewPlayer() != -1)){  // 接続があった
 
@@ -5586,7 +5586,7 @@ static int _parentModeSelectRelWait( WIFIP2PMATCH_WORK* wk, int seq )
     _myStatusChange(wk, WIFI_STATUS_LOGIN_WAIT);
 
     // 通信状態を元に戻す
-    //		GFL_NET_StateChangeWiFiLogin();
+    //    GFL_NET_StateChangeWiFiLogin();
     GFL_NET_ChangeInitStruct(&aGFLNetInit);
 
     // 主人公の動作を許可
@@ -5612,9 +5612,9 @@ static int _parentModeSelectRelWait( WIFIP2PMATCH_WORK* wk, int seq )
  * @retval  none
  */
 //------------------------------------------------------------------
-#define WIFI_STSET_SINGLEBATTLE	(WIFI_STATUS_NONE)		// 選択肢の無いものを割り当てる
-#define WIFI_STSET_DOUBLEBATTLE	(WIFI_STATUS_VCT)
-#define WIFI_STSET_MINIGAME		(WIFI_STATUS_UNKNOWN)
+#define WIFI_STSET_SINGLEBATTLE (WIFI_STATUS_NONE)    // 選択肢の無いものを割り当てる
+#define WIFI_STSET_DOUBLEBATTLE (WIFI_STATUS_VCT)
+#define WIFI_STSET_MINIGAME   (WIFI_STATUS_UNKNOWN)
 
 typedef struct {
   u32  str_id;
@@ -5622,11 +5622,11 @@ typedef struct {
 } _infoMenu;
 
 //  メニューリスト
-#define WIFI_PARENTINFO_MENULIST_MAX	  ( 10 )
+#define WIFI_PARENTINFO_MENULIST_MAX    ( 10 )
 #ifdef WFP2P_DEBUG_EXON
-#define WIFI_PARENTINFO_MENULIST_COMMON	  ( 5 )	// 変動しない部分の数
+#define WIFI_PARENTINFO_MENULIST_COMMON   ( 5 ) // 変動しない部分の数
 #else
-#define WIFI_PARENTINFO_MENULIST_COMMON	  ( 3 )	// 変動しない部分の数
+#define WIFI_PARENTINFO_MENULIST_COMMON   ( 3 ) // 変動しない部分の数
 #endif
 _infoMenu _parentInfoMenuList[ WIFI_PARENTINFO_MENULIST_MAX ] = {
   // 変動しない部分
@@ -5668,64 +5668,64 @@ _infoMenu _parentDoubleInfoMenuList[] = {
 
 ///選択メニューのリスト
 static BMPMENULIST_HEADER _parentInfoMenuListHeader = {
-  NULL,			// 表示文字データポインタ
-  _curCallBack,					// カーソル移動ごとのコールバック関数
-  NULL,					// 一列表示ごとのコールバック関数
+  NULL,     // 表示文字データポインタ
+  _curCallBack,         // カーソル移動ごとのコールバック関数
+  NULL,         // 一列表示ごとのコールバック関数
   NULL,                   //
   WIFI_PARENTINFO_MENULIST_COMMON,// リスト項目数
   WIFI_PARENTINFO_MENULIST_COMMON,// 表示最大項目数
-  0,						// ラベル表示Ｘ座標
-  8,						// 項目表示Ｘ座標
-  0,						// カーソル表示Ｘ座標
-  0,						// 表示Ｙ座標
-  FBMP_COL_BLACK,			// 文字色
-  FBMP_COL_WHITE,			// 背景色
-  FBMP_COL_BLK_SDW,		// 文字影色
-  0,						// 文字間隔Ｘ
-  16,						// 文字間隔Ｙ
-  BMPMENULIST_NO_SKIP,		// ページスキップタイプ
-  0,//FONT_SYSTEM,				// 文字指定
-  0,						// ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
+  0,            // ラベル表示Ｘ座標
+  8,            // 項目表示Ｘ座標
+  0,            // カーソル表示Ｘ座標
+  0,            // 表示Ｙ座標
+  FBMP_COL_BLACK,     // 文字色
+  FBMP_COL_WHITE,     // 背景色
+  FBMP_COL_BLK_SDW,   // 文字影色
+  0,            // 文字間隔Ｘ
+  16,           // 文字間隔Ｙ
+  BMPMENULIST_NO_SKIP,    // ページスキップタイプ
+  0,//FONT_SYSTEM,        // 文字指定
+  0,            // ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
   NULL,                   // work
-  _BMPMENULIST_FONTSIZE,			//文字サイズX(ドット
-  _BMPMENULIST_FONTSIZE,			//文字サイズY(ドット
-  NULL,		//表示に使用するメッセージバッフ
-  NULL,		//表示に使用するプリントユーティ
-  NULL,		//表示に使用するプリントキュー
-  NULL,		//表示に使用するフォントハンドル
+  _BMPMENULIST_FONTSIZE,      //文字サイズX(ドット
+  _BMPMENULIST_FONTSIZE,      //文字サイズY(ドット
+  NULL,   //表示に使用するメッセージバッフ
+  NULL,   //表示に使用するプリントユーティ
+  NULL,   //表示に使用するプリントキュー
+  NULL,   //表示に使用するフォントハンドル
 };
 
 ///選択メニューのリスト
 static const BMPMENULIST_HEADER _parentInfoBattleMenuListHeader = {
-  NULL,			// 表示文字データポインタ
-  _curCallBack,					// カーソル移動ごとのコールバック関数
-  NULL,					// 一列表示ごとのコールバック関数
+  NULL,     // 表示文字データポインタ
+  _curCallBack,         // カーソル移動ごとのコールバック関数
+  NULL,         // 一列表示ごとのコールバック関数
   NULL,                   //
-  NELEMS(_parentSingleInfoMenuList),	// リスト項目数
-  NELEMS(_parentSingleInfoMenuList),	// 表示最大項目数
-  0,						// ラベル表示Ｘ座標
-  8,						// 項目表示Ｘ座標
-  0,						// カーソル表示Ｘ座標
-  0,						// 表示Ｙ座標
-  FBMP_COL_BLACK,			// 文字色
-  FBMP_COL_WHITE,			// 背景色
-  FBMP_COL_BLK_SDW,		// 文字影色
-  0,						// 文字間隔Ｘ
-  16,						// 文字間隔Ｙ
-  BMPMENULIST_NO_SKIP,		// ページスキップタイプ
-  0,//FONT_SYSTEM,				// 文字指定
-  0,						// ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
+  NELEMS(_parentSingleInfoMenuList),  // リスト項目数
+  NELEMS(_parentSingleInfoMenuList),  // 表示最大項目数
+  0,            // ラベル表示Ｘ座標
+  8,            // 項目表示Ｘ座標
+  0,            // カーソル表示Ｘ座標
+  0,            // 表示Ｙ座標
+  FBMP_COL_BLACK,     // 文字色
+  FBMP_COL_WHITE,     // 背景色
+  FBMP_COL_BLK_SDW,   // 文字影色
+  0,            // 文字間隔Ｘ
+  16,           // 文字間隔Ｙ
+  BMPMENULIST_NO_SKIP,    // ページスキップタイプ
+  0,//FONT_SYSTEM,        // 文字指定
+  0,            // ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
   NULL,                    // work
-  _BMPMENULIST_FONTSIZE,			//文字サイズX(ドット
-  _BMPMENULIST_FONTSIZE,			//文字サイズY(ドット
-  NULL,		//表示に使用するメッセージバッフ
-  NULL,		//表示に使用するプリントユーティ
-  NULL,		//表示に使用するプリントキュー
-  NULL,		//表示に使用するフォントハンドル
+  _BMPMENULIST_FONTSIZE,      //文字サイズX(ドット
+  _BMPMENULIST_FONTSIZE,      //文字サイズY(ドット
+  NULL,   //表示に使用するメッセージバッフ
+  NULL,   //表示に使用するプリントユーティ
+  NULL,   //表示に使用するプリントキュー
+  NULL,   //表示に使用するフォントハンドル
 };
 
 
-#define PARENTMENU_Y	( 3 )
+#define PARENTMENU_Y  ( 3 )
 static int _parentModeSelectMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
 {
   int i,length;
@@ -5740,27 +5740,27 @@ static int _parentModeSelectMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
 
   // フロンティアの有無
   if( _frontierInCheck( wk ) == TRUE ){
-    length ++;			//  項目数追加
-    list_h.count ++;	// リスト最大項目数追加
-    list_h.line ++;		// リスト表示最大数追加
+    length ++;      //  項目数追加
+    list_h.count ++;  // リスト最大項目数追加
+    list_h.line ++;   // リスト表示最大数追加
 
     p_menu[ length-1 ] = _frontierMenu;
   }
 
   // ミニゲームの有無
   if( _miniGameInCheck( wk ) == TRUE ){
-    length ++;			//  項目数追加
-    list_h.count ++;	// リスト最大項目数追加
-    list_h.line ++;		// リスト表示最大数追加
+    length ++;      //  項目数追加
+    list_h.count ++;  // リスト最大項目数追加
+    list_h.line ++;   // リスト表示最大数追加
 
     p_menu[ length-1 ] =_minigameMenu;
   }
 
   // 終了の追加
   {
-    length ++;			//  項目数追加
-    list_h.count ++;	// リスト最大項目数追加
-    list_h.line ++;		// リスト表示最大数追加
+    length ++;      //  項目数追加
+    list_h.count ++;  // リスト最大項目数追加
+    list_h.line ++;   // リスト表示最大数追加
 
     p_menu[ length-1 ] =_endMenu;
   }
@@ -5795,7 +5795,7 @@ static int _parentModeSelectMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
   WifiP2PMatchMessagePrint(wk, msg_wifilobby_006, FALSE);
 
 
-  WIFI_MCR_PCAnmMain( &wk->matchroom );	// パソコンアニメメイン
+  WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
 
   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_WAIT);
   return seq;
@@ -5811,15 +5811,15 @@ static int _parentModeSelectMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
 static int _battleSubMenuInit( WIFIP2PMATCH_WORK *wk, int ret );
 static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  u32	ret;
+  u32 ret;
   int num = PokeParty_GetBattlePokeNum(wk->pMyPoke);
 
-  WIFI_MCR_PCAnmMain( &wk->matchroom );	// パソコンアニメメイン
+  WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
 
 
   if( !PRINTSYS_QUE_IsFinished(wk->SysMsgQue) ){
 
-    // ここで接続してくる可能性もある	080617	tomoya
+    // ここで接続してくる可能性もある 080617  tomoya
     if( 0 !=  _checkParentNewPlayer(wk)){ // 接続してきた
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
       wk->SubListWin = _BmpWinDel(wk->SubListWin);
@@ -5876,15 +5876,15 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
       BOOL  msg_on = TRUE;
 
       {
-        WifiP2PMatch_CommWifiBattleStart( wk, -1, ret );	// 交換でも通信方法を変更するためにここに移動
+        WifiP2PMatch_CommWifiBattleStart( wk, -1, ret );  // 交換でも通信方法を変更するためにここに移動
         _commStateChange( ret );
-        /*				↑commStateChangeでよい
-				if(ret == WIFI_STATUS_FRONTIER_WAIT){
-//					WifiP2PMatch_CommWifiBattleStart( wk, -1, ret );
+        /*        ↑commStateChangeでよい
+        if(ret == WIFI_STATUS_FRONTIER_WAIT){
+//          WifiP2PMatch_CommWifiBattleStart( wk, -1, ret );
 //
-					GFL_NET_SetWifiBothNet(FALSE);
-					GFL_NET_StateChangeWiFiFactory();
-				}
+          GFL_NET_SetWifiBothNet(FALSE);
+          GFL_NET_StateChangeWiFiFactory();
+        }
          */
       }
 
@@ -5912,7 +5912,7 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
 //------------------------------------------------------------------
 static int _parentRestart( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  u32	ret;
+  u32 ret;
 
   // エラーチェック
   if( GFL_NET_StateIsWifiError() ){
@@ -5920,7 +5920,7 @@ static int _parentRestart( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
   }
 
-  WIFI_MCR_PCAnmMain( &wk->matchroom );	// パソコンアニメメイン
+  WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
   if( 0 !=  _checkParentNewPlayer(wk)){ // 接続してきた
 
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
@@ -5945,7 +5945,7 @@ static int _parentRestart( WIFIP2PMATCH_WORK *wk, int seq )
 
     // 自分はエントリー
     //        CommInfoSetEntry( GFL_NET_SystemGetCurrentID() );    //@@OO
-    seq = SEQ_OUT;						//終了シーケンスへ
+    seq = SEQ_OUT;            //終了シーケンスへ
   }
   return seq;
 
@@ -6038,11 +6038,11 @@ static int _battleSubMenuInit( WIFIP2PMATCH_WORK *wk, int ret )
 //------------------------------------------------------------------
 static int _parentModeSubSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  u32	ret;
+  u32 ret;
 
-  WIFI_MCR_PCAnmMain( &wk->matchroom );	// パソコンアニメメイン
+  WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
 
-  // ここで接続してくる可能性もある	080617	tomoya
+  // ここで接続してくる可能性もある 080617  tomoya
   if( 0 !=  _checkParentNewPlayer(wk)){ // 接続してきた
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
     wk->SubListWin = _BmpWinDel(wk->SubListWin);
@@ -6072,8 +6072,8 @@ static int _parentModeSubSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
   }
 
 
-  //	{
-  if( wk->seq == WIFIP2PMATCH_MODE_FRIENDLIST ){	// 何か選択したときのみ、CANCELはだめ
+  //  {
+  if( wk->seq == WIFIP2PMATCH_MODE_FRIENDLIST ){  // 何か選択したときのみ、CANCELはだめ
     BOOL msg_on = TRUE;
     WifiP2PMatch_CommWifiBattleStart( wk, -1, ret );
     //@@OO            GFL_NET_StateChangeWiFiBattle();
@@ -6116,31 +6116,31 @@ static const struct {
 
 ///選択メニューのリスト
 static const BMPMENULIST_HEADER _childMatchMenuListHeader = {
-  NULL,			// 表示文字データポインタ
-  _curCallBack,					// カーソル移動ごとのコールバック関数
-  NULL,					// 一列表示ごとのコールバック関数
+  NULL,     // 表示文字データポインタ
+  _curCallBack,         // カーソル移動ごとのコールバック関数
+  NULL,         // 一列表示ごとのコールバック関数
   NULL,                   //
-  NELEMS(_childMatchMenuList),	// リスト項目数
-  NELEMS(_childMatchMenuList),	// 表示最大項目数
-  0,						// ラベル表示Ｘ座標
-  8,						// 項目表示Ｘ座標
-  0,						// カーソル表示Ｘ座標
-  0,						// 表示Ｙ座標
-  FBMP_COL_BLACK,			// 文字色
-  FBMP_COL_WHITE,			// 背景色
-  FBMP_COL_BLK_SDW,		// 文字影色
-  0,						// 文字間隔Ｘ
-  16,						// 文字間隔Ｙ
-  BMPMENULIST_NO_SKIP,		// ページスキップタイプ
-  0,//FONT_SYSTEM,				// 文字指定
-  0,						// ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
+  NELEMS(_childMatchMenuList),  // リスト項目数
+  NELEMS(_childMatchMenuList),  // 表示最大項目数
+  0,            // ラベル表示Ｘ座標
+  8,            // 項目表示Ｘ座標
+  0,            // カーソル表示Ｘ座標
+  0,            // 表示Ｙ座標
+  FBMP_COL_BLACK,     // 文字色
+  FBMP_COL_WHITE,     // 背景色
+  FBMP_COL_BLK_SDW,   // 文字影色
+  0,            // 文字間隔Ｘ
+  16,           // 文字間隔Ｙ
+  BMPMENULIST_NO_SKIP,    // ページスキップタイプ
+  0,//FONT_SYSTEM,        // 文字指定
+  0,            // ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
   NULL,                    // work
-  _BMPMENULIST_FONTSIZE,			//文字サイズX(ドット
-  _BMPMENULIST_FONTSIZE,			//文字サイズY(ドット
-  NULL,		//表示に使用するメッセージバッフ
-  NULL,		//表示に使用するプリントユーティ
-  NULL,		//表示に使用するプリントキュー
-  NULL,		//表示に使用するフォントハンドル
+  _BMPMENULIST_FONTSIZE,      //文字サイズX(ドット
+  _BMPMENULIST_FONTSIZE,      //文字サイズY(ドット
+  NULL,   //表示に使用するメッセージバッフ
+  NULL,   //表示に使用するプリントユーティ
+  NULL,   //表示に使用するプリントキュー
+  NULL,   //表示に使用するフォントハンドル
 };
 
 
@@ -6221,7 +6221,7 @@ static int _childModeMatchMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	メッセージの終了を見て、リストを出します WIFIP2PMATCH_MODE_MATCH_INIT2
+ *  @brief  メッセージの終了を見て、リストを出します WIFIP2PMATCH_MODE_MATCH_INIT2
  */
 //-----------------------------------------------------------------------------
 static int _childModeMatchMenuInit2( WIFIP2PMATCH_WORK *wk, int seq )
@@ -6303,7 +6303,7 @@ static int _childModeMatchMenuInit2( WIFIP2PMATCH_WORK *wk, int seq )
     vchat += WIFI_STATUS_GetVChatStatus( wk->pMatch );
 
     // その人の情報を表示
-    //	WifiP2PMatch_UserDispOn_MyAcces( wk, friendNo, HEAPID_WIFIP2PMATCH );
+    //  WifiP2PMatch_UserDispOn_MyAcces( wk, friendNo, HEAPID_WIFIP2PMATCH );
 
 
     wk->submenulist = BmpMenuWork_ListCreate( length , HEAPID_WIFIP2PMATCH );
@@ -6396,7 +6396,7 @@ static BOOL _isItemCheck(WIFI_STATUS* pTargetStatus)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ロビー用のBGMを設定する
+ *  @brief  ロビー用のBGMを設定する
  */
 //-----------------------------------------------------------------------------
 static void WifiP2P_SetLobbyBgm( void )
@@ -6404,17 +6404,17 @@ static void WifiP2P_SetLobbyBgm( void )
   u32 bgm;
 
   // ボイスチャットなしにする
-  GFL_NET_DWC_SetVChat(FALSE);		// ボイスチャットとBGM音量の関係を整理 tomoya takahashi
+  GFL_NET_DWC_SetVChat(FALSE);    // ボイスチャットとBGM音量の関係を整理 tomoya takahashi
 
   if( WifiP2P_CheckLobbyBgm() == FALSE ){
 
-    if( GFL_RTC_IsNightTime() == FALSE ){			//FALSE=昼、TRUE=夜
+    if( GFL_RTC_IsNightTime() == FALSE ){     //FALSE=昼、TRUE=夜
       bgm = SEQ_PC_01;
     }else{
       bgm = SEQ_PC_02;
     }
     Snd_SceneSet( SND_SCENE_DUMMY );
-    Snd_DataSetByScene( SND_SCENE_P2P, bgm, 1 );	//wifiロビー再生
+    Snd_DataSetByScene( SND_SCENE_P2P, bgm, 1 );  //wifiロビー再生
   }else{
     // もうＢＧＭ流れていても、音量だけ元に戻す
     Snd_PlayerSetInitialVolumeBySeqNo( Snd_NowBgmNoGet(), BGM_WIFILOBBY_VOL );
@@ -6423,10 +6423,10 @@ static void WifiP2P_SetLobbyBgm( void )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ロビー用のBGMが再生中か取得する
+ *  @brief  ロビー用のBGMが再生中か取得する
  *
- *	@retval	TRUE	再生中
- *	@retval	FALSE	他のBGMが再生中
+ *  @retval TRUE  再生中
+ *  @retval FALSE 他のBGMが再生中
  */
 //-----------------------------------------------------------------------------
 static BOOL WifiP2P_CheckLobbyBgm( void )
@@ -6451,7 +6451,7 @@ static BOOL WifiP2P_CheckLobbyBgm( void )
 //------------------------------------------------------------------
 static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  u32	ret;
+  u32 ret;
   int status,friendNo,message = 0,vchat,fst;
   u16 mainCursor;
   int checkMatch;
@@ -6510,7 +6510,7 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
 
         // NPCを元に戻す
         // ここでやってしまうとPauseOffを２重でよんでしまう
-        //				WIFI_MCR_NpcPauseOff( &wk->matchroom, p_npc );
+        //        WIFI_MCR_NpcPauseOff( &wk->matchroom, p_npc );
 
         _friendNameExpand(wk, friendNo - 1);
         WifiP2PMatchMessagePrint(wk, msg_wifilobby_013, FALSE);
@@ -6531,7 +6531,7 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
     if(ret == _CONNECTING){  // 子機が親機に接続
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
       //            BmpListDirectPosGet(wk->lw,&mainCursor);
-      //		    friendNo = wk->index2No[mainCursor];
+      //        friendNo = wk->index2No[mainCursor];
       wk->friendNo = friendNo;
       if(  friendNo != 0 ){
         int num = PokeParty_GetBattlePokeNum(wk->pMyPoke);
@@ -6583,7 +6583,7 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
               WifiP2PMatchMessagePrint(wk, msg_wifilobby_070, FALSE);
             }
 
-            // 080703	tomoya takahashi
+            // 080703 tomoya takahashi
             // VCHATのON・OFFを聞く箇所にいったら
             // もう応募中ということにして、
             // ３者の応募ができないようにする
@@ -6602,7 +6602,7 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
 #if 1  //最初はサーバでなく 自分がサーバになって相手に繋いでもらう
         // もしくはランダムマッチなので相互に親子が分かれる
         fst = WifiDwc_getFriendStatus(friendNo - 1);
-        
+
         if(( fst == DWC_STATUS_ONLINE || fst == DWC_STATUS_MATCH_SC_SV) && (WIFI_STATUS_TRADE!=status))
         {
           NET_PRINT( "wifi接続先 %d %d\n", friendNo - 1,status );
@@ -6726,7 +6726,7 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
   if( wk->seq == WIFIP2PMATCH_MODE_FRIENDLIST ){
 
     // その人の情報を消す
-    //		WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );
+    //    WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );
 
   }else{
 
@@ -6773,9 +6773,9 @@ static int _childModeMatchMenuLoop( WIFIP2PMATCH_WORK *wk, int seq )
     {
 
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_YESNO);
-      //    _timeWaitIconDel(wk);		timeWait内でMsgWinを破棄しているということはメッセージ終了でもOK↓
+      //    _timeWaitIconDel(wk);   timeWait内でMsgWinを破棄しているということはメッセージ終了でもOK↓
       EndMessageWindowOff(wk);
-      //		CommInfoInitialize(wk->pSaveData,NULL);   //Info初期化   //@@OO
+      //    CommInfoInitialize(wk->pSaveData,NULL);   //Info初期化   //@@OO
       CommCommandWFP2PMF_MatchStartInitialize(wk);
       wk->timer = 30;
 
@@ -6878,7 +6878,7 @@ static int _parentModeCallMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
   p_status = WifiFriendMatchStatusGet( GFL_NET_DWC_GetFriendIndex() );
   mySt = _WifiMyStatusGet( wk, wk->pMatch );
   targetSt = _WifiMyStatusGet( wk,p_status );
-  myvchat	= WIFI_STATUS_GetVChatStatus( wk->pMatch );
+  myvchat = WIFI_STATUS_GetVChatStatus( wk->pMatch );
 
   if((mySt == WIFI_STATUS_DBATTLE50_WAIT)&&(targetSt == WIFI_STATUS_DBATTLE50)){
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_YESNO);
@@ -6914,7 +6914,7 @@ static int _parentModeCallMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_YESNO);
   }
 #endif
-  else if((mySt == WIFI_STATUS_LOGIN_WAIT)&&(targetSt == WIFI_STATUS_VCT)&&(myvchat > 0)){	// 080703 tomoya VCHATがONであることを条件に追加
+  else if((mySt == WIFI_STATUS_LOGIN_WAIT)&&(targetSt == WIFI_STATUS_VCT)&&(myvchat > 0)){  // 080703 tomoya VCHATがONであることを条件に追加
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECT_INIT);
     return seq;
   }
@@ -6957,7 +6957,7 @@ static BOOL _connectingErrFunc(WIFIP2PMATCH_WORK *wk)
   else{
 
 #if 1//PL_T0857_080711_FIX
-    // 友達のSTATUSとVCHATをチェック	違っていたら切断
+    // 友達のSTATUSとVCHATをチェック  違っていたら切断
     {
       int mySt;
       int targetSt, targetSt_org;
@@ -6965,14 +6965,14 @@ static BOOL _connectingErrFunc(WIFIP2PMATCH_WORK *wk)
       int myvchat, targetvchat;
 
       p_status = WifiFriendMatchStatusGet( GFL_NET_DWC_GetFriendIndex() );
-      mySt		= _WifiMyStatusGet( wk, wk->pMatch );
+      mySt    = _WifiMyStatusGet( wk, wk->pMatch );
       targetSt_org= _WifiMyStatusGet( wk,p_status );
-      targetSt	= _convertState(targetSt_org);
-      myvchat		= WIFI_STATUS_GetVChatStatus( wk->pMatch );
-      targetvchat	= WIFI_STATUS_GetVChatStatus(p_status);
+      targetSt  = _convertState(targetSt_org);
+      myvchat   = WIFI_STATUS_GetVChatStatus( wk->pMatch );
+      targetvchat = WIFI_STATUS_GetVChatStatus(p_status);
 
-      //			NET_PRINT( "check mystart=%d tastatus=%d tastatus_org=%d myvchat=%d tavchat=%d \n",
-      //					mySt, targetSt, targetSt_org, myvchat, targetvchat );
+      //      NET_PRINT( "check mystart=%d tastatus=%d tastatus_org=%d myvchat=%d tavchat=%d \n",
+      //          mySt, targetSt, targetSt_org, myvchat, targetvchat );
 
       if( ((mySt != targetSt) && (mySt != targetSt_org)) ||
           (myvchat != targetvchat) ){
@@ -7188,7 +7188,7 @@ static int _parentModeCallMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
   if(_connectingErrFunc(wk)){
   }
   else if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_GAME_START2)
-          && (_parent_MsgEndCheck( wk ) == TRUE) ){		// メッセージの終了も待つように変更 08.06.01	tomoya
+          && (_parent_MsgEndCheck( wk ) == TRUE) ){   // メッセージの終了も待つように変更 08.06.01  tomoya
     GFL_NET_DWC_FriendAutoInputCheck( WifiList_GetDwcDataPtr(SaveData_GetWifiListData(wk->pSaveData), 0));
 
     EndMessageWindowOff(wk);
@@ -7244,7 +7244,7 @@ static int _parentModeCallMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
 #ifdef _WIFI_DEBUG_TUUSHIN
     WIFI_DEBUG_BATTLE_Work.DEBUG_WIFI_A_REQ = FALSE;
     WIFI_DEBUG_BATTLE_Work.DEBUG_WIFI_TOUCH_REQ = FALSE;
-#endif	//_WIFI_DEBUG_TUUSHIN
+#endif  //_WIFI_DEBUG_TUUSHIN
 
     // ボウケンノート
     //WifiP2P_Fnote_Set( wk, GFL_NET_DWC_GetFriendIndex() );
@@ -7256,7 +7256,7 @@ static int _parentModeCallMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
                                 0,16,COMM_BRIGHTNESS_SYNC);
 
 
-    seq = SEQ_OUT;						//終了シーケンスへ
+    seq = SEQ_OUT;            //終了シーケンスへ
   }
   return seq;
 }
@@ -7363,7 +7363,7 @@ static int _exitYesNo( WIFIP2PMATCH_WORK *wk, int seq )
 #ifdef _WIFI_DEBUG_TUUSHIN
   WIFI_DEBUG_BATTLE_Work.DEBUG_WIFI_A_REQ = TRUE;
   WIFI_DEBUG_BATTLE_Work.DEBUG_WIFI_B_REQ = FALSE;
-#endif	//_WIFI_DEBUG_TUUSHIN
+#endif  //_WIFI_DEBUG_TUUSHIN
 
   return seq;
 }
@@ -7390,7 +7390,7 @@ static int _exitWait( WIFIP2PMATCH_WORK *wk, int seq )
     if(ret == BMPMENU_NULL){
       BmpMenu_YesNoMenuExit( wk->pYesNoWork );
     }
-    ret = BMPMENU_CANCEL;	// CANCEL
+    ret = BMPMENU_CANCEL; // CANCEL
   }
 
   if(ret == BMPMENU_NULL){  // まだ選択中
@@ -7465,7 +7465,7 @@ static int _exitEnd( WIFIP2PMATCH_WORK *wk, int seq )
   WIFI_DEBUG_BATTLE_Work.DEBUG_WIFI_A_REQ = FALSE;
   WIFI_DEBUG_BATTLE_Work.DEBUG_WIFI_B_REQ = FALSE;
   WIFI_DEBUG_BATTLE_Work.DEBUG_WIFI_TOUCH_REQ = FALSE;
-#endif	//_WIFI_DEBUG_TUUSHIN
+#endif  //_WIFI_DEBUG_TUUSHIN
   return seq;
 }
 
@@ -7503,7 +7503,7 @@ static int _nextBattleYesNo( WIFIP2PMATCH_WORK *wk, int seq )
   WIFI_DEBUG_BATTLE_Work.DEBUG_WIFI_A_REQ = FALSE;
   WIFI_DEBUG_BATTLE_Work.DEBUG_WIFI_TOUCH_REQ = FALSE;
   WIFI_DEBUG_BATTLE_Work.DEBUG_WIFI_B_REQ = TRUE;
-#endif	//_WIFI_DEBUG_TUUSHIN
+#endif  //_WIFI_DEBUG_TUUSHIN
 
   return seq;
 }
@@ -7668,7 +7668,7 @@ static int _vchatNegoWait( WIFIP2PMATCH_WORK *wk, int seq )
 
   if(GFL_NET_StateGetWifiStatus() >= GFL_NET_STATE_TIMEOUT){
     BmpMenu_YesNoMenuExit(wk->pYesNoWork);
-    WifiP2PMatchMessagePrint(wk, msg_wifilobby_015, FALSE);	// 反応がない・・・
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_015, FALSE); // 反応がない・・・
     GFL_NET_StateWifiMatchEnd(TRUE);
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT);
     return seq;
@@ -7714,10 +7714,10 @@ static int _vchatNegoWait( WIFIP2PMATCH_WORK *wk, int seq )
 
 
     // その人の情報を消す
-    //		WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );
+    //    WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );
 
     // ステータスをもどす
-    // 080703	tomoya takahashi
+    // 080703 tomoya takahashi
     _myStatusChange(wk, WIFI_STATUS_LOGIN_WAIT);
 
     // VCHAT元に戻す
@@ -7747,14 +7747,14 @@ static int _vchatNegoWait( WIFIP2PMATCH_WORK *wk, int seq )
  * @retval  int
  */
 //------------------------------------------------------------------
-static int 	WifiP2PMatch_EndWait( WIFIP2PMATCH_WORK *wk, int seq )
+static int  WifiP2PMatch_EndWait( WIFIP2PMATCH_WORK *wk, int seq )
 {
   if(!GFL_NET_IsInit()){
     //        WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK,
     //                      COMM_BRIGHTNESS_SYNC, 1, HEAPID_WIFIP2PMATCH);
     GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT,
                                 0,16,COMM_BRIGHTNESS_SYNC);
-    seq = SEQ_OUT;						//終了シーケンスへ
+    seq = SEQ_OUT;            //終了シーケンスへ
   }
   return seq;
 }
@@ -7773,7 +7773,7 @@ static int 	WifiP2PMatch_EndWait( WIFIP2PMATCH_WORK *wk, int seq )
 static void WifiP2PMatchMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bSystem )
 {
   // 文字列取得
-  u8 speed = CONFIG_GetMsgPrintSpeed(wk->pConfig);
+  u8 speed = MSGSPEED_GetWait();
 
   // TimeWaitIcon破棄
   _timeWaitIconDel( wk );
@@ -7822,8 +7822,8 @@ static void WifiP2PMatchMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bSy
   //------
 
   // 文字列描画開始
-  //	MsgPrintSkipFlagSet( MSG_SKIP_ON );		// メッセージスキップON
-  //	MsgPrintAutoFlagSet( MSG_AUTO_OFF );	// メッセージ自動送りOFF
+  //  MsgPrintSkipFlagSet( MSG_SKIP_ON );   // メッセージスキップON
+  //  MsgPrintAutoFlagSet( MSG_AUTO_OFF );  // メッセージ自動送りOFF
   //    wk->MsgIndex = GF_STR_PrintSimple( &wk->MsgWin, FONT_TALK, wk->TalkString,
   //                                     0, 0, speed, NULL);
 
@@ -7901,7 +7901,7 @@ static void _systemMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno )
 /**
  * $brief   友人番号の名前をexpandする
  * @param   msg_index
- * @retval  int		    int friend = GFL_NET_DWC_GetFriendIndex();
+ * @retval  int       int friend = GFL_NET_DWC_GetFriendIndex();
 
  */
 //------------------------------------------------------------------
@@ -7951,10 +7951,10 @@ static void _myStatusChange(WIFIP2PMATCH_WORK *wk, int status)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	自分のステータス設定		ただ送信はしない
+ *  @brief  自分のステータス設定    ただ送信はしない
  *
- *	@param	wk
- *	@param	status
+ *  @param  wk
+ *  @param  status
  */
 //-----------------------------------------------------------------------------
 static void _myStatusChange_not_send(WIFIP2PMATCH_WORK *wk, int status)
@@ -7971,7 +7971,7 @@ static void _myStatusChange_not_send(WIFIP2PMATCH_WORK *wk, int status)
     _commStateChange(status);
 
     WIFI_STATUS_SetWifiMode(wk->pMatch,status);
-    //		wk->pMatch->myMatchStatus.status = status;
+    //    wk->pMatch->myMatchStatus.status = status;
     if(_modeBattle(status) || (status == WIFI_STATUS_TRADE)|| (status == WIFI_STATUS_FRONTIER)
 #ifdef WFP2P_DEBUG_EXON
        ||(status == WIFI_STATUS_BATTLEROOM)
@@ -7986,7 +7986,7 @@ static void _myStatusChange_not_send(WIFIP2PMATCH_WORK *wk, int status)
     else if(status == WIFI_STATUS_LOGIN_WAIT){    // 待機中　ログイン直後はこれ
 
       // ボイスチャットなしにする
-      GFL_NET_DWC_SetVChat(FALSE);		// ボイスチャットとBGM音量の関係を整理 tomoya takahashi
+      GFL_NET_DWC_SetVChat(FALSE);    // ボイスチャットとBGM音量の関係を整理 tomoya takahashi
 
       if( WifiP2P_CheckLobbyBgm() == TRUE ){
         // WiFi広場に来たときはどんなボリュームでも通常ボリュームにする
@@ -8047,7 +8047,7 @@ static BOOL _myVChatStatusToggleOrg(WIFIP2PMATCH_WORK *wk)
 
 static BOOL _myVChatStatusOrgSet(WIFIP2PMATCH_WORK *wk)
 {
-  //	@@oo
+  //  @@oo
   //  NET_PRINT( "change org %d\n", wk->pMatch->myMatchStatus.vchat_org );
   //  wk->pMatch->myMatchStatus.vchat = wk->pMatch->myMatchStatus.vchat_org;
   //  _sendMatchStatus(wk);
@@ -8074,10 +8074,10 @@ static void _timeWaitIconDel(WIFIP2PMATCH_WORK *wk)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ユーザーデータ強制表示処理
+ *  @brief  ユーザーデータ強制表示処理
  *
- *	@param	wk			システムワーク
- *	@param	friendNo	友達番号
+ *  @param  wk      システムワーク
+ *  @param  friendNo  友達番号
  */
 //-----------------------------------------------------------------------------
 static void WifiP2PMatch_UserDispOn( WIFIP2PMATCH_WORK *wk, u32 friendNo, u32 heapID )
@@ -8093,9 +8093,9 @@ static void WifiP2PMatch_UserDispOn( WIFIP2PMATCH_WORK *wk, u32 friendNo, u32 he
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ユーザーデータ強制表示処理終了
+ *  @brief  ユーザーデータ強制表示処理終了
  *
- *	@param	wk			システムワーク
+ *  @param  wk      システムワーク
  */
 //-----------------------------------------------------------------------------
 static void WifiP2PMatch_UserDispOff( WIFIP2PMATCH_WORK *wk, u32 heapID )
@@ -8109,11 +8109,11 @@ static void WifiP2PMatch_UserDispOff( WIFIP2PMATCH_WORK *wk, u32 heapID )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	表示中の人なら強制的に表示終了
+ *  @brief  表示中の人なら強制的に表示終了
  *
- *	@param	wk				システムワーク
- *	@param	target_friend	ターゲットの人物のインデックス
- *	@param	heapID			ヒープID
+ *  @param  wk        システムワーク
+ *  @param  target_friend ターゲットの人物のインデックス
+ *  @param  heapID      ヒープID
  */
 //-----------------------------------------------------------------------------
 static void WifiP2PMatch_UserDispOff_Target( WIFIP2PMATCH_WORK *wk, u32 target_friend, u32 heapID )
@@ -8125,7 +8125,7 @@ static void WifiP2PMatch_UserDispOff_Target( WIFIP2PMATCH_WORK *wk, u32 target_f
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	自分でアクセスしたときのユーザーデータ強制表示処理
+ *  @brief  自分でアクセスしたときのユーザーデータ強制表示処理
  */
 //-----------------------------------------------------------------------------
 static void WifiP2PMatch_UserDispOn_MyAcces( WIFIP2PMATCH_WORK *wk, u32 friendNo, u32 heapID )
@@ -8135,7 +8135,7 @@ static void WifiP2PMatch_UserDispOn_MyAcces( WIFIP2PMATCH_WORK *wk, u32 friendNo
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	自分でアクセスしたときのユーザーデータ強制表示処理終了
+ *  @brief  自分でアクセスしたときのユーザーデータ強制表示処理終了
  */
 //-----------------------------------------------------------------------------
 static void WifiP2PMatch_UserDispOff_MyAcces( WIFIP2PMATCH_WORK *wk, u32 heapID )
@@ -8149,12 +8149,12 @@ static void WifiP2PMatch_UserDispOff_MyAcces( WIFIP2PMATCH_WORK *wk, u32 heapID 
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	動作しているかチェック
+ *  @brief  動作しているかチェック
  *
- *	@param	wk	システムワーク
+ *  @param  wk  システムワーク
  *
- *	@retval	TRUE	動作中
- *	@retval	FALSE	非動作中
+ *  @retval TRUE  動作中
+ *  @retval FALSE 非動作中
  */
 //-----------------------------------------------------------------------------
 static BOOL MCVSys_MoveCheck( const WIFIP2PMATCH_WORK *wk )
@@ -8167,26 +8167,26 @@ static BOOL MCVSys_MoveCheck( const WIFIP2PMATCH_WORK *wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	友達データビューアー初期化
+ *  @brief  友達データビューアー初期化
  *
- *	@param	wk			システムワーク
- *	@param	p_handle	ハンドル
- *	@param	heapID		ヒープID
+ *  @param  wk      システムワーク
+ *  @param  p_handle  ハンドル
+ *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_Init( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 heapID )
 {
   static const GFL_UI_TP_HITTBL bttndata[ WCR_MAPDATA_1BLOCKOBJNUM+1 ] = {
-    {	0,		47,		0,		119 },
-    {	48,		95,		0,		119 },
-    {	96,		143,	0,		119 },
-    {	144,	191,	0,		119 },
+    { 0,    47,   0,    119 },
+    { 48,   95,   0,    119 },
+    { 96,   143,  0,    119 },
+    { 144,  191,  0,    119 },
 
-    {	0,		47,		128,	255 },
-    {	48,		95,		128,	255 },
-    {	96,		143,	128,	255 },
-    {	144,	191,	128,	255 },
-    {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
+    { 0,    47,   128,  255 },
+    { 48,   95,   128,  255 },
+    { 96,   143,  128,  255 },
+    { 144,  191,  128,  255 },
+    {GFL_UI_TP_HIT_END,0,0,0},     //終了データ
   };
 
   GFL_STD_MemFill( &wk->view, 0, sizeof(WIFIP2PMATCH_VIEW) );
@@ -8213,9 +8213,9 @@ static void MCVSys_Init( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 heapID 
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	友達データビューアー破棄
+ *  @brief  友達データビューアー破棄
  *
- *	@param	wk			システムワーク
+ *  @param  wk      システムワーク
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_Exit( WIFIP2PMATCH_WORK *wk )
@@ -8242,12 +8242,12 @@ static void MCVSys_Exit( WIFIP2PMATCH_WORK *wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	友達データビューアーアップデート
+ *  @brief  友達データビューアーアップデート
  *
- *	@param	wk			システムワーク
+ *  @param  wk      システムワーク
  *
- *	@retval	押されている友達番号	+ 1
- *	@retval	0	押されていない
+ *  @retval 押されている友達番号  + 1
+ *  @retval 0 押されていない
  */
 //-----------------------------------------------------------------------------
 static u32 MCVSys_Updata( WIFIP2PMATCH_WORK *wk, u32 heapID )
@@ -8279,7 +8279,7 @@ static u32 MCVSys_Updata( WIFIP2PMATCH_WORK *wk, u32 heapID )
 
       // ボタンも書き換える
       wk->view.button_on = TRUE;
-      wk->view.bttn_allchg = TRUE;	// ボタン強制変更
+      wk->view.bttn_allchg = TRUE;  // ボタン強制変更
     }
   }
 
@@ -8289,7 +8289,7 @@ static u32 MCVSys_Updata( WIFIP2PMATCH_WORK *wk, u32 heapID )
     wk->view.user_disp = MCV_USERDISP_ON;
     wk->view.user_dispno = WF_USERDISPTYPE_NRML;
     MCVSys_UserDispDraw( wk, heapID );
-    MCVSys_OamBttnOn( wk );	// OAMボタン表示
+    MCVSys_OamBttnOn( wk ); // OAMボタン表示
   }
 
 
@@ -8320,19 +8320,19 @@ static u32 MCVSys_Updata( WIFIP2PMATCH_WORK *wk, u32 heapID )
 
     // なにかキーを押すか、「もどる」を押したら終了する
     if( userd_end == TRUE ){
-      wk->view.bttn_chg_friendNo = wk->view.touch_friendNo;	// この友達のボタンを更新してもらう
+      wk->view.bttn_chg_friendNo = wk->view.touch_friendNo; // この友達のボタンを更新してもらう
       wk->view.touch_friendNo = 0;
       wk->view.touch_frame = 0;
       wk->view.button_on = TRUE;
       wk->view.bttn_allchg = TRUE;
       wk->view.user_disp = MCV_USERDISP_OFF;
-      MCVSys_OamBttnOff( wk );	// ボタンOFF
-      Snd_SePlay( _SE_DESIDE );	// キャンセル音
+      MCVSys_OamBttnOff( wk );  // ボタンOFF
+      Snd_SePlay( _SE_DESIDE ); // キャンセル音
     }else{
       // 左右のボタンが押されていたらページ切り替え１
       if( oambttn_ret != MCV_USERD_BTTN_RET_NONE ){
-        Snd_SePlay( _SE_DESIDE );						// ページ変更音
-        MCVSys_UserDispPageChange( wk, oambttn_ret );	// 変更処理
+        Snd_SePlay( _SE_DESIDE );           // ページ変更音
+        MCVSys_UserDispPageChange( wk, oambttn_ret ); // 変更処理
         MCVSys_UserDispDraw( wk, heapID );
       }
     }
@@ -8343,9 +8343,9 @@ static u32 MCVSys_Updata( WIFIP2PMATCH_WORK *wk, u32 heapID )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	友達データビューアーアップデート	ボタンの表示のみ
+ *  @brief  友達データビューアーアップデート  ボタンの表示のみ
  *
- *	@param	wk	システムワーク
+ *  @param  wk  システムワーク
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_UpdataBttn( WIFIP2PMATCH_WORK *wk )
@@ -8362,13 +8362,13 @@ static void MCVSys_UpdataBttn( WIFIP2PMATCH_WORK *wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ユーザーディスプレイを終了するかチェック
+ *  @brief  ユーザーディスプレイを終了するかチェック
  *
- *	@param	wk			ワーク
- *	@param	oambttn_ret	OAMボタンメイン戻り値
+ *  @param  wk      ワーク
+ *  @param  oambttn_ret OAMボタンメイン戻り値
  *
- *	@retval	TRUE	終了
- *	@retval	FALSE	しない
+ *  @retval TRUE  終了
+ *  @retval FALSE しない
  */
 //-----------------------------------------------------------------------------
 static BOOL MCVSys_UserDispEndCheck( WIFIP2PMATCH_WORK *wk, u32 oambttn_ret )
@@ -8390,43 +8390,43 @@ static BOOL MCVSys_UserDispEndCheck( WIFIP2PMATCH_WORK *wk, u32 oambttn_ret )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	今詳細表示している人の友達IDXを取得
+ *  @brief  今詳細表示している人の友達IDXを取得
  *
- *	@param	cp_wk	ワーク
+ *  @param  cp_wk ワーク
  *
- *	@return	友達インデックス	(0なら表示してない)
+ *  @return 友達インデックス  (0なら表示してない)
  */
 //-----------------------------------------------------------------------------
-static u32	MCVSys_UserDispGetFriend( const WIFIP2PMATCH_WORK* cp_wk )
+static u32  MCVSys_UserDispGetFriend( const WIFIP2PMATCH_WORK* cp_wk )
 {
   return cp_wk->view.touch_friendNo;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ユーザーデータ表示
+ *  @brief  ユーザーデータ表示
  *
- *	@param	wk			ワーク
- *	@param	friendNo	友達番号
+ *  @param  wk      ワーク
+ *  @param  friendNo  友達番号
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_UserDispOn( WIFIP2PMATCH_WORK *wk, u32 friendNo, u32 heapID )
 {
   if( MCVSys_MoveCheck(wk) == TRUE ){
     wk->view.touch_friendNo = friendNo;
-    wk->view.touch_frame	= 2;
-    wk->view.user_disp		= MCV_USERDISP_ONEX;
+    wk->view.touch_frame  = 2;
+    wk->view.user_disp    = MCV_USERDISP_ONEX;
     wk->view.user_dispno = WF_USERDISPTYPE_NRML;
     MCVSys_UserDispDraw( wk, heapID );
-    MCVSys_OamBttnOnNoBack( wk );	//  強制表示用ボタン表示
+    MCVSys_OamBttnOnNoBack( wk ); //  強制表示用ボタン表示
   }
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ユーザーデータOFF
+ *  @brief  ユーザーデータOFF
  *
- *	@param	wk			ワーク
+ *  @param  wk      ワーク
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_UserDispOff( WIFIP2PMATCH_WORK *wk )
@@ -8434,19 +8434,19 @@ static void MCVSys_UserDispOff( WIFIP2PMATCH_WORK *wk )
   if( MCVSys_MoveCheck(wk) == TRUE ){
     wk->view.touch_friendNo = 0;
     wk->view.touch_frame = 0;
-    wk->view.user_disp		= MCV_USERDISP_OFF;
-    wk->view.button_on		= TRUE;
+    wk->view.user_disp    = MCV_USERDISP_OFF;
+    wk->view.button_on    = TRUE;
     wk->view.bttn_allchg = TRUE;
-    MCVSys_OamBttnOff( wk );	// ボタンOFF
+    MCVSys_OamBttnOff( wk );  // ボタンOFF
   }
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ページ変更処理
+ *  @brief  ページ変更処理
  *
- *	@param	wk				ワーク
- *	@param	oambttn_ret		ボタン戻り値
+ *  @param  wk        ワーク
+ *  @param  oambttn_ret   ボタン戻り値
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_UserDispPageChange( WIFIP2PMATCH_WORK *wk, u32 oambttn_ret )
@@ -8457,7 +8457,7 @@ static void MCVSys_UserDispPageChange( WIFIP2PMATCH_WORK *wk, u32 oambttn_ret )
   if( _frontierInCheck(wk) == TRUE ){
     typenum = WF_USERDISPTYPE_NUM;
   }else{
-    typenum = WF_USERDISPTYPE_MINI+1;	// ミニゲームまで表示
+    typenum = WF_USERDISPTYPE_MINI+1; // ミニゲームまで表示
   }
 
   if( oambttn_ret == MCV_USERD_BTTN_RET_RIGHT ){
@@ -8472,11 +8472,11 @@ static void MCVSys_UserDispPageChange( WIFIP2PMATCH_WORK *wk, u32 oambttn_ret )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ボタンイベントコールバック
+ *  @brief  ボタンイベントコールバック
  *
- *	@param	bttnid		ボタンID
- *	@param	event		イベント種類
- *	@param	p_work		ワーク
+ *  @param  bttnid    ボタンID
+ *  @param  event   イベント種類
+ *  @param  p_work    ワーク
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_BttnCallBack( u32 bttnid, u32 event, void* p_work )
@@ -8486,7 +8486,7 @@ static void MCVSys_BttnCallBack( u32 bttnid, u32 event, void* p_work )
 
   // 友達番号取得
   friendNo = (wk->view.frame_no * WCR_MAPDATA_1BLOCKOBJNUM) + bttnid;
-  friendNo ++;	// 自分が０だから
+  friendNo ++;  // 自分が０だから
 
   // 動作中かチェック
   if( wk->view.bttnfriendNo[ friendNo-1 ] != MCV_BTTN_FRIEND_TYPE_IN ){
@@ -8500,7 +8500,7 @@ static void MCVSys_BttnCallBack( u32 bttnid, u32 event, void* p_work )
   }
 
   switch( event ){
-  case GFL_BMN_EVENT_TOUCH:		///< 触れた瞬間
+  case GFL_BMN_EVENT_TOUCH:   ///< 触れた瞬間
     wk->view.touch_friendNo = friendNo;
     Snd_SePlay( _SE_DESIDE );
     break;
@@ -8512,11 +8512,11 @@ static void MCVSys_BttnCallBack( u32 bttnid, u32 event, void* p_work )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	グラフィックデータ設定
+ *  @brief  グラフィックデータ設定
  *
- *	@param	wk			システムワーク
- *	@param	p_handle	アーカイブハンドル
- *	@param	heapID		ヒープID
+ *  @param  wk      システムワーク
+ *  @param  p_handle  アーカイブハンドル
+ *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_GraphicSet( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 heapID )
@@ -8528,9 +8528,9 @@ static void MCVSys_GraphicSet( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 h
   // FRAME0_Sスクリーンデータクリーン
   GFL_BG_ClearFrame(   GFL_BG_FRAME0_S );
   // パレット転送
-  GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wifip2pmatch_wf_match_btm_NCLR,	// 背景用
+  GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wifip2pmatch_wf_match_btm_NCLR,  // 背景用
                                     PALTYPE_SUB_BG, MCV_PAL_BACK*32, MCV_PAL_BACK_NUM*32, heapID );
-  GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wifip2pmatch_wf_match_btm_button_NCLR,	// ボタン用
+  GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wifip2pmatch_wf_match_btm_button_NCLR, // ボタン用
                                     PALTYPE_SUB_BG, MCV_PAL_BTTN*32, MCV_PAL_BTTN_NUM*32, heapID );
 
   // キャラクタ転送
@@ -8560,14 +8560,14 @@ static void MCVSys_GraphicSet( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 h
 
 
   // フォントパレット読込み
-  //	TalkFontPaletteLoad( PALTYPE_SUB_BG, MCV_SYSFONT_PAL*32, heapID );
+  //  TalkFontPaletteLoad( PALTYPE_SUB_BG, MCV_SYSFONT_PAL*32, heapID );
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , 13*0x20, 16*2, heapID );
 
   // ビットマップ作成
   for( i=0; i<WCR_MAPDATA_1BLOCKOBJNUM; i++ ){
-    x = i/4;	// 配置は2*4
+    x = i/4;  // 配置は2*4
     y = i%4;
-    //		GFL_BG_BmpWinInit( wk->view.nameWin[i] );
+    //    GFL_BG_BmpWinInit( wk->view.nameWin[i] );
     wk->view.nameWin[i] = GFL_BMPWIN_Create(
       GFL_BG_FRAME1_S,
       MCV_NAMEWIN_DEFX+(MCV_NAMEWIN_OFSX*x),
@@ -8580,7 +8580,7 @@ static void MCVSys_GraphicSet( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 h
 
     // 状態面書き込み先
     for( j=0; j<WF_VIEW_STATUS_NUM; j++ ){
-      //	GFL_BG_BmpWinInit( wk->view.statusWin[i][j] );
+      //  GFL_BG_BmpWinInit( wk->view.statusWin[i][j] );
       wk->view.statusWin[i][j] = GFL_BMPWIN_Create(
         GFL_BG_FRAME1_S,
         MCV_STATUSWIN_DEFX+(MCV_STATUSWIN_OFSX*x)+(j*MCV_STATUSWIN_VCHATX),
@@ -8609,9 +8609,9 @@ static void MCVSys_GraphicSet( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 h
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	グラフィックデータ破棄
+ *  @brief  グラフィックデータ破棄
  *
- *	@param	wk	システムワーク
+ *  @param  wk  システムワーク
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_GraphicDel( WIFIP2PMATCH_WORK *wk )
@@ -8644,10 +8644,10 @@ static void MCVSys_GraphicDel( WIFIP2PMATCH_WORK *wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	SCRNのキャラクタNoを転送先のアドレス分足す
+ *  @brief  SCRNのキャラクタNoを転送先のアドレス分足す
  *
- *	@param	p_scrn	スクリーンデータ
- *	@param	cgofs	キャラクタオフセット（キャラクタ単位）
+ *  @param  p_scrn  スクリーンデータ
+ *  @param  cgofs キャラクタオフセット（キャラクタ単位）
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_GraphicScrnCGOfsChange( NNSG2dScreenData* p_scrn, u8 cgofs )
@@ -8669,15 +8669,15 @@ static void MCVSys_GraphicScrnCGOfsChange( NNSG2dScreenData* p_scrn, u8 cgofs )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ボタン設定
+ *  @brief  ボタン設定
  *
- *	@param	wk			システムワーク
- *	@param	friendNo	友達番号
- *	@param	type		設定タイプ
+ *  @param  wk      システムワーク
+ *  @param  friendNo  友達番号
+ *  @param  type    設定タイプ
  *
- *	type
- *		MCV_BTTN_FRIEND_TYPE_RES,	// 予約
- *		MCV_BTTN_FRIEND_TYPE_IN,	// 登録済み
+ *  type
+ *    MCV_BTTN_FRIEND_TYPE_RES, // 予約
+ *    MCV_BTTN_FRIEND_TYPE_IN,  // 登録済み
  *
  */
 //-----------------------------------------------------------------------------
@@ -8692,10 +8692,10 @@ static void MCVSys_BttnSet( WIFIP2PMATCH_WORK *wk, u32 friendNo, u32 type )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ボタンからはずす
+ *  @brief  ボタンからはずす
  *
- *	@param	wk			システムワーク
- *	@param	friendNo	友達番号
+ *  @param  wk      システムワーク
+ *  @param  friendNo  友達番号
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_BttnDel( WIFIP2PMATCH_WORK *wk, u32 friendNo )
@@ -8707,16 +8707,16 @@ static void MCVSys_BttnDel( WIFIP2PMATCH_WORK *wk, u32 friendNo )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ボタンの表示タイプを取得する
+ *  @brief  ボタンの表示タイプを取得する
  *
- *	@param	wk			ワーク
- *	@param	friendNo	友達number
+ *  @param  wk      ワーク
+ *  @param  friendNo  友達number
  *
- *	@return	表示タイプ
- *	type
- *		MCV_BTTN_FRIEND_TYPE_RES,	// 予約
- *		MCV_BTTN_FRIEND_TYPE_IN,	// 登録済み
- *		MCV_BTTN_FRIEND_TYPE_NONE,	// なし
+ *  @return 表示タイプ
+ *  type
+ *    MCV_BTTN_FRIEND_TYPE_RES, // 予約
+ *    MCV_BTTN_FRIEND_TYPE_IN,  // 登録済み
+ *    MCV_BTTN_FRIEND_TYPE_NONE,  // なし
  */
 //-----------------------------------------------------------------------------
 static u32 MCVSys_BttnTypeGet( const WIFIP2PMATCH_WORK *wk, u32 friendNo )
@@ -8727,9 +8727,9 @@ static u32 MCVSys_BttnTypeGet( const WIFIP2PMATCH_WORK *wk, u32 friendNo )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	強制書き直し
+ *  @brief  強制書き直し
  *
- *	@param	wk			システムワーク
+ *  @param  wk      システムワーク
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_ReWrite( WIFIP2PMATCH_WORK *wk, u32 heapID )
@@ -8744,9 +8744,9 @@ static void MCVSys_ReWrite( WIFIP2PMATCH_WORK *wk, u32 heapID )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ボタンをすべて書くリクエストを出す
+ *  @brief  ボタンをすべて書くリクエストを出す
  *
- *	@param	wk
+ *  @param  wk
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_BttnAllWriteReq( WIFIP2PMATCH_WORK *wk )
@@ -8757,9 +8757,9 @@ static void MCVSys_BttnAllWriteReq( WIFIP2PMATCH_WORK *wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	背景描画
+ *  @brief  背景描画
  *
- *	@param	wk	システムワーク
+ *  @param  wk  システムワーク
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_BackDraw( WIFIP2PMATCH_WORK *wk )
@@ -8773,9 +8773,9 @@ static void MCVSys_BackDraw( WIFIP2PMATCH_WORK *wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ボタン表示
+ *  @brief  ボタン表示
  *
- *	@param	wk	システムワーク
+ *  @param  wk  システムワーク
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_BttnDraw( WIFIP2PMATCH_WORK *wk )
@@ -8786,8 +8786,8 @@ static void MCVSys_BttnDraw( WIFIP2PMATCH_WORK *wk )
   int x, y;
   int friend_no;
   int frame;
-  BOOL write_change_masterflag;	// 強制的にすべてのボタンを書き換える
-  BOOL write_change_localflag;	// ここのボタンごとの書き換えチェック
+  BOOL write_change_masterflag; // 強制的にすべてのボタンを書き換える
+  BOOL write_change_localflag;  // ここのボタンごとの書き換えチェック
 
   // 全書き換えチェック
   if( wk->view.bttn_allchg == TRUE ){
@@ -8795,7 +8795,7 @@ static void MCVSys_BttnDraw( WIFIP2PMATCH_WORK *wk )
     write_change_masterflag = TRUE;
 
     // スクリーンクリア
-    //		GFL_BG_ScrFill( GFL_BG_FRAME2_S, 0, 0, 0, 32, 24, 0 );
+    //    GFL_BG_ScrFill( GFL_BG_FRAME2_S, 0, 0, 0, 32, 24, 0 );
     GFL_BG_ClearScreen(GFL_BG_FRAME2_S);
   }else{
     write_change_masterflag = FALSE;
@@ -8852,7 +8852,7 @@ static void MCVSys_BttnDraw( WIFIP2PMATCH_WORK *wk )
         // 名前の表示
         NET_PRINT("friendno %d\n",friend_no);
         MCVSys_BttnWinDraw( wk, wk->view.nameWin[i], friend_no, frame, i );
-        //@@OO				MCVSys_BttnStatusWinDraw( wk, wk->view.statusWin[i], friend_no, frame, i );
+        //@@OO        MCVSys_BttnStatusWinDraw( wk, wk->view.statusWin[i], friend_no, frame, i );
       }else{
 
         // 透明にする
@@ -8875,9 +8875,9 @@ static void MCVSys_BttnDraw( WIFIP2PMATCH_WORK *wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ユーザーデータ表示
+ *  @brief  ユーザーデータ表示
  *
- *	@param	wk	システムワーク
+ *  @param  wk  システムワーク
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_UserDispDraw( WIFIP2PMATCH_WORK *wk, u32 heapID )
@@ -8905,8 +8905,8 @@ static void MCVSys_UserDispDraw( WIFIP2PMATCH_WORK *wk, u32 heapID )
   }
   GFL_BG_LoadScreen( GFL_BG_FRAME2_S, wk->view.p_userscrn[wk->view.user_dispno]->rawData,
                      wk->view.p_userscrn[wk->view.user_dispno]->szByte,0 );
-  //	GFL_BG_ScreenBufSet( GFL_BG_FRAME2_S, wk->view.p_userscrn[wk->view.user_dispno]->rawData,
-  //			wk->view.p_userscrn[wk->view.user_dispno]->szByte );
+  //  GFL_BG_ScreenBufSet( GFL_BG_FRAME2_S, wk->view.p_userscrn[wk->view.user_dispno]->rawData,
+  //      wk->view.p_userscrn[wk->view.user_dispno]->szByte );
 
   GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_S, 0, 0,
                               32, 24, pal );
@@ -8916,7 +8916,7 @@ static void MCVSys_UserDispDraw( WIFIP2PMATCH_WORK *wk, u32 heapID )
 
   // フロンティア非表示モードチェック
   if( _frontierInCheck( wk ) == FALSE ){
-    MCVSys_UserDispDrawFrontierOffScrn( wk );	// 非表示スクリーン設定
+    MCVSys_UserDispDrawFrontierOffScrn( wk ); // 非表示スクリーン設定
   }
 
 
@@ -9351,7 +9351,7 @@ static void MCVSys_UserDispDrawType06( WIFIP2PMATCH_WORK *wk, u32 heapID )
   int friendNo;
   WIFI_LIST* p_list;
 
-  p_list	= SaveData_GetWifiListData( wk->pSaveData );
+  p_list  = SaveData_GetWifiListData( wk->pSaveData );
 
   friendNo = wk->view.touch_friendNo - 1;
 
@@ -9411,9 +9411,9 @@ static void MCVSys_UserDispDrawType06( WIFIP2PMATCH_WORK *wk, u32 heapID )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	フロンティア非表示モードのスクリーンに変更
+ *  @brief  フロンティア非表示モードのスクリーンに変更
  *
- *	@param	wk		ワーク
+ *  @param  wk    ワーク
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_UserDispDrawFrontierOffScrn( WIFIP2PMATCH_WORK *wk )
@@ -9442,14 +9442,14 @@ static void MCVSys_UserDispDrawFrontierOffScrn( WIFIP2PMATCH_WORK *wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ファクトリーデータ表示
+ *  @brief  ファクトリーデータ表示
  *
- *	@param	wk			ワーク
- *	@param	strid		文字ID
- *	@param	factoryid	ファクトリーデータID
- *	@param	friendno	友達番号
- *	@param	x			表示X
- *	@param	y			表示Y
+ *  @param  wk      ワーク
+ *  @param  strid   文字ID
+ *  @param  factoryid ファクトリーデータID
+ *  @param  friendno  友達番号
+ *  @param  x     表示X
+ *  @param  y     表示Y
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_UserDispFrontiorNumDraw( WIFIP2PMATCH_WORK *wk, u32 strid, u32 factoryid, u32 friendno, u32 x, u32 y )
@@ -9468,20 +9468,20 @@ static void MCVSys_UserDispFrontiorNumDraw( WIFIP2PMATCH_WORK *wk, u32 strid, u3
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	フロンティア　タイトルメッセージ取得
+ *  @brief  フロンティア　タイトルメッセージ取得
  *
- *	@param	wk			ワーク
- *	@param	p_str		文字列格納先
- *	@param	factoryid	ファクトリー　セーブデータID
- *	@param	friendno	友達ナンバー
+ *  @param  wk      ワーク
+ *  @param  p_str   文字列格納先
+ *  @param  factoryid ファクトリー　セーブデータID
+ *  @param  friendno  友達ナンバー
  *
- *	factoryid
- *		MCV_FRONTIOR_TOWOR,
- *		MCV_FRONTIOR_FACTORY,
- *		MCV_FRONTIOR_FACTORY100,
- *		MCV_FRONTIOR_CASTLE,
- *		MCV_FRONTIOR_STAGE,
- *		MCV_FRONTIOR_ROULETTE,
+ *  factoryid
+ *    MCV_FRONTIOR_TOWOR,
+ *    MCV_FRONTIOR_FACTORY,
+ *    MCV_FRONTIOR_FACTORY100,
+ *    MCV_FRONTIOR_CASTLE,
+ *    MCV_FRONTIOR_STAGE,
+ *    MCV_FRONTIOR_ROULETTE,
  *
  */
 //-----------------------------------------------------------------------------
@@ -9502,7 +9502,7 @@ static void MCVSys_UserDispFrontiorTitleStrGet( WIFIP2PMATCH_WORK *wk, STRBUF* p
 
   GF_ASSERT( factoryid < MCV_FRONTIOR_NUM );
 
-  p_fsave		= SaveData_GetFrontier( wk->pSaveData );
+  p_fsave   = SaveData_GetFrontier( wk->pSaveData );
 
   clear_flag = FrontierRecord_Get(p_fsave, sc_MCVSYS_FRONTIOR_CLEAR_BIT[factoryid], friendno);
   if( clear_flag == FALSE ){
@@ -9516,13 +9516,13 @@ static void MCVSys_UserDispFrontiorTitleStrGet( WIFIP2PMATCH_WORK *wk, STRBUF* p
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	数字を表示する処理
+ *  @brief  数字を表示する処理
  *
- *	@param	wk		ワーク
- *	@param	strid	メッセージID
- *	@param	num		数字
- *	@param	x		ｘドット座標
- *	@param	y		ｙドット座標
+ *  @param  wk    ワーク
+ *  @param  strid メッセージID
+ *  @param  num   数字
+ *  @param  x   ｘドット座標
+ *  @param  y   ｙドット座標
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_UserDispNumDraw( WIFIP2PMATCH_WORK *wk, u32 strid, u32 num, u32 x, u32 y )
@@ -9538,13 +9538,13 @@ static void MCVSys_UserDispNumDraw( WIFIP2PMATCH_WORK *wk, u32 strid, u32 num, u
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ボタン描画
+ *  @brief  ボタン描画
  *
- *	@param	wk		システムワーク
- *	@param	cx		ｘキャラ座標
- *	@param	cy		ｙキャラ座標
- *	@param	type	ボタンタイプ
- *	@param	frame	フレーム
+ *  @param  wk    システムワーク
+ *  @param  cx    ｘキャラ座標
+ *  @param  cy    ｙキャラ座標
+ *  @param  type  ボタンタイプ
+ *  @param  frame フレーム
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_BttnWrite( WIFIP2PMATCH_WORK *wk, u8 cx, u8 cy, u8 type, u8 frame )
@@ -9587,22 +9587,22 @@ static void MCVSys_BttnWrite( WIFIP2PMATCH_WORK *wk, u8 cx, u8 cy, u8 type, u8 f
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	状態に対応したメッセージデータ表示
+ *  @brief  状態に対応したメッセージデータ表示
  *
- *	@param	status	状態
+ *  @param  status  状態
  *
- *	@return	メッセージデータ
+ *  @return メッセージデータ
  */
 //-----------------------------------------------------------------------------
 static u32 MCVSys_StatusMsgIdGet( u32 status, int* col )
 {
   u32 msg_id;
-  //	*col = _COL_N_BLACK;
+  //  *col = _COL_N_BLACK;
   _COL_N_BLACK;
   switch(status){
   case WIFI_STATUS_VCT:      // VCT中
     msg_id = msg_wifilobby_027;
-    //		*col = _COL_N_GRAY;
+    //    *col = _COL_N_GRAY;
     _COL_N_GRAY;
     break;
   case WIFI_STATUS_SBATTLE50:      // 対戦中
@@ -9615,7 +9615,7 @@ static u32 MCVSys_StatusMsgIdGet( u32 status, int* col )
   case WIFI_STATUS_MBATTLE_FREE:      // 対戦中
 #endif
     msg_id = msg_wifilobby_024;
-    //		*col = _COL_N_GRAY;
+    //    *col = _COL_N_GRAY;
     _COL_N_GRAY;
     break;
   case WIFI_STATUS_SBATTLE50_WAIT:   // 対戦募集中
@@ -9643,7 +9643,7 @@ static u32 MCVSys_StatusMsgIdGet( u32 status, int* col )
 #endif
   case WIFI_STATUS_TRADE:          // 交換中
     msg_id = msg_wifilobby_026;
-    //		*col = _COL_N_GRAY;
+    //    *col = _COL_N_GRAY;
     _COL_N_GRAY;
     break;
   case WIFI_STATUS_TRADE_WAIT:    // 交換募集中
@@ -9651,7 +9651,7 @@ static u32 MCVSys_StatusMsgIdGet( u32 status, int* col )
     break;
   case WIFI_STATUS_FRONTIER:          // フロンティア中
     msg_id = msg_wifilobby_139;
-    //		*col = _COL_N_GRAY;
+    //    *col = _COL_N_GRAY;
     _COL_N_GRAY;
     break;
   case WIFI_STATUS_FRONTIER_WAIT:    // フロンティア募集中
@@ -9660,7 +9660,7 @@ static u32 MCVSys_StatusMsgIdGet( u32 status, int* col )
 #ifdef WFP2P_DEBUG_EXON
   case WIFI_STATUS_BATTLEROOM:          // バトルルーム中
     msg_id = msg_wifilobby_debug_00;
-    //		*col = _COL_N_GRAY;
+    //    *col = _COL_N_GRAY;
     _COL_N_GRAY;
     break;
   case WIFI_STATUS_BATTLEROOM_WAIT:    // バトルルーム募集中
@@ -9679,13 +9679,13 @@ static u32 MCVSys_StatusMsgIdGet( u32 status, int* col )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ボタン上のトレーナー名の表示
+ *  @brief  ボタン上のトレーナー名の表示
  *
- *	@param	wk			システムワーク
- *	@param	p_bmp		ビットマップ
- *	@param	friendNo	友達ナンバー
- *	@param	frame		ボタンフレーム
- *	@param	area_id		配置ID
+ *  @param  wk      システムワーク
+ *  @param  p_bmp   ビットマップ
+ *  @param  friendNo  友達ナンバー
+ *  @param  frame   ボタンフレーム
+ *  @param  area_id   配置ID
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_BttnWinDraw( WIFIP2PMATCH_WORK *wk, GFL_BMPWIN* p_bmp, u32 friendNo, u32 frame, u32 area_id )
@@ -9718,13 +9718,13 @@ static void MCVSys_BttnWinDraw( WIFIP2PMATCH_WORK *wk, GFL_BMPWIN* p_bmp, u32 fr
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	状態ウィンドウの描画
+ *  @brief  状態ウィンドウの描画
  *
- *	@param	wk			しすてむワーク
- *	@param	p_stbmp		状態ビットマップ
- *	@param	friendNo	友達番号
- *	@param	frame		ボタンフレーム
- *	@param	area_id		配置ID
+ *  @param  wk      しすてむワーク
+ *  @param  p_stbmp   状態ビットマップ
+ *  @param  friendNo  友達番号
+ *  @param  frame   ボタンフレーム
+ *  @param  area_id   配置ID
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_BttnStatusWinDraw( WIFIP2PMATCH_WORK *wk, GFL_BMPWIN** p_stbmp, u32 friendNo, u32 frame, u32 area_id )
@@ -9745,7 +9745,7 @@ static void MCVSys_BttnStatusWinDraw( WIFIP2PMATCH_WORK *wk, GFL_BMPWIN** p_stbm
     // 画面クリーン
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_stbmp[i]), WINCLR_COL(FBMP_COL_WHITE) );
     if( i==0 ){
-      int	pal = WifiP2PMatchBglFrmIconPalGet( GFL_BMPWIN_GetFrame(p_stbmp[i]) );
+      int pal = WifiP2PMatchBglFrmIconPalGet( GFL_BMPWIN_GetFrame(p_stbmp[i]) );
       WifiP2PMatchFriendListBmpStIconWrite( p_stbmp[i], &wk->icon,
                                             0, y,
                                             status,pal );
@@ -9769,9 +9769,9 @@ static void MCVSys_BttnStatusWinDraw( WIFIP2PMATCH_WORK *wk, GFL_BMPWIN** p_stbm
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ボタンアニメメイン
+ *  @brief  ボタンアニメメイン
  *
- *	@param	wk		システムワーク
+ *  @param  wk    システムワーク
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_BttnAnmMan( WIFIP2PMATCH_WORK *wk )
@@ -9805,11 +9805,11 @@ static void MCVSys_BttnAnmMan( WIFIP2PMATCH_WORK *wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	サブ画面　OAMボタン　初期化
+ *  @brief  サブ画面　OAMボタン　初期化
  *
- *	@param	wk			ワーク
- *	@param	p_handle	ハンドル
- *	@param	heapID		ヒープID
+ *  @param  wk      ワーク
+ *  @param  p_handle  ハンドル
+ *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_OamBttnInit( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 heapID )
@@ -9817,25 +9817,25 @@ static void MCVSys_OamBttnInit( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 
 #if _OAMBUTTON //@@OO
   BOOL result;
   int i;
-  /* 	CLACT_HEADER head; */
-  //	GFL_BMPWIN* bttn_font;
+  /*  CLACT_HEADER head; */
+  //  GFL_BMPWIN* bttn_font;
   GFL_BMP_DATA *bmp;
   STRBUF* p_str;
-  //	FONTOAM_OAM_DATA_PTR p_fontoam_data;
+  //  FONTOAM_OAM_DATA_PTR p_fontoam_data;
   int fontoam_cgsize;
-  //	FONTOAM_INIT fontoam_add;
+  //  FONTOAM_INIT fontoam_add;
 
 
   GFL_CLWK_DATA add[ MCV_USERD_BTTN_NUM ] = {
-    {	// LEFT
+    { // LEFT
       MCV_USERD_BTTN_LEFT_X, MCV_USERD_BTTN_Y+NAMEIN_SUB_ACTOR_DISTANCE, 0,
       MCV_USERD_BTTN_PRI, 0
       },
-    {	// BACK
+    { // BACK
       MCV_USERD_BTTN_BACK_X, MCV_USERD_BTTN_Y+NAMEIN_SUB_ACTOR_DISTANCE, 0 ,
       MCV_USERD_BTTN_PRI, 0
       },
-    {	// RIGHT
+    { // RIGHT
       MCV_USERD_BTTN_RIGHT_X, MCV_USERD_BTTN_Y+NAMEIN_SUB_ACTOR_DISTANCE, 0,
       MCV_USERD_BTTN_PRI, 0
       },
@@ -9844,22 +9844,22 @@ static void MCVSys_OamBttnInit( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 
 
   // 一応表示をOFF
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
-  //	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+  //  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 
   // リソース読込み
-  //	wk->view.button_res[0] = CLACT_U_ResManagerResAddArcChar_ArcHandle(
-  //			wk->resMan[0], p_handle, NARC_wifip2pmatch_wf_match_btm_oam_NCGR,
-  //			FALSE, MCV_USERD_BTTN_RESCONTID,
-  //			NNS_G2D_VRAM_TYPE_2DSUB, heapID );
+  //  wk->view.button_res[0] = CLACT_U_ResManagerResAddArcChar_ArcHandle(
+  //      wk->resMan[0], p_handle, NARC_wifip2pmatch_wf_match_btm_oam_NCGR,
+  //      FALSE, MCV_USERD_BTTN_RESCONTID,
+  //      NNS_G2D_VRAM_TYPE_2DSUB, heapID );
   wk->view.button_res[0] = GFL_CLGRP_CGR_Register(p_handle,
                                                   NARC_wifip2pmatch_wf_match_btm_oam_NCGR,
                                                   FALSE , CLSYS_DRAW_SUB, heapID);
 
 
-  //	wk->view.button_res[1] = CLACT_U_ResManagerResAddArcPltt_ArcHandle(
-  //			wk->resMan[1], p_handle, NARC_wifip2pmatch_wf_match_btm_oam_NCLR,
-  //			FALSE, MCV_USERD_BTTN_RESCONTID,
-  //			NNS_G2D_VRAM_TYPE_2DSUB, 8, heapID );
+  //  wk->view.button_res[1] = CLACT_U_ResManagerResAddArcPltt_ArcHandle(
+  //      wk->resMan[1], p_handle, NARC_wifip2pmatch_wf_match_btm_oam_NCLR,
+  //      FALSE, MCV_USERD_BTTN_RESCONTID,
+  //      NNS_G2D_VRAM_TYPE_2DSUB, 8, heapID );
 
   wk->view.button_res[1] = GFL_CLGRP_PLTT_Register(p_handle,
                                                    NARC_wifip2pmatch_wf_match_btm_oam_NCLR,
@@ -9867,13 +9867,13 @@ static void MCVSys_OamBttnInit( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 
 
 
   /*     wk->view.button_res[2] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(
-   * 			wk->resMan[2], p_handle, NARC_wifip2pmatch_wf_match_btm_oam_NCER,
-   * 			FALSE, MCV_USERD_BTTN_RESCONTID, CLACT_U_CELL_RES,
-   * 			heapID );
-   * 	wk->view.button_res[3] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(
-   * 			wk->resMan[3], p_handle, NARC_wifip2pmatch_wf_match_btm_oam_NANR,
-   * 			FALSE, MCV_USERD_BTTN_RESCONTID, CLACT_U_CELLANM_RES,
-   * 			heapID );
+   *      wk->resMan[2], p_handle, NARC_wifip2pmatch_wf_match_btm_oam_NCER,
+   *      FALSE, MCV_USERD_BTTN_RESCONTID, CLACT_U_CELL_RES,
+   *      heapID );
+   *  wk->view.button_res[3] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(
+   *      wk->resMan[3], p_handle, NARC_wifip2pmatch_wf_match_btm_oam_NANR,
+   *      FALSE, MCV_USERD_BTTN_RESCONTID, CLACT_U_CELLANM_RES,
+   *      heapID );
    */
   wk->view.button_res[2] = GFL_CLGRP_CELLANIM_Register(p_handle,
                                                        NARC_wifip2pmatch_wf_match_btm_oam_NCER,
@@ -9882,33 +9882,33 @@ static void MCVSys_OamBttnInit( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 
 
 
   // VRAM展開
-  /* 	result = CLACT_U_CharManagerSetCharModeAdjustAreaCont( wk->view.button_res[0] );
-   * 	GF_ASSERT( result );
-   * 	result = CLACT_U_PlttManagerSetCleanArea( wk->view.button_res[1] );
-   * 	GF_ASSERT( result );
-   * 	CLACT_U_ResManagerResOnlyDelete( wk->view.button_res[0] );
-   * 	CLACT_U_ResManagerResOnlyDelete( wk->view.button_res[1] );
+  /*  result = CLACT_U_CharManagerSetCharModeAdjustAreaCont( wk->view.button_res[0] );
+   *  GF_ASSERT( result );
+   *  result = CLACT_U_PlttManagerSetCleanArea( wk->view.button_res[1] );
+   *  GF_ASSERT( result );
+   *  CLACT_U_ResManagerResOnlyDelete( wk->view.button_res[0] );
+   *  CLACT_U_ResManagerResOnlyDelete( wk->view.button_res[1] );
    */
 
   // ヘッダー作成
   /*
     CLACT_U_MakeHeader( &head,
-			MCV_USERD_BTTN_RESCONTID, MCV_USERD_BTTN_RESCONTID,
-			MCV_USERD_BTTN_RESCONTID, MCV_USERD_BTTN_RESCONTID,
-			CLACT_U_HEADER_DATA_NONE, CLACT_U_HEADER_DATA_NONE,
-			0, MCV_USERD_BTTN_BGPRI,
-			wk->resMan[0], wk->resMan[1], wk->resMan[2], wk->resMan[3],
-			NULL, NULL );
+      MCV_USERD_BTTN_RESCONTID, MCV_USERD_BTTN_RESCONTID,
+      MCV_USERD_BTTN_RESCONTID, MCV_USERD_BTTN_RESCONTID,
+      CLACT_U_HEADER_DATA_NONE, CLACT_U_HEADER_DATA_NONE,
+      0, MCV_USERD_BTTN_BGPRI,
+      wk->resMan[0], wk->resMan[1], wk->resMan[2], wk->resMan[3],
+      NULL, NULL );
    */
 
   // アクター作成
   for( i=0; i<MCV_USERD_BTTN_NUM; i++ ){
-    /* 		add[i].ClActSet = wk->clactSet;
-     * 		add[i].ClActHeader = &head;
-     * 		add[i].heap = heapID;
+    /*    add[i].ClActSet = wk->clactSet;
+     *    add[i].ClActHeader = &head;
+     *    add[i].heap = heapID;
      */
-    /* 		wk->view.button_act[i] = CLACT_Add( &add[i] );
-     * 		CLACT_AnmChg( wk->view.button_act[i], c_MCV_USER_BTTN_ANM_RELEASE[i] );
+    /*    wk->view.button_act[i] = CLACT_Add( &add[i] );
+     *    CLACT_AnmChg( wk->view.button_act[i], c_MCV_USER_BTTN_ANM_RELEASE[i] );
      */
     wk->view.button_act[i] = GFL_CLACT_WK_Create(wk->clactSet,
                                                  wk->view.button_res[0],
@@ -9923,10 +9923,10 @@ static void MCVSys_OamBttnInit( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 
   //FontProc_LoadFont( FONT_BUTTON, heapID );
 
   // もどる　描画用領域作成
-  /* 	GFL_BG_BmpWinInit( &bttn_font );
+  /*  GFL_BG_BmpWinInit( &bttn_font );
    *     GFL_BG_BmpWinObjAdd(  &bttn_font,
-   * 			MCV_USERD_BTTN_FONT_SIZX, MCV_USERD_BTTN_FONT_SIZY,
-   * 			MCV_USERD_BTTN_FONT_CGXOFS, MCV_USERD_BTTN_FONT_COL );
+   *      MCV_USERD_BTTN_FONT_SIZX, MCV_USERD_BTTN_FONT_SIZY,
+   *      MCV_USERD_BTTN_FONT_CGXOFS, MCV_USERD_BTTN_FONT_COL );
    */
   // 文字列取得
   p_str = GFL_STR_CreateBuffer( 64, heapID );
@@ -9944,7 +9944,7 @@ static void MCVSys_OamBttnInit( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 
     PRINTSYS_Print(bmp, 0, 0, p_str, wk->fontHandle);
   }
 
-  /* 	bmp = GFL_BMP_Create(char_len, y_char_len, GFL_BMP_16_COLOR, HEAPID_BALLOON);
+  /*  bmp = GFL_BMP_Create(char_len, y_char_len, GFL_BMP_16_COLOR, HEAPID_BALLOON);
    *     bttn_font = GFL_BMPWIN_Create(
    *         GFL_BG_FRAME1_S,
    *         0,
@@ -9955,7 +9955,7 @@ static void MCVSys_OamBttnInit( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 
 
 
   // 文字列を書き込む
-  //	PRINT_UTIL_Print( &bttn_font, FONT_BUTTON, p_str, 0, 0, MSG_NO_PUT, GF_PRINTCOLOR_MAKE(1,2,0), NULL );
+  //  PRINT_UTIL_Print( &bttn_font, FONT_BUTTON, p_str, 0, 0, MSG_NO_PUT, GF_PRINTCOLOR_MAKE(1,2,0), NULL );
   /*     PRINTSYS_Print( GFL_BMPWIN_GetBmp(bttn_font),
    *                     0,  0,
    *                     p_str, wk->fontHandle);
@@ -9966,34 +9966,34 @@ static void MCVSys_OamBttnInit( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 
   GFL_STR_DeleteBuffer( p_str );
 
   // 文字列OAMデータ作成
-  //	p_fontoam_data = FONTOAM_OAMDATA_Make( &bttn_font, heapID );
+  //  p_fontoam_data = FONTOAM_OAMDATA_Make( &bttn_font, heapID );
 
   //フォントOAMシステム作成
   wk->view.back_fontoam = BmpOam_Init(heapID, wk->clactSet);
 
 
   // サイズ取得
-  //	fontoam_cgsize = FONTOAM_OAMDATA_NeedCharSize( p_fontoam_data, NNS_G2D_VRAM_TYPE_2DSUB );
+  //  fontoam_cgsize = FONTOAM_OAMDATA_NeedCharSize( p_fontoam_data, NNS_G2D_VRAM_TYPE_2DSUB );
 
   // CharAreaAlloc
-  //	result = CharVramAreaAlloc( fontoam_cgsize, CHARM_CONT_AREACONT,
-  //			NNS_G2D_VRAM_TYPE_2DSUB, &wk->view.back_fontoam_cg );
-  //	GF_ASSERT(result);
+  //  result = CharVramAreaAlloc( fontoam_cgsize, CHARM_CONT_AREACONT,
+  //      NNS_G2D_VRAM_TYPE_2DSUB, &wk->view.back_fontoam_cg );
+  //  GF_ASSERT(result);
 
-  /* 	// fontoam作成
-   * 	fontoam_add.fontoam_sys = wk->fontoam;
-   * 	fontoam_add.bmp = &bttn_font;
-   * 	fontoam_add.clact_set = wk->clactSet;
-   * 	fontoam_add.pltt = CLACT_U_PlttManagerGetProxy( wk->view.button_res[1], NULL );
-   * 	fontoam_add.parent = wk->view.button_act[MCV_USERD_BTTN_BACK];
-   * 	fontoam_add.char_ofs = wk->view.back_fontoam_cg.alloc_ofs;
-   * 	fontoam_add.x = MCV_USERD_BTTN_FONT_X;
-   * 	fontoam_add.y = MCV_USERD_BTTN_FONT_Y;
-   * 	fontoam_add.bg_pri = MCV_USERD_BTTN_BGPRI;
-   * 	fontoam_add.soft_pri = MCV_USERD_BTTN_FONT_OAMPRI;
-   * 	fontoam_add.draw_area = NNS_G2D_VRAM_TYPE_2DSUB;
-   * 	fontoam_add.heap = heapID;
-   * 	wk->view.back_fontoam = FONTOAM_OAMDATA_Init( &fontoam_add, p_fontoam_data );
+  /*  // fontoam作成
+   *  fontoam_add.fontoam_sys = wk->fontoam;
+   *  fontoam_add.bmp = &bttn_font;
+   *  fontoam_add.clact_set = wk->clactSet;
+   *  fontoam_add.pltt = CLACT_U_PlttManagerGetProxy( wk->view.button_res[1], NULL );
+   *  fontoam_add.parent = wk->view.button_act[MCV_USERD_BTTN_BACK];
+   *  fontoam_add.char_ofs = wk->view.back_fontoam_cg.alloc_ofs;
+   *  fontoam_add.x = MCV_USERD_BTTN_FONT_X;
+   *  fontoam_add.y = MCV_USERD_BTTN_FONT_Y;
+   *  fontoam_add.bg_pri = MCV_USERD_BTTN_BGPRI;
+   *  fontoam_add.soft_pri = MCV_USERD_BTTN_FONT_OAMPRI;
+   *  fontoam_add.draw_area = NNS_G2D_VRAM_TYPE_2DSUB;
+   *  fontoam_add.heap = heapID;
+   *  wk->view.back_fontoam = FONTOAM_OAMDATA_Init( &fontoam_add, p_fontoam_data );
    */
   {
     BMPOAM_ACT_DATA head;
@@ -10015,10 +10015,10 @@ static void MCVSys_OamBttnInit( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 
     //        FONTOAM_OAMDATA_Free( p_fontoam_data );
   }
   // BMP破棄
-  //	GFL_BMPWIN_Delete( bttn_font );
+  //  GFL_BMPWIN_Delete( bttn_font );
 
   // 文字列フォント破棄
-  //	FontProc_UnloadFont( FONT_BUTTON );
+  //  FontProc_UnloadFont( FONT_BUTTON );
 
   // ボタンあたり判定データ作成
   wk->view.p_oambttnman = GFL_BMN_Create( c_MCV_USER_BTTN_OAM_Hit,
@@ -10028,9 +10028,9 @@ static void MCVSys_OamBttnInit( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ボタンデータの破棄
+ *  @brief  ボタンデータの破棄
  *
- *	@param	wk	ワーク
+ *  @param  wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_OamBttnDelete( WIFIP2PMATCH_WORK *wk )
@@ -10045,7 +10045,7 @@ static void MCVSys_OamBttnDelete( WIFIP2PMATCH_WORK *wk )
   FONTOAM_OAMDATA_Delete( wk->view.back_fontoam );
 
   // キャラ領域破棄
-  //	CharVramAreaFree( &wk->view.back_fontoam_cg );
+  //  CharVramAreaFree( &wk->view.back_fontoam_cg );
 
   // ワークの破棄
   for( i=0; i<MCV_USERD_BTTN_NUM; i++ ){
@@ -10066,9 +10066,9 @@ static void MCVSys_OamBttnDelete( WIFIP2PMATCH_WORK *wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	OAMボタンON
+ *  @brief  OAMボタンON
  *
- *	@param	wk	ワーク
+ *  @param  wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_OamBttnOn( WIFIP2PMATCH_WORK *wk )
@@ -10094,9 +10094,9 @@ static void MCVSys_OamBttnOn( WIFIP2PMATCH_WORK *wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ボタン表示　BACK非表示モード
+ *  @brief  ボタン表示　BACK非表示モード
  *
- *	@param	wk	ワーク
+ *  @param  wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_OamBttnOnNoBack( WIFIP2PMATCH_WORK *wk )
@@ -10108,7 +10108,7 @@ static void MCVSys_OamBttnOnNoBack( WIFIP2PMATCH_WORK *wk )
   GFL_CLACT_WK_SetDrawEnable( wk->view.button_act[MCV_USERD_BTTN_BACK], FALSE );
 
   //@@OO
-  //	FONTOAM_SetDrawFlag( wk->view.back_fontoam, FALSE );
+  //  FONTOAM_SetDrawFlag( wk->view.back_fontoam, FALSE );
   BmpOam_ActorSetDrawEnable(wk->view.BmpOamAct, FALSE);
 
   // 表示状態にする
@@ -10118,9 +10118,9 @@ static void MCVSys_OamBttnOnNoBack( WIFIP2PMATCH_WORK *wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ボタンOFF
+ *  @brief  ボタンOFF
  *
- *	@param	wk
+ *  @param  wk
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_OamBttnOff( WIFIP2PMATCH_WORK *wk )
@@ -10130,7 +10130,7 @@ static void MCVSys_OamBttnOff( WIFIP2PMATCH_WORK *wk )
   if( wk->view.buttonact_on == MCV_USERD_BTTN_MODE_NOBACK ){
     GFL_CLACT_WK_SetDrawEnable( wk->view.button_act[MCV_USERD_BTTN_BACK], TRUE );
     //@@OO
-    //	FONTOAM_SetDrawFlag( wk->view.back_fontoam, TRUE );
+    //  FONTOAM_SetDrawFlag( wk->view.back_fontoam, TRUE );
     BmpOam_ActorSetDrawEnable(wk->view.BmpOamAct, TRUE);
   }
 
@@ -10145,14 +10145,14 @@ static void MCVSys_OamBttnOff( WIFIP2PMATCH_WORK *wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ボタン非表示処理
+ *  @brief  ボタン非表示処理
  *
- *	@param	wk
+ *  @param  wk
  *
- *	@retval	MCV_USERD_BTTN_RET_NONE,	// 何の反応もなし
- *	@retval	MCV_USERD_BTTN_RET_LEFT,	// 左がおされた
- *	@retval	MCV_USERD_BTTN_RET_BACK,	// もどるがおされた
- *	@retval	MCV_USERD_BTTN_RET_RIGHT,	// 右がおされた
+ *  @retval MCV_USERD_BTTN_RET_NONE,  // 何の反応もなし
+ *  @retval MCV_USERD_BTTN_RET_LEFT,  // 左がおされた
+ *  @retval MCV_USERD_BTTN_RET_BACK,  // もどるがおされた
+ *  @retval MCV_USERD_BTTN_RET_RIGHT, // 右がおされた
  */
 //-----------------------------------------------------------------------------
 static u32 MCVSys_OamBttnMain( WIFIP2PMATCH_WORK *wk )
@@ -10168,8 +10168,8 @@ static u32 MCVSys_OamBttnMain( WIFIP2PMATCH_WORK *wk )
 
 
   // ボタンイベントデータ消去
-  wk->view.touch_button = MCV_USERD_BTTN_NUM;	// 何にも反応しないようにありえないボタン番号
-  wk->view.touch_button_event = 0xff;	// 何にも反応しないようにありえない数字をいれておく
+  wk->view.touch_button = MCV_USERD_BTTN_NUM; // 何にも反応しないようにありえないボタン番号
+  wk->view.touch_button_event = 0xff; // 何にも反応しないようにありえない数字をいれておく
 
   // ボタンマネージャ実行
   GFL_BMN_Main( wk->view.p_oambttnman );
@@ -10196,11 +10196,11 @@ static u32 MCVSys_OamBttnMain( WIFIP2PMATCH_WORK *wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ボタンコールバック
+ *  @brief  ボタンコールバック
  *
- *	@param	bttn_no		ボタンNo
- *	@param	event		イベントNo
- *	@param	p_work		ワーク
+ *  @param  bttn_no   ボタンNo
+ *  @param  event   イベントNo
+ *  @param  p_work    ワーク
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_OamBttnCallBack( u32 bttn_no, u32 event, void* p_work )
@@ -10212,38 +10212,38 @@ static void MCVSys_OamBttnCallBack( u32 bttn_no, u32 event, void* p_work )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ボタンアニメ開始
+ *  @brief  ボタンアニメ開始
  *
- *	@param	p_view		ワーク
- *	@param	bttn_no		ボタンナンバー
+ *  @param  p_view    ワーク
+ *  @param  bttn_no   ボタンナンバー
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_OamBttnObjAnmStart( WIFIP2PMATCH_VIEW*  p_view, u32 bttn_no )
 {
 #if _OAMBUTTON //@@OO
-  // アニメ初期化	RELEASEアニメ最終フレームに設定
+  // アニメ初期化 RELEASEアニメ最終フレームに設定
   GFL_CLACT_WK_SetAnmSeq( p_view->button_act[ bttn_no ], c_MCV_USER_BTTN_ANM_RELEASE[bttn_no] );
   GFL_CLACT_WK_SetAnmIndex( p_view->button_act[ bttn_no ], MCV_USERD_BTTN_ANMMAX_0ORG );
 
   // 文字列の座標初期化 @@OO
-  //	if( bttn_no == MCV_USERD_BTTN_BACK ){
-  //		FONTOAM_SetMat( p_view->back_fontoam, MCV_USERD_BTTN_FONT_X, c_MCV_USER_BTTN_FONT_YANM[0] );
-  //	}
+  //  if( bttn_no == MCV_USERD_BTTN_BACK ){
+  //    FONTOAM_SetMat( p_view->back_fontoam, MCV_USERD_BTTN_FONT_X, c_MCV_USER_BTTN_FONT_YANM[0] );
+  //  }
 #endif //_OAMBUTTON //@@OO
 
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	アニメメイン
+ *  @brief  アニメメイン
  *
- *	@param	p_view		ワーク
- *	@param	bttn_no		ボタンナンバー
- *	@param	push_bttn	押されているボタン
- *	@param	event		イベント
+ *  @param  p_view    ワーク
+ *  @param  bttn_no   ボタンナンバー
+ *  @param  push_bttn 押されているボタン
+ *  @param  event   イベント
  *
- *	@retval	TRUE	押し終わった
- *	@retval	FALSE	押されていない又は押し終わってない
+ *  @retval TRUE  押し終わった
+ *  @retval FALSE 押されていない又は押し終わってない
  */
 //-----------------------------------------------------------------------------
 static BOOL MCVSys_OamBttnObjAnmMain( WIFIP2PMATCH_VIEW*  p_view, u32 bttn_no, u32 push_bttn, u32 event )
@@ -10279,8 +10279,8 @@ static BOOL MCVSys_OamBttnObjAnmMain( WIFIP2PMATCH_VIEW*  p_view, u32 bttn_no, u
         // 「もどる」ならフォントも動かす
         if( bttn_no == MCV_USERD_BTTN_BACK ){
           //@@OO
-          //					FONTOAM_SetMat( p_view->back_fontoam, MCV_USERD_BTTN_FONT_X,
-          //							c_MCV_USER_BTTN_FONT_YANM[anm_frame] );
+          //          FONTOAM_SetMat( p_view->back_fontoam, MCV_USERD_BTTN_FONT_X,
+          //              c_MCV_USER_BTTN_FONT_YANM[anm_frame] );
         }
 
         // ボタンが下までアニメしたら押したことにする
@@ -10322,10 +10322,10 @@ static BOOL MCVSys_OamBttnObjAnmMain( WIFIP2PMATCH_VIEW*  p_view, u32 bttn_no, u
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	Vierのほうのワードセットに人の名前を設定
+ *  @brief  Vierのほうのワードセットに人の名前を設定
  *
- *	@param	p_wk			ワーク
- *	@param	friendno		友達ナンバー
+ *  @param  p_wk      ワーク
+ *  @param  friendno    友達ナンバー
  */
 //-----------------------------------------------------------------------------
 static void MCVSys_FriendNameSet( WIFIP2PMATCH_WORK* p_wk, int friendno )
@@ -10339,10 +10339,10 @@ static void MCVSys_FriendNameSet( WIFIP2PMATCH_WORK* p_wk, int friendno )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	友達マッチデータのステータス取得
+ *  @brief  友達マッチデータのステータス取得
  *
- *	@param	wk			システムワーク
- *	@param	idx			インデックス
+ *  @param  wk      システムワーク
+ *  @param  idx     インデックス
  */
 //-----------------------------------------------------------------------------
 static WIFI_STATUS* WifiFriendMatchStatusGet( u32 idx )
@@ -10353,14 +10353,14 @@ static WIFI_STATUS* WifiFriendMatchStatusGet( u32 idx )
   idx = 0;
 #endif
   return (WIFI_STATUS*)GFL_NET_DWC_GetFriendInfo( idx );
-  //	return &wk->pMatch->friendMatchStatus[ idx ];
+  //  return &wk->pMatch->friendMatchStatus[ idx ];
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	友達の状態を取得する
+ *  @brief  友達の状態を取得する
  *
- *	@param	idx		インデックス
+ *  @param  idx   インデックス
  */
 //-----------------------------------------------------------------------------
 static u8 WifiDwc_getFriendStatus( int idx )
@@ -10373,12 +10373,12 @@ static u8 WifiDwc_getFriendStatus( int idx )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	P2P通信ゲームを開始する。
+ *  @brief  P2P通信ゲームを開始する。
  *
- *	@param	friendno	ターゲット番号	（-1なら親）
- *	@param	status		ステータス
+ *  @param  friendno  ターゲット番号  （-1なら親）
+ *  @param  status    ステータス
  *
- *	@return
+ *  @return
  */
 //-----------------------------------------------------------------------------
 static BOOL WifiP2PMatch_CommWifiBattleStart( WIFIP2PMATCH_WORK* wk, int friendno, int status )
@@ -10397,9 +10397,9 @@ static BOOL WifiP2PMatch_CommWifiBattleStart( WIFIP2PMATCH_WORK* wk, int friendn
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	友達募集中　設定ON
+ *  @brief  友達募集中　設定ON
  *
- *	@param	wk	ワーク
+ *  @param  wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static void FriendRequestWaitOn( WIFIP2PMATCH_WORK* wk, BOOL msg_on )
@@ -10417,9 +10417,9 @@ static void FriendRequestWaitOn( WIFIP2PMATCH_WORK* wk, BOOL msg_on )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	友達募集中　設定OFF
+ *  @brief  友達募集中　設定OFF
  *
- *	@param	wk	ワーク
+ *  @param  wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static void FriendRequestWaitOff( WIFIP2PMATCH_WORK* wk )
@@ -10434,12 +10434,12 @@ static void FriendRequestWaitOff( WIFIP2PMATCH_WORK* wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	友達募集中フラグ取得
+ *  @brief  友達募集中フラグ取得
  *
- *	@param	cp_wk	ワーク
+ *  @param  cp_wk ワーク
  *
- *	@retval	TRUE	募集中
- *	@retval	FALSE	ぼしゅうしていない
+ *  @retval TRUE  募集中
+ *  @retval FALSE ぼしゅうしていない
  */
 //-----------------------------------------------------------------------------
 static BOOL FriendRequestWaitFlagGet( const WIFIP2PMATCH_WORK* cp_wk )
