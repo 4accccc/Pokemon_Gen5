@@ -920,6 +920,7 @@ static void setFirstBGM(GAMEDATA * gamedata, u16 zone_id)
   u32 no = FIELD_SOUND_GetFieldBGMNo( gamedata, form, zone_id );
   OS_Printf("NEXT BGM NO=%d\n",no);
   FIELD_SOUND_PlayBGM( no );
+  FIELD_SOUND_FadeInBGM( 60 );  // ゲーム開始時はBGMフェードインで始まる
 }
 //============================================================================================
 //============================================================================================

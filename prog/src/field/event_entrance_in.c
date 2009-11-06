@@ -21,6 +21,9 @@
 #include "event_fldmmdl_control.h"  // EVENT_PlayerOneStepAnime
 #include "field_bgm_control.h"
 #include "sound/pm_sndsys.h"
+#include "field_sound.h"
+#include "sound/bgm_info.h"
+#include "../../resource/sound/bgm_info/iss_type.h"
 
 
 //=======================================================================================
@@ -177,13 +180,58 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep(GMEVENT * event, int *s
     GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gsys, fieldmap) );
     ++ *seq;
     break;
-  case 1:
-    PMSND_PlaySE( SEQ_SE_KAIDAN );
-    FIELD_BGM_CONTROL_FadeOut( gamedata, event_work->location.zone_id, 30 );
-		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, fieldmap, 0));
+  case 1: // BGMフェードアウト
+    {
+      PLAYER_WORK* player = GAMEDATA_GetPlayerWork( gamedata, 0 );
+      PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
+      u32 bgm_no = FIELD_SOUND_GetFieldBGMNo( gamedata, form, event_work->location.zone_id );
+      u32 now = PMSND_GetBGMsoundNo();
+      BGM_INFO_SYS* bgm_info = GAMEDATA_GetBGMInfoSys( gamedata );
+      u8 iss_type = BGM_INFO_GetIssType( bgm_info, bgm_no ); 
+      u8 iss_type_now = BGM_INFO_GetIssType( bgm_info, now ); 
+      if( ( iss_type == ISS_TYPE_DUNGEON ) &&
+          ( iss_type_now == ISS_TYPE_DUNGEON ) )
+      {
+        PMSND_FadeOutBGM( 20 );
+      }
+    }
     ++ *seq;
     break;
-  case 2:
+  case 2: // BGMフェードアウト待ち
+    if( PMSND_CheckFadeOnBGM() != TRUE )
+    { // SE・画面フェードアウト
+      PMSND_PlaySE( SEQ_SE_KAIDAN );
+      GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, fieldmap, 0));
+      ++ *seq;
+    }
+    break;
+  case 3: // SE終了待ち
+    if( PMSND_CheckPlaySE() != TRUE )
+    {
+      {
+        PLAYER_WORK* player = GAMEDATA_GetPlayerWork( gamedata, 0 );
+        PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
+        u32 bgm_no = FIELD_SOUND_GetFieldBGMNo( gamedata, form, event_work->location.zone_id );
+        u32 now = PMSND_GetBGMsoundNo();
+        BGM_INFO_SYS* bgm_info = GAMEDATA_GetBGMInfoSys( gamedata );
+        u8 iss_type = BGM_INFO_GetIssType( bgm_info, bgm_no ); 
+        u8 iss_type_now = BGM_INFO_GetIssType( bgm_info, now ); 
+        if( ( iss_type == ISS_TYPE_DUNGEON ) &&
+            ( iss_type_now == ISS_TYPE_DUNGEON ) )
+        {
+          PMSND_FadeInBGM( 20 );
+        }
+      }
+      ++ *seq;
+    }
+    break;
+    /*
+  case 4:
+    //FIELD_BGM_CONTROL_FadeOut( gamedata, event_work->location.zone_id, 30 );
+    ++ *seq;
+    break;
+    */
+  case 4:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;

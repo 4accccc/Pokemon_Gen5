@@ -22,6 +22,10 @@
 #include "field_bgm_control.h"
 #include "field_place_name.h" // FIELD_PLACE_NAME_Display
 #include "fieldmap.h"       // FIELDMAP_GetPlaceNameSys
+#include "field_sound.h"
+#include "sound/pm_sndsys.h"
+#include "sound/bgm_info.h"
+#include "../../resource/sound/bgm_info/iss_type.h"
 
 
 
