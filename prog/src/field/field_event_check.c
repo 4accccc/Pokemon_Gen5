@@ -139,6 +139,8 @@ static GMEVENT * checkExit(EV_REQUEST * req,
     FIELDMAP_WORK *fieldWork, const VecFx32 *now_pos );
 static GMEVENT * checkPushExit(EV_REQUEST * req,
 		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
+static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
+		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 static GMEVENT * checkIntrudeSubScreenEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork);
 static GMEVENT * checkSubScreenEvent(
 		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
@@ -443,6 +445,10 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 	//キー入力接続チェック
   if (req.pushRequest) {
     event = checkPushExit(&req, gsys, fieldWork);
+    if( event != NULL ){
+      return event;
+    }
+    event = checkPushGimmick(&req, gsys, fieldWork);
     if( event != NULL ){
       return event;
     }
@@ -1502,6 +1508,52 @@ static GMEVENT * checkPushExit(EV_REQUEST * req,
 	
   //目の前チェック（階段、壁、ドア）
   idx = getConnectID(req, &front_pos);
+
+	//マップ遷移発生の場合、出入口を記憶しておく
+  rememberExitInfo(req, fieldWork, idx, &front_pos);
+  return getChangeMapEvent(req, fieldWork, idx);
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント キー入力ギミック起動チェック
+ *
+ * @param req   イベントチェック用ワーク
+ * @param gsys GAMESYS_WORK
+ * @param	fieldWork FIELDMAP_WORK
+ * @retval GMEVENT NULL イベント無し
+ */
+//--------------------------------------------------------------
+static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
+		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
+{
+	VecFx32 front_pos;
+  int idx;
+
+#if 0
+  //ギミックが割り当てられているかを調べて、ジムソースのオーバレイがなされていることを確認する
+  if ( FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_GYM_INSECT) ){
+    //虫ジム
+    return GYM_INSECT_CreateMoveEvt(gsys);
+  }
+#endif
+
+  //目の前が通行不可でない場合、チェックしない
+  setFrontPos(req, &front_pos);
+#if 1
+  {
+		FLDMAPPER *g3Dmapper = FIELDMAP_GetFieldG3Dmapper(fieldWork);
+    MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( MAPATTR_GetAttribute(g3Dmapper, &front_pos) );
+    //MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( MAPATTR_GetAttribute(g3Dmapper, &now_pos) );
+    if (!(flag & MAPATTR_FLAGBIT_HITCH))
+    {
+      return NULL;
+    }
+  }
+#endif
+
+  //目の前チェック
+  idx = getConnectID(req, &front_pos);
   if (idx == EXIT_ID_NONE) {
     //壁の場合、電気ジムかを調べる
     //ギミックが割り当てられているかを調べて、ジムソースのオーバレイがなされていることを確認する
@@ -1515,9 +1567,7 @@ static GMEVENT * checkPushExit(EV_REQUEST * req,
     return NULL;
   }
 
-	//マップ遷移発生の場合、出入口を記憶しておく
-  rememberExitInfo(req, fieldWork, idx, &front_pos);
-  return getChangeMapEvent(req, fieldWork, idx);
+  return NULL;
 }
 
 //--------------------------------------------------------------
