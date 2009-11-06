@@ -17,7 +17,7 @@
 #include "font/font.naix"
 
 #include "app/box2.h"
-//#include "demo/command_demo.h"
+#include "demo/command_demo.h"
 
 #include "arc_def.h"  //ARCID_MESSAGE
 #include "message.naix"
@@ -47,7 +47,7 @@ typedef struct {
 
 	BOX2_GFL_PROC_PARAM	box_data;
 
-//	COMMANDDEMO_DATA	cdemo_data;
+	COMMANDDEMO_DATA	cdemo_data;
 
 }NAKAHIRO_MAIN_WORK;
 
@@ -243,7 +243,7 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		break;
 
 	case MAIN_SEQ_MOVIE_CALL:
-//		GFL_PROC_SysCallProc( FS_OVERLAY_ID(command_demo), &COMMANDDEMO_ProcData, &wk->cdemo_data );
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(command_demo), &COMMANDDEMO_ProcData, &wk->cdemo_data );
 		wk->main_seq = MAIN_SEQ_END;
 		break;
 	}
