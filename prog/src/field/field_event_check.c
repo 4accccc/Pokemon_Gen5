@@ -1508,6 +1508,9 @@ static GMEVENT * checkPushExit(EV_REQUEST * req,
 	
   //目の前チェック（階段、壁、ドア）
   idx = getConnectID(req, &front_pos);
+  if (idx == EXIT_ID_NONE) {
+    return NULL;
+  }
 
 	//マップ遷移発生の場合、出入口を記憶しておく
   rememberExitInfo(req, fieldWork, idx, &front_pos);
