@@ -3015,6 +3015,22 @@
 //======================================================================
 //--------------------------------------------------------------
 /**
+ * @def _GET_ROM_VERSION
+ * @brief ロムバージョンの取得
+ * @retval  VERSION_WHITE ホワイトバージョン
+ * @retval  VERSION_BLACK ブラックバージョン
+ */
+//--------------------------------------------------------------
+#define _GET_ROM_VERSION( ret_wk )  \
+    _ASM_GET_ROM_VERSION ret_wk
+
+    .macro _ASM_GET_ROM_VERSION ret_wk
+    .short  EV_SEQ_GET_ROM_VERSION
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
  *  @def  _CHG_LANGID
  *  @brief  言語ID切り替え ひらがな<->漢字
  *  @param none
@@ -3131,6 +3147,92 @@
   .short  \ret_month
   .short  \ret_day
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _GET_SEASON_ID
+ * @brief 季節の取得
+ * @param ret_wk    結果を受けるワーク
+ * @return  季節指定ID（prog/include/gamesystem/pm_season.h参照）
+ */
+//--------------------------------------------------------------
+#define _GET_SEASON_ID( ret_wk )  \
+    _ASM_GET_SEASON_ID ret_wk
+
+    .macro _ASM_GET_SEASON_ID ret_wk
+    .short  EV_SEQ_GET_SEASON_ID
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _GET_BIRTHDAY
+ * @brief 誕生日の取得
+ * @param ret_month 月を受け取るワーク
+ * @param ret_day   日を受け取るワーク
+ *
+ * DSに登録した誕生日を取得する
+ */
+//--------------------------------------------------------------
+#define _GET_BIRTHDAY( ret_month, ret_day ) \
+    _ASM_GET_BIRTHDAY ret_month, ret_day
+
+    .macro _ASM_GET_BIRTHDAY ret_month, ret_day
+    .short  EV_SEQ_GET_BIRTHDAY
+    .short  \ret_month
+    .short  \ret_day
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _GET_MY_SEX
+ * @brief 自分の性別の取得
+ * @param ret_wk    結果を受けるワーク
+ * @retval  PM_MALE     男性
+ * @retval  PM_FEMALE   女性
+ */
+//--------------------------------------------------------------
+#define _GET_MY_SEX( ret_wk ) \
+    _ASM_GET_MY_SEX ret_wk
+
+    .macro _ASM_GET_MY_SEX ret_wk
+    .short  EV_SEQ_GET_MY_SEX
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _GET_ZUKAN_COUNT
+ * @brief ずかんフラグのカウント
+ * @param zukan_count_type  ZUKANCTRL_MODE_SEE / ZUKANCTRL_MODE_GET
+ * @param ret_wk    結果を受けるワーク
+ */
+//--------------------------------------------------------------
+#define _GET_ZUKAN_COUNT( zukan_count_type, ret_wk ) \
+    _ASM_GET_ZUKAN_COUNT zukan_count_type, ret_wk
+
+    .macro _ASM_GET_ZUKAN_COUNT zukan_count_type, ret_wk
+    .short  EV_SEQ_GET_ZUKAN_COUNT
+    .short  \zukan_count_type
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _SET_ZUKAN_FLAG
+ * @brief ずかんフラグをセットする
+ * @param zukan_count_type  ZUKANCTRL_MODE_SEE / ZUKANCTRL_MODE_GET
+ * @param monsno    セット対象ポケモンのナンバー
+ */
+//--------------------------------------------------------------
+#define _SET_ZUKAN_FLAG( zukan_count_type, monsno ) \
+    _ASM_SET_ZUKAN_FLAG zukan_count_type, monsno
+
+    .macro _ASM_SET_ZUKAN_FLAG zukan_count_type, monsno
+    .short  EV_SEQ_SET_ZUKAN_FLAG
+    .short  \zukan_count_type
+    .short  \monsno
+    .endm
 
 //--------------------------------------------------------------
 /**

@@ -31,10 +31,23 @@
 
 //======================================================================
 //======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief ロムバージョンの取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetRomVersion( VMHANDLE *core, void *wk )
+{
+  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
+  *ret_wk = PM_VERSION; //include/pm_version.h
+  return VMCMD_RESULT_CONTINUE;
+}
 
 //--------------------------------------------------------------
 /**
- * 言語IDを切り替え
+ * @brief メッセージ表示モード（漢字・かな）の切り替え
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval  VMCMD_RESULT
  */
@@ -53,7 +66,7 @@ VMCMD_RESULT EvCmdChangeLangID( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * メッセージ表示モードを取得する
+ * @brief メッセージ表示モード（漢字・かな）の取得
  * @retval  VMCMD_RESULT_CONTINUE
  */
 //--------------------------------------------------------------
@@ -66,7 +79,7 @@ VMCMD_RESULT EvCmdGetLangID( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * 乱数の取得
+ * @brief 乱数の取得
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
  */
@@ -81,14 +94,18 @@ VMCMD_RESULT EvCmdGetRand( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * @brief 現在のスクリプトでのメッセージアーカイブIDを取得
+ * @todo
+ * 現在のゾーンIDからメッセージ指定IDを辞書引きしているが、
+ * 本来はスクリプト起動時に使用するメッセージアーカイブIDを保存しておき、
+ * そこからわたすような仕組みとするべき
+ * （そうでないとcommon_scrなどの場合に妙なことになる）
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGetNowMsgArcID( VMHANDLE * core, void *wk )
 {
   u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
-  { //とりあえず。
-    //本来はスクリプト起動時に使用するメッセージアーカイブIDを保存しておき、
-    //そこからわたすような仕組みとするべき
+  { 
     GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
     PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
     u16 zone_id = PLAYERWORK_getZoneID( player );
@@ -99,7 +116,7 @@ VMCMD_RESULT EvCmdGetNowMsgArcID( VMHANDLE * core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * トレーナーカードランクの取得
+ * @brief トレーナーカードランクの取得
  * @param  core    仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
@@ -122,13 +139,14 @@ VMCMD_RESULT EvCmdGetTrainerCardRank( VMHANDLE *core, void *wk )
 //======================================================================
 //--------------------------------------------------------------
 /**
- * 時間帯の取得
+ * @brief 時間帯の取得
  * @param  core    仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
  *
- * @todo  時間帯が季節で変わることをどうするか企画と協議
- * @todo  直接RTCでなくイベントで保持している時間帯を参照するのか？
+ * @todo 
+ * 時間帯が季節で変わることをどうするか企画と協議。
+ * 直接RTCでなくイベントで保持している時間帯を参照するのか？
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGetTimeZone( VMHANDLE *core, void *wk )
@@ -140,7 +158,7 @@ VMCMD_RESULT EvCmdGetTimeZone( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * 曜日の取得
+ * @brief 曜日の取得
  * @param  core    仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
@@ -177,6 +195,56 @@ VMCMD_RESULT EvCmdGetDate( VMHANDLE * core, void *wk )
   GFL_RTC_GetDate( &now_date );
   *ret_month = now_date.month;
   *ret_day   = now_date.day;
+  return VMCMD_RESULT_CONTINUE;
+}
+//--------------------------------------------------------------
+/**
+ * @brief 現在の季節を取得する
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetSeasonID( VMHANDLE *core, void * wk )
+{
+  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
+  *ret_wk = GAMEDATA_GetSeasonID( gdata );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
+//--------------------------------------------------------------
+/**
+ * @brief 自分の誕生日の取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetBirthDay( VMHANDLE * core, void*wk )
+{
+  u16 *month_wk = SCRCMD_GetVMWork( core, wk );
+  u16 *day_wk = SCRCMD_GetVMWork( core, wk );
+  /* 未実装 */
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 自分の性別を取得する
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetMySex( VMHANDLE *core, void * wk )
+{
+  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
+  PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+  *ret_wk = MyStatus_GetMySex( &player->mystatus );
+
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -289,3 +357,39 @@ VMCMD_RESULT EvCmdSetWarpID( VMHANDLE * core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief 
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSetZukanFlag( VMHANDLE * core, void *wk )
+{
+  u16 set_mode = SCRCMD_GetVMWorkValue( core, wk );
+  u16 monsno = SCRCMD_GetVMWorkValue( core, wk );
+
+  /* 未実装 */
+  return VMCMD_RESULT_CONTINUE;
+}
+//--------------------------------------------------------------
+/**
+ * @brief 
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetZukanCount( VMHANDLE * core, void *wk )
+{
+  u16 get_mode = SCRCMD_GetVMWorkValue( core, wk );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+
+  /* 未実装 */
+  return VMCMD_RESULT_CONTINUE;
+}

@@ -141,8 +141,13 @@
 #include "../../../prog/include/gamesystem/game_comm.h"
 
 
+//性別、ロムバージョンなどの定義
+#include "../../../prog/include/pm_version.h"
+
+//季節指定IDの定義
+#include "../../../prog/include/gamesystem/pm_season.h"
+
 #if 0 //wb null
-#include "../../../include/pm_version.h"
 
 //include/field
 #include "../../../include/field/evwkdef.h"

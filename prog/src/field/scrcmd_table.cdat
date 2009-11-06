@@ -401,8 +401,8 @@
   DEF_CMD( EvCmdGetWeek, EV_SEQ_GET_WEEK )
   DEF_CMD( EvCmdGetDate, EV_SEQ_GET_DATE )
 
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdGetBirthDay, EV_SEQ_GET_BIRTHDAY )
+  DEF_CMD( EvCmdGetSeasonID, EV_SEQ_GET_SEASON_ID )
   NO_CMD()
   NO_CMD()
 
@@ -416,13 +416,13 @@
   NO_CMD()
   NO_CMD()
 
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdGetZukanCount, EV_SEQ_GET_ZUKAN_COUNT )
+  DEF_CMD( EvCmdSetZukanFlag, EV_SEQ_SET_ZUKAN_FLAG )
   NO_CMD()
   NO_CMD()
 
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdGetRomVersion, EV_SEQ_GET_ROM_VERSION )
+  DEF_CMD( EvCmdGetMySex, EV_SEQ_GET_MY_SEX )
   NO_CMD()
   NO_CMD()
 

@@ -12,6 +12,7 @@
 //======================================================================
 //  extern 
 //======================================================================
+extern VMCMD_RESULT EvCmdGetRomVersion( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdChangeLangID( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGetLangID( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGetRand( VMHANDLE *core, void *wk );
@@ -25,4 +26,9 @@ extern VMCMD_RESULT EvCmdSetBadgeFlag( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetBadgeCount( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetSaveDataStatus( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdSetWarpID( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdGetSeasonID( VMHANDLE *core, void * wk );
+extern VMCMD_RESULT EvCmdGetBirthDay( VMHANDLE * core, void*wk );
+extern VMCMD_RESULT EvCmdGetMySex( VMHANDLE *core, void * wk );
+extern VMCMD_RESULT EvCmdSetZukanFlag( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdGetZukanCount( VMHANDLE * core, void *wk );
 
