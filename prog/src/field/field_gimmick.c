@@ -19,6 +19,7 @@
 #include "gym_normal.h"
 #include "gym_anti.h"
 #include "gym_fly.h"
+#include "gym_insect.h"
 
 extern void GYM_SetupTest(FIELDMAP_WORK *fieldWork);
 extern void GYM_EndTest(FIELDMAP_WORK *fieldWork);
@@ -33,6 +34,7 @@ const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
   GYM_NORMAL_Setup,
   GYM_ANTI_Setup,
   GYM_FLY_Setup,
+  GYM_INSECT_Setup,
   H03_GIMMICK_Setup,
   GATE_GIMMICK_Setup,  // C04R0601
   GATE_GIMMICK_Setup,  // C08R0601
@@ -57,6 +59,7 @@ const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
   GYM_NORMAL_End,
   GYM_ANTI_End,
   GYM_FLY_End,
+  GYM_INSECT_End,
   H03_GIMMICK_End,
   GATE_GIMMICK_End,  // C04R0601
   GATE_GIMMICK_End,  // C08R0601
@@ -81,6 +84,7 @@ const static FLD_GMK_END_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
   GYM_NORMAL_Move,
   GYM_ANTI_Move,
   GYM_FLY_Move,
+  GYM_INSECT_Move,
   H03_GIMMICK_Move,
   GATE_GIMMICK_Move,  // C04R0601 
   GATE_GIMMICK_Move,  // C08R0601 

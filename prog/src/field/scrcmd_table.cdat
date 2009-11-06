@@ -632,6 +632,12 @@
   DEF_CMD( EvCmdElboard_Recovery, EV_SEQ_ELBOARD_RECOVERY )
   NO_CMD()
 
+  //虫ジム
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

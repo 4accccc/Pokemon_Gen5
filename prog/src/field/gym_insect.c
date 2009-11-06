@@ -18,8 +18,8 @@
 
 #include "arc/fieldmap/gym_insect.naix"
 #include "system/main.h"    //for HEAPID_FIELDMAP
-//#include "script.h"     //for SCRIPT_CallScript
-//#include "../../../resource/fldmapdata/script/c04gym0101_def.h"  //for SCRID_～
+#include "script.h"     //for SCRIPT_CallScript
+#include "../../../resource/fldmapdata/script/c03gym0101_def.h"  //for SCRID_～
 
 #include "../../../resource/fldmapdata/gimmick/gym_insect/gym_insect_local_def.cdat"
 
@@ -35,6 +35,9 @@
 
 #define SW_ANM_NUM  (2)
 #define PL_ANM_NUM  (2)
+#define EFF_ANM_NUM  (2)
+
+#define TRAP_NUM  (2)
 
 //ポール座標
 #define PL1_X (PL1_GX*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
@@ -136,13 +139,19 @@ static const u8 WallIdxCheck[INSECT_PL_MAX] = {
   5,5
 };    //※ウォールインデックス6はポールとの接続がない
 
+//トラップの位置
+static const VecFx32 TrapPos[TRAP_NUM] = 
+{
+  {TRAP1_GX, 0, TRAP1_GZ},
+  {TRAP2_GX, 0, TRAP2_GZ},
+};
+
 //ジム内部中の一時ワーク
 typedef struct GYM_INSECT_TMP_tag
 {
   u16 SwIdx;
   u16 PlIdx;
-  u16 TrapX;
-  u16 TrapZ;
+  int TrEvtIdx;
 }GYM_INSECT_TMP;
 
 
@@ -199,6 +208,8 @@ enum {
   OBJ_WALL5,
   OBJ_WALL6,
   OBJ_WALL7,
+
+  OBJ_EFF,
 };
 
 
@@ -255,6 +266,13 @@ static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_plR[] = {
   { RES_ID_PL_RIGHT_MOV1,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
   { RES_ID_PL_RIGHT_MOV2,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
 };
+
+//3Dアニメ　トラップエフェクト
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_eff[] = {
+  { RES_ID_EFF_MOV1,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_EFF_MOV2,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+};
+
 
 
 //3Dオブジェクト設定テーブル
@@ -461,6 +479,15 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 		g3Dutil_anmTbl_wall,			//アニメテーブル(複数指定のため)
 		NELEMS(g3Dutil_anmTbl_wall),	//アニメリソース数
 	},
+
+  //トラップエフェクト
+  {
+		RES_ID_EFFECT_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_EFFECT_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_eff,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_eff),	//アニメリソース数
+	},
 };
 
 static const GFL_G3D_UTIL_SETUP Setup = {
@@ -503,21 +530,44 @@ void GYM_INSECT_Setup(FIELDMAP_WORK *fieldWork)
   //座標セット
   for (i=0;i<INSECT_SW_MAX;i++)
   {
+    int j;
     int idx = OBJ_SW1 + i;
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_INSECT_UNIT_IDX, idx);
     status->trans = SwPos[i];
+    //カリングする
+    FLD_EXP_OBJ_SetCulling(ptr, GYM_INSECT_UNIT_IDX, idx, TRUE);
+
+    for (j=0;j<SW_ANM_NUM;j++)
+    {
+      //1回再生設定
+      EXP_OBJ_ANM_CNT_PTR anm;
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_INSECT_UNIT_IDX, idx, j);
+      FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+    }
   }
   for (i=0;i<INSECT_PL_MAX;i++)
   {
+    int j;
     int idx = OBJ_PL1 + i;
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_INSECT_UNIT_IDX, idx);
     status->trans = PolePos[i];
+    //カリングする
+    FLD_EXP_OBJ_SetCulling(ptr, GYM_INSECT_UNIT_IDX, idx, TRUE);
+    for (j=0;j<SW_ANM_NUM;j++)
+    {
+      //1回再生設定
+      EXP_OBJ_ANM_CNT_PTR anm;
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_INSECT_UNIT_IDX, idx, j);
+      FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+    }
   }
   for (i=0;i<INSECT_WALL_MAX;i++)
   {
     int idx = OBJ_WALL1 + i;
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_INSECT_UNIT_IDX, idx);
     status->trans = WallPos[i];
+    //カリングする
+    FLD_EXP_OBJ_SetCulling(ptr, GYM_INSECT_UNIT_IDX, idx, TRUE);
   }
 
 
@@ -641,16 +691,16 @@ GMEVENT* GYM_INSECT_CreatePoleEvt(GAMESYS_WORK *gsys, const int inPoleIdx)
  * @return      none
  */
 //--------------------------------------------------------------
-GMEVENT* GYM_INSECT_CreateTrTrapEvt(GAMESYS_WORK *gsys, const int inTrapX, const int inTrapZ)
+GMEVENT* GYM_INSECT_CreateTrTrapEvt(GAMESYS_WORK *gsys,
+                                    const int inTrEvtIdx)
 {
   //イベント作成
   GMEVENT* event;
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   GYM_INSECT_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_INSECT_TMP_ASSIGN_ID);
 
-  //トラップ位置セット
-  tmp->TrapX = inTrapX;
-  tmp->TrapZ = inTrapZ;
+  //トラップイベントインデックスセット
+  tmp->TrEvtIdx = inTrEvtIdx;
   //イベント作成
   event = GMEVENT_Create( gsys, NULL, TrTrapEvt, 0 );
 
@@ -817,17 +867,57 @@ static GMEVENT_RESULT TrTrapEvt( GMEVENT* event, int* seq, void* work )
 
   switch(*seq){
   case 0:  //トレーナー出現アニメ開始
+    {
+      int i;
+      EXP_OBJ_ANM_CNT_PTR anm;
+      u8 obj_idx;
+      obj_idx = OBJ_EFF;
+      //アニメを開始
+      for (i=0;i<EFF_ANM_NUM;i++){
+        FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_INSECT_UNIT_IDX, obj_idx, i, TRUE);
+        anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_INSECT_UNIT_IDX, obj_idx, i);
+        FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+      }
+    }
     (*seq)++;
     break;
   case 1: //トレーナー出現アニメスクリプトコール
+    {
+#if 0      
+      int scr_id;
+      if ( tmp->TrEvtIdx ){
+        scr_id = SCRID_PRG_C03GYM0101_TR2_APPEAR;
+      }else{
+        scr_id = SCRID_PRG_C03GYM0101_TR1_APPEAR;
+      }
+      SCRIPT_CallScript( event, scr_id,
+          NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
+#endif      
+    }
     (*seq)++;
     break;
   case 2:
-    //出現アニメ終了待ち
-    if (1){
-      //トレーナー戦スクリプトチェンジ
-      ;
+    {
+      u8 obj_idx;
+      EXP_OBJ_ANM_CNT_PTR anm;
+      obj_idx = OBJ_EFF;
+      //↓アニメ終了判定はくっついている始めアニメで行うことにする
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_INSECT_UNIT_IDX, obj_idx, 0);
+      //出現アニメ終了待ち
+      if ( FLD_EXP_OBJ_ChkAnmEnd(anm) )
+      {
+#if 0        
+        //トレーナー戦スクリプトチェンジ
+        SCRIPT_ChangeScript( event, SCRID_PRG_C03GYM0101_TR_BTL,
+          NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
+#endif        
+        (*seq)++;
+      }
     }
+    break;
+  case 3:
+    GF_ASSERT(0);   //イベントチェンジしているので、ここには来ない
+    return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
 }

@@ -60,3 +60,8 @@
 #define BD6_GZ (24)
 #define BD7_GX (18)
 #define BD7_GZ (28)
+//トラップの位置
+#define TRAP1_GX (24)
+#define TRAP1_GZ (20)
+#define TRAP2_GX (6)
+#define TRAP2_GZ (24)

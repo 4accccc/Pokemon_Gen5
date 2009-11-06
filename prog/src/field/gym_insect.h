@@ -17,4 +17,5 @@ extern void GYM_INSECT_PushWall(FIELDMAP_WORK *fieldWork);
 
 extern GMEVENT* GYM_INSECT_CreateSwitchEvt(GAMESYS_WORK *gsys, const int inSwIdx);
 extern GMEVENT* GYM_INSECT_CreatePoleEvt(GAMESYS_WORK *gsys, const int inPoleIdx);
-extern GMEVENT* GYM_INSECT_CreateTrTrapEvt(GAMESYS_WORK *gsys, const int inTrapX, const int inTrapZ);
+extern GMEVENT* GYM_INSECT_CreateTrTrapEvt( GAMESYS_WORK *gsys,
+                                            const int inTrEvtIdx);

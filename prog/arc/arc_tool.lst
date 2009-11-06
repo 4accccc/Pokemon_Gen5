@@ -204,5 +204,6 @@
   ARCID_LOCAL_TVT "local_tvt.narc" # ローカルTVトランシーバー
   ARCID_ISS_CITY "iss_city.narc" # 街ISSデータ
 	ARCID_WIFIMATCH_GRA	"wifimatch_gra.narc"	#WIFIランダム対戦グラフィック
-    $VERSION_BLACK	ARCID_CDEMO_DATA  "op_demo_dmy.narc" # コマンドデモデータ（ダミー）
-    $VERSION_WHITE	ARCID_CDEMO_DATA  "op_demo.narc" # コマンドデモデータ（ホンモノ）
+  $VERSION_BLACK	ARCID_CDEMO_DATA  "op_demo_dmy.narc" # コマンドデモデータ（ダミー）
+  $VERSION_WHITE	ARCID_CDEMO_DATA  "op_demo.narc" # コマンドデモデータ（ホンモノ）
+  ARCID_GYM_INSECT	"fieldmap/gym_insect.narc"	#虫ジム
