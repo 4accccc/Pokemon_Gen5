@@ -882,8 +882,7 @@ static GMEVENT_RESULT TrTrapEvt( GMEVENT* event, int* seq, void* work )
     (*seq)++;
     break;
   case 1: //トレーナー出現アニメスクリプトコール
-    {
-#if 0      
+    {      
       int scr_id;
       if ( tmp->TrEvtIdx ){
         scr_id = SCRID_PRG_C03GYM0101_TR2_APPEAR;
@@ -891,8 +890,7 @@ static GMEVENT_RESULT TrTrapEvt( GMEVENT* event, int* seq, void* work )
         scr_id = SCRID_PRG_C03GYM0101_TR1_APPEAR;
       }
       SCRIPT_CallScript( event, scr_id,
-          NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
-#endif      
+          NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );      
     }
     (*seq)++;
     break;
@@ -906,11 +904,15 @@ static GMEVENT_RESULT TrTrapEvt( GMEVENT* event, int* seq, void* work )
       //出現アニメ終了待ち
       if ( FLD_EXP_OBJ_ChkAnmEnd(anm) )
       {
-#if 0        
+        int scr_id;
+        if ( tmp->TrEvtIdx ){
+          scr_id = SCRID_PRG_C03GYM0101_TR2_BTL;
+        }else{
+          scr_id = SCRID_PRG_C03GYM0101_TR1_BTL;
+        }
         //トレーナー戦スクリプトチェンジ
-        SCRIPT_ChangeScript( event, SCRID_PRG_C03GYM0101_TR_BTL,
+        SCRIPT_ChangeScript( event, scr_id,
           NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
-#endif        
         (*seq)++;
       }
     }

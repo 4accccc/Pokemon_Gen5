@@ -3995,6 +3995,48 @@
   .short  \door_idx
   .endm
 
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　虫ジムスイッチオン
+ * @param sw_idx   スイッチインデックス0～7
+ */
+//--------------------------------------------------------------
+#define _GYM_INSECT_SW_ON(sw_idx) \
+    _ASM_GYM_INSECT_SW_ON sw_idx
+
+  .macro  _ASM_GYM_INSECT_SW_ON sw_idx
+  .short  EV_SEQ_GYM_INSECT_SW_ON
+  .short  \sw_idx
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　虫ジムポール解除
+ * @param pl_idx   ポールインデックス0～9
+ */
+//--------------------------------------------------------------
+#define _GYM_INSECT_PL_ON(pl_idx) \
+    _ASM_GYM_INSECT_PL_ON pl_idx
+
+  .macro  _ASM_GYM_INSECT_PL_ON pl_idx
+  .short  EV_SEQ_GYM_INSECT_PL_ON
+  .short  \pl_idx
+  .endm
+  
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　虫ジムトレーナートラップ
+ * @param trp_evt_idx   インデックス0～1
+ */
+//--------------------------------------------------------------
+#define _GYM_INSECT_TR_TRAP_ON(trp_evt_idx) \
+    _ASM_GYM_INSECT_SW_ON trp_evt_idx
+
+  .macro  _ASM_GYM_INSECT_TR_TRAP_ON trp_evt_idx
+  .short  EV_SEQ_GYM_INSECT_TR_TRAP_ON
+  .short  \trp_evt_idx
+  .endm
+
 //======================================================================
 //
 //  モデルアニメ関連
