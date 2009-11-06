@@ -10,3 +10,4 @@ battle_w_bg1a.nsc   たたかう＋技選択
 battle_w_bg1b.nsc   たたかう＋対象選択（2vs2）
 battle_w_bg1c.nsc   たたかう＋対象選択（3vs3）
 battle_w_bg1d.nsc   たたかう＋2択ボタン
+battle_w_bg1e.nsc   たたかう＋ローテーション画面
