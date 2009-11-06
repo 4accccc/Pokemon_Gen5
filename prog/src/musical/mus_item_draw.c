@@ -480,6 +480,8 @@ void MUS_ITEM_DRAW_SetShadowPallet( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_W
 		pltSize = NNS_GfdGetPlttKeySize( pltKey );
 		NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_PLTT , pltAdr , (void*)work->shadowPallet , pltSize );
 		itemWork->isShadow = TRUE;
+		
+		OS_TPrintf("[%x][%d]\n",pltAdr,pltSize);
 	}
 }
 

@@ -1289,24 +1289,30 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
   {
     VecFx32 pos = {0,0,0};
   	MUS_ITEM_DATA_WORK *itemData;
+    GFL_G3D_RES *itemRes;
     GFL_BBD_TEXSIZ texSize;
     u16 sizeX,sizeY;
-    GFL_G3D_RES *itemRes;
+    NNSGfdPlttKey	texPlttKey;
+    NNSGfdTexKey	texDataKey;
+
     work->shadowItemId = 0;
     itemData = MUS_ITEM_DATA_GetMusItemData( itemDataSys , work->shadowItemId );
     texSize = MUS_ITEM_DATA_GetTexType( itemData );
     GFL_BBD_GetTexSize( texSize , &sizeX , &sizeY );
 
     itemRes = MUS_ITEM_DRAW_LoadResource( work->shadowItemId );
-    work->shadowItemResIdx = GFL_BBD_AddResource( work->bbdSys , itemRes ,
+    GFL_G3D_TransVramTexture( itemRes );
+
+    texDataKey = GFL_G3D_GetTextureDataVramKey( itemRes );
+    texPlttKey = GFL_G3D_GetTexturePlttVramKey( itemRes );
+
+    work->shadowItemResIdx = GFL_BBD_AddResourceKey( work->bbdSys , texDataKey , texPlttKey ,
                                           GFL_BBD_TEXFMT_PAL16 , texSize , sizeX , sizeY );
-//    work->itemStateBase[i].itemResIdx = MUS_ITEM_DRAW_TransResource( work->itemDrawSys , itemRes , work->itemStateBase[i].itemId );
     work->shadowItem = MUS_ITEM_DRAW_AddResIdx( work->itemDrawSys , work->shadowItemId , work->shadowItemResIdx , &pos );
-    //work->shadowItem = MUS_ITEM_DRAW_AddResIdx( work->itemDrawSys , work->itemStateBase[0].itemId , work->itemStateBase[0].itemResIdx , &pos );
     MUS_ITEM_DRAW_SetDrawEnable( work->itemDrawSys , work->shadowItem , FALSE );
     MUS_ITEM_DRAW_SetSize( work->itemDrawSys , work->shadowItem , FX16_ONE , FX16_ONE );
-    
     MUS_ITEM_DRAW_SetShadowPallet( work->itemDrawSys , work->shadowItem , itemRes );
+    
     MUS_ITEM_DRAW_DeleteResource( itemRes );
 /*
     OS_TPrintf("[%d][%x][%x]\n",
@@ -1455,12 +1461,14 @@ static void DUP_FIT_TermItem( FITTING_WORK *work )
     GFL_BBD_RemoveObject( work->bbdSys , work->newPicBbdIdx[i] );
   }
   GFL_BBD_RemoveResource( work->bbdSys , work->newPicResIdx );
+  GF_ASSERT(GFL_HEAP_CheckHeapSafe( work->heapId ));
 
   //‰e—p
   MUS_ITEM_DRAW_DelItem( work->itemDrawSys , work->shadowItem );
   GFL_BBD_RemoveResource( work->bbdSys , work->shadowItemResIdx );
 //  MUS_ITEM_DRAW_DeleteResource( work->shadowItemRes );
 
+  GF_ASSERT(GFL_HEAP_CheckHeapSafe( work->heapId ));
 
   for( i=0;i<work->totalItemNum;i++ )
   {
