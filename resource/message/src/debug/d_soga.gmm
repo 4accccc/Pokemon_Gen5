@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="sogabe" host="W00140" date="2009-09-29T17:02:43"/>
+	<create user="sogabe" host="W00140" date="2009-11-02T20:56:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,6 +330,10 @@
 		<language name="JPN">ポケモンビューワー</language>
 	</row>
 
+	<row id="DSMSG_TRAINER_VIEWER">
+		<language name="JPN">トレーナービューワー</language>
+	</row>
+
 	<row id="DSMSG_BATTLE_TEST">
 		<language name="JPN">バトルテスト</language>
 	</row>
@@ -564,6 +568,10 @@
 
 	<row id="EV_MUS_01">
 		<language name="JPN">SEQ_VS_NORAPOKE</language>
+	</row>
+
+	<row id="TVMSG_TRTYPE">
+		<language name="JPN">[2:02:３桁:0]：[1:0E:トレーナー種別名:1]</language>
 	</row>
 
 	<flowchart-group-list>
