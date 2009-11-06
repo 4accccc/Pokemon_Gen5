@@ -139,13 +139,13 @@ endif
 #----------------------------------------------------------------------------
 # コンパイル時の警告抑止
 #----------------------------------------------------------------------------
-ifeq	($(USERNAME),tamada)
-CCFLAGS_WARNING	= -w all,noerr,nounusedarg,noextracomma,\
-	nonotused,nofilecaps,nosysfilecaps,noimpl_signedunsigned,noimplicit
-else
+#ifeq	($(USERNAME),tamada)
+#CCFLAGS_WARNING	= -w all,noerr,nounusedarg,noextracomma,\
+#	nonotused,nofilecaps,nosysfilecaps,noimpl_signedunsigned,noimplicit
+#else
 CCFLAGS_WARNING		=	-w all,nocmdline,noerr,nounused,noextracomma,nopedantic,noimplicit,\
 				nostructclass,nopadding,nonotused,noanyptrintconv,nofilecaps,nosysfilecaps
-endif
+#endif
 
 #------------------------------------------------------#
 # イクニューモンコンポーネントを追加 by Mori 2005.7.27
@@ -285,6 +285,11 @@ analyze:
 overlaymap:
 	../tools/analyze/overlaymap/overlaymap $(PROJECT_PROGDIR)/bin/$(TWL_BUILDTYPE)/$(TARGET_BIN:.srl=.nef).xmap
 	#dot -Tpng ../tools/analyze/overlaymap/overlaymap.dot >overlaymap.png
+
+#----------------------------------------------------------------------------
+#----------------------------------------------------------------------------
+filesize:
+		ruby ../tools/analyze/filesize/filesize.rb $(PROJECT_PROGDIR)/bin/$(TWL_BUILDTYPE)/$(TARGET_BIN:.srl=.nlf)
 
 #----------------------------------------------------------------------------
 #	警告フィルタの適用
