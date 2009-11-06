@@ -649,7 +649,36 @@ u16 FIELD_PLAYER_GetMoveFormToOBJCode( int sex, PLAYER_MOVE_FORM form )
 
 //--------------------------------------------------------------
 /**
- * 性別とOBJコードからPLAYER_DRAW_FORM取得
+ * OBJコードからPLAYER_DRAW_FORM取得　チェック用
+ * @param sex PM_MALE,PM_FEMALE
+ * @param code OBJコード
+ * @retval PLAYER_DRAW_FORM
+ */
+//--------------------------------------------------------------
+static PLAYER_DRAW_FORM fld_player_CheckOBJCodeToDrawForm( u16 code )
+{
+  int sex,i;
+  const OBJCODE_FORM *tbl;
+  
+  for( sex = 0; sex < 2; sex++ )
+  {
+    const OBJCODE_FORM *tbl = dataOBJCodeForm[sex];
+    
+    for( i = 0; i < PLAYER_DRAW_FORM_MAX; i++, tbl++ )
+    {
+      if( tbl->code == code )
+      {
+        return( i );
+      }
+    }
+  }
+  
+  return( PLAYER_DRAW_FORM_MAX );
+}
+
+//--------------------------------------------------------------
+/**
+ * BJコードがからPLAYER_DRAW_FORM取得
  * @param sex PM_MALE,PM_FEMALE
  * @param code OBJコード
  * @retval PLAYER_DRAW_FORM
@@ -668,6 +697,7 @@ PLAYER_DRAW_FORM FIELD_PLAYER_GetOBJCodeToDrawForm( int sex, u16 code )
   GF_ASSERT( 0 );
   return( PLAYER_DRAW_FORM_NORMAL );
 }
+
 
 //--------------------------------------------------------------
 /**
@@ -691,6 +721,37 @@ BOOL FIELD_PLAYER_CheckChangeEventDrawForm( FIELD_PLAYER *fld_player )
   }
   
   return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機の表示コードを直接変更
+ * @param fld_player FIELD_PLAYER
+ * @param code 表示コード HERO等
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_ChangeOBJCode( FIELD_PLAYER *fld_player, u16 code )
+{
+  MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+  MMDL_ChangeOBJCode( mmdl, code );
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機の表示コードが自機専用のものかどうか
+ * @param fld_player FIELD_PLAYER
+ * @retval BOOL TRUE=自機専用 FALSE=自機以外のコード
+ */
+//--------------------------------------------------------------
+BOOL FIELD_PLAYER_CheckIllegalOBJCode( FIELD_PLAYER *fld_player )
+{
+  MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+  u16 code = MMDL_GetOBJCode( mmdl );
+  if( fld_player_CheckOBJCodeToDrawForm(code) != PLAYER_DRAW_FORM_MAX ){
+    return( TRUE );
+  }
+  return( FALSE );
 }
 
 //======================================================================

@@ -156,4 +156,6 @@ extern void FIELD_PLAYER_ChangeDrawForm(
     FIELD_PLAYER *fld_player, PLAYER_DRAW_FORM form );
 extern BOOL FIELD_PLAYER_CheckAttrNaminori(
     FIELD_PLAYER *fld_player, MAPATTR nattr, MAPATTR fattr );
+extern void FIELD_PLAYER_ChangeOBJCode( FIELD_PLAYER *fld_player, u16 code );
+extern BOOL FIELD_PLAYER_CheckIllegalOBJCode( FIELD_PLAYER *fld_player );
 

@@ -1467,6 +1467,10 @@ static void gjiki_SetMove_Walk(
     code = AC_WALK_U_2F;
   }else if( key_cont & PAD_BUTTON_B ){
     code = AC_DASH_U_4F;
+    
+    if( FIELD_PLAYER_CheckIllegalOBJCode(gjiki->fld_player) == FALSE ){
+      code = AC_WALK_U_4F;
+    }
   }else{
     code = AC_WALK_U_8F;
   }
