@@ -6779,7 +6779,7 @@ static int SubProcSet( BOX2_SYS_WORK * syswk, u8 type )
 static int TrayLeftScrollSet( BOX2_SYS_WORK * syswk, int next )
 {
 	if( syswk->tray == 0 ){
-		syswk->tray = BOX_MAX_TRAY-1;
+		syswk->tray = syswk->trayMax-1;
 	}else{
 		syswk->tray--;
 	}
@@ -6812,7 +6812,7 @@ static int TrayLeftScrollSet( BOX2_SYS_WORK * syswk, int next )
 //--------------------------------------------------------------------------------------------
 static int TrayRightScrollSet( BOX2_SYS_WORK * syswk, int next )
 {
-	if( syswk->tray == (BOX_MAX_TRAY-1) ){
+	if( syswk->tray == (syswk->trayMax-1) ){
 		syswk->tray = 0;
 	}else{
 		syswk->tray++;
@@ -7733,9 +7733,9 @@ static void BoxMoveTrayIconChgOnly( BOX2_SYS_WORK * syswk, s8 mv )
 
 	pos = syswk->box_mv_pos + BOX2OBJ_TRAYICON_MAX * mv;
 	if( pos < 0 ){
-		pos += BOX_MAX_TRAY;
-	}else if( pos >= BOX_MAX_TRAY ){
-		pos -= BOX_MAX_TRAY;
+		pos += syswk->trayMax;
+	}else if( pos >= syswk->trayMax ){
+		pos -= syswk->trayMax;
 	}
 	syswk->box_mv_pos = pos;
 

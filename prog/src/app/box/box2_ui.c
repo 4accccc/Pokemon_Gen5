@@ -1587,7 +1587,7 @@ static void PartyOutBoxSelCallBack_Move( void * work, int now_pos, int old_pos )
 
 	// トレイ左から右へのループ
 	if( now_pos == BOX2UI_PTOUT_BOXSEL_TRAY1 && old_pos == BOX2UI_PTOUT_BOXSEL_TRAY6 ){
-		if( syswk->box_mv_pos + 1 >= BOX_MAX_TRAY ){
+		if( syswk->box_mv_pos + 1 >= syswk->trayMax ){
 			syswk->box_mv_pos = 0;
 		}else{
 			syswk->box_mv_pos++;
@@ -1605,7 +1605,7 @@ static void PartyOutBoxSelCallBack_Move( void * work, int now_pos, int old_pos )
 	// トレイ右から左へのループ
 	if( now_pos == BOX2UI_PTOUT_BOXSEL_TRAY6 && old_pos == BOX2UI_PTOUT_BOXSEL_TRAY1 ){
 		if( syswk->box_mv_pos - 1 < 0 ){
-			syswk->box_mv_pos = BOX_MAX_TRAY - 1;
+			syswk->box_mv_pos = syswk->trayMax - 1;
 		}else{
 			syswk->box_mv_pos--;
 		}
@@ -2021,7 +2021,7 @@ static void BoxArrangePokeMoveCallBack_Move( void * work, int now_pos, int old_p
 
 	// トレイ左から右へのループ
 	if( now_pos == BOX2UI_ARRANGE_MOVE_TRAY1 && old_pos == BOX2UI_ARRANGE_MOVE_TRAY6 ){
-		if( syswk->box_mv_pos + 1 >= BOX_MAX_TRAY ){
+		if( syswk->box_mv_pos + 1 >= syswk->trayMax ){
 			syswk->box_mv_pos = 0;
 		}else{
 			syswk->box_mv_pos++;
@@ -2039,7 +2039,7 @@ static void BoxArrangePokeMoveCallBack_Move( void * work, int now_pos, int old_p
 	// トレイ右から左へのループ
 	if( now_pos == BOX2UI_ARRANGE_MOVE_TRAY6 && old_pos == BOX2UI_ARRANGE_MOVE_TRAY1 ){
 		if( syswk->box_mv_pos - 1 < 0 ){
-			syswk->box_mv_pos = BOX_MAX_TRAY - 1;
+			syswk->box_mv_pos = syswk->trayMax - 1;
 		}else{
 			syswk->box_mv_pos--;
 		}
@@ -2543,7 +2543,7 @@ static void BoxThemaChgCallBack_Move( void * work, int now_pos, int old_pos )
 
 	// トレイ左から右へのループ
 	if( now_pos == BOX2UI_BOXTHEMA_CHG_TRAY1 && old_pos == BOX2UI_BOXTHEMA_CHG_TRAY6 ){
-		if( syswk->box_mv_pos + 1 >= BOX_MAX_TRAY ){
+		if( syswk->box_mv_pos + 1 >= syswk->trayMax ){
 			syswk->box_mv_pos = 0;
 		}else{
 			syswk->box_mv_pos++;
@@ -2562,7 +2562,7 @@ static void BoxThemaChgCallBack_Move( void * work, int now_pos, int old_pos )
 	// トレイ右から左へのループ
 	if( now_pos == BOX2UI_BOXTHEMA_CHG_TRAY6 && old_pos == BOX2UI_BOXTHEMA_CHG_TRAY1 ){
 		if( syswk->box_mv_pos - 1 < 0 ){
-			syswk->box_mv_pos = BOX_MAX_TRAY - 1;
+			syswk->box_mv_pos = syswk->trayMax - 1;
 		}else{
 			syswk->box_mv_pos--;
 		}

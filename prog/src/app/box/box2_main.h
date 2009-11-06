@@ -430,8 +430,8 @@ typedef struct {
 	u16	subRet;				// サブプロセスの戻り値などを保存する場所
 	u8	subProcType;		// サブプロセスの種類
 
-
 	u8	tray;										// 現在のトレイ
+	u8	trayMax;								// 開放されているトレイ数
 
 	u8	get_pos;								// 取得位置
 

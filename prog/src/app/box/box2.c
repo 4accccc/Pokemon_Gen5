@@ -64,7 +64,28 @@ static GFL_PROC_RESULT Box2Proc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 
 	syswk->dat      = pwk;
 	syswk->tray     = BOXDAT_GetCureentTrayNumber( syswk->dat->sv_box );
+	syswk->trayMax  = BOXDAT_GetTrayMax( syswk->dat->sv_box );
 	syswk->next_seq = BOX2SEQ_MAINSEQ_START;
+
+	// ƒgƒŒƒC‚ÌŠJ•ú
+	if( syswk->trayMax != BOX_MAX_TRAY ){
+		u16	max;
+		u16	i;
+		if( syswk->trayMax == BOX_MIN_TRAY ){
+			max = BOX_MIN_TRAY;
+		}else if( syswk->trayMax == BOX_MED_TRAY ){
+			max = BOX_MED_TRAY;
+		}
+		for( i=0; i<max; i++ ){
+			if( BOXDAT_GetPokeExistCount( syswk->dat->sv_box, i ) == 0 ){
+				break;
+			}
+		}
+		if( i == max ){
+			syswk->trayMax = BOXDAT_AddTrayMax( syswk->dat->sv_box );
+		}
+	}
+
 
 /*
 	syswk->box    = SaveData_GetBoxData( syswk->dat->savedata );
