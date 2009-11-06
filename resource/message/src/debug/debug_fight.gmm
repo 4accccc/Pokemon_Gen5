@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-11-06T13:36:37"/>
+	<create user="taya" host="W00146" date="2009-11-06T15:07:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -422,7 +422,7 @@
 	</row>
 
 	<row id="DBGF_ITEM_MSGSPD_EXFAST">
-		<language name="JPN" width="256">おにはや</language>
+		<language name="JPN" width="256">めちゃはや</language>
 	</row>
 
 	<flowchart-group-list>
