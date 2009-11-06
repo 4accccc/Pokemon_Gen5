@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/28 12:49:52
+#save date:2009/11/06 11:35:55
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/28 12:49:52
+#save date:2009/11/06 11:35:55
 2
 #hold event type:
 1
@@ -241,7 +241,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
-584 0 72
+552 0 72
 #event number: 8
 #type
 1
@@ -270,7 +270,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
-584 0 72
+552 0 72
 #event number: 9
 #type
 1
@@ -304,7 +304,7 @@ DIR_DOWN
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/28 12:49:52
+#save date:2009/11/06 11:35:55
 2
 #hold event type:
 1
@@ -347,7 +347,7 @@ SCRID_BG_C01_SIGN3_01
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/28 12:49:52
+#save date:2009/11/06 11:35:55
 2
 #hold event type:
 1
@@ -372,7 +372,7 @@ WK_SCENE_C01
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/28 12:49:52
+#save date:2009/11/06 11:35:55
 2
 #hold event type:
 1
@@ -455,7 +455,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
 #position
-584 0 88
+584 16 104
 #event number: 6
 #Door Event Label
 DOOR_ID_C01_D01R0101_EXIT01
