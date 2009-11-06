@@ -12,6 +12,7 @@
 #include <procsys.h>
 #include "system\main.h"
 #include "title/title.h"
+#include "demo/command_demo.h"
 
 
 //==============================================================================
@@ -29,6 +30,8 @@ const GFL_PROC_DATA TitleControlProcData = {
 	TitleControlProcMain,
 	TitleControlProcEnd,
 };
+
+static COMMANDDEMO_DATA	cdemo_data;
 
 
 //==============================================================================
@@ -60,7 +63,15 @@ static GFL_PROC_RESULT TitleControlProcInit( GFL_PROC * proc, int * seq, void * 
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	GFL_PROC_SysCallProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
+	switch( *seq  ){
+	case 0:
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(command_demo), &COMMANDDEMO_ProcData, &cdemo_data );
+		*seq = 1;
+		break;
+	case 1:
+		GFL_PROC_SysCallProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
+		break;
+	}
 	return GFL_PROC_RES_CONTINUE;
 }
 

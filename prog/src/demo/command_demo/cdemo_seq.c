@@ -65,6 +65,10 @@ static const pCommDemoFunc MainSeq[] = {
 //-------------------------------------------------------------------------------------------
 BOOL CDEMOSEQ_Main( CDEMO_WORK * wk, int * seq )
 {
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
+		return FALSE;
+	}
+
 	wk->main_seq = MainSeq[wk->main_seq]( wk );
 
 	if( wk->main_seq == CDEMOSEQ_MAIN_END ){
