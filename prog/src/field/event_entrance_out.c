@@ -208,8 +208,17 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep(GMEVENT * event, int *
     }
     ++ *seq;
     break;
-  case 1:
+  case 1: // 画面・BGMフェードイン
 		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
+    { // 現在のBGMがダンジョンISS ==> BGMフェードイン
+      BGM_INFO_SYS* bgm_info = GAMEDATA_GetBGMInfoSys( gamedata );
+      u32 bgm_now = PMSND_GetBGMsoundNo();
+      u8 iss_type_now = BGM_INFO_GetIssType( bgm_info, bgm_now ); 
+      if( iss_type_now == ISS_TYPE_DUNGEON )
+      {
+        PMSND_FadeInBGM( 20 );  // BGMフェードイン
+      }
+    }
     ++ *seq;
     break;
   case 2:
