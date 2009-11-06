@@ -312,11 +312,14 @@ static void changeScene_start( DEBUG_BTL_WORK* wk );
 static void changeScene_recover( DEBUG_BTL_WORK* wk );
 static void savework_Init( DEBUG_BTL_SAVEDATA* saveData );
 static POKEMON_PARAM* savework_GetPokeParaArea( DEBUG_BTL_SAVEDATA* saveData, u32 pokeIdx );
+static void savework_SetParty( DEBUG_BTL_SAVEDATA* saveData, DEBUG_BTL_WORK* wk );
 static void setMainProc( DEBUG_BTL_WORK* wk, pMainProc nextProc );
 static inline BOOL selItem_IsPoke( u16 itemID );
 static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue );
 static BOOL btltype_IsComm( BtlType type );
 static BOOL btltype_IsMulti( BtlType type );
+static BOOL btltype_IsWild( BtlType type );
+static BtlRule btltype_GetRule( BtlType type );
 static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect );
 static void printItem_Poke( DEBUG_BTL_WORK* wk, u16 itemID, STRBUF* buf );
 static void printItem_BtlType( DEBUG_BTL_WORK* wk, STRBUF* buf );
@@ -327,6 +330,10 @@ static BOOL mainProc_MakePokePara( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_Save( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_Load( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_StartBattle( DEBUG_BTL_WORK* wk, int* seq );
+static void cutoff_wildParty( POKEPARTY* party, BtlRule rule );
+static void* testBeaconGetFunc( void* pWork );
+static int testBeaconGetSizeFunc( void* pWork );
+static BOOL testBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo );
 static void comm_dummy_callback(void* pWork);
 static void testPacketFunc( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static void btlAutoConnectCallback( void* pWork );
@@ -1090,6 +1097,8 @@ FS_EXTERN_OVERLAY(battle);
     if( btltype_IsWild(wk->saveData.btlType) )
     {
       BtlRule rule = btltype_GetRule( wk->saveData.btlType );
+
+      cutoff_wildParty( wk->partyEnemy1, rule );
       BP_SETUP_Wild( &wk->setupParam, wk->gameData, HEAPID_BTL_DEBUG_SYS, rule, wk->partyEnemy1,
           BTL_LANDFORM_GRASS, BTL_WEATHER_NONE );
 
@@ -1167,6 +1176,41 @@ FS_EXTERN_OVERLAY(battle);
   return FALSE;
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * ルールに応じて野生戦のパーティメンバー余分をカットする
+ *
+ * @param   party
+ * @param   rule
+ */
+//----------------------------------------------------------------------------------
+static void cutoff_wildParty( POKEPARTY* party, BtlRule rule )
+{
+  u32 max;
+
+  switch( rule ){
+  case BTL_RULE_SINGLE:  max = 1; break;
+  case BTL_RULE_DOUBLE:  max = 2; break;
+  case BTL_RULE_TRIPLE:  max = 3; break;
+  default:
+       max = 1;
+       break;
+  }
+
+  if( PokeParty_GetPokeCount(party) > max )
+  {
+    POKEPARTY* tmpParty = PokeParty_AllocPartyWork( GFL_HEAP_LOWID(HEAPID_BTL_DEBUG_SYS) );
+    u32 i;
+    for(i=0; i<max; ++i){
+      PokeParty_Add( tmpParty, PokeParty_GetMemberPointer(party, i) );
+    }
+
+    PokeParty_InitWork( party );
+    PokeParty_Copy( tmpParty, party );
+
+    GFL_HEAP_FreeMemory( tmpParty );
+  }
+}
 
 /*----------------------------------------------------------------------------------------------------*/
 /*  通信設定                                                                                          */
