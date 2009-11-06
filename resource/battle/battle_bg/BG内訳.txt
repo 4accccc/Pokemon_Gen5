@@ -1,0 +1,12 @@
+・battle_w_bg0関連（バッグ、にげる、ポケモンボタン）
+battle_w_bg0a.nsc   コマンド（中央にげる）＋もどる
+battle_w_bg0b.nsc   コマンド（中央にげる）＋いどう＋もどる
+battle_w_bg0c.nsc   ローテーション
+battle_w_bg0d.nsc   コマンド（中央もどる）＋もどる
+battle_w_bg0e.nsc   コマンド（中央もどる）＋いどう＋もどる
+
+・battle_w_bg1関連（たたかうボタン）
+battle_w_bg1a.nsc   たたかう＋技選択
+battle_w_bg1b.nsc   たたかう＋対象選択（2vs2）
+battle_w_bg1c.nsc   たたかう＋対象選択（3vs3）
+battle_w_bg1d.nsc   たたかう＋2択ボタン
