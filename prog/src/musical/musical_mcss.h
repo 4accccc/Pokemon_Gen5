@@ -74,6 +74,7 @@ extern	void			MUS_MCSS_Del( MUS_MCSS_SYS_WORK *mcss_sys, MUS_MCSS_WORK *mcss );
 extern	void			MUS_MCSS_SetOrthoMode( MUS_MCSS_SYS_WORK *mcss_sys );
 extern	void			MUS_MCSS_ResetOrthoMode( MUS_MCSS_SYS_WORK *mcss_sys );
 extern	void			MUS_MCSS_SetTexAddres( MUS_MCSS_SYS_WORK *mcss_sys , u32 adr );
+extern	void			MUS_MCSS_SetPltAddres( MUS_MCSS_SYS_WORK *mcss_sys , u32 adr );
 extern	void			MUS_MCSS_GetPosition( MUS_MCSS_WORK *mcss, VecFx32 *pos );
 extern	void			MUS_MCSS_SetPosition( MUS_MCSS_WORK *mcss, VecFx32 *pos );
 extern	void			MUS_MCSS_GetScale( MUS_MCSS_WORK *mcss, VecFx32 *scale );

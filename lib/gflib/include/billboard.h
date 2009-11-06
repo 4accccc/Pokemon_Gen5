@@ -295,6 +295,9 @@ extern int GFL_BBD_AddResourceArc( GFL_BBD_SYS* billboardSys, int arcID, int dat
 //		３）アーカイブファイルパスによる読み込み(return resIdx)
 extern int GFL_BBD_AddResourcePath( GFL_BBD_SYS* billboardSys, const char* path, int datID,
 									u8 texFmt, u8 texSiz, u8 celSizX, u8 cellSizY ); 
+//		４）テクスチャキー・パレットキーから作成
+extern int GFL_BBD_AddResourceKey( GFL_BBD_SYS* billboardSys, NNSGfdTexKey texKey ,NNSGfdPlttKey plttKey ,
+									u8 texFmt, u8 texSiz, u8 celSizX, u8 cellSizY ); 
 //	ビルボードリソース破棄
 //		１）リソースＩＤＸによる破棄
 extern void	GFL_BBD_RemoveResource( GFL_BBD_SYS* billboardSys, int resIdx );
@@ -317,6 +320,16 @@ extern void	GFL_BBD_GetResourceTexDataAdrs
 //texPlttAdrs
 extern void	GFL_BBD_GetResourceTexPlttAdrs
 				( GFL_BBD_SYS* billboardSys, int resIdx, u32* texPlttAdrs );
+//NNSGfdTexKey
+extern void	GFL_BBD_GetResourceTexKey
+        ( GFL_BBD_SYS* billboardSys, int resIdx, NNSGfdTexKey* texKey );
+extern void	GFL_BBD_SetResourceTexKey
+        ( GFL_BBD_SYS* billboardSys, int resIdx, NNSGfdTexKey texKey );
+//NNSGfdPlttKey
+extern void	GFL_BBD_GetResourcePlttKey
+        ( GFL_BBD_SYS* billboardSys, int resIdx, NNSGfdPlttKey* plttKey );
+extern void	GFL_BBD_SetResourcePlttKey
+        ( GFL_BBD_SYS* billboardSys, int resIdx, NNSGfdPlttKey plttKey );
 //cel計算
 enum {
 	CEL_OFFS_1D = 0,

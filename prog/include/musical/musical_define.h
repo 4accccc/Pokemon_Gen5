@@ -14,9 +14,9 @@
 //======================================================================
 //	define
 //======================================================================
-//ミュージカルの装備アイテムの最大個数(最大512で考えておく
+//ミュージカルの装備アイテムの最大個数(最大255で考えておく
 #define MUSICAL_ITEM_MAX (250)
-#define MUSICAL_ITEM_INVALID (511)
+#define MUSICAL_ITEM_INVALID (255)
 //ミュージカルに参加可能な人数
 #define MUSICAL_POKE_MAX (4)
 
@@ -24,7 +24,7 @@
 #define MUSICAL_ITEM_EQUIP_MAX (MUS_POKE_EQUIP_USER_MAX)	//顔＆頭・胴・右手・左手
 
 //ミュージカルの演目名の文字数
-#define MUSICAL_PROGRAM_NAME_MAX (66) //日本32・海外64＋EOM
+#define MUSICAL_PROGRAM_NAME_MAX (36+EOM_SIZE) //日本18・海外36＋EOM
 
 //ミュージカルの背景数
 #define MUSICAL_BACK_NUM (20)
@@ -127,37 +127,41 @@ typedef struct
 //----------------------------------------------------------
 //	ミュージカルショット系
 //----------------------------------------------------------
+//装備グッズデータ
 typedef struct
 {
-  u16 itemNo;
-  s16 angle;
-  u8  equipPos;
+  u16 itemNo;   //グッズ番号
+  s16 angle;    //角度
+  u8  equipPos; //装備箇所
+  u8  pad[3];
 }
 MUSICAL_SHOT_POKE_EQUIP;
 
+//ポケモン１体のデータ
 typedef struct
 {
-  u16 monsno;
-  u8  sex :2;
-  u8  rare:1;
-  u8  form:5;
+  u16 monsno; //ポケモン番号
+  u16  sex :2; //性別
+  u16  rare:1; //レアフラグ
+  u16  form:5; //フォルム番号
+  u16  pad :8;
   
-  STRCODE trainerName[BUFLEN_PERSON_NAME];
-  MUSICAL_SHOT_POKE_EQUIP equip[MUSICAL_ITEM_EQUIP_MAX];
+  STRCODE trainerName[SAVELEN_PLAYER_NAME+EOM_SIZE];  //トレーナー名
+  MUSICAL_SHOT_POKE_EQUIP equip[MUSICAL_ITEM_EQUIP_MAX];  //装備グッズデータ(７個
   
 }MUSICAL_SHOT_POKE;
 
 typedef struct
 {
-  u32 bgNo   :5;    //背景番号
-  u32 spotBit:4; //スポットライト対象(bit)
-  u32 year   :7;
-  u32 month  :5;  //これが０だったら無効データとみなす
-  u32 day    :6;
+  u32 bgNo   :5;  //背景番号
+  u32 spotBit:4;  //スポットライト対象(bit)
+  u32 year   :7;  //年
+  u32 month  :5;  //月  これが０だったら無効データとみなす
+  u32 day    :6;  //日
   u32 pad    :5;
   
-  STRCODE title[MUSICAL_PROGRAM_NAME_MAX];
-  MUSICAL_SHOT_POKE shotPoke[MUSICAL_POKE_MAX];
+  STRCODE title[MUSICAL_PROGRAM_NAME_MAX];  //ミュージカルタイトル(日本32・海外64＋EOM
+  MUSICAL_SHOT_POKE shotPoke[MUSICAL_POKE_MAX]; //ポケモンデータ(４体
 }MUSICAL_SHOT_DATA;
 
 

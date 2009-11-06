@@ -47,9 +47,14 @@ void MUS_ITEM_DRAW_UpdateSystem_VBlank( MUS_ITEM_DRAW_SYSTEM* work );
 //アイテム番号からリソースの読み込み
 GFL_G3D_RES* MUS_ITEM_DRAW_LoadResource( u16 itemIdx );
 void MUS_ITEM_DRAW_DeleteResource( GFL_G3D_RES *res );
+//Vramへの転送
+int MUS_ITEM_DRAW_TransResource( MUS_ITEM_DRAW_SYSTEM* work , GFL_G3D_RES* g3DresTex , u16 itemIdx );
+void MUS_ITEM_DRAW_ReleaseTransResource( MUS_ITEM_DRAW_SYSTEM* work , int resIdx );
+
 //番号から追加と、読み込み済みリソースから追加
 MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddItemId( MUS_ITEM_DRAW_SYSTEM* work , u16 itemIdx , VecFx32 *pos );
 MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddResource( MUS_ITEM_DRAW_SYSTEM* work ,  u16 itemIdx ,GFL_G3D_RES* g3DresTex, VecFx32 *pos );
+MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddResIdx( MUS_ITEM_DRAW_SYSTEM* work , u16 itemIdx , int resIdx , VecFx32 *pos );
 void MUS_ITEM_DRAW_DelItem( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork );
 
 //アイテム番号からARCの番号を調べる
@@ -65,6 +70,7 @@ const BOOL MUS_ITEM_DRAW_IsFrontItem( MUS_ITEM_DRAW_WORK *itemWork );
 
 //絵の変更
 void MUS_ITEM_DRAW_ChengeGraphic( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , u16 newId , GFL_G3D_RES *newRes );
+void MUS_ITEM_DRAW_ChengeGraphicResIdx( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , u16 newId , u16 newResId );
 void MUS_ITEM_DRAW_SetShadowPallet( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , GFL_G3D_RES *shadowRes );
 void MUS_ITEM_DRAW_SetDarkPallet( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , GFL_G3D_RES *shadowRes , void **pltWork );
 void MUS_ITEM_DRAW_ResetShadowPallet( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , GFL_G3D_RES *shadowRes );

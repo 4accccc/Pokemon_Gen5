@@ -73,7 +73,7 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
       GFI_HEAP_GetHeapAllocatableSize( GFL_HEAPID_APP ) );
 */
   //ストリーミング配信分削ってテスト
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STAGE, 0x120000-0x80000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STAGE, 0x90000 );
 
   //TODO データの渡し方整理！
   work = GFL_PROC_AllocWork( proc, sizeof(STAGE_LOCAL_WORK), HEAPID_MUSICAL_STAGE );
@@ -170,6 +170,7 @@ static GFL_PROC_RESULT MusicalStageProc_Main( GFL_PROC * proc, int * seq , void 
     return GFL_PROC_RES_FINISH;
     break;
   }
+  
   return GFL_PROC_RES_CONTINUE;
 }
 

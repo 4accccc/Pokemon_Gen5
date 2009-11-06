@@ -276,7 +276,8 @@ struct _FITTING_WORK
 
   MUS_ITEM_DRAW_WORK *shadowItem; //影用
   u16         shadowItemId;
-  
+  int         shadowItemResIdx;
+
   //newの文字用
   u32         newPicResIdx;
   u32         newPicBbdIdx[ITEM_LIST_NUM];
@@ -345,7 +346,7 @@ struct _FITTING_WORK
   GFL_MSGDATA *msgHandle;
   GFL_FONT *fontHandle;
   PRINT_QUE *printQue;
-  GFL_BMPWIN *msgWin;  
+  GFL_BMPWIN *msgWin;
 };
 
 //======================================================================
@@ -418,16 +419,16 @@ static void DUP_EFFECT_TermCell( FITTING_WORK *work );
 static void DUP_EFFECT_UpdateCell( FITTING_WORK *work );
 
 static const GFL_DISP_VRAM vramBank = {
-  GX_VRAM_BG_128_D,       // メイン2DエンジンのBG
+  GX_VRAM_BG_64_E,       // メイン2DエンジンのBG
   GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
   GX_VRAM_SUB_BG_128_C,     // サブ2DエンジンのBG
   GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
-  GX_VRAM_OBJ_64_E,       // メイン2DエンジンのOBJ
+  GX_VRAM_OBJ_16_F,       // メイン2DエンジンのOBJ
   GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
   GX_VRAM_SUB_OBJ_16_I,     // サブ2DエンジンのOBJ
   GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
-  GX_VRAM_TEX_01_AB,        // テクスチャイメージスロット
-  GX_VRAM_TEXPLTT_01_FG,      // テクスチャパレットスロット
+  GX_VRAM_TEX_012_ABD,        // テクスチャイメージスロット
+  GX_VRAM_TEXPLTT_0_G,      // テクスチャパレットスロット
   GX_OBJVRAMMODE_CHAR_1D_64K,
   GX_OBJVRAMMODE_CHAR_1D_32K
 };
@@ -509,8 +510,6 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
     work->sortAnimeEndAngle = 0x10000 + work->listAngle%LIST_ONE_ANGLE;
   }
 
-
-  
   return work;
 }
 
@@ -802,7 +801,7 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
   {
     work->listSeWaitCnt--;
   }
-
+  
 #if DEB_ARI
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT &&
     GFL_UI_KEY_GetCont() & PAD_BUTTON_START )
@@ -842,10 +841,30 @@ static void DUP_FIT_VBlankFunc(GFL_TCB *tcb, void *wk )
     const ITEM_STATE *itemState = DUP_FIT_ITEM_GetItemState( work->holdItem );
     if( work->shadowItemId != itemState->itemId )
     {
+      MUS_ITEM_DATA_SYS* itemDataSys = MUS_ITEM_DRAW_GetItemDataSys( work->itemDrawSys );
+      u16 newResId;
+    	MUS_ITEM_DATA_WORK *itemData;
+      NNSGfdPlttKey	texPlttKey;
+      NNSGfdTexKey	texDataKey;
+      GFL_BBD_TEXSIZ texSize;
+      u16 sizeX,sizeY;
       work->shadowItemId = itemState->itemId;
       
-      MUS_ITEM_DRAW_ChengeGraphic( work->itemDrawSys , work->shadowItem , itemState->itemId , itemState->itemRes );
-      MUS_ITEM_DRAW_SetShadowPallet( work->itemDrawSys , work->shadowItem , itemState->itemRes );
+      //MUS_ITEM_DRAW_ChengeGraphicResIdx( work->itemDrawSys , work->shadowItem , itemState->itemId , itemState->itemResIdx );
+      
+      GFL_BBD_GetResourcePlttKey( work->bbdSys , work->shadowItemResIdx , &texPlttKey );
+      GFL_BBD_GetResourceTexKey( work->bbdSys , itemState->itemResIdx , &texDataKey );
+      GFL_BBD_SetResourceTexKey( work->bbdSys , work->shadowItemResIdx , texDataKey );
+      itemData = MUS_ITEM_DATA_GetMusItemData( itemDataSys , work->shadowItemId );
+      texSize = MUS_ITEM_DATA_GetTexType( itemData );
+      GFL_BBD_GetTexSize( texSize , &sizeX , &sizeY );
+      newResId = GFL_BBD_AddResourceKey( work->bbdSys , texDataKey , texPlttKey ,
+                           GFL_BBD_TEXFMT_PAL16 , texSize , sizeX , sizeY );
+
+      MUS_ITEM_DRAW_ChengeGraphicResIdx( work->itemDrawSys , work->shadowItem , work->shadowItemId , newResId );
+      //MUS_ITEM_DRAW_SetShadowPallet( work->itemDrawSys , work->shadowItem , work->shadowItemRes );
+      GFL_BBD_RemoveResourceVram( work->bbdSys , work->shadowItemResIdx );
+      work->shadowItemResIdx = newResId;
     }
   }
   GFL_CLACT_SYS_VBlankFunc();
@@ -933,21 +952,21 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
     static const GFL_BG_BGCNT_HEADER header_main1 = {
       0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x10000,0x1000,
+      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000,0x1000,
       GX_BG_EXTPLTT_01, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG2 MAIN (蓋・鏡
     static const GFL_BG_BGCNT_HEADER header_main2 = {
       0, 0, 0x1000, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x08000,0x6000,
+      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x08000,0,
       GX_BG_EXTPLTT_01, 2, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG3 MAIN (背景
     static const GFL_BG_BGCNT_HEADER header_main3 = {
       0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000,0x6000,
+      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x08000,0x8000,
       GX_BG_EXTPLTT_01, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
@@ -1012,7 +1031,7 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
 
   {
     GFL_BBD_SETUP bbdSetup = {
-      128,128,
+      512,128,
       {FX32_ONE,FX32_ONE,0},
       GX_RGB(0,0,0),
       GX_RGB(0,0,0),
@@ -1037,13 +1056,10 @@ static void DUP_FIT_SetupBgObj( FITTING_WORK *work )
   //下画面
   GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_dressup_gra_test_bg_d_NCLR , 
                     PALTYPE_MAIN_BG , 0 , 0 , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_dressup_gra_test_bg_NCGR ,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_dressup_gra_bg_mirror_NCGR ,
                     FIT_FRAME_MAIN_BG , 0 , 0, FALSE , work->heapId );
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_dressup_gra_test_bg_d_NSCR , 
                     FIT_FRAME_MAIN_BG ,  0 , 0, FALSE , work->heapId );
-
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_dressup_gra_bg_mirror_NCGR ,
-                    FIT_FRAME_MAIN_MIRROR , 0 , 0, FALSE , work->heapId );
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_dressup_gra_bg_mirror_NSCR , 
                     FIT_FRAME_MAIN_MIRROR ,  0 , 0, FALSE , work->heapId );
 
@@ -1144,6 +1160,8 @@ static void DUP_FIT_SetupPokemon( FITTING_WORK *work )
   VecFx32 pos = {FIT_POKE_POS_X_FX,FIT_POKE_POS_Y_FX,FIT_POKE_POS_Z_FX};
 //  VecFx32 pos = {FX32_ONE*10,FX32_ONE*10,FX32_ONE*-7};  //位置は適当
   work->drawSys = MUS_POKE_DRAW_InitSystem( work->heapId );
+  MUS_POKE_DRAW_SetTexAddres( work->drawSys , 0x50000 );
+  MUS_POKE_DRAW_SetPltAddres( work->drawSys , 0x4000-0x20 );
   work->drawWork = MUS_POKE_DRAW_Add( work->drawSys , work->initWork->musPoke , FALSE );
   MUS_POKE_DRAW_SetPosition( work->drawWork , &pos);
   
@@ -1155,6 +1173,8 @@ static void DUP_FIT_SetupPokemon( FITTING_WORK *work )
 static void DUP_FIT_SetupItem( FITTING_WORK *work )
 {
   int i;
+  MUS_ITEM_DATA_SYS* itemDataSys;
+
   //所持アイテムのチェック
   work->totalItemNum = 0;
   for( i=0;i<MUSICAL_ITEM_MAX;i++ )
@@ -1175,7 +1195,6 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
       }
       */
       work->itemStateBase[work->totalItemNum].isNew = FALSE;
-      work->itemStateBase[work->totalItemNum].pltWork = NULL;
       work->totalItemNum++;
     }
   }
@@ -1186,15 +1205,68 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
     work->itemStateBase[work->totalItemNum+i].itemId = MUSICAL_ITEM_INVALID;
     work->itemStateBase[work->totalItemNum+i].isOutList = FALSE;
     work->itemStateBase[work->totalItemNum].isNew = TRUE;
-    work->itemStateBase[work->totalItemNum].pltWork = NULL;
     i++;
   }
   
   //グラフィック系初期化
   work->itemDrawSys = MUS_ITEM_DRAW_InitSystem( work->bbdSys , ITEM_DISP_NUM , work->heapId );
+  itemDataSys = MUS_ITEM_DRAW_GetItemDataSys( work->itemDrawSys );
   for( i=0;i<work->totalItemNum;i++ )
   {
-    work->itemStateBase[i].itemRes = MUS_ITEM_DRAW_LoadResource( work->itemStateBase[i].itemId );
+    GFL_G3D_RES *itemRes;
+    NNSGfdTexKey	texDataKey;
+    NNSGfdPlttKey	texPlttKey,shadowPlttKey;
+  	MUS_ITEM_DATA_WORK *itemData;
+    GFL_BBD_TEXSIZ texSize;
+    u16 sizeX,sizeY;
+
+    itemRes = MUS_ITEM_DRAW_LoadResource( work->itemStateBase[i].itemId );
+    GFL_G3D_TransVramTexture( itemRes );
+    texDataKey = GFL_G3D_GetTextureDataVramKey( itemRes );
+    texPlttKey = GFL_G3D_GetTexturePlttVramKey( itemRes );
+    shadowPlttKey = NNS_GfdAllocPlttVram( NNS_GfdGetPlttKeySize( texPlttKey ) , FALSE , 0 );
+    itemData = MUS_ITEM_DATA_GetMusItemData( itemDataSys , work->itemStateBase[i].itemId );
+    texSize = MUS_ITEM_DATA_GetTexType( itemData );
+    GFL_BBD_GetTexSize( texSize , &sizeX , &sizeY );
+
+    work->itemStateBase[i].itemResIdx = GFL_BBD_AddResourceKey( work->bbdSys , texDataKey , texPlttKey ,
+                                        GFL_BBD_TEXFMT_PAL16 , texSize , sizeX , sizeY );
+    {
+      //パレットデータ改変
+      GXRgb *pltData = (void*)GFL_G3D_GetAdrsTexturePltt( itemRes );
+      const u32 pltSize = NNS_GfdGetPlttKeySize( texPlttKey );
+      u8 col;
+      for( col=0;col<pltSize/2;col++ )
+      {
+        const u8 r = (pltData[col] & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+        const u8 g = (pltData[col] & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+        const u8 b = (pltData[col] & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+        //ARI_TPrintf("[%04x:%d:%d:%d]\n",pltData[i],r,g,b);
+        pltData[col] = GX_RGB( r/2 , g/2 , b/2 );
+      }
+    }
+    {
+      //パレットデータ転送
+      NNSG3dResFileHeader*	header = GFL_G3D_GetResourceFileHeader( itemRes );
+      NNSG3dResTex* resTex = GFL_G3D_GetResTex( itemRes );
+      NNS_G3dPlttSetPlttKey( resTex, shadowPlttKey );
+      DC_FlushRange( header, header->fileSize );
+      NNS_G3dPlttLoad( resTex, TRUE );
+    }
+    
+    work->itemStateBase[i].itemShadowResIdx = GFL_BBD_AddResourceKey( work->bbdSys , texDataKey , shadowPlttKey ,
+                                        GFL_BBD_TEXFMT_PAL16 , texSize , sizeX , sizeY );
+    
+    MUS_ITEM_DRAW_DeleteResource( itemRes );
+    /*
+    OS_TPrintf("[%d][%d][%d][%x][%x][%x]\n",
+      work->itemStateBase[i].itemId,
+      work->itemStateBase[i].itemResIdx,
+      work->itemStateBase[i].itemShadowResIdx,
+      NNS_GfdGetTexKeyAddr( texDataKey ),
+      NNS_GfdGetPlttKeyAddr( texPlttKey ),
+      NNS_GfdGetPlttKeyAddr( shadowPlttKey ) );
+    //*/
   }
   //デフォルトでソート
   DUP_FIT_SortItemIdx( work , MUS_POKE_EQUIP_USER_MAX , 0 );
@@ -1209,17 +1281,39 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
     VecFx32 pos = {0,0,0};
     
     item = DUP_FIT_ITEM_CreateItem( work->heapId , work->itemDrawSys ,
-                                    &work->itemStateBase[0], &pos );
+                                    &work->itemStateBase[i], &pos );
     DUP_FIT_ITEMGROUP_AddItem( work->itemGroupList,item );
     MUS_ITEM_DRAW_SetUseOffset( work->itemDrawSys , DUP_FIT_ITEM_GetItemDrawWork( item ) , FALSE );
   }
   //影用
   {
     VecFx32 pos = {0,0,0};
-    work->shadowItem = MUS_ITEM_DRAW_AddResource( work->itemDrawSys , work->itemStateBase[0].itemId , work->itemStateBase[0].itemRes , &pos );
+  	MUS_ITEM_DATA_WORK *itemData;
+    GFL_BBD_TEXSIZ texSize;
+    u16 sizeX,sizeY;
+    GFL_G3D_RES *itemRes;
+    work->shadowItemId = 0;
+    itemData = MUS_ITEM_DATA_GetMusItemData( itemDataSys , work->shadowItemId );
+    texSize = MUS_ITEM_DATA_GetTexType( itemData );
+    GFL_BBD_GetTexSize( texSize , &sizeX , &sizeY );
+
+    itemRes = MUS_ITEM_DRAW_LoadResource( work->shadowItemId );
+    work->shadowItemResIdx = GFL_BBD_AddResource( work->bbdSys , itemRes ,
+                                          GFL_BBD_TEXFMT_PAL16 , texSize , sizeX , sizeY );
+//    work->itemStateBase[i].itemResIdx = MUS_ITEM_DRAW_TransResource( work->itemDrawSys , itemRes , work->itemStateBase[i].itemId );
+    work->shadowItem = MUS_ITEM_DRAW_AddResIdx( work->itemDrawSys , work->shadowItemId , work->shadowItemResIdx , &pos );
+    //work->shadowItem = MUS_ITEM_DRAW_AddResIdx( work->itemDrawSys , work->itemStateBase[0].itemId , work->itemStateBase[0].itemResIdx , &pos );
     MUS_ITEM_DRAW_SetDrawEnable( work->itemDrawSys , work->shadowItem , FALSE );
     MUS_ITEM_DRAW_SetSize( work->itemDrawSys , work->shadowItem , FX16_ONE , FX16_ONE );
-    work->shadowItemId = 0;
+    
+    MUS_ITEM_DRAW_SetShadowPallet( work->itemDrawSys , work->shadowItem , itemRes );
+    MUS_ITEM_DRAW_DeleteResource( itemRes );
+/*
+    OS_TPrintf("[%d][%x][%x]\n",
+      work->shadowItemResIdx,
+      NNS_GfdGetTexKeyAddr( GFL_G3D_GetTextureDataVramKey( work->shadowItemRes ) ),
+      NNS_GfdGetPlttKeyAddr( GFL_G3D_GetTexturePlttVramKey( work->shadowItemRes ) ) );
+*/
   }
 
   //Newの表示用
@@ -1364,11 +1458,15 @@ static void DUP_FIT_TermItem( FITTING_WORK *work )
 
   //影用
   MUS_ITEM_DRAW_DelItem( work->itemDrawSys , work->shadowItem );
+  GFL_BBD_RemoveResource( work->bbdSys , work->shadowItemResIdx );
+//  MUS_ITEM_DRAW_DeleteResource( work->shadowItemRes );
 
 
   for( i=0;i<work->totalItemNum;i++ )
   {
-    MUS_ITEM_DRAW_DeleteResource( work->itemStateBase[i].itemRes );
+    GFL_BBD_RemoveResource( work->bbdSys , work->itemStateBase[i].itemResIdx );
+    GFL_BBD_RemoveResource( work->bbdSys , work->itemStateBase[i].itemShadowResIdx );
+//    MUS_ITEM_DRAW_DeleteResource( work->itemStateBase[i].itemRes );
   }
   
   DUP_FIT_ITEMGROUP_DeleteGroup( work->itemGroupList );
@@ -1454,21 +1552,6 @@ static void DUP_FIT_FittingMain(  FITTING_WORK *work )
     DUP_FIT_CalcItemListAngle( work , work->listAngle , 0 , LIST_SIZE_X , LIST_SIZE_Y );
   }
   
-  //VBlankによるPltの転送が終わっていたらここでメモリを開放
-  //VBlank中だと割り込みが怖いのでここで・・・
-  if( NNS_GfdGetVramTransferTaskTotalSize() == 0 )
-  {
-    int i;
-    for( i=0;i<work->totalItemNum;i++ )
-    {
-      if(work->itemStateBase[i].pltWork != NULL )
-      {
-        GFL_HEAP_FreeMemory( work->itemStateBase[i].pltWork );
-        work->itemStateBase[i].pltWork = NULL;
-      }
-    }
-  }
-
 }
 
 
@@ -1651,11 +1734,11 @@ static void DUP_FIT_CheckItemListPallet( FITTING_WORK *work )
     //影化処理
     if( nowItemState->isOutList == TRUE )
     {
-      MUS_ITEM_DRAW_SetDarkPallet( work->itemDrawSys , itemDrawWork , nowItemState->itemRes , &nowItemState->pltWork );
+      MUS_ITEM_DRAW_ChengeGraphicResIdx( work->itemDrawSys , itemDrawWork , nowItemState->itemId , nowItemState->itemShadowResIdx );
     }
     else
     {
-      MUS_ITEM_DRAW_ResetShadowPallet( work->itemDrawSys , itemDrawWork , nowItemState->itemRes );
+      MUS_ITEM_DRAW_ChengeGraphicResIdx( work->itemDrawSys , itemDrawWork , nowItemState->itemId , nowItemState->itemResIdx );
     }
     item = DUP_FIT_ITEM_GetNextItem(item);
   }

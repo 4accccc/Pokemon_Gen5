@@ -204,7 +204,8 @@ FIT_ITEM_WORK* DUP_FIT_ITEM_CreateItem( HEAPID heapId , MUS_ITEM_DRAW_SYSTEM *it
 	
 	item->next = NULL;
 	item->itemState = itemState;
-	item->itemWork = MUS_ITEM_DRAW_AddResource( itemDrawSys , itemState->itemId , itemState->itemRes , pos );
+	//item->itemWork = MUS_ITEM_DRAW_AddResource( itemDrawSys , itemState->itemId , itemState->itemRes , pos );
+	item->itemWork = MUS_ITEM_DRAW_AddResIdx( itemDrawSys , itemState->itemId , itemState->itemResIdx , pos );
 	item->cnt = 0;
 	item->ePos = MUS_POKE_EQU_INVALID;
 	return item;
@@ -221,7 +222,8 @@ void DUP_FIT_ITEM_DeleteItem( FIT_ITEM_WORK *item , MUS_ITEM_DRAW_SYSTEM *itemDr
 void DUP_FIT_ITEM_ChengeGraphic( FIT_ITEM_WORK *item , MUS_ITEM_DRAW_SYSTEM *itemDrawSys , ITEM_STATE *itemState )
 {
 	item->itemState = itemState;
-	MUS_ITEM_DRAW_ChengeGraphic( itemDrawSys , item->itemWork , itemState->itemId , itemState->itemRes );
+	//MUS_ITEM_DRAW_ChengeGraphic( itemDrawSys , item->itemWork , itemState->itemId , itemState->itemRes );
+	MUS_ITEM_DRAW_ChengeGraphicResIdx( itemDrawSys , item->itemWork , itemState->itemId , itemState->itemResIdx );
 }
 
 //--------------------------------------------------------------

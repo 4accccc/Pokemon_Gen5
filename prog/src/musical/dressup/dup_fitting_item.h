@@ -26,10 +26,10 @@
 typedef struct
 {
   u16   itemId;
-  GFL_G3D_RES *itemRes;
+  int   itemResIdx;
+  int   itemShadowResIdx;
   BOOL  isOutList;  //リスト外にいる
   BOOL  isNew;
-  void  *pltWork;   //暗パレット用ワーク
 }ITEM_STATE;
 
 typedef struct _FIT_ITEM_WORK FIT_ITEM_WORK;

@@ -50,6 +50,9 @@
 
 FS_EXTERN_OVERLAY(musical);
 
+#define HEAPID_PROC_WRAPPER  (HEAPID_PROC)
+
+
 //======================================================================
 //  enum
 //======================================================================
@@ -379,6 +382,7 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_PROC );
     return GMEVENT_RES_FINISH;
   }
+
   return GMEVENT_RES_CONTINUE;
 }
 
@@ -391,12 +395,12 @@ static void MUSICAL_EVENT_InitMusical( MUSICAL_EVENT_WORK *evWork )
 {
   GFL_OVERLAY_Load(FS_OVERLAY_ID(musical));
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STRM|HEAPDIR_MASK, 0x80000 );
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_PROC|HEAPDIR_MASK, 0x8000 );
+  //GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_PROC|HEAPDIR_MASK, 0x8000 );
 
-  evWork->musPoke = MUSICAL_SYSTEM_InitMusPoke( evWork->pokePara , HEAPID_MUSICAL_PROC );
-  evWork->distData = MUSICAL_SYSTEM_InitDistributeData( HEAPID_MUSICAL_PROC );
+  evWork->musPoke = MUSICAL_SYSTEM_InitMusPoke( evWork->pokePara , HEAPID_PROC_WRAPPER );
+  evWork->distData = MUSICAL_SYSTEM_InitDistributeData( HEAPID_PROC_WRAPPER );
   MUSICAL_SYSTEM_LoadDistributeData( evWork->distData , HEAPID_MUSICAL_STRM );
-  evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_MUSICAL_PROC , evWork->distData );
+  evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData );
   evWork->commWork = NULL;
 }
 
@@ -428,7 +432,7 @@ static void MUSICAL_EVENT_TermMusical( MUSICAL_EVENT_WORK *evWork )
   
   MUSICAL_PROGRAM_TermProgramData( evWork->progWork );
   GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_STRM );
-  GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_PROC );
+  //GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_PROC );
 
   GFL_OVERLAY_Unload(FS_OVERLAY_ID(musical));
   
@@ -440,7 +444,7 @@ static void MUSICAL_EVENT_TermMusical( MUSICAL_EVENT_WORK *evWork )
 //--------------------------------------------------------------
 static void MUSICAL_EVENT_InitDressUp( MUSICAL_EVENT_WORK *evWork )
 {
-  evWork->dupInitWork = MUSICAL_DRESSUP_CreateInitWork( HEAPID_MUSICAL_PROC , evWork->musPoke , evWork->saveCtrl );
+  evWork->dupInitWork = MUSICAL_DRESSUP_CreateInitWork( HEAPID_PROC_WRAPPER , evWork->musPoke , evWork->saveCtrl );
   evWork->dupInitWork->commWork = evWork->commWork;
 }
 
@@ -458,7 +462,7 @@ static void MUSICAL_EVENT_TermDressUp( MUSICAL_EVENT_WORK *evWork )
 static void MUSICAL_EVENT_InitActing( MUSICAL_EVENT_WORK *evWork )
 {
   u8 i;
-  evWork->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_PROC , evWork->commWork );
+  evWork->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_PROC_WRAPPER , evWork->commWork );
   for( i=0;i<MUSICAL_POKE_MAX;i++ )
   {
     if( evWork->musicalIndex[i] == 0 )
@@ -469,13 +473,13 @@ static void MUSICAL_EVENT_InitActing( MUSICAL_EVENT_WORK *evWork )
     else
     {
       //NPC
-      MUSICAL_PROGRAM_SetData_NPC( evWork->progWork , evWork->actInitWork , i , evWork->musicalIndex[i]-1 , HEAPID_MUSICAL_PROC );
+      MUSICAL_PROGRAM_SetData_NPC( evWork->progWork , evWork->actInitWork , i , evWork->musicalIndex[i]-1 , HEAPID_PROC_WRAPPER );
     }
   }
 
   evWork->actInitWork->distData = evWork->distData;
   evWork->actInitWork->progWork = evWork->progWork;
-  MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID_MUSICAL_PROC , evWork->progWork , evWork->actInitWork );
+  MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID_PROC_WRAPPER , evWork->progWork , evWork->actInitWork );
 }
 
 //--------------------------------------------------------------
@@ -491,8 +495,8 @@ static void MUSICAL_EVENT_TermActing( MUSICAL_EVENT_WORK *evWork )
 //--------------------------------------------------------------
 static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork )
 {
-  evWork->shotInitWork = GFL_HEAP_AllocMemory( HEAPID_MUSICAL_PROC , sizeof( MUS_SHOT_INIT_WORK ));
-  evWork->shotInitWork->musShotData = GFL_HEAP_AllocClearMemory( HEAPID_MUSICAL_PROC , sizeof( MUSICAL_SHOT_DATA ));
+  evWork->shotInitWork = GFL_HEAP_AllocMemory( HEAPID_PROC_WRAPPER , sizeof( MUS_SHOT_INIT_WORK ));
+  evWork->shotInitWork->musShotData = GFL_HEAP_AllocClearMemory( HEAPID_PROC_WRAPPER , sizeof( MUSICAL_SHOT_DATA ));
   {
     u8 i;
     RTCDate date;

@@ -39,17 +39,19 @@
 //描画１個分
 struct _MUS_ITEM_DRAW_WORK
 {
-	BOOL	enable;
-	BOOL	isUpdate;
-	BOOL	useOffset;	//アイテムのオフセットを利用するか？
-	BOOL	isShadow;
+	u16	enable   :1;
+	u16	isUpdate :1;
+	u16	useOffset:1;	//アイテムのオフセットを利用するか？
+	u16	isShadow :1;
+  u16 isLoadTex:1;  //resIdxを自前で作成したか？
+	
+	u16		rotZ;
 	int		resIdx;
 	int		bbdIdx;
 	u32		arcIdx;
 	VecFx32 pos;
 	fx16	sizeX;
 	fx16	sizeY;
-	u16		rotZ;
 	MUS_ITEM_DATA_WORK *itemData;
 };
 
@@ -247,6 +249,29 @@ void MUS_ITEM_DRAW_DeleteResource( GFL_G3D_RES *res )
 	GFL_G3D_DeleteResource( res );
 }
 
+//ビルボード用にテクスチャを転送・開放
+int MUS_ITEM_DRAW_TransResource( MUS_ITEM_DRAW_SYSTEM* work , GFL_G3D_RES* g3DresTex , u16 itemIdx )
+{
+  int resIdx;
+	GFL_BBD_TEXSIZ texSize;
+	u16 sizeX,sizeY;
+	MUS_ITEM_DATA_WORK *itemData;
+	
+	itemData = MUS_ITEM_DATA_GetMusItemData( work->itemDataSys , itemIdx );
+
+	texSize = MUS_ITEM_DATA_GetTexType( itemData );
+	GFL_BBD_GetTexSize( texSize , &sizeX , &sizeY );
+
+	resIdx = GFL_BBD_AddResource( work->bbdSys , g3DresTex , 
+							GFL_BBD_TEXFMT_PAL16 , texSize , sizeX , sizeY );
+  
+	return resIdx;
+}
+void MUS_ITEM_DRAW_ReleaseTransResource( MUS_ITEM_DRAW_SYSTEM* work , int resIdx )
+{
+  GFL_BBD_RemoveResourceVram( work->bbdSys , resIdx );
+}
+
 //アイテムワークの空きを調べる
 static u16 MUS_ITEM_DRAW_SearchEmptyWork( MUS_ITEM_DRAW_SYSTEM* work )
 {
@@ -276,14 +301,14 @@ MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddItemId( MUS_ITEM_DRAW_SYSTEM* work , u16 it
 	u8 sizeX,sizeY;
 	
 	work->musItem[i].arcIdx = MUS_ITEM_DRAW_GetArcIdx( itemIdx );
-	work->musItem[i].itemData = MUS_ITEM_DATA_GetMusItemData( work->itemDataSys , work->musItem[i].arcIdx );
+	work->musItem[i].itemData = MUS_ITEM_DATA_GetMusItemData( work->itemDataSys , itemIdx );
 
 	texSize = MUS_ITEM_DATA_GetTexType( work->musItem[i].itemData );
 	MUS_ITEM_DRAW_GetPicSize( &work->musItem[i] , &sizeX , &sizeY );
 
 	work->musItem[i].resIdx = GFL_BBD_AddResourceArc( work->bbdSys , ARCID_MUSICAL_ITEM , work->musItem[i].arcIdx,
 							GFL_BBD_TEXFMT_PAL16 , texSize , sizeX*32 , sizeY*32 );
-	
+	work->musItem[i].isLoadTex = TRUE;
 	MUS_ITEM_DRAW_AddFunc( work , i , pos , sizeX , sizeY );
 	
 	return &work->musItem[i];
@@ -298,16 +323,40 @@ MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddResource( MUS_ITEM_DRAW_SYSTEM* work , u16 
 	u8 sizeX,sizeY;
 	
 	work->musItem[i].arcIdx = MUS_ITEM_DRAW_GetArcIdx( itemIdx );
-	work->musItem[i].itemData = MUS_ITEM_DATA_GetMusItemData( work->itemDataSys , work->musItem[i].arcIdx );
+	work->musItem[i].itemData = MUS_ITEM_DATA_GetMusItemData( work->itemDataSys , itemIdx );
+
+	texSize = MUS_ITEM_DATA_GetTexType( work->musItem[i].itemData );
+	MUS_ITEM_DRAW_GetPicSize( &work->musItem[i] , &sizeX , &sizeY );
+	
+	work->musItem[i].resIdx = GFL_BBD_AddResource( work->bbdSys , g3DresTex , 
+							GFL_BBD_TEXFMT_PAL16 , texSize , sizeX*32 , sizeY*32 );
+	work->musItem[i].isLoadTex = TRUE;
+	
+	MUS_ITEM_DRAW_AddFunc( work , i , pos , sizeX , sizeY );
+	
+	return &work->musItem[i];
+}
+
+MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddResIdx( MUS_ITEM_DRAW_SYSTEM* work , u16 itemIdx , int resIdx , VecFx32 *pos )
+{
+	VecFx32 scale;
+	MCSS_ADD_WORK maw;
+	int i = MUS_ITEM_DRAW_SearchEmptyWork(work);
+	GFL_BBD_TEXSIZ texSize;
+	u8 sizeX,sizeY;
+	
+	work->musItem[i].arcIdx = MUS_ITEM_DRAW_GetArcIdx( itemIdx );
+	work->musItem[i].itemData = MUS_ITEM_DATA_GetMusItemData( work->itemDataSys , itemIdx );
 
 	texSize = MUS_ITEM_DATA_GetTexType( work->musItem[i].itemData );
 	MUS_ITEM_DRAW_GetPicSize( &work->musItem[i] , &sizeX , &sizeY );
 
 	
-	work->musItem[i].resIdx = GFL_BBD_AddResource( work->bbdSys , g3DresTex , 
-							GFL_BBD_TEXFMT_PAL16 , texSize , sizeX*32 , sizeY*32 );
-	
+	work->musItem[i].resIdx = resIdx;
+	work->musItem[i].isLoadTex = FALSE;
+
 	MUS_ITEM_DRAW_AddFunc( work , i , pos , sizeX , sizeY );
+	
 	
 	return &work->musItem[i];
 }
@@ -336,7 +385,10 @@ static MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddFunc( MUS_ITEM_DRAW_SYSTEM* work , u
 void MUS_ITEM_DRAW_DelItem( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork )
 {
 	GFL_BBD_RemoveObject( work->bbdSys , itemWork->bbdIdx );
-	GFL_BBD_RemoveResourceVram( work->bbdSys , itemWork->resIdx );
+	if( itemWork->isLoadTex == TRUE )
+	{
+    GFL_BBD_RemoveResourceVram( work->bbdSys , itemWork->resIdx );
+  }
 	itemWork->enable = FALSE;
 	itemWork->isUpdate = FALSE;
 }
@@ -354,7 +406,7 @@ void MUS_ITEM_DRAW_ChengeGraphic( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WOR
 	u16 newResId;
 	
 	itemWork->arcIdx = MUS_ITEM_DRAW_GetArcIdx( newId );
-	itemWork->itemData = MUS_ITEM_DATA_GetMusItemData( work->itemDataSys , itemWork->arcIdx );
+	itemWork->itemData = MUS_ITEM_DATA_GetMusItemData( work->itemDataSys , newId );
 	itemWork->isShadow = FALSE;
 
 	texSize = MUS_ITEM_DATA_GetTexType( itemWork->itemData );
@@ -365,7 +417,11 @@ void MUS_ITEM_DRAW_ChengeGraphic( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WOR
 	newResId = GFL_BBD_AddResource( work->bbdSys , newRes , 
 							GFL_BBD_TEXFMT_PAL16 , texSize , sizeX*32 , sizeY*32 );
 	GFL_BBD_SetObjectResIdx( work->bbdSys , itemWork->bbdIdx , &newResId );
-	GFL_BBD_RemoveResourceVram( work->bbdSys , itemWork->resIdx );
+	if( itemWork->isLoadTex == TRUE )
+	{
+  	GFL_BBD_RemoveResourceVram( work->bbdSys , itemWork->resIdx );
+  }
+  itemWork->isLoadTex = TRUE;
 	itemWork->resIdx = newResId;
 //	itemWork->resIdx = GFL_BBD_AddResource( work->bbdSys , newRes , 
 //							GFL_BBD_TEXFMT_PAL16 , texSize , sizeX*32 , sizeY*32 );
@@ -376,6 +432,35 @@ void MUS_ITEM_DRAW_ChengeGraphic( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WOR
 //	GFL_BBD_SetObjectSiz( work->bbdSys , itemWork->bbdIdx , &scaleX , &scaleY );
 	itemWork->enable = TRUE;
 	itemWork->isUpdate = TRUE; 
+
+}
+
+//--------------------------------------------------------------
+//絵の変更 ResIdx.Ver
+//--------------------------------------------------------------
+void MUS_ITEM_DRAW_ChengeGraphicResIdx( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , u16 newId , u16 newResId )
+{
+	VecFx32 pos;
+	fx16 scaleX,scaleY;
+	const BOOL flg = TRUE;
+	GFL_BBD_TEXSIZ texSize;
+	u8 sizeX,sizeY;
+	
+	itemWork->arcIdx = MUS_ITEM_DRAW_GetArcIdx( newId );
+	itemWork->itemData = MUS_ITEM_DATA_GetMusItemData( work->itemDataSys , newId );
+	itemWork->isShadow = FALSE;
+
+	GFL_BBD_SetObjectResIdx( work->bbdSys , itemWork->bbdIdx , &newResId );
+	if( itemWork->isLoadTex == TRUE )
+	{
+  	GFL_BBD_RemoveResourceVram( work->bbdSys , itemWork->resIdx );
+  }
+  itemWork->isLoadTex = FALSE;
+	itemWork->resIdx = newResId;
+
+	itemWork->enable = TRUE;
+	itemWork->isUpdate = TRUE; 
+
 
 }
 
@@ -390,7 +475,8 @@ void MUS_ITEM_DRAW_SetShadowPallet( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_W
 		
 		//同じ16色パレットでも使用色数で配置サイズが変わるのでPltKeyからサイズを取得する
 		GFL_BBD_GetResourceTexPlttAdrs( work->bbdSys , itemWork->resIdx , &pltAdr );
-		pltKey = GFL_G3D_GetTexturePlttVramKey( shadowRes );
+		//pltKey = GFL_G3D_GetTexturePlttVramKey( shadowRes );
+		GFL_BBD_GetResourcePlttKey( work->bbdSys , itemWork->resIdx , &pltKey );
 		pltSize = NNS_GfdGetPlttKeySize( pltKey );
 		NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_PLTT , pltAdr , (void*)work->shadowPallet , pltSize );
 		itemWork->isShadow = TRUE;
@@ -398,7 +484,7 @@ void MUS_ITEM_DRAW_SetShadowPallet( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_W
 }
 
 //暗用灰色パレット設定
-//パレット用のワークはそこからポインタをもらう。NULLなら生成。あるならそれをそのまま使う
+//パレット用のワークは外からポインタをもらう。NULLなら生成。あるならそれをそのまま使う
 void MUS_ITEM_DRAW_SetDarkPallet( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , GFL_G3D_RES *shadowRes , void **pltWork )
 {
 	if( itemWork->isShadow == FALSE )
@@ -409,7 +495,8 @@ void MUS_ITEM_DRAW_SetDarkPallet( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WOR
 		
 		//同じ16色パレットでも使用色数で配置サイズが変わるのでPltKeyからサイズを取得する
 		GFL_BBD_GetResourceTexPlttAdrs( work->bbdSys , itemWork->resIdx , &pltAdr );
-		pltKey = GFL_G3D_GetTexturePlttVramKey( shadowRes );
+		//pltKey = GFL_G3D_GetTexturePlttVramKey( shadowRes );
+		GFL_BBD_GetResourcePlttKey( work->bbdSys , itemWork->resIdx , &pltKey );
 		pltSize = NNS_GfdGetPlttKeySize( pltKey );
 		
 		if( *pltWork == NULL )
@@ -433,6 +520,7 @@ void MUS_ITEM_DRAW_SetDarkPallet( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WOR
 		
 		NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_PLTT , pltAdr , *pltWork , pltSize );
 		itemWork->isShadow = TRUE;
+
 	}
 }
 
@@ -448,7 +536,8 @@ void MUS_ITEM_DRAW_ResetShadowPallet( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW
 		
 		//同じ16色パレットでも使用色数で配置サイズが変わるのでPltKeyからサイズを取得する
 		GFL_BBD_GetResourceTexPlttAdrs( work->bbdSys , itemWork->resIdx , &pltAdr );
-		pltKey = GFL_G3D_GetTexturePlttVramKey( shadowRes );
+		//pltKey = GFL_G3D_GetTexturePlttVramKey( shadowRes );
+		GFL_BBD_GetResourcePlttKey( work->bbdSys , itemWork->resIdx , &pltKey );
 		pltSize = NNS_GfdGetPlttKeySize( pltKey );
 		
 		dataAdr = (void*)GFL_G3D_GetAdrsTexturePltt( shadowRes );

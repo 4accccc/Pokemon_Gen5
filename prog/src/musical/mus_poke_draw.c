@@ -275,7 +275,11 @@ void MUS_POKE_DRAW_SetTexAddres(  MUS_POKE_DRAW_SYSTEM* work , u32 adr )
 	MUS_MCSS_SetTexAddres( work->mcssSys , adr );
   
 }
-
+void MUS_POKE_DRAW_SetPltAddres(  MUS_POKE_DRAW_SYSTEM* work , u32 adr )
+{
+	MUS_MCSS_SetPltAddres( work->mcssSys , adr );
+  
+}
 MUS_POKE_EQUIP_DATA* MUS_POKE_DRAW_GetEquipData( MUS_POKE_DRAW_WORK *drawWork , const MUS_POKE_EQUIP_POS pos )
 {
 	return &drawWork->equipData[pos];
