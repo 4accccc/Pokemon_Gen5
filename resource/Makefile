@@ -94,7 +94,8 @@ SUBDIRS	=	wmi \
 			fld_shortcut_menu \
 			wifi_match \
 			trtype_bgm \
-			local_tvt
+			local_tvt \
+            op_demo
 
 include $(RESOURCE_MACRO)
 
