@@ -50,7 +50,7 @@ enum
   TASKMENU_WIN_INITIAL_X = 6,
   TASKMENU_WIN_INITIAL_Y = 21,
 
-  MENU_CLWKICON_BASE_X = 4,
+  MENU_CLWKICON_BASE_X = 0,
   MENU_CLWKICON_BASE_Y = 8 * 21,
   MENU_CLWKICON_OFS_X = 8 * 3,
 
@@ -199,6 +199,32 @@ void PMSIV_MENU_Delete( PMSIV_MENU* wk )
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  主処理
+ *
+ *	@param	PMSIV_MENU* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void PMSIV_MENU_Main( PMSIV_MENU* wk )
+{
+  int i;
+
+  // タスクメニュー
+  for( i=0; i<TASKMENU_WIN_MAX; i++ )
+  {
+    if( wk->menu_win[i] != NULL )
+    {
+      APP_TASKMENU_WIN_Update( wk->menu_win[i] );
+    }
+  }
+
+  // タッチバー
+  TOUCHBAR_Main( wk->touchbar );
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  全てのタスクメニューを開放
  *
  *	@param	PMSIV_MENU* wk 
@@ -219,7 +245,6 @@ void PMSIV_MENU_Clear( PMSIV_MENU* wk )
     }
     if( wk->menu_win[i] != NULL )
     {
-
       APP_TASKMENU_WIN_Delete( wk->menu_win[i] );
       wk->menu_win[i] = NULL;
       HOSAKA_Printf("dell win[%d] \n",i);
@@ -340,8 +365,74 @@ void PMSIV_MENU_UpdateEditIcon( PMSIV_MENU* wk )
 
     _clwk_setanm( wk, iconIdx[i], is_on );
   }
-
 }
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  タスクメニューをアクティブに
+ *
+ *	@param	PMSIV_MENU* wk
+ *	@param	pos
+ *	@param	is_on 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void PMSIV_MENU_TaskMenuSetActive( PMSIV_MENU* wk, u8 pos, BOOL is_on )
+{
+  int i;
+
+  GF_ASSERT( pos < TASKMENU_WIN_MAX );
+  GF_ASSERT( wk->menu_win[pos] != NULL );
+
+  for( i=0; i<TASKMENU_WIN_MAX; i++ )
+  {
+    if( wk->menu_win[i] != NULL )
+    {
+      APP_TASKMENU_WIN_SetActive( wk->menu_win[ i ], FALSE );
+    }
+  }
+   
+  APP_TASKMENU_WIN_SetActive( wk->menu_win[ pos ], is_on );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  タスクメニュー 決定
+ *
+ *	@param	PMSIV_MENU* wk
+ *	@param	pos
+ *	@param	is_on 
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void PMSIV_MENU_TaskMenuSetDecide( PMSIV_MENU* wk, u8 pos, BOOL is_on )
+{ 
+  GF_ASSERT( pos < TASKMENU_WIN_MAX );
+  GF_ASSERT( wk->menu_win[pos] != NULL );
+
+  APP_TASKMENU_WIN_SetDecide( wk->menu_win[ pos ], is_on );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  タスクメニュー 終了待ち
+ *
+ *	@param	PMSIV_MENU* wk 
+ *	@param  pos
+ *
+ *	@retval TRUE : 終了
+ */
+//-----------------------------------------------------------------------------
+BOOL PMSIV_MENU_TaskMenuIsFinish( PMSIV_MENU* wk, u8 pos )
+{ 
+  GF_ASSERT( pos < TASKMENU_WIN_MAX );
+  GF_ASSERT( wk->menu_win[pos] != NULL );
+
+  return APP_TASKMENU_WIN_IsFinish( wk->menu_win[ pos ] );
+}
+
 
 //=============================================================================
 /**

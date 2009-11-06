@@ -55,7 +55,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g2dcvtr $<
 
 .nce.NCER:
-	g2dcvtr $<
+	g2dcvtr $< -lbl
 
 endif
 
@@ -77,6 +77,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects)
+	$(COPY) pms2_obj_main_NANR_LBLDEFS.h $(TARGETDIR)../src/app/pms_input
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 endif

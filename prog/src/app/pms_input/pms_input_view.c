@@ -214,6 +214,9 @@ void PMSIView_Delete( PMS_INPUT_VIEW* vwk )
 
 		GFL_TCB_DeleteTask( vwk->mainTask );
 		GFL_TCB_DeleteTask( vwk->vintrTask );
+      
+    // MAINを回しているのでここで開放
+    PMSIV_MENU_Delete( vwk->menu_wk );
 
 		GFL_CLACT_UNIT_Delete( vwk->cellUnit );
 		GFL_CLACT_SYS_Delete();
@@ -261,9 +264,11 @@ GFL_TCB *PMSIView_AddVTask( GFL_TCB_FUNC func, void* wk, int pri )
 //------------------------------------------------------------------
 static void PMSIView_MainTask( GFL_TCB *tcb, void* wk_adrs )
 {
+  PMS_INPUT_VIEW* vwk = wk_adrs;
 
 	GFL_CLACT_SYS_Main();
-	// 3D 関連の処理が無いのでなんにもしてない…
+
+  PMSIV_MENU_Main( vwk->menu_wk );
 }
 
 //------------------------------------------------------------------
@@ -563,7 +568,6 @@ static void Cmd_Quit( GFL_TCB *tcb, void* wk_adrs )
 		{
 			int i;
 
-      PMSIV_MENU_Delete( cwk->vwk->menu_wk );
 			PMSIV_EDIT_Delete( cwk->vwk->edit_wk );
 //	  PMSIV_BUTTON_Delete( cwk->vwk->button_wk );
 			PMSIV_CATEGORY_Delete( cwk->vwk->category_wk );
@@ -839,6 +843,8 @@ static void Cmd_EditAreaToButton( GFL_TCB *tcb, void* wk_adrs )
 	PMSIV_EDIT_VisibleCursor( vwk->edit_wk, FALSE );
 	PMSIV_EDIT_StopArrow( vwk->edit_wk );
 
+  PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, PMSI_GetButtonCursorPos(vwk->main_wk), TRUE );
+
 //	PMSIV_BUTTON_VisibleCursor( vwk->button_wk, TRUE );
 //	PMSIV_BUTTON_MoveCursor( vwk->button_wk, PMSI_GetButtonCursorPos(vwk->main_wk) );
 
@@ -859,6 +865,8 @@ static void Cmd_ButtonToEditArea( GFL_TCB *tcb, void* wk_adrs )
 	PMS_INPUT_VIEW* vwk = wk->vwk;
 
 	vwk->status = PMSI_ST_EDIT;
+  
+  PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, PMSI_GetButtonCursorPos(vwk->main_wk), FALSE );
 	
 //	PMSIV_BUTTON_VisibleCursor( vwk->button_wk, FALSE );
 	PMSIV_EDIT_ActiveArrow( vwk->edit_wk );
@@ -1269,6 +1277,8 @@ static void Cmd_MoveButtonCursor( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
+  
+  PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, PMSI_GetButtonCursorPos(vwk->main_wk), TRUE );
 
 //	PMSIV_BUTTON_MoveCursor( vwk->button_wk, PMSI_GetButtonCursorPos(vwk->main_wk) );
 	DeleteCommand( wk );
@@ -1379,7 +1389,8 @@ static void Cmd_DispMessageOK( GFL_TCB *tcb, void* wk_adrs )
 	}else{
 		PMSIV_EDIT_StopCursor( vwk->edit_wk );
 	}
-	PMSIV_EDIT_DispYesNoWin( vwk->edit_wk, PMSI_GetMenuCursorPos(wk->mwk) );
+  PMSIV_MENU_TaskMenuSetDecide( vwk->menu_wk, PMSI_GetButtonCursorPos(wk->mwk), TRUE );
+//	PMSIV_EDIT_DispYesNoWin( vwk->edit_wk, PMSI_GetMenuCursorPos(wk->mwk) );
 
 	DeleteCommand( wk );
 }
@@ -1408,7 +1419,8 @@ static void Cmd_DispMessageCancel( GFL_TCB *tcb, void* wk_adrs )
 	}else{
 		PMSIV_EDIT_StopCursor( vwk->edit_wk );
 	}
-	PMSIV_EDIT_DispYesNoWin( vwk->edit_wk, PMSI_GetMenuCursorPos(wk->mwk) );
+  PMSIV_MENU_TaskMenuSetDecide( vwk->menu_wk, PMSI_GetButtonCursorPos(wk->mwk), TRUE );
+//	PMSIV_EDIT_DispYesNoWin( vwk->edit_wk, PMSI_GetMenuCursorPos(wk->mwk) );
 
 	DeleteCommand( wk );
 }
@@ -1590,7 +1602,13 @@ void PMSIView_GetSentenceWordArea( PMS_INPUT_VIEW* wk ,GFL_UI_TP_HITTBL* tbl,u8 
 	*/
 int PMSIView_WaitYesNo(PMS_INPUT_VIEW* wk)
 {
-	return PMSIV_EDIT_WaitYesNoBtn(wk->edit_wk);
+  if( PMSIV_MENU_TaskMenuIsFinish( wk->menu_wk, PMSI_GetButtonCursorPos( wk->main_wk ) ) )
+  {
+    return 1;  // Yesとみなす
+  }
+
+  return -1; // 終了していない
+//	return PMSIV_EDIT_WaitYesNoBtn(wk->edit_wk);
 }
 
 //==============================================================================================

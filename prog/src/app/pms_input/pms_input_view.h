@@ -326,10 +326,13 @@ typedef struct _PMSIV_MENU PMSIV_MENU;
 
 extern PMSIV_MENU* PMSIV_MENU_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, const PMS_INPUT_DATA* dwk );
 extern void PMSIV_MENU_Delete( PMSIV_MENU* wk );
+extern void PMSIV_MENU_Main( PMSIV_MENU* wk );
 extern void PMSIV_MENU_Clear( PMSIV_MENU* wk );
 extern void PMSIV_MENU_SetupEdit( PMSIV_MENU* wk );
 extern void PMSIV_MENU_SetupCategory( PMSIV_MENU* wk );
 extern void PMSIV_MENU_UpdateEditIcon( PMSIV_MENU* wk );
-
+extern void PMSIV_MENU_TaskMenuSetActive( PMSIV_MENU* wk, u8 pos, BOOL is_on );
+extern void PMSIV_MENU_TaskMenuSetDecide( PMSIV_MENU* wk, u8 pos, BOOL is_on );
+extern BOOL PMSIV_MENU_TaskMenuIsFinish( PMSIV_MENU* wk, u8 pos );
 
 #endif
