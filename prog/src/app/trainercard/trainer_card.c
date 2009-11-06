@@ -10,6 +10,7 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 #include "system/bmp_winframe.h"
+#include "gamesystem/msgspeed.h"
 #include "arc_def.h"
 #include "font/font.naix"
 

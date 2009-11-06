@@ -16,6 +16,7 @@
 #include "message.naix"
 #include "msg/msg_wifi_lobby.h"
 #include "system/wipe.h"
+#include "gamesystem/msgspeed.h"
 
 #include "print/printsys.h"
 

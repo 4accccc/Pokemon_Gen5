@@ -13,6 +13,7 @@
 //system
 #include "system/main.h"
 #include "system/bmp_winframe.h"
+#include "gamesystem/msgspeed.h"
 #include "libdpw/dpw_tr.h"
 
 //mine

@@ -30,6 +30,7 @@
 #include "system/bmp_menu.h"
 #include "system/main.h"
 #include "system/rtc_tool.h"
+#include "gamesystem/msgspeed.h"
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/pokeparty.h"
 #include "item/itemsym.h"
