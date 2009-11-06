@@ -117,6 +117,14 @@ void CDEMOMAIN_BgInit( CDEMO_WORK * wk )
 		GFL_HEAP_FreeMemory( buf );
 	}
 
+/*
+	{	// サブ画面バックグラウンドカラークリア
+		u16	col = 0;
+		DC_FlushRange( &col, 2 );
+		GXS_LoadBGPltt( &col, 0, 2 );
+	}
+*/
+
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0 | GX_PLANEMASK_BG1 | GX_PLANEMASK_OBJ, VISIBLE_OFF );
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG2 | GX_PLANEMASK_BG3, VISIBLE_ON );
 

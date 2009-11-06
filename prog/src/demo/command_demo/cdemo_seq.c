@@ -66,7 +66,7 @@ static const pCommDemoFunc MainSeq[] = {
 BOOL CDEMOSEQ_Main( CDEMO_WORK * wk, int * seq )
 {
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
-		return FALSE;
+		wk->main_seq = CDEMOSEQ_MAIN_RELEASE;
 	}
 
 	wk->main_seq = MainSeq[wk->main_seq]( wk );
@@ -155,6 +155,8 @@ static int MainSeq_Init( CDEMO_WORK * wk )
 
 	// データロード
 	CDEMOMAIN_CommDataLoad( wk );
+
+//	WIPE_Reset( WIPE_DISP_SUB );
 
 	CDEMOMAIN_InitVBlank( wk );
 
