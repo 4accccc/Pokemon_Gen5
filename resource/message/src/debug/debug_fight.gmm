@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-10-22T11:28:37"/>
+	<create user="taya" host="W00146" date="2009-11-06T13:36:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,6 +357,10 @@
 		<language name="JPN" width="256">じめん</language>
 	</row>
 
+	<row id="DBGF_LABEL_MSGSPD">
+		<language name="JPN" width="256">ＭＳＧそくど</language>
+	</row>
+
 	<row id="DBGF_ITEM_SAVE">
 		<language name="JPN" width="256">セーブ</language>
 	</row>
@@ -403,6 +407,22 @@
 
 	<row id="DBGF_ITEM_TYPE10">
 		<language name="JPN" width="256">トリプル　つうしん</language>
+	</row>
+
+	<row id="DBGF_ITEM_MSGSPD_SLOW">
+		<language name="JPN" width="256">おそい</language>
+	</row>
+
+	<row id="DBGF_ITEM_MSGSPD_NORMAL">
+		<language name="JPN" width="256">ふつう</language>
+	</row>
+
+	<row id="DBGF_ITEM_MSGSPD_FAST">
+		<language name="JPN" width="256">はやい</language>
+	</row>
+
+	<row id="DBGF_ITEM_MSGSPD_EXFAST">
+		<language name="JPN" width="256">おにはや</language>
 	</row>
 
 	<flowchart-group-list>
