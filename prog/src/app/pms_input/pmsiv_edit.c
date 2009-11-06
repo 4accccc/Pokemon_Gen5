@@ -502,6 +502,15 @@ static void setup_pal_datas( PMSIV_EDIT* wk, ARCHANDLE* p_handle )
 	GFL_HEAP_FreeMemory( data_ptr );
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  エディット領域のパレットを PMS_TYPEによって 切替転送
+ *
+ *	@param	PMSIV_EDIT* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static void update_editarea_palette( PMSIV_EDIT* wk )
 {
 	if( PMSI_GetInputMode(wk->mwk) == PMSI_MODE_SENTENCE )

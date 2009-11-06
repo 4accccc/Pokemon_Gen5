@@ -212,30 +212,30 @@ typedef struct {
 //------------------------------------------------------
 struct _PMS_INPUT_WORK{
 
-	PMSI_PARAM*   input_param;
-	u32           input_mode;
+	PMSI_PARAM* input_param;
+	u32         input_mode;
 
-	PMS_DATA      edit_pms;
-	PMS_WORD      edit_word[ PMS_INPUT_WORD_MAX ];
+	PMS_DATA    edit_pms;
+	PMS_WORD    edit_word[ PMS_INPUT_WORD_MAX ];
 
 	PMS_INPUT_VIEW*   vwk;
 	PMS_INPUT_DATA*   dwk;
 
-	int          main_seq;
-	MainProc     main_proc;
-	MainProc     next_proc;
+	int        main_seq;
+	MainProc   main_proc;
+	MainProc   next_proc;
 
-	int          sub_seq;
-	SubProc      sub_proc;
+	int        sub_seq;
+	SubProc    sub_proc;
 
-	u16           key_trg;
-	u16           key_cont;
-	u16           key_repeat;
-	int           touch_button;
-	int           hold_button;
+	u16        key_trg;
+	u16        key_cont;
+	u16        key_repeat;
+	int        touch_button;
+	int        hold_button;
 	GFL_BUTTON_MAN*   bmn;
-	BOOL          button_up_hold_flag;
-	BOOL          button_down_hold_flag;
+	BOOL       button_up_hold_flag;
+	BOOL       button_down_hold_flag;
 
 	u16        cmd_button_pos;
 	u16        edit_pos;

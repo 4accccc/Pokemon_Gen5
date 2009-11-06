@@ -13,19 +13,23 @@
 #include "arc_def.h"
 #include "system\main.h"
 #include "system\pms_word.h"
-#include "print\printsys.h"
-#include "msg\msg_pms_input_button.h"
-#include "msg\msg_pms_input.h"
-#include "message.naix"
-
-#include "pms_input_prv.h"
-#include "pms_input_view.h"
+#include "system\pms_data.h"
 
 //タッチバー
 #include "ui/touchbar.h"
 
 //タスクメニュー
 #include "app/app_taskmenu.h"
+
+#include "print\printsys.h"
+
+#include "pms_input_prv.h"
+#include "pms_input_view.h"
+
+#include "pms2_obj_main_NANR_LBLDEFS.h"
+#include "msg\msg_pms_input_button.h"
+#include "msg\msg_pms_input.h"
+#include "message.naix"
 
 //=============================================================================
 /**
@@ -45,6 +49,11 @@ enum
   TASKMENU_WIN_INITIAL_W = 9,
   TASKMENU_WIN_INITIAL_X = 6,
   TASKMENU_WIN_INITIAL_Y = 21,
+
+  MENU_CLWKICON_BASE_X = 4,
+  MENU_CLWKICON_BASE_Y = 8 * 21,
+  MENU_CLWKICON_OFS_X = 8 * 3,
+
 };
 
 //--------------------------------------------------------------
@@ -67,6 +76,21 @@ typedef enum {
 
 } TASKMENU_WIN;
 
+//--------------------------------------------------------------
+///	CLWKボタン定義
+//==============================================================
+typedef enum {
+  MENU_CLWKICON_L,
+  MENU_CLWKICON_EDIT_MAIL,
+  MENU_CLWKICON_EDIT_BTL_READY,
+  MENU_CLWKICON_EDIT_BTL_WIN,
+  MENU_CLWKICON_EDIT_BTL_LOST,
+  MENU_CLWKICON_EDIT_UNION,
+  MENU_CLWKICON_R,
+  MENU_CLWKICON_CATEGORY_CHANGE,
+  MENU_CLWKICON_MAX,
+} MENU_CLWKICON;
+
 //=============================================================================
 /**
  *								構造体定義
@@ -81,11 +105,13 @@ struct _PMSIV_MENU {
   const PMS_INPUT_WORK* mwk;
   const PMS_INPUT_DATA* dwk;
   // [PRIVATE]
+  PMSIV_CELL_RES          resCell;
   TOUCHBAR_WORK*          touchbar;
 	GFL_MSGDATA*            msgman;
   APP_TASKMENU_RES*       menu_res;
   APP_TASKMENU_ITEMWORK   menu_item[ TASKMENU_WIN_MAX ];
   APP_TASKMENU_WIN_WORK*  menu_win[ TASKMENU_WIN_MAX ];
+  GFL_CLWK*               clwk_icon[ MENU_CLWKICON_MAX ];
 };
 
 //=============================================================================
@@ -93,7 +119,12 @@ struct _PMSIV_MENU {
  *							プロトタイプ宣言
  */
 //=============================================================================
-static TOUCHBAR_WORK* touchbar_init( GFL_CLUNIT* clunit, HEAPID heap_id );
+static void _clwk_create( PMSIV_MENU* wk );
+static void _clwk_delete( PMSIV_MENU* wk );
+static void _clwk_setanm( PMSIV_MENU* wk, MENU_CLWKICON iconIdx, BOOL is_on );
+static TOUCHBAR_WORK* _touchbar_init( GFL_CLUNIT* clunit, HEAPID heap_id );
+static void _setup_category_group( PMSIV_MENU* wk );
+static void _setup_category_initial( PMSIV_MENU* wk );
 
 //=============================================================================
 /**
@@ -131,7 +162,10 @@ PMSIV_MENU* PMSIV_MENU_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, c
         HEAPID_PMS_INPUT_VIEW );
 
   // タッチバー
-  wk->touchbar = touchbar_init( PMSIView_GetCellUnit(wk->vwk), HEAPID_PMS_INPUT_VIEW );
+  wk->touchbar = _touchbar_init( PMSIView_GetCellUnit(wk->vwk), HEAPID_PMS_INPUT_VIEW );
+
+  // CLWK
+  _clwk_create( wk );
 
   return wk;
 }
@@ -155,6 +189,8 @@ void PMSIV_MENU_Delete( PMSIV_MENU* wk )
 
   // タスクメニュー リソース開放
   APP_TASKMENU_RES_Delete( wk->menu_res );
+
+  _clwk_delete( wk );
 
   GFL_MSG_Delete( wk->msgman );
 
@@ -189,10 +225,14 @@ void PMSIV_MENU_Clear( PMSIV_MENU* wk )
       HOSAKA_Printf("dell win[%d] \n",i);
     }
   }
+
+  // CLWK
+  for( i=0; i<MENU_CLWKICON_MAX; i++ )
+  {
+    GFL_CLACT_WK_SetDrawEnable( wk->clwk_icon[i], FALSE );
+  }
  
   GFL_BG_LoadScreenReq( FRM_MAIN_TASKMENU );
-  
-  HOSAKA_Printf("PMSIV_MENU_Clear\n");
 }
 
 //-----------------------------------------------------------------------------
@@ -212,21 +252,12 @@ void PMSIV_MENU_SetupEdit( PMSIV_MENU* wk )
     
   for( i=0; i<TASKMENU_WIN_EDIT_MAX; i++ )
   {
-    if( wk->menu_item[i].str != NULL )
-    {
-      GFL_STR_DeleteBuffer( wk->menu_item[i].str );
-      wk->menu_item[i].str = NULL;
-    }
+    GF_ASSERT( wk->menu_item[i].str == NULL ); 
+    GF_ASSERT( wk->menu_win[i] == NULL );
 
 		wk->menu_item[i].str			= GFL_MSG_CreateString( wk->msgman, str_decide + i );
 		wk->menu_item[i].msgColor	= APP_TASKMENU_ITEM_MSGCOLOR;
 		wk->menu_item[i].type			= APP_TASKMENU_WIN_TYPE_NORMAL + (i==TASKMENU_WIN_EDIT_CANCEL);
-
-    if( wk->menu_win[i] != NULL )
-    {
-      APP_TASKMENU_WIN_Delete( wk->menu_win[i] );
-      wk->menu_win[i] = NULL;
-    }
 
     wk->menu_win[i] = APP_TASKMENU_WIN_Create( wk->menu_res, &wk->menu_item[i], 
         TASKMENU_WIN_EDIT_X,
@@ -238,6 +269,17 @@ void PMSIV_MENU_SetupEdit( PMSIV_MENU* wk )
   }
 
   GFL_BG_LoadScreenReq( FRM_MAIN_TASKMENU );
+
+  // CLWK
+  GFL_CLACT_WK_SetDrawEnable( wk->clwk_icon[ MENU_CLWKICON_L ], TRUE );
+  GFL_CLACT_WK_SetDrawEnable( wk->clwk_icon[ MENU_CLWKICON_EDIT_MAIL ], TRUE );
+  GFL_CLACT_WK_SetDrawEnable( wk->clwk_icon[ MENU_CLWKICON_EDIT_BTL_READY ], TRUE );
+  GFL_CLACT_WK_SetDrawEnable( wk->clwk_icon[ MENU_CLWKICON_EDIT_BTL_WIN ], TRUE );
+  GFL_CLACT_WK_SetDrawEnable( wk->clwk_icon[ MENU_CLWKICON_EDIT_BTL_LOST ], TRUE );
+  GFL_CLACT_WK_SetDrawEnable( wk->clwk_icon[ MENU_CLWKICON_EDIT_UNION ], TRUE );
+  GFL_CLACT_WK_SetDrawEnable( wk->clwk_icon[ MENU_CLWKICON_R ], TRUE );
+  
+  PMSIV_MENU_UpdateEditIcon( wk );
 
   HOSAKA_Printf("PMSIV_MENU_SetupEdit\n");
 }
@@ -253,44 +295,52 @@ void PMSIV_MENU_SetupEdit( PMSIV_MENU* wk )
 //-----------------------------------------------------------------------------
 void PMSIV_MENU_SetupCategory( PMSIV_MENU* wk )
 {
-  int i;
-    
   PMSIV_MENU_Clear( wk );
+  
+  GFL_CLACT_WK_SetDrawEnable( wk->clwk_icon[ MENU_CLWKICON_CATEGORY_CHANGE ], TRUE );
 	  
   if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_GROUP )
 	{
-    // グループはメニューなしなので何もせず抜ける
-    return;
+    _setup_category_group( wk );
   }
-
-  for( i=0; i<TASKMENU_WIN_INITIAL_MAX; i++ )
+  else
   {
-    if( wk->menu_item[i].str != NULL )
-    {
-      GFL_STR_DeleteBuffer( wk->menu_item[i].str );
-      wk->menu_item[i].str = NULL;
-    }
+    _setup_category_initial( wk );
+  }
+}
 
-		wk->menu_item[i].str			= GFL_MSG_CreateString( wk->msgman, select01_01 + i );
-		wk->menu_item[i].msgColor	= APP_TASKMENU_ITEM_MSGCOLOR;
-		wk->menu_item[i].type			= APP_TASKMENU_WIN_TYPE_NORMAL + (i==TASKMENU_WIN_INITIAL_CANCEL);
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  エディットモードのアイコンを更新
+ *
+ *	@param	PMSIV_MENU* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void PMSIV_MENU_UpdateEditIcon( PMSIV_MENU* wk )
+{
+  static const u8 iconIdx[PMS_TYPE_MAX] = 
+  {
+    MENU_CLWKICON_EDIT_MAIL,
+    MENU_CLWKICON_EDIT_BTL_READY,
+    MENU_CLWKICON_EDIT_BTL_WIN,
+    MENU_CLWKICON_EDIT_BTL_LOST,
+    MENU_CLWKICON_EDIT_UNION,
+  };
+  
+  int i;
+  enum PMS_TYPE type;
 
-    if( wk->menu_win[i] != NULL )
-    {
-      APP_TASKMENU_WIN_Delete( wk->menu_win[i] );
-      wk->menu_win[i] = NULL;
-    }
+  type = PMSI_GetSentenceType( wk->mwk );
 
-    wk->menu_win[i] = APP_TASKMENU_WIN_Create( wk->menu_res, &wk->menu_item[i], 
-        TASKMENU_WIN_INITIAL_X + TASKMENU_WIN_INITIAL_W * i,
-        TASKMENU_WIN_INITIAL_Y, 
-        TASKMENU_WIN_INITIAL_W,
-        HEAPID_PMS_INPUT_VIEW );
+  for( i=0; i<PMS_TYPE_MAX; i++ )
+  {
+    BOOL is_on = ( i == type );
+
+    _clwk_setanm( wk, iconIdx[i], is_on );
   }
 
-  GFL_BG_LoadScreenReq( FRM_MAIN_TASKMENU );
-
-  HOSAKA_Printf("PMSIV_MENU_SetupCategory\n");
 }
 
 //=============================================================================
@@ -298,6 +348,115 @@ void PMSIV_MENU_SetupCategory( PMSIV_MENU* wk )
  *								static関数
  */
 //=============================================================================
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  CLWK 生成
+ *
+ *	@param	PMSIV_MENU* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _clwk_create( PMSIV_MENU* wk )
+{
+
+  int i;
+  ARCHANDLE* p_handle;
+
+	p_handle = GFL_ARC_OpenDataHandle( ARCID_PMSI_GRAPHIC, HEAPID_PMS_INPUT_VIEW );
+
+  wk->resCell.pltIdx = GFL_CLGRP_PLTT_Register( p_handle, NARC_pmsi_pms2_obj_main_NCLR, CLSYS_DRAW_MAIN,
+      0x20*PALNUM_OBJ_M_MENU, HEAPID_PMS_INPUT_VIEW );
+
+  wk->resCell.ncgIdx = GFL_CLGRP_CGR_Register( p_handle, NARC_pmsi_pms2_obj_main_NCGR, FALSE, CLSYS_DRAW_MAIN, HEAPID_PMS_INPUT_VIEW );
+  wk->resCell.anmIdx = GFL_CLGRP_CELLANIM_Register( p_handle, NARC_pmsi_pms2_obj_main_NCER, NARC_pmsi_pms2_obj_main_NANR, HEAPID_PMS_INPUT_VIEW );
+	
+  GFL_ARC_CloseDataHandle( p_handle );
+
+  for( i=0; i<MENU_CLWKICON_MAX; i++ )
+  {
+    s16 px, py;
+
+    px = MENU_CLWKICON_BASE_X + MENU_CLWKICON_OFS_X * i;
+    py = MENU_CLWKICON_BASE_Y;
+
+    // カテゴリチェンジボタンは例外
+    if( i == MENU_CLWKICON_CATEGORY_CHANGE )
+    {
+      px = MENU_CLWKICON_BASE_X;
+    }
+
+    wk->clwk_icon[i] = PMSIView_AddActor( wk->vwk, &wk->resCell, 
+        px, py, 0, NNS_G2D_VRAM_TYPE_2DMAIN );
+  
+    _clwk_setanm( wk, i, FALSE );
+    GFL_CLACT_WK_SetDrawEnable( wk->clwk_icon[i], FALSE );
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  CLWK 開放
+ *
+ *	@param	PMSIV_MENU* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _clwk_delete( PMSIV_MENU* wk )
+{
+  // リソース
+  GFL_CLGRP_PLTT_Release( wk->resCell.pltIdx );
+	GFL_CLGRP_CGR_Release( wk->resCell.ncgIdx );
+	GFL_CLGRP_CELLANIM_Release( wk->resCell.anmIdx );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アイコンのアニメシーケンスを取得
+ *
+ *	@param	iconIdx   アニメーションIDX
+ *	@param	is_on     TRUE:ONアニメ, FALSE:OFFアニメ
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _clwk_setanm( PMSIV_MENU* wk, MENU_CLWKICON iconIdx, BOOL is_on )
+{
+  static const u8 anmIdx[ MENU_CLWKICON_MAX ][2] = 
+  {
+    {
+      NANR_pms2_obj_main_hidari, NANR_pms2_obj_main_hidari_tp,
+    },
+    {
+      NANR_pms2_obj_main_mail_off, NANR_pms2_obj_main_mail_on,
+    },
+    {
+      NANR_pms2_obj_main_sentoumae_off, NANR_pms2_obj_main_sentoumae_on,
+    },
+    {
+      NANR_pms2_obj_main_win_off, NANR_pms2_obj_main_win_on,
+    },
+    {
+      NANR_pms2_obj_main_lose_off, NANR_pms2_obj_main_lose_on,
+    },
+    {
+      NANR_pms2_obj_main_yunion_off, NANR_pms2_obj_main_yunion_on,
+    },
+    {
+      NANR_pms2_obj_main_migi, NANR_pms2_obj_main_migi_tp,
+    },
+    {
+      NANR_pms2_obj_main_change_off, NANR_pms2_obj_main_change_on,
+    },
+  };
+
+  GF_ASSERT( iconIdx < MENU_CLWKICON_MAX );
+    
+  GFL_CLACT_WK_SetAnmSeq( wk->clwk_icon[ iconIdx ], anmIdx[ iconIdx ][ is_on ] );
+}
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  タッチバーの設定
@@ -308,7 +467,7 @@ void PMSIV_MENU_SetupCategory( PMSIV_MENU* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static TOUCHBAR_WORK* touchbar_init( GFL_CLUNIT* clunit, HEAPID heap_id )
+static TOUCHBAR_WORK* _touchbar_init( GFL_CLUNIT* clunit, HEAPID heap_id )
 {
   TOUCHBAR_WORK* wk;
 
@@ -343,4 +502,52 @@ static TOUCHBAR_WORK* touchbar_init( GFL_CLUNIT* clunit, HEAPID heap_id )
   return wk;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  グループモード
+ *
+ *	@param	PMSIV_MENU* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _setup_category_group( PMSIV_MENU* wk )
+{
+
+  HOSAKA_Printf(" _setup_category_group \n");
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  イニシャルモード
+ *
+ *	@param	PMSIV_MENU* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _setup_category_initial( PMSIV_MENU* wk )
+{
+  int i;
+    
+  for( i=0; i<TASKMENU_WIN_INITIAL_MAX; i++ )
+  {
+    GF_ASSERT( wk->menu_item[i].str == NULL ); 
+    GF_ASSERT( wk->menu_win[i] == NULL );
+
+		wk->menu_item[i].str			= GFL_MSG_CreateString( wk->msgman, select01_01 + i );
+		wk->menu_item[i].msgColor	= APP_TASKMENU_ITEM_MSGCOLOR;
+		wk->menu_item[i].type			= APP_TASKMENU_WIN_TYPE_NORMAL + (i==TASKMENU_WIN_INITIAL_CANCEL);
+
+    wk->menu_win[i] = APP_TASKMENU_WIN_Create( wk->menu_res, &wk->menu_item[i], 
+        TASKMENU_WIN_INITIAL_X + TASKMENU_WIN_INITIAL_W * i,
+        TASKMENU_WIN_INITIAL_Y, 
+        TASKMENU_WIN_INITIAL_W,
+        HEAPID_PMS_INPUT_VIEW );
+  }
+
+  GFL_BG_LoadScreenReq( FRM_MAIN_TASKMENU );
+
+  HOSAKA_Printf(" _setup_category_initial \n");
+}
 

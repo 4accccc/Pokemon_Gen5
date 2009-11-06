@@ -734,6 +734,7 @@ static void Cmd_UpdateEditArea( GFL_TCB *tcb, void* wk_adrs )
 
 	PMSIV_EDIT_UpdateEditArea( vwk->edit_wk );
 	PMSIV_EDIT_MoveCursor( vwk->edit_wk, PMSI_GetEditAreaCursorPos( wk->mwk ) );
+  PMSIV_MENU_UpdateEditIcon( vwk->menu_wk );
 
 	DeleteCommand( wk );
 }
@@ -1592,11 +1593,6 @@ int PMSIView_WaitYesNo(PMS_INPUT_VIEW* wk)
 	return PMSIV_EDIT_WaitYesNoBtn(wk->edit_wk);
 }
 
-
-
-
-
-
 //==============================================================================================
 // ‰º¿‚¯ƒ‚ƒWƒ…[ƒ‹‚Ö‚Ìî•ñ’ñ‹Ÿ
 //==============================================================================================
@@ -1615,17 +1611,6 @@ PRINT_QUE* PMSIView_GetPrintQue( PMS_INPUT_VIEW* vwk )
 {
   return vwk->print_que;
 }
-
-/*
-NNSG2dImageProxy* PMSIView_GetObjImageProxy( PMS_INPUT_VIEW* vwk, int lcd )
-{
-	return &(vwk->obj_image_proxy[lcd]);
-}
-NNSG2dImagePaletteProxy* PMSIView_GetObjPaletteProxy( PMS_INPUT_VIEW* vwk, int lcd )
-{
-	return &(vwk->obj_pltt_proxy[lcd]);
-}
-*/
 
 void PMSIView_SetupDefaultActHeader( PMS_INPUT_VIEW* vwk, PMSIV_CELL_RES* header, u32 lcd, u32 bgpri )
 {

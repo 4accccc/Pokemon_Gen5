@@ -469,6 +469,7 @@ u32 PMSDAT_GetSentenceIdMax( u32 sentence_type )
 {
 	if( sentence_type < NELEMS(SentenceDatID) )
 	{
+    /// @TODO マジックナンバー
 		// とりあえず現状は全タイプ20個になっているので...
 		return 20;
 	}

@@ -73,12 +73,20 @@ enum {
 	
   PALNUM_MAIN_BUTTON = 0x0a, // @TODO 使ってないので消す
 
-  PALNUM_OBJ_M_COMMON  = 0x0, ///< 3本使用
+};
+//------------------------------------------------
+/**
+	* OBJパレット割り振り
+	*/ 
+//------------------------------------------------
+enum
+{ 
+  PALNUM_OBJ_M_COMMON   = 0x0, ///< 2本使用(旧OBJ)
+  PALNUM_OBJ_M_MENU     = 0x2, ///< 3本使用
 
-  PALNUM_OBJ_M_PMSDRAW = 0x5, ///< 5本使用
+  PALNUM_OBJ_M_PMSDRAW  = 0x5, ///< 5本使用
   PALNUM_OBJ_M_TOUCHBAR = 0xa, ///< 3本使用
 };
-
 
 //------------------------------------------------
 /**
@@ -321,6 +329,7 @@ extern void PMSIV_MENU_Delete( PMSIV_MENU* wk );
 extern void PMSIV_MENU_Clear( PMSIV_MENU* wk );
 extern void PMSIV_MENU_SetupEdit( PMSIV_MENU* wk );
 extern void PMSIV_MENU_SetupCategory( PMSIV_MENU* wk );
+extern void PMSIV_MENU_UpdateEditIcon( PMSIV_MENU* wk );
 
 
 #endif
