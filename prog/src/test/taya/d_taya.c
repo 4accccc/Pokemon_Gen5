@@ -469,7 +469,6 @@ static GFL_PROC_RESULT DebugTayaMainProcMain( GFL_PROC * proc, int * seq, void *
           }
         }
       }
-
     }
     break;
 
@@ -901,16 +900,18 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
       BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
 
       wk->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );  ///< プレイヤーのパーティ
-      wk->partyEnemy  = PokeParty_AllocPartyWork( HEAPID_CORE );  ///< プレイヤーのパーティ
+      wk->partyEnemy  = PokeParty_AllocPartyWork( HEAPID_CORE );  ///< 対戦相手パーティ
 
       #ifdef DEBUG_ONLY_FOR_taya
-        setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_GYARADOSU,   MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA,
-                  MONSNO_RAITYUU, MONSNO_KEKKINGU, 0 );
-        setup_party( HEAPID_CORE, wk->partyEnemy, MONSNO_MANYUURA,  MONSNO_AABOKKU, MONSNO_YADOKINGU, MONSNO_REKKUUZA, 0 );
+        setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_GYARADOSU,   MONSNO_PIKATYUU, 0 );
+//        , MONSNO_GURAADON, MONSNO_KAIOOGA,
+//                  MONSNO_RAITYUU, MONSNO_KEKKINGU, 0 );
+        setup_party( HEAPID_CORE, wk->partyEnemy, MONSNO_MANYUURA,  MONSNO_AABOKKU, 0 );//, MONSNO_YADOKINGU, MONSNO_REKKUUZA, 0 );
         {
           POKEMON_PARAM* pp = PokeParty_GetMemberPointer( wk->partyPlayer, 0 );
           PP_Put( pp, ID_PARA_exp, 150 );
           PP_Put( pp, ID_PARA_item, ITEM_TABENOKOSI );
+          PP_SetWazaPos( pp, WAZANO_NAKIGOE, 1 );
           PP_Renew( pp );
 
           pp = PokeParty_GetMemberPointer( wk->partyEnemy, 0 );

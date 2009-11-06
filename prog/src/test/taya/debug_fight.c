@@ -32,6 +32,7 @@
 #include "gamesystem\game_data.h"
 #include "gamesystem\btl_setup.h"
 #include "savedata\save_tbl.h"
+#include "savedata\config.h"
 #include "debug\debug_makepoke.h"
 #include "poke_tool\monsno_def.h"
 #include "battle\battle.h"
@@ -132,6 +133,7 @@ typedef enum {
   SELITEM_BTL_TYPE,
   SELITEM_SAVE,
   SELITEM_LOAD,
+  SELITEM_MSGSPEED,
 
   SELITEM_MAX,
   SELITEM_NULL = SELITEM_MAX,
@@ -166,6 +168,8 @@ enum {
   LAYOUT_PARAM_LINE_Y3 = 128 + LAYOUT_PARAM_LINE_HEIGHT*2,
   LAYOUT_PARAM_LINE_Y4 = 128 + LAYOUT_PARAM_LINE_HEIGHT*3,
 
+  LAYOUT_LABEL_BTLTYPE_X  = 8,
+  LAYOUT_LABEL_MSGSPEED_X = 144,
 
 };
 /*
@@ -180,9 +184,12 @@ static const struct {
   { DBGF_LABEL_ENEMY1,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LABEL_LINE_Y },
   { DBGF_LABEL_FRIEND2, LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LABEL_LINE_Y },
   { DBGF_LABEL_ENEMY2,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LABEL_LINE_Y },
-  { DBGF_LABEL_TYPE,    8, LAYOUT_PARAM_LINE_Y1 },
+  { DBGF_LABEL_TYPE,    LAYOUT_LABEL_BTLTYPE_X,  LAYOUT_PARAM_LINE_Y1 },
+  { DBGF_LABEL_MSGSPD,  LAYOUT_LABEL_MSGSPEED_X, LAYOUT_PARAM_LINE_Y1 },
+
   { DBGF_LABEL_WEATHER, 8, LAYOUT_PARAM_LINE_Y2 },
   { DBGF_LABEL_LAND,    8, LAYOUT_PARAM_LINE_Y3 },
+
 };
 /*
  *  アイテムレイアウト
@@ -220,7 +227,8 @@ static const struct {
   { SELITEM_POKE_ENEMY2_5,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y5 },
   { SELITEM_POKE_ENEMY2_6,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y6 },
 
-  { SELITEM_BTL_TYPE,   38, LAYOUT_PARAM_LINE_Y1 },
+  { SELITEM_BTL_TYPE,   LAYOUT_LABEL_BTLTYPE_X  +30, LAYOUT_PARAM_LINE_Y1 },
+  { SELITEM_MSGSPEED,   LAYOUT_LABEL_MSGSPEED_X +52, LAYOUT_PARAM_LINE_Y1 },
 
   { SELITEM_LOAD,        8, LAYOUT_PARAM_LINE_Y4 },
   { SELITEM_SAVE,       38, LAYOUT_PARAM_LINE_Y4 },
@@ -264,7 +272,8 @@ typedef BOOL (*pMainProc)( DEBUG_BTL_WORK*, int* );
 typedef struct {
   u8  btlType;
   u8  weather;
-  u16 dmy;
+  u8  msgSpeed;
+  u8  dmy;
 
   u8  pokeParaArea[ POKEPARA_SAVEAREA_SIZE ];
 
@@ -316,6 +325,7 @@ static void savework_SetParty( DEBUG_BTL_SAVEDATA* saveData, DEBUG_BTL_WORK* wk 
 static void setMainProc( DEBUG_BTL_WORK* wk, pMainProc nextProc );
 static inline BOOL selItem_IsPoke( u16 itemID );
 static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue );
+static int loopValue( int value, int min, int max );
 static BOOL btltype_IsComm( BtlType type );
 static BOOL btltype_IsMulti( BtlType type );
 static BOOL btltype_IsWild( BtlType type );
@@ -323,6 +333,7 @@ static BtlRule btltype_GetRule( BtlType type );
 static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect );
 static void printItem_Poke( DEBUG_BTL_WORK* wk, u16 itemID, STRBUF* buf );
 static void printItem_BtlType( DEBUG_BTL_WORK* wk, STRBUF* buf );
+static void printItem_MsgSpeed( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_DirectStr( DEBUG_BTL_WORK* wk, u16 strID, STRBUF* buf );
 static BOOL mainProc_Setup( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq );
@@ -612,8 +623,9 @@ static void savework_Init( DEBUG_BTL_SAVEDATA* saveData )
 
   POKEMON_PARAM* pp;
 
-  saveData->btlType = BTLTYPE_SINGLE_WILD;
-  saveData->weather = BTL_WEATHER_NONE;
+  saveData->btlType  = BTLTYPE_SINGLE_WILD;
+  saveData->weather  = BTL_WEATHER_NONE;
+  saveData->msgSpeed = MSGSPEED_FAST;
 
   for(i=0; i<POKEPARA_MAX; ++i){
     pp = savework_GetPokeParaArea( saveData, i );
@@ -723,21 +735,44 @@ static inline BOOL selItem_IsPoke( u16 itemID )
 static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
 {
   DEBUG_BTL_SAVEDATA* save = &wk->saveData;
-  int val;
 
   switch( itemID ){
   case SELITEM_BTL_TYPE:
-    val = save->btlType + incValue;
-    if( val >= BTLTYPE_MAX ){
-      val = 0;
-    }
-    else if( val < 0 ){
-      val = BTLTYPE_MAX - 1;
-    }
-    save->btlType = val;
+    save->btlType = loopValue( save->btlType+incValue, 0, BTLTYPE_MAX-1 );
     break;
+
+  case SELITEM_MSGSPEED:
+    save->msgSpeed = loopValue( save->msgSpeed+incValue, 0, MSGSPEED_FAST_EX );
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * ループする設定値計算
+ *
+ * @param   value
+ * @param   min
+ * @param   max
+ *
+ * @retval  int
+ */
+//----------------------------------------------------------------------------------
+static int loopValue( int value, int min, int max )
+{
+  if( min > max ){
+    int tmp = min;
+    min = max;
+    max = tmp;
+  }
+
+  if( value > max ){
+    value = min;
+  }
+  else if( value < min ){
+    value = max;
+  }
+  return value;
+}
+
 //----------------------------------------------------------------------------------
 /**
  * 通信を行う必要のあるバトルタイプか判定
@@ -807,8 +842,10 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
       }else{
         switch( itemID ){
         case SELITEM_BTL_TYPE:  printItem_BtlType( wk, wk->strbuf ); break;
+        case SELITEM_MSGSPEED:  printItem_MsgSpeed( wk, wk->strbuf ); break;
         case SELITEM_SAVE:      printItem_DirectStr( wk, DBGF_ITEM_SAVE, wk->strbuf ); break;
         case SELITEM_LOAD:      printItem_DirectStr( wk, DBGF_ITEM_LOAD, wk->strbuf ); break;
+
         default:
           GFL_STR_ClearBuffer( wk->strbuf );
           break;
@@ -833,6 +870,10 @@ static void printItem_Poke( DEBUG_BTL_WORK* wk, u16 itemID, STRBUF* buf )
 static void printItem_BtlType( DEBUG_BTL_WORK* wk, STRBUF* buf )
 {
   GFL_MSG_GetString( wk->mm, DBGF_ITEM_TYPE01+wk->saveData.btlType, buf );
+}
+static void printItem_MsgSpeed( DEBUG_BTL_WORK* wk, STRBUF* buf )
+{
+  GFL_MSG_GetString( wk->mm, DBGF_ITEM_MSGSPD_SLOW+wk->saveData.msgSpeed, buf );
 }
 static void printItem_DirectStr( DEBUG_BTL_WORK* wk, u16 strID, STRBUF* buf )
 {
@@ -908,14 +949,15 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_POKE_FRIEND_3, SELITEM_POKE_FRIEND_2, SELITEM_POKE_FRIEND_4, SELITEM_POKE_ENEMY2_3, SELITEM_POKE_ENEMY1_3 },
       { SELITEM_POKE_FRIEND_4, SELITEM_POKE_FRIEND_3, SELITEM_POKE_FRIEND_5, SELITEM_POKE_ENEMY2_4, SELITEM_POKE_ENEMY1_4 },
       { SELITEM_POKE_FRIEND_5, SELITEM_POKE_FRIEND_4, SELITEM_POKE_FRIEND_6, SELITEM_POKE_ENEMY2_5, SELITEM_POKE_ENEMY1_5 },
-      { SELITEM_POKE_FRIEND_6, SELITEM_POKE_FRIEND_5, SELITEM_BTL_TYPE,      SELITEM_POKE_ENEMY2_6, SELITEM_POKE_ENEMY1_6 },
+      { SELITEM_POKE_FRIEND_6, SELITEM_POKE_FRIEND_5, SELITEM_MSGSPEED,      SELITEM_POKE_ENEMY2_6, SELITEM_POKE_ENEMY1_6 },
       { SELITEM_POKE_ENEMY2_1, SELITEM_SAVE,          SELITEM_POKE_ENEMY2_2, SELITEM_POKE_SELF_1, SELITEM_POKE_FRIEND_1 },
       { SELITEM_POKE_ENEMY2_2, SELITEM_POKE_ENEMY2_1, SELITEM_POKE_ENEMY2_3, SELITEM_POKE_SELF_2, SELITEM_POKE_FRIEND_2 },
       { SELITEM_POKE_ENEMY2_3, SELITEM_POKE_ENEMY2_2, SELITEM_POKE_ENEMY2_4, SELITEM_POKE_SELF_3, SELITEM_POKE_FRIEND_3 },
       { SELITEM_POKE_ENEMY2_4, SELITEM_POKE_ENEMY2_3, SELITEM_POKE_ENEMY2_5, SELITEM_POKE_SELF_4, SELITEM_POKE_FRIEND_4 },
       { SELITEM_POKE_ENEMY2_5, SELITEM_POKE_ENEMY2_4, SELITEM_POKE_ENEMY2_6, SELITEM_POKE_SELF_5, SELITEM_POKE_FRIEND_5 },
-      { SELITEM_POKE_ENEMY2_6, SELITEM_POKE_ENEMY2_5, SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_6, SELITEM_POKE_FRIEND_6 },
-      { SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_6,   SELITEM_LOAD,          SELITEM_NULL,        SELITEM_NULL, },
+      { SELITEM_POKE_ENEMY2_6, SELITEM_POKE_ENEMY2_5, SELITEM_MSGSPEED,      SELITEM_POKE_SELF_6, SELITEM_POKE_FRIEND_6 },
+      { SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_6,   SELITEM_LOAD,          SELITEM_MSGSPEED,    SELITEM_MSGSPEED, },
+      { SELITEM_MSGSPEED,      SELITEM_POKE_ENEMY2_6, SELITEM_SAVE,          SELITEM_BTL_TYPE,    SELITEM_BTL_TYPE },
       { SELITEM_SAVE,          SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_1,   SELITEM_LOAD,        SELITEM_LOAD },
       { SELITEM_LOAD,          SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_1,   SELITEM_SAVE,        SELITEM_SAVE },
     };
@@ -1052,6 +1094,10 @@ FS_EXTERN_OVERLAY(battle);
 
   switch( *seq ){
   case SEQ_INIT:
+    {
+      CONFIG* config = SaveData_GetConfig( GAMEDATA_GetSaveControlWork(wk->gameData) );
+      CONFIG_SetMsgSpeed( config, wk->saveData.msgSpeed );
+    }
     BATTLE_PARAM_Init( &wk->setupParam );
     savework_SetParty( &wk->saveData, wk );
 
