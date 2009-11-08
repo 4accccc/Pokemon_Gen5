@@ -267,6 +267,26 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/h03_a01_04.3dppack \
 	$(DIR_OUTPUT)/h03_a00_05.3dppack \
 	$(DIR_OUTPUT)/h03_a01_05.3dppack \
+	$(DIR_OUTPUT)/h04_a00_00.3dppack \
+	$(DIR_OUTPUT)/h04_a01_00.3dppack \
+	$(DIR_OUTPUT)/h04_a02_00.3dppack \
+	$(DIR_OUTPUT)/h04_a03_00.3dppack \
+	$(DIR_OUTPUT)/h04_a04_00.3dppack \
+	$(DIR_OUTPUT)/h04_a00_01.3dppack \
+	$(DIR_OUTPUT)/h04_a01_01.3dppack \
+	$(DIR_OUTPUT)/h04_a02_01.3dppack \
+	$(DIR_OUTPUT)/h04_a03_01.3dppack \
+	$(DIR_OUTPUT)/h04_a04_01.3dppack \
+	$(DIR_OUTPUT)/winter05_06.3dppack \
+	$(DIR_OUTPUT)/winter06_06.3dppack \
+	$(DIR_OUTPUT)/winter05_05.3dppack \
+	$(DIR_OUTPUT)/winter05_04.3dppack \
+	$(DIR_OUTPUT)/winter06_05.3dppack \
+	$(DIR_OUTPUT)/winter07_05.3dppack \
+	$(DIR_OUTPUT)/white12_04.3dppack \
+	$(DIR_OUTPUT)/white12_05.3dppack \
+	$(DIR_OUTPUT)/white13_04.3dppack \
+	$(DIR_OUTPUT)/white13_05.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_01_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_01.3dppack \
@@ -390,6 +410,40 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_dun0908_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0908_01_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0909_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun0801_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun1001_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun1001_01_00.3dppack \
+	$(DIR_OUTPUT)/m_dun1001_00_01.3dppack \
+	$(DIR_OUTPUT)/m_dun1001_01_01.3dppack \
+	$(DIR_OUTPUT)/m_dun1801_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun1801_00_01.3dppack \
+	$(DIR_OUTPUT)/m_dun1801_01_00.3dppack \
+	$(DIR_OUTPUT)/m_dun1801_01_01.3dppack \
+	$(DIR_OUTPUT)/m_dun1701_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun1701_01_00.3dppack \
+	$(DIR_OUTPUT)/m_dun1701_00_01.3dppack \
+	$(DIR_OUTPUT)/m_dun1701_01_01.3dppack \
+	$(DIR_OUTPUT)/m_dun1702_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun1702_01_00.3dppack \
+	$(DIR_OUTPUT)/m_dun1702_00_01.3dppack \
+	$(DIR_OUTPUT)/m_dun1702_01_01.3dppack \
+	$(DIR_OUTPUT)/m_dun1703_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun1703_01_00.3dppack \
+	$(DIR_OUTPUT)/m_dun1703_00_01.3dppack \
+	$(DIR_OUTPUT)/m_dun1703_01_01.3dppack \
+	$(DIR_OUTPUT)/m_dun1704_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun1704_01_00.3dppack \
+	$(DIR_OUTPUT)/m_dun1704_00_01.3dppack \
+	$(DIR_OUTPUT)/m_dun1704_01_01.3dppack \
+	$(DIR_OUTPUT)/m_dun1705_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun1901_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun1901_01_00.3dppack \
+	$(DIR_OUTPUT)/m_dun1901_00_01.3dppack \
+	$(DIR_OUTPUT)/m_dun1901_01_01.3dppack \
+	$(DIR_OUTPUT)/winter0701_00_00.3dppack \
+	$(DIR_OUTPUT)/winter0701_01_00.3dppack \
+	$(DIR_OUTPUT)/winter0701_00_01.3dppack \
+	$(DIR_OUTPUT)/winter0701_01_01.3dppack \
 	$(DIR_OUTPUT)/m_ruin01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_gate01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_pc01_00_00.3dppack \
@@ -516,6 +570,9 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_cabin01_01_00.3dppack \
 	$(DIR_OUTPUT)/m_ybuill01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_museum02_00_00.3dppack \
+	$(DIR_OUTPUT)/m_labo03_00_00.3dppack \
+	$(DIR_OUTPUT)/m_bar01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_gym0602_00_00.3dppack \
 	$(DIR_OUTPUT)/C3_00_00.ngpack \
 	$(DIR_OUTPUT)/C3_00_01.ngpack \
 	$(DIR_OUTPUT)/C3_01_00.ngpack \
