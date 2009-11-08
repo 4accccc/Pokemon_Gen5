@@ -1099,6 +1099,10 @@ BOX_MANAGER * BOX_DAT_InitManager( const HEAPID heapId , SAVE_CONTROL_WORK * sv)
 	BOX_MANAGER* pData;
 	pData = GFL_HEAP_AllocMemory( heapId , sizeof( BOX_MANAGER ) );
 	pData->sv = sv;
+  {
+    BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(pData);
+    BOXDAT_Init(boxData);
+  }
 	return pData;
 
 }

@@ -66,7 +66,49 @@ static const GFL_CLSYS_INIT fldmapdata_CLSYS_Init =
   16, 16,
 };
 
+//--------------------------------------------------------------
+///	セルアクター　初期化データ
+//--------------------------------------------------------------
+static const GFL_CLSYS_INIT _CLSYS_Init =
+{
+  0, 0,
+  0, 512,
+  GFL_CLSYS_OAMMAN_INTERVAL, 128-GFL_CLSYS_OAMMAN_INTERVAL,
+  GFL_CLSYS_OAMMAN_INTERVAL, 128-GFL_CLSYS_OAMMAN_INTERVAL, //通信アイコン部分
+  0,
+  5,
+  5,
+  5,
+  5,
+  16, 16,
+};
 
+
+static const GFL_DISP_VRAM vramBank = {
+  GX_VRAM_BG_64_E,				// メイン2DエンジンのBG
+  GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+  GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
+  GX_VRAM_SUB_BGEXTPLTT_32_H,		// サブ2DエンジンのBG拡張パレット
+  GX_VRAM_OBJ_16_G,				// メイン2DエンジンのOBJ
+  GX_VRAM_OBJEXTPLTT_NONE,			// メイン2DエンジンのOBJ拡張パレット
+  GX_VRAM_SUB_OBJ_128_D,			// サブ2DエンジンのOBJ
+  GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+  GX_VRAM_TEX_01_AB,				// テクスチャイメージスロット
+  GX_VRAM_TEXPLTT_0_F,			// テクスチャパレットスロット
+  GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
+  GX_OBJVRAMMODE_CHAR_1D_128K,		// サブOBJマッピングモード
+};
+
+
+void IRC_POKETRADE_DEMOCLACT_Create(POKEMON_TRADE_WORK* pWork)
+{
+    GFL_CLACT_SYS_Create(	&_CLSYS_Init, &vramBank, pWork->heapID );
+}
+
+void IRC_POKETRADE_CLACT_Create(POKEMON_TRADE_WORK* pWork)
+{
+    GFL_CLACT_SYS_Create(	&fldmapdata_CLSYS_Init, &vramBank, pWork->heapID );
+}
 
 //------------------------------------------------------------------
 /**
@@ -449,8 +491,8 @@ static u16 _GetScr(int x , int y, POKEMON_TRADE_WORK* pWork)
 {
   int x2=x;
 
-  if(x >= _SRCMAX){
-    x2 = x - _SRCMAX;
+  if(x >= pWork->_SRCMAX){
+    x2 = x - pWork->_SRCMAX;
   }
   if(x2 < _TEMOTITRAY_SCR_MAX){
     return pWork->scrTemoti[ 18+(y * 32) + x2 ];
@@ -511,7 +553,7 @@ static void IRC_POKETRADE_TrayInit(POKEMON_TRADE_WORK* pWork,int subchar)
     }
   }
 
-  pWork->BoxScrollNum = _DOTMAX - 80;
+  pWork->BoxScrollNum = pWork->_DOTMAX + _STARTDOT_OFFSET;
 
   IRC_POKETRADE_TrayDisp(pWork);
 //  IRC_POKETRADE_TrayDisp(pWork);
@@ -544,11 +586,11 @@ void IRC_POKETRADE_SendVramBoxNameChar(POKEMON_TRADE_WORK* pWork)
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
                                 0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
 
-  for(i=0;i<BOX_MAX_TRAY+1;i++){
+  for(i=0;i< pWork->BOX_TRAY_MAX+1;i++){
     if(pWork->BoxNameWin[i]==NULL){
       pWork->BoxNameWin[i] = GFL_BMPWIN_Create(GFL_BG_FRAME1_S, (i % 3) * 10 , (i / 3) * 2, 10, 2, _BUTTON_MSG_PAL,GFL_BMP_CHRAREA_GET_B);
     }
-    if(i == BOX_MAX_TRAY){
+    if(i == pWork->BOX_TRAY_MAX){
       GFL_MSG_GetString(  pWork->pMsgData, POKETRADE_STR_19, pWork->pStrBuf );
     }
     else{
@@ -604,25 +646,25 @@ void IRC_POKETRADE_SendScreenBoxNameChar(POKEMON_TRADE_WORK* pWork)
 
   
   if(pWork->BoxScrollNum < _TEMOTITRAY_MAX){  //手持ち状態である
-    bgscr = BOX_MAX_TRAY;
+    bgscr = pWork->BOX_TRAY_MAX;
   }
   else{
     bgscr = (pWork->BoxScrollNum - _TEMOTITRAY_MAX) / _BOXTRAY_MAX;
   }
   for(disp = 0; disp < 3; disp++){ //三つのBOXを表示
     i = bgscr+disp;
-    if(i > BOX_MAX_TRAY){
-      i = i-BOX_MAX_TRAY-1;
+    if(i > pWork->BOX_TRAY_MAX){
+      i = i - pWork->BOX_TRAY_MAX - 1;
     }
     else if(i < 0){
-      i = i + BOX_MAX_TRAY + 1;
+      i = i + pWork->BOX_TRAY_MAX + 1;
     }
     {
       //自分の基準値
-      if(i==BOX_MAX_TRAY){
-        if(pos > (_SRCMAX - pos)){
-          spos = _SRCMAX - pos;
-          pos = pos - _SRCMAX;
+      if(i == pWork->BOX_TRAY_MAX){
+        if(pos > (pWork->_SRCMAX - pos)){
+          spos = pWork->_SRCMAX - pos;
+          pos = pos - pWork->_SRCMAX;
         }
         else{
           spos = 0 - pos;
@@ -847,7 +889,7 @@ static void _calcPokeIconPos(int line,int index, GFL_CLACTPOS* pos)
 static POKEMON_PASO_PARAM* _getPokeDataAddress(BOX_MANAGER* boxData , int lineno, int verticalindex , POKEMON_TRADE_WORK* pWork, BOOL* bTemoti)
 {
   if(lineno >= HAND_HORIZONTAL_NUM){
-    int tray = IRC_TRADE_LINE2TRAY(lineno);
+    int tray = IRC_TRADE_LINE2TRAY(lineno,pWork);
     int index = IRC_TRADE_LINE2POKEINDEX(lineno, verticalindex);
     *bTemoti = FALSE;
     return IRCPOKEMONTRADE_GetPokeDataAddress(boxData, tray, index, pWork);
@@ -856,7 +898,7 @@ static POKEMON_PASO_PARAM* _getPokeDataAddress(BOX_MANAGER* boxData , int lineno
     if(verticalindex <3){
       int index = lineno + verticalindex * 2;
       *bTemoti = TRUE;
-      return IRCPOKEMONTRADE_GetPokeDataAddress(boxData, BOX_MAX_TRAY, index, pWork);
+      return IRCPOKEMONTRADE_GetPokeDataAddress(boxData, pWork->BOX_TRAY_MAX, index, pWork);
 		}
 	}
 	return NULL;
@@ -1054,13 +1096,13 @@ BOOL POKETRADE_IsMainCursorDispIn(POKEMON_TRADE_WORK* pWork,int* line)
   int lineend = linest + 10;
 
   *line = linest+2;
-  if(*line > TRADEBOX_LINEMAX){
-    *line = linest + 2 - TRADEBOX_LINEMAX;
+  if(*line > pWork->TRADEBOX_LINEMAX){
+    *line = linest + 2 - pWork->TRADEBOX_LINEMAX;
   }
 
   
-  if(lineend > TRADEBOX_LINEMAX){
-    if(linest <= pWork->MainObjCursorLine && pWork->MainObjCursorLine <= TRADEBOX_LINEMAX){
+  if(lineend > pWork->TRADEBOX_LINEMAX){
+    if(linest <= pWork->MainObjCursorLine && pWork->MainObjCursorLine <= pWork->TRADEBOX_LINEMAX){
       return TRUE;
     }
     else if(0 <= pWork->MainObjCursorLine && pWork->MainObjCursorLine <= lineend){
@@ -1107,7 +1149,7 @@ void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork 
       
       _createPokeIconResource(pWork, boxData,line, k );  //アイコン表示
       line++;
-      if(line >= TRADEBOX_LINEMAX){
+      if(line >= pWork->TRADEBOX_LINEMAX){
         line=0;
       }
     }
@@ -1133,9 +1175,9 @@ static void IRC_POKETRADE_PokeIcomPosSet(POKEMON_TRADE_WORK* pWork)
   for(m = 0; m < _LING_LINENO_MAX; m++,line++){
     no = POKETRADE_Line2RingLineIconGet(pWork->oldLine + m);
 
-    if(line >= TRADEBOX_LINEMAX){
-      line = line - TRADEBOX_LINEMAX;
-      subnum = _DOTMAX;
+    if(line >= pWork->TRADEBOX_LINEMAX){
+      line = line - pWork->TRADEBOX_LINEMAX;
+      subnum = pWork->_DOTMAX;
     }
 
     for(i=0;i<BOX_VERTICAL_NUM;i++){
@@ -1260,7 +1302,7 @@ GFL_CLWK* IRC_POKETRADE_GetCLACT( POKEMON_TRADE_WORK* pWork , int x, int y, int*
               return NULL;
             }
             if(-1 != IRC_TRADE_LINE2POKEINDEX(line2, i)){
-              *trayno = IRC_TRADE_LINE2TRAY(line2);
+              *trayno = IRC_TRADE_LINE2TRAY(line2,pWork);
               *pokeindex = IRC_TRADE_LINE2POKEINDEX(line2, i);
             }
             else{
@@ -1369,20 +1411,6 @@ void IRC_POKETRADE_SetSubdispGraphicDemo(POKEMON_TRADE_WORK* pWork,int type)
 void IRC_POKETRADE_SetMainDispGraphic(POKEMON_TRADE_WORK* pWork)
 {
   {
-    static const GFL_DISP_VRAM vramBank = {
-      GX_VRAM_BG_64_E,				// メイン2DエンジンのBG
-      GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-      GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
-      GX_VRAM_SUB_BGEXTPLTT_32_H,		// サブ2DエンジンのBG拡張パレット
-      GX_VRAM_OBJ_16_G,				// メイン2DエンジンのOBJ
-      GX_VRAM_OBJEXTPLTT_NONE,			// メイン2DエンジンのOBJ拡張パレット
-      GX_VRAM_SUB_OBJ_128_D,			// サブ2DエンジンのOBJ
-      GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-      GX_VRAM_TEX_01_AB,				// テクスチャイメージスロット
-      GX_VRAM_TEXPLTT_0_F,			// テクスチャパレットスロット
-      GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
-      GX_OBJVRAMMODE_CHAR_1D_128K,		// サブOBJマッピングモード
-    };
     GFL_DISP_SetBank( &vramBank );
     GFL_CLACT_SYS_Create(	&fldmapdata_CLSYS_Init, &vramBank, pWork->heapID );
   }
@@ -1452,7 +1480,7 @@ void IRC_POKETRADE_SetMainVram(POKEMON_TRADE_WORK* pWork)
 
   GFL_BG_SetBGControl3D( 0 );
   GFL_BG_SetVisible( GFL_BG_FRAME0_M , TRUE );
-
+  GFL_BG_SetPriority( GFL_BG_FRAME0_M , 2 );
 }
 
 
@@ -1531,9 +1559,9 @@ void IRC_POKETRADE_3DGraphicSetUp( POKEMON_TRADE_WORK* pWork )
     static  const GXRgb edge_color_table[8]=
     { GX_RGB( 0, 0, 0 ), GX_RGB( 0, 0, 0 ), 0, 0, 0, 0, 0, 0 };
     GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K,
-                  0, pWork->heapID, Graphic_3d_SetUp );
+                  0, GetHeapLowID(pWork->heapID), Graphic_3d_SetUp );
 
-    pWork->pCamera   = GFL_G3D_CAMERA_CreateDefault( &cam_pos, &cam_target, pWork->heapID );
+    pWork->pCamera   = GFL_G3D_CAMERA_CreateDefault( &cam_pos, &cam_target, GetHeapLowID(pWork->heapID) );
 
     GFL_G3D_CAMERA_Switching( pWork->pCamera );
     //エッジマーキングカラーセット

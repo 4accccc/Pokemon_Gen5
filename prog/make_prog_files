@@ -706,6 +706,7 @@ SRCS_OVERLAY_IRCBATTLEMATCH = net_app/irc_match/ircbattlematch.c \
 SRCS_OVERLAY_POKEMON_TRADE = net_app/poke_trade/ircpokemontrade.c \
 								net_app/poke_trade/ircpokemontrade_step.c \
 								net_app/poke_trade/pokemontrade_ircdemo.c \
+								net_app/poke_trade/pokemontrade_save.c \
 								net_app/poke_trade/ircpoketrade_3d.c \
 								net_app/poke_trade/ircpoketrade_gra.c
 

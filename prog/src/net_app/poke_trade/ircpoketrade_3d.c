@@ -595,9 +595,9 @@ void IRC_POKETRADEDEMO_Init( POKEMON_TRADE_WORK* pWork )
   pWork->modelno = -1;
 
   // 初期化処理
-  _demoInit( pWork->heapID );
+  _demoInit( GetHeapLowID(pWork->heapID) );
   // 3D管理ユーティリティーのセットアップ
-  pWork->g3dUtil = GFL_G3D_UTIL_Create( 20, 20, pWork->heapID );
+  pWork->g3dUtil = GFL_G3D_UTIL_Create( 20, 20, GetHeapLowID(pWork->heapID) );
 
   // カメラ作成
   if(pWork->camera==NULL)

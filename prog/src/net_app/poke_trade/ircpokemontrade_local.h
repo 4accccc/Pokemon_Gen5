@@ -64,8 +64,8 @@ typedef enum
   _TIMING_SAVELAST,
   _TIMING_SAVEEND,
   _TIMING_ANIMEEND,
-  
- } NET_TIMING_ENUM;
+
+} NET_TIMING_ENUM;
 
 #define BOX_VERTICAL_NUM (5)
 #define BOX_HORIZONTAL_NUM (6)
@@ -73,7 +73,6 @@ typedef enum
 #define HAND_VERTICAL_NUM (3)
 #define HAND_HORIZONTAL_NUM (2)
 
-#define TRADEBOX_LINEMAX (BOX_MAX_TRAY * 6 + 2)
 
 //#define BOX_MONS_NUM (30)
 
@@ -173,7 +172,9 @@ typedef enum
 
 /// ドット単位で位置を管理  8*20がBOX 8*12がてもち BOX_MAX_TRAY => 2880+96=2976
 
-#define TOTAL_DOT_MAX  ((BOX_MAX_TRAY * 20 * 8) + (12 * 8))
+//#define TOTAL_DOT_MAX  ((BOX_MAX_TRAY * 20 * 8) + (12 * 8))
+
+#define _STARTDOT_OFFSET (-80)
 
 
 
@@ -285,7 +286,7 @@ typedef enum
   UI_BALL_SUBSTATUS,     ///< サブステータス用
   UI_BALL_MYSTATUS,      ///< メイン画面自分の
   UI_BALL_FRIENDSTATUS,  ///< メイン画面相手の
-  
+
   UI_BALL_NUM
 } _UI_BALLICON_TYPE;
 
@@ -327,7 +328,13 @@ struct _POKEMON_TRADE_WORK{
   StateFunc* state;      ///< ハンドルのプログラム状態
   HEAPID heapID;
 
-  
+  int BOX_TRAY_MAX;
+  int TRADEBOX_LINEMAX;  ///< ボックスのマックスが決まらないので縦の列が変数
+  int _SRCMAX;    ///< ボックスのマックスが決まらないのでスクリーンの数
+  int _DOTMAX;     ///< ボックスのマックスが決まらないので全横ドット
+//  int _DOT_START_POS;  ///< ボックスのマックスが決まらないので始まる場所の変数
+//#define TOTAL_DOT_MAX  ((BOX_MAX_TRAY * 20 * 8) + (12 * 8))
+
   GFL_BMPWIN* MessageWin;  ///< メッセージ系表示
 
   GFL_ARCUTIL_TRANSINFO bgchar;
@@ -352,7 +359,7 @@ struct _POKEMON_TRADE_WORK{
 
   GFL_BMPWIN* SerchMojiWin[JAPANESE_SEARCH_INDEX_MAX];  //頭文字検索のウインドウ用
   int selectMoji;                  //頭文字検索で選んだ文字
-  
+
   GFL_G3D_RES* pG3dRes;
   GFL_G3D_OBJ* pG3dObj;
   GFL_G3D_OBJSTATUS*	pStatus;
@@ -396,7 +403,7 @@ struct _POKEMON_TRADE_WORK{
   _ITEMMARK_ICON_WORK aPokeMark[_POKEMARK_MAX];
 
   TOUCHBAR_WORK* pTouchWork;
-    
+
   GFL_CLUNIT	*cellUnit;
   GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
 
@@ -528,6 +535,7 @@ extern void IRC_POKETRADEDEMO_RemoveModel( POKEMON_TRADE_WORK* pWork);
 
 extern void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(POKEMON_TRADE_WORK* pWork);
 extern void POKMEONTRADE_IRCDEMO_ChangeDemo(POKEMON_TRADE_WORK* pWork);
+extern void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork);
 
 extern void IRCPOKETRADE_PokeDeleteMcss( POKEMON_TRADE_WORK *pWork,int no  );
 extern void IRCPOKETRADE_PokeCreateMcss( POKEMON_TRADE_WORK *pWork ,int no, int bFront, const POKEMON_PARAM *pp );
@@ -550,12 +558,18 @@ extern void IRC_POKETRADE_PokeStatusIconReset(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_SetCursorXY(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKETRADE_IsMainCursorDispIn(POKEMON_TRADE_WORK* pWork,int* line);
 extern int POKETRADE_Line2RingLineIconGet(int line);
-extern void POKETRADE_ToolBarInit(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_TOUCHBAR_Init(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_MessageHeapInit(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_MessageHeapEnd(POKEMON_TRADE_WORK* pWork);
+
 extern BOOL POKEMONTRADE_IsPokeLanguageMark(int monsno,int moji);
 extern void IRC_POKETRADE_StatusWindowMessagePaletteTrans(POKEMON_TRADE_WORK* pWork, int palno, int palType);
 extern void IRC_POKETRADE_GraphicInitSubDispStatusDisp(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_GraphicEndSubDispStatusDisp(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_EndIconResource(POKEMON_TRADE_WORK* pWork);
+
+extern void IRC_POKETRADE_DEMOCLACT_Create(POKEMON_TRADE_WORK* pWork);
+extern void IRC_POKETRADE_CLACT_Create(POKEMON_TRADE_WORK* pWork);
 
 
 #if _TRADE_DEBUG
@@ -575,17 +589,17 @@ extern void IRC_POKMEONTRADE_changeState(POKEMON_TRADE_WORK* pWork,StateFunc* st
 
 #define _TEMOTITRAY_SCR_MAX (12)
 #define _BOXTRAY_SCR_MAX (20)
-#define _SRCMAX ((BOX_MAX_TRAY*_BOXTRAY_SCR_MAX)+_TEMOTITRAY_SCR_MAX)
+//#define _SRCMAX ((BOX_MAX_TRAY*_BOXTRAY_SCR_MAX)+_TEMOTITRAY_SCR_MAX)
 
 #define _TEMOTITRAY_MAX (8*_TEMOTITRAY_SCR_MAX)
 #define _BOXTRAY_MAX (8*_BOXTRAY_SCR_MAX)
 
-#define _DOTMAX ((BOX_MAX_TRAY*_BOXTRAY_MAX)+_TEMOTITRAY_MAX)
+//#define _DOTMAX ((BOX_MAX_TRAY*_BOXTRAY_MAX)+_TEMOTITRAY_MAX)
 
-#define _DOT_START_POS (_DOTMAX - 80)
+//#define _DOT_START_POS (_DOTMAX - 80)
 
 
-extern int IRC_TRADE_LINE2TRAY(int lineno);
+extern int IRC_TRADE_LINE2TRAY(int lineno,POKEMON_TRADE_WORK* pWork);
 extern int IRC_TRADE_LINE2POKEINDEX(int lineno,int verticalindex);
 
 
