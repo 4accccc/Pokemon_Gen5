@@ -31,6 +31,7 @@
 #include "field_comm/intrude_field.h"
 #include "event_debug_menu.h"     //DEBUG_EVENT_DebugMenu
 #include "event_battle.h"         //EVENT_Battle
+#include "event_gsync.h"         //EVENT_GSync
 #include "event_fieldtalk.h"      //EVENT_FieldTalk
 #include "event_fieldmap_menu.h"  //EVENT_FieldMapMenu
 #include "rail_editor.h"
@@ -1726,6 +1727,9 @@ static GMEVENT * checkSubScreenEvent(
 				event = EVENT_IrcBattle(gsys, fieldWork, NULL, TRUE);
 			}
 		}
+    break;
+  case FIELD_SUBSCREEN_ACTION_GSYNC:
+    event = EVENT_GSync(gsys, fieldWork, NULL, TRUE);
     break;
   case FIELD_SUBSCREEN_ACTION_INTRUDE_TOWN_WARP:
     event = EVENT_IntrudeTownWarp(gsys, fieldWork);

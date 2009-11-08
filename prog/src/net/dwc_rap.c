@@ -10,7 +10,7 @@
 #include <nitro.h>
 #include <nnsys.h>
 #include <gflib.h>
-//#include "../net_state.h"
+#include "net/network_define.h"
 
 #if GFL_NET_WIFI
 
@@ -371,12 +371,7 @@ int GFL_NET_DWC_connect()
       // ネット接続初期化
       DWC_InitInetEx(&_dWork->stConnCtrl, _NETWORK_DMA_NO, _NETWORK_POWERMODE, _NETWORK_SSL_PRIORITY);
 
-      if(pNetInit->bDebugServer){
-        DWC_SetAuthServer(DWC_CONNECTINET_AUTH_TEST);
-      }
-      else{
-        DWC_SetAuthServer(DWC_CONNECTINET_AUTH_RELEASE);
-      }
+      DWC_SetAuthServer(GF_DWC_CONNECTINET_AUTH_TYPE);
 
       // 非同期にネットに接続
       DWC_ConnectInetAsync();
@@ -1247,7 +1242,7 @@ static void UserRecvCallback( u8 aid, u8* buffer, int size,void* param )
   topcode = (buffer[3] << 24) | (buffer[2] << 16) | (buffer[1] << 8) | buffer[0];
 
   //	MYDWC_DEBUGPRINT("[%d,%d,%d,%d]", buffer[0], buffer[1], buffer[2], buffer[3]);
-  MYDWC_DEBUGPRINT("-受信-\n");
+//  MYDWC_DEBUGPRINT("-受信-\n");
 
   // 一度受信してはじめてタイムアウトを設定する。
   _dWork->timeoutflag = 1;

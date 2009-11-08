@@ -36,17 +36,14 @@
 #include "ui/touchbar.h"
 #include "savedata/mail_util.h"
 
-
+///3Dモデルのタイプ
 typedef enum
 {
   REEL_PANEL_OBJECT,
   TRADE01_OBJECT,
-  TRADE_TRADE_OBJECT,
-  TRADE_RETURN_OBJECT,
-  TRADE_SPLASH_OBJECT,
-  TRADE_END_OBJECT,
+  TRADEIR_OBJECT,
   OBJECT_MODEL_MAX,
-} CELL_OBJECT_MODEL;
+} D3_OBJECT_MODEL;
 
 
 typedef enum
@@ -317,28 +314,13 @@ typedef struct
   GFL_CLWK                  *clwk_type_icon;
 } _TYPE_ICON_WORK;
 
-typedef enum
-{
-  PTC_KIND_DEMO1,
-  PTC_KIND_DEMO2,
-  PTC_KIND_DEMO3,
-  PTC_KIND_DEMO4,
-  PTC_KIND_DEMO5,
-  PTC_KIND_DEMO6,
-  PTC_KIND_DEMO7,
-  PTC_KIND_DEMO8,
-//  PTC_KIND_DEMO9,
-//  PTC_KIND_DEMO10,
-//  PTC_KIND_DEMO11,
-  PTC_KIND_NUM_MAX,
-} _TYPE_PTC_KIND;
-
 #define _POKEMARK_MAX  (8)
 
-
+#include "pokemontrade_demo_local.h"
 
 
 struct _POKEMON_TRADE_WORK{
+  POKEMONTRADE_DEMO_WORK* pPokemonTradeDemo;
   u8 FriendPokemonCol[732];         ///< 相手のポケモンBOXにあるポケモン色
   GFL_BMPWIN* StatusWin[2];     ///< ステータス表示
   POKEMON_PARAM* recvPoke[2];  ///< 受け取ったポケモンを格納する場所
@@ -350,9 +332,6 @@ struct _POKEMON_TRADE_WORK{
 
   GFL_ARCUTIL_TRANSINFO bgchar;
 
-
-  GFL_PTC_PTR ptc[PTC_KIND_NUM_MAX];
-  GFL_PTC_PTR ptcOrthogonal;
 
   APP_TASKMENU_WORK* pAppTask;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
@@ -388,15 +367,6 @@ struct _POKEMON_TRADE_WORK{
 
   GFL_G3D_UTIL* g3dUtil;
   u16 unitIndex;
-//  ICA_ANIME* icaAnime;
-  ICA_ANIME* icaCamera;
-  ICA_ANIME* icaTarget;
-  //  GFL_G3D_CAMERA* camera;
-  ICA_ANIME* icaBallin;
-  GFL_EMIT_PTR pBallInPer;
-  ICA_ANIME* icaBallout;
-  GFL_EMIT_PTR pBallOutPer;
-  GFL_CLWK* pPokeCreateCLWK;   //ポケモン登場エフェクトCLACT
 
 
   BOX_MANAGER* pBox;
@@ -498,6 +468,7 @@ struct _POKEMON_TRADE_WORK{
   u16* scrTray;
   u16* scrTemoti;
   u8* pCharMem;
+  POKEMONTRADE_TYPE type;
 
 } ;
 
@@ -530,7 +501,7 @@ extern void IRC_POKETRADE_TrayDisp(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork );
 extern void IRC_POKETRADE_AllDeletePokeIconResource(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_G3dDraw(POKEMON_TRADE_WORK* pWork);
-extern void IRC_POKETRADE_SetSubdispGraphicDemo(POKEMON_TRADE_WORK* pWork);
+extern void IRC_POKETRADE_SetSubdispGraphicDemo(POKEMON_TRADE_WORK* pWork,int type);
 extern void IRC_POKETRADE_GraphicFreeVram(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_SetMainDispGraphic(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_ResetSubDispGraphic(POKEMON_TRADE_WORK* pWork);
@@ -556,6 +527,7 @@ extern void IRC_POKETRADEDEMO_SetModel( POKEMON_TRADE_WORK* pWork, int modelno);
 extern void IRC_POKETRADEDEMO_RemoveModel( POKEMON_TRADE_WORK* pWork);
 
 extern void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(POKEMON_TRADE_WORK* pWork);
+extern void POKMEONTRADE_IRCDEMO_ChangeDemo(POKEMON_TRADE_WORK* pWork);
 
 extern void IRCPOKETRADE_PokeDeleteMcss( POKEMON_TRADE_WORK *pWork,int no  );
 extern void IRCPOKETRADE_PokeCreateMcss( POKEMON_TRADE_WORK *pWork ,int no, int bFront, const POKEMON_PARAM *pp );
@@ -583,6 +555,7 @@ extern BOOL POKEMONTRADE_IsPokeLanguageMark(int monsno,int moji);
 extern void IRC_POKETRADE_StatusWindowMessagePaletteTrans(POKEMON_TRADE_WORK* pWork, int palno, int palType);
 extern void IRC_POKETRADE_GraphicInitSubDispStatusDisp(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_GraphicEndSubDispStatusDisp(POKEMON_TRADE_WORK* pWork);
+extern void IRC_POKETRADE_EndIconResource(POKEMON_TRADE_WORK* pWork);
 
 
 #if _TRADE_DEBUG
@@ -630,3 +603,14 @@ extern int IRC_TRADE_LINE2POKEINDEX(int lineno,int verticalindex);
 #define	FBMP_COL_PNK_SDW	(10)
 #define	FBMP_COL_WHITE_SDW		(14)
 #define	FBMP_COL_WHITE		(15)
+
+
+
+#define _CLACT_SOFTPRI_POKESEL  (11)
+#define _CLACT_SOFTPRI_POKESEL_BAR  (12)
+#define _CLACT_SOFTPRI_CATCHPOKE  (13)
+#define _CLACT_SOFTPRI_SCROLL_BAR  (14)
+#define _CLACT_SOFTPRI_SELECT (15)
+#define _CLACT_SOFTPRI_POKELIST  (16)
+
+

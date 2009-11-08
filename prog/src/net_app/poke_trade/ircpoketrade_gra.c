@@ -29,16 +29,11 @@
 #include "ircbattle.naix"
 #include "trade.naix"
 #include "tradedemo.naix"
+#include "tradeirdemo.naix"
 #include "app_menu_common.naix"
 
 
 
-
-#define _CLACT_SOFTPRI_POKESEL  (2)
-#define _CLACT_SOFTPRI_POKESEL_BAR  (3)
-#define _CLACT_SOFTPRI_SCROLL_BAR  (4)
-#define _CLACT_SOFTPRI_SELECT (5)
-#define _CLACT_SOFTPRI_POKELIST  (6)
 
 
 
@@ -376,9 +371,10 @@ void IRC_POKETRADE_MessageWindowOpen(POKEMON_TRADE_WORK* pWork)
 
   GFL_FONTSYS_SetColor(FBMP_COL_BLACK, FBMP_COL_BLK_SDW, 15);
   pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pMessageStrBuf, pWork->pFontHandle,
-                                                MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15 );
+                                        MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15 );
 
-  
+//  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 0, 0, pWork->pMessageStrBuf, pWork->pFontHandle);
+
   BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
 
   GFL_BMPWIN_TransVramCharacter(pwin);
@@ -802,6 +798,40 @@ void IRC_POKETRADE_AllDeletePokeIconResource(POKEMON_TRADE_WORK* pWork)
   GFL_HEAP_FreeMemory(pWork->pCharMem);
   pWork->pCharMem = NULL;
 }
+
+void IRC_POKETRADE_EndIconResource(POKEMON_TRADE_WORK* pWork)
+{
+  int i;
+
+  for(i = 0;i< CELL_DISP_NUM;i++){
+    if(pWork->curIcon[i]){
+      GFL_CLACT_WK_Remove(pWork->curIcon[i]);
+      pWork->curIcon[i] = NULL;
+    }
+  }
+
+  
+  for(i=0;i<PLT_RESOURCE_MAX;i++){
+    if(pWork->cellRes[i]!=0){
+      GFL_CLGRP_PLTT_Release(pWork->cellRes[i]);
+      pWork->cellRes[i]=0;
+    }
+  }
+  for( ;i<CHAR_RESOURCE_MAX;i++){
+    if(pWork->cellRes[i]!=0){
+      GFL_CLGRP_CGR_Release(pWork->cellRes[i]);
+      pWork->cellRes[i]=0;
+    }
+  }
+  for( ;i<ANM_RESOURCE_MAX;i++){
+    if(pWork->cellRes[i]!=0){
+      GFL_CLGRP_CELLANIM_Release(pWork->cellRes[i]);
+      pWork->cellRes[i]=0;
+    }
+  }
+
+}
+
 
 static void _calcPokeIconPos(int line,int index, GFL_CLACTPOS* pos)
 {
@@ -1256,11 +1286,12 @@ GFL_CLWK* IRC_POKETRADE_GetCLACT( POKEMON_TRADE_WORK* pWork , int x, int y, int*
 /**
  * デモ用下画面表示
  * @param	   pWork  ワーク
+ * @param	   type   デモのタイプ 0=NORMAL 1=赤外線
  * @return	 none
  */
 //--------------------------------------------------------------------------------------------
 
-void IRC_POKETRADE_SetSubdispGraphicDemo(POKEMON_TRADE_WORK* pWork)
+void IRC_POKETRADE_SetSubdispGraphicDemo(POKEMON_TRADE_WORK* pWork,int type)
 {
   int frame = GFL_BG_FRAME3_S;
 
@@ -1294,7 +1325,7 @@ void IRC_POKETRADE_SetSubdispGraphicDemo(POKEMON_TRADE_WORK* pWork)
     }
 
 
-    {
+    if(type==0){
       ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADEDEMO, pWork->heapID );
       
       GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_tradedemo_under01_NCLR,
@@ -1304,6 +1335,21 @@ void IRC_POKETRADE_SetSubdispGraphicDemo(POKEMON_TRADE_WORK* pWork)
       GFL_ARCHDL_UTIL_TransVramBgCharacter(p_handle, NARC_tradedemo_under01_NCGR,
                                            frame,0,0,0,pWork->heapID);
       GFL_ARCHDL_UTIL_TransVramScreen(p_handle,NARC_tradedemo_under01_NSCR,frame, 0,0,0,pWork->heapID);
+      
+      GFL_BG_SetScroll(frame,GFL_BG_SCROLL_X_SET, 0);
+      GFL_ARC_CloseDataHandle( p_handle );
+      
+    }
+    else{
+      ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADEDEMO_IR, pWork->heapID );
+      
+      GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_tradeirdemo_demo_backshot21_NCLR,
+                                        PALTYPE_SUB_BG_EX, 0x6000, 0,  pWork->heapID);
+      
+      
+      GFL_ARCHDL_UTIL_TransVramBgCharacter(p_handle, NARC_tradeirdemo_demo_backshot2_NCGR,
+                                           frame,0,0,0,pWork->heapID);
+      GFL_ARCHDL_UTIL_TransVramScreen(p_handle,NARC_tradeirdemo_under02_NSCR,frame, 0,0,0,pWork->heapID);
       
       GFL_BG_SetScroll(frame,GFL_BG_SCROLL_X_SET, 0);
       GFL_ARC_CloseDataHandle( p_handle );

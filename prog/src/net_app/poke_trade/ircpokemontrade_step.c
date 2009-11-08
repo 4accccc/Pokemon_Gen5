@@ -126,7 +126,7 @@ static void _pokemonCreateCLACTInit(POKEMON_TRADE_WORK* pWork)
       p_handle , NARC_tradedemo_trade01_NCER,
       NARC_tradedemo_trade01_NANR , pWork->heapID  );
   GFL_ARC_CloseDataHandle( p_handle );
-  pWork->pPokeCreateCLWK=NULL;
+  pWork->pPokemonTradeDemo->pPokeCreateCLWK=NULL;
 
 
 
@@ -141,8 +141,8 @@ static void _pokemonCreateCLACTInit(POKEMON_TRADE_WORK* pWork)
 
 static void _pokemonCreateCLACTExit(POKEMON_TRADE_WORK* pWork)
 {
-  if(pWork->pPokeCreateCLWK){
-    GFL_CLACT_WK_Remove( pWork->pPokeCreateCLWK);
+  if(pWork->pPokemonTradeDemo->pPokeCreateCLWK){
+    GFL_CLACT_WK_Remove( pWork->pPokemonTradeDemo->pPokeCreateCLWK);
   }
   GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_POKECREATE] );
   GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_POKECREATE] );
@@ -150,7 +150,7 @@ static void _pokemonCreateCLACTExit(POKEMON_TRADE_WORK* pWork)
   pWork->cellRes[CHAR_POKECREATE] = 0;
   pWork->cellRes[PLT_POKECREATE] = 0;
   pWork->cellRes[ANM_POKECREATE] = 0;
-  pWork->pPokeCreateCLWK=NULL;
+  pWork->pPokemonTradeDemo->pPokeCreateCLWK=NULL;
 }
 
 //------------------------------------------------------------------
@@ -162,23 +162,23 @@ static void _pokemonCreateCLACTExit(POKEMON_TRADE_WORK* pWork)
 //------------------------------------------------------------------
 static void _pokemonCreateCLACTAdd(POKEMON_TRADE_WORK* pWork)
 {
-  if(pWork->pPokeCreateCLWK==NULL){
+  if(pWork->pPokemonTradeDemo->pPokeCreateCLWK==NULL){
     GFL_CLWK_DATA cellInitData;
     cellInitData.pos_x = 128;
     cellInitData.pos_y = 99;
     cellInitData.anmseq = 0;
     cellInitData.softpri = 0;
     cellInitData.bgpri = 0;
-    pWork->pPokeCreateCLWK = GFL_CLACT_WK_Create( pWork->cellUnit ,
+    pWork->pPokemonTradeDemo->pPokeCreateCLWK = GFL_CLACT_WK_Create( pWork->cellUnit ,
                                                   pWork->cellRes[CHAR_POKECREATE],
                                                   pWork->cellRes[PLT_POKECREATE],
                                                   pWork->cellRes[ANM_POKECREATE],
                                                   &cellInitData ,CLSYS_DRAW_MAIN , pWork->heapID );
-    GFL_CLACT_WK_SetAutoAnmFlag( pWork->pPokeCreateCLWK , TRUE );
-    GFL_CLACT_WK_SetDrawEnable( pWork->pPokeCreateCLWK, TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->pPokemonTradeDemo->pPokeCreateCLWK , TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->pPokemonTradeDemo->pPokeCreateCLWK, TRUE );
   }
   else{
-    GFL_CLACT_WK_ResetAnm(pWork->pPokeCreateCLWK);
+    GFL_CLACT_WK_ResetAnm(pWork->pPokemonTradeDemo->pPokeCreateCLWK);
   }
 }
 
@@ -205,9 +205,9 @@ static void _pEmitCBInFunc( GFL_EMIT_PTR pEmiter, unsigned int flag)
   }
   if(pEmiter ){
     POKEMON_TRADE_WORK* pWork = (POKEMON_TRADE_WORK*)GFL_PTC_GetUserData( pEmiter );
-    if( pWork->icaBallin){
+    if( pWork->pPokemonTradeDemo->icaBallin){
       VecFx32 pos={0,0,0};
-      ICA_ANIME_GetTranslate( pWork->icaBallin, &pos );
+      ICA_ANIME_GetTranslate( pWork->pPokemonTradeDemo->icaBallin, &pos );
       GFL_PTC_SetEmitterPosition(pEmiter, &pos);
     }
   }
@@ -229,11 +229,9 @@ static void _pEmitCBOutFunc( GFL_EMIT_PTR pEmiter, unsigned int flag)
   }
   if(pEmiter  ){
     POKEMON_TRADE_WORK* pWork = (POKEMON_TRADE_WORK*)GFL_PTC_GetUserData( pEmiter );
-    if(pWork->icaBallout){
+    if(pWork->pPokemonTradeDemo->icaBallout){
       VecFx32 pos={0,0,0};
-      ICA_ANIME_GetTranslate( pWork->icaBallout, &pos );
-      //OS_TPrintf("---%d %d %d \n",pos.x / FX32_ONE,pos.y / FX32_ONE,pos.z / FX32_ONE );
-      
+      ICA_ANIME_GetTranslate( pWork->pPokemonTradeDemo->icaBallout, &pos );
       GFL_PTC_SetEmitterPosition(pEmiter, &pos);
     }
   }
@@ -337,10 +335,6 @@ static void _changeDemo_ModelTrade0(POKEMON_TRADE_WORK* pWork)
   _setNextAnim(pWork, 0);
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade1);
 
-  pWork->pBallInPer = NULL;
-  pWork->pBallOutPer = NULL;
-
-
 }
 
 static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
@@ -366,29 +360,27 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
 //    IRC_POKETRADEDEMO_Init(pWork);
 
 
-
-    
-    
-    for(i = 0;i< CELL_DISP_NUM;i++){
-      if(pWork->curIcon[i]){
-        GFL_CLACT_WK_Remove(pWork->curIcon[i]);
-      }
-    }
     IRC_POKETRADE_ResetBoxNameWindow(pWork);
     IRCPOKETRADE_PokeDeleteMcss(pWork,1);
 //    MCSS_SetVanishFlag( pWork->pokeMcss[1] );
     
     IRC_POKETRADE_AllDeletePokeIconResource(pWork);
+    IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork,0);
+    IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork,1);
+    TOUCHBAR_Exit(pWork->pTouchWork);
+    pWork->pTouchWork=NULL;
+    IRC_POKETRADE_EndIconResource(pWork);
+    GFL_CLACT_UNIT_Delete(pWork->cellUnit);
+    
+    pWork->cellUnit = GFL_CLACT_UNIT_Create( 3 , 0 , pWork->heapID );
 
+    
     IRC_POKETRADE_MainGraphicExit(pWork);
     IRC_POKETRADE_SubGraphicExit(pWork);
 
-    TOUCHBAR_Exit(pWork->pTouchWork);
-    pWork->pTouchWork=NULL;
-
     IRC_POKETRADE_ResetSubDispGraphic(pWork);
-    IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork,0);
-    IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork,1);
+
+
     GFL_HEAP_FreeMemory(pWork->pD2Fade);
     pWork->pD2Fade=NULL;
     _freePaletteFade(pWork->pModelFade);
@@ -423,11 +415,14 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
   MCSS_SetVanishFlag( pWork->pokeMcss[1] );
   MCSS_SetVanishFlag( pWork->pokeMcss[2] );
   MCSS_SetVanishFlag( pWork->pokeMcss[3] );
-
+  pWork->pPokemonTradeDemo = GFL_HEAP_AllocClearMemory(pWork->heapID,sizeof(POKEMONTRADE_DEMO_WORK));
+  pWork->pPokemonTradeDemo->heapID = pWork->heapID;
+  POKEMONTRADE_DEMO_PTC_Init(pWork->pPokemonTradeDemo);
+  POKEMONTRADE_DEMO_ICA_Init(pWork->pPokemonTradeDemo);
 
   IRC_POKETRADEDEMO_SetModel( pWork, TRADE01_OBJECT);
 
-  IRC_POKETRADE_SetSubdispGraphicDemo(pWork);
+  IRC_POKETRADE_SetSubdispGraphicDemo(pWork,0);
   G2S_BlendNone();
 
 
@@ -470,47 +465,33 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
 
 
   if(pWork->anmCount == ANMCNTC(_BALL_PARTICLE_START)){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO1], DERMO_TEX001, NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->pPokemonTradeDemo->ptc[PTC_KIND_DEMO1], DERMO_TEX001, NULL, pWork);
   }
   if(pWork->anmCount == ANMCNTC(_PARTICLE_DEMO2_START)){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO2], DEMO_TEX002, NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->pPokemonTradeDemo->ptc[PTC_KIND_DEMO2], DEMO_TEX002, NULL, pWork);
   }
   if(pWork->anmCount == ANMCNTC(_PARTICLE_DEMO3_START)){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO3], DEMO_TEX003, NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->pPokemonTradeDemo->ptc[PTC_KIND_DEMO3], DEMO_TEX003, NULL, pWork);
   }
   if(pWork->anmCount == ANMCNTC(_PARTICLE_DEMO3_START2)){
-    GFL_PTC_CreateEmitterCallback(pWork->ptcOrthogonal, DEMO_TEX003, NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->pPokemonTradeDemo->ptc[PTC_KIND_ORG], DEMO_TEX003, NULL, pWork);
   }
   if(pWork->anmCount == ANMCNTC(_PARTICLE_DEMO4_START)){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO4], DEMO_TEX004,  NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->pPokemonTradeDemo->ptc[PTC_KIND_DEMO4], DEMO_TEX004,  NULL, pWork);
   }
   if(pWork->anmCount == ANMCNTC(_PARTICLE_DEMO4_START2)){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO8], DEMO_TEX004,  NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->pPokemonTradeDemo->ptc[PTC_KIND_DEMO8], DEMO_TEX004,  NULL, pWork);
   }
   if(pWork->anmCount == ANMCNTC(_PARTICLE_DEMO5_START)){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO5], DEMO_TEX005, _ballinEmitFunc, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->pPokemonTradeDemo->ptc[PTC_KIND_DEMO5], DEMO_TEX005, _ballinEmitFunc, pWork);
   }
   if(pWork->anmCount == ANMCNTC(_PARTICLE_DEMO6_START)){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO6], DEMO_TEX006, NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->pPokemonTradeDemo->ptc[PTC_KIND_DEMO6], DEMO_TEX006, NULL, pWork);
   }
   if(pWork->anmCount == ANMCNTC(_PARTICLE_DEMO7_START)){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO7], DEMO_TEX007,_balloutEmitFunc, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->pPokemonTradeDemo->ptc[PTC_KIND_DEMO7], DEMO_TEX007,_balloutEmitFunc, pWork);
   }
-#if 0
-//  if(pWork->anmCount == ANMCNTC(_PARTICLE_DEMO9_START)){
-  //  GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO9], DEMO_TEX009,NULL, pWork);
-//  }
-  if(pWork->anmCount == ANMCNTC(_PARTICLE_DEMO8_START)){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO8], DEMO_TEX008,NULL, pWork);
-  }
-  if(pWork->anmCount == ANMCNTC(_PARTICLE_DEM10_START)){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO10], DEMO_TEX010,NULL, pWork);
-  }
-#endif
-  
-  /*  if(pWork->anmCount == ANMCNTC(_OAM_POKECREATE_START)){
-    _pokemonCreateCLACTAdd(pWork);
-  }*/
+
   if(pWork->anmCount == ANMCNTC(_OAM_POKECREATE_START2)){
     _pokemonCreateCLACTAdd(pWork);
   }
@@ -709,7 +690,7 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
     _WIPE_SYS_StartRap(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_WHITE,
                        ANMCNTC(_POKESPLASH_WHITEIN_TIMER), 1, pWork->heapID );
   }
-  OS_TPrintf("C %d\n",pWork->anmCount);
+  //OS_TPrintf("C %d\n",pWork->anmCount);
 
   if(pWork->anmCount == ANMCNTC(_DEMO_END-1)){
     GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);
@@ -787,6 +768,12 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
   IRCPOKETRADE_PokeDeleteMcss(pWork, 1);
   IRCPOKETRADE_PokeDeleteMcss(pWork, 2);
   IRCPOKETRADE_PokeDeleteMcss(pWork, 3);
+
+  _pokemonCreateCLACTExit(pWork);
+  POKEMONTRADE_DEMO_PTC_End(pWork->pPokemonTradeDemo,PTC_KIND_NUM_MAX);
+  POKEMONTRADE_DEMO_ICA_Delete(pWork->pPokemonTradeDemo);
+  GFL_HEAP_FreeMemory(pWork->pPokemonTradeDemo);
+  pWork->pPokemonTradeDemo = NULL;
 
   //@todo i‰»ƒfƒ‚‚É‚Æ‚Ô
 
@@ -909,7 +896,10 @@ static void _changeDemo_ModelTrade30(POKEMON_TRADE_WORK* pWork)
   GFL_DISP_GX_SetVisibleControlDirect( 0 );
   GFL_DISP_GXS_SetVisibleControlDirect( 0 );
 
-  _pokemonCreateCLACTExit(pWork);
+
+  GFL_CLACT_UNIT_Delete(pWork->cellUnit);
+  pWork->cellUnit = GFL_CLACT_UNIT_Create( 340 , 0 , pWork->heapID );
+
   IRC_POKETRADE_MessageWindowClose(pWork);
 
 //  IRC_POKETRADE_GraphicFreeVram(pWork);
@@ -999,10 +989,10 @@ static _EFFTOOL_PAL_FADE_WORK* _createPaletteFade(GFL_G3D_RES* g3DRES,HEAPID hea
   NNSG3dResFileHeader*	header = GFL_G3D_GetResourceFileHeader( g3DRES );
   NNSG3dResTex*		    	pTex = NNS_G3dGetTex( header );
   u32                   size = (u32)pTex->plttInfo.sizePltt << 3;
-  _EFFTOOL_PAL_FADE_WORK* pwk = GFL_HEAP_AllocMemory(heapID,sizeof(_EFFTOOL_PAL_FADE_WORK));
+  _EFFTOOL_PAL_FADE_WORK* pwk = GFL_HEAP_AllocClearMemory(heapID,sizeof(_EFFTOOL_PAL_FADE_WORK));
 
   pwk->g3DRES = g3DRES;
-  pwk->pData_dst  = GFL_HEAP_AllocMemory( heapID, size );
+  pwk->pData_dst  = GFL_HEAP_AllocClearMemory( heapID, size );
   return pwk;
 }
 
@@ -1179,7 +1169,7 @@ static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
 
     apos.y = _movemath(pMove->start.y, pMove->end.y ,pMove, TRUE);
     apos.z = _movemath(pMove->start.z, pMove->end.z ,pMove, FALSE);
-    OS_TPrintf(" posy %d\n",apos.y/FX32_ONE);
+//    OS_TPrintf(" posy %d\n",apos.y/FX32_ONE);
     
 
 

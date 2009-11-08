@@ -580,7 +580,10 @@ static int _gearPanelTypeNum(C_GEAR_WORK* pWork, CGEAR_PANELTYPE_ENUM type)
 {
 	int x,y,i;
 
-	i=0;
+  if(type == CGEAR_PANELTYPE_BASE){
+    return 1;
+  }
+  i=0;
 	for(y = 0; y < C_GEAR_PANEL_HEIGHT; y++)
 	{
 		for(x = 0; x < C_GEAR_PANEL_WIDTH; x++)
@@ -992,6 +995,9 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 //				FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_DEBUG_PALACEJUMP);
 				break;
 			case CGEAR_PANELTYPE_WIFI:
+#if DEBUG_ONLY_FOR_ohno
+				FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_GSYNC);
+#endif
 				break;
 			}
 		}
@@ -1532,6 +1538,10 @@ void CGEAR_ActionCallback( C_GEAR_WORK* pWork , FIELD_SUBSCREEN_ACTION actionno)
 {
 
 	switch(actionno){
+  case FIELD_SUBSCREEN_ACTION_GSYNC:
+    PMSND_PlaySystemSE( SEQ_SE_DECIDE3 );
+		_CHANGE_STATE(pWork,_modeSelectAnimInit);
+    break;
 	case FIELD_SUBSCREEN_ACTION_DEBUGIRC:
 		PMSND_PlaySystemSE( SEQ_SE_DECIDE3 );
 		_CHANGE_STATE(pWork,_modeSelectAnimInit);

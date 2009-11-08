@@ -8,8 +8,7 @@
  */
 //=============================================================================
 
-#ifndef __NETWORK_DEFINE_H__
-#define __NETWORK_DEFINE_H__
+#pragma once
 
 #define NET_WORK_ON (1)   // サンプルプログラム上で通信を動かす場合定義　動かさない場合未定義にする
 
@@ -133,5 +132,4 @@ enum NetworkCommandHeaderNo_e {
 #include "net_irc.h"
 
 
-#endif //__NETWORK_DEFINE_H__
 

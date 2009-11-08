@@ -330,8 +330,6 @@ GFL_TCBSYS * GFUser_VIntr_GetTCBSYS( void )
 //------------------------------------------------------------------
 void GFUser_SetStartRandContext(GFL_STD_RandContext *context)
 {
-  //@todo キーの作成方法が定まったら作り変える
-  //今の所セーブデータの一部を使用する事が考えられている
   GFL_STD_RandGeneralInit(context);
 }
 

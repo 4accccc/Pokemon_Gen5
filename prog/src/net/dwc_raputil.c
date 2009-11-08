@@ -9,6 +9,7 @@
 
 #include <gflib.h>
 #include <dwc.h>
+#include "net/network_define.h"
 #include "system/main.h"
 #include "net/dwc_raputil.h"
 
@@ -28,7 +29,7 @@ void mydwc_callWifiUtil( HEAPID HeapID )
 	OS_InitTick();
 	OS_InitAlarm();
 
-  DWC_SetAuthServer(DWC_CONNECTINET_AUTH_TEST);
+  DWC_SetAuthServer(GF_DWC_CONNECTINET_AUTH_TYPE);
 
 	// Š„‚è‚İˆ—‚ğˆê’U‹Ö~‚Ö
 	old = OS_DisableInterrupts();

@@ -10,6 +10,7 @@
 #include <nitro.h>
 #include "gflib.h"
 #include "arc_def.h"
+#include <ghttp/dwci_ghttp.h>
 
 #include "system/main.h"  //HEAPID
 #include "message.naix"
@@ -24,7 +25,7 @@
 #include "savedata/wifilist.h"
 #include "msg/msg_d_ohno.h"
 
-#define _TWLDWC_HTTP (0)
+#define _TWLDWC_HTTP (1)
 
 #if _TWLDWC_HTTP
 
@@ -84,13 +85,13 @@ static void _ghttpKeyWait(G_SYNC_WORK* pWork);
 static void GETCallback(const char* buf, int buflen, DWCGHTTPResult result, void* param);
 
 
-static DWCUserData* _getMyUserData(void* pWork)
+static void* _getMyUserData(void* pWork)
 {
   G_SYNC_WORK *wk = (G_SYNC_WORK*)pWork;
   return WifiList_GetMyUserInfo(SaveData_GetWifiListData(wk->pSaveData));
 }
 
-static DWCFriendData* _getFriendData(void* pWork)
+static void* _getFriendData(void* pWork)
 {
   G_SYNC_WORK *wk = (G_SYNC_WORK*)pWork;
   //    NET_PRINT("Friend %d\n",WifiList_GetFriendDataNum(SaveData_GetWifiListData(wk->pSaveData)));
@@ -465,7 +466,7 @@ static const GFL_DISP_VRAM vramBank = {
 static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 #if _TWLDWC_HTTP
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_PROC, 0x70000 );//テスト
+	//GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_PROC, 0x70000 );//テスト
 
 	{
 		G_SYNC_WORK* pWork = GFL_PROC_AllocWork( proc, sizeof(G_SYNC_WORK), HEAPID_PROC );
@@ -507,10 +508,16 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
 		GFL_BG_SetBGControl( GFL_BG_FRAME0_S,   &bgcntText,   GFL_BG_MODE_TEXT );
 
 		GFL_BG_SetVisible( GFL_BG_FRAME0_M,   VISIBLE_ON );
+		GFL_BG_SetVisible( GFL_BG_FRAME0_S,   VISIBLE_ON );
 		GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_OFF );
 		GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_OFF );
 		GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_OFF );
 
+    GX_SetMasterBrightness(0);
+    
+    GFL_BG_SetBackGroundColor(GFL_BG_FRAME0_M ,0x7f);
+    GFL_BG_SetBackGroundColor(GFL_BG_FRAME0_S ,0x7f);
+    
 //		GFL_BG_SetClearCharacter( GFL_BG_FRAME0_M, 0x20, 0x22, wk->heapID );
 		GFL_BG_FillCharacter( GFL_BG_FRAME0_M, 0xff, 1, 0 );
 

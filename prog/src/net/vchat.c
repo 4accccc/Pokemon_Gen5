@@ -440,8 +440,7 @@ void myvct_main(BOOL offflg)
 		VCT_Main();
 		while( _difftime >= 1000 * 1000 / 60 )
 		{
-			//            VCT_PRINT("!");
-			NET_PRINT("!");
+//			NET_PRINT("!");
 			VCT_Main();
 			_difftime -= 1000 * 1000 / 60 ;
 		}

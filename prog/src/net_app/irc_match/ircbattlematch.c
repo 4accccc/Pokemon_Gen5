@@ -310,7 +310,7 @@ static void _ircConnectEndCallback(void* pWk)
   int no;
 
   // ‰æ‘œŒðŠ·
-  {
+  if(1){
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_IRCBATTLE, pWork->heapID );
 
     if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND || pWork->selectType==EVENTIRCBTL_ENTRYMODE_TRADE){

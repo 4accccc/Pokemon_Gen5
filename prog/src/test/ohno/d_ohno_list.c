@@ -106,12 +106,19 @@ extern const GFL_PROC_DATA DebugLayoutMainProcData;
 extern const GFL_PROC_DATA G_SYNC_ProcData;
 extern const GFL_PROC_DATA VTRProcData;
 extern const GFL_PROC_DATA PokemonTradeProcData;
+extern const GFL_PROC_DATA PokemonTradeIrcProcData;
 
 //==============================================================================
 //	データ
 //==============================================================================
 //メニューデータ
 static const D_MENULIST DebugMenuList[] = {
+	{//
+		DEBUG_OHNO_MSG0015, 
+		&PokemonTradeIrcProcData,	
+		NULL,
+		FS_OVERLAY_ID(pokemon_trade)
+	},
 	{//
 		DEBUG_OHNO_MSG0013, 
 		&PokemonTradeProcData,	
@@ -137,7 +144,7 @@ static const D_MENULIST DebugMenuList[] = {
 		FS_OVERLAY_ID(ohno_debugapp)
 	},
 	{//
-		DEBUG_OHNO_MSG0004, 
+		DEBUG_OHNO_MSG0014, 
 		&VTRProcData,
 		NULL,
 		FS_OVERLAY_ID(ohno_debugapp)

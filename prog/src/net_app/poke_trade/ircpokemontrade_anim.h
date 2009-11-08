@@ -151,5 +151,83 @@
 //ゆれる上下幅  大きいほど大きく揺れる
 #define _WAVE_NUM    (8)
 
-//ゆれる間隔  大きいほど早く揺れる
-//#define _WAVE_TIME    (500)
+
+//----------------------------------------------------------------------------------------------
+//ここから赤外線デモ
+/*
+
+●画面用 ica
+ir_sean.ica
+ir_sean.imd
+ir_sean.ita
+
+●カメラ位置
+ir_ichi.ica
+
+●カメラ注視点
+ir_tyushiten.ica
+
+●パーティクル
+波紋
+ir_tex001.spr（2回出してください）
+
+交換シーン
+ir_tex002.spr
+ir_tex004.spr
+
+ポケモン→モン玉（2回出してください）
+ir_tex003.spr
+
+●下画面用
+under02.nsc
+demo_backshot21.ncl
+demo_backshot2.ncg
+
+
+全部で660フレームあります。
+
+*/
+
+
+#define _IR_POKEUP_WHITEOUT_START (159)    //最初のホワイトアウト
+#define _IR_POKEUP_WHITEOUT_TIMER (20)     //
+#define _IR_POKEUP_WHITEIN_START  (180)    //
+#define _IR_POKEUP_WHITEIN_TIMER (25)      //
+
+#define _IR_POKECHANGE_WHITEOUT_START (409)  //交換後のホワイトアウト
+#define _IR_POKECHANGE_WHITEOUT_TIMER (10)      //
+#define _IR_POKECHANGE_WHITEIN_START  (420)  //
+#define _IR_POKECHANGE_WHITEIN_TIMER (25)        //
+
+
+#define _IR_DEMO_END (660)   //デモが終わる最後のフレーム
+
+///パーティクルのタイミング
+#define _IRTEX001_01_START   (10)   ///波紋
+#define _IRTEX001_02_START   (500)   ///波紋
+#define _IRTEX002_01_START   (200)   ///交換シーン
+#define _IRTEX003_01_START   (100)    ///ポケモン→モン玉
+#define _IRTEX003_02_START   (500)    ///ポケモン→モン玉
+#define _IRTEX004_01_START   (200) ///交換シーン
+
+//ポケモンの動きに関する時間
+#define _IR_POKEMON_DELETE_TIME   (4)     //  ポケモンを消す
+
+#define _IR_POKE_APPEAR_START   (330)   //    ポケモン登場 自分のは裏
+#define _IR_POKE_APPEAR_TIME    (15)       //  ポケモン登場移動時間
+
+//ポケモンの位置
+#define _IR_POKEMON_PLAYER_APPEAR_POSX _MCSS_POS_X( -50)  // 自分のポケモンのX
+#define _IR_POKEMON_PLAYER_APPEAR_POSY _MCSS_POS_Y(-150)  // 自分のポケモンのY
+#define _IR_POKEMON_PLAYER_APPEAR_POSZ _MCSS_POS_Z(  10)  // 自分のポケモンのZ
+#define _IR_POKEMON_FRIEND_APPEAR_POSX _MCSS_POS_X( 60)  // 相手のポケモンのX
+#define _IR_POKEMON_FRIEND_APPEAR_POSY _MCSS_POS_Y(80)  // 相手のポケモンのY
+#define _IR_POKEMON_FRIEND_APPEAR_POSZ _MCSS_POS_Z(-10)  // 相手のポケモンのZ
+
+#define _IR_POKEMON_PLAYER_UP_POSX   _IR_POKEMON_PLAYER_APPEAR_POSX  // 自分のポケモンのX
+#define _IR_POKEMON_PLAYER_UP_POSY   _MCSS_POS_Y(-55)             // 自分のポケモンのY
+#define _IR_POKEMON_PLAYER_UP_POSZ   _IR_POKEMON_PLAYER_APPEAR_POSZ  // 自分のポケモンのZ
+#define _IR_POKEMON_FRIEND_DOWN_POSX _IR_POKEMON_FRIEND_APPEAR_POSX  // 相手のポケモンのX
+#define _IR_POKEMON_FRIEND_DOWN_POSY _MCSS_POS_Y( 5)              // 相手のポケモンのY
+#define _IR_POKEMON_FRIEND_DOWN_POSZ _IR_POKEMON_FRIEND_APPEAR_POSZ  // 相手のポケモンのZ
+

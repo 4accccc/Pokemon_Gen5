@@ -10,6 +10,7 @@
 #include <nitro.h>
 #include <nnsys.h>
 #include "gflib.h"
+#include "net/network_define.h"
 
 #if GFL_NET_WIFI
 #include <dwc.h>
@@ -35,13 +36,7 @@ int mydwc_init(HEAPID heapID)
   ret = DWC_Init( pTemp );
   GFL_HEAP_FreeMemory(pWork);
 
-#ifdef PM_DEBUG
-  DWC_SetAuthServer(DWC_CONNECTINET_AUTH_TEST);
-#else
-  DWC_SetAuthServer(DWC_CONNECTINET_AUTH_RELEASE);
-#endif
-
-
+  DWC_SetAuthServer(GF_DWC_CONNECTINET_AUTH_TYPE);
   return ret;
 }
 

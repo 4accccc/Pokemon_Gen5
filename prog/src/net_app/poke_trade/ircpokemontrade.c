@@ -188,6 +188,7 @@ static void _CatchPokemonMoveFunc(POKEMON_TRADE_WORK *pWork)
     if(GFL_UI_TP_GetPointCont(&x,&y)){
       pos.x = x;
       pos.y = y;
+      GFL_CLACT_WK_SetSoftPri(pWork->pCatchCLWK,_CLACT_SOFTPRI_CATCHPOKE);
       GFL_CLACT_WK_SetPos( pWork->pCatchCLWK, &pos, CLSYS_DRAW_SUB);
     }
   }
@@ -204,6 +205,7 @@ static void _CatchPokemonMoveFunc(POKEMON_TRADE_WORK *pWork)
 static void _CatchPokemonPositionRewind(POKEMON_TRADE_WORK *pWork)
 {
   if(pWork->pCatchCLWK){
+    GFL_CLACT_WK_SetSoftPri(pWork->pCatchCLWK,_CLACT_SOFTPRI_POKELIST);
     GFL_CLACT_WK_SetPos(pWork->pCatchCLWK, &pWork->aCatchOldPos, CLSYS_DRAW_SUB);
     GFL_CLACT_WK_SetDrawEnable( pWork->pCatchCLWK, TRUE);
     pWork->pCatchCLWK=NULL;
@@ -840,10 +842,13 @@ static void _setPokemonStatusMessage(POKEMON_TRADE_WORK *pWork, int side,POKEMON
   }
   pWork->StatusWin[side] = GFL_BMPWIN_Create(frame,	sidex[side], 1, 15, 20,	_BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
 
+  GFL_FONTSYS_SetColor( FBMP_COL_WHITE, FBMP_COL_WHITE_SDW, 0x0 );
+
   _pokeNickNameMsgDisp(pp, pWork->StatusWin[side], 2*8, 0, bEgg, pWork);
   if(!bEgg){
-    _pokeLvMsgDisp(pp, pWork->StatusWin[side], 16, 16, pWork);
     _pokeSexMsgDisp(pp, pWork->StatusWin[side], 10*8, 0, pWork);
+    GFL_FONTSYS_SetColor( FBMP_COL_BLACK, FBMP_COL_BLK_SDW, 0x0 );
+    _pokeLvMsgDisp(pp, pWork->StatusWin[side], 16, 17, pWork);
     _pokePocketItemMsgDisp(pp, pWork->StatusWin[side], 16, 16*8, pWork);
     UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[side+UI_BALL_MYSTATUS], pp, pWork->cellUnit,
                                     xdotpos[side]+16, 16, CLSYS_DRAW_MAIN, pWork->heapID );
@@ -1592,11 +1597,17 @@ static void _dispSubState(POKEMON_TRADE_WORK* pWork)
 //通信同期を取る
 static void _changeTimingDemoStart(POKEMON_TRADE_WORK* pWork)
 {
-  if(!GFL_NET_IsInit()){
-    _CHANGE_STATE(pWork,IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove);
-  }
-  else if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_TRADEDEMO_START)){
-    _CHANGE_STATE(pWork,IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove);
+  if(!GFL_NET_IsInit() || GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_TRADEDEMO_START)){
+    switch(pWork->type){
+    case POKEMONTRADE_IRC:   ///< 赤外線
+      _CHANGE_STATE(pWork,POKMEONTRADE_IRCDEMO_ChangeDemo);
+      break;
+    case POKEMONTRADE_UNION: ///< ユニオン
+    case POKEMONTRADE_WIFICLUB: ///< WIFIクラブ
+    case POKEMONTRADE_GTSNEGO: ///< GTSネゴシエーション
+      _CHANGE_STATE(pWork,IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove);
+      break;
+    }
   }
 }
 
@@ -2594,7 +2605,7 @@ static void _dispSystemHeapInit(POKEMON_TRADE_WORK* pWork)
   //セル系システムの作成
   pWork->cellUnit = GFL_CLACT_UNIT_Create( 340 , 0 , pWork->heapID );
 
-  pWork->mcssSys = MCSS_Init( 4 , pWork->heapID );
+  pWork->mcssSys = MCSS_Init( 4 , GetHeapLowID(pWork->heapID) );
   MCSS_SetTextureTransAdrs( pWork->mcssSys , 0x30000 );
   MCSS_SetOrthoMode( pWork->mcssSys );
 
@@ -2706,12 +2717,12 @@ static void DEBUG_MyPokeAdd(POKEPARTY *party,MYSTATUS *myStatus,HEAPID heapID)
   PokeParty_Add(party, pp);
 
   PP_Setup(pp, MONSNO_MUSYAANA, 100, 123456);
+  PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PokeParty_Add(party, pp);
-//  PP_Put( pp , ID_PARA_tamago_flag , 1 );
   PokeParty_Add(party, pp);
   PokeParty_Add(party, pp);
   PP_Setup(pp, MONSNO_MANAFI, 100, 123456);
-//  PP_Put( pp , ID_PARA_tamago_flag , 1 );
+  PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PokeParty_Add(party, pp);
   PokeParty_Add(party, pp);
   GFL_HEAP_FreeMemory(pp);
@@ -2772,7 +2783,9 @@ static void _savedataHeapInit(POKEMON_TRADE_WORK* pWork,EVENT_IRCBATTLE_WORK* pP
     pWork->pMyParty = PokeParty_AllocPartyWork(pWork->heapID);
   }
 #endif
+#if DEBUG_ONLY_FOR_ohno
   DEBUG_MyPokeAdd(pWork->pMyParty, pWork->pMy, pWork->heapID);
+#endif
 }
 
 
@@ -2802,7 +2815,7 @@ FS_EXTERN_OVERLAY(app_mail);
  * @retval       none
  */
 //------------------------------------------------------------------------------
-static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk,int type )
 {
   int i;
   EVENT_IRCBATTLE_WORK* pParentWork = pwk;
@@ -2810,13 +2823,14 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   //オーバーレイ読み込み
   GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
   GFL_OVERLAY_Load( FS_OVERLAY_ID(app_mail));
-//  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0xd300 ); //ほぼマックス
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x130000 ); //ほぼマックス
+//  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE,    0xd3000 ); //WiFiだとほぼマックス
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x100000 );
   GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
   {
     POKEMON_TRADE_WORK *pWork = GFL_PROC_AllocWork( proc, sizeof( POKEMON_TRADE_WORK ), HEAPID_IRCBATTLE );
     GFL_STD_MemClear(pWork, sizeof(POKEMON_TRADE_WORK));
     pWork->heapID = HEAPID_IRCBATTLE;
+    pWork->type = type;
     _messageHeapInit(pWork);
     _dispSystemHeapInit(pWork);
     _savedataHeapInit(pWork,pParentWork);
@@ -2853,6 +2867,18 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
 
   return GFL_PROC_RES_FINISH;
 }
+
+static GFL_PROC_RESULT PokemonTradeUnionProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+  return PokemonTradeProcInit(proc,seq,pwk,mywk,POKEMONTRADE_UNION);
+}
+
+
+static GFL_PROC_RESULT PokemonTradeIrcProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+  return PokemonTradeProcInit(proc,seq,pwk,mywk,POKEMONTRADE_IRC);
+}
+
 
 //------------------------------------------------------------------------------
 /**
@@ -2957,24 +2983,6 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
 
   GFL_G3D_CAMERA_Delete(pWork->pCamera);
 
-  for(i=0;i<PLT_RESOURCE_MAX;i++){
-    if(pWork->cellRes[i]!=0){
-      GFL_CLGRP_PLTT_Release(pWork->cellRes[i]);
-      pWork->cellRes[i]=0;
-    }
-  }
-  for( ;i<CHAR_RESOURCE_MAX;i++){
-    if(pWork->cellRes[i]!=0){
-      GFL_CLGRP_CGR_Release(pWork->cellRes[i]);
-      pWork->cellRes[i]=0;
-    }
-  }
-  for( ;i<ANM_RESOURCE_MAX;i++){
-    if(pWork->cellRes[i]!=0){
-      GFL_CLGRP_CELLANIM_Release(pWork->cellRes[i]);
-      pWork->cellRes[i]=0;
-    }
-  }
 
   IRC_POKETRADE_MainGraphicExit(pWork);
   IRC_POKETRADE_SubGraphicExit(pWork);
@@ -2988,15 +2996,8 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
 
   IRC_POKETRADE_AllDeletePokeIconResource(pWork);
 
+  IRC_POKETRADE_EndIconResource(pWork);  //OAMを全部消去
 
-  for(i = 0;i< CELL_DISP_NUM;i++){
-    if(pWork->curIcon[i]){
-      GFL_CLACT_WK_Remove(pWork->curIcon[i]);
-    }
-  }
-
-
-  //GFL_NET_Exit(NULL);  //@@OO 本来はここで呼ばない
 
   GFL_G3D_Exit();
   GFL_HEAP_FreeMemory(pWork->recvPoke[0]);
@@ -3024,7 +3025,13 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
  */
 //----------------------------------------------------------
 const GFL_PROC_DATA PokemonTradeProcData = {
-  PokemonTradeProcInit,
+  PokemonTradeUnionProcInit,
+  PokemonTradeProcMain,
+  PokemonTradeProcEnd,
+};
+
+const GFL_PROC_DATA PokemonTradeIrcProcData = {
+  PokemonTradeIrcProcInit,
   PokemonTradeProcMain,
   PokemonTradeProcEnd,
 };

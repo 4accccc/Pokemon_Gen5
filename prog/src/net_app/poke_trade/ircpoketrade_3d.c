@@ -25,6 +25,7 @@
 #include "pokeicon/pokeicon.h"
 
 #include "tradedemo.naix"
+#include "tradeirdemo.naix"
 #include "system/ica_anime.h"
 #include "system/ica_camera.h"
 
@@ -109,10 +110,6 @@ static void _demoExit()
 //============================================================================================
 /**
  * @brief 3Dデータ
-●trade2_2.mb(交換ですれ違うシーン)
-●trade4.mb（モンスターボールが帰ってくるシーン）
-●trade5.mb（モンスターボールが落ちるシーン）
-●trade3.mb（モンスターボールからポケモンになるシーン）
 
  */
 //============================================================================================
@@ -127,6 +124,13 @@ static const GFL_G3D_UTIL_RES res_table_trade1[] =
   { ARCID_POKETRADEDEMO,    NARC_tradedemo_matome_test_nsbmd,    GFL_G3D_UTIL_RESARC },
   { ARCID_POKETRADEDEMO,    NARC_tradedemo_matome_test_nsbca,    GFL_G3D_UTIL_RESARC },
   { ARCID_POKETRADEDEMO,    NARC_tradedemo_matome_test_nsbta,    GFL_G3D_UTIL_RESARC },
+};
+
+static const GFL_G3D_UTIL_RES res_table_trade_ir[] =
+{
+  { ARCID_POKETRADEDEMO_IR,    NARC_tradeirdemo_ir_sean_nsbmd,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO_IR,    NARC_tradeirdemo_ir_sean_nsbca,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO_IR,    NARC_tradeirdemo_ir_sean_nsbta,    GFL_G3D_UTIL_RESARC },
 };
 
 
@@ -166,10 +170,8 @@ static const GFL_G3D_UTIL_SETUP setup[] =
 {
   { res_table_reel, NELEMS(res_table_reel), obj_table_reel, NELEMS(obj_table_reel) },
   { res_table_trade1, NELEMS(res_table_trade1), obj_table_trade1, NELEMS(obj_table_trade1) },
-  //  { res_table_trade_trade, NELEMS(res_table_trade_trade), obj_table_trade_normal, NELEMS(obj_table_trade_normal) },
-  //  { res_table_trade_return, NELEMS(res_table_trade_return), obj_table_trade_normal, NELEMS(obj_table_trade_normal) },
-  //  { res_table_trade_splash, NELEMS(res_table_trade_splash), obj_table_trade_splash, NELEMS(obj_table_trade_splash) },
-  //  { res_table_trade_end, NELEMS(res_table_trade_end), obj_table_trade_normal, NELEMS(obj_table_trade_normal) },
+  { res_table_trade_ir, NELEMS(res_table_trade_ir), obj_table_trade1, NELEMS(obj_table_trade1) },
+
 };
 
 
@@ -291,75 +293,25 @@ static void _moveSetTrade01(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus
   VEC_Set( &pStatus->scale, FX32_ONE, FX32_ONE, FX32_ONE );
   MTX_Identity33( &pStatus->rotate );
 
-#if 0
+  if(pWork->pPokemonTradeDemo){
+    ICA_CAMERA_SetCameraPos( pWork->camera ,pWork->pPokemonTradeDemo->icaCamera );
+    ICA_CAMERA_SetTargetPos( pWork->camera ,pWork->pPokemonTradeDemo->icaTarget );
+  }
+
+#if 0  //カメラ位置確認用
   {
+    VecFx32 pos;
+    GFL_G3D_CAMERA_GetTarget( pWork->camera , &pos );
+    OS_TPrintf("pos %d %d %d\n",pos.x/FX32_ONE,pos.y/FX32_ONE,pos.z/FX32_ONE);
 
-    VecFx32 campos;
-
-    GFL_G3D_CAMERA_GetPos( pWork->camera, &campos );
-
-    if(GFL_UI_KEY_GetCont() == PAD_KEY_UP){
-      campos.y += FX32_ONE/2;
-    }
-    if(GFL_UI_KEY_GetCont() == PAD_KEY_DOWN){
-      campos.y -= FX32_ONE/2;
-    }
-    if(GFL_UI_KEY_GetCont() == PAD_KEY_LEFT){
-      campos.z += FX32_ONE/2;
-    }
-    if(GFL_UI_KEY_GetCont() == PAD_KEY_RIGHT){
-      campos.z -= FX32_ONE/2;
-    }
-    GFL_G3D_CAMERA_SetPos( pWork->camera, &campos );
+    pos.x = 20*FX32_ONE;
+    pos.y = 20*FX32_ONE;
+    pos.z = 20*FX32_ONE;
+    GFL_G3D_CAMERA_SetTarget( pWork->camera , &pos );
   }
 #endif
-
-  // カメラ更新
-  //  ICA_ANIME_SetCameraStatus( pWork->icaAnime, pWork->camera );
-
-  ICA_CAMERA_SetCameraPos( pWork->camera ,pWork->icaCamera );
-  ICA_CAMERA_SetTargetPos( pWork->camera ,pWork->icaTarget );
-
-
-  if(0){
-    VecFx32 campos;
-    VecFx32 tarpos;
-    fx32 far= 8000*FX32_ONE;
-    fx32 near= FX32_ONE;
-
-    campos.x = 0;
-    campos.y = 3*FX32_ONE;
-    campos.z = 15*FX32_ONE;
-    tarpos.x = 0;
-    tarpos.y = 0;
-    tarpos.z = 0;
-
-    GFL_G3D_CAMERA_SetPos( pWork->camera, &campos );
-    GFL_G3D_CAMERA_SetTarget( pWork->camera, &tarpos );
-    GFL_G3D_CAMERA_SetNear( pWork->camera, &near );
-    GFL_G3D_CAMERA_SetFar( pWork->camera, &far );
-    tarpos.x = 0;
-    tarpos.y = FX32_ONE;
-    tarpos.z = 0;
-
-    GFL_G3D_CAMERA_SetCamUp( pWork->camera, &tarpos );
-  }
-
-
-
+  
   GFL_G3D_CAMERA_Switching(pWork->camera );
-
-  if(0){
-    float x,y,z;
-    VecFx32 campos;
-    GFL_G3D_CAMERA_GetTarget( pWork->camera, &campos );
-
-    x = campos.x;
-    y = campos.y;
-    z = campos.z;
-    //OS_Printf("POS X=%f Y=%f Z=%f\n",x/FX32_ONE,y/FX32_ONE,z/FX32_ONE);
-
-  }
 
 
   {
@@ -405,34 +357,17 @@ static void _moveSetTrade01(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus
     }
   }
 
-  if(pWork->pBallInPer){
-    VecFx32 pos;
-    ICA_ANIME_GetTranslate( pWork->icaBallin, &pos );
-    GFL_PTC_SetEmitterPosition(pWork->pBallInPer, &pos);
-
-    if(1){
-      float x,y,z;
-      x = pos.x;
-      y = pos.y;
-      z = pos.z;
-      //OS_Printf("INPOS X=%f Y=%f Z=%f\n",x/FX32_ONE,y/FX32_ONE,z/FX32_ONE);
+  if(pWork->pPokemonTradeDemo){
+    if(pWork->pPokemonTradeDemo->pBallInPer){
+      VecFx32 pos;
+      ICA_ANIME_GetTranslate( pWork->pPokemonTradeDemo->icaBallin, &pos );
+      GFL_PTC_SetEmitterPosition(pWork->pPokemonTradeDemo->pBallInPer, &pos);
     }
-
-
-  }
-  if(pWork->pBallOutPer){
-    VecFx32 pos;
-    ICA_ANIME_GetTranslate( pWork->icaBallout, &pos );
-    GFL_PTC_SetEmitterPosition(pWork->pBallOutPer, &pos);
-
-    if(1){
-      float x,y,z;
-      x = pos.x;
-      y = pos.y;
-      z = pos.z;
-      //OS_Printf("OUTPOS X=%f Y=%f Z=%f\n",x/FX32_ONE,y/FX32_ONE,z/FX32_ONE);
+    if(pWork->pPokemonTradeDemo->pBallOutPer){
+      VecFx32 pos;
+      ICA_ANIME_GetTranslate( pWork->pPokemonTradeDemo->icaBallout, &pos );
+      GFL_PTC_SetEmitterPosition(pWork->pPokemonTradeDemo->pBallOutPer, &pos);
     }
-
   }
 
 
@@ -447,9 +382,35 @@ static const MODEL3D_SET_FUNCS modelset[] =
 {
   { _cameraSetReel,_moveSetReel },
   { _cameraSetTrade01,_moveSetTrade01 },
+  { _cameraSetTrade01,_moveSetTrade01 },
 };
 
-static void _icaCameraDelete(POKEMON_TRADE_WORK* pWork)
+
+//============================================================================================
+/**
+ * @brief ICA初期化
+ */
+//============================================================================================
+
+void POKEMONTRADE_DEMO_ICA_Init(POKEMONTRADE_DEMO_WORK* pWork)
+{
+  pWork->icaCamera = ICA_ANIME_CreateStreamingAlloc(
+    pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_icacamera_bin, 10 );
+  pWork->icaTarget = ICA_ANIME_CreateStreamingAlloc(
+    pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_icatarget_bin, 10 );
+  pWork->icaBallin = ICA_ANIME_CreateStreamingAlloc(
+    pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_ball_001_bin, 10 );
+  pWork->icaBallout = ICA_ANIME_CreateStreamingAlloc(
+    pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_ball_002_bin, 10 );
+}
+
+//============================================================================================
+/**
+ * @brief ICA消去
+ */
+//============================================================================================
+
+void POKEMONTRADE_DEMO_ICA_Delete(POKEMONTRADE_DEMO_WORK* pWork)
 {
   if(pWork->icaCamera){
     ICA_ANIME_Delete(pWork->icaCamera);
@@ -468,6 +429,145 @@ static void _icaCameraDelete(POKEMON_TRADE_WORK* pWork)
     pWork->icaBallout=NULL;
   }
 }
+
+
+//============================================================================================
+/**
+ * @brief ICA初期化
+ */
+//============================================================================================
+
+void POKEMONTRADE_DEMO_IRICA_Init(POKEMONTRADE_DEMO_WORK* pWork)
+{
+  pWork->icaCamera = ICA_ANIME_CreateStreamingAlloc(
+    pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradeirdemo_icacamera_bin, 10 );
+  pWork->icaTarget = ICA_ANIME_CreateStreamingAlloc(
+    pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradeirdemo_icatarget_bin, 10 );
+}
+
+//============================================================================================
+/**
+ * @brief ICA消去
+ */
+//============================================================================================
+
+void POKEMONTRADE_DEMO_IRICA_Delete(POKEMONTRADE_DEMO_WORK* pWork)
+{
+  if(pWork->icaCamera){
+    ICA_ANIME_Delete(pWork->icaCamera);
+    pWork->icaCamera=NULL;
+  }
+  if(pWork->icaTarget){
+    ICA_ANIME_Delete(pWork->icaTarget);
+    pWork->icaTarget=NULL;
+  }
+}
+
+
+
+
+//============================================================================================
+/**
+ * @brief パーティクル初期化 読み込み
+ */
+//============================================================================================
+void POKEMONTRADE_DEMO_PTC_Init( POKEMONTRADE_DEMO_WORK* pWork )
+{
+  VecFx32 campos;
+  VecFx32 tarpos;
+  int i;
+
+  //パーティクルシステムワーク初期化
+  GFL_PTC_Init(pWork->heapID);
+
+  {
+    int i;
+    BOOL bCamera;
+    for(i=0;i<PTC_KIND_NUM_MAX;i++){
+      pWork->ptcheap[i] = GFL_HEAP_AllocClearMemory(pWork->heapID, PARTICLE_LIB_HEAP_SIZE);
+      switch(i){
+      case PTC_KIND_DEMO1:
+      case PTC_KIND_DEMO2:
+      case PTC_KIND_DEMO3:
+      case PTC_KIND_DEMO6:
+      case PTC_KIND_DEMO7:
+      case PTC_KIND_ORG:
+        bCamera=FALSE;
+        break;
+      default:
+        bCamera=TRUE;
+        break;
+      }
+      pWork->ptc[i] = GFL_PTC_Create(pWork->ptcheap[i], PARTICLE_LIB_HEAP_SIZE, bCamera, pWork->heapID);
+    }
+
+  }
+  //リソース読み込み＆登録
+  {
+    void *resource;
+    int i;
+    resource = GFL_PTC_LoadArcResource(
+      ARCID_POKETRADEDEMO, NARC_tradedemo_demo_tex001_spa, pWork->heapID);
+    for(i=0;i<PTC_KIND_NUM_MAX;i++){
+      GFL_PTC_SetResource(pWork->ptc[i], resource, TRUE, NULL);
+    }
+  }
+}
+
+//============================================================================================
+/**
+ * @brief パーティクル終了関数
+ */
+//============================================================================================
+void POKEMONTRADE_DEMO_PTC_End( POKEMONTRADE_DEMO_WORK* pWork ,int num)
+{
+  int i;
+
+  GFL_PTC_Exit();
+  for(i=0;i<num;i++){
+    GFL_HEAP_FreeMemory(pWork->ptcheap[i]);
+  }
+}
+
+
+//============================================================================================
+/**
+ * @brief IRパーティクル初期化 読み込み
+ */
+//============================================================================================
+void POKEMONTRADE_DEMO_IRPTC_Init( POKEMONTRADE_DEMO_WORK* pWork )
+{
+  VecFx32 campos;
+  VecFx32 tarpos;
+  int i;
+
+  //パーティクルシステムワーク初期化
+  GFL_PTC_Init(pWork->heapID);
+
+  {
+    int i;
+    BOOL bCamera;
+    for(i = 0 ; i < IRPTC_KIND_NUM_MAX ; i++){
+      pWork->ptcheap[i] = GFL_HEAP_AllocClearMemory(pWork->heapID, PARTICLE_LIB_HEAP_SIZE);
+      bCamera = FALSE;
+      pWork->ptc[i] = GFL_PTC_Create(pWork->ptcheap[i], PARTICLE_LIB_HEAP_SIZE, bCamera, pWork->heapID);
+    }
+
+  }
+  //リソース読み込み＆登録
+  {
+    void *resource;
+    int i;
+    resource = GFL_PTC_LoadArcResource(
+      ARCID_POKETRADEDEMO_IR, NARC_tradeirdemo_irdemo_spa, pWork->heapID);
+    for(i=0;i<IRPTC_KIND_NUM_MAX;i++){
+      GFL_PTC_SetResource(pWork->ptc[i], resource, TRUE, NULL);
+    }
+  }
+
+}
+
+
 
 
 //============================================================================================
@@ -499,51 +599,6 @@ void IRC_POKETRADEDEMO_Init( POKEMON_TRADE_WORK* pWork )
   // 3D管理ユーティリティーのセットアップ
   pWork->g3dUtil = GFL_G3D_UTIL_Create( 20, 20, pWork->heapID );
 
-  //パーティクルシステムワーク初期化
-  GFL_PTC_Init(pWork->heapID);
-
-  {
-    void* heap;
-    int i;
-    BOOL bCamera;
-    for(i=0;i<PTC_KIND_NUM_MAX;i++){
-      heap = GFL_HEAP_AllocMemory(pWork->heapID, PARTICLE_LIB_HEAP_SIZE);
-      switch(i){
-      case PTC_KIND_DEMO1:
-      case PTC_KIND_DEMO2:
-      case PTC_KIND_DEMO3:
-      case PTC_KIND_DEMO6:
-      case PTC_KIND_DEMO7:
-        //      case PTC_KIND_DEMO8:
-        //      case PTC_KIND_DEMO9:
-        //      case PTC_KIND_DEMO10:
-        bCamera=FALSE;
-        break;
-      default:
-        bCamera=TRUE;
-        break;
-      }
-      pWork->ptc[i] = GFL_PTC_Create(heap, PARTICLE_LIB_HEAP_SIZE, bCamera, pWork->heapID);
-    }
-    heap = GFL_HEAP_AllocMemory(pWork->heapID, PARTICLE_LIB_HEAP_SIZE);
-    pWork->ptcOrthogonal = GFL_PTC_Create(heap, PARTICLE_LIB_HEAP_SIZE, FALSE, pWork->heapID);
-
-  }
-  if(0){
-    GFL_G3D_PROJECTION proj = {GFL_G3D_PRJORTH,
-      FX32_ONE*12.0f,
-      0,
-      0,
-      FX32_ONE*16.0f,
-      (FX32_ONE),
-      (FX32_ONE*300),
-      0,
-    };
-    VecFx32    pos = { -FX32_ONE*8, -FX32_ONE*6, 4*FX32_ONE };
-    VecFx32    target = { -FX32_ONE*8, -FX32_ONE*6, 0 };
-    GFL_PTC_PersonalCameraCreate(pWork->ptcOrthogonal,&proj,DEFAULT_PERSP_WAY,&pos,NULL,&target,pWork->heapID );
-
-  }
   // カメラ作成
   if(pWork->camera==NULL)
   {
@@ -553,18 +608,6 @@ void IRC_POKETRADEDEMO_Init( POKEMON_TRADE_WORK* pWork )
   }
   if(pWork->modelno!=-1){
     modelset[pWork->modelno].setCamera(pWork);
-  }
-
-  //リソース読み込み＆登録
-  {
-    void *resource;
-    int i;
-    resource = GFL_PTC_LoadArcResource(
-      ARCID_POKETRADEDEMO, NARC_tradedemo_demo_tex001_spa, pWork->heapID);
-    for(i=0;i<PTC_KIND_NUM_MAX;i++){
-      GFL_PTC_SetResource(pWork->ptc[i], resource, TRUE, NULL);
-    }
-    GFL_PTC_SetResource(pWork->ptcOrthogonal, resource, TRUE, NULL);
   }
 
 }
@@ -588,30 +631,12 @@ void IRC_POKETRADEDEMO_Main( POKEMON_TRADE_WORK* pWork )
 //============================================================================================
 void IRC_POKETRADEDEMO_End( POKEMON_TRADE_WORK* pWork )
 {
-  {
-    void *heap2 ,*heap[PTC_KIND_NUM_MAX];
-    int i;
-    //    GFL_PTC_PersonalCameraDelete(pWork->ptcOrthogonal);
-    heap2 = GFL_PTC_GetHeapPtr(pWork->ptcOrthogonal);
-    for(i=0;i<PTC_KIND_NUM_MAX;i++){
-      heap[i] = GFL_PTC_GetHeapPtr(pWork->ptc[i]);
-    }
-    GFL_PTC_Exit();
-    GFL_HEAP_FreeMemory(heap2);
-    for(i=0;i<PTC_KIND_NUM_MAX;i++){
-      GFL_HEAP_FreeMemory(heap[i]);
-    }
-  }
 
   // カメラ破棄
   if(pWork->camera)
   {
     GFL_G3D_CAMERA_Delete( pWork->camera );
   }
-  _icaCameraDelete(pWork);
-
-
-  //Finalize( pWork );
   // 3D管理ユーティリティーの破棄
   GFL_G3D_UTIL_Delete( pWork->g3dUtil );
 
@@ -635,19 +660,6 @@ void IRC_POKETRADEDEMO_SetModel( POKEMON_TRADE_WORK* pWork, int modelno)
 
   modelset[pWork->modelno].setCamera(pWork);
 
-  if(modelno== TRADE01_OBJECT){
-
-    pWork->icaCamera = ICA_ANIME_CreateStreamingAlloc(
-      pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_icacamera_bin, 10 );
-    pWork->icaTarget = ICA_ANIME_CreateStreamingAlloc(
-      pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_icatarget_bin, 10 );
-    pWork->icaBallin = ICA_ANIME_CreateStreamingAlloc(
-      pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_ball_001_bin, 10 );
-    pWork->icaBallout = ICA_ANIME_CreateStreamingAlloc(
-      pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_ball_002_bin, 10 );
-
-  }
-
 
 }
 
@@ -662,11 +674,8 @@ void IRC_POKETRADEDEMO_RemoveModel( POKEMON_TRADE_WORK* pWork)
     return;
   }
   Finalize(pWork);
-  _icaCameraDelete(pWork);
   pWork->modelno = -1;
 
-//  IRC_POKETRADEDEMO_End(pWork);
-//  IRC_POKETRADEDEMO_Init(pWork);
 }
 
 
@@ -709,9 +718,6 @@ static void Initialize( POKEMON_TRADE_WORK* pWork, int modelno )
   }
   pWork->modelno = modelno;
 
-  // icaデータをロード
-  //  pWork->icaAnime = ICA_ANIME_CreateStreamingAlloc(
-  //      pWork->heapID, ARCID_POKETRADEDEMO, NARC_debug_obata_ica_test_data2_bin, 10 );
 
 }
 
@@ -742,7 +748,6 @@ static void Finalize( POKEMON_TRADE_WORK* pWork )
 
 static void Draw( POKEMON_TRADE_WORK* pWork )
 {
-  static fx32 frame = 0;
   static fx32 anime_speed = FX32_ONE;  // 1/60での動作の為
   GFL_G3D_OBJSTATUS status;
 
@@ -792,9 +797,10 @@ static void Draw( POKEMON_TRADE_WORK* pWork )
   GFL_G3D_CAMERA_Switching( pWork->camera );
   GFL_G3D_DRAW_SetLookAt();
 
-  GFL_PTC_DrawAll();	//パーティクル描画
-  GFL_PTC_CalcAll();	//パーティクル計算
-
+  if(pWork->pPokemonTradeDemo){
+    GFL_PTC_DrawAll();	//パーティクル描画
+    GFL_PTC_CalcAll();	//パーティクル計算
+  }
   {
     {
       GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( pWork->g3dUtil, pWork->unitIndex );
@@ -803,13 +809,17 @@ static void Draw( POKEMON_TRADE_WORK* pWork )
   }
   //  GFL_G3D_DRAW_End();
 
-  if(pWork->icaCamera){
-    frame += anime_speed;
-    //    ICA_ANIME_IncAnimeFrame( pWork->icaAnime, anime_speed );
-    ICA_ANIME_IncAnimeFrame( pWork->icaCamera, anime_speed );
-    ICA_ANIME_IncAnimeFrame( pWork->icaTarget, anime_speed );
-    ICA_ANIME_IncAnimeFrame( pWork->icaBallout, anime_speed );
-    ICA_ANIME_IncAnimeFrame( pWork->icaBallin, anime_speed );
+  if(pWork->pPokemonTradeDemo){
+    if(pWork->pPokemonTradeDemo->icaCamera){
+      ICA_ANIME_IncAnimeFrame( pWork->pPokemonTradeDemo->icaCamera, anime_speed );
+      ICA_ANIME_IncAnimeFrame( pWork->pPokemonTradeDemo->icaTarget, anime_speed );
+    }
+    if(pWork->pPokemonTradeDemo->icaBallout){
+      ICA_ANIME_IncAnimeFrame( pWork->pPokemonTradeDemo->icaBallout, anime_speed );
+    }
+    if(pWork->pPokemonTradeDemo->icaBallin){
+      ICA_ANIME_IncAnimeFrame( pWork->pPokemonTradeDemo->icaBallin, anime_speed );
+    }
   }
 }
 

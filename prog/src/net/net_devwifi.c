@@ -9,6 +9,7 @@
 
 #include <nitro.h>
 #include "gflib.h"
+#include "net/network_define.h"
 
 #define _WIFILOBBY (0)
 
@@ -150,6 +151,7 @@ static NetWork* _pWork = NULL;
 //------------------------------------------------------------------------------
 static void _DevBootFunc(HEAPID heapID, NetErrorFunc errorFunc)
 {
+  DWC_SetAuthServer(GF_DWC_CONNECTINET_AUTH_TYPE);
   GFL_NET_WifiStart( heapID, errorFunc );
 
   //@todo ’u‚«Š·‚¦‚ª•K—v
