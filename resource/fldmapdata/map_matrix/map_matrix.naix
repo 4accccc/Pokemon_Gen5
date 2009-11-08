@@ -212,7 +212,20 @@ enum {
 	NARC_map_matrix_theater03_mat_bin = 198,
 	NARC_map_matrix_cabin01_mat_bin = 199,
 	NARC_map_matrix_ybuill01_mat_bin = 200,
-	NARC_map_matrix_museum02_mat_bin = 201
+	NARC_map_matrix_museum02_mat_bin = 201,
+	NARC_map_matrix_h04a_mat_bin = 202,
+	NARC_map_matrix_dun1801_mat_bin = 203,
+	NARC_map_matrix_dun1001_mat_bin = 204,
+	NARC_map_matrix_dun1701_mat_bin = 205,
+	NARC_map_matrix_dun1702_mat_bin = 206,
+	NARC_map_matrix_dun1703_mat_bin = 207,
+	NARC_map_matrix_dun1704_mat_bin = 208,
+	NARC_map_matrix_dun1705_mat_bin = 209,
+	NARC_map_matrix_dun1901_mat_bin = 210,
+	NARC_map_matrix_labo03_mat_bin = 211,
+	NARC_map_matrix_bar01_mat_bin = 212,
+	NARC_map_matrix_gym0602_mat_bin = 213,
+	NARC_map_matrix_winter0701_mat_bin = 214
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */
