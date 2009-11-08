@@ -1,0 +1,30 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: tradeirdemo.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_TRADEIRDEMO_NAIX_
+#define NARC_TRADEIRDEMO_NAIX_
+
+enum {
+	NARC_tradeirdemo_demo_backshot2_NCGR = 0,
+	NARC_tradeirdemo_demo_backshot21_NCLR = 1,
+	NARC_tradeirdemo_under02_NSCR = 2,
+	NARC_tradeirdemo_ir_ichi_nsbca = 3,
+	NARC_tradeirdemo_ir_ichi_nsbmd = 4,
+	NARC_tradeirdemo_ir_sean_nsbca = 5,
+	NARC_tradeirdemo_ir_sean_nsbmd = 6,
+	NARC_tradeirdemo_ir_sean_nsbta = 7,
+	NARC_tradeirdemo_ir_tyushiten_nsbca = 8,
+	NARC_tradeirdemo_ir_tyushiten_nsbmd = 9,
+	NARC_tradeirdemo_irdemo_spa = 10,
+	NARC_tradeirdemo_icacamera_bin = 11,
+	NARC_tradeirdemo_icatarget_bin = 12
+};
+
+/* NARC_TRADEIRDEMO_NAIX_ */
+#endif
