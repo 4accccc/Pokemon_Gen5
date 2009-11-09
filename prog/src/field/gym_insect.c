@@ -27,6 +27,8 @@
 
 //#include "gym_onsect_se_def.h"
 
+#include "event_fldmmdl_control.h"  //for EVENT_ObjAnime
+
 #define GYM_INSECT_UNIT_IDX (0)
 #define GYM_INSECT_TMP_ASSIGN_ID  (1)
 
@@ -36,8 +38,17 @@
 #define SW_ANM_NUM  (2)
 #define PL_ANM_NUM  (2)
 #define EFF_ANM_NUM  (2)
+#define WALL_ANM_NUM   (8)
+#define WALL_BRK_ANM_NUM   (4)
+#define WALL_CHG_ANM_NUM   (4)
 
 #define TRAP_NUM  (2)
+
+#define BAND_WIDTH  (32)
+
+#define CONT_TIME   (2)   //押し込み値が加算されるベタ押しの時間
+
+#define TEST_BRK
 
 //ポール座標
 #define PL1_X (PL1_GX*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
@@ -149,11 +160,19 @@ static const VecFx32 TrapPos[TRAP_NUM] =
 //ジム内部中の一時ワーク
 typedef struct GYM_INSECT_TMP_tag
 {
-  u16 SwIdx;
-  u16 PlIdx;
-  int TrEvtIdx;
+  u8 SwIdx;
+  u8 PlIdx;
+  u8 TrEvtIdx;
+  u8 WallIdx;
+  u8 BrkWallIdx;
+  u8 Val;
+  u8 Dir;
+  u8 Cont;
+  VecFx32 BasePos;
+  GFL_TCB *PushAnmTcb;
+  BOOL PushEnd;
+  BOOL PushStepStart;
 }GYM_INSECT_TMP;
-
 
 //リソースの並び順番
 enum {
@@ -162,6 +181,7 @@ enum {
   RES_ID_EFFECT_MDL,
   RES_ID_SW_MDL,
   RES_ID_WALL_MDL,
+  RES_ID_WALL_BRK_MDL,
 
   RES_ID_PL_LEFT_MOV1,
   RES_ID_PL_LEFT_MOV2,
@@ -171,12 +191,19 @@ enum {
   RES_ID_EFF_MOV2,
   RES_ID_SW_MOV1,
   RES_ID_SW_MOV2,
-  RES_ID_WALL1_MOV1,
-  RES_ID_WALL1_MOV2,
-  RES_ID_WALL2_MOV1,
-  RES_ID_WALL2_MOV2,
+  RES_ID_WALL1_MOV_N,
+  RES_ID_WALL1_MOV_S,
+  RES_ID_WALL2_MOV_N,
+  RES_ID_WALL2_MOV_S,
   RES_ID_WALL3_MOV1,
   RES_ID_WALL3_MOV2,
+  RES_ID_WALL3_MOV3,
+  RES_ID_WALL3_MOV4,
+
+  RES_ID_WALL1_BRK_MOV_N,
+  RES_ID_WALL1_BRK_MOV_S,
+  RES_ID_WALL2_BRK_MOV_N,
+  RES_ID_WALL2_BRK_MOV_S,
 };
 
 //ＯＢＪインデックス
@@ -209,8 +236,29 @@ enum {
   OBJ_WALL6,
   OBJ_WALL7,
 
+  OBJ_WALL_BRK1,
+  OBJ_WALL_BRK2,
+  OBJ_WALL_BRK3,
+  OBJ_WALL_BRK4,
+  OBJ_WALL_BRK5,
+  OBJ_WALL_BRK6,
+  OBJ_WALL_BRK7,
+
   OBJ_EFF,
 };
+
+//壁アニメの順番
+enum{
+  ANM_WALL_N = 0,   //北向き突破
+  ANM_WALL_S,       //南向き突破
+  ANM_WALL_SIDE_N,  //北向きサイド
+  ANM_WALL_SIDE_S,  //南向きサイド
+  ANM_WALL_CHG1,    //壁変更1(壊れない壁のみ)
+  ANM_WALL_CHG2,    //壁変更2(壊れない壁のみ)
+  ANM_WALL_CHG3,    //壁変更3(壊れない壁のみ)
+  ANM_WALL_CHG4,    //壁変更4(壊れない壁のみ)
+};
+
 
 
 
@@ -222,6 +270,7 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
   { ARCID_GYM_INSECT, NARC_gym_insect_c03_effect1_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
   { ARCID_GYM_INSECT, NARC_gym_insect_c03_switch1_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
   { ARCID_GYM_INSECT, NARC_gym_insect_c03_wall1_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
+  { ARCID_GYM_INSECT, NARC_gym_insect_c03_wall2_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
 
   { ARCID_GYM_INSECT, NARC_gym_insect_c03_pole1_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
   { ARCID_GYM_INSECT, NARC_gym_insect_c03_pole1_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
@@ -231,22 +280,40 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
   { ARCID_GYM_INSECT, NARC_gym_insect_c03_effect1_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
   { ARCID_GYM_INSECT, NARC_gym_insect_c03_switch1_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
   { ARCID_GYM_INSECT, NARC_gym_insect_c03_switch1_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
-  { ARCID_GYM_INSECT, NARC_gym_insect_c03_wall1_1_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
-  { ARCID_GYM_INSECT, NARC_gym_insect_c03_wall1_2_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
-  { ARCID_GYM_INSECT, NARC_gym_insect_c03_wall2_1_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
-  { ARCID_GYM_INSECT, NARC_gym_insect_c03_wall2_2_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
-  { ARCID_GYM_INSECT, NARC_gym_insect_c03_wall3_1_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
-  { ARCID_GYM_INSECT, NARC_gym_insect_c03_wall3_2_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
+
+  { ARCID_GYM_INSECT, NARC_gym_insect_c03_wall1_1a_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
+  { ARCID_GYM_INSECT, NARC_gym_insect_c03_wall1_1a_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
+  { ARCID_GYM_INSECT, NARC_gym_insect_c03_wall1_2a_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
+  { ARCID_GYM_INSECT, NARC_gym_insect_c03_wall1_2b_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
+  { ARCID_GYM_INSECT, NARC_gym_insect_c03_wall1_3_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
+  { ARCID_GYM_INSECT, NARC_gym_insect_c03_wall1_3_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
+  { ARCID_GYM_INSECT, NARC_gym_insect_c03_wall1_3_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
+  { ARCID_GYM_INSECT, NARC_gym_insect_c03_wall1_3_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
+
+  { ARCID_GYM_INSECT, NARC_gym_insect_c03_wall2_1a_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
+  { ARCID_GYM_INSECT, NARC_gym_insect_c03_wall2_1b_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
+  { ARCID_GYM_INSECT, NARC_gym_insect_c03_wall2_2a_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
+  { ARCID_GYM_INSECT, NARC_gym_insect_c03_wall2_2b_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
 };
 
 //3Dアニメ　壁
 static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_wall[] = {
-	{ RES_ID_WALL1_MOV1,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
-  { RES_ID_WALL1_MOV2,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
-  { RES_ID_WALL2_MOV1,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
-  { RES_ID_WALL2_MOV2,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+	{ RES_ID_WALL1_MOV_N,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_WALL1_MOV_S,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_WALL2_MOV_N,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_WALL2_MOV_S,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
   { RES_ID_WALL3_MOV1,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
   { RES_ID_WALL3_MOV2,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_WALL3_MOV3,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_WALL3_MOV4,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+};
+
+//3Dアニメ　壊れる壁
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_wall_brk[] = {
+	{ RES_ID_WALL1_BRK_MOV_N,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_WALL1_BRK_MOV_S,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_WALL2_BRK_MOV_N,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_WALL2_BRK_MOV_S,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
 };
 
 //3Dアニメ　スイッチ
@@ -480,6 +547,63 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 		NELEMS(g3Dutil_anmTbl_wall),	//アニメリソース数
 	},
 
+  //壊せる壁1
+  {
+		RES_ID_WALL_BRK_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_WALL_BRK_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_wall_brk,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_wall_brk),	//アニメリソース数
+	},
+  //壊せる壁2
+  {
+		RES_ID_WALL_BRK_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_WALL_BRK_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_wall_brk,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_wall_brk),	//アニメリソース数
+	},
+  //壊せる壁3
+  {
+		RES_ID_WALL_BRK_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_WALL_BRK_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_wall_brk,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_wall_brk),	//アニメリソース数
+	},
+  //壊せる壁4
+  {
+		RES_ID_WALL_BRK_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_WALL_BRK_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_wall_brk,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_wall_brk),	//アニメリソース数
+	},
+  //壊せる壁5
+  {
+		RES_ID_WALL_BRK_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_WALL_BRK_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_wall_brk,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_wall_brk),	//アニメリソース数
+	},
+  //壊せる壁6
+  {
+		RES_ID_WALL_BRK_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_WALL_BRK_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_wall_brk,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_wall_brk),	//アニメリソース数
+	},
+  //壊せる壁7
+  {
+		RES_ID_WALL_BRK_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_WALL_BRK_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_wall_brk,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_wall_brk),	//アニメリソース数
+	},
+  
   //トラップエフェクト
   {
 		RES_ID_EFFECT_MDL, 	//モデルリソースID
@@ -497,10 +621,32 @@ static const GFL_G3D_UTIL_SETUP Setup = {
 	NELEMS(g3Dutil_objTbl),		//オブジェクト数
 };
 
+static const MMDL_ACMD_LIST anime_up_table[] = {
+  AC_WALK_U_8F, 1,
+  ACMD_END, 0
+};
+static const MMDL_ACMD_LIST anime_down_table[] = {
+  AC_WALK_D_8F, 1,
+  ACMD_END, 0
+};
+static const MMDL_ACMD_LIST anime_up_push_table[] = {
+  AC_STAY_WALK_U_32F, 1,
+  ACMD_END, 0
+};
+static const MMDL_ACMD_LIST anime_down_push_table[] = {
+  AC_STAY_WALK_D_32F, 1,
+  ACMD_END, 0
+};
 
 static GMEVENT_RESULT SwitchEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT PoleEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT TrTrapEvt( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT PushWallEvt( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT PushWallSideEvt( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT PushWallNoBreakEvt( GMEVENT* event, int* seq, void* work );
+static int GetWallInfo( GYM_INSECT_SV_WORK *gmk_sv_work,
+                        const int inX, const int inZ,
+                        GYM_INSECT_WALL_ST *outSt, BOOL *outCenter  );
 
 //--------------------------------------------------------------
 /**
@@ -521,11 +667,23 @@ void GYM_INSECT_Setup(FIELDMAP_WORK *fieldWork)
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_INSECT );
   }
 
+  {
+    int size = GFI_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP);
+    OS_Printf("bfore_size = %x\n",size);
+  }
+
   //汎用ワーク確保
   GMK_TMP_WK_AllocWork
       (fieldWork, GYM_INSECT_TMP_ASSIGN_ID, FIELDMAP_GetHeapID(fieldWork), sizeof(GYM_INSECT_TMP));
   //必要なリソースの用意
   FLD_EXP_OBJ_AddUnit(ptr, &Setup, GYM_INSECT_UNIT_IDX );
+{
+    int size = GFI_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP);
+    OS_Printf("bfore_size = %x\n",size);
+  }
+
+  //@todo 今だけここでインデックス6番の壁を常時WEAKNESSにする
+  gmk_sv_work->WallSt[6] = WALL_ST_WEAKNESS;
 
   //座標セット
   for (i=0;i<INSECT_SW_MAX;i++)
@@ -563,18 +721,57 @@ void GYM_INSECT_Setup(FIELDMAP_WORK *fieldWork)
   }
   for (i=0;i<INSECT_WALL_MAX;i++)
   {
-    int idx = OBJ_WALL1 + i;
-    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_INSECT_UNIT_IDX, idx);
+    GFL_G3D_OBJSTATUS *status;
+    int j;
+    int nrm_idx = OBJ_WALL1 + i;
+    int brk_idx = OBJ_WALL_BRK1 + i;
+    status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_INSECT_UNIT_IDX, nrm_idx);
     status->trans = WallPos[i];
+    status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_INSECT_UNIT_IDX, brk_idx);
+    status->trans = WallPos[i];
+
     //カリングする
-    FLD_EXP_OBJ_SetCulling(ptr, GYM_INSECT_UNIT_IDX, idx, TRUE);
+    FLD_EXP_OBJ_SetCulling(ptr, GYM_INSECT_UNIT_IDX, nrm_idx, TRUE);
+    FLD_EXP_OBJ_SetCulling(ptr, GYM_INSECT_UNIT_IDX, brk_idx, TRUE);
+    for (j=0;j<WALL_ANM_NUM;j++)
+    {
+      //1回再生設定
+      EXP_OBJ_ANM_CNT_PTR anm;
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_INSECT_UNIT_IDX, nrm_idx, j);
+      FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+    }
+    for (j=0;j<WALL_BRK_ANM_NUM;j++)
+    {
+      //1回再生設定
+      EXP_OBJ_ANM_CNT_PTR anm;
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_INSECT_UNIT_IDX, brk_idx, j);
+      FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+    }
+    //壁の状態のより分岐
+    switch(gmk_sv_work->WallSt[i]){
+    case WALL_ST_NORMAL:
+      //壊せる壁を消す
+      FLD_EXP_OBJ_SetVanish( ptr, GYM_INSECT_UNIT_IDX, brk_idx, TRUE );
+      break;
+    case WALL_ST_WEAKNESS:
+      //通常壁を消す
+      FLD_EXP_OBJ_SetVanish( ptr, GYM_INSECT_UNIT_IDX, nrm_idx, TRUE );
+      break;
+    case WALL_ST_BREAK:
+      //両方消す
+      FLD_EXP_OBJ_SetVanish( ptr, GYM_INSECT_UNIT_IDX, nrm_idx, TRUE );
+      FLD_EXP_OBJ_SetVanish( ptr, GYM_INSECT_UNIT_IDX, brk_idx, TRUE );
+    default:
+      GF_ASSERT(0);
+    }
   }
-
-
   //スイッチのセットアップ
   //ウォールバンドのセットアップ
   //ポールのセットアップ
-
+  {
+    int size = GFI_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP);
+    OS_Printf("after_size = %x\n",size);
+  }
 }
 
 //--------------------------------------------------------------
@@ -614,9 +811,150 @@ void GYM_INSECT_Move(FIELDMAP_WORK *fieldWork)
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_INSECT );
   }
 
+  //フィールドの残りヒープをプリント
+  if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
+    int size = GFI_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP);
+    OS_Printf("size = %x\n",size);
+  }
+
   //アニメーション再生
   FLD_EXP_OBJ_PlayAnime( ptr );
 }
+
+//--------------------------------------------------------------
+/**
+ * 壁情報取得
+ * @param
+ * @param
+ * @param
+ * @param
+ * @param
+ * @return    
+ */
+//--------------------------------------------------------------
+static int GetWallInfo( GYM_INSECT_SV_WORK *gmk_sv_work,
+                        const int inX, const int inZ,
+                        GYM_INSECT_WALL_ST *outSt, BOOL *outCenter  )
+{
+  int i;
+  for(i=0;i<INSECT_WALL_MAX;i++)
+  {
+    BOOL hit;
+    int x,z;
+    x = WallPos[i].x / FIELD_CONST_GRID_FX32_SIZE;
+    z = WallPos[i].z / FIELD_CONST_GRID_FX32_SIZE;
+    hit = FALSE;
+    if ( (x == inX) && (z == inZ) )
+    {
+      //ど真ん中
+      *outCenter = TRUE;
+      hit = TRUE;
+    }
+    else if ( (x-1 == inX) && (z == inZ) )
+    {
+      //サイド
+      *outCenter = FALSE;
+      hit = TRUE;
+    }
+    else if( (x+1 == inX) && (z == inZ) )
+    {
+      //サイド
+      *outCenter = FALSE;
+      hit = TRUE;
+    }
+
+    if (hit){
+      *outSt = gmk_sv_work->WallSt[i];
+      return i;
+    }
+  }
+
+  //見つからなかったとき
+  *outCenter = FALSE;
+  *outSt = WALL_ST_BREAK;
+  return INSECT_WALL_MAX;
+}
+
+//--------------------------------------------------------------
+/**
+ * 壁押し込みイベント作成
+ * @param	      gsys     ゲームシステムポインタ
+ * @return      none
+ */
+//--------------------------------------------------------------
+GMEVENT* GYM_INSECT_CreatePushWallEvt(GAMESYS_WORK *gsys, const int inX, const int inZ)
+{
+  GMEVENT* event;
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  GYM_INSECT_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_INSECT_TMP_ASSIGN_ID);
+  FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+
+  int idx;
+  GYM_INSECT_WALL_ST wall_st;
+  BOOL weak;
+  u16 dir;
+
+  GYM_INSECT_SV_WORK *gmk_sv_work;
+  {
+    FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_INSECT );
+  }
+
+  dir = FIELD_PLAYER_GetDir( fld_player );
+
+  if ( (dir!=DIR_UP)&&(dir!=DIR_DOWN) ) return NULL;
+
+  //獲得座標は壊せる壁のどの部分かを調べる
+  idx = GetWallInfo(gmk_sv_work, inX,inZ, &wall_st, &weak);
+  if (idx < INSECT_WALL_MAX)
+  {
+    if ( wall_st == WALL_ST_BREAK ) return NULL;    //既に壊れてる
+
+    if (weak)
+    {
+      if (wall_st == WALL_ST_WEAKNESS)
+      {
+        //中央弱っている壁
+        event = GMEVENT_Create( gsys, NULL, PushWallEvt, 0 );
+      }
+      else
+      {
+        //中央弱っていない壁
+        event = GMEVENT_Create( gsys, NULL, PushWallNoBreakEvt, 0 );
+      }
+    }
+    else
+    {
+      //壁サイド
+      event = GMEVENT_Create( gsys, NULL, PushWallSideEvt, 0 );
+    }
+  }
+  else
+  {
+    //壊せる壁にヒットしていない
+    return NULL;
+  }
+
+  //イベント開始時のセットアップ
+  {
+    tmp->Val = 0;
+    tmp->Cont = 0;
+    FIELD_PLAYER_GetPos( fld_player, &tmp->BasePos );
+    //自機の向き取得
+    tmp->Dir = dir;
+    //壁インデックス
+    tmp->WallIdx = idx;
+    //ＴＣＢ初期化
+    tmp->PushAnmTcb = NULL;
+    tmp->PushEnd = FALSE;
+    tmp->PushStepStart = FALSE;
+  }
+
+  return event;
+}
+
 
 //--------------------------------------------------------------
 /**
@@ -625,13 +963,285 @@ void GYM_INSECT_Move(FIELDMAP_WORK *fieldWork)
  * @return      none
  */
 //--------------------------------------------------------------
-void GYM_INSECT_PushWall(FIELDMAP_WORK *fieldWork)
+static GMEVENT_RESULT PushWallEvt( GMEVENT* event, int* seq, void* work )
 {
-  //イベント作成
-  ;
-  //イベントコール
-  ;
+  GYM_INSECT_SV_WORK *gmk_sv_work;
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  GYM_INSECT_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_INSECT_TMP_ASSIGN_ID);
 
+  FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+
+  u8 obj_idx;
+  u8 anm_idx;
+  EXP_OBJ_ANM_CNT_PTR anm;
+
+  {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_INSECT );
+  }
+
+  obj_idx = OBJ_WALL_BRK1+tmp->WallIdx;
+  anm_idx = ANM_WALL_N;
+  //向きでアニメインデックスにオフセットをつける
+  if (tmp->Dir == DIR_DOWN){
+    anm_idx += 1;
+  }
+  anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_INSECT_UNIT_IDX, obj_idx, anm_idx);
+
+  switch(*seq){
+  case 0:
+    {
+      MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+      //アニメ有効化
+      FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_INSECT_UNIT_IDX, obj_idx, anm_idx, TRUE);
+      //頭出し
+      FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_INSECT_UNIT_IDX, obj_idx, anm_idx, 0 );
+      //アニメ停止
+      FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+      //自機アニメ終了待ち
+      if ( MMDL_CheckEndAcmd( mmdl ) && MMDL_CheckPossibleAcmd( mmdl ) )
+      {
+        //足踏みスタート
+        tmp->PushStepStart = TRUE;
+        (*seq)++;
+      }
+    }
+    break;
+  case 1:
+    {
+      int check_key;
+      int accel;
+      //キー入力検出
+      if ( tmp->Dir == DIR_UP ){
+        check_key = PAD_KEY_UP;
+        accel = -1;
+      }else{
+        check_key = PAD_KEY_DOWN;
+        accel = 1;
+      }
+
+      if ( GFL_UI_KEY_GetCont() & check_key )
+      {
+        VecFx32 pos;
+        tmp->Cont++;
+        if (tmp->Cont>=CONT_TIME)
+        {
+          tmp->Cont = 0;
+          tmp->Val++;
+          FIELD_PLAYER_GetPos( fld_player, &pos );
+          pos.z += (accel*FX32_ONE);
+          FIELD_PLAYER_SetPos( fld_player, &pos );
+          //アニメフレーム進める
+          {
+            FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_INSECT_UNIT_IDX, obj_idx, anm_idx, (tmp->Val/2)*FX32_ONE );
+          }
+
+          if ( tmp->Val >= BAND_WIDTH ) (*seq)++;
+          
+        } //end if (tmp->Cont>=CONT_TIME)
+      } //end if ( GFL_UI_KEY_GetCont() & check_key )
+    }
+    break;
+  case 2:
+    if ( tmp->PushAnmTcb != NULL )
+    {
+      if( MMDL_CheckEndAcmdList(tmp->PushAnmTcb) == TRUE )
+      {
+        MMDL_EndAcmdList( tmp->PushAnmTcb );
+		    tmp->PushAnmTcb = NULL;
+        tmp->PushEnd = TRUE;
+        (*seq)++;
+      }
+    }else{
+      tmp->PushEnd = TRUE;
+      (*seq)++;
+    }
+
+    if (tmp->PushEnd){
+      //残りアニメ再生
+      FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+      //アニメコマンド発行
+      {
+        GMEVENT * child;
+        void *tbl;
+        if ( tmp->Dir == DIR_UP ){
+          tbl = (void*)anime_up_table;
+        }else{
+          tbl = (void*)anime_down_table;
+        }
+        child = EVENT_ObjAnime( gsys, fieldWork, MMDL_ID_PLAYER, tbl );
+        GMEVENT_CallEvent(event, child);
+      }
+    }
+    break;
+  case 3:
+    //アニメ終了待ち
+    {
+      fx32 frm;
+      frm = FLD_EXP_OBJ_GetObjAnmFrm(ptr, GYM_INSECT_UNIT_IDX, obj_idx, anm_idx );
+      OS_Printf("%x :: %d\n", frm, frm/FX32_ONE);
+    }
+    if ( FLD_EXP_OBJ_ChkAnmEnd(anm) ){
+       //壁状態更新
+      //gmk_sv_work->WallSt[tmp->WallIdx] = WALL_ST_BREAK;
+      //ＯＢＪ消す
+      //
+      //アニメ無効化
+      FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_INSECT_UNIT_IDX, obj_idx, anm_idx, FALSE);
+      return GMEVENT_RES_FINISH;
+    }
+  }
+
+  //押し込みアニメ
+  if ( (tmp->PushStepStart) &&(!tmp->PushEnd) )
+  {
+    MMDL *fmmdl;
+    fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
+
+    if ( tmp->PushAnmTcb == NULL)
+    {
+      void *tbl;
+      if ( tmp->Dir == DIR_UP ) tbl = (void*)anime_up_push_table;
+      else tbl = (void*)anime_down_push_table;
+      tmp->PushAnmTcb = MMDL_SetAcmdList( fmmdl, tbl );
+    }
+    else{
+      if( MMDL_CheckEndAcmdList(tmp->PushAnmTcb) == TRUE )
+      {
+        MMDL_EndAcmdList( tmp->PushAnmTcb );
+			  tmp->PushAnmTcb = NULL;
+      }
+    }
+  }
+
+  //壁はじかれ処理
+  {
+    ;
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * バンドサイド押し込みイベント
+ * @param	      fieldWork     フィールドワークポインタ
+ * @return      none
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT PushWallSideEvt( GMEVENT* event, int* seq, void* work )
+{
+  GYM_INSECT_SV_WORK *gmk_sv_work;
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  GYM_INSECT_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_INSECT_TMP_ASSIGN_ID);
+
+  FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+
+  u8 obj_idx;
+  u8 anm_idx;
+  EXP_OBJ_ANM_CNT_PTR anm;
+
+  {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_INSECT );
+  }
+
+  //突破できる壁かで分岐
+  if(gmk_sv_work->WallSt[tmp->WallIdx] == WALL_ST_NORMAL){
+    obj_idx = OBJ_WALL1+tmp->WallIdx;
+  }else{
+    obj_idx = OBJ_WALL_BRK1+tmp->WallIdx;
+  }
+
+  anm_idx = ANM_WALL_SIDE_N;
+  //向きでアニメインデックスにオフセットをつける
+  if (tmp->Dir == DIR_DOWN){
+    anm_idx += 1;
+  }
+
+  anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_INSECT_UNIT_IDX, obj_idx, anm_idx);
+
+  switch(*seq){
+  case 0:
+    //壁が動くアニメ（サイドなので、突破できない）
+    //アニメを開始
+    FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_INSECT_UNIT_IDX, obj_idx, anm_idx, TRUE);
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+    //頭出し
+    FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_INSECT_UNIT_IDX, obj_idx, anm_idx, 0 );
+    
+    (*seq)++;
+    break;
+  case 1:
+    //アニメ終了待ち
+    if ( FLD_EXP_OBJ_ChkAnmEnd(anm) )
+    {
+      //アニメし終わったら無効化しておく
+      FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_INSECT_UNIT_IDX, obj_idx, anm_idx, FALSE);
+      return GMEVENT_RES_FINISH;
+    }
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 突破できないバンド押し込みイベント
+ * @param	      fieldWork     フィールドワークポインタ
+ * @return      none
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT PushWallNoBreakEvt( GMEVENT* event, int* seq, void* work )
+{
+  GYM_INSECT_SV_WORK *gmk_sv_work;
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  GYM_INSECT_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_INSECT_TMP_ASSIGN_ID);
+
+  FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+
+//@todo　自機も動かす
+  u8 obj_idx;
+  u8 anm_idx;
+  EXP_OBJ_ANM_CNT_PTR anm;
+
+  obj_idx = OBJ_WALL1+tmp->WallIdx;
+
+  anm_idx = ANM_WALL_N;
+  //向きでアニメインデックスにオフセットをつける
+  if (tmp->Dir == DIR_DOWN){
+    anm_idx += 1;
+  }
+
+  anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_INSECT_UNIT_IDX, obj_idx, anm_idx);
+
+  switch(*seq){
+  case 0:
+    //壁が動くアニメ
+    //アニメを開始
+    FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_INSECT_UNIT_IDX, obj_idx, anm_idx, TRUE);
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+    //頭出し
+    FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_INSECT_UNIT_IDX, obj_idx, anm_idx, 0 );
+    (*seq)++;
+    break;
+  case 1:
+    //アニメ終了待ち
+    if ( FLD_EXP_OBJ_ChkAnmEnd(anm) )
+    {
+      //アニメし終わったら無効化しておく
+      FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_INSECT_UNIT_IDX, obj_idx, anm_idx, FALSE);
+      return GMEVENT_RES_FINISH;
+    }
+  }
+  return GMEVENT_RES_CONTINUE;
 }
 
 //--------------------------------------------------------------
@@ -819,8 +1429,21 @@ static GMEVENT_RESULT PoleEvt( GMEVENT* event, int* seq, void* work )
         check_idx = WallIdxCheck[ tmp->PlIdx ];
         if ( gmk_sv_work->WallSt[tmp->PlIdx] == WALL_ST_NORMAL )
         {
-          //弱体化アニメ開始
-          ;
+          int i;
+          EXP_OBJ_ANM_CNT_PTR anm;
+          u8 wall_obj_idx;
+          u8 wall_anm_idx;
+          wall_obj_idx = OBJ_WALL1 + check_idx;
+          //壊れる壁のインデックスを保存
+          tmp->BrkWallIdx = check_idx;
+          for (i=0;i<WALL_CHG_ANM_NUM;i++)
+          {
+            wall_anm_idx = ANM_WALL_CHG1+i;
+            //弱体化アニメ開始
+            FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_INSECT_UNIT_IDX, wall_obj_idx, wall_anm_idx, TRUE);
+            anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_INSECT_UNIT_IDX, wall_obj_idx, wall_anm_idx);
+            FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+          }
           (*seq)++;
         }
         else
@@ -832,13 +1455,22 @@ static GMEVENT_RESULT PoleEvt( GMEVENT* event, int* seq, void* work )
     }
     break;
   case 2:
-    //弱体化アニメ待ち
-    if (1)
     {
-      //ウォールステートを弱体状態に変更
-      gmk_sv_work->WallSt[tmp->PlIdx] = WALL_ST_WEAKNESS;
-      //イベント終了
-      return GMEVENT_RES_FINISH;
+      u8 wall_obj_idx;
+      EXP_OBJ_ANM_CNT_PTR anm;
+      wall_obj_idx = OBJ_WALL1 + tmp->BrkWallIdx;
+      //↓アニメ終了判定はくっついている始めアニメで行うことにする
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_INSECT_UNIT_IDX, wall_obj_idx, 0);
+      //弱体化アニメ待ち
+      if ( FLD_EXP_OBJ_ChkAnmEnd(anm) )
+      {
+        //ウォールステートを弱体状態に変更
+        gmk_sv_work->WallSt[tmp->BrkWallIdx] = WALL_ST_WEAKNESS;
+        //ＯＢＪ表示切替
+        //
+        //イベント終了
+        return GMEVENT_RES_FINISH;
+      }
     }
   }
   return GMEVENT_RES_CONTINUE;
