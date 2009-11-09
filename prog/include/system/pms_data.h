@@ -17,6 +17,7 @@
 #define  PMS_WORD_MAX     (2)       ///< 文中に含まれる単語の最大数
 #define  PMS_WORD_NULL    (0xffff)  ///< 単語として無効な値
 #define  PMS_DECO_WIDTH   ( 84 )  ///< デコ文字の最大幅（ドット）
+#define  PMS_NULL_WIDTH   ( 84 )//(96)  ///< NULL文字の幅（ドット）
 
 //全開放デバッグ
 #ifdef PM_DEBUG
@@ -163,6 +164,19 @@ extern void PMSDAT_SetupDefaultUnionMessage( PMS_DATA* pms );
  */
 //------------------------------------------------------------------
 extern STRBUF* PMSDAT_ToString( const PMS_DATA* pms, u32 heapID );
+
+//-----------------------------------------------------------------------------
+/**
+ * 簡易文章データから、そのまま表示できる文字列を生成する(タグ数指定版)
+ *
+ * @param   pms     文章型へのポインタ
+ * @param   heapID    バッファ生成用ヒープID
+ * @param   wordCount タグ数
+ *
+ * @retval  STRBUF*   生成された文字列を含むバッファ
+ */
+//-----------------------------------------------------------------------------
+extern STRBUF* PMSDAT_ToStringWithWordCount( const PMS_DATA* pms, u32 heapID, u8 wordCount );
 
 //------------------------------------------------------------------
 /**
