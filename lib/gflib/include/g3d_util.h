@@ -96,6 +96,10 @@ extern void
 extern u16
 	GFL_G3D_UTIL_AddUnit
 		( GFL_G3D_UTIL* g3Dutil, const GFL_G3D_UTIL_SETUP* setup );
+
+extern u16
+	GFL_G3D_UTIL_AddUnitResShare
+		( GFL_G3D_UTIL* g3Dutil, const GFL_G3D_UTIL_SETUP* setup );    
 //--------------------------------------------------------------------------------------------
 /**
  * ƒ†ƒjƒbƒg”jŠü
