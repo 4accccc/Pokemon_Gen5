@@ -3076,14 +3076,24 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
  *
  */
 //----------------------------------------------------------
+
+//UNION WIFICLUB用
 const GFL_PROC_DATA PokemonTradeProcData = {
   PokemonTradeUnionProcInit,
   PokemonTradeProcMain,
   PokemonTradeProcEnd,
 };
 
+//IR用
 const GFL_PROC_DATA PokemonTradeIrcProcData = {
   PokemonTradeIrcProcInit,
+  PokemonTradeProcMain,
+  PokemonTradeProcEnd,
+};
+
+//wifiネゴシエーション用
+const GFL_PROC_DATA PokemonTradeWiFiProcData = {
+  PokemonTradeUnionProcInit,
   PokemonTradeProcMain,
   PokemonTradeProcEnd,
 };

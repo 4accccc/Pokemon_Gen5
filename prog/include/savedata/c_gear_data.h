@@ -41,6 +41,10 @@ extern int CGEAR_SV_GetWorkSize(void);
 extern CGEAR_SAVEDATA* CGEAR_SV_AllocWork(HEAPID heapID);
 extern void CGEAR_SV_Init(CGEAR_SAVEDATA* pSV);
 
+extern void CGEAR_SV_SetCGearONOFF(CGEAR_SAVEDATA* pSV,BOOL bON);
+extern BOOL CGEAR_SV_GetCGearONOFF(CGEAR_SAVEDATA* pSV);
+
+
 extern CGEAR_PANELTYPE_ENUM CGEAR_SV_GetPanelType(CGEAR_SAVEDATA* pSV,int x, int y);
 extern void CGEAR_SV_SetPanelType(CGEAR_SAVEDATA* pSV,int x, int y, CGEAR_PANELTYPE_ENUM type);
 

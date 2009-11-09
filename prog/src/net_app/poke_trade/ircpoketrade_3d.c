@@ -301,13 +301,20 @@ static void _moveSetTrade01(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus
 #if 0  //カメラ位置確認用
   {
     VecFx32 pos;
-    GFL_G3D_CAMERA_GetTarget( pWork->camera , &pos );
+    fx32 far;;
+    GFL_G3D_CAMERA_GetPos( pWork->camera , &pos );
     OS_TPrintf("pos %d %d %d\n",pos.x/FX32_ONE,pos.y/FX32_ONE,pos.z/FX32_ONE);
+  //  GFL_G3D_CAMERA_GetTarget( pWork->camera , &pos );
+    ///OS_TPrintf("target %d %d %d\n",pos.x/FX32_ONE,pos.y/FX32_ONE,pos.z/FX32_ONE);
 
-    pos.x = 200*FX32_ONE;
+    GFL_G3D_CAMERA_GetFar(pWork->camera ,&far);
+    OS_TPrintf("far %d \n",far/FX32_ONE);
+    
+
+    pos.x = 0;
     pos.y = 200*FX32_ONE;
     pos.z = 200*FX32_ONE;
-    GFL_G3D_CAMERA_SetTarget( pWork->camera , &pos );
+    GFL_G3D_CAMERA_SetPos( pWork->camera , &pos );
   }
 #endif
   

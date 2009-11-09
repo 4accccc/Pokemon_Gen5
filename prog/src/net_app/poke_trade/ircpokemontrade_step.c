@@ -410,8 +410,6 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
   POKEMONTRADE_DEMO_ICA_Init(pWork->pPokemonTradeDemo);
 
 
-
-
   _setNextAnim(pWork, 0);
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade3);
 
@@ -507,8 +505,8 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       MCSS_SetAnmStopFlag(pWork->pokeMcss[2]);
 
       MCSS_GetScale( pWork->pokeMcss[2], &apos );
-      apos.x *= _POKMEON_SCALE_SIZE;
-      apos.y *= _POKMEON_SCALE_SIZE;
+      apos.x *= _FRONT_POKMEON_SCALE_SIZE;
+      apos.y *= _FRONT_POKMEON_SCALE_SIZE;
       MCSS_SetScale( pWork->pokeMcss[2], &apos );
     }
   }
@@ -529,6 +527,10 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       apos.z = _POKEMON_FRIEND_DOWN_POSZ;
       pWork->pMoveMcss[1] = _pokeMoveCreate(pWork->pokeMcss[3], ANMCNTC(_POKE_APPEAR_TIME), &apos , pWork->heapID);
       MCSS_SetAnmStopFlag(pWork->pokeMcss[3]);
+      MCSS_GetScale( pWork->pokeMcss[3], &apos );
+      apos.x *= _BACK_POKMEON_SCALE_SIZE;
+      apos.y *= _BACK_POKMEON_SCALE_SIZE;
+      MCSS_SetScale( pWork->pokeMcss[3], &apos );
     }
     //ˆÚ“®Ý’è
   }
@@ -581,6 +583,10 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       apos.y = _POKEMON_PLAYER_SIDEIN_POSY;
       apos.z = _POKEMON_PLAYER_SIDEIN_POSZ;
       pWork->pMoveMcss[0] = _pokeMoveCreate(pWork->pokeMcss[0], ANMCNTC(_POKE_SIDEIN_TIME), &apos, pWork->heapID);
+      MCSS_GetScale( pWork->pokeMcss[0], &apos );
+      apos.x *= _BACK_POKMEON_SCALE_SIZE;
+      apos.y *= _BACK_POKMEON_SCALE_SIZE;
+      MCSS_SetScale( pWork->pokeMcss[0], &apos );
     }
 
     GFL_HEAP_FreeMemory(pWork->pMoveMcss[1]);
@@ -597,8 +603,8 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       apos.z = _POKEMON_FRIEND_SIDEIN_POSZ;
       pWork->pMoveMcss[1] = _pokeMoveCreate(pWork->pokeMcss[1], ANMCNTC(_POKE_SIDEIN_TIME), &apos , pWork->heapID);
       MCSS_GetScale( pWork->pokeMcss[1], &apos );
-      apos.x *= _POKMEON_SCALE_SIZE;
-      apos.y *= _POKMEON_SCALE_SIZE;
+      apos.x *= _FRONT_POKMEON_SCALE_SIZE;
+      apos.y *= _FRONT_POKMEON_SCALE_SIZE;
       MCSS_SetScale( pWork->pokeMcss[1], &apos );
     }
     pWork->pMoveMcss[0]->wave=1;

@@ -20,6 +20,8 @@
 
 struct _CGEAR_SAVEDATA {
 	u8 type[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
+  u8 CGearON;
+  u8 padding;
 };
 
 
@@ -103,6 +105,30 @@ void CGEAR_SV_Init(CGEAR_SAVEDATA* pSV)
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief   CGEARのONOFFをおこなう
+ * @param   pSV     CGEARセーブ構造体
+ * @param   bON     ONならTRUE OFFならFALSE
+ */
+//--------------------------------------------------------------------------------------------
+void CGEAR_SV_SetCGearONOFF(CGEAR_SAVEDATA* pSV,BOOL bON)
+{
+  pSV->CGearON = bON;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   CGEARのONOFFを得る
+ * @param   pSV     CGEARセーブ構造体
+ * @return   ONならTRUE OFFならFALSE
+ */
+//--------------------------------------------------------------------------------------------
+BOOL CGEAR_SV_GetCGearONOFF(CGEAR_SAVEDATA* pSV)
+{
+  return pSV->CGearON;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief   CGEARパネルタイプを得る
  * @param   x     パネル横位置
  * @param   y     パネル縦位置
@@ -112,7 +138,13 @@ void CGEAR_SV_Init(CGEAR_SAVEDATA* pSV)
 CGEAR_PANELTYPE_ENUM CGEAR_SV_GetPanelType(CGEAR_SAVEDATA* pSV,int x, int y)
 {
 	GF_ASSERT(x < C_GEAR_PANEL_WIDTH);
-	GF_ASSERT(y < C_GEAR_PANEL_HEIGHT);
+  if(!(x < C_GEAR_PANEL_WIDTH)){
+    return CGEAR_PANELTYPE_NONE;
+  }
+  GF_ASSERT(y < C_GEAR_PANEL_HEIGHT);
+  if(!(y < C_GEAR_PANEL_HEIGHT)){
+    return CGEAR_PANELTYPE_NONE;
+  }
 	return pSV->type[x][y];
 }
 
@@ -128,8 +160,17 @@ CGEAR_PANELTYPE_ENUM CGEAR_SV_GetPanelType(CGEAR_SAVEDATA* pSV,int x, int y)
 void CGEAR_SV_SetPanelType(CGEAR_SAVEDATA* pSV,int x, int y, CGEAR_PANELTYPE_ENUM type)
 {
 	GF_ASSERT(type < CGEAR_PANELTYPE_MAX);
+  if(!(type < CGEAR_PANELTYPE_MAX)){
+    return;
+  }
 	GF_ASSERT(x < C_GEAR_PANEL_WIDTH);
+  if(!(x < C_GEAR_PANEL_WIDTH)){
+    return;
+  }
 	GF_ASSERT(y < C_GEAR_PANEL_HEIGHT);
+  if(!(y < C_GEAR_PANEL_HEIGHT)){
+    return;
+  }
 	pSV->type[x][y] = type;
 }
 

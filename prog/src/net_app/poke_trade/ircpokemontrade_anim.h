@@ -146,7 +146,9 @@
 
 
 //手前のポケモンのサイズ
-#define _POKMEON_SCALE_SIZE   (1.2)
+#define _FRONT_POKMEON_SCALE_SIZE   (1.2)
+//奥のポケモンサイズ
+#define _BACK_POKMEON_SCALE_SIZE   (1.2)
 
 //ゆれる上下幅  大きいほど大きく揺れる
 #define _WAVE_NUM    (8)
@@ -214,7 +216,10 @@ demo_backshot2.ncg
 #define _IR_POKEMON_DELETE_TIME   (4)     //  ポケモンを消す
 
 #define _IR_POKE_APPEAR_START   (330)   //    ポケモン登場 自分のは裏
-#define _IR_POKE_APPEAR_TIME    (15)       //  ポケモン登場移動時間
+#define _IR_POKE_APPEAR_TIME    (35)       //  ポケモン登場移動時間
+
+#define _IR_OAM_POKECREATE      (500)  //最後にポケモンを出す時
+#define _IR_POKEMON_CREATE_TIME  (501)  //ポケモンを出す時間
 
 //ポケモンの位置
 #define _IR_POKEMON_PLAYER_APPEAR_POSX _MCSS_POS_X( -50)  // 自分のポケモンのX
@@ -225,9 +230,17 @@ demo_backshot2.ncg
 #define _IR_POKEMON_FRIEND_APPEAR_POSZ _MCSS_POS_Z(-10)  // 相手のポケモンのZ
 
 #define _IR_POKEMON_PLAYER_UP_POSX   _IR_POKEMON_PLAYER_APPEAR_POSX  // 自分のポケモンのX
-#define _IR_POKEMON_PLAYER_UP_POSY   _MCSS_POS_Y(-55)             // 自分のポケモンのY
+#define _IR_POKEMON_PLAYER_UP_POSY   _MCSS_POS_Y(80)             // 自分のポケモンのY
 #define _IR_POKEMON_PLAYER_UP_POSZ   _IR_POKEMON_PLAYER_APPEAR_POSZ  // 自分のポケモンのZ
 #define _IR_POKEMON_FRIEND_DOWN_POSX _IR_POKEMON_FRIEND_APPEAR_POSX  // 相手のポケモンのX
-#define _IR_POKEMON_FRIEND_DOWN_POSY _MCSS_POS_Y( 5)              // 相手のポケモンのY
+#define _IR_POKEMON_FRIEND_DOWN_POSY _MCSS_POS_Y(-150)              // 相手のポケモンのY
 #define _IR_POKEMON_FRIEND_DOWN_POSZ _IR_POKEMON_FRIEND_APPEAR_POSZ  // 相手のポケモンのZ
 
+//手前のポケモンのサイズ
+#define _IRC_FRONT_POKMEON_SCALE_SIZE   (1.2)
+//手前のポケモンのα 0-31まで
+#define _IRC_FRONT_POKMEON_ALPHA  (8)
+//奥のポケモンサイズ
+#define _IRC_BACK_POKMEON_SCALE_SIZE   (1.2)
+//奥のポケモンのα 0-31まで
+#define _IRC_BACK_POKMEON_ALPHA  (8)
