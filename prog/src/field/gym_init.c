@@ -12,6 +12,8 @@
 #include "gym_elec_sv.h"
 #include "gym_normal_sv.h"
 #include "gym_anti_sv.h"
+#include "gym_insect_sv.h"
+
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
 
 #include "../../../resource/fldmapdata/gimmick/gym_normal/gym_normal_exit_def.cdat"
@@ -122,5 +124,27 @@ void GYM_INIT_Fly(GAMESYS_WORK *gsys)
 {
   ;
 }
+
+//--------------------------------------------------------------
+/**
+ * 虫ジム初期化
+ * @param	    gsys    ゲームシステムポインタ
+ * @return    none
+ */
+//--------------------------------------------------------------
+void GYM_INIT_Insect(GAMESYS_WORK *gsys)
+{
+  GYM_INSECT_SV_WORK *gmk_sv_work;
+  {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_INSECT );
+  }
+
+  //インデックス6番の壁は始めから壊せる
+  gmk_sv_work->WallSt[6] = WALL_ST_WEAKNESS;
+
+}
+
 
 

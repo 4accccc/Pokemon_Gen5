@@ -636,7 +636,7 @@
   DEF_CMD( EvCmdGymInsect_SwOn, EV_SEQ_GYM_INSECT_SW_ON )
   DEF_CMD( EvCmdGymInsect_PoleOn, EV_SEQ_GYM_INSECT_PL_ON )
   DEF_CMD( EvCmdGymInsect_TrTrapOn, EV_SEQ_GYM_INSECT_TR_TRAP_ON )
-  NO_CMD()
+  DEF_CMD( EvCmdGymInsect_Init, EV_SEQ_GYM_INSECT_INIT )
 
   END_CMD
   //スクリプトコマンドテーブル終了

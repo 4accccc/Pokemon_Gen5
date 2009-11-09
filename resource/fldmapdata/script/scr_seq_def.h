@@ -4001,6 +4001,19 @@
  * @param sw_idx   スイッチインデックス0～7
  */
 //--------------------------------------------------------------
+#define _GYM_INSECT_INIT() \
+    _ASM_GYM_INSECT_INIT
+
+  .macro  _ASM_GYM_INSECT_INIT
+  .short  EV_SEQ_GYM_INSECT_INIT
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　虫ジムスイッチオン
+ * @param sw_idx   スイッチインデックス0～7
+ */
+//--------------------------------------------------------------
 #define _GYM_INSECT_SW_ON(sw_idx) \
     _ASM_GYM_INSECT_SW_ON sw_idx
 
