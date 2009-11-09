@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2009-11-04T13:11:06" source="ir_sean.mb"/>
+	<create user="ibe_mana" host="W00191" date="2009-11-09T10:42:47" source="ir_sean2.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2009-11-04T13:11:06" source="ir_sean.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2009-11-09T10:42:47" source="ir_sean2.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -385,7 +385,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="ir_02_pl"
-		path="C:/home/pokemon_wb/resource/trade/demo/ir_02.tga"
+		path="C:/home/pokemon_wb/resource/trade/ir/ir_02.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 2221 5432 8886 8888
@@ -10266,7 +10266,7 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="0.000000 0.000000 0.000000"
-		rotate="-180.000000 0.000000 0.000000"
+		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="2"
