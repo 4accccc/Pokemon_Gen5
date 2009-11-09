@@ -12,7 +12,7 @@
 
 //デバッグ有無のフラグ
 #if DEBUG_ONLY_FOR_ariizumi_nobuhiko | DEBUG_ONLY_FOR_ohno | DEBUG_ONLY_FOR_matsuda | DEBUG_ONLY_FOR_iwao_kazumasa
-#define DEB_ARI 0
+#define DEB_ARI 1
 #else
 #define DEB_ARI 0
 #endif
