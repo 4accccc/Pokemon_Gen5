@@ -393,6 +393,15 @@ static u32 setup_initial_window( PMSIV_CATEGORY* wk, u32 charpos )
 	return charpos;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	PMSIV_CATEGORY* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static void setup_actor( PMSIV_CATEGORY* wk )
 {
 	PMSIV_CELL_RES  header;

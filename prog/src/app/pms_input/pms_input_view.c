@@ -1068,6 +1068,7 @@ static void Cmd_CategoryToWordWin( GFL_TCB *tcb, void* wk_adrs )
 		PMSIV_WORDWIN_SetupWord( vwk->wordwin_wk );
 		PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, FALSE );
 		PMSIV_CATEGORY_StartFadeOut( vwk->category_wk );
+    PMSIV_MENU_SetupWordWin( vwk->menu_wk );
 		wk->seq++;
 		break;
 

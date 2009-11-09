@@ -2008,11 +2008,14 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
 	if( wk->category_mode == CATEGORY_MODE_GROUP ){
     // グループ
 		ret = category_touch_group(wk);
-		if(ret < 0){
+    // タッチなし
+		if(ret < 0 ) {
 			return;
 		}
 		wk->category_pos = ret;
-		if(PMSI_DATA_GetGroupEnableWordCount( wk->dwk, wk->category_pos ) == 0){
+		if( ( ret >= CATEGORY_GROUP_MAX ) ||
+        ( PMSI_DATA_GetGroupEnableWordCount( wk->dwk, wk->category_pos ) == 0 ) )
+    {
 #if PMS_USE_SND
 			GFL_SOUND_PlaySE( SOUND_DISABLE_CATEGORY );
 #endif //PMS_USE_SND
@@ -2699,9 +2702,9 @@ static int check_wordwin_key( WORDWIN_WORK* wordwin, u16 key )
 		return check_wordwin_scroll_down( wordwin );
 	}
 
-
 	return WORDWIN_RESULT_NONE;
 }
+
 static int check_wordwin_scroll_up( WORDWIN_WORK* wordwin )
 {
 	

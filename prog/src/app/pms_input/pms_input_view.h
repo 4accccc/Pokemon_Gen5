@@ -331,6 +331,7 @@ extern void PMSIV_MENU_Main( PMSIV_MENU* wk );
 extern void PMSIV_MENU_Clear( PMSIV_MENU* wk );
 extern void PMSIV_MENU_SetupEdit( PMSIV_MENU* wk );
 extern void PMSIV_MENU_SetupCategory( PMSIV_MENU* wk );
+extern void PMSIV_MENU_SetupWordWin( PMSIV_MENU* wk );
 extern void PMSIV_MENU_UpdateEditIcon( PMSIV_MENU* wk );
 extern void PMSIV_MENU_TaskMenuSetActive( PMSIV_MENU* wk, u8 pos, BOOL is_on );
 extern void PMSIV_MENU_TaskMenuSetDecide( PMSIV_MENU* wk, u8 pos, BOOL is_on );

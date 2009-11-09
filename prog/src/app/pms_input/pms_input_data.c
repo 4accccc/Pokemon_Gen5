@@ -403,6 +403,8 @@ static u32 CountupInitialWord( PMS_INPUT_DATA* pmsi, const PMS_WORD* src_tbl, PM
 //------------------------------------------------------------------
 u32 PMSI_DATA_GetGroupEnableWordCount( const PMS_INPUT_DATA* pmsi, u32 group )
 {
+  GF_ASSERT( group < CATEGORY_GROUP_MAX );
+
 	return pmsi->GroupEnableWordCnt[group];
 }
 //------------------------------------------------------------------

@@ -620,19 +620,6 @@ static void print_word( PMSIV_WORDWIN* wk, u32 wordnum, u32 v_line )
 //					NULL);
 		PRINTSYS_Print( GFL_BMPWIN_GetBmp( wk->tmp_win ) , 0, 0,wk->tmpbuf,fontHandle);
 		
-		//FIXME
-/*
-		GF_BGL_BmpWinPrint( &wk->win, wk->tmp_win.chrbuf, 0, 0,
-				WORD_TMPWIN_WIDTH*8, WORD_TMPWIN_HEIGHT*8,
-				WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN,   v_line,
-				WORD_TMPWIN_WIDTH*8, write_v_range );
-
-
-		GF_BGL_BmpWinPrint( &wk->win, wk->tmp_win.chrbuf, 0, write_v_range,
-				WORD_TMPWIN_WIDTH*8, WORD_TMPWIN_HEIGHT*8,
-				WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN,   0,
-				WORD_TMPWIN_WIDTH*8, (WORD_TMPWIN_HEIGHT*8) - write_v_range );
-*/
 		GFL_BMP_Print( GFL_BMPWIN_GetBmp(wk->tmp_win), GFL_BMPWIN_GetBmp(wk->win), 0, 0,
 				WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN,   v_line,
 				WORD_TMPWIN_WIDTH*8, write_v_range , GF_BMPPRT_NOTNUKI);

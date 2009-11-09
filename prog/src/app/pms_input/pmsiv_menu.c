@@ -326,9 +326,6 @@ void PMSIV_MENU_SetupCategory( PMSIV_MENU* wk )
   PMSIV_MENU_Clear( wk );
   
   GFL_CLACT_WK_SetDrawEnable( wk->clwk_icon[ MENU_CLWKICON_CATEGORY_CHANGE ], TRUE );
-  
-  // 表示
-  TOUCHBAR_SetVisibleAll( wk->touchbar, TRUE );
 	  
   if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_GROUP )
 	{
@@ -338,6 +335,22 @@ void PMSIV_MENU_SetupCategory( PMSIV_MENU* wk )
   {
     _setup_category_initial( wk );
   }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  単語リストのセットアップ
+ *
+ *	@param	PMSIV_MENU* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void PMSIV_MENU_SetupWordWin( PMSIV_MENU* wk )
+{
+  PMSIV_MENU_Clear( wk );
+  // タッチバーのリターンボタン表示
+  TOUCHBAR_SetVisibleAll( wk->touchbar, TRUE );
 }
 
 //-----------------------------------------------------------------------------
@@ -622,6 +635,8 @@ static TOUCHBAR_WORK* _touchbar_init( GFL_CLUNIT* clunit, HEAPID heap_id )
 //-----------------------------------------------------------------------------
 static void _setup_category_group( PMSIV_MENU* wk )
 {
+  // タッチバーのリターンボタン表示
+  TOUCHBAR_SetVisibleAll( wk->touchbar, TRUE );
 
   HOSAKA_Printf(" _setup_category_group \n");
 }
