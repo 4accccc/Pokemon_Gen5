@@ -32,6 +32,7 @@ typedef struct ANM_LIST_tag
 typedef struct EXP_OBJ_STATUS_tag
 {
   BOOL Culling;
+  BOOL Vanish;
   GFL_G3D_OBJSTATUS ObjStatus;
 }EXP_OBJ_STATUS;
 
@@ -125,7 +126,8 @@ void FLD_EXP_OBJ_AddUnit(  FLD_EXP_OBJ_CNT_PTR ptr,
     GF_ASSERT_MSG(0,"CAN NOT ADD UNIT\n");
   }
 
-  unitIdx = GFL_G3D_UTIL_AddUnit( ptr->ObjUtil, inSetup );
+  unitIdx = GFL_G3D_UTIL_AddUnitResShare( ptr->ObjUtil, inSetup );
+
   obj_num = inSetup->objCount;
   if (obj_num == 0){
     GF_ASSERT_MSG(0,"OBJ NOTHING\n");
@@ -134,29 +136,24 @@ void FLD_EXP_OBJ_AddUnit(  FLD_EXP_OBJ_CNT_PTR ptr,
   ptr->Unit[inIndex].Valid = TRUE;
   ptr->Unit[inIndex].UtilUnitIdx = unitIdx;
 
-#if 0  
-  status = GFL_HEAP_AllocClearMemory(ptr->HeapID, sizeof(GFL_G3D_OBJSTATUS)*obj_num);
-  ptr->Unit[inIndex].ObjStatus = status;
-#endif
   exp_status = GFL_HEAP_AllocClearMemory(ptr->HeapID, sizeof(EXP_OBJ_STATUS)*obj_num);
   ptr->Unit[inIndex].ExpObjStatus = exp_status;
 
   ptr->Unit[inIndex].AnmList = GFL_HEAP_AllocClearMemory(ptr->HeapID, sizeof(ANM_LIST)*obj_num);
+
   for(i=0;i<obj_num;i++){
     const GFL_G3D_UTIL_OBJ * objTbl = inSetup->objTbl;
     u16 anm_num = objTbl[i].anmCount;
     AnmCntInit(&ptr->Unit[inIndex].AnmList[i], anm_num, ptr->HeapID);
-#if 0
-    VEC_Set( &status[i].scale, FX32_ONE, FX32_ONE, FX32_ONE );
-	  MTX_Identity33( &status[i].rotate );
-    VEC_Set( &status[i].trans, 0, 0, 0 );
-#endif
+    
     VEC_Set( &exp_status[i].ObjStatus.scale, FX32_ONE, FX32_ONE, FX32_ONE );
 	  MTX_Identity33( &exp_status[i].ObjStatus.rotate );
     VEC_Set( &exp_status[i].ObjStatus.trans, 0, 0, 0 );
 
     //デフォルトはカリングしない
     exp_status[i].Culling = FALSE;
+    //デフォルトは表示状態
+    exp_status[i].Vanish = FALSE;
     {
       int j;
       GFL_G3D_OBJ *g3Dobj = FLD_EXP_OBJ_GetUnitObj(ptr, inIndex, i);
@@ -283,6 +280,25 @@ void FLD_EXP_OBJ_SetCulling(FLD_EXP_OBJ_CNT_PTR ptr,
   ptr->Unit[inUnitIdx].ExpObjStatus[inObjIdx].Culling = inCulling;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ *  表示状態をセット
+ *
+ * @param   ptr               モジュールポインタ
+ * @param   inUnitIdx         ユニットインデックス
+ * @param   inObjIdx          ユニット内ＯＢＪインデックス
+ * @param   inVanish          TRUEで非表示
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void FLD_EXP_OBJ_SetVanish(FLD_EXP_OBJ_CNT_PTR ptr,
+                            const u16 inUnitIdx,
+                            const u16 inObjIdx,
+                            const BOOL inVanish)
+{
+  ptr->Unit[inUnitIdx].ExpObjStatus[inObjIdx].Vanish = inVanish;
+}
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -338,13 +354,16 @@ void FLD_EXP_OBJ_Draw( FLD_EXP_OBJ_CNT_PTR ptr )
       u16 obj_count = GFL_G3D_UTIL_GetUnitObjCount( ptr->ObjUtil, ptr->Unit[i].UtilUnitIdx );
       for (j=0;j<obj_count;j++){
         GFL_G3D_OBJ* pObj;
+
+        //非表示状態ならば描画処理をスルー
+        if (ptr->Unit[i].ExpObjStatus[j].Vanish) continue;
+
         pObj = GFL_G3D_UTIL_GetObjHandle(ptr->ObjUtil, obj_idx+j);
         if ( ptr->Unit[i].ExpObjStatus[j].Culling ){
           GFL_G3D_DRAW_DrawObjectCullingON( pObj, &ptr->Unit[i].ExpObjStatus[j].ObjStatus );
         }else{
           GFL_G3D_DRAW_DrawObject( pObj, &ptr->Unit[i].ExpObjStatus[j].ObjStatus );
         }
-        
       }
     }
   }

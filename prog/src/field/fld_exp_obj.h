@@ -26,6 +26,8 @@ extern GFL_G3D_OBJSTATUS *FLD_EXP_OBJ_GetUnitObjStatus
           (FLD_EXP_OBJ_CNT_PTR ptr, const u16 inUnitIdx, const u16 inObjIdx);
 extern void FLD_EXP_OBJ_SetCulling
           (FLD_EXP_OBJ_CNT_PTR ptr, const u16 inUnitIdx, const u16 inObjIdx, const BOOL inCullingFlg);
+extern void FLD_EXP_OBJ_SetVanish
+          (FLD_EXP_OBJ_CNT_PTR ptr, const u16 inUnitIdx, const u16 inObjIdx, const BOOL inVanish);
 extern GFL_G3D_OBJ *FLD_EXP_OBJ_GetUnitObj
           (FLD_EXP_OBJ_CNT_PTR ptr, const u16 inUnitIdx, const u16 inObjIdx);
 extern void FLD_EXP_OBJ_Draw( FLD_EXP_OBJ_CNT_PTR ptr );
