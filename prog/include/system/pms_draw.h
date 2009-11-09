@@ -28,6 +28,8 @@ enum
 { 
   // 簡易会話表示システムで使用するパレット数
   PMS_DRAW_OBJ_PLTT_NUM = 5,
+  // デフォルトの空欄塗りつぶしパレット番号
+  PMS_DRAW_DEF_NULL_COLOR = 0xF,
 };
 
 
@@ -144,4 +146,15 @@ extern BOOL PMS_DRAW_IsPrinting( PMS_DRAW_WORK* wk, u8 id );
  */
 //-----------------------------------------------------------------------------
 extern void PMS_DRAW_Copy( PMS_DRAW_WORK* wk, u8 id_src, u8 id_dst );
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  簡易会話の空欄を埋めるパレット番号指定
+ *
+ *	@param	PMS_DRAW_WORK* wk　ワーク
+ *	@param	pltt_pos パレット番号
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+extern void PMS_DRAW_SetNullColorPallet( PMS_DRAW_WORK* wk, u8 pltt_pos );
 
