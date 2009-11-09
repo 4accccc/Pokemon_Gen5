@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-20T14:49:30"/>
+	<create user="mori" host="W00155" date="2009-11-09T22:54:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -364,8 +364,8 @@
 
 	<row id="mes_shop_02_01">
 		<comment>買う画面で、お金が足りないとき</comment>
-		<language name="JPN" width="256">おかねが　たりないですよ！</language>
-		<language name="JPN_KANJI" width="256">お金が　足りないですよ！</language>
+		<language name="JPN" width="256">おかねが　たりないですよ！▼</language>
+		<language name="JPN_KANJI" width="256">お金が　足りないですよ！▼</language>
 	</row>
 
 	<row id="mes_shop_02_02">
@@ -388,13 +388,13 @@
 	<row id="mes_shop_02_04">
 		<comment>買い物をしたときのお礼のメッセージ</comment>
 		<language name="JPN" width="256">はい　どうぞ
-まいど　ありがとう　ございます▼
+まいど　ありがとう　ございます[BE:05:コールバック引数変更（単発）:1]▼
 [1:09:どうぐ名:0]を
-[1:12:バッグのポケット名:1]ポケットに　しまった</language>
+[1:12:バッグのポケット名:1]ポケットに　しまった▼</language>
 		<language name="JPN_KANJI" width="256">はい　どうぞ
-まいど　ありがとう　ございます▼
+まいど　ありがとう　ございます[BE:05:コールバック引数変更（単発）:1]▼
 [1:09:どうぐ名:0]を
-[1:12:バッグのポケット名:1]ポケットに　しまった</language>
+[1:12:バッグのポケット名:1]ポケットに　しまった▼</language>
 	</row>
 
 	<row id="mes_shop_02_05">
@@ -421,9 +421,9 @@
 		<comment>モンスターボール１０個以上購入時で
 かつプレミアボール入手可能時</comment>
 		<language name="JPN" width="256">プレミアボール　１コ
-おまけ　しておきますね！</language>
+おまけ　しておきますね！▼</language>
 		<language name="JPN_KANJI" width="256">プレミアボール　１コ
-おまけ　しておきますね！</language>
+おまけ　しておきますね！▼</language>
 	</row>
 
 	<row id="mes_shop_04_01">
