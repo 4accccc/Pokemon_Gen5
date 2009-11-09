@@ -20,6 +20,7 @@
 #include "savedata/c_gear_data.h"
 #include "savedata/trainercard_data.h"
 #include "savedata/mystery_data.h"
+#include "savedata/dreamworld_data.h"
 #include "savedata/situation.h"
 #include "perapvoice_local.h"
 #include "savedata/system_data.h"
@@ -265,6 +266,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		GMDATA_ID_MYSTERYDATA,
 		(FUNC_GET_SIZE)MYSTERYDATA_GetWorkSize,
 		(FUNC_INIT_WORK)MYSTERYDATA_Init,
+	},
+	{	//PDW
+		GMDATA_ID_DREAMWORLD,
+		(FUNC_GET_SIZE)DREAMWORLD_SV_GetWorkSize,
+		(FUNC_INIT_WORK)DREAMWORLD_SV_Init,
 	},
 	{	//ぺラップボイス
 		GMDATA_ID_PERAPVOICE,

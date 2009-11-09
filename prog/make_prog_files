@@ -25,6 +25,7 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/record.c \
 				savedata/mail.c \
         savedata/c_gear_data.c \
+        savedata/dreamworld_data.c \
         savedata/wifihistory.c \
         savedata/wifi_status.c \
         savedata/wifilist.c \
