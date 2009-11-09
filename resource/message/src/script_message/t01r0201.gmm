@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-09T12:12:04"/>
+	<create user="matsumiya" host="W00207" date="2009-11-09T21:50:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -301,11 +301,11 @@
 ・主人公と隣接したとき
 　msg_t01r0301_white_02</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ともだち♀『あたしだって……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ホワイティ『あたしだって……[BE:01:ページ切り替え（クリア）]
 ポケモンを　もらった
 りっぱな　トレーナー　なんだもん！[BE:00:ページ切り替え（行送り）]
 ぼうけんだって　できるんだから！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ともだち♀『あたしだって……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ホワイティ『あたしだって……[BE:01:ページ切り替え（クリア）]
 ポケモンを　もらった
 りっぱな　トレーナー　なんだもん！[BE:00:ページ切り替え（行送り）]
 ぼうけんだって　できるんだから！[BE:01:ページ切り替え（クリア）]</language>
@@ -315,12 +315,12 @@
 		<comment>♀
 ・このメッセージ表示後
 　研究所内に入れる</comment>
-		<language name="JPN" width="256">ともだち♀『あっ　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ホワイティ『あっ　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 ……だいじょうぶ　だよ[BE:01:ページ切り替え（クリア）]
 ……だいじょうぶ！[BE:01:ページ切り替え（クリア）]
 あたし　けんきゅうじょの　まえで
 まってるからね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ともだち♀『あっ　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ホワイティ『あっ　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 ……大丈夫だよ[BE:01:ページ切り替え（クリア）]
 ……大丈夫！[BE:01:ページ切り替え（クリア）]
 それじゃ　あたし

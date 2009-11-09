@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-08T16:06:33"/>
+	<create user="matsumiya" host="W00207" date="2009-11-09T21:49:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -340,10 +340,10 @@
 		<comment>♂
 ・７月末ROM用</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ブラッカー『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 きみが　えらんでくれないと
 ぼくたち　ずっと　ここで　まつよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ブラッカー『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 今　すごく　うれしいんだけど
 どうして　博士は　僕たちに[BE:00:ページ切り替え（行送り）]
 ポケモンを　くれるのだろう？[BE:01:ページ切り替え（クリア）]</language>
@@ -375,18 +375,18 @@
 		<comment>♀
 ・７月末ROM用</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">クロックは　こっち　ね！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロックは　この子ね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ブラッカーは　こっち　ね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカーは　この子ね！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01r0102_black_test02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・７月末ROM用</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『どうして　きみが　きめるのさ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ブラッカー『どうして　きみが　きめるのさ[BE:01:ページ切り替え（クリア）]
 まあ　ぼくも　さいしょから
 この　ポケモンが　ほしかったけれど[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『どうして　君が　決めるのさ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ブラッカー『どうして　君が　決めるのさ[BE:01:ページ切り替え（クリア）]
 まあ　僕も　最初から
 この　ポケモンが　ほしかったけれど[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -421,10 +421,10 @@
 		<comment>♂
 ・７月末ROM用</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『おつかれさま[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ブラッカー『おつかれさま[BE:01:ページ切り替え（クリア）]
 と　いいたいところ　だけど
 こっちも　あいて　してもらえるかな？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『おつかれさま[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ブラッカー『おつかれさま[BE:01:ページ切り替え（クリア）]
 と　いいたいところ　だけど
 こっちも　相手してもらえるかな？[BE:01:ページ切り替え（クリア）]
 キミの　ポケモンの　体力は
@@ -437,7 +437,7 @@
 		<comment>♂
 ・７月末ROM用</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『……フゥ
+		<language name="JPN" width="256">ブラッカー『……フゥ
 これが　ポケモンしょうぶ　なんだ！[BE:01:ページ切り替え（クリア）]
 トレーナーに　なったって
 じっかん　できるよね[BE:01:ページ切り替え（クリア）]
@@ -445,7 +445,7 @@
 はかせに　おれいを　いいにいこう[BE:01:ページ切り替え（クリア）]
 じゃあ　ポケモンけんきゅうじょで
 まっているから！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『すごい！
+		<language name="JPN_KANJI" width="256">ブラッカー『すごい！
 これが　ポケモン勝負なんだ！[BE:01:ページ切り替え（クリア）]
 僕たち　ようやく
 トレーナーに　なったんだね[BE:01:ページ切り替え（クリア）]
@@ -494,12 +494,12 @@
 　msg_t01r0102_white_01表示
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ブラッカー『[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
 はかせが　ポケモン　くれるんだって！？[BE:01:ページ切り替え（クリア）]
 ……　……　……
 ……　……　……[BE:01:ページ切り替え（クリア）]
 ホワイティは　また……？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ブラッカー『[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
 博士が　ポケモン　くれるんだって！？[BE:01:ページ切り替え（クリア）]
 ……　……　……
 ……　……　……[BE:01:ページ切り替え（クリア）]
@@ -520,10 +520,10 @@
 		<comment>♂
 ・続けてmsg_t01r0102_white_02表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『なあ　ホワイティ
+		<language name="JPN" width="256">ブラッカー『なあ　ホワイティ
 いいかげんにさ[BE:00:ページ切り替え（行送り）]
 やくそくの　じかんは　まもろうよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『なあ　ホワイティ
+		<language name="JPN_KANJI" width="256">ブラッカー『なあ　ホワイティ
 いいかげんにさ[BE:00:ページ切り替え（行送り）]
 約束の　時間は　守ろうよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -538,13 +538,13 @@
 で　ポケモン　どこなの？[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]の　いえに　とどいたんだし
 えらぶのは　[1:00:トレーナー名:0]からで[BE:00:ページ切り替え（行送り）]
-いいよね　クロック[BE:01:ページ切り替え（クリア）]</language>
+いいよね　ブラッカー[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『はーい
 ごめんなさい　[1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
 で　ポケモン　どこなの？[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]の　家に　届いたんだし
 選ぶのは　[1:00:トレーナー名:0]からで[BE:00:ページ切り替え（行送り）]
-いいよね　クロック[BE:01:ページ切り替え（クリア）]</language>
+いいよね　ブラッカー[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01r0102_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -553,12 +553,12 @@
 ・階段から降りようとすると
 　msg_t01r0102_black_04表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『オレも　そのつもりだよ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ブラッカー『オレも　そのつもりだよ[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]！　３つの　ボールに
 それぞれ　ポケモンが　はいっている[BE:01:ページ切り替え（クリア）]
 どんな　ポケモンか　しりたければ
 モンスターボールを　しらべなよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『オレも　そのつもりだよ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ブラッカー『オレも　そのつもりだよ[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]！　３つの　ボールに
 それぞれ　ポケモンが　入っている[BE:01:ページ切り替え（クリア）]
 どんな　ポケモンか　知りたければ
@@ -571,10 +571,10 @@
 　ストッパー用メッセージ
 ・表示後、主人公を一歩もどす</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ブラッカー『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 まず　えらんでくれないと
 オレたちも　えらべないんだけど[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ブラッカー『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 まず　選んでくれないと
 オレたちも　選べないんだけど[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -601,20 +601,20 @@
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『じゃ！
 あたし　この　ポケモン！[BE:00:ページ切り替え（行送り）]
-クロックは　このこ　ね！[BE:01:ページ切り替え（クリア）]</language>
+ブラッカーは　このこ　ね！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『じゃ！
 あたし　この　ポケモン！[BE:00:ページ切り替え（行送り）]
-クロックは　この子　ね！[BE:01:ページ切り替え（クリア）]</language>
+ブラッカーは　この子　ね！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01r0102_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてmsg_t01r0102_white_05表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『なんで　おまえが……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ブラッカー『なんで　おまえが……[BE:01:ページ切り替え（クリア）]
 まあ　いいけどさ
 さいしょから　こいつ　ねらっていたし[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『なんで　おまえが……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ブラッカー『なんで　おまえが……[BE:01:ページ切り替え（クリア）]
 まあ　いいけどさ
 最初から　こいつ　ねらっていたし[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -633,11 +633,11 @@
 		<comment>♂
 ・続けてmsg_t01r0102_white_06表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『まだ
+		<language name="JPN" width="256">ブラッカー『まだ
 よわい　ポケモンとはいえ[BE:01:ページ切り替え（クリア）]
 いえの　なかだぞ？
 [1:00:トレーナー名:0]の　へやだぞ？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『まだ
+		<language name="JPN_KANJI" width="256">ブラッカー『まだ
 弱い　ポケモンとはいえ[BE:01:ページ切り替え（クリア）]
 家の中だぞ？
 [1:00:トレーナー名:0]の　部屋だぞ？[BE:01:ページ切り替え（クリア）]</language>
@@ -696,11 +696,11 @@
 		<comment>♂
 ・msg_t01r0102_white_07表示後のメッセージ</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『そうだな
+		<language name="JPN" width="256">ブラッカー『そうだな
 あいて　してあげれば？[BE:01:ページ切り替え（クリア）]
 ポケモンを　てにいれて
 はしゃぎたくなる　きもち　わかるし[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『そうだな
+		<language name="JPN_KANJI" width="256">ブラッカー『そうだな
 相手　してあげれば？[BE:01:ページ切り替え（クリア）]
 ポケモンを　手に入れて
 はしゃぎたくなる　気持ち　わかるし[BE:01:ページ切り替え（クリア）]</language>
@@ -755,12 +755,12 @@
 ・プレイヤーポケモンのHPが満タン時
 ・続けてmsg_t01r0102_black_10</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『ポケモンの　たいりょく……
+		<language name="JPN" width="256">ブラッカー『ポケモンの　たいりょく……
 ＨＰを　へらすことなく[BE:00:ページ切り替え（行送り）]
 かつなんて　すごいじゃないか！[BE:01:ページ切り替え（クリア）]
 これなら　キズぐすりを　つかう
 ひつようは　ないよな[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『ポケモンの　体力……
+		<language name="JPN_KANJI" width="256">ブラッカー『ポケモンの　体力……
 ＨＰを　減らすことなく[BE:00:ページ切り替え（行送り）]
 勝つなんて　すごいじゃないか！[BE:01:ページ切り替え（クリア）]
 これなら　キズぐすりを　使う
@@ -773,12 +773,12 @@
 ・道具使用ＭＥ＋HP20回復
 ・続けてmsg_t01r0102_black_10</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『てに　あせにぎる
+		<language name="JPN" width="256">ブラッカー『てに　あせにぎる
 いい　しょうぶ　だったぜ[BE:01:ページ切り替え（クリア）]
 ポケモンの　たいりょく……
 ＨＰ（ヒットポイント）が　へったな[BE:00:ページ切り替え（行送り）]
 これを　つかってやるよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『手に　汗握る
+		<language name="JPN_KANJI" width="256">ブラッカー『手に　汗握る
 いい　勝負　だったぜ[BE:01:ページ切り替え（クリア）]
 おまえの　ポケモンの　体力……
 ＨＰが　減ったな[BE:00:ページ切り替え（行送り）]
@@ -789,10 +789,10 @@
 		<comment>♂
 ・戦闘前メッセージ</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『で……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ブラッカー『で……[BE:01:ページ切り替え（クリア）]
 れんぞくで　わるいんだけど
 オレも　あいて　してくれよ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『で……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ブラッカー『で……[BE:01:ページ切り替え（クリア）]
 連続で　悪いんだけど
 オレも　相手して　くれよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -803,14 +803,14 @@
 　このメッセージ表示
 ・続けてmsg_t01r0102_white_12</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『……フゥ
+		<language name="JPN" width="256">ブラッカー『……フゥ
 これが　ポケモンしょうぶ　か！[BE:00:ページ切り替え（行送り）]
 トレーナーに　なったんだな！[BE:01:ページ切り替え（クリア）]
 よしっ！
 はかせに　おれいを　いいにいこう[BE:01:ページ切り替え（クリア）]
 オレ　けんきゅうじょの
 まえで　まってるからな！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『……フゥ
+		<language name="JPN_KANJI" width="256">ブラッカー『……フゥ
 これが　ポケモン勝負　か！[BE:00:ページ切り替え（行送り）]
 トレーナーに　なったんだな！[BE:01:ページ切り替え（クリア）]
 よしっ！

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-29T20:31:47"/>
+	<create user="matsumiya" host="W00207" date="2009-11-09T21:52:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -297,9 +297,9 @@
 ・マップに入ると自動で表示
 ・続けてmsg_t01r0401_white_01</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『ほら！
+		<language name="JPN" width="256">ブラッカー『ほら！
 はかせが　まってるよ</language>
-		<language name="JPN_KANJI" width="256">クロック『ほら！
+		<language name="JPN_KANJI" width="256">ブラッカー『ほら！
 博士が　待ってるよ</language>
 	</row>
 
@@ -333,10 +333,10 @@
 		<comment>♂
 ・続けてmsg_t01r0401_doctor_jr_02表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『アララギはかせ？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ブラッカー『アララギはかせ？[BE:01:ページ切り替え（クリア）]
 どうしたんですか
 いまさら　じこしょうかい　だなんて[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『アララギ博士？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ブラッカー『アララギ博士？[BE:01:ページ切り替え（クリア）]
 どうしたんですか
 いまさら　自己紹介だなんて[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -450,8 +450,8 @@
 		<comment>♂
 ・続けてmsg_t01r0401_white_01表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『ポケモンずかん　ですよね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『ポケモン図鑑　ですよね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ブラッカー『ポケモンずかん　ですよね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『ポケモン図鑑　ですよね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01r0401_white_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -470,13 +470,13 @@
 		<attribute name="キャラ指定">HAKASE2
 博士</attribute>
 		<language name="JPN" width="256">アララギ『すごいねすごいね
-さすがだね　クロック！[BE:01:ページ切り替え（クリア）]
+さすがだね　ブラッカー！[BE:01:ページ切り替え（クリア）]
 さいこうの　トレーナーを　めざして
 べんきょう　していることは　ある[BE:01:ページ切り替え（クリア）]
 うむ！　それでは
 せつめい　させていただこう！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">アララギ『すごいねすごいね
-流石だね　クロック！[BE:01:ページ切り替え（クリア）]
+流石だね　ブラッカー！[BE:01:ページ切り替え（クリア）]
 最高の　トレーナーを　目指して
 勉強していることは　ある[BE:01:ページ切り替え（クリア）]
 うむ！　それでは
@@ -517,12 +517,12 @@
 博士</attribute>
 		<language name="JPN" width="256">さて　たずねよう[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]！
-クロック！　ホワイティ！[BE:01:ページ切り替え（クリア）]
+ブラッカー！　ホワイティ！[BE:01:ページ切り替え（クリア）]
 ポケモンずかんを　うめるべく
 ぼうけんの　たびに　でかけるよね！</language>
 		<language name="JPN_KANJI" width="256">さて　たずねよう[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]！
-クロック！　ホワイティ！[BE:01:ページ切り替え（クリア）]
+ブラッカー！　ホワイティ！[BE:01:ページ切り替え（クリア）]
 ポケモン図鑑を　埋めるべく
 冒険の　旅に　でかけるよな！</language>
 	</row>
@@ -601,10 +601,10 @@
 ・メッセージ表示後、友達♂♀退場
 　画面外に消えると、操作可能に</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『ああ　そうだね[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ブラッカー『ああ　そうだね[BE:01:ページ切り替え（クリア）]
 というわけで　オレたちも
 １ばんどうろに　いくと　しよう</language>
-		<language name="JPN_KANJI" width="256">クロック『ああ　そうだね[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ブラッカー『ああ　そうだね[BE:01:ページ切り替え（クリア）]
 というわけで　僕たちも
 １番道路に　行くと　しよう</language>
 	</row>
