@@ -125,7 +125,7 @@ typedef struct{
   GFL_TCBLSYS       *pMsgTcblSys;  // メッセージ表示用タスクSYS
   PRINT_STREAM      *printStream;
   
-	GFL_CLUNIT        *ClactUnit;                // セルアクターユニット
+  GFL_CLUNIT        *ClactUnit;                // セルアクターユニット
   GFL_CLWK*         ClactWork[SHOP_OBJ_MAX];   // OBJワークポインタ
   u32               clact_res[3][SHOP_BUY_OBJ_RES_NUM]; // OBJリソースハンドル
 
@@ -195,7 +195,7 @@ static void submenu_screen_clear( int type );
 /**
  * @brief ショップ購入イベント呼び出し 
  *
- * @param	core 仮想マシン制御構造体へのポインタ
+ * @param core 仮想マシン制御構造体へのポインタ
  * @param wk   SCRCMD_WORKへのポインタ
  *
  * @retval VMCMD_RESULT
@@ -256,7 +256,7 @@ enum{
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	ショップ買うサブシーケンス
+ * @brief ショップ買うサブシーケンス
  *
  * @param   core  SCRCMD_WORK
  * @param   wk    SHOP_BUY_CALL_WORK
@@ -414,19 +414,19 @@ enum{
   SHOPBUY_SEQ_YESNO,
   SHOPBUY_SEQ_SELECT_YESNO_WAIT,
   SHOPBUY_SEQ_BUY,
-  SHOPBUY_SEQ_GET_GORGEOUSBALL,
+  SHOPBUY_SEQ_JUDGE_PREMIER_BALL,
   SHOPBUY_SEQ_MSG_WAIT,
   SHOPBUY_SEQ_END,
 };
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	ショップ画面初期化
+ * @brief ショップ画面初期化
  *
- * @param   gsys		
- * @param   wk		
- * @param   type		
- * @param   id		
+ * @param   gsys    
+ * @param   wk    
+ * @param   type    
+ * @param   id    
  */
 //----------------------------------------------------------------------------------
 static void shop_call_init( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, int id )
@@ -460,11 +460,11 @@ static void shop_call_init( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type,
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	どうぐ所持の最大数を返す
+ * @brief どうぐ所持の最大数を返す
  *
- * @param   item	
+ * @param   item  
  *
- * @retval  int		アイテムナンバー
+ * @retval  int   アイテムナンバー
  */
 //----------------------------------------------------------------------------------
 static int get_item_max( int item )
@@ -479,11 +479,11 @@ static int get_item_max( int item )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	道具選択時に何個買えるかで処理を分岐させる
+ * @brief 道具選択時に何個買えるかで処理を分岐させる
  *
- * @param   wk		
+ * @param   wk    
  *
- * @retval  int		
+ * @retval  int   
  */
 //----------------------------------------------------------------------------------
 static int can_player_buy_item( SHOP_BUY_APP_WORK *wk )
@@ -532,11 +532,11 @@ static int can_player_buy_item( SHOP_BUY_APP_WORK *wk )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	
+ * @brief 
  *
- * @param   wk		
+ * @param   wk    
  *
- * @retval  int		
+ * @retval  int   
  */
 //----------------------------------------------------------------------------------
 static void shop_main( SHOP_BUY_APP_WORK *wk )
@@ -560,14 +560,14 @@ static void shop_main( SHOP_BUY_APP_WORK *wk )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	ショップ買うメインルーチン
+ * @brief ショップ買うメインルーチン
  *
- * @param   gsys	GAMESYS_WORK
- * @param   wk		SHOP_BUY_APP_WORK
- * @param   type	ショップタイプ(SHOP_TYPE_NORMAL or SHOP_TYPE_FIX)
- * @param   id		固定ショップの際のID（shop_data.cdat参照)
+ * @param   gsys  GAMESYS_WORK
+ * @param   wk    SHOP_BUY_APP_WORK
+ * @param   type  ショップタイプ(SHOP_TYPE_NORMAL or SHOP_TYPE_FIX)
+ * @param   id    固定ショップの際のID（shop_data.cdat参照)
  *
- * @retval  BOOL	継続:FALSE  終了:TRUE
+ * @retval  BOOL  継続:FALSE  終了:TRUE
  */
 //----------------------------------------------------------------------------------
 static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, int id )
@@ -607,7 +607,7 @@ static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, i
     submenu_screen_clear( SCREEN_SUBMENU_ONLY );
     GFL_BMPWIN_MakeScreen( wk->win[SHOP_BUY_BMPWIN_LIST] );
     GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_ARROW_UPDOWN], FALSE );
-    wk->yesnoWork = BmpMenu_YesNoSelectInit(	&yesno_data, 1, MENU_WINDOW_PAL_OFFSET, 0, wk->heapId );
+    wk->yesnoWork = BmpMenu_YesNoSelectInit(  &yesno_data, 1, MENU_WINDOW_PAL_OFFSET, 0, wk->heapId );
     wk->seq = SHOPBUY_SEQ_SELECT_YESNO_WAIT;
     break;
   case SHOPBUY_SEQ_SELECT_YESNO_WAIT:
@@ -626,16 +626,33 @@ static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, i
     Mystatus_SubGold( wk->mystatus, wk->price*wk->item_multi);
     MYITEM_AddItem( wk->myitem, wk->selectitem, wk->item_multi, wk->heapId);
     wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
-    wk->next = SHOPBUY_SEQ_BACK;
+    wk->next = SHOPBUY_SEQ_JUDGE_PREMIER_BALL;
     break;
+
+  // プレミアボール判定
+  case SHOPBUY_SEQ_JUDGE_PREMIER_BALL:
+    if( wk->selectitem==ITEM_MONSUTAABOORU && wk->item_multi>=10){
+      ShopPrintMsg( wk, mes_shop_02_08, wk->selectitem );
+      MYITEM_AddItem( wk->myitem, ITEM_PUREMIABOORU, 1, wk->heapId);
+      wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
+      wk->next = SHOPBUY_SEQ_BACK;
+    }else{
+      wk->seq  = SHOPBUY_SEQ_BACK;
+    }
+    break;
+
   case SHOPBUY_SEQ_MSG_WAIT:    // メッセージ表示待ち
     {
       
       PRINTSTREAM_STATE state = PRINTSYS_PrintStreamGetState( wk->printStream );
-    	if( state == PRINTSTREAM_STATE_DONE ){
+      if( state == PRINTSTREAM_STATE_DONE ){
         PRINTSYS_PrintStreamDelete( wk->printStream );
-  		  wk->seq = wk->next;
-  	  }else if( state == PRINTSTREAM_STATE_PAUSE ){
+        wk->seq = wk->next;
+      }else if( state == PRINTSTREAM_STATE_RUNNING){
+        if(GFL_UI_KEY_GetCont()&PAD_BUTTON_DECIDE){
+          PRINTSYS_PrintStreamShortWait( wk->printStream, 0 );
+        }
+      }else if( state == PRINTSTREAM_STATE_PAUSE ){
         if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
           PRINTSYS_PrintStreamReleasePause( wk->printStream );
           PMSND_PlaySE( SEQ_SE_SELECT1 );
@@ -679,12 +696,12 @@ static const u8 normal_shop_offset[]={
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	ショップアイテム登録
+ * @brief ショップアイテム登録
  *
- * @param   wk		SHOP_BUY_APP_WORK
- * @param   type	ショップタイプ(SCR_SHOPID_NULL,SCR_SHOPID_FIX)
- * @param   id		固定ショップの際のID（shop_data.cdat参照)
- * @param   badge	バッジ取得総数(SCR_SHOPID_NULLの際に使用）
+ * @param   wk    SHOP_BUY_APP_WORK
+ * @param   type  ショップタイプ(SCR_SHOPID_NULL,SCR_SHOPID_FIX)
+ * @param   id    固定ショップの際のID（shop_data.cdat参照)
+ * @param   badge バッジ取得総数(SCR_SHOPID_NULLの際に使用）
  */
 //----------------------------------------------------------------------------------
 static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id, int badge )
@@ -728,9 +745,9 @@ static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id, int badge )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	ショップアイテム情報解放
+ * @brief ショップアイテム情報解放
  *
- * @param   wk		
+ * @param   wk    
  */
 //----------------------------------------------------------------------------------
 static void shop_item_release( SHOP_BUY_APP_WORK *wk )
@@ -743,9 +760,9 @@ static void shop_item_release( SHOP_BUY_APP_WORK *wk )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	ワーク初期化
+ * @brief ワーク初期化
  *
- * @param   wk		SHOP_BUY_APP_WORK
+ * @param   wk    SHOP_BUY_APP_WORK
  */
 //----------------------------------------------------------------------------------
 static void init_work( SHOP_BUY_APP_WORK *wk )
@@ -781,9 +798,9 @@ static void init_work( SHOP_BUY_APP_WORK *wk )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	ワーク解放
+ * @brief ワーク解放
  *
- * @param   wk		
+ * @param   wk    
  */
 //----------------------------------------------------------------------------------
 static void exit_work( SHOP_BUY_APP_WORK *wk )
@@ -804,9 +821,9 @@ static void exit_work( SHOP_BUY_APP_WORK *wk )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	BG転送
+ * @brief BG転送
  *
- * @param   wk		
+ * @param   wk    
  */
 //----------------------------------------------------------------------------------
 static void bg_trans( SHOP_BUY_APP_WORK *wk )
@@ -842,9 +859,9 @@ static void bg_trans( SHOP_BUY_APP_WORK *wk )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	BG消去
+ * @brief BG消去
  *
- * @param   wk		
+ * @param   wk    
  */
 //----------------------------------------------------------------------------------
 static void bg_clear( SHOP_BUY_APP_WORK *wk )
@@ -868,25 +885,25 @@ static const GFL_CLWK_DATA shop_obj_param[]={
   { 172, 132, 1, 0, 0 },// 下矢印
   { 243, 128, 2, 0, 0 },// 上下カーソル
   {  22, 172, 0, 0, 1 },// どうぐアイコン
-  // ｘ,ｙ座標,アニメーションシーケンス,ソフト優先順位	0>0xff, BG優先順位
+  // ｘ,ｙ座標,アニメーションシーケンス,ソフト優先順位  0>0xff, BG優先順位
 };
 
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	ショップ画面OBJリソース読み込み
+ * @brief ショップ画面OBJリソース読み込み
  *
- * @param   wk		
+ * @param   wk    
  */
 //----------------------------------------------------------------------------------
 static void shop_resource_load( SHOP_BUY_APP_WORK *wk )
 {
-	ARCHANDLE *handle = GFL_ARC_OpenDataHandle( ARCID_SHOP_GRA, wk->heapId );
+  ARCHANDLE *handle = GFL_ARC_OpenDataHandle( ARCID_SHOP_GRA, wk->heapId );
 
   // パレット
   wk->clact_res[0][ SHOP_OBJ_RES_PLTT ] = GFL_CLGRP_PLTT_RegisterEx( 
-		  	handle, NARC_shop_gra_shop_obj_NCLR, CLSYS_DRAW_MAIN, 
-		  	0, 0, 1, wk->heapId );
+        handle, NARC_shop_gra_shop_obj_NCLR, CLSYS_DRAW_MAIN, 
+        0, 0, 1, wk->heapId );
 
   // キャラ( 矢印 )
   wk->clact_res[0][ SHOP_OBJ_RES_CHAR ] = GFL_CLGRP_CGR_Register( 
@@ -908,17 +925,17 @@ static void shop_resource_load( SHOP_BUY_APP_WORK *wk )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	どうぐアイコン読み込み
+ * @brief どうぐアイコン読み込み
  *
- * @param   wk		
+ * @param   wk    
  */
 //----------------------------------------------------------------------------------
 static void itemicon_resource_load( SHOP_BUY_APP_WORK *wk )
 {
   // パレット
   wk->clact_res[2][ SHOP_OBJ_RES_PLTT ] = GFL_CLGRP_PLTT_RegisterEx( 
-		  	wk->itemiconHandle, ITEM_GetIndex( 1, ITEM_GET_ICON_PAL ), CLSYS_DRAW_MAIN, 
-		  	32, 0, 1, wk->heapId );
+        wk->itemiconHandle, ITEM_GetIndex( 1, ITEM_GET_ICON_PAL ), CLSYS_DRAW_MAIN, 
+        32, 0, 1, wk->heapId );
 
   // キャラ
   wk->clact_res[2][ SHOP_OBJ_RES_CHAR ] = GFL_CLGRP_CGR_Register( 
@@ -932,10 +949,10 @@ static void itemicon_resource_load( SHOP_BUY_APP_WORK *wk )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	どうぐアイコンリソース差し替え
+ * @brief どうぐアイコンリソース差し替え
  *
- * @param   wk		  
- * @param   itemno	どうぐNO
+ * @param   wk      
+ * @param   itemno  どうぐNO
  */
 //----------------------------------------------------------------------------------
 static void itemicon_resource_change( SHOP_BUY_APP_WORK *wk, u16 itemno )
@@ -965,9 +982,9 @@ static void itemicon_resource_change( SHOP_BUY_APP_WORK *wk, u16 itemno )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	OBJ表示登録
+ * @brief OBJ表示登録
  *
- * @param   wk		
+ * @param   wk    
  */
 //----------------------------------------------------------------------------------
 static void obj_set( SHOP_BUY_APP_WORK *wk )
@@ -1018,9 +1035,9 @@ static void obj_set( SHOP_BUY_APP_WORK *wk )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	OBJ初期化
+ * @brief OBJ初期化
  *
- * @param   wk		
+ * @param   wk    
  */
 //----------------------------------------------------------------------------------
 static void obj_init( SHOP_BUY_APP_WORK *wk )
@@ -1029,7 +1046,7 @@ static void obj_init( SHOP_BUY_APP_WORK *wk )
   wk->ClactUnit = GFL_CLACT_UNIT_Create( SHOP_OBJ_MAX, 
                                          SHOP_BUY_OBJ_BG_PRI, wk->heapId );
   // システムに連結
-	GFL_CLACT_UNIT_SetDrawEnable( wk->ClactUnit, TRUE );
+  GFL_CLACT_UNIT_SetDrawEnable( wk->ClactUnit, TRUE );
 
   // ショップ画面OBJリソース読み込み
   shop_resource_load( wk );
@@ -1049,9 +1066,9 @@ static void obj_init( SHOP_BUY_APP_WORK *wk )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	OBJ削除
+ * @brief OBJ削除
  *
- * @param   wk		
+ * @param   wk    
  */
 //----------------------------------------------------------------------------------
 static void obj_del( SHOP_BUY_APP_WORK *wk )
@@ -1080,9 +1097,9 @@ static void obj_del( SHOP_BUY_APP_WORK *wk )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	BMPWIN初期化
+ * @brief BMPWIN初期化
  *
- * @param   wk		
+ * @param   wk    
  */
 //----------------------------------------------------------------------------------
 static void bmpwin_init( SHOP_BUY_APP_WORK *wk )
@@ -1115,9 +1132,9 @@ static void bmpwin_init( SHOP_BUY_APP_WORK *wk )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	BMPWIN解放
+ * @brief BMPWIN解放
  *
- * @param   wk		
+ * @param   wk    
  */
 //----------------------------------------------------------------------------------
 static void bmpwin_exit( SHOP_BUY_APP_WORK *wk )
@@ -1134,9 +1151,9 @@ static void bmpwin_exit( SHOP_BUY_APP_WORK *wk )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	所持金表示
+ * @brief 所持金表示
  *
- * @param   wk		
+ * @param   wk    
  */
 //----------------------------------------------------------------------------------
 static void print_mygold( SHOP_BUY_APP_WORK *wk )
@@ -1166,10 +1183,10 @@ static void print_mygold( SHOP_BUY_APP_WORK *wk )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	指定のアイテムを何個持っているか表示する
+ * @brief 指定のアイテムを何個持っているか表示する
  *
- * @param   wk		  
- * @param   itemno	どうぐNO
+ * @param   wk      
+ * @param   itemno  どうぐNO
  */
 //----------------------------------------------------------------------------------
 static void print_carry_item( SHOP_BUY_APP_WORK *wk, u16 itemno )
@@ -1203,10 +1220,10 @@ static void print_carry_item( SHOP_BUY_APP_WORK *wk, u16 itemno )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	どうぐ説明表示
+ * @brief どうぐ説明表示
  *
- * @param   wk		
- * @param   itemno		
+ * @param   wk    
+ * @param   itemno    
  */
 //----------------------------------------------------------------------------------
 static void print_iteminfo( SHOP_BUY_APP_WORK *wk, u16 itemno )
@@ -1230,11 +1247,11 @@ static void print_iteminfo( SHOP_BUY_APP_WORK *wk, u16 itemno )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	「ｘ個数　？？？？？？円」表示
+ * @brief 「ｘ個数　？？？？？？円」表示
  *
- * @param   wk		      
- * @param   number	どうぐの数
- * @param   one_price		道具一つの売値
+ * @param   wk          
+ * @param   number  どうぐの数
+ * @param   one_price   道具一つの売値
  */
 //----------------------------------------------------------------------------------
 static void print_multiitem_price( SHOP_BUY_APP_WORK *wk, u16 number, int one_price )
@@ -1277,46 +1294,46 @@ static void print_multiitem_price( SHOP_BUY_APP_WORK *wk, u16 number, int one_pr
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	BMPWINリスト初期化
+ * @brief BMPWINリスト初期化
  *
- * @param   wk		
+ * @param   wk    
  */
 //----------------------------------------------------------------------------------
 static void bmpwin_list_init( SHOP_BUY_APP_WORK *wk )
 {
   BMPMENULIST_HEADER header;
 
-	
-	header.list = wk->list;   //表示文字データポインタ
-	                          //カーソル移動ごとのコールバック関数
-	header.call_back = move_callback;  // void	(*call_back)(BMPMENULIST_WORK * wk,u32 param,u8 mode);
+  
+  header.list = wk->list;   //表示文字データポインタ
+                            //カーソル移動ごとのコールバック関数
+  header.call_back = move_callback;  // void  (*call_back)(BMPMENULIST_WORK * wk,u32 param,u8 mode);
                             //一列表示ごとのコールバック関数
-  header.icon      = line_callback;  // void	(*icon)(BMPMENULIST_WORK * wk,u32 param,u8 y);
+  header.icon      = line_callback;  // void  (*icon)(BMPMENULIST_WORK * wk,u32 param,u8 y);
 
-	header.win       = wk->win[SHOP_BUY_BMPWIN_LIST];
-	
-	header.count     = BmpMenuWork_GetListMax(wk->list);		//リスト項目数
-	header.line      = 7;	//表示最大項目数
-	header.rabel_x   = 0;	//ラベル表示Ｘ座標
-	header.data_x    = 0;	//項目表示Ｘ座標
-	header.cursor_x  = 0;	//カーソル表示Ｘ座標
-	header.line_y    = 8;	//表示Ｙ座標
-	header.f_col     = 1;	//表示文字色
-	header.b_col     = 0;	//表示背景色
-	header.s_col     = 2;	//表示文字影色
-	header.msg_spc   = 0;	//文字間隔Ｘ
-	header.line_spc  = 0;	//文字間隔Ｙ
-	header.page_skip = BMPMENULIST_NO_SKIP; //ページスキップタイプ
-	header.font      = 0;	//文字指定(本来はu8だけどそんなに作らないと思うので)
-	header.c_disp_f  = 1;	//ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
-	header.work      = wk;// callback時に参照するワーク
-	
-	header.font_size_x  = 12;		//文字サイズX(ドット
-	header.font_size_y  = 16;		//文字サイズY(ドット
-	header.msgdata      = NULL;	//表示に使用するメッセージバッファ
-	header.print_util   = &wk->printUtil; //表示に使用するプリントユーティリティ
-	header.print_que    = wk->printQue;	//表示に使用するプリントキュー
-	header.font_handle  = wk->font;	//表示に使用するフォントハンドル
+  header.win       = wk->win[SHOP_BUY_BMPWIN_LIST];
+  
+  header.count     = BmpMenuWork_GetListMax(wk->list);    //リスト項目数
+  header.line      = 7; //表示最大項目数
+  header.rabel_x   = 0; //ラベル表示Ｘ座標
+  header.data_x    = 0; //項目表示Ｘ座標
+  header.cursor_x  = 0; //カーソル表示Ｘ座標
+  header.line_y    = 8; //表示Ｙ座標
+  header.f_col     = 1; //表示文字色
+  header.b_col     = 0; //表示背景色
+  header.s_col     = 2; //表示文字影色
+  header.msg_spc   = 0; //文字間隔Ｘ
+  header.line_spc  = 0; //文字間隔Ｙ
+  header.page_skip = BMPMENULIST_NO_SKIP; //ページスキップタイプ
+  header.font      = 0; //文字指定(本来はu8だけどそんなに作らないと思うので)
+  header.c_disp_f  = 1; //ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
+  header.work      = wk;// callback時に参照するワーク
+  
+  header.font_size_x  = 12;   //文字サイズX(ドット
+  header.font_size_y  = 16;   //文字サイズY(ドット
+  header.msgdata      = NULL; //表示に使用するメッセージバッファ
+  header.print_util   = &wk->printUtil; //表示に使用するプリントユーティリティ
+  header.print_que    = wk->printQue; //表示に使用するプリントキュー
+  header.font_handle  = wk->font; //表示に使用するフォントハンドル
   
 
    wk->menuList = BmpMenuList_Set( &header, 0, 0, wk->heapId );
@@ -1327,11 +1344,11 @@ static void bmpwin_list_init( SHOP_BUY_APP_WORK *wk )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	１行表示コールバック（主に値段表示処理)
+ * @brief １行表示コールバック（主に値段表示処理)
  *
- * @param   wk		  
- * @param   param		どうぐNO
- * @param   y		    表示Y座標
+ * @param   wk      
+ * @param   param   どうぐNO
+ * @param   y       表示Y座標
  */
 //----------------------------------------------------------------------------------
 static void line_callback(BMPMENULIST_WORK * wk, u32 param, u8 y )
@@ -1351,11 +1368,11 @@ static void line_callback(BMPMENULIST_WORK * wk, u32 param, u8 y )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	カーソル移動時のコールバック
+ * @brief カーソル移動時のコールバック
  *
- * @param   wk		  
- * @param   param		
- * @param   mode		
+ * @param   wk      
+ * @param   param   
+ * @param   mode    
  */
 //----------------------------------------------------------------------------------
 static void move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode)
@@ -1379,9 +1396,9 @@ static void move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode)
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	BMPLIST終了・解放処理
+ * @brief BMPLIST終了・解放処理
  *
- * @param   wk		
+ * @param   wk    
  */
 //----------------------------------------------------------------------------------
 static void bmpwin_list_exit( SHOP_BUY_APP_WORK *wk )
@@ -1396,11 +1413,11 @@ static void bmpwin_list_exit( SHOP_BUY_APP_WORK *wk )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	プリントコールバック
+ * @brief プリントコールバック
  *
- * @param   param		
+ * @param   param   
  *
- * @retval  BOOL		
+ * @retval  BOOL    
  */
 //----------------------------------------------------------------------------------
 static BOOL printBuyMsgCallBack( u32 param )
@@ -1415,17 +1432,17 @@ static BOOL printBuyMsgCallBack( u32 param )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	メッセージ表示
+ * @brief メッセージ表示
  *
- * @param   wk		
- * @param   itemno		
+ * @param   wk    
+ * @param   itemno    
  */
 //----------------------------------------------------------------------------------
 static void ShopPrintMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno )
 {
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[SHOP_BUY_BMPWIN_TALKMSG]), 15 );
-	BmpWinFrame_Write( wk->win[SHOP_BUY_BMPWIN_TALKMSG], WINDOW_TRANS_ON, 
-	                  1, MENU_WINDOW_PAL_OFFSET );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[SHOP_BUY_BMPWIN_TALKMSG]), 15 );
+  BmpWinFrame_Write( wk->win[SHOP_BUY_BMPWIN_TALKMSG], WINDOW_TRANS_ON, 
+                    1, MENU_WINDOW_PAL_OFFSET );
 
   WORDSET_RegisterItemName( wk->wordSet, 0, itemno );
   WORDSET_RegisterItemPocketName( wk->wordSet, 1, 
@@ -1447,17 +1464,17 @@ static void ShopPrintMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	メッセージ表示
+ * @brief メッセージ表示
  *
- * @param   wk		
- * @param   itemno		
+ * @param   wk    
+ * @param   itemno    
  */
 //----------------------------------------------------------------------------------
 static void ShopDecideMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u16 num )
 {
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[SHOP_BUY_BMPWIN_TALKMSG]), 15 );
-	BmpWinFrame_Write( wk->win[SHOP_BUY_BMPWIN_TALKMSG], WINDOW_TRANS_ON, 
-	                  1, MENU_WINDOW_PAL_OFFSET );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[SHOP_BUY_BMPWIN_TALKMSG]), 15 );
+  BmpWinFrame_Write( wk->win[SHOP_BUY_BMPWIN_TALKMSG], WINDOW_TRANS_ON, 
+                    1, MENU_WINDOW_PAL_OFFSET );
 
   WORDSET_RegisterItemName( wk->wordSet, 0, itemno );
   WORDSET_RegisterNumber( wk->wordSet, 1, num, 
@@ -1489,57 +1506,57 @@ static void ShopDecideMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u16 num
 /**
  * @brief   数値に算出とmax,minに対して回り込み計算を行う
  *
- * @param   num		数値ワークへのポインタ
- * @param   max		数値最大
- * @param   calc	+1,-1,+10,-10のみ受け付ける
+ * @param   num   数値ワークへのポインタ
+ * @param   max   数値最大
+ * @param   calc  +1,-1,+10,-10のみ受け付ける
  *
- * @retval  u8		計算結果
+ * @retval  u8    計算結果
  */
 //==============================================================================
 static u8 NumArroundCheck( s16 *num, u16 max, int calc )
 {
-	s16	tmp;
+  s16 tmp;
 
-	tmp = *num;
+  tmp = *num;
 
-	switch(calc){
-	case -1:
-		*num -= 1;
-		if( *num <= 0 ){ *num = max; }
-		if( *num == tmp ){ return APP_NUMSEL_NONE; }
-		return APP_NUMSEL_DOWN;
-		break;
-	case -10:
-		*num -= 10;
-		if( *num <= 0 ){ *num = 1; }
-		if( *num == tmp ){ return APP_NUMSEL_NONE; }
-		return APP_NUMSEL_DOWN;
-		break;
-	case 1:
-		*num += 1;
-		if( *num > max ){ *num = 1; }
-		if( *num == tmp ){ return APP_NUMSEL_NONE; }
-		return APP_NUMSEL_UP;
-		break;
-	case 10:
-		*num += 10;
-		if( *num > max ){ *num = max; }
-		if( *num == tmp ){ return APP_NUMSEL_NONE; }
-		return APP_NUMSEL_UP;
-		break;
-	}
-	return APP_NUMSEL_NONE;
+  switch(calc){
+  case -1:
+    *num -= 1;
+    if( *num <= 0 ){ *num = max; }
+    if( *num == tmp ){ return APP_NUMSEL_NONE; }
+    return APP_NUMSEL_DOWN;
+    break;
+  case -10:
+    *num -= 10;
+    if( *num <= 0 ){ *num = 1; }
+    if( *num == tmp ){ return APP_NUMSEL_NONE; }
+    return APP_NUMSEL_DOWN;
+    break;
+  case 1:
+    *num += 1;
+    if( *num > max ){ *num = 1; }
+    if( *num == tmp ){ return APP_NUMSEL_NONE; }
+    return APP_NUMSEL_UP;
+    break;
+  case 10:
+    *num += 10;
+    if( *num > max ){ *num = max; }
+    if( *num == tmp ){ return APP_NUMSEL_NONE; }
+    return APP_NUMSEL_UP;
+    break;
+  }
+  return APP_NUMSEL_NONE;
 }
 
 
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	個数選択時のキー制御
+ * @brief 個数選択時のキー制御
  *
- * @param   wk		
+ * @param   wk    
  *
- * @retval  int		
+ * @retval  int   
  */
 //----------------------------------------------------------------------------------
 static int price_key_control( SHOP_BUY_APP_WORK *wk )
@@ -1581,9 +1598,9 @@ static int price_key_control( SHOP_BUY_APP_WORK *wk )
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	サブメニューのスクリーンクリア
+ * @brief サブメニューのスクリーンクリア
  *
- * @param   type		
+ * @param   type    
  */
 //----------------------------------------------------------------------------------
 static void submenu_screen_clear( int type )
