@@ -67,6 +67,7 @@
 #include "field_gimmick_def.h"  //for FLD_GIMMICK_GYM_～
 #include "gym_elec.h"     //for GYM_ELEC_CreateMoveEvt
 #include "gym_fly.h"     //for GYM_FLY_CreateShotEvt
+#include "gym_insect.h"     //for GYM_INSECT_CreatePushWallEvt
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
@@ -1534,16 +1535,17 @@ static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
 	VecFx32 front_pos;
   int idx;
 
-#if 0
+  setFrontPos(req, &front_pos);
+
   //ギミックが割り当てられているかを調べて、ジムソースのオーバレイがなされていることを確認する
   if ( FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_GYM_INSECT) ){
     //虫ジム
-    return GYM_INSECT_CreateMoveEvt(gsys);
+    int x,z;
+    x =front_pos.x / FIELD_CONST_GRID_FX32_SIZE;
+    z =front_pos.z / FIELD_CONST_GRID_FX32_SIZE;
+    return GYM_INSECT_CreatePushWallEvt(gsys, x, z);
   }
-#endif
-
-  //目の前が通行不可でない場合、チェックしない
-  setFrontPos(req, &front_pos);
+  
 #if 1
   {
 		FLDMAPPER *g3Dmapper = FIELDMAP_GetFieldG3Dmapper(fieldWork);
