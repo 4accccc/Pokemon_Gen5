@@ -20,7 +20,7 @@
 
 #include "print/printsys.h"
 #include "print/wordset.h"
-#include "mus_shot_photo.h"
+#include "musical/mus_shot_photo.h"
 #include "musical/musical_camera_def.h"
 #include "musical/stage/sta_local_def.h"
 #include "musical/stage/sta_acting.h"

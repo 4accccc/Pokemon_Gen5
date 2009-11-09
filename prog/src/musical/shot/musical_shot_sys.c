@@ -13,7 +13,7 @@
 
 #include "musical/musical_system.h"
 #include "musical/musical_shot_sys.h"
-#include "mus_shot_photo.h"
+#include "musical/mus_shot_photo.h"
 #include "mus_shot_info.h"
 
 #include "poke_tool/monsno_def.h"
