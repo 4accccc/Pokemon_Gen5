@@ -278,14 +278,23 @@ static void LOCAL_TVT_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlan
 //--------------------------------------------------------------
 static void LOCAL_TVT_LoadResource( LOCAL_TVT_WORK *work )
 {
+  u32 datId;
+  if( work->initWork->mode == LTM_2_MEMBER )
+  {
+    datId = NARC_local_tvt_local_tvt_scr_2_NSCR;
+  }
+  else
+  {
+    datId = NARC_local_tvt_local_tvt_scr_4_NSCR;
+  }
   
   GFL_ARCHDL_UTIL_TransVramScreen( work->archandle , 
-                                   NARC_local_tvt_local_tvt_scr_NSCR ,
+                                   datId ,
                                    LTVT_FRAME_CHARA ,
                                    0,0,FALSE,work->heapId );
   
   GFL_ARCHDL_UTIL_TransVramScreen( work->archandle , 
-                                   NARC_local_tvt_local_tvt_scr_NSCR ,
+                                   datId ,
                                    LTVT_FRAME_BG ,
                                    0,0,FALSE,work->heapId );
 }
@@ -316,11 +325,22 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcInit( GFL_PROC * proc, int * seq , void *pw
   if( pwk == NULL )
   {
     initWork = GFL_HEAP_AllocMemory( HEAPID_LOCAL_TVT , sizeof( LOCAL_TVT_INIT_WORK ));
-    initWork->mode = LTM_2_MEMBER;
     initWork->charaType[0] = 0;
     initWork->charaType[1] = 1;
+    initWork->charaType[2] = 2;
+    initWork->charaType[3] = 3;
     initWork->bgType[0] = 0;
     initWork->bgType[1] = 1;
+    initWork->bgType[2] = 2;
+    initWork->bgType[3] = 3;
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+    {
+      initWork->mode = LTM_2_MEMBER;
+    }
+    else
+    {
+      initWork->mode = LTM_4_MEMBER;
+    }
   }
   else
   {

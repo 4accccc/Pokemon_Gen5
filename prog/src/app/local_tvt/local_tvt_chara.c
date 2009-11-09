@@ -22,6 +22,8 @@
 //======================================================================
 #pragma mark [> define
 
+#define LTVT_CHARA_UPDATE_CNT (40)
+
 //======================================================================
 //	enum
 //======================================================================
@@ -59,15 +61,19 @@ struct _LOCAL_TVT_CHARA
 
 };
 
-static const u8 charaResList[] = {
-    NARC_local_tvt_chara_01_01_NCGR ,
-    NARC_local_tvt_chara_02_01_NCGR ,
+static const u8 charaResList[][2] = {
+    { NARC_local_tvt_chara_01_NCLR , NARC_local_tvt_chara_01_01_NCGR },
+    { NARC_local_tvt_chara_02_NCLR , NARC_local_tvt_chara_02_01_NCGR },
+    { NARC_local_tvt_chara_03_NCLR , NARC_local_tvt_chara_03_01_NCGR },
+    { NARC_local_tvt_chara_04_NCLR , NARC_local_tvt_chara_04_01_NCGR },
 };
 
 
-static const u8 bgResList[] = {
-    NARC_local_tvt_back_01_01_NCGR ,
-    NARC_local_tvt_back_02_01_NCGR ,
+static const u8 bgResList[][2] = {
+    { NARC_local_tvt_back_01_NCLR , NARC_local_tvt_back_01_01_NCGR },
+    { NARC_local_tvt_back_02_NCLR , NARC_local_tvt_back_02_01_NCGR },
+    { NARC_local_tvt_back_03_NCLR , NARC_local_tvt_back_03_01_NCGR },
+    { NARC_local_tvt_back_04_NCLR , NARC_local_tvt_back_04_01_NCGR },
 };
 
 
@@ -98,6 +104,9 @@ LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_WORK *work , const u8 charaIdx 
   LOCAL_TVT_CHARA_LoadCommonResource( work , charaWork );
   
   charaWork->state = LTCTS_WAIT_REQ;
+  charaWork->resData = NULL;
+  
+  charaWork->anmCnt = GFUser_GetPublicRand0(LTVT_CHARA_UPDATE_CNT);
   
   return charaWork;
 }
@@ -107,6 +116,12 @@ LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_WORK *work , const u8 charaIdx 
 //--------------------------------------------------------------
 void LOCAL_TVT_CHARA_Term( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
 {
+  if( charaWork->resData != NULL )
+  {
+    GFL_HEAP_FreeMemory( charaWork->resData );
+  }
+
+  
   GFL_HEAP_FreeMemory( charaWork );
 }
 
@@ -124,7 +139,7 @@ void LOCAL_TVT_CHARA_Main( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
     break;
   case LTCTS_CHARA1:
     charaWork->transIdx = 0;
-    LOCAL_TVT_CHARA_LoadNcgResource( work , charaWork , charaResList[charaWork->charaType] + charaWork->charaAnmIdx );
+    LOCAL_TVT_CHARA_LoadNcgResource( work , charaWork , charaResList[charaWork->charaType][1] + charaWork->charaAnmIdx );
     charaWork->state = LTCTS_CHARA2;
     break;
   case LTCTS_CHARA2:
@@ -137,11 +152,12 @@ void LOCAL_TVT_CHARA_Main( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
     {
       charaWork->state = LTCTS_BG1;
       GFL_HEAP_FreeMemory( charaWork->resData );
+      charaWork->resData = NULL;
     }
     break;
   case LTCTS_BG1:
     charaWork->transIdx = 0;
-    LOCAL_TVT_CHARA_LoadNcgResource( work , charaWork , bgResList[charaWork->charaType] + charaWork->bgAnmIdx );
+    LOCAL_TVT_CHARA_LoadNcgResource( work , charaWork , bgResList[charaWork->charaType][1] + charaWork->bgAnmIdx );
     charaWork->state = LTCTS_BG2;
     break;
   case LTCTS_BG2:
@@ -154,10 +170,11 @@ void LOCAL_TVT_CHARA_Main( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
     {
       charaWork->state = LTCTS_WAIT_TRANS;
       GFL_HEAP_FreeMemory( charaWork->resData );
+      charaWork->resData = NULL;
     }
     break;
   }
-  if( charaWork->anmCnt < 40 )
+  if( charaWork->anmCnt < LTVT_CHARA_UPDATE_CNT )
   {
     charaWork->anmCnt++;
   }
@@ -208,14 +225,14 @@ static void LOCAL_TVT_CHARA_LoadCommonResource( LOCAL_TVT_WORK *work , LOCAL_TVT
   }
   
   GFL_ARCHDL_UTIL_TransVramPaletteEx( work->archandle , 
-                                      NARC_local_tvt_chara_01_NCLR + charaWork->charaType ,
+                                      charaResList[charaWork->charaType][0] ,
                                       PALTYPE_MAIN_BG_EX ,
                                       0 ,
                                       (2*16*16) * charaWork->charaIdx + 0x4000 ,
                                       (2*16*16) ,
                                       work->heapId );
   GFL_ARCHDL_UTIL_TransVramPaletteEx( work->archandle , 
-                                      NARC_local_tvt_back_01_NCLR + charaWork->bgType ,
+                                      bgResList[charaWork->charaType][0] ,
                                       PALTYPE_MAIN_BG_EX ,
                                       0 ,
                                       (2*16*16) * charaWork->charaIdx + 0x6000 ,
@@ -255,14 +272,14 @@ static void LOCAL_TVT_CHARA_LoadCharaResource( LOCAL_TVT_WORK *work , LOCAL_TVT_
     charSize = 0x3000;
   }
 
-  LOCAL_TVT_CHARA_LoadNcgResource( work , charaWork , charaResList[charaWork->charaType] );
+  LOCAL_TVT_CHARA_LoadNcgResource( work , charaWork , charaResList[charaWork->charaType][1] );
   LOCAL_TVT_CHARA_TransNcgResource( work , charaWork ,
                                     0 ,
                                     LTVT_VRAM_ADR_CHARA + charSize * charaWork->charaIdx ,
                                     charSize );
   GFL_HEAP_FreeMemory( charaWork->resData );
   
-  LOCAL_TVT_CHARA_LoadNcgResource( work , charaWork , bgResList[charaWork->charaType] );
+  LOCAL_TVT_CHARA_LoadNcgResource( work , charaWork , bgResList[charaWork->charaType][1] );
   LOCAL_TVT_CHARA_TransNcgResource( work , charaWork ,
                                     0 ,
                                     LTVT_VRAM_ADR_BG + charSize * charaWork->charaIdx ,
@@ -272,7 +289,7 @@ static void LOCAL_TVT_CHARA_LoadCharaResource( LOCAL_TVT_WORK *work , LOCAL_TVT_
 
 static void LOCAL_TVT_CHARA_LoadNcgResource( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork , ARCDATID datId )
 {
-  OS_TPrintf("[%d]L\n",charaWork->charaIdx);
+  //OS_TPrintf("[%d]L\n",charaWork->charaIdx);
   charaWork->resData = GFL_ARCHDL_UTIL_LoadBGCharacter( work->archandle , 
                                    datId ,
                                    FALSE ,
@@ -289,7 +306,7 @@ static void LOCAL_TVT_CHARA_LoadNcgResource( LOCAL_TVT_WORK *work , LOCAL_TVT_CH
 static void LOCAL_TVT_CHARA_TransNcgResource( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork ,
                                                    const u32 topOfs , const u32 transOfs , const u32 transSize )
 {
-  OS_TPrintf("[%d]T\n",charaWork->charaIdx);
+  //OS_TPrintf("[%d]T\n",charaWork->charaIdx);
   GFL_STD_MemCopy32( (void*)((u32)charaWork->charaData->pRawData + topOfs) , (void*)(HW_BG_VRAM + transOfs ) , transSize );
 
 }
