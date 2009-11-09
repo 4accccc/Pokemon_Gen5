@@ -192,7 +192,7 @@ enum {
 //Šg’£‚n‚a‚iƒŠƒ\[ƒXÅ‘å“o˜^”
 #define EXP_OBJ_RES_MAX   (60)
 //Šg’£‚n‚a‚i“o˜^Å‘å”
-#define EXP_OBJ_MAX   (30)
+#define EXP_OBJ_MAX   (35)
 
 
 //--------------------------------------------------------------
