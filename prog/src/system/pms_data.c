@@ -198,6 +198,22 @@ void PMSDAT_SetupDefaultBattleTowerMessage( PMS_DATA* pms, BTWR_PLAYER_MSG_ID ms
  */
 //------------------------------------------------------------------
 STRBUF* PMSDAT_ToString( const PMS_DATA* pms, u32 heapID )
+{ 
+  PMSDAT_ToStringWithWordCount( pms, heapID, PMS_WORD_MAX );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * 簡易文章データから、そのまま表示できる文字列を生成する(タグ数指定版)
+ *
+ * @param   pms     文章型へのポインタ
+ * @param   heapID    バッファ生成用ヒープID
+ * @param   wordCount タグ数
+ *
+ * @retval  STRBUF*   生成された文字列を含むバッファ
+ */
+//-----------------------------------------------------------------------------
+STRBUF* PMSDAT_ToStringWithWordCount( const PMS_DATA* pms, u32 heapID, u8 wordCount )
 {
 	STRBUF	*sentence,*baseStr;
 	WORDSET	*wordset;
@@ -206,7 +222,7 @@ STRBUF* PMSDAT_ToString( const PMS_DATA* pms, u32 heapID )
 
 	wordset = WORDSET_Create(heapID);
 
-	for(i=0; i<PMS_WORD_MAX; i++)
+	for(i=0; i<wordCount; i++)
 	{
 		if( pms->word[i] != PMS_WORD_NULL )
 		{
@@ -226,6 +242,9 @@ STRBUF* PMSDAT_ToString( const PMS_DATA* pms, u32 heapID )
 		}
 		else
 		{
+      // 空白をあける
+      // @@@
+			WORDSET_RegisterPMSDeco( wordset, i, 1 );
 			break;
 		}
 	}
@@ -365,6 +384,13 @@ static u32 get_include_word_max( u32 sentence_type, u32 sentence_id , const HEAP
 //------------------------------------------------------------------
 PMS_WORD  PMSDAT_GetWordNumber( const PMS_DATA* pms, int pos )
 {
+	GF_ASSERT( pos < PMS_WORD_MAX );
+
+  if( pms->word[ pos ] == PMS_WORD_NULL )
+  {
+	  return PMS_WORD_NULL;
+  }
+
 	return pms->word[ pos ] & PMS_WORD_NUM_MASK;
 }
 

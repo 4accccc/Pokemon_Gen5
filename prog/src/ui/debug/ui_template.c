@@ -1716,12 +1716,13 @@ static void UITemplate_PMSDRAW_Init( UI_TEMPLATE_MAIN_WORK* wk )
           GFL_BMP_CHRAREA_GET_B );	// キャラ取得方向
     }
     
-    // 1個目
+    // 1個目 通常+空欄表示
     PMSDAT_SetDebug( &pms );
+    PMSDAT_SetWord( &pms, 1, PMS_WORD_NULL );
     PMS_DRAW_Print( wk->pms_draw, wk->pms_win[0], &pms ,0 );
 
-    // 2個目 デコメ表示
-    PMSDAT_SetDeco( &pms, 0, PMS_DECOID_HERO );
+    // 2個目 デコメ
+    PMSDAT_SetDeco( &pms, 1, PMS_DECOID_HERO );
     PMS_DRAW_Print( wk->pms_draw, wk->pms_win[1], &pms ,1 );
     
     // 3個目 デコメ二個表示

@@ -849,22 +849,31 @@ static void fill_wordarea( GFL_BMPWIN* win, const POS* wordpos )
 			EDITAREA_WIN_WORD_COLOR_GROUND );
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  
+ *
+ *	@param	PMSIV_EDIT* wk
+ *	@param	win
+ *	@param	POS* wordpos
+ *	@param	word 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static void print_wordarea( PMSIV_EDIT* wk, GFL_BMPWIN* win, const POS* wordpos, PMS_WORD word )
 {
 	if( word != PMS_WORD_NULL )
 	{
 		POS  print_pos;
-		u32  write_xpos;
+//		u32  write_xpos;
 		GFL_FONT *fontHandle = fontHandle = PMSIView_GetFontHandle(wk->vwk);
 
 		wordpos_to_orgpos( wordpos, &print_pos );
 
 		PMSW_GetStr(word, wk->tmpbuf ,HEAPID_PMS_INPUT_VIEW);
-		write_xpos = (print_pos.x + (WORDAREA_WIDTH / 2)) - (PRINTSYS_GetStrWidth(wk->tmpbuf, fontHandle,0) / 2);
-		
-//		GF_STR_PrintColor( win, PMSI_FONT_EDITAREA_WORD, wk->tmpbuf, print_pos.x, print_pos.y, MSG_NO_PUT,
-//				GF_PRINTCOLOR_MAKE(EDITAREA_WIN_WORD_COLOR_LETTER, EDITAREA_WIN_WORD_COLOR_SHADOW, EDITAREA_WIN_WORD_COLOR_GROUND),
-//				NULL);
+//		write_xpos = (print_pos.x + (WORDAREA_WIDTH / 2)) - (PRINTSYS_GetStrWidth(wk->tmpbuf, fontHandle,0) / 2);
+
 		GFL_FONTSYS_SetColor( EDITAREA_WIN_WORD_COLOR_LETTER, EDITAREA_WIN_WORD_COLOR_SHADOW, EDITAREA_WIN_WORD_COLOR_GROUND);
 		PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), print_pos.x, print_pos.y, wk->tmpbuf,fontHandle );
 	}

@@ -23,13 +23,13 @@
 
 #define  SOUND_CHANGE_SENTENCE	(SEQ_SE_DP_SELECT)		// 文章変更
 
-#define  SOUND_CHANGE_CATEGORY	(SEQ_SE_DECIDE1)		// カテゴリ変更
+#define  SOUND_CHANGE_CATEGORY	(SEQ_SE_DECIDE3)		// カテゴリ変更
 //#define  SOUND_CHANGE_CATEGORY	(SEQ_SE_DP_BUTTON9)		// カテゴリ変更
 
-#define  SOUND_DISABLE_CATEGORY	(SEQ_SE_DECIDE2)	// 無効なカテゴリ選択
+#define  SOUND_DISABLE_CATEGORY	(SEQ_SE_BEEP)	// 無効なカテゴリ選択
 //#define  SOUND_DISABLE_CATEGORY	(SEQ_SE_DP_CUSTOM06)	// 無効なカテゴリ選択
 
-#define  SOUND_DISABLE_BUTTON	(SEQ_SE_DECIDE3)	// 無効なボタンタッチ
+#define  SOUND_DISABLE_BUTTON	(SEQ_SE_BEEP)	// 無効なボタンタッチ
 //#define  SOUND_DISABLE_BUTTON	(SEQ_SE_DP_CUSTOM06)	// 無効なボタンタッチ
 
 #endif //PMS_USE_SND

@@ -273,6 +273,8 @@ static void PMSIView_MainTask( GFL_TCB *tcb, void* wk_adrs )
 	GFL_CLACT_SYS_Main();
 
   PMSIV_MENU_Main( vwk->menu_wk );
+
+  PRINTSYS_QUE_Main( vwk->print_que );
 }
 
 //------------------------------------------------------------------
