@@ -126,7 +126,7 @@ static const VecFx32 PolePos[INSECT_PL_MAX] = {
   {PL6_X,0,PL6_Z},
   {PL7_X,0,PL7_Z},
   {PL8_X,0,PL8_Z},
-  {PL9_X,0,PL7_Z},
+  {PL9_X,0,PL9_Z},
   {PL10_X,0,PL10_Z},
 };
 
@@ -642,6 +642,7 @@ static GMEVENT_RESULT SwitchEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT PoleEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT TrTrapEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT PushWallEvt( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT WallReverseEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT PushWallSideEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT PushWallNoBreakEvt( GMEVENT* event, int* seq, void* work );
 static int GetWallInfo( GYM_INSECT_SV_WORK *gmk_sv_work,
@@ -682,9 +683,6 @@ void GYM_INSECT_Setup(FIELDMAP_WORK *fieldWork)
     OS_Printf("bfore_size = %x\n",size);
   }
 
-  //@todo 今だけここでインデックス6番の壁を常時WEAKNESSにする
-  gmk_sv_work->WallSt[6] = WALL_ST_WEAKNESS;
-
   //座標セット
   for (i=0;i<INSECT_SW_MAX;i++)
   {
@@ -701,6 +699,13 @@ void GYM_INSECT_Setup(FIELDMAP_WORK *fieldWork)
       EXP_OBJ_ANM_CNT_PTR anm;
       anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_INSECT_UNIT_IDX, idx, j);
       FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+      if ( gmk_sv_work->Sw[i] ){
+        fx32 last = FLD_EXP_OBJ_GetAnimeLastFrame(anm);
+        //ラストフレーム
+        FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_INSECT_UNIT_IDX, idx, j, last );
+        //アニメ停止
+        FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+      }
     }
   }
   for (i=0;i<INSECT_PL_MAX;i++)
@@ -717,6 +722,13 @@ void GYM_INSECT_Setup(FIELDMAP_WORK *fieldWork)
       EXP_OBJ_ANM_CNT_PTR anm;
       anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_INSECT_UNIT_IDX, idx, j);
       FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+      if ( gmk_sv_work->Pl[i] ){
+        fx32 last = FLD_EXP_OBJ_GetAnimeLastFrame(anm);
+        //ラストフレーム
+        FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_INSECT_UNIT_IDX, idx, j, last );
+        //アニメ停止
+        FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+      }
     }
   }
   for (i=0;i<INSECT_WALL_MAX;i++)
@@ -1043,6 +1055,14 @@ static GMEVENT_RESULT PushWallEvt( GMEVENT* event, int* seq, void* work )
           
         } //end if (tmp->Cont>=CONT_TIME)
       } //end if ( GFL_UI_KEY_GetCont() & check_key )
+      else
+      {
+        GMEVENT *next_evt;
+        //キー入力やめた
+        next_evt = GMEVENT_Create(gsys, NULL, WallReverseEvt, 0);
+        GMEVENT_ChangeEvent(event, next_evt);
+        return GMEVENT_RES_CONTINUE;
+      }
     }
     break;
   case 2:
@@ -1117,13 +1137,98 @@ static GMEVENT_RESULT PushWallEvt( GMEVENT* event, int* seq, void* work )
     }
   }
 
-  //壁はじかれ処理
-  {
-    ;
+  return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 弾かれイベント
+ * @param	      fieldWork     フィールドワークポインタ
+ * @return      none
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT WallReverseEvt( GMEVENT* event, int* seq, void* work )
+{
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  GYM_INSECT_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_INSECT_TMP_ASSIGN_ID);
+
+  FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+
+  u8 obj_idx = OBJ_WALL_BRK1+tmp->WallIdx;
+  u8 anm_idx = ANM_WALL_N;
+  //向きでアニメインデックスにオフセットをつける
+  if (tmp->Dir == DIR_DOWN){
+    anm_idx += 1;
+  }
+
+  switch(*seq){
+  case 0:
+    //アニメ終了待ち
+    if ( tmp->PushAnmTcb != NULL)
+    {
+      if( MMDL_CheckEndAcmdList(tmp->PushAnmTcb) == TRUE )
+      {
+        MMDL_EndAcmdList( tmp->PushAnmTcb );
+			  tmp->PushAnmTcb = NULL;
+        tmp->Val = 0;
+        (*seq)++;
+      }
+    }
+    else
+    {
+      tmp->Val = 0;
+      (*seq)++;
+    }
+    break;
+  case 1:
+    {
+      BOOL arrive;
+      VecFx32 pos;
+      fx32 diff;
+      int accel;
+      FIELD_PLAYER_GetPos( fld_player, &pos );
+      //戻る値セット
+      tmp->Val++;
+      arrive = FALSE;
+      if ( tmp->Dir == DIR_UP ){
+        accel = 1;
+        pos.z += (accel*tmp->Val*FX32_ONE);
+        //基点地点まで戻ったか？
+        if ( pos.z >= tmp->BasePos.z )
+        {
+          pos.z = tmp->BasePos.z;
+          arrive = TRUE; //到達
+        }
+        diff = tmp->BasePos.z - pos.z;
+      }else{
+        accel = -1;
+        pos.z += (accel*tmp->Val*FX32_ONE);
+        //基点地点まで戻ったか？
+        if ( pos.z <= tmp->BasePos.z )
+        {
+          pos.z = tmp->BasePos.z;
+          arrive = TRUE; //到達
+        }
+        diff = pos.z - tmp->BasePos.z;
+      }
+
+      FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_INSECT_UNIT_IDX, obj_idx, anm_idx, (diff/2) );
+      FIELD_PLAYER_SetPos( fld_player, &pos );
+
+      if (arrive)
+      {
+        //アニメ無効化
+        FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_INSECT_UNIT_IDX, obj_idx, anm_idx, FALSE);
+        return GMEVENT_RES_FINISH;
+      }
+    }
   }
 
   return GMEVENT_RES_CONTINUE;
 }
+
 
 //--------------------------------------------------------------
 /**
