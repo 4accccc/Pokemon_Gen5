@@ -257,14 +257,14 @@ VMCMD_RESULT EvCmdGymAnti_OpenDoor( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGymInsect_SwOn( VMHANDLE *core, void *wk )
 {
-  u8 sw_idx;
+  u16 *sw_idx;
   GMEVENT *call_event;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  sw_idx = VMGetU16( core );
-  call_event = GYM_INSECT_CreateSwitchEvt(gsys, sw_idx);
+  sw_idx = SCRCMD_GetVMWork( core, work );
+  call_event = GYM_INSECT_CreateSwitchEvt(gsys, *sw_idx);
   
   if (call_event == NULL){
     GF_ASSERT(0);
@@ -285,14 +285,14 @@ VMCMD_RESULT EvCmdGymInsect_SwOn( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGymInsect_PoleOn( VMHANDLE *core, void *wk )
 {
-  u8 pl_idx;
+  u16 *pl_idx;
   GMEVENT *call_event;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  pl_idx = VMGetU16( core );
-  call_event = GYM_INSECT_CreatePoleEvt(gsys, pl_idx);
+  pl_idx = SCRCMD_GetVMWork( core, work );
+  call_event = GYM_INSECT_CreatePoleEvt(gsys, *pl_idx);
   
   if (call_event == NULL){
     GF_ASSERT(0);
