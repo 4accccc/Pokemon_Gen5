@@ -1245,7 +1245,14 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 	case SEQ_EDS_KEYWAIT:
 		if( wk->key_trg & PAD_KEY_UP )
 		{
-			if( (wk->sentence_edit_pos_max) && (wk->edit_pos != 0) )
+      if( wk->edit_pos == 0 )
+      {
+        // ‰ñ‚èž‚Ý
+				wk->cmd_button_pos = BUTTON_POS_CANCEL;
+				PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_BUTTON );
+				(*seq) = SEQ_EDS_BUTTON_KEYWAIT;
+      }
+			else if( (wk->sentence_edit_pos_max) )
 			{
 #if PMS_USE_SND
 				GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
