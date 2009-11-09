@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= tomoya_takahashi nakatsui #ohno #tamada
+USERS	= tomoya_takahashi nakatsui takahashi hozumi_yukiko iwao_kazumasa murakami_naoto #ohno #tamada
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -79,14 +79,17 @@ do-build:	subdir $(TARGETDIR)/$(targetname).narc
 subdir:
 	@$(MAKE_SUBDIR)
 
+
+#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
+ifeq	($(CONVERTUSER),true)	
+
+
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(HEADERDUMMY_TARGET) $(targetname).narc 
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR)
 
 
-#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
-ifeq	($(CONVERTUSER),true)	
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(OBJ_FILE)
 	-ls *.dat > $(LIST_FILE)
@@ -104,6 +107,24 @@ $(targetname).narc: $(OBJ_FILE)
 $(HEADERDUMMY_TARGET):$(HEADERDIR)field_rail_loader_func.h $(HEADERDIR)field_rail.h
 	rm -f *.dat
 	echo このファイルは、headerが更新されたときにdatを作り直すために用意されています。 > $(HEADERDUMMY_TARGET)
+
+else
+
+
+# narc のコピーだけ実行する
+$(TARGETDIR)/$(targetname).narc: $(targetname).narc 
+	$(COPY) $(targetname).narc $(TARGETDIR)
+	$(COPY) $(targetname).naix $(TARGETDIR)
+
+#アーカイブのみ生成
+$(targetname).narc: $(OBJ_FILE)
+	-ls *.dat > $(LIST_FILE)
+	-ls *.atdat >> $(LIST_FILE)
+	$(ARCLIST_MAKE) $(LIST_FILE)
+	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
+	$(NAIXCUT) $(targetname).naix
+	-rm	$(LIST_FILE)
+
 endif
 
 #------------------------------------------------------------------------------
@@ -114,13 +135,13 @@ clean:
 	@$(MAKE_SUBDIR)
 	rm -f $(TARGETDIR)/$(targetname).narc
 	rm -f $(TARGETDIR)/$(targetname).naix
+	rm -f $(targetname).narc
+	rm -f $(targetname).naix
 
 #コンバート対象者のみ、中間ファイル削除
 ifeq	($(CONVERTUSER),true)	
 	rm -f *.dat
 	rm -f *.atdat
-	rm -f $(targetname).narc
-	rm -f $(targetname).naix
 endif
 
 

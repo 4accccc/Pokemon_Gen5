@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= tomoya_takahashi nakatsui #ohno #tamada
+USERS	= tomoya_takahashi nakatsui takahashi #ohno #tamada
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -33,6 +33,9 @@ include	$(PROJECT_RSCDIR)\macro_define
 #------------------------------------------------------------------------------
 XLSFILE = rail_data.xls
 XLS_CSV_FILE = rail_data.txt
+
+DAT_FILE = $(wildcard *.dat)
+
 #エクセルコンバーター
 CSV_CVTR	= $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
 
@@ -70,11 +73,12 @@ do-build:	subdir $(TARGETDIR)/$(targetname).narc
 subdir:
 	@$(MAKE_SUBDIR)
 
+
+
 # narc のコピーだけ実行する
-$(TARGETDIR)/$(targetname).narc: $(HEADERDUMMY_TARGET) $(targetname).narc 
+$(TARGETDIR)/$(targetname).narc: $(targetname).narc 
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR)
-
 
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	
@@ -84,6 +88,15 @@ $(targetname).narc: $(XLSFILE)
 	$(CSV_CVTR) -o $(XLS_CSV_FILE) -p 1 $(XLSFILE)
 	perl conv.pl $(XLS_CSV_FILE) $(RAILDATA_NAIX) $(SCENEDATA_NAIX)
 	
+	-ls *.dat > $(LIST_FILE)
+	$(ARCLIST_MAKE) $(LIST_FILE)
+	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
+	$(NAIXCUT) $(targetname).naix
+	-rm	$(LIST_FILE)
+
+else
+
+$(targetname).narc: $(DAT_FILE)
 	-ls *.dat > $(LIST_FILE)
 	$(ARCLIST_MAKE) $(LIST_FILE)
 	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
@@ -100,12 +113,12 @@ clean:
 	@$(MAKE_SUBDIR)
 	rm -f $(TARGETDIR)/$(targetname).narc
 	rm -f $(TARGETDIR)/$(targetname).naix
+	rm -f $(targetname).narc
+	rm -f $(targetname).naix
 
 #コンバート対象者のみ、中間ファイル削除
 ifeq	($(CONVERTUSER),true)	
 	rm -f *.dat
-	rm -f $(targetname).narc
-	rm -f $(targetname).naix
 endif
 
 
