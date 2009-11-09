@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2009-11-06T15:08:29
+	Update:2009-11-06T22:00:20
  *****************************************************************************/
 
 #ifndef NARC_GYM_INSECT_NAIX_
@@ -16,20 +16,27 @@ enum {
 	NARC_gym_insect_c03_effect1_nsbmd = 2,
 	NARC_gym_insect_c03_switch1_nsbmd = 3,
 	NARC_gym_insect_c03_wall1_nsbmd = 4,
-	NARC_gym_insect_c03_pole1_nsbca = 5,
-	NARC_gym_insect_c03_pole1_nsbta = 6,
-	NARC_gym_insect_c03_pole2_nsbca = 7,
-	NARC_gym_insect_c03_pole2_nsbta = 8,
-	NARC_gym_insect_c03_effect1_nsbca = 9,
-	NARC_gym_insect_c03_effect1_nsbtp = 10,
-	NARC_gym_insect_c03_switch1_nsbta = 11,
-	NARC_gym_insect_c03_switch1_nsbtp = 12,
-	NARC_gym_insect_c03_wall1_1_nsbca = 13,
-	NARC_gym_insect_c03_wall1_2_nsbca = 14,
-	NARC_gym_insect_c03_wall2_1_nsbca = 15,
-	NARC_gym_insect_c03_wall2_2_nsbca = 16,
-	NARC_gym_insect_c03_wall3_1_nsbca = 17,
-	NARC_gym_insect_c03_wall3_2_nsbca = 18
+	NARC_gym_insect_c03_wall2_nsbmd = 5,
+	NARC_gym_insect_c03_pole1_nsbca = 6,
+	NARC_gym_insect_c03_pole1_nsbta = 7,
+	NARC_gym_insect_c03_pole2_nsbca = 8,
+	NARC_gym_insect_c03_pole2_nsbta = 9,
+	NARC_gym_insect_c03_effect1_nsbca = 10,
+	NARC_gym_insect_c03_effect1_nsbtp = 11,
+	NARC_gym_insect_c03_switch1_nsbta = 12,
+	NARC_gym_insect_c03_switch1_nsbtp = 13,
+	NARC_gym_insect_c03_wall1_1a_nsbca = 14,
+	NARC_gym_insect_c03_wall1_1b_nsbca = 15,
+	NARC_gym_insect_c03_wall1_2a_nsbca = 16,
+	NARC_gym_insect_c03_wall1_2b_nsbca = 17,
+	NARC_gym_insect_c03_wall1_3_nsbca = 18,
+	NARC_gym_insect_c03_wall1_3_nsbta = 19,
+	NARC_gym_insect_c03_wall1_3_nsbtp = 20,
+	NARC_gym_insect_c03_wall1_3_nsbma = 21,
+	NARC_gym_insect_c03_wall2_1a_nsbca = 22,
+	NARC_gym_insect_c03_wall2_1b_nsbca = 23,
+	NARC_gym_insect_c03_wall2_2a_nsbca = 24,
+	NARC_gym_insect_c03_wall2_2b_nsbca = 25
 };
 
 /* NARC_GYM_INSECT_NAIX_ */

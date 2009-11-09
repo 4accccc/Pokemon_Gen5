@@ -4,6 +4,7 @@ DATA_LIST = \
   c03_effect1.nsbmd \
   c03_switch1.nsbmd \
   c03_wall1.nsbmd \
+  c03_wall2.nsbmd \
   c03_pole1.nsbca \
   c03_pole1.nsbta \
   c03_pole2.nsbca \
@@ -12,10 +13,17 @@ DATA_LIST = \
   c03_effect1.nsbtp \
   c03_switch1.nsbta \
   c03_switch1.nsbtp \
-  c03_wall1_1.nsbca \
-  c03_wall1_2.nsbca \
-  c03_wall2_1.nsbca \
-  c03_wall2_2.nsbca \
-  c03_wall3_1.nsbca \
-  c03_wall3_2.nsbca
+  c03_wall1_1a.nsbca \
+  c03_wall1_1b.nsbca \
+  c03_wall1_2a.nsbca \
+  c03_wall1_2b.nsbca \
+  c03_wall1_3.nsbca \
+  c03_wall1_3.nsbta \
+  c03_wall1_3.nsbtp \
+  c03_wall1_3.nsbma \
+  c03_wall2_1a.nsbca \
+  c03_wall2_1b.nsbca \
+  c03_wall2_2a.nsbca \
+  c03_wall2_2b.nsbca
+
 
