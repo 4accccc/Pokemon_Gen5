@@ -2181,7 +2181,6 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
   case 0:
     {
       BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-      BPP_ReflectExp( bpp );
 
       if( BTL_MAIN_CheckFrontPoke(wk->mainModule, wk->pokeCon, args[0]) )
       {
@@ -2189,7 +2188,6 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
         u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
 
         BTL_Printf("ポケ[%d] に経験値 %d\n", args[0], args[1] );
-        BPP_ReflectExp( bpp );
         BTLV_EFFECT_CalcGaugeEXP( vpos, args[1] );
         (*seq)++;
       }
@@ -2218,7 +2216,9 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
   case 0:
     {
       BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-      BPP_ReflectExp( bpp );
+      BTL_Printf(" GetExp with Levelup ... level=%d ->", BPP_GetValue(bpp, BPP_LEVEL) );
+      BPP_ReflectLevelup( bpp, args[1], args[2], args[2], args[4], args[5], args[6], args[7] );
+      BTL_PrintfSimple(" %d\n", BPP_GetValue(bpp, BPP_LEVEL));
       BPP_HpPlus( bpp, args[2] );
 
       if( BTL_MAIN_CheckFrontPoke(wk->mainModule, wk->pokeCon, args[0]) )

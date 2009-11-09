@@ -2088,7 +2088,7 @@ void BPP_BatonTouchParam( BTL_POKEPARAM* target, const BTL_POKEPARAM* user )
 
 //=============================================================================================
 /**
- * 経験値加算
+ * 経験値加算（サーバ用：Srcポケモンデータへの反映は行わない）
  *
  * @param   bpp
  * @param   expRest  [io] 加算する経験値／レベルアップ時は残りの加算経験値
@@ -2101,12 +2101,13 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
 {
   if( bpp->baseParam.level < PTL_LEVEL_MAX )
   {
-    u32 expNow, expBorder;
+    u32 expNow, expSum, expBorder;
 
     expNow = bpp->exp;
+    expSum = expNow + (*expRest);
     expBorder = POKETOOL_GetMinExp( bpp->baseParam.monsno, bpp->formNo, bpp->baseParam.level+1 );
 
-    if( (expNow + (*expRest)) >= expBorder )
+    if( expSum >= expBorder )
     {
       u32 expAdd = (expBorder - expNow);
       u16 prevHP   = bpp->baseParam.hpMax;
@@ -2136,12 +2137,15 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
       info->sp_def = bpp->baseParam.sp_defence - info->sp_def;
       info->agi    = bpp->baseParam.agility - info->agi;
 
+      PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_exp, bpp->exp );
+      PP_Renew( (POKEMON_PARAM*)(bpp->coreParam.ppSrc) );
+
       *expRest -= expAdd;
       return TRUE;
     }
     else
     {
-      bpp->exp = expNow + (*expRest);
+      bpp->exp = expSum;
       PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_exp, bpp->exp );
     }
   }
@@ -2151,21 +2155,21 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
 }
 //=============================================================================================
 /**
- * Srcポケモンデータに合わせて経験値、各種パラメータ値を反映させる（クライアント用）
+ * レベルアップパラメータを反映させる
  *
  * @param   bpp
  */
 //=============================================================================================
-void BPP_ReflectExp( BTL_POKEPARAM* bpp )
+void BPP_ReflectLevelup( BTL_POKEPARAM* bpp, u8 nextLevel, u8 hpMax, u8 atk, u8 def, u8 spAtk, u8 spDef, u8 agi )
 {
-  bpp->exp = PP_Get( bpp->coreParam.ppSrc, ID_PARA_exp, 0 );
-  bpp->baseParam.level = PP_Get( bpp->coreParam.ppSrc, ID_PARA_level, 0 );
-  bpp->baseParam.hpMax = PP_Get( bpp->coreParam.ppSrc, ID_PARA_hpmax, 0 );
-  bpp->baseParam.attack = PP_Get( bpp->coreParam.ppSrc, ID_PARA_pow, 0 );
-  bpp->baseParam.defence = PP_Get( bpp->coreParam.ppSrc, ID_PARA_def, 0 );
-  bpp->baseParam.sp_attack = PP_Get( bpp->coreParam.ppSrc, ID_PARA_spepow, 0 );
-  bpp->baseParam.sp_defence = PP_Get( bpp->coreParam.ppSrc, ID_PARA_spedef, 0 );
-  bpp->baseParam.agility = PP_Get( bpp->coreParam.ppSrc, ID_PARA_agi, 0 );
+  bpp->exp = POKETOOL_GetMinExp( bpp->baseParam.monsno, bpp->formNo, nextLevel );
+  bpp->baseParam.level = nextLevel;
+  bpp->baseParam.hpMax      += hpMax;
+  bpp->baseParam.attack     += atk;
+  bpp->baseParam.defence    += def;
+  bpp->baseParam.sp_attack  += spAtk;
+  bpp->baseParam.sp_defence += spDef;
+  bpp->baseParam.agility    += agi;
 }
 
 //=============================================================================================

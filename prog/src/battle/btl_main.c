@@ -163,7 +163,7 @@ static void srcParty_Init( BTL_MAIN_MODULE* wk );
 static void srcParty_Quit( BTL_MAIN_MODULE* wk );
 static void srcParty_Set( BTL_MAIN_MODULE* wk, u8 clientID, const POKEPARTY* party );
 static POKEPARTY* srcParty_Get( BTL_MAIN_MODULE* wk, u8 clientID );
-static void srcParty_RelrectBtlParty( BTL_MAIN_MODULE* wk, u8 clientID );
+static void srcParty_RefrectBtlParty( BTL_MAIN_MODULE* wk, u8 clientID );
 static void reflectPartyData( BTL_MAIN_MODULE* wk );
 static void checkWinner( BTL_MAIN_MODULE* wk );
 
@@ -2304,7 +2304,7 @@ s16 BTL_PARTY_FindMember( const BTL_PARTY* party, const BTL_POKEPARAM* param )
 
 POKEPARTY* BTL_MAIN_GetPlayerPokeParty( BTL_MAIN_MODULE* wk )
 {
-  srcParty_RelrectBtlParty( wk, wk->myClientID );
+  srcParty_RefrectBtlParty( wk, wk->myClientID );
   return srcParty_Get( wk, wk->myClientID );
 }
 
@@ -2531,7 +2531,7 @@ static POKEPARTY* srcParty_Get( BTL_MAIN_MODULE* wk, u8 clientID )
   return wk->srcParty[ clientID ];
 }
 // バトルパーティの内容をオリジナルパーティデータに反映させる
-static void srcParty_RelrectBtlParty( BTL_MAIN_MODULE* wk, u8 clientID )
+static void srcParty_RefrectBtlParty( BTL_MAIN_MODULE* wk, u8 clientID )
 {
   POKEPARTY* srcParty = srcParty_Get( wk, clientID );
   BTL_PARTY* btlParty = BTL_POKECON_GetPartyData( &wk->pokeconForClient, clientID );
@@ -2559,7 +2559,7 @@ static void srcParty_RelrectBtlParty( BTL_MAIN_MODULE* wk, u8 clientID )
   }
 }
 // バトルパーティの内容を、バトル開始時の順に並べ直した上でオリジナルパーティデータに反映させる
-static void srcParty_RelrectBtlPartyStartOrder( BTL_MAIN_MODULE* wk, u8 clientID )
+static void srcParty_RefrectBtlPartyStartOrder( BTL_MAIN_MODULE* wk, u8 clientID )
 {
   POKEPARTY* srcParty = srcParty_Get( wk, clientID );
   BTL_PARTY* btlParty = BTL_POKECON_GetPartyData( &wk->pokeconForClient, clientID );
@@ -2604,7 +2604,7 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
   {
     POKEPARTY* srcParty;
 
-    srcParty_RelrectBtlPartyStartOrder( wk, wk->myClientID );
+    srcParty_RefrectBtlPartyStartOrder( wk, wk->myClientID );
     srcParty = srcParty_Get( wk, wk->myClientID );
     PokeParty_Copy( srcParty, wk->setupParam->partyPlayer );
   }
@@ -2614,7 +2614,7 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
     u8 clientID = BTL_MAIN_GetOpponentClientID( wk, wk->myClientID, 0 );
     POKEPARTY* srcParty;
 
-    srcParty_RelrectBtlParty( wk, clientID );
+    srcParty_RefrectBtlParty( wk, clientID );
     srcParty = srcParty_Get( wk, clientID );
     PokeParty_Copy( srcParty, wk->setupParam->partyEnemy1 );
 

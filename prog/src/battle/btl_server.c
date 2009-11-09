@@ -399,58 +399,14 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
         (*seq)=0;
         break;
       case SVFLOW_RESULT_POKE_IN_REQ:
-        BTL_Printf("新ポケ入場リクエスト受け付け\n");
+        BTL_Printf("空き位置への新ポケ投入リクエスト受け付け\n");
         setMainProc( server, ServerMain_SelectPokemonIn );
         break;
       case SVFLOW_RESULT_POKE_CHANGE:
         BTL_Printf("入れ替えリクエスト受け付け\n");
-        if( server->giveupClientCnt ){
-          //2vs2or3vs3で場にポケモンが残っていても、
-          //空きがあって、控えがいないとgiveupClientCntが0以外になって戦闘終了してしまうので
-          //場のポケモンの数を数えて、正しく終われるようにする by soga
-#ifdef SOGA_DEBUG
-          int playerFront = 0;
-          int enemyFront = 0;
-          int pos;
-          int max = ( BTL_MAIN_GetRule( server->mainModule ) == BTL_RULE_TRIPLE ) ? BTLV_MCSS_POS_F : BTLV_MCSS_POS_D;
-          const BTL_POKEPARAM*  bpp;
-
-          for( pos = BTLV_MCSS_POS_A ; pos <= max ; pos++ )
-          {
-            bpp = BTL_POKECON_GetFrontPokeDataConst( server->pokeCon, BTL_MAIN_ViewPosToBtlPos( server->mainModule, pos ) );
-            if( bpp )
-            {
-              if( BPP_IsDead( bpp ) == FALSE )
-              {
-                if( pos & 1 )
-                {
-                  enemyFront++;
-                }
-                else
-                {
-                  playerFront++;
-                }
-              }
-            }
-          }
-          if( ( playerFront ) && ( enemyFront ) )
-          {
-            (*seq) = 0;
-          }
-          else
-          {
-            (*seq) = 3;
-          }
-#else
-          BTL_Printf("どちらか負け確定\n");
-          (*seq) = 3;
-#endif
-        }else{
-          // 空き位置がある場合、入れ替えリクエストへ
-          GF_ASSERT( server->changePokeCnt );
-          BTL_Printf("死んだポケ入れ替え\n");
-          setMainProc( server, ServerMain_SelectPokemonChange );
-        }
+        GF_ASSERT( server->changePokeCnt );
+        BTL_Printf("ターン途中のポケ入れ替え\n");
+        setMainProc( server, ServerMain_SelectPokemonChange );
         break;
       case SVFLOW_RESULT_POKE_GET:
         {
@@ -464,21 +420,6 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
         /* fallthru */
       case SVFLOW_RESULT_BTL_QUIT:
         BTL_Printf("バトル終了へ\n");
-        return TRUE;
-      }
-    }
-    break;
-
-  case 3:
-    PMSND_PlayBGM( SEQ_BGM_WIN1 );
-    (*seq)++;
-    break;
-  case 4:
-    {
-      u8 touch = ( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_A) != 0);
-      u8 bgm_end = !PMSND_CheckPlayBGM();
-      if( touch || bgm_end )
-      {
         return TRUE;
       }
     }
@@ -549,7 +490,16 @@ static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq )
   return FALSE;
 }
 
-
+//----------------------------------------------------------------------------------
+/**
+ * サーバメインループ：ターン途中で入れ替えが生じた後の処理
+ *
+ * @param   server
+ * @param   seq
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
 static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
 {
   switch( *seq ){
@@ -594,6 +544,16 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
   return FALSE;
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * サーバメインループ：バトル終了処理
+ *
+ * @param   server
+ * @param   seq
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
 static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
 {
   // @todo 本来は勝ちor負け、野生orトレーナー戦などで分岐する
