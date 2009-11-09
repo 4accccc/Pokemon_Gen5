@@ -7180,9 +7180,9 @@
 		<language name="JPN" width="256">W100-01</language>
 		<language name="JPN_KANJI" width="256">W100-01</language>
 	</row>
-	<row id="msg_seq_se_dmy_010">
-		<language name="JPN" width="256">DMY-010</language>
-		<language name="JPN_KANJI" width="256">DMY-010</language>
+	<row id="msg_seq_se_w084_01">
+		<language name="JPN" width="256">W084-01</language>
+		<language name="JPN_KANJI" width="256">W084-01</language>
 	</row>
 	<row id="msg_seq_se_dmy_011">
 		<language name="JPN" width="256">DMY-011</language>
