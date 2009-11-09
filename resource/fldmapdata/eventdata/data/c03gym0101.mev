@@ -1,15 +1,15 @@
 #event data
-#save date:2009/11/06 17:51:34
+#save date:2009/11/06 19:54:05
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03gym0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/11/06 17:51:34
+#save date:2009/11/06 19:54:05
 2
 #hold event type:
 1
 #hold event number:
-21
+23
 #event number: 0
 #type
 1
@@ -619,11 +619,69 @@ DIR_DOWN
 0
 #position
 24 0 56
+#event number: 21
+#type
+1
+#ID name
+C03GYM0101_TRAINER_01
+#OBJ CODE Number
+BOY1
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C03GYM0101_TR01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+120 0 -56
+#event number: 22
+#type
+1
+#ID name
+C03GYM0101_TRAINER_02
+#OBJ CODE Number
+BOY1
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C03GYM0101_TR02
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+-168 0 -120
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/11/06 17:51:35
+#save date:2009/11/06 19:54:05
 2
 #hold event type:
 1
@@ -633,17 +691,167 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/11/06 17:51:35
+#save date:2009/11/06 19:54:05
 2
 #hold event type:
 1
 #hold event number:
+10
+#event number: 0
+#Pos Event Label
+POS_C03GYM0101_SWITCH_06
+#Pos Script Name
+SCRID_POS_C03GYM0101_SWITCH_06
+#Event Trigger Work Name
+LOCALWORK6
+#Event Trigger Work Value
 0
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+24 0 -136
+#event number: 1
+#Pos Event Label
+POS_C03GYM0101_SWITCH_07
+#Pos Script Name
+SCRID_POS_C03GYM0101_SWITCH_07
+#Event Trigger Work Name
+LOCALWORK7
+#Event Trigger Work Value
+0
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+216 0 -136
+#event number: 2
+#Pos Event Label
+POS_C03GYM0101_SWITCH_08
+#Pos Script Name
+SCRID_POS_C03GYM0101_SWITCH_08
+#Event Trigger Work Name
+LOCALWORK8
+#Event Trigger Work Value
+0
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+24 0 -8
+#event number: 3
+#Pos Event Label
+POS_C03GYM0101_SWITCH_05
+#Pos Script Name
+SCRID_POS_C03GYM0101_SWITCH_05
+#Event Trigger Work Name
+LOCALWORK5
+#Event Trigger Work Value
+0
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-72 0 -72
+#event number: 4
+#Pos Event Label
+POS_C03GYM0101_SWITCH_02
+#Pos Script Name
+SCRID_POS_C03GYM0101_SWITCH_02
+#Event Trigger Work Name
+LOCALWORK2
+#Event Trigger Work Value
+0
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-168 0 -8
+#event number: 5
+#Pos Event Label
+POS_C03GYM0101_SWITCH_04
+#Pos Script Name
+SCRID_POS_C03GYM0101_SWITCH_04
+#Event Trigger Work Name
+LOCALWORK4
+#Event Trigger Work Value
+0
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+216 0 -8
+#event number: 6
+#Pos Event Label
+POS_C03GYM0101_SWITCH_00
+#Pos Script Name
+SCRID_POS_C03GYM0101_SWITCH_00
+#Event Trigger Work Name
+LOCALWORK0
+#Event Trigger Work Value
+0
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-72 0 56
+#event number: 7
+#Pos Event Label
+POS_C03GYM0101_SWITCH_01
+#Pos Script Name
+SCRID_POS_C03GYM0101_SWITCH_01
+#Event Trigger Work Name
+LOCALWORK1
+#Event Trigger Work Value
+0
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+120 0 56
+#event number: 8
+#Pos Event Label
+POS_C03GYM0101_SWITCH_09
+#Pos Script Name
+SCRID_POS_C03GYM0101_SWITCH_09
+#Event Trigger Work Name
+LOCALWORK9
+#Event Trigger Work Value
+0
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-168 0 -136
+#event number: 9
+#Pos Event Label
+POS_C03GYM0101_SWITCH_08
+#Pos Script Name
+SCRID_POS_C03GYM0101_SWITCH_08
+#Event Trigger Work Name
+LOCALWORK8
+#Event Trigger Work Value
+0
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+120 0 -72
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/11/06 17:51:35
+#save date:2009/11/06 19:54:05
 2
 #hold event type:
 1

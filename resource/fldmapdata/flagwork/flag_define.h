@@ -143,8 +143,8 @@
 #define FE_C04_SUPPORT_GUIDE               127 /* 0x007f Ｃ04ライモンシティのサポート誘導イベントフラグ */
 #define FE_C02GYM_TRBTL1                   128 /* 0x0080 C02ノーマルジムトレーナーの対戦済みチェックフラグ（１人目） */
 #define FE_C02GYM_TRBTL2                   129 /* 0x0081 C02ノーマルジムトレーナーの対戦済みチェックフラグ（２人目） */
-		/* not used   130(0x0082) */
-		/* not used   131(0x0083) */
+#define FE_C03GYM_TRBTL1                   130 /* 0x0082 C03虫ジムトレーナーの対戦済みチェックフラグ（右上） */
+#define FE_C03GYM_TRBTL2                   131 /* 0x0083 C03虫ジムトレーナーの対戦済みチェックフラグ（左下） */
 		/* not used   132(0x0084) */
 		/* not used   133(0x0085) */
 		/* not used   134(0x0086) */
@@ -591,8 +591,8 @@
 #define FV_R05_LEADER4                     567 /* 0x0237 ５番道路：ジムリーダー（カミツレ） */
 #define FV_R05_CHAMPION                    568 /* 0x0238 ５番道路：チャンピオンと子供たち */
 #define FV_MUSEUM_TOUNAN                   569 /* 0x0239 博物館：盗難イベントで盗まれるもの */
-		/* not used   570(0x023a) */
-		/* not used   571(0x023b) */
+#define FV_C03GYM0101_TR01                 570 /* 0x023a Ｃ03虫ジム：トリックアートに隠れているトレーナー（右上） */
+#define FV_C03GYM0101_TR02                 571 /* 0x023b Ｃ03虫ジム：トリックアートに隠れているトレーナー（左下） */
 		/* not used   572(0x023c) */
 		/* not used   573(0x023d) */
 		/* not used   574(0x023e) */
