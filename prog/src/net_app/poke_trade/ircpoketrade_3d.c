@@ -304,9 +304,9 @@ static void _moveSetTrade01(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus
     GFL_G3D_CAMERA_GetTarget( pWork->camera , &pos );
     OS_TPrintf("pos %d %d %d\n",pos.x/FX32_ONE,pos.y/FX32_ONE,pos.z/FX32_ONE);
 
-    pos.x = 20*FX32_ONE;
-    pos.y = 20*FX32_ONE;
-    pos.z = 20*FX32_ONE;
+    pos.x = 200*FX32_ONE;
+    pos.y = 200*FX32_ONE;
+    pos.z = 200*FX32_ONE;
     GFL_G3D_CAMERA_SetTarget( pWork->camera , &pos );
   }
 #endif
@@ -440,9 +440,9 @@ void POKEMONTRADE_DEMO_ICA_Delete(POKEMONTRADE_DEMO_WORK* pWork)
 void POKEMONTRADE_DEMO_IRICA_Init(POKEMONTRADE_DEMO_WORK* pWork)
 {
   pWork->icaCamera = ICA_ANIME_CreateStreamingAlloc(
-    pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradeirdemo_icacamera_bin, 10 );
+    pWork->heapID, ARCID_POKETRADEDEMO_IR, NARC_tradeirdemo_icacamera_bin, 10 );
   pWork->icaTarget = ICA_ANIME_CreateStreamingAlloc(
-    pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradeirdemo_icatarget_bin, 10 );
+    pWork->heapID, ARCID_POKETRADEDEMO_IR, NARC_tradeirdemo_icatarget_bin, 10 );
 }
 
 //============================================================================================
