@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00207" date="2009-11-09T22:19:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,13 +229,13 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="214"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="280"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,11 +292,151 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_r03r0301_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・pos（GRIDX=000、GRIDZ=000~000）で発動
+・はい/いいえの選択肢表示
+　はい→msg_r03r0301_black_04
+　いいえ→msg_r03r0301_black_02</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『この　さきに
+ポケモンドロボウは　いる[BE:01:ページ切り替え（クリア）]
+２ｖｓ２で　いっきに　かたづけよう
+じゅんびは　いいよな？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『……この先に
+ポケモンドロボウが　いる[BE:01:ページ切り替え（クリア）]
+２ｖｓ２で　一気に　片付けよう
+準備は　いいよな？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r03r0301_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『……わかった[BE:01:ページ切り替え（クリア）]
+あいつらが　にげないよう
+みはっているから[BE:00:ページ切り替え（行送り）]
+はやく　じゅんび　してきてくれ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『……わかった[BE:01:ページ切り替え（クリア）]
+あいつらが　逃げないよう
+見張っているから[BE:00:ページ切り替え（行送り）]
+はやく　準備してきてくれ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r03r0301_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・いいえ選択後、再度会話
+・はい/いいえの選択肢表示
+　はい→msg_r03r0301_black_04
+　いいえ→msg_r03r0301_black_02</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『２ｖｓ２で　かたづける
+じゅんびは　いいよな？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『２ｖｓ２で　片付ける
+準備は　いいよな？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r03r0301_black_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・はい選択時
+・続けてmsg_r03r0301_hakaim_01</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『おまえら……
+おとなが　ナニしてんだよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『おまえら……
+大人が　ナニしてんだよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r03r0301_hakaim_01">
+		<comment>♂
+・続けてmsg_r03r0301_black_05</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ</attribute>
+		<language name="JPN" width="256">プラズマだん『おれたちは
+ポケモンを　かいほう　する！[BE:01:ページ切り替え（クリア）]
+そのために　ポケモンを　うばう！
+これは　ただしいことだ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『おれたちは
+ポケモンを　解放する！[BE:01:ページ切り替え（クリア）]
+そのために　ポケモンを　奪う！
+これは　正しいことだ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r03r0301_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後、戦闘に</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『うるせーよ！[BE:01:ページ切り替え（クリア）]
+どんな　りゆう　でも
+ひとのモノ　とったら　ドロボウだろ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『うるせーよ！[BE:01:ページ切り替え（クリア）]
+どんな　理由でも
+ひとのモノ　とったら　ドロボウだろ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r03r0301_hakaim_03">
+		<comment>♂
+・戦闘後メッセージ
+・続けてmsg_r03r0301_black_06</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ</attribute>
+		<language name="JPN" width="256">プラズマだん『おまえたちの　ような
+ポケモントレーナーが[BE:00:ページ切り替え（行送り）]
+ポケモンを　くるしめて　いるぞ……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『おまえたちの　ような
+ポケモントレーナーが[BE:00:ページ切り替え（行送り）]
+ポケモンを　苦しめて　いるぞ……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r03r0301_black_06">
+		<comment>♂
+・続けてmsg_r03r0301_hakaim_04</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『どうして　トレーナーが
+ポケモンを　くるしめているんだ！？[BE:01:ページ切り替え（クリア）]
+だいたい　おまえら　だって
+ポケモントレーナーだろう！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『どうして　トレーナーが
+ポケモンを　苦しめているんだ！？[BE:01:ページ切り替え（クリア）]
+だいたい　おまえら　だって
+ポケモントレーナーだろう！！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r03r0301_hakaim_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後、画面暗転で
+　プラズマ団の動作モデル削除</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ</attribute>
+		<language name="JPN" width="256">プラズマだん『われわれは　ちがう！[BE:01:ページ切り替え（クリア）]
+まあいい　いつか
+じぶんたちの　おろかさに　きづけ……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『われわれは　違う！[BE:01:ページ切り替え（クリア）]
+まあいい　いつか
+自分たちの　愚かさに　気づけ……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r03r0301_black_07">
+		<comment>♂
+・出口のほうを向きながらメッセージ表示
+・続けて主人公と向き合ってmsg_r03r0301_black_08</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『……フン！
+なに　いってんだか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『……フン！
+なに　いってんだか[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r03r0301_black_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・表示後、出口方面へ移動
+　画面外に消えると、主人公操作可能に</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">さてと……
+ポケモン　かえしてくるわ[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]！　おまえとの
+タッグ　おもしろかった！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">さてと……
+ポケモン　返してくるわ[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]！　おまえとの
+タッグ　おもしろかった！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>
