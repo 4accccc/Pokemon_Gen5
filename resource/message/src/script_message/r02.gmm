@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-20T18:56:31"/>
+	<create user="matsumiya" host="W00207" date="2009-11-09T21:53:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r02_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r02_black_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・POSで発動
 　主人公に隣接してこのメッセージ表示
@@ -302,7 +302,7 @@
 		<language name="JPN_KANJI" width="256">ともだち♂『[1:00:トレーナー名:0]……！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r02_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r02_black_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・草むらを向いてこのメッセージ表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -314,7 +314,7 @@
 強い　ポケモンが　でてくるぜ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r02_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r02_black_03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・再度主人公と向き合い
 　メッセージ表示

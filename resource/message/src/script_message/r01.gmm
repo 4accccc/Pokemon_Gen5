@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-26T18:15:46"/>
+	<create user="matsumiya" host="W00207" date="2009-11-09T21:52:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -297,9 +297,9 @@
 ついで主人公を向き合いながら
 次のメッセージ表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『アララギはかせ
+		<language name="JPN" width="256">ブラッカー『アララギはかせ
 みんな　そろいましたよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『アララギ博士
+		<language name="JPN_KANJI" width="256">ブラッカー『アララギ博士
 みんな　そろいましたよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -397,9 +397,9 @@
 　ついで主人公を向き合いながら
 　次のmsg_r01_black_03表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『いいたいこと　いったら
+		<language name="JPN" width="256">ブラッカー『いいたいこと　いったら
 いっちゃったよ　はかせ……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『初めて　ポケモンの
+		<language name="JPN_KANJI" width="256">ブラッカー『初めて　ポケモンの
 捕獲を　みたけれど……[BE:00:ページ切り替え（行送り）]
 すごい　迫力　なんだね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -433,12 +433,12 @@
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『ちょっと　まって！[BE:01:ページ切り替え（クリア）]
 ねえねえ！
-[1:00:トレーナー名:0]　クロック[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]　ブラッカー[BE:01:ページ切り替え（クリア）]
 あたし　いいこと
 おもいついたんだけど[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『ちょっと　待って！[BE:01:ページ切り替え（クリア）]
 ねえねえ！
-[1:00:トレーナー名:0]　クロック[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]　ブラッカー[BE:01:ページ切り替え（クリア）]
 あたし　いいこと
 思いついたんだけど[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -446,8 +446,8 @@
 	<row id="msg_r01_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『きゃっか[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『さあ　行こうか
+		<language name="JPN" width="256">ブラッカー『きゃっか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『さあ　行こうか
 博士も　待っているだろうし[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -473,7 +473,7 @@
 		<comment>♂
 ・続けてmsg_r01_white_06表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『なるほどな
+		<language name="JPN" width="256">ブラッカー『なるほどな
 そういうことなら　おもしろいな[BE:01:ページ切り替え（クリア）]
 ずかんの　ページも　うまるから
 はかせも　よろこぶだろうし[BE:01:ページ切り替え（クリア）]
@@ -481,7 +481,7 @@
 カラクサタウンに　つくまで[BE:00:ページ切り替え（行送り）]
 ポケモンの　かいふくは[BE:00:ページ切り替え（行送り）]
 じたくで　しろよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『なるほどね
+		<language name="JPN_KANJI" width="256">ブラッカー『なるほどね
 それは　おもしろいな[BE:01:ページ切り替え（クリア）]
 図鑑の　ページも　うまるから
 博士にも　喜んでもらえる[BE:01:ページ切り替え（クリア）]
@@ -513,13 +513,13 @@
 ・msg_r01_white_06表示後
 　T02側に出現</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『おっ　[1:00:トレーナー名:0]
+		<language name="JPN" width="256">ブラッカー『おっ　[1:00:トレーナー名:0]
 ホワイティと　しょうぶ　する？[BE:01:ページ切り替え（クリア）]
 オレは　２ひき　つかまえて
 ホワイティと　ひきわけ　だったんだ[BE:01:ページ切り替え（クリア）]
 あっ……　どれだけ
 つかまえたか　いってしまった……</language>
-		<language name="JPN_KANJI" width="256">クロック『おっ　[1:00:トレーナー名:0]
+		<language name="JPN_KANJI" width="256">ブラッカー『おっ　[1:00:トレーナー名:0]
 ホワイティと　勝負する？[BE:01:ページ切り替え（クリア）]
 僕は　２匹　つかまえて
 ホワイティと　引き分け　だったんだ[BE:01:ページ切り替え（クリア）]
@@ -592,10 +592,10 @@
 	<row id="msg_r01_black_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『じゃあ
+		<language name="JPN" width="256">ブラッカー『じゃあ
 カラクサタウンに　いこう！[BE:01:ページ切り替え（クリア）]
 はかせも　まっているだろうし[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『じゃあ
+		<language name="JPN_KANJI" width="256">ブラッカー『じゃあ
 カラクサタウンに　行こうか[BE:01:ページ切り替え（クリア）]
 博士も　待っているだろうし[BE:01:ページ切り替え（クリア）]</language>
 	</row>
