@@ -34,7 +34,7 @@
  * @retval MAPATTR MAPATTR_ERROR=éÊìæÉGÉâÅ[
  */
 //--------------------------------------------------------------
-MAPATTR MAPATTR_GetAttribute( FLDMAPPER *mapper, const VecFx32 *pos )
+MAPATTR MAPATTR_GetAttribute( const FLDMAPPER *mapper, const VecFx32 *pos )
 {
   MAPATTR attr = MAPATTR_ERROR;
 #if 0 //íPëw
