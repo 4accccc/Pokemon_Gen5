@@ -834,7 +834,7 @@ static void bg_trans( SHOP_BUY_APP_WORK *wk )
   
     // BG2–ÊPltt
     GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_shop_gra_shop_bg_NCLR, PALTYPE_MAIN_BG, 
-                                      0, 32, wk->heapId );
+                                      0, 32*3, wk->heapId );
     // BG2–ÊChar
     GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_shop_gra_shop_bg_NCGR, GFL_BG_FRAME2_M, 
                                       0, 0, 0, wk->heapId);
