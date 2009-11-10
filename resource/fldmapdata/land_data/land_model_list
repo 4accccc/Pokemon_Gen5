@@ -277,8 +277,6 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/h04_a01_01.nsbmd \
 	$(DIR_TEMP)/h04_a02_01.nsbmd \
 	$(DIR_TEMP)/h04_a03_01.nsbmd \
-	$(DIR_TEMP)/h04_a04_01.nsbmd \
-	$(DIR_TEMP)/h04_a05_01.nsbmd \
 	$(DIR_TEMP)/winter05_06.nsbmd \
 	$(DIR_TEMP)/winter06_06.nsbmd \
 	$(DIR_TEMP)/winter05_05.nsbmd \

@@ -277,8 +277,6 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/h04_a01_01.3dppack \
 	$(DIR_OUTPUT)/h04_a02_01.3dppack \
 	$(DIR_OUTPUT)/h04_a03_01.3dppack \
-	$(DIR_OUTPUT)/h04_a04_01.3dppack \
-	$(DIR_OUTPUT)/h04_a05_01.3dppack \
 	$(DIR_OUTPUT)/winter05_06.3dppack \
 	$(DIR_OUTPUT)/winter06_06.3dppack \
 	$(DIR_OUTPUT)/winter05_05.3dppack \
