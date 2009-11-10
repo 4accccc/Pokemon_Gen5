@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-30T15:23:37"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T14:42:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -300,11 +300,11 @@
 ・表示後、戦闘に</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">？？？？？『[1:00:トレーナー名:0]！
+		<language name="JPN" width="256">ブラッカー『[1:00:トレーナー名:0]！
 オレも　ボルトバッジを　手に入れた[BE:01:ページ切り替え（クリア）]
 というわけで　どっちが　強いか
 ポケモン勝負　してもらうぜ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『[1:00:トレーナー名:0]！
+		<language name="JPN_KANJI" width="256">ブラッカー『[1:00:トレーナー名:0]！
 オレも　ボルトバッジを　手に入れた[BE:01:ページ切り替え（クリア）]
 というわけで　どっちが　強いか
 ポケモン勝負　してもらうぜ！[BE:01:ページ切り替え（クリア）]</language>
@@ -315,9 +315,9 @@
 ・戦闘後メッセージ
 ・続いてカミツレ
 　msg_r05_leader_01表示</comment>
-		<language name="JPN" width="256">？？？？？『今度は
+		<language name="JPN" width="256">ブラッカー『今度は
 勝てると　思ったんだけどな[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『今度は
+		<language name="JPN_KANJI" width="256">ブラッカー『今度は
 勝てると　思ったんだけどな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -338,8 +338,8 @@
 ・続けて</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">クロック『そっ　そうです[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『そっ　そうです[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ブラッカー『そっ　そうです[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『そっ　そうです[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r05_black_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -373,10 +373,10 @@
 ・このときカミツレと隣接</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">クロック『じいさんが
+		<language name="JPN" width="256">ブラッカー『じいさんが
 こどもたちに　ポケモンを　おしえてる[BE:01:ページ切り替え（クリア）]
 あの　じいさん　つよいのかな[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『じいさんが
+		<language name="JPN_KANJI" width="256">ブラッカー『じいさんが
 子供たちに　ポケモンを　教えてる[BE:01:ページ切り替え（クリア）]
 あの　じいさん　強いのかな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -401,8 +401,8 @@
 ・</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">クロック『もと？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『もと？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ブラッカー『もと？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『もと？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r05_champion_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -424,9 +424,9 @@
 ・続けて</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">クロック『なぜ？
+		<language name="JPN" width="256">ブラッカー『なぜ？
 チャンピオンを　やめた？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『なぜ？
+		<language name="JPN_KANJI" width="256">ブラッカー『なぜ？
 チャンピオンを　やめた？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -451,9 +451,9 @@
 ・続けて</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">クロック『ふざけるなよ！
+		<language name="JPN" width="256">ブラッカー『ふざけるなよ！
 オレは　チャンピオン　めざして……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『ふざけるなよ！
+		<language name="JPN_KANJI" width="256">ブラッカー『ふざけるなよ！
 オレは　チャンピオン目指して……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -482,11 +482,11 @@
 ・続けて</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">クロック『……いや
+		<language name="JPN" width="256">ブラッカー『……いや
 こちらも　わるかったし……[BE:01:ページ切り替え（クリア）]
 ……そうか　いま　ポケモンリーグに
 チャンピオン　いないのか……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『……いや
+		<language name="JPN_KANJI" width="256">ブラッカー『……いや
 こちらも　悪かったし……[BE:01:ページ切り替え（クリア）]
 ……そうか　今　ポケモンリーグに
 チャンピオン　いないのか……[BE:01:ページ切り替え（クリア）]</language>
@@ -607,12 +607,12 @@
 　先にc05に</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">クロック『いいや　きめた！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ブラッカー『いいや　きめた！[BE:01:ページ切り替え（クリア）]
 ぜんぶの　ジムバッジを　てにいれ
 そのまま　ポケモンリーグの[BE:00:ページ切り替え（行送り）]
 してんのう　ぜんいん　たおし[BE:00:ページ切り替え（行送り）]
 オレが　あたらしい　チャンピオンになる！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『いいや　決めた！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ブラッカー『いいや　決めた！[BE:01:ページ切り替え（クリア）]
 全部の　ジムバッジを手に入れ
 そのまま　ポケモンリーグの[BE:00:ページ切り替え（行送り）]
 四天王を　全員　倒し[BE:00:ページ切り替え（行送り）]
