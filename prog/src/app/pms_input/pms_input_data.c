@@ -319,7 +319,8 @@ static u32 CountupGroupPicture( PMS_INPUT_DATA* pmsi, const PMS_WORD* src_tbl, u
   for(i=0, cnt=0; i<tbl_elems; i++)
   {
 		SetWordEnableFlag( pmsi, src_tbl[i] );
-		*dst_tbl++ = src_tbl[i];
+    *dst_tbl++ = (PMS_DECOID_ORG + i) + (1<<PMS_WORD_DECO_BITSHIFT); ///< デコメフラグ + デコメID
+//		*dst_tbl++ = src_tbl[i];
     cnt++;
   }
   

@@ -57,6 +57,7 @@ struct _PMS_INPUT_VIEW {
 
 	// メインとサブで２つずつ	
 	PMSIV_CELL_RES	resCell[2];
+	PMSIV_CELL_RES	resCellDeco[2];
 
 	PMSIV_EDIT*			  edit_wk;
 //	PMSIV_BUTTON*		button_wk;
@@ -142,7 +143,7 @@ static const GFL_DISP_VRAM bank_data = {
 	GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
 	GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
 	GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-	GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+	GX_VRAM_SUB_OBJ_128_D,			// サブ2DエンジンのOBJ
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 	GX_VRAM_TEX_0_A,				// テクスチャイメージスロット
 	GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット
@@ -541,10 +542,19 @@ static void setup_obj_graphic( COMMAND_WORK* cwk, ARCHANDLE* p_handle )
 	PMS_INPUT_VIEW* vwk = cwk->vwk;
 
 	for(i = 0;i < 2;i++){
-		vwk->resCell[i].pltIdx = GFL_CLGRP_PLTT_Register( p_handle , NARC_pmsi_pms_obj_main_NCLR , CLSYS_DRAW_MAIN+i , 0 , HEAPID_PMS_INPUT_VIEW );
-		vwk->resCell[i].ncgIdx = GFL_CLGRP_CGR_Register( p_handle , NARC_pmsi_pms_obj_main_NCGR , FALSE , CLSYS_DRAW_MAIN+i , HEAPID_PMS_INPUT_VIEW );
-		vwk->resCell[i].anmIdx = GFL_CLGRP_CELLANIM_Register( p_handle , NARC_pmsi_pms_obj_main_NCER , NARC_pmsi_pms_obj_main_NANR, HEAPID_PMS_INPUT_VIEW );
-	
+		vwk->resCell[i].pltIdx = GFL_CLGRP_PLTT_Register( p_handle ,
+        NARC_pmsi_pms_obj_main_NCLR , CLSYS_DRAW_MAIN+i , 0 , HEAPID_PMS_INPUT_VIEW );
+		vwk->resCell[i].ncgIdx = GFL_CLGRP_CGR_Register( p_handle ,
+        NARC_pmsi_pms_obj_main_NCGR , FALSE , CLSYS_DRAW_MAIN+i , HEAPID_PMS_INPUT_VIEW );
+		vwk->resCell[i].anmIdx = GFL_CLGRP_CELLANIM_Register( p_handle ,
+        NARC_pmsi_pms_obj_main_NCER , NARC_pmsi_pms_obj_main_NANR, HEAPID_PMS_INPUT_VIEW );
+		
+    vwk->resCellDeco[i].pltIdx = GFL_CLGRP_PLTT_Register( p_handle ,
+        NARC_pmsi_pms2_obj_dekome_NCLR , CLSYS_DRAW_MAIN+i , 0x20*PALNUM_OBJ_M_PMSDRAW , HEAPID_PMS_INPUT_VIEW );
+		vwk->resCellDeco[i].ncgIdx = GFL_CLGRP_CGR_Register( p_handle ,
+        NARC_pmsi_pms2_obj_dekome_NCGR , FALSE , CLSYS_DRAW_MAIN+i , HEAPID_PMS_INPUT_VIEW );
+		vwk->resCellDeco[i].anmIdx = GFL_CLGRP_CELLANIM_Register( p_handle ,
+        NARC_pmsi_pms2_obj_dekome_64k_NCER , NARC_pmsi_pms2_obj_dekome_64k_NANR, HEAPID_PMS_INPUT_VIEW );
 	}
 }
 
@@ -586,6 +596,10 @@ static void Cmd_Quit( GFL_TCB *tcb, void* wk_adrs )
 				GFL_CLGRP_PLTT_Release( cwk->vwk->resCell[i].pltIdx );
 				GFL_CLGRP_CGR_Release( cwk->vwk->resCell[i].ncgIdx );
 				GFL_CLGRP_CELLANIM_Release( cwk->vwk->resCell[i].anmIdx );
+				
+        GFL_CLGRP_PLTT_Release( cwk->vwk->resCellDeco[i].pltIdx );
+				GFL_CLGRP_CGR_Release( cwk->vwk->resCellDeco[i].ncgIdx );
+				GFL_CLGRP_CELLANIM_Release( cwk->vwk->resCellDeco[i].anmIdx );
 			}
 			GFL_FONT_Delete(vwk->fontHandle);
 			
@@ -1667,6 +1681,12 @@ PRINT_QUE* PMSIView_GetPrintQue( PMS_INPUT_VIEW* vwk )
   return vwk->print_que;
 }
 
+void PMSIView_GetDecoResource( PMS_INPUT_VIEW* vwk, PMSIV_CELL_RES* out_res, u32 lcd )
+{
+  GF_ASSERT( lcd < 2 );
+	*out_res = vwk->resCellDeco[lcd];
+}
+
 void PMSIView_SetupDefaultActHeader( PMS_INPUT_VIEW* vwk, PMSIV_CELL_RES* header, u32 lcd, u32 bgpri )
 {
 #if 0
@@ -1681,6 +1701,7 @@ void PMSIView_SetupDefaultActHeader( PMS_INPUT_VIEW* vwk, PMSIV_CELL_RES* header
 	header->pMCABank = NULL;
 	header->flag = FALSE;
 #endif
+  GF_ASSERT( lcd < 2 );
 	*header = vwk->resCell[lcd];
 }
 

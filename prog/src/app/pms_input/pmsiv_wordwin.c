@@ -14,7 +14,6 @@
 #include "system\bmp_winframe.h"
 #include "print\printsys.h"
 #include "print\wordset.h"
-#include "system\pms_word.h"
 #include "msg\msg_pms_category.h"
 #include "message.naix"
 
@@ -47,14 +46,16 @@ enum {
 
 	WORDWIN_WRITE_LINE_INIT = 48,
 	WORDWIN_WRITE_LINE_MAX = 256,
-	WORDWIN_WRITE_LINE_UNIT = 16,
-	WORDWIN_WRITE_LINE_ROUND_BORDER = WORDWIN_WRITE_LINE_MAX - WORDWIN_WRITE_LINE_UNIT,
+	WORDWIN_WRITE_LINE_UNIT = 16, 
+	WORDWIN_WRITE_LINE_ROUND_BORDER = WORDWIN_WRITE_LINE_MAX - WORDWIN_WRITE_LINE_UNIT, ///< 描画領域
 
+  WORDWIN_WRITE_DECO_OX = 8*3,
 	WORDWIN_WRITE_OX = 0,
 	WORDWIN_WRITE_OY = 0,
 	WORDWIN_WRITE_X_MARGIN = 112,
 	WORDWIN_WRITE_Y_MARGIN = 24,
 	WORDWIN_WRITE_PAGE_HEIGHT = WORDWIN_DISP_LINE_MAX * WORDWIN_WRITE_Y_MARGIN,
+
 
 	WORDWIN_SCROLL_WAIT_UNIT = PMSI_FRAMES(1),
 
@@ -87,6 +88,8 @@ enum {
 	WORD_COL_GROUND = 0x00,
 };
 
+#define WORDWIN_DECO_ACT_NUM (PMS_DECOID_MAX-1)
+
 //======================================================================
 
 //======================================================================
@@ -106,6 +109,7 @@ struct _PMSIV_WORDWIN {
 	GFL_CLWK*	cursor_actor;
 	GFL_CLWK*	up_arrow_actor;
 	GFL_CLWK*	down_arrow_actor;
+  GFL_CLWK* deco_actor[ WORDWIN_DECO_ACT_NUM ];
 	STRBUF*		tmpbuf;
 
 	PMSIV_TOOL_BLEND_WORK   blend_work;
@@ -236,6 +240,7 @@ void PMSIV_WORDWIN_SetupGraphicDatas( PMSIV_WORDWIN* wk )
 
 static void setup_actor( PMSIV_WORDWIN* wk )
 {
+  int i;
 	PMSIV_CELL_RES  header;
 
 	PMSIView_SetupDefaultActHeader( wk->vwk, &header, PMSIV_LCD_MAIN, BGPRI_MAIN_EDITAREA );
@@ -256,7 +261,19 @@ static void setup_actor( PMSIV_WORDWIN* wk )
 	GFL_CLACT_WK_SetAnmSeq( wk->down_arrow_actor, ANM_WORD_SCR_D01 );
 	GFL_CLACT_WK_SetDrawEnable( wk->down_arrow_actor, FALSE );
 
+  // デコメ
+  for( i=0; i<WORDWIN_DECO_ACT_NUM; i++ )
+  {
+    PMSIV_CELL_RES resDeco;
 
+    PMSIView_GetDecoResource( wk->vwk, &resDeco, PMSIV_LCD_MAIN );
+
+    wk->deco_actor[i] = PMSIView_AddActor( wk->vwk, &resDeco, 0, 0, 0, NNS_G2D_VRAM_TYPE_2DMAIN );
+  
+    // @TODO とりあえず直でアニメシーケンス。
+    GFL_CLACT_WK_SetAnmSeq( wk->deco_actor[i], i ); 
+	  GFL_CLACT_WK_SetDrawEnable( wk->deco_actor[i], FALSE );
+  }
 }
 
 
@@ -399,6 +416,12 @@ BOOL PMSIV_WORDWIN_WaitFadeOut( PMSIV_WORDWIN* wk )
 	case 0:
 		if( PMSIV_TOOL_WaitBlend( &wk->blend_work ) )
 		{
+      int i;
+
+      for( i=0; i<WORDWIN_DECO_ACT_NUM; i++ )
+      {
+        GFL_CLACT_WK_SetDrawEnable( wk->deco_actor[i], FALSE );
+      }
 			GFL_BG_SetVisible( FRM_MAIN_WORDWIN, FALSE );
 			G2_SetWndOutsidePlane( wk->winout_backup.planeMask, wk->winout_backup.effect );
 			GX_SetVisibleWnd( wk->win_visible_backup );
@@ -595,41 +618,47 @@ static void init_write_params( PMSIV_WORDWIN* wk )
 static void print_word( PMSIV_WORDWIN* wk, u32 wordnum, u32 v_line )
 {
 	GFL_FONT *fontHandle = PMSIView_GetFontHandle(wk->vwk);
-	PMSI_GetCategoryWord( wk->mwk, wordnum, wk->tmpbuf );
+	
+  // デコメ例外処理
+  if( PMSI_GetCategoryCursorPos( wk->mwk ) == CATEGORY_GROUP_PICTURE )
+  {
+    GFL_CLACTPOS pos;
 
-	if( v_line <= WORDWIN_WRITE_LINE_ROUND_BORDER )
-	{
-//		GF_STR_PrintColor( &wk->win, PMSI_FONT_WORDWIN, wk->tmpbuf,
-//					WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN, v_line, MSG_NO_PUT,
-//					GF_PRINTCOLOR_MAKE(WORD_COL_LETTER, WORD_COL_SHADOW, WORD_COL_GROUND),
-//					NULL);
-		PRINTSYS_Print( GFL_BMPWIN_GetBmp( wk->win ) , 
-						WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN, 
-						v_line,
-						wk->tmpbuf,
-						fontHandle );
-	}
-	else
-	{
-		//スクロールをまたがるとき、仮Winに描画してから切れ目にコピー
-		u32  write_v_range = WORDWIN_WRITE_LINE_MAX - v_line;
-//		GF_BGL_BmpWinDataFill( &wk->tmp_win, WORD_COL_GROUND );
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->tmp_win ), WORD_COL_GROUND);
+    GF_ASSERT( wordnum < WORDWIN_DECO_ACT_NUM );
 
-//		GF_STR_PrintColor( &wk->tmp_win, PMSI_FONT_WORDWIN, wk->tmpbuf,
-//					0, 0, MSG_NO_PUT,
-//					GF_PRINTCOLOR_MAKE(WORD_COL_LETTER, WORD_COL_SHADOW, WORD_COL_GROUND),
-//					NULL);
-		PRINTSYS_Print( GFL_BMPWIN_GetBmp( wk->tmp_win ) , 0, 0,wk->tmpbuf,fontHandle);
-		
-		GFL_BMP_Print( GFL_BMPWIN_GetBmp(wk->tmp_win), GFL_BMPWIN_GetBmp(wk->win), 0, 0,
-				WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN,   v_line,
-				WORD_TMPWIN_WIDTH*8, write_v_range , GF_BMPPRT_NOTNUKI);
-		GFL_BMP_Print( GFL_BMPWIN_GetBmp(wk->tmp_win), GFL_BMPWIN_GetBmp(wk->win), 0, write_v_range,
-				WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN,   0,
-				WORD_TMPWIN_WIDTH*8, (WORD_TMPWIN_HEIGHT*8) - write_v_range , GF_BMPPRT_NOTNUKI);
-	}
+    pos.x = WORDWIN_WRITE_DECO_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN;
+    pos.y = v_line;
 
+    HOSAKA_Printf("[%d] deco pos[%d,%d] \n",wordnum, pos.x, pos.y);
+    GFL_CLACT_WK_SetWldPos( wk->deco_actor[ wordnum ], &pos );
+    GFL_CLACT_WK_SetDrawEnable( wk->deco_actor[ wordnum ], TRUE );
+  }
+  else
+  {
+    PMSI_GetCategoryWord( wk->mwk, wordnum, wk->tmpbuf );
 
+    if( v_line <= WORDWIN_WRITE_LINE_ROUND_BORDER )
+    {
+      PRINTSYS_Print( GFL_BMPWIN_GetBmp( wk->win ) , 
+              WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN, 
+              v_line,
+              wk->tmpbuf,
+              fontHandle );
+    }
+    else
+    {
+      //スクロールをまたがるとき、仮Winに描画してから切れ目にコピー
+      u32  write_v_range = WORDWIN_WRITE_LINE_MAX - v_line;
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->tmp_win ), WORD_COL_GROUND);
 
+      PRINTSYS_Print( GFL_BMPWIN_GetBmp( wk->tmp_win ) , 0, 0,wk->tmpbuf,fontHandle);
+      
+      GFL_BMP_Print( GFL_BMPWIN_GetBmp(wk->tmp_win), GFL_BMPWIN_GetBmp(wk->win), 0, 0,
+          WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN,   v_line,
+          WORD_TMPWIN_WIDTH*8, write_v_range , GF_BMPPRT_NOTNUKI);
+      GFL_BMP_Print( GFL_BMPWIN_GetBmp(wk->tmp_win), GFL_BMPWIN_GetBmp(wk->win), 0, write_v_range,
+          WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN,   0,
+          WORD_TMPWIN_WIDTH*8, (WORD_TMPWIN_HEIGHT*8) - write_v_range , GF_BMPPRT_NOTNUKI);
+    }
+  }
 }

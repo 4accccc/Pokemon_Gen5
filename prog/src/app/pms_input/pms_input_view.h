@@ -87,6 +87,8 @@ enum
 
   PALNUM_OBJ_M_PMSDRAW  = 0x5, ///< 5本使用
   PALNUM_OBJ_M_TOUCHBAR = 0xa, ///< 3本使用
+  
+  PALNUM_OBJ_S_PMSDRAW  = 0x5, ///< 5本使用
 };
 
 //------------------------------------------------
@@ -196,6 +198,7 @@ extern PRINT_QUE* PMSIView_GetPrintQue( PMS_INPUT_VIEW* vwk );
 //extern NNSG2dImagePaletteProxy*  PMSIView_GetObjPaletteProxy( PMS_INPUT_VIEW* vwk, int lcd );
 extern void PMSIView_SetupDefaultActHeader( PMS_INPUT_VIEW* vwk, PMSIV_CELL_RES* header, u32 lcd, u32 bgpri );
 extern GFL_CLWK* PMSIView_AddActor( PMS_INPUT_VIEW* vwk, PMSIV_CELL_RES* header, u32 x, u32 y, u32 actpri, int drawArea );
+extern void PMSIView_GetDecoResource( PMS_INPUT_VIEW* vwk, PMSIV_CELL_RES* out_res, u32 lcd );
 
 //================================================================================
 //  入力欄処理

@@ -498,7 +498,8 @@ GFL_PROC_RESULT PMSInput_Quit( GFL_PROC * proc, int * seq , void *pwk, void *myw
 		{	
 			wk->edit_pms.word[i]	= PMSI_WordToDeco( wk->edit_pms.word[i] );
 		}
-		PMSI_PARAM_WriteBackData( wk->input_param, wk->edit_word, &wk->edit_pms );
+    //@TODO ‚±‚ê‚¾‚Æmodifired‚ªã‘‚«‚³‚ê‚Ä‚µ‚Ü‚¤
+    PMSI_PARAM_WriteBackData( wk->input_param, wk->edit_word, &wk->edit_pms );
 		//ª‚±‚±‚Ü‚Å
 	}
 #endif
