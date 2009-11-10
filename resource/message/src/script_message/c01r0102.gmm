@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-29T22:54:23"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T14:48:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -493,34 +493,6 @@
 		<attribute name="キャラ指定">本棚</attribute>
 		<language name="JPN" width="256">Ｃギアの　マニュアル</language>
 		<language name="JPN_KANJI" width="256">Ｃギアの　マニュアル</language>
-	</row>
-
-	<row id="msg_c01r0102_trainerm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♂
-・削除予定ラベル</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c01r0102_girl3_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♀
-・削除予定ラベル</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c01r0102_boy3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♂
-・削除予定ラベル</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c01r0102_boy3_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♂
-・削除予定ラベル</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>
