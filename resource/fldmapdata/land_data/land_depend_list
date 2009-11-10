@@ -272,11 +272,13 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/h04_a02_00.3dppack \
 	$(DIR_OUTPUT)/h04_a03_00.3dppack \
 	$(DIR_OUTPUT)/h04_a04_00.3dppack \
+	$(DIR_OUTPUT)/h04_a05_00.3dppack \
 	$(DIR_OUTPUT)/h04_a00_01.3dppack \
 	$(DIR_OUTPUT)/h04_a01_01.3dppack \
 	$(DIR_OUTPUT)/h04_a02_01.3dppack \
 	$(DIR_OUTPUT)/h04_a03_01.3dppack \
 	$(DIR_OUTPUT)/h04_a04_01.3dppack \
+	$(DIR_OUTPUT)/h04_a05_01.3dppack \
 	$(DIR_OUTPUT)/winter05_06.3dppack \
 	$(DIR_OUTPUT)/winter06_06.3dppack \
 	$(DIR_OUTPUT)/winter05_05.3dppack \
@@ -444,6 +446,13 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/winter0701_01_00.3dppack \
 	$(DIR_OUTPUT)/winter0701_00_01.3dppack \
 	$(DIR_OUTPUT)/winter0701_01_01.3dppack \
+	$(DIR_OUTPUT)/m_dun0910_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun0911_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun0912_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun0913_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun0913_00_01.3dppack \
+	$(DIR_OUTPUT)/m_dun0914_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun0915_00_00.3dppack \
 	$(DIR_OUTPUT)/m_ruin01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_gate01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_pc01_00_00.3dppack \
