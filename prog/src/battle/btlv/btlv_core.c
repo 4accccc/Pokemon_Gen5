@@ -246,12 +246,23 @@ static void* getGenericWork( BTLV_CORE* core, u32 size )
 }
 
 
+//----------------------------------------------------------------------------------
+/**
+ * ƒoƒgƒ‹‰æ–Ê\’z—pVRAMÝ’è`‘o•û‚Ìƒ|ƒPƒ‚ƒ““oê‚Ü‚Å
+ *
+ * @param   core
+ * @param   seq
+ * @param   workBuffer
+ *
+ * @retval  BOOL        I—¹ŽžTRUE
+ */
+//----------------------------------------------------------------------------------
 static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
 {
   switch( *seq ){
   case 0:
     setup_core( core, core->heapID );
-    BTLV_EFFECT_Init( BTL_MAIN_GetRule( core->mainModule ), 0, core->heapID );
+    BTLV_EFFECT_Init( BTL_MAIN_GetRule(core->mainModule), 0, core->heapID );
 
     BTLV_SCU_Setup( core->scrnU );
     BTLV_SCD_Init( core->scrnD );
@@ -500,7 +511,7 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BTL
   wk->plistData.mode = BPL_MODE_NORMAL;
   wk->plistData.end_flg = FALSE;
   wk->plistData.sel_poke = 0;
-	wk->plistData.chg_waza = 0;
+  wk->plistData.chg_waza = 0;
   wk->plistData.rule = BTL_MAIN_GetRule( wk->mainModule );
   wk->plistData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
 
@@ -588,7 +599,7 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->plistData.mode = BPL_MODE_ITEMUSE;
     wk->plistData.end_flg = FALSE;
     wk->plistData.sel_poke = 0;
-		wk->plistData.chg_waza = 0;
+    wk->plistData.chg_waza = 0;
     wk->plistData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
 
     wk->selectItemSeq = 1;
@@ -1281,8 +1292,8 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
                       31, 3 );
   }
 
-  { 
- 	  static  const GFL_CLSYS_INIT clsysinit = {
+  {
+    static  const GFL_CLSYS_INIT clsysinit = {
       0, 0,
       0, 512,
       4, 124,

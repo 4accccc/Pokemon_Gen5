@@ -331,8 +331,8 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
   switch( *seq ){
   case 0:
     BTL_EVENT_InitSystem();
-    BTL_Printf("イニシャライズコマンド発行\n");
-    SetAdapterCmd( server, BTL_ACMD_WAIT_INITIALIZE );
+    BTL_Printf("バトルセットアップコマンド発行\n");
+    SetAdapterCmd( server, BTL_ACMD_WAIT_SETUP );
     (*seq)++;
     /* fallthru */
   case 1:

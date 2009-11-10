@@ -123,8 +123,8 @@ struct _BTL_CLIENT {
 static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd );
 static BOOL SubProc_UI_NotifyPokeData( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_NotifyPokeData( BTL_CLIENT* wk, int* seq );
-static BOOL SubProc_UI_Initialize( BTL_CLIENT* wk, int* seq );
-static BOOL SubProc_AI_Initialize( BTL_CLIENT* wk, int *seq );
+static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq );
+static BOOL SubProc_AI_Setup( BTL_CLIENT* wk, int *seq );
 static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq );
 static void _get_use_item( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, u8 procPokeIdx, u16* itemID, u16* targetID );
 static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action );
@@ -331,7 +331,7 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
   }procTbl[] = {
 
     { BTL_ACMD_NOTIFY_POKEDATA, { SubProc_UI_NotifyPokeData,SubProc_AI_NotifyPokeData }, },
-    { BTL_ACMD_WAIT_INITIALIZE, { SubProc_UI_Initialize,    SubProc_AI_Initialize } },
+    { BTL_ACMD_WAIT_SETUP,      { SubProc_UI_Setup,         SubProc_AI_Setup } },
     { BTL_ACMD_SELECT_ACTION,   { SubProc_UI_SelectAction,  SubProc_AI_SelectAction } },
     { BTL_ACMD_SELECT_POKEMON,  { SubProc_UI_SelectPokemon, SubProc_AI_SelectPokemon } },
     { BTL_ACMD_SERVER_CMD,      { SubProc_UI_ServerCmd,     SubProc_AI_ServerCmd } },
@@ -378,7 +378,7 @@ static BOOL SubProc_AI_NotifyPokeData( BTL_CLIENT* wk, int* seq )
 {
   return TRUE;
 }
-static BOOL SubProc_UI_Initialize( BTL_CLIENT* wk, int* seq )
+static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq )
 {
   switch( *seq ){
   case 0:
@@ -395,7 +395,7 @@ static BOOL SubProc_UI_Initialize( BTL_CLIENT* wk, int* seq )
   return FALSE;
 }
 
-static BOOL SubProc_AI_Initialize( BTL_CLIENT* wk, int *seq )
+static BOOL SubProc_AI_Setup( BTL_CLIENT* wk, int *seq )
 {
 
   return TRUE;

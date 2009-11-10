@@ -10,10 +10,6 @@
 #ifndef __BTL_COMMON_H__
 #define __BTL_COMMON_H__
 
-#ifdef TEST_IN_DOS
-#include "ds_types.h"
-#endif
-
 
 #include <gflib.h>
 #include "pm_define.h"

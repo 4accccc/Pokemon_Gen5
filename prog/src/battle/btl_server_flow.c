@@ -8,6 +8,7 @@
  */
 //=============================================================================================
 #include <gflib.h>
+
 #include "sound\pm_sndsys.h"
 #include "waza_tool\wazadata.h"
 #include "waza_tool\wazano_def.h"
@@ -2249,12 +2250,7 @@ static void scproc_MemberChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u8
     u8 clientID, posIdx;
     u8 outPokeID = BPP_GetID( outPoke );
 
-#ifdef SOGA_DEBUG
-    //posの型からするとこっちの関数っぽい
     pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, outPokeID );
-#else
-    pos = BTL_MAINUTIL_PokeIDtoSide( outPokeID );
-#endif
     BTL_MAIN_BtlPosToClientID_and_PosIdx( wk->mainModule, pos, &clientID, &posIdx );
 
     scproc_MemberIn( wk, clientID, posIdx, nextPokeIdx, FALSE );
@@ -5184,7 +5180,7 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_
       // 他人が親ならボーナス
       if( !PP_IsMatchOya(pp, status) )
       {
-        // 外国の親なら1.7倍，そうじゃなければ1.5倍
+        // 外国の親ならx1.7，そうじゃなければx1.5
         fx32 ratio;
         ratio = ( PP_Get(pp, ID_PARA_country_code, NULL) != MyStatus_GetRegionCode(status) )?
             FX32_CONST(1.7f) : FX32_CONST(1.5f);
@@ -5193,7 +5189,7 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_
         result[i].fBonus = TRUE;
       }
 #endif
-      // しあわせタマゴ持ってたらボーナス
+      // しあわせタマゴ持ってたらボーナス x1.5
       if( BPP_GetItem(bpp) == ITEM_SIAWASETAMAGO ){
         result[i].exp = BTL_CALC_MulRatio( result[i].exp, FX32_CONST(1.5f) );
         result[i].fBonus = TRUE;
@@ -5211,7 +5207,7 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_
  * @param   getpoke_lv    経験値を取得するポケモンのレベル
  * @param   deadpoke_lv   倒されたポケモンのレベル
  *
- * @retval  u32
+ * @retval  u32   補正後経験値
  */
 //----------------------------------------------------------------------------------
 static u32 getexp_calc_adjust_level( u32 base_exp, u16 getpoke_lv, u16 deadpoke_lv )

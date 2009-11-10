@@ -125,6 +125,7 @@ static BOOL cleanup_common( int* seq, void* work );
 static BOOL setup_alone_double( int* seq, void* work );
 static BOOL cleanup_alone_double( int* seq, void* work );
 static BOOL setup_alone_triple( int* seq, void* work );
+static BOOL setup_alone_rotation( int* seq, void* work );
 static BOOL setup_comm_single( int* seq, void* work );
 static BOOL setup_comm_double( int* seq, void* work );
 static BOOL setup_comm_triple( int* seq, void* work );
@@ -164,6 +165,7 @@ static void srcParty_Quit( BTL_MAIN_MODULE* wk );
 static void srcParty_Set( BTL_MAIN_MODULE* wk, u8 clientID, const POKEPARTY* party );
 static POKEPARTY* srcParty_Get( BTL_MAIN_MODULE* wk, u8 clientID );
 static void srcParty_RefrectBtlParty( BTL_MAIN_MODULE* wk, u8 clientID );
+static void srcParty_RefrectBtlPartyStartOrder( BTL_MAIN_MODULE* wk, u8 clientID );
 static void reflectPartyData( BTL_MAIN_MODULE* wk );
 static void checkWinner( BTL_MAIN_MODULE* wk );
 
@@ -325,6 +327,9 @@ static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_
     case BTL_RULE_TRIPLE:
       BTL_UTIL_SetupProc( bp, wk, setup_alone_triple, NULL );
       break;
+    case BTL_RULE_ROTATION:
+      BTL_UTIL_SetupProc( bp, wk, setup_alone_rotation, NULL );
+      break;
     default:
       GF_ASSERT(0);
       BTL_UTIL_SetupProc( bp, wk, setup_alone_single, NULL );
@@ -354,7 +359,7 @@ static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_
 // 各種モジュール解放＆削除処理ルーチンを設定
 static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param )
 {
-  // @@@ 本来は setup_param を参照して各種初期化処理ルーチンを決定する
+  #if 0
   if( setup_param->commMode == BTL_COMM_NONE )
   {
     switch( setup_param->rule ){
@@ -362,10 +367,13 @@ static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE
       BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
       break;
     case BTL_RULE_DOUBLE:
-      BTL_UTIL_SetupProc( bp, wk, cleanup_alone_double, NULL );
+      BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
       break;
     case BTL_RULE_TRIPLE:
-      BTL_UTIL_SetupProc( bp, wk, cleanup_alone_double, NULL );
+      BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
+      break;
+    case BTL_RULE_ROTATION:
+      BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
       break;
     default:
       GF_ASSERT(0);
@@ -382,12 +390,21 @@ static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE
     case BTL_RULE_DOUBLE:
       BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
       break;
+    case BTL_RULE_TRIPLE:
+      BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
+      break;
+    case BTL_RULE_ROTATION:
+      BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
+      break;
     default:
       GF_ASSERT(0);
       BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
       break;
     }
   }
+  #else
+  BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
+  #endif
 }
 
 //--------------------------------------------------------------------------
@@ -595,8 +612,7 @@ static BOOL cleanup_alone_double( int* seq, void* work )
 static BOOL setup_alone_triple( int* seq, void* work )
 {
   enum {
-    //BAG_MODE = BBAG_MODE_NORMAL,
-    BAG_MODE = BBAG_MODE_SHOOTER,    // 確認用にサポートシューターにした　by soga
+    BAG_MODE = BBAG_MODE_NORMAL,
   };
   // server*1, client*2
   BTL_MAIN_MODULE* wk = work;
@@ -645,6 +661,71 @@ static BOOL setup_alone_triple( int* seq, void* work )
   // Server に Client を接続
   BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[0]), 0, 3 );
   BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[1]), 1, 3 );
+
+  // Server 始動
+  BTL_SERVER_Startup( wk->server );
+
+  wk->mainLoop = MainLoop_StandAlone;
+
+  return TRUE;
+}
+//--------------------------------------------------------------------------
+/**
+ * スタンドアローン／ローテーションバトル：セットアップ
+ */
+//--------------------------------------------------------------------------
+static BOOL setup_alone_rotation( int* seq, void* work )
+{
+  enum {
+    BAG_MODE = BBAG_MODE_NORMAL,
+  };
+  // server*1, client*2
+  BTL_MAIN_MODULE* wk = work;
+  const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+
+  wk->myClientID = 0;
+  wk->numClients = 2;
+  wk->ImServer = TRUE;
+  wk->posCoverClientID[BTL_POS_1ST_0] = 0;
+  wk->posCoverClientID[BTL_POS_2ND_0] = 1;
+  wk->posCoverClientID[BTL_POS_1ST_1] = 0;
+  wk->posCoverClientID[BTL_POS_2ND_1] = 1;
+//  wk->posCoverClientID[BTL_POS_1ST_2] = 0;
+//  wk->posCoverClientID[BTL_POS_2ND_2] = 1;
+
+  // バトル用ポケモンパラメータ＆パーティデータを生成
+  srcParty_Set( wk, 0, sp->partyPlayer );
+  srcParty_Set( wk, 1, sp->partyEnemy1 );
+
+  PokeCon_Init( &wk->pokeconForClient, wk );
+  PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, 0), 0 );
+  PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, 1), 1 );
+
+  PokeCon_Init( &wk->pokeconForServer, wk );
+  PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, 0), 0 );
+  PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, 1), 1 );
+
+  // Server 作成
+  wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
+
+  trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, sp->statusPlayer );
+  trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->trID );
+
+  // Client 作成
+  wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 2,
+    BTL_THINKER_UI, BAG_MODE, wk->heapID );
+  wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 2,
+    BTL_THINKER_AI, BAG_MODE, wk->heapID );
+
+  // 描画エンジン生成
+  wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, HEAPID_BTL_VIEW );
+
+  // プレイヤークライアントに描画エンジンを関連付ける
+  BTL_CLIENT_AttachViewCore( wk->client[0], wk->viewCore );
+
+  // Server に Client を接続
+  BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[0]), 0, 2 );
+  BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[1]), 1, 2 );
 
   // Server 始動
   BTL_SERVER_Startup( wk->server );
