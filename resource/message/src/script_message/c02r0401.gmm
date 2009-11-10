@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-10T16:05:02"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T15:09:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -318,11 +318,6 @@
 ノーマルタイプや　いわ　はがね[BE:00:ページ切り替え（行送り）]
 さらには　あく　こおりタイプの[BE:00:ページ切り替え（行送り）]
 ポケモンに　こうか　ばつぐん　だぞ！</language>
-	</row>
-
-	<row id="msg_c02r0401_fighterm3_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>
