@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-11-06T15:07:00"/>
+	<create user="taya" host="W00146" date="2009-11-10T15:47:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -407,6 +407,14 @@
 
 	<row id="DBGF_ITEM_TYPE10">
 		<language name="JPN" width="256">トリプル　つうしん</language>
+	</row>
+
+	<row id="DBGF_ITEM_TYPE11">
+		<language name="JPN" width="256">ローテ　トレーナー</language>
+	</row>
+
+	<row id="DBGF_ITEM_TYPE12">
+		<language name="JPN" width="256">ローテ　つうしん</language>
 	</row>
 
 	<row id="DBGF_ITEM_MSGSPD_SLOW">
