@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-29T21:16:07"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T16:11:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -347,7 +347,7 @@
 		<attribute name="キャラクター">LEADER7
 ハチク</attribute>
 		<language name="JPN" width="256">ハチク『……！[BE:01:ページ切り替え（クリア）]
-塔が　壊された！？[BE:01:ページ切り替え（クリア）]</language>
+とうが　こわされた！？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ハチク『……！[BE:01:ページ切り替え（クリア）]
 塔が　壊された！？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -359,8 +359,8 @@
 ・d08の近くに配置</comment>
 		<attribute name="キャラクター">HAKAIM
 プラズマ団♂</attribute>
-		<language name="JPN" width="256">われわれ　プラズマ団の　王が
-英雄としての　力を　得るのだ！</language>
+		<language name="JPN" width="256">われわれ　プラズマだんの　おうが
+えいゆう　としての　ちからを　えるのだ！</language>
 		<language name="JPN_KANJI" width="256">われわれ　プラズマ団の　王が
 英雄としての　力を　得るのだ！</language>
 	</row>
@@ -385,12 +385,12 @@
 ・d08の近くに配置</comment>
 		<attribute name="キャラクター">HAKAIW
 プラズマ団♀</attribute>
-		<language name="JPN" width="256">リュウラセンの塔……[BE:01:ページ切り替え（クリア）]
-そこに　秘められた　力を
-われわれが　手に入れる！</language>
+		<language name="JPN" width="256">リュウラセンのとう……[BE:01:ページ切り替え（クリア）]
+そこに　ひめられた　ちからを
+プラズマだんが　てにいれる！</language>
 		<language name="JPN_KANJI" width="256">リュウラセンの塔……[BE:01:ページ切り替え（クリア）]
 そこに　秘められた　力を
-われわれが　手に入れる！</language>
+プラズマ団が　手に入れる！</language>
 	</row>
 
 	<row id="msg_c07_girl2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">

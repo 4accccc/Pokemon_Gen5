@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-21T17:23:02"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T16:15:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -297,7 +297,7 @@
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">OLDWOMAN1
 おばあさん</attribute>
-		<language name="JPN" width="256">たびの　りゆうは　人それぞれ
+		<language name="JPN" width="256">たびの　りゆうは　ひとそれぞれ
 プレゼントする　りゆうも　おなじ[BE:01:ページ切り替え（クリア）]
 あたしゃあ　あんたと　であえたことを
 きねんして　これを　あげようかね[BE:01:ページ切り替え（クリア）]</language>

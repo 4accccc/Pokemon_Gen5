@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T14:39:02"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T16:14:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -302,10 +302,10 @@
 	<row id="msg_c07gym0101_leader_02">
 		<comment>戦闘後メッセージ</comment>
 		<attribute name="キャラ指定">LEADER7</attribute>
-		<language name="JPN" width="256">……つよき　こころの　もちぬしよ
-これを　わたそう</language>
-		<language name="JPN_KANJI" width="256">……つよき　こころの　もちぬしよ
-これを　わたそう</language>
+		<language name="JPN" width="256">……つよき　こころを　もつものよ
+これを　わたそう[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">……強き　心を　持つものよ
+これを　わたそう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c07gym0101_leader_03">
@@ -323,7 +323,7 @@
 		<language name="JPN" width="256">この　わざマシンには
 わたしの　おもいが　こめられている[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">この　わざマシンには
-わたしの　おもいが　こめられている[BE:01:ページ切り替え（クリア）]</language>
+わたしの　想いが　こめられている[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c07gym0101_leader_05">
@@ -339,10 +339,8 @@
 　表示後に表示
 ・表示後、ジムの外に</comment>
 		<attribute name="キャラ指定">LEADER7</attribute>
-		<language name="JPN" width="256">……なにやら
-そとが　さわがしい</language>
-		<language name="JPN_KANJI" width="256">……なにやら
-そとが　さわがしい</language>
+		<language name="JPN" width="256">……そとが　さわがしいな</language>
+		<language name="JPN_KANJI" width="256">……外が　騒がしいな</language>
 	</row>
 
 	<row id="msg_c07gym0101_leader_07" back-color=",,,#ffff80,,,,,,,,,,,,,,,">
@@ -373,11 +371,11 @@
 		<language name="JPN" width="256">こおりは　ほのおで　とかすか
 かくとうで　ぶっこわす[BE:01:ページ切り替え（クリア）]
 あるいは　いわ　はがねで
-こなごなにすると　いいっすよ</language>
-		<language name="JPN_KANJI" width="256">こおりは　ほのおで　とかすか
+こなごなにすると　いいっすよ！</language>
+		<language name="JPN_KANJI" width="256">こおりは　ほのおで　溶かすか
 かくとうで　ぶっこわす[BE:01:ページ切り替え（クリア）]
 あるいは　いわ　はがねで
-こなごなにすると　いいっすよ</language>
+粉々にすると　いいっすよ！</language>
 	</row>
 
 	<row id="msg_c07gym0101_glasses_03" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -388,7 +386,7 @@
 		<language name="JPN" width="256">ハチクさんに　ならって
 ことばかず　へらしているんすよ</language>
 		<language name="JPN_KANJI" width="256">ハチクさんに　ならって
-ことばかず　へらしているんすよ</language>
+言葉数　減らしているんすよ</language>
 	</row>
 
 	<row id="msg_c07gym0101_statue_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">

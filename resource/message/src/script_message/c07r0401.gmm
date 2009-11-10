@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-28T20:32:50"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T16:17:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -304,10 +304,10 @@
 いちばん　ポケモンが　すきな[BE:00:ページ切り替え（行送り）]
 かいちょう　なのであります！</language>
 		<language name="JPN_KANJI" width="256">ウォッホン！[BE:01:ページ切り替え（クリア）]
-わたくし　せかいかっこくに　ある
-ポケモンだいすきクラブの　なかでも[BE:00:ページ切り替え（行送り）]
-いちばん　ポケモンが　すきな[BE:00:ページ切り替え（行送り）]
-かいちょう　なのであります！</language>
+わたくし　世界各国に　ある
+ポケモンだいすきクラブの　中でも[BE:00:ページ切り替え（行送り）]
+一番　ポケモンが　好きな[BE:00:ページ切り替え（行送り）]
+会長なので　あります！</language>
 	</row>
 
 	<row id="msg_c07r0401_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
