@@ -23,26 +23,16 @@ static void checkConfrontRec( BTL_POSPOKE_WORK* wk, BtlPokePos pos, BTL_POKE_CON
 
 void BTL_POSPOKE_InitWork( BTL_POSPOKE_WORK* wk, const BTL_MAIN_MODULE* mainModule, const BTL_POKE_CONTAINER* pokeCon, BtlRule rule )
 {
-  u32 i;
+  u32 i, endPos;
 
   for(i=0; i<NELEMS(wk->state); ++i){
     wk->state[i].fEnable = FALSE;
     wk->state[i].existPokeID = BTL_POKEID_NULL;
   }
 
-  switch( rule ){
-  case BTL_RULE_TRIPLE:
-    set_pos_state( wk, mainModule, pokeCon, BTL_POS_1ST_2 );
-    set_pos_state( wk, mainModule, pokeCon, BTL_POS_2ND_2 );
-    /* fallthru */
-  case BTL_RULE_DOUBLE:
-    set_pos_state( wk, mainModule, pokeCon, BTL_POS_1ST_1 );
-    set_pos_state( wk, mainModule, pokeCon, BTL_POS_2ND_1 );
-    /* fallthru */
-  case BTL_RULE_SINGLE:
-    set_pos_state( wk, mainModule, pokeCon, BTL_POS_1ST_0 );
-    set_pos_state( wk, mainModule, pokeCon, BTL_POS_2ND_0 );
-    break;
+  endPos = BTL_MAIN_GetEnablePosEnd( mainModule );
+  for(i=0; i<=endPos; ++i){
+    set_pos_state( wk, mainModule, pokeCon, i );
   }
 }
 static void set_pos_state( BTL_POSPOKE_WORK* wk, const BTL_MAIN_MODULE* mainModule, const BTL_POKE_CONTAINER* pokeCon, BtlPokePos pos )
@@ -96,7 +86,7 @@ void BTL_POSPOKE_PokeOut( BTL_POSPOKE_WORK* wk, u8 pokeID )
 //=============================================================================================
 void BTL_POSPOKE_PokeIn( BTL_POSPOKE_WORK* wk, BtlPokePos pos,  u8 pokeID, BTL_POKE_CONTAINER* pokeCon )
 {
-  GF_ASSERT(wk->state[pos].fEnable);
+  GF_ASSERT_MSG(wk->state[pos].fEnable, "pos=%d\n", pos);
   wk->state[pos].existPokeID = pokeID;
   BTL_Printf(" poke[%d] in to pos[%d]\n", pokeID, pos );
 

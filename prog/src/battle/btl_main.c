@@ -1326,13 +1326,19 @@ BtlPokePos BTL_MAIN_GetEnablePosEnd( const BTL_MAIN_MODULE* wk )
 {
   switch( wk->setupParam->rule ){
   case BTL_RULE_SINGLE:
-  default:
     return BTL_POS_2ND_0;
 
   case BTL_RULE_DOUBLE:
     return BTL_POS_2ND_1;
 
   case BTL_RULE_TRIPLE:
+    return BTL_POS_2ND_2;
+
+  case BTL_RULE_ROTATION:
+    return BTL_POS_2ND_1;
+
+  default:
+    GF_ASSERT(0);
     return BTL_POS_2ND_2;
   }
 }
@@ -1448,6 +1454,8 @@ u8 BTL_MAIN_ExpandBtlPos( const BTL_MAIN_MODULE* wk, BtlExPos exPos, u8* dst )
     return expandPokePos_double( wk, exType, basePos, dst );
   case BTL_RULE_TRIPLE:
     return expandPokePos_triple( wk, exType, basePos, dst );
+  case BTL_RULE_ROTATION:
+    return expandPokePos_double( wk, exType, basePos, dst );
   }
 }
 // ƒVƒ“ƒOƒ‹—p
@@ -1673,6 +1681,9 @@ BtlPokePos BTL_MAINUTIL_GetOpponentPokePos( BtlRule rule, BtlPokePos basePos, u8
   case BTL_RULE_TRIPLE:
     GF_ASSERT(idx<3);
     break;
+  case BTL_RULE_ROTATION:
+    GF_ASSERT(idx<2);
+    break;
   default:
     GF_ASSERT(0);
     break;
@@ -1740,6 +1751,7 @@ BtlPokePos BTL_MAIN_GetNextPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos basePo
     GF_ASSERT(0);
     return basePos;
   case BTL_RULE_DOUBLE:
+  case BTL_RULE_ROTATION:
     {
       u8 retPos = (basePos + 2) & 0x03;
       BTL_Printf("nextPos %d -> %d\n", basePos, retPos);

@@ -390,18 +390,18 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
                                        BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID( wk->bpp ) ) );
 
   for( j = 0 ; j < 2 ; j++ )
-  { 
+  {
     if( j == 0 )
-    { 
+    {
       //自分の手持ち
       party = wk->playerParty;
       members = BTL_PARTY_GetMemberCount( party );
       BTL_Printf("members=%d\n", members);
-      switch( BTL_MAIN_GetRule( wk->mainModule ) ){ 
+      switch( BTL_MAIN_GetRule( wk->mainModule ) ){
       case BTL_RULE_SINGLE:    ///< シングル
         bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, BTL_MAIN_ViewPosToBtlPos( wk->mainModule, BTLV_MCSS_POS_AA ) );
         if( BPP_IsDead( bpp ) == FALSE )
-        { 
+        {
           bicp.mons_no[ 0 ] = BPP_GetMonsNo( bpp );
           bicp.form_no[ 0 ] = BPP_GetValue( bpp, BPP_FORM );
         }
@@ -409,35 +409,37 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
       case BTL_RULE_TRIPLE:    ///< トリプル
         bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, BTL_MAIN_ViewPosToBtlPos( wk->mainModule, BTLV_MCSS_POS_E ) );
         if( BPP_IsDead( bpp ) == FALSE )
-        { 
+        {
           bicp.mons_no[ 2 ] = BPP_GetMonsNo( bpp );
           bicp.form_no[ 2 ] = BPP_GetValue( bpp, BPP_FORM );
         }
       /* fallthru */
       case BTL_RULE_DOUBLE:    ///< ダブル
+      case BTL_RULE_ROTATION:   ///< ローテーション @todo これでいいのか？
         bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, BTL_MAIN_ViewPosToBtlPos( wk->mainModule, BTLV_MCSS_POS_A ) );
         if( BPP_IsDead( bpp ) == FALSE )
-        { 
+        {
           bicp.mons_no[ 0 ] = BPP_GetMonsNo( bpp );
           bicp.form_no[ 0 ] = BPP_GetValue( bpp, BPP_FORM );
         }
         bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, BTL_MAIN_ViewPosToBtlPos( wk->mainModule, BTLV_MCSS_POS_C ) );
         if( BPP_IsDead( bpp ) == FALSE )
-        { 
+        {
           bicp.mons_no[ 1 ] = BPP_GetMonsNo( bpp );
           bicp.form_no[ 1 ] = BPP_GetValue( bpp, BPP_FORM );
         }
         bicp.pos = ( bicp.pos - BTLV_MCSS_POS_A ) / 2;
         break;
+
       default:
         GF_ASSERT_MSG( 0, "知らない戦闘ルールです\n" );
         break;
       }
     }
     else
-    { 
+    {
       if( BTL_MAIN_GetCompetitor( wk->mainModule ) == BTL_COMPETITOR_WILD )
-      { 
+      {
         break;
       }
       bicp.trainer_flag = TRUE;
@@ -1281,7 +1283,7 @@ static void printCommWait( BTLV_SCD* wk )
 //  カーソルフラグポインタ取得
 //=============================================================================================
 u8* BTLV_SCD_GetCursorFlagPtr( BTLV_SCD* wk )
-{ 
+{
   return &wk->cursor_flag;
 }
 

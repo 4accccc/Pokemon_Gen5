@@ -1500,16 +1500,16 @@ static BOOL btlinEff_MyPokeInDouble( BTLV_SCU* wk, int* seq )
         BTLV_EFFECT_SetPokemon( BPP_GetSrcData(subwk->bpp[1]), subwk->vpos[1] );
       }
       BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
-      statwin_disp_start( &wk->statusWin[ subwk->pos[0] ] );
-      if( subwk->aliveCnt > 1){
-        statwin_disp_start( &wk->statusWin[ subwk->pos[1] ] );
-      }
       (*seq)++;
     }
     break;
 
   case 4:
     if( !BTLV_EFFECT_CheckExecute() ){
+      statwin_disp_start( &wk->statusWin[ subwk->pos[0] ] );
+      if( subwk->aliveCnt > 1){
+        statwin_disp_start( &wk->statusWin[ subwk->pos[1] ] );
+      }
       (*seq)++;
     }
     break;
