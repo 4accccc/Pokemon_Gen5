@@ -318,11 +318,16 @@ int ZONEDATA_GetRailDataID(u16 zone_id)
     return NARC_field_rail_setup_C03P02_dat;
   case ZONE_ID_D09:
     return NARC_field_rail_setup_D09_dat;
-
-#ifdef DEBUG_ONLY_FOR_tomoya_takahashi
-  case ZONE_ID_T01:
-    return NARC_field_rail_setup_T01_dat;
-#endif
+  case ZONE_ID_R07R0101:
+    return NARC_field_rail_setup_R07R0101_dat;
+  case ZONE_ID_R07R0102:
+    return NARC_field_rail_setup_R07R0102_dat;
+  case ZONE_ID_R07R0103:
+    return NARC_field_rail_setup_R07R0103_dat;
+  case ZONE_ID_R07R0104:
+    return NARC_field_rail_setup_R07R0104_dat;
+  case ZONE_ID_C07GYM0101:
+    return NARC_field_rail_setup_C07GYM0101_dat;
   }
   return ZONEDATA_NO_RAILDATA_ID;
 }
