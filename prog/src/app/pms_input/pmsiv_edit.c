@@ -160,11 +160,12 @@ struct _PMSIV_EDIT {
 	const PMS_INPUT_WORK*  mwk;
 	const PMS_INPUT_DATA*  dwk;
 
-	GFL_BMPWIN	*win_edit[2];
-	GFL_BMPWIN	*win_msg[2];
+	GFL_BMPWIN	*win_edit[PMSIV_LCD_MAX];
+	GFL_BMPWIN	*win_msg[PMSIV_LCD_MAX];
 	GFL_BMPWIN	*win_yesno;
 	GFL_BMPWIN	**win_message;
-	GFL_CLWK	*cursor_actor[2];
+	GFL_CLWK	*cursor_actor[PMSIV_LCD_MAX];
+	GFL_CLWK	*deco_actor[PMS_WORD_MAX][PMSIV_LCD_MAX];
 #if 0
   // 会話文選択バー・ボタン
 	GFL_CLWK	*arrow_left_actor;
@@ -209,15 +210,16 @@ static void setup_pal_datas( PMSIV_EDIT* wk, ARCHANDLE* p_handle );
 static void update_editarea_palette( PMSIV_EDIT* wk );
 static void setup_wordarea_pos( PMSIV_EDIT* wk );
 static void setup_obj( PMSIV_EDIT* wk );
-static u32 print_sentence( PMSIV_EDIT* wk ,GFL_BMPWIN* win);
+static u32 print_sentence( PMSIV_EDIT* wk ,GFL_BMPWIN* win, u8 cnt);
 static void setup_pms_analyze( PMS_ANALYZE_WORK* awk, PMSIV_EDIT* wk );
 static void cleanup_pms_analyze( PMS_ANALYZE_WORK* awk );
 static int prog_pms_analyze( PMS_ANALYZE_WORK* awk, STRBUF* buf );
 static void wordpos_to_orgpos( const POS* wordpos, POS* orgpos);
 static void wordpos_to_lcdpos( const POS* wordpos, POS* lcdpos );
 static void fill_wordarea( GFL_BMPWIN* win, const POS* wordpos );
-static void print_wordarea( PMSIV_EDIT* wk, GFL_BMPWIN* win, const POS* wordpos, PMS_WORD word );
+static void print_wordarea( PMSIV_EDIT* wk, GFL_BMPWIN* win, const POS* wordpos, PMS_WORD word, GFL_CLWK* deco_actor );
 static void set_cursor_anm( PMSIV_EDIT* wk, BOOL active_flag );
+static CLSYS_DRAW_TYPE BGFrameToVramType( u8 frame );
 
 
 
@@ -433,8 +435,18 @@ void PMSIV_EDIT_ScrollSet( PMSIV_EDIT* wk,u8 scr_dir)
 	wk->hBlankTask = GFUser_HIntr_CreateTCB( pmsiv_edit_hblank, wk , 1);
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  エディットウィンドウ スクロール
+ *
+ *	@param	PMSIV_EDIT* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 int PMSIV_EDIT_ScrollWait( PMSIV_EDIT* wk)
 {
+  int i,w;
 	s16 dir;
 	s16	posY;
 	
@@ -452,14 +464,21 @@ int PMSIV_EDIT_ScrollWait( PMSIV_EDIT* wk)
 	GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,wk->main_scr);
 	GFL_BG_SetScroll( FRM_SUB_EDITAREA, GFL_BG_SCROLL_Y_SET,wk->sub_scr);
 	
-//	CATS_ObjectPosMove(wk->cursor_actor[0],0,-dir);
-	posY = GFL_CLACT_WK_GetTypePos( wk->cursor_actor[0] , CLSYS_DEFREND_MAIN, CLSYS_MAT_Y );
-	posY -=dir ;
-	GFL_CLACT_WK_SetTypePos( wk->cursor_actor[0] , posY , CLSYS_DEFREND_MAIN, CLSYS_MAT_Y );
-//	CATS_ObjectPosMove(wk->cursor_actor[1],0,-dir);
-	posY = GFL_CLACT_WK_GetTypePos( wk->cursor_actor[1] , CLSYS_DEFREND_SUB, CLSYS_MAT_Y );
-	posY -=dir ;
-	GFL_CLACT_WK_SetTypePos( wk->cursor_actor[1] , posY , CLSYS_DEFREND_SUB, CLSYS_MAT_Y );
+  for( i=0; i<PMSIV_LCD_MAX; i++ )
+  {
+    // カーソル追随
+    posY = GFL_CLACT_WK_GetTypePos( wk->cursor_actor[i] , CLSYS_DEFREND_MAIN+i, CLSYS_MAT_Y );
+    posY -=dir ;
+    GFL_CLACT_WK_SetTypePos( wk->cursor_actor[i] , posY , CLSYS_DEFREND_MAIN+i, CLSYS_MAT_Y );
+
+    // デコメ追随
+    for( w=0; w<PMS_WORD_MAX; w++ )
+    {
+      posY = GFL_CLACT_WK_GetTypePos( wk->deco_actor[w][i] , CLSYS_DEFREND_MAIN+i, CLSYS_MAT_Y );
+      posY -=dir ;
+      GFL_CLACT_WK_SetTypePos( wk->deco_actor[w][i] , posY , CLSYS_DEFREND_MAIN+i, CLSYS_MAT_Y );
+    }
+  }
 
 	wk->scr_ct++;
 
@@ -571,12 +590,31 @@ static void setup_obj( PMSIV_EDIT* wk )
 	}
 
 	PMSIView_SetupDefaultActHeader( wk->vwk, &header, PMSIV_LCD_SUB, BGPRI_MAIN_EDITAREA );
-	wk->cursor_actor[1] = PMSIView_AddActor( wk->vwk, &header, actpos.x, actpos.y+192,
+	wk->cursor_actor[1] = PMSIView_AddActor( wk->vwk, &header, actpos.x, actpos.y + GX_LCD_SIZE_Y,
 			ACTPRI_EDITAREA_CURSOR, NNS_G2D_VRAM_TYPE_2DSUB );
 	GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor[1], 1);
+
 	PMSIView_SetupDefaultActHeader( wk->vwk, &header, PMSIV_LCD_MAIN, BGPRI_MAIN_EDITAREA );
 	wk->cursor_actor[0] = PMSIView_AddActor( wk->vwk, &header, actpos.x, actpos.y,
 			ACTPRI_EDITAREA_CURSOR, NNS_G2D_VRAM_TYPE_2DMAIN );
+
+  {
+    int i, k;
+    PMSIV_CELL_RES deco_res;
+
+    for( i=0; i<PMS_WORD_MAX; i++ )
+    {
+      PMSIView_GetDecoResource( wk->vwk, &deco_res, PMSIV_LCD_MAIN+i );
+
+      for( k=0; k<PMS_WORD_MAX; k++ )
+      {
+        wk->deco_actor[k][PMSIV_LCD_MAIN+i] = PMSIView_AddActor( wk->vwk, &deco_res, 0, 0,
+          ACTPRI_EDITAREA_DECO, NNS_G2D_VRAM_TYPE_2DMAIN+i );
+      
+        GFL_CLACT_WK_SetDrawEnable( wk->deco_actor[k][PMSIV_LCD_MAIN+i], FALSE );
+      }
+    }
+  }
 
 	set_cursor_anm( wk, TRUE );
 
@@ -627,23 +665,34 @@ void PMSIV_EDIT_UpdateEditArea( PMSIV_EDIT* wk )
 
 	update_editarea_palette( wk );
 
-	for(i = 0;i < 2;i++){
+	for(i = 0;i < PMSIV_LCD_MAX;i++){
+
+    // 一端デコメ表示をクリア(OBJ初期化前にこの関数を使う必要があるため、NULLを弾く)
+    if( wk->deco_actor[0][0] != NULL )
+    {
+      int w;
+      for( w=0; w<PMS_WORD_MAX; w++ )
+      {
+         GFL_CLACT_WK_SetDrawEnable( wk->deco_actor[w][i], FALSE );
+      }
+    }
+
 		GFL_BMP_Clear(GFL_BMPWIN_GetBmp(wk->win_edit[i]),EDITAREA_WIN_BASE_COLOR_GROUND );
 		//GF_BGL_BmpWinDataFill( &wk->win_edit[i], EDITAREA_WIN_BASE_COLOR_GROUND );
 
 		switch(PMSI_GetInputMode(wk->mwk)){
 		case PMSI_MODE_SINGLE:
 			fill_wordarea( wk->win_edit[i], &wk->word_pos[0] );
-			print_wordarea( wk, wk->win_edit[i], &(wk->word_pos[0]), PMSI_GetEditWord(wk->mwk, 0) );
+			print_wordarea( wk, wk->win_edit[i], &(wk->word_pos[0]), PMSI_GetEditWord(wk->mwk, 0), wk->deco_actor[0][i] );
 			break;
 		case PMSI_MODE_DOUBLE:
 			fill_wordarea( wk->win_edit[i], &wk->word_pos[0] );
 			fill_wordarea( wk->win_edit[i], &wk->word_pos[1] );
-			print_wordarea( wk, wk->win_edit[i], &(wk->word_pos[0]), PMSI_GetEditWord(wk->mwk, 0) );
-			print_wordarea( wk, wk->win_edit[i], &(wk->word_pos[1]), PMSI_GetEditWord(wk->mwk, 1) );
+			print_wordarea( wk, wk->win_edit[i], &(wk->word_pos[0]), PMSI_GetEditWord(wk->mwk, 0), wk->deco_actor[0][i] );
+			print_wordarea( wk, wk->win_edit[i], &(wk->word_pos[1]), PMSI_GetEditWord(wk->mwk, 1), wk->deco_actor[1][i] );
 			break;
 		case PMSI_MODE_SENTENCE:
-			wk->word_pos_max = print_sentence( wk ,wk->win_edit[i]);
+			wk->word_pos_max = print_sentence( wk ,wk->win_edit[i], i);
 //			OS_TPrintf("word max:%d\n", wk->word_pos_max);
 			break;
 		}
@@ -676,13 +725,15 @@ void PMSIV_EDIT_GetSentenceWordPos( PMSIV_EDIT* wk ,GFL_UI_TP_HITTBL* tbl,u8 idx
 	* @retval  u32		
 	*/
 //------------------------------------------------------------------
-static u32 print_sentence( PMSIV_EDIT* wk ,GFL_BMPWIN* win)
+static u32 print_sentence( PMSIV_EDIT* wk ,GFL_BMPWIN* win, u8 cnt)
 {
 	STRBUF* buf = PMSI_GetEditSourceString( wk->mwk, HEAPID_PMS_INPUT_VIEW );
 	int x, y, word_pos;
 	BOOL cont_flag;
 	PMS_WORD  word_code;
 	GFL_FONT *fontHandle = fontHandle = PMSIView_GetFontHandle(wk->vwk);
+
+  GF_ASSERT( cnt < PMSIV_LCD_MAX );
 
 	x = y = word_pos = 0;
 	cont_flag = TRUE;
@@ -707,10 +758,7 @@ static u32 print_sentence( PMSIV_EDIT* wk ,GFL_BMPWIN* win)
 			wk->word_pos[word_pos].y = y + (WORDAREA_HEIGHT/2);
 			fill_wordarea( win, &(wk->word_pos[word_pos]) );
 			word_code = PMSI_GetEditWord(wk->mwk, word_pos);
-			if( word_code != PMS_WORD_NULL )
-			{
-				print_wordarea( wk, win, &(wk->word_pos[word_pos]), word_code );
-			}
+			print_wordarea( wk, win, &(wk->word_pos[word_pos]), word_code, wk->deco_actor[word_pos][cnt] );
 			word_pos++;
 			x += (WORDAREA_X_MARGIN+WORDAREA_WIDTH);
 			break;
@@ -849,34 +897,121 @@ static void fill_wordarea( GFL_BMPWIN* win, const POS* wordpos )
 			EDITAREA_WIN_WORD_COLOR_GROUND );
 }
 
+
 //-----------------------------------------------------------------------------
 /**
- *	@brief  
+ *	@brief  エディットエリアの指定座標に単語表示
  *
  *	@param	PMSIV_EDIT* wk
  *	@param	win
  *	@param	POS* wordpos
  *	@param	word 
+ *	@param  deco_actor
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void print_wordarea( PMSIV_EDIT* wk, GFL_BMPWIN* win, const POS* wordpos, PMS_WORD word )
+static void print_wordarea( PMSIV_EDIT* wk, GFL_BMPWIN* win, const POS* wordpos, PMS_WORD word, GFL_CLWK* deco_actor )
 {
-	if( word != PMS_WORD_NULL )
+  GFL_FONT *fontHandle = fontHandle = PMSIView_GetFontHandle(wk->vwk);
+  POS  print_pos;
+//	u32  write_xpos;
+
+  // NULLは何もしない
+  if( word == PMS_WORD_NULL ){ return; }
+    
+  wordpos_to_orgpos( wordpos, &print_pos );
+
+  // デコメなら例外表示
+  if( PMSW_IsDeco( word ) )
+  {
+    PMS_DECO_ID deco_id;
+    CLSYS_DRAW_TYPE draw_type;
+    GFL_CLACTPOS clPos;
+
+    deco_id = PMSW_GetDecoID( word ) - 1;
+    draw_type = BGFrameToVramType( GFL_BMPWIN_GetFrame(win) );
+
+    clPos.x = print_pos.x + GFL_BMPWIN_GetPosX( win ) * 8;
+    clPos.y = print_pos.y + GFL_BMPWIN_GetPosY( win ) * 8;
+
+    if( draw_type == CLSYS_DRAW_SUB )
+    {
+      clPos.y += GX_LCD_SIZE_Y;
+    }
+
+    HOSAKA_Printf("deco_actor pos=[%d %d], deco_id=%d \n", clPos.x, clPos.y, deco_id);
+
+    GFL_CLACT_WK_SetAnmSeq( deco_actor, deco_id );
+    GFL_CLACT_WK_SetPos( deco_actor, &clPos, draw_type );
+    GFL_CLACT_WK_SetDrawEnable( deco_actor, TRUE );
+  }
+  else
+  {
+    PMSW_GetStr(word, wk->tmpbuf ,HEAPID_PMS_INPUT_VIEW);
+  //	write_xpos = (print_pos.x + (WORDAREA_WIDTH / 2)) - (PRINTSYS_GetStrWidth(wk->tmpbuf, fontHandle,0) / 2);
+
+    GFL_FONTSYS_SetColor( EDITAREA_WIN_WORD_COLOR_LETTER, EDITAREA_WIN_WORD_COLOR_SHADOW, EDITAREA_WIN_WORD_COLOR_GROUND);
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), print_pos.x, print_pos.y, wk->tmpbuf,fontHandle );
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	PMSIV_EDIT* wk
+ *	@param	active_flag 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void set_cursor_anm( PMSIV_EDIT* wk, BOOL active_flag )
+{
+	if( wk->word_pos_max != 0 )
 	{
-		POS  print_pos;
-//		u32  write_xpos;
-		GFL_FONT *fontHandle = fontHandle = PMSIView_GetFontHandle(wk->vwk);
-
-		wordpos_to_orgpos( wordpos, &print_pos );
-
-		PMSW_GetStr(word, wk->tmpbuf ,HEAPID_PMS_INPUT_VIEW);
-//		write_xpos = (print_pos.x + (WORDAREA_WIDTH / 2)) - (PRINTSYS_GetStrWidth(wk->tmpbuf, fontHandle,0) / 2);
-
-		GFL_FONTSYS_SetColor( EDITAREA_WIN_WORD_COLOR_LETTER, EDITAREA_WIN_WORD_COLOR_SHADOW, EDITAREA_WIN_WORD_COLOR_GROUND);
-		PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), print_pos.x, print_pos.y, wk->tmpbuf,fontHandle );
+		if( active_flag )
+		{
+			GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor[0], ANM_EDITAREA_CURSOR_ACTIVE );
+		}
+		else
+		{
+			GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor[0], ANM_EDITAREA_CURSOR_STOP );
+		}
 	}
+	else
+	{
+		if( active_flag )
+		{
+			GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor[0], ANM_EDITAREA_ALLCOVER_CURSOR_ACTIVE );
+		}
+		else
+		{
+			GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor[0], ANM_EDITAREA_ALLCOVER_CURSOR_STOP );
+		}
+	}
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  BGフレームからOBJ用VRAMTYPEを取得
+ *
+ *	@param	u8 frame 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static CLSYS_DRAW_TYPE BGFrameToVramType( u8 frame )
+{
+  GF_ASSERT( frame <= GFL_BG_FRAME3_S );
+
+  if( frame >= GFL_BG_FRAME0_S )
+  {
+    return CLSYS_DRAW_SUB;
+  }
+
+  return CLSYS_DRAW_MAIN;
 }
 
 //======================================================================================
@@ -1040,37 +1175,10 @@ void PMSIV_EDIT_MoveCursor( PMSIV_EDIT* wk, int pos )
 //		CLACT_SetMatrix( wk->cursor_actor, &mtx );
 	}
 	GFL_CLACT_WK_SetPos( wk->cursor_actor[0], &clPos , CLSYS_DEFREND_MAIN );
-	clPos.y += 192;
+	clPos.y += GX_LCD_SIZE_Y;
 //	clPos.y -= wk->sub_scr;
 	GFL_CLACT_WK_SetPos( wk->cursor_actor[1], &clPos , CLSYS_DEFREND_SUB );
 	set_cursor_anm( wk, TRUE );
-}
-
-
-static void set_cursor_anm( PMSIV_EDIT* wk, BOOL active_flag )
-{
-	if( wk->word_pos_max != 0 )
-	{
-		if( active_flag )
-		{
-			GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor[0], ANM_EDITAREA_CURSOR_ACTIVE );
-		}
-		else
-		{
-			GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor[0], ANM_EDITAREA_CURSOR_STOP );
-		}
-	}
-	else
-	{
-		if( active_flag )
-		{
-			GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor[0], ANM_EDITAREA_ALLCOVER_CURSOR_ACTIVE );
-		}
-		else
-		{
-			GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor[0], ANM_EDITAREA_ALLCOVER_CURSOR_STOP );
-		}
-	}
 }
 
 

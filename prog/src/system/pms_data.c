@@ -199,7 +199,7 @@ void PMSDAT_SetupDefaultBattleTowerMessage( PMS_DATA* pms, BTWR_PLAYER_MSG_ID ms
 //------------------------------------------------------------------
 STRBUF* PMSDAT_ToString( const PMS_DATA* pms, u32 heapID )
 { 
-  PMSDAT_ToStringWithWordCount( pms, heapID, PMS_WORD_MAX );
+  return PMSDAT_ToStringWithWordCount( pms, heapID, PMS_WORD_MAX );
 }
 
 //-----------------------------------------------------------------------------
@@ -396,25 +396,67 @@ PMS_WORD  PMSDAT_GetWordNumber( const PMS_DATA* pms, int pos )
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  単語ナンバーを生で返す
+ *
+ *	@param	const PMS_DATA* pms
+ *	@param	pos 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+PMS_WORD PMSDAT_GetWordNumberDirect( const PMS_DATA* pms, int pos )
+{
+	GF_ASSERT( pos < PMS_WORD_MAX );
+	return pms->word[ pos ];
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  デコメ判定
  *
  *	@param	pms
  *	@param	pos 
- *	
- *	@note   add by genya hosaka
  *
  *	@retval TRUE:デコメ FALSE:デコメでない（通常の単語）
  */
 //-----------------------------------------------------------------------------
 BOOL PMSDAT_IsDecoID( const PMS_DATA* pms, int pos )
 {
+  return PMSW_IsDeco( pms->word[pos] );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  単語のデコメ判定
+ *
+ *	@param	const PMS_WORD* word 
+ *
+ *	@retval TRUE:デコメ
+ */
+//-----------------------------------------------------------------------------
+BOOL PMSW_IsDeco( const PMS_WORD word )
+{ 
   // NULL CHECK
-  if( pms->word[ pos ] == PMS_WORD_NULL )
+  if( word == PMS_WORD_NULL )
   {
     return FALSE;
   }
 
-  return (pms->word[ pos ] >> PMS_WORD_DECO_BITSHIFT) & PMS_WORD_DECO_MASK;
+  return ( word >> PMS_WORD_DECO_BITSHIFT) & PMS_WORD_DECO_MASK;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  PMS_WORD から デコメIDを取得
+ *
+ *	@param	const PMS_WORD* word ワードID
+ *
+ *	@retval PMS_DECO_ID デコメID
+ */
+//-----------------------------------------------------------------------------
+PMS_DECO_ID PMSW_GetDecoID( const PMS_WORD word )
+{
+  return ( word & PMS_WORD_NUM_MASK );
 }
 
 //------------------------------------------------------------------
