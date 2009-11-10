@@ -9,6 +9,7 @@
 #include "savedata/gimmickwork.h"
 #include "field_gimmick_def.h"
 #include "system/gfl_use.h"
+#include "sound/pm_sndsys.h"
 
 
 //==========================================================================================
@@ -138,6 +139,13 @@ void H03_GIMMICK_End( FIELDMAP_WORK* fieldmap )
   GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
   u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H03 );
   H03WORK*         work = (H03WORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
+
+  // 電車のトラックを止める
+  for( i=0; i<SOBJ_NUM; i++ )
+  {
+    u16 track = SOUNDOBJ_GetTrackBit( work->sobj[i] );
+    PMSND_ChangeBGMVolume( track, 0 );
+  }
 
   // セーブ
   SaveGimmick( work, fieldmap );

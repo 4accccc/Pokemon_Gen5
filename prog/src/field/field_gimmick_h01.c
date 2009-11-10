@@ -226,6 +226,7 @@ void H01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
 
   // 3Dサウンド情報を取得
   Load3DSoundInfo( h01work, heap_id );
+
 }
 
 //--------------------------------------------------------------------
@@ -258,6 +259,8 @@ void H01_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 
   // 3Dサウンドシステム破棄
   ISS_3DS_SYS_Delete( h01work->iss3DSSys );
+
+  // 車・船・風のトラックを止める
 
   // TEST:
   {
