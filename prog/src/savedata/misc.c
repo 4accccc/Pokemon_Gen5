@@ -11,6 +11,7 @@
 #include <gflib.h>
 #include "savedata/misc.h"
 #include "savedata/save_tbl.h"
+
 //=============================================================================
 /**
  *					定数宣言
@@ -29,8 +30,12 @@
 //=====================================
 struct _MISC
 {	
+	u16 favorite_monsno;		//お気に入りポケモン
+	u8  favorite_form_no:7;		//お気に入りポケモンのフォルム番号
+	u8  favorite_egg_flag:1;	//お気に入りポケモンのタマゴフラグ
 	u8	namein_mode[NAMEIN_MAX];	//5つ
-	u8	dummy[3];									//追加する方はダミーつぶしてください
+
+	PMS_DATA gds_self_introduction;		// GDSプロフィールの自己紹介メッセージ
 };
 
 //=============================================================================
@@ -153,5 +158,66 @@ static void MISC_InitNameIn( MISC *p_misc )
 	p_misc->namein_mode[ NAMEIN_POKEMON ] = 1;
 }
 
+//==============================================================================
+//  GDS
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   お気に入りポケモンのセット
+ *
+ * @param   misc		
+ * @param   monsno		ポケモン番号
+ * @param   form_no		フォルム番号
+ * @param   egg_flag	タマゴフラグ
+ */
+//--------------------------------------------------------------
+void MISC_SetFavoriteMonsno(MISC * misc, int monsno, int form_no, int egg_flag)
+{
+	misc->favorite_monsno = monsno;
+	misc->favorite_form_no = form_no;
+	misc->favorite_egg_flag = egg_flag;
+}
 
+//--------------------------------------------------------------
+/**
+ * @brief   お気に入りポケモン取得
+ *
+ * @param   misc		
+ * @param   monsno		ポケモン番号(お気に入りを設定していない場合は0)
+ * @param   form_no		フォルム番号
+ * @param   egg_flag	タマゴフラグ
+ */
+//--------------------------------------------------------------
+void MISC_GetFavoriteMonsno(const MISC * misc, int *monsno, int *form_no, int *egg_flag)
+{
+	*monsno = misc->favorite_monsno;
+	*form_no = misc->favorite_form_no;
+	*egg_flag = misc->favorite_egg_flag;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   GDS自己紹介メッセージを取得
+ *
+ * @param   misc		
+ * @param   pms			代入先
+ */
+//--------------------------------------------------------------
+void MISC_GetGdsSelfIntroduction(const MISC *misc, PMS_DATA *pms)
+{
+	*pms = misc->gds_self_introduction;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   GDS自己紹介メッセージをセットする
+ *
+ * @param   misc		
+ * @param   pms			セットするメッセージ
+ */
+//--------------------------------------------------------------
+void MISC_SetGdsSelfIntroduction(MISC *misc, const PMS_DATA *pms)
+{
+	misc->gds_self_introduction = *pms;
+}
 

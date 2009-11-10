@@ -45,7 +45,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
 				savedata/shortcut.c \
 				savedata/musical_dist_save.c \
 				savedata/zukan_savedata.c \
-				savedata/encount_sv.c
+				savedata/encount_sv.c \
+				savedata/gds_profile.c
 
 
 #’ÊM‚Ìí’“
@@ -59,7 +60,8 @@ NETWORKSRC =  net/net_icondata.c \
         net_app/union/union_comm_command.c \
         net_app/union/union_subproc.c \
         net_app/union/colosseum_comm_command.c \
-        net_app/union/colosseum.c
+        net_app/union/colosseum.c \
+        net_app/gds/gds_main.c
 
 ###        net_old/net_old.c \
 
@@ -864,6 +866,16 @@ SRCS_OVERLAY_PALACE = app/palace/palace_edit.c \
 SRCS_OVERLAY_DPW_COMMON   = libdpw/dpwi_encrypt.c \
               libdpw/dpwi_session.c \
 							libdpw/dpw_tr.c
+
+
+#GDS’ÊM§Œä
+#===> SRCS_OVERLAY_DPW_COMMON
+#LIB=>					libgds.a
+SRCS_OVERLAY_GDS_COMM =	net_app/gds/gds_data_conv.c \
+								net_app/gds/gds_rap.c \
+								net_app/gds/gds_rap_response.c \
+								net_app/gds/gds_connect.c \
+								savedata/battle_rec_ov.c
 
 
 # WIFI2DMAP

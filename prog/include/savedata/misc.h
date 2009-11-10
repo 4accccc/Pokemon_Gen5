@@ -13,6 +13,7 @@
 #include "savedata/save_control.h"
 
 #include "app/name_input.h"
+#include "system/pms_data.h"
 
 //=============================================================================
 /**
@@ -53,6 +54,11 @@ extern MISC * SaveData_GetMisc( SAVE_CONTROL_WORK * p_sv);
 //–¼‘O“ü—Í
 extern void MISC_SetNameInMode( MISC *p_misc, NAMEIN_MODE mode, u8 input_type );
 extern u8 MISC_GetNameInMode( const MISC *cp_misc, NAMEIN_MODE mode );
+//GDS
+extern void MISC_SetFavoriteMonsno(MISC * misc, int monsno, int form_no, int egg_flag);
+extern void MISC_GetFavoriteMonsno(const MISC * misc, int *monsno, int *form_no, int *egg_flag);
+extern void MISC_GetGdsSelfIntroduction(const MISC *misc, PMS_DATA *pms);
+extern void MISC_SetGdsSelfIntroduction(MISC *misc, const PMS_DATA *pms);
 
 
 
