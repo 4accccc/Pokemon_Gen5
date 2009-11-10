@@ -15,6 +15,7 @@
 #define	__GIMMICKWORK_H__
 
 #include "savedata/save_control.h"
+#include "gamesystem/gamedata_def.h"  //GAMEDATA
 
 #define GIMMICK_NO_ASSIGN (0xffffffff)
 
@@ -29,6 +30,18 @@ typedef struct _GIMMICKWORK GIMMICKWORK;
 
 //============================================================================================
 //============================================================================================
+//----------------------------------------------------------
+/**
+ * @brief   ギミックデータへのポインタ取得
+ * @param	  gamedata			GAMEDATAへのポインタ
+ * @return	ギミックデータへのポインタ
+ *
+ * 実態はsrc/gamesystem/game_data.cにあるが、情報隠蔽を
+ * 考慮してアクセス関数群を扱うヘッダに配置している
+ */
+//----------------------------------------------------------
+extern GIMMICKWORK * GAMEDATA_GetGimmickWork(GAMEDATA * gamedata);
+
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 extern int GIMMICKWORK_GetWorkSize(void);

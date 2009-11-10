@@ -24,20 +24,14 @@
 #include "sound/bgm_info.h"
 
 #include "field/field_beacon_message.h" //FIELD_BEACON_MSG_DATA
-#include "field/field_encount.h" //ENCOUNT_WORK
+//#include "field/field_encount.h" //ENCOUNT_WORK
 #include "savedata/box_savedata.h"      //BOX_MANAGER
-#include "savedata/intrude_save.h"      //OCCUPY_INFO
+//#include "savedata/intrude_save.h"      //OCCUPY_INFO
 #include "system/shortcut_data.h"			//SHORTCUT_ID
-#include "savedata/gimmickwork.h"
+//#include "savedata/gimmickwork.h"
 
 //============================================================================================
 //============================================================================================
-enum {
-  OCCUPY_ID_MAX = FIELD_COMM_MEMBER_MAX + 1,
-
-  OCCUPY_ID_MINE = OCCUPY_ID_MAX - 1,   ///<自分自身の占拠情報ID
-};
-
 
 //============================================================================================
 //	ゲームデータ本体の生成・破棄処理
@@ -118,26 +112,6 @@ extern const SAVE_CONTROL_WORK* GAMEDATA_GetSaveControlWorkConst(const GAMEDATA 
 
 
 
-
-//============================================================================================
-//============================================================================================
-//--------------------------------------------------------------
-/**
- * @brief   OCCUPY_INFOへのポインタ取得(プレイヤーID指定)
- * @param   gamedata		GAMEDATAへのポインタ
- * @param   player_id   プレイヤーID
- * @retval  OCCUPY_INFOへのポインタ
- */
-//--------------------------------------------------------------
-extern OCCUPY_INFO * GAMEDATA_GetOccupyInfo(GAMEDATA * gamedata, u32 player_id);
-//--------------------------------------------------------------
-/**
- * @brief   OCCUPY_INFOへのポインタ取得
- * @param   gamedata		GAMEDATAへのポインタ
- * @retval  OCCUPY_INFOへのポインタ
- */
-//--------------------------------------------------------------
-extern OCCUPY_INFO * GAMEDATA_GetMyOccupyInfo(GAMEDATA * gamedata);
 
 //============================================================================================
 //	EVENTDATA_SYSTEMへのアクセス
@@ -400,15 +374,6 @@ extern FIELD_SOUND * GAMEDATA_GetFieldSound( GAMEDATA *gamedata );
 
 //--------------------------------------------------------------
 /**
- * @brief   ENCOUNT_WORK取得
- * @param   gamedata	GAMEDATAへのポインタ
- * @return  ENCOUNT_WORK*
- */
-//--------------------------------------------------------------
-extern ENCOUNT_WORK* GAMEDATA_GetEncountWork( GAMEDATA *gamedata );
-
-//--------------------------------------------------------------
-/**
  * @brief 最新の戦闘結果をセット
  * @param   gamedata	GAMEDATAへのポインタ
  * @param btl_result  戦闘結果（include/battle/battle.hのBtlResult）
@@ -530,13 +495,4 @@ extern void GAMEDATA_SetShortCutCursor( GAMEDATA *gamedata, SHORTCUT_CURSOR *cur
  */
 //-----------------------------------------------------------------------------
 extern SHORTCUT_CURSOR * GAMEDATA_GetShortCutCursor( GAMEDATA *gamedata );
-
-//----------------------------------------------------------
-/**
- * @brief   ギミックデータへのポインタ取得
- * @param	  gamedata			GAMEDATAへのポインタ
- * @return	ギミックデータへのポインタ
- */
-//----------------------------------------------------------
-extern GIMMICKWORK * GAMEDATA_GetGimmickWork(GAMEDATA * gamedata);
 

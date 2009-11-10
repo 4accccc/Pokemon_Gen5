@@ -9,6 +9,7 @@
 #include <gflib.h>
 
 
+#include "system/gfl_use.h"   //GFUser_VIntr_CreateTCB
 #include "system/main.h"      //GFL_HEAPID_APPéQè∆
 #include "net/network_define.h"
 #include "arc_def.h"

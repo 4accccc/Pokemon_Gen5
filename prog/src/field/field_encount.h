@@ -27,6 +27,18 @@ typedef struct _TAG_ENCOUNT_WORK ENCOUNT_WORK;
 //======================================================================
 //  extern
 //======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   ENCOUNT_WORK取得
+ * @param   gamedata	GAMEDATAへのポインタ
+ * @return  ENCOUNT_WORK*
+ *
+ * 実態はsrc/gamesystem/game_data.cにあるが、情報隠蔽を
+ * 考慮してアクセス関数群を扱うヘッダに配置している
+ */
+//--------------------------------------------------------------
+extern ENCOUNT_WORK* GAMEDATA_GetEncountWork( GAMEDATA *gamedata );
+
 //生成、削除
 extern FIELD_ENCOUNT * FIELD_ENCOUNT_Create( FIELDMAP_WORK *fwork );
 extern void FIELD_ENCOUNT_Delete( FIELD_ENCOUNT *enc );

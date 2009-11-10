@@ -37,6 +37,7 @@
 #include "field/field_status.h"   //FIELD_STATUS
 #include "field/field_encount.h"
 #include "field/field_dir.h"
+#include "savedata/intrude_save.h"  //
 #include "savedata/shortcut.h"		//SHORTCUT_SetRegister
 
 #include "field/fldmmdl.h"      //MMDLSYS
