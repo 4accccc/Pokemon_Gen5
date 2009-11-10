@@ -1,6 +1,6 @@
 //======================================================================
 /**
- * @file	scrcmd_screeneffects.c
+ * @file	scrcmd_enviroments.c
  * @brief	スクリプトコマンド：システム管理データ関連
  * @date  2009.09.22
  * @author	tamada GAMEFREAK inc.
@@ -24,6 +24,7 @@
 #include "system/rtc_tool.h"  //GFL_RTC_GetTimeZone
 #include "field/zonedata.h"   //ZONEDATA_GetMessageArcID
 #include "savedata/mystatus.h"  //MyStatus_～
+#include "savedata/c_gear_data.h" //
 
 #include "savedata/save_control.h"
 
@@ -134,6 +135,33 @@ VMCMD_RESULT EvCmdGetTrainerCardRank( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief C-GEARの動作モードセット
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ * @todo 
+ * 時間帯が季節で変わることをどうするか企画と協議。
+ * 直接RTCでなくイベントで保持している時間帯を参照するのか？
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSetCGearFlag( VMHANDLE *core, void *wk )
+{
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
+  SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gdata );
+  CGEAR_SAVEDATA * cgear_sv = CGEAR_SV_GetCGearSaveData( sv );
+  u16 flag = SCRCMD_GetVMWorkValue( core, wk );
+
+  //CGEAR_SV_SetCGearONOFF( cgear_sv, flag );
+  CGEAR_SV_SetCGearONOFF( cgear_sv, FALSE );
+
+  return VMCMD_RESULT_CONTINUE;
+}
 
 //======================================================================
 //======================================================================

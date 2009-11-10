@@ -638,6 +638,17 @@
   DEF_CMD( EvCmdGymInsect_TrTrapOn, EV_SEQ_GYM_INSECT_TR_TRAP_ON )
   DEF_CMD( EvCmdGymInsect_Init, EV_SEQ_GYM_INSECT_INIT )
 
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  //CGear関連
+  DEF_CMD( EvCmdSetCGearFlag, EV_SEQ_SET_CGEAR_FLAG )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 
