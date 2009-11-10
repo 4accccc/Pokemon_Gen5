@@ -1157,23 +1157,6 @@ const BOOL FIELDMAP_IsReady( const FIELDMAP_WORK *fieldWork )
 
 //--------------------------------------------------------------
 /**
- * フィールドマップ　フィールド強制更新
- * @param fieldWork FIELDMAP_WORK
- * @retval nothing
- */
-//--------------------------------------------------------------
-void FIELDMAP_ForceUpdate( FIELDMAP_WORK *fieldWork )
-{
-	//登録テーブルごとに個別のメイン処理を呼び出し
-	fieldWork->func_tbl->main_func( fieldWork, &fieldWork->now_pos );
-	
-	//Mapシステムに位置を渡している。
-	//これがないとマップ移動しないので注意
-	FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
-}
-
-//--------------------------------------------------------------
-/**
  * フィールドマップ　自機にアイテム、自転車を使用。
  * 歩行形態の場合は自転車に。自転車乗りの場合は歩行形態に。
  * @param fieldWork FIELDMAP_WORK

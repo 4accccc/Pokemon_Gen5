@@ -158,7 +158,6 @@ static GMEVENT_RESULT FieldOpenEvent(GMEVENT * event, int *seq, void*work)
 	case 1:
 		fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
 		if (FIELDMAP_IsReady(fieldmap) == FALSE) break;
-		FIELDMAP_ForceUpdate(fieldmap);
 		(*seq) ++;
 		break;
 	case 2:

@@ -56,10 +56,3 @@ extern void FIELDMAP_Close( FIELDMAP_WORK *fieldWork );
 //--------------------------------------------------------------
 extern const BOOL FIELDMAP_IsReady( const FIELDMAP_WORK *fieldWork );
 
-//--------------------------------------------------------------
-/**
- * フィールドマップの強制更新
- */
-//--------------------------------------------------------------
-extern void FIELDMAP_ForceUpdate( FIELDMAP_WORK *fieldWork );
-
