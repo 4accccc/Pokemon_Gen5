@@ -194,3 +194,24 @@
   _POP_WORK   SCWK_PARAM0
   .endm
 
+//======================================================================
+//    簡易アプリ操作
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief CGEAR起動デモ（仮）
+ */
+//--------------------------------------------------------------
+  .macro  _ASM_CGEAR_ON_DEMO
+  _ASM_DISP_FADE_START  DISP_FADE_WHITEOUT, 0, 16, DISP_FADE_SPEED
+  _ASM_DISP_FADE_END_CHECK
+  _ASM_FIELD_CLOSE
+
+  _ASM_SET_CGEAR_FLAG TRUE
+
+  _ASM_FIELD_OPEN
+  _ASM_DISP_FADE_START  DISP_FADE_WHITEOUT, 16, 0, DISP_FADE_SPEED
+  _ASM_DISP_FADE_END_CHECK
+  .endm
+
+
