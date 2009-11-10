@@ -22,6 +22,7 @@
 #include "fieldmap_resist.h"
 #include "field_g3dmap_exwork.h"
 #include "field_ground_anime.h"
+#include "field_wfbc.h"
 #include "field/field_status_local.h" //FIELD_STATUS
 
 #include "system/g3d_tool.h"
@@ -124,6 +125,7 @@ struct _FLD_G3D_MAPPER {
 
   FIELD_BMODEL_MAN* bmodel_man; //配置モデルマネジャー
 	FIELD_GRANM*	granime;	// 地面アニメーションシステム
+  FIELD_WFBC* wfbcwork;   // ランダムマップワーク
 
   EHL_PTR	ExHeightList;   //拡張高さデータ領域
 };
@@ -208,6 +210,8 @@ FLDMAPPER*	FLDMAPPER_Create( HEAPID heapID )
   g3Dmapper->granime = NULL;
   //  配置モデルマネジャー生成
   g3Dmapper->bmodel_man = FIELD_BMODEL_MAN_Create(g3Dmapper->heapID, g3Dmapper);
+  // WFBCワークの生成
+  g3Dmapper->wfbcwork = FIELD_WFBC_Create( heapID );
 
   //拡張高さデータ領域確保
   g3Dmapper->ExHeightList = EXH_AllocHeightList(EX_HEIGHT_NUM, heapID);
@@ -227,6 +231,9 @@ void	FLDMAPPER_Delete( FLDMAPPER* g3Dmapper )
 	EXH_FreeHeightList(g3Dmapper->ExHeightList);
 
 	FLDMAPPER_ReleaseData( g3Dmapper );	//登録されたままの場合を想定して削除
+
+  // WFBCワークの破棄
+  FIELD_WFBC_Delete( g3Dmapper->wfbcwork );
 
   // 配置モデルマネジャー破棄
   if(g3Dmapper->bmodel_man) 
@@ -1490,6 +1497,21 @@ void FLDMAPPER_GetDrawOffset( const FLDMAPPER *g3Dmapper, VecFx32 *offs )
 FIELD_BMODEL_MAN * FLDMAPPER_GetBuildModelManager( FLDMAPPER* g3Dmapper)
 { 
   return g3Dmapper->bmodel_man;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WFBCワークの取得
+ *
+ *	@param	g3Dmapper マッパー
+ *
+ *	@return WFBCワーク
+ */
+//-----------------------------------------------------------------------------
+FIELD_WFBC* FLDMAPPER_GetWfbcWork( const FLDMAPPER* g3Dmapper)
+{
+  GF_ASSERT( g3Dmapper );
+  return g3Dmapper->wfbcwork;
 }
 
 
