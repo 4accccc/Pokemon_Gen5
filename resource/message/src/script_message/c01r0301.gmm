@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-10T16:02:22"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T14:50:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -302,31 +302,6 @@
 		<language name="JPN_KANJI" width="256">ポケモン勝負を　しなくても
 持っている　ジムバッジの　数で[BE:00:ページ切り替え（行送り）]
 トレーナーの　強さが　わかるのよ</language>
-	</row>
-
-	<row id="msg_c01r0301_man2_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c01r0301_man2_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c01r0301_man2_03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c01r0301_man2_04" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c01r0301_man2_05" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c01r0301_boy2_01">
