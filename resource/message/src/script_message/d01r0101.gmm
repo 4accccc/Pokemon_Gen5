@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mai_ando" host="W00168" date="2009-10-21T18:14:57"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T16:23:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -529,8 +529,8 @@
 ・アニメ後、画面外に移動</comment>
 		<attribute name="キャラ指定">ポケモン
 ムシャーナ</attribute>
-		<language name="JPN" width="256">ムンナ『……ぬぬは▼</language>
-		<language name="JPN_KANJI" width="256">ムンナ『……ぬぬは▼</language>
+		<language name="JPN" width="256">ムンナ『……むううん▼</language>
+		<language name="JPN_KANJI" width="256">ムンナ『……むううん▼</language>
 	</row>
 
 	<row id="msg_d01r0101_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
