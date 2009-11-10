@@ -233,6 +233,10 @@ extern u8  BTLV_ITEMSELECT_GetCost( BTLV_CORE* wk );
 extern u8  BTLV_ITEMSELECT_GetTargetIdx( BTLV_CORE* wk );
 extern void BTLV_ITEMSELECT_ReflectUsedItem( BTLV_CORE* wk );
 
+
+extern void BTLV_UI_SelectRotation_Start( BTLV_CORE* wk, BtlRotateDir prevDir );
+extern BOOL BTLV_UI_SelectRotation_Wait( BTLV_CORE* wk, BtlRotateDir* result );
+
 //-----------------------------------------------------------
 // äeéÌâ∫êøÇØÇ©ÇÁåƒÇ—èoÇ≥ÇÍÇÈä÷êî
 

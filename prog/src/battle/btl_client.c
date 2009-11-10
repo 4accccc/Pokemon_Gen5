@@ -75,9 +75,13 @@ struct _BTL_CLIENT {
   BTL_ADAPTER*  adapter;
   BTLV_CORE*    viewCore;
   STR_PARAM     strParam;
+  BtlRotateDir  prevRotateDir;
 
   ClientSubProc  subProc;
   int            subSeq;
+
+  ClientSubProc   selActProc;
+  int             selActSeq;
 
   const void*    returnDataPtr;
   u32            returnDataSize;
@@ -125,8 +129,24 @@ static BOOL SubProc_UI_NotifyPokeData( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_NotifyPokeData( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_Setup( BTL_CLIENT* wk, int *seq );
+static BOOL SubProc_UI_SelectRotation( BTL_CLIENT* wk, int* seq );
+static BOOL SubProc_AI_SelectRotation( BTL_CLIENT* wk, int* seq );
+static BOOL isCantRotation( BTL_CLIENT* wk );
+static void SelActProc_Set( BTL_CLIENT* wk, ClientSubProc proc );
+static BOOL SelActProc_Call( BTL_CLIENT* wk );
 static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq );
-static void _get_use_item( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, u8 procPokeIdx, u16* itemID, u16* targetID );
+static BOOL selact_Start( BTL_CLIENT* wk, int* seq );
+static BOOL selact_Root( BTL_CLIENT* wk, int* seq );
+static BOOL selact_Fight( BTL_CLIENT* wk, int* seq );
+static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq );
+static BOOL selact_Item( BTL_CLIENT* wk, int* seq );
+static BOOL selact_Escape( BTL_CLIENT* wk, int* seq );
+static BOOL selact_CheckFinish( BTL_CLIENT* wk, int* seq );
+static BOOL selact_Finish( BTL_CLIENT* wk, int* seq );
+static void shooterCost_Init( BTL_CLIENT* wk );
+static void shooterCost_Save( BTL_CLIENT* wk, u8 procPokeIdx, u8 cost );
+static u8 shooterCost_Get( BTL_CLIENT* wk, u8 procPokeIdx );
+static u8 shooterCost_GetSum( BTL_CLIENT* wk );
 static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action );
 static BOOL is_waza_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action );
 static void setWaruagakiAction( BTL_ACTION_PARAM* dst, BTL_CLIENT* wk, const BTL_POKEPARAM* bpp );
@@ -153,7 +173,6 @@ static BOOL scProc_MSG_Waza( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaEffect( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaEffectEx( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_ACT_WazaDmg_Dbl( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaDmg_Plural( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaIchigeki( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ConfDamage( BTL_CLIENT* wk, int* seq, const int* args );
@@ -241,6 +260,8 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->numCoverPos = numCoverPos;
   wk->procPokeIdx = 0;
   wk->basePos = clientID;
+  wk->prevRotateDir = BTL_ROTATEDIR_NONE;
+
   for(i=0; i<NELEMS(wk->frontPokeEmpty); ++i){
     wk->frontPokeEmpty[i] = FALSE;
   }
@@ -331,10 +352,11 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
   }procTbl[] = {
 
     { BTL_ACMD_NOTIFY_POKEDATA, { SubProc_UI_NotifyPokeData,SubProc_AI_NotifyPokeData }, },
-    { BTL_ACMD_WAIT_SETUP,      { SubProc_UI_Setup,         SubProc_AI_Setup } },
-    { BTL_ACMD_SELECT_ACTION,   { SubProc_UI_SelectAction,  SubProc_AI_SelectAction } },
-    { BTL_ACMD_SELECT_POKEMON,  { SubProc_UI_SelectPokemon, SubProc_AI_SelectPokemon } },
-    { BTL_ACMD_SERVER_CMD,      { SubProc_UI_ServerCmd,     SubProc_AI_ServerCmd } },
+    { BTL_ACMD_WAIT_SETUP,      { SubProc_UI_Setup,          SubProc_AI_Setup } },
+    { BTL_ACMD_SELECT_ROTATION, { SubProc_UI_SelectRotation, SubProc_AI_SelectRotation } },
+    { BTL_ACMD_SELECT_ACTION,   { SubProc_UI_SelectAction,   SubProc_AI_SelectAction } },
+    { BTL_ACMD_SELECT_POKEMON,  { SubProc_UI_SelectPokemon,  SubProc_AI_SelectPokemon } },
+    { BTL_ACMD_SERVER_CMD,      { SubProc_UI_ServerCmd,      SubProc_AI_ServerCmd } },
 
   };
 
@@ -401,105 +423,238 @@ static BOOL SubProc_AI_Setup( BTL_CLIENT* wk, int *seq )
   return TRUE;
 }
 
+
+
+//------------------------------------------------------------------------------------------------------
+// ローテーション選択
+//------------------------------------------------------------------------------------------------------
+
+static BOOL SubProc_UI_SelectRotation( BTL_CLIENT* wk, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    if( isCantRotation(wk) )
+    {
+      wk->prevRotateDir = BTL_ROTATEDIR_NONE;
+      wk->returnDataPtr = &wk->prevRotateDir;
+      wk->returnDataSize = sizeof(wk->prevRotateDir);
+      return TRUE;
+    }else{
+      BTLV_UI_SelectRotation_Start( wk->viewCore, wk->prevRotateDir );
+      (*seq)++;
+    }
+    break;
+
+  case 1:
+    if( BTLV_UI_SelectRotation_Wait(wk->viewCore, &wk->prevRotateDir) ){
+      wk->returnDataPtr = &wk->prevRotateDir;
+      wk->returnDataSize = sizeof(wk->prevRotateDir);
+      return TRUE;
+    }
+    break;
+  }
+
+  return FALSE;
+}
+static BOOL SubProc_AI_SelectRotation( BTL_CLIENT* wk, int* seq )
+{
+  // @todo AI用。今は仮動作
+  if( isCantRotation(wk) )
+  {
+    wk->prevRotateDir = BTL_ROTATEDIR_NONE;
+    wk->returnDataPtr = &wk->prevRotateDir;
+    wk->returnDataSize = sizeof(wk->prevRotateDir);
+    return TRUE;
+  }
+  else
+  {
+    if( wk->prevRotateDir == BTL_ROTATEDIR_NONE )
+    {
+      u32 rnd = GFL_STD_MtRand( 100 );
+      if( rnd < 30 ){
+        wk->prevRotateDir = BTL_ROTATEDIR_L;
+      }else if( rnd < 60 ){
+        wk->prevRotateDir = BTL_ROTATEDIR_R;
+      }
+    }
+    else
+    {
+      if( GFL_STD_MtRand(100) < 60 ){
+        wk->prevRotateDir = BTL_ROTATEDIR_NONE;
+      }else{
+        wk->prevRotateDir = (wk->prevRotateDir == BTL_ROTATEDIR_R)?
+              BTL_ROTATEDIR_L : BTL_ROTATEDIR_R;
+      }
+    }
+
+    wk->returnDataPtr = &wk->prevRotateDir;
+    wk->returnDataSize = sizeof(wk->prevRotateDir);
+    return TRUE;
+  }
+}
+/**
+ *  ローテーションできない状態か判定
+ */
+static BOOL isCantRotation( BTL_CLIENT* wk )
+{
+  // 生きてるメンバー２人以下なら出来ない
+  {
+    const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( wk->pokeCon, wk->myID );
+    if( BTL_PARTY_GetAliveMemberCount(party) < 3 ){
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
+
+
 //--------------
+
+static void SelActProc_Set( BTL_CLIENT* wk, ClientSubProc proc )
+{
+  wk->selActProc = proc;
+  wk->selActSeq = 0;
+}
+static BOOL SelActProc_Call( BTL_CLIENT* wk )
+{
+  return wk->selActProc( wk, &wk->selActSeq );
+}
+
 static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 {
+  switch( *seq ){
+  case 0:
+    SelActProc_Set( wk, selact_Start );
+    (*seq)++;
+    break;
+
+  case 1:
+    if( SelActProc_Call(wk) ){
+      return TRUE;
+    }
+    break;
+  }
+
+  return FALSE;
+}
+
+//----------------------------------------------------------------------
+/**
+ *  アクション選択ワーク初期化
+ */
+//----------------------------------------------------------------------
+static BOOL selact_Start( BTL_CLIENT* wk, int* seq )
+{
+  wk->procPokeIdx = 0;
+  wk->checkedPokeCnt = 0;
+
+  setup_pokesel_param_change( wk, &wk->pokeSelParam );
+  shooterCost_Init( wk );
+
+  SelActProc_Set( wk, selact_Root );
+  return FALSE;
+}
+//----------------------------------------------------------------------
+/**
+ *  アクション選択ルート
+ */
+//----------------------------------------------------------------------
+static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    wk->procPoke = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, wk->procPokeIdx );
+    wk->procAction = &wk->actionParam[ wk->procPokeIdx ];
+    if( is_action_unselectable(wk, wk->procPoke,  wk->procAction) ){
+      BTL_Printf("アクション選択(%d体目）スキップします\n", wk->procPokeIdx );
+      SelActProc_Set( wk, selact_CheckFinish );
+    }else{
+      (*seq)++;
+    }
+    break;
+
+  case 1:
+    BTL_Printf("アクション選択(%d体目=ID:%d）開始します\n", wk->procPokeIdx, BPP_GetID(wk->procPoke));
+    BTLV_UI_SelectAction_Start( wk->viewCore, wk->procPoke, (wk->procPokeIdx!=0), wk->procAction );
+    (*seq)++;
+    break;
+
+  case 2:
+    switch( BTLV_UI_SelectAction_Wait(wk->viewCore) ){
+
+    // 入れ替えポケモン選択の場合はまだアクションパラメータが不十分->ポケモン選択へ
+    case BTL_ACTION_CHANGE:
+      shooterCost_Save( wk, wk->procPokeIdx, 0 );
+      SelActProc_Set( wk, selact_SelectChangePokemon );
+      break;
+
+    // 「たたかう」を選んだ
+    case BTL_ACTION_FIGHT:
+      shooterCost_Save( wk, wk->procPokeIdx, 0 );
+      SelActProc_Set( wk, selact_Fight );
+      break;
+
+    // 「どうぐ」を選んだ
+    case BTL_ACTION_ITEM:
+//      (*seq) = SEQ_CHECK_ITEM;
+      SelActProc_Set( wk, selact_Item );
+      break;
+
+    // 「にげる」or「もどる」
+    case BTL_ACTION_ESCAPE:
+      // 先頭のポケなら「にげる」として処理
+      // （先頭ポケが行動選択不可のケースもあるので checkedPokeCnt で判定）
+      if( wk->checkedPokeCnt == 0 ){
+        BTL_Printf("「にげる」を選びました\n");
+        shooterCost_Save( wk, wk->procPokeIdx, 0 );
+        SelActProc_Set( wk, selact_Escape );
+//        (*seq) = SEQ_CHECK_ESCAPE;
+      // ２体目以降は「もどる」として処理
+      }else{
+        BTL_POKEPARAM* bpp;
+        while( wk->procPokeIdx )
+        {
+          wk->procPokeIdx--;
+          bpp = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, wk->procPokeIdx );
+          if( !is_action_unselectable(wk, bpp, NULL) )
+          {
+            wk->checkedPokeCnt--;
+            wk->shooterEnergy += shooterCost_Get( wk, wk->procPokeIdx );
+            SelActProc_Set( wk, selact_Root );
+//          (*seq) = SEQ_CHECK_UNSEL_ACTION;
+            return FALSE;
+          }
+        }
+        GF_ASSERT(0);
+        break;
+      }
+      break;
+    }
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------
+/**
+ *  「たたかう」選択後の分岐
+ */
+//----------------------------------------------------------------------
+static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
+{
   enum {
-    SEQ_INIT = 0,
-    SEQ_CHECK_UNSEL_ACTION,
-    SEQ_SELECT_ACTION,
-    SEQ_CHECK_ACTION,
-    SEQ_SELECT_POKEMON,
-    SEQ_CHECK_DONE,
-    SEQ_CHECK_ESCAPE,
-    SEQ_CHECK_FIGHT,
-    SEQ_CHECK_ITEM,
-    SEQ_WAIT_ITEM,
+    SEQ_START = 0,
     SEQ_SELECT_WAZA_START,
     SEQ_SELECT_WAZA_WAIT,
     SEQ_CHECK_WAZA_TARGET,
     SEQ_SELECT_TARGET_START,
     SEQ_SELECT_TARGET_WAIT,
     SEQ_WAIT_MSG,
-    SEQ_CANT_ESCAPE,
-    SEQ_RETURN_START,
-    SEQ_RETURN_COMM_WAIT,
-    SEQ_WAIT_CAMERA_EFFECT,
   };
 
-  // @@@ この関数、いずれ整理したいっす
-
   switch( *seq ){
-  case SEQ_INIT:
-    setup_pokesel_param_change( wk, &wk->pokeSelParam );
-    wk->procPokeIdx = 0;
-    wk->checkedPokeCnt = 0;
-    GFL_STD_MemClear( wk->shooterCost, sizeof(wk->shooterCost) );
-    (*seq) = SEQ_CHECK_UNSEL_ACTION;
-    /* fallthru */
-  case SEQ_CHECK_UNSEL_ACTION:
-    wk->procPoke = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, wk->procPokeIdx );
-    wk->procAction = &wk->actionParam[ wk->procPokeIdx ];
-    if( is_action_unselectable(wk, wk->procPoke,  wk->procAction) ){
-      BTL_Printf("アクション選択(%d体目）スキップします\n", wk->procPokeIdx );
-      (*seq) = SEQ_CHECK_DONE;
-      break;
-    }
-    (*seq) = SEQ_SELECT_ACTION;
-    /* fallthru */
-  case SEQ_SELECT_ACTION:
-    BTL_Printf("アクション選択(%d体目=ID:%d）開始します\n", wk->procPokeIdx, BPP_GetID(wk->procPoke));
-    BTLV_UI_SelectAction_Start( wk->viewCore, wk->procPoke, (wk->procPokeIdx!=0), wk->procAction );
-    (*seq) = SEQ_CHECK_ACTION;
-    break;
-  case SEQ_CHECK_ACTION:
-    {
-      BtlAction action = BTLV_UI_SelectAction_Wait( wk->viewCore );
-
-      switch( action ){
-      // 入れ替えポケモン選択の場合はまだアクションパラメータが不十分->ポケモン選択へ
-      case BTL_ACTION_CHANGE:
-        BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, &wk->pokeSelResult );
-        (*seq) = SEQ_SELECT_POKEMON;
-        break;
-      // 「にげる」を選んだら、反応の条件分岐へ
-      case BTL_ACTION_ESCAPE:
-        if( wk->checkedPokeCnt == 0 ){
-          BTL_Printf("「にげる」を選びました\n");
-          (*seq) = SEQ_CHECK_ESCAPE;
-        }else{
-          // ２体目以降は「もどる」として処理
-          BTL_POKEPARAM* bpp;
-          while( wk->procPokeIdx )
-          {
-            wk->procPokeIdx--;
-            bpp = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, wk->procPokeIdx );
-            if( !is_action_unselectable(wk, bpp, NULL) ){
-              wk->checkedPokeCnt--;
-              wk->shooterEnergy += wk->shooterCost[ wk->procPokeIdx ];
-              (*seq) = SEQ_CHECK_UNSEL_ACTION;
-              return FALSE;
-            }
-          }
-        }
-        break;
-      // 「たたかう」を選んだら、各種条件分岐
-      case BTL_ACTION_FIGHT:
-        (*seq) = SEQ_CHECK_FIGHT;
-        break;
-      case BTL_ACTION_ITEM:
-        (*seq) = SEQ_CHECK_ITEM;
-        break;
-      }
-
-      wk->shooterCost[ wk->procPokeIdx ] = 0;
-    }
-    break;
-
-  // 「たたかう」選択直後
-  case SEQ_CHECK_FIGHT:
+  case 0:
     if( is_waza_unselectable( wk, wk->procPoke, wk->procAction ) ){
-      (*seq) = SEQ_CHECK_DONE;
+      SelActProc_Set( wk, selact_CheckFinish );
     }else{
       (*seq) = SEQ_SELECT_WAZA_START;
     }
@@ -509,16 +664,17 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
     BTLV_UI_SelectWaza_Start( wk->viewCore, wk->procPoke, wk->procAction );
     (*seq) = SEQ_SELECT_WAZA_WAIT;
     break;
+
   case SEQ_SELECT_WAZA_WAIT:
     if( BTLV_UI_SelectWaza_Wait(wk->viewCore) )
     {
       BtlAction action = BTL_ACTION_GetAction( wk->procAction );
 
       if( action == BTL_ACTION_NULL ){
-        (*seq) = SEQ_SELECT_ACTION;
+        SelActProc_Set( wk, selact_Root );
       }
       else if( action == BTL_ACTION_MOVE ){
-        (*seq) = SEQ_CHECK_DONE;
+        SelActProc_Set( wk, selact_CheckFinish );
       }else
       {
         if( is_unselectable_waza(wk, wk->procPoke, wk->actionParam[wk->procPokeIdx].fight.waza, &wk->strParam) )
@@ -538,8 +694,9 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
     break;
 
   case SEQ_CHECK_WAZA_TARGET:
+    // シングルなら対象選択なし
     if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_SINGLE ){
-      (*seq) = SEQ_CHECK_DONE;
+      SelActProc_Set( wk, selact_CheckFinish );
     }else{
       (*seq) = SEQ_SELECT_TARGET_START;
     }
@@ -555,7 +712,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
       BtlvResult result = BTLV_UI_SelectTarget_Wait( wk->viewCore );
       if( result == BTLV_RESULT_DONE ){
         BTL_Printf("選択した対象ポケPos=%d\n", wk->procAction->fight.targetPos);
-        (*seq) = SEQ_CHECK_DONE;
+        SelActProc_Set( wk, selact_CheckFinish );
       }else if( result == BTLV_RESULT_CANCEL ){
         (*seq) = SEQ_SELECT_WAZA_START;
       }
@@ -565,12 +722,27 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
   case SEQ_WAIT_MSG:
     if( BTLV_WaitMsg(wk->viewCore) ){
       BTLV_UI_Restart( wk->viewCore );
-      (*seq) = SEQ_SELECT_ACTION;
+      SelActProc_Set( wk, selact_Root );
     }
     break;
+  }
 
-  // 入れ替えポケモン選択後
-  case SEQ_SELECT_POKEMON:
+  return FALSE;
+}
+//----------------------------------------------------------------------
+/**
+ *  入れ替えポケモン選択
+ */
+//----------------------------------------------------------------------
+static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, &wk->pokeSelResult );
+    (*seq)++;
+    break;
+
+  case 1:
     if( BTLV_WaitPokeSelect(wk->viewCore) )
     {
       if( BTL_POKESELECT_IsDone( &wk->pokeSelResult ) )
@@ -579,83 +751,36 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
         BTL_Printf("選んだポケidx=%d\n", idx);
         if( idx < BTL_PARTY_MEMBER_MAX ){
           BTL_ACTION_SetChangeParam( &wk->actionParam[wk->procPokeIdx], wk->procPokeIdx, idx );
-//          BTL_POKESELECT_PARAM_SetProhibit( &wk->pokeSelParam, BTL_POKESEL_CANT_SELECTED, idx );
-          (*seq) =  SEQ_CHECK_DONE;
+          SelActProc_Set( wk, selact_CheckFinish );
           break;
         }
       }
 
-      (*seq) = SEQ_SELECT_ACTION;
+      SelActProc_Set( wk, selact_Root );
     }
     break;
-
-  case SEQ_CHECK_DONE:
-    BTLV_UI_Restart( wk->viewCore );
-    wk->procPokeIdx++;
-    wk->checkedPokeCnt++;
-    if( wk->procPokeIdx >= wk->numCoverPos )
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------
+/**
+ *  「どうぐ」選択
+ */
+//----------------------------------------------------------------------
+static BOOL selact_Item( BTL_CLIENT* wk, int* seq )
+{
+  switch( *seq ){
+  case 0:
     {
-      BTL_Printf("カバー位置数(%d)終了、アクション送信へ\n", wk->numCoverPos);
-      wk->returnDataPtr = &(wk->actionParam[0]);
-      wk->returnDataSize = sizeof(wk->actionParam[0]) * wk->numCoverPos;
-      (*seq) = SEQ_RETURN_START;
-    }
-    else{
-      (*seq) = SEQ_CHECK_UNSEL_ACTION;
+      u8 cost_sum = shooterCost_GetSum( wk );
+      BTLV_ITEMSELECT_Start( wk->viewCore, wk->bagMode, wk->shooterEnergy, cost_sum );
+      (*seq)++;
     }
     break;
 
-  case SEQ_CHECK_ESCAPE:
+  case 1:
+    if( BTLV_ITEMSELECT_Wait(wk->viewCore) )
     {
-      // 戦闘モード等による禁止チェック（トレーナー戦など）
-      BtlEscapeMode esc = BTL_MAIN_GetEscapeMode( wk->mainModule );
-      switch( esc ){
-      case BTL_ESCAPE_MODE_OK:
-      default:
-        {
-          BtlCantEscapeCode  code;
-          u8 pokeID;
-          code = is_prohibit_escape( wk, &pokeID );
-          // とくせい、ワザ効果等による禁止チェック
-          if( code == BTL_CANTESC_NULL )
-          {
-            wk->returnDataPtr = wk->procAction;
-            wk->returnDataSize = sizeof(wk->actionParam[0]);
-            BTL_Printf("逃げコマンドのハズ=%d\n", wk->procAction->gen.cmd);
-            (*seq) = SEQ_RETURN_START;
-          }
-          else
-          {
-            int args[2];
-            args[0] = pokeID;
-            args[1] = code;
-            BTLV_StartMsgSet( wk->viewCore, BTL_STRID_SET_CantEscTok, args );
-            (*seq) = SEQ_CANT_ESCAPE;
-          }
-        }
-        break;
-
-      case BTL_ESCAPE_MODE_NG:
-        BTLV_StartMsgStd( wk->viewCore, BTL_STRID_STD_EscapeCant, NULL );
-        (*seq) = SEQ_CANT_ESCAPE;
-        break;
-      }
-    }
-    break;
-
-  case SEQ_CHECK_ITEM:
-    {
-      u32 i, sum_cost = 0;
-      for(i=0; i<wk->procPokeIdx; ++i){
-        sum_cost += wk->shooterCost[i];
-      }
-      BTLV_ITEMSELECT_Start( wk->viewCore, wk->bagMode, wk->shooterEnergy, sum_cost );
-      (*seq) = SEQ_WAIT_ITEM;
-    }
-    break;
-
-  case SEQ_WAIT_ITEM:
-    if( BTLV_ITEMSELECT_Wait(wk->viewCore) ){
       u16 itemID, targetIdx;
       itemID = BTLV_ITEMSELECT_GetItemID( wk->viewCore );
       targetIdx = BTLV_ITEMSELECT_GetTargetIdx( wk->viewCore );
@@ -669,134 +794,166 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
           wk->shooterEnergy = 0;
           cost = wk->shooterEnergy;
         }
-        wk->shooterCost[ wk->procPokeIdx ] = cost;
-        BTL_Printf("Act Param :item=%d, targetIdx=%d\n", itemID, targetIdx);
+        shooterCost_Save( wk, wk->procPokeIdx, cost );
         BTL_ACTION_SetItemParam( wk->procAction, itemID, targetIdx );
-        (*seq)=SEQ_CHECK_DONE;
+        SelActProc_Set( wk, selact_CheckFinish );
       }else{
-        (*seq)=SEQ_SELECT_ACTION;
+//      (*seq)=SEQ_SELECT_ACTION;
+        SelActProc_Set( wk, selact_Root );
       }
     }
     break;
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------
+/**
+ *  「にげる」選択
+ */
+//----------------------------------------------------------------------
+static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
+{
+  switch( *seq ){
+  case 0:
+  {
+    // 戦闘モード等による禁止チェック（トレーナー戦など）
+    BtlEscapeMode esc = BTL_MAIN_GetEscapeMode( wk->mainModule );
+    switch( esc ){
+    case BTL_ESCAPE_MODE_OK:
+    default:
+      {
+        BtlCantEscapeCode  code;
+        u8 pokeID;
+        code = is_prohibit_escape( wk, &pokeID );
+        // とくせい、ワザ効果等による禁止チェック
+        if( code == BTL_CANTESC_NULL )
+        {
+          wk->returnDataPtr = wk->procAction;
+          wk->returnDataSize = sizeof(wk->actionParam[0]);
+          BTL_Printf("逃げコマンドのハズ=%d\n", wk->procAction->gen.cmd);
+          SelActProc_Set( wk, selact_Fight );
+        }
+        else
+        {
+          int args[2];
+          args[0] = pokeID;
+          args[1] = code;
+          BTLV_StartMsgSet( wk->viewCore, BTL_STRID_SET_CantEscTok, args );
+          (*seq) = 1;
+        }
+      }
+      break;
 
-  case SEQ_CANT_ESCAPE:
+    case BTL_ESCAPE_MODE_NG:
+      BTLV_StartMsgStd( wk->viewCore, BTL_STRID_STD_EscapeCant, NULL );
+      (*seq) = 1;
+      break;
+    }
+  }
+  break;
+
+  case 1:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
-      (*seq) = SEQ_SELECT_ACTION;
+      //(*seq) = SEQ_SELECT_ACTION;
+      SelActProc_Set( wk, selact_Root );
     }
     break;
-
-  case SEQ_RETURN_START:
-    BTLV_EFFECT_Stop();
-    BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
-    if( BTL_MAIN_GetCommMode(wk->mainModule) != BTL_COMM_NONE )
-    {
-      BTL_Printf("通信中なので待機中メッセージだすよ\n");
-      wk->commWaitInfoOn = TRUE;
-      BTLV_StartCommWait( wk->viewCore );
-      (*seq) = SEQ_RETURN_COMM_WAIT;
-    }
-    else
-    {
-      BTL_Printf("通信中じゃないなので待機中メッセージだしません\n");
-      (*seq) = SEQ_WAIT_CAMERA_EFFECT;
-    }
-    break;
-
-  case SEQ_RETURN_COMM_WAIT:
-    if( BTLV_WaitCommWait(wk->viewCore) )
-    {
-      (*seq) = SEQ_WAIT_CAMERA_EFFECT;
-    }
-    break;
-
-  case SEQ_WAIT_CAMERA_EFFECT:
-    if( !BTLV_EFFECT_CheckExecute() )
-    {
-      return TRUE;
-    }
-    break;
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------
+/**
+ *  全アクション選択終了チェック
+ */
+//----------------------------------------------------------------------
+static BOOL selact_CheckFinish( BTL_CLIENT* wk, int* seq )
+{
+  BTLV_UI_Restart( wk->viewCore );
+  wk->procPokeIdx++;
+  wk->checkedPokeCnt++;
+  if( wk->procPokeIdx >= wk->numCoverPos )
+  {
+    BTL_Printf("カバー位置数(%d)終了、アクション送信へ\n", wk->numCoverPos);
+    wk->returnDataPtr = &(wk->actionParam[0]);
+    wk->returnDataSize = sizeof(wk->actionParam[0]) * wk->numCoverPos;
+    SelActProc_Set( wk, selact_Finish );
+  }
+  else{
+    SelActProc_Set( wk, selact_Root );
   }
 
   return FALSE;
 }
-// @@@ すごく仮作成なアイテム自動選択処理（いずれ消します）
-static void _get_use_item( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, u8 procPokeIdx, u16* itemID, u16* targetID )
+//----------------------------------------------------------------------
+/**
+ *  全アクション選択終了->サーバ返信へ
+ */
+//----------------------------------------------------------------------
+static BOOL selact_Finish( BTL_CLIENT* wk, int* seq )
 {
-  u8 pokeID = BPP_GetID( bpp );
-  u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
-  const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID );
-
-  *itemID = ITEM_DUMMY_DATA;
-
-  // 誰か死んでたら げんきのかけら
-  {
-    int i, cnt = BTL_PARTY_GetMemberCount( party );
-    const BTL_POKEPARAM* member;
-    for(i=0; i<cnt; ++i){
-      member = BTL_PARTY_GetMemberDataConst( party, i );
-      if( BPP_IsDead(member) && (member != bpp) ){
-        *itemID = ITEM_GENKINOKAKERA;
-        *targetID = i;
-        return;
-      }
-    }
-  }
-
-  // 自分が状態異常なら、それぞれ対応した治療薬
-  {
-    PokeSick sick = BPP_GetPokeSick( bpp );
-    if( sick != POKESICK_NULL )
+  switch( *seq ){
+  case 0:
+    BTLV_EFFECT_Stop();
+    BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
+    if( BTL_MAIN_GetCommMode(wk->mainModule) != BTL_COMM_NONE )
     {
-      switch( sick ){
-      case POKESICK_DOKU:    *itemID = ITEM_DOKUKESI; break;
-      case POKESICK_MAHI:    *itemID = ITEM_MAHINAOSI; break;
-      case POKESICK_YAKEDO:  *itemID = ITEM_YAKEDONAOSI; break;
-      case POKESICK_NEMURI:  *itemID = ITEM_NEMUKEZAMASI; break;
-      case POKESICK_KOORI:   *itemID = ITEM_KOORINAOSI; break;
-      }
-      *targetID = procPokeIdx;
-      return;
+      BTL_Printf("通信中なので待機中メッセージだす\n");
+      wk->commWaitInfoOn = TRUE;
+      BTLV_StartCommWait( wk->viewCore );
+      (*seq)++;
     }
-
-    if( BPP_CheckSick(bpp, WAZASICK_KONRAN) ){
-      *itemID = ITEM_NANDEMONAOSI;
-      *targetID = procPokeIdx;
-      return;
-    }
-  }
-
-  // 自分の体力が半分以下なら、回復薬
-  {
-    u32 maxHP = BPP_GetValue( bpp, BPP_MAX_HP );
-    if( BPP_GetValue(bpp, BPP_HP) < (maxHP/2) )
+    else
     {
-      *itemID = ITEM_IIKIZUGUSURI;
-      *targetID = procPokeIdx;
-      return;
+      BTL_Printf("通信中じゃないので待機中メッセージだしません\n");
+      (*seq)+=2;
     }
-  }
+    break;
 
-  // それ以外なら、まだ天井まで上がりきっていない能力のアップ効果
-  {
-    u8 tbl[ BPP_AGILITY+1 - BPP_ATTACK ];
-    u8 val, cnt, i;
-    for(val=BPP_ATTACK,cnt=0; val<BPP_AGILITY; ++val){
-      if( BPP_IsRankEffectValid(bpp, val, 1) ){
-        tbl[cnt++] = val;
-      }
+  case 1:
+    if( BTLV_WaitCommWait(wk->viewCore) ){
+      (*seq)++;
     }
-    i = GFL_STD_MtRand( cnt );
-    val = tbl[i];
-    switch( val ){
-    case BPP_ATTACK:      *itemID = ITEM_PURASUPAWAA; break;
-    case BPP_DEFENCE:     *itemID = ITEM_DHIFENDAA; break;
-    case BPP_SP_ATTACK:   *itemID = ITEM_SUPESYARUAPPU; break;
-    case BPP_SP_DEFENCE:  *itemID = ITEM_SUPESYARUGAADO; break;
-    case BPP_AGILITY:     *itemID = ITEM_SUPIIDAA; break;
+    break;
+
+  case 2:
+    if( !BTLV_EFFECT_CheckExecute() ){
+      (*seq)++;
+      return TRUE;
     }
-    *targetID = procPokeIdx;
+    break;
+  default:
+    return TRUE;
   }
+  return FALSE;
+}
+
+
+/*============================================================================================*/
+/* シューターコスト計算用ワーク                                                               */
+/*============================================================================================*/
+// 初期化
+static void shooterCost_Init( BTL_CLIENT* wk )
+{
+  GFL_STD_MemClear( wk->shooterCost, sizeof(wk->shooterCost) );
+}
+// 使用アイテムコストを記録
+static void shooterCost_Save( BTL_CLIENT* wk, u8 procPokeIdx, u8 cost )
+{
+  wk->shooterCost[ procPokeIdx ] = cost;
+}
+static u8 shooterCost_Get( BTL_CLIENT* wk, u8 procPokeIdx )
+{
+  return wk->shooterCost[ procPokeIdx ];
+}
+// 使用予定の合計値を取得
+static u8 shooterCost_GetSum( BTL_CLIENT* wk )
+{
+  u32 i, sum = 0;
+  for(i=0; i<wk->procPokeIdx; ++i){
+    sum += wk->shooterCost[i];
+  }
+  return sum;
 }
 
 //----------------------------------------------------------------------------------

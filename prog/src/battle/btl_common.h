@@ -113,7 +113,16 @@ typedef enum {
   BTL_DBLTEAM_TAG_TAG,    ///< タッグvsタッグ
 }BtlDblTeamFormation;
 
-
+//--------------------------------------------------------------
+/**
+ *  ローテーションバトルの回転方向
+ */
+//--------------------------------------------------------------
+typedef enum {
+  BTL_ROTATEDIR_NONE = 0,
+  BTL_ROTATEDIR_R,
+  BTL_ROTATEDIR_L,
+}BtlRotateDir;
 
 
 #endif

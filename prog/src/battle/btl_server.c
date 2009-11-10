@@ -93,6 +93,7 @@ struct _BTL_SERVER {
 static inline void setup_client_members( SVCL_WORK* client, BTL_PARTY* party, u8 numCoverPos );
 static void setMainProc( BTL_SERVER* sv, ServerMainProc mainProc );
 static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq );
+static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq );
@@ -360,11 +361,41 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
     }
     break;
   case 3:
-    setMainProc( server, ServerMain_SelectAction );
+    if( BTL_MAIN_GetRule(server->mainModule) != BTL_RULE_ROTATION ){
+      setMainProc( server, ServerMain_SelectAction );
+    }else{
+      setMainProc( server, ServerMain_SelectRotation );
+    }
     break;
   }
   return FALSE;
 }
+/**
+ *  ローテーション選択
+ */
+static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    if( BTL_SVFLOW_GetTurnCount(server->flowWork) == 0 ){
+      setMainProc( server, ServerMain_SelectAction );
+    }else{
+      SetAdapterCmd( server, BTL_ACMD_SELECT_ROTATION );
+      (*seq)++;
+    }
+    break;
+
+  case 1:
+    if( WaitAdapterCmd(server) )
+    {
+      ResetAdapterCmd( server );
+      (*seq)++;
+    }
+    break;
+  }
+  return FALSE;
+}
+
 
 static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 {
