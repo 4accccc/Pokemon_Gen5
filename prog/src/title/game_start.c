@@ -14,6 +14,7 @@
 #include "title/game_start.h"
 #include "title/title.h"
 #include "savedata/situation.h"
+#include "savedata/c_gear_data.h"
 #include "app/name_input.h"
 #include "test/testmode.h"
 #include "select_moji_mode.h"
@@ -405,6 +406,8 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
 		config	= SaveData_GetConfig( SaveControl_GetPointer() );
 		mode	= always_net? NETWORK_SEARCH_ON: NETWORK_SEARCH_OFF;
 		CONFIG_SetNetworkSearchMode( config, mode );
+    //CGEARON
+    CGEAR_SV_SetCGearONOFF(CGEAR_SV_GetCGearSaveData(SaveControl_GetPointer()),TRUE);
 	}
 	
 	init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, 0, &pos, 0 );
@@ -481,6 +484,8 @@ static GFL_PROC_RESULT GameStart_DebugSelectNameProcEnd( GFL_PROC * proc, int * 
 			config	= SaveData_GetConfig( SaveControl_GetPointer() );
 			CONFIG_SetNetworkSearchMode( config, NETWORK_SEARCH_OFF );
 		}
+    //CGEARON
+    CGEAR_SV_SetCGearONOFF(CGEAR_SV_GetCGearSaveData(SaveControl_GetPointer()),TRUE);
 		
 		init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, 0, &pos, 0 );
 		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);

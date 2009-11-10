@@ -16,6 +16,7 @@
 #include "system/wipe.h"
 #include "infowin/infowin.h"
 #include "c_gear/c_gear.h"
+#include "c_gear/no_gear.h"
 #include "field_menu.h"
 
 #include "sound/snd_viewer.h"
@@ -62,6 +63,7 @@ struct _FIELD_SUBSCREEN_WORK {
 	union {	
 	  FIELD_MENU_WORK *fieldMenuWork;
     C_GEAR_WORK* cgearWork;
+    NO_GEAR_WORK* nogearWork;
     UNION_SUBDISP_PTR unisubWork;
     INTRUDE_SUBDISP_PTR intsubWork;
 		GFL_CAMADJUST * gflCamAdjust;
@@ -116,6 +118,11 @@ static void exit_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void update_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
 static void draw_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
 
+static void init_nogear_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
+static void update_nogear_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
+static void exit_nogear_subscreen( FIELD_SUBSCREEN_WORK* pWork );
+static void actioncallback_nogear_subscreen( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_ACTION actionno );
+
 static void init_light_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
 static void update_light_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
 static void exit_light_subscreen( FIELD_SUBSCREEN_WORK* pWork );
@@ -127,6 +134,8 @@ static void exit_touchcamera_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void init_soundviewer_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
 static void update_soundviewer_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
 static void exit_soundviewer_subscreen( FIELD_SUBSCREEN_WORK* pWork );
+
+static FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_CGearCheck(FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE new_mode);
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -163,6 +172,14 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
 		draw_intrude_subscreen ,
 		exit_intrude_subscreen,
 		NULL ,
+	},
+	{	
+		FIELD_SUBSCREEN_NOGEAR,
+		init_nogear_subscreen,
+		update_nogear_subscreen,
+		NULL ,
+		exit_nogear_subscreen,
+		actioncallback_nogear_subscreen,
 	},
 	{	
 		FIELD_SUBSCREEN_DEBUG_LIGHT,
@@ -204,14 +221,14 @@ FIELD_SUBSCREEN_WORK* FIELD_SUBSCREEN_Init( u32 heapID,
   FIELD_SUBSCREEN_WORK* pWork = GFL_HEAP_AllocClearMemory(heapID, sizeof(FIELD_SUBSCREEN_WORK));
 	GF_ASSERT(mode < FIELD_SUBSCREEN_MODE_MAX);
 	GF_ASSERT(funcTable[mode].mode == mode);
-	pWork->mode = mode;
-	pWork->nextMode = mode;
 	pWork->state = FSS_UPDATE;
 	pWork->heapID = heapID;
 	pWork->checker = NULL;
 	pWork->fieldmap = fieldmap;
-
-	funcTable[mode].init_func(pWork,FIELD_SUBSCREEN_FIRST_CALL);
+	pWork->mode = FIELD_SUBSCREEN_CGearCheck(pWork,mode);
+  pWork->nextMode = pWork->mode;
+  
+	funcTable[pWork->mode].init_func(pWork,FIELD_SUBSCREEN_FIRST_CALL);
   
   return pWork;
 }
@@ -355,6 +372,28 @@ const BOOL FIELD_SUBSCREEN_CanChange( FIELD_SUBSCREEN_WORK* pWork )
   }
   return FALSE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ * @brief         CGEARのフラグを見て何も無いかどうか切り替えます
+ * @param	pWork     FIELD_SUBSCREEN_WORK
+ * @param	new_mode		切り替えるモード
+ * @return	mode    切り替わるモード
+ */
+//----------------------------------------------------------------------------
+
+static FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_CGearCheck(FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE new_mode)
+{
+  if(FIELD_SUBSCREEN_NORMAL==new_mode){
+    GAMEDATA* pGame = GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(pWork->fieldmap));
+    if(!CGEAR_SV_GetCGearONOFF(CGEAR_SV_GetCGearSaveData(GAMEDATA_GetSaveControlWork(pGame)))){
+      return FIELD_SUBSCREEN_NOGEAR;
+    }
+  }
+  return new_mode;
+}
+
+
 //----------------------------------------------------------------------------
 /**
  * @brief         FIELD_SUBSCREEN_ChangeForceと違いフェードしてから切り替えます
@@ -365,9 +404,10 @@ const BOOL FIELD_SUBSCREEN_CanChange( FIELD_SUBSCREEN_WORK* pWork )
 //----------------------------------------------------------------------------
 void FIELD_SUBSCREEN_Change( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE new_mode)
 {	
-	GF_ASSERT(new_mode < FIELD_SUBSCREEN_MODE_MAX);
+  GF_ASSERT(new_mode < FIELD_SUBSCREEN_MODE_MAX);
 	GF_ASSERT(funcTable[new_mode].mode == new_mode);
-	pWork->nextMode = new_mode;
+
+  pWork->nextMode = FIELD_SUBSCREEN_CGearCheck(pWork,new_mode);
   pWork->state = FSS_CHANGE_FADEOUT;
 
 }
@@ -384,6 +424,7 @@ void FIELD_SUBSCREEN_ChangeForce( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_M
 {
   GF_ASSERT(new_mode < FIELD_SUBSCREEN_MODE_MAX);
   GF_ASSERT(funcTable[new_mode].mode == new_mode);
+  new_mode=FIELD_SUBSCREEN_CGearCheck(pWork,new_mode);
   funcTable[pWork->mode].exit_func(pWork);
   funcTable[new_mode].init_func(pWork,pWork->mode);
   pWork->mode = new_mode;
@@ -402,6 +443,7 @@ void FIELD_SUBSCREEN_ChangeFromWithin( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCR
 {
   GF_ASSERT(new_mode < FIELD_SUBSCREEN_MODE_MAX);
   GF_ASSERT(funcTable[new_mode].mode == new_mode);
+  new_mode=FIELD_SUBSCREEN_CGearCheck(pWork,new_mode);
 	pWork->nextMode = new_mode;
 	if(bFade){
 		pWork->state = FSS_CHANGE_FADEOUT;
@@ -534,6 +576,55 @@ static void update_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 {
 	CGEAR_Main(pWork->cgearWork,bActive);
 }
+
+//=============================================================================
+//=============================================================================
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	NOGEARの初期化
+ *	
+ *	@param	heapID	ヒープＩＤ
+ */
+//-----------------------------------------------------------------------------
+static void init_nogear_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
+{
+  pWork->nogearWork = NOGEAR_Init(CGEAR_SV_GetCGearSaveData(
+		GAMEDATA_GetSaveControlWork(
+		GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(pWork->fieldmap))
+		)), pWork, FIELDMAP_GetGameSysWork(pWork->fieldmap));
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	NOGEARーの破棄
+ */
+//-----------------------------------------------------------------------------
+static void exit_nogear_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+{
+  NOGEAR_Exit(pWork->nogearWork);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アクションが行われた事を通知
+ */
+//-----------------------------------------------------------------------------
+static void actioncallback_nogear_subscreen( FIELD_SUBSCREEN_WORK* pWork , FIELD_SUBSCREEN_ACTION actionno)
+{
+  NOGEAR_ActionCallback(pWork->nogearWork, actionno);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	NOGEARの更新
+ */
+//-----------------------------------------------------------------------------
+static void update_nogear_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
+{
+	NOGEAR_Main(pWork->nogearWork,bActive);
+}
+
 
 //=============================================================================
 //=============================================================================

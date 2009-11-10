@@ -988,7 +988,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 
 			switch(type){
 			case CGEAR_PANELTYPE_IR:
-				FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_DEBUGIRC);
+				FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_IRC);
 				break;
 			case CGEAR_PANELTYPE_WIRELESS:
         //デバッグ機能はきりました
@@ -1542,7 +1542,7 @@ void CGEAR_ActionCallback( C_GEAR_WORK* pWork , FIELD_SUBSCREEN_ACTION actionno)
     PMSND_PlaySystemSE( SEQ_SE_DECIDE3 );
 		_CHANGE_STATE(pWork,_modeSelectAnimInit);
     break;
-	case FIELD_SUBSCREEN_ACTION_DEBUGIRC:
+	case FIELD_SUBSCREEN_ACTION_IRC:
 		PMSND_PlaySystemSE( SEQ_SE_DECIDE3 );
 		_CHANGE_STATE(pWork,_modeSelectAnimInit);
 		break;

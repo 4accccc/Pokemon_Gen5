@@ -1718,7 +1718,7 @@ static GMEVENT * checkSubScreenEvent(
   subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
 
   switch(FIELD_SUBSCREEN_GetAction(subscreen)){
-  case FIELD_SUBSCREEN_ACTION_DEBUGIRC:
+  case FIELD_SUBSCREEN_ACTION_IRC:
 		{
 			GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
 			GAME_COMM_NO no = GameCommSys_BootCheck(gcsp);
