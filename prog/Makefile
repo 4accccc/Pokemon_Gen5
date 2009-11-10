@@ -147,12 +147,6 @@ CCFLAGS_WARNING		=	-w all,nocmdline,noerr,nounused,noextracomma,nopedantic,noimp
 				nostructclass,nopadding,nonotused,noanyptrintconv,nofilecaps,nosysfilecaps
 #endif
 
-#------------------------------------------------------#
-# イクニューモンコンポーネントを追加 by Mori 2005.7.27
-# VRAM内に無線ライブラリが配置されるコンポーネント定義 #
-
-#MY_COMPONENT_NAME	= ichneumon
-#MAKEROM_ARM7	= $(TWL_COMPONENTSDIR)/$(MY_COMPONENT_NAME)/$(TWL_BUILDTYPE_ARM7)/$(MY_COMPONENT_NAME)_sub$(TS_VERSION).nef
 
 #----------------------------------------------------------------------------
 # 任天堂Cryptライブラリを追加

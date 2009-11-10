@@ -32,7 +32,7 @@ default_lsf = <<DEFAULT_LSFFILE
 
 Static main
 {
-  Address		$(ADDRESS_MAIN)
+  Address		$(ADDRESS_STATIC)
   Object		$(OBJS_STATIC)
   Library		$(LLIBS) $(GLIBS) $(CW_LIBS)
 
