@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-11-05T22:23:48"/>
+	<create user="fujiwara_maiko" host="W00194" date="2009-11-09T15:32:32" source="c03_wall.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2009-11-05T22:19:38" source="c03_wall1_1.mb"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2009-11-09T15:32:32" source="c03_wall.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -22,14 +22,14 @@
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="5 4"
 	compress_material="on" material_size="2 2"
-	output_texture="all"
+	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
 <box_test pos_scale="3" xyz="-3.000000 0.000000 0.000000" whd="6.000000 6.000000 0.000000"/>
 
-<tex_image_array size="2">
+<tex_image_array size="3">
 	<tex_image index="0" name="c03_efect"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
@@ -168,12 +168,12 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="1" name="c03_wall"
+	<tex_image index="1" name="c03_wall.1"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
 		color0_mode="color"
-		palette_name="c03_wall_pl"
-		path="C:/home/wb_data3d/gimmick/gym_insect/wall/tex/c03_wall.tga"
+		palette_name="c03_wall.1_pl"
+		path="C:/home/wb_data3d/gimmick/gym_insect/wall/tex/c03_wall.1.tga"
 	>
 		<bitmap size="1024">
 			1111 1111 1111 1111 1111 1111 1111 1111
@@ -306,13 +306,155 @@
 			bbbb bbbb bbbb bbbb bbbb bbbb bbbb bbbb
 		</bitmap>
 	</tex_image>
+	<tex_image index="2" name="c03_wall.2"
+		width="64" height="64" original_width="64" original_height="64"
+		format="palette16"
+		color0_mode="color"
+		palette_name="c03_wall.2_pl"
+		path="C:/home/wb_data3d/gimmick/gym_insect/wall/tex/c03_wall.2.tga"
+	>
+		<bitmap size="1024">
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			6666 6666 6666 7666 c998 689c 6666 6666
+			6666 6666 6666 0266 2202 6666 6666 6666
+			6666 6666 6666 9766 3335 9543 6666 6666
+			6666 6666 6666 0022 0010 6662 6666 6666
+			6666 6666 6666 5a77 bbb3 43bb 666a 6666
+			6666 6666 6666 0002 0111 6622 6666 6666
+			6666 6666 6666 3987 bbbb 3bbb 66a5 6666
+			6666 6666 2266 1100 1111 6620 6666 6666
+			6666 6666 6666 b3a7 bbbb bbbb 6754 6666
+			6666 6666 2266 1110 1111 6201 6666 6666
+			6778 6666 6666 b3a7 bbbb bbbb 6a43 6666
+			6666 6666 0266 1111 1111 6201 6666 8877
+			99c5 6677 6666 b3a7 bbbb bbbb 753b 6666
+			6666 6666 0026 1111 1111 6211 ca76 5455
+			4333 6785 6226 b397 bbbb bbbb a43b 6666
+			6666 6666 0026 1111 1111 6211 34c8 3333
+			3bbb 6854 6226 b3c7 bbbb bbbb c43b 6666
+			6666 6666 0026 1111 1111 a211 b345 bbbb
+			bbbb 6c43 6226 b358 bbbb bbbb 53bb 6667
+			6666 6666 0026 1111 1111 5701 bb33 bbbb
+			bbbb 753b 6226 b358 bbbb bbbb 53bb 6667
+			6666 6666 0226 1111 1111 3c21 bbbb bbbb
+			bbbb a43b 6226 b348 bbbb bbbb 53bb 6668
+			6666 6666 2266 1110 1111 3571 bbbb bbbb
+			bbbb 93bb 6226 b34a bbbb bbbb 43bb 6668
+			6666 6666 2666 1110 1111 b392 bbbb bbbb
+			bbbb 93bb 6226 bb3a bbbb bbbb 43bb 2669
+			6662 6666 2666 1110 1111 b357 bbbb bbbb
+			bbbb 93bb 6226 bb3a bbbb bbbb 43bb 026a
+			6622 6666 2666 1110 0111 b34a bbbb bbbb
+			bbbb 93bb 6006 bb3a bbbb bbbb 43bb 106a
+			6220 6666 2666 1110 2111 bb3c bbbb bbbb
+			bbbb 93bb 2112 bb3a bbbb bbbb 43bb 1128
+			6201 6666 6666 1112 8111 bb35 bbbb bbbb
+			bbbb 93bb 2112 bb3a bbbb bbbb 53bb 1107
+			6201 6666 6666 1112 8011 bb34 bbbb bbbb
+			bbbb c3bb 7007 bb3c bbbb bbbb 943b 1116
+			6601 9866 67a9 1112 a211 bb34 bbbb bbbb
+			bbbb 53bb 722a bb35 bbbb bbbb 843b 1106
+			6621 45a6 8c44 1116 a211 bb34 bbbb bbbb
+			bbbb 4bbb a669 bb34 bbbb bbbb 753b 1112
+			6621 334a c433 1107 9601 bb34 bbbb bbbb
+			bbbb 3bbb c66c bbb3 bbbb bbbb 7c3b 1112
+			8660 bb35 43bb 1129 9201 bb34 bbbb bbbb
+			bbbb 3bbb c66c bbb3 bbbb bbbb 6c3b 1110
+			c760 bb34 3bbb 1165 c601 bb34 bbbb bbbb
+			bbbb 3bbb c66c bbb3 bbbb bbbb 693b 1111
+			4a62 bbb3 bbbb 1074 c611 bb34 bbbb bbbb
+			bbbb 3bbb 566c bbb3 bbbb bbbb 293b 1111
+			3572 bbbb bbbb 1094 c211 bb34 bbbb bbbb
+			bbbb 3bbb 5775 bbb3 bbbb bbbb 2c3b 1111
+			3482 bbbb bbbb 12c3 c611 bb34 bbbb bbbb
+			bbbb 3bbb 4885 bbb3 bbbb bbbb 753b 1110
+			b396 bbbb bbbb 10c3 c611 bb34 bbbb bbbb
+			bbbb 3bbb 3453 bbb3 bbbb bbbb 943b 1116
+			b3c6 bbbb bbbb 10c3 c601 bb34 bbbb bbbb
+			bbbb bbbb 3333 bbbb bbbb bbbb 53bb 0116
+			b357 bbbb bbbb 11c3 c701 bb34 bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb 53bb 2108
+			b357 bbbb bbbb 11c3 c601 bb34 bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb 43bb 202a
+			b347 bbbb bbbb 1193 c211 bb34 bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb 3bbb 206c
+			b348 bbbb bbbb 1193 9111 bb34 bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb 3bbb 6265
+			b348 bbbb bbbb 1193 a011 bb34 bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb 3bbb 6675
+			b348 bbbb bbbb 1193 9211 bb34 bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb 3bbb 6674
+			bb3a bbbb bbbb 11c3 9611 bb34 bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb 3bbb 6684
+			bb39 bbbb bbbb 11c3 c601 bbb3 bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb 3bbb 6684
+			bb3c bbbb bbbb 2a43 5621 bbb3 bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb 3bbb 7684
+			bb3c bbbb bbbb 943b 4966 bbb3 bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb 3bbb 7684
+			bb35 bbbb bbbb 43bb 35cc bbbb bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb 3bbb 8684
+			bb34 bbbb bbbb 3bbb b343 bbbb bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb 3bbb 8684
+			bb34 bbbb bbbb bbbb bbbb bbbb bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb 3bbb 8674
+			bbb5 bbbb bbbb bbbb bbbb bbbb bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb 3bbb a265
+			bbb4 bbbb bbbb bbbb bbbb bbbb bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb 3bbb 9005
+			bbb4 bbbb bbbb bbbb bbbb bbbb bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb 3bbb c019
+			bbb3 bbbb bbbb bbbb bbbb bbbb bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb 3bbb c11a
+			bbb3 bbbb bbbb bbbb bbbb bbbb bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb 3bbb c018
+			bbb3 bbbb bbbb bbbb bbbb bbbb bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb 3bbb 521a
+			bbb3 bbbb bbbb bbbb bbbb bbbb bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb 3bbb 5725
+			bbb3 bbbb bbbb bbbb bbbb bbbb bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb bbbb 49c3
+			bbb3 bbbb bbbb bbbb bbbb bbbb bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb bbbb 3443
+			bbbb bbbb bbbb bbbb bbbb bbbb bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb bbbb b33b
+			bbbb bbbb bbbb bbbb bbbb bbbb bbbb bbbb
+		</bitmap>
+	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="2">
+<tex_palette_array size="3">
 	<tex_palette index="0" name="c03_efect_pl" color_size="8">
 		318c 43be 6bdf 475c 46d7 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="1" name="c03_wall_pl" color_size="16">
+	<tex_palette index="1" name="c03_wall.1_pl" color_size="16">
+		03bf 03ff 0b5f 0d2c 0d71 0dd7 0eff 129f
+		165f 19df 1a1f 1a81 1d99 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="2" name="c03_wall.2_pl" color_size="16">
 		03bf 03ff 0b5f 0d2c 0d71 0dd7 0eff 129f
 		165f 19df 1a1f 1a81 1d99 7fff 7fff 7fff
 	</tex_palette>
@@ -356,7 +498,7 @@
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="25 25 25"
-		ambient="16 16 16"
+		ambient="31 31 31"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
@@ -891,32 +1033,6 @@
 
 <output_info vertex_size="108" polygon_size="45"
 	triangle_size="16" quad_size="29"/>
-
-<ex_nns_3dme>
-	<ex_model_info scene_name="defo" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="2">
-		<ex_tex_image index="0" disp_pos="120.000000 360.000000"/>
-		<ex_tex_image index="1" disp_pos="-120.000000 300.000000"/>
-	</ex_tex_image_array>
-	<ex_tex_palette_array size="2">
-		<ex_tex_palette index="0" disp_pos="120.000000 420.000000"/>
-		<ex_tex_palette index="1" disp_pos="-120.000000 360.000000"/>
-	</ex_tex_palette_array>
-	<ex_material_array size="2">
-		<ex_material index="0" disp_pos="120.000000 300.000000"/>
-		<ex_material index="1" disp_pos="-120.000000 240.000000"/>
-	</ex_material_array>
-	<ex_polygon_array size="2">
-		<ex_polygon index="0" disp_pos="-120.000000 180.000000"/>
-		<ex_polygon index="1" disp_pos="120.000000 240.000000"/>
-	</ex_polygon_array>
-	<ex_node_array size="4">
-		<ex_node index="0" disp_pos="0.000000 120.000000"/>
-		<ex_node index="1" disp_pos="0.000000 180.000000"/>
-		<ex_node index="2" disp_pos="0.000000 240.000000"/>
-		<ex_node index="3" disp_pos="120.000000 180.000000"/>
-	</ex_node_array>
-</ex_nns_3dme>
 
 </body>
 
