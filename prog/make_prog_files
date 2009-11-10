@@ -354,6 +354,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/event_intrude_subscreen.c \
 				net_app/irc_match/ircbattlemenu.c \
 				field/c_gear/c_gear.c \
+				field/c_gear/no_gear.c \
 				field/fldmmdl_draw.c \
 				field/fldmmdl_acmd.c \
 				field/fldmmdl_move_0.c \
