@@ -343,6 +343,8 @@ void PMSI_PARAM_WriteBackData( PMSI_PARAM* p, const PMS_WORD* word, const PMS_DA
 	int i;
 
 	p->modified_flag = (PMSI_PARAM_CheckModifiedByEditDatas(p, word, pms) == FALSE);
+
+  HOSAKA_Printf("PMSI_PARAM_WriteBackData modified_flag=%d \n", p->modified_flag);
 	p->cancel_flag = FALSE;
 
 	for(i=0; i<PMS_INPUT_WORD_MAX; i++)

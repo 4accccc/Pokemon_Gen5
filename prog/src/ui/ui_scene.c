@@ -71,7 +71,7 @@ typedef struct UI_SCENE_CNT_tag{
  *	@retval	¶¬‚µ‚½ƒ[ƒN
  */
 //-----------------------------------------------------------------------------
-UI_SCENE_CNT_PTR UI_SCENE_CNT_Create( HEAPID heapID, const UI_SCENE_FUNC_SET* func_set_tbl, int scene_max, void* work )
+UI_SCENE_CNT_PTR UI_SCENE_CNT_Create( HEAPID heapID, const UI_SCENE_FUNC_SET* func_set_tbl, int scene_max, int first_scene, void* work )
 {	
 	UI_SCENE_CNT_PTR ptr;
 
@@ -82,6 +82,7 @@ UI_SCENE_CNT_PTR UI_SCENE_CNT_Create( HEAPID heapID, const UI_SCENE_FUNC_SET* fu
 	ptr->func_set_tbl	  = func_set_tbl;
 	ptr->scene_max	  	= scene_max;
 	ptr->work		      	= work;
+  ptr->scene_id       = first_scene;
 	ptr->scene_id_next  = UI_SCENE_ID_NULL;
 
 	return ptr;

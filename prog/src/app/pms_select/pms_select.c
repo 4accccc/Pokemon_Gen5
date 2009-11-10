@@ -216,8 +216,9 @@ typedef struct
 
   //[PRIVATE]
   HEAPID heapID;
+  PMSW_SAVEDATA*          pmsw_save;
 
-	PMS_SELECT_BG_WORK				wk_bg;
+	PMS_SELECT_BG_WORK			wk_bg;
 
 	//描画設定
 	PMS_SELECT_GRAPHIC_WORK	*graphic;
@@ -247,6 +248,8 @@ typedef struct
 
   UI_SCENE_CNT_PTR          cntScene;
   void*                     subproc_work;   ///< サブPROC用ワーク保存領域
+  u8    select_id;    ///< 選択したID
+  u8    padding[3];
 
   BOOL bProcChange; ///< PROC切替フラグ
 
@@ -342,7 +345,7 @@ static GFL_PROC_RESULT PMSSelectProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 	PMS_SELECT_PARAM *param;
 
 	//オーバーレイ読み込み
-	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
 	
 	//引数取得
 	param	= pwk;
@@ -353,7 +356,8 @@ static GFL_PROC_RESULT PMSSelectProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
   GFL_STD_MemClear( wk, sizeof(PMS_SELECT_MAIN_WORK) );
 
   // 初期化
-  wk->heapID = HEAPID_UI_DEBUG;
+  wk->heapID    = HEAPID_UI_DEBUG;
+  wk->pmsw_save = SaveData_GetPMSW( param->save_ctrl );
 	
 	//フォント作成
 	wk->font			= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
@@ -365,14 +369,39 @@ static GFL_PROC_RESULT PMSSelectProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 	//PRINT_QUE作成
 	wk->print_que		= PRINTSYS_QUE_Create( wk->heapID );
 
+  // グラフィックロード
   PMSSelect_GRAPHIC_Load( wk );
+  
+  // 初回判定
+  {
+    PMS_DATA* data;
+    int first_scene;
 
-  // SCENE
-	wk->cntScene = UI_SCENE_CNT_Create( wk->heapID, c_scene_func_tbl, PMSS_SCENE_ID_MAX, wk );
+    data = PMSW_GetDataEntry( wk->pmsw_save, 0 );
 
-	//@TODO	フェードシーケンスがないので
-	GX_SetMasterBrightness(0);
-	GXS_SetMasterBrightness(0);
+    if( PMSDAT_IsComplete( data, wk->heapID ) == FALSE )
+    {
+      first_scene = PMSS_SCENE_ID_CALL_EDIT; // いきなり編集画面へ
+
+      // 真っ暗にしておく
+      GX_SetMasterBrightness(16);
+      GXS_SetMasterBrightness(16);
+
+      HOSAKA_Printf("初回なので直接編集画面へ\n");
+    }
+    else
+    {
+      first_scene = PMSS_SCENE_ID_PLATE_SELECT; 
+
+      //@TODO	フェードシーケンスがないので
+      GX_SetMasterBrightness(0);
+      GXS_SetMasterBrightness(0);
+    }
+  
+    // SCENE
+	  wk->cntScene = UI_SCENE_CNT_Create( wk->heapID, c_scene_func_tbl, PMSS_SCENE_ID_MAX, first_scene, wk );
+  }
+  
 
   return GFL_PROC_RES_FINISH;
 }
@@ -746,7 +775,7 @@ static void PMSSelect_PMSDRAW_Init( PMS_SELECT_MAIN_WORK* wk )
   
   {
     int i;
-    PMS_DATA pms;
+    PMS_DATA* pms;
 
     // PMS表示用BMPWIN生成
     for( i=0; i<PMS_SELECT_PMSDRAW_NUM; i++ )
@@ -757,27 +786,16 @@ static void PMSSelect_PMSDRAW_Init( PMS_SELECT_MAIN_WORK* wk )
           28, 4,    							  // 表示サイズ
           15,												// パレット
           GFL_BMP_CHRAREA_GET_B );	// キャラ取得方向
-    }
     
-    // 1個目
-    PMSDAT_SetDebug( &pms );
-    PMS_DRAW_Print( wk->pms_draw, wk->pms_win[0], &pms ,0 );
+      // 描画
+      pms = PMSW_GetDataEntry( wk->pmsw_save, i );
 
-    // 2個目 デコメ表示
-    PMSDAT_SetDeco( &pms, 0, PMS_DECOID_HERO );
-    PMS_DRAW_Print( wk->pms_draw, wk->pms_win[1], &pms ,1 );
-    
-    // 3個目 デコメ二個表示
-    PMSDAT_SetDeco( &pms, 0, PMS_DECOID_TANKS );
-    PMSDAT_SetDeco( &pms, 1, PMS_DECOID_LOVE );
-    PMS_DRAW_Print( wk->pms_draw, wk->pms_win[2], &pms ,2 );
-    
-    // 4個目 デコメ二個表示
-    PMSDAT_SetDebugRandomDeco( &pms, wk->heapID );
-    PMS_DRAW_Print( wk->pms_draw, wk->pms_win[3], &pms ,3 );
-    
-    // 1の要素を2にコピー(移動表現などにご使用ください。)
-    PMS_DRAW_Copy( wk->pms_draw, 1, 2 );
+      if( PMSDAT_IsComplete( pms, wk->heapID ) == TRUE )
+      {
+        //@TODO ラップしてプレートも描画するようにする。
+        PMS_DRAW_Print( wk->pms_draw, wk->pms_win[i], pms ,i );
+      }
+    }
   }
 }
 
@@ -941,7 +959,7 @@ static BOOL ScenePlateSelect_End( UI_SCENE_CNT_PTR cnt, void* work )
   
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  プレートに対するコマンド選択 初期化
  *
  *	@param	UI_SCENE_CNT_PTR cnt
  *	@param	work 
@@ -1035,20 +1053,36 @@ static BOOL SceneCallEdit_Main( UI_SCENE_CNT_PTR cnt, void* work )
 {
   PMSI_PARAM* pmsi;
   PMS_SELECT_MAIN_WORK* wk = work;
+  u8 seq = UI_SCENE_CNT_GetSubSeq( cnt );
 
-  PMSSelect_GRAPHIC_UnLoad( wk );
-  
-  //@TODO セーブポインタグローバル参照
-  pmsi = PMSI_PARAM_Create(PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT, SaveControl_GetPointer(), wk->heapID );
+  switch( seq )
+  {
+  case 0:
+    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0);
+    UI_SCENE_CNT_IncSubSeq( cnt );
+    break;
+  case 1:
+    if( GFL_FADE_CheckFade() == FALSE )
+    {
+      PMSSelect_GRAPHIC_UnLoad( wk );
+      
+      //@TODO セーブポインタグローバル参照
+      pmsi = PMSI_PARAM_Create(PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT, SaveControl_GetPointer(), wk->heapID );
 
-  // PROC切替 入力画面呼び出し
-  GFL_PROC_SysCallProc( NO_OVERLAY_ID, &ProcData_PMSInput, pmsi );
-  wk->subproc_work = pmsi;
+      // PROC切替 入力画面呼び出し
+      GFL_PROC_SysCallProc( NO_OVERLAY_ID, &ProcData_PMSInput, pmsi );
+      wk->subproc_work = pmsi;
 
-  // PROC切替フラグON
-  wk->bProcChange = TRUE;
+      // PROC切替フラグON
+      wk->bProcChange = TRUE;
+      return TRUE;
+    }
+    break;
 
-  return TRUE;
+  default : GF_ASSERT(0);
+  }
+
+  return FALSE;
 }
 
 //-----------------------------------------------------------------------------
@@ -1069,7 +1103,21 @@ static BOOL SceneCallEdit_End( UI_SCENE_CNT_PTR cnt, void* work )
   switch( seq )
   {
   case 0:
+
+    if( PMSI_PARAM_CheckModified( wk->subproc_work ) )
+    {
+      PMS_DATA pms;
+
+      // 編集したメッセージをセーブ
+      PMSI_PARAM_GetInputDataSentence( wk->subproc_work, &pms );
+
+      PMSW_SetDataEntry( wk->pmsw_save, wk->select_id, &pms );
+    }
+
+    // パラメータ削除
     PMSI_PARAM_Delete( wk->subproc_work );
+
+    // グラフィックリロード
     PMSSelect_GRAPHIC_Load( wk );
 
     GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0);

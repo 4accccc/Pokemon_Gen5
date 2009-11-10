@@ -95,7 +95,7 @@ extern void PMSW_InitSaveData( void* work );
  *	@retval const PMS_DATA 保存されている簡易会話データへのconstポインタ
  */
 //-----------------------------------------------------------------------------
-extern const PMS_DATA* PMSW_GetDataEntry( const PMSW_SAVEDATA* saveData, int id );
+extern PMS_DATA* PMSW_GetDataEntry( PMSW_SAVEDATA* saveData, int id );
 
 //-----------------------------------------------------------------------------
 /**

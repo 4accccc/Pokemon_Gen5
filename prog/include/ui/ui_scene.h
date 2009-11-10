@@ -61,7 +61,7 @@ typedef struct {
  *	@retval	ê∂ê¨ÇµÇΩÉèÅ[ÉN
  */
 //-----------------------------------------------------------------------------
-extern UI_SCENE_CNT_PTR UI_SCENE_CNT_Create( HEAPID heapID, const UI_SCENE_FUNC_SET* func_set_tbl, int scene_max, void* work );
+extern UI_SCENE_CNT_PTR UI_SCENE_CNT_Create( HEAPID heapID, const UI_SCENE_FUNC_SET* func_set_tbl, int scene_max, int first_scene, void* work );
 
 //-----------------------------------------------------------------------------
 /**

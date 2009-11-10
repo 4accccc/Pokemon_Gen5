@@ -214,7 +214,7 @@ struct _PMSW_SAVEDATA{
  *	@retval const PMS_DATA 保存されている簡易会話データへのconstポインタ
  */
 //-----------------------------------------------------------------------------
-const PMS_DATA* PMSW_GetDataEntry( const PMSW_SAVEDATA* saveData, int id )
+PMS_DATA* PMSW_GetDataEntry( PMSW_SAVEDATA* saveData, int id )
 {
   GF_ASSERT( id < PMS_DATA_ENTRY_MAX );
   return &saveData->entry[id];
@@ -276,6 +276,16 @@ void PMSW_InitSaveData( void* wk_ptr )
 
 	wk->aisatsuBit = 0;
 	wk->nankaiBit = 0;
+
+  // 登録PMS_DATA 初期化
+  for(i=0;i<PMS_DATA_ENTRY_MAX; i++)
+  {
+    int k;
+    for(k=0; k<PMS_WORD_MAX; k++)
+    {
+      wk->entry[i].word[k] = PMS_WORD_NULL;
+    }
+  }
 
 	// 自国語のあいさつは初期状態でセットしておく
 	for(i=0; i<NELEMS(langTbl); i++)

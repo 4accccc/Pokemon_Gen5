@@ -58,8 +58,11 @@ FS_EXTERN_OVERLAY(pmsinput);
 extern const GFL_PROC_DATA ProcData_PMSSelect;
 static BOOL TESTMODE_ITEM_SelectPmsSelect( TESTMODE_WORK *work , const int idx )
 {
-	PMSI_PARAM	*initParam;
-	initParam = PMSI_PARAM_Create( PMSI_MODE_SENTENCE , PMSI_GUIDANCE_DEFAULT , SaveControl_GetPointer() , GFL_HEAPID_APP );
+  PMS_SELECT_PARAM* initParam;
+
+  initParam = GFL_HEAP_AllocClearMemory( GFL_HEAPID_APP, sizeof(PMS_SELECT_PARAM) );
+  initParam->save_ctrl = SaveControl_GetPointer();
+
 	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(pmsinput), &ProcData_PMSSelect, initParam);
 	return TRUE;
 }

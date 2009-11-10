@@ -483,12 +483,13 @@ static void BmnCallBack( u32 buttonID, u32 event, void* wk_ptr )
 //------------------------------------------------------------------
 GFL_PROC_RESULT PMSInput_Quit( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
+#if 0
 	{	
 		int i;
 
 		PMS_INPUT_WORK* wk	= mywk;
 
-		//↓@todoGMM文字列をデコメに変換する処理
+		//↓@todo  GMM文字列をデコメに変換する処理
 		for( i = 0; i < PMS_INPUT_WORD_MAX; i++ )
 		{	
 			wk->edit_word[i]	= PMSI_WordToDeco( wk->edit_word[i] );
@@ -500,8 +501,7 @@ GFL_PROC_RESULT PMSInput_Quit( GFL_PROC * proc, int * seq , void *pwk, void *myw
 		PMSI_PARAM_WriteBackData( wk->input_param, wk->edit_word, &wk->edit_pms );
 		//↑ここまで
 	}
-
-	
+#endif
 
 	DestructWork( mywk, proc );
 
@@ -2765,7 +2765,7 @@ static int check_wordwin_scroll_down( WORDWIN_WORK* wordwin )
 /**
 	* 選択された単語をデータに反映する
 	*
-	* @param   wk		
+	* @param   wk		ワーク
 	*
 	* @retval  BOOL	入力できる欄を全て埋めたらTRUEが返る
 	*/
@@ -2780,13 +2780,16 @@ static BOOL set_select_word( PMS_INPUT_WORK* wk )
 	}else{
 		word_idx = get_wordwin_pos( &wk->word_win );
 	}
+
 	if( wk->category_mode == CATEGORY_MODE_GROUP ){
 		word = PMSI_DATA_GetGroupEnableWordCode( wk->dwk, wk->category_pos, word_idx );
 	}else{
 		word = PMSI_DATA_GetInitialEnableWordCode( wk->dwk, wk->category_pos, word_idx );
 	}
-	OS_Printf(" WordSet pos=%d, idx = %d, word = %d\n",wk->edit_pos,word_idx,word);
-	switch( wk->input_mode ){
+
+	OS_TPrintf(" WordSet pos=%d, idx = %d, word = %d\n",wk->edit_pos,word_idx,word);
+	
+  switch( wk->input_mode ){
 	case PMSI_MODE_SINGLE:
 		wk->edit_word[0] = word;
 		break;
