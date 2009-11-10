@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-21T11:33:19"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T15:56:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,9 +365,9 @@
 		<comment>♂
 ・続けてleader_02</comment>
 		<attribute name="キャラクター">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">クロック『……いみふめい！
+		<language name="JPN" width="256">ブラッカー『……いみふめい！
 そんなの　そっちの　せきにんだろ？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『……意味不明！
+		<language name="JPN_KANJI" width="256">ブラッカー『……意味不明！
 そんなの　そっちの　責任だろ？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -562,14 +562,14 @@
 		<comment>♂
 ・メッセージ表示後、画面左に移動</comment>
 		<attribute name="キャラクター">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">クロック『……おたがい
+		<language name="JPN" width="256">ブラッカー『……おたがい
 まちなかでの　あらそいは　さけたか[BE:01:ページ切り替え（クリア）]
 それにしても　ゲーチスってヤツ
 フツウじゃないって　かんじだな[BE:01:ページ切り替え（クリア）]
 ……なんだか　きが　ぬけたし
 オレ　まちなかでも　さんさくするわ[BE:00:ページ切り替え（行送り）]
 きてから　コンテナしか　しらないし[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『……お互い
+		<language name="JPN_KANJI" width="256">ブラッカー『……お互い
 街中での　争いは避けたか[BE:01:ページ切り替え（クリア）]
 それにしても　ゲーチスってヤツ
 普通じゃないって　感じだな[BE:01:ページ切り替え（クリア）]
