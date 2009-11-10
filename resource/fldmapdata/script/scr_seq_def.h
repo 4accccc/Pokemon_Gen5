@@ -4043,7 +4043,7 @@
  */
 //--------------------------------------------------------------
 #define _GYM_INSECT_TR_TRAP_ON(trp_evt_idx) \
-    _ASM_GYM_INSECT_SW_ON trp_evt_idx
+    _ASM_GYM_INSECT_TR_TRAP_ON trp_evt_idx
 
   .macro  _ASM_GYM_INSECT_TR_TRAP_ON trp_evt_idx
   .short  EV_SEQ_GYM_INSECT_TR_TRAP_ON
