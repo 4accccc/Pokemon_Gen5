@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-30T11:49:26"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T14:45:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -313,7 +313,7 @@
 ちょっと　ついてきて！</language>
 	</row>
 
-	<row id="msg_c01_inventor_02" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c01_inventor_02" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・削除予定ラベル</comment>
 		<attribute name="キャラ指定">発明家</attribute>
@@ -321,7 +321,7 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_c01_musical_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c01_musical_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・7月末ROMミュージカル呼び出し
 ※こいつのスクリプトは
@@ -333,7 +333,7 @@
 ミュージカル　やってみない？</language>
 	</row>
 
-	<row id="msg_c01_musical_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c01_musical_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・7月末ROMミュージカル呼び出し</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
@@ -343,7 +343,7 @@
 思う存分　楽しんで！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01_musical_03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c01_musical_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・7月末ROMミュージカル呼び出し</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
@@ -353,17 +353,17 @@
 気が向いたら　また　話しかけてよ</language>
 	</row>
 
-	<row id="msg_c01_woman1_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c01_woman1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c01_woman1_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c01_woman1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c01_woman1_03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c01_woman1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
@@ -422,7 +422,7 @@
 きちんと　たいさく　しておいたほうが
 いいと　おもいますよ[BE:01:ページ切り替え（クリア）]
 それでは　ジムで　待っていますね！</language>
-		<language name="JPN_KANJI" width="256">え？　ぼくが　このまちの
+		<language name="JPN_KANJI" width="256">え？　ぼくが　この街の
 ジムリーダー　ですけど[BE:00:ページ切り替え（行送り）]
 きみは……？[BE:01:ページ切り替え（クリア）]
 そうですか　ジムに挑戦[BE:01:ページ切り替え（クリア）]
@@ -510,7 +510,7 @@
 すごいだろ？
 ジムリーダーに　おしえてもらったんだ</language>
 		<language name="JPN_KANJI" width="256">ポケモンの　タイプと
-わざの　タイプが　同じだと[BE:00:ページ切り替え（行送り）]
+技の　タイプが　同じだと[BE:00:ページ切り替え（行送り）]
 いりょくが　アップ！[BE:01:ページ切り替え（クリア）]
 すごいだろ？
 ジムリーダーに　教えてもらったんだ</language>

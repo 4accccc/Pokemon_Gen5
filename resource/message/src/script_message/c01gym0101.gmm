@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T14:34:29"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T14:45:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -690,7 +690,7 @@
 にんてい　トレーナー！</language>
 		<language name="JPN_KANJI" width="256">サンヨウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　コーン＆ポッド＆デント
-にんてい　トレーナー！</language>
+認定　トレーナー！</language>
 	</row>
 
 	<row id="msg_c01gym0101_statue_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -701,7 +701,7 @@
 [1:00:トレーナー名:0]</language>
 		<language name="JPN_KANJI" width="256">サンヨウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　コーン＆ポッド＆デント
-にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
+認定　トレーナー！[BE:00:ページ切り替え（行送り）]
 [1:00:トレーナー名:0]</language>
 	</row>
 
@@ -715,7 +715,7 @@
 ホワイティ</language>
 		<language name="JPN_KANJI" width="256">サンヨウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　コーン＆ポッド＆デント
-にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
+認定　トレーナー！[BE:00:ページ切り替え（行送り）]
 [1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
 ブラッカー[BE:00:ページ切り替え（行送り）]
 ホワイティ</language>
