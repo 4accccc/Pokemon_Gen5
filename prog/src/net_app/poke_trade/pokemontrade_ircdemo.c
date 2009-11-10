@@ -525,6 +525,9 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       pWork->pMoveMcss[1] = _pokeMoveCreate(pWork->pokeMcss[3], ANMCNTC(_IR_POKE_APPEAR_TIME), &apos , pWork->heapID);
       //MCSS_SetAnmStopFlag(pWork->pokeMcss[3]);
       MCSS_GetScale( pWork->pokeMcss[3], &apos );
+      pWork->pPokemonTradeDemo->PushPos.x = apos.x;
+      pWork->pPokemonTradeDemo->PushPos.y = apos.y;
+      pWork->pPokemonTradeDemo->PushPos.z = apos.z;
       apos.x *= _IRC_BACK_POKMEON_SCALE_SIZE;
       apos.y *= _IRC_BACK_POKMEON_SCALE_SIZE;
       MCSS_SetScale( pWork->pokeMcss[3], &apos );
@@ -549,6 +552,8 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
     apos.z = _POKEMON_PLAYER_CENTER_POSZ;
     MCSS_SetPosition( pWork->pokeMcss[3] ,&apos );
     MCSS_SetAnmStopFlag(pWork->pokeMcss[3]);
+
+    MCSS_SetScale( pWork->pokeMcss[3], &pWork->pPokemonTradeDemo->PushPos );
 
     
     MCSS_SetPaletteFade( pWork->pokeMcss[3], 16, 16, 0, 0x7fff );

@@ -40,6 +40,7 @@ typedef enum
 struct _POKEMONTRADE_DEMO_WORK{
   GFL_PTC_PTR ptc[PTC_KIND_NUM_MAX];
   void* ptcheap[PTC_KIND_NUM_MAX];
+  VecFx32 PushPos;
 
   ICA_ANIME* icaCamera;
   ICA_ANIME* icaTarget;
