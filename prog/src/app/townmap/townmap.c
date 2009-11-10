@@ -1566,10 +1566,6 @@ static void APPBAR_Init( APPBAR_WORK *p_wk, TOWNMAP_MODE mode, GFL_CLUNIT* p_uni
 				{	TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_Y },
 			},
 			{	
-				TOUCHBAR_ICON_CHECK,
-				{	TOUCHBAR_ICON_X_03, TOUCHBAR_ICON_Y_CHECK }
-			},
-			{	
 				TOUCHBAR_ICON_CUTSOM1,	//カスタムボタン１を拡大アイコンに,
 				{	TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_Y },
 			},
@@ -1579,24 +1575,24 @@ static void APPBAR_Init( APPBAR_WORK *p_wk, TOWNMAP_MODE mode, GFL_CLUNIT* p_uni
 			}
 		};
 		//拡大アイコン
-		touchbar_icon_tbl[3].cg_idx		= p_wk->res[APPBAR_RES_SCALE_CHR];				//キャラリソース
-		touchbar_icon_tbl[3].plt_idx	= p_wk->res[APPBAR_RES_SCALE_PLT];				//パレットリソース
-		touchbar_icon_tbl[3].cell_idx	=	p_wk->res[APPBAR_RES_SCALE_CEL];				//セルリソース
-		touchbar_icon_tbl[3].active_anmseq	=	7;						//アクティブのときのアニメ
-		touchbar_icon_tbl[3].noactive_anmseq	=		11;				//ノンアクティブのときのアニメ
-		touchbar_icon_tbl[3].push_anmseq	=		9;						//押したときのアニメ（STOPになっていること）
-		touchbar_icon_tbl[3].key	=		0;		//キーで押したときに動作させたいならば、ボタン番号
-		touchbar_icon_tbl[3].se		=		0;		//押したときにSEならしたいならば、SEの番号	
+		touchbar_icon_tbl[2].cg_idx		= p_wk->res[APPBAR_RES_SCALE_CHR];				//キャラリソース
+		touchbar_icon_tbl[2].plt_idx	= p_wk->res[APPBAR_RES_SCALE_PLT];				//パレットリソース
+		touchbar_icon_tbl[2].cell_idx	=	p_wk->res[APPBAR_RES_SCALE_CEL];				//セルリソース
+		touchbar_icon_tbl[2].active_anmseq	=	7;						//アクティブのときのアニメ
+		touchbar_icon_tbl[2].noactive_anmseq	=		11;				//ノンアクティブのときのアニメ
+		touchbar_icon_tbl[2].push_anmseq	=		9;						//押したときのアニメ（STOPになっていること）
+		touchbar_icon_tbl[2].key	=		0;		//キーで押したときに動作させたいならば、ボタン番号
+		touchbar_icon_tbl[2].se		=		0;		//押したときにSEならしたいならば、SEの番号	
 
 		//縮小アイコン
-		touchbar_icon_tbl[4].cg_idx		=  p_wk->res[APPBAR_RES_SCALE_CHR];				//キャラリソース
-		touchbar_icon_tbl[4].plt_idx	= p_wk->res[APPBAR_RES_SCALE_PLT];				//パレットリソース
-		touchbar_icon_tbl[4].cell_idx	=	p_wk->res[APPBAR_RES_SCALE_CEL];				//セルリソース
-		touchbar_icon_tbl[4].active_anmseq	=	8;						//アクティブのときのアニメ
-		touchbar_icon_tbl[4].noactive_anmseq=	12;						//ノンアクティブのときのアニメ
-		touchbar_icon_tbl[4].push_anmseq		=	10;						//押したときのアニメ（STOPになっていること）
-		touchbar_icon_tbl[4].key	=	0;		//キーで押したときに動作させたいならば、ボタン番号
-		touchbar_icon_tbl[4].se		=	0;			//押したときにSEならしたいならば、SEの番号	
+		touchbar_icon_tbl[3].cg_idx		=  p_wk->res[APPBAR_RES_SCALE_CHR];				//キャラリソース
+		touchbar_icon_tbl[3].plt_idx	= p_wk->res[APPBAR_RES_SCALE_PLT];				//パレットリソース
+		touchbar_icon_tbl[3].cell_idx	=	p_wk->res[APPBAR_RES_SCALE_CEL];				//セルリソース
+		touchbar_icon_tbl[3].active_anmseq	=	8;						//アクティブのときのアニメ
+		touchbar_icon_tbl[3].noactive_anmseq=	12;						//ノンアクティブのときのアニメ
+		touchbar_icon_tbl[3].push_anmseq		=	10;						//押したときのアニメ（STOPになっていること）
+		touchbar_icon_tbl[3].key	=	0;		//キーで押したときに動作させたいならば、ボタン番号
+		touchbar_icon_tbl[3].se		=	0;			//押したときにSEならしたいならば、SEの番号	
 
 		//設定構造体
 		//さきほどの窓情報＋リソース情報をいれる
@@ -1614,20 +1610,6 @@ static void APPBAR_Init( APPBAR_WORK *p_wk, TOWNMAP_MODE mode, GFL_CLUNIT* p_uni
 	}
 
 
-	//Yチェック
-	if( GAMEDATA_GetShortCut( p_wk->p_gamedata, SHORTCUT_ID_TOWNMAP ))
-	{	
-		TOUCHBAR_SetFlip( p_wk->p_touchbar, TOUCHBAR_ICON_CHECK, TRUE );
-	}
-	else
-	{	
-		TOUCHBAR_SetFlip( p_wk->p_touchbar, TOUCHBAR_ICON_CHECK, FALSE );
-	}
-
-	if( mode != TOWNMAP_MODE_MAP )
-	{	
-		TOUCHBAR_SetVisible( p_wk->p_touchbar, TOUCHBAR_ICON_CHECK, FALSE );
-	}
 
 	APPBAR_SetActive( p_wk, TOUCHBAR_ICON_SCALEUP, TRUE );
 	APPBAR_SetActive( p_wk, TOUCHBAR_ICON_SCALEDOWN, FALSE );
@@ -1670,14 +1652,6 @@ static void APPBAR_Main( APPBAR_WORK *p_wk )
 {	
 	TOUCHBAR_Main( p_wk->p_touchbar );
 
-	if( TOUCHBAR_GetFlip( p_wk->p_touchbar, TOUCHBAR_ICON_CHECK ) )
-	{	
-		GAMEDATA_SetShortCut( p_wk->p_gamedata, SHORTCUT_ID_TOWNMAP, TRUE );
-	}
-	else
-	{	
-		GAMEDATA_SetShortCut( p_wk->p_gamedata, SHORTCUT_ID_TOWNMAP, FALSE );
-	}
 
 	if( TOUCHBAR_GetTrg( p_wk->p_touchbar ) == TOUCHBAR_ICON_SCALEUP )
 	{	
