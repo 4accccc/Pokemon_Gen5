@@ -40,7 +40,8 @@
 #define EFF_ANM_NUM  (2)
 
 #define WALL_BRK_ANM_NUM   (4)
-#define WALL_CHG_ANM_NUM   (3)
+
+#define WALL_CHG_ANM_NUM   (4)
 
 #define WALL_ANM_NUM   (4+WALL_CHG_ANM_NUM)
 
@@ -271,7 +272,7 @@ enum{
   ANM_WALL_SIDE_S,  //南向きサイド
   ANM_WALL_CHG1,    //壁変更1(壊れない壁のみ)
   ANM_WALL_CHG2,    //壁変更2(壊れない壁のみ)
-///  ANM_WALL_CHG3,    //壁変更3(壊れない壁のみ)
+  ANM_WALL_CHG3,    //壁変更3(壊れない壁のみ)
   ANM_WALL_CHG4,    //壁変更4(壊れない壁のみ)
 };
 
@@ -320,7 +321,7 @@ static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_wall[] = {
   { RES_ID_WALL2_MOV_S,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
   { RES_ID_WALL3_MOV1,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
   { RES_ID_WALL3_MOV2,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
-///  { RES_ID_WALL3_MOV3,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_WALL3_MOV3,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
   { RES_ID_WALL3_MOV4,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
 };
 
