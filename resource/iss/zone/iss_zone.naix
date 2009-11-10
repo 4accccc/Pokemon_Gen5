@@ -1,0 +1,19 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: iss_zone.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_ISS_ZONE_NAIX_
+#define NARC_ISS_ZONE_NAIX_
+
+enum {
+	NARC_iss_zone_iss_zone_data_h01_bin = 0,
+	NARC_iss_zone_iss_zone_data_h03_bin = 1
+};
+
+/* NARC_ISS_ZONE_NAIX_ */
+#endif

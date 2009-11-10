@@ -18,6 +18,7 @@
 #define MAX_VOLUME   (127)	// 最大音量
 #define FADE_IN_SPEED  (8)	// フェード・イン速度
 #define FADE_OUT_SPEED (8)	// フェード・アウト速度
+#define TRACKBIT ((1<<(9-1))|(1<<(10-1))) // 操作トラック(9,10)
 
 
 //===========================================================================================
@@ -223,7 +224,7 @@ void AddVolume( ISS_ROAD_SYS* sys, int val )
   if( sys->volume < MIN_VOLUME ) sys->volume = MIN_VOLUME;  // 最小値補正
   if( sys->volume > MAX_VOLUME ) sys->volume = MAX_VOLUME;  // 最大値補正
   if( sys->volume == prev_volume ) return;                  // 変化無し
-  FIELD_SOUND_ChangeBGMActionVolume( sys->volume );
+  PMSND_ChangeBGMVolume( TRACKBIT, sys->volume );
 
   // DEBUG: 
   OBATA_Printf( "ISS-R: change volume ==> %d\n", sys->volume );

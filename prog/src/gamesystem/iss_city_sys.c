@@ -29,6 +29,9 @@
 #define MAX_VOLUME (127)
 #define INVALID_VOLUME (0xffff)
 
+// 操作トラック
+#define TRACKBIT ((1<<(9-1))|(1<<(10-1))) // 9,10トラック
+
 
 //===========================================================================================
 // ■街ISSシステム構造体
@@ -217,7 +220,7 @@ void ISS_CITY_SYS_Off( ISS_CITY_SYS* sys )
 {
 	sys->isActive     = FALSE;
   sys->activeUnitNo = INVALID_UNIT_NO;
-  FIELD_SOUND_ChangeBGMActionVolume(127);
+  PMSND_ChangeBGMVolume( TRACKBIT, 127 );
 
   // DEBUG:
   OBATA_Printf( "ISS-C: Off\n" );
@@ -289,7 +292,7 @@ static void UpdateVolume( ISS_CITY_SYS* sys )
   {
     // 更新
     sys->volume = new_volume;
-    FIELD_SOUND_ChangeBGMActionVolume( new_volume );
+    PMSND_ChangeBGMVolume( TRACKBIT, new_volume );
     // DEBUG:
     OBATA_Printf( "ISS-C: Update volume = %d\n", new_volume );
   }

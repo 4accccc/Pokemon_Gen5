@@ -208,3 +208,4 @@
   $VERSION_BLACK	ARCID_CDEMO_DATA  "op_demo_dmy.narc" # コマンドデモデータ（ダミー）
   $VERSION_WHITE	ARCID_CDEMO_DATA  "op_demo.narc" # コマンドデモデータ（ホンモノ）
   ARCID_GYM_INSECT	"fieldmap/gym_insect.narc"	#虫ジム
+  ARCID_ISS_ZONE "iss_zone.narc" # ゾーンISSデータ

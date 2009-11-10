@@ -10,6 +10,7 @@
 #include "iss_city_sys.h"
 #include "iss_road_sys.h"
 #include "iss_dungeon_sys.h"
+#include "iss_zone_sys.h"
 #include "../field/field_sound.h"
 #include "sound/bgm_info.h"
 #include "../../../resource/sound/bgm_info/iss_type.h"
@@ -51,6 +52,7 @@ struct _ISS_SYS
 	ISS_CITY_SYS*    issC;	// 街
 	ISS_ROAD_SYS*    issR;	// 道路
 	ISS_DUNGEON_SYS* issD;	// ダンジョン 
+  ISS_ZONE_SYS*    issZ;  // ゾーン
 
 	// 再生中のBGM番号
 	u16 bgmNo; 
@@ -104,15 +106,16 @@ ISS_SYS* ISS_SYS_Create( GAMEDATA* p_gdata, HEAPID heap_id )
 	p_sys = (ISS_SYS*)GFL_HEAP_AllocMemory( heap_id, sizeof( ISS_SYS ) );
 
 	// 初期設定
-	p_sys->heapID         = heap_id;
-	p_sys->pGameData      = p_gdata;
-	p_sys->cycle          = FALSE;
-	p_sys->surfing        = FALSE;
-	p_sys->issC    = ISS_CITY_SYS_Create( p_player, heap_id );
-	p_sys->issR    = ISS_ROAD_SYS_Create( p_player, heap_id );
-	p_sys->issD = ISS_DUNGEON_SYS_Create( p_player, heap_id );
-	p_sys->bgmNo          = INVALID_BGM_NO;
-	p_sys->frame          = 0;
+	p_sys->heapID    = heap_id;
+	p_sys->pGameData = p_gdata;
+	p_sys->cycle     = FALSE;
+	p_sys->surfing   = FALSE;
+	p_sys->issC      = ISS_CITY_SYS_Create( p_player, heap_id );
+	p_sys->issR      = ISS_ROAD_SYS_Create( p_player, heap_id );
+	p_sys->issD      = ISS_DUNGEON_SYS_Create( p_player, heap_id );
+  p_sys->issZ      = ISS_ZONE_SYS_Create( p_gdata, p_player, heap_id );
+	p_sys->bgmNo     = INVALID_BGM_NO;
+	p_sys->frame     = 0;
 
 
 	// 作成したISSシステムを返す
@@ -131,12 +134,13 @@ void ISS_SYS_Delete( ISS_SYS* p_sys )
 	ISS_CITY_SYS_Delete( p_sys->issC );
 	ISS_ROAD_SYS_Delete( p_sys->issR );
 	ISS_DUNGEON_SYS_Delete( p_sys->issD );
+  ISS_ZONE_SYS_Delete( p_sys->issZ );
 
 	// 本体を破棄
 	GFL_HEAP_FreeMemory( p_sys );
 
 	// 9, 10トラックの音量を元に戻す
-	FIELD_SOUND_ChangeBGMActionVolume( 127 );
+  PMSND_ChangeBGMVolume( (1<<8)|(1<<9), 127 );
 }
 
 //----------------------------------------------------------------------------
@@ -167,6 +171,9 @@ void ISS_SYS_Update( ISS_SYS* p_sys )
 	
 	// ダンジョンISS
 	ISS_DUNGEON_SYS_Update( p_sys->issD );
+
+  // ゾーンISS
+  ISS_ZONE_SYS_Update( p_sys->issZ );
 }
 	
 
@@ -180,11 +187,10 @@ void ISS_SYS_Update( ISS_SYS* p_sys )
 //---------------------------------------------------------------------------
 void ISS_SYS_ZoneChange( ISS_SYS* p_sys, u16 next_zone_id )
 {
-	PLAYER_WORK*     p_player;
 	PLAYER_MOVE_FORM form;
 	BGM_INFO_SYS*    p_bgm_info_sys;
 
-	// 自転車orなみのり中なら, ISSに変更はない
+	// 自転車 or なみのり中なら, ISSに変更はない
 	if( p_sys->cycle | p_sys->surfing ) return;
 
 	// 街ISS
@@ -192,6 +198,9 @@ void ISS_SYS_ZoneChange( ISS_SYS* p_sys, u16 next_zone_id )
 
 	// ダンジョンISS
 	ISS_DUNGEON_SYS_ZoneChange( p_sys->issD, next_zone_id );
+
+  // ゾーンISS
+  ISS_ZONE_SYS_ZoneChange( p_sys->issZ, next_zone_id );
 
 	// DEBUG:
 	//OBATA_Printf( "ISS_SYS_ZoneChange()\n" );
@@ -275,7 +284,6 @@ void SurfingCheck( ISS_SYS* p_sys )
 //----------------------------------------------------------------------------
 void BGMChangeCheck( ISS_SYS* p_sys )
 {
-	PLAYER_WORK*  p_player       = GAMEDATA_GetMyPlayerWork( p_sys->pGameData );
 	BGM_INFO_SYS* p_bgm_info_sys = GAMEDATA_GetBGMInfoSys( p_sys->pGameData );
 	int bgm_no, iss_type;
 
