@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T14:35:14"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T15:46:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="695"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -298,12 +298,12 @@
 		<attribute name="キャラ指定">LEADER4</attribute>
 		<language name="JPN" width="256">ウフフ　あまりの
 スピードに　クラクラしてない？[BE:01:ページ切り替え（クリア）]
-次は　愛しの　ポケモンたちで
-アナタを　クラクラ　させちゃうけど</language>
+つぎは　いとしの　ポケモンたちで
+アナタを　クラクラ　させちゃうけど[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ウフフ　あまりの
 スピードに　クラクラしてない？[BE:01:ページ切り替え（クリア）]
 次は　愛しの　ポケモンたちで
-アナタを　クラクラ　させちゃうけど</language>
+アナタを　クラクラ　させちゃうけど[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c04gym0101_leader_02">
@@ -312,13 +312,13 @@
 		<language name="JPN" width="256">ステキ……
 ホレボレするような　たたかいかた[BE:01:ページ切り替え（クリア）]
 アナタ　いい　トレーナーね
-なんだか　感激したわ[BE:00:ページ切り替え（行送り）]
-これを……！</language>
+なんだか　かんげき……[BE:00:ページ切り替え（行送り）]
+これを……！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ステキ……
 ホレボレするような　たたかいかた[BE:01:ページ切り替え（クリア）]
 アナタ　いい　トレーナーね
-なんだか　感激したわ[BE:00:ページ切り替え（行送り）]
-これを……！</language>
+なんだか　感激……[BE:00:ページ切り替え（行送り）]
+これを……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c04gym0101_leader_03">
@@ -335,16 +335,16 @@
 ・アイテム入手処理</comment>
 		<language name="JPN" width="256">ボルトバッジが　あれば
 レベル５０までの　ポケモンは[BE:00:ページ切り替え（行送り）]
-アナタに　従ってくれる[BE:01:ページ切り替え（クリア）]
+アナタに　したがってくれる[BE:01:ページ切り替え（クリア）]
 それと　これは
-わたしの　好きな　わざ……[BE:00:ページ切り替え（行送り）]
+わたしの　すきな　わざ……[BE:00:ページ切り替え（行送り）]
 よければ　アナタも　つかって</language>
 		<language name="JPN_KANJI" width="256">ボルトバッジが　あれば
 レベル５０までの　ポケモンは[BE:00:ページ切り替え（行送り）]
 アナタに　従ってくれる[BE:01:ページ切り替え（クリア）]
 それと　これは
-わたしの　好きな　わざ……[BE:00:ページ切り替え（行送り）]
-よければ　アナタも　つかって</language>
+わたしの　好きな　技……[BE:00:ページ切り替え（行送り）]
+よければ　アナタも　使って</language>
 	</row>
 
 	<row id="msg_c04gym0101_leader_05">
@@ -574,7 +574,7 @@ princess_01</attribute>
 にんてい　トレーナー！</language>
 		<language name="JPN_KANJI" width="256">ライモン　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　カミツレ
-にんてい　トレーナー！</language>
+認定　トレーナー！</language>
 	</row>
 
 	<row id="msg_c04gym0101_statue_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -585,7 +585,7 @@ princess_01</attribute>
 [1:00:トレーナー名:0]</language>
 		<language name="JPN_KANJI" width="256">ライモン　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　カミツレ
-にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
+認定　トレーナー！[BE:00:ページ切り替え（行送り）]
 [1:00:トレーナー名:0]</language>
 	</row>
 
@@ -599,7 +599,7 @@ princess_01</attribute>
 ホワイティ</language>
 		<language name="JPN_KANJI" width="256">ライモン　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　カミツレ
-にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
+認定　トレーナー！[BE:00:ページ切り替え（行送り）]
 [1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
 ブラッカー[BE:00:ページ切り替え（行送り）]
 ホワイティ</language>

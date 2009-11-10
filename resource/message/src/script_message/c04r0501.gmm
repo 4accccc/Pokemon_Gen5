@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-05T17:25:45"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T15:51:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -313,12 +313,13 @@
 		<language name="JPN" width="256">ミュージカルを　みましたか？[BE:01:ページ切り替え（クリア）]
 じぶんの　ポケモンが
 ぶたいの　うえで……[BE:01:ページ切り替え（クリア）]
-ことばに　できない
+あれは　ことばに　できない
 かんどうの　たいけん　ですよ</language>
 		<language name="JPN_KANJI" width="256">ミュージカルは
 ご覧に　なりましたか？[BE:01:ページ切り替え（クリア）]
-自分のポケモンが　舞台の上で……
-言葉にできない　感動体験ですよ</language>
+自分のポケモンが　舞台の上で……[BE:01:ページ切り替え（クリア）]
+あれは　言葉に　できない
+感動体験　ですよ</language>
 	</row>
 
 	<row id="msg_c04r0501_middleman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">

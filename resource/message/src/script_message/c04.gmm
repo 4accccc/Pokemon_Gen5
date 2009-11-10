@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T14:40:31"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T15:44:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="23" top="268" right="726" bottom="889" maximized="no" rayout="Vertical2">
+	<dialog left="23" top="271" right="725" bottom="889" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="528"/>
+		<band id="0" index="1" style="0000" width="527"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="541"/>
+		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="695"/>
+		<band id="4" index="0" style="0000" width="694"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -353,11 +353,11 @@
 ・POSはmsg_c04_white_01と同じ</comment>
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
-		<language name="JPN" width="256">カミツレ『遅くなって　ゴメン[BE:01:ページ切り替え（クリア）]
-ともだち♂って　トレーナーとの
-勝負が　長引いちゃった……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">カミツレ『おそくなって　ゴメン[BE:01:ページ切り替え（クリア）]
+ブラッカーって　トレーナーとの
+しょうぶが　ながびいちゃった……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">カミツレ『遅くなって　ゴメン[BE:01:ページ切り替え（クリア）]
-ともだち♂って　トレーナーとの
+ブラッカーって　トレーナーとの
 勝負が　長引いちゃった……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -369,9 +369,9 @@
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
 		<language name="JPN" width="256">さ　ホドモエシティに
-行けるように　してあげる[BE:01:ページ切り替え（クリア）]
-ワタシ　５番道路の
-橋の前で　待っているから[BE:01:ページ切り替え（クリア）]</language>
+いけるように　してあげる[BE:01:ページ切り替え（クリア）]
+それじゃ　ワタシ
+５ばんどうろで　まっているから[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">さ　ホドモエシティに
 行けるように　してあげる[BE:01:ページ切り替え（クリア）]
 ワタシ　５番道路の

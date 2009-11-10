@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-29T15:36:35"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T15:50:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -299,11 +299,11 @@
 		<attribute name="キャラ指定">LADY
 ＝オーナー</attribute>
 		<language name="JPN" width="256">ようこそ　わが　げきじょうへ！[BE:01:ページ切り替え（クリア）]
-よければ　あなたの　ポケモンに
-ドレスアップ　してあげてみて</language>
+よければ　あなたの　ポケモンを
+ドレスアップ　してあげて！！</language>
 		<language name="JPN_KANJI" width="256">ようこそ　わが　劇場へ！[BE:01:ページ切り替え（クリア）]
-よければ　あなたの　ポケモンに
-ドレスアップ　してあげてみて</language>
+よければ　あなたの　ポケモンを
+ドレスアップ　してあげて！！</language>
 	</row>
 
 	<row id="msg_c04r0201_owner_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -411,11 +411,12 @@
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">MAID
 ＝スタイリストその3</attribute>
-		<language name="JPN" width="256">ミュージカルの　本質は！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ミュージカルの　ほんしつは！[BE:01:ページ切り替え（クリア）]
 ミュージック！　ダンス！
 もちろん　それもあります！[BE:01:ページ切り替え（クリア）]
-ですが　一番　重要なのは
-舞台で　輝く　ポケモンたちでッすッ！！</language>
+ですが　いちばん　だいじなのは
+ステージの　うえで[BE:00:ページ切り替え（行送り）]
+かがやく　ポケモンたち　でッすッ！！</language>
 		<language name="JPN_KANJI" width="256">ミュージカルの　本質は！[BE:01:ページ切り替え（クリア）]
 ミュージック！　ダンス！
 もちろん　それもあります！[BE:01:ページ切り替え（クリア）]
