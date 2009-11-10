@@ -700,5 +700,17 @@ SCRIPTFILES += \
 	sp_c04r0110.ev \
 	c04r0111.ev \
 	sp_c04r0111.ev \
+	d09r1001.ev \
+	sp_d09r1001.ev \
+	d09r1101.ev \
+	sp_d09r1101.ev \
+	d09r1201.ev \
+	sp_d09r1201.ev \
+	d09r1301.ev \
+	sp_d09r1301.ev \
+	d09r1401.ev \
+	sp_d09r1401.ev \
+	d09r1501.ev \
+	sp_d09r1501.ev \
 
 #©“®¶¬ƒtƒ@ƒCƒ‹ zone_script.list ––”ö
