@@ -1310,7 +1310,6 @@ static BOOL SUBPROC_MultiBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk
     {
       BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
 
-      para->engine = BTL_ENGINE_ALONE;
       para->rule = BTL_RULE_DOUBLE;
       para->competitor = BTL_COMPETITOR_COMM;
 
