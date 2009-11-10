@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-30T18:02:48"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T14:34:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -394,14 +394,14 @@
 ジムリーダー　アロエ
 にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
 [1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
-ともだち♂[BE:00:ページ切り替え（行送り）]
-ともだち♀</language>
+ブラッカー[BE:00:ページ切り替え（行送り）]
+ホワイティ</language>
 		<language name="JPN_KANJI" width="256">シッポウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　アロエ
 認定　トレーナー！[BE:00:ページ切り替え（行送り）]
 [1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
-ともだち♂[BE:00:ページ切り替え（行送り）]
-ともだち♀</language>
+ブラッカー[BE:00:ページ切り替え（行送り）]
+ホワイティ</language>
 	</row>
 
 	<row id="msg_c02gym0101_girl3_01">
