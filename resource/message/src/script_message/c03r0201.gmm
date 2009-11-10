@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-10T14:00:22"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T15:29:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -265,7 +265,7 @@
 
 	<dialog left="109" top="215" right="813" bottom="835" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="136" right="1280" bottom="534" visible="yes"/>
+		<tag-palette left="803" top="136" right="1280" bottom="534" visible="yes"/>
 		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="542"/>
@@ -322,9 +322,9 @@
 0＝ポケモンのタイプ（ランダム）</comment>
 		<attribute name="キャラ指定">JUGGLING</attribute>
 		<language name="JPN" width="256">ミーも　アーティさんほどでは　ないが
-ちょいと　絵を　たしなんでいてね[BE:01:ページ切り替え（クリア）]
+ちょいと　えを　たしなんでいてね[BE:01:ページ切り替え（クリア）]
 そうですねー！　きょうは　タイプが
-[1:03:ポケモンタイプ:0]の　ポケモンを　描きたいな！[BE:01:ページ切り替え（クリア）]</language>
+[1:03:ポケモンタイプ:0]の　ポケモンを　かきたいな！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ミーも　アーティさんほどでは　ないが
 ちょいと　絵を　たしなんでいてね[BE:01:ページ切り替え（クリア）]
 そうですねー！　きょうは　タイプが
@@ -336,18 +336,18 @@
 		<language name="JPN" width="256">オー！　いるじゃん！
 なんだか　インスパイアされたね！[BE:01:ページ切り替え（クリア）]
 ありがとう！
-お礼に　これを　あげよう！！</language>
+おれいに　これを　あげよう！！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">オー！　いるじゃん！
 なんだか　インスパイアされたね！[BE:01:ページ切り替え（クリア）]
 ありがとう！
-お礼に　これを　あげよう！！</language>
+お礼に　これを　あげよう！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c03r0201_juggling_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・持っていて
 　アイテムをもらった後</comment>
-		<language name="JPN" width="256">描いている　本人が　楽しければ
-うまいとか　下手とか　関係ないねー</language>
+		<language name="JPN" width="256">かいている　ほんにんが　たのしければ
+うまいとか　ヘタとか　かんけいないね</language>
 		<language name="JPN_KANJI" width="256">描いている　本人が　楽しければ
 うまいとか　下手とか　関係ないねー</language>
 	</row>
@@ -355,7 +355,7 @@
 	<row id="msg_c03r0201_juggling_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・持っていない</comment>
 		<language name="JPN" width="256">[1:03:ポケモンタイプ:0]の　ポケモンを
-捕まえていたら　みせてほしいなー！[BE:00:ページ切り替え（行送り）]
+つかまえていたら　みせてほしいなー！[BE:00:ページ切り替え（行送り）]
 ちょっとしたモノ　あげるからねー</language>
 		<language name="JPN_KANJI" width="256">[1:03:ポケモンタイプ:0]の　ポケモンを
 捕まえていたら　みせてほしいなー！[BE:00:ページ切り替え（行送り）]
