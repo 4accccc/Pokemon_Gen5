@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-27T11:52:30"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T16:46:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="533"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="687"/>
-		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -363,10 +363,10 @@
 　POSを踏むとこのメッセージ
 0＝プレイヤー名</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ともだち♂『おい　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ブラッカー『おい　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 ポケモンセンターの　まえで
 はかせが　まっていなかったか？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ともだち♂『おい　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ブラッカー『おい　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 ポケモンセンターの　前で
 博士が　待っていなかったか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -380,10 +380,10 @@
 　演説イベント＝msg_t02_sage1_01開始
 0＝プレイヤー名</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ともだち♂『おい　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ブラッカー『おい　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 なんだか　おもしろい　はなしが
 はじまるんだってさ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ともだち♂『おい　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ブラッカー『おい　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 なんだか　おもしろい　話が
 始まるんだってさ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -930,7 +930,7 @@
 		<language name="JPN" width="256">カラクサタウン
 おいしげるツルは　はんえいのあかし</language>
 		<language name="JPN_KANJI" width="256">カラクサタウン
-生い茂るツルは繁栄の証</language>
+生い茂る　ツルは　繁栄の証</language>
 	</row>
 
 	<row id="msg_t02_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
