@@ -20,6 +20,7 @@
 #include "gamesystem/game_init.h"
 
 #include "src/field/event_mapchange.h"
+#include "src/field/field_sound.h"
 #include "system/net_err.h"
 
 #ifdef PM_DEBUG
@@ -292,6 +293,11 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
 	//メインプロセス
 	gsys->proc_result = GFL_PROC_LOCAL_Main(gsys->procsys);
 
+  // FIELD_SOUNDメイン
+  {
+    FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gsys->gamedata );
+    FIELD_SOUND_UpdateBGM( fsnd );
+  }
 	// ISSシステムメイン
 	ISS_SYS_Update( gsys->iss_sys );
 

@@ -939,8 +939,9 @@ void FIELD_PLAYER_ChangeMoveForm(
   {
     FIELDMAP_WORK *fieldWork = FIELD_PLAYER_GetFieldMapWork( fld_player );
     GAMEDATA *gdata = GAMESYSTEM_GetGameData( fld_player->gsys );
+    FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gdata );
     u32 zone_id = FIELDMAP_GetZoneID( fieldWork );
-    FIELD_SOUND_ChangePlayZoneBGM( gdata, form, zone_id );
+    FIELD_SOUND_ChangePlayZoneBGM( fsnd, gdata, form, zone_id );
   }
 }
 

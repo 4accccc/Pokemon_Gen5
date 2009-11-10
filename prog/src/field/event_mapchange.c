@@ -45,7 +45,6 @@
 #include "event_entrance_out.h"
 #include "event_appear.h"
 #include "event_disappear.h"
-#include "field_bgm_control.h"
 
 #include "savedata/gimmickwork.h"   //for GIMMICKWORK
 
@@ -307,10 +306,15 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
 		break;
   case 3:
     // BGMフェードアウト終了待ち
-    if( FIELD_BGM_CONTROL_IsFade() != TRUE )
-    { 
-      FIELD_BGM_CONTROL_FadeIn( gamedata, mcw->loc_req.zone_id, 0 );
-      (*seq)++;
+    {
+      FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
+      if( FIELD_SOUND_IsBGMFade(fsnd) != TRUE )
+      { 
+        PLAYER_WORK* player = GAMEDATA_GetPlayerWork( gamedata, 0 );
+        PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
+        FIELD_SOUND_ChangePlayZoneBGM( fsnd, gamedata, form, mcw->loc_req.zone_id );
+        (*seq)++;
+      }
     }
     break;
   case 4:
@@ -915,12 +919,12 @@ static void MAPCHG_releaseMapTools( GAMESYS_WORK * gsys )
 //--------------------------------------------------------------
 static void setFirstBGM(GAMEDATA * gamedata, u16 zone_id)
 {
+  FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
   PLAYER_WORK *player = GAMEDATA_GetPlayerWork( gamedata, 0 );
   PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
   u32 no = FIELD_SOUND_GetFieldBGMNo( gamedata, form, zone_id );
   OS_Printf("NEXT BGM NO=%d\n",no);
-  FIELD_SOUND_PlayBGM( no );
-  FIELD_SOUND_FadeInBGM( 60 );  // ゲーム開始時はBGMフェードインで始まる
+  FIELD_SOUND_PlayNextBGM_Ex( fsnd, no, 0, 60 );// ゲーム開始時はBGMフェードインで始まる
 }
 //============================================================================================
 //============================================================================================

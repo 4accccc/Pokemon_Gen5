@@ -26,9 +26,9 @@
 #include "event_entrance_effect.h"
 
 #include "event_camera_act.h" 
-#include "field_bgm_control.h"
 
 #include "sound/pm_sndsys.h"      //PMSND_PlaySE
+#include "field/field_sound.h"    // for FIELD_SOUND_ChangePlayZoneBGM
 
 //============================================================================================
 //============================================================================================
@@ -243,7 +243,12 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOORIN_FADEOUT:
-    FIELD_BGM_CONTROL_FadeOut( gamedata, fdaw->loc_req.zone_id, 30 );
+    { // BGM変更リクエスト
+      FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
+      PLAYER_WORK* player = GAMEDATA_GetPlayerWork( gamedata, 0 );
+      PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
+      FIELD_SOUND_ChangePlayZoneBGM( fsnd, gamedata, form, fdaw->loc_req.zone_id );
+    }
     GMEVENT_CallEvent( event, EVENT_FieldFadeOut(gsys, fieldmap, 0) );
     *seq = SEQ_DOORIN_END;
     break;

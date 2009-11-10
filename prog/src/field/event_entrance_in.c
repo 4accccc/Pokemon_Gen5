@@ -19,7 +19,6 @@
 #include "event_fieldmap_control.h" // EVENT_FieldFadeOut
 #include "event_entrance_effect.h"  // EVENT_FieldDoorInAnime
 #include "event_fldmmdl_control.h"  // EVENT_PlayerOneStepAnime
-#include "field_bgm_control.h"
 #include "sound/pm_sndsys.h"
 #include "field_sound.h"
 #include "sound/bgm_info.h"
@@ -129,7 +128,12 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeNone(GMEVENT * event, int *s
   switch ( *seq )
   {
   case 0:
-    FIELD_BGM_CONTROL_FadeOut( gamedata, event_work->location.zone_id, 30 );
+    { // BGM更新リクエスト
+      FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
+      PLAYER_WORK* player = GAMEDATA_GetPlayerWork( gamedata, 0 );
+      PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
+      FIELD_SOUND_ChangePlayZoneBGM( fsnd, gamedata, form, event_work->location.zone_id );
+    }
 		GMEVENT_CallEvent( event, EVENT_FieldFadeOut(gsys, fieldmap, 0) );
     ++ *seq;
     break;
@@ -182,6 +186,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep(GMEVENT * event, int *s
     break;
   case 1: // BGMフェードアウト
     { // 現在のBGMがダンジョンISS && 次のBGMもダンジョンISS ==> BGMフェードアウト
+      FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
       BGM_INFO_SYS* bgm_info = GAMEDATA_GetBGMInfoSys( gamedata );
       PLAYER_WORK* player = GAMEDATA_GetPlayerWork( gamedata, 0 );
       PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
@@ -192,7 +197,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep(GMEVENT * event, int *s
       if( ( iss_type_next == ISS_TYPE_DUNGEON ) &&
           ( iss_type_now == ISS_TYPE_DUNGEON ) )
       {
-        PMSND_FadeOutBGM( 20 );
+        FIELD_SOUND_FadeOutPushBGM( fsnd, 20 );
       }
     }
     ++ *seq;

@@ -19,13 +19,13 @@
 #include "event_fieldmap_control.h" // EVENT_FieldFadeIn
 #include "event_entrance_effect.h"  // EVENT_FieldDoorOutAnime
 #include "event_fldmmdl_control.h"  // EVENT_PlayerOneStepAnime
-#include "field_bgm_control.h"
 #include "field_place_name.h" // FIELD_PLACE_NAME_Display
 #include "fieldmap.h"       // FIELDMAP_GetPlaceNameSys
 #include "field_sound.h"
 #include "sound/pm_sndsys.h"
 #include "sound/bgm_info.h"
 #include "../../resource/sound/bgm_info/iss_type.h"
+#include "field/zonedata.h"  // for ZONEDATA_GetBGMID
 
 
 
@@ -211,12 +211,15 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep(GMEVENT * event, int *
   case 1: // 画面・BGMフェードイン
 		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
     { // 現在のBGMがダンジョンISS ==> BGMフェードイン
+      FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
       BGM_INFO_SYS* bgm_info = GAMEDATA_GetBGMInfoSys( gamedata );
-      u32 bgm_now = PMSND_GetBGMsoundNo();
+      u8 season = GAMEDATA_GetSeasonID( gamedata );
+      u16 zone_id = FIELDMAP_GetZoneID( fieldmap );
+      u32 bgm_now = ZONEDATA_GetBGMID( zone_id, season );
       u8 iss_type_now = BGM_INFO_GetIssType( bgm_info, bgm_now ); 
       if( iss_type_now == ISS_TYPE_DUNGEON )
       {
-        PMSND_FadeInBGM( 20 );  // BGMフェードイン
+        FIELD_SOUND_FadeInPopBGM( fsnd, 20 );
       }
     }
     ++ *seq;

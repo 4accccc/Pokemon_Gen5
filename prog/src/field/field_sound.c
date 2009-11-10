@@ -20,11 +20,18 @@
 //  define
 //======================================================================
 #define TRACKBIT_ALL (0xffff) ///<全track ON
-#define TRACKBIT_ACTION ((1<<8)|(1<<9)) ///<アクション用BGM Track 9,10
-#define TRACKBIT_STILL (TRACKBIT_ALL^TRACKBIT_ACTION) ///<Action Track OFF
+//#define TRACKBIT_ACTION ((1<<8)|(1<<9)) ///<アクション用BGM Track 9,10
+//#define TRACKBIT_STILL (TRACKBIT_ALL^TRACKBIT_ACTION) ///<Action Track OFF
 
-#define PLAY_NEXTBGM_FADEOUT_FRAME (60)
-#define PLAY_NEXTBGM_FADEIN_FRAME (0)
+
+// FIELD_SOUNDフェード監視状態
+typedef enum{
+  FS_STATE_PLAY,      // 再生中
+  FS_STATE_STOP,      // 停止中
+  FS_STATE_FADE_IN,   // フェードイン中
+  FS_STATE_FADE_OUT,  // フェードアウト中
+} FS_STATE;
+
 
 //======================================================================
 //  struct  
@@ -34,8 +41,15 @@
 //--------------------------------------------------------------
 struct _TAG_FIELD_SOUND
 {
-  u16 play_event_bgm; //イベントBGM再生中
-  s16 push_count; //BGM Pushカウント
+  u16 play_event_bgm; // イベントBGM再生中
+  s16 push_count; // BGM Pushカウント
+
+  FS_STATE state; // 現在の状態
+  u32 nextBGMNo;  // 次に再生するBGM
+  u16 fadeInFrame;  // フェードインフレーム数 
+  u16 fadeOutFrame; // フェードアウトフレーム数
+  BOOL fadeInPop;
+  BOOL fadeOutPush;
 };
 
 //======================================================================
@@ -44,6 +58,10 @@ struct _TAG_FIELD_SOUND
 static u32 fsnd_GetMapBGMIndex( GAMEDATA *gdata, u32 zone_id );
 static void fsnd_PushBGM( FIELD_SOUND *fsnd, int max );
 static void fsnd_PopBGM( FIELD_SOUND *fsnd );
+static void fsnd_UpdateBGM_PLAY( FIELD_SOUND* fsnd );
+static void fsnd_UpdateBGM_STOP( FIELD_SOUND* fsnd );
+static void fsnd_UpdateBGM_FADE_IN( FIELD_SOUND* fsnd );
+static void fsnd_UpdateBGM_FADE_OUT( FIELD_SOUND* fsnd );
 
 //======================================================================
 //  FILED_SOUND
@@ -59,6 +77,10 @@ FIELD_SOUND * FIELD_SOUND_Create( HEAPID heapID )
 {
   FIELD_SOUND *fsnd;
   fsnd = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_SOUND) );
+  fsnd->state = FS_STATE_STOP;
+  fsnd->nextBGMNo = 0;
+  fsnd->fadeInPop = FALSE;
+  fsnd->fadeOutPush = FALSE;
   return( fsnd );
 }
 
@@ -105,32 +127,31 @@ void FIELD_SOUND_PlayBGM( u32 bgmNo )
 //--------------------------------------------------------------
 /**
  * フィールドBGM フェードアウト → BGM再生
- * @param bgmNo 再生するBGMナンバー
+ * @param fsnd         フィールドサウンド
+ * @param bgmNo        再生するBGMナンバー
+ * @param fadeOutFrame フェードアウトフレーム数
+ * @param fadeInFrame  フェードインフレーム数
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FIELD_SOUND_PlayNextBGM( u32 bgmNo )
+void FIELD_SOUND_PlayNextBGM_Ex( 
+    FIELD_SOUND* fsnd, u32 bgmNo, u16 fadeOutFrame, u16 fadeInFrame )
 { 
-  u32 now;
-  
-  OS_Printf( "FIELD PLAY BGMNO %d\n", bgmNo );
-  
-  if( bgmNo == 0 ){
-    OS_Printf( "WARNING: FIELD PLAY BGMNO ZERO\n" );
+  if( fsnd->fadeInPop || fsnd->fadeOutPush )
+  {
     return;
   }
-  
-  now = PMSND_GetNextBGMsoundNo();
-  
-  if( now != bgmNo ){
-    PMSND_PlayNextBGM_EX( bgmNo, TRACKBIT_ALL,
-        PLAY_NEXTBGM_FADEOUT_FRAME, PLAY_NEXTBGM_FADEIN_FRAME );
-  }
+
+  // 次のBGMリクエストを更新
+  fsnd->nextBGMNo    = bgmNo;
+  fsnd->fadeInFrame  = fadeInFrame; 
+  fsnd->fadeOutFrame = fadeOutFrame; 
 }
 
 //--------------------------------------------------------------
 /**
  * ゾーン切り替え時のBGM変更
+ * @param fsnd FIELD_SOUND
  * @param gdata GAMEDATA
  * @param form PLAYER_MOVE_FORM
  * @param zone_id 
@@ -138,10 +159,11 @@ void FIELD_SOUND_PlayNextBGM( u32 bgmNo )
  */
 //--------------------------------------------------------------
 void FIELD_SOUND_ChangePlayZoneBGM(
-    GAMEDATA *gdata, PLAYER_MOVE_FORM form, u32 zone_id )
+    FIELD_SOUND* fsnd, GAMEDATA* gdata, PLAYER_MOVE_FORM form, u32 zone_id )
 {
+  // 自機フォームなどを考慮し, 指定ゾーンで再生すべきBGMを決定
   u32 no = FIELD_SOUND_GetFieldBGMNo( gdata, form, zone_id );
-  FIELD_SOUND_PlayNextBGM( no );
+  FIELD_SOUND_PlayNextBGM( fsnd, no );
 }
 
 //--------------------------------------------------------------
@@ -227,29 +249,172 @@ void FIELD_SOUND_ForcePopBGM( FIELD_SOUND *fsnd )
 //scrcmd_trainer.c
 //scrcmd_musical.c
 
+
+//======================================================================
+// フィールドBGM フェード管理
+//======================================================================
+
+//----------------------------------------------------------------------
+/**
+ * @brief BGMのフェード状態を管理し, BGMの変更を行う
+ *
+ * @param fsnd FIELD_SOUND
+ */
+//----------------------------------------------------------------------
+void FIELD_SOUND_UpdateBGM( FIELD_SOUND* fsnd )
+{
+  switch( fsnd->state )
+  {
+  case FS_STATE_PLAY:     fsnd_UpdateBGM_PLAY( fsnd );     break;
+  case FS_STATE_FADE_OUT: fsnd_UpdateBGM_FADE_OUT( fsnd ); break;
+  case FS_STATE_STOP:     fsnd_UpdateBGM_STOP( fsnd );     break;
+  case FS_STATE_FADE_IN:  fsnd_UpdateBGM_FADE_IN( fsnd );  break;
+  }
+}
+
+//----------------------------------------------------------------------
+/**
+ * @brief BGMフェードの管理(再生中)
+ */
+//----------------------------------------------------------------------
+static void fsnd_UpdateBGM_PLAY( FIELD_SOUND* fsnd )
+{
+  u32 now = PMSND_GetNextBGMsoundNo();  // 現BGM
+
+  // BGM変更リクエスト有 ==> フェードアウト開始
+  if( now != fsnd->nextBGMNo )
+  {
+    PMSND_FadeOutBGM( fsnd->fadeOutFrame );
+    fsnd->state = FS_STATE_FADE_OUT; 
+    // DEBUG:
+    OBATA_Printf( "FIELD_SOUND: fade out\n" );
+  } 
+}
+//----------------------------------------------------------------------
+/**
+ * @brief BGMフェードの管理(フェードアウト中)
+ */
+//----------------------------------------------------------------------
+static void fsnd_UpdateBGM_FADE_OUT( FIELD_SOUND* fsnd )
+{
+  // フェード終了 ==> 停止
+  if( PMSND_CheckFadeOnBGM() != TRUE )
+  {
+    if( fsnd->fadeOutPush )
+    { // BGM退避
+      fsnd_PushBGM( fsnd, FSND_PUSHCOUNT_BASEBGM );
+    }
+    else 
+    { // BGM停止
+      PMSND_StopBGM();
+    }
+    fsnd->state = FS_STATE_STOP;
+    // DEBUG:
+    OBATA_Printf( "FIELD_SOUND: stop\n" );
+  }
+}
+//----------------------------------------------------------------------
+/**
+ * @brief BGMフェードの管理(停止中)
+ */
+//----------------------------------------------------------------------
+static void fsnd_UpdateBGM_STOP( FIELD_SOUND* fsnd )
+{
+  BOOL fade_start = FALSE;
+
+  // Popリクエスト有 ==> フェードイン開始
+  if( fsnd->fadeInPop )
+  { // BGM復帰
+    fsnd_PopBGM( fsnd );
+    PMSND_FadeInBGM( fsnd->fadeInFrame );
+    fade_start = TRUE;
+  }
+  // BGM変更リクエスト有 ==> フェードイン開始
+  else if( fsnd->nextBGMNo != 0 )
+  { // BGM再生開始
+    PMSND_PlayNextBGM( fsnd->nextBGMNo, 0, fsnd->fadeInFrame ); 
+    fade_start = TRUE;
+  }
+
+  // フェードイン開始
+  if( fade_start )
+  {
+    fsnd->state = FS_STATE_FADE_IN;
+    // DEBUG:
+    OBATA_Printf( "FIELD_SOUND: fade in\n" );
+  }
+}
+//----------------------------------------------------------------------
+/**
+ * @brief BGMフェードの管理(フェードイン中)
+ */
+//----------------------------------------------------------------------
+static void fsnd_UpdateBGM_FADE_IN( FIELD_SOUND* fsnd )
+{
+  // フェード終了 ==> 再生中
+  if( PMSND_CheckFadeOnBGM() != TRUE )
+  {
+    fsnd->state = FS_STATE_PLAY;
+    // DEBUG:
+    OBATA_Printf( "FIELD_SOUND: play\n" );
+  }
+}
+
+
 //======================================================================
 //  フィールド BGM フェード
 //======================================================================
 //--------------------------------------------------------------
 /**
  * @brief BGMフェードイン
+ * @param fsnd   FIELD_SOUND
+ * @param bgmNo  再生するBGM
  * @param frames フェードインに要するフレーム数
  */
 //--------------------------------------------------------------
-void FIELD_SOUND_FadeInBGM( u16 frames )
+void FIELD_SOUND_FadeInBGM( FIELD_SOUND* fsnd, u32 bgmNo, u16 frames )
 {
-  PMSND_FadeInBGM( frames );
+  fsnd->state       = FS_STATE_STOP;
+  fsnd->nextBGMNo   = bgmNo;
+  fsnd->fadeInFrame = frames;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief BGM Pop ==> フェードイン
+ * @param fsnd   FIELD_SOUND
+ * @param frames フェードインに要するフレーム数
+ */
+//--------------------------------------------------------------
+void FIELD_SOUND_FadeInPopBGM( FIELD_SOUND* fsnd, u16 frames )
+{
+  FIELD_SOUND_FadeInBGM( fsnd, 0, frames );
+  fsnd->fadeInPop = TRUE;
 }
 
 //--------------------------------------------------------------
 /**
  * @brief BGMフェードアウト
+ * @param fsnd   FIELD_SOUND
  * @param frames フェードアウトに要するフレーム数
  */
 //--------------------------------------------------------------
-void FIELD_SOUND_FadeOutBGM( u16 frames )
+void FIELD_SOUND_FadeOutBGM( FIELD_SOUND* fsnd, u16 frames )
 {
-  PMSND_FadeOutBGM( frames );
+  FIELD_SOUND_PlayNextBGM_Ex( fsnd, 0, frames, 0 );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief BGMフェードアウト ==> BGM Push
+ * @param fsnd   FIELD_SOUND
+ * @param frames フェードアウトに要するフレーム数
+ */
+//--------------------------------------------------------------
+void FIELD_SOUND_FadeOutPushBGM( FIELD_SOUND* fsnd, u16 frames )
+{
+  FIELD_SOUND_FadeOutBGM( fsnd, frames );
+  fsnd->fadeOutPush = TRUE;
 }
 
 //--------------------------------------------------------------
@@ -258,11 +423,17 @@ void FIELD_SOUND_FadeOutBGM( u16 frames )
  * @return BGMがフェード中かどうか(TRUE : フェード中)
  */
 //--------------------------------------------------------------
-BOOL FIELD_SOUND_IsBGMFade()
+BOOL FIELD_SOUND_IsBGMFade( FIELD_SOUND* fsnd )
 {
-  return PMSND_CheckFadeOnBGM();
+  if( (fsnd->state == FS_STATE_FADE_IN) || 
+      (fsnd->state == FS_STATE_FADE_OUT) )
+  { 
+    return TRUE;
+  }
+  return FALSE;
 }
 
+#if 0
 //======================================================================
 //  フィールド BGM トラック関連
 //======================================================================
@@ -315,6 +486,8 @@ void FIELD_SOUND_ChangeBGMActionVolume( int vol )
 {
 	PMSND_ChangeBGMVolume( TRACKBIT_ACTION, vol );
 }
+#endif
+
 
 //======================================================================
 //  フィールド BGM BGMナンバー
@@ -420,6 +593,13 @@ static void fsnd_PushBGM( FIELD_SOUND *fsnd, int max )
   PMSND_PauseBGM( TRUE );
   PMSND_PushBGM();
   fsnd->push_count++;
+  // 監視状態を停止
+  fsnd->state = FS_STATE_STOP;
+  fsnd->nextBGMNo = 0;
+  fsnd->fadeOutPush = FALSE;
+
+  // DEBUG:
+  OBATA_Printf( "FIELD_SOUND: push BGM\n" );
 }
 
 //--------------------------------------------------------------
@@ -441,4 +621,11 @@ static void fsnd_PopBGM( FIELD_SOUND *fsnd )
   PMSND_PopBGM();
   PMSND_PauseBGM( FALSE );
   fsnd->push_count--;
+  // 監視状態を復帰
+  fsnd->state = FS_STATE_PLAY;
+  fsnd->nextBGMNo = PMSND_GetBGMsoundNo();
+  fsnd->fadeInPop = FALSE;
+
+  // DEBUG:
+  OBATA_Printf( "FIELD_SOUND: pop BGM\n" );
 }
