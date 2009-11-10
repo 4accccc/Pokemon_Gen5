@@ -1244,13 +1244,14 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
 		tlw->mcss	 = mcss;
 		// load character data for 3D (software sprite)
 		{
-			tlw->pBufChar = GFL_ARC_UTIL_LoadBGCharacter( maw->arcID, maw->ncbr, FALSE, &tlw->pCharData, mcss->heapID );
+			tlw->pBufChar = GFL_ARC_UTIL_LoadBGCharacter( maw->arcID, maw->ncbr, FALSE, &tlw->pCharData,
+                                                    GFL_HEAP_LOWID( mcss->heapID ) );
 			GF_ASSERT( tlw->pBufChar != NULL);
 		}
 
 		// load palette data
 		{
-			tlw->pBufPltt = GFL_ARC_UTIL_LoadPalette( maw->arcID, maw->nclr, &tlw->pPlttData, mcss->heapID );
+			tlw->pBufPltt = GFL_ARC_UTIL_LoadPalette( maw->arcID, maw->nclr, &tlw->pPlttData, GFL_HEAP_LOWID( mcss->heapID ) );
 			GF_ASSERT( tlw->pBufPltt != NULL);
 			mcss->pltt_data = GFL_HEAP_AllocMemory( mcss->heapID, tlw->pPlttData->szByte );
 			mcss->pltt_data_size = tlw->pPlttData->szByte;
