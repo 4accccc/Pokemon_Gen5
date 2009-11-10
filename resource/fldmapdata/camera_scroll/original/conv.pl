@@ -90,7 +90,7 @@ foreach $data ( @input_file )
 #o—Í
 $filename = $ARGV[0];
 $filename =~ s/\.txt//g;
-open( FILEOUT, ">original_".$filename.".bin" );
+open( FILEOUT, ">".$filename.".bin" );
 binmode( FILEOUT );
 {
   print( FILEOUT pack( "I", $DATANUM ) ); 

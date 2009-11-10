@@ -88,9 +88,8 @@ $(HEADERDUMMY_TARGET):$(HEADERDIR)field_camera.h
 
 else
 
-
 #‚»‚¤‚Å‚Í‚È‚¢ˆê”Ê
-$(targetname).txt: $(XLSFILE) $(HEADERDUMMY_TARGET)
+$(targetname).txt: $(XLSFILE)
 	-ls *.bin > $(targetname).txt
 endif
 
