@@ -157,8 +157,7 @@ VMCMD_RESULT EvCmdSetCGearFlag( VMHANDLE *core, void *wk )
   CGEAR_SAVEDATA * cgear_sv = CGEAR_SV_GetCGearSaveData( sv );
   u16 flag = SCRCMD_GetVMWorkValue( core, wk );
 
-  //CGEAR_SV_SetCGearONOFF( cgear_sv, flag );
-  CGEAR_SV_SetCGearONOFF( cgear_sv, FALSE );
+  CGEAR_SV_SetCGearONOFF( cgear_sv, flag );
 
   return VMCMD_RESULT_CONTINUE;
 }
