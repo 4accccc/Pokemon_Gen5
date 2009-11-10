@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-06T14:20:41"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T15:04:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,126 +292,11 @@
 	</lock>
 
 
-	<row id="msg_c02gym0203_leader_01">
-		<comment>♀
-・戦闘前メッセージ</comment>
-		<attribute name="キャラ指定">LEADER2</attribute>
-		<language name="JPN" width="256">いらっしゃい！[BE:01:ページ切り替え（クリア）]
-シッポウはくぶつかんの　かんちょう　にして
-シッポウジムの　ジムリーダー[BE:01:ページ切り替え（クリア）]
-それが　この　わたし
-アロエ　だよ！[BE:01:ページ切り替え（クリア）]
-さあて　ちょうせんしゃ　さん
-あいじょう　こめて　そだてたポケモンで[BE:00:ページ切り替え（行送り）]
-どんな　たたかいかたを　するのか[BE:00:ページ切り替え（行送り）]
-けんきゅう　させて　もらうよ！</language>
-		<language name="JPN_KANJI" width="256">いらっしゃい！[BE:01:ページ切り替え（クリア）]
-シッポウ博物館の　館長にして
-シッポウジムの　ジムリーダー[BE:01:ページ切り替え（クリア）]
-それが　この　わたし
-アロエ　だよ！[BE:01:ページ切り替え（クリア）]
-さあて　挑戦者さん
-愛情込めて　育てたポケモンで[BE:00:ページ切り替え（行送り）]
-どんな　闘い方をするのか[BE:00:ページ切り替え（行送り）]
-研究させて　もらうよ！</language>
-	</row>
-
-	<row id="msg_c02gym0203_leader_02">
-		<comment>♀
-・戦闘後メッセージ</comment>
-		<attribute name="キャラ指定">LEADER2</attribute>
-		<language name="JPN" width="256">ほれぼれ　するような
-みごとな　たたかいっぷり！[BE:01:ページ切り替え（クリア）]
-この　ベーシックバッジを
-うけとるのに　ふさわしい[BE:00:ページ切り替え（行送り）]
-ポケモントレーナーだね　アンタ！</language>
-		<language name="JPN_KANJI" width="256">ほれぼれ　するような
-みごとな　たたかいっぷり！[BE:01:ページ切り替え（クリア）]
-この　ベーシックバッジを
-受け取るのに　相応しい[BE:00:ページ切り替え（行送り）]
-ポケモントレーナーだね　アンタ！</language>
-	</row>
-
-	<row id="msg_c02gym0203_leader_03">
-		<comment>♀
-・ファンファーレ＋バッジ入手処理</comment>
-		<attribute name="キャラ指定">LEADER2</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は　アロエから
-ベーシックバッジを　もらった！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　アロエから
-ベーシックバッジを　もらった！</language>
-	</row>
-
-	<row id="msg_c02gym0203_leader_04">
-		<comment>♀
-・アイテム入手処理</comment>
-		<attribute name="キャラ指定">LEADER2</attribute>
-		<language name="JPN" width="256">その　バッジを　持っていれば
-どんな　ポケモンでも[BE:01:ページ切り替え（クリア）]
-レベル３０までなら　アンタの
-いうことを　きいてくれるよ！[BE:01:ページ切り替え（クリア）]
-あと　この　わざマシンも
-もっていくと　いいさ！</language>
-		<language name="JPN_KANJI" width="256">その　バッジを　持っていれば
-どんな　ポケモンでも[BE:01:ページ切り替え（クリア）]
-レベル３０までなら　アンタの
-いうことを　きいてくれるよ！[BE:01:ページ切り替え（クリア）]
-あと　この　わざマシンも
-持っていくと　いいさ！</language>
-	</row>
-
-	<row id="msg_c02gym0203_leader_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♀
-・アイテム入手処理後
-・初回は続けて
-　msg_c02gym0203_ad_01表示
-</comment>
-		<attribute name="キャラ指定">LEADER2</attribute>
-		<language name="JPN" width="256">わざマシンの　かいせつ</language>
-		<language name="JPN_KANJI" width="256">わざマシンの解説（予定）</language>
-	</row>
-
-	<row id="msg_c02gym0203_leader_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♀
-・
-・msg_c02gym0101_leader_05
-表示後に再度会話</comment>
-		<attribute name="キャラ指定">LEADER2</attribute>
-		<language name="JPN" width="256">わざマシンを　もらったあと</language>
-		<language name="JPN_KANJI" width="256">わざマシンをもらった後</language>
-	</row>
-
-	<row id="msg_c02gym0203_ad_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・メッセージ表示後
-　ジムリーダー退場
-　c02gym0101に出現</comment>
-		<attribute name="キャラ指定">副館長（Assistant　Director）
-助手♂</attribute>
-		<language name="JPN" width="256">？？？『たいへん！　たいへんだよ！[BE:01:ページ切り替え（クリア）]
-ママ！！　はくぶつかんの
-てんじぶつを　もっていかれた！！[BE:00:ページ切り替え（行送り）]
-ママの　だいじな　ホネの　ひょうほんも！！</language>
-		<language name="JPN_KANJI" width="256">？？？『大変！　大変だよ！　ママ！！
-博物館の　展示物が　持って行かれた！！[BE:00:ページ切り替え（行送り）]
-ママの　大事な　骨格標本も！！</language>
-	</row>
-
-	<row id="msg_c02gym0203_leader_07">
-		<comment>♀
-・メッセージ表示後、博物館のほうへ
-・副館長も追いかけるようにして
-　博物館のほうへ移動
-・そうすると主人公、操作可能に</comment>
-		<attribute name="キャラ指定">LEADER2</attribute>
-		<language name="JPN" width="256">アロエ『なんだって！
-どういうことだい！？[BE:01:ページ切り替え（クリア）]
-[1:00:トレーナー名:0]！
-アンタも　おいで！！</language>
-		<language name="JPN_KANJI" width="256">アロエ『なんだって！
-どういうことだい！？[BE:01:ページ切り替え（クリア）]
-[1:00:トレーナー名:0]！
-アンタも　おいで！！</language>
+	<row id="msg_mapscript_dummy">
+		<comment>？？？</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<flowchart-group-list>
