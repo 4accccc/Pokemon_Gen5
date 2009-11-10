@@ -19,23 +19,49 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA   ev_c03gym0101			//再利用してください
-_EVENT_DATA   ev_prg_c03gym0101_tr1_appear
-_EVENT_DATA   ev_prg_c03gym0101_tr2_appear
-_EVENT_DATA   ev_prg_c03gym0101_tr1_btl
-_EVENT_DATA   ev_prg_c03gym0101_tr2_btl
-_EVENT_DATA   ev_pos_c03gym0101_switch_00
-_EVENT_DATA   ev_pos_c03gym0101_switch_01
-_EVENT_DATA   ev_pos_c03gym0101_switch_02
-_EVENT_DATA   ev_pos_c03gym0101_switch_03
-_EVENT_DATA   ev_pos_c03gym0101_switch_04
-_EVENT_DATA   ev_pos_c03gym0101_switch_05
-_EVENT_DATA   ev_pos_c03gym0101_switch_06
-_EVENT_DATA   ev_pos_c03gym0101_switch_07
-_EVENT_DATA   ev_pos_c03gym0101_switch_08	//トラップ：トレーナーが出てくるスイッチ（右上）
-_EVENT_DATA   ev_pos_c03gym0101_switch_09	//トラップ：トレーナーが出てくるスイッチ（左下）
+_EVENT_DATA		ev_c03gym0101			//再利用してください
+_EVENT_DATA		ev_prg_c03gym0101_tr1_appear
+_EVENT_DATA		ev_prg_c03gym0101_tr2_appear
+_EVENT_DATA		ev_prg_c03gym0101_tr1_btl
+_EVENT_DATA		ev_prg_c03gym0101_tr2_btl
+_EVENT_DATA		ev_pos_c03gym0101_switch_00
+_EVENT_DATA		ev_pos_c03gym0101_switch_01
+_EVENT_DATA		ev_pos_c03gym0101_switch_02
+_EVENT_DATA		ev_pos_c03gym0101_switch_03
+_EVENT_DATA		ev_pos_c03gym0101_switch_04
+_EVENT_DATA		ev_pos_c03gym0101_switch_05
+_EVENT_DATA		ev_pos_c03gym0101_switch_06
+_EVENT_DATA		ev_pos_c03gym0101_switch_07
+_EVENT_DATA		ev_pos_c03gym0101_switch_08	//トラップ：トレーナーが出てくるスイッチ（右上）
+_EVENT_DATA		ev_pos_c03gym0101_switch_09	//トラップ：トレーナーが出てくるスイッチ（左下）
 _EVENT_DATA		ev_zone_c03gym0101
+_EVENT_DATA		ev_c03gym0101_trainer_01
+_EVENT_DATA		ev_c03gym0101_trainer_02
 _EVENT_DATA_END
+
+
+//------------------------------注意--------------------------------//
+//																	//
+//	ジムギミックに LOCALWORK0～9 まで使用ししています。				//
+//	同マップ内の使用を禁止します。									//
+//	LOCALWORK0～7 ⇒ ポール解除スイッチ								//
+//	LOCALWORK8～9 ⇒ トラップ(騙し絵)トレーナー						//
+//																	//
+//------------------------------------------------------------------//
+
+
+/************************************************************/
+/*					ジムギミック初期化						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_c03gym0101
+	//ジムギミック初期化コマンド
+	_GYM_INSECT_INIT()
+
+	//虫ジムのトラップ発動までトレーナーを非表示
+	_FLAG_SET( FV_C03GYM0101_TR01 )
+	_FLAG_SET( FV_C03GYM0101_TR02 )
+
+INIT_EVENT_END
 
 
 /************************************************************/
@@ -293,7 +319,6 @@ EVENT_START	ev_pos_c03gym0101_switch_09
 EVENT_END
 
 
-
 /************************************************************/
 /*			ジムギミック　トレーナーその2を表示状態にする	*/
 /************************************************************/
@@ -353,13 +378,20 @@ ev_pole_unlock:
 	_SE_WAIT()
 _RET
 
-/************************************************************/
-/*					ジムギミック初期化						*/
-/************************************************************/
-ev_zone_c03gym0101:
-	//ジムギミック初期化コマンド
-	_GYM_INSECT_INIT()
-_END
 
+/************************************************************/
+/*				トレーナー（右上）の話しかけ				*/
+/************************************************************/
+EVENT_START	ev_c03gym0101_trainer_01
+	_TALK_OBJ_START()
+EVENT_END
+
+
+/************************************************************/
+/*				トレーナー（左下）の話しかけ				*/
+/************************************************************/
+EVENT_START	ev_c03gym0101_trainer_02
+	_TALK_OBJ_START()
+EVENT_END
 
 

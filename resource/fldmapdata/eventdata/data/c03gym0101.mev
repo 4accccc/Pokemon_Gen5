@@ -1,10 +1,10 @@
 #event data
-#save date:2009/11/06 19:54:05
+#save date:2009/11/10 19:19:12
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03gym0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/11/06 19:54:05
+#save date:2009/11/10 19:19:12
 2
 #hold event type:
 1
@@ -38,7 +38,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
-8 0 -200
+8 0 -280
 #event number: 1
 #type
 1
@@ -67,7 +67,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
-40 0 -200
+40 0 -280
 #event number: 2
 #type
 1
@@ -96,7 +96,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
-24 0 -200
+24 0 -280
 #event number: 3
 #type
 1
@@ -125,7 +125,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
-104 0 -136
+104 0 -216
 #event number: 4
 #type
 1
@@ -154,7 +154,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
-136 0 -136
+136 0 -216
 #event number: 5
 #type
 1
@@ -183,7 +183,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
-120 0 -136
+120 0 -216
 #event number: 6
 #type
 1
@@ -212,7 +212,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--88 0 -136
+-88 0 -216
 #event number: 7
 #type
 1
@@ -241,7 +241,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--56 0 -136
+-56 0 -216
 #event number: 8
 #type
 1
@@ -270,7 +270,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--72 0 -136
+-72 0 -216
 #event number: 9
 #type
 1
@@ -299,7 +299,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--184 0 -72
+-184 0 -152
 #event number: 10
 #type
 1
@@ -328,7 +328,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--152 0 -72
+-152 0 -152
 #event number: 11
 #type
 1
@@ -357,7 +357,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--168 0 -72
+-168 0 -152
 #event number: 12
 #type
 1
@@ -386,7 +386,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--88 0 -8
+-88 0 -88
 #event number: 13
 #type
 1
@@ -415,7 +415,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--56 0 -8
+-56 0 -88
 #event number: 14
 #type
 1
@@ -444,7 +444,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--72 0 -8
+-72 0 -88
 #event number: 15
 #type
 1
@@ -473,7 +473,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
-104 0 -8
+104 0 -88
 #event number: 16
 #type
 1
@@ -502,7 +502,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
-136 0 -8
+136 0 -88
 #event number: 17
 #type
 1
@@ -531,7 +531,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
-120 0 -8
+120 0 -88
 #event number: 18
 #type
 1
@@ -560,7 +560,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
-8 0 56
+8 0 -24
 #event number: 19
 #type
 1
@@ -589,7 +589,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
-40 0 56
+40 0 -24
 #event number: 20
 #type
 1
@@ -618,7 +618,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
-24 0 56
+24 0 -24
 #event number: 21
 #type
 1
@@ -627,13 +627,13 @@ C03GYM0101_TRAINER_01
 #OBJ CODE Number
 BOY1
 #MOVE CODE Number
-MV_RND
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
 FV_C03GYM0101_TR01
 #Event Script Name
-SCRID_DUMMY
+SCRID_C03GYM0101_TRAINER_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -647,7 +647,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
-120 0 -56
+120 0 -136
 #event number: 22
 #type
 1
@@ -656,13 +656,13 @@ C03GYM0101_TRAINER_02
 #OBJ CODE Number
 BOY1
 #MOVE CODE Number
-MV_RND
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
 FV_C03GYM0101_TR02
 #Event Script Name
-SCRID_DUMMY
+SCRID_C03GYM0101_TRAINER_02
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -676,12 +676,12 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--168 0 -120
+-168 0 -200
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/11/06 19:54:05
+#save date:2009/11/10 19:19:12
 2
 #hold event type:
 1
@@ -691,7 +691,7 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/11/06 19:54:05
+#save date:2009/11/10 19:19:12
 2
 #hold event type:
 1
@@ -711,7 +711,7 @@ LOCALWORK6
 #Pos Event Size Z
 1
 #position
-24 0 -136
+24 0 -216
 #event number: 1
 #Pos Event Label
 POS_C03GYM0101_SWITCH_07
@@ -726,14 +726,14 @@ LOCALWORK7
 #Pos Event Size Z
 1
 #position
-216 0 -136
+216 0 -216
 #event number: 2
 #Pos Event Label
-POS_C03GYM0101_SWITCH_08
+POS_C03GYM0101_SWITCH_03
 #Pos Script Name
-SCRID_POS_C03GYM0101_SWITCH_08
+SCRID_POS_C03GYM0101_SWITCH_03
 #Event Trigger Work Name
-LOCALWORK8
+LOCALWORK3
 #Event Trigger Work Value
 0
 #Pos Event Size X
@@ -741,7 +741,7 @@ LOCALWORK8
 #Pos Event Size Z
 1
 #position
-24 0 -8
+24 0 -88
 #event number: 3
 #Pos Event Label
 POS_C03GYM0101_SWITCH_05
@@ -756,7 +756,7 @@ LOCALWORK5
 #Pos Event Size Z
 1
 #position
--72 0 -72
+-72 0 -152
 #event number: 4
 #Pos Event Label
 POS_C03GYM0101_SWITCH_02
@@ -771,7 +771,7 @@ LOCALWORK2
 #Pos Event Size Z
 1
 #position
--168 0 -8
+-168 0 -88
 #event number: 5
 #Pos Event Label
 POS_C03GYM0101_SWITCH_04
@@ -786,7 +786,7 @@ LOCALWORK4
 #Pos Event Size Z
 1
 #position
-216 0 -8
+216 0 -88
 #event number: 6
 #Pos Event Label
 POS_C03GYM0101_SWITCH_00
@@ -801,7 +801,7 @@ LOCALWORK0
 #Pos Event Size Z
 1
 #position
--72 0 56
+-72 0 -24
 #event number: 7
 #Pos Event Label
 POS_C03GYM0101_SWITCH_01
@@ -816,7 +816,7 @@ LOCALWORK1
 #Pos Event Size Z
 1
 #position
-120 0 56
+120 0 -24
 #event number: 8
 #Pos Event Label
 POS_C03GYM0101_SWITCH_09
@@ -831,7 +831,7 @@ LOCALWORK9
 #Pos Event Size Z
 1
 #position
--168 0 -136
+-168 0 -216
 #event number: 9
 #Pos Event Label
 POS_C03GYM0101_SWITCH_08
@@ -846,12 +846,12 @@ LOCALWORK8
 #Pos Event Size Z
 1
 #position
-120 0 -72
+120 0 -152
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/11/06 19:54:05
+#save date:2009/11/10 19:19:12
 2
 #hold event type:
 1
@@ -869,7 +869,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
-8 0 -376
+8 0 -456
 #event number: 1
 #Door Event Label
 DOOR_ID_C03GYM0101_C03P03_EXIT02
@@ -882,7 +882,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
-24 0 -376
+24 0 -456
 #event number: 2
 #Door Event Label
 DOOR_ID_C03GYM0101_C03P03_EXIT03
@@ -895,6 +895,6 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
-40 0 -376
+40 0 -456
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
