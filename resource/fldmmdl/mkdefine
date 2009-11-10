@@ -4,7 +4,7 @@
 #======================================================================
 #コンバート対象ユーザー定義
 #
-USERS = kagaya lee_hyunjung takahashi
+USERS = kagaya lee_hyunjung takahashi saya_tsuruta
 
 #対象ディレクトリ
 #
@@ -37,6 +37,10 @@ FMMDLLIST_CSV = fldmmdl_list.csv
 #管理表ncg対応ファイル
 #
 FMMDLNCGLIST_CSV = fldmmdl_ncglist.csv
+
+#ポケモン管理表テキストファイル
+#
+FMMDLPOKELIST_CSV = fldmmdl_poke_list.csv
 
 #管理表から生成されるリソース一覧
 #
