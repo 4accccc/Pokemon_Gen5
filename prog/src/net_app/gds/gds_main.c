@@ -70,6 +70,9 @@ static NNSFndHeapHandle _wtHeapHandle;
 //==============================================================================
 //	プロトタイプ宣言
 //==============================================================================
+static GFL_PROC_RESULT GdsMainProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static GFL_PROC_RESULT GdsMainProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static void GdsMain_CommInitialize(GDSPROC_MAIN_WORK *gmw);
 static void GdsMain_CommFree(GDSPROC_MAIN_WORK *gmw);
 static void *AllocFunc( DWCAllocType name, u32   size, int align );
@@ -78,11 +81,11 @@ static void FreeFunc(DWCAllocType name, void* ptr,  u32 size);
 //==============================================================================
 //	データ
 //==============================================================================
-///WIFI接続画面プロセス定義データ
-static const GFL_PROC_DATA GdsConnectProcData = {
-	GdsConnectProc_Init,
-	GdsConnectProc_Main,
-	GdsConnectProc_End,
+///GDSメインプロセス定義データ
+const GFL_PROC_DATA GdsMainProcData = {
+	GdsMainProc_Init,
+	GdsMainProc_Main,
+	GdsMainProc_End,
 };
 
 
@@ -96,7 +99,7 @@ static const GFL_PROC_DATA GdsConnectProcData = {
  * @retval  処理状況
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT GdsMainProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+static GFL_PROC_RESULT GdsMainProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	GDSPROC_MAIN_WORK *gmw;
 	
@@ -132,7 +135,7 @@ GFL_PROC_RESULT GdsMainProc_Init( GFL_PROC * proc, int * seq, void * pwk, void *
  * @retval  処理状況
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	GDSPROC_MAIN_WORK * gmw  = mywk;
 	enum{
@@ -241,7 +244,7 @@ GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk, void *
  * @retval  処理状況
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT GdsMainProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+static GFL_PROC_RESULT GdsMainProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	GDSPROC_MAIN_WORK * gmw  = mywk;
 

@@ -154,9 +154,9 @@ typedef struct{
 //==============================================================================
 //	プロトタイプ宣言
 //==============================================================================
-GFL_PROC_RESULT GdsConnectProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
-GFL_PROC_RESULT GdsConnectProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
-GFL_PROC_RESULT GdsConnectProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static GFL_PROC_RESULT GdsConnectProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static GFL_PROC_RESULT GdsConnectProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static GFL_PROC_RESULT GdsConnectProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static void GdsConnectMenu_VramBankSet(void);
 static void BgExit( void );
 static void BgGraphicSet( GDS_CONNECT_SYS * wk );
@@ -229,12 +229,12 @@ static int (*Functable[])( GDS_CONNECT_SYS *wk ) = {
 //==============================================================================
 //	データ
 //==============================================================================
-const GFL_PROC_DATA GdsConnect_ProcData =
+const GFL_PROC_DATA GdsConnectProcData =
 {	
 	GdsConnectProc_Init,
 	GdsConnectProc_Main,
 	GdsConnectProc_End,
-}
+};
 
 //--------------------------------------------------------------
 //	はい・いいえ　ウィンドウ
@@ -269,7 +269,7 @@ static const BMPWIN_YESNO_DAT YesNoBmpWin = {
  * @retval  処理状況
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT GdsConnectProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+static GFL_PROC_RESULT GdsConnectProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	GDS_CONNECT_SYS *wk;
 	
@@ -365,7 +365,7 @@ GFL_PROC_RESULT GdsConnectProc_Init( GFL_PROC * proc, int * seq, void * pwk, voi
  * @retval  処理状況
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT GdsConnectProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+static GFL_PROC_RESULT GdsConnectProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	GDS_CONNECT_SYS * wk  = mywk;
 	int ret, temp_subprocess_seq;
@@ -421,7 +421,7 @@ GFL_PROC_RESULT GdsConnectProc_Main( GFL_PROC * proc, int * seq, void * pwk, voi
  * @retval  処理状況
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT GdsConnectProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+static GFL_PROC_RESULT GdsConnectProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	GDS_CONNECT_SYS * wk  = mywk;
 

@@ -44,13 +44,10 @@ typedef struct{
 //==============================================================================
 //	äOïîä÷êîêÈåæ
 //==============================================================================
-
-extern GFL_PROC_RESULT GdsMainProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
-extern GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
-extern GFL_PROC_RESULT GdsMainProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+extern const GFL_PROC_DATA GdsMainProcData;
 
 //-- gds_connect.h --//
-extern const GFL_PROC_DATA GdsConnect_ProcData;
+extern const GFL_PROC_DATA GdsConnectProcData;
 
 
 #endif	//__GDS_MAIN_H__
