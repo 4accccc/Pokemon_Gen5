@@ -100,6 +100,8 @@ typedef enum
 //======================================================================
 #pragma mark [> struct
 
+typedef struct _COMM_TVT_MIC_WORK COMM_TVT_MIC_WORK;
+
 typedef struct
 {
   u32 dummy;
@@ -150,6 +152,7 @@ typedef struct
   u32       sendSecMax;
   u32       encTimeMax;  
 
+  COMM_TVT_MIC_WORK *micWork;
 }CAM_TEST_WORK;
 
 
@@ -169,7 +172,15 @@ static void CAM_TEST_InitComm( CAM_TEST_WORK *work );
 static void CAM_TEST_ExitComm( CAM_TEST_WORK *work );
 static void CAM_TEST_UpdateComm( CAM_TEST_WORK *work );
 
-#pragma mark [> comm prot
+extern COMM_TVT_MIC_WORK* COMM_TVT_MIC_Init( CAM_TEST_WORK *work );
+extern void COMM_TVT_MIC_Term( CAM_TEST_WORK *work , COMM_TVT_MIC_WORK *micWork );
+extern void COMM_TVT_MIC_Main( CAM_TEST_WORK *work , COMM_TVT_MIC_WORK *micWork );
+extern const BOOL COMM_TVT_MIC_StartRecord( CAM_TEST_WORK *work , COMM_TVT_MIC_WORK *micWork );
+extern const BOOL COMM_TVT_MIC_StopRecord( CAM_TEST_WORK *work , COMM_TVT_MIC_WORK *micWork );
+extern const BOOL COMM_TVT_MIC_PlayVoice( CAM_TEST_WORK *work , COMM_TVT_MIC_WORK *micWork , void *buffer , u32 buffSize );
+
+
+#pragma mark [> comm proc
 
 static const BOOL CAM_TEST_Send_PhotoData( CAM_TEST_WORK *work );
 static void CAM_TEST_Post_PhotoData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
@@ -262,17 +273,17 @@ static GFL_PROC_RESULT CAM_TEST_InitProc(GFL_PROC * proc, int * seq, void * pwk,
   GFL_STD_MemClear( G2_GetBG3ScrPtr() , 256*192*sizeof(u16) );
   
   work->capReq = 0;
-  work->capBuff[0] = (void*)(work->picBuffAdr);
-  work->capBuff[1] = (void*)(work->picBuffAdr + CAM_TEST_CAP_PIXEL*sizeof(u16));
-  work->encBuff    = (void*)(work->picBuffAdr + CAM_TEST_CAP_PIXEL*sizeof(u16)*2);
-  work->sendBuff   = (void*)(work->picBuffAdr + CAM_TEST_CAP_PIXEL*sizeof(u16)*3);
-  work->postBuff   = (void*)(work->wramAdrC );
-  work->jpgConvBuffAdr = work->wramAdrC + CAM_TEST_CAP_PIXEL*sizeof(u16)*1;
-  GFL_STD_MemClear( (void*)work->wramAdrB , 0x20000 );
-  GFL_STD_MemClear( (void*)work->wramAdrC , 0x20000 );
-  OS_TPrintf("[%x][leastSize:%x]\n",work->wramAdrB,((u32)work->sendBuff+CAM_TEST_CAP_PIXEL*sizeof(u16))-(u32)work->wramAdrB );
-  OS_TPrintf("[%x][leastSize:%x]\n",work->wramAdrC,((u32)work->jpgConvBuffAdr+CAM_TEST_CAP_PIXEL*sizeof(u16))-(u32)work->wramAdrC );
-  OS_TPrintf("[%x]\n",work->wramAdrC);
+  work->encBuff    = (void*)(work->picBuffAdr);
+  work->capBuff[0] = (void*)(work->wramAdrC);
+  work->capBuff[1] = (void*)(work->wramAdrC + CAM_TEST_CAP_PIXEL*sizeof(u16));
+  work->sendBuff   = (void*)(work->wramAdrC + CAM_TEST_CAP_PIXEL*sizeof(u16)*2);
+  work->postBuff   = (void*)(work->wramAdrC + CAM_TEST_CAP_PIXEL*sizeof(u16)*3);
+  work->jpgConvBuffAdr = work->wramAdrC + CAM_TEST_CAP_PIXEL*sizeof(u16)*4;
+  GFL_STD_MemClear( (void*)work->wramAdrB , 0x40000 );
+  GFL_STD_MemClear( (void*)work->wramAdrC , 0x40000 );
+  CAMERA_COMM_Print("[%x][leastSize:%x]\n",work->wramAdrB,((u32)work->encBuff+CAM_TEST_CAP_PIXEL*sizeof(u16))-(u32)work->wramAdrB );
+  CAMERA_COMM_Print("[%x][leastSize:%x]\n",work->wramAdrC,((u32)work->jpgConvBuffAdr+CAM_TEST_CAP_PIXEL*sizeof(u16))-(u32)work->wramAdrC );
+  CAMERA_COMM_Print("[%x]\n",work->wramAdrC);
 /*
   work->capBuff[0] = GFL_HEAP_AllocMemory( work->heapId , CAM_TEST_CAP_PIXEL*sizeof(u16) );
   work->capBuff[1] = GFL_HEAP_AllocMemory( work->heapId , CAM_TEST_CAP_PIXEL*sizeof(u16) );
@@ -293,7 +304,7 @@ static GFL_PROC_RESULT CAM_TEST_InitProc(GFL_PROC * proc, int * seq, void * pwk,
   CAMERA_SYS_StartCapture( work->camSys );
   work->capReq = 1;
   work->isDouble = FALSE;
-  OS_TPrintf("[%x]\n",GFL_HEAP_GetHeapFreeSize( HEAPID_ARIIZUMI_DEBUG ));
+  CAMERA_COMM_Print("[%x]\n",GFL_HEAP_GetHeapFreeSize( HEAPID_ARIIZUMI_DEBUG ));
   
   {
     u8 i;
@@ -310,6 +321,9 @@ static GFL_PROC_RESULT CAM_TEST_InitProc(GFL_PROC * proc, int * seq, void * pwk,
     work->sendSecCntIdx = 0;
     work->encTimeCntIdx = 0;
   }
+  
+  work->micWork = COMM_TVT_MIC_Init( work ); 
+  
   return GFL_PROC_RES_FINISH;
 }
 
@@ -334,6 +348,7 @@ static GFL_PROC_RESULT CAM_TEST_ExitProc(GFL_PROC * proc, int * seq, void * pwk,
   }
   CAM_TEST_ExitDebugMenu( work );
 
+  COMM_TVT_MIC_Term( work , work->micWork );
   CAMERA_SYS_ExitSystem( work->camSys );
 
   GFL_BG_FreeBGControl( GFL_BG_FRAME1_M );
@@ -473,6 +488,7 @@ static GFL_PROC_RESULT CAM_TEST_MainProc(GFL_PROC * proc, int * seq, void * pwk,
     }
   }
   
+  COMM_TVT_MIC_Main( work , work->micWork );
 
   if( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT) &&
       (GFL_UI_KEY_GetTrg() & PAD_BUTTON_START) )
@@ -623,8 +639,8 @@ static void CAM_TEST_InitComm( CAM_TEST_WORK *work )
     HEAPID_WIFI,            //wifi用にcreateされるHEAPID
     HEAPID_NETWORK,         //
     GFL_WICON_POSX,GFL_WICON_POSY,  // 通信アイコンXY位置
-    2,                      //_MAXNUM,  //最大接続人数
-    220,                     //_MAXSIZE, //最大送信バイト数
+    4,                      //_MAXNUM,  //最大接続人数
+    110,                    //_MAXSIZE, //最大送信バイト数
     4,                      //_BCON_GET_NUM,  // 最大ビーコン収集数
     TRUE,                   // CRC計算
     FALSE,                  // MP通信＝親子型通信モードかどうか
@@ -748,7 +764,7 @@ static void CAM_TEST_UpdateComm( CAM_TEST_WORK *work )
       {
         OSTick endTime = OS_GetTick();
         const OSTick time = OS_TicksToMilliSeconds(endTime-startTime);
-        OS_TPrintf("Returu Post[%x][%dms]\n",dataSize,time);
+        CAMERA_COMM_Print("Returu Post[%x][%dms]\n",dataSize,time);
         CAM_TEST_CalcAve( work->sizeAve , &work->sizeCntIdx , dataSize );
         CAM_TEST_CalcAve( work->encTimeAve , &work->encTimeCntIdx , time );
         if( work->sizeMax < convBufSize )
@@ -779,7 +795,7 @@ static void CAM_TEST_UpdateComm( CAM_TEST_WORK *work )
     {
       OSTick postTime = OS_GetTick();
       const OSTick time = OS_TicksToMilliSeconds(postTime-sendTime);
-      OS_TPrintf("Returu Post[%dms]\n",time);
+      CAMERA_COMM_Print("Returu Post[%dms]\n",time);
       CAM_TEST_CalcAve( work->sendSecAve , &work->sendSecCntIdx , time );
       if( work->sendSecMax < time )
       {
@@ -1011,6 +1027,223 @@ static u32 CAM_TEST_CalcAve( u32 *dataArr , u8 *nowIdx , u32 newVal )
   return sum/CAMERA_TEST_AVE_COUNT;
 }
 
+#pragma mark [>mic func
+#include "sound/snd_strm.h"
+
+// マイクゲインを設定
+#define COMM_TVT_MIC_Print(...) (void)((OS_TPrintf(__VA_ARGS__)))
+//#define COMM_TVT_MIC_Print(...)  ((void)0)
+
+#define COMM_TVT_MIC_AMPGAIN (PM_AMPGAIN_160)
+#define COMM_TVT_MIC_SAMPLING_SIZE (0xb000)
+#ifdef SDK_TWL
+#define COMM_TVT_MIC_SAMPLING_RATE (MIC_SAMPLING_RATE_8180)
+#else
+#define COMM_TVT_MIC_SAMPLING_RATE (MIC_SAMPLING_RATE_8K)
+#endif
+#define COMM_TVT_MIC_WAVEOUT_CH	(14)							//波形で使用するチャンネルNO
+#define COMM_TVT_MIC_WAVEOUT_PLAY_SPD (32768)
+
+struct _COMM_TVT_MIC_WORK
+{
+  void *buffer;
+  u32  recSize;
+  
+  
+  BOOL isRecord;
+  BOOL isPlayWave;
+  
+  NNSSndWaveOutHandle waveHandle;
+};
+
+static void COMM_TVT_MIC_BufferEndCallBack(MICResult	result, void*	arg );
+
+COMM_TVT_MIC_WORK* COMM_TVT_MIC_Init( CAM_TEST_WORK *work )
+{
+  COMM_TVT_MIC_WORK *micWork = GFL_HEAP_AllocClearMemory( work->heapId , sizeof(COMM_TVT_MIC_WORK) );
+  
+  MIC_Init();
+  PM_Init();
+  {
+    const u32 ret = PM_SetAmp(PM_AMP_ON);
+    if( ret == PM_RESULT_SUCCESS )
+    {
+      COMM_TVT_MIC_Print("AMPをオンにしました。\n");
+    }
+    else
+    {
+      COMM_TVT_MIC_Print("AMPの初期化に失敗（%d）", ret);
+    }
+  }
+  {
+    const u32 ret = PM_SetAmpGain(COMM_TVT_MIC_AMPGAIN);
+    if( ret == PM_RESULT_SUCCESS )
+    {
+      COMM_TVT_MIC_Print("AMPのゲインを設定しました。\n");
+    }
+    else
+    {
+      COMM_TVT_MIC_Print("AMPのゲイン設定に失敗（%d）", ret);
+    }
+  }
+  micWork->buffer = GFL_NET_Align32Alloc(GFL_HEAPID_APP ,COMM_TVT_MIC_SAMPLING_SIZE);
+  
+  micWork->isRecord = FALSE;
+  micWork->isPlayWave = FALSE;
+  micWork->recSize = 0;
+  return micWork;
+}
+
+void COMM_TVT_MIC_Term( CAM_TEST_WORK *work , COMM_TVT_MIC_WORK *micWork )
+{
+  GFL_HEAP_FreeMemory( micWork->buffer );
+  GFL_HEAP_FreeMemory( micWork );
+}
+
+void COMM_TVT_MIC_Main( CAM_TEST_WORK *work , COMM_TVT_MIC_WORK *micWork )
+{
+  if( micWork->isPlayWave == TRUE )
+  {
+    if( SND_STRM_CheckFinish() == TRUE )
+    {
+      SND_STRM_Stop();
+      COMM_TVT_MIC_Print( "CommTVTMic StopWave\n" );
+      micWork->isPlayWave = FALSE;
+    }
+  }
+  else
+  {
+    if( micWork->isRecord == FALSE )
+    {
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+      {
+        COMM_TVT_MIC_StartRecord( work , micWork );
+      }
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+      {
+        if( micWork->recSize != 0 )
+        {
+          COMM_TVT_MIC_PlayVoice( work , micWork , micWork->buffer , micWork->recSize );
+        }
+      }
+    }
+    else
+    {
+      if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_A) == 0  )
+      {
+        COMM_TVT_MIC_StopRecord( work , micWork );
+      }
+      
+    }
+  }
+}
+
+const BOOL COMM_TVT_MIC_StartRecord( CAM_TEST_WORK *work , COMM_TVT_MIC_WORK *micWork )
+{
+  MICResult ret;
+  
+  MICAutoParam mic;	//マイクパラメータ
+  mic.type			= MIC_SAMPLING_TYPE_SIGNED_8BIT;	//サンプリング種別
+  //バッファは32バイトアラインされたアドレスでないとダメ！
+  mic.size = COMM_TVT_MIC_SAMPLING_SIZE;
+  mic.buffer = micWork->buffer;
+  GFL_STD_MemClear32( (void*)micWork->buffer , COMM_TVT_MIC_SAMPLING_SIZE );
+  if( (mic.size&0x1f) != 0 ){
+  	mic.size &= 0xffffffe0;
+  }
+
+  //連続サンプリング時にバッファをループさせるフラグ
+  mic.loop_enable		= FALSE;
+  //バッファが飽和した際に呼び出すコールバック関数へのポインタ
+  mic.full_callback	= COMM_TVT_MIC_BufferEndCallBack;
+  //バッファが飽和した際に呼び出すコールバック関数へ渡す引数
+  mic.full_arg		= micWork;
+
+  //代表的なサンプリングレートをARM7のタイマー周期に換算した値の定義
+  mic.rate = COMM_TVT_MIC_SAMPLING_RATE;
+#ifdef SDK_TWL
+  ret = MIC_StartLimitedSampling( &mic );
+#else
+  ret = MIC_StartAutoSampling( &mic );
+#endif
+    
+  
+  if( ret == MIC_RESULT_SUCCESS )
+  {
+#ifdef SDK_TWL
+    COMM_TVT_MIC_Print( "CommTVTMic StartRecording(TWL)\n" );
+#else
+    COMM_TVT_MIC_Print( "CommTVTMic StartRecording(NTR)\n" );
+#endif
+    micWork->isRecord = TRUE;
+    return TRUE;
+  }
+  else
+  {
+    COMM_TVT_MIC_Print( "CommTVTMic StartRecording faile[%d]!!!\n",ret );
+    
+    return FALSE;
+  }
+}
+
+
+static void COMM_TVT_MIC_BufferEndCallBack(MICResult	result, void*	arg )
+{
+  COMM_TVT_MIC_WORK *micWork = arg;
+  micWork->isRecord = FALSE;
+  micWork->recSize = COMM_TVT_MIC_SAMPLING_SIZE;
+  COMM_TVT_MIC_Print( "CommTVTMic StopRecording(Buff is full)\n" );
+}
+
+const BOOL COMM_TVT_MIC_StopRecord( CAM_TEST_WORK *work , COMM_TVT_MIC_WORK *micWork )
+{
+  if( micWork->isRecord == FALSE )
+  {
+    return TRUE;
+  }
+  else
+  {
+    MICResult ret;
+#ifdef SDK_TWL
+    ret = MIC_StopLimitedSampling();
+#else
+    ret = MIC_StopAutoSampling();
+#endif
+    if( ret == MIC_RESULT_SUCCESS )
+    {
+      micWork->recSize = (u32)MIC_GetLastSamplingAddress()-(u32)micWork->buffer+32;
+      if( micWork->recSize > COMM_TVT_MIC_SAMPLING_SIZE )
+      {
+        micWork->recSize = COMM_TVT_MIC_SAMPLING_SIZE;
+      }
+      
+      COMM_TVT_MIC_Print( "CommTVTMic StopRecording buffSize[%x]\n",micWork->recSize );
+      micWork->isRecord = FALSE;
+      return TRUE;
+    }
+    else
+    {
+      COMM_TVT_MIC_Print( "CommTVTMic StopRecording faile[%d]!!!\n",ret );
+      return FALSE;
+    }
+  }
+}
+
+const BOOL COMM_TVT_MIC_PlayVoice( CAM_TEST_WORK *work , COMM_TVT_MIC_WORK *micWork , void *buffer , u32 buffSize )
+{
+  u32 size = buffSize;
+	if( (size&0x1f) != 0 ){
+		size &= 0xffffffe0;
+	}
+  SND_STRM_SetUpStraightData( SND_STRM_PCM8 , SND_STRM_8KHZ , GFL_HEAPID_APP, buffer,size);
+
+  SND_STRM_Play();
+
+  micWork->isPlayWave = TRUE;
+  COMM_TVT_MIC_Print( "CommTVTMic PlayWave\n" );
+
+  return TRUE;
+}
 
 #pragma mark [>debugMenu Comm
 static void CAM_TEST_DebFunc_StartParent( void* userWork , DEBUGWIN_ITEM* item )

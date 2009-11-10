@@ -115,7 +115,7 @@ static const BOOL LOCAL_TVT_Main( LOCAL_TVT_WORK *work )
   {
     work->transCnt++;
   }
-  else
+  //else
   {
     if( work->transChara == NULL &&
         work->transState == LTTS_TRANS_WAIT )

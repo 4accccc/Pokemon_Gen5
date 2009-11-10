@@ -74,6 +74,11 @@ extern BOOL SND_STRM_CheckSetUp( void );
 extern void SND_STRM_Play( void );
 extern void SND_STRM_Stop( void );
 extern BOOL SND_STRM_CheckPlay( void );
+extern const BOOL SND_STRM_CheckFinish( void );
+
+// ループ
+extern void SND_STRM_SetLoopFlg( const BOOL isLoop );
+extern const BOOL SND_STRM_GetLoopFlg( void );
 
 // ボリューム操作
 extern void SND_STRM_Volume( int volume );

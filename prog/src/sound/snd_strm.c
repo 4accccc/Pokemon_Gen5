@@ -104,6 +104,9 @@ typedef struct
 	u32					seek_top;
 	u32					type;
 	u32					hz;
+	
+	BOOL        isLoop;
+	BOOL        isFinishData;
 }STRM_WORK;
 
 //ワーク
@@ -140,6 +143,8 @@ void SND_STRM_Init( u32 heapID )
 	NNS_SndInit();
 	NNS_SndStrmInit( &sp_STRM_WORK->strm );
 	NNS_SndStrmAllocChannel( &sp_STRM_WORK->strm, SND_STRM_CHANNEL_MAX, sc_SND_STRM_CHANNEL_TBL);
+	
+	sp_STRM_WORK->isLoop = FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -288,6 +293,8 @@ void SND_STRM_Play( void )
 	}
 	sp_STRM_WORK->strmReadPos=0;
 	sp_STRM_WORK->strmWritePos=0;
+	sp_STRM_WORK->isFinishData = FALSE;
+
 
 	// セットアップ
 	ret = NNS_SndStrmSetup( &sp_STRM_WORK->strm,
@@ -339,6 +346,60 @@ BOOL SND_STRM_CheckPlay( void )
 	GF_ASSERT( sp_STRM_WORK );
 	GF_ASSERT( sp_STRM_WORK->snddata_in );
 	return sp_STRM_WORK->playing;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ストリームが最後まで行ったか？
+ *          現在最後のバッファを送る前にフラグが立ちます。
+ *          なのでギリギリまでデータが入っていると再生しきれない場合があります。
+ *          ループ設定時は必ずFALSEです。
+ *
+ *	@retval	TRUE	最後まで行った
+ *	@retval	FALSE	再生中
+ */
+//-----------------------------------------------------------------------------
+const BOOL SND_STRM_CheckFinish( void )
+{
+	GF_ASSERT( sp_STRM_WORK );
+	GF_ASSERT( sp_STRM_WORK->snddata_in );
+	
+	if( sp_STRM_WORK->playing == TRUE &&
+	    sp_STRM_WORK->isLoop == FALSE &&
+	    sp_STRM_WORK->isFinishData == TRUE )
+	{
+  	return TRUE;
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ループフラグの設定
+ *
+ *	@param	isLoop	ループ設定
+ */
+//-----------------------------------------------------------------------------
+void SND_STRM_SetLoopFlg( const BOOL isLoop )
+{
+	GF_ASSERT( sp_STRM_WORK );
+	GF_ASSERT( sp_STRM_WORK->snddata_in );
+	sp_STRM_WORK->isLoop = isLoop;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ループフラグの取得
+ *
+ *	@retval	TRUE	ループする
+ *	@retval	FALSE	ループしない
+ */
+//-----------------------------------------------------------------------------
+const BOOL SND_STRM_GetLoopFlg( void )
+{
+	GF_ASSERT( sp_STRM_WORK );
+	GF_ASSERT( sp_STRM_WORK->snddata_in );
+	return sp_STRM_WORK->isLoop;
 }
 
 //----------------------------------------------------------------------------
@@ -422,15 +483,25 @@ static void SND_STRM_CopyBuffer( STRM_WORK* p_wk,int size )
 		}
 		else{
 			while(p_wk->strmReadPos!=p_wk->strmWritePos){
-
-				GFL_STD_MemCopy(&p_wk->pStraightData[p_wk->FSReadPos], &p_wk->FS_strmBuffer[p_wk->strmWritePos] , 32);
+        if( sp_STRM_WORK->isFinishData == FALSE )
+        {
+  				GFL_STD_MemCopy(&p_wk->pStraightData[p_wk->FSReadPos], &p_wk->FS_strmBuffer[p_wk->strmWritePos] , 32);
+        }
+        else
+        {
+          GFL_STD_MemClear( &p_wk->FS_strmBuffer[p_wk->strmWritePos] , 32 );
+        }
 				p_wk->FSReadPos+=32;
 				p_wk->strmWritePos+=32;
 				if(p_wk->strmWritePos>=STRM_BUF_SIZE){
 					p_wk->strmWritePos=0;
 				}
 				if( p_wk->FSReadPos >= sp_STRM_WORK->data_siz ){
-					p_wk->FSReadPos=0;
+  					p_wk->FSReadPos=0;
+  					if( p_wk->isLoop == FALSE )
+  					{
+              p_wk->isFinishData = TRUE;
+            }
 //					GFL_ARC_SeekDataByHandle( p_wk->p_handle, sp_STRM_WORK->seek_top );
 				}
 			}
@@ -444,9 +515,14 @@ static void SND_STRM_CopyBuffer( STRM_WORK* p_wk,int size )
 		else{
 			while(p_wk->strmReadPos!=p_wk->strmWritePos){
 
-
-				GFL_ARC_LoadDataByHandleContinue( p_wk->p_handle, 32, &p_wk->FS_strmBuffer[p_wk->strmWritePos] );
-
+        if( sp_STRM_WORK->isFinishData == FALSE )
+        {
+  				GFL_ARC_LoadDataByHandleContinue( p_wk->p_handle, 32, &p_wk->FS_strmBuffer[p_wk->strmWritePos] );
+        }
+        else
+        {
+          GFL_STD_MemClear( &p_wk->FS_strmBuffer[p_wk->strmWritePos] , 32 );
+        }
 				p_wk->FSReadPos+=32;
 				p_wk->strmWritePos+=32;
 				if(p_wk->strmWritePos>=STRM_BUF_SIZE){
@@ -455,6 +531,10 @@ static void SND_STRM_CopyBuffer( STRM_WORK* p_wk,int size )
 				if( p_wk->FSReadPos >= sp_STRM_WORK->data_siz ){
 					p_wk->FSReadPos=SWAV_HEAD_SIZE;
 					GFL_ARC_SeekDataByHandle( p_wk->p_handle, sp_STRM_WORK->seek_top );
+					if( p_wk->isLoop == FALSE )
+					{
+            p_wk->isFinishData = TRUE;
+          }
 				}
 			}
 		}
