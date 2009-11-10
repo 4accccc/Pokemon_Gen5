@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-29T23:18:48"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T15:02:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -390,10 +390,11 @@
 		<language name="JPN" width="256">？？？『たいへん！　たいへんだよ！[BE:01:ページ切り替え（クリア）]
 ママ！！　はくぶつかんの
 てんじぶつを　もっていかれた！！[BE:00:ページ切り替え（行送り）]
-ママの　だいじな　ホネの　ひょうほんも！！</language>
+ママの　だいじな
+ホネの　ひょうほんも！！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">？？？『大変！　大変だよ！　ママ！！
 博物館の　展示物が　持って行かれた！！[BE:00:ページ切り替え（行送り）]
-ママの　大事な　骨格標本も！！</language>
+ママの　大事な　骨格標本も！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c02gym0202_leader_07">
@@ -406,11 +407,11 @@
 		<language name="JPN" width="256">アロエ『なんだって！
 どういうことだい！？[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]！
-アンタも　おいで！！</language>
+アンタも　おいで！！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">アロエ『なんだって！
 どういうことだい！？[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]！
-アンタも　おいで！！</language>
+アンタも　おいで！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>

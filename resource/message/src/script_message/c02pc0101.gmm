@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-30T20:28:58"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T15:06:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -297,12 +297,12 @@
 		<attribute name="キャラ指定">GIRL2
 少女２活発</attribute>
 		<language name="JPN" width="256">あたし　このまちの
-ジムリーダーさん　だいすきなの！</language>
+ジムリーダーさん　だーいすき！</language>
 		<language name="JPN_KANJI" width="256">あたし　このまちの
-ジムリーダーさん　だいすきなの！</language>
+ジムリーダーさん　だーいすき！</language>
 	</row>
 
-	<row id="msg_c02pc0101_backpackerm_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c02pc0101_backpackerm_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">BACKPACKERM
@@ -310,7 +310,7 @@
 		<language name="JPN" width="256">はくぶつかんの　てんじを　みるため
 シンオウちほう　から　きたんだ！</language>
 		<language name="JPN_KANJI" width="256">僕はね　博物館に　行くんだ！
-だって　博物館　すごいからね！</language>
+だって　博物館のアレ　すごいからね！</language>
 	</row>
 
 	<flowchart-group-list>
