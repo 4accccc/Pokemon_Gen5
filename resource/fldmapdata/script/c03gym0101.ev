@@ -34,6 +34,7 @@ _EVENT_DATA   ev_pos_c03gym0101_switch_06
 _EVENT_DATA   ev_pos_c03gym0101_switch_07
 _EVENT_DATA   ev_pos_c03gym0101_switch_08	//トラップ：トレーナーが出てくるスイッチ（右上）
 _EVENT_DATA   ev_pos_c03gym0101_switch_09	//トラップ：トレーナーが出てくるスイッチ（左下）
+_EVENT_DATA		ev_zone_c03gym0101
 _EVENT_DATA_END
 
 
@@ -351,5 +352,14 @@ ev_pole_unlock:
 	_GYM_INSECT_PL_ON( SCWK_TEMP0 )
 	_SE_WAIT()
 _RET
+
+/************************************************************/
+/*					ジムギミック初期化						*/
+/************************************************************/
+ev_zone_c03gym0101:
+	//ジムギミック初期化コマンド
+	_GYM_INSECT_INIT()
+_END
+
 
 
