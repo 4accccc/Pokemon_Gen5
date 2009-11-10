@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-29T21:52:07"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T15:00:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -492,10 +492,10 @@
 　メッセージは繰り返し
 ・削除タイミングは盗難イベントクリア時（仮）</comment>
 		<attribute name="キャラ指定">ライバル（友達♂）</attribute>
-		<language name="JPN" width="256">クロック『プラズマだんの　せいで
+		<language name="JPN" width="256">ブラッカー『プラズマだんの　せいで
 ジムリーダー　いないのか……[BE:00:ページ切り替え（行送り）]
 なんとも　めいわくな　はなしだな</language>
-		<language name="JPN_KANJI" width="256">クロック『プラズマ団のせいで
+		<language name="JPN_KANJI" width="256">ブラッカー『プラズマ団のせいで
 ジムリーダー　いないのか……[BE:00:ページ切り替え（行送り）]
 なんとも　迷惑な　話だな</language>
 	</row>
@@ -582,112 +582,7 @@ OLDMAN1</attribute>
 いったい　なにもの　なんだ！？</language>
 	</row>
 
-	<row id="msg_c02gym0101_fossil_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>no data</comment>
-		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c02gym0101_fossil_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>no data</comment>
-		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c02gym0101_fossil_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>no data</comment>
-		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c02gym0101_fossil_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>no data</comment>
-		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c02gym0101_fossil_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>no data</comment>
-		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c02gym0101_fossil_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>no data</comment>
-		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c02gym0101_fossil_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>no data</comment>
-		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c02gym0101_fossil_08" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>no data</comment>
-		<attribute name="キャラ指定">システム</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c02gym0101_fossil_09" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>no data</comment>
-		<attribute name="キャラ指定">システム</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c02gym0101_fossil_10" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>no data</comment>
-		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c02gym0101_meteor_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>no data</comment>
-		<attribute name="キャラ指定">隕石共通</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c02gym0101_meteor_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>no data</comment>
-		<attribute name="キャラ指定">隕石その１</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c02gym0101_meteor_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>no data</comment>
-		<attribute name="キャラ指定">隕石その２</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c02gym0101_meteor_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>no data</comment>
-		<attribute name="キャラ指定">隕石その３</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c02gym0101_meteor_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>no data</comment>
-		<attribute name="キャラ指定">隕石その４</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c02gym0101_plate_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_plate_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
@@ -695,7 +590,7 @@ OLDMAN1</attribute>
 		<language name="JPN_KANJI" width="256">展示物の　解説その１</language>
 	</row>
 
-	<row id="msg_c02gym0101_plate_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_plate_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
@@ -703,7 +598,7 @@ OLDMAN1</attribute>
 		<language name="JPN_KANJI" width="256">展示物の　解説その２</language>
 	</row>
 
-	<row id="msg_c02gym0101_plate_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_plate_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
@@ -711,7 +606,7 @@ OLDMAN1</attribute>
 		<language name="JPN_KANJI" width="256">展示物の　解説その３</language>
 	</row>
 
-	<row id="msg_c02gym0101_plate_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_plate_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
@@ -719,7 +614,7 @@ OLDMAN1</attribute>
 		<language name="JPN_KANJI" width="256">展示物の　解説その４</language>
 	</row>
 
-	<row id="msg_c02gym0101_plate_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_plate_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
@@ -727,7 +622,7 @@ OLDMAN1</attribute>
 		<language name="JPN_KANJI" width="256">展示物の　解説その５</language>
 	</row>
 
-	<row id="msg_c02gym0101_plate_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_plate_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
@@ -735,7 +630,7 @@ OLDMAN1</attribute>
 		<language name="JPN_KANJI" width="256">展示物の　解説その６</language>
 	</row>
 
-	<row id="msg_c02gym0101_plate_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_plate_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
