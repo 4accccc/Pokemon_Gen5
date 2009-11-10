@@ -52,6 +52,7 @@
 //#include "application/br_sys.h"
 
 #include "sound/pm_sndsys.h"
+#include "net\network_define.h"
 
 
 //==============================================================================
@@ -77,6 +78,7 @@ static void GdsMain_CommInitialize(GDSPROC_MAIN_WORK *gmw);
 static void GdsMain_CommFree(GDSPROC_MAIN_WORK *gmw);
 static void *AllocFunc( DWCAllocType name, u32   size, int align );
 static void FreeFunc(DWCAllocType name, void* ptr,  u32 size);
+static void _NetInitCallback( void *work );
 
 //==============================================================================
 //	データ
@@ -160,7 +162,7 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
 		*seq = SEQ_INIT_DPW_WAIT;
 		break;
 	case SEQ_INIT_DPW_WAIT:
-		if(1){//if(CommIsVRAMDInitialize()){
+		if(gmw->net_init == TRUE){//if(CommIsVRAMDInitialize()){
 			_wtHeapHandle = gmw->heapHandle;
 	
 			// wifiメモリ管理関数呼び出し
@@ -280,6 +282,64 @@ static void GdsMain_CommInitialize(GDSPROC_MAIN_WORK *gmw)
 		gmw->heapPtr    = GFL_HEAP_AllocMemory(HEAPID_GDS_MAIN, MYDWC_HEAPSIZE + 32);
 		gmw->heapHandle = NNS_FndCreateExpHeap( (void *)( ((u32)gmw->heapPtr + 31) / 32 * 32 ), MYDWC_HEAPSIZE);
 
+	#if 0
+		//DWCオーバーレイ読み込み
+		DwcOverlayStart();
+		DpwCommonOverlayStart();
+		// イクニューモン転送
+		CommVRAMDInitialize();
+  #else
+    {
+      //WIFIのオーバーレイを起動させるだけなので、
+      //ほぼデータなし
+      static const GFLNetInitializeStruct net_init =
+      {
+        NULL,
+        0,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+#if GFL_NET_WIFI
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        MYDWC_HEAPSIZE,
+        TRUE,         //デバッグ用サーバにつなぐかどうか
+#endif  //GFL_NET_WIFI
+        0x444,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
+        GFL_HEAPID_APP,
+        HEAPID_NETWORK,
+        HEAPID_WIFI,
+        HEAPID_IRC,
+        GFL_WICON_POSX,GFL_WICON_POSY,        // 通信アイコンXY位置
+        2,     // 最大接続人数
+        32,  //最大送信バイト数
+        4,    // 最大ビーコン収集数
+        TRUE,
+        FALSE,
+        GFL_NET_TYPE_WIFI_GTS,
+        TRUE,
+        WB_NET_GDS,
+#if GFL_NET_IRC
+        IRC_TIMEOUT_STANDARD,
+#endif  //GFL_NET_IRC
+        0,//MP親最大サイズ 512まで
+        0,//dummy
+      };
+      GFL_NET_Init( &net_init, _NetInitCallback, gmw );
+    }
+  #endif
+  
 		OS_TPrintf("Comm初期化終了\n");
 	}
 }
@@ -298,13 +358,36 @@ static void GdsMain_CommFree(GDSPROC_MAIN_WORK *gmw)
 		
 		NNS_FndDestroyExpHeap(gmw->heapHandle);
 		GFL_HEAP_FreeMemory( gmw->heapPtr );
+	#if 0
+		DpwCommonOverlayEnd();
+		DwcOverlayEnd();
 
+		// イクニューモン解放
+		CommVRAMDFinalize();
+  #else
+    GFL_NET_Exit(NULL); //WiFiのオーバーレイ解放
+    gmw->net_init = FALSE;
+  #endif
+  
 //		Overlay_UnloadID(FS_OVERLAY_ID(worldtrade));
 		
 		gmw->comm_initialize_ok = FALSE;
 
 		OS_TPrintf("Comm解放完了\n");
 	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  netの初期化終了コールバック
+ *
+ *  @param  void *wk_adrs   ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void _NetInitCallback( void *work )
+{
+  GDSPROC_MAIN_WORK *gmw = work;
+  gmw->net_init = TRUE;
 }
 
 /*---------------------------------------------------------------------------*

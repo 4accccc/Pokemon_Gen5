@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-10-22T23:32:57"/>
+	<create user="matsuda" host="W00142" date="2009-11-10T18:33:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -754,6 +754,11 @@
 	<row id="DEBUG_FIELD_STR47">
 		<language name="JPN" width="160">Yボタン登録操作</language>
 		<language name="JPN_KANJI" width="160">Yボタン登録操作</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR48">
+		<language name="JPN" width="160">GDS</language>
+		<language name="JPN_KANJI" width="160">GDS</language>
 	</row>
 
 	<flowchart-group-list>

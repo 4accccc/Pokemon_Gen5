@@ -520,20 +520,23 @@ static void GdsConnectMenu_VramBankSet(void)
 		};
 		GFL_BG_SetBGMode( &BGsys_data );
 	}
-
+  
+  GFL_BG_Init(HEAPID_GDS_CONNECT);
+  GFL_BMPWIN_Init(HEAPID_GDS_CONNECT);
+  
 	//メイン画面フレーム設定
 	{
 		GFL_BG_BGCNT_HEADER TextBgCntDat[] = {
 			///<FRAME0_M	テキスト面
 			{
 				0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-				GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+				GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000, GX_BG_EXTPLTT_01,
 				0, 0, 0, FALSE
 			},
 			///<FRAME1_M	背景
 			{
 				0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-				GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, GX_BG_EXTPLTT_01,
+				GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x7000, GX_BG_EXTPLTT_01,
 				1, 0, 0, FALSE
 			},
 		};
@@ -553,13 +556,13 @@ static void GdsConnectMenu_VramBankSet(void)
 			///<FRAME0_S	テキスト面
 			{
 				0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-				GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x10000, GX_BG_EXTPLTT_01,
+				GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x10000, 0x8000, GX_BG_EXTPLTT_01,
 				0, 0, 0, FALSE
 			},
 			///<FRAME1_S	背景
 			{
 				0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-				GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x08000, GX_BG_EXTPLTT_01,
+				GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x08000, 0x5800, GX_BG_EXTPLTT_01,
 				2, 0, 0, FALSE
 			},
 		};
@@ -594,6 +597,8 @@ static void BgExit( void )
 	GFL_BG_FreeBGControl( GFL_BG_FRAME1_M );
 	GFL_BG_FreeBGControl( GFL_BG_FRAME0_M );
 
+  GFL_BMPWIN_Exit();
+  GFL_BG_Exit();
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1146,7 +1151,7 @@ static int Enter_InternetConnect( GDS_CONNECT_SYS *wk )
 		break;
 	case 2:
 		DWC_InitInetEx(&wk->oya_proc_work->stConnCtrl, 
-		_NETWORK_DMA_NO, _NETWORK_POWERMODE, _NETWORK_SSL_PRIORITY);
+		  _NETWORK_DMA_NO, _NETWORK_POWERMODE, _NETWORK_SSL_PRIORITY);
     DWC_SetAuthServer(GF_DWC_CONNECTINET_AUTH_TYPE);
 		DWC_ConnectInetAsync();
 		

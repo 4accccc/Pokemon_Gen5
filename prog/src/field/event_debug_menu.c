@@ -203,6 +203,7 @@ static BOOL debugMenuCallProc_DebugSkyJump( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_ChangePlayerSex( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_GDS( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_UITemplate( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Jump( DEBUG_MENU_EVENT_WORK *wk );
 
@@ -245,6 +246,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR36, debugMenuCallProc_ControlFog },
 	{ DEBUG_FIELD_STR40, debugMenuCallProc_ChangePlayerSex },
 	{	DEBUG_FIELD_STR42, debugMenuCallProc_WifiGts },
+	{	DEBUG_FIELD_STR48, debugMenuCallProc_GDS },
 	{	DEBUG_FIELD_STR44, debugMenuCallProc_UITemplate },
   { DEBUG_FIELD_STR45, debugMenuCallProc_Kairiki },
   { DEBUG_FIELD_STR46, debugMenuCallProc_ControlLinerCamera },
@@ -782,7 +784,7 @@ static GMEVENT_RESULT debugMenuZoneJump(GMEVENT *event, int *seq, void *wk )
           mapchange_event = EVENT_ChangeMapToUnion(work->gmSys, work->fieldWork);
         }
         else if(ret == ZONE_ID_PALACE01){
-          VecFx32 pos = {PALACE_MAP_LEN + PALACE_MAP_LEN/2, 0, 408*FX32_ONE};
+          VecFx32 pos = {PALACE_MAP_LEN/2, 0, 408*FX32_ONE};
           mapchange_event = DEBUG_EVENT_ChangeMapPos(work->gmSys, work->fieldWork, ret, &pos, 0);
         }
         else{
@@ -3200,6 +3202,94 @@ static GMEVENT_RESULT debugMenuWifiGts( GMEVENT *p_event, int *p_seq, void *p_wk
 
 	return GMEVENT_RES_CONTINUE ;
 }
+
+//======================================================================
+//  デバッグメニュー　GDS接続
+//======================================================================
+#include "net_app/gds_main.h"
+FS_EXTERN_OVERLAY(gds_comm);
+//-------------------------------------
+///	デバッグGDS用ワーク	
+//=====================================
+typedef struct 
+{
+	GAMESYS_WORK				*gsys;
+	FIELDMAP_WORK			*fieldWork;
+} DEBUG_GDS_EVENT_WORK;
+static GMEVENT_RESULT debugMenuGDS( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+//----------------------------------------------------------------------------
+/**
+ *	@brief	GTS画面へいくイベント
+ *
+ *	@param	GMEVENT *event	GMEVENT
+ *	@param	*seq						シーケンス
+ *	@param	*work						ワーク
+ *
+ *	@return	終了コード
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_GDS( DEBUG_MENU_EVENT_WORK *p_wk )
+{	
+  GAMESYS_WORK *gsys = p_wk->gmSys;
+  FIELDMAP_WORK *fieldWork = p_wk->fieldWork;
+	GMEVENT				*p_event		= p_wk->gmEvent;
+  DEBUG_GDS_EVENT_WORK *p_gds;
+  
+	if( WifiList_CheckMyGSID( SaveData_GetWifiListData(SaveControl_GetPointer())) )
+	{	
+		//イヴェント
+		GMEVENT_Change( p_event, debugMenuGDS, sizeof(DEBUG_GDS_EVENT_WORK) );
+		p_gds = GMEVENT_GetEventWork( p_event );
+		p_gds->gsys = gsys;
+		p_gds->fieldWork = fieldWork;
+	}
+	else
+	{	
+		OS_Printf( "GameSpyIDが不正なので、GTSを開始しなかった\n" );
+	}
+
+	return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグGTS接続用イベント
+ *
+ *	@param	GMEVENT *event	GMEVENT
+ *	@param	*seq						シーケンス
+ *	@param	*work						ワーク
+ *
+ *	@return	終了コード
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT debugMenuGDS( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
+{	
+	DEBUG_GDS_EVENT_WORK	*p_gds	= p_wk_adrs;
+
+	switch(*p_seq )
+	{	
+	case 0:
+    {
+    	GDSPROC_PARAM *gds_param;
+      
+      gds_param = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(GDSPROC_PARAM));
+      gds_param->savedata = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(p_gds->gsys));
+      gds_param->connect = 0;
+      gds_param->gds_mode = 0;
+  		
+  		GMEVENT_CallEvent( p_event, EVENT_FieldSubProc( p_gds->gsys, p_gds->fieldWork,
+          FS_OVERLAY_ID(gds_comm), &GdsMainProcData, gds_param ) );
+  		(*p_seq)++;
+    }
+		break;
+  
+  case 1:
+		return GMEVENT_RES_FINISH;
+	}
+
+	return GMEVENT_RES_CONTINUE;
+}
+
 //======================================================================
 //  デバッグメニュー UIテンプレートへ
 //======================================================================

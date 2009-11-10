@@ -34,7 +34,7 @@ typedef struct{
 	DWCInetControl   stConnCtrl;	// DWC接続ワーク
 	
 	int comm_initialize_ok;			///<TRUE:通信初期化済み
-
+  BOOL net_init;              ///<TRUE:ネット初期化済み
 	
 	//Wifi接続画面の結果を受け取る
 	BOOL ret_connect;				///<TRUE:Wifi接続行った。　FALSE:接続しなかった
