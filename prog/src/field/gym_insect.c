@@ -38,9 +38,11 @@
 #define SW_ANM_NUM  (2)
 #define PL_ANM_NUM  (2)
 #define EFF_ANM_NUM  (2)
-#define WALL_ANM_NUM   (8)
+
 #define WALL_BRK_ANM_NUM   (4)
-#define WALL_CHG_ANM_NUM   (4)
+#define WALL_CHG_ANM_NUM   (3)
+
+#define WALL_ANM_NUM   (4+WALL_CHG_ANM_NUM)
 
 #define TRAP_NUM  (2)
 
@@ -48,7 +50,7 @@
 
 #define CONT_TIME   (2)   //押し込み値が加算されるベタ押しの時間
 
-#define TEST_BRK
+#define PAIR_NONE (-1)
 
 //ポール座標
 #define PL1_X (PL1_GX*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
@@ -149,6 +151,20 @@ static const u8 WallIdxCheck[INSECT_PL_MAX] = {
   4,
   5,5
 };    //※ウォールインデックス6はポールとの接続がない
+
+//ポールごとの対関連インデックス一覧
+static const s8 PolePairIdx[INSECT_PL_MAX] = {
+  1,  //0
+  0,  //1
+  3,  //2
+  2,  //3
+  5,  //4
+  4,  //5
+  PAIR_NONE,  //6 対なし
+  PAIR_NONE,  //7 対なし
+  9,   //8
+  8,  //9
+};
 
 //トラップの位置
 static const VecFx32 TrapPos[TRAP_NUM] = 
@@ -255,7 +271,7 @@ enum{
   ANM_WALL_SIDE_S,  //南向きサイド
   ANM_WALL_CHG1,    //壁変更1(壊れない壁のみ)
   ANM_WALL_CHG2,    //壁変更2(壊れない壁のみ)
-  ANM_WALL_CHG3,    //壁変更3(壊れない壁のみ)
+///  ANM_WALL_CHG3,    //壁変更3(壊れない壁のみ)
   ANM_WALL_CHG4,    //壁変更4(壊れない壁のみ)
 };
 
@@ -304,7 +320,7 @@ static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_wall[] = {
   { RES_ID_WALL2_MOV_S,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
   { RES_ID_WALL3_MOV1,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
   { RES_ID_WALL3_MOV2,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
-  { RES_ID_WALL3_MOV3,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+///  { RES_ID_WALL3_MOV3,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
   { RES_ID_WALL3_MOV4,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
 };
 
@@ -1525,29 +1541,48 @@ static GMEVENT_RESULT PoleEvt( GMEVENT* event, int* seq, void* work )
       //ポールアニメ終了待ち
       if ( FLD_EXP_OBJ_ChkAnmEnd(pl_anm) )
       {
+        s8 pair;
         u8 check_idx;
+        BOOL open;
+        open = FALSE; //ポール解放フラグ初期化
         //ポールフラグオン
         gmk_sv_work->Pl[tmp->PlIdx] = TRUE;
-        //ウォールバンド弱体化チェック
-        check_idx = WallIdxCheck[ tmp->PlIdx ];
-        if ( gmk_sv_work->WallSt[tmp->PlIdx] == WALL_ST_NORMAL )
+        //対になるポールのフラグ状態を調べる
+        pair = PolePairIdx[tmp->PlIdx];
+        if (pair != PAIR_NONE){
+          if (gmk_sv_work->Pl[pair] ) open = TRUE;
+        }else{
+          open = TRUE;
+        }
+
+        if (open)
         {
-          int i;
-          EXP_OBJ_ANM_CNT_PTR anm;
-          u8 wall_obj_idx;
-          u8 wall_anm_idx;
-          wall_obj_idx = OBJ_WALL1 + check_idx;
-          //壊れる壁のインデックスを保存
-          tmp->BrkWallIdx = check_idx;
-          for (i=0;i<WALL_CHG_ANM_NUM;i++)
+          //ウォールバンド弱体化チェック
+          check_idx = WallIdxCheck[ tmp->PlIdx ];
+          if ( gmk_sv_work->WallSt[check_idx] == WALL_ST_NORMAL )
           {
-            wall_anm_idx = ANM_WALL_CHG1+i;
-            //弱体化アニメ開始
-            FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_INSECT_UNIT_IDX, wall_obj_idx, wall_anm_idx, TRUE);
-            anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_INSECT_UNIT_IDX, wall_obj_idx, wall_anm_idx);
-            FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+            int i;
+            EXP_OBJ_ANM_CNT_PTR anm;
+            u8 wall_obj_idx;
+            u8 wall_anm_idx;
+             wall_obj_idx = OBJ_WALL1 + check_idx;
+            //壊れる壁のインデックスを保存
+            tmp->BrkWallIdx = check_idx;
+            for (i=0;i<WALL_CHG_ANM_NUM;i++)
+            {
+              wall_anm_idx = ANM_WALL_CHG1+i;
+              //弱体化アニメ開始
+              FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_INSECT_UNIT_IDX, wall_obj_idx, wall_anm_idx, TRUE);
+              anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_INSECT_UNIT_IDX, wall_obj_idx, wall_anm_idx);
+              FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+            }
+            (*seq)++;
           }
-          (*seq)++;
+          else
+          {
+            //ポールが完全解放されていないので、イベント終了
+            return GMEVENT_RES_FINISH;
+          }
         }
         else
         {
@@ -1570,7 +1605,14 @@ static GMEVENT_RESULT PoleEvt( GMEVENT* event, int* seq, void* work )
         //ウォールステートを弱体状態に変更
         gmk_sv_work->WallSt[tmp->BrkWallIdx] = WALL_ST_WEAKNESS;
         //ＯＢＪ表示切替
-        //
+        {
+          int nrm_idx = OBJ_WALL1 + tmp->BrkWallIdx;
+          int brk_idx = OBJ_WALL_BRK1 + tmp->BrkWallIdx;
+          //通常壁を消す
+          FLD_EXP_OBJ_SetVanish( ptr, GYM_INSECT_UNIT_IDX, nrm_idx, TRUE );
+          //壊せる壁を表示
+          FLD_EXP_OBJ_SetVanish( ptr, GYM_INSECT_UNIT_IDX, brk_idx, FALSE );
+        }
         //イベント終了
         return GMEVENT_RES_FINISH;
       }
