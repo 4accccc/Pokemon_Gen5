@@ -1,9 +1,9 @@
 //============================================================================================
 /**
- * @file	event_wificlub.c
- * @brief	イベント：WiFiクラブ
- * @author	k.ohno
- * @date	2009.03.31
+ * @file  event_wificlub.c
+ * @brief イベント：WiFiクラブ
+ * @author  k.ohno
+ * @date  2009.03.31
  */
 //============================================================================================
 
@@ -26,7 +26,7 @@
 //------------------------------------------------------------------
 #include "battle/battle.h"   // BATTLE_SETUP_PARAM
 #include "poke_tool/monsno_def.h"
-#include "system/main.h"			//GFL_HEAPID_APP参照
+#include "system/main.h"      //GFL_HEAPID_APP参照
 
 #include "poke_tool/pokeparty.h"
 #include "poke_tool/poke_tool.h"
@@ -42,7 +42,7 @@ extern const GFL_PROC_DATA WifiClubProcData;
 extern const NetRecvFuncTable BtlRecvFuncTable[];
 //----------------------------------------------------------------
 
-#define	HEAPID_CORE GFL_HEAPID_APP
+#define HEAPID_CORE GFL_HEAPID_APP
 
 enum _EVENT_IRCBATTLE {
   _FIELD_CLOSE,
@@ -57,7 +57,7 @@ static void _battleParaFree(EVENT_WIFICLUB_WORK *dbw);
 
 //============================================================================================
 //
-//		サブイベント
+//    サブイベント
 //
 //============================================================================================
 static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * work)
@@ -93,7 +93,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     }
     break;
   case _FIELD_OPEN:
-		_battleParaFree(dbw);
+    _battleParaFree(dbw);
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     (*seq) ++;
     break;
@@ -127,21 +127,20 @@ static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WOR
 
   para = &dbw->para;
   {
-    para->engine = BTL_ENGINE_ALONE;
     para->rule = BTL_RULE_SINGLE;
     para->competitor = BTL_COMPETITOR_COMM;
 
     para->commMode = BTL_COMM_DS;
     para->multiMode = 0;
 
-    para->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );	///< プレイヤーのパーティ
-    para->partyEnemy1 = NULL;		///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
-    para->partyPartner = NULL;	///< 2vs2時の味方AI（不要ならnull）
-    para->partyEnemy2 = NULL;		///< 2vs2時の２番目敵AI用（不要ならnull）
-		para->statusPlayer =  GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gsys));
+    para->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );  ///< プレイヤーのパーティ
+    para->partyEnemy1 = NULL;   ///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
+    para->partyPartner = NULL;  ///< 2vs2時の味方AI（不要ならnull）
+    para->partyEnemy2 = NULL;   ///< 2vs2時の２番目敵AI用（不要ならnull）
+    para->statusPlayer =  GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gsys));
 
-    para->musicDefault = SEQ_BGM_VS_NORAPOKE;		///< デフォルト時のBGMナンバー
-    para->musicPinch = SEQ_BGM_BATTLEPINCH;			///< ピンチ時のBGMナンバー
+    para->musicDefault = SEQ_BGM_VS_NORAPOKE;   ///< デフォルト時のBGMナンバー
+    para->musicPinch = SEQ_BGM_BATTLEPINCH;     ///< ピンチ時のBGMナンバー
 
     PokeParty_Copy(GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys)), para->partyPlayer);
   }
@@ -154,7 +153,7 @@ static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WOR
 //------------------------------------------------------------------
 GMEVENT* EVENT_WiFiClub( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
 {
-	GMEVENT * event = GMEVENT_Create(gsys, NULL, EVENT_WiFiClubMain, sizeof(EVENT_WIFICLUB_WORK));
+  GMEVENT * event = GMEVENT_Create(gsys, NULL, EVENT_WiFiClubMain, sizeof(EVENT_WIFICLUB_WORK));
   wifi_SetEventParam( event, gsys, fieldmap );
 
   return event;
@@ -174,9 +173,9 @@ void EVENT_WiFiClubChange(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT 
 
 static void _battleParaFree(EVENT_WIFICLUB_WORK *dbw)
 {
-	BATTLE_SETUP_PARAM * para;
+  BATTLE_SETUP_PARAM * para;
 
-	para = &dbw->para;
-	GFL_HEAP_FreeMemory(para->partyPlayer);
+  para = &dbw->para;
+  GFL_HEAP_FreeMemory(para->partyPlayer);
 }
 

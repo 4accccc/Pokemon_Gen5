@@ -121,7 +121,6 @@ void BP_SETUP_Wild( BATTLE_SETUP_PARAM* bp, GAMEDATA* gdata, HEAPID heapID, cons
 
   bp->partyEnemy1 = (POKEPARTY*)partyEnemy;
 
-  bp->engine = BTL_ENGINE_ALONE;
   bp->competitor = BTL_COMPETITOR_WILD;
   bp->rule = rule;
 
@@ -149,7 +148,6 @@ void BTL_SETUP_Single_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   dst->partyPlayer = PokeParty_AllocPartyWork( HEAPID_PROC );
   PokeParty_Copy( GAMEDATA_GetMyPokemon(gameData), dst->partyPlayer );
 
-  dst->engine = BTL_ENGINE_ALONE;
   dst->competitor = BTL_COMPETITOR_TRAINER;
   dst->rule = BTL_RULE_SINGLE;
 
@@ -172,7 +170,6 @@ void BTL_SETUP_Single_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 {
   setup_common( dst, gameData, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE );
 
-  dst->engine = BTL_ENGINE_ALONE;
   dst->competitor = BTL_COMPETITOR_COMM;
   dst->rule = BTL_RULE_SINGLE;
 
@@ -201,7 +198,6 @@ void BTL_SETUP_Double_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 {
   setup_common( dst, gameData, landForm, weather );
 
-  dst->engine = BTL_ENGINE_ALONE;
   dst->competitor = BTL_COMPETITOR_TRAINER;
   dst->rule = BTL_RULE_DOUBLE;
 
@@ -224,7 +220,6 @@ void BTL_SETUP_Double_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 {
   setup_common( dst, gameData, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE );
 
-  dst->engine = BTL_ENGINE_ALONE;
   dst->competitor = BTL_COMPETITOR_COMM;
   dst->rule = BTL_RULE_DOUBLE;
 
@@ -252,7 +247,6 @@ void BTL_SETUP_Multi_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 {
   setup_common( dst, gameData, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE );
 
-  dst->engine = BTL_ENGINE_ALONE;
   dst->competitor = BTL_COMPETITOR_COMM;
   dst->rule = BTL_RULE_DOUBLE;
 
@@ -281,7 +275,6 @@ void BTL_SETUP_Triple_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 {
   setup_common( dst, gameData, landForm, weather );
 
-  dst->engine = BTL_ENGINE_ALONE;
   dst->competitor = BTL_COMPETITOR_TRAINER;
   dst->rule = BTL_RULE_TRIPLE;
 
@@ -304,9 +297,57 @@ void BTL_SETUP_Triple_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 {
   setup_common( dst, gameData, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE );
 
-  dst->engine = BTL_ENGINE_ALONE;
   dst->competitor = BTL_COMPETITOR_COMM;
   dst->rule = BTL_RULE_TRIPLE;
+
+  dst->netHandle = netHandle;
+  dst->commMode = commMode;
+  dst->netID = GFL_NET_GetNetID( netHandle );
+  dst->multiMode = 0;
+
+  dst->trID = TRID_NULL;
+}
+
+//=============================================================================================
+/**
+ * ローテーション ゲーム内トレーナー対戦
+ *
+ * @param   dst
+ * @param   gameData
+ * @param   partyEnemy
+ * @param   landForm
+ * @param   weather
+ * @param   trID
+ */
+//=============================================================================================
+void BTL_SETUP_Rotation_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
+  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID )
+{
+  setup_common( dst, gameData, landForm, weather );
+
+  dst->competitor = BTL_COMPETITOR_TRAINER;
+  dst->rule = BTL_RULE_ROTATION;
+
+  dst->partyEnemy1 = partyEnemy;
+  dst->trID = trID;
+}
+//=============================================================================================
+/**
+ * ローテーション 通信対戦
+ *
+ * @param   dst
+ * @param   gameData
+ * @param   netHandle
+ * @param   commMode
+ */
+//=============================================================================================
+void BTL_SETUP_Rotation_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
+  GFL_NETHANDLE* netHandle, BtlCommMode commMode )
+{
+  setup_common( dst, gameData, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE );
+
+  dst->competitor = BTL_COMPETITOR_COMM;
+  dst->rule = BTL_RULE_ROTATION;
 
   dst->netHandle = netHandle;
   dst->commMode = commMode;

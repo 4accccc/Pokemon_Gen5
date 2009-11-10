@@ -341,7 +341,6 @@ GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT *
   dbw->fieldmap = fieldmap;
   para = &dbw->para;
   {
-    para->engine = BTL_ENGINE_ALONE;
     para->rule = BTL_RULE_SINGLE;
     para->competitor = BTL_COMPETITOR_COMM;
 

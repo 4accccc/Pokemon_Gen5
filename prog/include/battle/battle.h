@@ -10,10 +10,6 @@
 #ifndef __BATTLE_H__
 #define __BATTLE_H__
 
-#ifdef TEST_IN_DOS
-#include "ds_types.h"
-#endif
-
 #include <net.h>
 #include <procsys.h>
 
@@ -28,19 +24,6 @@
 
 //--------------------------------------------------------------
 /**
- *  駆動タイプ
- */
-//--------------------------------------------------------------
-typedef enum {
-
-  BTL_ENGINE_ALONE,         ///< スタンドアロン
-  BTL_ENGINE_COMM_PARENT,   ///< 通信（親）
-  BTL_ENGINE_COMM_CHILD,    ///< 通信（子）
-
-}BtlEngineType;
-
-//--------------------------------------------------------------
-/**
  *  対戦ルール
  */
 //--------------------------------------------------------------
@@ -49,6 +32,7 @@ typedef enum {
   BTL_RULE_SINGLE,    ///< シングル
   BTL_RULE_DOUBLE,    ///< ダブル
   BTL_RULE_TRIPLE,    ///< トリプル
+  BTL_RULE_ROTATION,  ///< ローテーション
 
 }BtlRule;
 
@@ -122,10 +106,9 @@ typedef enum {
 typedef struct {
 
   //バトルルール
-  BtlEngineType   engine;
   BtlCompetitor   competitor;
   BtlRule         rule;
-  
+
   //フィールドの状態から決定されるバトルシチュエーションデータ
   BtlBgType       bgType;
   BtlLandForm     landForm;

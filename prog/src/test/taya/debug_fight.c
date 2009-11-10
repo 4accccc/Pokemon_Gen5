@@ -73,6 +73,8 @@ typedef enum {
   BTLTYPE_DOUBLE_COMM_MULTI,
   BTLTYPE_TRIPLE_TRAINER,
   BTLTYPE_TRIPLE_COMM,
+  BTLTYPE_ROTATION_TRAINER,
+  BTLTYPE_ROTATION_COMM,
 
   BTLTYPE_MAX,
 }BtlType;
@@ -244,16 +246,18 @@ static const struct {
   u8  enemyPokeReg : 6;   // 敵ポケ規定数（0なら自由）
   u8  rule;
 }BtlTypeParams[] = {
-  { 0, 1, 1, BTL_RULE_SINGLE },   // BTLTYPE_SINGLE_WILD
-  { 0, 0, 0, BTL_RULE_SINGLE },   // BTLTYPE_SINGLE_TRAINER
-  { 1, 0, 0, BTL_RULE_SINGLE },   // BTLTYPE_SINGLE_COMM
-  { 0, 1, 2, BTL_RULE_DOUBLE },   // BTLTYPE_DOUBLE_WILD
-  { 0, 0, 0, BTL_RULE_DOUBLE },   // BTLTYPE_DOUBLE_TRAINER1,
-  { 0, 0, 0, BTL_RULE_DOUBLE },   // BTLTYPE_DOUBLE_TRAINER2,
-  { 1, 0, 0, BTL_RULE_DOUBLE },   // BTLTYPE_DOUBLE_COMM
-  { 1, 0, 0, BTL_RULE_DOUBLE },   // BTLTYPE_DOUBLE_COMM_DOUBLE
-  { 0, 0, 0, BTL_RULE_TRIPLE },   // BTLTYPE_TRIPLE_TRAINER
-  { 1, 0, 0, BTL_RULE_TRIPLE },   // BTLTYPE_TRIPLE_COMM
+  { 0, 1, 1, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_WILD
+  { 0, 0, 0, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_TRAINER
+  { 1, 0, 0, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_COMM
+  { 0, 1, 2, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_WILD
+  { 0, 0, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_TRAINER1,
+  { 0, 0, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_TRAINER2,
+  { 1, 0, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_COMM
+  { 1, 0, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_COMM_DOUBLE
+  { 0, 0, 0, BTL_RULE_TRIPLE   },   // BTLTYPE_TRIPLE_TRAINER
+  { 1, 0, 0, BTL_RULE_TRIPLE   },   // BTLTYPE_TRIPLE_COMM
+  { 0, 0, 3, BTL_RULE_ROTATION },   // BTLTYPE_ROTATION_TRAINER
+  { 1, 0, 0, BTL_RULE_ROTATION },   // BTLTYPE_ROTATION_COMM
 };
 
 /*--------------------------------------------------------------------------*/
@@ -1169,6 +1173,9 @@ FS_EXTERN_OVERLAY(battle);
       case BTL_RULE_TRIPLE:
         BTL_SETUP_Triple_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS );
         break;
+      case BTL_RULE_ROTATION:
+        BTL_SETUP_Rotation_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS );
+        break;
       }
       if( wk->setupParam.partyPlayer == NULL ){
         wk->setupParam.partyPlayer = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
@@ -1190,6 +1197,10 @@ FS_EXTERN_OVERLAY(battle);
         break;
       case BTL_RULE_TRIPLE:
         BTL_SETUP_Triple_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
+          BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, trID );
+        break;
+      case BTL_RULE_ROTATION:
+        BTL_SETUP_Rotation_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
           BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, trID );
         break;
       }
