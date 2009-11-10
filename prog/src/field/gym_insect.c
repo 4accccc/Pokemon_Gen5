@@ -953,7 +953,6 @@ GMEVENT* GYM_INSECT_CreatePushWallEvt(GAMESYS_WORK *gsys, const int inX, const i
   {
     tmp->Val = 0;
     tmp->Cont = 0;
-    FIELD_PLAYER_GetPos( fld_player, &tmp->BasePos );
     //自機の向き取得
     tmp->Dir = dir;
     //壁インデックス
@@ -1018,6 +1017,7 @@ static GMEVENT_RESULT PushWallEvt( GMEVENT* event, int* seq, void* work )
       {
         //足踏みスタート
         tmp->PushStepStart = TRUE;
+        FIELD_PLAYER_GetPos( fld_player, &tmp->BasePos );
         (*seq)++;
       }
     }
@@ -1047,9 +1047,7 @@ static GMEVENT_RESULT PushWallEvt( GMEVENT* event, int* seq, void* work )
           pos.z += (accel*FX32_ONE);
           FIELD_PLAYER_SetPos( fld_player, &pos );
           //アニメフレーム進める
-          {
-            FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_INSECT_UNIT_IDX, obj_idx, anm_idx, (tmp->Val/2)*FX32_ONE );
-          }
+          FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_INSECT_UNIT_IDX, obj_idx, anm_idx, (tmp->Val/2)*FX32_ONE );
 
           if ( tmp->Val >= BAND_WIDTH ) (*seq)++;
           
