@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-17T17:55:22"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T16:06:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -265,7 +265,7 @@
 
 	<dialog left="36" top="214" right="741" bottom="834" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<tag-palette left="735" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -389,9 +389,9 @@
 		<language name="JPN" width="256">フィールドわざ　そらをとぶ　は
 いままでに　いったことのある[BE:00:ページ切り替え（行送り）]
 まちに　ひとっとびできる　わざだよ</language>
-		<language name="JPN_KANJI" width="256">フィールドわざ　そらをとぶ　は
+		<language name="JPN_KANJI" width="256">フィールド技「そらをとぶ」は
 今までに　行ったことのある[BE:00:ページ切り替え（行送り）]
-街に　ひとっとびできる　わざだよ</language>
+街に　ひとっとびできる　技だよ</language>
 	</row>
 
 	<flowchart-group-list>
