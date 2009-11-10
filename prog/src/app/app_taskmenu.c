@@ -517,7 +517,7 @@ static void APP_TASKMENU_UpdateTP( APP_TASKMENU_WORK *work )
  *	@return					リソース保持ワーク
  */
 //-----------------------------------------------------------------------------
-extern APP_TASKMENU_RES* APP_TASKMENU_RES_Create( u8 frame, u8 plt, GFL_FONT *fontHandle, PRINT_QUE *printQue, HEAPID heapID )
+APP_TASKMENU_RES* APP_TASKMENU_RES_Create( u8 frame, u8 plt, GFL_FONT *fontHandle, PRINT_QUE *printQue, HEAPID heapID )
 {	
 	APP_TASKMENU_RES *wk;
   PALTYPE palType;
