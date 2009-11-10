@@ -88,8 +88,8 @@ extern void	PMSND_PlayBGM_EX( u32 soundIdx, u16 trackBit );
 //ＢＧＭ自動フェード再生
 extern void	PMSND_PlayNextBGM_EX
 		( u32 soundIdx, u16 trackBit, u8 fadeOutFrame, u8 fadeInFrame );	
-#define PMSND_PlayNextBGM( soundIdx, fadeInFrame, fadeOutFrame ) \
-					PMSND_PlayNextBGM_EX( soundIdx, 0xffff, fadeInFrame, fadeOutFrame );	//上記簡易版
+#define PMSND_PlayNextBGM( soundIdx, fadeOutFrame, fadeInFrame ) \
+					PMSND_PlayNextBGM_EX( soundIdx, 0xffff, fadeOutFrame, fadeInFrame );	//上記簡易版
 //ＢＧＭ終了検出(TRUE実行中)
 extern BOOL	PMSND_CheckPlayBGM( void );
 //ＢＧＭの再生トラック変更
