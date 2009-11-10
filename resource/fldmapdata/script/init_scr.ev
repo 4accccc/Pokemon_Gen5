@@ -46,9 +46,6 @@ init_flags:
 	//サンヨウシティジム：ジムリーダー２人（演出で出現するため）
 	_FLAG_SET( FV_C01GYM0101_LEADERS )
 	
-	//D01廃墟：サポート・ジムリーダーに勝つまで非表示
-	_FLAG_SET( FV_D01R0101_SUPPORT_01 )
-	
 	//R02・2番道路ランニングシューズイベントが始まるまで非表示
 	//_FLAG_SET(FV_R02_MOTHER)
 	
