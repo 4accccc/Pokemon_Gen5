@@ -9,6 +9,7 @@
 #include <gflib.h>
 
 #include "system\pms_word.h"
+#include "system\pms_data.h"
 //#include "savedata\zukanwork.h"
 #include "message.naix"
 
@@ -19,9 +20,7 @@
 #define __PMS_INPUT_RES__
 #include "pms_input.res"
 
-
-// @TODO とりあえず定義
-#define PMS_CATEGORY_PICTURE_MAX (10) ///< デコメ最大数
+#define PMS_CATEGORY_PICTURE_MAX (PMS_DECOID_MAX - 1) ///< デコメ最大数
 
 
 #define  WORD_ENABLE_FLAG_SIZE		((PMS_WORDNUM_MAX>>3)+1)	// 単語１つ =1bit換算で
@@ -141,9 +140,8 @@ static const struct {
 	{ CountupGruopDefault,  PMS_CategoryTable_05,  PMS_Category_05_MaxNum },	// ひと
 	{ CountupGruopDefault,  PMS_CategoryTable_07,  PMS_Category_07_MaxNum },	// せいかつ
 	{ CountupGruopDefault,  PMS_CategoryTable_08,  PMS_Category_08_MaxNum },	// きもち
-	{ CountupGroupPicture,  PMS_CategoryTable_09,  PMS_CATEGORY_PICTURE_MAX },	// なんかいことば > PICTUREでフック
+	{ CountupGroupPicture,  PMS_CategoryTable_11,  PMS_Category_11_MaxNum },	// ピクチャ
 };
-// @TODO 現状 09は無視
 
 /*====================================================================================================*/
 /*                                                                                                    */
@@ -174,9 +172,23 @@ static void SetupGroupEnableFlag( PMS_INPUT_DATA* pmsi )
 
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  単語の有効フラグを立てる。単語一つ = 1bit換算
+ *
+ *	@param	PMS_INPUT_DATA* data
+ *	@param	pos 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static inline void SetWordEnableFlag( PMS_INPUT_DATA* data, u32 pos )
 {
 	data->word_enable_flag[ (pos >> 3) ] |= (1 << (pos & 7));
+#if 0
+  HOSAKA_Printf( "SetWordEnableFlag (1<<(pos&7)=%d -> data->word_enable_flag[%d]=%d \n",
+      (1<<(pos&7)), pos>>3, data->word_enable_flag[pos>>3] );
+#endif
 }
 
 static inline BOOL GetWordEnableFlag( const PMS_INPUT_DATA* data, u32 pos )
@@ -288,10 +300,30 @@ static u32 CountupGroupAisatsu( PMS_INPUT_DATA* pmsi,  const PMS_WORD* src_tbl, 
 	return cnt;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  グループ項目初期化 ピクチャ
+ *
+ *	@param	PMS_INPUT_DATA* pmsi  ワーク
+ *	@param	PMS_WORD* src_tbl     テーブル
+ *	@param	tbl_elems             テーブルの要素数
+ *	@param	dst_tbl               [out] 出力テーブル
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static u32 CountupGroupPicture( PMS_INPUT_DATA* pmsi, const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl )
 {
-  // @TODO 使用不定なのでとりあえずMAX
-  return 10;
+	u32 i, cnt;
+
+  for(i=0, cnt=0; i<tbl_elems; i++)
+  {
+		SetWordEnableFlag( pmsi, src_tbl[i] );
+		*dst_tbl++ = src_tbl[i];
+    cnt++;
+  }
+  
+  return cnt;
 }
 
 static u32 CountupGruopDefault( PMS_INPUT_DATA* pmsi,  const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl )
@@ -512,6 +544,15 @@ static const u8 BoxPwdSrcGroup[] = {
 
 
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  ボックスパスワードの最大値
+ *
+ *	@param	none
+ *
+ *	@retval 最大値
+ */
+//-----------------------------------------------------------------------------
 int PMSI_DAT_GetBoxPwdMax(void)
 {
 	int i, max;
@@ -524,6 +565,15 @@ int PMSI_DAT_GetBoxPwdMax(void)
 
 
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  PMS_WORDからボックスパスワードIDを計算
+ *
+ *	@param	PMS_WORD word 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 int PMSI_DAT_WordToBoxPwdID( PMS_WORD word )
 {
 	int i, w, tbl_max, pwd_id = 0;

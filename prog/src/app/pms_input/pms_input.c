@@ -549,7 +549,6 @@ static PMS_INPUT_WORK* ConstructWork( GFL_PROC* proc , void* pwk )
 		setup_sentence_work( &wk->sentence_wk, &wk->edit_pms );
 	}
 
-
 	wk->tcbWork = GFL_HEAP_AllocMemory( HEAPID_PMS_INPUT_SYSTEM , GFL_TCB_CalcSystemWorkSize( 5 ) );
 	wk->tcbSys = GFL_TCB_Init( 5 , wk->tcbWork );
 
@@ -2662,9 +2661,13 @@ static int check_wordwin_key( WORDWIN_WORK* wordwin, u16 key )
 				return WORDWIN_RESULT_SCROLL_AND_CURSOR_MOVE;
 			}
 		}
+#if 0
+    // 「もどる」へカーソルを移動
 		wordwin->back_f = TRUE;
 		return WORDWIN_RESULT_CURSOR_MOVE;
-//		return WORDWIN_RESULT_INVALID;
+#else
+		return WORDWIN_RESULT_INVALID;
+#endif
 	}
 
 	if( key & PAD_KEY_UP )

@@ -46,6 +46,10 @@ clean:
 	-rm $(SOURCE_LIST)
 	-rm $(WORD_DAT_DIR)\$(WORD_DAT_FILE)
 	-rm $(INPUT_DAT_DIR)\$(INPUT_DAT_FILE)
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、フォルダ内の中間ファイルを削除
+	-rm $(WORD_DAT_FILE)
+	-rm $(INPUT_DAT_FILE)
+endif
 
 
 

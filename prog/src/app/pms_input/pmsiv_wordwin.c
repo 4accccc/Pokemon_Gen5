@@ -458,12 +458,14 @@ void PMSIV_WORDWIN_MoveCursor( PMSIV_WORDWIN* wk, u32 pos )
 	u32 x, y;
 
 	if(pos == 0xFFFFFFFF){	//back
+    GF_ASSERT(0); // 「もどる」カーソルは廃止
+#if 0
 		clPos.x = CURSOR_BACK_XPOS;
 		clPos.y = CURSOR_BACK_YPOS;
 
 		GFL_CLACT_WK_SetPos( wk->cursor_actor, &clPos , CLSYS_DEFREND_MAIN );
 		GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor, ANM_CATEGORY_BACK_CURSOR_ACTIVE );
-	
+#endif
 	}else{
 		x = pos & 1;
 		y = pos / 2;

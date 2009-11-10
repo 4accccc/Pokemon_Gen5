@@ -104,6 +104,7 @@ struct _PMSIV_MENU {
   PMS_INPUT_VIEW* vwk;
   const PMS_INPUT_WORK* mwk;
   const PMS_INPUT_DATA* dwk;
+  int*                  p_key_mode;
   // [PRIVATE]
   PMSIV_CELL_RES          resCell;
   TOUCHBAR_WORK*          touchbar;
@@ -140,7 +141,7 @@ static void _setup_category_initial( PMSIV_MENU* wk );
  *	@param	PMS_INPUT_WORK* mwk
  *	@param	PMS_INPUT_DATA* dwk 
  *
- *	@retval
+ *	@retval PMSIV_MENU* ワーク
  */
 //-----------------------------------------------------------------------------
 PMSIV_MENU* PMSIV_MENU_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, const PMS_INPUT_DATA* dwk )
@@ -150,6 +151,8 @@ PMSIV_MENU* PMSIV_MENU_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, c
 	wk->vwk = vwk;
 	wk->mwk = mwk;
 	wk->dwk = dwk;
+
+	wk->p_key_mode = PMSI_GetKTModePointer(wk->mwk);
   
   wk->msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
       NARC_message_pms_input_dat, HEAPID_PMS_INPUT_VIEW );
@@ -176,7 +179,7 @@ PMSIV_MENU* PMSIV_MENU_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, c
  *
  *	@param	PMSIV_MENU* wk 
  *
- *	@retval
+ *	@retval none
  */
 //-----------------------------------------------------------------------------
 void PMSIV_MENU_Delete( PMSIV_MENU* wk )
@@ -203,12 +206,15 @@ void PMSIV_MENU_Delete( PMSIV_MENU* wk )
  *
  *	@param	PMSIV_MENU* wk 
  *
- *	@retval
+ *	@retval none
  */
 //-----------------------------------------------------------------------------
 void PMSIV_MENU_Main( PMSIV_MENU* wk )
 {
   int i;
+
+  // キーモードを反映
+//  GFL_UI_SetTouchOrKey( *wk->p_key_mode );
 
   // タスクメニュー
   for( i=0; i<TASKMENU_WIN_MAX; i++ )
@@ -221,6 +227,7 @@ void PMSIV_MENU_Main( PMSIV_MENU* wk )
 
   // タッチバー
   TOUCHBAR_Main( wk->touchbar );
+
 }
 
 //-----------------------------------------------------------------------------
@@ -229,7 +236,7 @@ void PMSIV_MENU_Main( PMSIV_MENU* wk )
  *
  *	@param	PMSIV_MENU* wk 
  *
- *	@retval
+ *	@retval none
  */
 //-----------------------------------------------------------------------------
 void PMSIV_MENU_Clear( PMSIV_MENU* wk )
@@ -269,7 +276,7 @@ void PMSIV_MENU_Clear( PMSIV_MENU* wk )
  *
  *	@param	PMS_INPUT_VIEW* vwk 
  *
- *	@retval
+ *	@retval none
  */
 //-----------------------------------------------------------------------------
 void PMSIV_MENU_SetupEdit( PMSIV_MENU* wk )
@@ -318,7 +325,7 @@ void PMSIV_MENU_SetupEdit( PMSIV_MENU* wk )
  *
  *	@param	PMSIV_MENU* wk 
  *
- *	@retval
+ *	@retval none
  */
 //-----------------------------------------------------------------------------
 void PMSIV_MENU_SetupCategory( PMSIV_MENU* wk )
@@ -343,7 +350,7 @@ void PMSIV_MENU_SetupCategory( PMSIV_MENU* wk )
  *
  *	@param	PMSIV_MENU* wk 
  *
- *	@retval
+ *	@retval none
  */
 //-----------------------------------------------------------------------------
 void PMSIV_MENU_SetupWordWin( PMSIV_MENU* wk )
@@ -359,7 +366,7 @@ void PMSIV_MENU_SetupWordWin( PMSIV_MENU* wk )
  *
  *	@param	PMSIV_MENU* wk 
  *
- *	@retval
+ *	@retval none
  */
 //-----------------------------------------------------------------------------
 void PMSIV_MENU_UpdateEditIcon( PMSIV_MENU* wk )
@@ -394,7 +401,7 @@ void PMSIV_MENU_UpdateEditIcon( PMSIV_MENU* wk )
  *	@param	pos
  *	@param	is_on 
  *
- *	@retval
+ *	@retval none
  */
 //-----------------------------------------------------------------------------
 void PMSIV_MENU_TaskMenuSetActive( PMSIV_MENU* wk, u8 pos, BOOL is_on )
