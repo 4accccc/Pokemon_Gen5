@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-10T12:29:11"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T20:59:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="4" top="214" right="709" bottom="834" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -304,7 +304,7 @@
 迷ったりしないわよ　きっと</language>
 	</row>
 
-	<row id="msg_d02_hakaim1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_d02_hakaim1_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
 		<comment>♂
 ・10月ROM用
 ・c02ジムバッジ取得で削除
@@ -318,7 +318,7 @@
 ハカイするためなら……</language>
 	</row>
 
-	<row id="msg_d02_hakaim2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_d02_hakaim2_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
 		<comment>♂
 ・10月ROM用
 ・c02ジムバッジ取得で削除
@@ -332,7 +332,7 @@
 作戦を　実行する！</language>
 	</row>
 
-	<row id="msg_d02_hakaiw_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_d02_hakaiw_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
 		<comment>♀
 ・10月ROM用
 ・c02ジムバッジ取得で削除
@@ -363,6 +363,38 @@ C03ジムリーダー</attribute>
 ヤグルマの森　だよ[BE:01:ページ切り替え（クリア）]
 確かに　ここに　逃げられると
 やっかい　かもね</language>
+	</row>
+
+	<row id="msg_d02_rock_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+・手持ちリストの先頭が格闘ポケモンのとき
+・はい/いいえの選択肢</comment>
+		<attribute name="キャラ指定">特殊な岩</attribute>
+		<language name="JPN" width="256">ためしのいわが　ある……[BE:01:ページ切り替え（クリア）]
+[1:01:ポケモン種族名:0]に
+こわさせて　みますか？</language>
+		<language name="JPN_KANJI" width="256">ためしのいわが　ある……[BE:01:ページ切り替え（クリア）]
+[1:01:ポケモン種族名:0]に
+こわさせて　みますか？</language>
+	</row>
+
+	<row id="msg_d02_rock_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+・アイテム入手処理
+　No000「ほしのかけら」（仮）
+※入手アイテムはランダムにするかも</comment>
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]は
+ためしのいわを　こわそうとした！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]は
+ためしのいわを　こわそうとした！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d02_rock_03" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+・手持ちリストの先頭が格闘ポケモンでないとき
+・アイテムを入手したあと（日が変わるまで）</comment>
+		<language name="JPN" width="256">ためしのいわが　ある……</language>
+		<language name="JPN_KANJI" width="256">ためしのいわが　ある……</language>
 	</row>
 
 	<flowchart-group-list>
