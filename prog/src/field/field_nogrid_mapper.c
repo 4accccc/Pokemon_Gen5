@@ -24,10 +24,6 @@
 */
 //-----------------------------------------------------------------------------
 
-//-------------------------------------
-///	アトリビュート情報開始インデックス
-//=====================================
-#define FIELD_NOGRID_MAPPER_ARC_ATTR_INDEX_START  ( NARC_field_rail_data_c3_atdat )
 
 
 //-----------------------------------------------------------------------------
@@ -184,6 +180,8 @@ void FLDNOGRID_MAPPER_SetRailCameraActive( FLDNOGRID_MAPPER* p_mapper, BOOL flag
 //-----------------------------------------------------------------------------
 void FLDNOGRID_MAPPER_ResistData( FLDNOGRID_MAPPER* p_mapper, const FLDNOGRID_RESISTDATA* cp_data, u32 heapID )
 {
+  u32 filecnt;
+  
   GF_ASSERT( p_mapper );
   
   // 破棄処理
@@ -192,10 +190,14 @@ void FLDNOGRID_MAPPER_ResistData( FLDNOGRID_MAPPER* p_mapper, const FLDNOGRID_RE
   // 情報ロード＆構築
   if( cp_data->railDataID != FLDNOGRID_RESISTDATA_NONE )
   {
+    // 全ファイル数の半分からATTRは始まる
+    filecnt = GFL_ARC_GetDataFileCnt( ARCID_RAIL_DATA );
+    filecnt /= 2;
+    
     FIELD_RAIL_LOADER_Load( p_mapper->p_railLoader, cp_data->railDataID, heapID );
     FIELD_RAIL_MAN_Load( p_mapper->p_railMan, FIELD_RAIL_LOADER_GetData( p_mapper->p_railLoader ) );
 
-    RAIL_ATTR_Load( p_mapper->p_attr, cp_data->railDataID + FIELD_NOGRID_MAPPER_ARC_ATTR_INDEX_START, heapID );
+    RAIL_ATTR_Load( p_mapper->p_attr, cp_data->railDataID + filecnt, heapID );
   }
   if( cp_data->areaDataID != FLDNOGRID_RESISTDATA_NONE )
   {
