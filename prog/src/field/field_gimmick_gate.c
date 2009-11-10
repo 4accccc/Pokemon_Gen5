@@ -26,6 +26,8 @@
 #include "arc/gate.naix"
 #include "field_gimmick_def.h"
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"
+#include "msg/msg_gate.h"
+#include "field/zonedata.h"
 
 
 //==========================================================================================
@@ -218,6 +220,18 @@ static char* news_plt_name[NEWS_NUM] =
   "gelboard_5_pl",
   "gelboard_6_pl",
 };
+// 天気に使用するメッセージ
+u32 str_id_weather[WEATHER_NO_NUM] = 
+{
+  msg_gate_sunny,     // 晴れ
+  msg_gate_snow,      // 雪
+  msg_gate_rain,      // 雨
+  msg_gate_storm,     // 砂嵐
+  msg_gate_spark,     // 雷雨
+  msg_gate_snowstorm, // 吹雪
+  msg_gate_arare,     // 霰
+  msg_gate_mirage,    // 蜃気楼
+};
 
 
 //==========================================================================================
@@ -227,7 +241,6 @@ typedef struct
 { 
   HEAPID        heapID;   // 使用するヒープID
   GOBJ_ELBOARD* elboard;  // 電光掲示板管理オブジェクト
-  u16 weatherZoneID[WEATHER_ZONE_NUM];  // 天気を表示するゾーン
   u32 recoveryFrame;  // 復帰フレーム
 } GATEWORK;
 
@@ -556,11 +569,6 @@ static GATEWORK* CreateGateWork( FIELDMAP_WORK* fieldmap )
   // ヒープIDを記憶
   work->heapID = heap_id;
 
-  // 天気を表示するゾーンを記憶
-  work->weatherZoneID[0] = elboard_data.zoneID_weather_1;
-  work->weatherZoneID[1] = elboard_data.zoneID_weather_2;
-  work->weatherZoneID[2] = elboard_data.zoneID_weather_3;
-  work->weatherZoneID[3] = elboard_data.zoneID_weather_4;
   return work;
 }
 
@@ -678,7 +686,85 @@ static void AddNews_DATE( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
 //------------------------------------------------------------------------------------------
 static void AddNews_WEATHER( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
 {
+  int i;
+  HEAPID heap_id;
   NEWS_PARAM news;
+  WORDSET* wordset;
+  u32 zone_id[WEATHER_ZONE_NUM];
+
+  // 表示するゾーンリストを作成
+  zone_id[0] = data->zoneID_weather_1;
+  zone_id[1] = data->zoneID_weather_2;
+  zone_id[2] = data->zoneID_weather_3;
+  zone_id[3] = data->zoneID_weather_4;
+
+  for( i=0; i<WEATHER_ZONE_NUM; i++ )
+  {
+    OBATA_Printf( "zone_id[%d] = %d\n", i, zone_id[i] );
+  }
+
+  // ワードセット作成
+  heap_id = GOBJ_ELBOARD_GetHeapID( elboard );
+  wordset = WORDSET_CreateEx( WEATHER_ZONE_NUM, 256, heap_id );
+
+  // ワードセット登録処理
+  {
+    GFL_MSGDATA* msg_place_name;
+    GFL_MSGDATA* msg_gate;
+
+    // メッセージデータ ハンドルオープン
+    msg_place_name = GFL_MSG_Create( 
+        GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_place_name_dat, heap_id ); 
+    msg_gate = GFL_MSG_Create( 
+        GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_gate_dat, heap_id ); 
+
+    // 各ゾーンの地名＋天気を登録
+    for( i=0; i<WEATHER_ZONE_NUM; i++ )
+    {
+      STRBUF* strbuf_zone;    // 地名
+      STRBUF* strbuf_weather; // 天気
+      STRBUF* strbuf_set;     // 地名＋天気
+
+      // ゾーンが無効値なら表示しない
+      if( zone_id[i] == ZONE_ID_MAX ) 
+      {
+        continue;
+      }
+      // 地名を取得
+      {
+        int str_id = ZONEDATA_GetPlaceNameID( zone_id[i] );
+        strbuf_zone = GFL_MSG_CreateString( msg_place_name, str_id );
+        OBATA_Printf( "str_id = %d\n", str_id );
+      }
+      // 天気を取得
+      {
+        int weather = ZONEDATA_GetWeatherID( zone_id[i] );
+        strbuf_weather = GFL_MSG_CreateString( msg_gate, str_id_weather[weather] );
+        OBATA_Printf( "weather = %d\n", weather );
+      }
+      // 地名＋天気のセットを作成
+      {
+        WORDSET* wordset_expand = WORDSET_CreateEx( 2, 256, heap_id );
+        STRBUF* strbuf_expand = GFL_MSG_CreateString( msg_gate, msg_gate_weather );
+        strbuf_set = GFL_STR_CreateBuffer( 64, heap_id );
+        WORDSET_RegisterWord( wordset_expand, 0, strbuf_zone, 0, TRUE, 0 );
+        WORDSET_RegisterWord( wordset_expand, 1, strbuf_weather, 0, TRUE, 0 );
+        WORDSET_ExpandStr( wordset_expand, strbuf_set, strbuf_expand );
+        GFL_STR_DeleteBuffer( strbuf_expand );
+        WORDSET_Delete( wordset_expand );
+      }
+      // 作成した文字列をワードセットに登録
+      WORDSET_RegisterWord( wordset, i, strbuf_set, 0, TRUE, 0 );
+      // 後始末
+      GFL_STR_DeleteBuffer( strbuf_zone );
+      GFL_STR_DeleteBuffer( strbuf_weather );
+      GFL_STR_DeleteBuffer( strbuf_set );
+    }
+
+    // メッセージデータ ハンドルクローズ
+    GFL_MSG_Delete( msg_gate );
+    GFL_MSG_Delete( msg_place_name );
+  }
 
   // ニュースパラメータを作成
   news.animeIndex = news_anm_index[NEWS_WEATHER];
@@ -687,10 +773,15 @@ static void AddNews_WEATHER( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* dat
   news.msgArcID   = ARCID_MESSAGE;
   news.msgDatID   = NARC_message_gate_dat;
   news.msgStrID   = data->msgID_weather;
-  news.wordset    = NULL;
+  news.wordset    = wordset;
+
+  OBATA_Printf( "msgStrID = %d\n", data->msgID_weather );
 
   // ニュースを追加
   GOBJ_ELBOARD_AddNews( elboard, &news );
+
+  // ワードセット破棄
+  WORDSET_Delete( wordset );
 }
 
 //------------------------------------------------------------------------------------------
