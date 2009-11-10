@@ -1,0 +1,2207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="" ?>
+
+<gmml version="4.5">
+
+<head>
+	<create user="toru_nagihashi" host="W00160" date="2009-11-10T15:24:36"/>
+	<generator name="MessageEditor" version="4.9.2.5"/>
+</head>
+
+<body language="japanese">
+	<color>
+		<list entry="0" r="00" g="00" b="00" a="FF"/>
+		<list entry="1" r="FF" g="00" b="00" a="FF"/>
+		<list entry="2" r="00" g="00" b="FF" a="FF"/>
+		<list entry="3" r="00" g="8C" b="00" a="FF"/>
+	</color>
+
+	<tag-table>
+		<group entry="0" japanese="タググループ" english="タググループ">
+		</group>
+
+		<group entry="1" japanese="ポケモンＷＢ（単語）" english="PokemonDP" color="#c0c0c0">
+			<tag entry="00" japanese="トレーナー名" english="トレーナー名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="ポケモン種族名" english="ポケモン種族名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+				<comment language="english">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+			</tag>
+			<tag entry="02" japanese="ポケモンニックネーム" english="ポケモンニックネーム" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンのニックネーム</comment>
+				<comment language="english">ポケモンのニックネーム</comment>
+			</tag>
+			<tag entry="03" japanese="ポケモンタイプ" english="ポケモンタイプ" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">みず、くさ、ほのお…とか。</comment>
+				<comment language="english">みず、くさ、ほのお…とか。</comment>
+			</tag>
+			<tag entry="04" japanese="ポケモン分類" english="ポケモン分類" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「DNAポケモン」など。</comment>
+				<comment language="english">「DNAポケモン」など。</comment>
+			</tag>
+			<tag entry="05" japanese="マップ名" english="マップ名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="06" japanese="とくせい名" english="とくせい名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="わざ名" english="わざ名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="08" japanese="せいかく" english="せいかく" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="09" japanese="どうぐ名" english="どうぐ名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="10" japanese="グッズ名" english="グッズ名" view="EP" length="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+				<comment language="english">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+			</tag>
+			<tag entry="14" japanese="トレーナー種別名" english="トレーナー種別名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
+				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
+			</tag>
+			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの特殊状態です。</comment>
+				<comment language="english">ポケモンの特殊状態です。</comment>
+			</tag>
+			<tag entry="18" japanese="バッグのポケット名" english="バッグのポケット名" view="EP" width="132" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">対戦のレギュレーション名</comment>
+				<comment language="english">対戦のレギュレーション名</comment>
+			</tag>
+			<tag entry="28" japanese="簡易会話単語" english="簡易会話単語" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="31" japanese="アクセサリー名" english="アクセサリー名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンにつけるアクセサリー</comment>
+				<comment language="english">ポケモンにつけるアクセサリー</comment>
+			</tag>
+			<tag entry="32" japanese="ジム名" english="ジム名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="33" japanese="時間帯" english="時間帯" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ぼうけんノートなどで使う</comment>
+				<comment language="english">ぼうけんノートなどで使う</comment>
+			</tag>
+			<tag entry="34" japanese="コンテスト名称" english="コンテスト名称" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+				<comment language="english">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+			</tag>
+			<tag entry="35" japanese="コンテストランク" english="コンテストランク" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">○○○○ランク
+「ランク」も含む</comment>
+				<comment language="english">○○○○ランク
+「ランク」も含む</comment>
+			</tag>
+			<tag entry="36" japanese="国名" english="国名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる国名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる国名</comment>
+			</tag>
+			<tag entry="37" japanese="地域名" english="地域名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる地域名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる地域名</comment>
+			</tag>
+			<tag entry="39" japanese="リボンの名前" english="リボンの名前" view="EP" width="168" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リボンの名前</comment>
+				<comment language="english">リボンの名前</comment>
+			</tag>
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
+			</tag>
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
+			</tag>
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
+			</tag>
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
+			</tag>
+		</group>
+
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
+			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="２桁" english="２桁" view="EP" width="16" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="02" japanese="３桁" english="３桁" view="EP" width="24" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="03" japanese="４桁" english="４桁" view="EP" width="32" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="04" japanese="５桁" english="５桁" view="EP" width="40" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="05" japanese="６桁" english="６桁" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">
+</comment>
+				<comment language="english">
+</comment>
+			</tag>
+			<tag entry="06" japanese="７桁" english="７桁" view="EP" width="56" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+		</group>
+
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
+			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
+				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
+				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
+				<parameter number="2" japanese="背景色番号" english="背景色番号" type="int8"/>
+				<comment language="japanese">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+				<comment language="english">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+			</tag>
+			<tag entry="01" japanese="カラー変更リセット" english="カラー変更リセット" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="Ｘセンタリング" english="Ｘセンタリング" view="EP" length="0" line="1"/>
+			<tag entry="03" japanese="Ｘ右寄せ" english="Ｘ右寄せ" view="EP" length="0" line="1">
+				<parameter number="0" japanese="右スペース" english="右スペース" type="int8"/>
+				<comment language="japanese">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+				<comment language="english">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
+		</group>
+
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
+			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
+			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="03" japanese="ウェイト変更（継続）" english="ウェイト変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="04" japanese="ウェイトリセット" english="ウェイトリセット" view="EP" length="0" line="1"/>
+			<tag entry="05" japanese="コールバック引数変更（単発）" english="コールバック引数変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="06" japanese="コールバック引数変更（継続）" english="コールバック引数変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
+			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+		</group>
+
+		<group entry="254" japanese="文字列展開" english="Word">
+		</group>
+
+		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
+		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
+		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
+		<set japanese="200%" english="200%" value="FF:01:サイズ:200"/>
+		<set japanese="150%" english="150%" value="FF:01:サイズ:150"/>
+		<set japanese="100%" english="100%" value="FF:01:サイズ:100"/>
+		<set japanese="75%" english="75%" value="FF:01:サイズ:75"/>
+		<set japanese="50%" english="50%" value="FF:01:サイズ:50"/>
+		<set japanese="カラーデフォルト" english="Black" value="FF:00:色:0"/>
+		<set japanese="カラー１" english="Red" value="FF:00:色:1"/>
+		<set japanese="カラー２" english="Green" value="FF:00:色:2"/>
+		<set japanese="カラー３" english="Blue" value="FF:00:色:3"/>
+	</tag-table>
+
+	<columns>
+		<id position="0" width="117"/>
+		<group default=" 0:デフォルト" position="-1" width="100">
+			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
+		</group>
+		<number position="-1" width="100"/>
+		<comment position="1" width="171"/>
+		<erase position="-1" width="100"/>
+		<language japanese="JPN" english="JPN">
+			<message position="2" width="274"/>
+			<font default=" 0:large" position="4" width="109">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="6" width="70"/>
+			<line position="-1" width="100"/>
+		</language>
+		<language japanese="JPN_KANJI" english="JPN_KANJI">
+			<message position="3" width="246"/>
+			<font default=" 0:large" position="5" width="106">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="7" width="75"/>
+			<line position="-1" width="100"/>
+		</language>
+	</columns>
+
+	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<band id="0" index="0" style="0000" width="530"/>
+		<band id="1" index="1" style="0000" width="165"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
+		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
+	</dialog>
+
+	<output default="デフォルト">
+		<target japanese="デフォルト" english="default" endian="big" encoding="Shift_JIS" letter-list-encoding="Shift_JIS" header-file-encoding="Shift_JIS" language="JPN">
+			<struct name="JMSMesgEntry" id="" message="mesgOffset">
+			</struct>
+			<entry sort="id" id-block="no" flowlabel-block="no"/>
+			<header divide="no" id-prefix="JMS_" query-prefix="JMS_QUERY_" flownode-prefix="JMS_FLOWNODE_" id="" struct="" query=""/>
+		</target>
+	</output>
+
+
+	<lock>
+		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
+	</lock>
+
+
+	<row id="msg_01">
+		<comment>300ドレス 400ボックス 500ランキング 600ビデオランキング</comment>
+		<language name="JPN" font=" 1:small" width="216">バトルビデオ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルビデオ</language>
+	</row>
+
+	<row id="msg_02">
+		<language name="JPN" font=" 1:small" width="216">バトルサブウェイ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルサブウェイ</language>
+	</row>
+
+	<row id="msg_03">
+		<language name="JPN" font=" 1:small" width="216">ランダムマッチ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ランダムマッチ</language>
+	</row>
+
+	<row id="msg_04">
+		<language name="JPN" font=" 1:small" width="216">やめる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">やめる</language>
+	</row>
+
+	<row id="msg_05">
+		<language name="JPN" font=" 1:small" width="216">もどる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">もどる</language>
+	</row>
+
+	<row id="msg_06">
+		<language name="JPN" font=" 1:small" width="216">じぶんのきろく</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">じぶんのきろく</language>
+	</row>
+
+	<row id="msg_07">
+		<language name="JPN" font=" 1:small" width="216">だれかのきろく</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">だれかのきろく</language>
+	</row>
+
+	<row id="msg_08">
+		<language name="JPN" font=" 1:small" width="216">きろくをけす</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">きろくをけす</language>
+	</row>
+
+	<row id="msg_09">
+		<language name="JPN" font=" 1:small" width="216">[1:00:トレーナー名:0]　のきろく</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:00:トレーナー名:0]　のきろく</language>
+	</row>
+
+	<row id="msg_10">
+		<comment>データが無い場合</comment>
+		<language name="JPN" font=" 1:small" width="216">あき</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">あき</language>
+	</row>
+
+	<row id="msg_11">
+		<language name="JPN" font=" 1:small" width="216">[2:03:４桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[2:03:４桁:0]</language>
+	</row>
+
+	<row id="msg_11_2">
+		<language name="JPN" font=" 1:small" width="216">せんめ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">せんめ</language>
+	</row>
+
+	<row id="msg_12">
+		<language name="JPN" font=" 1:small" width="216">ビデオナンバー：[2:01:２桁:0]ー[2:04:５桁:1]ー[2:04:５桁:2]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ビデオナンバー：[2:01:２桁:0]ー[2:04:５桁:1]ー[2:04:５桁:2]</language>
+	</row>
+
+	<row id="msg_12_2">
+		<language name="JPN" font=" 1:small" width="216">ビデオナンバー：[2:01:２桁:0]ー[2:04:５桁:1]ー[2:04:５桁:2] ★</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ビデオナンバー：[2:01:２桁:0]ー[2:04:５桁:1]ー[2:04:５桁:2] ★</language>
+	</row>
+
+	<row id="msg_13">
+		<language name="JPN" font=" 1:small" width="216">[1:00:トレーナー名:0]　の　プロフィール</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:00:トレーナー名:0]　の　プロフィール</language>
+	</row>
+
+	<row id="msg_14">
+		<language name="JPN" font=" 1:small" width="216">ねんれい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ねんれい</language>
+	</row>
+
+	<row id="msg_15">
+		<language name="JPN" font=" 1:small" width="216">[2:01:２桁:0]がつうまれ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[2:01:２桁:0]がつうまれ</language>
+	</row>
+
+	<row id="msg_16">
+		<language name="JPN" font=" 1:small" width="216">すんでいるばしょ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">すんでいるばしょ</language>
+	</row>
+
+	<row id="msg_17">
+		<language name="JPN" font=" 1:small" width="216">じこしょうかい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">じこしょうかい</language>
+	</row>
+
+	<row id="msg_18">
+		<comment>したがめん</comment>
+		<language name="JPN" font=" 1:small" width="216">データ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">データ</language>
+	</row>
+
+	<row id="msg_19">
+		<comment>したがめん</comment>
+		<language name="JPN" font=" 1:small" width="216">プロフィール</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">プロフィール</language>
+	</row>
+
+	<row id="msg_20">
+		<comment>ただの空欄</comment>
+		<language name="JPN" font=" 1:small" width="216"> </language>
+		<language name="JPN_KANJI" font=" 1:small" width="216"> </language>
+	</row>
+
+	<row id="msg_21">
+		<language name="JPN" font=" 1:small" width="216">みとうろく</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">みとうろく</language>
+	</row>
+
+	<row id="msg_22">
+		<language name="JPN" font=" 1:small" width="216">\[1:36:国名:0\]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">\[1:36:国名:0\]</language>
+	</row>
+
+	<row id="msg_23">
+		<language name="JPN" font=" 1:small" width="216">\[1:37:地域名:0\]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">\[1:37:地域名:0\]</language>
+	</row>
+
+	<row id="msg_24">
+		<language name="JPN" font=" 1:small" width="216">[1:1C:簡易会話単語:0]　[1:1C:簡易会話単語:1]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:1C:簡易会話単語:0]　[1:1C:簡易会話単語:1]</language>
+	</row>
+
+	<row id="msg_100">
+		<language name="JPN" font=" 1:small" width="216">じぶんのきろくをけす</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">じぶんのきろくをけす</language>
+	</row>
+
+	<row id="msg_101">
+		<language name="JPN" font=" 1:small" width="216">だれかのきろくをけす</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">だれかのきろくをけす</language>
+	</row>
+
+	<row id="msg_102">
+		<language name="JPN" font=" 1:small" width="216">あき</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">あき</language>
+	</row>
+
+	<row id="msg_103">
+		<language name="JPN" font=" 1:small" width="216">[1:00:トレーナー名:0]　のきろくをけす</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:00:トレーナー名:0]　のきろくをけす</language>
+	</row>
+
+	<row id="msg_200">
+		<language name="JPN" font=" 1:small" width="216">ランキングでさがす</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ランキングでさがす</language>
+	</row>
+
+	<row id="msg_201">
+		<language name="JPN" font=" 1:small" width="216">データをおくる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">データをおくる</language>
+	</row>
+
+	<row id="msg_202">
+		<language name="JPN" font=" 1:small" width="216">さいしん３０こ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">さいしん３０こ</language>
+	</row>
+
+	<row id="msg_203">
+		<language name="JPN" font=" 1:small" width="216">くわしくさがす</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">くわしくさがす</language>
+	</row>
+
+	<row id="msg_204">
+		<language name="JPN" font=" 1:small" width="216">ビデオナンバーでさがす</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ビデオナンバーでさがす</language>
+	</row>
+
+	<row id="msg_205">
+		<language name="JPN" font=" 1:small" width="216">しせつでさがす</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">しせつでさがす</language>
+	</row>
+
+	<row id="msg_206">
+		<language name="JPN" font=" 1:small" width="216">ポケモンでさがす</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ポケモンでさがす</language>
+	</row>
+
+	<row id="msg_207">
+		<language name="JPN" font=" 1:small" width="216">おなじちいきでさがす</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">おなじちいきでさがす</language>
+	</row>
+
+	<row id="msg_300">
+		<comment>写真送受信画面用</comment>
+		<language name="JPN" font=" 1:small" width="216">しゃしんをおくる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">しゃしんをおくる</language>
+	</row>
+
+	<row id="msg_301">
+		<language name="JPN" font=" 1:small" width="216">しゃしんをみる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">しゃしんをみる</language>
+	</row>
+
+	<row id="msg_302">
+		<language name="JPN" font=" 1:small" width="216">おくる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">おくる</language>
+	</row>
+
+	<row id="msg_303">
+		<language name="JPN" font=" 1:small" width="216">みたいポケモンを　えらんでください</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">みたいポケモンを　えらんでください</language>
+	</row>
+
+	<row id="msg_304">
+		<language name="JPN" font=" 1:small" width="216">[1:00:トレーナー名:0]　の　しゃしん
+[1:1C:簡易会話単語:1]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:00:トレーナー名:0]　の　しゃしん
+[1:1C:簡易会話単語:1]</language>
+	</row>
+
+	<row id="msg_305">
+		<language name="JPN" font=" 1:small" width="216">[1:00:トレーナー名:0]
+[1:1C:簡易会話単語:1]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:00:トレーナー名:0]
+[1:1C:簡易会話単語:1]</language>
+	</row>
+
+	<row id="msg_308">
+		<language name="JPN" font=" 1:small" width="216">しゃしん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">しゃしん</language>
+	</row>
+
+	<row id="msg_400">
+		<language name="JPN" font=" 1:small" width="216">ボックスをおくる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ボックスをおくる</language>
+	</row>
+
+	<row id="msg_401">
+		<language name="JPN" font=" 1:small" width="216">ボックスをみる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ボックスをみる</language>
+	</row>
+
+	<row id="msg_402">
+		<language name="JPN" font=" 1:small" width="216">だいすき</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">だいすき</language>
+	</row>
+
+	<row id="msg_403">
+		<language name="JPN" font=" 1:small" width="216">かっこいい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">かっこいい</language>
+	</row>
+
+	<row id="msg_404">
+		<language name="JPN" font=" 1:small" width="216">かわいい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">かわいい</language>
+	</row>
+
+	<row id="msg_405">
+		<language name="JPN" font=" 1:small" width="216">おすすめ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">おすすめ</language>
+	</row>
+
+	<row id="msg_406">
+		<language name="JPN" font=" 1:small" width="216">おもしろい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">おもしろい</language>
+	</row>
+
+	<row id="msg_407">
+		<language name="JPN" font=" 1:small" width="216">こだわり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">こだわり</language>
+	</row>
+
+	<row id="msg_408">
+		<language name="JPN" font=" 1:small" width="216">ボックス</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ボックス</language>
+	</row>
+
+	<row id="msg_409">
+		<language name="JPN" font=" 1:small" width="216">くわしくみる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">くわしくみる</language>
+	</row>
+
+	<row id="msg_900">
+		<comment>900番は汎用？</comment>
+		<language name="JPN" font=" 1:small" width="216">ア</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ア</language>
+	</row>
+
+	<row id="msg_901">
+		<language name="JPN" font=" 1:small" width="216">カ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">カ</language>
+	</row>
+
+	<row id="msg_902">
+		<language name="JPN" font=" 1:small" width="216">サ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">サ</language>
+	</row>
+
+	<row id="msg_903">
+		<language name="JPN" font=" 1:small" width="216">タ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">タ</language>
+	</row>
+
+	<row id="msg_904">
+		<language name="JPN" font=" 1:small" width="216">ナ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ナ</language>
+	</row>
+
+	<row id="msg_905">
+		<language name="JPN" font=" 1:small" width="216">ハ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ハ</language>
+	</row>
+
+	<row id="msg_906">
+		<language name="JPN" font=" 1:small" width="216">マ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">マ</language>
+	</row>
+
+	<row id="msg_907">
+		<language name="JPN" font=" 1:small" width="216">ヤ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ヤ</language>
+	</row>
+
+	<row id="msg_908">
+		<language name="JPN" font=" 1:small" width="216">ラ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ラ</language>
+	</row>
+
+	<row id="msg_909">
+		<language name="JPN" font=" 1:small" width="216">ワ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ワ</language>
+	</row>
+
+	<row id="msg_500">
+		<language name="JPN" font=" 1:small" width="216">こんしゅうのランキング</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">こんしゅうのランキング</language>
+	</row>
+
+	<row id="msg_501">
+		<language name="JPN" font=" 1:small" width="216">せんしゅうのランキング</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">せんしゅうのランキング</language>
+	</row>
+
+	<row id="msg_502">
+		<language name="JPN" font=" 1:small" width="216">ランキングきりかえ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ランキングきりかえ</language>
+	</row>
+
+	<row id="msg_503">
+		<language name="JPN" font=" 1:small" width="216">チームきりかえ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">チームきりかえ</language>
+	</row>
+
+	<row id="msg_504">
+		<language name="JPN" font=" 1:small" width="216">チーム：トレーナータイプ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">チーム：トレーナータイプ</language>
+	</row>
+
+	<row id="msg_505">
+		<language name="JPN" font=" 1:small" width="216">チーム：うまれたつき</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">チーム：うまれたつき</language>
+	</row>
+
+	<row id="msg_506">
+		<language name="JPN" font=" 1:small" width="216">チーム：すきなポケモン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">チーム：すきなポケモン</language>
+	</row>
+
+	<row id="msg_507">
+		<language name="JPN" font=" 1:small" width="216">[1:00:トレーナー名:1]：[1:0E:トレーナー種別名:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:00:トレーナー名:1]：[1:0E:トレーナー種別名:0]</language>
+	</row>
+
+	<row id="msg_508">
+		<language name="JPN" font=" 1:small" width="216">[1:00:トレーナー名:1]：[2:01:２桁:0]がつうまれ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:00:トレーナー名:1]：[2:01:２桁:0]がつうまれ</language>
+	</row>
+
+	<row id="msg_509">
+		<language name="JPN" font=" 1:small" width="216">[1:00:トレーナー名:1]：[1:01:ポケモン種族名:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:00:トレーナー名:1]：[1:01:ポケモン種族名:0]</language>
+	</row>
+
+	<row id="msg_510">
+		<language name="JPN" font=" 1:small" width="216">[2:01:２桁:0]：[1:0E:トレーナー種別名:1]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[2:01:２桁:0]：[1:0E:トレーナー種別名:1]</language>
+	</row>
+
+	<row id="msg_511">
+		<language name="JPN" font=" 1:small" width="216">[2:01:２桁:0]：[2:01:２桁:1]がつ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[2:01:２桁:0]：[2:01:２桁:1]がつ</language>
+	</row>
+
+	<row id="msg_512">
+		<language name="JPN" font=" 1:small" width="216">[2:01:２桁:0]：[1:01:ポケモン種族名:1]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[2:01:２桁:0]：[1:01:ポケモン種族名:1]</language>
+	</row>
+
+	<row id="msg_513">
+		<language name="JPN" font=" 1:small" width="216">せんしゅうの　けっか！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">せんしゅうの　けっか！</language>
+	</row>
+
+	<row id="msg_600">
+		<language name="JPN" font=" 1:small" width="216">コロシアム</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">コロシアム</language>
+	</row>
+
+	<row id="msg_601">
+		<language name="JPN" font=" 1:small" width="216">バトルフロンティア</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルフロンティア</language>
+	</row>
+
+	<row id="msg_602">
+		<language name="JPN" font=" 1:small" width="216">ほぞん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ほぞん</language>
+	</row>
+
+	<row id="msg_603">
+		<language name="JPN" font=" 1:small" width="130">バトルビデオを
+みる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="130">バトルビデオを
+みる</language>
+	</row>
+
+	<row id="msg_604">
+		<language name="JPN" font=" 1:small" width="130">バトルビデオ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="130">バトルビデオ</language>
+	</row>
+
+	<row id="msg_605">
+		<language name="JPN" font=" 1:small" width="216">バトルビデオ　にんきランキング
+コロシアム</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルビデオ　にんきランキング
+コロシアム</language>
+	</row>
+
+	<row id="msg_606">
+		<language name="JPN" font=" 1:small" width="216">バトルビデオ　にんきランキング
+バトルフロンティア</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルビデオ　にんきランキング
+バトルフロンティア</language>
+	</row>
+
+	<row id="msg_607">
+		<comment>数字　：　なまえ　のとき使う</comment>
+		<language name="JPN" font=" 1:small" width="216">：</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">：</language>
+	</row>
+
+	<row id="msg_608">
+		<language name="JPN" font=" 1:small" width="216">[1:00:トレーナー名:0]の きろくを
+どこに　ほぞんしますか？</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:00:トレーナー名:0]の きろくを
+どこに　ほぞんしますか？</language>
+	</row>
+
+	<row id="msg_609">
+		<language name="JPN" font=" 1:small" width="216">うわがきほぞん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">うわがきほぞん</language>
+	</row>
+
+	<row id="msg_610">
+		<language name="JPN" font=" 1:small" width="216">[1:00:トレーナー名:0]の　バトルビデオを
+けしても　よろしいですか？</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:00:トレーナー名:0]の　バトルビデオを
+けしても　よろしいですか？</language>
+	</row>
+
+	<row id="msg_700">
+		<comment>検索画面用</comment>
+		<language name="JPN" font=" 1:small" width="216">バトルビデオをみる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルビデオをみる</language>
+	</row>
+
+	<row id="msg_701">
+		<language name="JPN" font=" 1:small" width="216">バトルビデオをおくる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルビデオをおくる</language>
+	</row>
+
+	<row id="msg_702">
+		<language name="JPN" font=" 1:small" width="216">さいしん３０けん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">さいしん３０けん</language>
+	</row>
+
+	<row id="msg_703">
+		<language name="JPN" font=" 1:small" width="216">くわしくさがす</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">くわしくさがす</language>
+	</row>
+
+	<row id="msg_704">
+		<language name="JPN" font=" 1:small" width="216">ビデオナンバーでさがす</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ビデオナンバーでさがす</language>
+	</row>
+
+	<row id="msg_705">
+		<language name="JPN" font=" 1:small" width="216">しせつでさがす</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">しせつでさがす</language>
+	</row>
+
+	<row id="msg_706">
+		<language name="JPN" font=" 1:small" width="216">ポケモンでさがす</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ポケモンでさがす</language>
+	</row>
+
+	<row id="msg_707">
+		<language name="JPN" font=" 1:small" width="216">おなじちいきでさがす</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">おなじちいきでさがす</language>
+	</row>
+
+	<row id="msg_708">
+		<language name="JPN" font=" 1:small" width="216">ＯＫ！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ＯＫ！</language>
+	</row>
+
+	<row id="msg_709">
+		<language name="JPN" font=" 1:small" width="216">ビデオナンバーを　にゅうりょくしてください</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ビデオナンバーを　にゅうりょくしてください</language>
+	</row>
+
+	<row id="msg_710">
+		<language name="JPN" font=" 1:small" width="216">しせつを　きめてください</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">しせつを　きめてください</language>
+	</row>
+
+	<row id="msg_711">
+		<language name="JPN" font=" 1:small" width="216">ポケモンを　きめてください</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ポケモンを　きめてください</language>
+	</row>
+
+	<row id="msg_712">
+		<language name="JPN" font=" 1:small" width="216">じょうけんを　いれてください</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">じょうけんを　いれてください</language>
+	</row>
+
+	<row id="msg_713">
+		<language name="JPN" font=" 1:small" width="216">じょうけんが　はいっていません！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">じょうけんが　はいっていません！</language>
+	</row>
+
+	<row id="msg_714">
+		<language name="JPN" font=" 1:small" width="216">バトルビデオを　さがしています……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルビデオを　さがしています……</language>
+	</row>
+
+	<row id="msg_715">
+		<language name="JPN" font=" 1:small" width="216">あてはまる　バトルビデオが　ありません……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">あてはまる　バトルビデオが　ありません……</language>
+	</row>
+
+	<row id="msg_716">
+		<language name="JPN" font=" 1:small" width="216">バトルビデオを　おくっています……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルビデオを　おくっています……</language>
+	</row>
+
+	<row id="msg_717">
+		<language name="JPN" font=" 1:small" width="216">バトルビデオを　おくりました！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルビデオを　おくりました！</language>
+	</row>
+
+	<row id="msg_718">
+		<language name="JPN" font=" 1:small" width="216">プロフィールをみる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">プロフィールをみる</language>
+	</row>
+
+	<row id="msg_719">
+		<language name="JPN" font=" 1:small" width="216">プロフィールをしまう</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">プロフィールをしまう</language>
+	</row>
+
+	<row id="msg_720">
+		<language name="JPN" font=" 1:small" width="216">バトルビデオ　さいしん３０けん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルビデオ　さいしん３０けん</language>
+	</row>
+
+	<row id="msg_721">
+		<language name="JPN" font=" 1:small" width="216">じょうけんを　いれてください</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">じょうけんを　いれてください</language>
+	</row>
+
+	<row id="msg_722">
+		<language name="JPN" font=" 1:small" width="216">なし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">なし</language>
+	</row>
+
+	<row id="msg_723">
+		<language name="JPN" font=" 1:small" width="216">けんさくした　バトルビデオ
+いちらん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">けんさくした　バトルビデオ
+いちらん</language>
+	</row>
+
+	<row id="msg_724">
+		<language name="JPN" font=" 1:small" width="216">おなじ　バトルビデオは
+２かい　おくれません</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">おなじ　バトルビデオは
+２かい　おくれません</language>
+	</row>
+
+	<row id="msg_725">
+		<language name="JPN" font=" 1:small" width="216">ちいきを　とうろくしていません</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ちいきを　とうろくしていません</language>
+	</row>
+
+	<row id="msg_726">
+		<language name="JPN" font=" 1:small" width="216">おくる　バトルビデオが　ありません</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">おくる　バトルビデオが　ありません</language>
+	</row>
+
+	<row id="msg_1000">
+		<language name="JPN" font=" 1:small" width="216">はい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">はい</language>
+	</row>
+
+	<row id="msg_1001">
+		<language name="JPN" font=" 1:small" width="216">いいえ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">いいえ</language>
+	</row>
+
+	<row id="msg_rule_000">
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
+シングル　せいげんなし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
+シングル　せいげんなし</language>
+	</row>
+
+	<row id="msg_rule_000_01">
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
+シングル　スタンダードカップ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
+シングル　スタンダードカップ</language>
+	</row>
+
+	<row id="msg_rule_000_02">
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
+シングル　ファンシーカップ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
+シングル　ファンシーカップ</language>
+	</row>
+
+	<row id="msg_rule_000_03">
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
+シングル　リトルカップ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
+シングル　リトルカップ</language>
+	</row>
+
+	<row id="msg_rule_000_04">
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
+シングル　ライトカップ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
+シングル　ライトカップ</language>
+	</row>
+
+	<row id="msg_rule_000_05">
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
+シングル　ダブルカップ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
+シングル　ダブルカップ</language>
+	</row>
+
+	<row id="msg_rule_000_06">
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
+シングル　そのたのカップ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
+シングル　そのたのカップ</language>
+	</row>
+
+	<row id="msg_rule_001">
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
+ダブル　せいげんなし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
+ダブル　せいげんなし</language>
+	</row>
+
+	<row id="msg_rule_001_01">
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
+ダブル　スタンダードカップ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
+ダブル　スタンダードカップ</language>
+	</row>
+
+	<row id="msg_rule_001_02">
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
+ダブル　ファンシーカップ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
+ダブル　ファンシーカップ</language>
+	</row>
+
+	<row id="msg_rule_001_03">
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
+ダブル　リトルカップ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
+ダブル　リトルカップ</language>
+	</row>
+
+	<row id="msg_rule_001_04">
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
+ダブル　ライトカップ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
+ダブル　ライトカップ</language>
+	</row>
+
+	<row id="msg_rule_001_05">
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
+ダブル　ダブルカップ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
+ダブル　ダブルカップ</language>
+	</row>
+
+	<row id="msg_rule_001_06">
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
+ダブル　そのたのカップ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
+ダブル　そのたのカップ</language>
+	</row>
+
+	<row id="msg_rule_002">
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
+マルチ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
+マルチ</language>
+	</row>
+
+	<row id="msg_rule_003">
+		<language name="JPN" font=" 1:small" width="216" line="2">バトルタワー
+シングル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">バトルタワー
+シングル</language>
+	</row>
+
+	<row id="msg_rule_004">
+		<language name="JPN" font=" 1:small" width="216" line="2">バトルタワー
+ダブル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">バトルタワー
+ダブル</language>
+	</row>
+
+	<row id="msg_rule_005">
+		<language name="JPN" font=" 1:small" width="216" line="2">バトルタワー
+マルチ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">バトルタワー
+マルチ</language>
+	</row>
+
+	<row id="msg_rule_006">
+		<language name="JPN" font=" 1:small" width="216" line="2">バトルファクトリー
+レベル５０　シングル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">バトルファクトリー
+レベル５０　シングル</language>
+	</row>
+
+	<row id="msg_rule_007">
+		<language name="JPN" font=" 1:small" width="216" line="2">バトルファクトリー
+レベル５０　ダブル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">バトルファクトリー
+レベル５０　ダブル</language>
+	</row>
+
+	<row id="msg_rule_008">
+		<language name="JPN" font=" 1:small" width="216" line="2">バトルファクトリー
+レベル５０　マルチ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">バトルファクトリー
+レベル５０　マルチ</language>
+	</row>
+
+	<row id="msg_rule_009">
+		<language name="JPN" font=" 1:small" width="216" line="2">バトルファクトリー
+オープンレベル　シングル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">バトルファクトリー
+オープンレベル　シングル</language>
+	</row>
+
+	<row id="msg_rule_010">
+		<language name="JPN" font=" 1:small" width="216" line="2">バトルファクトリー
+オープンレベル　ダブル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">バトルファクトリー
+オープンレベル　ダブル</language>
+	</row>
+
+	<row id="msg_rule_011">
+		<language name="JPN" font=" 1:small" width="216">バトルファクトリー
+オープンレベル　マルチ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルファクトリー
+オープンレベル　マルチ</language>
+	</row>
+
+	<row id="msg_rule_012">
+		<language name="JPN" font=" 1:small" width="216">バトルステージ
+シングル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルステージ
+シングル</language>
+	</row>
+
+	<row id="msg_rule_013">
+		<language name="JPN" font=" 1:small" width="216">バトルステージ
+ダブル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルステージ
+ダブル</language>
+	</row>
+
+	<row id="msg_rule_014">
+		<language name="JPN" font=" 1:small" width="216">バトルステージ
+マルチ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルステージ
+マルチ</language>
+	</row>
+
+	<row id="msg_rule_015">
+		<language name="JPN" font=" 1:small" width="216">バトルキャッスル
+シングル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルキャッスル
+シングル</language>
+	</row>
+
+	<row id="msg_rule_016">
+		<language name="JPN" font=" 1:small" width="216">バトルキャッスル
+ダブル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルキャッスル
+ダブル</language>
+	</row>
+
+	<row id="msg_rule_017">
+		<language name="JPN" font=" 1:small" width="216">バトルキャッスル
+マルチ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルキャッスル
+マルチ</language>
+	</row>
+
+	<row id="msg_rule_018">
+		<language name="JPN" font=" 1:small" width="216">バトルルーレット
+シングル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルルーレット
+シングル</language>
+	</row>
+
+	<row id="msg_rule_019">
+		<language name="JPN" font=" 1:small" width="216">バトルルーレット
+ダブル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルルーレット
+ダブル</language>
+	</row>
+
+	<row id="msg_rule_020">
+		<language name="JPN" font=" 1:small" width="216">バトルルーレット
+マルチ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルルーレット
+マルチ</language>
+	</row>
+
+	<row id="msg_rule_021">
+		<language name="JPN" font=" 1:small" width="216">コロシアム
+シングル　せいげんなし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">コロシアム
+シングル　せいげんなし</language>
+	</row>
+
+	<row id="msg_rule_022">
+		<language name="JPN" font=" 1:small" width="216">コロシアム
+シングル　カップせん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">コロシアム
+シングル　カップせん</language>
+	</row>
+
+	<row id="msg_rule_023">
+		<language name="JPN" font=" 1:small" width="216">コロシアム
+ダブル　せいげんなし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">コロシアム
+ダブル　せいげんなし</language>
+	</row>
+
+	<row id="msg_rule_024">
+		<language name="JPN" font=" 1:small" width="216">コロシアム
+ダブル　カップせん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">コロシアム
+ダブル　カップせん</language>
+	</row>
+
+	<row id="msg_rule_no_000">
+		<language name="JPN" font=" 1:small" width="216" line="2">　１：コロシアム
+　　　シングル　せいげんなし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">　１：コロシアム
+　　　シングル　せいげんなし</language>
+	</row>
+
+	<row id="msg_rule_no_000_01">
+		<language name="JPN" font=" 1:small" width="216" line="2">　２：コロシアム
+　　　シングル　カップせん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">　２：コロシアム
+　　　シングル　カップせん</language>
+	</row>
+
+	<row id="msg_rule_no_001">
+		<language name="JPN" font=" 1:small" width="216" line="2">　３：コロシアム
+　　　ダブル　せいげんなし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">　３：コロシアム
+　　　ダブル　せいげんなし</language>
+	</row>
+
+	<row id="msg_rule_no_001_01">
+		<language name="JPN" font=" 1:small" width="216" line="2">　４：コロシアム
+　　　ダブル　カップせん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">　４：コロシアム
+　　　ダブル　カップせん</language>
+	</row>
+
+	<row id="msg_rule_no_002">
+		<language name="JPN" font=" 1:small" width="216" line="2">　５：コロシアム
+　　　マルチ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">　５：コロシアム
+　　　マルチ</language>
+	</row>
+
+	<row id="msg_rule_no_003">
+		<language name="JPN" font=" 1:small" width="216" line="2">　６：バトルタワー
+　　　シングル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">　６：バトルタワー
+　　　シングル</language>
+	</row>
+
+	<row id="msg_rule_no_004">
+		<language name="JPN" font=" 1:small" width="216" line="2">　７：バトルタワー
+　　　ダブル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">　７：バトルタワー
+　　　ダブル</language>
+	</row>
+
+	<row id="msg_rule_no_005">
+		<language name="JPN" font=" 1:small" width="216" line="2">　８：バトルタワー
+　　　マルチ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">　８：バトルタワー
+　　　マルチ</language>
+	</row>
+
+	<row id="msg_rule_no_006">
+		<language name="JPN" font=" 1:small" width="216" line="2">　９：バトルファクトリー
+　　　レベル５０　シングル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">　９：バトルファクトリー
+　　　レベル５０　シングル</language>
+	</row>
+
+	<row id="msg_rule_no_007">
+		<language name="JPN" font=" 1:small" width="216" line="2">１０：バトルファクトリー
+　　　レベル５０　ダブル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">１０：バトルファクトリー
+　　　レベル５０　ダブル</language>
+	</row>
+
+	<row id="msg_rule_no_008">
+		<language name="JPN" font=" 1:small" width="216" line="2">１１：バトルファクトリー
+　　　レベル５０　マルチ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">１１：バトルファクトリー
+　　　レベル５０　マルチ</language>
+	</row>
+
+	<row id="msg_rule_no_009">
+		<language name="JPN" font=" 1:small" width="216" line="2">１２：バトルファクトリー
+　　　オープンレベル　シングル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">１２：バトルファクトリー
+　　　オープンレベル　シングル</language>
+	</row>
+
+	<row id="msg_rule_no_010">
+		<language name="JPN" font=" 1:small" width="216" line="2">１３：バトルファクトリー
+　　　オープンレベル　ダブル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">１３：バトルファクトリー
+　　　オープンレベル　ダブル</language>
+	</row>
+
+	<row id="msg_rule_no_011">
+		<language name="JPN" font=" 1:small" width="216">１４：バトルファクトリー
+　　　オープンレベル　マルチ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">１４：バトルファクトリー
+　　　オープンレベル　マルチ</language>
+	</row>
+
+	<row id="msg_rule_no_012">
+		<language name="JPN" font=" 1:small" width="216">１５：バトルステージ
+　　　シングル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">１５：バトルステージ
+　　　シングル</language>
+	</row>
+
+	<row id="msg_rule_no_013">
+		<language name="JPN" font=" 1:small" width="216">１６：バトルステージ
+　　　ダブル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">１６：バトルステージ
+　　　ダブル</language>
+	</row>
+
+	<row id="msg_rule_no_014">
+		<language name="JPN" font=" 1:small" width="216">１７：バトルステージ
+　　　マルチ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">１７：バトルステージ
+　　　マルチ</language>
+	</row>
+
+	<row id="msg_rule_no_015">
+		<language name="JPN" font=" 1:small" width="216">１８：バトルキャッスル
+　　　シングル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">１８：バトルキャッスル
+　　　シングル</language>
+	</row>
+
+	<row id="msg_rule_no_016">
+		<language name="JPN" font=" 1:small" width="216">１９：バトルキャッスル
+　　　ダブル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">１９：バトルキャッスル
+　　　ダブル</language>
+	</row>
+
+	<row id="msg_rule_no_017">
+		<language name="JPN" font=" 1:small" width="216">２０：バトルキャッスル
+　　　マルチ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">２０：バトルキャッスル
+　　　マルチ</language>
+	</row>
+
+	<row id="msg_rule_no_018">
+		<language name="JPN" font=" 1:small" width="216">２１：バトルルーレット
+　　　シングル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">２１：バトルルーレット
+　　　シングル</language>
+	</row>
+
+	<row id="msg_rule_no_019">
+		<language name="JPN" font=" 1:small" width="216">２２：バトルルーレット
+　　　ダブル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">２２：バトルルーレット
+　　　ダブル</language>
+	</row>
+
+	<row id="msg_rule_no_020">
+		<language name="JPN" font=" 1:small" width="216">２３：バトルルーレット
+　　　マルチ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">２３：バトルルーレット
+　　　マルチ</language>
+	</row>
+
+	<row id="msg_10000">
+		<language name="JPN" font=" 1:small" width="216">ＴＯＵＣＨ　ＨＥＲＥ！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ＴＯＵＣＨ　ＨＥＲＥ！</language>
+	</row>
+
+	<row id="msg_10001">
+		<language name="JPN" font=" 1:small" width="216">ＷｉーＦｉコネクション　から
+せつだんしても　よろしいですか？</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ＷｉーＦｉコネクション　から
+せつだんしても　よろしいですか？</language>
+	</row>
+
+	<row id="msg_err_000">
+		<comment>ドレス送信時</comment>
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_err_001">
+		<language name="JPN" font=" 1:small" width="216">ユーザーにんしょうエラーです
+すこし　まってから　せつぞくしてください</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ユーザーにんしょうエラーです
+すこし　まってから　せつぞくしてください</language>
+	</row>
+
+	<row id="msg_err_002">
+		<language name="JPN" font=" 1:small" width="216">すでに　とうろくされています</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">すでに　とうろくされています</language>
+	</row>
+
+	<row id="msg_err_003">
+		<language name="JPN" font=" 1:small" width="216">ドレスアップショットの　ないように
+もんだいが　あるようです</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ドレスアップショットの　ないように
+もんだいが　あるようです</language>
+	</row>
+
+	<row id="msg_err_004">
+		<language name="JPN" font=" 1:small" width="216">プロフィールの　ないように
+もんだいが　あるようです</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">プロフィールの　ないように
+もんだいが　あるようです</language>
+	</row>
+
+	<row id="msg_err_005">
+		<language name="JPN" font=" 1:small" width="216">エラーがはっせいしました</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">エラーがはっせいしました</language>
+	</row>
+
+	<row id="msg_err_006">
+		<comment>ドレス取得時</comment>
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_err_007">
+		<language name="JPN" font=" 1:small" width="216">ユーザーにんしょうエラーです
+すこし　まってから　せつぞくしてください</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ユーザーにんしょうエラーです
+すこし　まってから　せつぞくしてください</language>
+	</row>
+
+	<row id="msg_err_008">
+		<language name="JPN" font=" 1:small" width="216">えらんだ　ポケモンに
+もんだいが　あるようです</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">えらんだ　ポケモンに
+もんだいが　あるようです</language>
+	</row>
+
+	<row id="msg_err_009">
+		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　はっせいしました</language>
+	</row>
+
+	<row id="msg_err_010">
+		<comment>ボックスショット送信時</comment>
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_err_011">
+		<language name="JPN" font=" 1:small" width="216">ユーザーにんしょうエラーです
+すこし　まってから　せつぞくしてください</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ユーザーにんしょうエラーです
+すこし　まってから　せつぞくしてください</language>
+	</row>
+
+	<row id="msg_err_012">
+		<language name="JPN" font=" 1:small" width="216">すでに　とうろくされています</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">すでに　とうろくされています</language>
+	</row>
+
+	<row id="msg_err_013">
+		<language name="JPN" font=" 1:small" width="216">ボックスショットの　ないように
+もんだいが　あるようです</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ボックスショットの　ないように
+もんだいが　あるようです</language>
+	</row>
+
+	<row id="msg_err_014">
+		<language name="JPN" font=" 1:small" width="216">プロフィールの　ないように
+もんだいが　あるようです</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">プロフィールの　ないように
+もんだいが　あるようです</language>
+	</row>
+
+	<row id="msg_err_015">
+		<language name="JPN" font=" 1:small" width="216">あなたの　チームに
+もんだいが　あるようです</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">あなたの　チームに
+もんだいが　あるようです</language>
+	</row>
+
+	<row id="msg_err_016">
+		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　はっせいしました</language>
+	</row>
+
+	<row id="msg_err_017">
+		<comment>ボックスショット受信時</comment>
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_err_018">
+		<language name="JPN" font=" 1:small" width="216">ユーザーにんしょうエラーです
+すこし　まってから　せつぞくしてください</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ユーザーにんしょうエラーです
+すこし　まってから　せつぞくしてください</language>
+	</row>
+
+	<row id="msg_err_019">
+		<language name="JPN" font=" 1:small" width="216">あなたの　チームに
+もんだいが　あるようです</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">あなたの　チームに
+もんだいが　あるようです</language>
+	</row>
+
+	<row id="msg_err_020">
+		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　はっせいしました</language>
+	</row>
+
+	<row id="msg_err_021">
+		<comment>ランキングタイプ取得時</comment>
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_err_022">
+		<language name="JPN" font=" 1:small" width="216">ユーザーにんしょうエラーです
+すこし　まってから　せつぞくしてください</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ユーザーにんしょうエラーです
+すこし　まってから　せつぞくしてください</language>
+	</row>
+
+	<row id="msg_err_023">
+		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　はっせいしました</language>
+	</row>
+
+	<row id="msg_err_024">
+		<comment>ランキング受信</comment>
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_err_025">
+		<language name="JPN" font=" 1:small" width="216">ユーザーにんしょうエラーが　はっせいしました
+さいどじかんを　おいて　せつぞくしてください</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ユーザーにんしょうエラーが　はっせいしました
+さいどじかんを　おいて　せつぞくしてください</language>
+	</row>
+
+	<row id="msg_err_026">
+		<language name="JPN" font=" 1:small" width="216">ランキングの　うけとりに
+しっぱいしました</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ランキングの　うけとりに
+しっぱいしました</language>
+	</row>
+
+	<row id="msg_err_027">
+		<language name="JPN" font=" 1:small" width="216">あなたの　ランキングの　せいせきに
+もんだいが　あるようです</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">あなたの　ランキングの　せいせきに
+もんだいが　あるようです</language>
+	</row>
+
+	<row id="msg_err_028">
+		<language name="JPN" font=" 1:small" width="216">プロフィールに
+もんだいが　あるようです</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">プロフィールに
+もんだいが　あるようです</language>
+	</row>
+
+	<row id="msg_err_029">
+		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　はっせいしました</language>
+	</row>
+
+	<row id="msg_err_030">
+		<comment>バトルビデオ送信時</comment>
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_err_031">
+		<language name="JPN" font=" 1:small" width="216">ユーザーにんしょうエラーです
+すこし　まってから　せつぞくしてください</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ユーザーにんしょうエラーです
+すこし　まってから　せつぞくしてください</language>
+	</row>
+
+	<row id="msg_err_032">
+		<language name="JPN" font=" 1:small" width="216">すでに　とうろくされています</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">すでに　とうろくされています</language>
+	</row>
+
+	<row id="msg_err_033">
+		<language name="JPN" font=" 1:small" width="216">バトルビデオの　ないように
+もんだいが　あるようです</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルビデオの　ないように
+もんだいが　あるようです</language>
+	</row>
+
+	<row id="msg_err_034">
+		<language name="JPN" font=" 1:small" width="216">プロフィールに
+もんだいが　あるようです</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">プロフィールに
+もんだいが　あるようです</language>
+	</row>
+
+	<row id="msg_err_035">
+		<language name="JPN" font=" 1:small" width="216">エラーがはっせいしました</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">エラーがはっせいしました</language>
+	</row>
+
+	<row id="msg_err_036_0">
+		<language name="JPN" font=" 1:small" width="216">あなたの　ポケモンに
+もんだいがあり　おくれませんでした</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">あなたの　ポケモンに
+もんだいがあり　おくれませんでした</language>
+	</row>
+
+	<row id="msg_err_036_1">
+		<language name="JPN" font=" 1:small" width="216">つうしんあいての　ポケモンに
+もんだいがあり　おくれませんでした</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">つうしんあいての　ポケモンに
+もんだいがあり　おくれませんでした</language>
+	</row>
+
+	<row id="msg_err_036">
+		<comment>バトルビデオ検索取得時</comment>
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_err_037">
+		<language name="JPN" font=" 1:small" width="216">ユーザーにんしょうエラーです
+すこし　まってから　せつぞくしてください</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ユーザーにんしょうエラーです
+すこし　まってから　せつぞくしてください</language>
+	</row>
+
+	<row id="msg_err_038">
+		<language name="JPN" font=" 1:small" width="216">けんさく　ないように
+もんだいが　あるようです</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">けんさく　ないように
+もんだいが　あるようです</language>
+	</row>
+
+	<row id="msg_err_039">
+		<language name="JPN" font=" 1:small" width="216">エラーがはっせいしました</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">エラーがはっせいしました</language>
+	</row>
+
+	<row id="msg_err_040">
+		<comment>バトルビデオ取得</comment>
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_err_041">
+		<language name="JPN" font=" 1:small" width="216">ユーザーにんしょうエラーです
+すこし　まってから　せつぞくしてください</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ユーザーにんしょうエラーです
+すこし　まってから　せつぞくしてください</language>
+	</row>
+
+	<row id="msg_err_042">
+		<language name="JPN" font=" 1:small" width="216">あてはまる　バトルビデオが　ありません……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">あてはまる　バトルビデオが　ありません……</language>
+	</row>
+
+	<row id="msg_err_043">
+		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　はっせいしました</language>
+	</row>
+
+	<row id="msg_err_044">
+		<comment>お気に入り登録</comment>
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_err_045">
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_err_046">
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_err_047">
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_lib_err_000">
+		<comment>ライブラリのエラー</comment>
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_lib_err_001">
+		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました
+エラー１０６０１</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　はっせいしました
+エラー１０６０１</language>
+	</row>
+
+	<row id="msg_lib_err_002">
+		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました
+エラー１０６０２</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　はっせいしました
+エラー１０６０２</language>
+	</row>
+
+	<row id="msg_lib_err_003">
+		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました
+エラー１０６０３</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　はっせいしました
+エラー１０６０３</language>
+	</row>
+
+	<row id="msg_lib_err_004">
+		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました
+エラー１０６０４</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　はっせいしました
+エラー１０６０４</language>
+	</row>
+
+	<row id="msg_lib_err_005">
+		<language name="JPN" font=" 1:small" width="216">せつぞくに　しっぱいしました
+エラー１０６０５</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">せつぞくに　しっぱいしました
+エラー１０６０５</language>
+	</row>
+
+	<row id="msg_lib_err_006">
+		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました
+エラー１０６０６</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　はっせいしました
+エラー１０６０６</language>
+	</row>
+
+	<row id="msg_lib_err_007">
+		<language name="JPN" font=" 1:small" width="216">せつぞくに　しっぱいしました
+エラー１０６０７</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">せつぞくに　しっぱいしました
+エラー１０６０７</language>
+	</row>
+
+	<row id="msg_lib_err_008">
+		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました
+エラー１０６０８</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　はっせいしました
+エラー１０６０８</language>
+	</row>
+
+	<row id="msg_lib_err_009">
+		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました
+エラー１０６０９</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　はっせいしました
+エラー１０６０９</language>
+	</row>
+
+	<row id="msg_lib_err_010">
+		<language name="JPN" font=" 1:small" width="216">おうとうが　ありません
+エラー１０６１０</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">おうとうが　ありません
+エラー１０６１０</language>
+	</row>
+
+	<row id="msg_lib_err_011">
+		<language name="JPN" font=" 1:small" width="216">おうとうが　ありません
+エラー１０６１１</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">おうとうが　ありません
+エラー１０６１１</language>
+	</row>
+
+	<row id="msg_lib_err_012">
+		<language name="JPN" font=" 1:small" width="216">おうとうが　ありません
+エラー１０６１２</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">おうとうが　ありません
+エラー１０６１２</language>
+	</row>
+
+	<row id="msg_lib_err_013">
+		<language name="JPN" font=" 1:small" width="216">つうしんが　ちゅうだんされました
+エラー１０６１３</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">つうしんが　ちゅうだんされました
+エラー１０６１３</language>
+	</row>
+
+	<row id="msg_lib_err_014">
+		<language name="JPN" font=" 1:small" width="216">せつぞくに　しっぱいしました
+エラー１０６１４</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">せつぞくに　しっぱいしました
+エラー１０６１４</language>
+	</row>
+
+	<row id="msg_st_err_000">
+		<comment>ライブラリの状態エラー</comment>
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_st_err_001">
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_st_err_002">
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_st_err_003">
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_st_err_004">
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_st_err_005">
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_st_err_006">
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_st_err_007">
+		<language name="JPN" font=" 1:small" width="216">サーバーとの　せつぞくが　ちゅうだん　しました</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">サーバーとの　せつぞくが　ちゅうだん　しました</language>
+	</row>
+
+	<row id="msg_st_err_008">
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_st_err_009">
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_info_000">
+		<language name="JPN" font=" 1:small" width="216">きろくがありません</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">きろくがありません</language>
+	</row>
+
+	<row id="msg_info_001">
+		<language name="JPN" font=" 1:small" width="216">ボックスを　えらんでください</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ボックスを　えらんでください</language>
+	</row>
+
+	<row id="msg_info_002">
+		<language name="JPN" font=" 1:small" width="216">からの　ボックスは　おくれません！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">からの　ボックスは　おくれません！</language>
+	</row>
+
+	<row id="msg_info_003">
+		<language name="JPN" font=" 1:small" width="216">どの　コーナーに　おくりますか？</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">どの　コーナーに　おくりますか？</language>
+	</row>
+
+	<row id="msg_info_004">
+		<language name="JPN" font=" 1:small" width="216">ボックスは　いちどに
+ひとつ　しか　おくれません</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ボックスは　いちどに
+ひとつ　しか　おくれません</language>
+	</row>
+
+	<row id="msg_info_005">
+		<language name="JPN" font=" 1:small" width="216">おなじ　ボックスは　おくれません</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">おなじ　ボックスは　おくれません</language>
+	</row>
+
+	<row id="msg_info_006">
+		<language name="JPN" font=" 1:small" width="216">どの　コーナーを　みますか？</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">どの　コーナーを　みますか？</language>
+	</row>
+
+	<row id="msg_info_007">
+		<language name="JPN" font=" 1:small" width="216">きろくをけせませんでした…</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">きろくをけせませんでした…</language>
+	</row>
+
+	<row id="msg_info_008">
+		<language name="JPN" font=" 1:small" width="216">おなじバトルビデオは　ほぞんできません</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">おなじバトルビデオは　ほぞんできません</language>
+	</row>
+
+	<row id="msg_info_009">
+		<language name="JPN" font=" 1:small" width="216">ほぞんしています……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ほぞんしています……</language>
+	</row>
+
+	<row id="msg_info_010">
+		<language name="JPN" font=" 1:small" width="216">ランキングを　うけとっています……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ランキングを　うけとっています……</language>
+	</row>
+
+	<row id="msg_info_011">
+		<language name="JPN" font=" 1:small" width="216">ほぞんじょうほうを　おくっています……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ほぞんじょうほうを　おくっています……</language>
+	</row>
+
+	<row id="msg_info_012">
+		<language name="JPN" font=" 1:small" width="216">ほぞんが　おわりました！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ほぞんが　おわりました！</language>
+	</row>
+
+	<row id="msg_info_013">
+		<language name="JPN" font=" 1:small" width="216">[1:00:トレーナー名:0]の　バトルビデオを
+けしても　よろしいですか？</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:00:トレーナー名:0]の　バトルビデオを
+けしても　よろしいですか？</language>
+	</row>
+
+	<row id="msg_info_014">
+		<language name="JPN" font=" 1:small" width="216">ほんとうに　けしても　いいですか？</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ほんとうに　けしても　いいですか？</language>
+	</row>
+
+	<row id="msg_info_015">
+		<language name="JPN" font=" 1:small" width="216">きろくを　けしています……
+レポートを　かいています……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">きろくを　けしています……
+レポートを　かいています……</language>
+	</row>
+
+	<row id="msg_info_016">
+		<language name="JPN" font=" 1:small" width="216">きろくを　けしました！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">きろくを　けしました！</language>
+	</row>
+
+	<row id="msg_info_017">
+		<language name="JPN" font=" 1:small" width="216">ドレスアップショットを　おくっています……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ドレスアップショットを　おくっています……</language>
+	</row>
+
+	<row id="msg_info_018">
+		<language name="JPN" font=" 1:small" width="216">ドレスアップショットを　うけとっています……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ドレスアップショットを　うけとっています……</language>
+	</row>
+
+	<row id="msg_info_019">
+		<language name="JPN" font=" 1:small" width="216">ボックスショットを　おくっています……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ボックスショットを　おくっています……</language>
+	</row>
+
+	<row id="msg_info_020">
+		<language name="JPN" font=" 1:small" width="216">ボックスショットを　うけとっています……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ボックスショットを　うけとっています……</language>
+	</row>
+
+	<row id="msg_info_021">
+		<language name="JPN" font=" 1:small" width="216">おくる　しゃしんが　ありません
+コガネの　ちかつうろで　つくろう</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">おくる　しゃしんが　ありません
+コガネの　ちかつうろで　つくろう</language>
+	</row>
+
+	<row id="msg_info_022">
+		<language name="JPN" font=" 1:small" width="216">おなじ　しゃしんは
+２かい　おくれません</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">おなじ　しゃしんは
+２かい　おくれません</language>
+	</row>
+
+	<row id="msg_info_023">
+		<language name="JPN" font=" 1:small" width="216">バトルビデオを　うけとっています……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルビデオを　うけとっています……</language>
+	</row>
+
+	<row id="msg_info_024">
+		<language name="JPN" font=" 1:small" width="216">あてはまる　しゃしんが　ありません……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">あてはまる　しゃしんが　ありません……</language>
+	</row>
+
+	<row id="msg_info_025">
+		<language name="JPN" font=" 1:small" width="216">あてはまる　ボックスショットが
+ありません……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">あてはまる　ボックスショットが
+ありません……</language>
+	</row>
+
+	<row id="msg_info_026">
+		<language name="JPN" font=" 1:small" width="216">バトルビデオを　おくりました
+ビデオナンバー：[2:01:２桁:0]ー[2:04:５桁:1]ー[2:04:５桁:2]
+</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルビデオを　おくりました
+ビデオナンバー：[2:01:２桁:0]ー[2:04:５桁:1]ー[2:04:５桁:2]
+</language>
+	</row>
+
+	<row id="msg_info_027">
+		<language name="JPN" font=" 1:small" width="216">バトルビデオを　みる　まえに
+レポートを　かきます</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルビデオを　みる　まえに
+レポートを　かきます</language>
+	</row>
+
+	<row id="msg_info_028">
+		<language name="JPN" font=" 1:small" width="216">きろくを　けしています……
+レポートを　たくさん　かいています……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">きろくを　けしています……
+レポートを　たくさん　かいています……</language>
+	</row>
+
+	<row id="msg_info_029">
+		<language name="JPN" font=" 1:small" width="216">レポートを　たくさん　かいています……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">レポートを　たくさん　かいています……</language>
+	</row>
+
+	<row id="msg_info_030">
+		<language name="JPN" font=" 1:small" width="216">レポートを　かいています……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">レポートを　かいています……</language>
+	</row>
+
+	<row id="msg_info_031">
+		<language name="JPN" font=" 1:small" width="216">ランキングが　ありません……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ランキングが　ありません……</language>
+	</row>
+
+	<row id="msg_info_032">
+		<language name="JPN" font=" 1:small" width="216">バトルビデオを　おくりますか？</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルビデオを　おくりますか？</language>
+	</row>
+
+	<row id="msg_info_033">
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_info_034">
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_info_035">
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_info_036">
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_info_037">
+		<language name="JPN" font=" 1:small" width="216"></language>
+		<language name="JPN_KANJI" font=" 1:small" width="216"></language>
+	</row>
+
+	<row id="msg_info_038">
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_info_039">
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_info_040">
+		<language name="JPN" font=" 1:small" width="216">　</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
+	</row>
+
+	<row id="msg_box_index_000">
+		<language name="JPN" font=" 1:small" width="216" line="2">だいすきボックス　さいしん２０けん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">だいすきボックス　さいしん２０けん</language>
+	</row>
+
+	<row id="msg_box_index_001">
+		<language name="JPN" font=" 1:small" width="216" line="2">かっこいいボックス　さいしん２０けん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">かっこいいボックス　さいしん２０けん</language>
+	</row>
+
+	<row id="msg_box_index_002">
+		<language name="JPN" font=" 1:small" width="216" line="2">かわいいボックス　さいしん２０けん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">かわいいボックス　さいしん２０けん</language>
+	</row>
+
+	<row id="msg_box_index_003">
+		<language name="JPN" font=" 1:small" width="216" line="2">おすすめボックス　さいしん２０けん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">おすすめボックス　さいしん２０けん</language>
+	</row>
+
+	<row id="msg_box_index_004">
+		<language name="JPN" font=" 1:small" width="216" line="2">おもしろいボックス　さいしん２０けん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">おもしろいボックス　さいしん２０けん</language>
+	</row>
+
+	<row id="msg_box_index_005">
+		<language name="JPN" font=" 1:small" width="216" line="2">こだわりボックス　さいしん２０けん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">こだわりボックス　さいしん２０けん</language>
+	</row>
+
+	<row id="msg_trtype_000">
+		<language name="JPN" font=" 1:small" width="216" line="2">じゅくがえり　おとこ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">じゅくがえり　おとこ</language>
+	</row>
+
+	<row id="msg_trtype_001">
+		<language name="JPN" font=" 1:small" width="216" line="2">むしとりしょうねん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">むしとりしょうねん</language>
+	</row>
+
+	<row id="msg_trtype_002">
+		<language name="JPN" font=" 1:small" width="216" line="2">エリートトレーナー　おとこ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">エリートトレーナー　おとこ</language>
+	</row>
+
+	<row id="msg_trtype_003">
+		<language name="JPN" font=" 1:small" width="216" line="2">スキンヘッズ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">スキンヘッズ</language>
+	</row>
+
+	<row id="msg_trtype_004">
+		<language name="JPN" font=" 1:small" width="216" line="2">いせきマニア</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">いせきマニア</language>
+	</row>
+
+	<row id="msg_trtype_005">
+		<language name="JPN" font=" 1:small" width="216" line="2">からておう</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">からておう</language>
+	</row>
+
+	<row id="msg_trtype_006">
+		<language name="JPN" font=" 1:small" width="216" line="2">おぼっちゃま</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">おぼっちゃま</language>
+	</row>
+
+	<row id="msg_trtype_007">
+		<language name="JPN" font=" 1:small" width="216" line="2">サイキッカー　おとこ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">サイキッカー　おとこ</language>
+	</row>
+
+	<row id="msg_trtype_008">
+		<language name="JPN" font=" 1:small" width="216" line="2">ミニスカート</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">ミニスカート</language>
+	</row>
+
+	<row id="msg_trtype_009">
+		<language name="JPN" font=" 1:small" width="216" line="2">バトルガール</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">バトルガール</language>
+	</row>
+
+	<row id="msg_trtype_010">
+		<language name="JPN" font=" 1:small" width="216" line="2">おとなのおねえさん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">おとなのおねえさん</language>
+	</row>
+
+	<row id="msg_trtype_011">
+		<language name="JPN" font=" 1:small" width="216" line="2">エリートトレーナー　おんな</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">エリートトレーナー　おんな</language>
+	</row>
+
+	<row id="msg_trtype_012">
+		<language name="JPN" font=" 1:small" width="216" line="2">アイドル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">アイドル</language>
+	</row>
+
+	<row id="msg_trtype_013">
+		<language name="JPN" font=" 1:small" width="216" line="2">マダム</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">マダム</language>
+	</row>
+
+	<row id="msg_trtype_014">
+		<language name="JPN" font=" 1:small" width="216" line="2">カウガール</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">カウガール</language>
+	</row>
+
+	<row id="msg_trtype_015">
+		<language name="JPN" font=" 1:small" width="216" line="2">おじょうさま</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">おじょうさま</language>
+	</row>
+
+	<row id="msg_error_trainer_name">
+		<comment>録画再生データで不明文字コードが入っているトレーナー名の場合に、
+代わりに表示する名前</comment>
+		<language name="JPN" font=" 1:small" width="216">きんぎん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">きんぎん</language>
+	</row>
+
+	<flowchart-group-list>
+		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
+	</flowchart-group-list>
+</body>
+
+</gmml>

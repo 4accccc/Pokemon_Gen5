@@ -1,0 +1,424 @@
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		battle_recoder.c
+ *	@brief	バトルレコーダーメイン
+ *	@author	Toru=Nagihashi
+ *	@data		2009.11.09
+ *
+ *	このプロセスは、各アプリケーションプロセスを繋ぐ役割と
+ *	アプリケーション間の情報のやりとりをするために存在する。
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+
+#include "br_core.h"
+
+//=============================================================================
+/**
+ *					定数宣言
+*/
+//=============================================================================
+
+//=============================================================================
+/**
+ *					構造体宣言
+*/
+//=============================================================================
+//-------------------------------------
+///	サブプロック移動
+//=====================================
+typedef void *(*SUBPROC_ALLOC_FUNCTION)( HEAPID heapID, void *p_wk_adrs );
+typedef void (*SUBPROC_FREE_FUNCTION)( void *p_param, void *p_wk_adrs );
+typedef struct 
+{
+	FSOverlayID							ov_id;
+	const GFL_PROC_DATA			*cp_procdata;
+	SUBPROC_ALLOC_FUNCTION	alloc_func;
+	SUBPROC_FREE_FUNCTION		free_func;
+} SUBPROC_DATA;
+typedef struct {
+	GFL_PROCSYS			*p_procsys;
+	u32							seq;
+	void						*p_proc_param;
+	SUBPROC_DATA		*p_data;
+
+	HEAPID					heapID;
+	void						*p_wk_adrs;
+	const GFL_PROC_DATA			*cp_procdata;
+
+	u32							next_procID;
+	u32							now_procID;
+} SUBPROC_WORK;
+
+//-------------------------------------
+///	メインワーク
+//=====================================
+typedef struct 
+{
+	SUBPROC_WORK					subproc;
+	BATTLERECORDER_PARAM	*p_param;
+} BR_SYS_WORK;
+
+//=============================================================================
+/**
+ *					プロトタイプ宣言
+*/
+//=============================================================================
+//-------------------------------------
+///	BRメインプロセス
+//=====================================
+static GFL_PROC_RESULT BR_SYS_PROC_Init
+	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs );
+static GFL_PROC_RESULT BR_SYS_PROC_Exit
+	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs );
+static GFL_PROC_RESULT BR_SYS_PROC_Main
+	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs );
+
+//-------------------------------------
+///	サブプロセス
+//=====================================
+static void SUBPROC_Init( SUBPROC_WORK *p_wk, const SUBPROC_DATA *cp_procdata_tbl, void *p_wk_adrs, HEAPID heapID );
+static BOOL SUBPROC_Main( SUBPROC_WORK *p_wk );
+static void SUBPROC_Exit( SUBPROC_WORK *p_wk );
+static void SUBPROC_CallProc( SUBPROC_WORK *p_wk, u32 procID );
+
+//-------------------------------------
+///	サブプロセス用引数の解放、破棄関数
+//=====================================
+static void *BR_CORE_AllocParam( HEAPID heapID, void *p_wk_adrs );
+static void BR_CORE_FreeParam( void *p_param_adrs, void *p_wk_adrs );
+//=============================================================================
+/**
+ *					データ
+*/
+//=============================================================================
+//-------------------------------------
+///	サブプロセス移動データ
+//=====================================
+typedef
+{	
+	SUBPROCID_CORE,
+	SUBPROCID_BTLREC,
+
+	SUBPROCID_MAX
+} SUBPROC_ID;
+static const SUBPROC_DATA sc_subproc_data[SUBPROCID_MAX]	=
+{	
+	{	
+		GFL_OVERLAY_BLANK_ID,
+		&BR_CORE_ProcData,
+		BR_CORE_AllocParam,
+		BR_CORE_FreeParam,
+	},
+	{	
+		GFL_OVERLAY_BLANK_ID,
+		NULL,
+		NULL,
+		NULL,
+	},
+};
+
+//=============================================================================
+/**
+ *					外部参照
+*/
+//=============================================================================
+//-------------------------------------
+///	バトルレコーダープロセス
+//=====================================
+const GFL_PROC_DATA BattleRecorder_ProcData	=
+{
+	BR_SYS_PROC_Init,
+	BR_SYS_PROC_Main,
+	BR_SYS_PROC_Exit,
+};
+
+//=============================================================================
+/**
+ *					BRメインプロセス
+*/
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	バトルレコーダーPROC読み替え用PROC	初期化
+ *
+ *	@param	GFL_PROC *p_proc	プロセス
+ *	@param	*p_seq						シーケンス
+ *	@param	*p_param					親ワーク
+ *	@param	*p_work						ワーク
+ *
+ *	@return	終了コード
+ */
+//-----------------------------------------------------------------------------
+static GFL_PROC_RESULT BR_SYS_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
+{	
+	BR_SYS_WORK	*p_wk;
+
+	//ヒープ作成
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BATTLE_RECORDER_SYS, 0x10000 );
+
+	//プロセスワーク作成
+	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(BR_SYS_WORK), HEAPID_BATTLE_RECORDER_SYS );
+	GFL_STD_MemClear( p_wk, sizeof(BR_SYS_WORK) );	
+	p_wk->param		= p_param_adrs;
+
+	//モジュール作成
+	SUBPROC_Init( &p_wk->subproc, sc_subproc_data, p_wk, HEAPID_BATTLE_RECORDER_SYS );
+
+	return GFL_PROC_RES_FINISH;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	バトルレコーダーPROC読み替え用PROC	破棄
+ *
+ *	@param	GFL_PROC *p_proc	プロセス
+ *	@param	*p_seq						シーケンス
+ *	@param	*p_param					親ワーク
+ *	@param	*p_work						ワーク
+ *
+ *	@return	終了コード
+ */
+//-----------------------------------------------------------------------------
+static GFL_PROC_RESULT BR_SYS_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
+{	
+	BR_SYS_WORK	*p_wk	= p_wk_adrs;
+
+	//モジュール破棄
+	SUBPROC_Exit( &p_wk->subproc );
+
+	//プロセスワーク破棄
+	GFL_PROC_FreeWork( p_proc );
+
+	//ヒープ破棄
+	GFL_HEAP_DeleteHeap( HEAPID_BATTLE_RECORDER_SYS );
+
+	return GFL_PROC_RES_FINISH;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	バトルレコーダーPROC読み替え用PROC	メイン処理
+ *
+ *	@param	GFL_PROC *p_proc	プロセス
+ *	@param	*p_seq						シーケンス
+ *	@param	*p_param					親ワーク
+ *	@param	*p_work						ワーク
+ *
+ *	@return	終了コード
+ */
+//-----------------------------------------------------------------------------
+static GFL_PROC_RESULT BR_SYS_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
+{	
+	enum
+	{	
+		BR_SYS_SEQ_INIT,
+		BR_SYS_SEQ_MAIN,
+		BR_SYS_SEQ_EXIT,
+	};
+
+	BR_SYS_WORK	*p_wk	= p_wk_adrs;
+
+	switch( *p_seq )
+	{	
+	case BR_SYS_SEQ_INIT:
+		*p_seq	= BR_SYS_SEQ_MAIN;
+		break;
+
+	case BR_SYS_SEQ_MAIN:
+		{
+			BOOL is_end;
+			is_end	= SUBPROC_Main( &p_wk->subproc );
+
+			if( is_end )
+			{	
+				*p_seq	= BR_SYS_SEQ_EXIT;
+			}
+		}
+		break;
+
+	case BR_SYS_SEQ_EXIT:
+		return GFL_PROC_RES_FINISH;
+	}
+		
+	return GFL_PROC_RES_CONTINUE;
+}
+//=============================================================================
+/**
+ *			SUBPROCシステム
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SUBPROCシステム	初期化
+ *
+ *	@param	SUBPROC_WORK *p_wk	ワーク
+ *	@param	cp_procdata_tbl			プロセス接続テーブル
+ *	@param	void *p_wk_adrs			アロック関数と解放関数に渡すワーク
+ *	@param	heapID							システム構築用ヒープID
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SUBPROC_Init( SUBPROC_WORK *p_wk, const SUBPROC_DATA *cp_procdata_tbl, void *p_wk_adrs, HEAPID heapID )
+{	
+	GFL_STD_MemClear( p_wk, sizeof(SUBPROC_WORK) );
+	p_wk->p_procsys				= GFL_PROC_LOCAL_boot( heapID );
+	p_wk->p_wk_adrs				= p_wk_adrs;
+	p_wk->cp_procdata_tbl	= cp_procdata_tbl;
+	p_wk->heapID					= heapID;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SUBPROCシステム	メイン処理
+ *
+ *	@param	SUBPROC_WORK *p_wk	ワーク
+ *
+ *	@retval	TRUEならば終了	FALSEならばPROCが存在する
+ */
+//-----------------------------------------------------------------------------
+static BOOL SUBPROC_Main( SUBPROC_WORK *p_wk )
+{	
+	enum
+	{	
+		SEQ_INIT,
+		SEQ_ALLOC_PARAM,
+		SEQ_MAIN,
+		SEQ_FREE_PARAM,
+		SEQ_END,
+	};
+
+	switch( p_wk->seq )
+	{	
+	case SEQ_INIT:
+		p_wk->now_procID	= p_wk->next_procID;
+		p_wk->seq	= SEQ_ALLOC_PARAM;
+		break;
+
+	case SEQ_ALLOC_PARAM:
+		//プロセス引数作成関数があれば呼び出し
+		if( p_wk->cp_procdata_tbl[ p_wk->now_procID ].alloc_func )
+		{	
+			p_wk->p_proc_param	= p_wk->cp_procdata_tbl[ p_wk->now_procID ].alloc_func(
+					p_wk->heapID, p_wk->p_wk_adrs );
+		}
+		else
+		{	
+			p_wk->p_proc_param	= NULL;
+		}
+
+		//プロック呼び出し
+		GFL_PROC_LOCAL_CallProc( p_wk->p_procsys, p_wk->cp_procdata_tbl[	p_wk->now_procID ].ov_id,
+					p_wk->cp_procdata_tbl[	p_wk->now_procID ].cp_procdata, p_wk->p_proc_param );
+
+		p_wk->seq	= SEQ_MAIN;
+		break;
+
+	case SEQ_MAIN:
+		{	
+			GFL_PROC_MAIN_STATUS result;
+			result	= GFL_PROC_LOCAL_Main( p_wk->p_procsys );
+			if( GFL_PROC_MAIN_NULL == result )
+			{	
+				p_wk->seq	= SEQ_FREE_PARAM;
+			}
+		}
+		break;
+
+	case SEQ_FREE_PARAM:
+		//プロセス引数破棄関数呼び出し
+		if( p_wk->cp_procdata_tbl[	p_wk->now_procID ].free_func )
+		{	
+			p_wk->cp_procdata_tbl[	p_wk->now_procID ].free_func( p_wk->p_proc_param, p_wk->p_wk_adrs );
+			p_wk->p_proc_param	= NULL;
+		}
+
+		//もし次のプロセスがあれば呼び出し
+		//なければ終了
+		if( p_wk->now_procID	!= p_wk->next_procID )
+		{	
+			p_wk->seq	= SEQ_INIT;
+		}
+		else
+		{	
+			p_wk->seq	= SEQ_END;
+		}
+		break;
+
+	case SEQ_END:
+		return TRUE;
+	}
+
+	return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SUBPROCシステム	破棄
+ *
+ *	@param	SUBPROC_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SUBPROC_Exit( SUBPROC_WORK *p_wk )
+{	
+	GF_ASSERT( p_wk->p_proc_param == NULL );
+
+	GFL_PROC_LOCAL_Exit( p_wk->p_procsys );
+	GFL_STD_MemClear( p_wk, sizeof(SUBPROC_WORK) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SUBPROCシステム	プロセスリクエスト
+ *
+ *	@param	SUBPROC_WORK *p_wk	ワーク
+ *	@param	proc_id							呼ぶプロセスID
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SUBPROC_CallProc( SUBPROC_WORK *p_wk, u32 procID )
+{	
+	p_wk->next_procID	= procID;
+}
+
+//=============================================================================
+/**
+ *		サブプロセス用作成破棄
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	バトルレコーダーコアの引数	作成
+ *
+ *	@param	HEAPID heapID			ヒープID
+ *	@param	*p_wk_adrs				ワーク
+ *
+ *	@return	引数
+ */
+//-----------------------------------------------------------------------------
+static void *BR_CORE_AllocParam( HEAPID heapID, void *p_wk_adrs )
+{	
+	BR_CORE_PARAM	*p_param;
+
+	BR_SYS_WORK		*p_wk	= p_wk_adrs;
+
+	p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(BR_CORE_PARAM) );
+	GFL_STD_MemClear( p_param, sizeof(BR_CORE_PARAM) );
+	p_param->p_param	= p_wk->p_param;
+		
+	return p_param;;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	バトルレコーダーコアの引数	破棄
+ *
+ *	@param	void *p_param_adrs				引数
+ *	@param	*p_wk_adrs								ワーク
+ */
+//-----------------------------------------------------------------------------
+static void BR_CORE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
+{	
+	BR_CORE_PARAM	*p_param	= p_param_adrs;
+	BR_SYS_WORK		*p_wk			= p_wk_adrs;
+
+	GFL_HEAP_FreeMemory( p_param );
+}

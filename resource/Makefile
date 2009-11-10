@@ -95,7 +95,8 @@ SUBDIRS	=	wmi \
 			wifi_match \
 			trtype_bgm \
 			local_tvt \
-            op_demo
+            op_demo \
+			battle_recorder
 
 include $(RESOURCE_MACRO)
 
