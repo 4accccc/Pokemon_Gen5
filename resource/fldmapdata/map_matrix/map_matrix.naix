@@ -225,7 +225,13 @@ enum {
 	NARC_map_matrix_labo03_mat_bin = 211,
 	NARC_map_matrix_bar01_mat_bin = 212,
 	NARC_map_matrix_gym0602_mat_bin = 213,
-	NARC_map_matrix_winter0701_mat_bin = 214
+	NARC_map_matrix_winter0701_mat_bin = 214,
+	NARC_map_matrix_dun0910_mat_bin = 215,
+	NARC_map_matrix_dun0911_mat_bin = 216,
+	NARC_map_matrix_dun0912_mat_bin = 217,
+	NARC_map_matrix_dun0913_mat_bin = 218,
+	NARC_map_matrix_dun0914_mat_bin = 219,
+	NARC_map_matrix_dun0915_mat_bin = 220
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */
