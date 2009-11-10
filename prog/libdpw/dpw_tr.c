@@ -21,16 +21,14 @@
 	
 */
 
-#include <gflib.h>
-
-#ifdef _NITRO
-//#include <nitroWiFi/socl.h>
-#endif
-
 #include "include/libdpw/dpw_tr.h"
 #include "include/libdpw/dpwi_session.h"
 #include "include/libdpw/dpwi_assert.h"
-#include <ghttp/dwci_ghttp.h>
+
+// TwlSDK以上なら
+#if defined(_NITRO) && SDK_VERSION_MAJOR > 4
+#include "include/libdpw/dwci_ghttp.h"
+#endif
 
 /*-----------------------------------------------------------------------*
 					型・定数宣言
@@ -669,8 +667,7 @@ void Dpw_Tr_UploadAsync(const Dpw_Tr_Data* data) {
 	DPW_TASSERTMSG(dpw_tr.state == DPWi_TR_NORMAL, "async process is already running.\n");
 	DPW_NULL_TASSERT(data);
 	
-//	memcpy(&dpw_tr.send_buf[0], data, sizeof(Dpw_Tr_Data));
-  GFL_STD_MemCopy(data,&dpw_tr.send_buf[0],sizeof(Dpw_Tr_Data));
+	memcpy(&dpw_tr.send_buf[0], data, sizeof(Dpw_Tr_Data));
 	
 	// セッション初期化
 	DpwiSessionInitialize();
@@ -703,8 +700,7 @@ void Dpw_Tr_UploadFinishAsync(void) {
 	DPW_TASSERTMSG(dpw_tr.state == DPWi_TR_NORMAL, "async process is already running.\n");
 	
 	// 自分のフレンドキーを送る
-	//memcpy(&dpw_tr.send_buf[0], &dpw_tr.friend_key, 8);
-  GFL_STD_MemCopy(&dpw_tr.friend_key,&dpw_tr.send_buf[0],8);
+	memcpy(&dpw_tr.send_buf[0], &dpw_tr.friend_key, 8);
 	
 	// セッション初期化
 	DpwiSessionInitialize();
@@ -943,8 +939,7 @@ void Dpw_Tr_DownloadMatchDataAsync(const Dpw_Tr_PokemonSearchData* searchData, s
 	// セッション初期化
 	DpwiSessionInitialize();
 	
-//	memcpy(&dpw_tr.send_buf[0], searchData, sizeof(Dpw_Tr_PokemonSearchData));
-  GFL_STD_MemCopy(searchData, &dpw_tr.send_buf[0], sizeof(Dpw_Tr_PokemonSearchData));
+	memcpy(&dpw_tr.send_buf[0], searchData, sizeof(Dpw_Tr_PokemonSearchData));
 	dpw_tr.send_buf[sizeof(Dpw_Tr_PokemonSearchData)] = (u8)maxNum;
 	
 	// 通信開始
@@ -981,8 +976,7 @@ void Dpw_Tr_DownloadMatchDataExAsync(const Dpw_Tr_PokemonSearchDataEx* searchDat
 	// セッション初期化
 	DpwiSessionInitialize();
 	
-	//memcpy(&dpw_tr.send_buf[0], searchData, sizeof(Dpw_Tr_PokemonSearchDataEx));
-  GFL_STD_MemCopy(searchData,&dpw_tr.send_buf[0],sizeof(Dpw_Tr_PokemonSearchDataEx));
+	memcpy(&dpw_tr.send_buf[0], searchData, sizeof(Dpw_Tr_PokemonSearchDataEx));
 	
 	// 通信開始
 	if (Dpwi_Tr_CallSessionRequest(TR_URL_DOWNLOADMATCHDATA, dpw_tr.send_buf,
@@ -1030,8 +1024,7 @@ void Dpw_Tr_TradeAsync(s32 id, const Dpw_Tr_Data* uploadData, Dpw_Tr_Data* downl
 	// セッション初期化
 	DpwiSessionInitialize();
 	
-	//memcpy(&dpw_tr.send_buf[0], uploadData, sizeof(Dpw_Tr_Data));
-  GFL_STD_MemCopy(uploadData, &dpw_tr.send_buf[0], sizeof(Dpw_Tr_Data));
+	memcpy(&dpw_tr.send_buf[0], uploadData, sizeof(Dpw_Tr_Data));
 //	memcpy(&((Dpw_Tr_Data*)dpw_tr.send_buf)->friend_key, &dpw_tr.friend_key, 8);
 	*(s32*)(&dpw_tr.send_buf[sizeof(Dpw_Tr_Data)]) = id;
 	
@@ -1059,8 +1052,7 @@ void Dpw_Tr_TradeFinishAsync(void) {
 	DPW_TASSERTMSG(dpw_tr.state == DPWi_TR_NORMAL, "async process is already running.\n");
 	
 	// 自分のフレンドキーを送る
-	//memcpy(&dpw_tr.send_buf[0], &dpw_tr.friend_key, 8);
-  GFL_STD_MemCopy(&dpw_tr.friend_key,&dpw_tr.send_buf[0],8);
+	memcpy(&dpw_tr.send_buf[0], &dpw_tr.friend_key, 8);
 	
 	// セッション初期化
 	DpwiSessionInitialize();
@@ -1122,11 +1114,14 @@ void Dpw_Tr_SetProfileAsync(const Dpw_Common_Profile* data, Dpw_Common_ProfileRe
 	
     DPW_TASSERTMSG(sizeof(Dpw_Common_Profile) <= sizeof(dpw_tr.send_buf), "Internal error: dpw send buf is too small.\n");
     
+#ifdef _NITRO
     // Macアドレスをセット
 	OS_GetMacAddress((u8*)data->macAddr);
-    
-//	memcpy(dpw_tr.send_buf, data, sizeof(Dpw_Common_Profile));
-  GFL_STD_MemCopy(data, dpw_tr.send_buf, sizeof(Dpw_Common_Profile));
+#else
+    memset(((Dpw_Common_Profile*)data)->macAddr, 0, sizeof(data->macAddr));
+#endif
+
+	memcpy(dpw_tr.send_buf, data, sizeof(Dpw_Common_Profile));
 	dpw_tr.user_recv_buf = (u8*)result;
 	
 	// セッション初期化
@@ -1313,7 +1308,6 @@ static DpwTrError Dpwi_Tr_HandleCommonError(DpwiHttpError error) {
 	case DPWI_COMMON_SESSION_ERROR_FILE_INCOMPLETE:		// ダウンロードの中断 
 	case DPWI_COMMON_SESSION_ERROR_FILE_WRITE_FAILED:	// ローカルファイルへの書き込みエラー 
 	case DPWI_COMMON_SESSION_ERROR_FILE_READ_FAILED:	// ローカルファイルからの読み出しエラー 
-	case DPWI_COMMON_SESSION_ERROR_BAD_RESPONSE:		// HTTPサーバからのレスポンスの解析エラー 
 	case DPWI_COMMON_SESSION_ERROR_BUFFER_OVER:			// COMMON層: 受信バッファをオーバーした
 		DPW_TASSERTMSG(FALSE, "library internal error. please contact author.");
 		ret = DPW_TR_ERROR_FATAL;
@@ -1342,6 +1336,7 @@ static DpwTrError Dpwi_Tr_HandleCommonError(DpwiHttpError error) {
 	case DPWI_COMMON_SESSION_ERROR_DATA_LENGTH: 		// COMMON層: データの長さが不正
 	case DPWI_COMMON_SESSION_ERROR_TOKEN_NOT_FOUND:		// COMMON層: トークンがない
 	case DPWI_COMMON_SESSION_ERROR_INCORRECT_HASH:		// COMMON層: ハッシュが合わない
+	case DPWI_COMMON_SESSION_ERROR_BAD_RESPONSE:		// HTTPサーバからのレスポンスの解析エラー 
 		OS_TPrintf("[DPW TR] server internal error.  please contact server administrator.\n");
 		ret = DPW_TR_ERROR_SERVER_TIMEOUT;
 		break;
@@ -1355,12 +1350,11 @@ static DpwTrError Dpwi_Tr_HandleCommonError(DpwiHttpError error) {
 		ret = DPW_TR_ERROR_FATAL;
 		break;
 	}
-	
 	// FATALエラーでない場合
 	if (ret != DPW_TR_ERROR_FATAL) {
-#if 0
+#if defined(_NITRO)
 		// NitroWiFiのレイヤーで無線が切れていないかチェックする
-		if (WCM_GetPhase() != WCM_PHASE_DCF) {
+		if (DWC_UpdateConnection()) {
 			OS_TPrintf("[DPW TR] disconnected from access point.\n");
 			ret = DPW_TR_ERROR_DISCONNECTED;
 		}

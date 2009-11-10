@@ -36,31 +36,29 @@ extern "C" {
 
 //! SDK_TASSERTMSGと異なり、FINALROM以外でワーニングを行う
 
-//#define DPWDEBUG_ON
-
-#ifdef  DPWDEBUG_ON
+#ifndef  SDK_FINALROM
 #define DPW_TASSERTMSG(exp, ...) \
     (void) ((exp) || (OSi_TPanic(__FILE__, __LINE__, __VA_ARGS__), 0))
-#else  // DPWDEBUG_ON
+#else  // SDK_FINALROM
 #define DPW_TASSERTMSG(exp, ...)    ((void) 0)
-#endif // DPWDEBUG_ON
+#endif // SDK_FINALROM
 
 
-#ifdef  DPWDEBUG_ON
+#ifndef  SDK_FINALROM
 #define DPW_NULL_TASSERT(exp) \
              (void) ((exp != NULL) || (OSi_TPanic(__FILE__, __LINE__, "Pointer must not be NULL ("#exp")"), 0))
-#else  // DPWDEBUG_ON
+#else  // SDK_FINALROM
 #define DPW_NULL_TASSERT(exp)           ((void) 0)
-#endif // DPWDEBUG_ON
+#endif // SDK_FINALROM
 
 
-#ifdef  DPWDEBUG_ON
+#ifndef  SDK_FINALROM
 #define DPW_MINMAX_TASSERT(exp, min, max) \
              (void) (((exp) >= (min) && (exp) <= (max)) || \
                      (OSi_TPanic(__FILE__, __LINE__, #exp " is out of bounds(%d)\n%d <= "#exp" <= %d not satisfied.", exp, min, max), 0))
-#else  // DPWDEBUG_ON
+#else  // SDK_FINALROM
 #define DPW_MINMAX_TASSERT(exp, min, max)           ((void) 0)
-#endif // DPWDEBUG_ON
+#endif // SDK_FINALROM
 
 
 

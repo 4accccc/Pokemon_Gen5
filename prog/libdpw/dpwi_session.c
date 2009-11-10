@@ -22,20 +22,23 @@
 		@li
 */
 
-#include <gflib.h>
 #include <dwc.h>
+#include <string.h>
 #include "include/libdpw/dpwi_session.h"
 #include "include/libdpw/dpwi_encrypt.h"
 
-//#ifdef _NITRO
+// TwlSDK以上なら
+#if defined(_NITRO) && SDK_VERSION_MAJOR > 4
+#include "include/libdpw/dwci_ghttp.h"
+#endif
+
+#ifdef _NITRO
 #include "include/libdpw/dpwi_define.h"
-#include <ghttp/dwci_ghttp.h>
+#endif
 
-//#endif
-
-//#ifndef _NITRO
-//	#include "include/libdpw/dpwi_sha1.h"
-//#endif
+#ifndef _NITRO
+	#include "include/libdpw/dpwi_sha1.h"
+#endif
 
 /*-----------------------------------------------------------------------*
 					型・定数宣言
@@ -122,10 +125,12 @@ static void setlasterror( int err ){
 	case DWC_GHTTP_INVALID_URL:
 		g_session.lasterr = DPWI_COMMON_SESSION_ERROR_INVALID_URL;
 		break;
-	// その他のエラー は普通のエラーと統合
-//	case DWC_GHTTP_UNSPECIFIED_ERROR:
-//		g_session.lasterr = DPWI_COMMON_SESSION_ERROR_UNSPECIFIED_ERROR;
-//		break;
+	// その他のエラー
+#if defined(_NITRO) && SDK_VERSION_MAJOR < 5
+	case DWC_GHTTP_UNSPECIFIED_ERROR:
+		g_session.lasterr = DPWI_COMMON_SESSION_ERROR_UNSPECIFIED_ERROR;
+		break;
+#endif
 	// 成功
 	default:
 		g_session.lasterr = 0;
@@ -183,21 +188,19 @@ static void Completed(	const char* buf,
 				const char hextbl[] = "0123456789abcdef";	// hex変換テーブル
 
 				// 秘密鍵を格納
-//				strcpy( data, SECRET_KEY );
-        GFL_STD_MemCopy(SECRET_KEY,data,sizeof(KEYTOKEN_LENGTH));
+				strcpy( data, SECRET_KEY );
 
 				// トークンを連結
-//				strncat( data, buf, (u32)len );
-				GFL_STD_StrCat(data, buf,len);
+				strncat( data, buf, (u32)len );
+				
 				// ハッシュ計算
-				MATH_CalcSHA1((u8*)hashtmp, (const u8*)data, GFL_STD_StrLen(data));
+				MATH_CalcSHA1((u8*)hashtmp, (const u8*)data, strlen(data));
 
 				// パラメーター名追加
 				// 
 				// この時点ではrequestには"*?pid=****"まで書かれている
 				// 
-//				strcat( g_session.request, "&hash=" );
-        GFL_STD_StrCat(g_session.request, "&hash=", sizeof("&hash="));
+				strcat( g_session.request, "&hash=" );
 
 				// hex変換
 				//
@@ -210,8 +213,7 @@ static void Completed(	const char* buf,
 				g_session.hash[HASH_LENGTH] = '\0';
 
 				// URLにつなぐ
-//				strcat( g_session.request, "&data=" );
-        GFL_STD_StrCat(g_session.request, "&data=", sizeof("&data="));
+				strcat( g_session.request, "&data=" );
 
 
 				// 送信データの暗号化
@@ -266,27 +268,27 @@ static void Completed(	const char* buf,
 			// エラーかどうかチェック
 			if( len == COMMON_ERROR_MSG_LENGTH ){
 
-				if( GFL_STD_StrnCmp(buf, COMMON_ERROR_CHECKSUM, COMMON_ERROR_MSG_LENGTH) == 0 ){
+				if( strncmp(buf, COMMON_ERROR_CHECKSUM, COMMON_ERROR_MSG_LENGTH) == 0 ){
 					g_session.state = DPWI_COMMON_SESSION_STATE_ERROR;
 					g_session.lasterr = DPWI_COMMON_SESSION_ERROR_CHECKSUM;
 					break;
-				} else if (GFL_STD_StrnCmp(buf, COMMON_ERROR_PID, COMMON_ERROR_MSG_LENGTH) == 0 ){
+				} else if (strncmp(buf, COMMON_ERROR_PID, COMMON_ERROR_MSG_LENGTH) == 0 ){
 					g_session.state = DPWI_COMMON_SESSION_STATE_ERROR;
 					g_session.lasterr = DPWI_COMMON_SESSION_ERROR_PID;
 					break;
-				} else if (GFL_STD_StrnCmp(buf, COMMON_ERROR_DATA_LENGTH, COMMON_ERROR_MSG_LENGTH) == 0 ){
+				} else if (strncmp(buf, COMMON_ERROR_DATA_LENGTH, COMMON_ERROR_MSG_LENGTH) == 0 ){
 					g_session.state = DPWI_COMMON_SESSION_STATE_ERROR;
 					g_session.lasterr = DPWI_COMMON_SESSION_ERROR_DATA_LENGTH;
 					break;
-				} else if (GFL_STD_StrnCmp(buf, COMMON_ERROR_TOKEN_NOT_FOUND, COMMON_ERROR_MSG_LENGTH) == 0 ){
+				} else if (strncmp(buf, COMMON_ERROR_TOKEN_NOT_FOUND, COMMON_ERROR_MSG_LENGTH) == 0 ){
 					g_session.state = DPWI_COMMON_SESSION_STATE_ERROR;
 					g_session.lasterr = DPWI_COMMON_SESSION_ERROR_TOKEN_NOT_FOUND;
 					break;
-				} else if (GFL_STD_StrnCmp(buf, COMMON_ERROR_TOKEN_EXPIRED, COMMON_ERROR_MSG_LENGTH) == 0 ){
+				} else if (strncmp(buf, COMMON_ERROR_TOKEN_EXPIRED, COMMON_ERROR_MSG_LENGTH) == 0 ){
 					g_session.state = DPWI_COMMON_SESSION_STATE_ERROR;
 					g_session.lasterr = DPWI_COMMON_SESSION_ERROR_TOKEN_EXPIRED;
 					break;
-				} else if (GFL_STD_StrnCmp(buf, COMMON_ERROR_INCORRECT_HASH, COMMON_ERROR_MSG_LENGTH) == 0 ){
+				} else if (strncmp(buf, COMMON_ERROR_INCORRECT_HASH, COMMON_ERROR_MSG_LENGTH) == 0 ){
 					g_session.state = DPWI_COMMON_SESSION_STATE_ERROR;
 					g_session.lasterr = DPWI_COMMON_SESSION_ERROR_INCORRECT_HASH;
 					break;
@@ -298,8 +300,7 @@ static void Completed(	const char* buf,
 			if( len <= g_session.resbuflen ){
 
 				// コピー
-				//memcpy(g_session.resbuf, buf, (u32)len);
-        GFL_STD_MemCopy(buf,g_session.resbuf,len);
+				memcpy(g_session.resbuf, buf, (u32)len);
 
 				// 終了ステートへ
 				g_session.state = DPWI_COMMON_SESSION_STATE_COMPLETED;
@@ -313,8 +314,7 @@ static void Completed(	const char* buf,
 				//
 
 				// バッファサイズ分だけコピー
-				//memcpy(g_session.resbuf, buf, (u32)g_session.resbuflen );
-        GFL_STD_MemCopy(buf,g_session.resbuf,g_session.resbuflen);
+				memcpy(g_session.resbuf, buf, (u32)g_session.resbuflen );
 
 				// エラーステートへ
 				g_session.state = DPWI_COMMON_SESSION_STATE_ERROR;
@@ -466,7 +466,7 @@ DpwiSessionResult DpwiSessionRequest(	const u8* url,
 	// リクエスト文字列用メモリーを確保
 	// ( baseurllen + param[pid] + param[hash] + base64data + few more )
 	g_session.request = (char*)DWC_Alloc( (DWCAllocType)DPWI_ALLOC,
-									GFL_STD_StrLen((const char*)url)
+									strlen((const char*)url)
 									+ 68 + DpwiB64Size(8 + (u32)len) + 1);
 	if( g_session.request == NULL )
 		return DPWI_COMMON_SESSION_ERROR_NOMEMORY;
@@ -478,9 +478,9 @@ DpwiSessionResult DpwiSessionRequest(	const u8* url,
 	//
 	// メモリー節約のために同一バッファのポインタを保持する
 	// 
-	g_session.hash	= g_session.request + GFL_STD_StrLen(g_session.request)
-						+ GFL_STD_StrLen("&hash=");
-	g_session.data	= g_session.hash + HASH_LENGTH + GFL_STD_StrLen("&data=");
+	g_session.hash	= g_session.request + strlen(g_session.request)
+						+ strlen("&hash=");
+	g_session.data	= g_session.hash + HASH_LENGTH + strlen("&data=");
 	g_session.datasize = (int)(DpwiB64Size(8 + (u32)len) + 1);
 
 

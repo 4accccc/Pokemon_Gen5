@@ -33,6 +33,7 @@ extern "C" {
 #include <nitro.h>
 #include <dwc.h>
 #endif
+#include <string.h>
 
 // リリースサーバに接続するには下のコメントアウトを削除してください。
 //#define DPW_SERVER_PUBLIC

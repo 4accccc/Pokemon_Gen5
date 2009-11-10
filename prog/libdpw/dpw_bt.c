@@ -21,13 +21,14 @@
 	
 */
 
-#ifdef _NITRO
-#include <nitroWiFi/socl.h>
-#endif
-
 #include "include/libdpw/dpw_bt.h"
 #include "include/libdpw/dpwi_session.h"
 #include "include/libdpw/dpwi_assert.h"
+
+// TwlSDK以上なら
+#if defined(_NITRO) && SDK_VERSION_MAJOR > 4
+#include "include/libdpw/dwci_ghttp.h"
+#endif
 
 /*-----------------------------------------------------------------------*
 					型・定数宣言
@@ -554,9 +555,13 @@ void Dpw_Bt_SetProfileAsync(const Dpw_Common_Profile* data, Dpw_Common_ProfileRe
 	
     DPW_TASSERTMSG(sizeof(Dpw_Common_Profile) <= sizeof(dpw_bt.send_buf), "Internal error: dpw send buf is too small.\n");
     
+#ifdef _NITRO
     // Macアドレスをセット
 	OS_GetMacAddress((u8*)data->macAddr);
-    
+#else
+    memset(((Dpw_Common_Profile*)data)->macAddr, 0, sizeof(data->macAddr));
+#endif
+
 	memcpy(dpw_bt.send_buf, data, sizeof(Dpw_Common_Profile));
 	dpw_bt.user_recv_buf = (u8*)result;
 	
@@ -701,7 +706,6 @@ static DpwBtError Dpwi_Bt_HandleCommonError(DpwiHttpError error) {
 	case DPWI_COMMON_SESSION_ERROR_FILE_INCOMPLETE:		// ダウンロードの中断 
 	case DPWI_COMMON_SESSION_ERROR_FILE_WRITE_FAILED:	// ローカルファイルへの書き込みエラー 
 	case DPWI_COMMON_SESSION_ERROR_FILE_READ_FAILED:	// ローカルファイルからの読み出しエラー 
-	case DPWI_COMMON_SESSION_ERROR_BAD_RESPONSE:		// HTTPサーバからのレスポンスの解析エラー 
 	case DPWI_COMMON_SESSION_ERROR_BUFFER_OVER:			// COMMON層: 受信バッファをオーバーした
 		DPW_TASSERTMSG(FALSE, "library internal error. please contact author.");
 		ret = DPW_BT_ERROR_FATAL;
@@ -730,6 +734,7 @@ static DpwBtError Dpwi_Bt_HandleCommonError(DpwiHttpError error) {
 	case DPWI_COMMON_SESSION_ERROR_DATA_LENGTH: 		// COMMON層: データの長さが不正
 	case DPWI_COMMON_SESSION_ERROR_TOKEN_NOT_FOUND:		// COMMON層: トークンがない
 	case DPWI_COMMON_SESSION_ERROR_INCORRECT_HASH:		// COMMON層: ハッシュが合わない
+	case DPWI_COMMON_SESSION_ERROR_BAD_RESPONSE:		// HTTPサーバからのレスポンスの解析エラー 
 		OS_TPrintf("[DPW BT] server internal error.  please contact server administrator.\n");
 		ret = DPW_BT_ERROR_SERVER_TIMEOUT;
 		break;
@@ -746,9 +751,9 @@ static DpwBtError Dpwi_Bt_HandleCommonError(DpwiHttpError error) {
 	
 	// FATALエラーでない場合
 	if (ret != DPW_BT_ERROR_FATAL) {
-#ifdef _NITRO
+#if defined(_NITRO)
 		// NitroWiFiのレイヤーで無線が切れていないかチェックする
-		if (WCM_GetPhase() != WCM_PHASE_DCF) {
+		if (DWC_UpdateConnection()) {
 			OS_TPrintf("[DPW BT] disconnected from access point.\n");
 			ret = DPW_BT_ERROR_DISCONNECTED;
 		}
