@@ -6,8 +6,6 @@ SUBDIRS	=	rail_editor watanabe lobby_trfgra obata nagihashi
 TARGET_NAMES = \
 	mmodel.naix \
 	mmodel.narc \
-	fld_act.naix \
-	fld_act.narc 
 	
 TARGET_DIR = $(PROJECT_ARCDIR)debug
 

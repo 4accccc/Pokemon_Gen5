@@ -48,7 +48,6 @@
 #==================================================================================================
 
 	ARCID_D_TAYA		"test_graphic/d_taya.narc"		#
-	ARCID_FLDACT		"debug/fld_act.narc"		#
 	ARCID_RAIL_EDITOR "debug/rail_editor.narc"   # レールエディター
 	ARCID_SNDSTRM			"snd_strm.narc"	# サウンドストリーミング
 	ARCID_WMI			"wmi.narc"	# 通信アイコン
