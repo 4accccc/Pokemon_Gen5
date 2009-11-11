@@ -70,7 +70,7 @@ $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY)	$(NARCNAME) $(TARGETDIR)
 	$(COPY) $(NAIXNAME) $(TARGETDIR)
 
-$(NARCNAME): $(FONTFILE) $(GFONTFILE) $(COLFILE)
+$(NARCNAME): $(FONTFILE) $(GFONTFILE) $(COLFILE) arclist.txt
 	nnsarc -c -l -n -i $(NARCNAME) -S arclist.txt > error
 	$(NAIXCUT) $(NAIXNAME)
 
