@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-25T18:52:49"/>
+	<create user="matsumiya" host="W00207" date="2009-11-11T21:51:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,91 +292,89 @@
 	</lock>
 
 
-	<row id="msg_d06r0201_hakase2_01">
+	<row id="msg_d06r0201_boss_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
-・posを踏むと会話
-・続けてmsg_d06r0201_poke_02
-・その後msg_d06r0201_hakase2_02表示
-
-0＝主人公名前
-※
-
-</comment>
-		<attribute name="キャラ指定">HAKASE2
-博士２</attribute>
-		<language name="JPN" width="256">アララギ『やあやあやあ！
-[1:00:トレーナー名:0]では　ないか！[BE:01:ページ切り替え（クリア）]
-きみも　まよっているのか？
-いやなに　なんでだろう[BE:01:ページ切り替え（クリア）]
-この　どうくつは　フキヨセシティへの
-とおりみち　なのに[BE:00:ページ切り替え（行送り）]
-ぜんぜん　でられないんだよなー</language>
-		<language name="JPN_KANJI" width="256">アララギ『やあやあやあ！
-[1:00:トレーナー名:0]では　ないか！[BE:01:ページ切り替え（クリア）]
-きみも　迷っているのか？
-いやなに　なんでだろう[BE:01:ページ切り替え（クリア）]
-この　洞くつは　フキヨセシティへの
-通り道　なのに[BE:00:ページ切り替え（行送り）]
-全然　出られないんだよなー</language>
+・
+・はい/いいえの選択肢
+　はい→msg_d06r0201_boss_02
+　いいえ→msg_d06r0201_boss_03</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">Ｎ『かれは　なにをおもって　ボクに
+ここでまつよう　たのんだのだろう[BE:01:ページ切り替え（クリア）]
+キミと　であっても
+なにも　うまれなど　しないのに……[BE:01:ページ切り替え（クリア）]
+さて　いつも　いっしょに　いることで
+ポケモンへの　あいじょうが　めばえた……[BE:00:ページ切り替え（行送り）]
+いまも　そう　おもいこんでいますか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『彼は　何を思って　ボクに
+ここで待つよう　頼んだのだろう[BE:01:ページ切り替え（クリア）]
+キミと　出会っても
+何も　生まれなど　しないのに……[BE:01:ページ切り替え（クリア）]
+さて　いつも　一緒に　いることで
+ポケモンへの　愛情が　芽生える……[BE:00:ページ切り替え（行送り）]
+今も　そう　思いこんでいますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d06r0201_hakase2_02">
-		<comment>♂</comment>
-		<language name="JPN" width="256">アララギ『まあいいか
-ちょうさも　おわっていないしね[BE:01:ページ切り替え（クリア）]
-なにを　けんきゅう　しているか
-きみが　きょうみなくても　おしえるよ[BE:01:ページ切り替え（クリア）]
-なんと　ポケモンの　きげん……
-はじまりについて　しらべているのだ！[BE:01:ページ切り替え（クリア）]
-ここは　ひとの　てが
-さほど　はいっていない　からね[BE:01:ページ切り替え（クリア）]
-そういった　しょうこが
-はっけん　できると　いいよなー</language>
-		<language name="JPN_KANJI" width="256">アララギ『まあいいか
-調査も　終わっていないしね[BE:01:ページ切り替え（クリア）]
-なにを　研究しているか
-きみが　興味なくても　教えるよ[BE:01:ページ切り替え（クリア）]
-なんと　ポケモンの　起源……
-始まりについて　調べているのだ！[BE:01:ページ切り替え（クリア）]
-ここは　人の　手が
-さほど　はいっていない　からね[BE:01:ページ切り替え（クリア）]
-そういった　証拠が
-発見できると　いいよなー</language>
-	</row>
-
-	<row id="msg_d06r0201_hakase2_03">
+	<row id="msg_d06r0201_boss_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
-・msg_d06r0201_hakase2_02表示後
-　電気意志の洞窟イベントクリアまで繰り返し（仮）</comment>
-		<language name="JPN" width="256">アララギ『ポケモンたちが
-どこから　きたのか[BE:00:ページ切り替え（行送り）]
-そして　どこへ　いくのか……[BE:01:ページ切り替え（クリア）]
-それを　しることが　できれば
-ぼくたちは　もっと　なかよくなれる[BE:00:ページ切り替え（行送り）]
-そう　しんじているんだよねー</language>
-		<language name="JPN_KANJI" width="256">アララギ『ポケモンたちが
-どこから　来たのか[BE:00:ページ切り替え（行送り）]
-そして　どこへ　いくのか……[BE:01:ページ切り替え（クリア）]
-それを　知ることが　できれば
-ぼくたちは　もっと　仲良くなれる[BE:00:ページ切り替え（行送り）]
-そう　信じているんだよねー</language>
+・はい選択時
+　続けてmsg_d06r0201_boss_04表示</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">Ｎ『……そう　しんじていないと
+こころが　ゆらぐから　かい？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『……そう　信じていないと
+心が　揺らぐから　かい？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d06r0201_poke_01">
-		<comment>ポケモン
-・メッセージ表示にあわせて鳴き声再生
-・博士の隣に配置</comment>
-		<attribute name="キャラ指定">ポケモン
-・種類未定</attribute>
-		<language name="JPN" width="256">ポケモン『きゅきゅう！</language>
-		<language name="JPN_KANJI" width="256">ポケモン『きゅきゅう！</language>
+	<row id="msg_d06r0201_boss_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・いいえ選択時
+　続けてmsg_d06r0201_boss_04表示</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">Ｎ『そうか……
+いがいと　さめているんだな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『ふうん……
+意外と　冷めているんだな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d06r0201_poke_02">
-		<comment>ポケモン
-・博士の会話用</comment>
-		<language name="JPN" width="256">ポケモン『きゅきゅう！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ポケモン『きゅきゅう！[BE:01:ページ切り替え（クリア）]</language>
+	<row id="msg_d06r0201_boss_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・アイテム入手処理
+・入手後、続けてmsg_d06r0201_boss_05</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">……まあいい　キミは
+まだ　たびを　つづけるべきだね[BE:01:ページ切り替え（クリア）]
+トレーナーとして　ポケモンをつかう
+じぶんは　まちがっていると[BE:00:ページ切り替え（行送り）]
+こころの　そこから　りかいするまで！[BE:01:ページ切り替え（クリア）]
+さあ
+これを　つかえ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">……まあいい　キミは
+まだ　旅を続けるべきだね[BE:01:ページ切り替え（クリア）]
+トレーナーとして　ポケモンを使う
+自分は　間違っていると[BE:00:ページ切り替え（行送り）]
+心の底から　理解するまで！[BE:01:ページ切り替え（クリア）]
+さあ
+これを　使え！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d06r0201_boss_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・d06r0101出口前のposイベント発動まで
+　繰り返し表示</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">ボクに　ここでまつよう
+たのみこんだ　おとこが　つくったものだ[BE:01:ページ切り替え（クリア）]
+それを　もっていれば
+うかんでいる　いしを　おせる[BE:01:ページ切り替え（クリア）]
+さあ　いきたまえ
+じぶんじしんを　ひてい　するために</language>
+		<language name="JPN_KANJI" width="256">ボクに　ここで待つよう
+頼み込んだ　男が　つくったものだ[BE:01:ページ切り替え（クリア）]
+それを持っていれば
+浮かんでいる石を　押せる[BE:01:ページ切り替え（クリア）]
+さあ　行きたまえ
+自分自身を　否定するために</language>
 	</row>
 
 	<flowchart-group-list>

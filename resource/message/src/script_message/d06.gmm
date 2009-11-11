@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-25T18:16:16"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T19:14:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="190"/>
+		<comment position="4" width="305"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -251,7 +251,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="3" width="254"/>
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,20 +292,117 @@
 	</lock>
 
 
-	<row id="msg_d06r0201_white_01">
+	<row id="msg_d06_stopper_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>・c05ジムクリア前</comment>
+		<attribute name="キャラ指定">デンチュラの巣</attribute>
+		<language name="JPN" width="256">いりぐちが　ふさがれていて
+これいじょう　なかに　はいれない……</language>
+		<language name="JPN_KANJI" width="256">いりぐちが　ふさがれていて
+これいじょう　なかに　はいれない……</language>
+	</row>
+
+	<row id="msg_d06_leader_01">
+		<comment>・c05ジムクリア後
+・pos（GRIDX=718、GRIDZ=561~565）で発動</comment>
+		<attribute name="キャラ指定">LEADER5</attribute>
+		<language name="JPN" width="256">ヤーコン『待たせたな</language>
+		<language name="JPN_KANJI" width="256">ヤーコン『待たせたな</language>
+	</row>
+
+	<row id="msg_d06_leader_02">
+		<comment>♂
+・メッセージ表示後
+　ポケモン「」の動作モデル出現
+・続けてmsg_d06_leader_03</comment>
+		<attribute name="キャラ指定">LEADER5</attribute>
+		<language name="JPN" width="256">これは　デンチュラという
+でんきタイプ　ポケモンの　すだな[BE:01:ページ切り替え（クリア）]
+なんで　こんな　ところに
+すが　あるのか　わからんが[BE:00:ページ切り替え（行送り）]
+でんきタイプには　じめんタイプが[BE:00:ページ切り替え（行送り）]
+こうかてきめん　よ[BE:01:ページ切り替え（クリア）]
+ポケモン名！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">これは　デンチュラという
+でんきタイプ　ポケモンの　巣だな[BE:01:ページ切り替え（クリア）]
+なんで　こんな　ところに
+巣があるのか　わからんが[BE:00:ページ切り替え（行送り）]
+でんきタイプには　じめんタイプが[BE:00:ページ切り替え（行送り）]
+こうかてきめん　よ[BE:01:ページ切り替え（クリア）]
+ポケモン名！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d06_leader_03">
+		<comment>♂
+・ポケモンが巣に向かい技を出したような演出
+・巣を削除する処理
+・続けてmsg_d06_leader_04</comment>
+		<attribute name="キャラ指定">LEADER5</attribute>
+		<language name="JPN" width="256">ポケモン名
+技名！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ポケモン名
+技名！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d06_leader_04">
+		<comment>♂
+・主人公と向き合って
+・アイテム入手処理
+・続けてmsg_d06_leader_05</comment>
+		<attribute name="キャラ指定">LEADER5</attribute>
+		<language name="JPN" width="256">ほらよ！
+この　わざマシンを　くれてやる[BE:01:ページ切り替え（クリア）]
+ヤーコンさま　じまんの　わざマシンだ[BE:01:ページ切り替え（クリア）]
+ぜんぶの　ポケモンに
+おぼえさせても　いいぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ほらよ！
+この　わざマシンを　くれてやる[BE:01:ページ切り替え（クリア）]
+ヤーコンさま　自慢の　わざマシンだ[BE:01:ページ切り替え（クリア）]
+全部の　ポケモンに
+覚えさせても　いいぞ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d06_leader_05">
+		<comment>♂
+・msg_d06_leader_06</comment>
+		<attribute name="キャラ指定">LEADER5</attribute>
+		<language name="JPN" width="256">わざマシンの解説（予定）</language>
+		<language name="JPN_KANJI" width="256">わざマシンの解説（予定）</language>
+	</row>
+
+	<row id="msg_d06_leader_06">
+		<comment>♂
+・表示後、道をくだりc05方面へ移動
+　画面外に消えると、主人公操作可能に</comment>
+		<attribute name="キャラ指定">LEADER5</attribute>
+		<language name="JPN" width="256">オレには　おまえさんの　さいのうが
+どれほどのものか　わからんが[BE:01:ページ切り替え（クリア）]
+いけると　おもうなら　どこまでも[BE:01:ページ切り替え（クリア）]
+やれると　おもうなら　いつまでも[BE:01:ページ切り替え（クリア）]
+すきなように　やればいいじゃねえか[BE:01:ページ切り替え（クリア）]
+げんかいを　きめるのは
+じぶん　ってことだ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">オレには　おまえさんの　才能が
+どれほどのものか　わからんが[BE:01:ページ切り替え（クリア）]
+行けると思うなら　どこまでも[BE:01:ページ切り替え（クリア）]
+やれると思うなら　いつまでも[BE:01:ページ切り替え（クリア）]
+好きなように　やればいいじゃねえか
+限界を決めるのは　自分ってことだ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d06_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・d06入り口前のposを踏むと出現し
 　主人公に隣接してメッセージ表示</comment>
 		<attribute name="キャラ指定">友達♀
 サポート</attribute>
-		<language name="JPN" width="256">？？？？？『はぁ……
+		<language name="JPN" width="256">ホワイティ『はぁ……
 やっと　おいついた！[BE:01:ページ切り替え（クリア）]
 ねえねえ　[1:00:トレーナー名:0]！
 ずかんの　ちょうしは　どう？[BE:01:ページ切り替え（クリア）]
 [2:02:３桁:1]ひき！？
 すごい！　あたしも　がんばんなきゃ[BE:00:ページ切り替え（行送り）]
 ということで　おさきに　しつれい！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">？？？？？『はぁ……
+		<language name="JPN_KANJI" width="256">ホワイティ『はぁ……
 やっと　追いついた！[BE:01:ページ切り替え（クリア）]
 ねえねえ　[1:00:トレーナー名:0]！
 図鑑の　調子は　どう？[BE:01:ページ切り替え（クリア）]
