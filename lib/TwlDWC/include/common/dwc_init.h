@@ -13,6 +13,8 @@
 #ifndef DWC_INIT_H_
 #define DWC_INIT_H_
 
+#include <common/dwc_memfunc.h>
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -37,29 +39,34 @@ extern "C"
             enum
        ------------------------------------------------------------------------- */
 
+    // DWC_Init関数の返り値を示す列挙子
     enum
     {
-        DWC_INIT_RESULT_NOERROR,
-        DWC_INIT_RESULT_CREATE_USERID,
-        DWC_INIT_RESULT_DESTROY_USERID,
-        DWC_INIT_RESULT_DESTROY_OTHER_SETTING,
-        DWC_INIT_RESULT_LAST,
-
-        DWC_INIT_RESULT_DESTORY_USERID = DWC_INIT_RESULT_DESTROY_USERID,
-        DWC_INIT_RESULT_DESTORY_OTHER_SETTING = DWC_INIT_RESULT_DESTROY_OTHER_SETTING
+        DWC_INIT_RESULT_NOERROR = 0,            // 初期化成功。
+        DWC_INIT_RESULT_CREATE_USERID,          // DS本体に仮のユーザIDを生成しました。
+        DWC_INIT_RESULT_DESTROY_USERID,         // DS本体のユーザIDが破壊されていた可能性があるので、仮のユーザIDを生成しました。
+        DWC_INIT_RESULT_DESTROY_OTHER_SETTING,  // DS本体の接続先設定が破壊された可能性があります。
+        DWC_INIT_RESULT_MEMORY_FULL,            // ワークメモリの確保に失敗しました。(HYBRID ROM / LIMITED ROM で0x1000バイト、NITRO ROMで0x700バイト)
+        DWC_INIT_RESULT_LAST
     };
-
 
 
     /* -------------------------------------------------------------------------
             function - external
        ------------------------------------------------------------------------- */
 
-    int     DWC_Init( void* work );
+    int     DWC_InitForDevelopment( const char* gameName, u32 gameCode, DWCAllocEx alloc, DWCFreeEx free );
+    int     DWC_InitForProduction( const char* gameName, u32 gameCode, DWCAllocEx alloc, DWCFreeEx free );
 
     u64     DWC_GetAuthenticatedUserId( void );
 
     void    DWC_Debug_DWCInitError( void* work, int dwc_init_error );
+
+
+    /* -------------------------------------------------------------------------
+            function - internal
+       ------------------------------------------------------------------------- */
+    u32    DWCi_GetGamecode         ( void );
 
 
 

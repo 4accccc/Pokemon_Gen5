@@ -10,7 +10,7 @@
 <body>
     <h1 class="title">TWL-DWC 関数リファレンスマニュアル<br>(日本語版)</h1>
     <p align="right">
-    <span class="version">TWL-DWC 5.2 patch3 対応</span>
+    <span class="version">TWL-DWC 5.3 patch1 対応</span>
     </p>
     <p class="caution">[注意]　このドキュメントの内容は、秘密情報であるため、厳重な取扱い、管理を行なってください。</p>
     <p class="copyright">&copy;2005-2009 Nintendo Co.,Ltd. All rights reserved.</p>
@@ -131,8 +131,7 @@
     不正文字列チェックもこのサーバを使用します。
     </p>
     <p>
-    認証サーバは、以下の２種類のものを提供しています。開発・デバッグ時には開発向け認証サーバを使用し、最終ROM作成時に製品向け認証サーバに切り替えてご利用下さい。 開発向け認証サーバ、製品向け認証サーバともに無停止で運用しておりますが、開発向け認証サーバは冗長構成をとっていないため、停止する恐れがあります。万一開発向け認証サーバが停止している場合は、製品向け認証サーバをご利用いただいても問題ありません。
-    </p>
+    認証サーバは、以下の２種類のものを提供しています。開発・デバッグ時には開発向け認証サーバを使用し、最終ROM作成時に製品向け認証サーバに切り替えてご利用下さい。 開発向け認証サーバ、製品向け認証サーバともに無停止で運用しておりますが、開発向け認証サーバは冗長構成をとっていないため、停止する恐れがあります。万一開発向け認証サーバが停止している場合は、製品向け認証サーバをご利用いただいても問題ありません。認証サーバの選択は、DWC初期化関数<a href="dwc/DWC_InitForDevelopment.html">DWC_InitForDevelopment</a>/<a href="dwc/DWC_InitForProduction.html">DWC_InitForProduction</a>のどちらを使用するかによって行います。DS-MRCまたはTWLマスターエディタにて"DEBUG "プレフィックス付きのDWCライブラリバージョンが表示されていた場合は、開発向けサーバに接続している可能性があり、最終ROMとして提出することはできませんので注意して下さい。</p>
     <p>
     稼働状況の確認は、下記のリンクを参照し、「AuthServer is up」という文字列が表示されれば稼動中と判断出来ます。
     </p>
@@ -142,13 +141,6 @@
     <td align="center"><a href="https://nas.test.nintendowifi.net/nastest.jsp" target="_blank">開発向け認証サーバ</a></td>
     </tr>
     </table>
-    <p>
-    <strong>
-    【重要】<br/>
-    <span style="text-decolation:underline;">デフォルトでは開発向け認証サーバが使用されます。認証サーバを切り替える方法として、<a href="dwc/DWC_SetAuthServer.html">DWC_SetAuthServer</a>関数を用意しています。詳しくは関数リファレンスを参照してください。</span><br/>
-    DWCを使用するタイトルは全て、<a href="dwc/DWC_SetAuthServer.html">DWC_SetAuthServer</a>関数を使用して認証サーバを設定する必要があります。詳しくは関数リファレンスを参照してください。
-    </strong>
-    </p>
     
     <h5>● GameSpyサーバ</h5>
     <p>
@@ -156,7 +148,7 @@
     日本時間で毎週火曜日の１６時から１８時まで停止いたします。時によっては１８時でメンテナンスが完了せず、少々長引く場合もあります。
     </p>
     <p>
-    <font color="red">友達管理やマッチメイク処理、データストレージサーバは開発向けと製品向けサーバの区別がないことに注意してください。</font>開発向けと製品向けサーバの区別がないため、リマスター版やローカライズ版の開発でマッチメイクのテストを行なう際に、<a href="dwc/DWC_SetAuthServer.html">DWC_SetAuthServer</a>関数で製品向け認証サーバに設定していても、既に一般市場で発売しているタイトルとマッチメイクしてしまう可能性があります。
+    <font color="red">友達管理やマッチメイク処理、データストレージサーバは開発向けと製品向けサーバの区別がないことに注意してください。</font>開発向けと製品向けサーバの区別がないため、リマスター版やローカライズ版の開発でマッチメイクのテストを行なう際に、<a href="dwc/DWC_InitForDevelopment.html">DWC_InitForDevelopment</a>関数で開発向け認証サーバに設定していても、既に一般市場で発売しているタイトルとマッチメイクしてしまう可能性があります。
     </p>
     <p>
     これを避けるには、友達無指定ピアマッチメイクで指定できるマッチメイクの候補として検索するプレイヤーの条件によって「製品版」と「デバッグ・開発版」をマッチメイクしないように区別する必要があります。
@@ -336,27 +328,93 @@
             <DL>
 
             <p>
-            <DT>5.2patch1</DT>
+            <DT>5.3patch1</DT>
 
                 <DD>
-                    <a href="dwc/DWC_InitInet.html#dwc__connectinet_8h_1c9ae10a55929127c552c808ebb103cc8">DWC_InitInet</a> : 認証サーバのデフォルト設定が無くなったことに対応
+                    <a href="dwc/DWC_CheckProfanityAsync.html#dwc__prof_8h_16e8029f668632188e74681738be0aa20">DWC_CheckProfanityAsync</a> : 全リージョン&#39;A&#39;を指定したときの例で、不正文字を示す結果を修正
+                </DD>
+
+            </p>
+
+            <p>
+            <DT>5.3</DT>
+
+                <DD>
+                    <a href="dwc/DWC_CreateUserData.html#dwc__account_8h_193ca7d1d0b074e009d67cc3e9d9f7034">DWC_CreateUserData</a> : 引数にとっていたgamecodeについて、<a href="dwc/DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="dwc/DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で指定するように仕様変更したことに伴い、関連する記述を削除
                 </DD>
 
                 <DD>
-                    <a href="dwc/DWC_InitInetEx.html#dwc__connectinet_8h_1da26abf4e61fc5aac47a8d65206ce5eb">DWC_InitInetEx</a> : 認証サーバのデフォルト設定が無くなったことに対応
+                    <a href="dwc/DWC_GetCommonValueString.html#dwc__common_8h_1ccb38a8c74cfbd013fb1b1cca709fada">DWC_GetCommonValueString</a> : 引数valueにNULLを指定した場合、keyに対応する文字列の長さを返すように仕様変更したことに対応。
                 </DD>
 
                 <DD>
-                    <a href="dwc/DWC_SetAuthServer.html#dwc__connectinet_8h_1da96c96907e26b1362d663720e6a48e0">DWC_SetAuthServer</a> : 本関数を呼びださなかった場合のデフォルト設定がなくなり、呼び出しが必須になったことについて修正
+                    <a href="dwc/DWC_InitInetEx.html#dwc__connectinet_8h_1da26abf4e61fc5aac47a8d65206ce5eb">DWC_InitInetEx</a> : DWC_SetAuthServer関数の廃止に伴い、関連する記述を削除
                 </DD>
 
                 <DD>
-                    <a href="dwc/DWC_ConnectInetAsync.html#dwc__connectinet_8h_1ed6360e949bbab87f49275bac0a381cc">DWC_ConnectInetAsync</a> : 本関数を呼び出す前に、<a href="dwc/DWC_SetAuthServer.html#dwc__connectinet_8h_1da96c96907e26b1362d663720e6a48e0">DWC_SetAuthServer</a>関数で認証サーバを設定する必要があることについて追記
+                    <a href="dwc/DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a> : 関数の仕様変更で、開発用・製品用サーバ用それぞれに初期化関数が分かれたこと、及びゲーム名、イニシャルコード、アロケータの指定が必要になったことに対応
                 </DD>
 
                 <DD>
-                    <a href="dwc/DWC_DebugConnectInetAsync.html#dwc__connectinet_8h_12e0b604bf98cdbb0db24880bdbde3ceb">DWC_DebugConnectInetAsync</a> : 本関数を呼び出す前に、<a href="dwc/DWC_SetAuthServer.html#dwc__connectinet_8h_1da96c96907e26b1362d663720e6a48e0">DWC_SetAuthServer</a>関数で認証サーバを設定する必要があることについて追記
+                    <a href="dwc/DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a> : 関数の仕様変更で、開発用・製品用サーバ用それぞれに初期化関数が分かれたこと、及びゲーム名、イニシャルコード、アロケータの指定が必要になったことに対応
                 </DD>
+
+                <DD>
+                    <a href="dwc/DWC_Debug_DWCInitError.html#dwc__init_8h_160bf26c1ae87817c808204eb0cdab6a2">DWC_Debug_DWCInitError</a> : DWC_Init関数が、開発用・製品用サーバ用それぞれに分かれたことに対応
+                </DD>
+
+                <DD>
+                    <a href="dwc/DWC_InitFriendsMatch.html#dwc__main_8h_1de4fba18d5d03cbccd0c86efe9e80c1c">DWC_InitFriendsMatch</a> : 引数dwccnt,gameNameの廃止に対応。※GameSpyを使用する場合、gameNameは<a href="dwc/DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="dwc/DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で指定する必要があります。
+                </DD>
+
+                <DD>
+                    <a href="dwc/DWC_ConnectToAnybodyAsync.html#dwc__main_8h_10c4e2a60e98dfa82a16b5e896d3a2203">DWC_ConnectToAnybodyAsync</a> : 認証サーバの切り替えを、DWC_SetAuthServer関数ではなく<a href="dwc/DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="dwc/DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で行うよう仕様変更したため、関連する記述を修正
+                </DD>
+
+                <DD>
+                    <a href="dwc/DWCAllocEx.html#dwc__memfunc_8h_1b5f2b223b85ed60bd0d8e2e762b29eca">DWCAllocEx</a> : TWLモードで動作させた場合の注意について、廃止されたDWC_SetMemFunc関数からこちらに説明を移動
+                </DD>
+
+                <DD>
+                    <a href="dwc/DWC_Alloc.html#dwc__memfunc_8h_1aff2b5d03b69fa0cc6b5cea82e5cbdd4">DWC_Alloc</a> : アロケータの設定をDWC_SetMemFunc関数ではなく<a href="dwc/DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="dwc/DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で行うよう仕様変更したため、関連する記述を修正
+                </DD>
+
+                <DD>
+                    <a href="dwc/DWC_AllocEx.html#dwc__memfunc_8h_10be7843a0c0d09583ec57794f5109e80">DWC_AllocEx</a> : アロケータの設定をDWC_SetMemFunc関数ではなく<a href="dwc/DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="dwc/DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で行うよう仕様変更したため、関連する記述を修正
+                </DD>
+
+                <DD>
+                    <a href="dwc/DWC_Free.html#dwc__memfunc_8h_17df5b185c0e3ea8fc73668bff37f2006">DWC_Free</a> : アロケータの設定をDWC_SetMemFunc関数ではなく<a href="dwc/DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="dwc/DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で行うよう仕様変更したため、関連する記述を修正
+                </DD>
+
+                <DD>
+                    <a href="dwc/DWC_Realloc.html#dwc__memfunc_8h_19d490d1be6aee06cee99f6e554ac12b5">DWC_Realloc</a> : アロケータの設定をDWC_SetMemFunc関数ではなく<a href="dwc/DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="dwc/DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で行うよう仕様変更したため、関連する記述を修正
+                </DD>
+
+                <DD>
+                    <a href="dwc/DWC_ReallocEx.html#dwc__memfunc_8h_1100d1fa8c69d8434b1d2b06946d529df">DWC_ReallocEx</a> : アロケータの設定をDWC_SetMemFunc関数ではなく<a href="dwc/DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="dwc/DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で行うよう仕様変更したため、関連する記述を修正
+                </DD>
+
+                <DD>
+                    <a href="dwc/DWC_NdInitAsync.html#dwc__nd_8h_10f7fb2775c6aa081cdaadbc1247363d3">DWC_NdInitAsync</a> : 認証サーバの切り替えを、DWC_SetAuthServer関数ではなく<a href="dwc/DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="dwc/DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で行うよう仕様変更したため、関連する記述を修正
+                </DD>
+
+                <DD>
+                    <a href="dwc/DWC_RnkInitialize.html#dwc__ranking_8h_173c248d299ce23217350b63d6512eb15">DWC_RnkInitialize</a> : 認証サーバの切り替えを、DWC_SetAuthServer関数ではなく<a href="dwc/DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="dwc/DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で行うよう仕様変更したため、関連する記述を修正
+                </DD>
+
+                <DD>
+                    <a href="dwc/DWC_SVLGetTokenAsync.html#dwc__svl_8h_103ac491eb5bd8ad815acfdfaadfd28de">DWC_SVLGetTokenAsync</a> : アロケータの設定をDWC_SetMemFunc関数ではなく<a href="dwc/DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="dwc/DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で行うよう仕様変更したため、関連する記述を修正
+                </DD>
+
+                <DD>
+                    <a href="dwc/DWC_StartUtility.html#dwc__utility_8h_1a6e388b33fe6c8344210c25f8acca085">DWC_StartUtility</a> : 認証サーバの切り替えを、DWC_SetAuthServer関数ではなく<a href="dwc/DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="dwc/DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で行うよう仕様変更したため、関連する記述を修正
+                </DD>
+
+            </p>
+
+            <p>
+            <DT>5.3pr1</DT>
 
                 <DD>
                     <a href="dwc/DWC_Alloc.html#dwc__memfunc_8h_1aff2b5d03b69fa0cc6b5cea82e5cbdd4">DWC_Alloc</a> : 内部管理用のヘッダの存在に関して返り値及び説明部分を修正
@@ -372,14 +430,6 @@
 
                 <DD>
                     <a href="dwc/DWC_ReallocEx.html#dwc__memfunc_8h_1100d1fa8c69d8434b1d2b06946d529df">DWC_ReallocEx</a> : 内部管理用のヘッダの存在に関して返り値の説明を修正
-                </DD>
-
-                <DD>
-                    <a href="dwc/DWC_StartUtility.html#dwc__utility_8h_1a6e388b33fe6c8344210c25f8acca085">DWC_StartUtility</a> : 返り値DWC_UTIL_RESULT_FAILEDの説明に、認証サーバが設定されてない場合を追記
-                </DD>
-
-                <DD>
-                    <a href="dwc/DWC_StartUtilityEx.html#dwc__utility_8h_150e5b64241cfa2f8748540bad6c2a364">DWC_StartUtilityEx</a> : 返り値DWC_UTIL_RESULT_FAILEDの説明に、認証サーバが設定されてない場合を追記
                 </DD>
 
             </p>
@@ -430,10 +480,6 @@
                 </DD>
 
                 <DD>
-                    <a href="dwc/DWC_SetMemFunc.html#dwc__memfunc_8h_113607e1bcf007e9a7e28202c1a372e69">DWC_SetMemFunc</a> : TWLモードで動作させる場合、メインメモリ上の拡張アリーナから領域を確保する関数は指定できない旨を追記
-                </DD>
-
-                <DD>
                     <a href="dwc/DWC_CheckProfanityAsync.html#dwc__prof_8h_16e8029f668632188e74681738be0aa20">DWC_CheckProfanityAsync</a> : テスト用の不正文字列がリージョンの区別がなくなったことに対応。
                 </DD>
 
@@ -467,7 +513,11 @@
                 </DD>
 
                 <DD>
-                    <a href="dwc/DWC_Init.html#dwc__init_8h_12a34d048f06aa38b81263aa47d79eab1">DWC_Init</a> : <a href="dwc/DWC_Init.html#dwc__init_8h_12a34d048f06aa38b81263aa47d79eab1">DWC_Init</a>関数の使用前に呼ばなければいけない関数は、OS_Init関数だけである点について修正して記載
+                    <a href="dwc/DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a> : DWC_Init関数の使用前に呼ばなければいけない関数は、OS_Init関数だけである点について修正して記載
+                </DD>
+
+                <DD>
+                    <a href="dwc/DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a> : DWC_Init関数の使用前に呼ばなければいけない関数は、OS_Init関数だけである点について修正して記載
                 </DD>
 
                 <DD>
@@ -548,7 +598,7 @@
                 </DD>
 
                 <DD>
-                    <a href="dwc/DWC_InitFriendsMatch.html#dwc__main_8h_186c2f56943c3a20c05d73d4a2abad609">DWC_InitFriendsMatch</a> : dwccntに関する記述を修正
+                    <a href="dwc/DWC_InitFriendsMatch.html#dwc__main_8h_1de4fba18d5d03cbccd0c86efe9e80c1c">DWC_InitFriendsMatch</a> : dwccntに関する記述を修正
                 </DD>
 
                 <DD>

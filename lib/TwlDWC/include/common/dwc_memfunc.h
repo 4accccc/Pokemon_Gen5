@@ -55,6 +55,7 @@ extern "C"
      * DWCライブラリ全体で使用するメモリ確保関数
      *
      * DWCライブラリから使用されるメモリ確保関数です。スレッド排他処理を行う必要があります。
+     * TWLモードで動作させる場合、メインメモリ上の拡張アリーナから領域を確保する関数は指定できません。
      *
      * Param:    align   バイトアライメントされたsizeバイト分のバッファへのポ
      *                  インタを返してください。
@@ -65,7 +66,7 @@ extern "C"
      * メモリ確保に失敗した場合、NULL
      *
      * See also:  DWCFreeEx
-     *
+     * 
      */
     typedef void* (*DWCAllocEx)( DWCAllocType name, u32   size, int align );
 
@@ -91,7 +92,6 @@ extern "C"
     /* --------------------------------------------------------------------
       functions
       ----------------------------------------------------------------------*/
-    void  DWC_SetMemFunc( DWCAllocEx alloc, DWCFreeEx free );
     void* DWC_Alloc     ( DWCAllocType name, u32 size );
     void* DWC_AllocEx   ( DWCAllocType name, u32 size, int align );
     void  DWC_Free      ( DWCAllocType name, void* ptr, u32 size );

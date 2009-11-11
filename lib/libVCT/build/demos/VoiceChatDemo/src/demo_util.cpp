@@ -208,10 +208,10 @@ void ConnectionClosedCallback(DWCError error,
                 // クローズできたら次に進む
                 stGameCnt.blocking = FALSE;  // ブロッキング解除 
             }
-            if ((DWC_GetLastMatchingType() != DWC_MATCH_TYPE_SC_SV) || isServer){
+            if ((DWC_GetLastMatchType() != DWC_MATCH_TYPE_SC_SV) || isServer){
                 // isServer==TRUEで自分でクローズした場合と、
                 // 相手からのクローズの場合は、ここで次のモードをセットする
-                *(GameMode *)param = GAME_MODE_LOGIN;
+                *(GameMode *)param = GAME_MODE_CONNECTED;
             }
             // 自分がサーバクライアント型マッチングのサーバで、
             // クライアントが全員クローズした場合は何もしない
@@ -230,13 +230,7 @@ void ConnectionClosedCallback(DWCError error,
         }
     }
     else {
-        DispErrorMessage();
         OS_TPrintf("Failed to close connections. %d\n\n", error);
-
-        *(GameMode *)param = GAME_MODE_MAIN;
-
- // ブロッキング解除
-        stGameCnt.blocking = FALSE; 
     }
 }
 

@@ -15,29 +15,21 @@
 // define
 //----------------------------------------------------------------------------
 #define GAME_NAME        "dwctest" // このサンプルが使用するゲーム名
+#define INITIAL_CODE     'NTRJ'    // このサンプルが仕様するイニシャルコード
 #define GAME_SECRET_KEY  "d4q9GZ"  // このサンプルが使用するシークレットキー
 #define GAME_PRODUCTID   10824     // このサンプルが使用するプロダクトID
 #define	MAX_PLAYERS		 4	       // 自分も含めた接続人数
-#define APP_CONNECTION_KEEPALIVE_TIME 30000 // キープアライブ時間
+#define APP_CONNECTION_KEEPALIVE_TIME 300000 // キープアライブ時間
 #define KEEPALIVE_INTERVAL (APP_CONNECTION_KEEPALIVE_TIME/5) // キー入力を待たずデータを転送する時間
 #define FILTER_STRING "sample_filter"	// フィルタ文字列. 適宜変更してください
 #define FILTER_KEY "str_key"
-
 #define GAME_FRAME       1         // 想定するゲームフレーム（1/60を1とする）
-
 #define GAME_NUM_MATCH_KEYS 3      // マッチメイク用追加キー個数
-
 #define NETCONFIG_USE_HEAP 1
+//#define GAME_USE_STORAGE_SERVER   // ストレージサーバへのセーブ・ロードを試すスイッチ
+//#define USE_AUTHSERVER_PRODUCTION // 製品向け認証サーバを使用する場合有効にする
 
-// ストレージサーバへのセーブ・ロードを試すスイッチ
-//#define GAME_USE_STORAGE_SERVER
-
-// 認証サーバをデフォルトの開発向け認証サーバから製品向け認証サーバに変更する
-// 場合は、下記の定義を有効にしてください。
-//#define USE_AUTHSERVER_RELEASE
-
-// メモリ確保/開放時にメモリを埋めるデバッグオプション
-#undef DEBUG_OPTION_FILL_HEAP
+#undef DEBUG_OPTION_FILL_HEAP // メモリ確保/開放時にメモリを埋めるデバッグオプション
 
 //----------------------------------------------------------------------------
 // typedef
@@ -71,7 +63,6 @@ CommunicationData s_commData;
 //----------------------------------------------------------------------------
 static GameControl stGameCnt;  // ゲーム制御情報構造体
 KeyControl stKeyCnt;    // キー入力制御構造体
-static DWCFriendsMatchControl stDwcCnt;    // FriendsMatch制御構造体
 
 static int stNumEntry  = 2;    // ネットワーク構成人数指定
 static int stServerIdx = 0;    // 接続したいサーバDSの友達リストインデックス
@@ -423,7 +414,6 @@ void OS_TPrintf(const char *fmt, ...)
 /*---------------------------------------------------------------------------*
   メインルーチン
  *---------------------------------------------------------------------------*/
-static u8 s_Work[ DWC_INIT_WORK_SIZE ] ATTRIBUTE_ALIGN( 32 );
 void NitroMain ()
 {
     int friendIdx = 0;
@@ -442,7 +432,9 @@ void NitroMain ()
     OS_SetThreadStackWarningOffset(OS_GetCurrentThread(), 0x100);
     
     Heap_Init();
-//    Heap_SetDebug( TRUE );
+    
+    // ヒープ使用量表示ON
+    //Heap_SetDebug( TRUE );
 
     GX_Init();
 
@@ -480,8 +472,13 @@ void NitroMain ()
     DWC_SetReportLevel((unsigned long)(DWC_REPORTFLAG_ALL));
 
     // DWCライブラリ初期化
-    ret = DWC_Init( s_Work );
-    OS_TPrintf( "DWC_Init() result = %d\n", ret );
+#if defined( USE_AUTHSERVER_PRODUCTION )
+    ret = DWC_InitForProduction( GAME_NAME, INITIAL_CODE, AllocFunc, FreeFunc );
+#else
+    ret = DWC_InitForDevelopment( GAME_NAME, INITIAL_CODE, AllocFunc, FreeFunc );
+#endif
+    
+    OS_TPrintf( "DWC_InitFor*() result = %d\n", ret );
 
     if ( ret == DWC_INIT_RESULT_DESTROY_OTHER_SETTING )
     {
@@ -489,17 +486,11 @@ void NitroMain ()
     }
     
     // ユーザデータ作成
-    DWC_CreateUserData( &stUserData, 'NTRJ' );
+    DWC_CreateUserData( &stUserData );
 
     // ユーザデータ表示
     DWC_ReportUserData( &stUserData );
-
-    // ヒープ使用量表示ON
-    //Heap_SetDebug(TRUE);
-
-    // メモリ確保関数設定
-    DWC_SetMemFunc( AllocFunc, FreeFunc );
-        
+    
     // メインループ
     while (1){
         // メニュー表示
@@ -667,7 +658,7 @@ static GameMode GameMain(void)
                 // FriendsMatchライブラリ初期化
                 // ライブラリが使うソケットの送受信バッファサイズは
                 // デフォルトのまま（8KByte）にしておく
-                DWC_InitFriendsMatch(&stDwcCnt, &stUserData, GAME_PRODUCTID, GAME_NAME,
+                DWC_InitFriendsMatch(&stUserData, GAME_PRODUCTID,
                                      GAME_SECRET_KEY, 0, 0,
                                      stGameCnt.friendList.keyList, GAME_MAX_FRIEND_LIST);
 
@@ -1146,17 +1137,17 @@ static GameMode GameLogonMain(void)
 
 #else  // ストレージサーバへのセーブを試す場合
             // セレクトボタンでストレージサーバにテストキーをセーブ
-            char keyvalues[12];
+            char keyvalues[30];
             BOOL boolResult;
 
             if (stKeyCnt.cont & PAD_BUTTON_X){
                 // Xボタンが押されていればPrivateデータをセーブ
-                sprintf(keyvalues, "\\test_key_prv\\%lld", OS_GetTick());
+                snprintf(keyvalues, sizeof(keyvalues), "\\test_key_prv\\%lld", OS_TicksToSeconds(OS_GetTick()));
                 boolResult = DWC_SavePrivateDataAsync(keyvalues, NULL);
             }
             else {
                 // Xボタンが押されていなければPublicデータをセーブ
-                sprintf(keyvalues, "\\test_key_pub\\%lld", OS_GetTick());
+                snprintf(keyvalues, sizeof(keyvalues), "\\test_key_pub\\%lld", OS_TicksToSeconds(OS_GetTick()));
                 boolResult = DWC_SavePublicDataAsync(keyvalues, NULL);
             }
 
@@ -1769,8 +1760,9 @@ static void LoginToStorageCallback(DWCError error, void* param)
  *---------------------------------------------------------------------------*/
 static void SaveToServerCallback(BOOL success, BOOL isPublic, void* param)
 {
+#pragma unused(param)
 
-    OS_TPrintf("Saved data to server. %08x\n", (u32)param);
+    OS_TPrintf("Saved data to server.\n");
     OS_TPrintf("result %d, isPublic %d.\n", success, isPublic);
 }
 
@@ -1780,8 +1772,9 @@ static void SaveToServerCallback(BOOL success, BOOL isPublic, void* param)
  *---------------------------------------------------------------------------*/
 static void LoadFromServerCallback(BOOL success, int index, char* data, int len, void* param)
 {
+#pragma unused(param)
 
-    OS_TPrintf("Loaded data from server. %08x\n", (u32)(param));
+    OS_TPrintf("Loaded data from server.\n");
     OS_TPrintf("result %d, index %d, data '%s', len %d\n",
                success, index, data, len);
 }
@@ -2490,12 +2483,6 @@ static GameMode NetConfigMain(void)
     sPrintOverride = FALSE; // OS_TPrintf()の出力を一時的に元に戻す。
     dbs_DemoFinalize();
 
-#if defined( USE_AUTHSERVER_RELEASE )
-    DWC_SetAuthServer( DWC_CONNECTINET_AUTH_RELEASE );
-#else
-    DWC_SetAuthServer( DWC_CONNECTINET_AUTH_TEST );
-#endif
-
 #if defined( NETCONFIG_USE_HEAP )
     {
         void* work = OS_Alloc(DWC_UTILITY_WORK_SIZE);
@@ -2536,13 +2523,6 @@ static GameMode StartIPMain(void)
 	DWCApInfo apinfo;
 	
     DWC_InitInet( &stConnCtrl );
-
-#if defined( USE_AUTHSERVER_RELEASE )
-    DWC_SetAuthServer( DWC_CONNECTINET_AUTH_RELEASE );
-#else
-    DWC_SetAuthServer( DWC_CONNECTINET_AUTH_TEST );
-#endif
-
     
     DWC_ConnectInetAsync();
     // 安定なステートまで待つ。

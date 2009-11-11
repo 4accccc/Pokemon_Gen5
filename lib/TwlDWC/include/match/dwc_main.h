@@ -87,7 +87,7 @@ extern "C"
 // function - external
 //----------------------------------------------------------------------------
 
-    void    DWC_InitFriendsMatch        ( DWCFriendsMatchControl* dwccnt, DWCUserData* userdata, int productID, const char* gameName, const char* secretKey, int sendBufSize, int recvBufSize, DWCFriendData friendList[], int friendListLen );
+    void    DWC_InitFriendsMatch        ( DWCUserData* userdata, int productID, const char* secretKey, int sendBufSize, int recvBufSize, DWCFriendData friendList[], int friendListLen );
     void    DWC_ShutdownFriendsMatch    ( void);
     void    DWC_ProcessFriendsMatch     ( void);
     BOOL    DWC_LoginAsync              ( const u16*  ingamesn, const char* reserved, DWCLoginCallback callback, void* param );

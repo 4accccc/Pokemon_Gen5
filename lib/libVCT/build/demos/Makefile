@@ -11,9 +11,12 @@
 # or copied or duplicated in any form, in whole or in part,  without
 # the prior written consent of Abiosso.
 #
+# April 17, 2009
+# Support Twl Libraries
+#
 #----------------------------------------------------------------------------
 
-include	$(NITROLIBVCT_ROOT)/build/buildtools/commondefs
+include	$(TWLLIBVCT_ROOT)/build/buildtools/commondefs
 
 #----------------------------------------------------------------------------
 
@@ -21,4 +24,4 @@ SUBDIRS			= VoiceChatDemo
 
 #----------------------------------------------------------------------------
 
-include	$(NITROLIBVCT_ROOT)/build/buildtools/modulerules
+include	$(TWLLIBVCT_ROOT)/build/buildtools/modulerules

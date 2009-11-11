@@ -7,9 +7,9 @@
 //----------------------------------------------------------------------------
 // define
 //----------------------------------------------------------------------------
-#define GAME_FRAME  1   // 想定するゲームフレーム（1/60を1とする）
-
-//#define USE_AUTHSERVER_RELEASE   // 本番サーバへ接続
+#define INITIAL_CODE    'NTRJ'    // このサンプルが仕様するイニシャルコード
+#define GAME_FRAME      1         // 想定するゲームフレーム（1/60を1とする）
+//#define USE_AUTHSERVER_PRODUCTION // 製品向け認証サーバを使用する場合有効にする
 
 //----------------------------------------------------------------------------
 // typedef
@@ -191,19 +191,24 @@ void NitroMain ()
  *---------------------------------------------------------------------------*/
 static void InitDWC(void)
 {
-    static u8 work[DWC_INIT_WORK_SIZE] ATTRIBUTE_ALIGN(32);
+    int ret;
 
     // デバッグ表示レベル指定
     DWC_SetReportLevel(DWC_REPORTFLAG_ALL);
 
-    // DWC初期化
-    if (DWC_Init(work) == DWC_INIT_RESULT_DESTROY_OTHER_SETTING)
-    {
-        OS_TPrintf("Wi-Fi setting might be broken.\n");
-    }
+    // DWCライブラリ初期化
+#if defined( USE_AUTHSERVER_PRODUCTION )
+    ret = DWC_InitForProduction( NULL, INITIAL_CODE, AllocFunc, FreeFunc );
+#else
+    ret = DWC_InitForDevelopment( NULL, INITIAL_CODE, AllocFunc, FreeFunc );
+#endif
+    
+    OS_TPrintf( "DWC_InitFor*() result = %d\n", ret );
 
-    // メモリ確保/解放関数を設定
-    DWC_SetMemFunc(AllocFunc, FreeFunc);
+    if ( ret == DWC_INIT_RESULT_DESTROY_OTHER_SETTING )
+    {
+        OS_TPrintf( "Wi-Fi setting might be broken.\n" );
+    }
 }
 
 /*---------------------------------------------------------------------------*
@@ -217,12 +222,6 @@ static void NetConfigMain(void)
 
     sPrintOverride = FALSE; // OS_TPrintf()の出力を一時的に元に戻す.
     dbs_DemoFinalize();
-
-#if defined( USE_AUTHSERVER_RELEASE )
-    DWC_SetAuthServer( DWC_CONNECTINET_AUTH_RELEASE );
-#else
-    DWC_SetAuthServer( DWC_CONNECTINET_AUTH_TEST );
-#endif
 
     (void)DWC_StartUtilityEx(DWC_LANGUAGE_JAPANESE, DWC_UTILITY_TOP_MENU_FOR_JPN);
 
@@ -251,11 +250,7 @@ static void NetConfigMain(void)
 static void StartIPMain(void)
 {
     DWC_InitInet(&stConnCtrl);
-#if defined( USE_AUTHSERVER_RELEASE )
-    DWC_SetAuthServer( DWC_CONNECTINET_AUTH_RELEASE );
-#else
-    DWC_SetAuthServer( DWC_CONNECTINET_AUTH_TEST );
-#endif
+
     DWC_ConnectInetAsync();
 
     // 接続処理
@@ -288,21 +283,21 @@ static const u16 *words[] =
 {
     L"badword", // 全リージョン共通不正文字列
     L"mario",
-    L"\x308F\x308B\x3082\x3057", // 日本リージョン不正文字列「わるもし」
+    L"\x308F\x308B\x3082\x3057", // 日本リージョン不正文字列「わるもし」(※諸事情によりこの文字列は現在全リージョンでエラーになります)
     L"mario",
-    L"\x30EF\x30EB\x30E2\x30B7", // 日本リージョン不正文字列「ワルモシ」
+    L"\x30EF\x30EB\x30E2\x30B7", // 日本リージョン不正文字列「ワルモシ」(※諸事情によりこの文字列は現在全リージョンでエラーになります)
     L"mario",
-    L"\xB098\xC05C\xB2E8\xC5B4", // 韓国リージョン不正文字列
+    L"\xB098\xC05C\xB2E8\xC5B4", // 韓国リージョン不正文字列(※諸事情によりこの文字列は現在全リージョンでエラーになります)
     L"mario",
-    L"\xB098\xC05C\xBB38\xC7A5", // 韓国リージョン不正文字列
+    L"\xB098\xC05C\xBB38\xC7A5", // 韓国リージョン不正文字列(※諸事情によりこの文字列は現在全リージョンでエラーになります)
     L"mario",
-    L"\x574F\x7528\x8BED", // 中国リージョン不正文字列
+    L"\x574F\x7528\x8BED", // 中国リージョン不正文字列(※諸事情によりこの文字列は現在全リージョンでエラーになります)
     L"mario",
-    L"\x0062\x00E0\x0064\x0077", // 北米/欧州リージョン不正文字列
+    L"\x0062\x00E0\x0064\x0077", // 北米/欧州リージョン不正文字列(※諸事情によりこの文字列は現在全リージョンでエラーになります)
     L"mario",
-    L"\x0062\x00E1\x0064\x0077", // 北米/欧州リージョン不正文字列
+    L"\x0062\x00E1\x0064\x0077", // 北米/欧州リージョン不正文字列(※諸事情によりこの文字列は現在全リージョンでエラーになります)
     L"mario",
-    L"\x00DF\x00E4\x0064\x0077", // 北米/欧州リージョン不正文字列
+    L"\x00DF\x00E4\x0064\x0077", // 北米/欧州リージョン不正文字列(※諸事情によりこの文字列は現在全リージョンでエラーになります)
     L"mario",
     L"badword",
     L"mario",

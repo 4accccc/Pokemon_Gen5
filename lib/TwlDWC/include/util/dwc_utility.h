@@ -47,7 +47,7 @@ extern  "C"
     enum  DWCUTILRESULT
     {
         DWC_UTIL_RESULT_SUCCESS   =  0,    // 成功
-        DWC_UTIL_RESULT_FAILED    = -1,    // 引数エラー又はDWC_SetAuthServer関数で認証サーバの設定がされていない
+        DWC_UTIL_RESULT_FAILED    = -1,    // 引数エラー
         DWC_UTIL_RESULT_ERROR_TWL = -2     // TWLで起動した場合のエラー
     };
 

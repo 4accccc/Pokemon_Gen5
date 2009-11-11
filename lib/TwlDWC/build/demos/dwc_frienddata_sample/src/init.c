@@ -173,7 +173,6 @@ void OS_TVPrintf(const char *fmt, va_list vlist )
 /** --------------------------------------------------------------------
   OS_TPrintf‚ÌŽÀ‘•
   ----------------------------------------------------------------------*/
-#if defined(SDK_FINALROM) || defined(SDK_TWL)
 void OS_TPrintf(const char *fmt, ...)
 {
     va_list vlist;
@@ -182,4 +181,3 @@ void OS_TPrintf(const char *fmt, ...)
     OS_TVPrintf(fmt, vlist);
     va_end(vlist);
 }
-#endif

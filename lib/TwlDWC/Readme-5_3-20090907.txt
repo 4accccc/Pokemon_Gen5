@@ -1,7 +1,7 @@
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 
    Readme for
-   TwlDWC-5_2-20090630-jp  (20090630 版)
+   TwlDWC-5_3-20090907-jp  (20090907 版)
 
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 
@@ -14,9 +14,9 @@
    
    TWL-DWCの動作確認が取れている環境は以下の通りです。
    
-   ・TwlSDK 5.2 patch1 (20090617 版)
-   ・TWL-System 2.1.1 patch
-   ・CodeWarrior for NINTENDO DS 2.0 SP2 Patch4
+   ・TwlSDK 5.3 (2009/08/07 版)
+   ・TWL-System 2.2.0 (2009/08/05 版)
+   ・CodeWarrior for DSi v1.1 patch3 (2009/08/19版)
    
    TWL-DWCの詳細については、
    $(TWLDWC_ROOT)/docs/ 内の各種ドキュメントや、

@@ -1,0 +1,118 @@
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+   Readme for
+   TwlDWC-5_3_patch1-20091029-jp  (20091029 版)
+
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+
+1. はじめに
+==============================================================================
+    このパッチは、TWL-DWC 5.3 正式版 のリリース以降に発見された不具合を修正す
+    るためのものです。インストールするためには、同梱されているファイルを
+    TWL-DWC 5.3 正式版 (20090907)がインストールされているディレクトリに上書きコ
+    ピーしてください。
+
+    TWL-DWCの動作確認は以下の環境で行いました。
+   
+   ・TwlSDK 5.3 patch3 (2009/10/14 版)
+   ・TWL-System 2.2.0 (2009/08/05 版)
+   ・CodeWarrior for DSi v.1.2 (2009/10/06)
+
+
+2. ファイルリスト
+==============================================================================
+
+  ■ソースファイル
+  /TwlDWC/build/demos/dwc_anybody_match_sample/src/init.c
+  /TwlDWC/build/demos/dwc_eval_callback_sample/src/init.c
+  /TwlDWC/build/demos/dwc_frienddata_sample/src/init.c
+  /TwlDWC/build/demos/dwc_friend_match_sample/src/init.c
+  /TwlDWC/build/demos/dwc_prof_sample/src/main.c
+  /TwlDWC/build/demos/dwc_sc_match_sample/src/init.c
+  /TwlDWC/build/demos/dwc_userdata_sample/src/init.c
+
+  ■ヘッダファイル
+  /TwlDWC/include/dwc_version.h
+
+  ■ライブラリファイル
+  /TwlDWC/lib/ARM9-TS/Debug/libcps.a
+  /TwlDWC/lib/ARM9-TS/Debug/libcps.thumb.a
+  /TwlDWC/lib/ARM9-TS/Debug/libcps.TWL.HYB.a
+  /TwlDWC/lib/ARM9-TS/Debug/libcps.TWL.HYB.thumb.a
+  /TwlDWC/lib/ARM9-TS/Debug/libcps.TWL.LTD.a
+  /TwlDWC/lib/ARM9-TS/Debug/libcps.TWL.LTD.thumb.a
+  /TwlDWC/lib/ARM9-TS/Debug/libdwccommon.a
+  /TwlDWC/lib/ARM9-TS/Debug/libdwccommon.thumb.a
+  /TwlDWC/lib/ARM9-TS/Debug/libdwccommon.TWL.HYB.a
+  /TwlDWC/lib/ARM9-TS/Debug/libdwccommon.TWL.HYB.thumb.a
+  /TwlDWC/lib/ARM9-TS/Debug/libdwccommon.TWL.LTD.a
+  /TwlDWC/lib/ARM9-TS/Debug/libdwccommon.TWL.LTD.thumb.a
+  /TwlDWC/lib/ARM9-TS/Debug/libsoc.a
+  /TwlDWC/lib/ARM9-TS/Debug/libsoc.thumb.a
+  /TwlDWC/lib/ARM9-TS/Debug/libsoc.TWL.HYB.a
+  /TwlDWC/lib/ARM9-TS/Debug/libsoc.TWL.HYB.thumb.a
+  /TwlDWC/lib/ARM9-TS/Debug/libsoc.TWL.LTD.a
+  /TwlDWC/lib/ARM9-TS/Debug/libsoc.TWL.LTD.thumb.a
+  /TwlDWC/lib/ARM9-TS/Debug/libssl.a
+  /TwlDWC/lib/ARM9-TS/Debug/libssl.thumb.a
+  /TwlDWC/lib/ARM9-TS/Debug/libssl.TWL.HYB.a
+  /TwlDWC/lib/ARM9-TS/Debug/libssl.TWL.HYB.thumb.a
+  /TwlDWC/lib/ARM9-TS/Debug/libssl.TWL.LTD.a
+  /TwlDWC/lib/ARM9-TS/Debug/libssl.TWL.LTD.thumb.a
+  /TwlDWC/lib/ARM9-TS/Release/libcps.a
+  /TwlDWC/lib/ARM9-TS/Release/libcps.thumb.a
+  /TwlDWC/lib/ARM9-TS/Release/libcps.TWL.HYB.a
+  /TwlDWC/lib/ARM9-TS/Release/libcps.TWL.HYB.thumb.a
+  /TwlDWC/lib/ARM9-TS/Release/libcps.TWL.LTD.a
+  /TwlDWC/lib/ARM9-TS/Release/libcps.TWL.LTD.thumb.a
+  /TwlDWC/lib/ARM9-TS/Release/libdwccommon.a
+  /TwlDWC/lib/ARM9-TS/Release/libdwccommon.thumb.a
+  /TwlDWC/lib/ARM9-TS/Release/libdwccommon.TWL.HYB.a
+  /TwlDWC/lib/ARM9-TS/Release/libdwccommon.TWL.HYB.thumb.a
+  /TwlDWC/lib/ARM9-TS/Release/libdwccommon.TWL.LTD.a
+  /TwlDWC/lib/ARM9-TS/Release/libdwccommon.TWL.LTD.thumb.a
+  /TwlDWC/lib/ARM9-TS/Release/libsoc.a
+  /TwlDWC/lib/ARM9-TS/Release/libsoc.thumb.a
+  /TwlDWC/lib/ARM9-TS/Release/libsoc.TWL.HYB.a
+  /TwlDWC/lib/ARM9-TS/Release/libsoc.TWL.HYB.thumb.a
+  /TwlDWC/lib/ARM9-TS/Release/libsoc.TWL.LTD.a
+  /TwlDWC/lib/ARM9-TS/Release/libsoc.TWL.LTD.thumb.a
+  /TwlDWC/lib/ARM9-TS/Release/libssl.a
+  /TwlDWC/lib/ARM9-TS/Release/libssl.thumb.a
+  /TwlDWC/lib/ARM9-TS/Release/libssl.TWL.HYB.a
+  /TwlDWC/lib/ARM9-TS/Release/libssl.TWL.HYB.thumb.a
+  /TwlDWC/lib/ARM9-TS/Release/libssl.TWL.LTD.a
+  /TwlDWC/lib/ARM9-TS/Release/libssl.TWL.LTD.thumb.a
+  /TwlDWC/lib/ARM9-TS/Rom/libcps.a
+  /TwlDWC/lib/ARM9-TS/Rom/libcps.thumb.a
+  /TwlDWC/lib/ARM9-TS/Rom/libcps.TWL.HYB.a
+  /TwlDWC/lib/ARM9-TS/Rom/libcps.TWL.HYB.thumb.a
+  /TwlDWC/lib/ARM9-TS/Rom/libcps.TWL.LTD.a
+  /TwlDWC/lib/ARM9-TS/Rom/libcps.TWL.LTD.thumb.a
+  /TwlDWC/lib/ARM9-TS/Rom/libdwccommon.a
+  /TwlDWC/lib/ARM9-TS/Rom/libdwccommon.thumb.a
+  /TwlDWC/lib/ARM9-TS/Rom/libdwccommon.TWL.HYB.a
+  /TwlDWC/lib/ARM9-TS/Rom/libdwccommon.TWL.HYB.thumb.a
+  /TwlDWC/lib/ARM9-TS/Rom/libdwccommon.TWL.LTD.a
+  /TwlDWC/lib/ARM9-TS/Rom/libdwccommon.TWL.LTD.thumb.a
+  /TwlDWC/lib/ARM9-TS/Rom/libsoc.a
+  /TwlDWC/lib/ARM9-TS/Rom/libsoc.thumb.a
+  /TwlDWC/lib/ARM9-TS/Rom/libsoc.TWL.HYB.a
+  /TwlDWC/lib/ARM9-TS/Rom/libsoc.TWL.HYB.thumb.a
+  /TwlDWC/lib/ARM9-TS/Rom/libsoc.TWL.LTD.a
+  /TwlDWC/lib/ARM9-TS/Rom/libsoc.TWL.LTD.thumb.a
+  /TwlDWC/lib/ARM9-TS/Rom/libssl.a
+  /TwlDWC/lib/ARM9-TS/Rom/libssl.thumb.a
+  /TwlDWC/lib/ARM9-TS/Rom/libssl.TWL.HYB.a
+  /TwlDWC/lib/ARM9-TS/Rom/libssl.TWL.HYB.thumb.a
+  /TwlDWC/lib/ARM9-TS/Rom/libssl.TWL.LTD.a
+  /TwlDWC/lib/ARM9-TS/Rom/libssl.TWL.LTD.thumb.a
+  /TwlDWC/lib/gamespy/ARM9-TS/Debug/libdwcgscommon.TWL.HYB.thumb.a
+  /TwlDWC/lib/gamespy/ARM9-TS/Debug/libdwcgscommon.TWL.LTD.thumb.a
+
+  ■ドキュメント・その他
+  /TwlDWC/Changelog-5_3_patch1-20091029.txt
+  /TwlDWC/man/ja_JP/dwc/DWC_CheckProfanityAsync.html
+  /TwlDWC/man/ja_JP/main.html
+  /TwlDWC/Readme-5_3_patch1-20091029.txt

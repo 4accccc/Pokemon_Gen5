@@ -3,7 +3,6 @@
 //
 
 #include <nitro.h>
-#include <ninet/ip.h>
 #include <dwc.h>
 
 #include "main.h"
@@ -60,7 +59,6 @@ static char        sClientMsg[MAX_PLAYERS][32] = {
 static void         ClearSession(VCTSession *session);
 static Menu*        InitMenu();
 static void         DestroyMenu();
-
 
 /////////////////////////////////////////////////////////////////////////////////////
 //
@@ -172,11 +170,12 @@ GameMode ConferenceMain()
     OSTick tick1, tick2;
     //  カンファレンスを開始 
     while (1) {
-        dbs_Print( 0, 0, "s:%d", DWC_GetMatchingState() );
+        dbs_Print( 0, 0, "s:%d", DWC_GetMatchState() );
         dbs_Print( 7, 0, "n:%d", DWC_GetNumConnectionHost() );
         dbs_Print(14, 0, "a:%d", DWC_GetMyAID());
         dbs_Print( 0, 1, "w:%d", DWC_GetLinkLevel() );
         dbs_Print( 10,1, "p:%d", stGameCnt.userData.profileID );
+	    dbs_Print( 30, 0, "%c",  LoopChar());
         dbs_Print( 2, 2, "== Conference mode demo ==");
 
         ReadKeyData();
@@ -185,16 +184,11 @@ GameMode ConferenceMain()
 
         tick1 = OS_GetTick();
         DWC_ProcessFriendsMatch();
+
+        HandleDWCError(&returnSeq);  // エラー処理
+        
         tick1 = OS_GetTick() - tick1;
-        
-        if (DWC_GetLastError(NULL)){
-             //  マッチング失敗時の処理 
-            ShutdownInet();
-            DWC_ClearError();
-            returnSeq = GAME_MODE_MAIN;
-            break;
-        }
-        
+
         //  ピクチャーフレームに一度呼び出すメイン関数。
         tick2 = OS_GetTick();
         VCT_Main();
@@ -218,6 +212,7 @@ GameMode ConferenceMain()
         //
 
         if (key & PAD_BUTTON_A) {
+            int n;
             switch (curIdx){
             case 0:  // Client
             case 1:  // Client
@@ -242,7 +237,7 @@ GameMode ConferenceMain()
                 
                 //  参加人数に合わせてコーデックを変更 
                 //
-                int n = MATH_CountPopulation(aidBitmap);
+                n = MATH_CountPopulation(aidBitmap);
                 if (n < 3) {
                     VCT_SetCodec(VCT_CODEC_4BIT_ADPCM);
                 }

@@ -9,9 +9,11 @@ void Heap_Init(void);
 void Heap_Debug(void);
 void Heap_Dump(void);
 void Alarm_Init(void);
+void Heap_SetDebug( BOOL flag );
+void Heap_Print( void );
 
 extern u8 gAudioBuffer[];
-    
+
 #ifdef __cplusplus
 }
 #endif

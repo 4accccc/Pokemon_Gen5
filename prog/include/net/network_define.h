@@ -22,6 +22,15 @@
 #define DEBUG_SERVER
 #endif  //-- PM_DEBUG
 
+//DWC_Init～で仕様する、GameCode
+#ifdef VERSION_BLACK
+#define GF_DWC_GAMECODE		('IRAJ')
+#elif defined(VERSION_WHITE)
+#define GF_DWC_GAMECODE		('IRBJ')
+#endif
+
+//DWC_Init～で仕様する、GameName
+#define GF_DWC_GAMENAME		("syachi2ds")
 
 #ifdef DEBUG_SERVER
 //開発用サーバー

@@ -1,5 +1,4 @@
 #include <nitro.h>
-#include <ninet/ip.h>
 #include <nitro/os.h>
 #include <dwc.h>
 
@@ -17,6 +16,7 @@
 extern GameSequence gameSeqList[GAME_MODE_NUM];
 extern GameControl stGameCnt;  // ゲーム制御情報構造体 
 extern KeyControl stKeyCnt;    // キー入力制御構造体 
+extern u32  s_groupID;
 
 /** -------------------------------------------------------------------------
   DWC Transport
@@ -53,14 +53,26 @@ SetRecvBuffer( void )
 
         DWC_SetRecvBuffer( (u8)i, &sRecvBuffer[i-j], SIZE_RECV_BUFFER );
     }
+    // グループID も保存
+    s_groupID = DWC_GetGroupID();
+}
+
+/** -------------------------------------------------------------------------
+  送信完了コールバック  
+  ---------------------------------------------------------------------------*/
+static void
+SendDoneCallback( int size, u8 aid, void* param )
+{
+#pragma unused(size, aid, param)
 }
 
 /*---------------------------------------------------------------------------*
   DWC 受信処理
   ---------------------------------------------------------------------------*/
-
-static void UserRecvCallback( u8 aid, u8* buffer, int size )
+static void 
+UserRecvCallback( u8 aid, u8* buffer, int size, void* param )
 {
+#pragma unused(param)
     BOOL flag;
     
     flag = VCT_HandleData(aid, buffer, size);
@@ -84,7 +96,7 @@ static void UserRecvCallback( u8 aid, u8* buffer, int size )
 }
 
 /*---------------------------------------------------------------------------*
-  メッシュ接続完了後メイン関数
+  接続完了後メイン関数
  *---------------------------------------------------------------------------*/
 GameMode GameConnectedMain(void)
 {
@@ -95,8 +107,11 @@ GameMode GameConnectedMain(void)
     // レポートレベルを下げる
     DWC_SetReportLevel(0);
     
+    // 送信コールバックの設定	
+    DWC_SetUserSendCallback( SendDoneCallback, NULL ); 
+
     // 受信コールバックの設定	
-    DWC_SetUserRecvCallback( UserRecvCallback ); 
+    DWC_SetUserRecvCallback( UserRecvCallback, NULL ); 
     
     // 受信バッファの設定	
     SetRecvBuffer();
@@ -122,6 +137,7 @@ GameMode GameConnectedMain(void)
 #endif    
 
     (void)PM_SetBackLight( PM_LCD_ALL, PM_BACKLIGHT_ON );
+    OS_TPrintf("AID bitmap = %x\n", DWC_GetAIDBitmap());
     OS_TPrintf( "my aid = %d\n", DWC_GetMyAID() );
 
     // プロフィール情報を交換する
@@ -131,36 +147,34 @@ GameMode GameConnectedMain(void)
     DispMenuMsgWithCursor(gameSeq, curIdx, NULL);
     
     while (1){
-        dbs_Print( 0, 0, "s:%d", DWC_GetMatchingState() );
+        dbs_Print( 0, 0, "s:%d", DWC_GetMatchState() );
         dbs_Print( 7, 0, "n:%d", DWC_GetNumConnectionHost() );
-        dbs_Print(14, 0, "a:%d", DWC_GetMyAID());
         dbs_Print( 0, 1, "w:%d", DWC_GetLinkLevel() );
         dbs_Print( 10,1, "p:%d", stGameCnt.userData.profileID );
+	    dbs_Print( 30, 0, "%c",  LoopChar());
+        dbs_Print( 0,2, "AID:%d(0x%08X)", DWC_GetMyAID(), DWC_GetAIDBitmap() );
+        dbs_Print( 20, 2, "g:%d", s_groupID );
 
         ReadKeyData();  // キーデータ取得 
 
         DWC_ProcessFriendsMatch();  // DWC通信処理更新 
 
-        if (DWC_GetLastError(NULL)){
-            // マッチング失敗時の処理
-            ShutdownInet();  // ネットワーク切断 
-            DWC_ClearError();
-            returnSeq = GAME_MODE_MAIN;
-            break;
-        }
+        HandleDWCError(&returnSeq);  // エラー処理
 
         if (stGameCnt.blocking){
             // DWC処理中はキー操作を禁止する
-            dbs_DemoUpdate();
-            OS_WaitIrq(TRUE, OS_IE_V_BLANK);
-            Heap_Debug();
-            dbs_DemoLoad();
-            // スタック溢れチェック
-            OS_CheckStack(OS_GetCurrentThread());
+
+            // Vブランク待ち処理
+            GameWaitVBlankIntr();
             continue;
 	    }
 
         // 次に進むべきモードがセットされていたらループを抜ける
+        if (DWC_GetNumConnectionHost() <= 1){
+            DWC_CloseAllConnectionsHard();
+            stGameCnt.blocking = 0;
+            returnSeq = gameSeq->menuList[3].mode;
+        }
         if (returnSeq != GAME_MODE_NUM) break;
 
         ////////// 以下キー操作処理
@@ -200,12 +214,8 @@ GameMode GameConnectedMain(void)
         }
         ////////// キー操作処理ここまで
 
-        dbs_DemoUpdate();
-        OS_WaitIrq(TRUE, OS_IE_V_BLANK);
-            Heap_Debug();
-        dbs_DemoLoad();
-        // スタック溢れチェック
-        OS_CheckStack(OS_GetCurrentThread());
+        // Vブランク待ち処理
+        GameWaitVBlankIntr();
     }
 
     return returnSeq;

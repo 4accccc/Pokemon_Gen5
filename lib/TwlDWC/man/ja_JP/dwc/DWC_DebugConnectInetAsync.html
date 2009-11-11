@@ -57,7 +57,7 @@
 
 <H2>説明</H2>
 
-<p><a href="DWC_ConnectInetAsync.html#dwc__connectinet_8h_1ed6360e949bbab87f49275bac0a381cc">DWC_ConnectInetAsync</a>関数の代わりに使用するデバッグ用の関数で、引数で指定されたAPの設定を使ってインターネットへの自動接続処理を開始します。<br>この自動接続処理では、引数で指定されたAP以外には接続されません。また、IPアドレス等はDHCPを使って取得します。<br>WEPキーについてはトップページの注意事項「WEPキーについて」を参照してください。</p><p><b>本関数を呼び出す前に、<a href="DWC_SetAuthServer.html#dwc__connectinet_8h_1da96c96907e26b1362d663720e6a48e0">DWC_SetAuthServer</a>関数で認証サーバの設定を行って下さい。</b><br>認証サーバの設定が行われていない場合は、ASSERTもしくはDWCのエラー(-20100)がセットされ自動接続が行われません。</p><p>本関数を呼び出した後は、自動接続処理を実行するために<a href="DWC_ProcessInet.html#dwc__connectinet_8h_1c2a3fd1d79fee387ca123f5eb1cf0660">DWC_ProcessInet</a>関数を毎ゲームフレーム程度の頻度で呼び出してください。</p><p>自動接続処理中に発生したエラー処理を行うためには、<a href="DWC_ProcessInet.html#dwc__connectinet_8h_1c2a3fd1d79fee387ca123f5eb1cf0660">DWC_ProcessInet</a>関数呼出し後に<a href="DWC_GetLastErrorEx.html#dwc__error_8h_118bd79f5d5151259c19c4e552e5e633b">DWC_GetLastErrorEx</a>関数でエラー状態を取得し、必要に応じてエラーメッセージとともにエラーコードを表示してください。メッセージについては、「NitendoWi-FiConnectionプログラミングガイドライン」をご確認ください。本関数を使い、接続中にエラーが発生した場合、エラーコードの下二桁には00が入ります。</p><p>接続状態は<a href="DWC_CheckInet.html#dwc__connectinet_8h_1525ebb2790477ec1a4d430dd94d29fc7">DWC_CheckInet</a>関数,<a href="DWC_GetInetStatus.html#dwc__connectinet_8h_1dc3e39b117b96fe0e2facbb529ffee10">DWC_GetInetStatus</a>関数を使用して取得することができます。</p><p><b>※<a href="DWC_SetConnectApType.html#dwc__connectinet_8h_148e0cd405d24218b3762d1b4f88c0137">DWC_SetConnectApType</a>関数とは一緒に呼び出さないようにしてください。<br>※本関数は、最終ROM版（FINALROM）ライブラリでも動作しますが、デバッグの利便性を考慮して用意されたものですので、基本的には製品では使用しないでください。</b></p>
+<p><a href="DWC_ConnectInetAsync.html#dwc__connectinet_8h_1ed6360e949bbab87f49275bac0a381cc">DWC_ConnectInetAsync</a>関数の代わりに使用するデバッグ用の関数で、引数で指定されたAPの設定を使ってインターネットへの自動接続処理を開始します。<br>この自動接続処理では、引数で指定されたAP以外には接続されません。また、IPアドレス等はDHCPを使って取得します。<br>WEPキーについてはトップページの注意事項「WEPキーについて」を参照してください。</p><p>本関数を呼び出した後は、自動接続処理を実行するために<a href="DWC_ProcessInet.html#dwc__connectinet_8h_1c2a3fd1d79fee387ca123f5eb1cf0660">DWC_ProcessInet</a>関数を毎ゲームフレーム程度の頻度で呼び出してください。</p><p>自動接続処理中に発生したエラー処理を行うためには、<a href="DWC_ProcessInet.html#dwc__connectinet_8h_1c2a3fd1d79fee387ca123f5eb1cf0660">DWC_ProcessInet</a>関数呼出し後に<a href="DWC_GetLastErrorEx.html#dwc__error_8h_118bd79f5d5151259c19c4e552e5e633b">DWC_GetLastErrorEx</a>関数でエラー状態を取得し、必要に応じてエラーメッセージとともにエラーコードを表示してください。メッセージについては、「NitendoWi-FiConnectionプログラミングガイドライン」をご確認ください。本関数を使い、接続中にエラーが発生した場合、エラーコードの下二桁には00が入ります。</p><p>接続状態は<a href="DWC_CheckInet.html#dwc__connectinet_8h_1525ebb2790477ec1a4d430dd94d29fc7">DWC_CheckInet</a>関数,<a href="DWC_GetInetStatus.html#dwc__connectinet_8h_1dc3e39b117b96fe0e2facbb529ffee10">DWC_GetInetStatus</a>関数を使用して取得することができます。</p><p><b>※<a href="DWC_SetConnectApType.html#dwc__connectinet_8h_148e0cd405d24218b3762d1b4f88c0137">DWC_SetConnectApType</a>関数とは一緒に呼び出さないようにしてください。<br>※本関数は、最終ROM版（FINALROM）ライブラリでも動作しますが、デバッグの利便性を考慮して用意されたものですので、基本的には製品では使用しないでください。</b></p>
 
 
 <h2>参照</h2>
@@ -66,8 +66,6 @@
   <CODE><a href="DWC_ConnectInetAsync.html#dwc__connectinet_8h_1ed6360e949bbab87f49275bac0a381cc">DWC_ConnectInetAsync</a></CODE>
 
   <CODE><a href="DWC_CheckInet.html#dwc__connectinet_8h_1525ebb2790477ec1a4d430dd94d29fc7">DWC_CheckInet</a></CODE>
-
-  <CODE><a href="DWC_SetAuthServer.html#dwc__connectinet_8h_1da96c96907e26b1362d663720e6a48e0">DWC_SetAuthServer</a></CODE>
 
   <CODE><a href="DWC_CheckInet.html#dwc__connectinet_8h_1525ebb2790477ec1a4d430dd94d29fc7">DWC_CheckInet</a></CODE>
 
@@ -83,9 +81,6 @@
 
 <H2>履歴</H2>
 <DL>
-
-<DT>5.2patch1</DT>
-<DD>本関数を呼び出す前に、<a href="DWC_SetAuthServer.html#dwc__connectinet_8h_1da96c96907e26b1362d663720e6a48e0">DWC_SetAuthServer</a>関数で認証サーバを設定する必要があることについて追記</DD>
 
 <DT>5.1</DT>
 <DD>「接続中に発生したエラー処理を…」を「自動接続処理中に発生した…」に修正</DD>

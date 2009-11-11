@@ -55,7 +55,7 @@
 
 <H2>説明</H2>
 
-<p>この関数は、inetCntlで指定された自動接続制御オブジェクトの初期化を行います。アプリケーションで、DWCInetControl構造体分のバッファを準備してください。</p><p><a href="DWC_CleanupInet.html#dwc__connectinet_8h_14d7f46fc1822bb3f39eed3b087e629c6">DWC_CleanupInet</a>関数で、接続状態を解放するまで、自動接続制御オブジェクト用のバッファを保持するようにしてください。</p><p><a href="DWC_SetAuthServer.html#dwc__connectinet_8h_1da96c96907e26b1362d663720e6a48e0">DWC_SetAuthServer</a>関数をこの関数の<b>直後</b>に呼び出し、認証サーバの設定を行って下さい。</p><p><a href="DWC_InitInetEx.html#dwc__connectinet_8h_1da26abf4e61fc5aac47a8d65206ce5eb">DWC_InitInetEx</a>関数では、自動接続処理が使用するDMA番号、WMのパワーモード、SSL処理のスレッド優先順位を設定できます。ただしWMのパワーモードには必ず1を指定してください。<br><a href="DWC_InitInet.html#dwc__connectinet_8h_1c9ae10a55929127c552c808ebb103cc8">DWC_InitInet</a>関数は、ライブラリ内部で引数にdma=3,powerMode=1,ssl_priority=20を指定して<a href="DWC_InitInetEx.html#dwc__connectinet_8h_1da26abf4e61fc5aac47a8d65206ce5eb">DWC_InitInetEx</a>関数を呼び出しています。</p><p>SSL処理には時間がかかるため、メインスレッドよりも優先順位を下げなければメインスレッドの動作に影響を及ぼします。</p>
+<p>この関数は、inetCntlで指定された自動接続制御オブジェクトの初期化を行います。アプリケーションで、DWCInetControl構造体分のバッファを準備してください。</p><p><a href="DWC_CleanupInet.html#dwc__connectinet_8h_14d7f46fc1822bb3f39eed3b087e629c6">DWC_CleanupInet</a>関数で、接続状態を解放するまで、自動接続制御オブジェクト用のバッファを保持するようにしてください。</p><p><a href="DWC_InitInetEx.html#dwc__connectinet_8h_1da26abf4e61fc5aac47a8d65206ce5eb">DWC_InitInetEx</a>関数では、自動接続処理が使用するDMA番号、WMのパワーモード、SSL処理のスレッド優先順位を設定できます。ただしWMのパワーモードには必ず1を指定してください。<br><a href="DWC_InitInet.html#dwc__connectinet_8h_1c9ae10a55929127c552c808ebb103cc8">DWC_InitInet</a>関数は、ライブラリ内部で引数にdma=3,powerMode=1,ssl_priority=20を指定して<a href="DWC_InitInetEx.html#dwc__connectinet_8h_1da26abf4e61fc5aac47a8d65206ce5eb">DWC_InitInetEx</a>関数を呼び出しています。</p><p>SSL処理には時間がかかるため、メインスレッドよりも優先順位を下げなければメインスレッドの動作に影響を及ぼします。</p>
 
 
 <h2>参照</h2>
@@ -78,8 +78,8 @@
 <H2>履歴</H2>
 <DL>
 
-<DT>5.2patch1</DT>
-<DD>認証サーバのデフォルト設定が無くなったことに対応</DD>
+<DT>5.3</DT>
+<DD>DWC_SetAuthServer関数の廃止に伴い、関連する記述を削除</DD>
 
 </DL>
 <p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_InitInetEx_tag">こちら</a>　　</p>

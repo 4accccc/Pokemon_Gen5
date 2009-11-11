@@ -271,6 +271,7 @@ File.readlines(MAKE_PROG_FILE).each{ |line|
 
 }
 
+
 #オーバーレイに該当するファイルがコンパルターゲットになるようにする
 File.open(OUTPUT_OVERLAYFILES,"w"){|file|
   for i in 3..overlay_name.size-1
@@ -287,6 +288,7 @@ File.open(OUTPUT_OVERLAYFILES,"w"){|file|
 
 }
 
+
 ##TWL用ファイルを作成する部分
 
 copycmd = "cp " + OUTPUT_LSFFILE+" "+OUTPUT_TWL_LSFFILE
@@ -300,6 +302,24 @@ overlayList.each{ |line|
 fh.puts(bottom_lsf2)
 fh.close
 
+#TWLのLSFファイルの$LIBを読み替える
+fh = File.open(OUTPUT_TWL_LSFFILE,"r")
+buf = fh.read();
+fh.close
+buf	= buf.gsub("$HYB","TWL.HYB")
+fh = File.open(OUTPUT_TWL_LSFFILE,"w")
+fh.write(buf)
+fh.close
+
+
+#NITROのLSFのファイルの$LIBを読み替える
+fh = File.open(OUTPUT_LSFFILE,"r")
+buf = fh.read();
+fh.close
+buf	= buf.gsub(".$HYB","")
+fh = File.open(OUTPUT_LSFFILE,"w")
+fh.write(buf)
+fh.close
 
 
 #オーバーレイのターゲットネームとその番号をテキストに吐き出す

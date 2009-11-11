@@ -16,9 +16,12 @@
 /** --------------------------------------------------------------------
   defines
   ----------------------------------------------------------------------*/
+#define INITIAL_CODE    'NTRJ'     // このサンプルが仕様するイニシャルコード
 #define GAME_NAME        "dwctest" // このサンプルが使用するゲーム名
 #define GAME_SECRET_KEY  "d4q9GZ"  // このサンプルが使用するシークレットキー
-#define GAME_PRODUCTID   10824      // このサンプルが使用するプロダクトID
+#define GAME_PRODUCTID   10824     // このサンプルが使用するプロダクトID
+
+//#define USE_AUTHSERVER_PRODUCTION // 製品向け認証サーバを使用する場合有効にする
 
 /** --------------------------------------------------------------------
   globals
@@ -28,7 +31,6 @@ KeyControl		g_KeyCtrl;
 /** --------------------------------------------------------------------
   statics
   ----------------------------------------------------------------------*/
-static u8 s_Work[ DWC_INIT_WORK_SIZE ] ATTRIBUTE_ALIGN( 32 );
 static DWCFriendsMatchControl	s_FMCtrl;
 static DWCInetControl			s_ConnCtrl;
 static DWCFriendData stSampleFriendData ATTRIBUTE_ALIGN( 32 );// サンプルMP交換用友達情報
@@ -103,6 +105,8 @@ static int  do_msgSeq0006( void );
 static int  do_msgSeq0007( void );
 static int  do_msgSeq0008( void );
 static int  do_msgSeq0009( void );
+static void* AllocFunc     ( DWCAllocType name, u32 size, int align );
+static void  FreeFunc      ( DWCAllocType name, void* ptr, u32 size );
 
 /*---------------------------------------------------------------------------*
   Vブランク割り込み関数
@@ -765,11 +769,57 @@ DrawConsole( void )
     i++;
 }
 
+/*-------------------------------------------------------------------------*
+ * Name        : AllocFunc
+ * Description : メモリ確保関数
+ * Arguments   : name  - 確保する名前
+ *             : size  - 確保するサイズ
+ *             : align - 確保するアライメント
+ * Returns     : *void - 確保したポインタ
+ *-------------------------------------------------------------------------*/
+static void* AllocFunc( DWCAllocType name, u32 size, int align )
+{
+	#pragma unused( name, align )
+
+    OSIntrMode  old;
+	void       *ptr;
+
+    old = OS_DisableInterrupts();
+
+    ptr = OS_AllocFromMain( size );
+    OS_RestoreInterrupts( old );
+	
+    return ptr;
+}
+
+/*-------------------------------------------------------------------------*
+ * Name        : FreeFunc
+ * Description : メモリ開放関数
+ * Arguments   : name - 開放するメモリ名
+ *             : *ptr - 解放するメモリのポインタ
+ *             : size - 解放するサイズ
+ * Returns     : None.
+ *-------------------------------------------------------------------------*/
+static void FreeFunc( DWCAllocType name, void* ptr, u32 size  )
+{
+	#pragma unused( name, size )
+    OSIntrMode old;
+
+    if ( !ptr ) return;
+
+    old = OS_DisableInterrupts();
+
+	OS_FreeToMain( ptr );
+    OS_RestoreInterrupts( old );
+}
+
 /** --------------------------------------------------------------------
   エントリポイント
   ----------------------------------------------------------------------*/
 void NitroMain ()
 {
+    int ret;
+    
     initFunctions();
 
     // デバッグ表示レベル指定
@@ -777,7 +827,13 @@ void NitroMain ()
                               ~DWC_REPORTFLAG_QR2_REQ ));
     
     // DWCライブラリ初期化
-    if ( DWC_Init( s_Work ) == DWC_INIT_RESULT_DESTROY_OTHER_SETTING )
+#if defined( USE_AUTHSERVER_PRODUCTION )
+    ret = DWC_InitForProduction( GAME_NAME, INITIAL_CODE, AllocFunc, FreeFunc );
+#else
+    ret = DWC_InitForDevelopment( GAME_NAME, INITIAL_CODE, AllocFunc, FreeFunc );
+#endif
+    
+    if ( ret == DWC_INIT_RESULT_DESTROY_OTHER_SETTING )
     {
         // DS本体のNVRAMが破壊されている
         DispMessage( s_messages[s_msgSeq][0], s_messages[s_msgSeq][1], s_messages[s_msgSeq][2], s_messages[s_msgSeq][3], s_messages[s_msgSeq][4], s_messages[s_msgSeq][5]);

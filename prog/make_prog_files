@@ -251,6 +251,7 @@ SRCS  +=    $(SOUNDSRC) \
 #   一番初めのオーバーレイターゲット定義は「main」しか書けない事になります。
 #   複数の後ろにオーバーレイする場合「===>」を複数かいてください
 # 3.ライブラリをオーバーレイする場合  #LIB=>	???.a  と書いてください
+#		NITROとTWLでライブラリを読み変える場合は、.aの前に.$HYBと書いてください	#LIB=> ???.$HYB.a
 # 4.ユーザー名で別途コンパイル可能になりました
 #   #if sogabe|ohno|ariizumi
 #   #else
@@ -283,22 +284,22 @@ SRCS  +=    $(SOUNDSRC) \
 #   VCTはランダムマッチにいらない
 # wifiプログラムのライブラリ
 #===> main
-#LIB=>          libdwcnonport.a
-#LIB=>          libdwcnd.a
-#LIB=>          libdwcnas.a
-#LIB=>          libdwcghttp.a
-#LIB=>          libdwcmatch.a
-#LIB=>          libdwcauth.a
-#LIB=>          libdwcgdb.a
-#LIB=>          libdwcgscommon.a
-#LIB=>          libdwcgsghttp.a
-#LIB=>          libdwcgsgp.a
-#LIB=>          libdwcgsgstats.a
-#LIB=>          libdwcgsgt2.a
-#LIB=>          libdwcgsnatneg.a
-#LIB=>          libdwcgsqr2.a
-#LIB=>          libdwcgsserverbrowsing.a
-#LIB=>          libvct.a
+#LIB=>          libdwcnonport.$HYB.a
+#LIB=>          libdwcnd.$HYB.a
+#LIB=>          libdwcnas.$HYB.a
+#LIB=>          libdwcghttp.$HYB.a
+#LIB=>          libdwcmatch.$HYB.a
+#LIB=>          libdwcauth.$HYB.a
+#LIB=>          libdwcgdb.$HYB.a
+#LIB=>          libdwcgscommon.$HYB.a
+#LIB=>          libdwcgsghttp.$HYB.a
+#LIB=>          libdwcgsgp.$HYB.a
+#LIB=>          libdwcgsgstats.$HYB.a
+#LIB=>          libdwcgsgt2.$HYB.a
+#LIB=>          libdwcgsnatneg.$HYB.a
+#LIB=>          libdwcgsqr2.$HYB.a
+#LIB=>          libdwcgsserverbrowsing.$HYB.a
+#LIB=>          libvct.$HYB.a
 SRCS_OVERLAY_DEV_WIFILIB   = net/net_dummy.c
 
 
@@ -326,7 +327,7 @@ SRCS_OVERLAY_DEV_IRC    =   net/net_devirc.c \
 
 #wifi設定画面
 #===> SRCS_OVERLAY_DEV_WIFI
-#LIB=>          libdwcutil.a
+#LIB=>          libdwcutil.$HYB.a
 SRCS_OVERLAY_WIFI_UTIL  = net/dwc_raputil.c
 
 
@@ -862,8 +863,8 @@ SRCS_OVERLAY_PALACE = app/palace/palace_edit.c \
 
 #WIFI 世界 共通
 #===> SRCS_OVERLAY_DEV_WIFI
-#LIB=>          libdwcnd.a
-#LIB=>          libnhttp.a
+#LIB=>          libdwcnd.$HYB.a
+#LIB=>          libnhttp.$HYB.a
 SRCS_OVERLAY_DPW_COMMON   = libdpw/dpwi_encrypt.c \
               libdpw/dpwi_session.c \
 							libdpw/dpw_tr.c
@@ -971,7 +972,7 @@ SRCS_OVERLAY_OBATA_DEBUG = test/obata/debug_obata_menu.c \
 
 #MCSライブラリ
 #===> MCS_EX
-#LIB=>          libnnsmcs.a
+#LIB=>          libnnsmcs.$HYB.a
 SRCS_OVERLAY_MCS_LIB = debug/gf_mcs.c \
 											 debug/mcs_resident.c
 
@@ -1011,7 +1012,7 @@ SRCS_OVERLAY_NAKAHIRO_DEBUG = test/nakahiro/d_nakahiro.c
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
-#LIB=>          libssp.TWL.HYB.a
+#LIB=>          libssp.$HYB.a
 SRCS_OVERLAY_CAMERA_TEST = test/ariizumi/camera_system.c \
         test/ariizumi/camera_test.c \
 		test/ariizumi/jpeg_encoder.c

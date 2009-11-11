@@ -1,5 +1,4 @@
 #include <nitro.h>
-#include <ninet/ip.h>
 #include <dwc.h>
 
 #include "main.h"
@@ -9,23 +8,37 @@
 
 #include "gamemain.h"
 
+//----------------------------------------------------------------------------
+// define
+//----------------------------------------------------------------------------
+#define FILTER_STRING "sample_filter"	// フィルタ文字列. 適宜変更してください
+#define FILTER_KEY "str_key"
+#define APP_CONNECTION_KEEPALIVE_TIME 300000 // キープアライブ時間
+#define KEEPALIVE_INTERVAL (APP_CONNECTION_KEEPALIVE_TIME/5) // キー入力を待たずデータを転送する時間
+
+//----------------------------------------------------------------------------
+// variable
+//----------------------------------------------------------------------------
 extern GameSequence gameSeqList[GAME_MODE_NUM];
 extern GameControl stGameCnt;  // ゲーム制御情報構造体 
 extern KeyControl stKeyCnt;    // キー入力制御構造体 
-extern DWCFriendsMatchControl stDwcCnt;    // DWC制御構造体 
 
 extern DWCUserData stUserData;  // 本体固有のユーザID(本来はユーザの入力であったりゲームごとに割り当てられるものであったりする値)
 extern GameSaveData saveData;  
+extern char addFilter[128];
+extern u32  s_groupID;
+u64 friend_key;
 
-static volatile int stNameCbLevel; // プレイヤー名取得完了待ち件数 
-
+//----------------------------------------------------------------------------
+// prototype
+//----------------------------------------------------------------------------
 static void LoginCallback(DWCError error, int profileID, void* param);
 static void UpdateServersCallback(DWCError error, BOOL isChanged, void* param);
 static void FriendStatusCallback(int index, u8 status, const char* statusString, void* param);
 static void DeleteFriendListCallback(int deletedIndex, int srcIndex,void* param);
 static void SaveToServerCallback(BOOL success, BOOL isPublic, void* param);
 static void LoadFromServerCallback(BOOL success, int profileID, char* data, int len, void* param);
-
+static void BuddyFriendCallback(int index, void* param);
 /*---------------------------------------------------------------------------*
   オフライン時メイン関数
  *---------------------------------------------------------------------------*/
@@ -36,34 +49,24 @@ GameMode GameMain(void)
     int curIdx = 0;
 
     while (1){
-        dbs_Print( 0, 0, "s:%d", DWC_GetMatchingState() );
+        dbs_Print( 0, 0, "s:%d", DWC_GetMatchState() );
         dbs_Print( 7, 0, "n:%d", DWC_GetNumConnectionHost() );
         dbs_Print( 0, 1, "w:%d", DWC_GetLinkLevel() );
         dbs_Print( 10,1, "p:%d", stGameCnt.userData.profileID );
-        
+	    dbs_Print( 30, 0, "%c",  LoopChar());
+        dbs_Print( 20, 2, "g:%d", s_groupID );
+
         ReadKeyData();  // キーデータ取得 
 
         DWC_ProcessFriendsMatch();  // DWC通信処理更新 
 
-        if (DWC_GetLastError(NULL)){
-            // ログイン・サーバアップデート失敗時の処理
-            ShutdownInet();  // ネットワーク切断 
-            DWC_ClearError();
-            stGameCnt.blocking = FALSE;
-
-            returnSeq = GAME_MODE_MAIN;
-        }
+        HandleDWCError(&returnSeq);  // エラー処理
 
         if (stGameCnt.blocking){
             // DWC処理中はキー操作を禁止する
-            dbs_DemoUpdate();
-            //SVC_WaitVBlankIntr();
-            OS_WaitIrq(TRUE, OS_IE_V_BLANK);
-            Heap_Debug();
-            dbs_DemoLoad();
 
-            // スタック溢れチェック
-            OS_CheckStack(OS_GetCurrentThread());
+            // Vブランク待ち処理
+            GameWaitVBlankIntr();
             continue;
         }
 
@@ -92,16 +95,36 @@ GameMode GameMain(void)
 
             switch (returnSeq){
             case GAME_MODE_LOGIN:  // ログイン 
-
-                // DWCライブラリ初期化
-                // ライブラリが使うソケットの送受信バッファサイズは
-                // デフォルトのまま（8KByte）にしておく
-                DWC_InitFriendsMatch(&stDwcCnt, &stUserData, GAME_PRODUCTID, GAME_NAME,
+                if (DWC_CheckHasProfile(&stUserData))
+                {
+                    OS_TPrintf("DWC_CheckHasProfile:TRUE\n");
+                    if (DWC_CheckValidConsole(&stUserData))
+                    {
+                        OS_TPrintf("DWC_CheckValidConsole:TRUE\n");
+                    }
+                    else
+                    {
+                        OS_TPrintf("DWC_CheckValidConsole:FALSE\n");
+                        // このままログイン処理に進めても認証エラーになるため、
+                        // 通常はこのまま先に進めてはいけません。
+                    }
+                }
+                else
+                {
+                    OS_TPrintf("DWC_CheckHasProfile:FALSE\n");
+                }
+                DWC_InitFriendsMatch(&stUserData, GAME_PRODUCTID,
                                      GAME_SECRET_KEY, 0, 0,
                                      stGameCnt.friendList.keyList, GAME_MAX_FRIEND_LIST);
 
                 // 認証用関数を使ってログイン
-                DWC_LoginAsync(L"Name", NULL, LoginCallback, &returnSeq);
+                if (!DWC_LoginAsync(L"Name", NULL, LoginCallback, &returnSeq)){
+                    // ログインを開始できなかった場合はブロッキング状態にしない。
+                    // エラー発生中か二重ログインでなければFALSEにはならない。
+                    OS_TPrintf("Can't call DWC_LoginAsync().\n");
+                    returnSeq          = GAME_MODE_NUM;
+                    stGameCnt.blocking = 0;
+                }
                 break;
             default:
                 break;
@@ -126,13 +149,8 @@ GameMode GameMain(void)
         }
         ////////// キー操作処理ここまで
 
-        dbs_DemoUpdate();
-        //SVC_WaitVBlankIntr();
-        OS_WaitIrq(TRUE, OS_IE_V_BLANK);
-        Heap_Debug();
-        dbs_DemoLoad();
-        // スタック溢れチェック
-        OS_CheckStack(OS_GetCurrentThread());
+        // Vブランク待ち処理
+        GameWaitVBlankIntr();
     }
 
     return returnSeq;
@@ -144,20 +162,49 @@ GameMode GameMain(void)
 static void LoginCallback(DWCError error, int profileID, void *param)
 {
     BOOL result;
-    u64 friend_key;
+	RTCTime time;
+	RTCDate date;
     
     if (error == DWC_ERROR_NONE){
+        // フィルタ文字列を作成する
+        char* filterString = FILTER_STRING;
+		OS_SNPrintf(addFilter, sizeof(addFilter), "%s='%s'", FILTER_KEY, filterString);
+
         // 認証成功、プロファイルID取得
         OS_TPrintf("Login succeeded. profileID = %u\n\n", profileID);
+
+        // ingamesnチェックの結果を取得する
+		if(DWC_GetIngamesnCheckResult() == DWC_INGAMESN_INVALID)
+			OS_TPrintf("BAD ingamesn is detected by NAS.\n");
+		else if(DWC_GetIngamesnCheckResult() == DWC_INGAMESN_VALID)
+			OS_TPrintf("GOOD ingamesn is detected by NAS.\n");
+		else
+			OS_TPrintf("ingamesn is not checked yet.\n");
+		
+		// 認証サーバの時刻を表示する
+		if(DWC_GetDateTime(&date, &time) == TRUE)
+			OS_TPrintf("NasTime = %02d/%02d/%02d %02d:%02d:%02d\n", date.year+2000, date.month, date.day, time.hour, time.minute, time.second);
+		else
+			DWC_Printf(DWC_REPORTFLAG_AUTH, "DWC_GetNasTime failed\n");
+
+
+        // stUserDataが更新されているかどうかを確認。
+        if ( DWC_CheckDirtyFlag( &stUserData ) )
+        {
+            DWC_ClearDirtyFlag( &stUserData );
+
+            OS_TPrintf("*******************************\n");
+            OS_TPrintf("You must save the DWCUserData!!\n");
+            OS_TPrintf("*******************************\n");
+
+            // 必ずこのタイミングでチェックして、dirty flagが有効になっていたら、
+            // DWCUserDataをDSカードのバックアップに保存するようにしてください。
+            // saveUserDataToDSCard( &stUserData );
+        }
+        
         stGameCnt.userData.profileID = profileID;
         stGameCnt.userData.isValidProfile = TRUE;
 
-        // ingamesnチェックの結果を取得する
-        if( DWC_GetIngamesnCheckResult() == DWC_INGAMESN_INVALID )
-        {
-            // 不適切な名前と判断された場合は特別な処理が必要
-            OS_TPrintf("BAD ingamesn is detected by NAS.\n");
-        }
 
         // 友達登録鍵作成
         friend_key = DWC_CreateFriendKey( &stUserData );
@@ -166,7 +213,7 @@ static void LoginCallback(DWCError error, int profileID, void *param)
         }
         
         // 友達リスト同期処理開始
-        result = DWC_UpdateServersAsync(stGameCnt.userData.playerName,
+        result = DWC_UpdateServersAsync(NULL,
                                         UpdateServersCallback, param,
                                         FriendStatusCallback, param,
                                         DeleteFriendListCallback, param);
@@ -174,23 +221,37 @@ static void LoginCallback(DWCError error, int profileID, void *param)
            // 呼んでもいい状態（ログインが完了していない状態）で呼んだ時のみ
             // FALSEが返ってくるので、普通はTRUE
             OS_Panic("--- DWC_UpdateServersAsync error teminated.\n");
+            *(GameMode *)param = GAME_MODE_NUM;
+            stGameCnt.blocking  = 0;
+        }
+        else {
+            // GameSpyサーバ上バディ成立コールバックを登録する
+            DWC_SetBuddyFriendCallback(BuddyFriendCallback, NULL);
+
+            // ストレージサーバセーブ・ロード完了通知コールバックを登録する
+            DWC_SetStorageServerCallback(SaveToServerCallback,
+                                         LoadFromServerCallback);
         }
 
-        // ストレージサーバセーブ・ロード完了通知コールバックを登録する
-        // Register a callback for making notification that storage save/load is complete
-        DWC_SetStorageServerCallback(SaveToServerCallback,
-                                     LoadFromServerCallback);
+		// キープアライブ時間の設定        
+        DWC_SetConnectionKeepAliveTime(APP_CONNECTION_KEEPALIVE_TIME);
+
     }
     else {
         // 認証失敗
-        DispErrorMessage();
         OS_TPrintf("Login failed. %d\n\n", error);
-
-        // もう一度最初から
-        *(GameMode *)param = GAME_MODE_NUM;
-
-        stGameCnt.blocking = FALSE;  // ブロッキング解除 
+        stGameCnt.blocking = FALSE;  // ブロッキング解除
     }
+}
+
+/*---------------------------------------------------------------------------*
+  GameSpyバディ成立コールバック関数
+ *---------------------------------------------------------------------------*/
+static void BuddyFriendCallback(int index, void* param)
+{
+#pragma unused(param)
+
+    OS_TPrintf("I was authorized by friend[%d].\n", index);
 }
 
 
@@ -200,7 +261,6 @@ static void LoginCallback(DWCError error, int profileID, void *param)
 static void UpdateServersCallback(DWCError error, BOOL isChanged, void* param)
 {
 #pragma unused(param)
-    int i;
 
     if (error == DWC_ERROR_NONE){
         // 友達リスト同期処理完了
@@ -212,34 +272,8 @@ static void UpdateServersCallback(DWCError error, BOOL isChanged, void* param)
             MI_CpuCopy32(&stGameCnt.friendList, &saveData.friendList, sizeof(GameFriendList));
         }
 
-        // 友達の通信状態と名前を取得する
-        stNameCbLevel = 0;
-        for (i = 0; i < GAME_MAX_FRIEND_LIST; i++){
-            if (DWC_IsValidFriendData(&stGameCnt.friendList.keyList[i])){
-                stGameCnt.friendStatus[i] =
-                    DWC_GetFriendStatus(&stGameCnt.friendList.keyList[i], NULL);
-    
-                // プレイヤー名をロード
-                if (DWC_LoadOthersDataAsync("\\dwc_name", i, (void *)i)){
-                    stNameCbLevel++;
-                }
-            }
-        }
-
-        // 友達の名前が取得できるまでここで待つ
-        while (stNameCbLevel){
-            ReadKeyData();  // キーデータ取得 
-
-            DWC_ProcessFriendsMatch();  // DWC通信処理更新 
-
-            dbs_DemoUpdate();
-            OS_WaitIrq(TRUE, OS_IE_V_BLANK);
-            Heap_Debug();
-            dbs_DemoLoad();
-        }
-
         // 友達リストを表示する
-        DispFriendList(FALSE);
+        DispFriendList(TRUE);
     }
     else {
         // 失敗しても特に何もしない
@@ -302,11 +336,9 @@ static void DeleteFriendListCallback(int deletedIndex, int srcIndex, void* param
  *---------------------------------------------------------------------------*/
 static void SaveToServerCallback(BOOL success, BOOL isPublic, void* param)
 {
-#ifdef SDK_FINALROM
-#pragma unused(success, isPublic, param)
-#endif
+#pragma unused(param)
 
-    OS_TPrintf("Saved data to server. %08x\n", (u32)param);
+    OS_TPrintf("Saved data to server.\n");
     OS_TPrintf("result %d, isPublic %d.\n", success, isPublic);
 }
 
@@ -316,22 +348,11 @@ static void SaveToServerCallback(BOOL success, BOOL isPublic, void* param)
  *---------------------------------------------------------------------------*/
 static void LoadFromServerCallback(BOOL success, int profileID, char* data, int len, void* param)
 {
-#ifdef SDK_FINALROM
-#pragma unused(profileID, len)
-#endif
+#pragma unused(param)
 
-    OS_TPrintf("Loaded data from server. %08x\n", (u32)(param));
-    OS_TPrintf("result %d, profileID %u, data '%s', len %d\n",
+    OS_TPrintf("Saved data to server.\n");
+    OS_TPrintf("result %d, index %d, data '%s', len %d\n",
                success, profileID, data, len);
-
-    if (success){
-        // 汎用key/value型文字列操作関数を使いプレイヤー名を取得
-        (void)DWC_GetCommonValueString("dwc_name",
-                                       stGameCnt.friendList.playerName[(int)param],
-                                       data, '\\');
-
-        stNameCbLevel--;
-    }
 }
 
 

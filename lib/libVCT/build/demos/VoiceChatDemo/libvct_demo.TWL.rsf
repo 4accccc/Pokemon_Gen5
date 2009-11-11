@@ -1,0 +1,112 @@
+#----------------------------------------------------------------------------
+# Project:  TwlSDK - include
+# File:     ROM-TS.rsf
+#
+# Copyright 2007 Nintendo.  All rights reserved.
+#
+# These coded insructions, statements, and computer programs contain
+# proprietary information of Nintendo of America Inc. and/or Nintendo
+# Company Ltd., and are protected by Federal copyright law.  They may
+# not be disclosed to third parties or copied or duplicated in any form,
+# in whole or in part, without the prior written consent of Nintendo.
+#
+# $Date: 2008/07/23 18:45:32 $
+# $Rev: 6817 $
+# $Author: dfreeland $
+#----------------------------------------------------------------------------
+#
+#  TWL ROM SPEC FILE
+#
+
+Arm9
+{
+	Static			"$(MAKEROM_ARM9:r).TWL.FLX.sbin$(COMPSUFFIX9)"
+	OverlayDefs		"$(MAKEROM_ARM9:r)_defs.TWL.FLX.sbin$(COMPSUFFIX9)"
+	OverlayTable	"$(MAKEROM_ARM9:r)_table.TWL.FLX.sbin$(COMPSUFFIX9)"
+	Elf				"$(MAKEROM_ARM9:r).tef"
+}
+
+Arm7
+{
+	Static			"$(MAKEROM_ARM7_BASE:r).TWL.FLX.sbin$(COMPSUFFIX7)"
+	OverlayDefs		"$(MAKEROM_ARM7_BASE:r)_defs.TWL.FLX.sbin$(COMPSUFFIX7)"
+	OverlayTable	"$(MAKEROM_ARM7_BASE:r)_table.TWL.FLX.sbin$(COMPSUFFIX7)"
+	Elf				"$(MAKEROM_ARM7_BASE:r).tef"
+}
+
+Arm9.Ltd
+{
+	Static			"$(MAKEROM_ARM9:r).TWL.LTD.sbin$(COMPSUFFIX9)"
+	OverlayDefs		"$(MAKEROM_ARM9:r)_defs.TWL.LTD.sbin$(COMPSUFFIX9)"
+	OverlayTable	"$(MAKEROM_ARM9:r)_table.TWL.LTD.sbin$(COMPSUFFIX9)"
+}
+
+Arm7.Ltd
+{
+	Static			"$(MAKEROM_ARM7_BASE:r).TWL.LTD.sbin$(COMPSUFFIX7)"
+	OverlayDefs		"$(MAKEROM_ARM7_BASE:r)_defs.TWL.LTD.sbin$(COMPSUFFIX7)"
+	OverlayTable	"$(MAKEROM_ARM7_BASE:r)_table.TWL.LTD.sbin$(COMPSUFFIX7)"
+}
+
+Property
+{
+	RomSpeedType	$(MAKEROM_ROMSPEED)
+	BannerFile		$(TWLSDK_ROOT)/include/twl/specfiles/default.bnr
+	RomHeaderLtd	$(TWLSDK_ROOT)/tools/bin/rom_header.LTD.sbin
+	DigestParam		1024 32
+	WramMapping		$(MAKEROM_WRAM_MAPPING)
+	CardRegion	ALL
+	CodecMode		$(MAKEROM_CODEC_MODE)
+	
+	WiFiConnectionIcon	TRUE
+	AgreeEULA	TRUE
+}
+
+RomSpec
+{
+	Offset		0x00000000
+	Segment		ALL
+
+	Align		512
+	Padding		0xFF
+	
+	HostRoot    $(TWLDWC_ROOT)/file/dwc
+	Root        /dwc
+	File        utility.bin        
+
+}
+
+Rating
+{
+	#
+	# Permited age to play for each rating organization
+	#
+	# Supported organization
+	# - CERO			(OGN0)	:	for Japan
+	# - ESRB			(OGN1)	:	for North America
+	# - BBFC			(OGN2)	:	obsolete organization
+	# - USK				(OGN3)	:	for German
+	# - PEGI_GEN		(OGN4)	:	for Europe
+	# - PEGI_FINLAND	(OGN5)	:	obsolete organization
+	# - PEGI_PRT		(OGN6)	:	for Portugal
+	# - PEGI_BBFC		(OGN7)	:	for UK
+	# - OFLC			(OGN8)	:	for Australia and NewZealand
+	# - GRB				(OGN9)	:	for Korea
+	# - OGN10					:	reserved
+	# - OGN11					:	reserved
+	# - OGN12					:	reserved
+	# - OGN13					:	reserved
+	# - OGN14					:	reserved
+	# - OGN15					:	reserved
+	#
+	# Available age [ 0 - 31 / PENDING / FREE ]
+
+#	CERO		FREE
+#	ESRB		FREE
+#	USK			FREE
+#	PEGI_GEN	FREE
+#	PEGI_PRT	FREE
+#	PEGI_BBFC	FREE
+#	OFLC		FREE
+#	GRB			FREE
+}

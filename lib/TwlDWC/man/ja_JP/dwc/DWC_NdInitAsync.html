@@ -63,15 +63,13 @@
 
 <H2>説明</H2>
 
-<p>ダウンロードライブラリの初期化処理を開始します。<br>初期化処理はバックグラウンドでHTTP通信を行いますので、処理中はメインスレッドよりも優先度の低いスレッドに十分な処理時間が渡るようにしてください。なお、ダウンロードサーバは、開発向けと製品向けの２種類が提供されますが、この切り替えは<a href="DWC_SetAuthServer.html#dwc__connectinet_8h_1da96c96907e26b1362d663720e6a48e0">DWC_SetAuthServer</a>関数による認証サーバの切り替えにあわせて行なわれます。</p><p>引数として指定するgamecdおよびpasswdに関しては、弊社へのダウンロードサーバの利用申請後に発行されます。</p><p>本関数を呼び出しでTRUEが返された後、処理を進めるために<a href="DWC_NdProcess.html#dwc__nd_8h_194c5a22f39af6cd1bce2988daa1ac41d">DWC_NdProcess</a>関数を毎ゲームフレーム程度の頻度で呼び出してください。</p><p>初期化完了は本関数の引数で指定した<a href="DWCNdCallback.html#dwc__nd_8h_13ab334b8de8158333fe68797a4031d04">DWCNdCallback</a>型のcallbackで知ることができます。</p><p><b>返り値にTRUEが返された時点からダウンロードライブラリは開始していますので、初期化の非同期処理中にエラーが発生した場合も、<a href="DWC_NdCleanupAsync.html#dwc__nd_8h_1b5866639aee7fb3a9d693a1411625ee0">DWC_NdCleanupAsync</a>関数を呼ぶ必要があります。</b></p><p><b>本APIは、内部でTWL-SDKWi-FiライブラリのNHTTPStartup関数を呼び出します。本APIを呼び出してから<a href="DWC_NdCleanupAsync.html#dwc__nd_8h_1b5866639aee7fb3a9d693a1411625ee0">DWC_NdCleanupAsync</a>関数により処理が完了するまでの前後で、重複してNHTTPを使用しないようにしてください。</b></p><p><b>ダウンロード速度に関して、デフォルトの受信ウィンドウサイズでは、大きなサイズのファイルをダウンロードする際、パフォーマンスが悪くなります。<br><a href="DWC_SetRwinSize.html#dwc__connectinet_8h_1327157633915c13b3e74ece5b2389655">DWC_SetRwinSize</a>関数を使って、アプリ毎に適切な受信ウィンドウサイズを設定しておくようにして下さい。</b></p>
+<p>ダウンロードライブラリの初期化処理を開始します。<br>初期化処理はバックグラウンドでHTTP通信を行いますので、処理中はメインスレッドよりも優先度の低いスレッドに十分な処理時間が渡るようにしてください。なお、ダウンロードサーバは、開発向けと製品向けの２種類が提供されますが、この切り替えは<a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数による認証サーバの切り替えにあわせて行なわれます。</p><p>引数として指定するgamecdおよびpasswdに関しては、弊社へのダウンロードサーバの利用申請後に発行されます。</p><p>本関数を呼び出しでTRUEが返された後、処理を進めるために<a href="DWC_NdProcess.html#dwc__nd_8h_194c5a22f39af6cd1bce2988daa1ac41d">DWC_NdProcess</a>関数を毎ゲームフレーム程度の頻度で呼び出してください。</p><p>初期化完了は本関数の引数で指定した<a href="DWCNdCallback.html#dwc__nd_8h_13ab334b8de8158333fe68797a4031d04">DWCNdCallback</a>型のcallbackで知ることができます。</p><p><b>返り値にTRUEが返された時点からダウンロードライブラリは開始していますので、初期化の非同期処理中にエラーが発生した場合も、<a href="DWC_NdCleanupAsync.html#dwc__nd_8h_1b5866639aee7fb3a9d693a1411625ee0">DWC_NdCleanupAsync</a>関数を呼ぶ必要があります。</b></p><p><b>本APIは、内部でTWL-SDKWi-FiライブラリのNHTTPStartup関数を呼び出します。本APIを呼び出してから<a href="DWC_NdCleanupAsync.html#dwc__nd_8h_1b5866639aee7fb3a9d693a1411625ee0">DWC_NdCleanupAsync</a>関数により処理が完了するまでの前後で、重複してNHTTPを使用しないようにしてください。</b></p><p><b>ダウンロード速度に関して、デフォルトの受信ウィンドウサイズでは、大きなサイズのファイルをダウンロードする際、パフォーマンスが悪くなります。<br><a href="DWC_SetRwinSize.html#dwc__connectinet_8h_1327157633915c13b3e74ece5b2389655">DWC_SetRwinSize</a>関数を使って、アプリ毎に適切な受信ウィンドウサイズを設定しておくようにして下さい。</b></p>
 
 
 <h2>参照</h2>
 <p>
 
   <CODE><a href="DWCNdCallback.html#dwc__nd_8h_13ab334b8de8158333fe68797a4031d04">DWCNdCallback</a></CODE>
-
-  <CODE><a href="DWC_SetAuthServer.html#dwc__connectinet_8h_1da96c96907e26b1362d663720e6a48e0">DWC_SetAuthServer</a></CODE>
 
   <CODE><a href="DWC_GetLastErrorEx.html#dwc__error_8h_118bd79f5d5151259c19c4e552e5e633b">DWC_GetLastErrorEx</a></CODE>
 
@@ -83,6 +81,9 @@
 
 <H2>履歴</H2>
 <DL>
+
+<DT>5.3</DT>
+<DD>認証サーバの切り替えを、DWC_SetAuthServer関数ではなく<a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で行うよう仕様変更したため、関連する記述を修正</DD>
 
 </DL>
 <p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_NdInitAsync_tag">こちら</a>　　</p>

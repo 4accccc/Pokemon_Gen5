@@ -8,7 +8,7 @@
 //============================================================================================
 #include <gflib.h>
 #include <dwc.h>
-#include <ghttp/dwci_ghttp.h>
+#include "libdpw/dwci_ghttp.h"
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "arc_def.h"
@@ -844,7 +844,6 @@ static int Enter_InternetConnect( WORLDTRADE_WORK *wk )
 
 	WorldTrade_WifiIconAdd( wk );  //2768
 	DWC_InitInetEx(&wk->stConnCtrl,COMM_DMA_NO,COMM_POWERMODE,COMM_SSL_PRIORITY);
-    DWC_SetAuthServer(GF_DWC_CONNECTINET_AUTH_TYPE);
 	DWC_ConnectInetAsync();
 	
 	wk->subprocess_seq = ENTER_INTERNET_CONNECT_WAIT;

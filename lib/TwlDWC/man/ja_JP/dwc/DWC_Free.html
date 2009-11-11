@@ -32,7 +32,7 @@
 
     <TR>
       <TD width="13%"><EM><STRONG>ptr</STRONG></EM></TD>
-      <TD width="87%"><a href="DWC_SetMemFunc.html#dwc__memfunc_8h_113607e1bcf007e9a7e28202c1a372e69">DWC_SetMemFunc</a>関数で設定したメモリ確保関数で確保したメモリへのポインタ。</TD>
+      <TD width="87%"><a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で設定したメモリ確保関数で確保したメモリへのポインタ。</TD>
     </TR>
 
     <TR>
@@ -49,13 +49,11 @@
 
 <H2>説明</H2>
 
-<p><a href="DWC_SetMemFunc.html#dwc__memfunc_8h_113607e1bcf007e9a7e28202c1a372e69">DWC_SetMemFunc</a>関数で設定したメモリ解放関数を用いてメモリを解放します。</p>
+<p><a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で設定したメモリ解放関数を用いてメモリを解放します。</p>
 
 
 <h2>参照</h2>
 <p>
-
-  <CODE><a href="DWC_SetMemFunc.html#dwc__memfunc_8h_113607e1bcf007e9a7e28202c1a372e69">DWC_SetMemFunc</a></CODE>
 
   <CODE><a href="DWC_Alloc.html#dwc__memfunc_8h_1aff2b5d03b69fa0cc6b5cea82e5cbdd4">DWC_Alloc</a></CODE>
 
@@ -69,6 +67,9 @@
 
 <H2>履歴</H2>
 <DL>
+
+<DT>5.3</DT>
+<DD>アロケータの設定をDWC_SetMemFunc関数ではなく<a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で行うよう仕様変更したため、関連する記述を修正</DD>
 
 </DL>
 <p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_Free_tag">こちら</a>　　</p>

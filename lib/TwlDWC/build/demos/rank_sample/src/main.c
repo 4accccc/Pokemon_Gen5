@@ -11,11 +11,13 @@
 
 // 定数宣言
 //---------------------------------------------------------
-
+#define INITIAL_CODE     'NTRJ'     // このサンプルが仕様するイニシャルコード
+#define GAME_NAME        "dwctest" // このサンプルが使用するゲーム名
+#define GAME_SECRET_KEY  "d4q9GZ"  // このサンプルが使用するシークレットキー
+#define GAME_PRODUCTID   10824     // このサンプルが使用するプロダクトID
 #define RANKING_INITDATA "hxBfMOkOvlOHpUGfQlOb0001ed350000685d0040000037012e6bdwctest"
-#define CATEGORY		10
-
-//#define USE_AUTHSERVER_RELEASE   // 本番サーバへ接続
+#define CATEGORY         10
+//#define USE_AUTHSERVER_PRODUCTION // 製品向け認証サーバを使用する場合有効にする
 
 
 // 構造体型宣言
@@ -91,12 +93,6 @@ static BOOL StartIPMain(void)
 {
 	DWC_InitInet( &stConnCtrl );
 
-#if defined( USE_AUTHSERVER_RELEASE )
-    DWC_SetAuthServer( DWC_CONNECTINET_AUTH_RELEASE );
-#else
-    DWC_SetAuthServer( DWC_CONNECTINET_AUTH_TEST );
-#endif
-
 	DWC_ConnectInetAsync();
 
 	// 安定なステートまで待つ。
@@ -154,8 +150,6 @@ static void VBlankIntr(void)
  *	@brief	メイン
  */
 //=============================================================================
-static u8 s_Work[ DWC_INIT_WORK_SIZE ] ATTRIBUTE_ALIGN( 32 );
-
 void NitroMain()
 {
 
@@ -169,6 +163,7 @@ void NitroMain()
 	u32 count;
 	int i;
 	int errorCode;
+	int ret;
 
 	// initialize
 	//-------------------------------------------
@@ -199,13 +194,22 @@ void NitroMain()
 	GX_DispOn();
 	GXS_DispOn();
 
-	// DWCライブラリ初期化
-	DWC_Init( s_Work );
+    // DWCライブラリ初期化
+#if defined( USE_AUTHSERVER_PRODUCTION )
+    ret = DWC_InitForProduction( GAME_NAME, INITIAL_CODE, AllocFunc, FreeFunc );
+#else
+    ret = DWC_InitForDevelopment( GAME_NAME, INITIAL_CODE, AllocFunc, FreeFunc );
+#endif
+    
+    OS_TPrintf( "DWC_InitFor*() result = %d\n", ret );
+
+    if ( ret == DWC_INIT_RESULT_DESTROY_OTHER_SETTING )
+    {
+        OS_TPrintf( "Wi-Fi setting might be broken.\n" );
+    }
 	
 	// デバッグ表示レベル指定
 	DWC_SetReportLevel(DWC_REPORTFLAG_ALL);
-	
-	DWC_SetMemFunc( AllocFunc, FreeFunc );
 
 	//IPの取得
 	while(!StartIPMain())

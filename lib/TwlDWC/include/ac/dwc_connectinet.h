@@ -292,7 +292,6 @@ extern "C"
 
     void  DWC_InitInet( DWCInetControl* inetCntl );
     void  DWC_InitInetEx( DWCInetControl* inetCntl, u16 dmaNo, u16 powerMode, u16 ssl_priority );
-    void  DWC_SetAuthServer( DWCInetAuthType type );
     void  DWC_SetRwinSize( s32 size );
 
 #ifndef SDK_FINALROM

@@ -34,7 +34,7 @@
 
     <TR>
       <TD width="13%"><EM><STRONG>ptr</STRONG></EM></TD>
-      <TD width="87%"><a href="DWC_SetMemFunc.html#dwc__memfunc_8h_113607e1bcf007e9a7e28202c1a372e69">DWC_SetMemFunc</a>関数で設定したメモリ確保関数で確保したメモリへのポインタ。</TD>
+      <TD width="87%"><a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で設定したメモリ確保関数で確保したメモリへのポインタ。</TD>
     </TR>
 
     <TR>
@@ -49,7 +49,7 @@
 
     <TR>
       <TD width="13%"><EM><STRONG>align</STRONG></EM></TD>
-      <TD width="87%">確保したいメモリのアライメント（バイト）。<a href="DWC_SetMemFunc.html#dwc__memfunc_8h_113607e1bcf007e9a7e28202c1a372e69">DWC_SetMemFunc</a>関数で設定したメモリ確保関数に渡されます。</TD>
+      <TD width="87%">確保したいメモリのアライメント（バイト）。<a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で設定したメモリ確保関数に渡されます。</TD>
     </TR>
 
   </TBODY>
@@ -57,17 +57,15 @@
 
 <h2>返り値</h2>
 
-<p><a href="DWC_SetMemFunc.html#dwc__memfunc_8h_113607e1bcf007e9a7e28202c1a372e69">DWC_SetMemFunc</a>関数で指定したメモリ確保関数によって確保されたメモリの先頭から、内部管理用のヘッダサイズ(32バイト)を加えたアドレスへのポインタを返します。</p>
+<p><a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で指定したメモリ確保関数によって確保されたメモリの先頭から、内部管理用のヘッダサイズ(32バイト)を加えたアドレスへのポインタを返します。</p>
 
 <H2>説明</H2>
 
-<p><a href="DWC_SetMemFunc.html#dwc__memfunc_8h_113607e1bcf007e9a7e28202c1a372e69">DWC_SetMemFunc</a>関数で設定したメモリ確保関数を用いて確保したメモリのサイズを変更して移動します。</p><p>ライブラリ内部では、別の領域に新しいサイズでメモリを確保した後、元のメモリを解放するという処理を行っています。</p>
+<p><a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で設定したメモリ確保関数を用いて確保したメモリのサイズを変更して移動します。</p><p>ライブラリ内部では、別の領域に新しいサイズでメモリを確保した後、元のメモリを解放するという処理を行っています。</p>
 
 
 <h2>参照</h2>
 <p>
-
-  <CODE><a href="DWC_SetMemFunc.html#dwc__memfunc_8h_113607e1bcf007e9a7e28202c1a372e69">DWC_SetMemFunc</a></CODE>
 
   <CODE><a href="DWC_Alloc.html#dwc__memfunc_8h_1aff2b5d03b69fa0cc6b5cea82e5cbdd4">DWC_Alloc</a></CODE>
 
@@ -80,7 +78,10 @@
 <H2>履歴</H2>
 <DL>
 
-<DT>5.2patch1</DT>
+<DT>5.3</DT>
+<DD>アロケータの設定をDWC_SetMemFunc関数ではなく<a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で行うよう仕様変更したため、関連する記述を修正</DD>
+
+<DT>5.3pr1</DT>
 <DD>内部管理用のヘッダの存在に関して返り値の説明を修正</DD>
 
 </DL>

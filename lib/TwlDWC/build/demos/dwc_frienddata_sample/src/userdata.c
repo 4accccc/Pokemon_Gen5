@@ -175,7 +175,7 @@ DTUD_Init( void )
     OS_TPrintf("no Backup UserData\n");
 
     // ユーザデータを作成する
-    DWC_CreateUserData( &s_PlayerInfo.userData, DTUD_INITIAL_CODE );
+    DWC_CreateUserData( &s_PlayerInfo.userData );
 
     OS_TPrintf("Create UserData.\n");
     DWC_ReportUserData( &s_PlayerInfo.userData );

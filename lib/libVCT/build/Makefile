@@ -11,9 +11,12 @@
 # or copied or duplicated in any form, in whole or in part,  without
 # the prior written consent of Abiosso.
 #
+# April 30, 2009 Techno Mathematical
+# Supports Twl Libraries
+#
 #----------------------------------------------------------------------------
 
-include	$(NITROSDK_ROOT)/build/buildtools/commondefs
+include	$(TWLSDK_ROOT)/build/buildtools/commondefs
 
 
 #----------------------------------------------------------------------------
@@ -22,7 +25,7 @@ SUBDIRS = demos
 
 #----------------------------------------------------------------------------
 
-include	$(NITROSDK_ROOT)/build/buildtools/modulerules
+include	$(TWLSDK_ROOT)/build/buildtools/modulerules
 
 
 #===== End of Makefile =====

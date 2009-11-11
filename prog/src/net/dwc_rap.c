@@ -60,9 +60,11 @@
 //-----#endif //TESTOHNO
 
 // この辺はテスト用。正式に割り当てられたら、指定する。
-#define GAME_NAME        "pokemondpds"  // 使用するゲーム名
-#define GAME_SECRET_KEY  "1vTlwb"  // 使用するシークレットキー
-#define GAME_PRODUCTID   10727         // 使用するプロダクトID
+#define GAME_NAME					GF_DWC_GAMENAME		// 使用するゲーム名
+#define GAME_SECRET_KEY		"tXH2sN"					// 使用するシークレットキー
+#define GAME_PRODUCTID		12230							// 使用するプロダクトID
+//#define GAME_SECRET_KEY "1vTlwb"					// 使用するシークレットキー
+//#define GAME_PRODUCTID  10727							// 使用するプロダクトID
 
 #define SIZE_RECV_BUFFER (4 * 1024)
 #define SIZE_SEND_BUFFER 256
@@ -372,11 +374,11 @@ int GFL_NET_DWC_connect()
     {
       GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
       // メモリ確保関数設定
-      DWC_SetMemFunc( mydwc_AllocFunc, mydwc_FreeFunc );
+      //DWC_SetMemFunc( mydwc_AllocFunc, mydwc_FreeFunc );
       // ネット接続初期化
       DWC_InitInetEx(&_dWork->stConnCtrl, _NETWORK_DMA_NO, _NETWORK_POWERMODE, _NETWORK_SSL_PRIORITY);
 
-      DWC_SetAuthServer(GF_DWC_CONNECTINET_AUTH_TYPE);
+      //DWC_SetAuthServer(GF_DWC_CONNECTINET_AUTH_TYPE);
 
       // 非同期にネットに接続
       DWC_ConnectInetAsync();
@@ -447,10 +449,10 @@ int GFL_NET_DWC_connect()
     }
     // オーバーレイしてる場合 DWC_Initを再度CALLしてあげないとここで停止
     // フレンドライブラリ初期化
-    DWC_InitFriendsMatch(&(_dWork->stDwcCnt), (&_dWork->myUserData),
-                         GAME_PRODUCTID, GAME_NAME,
-                         GAME_SECRET_KEY, 0, 0,
-                         _dWork->keyList, FRIENDLIST_MAXSIZE);
+    DWC_InitFriendsMatch( (&_dWork->myUserData),
+													GAME_PRODUCTID, 
+													GAME_SECRET_KEY, 0, 0,
+													_dWork->keyList, FRIENDLIST_MAXSIZE);
 
     {// IPLのユーザ名を使ってログイン
       // 自分のユーザ名を圧縮。

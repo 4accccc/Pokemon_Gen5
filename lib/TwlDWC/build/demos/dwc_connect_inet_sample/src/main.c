@@ -13,13 +13,15 @@
 //----------------------------------------------------------------------------
 // define
 //----------------------------------------------------------------------------
-#undef	CONNECT_TYPE_SPECIFY_AP_TYPE	// 接続先タイプを指定する自動接続
-#undef	CONNECT_TYPE_SPECIFY_AP			// 接続先のSSIDを指定する自動接続
+#define INITIAL_CODE     'NTRJ'      // このサンプルが仕様するイニシャルコード
+
+#undef CONNECT_TYPE_SPECIFY_AP_TYPE  // 接続先タイプを指定する自動接続
+#undef CONNECT_TYPE_SPECIFY_AP       // 接続先のSSIDを指定する自動接続
 
 #define GAME_FRAME       1         // 想定するゲームフレーム（1/60を1とする）
 #define NETCONFIG_USE_HEAP 1
 
-//#define USE_AUTHSERVER_RELEASE   // 本番サーバへ接続
+//#define USE_AUTHSERVER_PRODUCTION // 製品向け認証サーバを使用する場合有効にする
 
 //----------------------------------------------------------------------------
 // typedef
@@ -202,8 +204,13 @@ void NitroMain ()
     DWC_SetReportLevel((unsigned long)(DWC_REPORTFLAG_ALL & ~DWC_REPORTFLAG_QR2_REQ));
 
     // DWCライブラリ初期化
-    ret = DWC_Init( s_Work );
-    OS_TPrintf( "DWC_Init() result = %d\n", ret );
+#if defined( USE_AUTHSERVER_PRODUCTION )
+    ret = DWC_InitForProduction( NULL, INITIAL_CODE, AllocFunc, FreeFunc );
+#else
+    ret = DWC_InitForDevelopment( NULL, INITIAL_CODE, AllocFunc, FreeFunc );
+#endif
+    
+    OS_TPrintf( "DWC_InitFor*() result = %d\n", ret );
 
     if ( ret == DWC_INIT_RESULT_DESTROY_OTHER_SETTING )
     {
@@ -211,14 +218,11 @@ void NitroMain ()
     }
     
     // 認証済みユーザIDを表示
-    // 該当の本体の最初のDWC_Init()の呼び出しで仮のユーザIDが作成される
+    // 該当の本体の最初のDWC_InitFor*()の呼び出しで仮のユーザIDが作成される
     PrintAuthenticatedUserId();
 
     // ヒープ使用量表示ON
     //Heap_SetDebug(TRUE);
-
-    // メモリ確保関数設定
-    DWC_SetMemFunc( AllocFunc, FreeFunc );
 	
 	// まずWiFiコネクション設定GUIを起動する(設定画面を抜けるまで制御は返されない)
 	NetConfigMain();
@@ -315,12 +319,6 @@ static void NetConfigMain(void)
     sPrintOverride = FALSE; // OS_TPrintf()の出力を一時的に元に戻す。
     dbs_DemoFinalize();
 
-#if defined( USE_AUTHSERVER_RELEASE )
-    DWC_SetAuthServer( DWC_CONNECTINET_AUTH_RELEASE );
-#else
-    DWC_SetAuthServer( DWC_CONNECTINET_AUTH_TEST );
-#endif
-
 #if defined( NETCONFIG_USE_HEAP )
     {
         void* work = OS_Alloc(DWC_UTILITY_WORK_SIZE);
@@ -356,12 +354,6 @@ static BOOL StartIPMain(void)
 	DWCApInfo apinfo;
 	
     DWC_InitInet( &stConnCtrl );
-
-#if defined( USE_AUTHSERVER_RELEASE )
-    DWC_SetAuthServer( DWC_CONNECTINET_AUTH_RELEASE );
-#else
-    DWC_SetAuthServer( DWC_CONNECTINET_AUTH_TEST );
-#endif
 
 	/*-----------------------------------------------------------------------*
 	 * ■通常の自動接続の場合は

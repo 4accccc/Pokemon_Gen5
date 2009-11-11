@@ -9,14 +9,11 @@
 //----------------------------------------------------------------------------
 // define
 //----------------------------------------------------------------------------
+#define INITIAL_CODE    'NTRJ'     // このサンプルが仕様するイニシャルコード
 #define GAME_FRAME       1         // 想定するゲームフレーム（1/60を1とする）
 #define NETCONFIG_USE_HEAP 1
 
-#define GAME_NAME        "dwctest" // このサンプルが使用するゲーム名
-#define GAME_SECRET_KEY  "d4q9GZ"  // このサンプルが使用するシークレットキー
-#define GAME_PRODUCTID   10824      // このサンプルが使用するプロダクトID
-
-//#define USE_AUTHSERVER_RELEASE   // 本番サーバへ接続
+//#define USE_AUTHSERVER_PRODUCTION // 製品向け認証サーバを使用する場合有効にする
 
 //----------------------------------------------------------------------------
 // typedef
@@ -162,8 +159,13 @@ void NitroMain ()
     DWC_SetReportLevel((unsigned long)(DWC_REPORTFLAG_ALL & ~DWC_REPORTFLAG_QR2_REQ));
 
     // DWCライブラリ初期化
-    ret = DWC_Init( s_Work );
-    OS_TPrintf( "DWC_Init() result = %d\n", ret );
+#if defined( USE_AUTHSERVER_PRODUCTION )
+    ret = DWC_InitForProduction( NULL, INITIAL_CODE, AllocFunc, FreeFunc );
+#else
+    ret = DWC_InitForDevelopment( NULL, INITIAL_CODE, AllocFunc, FreeFunc );
+#endif
+    
+    OS_TPrintf( "DWC_InitFor*() result = %d\n", ret );
 
     if ( ret == DWC_INIT_RESULT_DESTROY_OTHER_SETTING )
     {
@@ -172,9 +174,6 @@ void NitroMain ()
 
     // ヒープ使用量表示ON
     //Heap_SetDebug(TRUE);
-
-    // メモリ確保関数設定
-    DWC_SetMemFunc( AllocFunc, FreeFunc );
         
 	NetConfigMain(); // まずWiFiコネクション設定GUIを起動する
     // メインループ
@@ -198,12 +197,6 @@ static void NetConfigMain(void)
 
     sPrintOverride = FALSE; // OS_TPrintf()の出力を一時的に元に戻す。
     dbs_DemoFinalize();
-
-#if defined( USE_AUTHSERVER_RELEASE )
-    DWC_SetAuthServer( DWC_CONNECTINET_AUTH_RELEASE );
-#else
-    DWC_SetAuthServer( DWC_CONNECTINET_AUTH_TEST );
-#endif
 	
 #if defined( NETCONFIG_USE_HEAP )
     {
@@ -238,12 +231,6 @@ static void NetConfigMain(void)
 static void StartIPMain(void)
 {
     DWC_InitInet( &stConnCtrl );
-
-#if defined( USE_AUTHSERVER_RELEASE )
-    DWC_SetAuthServer( DWC_CONNECTINET_AUTH_RELEASE );
-#else
-    DWC_SetAuthServer( DWC_CONNECTINET_AUTH_TEST );
-#endif
 
     DWC_ConnectInetAsync();
     // 安定なステートまで待つ。

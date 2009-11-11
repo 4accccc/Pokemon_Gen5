@@ -20,12 +20,14 @@ extern "C" {
 // define
 //----------------------------------------------------------------------------
 #define GAME_NAME        "dwctest"  // このサンプルが使用するゲーム名 
+#define INITIAL_CODE     '_VCT'    // このサンプルが仕様するイニシャルコード
 #define GAME_SECRET_KEY  "d4q9GZ"  // このサンプルが使用するシークレットキー 
 #define GAME_PRODUCTID   10824     // このサンプルが使用するプロダクトID 
 
 #define GAME_MAX_SAVE_FILE   4   // ゲーム内のセーブファイル数（＝プレイヤー数） 
 #define GAME_MAX_FRIEND_LIST 32  // 友達登録最大数 
 #define GAME_MAX_PLAYER_NAME 16  // ゲーム内プレイヤーネーム長 
+#define DWC_GS_STATUS_STRING_LEN 256
 
 #define MAX_PLAYERS          8   // 最大接続数 
 //----------------------------------------------------------------------------
@@ -38,8 +40,12 @@ typedef enum
     GAME_MODE_REG_FRIEND,  // 友達登録・消去 
     GAME_MODE_LOGIN,       // ログイン表示 
     GAME_MODE_CONNECTED,   // マッチメイク終了後 
+    GAME_MODE_NETCONFIG_LANGUAGE,   // Wi-Fiコネクション設定の使用言語選択
+    GAME_MODE_NETCONFIG,   // Wi-Fiコネクション設定
     GAME_MODE_STARTIP,     // IP取得 
     GAME_MODE_STOPIP,      // IP開放 
+    GAME_MODE_TOPOLOGY,    // 接続形態設定
+    GAME_MODE_BACKUP,
     //
     // VoiceChatで追加 
     GAME_MODE_PHONE,       // 電話モード 
@@ -133,11 +139,13 @@ typedef struct tagGameMatchExtKeys
 //----------------------------------------------------------------------------
 void ShutdownInet(void);
 void DispMenuMsgWithCursor(const GameSequence* gameSeq, int index, void* param);
-void DispErrorMessage(void);
 void DispFriendList(BOOL overLoad);
 void DispFriendListData(void);
 int GetAvailableFriendListIndex(void);
-    
+char LoopChar(void);
+void GameWaitVBlankIntr(void);
+DWCError HandleDWCError(GameMode* gameMode);
+
 #ifdef __cplusplus
 }
 #endif

@@ -51,7 +51,7 @@
 
 <H2>説明</H2>
 
-<p>特定のAIDに割り当てられたホストへ、データをReliable送信可能かをチェックします。</p><p><a href="DWC_SendReliable.html#dwc__transport_8h_18af931f880aadbc50700c6c212ec64cc">DWC_SendReliable</a>/<a href="DWC_SendReliableBitmap.html#dwc__transport_8h_1ea79c20d9a54d219287cd7c1b906dd82">DWC_SendReliableBitmap</a>関数によるReliable送信は、まだ送信中のデータがある場合、もしくは<a href="DWC_InitFriendsMatch.html#dwc__main_8h_186c2f56943c3a20c05d73d4a2abad609">DWC_InitFriendsMatch</a>関数でサイズを指定した送信バッファに空きが全くない場合は、データを送信できません。その場合は本関数はFALSEを返すので、本関数がTRUEを返すまで、送信しないようにしてください。</p><p>またエラー発生中も本関数はFALSEを返します。</p><p>なお、引数aidに無効なAIDを指定した場合もFALSEを返しますが、この場合は<a href="DWC_IsValidAID.html#dwc__main_8h_15bd88e98bc0dcdb9c8c2c7a63274160e">DWC_IsValidAID</a>関数でAIDを調べれば、前の2つの送信不可条件と区別することができます。</p>
+<p>特定のAIDに割り当てられたホストへ、データをReliable送信可能かをチェックします。</p><p><a href="DWC_SendReliable.html#dwc__transport_8h_18af931f880aadbc50700c6c212ec64cc">DWC_SendReliable</a>/<a href="DWC_SendReliableBitmap.html#dwc__transport_8h_1ea79c20d9a54d219287cd7c1b906dd82">DWC_SendReliableBitmap</a>関数によるReliable送信は、まだ送信中のデータがある場合、もしくは<a href="DWC_InitFriendsMatch.html#dwc__main_8h_1de4fba18d5d03cbccd0c86efe9e80c1c">DWC_InitFriendsMatch</a>関数でサイズを指定した送信バッファに空きが全くない場合は、データを送信できません。その場合は本関数はFALSEを返すので、本関数がTRUEを返すまで、送信しないようにしてください。</p><p>またエラー発生中も本関数はFALSEを返します。</p><p>なお、引数aidに無効なAIDを指定した場合もFALSEを返しますが、この場合は<a href="DWC_IsValidAID.html#dwc__main_8h_15bd88e98bc0dcdb9c8c2c7a63274160e">DWC_IsValidAID</a>関数でAIDを調べれば、前の2つの送信不可条件と区別することができます。</p>
 
 
 <H2>履歴</H2>

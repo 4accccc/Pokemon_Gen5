@@ -1,6 +1,6 @@
 #include <nitro.h>
-#include <ninet/ip.h>
 #include <dwc.h>
+#include <string.h>
 
 #include "main.h"
 #include "init.h"
@@ -15,14 +15,17 @@
 // define
 //----------------------------------------------------------------------------
 #define GAME_NUM_MATCH_KEYS 3      // マッチメイク用追加キー個数       // 
-
+#define ConnectMaxVCT	8          //
+#define FILTER_STRING "sample_filter"	// フィルタ文字列. 適宜変更してください
+#define FILTER_KEY "str_key"
+//#define GAME_USE_STORAGE_SERVER
 //----------------------------------------------------------------------------
 // variable
 //----------------------------------------------------------------------------
 extern GameSequence gameSeqList[GAME_MODE_NUM];
 extern GameControl stGameCnt;  // ゲーム制御情報構造体  
 extern KeyControl stKeyCnt;    // キー入力制御構造体  
-
+u32  s_groupID = 0;
 // 友達無指定ピアマッチメイク用追加キーデータ構造体 
 static GameMatchExtKeys stMatchKeys[GAME_NUM_MATCH_KEYS] = { 0, };
 
@@ -33,12 +36,27 @@ static const char gsStatusSample[16] = { 10, 9, 8, 0, 0, 1, 2, 3, };
 static int stNumEntry  = 2;    // ネットワーク構成人数指定 
 static int stServerIdx = 0;    // 接続したいゲームサーバの友達リストインデックス 
 
+char addFilter[128] = "";
+static u8   userData[4]={ 0,5,120,254 };
+extern DWCTopologyType s_topologyType;
 
 static void SetGameMatchKeys(void);
 
 //callbackプロトタイプ 
-static void ConnectToAnybodyCallback(DWCError error, BOOL cancel, void* param);
-static void ConnectToFriendsCallback(DWCError error, BOOL cancel, void* param);
+static void ConnectToAnybodyCallback(DWCError error, 
+                                     BOOL cancel, 
+                                     BOOL self,
+                                     BOOL isServer,
+                                     int  index,
+                                     void* param);
+
+static void ConnectToFriendsCallback(DWCError error, 
+                                     BOOL cancel, 
+                                     BOOL self,
+                                     BOOL isServer,
+                                     int  index,
+                                     void* param);
+
 static void SetupGameServerCallback(DWCError error,
                                     BOOL cancel,
                                     BOOL self,
@@ -54,8 +72,8 @@ static void ConnectToGameServerCallback(DWCError error,
 static void NewClientCallback(int index, void* param);
 static int  EvaluateAnybodyCallback(int index, void* param);
 static int  EvaluateFriendCallback(int index, void* param);
-
-
+static void GenericNewClientCallback(int index, void* param);
+static void LoginToStorageCallback(DWCError error, void* param);
 /*---------------------------------------------------------------------------*
   ゲーム定義のマッチメイク用追加キーセット関数
  *---------------------------------------------------------------------------*/
@@ -71,15 +89,17 @@ static void SetGameMatchKeys(void)
         DWC_AddMatchKeyInt(stMatchKeys[0].keyID,
                            stMatchKeys[0].keyStr,
                            &stMatchKeys[0].ivalue);
+    if (stMatchKeys[0].keyID == 0) OS_TPrintf("AddMatchKey failed 0.\n");
 
     // マッチメイクに用いる評価タイプを文字列キーとして設定
     stMatchKeys[1].isStr  = 1;
-    strcpy(stMatchKeys[1].keyStr, "game_mtype");
-    strcpy(stMatchKeys[1].svalue, "eval_rank");
+    strcpy(stMatchKeys[1].keyStr, FILTER_KEY);
+    strcpy(stMatchKeys[1].svalue, FILTER_STRING);
     stMatchKeys[1].keyID  =
         DWC_AddMatchKeyString(stMatchKeys[1].keyID,
                               stMatchKeys[1].keyStr,
                               stMatchKeys[1].svalue);
+    if (stMatchKeys[1].keyID == 0) OS_TPrintf("AddMatchKey failed 1.\n");
 
     // とりあえずもう一つぐらい整数キーを設定
     stMatchKeys[2].isStr  = 0;
@@ -89,6 +109,7 @@ static void SetGameMatchKeys(void)
         DWC_AddMatchKeyInt(stMatchKeys[2].keyID,
                            stMatchKeys[2].keyStr,
                            &stMatchKeys[2].ivalue);
+    if (stMatchKeys[2].keyID == 0) OS_TPrintf("AddMatchKey failed 2.\n");
 }
 
 
@@ -161,7 +182,7 @@ static int  EvaluateAnybodyCallback(int index, void* param)
     int diff;
     
     if (!strncmp(matchType, "eval_rank", strlen("eval_rank"))){
-        // 相手もマッチメイクタイプとして"eval_rank"をセットしている場合
+        // 相手もマッチメイクタイプとしてFILTER_STRINGをセットしている場合
         rank = DWC_GetMatchIntValue(index, stMatchKeys[0].keyStr, -1);
         if (rank == -1){
             return 0;  // "game_rank"キーがなければマッチメイクしない 
@@ -198,8 +219,8 @@ static int  EvaluateFriendCallback(int index, void* param)
 #pragma unused(param)
     const char* matchType = DWC_GetMatchStringValue(index, stMatchKeys[1].keyStr, "NONE");
     
-    if (!strncmp(matchType, "eval_rank", strlen("eval_rank"))){
-        // 相手もマッチメイクタイプとして"eval_rank"をセットしている場合
+    if (!strncmp(matchType, FILTER_STRING, strlen(FILTER_STRING))){
+        // 相手もマッチメイクタイプとしてFILTER_STRINGをセットしている場合
         return 1;  // マッチメイクOK 
     }
     else {
@@ -220,6 +241,9 @@ GameMode GameLogonMain(void)
     stNumEntry  = 2;
     stServerIdx = 0;
 
+    // デバッグ表示レベル指定
+    DWC_SetReportLevel(DWC_REPORTFLAG_ALL);
+
 #if 0
 // サンプルの友達登録鍵表示テスト
 {
@@ -230,59 +254,41 @@ GameMode GameLogonMain(void)
 }
 #endif
 
-#if 0
-// 指定人数以下でのマッチメイク完了オプション設定テスト
+#ifdef GAME_USE_STORAGE_SERVER
+// GameSpyストレージサーバへのセーブ・ロードを行なうテストのためのログイン処理
 {
-    DWCMatchOptMinComplete optval;
-
-    optval.valid    = 1;
-    optval.minEntry = 3;
-    optval.timeout  = 30000;
-
-    if (DWC_SetMatchingOption(DWC_MATCH_OPTION_MIN_COMPLETE, &optval, 0)){
-        OS_TPrintf("Failed to set matching option\n");
+    if (!DWC_LoginToStorageServerAsync(LoginToStorageCallback, NULL)){
+        OS_TPrintf("DWC_LoginToStorageServerAsync() failed.\n");
     }
 }
 #endif
 
     while (1){
-        dbs_Print( 0, 0, "s:%d", DWC_GetMatchingState() );
+        dbs_Print( 0, 0, "s:%d", DWC_GetMatchState() );
         dbs_Print( 7, 0, "n:%d", DWC_GetNumConnectionHost() );
         dbs_Print( 0, 1, "w:%d", DWC_GetLinkLevel() );
         dbs_Print( 10,1, "p:%d", stGameCnt.userData.profileID );
+	    dbs_Print( 30, 0, "%c",  LoopChar());
+        dbs_Print( 0,2, "AID:%d(0x%08X)", DWC_GetMyAID(), DWC_GetAIDBitmap() );
+        dbs_Print( 20, 2, "g:%d", s_groupID );
 
         ReadKeyData();  // キーデータ取得 
 
         DWC_ProcessFriendsMatch();  // DWC通信処理更新 
 
-        if (DWC_GetLastError(NULL)){
-            // マッチメイク失敗時の処理 
-            int err;
-            DWC_GetLastError(&err);
-            OS_TPrintf("LOGON : OCCUR ERROR %d:%d\n",DWC_GetLastError(NULL), err );
-            ShutdownInet();  // ネットワーク切断 
-            DWC_ClearError();
-            stGameCnt.blocking = FALSE;
-            returnSeq = GAME_MODE_MAIN;
-            break;
-        }
+        HandleDWCError(&returnSeq);  // エラー処理
 
         if (stGameCnt.blocking){
             // DWC処理中はキー操作を禁止する（キャンセルのみ可）
             if (stKeyCnt.trg & PAD_BUTTON_B){
                 // Bボタンでマッチメイクをキャンセルする
-                boolRet = DWC_CancelMatching();
-                if (!boolRet){
-                    OS_TPrintf("Now unable to cancel matching.\n");
-                }
+                DWC_CloseAllConnectionsHard();
+                stGameCnt.blocking = FALSE;
+                returnSeq = GAME_MODE_LOGIN;
             }
 
-            dbs_DemoUpdate();
-            OS_WaitIrq(TRUE, OS_IE_V_BLANK);
-            Heap_Debug();
-            dbs_DemoLoad();
-            // スタック溢れチェック
-            OS_CheckStack(OS_GetCurrentThread());
+            // Vブランク待ち処理
+            GameWaitVBlankIntr();
             continue;
         }
 
@@ -294,6 +300,7 @@ GameMode GameLogonMain(void)
             // Aボタンでメニュー決定
             returnSeq = gameSeq->menuList[curIdx].mode;
             stGameCnt.blocking = gameSeq->menuList[curIdx].blocking;
+            boolRet   = TRUE;
 
             switch (curIdx){
             case 0:  // 友達無指定ピアマッチメイク呼び出し 
@@ -301,12 +308,18 @@ GameMode GameLogonMain(void)
                     // Xボタンが押されていなければ、マッチメイク用追加キーデータ設定
                     SetGameMatchKeys();
                 }
-                
-                DWC_ConnectToAnybodyAsync((u8)stNumEntry,
-                                          "game_mtype = 'eval_rank'",
+                boolRet = 
+                DWC_ConnectToAnybodyAsync(s_topologyType,
+                                          (u8)stNumEntry,
+                                          addFilter,
                                           ConnectToAnybodyCallback,
                                           &returnSeq,
+                                          GenericNewClientCallback,
+                                          NULL,
                                           EvaluateAnybodyCallback,
+                                          NULL,
+                                          NULL,
+                                          userData,
                                           NULL);
                 break;
             case 1:  // 友達指定ピアマッチメイク呼び出し 
@@ -314,36 +327,80 @@ GameMode GameLogonMain(void)
                     // Xボタンが押されていなければ、マッチメイク用追加キーデータ設定
                     SetGameMatchKeys();
                 }
-
                 // 引数friendIdxListにNULLを指定すると友達リスト内の全員から検索する
-                DWC_ConnectToFriendsAsync(NULL,
-                                          0,
+                boolRet =
+                DWC_ConnectToFriendsAsync(s_topologyType,
+                                          NULL,
+                                          ConnectMaxVCT,
                                           (u8)stNumEntry,
-                                          TRUE,//FALSE,
                                           ConnectToFriendsCallback,
                                           &returnSeq,
+                                          GenericNewClientCallback,
+                                          NULL,
                                           EvaluateFriendCallback,
+                                          NULL,
+                                          NULL,
+                                          userData,
                                           NULL);
                 break;
             case 2:  // サーバDSとしてサーバクライアントマッチメイク開始 
-                DWC_SetupGameServerAsync((u8)stNumEntry,
-                                         SetupGameServerCallback,
-                                         &returnSeq,
-                                         NewClientCallback,
-                                         NULL);
+                boolRet =
+                DWC_SetupGameServer(s_topologyType,
+                                    (u8)stNumEntry,
+                                    SetupGameServerCallback,
+                                    &returnSeq,
+                                    NewClientCallback,
+                                    NULL,
+                                    NULL,
+                                    userData,
+                                    NULL);
                 break;
             case 3:  // クライアントDSとしてサーバクライアントマッチメイク開始 
-                DWC_ConnectToGameServerAsync(stServerIdx,
+                boolRet =
+                DWC_ConnectToGameServerAsync(s_topologyType,
+                                             stServerIdx,
                                              ConnectToGameServerCallback,
                                              &returnSeq,
                                              NewClientCallback,
+                                             NULL,
+                                             NULL,
+                                             userData,
                                              NULL);
                 break;
-            case 4:  // ログアウト 
+            case 4:
+                if(s_groupID)
+                {
+                     boolRet =
+                     DWC_ConnectToGameServerByGroupID( s_topologyType,  // 接続形態
+                                                       s_groupID,		// グループID
+                                                       ConnectToGameServerCallback,
+                                                       &returnSeq,
+                                                       NewClientCallback,
+                                                       NULL,
+                                                       NULL,
+                                                       userData,
+                                                       NULL );
+                }
+                else
+                {
+                    boolRet = FALSE;
+                }
+                break;
+            case 5:
+                break;
+            case 6:  // ログアウト 
                 ShutdownInet();  // ネットワーク切断 
                 break;
             default:
                 break;
+            }
+            if (!boolRet){
+                // マッチメイクを開始できなかった場合はブロッキング状態にしない。
+                // エラー発生中かログイン前、接続後、二重呼び出し時しか
+                // FALSEにはならない
+                OS_TPrintf("Can't call matching function.\n");
+                returnSeq          = GAME_MODE_NUM;
+                stGameCnt.blocking = 0;
             }
         }
         else if (stKeyCnt.trg & PAD_BUTTON_Y){
@@ -359,10 +416,10 @@ GameMode GameLogonMain(void)
             }
         }
         else if (stKeyCnt.trg & PAD_BUTTON_SELECT){
-#if 1  // GameSpyのStatusセットを試す場合 
+#ifndef GAME_USE_STORAGE_SERVER  // GameSpyのStatusセットを試す場合
             if (!(stKeyCnt.cont & PAD_BUTTON_X)){
                 // Xボタンが押されていなければ、セレクトボタンでGameSpy Status文字列をセット
-                if (DWC_SetGsStatusString("SampleString-00")){
+                if (DWC_SetOwnStatusString("SampleString-00")){
                     OS_TPrintf("Set GsStatusString.\n");
                 }
                 else {
@@ -371,7 +428,7 @@ GameMode GameLogonMain(void)
             }
             else {
                 // Xボタンが押されていれば、セレクトボタンでGameSpy Statusデータをセット
-                if (DWC_SetGsStatusData(gsStatusSample, sizeof(gsStatusSample))){
+                if (DWC_SetOwnStatusData(gsStatusSample, sizeof(gsStatusSample))){
                     OS_TPrintf("Set GsStatusData.\n");
                 }
                 else {
@@ -379,20 +436,21 @@ GameMode GameLogonMain(void)
                 }
             }
 
-#else  // ストレージサーバへのセーブを試す場合 
-            // セレクトボタンでストレージサーバにテストキーをセーブ 
-            char keyvalues[12];
+#else  // ストレージサーバへのセーブを試す場合
+            // セレクトボタンでストレージサーバにテストキーをセーブ
+            char keyvalues[30];
             BOOL boolResult;
 
-            sprintf(keyvalues, "\\test_key\\%u", OS_GetTick());
-
-#if 1
-            // Publicなキーとして登録 
-            boolResult = DWC_SavePublicDataAsync(keyvalues, NULL);
-#else
-            // Privateなキーとして登録 
-            boolResult = DWC_SavePrivateDataAsync(keyvalues, NULL);
-#endif
+            if (stKeyCnt.cont & PAD_BUTTON_X){
+                // Xボタンが押されていればPrivateデータをセーブ
+                snprintf(keyvalues, sizeof(keyvalues), "\\test_key_prv\\%lld", OS_TicksToSeconds(OS_GetTick()));
+                boolResult = DWC_SavePrivateDataAsync(keyvalues, NULL);
+            }
+            else {
+                // Xボタンが押されていなければPublicデータをセーブ
+                snprintf(keyvalues, sizeof(keyvalues), "\\test_key_pub\\%lld", OS_TicksToSeconds(OS_GetTick()));
+                boolResult = DWC_SavePublicDataAsync(keyvalues, NULL);
+            }
 
             if (boolResult){
                 OS_TPrintf("Saved '%s'.\n", keyvalues);
@@ -403,13 +461,13 @@ GameMode GameLogonMain(void)
 #endif
         }
         else if (stKeyCnt.trg & PAD_BUTTON_START){
-#if 1  // GameSpyのStatusセットを試す場合 
-            char statusData[DWC_GS_STATUS_STRING_LEN];
+#ifndef GAME_USE_STORAGE_SERVER  // GameSpyのStatusセットを試す場合
+            char statusData[DWC_FRIEND_STATUS_STRING_LEN];
             
             if (!(stKeyCnt.cont & PAD_BUTTON_X)){
-                // Xボタンが押されていなければ、スタートボタンでGameSpy Status文字列を取得
-
-                if (DWC_GetGsStatusString(statusData)){
+                // Xボタンが押されていなければ、
+                // スタートボタンでGameSpy Status文字列を取得
+                if (DWC_GetOwnStatusString(statusData)){
                     OS_TPrintf("Got my GsStatusString : %s\n", statusData);
                 }
                 else {
@@ -417,11 +475,11 @@ GameMode GameLogonMain(void)
                 }
             }
             else {
-                // Xボタンが押されていれば、スタートボタンでGameSpy Statusデータを取得
-
+                // Xボタンが押されていれば、
+                // スタートボタンでGameSpy Statusデータを取得
                 int size, i;
 
-                size = DWC_GetGsStatusData(statusData);
+                size = DWC_GetOwnStatusData(statusData);
                 if (size != -1){
                     OS_TPrintf("Got my GsStatusData\n");
                     for (i = 0; i < size; i++){
@@ -436,16 +494,19 @@ GameMode GameLogonMain(void)
 
 #else  // ストレージサーバからのロードを試す場合 
             // スタートボタンでストレージサーバからテストデータをロード 
-#if 0
-            int profileID;
-#endif
             BOOL boolResult;
 
 #if 1
-            // 自分のデータをロード 
-            boolResult = DWC_LoadOwnDataAsync("\\test_key", NULL);
+            if (stKeyCnt.cont & PAD_BUTTON_X){
+                // Xボタンが押されていれば自分のPrivateデータをロード
+                boolResult = DWC_LoadOwnPrivateDataAsync("\\test_key_prv\\test_key_pub", NULL);
+            }
+            else {
+                // Xボタンが押されていなければ自分のPublicデータをロード
+                boolResult = DWC_LoadOwnPublicDataAsync("\\test_key_prv\\test_key_pub", NULL);
+            }
 #else
-            // 友達リスト中のホストのデータをロード 
+            // 友達リスト中のホストのデータをロード
             boolResult = DWC_LoadOthersDataAsync("\\test_key", stServerIdx, NULL);
 #endif
             if (!boolResult) OS_TPrintf("Can't load from storage server.\n");
@@ -503,12 +564,8 @@ GameMode GameLogonMain(void)
         }
         ////////// キー操作処理ここまで
 
-        dbs_DemoUpdate();
-        OS_WaitIrq(TRUE, OS_IE_V_BLANK);
-            Heap_Debug();
-        dbs_DemoLoad();
-        // スタック溢れチェック
-        OS_CheckStack(OS_GetCurrentThread());
+        // Vブランク待ち処理
+        GameWaitVBlankIntr();
     }
 
     return returnSeq;
@@ -518,9 +575,14 @@ GameMode GameLogonMain(void)
 /*---------------------------------------------------------------------------*
   友達無指定接続コールバック関数
  *---------------------------------------------------------------------------*/
-static void ConnectToAnybodyCallback(DWCError error, BOOL cancel, void* param)
+static void ConnectToAnybodyCallback(DWCError error, BOOL cancel, BOOL self, BOOL isServer,
+                                     int index, void* param)
 {
-
+    (void)self;
+    (void)isServer;
+    (void)index;
+    (void)param;
+    
     if (error == DWC_ERROR_NONE){
         if (!cancel){
             // 見知らぬ人たちとのコネクション設立完了
@@ -531,16 +593,10 @@ static void ConnectToAnybodyCallback(DWCError error, BOOL cancel, void* param)
         }
         else {
             OS_TPrintf("Canceled matching.\n");
-            // ログイン後状態に戻る
-            *(GameMode *)param = GAME_MODE_LOGIN;
         }
     }
     else {
-        DispErrorMessage();
         OS_TPrintf("Failed to connect to anybody. %d\n\n", error);
-
-        // もう一度最初から 
-        *(GameMode *)param = GAME_MODE_MAIN;
     }
 
     stGameCnt.blocking = FALSE;  // ブロッキング解除 
@@ -550,8 +606,13 @@ static void ConnectToAnybodyCallback(DWCError error, BOOL cancel, void* param)
 /*---------------------------------------------------------------------------*
   友達指定接続コールバック関数
  *---------------------------------------------------------------------------*/
-static void ConnectToFriendsCallback(DWCError error, BOOL cancel, void* param)
+static void ConnectToFriendsCallback(DWCError error, BOOL cancel, BOOL self, BOOL isServer,
+                                     int index, void* param)
 {
+    (void)self;
+    (void)isServer;
+    (void)index;
+    (void)param;
 
     if (error == DWC_ERROR_NONE){
         if (!cancel){
@@ -563,16 +624,10 @@ static void ConnectToFriendsCallback(DWCError error, BOOL cancel, void* param)
         }
         else {
             OS_TPrintf("Canceled matching.\n");
-            // ログイン後状態に戻る
-            *(GameMode *)param = GAME_MODE_LOGIN;
         }
     }
     else {
-        DispErrorMessage();
         OS_TPrintf("Failed to connect to friends. %d\n\n", error);
-
-        // もう一度最初から
-        *(GameMode *)param = GAME_MODE_MAIN;
     }
 
     stGameCnt.blocking = FALSE;  // ブロッキング解除 
@@ -614,21 +669,15 @@ static void SetupGameServerCallback(DWCError error,
                 // クライアントDSがマッチメイクをキャンセルした
                 OS_TPrintf("Client (friendListIndex = %d) canceled matching.\n\n", index);
 
-                if (DWC_GetState() == DWC_STATE_MATCHING){
+                if (DWC_GetNumConnectionHost() == 1){
                     // まだ誰とも接続していなければ、次の状態に進まない
-                    *(GameMode *)param = GAME_MODE_NUM;
                     return;
                 }
             }
         }
     }
     else {
-        // エラーが発生した 
-        DispErrorMessage();
         OS_TPrintf("Game server error occured. %d\n\n", error);
-
-        // もう一度最初から 
-        *(GameMode *)param = GAME_MODE_MAIN;
     }
 
     stGameCnt.blocking = FALSE;  // ブロッキング解除 
@@ -688,16 +737,28 @@ static void ConnectToGameServerCallback(DWCError error,
         }
     }
     else {
-        // エラーが発生した 
-        DispErrorMessage();
         OS_TPrintf("Failed to join the game. %d\n\n", error);
-
-        // もう一度最初から 
-        *(GameMode *)param = GAME_MODE_MAIN;
     }
 
     stGameCnt.blocking = FALSE;  // ブロッキング解除 
 }
 
+/*---------------------------------------------------------------------------*
+  新規接続クライアント通知コールバック関数
+ *---------------------------------------------------------------------------*/
+static void GenericNewClientCallback(int index, void* param )
+{
+    (void)param;
 
+    OS_TPrintf( "New Client is connecting(idx %d)...\n", index);
+}
 
+/*---------------------------------------------------------------------------*
+  ストレージサーバへのログイン完了コールバック関数
+ *---------------------------------------------------------------------------*/
+static void LoginToStorageCallback(DWCError error, void* param)
+{
+#pragma unused(param)
+
+    OS_TPrintf("Login to storage server: result %d\n", error);
+}

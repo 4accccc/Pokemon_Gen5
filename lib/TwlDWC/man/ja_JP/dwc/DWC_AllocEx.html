@@ -37,7 +37,7 @@
 
     <TR>
       <TD width="13%"><EM><STRONG>align</STRONG></EM></TD>
-      <TD width="87%">確保したいメモリのアライメント（バイト）。<a href="DWC_SetMemFunc.html#dwc__memfunc_8h_113607e1bcf007e9a7e28202c1a372e69">DWC_SetMemFunc</a>関数で設定したメモリ確保関数に渡されます。</TD>
+      <TD width="87%">確保したいメモリのアライメント（バイト）。<a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で設定したメモリ確保関数に渡されます。</TD>
     </TR>
 
   </TBODY>
@@ -45,17 +45,15 @@
 
 <h2>返り値</h2>
 
-<p><a href="DWC_SetMemFunc.html#dwc__memfunc_8h_113607e1bcf007e9a7e28202c1a372e69">DWC_SetMemFunc</a>関数で指定したメモリ確保関数によって確保されたメモリの先頭から、内部管理用のヘッダサイズ(32バイト)を加えたアドレスへのポインタを返します。</p>
+<p><a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で指定したメモリ確保関数によって確保されたメモリの先頭から、内部管理用のヘッダサイズ(32バイト)を加えたアドレスへのポインタを返します。</p>
 
 <H2>説明</H2>
 
-<p><a href="DWC_SetMemFunc.html#dwc__memfunc_8h_113607e1bcf007e9a7e28202c1a372e69">DWC_SetMemFunc</a>関数で設定したメモリ確保関数を用いてメモリを確保します。<br>実際に確保する大きさは、引数sizeに内部管理用のヘッダ32バイトを足した分になります。<br></p>
+<p><a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で設定したメモリ確保関数を用いてメモリを確保します。<br>実際に確保する大きさは、引数sizeに内部管理用のヘッダ32バイトを足した分になります。<br></p>
 
 
 <h2>参照</h2>
 <p>
-
-  <CODE><a href="DWC_SetMemFunc.html#dwc__memfunc_8h_113607e1bcf007e9a7e28202c1a372e69">DWC_SetMemFunc</a></CODE>
 
   <CODE><a href="DWC_Realloc.html#dwc__memfunc_8h_19d490d1be6aee06cee99f6e554ac12b5">DWC_Realloc</a></CODE>
 
@@ -70,7 +68,10 @@
 <H2>履歴</H2>
 <DL>
 
-<DT>5.2patch1</DT>
+<DT>5.3</DT>
+<DD>アロケータの設定をDWC_SetMemFunc関数ではなく<a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で行うよう仕様変更したため、関連する記述を修正</DD>
+
+<DT>5.3pr1</DT>
 <DD>内部管理用のヘッダの存在に関して返り値及び説明部分を修正</DD>
 
 </DL>

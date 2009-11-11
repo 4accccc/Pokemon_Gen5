@@ -181,7 +181,7 @@ extern "C"
 
     // ユーザデータの作成／確認用。
     //------------------------------------------------------
-    void    DWC_CreateUserData            ( DWCUserData* userdata, u32 gamecode );
+    void    DWC_CreateUserData            ( DWCUserData* userdata );
     BOOL    DWC_CheckUserData             ( const DWCUserData* userdata );
     BOOL    DWC_CheckValidConsole         ( const DWCUserData* userdata );
     BOOL    DWC_CheckHasProfile           ( const DWCUserData* userdata );

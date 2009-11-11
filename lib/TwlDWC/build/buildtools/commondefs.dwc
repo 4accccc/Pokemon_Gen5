@@ -98,7 +98,7 @@ LLIBRARY_DIRS  += $(TWIFI_ROOT)/lib/$(TWIFI_LIBTYPE)
 
 #----------------------------------------------------------------------------
 ##LINCLUDESÇ…í«â¡ÇµÇ‹Ç∑ÅB
-LINCLUDES		+= $(TWLDWC_LIBDIR)
+LINCLUDES			+= $(TWLDWC_INCDIR)
 
 #----------------------------------------------------------------------------
 ## gamespyópÇÃNITROíËã`

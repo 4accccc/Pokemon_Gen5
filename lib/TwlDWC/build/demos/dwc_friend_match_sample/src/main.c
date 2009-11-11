@@ -15,6 +15,7 @@
 /** --------------------------------------------------------------------
   defines
   ----------------------------------------------------------------------*/
+#define INITIAL_CODE    'NTRJ'     // このサンプルが仕様するイニシャルコード
 #define GAME_NAME        "dwctest" // このサンプルが使用するゲーム名
 #define GAME_SECRET_KEY  "d4q9GZ"  // このサンプルが使用するシークレットキー
 #define GAME_PRODUCTID   10824      // このサンプルが使用するプロダクトID
@@ -23,7 +24,7 @@
 #define APP_CONNECTION_KEEPALIVE_TIME 30000 // キープアライブ時間
 #define KEEPALIVE_INTERVAL (APP_CONNECTION_KEEPALIVE_TIME/5) // キー入力を待たずデータを転送する時間
 //#define USE_RELIABLE	// Reliable 通信を行う場合は定義しておいてください
-//#define USE_AUTHSERVER_RELEASE   // 本番サーバへ接続
+//#define USE_AUTHSERVER_PRODUCTION // 製品向け認証サーバを使用する場合有効にする
 
 /** --------------------------------------------------------------------
   globals
@@ -33,8 +34,6 @@ KeyControl		g_KeyCtrl;
 /** --------------------------------------------------------------------
   statics
   ----------------------------------------------------------------------*/
-static u8 s_Work[ DWC_INIT_WORK_SIZE ] ATTRIBUTE_ALIGN( 32 );
-static DWCFriendsMatchControl	s_FMCtrl;
 static DWCInetControl			s_ConnCtrl;
 static int  s_state  = state_init;
 static BOOL s_logined;
@@ -202,12 +201,6 @@ update_init( void )
         
         DWC_InitInet( &s_ConnCtrl );
         
-#if defined( USE_AUTHSERVER_RELEASE )
-        DWC_SetAuthServer( DWC_CONNECTINET_AUTH_RELEASE );
-#else
-        DWC_SetAuthServer( DWC_CONNECTINET_AUTH_TEST );
-#endif
-        
         DWC_ConnectInetAsync();
         
         return state_connect;
@@ -243,8 +236,8 @@ update_connect( void )
 
             s_logined = FALSE;
 
-            DWC_InitFriendsMatch(&s_FMCtrl, DTUD_GetUserData(),
-                                 GAME_PRODUCTID, GAME_NAME, GAME_SECRET_KEY,
+            DWC_InitFriendsMatch(DTUD_GetUserData(),
+                                 GAME_PRODUCTID, GAME_SECRET_KEY,
                                  0, 0,
                                  DTUD_GetFriendList(), FRIEND_LIST_LEN);
 
@@ -846,6 +839,8 @@ drawConsole( void )
   ----------------------------------------------------------------------*/
 void NitroMain ()
 {
+    int ret;
+    
     initFunctions();
 
     // デバッグ表示レベル指定
@@ -853,12 +848,21 @@ void NitroMain ()
                               ~DWC_REPORTFLAG_QR2_REQ*/ ));
     
     // DWCライブラリ初期化
-    DWC_Init( s_Work );
+#if defined( USE_AUTHSERVER_PRODUCTION )
+    ret = DWC_InitForProduction( GAME_NAME, INITIAL_CODE, DTDB_GetAllocFunc(), DTDB_GetFreeFunc() );
+#else
+    ret = DWC_InitForDevelopment( GAME_NAME, INITIAL_CODE, DTDB_GetAllocFunc(), DTDB_GetFreeFunc() );
+#endif
+    
+    OS_TPrintf( "DWC_InitFor*() result = %d\n", ret );
+
+    if ( ret == DWC_INIT_RESULT_DESTROY_OTHER_SETTING )
+    {
+        OS_TPrintf( "Wi-Fi setting might be broken.\n" );
+    }
 
     // ユーザデータ読み込み
     DTUD_Init();
-    // メモリ確保関数設定
-    DWC_SetMemFunc( DTDB_GetAllocFunc(), DTDB_GetFreeFunc() );
 
     while (1)
     {

@@ -72,11 +72,14 @@
 
 <H2>説明</H2>
 
-<p>ランキングライブラリを初期化します。</p><p>終了するときには<a href="DWC_RnkShutdown.html#dwc__ranking_8h_1ebd54c804ee5147f740362c5cb482bfd">DWC_RnkShutdown</a>関数を呼び出してください。</p><p>既に初期化済みの場合や初期化データが不正な場合は失敗します。</p><p>ユーザーデータは有効なGSプロファイルIDを含む必要があります。一度もログインしていない仮ログインIDを含むデータや、Dirtyフラグがセットされているデータではエラー(<a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace5910fa8759f04ea1c401bad3c44cbcd691ca">DWC_RNK_ERROR_INIT_INVALID_USERDATA</a>)が発生します。</p><p>エラーやキャンセルで中断したときは、一度<a href="DWC_RnkShutdown.html#dwc__ranking_8h_1ebd54c804ee5147f740362c5cb482bfd">DWC_RnkShutdown</a>関数で終了処理をしてから再度呼び出す必要があります。</p><p>引数の初期化データ（文字列）によってサーバはタイトルを識別します。初期化データは弊社への汎用ランキング機能の利用申請後に発行されます。弊社が初期化データを発行し、サーバの設定を行うまでランキングライブラリを使用することは出来ません。</p><p>また、必要であれば、<a href="DWC_SetRwinSize.html#dwc__connectinet_8h_1327157633915c13b3e74ece5b2389655">DWC_SetRwinSize</a>関数で、受信ウィンドウサイズをアプリ毎に適切な値に設定しておいて下さい。</p><p>汎用ランキング機能はGameSpyサーバを使用しており、開発向けサーバと製品向けサーバの２種類が提供されますが、この切り替えは<a href="DWC_SetAuthServer.html#dwc__connectinet_8h_1da96c96907e26b1362d663720e6a48e0">DWC_SetAuthServer</a>関数による認証サーバの切り替えにあわせて行なわれます。</p><p>また、開発向けと製品向けのサーバはデータベースがお互いに独立しているため、双方のランキングは異なるものとして構成されます。</p>
+<p>ランキングライブラリを初期化します。</p><p>終了するときには<a href="DWC_RnkShutdown.html#dwc__ranking_8h_1ebd54c804ee5147f740362c5cb482bfd">DWC_RnkShutdown</a>関数を呼び出してください。</p><p>既に初期化済みの場合や初期化データが不正な場合は失敗します。</p><p>ユーザーデータは有効なGSプロファイルIDを含む必要があります。一度もログインしていない仮ログインIDを含むデータや、Dirtyフラグがセットされているデータではエラー(<a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace5910fa8759f04ea1c401bad3c44cbcd691ca">DWC_RNK_ERROR_INIT_INVALID_USERDATA</a>)が発生します。</p><p>エラーやキャンセルで中断したときは、一度<a href="DWC_RnkShutdown.html#dwc__ranking_8h_1ebd54c804ee5147f740362c5cb482bfd">DWC_RnkShutdown</a>関数で終了処理をしてから再度呼び出す必要があります。</p><p>引数の初期化データ（文字列）によってサーバはタイトルを識別します。初期化データは弊社への汎用ランキング機能の利用申請後に発行されます。弊社が初期化データを発行し、サーバの設定を行うまでランキングライブラリを使用することは出来ません。</p><p>また、必要であれば、<a href="DWC_SetRwinSize.html#dwc__connectinet_8h_1327157633915c13b3e74ece5b2389655">DWC_SetRwinSize</a>関数で、受信ウィンドウサイズをアプリ毎に適切な値に設定しておいて下さい。</p><p>汎用ランキング機能はGameSpyサーバを使用しており、開発向けサーバと製品向けサーバの２種類が提供されますが、この切り替えは<a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数による認証サーバの切り替えにあわせて行なわれます。</p><p>また、開発向けと製品向けのサーバはデータベースがお互いに独立しているため、双方のランキングは異なるものとして構成されます。</p>
 
 
 <H2>履歴</H2>
 <DL>
+
+<DT>5.3</DT>
+<DD>認証サーバの切り替えを、DWC_SetAuthServer関数ではなく<a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で行うよう仕様変更したため、関連する記述を修正</DD>
 
 </DL>
 <p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_RnkInitialize_tag">こちら</a>　　</p>

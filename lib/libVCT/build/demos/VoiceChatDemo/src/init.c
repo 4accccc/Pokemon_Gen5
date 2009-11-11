@@ -2,6 +2,7 @@
 #include "init.h"
 #include "vct.h"
 
+
 #define ROUND(n, a)		(((u32)(n)+(a)-1) & ~((a)-1))
 
 static OSHeapHandle sHandle;
@@ -33,19 +34,35 @@ void Heap_Init(void)
     OS_SetArenaLo(OS_ARENA_MAIN, arenaHi);
 }
 
+static BOOL sEnableDebug = FALSE;
 void Heap_Debug( void )
 {
     static u32 presize = 0;
     u32 size;
 
-    size = OS_GetTotalAllocSize( OS_ARENA_MAIN, sHandle );
-
-    if ( presize != size )
+    if ( sEnableDebug )
     {
-        OS_TPrintf("***Heap:%d->%d\n", presize, size);
+        size = OS_GetTotalAllocSize( OS_ARENA_MAIN, sHandle );
 
-        presize = size;
+        if ( presize != size )
+        {
+            OS_TPrintf("***Heap:%d->%d\n", presize, size);
+
+            presize = size;
+        }
     }
+}
+
+void Heap_Print( void )
+{
+    u32 size;
+    size = OS_GetTotalAllocSize( OS_ARENA_MAIN, sHandle );
+    OS_TPrintf("***Heap:%d\n", size);
+}
+
+void Heap_SetDebug( BOOL flag )
+{
+    sEnableDebug = flag;
 }
 
 void Heap_Dump( void )

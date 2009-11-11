@@ -7,7 +7,7 @@ extern "C" {
 
 /*===========================================================================*/
 
-#include	<nitro/types.h>
+#include	<twl/types.h>
 
 extern const u32 d_CharData[8 * 256];
 extern const u32 d_PaletteData[8 * 16];

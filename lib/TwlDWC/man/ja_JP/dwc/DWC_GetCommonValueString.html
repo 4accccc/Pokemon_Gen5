@@ -51,7 +51,7 @@
 
 <h2>返り値</h2>
 
-<p>valueにセットされた文字列長（ヌル文字終端は含まない）。存在しないkeyを指定した場合は-1を返します。</p>
+<p>keyに対応する値の文字列長（ヌル文字終端は含まない）。<br>引数valueにNULLを指定して、文字列長の確認のみ行うことができます。<br>対応する値の無いkeyを指定した場合は-1を返します。<br></p>
 
 <H2>説明</H2>
 
@@ -60,6 +60,9 @@
 
 <H2>履歴</H2>
 <DL>
+
+<DT>5.3</DT>
+<DD>引数valueにNULLを指定した場合、keyに対応する文字列の長さを返すように仕様変更したことに対応。</DD>
 
 </DL>
 <p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GetCommonValueString_tag">こちら</a>　　</p>

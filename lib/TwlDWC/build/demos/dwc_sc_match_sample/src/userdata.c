@@ -173,7 +173,7 @@ DTUD_Init( void )
         if ( !DWC_CheckUserData( &s_PlayerInfo.userData ) )
         {
             // だめだったら作る。
-            DWC_CreateUserData( &s_PlayerInfo.userData, DTUD_INITIAL_CODE );
+            DWC_CreateUserData( &s_PlayerInfo.userData );
 
             OS_TPrintf("But UserData was broken.\n");
         }
@@ -181,7 +181,7 @@ DTUD_Init( void )
         if ( !DWC_CheckValidConsole( &s_PlayerInfo.userData ) )
         {
             // コンソールが間違ってたらLogonできないので、作り直す。
-            DWC_CreateUserData( &s_PlayerInfo.userData, DTUD_INITIAL_CODE );
+            DWC_CreateUserData( &s_PlayerInfo.userData );
 
             OS_TPrintf("UserData is not Valid Console.\nCreate UserData.\n");
         }
@@ -190,7 +190,7 @@ DTUD_Init( void )
     {
         OS_TPrintf("no Backup.. create UserData\n");
         // ないときは作る。
-        DWC_CreateUserData( &s_PlayerInfo.userData, DTUD_INITIAL_CODE );
+        DWC_CreateUserData( &s_PlayerInfo.userData );
     }
 
     DWC_ReportUserData( &s_PlayerInfo.userData );

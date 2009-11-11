@@ -151,7 +151,8 @@ static NetWork* _pWork = NULL;
 //------------------------------------------------------------------------------
 static void _DevBootFunc(HEAPID heapID, NetErrorFunc errorFunc)
 {
-  DWC_SetAuthServer(GF_DWC_CONNECTINET_AUTH_TYPE);
+//DWC5.3では使わない
+//  DWC_SetAuthServer(GF_DWC_CONNECTINET_AUTH_TYPE);
   GFL_NET_WifiStart( heapID, errorFunc );
 
   //@todo 置き換えが必要

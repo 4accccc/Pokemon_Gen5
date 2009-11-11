@@ -42,9 +42,7 @@ endif
 # TWL-DWC ÇÕç≈å„Ç…éwíË       #
 
 #  INCLUDESÇ…SDK2.xëŒçÙÇì¸ÇÍÇÈÅB
-INCLUDES		+= -gccinc -I. $(INCLUDE_DIRS) -I'$(TWLDWC_ROOT)/include'
-
-
+INCLUDES		= -gccinc -I. $(INCLUDE_DIRS)
     include $(TWLDWC_ROOT)/build/buildtools/modulerules.dwc
 
 #________________________________#

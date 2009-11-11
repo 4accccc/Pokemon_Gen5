@@ -326,7 +326,7 @@ static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * p
     if(NET_IsInit(wk)){
       _wtHeapHandle = wk->heapHandle;
       // wifiƒƒ‚ƒŠŠÇ—ŠÖ”ŒÄ‚Ño‚µ
-      DWC_SetMemFunc( AllocFunc, FreeFunc );
+      //DWC_SetMemFunc( AllocFunc, FreeFunc );
       *seq = SEQ_INIT;
     }
     break;
@@ -1147,7 +1147,7 @@ static void InitDpw( void *heapPtr, NNSFndHeapHandle heapHandle, DWCAllocEx allo
 //  CommVRAMDInitialize();
 
   // wifiƒƒ‚ƒŠŠÇ—ŠÖ”ŒÄ‚Ño‚µ
-  DWC_SetMemFunc( alloc, free );
+  //DWC_SetMemFunc( alloc, free );
 
   ;
 

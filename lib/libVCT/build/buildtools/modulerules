@@ -11,9 +11,12 @@
 # or copied or duplicated in any form, in whole or in part,  without
 # the prior written consent of Abiosso.
 #
+# April 17, 2009
+# Support Twl Libraries
+#
 #----------------------------------------------------------------------------
 
-include  $(NITRODWC_ROOT)/build/buildtools/modulerules
-include  $(NITROLIBVCT_ROOT)/build/buildtools/modulerules.VCT
+include  $(TWLDWC_ROOT)/build/buildtools/modulerules
+include  $(TWLLIBVCT_ROOT)/build/buildtools/modulerules.VCT
 
 #===== End of modulerules =====

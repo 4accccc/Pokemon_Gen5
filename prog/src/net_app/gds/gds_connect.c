@@ -1152,7 +1152,7 @@ static int Enter_InternetConnect( GDS_CONNECT_SYS *wk )
 	case 2:
 		DWC_InitInetEx(&wk->oya_proc_work->stConnCtrl, 
 		  _NETWORK_DMA_NO, _NETWORK_POWERMODE, _NETWORK_SSL_PRIORITY);
-    DWC_SetAuthServer(GF_DWC_CONNECTINET_AUTH_TYPE);
+    //DWC_SetAuthServer(GF_DWC_CONNECTINET_AUTH_TYPE);
 		DWC_ConnectInetAsync();
 		
 		wk->subprocess_seq = ENTER_INTERNET_CONNECT_WAIT;

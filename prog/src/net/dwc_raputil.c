@@ -29,7 +29,7 @@ void mydwc_callWifiUtil( HEAPID HeapID )
 	OS_InitTick();
 	OS_InitAlarm();
 
-  DWC_SetAuthServer(GF_DWC_CONNECTINET_AUTH_TYPE);
+  //DWC_SetAuthServer(GF_DWC_CONNECTINET_AUTH_TYPE);
 
 	// Š„‚è‚İˆ—‚ğˆê’U‹Ö~‚Ö
 	old = OS_DisableInterrupts();

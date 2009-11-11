@@ -166,7 +166,7 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
 			_wtHeapHandle = gmw->heapHandle;
 	
 			// wifiƒƒ‚ƒŠŠÇ—ŠÖ”ŒÄ‚Ño‚µ
-			DWC_SetMemFunc( AllocFunc, FreeFunc );
+			//DWC_SetMemFunc( AllocFunc, FreeFunc );
 			
 			gmw->comm_initialize_ok = TRUE;
 			(*seq)++;

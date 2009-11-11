@@ -3,7 +3,6 @@
 //
 
 #include <nitro.h>
-#include <ninet/ip.h>
 #include <dwc.h>
 
 #include "main.h"
@@ -320,24 +319,19 @@ GameMode PhoneMain()
     StartSoundLoop();
 
     while (1) {
-        dbs_Print( 0, 0, "s:%d", DWC_GetMatchingState() );
+        dbs_Print( 0, 0, "s:%d", DWC_GetMatchState() );
         dbs_Print( 7, 0, "n:%d", DWC_GetNumConnectionHost() );
         dbs_Print(14, 0, "a:%d", DWC_GetMyAID());
         dbs_Print( 0, 1, "w:%d", DWC_GetLinkLevel() );
         dbs_Print( 10,1, "p:%d", stGameCnt.userData.profileID );
+	    dbs_Print( 30, 0, "%c",  LoopChar());
         dbs_Print( 5, 2, "== Phone mode demo ==");
 
         ReadKeyData();
 
         DWC_ProcessFriendsMatch();
-        
-        if (DWC_GetLastError(NULL)){
-            //  マッチング失敗時の処理 
-            ShutdownInet();
-            DWC_ClearError();
-            returnSeq = GAME_MODE_MAIN;
-            break;
-        }
+
+        HandleDWCError(&returnSeq);  // エラー処理
 
         //  ピクチャーフレームに一度呼び出すメイン関数。 
         VCT_Main();

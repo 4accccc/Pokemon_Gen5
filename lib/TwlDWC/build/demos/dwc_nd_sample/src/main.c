@@ -12,10 +12,11 @@
 /*---------------------------------------------------------------------------*
  * define
  *---------------------------------------------------------------------------*/
-#define GAME_FRAME				1		// 想定するゲームフレーム（1/60を1とする）
-#define NETCONFIG_USE_HEAP		1
+#define INITIAL_CODE     'NTRJ'    // このサンプルが仕様するイニシャルコード
+#define GAME_FRAME         1       // 想定するゲームフレーム（1/60を1とする）
+#define NETCONFIG_USE_HEAP 1
 #define DOWNLOAD_SAMPLE_RWIN_SIZE 65535 // 受信ウィンドウサイズ
-//#define USE_AUTHSERVER_RELEASE        // 本番サーバへ接続
+//#define USE_AUTHSERVER_PRODUCTION // 製品向け認証サーバを使用する場合有効にする
 
 // -- ND に関連した定数 --
 #define FILE_NUM				10
@@ -117,8 +118,13 @@ void NitroMain( void )
     DWC_SetReportLevel((unsigned long)(DWC_REPORTFLAG_ALL & ~DWC_REPORTFLAG_QR2_REQ));
 
     // DWCライブラリ初期化
-    ret = DWC_Init( dwcWork );
-    OS_TPrintf( "DWC_Init() result = %d\n", ret );
+#if defined( USE_AUTHSERVER_PRODUCTION )
+    ret = DWC_InitForProduction( NULL, INITIAL_CODE, AllocFunc, FreeFunc );
+#else
+    ret = DWC_InitForDevelopment( NULL, INITIAL_CODE, AllocFunc, FreeFunc );
+#endif
+    
+    OS_TPrintf( "DWC_InitFor*() result = %d\n", ret );
 
     if ( ret == DWC_INIT_RESULT_DESTROY_OTHER_SETTING )
     {
@@ -127,9 +133,6 @@ void NitroMain( void )
 
     // ヒープ使用量表示ON
     //Heap_SetDebug(TRUE);
-
-    // メモリ確保関数設定
-    DWC_SetMemFunc( AllocFunc, FreeFunc );
         
 	NetConfigMain(); // まずWiFiコネクション設定GUIを起動する
     
@@ -533,12 +536,6 @@ static void NetConfigMain( void )
     printOverride = FALSE; // OS_TPrintf()の出力を一時的に元に戻す。
     dbs_DemoFinalize();
 
-#if defined( USE_AUTHSERVER_RELEASE )
-    DWC_SetAuthServer( DWC_CONNECTINET_AUTH_RELEASE );
-#else
-    DWC_SetAuthServer( DWC_CONNECTINET_AUTH_TEST );
-#endif
-
 #if defined( NETCONFIG_USE_HEAP )
     {
         void* work = OS_Alloc( DWC_UTILITY_WORK_SIZE );
@@ -578,12 +575,6 @@ static BOOL StartIPMain( void )
 	DWCApInfo apinfo;
 
     DWC_InitInet( &stConnCtrl );
-
-#if defined( USE_AUTHSERVER_RELEASE )
-    DWC_SetAuthServer( DWC_CONNECTINET_AUTH_RELEASE );
-#else
-    DWC_SetAuthServer( DWC_CONNECTINET_AUTH_TEST );
-#endif
 
     // 受信ウィンドウサイズ設定
     DWC_SetRwinSize( DOWNLOAD_SAMPLE_RWIN_SIZE );
