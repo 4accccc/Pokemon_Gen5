@@ -33,6 +33,7 @@
 #include "gym_normal.h"
 #include "gym_anti.h"
 #include "gym_insect.h"
+#include "gym_ground.h"
 
 //--電気--
 //--------------------------------------------------------------
@@ -324,6 +325,35 @@ VMCMD_RESULT EvCmdGymInsect_TrTrapOn( VMHANDLE *core, void *wk )
   GF_ASSERT( tr_evt_idx < 2 );
   call_event = GYM_INSECT_CreateTrTrapEvt(gsys, tr_evt_idx);
   
+  if (call_event == NULL){
+    GF_ASSERT(0);
+    return VMCMD_RESULT_SUSPEND;
+  }
+
+  SCRIPT_CallEvent( sc, call_event );  
+  //イベントコールするので、一度制御を返す
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--地面--
+//--------------------------------------------------------------
+/**
+ * 地面ジムギミック　リフト移動
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymGround_MvLift( VMHANDLE *core, void *wk )
+{
+  u16 lift_idx;
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  lift_idx = VMGetU16( core );
+
+  call_event = GYM_GROUND_CreateLiftMoveEvt(gsys, lift_idx);
   if (call_event == NULL){
     GF_ASSERT(0);
     return VMCMD_RESULT_SUSPEND;

@@ -638,7 +638,8 @@
   DEF_CMD( EvCmdGymInsect_TrTrapOn, EV_SEQ_GYM_INSECT_TR_TRAP_ON )
   DEF_CMD( EvCmdGymInsect_Init, EV_SEQ_GYM_INSECT_INIT )
 
-  NO_CMD()
+  //’n–ÊƒWƒ€
+  DEF_CMD( EvCmdGymGround_MvLift, EV_SEQ_GYM_GROUND_MV_LIFT )
   NO_CMD()
   NO_CMD()
   NO_CMD()

@@ -4066,6 +4066,20 @@
   .short  \trp_evt_idx
   .endm
 
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　地面ジムリフト移動
+ * @param lift_idx   インデックス0～5
+ */
+//--------------------------------------------------------------
+#define _GYM_GROUND_MV_LIFT(lift_idx) \
+    _ASM_GYM_GROUND_MV_LIFT lift_idx
+
+  .macro  _ASM_GYM_GROUND_MV_LIFT lift_idx
+  .short  EV_SEQ_GYM_GROUND_MV_LIFT
+  .short  \lift_idx
+  .endm
+  
 //======================================================================
 //
 //  モデルアニメ関連
