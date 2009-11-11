@@ -1,0 +1,25 @@
+
+//============================================================================================
+/**
+ * @file	yesno_sel.cdat
+ * @brief	はい、いいえなど2択タッチパネル＆キー操作データテーブル
+ * @author	soga
+ * @date	2009.11.09
+ */
+//============================================================================================
+
+///2択タッチパネル領域設定
+static const GFL_UI_TP_HITTBL YesNoTouchData[] = {
+  //UP      DOWN    LEFT    RIGHT
+  { 0x04*8, 0x0a*8, 0x01*8, 0x1e*8},   //はい
+  { 0x0a*8, 0x10*8, 0x00*8, 0x1e*8},   //いいえ
+  { GFL_UI_TP_HIT_END, 0, 0, 0 }
+};
+
+static const BTLV_INPUT_KEYTBL  YesNoKeyData[] = { 
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  BTLV_INPUT_NOMOVE },
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 1,  1,  1,  1,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE },
+};
+
