@@ -501,7 +501,10 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
       p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
       
       FIELD_PLAYER_NOGRID_Delete( p_wk->p_railplayer );
-      FLDNOGRID_MAPPER_BindCameraWork( p_mapper, p_wk->cp_default_railwork );
+      if(p_wk->cp_default_railwork != NULL)
+      {
+        FLDNOGRID_MAPPER_BindCameraWork( p_mapper, p_wk->cp_default_railwork );
+      }
     }
 		
 		return GMEVENT_RES_FINISH;
