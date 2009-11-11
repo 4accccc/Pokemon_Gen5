@@ -242,7 +242,8 @@ void * SaveControl_DataPtrGet(SAVE_CONTROL_WORK *ctrl, GFL_SVDT_ID gmdata_id)
 /**
  * セーブデータワークの先頭アドレスを取得
  *
- * @param   ctrl		セーブデータ管理ワークへのポインタ
+ * @param   ctrl    		セーブデータ管理ワークへのポインタ
+ * @param   get_size		セーブデータの実サイズが代入されるワークのポインタ
  *
  * @retval  const void *		セーブデータワークの先頭アドレス
  *
@@ -250,9 +251,9 @@ void * SaveControl_DataPtrGet(SAVE_CONTROL_WORK *ctrl, GFL_SVDT_ID gmdata_id)
  * 他の箇所では使用しないこと!
  */
 //==================================================================
-const void * SaveControl_GetSaveWorkAdrs(SAVE_CONTROL_WORK *ctrl)
+const void * SaveControl_GetSaveWorkAdrs(SAVE_CONTROL_WORK *ctrl, u32 *get_size)
 {
-  return GFL_SAVEDATA_GetSaveWorkAdrs(ctrl->sv_normal);
+  return GFL_SAVEDATA_GetSaveWorkAdrs(ctrl->sv_normal, get_size);
 }
 
 //--------------------------------------------------------------
