@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T15:57:24"/>
+	<create user="matsumiya" host="W00207" date="2009-11-10T20:36:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="186"/>
+		<comment position="4" width="241"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -318,14 +318,14 @@
 おまえさんに　さいのうを　みいだす
 にんげんがいるのも　わかるってもんだ[BE:01:ページ切り替え（クリア）]
 フンッ
-これでも　もっていけ！</language>
+こいつを　もっていけ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">なるほど　気に入らないな！[BE:01:ページ切り替え（クリア）]
 年齢の　わりに
 堂々たる　闘いっぷり[BE:01:ページ切り替え（クリア）]
 おまえさんに　才能を　見出す
 人間が　いるのも　わかるってもんだ[BE:01:ページ切り替え（クリア）]
 フンッ
-これでも　持っていけ！</language>
+こいつを　持っていけ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c05gym0101_leader_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -338,35 +338,41 @@
 クエイクバッジを　もらった！</language>
 	</row>
 
-	<row id="msg_c05gym0101_leader_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c05gym0101_leader_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
-・アイテム入手処理</comment>
+・</comment>
 		<attribute name="キャラ指定">LEADER5</attribute>
 		<language name="JPN" width="256">ついでだ
 こっちの　わざマシンを　くれてやる[BE:01:ページ切り替え（クリア）]
-ヤーコンさま
-じまんの　わざマシンだ[BE:01:ページ切り替え（クリア）]
-ぜんぶの　ポケモンに
-おぼえさせても　いいぞ！[BE:01:ページ切り替え（クリア）]</language>
+……と　おもったが
+ちょいと　やぼようが　あってな[BE:01:ページ切り替え（クリア）]
+おまえ　６ばんどうろの　さきにある
+どうくつの　まえで　まっていろ！</language>
 		<language name="JPN_KANJI" width="256">ついでだ
 こっちの　わざマシンを　くれてやる[BE:01:ページ切り替え（クリア）]
-ヤーコンさま　自慢の　わざマシンだ[BE:01:ページ切り替え（クリア）]
-全部の　ポケモンに
-覚えさせても　良いぞ！[BE:01:ページ切り替え（クリア）]</language>
+……と思ったが
+ちょいと　野暮用が　あってな[BE:01:ページ切り替え（クリア）]
+おまえ　６番道路の　先にある
+洞くつの前で　待っていろ！</language>
 	</row>
 
-	<row id="msg_c05gym0101_leader_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c05gym0101_leader_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
-・アイテム入手処理後</comment>
+・msg_c05gym0101_leader_04表示後
+　d06：電気石の洞窟ストッパー解除まで
+　繰り返し</comment>
 		<attribute name="キャラ指定">LEADER5</attribute>
-		<language name="JPN" width="256">わざマシンのかいせつ（よてい）</language>
-		<language name="JPN_KANJI" width="256">わざマシンの解説（予定）</language>
+		<language name="JPN" width="256">ヤーコン『どうした？[BE:01:ページ切り替え（クリア）]
+おまえ　６ばんどうろの　さきにある
+どうくつの　まえで　まっていろ！</language>
+		<language name="JPN_KANJI" width="256">ヤーコン『どうした？[BE:01:ページ切り替え（クリア）]
+おまえ　６番道路の　先にある
+洞くつの前で　待っていろ！</language>
 	</row>
 
-	<row id="msg_c05gym0101_leader_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c05gym0101_leader_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
-・msg_c01gym0101_leader_05
-表示後に再度会話</comment>
+・d06：電気石の洞窟ストッパー解除後</comment>
 		<attribute name="キャラ指定">LEADER5</attribute>
 		<language name="JPN" width="256">オレには　おまえさんの　さいのうが
 どれほどのものか　わからんが[BE:01:ページ切り替え（クリア）]
@@ -382,7 +388,7 @@
 限界を決めるのは　自分ってことだ</language>
 	</row>
 
-	<row id="msg_c05gym0101_glasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05gym0101_glasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手前
 ・ジムに入ると
@@ -400,7 +406,7 @@
 これを　さしあげるッす！</language>
 	</row>
 
-	<row id="msg_c05gym0101_glasses_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05gym0101_glasses_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手後
 ・ジムバッジ取得まで繰り返し</comment>
@@ -422,7 +428,7 @@
 水のそばで　暮らしているんですかね</language>
 	</row>
 
-	<row id="msg_c05gym0101_glasses_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05gym0101_glasses_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・ジムバッジ取得後</comment>
 		<attribute name="キャラ指定">GLASSES
@@ -437,7 +443,7 @@
 思い出して　ほしいっすね</language>
 	</row>
 
-	<row id="msg_c05gym0101_statue_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c05gym0101_statue_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>ジムバッジ取得前</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
 		<language name="JPN" width="256">ホドモエ　ポケモンジム[BE:01:ページ切り替え（クリア）]
@@ -448,7 +454,7 @@
 認定　トレーナー！</language>
 	</row>
 
-	<row id="msg_c05gym0101_statue_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c05gym0101_statue_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>ジムバッジ取得後</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
 		<language name="JPN" width="256">ホドモエ　ポケモンジム[BE:01:ページ切り替え（クリア）]
@@ -461,7 +467,7 @@
 [1:00:トレーナー名:0]</language>
 	</row>
 
-	<row id="msg_c05gym0101_statue_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c05gym0101_statue_03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>？？後</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
 		<language name="JPN" width="256">ホドモエ　ポケモンジム[BE:01:ページ切り替え（クリア）]
