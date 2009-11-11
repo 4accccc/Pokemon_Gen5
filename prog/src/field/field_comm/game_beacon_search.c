@@ -104,8 +104,8 @@ static const GFLNetInitializeStruct aGFLNetInit = {
 	4,//_BCON_GET_NUM,  // 最大ビーコン収集数
 	TRUE,		// CRC計算
 	FALSE,		// MP通信＝親子型通信モードかどうか
-	GFL_NET_TYPE_WIRELESS,		//通信タイプの指定
-	TRUE,		// 親が再度初期化した場合、つながらないようにする場合TRUE
+	GFL_NET_TYPE_WIRELESS_SCANONLY,		//通信タイプの指定
+	FALSE,		// 親が再度初期化した場合、つながらないようにする場合TRUE
 	WB_NET_FIELDMOVE_SERVICEID,	//GameServiceID
 #if GFL_NET_IRC
 	IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間
@@ -192,6 +192,7 @@ BOOL GameBeacon_Exit(int *seq, void *pwk, void *pWork)
 {
   GAME_BEACON_SYS_PTR gbs = pWork;
   
+  OS_TPrintf("GameBeaconExit\n");
 	GFL_NET_Exit(GameBeacon_ExitCallback);
 	return TRUE;
 }
@@ -212,8 +213,10 @@ BOOL GameBeacon_ExitWait(int *seq, void *pwk, void *pWork)
   if(gbs->status == GBS_STATUS_NULL){
     FIELD_BEACON_MSG_ExitSystem( gbs->fbmSys );
     GFL_HEAP_FreeMemory(gbs);
+    OS_TPrintf("GameBeaconWait...Finish\n");
     return TRUE;
   }
+  OS_TPrintf("GameBeaconWait...\n");
   return FALSE;
 }
 
@@ -262,6 +265,7 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
           invalid_parent->parent_macAddress[i] = target->macAddress[i];
         }
         GameCommSys_ChangeReq(gcsp, GAME_COMM_NO_INVASION, invalid_parent);
+        OS_TPrintf("パレス親が見つかった為、通信を侵入に切り替えます\n");
       }
       break;
     default:
@@ -291,7 +295,7 @@ static GBS_TARGET_INFO * GameBeacon_UpdateBeacon(GAME_BEACON_SYS_PTR gbs)
     return NULL;
   }
   if(gbs->status == GBS_STATUS_INIT){
-    GFL_NET_Changeover(NULL);
+    GFL_NET_StartBeaconScan();
     gbs->status = GBS_STATUS_UPDATE;
     return NULL;
   }

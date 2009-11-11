@@ -452,7 +452,7 @@ static void  IntrudeComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWor
 
 //  NetErr_ErrorSet();
 //  intcomm->comm_status = INTRUDE_COMM_STATUS_ERROR;
-  OS_TPrintf("intrude comm エラー！\n");
+  OS_TPrintf("intrude comm エラー！ errNo = %d\n");
 }
 
 //--------------------------------------------------------------
