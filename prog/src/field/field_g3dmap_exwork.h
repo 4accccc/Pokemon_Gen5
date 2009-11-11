@@ -19,6 +19,7 @@ extern "C"{
 #include <gflib.h>
 #include "field_ground_anime.h"
 #include "field_buildmodel.h"
+#include "field_wfbc.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -49,6 +50,9 @@ extern FIELD_GRANM_WORK* FLD_G3D_MAP_EXWORK_GetGranmWork( const FLD_G3D_MAP_EXWO
 
 // 配置モデル制御
 extern FIELD_BMODEL_MAN* FLD_G3D_MAP_EXWORK_GetBModelMan( const FLD_G3D_MAP_EXWORK* cp_wk );
+
+// WFBC街情報
+extern FIELD_WFBC* FLD_G3D_MAP_EXWORK_GetWFBCWork( const FLD_G3D_MAP_EXWORK* cp_wk );
 
 // マップインデックス取得
 const u32 FLD_G3D_MAP_EXWORK_GetMapIndex( const FLD_G3D_MAP_EXWORK* cp_wk );

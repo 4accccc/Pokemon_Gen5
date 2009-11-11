@@ -37,7 +37,9 @@
 #include "field/field_status.h"   //FIELD_STATUS
 #include "field/field_encount.h"
 #include "field/field_dir.h"
+#include "field/field_wfbc_data.h"  // WF・BC
 #include "savedata/intrude_save.h"  //
+#include "savedata/randommap_save.h"  //WF・BC
 #include "savedata/shortcut.h"		//SHORTCUT_SetRegister
 
 #include "field/fldmmdl.h"      //MMDLSYS
@@ -89,6 +91,7 @@ struct _GAMEDATA{
   u8 intrude_num;         ///<侵入している時の接続人数
   u8 intrude_my_id;       ///<侵入している自分のNetID
   OCCUPY_INFO occupy[OCCUPY_ID_MAX];    ///<占拠情報
+  FIELD_WFBC_CORE wfbc[GAMEDATA_WFBC_ID_MAX];  ///<WhiteForest BlackCity
   
   FIELD_BEACON_MSG_DATA *fbmData; //フィールドビーコンメッセージデータ
 
@@ -184,6 +187,14 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   for(i = 0; i < OCCUPY_ID_MAX; i++){
     OccupyInfo_WorkInit(&gd->occupy[i]);
   }
+
+  //街拠情報
+  for(i = 0; i < GAMEDATA_WFBC_ID_MAX; i++){
+    FIELD_WFBC_CORE_Crear(&gd->wfbc[i]);
+  }
+  // 街自分の場所初期化
+  // @TODO ここでいいのか？ 
+  FIELD_WFBC_CORE_SetUp( &gd->wfbc[GAMEDATA_WFBC_ID_MINE] );
   
   //歩数カウント
   gd->fieldmap_walk_count = 0;
@@ -261,6 +272,38 @@ OCCUPY_INFO * GAMEDATA_GetMyOccupyInfo(GAMEDATA * gamedata)
 {
   return GAMEDATA_GetOccupyInfo(gamedata, OCCUPY_ID_MINE);
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自分のWFBC街情報の取得
+ *
+ *	@param	gamedata  ゲームデータ
+ *
+ *	@return WFBC街情報のポインタ
+ */
+//-----------------------------------------------------------------------------
+FIELD_WFBC_CORE* GAMEDATA_GetMyWFBCCoreData( GAMEDATA * gamedata )
+{
+  return GAMEDATA_GetWFBCCoreData( gamedata, GAMEDATA_WFBC_ID_MINE );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プレイヤーのWFBC街情報の取得
+ *
+ *	@param	gamedata      ゲームデータ
+ *	@param	player_id     プレイヤーID
+ *
+ *	@return WFBC街情報のポインタ
+ */
+//-----------------------------------------------------------------------------
+FIELD_WFBC_CORE* GAMEDATA_GetWFBCCoreData( GAMEDATA * gamedata, GAMEDATA_WFBC_ID id )
+{
+  GF_ASSERT_MSG(id < GAMEDATA_WFBC_ID_MAX, "wfbc data data_id = %d\n", id);
+  return &gamedata->wfbc[id];
+}
+
 
 //============================================================================================
 //============================================================================================
@@ -1042,6 +1085,12 @@ static void GAMEDATA_SaveDataLoad(GAMEDATA *gamedata)
     SaveData_OccupyInfoLoad(gamedata->sv_control_ptr, occupy);
   }
 
+  { //WFBC_CORE
+    FIELD_WFBC_CORE *wfbc = GAMEDATA_GetMyWFBCCoreData(gamedata);
+    RANDOMMAP_SAVE* save = RANDOMMAP_SAVE_GetRandomMapSave( gamedata->sv_control_ptr );
+    RANDOMMAP_SAVE_GetCoreWork(save, wfbc);
+  }
+
   { //GIMMICK_WORK
     SaveData_LoadGimmickWork(gamedata->sv_control_ptr, &gamedata->GimmickWork);
   }
@@ -1073,6 +1122,12 @@ static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata)
   { //OCCUPY_INFO
     OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
     SaveData_OccupyInfoUpdate(gamedata->sv_control_ptr, occupy);
+  }
+
+  { //WFBC_CORE
+    FIELD_WFBC_CORE *wfbc = GAMEDATA_GetMyWFBCCoreData(gamedata);
+    RANDOMMAP_SAVE* save = RANDOMMAP_SAVE_GetRandomMapSave( gamedata->sv_control_ptr );
+    RANDOMMAP_SAVE_SetCoreWork(save, wfbc);
   }
 
   { //GIMMICK_WORK

@@ -18,6 +18,10 @@ extern "C"{
 
 #include "field_g3d_mapper.h"
 
+#include "field/field_wfbc_data.h"
+
+#include "debug/debugwin_sys.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -36,11 +40,6 @@ typedef enum
 } FIELD_WFBC_PEOPLE_STATUS;
 
 
-//-------------------------------------
-///	記憶する人物の数　最大数
-//=====================================
-#define FIELD_WFBC_PEOPLE_MAX ( 10 )
-
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
@@ -55,7 +54,6 @@ typedef struct _FIELD_WFBC FIELD_WFBC;
 ///	人物情報
 //=====================================
 typedef struct _FIELD_WFBC_PEOPLE FIELD_WFBC_PEOPLE;
-
 
 
 //-----------------------------------------------------------------------------
@@ -74,8 +72,13 @@ extern void FIELD_WFBC_Delete( FIELD_WFBC* p_wk );
 //-------------------------------------
 ///	全体情報の取得
 //=====================================
+extern void FIELD_WFBC_GetCore( const FIELD_WFBC* cp_wk, FIELD_WFBC_CORE* p_buff );
+
 extern u32 FIELD_WFBC_GetPeopleNum( const FIELD_WFBC* cp_wk );
 extern const FIELD_WFBC_PEOPLE* FIELD_WFBC_GetPeople( const FIELD_WFBC* cp_wk, int index );
+
+// 街タイプ
+extern FIELD_WFBC_CORE_TYPE FIELD_WFBC_GetType( const FIELD_WFBC* cp_wk );
 
 // WFの高さ情報
 
@@ -85,7 +88,9 @@ extern const FIELD_WFBC_PEOPLE* FIELD_WFBC_GetPeople( const FIELD_WFBC* cp_wk, i
 //-------------------------------------
 ///	全体情報の設定
 //=====================================
-extern int FIELD_WFBC_AddPeople( FIELD_WFBC* p_wk, u32 objcode );
+extern void FIELD_WFBC_SetUp( FIELD_WFBC* p_wk, const FIELD_WFBC_CORE* cp_core );
+
+extern int FIELD_WFBC_AddPeople( FIELD_WFBC* p_wk, const FIELD_WFBC_CORE_PEOPLE* cp_core );
 extern void FIELD_WFBC_DeletePeople( FIELD_WFBC* p_wk, int index );
 
 //-------------------------------------
@@ -100,6 +105,17 @@ extern u32 FIELD_WFBC_PEOPLE_GetOBJCode( const FIELD_WFBC_PEOPLE* cp_people );
 //  ↓このヘッダで宣言しているが実態はfield_g3d_mapper.cにある
 //------------------------------------------------------------------
 extern FIELD_WFBC* FLDMAPPER_GetWfbcWork( const FLDMAPPER* g3Dmapper);
+
+//-------------------------------------
+///	マッパーのWFBCワークに街情報を設定する
+//=====================================
+extern void FLDMAPPER_SetWfbcData( FLDMAPPER* g3Dmapper, const FIELD_WFBC_CORE* cp_core );
+
+
+#ifdef PM_DEBUG
+extern void FIELD_FUNC_RANDOM_GENERATE_InitDebug( HEAPID heapId );
+extern void FIELD_FUNC_RANDOM_GENERATE_TermDebug();
+#endif
 
 
 #ifdef _cplusplus

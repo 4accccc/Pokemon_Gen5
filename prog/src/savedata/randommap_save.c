@@ -30,9 +30,7 @@
 #pragma mark [> struct
 struct _RANDOMMAP_SAVE
 {
-  u16 cityLevel;
-  u8 type;  //テスト用街の種類
-  u8 pad;
+  FIELD_WFBC_CORE mapdata;
 };
 
 
@@ -47,8 +45,8 @@ int RANDOMMAP_SAVE_GetWorkSize(void)
 
 void RANDOMMAP_SAVE_InitWork(RANDOMMAP_SAVE *randomMapSave)
 {
-	randomMapSave->cityLevel = 5;
-	randomMapSave->type = RMT_BLACK_CITY;
+  // クリア
+  FIELD_WFBC_CORE_Crear( &randomMapSave->mapdata );
 }
 
 //----------------------------------------------------------
@@ -59,25 +57,38 @@ RANDOMMAP_SAVE* RANDOMMAP_SAVE_GetRandomMapSave( SAVE_CONTROL_WORK *sv )
 	return (RANDOMMAP_SAVE*)SaveControl_DataPtrGet( sv , GMDATA_ID_RANDOMMAP );
 }
 
-void RANDOMMAP_SAVE_SetCityLevel( RANDOMMAP_SAVE *randomMapSave , const u16 level )
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WFBC基本情報を設定
+ *
+ *	@param	sv        セーブワーク
+ *	@param	cp_buff   基本情報
+ */
+//-----------------------------------------------------------------------------
+void RANDOMMAP_SAVE_SetCoreWork( RANDOMMAP_SAVE* sv, const FIELD_WFBC_CORE* cp_buff )
 {
-  randomMapSave->cityLevel = level;
+  GF_ASSERT( sv );
+  GF_ASSERT( cp_buff );
+  GFL_STD_MemCopy( cp_buff, &sv->mapdata, sizeof(FIELD_WFBC_CORE) );
 }
 
-const u16 RANDOMMAP_SAVE_GetCityLevel( RANDOMMAP_SAVE *randomMapSave )
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WFBC基本情報を取得する
+ *
+ *	@param	sv        セーブワーク
+ *	@param	p_buff    バッファ
+ */
+//-----------------------------------------------------------------------------
+void RANDOMMAP_SAVE_GetCoreWork( const RANDOMMAP_SAVE* sv, FIELD_WFBC_CORE* p_buff )
 {
-  return randomMapSave->cityLevel;
+  GF_ASSERT( sv );
+  GF_ASSERT( p_buff );
+  
+  GFL_STD_MemCopy( &sv->mapdata, p_buff, sizeof(FIELD_WFBC_CORE) );
 }
 
-//----------------------------------------------------------
-//	テスト用街の種類
-//----------------------------------------------------------
-void RANDOMMAP_SAVE_SetCityType( RANDOMMAP_SAVE *randomMapSave , const u8 type )
-{
-  randomMapSave->type = type;
-}
 
-const u8 RANDOMMAP_SAVE_GetCityType( RANDOMMAP_SAVE *randomMapSave )
-{
-  return randomMapSave->type;
-}
+
+

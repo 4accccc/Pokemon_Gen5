@@ -26,5 +26,3 @@ extern void FieldGetAttr_RandomGenerate( GFL_G3D_MAP_ATTRINFO* attrInfo,
 									const void* mapdata, const VecFx32* posInBlock, 
 									const fx32 map_width, const fx32 map_height );
 
-extern void FIELD_FUNC_RANDOM_GENERATE_InitDebug( HEAPID heapId );
-extern void FIELD_FUNC_RANDOM_GENERATE_TermDebug();

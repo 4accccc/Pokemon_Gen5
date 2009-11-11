@@ -98,6 +98,8 @@
 #include "fld_particle.h"
 #include "fld3d_ci.h"
 
+#include "field_wfbc.h"
+
 #include "savedata/sodateya_work.h"
 #include "sodateya.h"
 #include "system/net_err.h"
@@ -557,6 +559,12 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     }
     //とりあえずここで配置モデルリストをセットする
     FIELD_BMODEL_MAN_Load(bmodel_man, fieldWork->map_id, fieldWork->areadata);
+
+    // WFBC街情報を設定
+    // @TODO　後々は、パレス接続先の人の街情報を設定する
+    {
+      FLDMAPPER_SetWfbcData( fieldWork->g3Dmapper, GAMEDATA_GetMyWFBCCoreData( fieldWork->gamedata ) );
+    }
   }
   
   //フィールドマップ用ロケーション作成
@@ -1018,7 +1026,7 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   SODATEYA_Delete( fieldWork->sodateya );
 
 #if USE_DEBUGWIN_SYSTEM
-  FIELD_FUNC_RANDOM_GENERATE_TermDebug( );
+  FIELD_FUNC_RANDOM_GENERATE_TermDebug();
   DEBUGWIN_ExitProc();
 #endif  //USE_DEBUGWIN_SYSTEM
 

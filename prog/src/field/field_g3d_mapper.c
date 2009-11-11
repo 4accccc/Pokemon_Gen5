@@ -74,6 +74,7 @@ typedef struct {
 struct _FLD_G3D_MAP_EXWORK{
 	FIELD_GRANM_WORK* p_granm_wk;		// 地面アニメーション
 	FIELD_BMODEL_MAN * bmodel_man;	// 
+	FIELD_WFBC * wfbcwork;	// 
 	u32               mapIndex;     //マップのindex(ランダムマップで使用
 };
 
@@ -212,6 +213,7 @@ FLDMAPPER*	FLDMAPPER_Create( HEAPID heapID )
   g3Dmapper->bmodel_man = FIELD_BMODEL_MAN_Create(g3Dmapper->heapID, g3Dmapper);
   // WFBCワークの生成
   g3Dmapper->wfbcwork = FIELD_WFBC_Create( heapID );
+
 
   //拡張高さデータ領域確保
   g3Dmapper->ExHeightList = EXH_AllocHeightList(EX_HEIGHT_NUM, heapID);
@@ -1514,6 +1516,20 @@ FIELD_WFBC* FLDMAPPER_GetWfbcWork( const FLDMAPPER* g3Dmapper)
   return g3Dmapper->wfbcwork;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  描画するWFBC街情報を設定する
+ *
+ *	@param	g3Dmapper
+ *	@param	cp_core 
+ */
+//-----------------------------------------------------------------------------
+void FLDMAPPER_SetWfbcData( FLDMAPPER* g3Dmapper, const FIELD_WFBC_CORE* cp_core )
+{
+  GF_ASSERT( g3Dmapper );
+  FIELD_WFBC_SetUp( g3Dmapper->wfbcwork, cp_core );
+}
+
 
 
 //============================================================================================
@@ -1606,6 +1622,18 @@ FIELD_BMODEL_MAN* FLD_G3D_MAP_EXWORK_GetBModelMan( const FLD_G3D_MAP_EXWORK* cp_
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  WFBC街情報
+ *
+ *	@param	cp_wk   ワーク
+ */
+//-----------------------------------------------------------------------------
+FIELD_WFBC* FLD_G3D_MAP_EXWORK_GetWFBCWork( const FLD_G3D_MAP_EXWORK* cp_wk )
+{
+  return cp_wk->wfbcwork;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	マップのインデックス取得
  *
  *	@param	cp_wk		ワーク
@@ -1632,6 +1660,7 @@ static void FLD_G3D_MAP_ExWork_Init( FLD_G3D_MAP_EXWORK* p_wk, FLDMAPPER* g3Dmap
 	// 地面アニメ
 	p_wk->p_granm_wk = FIELD_GRANM_GetWork( g3Dmapper->granime, index );
   p_wk->bmodel_man = g3Dmapper->bmodel_man;
+  p_wk->wfbcwork = g3Dmapper->wfbcwork;
   p_wk->mapIndex = index;
 }
 

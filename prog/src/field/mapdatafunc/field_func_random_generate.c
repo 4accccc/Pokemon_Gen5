@@ -17,8 +17,6 @@
 
 
 #include "savedata/save_control.h"
-#include "savedata/randommap_save.h"
-#include "debug/debugwin_sys.h"
 #include "fieldmap/buildmodel_outdoor.naix"
 
 //============================================================================================
@@ -60,9 +58,9 @@ typedef enum
   RMM_RIGHT_BOTTOM,
 }RANDOM_MAP_MAPPOS;
 
-static const RANDOM_MAP_MAPPOS FieldFuncRandom_CheckMapPos( GFL_G3D_MAP* g3Dmap , const u8 mapIdx );
+static void FieldFuncRandom_CheckMapPos( GFL_G3D_MAP* g3Dmap , VecFx32* p_pos );
 static const u8 FieldFuncRandom_GetBilduingHeight( const u8 idxTop , const u8 idxLeft );
-static const u32 FieldFuncRandom_GetBilduingResId( const u8 height );
+static const u32 FieldFuncRandom_GetBilduingResId( u32 cyty_type, const u8 height );
 
 BOOL FieldLoadMapData_RandomGenerate( GFL_G3D_MAP* g3Dmap, void * exWork )
 {
@@ -114,10 +112,9 @@ BOOL FieldLoadMapData_RandomGenerate( GFL_G3D_MAP* g3Dmap, void * exWork )
 			//配置オブジェクト設定
 			if( fileHeader->positionOffset != fileHeader->endPos )
 			{
-        //レベル取得(仮
-        SAVE_CONTROL_WORK *saveWork = SaveControl_GetPointer();
-        RANDOMMAP_SAVE* mapSave = RANDOMMAP_SAVE_GetRandomMapSave( saveWork );
-        u16 level = RANDOMMAP_SAVE_GetCityLevel( mapSave );
+        FIELD_WFBC* p_wfbc = FLD_G3D_MAP_EXWORK_GetWFBCWork( p_exwork );
+        u16 level = FIELD_WFBC_GetPeopleNum( p_wfbc );
+        u16 cyty_type = FIELD_WFBC_GetType(  p_wfbc );
 
 				LayoutFormat* layout = (LayoutFormat*)((u32)mem + fileHeader->positionOffset);
 				PositionSt* objStatus = (PositionSt*)&layout->posData;
@@ -125,36 +122,34 @@ BOOL FieldLoadMapData_RandomGenerate( GFL_G3D_MAP* g3Dmap, void * exWork )
 				int i, count = layout->count;
         FIELD_BMODEL_MAN * bm = FLD_G3D_MAP_EXWORK_GetBModelMan(p_exwork);
         const u8 mapIndex = FLD_G3D_MAP_EXWORK_GetMapIndex(p_exwork);
-        const RANDOM_MAP_MAPPOS mapPos = FieldFuncRandom_CheckMapPos( g3Dmap , mapIndex );
+        VecFx32 pos;
         u8 x,z;
         fx32 top,left;
         u8  idxTop,idxLeft;
-        switch(mapPos)
+
+        FieldFuncRandom_CheckMapPos( g3Dmap , &pos );
+
+        top = pos.z - (256<<FX32_SHIFT) - (144<<FX32_SHIFT);  // ハーフブロックと配置モデルのローカル座標分ずらす
+        left = pos.x - (256<<FX32_SHIFT) - (144<<FX32_SHIFT);
+        
+        switch(mapIndex)
         {
         case RMM_LEFT_TOP:
-          top = FX32_CONST(-144.0f);
-          left = FX32_CONST(-144.0f);
           idxTop = 0;
           idxLeft = 0;
           break;
 
         case RMM_RIGHT_TOP:
-          top = FX32_CONST(-144.0f);
-          left = FX32_CONST(-176.0f);
           idxTop = 0;
           idxLeft = 3;
           break;
 
         case RMM_LEFT_BOTTOM:
-          top = FX32_CONST(-176.0f);
-          left = FX32_CONST(-144.0f);
           idxTop = 3;
           idxLeft = 0;
           break;
 
         case RMM_RIGHT_BOTTOM:
-          top = FX32_CONST(-176.0f);
-          left = FX32_CONST(-176.0f);
           idxTop = 3;
           idxLeft = 3;
           break;
@@ -164,22 +159,31 @@ BOOL FieldLoadMapData_RandomGenerate( GFL_G3D_MAP* g3Dmap, void * exWork )
 				{
   				for( z=0; z<3; z++ )
   				{
-            s8 height = FieldFuncRandom_GetBilduingHeight(idxTop+z,idxLeft+x) + level - 10;
-            if( height > 10 )
+            u8 height_base = FieldFuncRandom_GetBilduingHeight(idxTop+z,idxLeft+x);
+            s8 height = height_base + level - 10;
+            if( height_base > 5 )
             {
-              height = 10;
+              if( height > 10 )
+              {
+                height = 10;
+              }
+            }
+            else if( height_base > 0 )
+            {
+              height = height_base;
             }
             
             if( height > 0 )
             {
-              const u32 resId = FieldFuncRandom_GetBilduingResId( height );
+              const u32 resId = FieldFuncRandom_GetBilduingResId( cyty_type, height );
               PositionSt objStatus;
               objStatus.resourceID = resId;
               objStatus.rotate = 0;
               objStatus.billboard = 0;
               objStatus.xpos = left+FX32_CONST( x*160.0f );
               objStatus.ypos = 0;
-              objStatus.zpos = - (top+FX32_CONST( z*160.0f) );
+              objStatus.zpos = - (top+FX32_CONST( z*160.0f)); // ResistMapObject内で-反転されるので
+              OS_TPrintf( "x=%d z=%d  pos x[%d] z[%d] \n", x, z, FX_Whole(objStatus.xpos), FX_Whole(-objStatus.zpos) );
               FIELD_BMODEL_MAN_ResistMapObject( bm, g3Dmap, &objStatus, i );
   					  i++;
   					}
@@ -280,40 +284,15 @@ void FieldGetAttr_RandomGenerate( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* ma
 
 
 //MAPの位置をチェック
-static const RANDOM_MAP_MAPPOS FieldFuncRandom_CheckMapPos( GFL_G3D_MAP* g3Dmap , const u8 mapIdx )
+static void FieldFuncRandom_CheckMapPos( GFL_G3D_MAP* g3Dmap , VecFx32* p_pos )
 {
-  VecFx32 pos;
-  GFL_G3D_MAP_GetTrans( g3Dmap , &pos );
-  OS_Printf("[%d][%f:%f:%f]\n",mapIdx,FX_FX32_TO_F32(pos.x),FX_FX32_TO_F32(pos.y),FX_FX32_TO_F32(pos.z));
-/*
-  if( pos.x < FX32_CONST( 256.0f+256.0f ) )
-  {
-    if( pos.z < FX32_CONST( 256.0f+256.0f ) )
-    {
-      return RMM_LEFT_TOP;
-    }
-    else
-    {
-      return RMM_LEFT_BOTTOM;
-    }
-  }
-  else
-  {
-    if( pos.z < FX32_CONST( 256.0f+256.0f ) )
-    {
-      return RMM_RIGHT_TOP;
-    }
-    else
-    {
-      return RMM_RIGHT_BOTTOM;
-    }
-  }
-*/
-  return (RANDOM_MAP_MAPPOS)(mapIdx);
+  GFL_G3D_MAP_GetTrans( g3Dmap , p_pos );
+  OS_Printf("[%f:%f:%f]\n",FX_FX32_TO_F32(p_pos->x),FX_FX32_TO_F32(p_pos->y),FX_FX32_TO_F32(p_pos->z));
 }
 
 static const u8 FieldFuncRandom_GetBilduingHeight( const u8 idxTop , const u8 idxLeft )
 {
+#if 0
   static const u8 idxArr[6][6] =
   {
     {1,3,6,5,4,2},
@@ -323,16 +302,27 @@ static const u8 FieldFuncRandom_GetBilduingHeight( const u8 idxTop , const u8 id
     {2,4,5,6,5,3},
     {1,2,4,3,2,1},
   };
+#else
+  static const u8 idxArr[6][6] =
+  {
+    {1,1,1,1,1,1},
+    {1,8,0,0,8,1},
+    {1,0,10,0,0,1},
+    {1,0,0,10,0,1},
+    {1,8,0,0,8,1},
+    {1,0,0,0,0,1},
+  };
+#endif
+
+  GF_ASSERT( idxTop < 6 );
+  GF_ASSERT( idxLeft < 6 );
   
   return idxArr[idxTop][idxLeft];
 }
 
-static const u32 FieldFuncRandom_GetBilduingResId( const u8 height )
+static const u32 FieldFuncRandom_GetBilduingResId( u32 cyty_type, const u8 height )
 {
-  SAVE_CONTROL_WORK *saveWork = SaveControl_GetPointer();
-  RANDOMMAP_SAVE* mapSave = RANDOMMAP_SAVE_GetRandomMapSave( saveWork );
-  u8 type = RANDOMMAP_SAVE_GetCityType( mapSave );
-  if( type == RMT_BLACK_CITY )
+  if( cyty_type == FIELD_WFBC_CORE_TYPE_BLACK_CITY )
   {
     return NARC_output_buildmodel_outdoor_bc_build_01_nsbmd + height-1;
   }
@@ -345,98 +335,3 @@ static const u32 FieldFuncRandom_GetBilduingResId( const u8 height )
 
 
 
-//デバッグ操作
-
-static void DEBWIN_Update_CityLevel( void* userWork , DEBUGWIN_ITEM* item );
-static void DEBWIN_Draw_CityLevel( void* userWork , DEBUGWIN_ITEM* item );
-static void DEBWIN_Update_CityType( void* userWork , DEBUGWIN_ITEM* item );
-static void DEBWIN_Draw_CityType( void* userWork , DEBUGWIN_ITEM* item );
-
-
-void FIELD_FUNC_RANDOM_GENERATE_InitDebug( HEAPID heapId )
-{
-  DEBUGWIN_AddGroupToTop( 10 , "RandomMap" , heapId );
-  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_CityLevel ,DEBWIN_Draw_CityLevel , 
-                             NULL , 10 , heapId );
-  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_CityType ,DEBWIN_Draw_CityType , 
-                             NULL , 10 , heapId );
-}
-
-void FIELD_FUNC_RANDOM_GENERATE_TermDebug( void )
-{
-  DEBUGWIN_RemoveGroup( 10 );
-}
-
-static void DEBWIN_Update_CityLevel( void* userWork , DEBUGWIN_ITEM* item )
-{
-  SAVE_CONTROL_WORK *saveWork = SaveControl_GetPointer();
-  RANDOMMAP_SAVE* mapSave = RANDOMMAP_SAVE_GetRandomMapSave( saveWork );
-  u16 level = RANDOMMAP_SAVE_GetCityLevel( mapSave );
-  
-  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
-  {
-    if( level < 20 )
-    {
-      level++;
-      RANDOMMAP_SAVE_SetCityLevel( mapSave , level );
-      DEBUGWIN_RefreshScreen();
-    }
-  }
-  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
-  {
-    if( level > 0 )
-    {
-      level--;
-      RANDOMMAP_SAVE_SetCityLevel( mapSave , level );
-      DEBUGWIN_RefreshScreen();
-    }
-  }
-}
-
-static void DEBWIN_Draw_CityLevel( void* userWork , DEBUGWIN_ITEM* item )
-{
-  SAVE_CONTROL_WORK *saveWork = SaveControl_GetPointer();
-  RANDOMMAP_SAVE* mapSave = RANDOMMAP_SAVE_GetRandomMapSave( saveWork );
-  u16 level = RANDOMMAP_SAVE_GetCityLevel( mapSave );
-  DEBUGWIN_ITEM_SetNameV( item , "Level[%d]",level );
-}
-
-static void DEBWIN_Update_CityType( void* userWork , DEBUGWIN_ITEM* item )
-{
-  SAVE_CONTROL_WORK *saveWork = SaveControl_GetPointer();
-  RANDOMMAP_SAVE* mapSave = RANDOMMAP_SAVE_GetRandomMapSave( saveWork );
-  u8 type = RANDOMMAP_SAVE_GetCityType( mapSave );
-  
-  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT || 
-      GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT  ||
-      GFL_UI_KEY_GetRepeat() & PAD_BUTTON_A )
-  {
-    if( type == RMT_BLACK_CITY )
-    {
-      type = RMT_WHITE_FOREST;
-    }
-    else
-    {
-      type = RMT_BLACK_CITY;
-    }
-    RANDOMMAP_SAVE_SetCityType( mapSave , type );
-    DEBUGWIN_RefreshScreen();
-  }
-  
-}
-
-static void DEBWIN_Draw_CityType( void* userWork , DEBUGWIN_ITEM* item )
-{
-  SAVE_CONTROL_WORK *saveWork = SaveControl_GetPointer();
-  RANDOMMAP_SAVE* mapSave = RANDOMMAP_SAVE_GetRandomMapSave( saveWork );
-  u8 type = RANDOMMAP_SAVE_GetCityType( mapSave );
-  if( type == RMT_BLACK_CITY )
-  {
-    DEBUGWIN_ITEM_SetName( item , "Type[BLACK CITY]" );
-  }
-  else
-  {
-    DEBUGWIN_ITEM_SetName( item , "Type[WHITE FOREST]" );
-  }
-  
-}
