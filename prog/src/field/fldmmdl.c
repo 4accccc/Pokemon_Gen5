@@ -283,6 +283,7 @@ static void MMdlSys_DeleteOBJCodeParam( MMDLSYS *mmdlsys );
 
 //parts
 static u16 WorkOBJCode_GetOBJCode( void *fsys, int code );
+static u16 OBJCode_GetDataNumber( u16 code );
 static const MMDL_MOVE_PROC_LIST * MoveProcList_GetList( u16 code );
 static const MMDL_DRAW_PROC_LIST * DrawProcList_GetList(
 		MMDL_DRAWPROCNO no );
@@ -4505,8 +4506,8 @@ static void MMdlSys_DeleteOBJCodeParam( MMDLSYS *mmdlsys )
 const OBJCODE_PARAM * MMDLSYS_GetOBJCodeParam(
 		const MMDLSYS *mmdlsys, u16 code )
 {
-	GF_ASSERT( code < OBJCODEMAX );
   GF_ASSERT( mmdlsys->pOBJCodeParamTbl != NULL );
+  code = OBJCode_GetDataNumber( code );
 	return( &(mmdlsys->pOBJCodeParamTbl[code]) );
 }
 
@@ -4549,6 +4550,30 @@ static u16 WorkOBJCode_GetOBJCode( void *fsys, int code )
 	#endif
 	
 	return( code );
+}
+
+//--------------------------------------------------------------
+/**
+ * 指定されたOBJコードをデータ配列要素数に変換
+ * @param code OBJ CODE
+ * @retval u16 codeをデータの並びにあわせた数値
+ */
+//--------------------------------------------------------------
+static u16 OBJCode_GetDataNumber( u16 code )
+{
+  GF_ASSERT( code < OBJCODETOTAL );
+  
+  if( code < OBJCODEEND_BBD ){
+    return( code );
+  }
+  
+  if( code >= OBJCODESTART_TPOKE && code < OBJCODEEND_TPOKE ){
+    code = (code - OBJCODESTART_TPOKE) + OBJCODEEND_BBD;
+    return( code );
+  }
+  
+  GF_ASSERT( 0 );
+  return( 0 );
 }
 
 //--------------------------------------------------------------
@@ -5008,13 +5033,17 @@ void MMDLHEADER_SetRailPos( MMDL_HEADER* head, u16 index, u16 front, u16 side )
 u8 * DEBUG_MMDL_GetOBJCodeString( u16 code, HEAPID heapID )
 {
 	u8 *buf;
-	GF_ASSERT( code < OBJCODEMAX );
-	buf = GFL_HEAP_AllocClearMemoryLo(
+  
+  code = OBJCode_GetDataNumber( code );
+	
+  buf = GFL_HEAP_AllocClearMemoryLo(
 			heapID, DEBUG_OBJCODE_STR_LENGTH );
-	GFL_ARC_LoadDataOfs( buf, ARCID_MMDL_PARAM,
+	
+  GFL_ARC_LoadDataOfs( buf, ARCID_MMDL_PARAM,
 			NARC_fldmmdl_mdlparam_fldmmdl_objcodestr_bin,
 			DEBUG_OBJCODE_STR_LENGTH * code, DEBUG_OBJCODE_STR_LENGTH );
-	return( buf );
+	
+  return( buf );
 }
 #endif //DEBUG_MMDL
 
