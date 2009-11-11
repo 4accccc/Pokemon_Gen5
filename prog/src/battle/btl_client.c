@@ -75,7 +75,8 @@ struct _BTL_CLIENT {
   BTL_ADAPTER*  adapter;
   BTLV_CORE*    viewCore;
   STR_PARAM     strParam;
-  BtlRotateDir  prevRotateDir;
+  BtlRotateDir    prevRotateDir;
+  const BTL_POKEPARAM*  rotatePokeWork[BTL_ROTATE_NUM];
 
   ClientSubProc  subProc;
   int            subSeq;
@@ -434,8 +435,16 @@ static BOOL SubProc_UI_SelectRotation( BTL_CLIENT* wk, int* seq )
 {
   switch( *seq ){
   case 0:
-    BTLV_UI_SelectRotation_Start( wk->viewCore, wk->prevRotateDir );
-    (*seq)++;
+    {
+      const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( wk->pokeCon, wk->myID );
+      u32 i;
+      for(i=0; i<BTL_ROTATE_NUM; ++i){
+        wk->rotatePokeWork[i] = BTL_PARTY_GetMemberDataConst( party, i );
+      }
+      BTLV_UI_SelectRotation_Start( wk->viewCore, wk->prevRotateDir );
+      (*seq)++;
+    }
+    break;
 
   case 1:
     {

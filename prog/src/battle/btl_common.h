@@ -34,6 +34,7 @@ enum {
   BTL_POKEID_NULL = 31,     ///< 無効が保証されるポケモンID（サーバコマンド生成の都合上、5bitに収まるように…）
   BTL_TURNCOUNT_MAX = 9999, ///< カウントするターン数の最大
   BTL_SHOOTER_ENERGY_MAX = 14,  ///< シューターの蓄積エネルギー最大値
+  BTL_ROTATE_NUM = 3,       ///< ローテーション対象ポケ数
 
   BTL_CLIENTID_NULL = BTL_CLIENT_MAX,
 };

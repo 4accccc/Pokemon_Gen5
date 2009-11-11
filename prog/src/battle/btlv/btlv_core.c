@@ -92,11 +92,11 @@ static BOOL CmdProc_SelectTarget( BTLV_CORE* core, int* seq, void* workBufer );
 static void mainproc_setup( BTLV_CORE* core, pCmdProc proc );
 static BOOL mainproc_call( BTLV_CORE* core );
 static BOOL subprocDamageEffect( int* seq, void* wk_adrs );
-static BOOL subprocDamageDoubleEffect( int* seq, void* wk_adrs );
 static BOOL subprocMemberIn( int* seq, void* wk_adrs );
 static void setup_core( BTLV_CORE* wk, HEAPID heapID );
 static void cleanup_core( BTLV_CORE* wk );
 static BOOL subprocMoveMember( int* seq, void* wk_adrs );
+static BOOL subprocRotateMember( int* seq, void* wk_adrs );
 
 
 
@@ -1378,6 +1378,8 @@ static BOOL subprocMoveMember( int* seq, void* wk_adrs )
   BTLV_CORE* wk = wk_adrs;
   MOVE_MEMBER_WORK* subwk = getGenericWork( wk, sizeof(MOVE_MEMBER_WORK) );
 
+  // @todo 今は単に該当個所の絵を消して、新しく出してるだけで、
+  // 演出的な動作がまったく入っていない。いずれちゃんと作る。
   switch( *seq ){
   case 0:
     if( BTLV_EFFECT_CheckExist(subwk->vpos1) ){
@@ -1426,6 +1428,14 @@ static BOOL subprocMoveMember( int* seq, void* wk_adrs )
 /*--------------------------------------------------------------------------------------------------*/
 /* ローテーションバトル関連                                                                         */
 /*--------------------------------------------------------------------------------------------------*/
+typedef struct {
+  u8 clientID;
+  u8 dir;
+  u8 vpos1;
+  u8 vpos2;
+  BtlPokePos  pos1;
+  BtlPokePos  pos2;
+}ROTATE_MEMBER_WORK;
 
 
 //=============================================================================================
@@ -1470,6 +1480,22 @@ void BTLV_RotationMember_Start( BTLV_CORE* wk, u8 clientID, BtlRotateDir dir )
 {
 //  BtlPokePos  topPos = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, 0 );
 //  u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, topPos );
+  if( dir != BTL_ROTATEDIR_STAY )
+  {
+    ROTATE_MEMBER_WORK* subwk = getGenericWork( wk, sizeof(ROTATE_MEMBER_WORK) );
+
+    BTL_Printf("回転方向=%d\n", dir);
+
+    subwk->clientID = clientID;
+    subwk->dir = dir;
+
+    subwk->pos1 = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, 0 );
+    subwk->pos2 = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, 1 );
+    subwk->vpos1 = BTL_MAIN_BtlPosToViewPos( wk->mainModule, subwk->pos1 );
+    subwk->vpos2 = BTL_MAIN_BtlPosToViewPos( wk->mainModule, subwk->pos2 );
+
+    BTL_UTIL_SetupProc( &wk->subProc, wk, NULL, subprocRotateMember );
+  }
 
 }
 //=============================================================================================
@@ -1483,9 +1509,58 @@ void BTLV_RotationMember_Start( BTLV_CORE* wk, u8 clientID, BtlRotateDir dir )
 //=============================================================================================
 BOOL BTLV_RotationMember_Wait( BTLV_CORE* wk )
 {
+  return BTL_UTIL_CallProc( &wk->subProc );
+}
+static BOOL subprocRotateMember( int* seq, void* wk_adrs )
+{
+  // @todo 今は単に該当個所の絵を消して、新しく出してるだけで、
+  // 演出的な動作がまったく入っていない。いずれちゃんと作る。
+  BTLV_CORE* wk = wk_adrs;
+  ROTATE_MEMBER_WORK* subwk = getGenericWork( wk, sizeof(ROTATE_MEMBER_WORK) );
+
+  switch( *seq ){
+  case 0:
+    if( BTLV_EFFECT_CheckExist(subwk->vpos1) ){
+      BTLV_EFFECT_DelPokemon( subwk->vpos1 );
+    }
+    if( BTLV_EFFECT_CheckExist(subwk->vpos2) ){
+      BTLV_EFFECT_DelPokemon( subwk->vpos2 );
+    }
+    (*seq)++;
+    break;
+
+  case 1:
+    if( !BTLV_EFFECT_CheckExecute() )
+    {
+      const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( wk->pokeCon, subwk->clientID );
+      const BTL_POKEPARAM* bpp;
+      bpp = BTL_PARTY_GetMemberDataConst( party, 0 );
+      if( !BPP_IsDead(bpp) ){
+        BTLV_EFFECT_SetPokemon( BPP_GetSrcData(bpp), subwk->vpos1 );
+      }
+      bpp = BTL_PARTY_GetMemberDataConst( party, 1 );
+      if( !BPP_IsDead(bpp) ){
+        BTLV_EFFECT_SetPokemon( BPP_GetSrcData(bpp), subwk->vpos2 );
+      }
+      (*seq)++;
+    }
+    break;
+
+  case 2:
+    if( !BTLV_EFFECT_CheckExecute() ){
+      BTLV_SCU_MoveGauge_Start( wk->scrnU, subwk->pos1, subwk->pos2 );
+      (*seq)++;
+    }
+    break;
+
+  case 3:
+    if( BTLV_SCU_MoveGauge_Wait(wk->scrnU) ){
+      return TRUE;
+    }
+    break;
+  }
   return FALSE;
 }
-
 
 /*--------------------------------------------------------------------------------------------------*/
 /* 下請けから呼び出される関数群                                                                     */

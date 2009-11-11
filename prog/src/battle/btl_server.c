@@ -92,6 +92,7 @@ struct _BTL_SERVER {
 /*--------------------------------------------------------------------------*/
 static inline void setup_client_members( SVCL_WORK* client, BTL_PARTY* party, u8 numCoverPos );
 static void setMainProc( BTL_SERVER* sv, ServerMainProc mainProc );
+static void setMainProc_Root( BTL_SERVER* server );
 static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq );
@@ -317,16 +318,51 @@ void BTL_SERVER_Main( BTL_SERVER* sv )
   }
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * メインループ関数切り替え
+ *
+ * @param   sv
+ * @param   mainProc
+ */
+//----------------------------------------------------------------------------------
 static void setMainProc( BTL_SERVER* sv, ServerMainProc mainProc )
 {
   sv->mainProc = mainProc;
   sv->seq = 0;
 }
-
+//----------------------------------------------------------------------------------
+/**
+ * 状況に応じてルートメインループ関数切り分け
+ *
+ * @param   sv
+ */
+//----------------------------------------------------------------------------------
+static void setMainProc_Root( BTL_SERVER* server )
+{
+  // ローテーションバトル＆初回ターン以外なら、アクションの前にローテーション選択する
+  if( (BTL_MAIN_GetRule(server->mainModule) == BTL_RULE_ROTATION)
+  &&  (BTL_SVFLOW_GetTurnCount(server->flowWork) != 0 )
+  ){
+    setMainProc( server, ServerMain_SelectRotation );
+  }else{
+    setMainProc( server, ServerMain_SelectAction );
+  }
+}
 
 //----------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------
 
+//----------------------------------------------------------------------------------
+/**
+ * サーバメインループ：画面構築、初期ポケ入場エフェクトまで終了待ち
+ *
+ * @param   server
+ * @param   seq
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
 static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
 {
   switch( *seq ){
@@ -361,28 +397,28 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
     }
     break;
   case 3:
-    if( BTL_MAIN_GetRule(server->mainModule) != BTL_RULE_ROTATION ){
-      setMainProc( server, ServerMain_SelectAction );
-    }else{
-      setMainProc( server, ServerMain_SelectRotation );
-    }
+    setMainProc_Root( server );
     break;
   }
   return FALSE;
 }
+//----------------------------------------------------------------------------------
 /**
- *  ローテーション選択
+ * サーバメインループ：ローテーション選択（ローテーションバトルのみ）
+ *
+ * @param   server
+ * @param   seq
+ *
+ * @retval  BOOL
  */
+//----------------------------------------------------------------------------------
 static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq )
 {
   switch( *seq ){
   case 0:
-    if( BTL_SVFLOW_GetTurnCount(server->flowWork) == 0 ){
-      setMainProc( server, ServerMain_SelectAction );
-    }else{
-      SetAdapterCmd( server, BTL_ACMD_SELECT_ROTATION );
-      (*seq)++;
-    }
+    BTL_Printf("ローテーション選択へ\n");
+    SetAdapterCmd( server, BTL_ACMD_SELECT_ROTATION );
+    (*seq)++;
     break;
 
   case 1:
@@ -399,6 +435,7 @@ static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq )
         dir = BTL_ADAPTER_GetReturnData( server->client[i].adapter );
         SCQUE_PUT_ACT_Rotation( server->que, i, *dir );
         party = BTL_POKECON_GetPartyData( server->pokeCon, i );
+        BTL_Printf("クライアント[%d]は回転方向%d\n", i, *dir);
         BTL_PARTY_RotateMembers( party, *dir );
       }
       SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
@@ -410,14 +447,22 @@ static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq )
     if( WaitAdapterCmd(server) )
     {
       ResetAdapterCmd( server );
-      return TRUE;
+      setMainProc( server, ServerMain_SelectAction );
     }
     break;
   }
   return FALSE;
 }
-
-
+//----------------------------------------------------------------------------------
+/**
+ * サーバメインループ：アクション選択
+ *
+ * @param   server
+ * @param   seq
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
 static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 {
   switch( *seq ){
@@ -448,16 +493,15 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 
       switch( server->flowResult ){
       case SVFLOW_RESULT_DEFAULT:
-        (*seq)=0;
+        setMainProc_Root( server );
         break;
       case SVFLOW_RESULT_POKE_IN_REQ:
         BTL_Printf("空き位置への新ポケ投入リクエスト受け付け\n");
         setMainProc( server, ServerMain_SelectPokemonIn );
         break;
       case SVFLOW_RESULT_POKE_CHANGE:
-        BTL_Printf("入れ替えリクエスト受け付け\n");
+        BTL_Printf("ターン途中のポケ入れ替え発生\n");
         GF_ASSERT( server->changePokeCnt );
-        BTL_Printf("ターン途中のポケ入れ替え\n");
         setMainProc( server, ServerMain_SelectPokemonChange );
         break;
       case SVFLOW_RESULT_POKE_GET:
@@ -480,7 +524,6 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 
   return FALSE;
 }
-
 //----------------------------------------------------------------------------------
 /**
  * サーバメインループ：死亡・生き返りで空き位置にポケモンを投入した直後の処理
@@ -529,7 +572,7 @@ static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq )
 
       if( server->flowResult != SVFLOW_RESULT_POKE_IN_REQ )
       {
-        setMainProc( server, ServerMain_SelectAction );
+        setMainProc_Root( server );
       }
       else
       {
@@ -583,7 +626,7 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
 
       if( server->flowResult != SVFLOW_RESULT_POKE_IN_REQ )
       {
-        setMainProc( server, ServerMain_SelectAction );
+        setMainProc_Root( server );
       }
       else
       {
