@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-25T16:40:59"/>
+	<create user="matsumiya" host="W00207" date="2009-11-11T15:52:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,52 +292,57 @@
 	</lock>
 
 
-	<row id="msg_r06_mountain_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r06_mountain_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・電気石の洞窟クリア前
+・d06洞窟前ストッパー解除前
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">MOUNTAIN
 山男</attribute>
-		<language name="JPN" width="256">おかしいなあ……[BE:01:ページ切り替え（クリア）]
-このさきの　どうくつ
-でんきいしのどうくつ　というんだが
-なぜだか　みちが　ふさがっている
-まえまで　ふつうに　とおれたのになあ</language>
-		<language name="JPN_KANJI" width="256">おかしいなあ……[BE:01:ページ切り替え（クリア）]
-この先の　洞くつ
+		<language name="JPN" width="256">こりゃ　まいった！[BE:01:ページ切り替え（クリア）]
+あのな　このさきの　どうくつ
+でんきいしのどうくつ　というんだが[BE:00:ページ切り替え（行送り）]
+みちが　ふさがっている[BE:01:ページ切り替え（クリア）]
+デンチュラという　ポケモンの
+しわざ　なんだが[BE:01:ページ切り替え（クリア）]
+ヤーコンさんに　たのまないと
+あのままでは　とおれんぞ……</language>
+		<language name="JPN_KANJI" width="256">こりゃ　まいった！[BE:01:ページ切り替え（クリア）]
+あのな　この先の　洞くつ
 電気石の洞くつ　というんだが[BE:00:ページ切り替え（行送り）]
-なぜだか　道が　ふさがっている[BE:01:ページ切り替え（クリア）]
-前まで　普通に　通れたのになあ</language>
+道が　ふさがっている[BE:01:ページ切り替え（クリア）]
+デンチュラという　ポケモンの
+しわざ　なんだが[BE:01:ページ切り替え（クリア）]
+ヤーコンさんに　頼まないと
+あのままでは　通れんぞ……</language>
 	</row>
 
-	<row id="msg_r06_mountain_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r06_mountain_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・電気石の洞窟クリア後</comment>
-		<language name="JPN" width="256">おかしいなあ……？
-このさきの　でんきいしのどうくつ[BE:00:ページ切り替え（行送り）]
-ふつうに　とおりぬけられたよ[BE:01:ページ切り替え（クリア）]
-なにか　みえない　ちからが
-はたらいて　いたのかなあ……？</language>
-		<language name="JPN_KANJI" width="256">おかしいなあ……？
-このさきの　でんきいしのどうくつ[BE:00:ページ切り替え（行送り）]
-ふつうに　とおりぬけられたよ[BE:01:ページ切り替え（クリア）]
-なにか　みえない　ちからが
-はたらいて　いたのかなあ……？</language>
+・d06洞窟前ストッパー解除後
+・仮メッセージ</comment>
+		<language name="JPN" width="256">でんきいしのどうくつは
+まさに　てんねんの　めいろ！[BE:01:ページ切り替え（クリア）]
+でんきが　じりょくを　うみだし
+さまざまな　しかけで　いっぱいだ！</language>
+		<language name="JPN_KANJI" width="256">電気石の洞くつは
+まさに　天然の　迷路！[BE:01:ページ切り替え（クリア）]
+電気が　磁力を　うみだし
+さまざまな　仕掛けで　いっぱいだ！</language>
 	</row>
 
-	<row id="msg_r06_sportsw_01_01">
+	<row id="msg_r06_sportsw_01_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">SPORTSW
 ジョギング♀</attribute>
-		<language name="JPN" width="256">はなが　きせつに　あわせて
-その　すがたを　かえるように[BE:01:ページ切り替え（クリア）]
-きせつに　あわせ　すがたを　かえる
-ポケモンが　いると　おもしろいよね</language>
-		<language name="JPN_KANJI" width="256">花が　季節に　あわせて
-その　姿を　変えるように[BE:01:ページ切り替え（クリア）]
-季節に　あわせ　姿を　変える
-ポケモンが　いると　おもしろいよね</language>
+		<language name="JPN" width="256">きせつが　うつれば
+はなも　その　すがたを　かえる[BE:01:ページ切り替え（クリア）]
+この　あたりの　ようすも
+がらりと　かわるのよ</language>
+		<language name="JPN_KANJI" width="256">季節が　移れば
+花も　その姿を　変える[BE:01:ページ切り替え（クリア）]
+このあたりの　様子も
+がらりと　一変するのよ</language>
 	</row>
 
 	<row id="msg_r06_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
