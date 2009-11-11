@@ -1195,6 +1195,90 @@ static u32 setupWindowBG( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setu
 	return chrSiz;
 }
 
+//============================================================================================
+/**
+ *
+ *
+ *
+ *
+ *
+ * @brief	ＢＧウインドウキャラクター
+ *
+ *
+ *
+ *
+ *
+ */
+//============================================================================================
+void TALKMSGWIN_ReTransWindowBG( TALKMSGWIN_SYS* tmsgwinSys )
+{
+	u32 chrSiz;
+  TALKMSGWIN_SYS_SETUP* setup = &tmsgwinSys->setup;
+
+	//GFL_BG_FillCharacter(setup->ini.frameID, 0, 1, 0);	// 先頭にクリアキャラ配置
+	GFL_BG_ClearScreen(setup->ini.frameID);
+
+	//パレット転送
+	{
+		PALTYPE paltype = PALTYPE_MAIN_BG;
+
+		switch(setup->ini.frameID){
+		case GFL_BG_FRAME0_M:
+		case GFL_BG_FRAME1_M:
+		case GFL_BG_FRAME2_M:
+		case GFL_BG_FRAME3_M:
+			break;
+		case GFL_BG_FRAME0_S:
+		case GFL_BG_FRAME1_S:
+		case GFL_BG_FRAME2_S:
+		case GFL_BG_FRAME3_S:
+			paltype = PALTYPE_SUB_BG;
+			break;
+		}
+#if TALKWIN_MODE
+#if 0
+		GFL_ARC_UTIL_TransVramPalette(ARCID_TALKWIN_TEST, 
+																	NARC_talkwin_test_talkwin2_NCLR,
+																	paltype,
+																	setup->ini.fontPltID * PLTT_SIZ,
+																	PLTT_SIZ,
+																	setup->heapID);
+#endif
+		GFL_ARC_UTIL_TransVramPalette(ARCID_TALKWIN_TEST, 
+//															  NARC_talkwin_test_talkwin2_NCLR, //黒地
+																	NARC_talkwin_test_talkwin_NCLR,  //白地
+																	paltype,
+																	setup->ini.winPltID * PLTT_SIZ,
+																	PLTT_SIZ,
+																	setup->heapID);
+//		setBGAlpha(tmsgwinSys, setup);
+#else
+#if 0
+		GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, 
+																	NARC_font_default_nclr,
+																	paltype,
+																	setup->ini.fontPltID * PLTT_SIZ,
+																	PLTT_SIZ,
+																	setup->heapID);
+#endif
+		GFL_ARC_UTIL_TransVramPalette(ARCID_TALKWIN_TEST, 
+																	NARC_talkwin_test_talkwin_NCLR,
+																	paltype,
+																	setup->ini.winPltID * PLTT_SIZ,
+																	PLTT_SIZ,
+																	setup->heapID);
+#endif
+	}
+	//キャラクター転送
+	chrSiz = GFL_ARC_UTIL_TransVramBgCharacter(	ARCID_TALKWIN_TEST, 
+																							NARC_talkwin_test_talkwin_NCGR,
+																							setup->ini.frameID,
+																							setup->chrNumOffs,
+																							0,
+																							FALSE,
+																							setup->heapID);
+}
+
 //------------------------------------------------------------------
 static void setBGAlpha( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setup )
 {

@@ -238,4 +238,6 @@ extern BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg );
 //‚»‚Ì‘¼
 extern void FLDMSGBG_SetBlendAlpha( BOOL set );
 
+extern void FLDMSGBG_RecoveryBG( FLDMSGBG *fmb );
+
 #endif //__FLDMSGBG_H__

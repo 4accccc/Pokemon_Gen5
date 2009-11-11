@@ -2086,6 +2086,63 @@ void FLDMSGBG_SetBlendAlpha( BOOL set )
   setBlendAlpha( set );
 }
 
+//--------------------------------------------------------------
+/**
+ * キャラスクリーンデータ復帰
+ * @param 
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDMSGBG_RecoveryBG( FLDMSGBG *fmb )
+{
+  HEAPID heapID = fmb->heapID;
+  
+  {
+#if 0    
+    //BG初期化
+		GFL_BG_BGCNT_HEADER bgcntText = {
+			0, 0, 0x800, 0,
+			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x10000, 0x8000,
+			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+		};
+		
+		GFL_BG_SetBGControl( fmb->bgFrame, &bgcntText, GFL_BG_MODE_TEXT );
+    
+		GFL_BG_SetVisible( fmb->bgFrame, VISIBLE_ON );
+		
+		GFL_BG_SetPriority( fmb->bgFrame, 0 );
+		GFL_BG_SetPriority( GFL_BG_FRAME0_M, 3 );
+#endif		
+    GFL_BG_FillCharacterRelease( fmb->bgFrame, 1, 0 );
+		GFL_BG_FillCharacter( fmb->bgFrame, 0x00, 1, 0 );
+		GFL_BG_FillScreen( fmb->bgFrame,
+			0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+		
+		GFL_BG_LoadScreenReq( fmb->bgFrame );
+	}
+	
+	{	//フォントパレット
+		GFL_ARC_UTIL_TransVramPalette(
+			ARCID_FONT, NARC_font_default_nclr, //黒
+			PALTYPE_MAIN_BG, FLDMSGBG_PANO_FONT_TALKMSGWIN*32, 32, fmb->heapID );
+		GFL_ARC_UTIL_TransVramPalette(
+			ARCID_FONT, NARC_font_systemwin_nclr, //白
+			PALTYPE_MAIN_BG, FLDMSGBG_PANO_FONT*32, 32, fmb->heapID );
+	}
+	
+	{	//window frame
+		BmpWinFrame_GraphicSet( fmb->bgFrame, 1,
+			FLDMSGBG_PANO_MENU, MENU_TYPE_SYSTEM, heapID );
+    debug_ROM091030_WindowColorOFF( heapID );
+	}
+
+  { //バルーンウィンドウ
+    TALKMSGWIN_ReTransWindowBG( fmb->talkMsgWinSys );
+  }
+}
+
+
 //======================================================================
 //	パーツ
 //======================================================================
