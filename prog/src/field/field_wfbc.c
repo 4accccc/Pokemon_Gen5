@@ -21,6 +21,65 @@
 */
 //-----------------------------------------------------------------------------
 
+//-------------------------------------
+///	人物基本情報
+//=====================================
+static const MMDL_HEADER sc_DEFAULT_HEADER = 
+{
+	0,		///<識別ID
+	0,	  ///<表示するOBJコード
+	0,	  ///<動作コード
+	0,	  ///<イベントタイプ
+	0,	  ///<イベントフラグ
+	0,	  ///<イベントID
+	0,		///<指定方向
+	0,		///<指定パラメタ 0
+	0,		///<指定パラメタ 1
+	0,		///<指定パラメタ 2
+	0,		///<X方向移動制限
+	0,		///<Z方向移動制限
+};
+
+
+//-------------------------------------
+///	人物配置情報
+//=====================================
+typedef struct
+{
+  u16 gx;
+  u16 gz;
+} WFBC_PEOPLE_POS;
+static const WFBC_PEOPLE_POS  sc_WFBC_PEOPLE_POS[ FIELD_WFBC_CORE_TYPE_MAX ][ FIELD_WFBC_PEOPLE_MAX ] = 
+{
+  // BLACK CITY
+  {
+    { 23,12 },
+    { 24,12 },
+    { 25,12 },
+    { 26,12 },
+    { 27,12 },
+    { 28,29 },
+    { 29,29 },
+    { 30,29 },
+    { 31,29 },
+    { 32,29 },
+  },
+  
+
+  // White Forest
+  {
+    { 23,12 },
+    { 24,12 },
+    { 25,12 },
+    { 26,12 },
+    { 27,12 },
+    { 28,29 },
+    { 29,29 },
+    { 30,29 },
+    { 31,29 },
+    { 32,29 },
+  },
+};
 
 
 //-----------------------------------------------------------------------------
@@ -36,7 +95,10 @@ struct _FIELD_WFBC_PEOPLE
   u16   status;   // FIELD_WFBC_PEOPLE_STATUS
   u16   npcid;    // 人物ID
   u16   objcode;  // 見た目
-  u16   pad;      // 
+  u16   move_code;// 動作
+
+  u16   gx;   // グリッドｘ座標
+  u16   gz;   // グリッドｚ座標
 };
 
 //-------------------------------------
@@ -68,7 +130,7 @@ static void WFBC_GetCore( const FIELD_WFBC* cp_wk, FIELD_WFBC_CORE* p_buff );
 ///	FIELD_WFBC_PEOPLE
 //=====================================
 static void WFBC_PEOPLE_Clear( FIELD_WFBC_PEOPLE* p_people );
-static void WFBC_PEOPLE_SetUp( FIELD_WFBC_PEOPLE* p_people, const FIELD_WFBC_CORE_PEOPLE* cp_core );
+static void WFBC_PEOPLE_SetUp( FIELD_WFBC_PEOPLE* p_people, const FIELD_WFBC_CORE_PEOPLE* cp_core, const WFBC_PEOPLE_POS* cp_pos );
 static void WFBC_PEOPLE_GetCore( const FIELD_WFBC_PEOPLE* cp_people, FIELD_WFBC_CORE_PEOPLE* p_core );
 
 
@@ -172,6 +234,55 @@ FIELD_WFBC_CORE_TYPE FIELD_WFBC_GetType( const FIELD_WFBC* cp_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  動作モデル情報を取得
+ *
+ *	@param	cp_wk     ワーク
+ *	@param	heapID    ヒープID
+ *
+ *	@retval 動作モデルヘッダーテーブル
+ *	@retval NULL  人物はいない
+ */
+//-----------------------------------------------------------------------------
+MMDL_HEADER* FIELD_WFBC_MMDLHeaderCreateHeapLo( const FIELD_WFBC* cp_wk, HEAPID heapID )
+{
+  u32 count;
+  u32 num;
+  MMDL_HEADER* p_buff;
+  int i;
+  
+  GF_ASSERT( cp_wk );
+
+  num = WFBC_GetPeopleNum( cp_wk );
+
+  if( num == 0 )
+  {
+    return NULL;
+  }
+
+  p_buff = GFL_HEAP_AllocClearMemoryLo( heapID, sizeof(MMDL_HEADER) * num );
+  
+  count = 0;
+  for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+  {
+    if( cp_wk->people[i].status == FIELD_WFBC_PEOPLE_STATUS_NORMAL )
+    {
+      // 人物として登録
+      p_buff[count] = sc_DEFAULT_HEADER;
+
+      p_buff[count].id          = cp_wk->people[i].npcid;
+      p_buff[count].obj_code    = cp_wk->people[i].objcode;
+      p_buff[count].move_code   = cp_wk->people[i].move_code;
+      MMDLHEADER_SetGridPos( &p_buff[count], cp_wk->people[i].gx, cp_wk->people[i].gz, 0 );
+
+      count ++;
+    }
+  }
+
+  return p_buff;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  街情報を設定
  *
  *	@param	p_wk        ワーク
@@ -202,7 +313,7 @@ int FIELD_WFBC_AddPeople( FIELD_WFBC* p_wk, const FIELD_WFBC_CORE_PEOPLE* cp_cor
   index = WFBC_GetClearPeople( p_wk );
 
   // 人情報をセットアップ
-  WFBC_PEOPLE_SetUp( &p_wk->people[index], cp_core );
+  WFBC_PEOPLE_SetUp( &p_wk->people[index], cp_core, &sc_WFBC_PEOPLE_POS[ p_wk->type ][ index ] );
 
   return index;
 }
@@ -352,7 +463,7 @@ static void WFBC_SetCore( FIELD_WFBC* p_wk, const FIELD_WFBC_CORE* cp_buff )
     // データがあったら設定
     if( cp_buff->people[i].data_in )
     {
-      WFBC_PEOPLE_SetUp( &p_wk->people[i], &cp_buff->people[i] );
+      WFBC_PEOPLE_SetUp( &p_wk->people[i], &cp_buff->people[i], &sc_WFBC_PEOPLE_POS[ p_wk->type ][ i ] );
     }
   }
 }
@@ -394,8 +505,8 @@ static void WFBC_GetCore( const FIELD_WFBC* cp_wk, FIELD_WFBC_CORE* p_buff )
 //-----------------------------------------------------------------------------
 static void WFBC_PEOPLE_Clear( FIELD_WFBC_PEOPLE* p_people )
 {
+  GFL_STD_MemClear( p_people, sizeof(FIELD_WFBC_PEOPLE) );
   p_people->status  = FIELD_WFBC_PEOPLE_STATUS_NONE;
-  p_people->objcode = 0;
 }
 
 
@@ -405,9 +516,10 @@ static void WFBC_PEOPLE_Clear( FIELD_WFBC_PEOPLE* p_people )
  *
  *	@param	p_people    人物ワーク
  *	@param	cp_core     人物CORE情報
+ *	@param  cp_pos      位置情報
  */
 //-----------------------------------------------------------------------------
-static void WFBC_PEOPLE_SetUp( FIELD_WFBC_PEOPLE* p_people, const FIELD_WFBC_CORE_PEOPLE* cp_core )
+static void WFBC_PEOPLE_SetUp( FIELD_WFBC_PEOPLE* p_people, const FIELD_WFBC_CORE_PEOPLE* cp_core, const WFBC_PEOPLE_POS* cp_pos )
 {
   BOOL result;
   
@@ -420,7 +532,10 @@ static void WFBC_PEOPLE_SetUp( FIELD_WFBC_PEOPLE* p_people, const FIELD_WFBC_COR
   p_people->npcid   = cp_core->npc_id;
 
   // NPCIDの基本情報を読み込む
-  p_people->objcode = 0;
+  p_people->objcode   = 0x5;
+  p_people->move_code = MV_DIR_RND;
+  p_people->gx        = cp_pos->gx;
+  p_people->gz        = cp_pos->gz;
 
   // 拡張データを設定する
 }
@@ -462,14 +577,13 @@ static void DEBWIN_Draw_CityLevel( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Update_CityType( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Draw_CityType( void* userWork , DEBUGWIN_ITEM* item );
 
-
-void FIELD_FUNC_RANDOM_GENERATE_InitDebug( HEAPID heapId )
+void FIELD_FUNC_RANDOM_GENERATE_InitDebug( HEAPID heapId, FIELD_WFBC_CORE* p_core )
 {
   DEBUGWIN_AddGroupToTop( 10 , "RandomMap" , heapId );
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_CityLevel ,DEBWIN_Draw_CityLevel , 
-                             NULL , 10 , heapId );
+                             p_core , 10 , heapId );
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_CityType ,DEBWIN_Draw_CityType , 
-                             NULL , 10 , heapId );
+                             p_core , 10 , heapId );
 }
 
 void FIELD_FUNC_RANDOM_GENERATE_TermDebug( void )
@@ -479,74 +593,74 @@ void FIELD_FUNC_RANDOM_GENERATE_TermDebug( void )
 
 static void DEBWIN_Update_CityLevel( void* userWork , DEBUGWIN_ITEM* item )
 {
-#if 0
-  SAVE_CONTROL_WORK *saveWork = SaveControl_GetPointer();
-  RANDOMMAP_SAVE* mapSave = RANDOMMAP_SAVE_GetRandomMapSave( saveWork );
-  u16 level = RANDOMMAP_SAVE_GetCityLevel( mapSave );
-  
+  FIELD_WFBC_CORE* p_wk = userWork;
+  int  i;
+
   if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
   {
-    if( level < 20 )
+    // 増やす
+    for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
     {
-      level++;
-      RANDOMMAP_SAVE_SetCityLevel( mapSave , level );
-      DEBUGWIN_RefreshScreen();
+      if( p_wk->people[i].data_in == FALSE )
+      {
+        p_wk->people[i].data_in = TRUE;
+        p_wk->people[i].npc_id  = 0;
+        break;
+      }
     }
+    DEBUGWIN_RefreshScreen();
   }
   if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
   {
-    if( level > 0 )
+    // 減らす
+    for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
     {
-      level--;
-      RANDOMMAP_SAVE_SetCityLevel( mapSave , level );
-      DEBUGWIN_RefreshScreen();
+      if( p_wk->people[i].data_in )
+      {
+        p_wk->people[i].data_in = FALSE;
+        p_wk->people[i].npc_id  = 0;
+        break;
+      }
     }
+    DEBUGWIN_RefreshScreen();
   }
-#endif
 }
 
 static void DEBWIN_Draw_CityLevel( void* userWork , DEBUGWIN_ITEM* item )
 {
-#if 0
-  SAVE_CONTROL_WORK *saveWork = SaveControl_GetPointer();
-  RANDOMMAP_SAVE* mapSave = RANDOMMAP_SAVE_GetRandomMapSave( saveWork );
-  u16 level = RANDOMMAP_SAVE_GetCityLevel( mapSave );
+  FIELD_WFBC_CORE* p_wk = userWork;
+  u16 level = FIELD_WFBC_CORE_GetPeopleNum( p_wk );
   DEBUGWIN_ITEM_SetNameV( item , "Level[%d]",level );
-#endif
 }
 
 static void DEBWIN_Update_CityType( void* userWork , DEBUGWIN_ITEM* item )
 {
-#if 0
-  SAVE_CONTROL_WORK *saveWork = SaveControl_GetPointer();
-  RANDOMMAP_SAVE* mapSave = RANDOMMAP_SAVE_GetRandomMapSave( saveWork );
-  u8 type = RANDOMMAP_SAVE_GetCityType( mapSave );
-  
+  FIELD_WFBC_CORE* p_wk = userWork;
+  u8 type = p_wk->type;
+
   if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT || 
       GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT  ||
       GFL_UI_KEY_GetRepeat() & PAD_BUTTON_A )
   {
-    if( type == RMT_BLACK_CITY )
+    if( type == FIELD_WFBC_CORE_TYPE_BLACK_CITY )
     {
-      type = RMT_WHITE_FOREST;
+      type = FIELD_WFBC_CORE_TYPE_WHITE_FOREST;
     }
     else
     {
-      type = RMT_BLACK_CITY;
+      type = FIELD_WFBC_CORE_TYPE_BLACK_CITY;
     }
-    RANDOMMAP_SAVE_SetCityType( mapSave , type );
+    p_wk->type = type;
     DEBUGWIN_RefreshScreen();
   }
-#endif 
 }
 
 static void DEBWIN_Draw_CityType( void* userWork , DEBUGWIN_ITEM* item )
 {
-#if 0
-  SAVE_CONTROL_WORK *saveWork = SaveControl_GetPointer();
-  RANDOMMAP_SAVE* mapSave = RANDOMMAP_SAVE_GetRandomMapSave( saveWork );
-  u8 type = RANDOMMAP_SAVE_GetCityType( mapSave );
-  if( type == RMT_BLACK_CITY )
+  FIELD_WFBC_CORE* p_wk = userWork;
+  u8 type = p_wk->type;
+
+  if( type == FIELD_WFBC_CORE_TYPE_BLACK_CITY )
   {
     DEBUGWIN_ITEM_SetName( item , "Type[BLACK CITY]" );
   }
@@ -554,6 +668,5 @@ static void DEBWIN_Draw_CityType( void* userWork , DEBUGWIN_ITEM* item )
   {
     DEBUGWIN_ITEM_SetName( item , "Type[WHITE FOREST]" );
   }
-#endif
 }
 #endif

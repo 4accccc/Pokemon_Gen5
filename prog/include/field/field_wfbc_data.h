@@ -110,6 +110,8 @@ extern BOOL FIELD_WFBC_CORE_IsConfomity( const FIELD_WFBC_CORE* cp_wk );
 extern void FIELD_WFBC_CORE_Management( FIELD_WFBC_CORE* p_wk );
 // データの有無   不正データの場合、FALSEを返します。
 extern BOOL FIELD_WFBC_CORE_IsInData( const FIELD_WFBC_CORE* cp_wk );
+// 人の数を返す
+extern u32 FIELD_WFBC_CORE_GetPeopleNum( const FIELD_WFBC_CORE* cp_wk );
 
 
 //-------------------------------------

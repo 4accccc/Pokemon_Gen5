@@ -129,8 +129,10 @@ BOOL FieldLoadMapData_RandomGenerate( GFL_G3D_MAP* g3Dmap, void * exWork )
 
         FieldFuncRandom_CheckMapPos( g3Dmap , &pos );
 
-        top = pos.z - (256<<FX32_SHIFT) - (144<<FX32_SHIFT);  // ハーフブロックと配置モデルのローカル座標分ずらす
-        left = pos.x - (256<<FX32_SHIFT) - (144<<FX32_SHIFT);
+        //top = pos.z - (256<<FX32_SHIFT) - (144<<FX32_SHIFT);  // ハーフブロックと配置モデルのローカル座標分ずらす
+        //left = pos.x - (256<<FX32_SHIFT) - (144<<FX32_SHIFT);
+        top = -(144<<FX32_SHIFT);  // ハーフブロックと配置モデルのローカル座標分ずらす
+        left = -(144<<FX32_SHIFT);
         
         switch(mapIndex)
         {
@@ -180,10 +182,10 @@ BOOL FieldLoadMapData_RandomGenerate( GFL_G3D_MAP* g3Dmap, void * exWork )
               objStatus.resourceID = resId;
               objStatus.rotate = 0;
               objStatus.billboard = 0;
-              objStatus.xpos = left+FX32_CONST( x*160.0f );
+              objStatus.xpos = left+FX32_CONST( x*172.0f );
               objStatus.ypos = 0;
-              objStatus.zpos = - (top+FX32_CONST( z*160.0f)); // ResistMapObject内で-反転されるので
-              OS_TPrintf( "x=%d z=%d  pos x[%d] z[%d] \n", x, z, FX_Whole(objStatus.xpos), FX_Whole(-objStatus.zpos) );
+              objStatus.zpos = - (top+FX32_CONST( z*172.0f)); // ResistMapObject内で-反転されるので
+              //OS_TPrintf( "x=%d z=%d  pos x[%d] z[%d] \n", x, z, FX_Whole(objStatus.xpos), FX_Whole(-objStatus.zpos) );
               FIELD_BMODEL_MAN_ResistMapObject( bm, g3Dmap, &objStatus, i );
   					  i++;
   					}
@@ -310,7 +312,7 @@ static const u8 FieldFuncRandom_GetBilduingHeight( const u8 idxTop , const u8 id
     {1,0,10,0,0,1},
     {1,0,0,10,0,1},
     {1,8,0,0,8,1},
-    {1,0,0,0,0,1},
+    {1,1,1,1,1,1},
   };
 #endif
 

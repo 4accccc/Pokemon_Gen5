@@ -184,6 +184,34 @@ BOOL FIELD_WFBC_CORE_IsInData( const FIELD_WFBC_CORE* cp_wk )
   return TRUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人の数を返す
+ *
+ *	@param	cp_wk   ワーク
+ *
+ *	@return 人の数
+ */
+//-----------------------------------------------------------------------------
+u32 FIELD_WFBC_CORE_GetPeopleNum( const FIELD_WFBC_CORE* cp_wk )
+{
+  int i;
+  int num;
+  GF_ASSERT( cp_wk );
+
+
+  num = 0;
+
+  for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+  {
+    if( FIELD_WFBC_CORE_PEOPLE_IsInData( &cp_wk->people[i] ) )
+    {
+      num ++;
+    }
+  }
+  return num;
+}
+
 
 //-------------------------------------
 ///	FIELD_WFBC_CORE_PEOPLE用関数

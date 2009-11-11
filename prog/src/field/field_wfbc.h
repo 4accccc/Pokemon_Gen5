@@ -22,6 +22,8 @@ extern "C"{
 
 #include "debug/debugwin_sys.h"
 
+#include "fldmmdl.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -84,6 +86,10 @@ extern FIELD_WFBC_CORE_TYPE FIELD_WFBC_GetType( const FIELD_WFBC* cp_wk );
 
 // BCの高さ情報
 
+// 人物情報
+// 戻り値は、GFL_HEAP_Freeをしてください。
+extern MMDL_HEADER* FIELD_WFBC_MMDLHeaderCreateHeapLo( const FIELD_WFBC* cp_wk, HEAPID heapID );
+
 
 //-------------------------------------
 ///	全体情報の設定
@@ -113,7 +119,7 @@ extern void FLDMAPPER_SetWfbcData( FLDMAPPER* g3Dmapper, const FIELD_WFBC_CORE* 
 
 
 #ifdef PM_DEBUG
-extern void FIELD_FUNC_RANDOM_GENERATE_InitDebug( HEAPID heapId );
+extern void FIELD_FUNC_RANDOM_GENERATE_InitDebug( HEAPID heapId, FIELD_WFBC_CORE* p_core );
 extern void FIELD_FUNC_RANDOM_GENERATE_TermDebug();
 #endif
 
