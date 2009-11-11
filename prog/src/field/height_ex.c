@@ -120,6 +120,18 @@ void EXH_SetUpHeightData(	const u8 inIndex,
 							const fx32 inHeight,
 							EHL_PTR outExHeightList )
 {
+  if ( inIndex >= outExHeightList->Num )
+  {
+    GF_ASSERT(0);
+    return;
+  }
+
+  if ( outExHeightList->ExHeightData[inIndex].Valid )
+  {
+    GF_ASSERT(0);
+    return;
+  }
+
 	outExHeightList->ExHeightData[inIndex].StartGridX = inStX;
 	outExHeightList->ExHeightData[inIndex].StartGridZ = inStZ;
 	outExHeightList->ExHeightData[inIndex].SizeGridX = inSizX;
