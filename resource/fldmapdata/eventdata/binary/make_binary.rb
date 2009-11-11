@@ -25,8 +25,6 @@ BLOCK_SIZE  =   32    #地形ブロック当たりのグリッド数
 #ポジションタイプ定数
 EVENTDATA_POS_TYPE_GRID = "EVENTDATA_POSTYPE_GRID"
 EVENTDATA_POS_TYPE_RAIL = "EVENTDATA_POSTYPE_RAIL"
-MMDL_POS_TYPE_GRID = "MMDL_HEADER_POSTYPE_GRID"
-MMDL_POS_TYPE_RAIL = "MMDL_HEADER_POSTYPE_RAIL"
 
 
 #============================================================================
@@ -584,12 +582,12 @@ class ObjEvent < AllEvent
     @move_limit_z = read(lines, /#Move Limit Z Number/)
 
     if isPosType(lines) == false
-      @pos_type = "MMDL_HEADER_POSTYPE_GRID"
+      @pos_type = EVENTDATA_POS_TYPE_GRID
       @gx, @y, @gz = readPosition( lines )
       #@gx, @gy, @z = read(lines, /#position/).split
     else
       @pos_type = read( lines, /#Pos Type/ )
-      if @pos_typ == MMDL_POS_TYPE_GRID
+      if @pos_type == EVENTDATA_POS_TYPE_GRID
         @gx, @y, @gz = readPosition( lines )
       else
         @rail_index, @rail_front, @rail_side = readPosition( lines )
@@ -613,7 +611,7 @@ class ObjEvent < AllEvent
     output.write [headerArray.sarch( @move_limit_z, @id )].pack("s")
     output.write [headerArray.sarch( @pos_type, @id )].pack("I")
 
-    if @pos_type == MMDL_POS_TYPE_GRID
+    if @pos_type == EVENTDATA_POS_TYPE_GRID
       gx,gz = calc_grid_ofs @gx, @gz
       output.write [headerArray.sarch( gx, @id )].pack("S")
       output.write [headerArray.sarch( gz, @id )].pack("S")
@@ -941,7 +939,8 @@ begin
     }
   }
 
-rescue
+rescue => errors
+  p errors
   #例外時
   if File.exist?( "#{ofilename}.bin" )
     File.delete( "#{ofilename}.bin" );

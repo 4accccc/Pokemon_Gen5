@@ -424,12 +424,12 @@ class ObjEvent < AllEvent
     @move_limit_z = read(lines, /#Move Limit Z Number/)
 
     if isPosType(lines) == false
-      @pos_type = "MMDL_HEADER_POSTYPE_GRID"
+      @pos_type = EVENTDATA_POS_TYPE_GRID
       @gx, @y, @gz = readPosition( lines )
       #@gx, @gy, @z = read(lines, /#position/).split
     else
       @pos_type = read( lines, /#Pos Type/ )
-      if @pos_typ == MMDL_POS_TYPE_GRID
+      if @pos_type == EVENTDATA_POS_TYPE_GRID
         @gx, @y, @gz = readPosition( lines )
       else
         @rail_index, @rail_front, @rail_side = readPosition( lines )
@@ -486,6 +486,7 @@ class ObjEvent < AllEvent
     #flag_define.h
     header.push( "../../flagwork/flag_define.h " )
 
+    header.push( "../../../../prog/include/field/eventdata_type.h " )
   end
 end
 
