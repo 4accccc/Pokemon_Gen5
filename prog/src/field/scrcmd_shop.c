@@ -662,10 +662,10 @@ static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, i
     break;
 
   case SHOPBUY_SEQ_END:
-    bmpwin_list_exit(wk); // BMPLIST解放
-    obj_del( wk );    // OBJ削除
-    bmpwin_exit( wk );// BMPWIN解放
-    bg_clear(wk);     // BG消去
+    bmpwin_list_exit(wk);   // BMPLIST解放
+    obj_del( wk );          // OBJ削除
+    bmpwin_exit( wk );      // BMPWIN解放
+    bg_clear(wk);           // BG消去
     
     // 品揃えデータ削除
     shop_item_release( wk);
@@ -796,6 +796,7 @@ static void init_work( SHOP_BUY_APP_WORK *wk )
 }
 
 
+
 //----------------------------------------------------------------------------------
 /**
  * @brief ワーク解放
@@ -818,6 +819,8 @@ static void exit_work( SHOP_BUY_APP_WORK *wk )
 
 }
 
+// パレット転送本数(byte単位）
+#define SHOP_BG_PLTT_NUM  ( 32*3 )
 
 //----------------------------------------------------------------------------------
 /**
@@ -832,13 +835,13 @@ static void bg_trans( SHOP_BUY_APP_WORK *wk )
   {
     ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_SHOP_GRA, wk->heapId );
   
-    // BG2面Pltt
+    // MAIN BG面Pltt
     GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_shop_gra_shop_bg_NCLR, PALTYPE_MAIN_BG, 
-                                      0, 32*3, wk->heapId );
-    // BG2面Char
+                                      0, SHOP_BG_PLTT_NUM, wk->heapId );
+    // BG2面Char(背景）
     GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_shop_gra_shop_bg_NCGR, GFL_BG_FRAME2_M, 
                                       0, 0, 0, wk->heapId);
-    // BG2面Screen
+    // BG2面Screen(背景）
     GFL_ARCHDL_UTIL_TransVramScreen( handle, NARC_shop_gra_shop_bg1_NSCR, GFL_BG_FRAME2_M, 
                                      0, 0, 0, wk->heapId);
   
@@ -850,6 +853,8 @@ static void bg_trans( SHOP_BUY_APP_WORK *wk )
 
   // テキスト面消去
   GFL_BG_ClearScreen( GFL_BG_FRAME1_M );
+
+
 
   // BG2面のプライオリティを１に変更
   GFL_BG_SetPriority( GFL_BG_FRAME2_M, 1 );
@@ -869,6 +874,10 @@ static void bg_clear( SHOP_BUY_APP_WORK *wk )
   // ショップBG面消去
   GFL_BG_ClearScreen( GFL_BG_FRAME1_M );
   GFL_BG_ClearScreen( GFL_BG_FRAME2_M );
+
+  // ショップ用に変更していたBG2面のプライオリティを0に戻す
+  GFL_BG_SetPriority( GFL_BG_FRAME2_M, 0 );
+
 }
 
 #define SHOP_BUY_OBJ_BG_PRI ( 1 )
@@ -1118,7 +1127,7 @@ static void bmpwin_init( SHOP_BUY_APP_WORK *wk )
     STRBUF *str = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_05_01 );
     PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp( wk->win[SHOP_BUY_BMPWIN_OKODUKAI]), 
                                             0, 0, str, wk->font, 
-                                            PRINTSYS_LSB_Make(1,2,15) );
+                                            PRINTSYS_LSB_Make(15,2,15) );
     GFL_STR_DeleteBuffer( str );
   }
 
@@ -1170,7 +1179,7 @@ static void print_mygold( SHOP_BUY_APP_WORK *wk )
   {
     GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( wk->win[SHOP_BUY_BMPWIN_MONEY]);
     GFL_BMP_Clear( bmp, 0 );
-    PRINTSYS_PrintColor( bmp,  0, 0, expand, wk->font, PRINTSYS_LSB_Make(1,2,15) );
+    PRINTSYS_PrintColor( bmp,  0, 0, expand, wk->font, PRINTSYS_LSB_Make(15,2,15) );
   
   }
 
@@ -1318,10 +1327,10 @@ static void bmpwin_list_init( SHOP_BUY_APP_WORK *wk )
   header.data_x    = 0; //項目表示Ｘ座標
   header.cursor_x  = 0; //カーソル表示Ｘ座標
   header.line_y    = 8; //表示Ｙ座標
-  header.f_col     = 1; //表示文字色
-  header.b_col     = 0; //表示背景色
-  header.s_col     = 2; //表示文字影色
-  header.msg_spc   = 0; //文字間隔Ｘ
+  header.f_col     = 12; //表示文字色
+  header.b_col     = 0;  //表示背景色
+  header.s_col     = 13; //表示文字影色
+  header.msg_spc   = 0;  //文字間隔Ｘ
   header.line_spc  = 0; //文字間隔Ｙ
   header.page_skip = BMPMENULIST_NO_SKIP; //ページスキップタイプ
   header.font      = 0; //文字指定(本来はu8だけどそんなに作らないと思うので)
@@ -1362,7 +1371,7 @@ static void line_callback(BMPMENULIST_WORK * wk, u32 param, u8 y )
     WORDSET_ExpandStr( sbw->wordSet, sbw->expandBuf, sbw->priceStr );
   
     PRINTSYS_PrintQueColor( sbw->printQue, GFL_BMPWIN_GetBmp( sbw->win[SHOP_BUY_BMPWIN_LIST]), 
-                          14*8, y, sbw->expandBuf, sbw->font, PRINTSYS_LSB_Make(1,2,0) );
+                          14*8, y, sbw->expandBuf, sbw->font, PRINTSYS_LSB_Make(12,13,0) );
   }
 }
 
