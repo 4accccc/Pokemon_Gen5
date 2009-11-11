@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-25T16:22:06"/>
+	<create user="matsumiya" host="W00207" date="2009-11-11T15:38:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -237,7 +237,7 @@
 		<number position="-1" width="100"/>
 		<comment position="4" width="211"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="119">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -322,10 +322,12 @@
 	</row>
 
 	<row id="msg_r07_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>看板分類：タウンマップ</comment>
+		<comment>・タワーオブヘブン用</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
-		<language name="JPN" width="256">７ばんどうろ</language>
-		<language name="JPN_KANJI" width="256">７番道路</language>
+		<language name="JPN" width="256">タワーオブヘブン
+ここに　ただしき　もの　ねむる</language>
+		<language name="JPN_KANJI" width="256">タワーオブヘブン
+ここに　正しき　もの　眠る</language>
 	</row>
 
 	<row id="msg_r07_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
