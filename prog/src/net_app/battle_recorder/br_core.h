@@ -1,16 +1,16 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
- *	@file		src\net_app\battle_recoder\br_core.h
- *	@brief
- *	@author		Toru=Nagihashi
+ *	@file		br_core.h
+ *	@brief	バトルレコーダー本体
+ *	@author	Toru=Nagihashi
  *	@date		2009.11.09
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
-#include "net_app/battle_recoder.h"
+#include "net_app/battle_recorder.h"
 //=============================================================================
 /**
  *					構造体

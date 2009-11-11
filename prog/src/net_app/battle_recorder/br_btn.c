@@ -8,9 +8,17 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+//ライブラリ
+#include <gflib.h>
 
-"br_btn_data.h"
-"br_btn.h"
+//システム
+#include "system/gfl_use.h"
+#include "system/main.h"  //HEAPID
+
+//自分のモジュール
+#include "br_btn_data.h"
+#include "br_btn.h"
+
 //=============================================================================
 /**
  *					定数宣言
@@ -61,7 +69,9 @@ typedef struct
 //=====================================
 struct _BR_BTN_SYS_WORK
 {
+
 	BR_BTN_SYS_STATE	state;	//ボタン管理の状態
+	BR_BTN_SYS_INPUT	input;	//ボタン入力状態
 
 	u32					trg_btn;			//押したボタン
 
@@ -120,6 +130,10 @@ BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MODE mode, GFL_CLUNIT *p_unit, HEAPID heapI
 		GFL_STD_MemClear( p_wk, sizeof(BR_BTN_SYS_WORK) );
 	}
 
+	//リソース読み込み
+	{	
+		
+	}
 
 	//ボタンバッファを作成
 	{	
@@ -140,7 +154,6 @@ BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MODE mode, GFL_CLUNIT *p_unit, HEAPID heapI
 		p_wk->p_btn_stack	= GFL_HEAP_AllocMemory( heapID, size );
 		GFL_STD_MemClear( p_wk->p_btn_stack, size );
 	}
-
 
 	//最初に読み込むボタンを初期化
 	{	
@@ -192,6 +205,10 @@ void BR_BTN_SYS_Exit( BR_BTN_SYS_WORK *p_wk )
 	}
 	GFL_HEAP_FreeMemory( p_wk->p_btn_now );
 	
+	//リソース破棄
+	{	
+
+	}
 
 	//ワーク破棄
 	GFL_HEAP_FreeMemory( p_wk );
@@ -209,10 +226,12 @@ void BR_BTN_SYS_Main( BR_BTN_SYS_WORK *p_wk )
 	{	
 	case BR_BTN_SYS_STATE_WAIT:	
 		{	
-			p_wk->input	= BR_BTN_SYS_INPUT_NONE;
-
 			int i;
 			BOOL is_trg	= FALSE;
+
+
+			p_wk->input	= BR_BTN_SYS_INPUT_NONE;
+
 			//ボタン押し検知
 			for( i = 0; i < p_wk->btn_now_max; i++ )
 			{	
@@ -235,7 +254,7 @@ void BR_BTN_SYS_Main( BR_BTN_SYS_WORK *p_wk )
 					}
 					else
 					{	
-						BR_BTN_StartMove( &p_wk->p_btn_now[i], BR_BTN_MOVE_HIDE, &p_wk->p_btn[p_wk->trg_btn] );
+						BR_BTN_StartMove( &p_wk->p_btn_now[i], BR_BTN_MOVE_HIDE, &p_wk->p_btn_now[p_wk->trg_btn] );
 					}
 				}
 
@@ -250,9 +269,9 @@ void BR_BTN_SYS_Main( BR_BTN_SYS_WORK *p_wk )
 			int i;
 			BOOL is_end	= FALSE;
 
-			for( i = 0; i < p_wk->btn_num; i++ )
+			for( i = 0; i < p_wk->btn_now_max; i++ )
 			{	
-				is_end	&= BR_BTN_MainMove( &p_wk->p_btn[i] );
+				is_end	&= BR_BTN_MainMove( &p_wk->p_btn_now[i] );
 			}
 
 			if( is_end )
@@ -264,10 +283,10 @@ void BR_BTN_SYS_Main( BR_BTN_SYS_WORK *p_wk )
 	
 	case BR_BTN_SYS_STATE_BTN_CHANGE:
 		//決定したボタンをスタックに積み、クリア
-		Br_Btn_Sys_PushStack( p_wk, &p_wk->p_btn[p_wk->trg_btn] );
-		BR_BTN_Exit( &p_wk->p_btn[p_wk->trg_btn] );
+		Br_Btn_Sys_PushStack( p_wk, &p_wk->p_btn_now[p_wk->trg_btn] );
+		BR_BTN_Exit( &p_wk->p_btn_now[p_wk->trg_btn] );
 		//他のボタンを読み変える
-		Br_Btn_Sys_ReLoadBtn( p_wk );
+		Br_Btn_Sys_ReLoadBtn( p_wk, 0 );	//@todo
 		{	
 			int i;
 
@@ -280,7 +299,7 @@ void BR_BTN_SYS_Main( BR_BTN_SYS_WORK *p_wk )
 			//スタックに積んだ、決定ボタンは上部へ移動
 			BR_BTN_StartMove( &p_wk->p_btn_stack[p_wk->btn_stack_num-1], BR_BTN_MOVE_TAG, NULL );
 		}
-		p_wk->state	= BR_BTN_SYS_STATE_APPEAR_MOVE:
+		p_wk->state	= BR_BTN_SYS_STATE_APPEAR_MOVE;
 		break;
 
 	case BR_BTN_SYS_STATE_APPEAR_MOVE:
@@ -288,11 +307,14 @@ void BR_BTN_SYS_Main( BR_BTN_SYS_WORK *p_wk )
 			int i;
 			BOOL is_end	= FALSE;
 
-			for( i = 0; i < p_wk->btn_num; i++ )
+			for( i = 0; i < p_wk->btn_now_max; i++ )
 			{	
-				is_end	&= BR_BTN_MainMove( &p_wk->p_btn[i] );
+				is_end	&= BR_BTN_MainMove( &p_wk->p_btn_now[i] );
 			}
-
+			for( i = 0; i < p_wk->btn_stack_max; i++ )
+			{	
+				is_end	&= BR_BTN_MainMove( &p_wk->p_btn_stack[i] );
+			}
 			if( is_end )
 			{
 				p_wk->state	= BR_BTN_SYS_STATE_BTN_CHANGE;
@@ -300,11 +322,12 @@ void BR_BTN_SYS_Main( BR_BTN_SYS_WORK *p_wk )
 		}
 		break;
 
-	case BR_BTN_SYS_STATE_:
-		if(  )
+	case BR_BTN_SYS_STATE_INPUT:
+		if( 0 )
 		{	
 			p_wk->input	= BR_BTN_SYS_INPUT_CHANGESEQ;
 		}
+		p_wk->state	= BR_BTN_SYS_STATE_WAIT;
 		break;
 	}
 }
@@ -406,7 +429,7 @@ static void BR_BTN_Exit( BR_BTN_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static BOOL BR_BTN_GetTrg( const BR_BTN_WORK *cp_wk )
 {	
-
+	
 }
 //----------------------------------------------------------------------------
 /**

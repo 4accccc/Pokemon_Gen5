@@ -8,6 +8,8 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+//ライブラリ
+#include <gflib.h>
 
 #include "msg/msg_battle_rec.h"
 #include "br_btn_data.h"
@@ -37,7 +39,7 @@
 //=====================================
 struct _BR_BTN_DATA
 {	
-	u16	param[BR_BTN_DATA_PARAM];
+	u16	param[BR_BTN_DATA_PARAM_MAX];
 };
 
 //=============================================================================
@@ -49,7 +51,7 @@ struct _BR_BTN_DATA
 ///	ブラウザモード	初期メニュー
 //=====================================
 #define BTN_DATA_BROWSE_TOP_MAX	(4)
-static const sc_btn_data_browse_top[BTN_DATA_BROWSE_TOP_MAX] =
+static const BR_BTN_DATA sc_btn_data_browse_top[BTN_DATA_BROWSE_TOP_MAX] =
 {	
 	//バトルビデオ
 	{	
@@ -99,7 +101,7 @@ static const sc_btn_data_browse_top[BTN_DATA_BROWSE_TOP_MAX] =
 ///	ブラウザモード	バトルビデオメニュー
 //=====================================
 #define BTN_DATA_BROWSE_BTLVIDEO_MAX	(4)
-static const sc_btn_data_browse_btlviedeo[BTN_DATA_BROWSE_BTLVIDEO_MAX] =
+static const BR_BTN_DATA sc_btn_data_browse_btlviedeo[BTN_DATA_BROWSE_BTLVIDEO_MAX] =
 {	
 	//自分の記録
 	{	
@@ -147,7 +149,7 @@ static const sc_btn_data_browse_btlviedeo[BTN_DATA_BROWSE_BTLVIDEO_MAX] =
 ///	ブラウザモード	誰かの記録メニュー
 //=====================================
 #define BTN_DATA_BROWSE_OTHER_RECORD_MAX	(4)
-static const sc_btn_data_browse_other_record[BTN_DATA_BROWSE_OTHER_RECORD_MAX] =
+static const BR_BTN_DATA sc_btn_data_browse_other_record[BTN_DATA_BROWSE_OTHER_RECORD_MAX] =
 {	
 	//誰かの記録１
 	{	
@@ -194,7 +196,7 @@ static const sc_btn_data_browse_other_record[BTN_DATA_BROWSE_OTHER_RECORD_MAX] =
 ///	ブラウザモード	記録を消すメニュー
 //=====================================
 #define BTN_DATA_BROWSE_DELETE_RECORD_MAX	(3)
-static const sc_btn_data_browse_delete_record[BTN_DATA_BROWSE_DELETE_RECORD_MAX] =
+static const BR_BTN_DATA sc_btn_data_browse_delete_record[BTN_DATA_BROWSE_DELETE_RECORD_MAX] =
 {	
 	//自分の記録
 	{	
@@ -231,7 +233,7 @@ static const sc_btn_data_browse_delete_record[BTN_DATA_BROWSE_DELETE_RECORD_MAX]
 ///	ブラウザモード	誰かの記録を消すメニュー
 //=====================================
 #define BTN_DATA_BROWSE_DELETE_OTHER_MAX	(4)
-static const sc_btn_data_browse_delete_other[BTN_DATA_BROWSE_DELETE_OTHER_MAX] =
+static const BR_BTN_DATA sc_btn_data_browse_delete_other[BTN_DATA_BROWSE_DELETE_OTHER_MAX] =
 {	
 	//誰かの記録１
 	{	
@@ -278,7 +280,7 @@ static const sc_btn_data_browse_delete_other[BTN_DATA_BROWSE_DELETE_OTHER_MAX] =
 ///	グローバルバトルビデオモード	初期メニュー
 //=====================================
 #define BTN_DATA_BTLVIDEO_TOP_MAX	(3)
-static const sc_btn_data_btlvideo_top[BTN_DATA_BTLVIDEO_TOP_MAX] =
+static const BR_BTN_DATA sc_btn_data_btlvideo_top[BTN_DATA_BTLVIDEO_TOP_MAX] =
 {	
 	//バトルビデオを見る
 	{	
@@ -315,7 +317,7 @@ static const sc_btn_data_btlvideo_top[BTN_DATA_BTLVIDEO_TOP_MAX] =
 ///	グローバルバトルビデオモード	見るメニュー
 //=====================================
 #define BTN_DATA_BTLVIDEO_LOOK_MAX	(4)
-static const sc_btn_data_btlvideo_look[BTN_DATA_BTLVIDEO_LOOK_MAX] =
+static const BR_BTN_DATA sc_btn_data_btlvideo_look[BTN_DATA_BTLVIDEO_LOOK_MAX] =
 {	
 	//ランキングで探す
 	{	
@@ -362,7 +364,7 @@ static const sc_btn_data_btlvideo_look[BTN_DATA_BTLVIDEO_LOOK_MAX] =
 ///	グローバルバトルビデオモード	ランキングで探すメニュー
 //=====================================
 #define BTN_DATA_BTLVIDEO_RANK_MAX	(4)
-static const sc_btn_data_btlvideo_rank[BTN_DATA_BTLVIDEO_RANK_MAX] =
+static const BR_BTN_DATA sc_btn_data_btlvideo_rank[BTN_DATA_BTLVIDEO_RANK_MAX] =
 {	
 	//最新30件
 	{	
@@ -409,7 +411,7 @@ static const sc_btn_data_btlvideo_rank[BTN_DATA_BTLVIDEO_RANK_MAX] =
 ///	グローバルバトルミュージカルショット	初期メニュー
 //=====================================
 #define BTN_DATA_MUSICAL_TOP_MAX	(3)
-static const sc_btn_data_musical_top[BTN_DATA_MUSICAL_TOP_MAX] =
+static const BR_BTN_DATA sc_btn_data_musical_top[BTN_DATA_MUSICAL_TOP_MAX] =
 {	
 	//写真を見る
 	{	
@@ -447,7 +449,7 @@ static const sc_btn_data_musical_top[BTN_DATA_MUSICAL_TOP_MAX] =
 ///	汎用	はい、いいえ
 //=====================================
 #define BTN_DATA_YESNO_MAX	(2)
-static const sc_btn_data_yesno[BTN_DATA_YESNO_MAX] =
+static const BR_BTN_DATA sc_btn_data_yesno[BTN_DATA_YESNO_MAX] =
 {	
 	//はい
 	{	
@@ -542,7 +544,7 @@ const BR_BTN_DATA * BR_BTN_DATA_SYS_GetData( BR_MENUID menuID, u16 btnID )
 {	
 	GF_ASSERT( menuID < BR_MENUID_MAX );
 	GF_ASSERT( btnID  < scp_btn_data_tbl[menuID].max );
-	return scp_btn_data_tbl[menuID].cp_data[ btnID ];
+	return &(scp_btn_data_tbl[menuID].cp_data[ btnID ]);
 }
 
 //----------------------------------------------------------------------------

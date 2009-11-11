@@ -10,9 +10,18 @@
  *	アプリケーション間の情報のやりとりをするために存在する。
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+//ライブラリ
+#include <gflib.h>
 
+//システム
+#include "system/gfl_use.h"
+#include "system/main.h"  //HEAPID
 
+//自分のモジュール
 #include "br_core.h"
+
+//外部公開
+#include "net_app/battle_recorder.h"
 
 //=============================================================================
 /**
@@ -45,7 +54,7 @@ typedef struct {
 
 	HEAPID					heapID;
 	void						*p_wk_adrs;
-	const GFL_PROC_DATA			*cp_procdata;
+	const SUBPROC_DATA			*cp_procdata_tbl;
 
 	u32							next_procID;
 	u32							now_procID;
@@ -96,7 +105,7 @@ static void BR_CORE_FreeParam( void *p_param_adrs, void *p_wk_adrs );
 //-------------------------------------
 ///	サブプロセス移動データ
 //=====================================
-typedef
+typedef enum
 {	
 	SUBPROCID_CORE,
 	SUBPROCID_BTLREC,
@@ -105,12 +114,14 @@ typedef
 } SUBPROC_ID;
 static const SUBPROC_DATA sc_subproc_data[SUBPROCID_MAX]	=
 {	
+	//SUBPROCID_CORE
 	{	
 		GFL_OVERLAY_BLANK_ID,
 		&BR_CORE_ProcData,
 		BR_CORE_AllocParam,
 		BR_CORE_FreeParam,
 	},
+	//SUBPROCID_BTLREC
 	{	
 		GFL_OVERLAY_BLANK_ID,
 		NULL,
@@ -161,7 +172,7 @@ static GFL_PROC_RESULT BR_SYS_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(BR_SYS_WORK), HEAPID_BATTLE_RECORDER_SYS );
 	GFL_STD_MemClear( p_wk, sizeof(BR_SYS_WORK) );	
-	p_wk->param		= p_param_adrs;
+	p_wk->p_param		= p_param_adrs;
 
 	//モジュール作成
 	SUBPROC_Init( &p_wk->subproc, sc_subproc_data, p_wk, HEAPID_BATTLE_RECORDER_SYS );

@@ -208,4 +208,5 @@
   $VERSION_WHITE	ARCID_CDEMO_DATA  "op_demo.narc" # コマンドデモデータ（ホンモノ）
   ARCID_GYM_INSECT	"fieldmap/gym_insect.narc"	#虫ジム
   ARCID_ISS_ZONE "iss_zone.narc" # ゾーンISSデータ
+	ARCID_BATTLE_RECORDER_GRA	"battle_recorder_gra.narc" #バトルレコーダーグラフィック
   ARCID_GYM_GROUND	"fieldmap/gym_ground.narc"	#地面ジム

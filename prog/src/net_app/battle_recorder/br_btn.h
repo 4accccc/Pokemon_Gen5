@@ -9,24 +9,27 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
-
-#include "net_app/battle_recoder.h"
+#include "system/main.h"  //HEAPID
+#include "net_app/battle_recorder.h"	//BR_MODE
 //=============================================================================
 /**
  *					定数宣言
 */
 //=============================================================================
 //-------------------------------------
-///	バトルレコーダー状態
+///	ボタン状態
 //=====================================
 typedef enum
 {
 	BR_BTN_SYS_STATE_WAIT,	//タッチ待ち
-	BR_BTN_SYS_STATE_MOVE,	//移動中
+	BR_BTN_SYS_STATE_HANGER_MOVE,	//移動中
+	BR_BTN_SYS_STATE_BTN_CHANGE,	//ボタン切り替え中
+	BR_BTN_SYS_STATE_APPEAR_MOVE,
+	BR_BTN_SYS_STATE_INPUT,
 } BR_BTN_SYS_STATE;
 
 //-------------------------------------
-///	バトルレコーダーボタン状態
+///	ボタン入力
 //=====================================
 typedef enum
 {
@@ -43,7 +46,7 @@ typedef enum
 //-------------------------------------
 ///	バトルレコーダー　ボタン管理
 //=====================================
-typedef struct BR_BTN_SYS_WORK BR_BTN_SYS_WORK;
+typedef struct _BR_BTN_SYS_WORK BR_BTN_SYS_WORK;
 //=============================================================================
 /**
  *					PUBILIC関数

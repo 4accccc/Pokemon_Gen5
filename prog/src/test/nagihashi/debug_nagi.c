@@ -39,6 +39,7 @@
 #include "debug_poke2dcheck.h"
 #include "app/name_input.h"
 #include "net_app/wifibattlematch.h"
+#include "net_app/battle_recorder.h"
 
 #include "savedata/irc_compatible_savedata.h"
 #include "savedata/shortcut.h"
@@ -59,6 +60,7 @@
 //=====================================
 FS_EXTERN_OVERLAY( compatible_irc_sys );
 FS_EXTERN_OVERLAY( wifibattlematch );
+FS_EXTERN_OVERLAY( battle_recorder );
 
 //-------------------------------------
 ///	個数
@@ -172,9 +174,10 @@ typedef struct
 	TOWNMAP_PARAM					townmap_param;
 	WORLDTRADE_PARAM			gts_param;
 	TEMPLATE_PARAM				template_param;
-	NAMEIN_PARAM					*p_namein_param;
 	CONFIG_PANEL_PARAM		config_param;
 	WIFIBATTLEMATCH_PARAM	wifibattlematch_param;
+	BATTLERECORDER_PARAM	battle_recorder_param;
+	NAMEIN_PARAM					*p_namein_param;
 } DEBUG_NAGI_MAIN_WORK;
 
 //-------------------------------------
@@ -250,6 +253,7 @@ static void LISTDATA_NextListHome( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_NextListPage1( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_FullShortCutData( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallWifiBattleMatch( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_CallBtlRecorder( DEBUG_NAGI_MAIN_WORK *p_wk );
 //3d
 static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_3D_Exit( GRAPHIC_3D_WORK *p_wk );
@@ -327,6 +331,7 @@ enum
 	LISTDATA_SEQ_PROC_NAMEIN,
 	LISTDATA_SEQ_SHORTCUTDATA_FULL,
 	LISTDATA_SEQ_PROC_WIFIBATTLEMATCH,
+	LISTDATA_SEQ_PROC_BTLRECORDER,
 
 	LISTDATA_SEQ_MAX,
 };
@@ -353,6 +358,7 @@ static const LISTDATA_FUNCTION	sc_list_funciton[]	=
 	LISTDATA_CallProcNamin,
 	LISTDATA_FullShortCutData,
 	LISTDATA_CallWifiBattleMatch,
+	LISTDATA_CallBtlRecorder,
 };
 
 //-------------------------------------
@@ -363,6 +369,9 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 #if 1
 	{	
 		L"WIFIバトルマッチ", LISTDATA_SEQ_PROC_WIFIBATTLEMATCH,
+	},
+	{	
+		L"バトルレコーダー", LISTDATA_SEQ_PROC_BTLRECORDER,
 	},
 #endif 
 	{	
@@ -1158,6 +1167,21 @@ static void LISTDATA_CallWifiBattleMatch( DEBUG_NAGI_MAIN_WORK *p_wk )
 
 	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(wifibattlematch), &WifiBattleMaptch_ProcData, &p_wk->wifibattlematch_param );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	バトルレコーダーを呼ぶ
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void LISTDATA_CallBtlRecorder( DEBUG_NAGI_MAIN_WORK *p_wk )
+{	
+	p_wk->battle_recorder_param.mode		= BR_MODE_BROWSE;
+	p_wk->battle_recorder_param.p_gsys	= NULL;
+	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(battle_recorder), &BattleRecorder_ProcData, &p_wk->battle_recorder_param );
+}
+
 //=============================================================================
 /**
  *				GRAPHIC

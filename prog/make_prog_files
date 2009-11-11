@@ -1039,7 +1039,14 @@ SRCS_OVERLAY_COMMAND_DEMO = demo/command_demo/command_demo.c \
 							demo/command_demo/cdemo_seq.c \
 							demo/command_demo/cdemo_comm.c
 
-
+#バトルレコーダー
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_BATTLE_RECORDER	= net_app/battle_recorder/br_main.c \
+																net_app/battle_recorder/br_core.c \
+																net_app/battle_recorder/br_btn.c \
+																net_app/battle_recorder/br_btn_data.c \
+																net_app/battle_recorder/br_res.c \
+																net_app/battle_recorder/br_graphic.c
 
 # デバッグデータ作成
 #===> SRCS_OVERLAY_FIELDMAP

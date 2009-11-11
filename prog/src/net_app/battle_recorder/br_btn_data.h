@@ -9,7 +9,9 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
-
+#include "system/main.h"  //HEAPID
+#include "br_inner.h"			//BR_MENUID
+#include "net_app/battle_recorder.h"	//BR_MODE
 //=============================================================================
 /**
  *					定数宣言
@@ -20,38 +22,8 @@
 //=====================================
 #define BR_BTN_DATA_NONE	(0xFFFF)
 
-
-#define BR_BTN_DATA_WIDTH	()
-
-//-------------------------------------
-///	メニューインデックス
-//		ここでのメニューとは上画面が切り替らず、
-//		メニューを押していくことで進んでいく箇所です。
-//		（消すは入ります）
-//=====================================
-typedef enum
-{
-	BR_BROWSE_MENUID_TOP,					//ブラウザモード　初期メニュー
-
-	BR_BROWSE_MENUID_BTLVIDEO,		//ブラウザモード　バトルビデオメニュー,
-
-	BR_BROWSE_MENUID_OTHER_RECORD,//ブラウザモード　だれかの記録メニュー
-	BR_BROWSE_MENUID_DELETE_RECORD,//ブラウザモード　記録を消すメニュー
-	BR_BROWSE_MENUID_DELETE_OTHER,//ブラウザモード　誰かの記録を消すメニュー
-
-	//BR_BROWSE_MENUID_BTLSUBWAY,		//ブラウザモード　バトルサブウェイメニュー	
-	//BR_BROWSE_MENUID_RNDMATCH,		//ブラウザモード　ランダムマッチメニュー
-	
-	BR_BTLVIDEO_MENUID_TOP,					//グローバルバトルビデオモード　初期メニュー
-
-	BR_BTLVIDEO_MENUID_LOOK,				//グローバルバトルビデオモード　見るメニュー
-	BR_BTLVIDEO_MENUID_RANK,				//グローバルバトルビデオモード　ランキングで探すメニュー
-
-	BR_MUSICAL_MENUID_TOP,					//グローバルミュージカルショットモード　初期メニュー
-
-	BR_MENUID_YESNO,								//汎用	はい、いいえ
-	BR_MENUID_MAX
-} BR_MENUID;
+#define BR_BTN_DATA_WIDTH		(0)
+#define BR_BTN_DATA_HEIGHT	(0)
 
 //-------------------------------------
 ///	ボタンの種類
@@ -90,9 +62,9 @@ typedef enum
 */
 //=============================================================================
 //-------------------------------------
-///	ボタン情報管理
+///	ボタン情報
 //=====================================
-typedef struct _BR_BTN_DATA_SYS  BR_BTN_DATA_SYS;
+typedef struct _BR_BTN_DATA  BR_BTN_DATA;
 
 //=============================================================================
 /**
