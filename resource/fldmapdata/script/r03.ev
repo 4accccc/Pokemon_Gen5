@@ -26,10 +26,10 @@ _EVENT_DATA    ev_r03_babygirl1a
 _EVENT_DATA    ev_r03_babygirl1b
 _EVENT_DATA    ev_pos_r03_rival_01
 _EVENT_DATA    ev_pos_r03_rival_02
-_EVENT_DATA    ev_r03_rival_03
-_EVENT_DATA    ev_r03_babygirl_02
-_EVENT_DATA    ev_r03_support_01
-_EVENT_DATA    ev_pos_r03_rival_04
+_EVENT_DATA    ev_pos_r03_support_01
+_EVENT_DATA    ev_r03_support_02
+_EVENT_DATA    ev_pos_r03_support_03
+_EVENT_DATA    ev_r03_babygirl_03
 _EVENT_DATA    ev_bg_r03_board_01
 _EVENT_DATA    ev_bg_r03_board_02
 _EVENT_DATA    ev_bg_r03_board_03
@@ -49,27 +49,26 @@ EVENT_START   ev_pos_r03_rival_01
 
 	//オブジェクトを出現させる
 	_FLAG_RESET(FV_R03_RIVAL_01)
-	_OBJ_ADD(R03_RIVAL)
-	_OBJ_ADD(R03_SUPPORT)
+	_OBJ_ADD(R03_RIVAL_01)
+	_OBJ_ADD(R03_SUPPORT_01)
 	_OBJ_ADD(R03_BABYGIRL_02)
 	_OBJ_ADD(R03_HAKAIM_01)
 	_OBJ_ADD(R03_HAKAIM_02)
 	
 	//オブジェクト駆け寄る
-	_OBJ_ANIME(R03_RIVAL,anm_r03_rival_01)
-	_OBJ_ANIME(R03_SUPPORT,anm_r03_rival_01)
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_r03_player_00)
+	_OBJ_ANIME(R03_RIVAL_01,anm_rival_01)
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_00)
 	_OBJ_ANIME_WAIT()
 	
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
 	
 	//会話スタート
-	_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_01,R03_RIVAL)
+	_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_01,R03_RIVAL_01)
 	_BALLOONWIN_CLOSE()
 	
 	//ライバル隣接
-	_OBJ_ANIME(R03_RIVAL,anm_r03_rival_01_02)
+	_OBJ_ANIME(R03_RIVAL_01,anm_rival_01_02)
 	_OBJ_ANIME_WAIT()
 	
 	//ライバルと戦闘（持ちタイプで分岐）
@@ -110,332 +109,400 @@ EVENT_START   ev_pos_r03_rival_01
 	ENDIF
 	
 	
-
-	
 	//戦闘後会話
-	_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_02,R03_RIVAL)
+	_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_02,R03_RIVAL_01)
 	_BALLOONWIN_CLOSE()
 	
-	//サポート、プラズマ団に気づいて駆け寄る。
-	_OBJ_ANIME(R03_SUPPORT,anm_r03_support_01)
+	//プラズマ団駆け抜けてゆく
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03_hakaim_01 , R03_HAKAIM_01 )
+	_OBJ_ANIME( R03_HAKAIM_01 , anm_hakai_dash_01 )
+	_OBJ_ANIME( R03_HAKAIM_02, anm_hakai_dash_01 )
 	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG_OPEN(msg_r03_white_01,R03_SUPPORT)
-	_BALLOONWIN_CLOSE()
-	_OBJ_ANIME(R03_SUPPORT,anm_r03_rival_02)
-	_OBJ_ANIME_WAIT()
-	
-	
-	//主人公とライバルプラズマ団のもとに移動
-	_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_03,R03_RIVAL)
-	_BALLOONWIN_CLOSE()
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_r03_player_01)
-	_OBJ_ANIME_WAIT()
-	_OBJ_ANIME(R03_RIVAL,anm_r03_rival_02)
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_r03_rival_02)
-	_OBJ_ANIME_WAIT()
-	
-	//幼女とプラズマ団
-	_BALLOONWIN_OBJMSG_OPEN(msg_r03_babygirl1_01,R03_BABYGIRL_02)
-	_BALLOONWIN_CLOSE()
-	_BALLOONWIN_OBJMSG_OPEN(msg_r03_hakaim_01,R03_HAKAIM_02)
-	_BALLOONWIN_CLOSE()
-	_BALLOONWIN_OBJMSG_OPEN(msg_r03_white_02,R03_SUPPORT)
-	_BALLOONWIN_CLOSE()
-	_BALLOONWIN_OBJMSG_OPEN(msg_r03_hakaim_02,R03_HAKAIM_01)
 	_BALLOONWIN_CLOSE()
 	
-	//プラズマ団逃走
-	_OBJ_ANIME(R03_HAKAIM_02,anm_r03_hakai_01)
-	_OBJ_ANIME(R03_HAKAIM_01,anm_r03_hakai_01)
-	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG_OPEN(msg_r03_white_03,R03_SUPPORT)
-	_BALLOONWIN_CLOSE()
-	_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_04,R03_RIVAL)
-	
-	//ライバル：追うかアンサー
-	_YES_NO_WIN( SCWK_ANSWER )
-	_BALLOONWIN_CLOSE()
-	
-	//レスにより分岐
-	IF $SCWK_ANSWER == SCR_YES THEN
-  //「はい」
-		_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_06,R03_RIVAL)
-		_BALLOONWIN_CLOSE()
-		_OBJ_ANIME(R03_RIVAL,anm_r03_rival_03)
-		_OBJ_ANIME_WAIT()
-		//プラズマ団のPOSイベント起動
-		$WK_SCENE_R03 = 1
-	ELSE
-  //「いいえ」
-		_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_07,R03_RIVAL)
-		_BALLOONWIN_CLOSE()
-	ENDIF
-
-	
-EVENT_END
-
-/**************************************************************/
-/*  R03 POSプラズマ団と戦うオッケーを出すまで戻す*/
-/**************************************************************/
-EVENT_START   ev_pos_r03_rival_02
-	_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_07,R03_RIVAL)
-	_BALLOONWIN_CLOSE()
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_r03_player_02)
-	_OBJ_ANIME_WAIT()
-EVENT_END
-
-/**************************************************************/
-/*  R03 プラズマ団と戦う前の幼女*/
-/**************************************************************/
-EVENT_START   ev_r03_babygirl_02
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r03_babygirl1_02)
-EVENT_END
-
-/**************************************************************/
-/*  R03 プラズマ団と戦う前のサポート*/
-/**************************************************************/
-EVENT_START   ev_r03_support_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r03_white_04)
-EVENT_END
-
-
-/**************************************************************/
-/*  R03 プラズマ団と戦うかライバルから質問*/
-/**************************************************************/
-EVENT_START   ev_r03_rival_03
-	_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_04,R03_RIVAL)
-	//ライバル：追うかアンサー
-	_YES_NO_WIN( SCWK_ANSWER )
-	_BALLOONWIN_CLOSE()
-	
-	//レスにより分岐
-	IF $SCWK_ANSWER == 0 THEN
-  //「はい」
-		_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_06,R03_RIVAL)
-		_BALLOONWIN_CLOSE()
-		_OBJ_ANIME(R03_RIVAL,anm_r03_rival_03)
-		_OBJ_ANIME_WAIT()
-		//プラズマ団のPOSイベント起動
-		$WK_SCENE_R03 = 1
-	ELSE
-  //「いいえ」
-		_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_07,R03_RIVAL)
-		_BALLOONWIN_CLOSE()
-	ENDIF
-
-EVENT_END
-
-/**************************************************************/
-/*  R03 ライバルと一緒にプラズマ団と戦う*/
-/**************************************************************/
-EVENT_START   ev_pos_r03_rival_04
-	
-	//主人公、ライバルの隣へ
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_r03_player_03)
-	_OBJ_ANIME_WAIT()
-	
-	//プレイヤーネームを格納
-	_PLAYER_NAME(0)
-	
-	//ライバルとプラズマ団会話
-	_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_08,R03_RIVAL)
-	_BALLOONWIN_CLOSE()
-	_BALLOONWIN_OBJMSG_OPEN(msg_r03_hakaim_03,R03_HAKAIM_02)
-	_BALLOONWIN_CLOSE()
-	_BALLOONWIN_OBJMSG_OPEN(msg_r03_hakaim_04,R03_HAKAIM_02)
-	_BALLOONWIN_CLOSE()
-	_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_09,R03_RIVAL)
-	_BALLOONWIN_CLOSE()
-	
-	//プラズマ団とダブルバトル！
-	_TRAINER_BTL_SET( TRID_HAKAIM1_01, TRID_HAKAIM1_02 )
-	//結果チェック
-	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-		_TRAINER_WIN()
-	ELSE
-		_TRAINER_LOSE()
-	ENDIF
-
-	
-	//囚われのポケモン出現
-	_FLAG_RESET(FV_R03_POKE)
-	_OBJ_ADD(R03_POKE)
-	_OBJ_ADD(R03_SUPPORT_02)
-	
-	//ライバルとプラズマ団会話
-	_BALLOONWIN_OBJMSG_OPEN(msg_r03_hakaim_05,R03_HAKAIM_02)
-	_BALLOONWIN_CLOSE()
-	_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_10,R03_RIVAL)
-	_BALLOONWIN_CLOSE()
-	_BALLOONWIN_OBJMSG_OPEN(msg_r03_hakaim_06,R03_HAKAIM_02)
-	_BALLOONWIN_CLOSE()
-	
-	//プラズマ団逃走
-	_OBJ_ANIME(R03_HAKAIM_02,anm_r03_hakai_01)
-	_OBJ_ANIME(R03_HAKAIM_01,anm_r03_hakai_01)
-	_OBJ_ANIME_WAIT()
-	
-	//サポート会話後退場
-	_BALLOONWIN_OBJMSG_OPEN(msg_r03_white_05,R03_SUPPORT_02)
-	_BALLOONWIN_CLOSE()
-	_OBJ_ANIME(R03_SUPPORT_02,anm_r03_support_02)
-	_OBJ_ANIME(R03_POKE,anm_r03_support_02)
-	_OBJ_ANIME_WAIT()
-	
-	//ライバル会話後退場
-	_OBJ_ANIME(R03_RIVAL,anm_r03_rival_04)
-	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_11,R03_RIVAL)
-	_BALLOONWIN_CLOSE()
-	_OBJ_ANIME(R03_RIVAL,anm_r03_rival_05)
-	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_12,R03_RIVAL)
-	_BALLOONWIN_CLOSE()
-	_OBJ_ANIME(R03_RIVAL,anm_r03_rival_06)
-	_OBJ_ANIME_WAIT()
-	
-	//イベントが終了したので関連するOBJを非表示にする
-	_OBJ_DEL(R03_POKE)
-	_OBJ_DEL(R03_SUPPORT)
-	_OBJ_DEL(R03_SUPPORT_02)
-	_OBJ_DEL(R03_RIVAL)
+	//プラズマ団OBJ消去
 	_OBJ_DEL(R03_HAKAIM_01)
 	_OBJ_DEL(R03_HAKAIM_02)
+	
+	//ライバル画面右を見てサポートに気づく
+	_OBJ_ANIME( R03_RIVAL_01 , anm_rival_01_03 )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03_black_03 , R03_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03_black_04 , R03_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//サポート到着
+	_OBJ_ANIME( R03_SUPPORT_01 , anm_support_01 )
+	_OBJ_ANIME( R03_BABYGIRL_02 , anm_babygirl_01 )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03_white_01 , R03_SUPPORT_01  )
+	_BALLOONWIN_CLOSE()
+	
+	//ライバルサポートにつっこむ
+	_OBJ_ANIME( R03_RIVAL_01 , anm_rival_01_04 )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03_black_05 , R03_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+	_OBJ_ANIME( R03_RIVAL_01 , anm_rival_01_05)
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03_black_06 , R03_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//サポートとBABYGIRL
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03_white_02 , R03_SUPPORT_01 )
+	_BALLOONWIN_CLOSE()
+	_OBJ_ANIME( R03_BABYGIRL_02 , anm_babygirl_02 )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03_babygirl1_01 , R03_BABYGIRL_02 )
+	_BALLOONWIN_CLOSE()
+	_OBJ_ANIME( R03_SUPPORT_01 , anm_support_02 )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03_white_03 , R03_SUPPORT_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//ライバルつっこむ
+	_OBJ_ANIME( R03_RIVAL_01 , anm_rival_01_06 )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03_black_07 , R03_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+	_OBJ_ANIME( R03_SUPPORT_01 , anm_support_03 )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03_white_04 , R03_SUPPORT_01 )
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03_black_08 , R03_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//ライバルと主人公洞窟方面へ
+	_OBJ_ANIME( R03_RIVAL_01 , anm_rival_01_07 )
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_player_01 )
+	_OBJ_ANIME_WAIT()
+	_OBJ_DEL(R03_RIVAL_01)
+	
+	//======================================//
+	
+	//プラズマ団とRIVAL01とSUPPORT01とBABYGIRL_02のフラグをSETして以降非表示に
 	_FLAG_SET(FV_R03_RIVAL_01)
-	_FLAG_SET(FV_R03_POKE)
+	
+	_OBJ_DEL(R03_SUPPORT_01)
+	_OBJ_DEL(R03_BABYGIRL_02)
+	
+	//SUPPORT02とBABYGIRL03を出現させる
+	_FLAG_RESET(FV_R03_SUPPORT_01)
+	
+	_OBJ_ADD(R03_SUPPORT_02)
+	_OBJ_ADD(R03_BABYGIRL_03)
+	
+	//***フラグ操作：ストッパーを有効にする***
+	$WK_SCENE_R03 = 1
+	
+	//======================================//
+	
+EVENT_END
 
-	//r03のイベントをすべて起動しなくする
-	$WK_SCENE_R03 = 2
+/**************************************************************/
+/*  R03 POSでsupportストッパー*/
+/**************************************************************/
+EVENT_START   ev_pos_r03_support_01
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03_white_06 , R03_SUPPORT_02 )
+	_BALLOONWIN_CLOSE()
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_player_stop_01 )
+	_OBJ_ANIME_WAIT()
+EVENT_END
+
+/**************************************************************/
+/*  R03 support02に直接話しかけ*/
+/**************************************************************/
+EVENT_START   ev_r03_support_02
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r03_white_05 )
+EVENT_END
+
+/**************************************************************/
+/*  R03 BABYGIRL03に直接話しかけ*/
+/**************************************************************/
+EVENT_START   ev_r03_babygirl_03
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r03_babygirl1_02 )
+EVENT_END
 
 
+/**************************************************************/
+/*  R03 R03R0301イベント終了後POSでお礼イベント*/
+/**************************************************************/
+EVENT_START   ev_pos_r03_support_03
+
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+
+	//主人公下を向く
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_player_02 )
+	_OBJ_ANIME_WAIT()
+
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03_white_07 , R03_SUPPORT_02 )
+	_BALLOONWIN_CLOSE()
+	
+	//性別が格納されるローカル変数を定義
+	DEFINE_LOCAL SCWK_SEX
+	_GET_MY_SEX(SCWK_SEX)
+	
+	//男性だった場合
+	IF $SCWK_SEX == PM_MALE THEN
+	
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03_babygirl1_03 , R03_BABYGIRL_03 )
+	_BALLOONWIN_CLOSE()
+	
+	//女性だった場合
+	ELSE
+	
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03_babygirl1_04 , R03_BABYGIRL_03 )
+	_BALLOONWIN_CLOSE()
+	
+	ENDIF
+	
+	//【仮】アイテム入手
+	_ITEM_EVENT_KEYWAIT(ITEM_MONSUTAABOORU, 5)
+	
+	//バイバーイ。サポートとBABYRIRL退場
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03_white_08 , R03_SUPPORT_02 )
+	_BALLOONWIN_CLOSE()
+	_OBJ_ANIME( R03_SUPPORT_02 , anm_support_goodbye )
+	_OBJ_ANIME( R03_BABYGIRL_03 ,  anm_support_goodbye )
+	_OBJ_ANIME_WAIT()
+
+	//======================================//
+	
+	//SUPPORT02とBABYGIRL03のフラグをSETして以降非表示に
+	_FLAG_SET(FV_R03_SUPPORT_01)
+	
+	_OBJ_DEL(R03_SUPPORT_02)
+	_OBJ_DEL(R03_BABYGIRL_03)
+	
+	//***フラグ操作：長い草イベントを有効にする***
+	$WK_SCENE_R03 = 3
+	
+	//======================================//
+	
+EVENT_END
+
+/**************************************************************/
+/*  R03 POSでライバルによる長い草解説イベント*/
+/**************************************************************/
+EVENT_START   ev_pos_r03_rival_02
+
+	//草むらからライバル登場
+	_OBJ_ANIME( R03_RIVAL_02 ,  anm_kusa_rival_02_01 )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_09 , R03_RIVAL_02 )
+	_BALLOONWIN_CLOSE()
+	
+	//草むらを語る
+	_OBJ_ANIME( R03_RIVAL_02 ,  anm_kusa_rival_02_02 )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03_black_10 , R03_RIVAL_02 )
+	_BALLOONWIN_CLOSE()
+	_OBJ_ANIME( R03_RIVAL_02 ,  anm_kusa_rival_02_03 )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03_black_11 , R03_RIVAL_02 )
+	_BALLOONWIN_CLOSE()
+	
+	//退場
+	_OBJ_ANIME( R03_RIVAL_02 ,  anm_kusa_rival_02_04 )
+	_OBJ_ANIME_WAIT()
+
+	//======================================//
+	
+	//RIVAL02のフラグをSETして以降非表示に
+	_FLAG_SET(FV_R03_RIVAL_02)
+	
+	_OBJ_DEL(R03_RIVAL_02)
+	
+	//***フラグ操作：R03の全てのイベントを無効に***
+	$WK_SCENE_R03 = 4
+	
+	//======================================//
+	
 EVENT_END
 
 
 //--------------------------------------------------------------
-//	R03ライバルとサポート駆け寄って来る
+//	ポケモン誘拐イベント：R03ライバル駆け寄って来る
 //--------------------------------------------------------------
 
-_ANIME_LABEL	anm_r03_rival_01
+_ANIME_LABEL	anm_rival_01
 	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WALK_L_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：R03主人公振り向く
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_player_00
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：R03ライバル主人公に隣接
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_rival_01_02
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：R03プラズマ団駆け抜ける
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_hakai_dash_01
+	_ANIME_DATA	AC_WALK_L_4F,18
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：R03ライバル画面右を向く
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_rival_01_03
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：R03サポート追いつく
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_support_01
+		_ANIME_DATA	AC_WALK_L_4F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：R03 BABYGIRL追いつく
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_babygirl_01
+		_ANIME_DATA	AC_WALK_L_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//  ポケモン誘拐イベント：ライバル左方向を向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_rival_01_04
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//  ポケモン誘拐イベント：ライバル右方向を向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_rival_01_05
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//  ポケモン誘拐イベント：BABYGIRLサポートの方を向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_babygirl_02
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+// ポケモン誘拐イベント：サポート BABYGIRLの方を向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_support_02
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+// ポケモン誘拐イベント：ライバルその場歩きでせっかちさ表現
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_rival_01_06
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+// ポケモン誘拐イベント：サポート ライバルの方を向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_support_03
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：ライバル洞窟方面へ
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_rival_01_07
+	_ANIME_DATA	AC_WALK_L_8F,35
+	_ANIME_DATA	AC_WALK_U_8F,9
 	_ANIME_DATA	AC_WALK_L_8F,4
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	R03主人公振り向く
+//	ポケモン誘拐イベント：主人公洞窟方面へ
 //--------------------------------------------------------------
 
-_ANIME_LABEL	anm_r03_player_00
-	_ANIME_DATA	AC_DIR_R,1
+_ANIME_LABEL	 anm_player_01
+	_ANIME_DATA	AC_WALK_L_8F,35
+	_ANIME_DATA	AC_WALK_U_8F,9
+	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 
 
 //--------------------------------------------------------------
-//	R03ライバル主人公に隣接
+//	ポケモン誘拐イベント：主人公ストッパーで戻される
 //--------------------------------------------------------------
 
-_ANIME_LABEL	anm_r03_rival_01_02
-	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	ACMD_END,0
-
-
-//--------------------------------------------------------------
-//	R03主人公一歩上に移動
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_r03_player_01
-	_ANIME_DATA	AC_DIR_D,1
+_ANIME_LABEL	 anm_player_stop_01
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	R03サポート気づく
+//	ポケモン誘拐イベント：R03主人公振り向く
 //--------------------------------------------------------------
 
-_ANIME_LABEL	anm_r03_support_01
-	_ANIME_DATA	AC_MARK_GYOE,1
+_ANIME_LABEL	anm_player_02
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：BABYGIRLとサポート退場
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_support_goodbye
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,10
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	R03ライバルとサポートと一緒にプラズマ団の元へ
+//	長い草イベント：ライバル登場
 //--------------------------------------------------------------
 
-_ANIME_LABEL	anm_r03_rival_02
-	_ANIME_DATA	AC_DIR_L,1
+_ANIME_LABEL	 anm_kusa_rival_02_01
 	_ANIME_DATA	AC_WALK_L_8F,8
 	_ANIME_DATA	ACMD_END,0
-	
+
 //--------------------------------------------------------------
-//	R03プラズマ団逃げる
+//	長い草イベント：ライバル草のほうを見る
 //--------------------------------------------------------------
 
-_ANIME_LABEL	anm_r03_hakai_01
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WALK_L_4F,8
+_ANIME_LABEL	 anm_kusa_rival_02_02
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	R03主人公はいを言うまで戻る
+//	長い草イベント：ライバル主人公のほうを見る
 //--------------------------------------------------------------
 
-_ANIME_LABEL	anm_r03_player_02
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_WALK_R_8F,1
+_ANIME_LABEL	 anm_kusa_rival_02_03
+		_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	R03ライバル、プラズマ団を追う
+//	長い草イベント：ライバル退場
 //--------------------------------------------------------------
 
-_ANIME_LABEL	anm_r03_rival_03
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WALK_L_4F,8
+_ANIME_LABEL	 anm_kusa_rival_02_04
+		_ANIME_DATA	AC_WALK_D_8F,10
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------
-//	R03主人公、ライバルの隣へ
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_r03_player_03
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	R03サポート・ポケモン退場
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_r03_support_02
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_WALK_R_8F,12
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	R03ライバルサポートの方を向く
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_r03_rival_04
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	R03ライバルサポートの方を向く
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_r03_rival_05
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	R03ライバル退場
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_r03_rival_06
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WALK_L_8F,12
-	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*  R03 OLDWOMAN1の会話のイベントスクリプト*/

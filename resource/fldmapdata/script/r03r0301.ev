@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_r03r0301.h"
-  //.include  "r03r0301.h"
+  .include  "r03r0301.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r03r0301
+_EVENT_DATA    ev_pos_r03r0301_rival_01
 _EVENT_DATA_END
 
 
@@ -30,9 +30,176 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  ポケモン誘拐イベント：POSで先に進むか質問*/
 /**************************************************************/
-ev_r03r0301:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_pos_r03r0301_rival_01
 
+	_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_rival_01 )
+	_OBJ_ANIME_WAIT()
+
+	//一回目に話しかけた場合
+	IF $WK_SCENE_R03R0301 == 0 THEN
+	
+		//======================================//
+	
+		//***フラグ操作：一回目の会話を繰り返さない***
+		$WK_SCENE_R03R0301 = 1
+	
+		//======================================//
+
+		//先に進むか質問
+		_BALLOONWIN_OBJMSG_OPEN( msg_r03r0301_black_01 , R03R0301_RIVAL_01 )
+		_YES_NO_WIN( SCWK_ANSWER )
+		_BALLOONWIN_CLOSE()
+		
+		//「はい」の場合はプラズマ団とのイベントにジャンプ
+		IF $SCWK_ANSWER == SCR_YES THEN
+			_CALL ev_r03r0301_rival02
+			
+		//「いいえ」の場合は戻す
+		ELSE
+			_BALLOONWIN_OBJMSG_OPEN( msg_r03r0301_black_02 , R03R0301_RIVAL_01 )
+			_BALLOONWIN_CLOSE()
+			_OBJ_ANIME( MMDL_ID_PLAYER , anm_r03r0301_player_return )
+			_OBJ_ANIME_WAIT()
+		ENDIF
+	
+	//二回目以降に話しかけた場合
+	ELSE
+	
+		//先に進むか質問
+		_BALLOONWIN_OBJMSG_OPEN( msg_r03r0301_black_03 , R03R0301_RIVAL_01 )
+		_YES_NO_WIN( SCWK_ANSWER )
+		_BALLOONWIN_CLOSE()
+		
+		//「はい」の場合はプラズマ団とのイベントにジャンプ
+		IF $SCWK_ANSWER == SCR_YES THEN
+			_CALL ev_r03r0301_rival02
+		
+		//「いいえ」の場合は戻す
+		ELSE
+			_BALLOONWIN_OBJMSG_OPEN( msg_r03r0301_black_02 , R03R0301_RIVAL_01 )
+			_BALLOONWIN_CLOSE()
+			_OBJ_ANIME( MMDL_ID_PLAYER , anm_r03r0301_player_return )
+			_OBJ_ANIME_WAIT()
+		ENDIF
+	
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*CALL：ポケモン誘拐イベント                              */
+/**************************************************************/
+ev_r03r0301_rival02:
+
+	//プラズマ団のもとへ
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_r03r0301_player_go )
+	_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_player_go )
+	_OBJ_ANIME_WAIT()
+	
+	//プラズマ団と会話
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03r0301_black_04 , R03R0301_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03r0301_hakaim_01 , R03R0301_HAKAIM_01 )
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03r0301_black_05 , R03R0301_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+
+	//プラズマ団とダブルバトル！
+	_TRAINER_BTL_SET( TRID_HAKAIM1_01, TRID_HAKAIM1_02 )
+	//結果チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()
+	ELSE
+		_TRAINER_LOSE()
+	ENDIF
+	
+	//戦闘後プラズマ団と会話
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03r0301_hakaim_03 , R03R0301_HAKAIM_01 )
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03r0301_black_06 , R03R0301_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03r0301_hakaim_04 , R03R0301_HAKAIM_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//暗転プラズマ団OBJ削除
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+	_OBJ_DEL( R03R0301_HAKAIM_01 )
+	_OBJ_DEL( R03R0301_HAKAIM_02 )
+	_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_rival_01 )
+	_OBJ_ANIME_WAIT()
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+	
+	//ライバル会話
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03r0301_black_07 , R03R0301_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//主人公のほうを向いて
+	_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_rival_02 )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_OPEN( msg_r03r0301_black_08 , R03R0301_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//ライバル退場
+	_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_rival_03 )
+	_OBJ_ANIME_WAIT()
+	_OBJ_DEL( R03R0301_RIVAL_01 )
+
+	//==================================//
+
+	//ポケモン誘拐イベント関連OBJを削除
+	_FLAG_SET( FV_R03R0301_RIVAL_01 )
+
+	//R03R0301の誘拐イベントを終了
+	$WK_SCENE_R03R0301 = 2
+	//R03の誘拐イベントお礼POS起動
+	$WK_SCENE_R03 = 2
+
+	//==================================//
+
+
+_RET
+
+//--------------------------------------------------------------
+//	主人公「いいえ」で戻る
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_r03r0301_player_return
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	主人公「はい」で進む
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_r03r0301_player_go
+	_ANIME_DATA	AC_WALK_L_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ライバル出口方面を向く
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_r03r0301_rival_01
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ライバル主人公のほうを向く
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_r03r0301_rival_02
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ライバル退場
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_r03r0301_rival_03
+	_ANIME_DATA	AC_WALK_R_8F,10
+	_ANIME_DATA	ACMD_END,0

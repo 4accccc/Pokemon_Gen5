@@ -10,5 +10,8 @@
 #ifndef ZONE_R03R0301_EVC_H
 #define ZONE_R03R0301_EVC_H
 
+#define R03R0301_RIVAL_01                  0
+#define R03R0301_HAKAIM_02                 1
+#define R03R0301_HAKAIM_01                 2
 
 #endif //ZONE_R03R0301_EVC_H
