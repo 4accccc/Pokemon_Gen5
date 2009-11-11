@@ -107,6 +107,8 @@ extern const GFL_PROC_DATA G_SYNC_ProcData;
 extern const GFL_PROC_DATA VTRProcData;
 extern const GFL_PROC_DATA PokemonTradeProcData;
 extern const GFL_PROC_DATA PokemonTradeIrcProcData;
+extern const GFL_PROC_DATA DebugSaveAddrProcData;
+
 
 //==============================================================================
 //	ÉfÅ[É^
@@ -149,6 +151,14 @@ static const D_MENULIST DebugMenuList[] = {
 		NULL,
 		FS_OVERLAY_ID(ohno_debugapp)
 	},
+	{//
+		DEBUG_OHNO_MSG0016, 
+		&DebugSaveAddrProcData,
+		NULL,
+		FS_OVERLAY_ID(ohno_debugapp)
+	},
+
+
 
 
 };

@@ -79,7 +79,6 @@ SRCS  +=    $(SOUNDSRC) \
         gamesystem/game_event.c \
         gamesystem/game_data.c \
         gamesystem/msgspeed.c \
-        gamesystem/debug_data.c \
 	gamesystem/btl_setup.c \
         map/dp3format.c \
 				field/field_data.c \
@@ -804,6 +803,7 @@ SRCS_OVERLAY_OHNO_DEBUGAPP  = test/ohno/debug_ohno.c \
 			  net_app/gsync/gsync_state.c \
 			  test/ohno/debug_vtr.c \
         test/ohno/fatal_error.c \
+        test/ohno/debug_saveaddr.c \
         test/ohno/debug_field.c \
         test/ohno/test_layout.c
 
@@ -1044,6 +1044,13 @@ SRCS_OVERLAY_COMMAND_DEMO = demo/command_demo/command_demo.c \
 							demo/command_demo/cdemo_main.c \
 							demo/command_demo/cdemo_seq.c \
 							demo/command_demo/cdemo_comm.c
+
+
+
+# デバッグデータ作成
+#===> SRCS_OVERLAY_FIELDMAP
+SRCS_OVERLAY_DEBUG_DATA = gamesystem/debug_data.c
+
 
 #名前入力
 #===> SRCS_OVERLAY_WIFINOTE

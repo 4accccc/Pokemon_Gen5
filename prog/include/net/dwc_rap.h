@@ -419,5 +419,11 @@ extern void GFL_NET_DWC_SaveAsyncInit(SAVE_CONTROL_WORK *ctrl);
 extern SAVE_RESULT GFL_NET_DWC_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl);
 
 
+
+extern void GFL_NET_DWC_MainStep( void );
+extern BOOL GFL_NET_DWC_SetCancelState(void);
+
+
+
 //#include <ppwlobby/ppw_lobby.h>
 

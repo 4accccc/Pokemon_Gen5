@@ -227,6 +227,28 @@ static void mydwc_FreeFunc( DWCAllocType name, void* ptr,  u32 size  );
 static void _FuncNonSave(void);
 
 
+#if DEBUGPRINT_ON
+
+static void _setStateDebug(int state,int line)
+{
+   _dWork->state = MDSTATE_INIT;
+}
+
+#define   _CHANGE_STATE(state)  _setStateDebug(state, __LINE__)
+
+#else  //DEBUGPRINT_ON
+
+static void _setState(int state)
+{
+   _dWork->state = state;
+}
+
+#define   _CHANGE_STATE(state)  _setState(state)
+
+#endif //DEBUGPRINT_ON
+
+
+
 
 
 //==============================================================================
@@ -681,15 +703,8 @@ static void finishcancel()
  */
 //==============================================================================
 
-static int dummyFlg = 0;
-
 int GFL_NET_DWC_stepmatch( int isCancel )
 {
-  if(dummyFlg != _dWork->state){
-    OS_TPrintf("dummyflg change = %d\n", _dWork->state);
-    dummyFlg = _dWork->state;
-  }
-
   switch ( _dWork->state ){
   case MDSTATE_INIT:
   case MDSTATE_CONNECTING:
@@ -2780,8 +2795,55 @@ SAVE_RESULT GFL_NET_DWC_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl)
   return ret;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   GFL_NET_DWC_stepmatchを改造しmain処理としての機能だけを独立
+ * @retval  none
+ */
+//--------------------------------------------------------------
+void GFL_NET_DWC_MainStep( void )
+{
+  GFL_NET_DWC_stepmatch( 0 );
+}
 
 
+//--------------------------------------------------------------
+/**
+ * @brief   キャンセル状態に移行する
+            前回ではVCTの状態を終了する為に頻繁に用いられているが、
+            マッチングをキャンセルする為の物なので、全部がキャンセルできるわけではない
+ * @retval  キャンセル状態に移行したらTRUE
+ */
+//--------------------------------------------------------------
+
+BOOL GFL_NET_DWC_SetCancelState(void)
+{
+  if(_dWork->state == MDSTATE_MATCHING)
+  {
+    _dWork->state = MDSTATE_CANCEL;
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ステップマッチの結果を得る
+ * @retval  ステップマッチの結果
+ 	          STEPMATCH_CONTINUE…マッチング中
+ 	          STEPMATCH_SUCCESS…成功
+            STEPMATCH_CANCEL…キャンセル
+            STEPMATCH_FAIL  …相手が親をやめたため、接続を中断
+ */
+//--------------------------------------------------------------
+
+int GFL_NET_DWC_GetStepMatchResult(void)
+{
+  //@todo 作り途中
+  return STEPMATCH_CONTINUE;
+
+  
+}
 
 
 #endif //GFL_NET_WIFI

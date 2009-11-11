@@ -25,6 +25,7 @@
 
 #ifdef PM_DEBUG
 #include "debug_data.h"
+FS_EXTERN_OVERLAY(debug_data);
 #endif
 
 
@@ -123,10 +124,13 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 		break;
 	case GAMEINIT_MODE_DEBUG:
 #ifdef PM_DEBUG
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(debug_data));
     //適当に手持ちポケモンをAdd
     DEBUG_MyPokeAdd( GAMESYSTEM_GetGameData(gsys), GFL_HEAPID_APP );
     //デバッグアイテム追加
     DEBUG_MYITEM_MakeBag( GAMESYSTEM_GetGameData(gsys), GFL_HEAPID_APP );
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(debug_data));
+    
 #endif //PM_DEBUG
     /* FALL THROUGH */
 	case GAMEINIT_MODE_FIRST:
