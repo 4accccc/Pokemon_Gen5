@@ -88,7 +88,7 @@ enum{
   SUB_SEQ_PARTICLE_PLAY_PARAM_SEND,
 };
 
-enum{ 
+enum{
   EV_WAZANO_X = 44,
   EV_WAZANO_Y = 90,
   EV_WAZANAME_X = 80,
@@ -97,7 +97,7 @@ enum{
 };
 
 typedef enum
-{ 
+{
   DRAW_REQ_NONE = 0,
   DRAW_REQ_MENU_LIST,
   DRAW_REQ_WAZA_NO,
@@ -180,7 +180,7 @@ static  const int pokemon_pos_table[][2]={
   { BTLV_MCSS_POS_C, BTLV_MCSS_POS_D }
 };
 
-static  const int bgm_table[]={ 
+static  const int bgm_table[]={
   SEQ_BGM_VS_NORAPOKE,
 };
 
@@ -351,7 +351,7 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
   //メッセージ系初期化
   GFL_FONTSYS_Init();
   evw->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_soga_dat, evw->heapID );
-  evw->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, TRUE, evw->heapID );
+  evw->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, TRUE, evw->heapID );
 
   EffectViewerInitMenuList( evw, MENULIST_TITLE );
 
@@ -380,13 +380,13 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
       MCS_Init( evw->heapID );
     }
     else
-    { 
+    {
       MCS_Exit();
     }
   }
 
   if( trg & PAD_BUTTON_SELECT )
-  { 
+  {
     VecFx32 cam_pos, cam_target;
 
     PMSND_StopSE();
@@ -490,7 +490,7 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
       evw->seq_no = SEQ_EFFECT_ENABLE;
     }
     else if( tp )
-    { 
+    {
       evw->waza_no = WAZANO_HATAKU;
       evw->cursor_keta = 0;
       evw->draw_req = DRAW_REQ_WAZA_NO;
@@ -559,7 +559,7 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
       evw->seq_no = SEQ_EFFECT_WAIT;
     }
     else if( EffectViewerEffectView( evw ) == TRUE )
-    { 
+    {
       evw->draw_req = DRAW_REQ_BGM_NO;
       evw->seq_no = SEQ_BGM_SELECT;
     }
@@ -570,11 +570,11 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
       PMSND_PlayBGM( bgm_table[ evw->bgm_no ] );
     }
     else if( trg == PAD_BUTTON_B )
-    { 
+    {
       PMSND_StopBGM();
     }
     else if( tp )
-    { 
+    {
       evw->draw_req = DRAW_REQ_MENU_LIST;
       evw->seq_no = SEQ_IDLE;
     }
@@ -704,27 +704,27 @@ static  BOOL  EffectViewerRecieveAction( EFFECT_VIEWER_WORK *evw )
       case EC_POKEMON_SET_ANM_FLAG:
 #endif
       case EC_SE_PLAY:
-        { 
+        {
           int player = ev_param_get( evw, SPPARAM_PLAYER );
           evw->se_no = ev_param_get( evw, SPPARAM_SE_NO );
 
           if( player == BTLEFF_SEPLAY_DEFAULT )
-          { 
+          {
             PMSND_PlaySE( evw->se_no );
             player = PMSND_GetSE_DefaultPlayerID( evw->se_no );
           }
           else
-          { 
+          {
             PMSND_PlaySE_byPlayerID( evw->se_no, player );
           }
-        	NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player ), ev_param_get( evw, SPPARAM_VOLUME ) );
+          NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player ), ev_param_get( evw, SPPARAM_VOLUME ) );
           PMSND_SetStatusSE_byPlayerID( player, PMSND_NOEFFECT, ev_param_get( evw, SPPARAM_PITCH ), PMSND_NOEFFECT );
           NNS_SndPlayerSetTrackModDepth( PMSND_GetSE_SndHandle( player ), 0xffff, ev_param_get( evw, SPPARAM_MODUDEPTH ) );
           NNS_SndPlayerSetTrackModSpeed( PMSND_GetSE_SndHandle( player ), 0xffff, ev_param_get( evw, SPPARAM_MODUSPEED ) );
         }
         break;
       case EC_SE_PAN:
-        { 
+        {
           int player = ev_param_get( evw, SPANPARAM_PLAYER );
 
           PMSND_PlaySE_byPlayerID( evw->se_no, player );
@@ -742,7 +742,7 @@ static  BOOL  EffectViewerRecieveAction( EFFECT_VIEWER_WORK *evw )
         }
         break;
       case EC_SE_EFFECT:
-        { 
+        {
           int player = ev_param_get( evw, SEFFPARAM_PLAYER );
 
           PMSND_PlaySE_byPlayerID( evw->se_no, player );
@@ -800,34 +800,34 @@ static  BOOL  EffectViewerRecieveAction( EFFECT_VIEWER_WORK *evw )
 }
 
 static  BOOL  EffectViewerEffectView( EFFECT_VIEWER_WORK *evw )
-{ 
+{
   int trg = GFL_UI_KEY_GetTrg();
 
   if( trg == PAD_KEY_UP )
-  { 
+  {
     evw->waza_no += ev_pow( 10, evw->cursor_keta );
     if( evw->waza_no > WAZANO_MAX )
-    { 
+    {
       evw->waza_no = WAZANO_MAX;
     }
     evw->draw_req = DRAW_REQ_WAZA_NO;
   }
   else if( trg == PAD_KEY_DOWN )
-  { 
+  {
     evw->waza_no -= ev_pow( 10, evw->cursor_keta );
     if( evw->waza_no < WAZANO_HATAKU )
-    { 
+    {
       evw->waza_no = WAZANO_HATAKU;
     }
     evw->draw_req = DRAW_REQ_WAZA_NO;
   }
   else if( ( trg == PAD_KEY_LEFT ) && ( evw->cursor_keta < 2 ) )
-  { 
+  {
     evw->cursor_keta++;
     evw->draw_req = DRAW_REQ_WAZA_NO;
   }
   else if( ( trg == PAD_KEY_RIGHT ) && ( evw->cursor_keta > 0 ) )
-  { 
+  {
     evw->cursor_keta--;
     evw->draw_req = DRAW_REQ_WAZA_NO;
   }
@@ -838,21 +838,21 @@ static  BOOL  EffectViewerEffectView( EFFECT_VIEWER_WORK *evw )
 //  技No表示
 //======================================================================
 static  void  EffectViewerDrawWazaNo( EFFECT_VIEWER_WORK *evw )
-{ 
+{
   STRBUF  *strbuf;
   int     keta, ofsx = 0;
   u32     num;
   int     div_num = 100;
   int     waza_no = evw->waza_no;
 
-  { 
-  	GFL_MSGDATA *man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wazaname_dat, evw->heapID );
-		strbuf = GFL_MSG_CreateString( man, evw->waza_no );
+  {
+    GFL_MSGDATA *man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wazaname_dat, evw->heapID );
+    strbuf = GFL_MSG_CreateString( man, evw->waza_no );
     GFL_FONTSYS_SetColor( LETTER_COL_NORMAL, SHADOW_COL, BACK_COL );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), EV_WAZANAME_X, EV_WAZANO_Y, strbuf, evw->font );
     GFL_STR_DeleteBuffer( strbuf );
-		GFL_MSG_Delete( man );
-	}
+    GFL_MSG_Delete( man );
+  }
 
   for( keta = 2 ; keta >= 0 ; keta-- )
   {
@@ -878,7 +878,7 @@ static  void  EffectViewerDrawWazaNo( EFFECT_VIEWER_WORK *evw )
 //  BGMNo表示
 //======================================================================
 static  void  EffectViewerDrawBgmNo( EFFECT_VIEWER_WORK *evw )
-{ 
+{
   STRBUF  *strbuf;
   int     pos_x;
 
@@ -1355,12 +1355,12 @@ static  void  del_pokemon( EFFECT_VIEWER_WORK *evw )
 }
 
 static  int ev_pow( int x, int y )
-{ 
+{
   int i;
   int ans = 1;
 
   for( i = 0 ; i < y ; i++ )
-  { 
+  {
     ans *= x;
   }
 
@@ -1368,7 +1368,7 @@ static  int ev_pow( int x, int y )
 }
 
 static  int   ev_param_get( EFFECT_VIEWER_WORK* evw, int param )
-{ 
+{
   int result = 0;
   u8 a,b,c,d;
 

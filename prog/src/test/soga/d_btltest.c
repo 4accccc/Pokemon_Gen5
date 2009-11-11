@@ -257,7 +257,7 @@ static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void
 
   GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
 
-  wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
+  wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
   wk->biw = BTLV_INPUT_Init( BTLV_INPUT_TYPE_SINGLE, wk->font, &wk->cursor_flag, wk->heapID );
 
@@ -326,7 +326,7 @@ static GFL_PROC_RESULT DebugBattleTestProcMain( GFL_PROC * proc, int * seq, void
 
 #if 0
   if( trg & PAD_BUTTON_SELECT )
-  { 
+  {
     BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
   }
   if( trg & PAD_BUTTON_A )
@@ -349,37 +349,37 @@ static GFL_PROC_RESULT DebugBattleTestProcMain( GFL_PROC * proc, int * seq, void
     BTLV_EFFECT_CalcGauge( BTLV_MCSS_POS_AA, 12 );
   }
   if( trg & PAD_BUTTON_X )
-  { 
+  {
     if( wk->bbgw[ 0 ] )
-    { 
+    {
       BTLV_BALL_GAUGE_Delete( wk->bbgw[ 0 ] );
       wk->bbgw[ 0 ] = NULL;
     }
     if( wk->bbgw[ 1 ] )
-    { 
+    {
       BTLV_BALL_GAUGE_Delete( wk->bbgw[ 1 ] );
       wk->bbgw[ 1 ] = NULL;
     }
   }
   if( trg & PAD_BUTTON_Y )
-  { 
+  {
     BTLV_BALL_GAUGE_PARAM param;
     int i;
 
     if( wk->bbgw[ 0 ] )
-    { 
+    {
       BTLV_BALL_GAUGE_Delete( wk->bbgw[ 0 ] );
       wk->bbgw[ 0 ] = NULL;
     }
     if( wk->bbgw[ 1 ] )
-    { 
+    {
       BTLV_BALL_GAUGE_Delete( wk->bbgw[ 1 ] );
       wk->bbgw[ 1 ] = NULL;
     }
 
     param.type = BTLV_BALL_GAUGE_TYPE_ENEMY;
     for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
-    { 
+    {
       param.status[ i ] = BTLV_BALL_GAUGE_STATUS_ALIVE;
     }
     wk->bbgw[ 0 ]  = BTLV_BALL_GAUGE_Create( &param, wk->heapID );
@@ -393,7 +393,7 @@ static GFL_PROC_RESULT DebugBattleTestProcMain( GFL_PROC * proc, int * seq, void
   BTLV_INPUT_Main( wk->biw );
 
 #if 0
-  { 
+  {
     MtxFx22 mtx;
 
     MTX_Scale22( &mtx, wk->scale, wk->scale );
@@ -403,7 +403,7 @@ static GFL_PROC_RESULT DebugBattleTestProcMain( GFL_PROC * proc, int * seq, void
     wk->scale += wk->scale_value;
 
     if( ( wk->scale == FX32_ONE ) || ( wk->scale == FX32_ONE * 3 ) )
-    { 
+    {
       wk->scale_value *= -1;
     }
   }

@@ -150,7 +150,7 @@ enum{
   BMPWIN_MAX
 };
 
-enum{ 
+enum{
   VALUE_X = 0,
   VALUE_Y,
   VALUE_Z,
@@ -214,7 +214,7 @@ static  const u32 btlv_mcss_pos_msg[BMPWIN_MAX]={
   PVMSG_POS_D,
 };
 
-static  const BtlvMcssPos tr_pos[BMPWIN_MAX]={ 
+static  const BtlvMcssPos tr_pos[BMPWIN_MAX]={
   BTLV_MCSS_POS_TR_BB,
   BTLV_MCSS_POS_TR_B,
   BTLV_MCSS_POS_TR_D,
@@ -383,7 +383,7 @@ static GFL_PROC_RESULT TrainerViewerProcInit( GFL_PROC * proc, int * seq, void *
     //メッセージ系初期化
     GFL_FONTSYS_Init();
     tvw->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_soga_dat, tvw->heapID );
-    tvw->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, TRUE, tvw->heapID );
+    tvw->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, TRUE, tvw->heapID );
 
     for( i = 0 ; i < BMPWIN_MAX ; i++ ){
       tvw->bmpwin[ i ] = GFL_BMPWIN_Create(
@@ -420,7 +420,7 @@ static GFL_PROC_RESULT TrainerViewerProcInit( GFL_PROC * proc, int * seq, void *
   GFL_UI_KEY_GetRepeatSpeed( &tvw->key_repeat_speed, &tvw->key_repeat_wait );
   GFL_UI_KEY_SetRepeatSpeed( tvw->key_repeat_speed / 4, tvw->key_repeat_wait );
 
-  { 
+  {
     VecFx32 pos = { 0x000004cd, 0x000047bd, 0x00003015 };
     VecFx32 tar = { 0xfffff4cd, 0x00003800, 0xffff9000 };
 
