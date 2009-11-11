@@ -229,27 +229,6 @@ static inline void setup_client_members( SVCL_WORK* client, BTL_PARTY* party, u8
   client->party = party;
   client->memberCount = BTL_PARTY_GetMemberCount( party );
   client->numCoverPos = numCoverPos;
-
-  for(i=0; i<client->memberCount; i++)
-  {
-    client->member[i] = BTL_PARTY_GetMemberData( client->party, i );
-  }
-  for( ; i<NELEMS(client->member); i++)
-  {
-    client->member[i] = NULL;
-  }
-
-  {
-    u16 numFrontPoke = (numCoverPos < client->memberCount)? numCoverPos : client->memberCount;
-    for(i=0; i<numFrontPoke; i++)
-    {
-//      client->frontMember[i] = client->member[i];
-    }
-    for( ; i<NELEMS(client->frontMember); i++)
-    {
-      client->frontMember[i] = NULL;
-    }
-  }
 }
 //--------------------------------------------------------------------------------------
 /**
@@ -402,6 +381,8 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
   }
   return FALSE;
 }
+
+
 //----------------------------------------------------------------------------------
 /**
  * サーバメインループ：ローテーション選択（ローテーションバトルのみ）
@@ -425,7 +406,6 @@ static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq )
     if( WaitAdapterCmd(server) )
     {
       const BtlRotateDir  *dir;
-      BTL_PARTY* party;
       u32 i;
 
       ResetAdapterCmd( server );
@@ -433,10 +413,7 @@ static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq )
       for(i=0; i<server->numClient; ++i)
       {
         dir = BTL_ADAPTER_GetReturnData( server->client[i].adapter );
-        SCQUE_PUT_ACT_Rotation( server->que, i, *dir );
-        party = BTL_POKECON_GetPartyData( server->pokeCon, i );
-        BTL_Printf("クライアント[%d]は回転方向%d\n", i, *dir);
-        BTL_PARTY_RotateMembers( party, *dir );
+        BTL_SVFLOW_CreateRotationCommand( server->flowWork, i, *dir );
       }
       SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
       (*seq)++;

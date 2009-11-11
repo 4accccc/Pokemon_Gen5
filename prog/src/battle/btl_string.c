@@ -351,6 +351,7 @@ void BTL_STR_MakeStringStd( STRBUF* buf, BtlStrID_STD strID, u32 numArgs, ... )
 //=============================================================================================
 void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const int* args )
 {
+  BTL_Printf(" strID=%d\n", strID);
   ms_std_simple( buf, strID, args );
 }
 

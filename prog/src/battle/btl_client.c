@@ -2501,7 +2501,7 @@ static BOOL scProc_ACT_Rotation( BTL_CLIENT* wk, int* seq, const int* args )
       BtlRotateDir dir = args[1];
       BTL_PARTY*  party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
 
-      BTL_PARTY_RotateMembers( party, dir );
+      BTL_PARTY_RotateMembers( party, dir, NULL, NULL );
       BTLV_RotationMember_Start( wk->viewCore, clientID, dir );
       (*seq)++;
     }
@@ -2517,10 +2517,9 @@ static BOOL scProc_ACT_Rotation( BTL_CLIENT* wk, int* seq, const int* args )
       else
       {
         u8  clientID = args[0];
-        u8  fNPC;
+        u8  fNPC = (BTL_MAIN_GetClientTrainerID(wk->mainModule, clientID) != TRID_NULL);
         u16 strID;
 
-        fNPC = (BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_TRAINER);
         if( dir == BTL_ROTATEDIR_L ){
           strID = (fNPC)? BTL_STRID_STD_RotateL_NPC : BTL_STRID_STD_RotateL_Player;
         }else{

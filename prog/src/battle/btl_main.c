@@ -2382,7 +2382,7 @@ void BTL_PARTY_SwapMembers( BTL_PARTY* party, u8 idx1, u8 idx2 )
   }
 }
 
-void BTL_PARTY_RotateMembers( BTL_PARTY* party, BtlRotateDir dir )
+void BTL_PARTY_RotateMembers( BTL_PARTY* party, BtlRotateDir dir, BTL_POKEPARAM** outPoke, BTL_POKEPARAM** inPoke )
 {
   GF_ASSERT(party->memberCount>=3);
 
@@ -2394,16 +2394,24 @@ void BTL_PARTY_RotateMembers( BTL_PARTY* party, BtlRotateDir dir )
       party->member[0] = party->member[2];
       party->member[2] = party->member[1];
       party->member[1] = tmp;
-      BTL_Printf("‰E‰ñ“] : pokeID=%d, %d, %d\n",
-          BPP_GetID(party->member[0]), BPP_GetID(party->member[1]), BPP_GetID(party->member[2]));
+      if( outPoke != NULL ){
+        *outPoke = party->member[2];
+      }
+      if( inPoke != NULL ){
+        *inPoke = party->member[0];
+      }
     }
     else if( dir == BTL_ROTATEDIR_L )
     {
       party->member[0] = party->member[1];
       party->member[1] = party->member[2];
       party->member[2] = tmp;
-      BTL_Printf("¶‰ñ“] : pokeID=%d, %d, %d\n",
-          BPP_GetID(party->member[0]), BPP_GetID(party->member[1]), BPP_GetID(party->member[2]));
+      if( outPoke != NULL ){
+        *outPoke = party->member[2];
+      }
+      if( inPoke != NULL ){
+        *inPoke = party->member[1];
+      }
     }
   }
 }

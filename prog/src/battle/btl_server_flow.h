@@ -46,8 +46,6 @@ struct _SVCL_WORK {
 
   BTL_ADAPTER*    adapter;
   BTL_PARTY*      party;
-  BTL_POKEPARAM*  member[ TEMOTI_POKEMAX ];
-  BTL_POKEPARAM*  frontMember[ BTL_POSIDX_MAX ];
   u8        memberCount;
   u8        numCoverPos;
   u8        isLocalClient;
@@ -84,7 +82,7 @@ extern SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk );
 extern SvflowResult BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk );
 extern SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk );
 extern SvflowResult BTL_SVFLOW_StartAfterPokeChange( BTL_SVFLOW_WORK* wk );
-
+extern void BTL_SVFLOW_CreateRotationCommand( BTL_SVFLOW_WORK* wk, u8 clientID, BtlRotateDir dir );
 
 
 // server_flow -> server

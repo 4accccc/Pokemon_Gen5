@@ -92,6 +92,72 @@ void BTL_POSPOKE_PokeIn( BTL_POSPOKE_WORK* wk, BtlPokePos pos,  u8 pokeID, BTL_P
 
   checkConfrontRec( wk, pos, pokeCon );
 }
+//=============================================================================================
+/**
+ * ポケモンローテーションの通知受け取り
+ *
+ * @param   wk
+ * @param   dir
+ * @param   clientID
+ * @param   inPokeID
+ * @param   pokeCon
+ */
+//=============================================================================================
+void BTL_POSPOKE_Rotate( BTL_POSPOKE_WORK* wk, BtlRotateDir dir, u8 clientID, const BTL_POKEPARAM* inPoke, BTL_POKE_CONTAINER* pokeCon )
+{
+  enum {
+    ROT_MAX = BTL_ROTATE_NUM-1,
+  };
+
+  if( dir == BTL_ROTATEDIR_STAY ){
+    return;
+  }
+  else
+  {
+    u8 idx[ ROT_MAX ];
+    u8 cnt, i;
+
+    // 該当クライアントの担当位置インデックスを保存
+    for(cnt=0, i=0; i<NELEMS(wk->state); ++i)
+    {
+      if( wk->state[i].clientID == clientID ){
+        idx[cnt++] = i;
+        if( cnt >= ROT_MAX ){
+          break;
+        }
+      }
+    }
+
+    // スライド方向に併せて状態更新
+    if( cnt == ROT_MAX )
+    {
+      BtlPokePos slideInPos = BTL_POS_MAX;
+      u8 slideInPokeID = BTL_POKEID_NULL;
+
+      if( dir == BTL_ROTATEDIR_R )
+      {
+        wk->state[ idx[1] ] = wk->state[ idx[0] ];
+        slideInPos = idx[0];
+      }
+      if( dir == BTL_ROTATEDIR_R )
+      {
+        wk->state[ idx[0] ] = wk->state[ idx[1] ];
+        slideInPos = idx[1];
+      }
+
+      if( slideInPos != BTL_POS_MAX )
+      {
+        // 後衛から前衛に出たポケが生きていたら入場と同じ処理
+        if( !BPP_IsDead(inPoke) ){
+          BTL_POSPOKE_PokeIn( wk, slideInPos, BPP_GetID(inPoke), pokeCon );
+        // 死んでいたらスライド位置を空ける
+        }else{
+          wk->state[ slideInPos ].existPokeID = BTL_POKEID_NULL;
+        }
+      }
+    }
+  }
+}
 //----------------------------------------------------------------------------------
 /**
  * 対面レコード更新
@@ -178,18 +244,18 @@ u8 BTL_POSPOKE_GetClientEmptyPos( const BTL_POSPOKE_WORK* wk, u8 clientID, u8* p
  * @param   wk
  * @param   pokeID
  *
- * @retval  BOOL    出ている場合はTRUE
+ * @retval  BtlPokePos    出ている場合は位置ID、出ていない場合は BTL_POS_MAX
  */
 //=============================================================================================
-BOOL BTL_POSPOKE_IsExistPokemon( const BTL_POSPOKE_WORK* wk, u8 pokeID )
+BtlPokePos BTL_POSPOKE_GetPokeExistPos( const BTL_POSPOKE_WORK* wk, u8 pokeID )
 {
   u32 i;
   for(i=0; i<NELEMS(wk->state); ++i)
   {
     if( wk->state[i].fEnable && (wk->state[i].existPokeID == pokeID) ){
-      return TRUE;
+      return i;
     }
   }
-  return FALSE;
+  return BTL_POS_MAX;
 }
 

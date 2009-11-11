@@ -656,7 +656,7 @@ SvflowResult BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk )
 
     for(posIdx=0; posIdx<cw->numCoverPos; ++posIdx)
     {
-      if( !BPP_IsDead(cw->member[posIdx]) )
+      if( !BPP_IsDead( BTL_PARTY_GetMemberData(cw->party, posIdx)) )
       {
         BTL_Printf("client(%d, posIdx=%d poke...In!\n", i, posIdx);
         scproc_MemberIn( wk, i, posIdx, posIdx, TRUE );
@@ -857,6 +857,36 @@ SvflowResult BTL_SVFLOW_StartAfterPokeChange( BTL_SVFLOW_WORK* wk )
   }
 
   return SVFLOW_RESULT_DEFAULT;
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * ローテーションコマンド生成（ローテーションバトルのみ）
+ *
+ * @param   wk
+ * @param   clientID
+ * @param   dir
+ */
+//----------------------------------------------------------------------------------
+void BTL_SVFLOW_CreateRotationCommand( BTL_SVFLOW_WORK* wk, u8 clientID, BtlRotateDir dir )
+{
+  BTL_Printf("クライアント[%d]は回転方向 %d へローテ\n", clientID, dir);
+  SCQUE_PUT_ACT_Rotation( wk->que, clientID, dir );
+
+  if( dir != BTL_ROTATEDIR_STAY )
+  {
+    BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
+    BTL_POKEPARAM *outPoke, *inPoke;
+    BTL_PARTY_RotateMembers( party, dir, &outPoke, &inPoke );
+    if( !BPP_IsDead(outPoke) ){
+      BTL_HANDLER_TOKUSEI_Remove( outPoke );
+    }
+    if( !BPP_IsDead(inPoke) ){
+      BTL_HANDLER_TOKUSEI_Add( inPoke );
+    }
+    BTL_POSPOKE_Rotate( &wk->pospokeWork, dir, clientID, inPoke, wk->pokeCon );
+  }
 }
 
 //----------------------------------------------------------------------------------
@@ -1121,7 +1151,7 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 o
     numPoke = BTL_SVCL_GetNumActPoke( clwk );
     for(j=0; j<numPoke; j++)
     {
-      order[p].bpp = clwk->frontMember[j];
+      order[p].bpp = BTL_PARTY_GetMemberData( clwk->party, j );
       order[p].action = *BTL_SVCL_GetPokeAction( clwk, j );
       order[p].clientID = i;
       order[p].pokeIdx = j;
@@ -1270,7 +1300,7 @@ static void FRONT_POKE_SEEK_InitWork( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WOR
 
       for(j=0; j<cw->numCoverPos; ++j)
       {
-        if( !BPP_IsDead(cw->frontMember[j]) )
+        if( !BPP_IsDead( BTL_PARTY_GetMemberDataConst(cw->party, j)) )
         {
           fpsw->clientIdx = i;
           fpsw->pokeIdx = j;
@@ -1295,7 +1325,7 @@ static BOOL FRONT_POKE_SEEK_GetNext( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WORK
     BTL_POKEPARAM* nextPoke = NULL;
     SVCL_WORK* cw = BTL_SERVER_GetClientWork( wk->server, fpsw->clientIdx );
 
-    *bpp = cw->frontMember[ fpsw->pokeIdx ];
+    *bpp = BTL_PARTY_GetMemberData( cw->party, fpsw->pokeIdx );
     fpsw->pokeIdx++;
 
     while( fpsw->clientIdx < BTL_CLIENT_MAX )
@@ -1305,7 +1335,7 @@ static BOOL FRONT_POKE_SEEK_GetNext( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WORK
       {
         while( fpsw->pokeIdx < cw->numCoverPos )
         {
-          nextPoke = cw->frontMember[ fpsw->pokeIdx ];
+          nextPoke = BTL_PARTY_GetMemberData( cw->party, fpsw->pokeIdx );
           if( !BPP_IsDead(nextPoke) )
           {
             return TRUE;
@@ -1661,21 +1691,20 @@ static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 static void scproc_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 next_poke_idx, BOOL fBtlStart )
 {
   SVCL_WORK* clwk;
-  BTL_PARTY* party;
+//  BTL_PARTY* party;
   BTL_POKEPARAM* bpp;
 
-  party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
+//  party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
   clwk = BTL_SERVER_GetClientWork( wk->server, clientID );
 
   GF_ASSERT(posIdx < clwk->numCoverPos);
 
   if( posIdx != next_poke_idx ){
     BTL_Printf("サーバ側：%d <-> %d ポケ入れ替え\n", posIdx, next_poke_idx);
-    BTL_PARTY_SwapMembers( party, posIdx, next_poke_idx );
+//    BTL_PARTY_SwapMembers( party, posIdx, next_poke_idx );
+    BTL_PARTY_SwapMembers( clwk->party, posIdx, next_poke_idx );
   }
-  bpp = BTL_PARTY_GetMemberData( party, posIdx );
-
-  clwk->frontMember[ posIdx ] = bpp;
+  bpp = BTL_PARTY_GetMemberData( clwk->party, posIdx );
 
   BTL_HANDLER_TOKUSEI_Add( bpp );
   BTL_HANDLER_ITEM_Add( bpp );
@@ -3251,7 +3280,7 @@ static BTL_POKEPARAM* get_opponent_pokeparam( BTL_SVFLOW_WORK* wk, BtlPokePos po
 
   clwk = BTL_SERVER_GetClientWork( wk->server, clientID );
 
-  return clwk->frontMember[ posIdx ];
+  return BTL_PARTY_GetMemberData( clwk->party, posIdx );
 }
 // 指定位置から見て隣のポケモンデータを返す
 static BTL_POKEPARAM* get_next_pokeparam( BTL_SVFLOW_WORK* wk, BtlPokePos pos )
@@ -3264,7 +3293,7 @@ static BTL_POKEPARAM* get_next_pokeparam( BTL_SVFLOW_WORK* wk, BtlPokePos pos )
   BTL_MAIN_BtlPosToClientID_and_PosIdx( wk->mainModule, nextPos, &clientID, &posIdx );
   clwk = BTL_SERVER_GetClientWork( wk->server, clientID );
 
-  return clwk->frontMember[ posIdx ];
+  return BTL_PARTY_GetMemberData( clwk->party, posIdx );
 }
 //--------------------------------------------------------------------------
 /**
@@ -7959,27 +7988,7 @@ static BOOL scEventSetItem( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
 //--------------------------------------------------------------------------------------
 BtlPokePos BTL_SVFLOW_CheckExistFrontPokeID( BTL_SVFLOW_WORK* wk, u8 pokeID )
 {
-  SVCL_WORK* clwk;
-  int i;
-
-  for(i=0; i<BTL_CLIENT_MAX; ++i)
-  {
-    clwk = BTL_SERVER_GetClientWork( wk->server, i );
-    if( (clwk != NULL)
-    &&  (clwk->numCoverPos)
-    ){
-      int p;
-      for(p=0; p<clwk->numCoverPos; ++p)
-      {
-        if( (clwk->frontMember[p] != NULL)
-        &&  (BPP_GetID(clwk->frontMember[p]) == pokeID)
-        ){
-          return BTL_MAIN_GetClientPokePos( wk->mainModule, i, p );
-        }
-      }
-    }
-  }
-  return BTL_POS_MAX;
+  return BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, pokeID );
 }
 //--------------------------------------------------------------------------------------
 /**
