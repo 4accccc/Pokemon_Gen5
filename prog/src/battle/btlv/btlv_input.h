@@ -70,7 +70,7 @@ typedef struct{
 
 ///ローテーション画面構成用のワーク
 typedef struct{
-  const POKEMON_PARAM*  pp[ BTLV_INPUT_POKEICON_MAX ];
+  const POKEMON_PARAM*  pp[ BTL_ROTATE_NUM ];
   BtlRotateDir          before_select_dir;                  //1つ前に選択した方向
 }BTLV_INPUT_ROTATE_PARAM;
 
