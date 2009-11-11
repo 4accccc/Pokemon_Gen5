@@ -212,11 +212,6 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		(FUNC_GET_SIZE)BOXTRAYDAT_GetTotalSize,
 		(FUNC_INIT_WORK)BOXTRAYDAT_Init,
 	},
-	{	//パルパーク用ボックス
-		GMDATA_ID_BOXTRAY_PALPARK,
-		(FUNC_GET_SIZE)BOXTRAYDAT_GetTotalSize,
-		(FUNC_INIT_WORK)BOXTRAYDAT_Init,
-	},
 	{	//手持ちアイテム
 		GMDATA_ID_MYITEM,
 		(FUNC_GET_SIZE)MYITEM_GetWorkSize,

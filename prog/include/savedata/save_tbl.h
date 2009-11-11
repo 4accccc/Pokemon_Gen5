@@ -50,7 +50,6 @@ enum{
 	GMDATA_ID_BOXTRAY_22,
 	GMDATA_ID_BOXTRAY_23,
 	GMDATA_ID_BOXTRAY_24,
-	GMDATA_ID_BOXTRAY_PALPARK,  // パルパーク用ボックス
 	GMDATA_ID_MYITEM,           // どうぐ
 	GMDATA_ID_MYPOKE,           // てもちポケモン
 	GMDATA_ID_PLAYER_DATA,      // プレイヤー関連セーブデータ
