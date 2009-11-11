@@ -20,8 +20,6 @@
 
 #include "hand_tokusei.h"
 
-#include "tokusei\hand_tokusei_common.h"
-
 
 /*--------------------------------------------------------------------------*/
 /* Globals                                                                  */
