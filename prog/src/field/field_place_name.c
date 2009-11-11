@@ -1126,6 +1126,7 @@ static void SetState( FIELD_PLACE_NAME* p_sys, STATE next_state )
 			SetAllCharUnitVisibleOff( p_sys );			// 文字ユニットを非表示に
 			break;
 		case STATE_FADE_IN:
+      GFL_BG_SetVisible( BG_FRAME, VISIBLE_ON );	// BGを表示
 			p_sys->currentZoneID = p_sys->nextZoneID;	// 表示中ゾーンIDを更新
 			RecoveryBitmapWindow( p_sys );				// ビットマップウィンドウを復帰
 			WritePlaceName( p_sys, p_sys->nextZoneID );	// 新しい地名を書き込む
@@ -1372,7 +1373,7 @@ static void Process_FADE_OUT( FIELD_PLACE_NAME* p_sys )
 static void Draw_HIDE( FIELD_PLACE_NAME* p_sys )
 {
 	// BGを非表示
-	GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF );	
+	//GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF );	
 }
 
 //-----------------------------------------------------------------------------------
@@ -1388,7 +1389,7 @@ static void Draw_FADE_IN( FIELD_PLACE_NAME* p_sys )
 	float rate;
 
 	// BGを表示
-	GFL_BG_SetVisible( BG_FRAME, VISIBLE_ON );	
+	//GFL_BG_SetVisible( BG_FRAME, VISIBLE_ON );	
 	
 	// αブレンディング係数を更新
 	rate  = (float)p_sys->stateCount / (float)PROCESS_TIME_FADE_IN;
