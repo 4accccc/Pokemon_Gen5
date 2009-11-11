@@ -66,9 +66,9 @@ typedef struct LIFT_RECT_tag
 }LIFT_RECT;
 
 
-#define F1_HEIGHT ( 40*FIELD_CONST_GRID_FX32_SIZE )
-#define F2_HEIGHT ( 30*FIELD_CONST_GRID_FX32_SIZE )
-#define F3_HEIGHT ( 20*FIELD_CONST_GRID_FX32_SIZE )
+#define F1_HEIGHT ( 50*FIELD_CONST_GRID_FX32_SIZE )
+#define F2_HEIGHT ( 40*FIELD_CONST_GRID_FX32_SIZE )
+#define F3_HEIGHT ( 30*FIELD_CONST_GRID_FX32_SIZE )
 #define F4_HEIGHT (  0*FIELD_CONST_GRID_FX32_SIZE )
 
 #define F1_1_X  (7)
@@ -301,7 +301,7 @@ void GYM_GROUND_Move(FIELDMAP_WORK *fieldWork)
         }
         if (i != LIFT_NUM_MAX)
         {
-          event = GYM_GROUND_CreateUpDownEvt(gsys, i);
+          event = GYM_GROUND_CreateLiftMoveEvt(gsys, i);
           GAMESYSTEM_SetEvent(gsys, event);
         }
       }
@@ -332,7 +332,7 @@ void GYM_GROUND_Move(FIELDMAP_WORK *fieldWork)
  * @return      GMEVENT     イベントポインタ
  */
 //--------------------------------------------------------------
-GMEVENT *GYM_GROUND_CreateUpDownEvt(GAMESYS_WORK *gsys, const int inLiftIdx)
+GMEVENT *GYM_GROUND_CreateLiftMoveEvt(GAMESYS_WORK *gsys, const int inLiftIdx)
 {
   GMEVENT * event;
   GYM_GROUND_TMP *tmp;
@@ -343,6 +343,11 @@ GMEVENT *GYM_GROUND_CreateUpDownEvt(GAMESYS_WORK *gsys, const int inLiftIdx)
     GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_GROUND );
     tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_GROUND_TMP_ASSIGN_ID);
+  }
+
+  if ( inLiftIdx >= LIFT_NUM_MAX ){
+    GF_ASSERT_MSG(0, "LIFT_INDEX_OVER %d",inLiftIdx);
+    return NULL;
   }
 
   tmp->TargetLiftIdx = inLiftIdx;
@@ -384,7 +389,7 @@ static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work )
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   GYM_GROUND_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_GROUND_TMP_ASSIGN_ID);
-
+  FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( fieldWork );
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
     GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
@@ -393,13 +398,15 @@ static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work )
 
   switch(*seq){
   case 0:
-    //カメラトレース終了リクエスト
-    ;
+    //カメラトレースを切る
+    FIELD_CAMERA_StopTraceRequest(camera);
     (*seq)++;
     break;
   case 1:
-    if ( 1 )
     {
+      //カメラトレースが生きている間は処理を進めない
+      if ( FIELD_CAMERA_CheckTrace(camera) ) break;
+
       //トレース終了
       (*seq)++;
     }
@@ -471,10 +478,19 @@ static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work )
       }
     }
     //カメラトレース再開
+    FIELD_CAMERA_RestartTrace(camera);
+    //アニメ開始
     ;
-    //OBJのポーズを解除
-    ;
-    return GMEVENT_RES_FINISH;
+    (*seq)++;
+    break;
+  case 4:
+    //アニメ待ち
+    if (1){
+      //OBJのポーズを解除
+      ;
+      return GMEVENT_RES_FINISH;
+    }
+
   }
   return GMEVENT_RES_CONTINUE;
 }
