@@ -724,6 +724,7 @@ static BOOL OneselfSeq_ChatCallUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
     	PMS_DATA  pmsDat;
 
     	initParam = PMSI_PARAM_Create(PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT, 
+          NULL, TRUE,
     	  GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data), HEAPID_UNION);
     	PMSDAT_Init(&pmsDat, PMS_TYPE_UNION);
     	PMSI_PARAM_SetInitializeDataSentence( initParam, &pmsDat );

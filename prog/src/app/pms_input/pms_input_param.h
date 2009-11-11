@@ -22,6 +22,8 @@ extern void PMSI_PARAM_GetInitializeData( const PMSI_PARAM* p, PMS_WORD* word, P
 extern BOOL PMSI_PARAM_CheckModifiedByEditDatas( const PMSI_PARAM* p, const PMS_WORD* word, const PMS_DATA* pms );
 extern void PMSI_PARAM_WriteBackData( PMSI_PARAM* p, const PMS_WORD* word, const PMS_DATA* pms );
 extern BOOL PMSI_PARAM_GetNotEditEgnoreFlag( const PMSI_PARAM* p );
+extern BOOL PMSI_PARAM_GetLockFlag( const PMSI_PARAM* p );
+extern BOOL PMSI_PARAM_GetPictureFlag( const PMSI_PARAM* p );
 extern int PMSI_PARAM_GetKTStatus(const PMSI_PARAM* p);
 extern void PMSI_PARAM_SetKTStatus(const PMSI_PARAM* p,int param);
 

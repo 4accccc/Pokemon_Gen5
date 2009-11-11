@@ -134,7 +134,9 @@ static BOOL TESTMODE_ITEM_SelectDebCodeIn( TESTMODE_WORK *work , const int idx )
 static BOOL TESTMODE_ITEM_SelectDebPmsInput( TESTMODE_WORK *work , const int idx )
 {
 	PMSI_PARAM	*initParam;
-	initParam = PMSI_PARAM_Create( PMSI_MODE_SENTENCE , PMSI_GUIDANCE_DEFAULT , SaveControl_GetPointer() , GFL_HEAPID_APP );
+	initParam = PMSI_PARAM_Create( PMSI_MODE_SENTENCE , PMSI_GUIDANCE_DEFAULT , 
+  NULL, TRUE,
+  SaveControl_GetPointer() , GFL_HEAPID_APP );
 	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(pmsinput), &ProcData_PMSInput, initParam);
 	return TRUE;
 	

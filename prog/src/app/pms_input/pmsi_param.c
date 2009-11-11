@@ -19,15 +19,22 @@ enum {
 //==================================================================================
 
 struct _PMSI_PARAM {
+	// [IN]
 	u8   input_mode;
 	u8   guidance_type;			///< 説明文タイプ（enum PMS_INPUT_GUIDANCE）
 
-	// [out]
+	// [OUT]
 	u8  cancel_flag;			///< 「やめる」でキャンセルされたフラグ
 	u8  modified_flag;			///< キャンセルされず、かつ内容が更新されたかフラグ
 
-	u8  game_clear_flag;
-	u8  notedit_egnore_flag;	///< ONにすると編集されていなくても普通に終わることが出来る
+	// [PRIVATE]
+	u8  game_clear_flag : 1;
+	u8  notedit_egnore_flag : 1;	///< ONにすると編集されていなくても普通に終わることが出来る
+  u8  lock_flag : 1;      ///< ONにすると文章固定になる
+  u8  picture_flag : 1;   ///< ONにするとデコメ利用可能
+  u8  bit_padding : 4;
+
+  u8  padding[1];
 
 	WINTYPE		win_type;
 
@@ -57,23 +64,26 @@ struct _PMSI_PARAM {
 //	入力画面を呼び出す側からのパラメータ操作
 //==============================================================================================
 
+
 //------------------------------------------------------------------
 /**
-	* 簡易会話入力画面パラメータ作成
+ * 簡易会話入力画面パラメータ作成 
 	*
 	* @param   input_mode			入力モード（enum PMSI_MODE）
-	* @param   guidance_type		説明文タイプ（enum PMSI_GUIDANCE）
-	* @param   savedata			セーブデータポインタ
-	* @param	pKTStatus			キータッチスタータス保持構造体へのポインタ
-	* @param   heapID				作成用ヒープID
+	* @param   guidance_type	説明文タイプ（enum PMSI_GUIDANCE）
+	* @param   savedata			  セーブデータポインタ
+  * @param   pms            文章を固定したい場合はPMS_DATAを指定。NULLにすれば固定化しない。
+  * @param   picture_flag   TRUE:デコメ入力可能
+	* @param	 pKTStatus			キータッチスタータス保持構造体へのポインタ
+	* @param   heapID				  作成用ヒープID
 	*
-	* @retval  PMSI_PARAM*			作成されたパラメータオブジェクトへのポインタ
+	* @retval  PMSI_PARAM*		作成されたパラメータオブジェクトへのポインタ
 	*/
 //------------------------------------------------------------------
 PMSI_PARAM*  PMSI_PARAM_Create( u32 input_mode, u32 guidance_type,
-		SAVE_CONTROL_WORK* savedata, u32 heapID )
-{
-	PMSI_PARAM* p = GFL_HEAP_AllocMemory( heapID, sizeof(PMSI_PARAM));
+    PMS_DATA* pms, BOOL picture_flag, SAVE_CONTROL_WORK* savedata, u32 heapID )
+{ 
+	PMSI_PARAM* p = GFL_HEAP_AllocClearMemory( heapID, sizeof(PMSI_PARAM));
 
 	p->input_mode = input_mode;
 	p->guidance_type = guidance_type;
@@ -88,15 +98,27 @@ PMSI_PARAM*  PMSI_PARAM_Create( u32 input_mode, u32 guidance_type,
 	p->cancel_flag = TRUE;
 	p->modified_flag = FALSE;
 	p->win_type = CONFIG_GetWindowType( SaveData_GetConfig(savedata) );
-
+  p->picture_flag = picture_flag;
 	
 	if(input_mode == PMSI_MODE_SENTENCE)
 	{
-		PMSDAT_Init( &p->pms, PMS_TYPE_DEFAULT );
+    if( pms == NULL )
+    {
+		  PMSDAT_Init( &p->pms, PMS_TYPE_DEFAULT );
+    }
+    else
+    {
+      GFL_STD_MemCopy( pms, &p->pms, sizeof( PMS_DATA ) );
+      p->lock_flag = TRUE;
+      HOSAKA_Printf("PMS INPUT IS LOCK MODE !!\n");
+    }
 	}
 	else
 	{
 		int i;
+
+    GF_ASSERT( pms == NULL ); ///< 単語モードは文章固定に未対応
+
 		for(i=0; i<PMS_INPUT_WORD_MAX; i++)
 		{
 			p->word[i] = PMS_WORD_NULL;
@@ -305,6 +327,17 @@ BOOL PMSI_PARAM_GetNotEditEgnoreFlag( const PMSI_PARAM* p )
 {
 	return p->notedit_egnore_flag;
 }
+
+BOOL PMSI_PARAM_GetLockFlag( const PMSI_PARAM* p )
+{
+  return p->lock_flag;
+}
+
+BOOL PMSI_PARAM_GetPictureFlag( const PMSI_PARAM* p )
+{
+  return p->picture_flag;
+}
+
 
 void PMSI_PARAM_GetInitializeData( const PMSI_PARAM* p, PMS_WORD* word, PMS_DATA* pms )
 {

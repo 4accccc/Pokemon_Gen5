@@ -216,6 +216,8 @@ typedef struct
 
   //[PRIVATE]
   HEAPID heapID;
+
+  SAVE_CONTROL_WORK*      save_ctrl;
   PMSW_SAVEDATA*          pmsw_save;
 
 	PMS_SELECT_BG_WORK			wk_bg;
@@ -357,6 +359,7 @@ static GFL_PROC_RESULT PMSSelectProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 
   // 初期化
   wk->heapID    = HEAPID_UI_DEBUG;
+  wk->save_ctrl = param->save_ctrl;
   wk->pmsw_save = SaveData_GetPMSW( param->save_ctrl );
 	
 	//フォント作成
@@ -831,7 +834,7 @@ static void PMSSelect_PMSDRAW_Exit( PMS_SELECT_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void PMSSelect_PMSDRAW_Proc( PMS_SELECT_MAIN_WORK* wk )
 {
-#if 1
+#if 0
   // SELECTでクリア
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
   {
@@ -1065,9 +1068,21 @@ static BOOL SceneCallEdit_Main( UI_SCENE_CNT_PTR cnt, void* work )
     if( GFL_FADE_CheckFade() == FALSE )
     {
       PMSSelect_GRAPHIC_UnLoad( wk );
-      
-      //@TODO セーブポインタグローバル参照
-      pmsi = PMSI_PARAM_Create(PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT, SaveControl_GetPointer(), wk->heapID );
+
+#if PM_DEBUG
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+      {
+        PMS_DATA data;
+        PMSDAT_Init( &data, 0 );
+        pmsi = PMSI_PARAM_Create(PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT, &data, TRUE, wk->save_ctrl, wk->heapID );
+      }
+      else
+#endif
+      {
+        pmsi = PMSI_PARAM_Create(PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT, NULL, TRUE, wk->save_ctrl, wk->heapID );
+      }
+
+      if( pmsi )
 
       // PROC切替 入力画面呼び出し
       GFL_PROC_SysCallProc( NO_OVERLAY_ID, &ProcData_PMSInput, pmsi );

@@ -948,6 +948,8 @@ static int edit_sentence_touch(PMS_INPUT_WORK* wk)
 	if(ret != GFL_UI_TP_HIT_NONE){
 		return ret;
 	}
+
+  // 単語判定
 	num = PMSIView_GetSentenceEditPosMax( wk->vwk );
 	//TODO Cont? Trg?
 	GFL_UI_TP_GetPointTrg( &tpx,&tpy );
@@ -1077,7 +1079,7 @@ static GFL_PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 			{
 #if PMS_USE_SND
 				GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
-#endif /PMS_USE_SND
+#endif //PMS_USE_SND
 				wk->edit_pos = 1;
 				PMSIView_SetCommand( wk->vwk, VCMD_MOVE_EDITAREA_CURSOR );
 			}
@@ -1243,6 +1245,15 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 
 
 	case SEQ_EDS_KEYWAIT:
+    // 文章固定モードは左右を無効化
+    if( PMSI_PARAM_GetLockFlag( wk->input_param ) )
+    {
+      if( (wk->key_repeat & PAD_KEY_LEFT) || ( wk->key_repeat & PAD_KEY_RIGHT ) )
+      {
+        break;
+      }
+    }
+
 		if( wk->key_trg & PAD_KEY_UP )
 		{
       if( wk->edit_pos == 0 )
@@ -1471,11 +1482,17 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 	case SEQ_EDS_KEYWAIT:
 	case SEQ_EDS_BUTTON_KEYWAIT:
 		ret = edit_sentence_touch(wk);
-		if( ret != GFL_UI_TP_HIT_NONE )
-		{
-			ARI_TPrintf("[%d]\n",ret);
-		}
-		
+
+    // 文章固定モードは左右無効
+    if( PMSI_PARAM_GetLockFlag( wk->input_param ) )
+    {
+      if( ret == 2 || ret == 3 )
+      {
+        HOSAKA_Printf("lock mode scroll failed! \n");
+        break;
+      }
+    }
+
 		switch(ret){
 		case 0:	//決定
 		case 1:	//やめる
@@ -3448,6 +3465,20 @@ int PMSI_GetTalkWindowType( const PMS_INPUT_WORK* wk )
 u32 PMSI_GetMenuCursorPos( const PMS_INPUT_WORK* wk )
 {
 	return get_menu_cursor_pos( &wk->menu );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  
+ *
+ *	@param	const PMS_INPUT_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+BOOL PMSI_GetLockFlag( const PMS_INPUT_WORK* wk )
+{
+  return PMSI_PARAM_GetLockFlag( wk->input_param );
 }
 
 

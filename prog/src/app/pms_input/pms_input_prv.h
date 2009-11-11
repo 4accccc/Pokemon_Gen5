@@ -264,6 +264,7 @@ extern BOOL PMSI_GetWordWinUpArrowVisibleFlag( const PMS_INPUT_WORK* wk );
 extern BOOL PMSI_GetWordWinDownArrowVisibleFlag( const PMS_INPUT_WORK* wk );
 extern int PMSI_GetTalkWindowType( const PMS_INPUT_WORK* wk );
 extern u32 PMSI_GetMenuCursorPos( const PMS_INPUT_WORK* wk );
+extern BOOL PMSI_GetLockFlag( const PMS_INPUT_WORK* wk );
 
 extern GFL_TCBSYS* PMSI_GetTcbSystem( const PMS_INPUT_WORK* wk );
 

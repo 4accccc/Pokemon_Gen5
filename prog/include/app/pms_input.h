@@ -63,18 +63,22 @@ enum {
 
 //------------------------------------------------------------------
 /**
- * 簡易会話入力画面パラメータ作成
- *
- * @param   input_mode			入力モード（enum PMSI_MODE）
- * @param   guidance_type		説明文タイプ（enum PMSI_GUIDANCE）
- * @param   savedata			セーブデータポインタ
- * @param   heapID				作成用ヒープID
- *
- * @retval  PMSI_PARAM*			作成されたパラメータオブジェクトへのポインタ
- */
+ * 簡易会話入力画面パラメータ作成 
+	*
+	* @param   input_mode			入力モード（enum PMSI_MODE）
+	* @param   guidance_type	説明文タイプ（enum PMSI_GUIDANCE）
+	* @param   savedata			  セーブデータポインタ
+  * @param   pms            文章を固定したい場合はPMS_DATAを指定。NULLにすれば固定化しない。
+  * @param   picture_flag   TRUE:デコメ入力可能
+	* @param	 pKTStatus			キータッチスタータス保持構造体へのポインタ
+	* @param   heapID				  作成用ヒープID
+	*
+	* @retval  PMSI_PARAM*		作成されたパラメータオブジェクトへのポインタ
+	*/
 //------------------------------------------------------------------
 extern PMSI_PARAM*  PMSI_PARAM_Create( u32 input_mode, u32 guidance_type,
-		SAVE_CONTROL_WORK* savedata, u32 heapID );
+    PMS_DATA* pms, BOOL picture_flag, SAVE_CONTROL_WORK* savedata, u32 heapID );
+
 
 //------------------------------------------------------------------
 /**
