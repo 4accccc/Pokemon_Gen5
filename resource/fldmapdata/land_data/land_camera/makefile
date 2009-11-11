@@ -55,7 +55,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(targetname).txt
+do-build:	subdir $(targetname).txt conv
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -65,6 +65,8 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするル
 $(targetname).txt: Makefile $(IMD_FILE) $(MAP_MATRIX)
 
 	$(CSV_CVTR) -o $(MAP_MATRIX_FILE) -p 1 $(MAP_MATRIX)
+
+conv:
 	perl conv.pl $(MAP_MATRIX_FILE) $(IMD_FOLDER) $(LIST_FILE)
 	ls *.bin > $(targetname).txt
 
@@ -72,8 +74,9 @@ else
 
 # コピー先のnarcが古い場合実行する
 $(targetname).txt: Makefile $(BIN_FILE)
-
 	ls *.bin > $(targetname).txt
+
+conv:
 
 endif
 

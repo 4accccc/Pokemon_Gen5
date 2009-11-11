@@ -13,12 +13,14 @@ if( @ARGV != 3 )
   exit(1);
 }
 
+@FILE_LIST = undef;
+$list_output = 0;
+$file_list_count = 0;
 
 open( FILEIN, $ARGV[0] );
 @map_matrix = <FILEIN>;
 close( FILEIN );
 
-open( FILEOUT, ">".$ARGV[2] );
 
 $skip = 1;
 foreach $one ( @map_matrix )
@@ -94,17 +96,30 @@ foreach $one ( @map_matrix )
       #$cmd = "perl area_output.pl ".$ARGV[1].$data[3]." ".$data[1]." ".$data[2]." ".$data[0]." 168 168";
       if( system( $cmd ) )
       {
-        close( FILEOUT );
         exit(1);
       }
+      $list_output = 1;
     }
 
-    #アーカイブリストの作成
-    print( FILEOUT "\"".$data[0].".bin\"\n" ); 
+    #ファイル保存
+    $FILE_LIST[ $file_list_count ] = $data[0];
+    $file_list_count ++;
+
   }
 }
 
-close( FILEOUT );
+if( $list_output )
+{
+  open( FILEOUT, ">".$ARGV[2] );
+
+  foreach $one ( @FILE_LIST )
+  {
+    #アーカイブリストの作成
+    print( FILEOUT "\"".$one.".bin\"\n" ); 
+  }
+
+  close( FILEOUT );
+}
 
 
 exit(0);
