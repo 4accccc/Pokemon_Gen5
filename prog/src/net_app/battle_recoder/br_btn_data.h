@@ -20,6 +20,9 @@
 //=====================================
 #define BR_BTN_DATA_NONE	(0xFFFF)
 
+
+#define BR_BTN_DATA_WIDTH	()
+
 //-------------------------------------
 ///	メニューインデックス
 //		ここでのメニューとは上画面が切り替らず、
@@ -101,6 +104,8 @@ typedef struct _BR_BTN_DATA_SYS  BR_BTN_DATA_SYS;
 //=====================================
 extern const BR_BTN_DATA * BR_BTN_DATA_SYS_GetData( BR_MENUID menuID, u16 btnID );
 extern u32 BR_BTN_DATA_SYS_GetDataNum( BR_MENUID menuID );
+extern u32 BR_BTN_DATA_SYS_GetDataMax( void );
+extern BR_MENUID BR_BTN_DATA_SYS_GetStartMenuID( BR_MODE mode );
 //-------------------------------------
 ///	内部情報取得
 //=====================================

@@ -10,6 +10,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
+#include "net_app/battle_recoder.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -29,8 +30,9 @@ typedef enum
 //=====================================
 typedef enum
 {
-	BR_BTN_SYS_INPUT_CHANGESEQ
-	BR_BTN_SYS_INPUT_EXIT
+	BR_BTN_SYS_INPUT_NONE,			//押していない（or押した後の動作中）
+	BR_BTN_SYS_INPUT_CHANGESEQ,	//別シーケンスに飛ぶ
+	BR_BTN_SYS_INPUT_EXIT,			//終了
 } BR_BTN_SYS_INPUT;
 
 //=============================================================================
@@ -47,7 +49,7 @@ typedef struct BR_BTN_SYS_WORK BR_BTN_SYS_WORK;
  *					PUBILIC関数
 */
 //=============================================================================
-extern BR_BTN_SYS_WORK *BR_BTN_SYS_Init( HEAPID heapID );
+extern BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MODE mode, GFL_CLUNIT *p_unit, HEAPID heapID );
 extern void BR_BTN_SYS_Exit( BR_BTN_SYS_WORK *p_wk );
 extern void BR_BTN_SYS_Main( BR_BTN_SYS_WORK *p_wk );
 extern BR_BTN_SYS_INPUT BR_BTN_SYS_GetInput( const BR_BTN_SYS_WORK *cp_wk, u32 *p_seq );

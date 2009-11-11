@@ -547,17 +547,72 @@ const BR_BTN_DATA * BR_BTN_DATA_SYS_GetData( BR_MENUID menuID, u16 btnID )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	メニューでのボタン最大数を取得
+ *	@brief	メニューごとのボタン最大数を取得
  *
  *	@param	BR_MENUID menuID	メニューID
  *
- *	@return	ボタンID
+ *	@return	ボタンの数
  */
 //-----------------------------------------------------------------------------
 u32 BR_BTN_DATA_SYS_GetDataNum( BR_MENUID menuID )
 {	
 	GF_ASSERT( menuID < BR_MENUID_MAX );
 	return scp_btn_data_tbl[menuID].max;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	それぞれのメニューを交えたメニューのボタン最大数を取得
+ *
+ *	@return	ボタンの数
+ */
+//-----------------------------------------------------------------------------
+u32 BR_BTN_DATA_SYS_GetDataMax( void )
+{	
+	int i;
+	int max;
+
+	max	= 0;
+	for( i = 0; i < BR_MENUID_MAX; i++ )
+	{	
+		if( max	< BR_BTN_DATA_SYS_GetDataNum( i ) )
+		{	
+			max	= BR_BTN_DATA_SYS_GetDataNum( i );
+		}
+
+	}
+	return max;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	モード別の初期メニュー取得
+ *
+ *	@param	BR_MODE mode モード
+ *
+ *	@return	初期メニュー
+ */
+//-----------------------------------------------------------------------------
+BR_MENUID BR_BTN_DATA_SYS_GetStartMenuID( BR_MODE mode )
+{	
+	BR_MENUID	startID;
+
+	switch( mode )
+	{	
+	case BR_MODE_BROWSE:
+		startID	= BR_BROWSE_MENUID_TOP;
+		break;
+	case BR_MODE_GLOBAL_BV:
+		startID	= BR_BTLVIDEO_MENUID_TOP;
+		break;
+	case BR_MODE_GLOBAL_MUSICAL:
+		startID	= BR_MUSICAL_MENUID_TOP;
+		break;
+	default:
+		GF_ASSERT(0);
+	}
+
+	return startID;
 }
 
 //----------------------------------------------------------------------------
