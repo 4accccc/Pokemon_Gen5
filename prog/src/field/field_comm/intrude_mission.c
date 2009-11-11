@@ -429,3 +429,4 @@ BOOL MISSION_AddPoint(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *missio
   }
   return FALSE;
 }
+

@@ -28,13 +28,13 @@ typedef struct{
   VecFx32 pos;
   BOOL vanish;
   u16 dir;
+  u16 obj_code;
   
   //comm_player.cでのみ使用するもの
   u8 occ:1;         ///<この構造体全体のデータ有効・無効(TRUE:有効)
-  u8 sex:1;
   u8 push_flag:1;
-  u8 :5;
-  u8 padding;
+  u8 :6;
+  u8 padding[3];
   
   FLDEFF_TASK *fldeff_gyoe_task;  ///<「！」エフェクト動作タスク
 }COMM_PLAYER;
@@ -161,10 +161,8 @@ void CommPlayer_Update(COMM_PLAYER_SYS_PTR cps)
  * @param   pack    座標データパッケージ
  */
 //==================================================================
-void CommPlayer_Add(COMM_PLAYER_SYS_PTR cps, int index, int sex, const COMM_PLAYER_PACKAGE *pack)
+void CommPlayer_Add(COMM_PLAYER_SYS_PTR cps, int index, u16 obj_code, const COMM_PLAYER_PACKAGE *pack)
 {
-  int objcode;
-
   OS_TPrintf("通信プレイヤーAdd index=%d\n", index);
 
 #ifdef PM_DEBUG
@@ -188,16 +186,15 @@ void CommPlayer_Add(COMM_PLAYER_SYS_PTR cps, int index, int sex, const COMM_PLAY
     return; //一応
   }
 
-  objcode = (sex == PM_MALE) ? HERO : HEROINE;
   cps->act[index].pos = pack->pos;
   cps->act[index].dir = pack->dir;
   cps->act[index].vanish = pack->vanish;
-  cps->act[index].sex = sex;
+  cps->act[index].obj_code = obj_code;
   cps->act[index].push_flag = FALSE;
   cps->act[index].occ = TRUE;
   cps->act[index].fldeff_gyoe_task = NULL;
   
-  FIELD_COMM_ACTOR_CTRL_AddActor(cps->act_ctrl, index, objcode, &cps->act[index].dir, 
+  FIELD_COMM_ACTOR_CTRL_AddActor(cps->act_ctrl, index, obj_code, &cps->act[index].dir, 
     &cps->act[index].pos, &cps->act[index].vanish);
 }
 
@@ -272,7 +269,7 @@ void CommPlayer_Pop(COMM_PLAYER_SYS_PTR cps)
       pack.pos = cps->act[i].pos;
       pack.dir = cps->act[i].dir;
       pack.vanish = cps->act[i].vanish;
-      CommPlayer_Add(cps, i, cps->act[i].sex, &pack);
+      CommPlayer_Add(cps, i, cps->act[i].obj_code, &pack);
       OS_TPrintf("CommPlayer Pop! %d\n", i);
     }
   }
@@ -305,6 +302,22 @@ BOOL CommPlayer_CheckOcc(COMM_PLAYER_SYS_PTR cps, int index)
 {
   GF_ASSERT(cps != NULL && index < COMM_PLAYER_MAX);
   return cps->act[index].occ;
+}
+
+//==================================================================
+/**
+ * 通信プレイヤーのOBJコードを取得
+ *
+ * @param   cps		
+ * @param   index		
+ *
+ * @retval  u16		OBJコード
+ */
+//==================================================================
+u16 CommPlayer_GetObjCode(COMM_PLAYER_SYS_PTR cps, int index)
+{
+  GF_ASSERT(cps != NULL && index < COMM_PLAYER_MAX && cps->act[index].occ == TRUE);
+  return cps->act[index].obj_code;
 }
 
 //==================================================================

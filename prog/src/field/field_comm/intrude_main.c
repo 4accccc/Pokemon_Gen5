@@ -146,6 +146,30 @@ static const VecFx32 PalaceWarpPos = {
   440 * FX32_ONE,
 };
 
+//--------------------------------------------------------------
+//  
+//--------------------------------------------------------------
+///変装用OBJCODEインデックス
+static const u16 DisguiseObjCodeTbl[] = {
+  HERO,   //変装無し
+  BABYBOY1,
+  BABYGIRL1,
+  BOY1,
+  BOY2,
+  BOY3,
+  BOY4,
+  GIRL1,
+  GIRL2,
+  GIRL3,
+  GIRL4,
+  POKE2,
+  POKE3,
+  POKE4,
+  POKE5,
+  POKE6,
+};
+u32 DisguiseObjCodeTblMax = NELEMS(DisguiseObjCodeTbl);
+
 //==============================================================================
 //
 //  
@@ -391,6 +415,16 @@ void Intrude_SetPlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INT
     }
   }
 #endif
+
+  //変装によるOBJCODEが変わっているチェック
+  if(CommPlayer_CheckOcc(intcomm->cps, net_id) == TRUE){
+    GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+    u16 obj_code = Intrude_GetObjCode(target_status, GAMEDATA_GetMyStatus(gamedata));
+    if(obj_code != CommPlayer_GetObjCode(intcomm->cps, net_id)){
+      CommPlayer_Del(intcomm->cps, net_id);
+      CommPlayer_Add(intcomm->cps, net_id, obj_code, &target_status->player_pack);
+    }
+  }
 }
 
 //==================================================================
@@ -776,6 +810,30 @@ INTRUDE_COMM_SYS_PTR Intrude_Check_CommConnect(GAME_COMM_SYS_PTR game_comm)
     return NULL;
   }
   return intcomm;
+}
+
+//==================================================================
+/**
+ * 侵入ステータスから表示するOBJコードを取得
+ *
+ * @param   sta		
+ * @param   myst		
+ *
+ * @retval  u16		OBJコード
+ */
+//==================================================================
+u16 Intrude_GetObjCode(const INTRUDE_STATUS *sta, const MYSTATUS *myst)
+{
+  u16 obj_code;
+
+  if(sta->disguise_no == 0 || sta->disguise_no >= NELEMS(DisguiseObjCodeTbl)){
+    obj_code = (MyStatus_GetMySex(myst) == PM_MALE) ? HERO : HEROINE;
+  }
+  else{
+    obj_code = DisguiseObjCodeTbl[sta->disguise_no];
+  }
+  
+  return obj_code;
 }
 
 //==================================================================

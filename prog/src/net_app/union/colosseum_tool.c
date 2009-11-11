@@ -365,7 +365,8 @@ void ColosseumTool_CommPlayerUpdate(COLOSSEUM_SYSTEM_PTR clsys)
     }
     if(Colosseum_GetCommPlayerPos(clsys, net_id, &pospack) == TRUE){
       if(CommPlayer_CheckOcc(clsys->cps, net_id) == FALSE){
-        CommPlayer_Add(clsys->cps, net_id, clsys->basic_status[net_id].sex, &pospack);
+        u16 obj_code = (clsys->basic_status[net_id].sex == PM_MALE) ? HERO : HEROINE;
+        CommPlayer_Add(clsys->cps, net_id, obj_code, &pospack);
       }
       else{
         CommPlayer_SetParam(clsys->cps, net_id, &pospack);
@@ -374,3 +375,65 @@ void ColosseumTool_CommPlayerUpdate(COLOSSEUM_SYSTEM_PTR clsys)
   }
 }
 
+#if 0 //※check
+void ColosseumTool_ActorSetup(COLOSSEUM_SYSTEM_PTR clsys)
+{
+  clsys->clunit = GFL_CLACT_UNIT_Create( 6, 10, HEAPID_WORLD);
+}
+
+void ColosseumTool_ActorExit(COLOSSEUM_SYSTEM_PTR clsys)
+{
+  if(clsys->clunit != NULL){
+    GFL_CLACT_UNIT_Delete(clsys->clunit);
+    clsys->clunit = NULL;
+  }
+}
+
+void ColosseumTool_PokeIconAdd(COLOSSEUM_SYSTEM_PTR clsys, POKEPARTY *party)
+{
+  GF_ASSERT(clsys->clunit != NULL);
+  
+  //リソース登録
+  for(i = 0; i < TEMOTI_POKEMAX; i++){
+    POKEMON_PARAM *pp = PokeParty_GetMemberPointer(party, i);
+    BOOL backup_fast;
+    u32 data_idx;
+    
+    backup_fast = PP_FastModeOn( pp );
+    
+    monsno = PP_Get( pp, ID_PARA_monsno, NULL);
+    monsno = PP_Get( pp, ID_PARA_form_no, NULL);
+    monsno = PP_Get( pp, ID_PARA_monsno_egg, NULL);
+    data_idx = POKEICON_GetCgxArcIndexByMonsNumber( u32 mons, u32 form_no, BOOL egg );
+    
+    PP_FastModeOff( pp, backup_fast );
+    
+  {//リソース登録
+    ARCHANDLE *handle;
+
+    handle = GFL_ARC_OpenDataHandle(ARCID_PALACE, heap_id);
+    
+  	number->cgr_id = GFL_CLGRP_CGR_Register( 
+  	  handle, NARC_palace_debug_areano_NCGR, FALSE, CLSYS_DRAW_MAIN, heap_id );
+  	number->pltt_id = GFL_CLGRP_PLTT_RegisterEx( 
+  	  handle, NARC_palace_debug_areano_NCLR, CLSYS_DRAW_MAIN, 15*32, 0, 1, heap_id );
+  	number->cell_id = GFL_CLGRP_CELLANIM_Register( 
+  	  handle, NARC_palace_debug_areano_NCER, NARC_palace_debug_areano_NANR, heap_id );
+  	
+  	GFL_ARC_CloseDataHandle(handle);
+  }
+  
+  {//アクター生成
+    static const GFL_CLWK_DATA clwkdata = {
+      16, 40, 0, 1, 0,
+    };
+    
+    number->clact = GFL_CLACT_WK_Create(
+      palace->clunit, number->cgr_id, number->pltt_id, number->cell_id, 
+      &clwkdata, CLSYS_DEFREND_MAIN, heap_id);
+    GFL_CLACT_WK_SetAutoAnmFlag(number->clact, TRUE); //オートアニメON
+    GFL_CLACT_WK_SetDrawEnable(number->clact, FALSE);
+  }
+  
+}
+#endif

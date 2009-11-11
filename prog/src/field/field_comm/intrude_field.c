@@ -73,6 +73,7 @@ static void DEBUG_PalaceMapInCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
 static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor, INTRUDE_COMM_SYS_PTR intcomm);
 
 
+
 //==============================================================================
 //
 //  
@@ -127,9 +128,11 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
     }
     if(intcomm->recv_profile & (1 << i)){
       if(CommPlayer_CheckOcc(intcomm->cps, i) == FALSE){
-        MYSTATUS *myst = GAMEDATA_GetMyStatusPlayer(GAMESYSTEM_GetGameData(gameSys), i);
-        CommPlayer_Add(intcomm->cps, i, MyStatus_GetMySex(myst), 
-          &intcomm->intrude_status[i].player_pack);
+        GAMEDATA *gdata = GAMESYSTEM_GetGameData(gameSys);
+        MYSTATUS *myst = GAMEDATA_GetMyStatusPlayer(gdata, i);
+        u16 obj_code = Intrude_GetObjCode(&intcomm->intrude_status[i], 
+          GAMEDATA_GetMyStatusPlayer(gdata, i));
+        CommPlayer_Add(intcomm->cps, i, obj_code, &intcomm->intrude_status[i].player_pack);
       }
       else{
         CommPlayer_SetParam(intcomm->cps, i, &intcomm->intrude_status[i].player_pack);
@@ -792,3 +795,35 @@ void IntrudeField_ConnectMap(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, IN
     MAP_MATRIX_Delete( mmatrix );
   }
 }
+
+//==================================================================
+/**
+ * 自機を変装させる(OBJコードの変更)
+ *
+ * @param   intcomm		
+ * @param   gsys		
+ */
+//==================================================================
+void IntrudeField_PlayerDisguise(INTRUDE_COMM_SYS_PTR intcomm, GAMESYS_WORK *gsys)
+{
+  FIELDMAP_WORK *fieldWork;
+  FIELD_PLAYER *fld_player;
+  int disguise_no;
+  u16 obj_code;
+  
+  if(GAMESYSTEM_CheckFieldMapWork( gsys ) == FALSE){
+    return;
+  }
+  
+  fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+  disguise_no = GFUser_GetPublicRand(DisguiseObjCodeTblMax);
+
+  intcomm->intrude_status_mine.disguise_no = disguise_no;
+  intcomm->send_status = TRUE;
+
+  obj_code = Intrude_GetObjCode(&intcomm->intrude_status_mine, 
+    GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gsys)));
+  FIELD_PLAYER_ChangeOBJCode( fld_player, obj_code );
+}
+
