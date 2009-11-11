@@ -246,7 +246,7 @@ BOOL BTLV_SCD_FadeFwd( BTLV_SCD* wk )
 }
 void BTLV_SCD_Cleanup( BTLV_SCD* wk )
 {
-  GFL_BMPWIN_Delete( wk->win );
+  //GFL_BMPWIN_Delete( wk->win );
 }
 void BTLV_SCD_Setup( BTLV_SCD* wk )
 {
@@ -255,6 +255,7 @@ void BTLV_SCD_Setup( BTLV_SCD* wk )
 
 static void setupMainWin( BTLV_SCD* wk )
 {
+#if 0
   wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME2_S, 0, 2, 32, 22, 0x0e, GFL_BMP_CHRAREA_GET_F );
   wk->bmp = GFL_BMPWIN_GetBmp( wk->win );
   GFL_BMP_Clear( wk->bmp, 0x00 );
@@ -262,6 +263,7 @@ static void setupMainWin( BTLV_SCD* wk )
   GFL_BMPWIN_MakeScreen( wk->win );
   GFL_BMPWIN_TransVramCharacter( wk->win );
   GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
+#endif
 }
 
 void BTLV_SCD_RestartUI( BTLV_SCD* wk )
@@ -271,7 +273,7 @@ void BTLV_SCD_RestartUI( BTLV_SCD* wk )
 
 void BTLV_SCD_Delete( BTLV_SCD* wk )
 {
-  GFL_BMPWIN_Delete( wk->win );
+  //GFL_BMPWIN_Delete( wk->win );
 
   PRINTSYS_QUE_Delete( wk->printQue );
   GFL_STR_DeleteBuffer( wk->strbuf );
@@ -374,6 +376,8 @@ BOOL BTLV_SCD_WaitTargetSelect( BTLV_SCD* wk )
 }
 
 #include "data\command_sel.cdat"
+#include "msg/msg_d_soga.h"
+#include "message.naix"
 
 static BOOL selectAction_init( int* seq, void* wk_adrs )
 {

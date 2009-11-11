@@ -50,6 +50,7 @@ typedef struct
 
 extern	void	BTLV_EFFTOOL_CalcMoveVector( VecFx32 *start, VecFx32 *end, VecFx32 *out, fx32 flame );
 extern	void	BTLV_EFFTOOL_CheckMove( fx32 *now_pos, fx32 *vec, fx32 *move_pos, BOOL *ret );
+extern  void	BTLV_EFFTOOL_CheckVecMove( VecFx32 *now_pos, VecFx32 *vec, VecFx32 *move_pos, BOOL *ret );
 extern	BOOL	BTLV_EFFTOOL_CalcParam( EFFTOOL_MOVE_WORK *emw, VecFx32 *now_param );
 extern	u32		BTLV_EFFTOOL_Pos2Bit( BtlvMcssPos no );
 extern  void  BTLV_EFFTOOL_CalcPaletteFade( EFFTOOL_PAL_FADE_WORK* epfw );

@@ -58,9 +58,9 @@ void	BTLV_EFFTOOL_CalcMoveVector( VecFx32 *start, VecFx32 *end, VecFx32 *out, fx
  *	もらった値から移動できるかチェックして移動できないときは何もしない
  *
  *	@param[in]	now_pos		現在値
- *	@param[in]	vec			移動量
+ *	@param[in]	vec			  移動量
  *	@param[in]	move_pos	移動先
- *	@param[out]	ret			移動したかどうかを返す（FALSE:移動しない）
+ *	@param[out]	ret			  移動したかどうかを返す（FALSE:移動しない）
  */
 //============================================================================================
 void	BTLV_EFFTOOL_CheckMove( fx32 *now_pos, fx32 *vec, fx32 *move_pos, BOOL *ret )
@@ -80,9 +80,38 @@ void	BTLV_EFFTOOL_CheckMove( fx32 *now_pos, fx32 *vec, fx32 *move_pos, BOOL *ret
 			*now_pos = *move_pos;
 		}
 		else{
-			*ret = FALSE;
+      if( ret != NULL )
+      { 
+			  *ret = FALSE;
+      }
 		}
 	}
+}
+
+//============================================================================================
+/**
+ *	もらった値から移動できるかチェックして移動できないときは何もしない（3軸バージョン）
+ *
+ *	@param[in]	now_pos		現在値
+ *	@param[in]	vec			  移動量
+ *	@param[in]	move_pos	移動先
+ *	@param[out]	ret			  移動したかどうかを返す（FALSE:移動しない）
+ */
+//============================================================================================
+void	BTLV_EFFTOOL_CheckVecMove( VecFx32 *now_pos, VecFx32 *vec, VecFx32 *move_pos, BOOL *ret )
+{
+  BOOL  ret_vec_x = TRUE;
+  BOOL  ret_vec_y = TRUE;
+  BOOL  ret_vec_z = TRUE;
+
+  BTLV_EFFTOOL_CheckMove( &now_pos->x, &vec->x, &move_pos->x, &ret_vec_x );
+  BTLV_EFFTOOL_CheckMove( &now_pos->y, &vec->y, &move_pos->y, &ret_vec_y );
+  BTLV_EFFTOOL_CheckMove( &now_pos->z, &vec->z, &move_pos->z, &ret_vec_z );
+
+  if( ret != NULL )
+  { 
+    *ret = ret_vec_x | ret_vec_y | ret_vec_z; 
+  }
 }
 
 //============================================================================================

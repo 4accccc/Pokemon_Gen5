@@ -12,7 +12,8 @@
 
 #include "battle/btl_common.h"
 
-#define BTLV_INPUT_DIR_MAX  ( TEMOTI_POKEMAX )   //対象選択MAX
+#define BTLV_INPUT_DIR_MAX  ( TEMOTI_POKEMAX )  //対象選択MAX
+#define BTLV_INPUT_POKEICON_MAX ( 3 )           //ポケモンアイコンMAX
 
 typedef struct _BTLV_INPUT_WORK BTLV_INPUT_WORK;
 
@@ -44,6 +45,13 @@ typedef struct{
   u8                    waza_target;  ///<対象選択タイプ
 }BTLV_INPUT_SCENE_PARAM;
 
+///YES/NO選択画面構成用のSceneワーク
+typedef struct{
+  ARCDATID  msg_datID;        //メッセージが格納されているARCDATID
+  int       yes_msg_index;    //YESに相当するメッセージのインデックス
+  int       no_msg_index;     //NOに相当するメッセージのインデックス
+}BTLV_INPUT_YESNO_PARAM;
+
 typedef enum
 { 
   BTLV_INPUT_CENTER_BUTTON_ESCAPE = FALSE,
@@ -55,10 +63,16 @@ typedef struct{
   BTLV_INPUT_DIR_PARAM          bidp[ 2 ][ BTLV_INPUT_DIR_MAX ];
   BTLV_INPUT_CENTER_BUTTON_TYPE center_button_type;
   BOOL                          trainer_flag;                    //対戦相手がトレーナーかどうか
-  int                           mons_no[ 3 ];   //繰り出しているポケモンナンバー
-  int                           form_no[ 3 ];   //繰り出しているポケモンのフォルムナンバー
+  int                           mons_no[ BTLV_INPUT_POKEICON_MAX ];   //繰り出しているポケモンナンバー
+  int                           form_no[ BTLV_INPUT_POKEICON_MAX ];   //繰り出しているポケモンのフォルムナンバー
   BtlvMcssPos                   pos;
 }BTLV_INPUT_COMMAND_PARAM;
+
+///ローテーション画面構成用のワーク
+typedef struct{
+  const POKEMON_PARAM*  pp[ BTLV_INPUT_POKEICON_MAX ];
+  BtlRotateDir          before_select_dir;                  //1つ前に選択した方向
+}BTLV_INPUT_ROTATE_PARAM;
 
 typedef enum
 { 
