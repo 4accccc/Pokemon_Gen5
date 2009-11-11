@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTP_CreateConnection</title>
+</head>
+
+<body>
+
+<h1>NHTTP_CreateConnection<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+NHTTPConnectionHandle NHTTP_CreateConnection(const char* url,
+                                            NHTTP_ReqMethod method,
+                                            char* bodyBuffer, u32 bodyLength,
+                                            <a href="NHTTPConnectionCallback.html">NHTTPConnectionCallback</a> callback,
+                                            void* userParam);
+</code></pre></dd></dl>
+
+<h2>引数</h2>
+<p>
+<table border="1">
+  <tr>
+    <td><var>url</var></td>
+    <td>接続先URL(NULL終端ASCII文字列)へのポインタ</td>
+  </tr>
+  <tr>
+    <td><var>method</var></td>
+    <td>NHTTP_ReqMethod列挙型で指定する以下のいずれかのHTTPリクエストメソッド<br>
+<table border='1'>
+  <tr>
+    <td bgcolor="#ffffe8">NHTTP_REQMETHOD_GET</td>
+    <td>HTTP GETメソッド</td>
+  </tr>
+  <tr>
+    <td bgcolor="#ffffe8">NHTTP_REQMETHOD_POST</td>
+    <td>HTTP POSTメソッド</td>
+  </tr>
+  <tr>
+    <td bgcolor="#ffffe8">NHTTP_REQMETHOD_HEAD</td>
+    <td>HTTP HEADメソッド</td>
+  </tr>
+</table>
+</td>
+  </tr>
+  <tr>
+    <td><var>bodyBuffer</var></td>
+    <td>受信したHTTPボディを格納するバッファへのポインタ<br>
+	                このバッファにはNULLを指定することも可能で、<a href="NHTTPConnectionCallback.html">NHTTP_EVENT_BODY_RECV_FULL</a>イベントコールバック内から
+					argを上書きすることによって再設定することもできます。
+  </tr>
+  <tr>
+    <td><var>bodyLength</var></td>
+    <td>bodyBufferの長さ<br>
+  </tr>
+  <tr>
+    <td><var>callback</var></td>
+    <td>HTTP通信中に発生する各種イベントを通知する<a href="NHTTPConnectionCallback.html">NHTTPConnectionCallback</a>型のコールバック<br>
+	通知が不要であればNULLを指定することも可能です。通知されるイベントの詳細については
+	<a href="NHTTPConnectionCallback.html">NHTTPConnectionCallback</a>の説明をご参照ください。
+  </tr>
+  <tr>
+    <td><var>userParam</var></td>
+    <td>この接続ハンドルに関連付けることのできる任意のユーザ定義パラメータ<br>
+	設定した値は<a href="NHTTP_GetUserParam.html">NHTTP_GetUserParam()</a>で取得することができます。
+  </tr>
+</table>
+</p>
+
+<h2>返り値</h2>
+<pre>
+成功すれば新規に生成された接続ハンドルを返し、
+メモリ確保に失敗した場合、
+NHTTP_ReqMethod列挙型以外のメソッドを設定した場合、
+接続先URLがhttp://あるいはhttps://で始まらない場合、
+URLで指定したポート番号が65535を超える場合はNULLを返します。
+</pre>
+
+<h2>説明</h2>
+<p>
+指定されたパラメータに基づいてHTTP通信用の接続ハンドルを新規に1個生成します。<br>
+この関数によって得られた接続ハンドルを使用して各種の設定用関数を呼び出した後、
+<a href="NHTTP_StartConnection.html">NHTTP_StartConnection()</a>の呼び出しによって通信を開始します。
+</p>
+<p>
+生成した接続ハンドルは、必ず<a href="NHTTP_DeleteConnection.html">NHTTP_DeleteConnection()</a>を呼び出して解放する必要があります。
+</p>
+
+<h2>参照</h2>
+<p>
+<code>
+<a href="NHTTPConnectionCallback.html">NHTTPConnectionCallback</a>, 
+<a href="NHTTP_DeleteConnection.html">NHTTP_DeleteConnection</a>, 
+<a href="NHTTP_StartConnection.html">NHTTP_StartConnection</a>, 
+<a href="NHTTP_GetUserParam.html">NHTTP_GetUserParam</a>, 
+</code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2007/06/07 返り値の説明を追加。<br>
+2006/10/14 初版 <br>
+</p>
+
+</body>
+</html>

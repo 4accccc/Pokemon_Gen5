@@ -1,0 +1,77 @@
+#! make -f
+#----------------------------------------------------------------------------
+# Project:  TwlWiFi - NHTTP - libraries
+# File:     Makefile.common
+#
+# Copyright 2003-2008 Nintendo.  All rights reserved.
+#
+# These coded instructions, statements, and computer programs contain
+# proprietary information of Nintendo of America Inc. and/or Nintendo
+# Company Ltd., and are protected by Federal copyright law.  They may
+# not be disclosed to third parties or copied or duplicated in any form,
+# in whole or in part, without the prior written consent of Nintendo.
+#
+# $Date:: 2008-10-31#$
+# $Rev: 1083 $
+# $Author: adachi_hiroaki $
+#----------------------------------------------------------------------------
+
+SUBDIRS			 =
+
+#----------------------------------------------------------------------------
+
+TWLWIFI_COMPAT		= TRUE
+
+SRCDIR			= ../common/src
+INCDIR			= ../common/include
+
+SRCS			= NHTTP_os_NTR.c		\
+			  NHTTP_socket_NTR.c		\
+			  NHTTP_stdlib_NTR.c		\
+			  NHTTP_bgnend.c		\
+			  NHTTP_control.c		\
+			  NHTTP_list.c			\
+			  NHTTP_recvbuf.c		\
+			  NHTTP_request.c		\
+			  NHTTP_response.c		\
+			  NHTTP_thread.c		\
+			  d_nhttp.c			\
+			  d_nhttp_common.c		\
+			  d_nhttp_private.c		\
+			  d_nhttp_compat.c		\
+
+include	$(TWLWIFI_ROOT)/build/buildtools/commondefs
+
+ifeq	($(TWLWIFI_INET),TRUE)
+TWLWIFI_USE_NSSL	= TRUE
+endif
+
+ifeq	($(TWLWIFI_USE_NSSL),TRUE)
+LMACRO_FLAGS	       += -DNHTTP_USE_NSSL
+TWIFI_EXSUFFIX	       := .nssl$(TWIFI_EXSUFFIX)
+else
+LMACRO_FLAGS	       += -DNHTTP_USE_CPSSSL
+endif
+
+ifneq	($(TWLDWC_ROOT),)
+ifneq	($(TWLWIFI_INET),TRUE)
+# require DWC
+LMACRO_FLAGS	       += -DNHTTP_USE_DWC
+GINCLUDES	       += $(subst $(SPACE),\ ,$(subst \,/,$(TWLDWC_ROOT)))/include
+endif
+endif
+
+#----------------------------------------------------------------------------
+
+INSTALL_TARGETS		= $(TARGETS)
+INSTALL_DIR		= $(TWIFI_INSTALL_LIBDIR)
+
+GINCLUDES	       += $(TWIFI_INCDIR)/NitroWiFi
+
+#----------------------------------------------------------------------------
+
+do-build:		$(TARGETS)
+
+include	$(TWLWIFI_ROOT)/build/buildtools/modulerules
+
+#===== End of Makefile =====

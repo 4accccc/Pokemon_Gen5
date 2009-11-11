@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTPBodyBufArg</title>
+</head>
+
+<body>
+
+<h1>NHTTPBodyBufArg<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+typedef struct _NHTTPBodyBufArg {
+    char*	buf;
+    u32		size;
+    u32		offset;
+} NHTTPBodyBufArg;
+</code></pre></dd></dl>
+
+<h2>説明</h2>
+<p>
+<a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection()</a>で指定する <a href="NHTTPConnectionCallback.html">NHTTPConnectionCallback()</a>において、NHTTP_EVENT_BODY_RECV_FULL / NHTTP_EVENT_BODY_RECV_DONEイベントが起きた際に argとして渡される構造体です。<br>
+NHTTP_EVENT_BODY_RECV_FULLイベント時に、下記のメンバを上書きして NHTTP_ライブラリに返すことにより、受信バッファの再設定が可能です。<br>
+NHTTP_EVENT_BODY_RECV_FULLイベント時に、下記のメンバを上書きせずに NHTTP_ライブラリに返した場合、NHTTP_ライブラリは受信バッファが足りないとみなし、以降の受信データを読み捨てます。読み捨てられたデータを取得することはできません。
+</p>
+<table width="100%">
+  <tr>
+    <td><var>buf</var></td>
+    <td width="520" bgcolor="#ffffe8">ボディ受信バッファのポインタです。<br>
+    <a href="NHTTP_GetBodyBuffer.html">NHTTP_GetBodyBuffer()</a>で取得するbodyBufferと同じ値を示します｡</td>
+  </tr>
+  <tr>
+    <td><var>size</var></td>
+    <td width="520" bgcolor="#ffffe8">ボディ受信バッファサイズです。<br>
+    <a href="NHTTP_GetBodyBuffer.html">NHTTP_GetBodyBuffer()</a>で取得するsizeと同じ値を示します｡</td>
+  </tr>
+  <tr>
+    <td><var>offset</var></td>
+    <td width="520" bgcolor="#ffffe8">ボディ受信バッファに格納されている受信データ長です。<br>
+    <a href="NHTTP_GetBodyBuffer.html">NHTTP_GetBodyBuffer()</a>の返り値と同じ値を示します｡<br>
+    NHTTP_ライブラリは <a href="NHTTPConnectionCallback.html">NHTTPConnectionCallback()</a>処理後、この offset位置から続けて受信バッファにデータを受信しようとします。<br>
+    NHTTP_EVENT_BODY_RECV_FULLイベント時に、このoffsetの値を 0に設定して返すことにより、受信バッファを再利用することが可能です。</td>
+  </tr>
+</table>
+</p>
+
+<h2>参照</h2>
+<p>
+<code><a href="./NHTTPConnectionCallback.html">NHTTPConnectionCallback</a></code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2006/10/14 初版<br>
+</p>
+
+</body>
+
+</html>

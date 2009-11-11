@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTP_SetBaseAuthorization</title>
+</head>
+
+<body>
+
+<h1>NHTTP_SetBaseAuthorization<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+int NHTTP_SetBaseAuthorization( NHTTPConnectionHandle handle, const char* username, const char* password);
+</code></pre></dd></dl>
+
+<h2>引数</h2>
+<p>
+<table width="100%">
+  <tr>
+    <td><var>handle</var></td>
+    <td><a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection()</a>で生成した接続ハンドル</td>
+  </tr>
+  <tr>
+    <td><var>username</var></td>
+    <td>Basic認証のユーザ名(32文字まで)</td>
+  </tr>
+  <tr>
+    <td><var>password</var></td>
+    <td>Basic認証のパスワード(32文字まで)</td>
+  </tr>
+</table>
+</p>
+
+<h2>返り値</h2>
+<pre>
+Basic認証の設定に成功すれば0を、
+接続ハンドル、Basic認証のユーザー名、パスワードがNULLの場合、
+Basic認証のユーザー名、パスワードが32文字を超える場合に失敗し-1を返します。
+</pre>
+
+<h2>説明</h2>
+<p>
+送信すべきHTTPリクエストに使用するBasic認証を設定します。<br>
+<br>
+これらの設定内容は、<a href="NHTTP_StartConnection.html">NHTTP_StartConnection()</a>呼び出し後の実際の接続時にライブラリ内部で適切に処理されます。 
+</p>
+
+<h2>参照</h2>
+<p>
+<code>
+<a href="NHTTP_StartConnection.html">NHTTP_StartConnection</a>
+</code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2007/05/21 返り値を追記。<br>
+2006/10/19 説明を追記。<br>
+2006/8/7 初版。<br>
+</p>
+
+</body>
+
+</html>

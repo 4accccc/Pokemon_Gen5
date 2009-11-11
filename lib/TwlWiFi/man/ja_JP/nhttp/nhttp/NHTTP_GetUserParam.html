@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTP_GetUserParam</title>
+</head>
+
+<body>
+
+<h1>NHTTP_GetUserParam<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+void* NHTTP_GetUserParam(NHTTPConnectionHandle handle);
+</code></pre></dd></dl>
+
+<h2>引数</h2>
+<p>
+<table width="100%">
+  <tr>
+    <td><var>handle</var></td>
+    <td><a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection()</a>で生成した接続ハンドル</td>
+  </tr>
+</table>
+</p>
+
+<h2>返り値</h2>
+<pre>
+接続ハンドルに関連付けられたユーザ定義パラメータを返します。<br>
+不正な接続ハンドルに対してはNULLを返します。
+</pre>
+
+<h2>説明</h2>
+<p>
+<a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection()</a>で関連付けられたユーザ定義パラメータを取得します。
+</p>
+
+<h2>参照</h2>
+<p>
+<code>
+<a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection</a>
+</code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2006/10/14 初版 <br>
+</p>
+
+</body>
+</html>

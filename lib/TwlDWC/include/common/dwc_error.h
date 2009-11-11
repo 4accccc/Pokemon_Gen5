@@ -56,6 +56,7 @@ extern "C" {
     	
     	// gdbライブラリのエラー
     	DWC_ERROR_GDB_ANY,            ///< GDBライブラリのエラー。通常のDWCでは発生しません。
+        DWC_ERROR_SCL_ANY,            ///< SCライブラリのエラー。通常のDWCでは発生しません。
     
         DWC_ERROR_SC_CONNECT_BLOCK,   ///< サーバクライアントマッチメイクで、クライアントがサーバから接続を拒否された
         DWC_ERROR_NETWORK_LIGHT,	  ///< 軽度として扱うネットワークエラー

@@ -29,13 +29,13 @@ endif
 # TwlDWC Path
 #
 ifndef TWLDWC_NOGS
-TWLDWC_LIB_MODULES_   ?= ac auth bm account common nonport nas nd util enc ghttp ranking gdb match
+TWLDWC_LIB_MODULES_   ?= ac auth bm account common nonport nas nd util enc ghttp ranking gdb match sc
 else
 TWLDWC_LIB_MODULES_   ?= ac auth bm common nonport nas nd util
 endif
 
 ifndef TWLDWC_NOGS
-TWLDWC_LIB_GSMODULES_ ?= common ghttp gp gstats gt2 natneg qr2 serverbrowsing sake chat
+TWLDWC_LIB_GSMODULES_ ?= common ghttp GP gstats gt2 natneg qr2 serverbrowsing sake Chat sc webservices
 endif
 
 # peer, gsoap modules are not supported now.
@@ -101,8 +101,8 @@ LLIBRARY_DIRS  += $(TWIFI_ROOT)/lib/$(TWIFI_LIBTYPE)
 LINCLUDES			+= $(TWLDWC_INCDIR)
 
 #----------------------------------------------------------------------------
-## gamespy用のNITRO定義
-MACRO_FLAGS += -D_NITRO
+## gamespy用の定義
+MACRO_FLAGS += -D_NITRO -DGSI_DOMAIN_NAME='"gs.nintendowifi.net"'
 CCFLAGS_WARNING 	+= -w nonotused -w nopadding
 
 ##MACRO_FLAGS += -D_NITRO -DGSI_MEM_MANAGED -w nonotused -w nopadding
@@ -110,6 +110,9 @@ CCFLAGS_WARNING 	+= -w nonotused -w nopadding
 
 ## 不具合の吸収のため。
 #MACRO_FLAGS += -DDWC_BUG_WIFI_DELAY_SEND
+
+## WiFi互換ヘッダ
+MACRO_FLAGS += -DSDK_WIFI_COMPAT
 
 ifdef TWLDWC_NOGS
 MACRO_FLAGS += -DTWLDWC_NOGS -DDWC_NOGS

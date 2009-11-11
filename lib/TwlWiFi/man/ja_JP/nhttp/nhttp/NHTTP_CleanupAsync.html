@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTP_CleanupAsync</title>
+</head>
+
+<body>
+
+<h1>NHTTP_CleanupAsync<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+void NHTTP_CleanupAsync( <a href="./NHTTPCleanupCallback.html">NHTTPCleanupCallback</a> callback );
+</code></pre></dd></dl>
+
+<h2>引数</h2>
+<p>
+<table width="100%">
+  <tr>
+    <td><var>callback</var></td>
+    <td>NHTTP_ライブラリの解放処理が完了した際に
+呼び出される<a href="./NHTTPCleanupCallback.html">NHTTPCleanupCallback</a>型のコールバック関数へのポインタ</td>
+  </tr>
+</table>
+</p>
+
+<h2>返り値</h2>
+<pre>
+なし。
+</pre>
+
+<h2>説明</h2>
+<p>
+すでに<a href="./NHTTP_Startup.html">NHTTP_Startup()</a>によって初期化されているNHTTP_ライブラリの終了を要求します。<br>
+<br>
+この呼び出しのあと、内部処理用スレッドの終了処理や動的確保済みメモリの解放処理などが
+ライブラリ内部で実行されます。全ての終了処理が完了すると、<a href="./NHTTPCleanupCallback.html">NHTTPCleanupCallback</a>コールバックとして
+アプリケーションへ完了通知が発生します。<br>
+</p>
+<h2>注意</h2>
+<p><font color="red"> 
+<a href="./NHTTP_CreateConnection.html">NHTTP_CreateConnection()</a>で生成した全ての接続ハンドルは、
+この関数を呼び出す前に<a href="./NHTTP_DeleteConnection.html">NHTTP_DeleteConnection()</a>で解放しておく必要があるという点に注意してください。<br>
+また、イベント通知コールバック内からこの関数を呼び出すことはできません。
+その場合、ライブラリは警告メッセージをデバッグ出力して強制停止します。<br>
+詳細は<a href="NHTTPConnectionCallback.html">NHTTPConnectionCallback</a>の項をご参照ください。
+</font>
+</p>
+
+<h2>参照</h2>
+<p>
+<code>
+<a href="./NHTTPCleanupCallback.html">NHTTPCleanupCallback</a>, 
+<a href="./NHTTP_Startup.html">NHTTP_Startup</a>
+</code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2006/10/30 注意事項を追記。<br>
+2006/10/19 注意事項を追記、説明の詳細を捕捉。<br>
+2006/6/26 初版。<br>
+</p>
+ 
+</body>
+
+</html>

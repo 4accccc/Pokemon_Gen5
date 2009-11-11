@@ -323,7 +323,11 @@ extern "C"
 
 
     void DWC_EnableHotspot(void); // [nakata] ƒuƒ‰ƒEƒU‘Î‰ž‚ÌŠg’£
-    BOOL DWC_CheckWiFiStation( const void *ssid, u16 len ); // [uemura] 2006/05/24’Ç‰Á
+    BOOL DWC_CheckWiFiStation( const void *ssid, u16 len, DWCApInfo* apinfo );
+    size_t DWC_GetCheckNintendoZoneWorkSize( void );
+    BOOL DWC_CheckNintendoZone( void* work, const WMBssDesc* bssdesc, DWCApInfo* apinfo );
+    size_t DWC_GetParseWMBssDescWorkSize( void );
+    BOOL DWC_ParseWMBssDesc( void* work, const WMBssDesc* bssdesc, DWCApInfo* apinfo );
     void DWC_SetDisableEulaCheck( void );
 
 

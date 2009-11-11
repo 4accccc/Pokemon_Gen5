@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTP_StartConnection</title>
+</head>
+
+<body>
+
+<h1>NHTTP_StartConnection<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+<a href="NHTTPError.html">NHTTPError</a> NHTTP_StartConnection(NHTTPConnectionHandle handle);
+</code></pre></dd></dl>
+
+<h2>引数</h2>
+<p>
+<table width="100%">
+  <tr>
+    <td><var>handle</var></td>
+    <td><a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection()</a>で生成した接続ハンドル</td>
+  </tr>
+</table>
+</p>
+
+<h2>返り値</h2>
+<pre>
+正常に通信準備が完了すればNHTTP_ERROR_NONEを、
+失敗すれば<a href="NHTTPError.html">NHTTPError</a>型のいずれかのエラー値を返します。
+</pre>
+
+<h2>説明</h2>
+<p>
+接続ハンドルに設定されたリクエスト内容を使用して通信処理を開始します。
+この関数が成功すると、接続ハンドルはライブラリ内部の通信準備リストへ追加されます。
+ライブラリ内部のスレッドはこのリストの先頭から1個ずつ取得してHTTP通信を実行します。
+</p>
+<p>
+通信処理が完了するまで、<a href="NHTTP_GetConnectionError.html">NHTTP_GetConnectionError()</a>は
+<a href="NHTTPError.html">NHTTP_ERROR_BUSY</a>を返します。<br>
+通信処理をキャンセルしたい場合は<a href="NHTTP_CancelConnection.html">NHTTP_CancelConnection()</a>を使用します。
+通信完了までその場で待機したい場合は<a href="NHTTP_WaitForConnection.html">NHTTP_WaitForConnection()</a>を使用します。
+</p>
+<p>
+すでにこの関数で通信処理を開始されている場合は、何も行いません。
+</p>
+
+<h2>参照</h2>
+<p>
+<code>
+<a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection</a>,
+<a href="NHTTP_CancelConnection.html">NHTTP_CancelConnection</a>,
+<a href="NHTTP_WaitForConnection.html">NHTTP_WaitForConnection</a>,
+<a href="NHTTP_GetConnectionError.html">NHTTP_GetConnectionError</a>
+</code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2006/10/14 初版 <br>
+</p>
+
+</body>
+</html>

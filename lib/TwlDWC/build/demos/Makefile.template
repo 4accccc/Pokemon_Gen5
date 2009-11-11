@@ -20,7 +20,7 @@ TARGET_BIN                      = $(shell basename $(CURDIR)).srl
 #----------------------------------------------------------------------------
 # overlay for util library
 ifeq ($(TWLDWC_DEMOS_UTILOVERLAY),TRUE)
-TWLDWC_LIB_MODULES_   = ac auth bm account common nonport nas nd enc ghttp ranking gdb match
+TWLDWC_LIB_MODULES_   = ac auth bm account common nonport nas nd enc ghttp ranking gdb match sc
 endif
 
 ifeq ($(TWLDWC_DL_DEMOS_UTILOVERLAY),TRUE)

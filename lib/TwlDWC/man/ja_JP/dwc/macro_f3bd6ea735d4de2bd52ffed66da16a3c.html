@@ -40,6 +40,7 @@ enum DWCError {
     DWC_ERROR_PROF_ANY,
     DWC_ERROR_PROF_HTTP,
     DWC_ERROR_GDB_ANY,
+    DWC_ERROR_SCL_ANY,
     DWC_ERROR_SC_CONNECT_BLOCK,
     DWC_ERROR_NETWORK_LIGHT,
     DWC_ERROR_NUM,
@@ -205,6 +206,11 @@ enum DWCReportFlag {
 	<TR>
 	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_GDB_ANY</CODE></STRONG></EM></TD>
 	  <TD>GDBライブラリのエラー。通常のDWCでは発生しません。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_SCL_ANY</CODE></STRONG></EM></TD>
+	  <TD>SCライブラリのエラー。通常のDWCでは発生しません。</TD>
 	</TR>
 
 	<TR>

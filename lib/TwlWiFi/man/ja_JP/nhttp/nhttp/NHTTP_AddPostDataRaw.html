@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" href="../../css/twl.css" type="text/css">
+<title>NHTTP_AddPostDataRaw</title>
+</head>
+
+<body>
+
+<h1>NHTTP_AddPostDataRaw<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+<dl><dd><pre><code>
+#include &lt;nitroWiFi/nhttp.h&gt;
+
+int NHTTP_AddPostDataRaw( NHTTPConnectionHandle handle, const void* value, u32 length );
+</code></pre></dd></dl>
+
+<h2>引数</h2>
+<p>
+<table width="100%">
+  <tr>
+    <td><var>handle</var></td>
+    <td><a href="NHTTP_CreateConnection.html">NHTTP_CreateConnection()</a>で生成した接続ハンドル</td>
+  </tr>
+  <tr>
+    <td><var>value</var></td>
+    <td>送信すべきHTTPリクエストPOSTデータへのポインタ<br>
+送信すべきデータをこの場で用意しない場合にはNULLを指定することもできます。その場合、
+必要に応じて<a href="NHTTPConnectionCallback.html">NHTTP_EVENT_POST_SEND</a>コールバックが通知されますので、
+その場で適切に応答する必要があります。<br>
+<font color="red">このポインタの指す先は接続ハンドルが解放されるまでライブラリ内部で参照される点に注意してください。</font></td>
+  </tr>
+  <tr>
+    <td><var>length</var></td>
+    <td>valueの長さ(Byte単位)<br>
+  </tr>
+</table>
+</p>
+
+<h2>返り値</h2>
+<pre>
+POST項目の追加に成功すれば0を、
+接続ハンドルがNULLの場合、
+<a href="./NHTTP_AddPostDataAscii.html">NHTTP_AddPostDataAscii()</a>および<a href="./NHTTP_AddPostDataBinary.html">NHTTP_AddPostDataBinary()</a>を既に接続ハンドルに設定した場合、
+<a href="NHTTP_StartConnection.html">NHTTP_StartConnection()</a>で通信処理を開始した接続ハンドルに設定しようとした場合、
+内部処理でリスト要素追加時にメモリ確保に失敗した場合に失敗し-1を返します。
+</pre>
+
+
+<h2>説明</h2>
+<p>
+送信すべきHTTPリクエストPOST項目全体を1個のバイナリデータとして直接設定します。<br>
+<font color="red">
+この関数は、<a href="./NHTTP_AddPostDataAscii.html">NHTTP_AddPostDataAscii()</a>および<a href="./NHTTP_AddPostDataBinary.html">NHTTP_AddPostDataBinary()</a>と
+併用することはできません。</font>
+</p>
+
+<h2>参照</h2>
+<p>
+<code>
+<a href="./NHTTPConnectionCallback.html">NHTTPConnectionCallback</a>,
+<a href="./NHTTP_AddPostDataAscii.html">NHTTP_AddPostDataAscii</a>, 
+<a href="./NHTTP_AddPostDataBinary.html">NHTTP_AddPostDataBinary</a>, 
+<a href="NHTTP_StartConnection.html">NHTTP_StartConnection</a>
+</code>
+</p>
+
+<h2>履歴</h2>
+<p>
+2007/05/21 返り値を追記。<br>
+2006/10/30 記述ミスを修正。<br>
+2006/10/19 引数に関する注意事項など、説明を追記。<br>
+2006/9/25 初版。<br>
+</p>
+
+</body>
+</html>
