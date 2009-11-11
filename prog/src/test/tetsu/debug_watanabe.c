@@ -135,6 +135,7 @@ extern const GFL_PROC_DATA DebugWatanabeSample2ProcData;
 extern const GFL_PROC_DATA DebugWatanabeSample3ProcData;
 extern const GFL_PROC_DATA DebugWatanabeSample4ProcData;
 extern const GFL_PROC_DATA DebugWatanabeSample5ProcData;
+extern const GFL_PROC_DATA DebugWatanabeSample6ProcData;
 
 static const DEBUGITEM_LIST debugItemList[] = {
 	//{DEBUG_TETSU_MENU1, FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample1ProcData},
@@ -142,6 +143,7 @@ static const DEBUGITEM_LIST debugItemList[] = {
 	{DEBUG_TETSU_MENU3, FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample3ProcData},
 	{DEBUG_TETSU_MENU4, FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample4ProcData},
 	{DEBUG_TETSU_MENU5, FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample5ProcData},
+	{DEBUG_TETSU_MENU6, FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample6ProcData},
 };
 
 //------------------------------------------------------------------
@@ -418,7 +420,7 @@ static void systemDelete(DEBUG_WATANABE_WORK* dw)
 //============================================================================================
 #define ITEM_PX (8*2)
 #define ITEM_PY (8*2)
-#define ITEM_SX (16)
+#define ITEM_SX (256-ITEM_PX*2)
 #define ITEM_SY (16)
 
 //------------------------------------------------------------------

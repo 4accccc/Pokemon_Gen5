@@ -35,17 +35,6 @@
 //============================================================================================
 //------------------------------------------------------------------
 /**
- * @brief		‚a‚fÝ’è’è‹`
- */
-//------------------------------------------------------------------
-#define TEXT_FRAME_M	(GFL_BG_FRAME3_M)
-#define TEXT_FRAME_S	(GFL_BG_FRAME3_S)
-#define STATUS_FRAME	(GFL_BG_FRAME0_S)
-#define TEXT_PLTTID		(15)
-#define PLTT_SIZ			(16*2)
-
-//------------------------------------------------------------------
-/**
  * @brief		\‘¢‘Ì’è‹`
  */
 //------------------------------------------------------------------
@@ -265,7 +254,7 @@ DWS_SYS* DWS_SYS_Setup(HEAPID heapID)
 	dws->gflCamAdjust = GFL_CAMADJUST_Create(&camAdjustData, dws->heapID);
 	dws->cameraAngleV = 0;
 	dws->cameraAngleH = 0;
-	dws->cameraLength = 8*FX32_ONE; 
+	dws->cameraLength = 16*FX32_ONE; 
   dws->cameraFovy   = defaultCameraFovy/2 *PERSPWAY_COEFFICIENT;
   dws->cameraFar    = defaultCameraFar;
 	GFL_CAMADJUST_SetCameraParam(	dws->gflCamAdjust, 

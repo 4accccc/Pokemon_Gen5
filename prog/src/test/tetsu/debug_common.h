@@ -8,6 +8,17 @@
 
 #include "msg/msg_d_tetsu.h"
 
+//------------------------------------------------------------------
+/**
+ * @brief		ÇaÇfê›íËíËã`
+ */
+//------------------------------------------------------------------
+#define TEXT_FRAME_M	(GFL_BG_FRAME3_M)
+#define TEXT_FRAME_S	(GFL_BG_FRAME3_S)
+#define STATUS_FRAME	(GFL_BG_FRAME0_S)
+#define TEXT_PLTTID		(15)
+#define PLTT_SIZ			(16*2)
+
 typedef struct _DWS_SYS DWS_SYS;
 
 extern DWS_SYS*	DWS_SYS_Setup(HEAPID heapID);

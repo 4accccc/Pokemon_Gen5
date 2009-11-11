@@ -522,6 +522,7 @@ SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample/g3d_mapper.c \
         test/tetsu/sample3.c \
         test/tetsu/sample4.c \
         test/tetsu/sample5.c \
+        test/tetsu/sample6.c \
         test/tetsu/debug_watanabe.c
 
 #UI”Ä—pƒ‚ƒWƒ…[ƒ‹
