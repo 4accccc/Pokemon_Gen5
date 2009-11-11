@@ -63,6 +63,11 @@ G3DCVTR	= g3dcvtr.exe
 #G3DCVTR	= $(NITROSYSTEM_ROOT)/tools/win/bin/g3dcvtr.exe
 TEX_MAG = $(PROJECT_ROOT)tools/imdtools/tex_mag/tex_mag.exe
 
+#----------------------------------------------------------------------------
+#	アーカイブのみ行う場合の依存関係
+#----------------------------------------------------------------------------
+NSBTXFILES = $(wildcard $(NSBTXFILESDIR)/*.nsbtx)
+
 .PHONY:	do-build clean
 #----------------------------------------------------------------------------
 #
@@ -90,14 +95,24 @@ NNSARC_LIST_FILE	= ../$(subst $(DQ),,$(NNSARC_TEXLIST_FILENAME))
 $(NARCNAME): $(NNSARC_DEPEND_FILES)
 	nnsarc -i -c -l -n $(NARCNAME) -S $(NNSARC_LIST_FILE)  > arc_result.txt
 
+else	#その他の人はアーカイブのみ
+
+# nnsarcで固めるデータ指定リスト
+NNSARC_LIST_FILE	= ../$(subst $(DQ),,$(NNSARC_TEXLIST_FILENAME))
+
+#アーカイブ
+$(NARCNAME): $(NNSARC_LIST_FILE) $(NSBTXFILES)
+	nnsarc -i -c -l -n $(NARCNAME) -S $(NNSARC_LIST_FILE)  > arc_result.txt
+
 endif
 
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
 clean:
 	@-rm $(TARGETDIR)/$(NARCNAME)
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ生成
 	@-rm $(NARCNAME) $(NAIXNAME)
+	@-rm arc_result.txt
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ生成
 	@-rm $(CLEANFILES)
 endif
 
