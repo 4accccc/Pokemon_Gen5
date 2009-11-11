@@ -84,7 +84,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 ifeq	($(CONVERTUSER),true)	
 
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(XLSFILE)
+$(targetname).narc: $(XLSFILE) $(RAILDATA_NAIX) $(SCENEDATA_NAIX)
 	$(CSV_CVTR) -o $(XLS_CSV_FILE) -p 1 $(XLSFILE)
 	perl conv.pl $(XLS_CSV_FILE) $(RAILDATA_NAIX) $(SCENEDATA_NAIX)
 	
