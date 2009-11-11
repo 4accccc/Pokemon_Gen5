@@ -1324,12 +1324,14 @@ static void setupMusicarAll(DEB_MENU_MUS_WORK * work)
 #define ASCII_9 (0x39)
 #define ASCII_A (0x41)
 #define ASCII_Z (0x5a)
+#define ASCII_UL (0x5f)
 
 //”¼Šp
 #define UTF16H_0 (0x0030)
 #define UTF16H_9 (0x0039)
 #define UTF16H_A (0x0041)
 #define UTF16H_Z (0x005a)
+#define UTF16H_UL (0x005f)
 
 //‘SŠp
 #define UTF16_0 (0xff10)
@@ -1350,6 +1352,10 @@ static u16 DEBUG_ASCIICODE_UTF16( u8 code )
 		return( GFL_STR_GetEOMCode() );
 	}
 	
+  if( code == ASCII_UL ){
+    return( UTF16H_UL );
+  }
+  
 	if( code >= ASCII_0 && code <= ASCII_9 ){
 		code -= ASCII_0;
 		return( UTF16H_0 + code );

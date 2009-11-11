@@ -46,6 +46,18 @@ typedef struct
   COMMAN_ANMCTRL_WORK anmcnt_work;
 }DRAW_BLACT_WORK;
 
+//--------------------------------------------------------------
+///  DRAW_BLACT_POKE_WORK
+//--------------------------------------------------------------
+typedef struct
+{
+  u16 actID;
+  u8 set_anm_dir;
+  u8 offs_frame;
+  u8 dmy;
+  fx32 offs_y;
+}DRAW_BLACT_POKE_WORK;
+
 //======================================================================
 //  proto
 //======================================================================
@@ -152,7 +164,7 @@ static void DrawHero_Init( MMDL *mmdl )
   
   code = MMDL_GetOBJCode( mmdl );
   comManAnmCtrl_Init( &work->anmcnt_work );
-
+  
   if( MMDL_BLACTCONT_AddActor(mmdl,code,&work->actID) == TRUE ){
     MMDL_CallDrawProc( mmdl );
   }
@@ -762,7 +774,7 @@ static void DrawBlAct_DrawOnePatternLoop( MMDL *mmdl )
   actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
   
   blact_UpdatePauseVanish( mmdl, actSys, work->actID, FALSE );
-
+  
   MMDL_GetDrawVectorPos( mmdl, &pos );
   blact_SetCommonOffsPos( &pos );
   GFL_BBD_SetObjectTrans(
@@ -780,6 +792,181 @@ const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActOnePatternLoop =
   DrawBlAct_Delete,  //本当は退避
   DrawBlAct_Init,    //本当は復帰
   DrawBlAct_GetBlActID,
+};
+
+//======================================================================
+//  ビルボード　連れ歩きポケモンアニメ
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　連れ歩きポケモン　初期化
+ * @param  mmdl  MMDL
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void DrawTsurePoke_Init( MMDL *mmdl )
+{
+  u16 code;
+  DRAW_BLACT_POKE_WORK *work;
+  
+  work = MMDL_InitDrawProcWork( mmdl, sizeof(DRAW_BLACT_WORK) );
+  work->set_anm_dir = DIR_NOT;
+  
+  code = MMDL_GetOBJCode( mmdl );
+  
+  if( MMDL_BLACTCONT_AddActor(mmdl,code,&work->actID) == TRUE ){
+    MMDL_CallDrawProc( mmdl );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　連れ歩きポケモン　削除
+ * @param  mmdl  MMDL
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void DrawTsurePoke_Delete( MMDL *mmdl )
+{
+  DRAW_BLACT_POKE_WORK *work;
+  work = MMDL_GetDrawProcWork( mmdl );
+  MMDL_BLACTCONT_DeleteActor( mmdl, work->actID );
+}
+
+//--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　連れ歩きポケモン　描画
+ * @param  mmdl  MMDL
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void DrawTsurePoke_Draw( MMDL *mmdl )
+{
+  DRAW_BLACT_POKE_WORK *work;
+  
+  work = MMDL_GetDrawProcWork( mmdl );
+  
+  if( work->actID != MMDL_BLACTID_NULL ){
+    VecFx32 pos;
+    u16 dir,init_flag;
+    GFL_BBDACT_SYS *actSys;
+  
+    init_flag = FALSE;
+
+    actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+    dir = MMDL_GetDirDisp( mmdl );
+  
+    if( dir != work->set_anm_dir ){
+      init_flag = TRUE;
+      work->set_anm_dir = dir;
+      GFL_BBDACT_SetAnimeIdx( actSys, work->actID, work->set_anm_dir );
+    }
+    
+    MMDL_GetDrawVectorPos( mmdl, &pos );
+    
+    blact_SetCommonOffsPos( &pos );
+    GFL_BBD_SetObjectTrans(
+      GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
+    
+    blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　連れ歩きポケモン　縦揺れ付き　描画
+ * @param  mmdl  MMDL
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void DrawTsurePokeFly_Draw( MMDL *mmdl )
+{
+  DRAW_BLACT_POKE_WORK *work;
+  
+  work = MMDL_GetDrawProcWork( mmdl );
+  
+  if( work->actID != MMDL_BLACTID_NULL ){
+    VecFx32 pos;
+    u16 dir,init_flag;
+    GFL_BBDACT_SYS *actSys;
+  
+    init_flag = FALSE;
+
+    actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+    dir = MMDL_GetDirDisp( mmdl );
+  
+    if( dir != work->set_anm_dir ){
+      init_flag = TRUE;
+      work->set_anm_dir = dir;
+      work->offs_frame = 0;
+      GFL_BBDACT_SetAnimeIdx( actSys, work->actID, work->set_anm_dir );
+    }
+    
+    if( MMDL_CheckDrawPause(mmdl) == FALSE ){ //to GS
+      work->offs_frame++;
+      work->offs_frame %= 20;
+      
+      if( work->offs_frame >= 15 || //5-9 or 15-19
+          (work->offs_frame >= 5 && work->offs_frame < 10) ){
+        work->offs_y -= FX32_ONE * 2;
+      }else{
+        work->offs_y += FX32_ONE * 2;
+      }
+    }
+    
+    pos.x = 0;
+    pos.y = work->offs_y;
+    pos.z = 0;
+	  MMDL_SetVectorDrawOffsetPos( mmdl, &pos );
+    
+    MMDL_GetDrawVectorPos( mmdl, &pos );
+    blact_SetCommonOffsPos( &pos );
+    GFL_BBD_SetObjectTrans(
+      GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
+    
+    MMDL_GetDrawVectorPos( mmdl, &pos );
+    blact_SetCommonOffsPos( &pos );
+    blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　連れ歩きポケモン
+ * ビルボードアクターIDを返す。
+ * @param  mmdl  MMDL
+ * @param  state  特に無し
+ * @retval  u32  GFL_BBDACT_ACTUNIT_ID
+ */
+//--------------------------------------------------------------
+static u32 DrawTsurePoke_GetBlActID( MMDL *mmdl, u32 state )
+{
+  DRAW_BLACT_POKE_WORK *work;
+  work = MMDL_GetDrawProcWork( mmdl );
+  return( work->actID );
+}
+
+//--------------------------------------------------------------
+// 描画処理　ビルボード　連れ歩きポケモン　まとめ
+//--------------------------------------------------------------
+const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_TsurePoke =
+{
+  DrawTsurePoke_Init,
+  DrawTsurePoke_Draw,
+  DrawTsurePoke_Delete,
+  DrawTsurePoke_Delete,  //退避
+  DrawTsurePoke_Init,    //本当は復帰
+  DrawTsurePoke_GetBlActID,
+};
+
+const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_TsurePokeFly =
+{
+  DrawTsurePoke_Init,
+  DrawTsurePokeFly_Draw,
+  DrawTsurePoke_Delete,
+  DrawTsurePoke_Delete,  //退避
+  DrawTsurePoke_Init,    //本当は復帰
+  DrawTsurePoke_GetBlActID,
 };
 
 //======================================================================

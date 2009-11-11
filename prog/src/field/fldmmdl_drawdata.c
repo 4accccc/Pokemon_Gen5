@@ -31,6 +31,8 @@ const MMDL_DRAW_PROC_LIST * const
   &DATA_MMDL_DRAWPROCLIST_PCAzukeHero, //自機PC預け
   &DATA_MMDL_DRAWPROCLIST_BlActOnePatternLoop, //ビルボード1パターンアニメ
   &DATA_MMDL_DRAWPROCLIST_BlActPCWoman, //PCお姉さん
+  &DATA_MMDL_DRAWPROCLIST_TsurePoke, //連れ歩きポケモン
+  &DATA_MMDL_DRAWPROCLIST_TsurePokeFly, //連れ歩きポケモン 縦揺れ付き
 };
 
 //======================================================================
@@ -1539,6 +1541,88 @@ static const GFL_BBDACT_ANM * const DATA_BlActSaveHero[DRAW_STA_SAVEHERO_MAX] =
 };
 
 //======================================================================
+//  ビルボードアニメデータ　連れ歩きポケモン　反転使用
+//======================================================================
+enum
+{
+  TEXIDX_TPOKE_FLIP_U0,
+  TEXIDX_TPOKE_FLIP_U1,
+  TEXIDX_TPOKE_FLIP_D0,
+  TEXIDX_TPOKE_FLIP_D1,
+  TEXIDX_TPOKE_FLIP_L0,
+  TEXIDX_TPOKE_FLIP_L1,
+};
+
+static const GFL_BBDACT_ANM DATA_BlActTPokeFlip_U[] = {
+  {TEXIDX_TPOKE_FLIP_U0,ANMFLIP_OFF,ANMFLIP_OFF,10},
+  {TEXIDX_TPOKE_FLIP_U1,ANMFLIP_OFF,ANMFLIP_OFF,10},
+  {GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActTPokeFlip_D[] = {
+  {TEXIDX_TPOKE_FLIP_D0,ANMFLIP_OFF,ANMFLIP_OFF,10},
+  {TEXIDX_TPOKE_FLIP_D1,ANMFLIP_OFF,ANMFLIP_OFF,10},
+  {GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActTPokeFlip_L[] = {
+  {TEXIDX_TPOKE_FLIP_L0,ANMFLIP_OFF,ANMFLIP_OFF,10},
+  {TEXIDX_TPOKE_FLIP_L1,ANMFLIP_OFF,ANMFLIP_OFF,10},
+  {GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActTPokeFlip_R[] = {
+  {TEXIDX_TPOKE_FLIP_L0,ANMFLIP_ON,ANMFLIP_OFF,10},
+  {TEXIDX_TPOKE_FLIP_L1,ANMFLIP_ON,ANMFLIP_OFF,10},
+  {GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM * DATA_BlActTPokeFlipTbl[4] = {
+  DATA_BlActTPokeFlip_U,
+  DATA_BlActTPokeFlip_D,
+  DATA_BlActTPokeFlip_L,
+  DATA_BlActTPokeFlip_R,
+};
+
+//======================================================================
+//  ビルボードアニメデータ　連れ歩きポケモン　反転未使用
+//======================================================================
+enum
+{
+  TEXIDX_TPOKE_NFLIP_U0,
+  TEXIDX_TPOKE_NFLIP_U1,
+  TEXIDX_TPOKE_NFLIP_D0,
+  TEXIDX_TPOKE_NFLIP_D1,
+  TEXIDX_TPOKE_NFLIP_L0,
+  TEXIDX_TPOKE_NFLIP_L1,
+  TEXIDX_TPOKE_NFLIP_R0,
+  TEXIDX_TPOKE_NFLIP_R1,
+};
+
+static const GFL_BBDACT_ANM DATA_BlActTPokeNonFlip_U[] = {
+  {TEXIDX_TPOKE_NFLIP_U0,ANMFLIP_OFF,ANMFLIP_OFF,10},
+  {TEXIDX_TPOKE_NFLIP_U1,ANMFLIP_OFF,ANMFLIP_OFF,10},
+  {GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActTPokeNonFlip_D[] = {
+  {TEXIDX_TPOKE_NFLIP_D0,ANMFLIP_OFF,ANMFLIP_OFF,10},
+  {TEXIDX_TPOKE_NFLIP_D1,ANMFLIP_OFF,ANMFLIP_OFF,10},
+  {GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActTPokeNonFlip_L[] = {
+  {TEXIDX_TPOKE_NFLIP_L0,ANMFLIP_OFF,ANMFLIP_OFF,10},
+  {TEXIDX_TPOKE_NFLIP_L1,ANMFLIP_OFF,ANMFLIP_OFF,10},
+  {GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActTPokeNonFlip_R[] = {
+  {TEXIDX_TPOKE_NFLIP_R0,ANMFLIP_OFF,ANMFLIP_OFF,10},
+  {TEXIDX_TPOKE_NFLIP_R1,ANMFLIP_OFF,ANMFLIP_OFF,10},
+  {GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM * DATA_BlActTPokeNonFlipTbl[4] = {
+  DATA_BlActTPokeNonFlip_U,  //DRAW_STA_STOP
+  DATA_BlActTPokeNonFlip_D,
+  DATA_BlActTPokeNonFlip_L,
+  DATA_BlActTPokeNonFlip_R,
+};
+
+//======================================================================
 //  ビルボードアクター　アニメーション　リストテーブル
 //======================================================================
 const MMDL_BBDACT_ANMTBL
@@ -1568,8 +1652,12 @@ const MMDL_BBDACT_ANMTBL
   {DATA_BlActPCAzuke,DRAW_STA_PCAZUKE_MAX},
   //MMDL_BLACT_ANMTBLNO_SAVE
   {DATA_BlActSaveHero,DRAW_STA_SAVEHERO_MAX},
-  //MMDL_BLACT?_ANMTBLNO_PCWOMAN
+  //MMDL_BLACT_ANMTBLNO_PCWOMAN
   {DATA_BlActAnmPcwomanTbl,DRAW_STA_PCWOMAN_MAX},
+  //MMDL_BLACT_ANMTBLNO_POKE_FLIP
+  {DATA_BlActTPokeFlipTbl,4},
+  //MMDL_BLACT_ANMTBLNO_POKE_NONFLIP
+  {DATA_BlActTPokeNonFlipTbl,4},
 };
 
 //======================================================================

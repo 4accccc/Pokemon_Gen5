@@ -4561,8 +4561,6 @@ static u16 WorkOBJCode_GetOBJCode( void *fsys, int code )
 //--------------------------------------------------------------
 static u16 OBJCode_GetDataNumber( u16 code )
 {
-  GF_ASSERT( code < OBJCODETOTAL );
-  
   if( code < OBJCODEEND_BBD ){
     return( code );
   }
@@ -4573,7 +4571,7 @@ static u16 OBJCode_GetDataNumber( u16 code )
   }
   
   GF_ASSERT( 0 );
-  return( 0 );
+  return( BOY1 ); //エラー回避用として無難なコードを返す
 }
 
 //--------------------------------------------------------------
