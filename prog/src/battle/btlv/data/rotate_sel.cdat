@@ -1,0 +1,112 @@
+
+//============================================================================================
+/**
+ * @file	rotate_sel.cdat
+ * @brief	ローテーション選択用タッチパネル＆キー操作データテーブル
+ * @author	soga
+ * @date	2009.11.10
+ */
+//============================================================================================
+
+static const GFL_UI_TP_HITTBL RotateTouchData[] = {
+  //UP      DOWN    LEFT    RIGHT
+  { 0x12*8, 0x18*8, 0x00*8, 0x0a*8},  //左周り
+  { 0x12*8, 0x18*8, 0x16*8, 255},     //右周り
+  { 0x13*8, 0x18*8, 0x0b*8, 0x15*8},  //けってい
+  { GFL_UI_TP_HIT_END, 0, 0, 0 }
+};
+
+static const BTLV_INPUT_KEYTBL  RotateKeyL[] = {  
+  //  LU  RU  LD  RD  LD2 RD2   U                   D                   L                   R   A   B
+  { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  1,  0,  BTLV_INPUT_NOMOVE },  //0
+  //  LU  RU  LD  RD  LD2 RD2   U                   D                   L   R                   A   B
+  { { 2,  2,  2,  2,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  BTLV_INPUT_NOMOVE,  2,  BTLV_INPUT_NOMOVE },  //1
+};
+
+static const BTLV_INPUT_KEYTBL  RotateKeyR[] = {  
+  //  LU  RU  LD  RD  LD2 RD2   U                   D                   L                   R   A   B
+  { { 1,  1,  1,  1,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  1,  1,  BTLV_INPUT_NOMOVE },  //0
+  //  LU  RU  LD  RD  LD2 RD2   U                   D                   L   R                   A   B
+  { { 2,  2,  2,  2,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  BTLV_INPUT_NOMOVE,  2,  BTLV_INPUT_NOMOVE },  //1
+};
+
+static const BTLV_INPUT_KEYTBL  RotateKeyC[] = {  
+  //  LU  RU  LD  RD  LD2 RD2   U                   D                   L                   R   A   B
+  { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  1,  0,  BTLV_INPUT_NOMOVE },  //0
+  //  LU  RU  LD  RD  LD2 RD2   U                   D                   L   R                   A   B
+  { { 1,  1,  1,  1,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE },  //1
+};
+
+static const BTLV_INPUT_KEYTBL  RotateKeyC_All[] = {  
+  //  LU  RU  LD  RD  LD2 RD2   U                   D                   L                   R   A   B
+  { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  1,  0,  BTLV_INPUT_NOMOVE },  //0
+  //  LU  RU  LD  RD  LD2 RD2   U                   D                   L   R   A   B
+  { { 2,  2,  2,  2,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  2,  2,  BTLV_INPUT_NOMOVE },  //1
+  //  LU  RU  LD  RD  LD2 RD2   U                   D                   L   R                   A   B
+  { { 1,  1,  1,  1,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE },  //2
+};
+
+static const BTLV_INPUT_KEYTBL  *RotateKeyData[ 4 ] = { 
+  RotateKeyL,
+  RotateKeyR,
+  RotateKeyC,
+  RotateKeyC_All,
+};
+
+static  const u8  button_exist_table[][ 3 ] =
+{ 
+  //L       R       C
+  { TRUE,   FALSE,  TRUE  },    //SCR_L
+  { FALSE,  TRUE,   TRUE  },    //SCR_R
+  { TRUE,   TRUE,   FALSE },    //SCR_C
+  { TRUE,   TRUE,   TRUE  },    //SCR_C_ALL
+};
+
+enum
+{ 
+  ROTATE_SCR_L = 0,
+  ROTATE_SCR_R,
+  ROTATE_SCR_C,
+  ROTATE_SCR_C_ALL,
+  ROTATE_SCR_NONE,
+
+  ROTATE_SCROLL_X0 = 0,
+  ROTATE_SCROLL_X1 = 256,
+  ROTATE_SCROLL_X2 = 0,
+  ROTATE_SCROLL_X3 = 256,
+
+  ROTATE_SCROLL_Y0 = 0x1c0,
+  ROTATE_SCROLL_Y1 = 0x1c0,
+  ROTATE_SCROLL_Y2 = 0x0c0,
+  ROTATE_SCROLL_Y3 = 0x0c0,
+};
+
+typedef struct
+{ 
+  u8  init_scr;   //初期スクリーン
+  u8  left_scr;   //左周り時のスクリーン
+  u8  right_scr;  //右周り時のスクリーン
+}BTLV_INPUT_ROTATE_DATA;
+
+static  const BTLV_INPUT_ROTATE_DATA  bird[] =
+{ 
+  { ROTATE_SCR_C_ALL, ROTATE_SCR_R,     ROTATE_SCR_L },
+  { ROTATE_SCR_C,     ROTATE_SCR_R,     ROTATE_SCR_L },
+  { ROTATE_SCR_L,     ROTATE_SCR_R,     ROTATE_SCR_NONE },
+  { ROTATE_SCR_R,     ROTATE_SCR_NONE,  ROTATE_SCR_L },
+};
+
+static  const rotate_scroll_table[][ 2 ] =
+{ 
+  { ROTATE_SCROLL_X0, ROTATE_SCROLL_Y0 },
+  { ROTATE_SCROLL_X1, ROTATE_SCROLL_Y1 },
+  { ROTATE_SCROLL_X2, ROTATE_SCROLL_Y2 },
+  { ROTATE_SCROLL_X3, ROTATE_SCROLL_Y3 },
+};
+
+/*
+  BTL_ROTATEDIR_NONE = 0,
+  BTL_ROTATEDIR_STAY,
+  BTL_ROTATEDIR_R,
+  BTL_ROTATEDIR_L,
+*/
