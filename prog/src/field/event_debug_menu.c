@@ -1872,7 +1872,7 @@ static const FLDMENUFUNC_HEADER DATA_DebugMenuList_MMdlList =
 
 static const DEBUG_MENU_INITIALIZER DebugMMdlListData = {
   NARC_message_d_field_dat,
-  OBJCODEMAX,
+  OBJCODETOTAL,
   NULL,
   &DATA_DebugMenuList_MMdlList,
   1, 1, 11, 16,
@@ -2063,22 +2063,27 @@ static void DEBUG_SetMenuWorkMMdlList(
 		GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID )
 {
 	u16 *str;
-	int id,max = OBJCODEMAX;
+	int id,max;
 	STRBUF *strBuf = GFL_STR_CreateBuffer( DEBUG_OBJCODE_STR_LENGTH, heapID );
 	
-	for( id = 0; id < max; id++ ){
+	for( id = OBJCODESTART_BBD; id < OBJCODEEND_BBD; id++ ){
 		GFL_STR_ClearBuffer( strBuf );
 		str = DEBUG_GetOBJCodeStrBuf( heapID, id );
 		GFL_STR_SetStringCode( strBuf, str );
 		GFL_HEAP_FreeMemory( str );
 		FLDMENUFUNC_AddStringListData( list, strBuf, id, heapID );
 	}
-	
+  
+  for( id = OBJCODESTART_TPOKE; id < OBJCODEEND_TPOKE; id++ ){
+		GFL_STR_ClearBuffer( strBuf );
+		str = DEBUG_GetOBJCodeStrBuf( heapID, id );
+		GFL_STR_SetStringCode( strBuf, str );
+		GFL_HEAP_FreeMemory( str );
+		FLDMENUFUNC_AddStringListData( list, strBuf, id, heapID );
+	}
+  
 	GFL_HEAP_FreeMemory( strBuf );
 }
-
-
-
 
 //======================================================================
 //	デバッグメニュー　ライト操作
