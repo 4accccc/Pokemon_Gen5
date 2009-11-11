@@ -16,15 +16,6 @@
 
 #include  "print/gf_font.h"
 
-enum {
-  NARC_font_large_nftr = 0,
-  NARC_font_large_gftr = 1,
-  NARC_font_small_nftr = 2,
-  NARC_font_small_gftr = 3,
-  NARC_font_default_nclr = 4,
-  NARC_font_talkwin_nclr = 5
-};
-
 
 typedef u8 (*pWidthGetFunc)( const GFL_FONT*, u32 );
 typedef void (*pGetBitmapFunc)(const GFL_FONT*, u32, void*, GFL_FONT_SIZE* );
@@ -188,12 +179,6 @@ GFL_FONT* GFL_FONT_Create( u32 arcID, u32 datID, GFL_FONT_LOADTYPE loadType, BOO
   GFL_FONT* wk = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_FONT) );
   if( wk )
   {
-    if( datID == NARC_font_large_nftr ){
-      datID = NARC_font_large_gftr;
-    }
-    if( datID == NARC_font_small_nftr ){
-      datID = NARC_font_small_gftr;
-    }
     wk->fileHandle = GFL_ARC_OpenDataHandle( arcID, heapID );
     load_font_header( wk, datID, fixedFontFlag, heapID );
     setup_font_datas( wk, loadType, heapID );

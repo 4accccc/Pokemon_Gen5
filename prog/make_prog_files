@@ -561,22 +561,20 @@ SRCS_OVERLAY_ARIIZUMI_DEBUG = test/ariizumi/debug_ariizumi.c
 # 田谷デバッグ
 #===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_WIFI
 SRCS_OVERLAY_TAYA_DEBUG   = test/taya/d_taya.c
 
 # 戦闘デバッグ
 #===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_WIFI
 SRCS_OVERLAY_DEBUG_FIGHT   = test/taya/debug_fight.c
 
 
 #デバッグポケモン作成
 #===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_WIFI
-#===> SRCS_OVERLAY_TAYA_DEBUG
+#===> SRCS_OVERLAY_DEBUG_FIGHT
 SRCS_OVERLAY_DEBUG_MAKEPOKE = debug/debug_makepoke.c
+
 
 # 曽我部デバッグ
 #===> SRCS_OVERLAY_DEV_IRC
@@ -654,11 +652,6 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/handler/hand_side.c \
 			battle/handler/hand_field.c \
 			battle/handler/hand_pos.c \
-			battle/handler/tokusei/hand_tok_ikaku.c \
-			battle/handler/tokusei/hand_tok_seisinryoku.c \
-			battle/handler/tokusei/hand_tok_fukutsuno.c \
-			battle/handler/tokusei/hand_tok_atuisibou.c \
-			battle/handler/tokusei/hand_tok_tikaramoti.c \
 			battle/btlv/btlv_core.c \
 			battle/btlv/btlv_scu.c \
 			battle/btlv/btlv_scd.c \
@@ -676,7 +669,7 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btlv/btlv_timer.c \
 			battle/btlv/btlv_bg.c \
 			battle/btlv/wazatype_panel.c \
-            battle/app/b_app_tool.c \
+			battle/app/b_app_tool.c \
 			battle/app/b_bag_bmp.c \
 			battle/app/b_bag_item.c \
 			battle/app/b_bag_anm.c \
@@ -685,9 +678,9 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/app/b_bag_ui.c \
 			battle/app/b_plist_anm.c \
 			battle/app/b_plist_bmp.c \
-       		battle/app/b_plist_obj.c \
-    		battle/app/b_plist_main.c \
-    		battle/app/b_plist_ui.c
+			battle/app/b_plist_obj.c \
+			battle/app/b_plist_main.c \
+			battle/app/b_plist_ui.c
 #			battle/btlv/finger_cursor.c \
 
 # WIFICLUB
