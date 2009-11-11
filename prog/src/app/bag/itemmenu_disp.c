@@ -1,9 +1,9 @@
 //============================================================================================
 /**
- * @file	  itemmenu_disp.c
- * @brief	  アイテムメニューの描画周り
- * @author	k.ohno
- * @date	  2009.07.19
+ * @file    itemmenu_disp.c
+ * @brief   アイテムメニューの描画周り
+ * @author  k.ohno
+ * @date    2009.07.19
  */
 //============================================================================================
 #include <gflib.h>
@@ -27,7 +27,7 @@
 
 #include "system/bmp_winframe.h"
 #include "system/wipe.h"
-#include "system/main.h"			//GFL_HEAPID_APP参照
+#include "system/main.h"      //GFL_HEAPID_APP参照
 
 #include "msg/msg_d_field.h"
 #include "msg/msg_bag.h"
@@ -36,7 +36,7 @@
 #include "print/wordset.h"
 
 #include "field/fieldmap.h"
-#include "font/font.naix" //NARC_font_large_nftr
+#include "font/font.naix" //NARC_font_large_gftr
 
 #include "waza_tool/waza_tool.h"
 #include "waza_tool/wazadata.h"
@@ -60,7 +60,7 @@
 //------------------------------------------------------------------
 
 enum
-{ 
+{
   // パレットオフセット
   PALOFS_NUM_FRAME = 3,   ///< 数値入力フレーム
 };
@@ -202,7 +202,7 @@ void _createSubBg(void)
 
     GFL_BG_SetVisible( frame, VISIBLE_OFF );
     GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
-    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_FillScreen( frame, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( frame );
   }
   {
@@ -219,11 +219,11 @@ void _createSubBg(void)
   }
 }
 
-#define FIELD_CLSYS_RESOUCE_MAX		(100)
+#define FIELD_CLSYS_RESOUCE_MAX   (100)
 
 
 //--------------------------------------------------------------
-///	セルアクター　初期化データ
+/// セルアクター　初期化データ
 //--------------------------------------------------------------
 static const GFL_CLSYS_INIT fldmapdata_CLSYS_Init =
 {
@@ -240,16 +240,16 @@ static const GFL_CLSYS_INIT fldmapdata_CLSYS_Init =
 };
 
 static GFL_DISP_VRAM _defVBTbl = {
-  GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
-  GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-  GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
-  GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
-  GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
-  GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-  GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
-  GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-  GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
-  GX_VRAM_TEXPLTT_NONE,			// テクスチャパレットスロット
+  GX_VRAM_BG_128_A,       // メイン2DエンジンのBG
+  GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
+  GX_VRAM_SUB_BG_128_C,     // サブ2DエンジンのBG
+  GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
+  GX_VRAM_OBJ_128_B,        // メイン2DエンジンのOBJ
+  GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
+  GX_VRAM_SUB_OBJ_16_I,     // サブ2DエンジンのOBJ
+  GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
+  GX_VRAM_TEX_NONE,       // テクスチャイメージスロット
+  GX_VRAM_TEXPLTT_NONE,     // テクスチャパレットスロット
   GX_OBJVRAMMODE_CHAR_1D_128K,
   GX_OBJVRAMMODE_CHAR_1D_32K,
 };
@@ -271,12 +271,12 @@ void ITEMDISP_SetVisible(void)
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  下画面BGリソース読み込み（男女でリソースきりわけ）
+ *  @brief  下画面BGリソース読み込み（男女でリソースきりわけ）
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork
- *	@param	p_handle 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
+ *  @param  p_handle
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _load_basebg_d( FIELD_ITEMMENU_WORK* pWork, ARCHANDLE* p_handle )
@@ -285,7 +285,7 @@ static void _load_basebg_d( FIELD_ITEMMENU_WORK* pWork, ARCHANDLE* p_handle )
   u32 ncgr;
   u32 nscr;
   u32 sex = MyStatus_GetMySex( pWork->mystatus );
-  
+
   if( sex == PTL_SEX_MALE )
   {
     // 男
@@ -315,12 +315,12 @@ static void _load_basebg_d( FIELD_ITEMMENU_WORK* pWork, ARCHANDLE* p_handle )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  下画面アイコンリソース読み込み（男女でリソースきりわけ）
+ *  @brief  下画面アイコンリソース読み込み（男女でリソースきりわけ）
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork
- *	@param	p_handle 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
+ *  @param  p_handle
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _load_parts( FIELD_ITEMMENU_WORK* pWork, ARCHANDLE* p_handle )
@@ -330,7 +330,7 @@ static void _load_parts( FIELD_ITEMMENU_WORK* pWork, ARCHANDLE* p_handle )
   u32 parts_cer;
   u32 parts_anm;
   u32 sex = MyStatus_GetMySex( pWork->mystatus );
-  
+
   if( sex == PTL_SEX_MALE )
   {
     // 男
@@ -359,11 +359,11 @@ static void _load_parts( FIELD_ITEMMENU_WORK* pWork, ARCHANDLE* p_handle )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  グラフィック初期化
+ *  @brief  グラフィック初期化
  *
- *	@param	pWork
+ *  @param  pWork
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
@@ -374,7 +374,7 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
   GFL_BMPWIN_Init(pWork->heapID);
   GFL_FONTSYS_Init();
   GFL_DISP_SetBank( &_defVBTbl );
-  GFL_CLACT_SYS_Create(	&fldmapdata_CLSYS_Init, &_defVBTbl, pWork->heapID );
+  GFL_CLACT_SYS_Create( &fldmapdata_CLSYS_Init, &_defVBTbl, pWork->heapID );
 
   {
     GFL_BG_SYS_HEADER BGsys_data = {
@@ -383,7 +383,7 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     GFL_BG_SetBGMode( &BGsys_data );
   }
 
-  GFL_DISP_GX_SetVisibleControlDirect(0);		//全BG&OBJの表示OFF
+  GFL_DISP_GX_SetVisibleControlDirect(0);   //全BG&OBJの表示OFF
   GFL_DISP_GXS_SetVisibleControlDirect(0);
 
   _createSubBg();
@@ -399,7 +399,7 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
 
     // 上画面パレット一括転送
       GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_bg_u_NCLR, PALTYPE_SUB_BG, 0, 0, pWork->heapID );
-    
+
     // 上画面パレット 男の場合一本目を上書き
     {
       u32 sex = MyStatus_GetMySex( pWork->mystatus );
@@ -421,7 +421,7 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
 
     pWork->subbg2 = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_bag_bag_win01_02_u_NCGR,
                                                                  GFL_BG_FRAME1_S, 0, 0, pWork->heapID);
-    
+
     GFL_ARCHDL_UTIL_TransVramScreenCharOfs( p_handle, NARC_bag_bag_win01_u_NSCR,
                                             GFL_BG_FRAME1_S, 0,
                                             GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg2), 0, 0, pWork->heapID);
@@ -433,11 +433,11 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     pWork->numFrameBg =
       GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(
         p_handle, NARC_bag_bag_win05_d_NCGR, GFL_BG_FRAME3_M, 0, 0, pWork->heapID);
-        
+
     //数字フレーム用パレット
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_win05_d_NCLR,
                                       PALTYPE_MAIN_BG, PALOFS_NUM_FRAME*0x20, 1*0x20,  pWork->heapID);
-    
+
     GFL_ARC_CloseDataHandle(p_handle);
   }
 
@@ -532,18 +532,18 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind , FALSE );
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType , FALSE );
   }
-  
+
   // ソートボタン リソースロード
   {
     ARCHANDLE *archandle = GFL_ARC_OpenDataHandle( ARCID_BAG , pWork->heapID );
-    
+
     pWork->cellRes[_PLT_SORT] = GFL_CLGRP_PLTT_RegisterEx(
       archandle , NARC_bag_bag_win06_d_NCLR , CLSYS_DRAW_MAIN , _PAL_SORT_CELL*32 , 0 , _PAL_SORT_CELL_NUM , pWork->heapID  );
     pWork->cellRes[_NCG_SORT] = GFL_CLGRP_CGR_Register(
       archandle , NARC_bag_bag_win06_d_NCGR , FALSE , CLSYS_DRAW_MAIN , pWork->heapID);
     pWork->cellRes[_ANM_SORT] = GFL_CLGRP_CELLANIM_Register(
       archandle, NARC_bag_bag_win06_d_NCER, NARC_bag_bag_win06_d_NANR , pWork->heapID);
-  
+
     GFL_ARC_CloseDataHandle(archandle);
   }
 
@@ -566,7 +566,7 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
 
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkSort, TRUE );
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkSort, TRUE );
-    
+
 #if 0
     // 売る画面のときは非表示
     if( pWork->mode == BAG_MODE_SELL )
@@ -580,11 +580,11 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  グラフィック消去
+ *  @brief  グラフィック消去
  *
- *	@param	pWork
+ *  @param  pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 void ITEMDISP_graphicDelete(FIELD_ITEMMENU_WORK* pWork)
@@ -693,7 +693,7 @@ void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
   GFL_BMPWIN_Delete(pWork->winSellGold);
 
   GFL_CLACT_WK_Remove( pWork->scrollCur );
-  
+
  if(pWork->cellicon!=NULL){
   GFL_CLACT_WK_Remove( pWork->cellicon );
  }
@@ -727,13 +727,13 @@ void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
     _SUBBUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
 
   pWork->winNumFrame = GFL_BMPWIN_Create(
-      GFL_BG_FRAME3_M,	
+      GFL_BG_FRAME3_M,
       _WINNUM_INITX, _WINNUM_INITY,
-      _WINNUM_SIZEX, _WINNUM_SIZEY,	
+      _WINNUM_SIZEX, _WINNUM_SIZEY,
       _WINNUM_PAL, GFL_BMP_CHRAREA_GET_B );
- 
+
   pWork->winSellGold = GFL_BMPWIN_Create(
-    GFL_BG_FRAME3_M, 
+    GFL_BG_FRAME3_M,
     _SELL_GOLD_DISP_INITX, _SELL_GOLD_DISP_INITY,
     _SELL_GOLD_DISP_SIZEX, _SELL_GOLD_DISP_SIZEY,
     _WINNUM_PAL, GFL_BMP_CHRAREA_GET_B );
@@ -780,12 +780,12 @@ void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  アイテムアイコン アニメ
+ *  @brief  アイテムアイコン アニメ
  *
- *	@param	pWork
- *	@param	itemid
+ *  @param  pWork
+ *  @param  itemid
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _itemiconAnim(FIELD_ITEMMENU_WORK* pWork,int itemid)
@@ -835,11 +835,11 @@ static void _itemiconAnim(FIELD_ITEMMENU_WORK* pWork,int itemid)
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  描画 主処理
+ *  @brief  描画 主処理
  *
- *	@param	pWork
+ *  @param  pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 void _dispMain(FIELD_ITEMMENU_WORK* pWork)
@@ -855,11 +855,11 @@ void _dispMain(FIELD_ITEMMENU_WORK* pWork)
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  セルリソース 生成
+ *  @brief  セルリソース 生成
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
@@ -894,13 +894,13 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
     pWork->listRes[i] = GFL_CLGRP_CGR_Register(  archandle , NARC_bag_bag_win01_d_NCGR , FALSE , CLSYS_DRAW_MAIN , pWork->heapID );
     pWork->listBmp[i] = GFL_BMP_Create( 12, 2, GFL_BMP_16_COLOR, pWork->heapID );
   }
-  
+
   // 男女でウィンドウカーソル用パレットを切替
   // OAMリストの項目に使用。
   {
     u32 sex = MyStatus_GetMySex( pWork->mystatus );
     u32 res_nclr;
-    
+
      if( sex == PTL_SEX_MALE )
      {
        res_nclr = NARC_bag_bag_win01_d_man_NCLR;
@@ -909,26 +909,26 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
      {
        res_nclr = NARC_bag_bag_win01_d_NCLR;
      }
-  
+
      pWork->cellRes[_PLT_LIST] = GFL_CLGRP_PLTT_RegisterEx( archandle, res_nclr, CLSYS_DRAW_MAIN, _PAL_WIN01_CELL, 0, 1, pWork->heapID );
   }
 
-    
+
   pWork->cellRes[_ANM_LIST] = GFL_CLGRP_CELLANIM_Register(
     archandle , NARC_bag_bag_win01_d_NCER, NARC_bag_bag_win01_d_NANR ,
     pWork->heapID  );
-  
+
   GFL_ARC_CloseDataHandle(archandle);
 }
 
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  セル生成
+ *  @brief  セル生成
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
@@ -968,7 +968,7 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
 
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, TRUE );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkCur, TRUE );
-  
+
     // タッチ起動 > カーソルをOFF
     if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
     {
@@ -1011,11 +1011,11 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  アイテムナンバーからパレットカラーを指定
+ *  @brief  アイテムナンバーからパレットカラーを指定
  *
- *	@param	u16 itemtype 
+ *  @param  u16 itemtype
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 static void _cellmessage_printcolor( u16 itemtype )
@@ -1043,11 +1043,11 @@ static void _cellmessage_printcolor( u16 itemtype )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  セル メッセージ表示
+ *  @brief  セル メッセージ表示
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
@@ -1116,11 +1116,11 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  セル VRAM転送
+ *  @brief  セル VRAM転送
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
@@ -1263,9 +1263,9 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
 
    cellInitData.softpri = 10;
    cellInitData.bgpri = 1;
-  
+
    //バーのボタン
-  { 
+  {
     const u8 anmIdxArr[] = { 4, 5, 6, 0, 1 };
     const u8 posXArr[] =
     {
@@ -1306,7 +1306,7 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
   {
     const u8 anmIdxArr[] = { 3, 2 };
     const u8 posYArr[] = { 8 * 12 + 1, 8 * 15 - 1 };
-  
+
     for( i=0; i<elementof(anmIdxArr); i++ )
     {
       u8 clwk_id = BAR_ICON_INPUT_U + i;
@@ -1315,7 +1315,7 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
       cellInitData.pos_y = posYArr[i];
       cellInitData.anmseq = anmIdxArr[i];
       cellInitData.bgpri = 0;
-    
+
       pWork->clwkBarIcon[ clwk_id ] = GFL_CLACT_WK_Create( pWork->cellUnit ,
                                                  pWork->cellRes[_NCG_COMMON],
                                                  pWork->cellRes[_PLT_COMMON],
@@ -1373,12 +1373,12 @@ static GFL_CLACTPOS pokectCellPos[]={
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *  @brief
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork
- *	@param	pocketno 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
+ *  @param  pocketno
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 void ITEMDISP_ChangePocketCell( FIELD_ITEMMENU_WORK* pWork,int pocketno )
@@ -1440,8 +1440,8 @@ void ITEMDISP_MenuWinDisp(  FIELD_ITEMMENU_WORK *pWork , int *menustr,int num )
   appinit.posType = ATPT_RIGHT_DOWN;
   appinit.charPosX = 32;
   appinit.charPosY = 24;
-	appinit.w				 = APP_TASKMENU_PLATE_WIDTH;
-	appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
+  appinit.w        = APP_TASKMENU_PLATE_WIDTH;
+  appinit.h        = APP_TASKMENU_PLATE_HEIGHT;
 
 
   for(i=0;i<num;i++){
@@ -1575,7 +1575,7 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
 
   _wazaKindDisp(pWork,wazano);
   _wazaTypeDisp(pWork,wazano);
-  
+
   // カラー指定
   GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
 
@@ -1740,11 +1740,11 @@ BOOL ITEMDISP_MessageEndCheck(FIELD_ITEMMENU_WORK* pWork)
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  BARメッセージ生成
+ *  @brief  BARメッセージ生成
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 void ITEMDISP_BarMessageCreate( FIELD_ITEMMENU_WORK* pWork )
@@ -1757,14 +1757,14 @@ void ITEMDISP_BarMessageCreate( FIELD_ITEMMENU_WORK* pWork )
 
   pWork->winGoldCap = GFL_BMPWIN_Create(
     GFL_BG_FRAME2_M,
-    _GOLD_CAP_DISP_INITX, _GOLD_CAP_DISP_INITY, 
-    _GOLD_CAP_DISP_SIZEX,	_GOLD_CAP_DISP_SIZEY,
+    _GOLD_CAP_DISP_INITX, _GOLD_CAP_DISP_INITY,
+    _GOLD_CAP_DISP_SIZEX, _GOLD_CAP_DISP_SIZEY,
     _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
 
   pWork->winGold = GFL_BMPWIN_Create(
-    GFL_BG_FRAME2_M, 
+    GFL_BG_FRAME2_M,
     _GOLD_DISP_INITX, _GOLD_DISP_INITY,
-    _GOLD_DISP_SIZEX,	_GOLD_DISP_SIZEY,
+    _GOLD_DISP_SIZEX, _GOLD_DISP_SIZEY,
     _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
 
   ITEMDISP_PocketMessage(pWork, pWork->pocketno);
@@ -1774,15 +1774,15 @@ void ITEMDISP_BarMessageCreate( FIELD_ITEMMENU_WORK* pWork )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  BARメッセージ削除
+ *  @brief  BARメッセージ削除
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 void ITEMDISP_BarMessageDelete( FIELD_ITEMMENU_WORK* pWork )
-{ 
+{
   GFL_BMPWIN_Delete(pWork->pocketNameWin);
   GFL_BMPWIN_Delete(pWork->winGold);
   GFL_BMPWIN_Delete(pWork->winGoldCap);
@@ -1812,11 +1812,11 @@ void ITEMDISP_PocketMessage(FIELD_ITEMMENU_WORK* pWork,int newpocket)
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  おこづかい表示
+ *  @brief  おこづかい表示
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 void ITEMDISP_GoldDispWrite( FIELD_ITEMMENU_WORK* pWork )
@@ -1848,15 +1848,15 @@ void ITEMDISP_GoldDispWrite( FIELD_ITEMMENU_WORK* pWork )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  おこづかい表示開始
+ *  @brief  おこづかい表示開始
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 void ITEMDISP_GoldDispIn( FIELD_ITEMMENU_WORK* pWork )
-{ 
+{
   // 左右カーソル非表示
   GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[BAR_ICON_LEFT] , FALSE );
   GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[BAR_ICON_RIGHT] , FALSE );
@@ -1871,11 +1871,11 @@ void ITEMDISP_GoldDispIn( FIELD_ITEMMENU_WORK* pWork )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  おこづかい表示終了
+ *  @brief  おこづかい表示終了
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 void ITEMDISP_GoldDispOut( FIELD_ITEMMENU_WORK* pWork )
@@ -1897,9 +1897,9 @@ void ITEMDISP_GoldDispOut( FIELD_ITEMMENU_WORK* pWork )
 /**
  *  @brief   はいいいえウインドウ 開始
  *
- *	@param	pWork
+ *  @param  pWork
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 void ITEMDISP_YesNoStart(FIELD_ITEMMENU_WORK* pWork)
@@ -1914,8 +1914,8 @@ void ITEMDISP_YesNoStart(FIELD_ITEMMENU_WORK* pWork)
   appinit.posType = ATPT_RIGHT_DOWN;
   appinit.charPosX = 32;
   appinit.charPosY = 12;
-	appinit.w				 = APP_TASKMENU_PLATE_WIDTH;
-	appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
+  appinit.w        = APP_TASKMENU_PLATE_WIDTH;
+  appinit.h        = APP_TASKMENU_PLATE_HEIGHT;
 
   pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
   GFL_MSG_GetString(pWork->MsgManager, MSG_ITEM_STR003, pWork->appitem[0].str);
@@ -1931,11 +1931,11 @@ void ITEMDISP_YesNoStart(FIELD_ITEMMENU_WORK* pWork)
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  はいいいえウィンドウ 終了
+ *  @brief  はいいいえウィンドウ 終了
  *
- *	@param	pWork
+ *  @param  pWork
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 void ITEMDISP_YesNoExit(FIELD_ITEMMENU_WORK* pWork)
@@ -1966,7 +1966,7 @@ void ITEMDISP_NumFrameDisp(FIELD_ITEMMENU_WORK* pWork)
       int xs = scrnData->screenWidth/8;
       int ys = scrnData->screenHeight/8;
       u16* buff = (u16*)&scrnData->rawData;
- 
+
       // パレット指定
       for(i=0;i<(xs*ys);i++){
         buff[i] += GFL_ARCUTIL_TRANSINFO_GetPos(pWork->numFrameBg) | (0x1000 * PALOFS_NUM_FRAME);
@@ -1987,12 +1987,12 @@ void ITEMDISP_NumFrameDisp(FIELD_ITEMMENU_WORK* pWork)
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  数値入力 表示更新
+ *  @brief  数値入力 表示更新
  *
- *	@param	pWork
- *	@param	num
+ *  @param  pWork
+ *  @param  num
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 void ITEMDISP_InputNumDisp(FIELD_ITEMMENU_WORK* pWork,int num)

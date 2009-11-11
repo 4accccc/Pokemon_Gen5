@@ -26,7 +26,7 @@
 #include "msg/msg_bag.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
-#include "font/font.naix" //NARC_font_large_nftr
+#include "font/font.naix" //NARC_font_large_gftr
 #include "sound/pm_sndsys.h"
 #include "system/wipe.h"
 

@@ -103,9 +103,9 @@ GOBJ_ELBOARD* GOBJ_ELBOARD_Create( ELBOARD_PARAM* param )
   elboard->frame        = 0;
 
   // ニュース配列・表示スイッチ配列を確保
-  elboard->news = GFL_HEAP_AllocMemory( 
+  elboard->news = GFL_HEAP_AllocMemory(
       param->heapID, sizeof(NEWS*)*param->maxNewsNum );
-  elboard->newsSwitch = GFL_HEAP_AllocMemory( 
+  elboard->newsSwitch = GFL_HEAP_AllocMemory(
       param->heapID, sizeof(BOOL)*param->maxNewsNum );
 
   // アニメーション状態を初期化
@@ -117,8 +117,8 @@ GOBJ_ELBOARD* GOBJ_ELBOARD_Create( ELBOARD_PARAM* param )
   elboard->newsSwitch[0] = TRUE;  // 最初のニュースを表示する
 
   // ニュース描画に使用するフォントを作成
-  elboard->font = GFL_FONT_Create( 
-      ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, elboard->heapID );
+  elboard->font = GFL_FONT_Create(
+      ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, elboard->heapID );
 
   return elboard;
 }
@@ -143,7 +143,7 @@ void GOBJ_ELBOARD_AddNews( GOBJ_ELBOARD* elboard, const NEWS_PARAM* news_param )
   }
 
   // 登録
-  elboard->news[ elboard->newsNum ] = 
+  elboard->news[ elboard->newsNum ] =
     NewsCreate( elboard, news_param, elboard->newsNum );
   elboard->newsNum++;
 }
@@ -203,7 +203,7 @@ void GOBJ_ELBOARD_Main( GOBJ_ELBOARD* elboard, fx32 frame )
   for( i=0; i<elboard->newsNum; i++ )
   {
     NewsMove_Update( elboard, elboard->news[i], frame );
-  } 
+  }
 
   // 動作フレーム数更新
   elboard->frame += frame;
@@ -299,9 +299,9 @@ void GOBJ_ELBOARD_SetFrame( GOBJ_ELBOARD* elboard, fx32 frame )
     else
     {
       // 前ニュースのスタートフレーム + 前ニュースのスイッチフレーム数
-      start_frame[i] = 
+      start_frame[i] =
         start_frame[i-1] + FX_Whole( elboard->news[i-1]->switchFrame );
-    } 
+    }
   }
 
   // 各ニュースの現在フレーム数を計算
@@ -329,7 +329,7 @@ void GOBJ_ELBOARD_SetFrame( GOBJ_ELBOARD* elboard, fx32 frame )
   for( i=0; i<elboard->newsNum; i++ )
   {
     int next = (i+1)%elboard->newsNum;
-    elboard->newsSwitch[next] = 
+    elboard->newsSwitch[next] =
       elboard->news[i]->switchFlag && !elboard->news[next]->dispFlag;
   }
 
@@ -382,7 +382,7 @@ static NEWS* NewsCreate( GOBJ_ELBOARD* elboard, const NEWS_PARAM* param, int ind
     GFL_G3D_RES* res;
 
     // 描画する文字列を取得
-    msg = GFL_MSG_Create( 
+    msg = GFL_MSG_Create(
         GFL_MSG_LOAD_NORMAL, param->msgArcID, param->msgDatID, elboard->heapID );
     if( param->wordset )
     { // WORDSET展開
@@ -401,8 +401,8 @@ static NEWS* NewsCreate( GOBJ_ELBOARD* elboard, const NEWS_PARAM* param, int ind
     rnd = GFL_G3D_OBJECT_GetG3Drnd( elboard->g3dObj );
     res = GFL_G3D_RENDER_GetG3DresTex( rnd );
     // 描画
-    news->tex = ELBOARD_TEX_Add_Ex( 
-        res, param->texName, param->pltName, strbuf, 
+    news->tex = ELBOARD_TEX_Add_Ex(
+        res, param->texName, param->pltName, strbuf,
         (CHAR_WIDTH + MARGIN_SIZE) * elboard->dispSize, 2, elboard->heapID );
     // 後始末
     GFL_HEAP_FreeMemory( strbuf );
@@ -501,7 +501,7 @@ static void NewsMove_Update( GOBJ_ELBOARD* elboard, NEWS* news, fx32 frame )
   {
     // アニメーションを更新
     ELBOARD_TEX_Main( news->tex );
-    GFL_G3D_OBJECT_IncAnimeFrame( news->g3dObj, news->animeIndex, frame ); 
+    GFL_G3D_OBJECT_IncAnimeFrame( news->g3dObj, news->animeIndex, frame );
     news->nowFrame += FX32_ONE;
 
     // スイッチフレームに到達 ==> 次のニュースのスイッチをON
@@ -547,4 +547,4 @@ static void NewsMove_End( NEWS* news )
     GFL_G3D_OBJECT_DisableAnime( news->g3dObj, news->animeIndex );
     GFL_G3D_OBJECT_ResetAnimeFrame( news->g3dObj, news->animeIndex );
   }
-} 
+}
