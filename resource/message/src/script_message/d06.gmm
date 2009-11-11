@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T19:14:34"/>
+	<create user="matsumiya" host="W00207" date="2009-11-11T21:51:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -306,7 +306,7 @@
 ・pos（GRIDX=718、GRIDZ=561~565）で発動</comment>
 		<attribute name="キャラ指定">LEADER5</attribute>
 		<language name="JPN" width="256">ヤーコン『待たせたな</language>
-		<language name="JPN_KANJI" width="256">ヤーコン『待たせたな</language>
+		<language name="JPN_KANJI" width="256">ヤーコン『待たせたな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d06_leader_02">
@@ -387,28 +387,6 @@
 やれると思うなら　いつまでも[BE:01:ページ切り替え（クリア）]
 好きなように　やればいいじゃねえか
 限界を決めるのは　自分ってことだ[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_d06_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀
-・d06入り口前のposを踏むと出現し
-　主人公に隣接してメッセージ表示</comment>
-		<attribute name="キャラ指定">友達♀
-サポート</attribute>
-		<language name="JPN" width="256">ホワイティ『はぁ……
-やっと　おいついた！[BE:01:ページ切り替え（クリア）]
-ねえねえ　[1:00:トレーナー名:0]！
-ずかんの　ちょうしは　どう？[BE:01:ページ切り替え（クリア）]
-[2:02:３桁:1]ひき！？
-すごい！　あたしも　がんばんなきゃ[BE:00:ページ切り替え（行送り）]
-ということで　おさきに　しつれい！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『はぁ……
-やっと　追いついた！[BE:01:ページ切り替え（クリア）]
-ねえねえ　[1:00:トレーナー名:0]！
-図鑑の　調子は　どう？[BE:01:ページ切り替え（クリア）]
-[2:02:３桁:1]匹！？
-すごい！　あたしも　がんばんなきゃ[BE:00:ページ切り替え（行送り）]
-ということで　お先に　失礼！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>
