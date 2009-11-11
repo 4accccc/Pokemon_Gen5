@@ -2810,14 +2810,6 @@ static void Draw3DNormalMode( FIELDMAP_WORK * fieldWork )
       GFL_BG_SetBGMode( &sc_bg_sys_header );
       GX_SetBankForBG(GX_VRAM_BG_128_D);
     }
-    else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){
-      static const GFL_BG_SYS_HEADER sc_bg_sys_header = 
-      {
-				GX_DISPMODE_VRAM_D,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
-      };
-      GFL_BG_SetBGMode( &sc_bg_sys_header );
-      GX_SetBankForLCDC(GX_VRAM_LCDC_D);
-    }
   }
 
   FLD_PRTCL_Main();
