@@ -1874,7 +1874,7 @@ BtlPokePos BTL_MAIN_PokeIDtoPokePos( const BTL_MAIN_MODULE* wk, const BTL_POKE_C
     {
       return pos;
     }
-    GF_ASSERT_MSG(0, " not fighting pokeID [%d]", pokeID );
+    GF_ASSERT_MSG(0, " not fighting pokemon client=%d, idx=%d, pokeID [%d]", clientID, idx, pokeID );
   }
   GF_ASSERT_MSG(0, " not including pokeID [%d] (clientID=%d)", pokeID, clientID );
   return BTL_POS_MAX;
@@ -2394,12 +2394,16 @@ void BTL_PARTY_RotateMembers( BTL_PARTY* party, BtlRotateDir dir )
       party->member[0] = party->member[2];
       party->member[2] = party->member[1];
       party->member[1] = tmp;
+      BTL_Printf("‰E‰ñ“] : pokeID=%d, %d, %d\n",
+          BPP_GetID(party->member[0]), BPP_GetID(party->member[1]), BPP_GetID(party->member[2]));
     }
     else if( dir == BTL_ROTATEDIR_L )
     {
       party->member[0] = party->member[1];
       party->member[1] = party->member[2];
       party->member[2] = tmp;
+      BTL_Printf("¶‰ñ“] : pokeID=%d, %d, %d\n",
+          BPP_GetID(party->member[0]), BPP_GetID(party->member[1]), BPP_GetID(party->member[2]));
     }
   }
 }

@@ -2633,6 +2633,7 @@ static u8 flowsub_registerWazaTargets( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attac
     return registerTarget_single( wk, attacker, targetPos, wazaParam, intrPokeID, rec );
 
   case BTL_RULE_DOUBLE:
+  case BTL_RULE_ROTATION:
     return registerTarget_double( wk, attacker, targetPos, wazaParam, intrPokeID, rec );
 
   case BTL_RULE_TRIPLE:
