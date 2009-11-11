@@ -1,0 +1,9 @@
+DATA_LIST = \
+  rif_anim01.nsbmd \
+  mainrif_anim01.nsbmd \
+  kakuheki_anim01.nsbmd \
+  rif_anim01.nsbta \
+  rif_anim02.nsbta \
+  mainrif_anim01.nsbta \
+  mainrif_anim02.nsbta \
+  kakuheki_anim01.nsbca

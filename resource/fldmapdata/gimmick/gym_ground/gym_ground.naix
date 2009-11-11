@@ -1,0 +1,25 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: gym_ground.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2009-11-11T22:46:13
+ *****************************************************************************/
+
+#ifndef NARC_GYM_GROUND_NAIX_
+#define NARC_GYM_GROUND_NAIX_
+
+enum {
+	NARC_gym_ground_rif_anim01_nsbmd = 0,
+	NARC_gym_ground_mainrif_anim01_nsbmd = 1,
+	NARC_gym_ground_kakuheki_anim01_nsbmd = 2,
+	NARC_gym_ground_rif_anim01_nsbta = 3,
+	NARC_gym_ground_rif_anim02_nsbta = 4,
+	NARC_gym_ground_mainrif_anim01_nsbta = 5,
+	NARC_gym_ground_mainrif_anim02_nsbta = 6,
+	NARC_gym_ground_kakuheki_anim01_nsbca = 7
+};
+
+/* NARC_GYM_GROUND_NAIX_ */
+#endif

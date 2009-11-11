@@ -10,6 +10,7 @@ SUBDIRS	=	gym_denki \
 					gym_fly \
 					gym_anti \
 					gym_insect \
+					gym_ground \
 					h03 \
 					gate
 
