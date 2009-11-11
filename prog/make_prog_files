@@ -584,7 +584,6 @@ SRCS_OVERLAY_DEBUG_MAKEPOKE = debug/debug_makepoke.c
 # 曽我部デバッグ
 #===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_WIFI
 SRCS_OVERLAY_SOGABE_DEBUG		= test/soga/d_soga.c \
 								  test/soga/d_btltest.c \
 								  test/soga/capture.c \
@@ -628,11 +627,13 @@ SRCS_OVERLAY_TRADE  = trade/trade.c \
 # バトル->フィールド復帰
 #===> SRCS_OVERLAY_TAYA_DEBUG
 #===> SRCS_OVERLAY_SOGABE_DEBUG
+#===> SRCS_OVERLAY_DEV_WIFI
 SRCS_OVERLAY_BATTLE_RETURN =	field/event_battle_return.c
 
 # バトル
 #===> SRCS_OVERLAY_TAYA_DEBUG
 #===> SRCS_OVERLAY_SOGABE_DEBUG
+#===> SRCS_OVERLAY_DEV_WIFI
 SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btl_server.c \
 			battle/btl_server_flow.c \
