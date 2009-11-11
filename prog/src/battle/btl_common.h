@@ -120,6 +120,7 @@ typedef enum {
 //--------------------------------------------------------------
 typedef enum {
   BTL_ROTATEDIR_NONE = 0,
+  BTL_ROTATEDIR_STAY,
   BTL_ROTATEDIR_R,
   BTL_ROTATEDIR_L,
 }BtlRotateDir;

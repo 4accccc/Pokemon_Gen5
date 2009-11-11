@@ -236,6 +236,8 @@ extern void BTLV_ITEMSELECT_ReflectUsedItem( BTLV_CORE* wk );
 
 extern void BTLV_UI_SelectRotation_Start( BTLV_CORE* wk, BtlRotateDir prevDir );
 extern BOOL BTLV_UI_SelectRotation_Wait( BTLV_CORE* wk, BtlRotateDir* result );
+extern void BTLV_RotationMember_Start( BTLV_CORE* wk, u8 clientID, BtlRotateDir dir );
+extern BOOL BTLV_RotationMember_Wait( BTLV_CORE* wk );
 
 //-----------------------------------------------------------
 // äeéÌâ∫êøÇØÇ©ÇÁåƒÇ—èoÇ≥ÇÍÇÈä÷êî

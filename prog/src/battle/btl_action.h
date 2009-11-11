@@ -23,7 +23,6 @@ typedef enum {
   BTL_ACTION_CHANGE,
   BTL_ACTION_ESCAPE,
   BTL_ACTION_MOVE,
-  BTL_ACTION_ROTATE,
 
   BTL_ACTION_SKIP,    ///< ”½“®‚È‚Ç‚Å“®‚¯‚È‚¢
 }BtlAction;
@@ -68,11 +67,6 @@ typedef union {
     u32 cmd     : 3;
     u32 _4      : 29;
   }move;
-
-  struct {
-    u32 cmd     : 3;
-    u32 dir     : 29;
-  }rotate;
 
 }BTL_ACTION_PARAM;
 

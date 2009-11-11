@@ -89,6 +89,7 @@ typedef enum {
   SC_ACT_EXP,               ///< 経験値取得
   SC_ACT_EXP_LVUP,          ///< 経験値取得＋レベルアップ
   SC_ACT_BALL_THROW,        ///< ボール投げ
+  SC_ACT_ROTATION,          ///< ローテーション
   SC_TOKWIN_IN,             ///< とくせいウィンドウ表示イン [ClientID]
   SC_TOKWIN_OUT,            ///< とくせいウィンドウ表示アウト [ClientID]
   SC_MSG_WAZA,              ///< ワザメッセージ表示[ ClientID, wazaIdx ]
@@ -486,6 +487,10 @@ static inline void SCQUE_PUT_ACT_AddExpLevelup( BTL_SERVER_CMD_QUE* que, u8 poke
 static inline void SCQUE_PUT_ACT_BallThrow( BTL_SERVER_CMD_QUE* que, BtlPokePos pos, u8 yureCnt, u8 fSuccess )
 {
   SCQUE_PUT_Common( que, SC_ACT_BALL_THROW, pos, yureCnt, fSuccess );
+}
+static inline void SCQUE_PUT_ACT_Rotation( BTL_SERVER_CMD_QUE* que, u8 clientID, BtlRotateDir dir )
+{
+  SCQUE_PUT_Common( que, SC_ACT_ROTATION, clientID, dir );
 }
 
 

@@ -131,7 +131,7 @@ static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_Setup( BTL_CLIENT* wk, int *seq );
 static BOOL SubProc_UI_SelectRotation( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_SelectRotation( BTL_CLIENT* wk, int* seq );
-static BOOL isCantRotation( BTL_CLIENT* wk );
+static BtlRotateDir _testAI_dir( BtlRotateDir prevDir );
 static void SelActProc_Set( BTL_CLIENT* wk, ClientSubProc proc );
 static BOOL SelActProc_Call( BTL_CLIENT* wk );
 static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq );
@@ -190,6 +190,7 @@ static BOOL scProc_ACT_Move( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_Rotation( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_TraceTokusei( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args );
@@ -433,79 +434,68 @@ static BOOL SubProc_UI_SelectRotation( BTL_CLIENT* wk, int* seq )
 {
   switch( *seq ){
   case 0:
-    if( isCantRotation(wk) )
-    {
-      wk->prevRotateDir = BTL_ROTATEDIR_NONE;
-      wk->returnDataPtr = &wk->prevRotateDir;
-      wk->returnDataSize = sizeof(wk->prevRotateDir);
-      return TRUE;
-    }else{
-      BTLV_UI_SelectRotation_Start( wk->viewCore, wk->prevRotateDir );
-      (*seq)++;
-    }
-    break;
+    BTLV_UI_SelectRotation_Start( wk->viewCore, wk->prevRotateDir );
+    (*seq)++;
 
   case 1:
-    if( BTLV_UI_SelectRotation_Wait(wk->viewCore, &wk->prevRotateDir) ){
-      wk->returnDataPtr = &wk->prevRotateDir;
-      wk->returnDataSize = sizeof(wk->prevRotateDir);
-      return TRUE;
+    {
+      BtlRotateDir  dir;
+      if( BTLV_UI_SelectRotation_Wait(wk->viewCore, &dir) ){
+        // @todo 今は適当AIと同じルーチンで決定
+        wk->prevRotateDir = _testAI_dir( wk->prevRotateDir );
+        wk->returnDataPtr = &wk->prevRotateDir;
+        wk->returnDataSize = sizeof(wk->prevRotateDir);
+        return TRUE;
+      }
     }
     break;
   }
 
   return FALSE;
 }
+
 static BOOL SubProc_AI_SelectRotation( BTL_CLIENT* wk, int* seq )
 {
   // @todo AI用。今は仮動作
-  if( isCantRotation(wk) )
+  wk->prevRotateDir = _testAI_dir( wk->prevRotateDir );
+  wk->returnDataPtr = &wk->prevRotateDir;
+  wk->returnDataSize = sizeof(wk->prevRotateDir);
+
+  return TRUE;
+}
+static BtlRotateDir _testAI_dir( BtlRotateDir prevDir )
+{
+  u32 rnd = GFL_STD_MtRand( 100 );
+
+  if( prevDir == BTL_ROTATEDIR_NONE )
   {
-    wk->prevRotateDir = BTL_ROTATEDIR_NONE;
-    wk->returnDataPtr = &wk->prevRotateDir;
-    wk->returnDataSize = sizeof(wk->prevRotateDir);
-    return TRUE;
+    if( rnd < 30 ){
+      prevDir = BTL_ROTATEDIR_L;
+    }else if( rnd < 60 ){
+      prevDir = BTL_ROTATEDIR_R;
+    }else{
+      prevDir = BTL_ROTATEDIR_STAY;
+    }
   }
   else
   {
-    if( wk->prevRotateDir == BTL_ROTATEDIR_NONE )
-    {
-      u32 rnd = GFL_STD_MtRand( 100 );
-      if( rnd < 30 ){
-        wk->prevRotateDir = BTL_ROTATEDIR_L;
-      }else if( rnd < 60 ){
-        wk->prevRotateDir = BTL_ROTATEDIR_R;
-      }
-    }
-    else
-    {
-      if( GFL_STD_MtRand(100) < 60 ){
-        wk->prevRotateDir = BTL_ROTATEDIR_NONE;
-      }else{
-        wk->prevRotateDir = (wk->prevRotateDir == BTL_ROTATEDIR_R)?
-              BTL_ROTATEDIR_L : BTL_ROTATEDIR_R;
-      }
-    }
+    switch( prevDir ){
+    case BTL_ROTATEDIR_STAY:
+    default:
+      prevDir = (rnd < 50)? BTL_ROTATEDIR_R : BTL_ROTATEDIR_L;
+      break;
 
-    wk->returnDataPtr = &wk->prevRotateDir;
-    wk->returnDataSize = sizeof(wk->prevRotateDir);
-    return TRUE;
-  }
-}
-/**
- *  ローテーションできない状態か判定
- */
-static BOOL isCantRotation( BTL_CLIENT* wk )
-{
-  // 生きてるメンバー２人以下なら出来ない
-  {
-    const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( wk->pokeCon, wk->myID );
-    if( BTL_PARTY_GetAliveMemberCount(party) < 3 ){
-      return TRUE;
+    case BTL_ROTATEDIR_L:
+      prevDir = (rnd < 40)? BTL_ROTATEDIR_R : BTL_ROTATEDIR_STAY;
+      break;
+
+    case BTL_ROTATEDIR_R:
+      prevDir = (rnd < 40)? BTL_ROTATEDIR_L : BTL_ROTATEDIR_STAY;
+      break;
     }
   }
 
-  return FALSE;
+  return prevDir;
 }
 
 
@@ -1645,6 +1635,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_EXP,               scProc_ACT_Exp            },
     { SC_ACT_EXP_LVUP,          scProc_ACT_ExpLvup        },
     { SC_ACT_BALL_THROW,        scProc_ACT_BallThrow      },
+    { SC_ACT_ROTATION,          scProc_ACT_Rotation       },
   };
 
 restart:
@@ -2482,6 +2473,36 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
     break;
   default:
       return TRUE;
+  }
+  return FALSE;
+}
+
+//---------------------------------------------------------------------------------------
+/**
+ *  ローテーション動作
+ *  args .. [0]:対象クライアントID  [1]:ローテーション方向 (BtlRotateDir)
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_Rotation( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  switch( *seq ){
+  case 0:
+    {
+      u8 clientID = args[0];
+      BtlRotateDir dir = args[1];
+      BTL_PARTY*  party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
+      BTL_PARTY_RotateMembers( party, dir );
+      BTLV_RotationMember_Start( wk->viewCore, clientID, dir );
+      (*seq)++;
+    }
+    break;
+
+  case 1:
+    if( BTLV_RotationMember_Wait(wk->viewCore) )
+    {
+      return TRUE;
+    }
+    break;
   }
   return FALSE;
 }

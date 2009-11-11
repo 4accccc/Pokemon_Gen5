@@ -69,6 +69,7 @@ struct _BTLV_CORE {
   BBAG_DATA             bagData;
   BPLIST_DATA           plistData;
   BTL_POKESELECT_RESULT* pokeselResult;
+  BtlRotateDir          prevRotDir;
   u8                    selectItemSeq;
   u8                    fActionPrevButton;
 
@@ -1427,10 +1428,28 @@ static BOOL subprocMoveMember( int* seq, void* wk_adrs )
 /*--------------------------------------------------------------------------------------------------*/
 
 
+//=============================================================================================
+/**
+ * ユーザ入力：ローテーション選択開始
+ *
+ * @param   wk
+ * @param   prevDir   前ターンに選択されたローテーション方向
+ */
+//=============================================================================================
 void BTLV_UI_SelectRotation_Start( BTLV_CORE* wk, BtlRotateDir prevDir )
 {
-
+  wk->prevRotDir = prevDir;
 }
+//=============================================================================================
+/**
+ * ユーザ入力：ローテーション選択終了待ち
+ *
+ * @param   wk
+ * @param   result    [out] 今回選択されたローテーション方向
+ *
+ * @retval  BOOL      終了時TRUE
+ */
+//=============================================================================================
 BOOL BTLV_UI_SelectRotation_Wait( BTLV_CORE* wk, BtlRotateDir* result )
 {
   // @todo 仮動作です
@@ -1438,6 +1457,34 @@ BOOL BTLV_UI_SelectRotation_Wait( BTLV_CORE* wk, BtlRotateDir* result )
   return TRUE;
 }
 
+//=============================================================================================
+/**
+ * ローテーションアクション開始
+ *
+ * @param   wk
+ * @param   clientID    対象クライアントID
+ * @param   dir         ローテーション方向
+ */
+//=============================================================================================
+void BTLV_RotationMember_Start( BTLV_CORE* wk, u8 clientID, BtlRotateDir dir )
+{
+//  BtlPokePos  topPos = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, 0 );
+//  u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, topPos );
+
+}
+//=============================================================================================
+/**
+ * ローテーションアクション終了待ち
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTLV_RotationMember_Wait( BTLV_CORE* wk )
+{
+  return FALSE;
+}
 
 
 /*--------------------------------------------------------------------------------------------------*/

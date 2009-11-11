@@ -61,6 +61,7 @@ extern BTL_POKEPARAM* BTL_PARTY_GetMemberData( BTL_PARTY* party, u8 idx );
 extern const BTL_POKEPARAM* BTL_PARTY_GetMemberDataConst( const BTL_PARTY* party, u8 idx );
 
 extern void BTL_PARTY_SwapMembers( BTL_PARTY* party, u8 idx1, u8 idx2 );
+extern void BTL_PARTY_RotateMembers( BTL_PARTY* party, BtlRotateDir dir );
 
 //-------------------------------------------------------------------------------
 /**

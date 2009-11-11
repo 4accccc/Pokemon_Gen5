@@ -2382,6 +2382,28 @@ void BTL_PARTY_SwapMembers( BTL_PARTY* party, u8 idx1, u8 idx2 )
   }
 }
 
+void BTL_PARTY_RotateMembers( BTL_PARTY* party, BtlRotateDir dir )
+{
+  GF_ASSERT(party->memberCount>=3);
+
+  {
+    BTL_POKEPARAM* tmp = party->member[0];
+
+    if( dir == BTL_ROTATEDIR_R )
+    {
+      party->member[0] = party->member[2];
+      party->member[2] = party->member[1];
+      party->member[1] = tmp;
+    }
+    else if( dir == BTL_ROTATEDIR_L )
+    {
+      party->member[0] = party->member[1];
+      party->member[1] = party->member[2];
+      party->member[2] = tmp;
+    }
+  }
+}
+
 s16 BTL_PARTY_FindMember( const BTL_PARTY* party, const BTL_POKEPARAM* param )
 {
   int i;

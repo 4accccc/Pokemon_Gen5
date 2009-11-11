@@ -388,8 +388,29 @@ static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq )
   case 1:
     if( WaitAdapterCmd(server) )
     {
+      const BtlRotateDir  *dir;
+      BTL_PARTY* party;
+      u32 i;
+
       ResetAdapterCmd( server );
+      SCQUE_Init( server->que );
+      for(i=0; i<server->numClient; ++i)
+      {
+        dir = BTL_ADAPTER_GetReturnData( server->client[i].adapter );
+        SCQUE_PUT_ACT_Rotation( server->que, i, *dir );
+        party = BTL_POKECON_GetPartyData( server->pokeCon, i );
+        BTL_PARTY_RotateMembers( party, *dir );
+      }
+      SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
       (*seq)++;
+    }
+    break;
+
+  case 2:
+    if( WaitAdapterCmd(server) )
+    {
+      ResetAdapterCmd( server );
+      return TRUE;
     }
     break;
   }

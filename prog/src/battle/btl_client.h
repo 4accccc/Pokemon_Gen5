@@ -23,7 +23,6 @@ typedef struct _BTL_CLIENT    BTL_CLIENT;
  *  逃げ・交換禁止コード
  */
 //--------------------------------------------------------------
-
 typedef enum {
 
   BTL_CANTESC_START = 0,
@@ -36,6 +35,7 @@ typedef enum {
   BTL_CANTESC_NULL = BTL_CANTESC_MAX,
 
 }BtlCantEscapeCode;
+
 
 
 //----------------------------------------------------------------------
