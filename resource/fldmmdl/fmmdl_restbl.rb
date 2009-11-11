@@ -3,39 +3,43 @@
 # フィールド動作モデル リソーステーブル作成
 # 
 # 引数 fmmdl_restbl.rb
-# xlstxt_filename restbl_filename res_dir select_res 
-# xlstxt_ncgimd_filename restbl_ncgimd_filename mkobj_ncgimd_filename
-# res_ncg_dir ncgimd_conv_path
-# dmyfile
+# fname_listcsv fname_restbl res_dir select_res
+# fname_prmcsv_ncgimd fname_restbl_ncgimd fname_mkobj_ncgimd
+# res_ncg_dir path_conv_ncgimd
+# flag_dummy
+# fname_listcsv_poke
 # 
-# xlstxt_filename
+# fname_listcsv
 # 動作モデルリスト表 テキスト変換済みファイル名
 # 
-# restbl_filename
+# fname_restbl
 # 動作モデルリソースファイル名記述先ファイル名
 #
 # res_dir
 # リソースファイルが置かれているディレクトリ
 # 
 # select_res
-# xlstxt_filenameで指定されている複数のリソースファイルの内、どちらを使うか
+# fname_listcsvで指定されている複数のリソースファイルの内、どちらを使うか
 # 0=製品反映モデルファイルを使用 1=テスト用を使用
 #
-# xlstxt_ncgimd_filename
+# fname_prmcsv_ncgimd
 # 動作モデルリスト表 ncg変換対応imd テキスト変換済みファイル名
 #
-# restbl_ncgimd_filename
+# fname_restbl_ncgimd
 # 動作モデル ncg変換imd一覧記述先ファイル名
 #
-# mkobj_ncgimd_filename
+# fname_mkobj_ncgimd
 # 動作モデル ncg変換対象make記述先ファイル名
 #
 # res_ncg_dir
 # ncgファイルが置かれているディレクトリ
 #
-# dmyfile　※任意
-# ダミーファイル　dmyfileが指定されていて
-# リソースファイルが無い場合、dmyfileをリソースファイルに置き換えます。
+# flag_dummy
+# "0" = ファイルが存在していない場合エラー。
+# "1" = ファイルが存在していない場合、ダミーファイルから置き換え。
+#
+# fname_listcsv_poke
+# ポケモン用リスト表　テキスト変換済みファイル名
 #=======================================================================
 $KCODE = "SJIS"
 load "rbdefine"
@@ -49,6 +53,18 @@ STR_END = "#END"
 RET_FALSE = (0)
 RET_TRUE = (1)
 RET_ERROR = (-1)
+
+ARGVNO_FNAME_RESCSV = (0)
+ARGVNO_FNAME_RESTBL = (1)
+ARGVNO_DIR_RES = (2)
+ARGVNO_FLAG_SELECT_RES = (3)
+ARGVNO_FNAME_NCGIMDCSV = (4)
+ARGVNO_FNAME_NCGIMDLIST = (5)
+ARGVNO_FNAME_MKNCGIMD = (6)
+ARGVNO_DIR_NCG = (7)
+ARGVNO_PATH_NCGIMDCV = (8)
+ARGVNO_FLAG_CREATE_DUMMY = (9)
+ARGVNO_FNAME_RESCSV_POKE = (10)
 
 #=======================================================================
 #	異常終了
@@ -76,18 +92,18 @@ end
 #	指定番号の","区切り文字列を取得
 #	戻り値 nil=無し,STR_ERROR=エラー,STR_END=終了
 #=======================================================================
-def xlstxt_getlinestr( xlstxt_file, get_no )
+def listcsv_getlinestr( file_listcsv, get_no )
 	no = 0
-	xlstxt_file.pos = 0
+	file_listcsv.pos = 0
 	
-	line = xlstxt_file.gets #一行目飛ばし
+	line = file_listcsv.gets #一行目飛ばし
   
 	if( line == nil )
 		return RET_FALSE
 	end
 	
 	while no < get_no
-    line = xlstxt_file.gets
+    line = file_listcsv.gets
 
     if( line == nil )
       return STR_ERROR
@@ -102,7 +118,7 @@ def xlstxt_getlinestr( xlstxt_file, get_no )
     no = no + 1
   end
   
-  line = xlstxt_file.gets
+  line = file_listcsv.gets
   line = line.strip
 
   if( line == nil )
@@ -122,14 +138,14 @@ end
 #	指定番号のリソースファイル名を取得
 #	戻り値 nil=無し,STR_ERROR=エラー,STR_END=終了
 #=======================================================================
-def xlstxt_get_resfile_name( xlstxt_file, no, sel_res )
+def listcsv_get_filename( file_listcsv, no, sel_res )
   xlsline = RBDEF_NUM_RESFILE_NAME_0
 
   if( sel_res != "0" )
     xlsline = RBDEF_NUM_RESFILE_NAME_1
   end
   
-  str = xlstxt_getlinestr( xlstxt_file, no )
+  str = listcsv_getlinestr( file_listcsv, no )
 	
 	if( str == STR_ERROR )
 		return STR_ERROR
@@ -150,8 +166,8 @@ end
 #	指定番号の表示タイプを取得
 #	戻り値 nil=無し,STR_ERROR=エラー,STR_END=終了
 #=======================================================================
-def xlstxt_get_drawtype( xlstxt_file, no )
-  str = xlstxt_getlinestr( xlstxt_file, no )
+def listcsv_get_drawtype( file_listcsv, no )
+  str = listcsv_getlinestr( file_listcsv, no )
   
   if( str == STR_ERROR )
 		return STR_ERROR
@@ -175,9 +191,39 @@ end
 #	戻り値 RET_TRUE=指定ファイル名が存在している RET_FALSE=無し
 #	戻り値 nil=無し,STR_ERROR=エラー,STR_END=終了
 #=======================================================================
-def xlstxt_check_resfile_name( xlstxt_file, check_no, check_str, sel_res )
+def csvlist_check_repeat_filename( buf, check_no, check_str )
+  no = 0
+  max = buf.size
+
+#debug
+=begin
+  printf( "重複チェック %d以下に%sが在るか探しています\n",
+         check_no, check_str )
+=end
+
+	while no < check_no
+    if( no >= max )
+      break
+    end
+    
+    str = buf[no]
+    
+	  if( str == check_str )
+		  return RET_TRUE
+		end
+		
+		no = no + 1
+	end
+	
+	return RET_FALSE
+end
+
+#ファイル検索タイプ　激遅
+=begin
+def csvlist_check_repeat_filename(
+  file_listcsv, check_no, check_str, sel_res )
 	no = 0
-	xlstxt_file.pos = 0
+	file_listcsv.pos = 0
 	
   xlsline = RBDEF_NUM_RESFILE_NAME_0
   
@@ -186,7 +232,7 @@ def xlstxt_check_resfile_name( xlstxt_file, check_no, check_str, sel_res )
   end
   
 	while no < check_no
-    str = xlstxt_getlinestr( xlstxt_file, no )
+    str = listcsv_getlinestr( file_listcsv, no )
 		
 		if( str == STR_ERROR )
       break
@@ -209,6 +255,7 @@ def xlstxt_check_resfile_name( xlstxt_file, check_no, check_str, sel_res )
 	
 	return RET_FALSE
 end
+=end
 
 #=======================================================================
 # 指定されたモデルサイズ、アニメーションIDから
@@ -242,7 +289,7 @@ def ncgparam_get( listfile, mdlstr, anmstr )
           h.store( "str_height", param[2] )
           h.store( "str_count", param[3] )
           h.store( "str_imdfile", param[4] )
-          h.store( "str_dmyfile", param[5] )
+          h.store( "str_flag_dummy", param[5] )
           return h
         end
         
@@ -259,11 +306,12 @@ end
 # 戻り値 RET_TRUE=リソースを追加した。
 #=======================================================================
 def conv_drawtype_blact(
-  xlstxt_file, restbl_file, no, resdir_path, sel_res, dmyfile, 
-  xlstxt_ncgimd_file, restbl_ncgimd_file,
-  mkobj_ncgimd_file, resdir_ncgimd_path, ncgimd_conv_path )
+  file_listcsv, file_restbl, no, dir_res, sel_res, flag_dummy,
+  file_prmcsv_ncgimd, file_restbl_ncgimd,
+  file_make_ncgimd, dir_res_ncgimd, path_conv_ncgimd,
+  strbuf_res, data_no )
 	
-  imdname = xlstxt_get_resfile_name( xlstxt_file, no, sel_res )
+  imdname = listcsv_get_filename( file_listcsv, no, sel_res )
   
 	if( imdname == STR_ERROR )
     return RET_ERROR
@@ -273,189 +321,226 @@ def conv_drawtype_blact(
     return RET_FALSE
   end
   
-  if( xlstxt_check_resfile_name(xlstxt_file,no,imdname,sel_res) == RET_TRUE )
+=begin  
+  if( csvlist_check_repeat_filename(
+    file_listcsv,no,imdname,sel_res) == RET_TRUE )
     return RET_FALSE
   end
+=end
   
-	restbl_file.printf( " \\\n" )
+  if( csvlist_check_repeat_filename(
+      strbuf_res,data_no,imdname) == RET_TRUE )
+    return RET_FALSE
+  end
+
+	file_restbl.printf( " \\\n" )
   
-  str = xlstxt_getlinestr( xlstxt_file, no )
+  str = listcsv_getlinestr( file_listcsv, no )
   mdltype = str[RBDEF_NUM_MDLSIZE]
   anmtype = str[RBDEF_NUM_ANMID]
-  param = ncgparam_get( xlstxt_ncgimd_file, mdltype, anmtype )
-
-  imdpath = sprintf( "%s\/%s", resdir_path, imdname )
+  param = ncgparam_get( file_prmcsv_ncgimd, mdltype, anmtype )
   
-  if( param == nil ) #ncg変換対象ではない
+  imdpath = sprintf( "%s\/%s", dir_res, imdname )
+  
+  #ncg変換対象ではない
+  if( param == nil )
 		if( FileTest.exist?(imdpath) != true )
-		  if( dmyfile == nil )
+		  if( flag_dummy == 0 )
 				printf( "ERROR %s がありません\n", imdname )
         return RET_ERROR
       end
       
-		  file_copy( dmyfile, imdpath )
-		  printf( "%sをダミーファイルから作成しました\n", imdpath )
+      #ダミーファイル作成 現状非対応
+		  #file_copy( flag_dummy, imdpath )
+		  #printf( "%sをダミーファイルから作成しました\n", imdpath )
+		  printf( "ERROR %s がありません\n", imdname )
+      return RET_ERROR
     end
     
-		restbl_file.printf( "\t%s", str )
+    strbuf_res[data_no] = imdname
+    
+		file_restbl.printf( "\t%s", str )
     return RET_TRUE
   end
   
   #ncg変換対象
-  restbl_ncgimd_file.printf( " \\\n" )
+  file_restbl_ncgimd.printf( " \\\n" )
   
   name = imdname.gsub( "\.imd", "" )
   ncgname = name + "\.ncg"
   nclname = name + "\.ncl"
   
-  ncgpath = sprintf( "%s\/%s", resdir_ncgimd_path, ncgname )
+  ncgpath = sprintf( "%s\/%s", dir_res_ncgimd, ncgname )
   
 	if( FileTest.exist?(ncgpath) != true )
-    if( dmyfile == nil )
+    if( flag_dummy )
 		  printf( "ERROR %s がありません\n", ncgpath )
       return RET_ERROR
     end
     
-    dmyfile = sprintf( "%s/%s.ncg", resdir_ncgimd_path, param['str_dmyfile'] )
-    file_copy( dmyfile, ncgpath )
+    dummy_file = sprintf(
+      "%s/%s.ncg", dir_res_ncgimd, param['str_flag_dummy'] )
+    file_copy( dummy_file, ncgpath )
 		printf( "%sをダミーファイルから作成しました\n", ncgpath )
   end
 	
-  nclpath = sprintf( "%s\/%s", resdir_ncgimd_path, nclname )
+  nclpath = sprintf( "%s\/%s", dir_res_ncgimd, nclname )
 
   if( FileTest.exist?(nclpath) != true )
-    if( dmyfile == nil )
+    if( flag_dummy == nil )
 		  printf( "ERROR %s がありません\n", nclpath )
       return RET_ERROR
     end
     
-    dmyfile = sprintf( "%s/%s.ncl", resdir_ncgimd_path, param['str_dmyfile'] )
-    file_copy( dmyfile, nclpath )
+    dummy_file = sprintf(
+      "%s/%s.ncl", dir_res_ncgimd, param['str_flag_dummy'] )
+    file_copy( dummy_file, nclpath )
 		printf( "%sをダミーファイルから作成しました\n", nclpath )
   end
   
-  restbl_file.printf( "\t%s", imdname )
-  restbl_ncgimd_file.printf( "\t%s", imdname )
+  file_restbl.printf( "\t%s", imdname )
+  file_restbl_ncgimd.printf( "\t%s", imdname )
   
   #make object
-  dmyimdpath = sprintf( "%s\/%s", resdir_path, param['str_imdfile'] )
+  dmyimdpath = sprintf( "%s\/%s", dir_res, param['str_imdfile'] )
   
-  mkobj_ncgimd_file.printf( "#%s\n", imdname )
-  mkobj_ncgimd_file.printf(
+  file_make_ncgimd.printf( "#%s\n", imdname )
+  file_make_ncgimd.printf(
     "%s: %s %s\n\t@echo convert ncg_imd %s\n\t@ruby %s %s %s %s %s %s %s\n\n",
     imdpath, ncgpath, nclpath, name,
-    ncgimd_conv_path, ncgpath, resdir_path, dmyimdpath, 
+    path_conv_ncgimd, ncgpath, dir_res, dmyimdpath, 
     param['str_width'], param['str_height'], param['str_count'] )
   
+  strbuf_res[data_no] = imdname
   return RET_TRUE
 end
 
 #=======================================================================
 #	リソーステーブル作成
 #=======================================================================
-xlstxt_filename = ARGV[0]
+#---------------------------------------------------------------
+# 引数取得
+#---------------------------------------------------------------
+fname_listcsv = ARGV[ARGVNO_FNAME_RESCSV]
 
-if( xlstxt_filename == nil )
-	printf( "ERROR!! fmmdl_restbl.rb restbl_filename\n" )
+if( fname_listcsv == nil )
+	printf( "ERROR!! fmmdl_restbl.rb fname_restbl\n" )
 	exit 1
 end
 
-restbl_filename = ARGV[1]
+fname_listcsv_poke = ARGV[ARGVNO_FNAME_RESCSV_POKE]
 
-if( restbl_filename == nil )
-	printf( "ERROR!! fmmdl_restbl.rb restbl_filename\n" )
+if( fname_listcsv_poke == nil )
+	printf( "ERROR!! fmmdl_restbl.rb fname_restbl\n" )
 	exit 1
 end
 
-resdir_path = ARGV[2] 
+fname_restbl = ARGV[ARGVNO_FNAME_RESTBL]
 
-if( resdir_path == nil )
+if( fname_restbl == nil )
+	printf( "ERROR!! fmmdl_restbl.rb fname_restbl\n" )
+	exit 1
+end
+
+dir_res = ARGV[ARGVNO_DIR_RES] 
+
+if( dir_res == nil )
 	printf( "ERROR!! fmmdl_restbl.rb resdir\n" )
 	exit 1
 end
 
-if( FileTest.directory?(resdir_path) != true )
+if( FileTest.directory?(dir_res) != true )
 	printf( "ERROR!! fmmdl_restbl.rb resdir\n" )
 	exit 1
 end
 
-sel_res = ARGV[3]
+sel_res = ARGV[ARGVNO_FLAG_SELECT_RES]
 
 if( sel_res != "0" && sel_res != "1" )
   printf( "ERROR!! fmmdl_restbl.rb sel_res\n" )
   exit 1
 end
 
-xlstxt_ncgimd_filename = ARGV[4]
+fname_prmcsv_ncgimd = ARGV[ARGVNO_FNAME_NCGIMDCSV]
 
-if( xlstxt_ncgimd_filename == nil )
-	printf( "ERROR!! fmmdl_restbl.rb xlstxt_ncgimd_filename\n" )
+if( fname_prmcsv_ncgimd == nil )
+	printf( "ERROR!! fmmdl_restbl.rb fname_prmcsv_ncgimd\n" )
 	exit 1
 end
 
-restbl_ncgimd_filename = ARGV[5]
+fname_restbl_ncgimd = ARGV[ARGVNO_FNAME_NCGIMDLIST]
 
-if( restbl_ncgimd_filename == nil )
-	printf( "ERROR!! fmmdl_restbl.rb restbl_ncgimd_filename\n" )
+if( fname_restbl_ncgimd == nil )
+	printf( "ERROR!! fmmdl_restbl.rb fname_restbl_ncgimd\n" )
 	exit 1
 end
 
-mkobj_ncgimd_filename = ARGV[6]
+fname_mkobj_ncgimd = ARGV[ARGVNO_FNAME_MKNCGIMD]
 
-if( mkobj_ncgimd_filename == nil )
-	printf( "ERROR!! fmmdl_restbl.rb mkobj_ncgimd_filename\n" )
+if( fname_mkobj_ncgimd == nil )
+	printf( "ERROR!! fmmdl_restbl.rb fname_mkobj_ncgimd\n" )
 	exit 1
 end
 
-resdir_ncgimd_path = ARGV[7]
+dir_res_ncgimd = ARGV[ARGVNO_DIR_NCG]
 
-if( resdir_ncgimd_path == nil )
-	printf( "ERROR!! fmmdl_restbl.rb resdir_ncgimd_path\n" )
+if( dir_res_ncgimd == nil )
+	printf( "ERROR!! fmmdl_restbl.rb dir_res_ncgimd\n" )
 	exit 1
 end
 
-ncgimd_conv_path = ARGV[8]
+path_conv_ncgimd = ARGV[ARGVNO_PATH_NCGIMDCV]
 
-if( ncgimd_conv_path == nil )
-	printf( "ERROR!! fmmdl_restbl.rb ncgimd_conv_path\n" )
+if( path_conv_ncgimd == nil )
+	printf( "ERROR!! fmmdl_restbl.rb path_conv_ncgimd\n" )
 	exit 1
 end
 
+flag_dummy = ARGV[ARGVNO_FLAG_CREATE_DUMMY]
 
-dmyfile = nil
-
-if( ARGV[9] != nil )
-	dmyfile = sprintf( "%s\/%s", resdir_path, ARGV[9] )
-	if( FileTest.exist?(dmyfile) != true )
-		printf( "ERROR!! fmmdl_restbl.rb dmyfile\n" )
-		exit 1
-	end
+if( ARGV[ARGVNO_FLAG_CREATE_DUMMY] == "0" )
+  flag_dummy = 0
+else
+  flag_dummy = 1
 end
 
-xlstxt_file = File.open( xlstxt_filename, "r" )
-restbl_file = File.open( restbl_filename, "w" )
-xlstxt_ncgimd_file = File.open( xlstxt_ncgimd_filename, "r" )
-restbl_ncgimd_file = File.open( restbl_ncgimd_filename, "w" )
-mkobj_ncgimd_file = File.open( mkobj_ncgimd_filename, "w" )
+#---------------------------------------------------------------
+# ファイルオープン
+#---------------------------------------------------------------
+file_listcsv = File.open( fname_listcsv, "r" )
+file_listcsv_poke = File.open( fname_listcsv_poke, "r" )
+file_restbl = File.open( fname_restbl, "w" )
+file_prmcsv_ncgimd = File.open( fname_prmcsv_ncgimd, "r" )
+file_restbl_ncgimd = File.open( fname_restbl_ncgimd, "w" )
+file_make_ncgimd = File.open( fname_mkobj_ncgimd, "w" )
 
+#---------------------------------------------------------------
+# 初期化
+#---------------------------------------------------------------
 no = 0
+data_no = 0
 flag = 0
 ret = RET_FALSE
+strbuf_res = Array.new()
 
-restbl_file.printf( "FMMDL_RESLIST =" )
-restbl_ncgimd_file.printf( "FMMDL_RESLIST_NCGIMD =" )
+#---------------------------------------------------------------
+# ビルボード変換
+#---------------------------------------------------------------
+file_restbl.printf( "FMMDL_RESLIST =" )
+file_restbl_ncgimd.printf( "FMMDL_RESLIST_NCGIMD =" )
 
 loop{
-  type = xlstxt_get_drawtype( xlstxt_file, no )
+  type = listcsv_get_drawtype( file_listcsv, no )
   
   case type
   when "DRAWTYPE_NON"
     #現状無し
   when "DRAWTYPE_BLACT"
     ret = conv_drawtype_blact(
-      xlstxt_file, restbl_file, no, resdir_path, sel_res, dmyfile,
-      xlstxt_ncgimd_file, restbl_ncgimd_file,
-      mkobj_ncgimd_file, resdir_ncgimd_path, ncgimd_conv_path )
+      file_listcsv, file_restbl, no, dir_res, sel_res, flag_dummy,
+      file_prmcsv_ncgimd, file_restbl_ncgimd,
+      file_make_ncgimd, dir_res_ncgimd, path_conv_ncgimd,
+      strbuf_res, data_no )
   when "DRAWTYPE_MDL"
     #現状無し
   when STR_END
@@ -466,10 +551,11 @@ loop{
   
   if( ret == RET_TRUE ) #リソース存在
     flag = 1
+    data_no = data_no + 1
   elsif( ret == RET_ERROR ) #エラー
-		printf( "ERROR: fmmdl_restbl.rb %s error text\n", xlstxt_filename )
-		error_end( restbl_filename, xlstxt_file, restbl_file,
-              xlstxt_ncgimd_file, restbl_ncgimd_file )
+		printf( "ERROR: fmmdl_restbl.rb %s error text\n", fname_listcsv )
+		error_end( fname_restbl, file_listcsv, file_restbl,
+              file_prmcsv_ncgimd, file_restbl_ncgimd )
 		exit 1
   end
   
@@ -478,58 +564,79 @@ loop{
 
 if( flag == 0 ) #リソースが一つも存在していない
 	printf( "fmmdl_restbl.rb リソース対象がありません\n" )
-  error_end( restbl_filename, xlstxt_file, restbl_file,
-            xlstxt_ncgimd_file, restbl_ncgimd_file )
+  error_end( fname_restbl, file_listcsv, file_restbl,
+            file_prmcsv_ncgimd, file_restbl_ncgimd )
 	exit 1
 end
 
-xlstxt_file.close
-restbl_file.close
-xlstxt_ncgimd_file.close
-restbl_ncgimd_file.close
-mkobj_ncgimd_file.close
+#---------------------------------------------------------------
+# ポケモン変換
+#---------------------------------------------------------------
+no = 0
+flag = 0
+ret = RET_FALSE
 
-=begin
-	str = xlstxt_get_resfile_name( xlstxt_file, no, sel_res )
-	
-	if( str == STR_ERROR )
-		printf( "ERROR!! fmmdl_restbl.rb %sが異常です\n", xlstxt_filename )
-		error_end( restbl_filename,
-       xlstxt_file, restbl_file, xlstxt_ncgimd_file, restbl_ncgimd_file )
+loop{
+  type = listcsv_get_drawtype( file_listcsv_poke, no )
+  
+  case type
+  when "DRAWTYPE_NON"
+    #現状無し
+  when "DRAWTYPE_BLACT"
+    ret = conv_drawtype_blact(
+      file_listcsv_poke, file_restbl, no, dir_res, sel_res, flag_dummy,
+      file_prmcsv_ncgimd, file_restbl_ncgimd,
+      file_make_ncgimd,
+      dir_res_ncgimd + "\/pokemon\/",
+      path_conv_ncgimd,
+      strbuf_res, data_no )
+  when "DRAWTYPE_MDL"
+    #現状無し
+  when STR_END
+    break
+  else
+    ret = RET_ERROR
+  end
+  
+  if( ret == RET_TRUE ) #リソース存在
+    flag = 1
+    data_no = data_no + 1
+  elsif( ret == RET_ERROR ) #エラー
+		printf( "ERROR: fmmdl_restbl.rb %s error text\n", fname_listcsv )
+		error_end( fname_restbl, file_listcsv_poke, file_restbl,
+              file_prmcsv_ncgimd, file_restbl_ncgimd )
 		exit 1
-	end
-	
-	if( str == STR_END )
-		break
-	end
-	
-	if( str != nil )
-		if( xlstxt_check_resfile_name(xlstxt_file,no,str,sel_res) == RET_FALSE )
-			restbl_file.printf( " \\\n" )
-			path = sprintf( "%s\/%s", resdir_path, str )
-		  
-			if( FileTest.exist?(path) != true )
-				if( dmyfile != nil )
-					file_copy( dmyfile, path )
-					printf( "%sをダミーファイルから作成しました\n", path )
-				else
-					printf( "ERROR!! %s がありません\n", str )
-		      error_end( restbl_filename, xlstxt_file, restbl_file,
-              xlstxt_ncgimd_file, restbl_ncgimd_file )
-					exit 1
-				end
-			end
-			
-			restbl_file.printf( "\t%s", str )
-			flag = 1
-		end
-	end
-	
+  end
+  
+	no = no + 1
+}
 
-if( flag == 0 )
+if( flag == 0 ) #リソースが一つも存在していない
 	printf( "fmmdl_restbl.rb リソース対象がありません\n" )
-  error_end( restbl_filename, xlstxt_file, restbl_file,
-      xlstxt_ncgimd_file, restbl_ncgimd_file )
+  error_end( fname_restbl, file_listcsv_poke, file_restbl,
+            file_prmcsv_ncgimd, file_restbl_ncgimd )
 	exit 1
+end
+
+#---------------------------------------------------------------
+# デバッグ
+#---------------------------------------------------------------
+=begin
+no = 0
+max = strbuf_res.size
+
+while no < max
+  printf( "buf[%d] = %s\n", no, strbuf_res[no] )
+  no = no + 1
 end
 =end
+
+#---------------------------------------------------------------
+# 終了
+#---------------------------------------------------------------
+file_listcsv.close
+file_listcsv_poke.close
+file_restbl.close
+file_prmcsv_ncgimd.close
+file_restbl_ncgimd.close
+file_make_ncgimd.close

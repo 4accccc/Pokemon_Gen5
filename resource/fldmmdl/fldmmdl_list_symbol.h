@@ -18,6 +18,8 @@
 #define PROC_HERO_PCAZUKE 7 //自機PC預け
 #define PROC_BLACT_ONEANMLOOP 8 //一パターンループアニメ
 #define PROC_PCWOMAN 9 //PC姉
+#define PROC_POKE 10 //連れ歩きポケモン
+#define PROC_POKE_FLY 11 //連れ歩きポケモン 浮遊演出
 
 //FOOTMARK 足跡種類で指定するシンボルです。
 #define FOOTMARK_NON 0 //足跡無し
@@ -27,6 +29,7 @@
 //MDLSIZE モデルサイズで指定するシンボルです。
 #define MDLSIZE_32x32 0 //32x32
 #define MDLSIZE_16x16 1 //16x16
+#define MDLSIZE_64x64 2 //64x64
 
 //TEXSIZE テクスチャサイズで指定するシンボルです。
 #define TEXSIZE_8x8 0
@@ -108,6 +111,8 @@
 #define ANMID_PCAZUKE 10 //自機ポケセン預け
 #define ANMID_SAVE 11 //自機レポート
 #define ANMID_PCWOMAN 12 //PC姉
+#define ANMID_POKE_FLIP 13 //ポケモン　反転使用
+#define ANMID_POKE_NONFLIP 14 //ポケモン　反転未使用
 
 //SEX 性別で指定するシンボルです。
 #define SEX_MALE 0

@@ -1,171 +1,747 @@
 //動作モデル OBJコード定義
+//このファイルはコンバータから作成されました
 #ifndef _FLDMMDL_OBJCODE_
 #define _FLDMMDL_OBJCODE_
 
-#define NONDRAW (0x0) //0 描画無し
-#define HERO (0x1) //1 主人公男
-#define CYCLEHERO (0x2) //2 主人公男自転車
-#define SWIMHERO (0x3) //3 主人公男波乗り
-#define HEROINE (0x4) //4 主人公女
-#define CYCLEHEROINE (0x5) //5 主人公女自転車
-#define SWIMHEROINE (0x6) //6 主人公女波乗り
-#define RIVEL (0x7) //7 ライバル
-#define BABYBOY1 (0x8) //8 男の子
-#define BABYGIRL1 (0x9) //9 女の子
-#define BOY1 (0xa) //10 少年１
-#define BOY2 (0xb) //11 少年２
-#define BOY3 (0xc) //12 少年３
-#define BOY4 (0xd) //13 少年４
-#define GIRL1 (0xe) //14 少女１
-#define GIRL2 (0xf) //15 少女２
-#define GIRL3 (0x10) //16 少女３
-#define GIRL4 (0x11) //17 少女４
-#define MAN1 (0x12) //18 青年１
-#define MAN2 (0x13) //19 青年２
-#define MAN3 (0x14) //20 青年３
-#define WOMAN1 (0x15) //21 女性
-#define WOMAN2 (0x16) //22 女性２
-#define WOMAN3 (0x17) //23 女性３
-#define MIDDLEMAN1 (0x18) //24 中年男性１
-#define MIDDLEMAN2 (0x19) //25 中年男性２
-#define MIDDLEWOMAN1 (0x1a) //26 中年女性１
-#define MIDDLEWOMAN2 (0x1b) //27 中年女性２
-#define OLDMAN1 (0x1c) //28 おじいさん
-#define OLDWOMAN1 (0x1d) //29 おばあさん
-#define TRAINERM (0x1e) //30 トレーナー♂
-#define TRAINERW (0x1f) //31 トレーナー♀
-#define VETERANM (0x20) //32 ベテラン♂
-#define VETERANW (0x21) //33 ベテラン♀
-#define BREEDERM (0x22) //34 ブリーダー♂
-#define BREEDERW (0x23) //35 ブリーダー♀
-#define RANGERM (0x24) //36 レンジャー♂
-#define RANGERW (0x25) //37 レンジャー♀
-#define SPORTSM (0x26) //38 ジョギング♂
-#define SPORTSW (0x27) //39 ジョギング♀
-#define CYCLEM (0x28) //40 サイクリング♂
-#define CYCLEW (0x29) //41 サイクリング♀
-#define SWIMMERM (0x2a) //42 スイム♂
-#define SWIMMERW (0x2b) //43 スイム♀
-#define WAITER (0x2c) //44 ウエーター
-#define WAITRESS (0x2d) //45 ウエートレス
-#define GENTLEMAN (0x2e) //46 紳士
-#define LADY (0x2f) //47 淑女
-#define FIGHTERM (0x30) //48 格闘家♂
-#define FIGHTERW (0x31) //49 格闘家♀
-#define BACKPACKERM (0x32) //50 バックパッカー♂
-#define BACKPACKERW (0x33) //51 バックパッカー♀
-#define DOCTOR (0x34) //52 ドクター
-#define NURSE (0x35) //53 ナース
-#define CAMERAMAN (0x36) //54 カメラマン
-#define REPORTER (0x37) //55 レポーター
-#define BUSINESSMAN (0x38) //56 サラリーマン
-#define OL (0x39) //57 ＯＬ
-#define CLOWN (0x3a) //58 ピエロ
-#define DANCER (0x3b) //59 ダンサー
-#define JUGGLING (0x3c) //60 ピエロ
-#define MUSICIAN (0x3d) //61 ミュージシャン
-#define BASEBALLM (0x3e) //62 野球選手
-#define SOCCERM (0x3f) //63 サッカー選手
-#define FOOTBALLM (0x40) //64 アメフト選手
-#define TENNISW (0x41) //65 テニス選手
-#define BADMAN (0x42) //66 不良
-#define BADRIDER (0x43) //67 暴走族
-#define FISHING (0x44) //68 釣り人
-#define MOUNTMAN (0x45) //69 山男
-#define MAID (0x46) //70 メイド
-#define BAKER (0x47) //71 パン屋
-#define WORKMAN (0x48) //72 作業員
-#define RAILMAN (0x49) //73 鉄道員
-#define CLEANINGM (0x4a) //74 清掃員
-#define DELIVERY (0x4b) //75 配達員
-#define PILOT (0x4c) //76 パイロット
-#define POLICEMAN (0x4d) //77 ポリスマン
-#define DRIVER (0x4e) //78 ドライバー
-#define ASSISTANTM (0x4f) //79 助手♂
-#define ASSISTANTW (0x50) //80 助手♀
-#define INFORMATIONM (0x51) //81 受付♂
-#define INFORMATIONW (0x52) //82 受付♀
-#define SHOPM1 (0x53) //83 ショップ店員
-#define PCWOMAN1 (0x54) //84 ポケセン受付１
-#define PCWOMAN2 (0x55) //85 ポケセン受付２
-#define PCWOMAN3 (0x56) //86 ポケセン受付３
-#define WIFISM (0x57) //87 Wifi係員♂
-#define WIFISW (0x58) //88 Wifi係員♀
-#define SUNGLASSES (0x59) //89 サングラス
-#define AMBRELLA (0x5a) //90 パラソル
-#define LEADER1 (0x5b) //91 ジムリーダー１
-#define LEADER2 (0x5c) //92 ジムリーダー２
-#define LEADER3 (0x5d) //93 ジムリーダー３
-#define LEADER4 (0x5e) //94 ジムリーダー４
-#define LEADER5 (0x5f) //95 ジムリーダー５
-#define LEADER6 (0x60) //96 ジムリーダー６
-#define LEADER7 (0x61) //97 ジムリーダー７
-#define LEADER8 (0x62) //98 ジムリーダー８
-#define BIGFOUR1 (0x63) //99 四天王１
-#define BIGFOUR2 (0x64) //100 四天王２
-#define BIGFOUR3 (0x65) //101 四天王３
-#define BIGFOUR4 (0x66) //102 四天王４
-#define CHAMPION (0x67) //103 チャンピオン
-#define HAKAIM (0x68) //104 ハカイ団♂
-#define HAKAIW (0x69) //105 ハカイ団♀
-#define SAGE1 (0x6a) //106 7賢者１
-#define SAGE2 (0x6b) //107 7賢者２
-#define SAGE3 (0x6c) //108 7賢者３
-#define SAGE4 (0x6d) //109 7賢者４
-#define SAGE5 (0x6e) //110 7賢者５
-#define SAGE6 (0x6f) //111 7賢者６
-#define SAGE7 (0x70) //112 7賢者７
-#define GODDESS1 (0x71) //113 ２女神１
-#define GODDESS2 (0x72) //114 ２女神２
-#define BIGFOUR5 (0x73) //115 悪の四天王１
-#define BIGFOUR6 (0x74) //116 悪の四天王２
-#define BIGFOUR7 (0x75) //117 悪の四天王３
-#define BIGFOUR8 (0x76) //118 悪の四天王４
-#define BOSS (0x77) //119 Ｎ
-#define HAKASE1 (0x78) //120 博士１
-#define HAKASE2 (0x79) //121 博士２
-#define ICPO (0x7a) //122 ハンサム
-#define TBOSS (0x7b) //123 タワーボス
-#define TREE (0x7c) //124 切れる木
-#define ROCK (0x7d) //125 怪力の岩
-#define MONSTERBALL (0x7e) //126 アイテムカプセル
-#define PIKACHU (0x7f) //127 ピカチュウ
-#define KABI32 (0x80) //128 テスト三頭身
-#define POKE2 (0x81) //129 ポケモン２
-#define POKE3 (0x82) //130 ポケモン３
-#define POKE4 (0x83) //131 ポケモン４
-#define POKE5 (0x84) //132 ポケモン５
-#define POKE6 (0x85) //133 ポケモン６
-#define POKE7 (0x86) //134 ポケモン７
-#define POKE8 (0x87) //135 ポケモン８
-#define POKE9 (0x88) //136 ポケモン９
-#define POKE10 (0x89) //137 ポケモン１０
-#define POKE11 (0x8a) //138 ポケモン１１
-#define POKE12 (0x8b) //139 ポケモン１２
-#define POKE13 (0x8c) //140 ポケモン１３
-#define POKE14 (0x8d) //141 ポケモン１４
-#define POKE15 (0x8e) //142 ポケモン１５
-#define POKE16 (0x8f) //143 ポケモン１６
-#define POKE17 (0x90) //144 ポケモン１７
-#define POKE18 (0x91) //145 ポケモン１８
-#define POKE19 (0x92) //146 ポケモン１９
-#define POKE20 (0x93) //147 ポケモン２０
-#define ACCORDION (0x94) //148 アコーディオン奏者
-#define BASKETM (0x95) //149 バスケ選手
-#define SUPPORT (0x96) //150 サポート
-#define NONE (0x97) //151 透明なもの
-#define GETHERO (0x98) //152 主人公男ゲット
-#define GETHEROINE (0x99) //153 主人公女ゲット
-#define REPORTHERO (0x9a) //154 主人公男レポート
-#define REPORTHEROINE (0x9b) //155 主人公女レポート
-#define PCHERO (0x9c) //156 主人公男差し出し
-#define PCHEROINE (0x9d) //157 主人公女差し出し
-#define BONE (0x9e) //158 骨の標本
-#define BLACKSTONE (0x9f) //159 石（黒）
-#define WHITESTONE (0xa0) //160 石（白）
-#define BLACKMONOLITH (0xa1) //161 モノリス（黒）
-#define WHITEMONOLITH (0xa2) //162 モノリス（白）
-#define MAMA (0xa3) //163 ママ
-#define OBJCODEMAX (0xa4) //164 最大
+//ビルボード
+#define OBJCODESTART_BBD (0x0)
+#define NONDRAW (0x0) //0(total 0) 描画無し
+#define HERO (0x1) //1(total 1) 主人公男
+#define CYCLEHERO (0x2) //2(total 2) 主人公男自転車
+#define SWIMHERO (0x3) //3(total 3) 主人公男波乗り
+#define HEROINE (0x4) //4(total 4) 主人公女
+#define CYCLEHEROINE (0x5) //5(total 5) 主人公女自転車
+#define SWIMHEROINE (0x6) //6(total 6) 主人公女波乗り
+#define RIVEL (0x7) //7(total 7) ライバル
+#define BABYBOY1 (0x8) //8(total 8) 男の子
+#define BABYGIRL1 (0x9) //9(total 9) 女の子
+#define BOY1 (0xa) //10(total 10) 少年１
+#define BOY2 (0xb) //11(total 11) 少年２
+#define BOY3 (0xc) //12(total 12) 少年３
+#define BOY4 (0xd) //13(total 13) 少年４
+#define GIRL1 (0xe) //14(total 14) 少女１
+#define GIRL2 (0xf) //15(total 15) 少女２
+#define GIRL3 (0x10) //16(total 16) 少女３
+#define GIRL4 (0x11) //17(total 17) 少女４
+#define MAN1 (0x12) //18(total 18) 青年１
+#define MAN2 (0x13) //19(total 19) 青年２
+#define MAN3 (0x14) //20(total 20) 青年３
+#define WOMAN1 (0x15) //21(total 21) 女性
+#define WOMAN2 (0x16) //22(total 22) 女性２
+#define WOMAN3 (0x17) //23(total 23) 女性３
+#define MIDDLEMAN1 (0x18) //24(total 24) 中年男性１
+#define MIDDLEMAN2 (0x19) //25(total 25) 中年男性２
+#define MIDDLEWOMAN1 (0x1a) //26(total 26) 中年女性１
+#define MIDDLEWOMAN2 (0x1b) //27(total 27) 中年女性２
+#define OLDMAN1 (0x1c) //28(total 28) おじいさん
+#define OLDWOMAN1 (0x1d) //29(total 29) おばあさん
+#define TRAINERM (0x1e) //30(total 30) トレーナー♂
+#define TRAINERW (0x1f) //31(total 31) トレーナー♀
+#define VETERANM (0x20) //32(total 32) ベテラン♂
+#define VETERANW (0x21) //33(total 33) ベテラン♀
+#define BREEDERM (0x22) //34(total 34) ブリーダー♂
+#define BREEDERW (0x23) //35(total 35) ブリーダー♀
+#define RANGERM (0x24) //36(total 36) レンジャー♂
+#define RANGERW (0x25) //37(total 37) レンジャー♀
+#define SPORTSM (0x26) //38(total 38) ジョギング♂
+#define SPORTSW (0x27) //39(total 39) ジョギング♀
+#define CYCLEM (0x28) //40(total 40) サイクリング♂
+#define CYCLEW (0x29) //41(total 41) サイクリング♀
+#define SWIMMERM (0x2a) //42(total 42) スイム♂
+#define SWIMMERW (0x2b) //43(total 43) スイム♀
+#define WAITER (0x2c) //44(total 44) ウエーター
+#define WAITRESS (0x2d) //45(total 45) ウエートレス
+#define GENTLEMAN (0x2e) //46(total 46) 紳士
+#define LADY (0x2f) //47(total 47) 淑女
+#define FIGHTERM (0x30) //48(total 48) 格闘家♂
+#define FIGHTERW (0x31) //49(total 49) 格闘家♀
+#define BACKPACKERM (0x32) //50(total 50) バックパッカー♂
+#define BACKPACKERW (0x33) //51(total 51) バックパッカー♀
+#define DOCTOR (0x34) //52(total 52) ドクター
+#define NURSE (0x35) //53(total 53) ナース
+#define CAMERAMAN (0x36) //54(total 54) カメラマン
+#define REPORTER (0x37) //55(total 55) レポーター
+#define BUSINESSMAN (0x38) //56(total 56) サラリーマン
+#define OL (0x39) //57(total 57) ＯＬ
+#define CLOWN (0x3a) //58(total 58) ピエロ
+#define DANCER (0x3b) //59(total 59) ダンサー
+#define JUGGLING (0x3c) //60(total 60) ピエロ
+#define MUSICIAN (0x3d) //61(total 61) ミュージシャン
+#define BASEBALLM (0x3e) //62(total 62) 野球選手
+#define SOCCERM (0x3f) //63(total 63) サッカー選手
+#define FOOTBALLM (0x40) //64(total 64) アメフト選手
+#define TENNISW (0x41) //65(total 65) テニス選手
+#define BADMAN (0x42) //66(total 66) 不良
+#define BADRIDER (0x43) //67(total 67) 暴走族
+#define FISHING (0x44) //68(total 68) 釣り人
+#define MOUNTMAN (0x45) //69(total 69) 山男
+#define MAID (0x46) //70(total 70) メイド
+#define BAKER (0x47) //71(total 71) パン屋
+#define WORKMAN (0x48) //72(total 72) 作業員
+#define RAILMAN (0x49) //73(total 73) 鉄道員
+#define CLEANINGM (0x4a) //74(total 74) 清掃員
+#define DELIVERY (0x4b) //75(total 75) 配達員
+#define PILOT (0x4c) //76(total 76) パイロット
+#define POLICEMAN (0x4d) //77(total 77) ポリスマン
+#define DRIVER (0x4e) //78(total 78) ドライバー
+#define ASSISTANTM (0x4f) //79(total 79) 助手♂
+#define ASSISTANTW (0x50) //80(total 80) 助手♀
+#define INFORMATIONM (0x51) //81(total 81) 受付♂
+#define INFORMATIONW (0x52) //82(total 82) 受付♀
+#define SHOPM1 (0x53) //83(total 83) ショップ店員
+#define PCWOMAN1 (0x54) //84(total 84) ポケセン受付１
+#define PCWOMAN2 (0x55) //85(total 85) ポケセン受付２
+#define PCWOMAN3 (0x56) //86(total 86) ポケセン受付３
+#define WIFISM (0x57) //87(total 87) Wifi係員♂
+#define WIFISW (0x58) //88(total 88) Wifi係員♀
+#define SUNGLASSES (0x59) //89(total 89) サングラス
+#define AMBRELLA (0x5a) //90(total 90) パラソル
+#define LEADER1 (0x5b) //91(total 91) ジムリーダー１
+#define LEADER2 (0x5c) //92(total 92) ジムリーダー２
+#define LEADER3 (0x5d) //93(total 93) ジムリーダー３
+#define LEADER4 (0x5e) //94(total 94) ジムリーダー４
+#define LEADER5 (0x5f) //95(total 95) ジムリーダー５
+#define LEADER6 (0x60) //96(total 96) ジムリーダー６
+#define LEADER7 (0x61) //97(total 97) ジムリーダー７
+#define LEADER8 (0x62) //98(total 98) ジムリーダー８
+#define BIGFOUR1 (0x63) //99(total 99) 四天王１
+#define BIGFOUR2 (0x64) //100(total 100) 四天王２
+#define BIGFOUR3 (0x65) //101(total 101) 四天王３
+#define BIGFOUR4 (0x66) //102(total 102) 四天王４
+#define CHAMPION (0x67) //103(total 103) チャンピオン
+#define HAKAIM (0x68) //104(total 104) ハカイ団♂
+#define HAKAIW (0x69) //105(total 105) ハカイ団♀
+#define SAGE1 (0x6a) //106(total 106) 7賢者１
+#define SAGE2 (0x6b) //107(total 107) 7賢者２
+#define SAGE3 (0x6c) //108(total 108) 7賢者３
+#define SAGE4 (0x6d) //109(total 109) 7賢者４
+#define SAGE5 (0x6e) //110(total 110) 7賢者５
+#define SAGE6 (0x6f) //111(total 111) 7賢者６
+#define SAGE7 (0x70) //112(total 112) 7賢者７
+#define GODDESS1 (0x71) //113(total 113) ２女神１
+#define GODDESS2 (0x72) //114(total 114) ２女神２
+#define BIGFOUR5 (0x73) //115(total 115) 悪の四天王１
+#define BIGFOUR6 (0x74) //116(total 116) 悪の四天王２
+#define BIGFOUR7 (0x75) //117(total 117) 悪の四天王３
+#define BIGFOUR8 (0x76) //118(total 118) 悪の四天王４
+#define BOSS (0x77) //119(total 119) Ｎ
+#define HAKASE1 (0x78) //120(total 120) 博士１
+#define HAKASE2 (0x79) //121(total 121) 博士２
+#define ICPO (0x7a) //122(total 122) ハンサム
+#define TBOSS (0x7b) //123(total 123) タワーボス
+#define TREE (0x7c) //124(total 124) 切れる木
+#define ROCK (0x7d) //125(total 125) 怪力の岩
+#define MONSTERBALL (0x7e) //126(total 126) アイテムカプセル
+#define PIKACHU (0x7f) //127(total 127) ピカチュウ
+#define KABI32 (0x80) //128(total 128) テスト三頭身
+#define POKE2 (0x81) //129(total 129) ポケモン２
+#define POKE3 (0x82) //130(total 130) ポケモン３
+#define POKE4 (0x83) //131(total 131) ポケモン４
+#define POKE5 (0x84) //132(total 132) ポケモン５
+#define POKE6 (0x85) //133(total 133) ポケモン６
+#define POKE7 (0x86) //134(total 134) ポケモン７
+#define POKE8 (0x87) //135(total 135) ポケモン８
+#define POKE9 (0x88) //136(total 136) ポケモン９
+#define POKE10 (0x89) //137(total 137) ポケモン１０
+#define POKE11 (0x8a) //138(total 138) ポケモン１１
+#define POKE12 (0x8b) //139(total 139) ポケモン１２
+#define POKE13 (0x8c) //140(total 140) ポケモン１３
+#define POKE14 (0x8d) //141(total 141) ポケモン１４
+#define POKE15 (0x8e) //142(total 142) ポケモン１５
+#define POKE16 (0x8f) //143(total 143) ポケモン１６
+#define POKE17 (0x90) //144(total 144) ポケモン１７
+#define POKE18 (0x91) //145(total 145) ポケモン１８
+#define POKE19 (0x92) //146(total 146) ポケモン１９
+#define POKE20 (0x93) //147(total 147) ポケモン２０
+#define ACCORDION (0x94) //148(total 148) アコーディオン奏者
+#define BASKETM (0x95) //149(total 149) バスケ選手
+#define SUPPORT (0x96) //150(total 150) サポート
+#define NONE (0x97) //151(total 151) 透明なもの
+#define GETHERO (0x98) //152(total 152) 主人公男ゲット
+#define GETHEROINE (0x99) //153(total 153) 主人公女ゲット
+#define REPORTHERO (0x9a) //154(total 154) 主人公男レポート
+#define REPORTHEROINE (0x9b) //155(total 155) 主人公女レポート
+#define PCHERO (0x9c) //156(total 156) 主人公男差し出し
+#define PCHEROINE (0x9d) //157(total 157) 主人公女差し出し
+#define BONE (0x9e) //158(total 158) 骨の標本
+#define BLACKSTONE (0x9f) //159(total 159) 石（黒）
+#define WHITESTONE (0xa0) //160(total 160) 石（白）
+#define BLACKMONOLITH (0xa1) //161(total 161) モノリス（黒）
+#define WHITEMONOLITH (0xa2) //162(total 162) モノリス（白）
+#define MAMA (0xa3) //163(total 163) ママ
+#define OBJCODEEND_BBD (0xa4) //164(total 164) ビルボードコード終端
 
-#endif
+//連れ歩きポケモン
+#define OBJCODESTART_TPOKE (0x1000)
+#define TPOKE_0001 (0x1000) //4096(total 164) フシギダネ
+#define TPOKE_0002 (0x1001) //4097(total 165) フシギソウ
+#define TPOKE_0003 (0x1002) //4098(total 166) フシギバナ／オス
+#define TPOKE_0557 (0x1003) //4099(total 167) フシギバナ／メス
+#define TPOKE_0004 (0x1004) //4100(total 168) ヒトカゲ
+#define TPOKE_0005 (0x1005) //4101(total 169) リザード
+#define TPOKE_0006 (0x1006) //4102(total 170) リザードン
+#define TPOKE_0007 (0x1007) //4103(total 171) ゼニガメ
+#define TPOKE_0008 (0x1008) //4104(total 172) カメール
+#define TPOKE_0009 (0x1009) //4105(total 173) カメックス
+#define TPOKE_0010 (0x100a) //4106(total 174) キャタピー
+#define TPOKE_0011 (0x100b) //4107(total 175) トランセル
+#define TPOKE_0012 (0x100c) //4108(total 176) バタフリー
+#define TPOKE_0013 (0x100d) //4109(total 177) ビードル
+#define TPOKE_0014 (0x100e) //4110(total 178) コクーン
+#define TPOKE_0015 (0x100f) //4111(total 179) スピアー
+#define TPOKE_0016 (0x1010) //4112(total 180) ポッポ
+#define TPOKE_0017 (0x1011) //4113(total 181) ピジョン
+#define TPOKE_0018 (0x1012) //4114(total 182) ピジョット
+#define TPOKE_0019 (0x1013) //4115(total 183) コラッタ
+#define TPOKE_0020 (0x1014) //4116(total 184) ラッタ
+#define TPOKE_0021 (0x1015) //4117(total 185) オニスズメ
+#define TPOKE_0022 (0x1016) //4118(total 186) オニドリル
+#define TPOKE_0023 (0x1017) //4119(total 187) アーボ
+#define TPOKE_0024 (0x1018) //4120(total 188) アーボック
+#define TPOKE_0025 (0x1019) //4121(total 189) ピカチュウ／オス
+#define TPOKE_0558 (0x101a) //4122(total 190) ピカチュウ／メス
+#define TPOKE_0026 (0x101b) //4123(total 191) ライチュウ
+#define TPOKE_0027 (0x101c) //4124(total 192) サンド
+#define TPOKE_0028 (0x101d) //4125(total 193) サンドパン
+#define TPOKE_0029 (0x101e) //4126(total 194) ニドラン♀
+#define TPOKE_0030 (0x101f) //4127(total 195) ニドリーナ
+#define TPOKE_0031 (0x1020) //4128(total 196) ニドクイン
+#define TPOKE_0032 (0x1021) //4129(total 197) ニドラン♂
+#define TPOKE_0033 (0x1022) //4130(total 198) ニドリーノ
+#define TPOKE_0034 (0x1023) //4131(total 199) ニドキング
+#define TPOKE_0035 (0x1024) //4132(total 200) ピッピ
+#define TPOKE_0036 (0x1025) //4133(total 201) ピクシー
+#define TPOKE_0037 (0x1026) //4134(total 202) ロコン
+#define TPOKE_0038 (0x1027) //4135(total 203) キュウコン
+#define TPOKE_0039 (0x1028) //4136(total 204) プリン
+#define TPOKE_0040 (0x1029) //4137(total 205) プクリン
+#define TPOKE_0041 (0x102a) //4138(total 206) ズバット
+#define TPOKE_0042 (0x102b) //4139(total 207) ゴルバット
+#define TPOKE_0043 (0x102c) //4140(total 208) ナゾノクサ
+#define TPOKE_0044 (0x102d) //4141(total 209) クサイハナ
+#define TPOKE_0045 (0x102e) //4142(total 210) ラフレシア
+#define TPOKE_0046 (0x102f) //4143(total 211) パラス
+#define TPOKE_0047 (0x1030) //4144(total 212) パラセクト
+#define TPOKE_0048 (0x1031) //4145(total 213) コンパン
+#define TPOKE_0049 (0x1032) //4146(total 214) モルフォン
+#define TPOKE_0050 (0x1033) //4147(total 215) ディグダ
+#define TPOKE_0051 (0x1034) //4148(total 216) ダグトリオ
+#define TPOKE_0052 (0x1035) //4149(total 217) ニャース
+#define TPOKE_0053 (0x1036) //4150(total 218) ペルシアン
+#define TPOKE_0054 (0x1037) //4151(total 219) コダック
+#define TPOKE_0055 (0x1038) //4152(total 220) ゴルダック
+#define TPOKE_0056 (0x1039) //4153(total 221) マンキー
+#define TPOKE_0057 (0x103a) //4154(total 222) オコリザル
+#define TPOKE_0058 (0x103b) //4155(total 223) ガーディ
+#define TPOKE_0059 (0x103c) //4156(total 224) ウインディ
+#define TPOKE_0060 (0x103d) //4157(total 225) ニョロモ
+#define TPOKE_0061 (0x103e) //4158(total 226) ニョロゾ
+#define TPOKE_0062 (0x103f) //4159(total 227) ニョロボン
+#define TPOKE_0063 (0x1040) //4160(total 228) ケーシィ
+#define TPOKE_0064 (0x1041) //4161(total 229) ユンゲラー
+#define TPOKE_0065 (0x1042) //4162(total 230) フーディン
+#define TPOKE_0066 (0x1043) //4163(total 231) ワンリキー
+#define TPOKE_0067 (0x1044) //4164(total 232) ゴーリキー
+#define TPOKE_0068 (0x1045) //4165(total 233) カイリキー
+#define TPOKE_0069 (0x1046) //4166(total 234) マダツボミ
+#define TPOKE_0070 (0x1047) //4167(total 235) ウツドン
+#define TPOKE_0071 (0x1048) //4168(total 236) ウツボット
+#define TPOKE_0072 (0x1049) //4169(total 237) メノクラゲ
+#define TPOKE_0073 (0x104a) //4170(total 238) ドククラゲ
+#define TPOKE_0074 (0x104b) //4171(total 239) イシツブテ
+#define TPOKE_0075 (0x104c) //4172(total 240) ゴローン
+#define TPOKE_0076 (0x104d) //4173(total 241) ゴローニャ
+#define TPOKE_0077 (0x104e) //4174(total 242) ポニータ
+#define TPOKE_0078 (0x104f) //4175(total 243) ギャロップ
+#define TPOKE_0079 (0x1050) //4176(total 244) ヤドン
+#define TPOKE_0080 (0x1051) //4177(total 245) ヤドラン
+#define TPOKE_0081 (0x1052) //4178(total 246) コイル
+#define TPOKE_0082 (0x1053) //4179(total 247) レアコイル
+#define TPOKE_0083 (0x1054) //4180(total 248) カモネギ
+#define TPOKE_0084 (0x1055) //4181(total 249) ドードー
+#define TPOKE_0085 (0x1056) //4182(total 250) ドードリオ
+#define TPOKE_0086 (0x1057) //4183(total 251) パウワウ
+#define TPOKE_0087 (0x1058) //4184(total 252) ジュゴン
+#define TPOKE_0088 (0x1059) //4185(total 253) ベトベター
+#define TPOKE_0089 (0x105a) //4186(total 254) ベトベトン
+#define TPOKE_0090 (0x105b) //4187(total 255) シェルダー
+#define TPOKE_0091 (0x105c) //4188(total 256) パルシェン
+#define TPOKE_0092 (0x105d) //4189(total 257) ゴース
+#define TPOKE_0093 (0x105e) //4190(total 258) ゴースト
+#define TPOKE_0094 (0x105f) //4191(total 259) ゲンガー
+#define TPOKE_0095 (0x1060) //4192(total 260) イワーク
+#define TPOKE_0096 (0x1061) //4193(total 261) スリープ
+#define TPOKE_0097 (0x1062) //4194(total 262) スリーパー
+#define TPOKE_0098 (0x1063) //4195(total 263) クラブ
+#define TPOKE_0099 (0x1064) //4196(total 264) キングラー
+#define TPOKE_0100 (0x1065) //4197(total 265) ビリリダマ
+#define TPOKE_0101 (0x1066) //4198(total 266) マルマイン
+#define TPOKE_0102 (0x1067) //4199(total 267) タマタマ
+#define TPOKE_0103 (0x1068) //4200(total 268) ナッシー
+#define TPOKE_0104 (0x1069) //4201(total 269) カラカラ
+#define TPOKE_0105 (0x106a) //4202(total 270) ガラガラ
+#define TPOKE_0106 (0x106b) //4203(total 271) サワムラー
+#define TPOKE_0107 (0x106c) //4204(total 272) エビワラー
+#define TPOKE_0108 (0x106d) //4205(total 273) ベロリンガ
+#define TPOKE_0109 (0x106e) //4206(total 274) ドガース
+#define TPOKE_0110 (0x106f) //4207(total 275) マタドガス
+#define TPOKE_0111 (0x1070) //4208(total 276) サイホーン
+#define TPOKE_0112 (0x1071) //4209(total 277) サイドン
+#define TPOKE_0113 (0x1072) //4210(total 278) ラッキー
+#define TPOKE_0114 (0x1073) //4211(total 279) モンジャラ
+#define TPOKE_0115 (0x1074) //4212(total 280) ガルーラ
+#define TPOKE_0116 (0x1075) //4213(total 281) タッツー
+#define TPOKE_0117 (0x1076) //4214(total 282) シードラ
+#define TPOKE_0118 (0x1077) //4215(total 283) トサキント
+#define TPOKE_0119 (0x1078) //4216(total 284) アズマオウ
+#define TPOKE_0120 (0x1079) //4217(total 285) ヒトデマン
+#define TPOKE_0121 (0x107a) //4218(total 286) スターミー
+#define TPOKE_0122 (0x107b) //4219(total 287) バリヤード
+#define TPOKE_0123 (0x107c) //4220(total 288) ストライク
+#define TPOKE_0124 (0x107d) //4221(total 289) ルージュラ
+#define TPOKE_0125 (0x107e) //4222(total 290) エレブー
+#define TPOKE_0126 (0x107f) //4223(total 291) ブーバー
+#define TPOKE_0127 (0x1080) //4224(total 292) カイロス
+#define TPOKE_0128 (0x1081) //4225(total 293) ケンタロス
+#define TPOKE_0129 (0x1082) //4226(total 294) コイキング
+#define TPOKE_0130 (0x1083) //4227(total 295) ギャラドス
+#define TPOKE_0131 (0x1084) //4228(total 296) ラプラス
+#define TPOKE_0132 (0x1085) //4229(total 297) メタモン
+#define TPOKE_0133 (0x1086) //4230(total 298) イーブイ
+#define TPOKE_0134 (0x1087) //4231(total 299) シャワーズ
+#define TPOKE_0135 (0x1088) //4232(total 300) サンダース
+#define TPOKE_0136 (0x1089) //4233(total 301) ブースター
+#define TPOKE_0137 (0x108a) //4234(total 302) ポリゴン
+#define TPOKE_0138 (0x108b) //4235(total 303) オムナイト
+#define TPOKE_0139 (0x108c) //4236(total 304) オムスター
+#define TPOKE_0140 (0x108d) //4237(total 305) カブト
+#define TPOKE_0141 (0x108e) //4238(total 306) カブトプス
+#define TPOKE_0142 (0x108f) //4239(total 307) プテラ
+#define TPOKE_0143 (0x1090) //4240(total 308) カビゴン
+#define TPOKE_0144 (0x1091) //4241(total 309) フリーザー
+#define TPOKE_0145 (0x1092) //4242(total 310) サンダー
+#define TPOKE_0146 (0x1093) //4243(total 311) ファイヤー
+#define TPOKE_0147 (0x1094) //4244(total 312) ミニリュウ
+#define TPOKE_0148 (0x1095) //4245(total 313) ハクリュー
+#define TPOKE_0149 (0x1096) //4246(total 314) カイリュー
+#define TPOKE_0150 (0x1097) //4247(total 315) ミュウツー
+#define TPOKE_0151 (0x1098) //4248(total 316) ミュウ
+#define TPOKE_0152 (0x1099) //4249(total 317) チコリータ
+#define TPOKE_0153 (0x109a) //4250(total 318) ベイリーフ
+#define TPOKE_0154 (0x109b) //4251(total 319) メガニウム／オス
+#define TPOKE_0559 (0x109c) //4252(total 320) メガニウム／メス
+#define TPOKE_0155 (0x109d) //4253(total 321) ヒノアラシ
+#define TPOKE_0156 (0x109e) //4254(total 322) マグマラシ
+#define TPOKE_0157 (0x109f) //4255(total 323) バクフーン
+#define TPOKE_0158 (0x10a0) //4256(total 324) ワニノコ
+#define TPOKE_0159 (0x10a1) //4257(total 325) アリゲイツ
+#define TPOKE_0160 (0x10a2) //4258(total 326) オーダイル
+#define TPOKE_0161 (0x10a3) //4259(total 327) オタチ
+#define TPOKE_0162 (0x10a4) //4260(total 328) オオタチ
+#define TPOKE_0163 (0x10a5) //4261(total 329) ホーホー
+#define TPOKE_0164 (0x10a6) //4262(total 330) ヨルノズク
+#define TPOKE_0165 (0x10a7) //4263(total 331) レディバ
+#define TPOKE_0166 (0x10a8) //4264(total 332) レディアン
+#define TPOKE_0167 (0x10a9) //4265(total 333) イトマル
+#define TPOKE_0168 (0x10aa) //4266(total 334) アリアドス
+#define TPOKE_0169 (0x10ab) //4267(total 335) クロバット
+#define TPOKE_0170 (0x10ac) //4268(total 336) チョンチー
+#define TPOKE_0171 (0x10ad) //4269(total 337) ランターン
+#define TPOKE_0172 (0x10ae) //4270(total 338) ピチュー
+#define TPOKE_0556 (0x10af) //4271(total 339) ピチュー・ギザ
+#define TPOKE_0173 (0x10b0) //4272(total 340) ピィ
+#define TPOKE_0174 (0x10b1) //4273(total 341) ププリン
+#define TPOKE_0175 (0x10b2) //4274(total 342) トゲピー
+#define TPOKE_0176 (0x10b3) //4275(total 343) トゲチック
+#define TPOKE_0177 (0x10b4) //4276(total 344) ネイティ
+#define TPOKE_0178 (0x10b5) //4277(total 345) ネイティオ
+#define TPOKE_0179 (0x10b6) //4278(total 346) メリープ
+#define TPOKE_0180 (0x10b7) //4279(total 347) モココ
+#define TPOKE_0181 (0x10b8) //4280(total 348) デンリュウ
+#define TPOKE_0182 (0x10b9) //4281(total 349) キレイハナ
+#define TPOKE_0183 (0x10ba) //4282(total 350) マリル
+#define TPOKE_0184 (0x10bb) //4283(total 351) マリルリ
+#define TPOKE_0185 (0x10bc) //4284(total 352) ウソッキー
+#define TPOKE_0186 (0x10bd) //4285(total 353) ニョロトノ
+#define TPOKE_0187 (0x10be) //4286(total 354) ハネッコ
+#define TPOKE_0188 (0x10bf) //4287(total 355) ポポッコ
+#define TPOKE_0189 (0x10c0) //4288(total 356) ワタッコ
+#define TPOKE_0190 (0x10c1) //4289(total 357) エイパム
+#define TPOKE_0191 (0x10c2) //4290(total 358) ヒマナッツ
+#define TPOKE_0192 (0x10c3) //4291(total 359) キマワリ
+#define TPOKE_0193 (0x10c4) //4292(total 360) ヤンヤンマ
+#define TPOKE_0194 (0x10c5) //4293(total 361) ウパー
+#define TPOKE_0195 (0x10c6) //4294(total 362) ヌオー
+#define TPOKE_0196 (0x10c7) //4295(total 363) エーフィ
+#define TPOKE_0197 (0x10c8) //4296(total 364) ブラッキー
+#define TPOKE_0198 (0x10c9) //4297(total 365) ヤミカラス
+#define TPOKE_0199 (0x10ca) //4298(total 366) ヤドキング
+#define TPOKE_0200 (0x10cb) //4299(total 367) ムウマ
+#define TPOKE_0201 (0x10cc) //4300(total 368) アンノーン・A
+#define TPOKE_0202 (0x10cd) //4301(total 369) アンノーン・B
+#define TPOKE_0203 (0x10ce) //4302(total 370) アンノーン・C
+#define TPOKE_0204 (0x10cf) //4303(total 371) アンノーン・D
+#define TPOKE_0205 (0x10d0) //4304(total 372) アンノーン・E
+#define TPOKE_0206 (0x10d1) //4305(total 373) アンノーン・F
+#define TPOKE_0207 (0x10d2) //4306(total 374) アンノーン・G
+#define TPOKE_0208 (0x10d3) //4307(total 375) アンノーン・H
+#define TPOKE_0209 (0x10d4) //4308(total 376) アンノーン・I
+#define TPOKE_0210 (0x10d5) //4309(total 377) アンノーン・J
+#define TPOKE_0211 (0x10d6) //4310(total 378) アンノーン・K
+#define TPOKE_0212 (0x10d7) //4311(total 379) アンノーン・L
+#define TPOKE_0213 (0x10d8) //4312(total 380) アンノーン・M
+#define TPOKE_0214 (0x10d9) //4313(total 381) アンノーン・N
+#define TPOKE_0215 (0x10da) //4314(total 382) アンノーン・O
+#define TPOKE_0216 (0x10db) //4315(total 383) アンノーン・P
+#define TPOKE_0217 (0x10dc) //4316(total 384) アンノーン・Q
+#define TPOKE_0218 (0x10dd) //4317(total 385) アンノーン・R
+#define TPOKE_0219 (0x10de) //4318(total 386) アンノーン・S
+#define TPOKE_0220 (0x10df) //4319(total 387) アンノーン・T
+#define TPOKE_0221 (0x10e0) //4320(total 388) アンノーン・U
+#define TPOKE_0222 (0x10e1) //4321(total 389) アンノーン・V
+#define TPOKE_0223 (0x10e2) //4322(total 390) アンノーン・W
+#define TPOKE_0224 (0x10e3) //4323(total 391) アンノーン・X
+#define TPOKE_0225 (0x10e4) //4324(total 392) アンノーン・Y
+#define TPOKE_0226 (0x10e5) //4325(total 393) アンノーン・Z
+#define TPOKE_0227 (0x10e6) //4326(total 394) アンノーン・！
+#define TPOKE_0228 (0x10e7) //4327(total 395) アンノーン・？
+#define TPOKE_0229 (0x10e8) //4328(total 396) ソーナンス／オス
+#define TPOKE_0560 (0x10e9) //4329(total 397) ソーナンス／メス
+#define TPOKE_0230 (0x10ea) //4330(total 398) キリンリキ
+#define TPOKE_0231 (0x10eb) //4331(total 399) クヌギダマ
+#define TPOKE_0232 (0x10ec) //4332(total 400) フォレトス
+#define TPOKE_0233 (0x10ed) //4333(total 401) ノコッチ
+#define TPOKE_0234 (0x10ee) //4334(total 402) グライガー
+#define TPOKE_0235 (0x10ef) //4335(total 403) ハガネール／オス
+#define TPOKE_0562 (0x10f0) //4336(total 404) ハガネール／メス
+#define TPOKE_0236 (0x10f1) //4337(total 405) ブルー
+#define TPOKE_0237 (0x10f2) //4338(total 406) グランブル
+#define TPOKE_0238 (0x10f3) //4339(total 407) ハリーセン
+#define TPOKE_0239 (0x10f4) //4340(total 408) ハッサム
+#define TPOKE_0240 (0x10f5) //4341(total 409) ツボツボ
+#define TPOKE_0241 (0x10f6) //4342(total 410) ヘラクロス／オス
+#define TPOKE_0561 (0x10f7) //4343(total 411) ヘラクロス／メス
+#define TPOKE_0242 (0x10f8) //4344(total 412) ニューラ
+#define TPOKE_0243 (0x10f9) //4345(total 413) ヒメグマ
+#define TPOKE_0244 (0x10fa) //4346(total 414) リングマ
+#define TPOKE_0245 (0x10fb) //4347(total 415) マグマッグ
+#define TPOKE_0246 (0x10fc) //4348(total 416) マグカルゴ
+#define TPOKE_0247 (0x10fd) //4349(total 417) ウリムー
+#define TPOKE_0248 (0x10fe) //4350(total 418) イノムー
+#define TPOKE_0249 (0x10ff) //4351(total 419) サニーゴ
+#define TPOKE_0250 (0x1100) //4352(total 420) テッポウオ
+#define TPOKE_0251 (0x1101) //4353(total 421) オクタン
+#define TPOKE_0252 (0x1102) //4354(total 422) デリバード
+#define TPOKE_0253 (0x1103) //4355(total 423) マンタイン
+#define TPOKE_0254 (0x1104) //4356(total 424) エアームド
+#define TPOKE_0255 (0x1105) //4357(total 425) デルビル
+#define TPOKE_0256 (0x1106) //4358(total 426) ヘルガー
+#define TPOKE_0257 (0x1107) //4359(total 427) キングドラ
+#define TPOKE_0258 (0x1108) //4360(total 428) ゴマゾウ
+#define TPOKE_0259 (0x1109) //4361(total 429) ドンファン
+#define TPOKE_0260 (0x110a) //4362(total 430) ポリゴン２
+#define TPOKE_0261 (0x110b) //4363(total 431) オドシシ
+#define TPOKE_0262 (0x110c) //4364(total 432) ドーブル
+#define TPOKE_0263 (0x110d) //4365(total 433) バルキー
+#define TPOKE_0264 (0x110e) //4366(total 434) カポエラー
+#define TPOKE_0265 (0x110f) //4367(total 435) ムチュール
+#define TPOKE_0266 (0x1110) //4368(total 436) エレキッド
+#define TPOKE_0267 (0x1111) //4369(total 437) ブビィ
+#define TPOKE_0268 (0x1112) //4370(total 438) ミルタンク
+#define TPOKE_0269 (0x1113) //4371(total 439) ハピナス
+#define TPOKE_0270 (0x1114) //4372(total 440) ライコウ
+#define TPOKE_0271 (0x1115) //4373(total 441) エンテイ
+#define TPOKE_0272 (0x1116) //4374(total 442) スイクン
+#define TPOKE_0273 (0x1117) //4375(total 443) ヨーギラス
+#define TPOKE_0274 (0x1118) //4376(total 444) サナギラス
+#define TPOKE_0275 (0x1119) //4377(total 445) バンギラス
+#define TPOKE_0276 (0x111a) //4378(total 446) ルギア
+#define TPOKE_0277 (0x111b) //4379(total 447) ホウオウ
+#define TPOKE_0278 (0x111c) //4380(total 448) セレビィ
+#define TPOKE_0279 (0x111d) //4381(total 449) キモリ
+#define TPOKE_0280 (0x111e) //4382(total 450) ジュプトル
+#define TPOKE_0281 (0x111f) //4383(total 451) ジュカイン
+#define TPOKE_0282 (0x1120) //4384(total 452) アチャモ
+#define TPOKE_0283 (0x1121) //4385(total 453) ワカシャモ
+#define TPOKE_0284 (0x1122) //4386(total 454) バシャーモ
+#define TPOKE_0285 (0x1123) //4387(total 455) ミズゴロウ
+#define TPOKE_0286 (0x1124) //4388(total 456) ヌマクロー
+#define TPOKE_0287 (0x1125) //4389(total 457) ラグラージ
+#define TPOKE_0288 (0x1126) //4390(total 458) ポチエナ
+#define TPOKE_0289 (0x1127) //4391(total 459) グラエナ
+#define TPOKE_0290 (0x1128) //4392(total 460) ジグザグマ
+#define TPOKE_0291 (0x1129) //4393(total 461) マッスグマ
+#define TPOKE_0292 (0x112a) //4394(total 462) ケムッソ
+#define TPOKE_0293 (0x112b) //4395(total 463) カラサリス
+#define TPOKE_0294 (0x112c) //4396(total 464) アゲハント
+#define TPOKE_0295 (0x112d) //4397(total 465) マユルド
+#define TPOKE_0296 (0x112e) //4398(total 466) ドクケイル
+#define TPOKE_0297 (0x112f) //4399(total 467) ハスボー
+#define TPOKE_0298 (0x1130) //4400(total 468) ハスブレロ
+#define TPOKE_0299 (0x1131) //4401(total 469) ルンパッパ
+#define TPOKE_0300 (0x1132) //4402(total 470) タネボー
+#define TPOKE_0301 (0x1133) //4403(total 471) コノハナ
+#define TPOKE_0302 (0x1134) //4404(total 472) ダーテング
+#define TPOKE_0303 (0x1135) //4405(total 473) スバメ
+#define TPOKE_0304 (0x1136) //4406(total 474) オオスバメ
+#define TPOKE_0305 (0x1137) //4407(total 475) キャモメ
+#define TPOKE_0306 (0x1138) //4408(total 476) ペリッパー
+#define TPOKE_0307 (0x1139) //4409(total 477) ラルトス
+#define TPOKE_0308 (0x113a) //4410(total 478) キルリア
+#define TPOKE_0309 (0x113b) //4411(total 479) サーナイト
+#define TPOKE_0310 (0x113c) //4412(total 480) アメタマ
+#define TPOKE_0311 (0x113d) //4413(total 481) アメモース
+#define TPOKE_0312 (0x113e) //4414(total 482) キノココ
+#define TPOKE_0313 (0x113f) //4415(total 483) キノガッサ
+#define TPOKE_0314 (0x1140) //4416(total 484) ナマケロ
+#define TPOKE_0315 (0x1141) //4417(total 485) ヤルキモノ
+#define TPOKE_0316 (0x1142) //4418(total 486) ケッキング
+#define TPOKE_0317 (0x1143) //4419(total 487) ツチニン
+#define TPOKE_0318 (0x1144) //4420(total 488) テッカニン
+#define TPOKE_0319 (0x1145) //4421(total 489) ヌケニン
+#define TPOKE_0320 (0x1146) //4422(total 490) ゴニョニョ
+#define TPOKE_0321 (0x1147) //4423(total 491) ドゴーム
+#define TPOKE_0322 (0x1148) //4424(total 492) バクオング
+#define TPOKE_0323 (0x1149) //4425(total 493) マクノシタ
+#define TPOKE_0324 (0x114a) //4426(total 494) ハリテヤマ
+#define TPOKE_0325 (0x114b) //4427(total 495) ルリリ
+#define TPOKE_0326 (0x114c) //4428(total 496) ノズパス
+#define TPOKE_0327 (0x114d) //4429(total 497) エネコ
+#define TPOKE_0328 (0x114e) //4430(total 498) エネコロロ
+#define TPOKE_0329 (0x114f) //4431(total 499) ヤミラミ
+#define TPOKE_0330 (0x1150) //4432(total 500) クチート
+#define TPOKE_0331 (0x1151) //4433(total 501) ココドラ
+#define TPOKE_0332 (0x1152) //4434(total 502) コドラ
+#define TPOKE_0333 (0x1153) //4435(total 503) ボスゴドラ
+#define TPOKE_0334 (0x1154) //4436(total 504) アサナン
+#define TPOKE_0335 (0x1155) //4437(total 505) チャーレム
+#define TPOKE_0336 (0x1156) //4438(total 506) ラクライ
+#define TPOKE_0337 (0x1157) //4439(total 507) ライボルト
+#define TPOKE_0338 (0x1158) //4440(total 508) プラスル
+#define TPOKE_0339 (0x1159) //4441(total 509) マイナン
+#define TPOKE_0340 (0x115a) //4442(total 510) バルビート
+#define TPOKE_0341 (0x115b) //4443(total 511) イルミーゼ
+#define TPOKE_0342 (0x115c) //4444(total 512) ロゼリア
+#define TPOKE_0343 (0x115d) //4445(total 513) ゴクリン
+#define TPOKE_0344 (0x115e) //4446(total 514) マルノーム
+#define TPOKE_0345 (0x115f) //4447(total 515) キバニア
+#define TPOKE_0346 (0x1160) //4448(total 516) サメハダー
+#define TPOKE_0347 (0x1161) //4449(total 517) ホエルコ
+#define TPOKE_0348 (0x1162) //4450(total 518) ホエルオー
+#define TPOKE_0349 (0x1163) //4451(total 519) ドンメル
+#define TPOKE_0350 (0x1164) //4452(total 520) バクーダ
+#define TPOKE_0351 (0x1165) //4453(total 521) コータス
+#define TPOKE_0352 (0x1166) //4454(total 522) バネブー
+#define TPOKE_0353 (0x1167) //4455(total 523) ブーピッグ
+#define TPOKE_0354 (0x1168) //4456(total 524) パッチール
+#define TPOKE_0355 (0x1169) //4457(total 525) ナックラー
+#define TPOKE_0356 (0x116a) //4458(total 526) ビブラーバ
+#define TPOKE_0357 (0x116b) //4459(total 527) フライゴン
+#define TPOKE_0358 (0x116c) //4460(total 528) サボネア
+#define TPOKE_0359 (0x116d) //4461(total 529) ノクタス
+#define TPOKE_0360 (0x116e) //4462(total 530) チルット
+#define TPOKE_0361 (0x116f) //4463(total 531) チルタリス
+#define TPOKE_0362 (0x1170) //4464(total 532) ザングース
+#define TPOKE_0363 (0x1171) //4465(total 533) ハブネーク
+#define TPOKE_0364 (0x1172) //4466(total 534) ルナトーン
+#define TPOKE_0365 (0x1173) //4467(total 535) ソルロック
+#define TPOKE_0366 (0x1174) //4468(total 536) ドジョッチ
+#define TPOKE_0367 (0x1175) //4469(total 537) ナマズン
+#define TPOKE_0368 (0x1176) //4470(total 538) ヘイガニ
+#define TPOKE_0369 (0x1177) //4471(total 539) シザリガー
+#define TPOKE_0370 (0x1178) //4472(total 540) ヤジロン
+#define TPOKE_0371 (0x1179) //4473(total 541) ネンドール
+#define TPOKE_0372 (0x117a) //4474(total 542) リリーラ
+#define TPOKE_0373 (0x117b) //4475(total 543) ユレイドル
+#define TPOKE_0374 (0x117c) //4476(total 544) アノプス
+#define TPOKE_0375 (0x117d) //4477(total 545) アーマルド
+#define TPOKE_0376 (0x117e) //4478(total 546) ヒンバス
+#define TPOKE_0377 (0x117f) //4479(total 547) ミロカロス
+#define TPOKE_0378 (0x1180) //4480(total 548) ポワルン
+#define TPOKE_0379 (0x1181) //4481(total 549) カクレオン
+#define TPOKE_0380 (0x1182) //4482(total 550) カゲボウズ
+#define TPOKE_0381 (0x1183) //4483(total 551) ジュペッタ
+#define TPOKE_0382 (0x1184) //4484(total 552) ヨマワル
+#define TPOKE_0383 (0x1185) //4485(total 553) サマヨール
+#define TPOKE_0384 (0x1186) //4486(total 554) トロピウス
+#define TPOKE_0385 (0x1187) //4487(total 555) チリーン
+#define TPOKE_0386 (0x1188) //4488(total 556) アブソル
+#define TPOKE_0387 (0x1189) //4489(total 557) ソーナノ
+#define TPOKE_0388 (0x118a) //4490(total 558) ユキワラシ
+#define TPOKE_0389 (0x118b) //4491(total 559) オニゴーリ
+#define TPOKE_0390 (0x118c) //4492(total 560) タマザラシ
+#define TPOKE_0391 (0x118d) //4493(total 561) トドグラー
+#define TPOKE_0392 (0x118e) //4494(total 562) トドゼルガ
+#define TPOKE_0393 (0x118f) //4495(total 563) パールル
+#define TPOKE_0394 (0x1190) //4496(total 564) ハンテール
+#define TPOKE_0395 (0x1191) //4497(total 565) サクラビス
+#define TPOKE_0396 (0x1192) //4498(total 566) ジーランス
+#define TPOKE_0397 (0x1193) //4499(total 567) ラブカス
+#define TPOKE_0398 (0x1194) //4500(total 568) タツベイ
+#define TPOKE_0399 (0x1195) //4501(total 569) コモルー
+#define TPOKE_0400 (0x1196) //4502(total 570) ボーマンダ
+#define TPOKE_0401 (0x1197) //4503(total 571) ダンバル
+#define TPOKE_0402 (0x1198) //4504(total 572) メタング
+#define TPOKE_0403 (0x1199) //4505(total 573) メタグロス
+#define TPOKE_0404 (0x119a) //4506(total 574) レジロック
+#define TPOKE_0405 (0x119b) //4507(total 575) レジアイス
+#define TPOKE_0406 (0x119c) //4508(total 576) レジスチル
+#define TPOKE_0407 (0x119d) //4509(total 577) ラティアス
+#define TPOKE_0408 (0x119e) //4510(total 578) ラティオス
+#define TPOKE_0409 (0x119f) //4511(total 579) カイオーガ
+#define TPOKE_0410 (0x11a0) //4512(total 580) グラードン
+#define TPOKE_0411 (0x11a1) //4513(total 581) レックウザ
+#define TPOKE_0412 (0x11a2) //4514(total 582) ジラーチ
+#define TPOKE_0413 (0x11a3) //4515(total 583) デオキシス・ノーマル
+#define TPOKE_0414 (0x11a4) //4516(total 584) デオキシス・アタック
+#define TPOKE_0415 (0x11a5) //4517(total 585) デオキシス・ディフェンス
+#define TPOKE_0416 (0x11a6) //4518(total 586) デオキシス・スピード
+#define TPOKE_0417 (0x11a7) //4519(total 587) ナエトル
+#define TPOKE_0418 (0x11a8) //4520(total 588) ハヤシガメ
+#define TPOKE_0419 (0x11a9) //4521(total 589) ドダイトス
+#define TPOKE_0420 (0x11aa) //4522(total 590) ヒコザル
+#define TPOKE_0421 (0x11ab) //4523(total 591) モウカザル
+#define TPOKE_0422 (0x11ac) //4524(total 592) ゴウカザル
+#define TPOKE_0423 (0x11ad) //4525(total 593) ポッチャマ
+#define TPOKE_0424 (0x11ae) //4526(total 594) ポッタイシ
+#define TPOKE_0425 (0x11af) //4527(total 595) エンペルト
+#define TPOKE_0426 (0x11b0) //4528(total 596) ムックル
+#define TPOKE_0427 (0x11b1) //4529(total 597) ムクバード
+#define TPOKE_0428 (0x11b2) //4530(total 598) ムクホーク
+#define TPOKE_0429 (0x11b3) //4531(total 599) ビッパ
+#define TPOKE_0430 (0x11b4) //4532(total 600) ビーダル
+#define TPOKE_0431 (0x11b5) //4533(total 601) コロボーシ
+#define TPOKE_0432 (0x11b6) //4534(total 602) コロトック
+#define TPOKE_0433 (0x11b7) //4535(total 603) コリンク
+#define TPOKE_0434 (0x11b8) //4536(total 604) ルクシオ
+#define TPOKE_0435 (0x11b9) //4537(total 605) レントラー
+#define TPOKE_0436 (0x11ba) //4538(total 606) スボミー
+#define TPOKE_0437 (0x11bb) //4539(total 607) ロズレイド
+#define TPOKE_0438 (0x11bc) //4540(total 608) ズガイドス
+#define TPOKE_0439 (0x11bd) //4541(total 609) ラムパルド
+#define TPOKE_0440 (0x11be) //4542(total 610) タテトプス
+#define TPOKE_0441 (0x11bf) //4543(total 611) トリデプス
+#define TPOKE_0442 (0x11c0) //4544(total 612) ミノムッチ・草
+#define TPOKE_0443 (0x11c1) //4545(total 613) ミノムッチ・砂
+#define TPOKE_0444 (0x11c2) //4546(total 614) ミノムッチ・鉄
+#define TPOKE_0445 (0x11c3) //4547(total 615) ミノマダム・草
+#define TPOKE_0446 (0x11c4) //4548(total 616) ミノマダム・砂
+#define TPOKE_0447 (0x11c5) //4549(total 617) ミノマダム・鉄
+#define TPOKE_0448 (0x11c6) //4550(total 618) ガーメイル
+#define TPOKE_0449 (0x11c7) //4551(total 619) ミツハニー／オス
+#define TPOKE_0563 (0x11c8) //4552(total 620) ミツハニー／メス
+#define TPOKE_0450 (0x11c9) //4553(total 621) ビークイン
+#define TPOKE_0451 (0x11ca) //4554(total 622) パチリス
+#define TPOKE_0452 (0x11cb) //4555(total 623) ブイゼル
+#define TPOKE_0453 (0x11cc) //4556(total 624) フローゼル
+#define TPOKE_0454 (0x11cd) //4557(total 625) チェリンボ
+#define TPOKE_0455 (0x11ce) //4558(total 626) チェリム
+#define TPOKE_0456 (0x11cf) //4559(total 627) カラナクシ・西
+#define TPOKE_0457 (0x11d0) //4560(total 628) カラナクシ・東
+#define TPOKE_0458 (0x11d1) //4561(total 629) トリトドン・西
+#define TPOKE_0459 (0x11d2) //4562(total 630) トリトドン・東
+#define TPOKE_0460 (0x11d3) //4563(total 631) エテボース
+#define TPOKE_0461 (0x11d4) //4564(total 632) フワンテ
+#define TPOKE_0462 (0x11d5) //4565(total 633) フワライド
+#define TPOKE_0463 (0x11d6) //4566(total 634) ミミロル
+#define TPOKE_0464 (0x11d7) //4567(total 635) ミミロップ
+#define TPOKE_0465 (0x11d8) //4568(total 636) ムウマージ
+#define TPOKE_0466 (0x11d9) //4569(total 637) ドンカラス
+#define TPOKE_0467 (0x11da) //4570(total 638) ニャルマー
+#define TPOKE_0468 (0x11db) //4571(total 639) ブニャット
+#define TPOKE_0469 (0x11dc) //4572(total 640) リーシャン
+#define TPOKE_0470 (0x11dd) //4573(total 641) スカンプー
+#define TPOKE_0471 (0x11de) //4574(total 642) スカタンク
+#define TPOKE_0472 (0x11df) //4575(total 643) ドーミラー
+#define TPOKE_0473 (0x11e0) //4576(total 644) ドータクン
+#define TPOKE_0474 (0x11e1) //4577(total 645) ウソハチ
+#define TPOKE_0475 (0x11e2) //4578(total 646) マネネ
+#define TPOKE_0476 (0x11e3) //4579(total 647) ピンプク
+#define TPOKE_0477 (0x11e4) //4580(total 648) ペラップ
+#define TPOKE_0478 (0x11e5) //4581(total 649) ミカルゲ
+#define TPOKE_0479 (0x11e6) //4582(total 650) フカマル／オス
+#define TPOKE_0564 (0x11e7) //4583(total 651) フカマル／メス
+#define TPOKE_0480 (0x11e8) //4584(total 652) ガバイト／オス
+#define TPOKE_0565 (0x11e9) //4585(total 653) ガバイト／メス
+#define TPOKE_0481 (0x11ea) //4586(total 654) ガブリアス／オス
+#define TPOKE_0566 (0x11eb) //4587(total 655) ガブリアス／メス
+#define TPOKE_0482 (0x11ec) //4588(total 656) ゴンベ
+#define TPOKE_0483 (0x11ed) //4589(total 657) リオル
+#define TPOKE_0484 (0x11ee) //4590(total 658) ルカリオ
+#define TPOKE_0485 (0x11ef) //4591(total 659) ヒポポタス／オス
+#define TPOKE_0486 (0x11f0) //4592(total 660) ヒポポタス／メス
+#define TPOKE_0487 (0x11f1) //4593(total 661) カバルドン／オス
+#define TPOKE_0488 (0x11f2) //4594(total 662) カバルドン／メス
+#define TPOKE_0489 (0x11f3) //4595(total 663) スコルピ
+#define TPOKE_0490 (0x11f4) //4596(total 664) ドラピオン
+#define TPOKE_0491 (0x11f5) //4597(total 665) グレッグル
+#define TPOKE_0492 (0x11f6) //4598(total 666) ドクロッグ
+#define TPOKE_0493 (0x11f7) //4599(total 667) マスキッパ
+#define TPOKE_0494 (0x11f8) //4600(total 668) ケイコウオ
+#define TPOKE_0495 (0x11f9) //4601(total 669) ネオラント
+#define TPOKE_0496 (0x11fa) //4602(total 670) タマンタ
+#define TPOKE_0497 (0x11fb) //4603(total 671) ユキカブリ
+#define TPOKE_0498 (0x11fc) //4604(total 672) ユキノオー
+#define TPOKE_0499 (0x11fd) //4605(total 673) マニューラ
+#define TPOKE_0500 (0x11fe) //4606(total 674) ジバコイル
+#define TPOKE_0501 (0x11ff) //4607(total 675) ベロベルト
+#define TPOKE_0502 (0x1200) //4608(total 676) ドサイドン
+#define TPOKE_0503 (0x1201) //4609(total 677) モジャンボ
+#define TPOKE_0504 (0x1202) //4610(total 678) エレキブル
+#define TPOKE_0505 (0x1203) //4611(total 679) ブーバーン
+#define TPOKE_0506 (0x1204) //4612(total 680) トゲキッス
+#define TPOKE_0507 (0x1205) //4613(total 681) メガヤンマ
+#define TPOKE_0508 (0x1206) //4614(total 682) リーフィア
+#define TPOKE_0509 (0x1207) //4615(total 683) グレイシア
+#define TPOKE_0510 (0x1208) //4616(total 684) グライオン
+#define TPOKE_0511 (0x1209) //4617(total 685) マンムー
+#define TPOKE_0512 (0x120a) //4618(total 686) ポリゴンＺ
+#define TPOKE_0513 (0x120b) //4619(total 687) エルレイド
+#define TPOKE_0514 (0x120c) //4620(total 688) ダイノーズ
+#define TPOKE_0515 (0x120d) //4621(total 689) ヨノワール
+#define TPOKE_0516 (0x120e) //4622(total 690) ユキメノコ
+#define TPOKE_0517 (0x120f) //4623(total 691) ロトム・ノーマル
+#define TPOKE_0518 (0x1210) //4624(total 692) ロトム・ヒート
+#define TPOKE_0519 (0x1211) //4625(total 693) ロトム・ウォッシュ
+#define TPOKE_0520 (0x1212) //4626(total 694) ロトム・フロスト
+#define TPOKE_0521 (0x1213) //4627(total 695) ロトム・スピン
+#define TPOKE_0522 (0x1214) //4628(total 696) ロトム・カット
+#define TPOKE_0523 (0x1215) //4629(total 697) ユクシー
+#define TPOKE_0524 (0x1216) //4630(total 698) エムリット
+#define TPOKE_0525 (0x1217) //4631(total 699) アグノム
+#define TPOKE_0526 (0x1218) //4632(total 700) ディアルガ
+#define TPOKE_0527 (0x1219) //4633(total 701) パルキア
+#define TPOKE_0528 (0x121a) //4634(total 702) ヒードラン
+#define TPOKE_0529 (0x121b) //4635(total 703) レジギガス
+#define TPOKE_0530 (0x121c) //4636(total 704) ギラティナ・アナザ
+#define TPOKE_0531 (0x121d) //4637(total 705) ギラティナ・オリジン
+#define TPOKE_0532 (0x121e) //4638(total 706) クレセリア
+#define TPOKE_0533 (0x121f) //4639(total 707) フィオネ
+#define TPOKE_0534 (0x1220) //4640(total 708) マナフィ
+#define TPOKE_0535 (0x1221) //4641(total 709) ダークライ
+#define TPOKE_0536 (0x1222) //4642(total 710) シェイミ・ランド
+#define TPOKE_0537 (0x1223) //4643(total 711) シェイミ・スカイ
+#define TPOKE_0538 (0x1224) //4644(total 712) アルセウス・ノーマル
+#define TPOKE_0539 (0x1225) //4645(total 713) アルセウス・かくとう
+#define TPOKE_0540 (0x1226) //4646(total 714) アルセウス・ひこう
+#define TPOKE_0541 (0x1227) //4647(total 715) アルセウス・どく
+#define TPOKE_0542 (0x1228) //4648(total 716) アルセウス・じめん
+#define TPOKE_0543 (0x1229) //4649(total 717) アルセウス・いわ
+#define TPOKE_0544 (0x122a) //4650(total 718) アルセウス・むし
+#define TPOKE_0545 (0x122b) //4651(total 719) アルセウス・ゴースト
+#define TPOKE_0546 (0x122c) //4652(total 720) アルセウス・はがね
+#define TPOKE_0547 (0x122d) //4653(total 721) アルセウス・はてな
+#define TPOKE_0548 (0x122e) //4654(total 722) アルセウス・ほのお
+#define TPOKE_0549 (0x122f) //4655(total 723) アルセウス・みず
+#define TPOKE_0550 (0x1230) //4656(total 724) アルセウス・くさ
+#define TPOKE_0551 (0x1231) //4657(total 725) アルセウス・でんき
+#define TPOKE_0552 (0x1232) //4658(total 726) アルセウス・エスパー
+#define TPOKE_0553 (0x1233) //4659(total 727) アルセウス・こおり
+#define TPOKE_0554 (0x1234) //4660(total 728) アルセウス・ドラゴン
+#define TPOKE_0555 (0x1235) //4661(total 729) アルセウス・あく
+#define OBJCODEEND_TPOKE (0x1236) //4662(total 730) ポケモンコード終端
+
+#define OBJCODETOTAL (0x2da) //730 総数
+#define OBJCODEMAX (0xffff) //65535 最大
+
+#endif //__FLDMMDL_OBJCODE__

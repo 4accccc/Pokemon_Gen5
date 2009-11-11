@@ -1,0 +1,285 @@
+<?xml version='1.0' encoding='SHIFT_JIS'?><imd version='1.6.0'>
+
+<head>
+	<create date='2006-07-03T13:36:54' host='W00107' user='kanako_eo' source='fieldobj.mb'/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
+</head>
+
+<body>
+
+<original_create date='2006-07-03T13:36:54' host='W00107' user='kanako_eo' source='fieldobj.mb'/>
+<original_generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
+
+<model_info tool_start_frame='0' force_full_weight='off' magnify='1.000000' scaling_rule='standard' compress_node='none' material_size='1 1' vertex_style='direct' compress_material='off' output_texture='used' node_size='1 1' pos_scale='3' tex_matrix_mode='maya' use_primitive_strip='on'/>
+
+<box_test xyz='-2.000000 0.000000 0.000000' whd='4.000000 4.000000 0.000000' pos_scale='3'/>
+
+<tex_image_array size='6'>
+	<tex_image name='tsure_poke.1' format='palette16' original_width='32' original_height='32' index='0' height='32' path='auto_make1.tga' palette_name='tsure_poke0' width='32' color0_mode='transparency'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 9990 0009 0000 9990 0000 0000 
+			0000 0000 ccc9 009c 0000 bbc9 0009 0000 
+			0000 0000 ccc9 009c d000 bccc 00db 0000 
+			0000 0000 c990 0dcc 9000 bdcc 00db 0000 
+			0000 0000 d000 9dcc cd99 9dcc 0009 0000 
+			0000 0000 d000 c9cc c9cc 009c 0000 0000 
+			0000 0000 0000 ccb9 bccc 0009 0000 0000 
+			0000 0000 0000 ccc9 cccc 0009 0000 0000 
+			0000 0000 9000 cccc cccc 009c 0000 0000 
+			0000 0099 9000 cccc cccc 099c 0000 0000 
+			9000 09bb b900 cccc cccc 9bbc 0000 0000 
+			c900 9bfb ab90 cccb cccc 99ab 0000 0000 
+			c900 9bbb 3990 c3bb bccc 093b 0000 0000 
+			d000 2dcc a002 ccd2 33cc 00ab 0000 0000 
+			0000 00dd d202 dd33 3333 00d3 0000 0000 
+			0000 0000 0022 33dd d333 000d 0000 0000 
+			0000 0000 0000 dd00 a9dd 000d 0000 0000 
+			0000 0000 0000 0000 dd00 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='tsure_poke.2' format='palette16' original_width='32' original_height='32' index='1' height='32' path='auto_make2.tga' palette_name='tsure_poke0' width='32' color0_mode='transparency'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 9999 0000 0000 0999 0000 0000 
+			0000 9000 cccc 000d d000 9bbc 0000 0000 
+			0000 9000 cccc 00dc 9000 bbcc 000d 0000 
+			0000 0000 cc99 009c cd00 bdcc 000d 0000 
+			0000 0000 cd00 9dcc c999 9dcc 0000 0000 
+			0000 0000 d000 c9cc c9cc 009c 0000 0000 
+			0000 0000 0000 ccb9 bccc 0009 0000 0000 
+			0000 0000 0000 ccc9 cccc 0009 0000 0000 
+			0000 0000 9000 cccc cccc 009c 0000 0000 
+			0000 0000 9900 cccc cccc 009c 0000 0000 
+			0000 0990 bb90 cccc cccc 09bc 0000 0000 
+			0000 9bb9 a990 cccb cccc 9bab 0000 0000 
+			9000 bfbc 3909 c3bb bccc 993b 0000 0000 
+			9000 bbbc a029 cddb 33cc 00ab 0000 0000 
+			0000 dccd d020 d332 3333 00d3 0000 0000 
+			0000 0dd0 0220 33dd d333 000d 0000 0000 
+			0000 0000 0000 d9ad 0ddd 0000 0000 0000 
+			0000 0000 0000 0dd0 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='tsure_poke.3' format='palette16' original_width='32' original_height='32' index='2' height='32' path='auto_make3.tga' palette_name='tsure_poke0' width='32' color0_mode='transparency'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 9999 0000 0000 9999 0000 0000 
+			0000 d000 ccca 0009 9000 cccc 0009 0000 
+			0000 d000 9ccc 009b b900 cb44 0009 0000 
+			0000 0000 4ddd 009b b900 9994 0000 0000 
+			0000 0000 44d0 99db 4bd9 00d4 0000 0000 
+			0000 0000 4900 ccdb 4bdc 000d 0000 0000 
+			0000 0000 9000 cccb 9ccc 0000 0000 0000 
+			0000 0000 9000 cccc 9ccc 0000 0000 0000 
+			0000 0000 c900 cccc cccc 0009 0000 0000 
+			0000 0000 ca00 ccfc ccfc 009a 0000 0000 
+			0000 0000 cb90 bcdc ccdc 09bb 0990 0000 
+			0000 0000 bab9 accc bccc 099a 9bb9 0000 
+			0000 0000 b399 cccb bb3c 9093 cbfb 0009 
+			0000 0000 ba00 cc33 33cc 920a cbbb 0009 
+			0000 0000 3d00 3333 3333 020d dccd 0000 
+			0000 0000 d000 333d dd33 0220 0dd0 0000 
+			0000 0000 0000 ddd0 da9d 0000 0000 0000 
+			0000 0000 0000 0000 0dd0 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='tsure_poke.4' format='palette16' original_width='32' original_height='32' index='3' height='32' path='auto_make4.tga' palette_name='tsure_poke0' width='32' color0_mode='transparency'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 9000 0999 0000 9000 0999 0000 0000 
+			0000 ad00 9ccc 0000 c900 9ccc 0000 0000 
+			0000 cd00 b9cc 0009 b900 9cb4 0000 0000 
+			0000 d000 44dd 009b 4b90 0994 0000 0000 
+			0000 0000 44d0 99db 4bd9 000d 0000 0000 
+			0000 0000 4900 ccdb 4bdc 000d 0000 0000 
+			0000 0000 9000 cccb 9ccc 0000 0000 0000 
+			0000 0000 9000 cccc 9ccc 0000 0000 0000 
+			0000 0000 c900 cccc cccc 0009 0000 0000 
+			0000 0000 ca90 ccfc ccfc 000a 9900 0000 
+			0000 0000 cbb9 bcdc ccdc 009b bb90 0009 
+			0000 0000 ba99 accc bccc 09ba bfb9 009c 
+			0000 0000 b390 cccb bb3c 0993 bbb9 009c 
+			0000 0000 ba00 cc33 33cc 200a ccd2 000d 
+			0000 0000 3d00 3333 3333 202d dd00 0000 
+			0000 0000 d000 333d dd33 2200 0000 0000 
+			0000 0000 d000 dd9a 00dd 0000 0000 0000 
+			0000 0000 0000 00dd 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='tsure_poke.5' format='palette16' original_width='32' original_height='32' index='4' height='32' path='auto_make5.tga' palette_name='tsure_poke0' width='32' color0_mode='transparency'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 9000 0009 0000 0000 0000 
+			0000 0000 9000 cd99 009c 0000 0000 0000 
+			0000 0000 c900 cdcc 009c 0000 0000 0000 
+			0000 0000 c900 4dbc 09cc 0000 0000 0000 
+			0000 0000 9000 4db9 09cb 0000 0000 0000 
+			0000 0000 0000 4d90 09c4 0000 0000 0000 
+			0000 0000 0000 4bd9 0a9b 0000 0000 0000 
+			0000 0000 9000 449c 099b 0000 0000 0000 
+			0000 0000 c900 b4cc 9cc9 0000 0000 0000 
+			0000 0000 c900 cccc 9ccc 0000 0000 0000 
+			0000 0000 cc90 cccc cccc 0009 0000 0000 
+			0000 0000 cb90 cccf cccc 0009 0990 0000 
+			0000 0000 ca90 cccd cccc 0009 9bb9 0000 
+			0000 0000 cc90 cccc 3ccc 9009 cbfb 0009 
+			0000 0000 ca90 b933 a3ca 2200 cbbb 0009 
+			0000 0000 ed00 c933 d339 0202 dccd 0000 
+			0000 0000 d000 a8ea 098e 0220 0dd0 0000 
+			0000 0000 0000 daad 009d 0000 0000 0000 
+			0000 0000 0000 0dd0 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='tsure_poke.6' format='palette16' original_width='32' original_height='32' index='5' height='32' path='auto_make6.tga' palette_name='tsure_poke0' width='32' color0_mode='transparency'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 9900 0000 0000 0000 0000 
+			0000 0000 0000 ccd0 0009 0000 0000 0000 
+			0000 0000 9000 cbd9 009c 0000 0000 0000 
+			0000 0000 c900 4dcc 009c 0000 0000 0000 
+			0000 0000 c900 4dbc 09cb 0000 0000 0000 
+			0000 0000 9000 4db9 09c4 0000 0000 0000 
+			0000 0000 0000 4bd9 09b4 0000 0000 0000 
+			0000 0000 9000 449c 0a9b 0000 0000 0000 
+			0000 0000 c900 b4cc 9cc9 0000 0000 0000 
+			0000 0000 c900 cccc 9ccc 0000 0000 0000 
+			0000 0000 cc90 cccc cccc 0009 0099 0000 
+			0000 0000 cb90 cccf cccc 9009 09bb 0000 
+			0000 0000 ca90 cccd cccc b909 9cbf 0000 
+			0000 0000 cc90 cccc 3ccc b909 9cbb 0000 
+			0000 0000 cb90 ab93 a3c3 d220 0dcc 0000 
+			0000 0000 ed00 9c93 d333 0020 00dd 0000 
+			0000 0000 d000 eaea 09ee 0022 0000 0000 
+			0000 0000 0000 add0 00da 0000 0000 0000 
+			0000 0000 0000 d000 000d 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+  </tex_image>
+</tex_image_array>
+
+<tex_palette_array size='2'>
+	<tex_palette name='tsure_poke0' color_size='16' index='0'>
+		4691 7c1f 20e6 735a 14d7 7c1f 7c1f 7c1f 
+		6690 34c4 51c7 6649 7ace 0000 7337 7fbd 
+	</tex_palette>
+	<tex_palette name='tsure_poke1' color_size='16' index='1'/>
+</tex_palette_array>
+
+<material_array size='1'>
+	<material name='obj' tex_translate='0.000000 0.000000' tex_image_idx='0' tex_gen_mode='none' polygon_id='0' tex_palette_idx='0' light0='on' fog_flag='off' render_1_pixel='off' diffuse='0 0 0' shininess_table_flag='off' light1='off' specular='0 0 0' tex_tiling='clamp clamp' light2='off' ambient='31 31 31' index='0' light3='off' emission='0 0 0' polygon_mode='modulate' depth_test_decal='off' tex_rotate='0.000000' face='front' wire_mode='off' tex_scale='1.000000 1.000000' alpha='31' translucent_update_depth='off' far_clipping='off'/>
+</material_array>
+
+<matrix_array size='1'>
+	<matrix node_idx='0' index='0' mtx_weight='1'/>
+</matrix_array>
+
+<polygon_array size='1'>
+	<polygon name='polygon0' volume_max='2.000000 4.000000 0.000000' clr_flag='off' triangle_size='0' volume_min='-2.000000 0.000000 0.000000' volume_r='4.472168' polygon_size='1' nrm_flag='on' tex_flag='on' index='0' quad_size='1' vertex_size='4' mtx_prim_size='1'>
+		<mtx_prim index='0'>
+			<mtx_list size='1'>0</mtx_list>
+			<primitive_array size='1'>
+				<primitive type='quads' index='0' vertex_size='4'>
+					<mtx idx='0'/>
+					<tex st='0.000000 32.000000'/>
+					<nrm xyz='0.000000 0.000000 0.998047'/>
+					<pos_s xyz='-2.000000 0.000000 0.000000'/>
+					<tex st='32.000000 32.000000'/>
+					<pos_xy xy='2.000000 0.000000'/>
+					<tex st='32.000000 0.000000'/>
+					<pos_xy xy='2.000000 4.000000'/>
+					<tex st='0.000000 0.000000'/>
+					<pos_xy xy='-2.000000 4.000000'/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size='1'>
+	<node name='pPlane1' kind='mesh' volume_max='2.000000 4.000000 0.000000' parent='-1' scale='1.000000 1.000000 1.000000' display_size='1' draw_mtx='on' billboard='on' triangle_size='0' volume_min='-2.000000 0.000000 0.000000' volume_r='4.472168' translate='0.000000 0.000000 0.000000' polygon_size='1' index='0' rotate='0.000000 0.000000 0.000000' quad_size='1' child='-1' vertex_size='4' brother_next='-1' brother_prev='-1' visibility='on'>
+		<display polygon='0' priority='0' index='0' material='0'/>
+	</node>
+</node_array>
+
+<output_info triangle_size='0' polygon_size='1' quad_size='1' vertex_size='4'/>
+
+</body>
+
+</imd>

@@ -42,6 +42,10 @@ FMMDLNCGLIST_CSV = fldmmdl_ncglist.csv
 #
 FMMDLPOKELIST_CSV = fldmmdl_poke_list.csv
 
+#モデル管理表テキストファイル
+#
+FMMDLMDLLIST_CSV = fldmmdl_mdl_list.csv
+
 #管理表から生成されるリソース一覧
 #
 FMMDLLIST_RES = fldmmdl_list_res
