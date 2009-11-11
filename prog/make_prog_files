@@ -473,7 +473,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/gimmick_obj_elboard.c \
         field/elboard_zone_data.c \
         field/scrcmd_gate.c \
-        field/gym_insect.c
+        field/gym_insect.c \
+        field/gym_ground.c
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP
