@@ -190,7 +190,9 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
 	work->selModeParam.configSave = SaveData_GetConfig( SaveControl_GetPointer() );
 	work->selModeParam.mystatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
 	//主人公の性別は、性別設定が終わってから入れる
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );	
 	work->nameInParam = NAMEIN_AllocParam( GFL_HEAPID_APP , NAMEIN_MYNAME , 0, 0, NAMEIN_PERSON_LENGTH , NULL );
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -211,7 +213,7 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
 	case 1:
 	  //名前入力
 		work->nameInParam->hero_sex	= MyStatus_GetMySex(work->selModeParam.mystatus);
-		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &NameInputProcData,(void*)work->nameInParam);
+		GFL_PROC_SysCallProc(FS_OVERLAY_ID(namein), &NameInputProcData,(void*)work->nameInParam);
 		(*seq)++;
 		break;
 	case 2:
@@ -242,7 +244,9 @@ static GFL_PROC_RESULT GameStart_FirstProcEnd( GFL_PROC * proc, int * seq, void 
 	  UnionView_GetTrainerTypeIndex(MyStatus_GetID(myStatus), MyStatus_GetMySex(myStatus), 0));
 	init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0 );
 
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
 	NAMEIN_FreeParam(work->nameInParam);
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
 	GFL_PROC_FreeWork( proc );
 	
 	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);

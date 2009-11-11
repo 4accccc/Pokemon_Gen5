@@ -84,7 +84,7 @@ static GMEVENT_RESULT EVENT_FUNC_NameInput(GMEVENT * event, int * seq, void * wo
 	case 0: // 名前入力画面呼び出し
     GMEVENT_CallEvent( 
         event, EVENT_FieldSubProc(niw->gsys, niw->fieldmap, 
-          NO_OVERLAY_ID, &NameInputProcData, niw->nameInParam) );
+          FS_OVERLAY_ID(namein), &NameInputProcData, niw->nameInParam) );
     (*seq)++;
 		break;
 	case 1: // イベント終了

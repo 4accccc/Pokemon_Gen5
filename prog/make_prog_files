@@ -141,9 +141,6 @@ SRCS  +=    $(SOUNDSRC) \
         system/brightness.c \
         system/touch_subwindow.c \
         app/trainercard/trcard_sys.c \
-        app/name_input/namein.c \
-				app/name_input/namein_graphic.c \
-				app/name_input/namein_data.c \
         app/pms_input/pmsi_param.c \
         sound/snd_viewer.c \
         sound/snd_viewer_mcs.c \
@@ -1048,5 +1045,11 @@ SRCS_OVERLAY_COMMAND_DEMO = demo/command_demo/command_demo.c \
 							demo/command_demo/cdemo_seq.c \
 							demo/command_demo/cdemo_comm.c
 
-
-
+#–¼‘O“ü—Í
+#===> SRCS_OVERLAY_WIFINOTE
+#===> SRCS_OVERLAY_TITLE
+#===> SRCS_OVERLAY_BATTLE_RETURN
+#===> SRCS_OVERLAY_BOX
+SRCS_OVERLAY_NAMEIN	= app/name_input/namein.c \
+											app/name_input/namein_graphic.c \
+											app/name_input/namein_data.c

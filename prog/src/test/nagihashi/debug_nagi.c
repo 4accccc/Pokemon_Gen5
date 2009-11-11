@@ -948,7 +948,7 @@ static void LISTDATA_CallProcPoke2DCheck( DEBUG_NAGI_MAIN_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void LISTDATA_CallProcNamin( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
-	DEBUG_NAGI_COMMAND_CallProc( p_wk, NO_OVERLAY_ID, &NameInputProcData, p_wk->p_namein_param );
+	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(namein), &NameInputProcData, p_wk->p_namein_param );
 }
 //----------------------------------------------------------------------------
 /**

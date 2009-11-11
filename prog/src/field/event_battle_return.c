@@ -125,7 +125,9 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         PP_Put( wk->pp, ID_PARA_oyaname, (u32)(wk->strbuf) );
 
         // @todo 今は必ず名前入力させているが、いずれ確認画面を作る。
+				GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
         wk->nameinParam = NAMEIN_AllocParamPokemonByPP( wk->heapID, wk->pp, NAMEIN_POKEMON_LENGTH, NULL );
+
         GFL_PROC_SysCallProc( NO_OVERLAY_ID, &NameInputProcData, wk->nameinParam );
         (*seq)++;
       }else{
@@ -140,6 +142,7 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
       PP_Put( wk->pp, ID_PARA_nickname, (u32)(wk->strbuf) );
     }
     NAMEIN_FreeParam( wk->nameinParam );
+		GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
     wk->nameinParam = NULL;
     (*seq)++;
     break;

@@ -339,7 +339,7 @@ static GFL_PROC_RESULT DEBUG_IRC_NAME_PROC_Main( GFL_PROC *p_proc, int *p_seq, v
 		break;
 
 	case SEQ_PLAYER1_NAME_INPUT:
-		GFL_PROC_SysCallProc( NO_OVERLAY_ID, &NameInputProcData, p_wk->p_param_adrs );
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(namein), &NameInputProcData, p_wk->p_param_adrs );
 		*p_seq	= SEQ_PLAYER1_NAME_END;
 		break;
 
@@ -359,7 +359,7 @@ static GFL_PROC_RESULT DEBUG_IRC_NAME_PROC_Main( GFL_PROC *p_proc, int *p_seq, v
 		break;
 
 	case SEQ_PLAYER2_NAME_INPUT:
-		GFL_PROC_SysCallProc( NO_OVERLAY_ID, &NameInputProcData, p_wk->p_param_adrs );
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(namein), &NameInputProcData, p_wk->p_param_adrs );
 		*p_seq	= SEQ_PLAYER2_NAME_END;
 		break;
 

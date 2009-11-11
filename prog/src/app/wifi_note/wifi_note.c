@@ -5703,13 +5703,16 @@ static WFNOTE_STRET CodeIn_Main( WFNOTE_CODEIN* p_wk, WFNOTE_WK* p_sys, WFNOTE_D
   case SEQ_CODEIN_NAMEIN:
 
     // 名前入力、コード入力パラメータ作成
+		GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
     p_wk->p_namein = CodeIn_NameInParamMake( p_wk, p_data, heapID );
+		GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
+
     CodeIn_BlockDataMake_4_4_4( block );
     p_wk->p_codein = CodeInput_ParamCreate( heapID, FRIENDCODE_MAXLEN, block );
 
     WFNOTE_DrawExit( p_sys ); // 画面ワーク全破棄
     p_wk->p_subproc = GFL_PROC_LOCAL_boot( heapID );
-    GFL_PROC_LOCAL_CallProc( p_wk->p_subproc , NO_OVERLAY_ID ,
+    GFL_PROC_LOCAL_CallProc( p_wk->p_subproc , FS_OVERLAY_ID(namein) ,
         &NameInputProcData, p_wk->p_namein );
     p_data->subseq = SEQ_CODEIN_NAMEIN_WAIT;
     break;
@@ -5750,7 +5753,9 @@ static WFNOTE_STRET CodeIn_Main( WFNOTE_CODEIN* p_wk, WFNOTE_WK* p_sys, WFNOTE_D
 
   case SEQ_CODEIN_END:
     // 名前入力、コード入力画面の破棄
+		GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
     NAMEIN_FreeParam( p_wk->p_namein );
+		GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
     CodeInput_ParamDelete( p_wk->p_codein );
 
     WFNOTE_DrawInit( p_sys, heapID ); // 画面復帰
@@ -5760,10 +5765,13 @@ static WFNOTE_STRET CodeIn_Main( WFNOTE_CODEIN* p_wk, WFNOTE_WK* p_sys, WFNOTE_D
 
   case SEQ_CODEIN_NAMEINONLY: // 名前入力のみ
     // 名前入力、コード入力パラメータ作成
+		GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
     p_wk->p_namein = CodeIn_NameInParamMake( p_wk, p_data, heapID );
+		GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
+
     WFNOTE_DrawExit( p_sys ); // 画面ワーク全破棄
     p_wk->p_subproc = GFL_PROC_LOCAL_boot( heapID );
-    GFL_PROC_LOCAL_CallProc( p_wk->p_subproc , NO_OVERLAY_ID ,
+    GFL_PROC_LOCAL_CallProc( p_wk->p_subproc , FS_OVERLAY_ID(namein),
         &NameInputProcData, p_wk->p_namein );
     p_data->subseq = SEQ_CODEIN_NAMEINONLY_WAIT;
     break;
@@ -5791,7 +5799,9 @@ static WFNOTE_STRET CodeIn_Main( WFNOTE_CODEIN* p_wk, WFNOTE_WK* p_sys, WFNOTE_D
 
   case SEQ_CODEIN_NAMEINONLY_END: // 名前入力のみ
     // 名前入力、コード入力画面の破棄
+		GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
     NAMEIN_FreeParam( p_wk->p_namein );
+		GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
 
     WFNOTE_DrawInit( p_sys, heapID ); // 画面復帰
     return WFNOTE_STRET_FINISH;
