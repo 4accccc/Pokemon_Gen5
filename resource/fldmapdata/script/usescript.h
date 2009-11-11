@@ -104,6 +104,14 @@
 #include "common_scr_def.h"
 #include "shop_scr_def.h"
 
+
+//スクリプト内共通定義ヘッダファイル
+//最初の3体タイプわけなど
+#include "user_define.h"
+
+//======================================================================
+//	
+//======================================================================
 //動作モデル表示コード
 #include "../../../prog/src/field/fldmmdl_code.h"
 #include "../../../prog/arc/fieldmap/fldmmdl_objcode.h"
@@ -181,7 +189,6 @@
 #include "../../../include/savedata/record.h"	//スコア
 
 //src/field
-#include "../../field/script_def.h"					//特殊スクリプト定義
 #include "../../field/ev_win.h"						//イベントウィンドウ定義
 #include "../../field/comm_union_def.h"				//ユニオン定義
 #include "../../field/comm_union_beacon.h"			//ユニオンルーム用ビーコン定義
@@ -197,7 +204,6 @@
 #include "../../field/field_trade.h"				//ゲーム内交換
 #include "../../field/scr_cycling.h"				//サイクリングロード座標
 
-#include "../../data/sound/pl_sound_data.sadl"		//サウンドナンバー定義
 #include "../../../include/system/snd_def.h"		//サウンド定義の置き換え定義
 #include "../maptable/zone_id.h"					//ゾーンID定義
 #include "../shopdata/fs_item_def.h"				//固定アイテムショップ定義
