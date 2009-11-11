@@ -6,6 +6,8 @@
 
 #include "field/map_matrix.h"
 
+#include "height_ex.h"
+
 //------------------------------------------------------------------
 /**
  * @brief	マッパー制御構造体の不完全型定義
@@ -159,3 +161,14 @@ BOOL FLDMAPPER_Connect( FLDMAPPER* g3Dmapper, const MAP_MATRIX* matrix );
  */
 //--------------------------------------------------------------
 extern void FLDMAPPER_DebugPrint( const FLDMAPPER* g3Dmapper );
+
+//--------------------------------------------------------------
+/**
+ * @brief 拡張高さデータリストポインタ取得
+ *
+ * @param g3Dmapper 状態を出力したいマッパー
+ *
+ * @return  拡張高さデータリストポインタ
+ */
+//--------------------------------------------------------------
+extern EHL_PTR	FLDMAPPER_GetExHegihtPtr( FLDMAPPER* g3Dmapper );

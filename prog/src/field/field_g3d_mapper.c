@@ -29,8 +29,6 @@
 
 #include "field_hit_check.h"
 
-#include "height_ex.h"
-
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
 #include "field/map_matrix.h"   // for MAP_MATRIX_MAX
 #include "map_attr.h" //MAPATTR_IsEnable
@@ -516,6 +514,20 @@ void FLDMAPPER_DebugPrint( const FLDMAPPER* g3Dmapper )
   OS_Printf( "================================================\n" );
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief 拡張高さデータリストポインタ取得
+ *
+ * @param g3Dmapper 状態を出力したいマッパー
+ *
+ * @return  拡張高さデータリストポインタ
+ */
+//--------------------------------------------------------------
+EHL_PTR	FLDMAPPER_GetExHegihtPtr( FLDMAPPER* g3Dmapper )
+{
+	GF_ASSERT( g3Dmapper );
+	return g3Dmapper->ExHeightList;
+}
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -1845,7 +1857,7 @@ static void GetExHight( const FLDMAPPER* g3Dmapper, const VecFx32 *pos, FLDMAPPE
     if ( rc ){
       int idx;
       n++;
-      idx = count+n;
+      idx = count+n-1;
       if(idx >= FLDMAPPER_GRIDINFO_MAX){
         break;  //これ以上は積めないので抜ける
       }
