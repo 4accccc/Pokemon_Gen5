@@ -194,6 +194,14 @@ extern LOAD_RESULT GFL_SAVEDATA_GetLoadResult(const GFL_SAVEDATA * sv);
 //---------------------------------------------------------------------------
 extern BOOL GFL_SAVEDATA_GetExistFlag(const GFL_SAVEDATA * sv);
 
+//==================================================================
+/**
+ * セーブデータワークの先頭アドレスを取得
+ * @param   sv		セーブデータ構造へのポインタ
+ * @retval  const void *		セーブデータワークの先頭アドレス
+ */
+//==================================================================
+extern const void * GFL_SAVEDATA_GetSaveWorkAdrs(GFL_SAVEDATA * sv);
 
 //---------------------------------------------------------------------------
 /**

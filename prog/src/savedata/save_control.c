@@ -238,6 +238,23 @@ void * SaveControl_DataPtrGet(SAVE_CONTROL_WORK *ctrl, GFL_SVDT_ID gmdata_id)
 	return GFL_SAVEDATA_Get(ctrl->sv_normal, gmdata_id);
 }
 
+//==================================================================
+/**
+ * セーブデータワークの先頭アドレスを取得
+ *
+ * @param   ctrl		セーブデータ管理ワークへのポインタ
+ *
+ * @retval  const void *		セーブデータワークの先頭アドレス
+ *
+ * GPFでセーブデータ全転送用に用意した関数です
+ * 他の箇所では使用しないこと!
+ */
+//==================================================================
+const void * SaveControl_GetSaveWorkAdrs(SAVE_CONTROL_WORK *ctrl)
+{
+  return GFL_SAVEDATA_GetSaveWorkAdrs(ctrl->sv_normal);
+}
+
 //--------------------------------------------------------------
 /**
  * @brief   新規データフラグを取得する
