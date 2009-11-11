@@ -22,8 +22,10 @@
 
 
 /*--------------------------------------------------------------------------*/
-/* Globals                                                                  */
+/* Typedefs                                                                 */
 /*--------------------------------------------------------------------------*/
+typedef BTL_EVENT_FACTOR* (*pTokuseiEventAddFunc)( u16, u16, u8 );
+
 
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
@@ -302,7 +304,7 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Nenchaku( u16 pri, u16 tokID, u8 pokeID )
 BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
 {
   static const struct {
-    PokeTokusei       tokusei;
+    PokeTokusei           tokusei;
     pTokuseiEventAddFunc  func;
   }funcTbl[] = {
     { POKETOKUSEI_IKAKU,          HAND_TOK_ADD_Ikaku },
