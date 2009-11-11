@@ -593,9 +593,9 @@
 #define FV_MUSEUM_TOUNAN                   569 /* 0x0239 博物館：盗難イベントで盗まれるもの */
 #define FV_C03GYM0101_TR01                 570 /* 0x023a Ｃ03虫ジム：トリックアートに隠れているトレーナー（右上） */
 #define FV_C03GYM0101_TR02                 571 /* 0x023b Ｃ03虫ジム：トリックアートに隠れているトレーナー（左下） */
-		/* not used   572(0x023c) */
-		/* not used   573(0x023d) */
-		/* not used   574(0x023e) */
+#define FV_R03_SUPPORT_01                  572 /* 0x023c R03：ストッパーのサポート02 */
+#define FV_R03_RIVAL_02                    573 /* 0x023d R03：ライバル02 */
+#define FV_R03R0301_RIVAL_01               574 /* 0x023e R030101：プラズマ団・ライバル */
 		/* not used   575(0x023f) */
 		/* not used   576(0x0240) */
 		/* not used   577(0x0241) */
