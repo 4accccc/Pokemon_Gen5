@@ -289,8 +289,6 @@ void GATE_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
 
   // TEMP: 通常ニュースを放送
   //GATE_GIMMICK_Elboard_SetupNormalNews( fieldmap );
-
-  OBATA_Printf( "GATE_GIMMICK_Setup\n" );
 }
 
 //------------------------------------------------------------------------------------------
@@ -319,8 +317,6 @@ void GATE_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 
   // ギミック管理ワークを破棄
   GFL_HEAP_FreeMemory( work );
-
-  OBATA_Printf( "GATE_GIMMICK_End\n" );
 }
 
 //------------------------------------------------------------------------------------------
@@ -339,8 +335,6 @@ void GATE_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
 
   // 電光掲示板メイン処理
   GOBJ_ELBOARD_Main( work->elboard, FX32_ONE ); 
-
-  OBATA_Printf( "GATE_GIMMICK_Move\n" );
 }
 
 
