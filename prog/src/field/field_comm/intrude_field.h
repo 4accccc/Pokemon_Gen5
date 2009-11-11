@@ -20,7 +20,7 @@ enum{
   PALACE_MAP_RIGHT = 3072 << FX32_SHIFT,          ///<パレスマップ右端
   PALACE_MAP_LEN = PALACE_MAP_RIGHT - PALACE_MAP_LEFT,  ///<パレスマップ幅
   
-  PALACE_MAP_WARP_OFFSET = (PALACE_MAP_LEN / 4) * 3,///残りこれ以内の座標になったらワープ
+  PALACE_MAP_WARP_OFFSET = 0, //(PALACE_MAP_LEN / 4) * 3,///残りこれ以内の座標になったらワープ
   
   PALACE_MAP_RANGE_LEN = (2056-1016) << FX32_SHIFT,     ///<パレスマップのX長
   

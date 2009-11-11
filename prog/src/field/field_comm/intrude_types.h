@@ -111,6 +111,7 @@ typedef struct _INTRUDE_COMM_SYS{
   GBS_BEACON send_beacon;
   INTRUDE_STATUS intrude_status_mine;               ///<自分の現在情報
   INTRUDE_STATUS intrude_status[FIELD_COMM_MEMBER_MAX]; ///<全員の現在情報
+  COMM_PLAYER_PACKAGE backup_player_pack[FIELD_COMM_MEMBER_MAX];  ///<Backup座標データ(座標変換をしていない)
   INTRUDE_TALK   talk;
   INTRUDE_PROFILE send_profile;   ///<自分プロフィール送信バッファ(受信はgamedata内なので不要)
   

@@ -40,7 +40,7 @@
 //==============================================================================
 static void Intrude_CheckProfileReq(INTRUDE_COMM_SYS_PTR intcomm);
 static void Intrude_CheckTalkAnswerNG(INTRUDE_COMM_SYS_PTR intcomm);
-static void Intrude_ConvertPlayerPos(INTRUDE_COMM_SYS_PTR intcomm, const INTRUDE_STATUS *mine, INTRUDE_STATUS *target);
+static void Intrude_ConvertPlayerPos(INTRUDE_COMM_SYS_PTR intcomm, ZONEID mine_zone_id, fx32 mine_x, INTRUDE_STATUS *target);
 static int Intrude_GetPalaceOffsetNo(const INTRUDE_COMM_SYS_PTR intcomm, int palace_area);
 
 //==============================================================================
@@ -141,7 +141,7 @@ SDK_COMPILER_ASSERT(NELEMS(PalaceTownData) == PALACE_TOWN_DATA_MAX);
 
 ///パレスへワープしてきたときの出現座標
 static const VecFx32 PalaceWarpPos = {
-  1464 * FX32_ONE + PALACE_MAP_LEN,
+  1464 * FX32_ONE,
   0*FX32_ONE,
   440 * FX32_ONE,
 };
@@ -343,7 +343,9 @@ void Intrude_SetPlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INT
 
   //座標変換
   if(net_id != GFL_NET_SystemGetCurrentID()){
-    Intrude_ConvertPlayerPos(intcomm, &intcomm->intrude_status_mine, target_status);
+    intcomm->backup_player_pack[net_id] = target_status->player_pack;
+    Intrude_ConvertPlayerPos(intcomm, intcomm->intrude_status_mine.zone_id, 
+      intcomm->intrude_status_mine.player_pack.pos.x, target_status);
   }
   
   //侵入エリアの違いによるアクター表示・非表示設定
@@ -484,19 +486,19 @@ static int Intrude_GetPalaceOffsetNo(const INTRUDE_COMM_SYS_PTR intcomm, int pal
  * @param   target		
  */
 //==================================================================
-static void Intrude_ConvertPlayerPos(INTRUDE_COMM_SYS_PTR intcomm, const INTRUDE_STATUS *mine, INTRUDE_STATUS *target)
+static void Intrude_ConvertPlayerPos(INTRUDE_COMM_SYS_PTR intcomm, ZONEID mine_zone_id, fx32 mine_x, INTRUDE_STATUS *target)
 {
   PALACE_TOWN_RESULT result_a, result_b;
   BOOL search_a, search_b;
   CHECKSAME ret;
   
-  Intrude_SearchPalaceTown(mine->zone_id, &result_a);
+  Intrude_SearchPalaceTown(mine_zone_id, &result_a);
   Intrude_SearchPalaceTown(target->zone_id, &result_b);
   
   ret = Intrude_CheckSameZoneID(&result_a, &result_b);
   switch(ret){
   case CHECKSAME_SAME:
-    if(ZONEDATA_IsPalace(mine->zone_id) == FALSE){
+    if(ZONEDATA_IsPalace(mine_zone_id) == FALSE){
       return; //同じゾーンにいるので変換の必要無し
     }
     //双方ともパレスにいるのでパレスエリアに合わせた座標変換
@@ -507,20 +509,50 @@ static void Intrude_ConvertPlayerPos(INTRUDE_COMM_SYS_PTR intcomm, const INTRUDE
       map_len = PALACE_MAP_LEN;
       offset_x = target->player_pack.pos.x % map_len;
       area_offset = Intrude_GetPalaceOffsetNo(intcomm, target->palace_area);
-      if(area_offset == intcomm->member_num - 1 && mine->player_pack.pos.x < PALACE_MAP_LEN){
-        //自機がダミーマップにいる場合は相手の処理
-        target->player_pack.pos.x = offset_x;
+      if(area_offset == intcomm->member_num - 1 && offset_x > PALACE_MAP_LEN/2 
+          && mine_x < PALACE_MAP_LEN/2){
+        //相手が右端のエリアの右寄りにいて、自機が左端の左寄りにいるなら、相手の座標を
+        //自機の左側にある回り込みマップ上の座標にする
+        target->player_pack.pos.x = -map_len + offset_x;
+      }
+      else if(area_offset == 0 && offset_x < PALACE_MAP_LEN/2 
+          && mine_x > (PALACE_MAP_LEN*intcomm->member_num - PALACE_MAP_LEN/2)){
+        //相手が左端のエリアの左寄りにいて、自機が右端の右寄りにいるなら、相手の座標を
+        //自機の右側にある回り込みマップ上の座標にする
+        target->player_pack.pos.x = intcomm->member_num * map_len + offset_x;
       }
       else{
-        target->player_pack.pos.x 
-          = area_offset * map_len + offset_x 
-          + PALACE_MAP_LEN; //左端にダミーマップを入れているため。
+        target->player_pack.pos.x = area_offset * map_len + offset_x;
       }
     }
     break;
   case CHECKSAME_SAME_REVERSE:  //表裏ゾーンにいるのでこのままでよい
   case CHECKSAME_NOT:
     return; //違うゾーンにいるのでこのままでよい
+  }
+}
+
+//==================================================================
+/**
+ * バックアップ座標を元に通信プレイヤーの座標を再計算
+ *
+ * @param   intcomm		
+ * @param   mine_x		自機の座標X
+ */
+//==================================================================
+void Intrude_PlayerPosRecalc(INTRUDE_COMM_SYS_PTR intcomm, fx32 mine_x)
+{
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+  int i;
+  int my_netid = GAMEDATA_GetIntrudeMyID(gamedata);
+  const INTRUDE_STATUS *mine = &intcomm->intrude_status_mine;
+  
+  for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
+    if((intcomm->recv_profile & (1 << i)) && i != my_netid){
+      INTRUDE_STATUS *target = &intcomm->intrude_status[i];
+      target->player_pack = intcomm->backup_player_pack[i];
+      Intrude_ConvertPlayerPos(intcomm, mine->zone_id, mine_x, target);
+    }
   }
 }
 

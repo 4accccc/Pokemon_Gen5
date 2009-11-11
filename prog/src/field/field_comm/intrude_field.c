@@ -363,8 +363,8 @@ GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
     FIELD_PLAYER_GetPos( pcActor, &pos );
     pos.x >>= FX32_SHIFT;
     pos.z >>= FX32_SHIFT;
-    if(GFL_NET_GetConnectNum() <= 1 && ((pos.x <= 4008 && pos.x >= 4008-32) || (pos.x >= 5192 && pos.x <= 5192+32)) && (pos.z >= 440 && pos.z <= 504)){
-      left_right = pos.x <= 888 ? 0 : 1;
+    if(GFL_NET_GetConnectNum() <= 1 && ((pos.x <= 936 && pos.x >= 936-32) || (pos.x >= 2136 && pos.x <= 2136+32)) && (pos.z >= 440 && pos.z <= 504)){
+      left_right = pos.x <= (PALACE_MAP_LEN/2 >> FX32_SHIFT) ? 0 : 1;
       return EVENT_DebugPalaceNGWin( gameSys, fieldWork, pcActor, left_right );
     }
   }
@@ -652,7 +652,7 @@ GMEVENT * DEBUG_PalaceJamp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIEL
   	jump_zone = ZONE_ID_UNION;
   }
   else{
-  	pos.x = PALACE_MAP_LEN + PALACE_MAP_LEN/2;
+  	pos.x = PALACE_MAP_LEN/2;
   	pos.y = 0;
   	pos.z = 408 << FX32_SHIFT;
   	jump_zone = ZONE_ID_PALACE01;
@@ -678,7 +678,7 @@ static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
   VecFx32 pos, new_pos;
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gameSys);
   int i, now_area, new_area;
-  BOOL warp;
+  BOOL warp = FALSE;
   fx32 left_end, right_end;
   
 #if 1
@@ -701,8 +701,8 @@ static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
   now_area = intcomm->intrude_status_mine.palace_area;
   new_area = now_area;
   
-  left_end = PALACE_MAP_LEN - PALACE_MAP_WARP_OFFSET;
-  right_end = PALACE_MAP_LEN + (PALACE_MAP_LEN * intcomm->member_num - PALACE_MAP_WARP_OFFSET);
+  left_end = 0;
+  right_end = PALACE_MAP_LEN * intcomm->member_num;
   
   //マップループチェック
   if(pos.x < left_end){// && player_dir == DIR_LEFT){
@@ -717,17 +717,11 @@ static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
   }
   
   //現在の座標からパレスエリアを判定
-  {
-    int area_pos = pos.x / PALACE_MAP_LEN;
-    area_pos--;   //一番左にワープ用のダミーマップが連結されている為。
-    if(area_pos < 0){
-      area_pos = intcomm->member_num - 1; //ダミーマップにいる場合は右端エリア扱い
-    }
-    new_area = area_pos;
-  }
+  new_area = pos.x / PALACE_MAP_LEN;
 
   if(warp == TRUE){
     FIELD_PLAYER_SetPos( pcActor, &new_pos );
+    Intrude_PlayerPosRecalc(intcomm, new_pos.x);
   }
   
   new_area = new_area + GFL_NET_SystemGetCurrentID();
@@ -753,6 +747,7 @@ static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
 //==================================================================
 void IntrudeField_ConnectMapInit(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys)
 {
+#if 0
   MAP_MATRIX *mmatrix = MAP_MATRIX_Create( HEAPID_WORLD );
   
   MAP_MATRIX_Init(mmatrix, NARC_map_matrix_palace01_mat_bin, ZONE_ID_PALACE01);
@@ -761,6 +756,7 @@ void IntrudeField_ConnectMapInit(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys
   FLDMAPPER_Connect( FIELDMAP_GetFieldG3Dmapper( fieldWork ), mmatrix );
 
   MAP_MATRIX_Delete( mmatrix );
+#endif
 }
 
 //==================================================================
