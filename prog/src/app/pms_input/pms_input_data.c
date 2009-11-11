@@ -316,11 +316,17 @@ static u32 CountupGroupPicture( PMS_INPUT_DATA* pmsi, const PMS_WORD* src_tbl, u
 {
 	u32 i, cnt;
 
+  // デコメ使用フラグが折れていた場合は項目を無効化
+  if( PMSI_PARAM_GetPictureFlag( pmsi->input_param ) == FALSE )
+  {
+    return 0;
+  }
+
   for(i=0, cnt=0; i<tbl_elems; i++)
   {
 		SetWordEnableFlag( pmsi, src_tbl[i] );
     *dst_tbl++ = (PMS_DECOID_ORG + i) + (1<<PMS_WORD_DECO_BITSHIFT); ///< デコメフラグ + デコメID
-//		*dst_tbl++ = src_tbl[i];
+//	*dst_tbl++ = src_tbl[i];
     cnt++;
   }
   
