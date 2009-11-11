@@ -343,10 +343,10 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
 	}
 	NET_PRINT("debugNo %d %d\n",pGF->debugAloneTest , _DEBUG_ALONETEST);
 
-#if PM_DEBUG  // デバッグの時だけ、上に定義がある人は基本他の人とつながらない
+#ifdef PM_DEBUG  // デバッグの時だけ、上に定義がある人は基本他の人とつながらない
 	if(pNetWL->mineDebugNo!=0){
 		if(pGF->debugAloneTest != pNetWL->mineDebugNo){
-			//            return FALSE;
+			return FALSE;   //パレスの為
 		}
 	}
 #endif
