@@ -411,12 +411,20 @@ static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
       MOVE_LIMIT_NOT,	///<Zï˚å¸à⁄ìÆêßå¿
       MMDL_HEADER_POSTYPE_GRID,
     };
+    VecFx32 pos = *((VecFx32*)cp_pos);
+    u32 dir = MMDL_GetDirDisp( p_mmdl );
     
     // ìÆçÏïœçX
     FIELD_PLAYER_NOGRID_Stop( p_wk->p_player_nogrid );
     MMDL_ChangeMoveParam( p_mmdl, &data_MMdlHeader );
 
-    FIELD_PLAYER_SetPos( p_wk->p_player, cp_pos );
+    //  ç¿ïWÇê›íË
+    {
+      MMDL_InitGridPosition( p_mmdl, SIZE_GRID_FX32( pos.x ), SIZE_GRID_FX32( pos.y ), SIZE_GRID_FX32( pos.z ), dir );
+      
+      MMDL_GetVectorPos( p_mmdl, &pos );
+    }
+    FIELD_PLAYER_SetPos( p_wk->p_player, &pos );
 
     // ÉJÉÅÉâê›íË
     FLDNOGRID_MAPPER_UnBindCameraWork( p_mapper );
