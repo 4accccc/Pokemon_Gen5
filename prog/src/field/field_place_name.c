@@ -884,15 +884,15 @@ static void LoadBGPaletteData( FIELD_PLACE_NAME* sys, u32 arc_id, u32 data_id )
 	ARCHANDLE* handle;
 	u32 size;
 	void* src;
-	NNSG2dPaletteData* p_palette;
-	handle = GFL_ARC_OpenDataHandle( arc_id, sys->heapID );				// アーカイブデータハンドルオープン
-	size    = GFL_ARC_GetDataSizeByHandle( handle, data_id );				// データサイズ取得
-	src   = GFL_HEAP_AllocMemoryLo( sys->heapID, size );				// データバッファ確保
+	NNSG2dPaletteData* pltt_data;
+	handle = GFL_ARC_OpenDataHandle( arc_id, sys->heapID );		// アーカイブデータハンドルオープン
+	size    = GFL_ARC_GetDataSizeByHandle( handle, data_id );	// データサイズ取得
+	src   = GFL_HEAP_AllocMemory( sys->heapID, size );				// データバッファ確保
 	GFL_ARC_LoadDataByHandle( handle, data_id, src );					// データ取得
-	NNS_G2dGetUnpackedPaletteData( src, &p_palette );						// バイナリからデータを展開
-	GFL_BG_LoadPalette( BG_FRAME, p_palette->pRawData, 0x20, BG_PALETTE_NO );	// パレットデータ転送
-	GFL_HEAP_FreeMemory( src );											// データバッファ解放
-	GFL_ARC_CloseDataHandle( handle );										// アーカイブデータハンドルクローズ
+	NNS_G2dGetUnpackedPaletteData( src, &pltt_data );					// バイナリからデータを展開
+	GFL_BG_LoadPalette( BG_FRAME, pltt_data->pRawData, 0x20, BG_PALETTE_NO );	// パレットデータ転送
+	GFL_HEAP_FreeMemory( src );											          // データバッファ解放
+	GFL_ARC_CloseDataHandle( handle );										    // アーカイブデータハンドルクローズ
 }
 
 //-----------------------------------------------------------------------------------
