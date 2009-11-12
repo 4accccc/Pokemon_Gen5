@@ -145,8 +145,8 @@
 #define FE_C02GYM_TRBTL2                   129 /* 0x0081 C02ノーマルジムトレーナーの対戦済みチェックフラグ（２人目） */
 #define FE_C03GYM_TRBTL1                   130 /* 0x0082 C03虫ジムトレーナーの対戦済みチェックフラグ（右上） */
 #define FE_C03GYM_TRBTL2                   131 /* 0x0083 C03虫ジムトレーナーの対戦済みチェックフラグ（左下） */
-		/* not used   132(0x0084) */
-		/* not used   133(0x0085) */
+#define FE_R01_BABYGIRL_01                 132 /* 0x0084 R01：BABYGIRLきずぐすり入手フラグ */
+#define FE_R07_FIGHTREW_01                 133 /* 0x0085 R07：FIGHTREWわざマシン入手フラグ */
 		/* not used   134(0x0086) */
 		/* not used   135(0x0087) */
 		/* not used   136(0x0088) */
