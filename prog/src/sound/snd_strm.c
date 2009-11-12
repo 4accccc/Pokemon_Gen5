@@ -344,7 +344,7 @@ void SND_STRM_Stop( void )
 BOOL SND_STRM_CheckPlay( void )
 {
 	GF_ASSERT( sp_STRM_WORK );
-	GF_ASSERT( sp_STRM_WORK->snddata_in );
+	//GF_ASSERT( sp_STRM_WORK->snddata_in );
 	return sp_STRM_WORK->playing;
 }
 

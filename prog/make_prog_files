@@ -945,7 +945,7 @@ SRCS_OVERLAY_POKE_STATUS = app/p_status/p_sta_sys.c \
 		app/p_status/ribbon.c
 
 # ƒoƒgƒ‹‘å‰ï
-#===> SRCS_OVERLAY_BATTLE
+#===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_BATTLE_CHAMPIONSHIP = battle_championship/battle_championship.c \
 				net_app/irc_battle/irc_battle_main.c \
 				net_app/irc_battle/irc_battle_subproc.c
@@ -1009,7 +1009,8 @@ SRCS_OVERLAY_NAKAHIRO_DEBUG = test/nakahiro/d_nakahiro.c
 #LIB=>          libssp.$HYB.a
 SRCS_OVERLAY_CAMERA_TEST = test/ariizumi/camera_system.c \
         test/ariizumi/camera_test.c \
-		test/ariizumi/jpeg_encoder.c
+		test/ariizumi/jpeg_encoder.c \
+		test/ariizumi/enc_adpcm.c
 
 
 # ‹Z‹³‚¦
