@@ -86,8 +86,8 @@ typedef struct{
   u16 zone_id;      ///<ゾーンID
   u8 palace_area;   ///<パレスエリア
   u8 action_status; ///<実行中のアクション(INTRUDE_ACTION_???)
-  u8 disguise_no;   ///<変装番号
-  u8 padding[3];
+  u16 disguise_no;   ///<変装番号
+  u8 padding[2];
 }INTRUDE_STATUS;
 
 ///プロフィールデータ(送信のみに使用。受信は各々のバッファに分かれる)

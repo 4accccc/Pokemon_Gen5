@@ -817,7 +817,16 @@ void IntrudeField_PlayerDisguise(INTRUDE_COMM_SYS_PTR intcomm, GAMESYS_WORK *gsy
   
   fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+#if 0
   disguise_no = GFUser_GetPublicRand(DisguiseObjCodeTblMax);
+#else
+  if(GFL_UI_KEY_GetCont() & PAD_BUTTON_R){
+    disguise_no = MONSNO_BIRIRIDAMA + 1;  //+1 = ƒtƒVƒMƒ_ƒl‚Ì—Y“‚ª•ª‚©‚ê‚Ä“ü‚Á‚Ä‚¢‚éˆ×
+  }
+  else{
+    disguise_no = GFUser_GetPublicRand0(MONSNO_ARUSEUSU) + 1;
+  }
+#endif
 
   intcomm->intrude_status_mine.disguise_no = disguise_no;
   intcomm->send_status = TRUE;
