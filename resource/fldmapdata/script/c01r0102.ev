@@ -46,6 +46,9 @@ EVENT_START   ev_scene_c01r0102_pdwguide_01
 	_OBJ_ANIME( C01R0102_INVENTOR_01, anm_inventor_kaizou )
 	_OBJ_ANIME_WAIT()
 	
+	//Cギア入手イベント演出
+	_CGEAR_ON_DEMO()
+	
 	//で　アタシからの　バックアップです　この　わざマシンを　どうぞ！
 	_BALLOONWIN_OBJMSG_OPEN( msg_c01r0102_inventor_03 , C01R0102_INVENTOR_01 )
 	_BALLOONWIN_CLOSE()
@@ -73,6 +76,9 @@ EVENT_START   ev_scene_c01r0102_pdwguide_01
 	
 	//発明家イベント終了
 	$WK_SCENE_C01R0102 = 1
+	
+	//Cギア入手フラグ
+	_FLAG_SET( FE_CGEAR_GET )
 	
 	//======================================//
 
@@ -169,9 +175,7 @@ EVENT_START   ev_c01r0102_inventor_01
 			//マコモ『それって！　ムシャーナの「？？？？？」！？』
 			_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0102_inventor_08 )
 			_BALLOONWIN_CLOSE()
-		
-			_FLAG_SET( FE_CGEAR_GET )
-		
+			
 		ENDIF
 
 EVENT_END
