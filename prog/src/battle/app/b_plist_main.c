@@ -3171,6 +3171,7 @@ static BOOL FightPokeCheck( BPLIST_WORK * wk, u32 pos )
 		break;
 
 	case BTL_RULE_TRIPLE:		// トリプル
+	case BTL_RULE_ROTATION:	// ローテーション
 		if( pos == 0 || pos == 1 || pos == 2 ){
 			return TRUE;
 		}
@@ -3191,6 +3192,7 @@ static BOOL ChangePokeCheck( BPLIST_WORK * wk, u32 pos )
 		break;
 
 	case BTL_RULE_TRIPLE:		// トリプル
+	case BTL_RULE_ROTATION:	// ローテーション
 		if( pos == wk->dat->change_sel[0] || pos == wk->dat->change_sel[1] ){
 			return TRUE;
 		}
