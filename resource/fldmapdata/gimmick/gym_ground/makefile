@@ -2,7 +2,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	saitou ibe_mana
+USERS	=	saitou ibe_mana saitou_masafumi
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -20,7 +20,7 @@ TARGETDIR = $(PROJECT_ARCDIR)$(FLDMAP)
 #------------------------------------------------------------------------------
 SUBDIRS	=
 
-#CDAT = gym_ground_local_def.cdat
+CDAT = gym_ground_local_def.cdat
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
@@ -103,7 +103,7 @@ $(targetname).narc: $(DATA_LIST)
 #	@-rm -f *.nsb*
 #	@-rm -f *.bin
 
-#$(CDAT): def_make.xls
-#	ruby $(XLS_CNV) -c def_make.xls > def_make.csv
-#	ruby $(DEF_MAKE) def_make.csv $(CDAT)
+$(CDAT): def_make.xls
+	ruby $(XLS_CNV) -c def_make.xls > def_make.csv
+	ruby $(DEF_MAKE) def_make.csv $(CDAT)
 endif
