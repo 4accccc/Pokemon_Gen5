@@ -9,7 +9,7 @@
 #ifndef __ZUKAN_SAVEDATA_H__
 #define __ZUKAN_SAVEDATA_H__
 
-#include "savedata/save_control.h"
+#include "gamesystem/gamedata_def.h"
 
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
@@ -25,7 +25,7 @@ enum{
   ZUKANSAVE_SEX_FIRST = 0,
   ZUKANSAVE_SEX_SECOND,
 
-  // ZukanSave_GetPokeSexFlag系関数のエラーコード
+  // ZUKANSAVE_GetPokeSexFlag系関数のエラーコード
   ZUKANSAVE_GET_SEX_ERR = 0xffffffff,
 
 
@@ -73,94 +73,94 @@ enum{
 typedef struct ZUKAN_SAVEDATA ZUKAN_SAVEDATA;
 
 //----------------------------------------------------------
-//  セーブデータ取得のための関数
+//  セーブデータ取得のための関数（GAMEDATA経由）
 //----------------------------------------------------------
-extern ZUKAN_SAVEDATA * SaveData_GetZukanSave( SAVE_CONTROL_WORK * sv);
+extern ZUKAN_SAVEDATA * GAMEDATA_GetZukanSave( GAMEDATA * gamedata );
 
 
 //----------------------------------------------------------
 //  セーブデータシステムが依存する関数
 //----------------------------------------------------------
-extern int ZukanSave_GetWorkSize(void);
-extern ZUKAN_SAVEDATA * ZukanSave_AllocWork( HEAPID heapID );
+extern int ZUKANSAVE_GetWorkSize(void);
+extern ZUKAN_SAVEDATA * ZUKANSAVE_AllocWork( HEAPID heapID );
 
 
 //----------------------------------------------------------
 //----------------------------------------------------------
-extern void ZukanSave_Init(ZUKAN_SAVEDATA * zs);
+extern void ZUKANSAVE_Init(ZUKAN_SAVEDATA * zs);
 
-extern u16 ZukanSave_GetPokeGetCount(const ZUKAN_SAVEDATA * zs);
-extern u16 ZukanSave_GetPokeSeeCount(const ZUKAN_SAVEDATA * zs);
+extern u16 ZUKANSAVE_GetPokeGetCount(const ZUKAN_SAVEDATA * zs);
+extern u16 ZUKANSAVE_GetPokeSeeCount(const ZUKAN_SAVEDATA * zs);
 
-extern u16 ZukanSave_GetJohtoPokeGetCount(const ZUKAN_SAVEDATA * zs);
-extern u16 ZukanSave_GetJohtoPokeSeeCount(const ZUKAN_SAVEDATA * zs);
+extern u16 ZUKANSAVE_GetJohtoPokeGetCount(const ZUKAN_SAVEDATA * zs);
+extern u16 ZUKANSAVE_GetJohtoPokeSeeCount(const ZUKAN_SAVEDATA * zs);
 
 // ポケモン見た登録・ポケモン捕まえた登録
-extern void ZukanSave_SetPokeSee(ZUKAN_SAVEDATA * zs, const POKEMON_PARAM * pp);
-extern void ZukanSave_SetPokeGet(ZUKAN_SAVEDATA * zs, const POKEMON_PARAM * pp);
+extern void ZUKANSAVE_SetPokeSee(ZUKAN_SAVEDATA * zs, const POKEMON_PARAM * pp);
+extern void ZUKANSAVE_SetPokeGet(ZUKAN_SAVEDATA * zs, const POKEMON_PARAM * pp);
 
 // ゼンコク図鑑持っているときー＞全国用の各数字を返す
 // ジョウト図鑑しかもっていないときー＞ジョウト図鑑用の各数字を返す
-extern u16 ZukanSave_GetZukanPokeGetCount(const ZUKAN_SAVEDATA * zs);
-extern u16 ZukanSave_GetZukanPokeSeeCount(const ZUKAN_SAVEDATA * zs);
+extern u16 ZUKANSAVE_GetZukanPokeGetCount(const ZUKAN_SAVEDATA * zs);
+extern u16 ZUKANSAVE_GetZukanPokeSeeCount(const ZUKAN_SAVEDATA * zs);
 
 
 // ゼンコク図鑑　ジョウト図鑑
 // 完成に必要なポケモンだけでカウントした値を取得
-extern u16 ZukanSave_GetZenkokuGetCompCount(const ZUKAN_SAVEDATA * zs);
-extern u16 ZukanSave_GetJohtoGetCompCount(const ZUKAN_SAVEDATA * zs);
+extern u16 ZUKANSAVE_GetZenkokuGetCompCount(const ZUKAN_SAVEDATA * zs);
+extern u16 ZUKANSAVE_GetJohtoGetCompCount(const ZUKAN_SAVEDATA * zs);
 
-extern BOOL ZukanSave_CheckZenkokuComp(const ZUKAN_SAVEDATA * zs);
-extern BOOL ZukanSave_CheckJohtoComp(const ZUKAN_SAVEDATA * zs);
+extern BOOL ZUKANSAVE_CheckZenkokuComp(const ZUKAN_SAVEDATA * zs);
+extern BOOL ZUKANSAVE_CheckJohtoComp(const ZUKAN_SAVEDATA * zs);
 
-extern BOOL ZukanSave_GetPokeGetFlag(const ZUKAN_SAVEDATA * zs, u16 monsno);
-extern BOOL ZukanSave_GetPokeSeeFlag(const ZUKAN_SAVEDATA * zs, u16 monsno);
-extern u32 ZukanSave_GetPokeSexFlag(const ZUKAN_SAVEDATA * zw, u16 monsno, int first_second, HEAPID heapId );
-extern u32 ZukanSave_GetPokeAnnoonForm(const ZUKAN_SAVEDATA * zs, int count, BOOL get_f );
-extern u32 ZukanSave_GetPokeAnnoonNum(const ZUKAN_SAVEDATA * zs, BOOL get_f);
-extern u32 ZukanSave_GetPokeSiiusiForm(const ZUKAN_SAVEDATA * zs, int count);
-extern u32 ZukanSave_GetPokeSiiusiSeeNum(const ZUKAN_SAVEDATA * zs);
-extern u32 ZukanSave_GetPokeSiidorugoForm(const ZUKAN_SAVEDATA * zs, int count);
-extern u32 ZukanSave_GetPokeSiidorugoSeeNum(const ZUKAN_SAVEDATA * zs);
-extern u32 ZukanSave_GetPokeMinomuttiForm(const ZUKAN_SAVEDATA * zs, int count);
-extern u32 ZukanSave_GetPokeMinomuttiSeeNum(const ZUKAN_SAVEDATA * zs);
-extern u32 ZukanSave_GetPokeMinomesuForm(const ZUKAN_SAVEDATA * zs, int count);
-extern u32 ZukanSave_GetPokeMinomesuSeeNum(const ZUKAN_SAVEDATA * zs);
-extern u32 ZukanSave_GetPokePityuuForm(const ZUKAN_SAVEDATA * zs, int count);
-extern u32 ZukanSave_GetPokePityuuSeeNum(const ZUKAN_SAVEDATA * zs);
-extern u32 ZukanSave_GetPokeRandomFlag(const ZUKAN_SAVEDATA * zs, u8 random_poke);
-extern u32 ZukanSave_GetPokeDeokisisuForm(const ZUKAN_SAVEDATA * zs, int count);
-extern u32 ZukanSave_GetPokeDeokisisuFormSeeNum(const ZUKAN_SAVEDATA * zs);
-extern u32 ZukanSave_GetPokeForm( const ZUKAN_SAVEDATA* zs, int monsno, int count );
-extern u32 ZukanSave_GetPokeFormNum( const ZUKAN_SAVEDATA* zs, int monsno );
+extern BOOL ZUKANSAVE_GetPokeGetFlag(const ZUKAN_SAVEDATA * zs, u16 monsno);
+extern BOOL ZUKANSAVE_GetPokeSeeFlag(const ZUKAN_SAVEDATA * zs, u16 monsno);
+extern u32 ZUKANSAVE_GetPokeSexFlag(const ZUKAN_SAVEDATA * zw, u16 monsno, int first_second, HEAPID heapId );
+extern u32 ZUKANSAVE_GetPokeAnnoonForm(const ZUKAN_SAVEDATA * zs, int count, BOOL get_f );
+extern u32 ZUKANSAVE_GetPokeAnnoonNum(const ZUKAN_SAVEDATA * zs, BOOL get_f);
+extern u32 ZUKANSAVE_GetPokeSiiusiForm(const ZUKAN_SAVEDATA * zs, int count);
+extern u32 ZUKANSAVE_GetPokeSiiusiSeeNum(const ZUKAN_SAVEDATA * zs);
+extern u32 ZUKANSAVE_GetPokeSiidorugoForm(const ZUKAN_SAVEDATA * zs, int count);
+extern u32 ZUKANSAVE_GetPokeSiidorugoSeeNum(const ZUKAN_SAVEDATA * zs);
+extern u32 ZUKANSAVE_GetPokeMinomuttiForm(const ZUKAN_SAVEDATA * zs, int count);
+extern u32 ZUKANSAVE_GetPokeMinomuttiSeeNum(const ZUKAN_SAVEDATA * zs);
+extern u32 ZUKANSAVE_GetPokeMinomesuForm(const ZUKAN_SAVEDATA * zs, int count);
+extern u32 ZUKANSAVE_GetPokeMinomesuSeeNum(const ZUKAN_SAVEDATA * zs);
+extern u32 ZUKANSAVE_GetPokePityuuForm(const ZUKAN_SAVEDATA * zs, int count);
+extern u32 ZUKANSAVE_GetPokePityuuSeeNum(const ZUKAN_SAVEDATA * zs);
+extern u32 ZUKANSAVE_GetPokeRandomFlag(const ZUKAN_SAVEDATA * zs, u8 random_poke);
+extern u32 ZUKANSAVE_GetPokeDeokisisuForm(const ZUKAN_SAVEDATA * zs, int count);
+extern u32 ZUKANSAVE_GetPokeDeokisisuFormSeeNum(const ZUKAN_SAVEDATA * zs);
+extern u32 ZUKANSAVE_GetPokeForm( const ZUKAN_SAVEDATA* zs, int monsno, int count );
+extern u32 ZUKANSAVE_GetPokeFormNum( const ZUKAN_SAVEDATA* zs, int monsno );
 
-extern BOOL ZukanSave_GetZukanGetFlag(const ZUKAN_SAVEDATA * zs);
-extern void ZukanSave_SetZukanGetFlag(ZUKAN_SAVEDATA * zs);
+extern BOOL ZUKANSAVE_GetZukanGetFlag(const ZUKAN_SAVEDATA * zs);
+extern void ZUKANSAVE_SetZukanGetFlag(ZUKAN_SAVEDATA * zs);
 
-extern BOOL ZukanSave_GetZenkokuZukanFlag(const ZUKAN_SAVEDATA * zs);
-extern void ZukanSave_SetZenkokuZukanFlag(ZUKAN_SAVEDATA * zs);
+extern BOOL ZUKANSAVE_GetZenkokuZukanFlag(const ZUKAN_SAVEDATA * zs);
+extern void ZUKANSAVE_SetZenkokuZukanFlag(ZUKAN_SAVEDATA * zs);
 
-extern BOOL ZukanSave_GetGraphicVersionUpFlag(const ZUKAN_SAVEDATA * zs);
-extern void ZukanSave_SetGraphicVersionUpFlag(ZUKAN_SAVEDATA * zs);
+extern BOOL ZUKANSAVE_GetGraphicVersionUpFlag(const ZUKAN_SAVEDATA * zs);
+extern void ZUKANSAVE_SetGraphicVersionUpFlag(ZUKAN_SAVEDATA * zs);
 
-extern BOOL ZukanSave_GetTextVersionUpFlag(const ZUKAN_SAVEDATA * zs, u16 monsno, u32 country_code);
+extern BOOL ZUKANSAVE_GetTextVersionUpFlag(const ZUKAN_SAVEDATA * zs, u16 monsno, u32 country_code);
 
-extern void ZukanSave_SetTextVersionUpMasterFlag( ZUKAN_SAVEDATA * zs );
-extern BOOL ZukanSave_GetTextVersionUpMasterFlag(const ZUKAN_SAVEDATA * zs);
+extern void ZUKANSAVE_SetTextVersionUpMasterFlag( ZUKAN_SAVEDATA * zs );
+extern BOOL ZUKANSAVE_GetTextVersionUpMasterFlag(const ZUKAN_SAVEDATA * zs);
 
-extern void ZukanSave_Copy(const ZUKAN_SAVEDATA * from, ZUKAN_SAVEDATA * to);
+extern void ZUKANSAVE_Copy(const ZUKAN_SAVEDATA * from, ZUKAN_SAVEDATA * to);
 
 
 //----------------------------------------------------------
 //  デバッグ用
 //----------------------------------------------------------
-extern void Debug_ZukanSave_Make(ZUKAN_SAVEDATA * zs, int start, int end, BOOL see_flg, HEAPID heapId);
-extern void Debug_ZukanSave_Make_PM_LANG(ZUKAN_SAVEDATA * zs, int start, int end, BOOL see_flg, HEAPID heapId);
-extern void Debug_ZukanSave_LangSetRand( ZUKAN_SAVEDATA * zs, int start, int end );
-extern void Debug_ZukanSave_LangSetAll( ZUKAN_SAVEDATA * zs, int start, int end );
-extern void Debug_ZukanSave_LangSet( ZUKAN_SAVEDATA * zs, int start, int end, u8 lang );
-extern void Debug_ZukanSave_AnnoonGetSet( ZUKAN_SAVEDATA * zs, int start, int end, HEAPID heapId );
-extern void Debug_ZukanSave_DeokisisuBuckUp( ZUKAN_SAVEDATA * zs );
+extern void Debug_ZUKANSAVE_Make(ZUKAN_SAVEDATA * zs, int start, int end, BOOL see_flg, HEAPID heapId);
+extern void Debug_ZUKANSAVE_Make_PM_LANG(ZUKAN_SAVEDATA * zs, int start, int end, BOOL see_flg, HEAPID heapId);
+extern void Debug_ZUKANSAVE_LangSetRand( ZUKAN_SAVEDATA * zs, int start, int end );
+extern void Debug_ZUKANSAVE_LangSetAll( ZUKAN_SAVEDATA * zs, int start, int end );
+extern void Debug_ZUKANSAVE_LangSet( ZUKAN_SAVEDATA * zs, int start, int end, u8 lang );
+extern void Debug_ZUKANSAVE_AnnoonGetSet( ZUKAN_SAVEDATA * zs, int start, int end, HEAPID heapId );
+extern void Debug_ZUKANSAVE_DeokisisuBuckUp( ZUKAN_SAVEDATA * zs );
 
 #ifdef CREATE_INDEX
 extern void *Index_Get_Zukan_Offset(ZUKAN_SAVEDATA *zs);

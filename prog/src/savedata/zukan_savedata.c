@@ -14,7 +14,7 @@
 #include "savedata/save_tbl.h"
 #include "savedata/save_control.h"
 
-//#include "system/gamedata.h"
+#include "gamesystem/game_data.h"
 #include "savedata/zukan_savedata.h"
 #include "poke_tool/poke_personal.h"
 
@@ -85,7 +85,7 @@ struct ZUKAN_SAVEDATA {
  * @return  int   ZUKAN_SAVEDATAのサイズ
  */
 //----------------------------------------------------------
-int ZukanSave_GetWorkSize(void)
+int ZUKANSAVE_GetWorkSize(void)
 {
   return sizeof(ZUKAN_SAVEDATA);
 }
@@ -96,11 +96,11 @@ int ZukanSave_GetWorkSize(void)
  * @return  ZUKAN_SAVEDATA  生成したZUKAN_SAVEDATAへのポインタ
  */
 //----------------------------------------------------------
-ZUKAN_SAVEDATA * ZukanSave_AllocWork( HEAPID heapID )
+ZUKAN_SAVEDATA * ZUKANSAVE_AllocWork( HEAPID heapID )
 {
   ZUKAN_SAVEDATA * zw;
   zw = GFL_HEAP_AllocClearMemory( heapID, sizeof(ZUKAN_SAVEDATA));
-  ZukanSave_Init(zw);
+  ZUKANSAVE_Init(zw);
 #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_ZUKAN)
   SVLD_SetCrc( GMDATA_ID_ZUKAN );
 #endif //CRC_LOADCHECK
@@ -114,7 +114,7 @@ ZUKAN_SAVEDATA * ZukanSave_AllocWork( HEAPID heapID )
  * @param to    コピー先ZUKAN_SAVEDATAへのポインタ
  */
 //----------------------------------------------------------
-void ZukanSave_Copy(const ZUKAN_SAVEDATA * from, ZUKAN_SAVEDATA * to)
+void ZUKANSAVE_Copy(const ZUKAN_SAVEDATA * from, ZUKAN_SAVEDATA * to)
 {
   MI_CpuCopy8(from, to, sizeof(ZUKAN_SAVEDATA));
 }
@@ -453,7 +453,7 @@ static int get_twoform_poke_turn_num( const ZUKAN_SAVEDATA * zw, u32 monsno )
   GF_ASSERT( (monsno == MONSNO_KARANAKUSI) || (monsno == MONSNO_TORITODON) || (monsno == MONSNO_SHEIMI) || (monsno == MONSNO_GIRATHINA) );
 
   // 見てもいないときは0
-  if( ZukanSave_GetPokeSeeFlag( zw, monsno ) == FALSE ){
+  if( ZUKANSAVE_GetPokeSeeFlag( zw, monsno ) == FALSE ){
     return 0;
   }
 #if 0
@@ -501,7 +501,7 @@ static BOOL check_twoform_poke_turn_set( const ZUKAN_SAVEDATA * zw, u32 monsno, 
   GF_ASSERT( (monsno == MONSNO_KARANAKUSI) || (monsno == MONSNO_TORITODON) || (monsno == MONSNO_SHEIMI) || (monsno == MONSNO_GIRATHINA) );
 
   // 見てもいないときは設定されているわけがない
-  if( ZukanSave_GetPokeSeeFlag( zw, monsno ) == FALSE ){
+  if( ZUKANSAVE_GetPokeSeeFlag( zw, monsno ) == FALSE ){
     return FALSE;
   }
 
@@ -598,7 +598,7 @@ static int get_threeform_poke_turn_num( const ZUKAN_SAVEDATA * zw, u32 monsno )
 
   GF_ASSERT( (monsno == MONSNO_MINOMUTTI) || (monsno == MONSNO_MINOMADAMU) || (monsno == MONSNO_PITYUU) );
   // 見てもいないときは0
-  if( ZukanSave_GetPokeSeeFlag( zw, monsno ) == FALSE ){
+  if( ZUKANSAVE_GetPokeSeeFlag( zw, monsno ) == FALSE ){
     return 0;
   }
 
@@ -640,7 +640,7 @@ static BOOL check_threeform_poke_turn_set( const ZUKAN_SAVEDATA * zw, u32 monsno
 
   GF_ASSERT( (monsno == MONSNO_MINOMUTTI) || (monsno == MONSNO_MINOMADAMU) || (monsno == MONSNO_PITYUU) );
   // 見てもいないときはFALSE
-  if( ZukanSave_GetPokeSeeFlag( zw, monsno ) == FALSE ){
+  if( ZUKANSAVE_GetPokeSeeFlag( zw, monsno ) == FALSE ){
     return FALSE;
   }
 
@@ -896,7 +896,7 @@ static int get_rotom_turn_num( const ZUKAN_SAVEDATA * zw, u32 monsno )
   GF_ASSERT( monsno == MONSNO_ROTOMU );
 
   // 見てもいないときは0
-  if( ZukanSave_GetPokeSeeFlag( zw, monsno ) == FALSE ){
+  if( ZUKANSAVE_GetPokeSeeFlag( zw, monsno ) == FALSE ){
     return 0;
   }
 
@@ -928,7 +928,7 @@ static BOOL check_rotom_turn_set( const ZUKAN_SAVEDATA * zw, u32 monsno, u8 form
   GF_ASSERT( (monsno == MONSNO_ROTOMU) );
 
   // 見てもいないときは設定されているわけがない
-  if( ZukanSave_GetPokeSeeFlag( zw, monsno ) == FALSE ){
+  if( ZUKANSAVE_GetPokeSeeFlag( zw, monsno ) == FALSE ){
     return FALSE;
   }
 
@@ -1283,7 +1283,7 @@ static BOOL check_JohtoCompMonsno( u16 monsno )
  * @param zw    ずかんワークへのポインタ
  */
 //----------------------------------------------------------
-void ZukanSave_Init(ZUKAN_SAVEDATA * zw)
+void ZUKANSAVE_Init(ZUKAN_SAVEDATA * zw)
 {
   MI_CpuClear( zw, sizeof(ZUKAN_SAVEDATA));
   zw->zukan_magic    = MAGIC_NUMBER;
@@ -1313,7 +1313,7 @@ void ZukanSave_Init(ZUKAN_SAVEDATA * zw)
  * @return  u16   捕まえた数
  */
 //----------------------------------------------------------
-u16 ZukanSave_GetPokeGetCount(const ZUKAN_SAVEDATA * zw)
+u16 ZUKANSAVE_GetPokeGetCount(const ZUKAN_SAVEDATA * zw)
 {
   int i;
   int count;
@@ -1321,7 +1321,7 @@ u16 ZukanSave_GetPokeGetCount(const ZUKAN_SAVEDATA * zw)
   zukan_incorrect(zw);
   count= 0;
   for( i=1; i<=MONSNO_END; i++ ){
-    if( ZukanSave_GetPokeGetFlag( zw, i ) == TRUE ){
+    if( ZUKANSAVE_GetPokeGetFlag( zw, i ) == TRUE ){
       count ++;
     }
   }
@@ -1339,7 +1339,7 @@ u16 ZukanSave_GetPokeGetCount(const ZUKAN_SAVEDATA * zw)
  * @return  u16   見つけた数
  */
 //----------------------------------------------------------
-u16 ZukanSave_GetPokeSeeCount(const ZUKAN_SAVEDATA * zw)
+u16 ZUKANSAVE_GetPokeSeeCount(const ZUKAN_SAVEDATA * zw)
 {
   int i;
   int count;
@@ -1347,7 +1347,7 @@ u16 ZukanSave_GetPokeSeeCount(const ZUKAN_SAVEDATA * zw)
   zukan_incorrect(zw);
   count= 0;
   for( i=1; i<=MONSNO_END; i++ ){
-    if( ZukanSave_GetPokeSeeFlag( zw, i ) == TRUE ){
+    if( ZUKANSAVE_GetPokeSeeFlag( zw, i ) == TRUE ){
       count ++;
     }
   }
@@ -1364,12 +1364,12 @@ u16 ZukanSave_GetPokeSeeCount(const ZUKAN_SAVEDATA * zw)
  *  @return 捕まえた数
  */
 //-----------------------------------------------------------------------------
-u16 ZukanSave_GetZukanPokeGetCount(const ZUKAN_SAVEDATA * zw)
+u16 ZUKANSAVE_GetZukanPokeGetCount(const ZUKAN_SAVEDATA * zw)
 {
-  if( ZukanSave_GetZenkokuZukanFlag( zw ) ){
-    return ZukanSave_GetPokeGetCount( zw );
+  if( ZUKANSAVE_GetZenkokuZukanFlag( zw ) ){
+    return ZUKANSAVE_GetPokeGetCount( zw );
   }
-  return ZukanSave_GetJohtoPokeGetCount( zw );
+  return ZUKANSAVE_GetJohtoPokeGetCount( zw );
 }
 
 //----------------------------------------------------------------------------
@@ -1379,12 +1379,12 @@ u16 ZukanSave_GetZukanPokeGetCount(const ZUKAN_SAVEDATA * zw)
  *  @return 見た数
  */
 //-----------------------------------------------------------------------------
-u16 ZukanSave_GetZukanPokeSeeCount(const ZUKAN_SAVEDATA * zw)
+u16 ZUKANSAVE_GetZukanPokeSeeCount(const ZUKAN_SAVEDATA * zw)
 {
-  if( ZukanSave_GetZenkokuZukanFlag( zw ) ){
-    return ZukanSave_GetPokeSeeCount( zw );
+  if( ZUKANSAVE_GetZenkokuZukanFlag( zw ) ){
+    return ZUKANSAVE_GetPokeSeeCount( zw );
   }
-  return ZukanSave_GetJohtoPokeSeeCount( zw );
+  return ZUKANSAVE_GetJohtoPokeSeeCount( zw );
 }
 
 //----------------------------------------------------------
@@ -1395,7 +1395,7 @@ u16 ZukanSave_GetZukanPokeSeeCount(const ZUKAN_SAVEDATA * zw)
  * @return  u16   捕まえた数
  */
 //----------------------------------------------------------
-u16 ZukanSave_GetJohtoPokeGetCount(const ZUKAN_SAVEDATA * zw)
+u16 ZUKANSAVE_GetJohtoPokeGetCount(const ZUKAN_SAVEDATA * zw)
 {
   u16 * buf;
   u16 i;
@@ -1406,7 +1406,7 @@ u16 ZukanSave_GetJohtoPokeGetCount(const ZUKAN_SAVEDATA * zw)
 
 #if ZUKAN_ISSHU_TABLE_NONE
   for( i=1; i<=MONSNO_END; i++ ){
-    if( ZukanSave_GetPokeGetFlag( zw, i ) == TRUE ){
+    if( ZUKANSAVE_GetPokeGetFlag( zw, i ) == TRUE ){
       num++;
     }
   }
@@ -1415,7 +1415,7 @@ u16 ZukanSave_GetJohtoPokeGetCount(const ZUKAN_SAVEDATA * zw)
   num = 0;
 
   for( i=1; i<=MONSNO_END; i++ ){
-    if( ZukanSave_GetPokeGetFlag( zw, i ) == TRUE ){
+    if( ZUKANSAVE_GetPokeGetFlag( zw, i ) == TRUE ){
       // ジョウト図鑑にいるかチェック
       if( buf[i] != 0 ){
         num++;
@@ -1438,7 +1438,7 @@ u16 ZukanSave_GetJohtoPokeGetCount(const ZUKAN_SAVEDATA * zw)
  * @return  u16   見つけた数
  */
 //----------------------------------------------------------
-u16 ZukanSave_GetJohtoPokeSeeCount(const ZUKAN_SAVEDATA * zw)
+u16 ZUKANSAVE_GetJohtoPokeSeeCount(const ZUKAN_SAVEDATA * zw)
 {
   u16 * buf;
   u16 i;
@@ -1449,7 +1449,7 @@ u16 ZukanSave_GetJohtoPokeSeeCount(const ZUKAN_SAVEDATA * zw)
 #if ZUKAN_ISSHU_TABLE_NONE
 
   for( i=1; i<=MONSNO_END; i++ ){
-    if( ZukanSave_GetPokeSeeFlag( zw, i ) == TRUE ){
+    if( ZUKANSAVE_GetPokeSeeFlag( zw, i ) == TRUE ){
        num++;
     }
   }
@@ -1458,7 +1458,7 @@ u16 ZukanSave_GetJohtoPokeSeeCount(const ZUKAN_SAVEDATA * zw)
   num = 0;
 
   for( i=1; i<=MONSNO_END; i++ ){
-    if( ZukanSave_GetPokeSeeFlag( zw, i ) == TRUE ){
+    if( ZUKANSAVE_GetPokeSeeFlag( zw, i ) == TRUE ){
       // ジョウト図鑑にいるかチェック
       if( buf[i] != 0 ){
         num++;
@@ -1481,12 +1481,12 @@ u16 ZukanSave_GetJohtoPokeSeeCount(const ZUKAN_SAVEDATA * zw)
  *  @retval FALSE 未完成
  */
 //-----------------------------------------------------------------------------
-BOOL ZukanSave_CheckZenkokuComp(const ZUKAN_SAVEDATA * zw)
+BOOL ZUKANSAVE_CheckZenkokuComp(const ZUKAN_SAVEDATA * zw)
 {
   u16 num;
 
   // ゼンコク図鑑完成に必要なポケモンを何匹捕まえたか
-  num = ZukanSave_GetZenkokuGetCompCount( zw );
+  num = ZUKANSAVE_GetZenkokuGetCompCount( zw );
 
   if( num >= ZUKANSAVE_ZENKOKU_COMP_NUM ){
     return TRUE;
@@ -1504,12 +1504,12 @@ BOOL ZukanSave_CheckZenkokuComp(const ZUKAN_SAVEDATA * zw)
  *  @retval FALSE 未完成
  */
 //-----------------------------------------------------------------------------
-BOOL ZukanSave_CheckJohtoComp(const ZUKAN_SAVEDATA * zw)
+BOOL ZUKANSAVE_CheckJohtoComp(const ZUKAN_SAVEDATA * zw)
 {
   u16 num;
 
   // ジョウト図鑑完成に必要なポケモンを何匹捕まえたか
-  num = ZukanSave_GetJohtoGetCompCount( zw );
+  num = ZUKANSAVE_GetJohtoGetCompCount( zw );
 
   if( num >= ZUKANSAVE_JOHTO_COMP_NUM ){
     return TRUE;
@@ -1525,7 +1525,7 @@ BOOL ZukanSave_CheckJohtoComp(const ZUKAN_SAVEDATA * zw)
  *  @return 完成に必要なポケモンを捕まえた数
  */
 //-----------------------------------------------------------------------------
-u16 ZukanSave_GetZenkokuGetCompCount(const ZUKAN_SAVEDATA * zw)
+u16 ZUKANSAVE_GetZenkokuGetCompCount(const ZUKAN_SAVEDATA * zw)
 {
   int i;
   u16 num;
@@ -1533,7 +1533,7 @@ u16 ZukanSave_GetZenkokuGetCompCount(const ZUKAN_SAVEDATA * zw)
   // 以外を捕まえていたらOK
   num = 0;
   for( i=1; i<=ZUKANSAVE_ZENKOKU_MONSMAX; i++ ){
-    if( ZukanSave_GetPokeGetFlag( zw, i ) == TRUE ){
+    if( ZUKANSAVE_GetPokeGetFlag( zw, i ) == TRUE ){
       if( check_ZenkokuCompMonsno( i ) == TRUE ){
         num ++;
       }
@@ -1550,7 +1550,7 @@ u16 ZukanSave_GetZenkokuGetCompCount(const ZUKAN_SAVEDATA * zw)
  *  @return 完成に必要なポケモンを見つけた数
  */
 //-----------------------------------------------------------------------------
-u16 ZukanSave_GetJohtoGetCompCount(const ZUKAN_SAVEDATA * zw)
+u16 ZUKANSAVE_GetJohtoGetCompCount(const ZUKAN_SAVEDATA * zw)
 {
   u16 * buf;
   u16 i;
@@ -1560,7 +1560,7 @@ u16 ZukanSave_GetJohtoGetCompCount(const ZUKAN_SAVEDATA * zw)
 #if ZUKAN_ISSHU_TABLE_NONE
 
   for( i=1; i<=MONSNO_END; i++ ){
-    if( ZukanSave_GetPokeGetFlag( zw, i ) == TRUE ){
+    if( ZUKANSAVE_GetPokeGetFlag( zw, i ) == TRUE ){
       num++;
     }
   }
@@ -1571,7 +1571,7 @@ u16 ZukanSave_GetJohtoGetCompCount(const ZUKAN_SAVEDATA * zw)
   // ミュウとセレビィ
   // 以外を捕まえていたらOK
   for( i=1; i<=ZUKANSAVE_ZENKOKU_MONSMAX; i++ ){
-    if( ZukanSave_GetPokeGetFlag( zw, i ) == TRUE ){
+    if( ZUKANSAVE_GetPokeGetFlag( zw, i ) == TRUE ){
       if( buf[i] != 0 ){
         if( check_JohtoCompMonsno( i ) == TRUE ){
           num++;
@@ -1595,7 +1595,7 @@ u16 ZukanSave_GetJohtoGetCompCount(const ZUKAN_SAVEDATA * zw)
  * @return  BOOL  フラグ結果
  */
 //----------------------------------------------------------
-BOOL ZukanSave_GetPokeGetFlag(const ZUKAN_SAVEDATA * zw, u16 monsno)
+BOOL ZUKANSAVE_GetPokeGetFlag(const ZUKAN_SAVEDATA * zw, u16 monsno)
 {
   zukan_incorrect(zw);
   if (monsno_incorrect(monsno)) {
@@ -1616,7 +1616,7 @@ BOOL ZukanSave_GetPokeGetFlag(const ZUKAN_SAVEDATA * zw, u16 monsno)
  * @return  BOOL  フラグ結果
  */
 //----------------------------------------------------------
-BOOL ZukanSave_GetPokeSeeFlag(const ZUKAN_SAVEDATA * zw, u16 monsno)
+BOOL ZUKANSAVE_GetPokeSeeFlag(const ZUKAN_SAVEDATA * zw, u16 monsno)
 {
   zukan_incorrect(zw);
   if (monsno_incorrect(monsno)) {
@@ -1635,7 +1635,7 @@ BOOL ZukanSave_GetPokeSeeFlag(const ZUKAN_SAVEDATA * zw, u16 monsno)
  *  @return 個性乱数
  */
 //-----------------------------------------------------------------------------
-u32 ZukanSave_GetPokeRandomFlag(const ZUKAN_SAVEDATA * zw, u8 random_poke)
+u32 ZUKANSAVE_GetPokeRandomFlag(const ZUKAN_SAVEDATA * zw, u8 random_poke)
 {
   u32 random;
 
@@ -1668,7 +1668,7 @@ u32 ZukanSave_GetPokeRandomFlag(const ZUKAN_SAVEDATA * zw, u8 random_poke)
  *  @retval ZUKANSAVE_GET_SEX_ERR 見た性別がまだ無い
  */
 //-----------------------------------------------------------------------------
-u32 ZukanSave_GetPokeSexFlag(const ZUKAN_SAVEDATA * zw, u16 monsno, int first_second, HEAPID heapId )
+u32 ZUKANSAVE_GetPokeSexFlag(const ZUKAN_SAVEDATA * zw, u16 monsno, int first_second, HEAPID heapId )
 {
   zukan_incorrect(zw);
   if (monsno_incorrect(monsno)) {
@@ -1695,7 +1695,7 @@ u32 ZukanSave_GetPokeSexFlag(const ZUKAN_SAVEDATA * zw, u16 monsno, int first_se
  *  @retval ZUKANSAVE_GET_SEX_ERR 見つけて(捕獲して)いない
  */
 //-----------------------------------------------------------------------------
-u32 ZukanSave_GetPokeAnnoonForm(const ZUKAN_SAVEDATA * zw, int count, BOOL get_f)
+u32 ZUKANSAVE_GetPokeAnnoonForm(const ZUKAN_SAVEDATA * zw, int count, BOOL get_f)
 {
   zukan_incorrect(zw);
   // その数のアンノーンフォルムを見ているかチェック
@@ -1716,7 +1716,7 @@ u32 ZukanSave_GetPokeAnnoonForm(const ZUKAN_SAVEDATA * zw, int count, BOOL get_f
  *  @return 見た数
  */
 //-----------------------------------------------------------------------------
-u32 ZukanSave_GetPokeAnnoonNum(const ZUKAN_SAVEDATA * zw, BOOL get_f)
+u32 ZUKANSAVE_GetPokeAnnoonNum(const ZUKAN_SAVEDATA * zw, BOOL get_f)
 {
   zukan_incorrect(zw);
   return get_zukan_unknown_turn_num( zw, get_f );
@@ -1733,7 +1733,7 @@ u32 ZukanSave_GetPokeAnnoonNum(const ZUKAN_SAVEDATA * zw, BOOL get_f)
  *  @retval ZUKANSAVE_GET_SEX_ERR 見つけていない
  */
 //-----------------------------------------------------------------------------
-u32 ZukanSave_GetPokeSiiusiForm(const ZUKAN_SAVEDATA * zw, int count)
+u32 ZUKANSAVE_GetPokeSiiusiForm(const ZUKAN_SAVEDATA * zw, int count)
 {
   zukan_incorrect(zw);
 
@@ -1753,7 +1753,7 @@ u32 ZukanSave_GetPokeSiiusiForm(const ZUKAN_SAVEDATA * zw, int count)
  *  @return フォルムを見た数
  */
 //-----------------------------------------------------------------------------
-u32 ZukanSave_GetPokeSiiusiSeeNum(const ZUKAN_SAVEDATA * zw)
+u32 ZUKANSAVE_GetPokeSiiusiSeeNum(const ZUKAN_SAVEDATA * zw)
 {
   zukan_incorrect(zw);
   return get_twoform_poke_turn_num( zw, MONSNO_KARANAKUSI );
@@ -1770,7 +1770,7 @@ u32 ZukanSave_GetPokeSiiusiSeeNum(const ZUKAN_SAVEDATA * zw)
  *  @retval ZUKANSAVE_GET_SEX_ERR 見つけていない
  */
 //-----------------------------------------------------------------------------
-u32 ZukanSave_GetPokeSiidorugoForm(const ZUKAN_SAVEDATA * zw, int count)
+u32 ZUKANSAVE_GetPokeSiidorugoForm(const ZUKAN_SAVEDATA * zw, int count)
 {
   zukan_incorrect(zw);
 
@@ -1790,7 +1790,7 @@ u32 ZukanSave_GetPokeSiidorugoForm(const ZUKAN_SAVEDATA * zw, int count)
  *  @return フォルムを見た数
  */
 //-----------------------------------------------------------------------------
-u32 ZukanSave_GetPokeSiidorugoSeeNum(const ZUKAN_SAVEDATA * zw)
+u32 ZUKANSAVE_GetPokeSiidorugoSeeNum(const ZUKAN_SAVEDATA * zw)
 {
   zukan_incorrect(zw);
   return get_twoform_poke_turn_num( zw, MONSNO_TORITODON );
@@ -1807,7 +1807,7 @@ u32 ZukanSave_GetPokeSiidorugoSeeNum(const ZUKAN_SAVEDATA * zw)
  *  @retval ZUKANSAVE_GET_SEX_ERR 見つけていない
  */
 //-----------------------------------------------------------------------------
-u32 ZukanSave_GetPokeMinomuttiForm(const ZUKAN_SAVEDATA * zw, int count)
+u32 ZUKANSAVE_GetPokeMinomuttiForm(const ZUKAN_SAVEDATA * zw, int count)
 {
   zukan_incorrect(zw);
 
@@ -1827,7 +1827,7 @@ u32 ZukanSave_GetPokeMinomuttiForm(const ZUKAN_SAVEDATA * zw, int count)
  *  @return フォルムを見た数
  */
 //-----------------------------------------------------------------------------
-u32 ZukanSave_GetPokeMinomuttiSeeNum(const ZUKAN_SAVEDATA * zw)
+u32 ZUKANSAVE_GetPokeMinomuttiSeeNum(const ZUKAN_SAVEDATA * zw)
 {
   zukan_incorrect(zw);
   return get_threeform_poke_turn_num( zw, MONSNO_MINOMUTTI );
@@ -1844,7 +1844,7 @@ u32 ZukanSave_GetPokeMinomuttiSeeNum(const ZUKAN_SAVEDATA * zw)
  *  @retval ZUKANSAVE_GET_SEX_ERR 見つけていない
  */
 //-----------------------------------------------------------------------------
-u32 ZukanSave_GetPokeMinomesuForm(const ZUKAN_SAVEDATA * zw, int count)
+u32 ZUKANSAVE_GetPokeMinomesuForm(const ZUKAN_SAVEDATA * zw, int count)
 {
   zukan_incorrect(zw);
 
@@ -1864,7 +1864,7 @@ u32 ZukanSave_GetPokeMinomesuForm(const ZUKAN_SAVEDATA * zw, int count)
  *  @return フォルムを見た数
  */
 //-----------------------------------------------------------------------------
-u32 ZukanSave_GetPokeMinomesuSeeNum(const ZUKAN_SAVEDATA * zw)
+u32 ZUKANSAVE_GetPokeMinomesuSeeNum(const ZUKAN_SAVEDATA * zw)
 {
   zukan_incorrect(zw);
   return get_threeform_poke_turn_num( zw, MONSNO_MINOMADAMU );
@@ -1881,7 +1881,7 @@ u32 ZukanSave_GetPokeMinomesuSeeNum(const ZUKAN_SAVEDATA * zw)
  *  @retval ZUKANSAVE_GET_SEX_ERR 見つけていない
  */
 //-----------------------------------------------------------------------------
-u32 ZukanSave_GetPokePityuuForm(const ZUKAN_SAVEDATA * zw, int count)
+u32 ZUKANSAVE_GetPokePityuuForm(const ZUKAN_SAVEDATA * zw, int count)
 {
   zukan_incorrect(zw);
 
@@ -1901,7 +1901,7 @@ u32 ZukanSave_GetPokePityuuForm(const ZUKAN_SAVEDATA * zw, int count)
  *  @return フォルムを見た数
  */
 //-----------------------------------------------------------------------------
-u32 ZukanSave_GetPokePityuuSeeNum(const ZUKAN_SAVEDATA * zw)
+u32 ZUKANSAVE_GetPokePityuuSeeNum(const ZUKAN_SAVEDATA * zw)
 {
   zukan_incorrect(zw);
   return get_threeform_poke_turn_num( zw, MONSNO_PITYUU );
@@ -1917,7 +1917,7 @@ u32 ZukanSave_GetPokePityuuSeeNum(const ZUKAN_SAVEDATA * zw)
  *  @return デオキシスフォルムナンバー
  */
 //-----------------------------------------------------------------------------
-u32 ZukanSave_GetPokeDeokisisuForm(const ZUKAN_SAVEDATA * zw, int count)
+u32 ZUKANSAVE_GetPokeDeokisisuForm(const ZUKAN_SAVEDATA * zw, int count)
 {
   zukan_incorrect(zw);
   return getDEOKISISUFormNo( zw, count );
@@ -1932,7 +1932,7 @@ u32 ZukanSave_GetPokeDeokisisuForm(const ZUKAN_SAVEDATA * zw, int count)
  *  @return 見た数
  */
 //-----------------------------------------------------------------------------
-u32 ZukanSave_GetPokeDeokisisuFormSeeNum(const ZUKAN_SAVEDATA * zw)
+u32 ZUKANSAVE_GetPokeDeokisisuFormSeeNum(const ZUKAN_SAVEDATA * zw)
 {
   zukan_incorrect(zw);
   return nowGetDeokisisuFormNum( zw );
@@ -1946,7 +1946,7 @@ u32 ZukanSave_GetPokeDeokisisuFormSeeNum(const ZUKAN_SAVEDATA * zw)
  * @param pp    見つけたポケモンのPOKEMON_PARAMへのポインタ
  */
 //----------------------------------------------------------
-void ZukanSave_SetPokeSee(ZUKAN_SAVEDATA * zw, const POKEMON_PARAM * pp)
+void ZUKANSAVE_SetPokeSee(ZUKAN_SAVEDATA * zw, const POKEMON_PARAM * pp)
 {
   u16 monsno = PP_Get(pp, ID_PARA_monsno, NULL);
   u32 rand = PP_Get(pp, ID_PARA_personal_rnd, NULL);
@@ -1978,7 +1978,7 @@ void ZukanSave_SetPokeSee(ZUKAN_SAVEDATA * zw, const POKEMON_PARAM * pp)
  * @param pp    捕まえたポケモンのPOKEMON_PARAMへのポインタ
  */
 //----------------------------------------------------------
-void ZukanSave_SetPokeGet(ZUKAN_SAVEDATA * zw, const POKEMON_PARAM * pp)
+void ZUKANSAVE_SetPokeGet(ZUKAN_SAVEDATA * zw, const POKEMON_PARAM * pp)
 {
   u16 monsno = PP_Get(pp, ID_PARA_monsno, NULL);
   u32 lang = PP_Get(pp, ID_PARA_country_code, NULL);
@@ -2009,7 +2009,7 @@ void ZukanSave_SetPokeGet(ZUKAN_SAVEDATA * zw, const POKEMON_PARAM * pp)
   SetZukanTextVersionUp(zw, monsno, lang);  // 国コード
   // 母国語以外が登録された場合、言語登録マスターフラグをセット
   if( lang != PM_LANG ){
-    ZukanSave_SetTextVersionUpMasterFlag( zw );
+    ZUKANSAVE_SetTextVersionUpMasterFlag( zw );
   }
   set_get_bit(zw, monsno);
   set_see_bit(zw, monsno);
@@ -2022,7 +2022,7 @@ void ZukanSave_SetPokeGet(ZUKAN_SAVEDATA * zw, const POKEMON_PARAM * pp)
  * @param zw    ずかんワークへのポインタ
  */
 //----------------------------------------------------------
-void ZukanSave_SetZenkokuZukanFlag(ZUKAN_SAVEDATA * zw)
+void ZUKANSAVE_SetZenkokuZukanFlag(ZUKAN_SAVEDATA * zw)
 {
   zukan_incorrect(zw);
   zw->zenkoku_flag = TRUE;
@@ -2036,7 +2036,7 @@ void ZukanSave_SetZenkokuZukanFlag(ZUKAN_SAVEDATA * zw)
  * @retval  FALSE ジョウトずかんモード
  */
 //----------------------------------------------------------
-BOOL ZukanSave_GetZenkokuZukanFlag(const ZUKAN_SAVEDATA * zw)
+BOOL ZUKANSAVE_GetZenkokuZukanFlag(const ZUKAN_SAVEDATA * zw)
 {
   zukan_incorrect(zw);
   return zw->zenkoku_flag;
@@ -2052,7 +2052,7 @@ BOOL ZukanSave_GetZenkokuZukanFlag(const ZUKAN_SAVEDATA * zw)
  *  @retval FALSE バージョンアップ未完了
  */
 //-----------------------------------------------------------------------------
-BOOL ZukanSave_GetGraphicVersionUpFlag(const ZUKAN_SAVEDATA * zw)
+BOOL ZUKANSAVE_GetGraphicVersionUpFlag(const ZUKAN_SAVEDATA * zw)
 {
   zukan_incorrect(zw);
   return zw->GraphicVersionUp;
@@ -2067,7 +2067,7 @@ BOOL ZukanSave_GetGraphicVersionUpFlag(const ZUKAN_SAVEDATA * zw)
  *  @return none
  */
 //-----------------------------------------------------------------------------
-void ZukanSave_SetGraphicVersionUpFlag(ZUKAN_SAVEDATA * zw)
+void ZUKANSAVE_SetGraphicVersionUpFlag(ZUKAN_SAVEDATA * zw)
 {
   zukan_incorrect(zw);
   zw->GraphicVersionUp = 1;
@@ -2085,7 +2085,7 @@ void ZukanSave_SetGraphicVersionUpFlag(ZUKAN_SAVEDATA * zw)
  *  @retval FALSE その国のバージョンを表示してはいけない
  */
 //-----------------------------------------------------------------------------
-BOOL ZukanSave_GetTextVersionUpFlag(const ZUKAN_SAVEDATA * zw, u16 monsno, u32 country_code)
+BOOL ZUKANSAVE_GetTextVersionUpFlag(const ZUKAN_SAVEDATA * zw, u16 monsno, u32 country_code)
 {
   int idx;
 
@@ -2124,7 +2124,7 @@ BOOL ZukanSave_GetTextVersionUpFlag(const ZUKAN_SAVEDATA * zw, u16 monsno, u32 c
  *  このフラグがたっていないと、外国語図鑑はオープンされない
  */
 //-----------------------------------------------------------------------------
-void ZukanSave_SetTextVersionUpMasterFlag( ZUKAN_SAVEDATA * zw )
+void ZUKANSAVE_SetTextVersionUpMasterFlag( ZUKAN_SAVEDATA * zw )
 {
   zw->TextVersionUpMasterFlag = TRUE;
 }
@@ -2139,7 +2139,7 @@ void ZukanSave_SetTextVersionUpMasterFlag( ZUKAN_SAVEDATA * zw )
  *  @retval FALSE バージョンアップされてない
  */
 //-----------------------------------------------------------------------------
-BOOL ZukanSave_GetTextVersionUpMasterFlag(const ZUKAN_SAVEDATA * zw)
+BOOL ZUKANSAVE_GetTextVersionUpMasterFlag(const ZUKAN_SAVEDATA * zw)
 {
   return zw->TextVersionUpMasterFlag;
 }
@@ -2154,7 +2154,7 @@ BOOL ZukanSave_GetTextVersionUpMasterFlag(const ZUKAN_SAVEDATA * zw)
  *  @retval FALSE 保持していない
  */
 //-----------------------------------------------------------------------------
-BOOL ZukanSave_GetZukanGetFlag(const ZUKAN_SAVEDATA * zw)
+BOOL ZUKANSAVE_GetZukanGetFlag(const ZUKAN_SAVEDATA * zw)
 {
   zukan_incorrect(zw);
   return zw->zukan_get;
@@ -2169,7 +2169,7 @@ BOOL ZukanSave_GetZukanGetFlag(const ZUKAN_SAVEDATA * zw)
  *  @return none
  */
 //-----------------------------------------------------------------------------
-void ZukanSave_SetZukanGetFlag(ZUKAN_SAVEDATA * zw)
+void ZUKANSAVE_SetZukanGetFlag(ZUKAN_SAVEDATA * zw)
 {
   zukan_incorrect(zw);
   zw->zukan_get = TRUE;
@@ -2187,10 +2187,11 @@ void ZukanSave_SetZukanGetFlag(ZUKAN_SAVEDATA * zw)
  * @return  ZUKAN_SAVEDATA  ずかんワークへのポインタ
  */
 //----------------------------------------------------------
-ZUKAN_SAVEDATA * SaveData_GetZukanSave( SAVE_CONTROL_WORK * sv)
+ZUKAN_SAVEDATA * GAMEDATA_GetZukanSave( GAMEDATA *gamedata )
 {
-  ZUKAN_SAVEDATA * zs;
-  zs = SaveControl_DataPtrGet( sv, GMDATA_ID_ZUKAN );
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork( gamedata );
+  ZUKAN_SAVEDATA    *zs = SaveControl_DataPtrGet( sv, GMDATA_ID_ZUKAN );
+
   return zs;
 }
 
@@ -2288,7 +2289,7 @@ static void set_debug_poke_sex( ZUKAN_SAVEDATA * zw, int monsno, HEAPID heapId )
  * @param option
  */
 //----------------------------------------------------------
-void Debug_ZukanSave_Make(ZUKAN_SAVEDATA * zw, int start, int end, BOOL see_flg, HEAPID heapId)
+void Debug_ZUKANSAVE_Make(ZUKAN_SAVEDATA * zw, int start, int end, BOOL see_flg, HEAPID heapId)
 {
   int i;
   zukan_incorrect(zw);
@@ -2324,11 +2325,11 @@ void Debug_ZukanSave_Make(ZUKAN_SAVEDATA * zw, int start, int end, BOOL see_flg,
   }
 
   // グラフィックバージョンアップ
-  ZukanSave_SetGraphicVersionUpFlag(zw);
-  ZukanSave_SetTextVersionUpMasterFlag(zw);
+  ZUKANSAVE_SetGraphicVersionUpFlag(zw);
+  ZUKANSAVE_SetTextVersionUpMasterFlag(zw);
 }
 
-void Debug_ZukanSave_Make_PM_LANG(ZUKAN_SAVEDATA * zw, int start, int end, BOOL see_flg, HEAPID heapId)
+void Debug_ZUKANSAVE_Make_PM_LANG(ZUKAN_SAVEDATA * zw, int start, int end, BOOL see_flg, HEAPID heapId)
 {
   int i;
   zukan_incorrect(zw);
@@ -2359,10 +2360,10 @@ void Debug_ZukanSave_Make_PM_LANG(ZUKAN_SAVEDATA * zw, int start, int end, BOOL 
   }
 
   // グラフィックバージョンアップ
-  ZukanSave_SetGraphicVersionUpFlag(zw);
+  ZUKANSAVE_SetGraphicVersionUpFlag(zw);
 }
 
-void Debug_ZukanSave_LangSetRand( ZUKAN_SAVEDATA * zw, int start, int end )
+void Debug_ZUKANSAVE_LangSetRand( ZUKAN_SAVEDATA * zw, int start, int end )
 {
   int i;
 
@@ -2389,10 +2390,10 @@ void Debug_ZukanSave_LangSetRand( ZUKAN_SAVEDATA * zw, int start, int end )
       SetZukanTextVersionUp( zw, i, LANG_SPAIN );
     }
   }
-  ZukanSave_SetTextVersionUpMasterFlag(zw);
+  ZUKANSAVE_SetTextVersionUpMasterFlag(zw);
 }
 
-void Debug_ZukanSave_LangSetAll( ZUKAN_SAVEDATA * zw, int start, int end )
+void Debug_ZUKANSAVE_LangSetAll( ZUKAN_SAVEDATA * zw, int start, int end )
 {
   int i;
 
@@ -2409,10 +2410,10 @@ void Debug_ZukanSave_LangSetAll( ZUKAN_SAVEDATA * zw, int start, int end )
     SetZukanTextVersionUp( zw, i, LANG_GERMANY );
     SetZukanTextVersionUp( zw, i, LANG_SPAIN );
   }
-  ZukanSave_SetTextVersionUpMasterFlag(zw);
+  ZUKANSAVE_SetTextVersionUpMasterFlag(zw);
 }
 
-void Debug_ZukanSave_LangSet( ZUKAN_SAVEDATA * zw, int start, int end, u8 lang )
+void Debug_ZUKANSAVE_LangSet( ZUKAN_SAVEDATA * zw, int start, int end, u8 lang )
 {
   int i;
 
@@ -2425,10 +2426,10 @@ void Debug_ZukanSave_LangSet( ZUKAN_SAVEDATA * zw, int start, int end, u8 lang )
     if( check_get_bit( zw, i ) == FALSE ){ continue; }
     SetZukanTextVersionUp( zw, i, lang );
   }
-  ZukanSave_SetTextVersionUpMasterFlag(zw);
+  ZUKANSAVE_SetTextVersionUpMasterFlag(zw);
 }
 
-void Debug_ZukanSave_AnnoonGetSet( ZUKAN_SAVEDATA * zw, int start, int end, HEAPID heapId )
+void Debug_ZUKANSAVE_AnnoonGetSet( ZUKAN_SAVEDATA * zw, int start, int end, HEAPID heapId )
 {
   int i;
   zukan_incorrect(zw);
@@ -2452,8 +2453,8 @@ void Debug_ZukanSave_AnnoonGetSet( ZUKAN_SAVEDATA * zw, int start, int end, HEAP
   set_debug_poke_sex( zw, MONSNO_ANNOON, heapId );
 
   // グラフィックバージョンアップ
-  ZukanSave_SetGraphicVersionUpFlag(zw);
-  ZukanSave_SetTextVersionUpMasterFlag(zw);
+  ZUKANSAVE_SetGraphicVersionUpFlag(zw);
+  ZUKANSAVE_SetTextVersionUpMasterFlag(zw);
 }
 
 
@@ -2464,13 +2465,13 @@ void Debug_ZukanSave_AnnoonGetSet( ZUKAN_SAVEDATA * zw, int start, int end, HEAP
  *  @param  zw  図鑑ワーク
  */
 //-----------------------------------------------------------------------------
-void Debug_ZukanSave_DeokisisuBuckUp( ZUKAN_SAVEDATA * zw )
+void Debug_ZUKANSAVE_DeokisisuBuckUp( ZUKAN_SAVEDATA * zw )
 {
   // デオキシスフォルムIDバッファ初期化
   InitDeokisisuFormNo( zw );
 
   // デオキシス保持しているかチェック
-  if( ZukanSave_GetPokeSeeFlag( zw, MONSNO_DEOKISISU ) == TRUE ){
+  if( ZUKANSAVE_GetPokeSeeFlag( zw, MONSNO_DEOKISISU ) == TRUE ){
     // フォルムナンバー０でセーブ
     setDEOKISISUFormNo( zw, 0, 0 );
   }
@@ -2500,7 +2501,7 @@ void *Index_Get_Sex_Flag_Offset(ZUKAN_SAVEDATA *zw){ return &zw->sex_flag; }
  * @retval  u32
  */
 //------------------------------------------------------------------
-u32 ZukanSave_GetPokeForm( const ZUKAN_SAVEDATA* zw, int monsno, int count )
+u32 ZUKANSAVE_GetPokeForm( const ZUKAN_SAVEDATA* zw, int monsno, int count )
 {
 //  OS_TPrintf("monsno:%d\n", monsno);
   zukan_incorrect(zw);
@@ -2508,52 +2509,52 @@ u32 ZukanSave_GetPokeForm( const ZUKAN_SAVEDATA* zw, int monsno, int count )
   switch( monsno ){
   case MONSNO_ANNOON:
 //    OS_TPrintf("  Annoon\n");
-    if( count < ZukanSave_GetPokeAnnoonNum(zw, FALSE ) )
+    if( count < ZUKANSAVE_GetPokeAnnoonNum(zw, FALSE ) )
     {
 //      OS_TPrintf("   CheckForm\n");
-      return ZukanSave_GetPokeAnnoonForm( zw, count, FALSE );
+      return ZUKANSAVE_GetPokeAnnoonForm( zw, count, FALSE );
     }
     break;
 
   case MONSNO_KARANAKUSI:
-    if( count < ZukanSave_GetPokeSiiusiSeeNum(zw) )
+    if( count < ZUKANSAVE_GetPokeSiiusiSeeNum(zw) )
     {
-      return ZukanSave_GetPokeSiiusiForm( zw, count );
+      return ZUKANSAVE_GetPokeSiiusiForm( zw, count );
     }
     break;
 
   case MONSNO_TORITODON:
-    if( count < ZukanSave_GetPokeSiidorugoSeeNum(zw) )
+    if( count < ZUKANSAVE_GetPokeSiidorugoSeeNum(zw) )
     {
-      return ZukanSave_GetPokeSiidorugoForm( zw, count );
+      return ZUKANSAVE_GetPokeSiidorugoForm( zw, count );
     }
     break;
 
   case MONSNO_MINOMUTTI:
-    if( count < ZukanSave_GetPokeMinomuttiSeeNum(zw) )
+    if( count < ZUKANSAVE_GetPokeMinomuttiSeeNum(zw) )
     {
-      return ZukanSave_GetPokeMinomuttiForm( zw, count );
+      return ZUKANSAVE_GetPokeMinomuttiForm( zw, count );
     }
     break;
 
   case MONSNO_MINOMADAMU:
-    if( count < ZukanSave_GetPokeMinomesuSeeNum(zw) )
+    if( count < ZUKANSAVE_GetPokeMinomesuSeeNum(zw) )
     {
-      return ZukanSave_GetPokeMinomesuForm( zw, count );
+      return ZUKANSAVE_GetPokeMinomesuForm( zw, count );
     }
     break;
 
   case MONSNO_PITYUU:
-    if( count < ZukanSave_GetPokePityuuSeeNum(zw) )
+    if( count < ZUKANSAVE_GetPokePityuuSeeNum(zw) )
     {
-      return ZukanSave_GetPokePityuuForm( zw, count );
+      return ZUKANSAVE_GetPokePityuuForm( zw, count );
     }
     break;
 
   case MONSNO_DEOKISISU:
-    if( count < ZukanSave_GetPokeDeokisisuFormSeeNum(zw) )
+    if( count < ZUKANSAVE_GetPokeDeokisisuFormSeeNum(zw) )
     {
-      return ZukanSave_GetPokeDeokisisuForm( zw, count );
+      return ZUKANSAVE_GetPokeDeokisisuForm( zw, count );
     }
     break;
 
@@ -2590,32 +2591,32 @@ u32 ZukanSave_GetPokeForm( const ZUKAN_SAVEDATA* zw, int monsno, int count )
  *  @return 見たフォルム数
  */
 //-----------------------------------------------------------------------------
-u32 ZukanSave_GetPokeFormNum( const ZUKAN_SAVEDATA* zw, int monsno )
+u32 ZUKANSAVE_GetPokeFormNum( const ZUKAN_SAVEDATA* zw, int monsno )
 {
 //  OS_TPrintf("monsno:%d\n", monsno);
   zukan_incorrect(zw);
 
   switch( monsno ){
   case MONSNO_ANNOON:
-    return ZukanSave_GetPokeAnnoonNum(zw, FALSE);
+    return ZUKANSAVE_GetPokeAnnoonNum(zw, FALSE);
 
   case MONSNO_KARANAKUSI:
-    return ZukanSave_GetPokeSiiusiSeeNum(zw);
+    return ZUKANSAVE_GetPokeSiiusiSeeNum(zw);
 
   case MONSNO_TORITODON:
-    return ZukanSave_GetPokeSiidorugoSeeNum(zw);
+    return ZUKANSAVE_GetPokeSiidorugoSeeNum(zw);
 
   case MONSNO_MINOMUTTI:
-    return ZukanSave_GetPokeMinomuttiSeeNum(zw);
+    return ZUKANSAVE_GetPokeMinomuttiSeeNum(zw);
 
   case MONSNO_MINOMADAMU:
-    return ZukanSave_GetPokeMinomesuSeeNum(zw);
+    return ZUKANSAVE_GetPokeMinomesuSeeNum(zw);
 
   case MONSNO_PITYUU:
-    return ZukanSave_GetPokePityuuSeeNum(zw);
+    return ZUKANSAVE_GetPokePityuuSeeNum(zw);
 
   case MONSNO_DEOKISISU:
-    return ZukanSave_GetPokeDeokisisuFormSeeNum(zw);
+    return ZUKANSAVE_GetPokeDeokisisuFormSeeNum(zw);
 
   // シェイミ
   case MONSNO_SHEIMI:

@@ -92,7 +92,7 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BtlLandFo
   dst->statusPlayer = GAMEDATA_GetMyStatus( gameData );
   dst->itemData     = GAMEDATA_GetMyItem( gameData );
   dst->bagCursor    = GAMEDATA_GetBagCursor( gameData );
-  dst->zukanData    = SaveData_GetZukanSave( GAMEDATA_GetSaveControlWork(gameData) );
+  dst->zukanData    = GAMEDATA_GetZukanSave( gameData );
 
   dst->musicDefault = SEQ_BGM_VS_NORAPOKE;
   dst->musicPinch = SEQ_BGM_BATTLEPINCH;

@@ -113,17 +113,17 @@ typedef struct{
 
   GFL_BMPWIN        *win[SHOP_BUY_BMPWIN_MAX];  // BMPWIN
   BMP_MENULIST_DATA *list;            // 買い物リストデータ
-  BMPMENU_WORK      *yesnoWork;
+  BMPMENU_WORK      *yesnoWork;       // はい・いいえ画面ワーク
   GFL_MSGDATA       *shopMsgData;     // ショップ画面MSGDATA
   GFL_MSGDATA       *itemInfoMsgData; // どうぐ名MSGDATA
   WORDSET           *wordSet;         // 文字列展開ワーク
-  STRBUF            *priceStr;       
-  STRBUF            *expandBuf;       
+  STRBUF            *priceStr;        // 値段文字列
+  STRBUF            *expandBuf;       // expand展開用
   BMPMENULIST_WORK  *menuList;        // BMPMENULIST
-  PRINT_UTIL         printUtil;       
-  PRINT_QUE         *printQue;
-  GFL_TCBLSYS       *pMsgTcblSys;  // メッセージ表示用タスクSYS
-  PRINT_STREAM      *printStream;
+  PRINT_UTIL         printUtil;       // 
+  PRINT_QUE         *printQue;        // 
+  GFL_TCBLSYS       *pMsgTcblSys;     // メッセージ表示用タスクSYS
+  PRINT_STREAM      *printStream;     // 
   
   GFL_CLUNIT        *ClactUnit;                // セルアクターユニット
   GFL_CLWK*         ClactWork[SHOP_OBJ_MAX];   // OBJワークポインタ
@@ -131,10 +131,10 @@ typedef struct{
 
   ARCHANDLE         *itemiconHandle;    // アイテムアイコンハンドル
 
-  u16               selectitem;
-  u16               price;
-  u32               buy_max;     // 購入最大数
-  s16               item_multi;
+  u16               selectitem;       // 選択したどうぐ
+  u16               price;            // 選択したどうぐの価格
+  u32               buy_max;          // 購入できる最大数
+  s16               item_multi;       // 購入する数
   s16               etc;
 } SHOP_BUY_APP_WORK;
 
@@ -145,11 +145,11 @@ typedef struct {
   u8 shopType;  // ショップタイプ(SHOP_TYPE_NORMAL, SHOP_TYPE_FIX, etc..)
   u8 shopId;    // ショップの場所ID（shop_data.cdat参照。SHOP_TYOE_FIXの際に使用する)
   
-  SHOP_BUY_APP_WORK wk;
+  SHOP_BUY_APP_WORK wk; // ショップ画面ワーク
   
 } SHOP_BUY_CALL_WORK;
 
-
+// BMP登録用情報構造体
 typedef struct {
   int frame;
   u8  x,y,w,h;
@@ -186,6 +186,7 @@ static void ShopDecideMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u16 num
 static void print_multiitem_price( SHOP_BUY_APP_WORK *wk, u16 number, int one_price );
 static  int price_key_control( SHOP_BUY_APP_WORK *wk );
 static void submenu_screen_clear( int type );
+static  int shop_buy_printwait( SHOP_BUY_APP_WORK *wk );
 
 
 // BMPWIN定義テーブル
@@ -275,10 +276,10 @@ static BOOL EvShopBuyWait( VMHANDLE *core, void *wk )
   FIELD_CAMERA *fieldcamera = FIELDMAP_GetFieldCamera( fieldmap );
 
 
-  // 
+  // ショップ呼び出しイベントシーケンス
   switch(sbw->seq)
   {
-    case SHOP_BUY_CALL_CAMERATRACE_STOP:
+    case SHOP_BUY_CALL_CAMERATRACE_STOP:  // カメラ移動停止（念のため）
       FIELD_CAMERA_StopTraceRequest( fieldcamera );
       sbw->seq++;
       break;
@@ -289,7 +290,7 @@ static BOOL EvShopBuyWait( VMHANDLE *core, void *wk )
       break;
     case SHOP_BUY_CALL_CAMERA_MOVE:
     
-      // カメラ移動
+      // カメラ移動開始
       OS_Printf("ショップ起動\n");
       FIELD_CAMERA_SetRecvCamParam( fieldcamera );
       {
@@ -340,6 +341,7 @@ static BOOL EvShopBuyWait( VMHANDLE *core, void *wk )
         sbw->seq++;
       }
       break;
+    // イベント終了
     case SHOP_BUY_CALL_END:
       GFL_HEAP_FreeMemory(*scr_subproc_work);
       return TRUE;
@@ -398,6 +400,7 @@ static BOOL EvShopBuyWait( VMHANDLE *core, void *wk )
 //----------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------
 
+// はい・いいえ画面描画処理
 static const BMPWIN_YESNO_DAT yesno_data= {
   GFL_BG_FRAME1_M,
   24, 13, 
@@ -423,10 +426,10 @@ enum{
 /**
  * @brief ショップ画面初期化
  *
- * @param   gsys    
- * @param   wk    
- * @param   type    
- * @param   id    
+ * @param   gsys  GAMESYS_WORK(セーブデータ引継ぎのため）
+ * @param   wk    SHOP_BUY_APP_WORK
+ * @param   type  ショップタイプ（変動型： 固定リスト）
+ * @param   id    固定リストの際の参照データ番号
  */
 //----------------------------------------------------------------------------------
 static void shop_call_init( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, int id )
@@ -462,14 +465,14 @@ static void shop_call_init( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type,
 /**
  * @brief どうぐ所持の最大数を返す
  *
- * @param   item  
+ * @param   item  どうぐNO
  *
  * @retval  int   アイテムナンバー
  */
 //----------------------------------------------------------------------------------
 static int get_item_max( int item )
 {
-  // 
+  // 技マシンは99個までしか持てない
   if(item>=ITEM_WAZAMASIN01 && item < ITEM_HIDENMASIN01){
     return 99;
   }
@@ -480,13 +483,14 @@ static int get_item_max( int item )
 //----------------------------------------------------------------------------------
 /**
  * @brief 道具選択時に何個買えるかで処理を分岐させる
+ *        (持ちきれない・買えません・複数個選択へ・１つしか買えないのですぐYESNOへ)
  *
- * @param   wk    
+ * @param   wk    SHOP_BUY_APP_WORK
  *
- * @retval  int   
+ * @retval  none
  */
 //----------------------------------------------------------------------------------
-static int can_player_buy_item( SHOP_BUY_APP_WORK *wk )
+static void can_player_buy_item( SHOP_BUY_APP_WORK *wk )
 {
   int gold = MyStatus_GetGold(wk->mystatus);
   int num  = MYITEM_GetItemNum( wk->myitem, wk->selectitem, wk->heapId );
@@ -527,16 +531,15 @@ static int can_player_buy_item( SHOP_BUY_APP_WORK *wk )
       wk->buy_max = MYITEM_GetItemMax( wk->selectitem ) - num;
     }
   }
-  return 1;
 }
 
 //----------------------------------------------------------------------------------
 /**
- * @brief 
+ * @brief 買う画面どうぐ選択時メイン処理
  *
- * @param   wk    
+ * @param   wk    SHOP_BUY_APP_WORK
  *
- * @retval  int   
+ * @retval  none
  */
 //----------------------------------------------------------------------------------
 static void shop_main( SHOP_BUY_APP_WORK *wk )
@@ -556,6 +559,41 @@ static void shop_main( SHOP_BUY_APP_WORK *wk )
     }
   }
 
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 文字列表示待ち処理
+ *
+ * @param   printStream   
+ *
+ * @retval  int   次のシーケンスを指定
+ */
+//----------------------------------------------------------------------------------
+static int shop_buy_printwait( SHOP_BUY_APP_WORK *wk )
+{
+  PRINTSTREAM_STATE state = PRINTSYS_PrintStreamGetState( wk->printStream );
+
+  if( state == PRINTSTREAM_STATE_DONE )
+  {
+    PRINTSYS_PrintStreamDelete( wk->printStream );
+    return wk->next;
+  }else if( state == PRINTSTREAM_STATE_RUNNING)
+  {
+    if(GFL_UI_KEY_GetCont()&PAD_BUTTON_DECIDE || GFL_UI_KEY_GetCont()&PAD_BUTTON_DECIDE)
+    {
+      PRINTSYS_PrintStreamShortWait( wk->printStream, 0 );
+    }
+  }else if( state == PRINTSTREAM_STATE_PAUSE )
+  {
+    if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
+      PRINTSYS_PrintStreamReleasePause( wk->printStream );
+      PMSND_PlaySE( SEQ_SE_SELECT1 );
+    }
+  }
+  
+  return wk->seq;
 }
 
 //----------------------------------------------------------------------------------
@@ -641,24 +679,9 @@ static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, i
     }
     break;
 
-  case SHOPBUY_SEQ_MSG_WAIT:    // メッセージ表示待ち
-    {
-      
-      PRINTSTREAM_STATE state = PRINTSYS_PrintStreamGetState( wk->printStream );
-      if( state == PRINTSTREAM_STATE_DONE ){
-        PRINTSYS_PrintStreamDelete( wk->printStream );
-        wk->seq = wk->next;
-      }else if( state == PRINTSTREAM_STATE_RUNNING){
-        if(GFL_UI_KEY_GetCont()&PAD_BUTTON_DECIDE){
-          PRINTSYS_PrintStreamShortWait( wk->printStream, 0 );
-        }
-      }else if( state == PRINTSTREAM_STATE_PAUSE ){
-        if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
-          PRINTSYS_PrintStreamReleasePause( wk->printStream );
-          PMSND_PlaySE( SEQ_SE_SELECT1 );
-        }
-      }
-    }
+  // メッセージ表示待ち
+  case SHOPBUY_SEQ_MSG_WAIT:    
+    wk->seq = shop_buy_printwait( wk );
     break;
 
   case SHOPBUY_SEQ_END:
