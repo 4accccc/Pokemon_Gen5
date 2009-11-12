@@ -65,6 +65,8 @@ static void MAPCHG_releaseMMdl( GAMEDATA * gamedata );
 static void setFirstBGM(GAMEDATA * gamedata, u16 zone_id);
 static void AssignGimmickID(GAMEDATA * gamedata, int inZoneID);
 
+static GMEVENT_RESULT EVENT_MapChangeNoFade(GMEVENT * event, int *seq, void*work);
+
 
 //============================================================================================
 //
@@ -372,6 +374,42 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 	return GMEVENT_RES_CONTINUE;
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_MapChangeNoFade(GMEVENT * event, int *seq, void*work)
+{
+	MAPCHANGE_WORK * mcw = work;
+	GAMESYS_WORK  * gsys = mcw->gsys;
+	FIELDMAP_WORK * fieldmap = mcw->fieldmap;
+	GAMEDATA * gamedata = mcw->gamedata;
+	switch (*seq) {
+  case 0:
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, fieldmap) );
+    (*seq) ++;
+    break;
+	case 1:
+    { // BGM更新リクエスト
+      FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
+      PLAYER_WORK* player = GAMEDATA_GetPlayerWork( gamedata, 0 );
+      PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
+      FIELD_SOUND_ChangePlayZoneBGM( fsnd, gamedata, form, mcw->loc_req.zone_id );
+    }
+		(*seq)++;
+		break;
+  case 2:
+    // マップチェンジ・コア・イベント
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw ) );
+		(*seq)++;
+    break;
+	case 3:
+    FIELD_PLACE_NAME_Display(FIELDMAP_GetPlaceNameSys(fieldmap), mcw->loc_req.zone_id);
+		(*seq) ++;
+		break;
+  case 4:
+		return GMEVENT_RES_FINISH; 
+	}
+	return GMEVENT_RES_CONTINUE;
+}
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -495,7 +533,7 @@ static void MAPCHANGE_WORK_init(MAPCHANGE_WORK * mcw, GAMESYS_WORK * gsys)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT * DEBUG_EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
+GMEVENT * EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
 		u16 zone_id, const VecFx32 * pos, u16 dir )
 {
 	MAPCHANGE_WORK * mcw;
@@ -639,6 +677,25 @@ GMEVENT * EVENT_ChangeMapByConnect(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap
   }
 	return event;
 }
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+GMEVENT * EVENT_ChangeMapPosNoFade(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
+		u16 zone_id, const VecFx32 * pos, u16 dir )
+{
+	MAPCHANGE_WORK * mcw;
+	GMEVENT * event;
+
+	event = GMEVENT_Create(gsys, NULL, EVENT_MapChangeNoFade, sizeof(MAPCHANGE_WORK));
+	mcw = GMEVENT_GetEventWork(event);
+  MAPCHANGE_WORK_init( mcw, gsys );
+	
+	LOCATION_SetDirect(&mcw->loc_req, zone_id, dir, pos->x, pos->y, pos->z);
+  mcw->exit_type = EXIT_TYPE_NONE;
+	
+	return event;
+}
+
 
 
 //------------------------------------------------------------------

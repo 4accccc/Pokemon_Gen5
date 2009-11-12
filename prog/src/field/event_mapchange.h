@@ -54,7 +54,7 @@ extern GMEVENT * EVENT_ChangeMapByConnect(GAMESYS_WORK * gsys, FIELDMAP_WORK * f
  * @return	GMEVENT		生成したマップ遷移イベント
  */
 //------------------------------------------------------------------
-extern GMEVENT * DEBUG_EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
+extern GMEVENT * EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
 		u16 zone_id, const VecFx32 * pos, u16 dir );
 
 //------------------------------------------------------------------
@@ -125,6 +125,9 @@ extern GMEVENT * EVENT_ChangeMapToUnion( GAMESYS_WORK * gsys, FIELDMAP_WORK * fi
  */
 //------------------------------------------------------------------
 extern GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys, FIELDMAP_WORK *fieldmap);
+
+extern GMEVENT * EVENT_ChangeMapPosNoFade(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
+		u16 zone_id, const VecFx32 * pos, u16 dir );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
