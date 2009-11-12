@@ -8,6 +8,7 @@
  *
  */
 //////////////////////////////////////////////////////////////////////////////////////
+#include <gflib.h>
 #include "field_place_name.h"
 #include "field/zonedata.h"
 #include "arc/arc_def.h"
@@ -18,9 +19,7 @@
 
 
 //===================================================================================
-/**
- * @brief 定数・マクロ
- */
+// ■ 定数・マクロ
 //=================================================================================== 
 // 最大文字数
 #define MAX_NAME_LENGTH (16)
@@ -105,30 +104,28 @@ enum
 // 各状態の動作設定
 //------------------
 #define PROCESS_TIME_FADE_IN  (10)
-#define PROCESS_TIME_WAIT_1   (10)
-#define PROCESS_TIME_WAIT_2   (30)
+#define PROCESS_TIME_WAIT_LAUNCH   (10)
+#define PROCESS_TIME_WAIT_FADE_OUT   (30)
 #define PROCESS_TIME_FADE_OUT (20)
 
 //-----------------
 // システムの状態
 //-----------------
-typedef enum
-{
-	STATE_HIDE,			// 非表示
-	STATE_FADE_IN,		// フェード・イン
-	STATE_WAIT_1,		// 待機1
-	STATE_LAUNCH,		// 文字発射
-	STATE_WAIT_2,		// 待機2
-	STATE_FADE_OUT,		// フェード・アウト
-	STATE_MAX,
-}
-STATE;
+typedef enum {
+	STATE_HIDE,			      // 非表示
+  STATE_SETUP,          // 準備
+	STATE_FADE_IN,	      // フェード・イン
+	STATE_WAIT_LAUNCE,		// 発射待ち
+	STATE_LAUNCH,		      // 文字発射
+	STATE_WAIT_FADE_OUT,  // フェードアウト待ち
+	STATE_FADE_OUT,	      // フェード・アウト
+	STATE_NUM,
+  STATE_MAX = STATE_NUM - 1
+} STATE;
 
 
 //===================================================================================
-/**
- * @brief 文字ユニット・パラメータ
- */
+// ■ 文字ユニット・移動パラメータ
 //===================================================================================
 typedef struct
 {
@@ -141,291 +138,297 @@ typedef struct
 
 	float dx;		// 目標位置
 	float dy;		// 
-	float dsx;		// 目標位置での速度
-	float dsy;		// 
+	float dsx;	// 目標位置での速度
+	float dsy;	// 
 
 	int tx;			// 残り移動回数( x方向 )
 	int ty;			// 残り移動回数( y方向 )
 }
 CHAR_UNIT_PARAM;
 
+
 //===================================================================================
-/**
- * @brief 文字ユニット構造体
- */
+// ■文字ユニット
 //===================================================================================
 typedef struct
 {
-	GFL_BMP_DATA*   pBmp;		// ビットマップ
-	BMPOAM_ACT_PTR  pBmpOamAct;	// BMPOAMアクター
-	CHAR_UNIT_PARAM param;		// 移動パラメータ
-	u8              width;		// 幅
-	u8              height;		// 高さ
-	BOOL            moving;		// 動作フラグ
+	GFL_BMP_DATA*   bmp;		      // ビットマップ
+	BMPOAM_ACT_PTR  bmpOamActor;	// BMPOAMアクター
+	CHAR_UNIT_PARAM param;		    // 移動パラメータ
+	u8              width;		    // 幅
+	u8              height;		    // 高さ
+	BOOL            moving;		    // 動作フラグ
 }
 CHAR_UNIT;
 
+
 //===================================================================================
-/**
- * @brief 文字ユニット構造体に関する関数群
- */
+// ■文字ユニットに関する関数群
 //===================================================================================
-// 初期化関数
-static void CHAR_UNIT_Initialize( CHAR_UNIT* p_unit, BMPOAM_SYS_PTR p_bmp_oam_sys, u32 pltt_idx, HEAPID heap_id );
-
-// 後始末関数
-static void CHAR_UNIT_Finalize( CHAR_UNIT* p_unit );
-
-// ビットマップを作成する
-static void CHAR_UNIT_SetCharCode( CHAR_UNIT* p_unit, GFL_FONT* p_font, STRCODE code, HEAPID heap_id );
-
-// 移動開始時の初期パラメータを設定する
-static void CHAR_UNIT_SetMoveParam( CHAR_UNIT* p_unit, const CHAR_UNIT_PARAM* p_param );
-
-// 動かす
-static void CHAR_UNIT_Move( CHAR_UNIT* p_unit );
-
-// 移動中かどうかを調べる
-static BOOL CHAR_UNIT_IsMoving( CHAR_UNIT* p_unit ); 
-
+static void CHAR_UNIT_Initialize( 
+    CHAR_UNIT* unit, BMPOAM_SYS_PTR bmpoam_sys, u32 pltt_idx, HEAPID heap_id );
+static void CHAR_UNIT_Finalize( CHAR_UNIT* unit );
+static void CHAR_UNIT_Write( 
+    CHAR_UNIT* unit, GFL_FONT* font, STRCODE code, HEAPID heap_id );
+static void CHAR_UNIT_SetMoveParam( CHAR_UNIT* unit, const CHAR_UNIT_PARAM* p_param );
+static void CHAR_UNIT_MoveStart( CHAR_UNIT* unit );
+static void CHAR_UNIT_Move( CHAR_UNIT* unit );
+static BOOL CHAR_UNIT_IsMoving( CHAR_UNIT* unit ); 
 
 
 //------------------------------------------------------------------------------------ 
 /**
  * @brief 初期化関数
  *
- * @param p_unit        初期化する変数へのポインタ
- * @param p_bmp_oam_sys BMPOAMアクターを追加するシステム
- * @param pltt_idx      適用するパレットの登録インデックス
- * @param heap_id       使用するヒープID
+ * @param unit       初期化する変数へのポインタ
+ * @param bmpoam_sys BMPOAMアクターを追加するシステム
+ * @param pltt_idx   適用するパレットの登録インデックス
+ * @param heap_id    使用するヒープID
  */
 //------------------------------------------------------------------------------------
-static void CHAR_UNIT_Initialize( CHAR_UNIT* p_unit, BMPOAM_SYS_PTR p_bmp_oam_sys, u32 pltt_idx, HEAPID heap_id )
+static void CHAR_UNIT_Initialize( 
+    CHAR_UNIT* unit, BMPOAM_SYS_PTR bmpoam_sys, u32 pltt_idx, HEAPID heap_id )
 {
-	BMPOAM_ACT_DATA data;
+	BMPOAM_ACT_DATA actor_data;
 
 	// ビットマップを作成
-	p_unit->pBmp = GFL_BMP_Create( 2, 2, GFL_BMP_16_COLOR, heap_id );
-
-	// BMPOAMアクターの初期設定
-	data.bmp        = p_unit->pBmp;
-	data.x          = 0;
-	data.y          = 0;
-	data.pltt_index = pltt_idx;
-	data.pal_offset = 0;
-	data.soft_pri   = 0;
-	data.bg_pri     = BG_FRAME_PRIORITY;
-	data.setSerface = CLSYS_DEFREND_MAIN;
-	data.draw_type  = CLSYS_DRAW_MAIN; 
+	unit->bmp = GFL_BMP_Create( 2, 2, GFL_BMP_16_COLOR, heap_id );
 
 	// BMPOAMアクターを作成
-	p_unit->pBmpOamAct = BmpOam_ActorAdd( p_bmp_oam_sys, &data );
-
-	// 非表示に設定
-	BmpOam_ActorSetDrawEnable( p_unit->pBmpOamAct, FALSE );
+	actor_data.bmp        = unit->bmp;
+	actor_data.x          = 0;
+	actor_data.y          = 0;
+	actor_data.pltt_index = pltt_idx;
+	actor_data.pal_offset = 0;
+	actor_data.soft_pri   = 0;
+	actor_data.bg_pri     = BG_FRAME_PRIORITY;
+	actor_data.setSerface = CLSYS_DEFREND_MAIN;
+	actor_data.draw_type  = CLSYS_DRAW_MAIN; 
+	unit->bmpOamActor = BmpOam_ActorAdd( bmpoam_sys, &actor_data ); 
+	BmpOam_ActorSetDrawEnable( unit->bmpOamActor, FALSE );  // 非表示
 
 	// 初期化
-	p_unit->param.tx = 0;
-	p_unit->param.ty = 0;
-	p_unit->width  = 0;
-	p_unit->height = 0;
-	p_unit->moving = FALSE;
+	unit->param.tx = 0;
+	unit->param.ty = 0;
+	unit->width    = 0;
+	unit->height   = 0;
+	unit->moving   = FALSE;
 }
 
 //------------------------------------------------------------------------------------
 /**
  * @brief 後始末関数
  *
- * @param p_unit 使用を終了する変数へのポインタ
+ * @param unit 使用を終了する変数へのポインタ
  */
 //------------------------------------------------------------------------------------
-static void CHAR_UNIT_Finalize( CHAR_UNIT* p_unit )
+static void CHAR_UNIT_Finalize( CHAR_UNIT* unit )
 {
 	// BMPOAMアクターを破棄
-	BmpOam_ActorDel( p_unit->pBmpOamAct );
+	BmpOam_ActorDel( unit->bmpOamActor );
 
 	// ビットマップを破棄
-	GFL_BMP_Delete( p_unit->pBmp );
+	GFL_BMP_Delete( unit->bmp );
 }
 
 //------------------------------------------------------------------------------------
 /**
- * @brief ビットマップを作成する
+ * @brief 文字ユニットの持つビットマップに文字を書き込む
  *
- * @param p_unit  書き込み先ビットマップを持つユニット
- * @param p_font  フォント
- * @param code    書き込む文字の文字コード
+ * @param unit    書き込み先ユニット
+ * @param font    フォント
+ * @param code    書き込む文字
  * @param heap_id 使用するヒープID
  */
 //------------------------------------------------------------------------------------
-static void CHAR_UNIT_SetCharCode( CHAR_UNIT* p_unit, GFL_FONT* p_font, STRCODE code, HEAPID heap_id )
+static void CHAR_UNIT_Write( CHAR_UNIT* unit, GFL_FONT* font, STRCODE code, HEAPID heap_id )
 {
 	int i;
 
-	STRCODE code_arr[2];
-	STRBUF* buf = NULL;
+	STRCODE string[2];
+	STRBUF* strbuf = NULL;
   HEAPID heap_low_id = GFL_HEAP_LOWID( heap_id );
+  PRINTSYS_LSB color = 
+    PRINTSYS_LSB_Make( COLOR_NO_LETTER, COLOR_NO_SHADOW, COLOR_NO_BACKGROUND );
 
 	// 生の文字列を作成し, 文字バッファを作成
-	code_arr[0] = code;
-	code_arr[1] = GFL_STR_GetEOMCode();
-	buf         = GFL_STR_CreateBuffer( 2, heap_low_id );
-	GFL_STR_SetStringCodeOrderLength( buf, code_arr, 2 );
+	string[0] = code;
+	string[1] = GFL_STR_GetEOMCode();
+	strbuf    = GFL_STR_CreateBuffer( 2, heap_low_id );
+	GFL_STR_SetStringCodeOrderLength( strbuf, string, 2 );
 
-	// サイズを取得
-	p_unit->width  = (u8)PRINTSYS_GetStrWidth( buf, p_font, 0 );
-	p_unit->height = (u8)PRINTSYS_GetStrHeight( buf, p_font );
-
-	// フォントの色を設定
-	GFL_FONTSYS_SetColor( COLOR_NO_LETTER, COLOR_NO_SHADOW, COLOR_NO_BACKGROUND );
+	// サイズ取得
+	unit->width  = (u8)PRINTSYS_GetStrWidth( strbuf, font, 0 );
+	unit->height = (u8)PRINTSYS_GetStrHeight( strbuf, font );
 
 	// ビットマップに書き込む
-	GFL_BMP_Clear( p_unit->pBmp, 0 );
-	PRINTSYS_Print( p_unit->pBmp, 0, 0, buf, p_font );
-	BmpOam_ActorBmpTrans( p_unit->pBmpOamAct );
+	GFL_BMP_Clear( unit->bmp, 0 );
+	PRINTSYS_PrintColor( unit->bmp, 0, 0, strbuf, font, color );
+	BmpOam_ActorBmpTrans( unit->bmpOamActor );
 
 	// 後始末
-	GFL_STR_DeleteBuffer( buf );
+	GFL_STR_DeleteBuffer( strbuf );
 }
 
 //------------------------------------------------------------------------------------
 /**
  * @brief 移動開始時の初期パラメータを設定する
  *
- * @param p_unit  設定する変数
- * @param p_param 初期パラメータ
+ * @param unit  設定する変数
+ * @param param 初期パラメータ
  */
 //------------------------------------------------------------------------------------ 
-static void CHAR_UNIT_SetMoveParam( CHAR_UNIT* p_unit, const CHAR_UNIT_PARAM* p_param )
+static void CHAR_UNIT_SetMoveParam( CHAR_UNIT* unit, const CHAR_UNIT_PARAM* param )
 {
-	const CHAR_UNIT_PARAM* p = p_param;
 	float dist_x;
 	float dist_y;
 
 	// パラメータをコピー
-	p_unit->param    = *p_param;
-	p_unit->param.ax = 0;
-	p_unit->param.ay = 0;
-	p_unit->param.tx = 0;
-	p_unit->param.ty = 0;
+	unit->param    = *param;
+	unit->param.ax = 0;
+	unit->param.ay = 0;
+	unit->param.tx = 0;
+	unit->param.ty = 0;
 
 	// 加速度を計算
-	dist_x = p->dx - p->x;
-	dist_y = p->dy - p->y;
-	if( dist_x != 0 ) p_unit->param.ax = ( ( p->dsx * p->dsx ) - ( p->sx * p->sx ) ) / ( 2 * dist_x );
-	if( dist_y != 0 ) p_unit->param.ay = ( ( p->dsy * p->dsy ) - ( p->sy * p->sy ) ) / ( 2 * dist_y );
+	dist_x = param->dx - param->x;
+	if( dist_x != 0 )
+  {
+    unit->param.ax = 
+      ( ( param->dsx * param->dsx ) - ( param->sx * param->sx ) ) / ( 2 * dist_x );
+  }
+	dist_y = param->dy - param->y;
+	if( dist_y != 0 )
+  {
+    unit->param.ay = 
+      ( ( param->dsy * param->dsy ) - ( param->sy * param->sy ) ) / ( 2 * dist_y );
+  }
 
 	// 移動回数を計算
-	if( p_unit->param.ax != 0 ) p_unit->param.tx = (int)( ( p_unit->param.dsx - p_unit->param.sx ) / p_unit->param.ax );
-	if( p_unit->param.ay != 0 ) p_unit->param.ty = (int)( ( p_unit->param.dsy - p_unit->param.sy ) / p_unit->param.ay );
+	if( unit->param.ax != 0 )
+  {
+    unit->param.tx = (int)( ( unit->param.dsx - unit->param.sx ) / unit->param.ax );
+  }
+	if( unit->param.ay != 0 )
+  {
+    unit->param.ty = (int)( ( unit->param.dsy - unit->param.sy ) / unit->param.ay );
+  }
 
 	// BMPOAMアクターの表示位置を反映
-	BmpOam_ActorSetPos( p_unit->pBmpOamAct, p_param->x, p_param->y );
+	BmpOam_ActorSetPos( unit->bmpOamActor, param->x, param->y );
+}
+
+//------------------------------------------------------------------------------------ 
+/**
+ * @brief 文字ユニットの移動を開始する
+ *
+ * @param unit 移動を開始するユニット
+ */
+//------------------------------------------------------------------------------------ 
+static void CHAR_UNIT_MoveStart( CHAR_UNIT* unit )
+{
+  unit->moving = TRUE;
 }
 
 //------------------------------------------------------------------------------------ 
 /**
  * @brief 動かす
  *
- * @param p_unit 動かすユニット
+ * @param unit 動かすユニット
  */
 //------------------------------------------------------------------------------------ 
-static void CHAR_UNIT_Move( CHAR_UNIT* p_unit )
+static void CHAR_UNIT_Move( CHAR_UNIT* unit )
 {
 	// 動作フラグがセットされていなければ, 動かない
-	if( p_unit->moving != TRUE ) return;
+	if( unit->moving != TRUE ) return;
 
 	// x方向動作
-	if( 0 < p_unit->param.tx )
+	if( 0 < unit->param.tx )
 	{
 		// 移動
-		p_unit->param.x += p_unit->param.sx;
+		unit->param.x += unit->param.sx;
 
 		// 加速
-		p_unit->param.sx += p_unit->param.ax;
+		unit->param.sx += unit->param.ax;
 
 		// 残り移動回数をデクリメント
-		p_unit->param.tx--;
+		unit->param.tx--;
 	}
 	// y方向動作
-	if( 0 < p_unit->param.ty )
+	if( 0 < unit->param.ty )
 	{
 		// 移動
-		p_unit->param.y += p_unit->param.sy;
+		unit->param.y += unit->param.sy;
 
 		// 加速
-		p_unit->param.sy += p_unit->param.ay;
+		unit->param.sy += unit->param.ay;
 
 		// 残り移動回数をデクリメント
-		p_unit->param.ty--;
+		unit->param.ty--;
 	}
-
-	// BMPOAMアクターの表示位置を反映
-	BmpOam_ActorSetPos( p_unit->pBmpOamAct, p_unit->param.x, p_unit->param.y );
 
 	// 残り移動回数が無くなったら, 動作フラグを落とす
-	if( ( p_unit->param.tx <= 0 ) && ( p_unit->param.ty <= 0 ) )
+	if( ( unit->param.tx <= 0 ) && ( unit->param.ty <= 0 ) )
 	{
-		p_unit->moving = FALSE;
+		unit->moving = FALSE;
 	}
+	// BMPOAMアクターの表示位置に反映
+	BmpOam_ActorSetPos( unit->bmpOamActor, unit->param.x, unit->param.y );
 }
 
 //------------------------------------------------------------------------------------ 
 /**
  * @brief 移動中かどうかを調べる
  *
- * @param p_unit 調べるユニット
+ * @param unit 調べるユニット
  *
  * @return 移動中なら TRUE
  */
 //------------------------------------------------------------------------------------ 
-static BOOL CHAR_UNIT_IsMoving( CHAR_UNIT* p_unit )
+static BOOL CHAR_UNIT_IsMoving( CHAR_UNIT* unit )
 {
-	return p_unit->moving;
+	return unit->moving;
 }
 
 
 //===================================================================================
-/**
- * @brief システム・ワーク
- */
+// ■地名表示システム
 //===================================================================================
 struct _FIELD_PLACE_NAME
 { 
 	HEAPID heapID;	// ヒープID
 
-	// 地名の表示に使用するデータ
-	FLDMSGBG*    pFldMsgBG;			// BMPWINへの文字列書き込みに使用するシステム( 外部インスタンスを参照 )
-	GFL_MSGDATA* pMsgData;			// メッセージ・データ( インスタンスを保持 )
+	// 表示に使用するデータ
+	GFL_MSGDATA* msg;	  // メッセージ・データ
+  GFL_FONT*    font;  // フォント
 
 	// BG
-	GFL_BMPWIN*   pBmpWin;	        // ビットマップ・ウィンドウ
-	GFL_BMP_DATA* pBGOriginalBmp;	// オリジナル・ビットマップ・データ
+	GFL_BMPWIN*   bmpWin;	 // ビットマップ・ウィンドウ
+	GFL_BMP_DATA* bmpOrg;	 // 文字が書き込まれていない状態
 
-	// CLACTリソース( 登録インデックス )
-	//u32 hResource_CGR[ CGR_RES_INDEX_MAX ];
-	u32 hResource_PLTT[ PLTT_RES_INDEX_MAX ];
-	//u32 hResource_CLANM[ CLANM_RES_INDEX_MAX ];
+	// リソース
+	u32 resPltt[PLTT_RES_INDEX_MAX];  // パレット
 
 	// セルアクターユニット
-	GFL_CLUNIT* pClactUnit[ CLUNIT_INDEX_MAX ];
+	GFL_CLUNIT* clunit[CLUNIT_INDEX_MAX];
 
 	// BMPOAMシステム
-	BMPOAM_SYS_PTR pBmpOamSys;
+	BMPOAM_SYS_PTR bmpOamSys;
 
 	// 文字ユニット
-	CHAR_UNIT charUnit[ MAX_NAME_LENGTH ];
+	CHAR_UNIT charUnit[MAX_NAME_LENGTH];
 
 	// 動作に使用するデータ
-	STATE state;			// 状態
-	u16	  stateCount;		// 状態カウンタ
-	u32	  currentZoneID;	// 現在表示中の地名に対応するゾーンID
-	u32   nextZoneID;		// 次に表示する地名に対応するゾーンID
-	u8    launchNum;		// 発射済み文字数
+	STATE state;			    // システム状態
+	u16	  stateCount;		  // 状態カウンタ
+	u32	  currentZoneID;  // 現在表示中の地名に対応するゾーンID
+	u32   nextZoneID;		  // 次に表示する地名に対応するゾーンID
+	u8    launchUnitNum;  // 発射済み文字数
 
 	// 地名
-	STRBUF* pNameBuf;		// 表示中の地名文字列
-	u8      nameLength;		// 表示中の地名文字数
+	STRBUF* nameBuf;		  // 表示中の地名文字列
+	u8      nameLength;	  // 表示中の地名文字数
+  u8      writeCharNum; // ビットマップへの書き込みが完了した文字数
 };
 
 
@@ -435,349 +438,344 @@ struct _FIELD_PLACE_NAME
  */
 //===================================================================================
 // BGの設定を行う
-static void SetupBG( FIELD_PLACE_NAME* p_sys );	
-static void LoadNullCharacterData();
+static void SetupBG( FIELD_PLACE_NAME* sys );	
+static void AllocNullCharacterArea();
 
 // リソースの読み込み
-static void LoadBGScreenData( FIELD_PLACE_NAME* p_sys, u32 arc_id, u32 data_id );
-static void LoadBGCharacterData( FIELD_PLACE_NAME* p_sys, u32 arc_id, u32 data_id );
-static void LoadBGPaletteData( FIELD_PLACE_NAME* p_sys, u32 arc_id, u32 data_id ); 
-static void LoadClactResource( FIELD_PLACE_NAME* p_sys );
+static void LoadBGScreenData( FIELD_PLACE_NAME* sys, u32 arc_id, u32 data_id );
+static void LoadBGCharacterData( FIELD_PLACE_NAME* sys, u32 arc_id, u32 data_id );
+static void LoadBGPaletteData( FIELD_PLACE_NAME* sys, u32 arc_id, u32 data_id ); 
+static void LoadClactResource( FIELD_PLACE_NAME* sys );
 
 // セルアクターユニットを作成する
-static void CreateClactUnit( FIELD_PLACE_NAME* p_sys );
+static void CreateClactUnit( FIELD_PLACE_NAME* sys );
 
 // 文字ユニットを初期化する
-static void CreateCharUnit( FIELD_PLACE_NAME* p_sys );
+static void CreateCharUnit( FIELD_PLACE_NAME* sys );
 
 // 指定したゾーンIDに対応する地名を文字ユニットに書き込む
-static void WritePlaceName( FIELD_PLACE_NAME* p_sys, u32 zone_id );
+static void WritePlaceName( FIELD_PLACE_NAME* sys, u32 zone_id );
+
+// 表示する地名を更新する
+static void SetupPlaceName( FIELD_PLACE_NAME* sys );
 
 // 文字ユニットの動作を設定する
-static void SetCharUnitAction( FIELD_PLACE_NAME* p_sys );
+static void SetupCharUnitAction( FIELD_PLACE_NAME* sys );
 
 // 文字ユニットを発射する
-static void LaunchCharUnit( FIELD_PLACE_NAME* p_sys, int unit_index );
+static void LaunchCharUnit( FIELD_PLACE_NAME* sys );
 
 // 状態を変更する
-static void SetState( FIELD_PLACE_NAME* p_sys, STATE next_state );
+static void SetState( FIELD_PLACE_NAME* sys, STATE next_state );
 
 // 強制的にウィンドウを退出させる
-static void Cancel( FIELD_PLACE_NAME* p_sys );
+static void Cancel( FIELD_PLACE_NAME* sys );
 
 // 全文字ユニットを非表示に設定する
-static void SetAllCharUnitVisibleOff( FIELD_PLACE_NAME* p_sys );
+static void SetAllCharUnitVisibleOff( FIELD_PLACE_NAME* sys );
+
+// 全文字ユニットを動かす
+static void MoveAllCharUnit( FIELD_PLACE_NAME* sys );
 
 // ビットマップ・ウィンドウをBGオリジナルデータに復元する
-static void RecoveryBitmapWindow( FIELD_PLACE_NAME* p_sys );
+static void RecoveryBitmapWindow( FIELD_PLACE_NAME* sys );
 
 // 表示中の文字ユニットをビットマップ・ウィンドウに書き込む
-static void WriteCharUnitToBitmapWindow( FIELD_PLACE_NAME* p_sys );
+static void WriteCharUnitToBitmapWindow( FIELD_PLACE_NAME* sys );
 
 // 各状態時の動作
-static void Process_HIDE( FIELD_PLACE_NAME* p_sys );
-static void Process_FADE_IN( FIELD_PLACE_NAME* p_sys );
-static void Process_WAIT_1( FIELD_PLACE_NAME* p_sys );
-static void Process_LAUNCH( FIELD_PLACE_NAME* p_sys );
-static void Process_WAIT_2( FIELD_PLACE_NAME* p_sys );
-static void Process_FADE_OUT( FIELD_PLACE_NAME* p_sys );
+static void Process_HIDE( FIELD_PLACE_NAME* sys );
+static void Process_SETUP( FIELD_PLACE_NAME* sys );
+static void Process_FADE_IN( FIELD_PLACE_NAME* sys );
+static void Process_WAIT_LAUNCH( FIELD_PLACE_NAME* sys );
+static void Process_LAUNCH( FIELD_PLACE_NAME* sys );
+static void Process_WAIT_FADE_OUT( FIELD_PLACE_NAME* sys );
+static void Process_FADE_OUT( FIELD_PLACE_NAME* sys );
 
 // 各状態時の描画処理
-static void Draw_HIDE( FIELD_PLACE_NAME* p_sys );
-static void Draw_FADE_IN( FIELD_PLACE_NAME* p_sys );
-static void Draw_WAIT_1( FIELD_PLACE_NAME* p_sys );
-static void Draw_LAUNCH( FIELD_PLACE_NAME* p_sys );
-static void Draw_WAIT_2( FIELD_PLACE_NAME* p_sys );
-static void Draw_FADE_OUT( FIELD_PLACE_NAME* p_sys );
+static void Draw_HIDE( FIELD_PLACE_NAME* sys );
+static void Draw_SETUP( FIELD_PLACE_NAME* sys );
+static void Draw_FADE_IN( FIELD_PLACE_NAME* sys );
+static void Draw_WAIT_LAUNCH( FIELD_PLACE_NAME* sys );
+static void Draw_LAUNCH( FIELD_PLACE_NAME* sys );
+static void Draw_WAIT_FADE_OUT( FIELD_PLACE_NAME* sys );
+static void Draw_FADE_OUT( FIELD_PLACE_NAME* sys );
 
 // デバッグ出力
-static void DebugPrint( FIELD_PLACE_NAME* p_sys );
+static void DebugPrint( FIELD_PLACE_NAME* sys );
 
 
-//===================================================================================
-/**
- * @brief 公開関数の実装( システムの稼動に関する関数 )
- */
-//===================================================================================
+//====================================================================================
+// ■作成・破棄
+//====================================================================================
+
 //------------------------------------------------------------------------------------
 /**
  * @brief 地名表示システムを作成する
  *
- * @param heap_id      使用するヒープID
- * @param p_fld_msg_bg 使用するメッセージ表示システム
+ * @param heap_id 使用するヒープID
+ * @param msgbg   使用するメッセージ表示システム
  *
  * @return 地名表示システム・ワークへのポインタ
  */
 //------------------------------------------------------------------------------------
-FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( HEAPID heap_id, FLDMSGBG* p_fld_msg_bg )
+FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( HEAPID heap_id, FLDMSGBG* msgbg )
 {
-	FIELD_PLACE_NAME* p_sys;
+	FIELD_PLACE_NAME* sys;
 
 	// システム・ワーク作成
-	p_sys = (FIELD_PLACE_NAME*)GFL_HEAP_AllocClearMemory( heap_id, sizeof( FIELD_PLACE_NAME ) );
+	sys = (FIELD_PLACE_NAME*)GFL_HEAP_AllocClearMemory( heap_id, sizeof( FIELD_PLACE_NAME ) );
 
 	// システムの設定
-	p_sys->heapID    = heap_id;
-	p_sys->pFldMsgBG = p_fld_msg_bg;
+	sys->heapID = heap_id;
 
 	// BGの使用準備
-	SetupBG( p_sys );
+	SetupBG( sys );
 
 	// セルアクター用リソースの読み込み
-	LoadClactResource( p_sys );
+	LoadClactResource( sys );
 
 	// セルアクターユニットを作成
-	CreateClactUnit( p_sys );
+	CreateClactUnit( sys );
 
 	// BMPOAMシステム作成
-	p_sys->pBmpOamSys = BmpOam_Init( heap_id, p_sys->pClactUnit[ CLUNIT_INDEX_CHAR_UNIT ] );
+	sys->bmpOamSys = BmpOam_Init( heap_id, sys->clunit[ CLUNIT_INDEX_CHAR_UNIT ] );
 
 	// 文字ユニットを作成
-	CreateCharUnit( p_sys );
+	CreateCharUnit( sys );
 
 	// メッセージ・データを作成
-	p_sys->pMsgData = FLDMSGBG_CreateMSGDATA( p_sys->pFldMsgBG, NARC_message_place_name_dat );
+	sys->msg = FLDMSGBG_CreateMSGDATA( msgbg, NARC_message_place_name_dat );
+
+  // フォント取得
+	sys->font = FLDMSGBG_GetFontHandle( msgbg );
 
 	// 文字バッファを作成
-	p_sys->pNameBuf = GFL_STR_CreateBuffer( MAX_NAME_LENGTH + 1, p_sys->heapID );
+	sys->nameBuf = GFL_STR_CreateBuffer( MAX_NAME_LENGTH + 1, sys->heapID );
 
 	// その他の初期化
-	p_sys->currentZoneID = INVALID_ZONE_ID;
-	p_sys->nextZoneID    = INVALID_ZONE_ID;
-	p_sys->nameLength    = 0;
+	sys->currentZoneID = INVALID_ZONE_ID;
+	sys->nextZoneID    = INVALID_ZONE_ID;
+	sys->nameLength    = 0;
+  sys->writeCharNum  = 0;
 
 	// 初期状態を設定
-	SetState( p_sys, STATE_HIDE );
+	SetState( sys, STATE_HIDE );
 
 	// 作成したシステムを返す
-	return p_sys;
-}
-
-//------------------------------------------------------------------------------------
-/**
- * @brief 地名表示システムの動作処理
- *
- * @param p_sys 動かすシステム
- */
-//------------------------------------------------------------------------------------
-void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* p_sys )
-{
-	int i;
-
-	// 状態カウンタを更新
-	p_sys->stateCount++;
-
-	// 状態に応じた動作
-	switch( p_sys->state )
-	{
-		case STATE_HIDE:		Process_HIDE( p_sys );		break;
-		case STATE_FADE_IN:		Process_FADE_IN( p_sys );	break;
-		case STATE_WAIT_1:		Process_WAIT_1( p_sys );	break;
-		case STATE_LAUNCH:		Process_LAUNCH( p_sys );	break;
-		case STATE_WAIT_2:		Process_WAIT_2( p_sys );	break;
-		case STATE_FADE_OUT:	Process_FADE_OUT( p_sys );	break;
-	}
-
-	// 文字ユニットを動かす
-	for( i=0; i<p_sys->nameLength; i++ )
-	{
-		CHAR_UNIT_Move( &p_sys->charUnit[i] );
-	}
-}
-
-//------------------------------------------------------------------------------------
-/**
- * @brief 地名表示ウィンドウの描画処理
- *
- * @param p_sys 描画対象システム
- */
-//------------------------------------------------------------------------------------
-void FIELD_PLACE_NAME_Draw( FIELD_PLACE_NAME* p_sys )
-{ 
-	// 状態に応じた描画処理
-	switch( p_sys->state )
-	{
-		case STATE_HIDE:		Draw_HIDE( p_sys );		break;
-		case STATE_FADE_IN:		Draw_FADE_IN( p_sys );	break;
-		case STATE_WAIT_1:		Draw_WAIT_1( p_sys );	break;
-		case STATE_LAUNCH:		Draw_LAUNCH( p_sys );	break;
-		case STATE_WAIT_2:		Draw_WAIT_2( p_sys );	break;
-		case STATE_FADE_OUT:	Draw_FADE_OUT( p_sys );	break;
-	}
-
-	// DEBUG: デバッグ出力
-	//DebugPrint( p_sys );
+	return sys;
 }
 
 //------------------------------------------------------------------------------------
 /**
  * @brief 地名表示システムを破棄する
  *
- * @param p_sys 破棄するシステム
+ * @param sys 破棄するシステム
  */
 //------------------------------------------------------------------------------------
-void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* p_sys )
+void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* sys )
 {
 	int i;
 
 	// 文字バッファを解放
-	GFL_STR_DeleteBuffer( p_sys->pNameBuf );
+	GFL_STR_DeleteBuffer( sys->nameBuf );
 
 	// BMPOAMシステムの後始末
 	for( i=0; i<MAX_NAME_LENGTH; i++ )
 	{ 
-		CHAR_UNIT_Finalize( &p_sys->charUnit[i] );
+		CHAR_UNIT_Finalize( &sys->charUnit[i] );
 	}
-	BmpOam_Exit( p_sys->pBmpOamSys );
+	BmpOam_Exit( sys->bmpOamSys );
 	
 	// セルアクターユニットの破棄
 	for( i=0; i<CLUNIT_INDEX_MAX; i++ )
 	{
-		GFL_CLACT_UNIT_Delete( p_sys->pClactUnit[i] );
+		GFL_CLACT_UNIT_Delete( sys->clunit[i] );
 	}
 	
 	// セルアクター用リソースの破棄
-	for( i=0; i<CLANM_RES_INDEX_MAX; i++ )
-	{
-		//GFL_CLGRP_CELLANIM_Release( p_sys->hResource_CLANM[i] );
-	}
 	for( i=0; i<PLTT_RES_INDEX_MAX; i++ )
 	{
-		GFL_CLGRP_PLTT_Release( p_sys->hResource_PLTT[i] );
-	}
-	for( i=0; i<CGR_RES_INDEX_MAX; i++ )
-	{
-		//GFL_CLGRP_CGR_Release( p_sys->hResource_CGR[i] );
+		GFL_CLGRP_PLTT_Release( sys->resPltt[i] );
 	}
 	
 	// 描画用インスタンスの破棄
-	GFL_MSG_Delete( p_sys->pMsgData );
+	GFL_MSG_Delete( sys->msg );
 
 	// ビットマップ・ウィンドウの破棄
-	GFL_BMPWIN_Delete( p_sys->pBmpWin );
-	GFL_BMP_Delete( p_sys->pBGOriginalBmp );
+	GFL_BMPWIN_Delete( sys->bmpWin );
+	GFL_BMP_Delete( sys->bmpOrg );
 
 	// BGSYSの後始末
 	GFL_BG_FreeBGControl( BG_FRAME );
 
 	// システム・ワーク解放
-	GFL_HEAP_FreeMemory( p_sys );
+	GFL_HEAP_FreeMemory( sys );
 } 
 
 
-//===================================================================================
+//====================================================================================
+// ■動作
+//====================================================================================
+
+//------------------------------------------------------------------------------------
 /**
- * 公開関数の実装( システムの制御に関する関数 )
+ * @brief 地名表示システムの動作処理
+ *
+ * @param sys 動かすシステム
  */
-//===================================================================================
+//------------------------------------------------------------------------------------
+void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* sys )
+{
+	// 状態カウンタを更新
+	sys->stateCount++;
+
+	// 状態に応じた動作
+	switch( sys->state )
+	{
+  case STATE_HIDE:          Process_HIDE( sys );		       break;
+  case STATE_SETUP:         Process_SETUP( sys );		       break;
+  case STATE_FADE_IN:       Process_FADE_IN( sys );	       break;
+  case STATE_WAIT_LAUNCE:   Process_WAIT_LAUNCH( sys );	   break;
+  case STATE_LAUNCH:        Process_LAUNCH( sys );	       break;
+  case STATE_WAIT_FADE_OUT: Process_WAIT_FADE_OUT( sys );	 break;
+  case STATE_FADE_OUT:      Process_FADE_OUT( sys );	     break;
+	}
+
+	// 文字ユニットを動かす
+  MoveAllCharUnit( sys );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief 地名表示ウィンドウの描画処理
+ *
+ * @param sys 描画対象システム
+ */
+//------------------------------------------------------------------------------------
+void FIELD_PLACE_NAME_Draw( FIELD_PLACE_NAME* sys )
+{ 
+	switch( sys->state )
+	{
+  case STATE_HIDE:		        Draw_HIDE( sys );		        break;
+  case STATE_SETUP:		        Draw_SETUP( sys );		      break;
+  case STATE_FADE_IN:		      Draw_FADE_IN( sys );	      break;
+  case STATE_WAIT_LAUNCE:		  Draw_WAIT_LAUNCH( sys );	  break;
+  case STATE_LAUNCH:		      Draw_LAUNCH( sys );	        break;
+  case STATE_WAIT_FADE_OUT:		Draw_WAIT_FADE_OUT( sys );	break;
+  case STATE_FADE_OUT:	      Draw_FADE_OUT( sys );	      break;
+	} 
+}
+
+
+//====================================================================================
+// ■制御
+//====================================================================================
 
 //------------------------------------------------------------------------------------
 /**
  * @brief ゾーンの切り替えを通知し, 新しい地名を表示する
  *
- * @param p_sys        ゾーン切り替えを通知するシステム
+ * @param sys        ゾーン切り替えを通知するシステム
  * @param next_zone_id 新しいゾーンID
  */
 //------------------------------------------------------------------------------------
-void FIELD_PLACE_NAME_Display( FIELD_PLACE_NAME* p_sys, u32 next_zone_id )
+void FIELD_PLACE_NAME_Display( FIELD_PLACE_NAME* sys, u32 next_zone_id )
 { 
-  // ゾーンの地名表示フラグが立っていない場合は表示しない
+  // ゾーンの地名表示フラグが立っていない場所では表示しない
   if( ZONEDATA_GetPlaceNameFlag( next_zone_id ) != TRUE ) return;
 
 	// 指定されたゾーンIDを次に表示すべきものとして記憶
-	p_sys->nextZoneID = next_zone_id;
+	sys->nextZoneID = next_zone_id;
 
 	// 表示中のウィンドウを退出させる
-	Cancel( p_sys ); 
+	Cancel( sys ); 
 }
 
 //------------------------------------------------------------------------------------
 /**
  * @brief 地名ウィンドウを強制的に表示する
  *
- * @param p_sys   表示するシステム
+ * @param sys   表示するシステム
  * @param zone_id 表示する場所のゾーンID
  */
 //------------------------------------------------------------------------------------
-extern void FIELD_PLACE_NAME_DisplayForce( FIELD_PLACE_NAME* p_sys, u32 zone_id )
+extern void FIELD_PLACE_NAME_DisplayForce( FIELD_PLACE_NAME* sys, u32 zone_id )
 {
   // 強制的に表示
-  p_sys->currentZoneID = INVALID_ZONE_ID;
-  p_sys->nextZoneID    = zone_id;
+  sys->currentZoneID = INVALID_ZONE_ID;
+  sys->nextZoneID    = zone_id;
 
 	// 表示中のウィンドウを退出させる
-	Cancel( p_sys ); 
+	Cancel( sys ); 
 }
 
 //------------------------------------------------------------------------------------
 /**
  * @brief 地名ウィンドウの表示を強制的に終了する
  *
- * @param p_sys 表示を終了するシステム
+ * @param sys 表示を終了するシステム
  */
 //------------------------------------------------------------------------------------
-void FIELD_PLACE_NAME_Hide( FIELD_PLACE_NAME* p_sys )
+void FIELD_PLACE_NAME_Hide( FIELD_PLACE_NAME* sys )
 {
-	SetState( p_sys, STATE_HIDE );
+	SetState( sys, STATE_HIDE );
 }
 
 
 //===================================================================================
-/**
- * 非公開関数の実装
- */
+// ■非公開関数
 //===================================================================================
 
 //-----------------------------------------------------------------------------------
 /**
  * @brief BGの設定を行う
  *
- * @param p_sys 設定を行うシステム
+ * @param sys 設定を行うシステム
  */ 
 //-----------------------------------------------------------------------------------
-static void SetupBG( FIELD_PLACE_NAME* p_sys )
+static void SetupBG( FIELD_PLACE_NAME* sys )
 { 
 	GFL_BG_BGCNT_HEADER bgcnt = 
 	{
-		0, 0,					    // 初期表示位置
-		0x800,						// スクリーンバッファサイズ
-		0,							// スクリーンバッファオフセット
-		GFL_BG_SCRSIZ_256x256,		// スクリーンサイズ
+		0, 0,					          // 初期表示位置
+		0x800,						      // スクリーンバッファサイズ
+		0,							        // スクリーンバッファオフセット
+		GFL_BG_SCRSIZ_256x256,	// スクリーンサイズ
 		GX_BG_COLORMODE_16,			// カラーモード
 		GX_BG_SCRBASE_0x1000,		// スクリーンベースブロック
-		GX_BG_CHARBASE_0x04000,		// キャラクタベースブロック
-		GFL_BG_CHRSIZ_256x256,		// キャラクタエリアサイズ
-		GX_BG_EXTPLTT_01,			// BG拡張パレットスロット選択
-		1,							// 表示プライオリティー
-		0,							// エリアオーバーフラグ
-		0,							// DUMMY
-		FALSE,						// モザイク設定
-	};
-
+		GX_BG_CHARBASE_0x04000,	// キャラクタベースブロック
+		GFL_BG_CHRSIZ_256x256,	// キャラクタエリアサイズ
+		GX_BG_EXTPLTT_01,			  // BG拡張パレットスロット選択
+		1,							        // 表示プライオリティー
+		0,							        // エリアオーバーフラグ
+		0,							        // DUMMY
+		FALSE,						      // モザイク設定
+	}; 
 	GFL_BG_SetBGControl( BG_FRAME, &bgcnt, GFL_BG_MODE_TEXT );
 	GFL_BG_SetPriority( BG_FRAME, BG_FRAME_PRIORITY );
-	GFL_BG_SetVisible( BG_FRAME, VISIBLE_ON ); 
+	GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF ); 
 	G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, ALPHA_VALUE_1, ALPHA_VALUE_2 );
 
 	// キャラVRAM・スクリーンVRAMをクリア
 	GFL_BG_ClearFrame( BG_FRAME );
 
-	// NULLキャラクタデータをセット
-	LoadNullCharacterData();
+	// NULLキャラクタデータを確保
+	AllocNullCharacterArea();
 
 	// ビットマップ・ウィンドウを作成する
-	p_sys->pBmpWin = GFL_BMPWIN_Create( 
+	sys->bmpWin = GFL_BMPWIN_Create( 
 			BG_FRAME,
 			BMPWIN_POS_X_CHAR, BMPWIN_POS_Y_CHAR, BMPWIN_WIDTH_CHAR, BMPWIN_HEIGHT_CHAR,
 			BG_PALETTE_NO, GFL_BMP_CHRAREA_GET_F );
 
 	// パレット・キャラクタ・スクリーンを転送
-	LoadBGCharacterData( p_sys, ARCID_PLACE_NAME, NARC_place_name_place_name_back_NCGR );
-	LoadBGPaletteData( p_sys, ARCID_PLACE_NAME, NARC_place_name_place_name_back_NCLR );
-	//LoadBGScreenData( p_sys, ARCID_PLACE_NAME, NARC_area_win_gra_place_name_back_NSCR );
+	LoadBGCharacterData( sys, ARCID_PLACE_NAME, NARC_place_name_place_name_back_NCGR );
+	LoadBGPaletteData( sys, ARCID_PLACE_NAME, NARC_place_name_place_name_back_NCLR );
+	//LoadBGScreenData( sys, ARCID_PLACE_NAME, NARC_area_win_gra_place_name_back_NSCR );
 	
 	// ビットマップ・ウィンドウのデータをVRAMに転送
-	GFL_BMPWIN_MakeTransWindow( p_sys->pBmpWin );
+	GFL_BMPWIN_MakeTransWindow( sys->bmpWin );
 
 	// DEBUG: スクリーン・バッファを書き出す
 	/*
@@ -802,9 +800,10 @@ static void SetupBG( FIELD_PLACE_NAME* p_sys )
 //------------------------------------------------------------------------------------
 /**
  * @brief 空のキャラクタデータを1キャラ分VRAMに確保する
+ *        キャラクタ番号0を空白キャラクタとして使用するため。
  */
 //------------------------------------------------------------------------------------
-static void LoadNullCharacterData()
+static void AllocNullCharacterArea()
 {
 	GFL_BG_AllocCharacterArea( BG_FRAME, CHAR_SIZE * CHAR_SIZE / 2, GFL_BG_CHRAREA_GET_F );
 	//GFL_BG_FillCharacter( BG_FRAME, 0, 1, 0 );
@@ -814,67 +813,46 @@ static void LoadNullCharacterData()
 /**
  * @brief スクリーン・データを読み込む
  *
- * @param p_sys   読み込みを行うシステム
+ * @param sys   読み込みを行うシステム
  * @param arc_id  アーカイブデータのインデックス
  * @param data_id アーカイブ内データインデックス
  */
 //------------------------------------------------------------------------------------
-static void LoadBGScreenData( FIELD_PLACE_NAME* p_sys, u32 arc_id, u32 data_id )
+static void LoadBGScreenData( FIELD_PLACE_NAME* sys, u32 arc_id, u32 data_id )
 {
-	ARCHANDLE* p_h_arc;
+	ARCHANDLE* handle;
 	u32 size;
-	void* p_src;
-	void* p_tmp;
+	void* src;
 	NNSG2dScreenData* p_screen;
-	p_h_arc = GFL_ARC_OpenDataHandle( arc_id, p_sys->heapID );					// アーカイブデータハンドルオープン
-	size    = GFL_ARC_GetDataSizeByHandle( p_h_arc, data_id );					// データサイズ取得
-	p_src   = GFL_HEAP_AllocMemoryLo( p_sys->heapID, size );					// データバッファ確保
-	GFL_ARC_LoadDataByHandle( p_h_arc, data_id, p_src );						// データ取得
-	NNS_G2dGetUnpackedScreenData( p_src, &p_screen );							// バイナリからデータを展開
+	handle = GFL_ARC_OpenDataHandle( arc_id, sys->heapID );					// アーカイブデータハンドルオープン
+	size    = GFL_ARC_GetDataSizeByHandle( handle, data_id );					// データサイズ取得
+	src   = GFL_HEAP_AllocMemoryLo( sys->heapID, size );					// データバッファ確保
+	GFL_ARC_LoadDataByHandle( handle, data_id, src );						// データ取得
+	NNS_G2dGetUnpackedScreenData( src, &p_screen );							// バイナリからデータを展開
 	GFL_BG_LoadScreenBuffer( BG_FRAME, p_screen->rawData, p_screen->szByte );	// BGSYS内部バッファに転送
 	GFL_BG_LoadScreenReq( BG_FRAME );											// VRAMに転送
-	GFL_HEAP_FreeMemory( p_src );												// データバッファ解放
-	GFL_ARC_CloseDataHandle( p_h_arc );											// アーカイブデータハンドルクローズ
+	GFL_HEAP_FreeMemory( src );												// データバッファ解放
+	GFL_ARC_CloseDataHandle( handle );											// アーカイブデータハンドルクローズ
 }
 
 //------------------------------------------------------------------------------------
 /**
  * @brief キャラクタデータをロードする
  *
- * @param p_sys   読み込みを行うシステム
+ * @param sys   読み込みを行うシステム
  * @param arc_id  アーカイブデータのインデックス
  * @param data_id アーカイブ内データインデックス
  */
 //------------------------------------------------------------------------------------
-static void LoadBGCharacterData( FIELD_PLACE_NAME* p_sys, u32 arc_id, u32 data_id )
-{
-	/*
-		u32 size;
-		void* pSrc;
-		ARCHANDLE* handle;
-		NNSG2dCharacterData* pChar;
-
-		handle = GFL_ARC_OpenDataHandle( arc_id, p_sys->heapID );
-
-		size = GFL_ARC_GetDataSizeByHandle( handle, data_id );
-		pSrc = GFL_HEAP_AllocMemoryLo( p_sys->heapID, size );
-		GFL_ARC_LoadDataByHandle(handle, data_id, (void*)pSrc);
-
-		NNS_G2dGetUnpackedCharacterData(pSrc, &pChar);
-		GFL_BG_LoadCharacter(BG_FRAME, pChar->pRawData, pChar->szByte, 0);
-
-		GFL_HEAP_FreeMemory( pSrc );
-
-		GFL_ARC_CloseDataHandle( handle ); 
-	*/
-
+static void LoadBGCharacterData( FIELD_PLACE_NAME* sys, u32 arc_id, u32 data_id )
+{ 
 	int i;
 	u16 sx, sy, dx, dy;
-	GFL_BMP_DATA* p_dst_bmp = NULL;
+	GFL_BMP_DATA* dst_bmp = NULL;
 
 	// コピー元・コピー先ビットマップを取得
-	p_sys->pBGOriginalBmp = GFL_BMP_LoadCharacter( arc_id, data_id, FALSE, p_sys->heapID );
-	p_dst_bmp             = GFL_BMPWIN_GetBmp( p_sys->pBmpWin );
+	sys->bmpOrg = GFL_BMP_LoadCharacter( arc_id, data_id, FALSE, sys->heapID );
+	dst_bmp     = GFL_BMPWIN_GetBmp( sys->bmpWin );
 
 	// 1キャラずつコピーする
 	sx = 0;
@@ -884,7 +862,7 @@ static void LoadBGCharacterData( FIELD_PLACE_NAME* p_sys, u32 arc_id, u32 data_i
 	for( i=0; i<BMPWIN_WIDTH_CHAR * BMPWIN_HEIGHT_CHAR; i++ )
 	{
 		// コピー
-		GFL_BMP_Print( p_sys->pBGOriginalBmp, p_dst_bmp, dx, sy, dx, dy, CHAR_SIZE, CHAR_SIZE, 0 );
+		GFL_BMP_Print( sys->bmpOrg, dst_bmp, dx, sy, dx, dy, CHAR_SIZE, CHAR_SIZE, 0 );
 
 		// コピー元座標の更新
 		sx += CHAR_SIZE;
@@ -907,44 +885,44 @@ static void LoadBGCharacterData( FIELD_PLACE_NAME* p_sys, u32 arc_id, u32 data_i
 /**
  * @brief パレット・データを読み込む
  *
- * @param p_sys   読み込みを行うシステム
+ * @param sys   読み込みを行うシステム
  * @param arc_id  アーカイブデータのインデックス
  * @param data_id アーカイブ内データインデックス
  */
 //------------------------------------------------------------------------------------
-static void LoadBGPaletteData( FIELD_PLACE_NAME* p_sys, u32 arc_id, u32 data_id )
+static void LoadBGPaletteData( FIELD_PLACE_NAME* sys, u32 arc_id, u32 data_id )
 {
-	ARCHANDLE* p_h_arc;
+	ARCHANDLE* handle;
 	u32 size;
-	void* p_src;
+	void* src;
 	NNSG2dPaletteData* p_palette;
-	p_h_arc = GFL_ARC_OpenDataHandle( arc_id, p_sys->heapID );				// アーカイブデータハンドルオープン
-	size    = GFL_ARC_GetDataSizeByHandle( p_h_arc, data_id );				// データサイズ取得
-	p_src   = GFL_HEAP_AllocMemoryLo( p_sys->heapID, size );				// データバッファ確保
-	GFL_ARC_LoadDataByHandle( p_h_arc, data_id, p_src );					// データ取得
-	NNS_G2dGetUnpackedPaletteData( p_src, &p_palette );						// バイナリからデータを展開
+	handle = GFL_ARC_OpenDataHandle( arc_id, sys->heapID );				// アーカイブデータハンドルオープン
+	size    = GFL_ARC_GetDataSizeByHandle( handle, data_id );				// データサイズ取得
+	src   = GFL_HEAP_AllocMemoryLo( sys->heapID, size );				// データバッファ確保
+	GFL_ARC_LoadDataByHandle( handle, data_id, src );					// データ取得
+	NNS_G2dGetUnpackedPaletteData( src, &p_palette );						// バイナリからデータを展開
 	GFL_BG_LoadPalette( BG_FRAME, p_palette->pRawData, 0x20, BG_PALETTE_NO );	// パレットデータ転送
-	GFL_HEAP_FreeMemory( p_src );											// データバッファ解放
-	GFL_ARC_CloseDataHandle( p_h_arc );										// アーカイブデータハンドルクローズ
+	GFL_HEAP_FreeMemory( src );											// データバッファ解放
+	GFL_ARC_CloseDataHandle( handle );										// アーカイブデータハンドルクローズ
 }
 
 //-----------------------------------------------------------------------------------
 /**
  * @brief セルアクターで使用するリソースを読み込む
  *
- * @param p_sys 読み込み対象システム
+ * @param sys 読み込み対象システム
  */
 //-----------------------------------------------------------------------------------
-static void LoadClactResource( FIELD_PLACE_NAME* p_sys )
+static void LoadClactResource( FIELD_PLACE_NAME* sys )
 {
 	ARCHANDLE* p_arc_handle;
 
-	p_arc_handle = GFL_ARC_OpenDataHandle( ARCID_PLACE_NAME, p_sys->heapID );
+	p_arc_handle = GFL_ARC_OpenDataHandle( ARCID_PLACE_NAME, sys->heapID );
 
-	p_sys->hResource_PLTT[ PLTT_RES_INDEX_CHAR_UNIT ] = 
+	sys->resPltt[ PLTT_RES_INDEX_CHAR_UNIT ] = 
 		GFL_CLGRP_PLTT_RegisterEx( 
 				p_arc_handle, NARC_place_name_place_name_string_NCLR,
-				CLSYS_DRAW_MAIN, OBJ_PALETTE_NO * 32, 0, 1, p_sys->heapID );
+				CLSYS_DRAW_MAIN, OBJ_PALETTE_NO * 32, 0, 1, sys->heapID );
 
 	GFL_ARC_CloseDataHandle( p_arc_handle );
 }
@@ -953,35 +931,35 @@ static void LoadClactResource( FIELD_PLACE_NAME* p_sys )
 /**
  * @brief セルアクターユニットを作成する
  *
- * @param p_sys 作成対象システム
+ * @param sys 作成対象システム
  */
 //-----------------------------------------------------------------------------------
-static void CreateClactUnit( FIELD_PLACE_NAME* p_sys )
+static void CreateClactUnit( FIELD_PLACE_NAME* sys )
 {
 	// セルアクターユニットを作成
-	p_sys->pClactUnit[ CLUNIT_INDEX_CHAR_UNIT ] = 
-		GFL_CLACT_UNIT_Create( MAX_NAME_LENGTH, BG_FRAME_PRIORITY, p_sys->heapID );
+	sys->clunit[ CLUNIT_INDEX_CHAR_UNIT ] = 
+		GFL_CLACT_UNIT_Create( MAX_NAME_LENGTH, BG_FRAME_PRIORITY, sys->heapID );
 
 	// 初期設定
-	GFL_CLACT_UNIT_SetDrawEnable( p_sys->pClactUnit[ CLUNIT_INDEX_CHAR_UNIT ], TRUE );
+	GFL_CLACT_UNIT_SetDrawEnable( sys->clunit[ CLUNIT_INDEX_CHAR_UNIT ], TRUE );
 }
 
 //-----------------------------------------------------------------------------------
 /**
  * @brief 文字ユニットを初期化する
  *
- * @param p_sys 作成対象システム
+ * @param sys 作成対象システム
  */
 //-----------------------------------------------------------------------------------
-static void CreateCharUnit( FIELD_PLACE_NAME* p_sys )
+static void CreateCharUnit( FIELD_PLACE_NAME* sys )
 {
 	int i;
 
 	for( i=0; i<MAX_NAME_LENGTH; i++ )
 	{
 		CHAR_UNIT_Initialize( 
-				&p_sys->charUnit[i], p_sys->pBmpOamSys, 
-				p_sys->hResource_PLTT[ PLTT_RES_INDEX_CHAR_UNIT ], p_sys->heapID );
+				&sys->charUnit[i], sys->bmpOamSys, 
+				sys->resPltt[ PLTT_RES_INDEX_CHAR_UNIT ], sys->heapID );
 	} 
 }
 
@@ -989,55 +967,62 @@ static void CreateCharUnit( FIELD_PLACE_NAME* p_sys )
 /**
  * @brief 指定したゾーンIDに対応する地名を文字ユニットに書き込む
  *
- * @param p_sys   操作対象システム
+ * @param sys   操作対象システム
  * @param zone_id ゾーンID
  */
 //----------------------------------------------------------------------------------- 
-static void WritePlaceName( FIELD_PLACE_NAME* p_sys, u32 zone_id )
+static void WritePlaceName( FIELD_PLACE_NAME* sys, u32 zone_id )
 {
-	int            i;
-	u16            str_id;				// メッセージデータ内の文字列ID
-	const STRCODE* p_str_code = NULL;	// 生の文字列
-	GFL_FONT*      p_font     = NULL;	// フォント
+  int i;
+	const STRCODE* strcode = NULL;
 
-	// フォントを取得
-	p_font = FLDMSGBG_GetFontHandle( p_sys->pFldMsgBG );		
+  // すでに書き込みが完了済み
+  if( sys->nameLength <= sys->writeCharNum ) return;
 
-	// ゾーンIDから文字列を取得する
-	str_id = ZONEDATA_GetPlaceNameID( zone_id );					// メッセージ番号を決定
-	if( str_id < 0 | msg_place_name_max <= str_id ) str_id = 0;		// メッセージ番号の範囲チェック
-	GFL_MSG_GetString( p_sys->pMsgData,	str_id, p_sys->pNameBuf );	// 地名文字列を取得
-	p_str_code = GFL_STR_GetStringCodePointer( p_sys->pNameBuf );	// 生の文字列を取得
-	p_sys->nameLength = GFL_STR_GetBufferLength( p_sys->pNameBuf );	// 文字数を取得
-
-	// 文字数チェック
-	//GF_ASSERT_MSG( ( p_sys->nameLength < MAX_NAME_LENGTH ), "最大文字数をオーバーしています。" );	// 止めない
-	if( MAX_NAME_LENGTH < p_sys->nameLength )
-	{
-		OBATA_Printf( "地名の最大文字数をオーバーしています。\n" );
-		p_sys->nameLength =	MAX_NAME_LENGTH;
-	}
+  // 生の文字列を取得
+  strcode = GFL_STR_GetStringCodePointer( sys->nameBuf );
 
 	// 1文字ずつ設定
-	for( i=0; i<p_sys->nameLength; i++ )
-	{
-		// ビットマップを作成する
-		CHAR_UNIT_SetCharCode( &p_sys->charUnit[i], p_font, p_str_code[i], p_sys->heapID );
+  i = sys->writeCharNum++;
+  CHAR_UNIT_Write( &sys->charUnit[i], sys->font, strcode[i], sys->heapID ); 
+	sys->charUnit[i].param.x = 256;
+}
 
-		// 表示状態を設定
-		BmpOam_ActorSetDrawEnable( p_sys->charUnit[i].pBmpOamAct, TRUE );
-	}
-	for( i=p_sys->nameLength; i<MAX_NAME_LENGTH; i++ )
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 表示する地名を更新する
+ *
+ * @param sys 更新するシステム
+ */
+//-----------------------------------------------------------------------------------
+static void SetupPlaceName( FIELD_PLACE_NAME* sys )
+{
+	u16 str_id;  // メッセージデータ内の文字列ID
+  
+	// ゾーンIDから地名文字列を取得する
+	str_id = ZONEDATA_GetPlaceNameID( sys->nextZoneID );
+	if( (str_id < 0) || 
+      (msg_place_name_max <= str_id) ) 
+  { // エラー回避
+    str_id = 0;	
+  }
+	GFL_MSG_GetString( sys->msg,	str_id, sys->nameBuf );
+	sys->nameLength = GFL_STR_GetBufferLength( sys->nameBuf );	// 文字数を取得
+
+	// 文字数チェック
+	if( MAX_NAME_LENGTH < sys->nameLength )
 	{
-		// 表示状態を設定
-		BmpOam_ActorSetDrawEnable( p_sys->charUnit[i].pBmpOamAct, FALSE );
+    OBATA_Printf( "==================================================\n" );
+		OBATA_Printf( "PLACE_NAME: 地名が最大文字数をオーバーしています。\n" );
+    OBATA_Printf( "==================================================\n" );
+		sys->nameLength =	MAX_NAME_LENGTH;
 	}
 
-	// TEMP: "なぞのばしょ" なら表示しない
+	//「なぞのばしょ」なら表示しない
 	if( str_id == 0 ) 
   {
-    OBATA_Printf( "「なぞのばしょ」を検出( zone id = %d )\n", zone_id );
-    FIELD_PLACE_NAME_Hide( p_sys );
+    OBATA_Printf( "「なぞのばしょ」を検出( zone id = %d )\n", sys->nextZoneID );
+    FIELD_PLACE_NAME_Hide( sys );
   }
 }
 
@@ -1048,20 +1033,15 @@ static void WritePlaceName( FIELD_PLACE_NAME* p_sys, u32 zone_id )
  * @param 設定対象システム
  */
 //-----------------------------------------------------------------------------------
-static void SetCharUnitAction( FIELD_PLACE_NAME* p_sys )
+static void SetupCharUnitAction( FIELD_PLACE_NAME* sys )
 {
 	int i;
 	int str_width;	// 文字列の幅
 	int str_height;	// 文字列の高さ
-	const STRCODE* p_str_code = NULL;
-	GFL_FONT*      p_font     = NULL;
-
-	// フォントを取得
-	p_font = FLDMSGBG_GetFontHandle( p_sys->pFldMsgBG );		
 
 	// 文字列のサイズを取得
-	str_width  = PRINTSYS_GetStrWidth( p_sys->pNameBuf, p_font, 0 );
-    str_height = PRINTSYS_GetStrHeight( p_sys->pNameBuf, p_font );
+	str_width  = PRINTSYS_GetStrWidth( sys->nameBuf, sys->font, 0 );
+  str_height = PRINTSYS_GetStrHeight( sys->nameBuf, sys->font );
 
 	// 各文字ユニットの設定
 	{
@@ -1072,20 +1052,20 @@ static void SetCharUnitAction( FIELD_PLACE_NAME* p_sys )
 		param.y   = Y_CENTER_POS - ( str_height / 2 );
 		param.sx  = -20;
 		param.sy  =  0;
-		//param.dx  = 128 - ( str_width / 2 ) - ( p_sys->nameLength / 2 );	// 中央揃え
+		//param.dx  = 128 - ( str_width / 2 ) - ( sys->nameLength / 2 );	// 中央揃え
 		param.dx  = 24;			// 左詰め
 		param.dy  = param.y;
 		param.dsx = 0;
 		param.dsy = 0;
 
 		// 1文字ずつ設定する
-		for( i=0; i<p_sys->nameLength; i++ )
+		for( i=0; i<sys->nameLength; i++ )
 		{
 			// 目標パラメータを設定
-			CHAR_UNIT_SetMoveParam( &p_sys->charUnit[i], &param );
+			CHAR_UNIT_SetMoveParam( &sys->charUnit[i], &param );
 
 			// 目標パラメータを更新
-			param.dx += p_sys->charUnit[i].width + 1;
+			param.dx += sys->charUnit[i].width + 1;
 		}
 	}
 }
@@ -1094,54 +1074,64 @@ static void SetCharUnitAction( FIELD_PLACE_NAME* p_sys )
 /**
  * @brief 文字ユニットを発射する
  *
- * @param p_sys      システム
- * @param unit_index 発射する文字ユニット番号(何文字目か)
+ * @param sys 発射するシステム
  */
 //-----------------------------------------------------------------------------------
-static void LaunchCharUnit( FIELD_PLACE_NAME* p_sys, int unit_index )
+static void LaunchCharUnit( FIELD_PLACE_NAME* sys )
 {
-	// 動作フラグを立てる
-	p_sys->charUnit[ unit_index ].moving = TRUE;
+  int i;
+
+  // すでに全てのユニット発射済み
+  if( sys->nameLength <= sys->launchUnitNum ) return;
+
+  // 発射
+  i = sys->launchUnitNum++;
+	CHAR_UNIT_MoveStart( &sys->charUnit[i] );
+  BmpOam_ActorSetDrawEnable( sys->charUnit[i].bmpOamActor, TRUE ); // 表示
 }
 
 //-----------------------------------------------------------------------------------
 /**
  * @brief 状態を変更する
  *
- * @param p_sys      状態を変更するシステム
+ * @param sys      状態を変更するシステム
  * @param next_state 設定する状態
  */
 //-----------------------------------------------------------------------------------
-static void SetState( FIELD_PLACE_NAME* p_sys, STATE next_state )
+static void SetState( FIELD_PLACE_NAME* sys, STATE next_state )
 {
 	// 状態を変更し, 状態カウンタを初期化する
-	p_sys->state      = next_state;
-	p_sys->stateCount = 0;
+	sys->state      = next_state;
+	sys->stateCount = 0;
 
 	// 遷移先の状態に応じた初期化
 	switch( next_state )
 	{
 		case STATE_HIDE:	
 			GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF );	// BGを非表示
-			SetAllCharUnitVisibleOff( p_sys );			// 文字ユニットを非表示に
+			SetAllCharUnitVisibleOff( sys );			      // 文字ユニットを非表示に
 			break;
+    case STATE_SETUP:
+      sys->currentZoneID = sys->nextZoneID;	   // 表示中ゾーンIDを更新
+			RecoveryBitmapWindow( sys );	  // ビットマップウィンドウを復帰
+      SetupPlaceName( sys );          // 表示する地名を更新
+      sys->writeCharNum = 0;          // 書き込み準備
+      break;
 		case STATE_FADE_IN:
       GFL_BG_SetVisible( BG_FRAME, VISIBLE_ON );	// BGを表示
-			p_sys->currentZoneID = p_sys->nextZoneID;	// 表示中ゾーンIDを更新
-			RecoveryBitmapWindow( p_sys );				// ビットマップウィンドウを復帰
-			WritePlaceName( p_sys, p_sys->nextZoneID );	// 新しい地名を書き込む
-			SetCharUnitAction( p_sys );					// 文字ユニットの動きをセット
+      Draw_FADE_IN( sys );
 			break;
-		case STATE_WAIT_1:
+		case STATE_WAIT_LAUNCE:
 			break;
 		case STATE_LAUNCH:
-			p_sys->launchNum = 0;	// 発射文字数をリセット
+			sys->launchUnitNum = 0;	     // 発射文字数をリセット
+			SetupCharUnitAction( sys );	 // 文字ユニットの動きをセット
 			break;
-		case STATE_WAIT_2:
+		case STATE_WAIT_FADE_OUT:
 			break;
 		case STATE_FADE_OUT:
-			WriteCharUnitToBitmapWindow( p_sys );	// 現時点での文字をBGに書き込む
-			SetAllCharUnitVisibleOff( p_sys );		// 文字ユニットを非表示に
+			WriteCharUnitToBitmapWindow( sys );	// 現時点での文字をBGに書き込む
+			SetAllCharUnitVisibleOff( sys );		// 文字ユニットを非表示に
 			break;
 	}
 }
@@ -1150,55 +1140,76 @@ static void SetState( FIELD_PLACE_NAME* p_sys, STATE next_state )
 /**
  * @brief 強制的にウィンドウを退出させる
  *
- * @param p_sys 状態を更新するシステム
+ * @param sys 状態を更新するシステム
  */
 //-----------------------------------------------------------------------------------
-static void Cancel( FIELD_PLACE_NAME* p_sys )
+static void Cancel( FIELD_PLACE_NAME* sys )
 {
 	STATE next_state;
 	int   start_count;
 	float passed_rate;
 	
 	// 現在の状態に応じた処理
-	switch( p_sys->state )
+	switch( sys->state )
 	{
-		case STATE_HIDE:	
-		case STATE_FADE_OUT:
-			return;
-		case STATE_WAIT_1:
-		case STATE_WAIT_2:
-		case STATE_LAUNCH:
-			next_state  = STATE_WAIT_2;
-			start_count = PROCESS_TIME_WAIT_2;
-			break;
-		case STATE_FADE_IN:
-			next_state = STATE_FADE_OUT;
-			// 経過済みフレーム数を算出
-			// (stateCountから, 表示位置を算出しているため, 強制退出させた場合, stateCount を適切に計算する必要がある)
-			passed_rate = p_sys->stateCount / (float)PROCESS_TIME_FADE_IN;			// 経過した時間の割合を算出
-			start_count = (int)( (1.0f - passed_rate) * PROCESS_TIME_FADE_OUT );	// 遷移先状態の経過済みカウントを算出
-			break;
+  case STATE_HIDE:	
+  case STATE_FADE_OUT:
+    return;
+  case STATE_WAIT_LAUNCE:
+  case STATE_WAIT_FADE_OUT:
+  case STATE_LAUNCH:
+    next_state  = STATE_WAIT_FADE_OUT;
+    start_count = PROCESS_TIME_WAIT_FADE_OUT;
+    break;
+  case STATE_FADE_IN:
+    next_state = STATE_FADE_OUT;
+    // 経過済みフレーム数を算出
+    // (stateCountから, 表示位置を算出しているため, 
+    //  強制退出させた場合は stateCount を適切に計算する必要がある)
+    passed_rate = sys->stateCount / (float)PROCESS_TIME_FADE_IN;
+    start_count = (int)( (1.0f - passed_rate) * PROCESS_TIME_FADE_OUT );
+    break;
+  case STATE_SETUP:
+    next_state = STATE_HIDE;
+    start_count = 0;
+    break;
 	}
 
 	// 状態を更新
-	SetState( p_sys, next_state );
-	p_sys->stateCount = start_count;
+	SetState( sys, next_state );
+	sys->stateCount = start_count;
 }
 
 //-----------------------------------------------------------------------------------
 /**
  * @brief 全文字ユニットを非表示に設定する
  *
- * @param p_sys 設定対象システム
+ * @param sys 設定対象システム
  */
 //-----------------------------------------------------------------------------------
-static void SetAllCharUnitVisibleOff( FIELD_PLACE_NAME* p_sys )
+static void SetAllCharUnitVisibleOff( FIELD_PLACE_NAME* sys )
 {
 	int i;
 	
 	for( i=0; i<MAX_NAME_LENGTH; i++ )
 	{
-		BmpOam_ActorSetDrawEnable( p_sys->charUnit[i].pBmpOamAct, FALSE );
+		BmpOam_ActorSetDrawEnable( sys->charUnit[i].bmpOamActor, FALSE );
+	}
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 全文字ユニットを動かす
+ *
+ * @param sys 動作対象システム
+ */
+//-----------------------------------------------------------------------------------
+static void MoveAllCharUnit( FIELD_PLACE_NAME* sys )
+{
+  int i;
+	for( i=0; i<sys->nameLength; i++ )
+	{
+		CHAR_UNIT_Move( &sys->charUnit[i] );
 	}
 }
 
@@ -1206,144 +1217,160 @@ static void SetAllCharUnitVisibleOff( FIELD_PLACE_NAME* p_sys )
 /**
  * @brief ビットマップ・ウィンドウをBGオリジナルデータに復元する
  *
- * @param p_sys 操作対象システム
+ * @param sys 操作対象システム
  */
 //-----------------------------------------------------------------------------------
-static void RecoveryBitmapWindow( FIELD_PLACE_NAME* p_sys )
+static void RecoveryBitmapWindow( FIELD_PLACE_NAME* sys )
 {
-	GFL_BMP_DATA* p_src = p_sys->pBGOriginalBmp;
-	GFL_BMP_DATA* p_dst = GFL_BMPWIN_GetBmp( p_sys->pBmpWin );
+	GFL_BMP_DATA* p_src = sys->bmpOrg;
+	GFL_BMP_DATA* p_dst = GFL_BMPWIN_GetBmp( sys->bmpWin );
 
 	// オリジナル(文字が書き込まれていない状態)をコピーして, VRAMに転送
 	GFL_BMP_Copy( p_src, p_dst );	
-	GFL_BMPWIN_TransVramCharacter( p_sys->pBmpWin );	
+	GFL_BMPWIN_TransVramCharacter( sys->bmpWin );	
 }
 
 //-----------------------------------------------------------------------------------
 /**
  * @brief 表示中の文字ユニットをビットマップ・ウィンドウに書き込む
  *
- * @param p_sys 操作対象システム
+ * @param sys 操作対象システム
  */
 //-----------------------------------------------------------------------------------
-static void WriteCharUnitToBitmapWindow( FIELD_PLACE_NAME* p_sys )
+static void WriteCharUnitToBitmapWindow( FIELD_PLACE_NAME* sys )
 {
 	int i;
 	u16 dx, dy;
 	CHAR_UNIT* p_char;
 	GFL_BMP_DATA* p_src_bmp = NULL;
-	GFL_BMP_DATA* p_dst_bmp = GFL_BMPWIN_GetBmp( p_sys->pBmpWin );
+	GFL_BMP_DATA* p_dst_bmp = GFL_BMPWIN_GetBmp( sys->bmpWin );
 
 	// 表示中の全ての文字ユニットをコピーする
-	for( i=0; i<p_sys->nameLength; i++ )
+	for( i=0; i<sys->nameLength; i++ )
 	{
-		p_char = &p_sys->charUnit[i];
-		p_src_bmp = p_char->pBmp;
+		p_char = &sys->charUnit[i];
+		p_src_bmp = p_char->bmp;
 		dx = p_char->param.x - ( BMPWIN_POS_X_CHAR * CHAR_SIZE );
 		dy = p_char->param.y - ( BMPWIN_POS_Y_CHAR * CHAR_SIZE );
 		GFL_BMP_Print( p_src_bmp, p_dst_bmp, 0, 0, dx, dy, p_char->width, p_char->height, 0 );
 	}
 
 	// 更新されたキャラデータをVRAMに転送
-	GFL_BMPWIN_TransVramCharacter( p_sys->pBmpWin );
+	GFL_BMPWIN_TransVramCharacter( sys->bmpWin );
 }
 
 //-----------------------------------------------------------------------------------
 /**
  * @brief 非表示状態時の動作
  *
- * @param p_sys 動かすシステム
+ * @param sys 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Process_HIDE( FIELD_PLACE_NAME* p_sys )
+static void Process_HIDE( FIELD_PLACE_NAME* sys )
 {
-	// ゾーン切り替えを検出したら, 次の状態へ
-	if( p_sys->currentZoneID != p_sys->nextZoneID )
+	// ゾーンチェンジが通知されたら, 次の状態へ
+	if( sys->currentZoneID != sys->nextZoneID )
 	{
-		SetState( p_sys, STATE_FADE_IN );
+		SetState( sys, STATE_SETUP );
 	}
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 準備状態時の動作
+ *
+ * @param sys 動かすシステム
+ */
+//-----------------------------------------------------------------------------------
+static void Process_SETUP( FIELD_PLACE_NAME* sys )
+{
+  // 新しい地名を書き込む
+  WritePlaceName( sys, sys->nextZoneID );	 
+
+  // 書き込みが完了したら, 次の状態へ
+  if( sys->nameLength <= sys->writeCharNum )
+  {
+    SetState( sys, STATE_FADE_IN );
+  }
 }
 
 //-----------------------------------------------------------------------------------
 /**
  * @brief フェード・イン状態時の動作
  *
- * @param p_sys 動かすシステム
+ * @param sys 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Process_FADE_IN( FIELD_PLACE_NAME* p_sys )
+static void Process_FADE_IN( FIELD_PLACE_NAME* sys )
 {
 	// 一定時間が経過したら, 次の状態へ
-	if( PROCESS_TIME_FADE_IN < p_sys->stateCount )
+	if( PROCESS_TIME_FADE_IN < sys->stateCount )
 	{
-		SetState( p_sys, STATE_WAIT_1 );
+		SetState( sys, STATE_WAIT_LAUNCE );
 	}
 }
 
 //-----------------------------------------------------------------------------------
 /**
- * @brief 待機状態時の動作
+ * @brief 発射待ち状態時の動作
  *
- * @param p_sys 動かすシステム
+ * @param sys 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Process_WAIT_1( FIELD_PLACE_NAME* p_sys )
+static void Process_WAIT_LAUNCH( FIELD_PLACE_NAME* sys )
 {
 	// 一定時間が経過したら, 次の状態へ
-	if( PROCESS_TIME_WAIT_1 < p_sys->stateCount )
+	if( PROCESS_TIME_WAIT_LAUNCH < sys->stateCount )
 	{
-		SetState( p_sys, STATE_LAUNCH );
+		SetState( sys, STATE_LAUNCH );
 	}
 }
 
 //-----------------------------------------------------------------------------------
 /**
- * @brief 文字発射状態時の動作
+ * @brief 発射状態時の動作
  *
- * @param p_sys 動かすシステム
+ * @param sys 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Process_LAUNCH( FIELD_PLACE_NAME* p_sys )
+static void Process_LAUNCH( FIELD_PLACE_NAME* sys )
 {
-	// 一定間隔が経過したら, 文字を発射
-	if( p_sys->stateCount % LAUNCH_INTERVAL == 0 )
+	// 一定間隔で文字を発射
+	if( sys->stateCount % LAUNCH_INTERVAL == 0 )
 	{
 		// 発射
-		LaunchCharUnit( p_sys, p_sys->launchNum );
-
-		// 発射した文字の数をカウント
-		p_sys->launchNum++;
+		LaunchCharUnit( sys );
 
 		// すべての文字を発射したら, 次の状態へ
-		if( p_sys->nameLength <= p_sys->launchNum )
+		if( sys->nameLength <= sys->launchUnitNum )
 		{
-			SetState( p_sys, STATE_WAIT_2 );
+			SetState( sys, STATE_WAIT_FADE_OUT );
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------------
 /**
- * @brief 待機状態時の動作
+ * @brief フェードアウト待ち状態時の動作
  *
- * @param p_sys 動かすシステム
+ * @param sys 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Process_WAIT_2( FIELD_PLACE_NAME* p_sys )
+static void Process_WAIT_FADE_OUT( FIELD_PLACE_NAME* sys )
 {
 	int i;
 
-	// 一定時間が経過したら, 次の状態へ
-	if( PROCESS_TIME_WAIT_2 < p_sys->stateCount )
+	// 一定時間が経過
+	if( PROCESS_TIME_WAIT_FADE_OUT < sys->stateCount )
 	{
 		// 動いている文字があるなら, 待機状態を維持
-		for( i=0; i<p_sys->nameLength; i++ )
+		for( i=0; i<sys->nameLength; i++ )
 		{
-			if( CHAR_UNIT_IsMoving( &p_sys->charUnit[i] ) == TRUE ) break;
+			if( CHAR_UNIT_IsMoving( &sys->charUnit[i] ) == TRUE ) break;
 		}
 
 		// 次の状態へ
-		SetState( p_sys, STATE_FADE_OUT );
+		SetState( sys, STATE_FADE_OUT );
 	}
 }
 
@@ -1351,15 +1378,15 @@ static void Process_WAIT_2( FIELD_PLACE_NAME* p_sys )
 /**
  * @brief フェード・アウト状態時の動作
  *
- * @param p_sys 動かすシステム
+ * @param sys 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Process_FADE_OUT( FIELD_PLACE_NAME* p_sys )
+static void Process_FADE_OUT( FIELD_PLACE_NAME* sys )
 {
 	// 一定時間が経過したら, 次の状態へ
-	if( PROCESS_TIME_FADE_OUT < p_sys->stateCount )
+	if( PROCESS_TIME_FADE_OUT < sys->stateCount )
 	{
-		SetState( p_sys, STATE_HIDE );
+		SetState( sys, STATE_HIDE );
 	}
 }
 
@@ -1367,32 +1394,38 @@ static void Process_FADE_OUT( FIELD_PLACE_NAME* p_sys )
 /**
  * @brief 非表示状態時の描画処理
  *
- * @param p_sys 動かすシステム
+ * @param sys 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Draw_HIDE( FIELD_PLACE_NAME* p_sys )
+static void Draw_HIDE( FIELD_PLACE_NAME* sys )
 {
-	// BGを非表示
-	//GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF );	
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 準備状態時の描画処理
+ *
+ * @param sys 動かすシステム
+ */
+//-----------------------------------------------------------------------------------
+static void Draw_SETUP( FIELD_PLACE_NAME* sys )
+{
 }
 
 //-----------------------------------------------------------------------------------
 /**
  * @brief フェード・イン状態時の描画処理
  *
- * @param p_sys 動かすシステム
+ * @param sys 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Draw_FADE_IN( FIELD_PLACE_NAME* p_sys )
+static void Draw_FADE_IN( FIELD_PLACE_NAME* sys )
 {
 	int val1, val2;
 	float rate;
 
-	// BGを表示
-	//GFL_BG_SetVisible( BG_FRAME, VISIBLE_ON );	
-	
 	// αブレンディング係数を更新
-	rate  = (float)p_sys->stateCount / (float)PROCESS_TIME_FADE_IN;
+	rate  = (float)sys->stateCount / (float)PROCESS_TIME_FADE_IN;
 	val1 = (int)( ALPHA_VALUE_1 * rate );
 	val2 = (int)( ALPHA_VALUE_2 + (16 - ALPHA_VALUE_2) * (1.0f - rate) );
 	G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, val1, val2 );
@@ -1402,10 +1435,10 @@ static void Draw_FADE_IN( FIELD_PLACE_NAME* p_sys )
 /**
  * @brief 待機状態時の描画処理
  *
- * @param p_sys 動かすシステム
+ * @param sys 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Draw_WAIT_1( FIELD_PLACE_NAME* p_sys )
+static void Draw_WAIT_LAUNCH( FIELD_PLACE_NAME* sys )
 {
 }
 
@@ -1413,10 +1446,10 @@ static void Draw_WAIT_1( FIELD_PLACE_NAME* p_sys )
 /**
  * @brief 文字発射状態時の描画処理
  *
- * @param p_sys 動かすシステム
+ * @param sys 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Draw_LAUNCH( FIELD_PLACE_NAME* p_sys )
+static void Draw_LAUNCH( FIELD_PLACE_NAME* sys )
 {
 }
 
@@ -1424,10 +1457,10 @@ static void Draw_LAUNCH( FIELD_PLACE_NAME* p_sys )
 /**
  * @brief 待機状態時の描画処理
  *
- * @param p_sys 動かすシステム
+ * @param sys 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Draw_WAIT_2( FIELD_PLACE_NAME* p_sys )
+static void Draw_WAIT_FADE_OUT( FIELD_PLACE_NAME* sys )
 {
 }
 
@@ -1435,16 +1468,16 @@ static void Draw_WAIT_2( FIELD_PLACE_NAME* p_sys )
 /**
  * @brief フェード・アウト状態時の描画処理
  *
- * @param p_sys 動かすシステム
+ * @param sys 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Draw_FADE_OUT( FIELD_PLACE_NAME* p_sys )
+static void Draw_FADE_OUT( FIELD_PLACE_NAME* sys )
 {
 	int val1, val2;
 	float rate;
 	
 	// αブレンディング係数を更新
-	rate  = (float)p_sys->stateCount / (float)PROCESS_TIME_FADE_OUT;
+	rate  = (float)sys->stateCount / (float)PROCESS_TIME_FADE_OUT;
 	val1 = (int)( ALPHA_VALUE_1 * (1.0f - rate) );
 	val2 = (int)( ALPHA_VALUE_2 + (16 - ALPHA_VALUE_2) * rate );
 	G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, val1, val2 );
@@ -1454,27 +1487,27 @@ static void Draw_FADE_OUT( FIELD_PLACE_NAME* p_sys )
 /**
  * @brief デバッグ出力
  *
- * @param p_sys データを出力するシステム
+ * @param sys データを出力するシステム
  */
 //-----------------------------------------------------------------------------------
-static void DebugPrint( FIELD_PLACE_NAME* p_sys )
+static void DebugPrint( FIELD_PLACE_NAME* sys )
 {
 	char* str;
 
-	switch( p_sys->state )
+	switch( sys->state )
 	{
 		case STATE_HIDE:		str = "HIDE";		break;
 		case STATE_FADE_IN:		str = "FADE_IN";	break;
-		case STATE_WAIT_1:		str = "WAIT_1";		break;
+		case STATE_WAIT_LAUNCE:		str = "WAIT_1";		break;
 		case STATE_LAUNCH:		str = "LAUNCE";		break;
-		case STATE_WAIT_2:		str = "WAIT_2";		break;
+		case STATE_WAIT_FADE_OUT:		str = "WAIT_2";		break;
 		case STATE_FADE_OUT:	str = "FADE_OUT";	break;
 	}
 
 	// DEBUG:
 	OBATA_Printf( "-------------------------------FIELD_PLACE_NAME\n" );
 	OBATA_Printf( "state         = %s\n", str );
-	OBATA_Printf( "stateCount    = %d\n", p_sys->stateCount );
-	OBATA_Printf( "currentZoneID = %d\n", p_sys->currentZoneID );
-	OBATA_Printf( "nextZoneID    = %d\n", p_sys->nextZoneID );
+	OBATA_Printf( "stateCount    = %d\n", sys->stateCount );
+	OBATA_Printf( "currentZoneID = %d\n", sys->currentZoneID );
+	OBATA_Printf( "nextZoneID    = %d\n", sys->nextZoneID );
 }
