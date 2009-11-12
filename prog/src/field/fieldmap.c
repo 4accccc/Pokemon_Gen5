@@ -114,6 +114,8 @@
 
 #define DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK    // フィールドマップ描画にかかる処理時間を求める
 
+#define DEBUG_FIELDMAP_ZONE_CHANGE_SYNC    // ゾーンチェンジに必要なシンク数を監視
+
 #endif
 
 // フィールドマップ描画にかかる処理時間を求める
@@ -2295,6 +2297,11 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	u32 new_zone_id;
 	u32 old_zone_id = lc->zone_id;
 
+#ifdef DEBUG_FIELDMAP_ZONE_CHANGE_SYNC
+  OSTick debug_fieldmap_start_tick = OS_GetTick(); 
+  OSTick debug_fieldmap_end_tick;
+#endif
+
   LOCATION_Get3DPos( lc, &lc_pos );
 
   new_zone_id = MAP_MATRIX_GetVectorPosZoneID(
@@ -2338,6 +2345,20 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 
   //特殊スクリプト呼び出し：ゾーン切り替え
   SCRIPT_CallZoneChangeScript( fieldWork->gsys, HEAPID_PROC );
+
+#ifdef DEBUG_FIELDMAP_ZONE_CHANGE_SYNC
+  debug_fieldmap_end_tick = OS_GetTick();
+  debug_fieldmap_end_tick -= debug_fieldmap_start_tick;
+
+  debug_fieldmap_end_tick = OS_TicksToMicroSeconds( debug_fieldmap_end_tick );
+
+  if( debug_fieldmap_end_tick > 10000 )
+  {
+    OS_TPrintf( "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" );
+    OS_TPrintf( "!!!!!!zone_change TickOver  [%d] micro second !!!!!!\n", debug_fieldmap_end_tick );
+    OS_TPrintf( "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" );
+  }
+#endif
 
 	KAGAYA_Printf( "ゾーン更新完了 %d -> %d\n", lc->zone_id, new_zone_id );
 }
