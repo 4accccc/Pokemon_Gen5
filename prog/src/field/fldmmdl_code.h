@@ -131,7 +131,10 @@
 #define MV_RAIL_DIR_RND_DLR		0x4e		///<レールマップ　ランダムに方向切り替え
 #define MV_RAIL_DIR_RND_UD		0x4f		///<レールマップ　ランダムに方向切り替え
 #define MV_RAIL_DIR_RND_LR		0x50		///<レールマップ　ランダムに方向切り替え
-#define MV_CODE_MAX		0x51		///<コード最大（プログラム判定専用
+#define MV_RAIL_RND			0x51		///<ランダムに移動    (移動制限あり)
+#define MV_RAIL_RND_V		0x52		///<ランダムに縦移動  (移動制限あり)
+#define MV_RAIL_RND_H		0x53		///<ランダムに横移動  (移動制限あり) 
+#define MV_CODE_MAX		0x54		///<コード最大（プログラム判定専用
 #define MV_CODE_NOT		0xff		///<非動作コード(プログラム判定専用
 
 /*　未対応

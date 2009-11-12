@@ -21,6 +21,18 @@
 */
 //-----------------------------------------------------------------------------
 
+//-------------------------------------
+///	MV_RAIL_RND_WORK　動作シーケンス
+//=====================================
+enum
+{
+  MV_RND_MOVE_SEQ_ACT,      ///<振り向きアクション
+  MV_RND_MOVE_SEQ_ACT_WAIT, ///<動作待ち
+  MV_RND_MOVE_SEQ_TIME_WAIT,///<待ち時間
+  MV_RND_MOVE_SEQ_WALK_ACT, ///<移動アクション
+  MV_RND_MOVE_SEQ_WALK_ACT_WAIT, ///<移動アクション
+};
+
 //--------------------------------------------------------------
 ///	方向テーブルID
 //--------------------------------------------------------------
@@ -224,7 +236,8 @@ static const u16 sc_RAILLINE_DIR_ROT_Y[ DIR_MAX4 ] =
 typedef struct 
 {
   FIELD_RAIL_WORK* rail_wk;           ///<レール移動ワーク 4byte
-  RAIL_LOCATION location;             ///<レールロケーション 8bytie
+  RAIL_LOCATION location;             ///<レールロケーション 8bytie   
+                                      // MMdl_RailCommon_SetSaveLocationで毎フレーム更新
 } MV_RAIL_COMMON_WORK;
 #define MV_RAIL_COMMON_WORK_SIZE (sizeof(MV_RAIL_COMMON_WORK))		///<MV_RAIL_COMMONサイズ
 
@@ -248,6 +261,21 @@ typedef struct
   u16 tbl_id;
 } MV_RAIL_DIR_RND_WORK;
 #define MV_RAIL_DIR_RND_WORK_SIZE (sizeof(MV_RAIL_DIR_RND_WORK))		///<MV_RAIL_DIR_RNDサイズ
+
+
+//-------------------------------------
+///	MV_RAIL_RND_WORK構造体
+//=====================================
+typedef struct 
+{
+  MV_RAIL_COMMON_WORK rail_wk;
+  u8 seq_no:4;
+  u8 tbl_id:4;
+  s8 wait;
+  s8 init_width;
+  u8 init_line;
+} MV_RAIL_RND_WORK;
+#define MV_RAIL_RND_WORK_SIZE (sizeof(MV_RAIL_RND_WORK))		///<MV_RAIL_RNDサイズ
 
 //-----------------------------------------------------------------------------
 /**
@@ -284,6 +312,10 @@ static void DirRndWorkMove( MMDL * fmmdl );
 static void DirRndWorkDelete( MMDL * fmmdl );
 
 
+// MV_RND
+static void MvRndWorkInit( MMDL * fmmdl, int id );
+static void MvRndWorkMove( MMDL * fmmdl );
+static void MvRndWorkDelete( MMDL * fmmdl );
 
 
 
@@ -976,6 +1008,60 @@ void MMDL_RailDirRnd_Delete( MMDL * fmmdl )
 
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  移動　全方向ランダム  初期化
+ */
+//-----------------------------------------------------------------------------
+void MMDL_RailRnd_ALL_Init( MMDL * fmmdl )
+{
+  MvRndWorkInit( fmmdl, DIRID_MvDirRndDirTbl );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  移動　縦方向ランダム  初期化
+ */
+//-----------------------------------------------------------------------------
+void MMDL_RailRnd_V_Init( MMDL * fmmdl )
+{
+  MvRndWorkInit( fmmdl, DIRID_MvDirRndDirTbl_UD );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  移動　横方向ランダム  初期化
+ */
+//-----------------------------------------------------------------------------
+void MMDL_RailRnd_H_Init( MMDL * fmmdl )
+{
+  MvRndWorkInit( fmmdl, DIRID_MvDirRndDirTbl_LR );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  移動　ランダム  メイン
+ */
+//-----------------------------------------------------------------------------
+void MMDL_RailRnd_Move( MMDL * fmmdl )
+{
+  MvRndWorkMove( fmmdl );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  移動　ランダム　破棄
+ *
+ *	@param	fmmdl 
+ */
+//-----------------------------------------------------------------------------
+void MMDL_RailRnd_Delete( MMDL * fmmdl )
+{
+  MvRndWorkDelete( fmmdl );
+}
+
+
+
 //-----------------------------------------------------------------------------
 /**
  *          private関数
@@ -1272,6 +1358,8 @@ static void DirRndWorkMove( MMDL * fmmdl )
     p_wk->wait = TblRndGet( DATA_MvDirRndWaitTbl, WAIT_END );
     MMDL_SetDirDisp( fmmdl, TblIDRndGet(p_wk->tbl_id,DIR_NOT) );
   }
+
+  MMdl_RailCommon_Move( &p_wk->rail_wk, fmmdl );
 }
 
 //----------------------------------------------------------------------------
@@ -1283,5 +1371,175 @@ static void DirRndWorkMove( MMDL * fmmdl )
 //-----------------------------------------------------------------------------
 static void DirRndWorkDelete( MMDL * fmmdl )
 {
+	MV_RAIL_DIR_RND_WORK* p_wk = MMDL_GetMoveProcWork( fmmdl );
+  MMdl_RailCommon_Delete( &p_wk->rail_wk, fmmdl );
 }
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ランダム移動　初期化
+ *
+ *	@param	fmmdl   
+ *	@param	id            方向テーブルID
+ */
+//-----------------------------------------------------------------------------
+static void MvRndWorkInit( MMDL * fmmdl, int id )
+{
+  MV_RAIL_RND_WORK* p_wk;
+  RAIL_LOCATION location;
+
+  p_wk = MMdl_RailDefaultInit( fmmdl, MV_RAIL_RND_WORK_SIZE );
+
+  MMDL_GetRailLocation( fmmdl, &location );
+
+  p_wk->seq_no = 0;
+  p_wk->wait = 0;
+  p_wk->tbl_id = id;
+
+  // ワークサイズをオーバーしないようにチェック
+  GF_ASSERT( location.line_grid < 0xff );
+  GF_ASSERT( location.width_grid < 0x7f );
+
+  p_wk->init_line   = location.line_grid;
+  p_wk->init_width  = location.width_grid;
+
+	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	MMDL_OffStatusBitMove( fmmdl );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ランダム移動　メイン
+ *
+ *	@param	fmmdl 
+ */
+//-----------------------------------------------------------------------------
+static void MvRndWorkMove( MMDL * fmmdl )
+{
+	MV_RAIL_RND_WORK* p_wk = MMDL_GetMoveProcWork( fmmdl );
+  u32 ret;
+	
+	switch( p_wk->seq_no ){
+	case MV_RND_MOVE_SEQ_ACT:
+		MMDL_OffStatusBitMove( fmmdl );
+		MMDL_OffStatusBitMoveEnd( fmmdl );
+		
+		ret = MMDL_GetDirDisp( fmmdl );
+		ret = MMDL_ChangeDirAcmdCode( ret, AC_DIR_U );
+		MMDL_SetLocalAcmd( fmmdl, ret );
+		
+		p_wk->seq_no++;
+		break;
+	case MV_RND_MOVE_SEQ_ACT_WAIT:
+		if( MMDL_ActionLocalAcmd(fmmdl) == FALSE ){
+			break;
+		}
+		
+		p_wk->wait = TblRndGet( DATA_MvDirRndWaitTbl, WAIT_END );
+		p_wk->seq_no++;
+	case MV_RND_MOVE_SEQ_TIME_WAIT:
+		p_wk->wait--;
+		
+		if( p_wk->wait ){
+			break;
+		}
+		
+		p_wk->seq_no++;
+	case MV_RND_MOVE_SEQ_WALK_ACT:
+		ret = TblIDRndGet( p_wk->tbl_id, DIR_NOT );
+		MMDL_SetDirAll( fmmdl, ret );
+
+    // ヒットチェック
+		{
+			u32 hit = MMDL_HitCheckRailMoveDir( fmmdl, ret );
+			
+			if( hit != MMDL_MOVEHITBIT_NON ){
+        p_wk->seq_no = 0;
+        break;
+			}
+		}
+
+    // ライン乗り換えチェック
+    // 移動リミットチェック
+    {
+      RAIL_LOCATION now_location;
+      RAIL_LOCATION next_location;
+      s16 limit_x, limit_z, min, max;
+
+      MMDL_GetRailLocation( fmmdl, &now_location );
+      MMDL_GetRailDirLocation( fmmdl, ret, &next_location );
+
+      // ライン乗り換えチェック
+      if( now_location.rail_index != next_location.rail_index )
+      {
+        p_wk->seq_no = 0;
+        break;
+      }
+
+
+      limit_x = MMDL_GetMoveLimitX( fmmdl );  // Width
+      limit_z = MMDL_GetMoveLimitZ( fmmdl );  // Line
+
+      // 移動リミットチェック
+      if( limit_x != MOVE_LIMIT_NOT )
+      {
+        min = p_wk->init_width - limit_x;
+        max = p_wk->init_width + limit_x;
+        if( (min > next_location.width_grid) || (max < next_location.width_grid) )
+        {
+          p_wk->seq_no = 0;
+          break;
+        }
+      }
+
+      if( limit_z != MOVE_LIMIT_NOT )
+      {
+        min = p_wk->init_line - limit_z;
+        max = p_wk->init_line + limit_z;
+        if( (min > next_location.line_grid) || (max < next_location.line_grid) )
+        {
+          p_wk->seq_no = 0;
+          break;
+        }
+      }
+    }
+		
+		ret = MMDL_ChangeDirAcmdCode( ret, AC_WALK_U_8F );
+		MMDL_SetLocalAcmd( fmmdl, ret );
+			
+		MMDL_OnStatusBitMove( fmmdl );
+		p_wk->seq_no++;
+	case MV_RND_MOVE_SEQ_WALK_ACT_WAIT:
+		if( MMDL_ActionLocalAcmd(fmmdl) == FALSE ){
+			break;
+		}
+		
+		MMDL_OffStatusBitMove( fmmdl );
+		p_wk->seq_no = 0;
+    break;
+
+  default:
+    GF_ASSERT(0);
+    break;
+	}
+
+  MMdl_RailCommon_Move( &p_wk->rail_wk, fmmdl );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ランダム移動　破棄
+ *
+ *	@param	fmmdl 
+ */
+//-----------------------------------------------------------------------------
+static void MvRndWorkDelete( MMDL * fmmdl )
+{ 
+	MV_RAIL_RND_WORK* p_wk = MMDL_GetMoveProcWork( fmmdl );
+  MMdl_RailCommon_Delete( &p_wk->rail_wk, fmmdl );
+}
+
+
 

@@ -18,7 +18,7 @@ T09_BIGMAN
 #OBJ CODE Number
 MAN3
 #MOVE CODE Number
-MV_RAIL_DIR_RND_DLR
+MV_RAIL_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -34,13 +34,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+2
 #Move Limit Z Number
-0
+2
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-5 29 -2
+5 29 -1
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
