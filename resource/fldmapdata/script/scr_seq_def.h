@@ -3825,7 +3825,7 @@
  * マップ遷移コマンド
  * @param zone_id   移動先ゾーンID指定
  * @param gx        移動先Ｘ位置指定（グリッド単位）
- * @param gz        移動先Ｙ位置指定（グリッド単位）
+ * @param gz        移動先Ｚ位置指定（グリッド単位）
  * @param dir       移動後の向き
  */
 //--------------------------------------------------------------
@@ -3851,6 +3851,28 @@
   .macro  _ASM_MAP_CHANGE_TO_UNION 
   .short  EV_SEQ_MAP_CHANGE_TO_UNION
   .endm
+
+//--------------------------------------------------------------
+/**
+ * フェードなしマップ遷移コマンド
+ * @param zone_id   移動先ゾーンID指定
+ * @param gx        移動先Ｘ位置指定（グリッド単位）
+ * @param gy        移動先Ｙ位置指定（グリッド単位）
+ * @param gz        移動先Ｚ位置指定（グリッド単位）
+ * @param dir       移動後の向き
+ */
+//--------------------------------------------------------------
+#define _MAP_CHANGE_NO_FADE( zone_id, gx, gy, gz, dir )  \
+    _ASM_MAP_CHANGE_NO_FADE zone_id, gx, gy, gz, dir
+
+  .macro  _ASM_MAP_CHANGE_NO_FADE zone_id, gx, gy, gz, dir
+  .short  EV_SEQ_MAP_CHANGE_NO_FADE
+  .short  \zone_id
+  .short  \gx
+  .short  \gy
+  .short  \gz
+  .short  \dir
+  .endm  
 
 //======================================================================
 //
