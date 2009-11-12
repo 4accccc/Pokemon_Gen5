@@ -641,7 +641,7 @@
   //’n–ÊƒWƒ€
   DEF_CMD( EvCmdGymGround_MvLift, EV_SEQ_GYM_GROUND_MV_LIFT )
   DEF_CMD( EvCmdGymGround_ExitLift, EV_SEQ_GYM_GROUND_EXIT_LIFT )
-  NO_CMD()
+  DEF_CMD( EvCmdGymGroundEnt_ExitLift, EV_SEQ_GYM_GROUND_ENT_EXIT_LIFT )
   NO_CMD()
 
   //CGearŠÖ˜A

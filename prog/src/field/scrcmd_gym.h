@@ -31,3 +31,4 @@ extern VMCMD_RESULT EvCmdGymInsect_TrTrapOn( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdGymGround_MvLift( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGymGround_ExitLift( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGymGroundEnt_ExitLift( VMHANDLE *core, void *wk );

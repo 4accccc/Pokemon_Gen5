@@ -183,6 +183,13 @@ void GYM_GROUND_ENT_Move(FIELDMAP_WORK *fieldWork)
         event = GYM_GROUND_ENT_CreateExitLiftMoveEvt(gsys, TRUE);
         GAMESYSTEM_SetEvent(gsys, event);
       }
+    }else if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
+      GMEVENT *event;
+      {
+        event = GYM_GROUND_ENT_CreateExitLiftMoveEvt(gsys, FALSE);
+        GAMESYSTEM_SetEvent(gsys, event);
+      }
     }
   }
 

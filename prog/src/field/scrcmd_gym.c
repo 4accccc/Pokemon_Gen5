@@ -34,6 +34,7 @@
 #include "gym_anti.h"
 #include "gym_insect.h"
 #include "gym_ground.h"
+#include "gym_ground_ent.h"
 
 //--電気--
 //--------------------------------------------------------------
@@ -386,6 +387,38 @@ VMCMD_RESULT EvCmdGymGround_ExitLift( VMHANDLE *core, void *wk )
   else exit_flg = FALSE;
 
   call_event = GYM_GROUND_CreateExitLiftMoveEvt(gsys, exit_flg);
+  if (call_event == NULL){
+    GF_ASSERT(0);
+    return VMCMD_RESULT_SUSPEND;
+  }
+
+  SCRIPT_CallEvent( sc, call_event );  
+  //イベントコールするので、一度制御を返す
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * 地面ジムエントランスギミック　出口リフト移動
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymGroundEnt_ExitLift( VMHANDLE *core, void *wk )
+{
+  u16 exit;
+  BOOL exit_flg;
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  exit = VMGetU16( core );
+
+  if (exit) exit_flg = TRUE;
+  else exit_flg = FALSE;
+
+  call_event = GYM_GROUND_ENT_CreateExitLiftMoveEvt(gsys, exit_flg);
   if (call_event == NULL){
     GF_ASSERT(0);
     return VMCMD_RESULT_SUSPEND;
