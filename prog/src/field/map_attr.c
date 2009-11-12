@@ -135,7 +135,7 @@ BOOL MAPATTR_GetHitchFlag( const MAPATTR attr )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckLongGrass( const MAPATTR_VALUE val )
 {
-  return (val == 0x06 || val == 0x07);
+  return (val == MATTR_E_LGRASS_LOW || val == MATTR_E_LGRASS_HIGH);
 }
 
 //--------------------------------------------------------------
@@ -147,7 +147,7 @@ BOOL MAPATTR_VALUE_CheckLongGrass( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckJumpUp( const MAPATTR_VALUE val )
 {
-  return (val == 0x74);
+  return (val == MATTR_JUMP_UP);
 }
 
 //--------------------------------------------------------------
@@ -159,7 +159,7 @@ BOOL MAPATTR_VALUE_CheckJumpUp( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckJumpDown( const MAPATTR_VALUE val )
 {
-  return (val == 0x75);
+  return (val == MATTR_JUMP_DOWN);
 }
 
 //--------------------------------------------------------------
@@ -171,7 +171,7 @@ BOOL MAPATTR_VALUE_CheckJumpDown( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckumpLeft( const MAPATTR_VALUE val )
 {
-  return (val == 0x73);
+  return (val == MATTR_JUMP_LEFT);
 }
 
 //--------------------------------------------------------------
@@ -183,7 +183,7 @@ BOOL MAPATTR_VALUE_CheckumpLeft( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckJumpRight( const MAPATTR_VALUE val )
 {
-  return (val == 0x72);
+  return (val == MATTR_JUMP_RIGHT);
 }
 
 //--------------------------------------------------------------
@@ -195,7 +195,7 @@ BOOL MAPATTR_VALUE_CheckJumpRight( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckSandStream( const MAPATTR_VALUE val )
 {
-  return (val == 0x7c);
+  return (val == MATTR_DRIFT_SAND_01);
 }
 
 //--------------------------------------------------------------
@@ -207,7 +207,7 @@ BOOL MAPATTR_VALUE_CheckSandStream( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckCounter( const MAPATTR_VALUE val )
 {
-  return (val == 0xd4);
+  return (val == MATTR_COUNTER_01);
 }
 
 //--------------------------------------------------------------
@@ -219,7 +219,7 @@ BOOL MAPATTR_VALUE_CheckCounter( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckMat( const MAPATTR_VALUE val )
 {
-  return (val == 0xd5);
+  return (val == MATTR_MAT_01);
 }
 
 //--------------------------------------------------------------
@@ -231,7 +231,7 @@ BOOL MAPATTR_VALUE_CheckMat( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckPC( const MAPATTR_VALUE val )
 {
-  return (val == 0xd6);
+  return (val == MATTR_PC_01);
 }
 
 //--------------------------------------------------------------
@@ -243,7 +243,7 @@ BOOL MAPATTR_VALUE_CheckPC( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckMap( const MAPATTR_VALUE val )
 {
-  return (val == 0xd7);
+  return (val == MATTR_WORLDMAP_01);
 }
 
 //--------------------------------------------------------------
@@ -255,7 +255,7 @@ BOOL MAPATTR_VALUE_CheckMap( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckTV( const MAPATTR_VALUE val )
 {
-  return (val == 0xd8);
+  return (val == MATTR_TV_01);
 }
 
 //--------------------------------------------------------------
@@ -267,7 +267,7 @@ BOOL MAPATTR_VALUE_CheckTV( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckBookShelf1( const MAPATTR_VALUE val )
 {
-  return (val == 0xd9);
+  return (val == MATTR_BOOKSHELF_01);
 }
 
 //--------------------------------------------------------------
@@ -279,7 +279,7 @@ BOOL MAPATTR_VALUE_CheckBookShelf1( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckBookShelf2( const MAPATTR_VALUE val )
 {
-  return (val == 0xda);
+  return (val == MATTR_BOOKSHELF_02);
 }
 
 //--------------------------------------------------------------
@@ -291,7 +291,7 @@ BOOL MAPATTR_VALUE_CheckBookShelf2( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckBookShelf3( const MAPATTR_VALUE val )
 {
-  return (val == 0xdb);
+  return (val == MATTR_BOOKSHELF_03);
 }
 
 //--------------------------------------------------------------
@@ -303,7 +303,7 @@ BOOL MAPATTR_VALUE_CheckBookShelf3( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckBookShelf4( const MAPATTR_VALUE val )
 {
-  return (val == 0xdc);
+  return (val == MATTR_BOOKSHELF_04);
 }
 
 //--------------------------------------------------------------
@@ -315,7 +315,7 @@ BOOL MAPATTR_VALUE_CheckBookShelf4( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckVase( const MAPATTR_VALUE val )
 {
-  return (val == 0xdd);
+  return (val == MATTR_VASE_01);
 }
 
 //--------------------------------------------------------------
@@ -327,7 +327,7 @@ BOOL MAPATTR_VALUE_CheckVase( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckDustBox( const MAPATTR_VALUE val )
 {
-  return (val == 0xde);
+  return (val == MATTR_DUST_BOX);
 }
 
 //--------------------------------------------------------------
@@ -339,7 +339,7 @@ BOOL MAPATTR_VALUE_CheckDustBox( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckShopShelf1( const MAPATTR_VALUE val )
 {
-  return (val == 0xdf);
+  return (val == MATTR_SHOPSHELF_01);
 }
 
 //--------------------------------------------------------------
@@ -351,7 +351,7 @@ BOOL MAPATTR_VALUE_CheckShopShelf1( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckShopShelf2( const MAPATTR_VALUE val )
 {
-  return (val == 0xe0);
+  return (val == MATTR_SHOPSHELF_02);
 }
 
 //--------------------------------------------------------------
@@ -363,60 +363,60 @@ BOOL MAPATTR_VALUE_CheckShopShelf2( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckShopShelf3( const MAPATTR_VALUE val )
 {
-  return (val == 0xe1);
+  return (val == MATTR_SHOPSHELF_03);
 }
 
 //--------------------------------------------------------------
 /**
- * アトリビュートバリュー チェック 草むらエンカウントA1
+ * アトリビュートバリュー チェック 草むらエンカウントA1　草むら弱
  * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う
  */
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckEncountGrassA1( const MAPATTR_VALUE val )
 {
-  return ( (val == 0x04) || (val == 0xa1) );  // 0xa1レール滑り降り草むら
+  return ( (val == MATTR_E_GRASS_LOW) || (val == MATTR_SLIP_GRASS_LOW) );  // 0xa1レール滑り降り草むら
 }
 
 //--------------------------------------------------------------
 /**
- * アトリビュートバリュー チェック 草むらエンカウントA2
+ * アトリビュートバリュー チェック 草むらエンカウントA2 長い草むら弱
  * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う
  */
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckEncountGrassA2( const MAPATTR_VALUE val )
 {
-  return (val == 0x05);
+  return (val == MATTR_E_LGRASS_LOW);
 }
 
 //--------------------------------------------------------------
 /**
- * アトリビュートバリュー チェック 草むらエンカウントB1
+ * アトリビュートバリュー チェック 草むらエンカウントB1　草むら強
  * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う
  */
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckEncountGrassB1( const MAPATTR_VALUE val )
 {
-  return ( (val == 0x06) || (val == 0xa2) );  // 0xa2レール滑り降り草むら　強
+  return ( (val == MATTR_E_GRASS_HIGH) || (val == MATTR_SLIP_GRASS_HIGH) );  // 0xa2レール滑り降り草むら　強
 }
 
 //--------------------------------------------------------------
 /**
- * アトリビュートバリュー チェック 草むらエンカウントB2
+ * アトリビュートバリュー チェック 草むらエンカウントB2 長い草むら強
  * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う
  */
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckEncountGrassB2( const MAPATTR_VALUE val )
 {
-  return (val == 0x07);
+  return (val == MATTR_E_LGRASS_HIGH);
 }
 
 //--------------------------------------------------------------
 /**
- * アトリビュートバリュー チェック 草むらエンカウントA群(A1,A2)
+ * アトリビュートバリュー チェック 草むらエンカウント弱　A群(A1,A2)
  * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う
  */
@@ -432,7 +432,7 @@ BOOL MAPATTR_VALUE_CheckEncountGrassA( const MAPATTR_VALUE val )
 
 //--------------------------------------------------------------
 /**
- * アトリビュートバリュー チェック 草むらエンカウントB群(B1,B2)
+ * アトリビュートバリュー チェック 草むらエンカウント強　B群(B1,B2)
  * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う
  */
@@ -455,7 +455,7 @@ BOOL MAPATTR_VALUE_CheckEncountGrassB( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckKairikiAna( const MAPATTR_VALUE val )
 {
-  return( val == 0x1d );
+  return( val == MATTR_KAIRIKI_ANA );
 }
 
 //--------------------------------------------------------------
@@ -467,19 +467,19 @@ BOOL MAPATTR_VALUE_CheckKairikiAna( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckShore( const MAPATTR_VALUE val )
 {
-  return( val == 0x41 );
+  return( val == MATTR_SHORE_01 );
 }
 
 //--------------------------------------------------------------
 /**
- * アトリビュートバリュー チェック 水溜り
+ * アトリビュートバリュー チェック 水たまり(四季無し)
  * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う
  */
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckPool( const MAPATTR_VALUE val )
 {
-  return( val == 0x14 );
+  return( val == MATTR_POOL_01 );
 }
 
 //--------------------------------------------------------------
@@ -491,7 +491,7 @@ BOOL MAPATTR_VALUE_CheckPool( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckShoal( const MAPATTR_VALUE val )
 {
-  return( val == 0x17 );
+  return( val == MATTR_SHOAL_01 );
 }
 
 //--------------------------------------------------------------
@@ -503,31 +503,19 @@ BOOL MAPATTR_VALUE_CheckShoal( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckWaterFall( const MAPATTR_VALUE val )
 {
-  return( val == 0x40 );
+  return( val == MATTR_WATERFALL_01 );
 }
 
 //--------------------------------------------------------------
 /**
- * アトリビュートバリュー　チェック　深い雪
+ * アトリビュートバリュー　チェック　雪
  * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う
  */
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckSnow( const MAPATTR_VALUE val )
 {
-  return( val == 0x0e );
-}
-
-//--------------------------------------------------------------
-/**
- * アトリビュートバリュー　チェック　とても深い雪
- * @param val MAPATTR_VALUE
- * @retval BOOL FALSE=違う
- */
-//--------------------------------------------------------------
-BOOL MAPATTR_VALUE_CheckDeepSnow( const MAPATTR_VALUE val )
-{
-  return( val == 0x0f );
+  return( val == MATTR_SNOW_01 );
 }
 
 //--------------------------------------------------------------
@@ -539,7 +527,7 @@ BOOL MAPATTR_VALUE_CheckDeepSnow( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckSnowType( const MAPATTR_VALUE val )
 {
-  if( MAPATTR_VALUE_CheckSnow(val) || MAPATTR_VALUE_CheckDeepSnow(val) ){
+  if( MAPATTR_VALUE_CheckSnow(val) ){
     return( TRUE );
   }
   return( FALSE );
@@ -554,17 +542,17 @@ BOOL MAPATTR_VALUE_CheckSnowType( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckIce( const MAPATTR_VALUE val )
 {
-  return( val == 0x18 );
+  return( val == MATTR_ICE_01 );
 }
 
 //--------------------------------------------------------------
 /**
- * アトリビュートバリュー　チェック　湿原
+ * アトリビュートバリュー　チェック　浅い湿原
  * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う
  */
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckMarsh( const MAPATTR_VALUE val )
 {
-  return( val == 0x1c );
+  return( val == MATTR_MARSH_01 );
 }
