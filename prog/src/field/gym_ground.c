@@ -48,6 +48,8 @@ typedef struct GYM_GROUND_TMP_tag
   fx32 NowHeight;
   fx32 DstHeight;
   fx32 AddVal;
+  const VecFx32 *Watch;
+  BOOL Exit;
 }GYM_GROUND_TMP;
 
 typedef struct FLOOR_RECT_tag
@@ -68,10 +70,11 @@ typedef struct LIFT_RECT_tag
   fx32 Height[2];
 }LIFT_RECT;
 
+#define F0_HEIGHT ( 55*FIELD_CONST_GRID_FX32_SIZE )
 #define F1_HEIGHT ( 50*FIELD_CONST_GRID_FX32_SIZE )
 #define F2_HEIGHT ( 40*FIELD_CONST_GRID_FX32_SIZE )
 #define F3_HEIGHT ( 30*FIELD_CONST_GRID_FX32_SIZE )
-#define F4_HEIGHT (  0*FIELD_CONST_GRID_FX32_SIZE )
+#define F4_HEIGHT (  4*FIELD_CONST_GRID_FX32_SIZE )
 
 #define WALL_HEIGHT ( 10*FIELD_CONST_GRID_FX32_SIZE )
 #define WALL_OPEN_HEIGHT ( 20*FIELD_CONST_GRID_FX32_SIZE )
@@ -332,6 +335,7 @@ static const GFL_G3D_UTIL_SETUP Setup = {
 };
 
 static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work );
 static BOOL CheckArrive(GYM_GROUND_TMP *tmp);
 static BOOL CheckLiftHit(u8 inLiftIdx, const int inX, const int inZ);
 static void SetupLiftAnm( GYM_GROUND_SV_WORK *gmk_sv_work,
@@ -529,6 +533,11 @@ void GYM_GROUND_Move(FIELDMAP_WORK *fieldWork)
           GAMESYSTEM_SetEvent(gsys, event);
         }
       }
+    }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_A){
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
+      GMEVENT *event;
+      event = GYM_GROUND_CreateExitLiftMoveEvt(gsys, TRUE);
+      GAMESYSTEM_SetEvent(gsys, event);
     }
   }
   else if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_L)
@@ -594,6 +603,49 @@ GMEVENT *GYM_GROUND_CreateLiftMoveEvt(GAMESYS_WORK *gsys, const int inLiftIdx)
   //イベント作成
   event = GMEVENT_Create( gsys, NULL, UpDownEvt, 0 );
 
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * 出口昇降イベント作成
+ * @param	      gsys        ゲームシステムポインタ
+ * @param       inExit      ジムから出るとき TRUE
+ * @return      GMEVENT     イベントポインタ
+ */
+//--------------------------------------------------------------
+GMEVENT *GYM_GROUND_CreateExitLiftMoveEvt(GAMESYS_WORK *gsys, const BOOL inExit)
+{
+  GMEVENT * event;
+  GYM_GROUND_TMP *tmp;
+  GYM_GROUND_SV_WORK *gmk_sv_work;
+  {
+    FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_GROUND );
+    tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_GROUND_TMP_ASSIGN_ID);
+  }
+
+  tmp->Exit = inExit;
+
+  //対象リフトの状態を取得
+  if ( inExit )
+  {
+    //移動後位置→基準位置
+    tmp->NowHeight = F1_HEIGHT;
+    tmp->DstHeight = F0_HEIGHT;
+  }
+  else
+  {
+    //基準位置→移動後位置
+    tmp->NowHeight = F0_HEIGHT;
+    tmp->DstHeight = F1_HEIGHT;
+  }
+  if ( tmp->DstHeight - tmp->NowHeight < 0 ) tmp->AddVal = -LIFT_MOVE_SPD;
+  else tmp->AddVal = LIFT_MOVE_SPD;
+  //イベント作成
+  event = GMEVENT_Create( gsys, NULL, ExitLiftEvt, 0 );
   return event;
 }
 
@@ -750,6 +802,80 @@ static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work )
 
 //--------------------------------------------------------------
 /**
+ * 出口昇降イベント
+ * @param	  event   イベントポインタ
+ * @param   seq     シーケンサ
+ * @param   work    ワークポインタ
+ * @return  GMEVENT_RESULT  イベント結果
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work )
+{
+  GYM_GROUND_SV_WORK *gmk_sv_work;
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  GYM_GROUND_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_GROUND_TMP_ASSIGN_ID);
+  FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( fieldWork );
+  {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_GROUND );
+  }
+
+  switch(*seq){
+  case 0:
+    {
+      //現在ウォッチターゲットを保存
+      tmp->Watch = FIELD_CAMERA_GetWatchTarget(camera);
+      //カメラのバインドを切る
+      FIELD_CAMERA_FreeTarget(camera);
+      //ジムに入るときは自機とリフトの位置を空中にする
+      ;
+    }
+    (*seq)++;
+    break;
+  case 1:
+    {
+      //変動後の高さに書き換え
+      tmp->NowHeight += tmp->AddVal;
+      //目的の高さに到達したか？
+      if(  CheckArrive(tmp) )
+      {
+        //目的高さで上書き
+        tmp->NowHeight = tmp->DstHeight;
+        //次のシーケンスへ
+        (*seq)++;
+      }
+      //対象リフト高さ更新
+      {
+        int obj_idx = OBJ_LIFT_0;
+        GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_GROUND_UNIT_IDX, obj_idx);
+        status->trans.y = tmp->NowHeight;
+      }
+      //自機の高さを更新
+      {
+        VecFx32 pos;
+        FIELD_PLAYER *fld_player;
+        fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+        FIELD_PLAYER_GetPos( fld_player, &pos );
+        pos.y = tmp->NowHeight;
+        FIELD_PLAYER_SetPos( fld_player, &pos );
+      }
+    }
+    break;
+  case 2:
+    //カメラを再バインド
+    if ( (!tmp->Exit)&&(tmp->Watch != NULL) ){
+      FIELD_CAMERA_BindTarget(camera, tmp->Watch);
+    }
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
  * リフト到達チェック
  * @param	  GYM_GROUND_TMP *tmp
  * @return  BOOL      TRUEで到達
@@ -889,6 +1015,13 @@ static int GetWatchLiftAnmIdx(GYM_GROUND_SV_WORK *gmk_sv_work, const int inLiftI
   return valid_anm_idx;
 }
 
+//--------------------------------------------------------------
+/**
+ * メインリフトのみの処理
+ * @param   gsys      ゲームシステムポインタ
+ * @return  none
+ */
+//--------------------------------------------------------------
 static void FuncMainLiftOnly(GAMESYS_WORK *gsys)
 {
   GYM_GROUND_SV_WORK *gmk_sv_work;
