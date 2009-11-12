@@ -233,8 +233,8 @@ static inline void FlowFlg_Set( BTL_SVFLOW_WORK* wk, FlowFlag flg );
 static inline void FlowFlg_Clear( BTL_SVFLOW_WORK* wk, FlowFlag flg );
 static inline BOOL FlowFlg_Get( BTL_SVFLOW_WORK* wk, FlowFlag flg );
 static inline void FlowFlg_ClearAll( BTL_SVFLOW_WORK* wk );
-static void wazaEff_SetTarget( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target );
-static void wazaEff_SetNoTarget( BTL_SVFLOW_WORK* wk );
+static void wazaEffSet_ExplicitTarget( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target );
+static void wazaEffSet_ImplicitTarget( BTL_SVFLOW_WORK* wk );
 static void FRONT_POKE_SEEK_InitWork( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WORK* wk );
 static BOOL FRONT_POKE_SEEK_GetNext( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WORK* wk, BTL_POKEPARAM** bpp );
 static inline void TargetPokeRec_Clear( TARGET_POKE_REC* rec );
@@ -1267,12 +1267,18 @@ static inline void FlowFlg_ClearAll( BTL_SVFLOW_WORK* wk )
   }
 }
 
-static void wazaEff_SetTarget( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target )
+/**
+ *  ワザエフェクト発動確定：ターゲットが明確な１体
+ */
+static void wazaEffSet_ExplicitTarget( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target )
 {
   wk->wazaEff_EnableFlag = TRUE;
   wk->wazaEff_TargetPokeID = BPP_GetID( target );
 }
-static void wazaEff_SetNoTarget( BTL_SVFLOW_WORK* wk )
+/**
+ *  ワザエフェクト発動確定：ターゲットが複数体や場に効くワザなど
+ */
+static void wazaEffSet_ImplicitTarget( BTL_SVFLOW_WORK* wk )
 {
   wk->wazaEff_EnableFlag = TRUE;
   wk->wazaEff_TargetPokeID = BTL_POKEID_NULL;
@@ -2548,6 +2554,7 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   wk->wazaEff_EnableFlag = FALSE;
   wk->wazaEff_TargetPokeID = BTL_POKEID_NULL;
 
+
   // ワザ出し確定イベント
   {
     u32 hem_state = Hem_PushState( &wk->HEManager );
@@ -2555,13 +2562,17 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
     scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
     Hem_PopState( &wk->HEManager, hem_state );
     if( fQuit ){
-      wazaEff_SetNoTarget( wk );
+      wazaEffSet_ImplicitTarget( wk );
       return;
     }
   }
 
-  // @@@単純に死んでるポケモンを除外してるが…ホントはダブルとかだと隣のポケモンに当たったりするハズ
+  // 死んでるポケモンは除外
+  // @todo この時点でターゲット数0でも、天候ワザなどは発動するがダメージワザは終了。どうすべき？
+  //       -> おそらくレコードに「登録された最大数」を記録しておき、それが１以上かつ現状が０なら
+  //          ハズレ、終了とすべきか。
   TargetPokeRec_RemoveDeadPokemon( targetRec );
+
 
   // 対象ごとの無効チェック＆回避チェック
   flowsub_checkNotEffect( wk, &wk->wazaParam, attacker, targetRec );
@@ -3456,14 +3467,11 @@ static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
 // 味方に対するダメージ
   if( TargetPokeRec_CopyFriends(targets, attacker, &wk->targetSubPokemon) )
   {
-    TargetPokeRec_RemoveDeadPokemon( &wk->targetSubPokemon );
     scproc_Fight_Damage_side( wk, wazaParam, attacker, &wk->targetSubPokemon, dmg_ratio );
   }
 // 敵に対するダメージ
   if( TargetPokeRec_CopyEnemys(targets, attacker, &wk->targetSubPokemon) )
   {
-    // @@@ 本当は死んでたら別ターゲットにしないとダメかも
-    TargetPokeRec_RemoveDeadPokemon( &wk->targetSubPokemon );
     scproc_Fight_Damage_side( wk, wazaParam, attacker, &wk->targetSubPokemon, dmg_ratio );
   }
 
@@ -3482,7 +3490,7 @@ static void scproc_Fight_Damage_ToRecover( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* a
     {
       u32 hem_state;
 
-      wazaEff_SetTarget( wk, bpp );
+      wazaEffSet_ExplicitTarget( wk, bpp );
       hem_state = Hem_PushState( &wk->HEManager );
 //        scput_DmgToRecover( wk, bpp, ewk );
       scEvent_DmgToRecover( wk, attacker, bpp );
@@ -3614,7 +3622,7 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
 
   plural_flag = scEvent_CheckPluralHit( wk, attacker, wazaParam->wazaID, &hit_count );
 
-  wazaEff_SetTarget( wk, defender );
+  wazaEffSet_ExplicitTarget( wk, defender );
   damage_sum = 0;
 
   for(i=0; i<hit_count; ++i)
@@ -3693,7 +3701,7 @@ static void scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
   poke_cnt = TargetPokeRec_GetCount( targets );
   GF_ASSERT(poke_cnt <= BTL_POSIDX_MAX);
 
-  wazaEff_SetNoTarget( wk );
+  wazaEffSet_ImplicitTarget( wk );
 
   dmg_sum = 0;
   for(i=0; i<poke_cnt; ++i)
@@ -4387,7 +4395,7 @@ static void scproc_Fight_SimpleEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM
   {
     if( scproc_WazaRankEffect_Common(wk, wazaParam, attacker, target, TRUE) )
     {
-      wazaEff_SetTarget( wk, target );
+      wazaEffSet_ExplicitTarget( wk, target );
     }
   }
 }
@@ -4496,10 +4504,10 @@ static void scproc_Fight_EffectSick( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* 
   while( (target = TargetPokeRec_GetNext(targetRec)) != NULL )
   {
     if( scproc_WazaRankEffect_Common(wk, wazaParam, attacker, target, TRUE) ){
-      wazaEff_SetTarget( wk, target );
+      wazaEffSet_ExplicitTarget( wk, target );
     }
     if( scproc_Fight_WazaSickCore(wk, attacker, target, wazaParam->wazaID, sick, sickCont, TRUE) ){
-      wazaEff_SetTarget( wk, target );
+      wazaEffSet_ExplicitTarget( wk, target );
     }
   }
 }
@@ -4512,7 +4520,7 @@ static void scproc_Fight_SimpleRecover( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_PO
 
   if( scproc_RecoverHP(wk, attacker, recoverHP) ){
     u8 pokeID = BPP_GetID( attacker );
-    wazaEff_SetTarget( wk, attacker );
+    wazaEffSet_ExplicitTarget( wk, attacker );
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_HP_Recover, pokeID );
   }
 }
@@ -4552,7 +4560,7 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPAR
       {
         if( scEvent_IchigekiCheck(wk, attacker, target, waza) )
         {
-          wazaEff_SetTarget( wk, target );
+          wazaEffSet_ExplicitTarget( wk, target );
           scPut_Ichigeki( wk, target );
         }
         else
@@ -4694,7 +4702,7 @@ static void scproc_Fight_Weather( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARA
   BtlWeather  weather = WAZADATA_GetWeather( waza );
 
   if( scproc_WeatherCore( wk, weather, BTL_WEATHER_TURN_DEFAULT ) ){
-    wazaEff_SetNoTarget( wk );
+    wazaEffSet_ImplicitTarget( wk );
   }
 }
 static BOOL scproc_WeatherCore( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn )
@@ -4743,7 +4751,7 @@ static void scput_Fight_Uncategory( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
       u32 hem_state = Hem_PushState( &wk->HEManager );
       if( scEvent_UnCategoryWaza(wk, wazaParam, attacker, targets) ){
         if( scproc_HandEx_Root( wk, ITEM_DUMMY_DATA ) ){
-          wazaEff_SetNoTarget( wk );
+          wazaEffSet_ImplicitTarget( wk );
         }
       }
       Hem_PopState( &wk->HEManager, hem_state );
@@ -5763,7 +5771,7 @@ static void scput_DmgToRecover( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BTL_EVW
 
   if( evwk->recoverHP != 0 )
   {
-    wazaEff_SetTarget( wk, bpp );
+    wazaEffSet_ExplicitTarget( wk, bpp );
     SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_SET_HP_Recover, pokeID );
     BPP_HpPlus( bpp, evwk->recoverHP );
     SCQUE_PUT_OP_HpPlus( wk->que, pokeID, evwk->recoverHP );

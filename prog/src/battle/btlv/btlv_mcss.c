@@ -31,7 +31,7 @@
 #define BTLV_MCSS_ORTHO_SCALE_MINE  ( FX32_ONE * 16 * 2 )
 #define BTLV_MCSS_ORTHO_SCALE_ENEMY ( FX32_ONE * 16 * 1 )
 
-enum{ 
+enum{
   REVERSE_FLAG_OFF = 0,
   REVERSE_FLAG_ON,
 };
@@ -119,7 +119,7 @@ static  const VecFx32 poke_pos_single_table[]={
 
 static  const VecFx32 poke_pos_double_table[]={
   { 0xffffe500, 0x00000666, 0x00007000 }, //POS_A
-  { 0x000026cd, 0x00000666, 0xffff5a00 }, //POS_B  
+  { 0x000026cd, 0x00000666, 0xffff5a00 }, //POS_B
   { 0x00002800, 0x00000666, 0x00007000 }, //POS_C
   { 0xffffdccd, 0x00000666, 0xffff4700 }, //POS_D
 };
@@ -312,7 +312,7 @@ void  BTLV_MCSS_Del( BTLV_MCSS_WORK *bmw, int position )
  */
 //============================================================================================
 void  BTLV_MCSS_SetPosition( BTLV_MCSS_WORK *bmw, int position, fx32 pos_x, fx32 pos_y, fx32 pos_z )
-{ 
+{
   VecFx32 pos;
 
   pos.x = pos_x;
@@ -538,7 +538,7 @@ void  BTLV_MCSS_SetShadowVanishFlag( BTLV_MCSS_WORK *bmw, int position, u8 flag 
  */
 //============================================================================================
 void  BTLV_MCSS_SetAnmSpeed( BTLV_MCSS_WORK *bmw, int position, fx32 speed )
-{ 
+{
   //MCSS_SetAnmSpeed( bmw->mcss[ position ], speed );
 }
 
@@ -564,10 +564,10 @@ void  BTLV_MCSS_MovePosition( BTLV_MCSS_WORK *bmw, int position, int type, VecFx
   MCSS_GetPosition( bmw->mcss[ position ], &start );
   //ˆÚ“®‚Ì•âŠÔ‚Í‘Š‘ÎŽw’è‚Æ‚·‚é
   if( type == EFFTOOL_CALCTYPE_INTERPOLATION )
-  { 
+  {
     //ƒ|ƒPƒ‚ƒ“‚ÌŽ‹ü‚Ì•ûŒü‚Å{|‚ðŒˆ’è‚·‚é
     if( position & 1 )
-    { 
+    {
       pos->x = start.x - pos->x;
       pos->y += start.y;
       pos->z += start.z;
@@ -581,7 +581,7 @@ void  BTLV_MCSS_MovePosition( BTLV_MCSS_WORK *bmw, int position, int type, VecFx
   }
   //‰ŠúˆÊ’uˆÚ“®
   if( type == BTLEFF_POKEMON_MOVE_INIT )
-  { 
+  {
     BTLV_MCSS_GetDefaultPos( bmw, pos, position );
     type = EFFTOOL_CALCTYPE_INTERPOLATION;
   }
@@ -712,42 +712,42 @@ void  BTLV_MCSS_MoveAlpha( BTLV_MCSS_WORK *bmw, int position, int type, int alph
  */
 //============================================================================================
 void  BTLV_MCSS_MoveCircle( BTLV_MCSS_WORK *bmw, BTLV_MCSS_MOVE_CIRCLE_PARAM* bmmcp )
-{ 
+{
   BTLV_MCSS_MOVE_CIRCLE_PARAM* bmmcp_p = GFL_HEAP_AllocMemory( bmw->heapID, sizeof( BTLV_MCSS_MOVE_CIRCLE_PARAM ) );
 
   bmmcp_p->bmw                      = bmw;
   bmmcp_p->position                 = bmmcp->position;
   bmmcp_p->axis                     = bmmcp->axis;
   bmmcp_p->shift                    = bmmcp->shift;
-	bmmcp_p->radius_h                 = bmmcp->radius_h;
-	bmmcp_p->radius_v                 = bmmcp->radius_v;
-	bmmcp_p->frame                    = bmmcp->frame;
-	bmmcp_p->rotate_wait              = bmmcp->rotate_wait;
-	bmmcp_p->count                    = bmmcp->count;
-	bmmcp_p->rotate_after_wait        = bmmcp->rotate_after_wait;
+  bmmcp_p->radius_h                 = bmmcp->radius_h;
+  bmmcp_p->radius_v                 = bmmcp->radius_v;
+  bmmcp_p->frame                    = bmmcp->frame;
+  bmmcp_p->rotate_wait              = bmmcp->rotate_wait;
+  bmmcp_p->count                    = bmmcp->count;
+  bmmcp_p->rotate_after_wait        = bmmcp->rotate_after_wait;
   bmmcp_p->rotate_wait_count        = 0;
   bmmcp_p->rotate_after_wait_count  = 0;
 
   //ƒ|ƒPƒ‚ƒ“‚ÌŒü‚«‚É‚æ‚Á‚ÄA{|‚ðŒˆ’è
   if( bmmcp_p->position & 1 )
-  { 
+  {
     if( ( ( bmmcp_p->axis == BTLEFF_AXIS_X_L ) || ( bmmcp_p->axis == BTLEFF_AXIS_X_R ) ||
           ( bmmcp_p->axis == BTLEFF_AXIS_Z_L ) || ( bmmcp_p->axis == BTLEFF_AXIS_Z_R ) ) &&
         ( ( bmmcp->shift == BTLEFF_SHIFT_V_P ) || ( bmmcp->shift == BTLEFF_SHIFT_V_M ) ) )
-    { 
-      ; 
+    {
+      ;
     }
     else
-    { 
+    {
       bmmcp_p->shift ^= 1;
     }
   }
   if( bmmcp_p->axis & 1 )
-  { 
+  {
     bmmcp_p->angle  = 0x10000;
   }
   else
-  { 
+  {
     bmmcp_p->angle  = 0;
   }
   bmmcp_p->speed  = 0x10000 / bmmcp->frame;
@@ -842,7 +842,7 @@ static  void  BTLV_MCSS_MakeMAW( const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, in
  */
 //============================================================================================
 static  void  BTLV_MCSS_MakeMAWTrainer( int tr_type, MCSS_ADD_WORK* maw, int position )
-{ 
+{
   int dir = ( ( position & 1 ) ) ? MCSS_DIR_FRONT : MCSS_DIR_BACK;
 
   MCSS_TOOL_MakeMAWTrainer( tr_type, maw, dir );
@@ -912,7 +912,7 @@ static  void  BTLV_MCSS_TCBInitialize( BTLV_MCSS_WORK *bmw, int position, int ty
     pmtw->emw.vector.y = FX_Div( end->y, FX32_CONST( frame ) );
     pmtw->emw.vector.z = FX_Div( end->z, FX32_CONST( frame ) );
     if( ( position & 1 ) && ( reverse_flag ) )
-    { 
+    {
       pmtw->emw.vector.x *= -1;
       pmtw->emw.vector.z *= -1;
     }
@@ -1042,7 +1042,7 @@ static  void  TCB_BTLV_MCSS_Alpha( GFL_TCB *tcb, void *work )
 //============================================================================================
 static  BTLV_MCSS_MOVE_CIRCLE_PARAM*  bmmcp_pp = NULL;
 static  void  TCB_BTLV_MCSS_MoveCircle( GFL_TCB *tcb, void *work )
-{ 
+{
   BTLV_MCSS_MOVE_CIRCLE_PARAM*  bmmcp = ( BTLV_MCSS_MOVE_CIRCLE_PARAM * )work;
   BTLV_MCSS_WORK *bmw = bmmcp->bmw;
   VecFx32 ofs = { 0, 0, 0 };
@@ -1051,27 +1051,27 @@ static  void  TCB_BTLV_MCSS_MoveCircle( GFL_TCB *tcb, void *work )
   bmmcp_pp = bmmcp;
 
   if( bmmcp->rotate_after_wait_count ==0 )
-  { 
+  {
     if( bmmcp->rotate_wait_count == bmmcp->rotate_wait )
-    { 
+    {
       bmmcp->rotate_wait_count = 0;
       if( bmmcp->axis & 1 )
-      { 
+      {
         bmmcp->angle -= bmmcp->speed;
       }
       else
-      { 
+      {
         bmmcp->angle += bmmcp->speed;
       }
       if( bmmcp->angle & 0xffff0000 )
-      { 
+      {
         bmmcp->angle &= 0x0000ffff;
         bmmcp->count--;
         bmmcp->rotate_after_wait_count = bmmcp->rotate_after_wait;
       }
       if( bmmcp->count )
-      { 
-        switch( bmmcp->shift ){ 
+      {
+        switch( bmmcp->shift ){
         case BTLEFF_SHIFT_H_P:    //ƒVƒtƒg‚g{
           sin = FX_Mul( FX_SinIdx( ( bmmcp->angle + 0x4000 ) & 0xffff ), bmmcp->radius_h ) * -1;
           cos = FX_Mul( FX_CosIdx( ( bmmcp->angle + 0x4000 ) & 0xffff ), bmmcp->radius_v ) * -1;
@@ -1091,7 +1091,7 @@ static  void  TCB_BTLV_MCSS_MoveCircle( GFL_TCB *tcb, void *work )
           cos = FX_Mul( FX_CosIdx( bmmcp->angle ), bmmcp->radius_v ) - bmmcp->radius_v;
           break;
         }
-        switch( ( bmmcp->axis & 7 ) >> 1 ){ 
+        switch( ( bmmcp->axis & 7 ) >> 1 ){
         default:
         case 0:   //XŽ²
           ofs.z = sin;
@@ -1115,7 +1115,7 @@ static  void  TCB_BTLV_MCSS_MoveCircle( GFL_TCB *tcb, void *work )
     }
   }
   else
-  { 
+  {
     bmmcp->rotate_after_wait_count--;
   }
   if( bmmcp->count == 0 ){
@@ -1147,9 +1147,9 @@ static  void  BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame )
  */
 //============================================================================================
 static  void  BTLV_MCSS_GetDefaultPos( BTLV_MCSS_WORK *bmw, VecFx32 *pos, BtlvMcssPos position )
-{ 
+{
   const VecFx32 *pos_table;
-  switch( position ){ 
+  switch( position ){
   case BTLV_MCSS_POS_AA:
   case BTLV_MCSS_POS_BB:
     pos_table = &poke_pos_single_table[ position ];
@@ -1159,11 +1159,11 @@ static  void  BTLV_MCSS_GetDefaultPos( BTLV_MCSS_WORK *bmw, VecFx32 *pos, BtlvMc
   case BTLV_MCSS_POS_C:
   case BTLV_MCSS_POS_D:
     if( bmw->mcss_pos_3vs3 )
-    { 
+    {
       pos_table = &poke_pos_triple_table[ position - BTLV_MCSS_POS_A ];
     }
     else
-    { 
+    {
       pos_table = &poke_pos_double_table[ position - BTLV_MCSS_POS_A ];
     }
     break;
@@ -1200,12 +1200,12 @@ static  void  BTLV_MCSS_GetDefaultPos( BTLV_MCSS_WORK *bmw, VecFx32 *pos, BtlvMc
  */
 //============================================================================================
 static  fx32  BTLV_MCSS_GetDefaultScale( BTLV_MCSS_WORK* bmw, BtlvMcssPos position, BTLV_MCSS_PROJECTION proj )
-{ 
+{
   fx32 scale;
 
   if( proj == BTLV_MCSS_PROJ_PERSPECTIVE )
-  { 
-    switch( position ){ 
+  {
+    switch( position ){
     case BTLV_MCSS_POS_AA:
     case BTLV_MCSS_POS_BB:
       scale = poke_scale_single_table[ position ];
@@ -1215,11 +1215,11 @@ static  fx32  BTLV_MCSS_GetDefaultScale( BTLV_MCSS_WORK* bmw, BtlvMcssPos positi
     case BTLV_MCSS_POS_C:
     case BTLV_MCSS_POS_D:
       if( bmw->mcss_pos_3vs3 )
-      { 
+      {
         scale = poke_scale_triple_table[ position - BTLV_MCSS_POS_A ];
       }
       else
-      { 
+      {
         scale = poke_scale_double_table[ position - BTLV_MCSS_POS_A ];
       }
       break;
@@ -1243,13 +1243,13 @@ static  fx32  BTLV_MCSS_GetDefaultScale( BTLV_MCSS_WORK* bmw, BtlvMcssPos positi
     }
   }
   else
-  { 
+  {
     if( position & 1 )
-    { 
+    {
       scale = BTLV_MCSS_ORTHO_SCALE_ENEMY;
     }
     else
-    { 
+    {
       scale = BTLV_MCSS_ORTHO_SCALE_MINE;
     }
   }
@@ -1302,7 +1302,7 @@ void  BTLV_MCSS_SetMcss3vs3( BTLV_MCSS_WORK *bmw, int flag )
  */
 //============================================================================================
 void  BTLV_MCSS_ClearExecute( BTLV_MCSS_WORK *bmw )
-{ 
+{
 
 }
 

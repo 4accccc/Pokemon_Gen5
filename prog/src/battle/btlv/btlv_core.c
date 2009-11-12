@@ -1437,6 +1437,8 @@ typedef struct {
 }ROTATE_MEMBER_WORK;
 
 
+
+
 //=============================================================================================
 /**
  * ユーザ入力：ローテーション選択開始
@@ -1457,6 +1459,8 @@ void BTLV_UI_SelectRotation_Start( BTLV_CORE* wk, BtlRotateDir prevDir )
     rotateParam->pp[i] = BPP_GetSrcData( bpp );
   }
   rotateParam->before_select_dir = prevDir;
+
+  BTLV_SCD_SelectRotate_Start( wk->scrnD, rotateParam );
 }
 //=============================================================================================
 /**
@@ -1470,9 +1474,10 @@ void BTLV_UI_SelectRotation_Start( BTLV_CORE* wk, BtlRotateDir prevDir )
 //=============================================================================================
 BOOL BTLV_UI_SelectRotation_Wait( BTLV_CORE* wk, BtlRotateDir* result )
 {
-  // @todo 仮動作です
-  *result = BTL_ROTATEDIR_NONE;
-  return TRUE;
+  if( BTLV_SCD_SelectRotate_Wait(wk->scrnD, result) ){
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //=============================================================================================

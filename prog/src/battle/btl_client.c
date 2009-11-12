@@ -826,7 +826,6 @@ static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
         {
           wk->returnDataPtr = wk->procAction;
           wk->returnDataSize = sizeof(wk->actionParam[0]);
-          BTL_Printf("逃げコマンドのハズ=%d\n", wk->procAction->gen.cmd);
           SelActProc_Set( wk, selact_Finish );
         }
         else
@@ -2307,13 +2306,13 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
   case 0:
     {
       BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+      BPP_ReflectExpAdd( bpp );
 
       if( BTL_MAIN_CheckFrontPoke(wk->mainModule, wk->pokeCon, args[0]) )
       {
         u8 pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
         u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
 
-        BTL_Printf("ポケ[%d] に経験値 %d\n", args[0], args[1] );
         BTLV_EFFECT_CalcGaugeEXP( vpos, args[1] );
         (*seq)++;
       }

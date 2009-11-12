@@ -24,6 +24,7 @@ typedef struct _BTLV_SCD  BTLV_SCD;
 #include "battle/btl_pokeparam.h"
 #include "battle/btl_action.h"
 #include "battle/btl_pokeselect.h"
+#include "btlv_input.h"
 #include "btlv_core.h"
 
 //--------------------------------------------------------------
@@ -78,6 +79,9 @@ extern void BTLV_SCD_FadeOut( BTLV_SCD* wk );
 extern void BTLV_SCD_FadeIn( BTLV_SCD* wk );
 extern BOOL BTLV_SCD_FadeFwd( BTLV_SCD* wk );
 extern u8*  BTLV_SCD_GetCursorFlagPtr( BTLV_SCD* wk );
+
+extern void BTLV_SCD_SelectRotate_Start( BTLV_SCD* wk, BTLV_INPUT_ROTATE_PARAM* param );
+extern BOOL BTLV_SCD_SelectRotate_Wait( BTLV_SCD* wk, BtlRotateDir* result );
 
 
 #endif

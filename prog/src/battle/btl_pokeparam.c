@@ -2137,16 +2137,18 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
       info->sp_def = bpp->baseParam.sp_defence - info->sp_def;
       info->agi    = bpp->baseParam.agility - info->agi;
 
-      PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_exp, bpp->exp );
-      PP_Renew( (POKEMON_PARAM*)(bpp->coreParam.ppSrc) );
+//      PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_exp, bpp->exp );
+//      PP_Renew( (POKEMON_PARAM*)(bpp->coreParam.ppSrc) );
 
       *expRest -= expAdd;
       return TRUE;
     }
     else
     {
+      BTL_Printf("pp[%p]に経験値 %d->%d\n", bpp->coreParam.ppSrc, bpp->exp, expSum);
       bpp->exp = expSum;
       PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_exp, bpp->exp );
+      BTL_Printf("  ... exp=%d=%d\n", PP_Get(bpp->coreParam.ppSrc, ID_PARA_exp, NULL),bpp->exp);
     }
   }
 
@@ -2155,7 +2157,7 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
 }
 //=============================================================================================
 /**
- * レベルアップパラメータを反映させる
+ * レベルアップパラメータを反映させる（クライアント用）
  *
  * @param   bpp
  */
@@ -2171,6 +2173,18 @@ void BPP_ReflectLevelup( BTL_POKEPARAM* bpp, u8 nextLevel, u8 hpMax, u8 atk, u8 
   bpp->baseParam.sp_defence += spDef;
   bpp->baseParam.agility    += agi;
 }
+//=============================================================================================
+/**
+ * 経験値アップを反映させる（クライアント用）
+ *
+ * @param   bpp
+ */
+//=============================================================================================
+void BPP_ReflectExpAdd( BTL_POKEPARAM* bpp )
+{
+  POKEMON_PARAM* pp = (POKEMON_PARAM*)(bpp->coreParam.ppSrc);
+  bpp->exp = PP_Get( pp, ID_PARA_exp, NULL );
+}
 
 //=============================================================================================
 /**
@@ -2182,6 +2196,7 @@ void BPP_ReflectLevelup( BTL_POKEPARAM* bpp, u8 nextLevel, u8 hpMax, u8 atk, u8 
 void BPP_ReflectPP( BTL_POKEPARAM* bpp )
 {
   POKEMON_PARAM* pp = (POKEMON_PARAM*)(bpp->coreParam.ppSrc);
+  u32 i;
 
   PP_Put( pp, ID_PARA_exp, bpp->exp );
   PP_Put( pp, ID_PARA_hp, bpp->coreParam.hp );
@@ -2191,6 +2206,12 @@ void BPP_ReflectPP( BTL_POKEPARAM* bpp )
     if( sick != POKESICK_NULL ){
       PP_SetSick( pp, sick );
     }
+  }
+
+  for(i=0; i<PTL_WAZA_MAX; ++i)
+  {
+    PP_SetWazaPos( pp, bpp->waza[i].number, i );
+    PP_Put( pp, ID_PARA_pp1+i, bpp->waza[i].pp );
   }
 }
 //=============================================================================================

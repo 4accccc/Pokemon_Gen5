@@ -2791,7 +2791,16 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
 
     srcParty_RefrectBtlPartyStartOrder( wk, wk->myClientID );
     srcParty = srcParty_Get( wk, wk->myClientID );
+    BTL_Printf("%p ‚ÌŒ‹‰Ê‚ð %p ‚É‘‚«–ß‚µ\nsrc_member..\n", srcParty, wk->setupParam->partyPlayer);
     PokeParty_Copy( srcParty, wk->setupParam->partyPlayer );
+    {
+      u32 i;
+      POKEMON_PARAM* pp;
+      for(i=0; i<PokeParty_GetPokeCount(srcParty); ++i){
+        pp = PokeParty_GetMemberPointer(srcParty, i);
+        BTL_Printf("  %p's exp=%d\n", pp, PP_Get(pp,ID_PARA_exp,NULL));
+      }
+    }
   }
 
   if( wk->setupParam->competitor == BTL_COMPETITOR_WILD )
