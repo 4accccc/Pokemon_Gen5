@@ -82,7 +82,13 @@ static inline BOOL BTL_CALC_BITFLG_Check( const u8* flags, u32 index )
   return 0;
 }
 
-
+static inline u32 BTL_CALC_ABS( int value )
+{
+  if( value < 0 ){
+    value *= -1;
+  }
+  return value;
+}
 
 //--------------------------------------------------------------------
 /**
@@ -200,6 +206,13 @@ extern s32  BTL_CALC_ITEM_GetParam( u16 item, u16 paramID );
 
 extern WazaID BTL_CALC_RandWaza( const u16* excludeWazaTbl, u16 tblElems );
 extern u32 BTL_CALC_CalcBaseExp( const BTL_POKEPARAM* bpp );
+
+
+//=============================================================================================
+//=============================================================================================
+extern u8 BTL_RULE_GetNumFrontPos( BtlRule rule );
+extern BOOL BTL_RULE_IsNeedSelectTarget( BtlRule rule );
+extern u8 BTL_RULE_HandPokeIndex( BtlRule rule, u8 numCoverPos );
 
 
 #endif

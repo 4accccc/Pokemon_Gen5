@@ -139,7 +139,7 @@ void BTL_POSPOKE_Rotate( BTL_POSPOKE_WORK* wk, BtlRotateDir dir, u8 clientID, co
         wk->state[ idx[1] ] = wk->state[ idx[0] ];
         slideInPos = idx[0];
       }
-      if( dir == BTL_ROTATEDIR_R )
+      if( dir == BTL_ROTATEDIR_L )
       {
         wk->state[ idx[0] ] = wk->state[ idx[1] ];
         slideInPos = idx[1];
@@ -150,11 +150,14 @@ void BTL_POSPOKE_Rotate( BTL_POSPOKE_WORK* wk, BtlRotateDir dir, u8 clientID, co
         // 後衛から前衛に出たポケが生きていたら入場と同じ処理
         if( !BPP_IsDead(inPoke) ){
           BTL_POSPOKE_PokeIn( wk, slideInPos, BPP_GetID(inPoke), pokeCon );
-        // 死んでいたらスライド位置を空ける
+        // 死んでいたらその位置を空ける
         }else{
           wk->state[ slideInPos ].existPokeID = BTL_POKEID_NULL;
         }
       }
+
+      BTL_Printf("Client[%d] rotate_%d, front pokeID= %d, %d\n", clientID, dir,
+        wk->state[idx[0]].existPokeID, wk->state[idx[1]].existPokeID );
     }
   }
 }

@@ -1754,7 +1754,6 @@ BtlPokePos BTL_MAIN_GetNextPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos basePo
   case BTL_RULE_ROTATION:
     {
       u8 retPos = (basePos + 2) & 0x03;
-      BTL_Printf("nextPos %d -> %d\n", basePos, retPos);
       return retPos;
     }
   case BTL_RULE_TRIPLE:
@@ -1906,10 +1905,25 @@ u8 BTL_MAIN_BtlPosToClientID( const BTL_MAIN_MODULE* wk, BtlPokePos pos )
 {
   return btlPos_to_clientID( wk, pos );
 }
-
 //=============================================================================================
 /**
- * 戦闘位置 -> クライアントID，ポケモンインデックス変換
+ * 戦闘位置->位置インデックス変換
+ *
+ * @param   wk
+ * @param   pos
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BTL_MAIN_BtlPosToPosIdx( const BTL_MAIN_MODULE* wk, BtlPokePos pos )
+{
+  u8 clientID, posIdx;
+  btlPos_to_cliendID_and_posIdx( wk, pos, &clientID, &posIdx );
+  return posIdx;
+}
+//=============================================================================================
+/**
+ * 戦闘位置 -> クライアントID＆位置インデックス変換
  *
  * @param   wk
  * @param   pos
@@ -1922,6 +1936,7 @@ void BTL_MAIN_BtlPosToClientID_and_PosIdx( const BTL_MAIN_MODULE* wk, BtlPokePos
 {
   btlPos_to_cliendID_and_posIdx( wk, pos, clientID, posIdx );
 }
+
 
 
 //=============================================================================================

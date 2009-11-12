@@ -47,6 +47,7 @@ extern void BTL_MAIN_AddBonusMoney( BTL_MAIN_MODULE* wk, u32 volume );
 // for server only
 //=========================================================
 extern void BTL_MAIN_BtlPosToClientID_and_PosIdx( const BTL_MAIN_MODULE* wk, BtlPokePos pos, u8* clientID, u8* posIdx );
+extern u8   BTL_MAIN_BtlPosToPosIdx( const BTL_MAIN_MODULE* wk, BtlPokePos pos );
 extern void BTL_MAIN_SyncServerCalcData( BTL_MAIN_MODULE* wk );
 
 //=========================================================

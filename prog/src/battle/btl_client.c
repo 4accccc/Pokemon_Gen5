@@ -76,7 +76,6 @@ struct _BTL_CLIENT {
   BTLV_CORE*    viewCore;
   STR_PARAM     strParam;
   BtlRotateDir    prevRotateDir;
-  const BTL_POKEPARAM*  rotatePokeWork[BTL_ROTATE_NUM];
 
   ClientSubProc  subProc;
   int            subSeq;
@@ -155,7 +154,7 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
 static BtlCantEscapeCode is_prohibit_escape( BTL_CLIENT* wk, u8* pokeID );
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq );
 static void abandon_cover_pos( BTL_CLIENT* wk, u8 numPos );
-static u8 calc_puttable_pokemons( BTL_CLIENT* wk, u8* list );
+static u8 calcPuttablePokemons( BTL_CLIENT* wk, u8* list );
 static u8 calc_front_dead_pokemons( BTL_CLIENT* wk, u8* list );
 static void setup_pokesel_param_change( BTL_CLIENT* wk, BTL_POKESELECT_PARAM* param );
 static void setup_pokesel_param_dead( BTL_CLIENT* wk, u8 numSelect, BTL_POKESELECT_PARAM* param );
@@ -436,11 +435,6 @@ static BOOL SubProc_UI_SelectRotation( BTL_CLIENT* wk, int* seq )
   switch( *seq ){
   case 0:
     {
-      const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( wk->pokeCon, wk->myID );
-      u32 i;
-      for(i=0; i<BTL_ROTATE_NUM; ++i){
-        wk->rotatePokeWork[i] = BTL_PARTY_GetMemberDataConst( party, i );
-      }
       BTLV_UI_SelectRotation_Start( wk->viewCore, wk->prevRotateDir );
       (*seq)++;
     }
@@ -694,10 +688,13 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
 
   case SEQ_CHECK_WAZA_TARGET:
     // シングルなら対象選択なし
-    if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_SINGLE ){
-      SelActProc_Set( wk, selact_CheckFinish );
-    }else{
-      (*seq) = SEQ_SELECT_TARGET_START;
+    {
+      BtlRule rule = BTL_MAIN_GetRule( wk->mainModule );
+      if( BTL_RULE_IsNeedSelectTarget(rule) ){
+        (*seq) = SEQ_SELECT_TARGET_START;
+      }else{
+        SelActProc_Set( wk, selact_CheckFinish );
+      }
     }
     break;
 
@@ -830,7 +827,7 @@ static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
           wk->returnDataPtr = wk->procAction;
           wk->returnDataSize = sizeof(wk->actionParam[0]);
           BTL_Printf("逃げコマンドのハズ=%d\n", wk->procAction->gen.cmd);
-          SelActProc_Set( wk, selact_Fight );
+          SelActProc_Set( wk, selact_Finish );
         }
         else
         {
@@ -1314,58 +1311,32 @@ static void abandon_cover_pos( BTL_CLIENT* wk, u8 numPos )
 //
 //--------------------------------------------------------------------------
 /**
- * 今、場に出ているポケモン以外で、生きているポケモンの数を返す
+ * 死亡時の選択可能ポケモン（場に出ているポケモン以外で、生きているポケモン）の数
  *
  * @param   wk
- * @param   list    [out] 場に出ている以外で生きているポケモンのパーティ内インデックスを格納する配列
+ * @param   list    [out] 選択可能ポケモンのパーティ内インデックスを格納する配列
  *
- * @retval  u8    場に出ている以外で生きているポケモンの数
+ * @retval  u8    選択可能ポケモンの数
  */
 //--------------------------------------------------------------------------
-static u8 calc_puttable_pokemons( BTL_CLIENT* wk, u8* list )
+static u8 calcPuttablePokemons( BTL_CLIENT* wk, u8* list )
 {
-  u8 cnt, numMembers, i, j;
+  u8 cnt, numMembers, numFront, i, j;
 
   numMembers = BTL_PARTY_GetMemberCount( wk->myParty );
-  for(i=wk->numCoverPos, cnt=0; i<numMembers; i++)
+  numFront = BTL_RULE_HandPokeIndex( BTL_MAIN_GetRule(wk->mainModule), wk->numCoverPos );
+
+  for(i=numFront, cnt=0; i<numMembers; i++)
   {
     {
       const BTL_POKEPARAM* pp = BTL_PARTY_GetMemberDataConst(wk->myParty, i);
       if( !BPP_IsDead(pp) )
       {
-        if( list )
-        {
-          BTL_Printf(" %d番目は選べます\n", i);
+        if( list ){
           list[cnt] = i;
         }
-        cnt++;
+        ++cnt;
       }
-    }
-  }
-  return cnt;
-}
-//--------------------------------------------------------------------------
-/**
- * 今、場に出ているポケモンで、死んでいるポケモンの数を返す
- *
- * @param   wk
- * @param   list    [out] 場に出ていて死んでるポケモンのパーティ内インデックスを格納する配列
- *
- * @retval  u8
- */
-//--------------------------------------------------------------------------
-static u8 calc_front_dead_pokemons( BTL_CLIENT* wk, u8* list )
-{
-  const BTL_POKEPARAM* pp;
-  u8 cnt, numMembers, i;
-
-  numMembers = BTL_PARTY_GetMemberCount( wk->myParty );
-  for(i=0, cnt=0; i<wk->numCoverPos; ++i)
-  {
-    pp = BTL_PARTY_GetMemberDataConst(wk->myParty, i);
-    if( BPP_IsDead(pp) )
-    {
-      list[cnt++] = i;
     }
   }
   return cnt;
@@ -1408,8 +1379,6 @@ static void store_pokesel_to_action( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT
 
   {
     u8 clientID, posIdx, selIdx, i;
-
-  //  calc_front_dead_pokemons( wk, deadList );
 
     for(i=0; i<res->cnt; i++)
     {
@@ -1466,7 +1435,7 @@ static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq )
 
       if( wk->myChangePokeCnt )
       {
-        u8 numPuttable = calc_puttable_pokemons( wk, NULL );
+        u8 numPuttable = calcPuttablePokemons( wk, NULL );
         if( numPuttable )
         {
           u8 numSelect = wk->myChangePokeCnt;
@@ -1522,7 +1491,7 @@ static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq )
     u8 puttableList[ BTL_PARTY_MEMBER_MAX ];
     u8 numPuttable;
 
-    numPuttable = calc_puttable_pokemons( wk, puttableList );
+    numPuttable = calcPuttablePokemons( wk, puttableList );
     if( numPuttable )
     {
       u8 numSelect = wk->myChangePokeCnt;

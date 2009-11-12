@@ -26,7 +26,8 @@
 
 #include "btlv_scu.h"
 #include "btlv_scd.h"
-#include "btlv_effect.h"  //soga
+#include "btlv_effect.h"
+#include "btlv_input.h"
 
 #include "btlv_core.h"
 
@@ -69,7 +70,6 @@ struct _BTLV_CORE {
   BBAG_DATA             bagData;
   BPLIST_DATA           plistData;
   BTL_POKESELECT_RESULT* pokeselResult;
-  BtlRotateDir          prevRotDir;
   u8                    selectItemSeq;
   u8                    fActionPrevButton;
 
@@ -1448,7 +1448,16 @@ typedef struct {
 //=============================================================================================
 void BTLV_UI_SelectRotation_Start( BTLV_CORE* wk, BtlRotateDir prevDir )
 {
-  wk->prevRotDir = prevDir;
+  BTLV_INPUT_ROTATE_PARAM* rotateParam = getGenericWork( wk, sizeof(BTLV_INPUT_ROTATE_PARAM) );
+  const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( wk->pokeCon, wk->myClientID );
+  const BTL_POKEPARAM* bpp;
+  u32 i;
+
+  for(i=0; i<BTL_ROTATE_NUM; ++i){
+    bpp = BTL_PARTY_GetMemberDataConst( party, i );
+    rotateParam->pp[i] = BPP_GetSrcData( bpp );
+  }
+  rotateParam->before_select_dir = prevDir;
 }
 //=============================================================================================
 /**
@@ -1478,13 +1487,9 @@ BOOL BTLV_UI_SelectRotation_Wait( BTLV_CORE* wk, BtlRotateDir* result )
 //=============================================================================================
 void BTLV_RotationMember_Start( BTLV_CORE* wk, u8 clientID, BtlRotateDir dir )
 {
-//  BtlPokePos  topPos = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, 0 );
-//  u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, topPos );
   if( dir != BTL_ROTATEDIR_STAY )
   {
     ROTATE_MEMBER_WORK* subwk = getGenericWork( wk, sizeof(ROTATE_MEMBER_WORK) );
-
-    BTL_Printf("‰ñ“]•ûŒü=%d\n", dir);
 
     subwk->clientID = clientID;
     subwk->dir = dir;

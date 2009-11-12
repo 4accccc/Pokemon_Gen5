@@ -2548,9 +2548,12 @@ static void statwin_reset_data( STATUS_WIN* stwin )
 
 static void statwin_disp_start( STATUS_WIN* stwin )
 {
-  u8 viewPos = BTL_MAIN_BtlPosToViewPos( stwin->parentWk->mainModule, stwin->pokePos );
-  BTLV_EFFECT_SetGauge( stwin->bpp, viewPos );
-  stwin->dispFlag = TRUE;
+  if( !BPP_IsDead(stwin->bpp) )
+  {
+    u8 viewPos = BTL_MAIN_BtlPosToViewPos( stwin->parentWk->mainModule, stwin->pokePos );
+    BTLV_EFFECT_SetGauge( stwin->bpp, viewPos );
+    stwin->dispFlag = TRUE;
+  }
 }
 
 static void statwin_disp( STATUS_WIN* stwin )

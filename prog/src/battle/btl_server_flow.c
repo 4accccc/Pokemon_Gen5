@@ -302,6 +302,8 @@ static void scPut_ReqWazaEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaID
 static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, TARGET_POKE_REC* targetRec );
 static u8 flowsub_registerWazaTargets( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
   const SVFL_WAZAPARAM* wazaParam, TARGET_POKE_REC* rec );
+static void correctTargetDead( BTL_SVFLOW_WORK* wk, BtlRule rule, const BTL_POKEPARAM* attacker,
+  const SVFL_WAZAPARAM* wazaParam, TARGET_POKE_REC* rec );
 static u8 registerTarget_single( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
   const SVFL_WAZAPARAM* wazaParam, u8 intrPokeID, TARGET_POKE_REC* rec );
 static u8 registerTarget_double( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
@@ -2382,7 +2384,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, REQWAZA_
     TargetPokeRec_Clear( &wk->targetPokemon );
     flowsub_registerWazaTargets( wk, attacker, action->fight.targetPos, &wk->wazaParam, &wk->targetPokemon );
 
-    // ワザ乗っ取られ判定
+    // ワザ乗っ取り判定
     {
       BTL_POKEPARAM* wazaUser;
       u8 robberPokeID;
@@ -2395,7 +2397,6 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, REQWAZA_
       else
       {
         // ここまで来たら通常ワザ出し成功
-        // @@@ ここに、対象ポケによらない無効化チェックを入れるかも…
         wazaUser = attacker;
         BPP_UpdatePrevWazaID( attacker, actWaza, actTargetPos );
         SCQUE_PUT_OP_UpdateUseWaza( wk->que, BPP_GetID(attacker), actTargetPos, actWaza );
@@ -2546,6 +2547,8 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   que_reserve_pos = SCQUE_RESERVE_Pos( wk->que, SC_ACT_WAZA_EFFECT );
   wk->wazaEff_EnableFlag = FALSE;
   wk->wazaEff_TargetPokeID = BTL_POKEID_NULL;
+
+  // ワザ出し確定イベント
   {
     u32 hem_state = Hem_PushState( &wk->HEManager );
     BOOL fQuit = scEvent_WazaExecuteFix( wk, attacker, waza, targetRec );
@@ -2653,22 +2656,35 @@ static u8 flowsub_registerWazaTargets( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attac
   BtlRule rule = BTL_MAIN_GetRule( wk->mainModule );
 
   u8 intrPokeID = scEvent_GetWazaTargetIntr( wk, attacker, wazaParam );
+  u8 numTarget;
 
   TargetPokeRec_Clear( rec );
 
   switch( rule ){
   case BTL_RULE_SINGLE:
   default:
-    return registerTarget_single( wk, attacker, targetPos, wazaParam, intrPokeID, rec );
+    numTarget = registerTarget_single( wk, attacker, targetPos, wazaParam, intrPokeID, rec );
+    break;
 
   case BTL_RULE_DOUBLE:
   case BTL_RULE_ROTATION:
-    return registerTarget_double( wk, attacker, targetPos, wazaParam, intrPokeID, rec );
+    numTarget = registerTarget_double( wk, attacker, targetPos, wazaParam, intrPokeID, rec );
+    break;
 
   case BTL_RULE_TRIPLE:
-    return registerTarget_triple( wk, attacker, targetPos, wazaParam, intrPokeID, rec );
+    numTarget = registerTarget_triple( wk, attacker, targetPos, wazaParam, intrPokeID, rec );
+    break;
   }
+
+  if( numTarget == 1 )
+  {
+    correctTargetDead( wk, rule, attacker, wazaParam, rec );
+  }
+
+  return numTarget;
 }
+
+
 static u8 registerTarget_single( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
   const SVFL_WAZAPARAM* wazaParam, u8 intrPokeID, TARGET_POKE_REC* rec )
 {
@@ -2762,7 +2778,7 @@ static u8 registerTarget_double( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
 
   case WAZA_TARGET_UNKNOWN:
     {
-      // @@@ ココは割り込みのターゲットとは処理を別ける必要があると思う。いずれやる。
+      // @@@ ココは割り込みのターゲットイベントとは処理を別ける必要があると思う。いずれやる。
       u8 pokeID = scEvent_GetWazaTargetIntr( wk, attacker, wazaParam );
       if( pokeID != BTL_POKEID_NULL ){
         bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
@@ -2774,8 +2790,10 @@ static u8 registerTarget_double( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
     return 0;
   }
 
+  // 対象が敵含む１体のワザ
   if( bpp )
   {
+    u8 atkPokeID, targetPokeID;
     if( intrPokeID != BTL_POKEID_NULL ){
       bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, intrPokeID );
     }
@@ -2854,7 +2872,7 @@ static u8 registerTarget_triple( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
 
   case WAZA_TARGET_UNKNOWN:
     {
-      // @@@ ココは割り込みのターゲットとは処理を別ける必要があると思う。いずれやる。
+      // @@@ ココは割り込みのターゲットイベントとは処理を別ける必要があると思う。いずれやる。
       u8 pokeID = scEvent_GetWazaTargetIntr( wk, attacker, wazaParam );
       if( pokeID != BTL_POKEID_NULL ){
         bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
@@ -2879,7 +2897,82 @@ static u8 registerTarget_triple( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
     return 0;
   }
 }
-
+/**
+ *  対象ポケモンが死んでいた時の対象修正
+ */
+static void correctTargetDead( BTL_SVFLOW_WORK* wk, BtlRule rule, const BTL_POKEPARAM* attacker,
+  const SVFL_WAZAPARAM* wazaParam, TARGET_POKE_REC* rec )
+{
+  // 戦闘位置が陣営あたり２以上（ダブル、トリプル、ローテ）
+  u8 numFrontPos = BTL_RULE_GetNumFrontPos( rule );
+  if( numFrontPos > 1 )
+  {
+    // 元々の対象が１体で、
+    if( TargetPokeRec_GetCount(rec) == 1 )
+    {
+      // 攻撃ポケの敵で、かつ死んでいる
+      BTL_POKEPARAM* target = TargetPokeRec_Get( rec, 0 );
+      if( BPP_IsDead(target)
+      &&  !BTL_MAINUTIL_IsFriendPokeID( BPP_GetID(attacker), BPP_GetID(target) )
+      ){
+        BTL_POKEPARAM* nextTarget[ BTL_POSIDX_MAX ];
+        BtlPokePos  atPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(attacker) );
+        BtlPokePos  opPos;
+        u8 i, defTargetIdx=BTL_POSIDX_MAX;
+        TargetPokeRec_Remove( rec, target );  // 元々の対象は死んでるので除外
+        BTL_Printf("攻撃ポケ[%d]が狙おうとしたポケ[%d]が死んでいるので補正する\n",
+          BPP_GetID(attacker), BPP_GetID(target));
+        // 元々の対象が何番目に居たか調べる
+        for(i=0; i<numFrontPos; ++i)
+        {
+          opPos = BTL_MAINUTIL_GetOpponentPokePos( rule, atPos, i );
+          nextTarget[i] = BTL_POKECON_GetFrontPokeData( wk->pokeCon, opPos );
+          if( BPP_GetID(nextTarget[i]) == BPP_GetID(target) ){
+            defTargetIdx = i;
+          }
+        }
+        if( defTargetIdx != BTL_POSIDX_MAX )
+        {
+          // 元々の対象の隣にいる生存ポケをリストアップ
+          u8 refIdx[ BTL_POSIDX_MAX ];
+          u8 nextTargetIdx;
+          u8 refCnt=0;
+          for(i=0; i<numFrontPos; ++i)
+          {
+            if( !BPP_IsDead(nextTarget[i]) && (BTL_CALC_ABS((int)i-(int)defTargetIdx)==1) ){
+              BTL_Printf("狙おうとしたポケの位置Idx-%d\n", i);
+              refIdx[ refCnt++ ] = i;
+            }
+          }
+          // 候補が１体なら決定
+          if( refCnt == 1 )
+          {
+            nextTargetIdx = refIdx[0];
+          }
+          // 候補が２体（トリプルのみ）ならHPの少ない方
+          else
+          {
+            u16 hp[2];
+            for(i=0; i<2; ++i){
+              hp[i] = BPP_GetValue( nextTarget[refIdx[i]], BPP_HP );
+            }
+            if( hp[0] < hp[1] ){
+              nextTargetIdx = refIdx[0];
+            }else if( hp[1] < hp[0] ){
+              nextTargetIdx = refIdx[1];
+            }else{
+              u8 rnd = GFL_STD_MtRand( 1 );
+              nextTargetIdx = refIdx[ rnd ];
+            }
+          }
+          BTL_Printf("補正後の対象ポケモンは 位置idx-%d, ID=%d\n",
+            nextTargetIdx, BPP_GetID(nextTarget[nextTargetIdx]) );
+          TargetPokeRec_Add( rec, nextTarget[ nextTargetIdx ] );
+        }
+      }
+    }
+  }
+}
 
 //----------------------------------------------------------------------------------
 /**
@@ -4879,8 +4972,7 @@ static void scproc_countup_shooter_energy( BTL_SVFLOW_WORK* wk )
     for(i=0; i<wk->numClient; ++i)
     {
       if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_TRIPLE ){
-//        SCQUE_PUT_OP_ShooterCharge( wk->que, i, 1 );
-        SCQUE_PUT_OP_ShooterCharge( wk->que, i, 13 );  // @@@ テスト用措置
+        SCQUE_PUT_OP_ShooterCharge( wk->que, i, 1 );
       }else{
         u8 myClientID, opponentClientID, emptyCnt, fEnable, p;
         u8 emptyPos[ BTL_POSIDX_MAX ];
