@@ -407,21 +407,10 @@ static u32 _FOLocal_CellResourceSet(BMPOAM_SYS_PTR bsp, CLSYS_DRAW_TYPE draw_typ
 		return index;		//このマッピングモードのセルは既に登録済み
 	}
 
-  // TEST:
-  {
-    static int* p = NULL;
-    if( p == NULL ) GFL_HEAP_AllocMemory( bsp->heap_id, 20 );
-  }
-	
 	//セル＆セルアニメ
 	bsp->cell_id[index] = GFL_CLGRP_CELLANIM_Register(hdl, 
 		OamResourceTbl[index].ncer, OamResourceTbl[index].nanr, bsp->heap_id);
 
-  // TEST:
-  {
-    static int* p = NULL;
-    if( p == NULL ) GFL_HEAP_AllocMemory( bsp->heap_id, 20 );
-  }
 	return index;
 }
 
