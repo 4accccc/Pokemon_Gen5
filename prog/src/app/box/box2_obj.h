@@ -30,6 +30,9 @@ enum {
 	BOX2OBJ_ANM_HAND_PUSH2,				// 手カーソル：押す２
 	BOX2OBJ_ANM_HAND_SHADOW,			// 手カーソル：影
 	BOX2OBJ_ANM_HAND_TRAY,				// 手カーソル：横（トレイなど選択用）
+	BOX2OBJ_ANM_HAND_TRAY2,				// 手カーソル：横（いらないような？）
+	BOX2OBJ_ANM_TB_STATUS,				// タッチバーステータス
+	BOX2OBJ_ANM_TB_STATUS_ON,			// タッチバーステータス・ON
 };
 
 #define	BOX2OBJ_TRAYPOKE_PX		( 24 )		// トレイのポケモンアイコン表示開始Ｘ座標
@@ -108,6 +111,8 @@ extern void BOX2OBJ_AnmMain( BOX2_APP_WORK * appwk );
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_AnmSet( BOX2_APP_WORK * appwk, u32 id, u32 anm );
+
+extern void BOX2OBJ_AutoAnmSet( BOX2_APP_WORK * appwk, u32 id, u32 anm );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1072,3 +1077,6 @@ extern void BOX2OBJ_FontOamExit( BOX2_APP_WORK * appwk );
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_FontOamResetBmp( BOX2_APP_WORK * appwk, GFL_BMPWIN * win, u32 id );
+
+extern void BOX2OBJ_SetTouchBarButton( BOX2_SYS_WORK * syswk, BOOL ret, BOOL exit, BOOL status );
+extern void BOX2OBJ_VanishTouchBarButton( BOX2_SYS_WORK * syswk );

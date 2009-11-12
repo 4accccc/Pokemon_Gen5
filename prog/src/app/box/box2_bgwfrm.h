@@ -187,3 +187,5 @@ extern void BOX2BGWFRM_WallPaperFrameOutSet( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_YStatusButtonPut( BGWINFRM_WORK * wk );
 
 extern void BOX2BGWFRM_SubDispWinFrmMove( BOX2_SYS_WORK * syswk );
+
+extern void BOX2BGWFRM_PutTouchBar( BGWINFRM_WORK * wk );

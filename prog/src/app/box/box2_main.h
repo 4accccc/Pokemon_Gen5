@@ -20,34 +20,27 @@
 #include "app/app_taskmenu.h"
 #include "app/box2.h"
 
-/*
-//#include "system/clact_tool.h"
-//↑[GS_CONVERT_TAG]
-#include "system/msgdata.h"
-#include "system/numfont.h"
-#include "system/wordset.h"
-#include "system/window.h"
-#include "system/touch_subwindow.h"
-#include "system/fontoam.h"
-#include "poketool/pokeparty.h"
-#include "poketool/boxdata.h"
-#include "itemtool/myitem.h"
-*/
 
 //============================================================================================
 //	定数定義
 //============================================================================================
 
 // BGパレット
-#define	BOX2MAIN_BG_PAL_YNWIN		( 9 )		// はい・いいえウィンド
-#define	BOX2MAIN_BG_PAL_TALKWIN	( 10 )
-#define	BOX2MAIN_BG_PAL_TALKFNT	( 11 )
-#define	BOX2MAIN_BG_PAL_SELWIN	( 12 )		// 選択ボタン（２本）
-#define	BOX2MAIN_BG_PAL_WALL1		( 14 )		// 壁紙１
-#define	BOX2MAIN_BG_PAL_WALL2		( 15 )		// 壁紙２
+#define	BOX2MAIN_BG_PAL_TOUCH_BAR	( 7 )			// タッチバー
+#define	BOX2MAIN_BG_PAL_YNWIN			( 8 )			// はい・いいえウィンド
+#define	BOX2MAIN_BG_PAL_SYSWIN		( 10 )		// メッセージウィンドウ
+#define	BOX2MAIN_BG_PAL_SYSFNT		( 11 )		// メッセージフォント
+#define	BOX2MAIN_BG_PAL_SELWIN		( 12 )		// 選択ボタン（２本）
+#define	BOX2MAIN_BG_PAL_WALL1			( 14 )		// 壁紙１
+#define	BOX2MAIN_BG_PAL_WALL2			( 15 )		// 壁紙２
+//↑使用確定-----------------------------------------------------------
 
 #define	BOX2MAIN_BG_PAL_SYSFNT_S	( 15 )
 
+
+// システムウィンドウ定義
+//#define	BOX2MAIN_SYSWIN_CGX_SIZ	( TALK_WIN_CGX_SIZ )
+//#define	BOX2MAIN_SYSWIN_CGX_POS	( 8 )			// 適当（タッチバーのキャラの後に入れる）
 // 選択ウィンドウ定義
 #define	BOX2MAIN_SELWIN_CGX_SIZ	( 3 * 4 )
 #define	BOX2MAIN_SELWIN_CGX_POS	( 1024 - BOX2MAIN_SELWIN_CGX_SIZ * 2 )
@@ -56,28 +49,12 @@
 // はい・いいえウィンドウ定義
 #define	BOX2MAIN_YNWIN_CGX_SIZ	( 9 )//( TOUCH_SW_USE_CHAR_NUM )
 #define	BOX2MAIN_YNWIN_CGX_POS	( BOX2MAIN_SELWIN_CGX_POS - BOX2MAIN_YNWIN_CGX_SIZ )
-// システムウィンドウ定義
-//#define	BOX2MAIN_SYSWIN_CGX_SIZ	( TALK_WIN_CGX_SIZ )
-#define	BOX2MAIN_SYSWIN_CGX_POS	( BOX2MAIN_YNWIN_CGX_POS - TALK_WIN_CGX_SIZ )
 
-
-/*
-// BGフレーム
-#define	BOX2MAIN_BGF_STR_M	( GFL_BG_FRAME0_M )
-//↑[GS_CONVERT_TAG]
-#define	BOX2MAIN_BGF_BTN_M	( GFL_BG_FRAME1_M )
-//↑[GS_CONVERT_TAG]
-#define	BOX2MAIN_BGF_BG_M	( GFL_BG_FRAME2_M )
-//↑[GS_CONVERT_TAG]
-#define	BOX2MAIN_BGF_WALL_M	( GFL_BG_FRAME3_M )
-//↑[GS_CONVERT_TAG]
-#define	BOX2MAIN_BGF_STR_S	( GFL_BG_FRAME0_S )
-//↑[GS_CONVERT_TAG]
-#define	BOX2MAIN_BGF_BG_S	( GFL_BG_FRAME1_S )
-//↑[GS_CONVERT_TAG]
-#define	BOX2MAIN_BGF_WIN_S	( GFL_BG_FRAME2_S )
-//↑[GS_CONVERT_TAG]
-*/
+// タッチバー定義
+#define	BOX2MAIN_TOUCH_BAR_PX		( 0 )
+#define	BOX2MAIN_TOUCH_BAR_PY		( 21 )
+#define	BOX2MAIN_TOUCH_BAR_SX		( 32 )
+#define	BOX2MAIN_TOUCH_BAR_SY		( 3 )
 
 // ポケモンアイコン数
 #define	BOX2OBJ_POKEICON_H_MAX		( BOX_MAX_COLUMN )
@@ -114,6 +91,7 @@ enum {
 	BOX2MAIN_CHRRES_TRAYICON,
 	BOX2MAIN_CHRRES_WPICON = BOX2MAIN_CHRRES_TRAYICON + BOX2OBJ_TRAYICON_MAX,
 	BOX2MAIN_CHRRES_BOXOBJ = BOX2MAIN_CHRRES_WPICON + BOX2OBJ_WPICON_MAX,
+	BOX2MAIN_CHRRES_TOUCH_BAR,
 	BOX2MAIN_CHRRES_MAX
 };
 // パレットリソースID
@@ -127,6 +105,7 @@ enum {
 	BOX2MAIN_PALRES_TRAYICON,
 	BOX2MAIN_PALRES_WPICON,
 	BOX2MAIN_PALRES_BOXOBJ,
+	BOX2MAIN_PALRES_TOUCH_BAR,
 	BOX2MAIN_PALRES_MAX
 };
 // セルリソースID
@@ -139,6 +118,7 @@ enum {
 	BOX2MAIN_CELRES_TRAYICON,
 	BOX2MAIN_CELRES_WPICON,
 	BOX2MAIN_CELRES_BOXOBJ,
+	BOX2MAIN_CELRES_TOUCH_BAR,
 	BOX2MAIN_CELRES_MAX
 };
 
@@ -155,6 +135,10 @@ enum {
 
 	BOX2OBJ_ID_HAND_CURSOR,	// 手カーソル
 	BOX2OBJ_ID_HAND_SHADOW,	// 手カーソル影
+
+	BOX2OBJ_ID_TB_CANCEL,		// タッチバー戻るボタン（ボックスメニューへ）
+	BOX2OBJ_ID_TB_END,			// タッチバー終了ボタン（C-gearへ）
+	BOX2OBJ_ID_TB_STATUS,		// タッチバーステータスボタン
 
 	BOX2OBJ_ID_ITEMICON,
 	BOX2OBJ_ID_ITEMICON_SUB,
@@ -177,6 +161,7 @@ enum {
 
 // BMPWIN ID
 enum {
+	// 上画面
 	BOX2BMPWIN_ID_NAME = 0,		// ポケモン名
 	BOX2BMPWIN_ID_NICKNAME,		// ニックネーム
 	BOX2BMPWIN_ID_LV,			// レベル
@@ -204,20 +189,25 @@ enum {
 	BOX2BMPWIN_ID_ITEMLABEL2,	// アイテム名（説明ウィンドウのタブ部分）（スワップ用）
 	BOX2BMPWIN_ID_ITEMINFO2,	// アイテム説明（スワップ用）
 
-	BOX2BMPWIN_ID_TEMOCHI,		//「てもちポケモン」
-	BOX2BMPWIN_ID_IDOU,			//「ポケモンいどう」
-	BOX2BMPWIN_ID_MODORU,		//「もどる」
-	BOX2BMPWIN_ID_YAMERU,		//「やめる」
-	BOX2BMPWIN_ID_TOZIRU,		//「とじる」
 
+// ↓使用確定-----------------------------------------------------
+	// 下画面
 	BOX2BMPWIN_ID_MENU1,		// メニュー１
 	BOX2BMPWIN_ID_MENU2,		// メニュー２
 	BOX2BMPWIN_ID_MENU3,		// メニュー３
 	BOX2BMPWIN_ID_MENU4,		// メニュー４
 	BOX2BMPWIN_ID_MENU5,		// メニュー５
+	BOX2BMPWIN_ID_MENU6,		// メニュー６
 
 	BMPWIN_MARK_ENTER,			// マーキング決定
 	BMPWIN_MARK_CANCEL,			// マーキングキャンセル
+// ↑使用確定-----------------------------------------------------
+
+	BOX2BMPWIN_ID_TEMOCHI,		//「てもちポケモン」
+	BOX2BMPWIN_ID_IDOU,			//「ポケモンいどう」
+	BOX2BMPWIN_ID_MODORU,		//「もどる」
+	BOX2BMPWIN_ID_YAMERU,		//「やめる」
+	BOX2BMPWIN_ID_TOZIRU,		//「とじる」
 
 	BMPWIN_PARTY_CNG,			// 手持ちポケモン入れ替えorやめる
 
@@ -238,24 +228,34 @@ enum {
 
 // BGWINFRAME
 enum {
-	BOX2MAIN_WINFRM_MOVE = 0,	// ボックス移動フレーム
-	BOX2MAIN_WINFRM_PARTY,		// 手持ちポケモンフレーム
-	BOX2MAIN_WINFRM_MARK,		// マーキングフレーム
-	BOX2MAIN_WINFRM_MENU1,		// メニューフレーム
-	BOX2MAIN_WINFRM_MENU2,		// メニューフレーム
-	BOX2MAIN_WINFRM_MENU3,		// メニューフレーム
-	BOX2MAIN_WINFRM_MENU4,		// メニューフレーム
-	BOX2MAIN_WINFRM_MENU5,		// メニューフレーム
-	BOX2MAIN_WINFRM_POKE_BTN,	//「てもちポケモン」ボタン
-	BOX2MAIN_WINFRM_MV_BTN,		//「ポケモンいどう」ボタン
-	BOX2MAIN_WINFRM_RET_BTN,	//「もどる」ボタン
-	BOX2MAIN_WINFRM_CLOSE_BTN,	//「とじる」ボタン
+	BOX2MAIN_WINFRM_MENU1 = 0,	// メニューフレーム
+	BOX2MAIN_WINFRM_MENU2,			// メニューフレーム
+	BOX2MAIN_WINFRM_MENU3,			// メニューフレーム
+	BOX2MAIN_WINFRM_MENU4,			// メニューフレーム
+	BOX2MAIN_WINFRM_MENU5,			// メニューフレーム
+	BOX2MAIN_WINFRM_MENU6,			// メニューフレーム
+
+	BOX2MAIN_WINFRM_TOUCH_BAR,	// タッチバー
+
+	BOX2MAIN_WINFRM_MARK,				// マーキングフレーム
+	BOX2MAIN_WINFRM_PARTY,			// 手持ちポケモンフレーム
+// ↑使用確定------------------------------------------------
+
+
+
+
+	BOX2MAIN_WINFRM_MOVE,			// ボックス移動フレーム
+
+//	BOX2MAIN_WINFRM_POKE_BTN,	//「てもちポケモン」ボタン
+//	BOX2MAIN_WINFRM_MV_BTN,		//「ポケモンいどう」ボタン
+//	BOX2MAIN_WINFRM_RET_BTN,	//「もどる」ボタン
+//	BOX2MAIN_WINFRM_CLOSE_BTN,	//「とじる」ボタン
 	BOX2MAIN_WINFRM_BOXMV_MENU,	// ボックス移動時のメニュー
 	BOX2MAIN_WINFRM_WPCHG,		// 壁紙変更フレーム
 	BOX2MAIN_WINFRM_BOXMV_BTN,	// ボックス移動時のボタン
 	BOX2MAIN_WINFRM_Y_ST_BTN,	// Ｙボタンステータス
 
-	BOX2MAIN_WINFRM_SUBDISP,	// 上画面用（技・持ち物）
+//	BOX2MAIN_WINFRM_SUBDISP,	// 上画面用（技・持ち物）
 
 	BOX2MAIN_WINFRM_MAX,
 };
@@ -342,6 +342,8 @@ typedef struct {
 
 	PRINT_UTIL	win[BOX2BMPWIN_ID_MAX];		// BMPWIN
 
+	GFL_ARCUTIL_TRANSINFO	syswinInfo;
+
 	// はい・いいえ関連
 //	TOUCH_SW_SYS * tsw;		// タッチウィンドウ
 	APP_TASKMENU_ITEMWORK	ynList[2];
@@ -386,6 +388,8 @@ typedef struct {
 
 	u8	party_frm;			// 手持ちポケモンフレーム制御
 
+	u8	msg_put;				// メッセージを表示するか
+
 	BOOL poke_mv_cur_flg;	// ポケモンアイコン移動後にアウトラインを表示するか
 
 	u32	pokeMark;			// マーキング変更ワーク
@@ -406,6 +410,7 @@ typedef struct {
 	int	wait;									// ウェイト
 
 	void * seqwk;			// シーケンスワーク
+	int	sub_seq;			// シーケンス内シーケンス
 
 }BOX2_APP_WORK;
 
@@ -451,6 +456,10 @@ typedef struct {
 	u8	party_sel_flg;		// 手持ち選択フラグ
 	u8	box_mv_flg;			// ボックス移動フラグ
 //	u8	box_mv_pos;			// ボックス移動選択位置
+
+	BOOL	tb_ret_flg;
+	BOOL	tb_exit_flg;
+	BOOL	tb_status_flg;
 
 	u32	cur_rcv_pos;		// カーソル表示復帰位置
 
@@ -1016,6 +1025,10 @@ extern BOOL BOX2MAIN_ButtonAnmMain( BOX2_SYS_WORK * syswk );
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2MAIN_KeyTouchStatusSet( BOX2_SYS_WORK * syswk );
+
+
+extern void BOX2MAIN_ResetTouchBar( BOX2_SYS_WORK * syswk );
+
 
 
 //============================================================================================
@@ -2213,7 +2226,7 @@ extern int BOX2MAIN_VFuncMarkingFrameMove( BOX2_SYS_WORK * syswk );
  * @retval	"0 = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-extern int BOX2MAIN_VFuncUnderButtonMove( BOX2_SYS_WORK * syswk );
+//extern int BOX2MAIN_VFuncUnderButtonMove( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**

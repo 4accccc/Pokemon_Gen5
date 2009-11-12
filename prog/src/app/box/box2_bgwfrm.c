@@ -26,7 +26,7 @@
 
 // マーキング
 #define	MARKING_FRM_SX	( 11 )						// マーキングフレームＸサイズ
-#define	MARKING_FRM_SY	( 18 )						// マーキングフレームＹサイズ
+#define	MARKING_FRM_SY	( 15 )						// マーキングフレームＹサイズ
 //#define	MARKING_FRM_PX	( 32 - MARKING_FRM_SX )		// マーキングフレームＸ表示座標
 //#define	MARKING_FRM_PY	( 26 )						// マーキングフレームＸ表示座標
 
@@ -68,7 +68,7 @@
 // ポケモン選択メニューフレームデータ
 #define	WINFRM_MENU_INIT_PX	( 32 )		// 表示Ｘ座標
 #define	WINFRM_MENU_PX		( 21 )		// 表示Ｘ座標
-#define	WINFRM_MENU_PY		( 5 )		// 表示Ｙ座標
+#define	WINFRM_MENU_PY		( 2 )		// 表示Ｙ座標
 #define	WINFRM_MENU_SY		( 3 )		// 表示Ｙサイズ
 
 //「ボックスをきりかえる」ボタンフレームデータ
@@ -96,13 +96,13 @@
 
 // マーキング配置データ
 #define	MARK_DEF_PX		( 3 )
-#define	MARK_DEF_PY		( 2 )
+#define	MARK_DEF_PY		( 1 )
 #define	MARK_DEF_SX		( 4 )
 #define	MARK_DEF_SY		( 3 )
 
 // マーキングフレームデータ
 #define	WINFRM_MARK_PX			( 21 )
-#define	WINFRM_MARK_PY			( 6 )
+#define	WINFRM_MARK_PY			( 5 )
 #define	WINFRM_MARK_IN_START_PY	( 24 )
 #define	WINFRM_MARK_MV_CNT		( WINFRM_MARK_IN_START_PY - WINFRM_MARK_PY )
 
@@ -141,6 +141,7 @@ static void FrameArcLoad( BGWINFRM_WORK * wk, u32 index, u32 dataIdx );
 static void PokeMenuInitPosSet( BGWINFRM_WORK * wk );
 static void BoxMoveButtonInitPut( BGWINFRM_WORK * wk );
 static void YStatusButtonInitPut( BGWINFRM_WORK * wk );
+static void InitTouchBar( BOX2_SYS_WORK * syswk );
 
 
 
@@ -159,16 +160,24 @@ void BOX2BGWFRM_Init( BOX2_SYS_WORK * syswk )
 
 	appwk->wfrm = BGWINFRM_Create( BGWINFRM_TRANS_VBLANK, BOX2MAIN_WINFRM_MAX, HEAPID_BOX_APP );
 
+	BOX2BMP_PokeMenuBgFrmWkMake( appwk );				// メニュー
+	InitTouchBar( syswk );											// タッチバー
+
+
+
+
+
 	// 壁紙変更フレーム
 	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_WPCHG, GFL_BG_FRAME1_M, WPCHG_FRM_SX, WPCHG_FRM_SY );
 	// 手持ちポケモンフレーム
 	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_PARTY, GFL_BG_FRAME1_M, PARTYPOKE_FRM_SX, PARTYPOKE_FRM_SY );
 	// マーキングフレーム
-	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_MARK, GFL_BG_FRAME0_M, MARKING_FRM_SX, MARKING_FRM_SY );
+//	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_MARK, GFL_BG_FRAME0_M, MARKING_FRM_SX, MARKING_FRM_SY );
+	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_MARK, GFL_BG_FRAME1_M, MARKING_FRM_SX, MARKING_FRM_SY );
 	// ボックス移動フレーム
-	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_BOXMV_MENU, GFL_BG_FRAME0_M, BOX2BMP_BOXMVMENU_SX, BOX2BMP_BOXMVMENU_SY );
+//	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_BOXMV_MENU, GFL_BG_FRAME0_M, BOX2BMP_BOXMVMENU_SX, BOX2BMP_BOXMVMENU_SY );
+	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_BOXMV_MENU, GFL_BG_FRAME1_M, BOX2BMP_BOXMVMENU_SX, BOX2BMP_BOXMVMENU_SY );
 
-	BOX2BMP_PokeMenuBgFrmWkMake( appwk );				// メニュー
 
 	BOX2BMP_TemochiButtonBgFrmWkMake( appwk );	//「てもちポケモン」
 	BOX2BMP_IdouButtonBgFrmWkMake( appwk );			//「ポケモンいどう」
@@ -192,6 +201,7 @@ void BOX2BGWFRM_Init( BOX2_SYS_WORK * syswk )
 		BOX2BMP_PartyCngButtonFrmPut( appwk );
 	}
 
+/*	上画面　技・アイテムフレーム
 	if( syswk->dat->callMode == BOX_MODE_ITEM ){
 		BGWINFRM_Add(
 			appwk->wfrm, BOX2MAIN_WINFRM_SUBDISP,
@@ -209,6 +219,7 @@ void BOX2BGWFRM_Init( BOX2_SYS_WORK * syswk )
 			SUBDISP_WAZA_FRM_IN_PX, SUBDISP_WAZA_FRM_IN_PY );
 		FrameArcLoad( appwk->wfrm, BOX2MAIN_WINFRM_SUBDISP, NARC_box_gra_sub_waza_frm_lz_NSCR );
 	}
+*/
 
 	FrameArcLoad( appwk->wfrm, BOX2MAIN_WINFRM_MARK, NARC_box_gra_box_mark_bg_lz_NSCR );
 	BOX2BMP_MarkingButtonFrmPut( syswk->app );
@@ -343,11 +354,13 @@ void BOX2BGWFRM_PartyPokeFrameInSet( BGWINFRM_WORK * wk )
 	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_PARTY, &px, &py );
 	if( py != WINFRM_PARTYPOKE_PY ){
 		BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_PARTY, 0, -1, py-WINFRM_PARTYPOKE_PY );
+/*
 		if( px == WINFRM_PARTYPOKE_LX ){
 			BGWINFRM_FramePut(
 				wk, BOX2MAIN_WINFRM_RET_BTN, WINFRM_PARTYPOKE_RET_PX, py+WINFRM_PARTYPOKE_RET_PY );
 			BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_RET_BTN, 0, -1, py-WINFRM_PARTYPOKE_PY );
 		}
+*/
 	}
 }
 
@@ -368,11 +381,13 @@ void BOX2BGWFRM_PartyPokeFrameOutSet( BGWINFRM_WORK * wk )
 	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_PARTY, &px, &py );
 	if( py != WINFRM_PARTYPOKE_INIT_PY ){
 		BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_PARTY, 0, 1, WINFRM_PARTYPOKE_INIT_PY-py );
+/*
 		if( px == WINFRM_PARTYPOKE_LX ){
 			BGWINFRM_FramePut(
 				wk, BOX2MAIN_WINFRM_RET_BTN, WINFRM_PARTYPOKE_RET_PX, py+WINFRM_PARTYPOKE_RET_PY );
 			BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_RET_BTN, 0, 1, WINFRM_PARTYPOKE_INIT_PY-py );
 		}
+*/
 	}
 }
 
@@ -432,7 +447,7 @@ void BOX2BGWFRM_PartyPokeFrameOnlyInSet( BGWINFRM_WORK * wk )
 void BOX2BGWFRM_PartyPokeFrameRightMoveSet( BGWINFRM_WORK * wk )
 {
 	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_PARTY, 1, 0, BOX2MAIN_PARTYPOKE_FRM_H_CNT );
-	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_RET_BTN, 1, 0, BOX2MAIN_PARTYPOKE_FRM_H_CNT );
+//	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_RET_BTN, 1, 0, BOX2MAIN_PARTYPOKE_FRM_H_CNT );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -461,12 +476,13 @@ void BOX2BGWFRM_AzukeruPartyPokeFrameRightMoveSet( BGWINFRM_WORK * wk )
 void BOX2BGWFRM_PartyPokeFrameLeftMoveSet( BGWINFRM_WORK * wk )
 {
 	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_PARTY, -1, 0, BOX2MAIN_PARTYPOKE_FRM_H_CNT );
-
+/*
 	BGWINFRM_FramePut(
 		wk, BOX2MAIN_WINFRM_RET_BTN,
 		WINFRM_PARTYPOKE_RET_PX+BOX2MAIN_PARTYPOKE_FRM_H_CNT,
 		WINFRM_PARTYPOKE_PY+WINFRM_PARTYPOKE_RET_PY );
 	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_RET_BTN, -1, 0, BOX2MAIN_PARTYPOKE_FRM_H_CNT );
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -502,7 +518,8 @@ BOOL BOX2BGWFRM_PartyPokeFrameMove( BOX2_SYS_WORK * syswk )
 	BGWINFRM_PosGet( syswk->app->wfrm, BOX2MAIN_WINFRM_PARTY, &x1, &y1 );
 
 	party_mv = BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_PARTY );
-	ret_mv   = BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_RET_BTN );
+//	ret_mv   = BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_RET_BTN );
+	ret_mv   = 0;
 	BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_Y_ST_BTN );
 
 	BGWINFRM_PosGet( syswk->app->wfrm, BOX2MAIN_WINFRM_PARTY, &x2, &y2 );
@@ -588,10 +605,10 @@ static void PokeMenuInitPosSet( BGWINFRM_WORK * wk )
 {
 	u32	i;
 
-	for( i=0; i<5; i++ ){
+	for( i=0; i<6; i++ ){
 		BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_MENU1+i, WINFRM_MENU_INIT_PX, WINFRM_MENU_PY+i*WINFRM_MENU_SY );
 	}
-	BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_CLOSE_BTN, WINFRM_MODORU_PX, WINFRM_MODORU_PY+BOXPARTY_BTN_CNT );
+//	BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_CLOSE_BTN, WINFRM_MODORU_PX, WINFRM_MODORU_PY+BOXPARTY_BTN_CNT );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -607,10 +624,10 @@ void BOX2BGWFRM_PokeMenuOpenPosSet( BGWINFRM_WORK * wk )
 {
 	u32	i;
 
-	for( i=0; i<5; i++ ){
+	for( i=0; i<6; i++ ){
 		BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_MENU1+i, WINFRM_MENU_PX, WINFRM_MENU_PY+i*WINFRM_MENU_SY );
 	}
-	BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_CLOSE_BTN, WINFRM_MODORU_PX, WINFRM_MODORU_PY );
+//	BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_CLOSE_BTN, WINFRM_MODORU_PX, WINFRM_MODORU_PY );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -626,12 +643,12 @@ void BOX2BGWFRM_PokeMenuOff( BGWINFRM_WORK * wk )
 {
 	u32	i;
 
-	for( i=0; i<5; i++ ){
+	for( i=0; i<6; i++ ){
 		BGWINFRM_FrameOff( wk, BOX2MAIN_WINFRM_MENU1+i );
 		BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_MENU1+i, WINFRM_MENU_INIT_PX, WINFRM_MENU_PY+i*WINFRM_MENU_SY );
 	}
-	BGWINFRM_FrameOff( wk, BOX2MAIN_WINFRM_CLOSE_BTN );
-	BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_CLOSE_BTN, WINFRM_MODORU_PX, WINFRM_MODORU_PY+BOXPARTY_BTN_CNT );
+//	BGWINFRM_FrameOff( wk, BOX2MAIN_WINFRM_CLOSE_BTN );
+//	BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_CLOSE_BTN, WINFRM_MODORU_PX, WINFRM_MODORU_PY+BOXPARTY_BTN_CNT );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -651,12 +668,12 @@ void BOX2BGWFRM_PokeMenuInSet( BGWINFRM_WORK * wk )
 	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_MENU1, &px, &py );
 	if( px == WINFRM_MENU_PX ){ return; }
 
-	for( i=0; i<5; i++ ){
+	for( i=0; i<6; i++ ){
 		BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_MENU1+i, -1, 0, px-WINFRM_MENU_PX );
 	}
 
-	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_CLOSE_BTN, &px, &py );
-	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_CLOSE_BTN, 0, -1, py-WINFRM_MODORU_PY );
+//	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_CLOSE_BTN, &px, &py );
+//	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_CLOSE_BTN, 0, -1, py-WINFRM_MODORU_PY );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -676,12 +693,12 @@ void BOX2BGWFRM_PokeMenuOutSet( BGWINFRM_WORK * wk )
 	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_MENU1, &px, &py );
 	if( px == WINFRM_MENU_INIT_PX ){ return; }
 
-	for( i=0; i<5; i++ ){
+	for( i=0; i<6; i++ ){
 		BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_MENU1+i, 1, 0, WINFRM_MENU_INIT_PX-px );
 	}
 
-	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_CLOSE_BTN, &px, &py );
-	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_CLOSE_BTN, 0, 1, WINFRM_MODORU_PY+BOXPARTY_BTN_CNT-py );
+//	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_CLOSE_BTN, &px, &py );
+//	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_CLOSE_BTN, 0, 1, WINFRM_MODORU_PY+BOXPARTY_BTN_CNT-py );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -701,14 +718,16 @@ BOOL BOX2BGWFRM_PokeMenuMoveMain( BGWINFRM_WORK * wk )
 	
 	ret = FALSE;
 
-	for( i=0; i<5; i++ ){
+	for( i=0; i<6; i++ ){
 		if( BGWINFRM_MoveOne( wk, BOX2MAIN_WINFRM_MENU1+i ) == 1 ){
 			ret = TRUE;
 		}
 	}
+/*
 	if( BGWINFRM_MoveOne( wk, BOX2MAIN_WINFRM_CLOSE_BTN ) == 1 ){
 		ret = TRUE;
 	}
+*/
 
 	return ret;
 }
@@ -886,6 +905,45 @@ BOOL BOX2BGWFRM_YStatusButtonCheck( BGWINFRM_WORK * wk )
 
 
 //============================================================================================
+//	タッチバー
+//============================================================================================
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タッチバー初期化
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void InitTouchBar( BOX2_SYS_WORK * syswk )
+{
+	u16 * scr = GFL_BG_GetScreenBufferAdrs( GFL_BG_FRAME0_M );
+
+	scr = &scr[BOX2MAIN_TOUCH_BAR_PY*BOX2MAIN_TOUCH_BAR_SX+BOX2MAIN_TOUCH_BAR_PX];
+	BGWINFRM_Add(
+		syswk->app->wfrm, BOX2MAIN_WINFRM_TOUCH_BAR,
+		GFL_BG_FRAME0_M, BOX2MAIN_TOUCH_BAR_SX, BOX2MAIN_TOUCH_BAR_SY );
+	BGWINFRM_FrameSet( syswk->app->wfrm, BOX2MAIN_WINFRM_TOUCH_BAR, scr );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タッチバー配置
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BGWFRM_PutTouchBar( BGWINFRM_WORK * wk )
+{
+	BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_TOUCH_BAR, BOX2MAIN_TOUCH_BAR_PX, BOX2MAIN_TOUCH_BAR_PY );
+}
+
+
+//============================================================================================
 //	その他
 //============================================================================================
 
@@ -900,8 +958,10 @@ BOOL BOX2BGWFRM_YStatusButtonCheck( BGWINFRM_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_ButtonPutTemochi( BOX2_SYS_WORK * syswk )
 {
+/*
 	BOX2BMP_ButtonPutTemochi( syswk );
 	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_POKE_BTN, WINFRM_TEMOCHI_PX, WINFRM_TEMOCHI_PY );
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -915,7 +975,7 @@ void BOX2BGWFRM_ButtonPutTemochi( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_ButtonOutPutTemochi( BOX2_SYS_WORK * syswk )
 {
-	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_POKE_BTN, WINFRM_TEMOCHI_PX, WINFRM_TEMOCHI_OUT_PY );
+//	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_POKE_BTN, WINFRM_TEMOCHI_PX, WINFRM_TEMOCHI_OUT_PY );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -929,7 +989,7 @@ void BOX2BGWFRM_ButtonOutPutTemochi( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_TemochiButtonOutSet( BGWINFRM_WORK * wk )
 {
-	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_POKE_BTN, 0, 1, BOXPARTY_BTN_CNT );
+//	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_POKE_BTN, 0, 1, BOXPARTY_BTN_CNT );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -943,7 +1003,7 @@ void BOX2BGWFRM_TemochiButtonOutSet( BGWINFRM_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_TemochiButtonInSet( BGWINFRM_WORK * wk )
 {
-	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_POKE_BTN, 0, -1, BOXPARTY_BTN_CNT );
+//	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_POKE_BTN, 0, -1, BOXPARTY_BTN_CNT );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -957,8 +1017,10 @@ void BOX2BGWFRM_TemochiButtonInSet( BGWINFRM_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_ButtonPutIdou( BOX2_SYS_WORK * syswk )
 {
+/*
 	BOX2BMP_ButtonPutIdou( syswk );
 	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_MV_BTN, WINFRM_IDOU_PX, WINFRM_IDOU_PY );
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -972,7 +1034,7 @@ void BOX2BGWFRM_ButtonPutIdou( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_ButtonOutPutIdou( BOX2_SYS_WORK * syswk )
 {
-	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_MV_BTN, WINFRM_IDOU_PX, WINFRM_IDOU_OUT_PY );
+//	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_MV_BTN, WINFRM_IDOU_PX, WINFRM_IDOU_OUT_PY );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -986,7 +1048,7 @@ void BOX2BGWFRM_ButtonOutPutIdou( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_IdouButtonOutSet( BGWINFRM_WORK * wk )
 {
-	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_MV_BTN, 0, 1, BOXPARTY_BTN_CNT );
+//	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_MV_BTN, 0, 1, BOXPARTY_BTN_CNT );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1000,7 +1062,7 @@ void BOX2BGWFRM_IdouButtonOutSet( BGWINFRM_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_IdouButtonInSet( BGWINFRM_WORK * wk )
 {
-	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_MV_BTN, 0, -1, BOXPARTY_BTN_CNT );
+//	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_MV_BTN, 0, -1, BOXPARTY_BTN_CNT );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1015,7 +1077,7 @@ void BOX2BGWFRM_IdouButtonInSet( BGWINFRM_WORK * wk )
 void BOX2BGWFRM_ButtonPutModoru( BOX2_SYS_WORK * syswk )
 {
 	BOX2BMP_ButtonPutModoru( syswk );
-	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_RET_BTN, WINFRM_MODORU_PX, WINFRM_MODORU_PY );
+//	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_RET_BTN, WINFRM_MODORU_PX, WINFRM_MODORU_PY );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1030,7 +1092,7 @@ void BOX2BGWFRM_ButtonPutModoru( BOX2_SYS_WORK * syswk )
 void BOX2BGWFRM_ButtonPutYameru( BOX2_SYS_WORK * syswk )
 {
 	BOX2BMP_ButtonPutYameru( syswk );
-	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_RET_BTN, WINFRM_MODORU_PX, WINFRM_MODORU_PY );
+//	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_RET_BTN, WINFRM_MODORU_PX, WINFRM_MODORU_PY );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1044,8 +1106,8 @@ void BOX2BGWFRM_ButtonPutYameru( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_RetButtonOutPut( BGWINFRM_WORK * wk )
 {
-	BGWINFRM_FrameOff( wk, BOX2MAIN_WINFRM_RET_BTN );
-	BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_RET_BTN, WINFRM_MODORU_PX, WINFRM_MODORU_OUT_PY );
+//	BGWINFRM_FrameOff( wk, BOX2MAIN_WINFRM_RET_BTN );
+//	BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_RET_BTN, WINFRM_MODORU_PX, WINFRM_MODORU_OUT_PY );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1059,7 +1121,7 @@ void BOX2BGWFRM_RetButtonOutPut( BGWINFRM_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_RetButtonOutSet( BGWINFRM_WORK * wk )
 {
-	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_RET_BTN, 0, 1, BOXPARTY_BTN_CNT );
+//	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_RET_BTN, 0, 1, BOXPARTY_BTN_CNT );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1074,8 +1136,8 @@ void BOX2BGWFRM_RetButtonOutSet( BGWINFRM_WORK * wk )
 void BOX2BGWFRM_RetButtonInSet( BGWINFRM_WORK * wk )
 {
 	// 手持ちフレーム動作で位置が変更されている可能性があるので、再設定
-	BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_RET_BTN, WINFRM_MODORU_PX, WINFRM_MODORU_OUT_PY );
-	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_RET_BTN, 0, -1, BOXPARTY_BTN_CNT );
+//	BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_RET_BTN, WINFRM_MODORU_PX, WINFRM_MODORU_OUT_PY );
+//	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_RET_BTN, 0, -1, BOXPARTY_BTN_CNT );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1090,6 +1152,7 @@ void BOX2BGWFRM_RetButtonInSet( BGWINFRM_WORK * wk )
 //--------------------------------------------------------------------------------------------
 BOOL BOX2BGWFRM_CloseButtonPutCheck( BGWINFRM_WORK * wk )
 {
+/*
 	s8	px, py;
 
 	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_CLOSE_BTN, &px, &py );
@@ -1097,6 +1160,8 @@ BOOL BOX2BGWFRM_CloseButtonPutCheck( BGWINFRM_WORK * wk )
 		return TRUE;
 	}
 	return FALSE;
+*/
+	return TRUE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1110,6 +1175,7 @@ BOOL BOX2BGWFRM_CloseButtonPutCheck( BGWINFRM_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_BoxPartyButtonVanish( BGWINFRM_WORK * wk )
 {
+/*
 	BGWINFRM_FrameOff( wk, BOX2MAIN_WINFRM_POKE_BTN );
 	BGWINFRM_FrameOff( wk, BOX2MAIN_WINFRM_MV_BTN );
 
@@ -1119,6 +1185,7 @@ void BOX2BGWFRM_BoxPartyButtonVanish( BGWINFRM_WORK * wk )
 	BGWINFRM_FramePut(
 		wk, BOX2MAIN_WINFRM_MV_BTN,
 		WINFRM_IDOU_PX, WINFRM_IDOU_PY+BOXPARTY_BTN_CNT );
+*/
 }
 
 
@@ -1137,8 +1204,10 @@ void BOX2BGWFRM_BoxPartyButtonVanish( BGWINFRM_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_SubDispWazaFrmInSet( BOX2_APP_WORK * appwk )
 {
+/*
 	if( appwk->subdisp_waza_put == 0 ){ return; }
 	BGWINFRM_MoveInit( appwk->wfrm, BOX2MAIN_WINFRM_SUBDISP, -1, 0, SUBDISP_WAZA_FRM_SX );
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1152,8 +1221,10 @@ void BOX2BGWFRM_SubDispWazaFrmInSet( BOX2_APP_WORK * appwk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_SubDispWazaFrmOutSet( BOX2_APP_WORK * appwk )
 {
+/*
 	if( appwk->subdisp_waza_put == 0 ){ return; }
 	BGWINFRM_MoveInit( appwk->wfrm, BOX2MAIN_WINFRM_SUBDISP, 1, 0, SUBDISP_WAZA_FRM_SX );
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1167,11 +1238,13 @@ void BOX2BGWFRM_SubDispWazaFrmOutSet( BOX2_APP_WORK * appwk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_SubDispWazaFrmInPosSet( BOX2_APP_WORK * appwk )
 {
+/*
 	if( appwk->subdisp_waza_put == 0 ){ return; }
 	BGWINFRM_FrameOff( appwk->wfrm, BOX2MAIN_WINFRM_SUBDISP );
 	BGWINFRM_FramePut(
 		appwk->wfrm, BOX2MAIN_WINFRM_SUBDISP,
 		SUBDISP_WAZA_FRM_IN_PX-SUBDISP_WAZA_FRM_SX, SUBDISP_WAZA_FRM_IN_PY );
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1185,9 +1258,11 @@ void BOX2BGWFRM_SubDispWazaFrmInPosSet( BOX2_APP_WORK * appwk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_SubDispWazaFrmOutPosSet( BGWINFRM_WORK * wk )
 {
+/*
 	BGWINFRM_FrameOff( wk, BOX2MAIN_WINFRM_SUBDISP );
 	BGWINFRM_FramePut(
 		wk, BOX2MAIN_WINFRM_SUBDISP, SUBDISP_WAZA_FRM_IN_PX, SUBDISP_WAZA_FRM_IN_PY );
+*/
 }
 
 
@@ -1206,6 +1281,7 @@ void BOX2BGWFRM_SubDispWazaFrmOutPosSet( BGWINFRM_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_SubDispItemFrmInSet( BGWINFRM_WORK * wk )
 {
+/*
 	s8	px, py;
 
 	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_SUBDISP, &px, &py );
@@ -1213,6 +1289,7 @@ void BOX2BGWFRM_SubDispItemFrmInSet( BGWINFRM_WORK * wk )
 		return;
 	}
 	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_SUBDISP, 0, -1, SUBDISP_ITEM_FRM_SY-(SUBDISP_ITEM_FRM_IN_PY-py) );
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1226,6 +1303,7 @@ void BOX2BGWFRM_SubDispItemFrmInSet( BGWINFRM_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_SubDispItemFrmOutSet( BGWINFRM_WORK * wk )
 {
+/*
 	s8	px, py;
 
 	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_SUBDISP, &px, &py );
@@ -1233,6 +1311,7 @@ void BOX2BGWFRM_SubDispItemFrmOutSet( BGWINFRM_WORK * wk )
 		return;
 	}
 	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_SUBDISP, 0, 1, SUBDISP_ITEM_FRM_IN_PY-py );
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1246,9 +1325,11 @@ void BOX2BGWFRM_SubDispItemFrmOutSet( BGWINFRM_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_SubDispItemFrmInPosSet( BGWINFRM_WORK * wk )
 {
+/*
 	BGWINFRM_FrameOff( wk, BOX2MAIN_WINFRM_SUBDISP );
 	BGWINFRM_FramePut(
 		wk, BOX2MAIN_WINFRM_SUBDISP, SUBDISP_ITEM_FRM_IN_PX, SUBDISP_ITEM_FRM_IN_PY-SUBDISP_ITEM_FRM_SY );
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1262,9 +1343,11 @@ void BOX2BGWFRM_SubDispItemFrmInPosSet( BGWINFRM_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_SubDispItemFrmOutPosSet( BGWINFRM_WORK * wk )
 {
+/*
 	BGWINFRM_FrameOff( wk, BOX2MAIN_WINFRM_SUBDISP );
 	BGWINFRM_FramePut(
 		wk, BOX2MAIN_WINFRM_SUBDISP, SUBDISP_ITEM_FRM_IN_PX, SUBDISP_ITEM_FRM_IN_PY );
+*/
 }
 
 
@@ -1460,10 +1543,10 @@ void BOX2BGWFRM_BoxMoveFrmPut( BOX2_SYS_WORK * syswk )
 {
 	BOX2BGWFRM_ButtonPutYameru( syswk );
 
-	BGWINFRM_FrameOff( syswk->app->wfrm, BOX2MAIN_WINFRM_POKE_BTN );
-	BGWINFRM_FrameOff( syswk->app->wfrm, BOX2MAIN_WINFRM_MV_BTN );
-	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_POKE_BTN, WINFRM_TEMOCHI_PX, WINFRM_TEMOCHI_OUT_PY );
-	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_MV_BTN, WINFRM_IDOU_PX, WINFRM_IDOU_OUT_PY );
+//	BGWINFRM_FrameOff( syswk->app->wfrm, BOX2MAIN_WINFRM_POKE_BTN );
+//	BGWINFRM_FrameOff( syswk->app->wfrm, BOX2MAIN_WINFRM_MV_BTN );
+//	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_POKE_BTN, WINFRM_TEMOCHI_PX, WINFRM_TEMOCHI_OUT_PY );
+//	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_MV_BTN, WINFRM_IDOU_PX, WINFRM_IDOU_OUT_PY );
 
 	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_MOVE, 0, 0 );
 
@@ -1590,11 +1673,11 @@ void BOX2BGWFRM_BoxThemaMenuOutSet( BGWINFRM_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_ArrangeUnderButtonDel( BOX2_SYS_WORK * syswk )
 {
-	BGWINFRM_FrameOff( syswk->app->wfrm, BOX2MAIN_WINFRM_POKE_BTN );
-	BGWINFRM_FrameOff( syswk->app->wfrm, BOX2MAIN_WINFRM_MV_BTN );
+//	BGWINFRM_FrameOff( syswk->app->wfrm, BOX2MAIN_WINFRM_POKE_BTN );
+//	BGWINFRM_FrameOff( syswk->app->wfrm, BOX2MAIN_WINFRM_MV_BTN );
 
-	BOX2BGWFRM_ButtonOutPutTemochi( syswk );
-	BOX2BGWFRM_ButtonOutPutIdou( syswk );
+//	BOX2BGWFRM_ButtonOutPutTemochi( syswk );
+//	BOX2BGWFRM_ButtonOutPutIdou( syswk );
 }
 
 
@@ -1609,10 +1692,12 @@ void BOX2BGWFRM_ArrangeUnderButtonDel( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_SubDispWinFrmMove( BOX2_SYS_WORK * syswk )
 {
+/*
 	if( syswk->dat->callMode != BOX_MODE_ITEM ){
 		BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_SUBDISP );
 	}else{
 		BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_SUBDISP );
 		BOX2OBJ_ItemIconPutSub( syswk->app );
 	}
+*/
 }

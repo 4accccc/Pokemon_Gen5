@@ -22,6 +22,7 @@
 
 #include "box2_main.h"
 #include "box2_bmp.h"
+#include "box2_obj.h"
 #include "box_gra.naix"
 
 
@@ -201,64 +202,36 @@
 #define	BMPWIN_Y_ST_BTN_SY		( 3 )
 #define	BMPWIN_Y_ST_BTN_PAL		( 2 )
 
-// メニュー１
-#define	BMPWIN_MENU1_FRM	( GFL_BG_FRAME0_M )
-#define	BMPWIN_MENU1_PX		( 0 )//( 21 )
-#define	BMPWIN_MENU1_PY		( 0 )//( 8 )
-#define	BMPWIN_MENU1_SX		( 11 )
-#define	BMPWIN_MENU1_SY		( 3 )
-#define	BMPWIN_MENU1_PAL	( BOX2MAIN_BG_PAL_SELWIN )
-// メニュー２
-#define	BMPWIN_MENU2_FRM	( GFL_BG_FRAME0_M )
-#define	BMPWIN_MENU2_PX		( 0 )//( 21 )
-#define	BMPWIN_MENU2_PY		( 0 )//( 11 )
-#define	BMPWIN_MENU2_SX		( 11 )
-#define	BMPWIN_MENU2_SY		( 3 )
-#define	BMPWIN_MENU2_PAL	( BOX2MAIN_BG_PAL_SELWIN )
-// メニュー３
-#define	BMPWIN_MENU3_FRM	( GFL_BG_FRAME0_M )
-#define	BMPWIN_MENU3_PX		( 0 )//( 21 )
-#define	BMPWIN_MENU3_PY		( 0 )//( 14 )
-#define	BMPWIN_MENU3_SX		( 11 )
-#define	BMPWIN_MENU3_SY		( 3 )
-#define	BMPWIN_MENU3_PAL	( BOX2MAIN_BG_PAL_SELWIN )
-// メニュー４
-#define	BMPWIN_MENU4_FRM	( GFL_BG_FRAME0_M )
-#define	BMPWIN_MENU4_PX		( 0 )//( 21 )
-#define	BMPWIN_MENU4_PY		( 0 )//( 17 )
-#define	BMPWIN_MENU4_SX		( 11 )
-#define	BMPWIN_MENU4_SY		( 3 )
-#define	BMPWIN_MENU4_PAL	( BOX2MAIN_BG_PAL_SELWIN )
-// メニュー５
-#define	BMPWIN_MENU5_FRM	( GFL_BG_FRAME0_M )
-#define	BMPWIN_MENU5_PX		( 0 )//( 21 )
-#define	BMPWIN_MENU5_PY		( 0 )//( 17 )
-#define	BMPWIN_MENU5_SX		( 11 )
-#define	BMPWIN_MENU5_SY		( 3 )
-#define	BMPWIN_MENU5_PAL	( BOX2MAIN_BG_PAL_SELWIN )
+// メニュー
+#define	BMPWIN_MENU_FRM		( GFL_BG_FRAME1_M )//( GFL_BG_FRAME0_M )
+#define	BMPWIN_MENU_PX		( 0 )//( 21 )
+#define	BMPWIN_MENU_PY		( 0 )//( 8 )
+#define	BMPWIN_MENU_SX		( 11 )
+#define	BMPWIN_MENU_SY		( 3 )
+#define	BMPWIN_MENU_PAL		( BOX2MAIN_BG_PAL_SELWIN )
 
 // マーキング決定
-#define	BMPWIN_MARK_ENTER_FRM	( GFL_BG_FRAME0_M )
-#define	BMPWIN_MARK_ENTER_PX	( 2 )
-#define	BMPWIN_MARK_ENTER_PY	( 11 )
-#define	BMPWIN_MARK_ENTER_SX	( 7 )
-#define	BMPWIN_MARK_ENTER_SY	( 2 )
-#define	BMPWIN_MARK_ENTER_PAL	( 1 )
+#define	BMPWIN_MARK_ENTER_FRM		( GFL_BG_FRAME1_M )//( GFL_BG_FRAME0_M )
+#define	BMPWIN_MARK_ENTER_PX		( 2 )
+#define	BMPWIN_MARK_ENTER_PY		( 9 )
+#define	BMPWIN_MARK_ENTER_SX		( 7 )
+#define	BMPWIN_MARK_ENTER_SY		( 3 )
+#define	BMPWIN_MARK_ENTER_PAL		( 1 )
 // マーキングキャンセル
-#define	BMPWIN_MARK_CANCEL_FRM	( GFL_BG_FRAME0_M )
-#define	BMPWIN_MARK_CANCEL_PX	( 2 )
-#define	BMPWIN_MARK_CANCEL_PY	( 15 )
-#define	BMPWIN_MARK_CANCEL_SX	( 7 )
-#define	BMPWIN_MARK_CANCEL_SY	( 2 )
+#define	BMPWIN_MARK_CANCEL_FRM	( GFL_BG_FRAME1_M )//( GFL_BG_FRAME0_M )
+#define	BMPWIN_MARK_CANCEL_PX		( 2 )
+#define	BMPWIN_MARK_CANCEL_PY		( 12 )
+#define	BMPWIN_MARK_CANCEL_SX		( 7 )
+#define	BMPWIN_MARK_CANCEL_SY		( 3 )
 #define	BMPWIN_MARK_CANCEL_PAL	( 1 )
 
 // メッセージ１
 #define	BMPWIN_MSG1_FRM		( GFL_BG_FRAME0_M )
-#define	BMPWIN_MSG1_PX		( 2 )
+#define	BMPWIN_MSG1_PX		( 1 )
 #define	BMPWIN_MSG1_PY		( 21 )
-#define	BMPWIN_MSG1_SX		( 27 )
+#define	BMPWIN_MSG1_SX		( 30 )
 #define	BMPWIN_MSG1_SY		( 2 )
-#define	BMPWIN_MSG1_PAL		( BOX2MAIN_BG_PAL_TALKFNT )
+#define	BMPWIN_MSG1_PAL		( BOX2MAIN_BG_PAL_SYSFNT )
 // メッセージ２
 #define	BMPWIN_MSG2_PX		( 2 )
 #define	BMPWIN_MSG2_PY		( 1 )
@@ -267,7 +240,7 @@
 #define	BMPWIN_MSG3_SY		( 2 )
 
 // ボックス移動のメニュー
-#define	BMPWIN_BOXMV_MENU_FRM	( GFL_BG_FRAME0_M )
+#define	BMPWIN_BOXMV_MENU_FRM	( GFL_BG_FRAME1_M )//( GFL_BG_FRAME0_M )
 #define	BMPWIN_BOXMV_MENU_PX	( 22 )
 #define	BMPWIN_BOXMV_MENU_PY	( 16 )
 #define	BMPWIN_BOXMV_MENU_SX	( 9 )
@@ -450,6 +423,46 @@ static const u8	BoxBmpWinData[][6] =
 	},
 
 /** 下画面 **/
+	{	// メニュー１
+		BMPWIN_MENU_FRM, BMPWIN_MENU_PX, BMPWIN_MENU_PY,
+		BMPWIN_MENU_SX, BMPWIN_MENU_SY, BMPWIN_MENU_PAL,
+	},
+	{	// メニュー２
+		BMPWIN_MENU_FRM, BMPWIN_MENU_PX, BMPWIN_MENU_PY,
+		BMPWIN_MENU_SX, BMPWIN_MENU_SY, BMPWIN_MENU_PAL,
+	},
+	{	// メニュー３
+		BMPWIN_MENU_FRM, BMPWIN_MENU_PX, BMPWIN_MENU_PY,
+		BMPWIN_MENU_SX, BMPWIN_MENU_SY, BMPWIN_MENU_PAL,
+	},
+	{	// メニュー４
+		BMPWIN_MENU_FRM, BMPWIN_MENU_PX, BMPWIN_MENU_PY,
+		BMPWIN_MENU_SX, BMPWIN_MENU_SY, BMPWIN_MENU_PAL,
+	},
+	{	// メニュー５
+		BMPWIN_MENU_FRM, BMPWIN_MENU_PX, BMPWIN_MENU_PY,
+		BMPWIN_MENU_SX, BMPWIN_MENU_SY, BMPWIN_MENU_PAL,
+	},
+	{	// メニュー６
+		BMPWIN_MENU_FRM, BMPWIN_MENU_PX, BMPWIN_MENU_PY,
+		BMPWIN_MENU_SX, BMPWIN_MENU_SY, BMPWIN_MENU_PAL,
+	},
+
+	{	// マーキング決定
+		BMPWIN_MARK_ENTER_FRM, BMPWIN_MARK_ENTER_PX, BMPWIN_MARK_ENTER_PY,
+		BMPWIN_MARK_ENTER_SX, BMPWIN_MARK_ENTER_SY, BMPWIN_MARK_ENTER_PAL,
+	},
+	{	// マーキングキャンセル
+		BMPWIN_MARK_CANCEL_FRM, BMPWIN_MARK_CANCEL_PX, BMPWIN_MARK_CANCEL_PY,
+		BMPWIN_MARK_CANCEL_SX, BMPWIN_MARK_CANCEL_SY, BMPWIN_MARK_CANCEL_PAL,
+	},
+
+
+
+
+
+
+
 	{	//「てもちポケモン」
 		BMPWIN_TEMOCHI_FRM, BMPWIN_TEMOCHI_PX, BMPWIN_TEMOCHI_PY,
 		BMPWIN_TEMOCHI_SX, BMPWIN_TEMOCHI_SY, BMPWIN_TEMOCHI_PAL,
@@ -471,35 +484,7 @@ static const u8	BoxBmpWinData[][6] =
 		BMPWIN_TOZIRU_SX, BMPWIN_TOZIRU_SY, BMPWIN_TOZIRU_PAL,
 	},
 
-	{	// メニュー１
-		BMPWIN_MENU1_FRM, BMPWIN_MENU1_PX, BMPWIN_MENU1_PY,
-		BMPWIN_MENU1_SX, BMPWIN_MENU1_SY, BMPWIN_MENU1_PAL,
-	},
-	{	// メニュー２
-		BMPWIN_MENU2_FRM, BMPWIN_MENU2_PX, BMPWIN_MENU2_PY,
-		BMPWIN_MENU2_SX, BMPWIN_MENU2_SY, BMPWIN_MENU2_PAL,
-	},
-	{	// メニュー３
-		BMPWIN_MENU3_FRM, BMPWIN_MENU3_PX, BMPWIN_MENU3_PY,
-		BMPWIN_MENU3_SX, BMPWIN_MENU3_SY, BMPWIN_MENU3_PAL,
-	},
-	{	// メニュー４
-		BMPWIN_MENU4_FRM, BMPWIN_MENU4_PX, BMPWIN_MENU4_PY,
-		BMPWIN_MENU4_SX, BMPWIN_MENU4_SY, BMPWIN_MENU4_PAL,
-	},
-	{	// メニュー５
-		BMPWIN_MENU5_FRM, BMPWIN_MENU5_PX, BMPWIN_MENU5_PY,
-		BMPWIN_MENU5_SX, BMPWIN_MENU5_SY, BMPWIN_MENU5_PAL,
-	},
 
-	{	// マーキング決定
-		BMPWIN_MARK_ENTER_FRM, BMPWIN_MARK_ENTER_PX, BMPWIN_MARK_ENTER_PY,
-		BMPWIN_MARK_ENTER_SX, BMPWIN_MARK_ENTER_SY, BMPWIN_MARK_ENTER_PAL,
-	},
-	{	// マーキングキャンセル
-		BMPWIN_MARK_CANCEL_FRM, BMPWIN_MARK_CANCEL_PX, BMPWIN_MARK_CANCEL_PY,
-		BMPWIN_MARK_CANCEL_SX, BMPWIN_MARK_CANCEL_SY, BMPWIN_MARK_CANCEL_PAL,
-	},
 
 	{	// 手持ちポケモンフレーム・いれかえ
 		BMPWIN_PARTY_CNG_FRM, BMPWIN_PARTY_CNG_PX, BMPWIN_PARTY_CNG_PY,
@@ -561,16 +546,6 @@ static const u8	BoxBmpWinData[][6] =
 //--------------------------------------------------------------------------------------------
 void BOX2BMP_Init( BOX2_SYS_WORK * syswk )
 {
-/*
-	u32	i;
-
-	FontProc_LoadFont( FONT_TOUCH, HEAPID_BOX_APP );
-
-	for( i=0; i<BOX2BMPWIN_ID_MAX; i++ ){
-		GF_BGL_BmpWinAddEx( syswk->app->bgl, &syswk->app->win[i], &BoxBmpWinData[i] );
-	}
-*/
-
 	const u8 * dat;
 	u32	i;
 
@@ -1472,8 +1447,11 @@ void BOX2BMP_PokeMenuBgFrmWkMake( BOX2_APP_WORK * appwk )
 	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_MENU3, appwk->win[BOX2BMPWIN_ID_MENU3].win );
 	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_MENU4, appwk->win[BOX2BMPWIN_ID_MENU4].win );
 	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_MENU5, appwk->win[BOX2BMPWIN_ID_MENU5].win );
+	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_MENU6, appwk->win[BOX2BMPWIN_ID_MENU6].win );
 
-	MenuBgFrmWkSet2( appwk->wfrm, BOX2MAIN_WINFRM_BOXMV_MENU, appwk->win[BOX2BMPWIN_ID_BOXMV_MENU].win );
+
+
+//	MenuBgFrmWkSet2( appwk->wfrm, BOX2MAIN_WINFRM_BOXMV_MENU, appwk->win[BOX2BMPWIN_ID_BOXMV_MENU].win );
 
 	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_BOXMV_BTN, appwk->win[BOX2BMPWIN_ID_BOXMV_BTN].win );
 	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_Y_ST_BTN, appwk->win[BOX2BMPWIN_ID_Y_STATUS].win );
@@ -1490,7 +1468,7 @@ void BOX2BMP_PokeMenuBgFrmWkMake( BOX2_APP_WORK * appwk )
 //--------------------------------------------------------------------------------------------
 void BOX2BMP_TemochiButtonBgFrmWkMake( BOX2_APP_WORK * appwk )
 {
-	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_POKE_BTN, appwk->win[BOX2BMPWIN_ID_TEMOCHI].win );
+//	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_POKE_BTN, appwk->win[BOX2BMPWIN_ID_TEMOCHI].win );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1504,7 +1482,7 @@ void BOX2BMP_TemochiButtonBgFrmWkMake( BOX2_APP_WORK * appwk )
 //--------------------------------------------------------------------------------------------
 void BOX2BMP_IdouButtonBgFrmWkMake( BOX2_APP_WORK * appwk )
 {
-	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_MV_BTN, appwk->win[BOX2BMPWIN_ID_IDOU].win );
+//	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_MV_BTN, appwk->win[BOX2BMPWIN_ID_IDOU].win );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1518,7 +1496,7 @@ void BOX2BMP_IdouButtonBgFrmWkMake( BOX2_APP_WORK * appwk )
 //--------------------------------------------------------------------------------------------
 void BOX2BMP_ModoruButtonBgFrmWkMake( BOX2_APP_WORK * appwk )
 {
-	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_RET_BTN, appwk->win[BOX2BMPWIN_ID_MODORU].win );
+//	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_RET_BTN, appwk->win[BOX2BMPWIN_ID_MODORU].win );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1534,7 +1512,7 @@ void BOX2BMP_ToziruButtonBgFrmWkMake( BOX2_SYS_WORK * syswk )
 {
 	BOX2_APP_WORK * appwk = syswk->app;
 
-	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_CLOSE_BTN, appwk->win[BOX2BMPWIN_ID_TOZIRU].win );
+//	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_CLOSE_BTN, appwk->win[BOX2BMPWIN_ID_TOZIRU].win );
 
 	ButtonPut_S( syswk, BOX2BMPWIN_ID_TOZIRU, mes_boxbutton_02_07 );
 }
@@ -2050,6 +2028,7 @@ void BOX2BMP_MarkingButtonFrmPut( BOX2_APP_WORK * appwk )
 {
 	BGWINFRM_BmpWinOn( appwk->wfrm, BOX2MAIN_WINFRM_MARK, appwk->win[BMPWIN_MARK_ENTER].win );
 	BGWINFRM_BmpWinOn( appwk->wfrm, BOX2MAIN_WINFRM_MARK, appwk->win[BMPWIN_MARK_CANCEL].win );
+	BOX2BMP_MarkingButtonPut( appwk );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2100,19 +2079,19 @@ void BOX2BMP_MenuStrPrint( BOX2_SYS_WORK * syswk, const BOX2BMP_BUTTON_LIST * li
 
 	for( i=0; i<max; i++ ){
 		if( list[max-1-i].type == BOX2BMP_BUTTON_TYPE_WHITE ){
-			ButtonPut_S( syswk, BOX2BMPWIN_ID_MENU5-i, list[max-1-i].strID );
+			ButtonPut_S( syswk, BOX2BMPWIN_ID_MENU6-i, list[max-1-i].strID );
 			BGWINFRM_PaletteChange(
-				syswk->app->wfrm, BOX2MAIN_WINFRM_MENU5-i, 0, 0, sx, sy, BOX2MAIN_BG_PAL_SELWIN );
+				syswk->app->wfrm, BOX2MAIN_WINFRM_MENU6-i, 0, 0, sx, sy, BOX2MAIN_BG_PAL_SELWIN );
 		}else{
-			PokeMoveButtonPut( syswk, BOX2BMPWIN_ID_MENU5-i, list[max-1-i].strID );
+			PokeMoveButtonPut( syswk, BOX2BMPWIN_ID_MENU6-i, list[max-1-i].strID );
 			BGWINFRM_PaletteChange(
-				syswk->app->wfrm, BOX2MAIN_WINFRM_MENU5-i, 0, 0, sx, sy, 2 );
+				syswk->app->wfrm, BOX2MAIN_WINFRM_MENU6-i, 0, 0, sx, sy, 2 );
 		}
 	}
 	// いらないものは消す
-	for( i=max; i<5; i++ ){
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(syswk->app->win[BOX2BMPWIN_ID_MENU5-i].win), 0 );
-		GFL_BMPWIN_TransVramCharacter( syswk->app->win[BOX2BMPWIN_ID_MENU5-i].win );
+	for( i=max; i<6; i++ ){
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(syswk->app->win[BOX2BMPWIN_ID_MENU6-i].win), 0 );
+		GFL_BMPWIN_TransVramCharacter( syswk->app->win[BOX2BMPWIN_ID_MENU6-i].win );
 	}
 }
 
@@ -2249,10 +2228,12 @@ void BOX2BMP_PartyOutMenuPrint( BOX2_SYS_WORK * syswk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void SysWinPut( GFL_BMPWIN * win )
+static void SysWinPut( BOX2_SYS_WORK * syswk, GFL_BMPWIN * win )
 {
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win), 15 );
-	BmpWinFrame_Write( win, WINDOW_TRANS_OFF, BOX2MAIN_SYSWIN_CGX_POS, BOX2MAIN_BG_PAL_TALKWIN );
+	BmpWinFrame_Write(
+		win, WINDOW_TRANS_OFF,
+		GFL_ARCUTIL_TRANSINFO_GetPos(syswk->app->syswinInfo), BOX2MAIN_BG_PAL_SYSWIN );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2315,12 +2296,14 @@ static void SysMesPut( BOX2_SYS_WORK * syswk, u32 strID, u32 winID )
 {
 	GFL_MSGDATA * man = BoxMsgManGet();
 
-	SysWinPut( syswk->app->win[winID].win );
+	SysWinPut( syswk, syswk->app->win[winID].win );
 	ExStrPrint(
 		syswk->app, winID, man, strID, 0, 0, syswk->app->font, FCOL_W_BLACK );
 	PrintScreenTrans( &syswk->app->win[winID] );
 
 	GFL_MSG_Delete( man );
+
+	BOX2OBJ_VanishTouchBarButton( syswk );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2545,7 +2528,7 @@ void BOX2BMP_BoxThemaMsgPut( BOX2_SYS_WORK * syswk, u32 msgID, u32 winID )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 「ポケモンをつれていく」メッセージ表示
+ * ポケモン選択メッセージ表示
  *
  * @param	syswk	ボックス画面システムワーク
  * @param	pos		ポケモンの位置
@@ -2555,7 +2538,7 @@ void BOX2BMP_BoxThemaMsgPut( BOX2_SYS_WORK * syswk, u32 msgID, u32 winID )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void BOX2BMP_PokePartyInMsgPut( BOX2_SYS_WORK * syswk, u32 pos, u32 msgID, u32 winID )
+void BOX2BMP_PokeSelectMsgPut( BOX2_SYS_WORK * syswk, u32 pos, u32 msgID, u32 winID )
 {
 	u32	str;
 
@@ -2581,10 +2564,12 @@ void BOX2BMP_PokePartyInMsgPut( BOX2_SYS_WORK * syswk, u32 pos, u32 msgID, u32 w
 	case BOX2BMP_MSGID_PARTYOUT_BOXMAX:	// このボックスは　いっぱいだ！
 		str = msg_boxmes_01_14;
 		break;
-		
+
+/*		
 	case BOX2BMP_MSGID_PARTYOUT_CAPSULE:	// ボールカプセルを　はずしてください！
 		str = msg_boxmes_01_31;
 		break;
+*/
 
 	case BOX2BMP_MSGID_PARTYOUT_MAIL:	// メールを　はずしてください！
 		str = msg_boxmes_01_32;
@@ -2731,5 +2716,7 @@ void BOX2BMP_VBlankMsgSet( BOX2_SYS_WORK * syswk, u32 winID, u32 msgID )
 //--------------------------------------------------------------------------------------------
 void BOX2BMP_VBlankMsgPut( BOX2_SYS_WORK * syswk, u32 winID )
 {
-	BmpWinFrame_Write( syswk->app->win[winID].win, WINDOW_TRANS_ON_V, BOX2MAIN_SYSWIN_CGX_POS, BOX2MAIN_BG_PAL_TALKWIN );
+	BmpWinFrame_Write(
+		syswk->app->win[winID].win, WINDOW_TRANS_ON_V,
+		GFL_ARCUTIL_TRANSINFO_GetPos(syswk->app->syswinInfo), BOX2MAIN_BG_PAL_SYSWIN );
 }

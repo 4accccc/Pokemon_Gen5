@@ -67,13 +67,13 @@ enum {
 
 // ポケモンをつれていくメッセージ表示ID
 enum {
-	BOX2BMP_MSGID_PARTYIN_INIT = 0,		// ポケモンを　タッチ！
-	BOX2BMP_MSGID_PARTYIN_MENU,			// @01を　どうする？
-	BOX2BMP_MSGID_PARTYIN_ERR,			// てもちが　いっぱいです！
-	BOX2BMP_MSGID_PARTYOUT_INIT,		// どこへ　あずける？
-	BOX2BMP_MSGID_PARTYOUT_BOXMAX,		// このボックスは　いっぱいだ！
-	BOX2BMP_MSGID_PARTYOUT_CAPSULE,		// ボールカプセルを　はずしてください！
-	BOX2BMP_MSGID_PARTYOUT_MAIL,		// メールを　はずしてください！
+	BOX2BMP_MSGID_PARTYIN_INIT = 0,			// ポケモンを　タッチ！
+	BOX2BMP_MSGID_PARTYIN_MENU,					// @01を　どうする？
+	BOX2BMP_MSGID_PARTYIN_ERR,					// てもちが　いっぱいです！
+	BOX2BMP_MSGID_PARTYOUT_INIT,				// どこへ　あずける？
+	BOX2BMP_MSGID_PARTYOUT_BOXMAX,			// このボックスは　いっぱいだ！
+	BOX2BMP_MSGID_PARTYOUT_MAIL,				// メールを　はずしてください！
+//	BOX2BMP_MSGID_PARTYOUT_CAPSULE,		// ボールカプセルを　はずしてください！
 };
 
 // 道具整理メッセージ表示ＩＤ
@@ -866,7 +866,7 @@ extern void BOX2BMP_BoxThemaMsgPut( BOX2_SYS_WORK * syswk, u32 msgID, u32 winID 
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2BMP_PokePartyInMsgPut( BOX2_SYS_WORK * syswk, u32 pos, u32 msgID, u32 winID );
+extern void BOX2BMP_PokeSelectMsgPut( BOX2_SYS_WORK * syswk, u32 pos, u32 msgID, u32 winID );
 
 //--------------------------------------------------------------------------------------------
 /**

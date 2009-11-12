@@ -42,6 +42,9 @@ typedef struct {
 
 	BOX_MODE	callMode;					// 呼び出しモード
 
+	// [out]
+	u32 retMode;								// 終了モード
+
 /*
 	// [in] 
 	SAVEDATA * savedata;

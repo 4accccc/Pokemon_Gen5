@@ -86,6 +86,11 @@ static GFL_PROC_RESULT Box2Proc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 		}
 	}
 
+	// 初期タッチバーアイコンの設定
+	syswk->tb_exit_flg    = TRUE;
+	syswk->tb_ret_flg     = TRUE;
+	syswk->tb_status_flg  = FALSE;
+
 
 /*
 	syswk->box    = SaveData_GetBoxData( syswk->dat->savedata );
