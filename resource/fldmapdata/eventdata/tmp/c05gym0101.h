@@ -3,14 +3,24 @@
 #define ZONE_C05GYM0101_EVD_H
 
 #define DOOR_ID_C05GYM0101_EXIT02         0
-#define DOOR_ID_C05GYM0101_EXIT01         1
-#define DOOR_ID_C05GYM0101_EXIT03         2
 
 #endif //ZONE_C05GYM0101_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c05gym0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_C05GYM0101_EVC_H
 #define ZONE_C05GYM0101_EVC_H
 
-#define C05GYM0101_LEADER                  0
+#define C05GYM0101_LEADER_01               0
+#define C05GYM0101_LIFT_00R                1
+#define C05GYM0101_LIFT_00L                2
+#define C05GYM0101_LIFT_05R                3
+#define C05GYM0101_LIFT_05L                4
+#define C05GYM0101_LIFT_04R                5
+#define C05GYM0101_LIFT_04L                6
+#define C05GYM0101_LIFT_01R                7
+#define C05GYM0101_LIFT_01L                8
+#define C05GYM0101_LIFT_02R                9
+#define C05GYM0101_LIFT_02L               10
+#define C05GYM0101_LIFT_03R               11
+#define C05GYM0101_LIFT_03L               12
 
 #endif //ZONE_C05GYM0101_EVC_H

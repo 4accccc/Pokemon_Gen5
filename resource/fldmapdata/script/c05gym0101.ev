@@ -20,14 +20,14 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c05gym0101_leader
+_EVENT_DATA    ev_c05gym0101_lift_00
+_EVENT_DATA    ev_c05gym0101_lift_01
+_EVENT_DATA    ev_c05gym0101_lift_02
+_EVENT_DATA    ev_c05gym0101_lift_03
+_EVENT_DATA    ev_c05gym0101_lift_04
+_EVENT_DATA    ev_c05gym0101_lift_05
 _EVENT_DATA_END
 
-
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_c05gym0101_flag_change:
-//  _END
 
 /**************************************************************/
 /*    ジムリーダー会話（仮）                                  */
@@ -42,7 +42,7 @@ EVENT_START		ev_c05gym0101_leader
 	IF $SCWK_TEMP0 == 0 THEN
 	
 		//会話
-		_BALLOONWIN_OBJMSG_OPEN( msg_c05gym0101_leader_01,C05GYM0101_LEADER )
+		_BALLOONWIN_OBJMSG_OPEN( msg_c05gym0101_leader_01,C05GYM0101_LEADER_01 )
 		_BALLOONWIN_CLOSE()
 	
 		//戦闘処理
@@ -56,7 +56,7 @@ EVENT_START		ev_c05gym0101_leader
 		ENDIF
 	
 		//勝利後会話
-		_BALLOONWIN_OBJMSG_OPEN( msg_c05gym0101_leader_02 , C05GYM0101_LEADER )
+		_BALLOONWIN_OBJMSG_OPEN( msg_c05gym0101_leader_02 , C05GYM0101_LEADER_01 )
 		_BALLOONWIN_CLOSE()
 	
 		//クエイクバッジ入手処理
@@ -70,7 +70,7 @@ EVENT_START		ev_c05gym0101_leader
 		_TALKWIN_CLOSE()
 
 		//ヤーコンメッセージ
-		_BALLOONWIN_OBJMSG_OPEN( msg_c05gym0101_leader_04 , C05GYM0101_LEADER )
+		_BALLOONWIN_OBJMSG_OPEN( msg_c05gym0101_leader_04 , C05GYM0101_LEADER_01 )
 		_BALLOONWIN_CLOSE()
 
 		//わざマシン入手
@@ -79,7 +79,7 @@ EVENT_START		ev_c05gym0101_leader
 		//わざマシン中身解説
 		_ITEM_NAME( 0, ITEM_WAZAMASIN01 )
 		_ITEM_WAZA_NAME( 1, ITEM_WAZAMASIN01 )
-		_BALLOONWIN_OBJMSG_OPEN( msg_c05gym0101_leader_05 , C05GYM0101_LEADER )
+		_BALLOONWIN_OBJMSG_OPEN( msg_c05gym0101_leader_05 , C05GYM0101_LEADER_01 )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		
@@ -95,9 +95,132 @@ EVENT_START		ev_c05gym0101_leader
 		
 	//ジムバッジ入手後
 	ELSE
-		_BALLOONWIN_OBJMSG_OPEN( msg_c05gym0101_leader_06 , C05GYM0101_LEADER )
+		_BALLOONWIN_OBJMSG_OPEN( msg_c05gym0101_leader_06 , C05GYM0101_LEADER_01 )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	ENDIF
 
 EVENT_END
+
+
+/************************************************************/
+/*						リフト 0号機						*/
+/************************************************************/
+EVENT_START		ev_c05gym0101_lift_00
+	//ローカル変数を定義
+	{
+	DEFINE_LOCAL	LWK_PLY_DIR
+
+	_PLAYER_DIR_GET( LWK_PLY_DIR )	//主人公の向き情報を取得
+
+	//上側からスイッチに話しかけた場合は無視する
+	IF $LWK_PLY_DIR != DIR_DOWN THEN
+		//リフトを動作させる（引数はリフトインデックス）
+		_GYM_GROUND_MV_LIFT( 0 )
+	ENDIF
+	}
+
+EVENT_END
+
+
+/************************************************************/
+/*						リフト 1号機						*/
+/************************************************************/
+EVENT_START		ev_c05gym0101_lift_01
+	//ローカル変数を定義
+	{
+	DEFINE_LOCAL	LWK_PLY_DIR
+
+	_PLAYER_DIR_GET( LWK_PLY_DIR )	//主人公の向き情報を取得
+
+	//上側からスイッチに話しかけた場合は無視する
+	IF $LWK_PLY_DIR != DIR_DOWN THEN
+		//リフトを動作させる（引数はリフトインデックス）
+		_GYM_GROUND_MV_LIFT( 1 )
+	ENDIF
+	}
+
+EVENT_END
+
+
+/************************************************************/
+/*						リフト 2号機						*/
+/************************************************************/
+EVENT_START		ev_c05gym0101_lift_02
+	//ローカル変数を定義
+	{
+	DEFINE_LOCAL	LWK_PLY_DIR
+
+	_PLAYER_DIR_GET( LWK_PLY_DIR )	//主人公の向き情報を取得
+
+	//上側からスイッチに話しかけた場合は無視する
+	IF $LWK_PLY_DIR != DIR_DOWN THEN
+		//リフトを動作させる（引数はリフトインデックス）
+		_GYM_GROUND_MV_LIFT( 2 )
+	ENDIF
+	}
+
+EVENT_END
+
+
+/************************************************************/
+/*						リフト 3号機						*/
+/************************************************************/
+EVENT_START		ev_c05gym0101_lift_03
+	//ローカル変数を定義
+	{
+	DEFINE_LOCAL	LWK_PLY_DIR
+
+	_PLAYER_DIR_GET( LWK_PLY_DIR )	//主人公の向き情報を取得
+
+	//上側からスイッチに話しかけた場合は無視する
+	IF $LWK_PLY_DIR != DIR_DOWN THEN
+		//リフトを動作させる（引数はリフトインデックス）
+		_GYM_GROUND_MV_LIFT( 3 )
+	ENDIF
+	}
+
+EVENT_END
+
+
+/************************************************************/
+/*						リフト 4号機						*/
+/************************************************************/
+EVENT_START		ev_c05gym0101_lift_04
+	//ローカル変数を定義
+	{
+	DEFINE_LOCAL	LWK_PLY_DIR
+
+	_PLAYER_DIR_GET( LWK_PLY_DIR )	//主人公の向き情報を取得
+
+	//上側からスイッチに話しかけた場合は無視する
+	IF $LWK_PLY_DIR != DIR_DOWN THEN
+		//リフトを動作させる（引数はリフトインデックス）
+		_GYM_GROUND_MV_LIFT( 4 )
+	ENDIF
+	}
+
+EVENT_END
+
+
+/************************************************************/
+/*						リフト 5号機						*/
+/************************************************************/
+EVENT_START		ev_c05gym0101_lift_05
+	//ローカル変数を定義
+	{
+	DEFINE_LOCAL	LWK_PLY_DIR
+
+	_PLAYER_DIR_GET( LWK_PLY_DIR )	//主人公の向き情報を取得
+
+	//上側からスイッチに話しかけた場合は無視する
+	IF $LWK_PLY_DIR != DIR_DOWN THEN
+		//リフトを動作させる（引数はリフトインデックス）
+		_GYM_GROUND_MV_LIFT( 5 )
+	ENDIF
+	}
+
+EVENT_END
+
+
+
