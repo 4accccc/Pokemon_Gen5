@@ -16,7 +16,7 @@
 
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
 
-///#include "arc/fieldmap/gym_ground.naix"
+#include "arc/fieldmap/gym_ground.naix"
 #include "system/main.h"    //for HEAPID_FIELDMAP
 ///#include "script.h"     //for SCRIPT_CallScript
 ///#include "../../../resource/fldmapdata/script/c03gym0101_def.h"  //for SCRID_～
@@ -34,7 +34,8 @@
 
 #define GRID_HALF_SIZE ((FIELD_CONST_GRID_SIZE/2)*FX32_ONE)
 
-#define FLOOR_RECT_NUM  (7)
+#define FLOOR_RECT_NUM  (8)
+#define LIFT_ANM_NUM    (2)
 
 #define LIFT_MOVE_SPD (FIELD_CONST_GRID_SIZE*FX32_ONE)
 
@@ -65,11 +66,12 @@ typedef struct LIFT_RECT_tag
   fx32 Height[2];
 }LIFT_RECT;
 
-
 #define F1_HEIGHT ( 50*FIELD_CONST_GRID_FX32_SIZE )
 #define F2_HEIGHT ( 40*FIELD_CONST_GRID_FX32_SIZE )
 #define F3_HEIGHT ( 30*FIELD_CONST_GRID_FX32_SIZE )
 #define F4_HEIGHT (  0*FIELD_CONST_GRID_FX32_SIZE )
+
+#define WALL_HEIGHT ( 10*FIELD_CONST_GRID_FX32_SIZE )
 
 #define F1_1_X  (7)
 #define F1_1_Z  (19)
@@ -79,6 +81,10 @@ typedef struct LIFT_RECT_tag
 #define F1_2_Z  (23)
 #define F1_2_W  (17)
 #define F1_2_H  (1)
+#define F1_3_X  (13)
+#define F1_3_Z  (24)
+#define F1_3_W  (5)
+#define F1_3_H  (3)
 
 #define F2_1_X  (7)
 #define F2_1_Z  (19)
@@ -125,9 +131,38 @@ typedef struct LIFT_RECT_tag
 #define LIFT_6_X  (14)
 #define LIFT_6_Z  (20)
 
+//配置座標
+#define LIFT_0_GX (15*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define LIFT_0_GY (F1_HEIGHT)
+#define LIFT_0_GZ (25*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+
+#define LIFT_1_GX (20*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define LIFT_1_GY (F1_HEIGHT)
+#define LIFT_1_GZ (25*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define LIFT_2_GX (20*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define LIFT_2_GY (F2_HEIGHT)
+#define LIFT_2_GZ (21*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define LIFT_3_GX (10*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define LIFT_3_GY (F2_HEIGHT)
+#define LIFT_3_GZ (25*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define LIFT_4_GX (15*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define LIFT_4_GY (F3_HEIGHT)
+#define LIFT_4_GZ (25*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define LIFT_5_GX (10*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define LIFT_5_GY (F3_HEIGHT)
+#define LIFT_5_GZ (21*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define LIFT_6_GX (15*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define LIFT_6_GY (F1_HEIGHT)
+#define LIFT_6_GZ (21*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+
+#define WALL_GX (15*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define WALL_GY (WALL_HEIGHT)
+#define WALL_GZ (24*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+
 static const FLOOR_RECT FloorRect[FLOOR_RECT_NUM] = {
   {F1_1_X, F1_1_Z, F1_1_W, F1_1_H, F1_HEIGHT},
   {F1_2_X, F1_2_Z, F1_2_W, F1_2_H, F1_HEIGHT},
+  {F1_3_X, F1_3_Z, F1_3_W, F1_3_H, F1_HEIGHT},
 
   {F2_1_X, F2_1_Z, F2_1_W, F2_1_H, F2_HEIGHT},
   {F2_2_X, F2_2_Z, F2_2_W, F2_2_H, F2_HEIGHT},
@@ -146,10 +181,160 @@ static const LIFT_RECT LiftRect[LIFT_NUM_MAX] = {
   {LIFT_6_X, LIFT_6_Z, SP_LIFT_WIDTH, SP_LIFT_HEIGHT, { F1_HEIGHT, F4_HEIGHT} },
 };
 
+static const VecFx32 LiftBasePos[LIFT_NUM_MAX] = {
+  { LIFT_1_GX, LIFT_1_GY, LIFT_1_GZ },
+  { LIFT_2_GX, LIFT_2_GY, LIFT_2_GZ },
+  { LIFT_3_GX, LIFT_3_GY, LIFT_3_GZ },
+  { LIFT_4_GX, LIFT_4_GY, LIFT_4_GZ },
+  { LIFT_5_GX, LIFT_5_GY, LIFT_5_GZ },
+  { LIFT_6_GX, LIFT_6_GY, LIFT_6_GZ },
+};
+
+//リフトごとの基準位置が上下どちらなのかを管理するリスト 上の場合はTRUE
+static const BOOL LiftBaseUP[LIFT_NUM_MAX] = {
+  TRUE,
+  FALSE,
+  TRUE,
+  FALSE,
+  FALSE,
+  TRUE,
+};
+
+//リソースの並び順番
+enum {
+  RES_ID_LIFT_MDL = 0,
+  RES_ID_SP_LIFT_MDL,
+  RES_ID_WALL_MDL,
+  RES_ID_LIFT_ANM_A,
+  RES_ID_LIFT_ANM_B,
+  RES_ID_SP_LIFT_ANM_A,
+  RES_ID_SP_LIFT_ANM_B,
+  RES_ID_WALL_ANM,
+};
+
+//ＯＢＪインデックス
+enum {
+  OBJ_LIFT_1 = 0,
+  OBJ_LIFT_2,
+  OBJ_LIFT_3,
+  OBJ_LIFT_4,
+  OBJ_LIFT_5,
+  OBJ_SP_LIFT,
+  OBJ_WALL,
+  OBJ_LIFT_0,
+};
+
+//--リソース関連--
+//読み込む3Dリソース
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
+	{ ARCID_GYM_GROUND, NARC_gym_ground_rif_anim01_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
+  { ARCID_GYM_GROUND, NARC_gym_ground_mainrif_anim01_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
+  { ARCID_GYM_GROUND, NARC_gym_ground_kakuheki_anim01_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
+
+  { ARCID_GYM_GROUND, NARC_gym_ground_rif_anim01_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
+  { ARCID_GYM_GROUND, NARC_gym_ground_rif_anim02_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
+  { ARCID_GYM_GROUND, NARC_gym_ground_rif_anim01_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
+  { ARCID_GYM_GROUND, NARC_gym_ground_rif_anim02_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
+  { ARCID_GYM_GROUND, NARC_gym_ground_kakuheki_anim01_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
+};
+
+//3Dアニメ　リフト
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_lift[] = {
+	{ RES_ID_LIFT_ANM_A,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_LIFT_ANM_B,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+};
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_splift[] = {
+	{ RES_ID_SP_LIFT_ANM_A,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_SP_LIFT_ANM_B,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+};
+
+//3Dアニメ　隔壁
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_wall[] = {
+	{ RES_ID_WALL_ANM,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+};
+
+//3Dオブジェクト設定テーブル
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
+  //リフト1
+	{
+		RES_ID_LIFT_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_LIFT_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_lift,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_lift),	//アニメリソース数
+	},
+  //リフト2
+	{
+		RES_ID_LIFT_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_LIFT_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_lift,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_lift),	//アニメリソース数
+	},
+  //リフト3
+	{
+		RES_ID_LIFT_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_LIFT_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_lift,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_lift),	//アニメリソース数
+	},
+  //リフト4
+	{
+		RES_ID_LIFT_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_LIFT_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_lift,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_lift),	//アニメリソース数
+	},
+  //リフト5
+	{
+		RES_ID_LIFT_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_LIFT_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_lift,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_lift),	//アニメリソース数
+	},
+  //メインリフト
+	{
+		RES_ID_SP_LIFT_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_SP_LIFT_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_splift,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_splift),	//アニメリソース数
+	},
+  //隔壁
+	{
+		RES_ID_WALL_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_WALL_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_wall,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_wall),	//アニメリソース数
+	},
+  //リフト0
+	{
+		RES_ID_LIFT_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_LIFT_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_lift,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_lift),	//アニメリソース数
+	},
+};
+
+static const GFL_G3D_UTIL_SETUP Setup = {
+  g3Dutil_resTbl,				//リソーステーブル
+	NELEMS(g3Dutil_resTbl),		//リソース数
+	g3Dutil_objTbl,				//オブジェクト設定テーブル
+	NELEMS(g3Dutil_objTbl),		//オブジェクト数
+};
 
 static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work );
 static BOOL CheckArrive(GYM_GROUND_TMP *tmp);
 static BOOL CheckLiftHit(u8 inLiftIdx, const int inX, const int inZ);
+static void SetupLiftAnm( GYM_GROUND_SV_WORK *gmk_sv_work,
+                          FLD_EXP_OBJ_CNT_PTR ptr,
+                          const int inLiftIdx);
+static int GetWatchLiftAnmIdx(GYM_GROUND_SV_WORK *gmk_sv_work, const int inLiftIdx);
 
 //--------------------------------------------------------------
 /**
@@ -195,7 +380,7 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *fieldWork)
     u8 height_idx = FLOOR_RECT_NUM+i;
     u8 idx;
     //セーブデータで分岐
-    if (0) idx = 1;
+    if ( gmk_sv_work->LiftMoved[i] ) idx = 1;
     else idx = 0;
       
     EXH_SetUpHeightData( height_idx,
@@ -206,16 +391,15 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *fieldWork)
 
 
   //必要なリソースの用意
-///  FLD_EXP_OBJ_AddUnit(ptr, &Setup, GYM_GROUND_UNIT_IDX );
+  FLD_EXP_OBJ_AddUnit(ptr, &Setup, GYM_GROUND_UNIT_IDX );
 
-#if 0
   //座標セット
-  for (i=0;i<GROUND_LIFT_MAX;i++)
+  for (i=0;i<LIFT_NUM_MAX;i++)
   {
     int j;
-    int idx = OBJ_SW1 + i;
+    int idx = OBJ_LIFT_1 + i;
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_GROUND_UNIT_IDX, idx);
-    status->trans = SwPos[i];
+    status->trans = LiftBasePos[i];
     //カリングする
     FLD_EXP_OBJ_SetCulling(ptr, GYM_GROUND_UNIT_IDX, idx, TRUE);
 
@@ -223,20 +407,42 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *fieldWork)
     {
       //1回再生設定
       EXP_OBJ_ANM_CNT_PTR anm;
-      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_INSECT_UNIT_IDX, idx, j);
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, idx, j);
       FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
-      if ( gmk_sv_work->Sw[i] ){
-        fx32 last = FLD_EXP_OBJ_GetAnimeLastFrame(anm);
-        //ラストフレーム
-        FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_INSECT_UNIT_IDX, idx, j, last );
-        //アニメ停止
-        FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
-      }
+      //アニメ停止
+      FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
     }
+    
+    SetupLiftAnm(gmk_sv_work, ptr, i);
   }
-#endif  
-  
 
+  {
+    EXP_OBJ_ANM_CNT_PTR anm;
+    VecFx32 pos = {LIFT_0_GX, LIFT_0_GY, LIFT_0_GZ};
+    int obj_idx = OBJ_LIFT_0;
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_GROUND_UNIT_IDX, obj_idx);
+    status->trans = pos;
+    //1回再生設定
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, 0);
+    FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+    //アニメ停止
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+  }
+  
+  //隔壁座標セット
+  {
+    EXP_OBJ_ANM_CNT_PTR anm;
+    VecFx32 wall_pos = {WALL_GX, WALL_GY, WALL_GZ};
+    int obj_idx = OBJ_WALL;
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_GROUND_UNIT_IDX, obj_idx);
+    status->trans = wall_pos;
+    //1回再生設定
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, 0);
+    FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+    //アニメ停止
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+  }
+  
   {
     int size = GFI_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP);
     OS_Printf("after_size = %x\n",size);
@@ -258,7 +464,7 @@ void GYM_GROUND_End(FIELDMAP_WORK *fieldWork)
   //汎用ワーク解放
   GMK_TMP_WK_FreeWork(fieldWork, GYM_GROUND_TMP_ASSIGN_ID);
   //ＯＢＪ解放
-///  FLD_EXP_OBJ_DelUnit( ptr, GYM_GROUND_UNIT_IDX );
+  FLD_EXP_OBJ_DelUnit( ptr, GYM_GROUND_UNIT_IDX );
 }
 
 //--------------------------------------------------------------
@@ -424,7 +630,11 @@ static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work )
     }
 
     //対象リフト高さ更新
-    ;
+    {
+      int obj_idx = OBJ_LIFT_1 + tmp->TargetLiftIdx;
+      GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_GROUND_UNIT_IDX, obj_idx);
+      status->trans.y = tmp->NowHeight;
+    }
     //フィールドＯＢＪ全検索
     {
       u32 no = 0;
@@ -453,42 +663,63 @@ static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work )
     }
     break;
   case 3:
-    {
-      u8 idx;
-      //対象リフトのギミックデータ書き換え
-      if ( gmk_sv_work->LiftMoved[ tmp->TargetLiftIdx ] ){
-        gmk_sv_work->LiftMoved[ tmp->TargetLiftIdx ] = FALSE;
-        idx = 0;
-      }else{
-        gmk_sv_work->LiftMoved[ tmp->TargetLiftIdx ] = TRUE;
-        idx = 1;
-      }
-      //対象リフトの拡張高さを書き換え
-      {
-        u8 height_idx;
-        EHL_PTR exHeightPtr;
-        {
-          FLDMAPPER * mapper = FIELDMAP_GetFieldG3Dmapper( fieldWork );
-          exHeightPtr = FLDMAPPER_GetExHegihtPtr( mapper );
-        }
-        height_idx = FLOOR_RECT_NUM + tmp->TargetLiftIdx;
-        EXH_SetHeight( height_idx,
-            					 LiftRect[tmp->TargetLiftIdx].Height[idx],
-                       exHeightPtr );
-      }
-    }
     //カメラトレース再開
     FIELD_CAMERA_RestartTrace(camera);
     //アニメ開始
-    ;
+    {
+      EXP_OBJ_ANM_CNT_PTR anm;
+      int obj_idx;
+      int anm_idx;
+      obj_idx = OBJ_LIFT_1+tmp->TargetLiftIdx;
+      anm_idx = GetWatchLiftAnmIdx(gmk_sv_work, tmp->TargetLiftIdx);
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, anm_idx );
+      //アニメ停止解除
+      FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+    }
     (*seq)++;
     break;
   case 4:
-    //アニメ待ち
-    if (1){
-      //OBJのポーズを解除
-      ;
-      return GMEVENT_RES_FINISH;
+    {
+      EXP_OBJ_ANM_CNT_PTR anm;
+      int obj_idx;
+      int anm_idx;
+      obj_idx = OBJ_LIFT_1+tmp->TargetLiftIdx;
+      anm_idx = GetWatchLiftAnmIdx(gmk_sv_work, tmp->TargetLiftIdx);
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, anm_idx );
+      //アニメ待ち
+      if ( FLD_EXP_OBJ_ChkAnmEnd(anm) ){
+        u8 idx;
+        //対象リフトのギミックデータ書き換え
+        if ( gmk_sv_work->LiftMoved[ tmp->TargetLiftIdx ] )
+        {
+          gmk_sv_work->LiftMoved[ tmp->TargetLiftIdx ] = FALSE;
+          idx = 0;
+        }
+        else
+        {
+          gmk_sv_work->LiftMoved[ tmp->TargetLiftIdx ] = TRUE;
+          idx = 1;
+        }
+        //対象リフトの拡張高さを書き換え
+        {
+          u8 height_idx;
+          EHL_PTR exHeightPtr;
+          {
+            FLDMAPPER * mapper = FIELDMAP_GetFieldG3Dmapper( fieldWork );
+            exHeightPtr = FLDMAPPER_GetExHegihtPtr( mapper );
+          }
+          height_idx = FLOOR_RECT_NUM + tmp->TargetLiftIdx;
+          EXH_SetHeight( height_idx,
+              					 LiftRect[tmp->TargetLiftIdx].Height[idx],
+                         exHeightPtr );
+        }
+
+        //次回に備え、アニメ切り替え
+        SetupLiftAnm(gmk_sv_work, ptr, tmp->TargetLiftIdx);
+        //OBJのポーズを解除
+        ;
+        return GMEVENT_RES_FINISH;
+      }
     }
 
   }
@@ -534,4 +765,104 @@ static BOOL CheckLiftHit(u8 inLiftIdx, const int inX, const int inZ)
     return TRUE;
   }
   return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * リフトアニメ準備
+ * @param   gmk_sv_work   ギミックセーブワーク
+ * @param   ptr       拡張ＯＢＪコントロールポインタ
+ * @param	  inLiftIdx リフトインデックス
+ * @return  none
+ */
+//--------------------------------------------------------------
+static void SetupLiftAnm(GYM_GROUND_SV_WORK *gmk_sv_work, FLD_EXP_OBJ_CNT_PTR ptr, const int inLiftIdx)
+{
+  EXP_OBJ_ANM_CNT_PTR anm;
+  int valid_anm_idx, invalid_anm_idx;
+  int obj_idx;
+
+  obj_idx = OBJ_LIFT_1 + inLiftIdx;
+  if ( gmk_sv_work->LiftMoved[inLiftIdx] )
+  {
+    if ( LiftBaseUP[inLiftIdx] )
+    {
+      //下→上アニメ有効
+      valid_anm_idx = 0;
+      invalid_anm_idx = 1;
+    }
+    else
+    {
+      //上→下アニメ有効
+      valid_anm_idx = 1;
+      invalid_anm_idx = 0;
+    }
+  }
+  else
+  {
+    if ( LiftBaseUP[inLiftIdx] )
+    {
+      //上→下アニメ有効
+      valid_anm_idx = 1;
+      invalid_anm_idx = 0;
+    }
+    else
+    {
+      //下→上アニメ有効
+      valid_anm_idx = 0;
+      invalid_anm_idx = 1;
+    }
+  }
+  
+  FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_GROUND_UNIT_IDX, obj_idx, valid_anm_idx, TRUE);
+  FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_GROUND_UNIT_IDX, obj_idx, invalid_anm_idx, FALSE);
+  //頭だし
+  FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_GROUND_UNIT_IDX, obj_idx, valid_anm_idx, 0 );
+  //停止にしておく
+  anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, valid_anm_idx);
+  FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+}
+
+//--------------------------------------------------------------
+/**
+ * 終了監視するリフトアニメインデックスを取得
+ * @param   gmk_sv_work   ギミックセーブワーク
+ * @param	  inLiftIdx リフトインデックス
+ * @return  int     終了監視するアニメインデックス　0～1
+ */
+//--------------------------------------------------------------
+static int GetWatchLiftAnmIdx(GYM_GROUND_SV_WORK *gmk_sv_work, const int inLiftIdx)
+{
+  int valid_anm_idx;
+  int obj_idx;
+
+  obj_idx = OBJ_LIFT_1 + inLiftIdx;
+  if ( gmk_sv_work->LiftMoved[inLiftIdx] )
+  {
+    if ( LiftBaseUP[inLiftIdx] )
+    {
+      //下→上アニメ有効
+      valid_anm_idx = 0;
+    }
+    else
+    {
+      //上→下アニメ有効
+      valid_anm_idx = 1;
+    }
+  }
+  else
+  {
+    if ( LiftBaseUP[inLiftIdx] )
+    {
+      //上→下アニメ有効
+      valid_anm_idx = 1;
+    }
+    else
+    {
+      //下→上アニメ有効
+      valid_anm_idx = 0;
+    }
+  }
+
+  return valid_anm_idx;
 }
