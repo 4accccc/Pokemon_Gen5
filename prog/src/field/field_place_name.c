@@ -115,7 +115,7 @@ typedef enum {
 	STATE_HIDE,			      // 非表示
   STATE_SETUP,          // 準備
 	STATE_FADE_IN,	      // フェード・イン
-	STATE_WAIT_LAUNCE,		// 発射待ち
+	STATE_WAIT_LAUNCH,		// 発射待ち
 	STATE_LAUNCH,		      // 文字発射
 	STATE_WAIT_FADE_OUT,  // フェードアウト待ち
 	STATE_FADE_OUT,	      // フェード・アウト
@@ -402,21 +402,17 @@ struct _FIELD_PLACE_NAME
 	GFL_MSGDATA* msg;	  // メッセージ・データ
   GFL_FONT*    font;  // フォント
 
+	// リソース
+	u32 resPltt[PLTT_RES_INDEX_MAX];  // パレット
+
 	// BG
 	GFL_BMPWIN*   bmpWin;	 // ビットマップ・ウィンドウ
 	GFL_BMP_DATA* bmpOrg;	 // 文字が書き込まれていない状態
 
-	// リソース
-	u32 resPltt[PLTT_RES_INDEX_MAX];  // パレット
-
-	// セルアクターユニット
-	GFL_CLUNIT* clunit[CLUNIT_INDEX_MAX];
-
-	// BMPOAMシステム
-	BMPOAM_SYS_PTR bmpOamSys;
-
 	// 文字ユニット
-	CHAR_UNIT charUnit[MAX_NAME_LENGTH];
+	CHAR_UNIT      charUnit[MAX_NAME_LENGTH];
+	BMPOAM_SYS_PTR bmpOamSys;                // BMPOAMシステム
+	GFL_CLUNIT*    clunit[CLUNIT_INDEX_MAX]; // セルアクターユニット
 
 	// 動作に使用するデータ
 	STATE state;			    // システム状態
@@ -437,21 +433,17 @@ struct _FIELD_PLACE_NAME
  * @brief システムに関する関数
  */
 //===================================================================================
-// BGの設定を行う
+// BGの設定
 static void SetupBG( FIELD_PLACE_NAME* sys );	
-static void AllocNullCharacterArea();
-
+static void AllocNullCharacterArea(); 
 // リソースの読み込み
 static void LoadBGScreenData( FIELD_PLACE_NAME* sys, u32 arc_id, u32 data_id );
 static void LoadBGCharacterData( FIELD_PLACE_NAME* sys, u32 arc_id, u32 data_id );
 static void LoadBGPaletteData( FIELD_PLACE_NAME* sys, u32 arc_id, u32 data_id ); 
-static void LoadClactResource( FIELD_PLACE_NAME* sys );
-
-// セルアクターユニットを作成する
-static void CreateClactUnit( FIELD_PLACE_NAME* sys );
-
-// 文字ユニットを初期化する
-static void CreateCharUnit( FIELD_PLACE_NAME* sys );
+static void LoadClactResource( FIELD_PLACE_NAME* sys ); 
+// 各種オブジェクトの作成
+static void CreateClactUnit( FIELD_PLACE_NAME* sys ); // セルアクターユニット
+static void CreateCharUnit( FIELD_PLACE_NAME* sys );  // 文字ユニット
 
 // 指定したゾーンIDに対応する地名を文字ユニットに書き込む
 static void WritePlaceName( FIELD_PLACE_NAME* sys, u32 zone_id );
@@ -500,9 +492,6 @@ static void Draw_WAIT_LAUNCH( FIELD_PLACE_NAME* sys );
 static void Draw_LAUNCH( FIELD_PLACE_NAME* sys );
 static void Draw_WAIT_FADE_OUT( FIELD_PLACE_NAME* sys );
 static void Draw_FADE_OUT( FIELD_PLACE_NAME* sys );
-
-// デバッグ出力
-static void DebugPrint( FIELD_PLACE_NAME* sys );
 
 
 //====================================================================================
@@ -636,7 +625,7 @@ void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* sys )
   case STATE_HIDE:          Process_HIDE( sys );		       break;
   case STATE_SETUP:         Process_SETUP( sys );		       break;
   case STATE_FADE_IN:       Process_FADE_IN( sys );	       break;
-  case STATE_WAIT_LAUNCE:   Process_WAIT_LAUNCH( sys );	   break;
+  case STATE_WAIT_LAUNCH:   Process_WAIT_LAUNCH( sys );	   break;
   case STATE_LAUNCH:        Process_LAUNCH( sys );	       break;
   case STATE_WAIT_FADE_OUT: Process_WAIT_FADE_OUT( sys );	 break;
   case STATE_FADE_OUT:      Process_FADE_OUT( sys );	     break;
@@ -660,7 +649,7 @@ void FIELD_PLACE_NAME_Draw( FIELD_PLACE_NAME* sys )
   case STATE_HIDE:		        Draw_HIDE( sys );		        break;
   case STATE_SETUP:		        Draw_SETUP( sys );		      break;
   case STATE_FADE_IN:		      Draw_FADE_IN( sys );	      break;
-  case STATE_WAIT_LAUNCE:		  Draw_WAIT_LAUNCH( sys );	  break;
+  case STATE_WAIT_LAUNCH:		  Draw_WAIT_LAUNCH( sys );	  break;
   case STATE_LAUNCH:		      Draw_LAUNCH( sys );	        break;
   case STATE_WAIT_FADE_OUT:		Draw_WAIT_FADE_OUT( sys );	break;
   case STATE_FADE_OUT:	      Draw_FADE_OUT( sys );	      break;
@@ -1121,7 +1110,7 @@ static void SetState( FIELD_PLACE_NAME* sys, STATE next_state )
       GFL_BG_SetVisible( BG_FRAME, VISIBLE_ON );	// BGを表示
       Draw_FADE_IN( sys );
 			break;
-		case STATE_WAIT_LAUNCE:
+		case STATE_WAIT_LAUNCH:
 			break;
 		case STATE_LAUNCH:
 			sys->launchUnitNum = 0;	     // 発射文字数をリセット
@@ -1134,6 +1123,19 @@ static void SetState( FIELD_PLACE_NAME* sys, STATE next_state )
 			SetAllCharUnitVisibleOff( sys );		// 文字ユニットを非表示に
 			break;
 	}
+
+  // DEBUG:
+  OBATA_Printf( "PLACE_NAME: set state ==> " );
+  switch( next_state )
+  {
+  case STATE_HIDE:           OBATA_Printf( "HIDE\n" );           break;
+  case STATE_SETUP:          OBATA_Printf( "SETUP\n" );          break;
+  case STATE_FADE_IN:        OBATA_Printf( "FADE_IN\n" );        break;
+  case STATE_WAIT_LAUNCH:    OBATA_Printf( "WAIT_LAUNCH\n" );    break;
+  case STATE_LAUNCH:         OBATA_Printf( "LAUNCH\n" );         break;
+  case STATE_WAIT_FADE_OUT:  OBATA_Printf( "WAIT_FADE_OUT\n" );  break;
+  case STATE_FADE_OUT:       OBATA_Printf( "FADE_OUT\n" );       break;
+  }
 }
 
 //-----------------------------------------------------------------------------------
@@ -1155,7 +1157,7 @@ static void Cancel( FIELD_PLACE_NAME* sys )
   case STATE_HIDE:	
   case STATE_FADE_OUT:
     return;
-  case STATE_WAIT_LAUNCE:
+  case STATE_WAIT_LAUNCH:
   case STATE_WAIT_FADE_OUT:
   case STATE_LAUNCH:
     next_state  = STATE_WAIT_FADE_OUT;
@@ -1306,7 +1308,7 @@ static void Process_FADE_IN( FIELD_PLACE_NAME* sys )
 	// 一定時間が経過したら, 次の状態へ
 	if( PROCESS_TIME_FADE_IN < sys->stateCount )
 	{
-		SetState( sys, STATE_WAIT_LAUNCE );
+		SetState( sys, STATE_WAIT_LAUNCH );
 	}
 }
 
@@ -1481,33 +1483,4 @@ static void Draw_FADE_OUT( FIELD_PLACE_NAME* sys )
 	val1 = (int)( ALPHA_VALUE_1 * (1.0f - rate) );
 	val2 = (int)( ALPHA_VALUE_2 + (16 - ALPHA_VALUE_2) * rate );
 	G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, val1, val2 );
-}
-
-//-----------------------------------------------------------------------------------
-/**
- * @brief デバッグ出力
- *
- * @param sys データを出力するシステム
- */
-//-----------------------------------------------------------------------------------
-static void DebugPrint( FIELD_PLACE_NAME* sys )
-{
-	char* str;
-
-	switch( sys->state )
-	{
-		case STATE_HIDE:		str = "HIDE";		break;
-		case STATE_FADE_IN:		str = "FADE_IN";	break;
-		case STATE_WAIT_LAUNCE:		str = "WAIT_1";		break;
-		case STATE_LAUNCH:		str = "LAUNCE";		break;
-		case STATE_WAIT_FADE_OUT:		str = "WAIT_2";		break;
-		case STATE_FADE_OUT:	str = "FADE_OUT";	break;
-	}
-
-	// DEBUG:
-	OBATA_Printf( "-------------------------------FIELD_PLACE_NAME\n" );
-	OBATA_Printf( "state         = %s\n", str );
-	OBATA_Printf( "stateCount    = %d\n", sys->stateCount );
-	OBATA_Printf( "currentZoneID = %d\n", sys->currentZoneID );
-	OBATA_Printf( "nextZoneID    = %d\n", sys->nextZoneID );
-}
+} 
