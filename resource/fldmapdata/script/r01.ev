@@ -177,7 +177,7 @@ EVENT_END
 /*Ç´Ç∏ÇÆÇ∑ÇËÇ≠ÇÍÇÈÉKÅ[Éã                                      */
 /**************************************************************/
 EVENT_START   ev_r01_girl1_01
-  _EASY_TALK_ITEM_EVENT(ITEM_KIZUGUSURI, 3, FH_01, msg_r01_girl1_01, msg_r01_girl1_02, msg_r01_girl1_02 )
+  _EASY_TALK_ITEM_EVENT(ITEM_KIZUGUSURI, 3, FE_R01_BABYGIRL_01, msg_r01_girl1_01, msg_r01_girl1_02, msg_r01_girl1_02 )
 EVENT_END
 
 /**************************************************************/

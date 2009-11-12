@@ -20,5 +20,7 @@
 #ifndef ZONE_D07R0101_EVC_H
 #define ZONE_D07R0101_EVC_H
 
+#define D07R0101_LEADER05_01               0
+#define D07R0101_WORKMAN1_01               1
 
 #endif //ZONE_D07R0101_EVC_H

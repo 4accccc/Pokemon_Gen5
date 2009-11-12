@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d07r0101.h"
-  //.include  "d07r0101.h"
+  .include  "d07r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d07r0101
+_EVENT_DATA    ev_pos_d07r0101_leader05_01
+_EVENT_DATA    ev_d07r0101_leader05_02
+_EVENT_DATA    ev_d07r0101_workman1_01
 _EVENT_DATA_END
 
 
@@ -30,9 +32,90 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/* POS：ヤーコン遭遇イベント                                   */
 /**************************************************************/
-ev_d07r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START     ev_pos_d07r0101_leader05_01
+	
+	//こちらに気づく
+	_OBJ_ANIME( D07R0101_LEADER05_01 , anm_gym05_01 )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_OPEN( msg_d07r0101_leader5_01 , D07R0101_LEADER05_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//右方向を向いて喋る
+	_OBJ_ANIME( D07R0101_LEADER05_01 , anm_gym05_02 )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_OPEN( msg_d07r0101_leader5_02 , D07R0101_LEADER05_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//主人公のほうを向いて喋る
+	_OBJ_ANIME( D07R0101_LEADER05_01 , anm_gym05_03 )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_OPEN( msg_d07r0101_leader5_03 , D07R0101_LEADER05_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//元の位置に戻る
+	_OBJ_ANIME( D07R0101_LEADER05_01 , anm_gym05_04 )
+	_OBJ_ANIME_WAIT()
+	
+EVENT_END
 
+/**************************************************************/
+/* ヤーコン一言メッセージ（C08到着まで）                       */
+/**************************************************************/
+EVENT_START     ev_d07r0101_leader05_02
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d07r0101_leader5_04 )
+EVENT_END
+
+/**************************************************************/
+/* workmanメッセージ（季節で変わる）                           */
+/**************************************************************/
+EVENT_START     ev_d07r0101_workman1_01
+	
+	//季節を格納するローカル変数定義
+	DEFINE_LOCAL SCWK_SEASON
+	_GET_SEASON_ID( SCWK_SEASON )
+	
+	//【仮】冬の一言メッセージ
+	IF $SCWK_SEASON == 0 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d07r0101_workman1_02 )
+	
+	//【仮】冬以外
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d07r0101_workman1_01 )
+	
+	ENDIF
+	
+EVENT_END
+
+//--------------------------------------------------------------
+//  ヤーコン遭遇イベント：こちらに気づく
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_gym05_01
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//  ヤーコン遭遇イベント：右方向を向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_gym05_02
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//  ヤーコン遭遇イベント：左方向を向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_gym05_03
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//  ヤーコン遭遇イベント：戻っていく
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_gym05_04
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
