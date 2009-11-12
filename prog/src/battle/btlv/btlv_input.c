@@ -11,13 +11,14 @@
 #include "btlv_effect.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
-#include "system/wazatype_icon.h"
 #include "waza_tool/waza_tool.h"
 #include "system/palanm.h"
 #include "system/bmp_oam.h"
 #include "infowin/infowin.h"
 #include "pokeicon/pokeicon.h"
 #include "system/sdkdef.h"
+
+#include "app/app_menu_common.h"
 
 #include "battle/btl_field.h"
 
@@ -48,7 +49,8 @@
 
 #define INFOWIN_PAL_NO  ( 0x0f )  //情報ステータスバーパレット
 
-#define WAZATYPEICON_OAMSIZE  ( 32 * 8 )
+#define WAZATYPEICON_COMP_CHAR  ( 0 )
+#define WAZATYPEICON_OAMSIZE    ( 32 * 8 )
 
 #define ALLOC_CHAR_SIZE ( 0xa00 )   //BG_FRAME2_Sで対象選択枠用キャラエリアをAllocするサイズ
                                     /** @TODO ポケモンリストが正規になったらいらなくなる */
@@ -253,6 +255,9 @@ enum
   WAZATYPE_Y3 = 112,
   WAZATYPE_X4 = WAZATYPE_X2,
   WAZATYPE_Y4 = WAZATYPE_Y3,
+
+  WAZATYPE_PLTT = 0x90,
+
 };
 
 ALIGN4  static  const GFL_CLACTPOS WazaIconPos[] =
@@ -374,9 +379,9 @@ enum
   ROTATE_POKEICON_Y1 = 76,
   ROTATE_POKEICON_Y2 = 120,
 
-  ROTATE_FRAME = 12,
+  ROTATE_FRAME = 8,
 
-  ROTATE_SCROLL_COUNT = 12,
+  ROTATE_SCROLL_COUNT = 8,
   ROTATE_SCROLL_SPEED = 64 / ROTATE_SCROLL_COUNT,
 };
 
@@ -422,6 +427,7 @@ struct _BTLV_INPUT_WORK
   ARCHANDLE*            handle;
   BTLV_INPUT_TYPE       type;
   BTLV_INPUT_SCRTYPE    scr_type;
+  GFL_MSGDATA*          msg;
   u32                   tcb_execute_flag    :1;
   u32                   tcb_execute_count   :3;
   u32                   center_button_type  :1;
@@ -482,9 +488,6 @@ struct _BTLV_INPUT_WORK
   GFL_TCB*              main_loop;      //scdにメインループが存在しないのでBTLV_EFFECTのTCBを間借りしてメインを回す
 
   HEAPID                heapID;
-
-  /** @TODO ポケモンリストが正規になったらいらなくなる */
-  u32                   alloc_char_area;
 
   u8                    button_exist[ BTLV_INPUT_BUTTON_MAX ];  //押せるボタンかどうかチェック
 
@@ -668,6 +671,8 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, GFL_FONT* font, u8* cur
     }
   }
 
+  biw->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_btlv_input_dat, biw->heapID );
+
   BTLV_INPUT_InitBG( biw );
 
   return biw;
@@ -683,6 +688,8 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, GFL_FONT* font, u8* cur
 void  BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw )
 {
   BTLV_INPUT_ExitBG( biw );
+
+  GFL_MSG_Delete( biw->msg );
 
   GFL_TCB_Exit( biw->tcbsys );
   GFL_HEAP_FreeMemory( biw->tcbwork );
@@ -849,9 +856,6 @@ void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
   GFL_ARC_CloseDataHandle( biw->handle );
 
   biw->scr_type = BTLV_INPUT_SCRTYPE_STANDBY;
-
-  /** @TODO ポケモンリストが正規になったらいらなくなる */
-  //GFL_BG_FreeCharacterArea( GFL_BG_FRAME2_S, biw->alloc_char_area, ALLOC_CHAR_SIZE );
 }
 
 //============================================================================================
@@ -1110,9 +1114,6 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl,
 {
   int hit;
 
-  GF_ASSERT( tp_tbl != NULL );
-  GF_ASSERT( key_tbl != NULL );
-
   //下画面変形中は入力を無視
   if( biw->tcb_execute_flag )
   {
@@ -1147,6 +1148,9 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl,
     return hit;
   }
 
+  GF_ASSERT( tp_tbl != NULL );
+  GF_ASSERT( key_tbl != NULL );
+
   hit = GFL_UI_TP_HitTrg( tp_tbl );
   hit = BTLV_INPUT_CheckKey( biw, tp_tbl, key_tbl, hit );
 
@@ -1174,9 +1178,6 @@ static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw )
   GFL_ARCHDL_UTIL_TransVramBgCharacter( biw->handle, NARC_battgra_wb_battle_w_bg_NCGR,
                                         GFL_BG_FRAME0_S, 0, 0, FALSE, biw->heapID );
 
-  /** @TODO ポケモンリストが正規になったらいらなくなる */
-  //biw->alloc_char_area = GFL_BG_AllocCharacterArea( GFL_BG_FRAME2_S, ALLOC_CHAR_SIZE, GFL_BG_CHRAREA_GET_F );
-
   GFL_ARCHDL_UTIL_TransVramBgCharacter( biw->handle, NARC_battgra_wb_battle_w_bg3_NCGR,
                                         GFL_BG_FRAME3_S, 0, 0x8000, FALSE, biw->heapID );
   GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_battle_w_bg3_NSCR,
@@ -1201,14 +1202,18 @@ static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw )
     int         i;
 
     //技タイプアイコン
-    hdl = GFL_ARC_OpenDataHandle( WazaTypeIcon_ArcIDGet(), biw->heapID );
-    biw->wazatype_cellID = GFL_CLGRP_CELLANIM_Register( hdl, WazaTypeIcon_CellIDGet(), WazaTypeIcon_CellAnmIDGet(),
+    hdl = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), biw->heapID );
+    biw->wazatype_cellID = GFL_CLGRP_CELLANIM_Register( hdl,
+                                                        APP_COMMON_GetPokeTypeCellArcIdx( APP_COMMON_MAPPING_32K ),
+                                                        APP_COMMON_GetPokeTypeAnimeArcIdx( APP_COMMON_MAPPING_32K ),
                                                         biw->heapID );
-    biw->wazatype_plttID = GFL_CLGRP_PLTT_Register( hdl, WazaTypeIcon_PlttIDGet(), CLSYS_DRAW_SUB, 0x20 * 8, biw->heapID );
+    biw->wazatype_plttID = GFL_CLGRP_PLTT_Register( hdl,
+                                                    APP_COMMON_GetPokeTypePltArcIdx(), CLSYS_DRAW_SUB,
+                                                    0x20 * 3, biw->heapID );
     PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_SUB_OBJ,
                              GFL_CLGRP_PLTT_GetAddr( biw->wazatype_plttID, CLSYS_DRAW_SUB ) / 2, 0x20 * 3 );
     for( i = 0; i < PTL_WAZA_MAX ; i++ ){
-      biw->wazatype_charID[ i ] = GFL_CLGRP_CGR_Register( hdl, WazaTypeIcon_CgrIDGet( POKETYPE_NORMAL ), FALSE,
+      biw->wazatype_charID[ i ] = GFL_CLGRP_CGR_Register( hdl, APP_COMMON_GetPokeTypeCharArcIdx( POKETYPE_NORMAL ), FALSE,
                                                           CLSYS_DRAW_SUB, biw->heapID );
     }
     GFL_ARC_CloseDataHandle( hdl );
@@ -2065,6 +2070,10 @@ static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int hit )
   { 
     biw->rotate_flag = 0;
     biw->rotate_scr = bird[ biw->before_select_dir ].init_scr;
+    if( ( hit == 0 ) && ( ( biw->rotate_scr == ROTATE_SCR_C ) || ( biw->rotate_scr == ROTATE_SCR_C_ALL ) ) )
+    { 
+      biw->cursor_pos = 1;
+    }
   }
   else
   { 
@@ -2135,10 +2144,6 @@ static  void  TCB_RotateAction( GFL_TCB* tcb, void* work )
       tra->frame--;
       if( tra->frame == 0 )
       { 
-        BTLV_INPUT_CreateRotateScreen( tra->biw );
-        GFL_BMPWIN_MakeScreen( tra->biw->bmp_win );
-        GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
-        GFL_BMPWIN_TransVramCharacter( tra->biw->bmp_win );
         tra->seq_no++;
       }
     }
@@ -2152,6 +2157,10 @@ static  void  TCB_RotateAction( GFL_TCB* tcb, void* work )
       { 
         tra->biw->button_exist[ i ] = button_exist_table[ tra->biw->rotate_scr ][ i ];
       }
+      BTLV_INPUT_CreateRotateScreen( tra->biw );
+      GFL_BMPWIN_MakeScreen( tra->biw->bmp_win );
+      GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
+      GFL_BMPWIN_TransVramCharacter( tra->biw->bmp_win );
       tra->biw->tcb_execute_flag = 0;
       GFL_HEAP_FreeMemory( tra );
       GFL_TCB_DeleteTask( tcb );
@@ -2202,7 +2211,6 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
   STRBUF *ppmsg_src;
   WORDSET *wordset;
   PRINTSYS_LSB color;
-  GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_btlv_input_dat, biw->heapID );
   static const int wazaname_pos[ PTL_WAZA_MAX ][ 2 ] =
   {
     { WAZANAME_X1, WAZANAME_Y1 },
@@ -2226,11 +2234,11 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
   };
 
   wazaname_p = GFL_STR_CreateBuffer( BUFLEN_WAZA_NAME, biw->heapID );
-  wazaname_src = GFL_MSG_CreateString( msg, BI_WazaNameMsg );
-  ppmsg_src = GFL_MSG_CreateString( msg, BI_PPMsg );
+  wazaname_src = GFL_MSG_CreateString( biw->msg, BI_WazaNameMsg );
+  ppmsg_src = GFL_MSG_CreateString( biw->msg, BI_PPMsg );
   wordset = WORDSET_Create( biw->heapID );
   pp_p = GFL_STR_CreateBuffer( BUFLEN_BI_WAZAPP, biw->heapID );
-  pp_src = GFL_MSG_CreateString( msg,  BI_PPNowMaxMsg );
+  pp_src = GFL_MSG_CreateString( biw->msg,  BI_PPNowMaxMsg );
 
   GFL_CLACT_UNIT_SetDrawEnable( biw->wazatype_clunit, FALSE );
 
@@ -2256,7 +2264,6 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
           NARC_battgra_wb_waza_w_12_NCLR,
           NARC_battgra_wb_waza_w_14_NCLR,
           NARC_battgra_wb_waza_w_16_NCLR,
-          NARC_battgra_wb_waza_w_00_NCLR,
           NARC_battgra_wb_waza_w_02_NCLR,
           NARC_battgra_wb_waza_w_03_NCLR,
           NARC_battgra_wb_waza_w_05_NCLR,
@@ -2267,17 +2274,18 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
           NARC_battgra_wb_waza_w_17_NCLR,
         };
         waza_type = WT_WazaDataParaGet( biwp->wazano[ i ], ID_WTD_wazatype );
+        datID = waza_type_pltt[ waza_type ];
 
         biw->wazatype_wk[ i ] = GFL_CLACT_WK_Create( biw->wazatype_clunit, biw->wazatype_charID[ i ],
                                                      biw->wazatype_plttID, biw->wazatype_cellID,
                                                      &obj_param, CLSYS_DEFREND_SUB, biw->heapID );
         GFL_CLACT_WK_SetPos( biw->wazatype_wk[ i ], &WazaIconPos[ i ], CLSYS_DEFREND_SUB );
 
-        arc_data = GFL_ARC_UTIL_LoadOBJCharacter( WazaTypeIcon_ArcIDGet(),
-                                                  WazaTypeIcon_CgrIDGet( waza_type ), WAZATYPEICON_COMP_CHAR,
+        arc_data = GFL_ARC_UTIL_LoadOBJCharacter( APP_COMMON_GetArcId(),
+                                                  APP_COMMON_GetPokeTypeCharArcIdx( waza_type ), WAZATYPEICON_COMP_CHAR,
                                                   &char_data, biw->heapID );
 
-        GFL_CLACT_WK_SetPlttOffs( biw->wazatype_wk[ i ], WazaTypeIcon_PlttOffsetGet( waza_type ), CLWK_PLTTOFFS_MODE_PLTT_TOP );
+        GFL_CLACT_WK_SetPlttOffs( biw->wazatype_wk[ i ], APP_COMMON_GetPokeTypePltOffset( waza_type ), CLWK_PLTTOFFS_MODE_PLTT_TOP );
         obj_vram = G2S_GetOBJCharPtr();
         GFL_CLACT_WK_GetImgProxy( biw->wazatype_wk[ i ],  &image );
         MI_CpuCopy16( char_data->pRawData,
@@ -2317,9 +2325,12 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
       datID = NARC_battgra_wb_waza_w_00_NCLR;
     }
     { 
-//      void* dat = GFL_ARC_LoadDataAlloc( ARCID_BATTGRA, datID, biw->heapID );
+      NNSG2dPaletteData* palData;
+      void* dat = GFL_ARC_UTIL_LoadPalette( ARCID_BATTGRA, datID, &palData, biw->heapID );
 
-//      PaletteWorkSet( BTLV_EFFECT_GetPfd(), dat, FADE_SUB_BG, BTLV_INPUT_WAZA_PLTT + i * 0x20, 0x20 );
+      PaletteWorkSet( BTLV_EFFECT_GetPfd(), palData->pRawData, FADE_SUB_BG, WAZATYPE_PLTT + i * 0x10, 0x20 );
+
+      GFL_HEAP_FreeMemory( dat );
     }
 
   }
@@ -2336,8 +2347,6 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
   GFL_STR_DeleteBuffer( wazaname_src );
   GFL_STR_DeleteBuffer( pp_src );
   GFL_STR_DeleteBuffer( pp_p );
-
-  GFL_MSG_Delete( msg );
 }
 
 //--------------------------------------------------------------
@@ -2352,7 +2361,6 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
   STRBUF *monsname_p;
   STRBUF *monsname_src;
   WORDSET *wordset;
-  GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_btlv_input_dat, GFL_HEAP_LOWID(biw->heapID) );
   static  const int monsname_pos[ 2 ][ BTLV_INPUT_DIR_MAX ][ 2 ] =
   {
     {
@@ -2381,7 +2389,7 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
   for( i = 0 ; i < max ; i++){
     if( bisp->bidp[ i ].hp ){
       //BMPWIN：ポケモン名
-      monsname_src = GFL_MSG_CreateString( msg, BI_TargetPokemonMaleMsg + bisp->bidp[ i ].sex );
+      monsname_src = GFL_MSG_CreateString( biw->msg, BI_TargetPokemonMaleMsg + bisp->bidp[ i ].sex );
       WORDSET_RegisterPokeNickName( wordset, 0, bisp->bidp[ i ].pp );
       WORDSET_ExpandStr( wordset, monsname_p, monsname_src );
       FontLenGet( monsname_p, biw->font, &dot_len, &char_len );
@@ -2396,8 +2404,6 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
 
   WORDSET_Delete( wordset );
   GFL_STR_DeleteBuffer( monsname_p );
-
-  GFL_MSG_Delete( msg );
 
   //選択枠表示
   { 
@@ -2557,8 +2563,6 @@ static  void  BTLV_INPUT_CreateRotateScreen( BTLV_INPUT_WORK* biw )
   STRBUF *monsname_p;
   STRBUF *monsname_src;
   WORDSET *wordset;
-  GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_btlv_input_dat,
-                                     GFL_HEAP_LOWID( biw->heapID ) );
   static  const int monsname_pos[ BTLV_INPUT_POKEICON_MAX ][ 2 ] =
   {
     { ROTATE_MONSNAME_X0, ROTATE_MONSNAME_Y0 },
@@ -2578,7 +2582,7 @@ static  void  BTLV_INPUT_CreateRotateScreen( BTLV_INPUT_WORK* biw )
     { 
       int sex = PP_Get( biw->rotate_pp[ pos ], ID_PARA_sex, NULL );
       //BMPWIN：ポケモン名
-      monsname_src = GFL_MSG_CreateString( msg, BI_TargetPokemonMaleMsg + sex );
+      monsname_src = GFL_MSG_CreateString( biw->msg, BI_TargetPokemonMaleMsg + sex );
       WORDSET_RegisterPokeNickName( wordset, 0, biw->rotate_pp[ pos ] );
       WORDSET_ExpandStr( wordset, monsname_p, monsname_src );
       FontLenGet( monsname_p, biw->font, &dot_len, &char_len );
@@ -2589,8 +2593,6 @@ static  void  BTLV_INPUT_CreateRotateScreen( BTLV_INPUT_WORK* biw )
 
   WORDSET_Delete( wordset );
   GFL_STR_DeleteBuffer( monsname_p );
-
-  GFL_MSG_Delete( msg );
 
   GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_battle_w_bg0c_NSCR,
                                    GFL_BG_FRAME0_S, 0, 0, FALSE, biw->heapID );
