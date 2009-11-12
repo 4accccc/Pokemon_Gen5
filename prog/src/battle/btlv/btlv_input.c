@@ -577,6 +577,7 @@ static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw );
 static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformCommand2Waza( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformWaza2Command( GFL_TCB* tcb, void* work );
+static  void  TCB_TransformRotate2Command( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformWaza2Dir( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformDir2Waza( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformCommand2Standby( GFL_TCB* tcb, void* work );
@@ -1009,17 +1010,19 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE )
       { 
-        GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
-                                         GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
         BTLV_INPUT_DeletePokeIcon( biw );
       }
 
       BTLV_INPUT_CreatePokeIcon( biw, bicp );
       BTLV_INPUT_CreateWeatherIcon( biw );
 
-      if( ( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA ) || ( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE ) )
+      if( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA )
       {
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformWaza2Command, ttw, 1 );
+      }
+      else if( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE )
+      { 
+        GFL_TCB_AddTask( biw->tcbsys, TCB_TransformRotate2Command, ttw, 1 );
       }
       else
       {
@@ -1365,6 +1368,57 @@ static  void  TCB_TransformWaza2Command( GFL_TCB* tcb, void* work )
     SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_BACKWARD );
     SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_VANISH );
     SetupBallGaugeMove( ttw->biw, BALL_GAUGE_MOVE_CLOSE );
+    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+    ttw->seq_no++;
+    break;
+  case 1:
+  default:
+    if( ttw->biw->tcb_execute_count == 0 )
+    {
+      ttw->biw->tcb_execute_flag = 0;
+      GFL_HEAP_FreeMemory( ttw );
+      GFL_TCB_DeleteTask( tcb );
+    }
+    break;
+  }
+}
+
+//============================================================================================
+/**
+ *  @brief  下画面変形タスク（ローテーション選択→コマンド選択）
+ */
+//============================================================================================
+static  void  TCB_TransformRotate2Command( GFL_TCB* tcb, void* work )
+{
+  TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
+
+  switch( ttw->seq_no ){
+  case 0:
+    if( ttw->biw->center_button_type == BTLV_INPUT_CENTER_BUTTON_ESCAPE )
+    { 
+      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
+                                       GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+    }
+    else
+    { 
+      if( ( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE ) && ( ttw->pos != BTLV_MCSS_POS_C ) )
+      { 
+        GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0e_NSCR,
+                                         GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+      }
+      else
+      { 
+        GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0d_NSCR,
+                                         GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+      }
+    }
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
+                                     GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
+    SetupScrollUp( ttw->biw, TTW2C_START_SCROLL_X, TTW2C_START_SCROLL_Y, TTW2C_SCROLL_SPEED, TTW2C_SCROLL_COUNT );
+    SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_BACKWARD );
+    SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_VANISH );
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
