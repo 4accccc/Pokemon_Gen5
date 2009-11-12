@@ -785,7 +785,7 @@ static GMEVENT_RESULT debugMenuZoneJump(GMEVENT *event, int *seq, void *wk )
         }
         else if(ret == ZONE_ID_PALACE01){
           VecFx32 pos = {PALACE_MAP_LEN/2, 0, 408*FX32_ONE};
-          mapchange_event = DEBUG_EVENT_ChangeMapPos(work->gmSys, work->fieldWork, ret, &pos, 0);
+          mapchange_event = EVENT_ChangeMapPos(work->gmSys, work->fieldWork, ret, &pos, 0);
         }
         else{
           mapchange_event = DEBUG_EVENT_ChangeMapDefaultPos( work->gmSys, work->fieldWork, ret );
@@ -918,7 +918,7 @@ static GMEVENT_RESULT debugMenuSeasonSelectEvent(
 				GAMEDATA_SetSeasonID(gdata, ret);
         if( FIELDMAP_GetMapControlType( work->fieldWork ) == FLDMAP_CTRLTYPE_GRID )
         {
-          event = DEBUG_EVENT_ChangeMapPos(
+          event = EVENT_ChangeMapPos(
             work->gmSys, work->fieldWork, zone_id, pos, dir );
         }
         else

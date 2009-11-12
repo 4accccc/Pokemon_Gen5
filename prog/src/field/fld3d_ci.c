@@ -448,7 +448,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
         VecFx32 pos;
         //é©ã@ÇÃç¿ïW
         FIELD_PLAYER_GetPos( fld_player, &pos );
-        child = DEBUG_EVENT_ChangeMapPos(gsys, fieldmap,
+        child = EVENT_ChangeMapPos(gsys, fieldmap,
             zone_id, &pos, DIR_DOWN );
       }
       else{

@@ -801,7 +801,7 @@ static const void MUSICAL_EVENT_JumpWaitingRoom( GMEVENT *event, MUSICAL_EVENT_W
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( evWork->gsys );
   const VecFx32 pos = { FX32_CONST(40.0f) , FX32_CONST(0.0f) , FX32_CONST(360.0f) };
   
-  newEvent = DEBUG_EVENT_ChangeMapPos( evWork->gsys, fieldWork ,
+  newEvent = EVENT_ChangeMapPos( evWork->gsys, fieldWork ,
                 ZONE_ID_C04R0202 , &pos , 0 );
   GMEVENT_CallEvent(event, newEvent);
 }
@@ -818,7 +818,7 @@ static const void MUSICAL_EVENT_JumpMusicalHall( GMEVENT *event, MUSICAL_EVENT_W
   //––ROM—p
   const VecFx32 pos = { FX32_CONST(232.0f) , FX32_CONST(0.0f) , FX32_CONST(200.0f) };
   
-  newEvent = DEBUG_EVENT_ChangeMapPos( evWork->gsys, fieldWork ,
+  newEvent = EVENT_ChangeMapPos( evWork->gsys, fieldWork ,
                 ZONE_ID_C04R0201 , &pos , 2 );
   GMEVENT_CallEvent(event, newEvent);
 }
