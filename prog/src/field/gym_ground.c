@@ -18,8 +18,6 @@
 
 #include "arc/fieldmap/gym_ground.naix"
 #include "system/main.h"    //for HEAPID_FIELDMAP
-///#include "script.h"     //for SCRIPT_CallScript
-///#include "../../../resource/fldmapdata/script/c03gym0101_def.h"  //for SCRID_Å`
 
 #include "../../../resource/fldmapdata/gimmick/gym_ground/gym_ground_local_def.cdat"
 
