@@ -34,6 +34,8 @@
 #include "msg/msg_invasion.h"
 #include "fieldmap/map_matrix.naix"  //MATRIX_ID
 
+#include "intrude_minimono.h"   //DEBUG_INTRUDE_Pokemon_Add
+
 
 //==============================================================================
 //  構造体定義
@@ -146,6 +148,11 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
   
   IntrudeField_ConnectMap(fieldWork, gameSys, intcomm);
   _PalaceFieldPlayerWarp(fieldWork, gameSys, pcActor, intcomm);
+  
+  //※check　デバッグ
+  if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){
+    DEBUG_INTRUDE_Pokemon_Add(fieldWork);
+  }
 }
 
 //==================================================================

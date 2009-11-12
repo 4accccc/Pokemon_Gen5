@@ -95,3 +95,59 @@ void MINIMONO_AddPosRand(GAME_COMM_SYS_PTR game_comm, FIELDMAP_WORK *fieldWork)
   vec.z -= GRID_TO_FX32( 1 );  //自機のワープ場所と被らないように1grid上にする
   MINIMONO_AddMMdl(fieldWork, FX32_TO_GRID( vec.x ), FX32_TO_GRID( vec.z ), vec.y);
 }
+
+#ifdef PM_DEBUG
+//==================================================================
+/**
+ * ミニモノリスの動作モデルをAdd
+ *
+ * @param   fieldWork		
+ * @param   grid_x		グリッド座標X
+ * @param   grid_z		グリッド座標Z
+ * @param   fx_y		  Y座標(fx32)
+ */
+//==================================================================
+static void DEBUG_INTRUDE_Pokemon_AddMMdl(FIELDMAP_WORK *fieldWork, u16 grid_x, u16 grid_z, fx32 fx_y)
+{
+  MMDL_HEADER head;
+  MMDL_HEADER_GRIDPOS *grid_pos;
+  const MMDLSYS *mmdl_sys;
+  ZONEID zone_id;
+  
+  mmdl_sys = FIELDMAP_GetMMdlSys( fieldWork );
+  zone_id = FIELDMAP_GetZoneID( fieldWork );
+  
+  head = data_MMdlHeader;
+  if(GFUser_GetPublicRand(1) == 0){
+    head.obj_code = TPOKE_0001 + GFUser_GetPublicRand0(MONSNO_ARUSEUSU) + 1;
+  }
+  grid_pos = (MMDL_HEADER_GRIDPOS *)head.pos_buf;
+  
+  grid_pos->gx = grid_x;
+  grid_pos->gz = grid_z;
+  grid_pos->y = fx_y;
+  
+  MMDLSYS_AddMMdl(mmdl_sys, &head, zone_id);
+}
+
+//==================================================================
+/**
+ * 
+ *
+ * @param   fieldWork		
+ */
+//==================================================================
+void DEBUG_INTRUDE_Pokemon_Add(FIELDMAP_WORK *fieldWork)
+{
+  static u16 gx = 20;
+  static u16 gz = 30;
+  
+  DEBUG_INTRUDE_Pokemon_AddMMdl(fieldWork, gx, gz, 0);
+  gx += 1;
+  if(gx % 10 == 0){
+    gz += 2;
+    gx -= 10;
+  }
+}
+#endif  //-------- PM_DEBUG --------
+
