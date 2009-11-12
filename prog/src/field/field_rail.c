@@ -140,7 +140,6 @@ struct _FIELD_RAIL_WORK{
   // ‰ß‹Ž‚Ìî•ñ
   RAIL_LOCATION last_location;
 
-
   const FIELD_RAIL_MAN* cp_man;
 };
 
@@ -1368,7 +1367,7 @@ void FIELD_RAIL_WORK_Update(FIELD_RAIL_WORK * work)
   work->last_move   = FALSE;
 	
 	if( work->req_move )
-	{
+  {
 		FIELD_RAIL_TYPE type = work->type;
 		RAIL_KEY set_key = RAIL_KEY_NULL;
 		RAIL_KEY key = work->save_move_key;
@@ -1447,7 +1446,6 @@ void FIELD_RAIL_WORK_Update(FIELD_RAIL_WORK * work)
         }
       }
 		}
-
 	}
 
 }

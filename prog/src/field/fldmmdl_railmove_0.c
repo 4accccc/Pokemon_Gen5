@@ -33,6 +33,17 @@ enum
   MV_RND_MOVE_SEQ_WALK_ACT_WAIT, ///<移動アクション
 };
 
+
+//-------------------------------------
+///	MV_RAIL_RT2_WORK　動作シーケンス
+//=====================================
+enum
+{
+  MV_RT2_MOVE_SEQ_CHECK_DIR,      ///<初期方向チェック
+  MV_RT2_MOVE_SEQ_ACT_SET,        ///<動作設定
+  MV_RT2_MOVE_SEQ_ACT_WAIT,       ///<動作待ち
+};
+
 //--------------------------------------------------------------
 ///	方向テーブルID
 //--------------------------------------------------------------
@@ -262,7 +273,6 @@ typedef struct
 } MV_RAIL_DIR_RND_WORK;
 #define MV_RAIL_DIR_RND_WORK_SIZE (sizeof(MV_RAIL_DIR_RND_WORK))		///<MV_RAIL_DIR_RNDサイズ
 
-
 //-------------------------------------
 ///	MV_RAIL_RND_WORK構造体
 //=====================================
@@ -277,6 +287,20 @@ typedef struct
 } MV_RAIL_RND_WORK;
 #define MV_RAIL_RND_WORK_SIZE (sizeof(MV_RAIL_RND_WORK))		///<MV_RAIL_RNDサイズ
 
+
+//-------------------------------------
+///	MV_RAIL_RT2_WORK構造体
+//=====================================
+typedef struct 
+{
+  MV_RAIL_COMMON_WORK rail_wk;
+  u8 seq_no;
+  u8 turn_flag;
+  s8 init_width;
+  u8 init_line;
+} MV_RAIL_RT2_WORK;
+#define MV_RAIL_RT2_WORK_SIZE (sizeof(MV_RAIL_RT2_WORK))		///<MV_RAIL_RTサイズ
+
 //-----------------------------------------------------------------------------
 /**
  *					プロトタイプ宣言
@@ -288,6 +312,8 @@ static RAIL_KEY MMdl_ConvertDir_RailKey( u16 dir );
 static RAIL_FRAME MMdl_ConvertWait_RailFrame( s16 wait );
 
 static void* MMdl_RailDefaultInit( MMDL* fmmdl, u32 work_size );
+
+static BOOL MMdl_CheckRailLimit( const MMDL* fmmdl, u8 init_line, s8 init_width, const RAIL_LOCATION* cp_location );
 
 // RNDテーブル
 static int TblNumGet( const int *tbl, int end );
@@ -318,6 +344,10 @@ static void MvRndWorkMove( MMDL * fmmdl );
 static void MvRndWorkDelete( MMDL * fmmdl );
 
 
+// MV_RT2
+static void MvRoot2WorkInit( MMDL * fmmdl );
+static void MvRoot2WorkMove( MMDL * fmmdl );
+static void MvRoot2WorkDelete( MMDL * fmmdl );
 
 //----------------------------------------------------------------------------
 /**
@@ -355,13 +385,25 @@ void MMDL_SetRailLocation( MMDL * fmmdl, const RAIL_LOCATION* location )
 void MMDL_GetRailLocation( const MMDL * fmmdl, RAIL_LOCATION* location )
 {
   const MV_RAIL_COMMON_WORK* cp_work;
+  const FLDNOGRID_MAPPER* cp_mapper = MMDLSYS_GetNOGRIDMapper( MMDL_GetMMdlSys( fmmdl ) );
+  const FIELD_RAIL_MAN* cp_railman = FLDNOGRID_MAPPER_GetRailMan( cp_mapper );
 
   // レール動作チェック
   GF_ASSERT( MMDL_CheckStatusBit( fmmdl, MMDL_STABIT_RAIL_MOVE ) );
 
 	cp_work = MMDL_GetMoveProcWork( (MMDL*)fmmdl );
 
-  FIELD_RAIL_WORK_GetLocation( cp_work->rail_wk, location );
+  if( FIELD_RAIL_WORK_IsAction( cp_work->rail_wk ) )
+  {
+    // 移動先を返す
+    FIELD_RAIL_WORK_GetLocation( cp_work->rail_wk, location );
+    FIELD_RAIL_MAN_CalcRailKeyLocation( cp_railman, location, FIELD_RAIL_WORK_GetActionKey( cp_work->rail_wk ), location );
+  }
+  else
+  {
+    // 今を返す
+    FIELD_RAIL_WORK_GetLocation( cp_work->rail_wk, location );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -380,7 +422,7 @@ void MMDL_GetOldRailLocation( const MMDL * fmmdl, RAIL_LOCATION* location )
   GF_ASSERT( MMDL_CheckStatusBit( fmmdl, MMDL_STABIT_RAIL_MOVE ) );
 
 	cp_work = MMDL_GetMoveProcWork( (MMDL*)fmmdl );
-  FIELD_RAIL_WORK_GetLastLocation( cp_work->rail_wk, location );
+  FIELD_RAIL_WORK_GetLocation( cp_work->rail_wk, location );
 }
 
 //----------------------------------------------------------------------------
@@ -609,10 +651,23 @@ BOOL MMDL_HitCheckRailMoveFellow( const MMDL * mmdl, const RAIL_LOCATION* next_l
         }
         else
         {
+          // NOW
           MMDL_GetRailLocation( cmdl, &mdl_location );
           FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &mdl_location, &mdl_pos );
 
-  //        TOMOYA_Printf( "grid_r 0x%x my_pos x[0x%x]y[0x%x]z[0x%x] mdl_pos x[0x%x]y[0x%x]z[0x%x] \n", grid_r, my_pos.x, my_pos.y, my_pos.z, mdl_pos.x, mdl_pos.y, mdl_pos.z );
+          //TOMOYA_Printf( "now grid_r 0x%x my_pos x[0x%x]y[0x%x]z[0x%x] mdl_pos x[0x%x]y[0x%x]z[0x%x] \n", grid_r, my_pos.x, my_pos.y, my_pos.z, mdl_pos.x, mdl_pos.y, mdl_pos.z );
+          //TOMOYA_Printf( "mdl_location line%d width%d\n", mdl_location.line_grid, mdl_location.width_grid );
+          if( FIELD_RAIL_TOOL_HitCheckSphere( &my_pos, &mdl_pos, grid_r ) )
+          {
+            return TRUE;
+          }
+
+          // OLD
+          MMDL_GetOldRailLocation( cmdl, &mdl_location );
+          FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &mdl_location, &mdl_pos );
+
+          //TOMOYA_Printf( "last grid_r 0x%x my_pos x[0x%x]y[0x%x]z[0x%x] mdl_pos x[0x%x]y[0x%x]z[0x%x] \n", grid_r, my_pos.x, my_pos.y, my_pos.z, mdl_pos.x, mdl_pos.y, mdl_pos.z );
+          //TOMOYA_Printf( "mdl_location line%d width%d\n", mdl_location.line_grid, mdl_location.width_grid );
           if( FIELD_RAIL_TOOL_HitCheckSphere( &my_pos, &mdl_pos, grid_r ) )
           {
             return TRUE;
@@ -1062,6 +1117,45 @@ void MMDL_RailRnd_Delete( MMDL * fmmdl )
 
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ２分岐ルート移動　初期化
+ *
+ *	@param	fmmdl 
+ */
+//-----------------------------------------------------------------------------
+void MMDL_RailRoot2_Init( MMDL * fmmdl )
+{
+  MvRoot2WorkInit( fmmdl );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ２分岐ルート移動　動作
+ *
+ *	@param	fmmdl 
+ */
+//-----------------------------------------------------------------------------
+void MMDL_RailRoot2_Move( MMDL * fmmdl )
+{
+  MvRoot2WorkMove( fmmdl );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ２分岐ルート移動　破棄
+ *
+ *	@param	fmmdl 
+ */
+//-----------------------------------------------------------------------------
+void MMDL_RailRoot2_Delete( MMDL * fmmdl )
+{
+  MvRoot2WorkDelete( fmmdl );
+}
+
+
+
+
 //-----------------------------------------------------------------------------
 /**
  *          private関数
@@ -1149,6 +1243,51 @@ static void* MMdl_RailDefaultInit( MMDL* fmmdl, u32 work_size )
   }
 
   return p_work;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レールリミットチェック
+ *
+ *	@param	fmmdl       モデル
+ *	@param	init_line   ライングリッド初期値
+ *	@param	init_width  幅グリッド初期値
+ *	@param  cp_location チェックロケーション
+ *
+ *	@retval TRUE  リミットヒット
+ *	@retval FALSE リミットしない
+ */
+//-----------------------------------------------------------------------------
+static BOOL MMdl_CheckRailLimit( const MMDL* fmmdl, u8 init_line, s8 init_width, const RAIL_LOCATION* cp_location )
+{
+  int limit_x, limit_z, max, min;
+  
+  limit_x = MMDL_GetMoveLimitX( fmmdl );  // Width
+  limit_z = MMDL_GetMoveLimitZ( fmmdl );  // Line
+
+  // 移動リミットチェック
+  if( limit_x != MOVE_LIMIT_NOT )
+  {
+    min = init_width - limit_x;
+    max = init_width + limit_x;
+    if( (min > cp_location->width_grid) || (max < cp_location->width_grid) )
+    {
+      return TRUE;
+    }
+  }
+
+  if( limit_z != MOVE_LIMIT_NOT )
+  {
+    min = init_line - limit_z;
+    max = init_line + limit_z;
+    if( (min > cp_location->line_grid) || (max < cp_location->line_grid) )
+    {
+      return TRUE;
+    }
+  }
+
+  return FALSE;
 }
 
 
@@ -1466,7 +1605,6 @@ static void MvRndWorkMove( MMDL * fmmdl )
     {
       RAIL_LOCATION now_location;
       RAIL_LOCATION next_location;
-      s16 limit_x, limit_z, min, max;
 
       MMDL_GetRailLocation( fmmdl, &now_location );
       MMDL_GetRailDirLocation( fmmdl, ret, &next_location );
@@ -1479,30 +1617,11 @@ static void MvRndWorkMove( MMDL * fmmdl )
       }
 
 
-      limit_x = MMDL_GetMoveLimitX( fmmdl );  // Width
-      limit_z = MMDL_GetMoveLimitZ( fmmdl );  // Line
-
       // 移動リミットチェック
-      if( limit_x != MOVE_LIMIT_NOT )
+      if( MMdl_CheckRailLimit( fmmdl, p_wk->init_line, p_wk->init_width, &next_location ) )
       {
-        min = p_wk->init_width - limit_x;
-        max = p_wk->init_width + limit_x;
-        if( (min > next_location.width_grid) || (max < next_location.width_grid) )
-        {
-          p_wk->seq_no = 0;
-          break;
-        }
-      }
-
-      if( limit_z != MOVE_LIMIT_NOT )
-      {
-        min = p_wk->init_line - limit_z;
-        max = p_wk->init_line + limit_z;
-        if( (min > next_location.line_grid) || (max < next_location.line_grid) )
-        {
-          p_wk->seq_no = 0;
-          break;
-        }
+        p_wk->seq_no = 0;
+        break;
       }
     }
 		
@@ -1540,6 +1659,171 @@ static void MvRndWorkDelete( MMDL * fmmdl )
 	MV_RAIL_RND_WORK* p_wk = MMDL_GetMoveProcWork( fmmdl );
   MMdl_RailCommon_Delete( &p_wk->rail_wk, fmmdl );
 }
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ルート移動  初期化
+ *    
+ *	@param	fmmdl
+ *	@param	id        テーブルID
+ */
+//-----------------------------------------------------------------------------
+static void MvRoot2WorkInit( MMDL * fmmdl )
+{
+  MV_RAIL_RT2_WORK* p_wk;
+  RAIL_LOCATION location;
+
+  p_wk = MMdl_RailDefaultInit( fmmdl, MV_RAIL_RT2_WORK_SIZE );
+
+  MMDL_GetRailLocation( fmmdl, &location );
+
+  p_wk->seq_no = 0;
+  p_wk->turn_flag = 0;
+
+  // ワークサイズをオーバーしないようにチェック
+  GF_ASSERT( location.line_grid < 0xff );
+  GF_ASSERT( location.width_grid < 0x7f );
+
+  p_wk->init_line   = location.line_grid;
+  p_wk->init_width  = location.width_grid;
+
+	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	MMDL_OffStatusBitMove( fmmdl );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ルート移動　メイン
+ *
+ *	@param	fmmdl 
+ */
+//-----------------------------------------------------------------------------
+static void MvRoot2WorkMove( MMDL * fmmdl )
+{
+	MV_RAIL_RT2_WORK* p_wk = MMDL_GetMoveProcWork( fmmdl );
+
+  switch( p_wk->seq_no )
+  {
+  ///<初期方向チェック
+  case MV_RT2_MOVE_SEQ_CHECK_DIR:      
+    {
+      int dir;
+      
+      dir = MMDL_GetDirHeader( fmmdl );						//ヘッダ指定方向
+
+      if( p_wk->turn_flag == TRUE ){
+        dir = MMDL_TOOL_FlipDir( dir );
+      }
+      
+      MMDL_SetDirAll( fmmdl, dir );
+
+      p_wk->seq_no = MV_RT2_MOVE_SEQ_ACT_SET;
+    }
+    ///↓へ
+    
+  ///<動作設定
+  case MV_RT2_MOVE_SEQ_ACT_SET:        
+    {
+      RAIL_LOCATION now_location;
+      RAIL_LOCATION next_location;
+
+      // 現状のロケーション取得
+      MMDL_GetRailLocation( fmmdl, &now_location );
+      
+      // 反転中　戻り中なら、元に戻すかチェック
+      if( p_wk->turn_flag ){
+        
+        if( (p_wk->init_line == now_location.line_grid) && 
+            (p_wk->init_width == now_location.width_grid) )
+        {
+          int dir = MMDL_TOOL_FlipDir( MMDL_GetDirMove(fmmdl) );
+          
+          MMDL_SetDirAll( fmmdl, dir );
+
+          p_wk->turn_flag = FALSE;
+        }
+      }
+
+      // 移動設定
+      {
+        int dir, acmd;
+        u32 ret;
+        BOOL limit;
+        BOOL line_change = FALSE;
+
+        dir = MMDL_GetDirMove( fmmdl );
+
+        ret = MMDL_HitCheckRailMoveDir( fmmdl, dir );
+
+        // 移動先ロケーション取得
+        MMDL_GetRailDirLocation( fmmdl, dir, &next_location );
+        
+        // レールリミットも計算
+        limit = MMdl_CheckRailLimit( fmmdl, p_wk->init_line, p_wk->init_width, &next_location );
+
+        // ラインが変わらないようにチェック
+        if( now_location.rail_index != next_location.rail_index )
+        {
+          line_change = TRUE;
+        }
+
+        // リミットで反転
+        if( (ret & MMDL_MOVEHITBIT_LIM) || limit || line_change )
+        {
+          p_wk->turn_flag = TRUE;
+          dir = MMDL_TOOL_FlipDir( dir );
+          ret = MMDL_HitCheckRailMoveDir( fmmdl, dir );
+          MMDL_GetRailDirLocation( fmmdl, dir, &next_location );
+        }
+
+        acmd = AC_WALK_U_8F;
+        if( ret != MMDL_MOVEHITBIT_NON )
+        {
+          acmd = AC_STAY_WALK_U_8F;
+        }
+
+
+        acmd = MMDL_ChangeDirAcmdCode( dir, acmd );
+        MMDL_SetLocalAcmd( fmmdl, acmd );
+      }
+
+      MMDL_OnStatusBitMove( fmmdl );
+      p_wk->seq_no = MV_RT2_MOVE_SEQ_ACT_WAIT;
+    }
+    break;
+  ///<動作待ち
+  case MV_RT2_MOVE_SEQ_ACT_WAIT:       
+    if( MMDL_ActionLocalAcmd(fmmdl) == TRUE ){
+      MMDL_OffStatusBitMove( fmmdl );
+      
+      p_wk->seq_no = MV_RT2_MOVE_SEQ_CHECK_DIR;
+    }
+    break;
+
+  // エラー
+  default:
+    GF_ASSERT(0);
+    break;
+  }
+	
+  MMdl_RailCommon_Move( &p_wk->rail_wk, fmmdl );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ルート移動　破棄
+ *
+ *	@param	fmmdl 
+ */
+//-----------------------------------------------------------------------------
+static void MvRoot2WorkDelete( MMDL * fmmdl )
+{
+	MV_RAIL_RT2_WORK* p_wk = MMDL_GetMoveProcWork( fmmdl );
+  MMdl_RailCommon_Delete( &p_wk->rail_wk, fmmdl );
+}
+
 
 
 

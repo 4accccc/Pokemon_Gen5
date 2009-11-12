@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d09.wms
 #hold event type:
 1
 #hold event number:
-1
+2
 #event number: 0
 #type
 1
@@ -41,6 +41,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_RAIL
 #position
 5 29 -1
+#event number: 1
+#type
+1
+#ID name
+T09_BIGMAN2
+#OBJ CODE Number
+MAN3
+#MOVE CODE Number
+MV_RAIL_RT2
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_D09
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+4
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+1 65 -1
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

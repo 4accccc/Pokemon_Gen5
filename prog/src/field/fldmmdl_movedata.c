@@ -1034,6 +1034,18 @@ static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RailRndH =
 	MMDL_RailDmy_Return,			///<復帰関数
 };
 
+//--------------------------------------------------------------
+/// MV_RAIL_RT2
+//--------------------------------------------------------------
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RailRoot2 =
+{
+	MV_RAIL_RT2,					  ///<動作コード
+	MMDL_RailRoot2_Init,			///<初期化関数
+	MMDL_RailRoot2_Move,					///<動作関数
+  MMDL_RailRoot2_Delete,				///<削除関数
+	MMDL_RailDmy_Return,			///<復帰関数
+};
+
 
 
 
@@ -1134,6 +1146,7 @@ const MMDL_MOVE_PROC_LIST * const DATA_FieldOBJMoveProcListTbl[MV_CODE_MAX] =
   &DATA_FieldOBJMove_RailRnd,             //MV_RAIL_RND	 
   &DATA_FieldOBJMove_RailRndV,            //MV_RAIL_RND_V
   &DATA_FieldOBJMove_RailRndH,            //MV_RAIL_RND_H
+  &DATA_FieldOBJMove_RailRoot2,           ///<ルート2分岐
 };
 
 //==============================================================================
@@ -1353,10 +1366,10 @@ int (* const * const DATA_RailAcmdActionTbl[ACMD_MAX])( MMDL * ) =
 	DATA_AC_RailStayWalkD_16F_Tbl,								//AC_STAY_WALK_D_16F
 	DATA_AC_RailStayWalkL_16F_Tbl,								//AC_STAY_WALK_L_16F
 	DATA_AC_RailStayWalkR_16F_Tbl,								//AC_STAY_WALK_R_16F
-	DATA_AC_RailDummy,								//AC_STAY_WALK_U_8F
-	DATA_AC_RailDummy,								//AC_STAY_WALK_D_8F
-	DATA_AC_RailDummy,								//AC_STAY_WALK_L_8F
-	DATA_AC_RailDummy,								//AC_STAY_WALK_R_8F
+	DATA_AC_RailStayWalkU_8F_Tbl,								//AC_STAY_WALK_U_8F
+	DATA_AC_RailStayWalkD_8F_Tbl,								//AC_STAY_WALK_D_8F
+	DATA_AC_RailStayWalkL_8F_Tbl,								//AC_STAY_WALK_L_8F
+	DATA_AC_RailStayWalkR_8F_Tbl,								//AC_STAY_WALK_R_8F
 	DATA_AC_RailDummy,								//AC_STAY_WALK_U_4F
 	DATA_AC_RailDummy,								//AC_STAY_WALK_D_4F
 	DATA_AC_RailDummy,								//AC_STAY_WALK_L_4F

@@ -151,4 +151,9 @@ extern void MMDL_RailRnd_H_Init( MMDL * fmmdl );
 extern void MMDL_RailRnd_Move( MMDL * fmmdl );
 extern void MMDL_RailRnd_Delete( MMDL * fmmdl );
 
+// ÉãÅ[Égà⁄ìÆ
+extern void MMDL_RailRoot2_Init( MMDL * fmmdl );
+extern void MMDL_RailRoot2_Move( MMDL * fmmdl );
+extern void MMDL_RailRoot2_Delete( MMDL * fmmdl );
+
 #endif //MMDL_PROCMOVE_H_FILE

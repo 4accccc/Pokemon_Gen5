@@ -78,7 +78,7 @@ static int AC_RailEnd( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_RailDummy_0( MMDL * mmdl )
 {
-  GF_ASSERT_MSG( 0, "レール移動では、対応されていません。\n" );
+  GF_ASSERT_MSG( 0, "レール移動では、対応されていません。ACMD[0x%x]\n", MMDL_GetAcmdCode(mmdl) );
 	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
 }
@@ -623,6 +623,48 @@ static int AC_RailStayWalkU8F_0( MMDL * mmdl )
 	return( TRUE );
 }
 
+//--------------------------------------------------------------
+/**
+ * AC_STAY_WALK_D_8F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_RailStayWalkD8F_0( MMDL * mmdl )
+{
+	AcRailStayWalkWorkInit( mmdl, DIR_DOWN, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
+	
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_STAY_WALK_L_8F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_RailStayWalkL8F_0( MMDL * mmdl )
+{
+	AcRailStayWalkWorkInit( mmdl, DIR_LEFT, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
+	
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_STAY_WALK_R_8F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_RailStayWalkR8F_0( MMDL * mmdl )
+{
+	AcRailStayWalkWorkInit( mmdl, DIR_RIGHT, GRID_FRAME_8, DRAW_STA_WALK_8F ); 
+	
+	return( TRUE );
+}
+
 
 //--------------------------------------------------------------
 /**
@@ -967,6 +1009,46 @@ int (* const DATA_AC_RailStayWalkL_16F_Tbl[])( MMDL * ) =
 int (* const DATA_AC_RailStayWalkR_16F_Tbl[])( MMDL * ) =
 {
 	AC_RailStayWalkR16F_0,
+	AC_RailStayWalk_1,
+  AC_RailEnd,
+};
+
+//--------------------------------------------------------------
+///	AC_RAIL_STAY_WALK_U_8F
+//--------------------------------------------------------------
+int (* const DATA_AC_RailStayWalkU_8F_Tbl[])( MMDL * ) =
+{
+	AC_RailStayWalkU8F_0,
+	AC_RailStayWalk_1,
+  AC_RailEnd,
+};
+
+//--------------------------------------------------------------
+///	AC_RAIL_STAY_WALK_D_8F
+//--------------------------------------------------------------
+int (* const DATA_AC_RailStayWalkD_8F_Tbl[])( MMDL * ) =
+{
+	AC_RailStayWalkD8F_0,
+	AC_RailStayWalk_1,
+  AC_RailEnd,
+};
+
+//--------------------------------------------------------------
+///	AC_RAIL_STAY_WALK_L_8F
+//--------------------------------------------------------------
+int (* const DATA_AC_RailStayWalkL_8F_Tbl[])( MMDL * ) =
+{
+	AC_RailStayWalkL8F_0,
+	AC_RailStayWalk_1,
+  AC_RailEnd,
+};
+
+//--------------------------------------------------------------
+///	AC_RAIL_STAY_WALK_R_8F
+//--------------------------------------------------------------
+int (* const DATA_AC_RailStayWalkR_8F_Tbl[])( MMDL * ) =
+{
+	AC_RailStayWalkR8F_0,
 	AC_RailStayWalk_1,
   AC_RailEnd,
 };

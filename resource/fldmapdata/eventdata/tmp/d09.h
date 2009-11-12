@@ -24,5 +24,6 @@
 #define ZONE_D09_EVC_H
 
 #define T09_BIGMAN                         0
+#define T09_BIGMAN2                        1
 
 #endif //ZONE_D09_EVC_H
