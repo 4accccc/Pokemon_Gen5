@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_ScSubmitReportAsync</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__sc_8h_197a82da28fbbb859439c4779b0f0abcb" align="left">DWC_ScSubmitReportAsync</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE><a href="Macro.html#dwc__sc_8h_1dca53ef710261d3406ae316e692e498d">DWCScResult</a> DWC_ScSubmitReportAsync(const DWCScReportPtr theReport,
+                                    BOOL isAuthoritative,
+                                    <a href="DWCScSubmitReportCallback.html#dwc__sc_8h_1e84eb5f3d60890e10ba01ce9a48d287c">DWCScSubmitReportCallback</a> theCallback,
+                                    u32 theTimeoutMs,
+                                    void *theUserData);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>theReport</STRONG></EM></TD>
+      <TD width="87%">レポートオブジェクト</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>isAuthoritative</STRONG></EM></TD>
+      <TD width="87%">スナップショットが正式なものか</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>theCallback</STRONG></EM></TD>
+      <TD width="87%">レポート送信結果を通知するコールバック</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>theTimeoutMs</STRONG></EM></TD>
+      <TD width="87%">タイムアウトするまでの時間(msec)</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>theUserData</STRONG></EM></TD>
+      <TD width="87%">コールバックに付与する任意のバイナリデータ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>エラーの内容</p>
+
+<H2>説明</H2>
+
+<p>レポートを送信します。</p><p>レポートは<a href="DWC_ScReportEnd.html#dwc__sc_8h_16b3065f42abaaa87f98dddf26672905a">DWC_ScReportEnd</a>を呼び出し、レポートを完成させた後に送信することができるようになります。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_ScSubmitReportAsync_tag">こちら</a>　　</p>
+</body>
+</html>

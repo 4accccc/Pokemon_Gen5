@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_CheckProfanityAsync</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__prof_8h_16e8029f668632188e74681738be0aa20" align="left">DWC_CheckProfanityAsync</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_CheckProfanityAsync(const u16 **words,
+                             int wordsnum,
+                             const char *reserved,
+                             int timeout,
+                             char *result,
+                             int *badwordsnum);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>words</STRONG></EM></TD>
+      <TD width="87%">チェックする文字列配列へのポインタ<br><ul><li>
+文字コードはUnicode（リトルエンディアンUTF16）を使用してください。<br>それ以外の文字コードを使用している場合は、Unicodeに変換してください。
+</li><li>
+スクリーンネームにUnicode及びIPLフォントにない独自の文字を使用している場合は、スペースに置き換えてください。
+</li><li>
+終端は<code>"&#92;0&#92;0"</code>（u16で0x0000）である必要があります。
+</li><li>
+配列内の全ての文字列の合計が501文字まで（各文字列の終端を含む）にする必要があります。
+</li><li>
+配列内の文字列にNULLを指定することはできません。
+</li><li>
+文字列配列および配列内の文字列は関数呼び出し後に破棄しても問題ありません。
+</li></ul></TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>wordsnum</STRONG></EM></TD>
+      <TD width="87%">wordsで指定した文字列配列の要素数(1～50)</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>reserved</STRONG></EM></TD>
+      <TD width="87%">NULLを指定します</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>timeout</STRONG></EM></TD>
+      <TD width="87%">サーバの応答タイムアウト時間(ミリ秒単位)<br>(0を指定した場合はデフォルト値の10000が使われます)</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>result</STRONG></EM></TD>
+      <TD width="87%">チェック結果の格納先へのポインタ<br>(wordsnumバイトの領域が必要です)</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>badwordsnum</STRONG></EM></TD>
+      <TD width="87%">チェック結果に含まれる不正文字列の個数の格納先へのポインタ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">不正文字列チェック処理を開始した</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">不正文字列チェック処理の開始に失敗した</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>不正文字列チェック処理を開始します。不正文字列チェック中に呼び出した場合は必ずFALSEを返します。</p><p>不正文字列のチェックは認証サーバと通信することで行い、そのチェック内容は<a href="DWC_LoginAsync.html#dwc__main_8h_1ac1f7f301938afe8408be88dfa65f217">DWC_LoginAsync</a>関数によるものと同じです。</p><p>本関数では単体で不正文字列チェックができること以外に、次の制限内で一度に複数の文字列をチェックできます。<ul><li>
+一度にチェックできる文字列は50個まで。
+</li><li>
+全ての文字列の長さの合計が各文字列の終端文字を含めて501文字まで。
+</li></ul></p><p>本関数を呼び出した後は、不正文字列チェック処理を進行させるために<a href="DWC_CheckProfanityProcess.html#dwc__prof_8h_1cf829b09d9ec8b42bf3987266e9983ca">DWC_CheckProfanityProcess</a>関数を毎ゲームフレーム程度の頻度で呼び出してください。不正文字列チェック処理が成功終了すると、resultにチェック結果が配列として格納されます。</p><p><hr>不正文字列のチェック対象はリージョンによって異なります。対象のリージョンは、<a href="DWC_CheckProfanityAsync.html#dwc__prof_8h_16e8029f668632188e74681738be0aa20">DWC_CheckProfanityAsync</a>関数では、ROM内登録データのゲームコード（イニシャルコード）の末尾で決まり、<a href="DWC_CheckProfanityExAsync.html#dwc__prof_8h_1583a36ef6c630987c29f68ac67a3d482">DWC_CheckProfanityExAsync</a>関数では、強制的に全リージョンを示す&#39;A&#39;を指定することもできます。<br>また、構文解析は行わないため、単語単位のチェックしか対応していないことに留意してください。<hr></p><p>resultに格納されるチェック結果は、全リージョンを示す&#39;A&#39;のときとそれ以外の場合で異なります。</p><p>■全リージョンを示す&#39;A&#39;のとき<br>リージョン毎に決められたビットフィールドに、wordsに与えたチェック対象の文字列の順に結果が不正であれば1、そうでなければ0が入ります。<br>結果、resultは以下の値の論理和となります。</p><p><table border="1"><tbody><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__prof_8h_1bd4513afb206ea295489180b696074d2fcd54e6097b43596eac523a74df8e9f0">DWC_PROF_REGION_JP</a></code></strong></em></td><td>0x01　日本リージョンで不正</td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__prof_8h_1bd4513afb206ea295489180b696074d2fdbd0c02aaf8c3a0f0905320ef1b95fb">DWC_PROF_REGION_US</a></code></strong></em></td><td>0x02　北米リージョンで不正</td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__prof_8h_1bd4513afb206ea295489180b696074d21b5e5841fca39e47c5644c1fa4628448">DWC_PROF_REGION_EU</a></code></strong></em></td><td>0x04　欧州リージョンで不正</td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__prof_8h_1bd4513afb206ea295489180b696074d21b2574f2837f1ed800183263bcd3d0c2">DWC_PROF_REGION_KR</a></code></strong></em></td><td>0x08　韓国リージョンで不正</td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__prof_8h_1bd4513afb206ea295489180b696074d29cf4a1db77b9a47dd72d3862db632105">DWC_PROF_REGION_CN</a></code></strong></em></td><td>0x10　中国リージョンで不正</td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__prof_8h_1bd4513afb206ea295489180b696074d2eb521951cb74b549793bad63a6f36d06">DWC_PROF_REGION_ALL</a></code></strong></em></td><td>0x80　いずれかのリージョンで不正<br>必ずしも上記リージョン毎の結果の論理和になっていないことに留意してください。ライブラリで未定義のリージョンで不正と判断された場合も含めて結果はセットされます。これは将来的に認証サーバ側でリージョンの追加が行われる可能性を想定しての仕様になります。また引数のbadwordsnumに入る値もこのビットが元になります。</td></tr></tbody></table></p><p><p>【例】<br>words[4]={L"goodoword1",L"goodoword2",L"badword",L"goodoword3"}<br>という文字列群をチェックして3番目の"badword"のみが全てのリージョンで不正な文字列であった場合、<br>result[4]={0,0,0x9f,0}<br>badwordsnum=1<br>となります。</p><p>■それ以外のとき<br>wordsに与えたチェック対象の文字列の順に結果が不正であれば1、そうでなければ0が入ります。<br></p><p>【例】<br>words[4]={L"goodoword1",L"goodoword2",L"badword",L"goodoword3"}<br>という文字列群をチェックして3番目の"badword"のみが不正な文字列であった場合、<br>result[4]={0,0,1,0}<br>badwordsnum=1<br>となります。<br></p><hr><p>不正文字列チェックで不正と判定された場合のテストを行なうために下記の単語が認証サーバに不正文字列として登録されています。</p><ul><li>badword</li><li>わるもし</li><li>ワルモシ</li><li>&#45208;&#49244;&#45800;&#50612;</li><li>&#45208;&#49244;&#47928;&#51109;</li><li>&#22351;&#29992;&#35821;</li><li>&#98;&#224;&#100;&#119</li><li>&#98;&#225;&#100;&#119</li><li>&#223;&#228;&#100;&#119</li></ul></p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_CheckProfanityProcess.html#dwc__prof_8h_1cf829b09d9ec8b42bf3987266e9983ca">DWC_CheckProfanityProcess</a></CODE>
+
+  <CODE><a href="DWC_LoginAsync.html#dwc__main_8h_1ac1f7f301938afe8408be88dfa65f217">DWC_LoginAsync</a></CODE>
+
+  <CODE><a href="DWC_CheckProfanityExAsync.html#dwc__prof_8h_1583a36ef6c630987c29f68ac67a3d482">DWC_CheckProfanityExAsync</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.4pr1</DT>
+<DD>全リージョン&#39;A&#39;を指定したときの例で、不正文字を示す結果を修正</DD>
+
+<DT>5.1patch1</DT>
+<DD>テスト用の不正文字列がリージョンの区別がなくなったことに対応。</DD>
+
+<DT>5.1</DT>
+<DD>北米/欧州リージョンのテスト用不正文字列を追記</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_CheckProfanityAsync_tag">こちら</a>　　</p>
+</body>
+</html>

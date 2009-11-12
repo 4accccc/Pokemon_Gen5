@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_GetMyAID</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__main_8h_1e5406bc54caef00d5715b1995d467531" align="left">DWC_GetMyAID</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>u8 DWC_GetMyAID(void);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<p>なし</p>
+
+<h2>返り値</h2>
+
+<p>自分のAID<br>FriendsMatchライブラリ非動作中に本関数を呼び出した場合は0を返します。</p>
+
+<H2>説明</H2>
+
+<p>自分のAIDを取得します。</p><p>AIDはマッチメイクされたグループ内の各ホストの識別番号で、0～（ネットワーク構成台数-1）の数値が用いられます。例えば4人でマッチメイクを完了した場合なら、0,1,2,3の4台が存在し、AID=1の人がネットワークから抜ければ、残りは0,2,3となります。</p><p>まだ誰とも接続したことが無い状態では<a href="Macro.html#dwc__main_8h_140d1ea4526f0887e7d67830ff74d9626">DWC_INVALID_AID</a>が返ります。<a href="DWCMatchedSCCallback.html#dwc__match_8h_169fa2126df86bf98f54258f5ccab9beb">DWCMatchedSCCallback</a>のerrorが<a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed19e183029cab4bcfb2768bf5e52c81ce0a">DWC_ERROR_NONE</a>で呼び出された後は必ず有効な値が取得できます。</p><p>尚、<a href="DWC_SetupGameServer.html#dwc__main_8h_1230f0bb02b234d806cc51470e67647f1">DWC_SetupGameServer</a>関数を呼び出したホストは、<a href="DWC_SetupGameServer.html#dwc__main_8h_1230f0bb02b234d806cc51470e67647f1">DWC_SetupGameServer</a>関数呼び出し後しばらくするとまだ誰とも繋がった事が無い状態で、<br>・接続人数が一人<br>・自分のAIDは0<br>の状態になります。<br>その他の接続APIでは、実際の接続人数・自分のAIDは、誰かと繋がるまで知ることは出来ません。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.1pr2</DT>
+<DD><a href="DWC_SetupGameServer.html#dwc__main_8h_1230f0bb02b234d806cc51470e67647f1">DWC_SetupGameServer</a>でサーバとして起動したホストについての説明で、重複した内容を削除</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GetMyAID_tag">こちら</a>　　</p>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWCApInfo</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 id="struct_d_w_c_ap_info" align="left">
+DWCApInfo
+</h1>
+<h2>定義</h2>
+
+<dl>
+  <dd>
+<PRE><code>
+#include &lt;dwc.h&gt;
+
+typedef struct DWCApInfo {
+    <a href="Macro.html#dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa">DWCApInfoType</a> aptype;
+    <a href="Macro.html#dwc__connectinet_8h_1dabefabb4d99decae8ecdd07f2a1994b">DWCApInfoArea</a> area;
+    <a href="Macro.html#dwc__connectinet_8h_1b7f75bb4a03e4b1c4b0dc05625eff428">DWCApInfoSecurity</a> security;
+    char spotinfo[DWC_SIZE_ZONEINFO+1];
+    char essid[WM_SIZE_SSID+1];
+    u8 bssid[WM_SIZE_BSSID];
+} DWCApInfo;</code></PRE></dd>
+</dl>
+<H2>説明</H2>
+<p>アクセスポイントの情報を格納するための構造体です。</p>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>aptype</STRONG></EM></TD>
+      <TD width="87%">アクセスポイントの種類<ul><li>
+<a href="Macro.html#dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa582b510a693306d433d44251f143c716">DWC_APINFO_TYPE_USER0</a>:接続先1のアクセスポイント
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa18888ebc5096b47b2f4f85a0b478545a">DWC_APINFO_TYPE_USER1</a>:接続先2のアクセスポイント
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_19966344206c7cf7bea94389415ce18facd27cc3e55de3a797274b71ee0856faa">DWC_APINFO_TYPE_USER2</a>:接続先3のアクセスポイント
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa12384157ba0d65fea1ab226c08fd03ca">DWC_APINFO_TYPE_USER3</a>:接続先4のアクセスポイント
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa690d701ffe5caf5aaa42bb28513a7af4">DWC_APINFO_TYPE_USER4</a>:接続先5のアクセスポイント
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fafd0a17580d2b828a992ef5bb057456d3">DWC_APINFO_TYPE_USER5</a>:接続先6のアクセスポイント
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa8ad39d9837d65e8f3c79359fd7742eec">DWC_APINFO_TYPE_USB</a>:ニンテンドーWi-FiUSBコネクタ
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa0152b84d5673597d3c70d82e5a79e35e">DWC_APINFO_TYPE_SHOP</a>:ニンテンドーWi-Fiステーション
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fafb51af4b2a8f023c03ddeac93d38f066">DWC_APINFO_TYPE_FREESPOT</a>:FREESPOT（フリースポット）
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa2db037e352ea167c22b7bb2ca0f2b186">DWC_APINFO_TYPE_WAYPORT</a>:Wayport(北米ホットスポット)※現在は使用できません
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa46d7d9f05c46351fa1de4fcb4898f58b">DWC_APINFO_TYPE_NINTENDOZONE</a>:NintendoZone
+</li></ul></TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>area</STRONG></EM></TD>
+      <TD width="87%">ニンテンドーWi-Fiステーション/nintendozoneの設置地域<br>※aptypeが<a href="Macro.html#dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa0152b84d5673597d3c70d82e5a79e35e">DWC_APINFO_TYPE_SHOP</a>/<a href="Macro.html#dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa46d7d9f05c46351fa1de4fcb4898f58b">DWC_APINFO_TYPE_NINTENDOZONE</a>の時のみ有効です。<br>※下記の全ての地域に設置されているとは限りません。<br><ul><li>
+<a href="Macro.html#dwc__connectinet_8h_1dabefabb4d99decae8ecdd07f2a1994bd71d64542bf51f99071f935bc153cfed">DWC_APINFO_AREA_JPN</a>:日本
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_1dabefabb4d99decae8ecdd07f2a1994b8bc18a79fb20a474d7b7eeec88943668">DWC_APINFO_AREA_USA</a>:北米
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_1dabefabb4d99decae8ecdd07f2a1994bf165e2982aee43dee8c9aada55df2868">DWC_APINFO_AREA_EUR</a>:欧州
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_1dabefabb4d99decae8ecdd07f2a1994ba2c56d65c8a6955449c2b142644d7edc">DWC_APINFO_AREA_AUS</a>:豪州
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_1dabefabb4d99decae8ecdd07f2a1994b8c5ae540377c5782fae5919642db3dde">DWC_APINFO_AREA_KOR</a>:韓国
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_1dabefabb4d99decae8ecdd07f2a1994b7f9eff0b6c739df460635ea96b00915d">DWC_APINFO_AREA_UNKNOWN</a>:(ニンテンドーWi-Fiステーション/nintendozoneではありません)
+</li></ul></TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>security</STRONG></EM></TD>
+      <TD width="87%">APとの通信に用いる無線暗号化方式<ul><li>
+<a href="Macro.html#dwc__connectinet_8h_1b7f75bb4a03e4b1c4b0dc05625eff428748d2a072cf40559645465b5929eb88e">DWC_APINFO_WSEC_NONE</a>:暗号化なし
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_1b7f75bb4a03e4b1c4b0dc05625eff428d0ea12012dde1a55d8df976d5a3c20cb">DWC_APINFO_WSEC_WEPMODE_40</a>:RC4(40ビット)暗号化モード
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_1b7f75bb4a03e4b1c4b0dc05625eff4288dbbe9c87d65862fe4472b4baadbd082">DWC_APINFO_WSEC_WEPMODE_104</a>:RC4(104ビット)暗号化モード
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_1b7f75bb4a03e4b1c4b0dc05625eff428e965780c2416cf3d8d8d972169b44cb0">DWC_APINFO_WSEC_WEPMODE_128</a>:RC4(128ビット)暗号化モード
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_1b7f75bb4a03e4b1c4b0dc05625eff428e07f4b4c788243a07ada2d6f4bc3a73b">DWC_APINFO_WSEC_WPA_PSK_TKIP</a>:WPA-PSK(TKIP)暗号
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_1b7f75bb4a03e4b1c4b0dc05625eff4286301d57f4b76624c0f4250723ddc24f8">DWC_APINFO_WSEC_WPA2_PSK_TKIP</a>:WPA2-PSK(TKIP)暗号
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_1b7f75bb4a03e4b1c4b0dc05625eff42856dc387ffc4e6b863e04496d7ea43d3b">DWC_APINFO_WSEC_WPA_PSK_AES</a>:WPA-PSK(AES)暗号
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_1b7f75bb4a03e4b1c4b0dc05625eff4285c0f435dd8ad13da296de241a09a3c70">DWC_APINFO_WSEC_WPA2_PSK_AES</a>:WPA2-PSK(AES)暗号
+</li></ul></TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>spotinfo</STRONG></EM></TD>
+      <TD width="87%">ニンテンドーWi-Fiステーション/nintendozoneの場所情報<br>※aptypeが<a href="Macro.html#dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa0152b84d5673597d3c70d82e5a79e35e">DWC_APINFO_TYPE_SHOP</a>/<a href="Macro.html#dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa46d7d9f05c46351fa1de4fcb4898f58b">DWC_APINFO_TYPE_NINTENDOZONE</a>の時のみ有効です。<br>各ニンテンドーWi-Fiステーション/nintendozoneでユニークな9桁の文字列です。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>essid</STRONG></EM></TD>
+      <TD width="87%">アクセスポイントのSSID<br>※aptypeがDWC_APINFO_TYPE_USER*の時のみ有効です。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>bssid</STRONG></EM></TD>
+      <TD width="87%">アクセスポイントのBSSID</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_GetApInfo.html#dwc__connectinet_8h_1f8a4c656577c5356547ba34e788172c2">DWC_GetApInfo</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.1</DT>
+<DD>Wayport(北米ホットスポット)が現在は使用できないことについて追記</DD>
+
+<DT>5.1pr2</DT>
+<DD>構造体のsecurity,areaメンバの説明に誤植があったので修正</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWCApInfo_tag">こちら</a>　　</p>
+</body>
+</html>

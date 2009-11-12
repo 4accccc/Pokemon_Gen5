@@ -1,0 +1,536 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>簡易データベース - 定数</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">簡易データベース - 定数</h1>
+<H2>定義</H2>
+<DL>
+	<DD>
+		<PRE><CODE>
+#include &lt;dwc.h&gt;
+
+
+enum DWCGdbSSLType {
+    DWC_GDB_SSL_TYPE_NONE,
+    DWC_GDB_SSL_TYPE_SERVER_AUTH,
+    DWC_GDB_SSL_TYPE_SERVER_CLIENT_AUTH,
+    DWC_GDB_SSL_TYPE_NUM,
+};
+
+enum DWCGdbFieldType {
+    DWC_GDB_FIELD_TYPE_BYTE,
+    DWC_GDB_FIELD_TYPE_SHORT,
+    DWC_GDB_FIELD_TYPE_INT,
+    DWC_GDB_FIELD_TYPE_FLOAT,
+    DWC_GDB_FIELD_TYPE_ASCII_STRING,
+    DWC_GDB_FIELD_TYPE_UNICODE_STRING,
+    DWC_GDB_FIELD_TYPE_BOOLEAN,
+    DWC_GDB_FIELD_TYPE_DATE_AND_TIME,
+    DWC_GDB_FIELD_TYPE_BINARY_DATA,
+    DWC_GDB_FIELD_TYPE_INT64,
+    DWC_GDB_FIELD_TYPE_NUM_FIELD_TYPES,
+};
+
+enum DWCGdbError {
+    DWC_GDB_ERROR_NONE                      =  0,
+    DWC_GDB_ERROR_OUT_OF_MEMORY             =  1,
+    DWC_GDB_ERROR_NOT_AVAILABLE             =  2,
+    DWC_GDB_ERROR_CORE_SHUTDOWN             =  3,
+    DWC_GDB_ERROR_NOT_LOGIN                 =  4,
+    DWC_GDB_ERROR_NOT_AUTHENTICATED         =  5,
+    DWC_GDB_ERROR_BAD_INPUT                 =  6,
+    DWC_GDB_ERROR_BAD_TABLENAME             =  7,
+    DWC_GDB_ERROR_BAD_FIELDS                =  8,
+    DWC_GDB_ERROR_BAD_NUM_FIELDS            =  9,
+    DWC_GDB_ERROR_BAD_FIELD_NAME            =  10,
+    DWC_GDB_ERROR_BAD_FIELD_TYPE            =  11,
+    DWC_GDB_ERROR_BAD_FIELD_VALUE           =  12,
+    DWC_GDB_ERROR_BAD_OFFSET                =  13,
+    DWC_GDB_ERROR_BAD_MAX                   =  14,
+    DWC_GDB_ERROR_BAD_RECORDIDS             =  15,
+    DWC_GDB_ERROR_BAD_NUM_RECORDIDS         =  16,
+    DWC_GDB_ERROR_UNKNOWN                   =  17,
+    DWC_GDB_ERROR_ALREADY_INITIALIZED       =  18,
+    DWC_GDB_ERROR_NOT_INITIALIZED           =  19,
+    DWC_GDB_ERROR_IN_ASYNC_PROCESS          =  20,
+    DWC_GDB_ERROR_GHTTP                     =  21,
+    DWC_GDB_ERROR_IN_DWC_ERROR              =  22,
+};
+
+enum DWCGdbAsyncResult {
+    DWC_GDB_ASYNC_RESULT_NONE               =  0,
+    DWC_GDB_ASYNC_RESULT_SUCCESS            =  1,
+    DWC_GDB_ASYNC_RESULT_SECRET_KEY_INVALID =  2,
+    DWC_GDB_ASYNC_RESULT_SERVICE_DISABLED   =  3,
+    DWC_GDB_ASYNC_RESULT_CONNECTION_TIMEOUT =  4,
+    DWC_GDB_ASYNC_RESULT_CONNECTION_ERROR   =  5,
+    DWC_GDB_ASYNC_RESULT_MALFORMED_RESPONSE =  6,
+    DWC_GDB_ASYNC_RESULT_OUT_OF_MEMORY      =  7,
+    DWC_GDB_ASYNC_RESULT_DATABASE_UNAVAILABLE =  8,
+    DWC_GDB_ASYNC_RESULT_LOGIN_TICKET_INVALID =  9,
+    DWC_GDB_ASYNC_RESULT_LOGIN_TICKET_EXPIRED =  10,
+    DWC_GDB_ASYNC_RESULT_TABLE_NOT_FOUND    =  11,
+    DWC_GDB_ASYNC_RESULT_RECORD_NOT_FOUND   =  12,
+    DWC_GDB_ASYNC_RESULT_FIELD_NOT_FOUND    =  13,
+    DWC_GDB_ASYNC_RESULT_FIELD_TYPE_INVALID =  14,
+    DWC_GDB_ASYNC_RESULT_NO_PERMISSION      =  15,
+    DWC_GDB_ASYNC_RESULT_RECORD_LIMIT_REACHED =  16,
+    DWC_GDB_ASYNC_RESULT_ALREADY_RATED      =  17,
+    DWC_GDB_ASYNC_RESULT_NOT_RATEABLE       =  18,
+    DWC_GDB_ASYNC_RESULT_NOT_OWNED          =  19,
+    DWC_GDB_ASYNC_RESULT_FILTER_INVALID     =  20,
+    DWC_GDB_ASYNC_RESULT_SORT_INVALID       =  21,
+    DWC_GDB_ASYNC_RESULT_UNKNOWN_ERROR      =  22,
+    DWC_GDB_ASYNC_RESULT_BAD_HTTP_METHOD    =  23,
+    DWC_GDB_ASYNC_RESULT_BAD_FILE_COUNT     =  24,
+    DWC_GDB_ASYNC_RESULT_MISSING_PARAMETER  =  25,
+    DWC_GDB_ASYNC_RESULT_FILE_NOT_FOUND     =  26,
+    DWC_GDB_ASYNC_RESULT_FILE_TOO_LARGE     =  27,
+    DWC_GDB_ASYNC_RESULT_FILE_UNKNOWN_ERROR =  28,
+    DWC_GDB_ASYNC_RESULT_GHTTP_ERROR        =  29,
+    DWC_GDB_ASYNC_RESULT_TARGET_FILTER_INVALID =  30,
+    DWC_GDB_ASYNC_RESULT_SERVER_ERROR       =  31,
+};
+
+enum DWCGdbState {
+    DWC_GDB_STATE_UNINITIALIZED,
+    DWC_GDB_STATE_IDLE,
+    DWC_GDB_STATE_IN_ASYNC_PROCESS,
+    DWC_GDB_STATE_ERROR_OCCURED,
+};
+
+		</CODE></PRE>
+	</DD>
+</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+	</TBODY>
+</TABLE>
+
+<a id="dwc__gdb_8h_10aa8159d80833f71954f89c9272d6b99"></a>
+<H2 id="TAG_ENUM_1">SSL通信の状態を示す列挙型です。</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_SSL_TYPE_NONE</CODE></STRONG></EM></TD>
+	  <TD>SSLを使用しません。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_SSL_TYPE_SERVER_AUTH</CODE></STRONG></EM></TD>
+	  <TD>サーバ認証を行いSSLで通信します。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_SSL_TYPE_SERVER_CLIENT_AUTH</CODE></STRONG></EM></TD>
+	  <TD>サーバ認証とクライアント認証を行いSSLで通信します。※Nitro,Twlでは使えません。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_SSL_TYPE_NUM</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4a"></a>
+<H2 id="TAG_ENUM_2">フィールドの型を示す列挙型です。</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_FIELD_TYPE_BYTE</CODE></STRONG></EM></TD>
+	  <TD>1バイトの符号なし整数です。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_FIELD_TYPE_SHORT</CODE></STRONG></EM></TD>
+	  <TD>2バイトの符号付き整数です。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_FIELD_TYPE_INT</CODE></STRONG></EM></TD>
+	  <TD>4バイトの符号付き整数です。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_FIELD_TYPE_FLOAT</CODE></STRONG></EM></TD>
+	  <TD>8バイトの浮動小数点数です。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_FIELD_TYPE_ASCII_STRING</CODE></STRONG></EM></TD>
+	  <TD>一文字1バイトの文字列です。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_FIELD_TYPE_UNICODE_STRING</CODE></STRONG></EM></TD>
+	  <TD>一文字2バイトの文字列です。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_FIELD_TYPE_BOOLEAN</CODE></STRONG></EM></TD>
+	  <TD>真偽値です。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_FIELD_TYPE_DATE_AND_TIME</CODE></STRONG></EM></TD>
+	  <TD>UnixTimeで表される時間です。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_FIELD_TYPE_BINARY_DATA</CODE></STRONG></EM></TD>
+	  <TD>バイナリデータです。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_FIELD_TYPE_INT64</CODE></STRONG></EM></TD>
+	  <TD>8バイトの符号付き整数です。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_FIELD_TYPE_NUM_FIELD_TYPES</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86"></a>
+<H2 id="TAG_ENUM_3">エラーを示す列挙型です。</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_NONE</CODE></STRONG></EM></TD>
+	  <TD>正常に終了しました。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_OUT_OF_MEMORY</CODE></STRONG></EM></TD>
+	  <TD>DWC_Initで与えたアロケータからメモリを確保できませんでした。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_NOT_AVAILABLE</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_CORE_SHUTDOWN</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_NOT_LOGIN</CODE></STRONG></EM></TD>
+	  <TD>WiFiConnectionに正しくログインしていません。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_NOT_AUTHENTICATED</CODE></STRONG></EM></TD>
+	  <TD>WiFiConnectionに正しくログインしていません。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_BAD_INPUT</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_BAD_TABLENAME</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_BAD_FIELDS</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_BAD_NUM_FIELDS</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_BAD_FIELD_NAME</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_BAD_FIELD_TYPE</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_BAD_FIELD_VALUE</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_BAD_OFFSET</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_BAD_MAX</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_BAD_RECORDIDS</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_BAD_NUM_RECORDIDS</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_UNKNOWN</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_ALREADY_INITIALIZED</CODE></STRONG></EM></TD>
+	  <TD>既に初期化されています。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_NOT_INITIALIZED</CODE></STRONG></EM></TD>
+	  <TD>初期化が行われていません。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_IN_ASYNC_PROCESS</CODE></STRONG></EM></TD>
+	  <TD>非同期処理中です。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_GHTTP</CODE></STRONG></EM></TD>
+	  <TD>GHTTPのエラーが発生しました。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_IN_DWC_ERROR</CODE></STRONG></EM></TD>
+	  <TD>DWCのエラーが起こっています。エラーの対処を行ってください。</TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492"></a>
+<H2 id="TAG_ENUM_4">非同期処理の結果を示す列挙型です。</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_NONE</CODE></STRONG></EM></TD>
+	  <TD>非同期処理がまだ終了していません。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_SUCCESS</CODE></STRONG></EM></TD>
+	  <TD>成功しました。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_SECRET_KEY_INVALID</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_SERVICE_DISABLED</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_CONNECTION_TIMEOUT</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_CONNECTION_ERROR</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_MALFORMED_RESPONSE</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_OUT_OF_MEMORY</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_DATABASE_UNAVAILABLE</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_LOGIN_TICKET_INVALID</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_LOGIN_TICKET_EXPIRED</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_TABLE_NOT_FOUND</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_RECORD_NOT_FOUND</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_FIELD_NOT_FOUND</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_FIELD_TYPE_INVALID</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_NO_PERMISSION</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_RECORD_LIMIT_REACHED</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_ALREADY_RATED</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_NOT_RATEABLE</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_NOT_OWNED</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_FILTER_INVALID</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_SORT_INVALID</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_UNKNOWN_ERROR</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_BAD_HTTP_METHOD</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_BAD_FILE_COUNT</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_MISSING_PARAMETER</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_FILE_NOT_FOUND</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_FILE_TOO_LARGE</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_FILE_UNKNOWN_ERROR</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_GHTTP_ERROR</CODE></STRONG></EM></TD>
+	  <TD>GHTTPのエラーが発生しました。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_TARGET_FILTER_INVALID</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_SERVER_ERROR</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb"></a>
+<H2 id="TAG_ENUM_5">DWCGdbライブラリの状態を示す列挙型です。</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_STATE_UNINITIALIZED</CODE></STRONG></EM></TD>
+	  <TD>未初期化状態</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_STATE_IDLE</CODE></STRONG></EM></TD>
+	  <TD>初期化が終了し、非同期処理が行われていない状態</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_STATE_IN_ASYNC_PROCESS</CODE></STRONG></EM></TD>
+	  <TD>非同期処理を行っている状態</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_STATE_ERROR_OCCURED</CODE></STRONG></EM></TD>
+	  <TD>エラーが発生した状態</TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+</body>
+</html>

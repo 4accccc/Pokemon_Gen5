@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_GetGroupID</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__match_8h_108509cea9e99e5bf301e93cf612f1142" align="left">DWC_GetGroupID</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>u32 DWC_GetGroupID(void);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<p>なし</p>
+
+<h2>返り値</h2>
+
+<p>現在自分が参加しているグループのID。グループIDを取得できない状態では0を返します</p>
+
+<H2>説明</H2>
+
+<p>現在自分が参加しているグループのIDを取得する関数です。</p><p>グループIDを保存しておけば、それを使用して自分が一度参加していたグループに再接続を試みることができます。この関数は、<a href="DWC_ConnectToAnybodyAsync.html#dwc__main_8h_10c4e2a60e98dfa82a16b5e896d3a2203">DWC_ConnectToAnybodyAsync</a>/<a href="DWC_ConnectToFriendsAsync.html#dwc__main_8h_1dcb8be27412df5c9d5e0d9b9d035079b">DWC_ConnectToFriendsAsync</a>/<a href="DWC_SetupGameServer.html#dwc__main_8h_1230f0bb02b234d806cc51470e67647f1">DWC_SetupGameServer</a>/<a href="DWC_ConnectToGameServerAsync.html#dwc__main_8h_1254f419a2e97ad73074d232c4160cfd2">DWC_ConnectToGameServerAsync</a>/<a href="DWC_ConnectToGameServerByGroupID.html#dwc__main_8h_116b3b3faa8c7b9ee600fa77820ee1f57">DWC_ConnectToGameServerByGroupID</a>で指定する、<a href="DWCMatchedSCCallback.html#dwc__match_8h_169fa2126df86bf98f54258f5ccab9beb">DWCMatchedSCCallback</a>が、error==<a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed19e183029cab4bcfb2768bf5e52c81ce0a">DWC_ERROR_NONE</a>で呼ばれた時点から、有効な値を返します。(誰かと一度でも繋がったことのある状態)</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GetGroupID_tag">こちら</a>　　</p>
+</body>
+</html>

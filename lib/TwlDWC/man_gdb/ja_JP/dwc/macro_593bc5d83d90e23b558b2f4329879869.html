@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>認証サーバー - 定数</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">認証サーバー - 定数</h1>
+<H2>定義</H2>
+<DL>
+	<DD>
+		<PRE><CODE>
+#include &lt;dwc.h&gt;
+
+#define   DWC_SVL_HOST_LENGTH                     64
+#define   DWC_SVL_TOKEN_LENGTH                    300
+#define   DWC_SVL_STATUSDATA_LENGTH               1
+
+enum DWCIngamesnCheckResult {
+    DWC_INGAMESN_NOT_CHECKED                =  0,
+    DWC_INGAMESN_VALID                      =  1,
+    DWC_INGAMESN_INVALID                    =  2,
+};
+
+enum DWCNasLoginState {
+    DWC_NASLOGIN_STATE_DIRTY                =  0,
+    DWC_NASLOGIN_STATE_IDLE,
+    DWC_NASLOGIN_STATE_HTTP,
+    DWC_NASLOGIN_STATE_SUCCESS,
+    DWC_NASLOGIN_STATE_ERROR,
+    DWC_NASLOGIN_STATE_CANCELED,
+    DWC_NASLOGIN_STATE_MAX,
+};
+
+enum DWCSvlState {
+    DWC_SVL_STATE_DIRTY                     =  0,
+    DWC_SVL_STATE_IDLE,
+    DWC_SVL_STATE_HTTP,
+    DWC_SVL_STATE_SUCCESS,
+    DWC_SVL_STATE_ERROR,
+    DWC_SVL_STATE_CANCELED,
+    DWC_SVL_STATE_MAX,
+};
+
+		</CODE></PRE>
+	</DD>
+</DL>
+
+<H2>定数</H2>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+			<TH width="25%">DWC_SVL_HOST_LENGTH</TH>
+			<TD>ホスト名の最大文字数</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_SVL_TOKEN_LENGTH</TH>
+			<TD>トークンの最大文字数</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_SVL_STATUSDATA_LENGTH</TH>
+			<TD>ステータスのサイズ</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+<a id="dwc__nas_8h_1349021731a0fc769a18f1057332fd0f6"></a>
+<H2 id="TAG_ENUM_1">ingamesnチェック結果列挙子</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_INGAMESN_NOT_CHECKED</CODE></STRONG></EM></TD>
+	  <TD>未チェック</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_INGAMESN_VALID</CODE></STRONG></EM></TD>
+	  <TD>有効</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_INGAMESN_INVALID</CODE></STRONG></EM></TD>
+	  <TD>無効</TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__nas_8h_1114bd9397d08664e16b744907f8cf30b"></a>
+<H2 id="TAG_ENUM_2">任天堂認証サーバへの認証処理の状況を示す列挙型です。</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_NASLOGIN_STATE_DIRTY</CODE></STRONG></EM></TD>
+	  <TD>認証処理が初期化されていません。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_NASLOGIN_STATE_IDLE</CODE></STRONG></EM></TD>
+	  <TD>認証処理が開始されていません。待機状態です。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_NASLOGIN_STATE_HTTP</CODE></STRONG></EM></TD>
+	  <TD>認証処理のためのHTTP通信を実行中です。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_NASLOGIN_STATE_SUCCESS</CODE></STRONG></EM></TD>
+	  <TD>認証処理が成功しました。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_NASLOGIN_STATE_ERROR</CODE></STRONG></EM></TD>
+	  <TD>認証処理が失敗しました。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_NASLOGIN_STATE_CANCELED</CODE></STRONG></EM></TD>
+	  <TD>認証処理がキャンセルされました。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_NASLOGIN_STATE_MAX</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__svl_8h_1eac74605ac413c74cd6b770894fe426c"></a>
+<H2 id="TAG_ENUM_3">サービスロケータ情報取得中のステートを示す列挙型</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SVL_STATE_DIRTY</CODE></STRONG></EM></TD>
+	  <TD>未初期化</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SVL_STATE_IDLE</CODE></STRONG></EM></TD>
+	  <TD>処理実行中ではない</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SVL_STATE_HTTP</CODE></STRONG></EM></TD>
+	  <TD>HTTP通信中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SVL_STATE_SUCCESS</CODE></STRONG></EM></TD>
+	  <TD>トークン取得成功</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SVL_STATE_ERROR</CODE></STRONG></EM></TD>
+	  <TD>トークン取得失敗</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SVL_STATE_CANCELED</CODE></STRONG></EM></TD>
+	  <TD>トークン取得キャンセル</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SVL_STATE_MAX</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+</body>
+</html>

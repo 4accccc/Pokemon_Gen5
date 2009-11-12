@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWCMatchedSCCallback</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__match_8h_169fa2126df86bf98f54258f5ccab9beb" align="left">DWCMatchedSCCallback</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>typedef void(*) DWCMatchedSCCallback(<a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed19">DWCError</a> error,
+             BOOL cancel,
+             BOOL self,
+             BOOL isServer,
+             int index,
+             void *param);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>error</parametername></STRONG></EM></TD>
+      <TD width="87%">DWCエラー種別。内容の詳細は、<a href="DWC_GetLastErrorEx.html#dwc__error_8h_118bd79f5d5151259c19c4e552e5e633b">DWC_GetLastErrorEx</a>を参照してください。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>cancel</parametername></STRONG></EM></TD>
+      <TD width="87%">TRUE:キャンセルでマッチメイク終了<br>FALSE:キャンセルではない<br></TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>self</parametername></STRONG></EM></TD>
+      <TD width="87%">TRUE:自分がサーバへの接続に成功、もしくは接続をキャンセルした。<br>FALSE:他のホストがサーバへの接続に成功、もしくは接続をキャンセルした。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>isServer</parametername></STRONG></EM></TD>
+      <TD width="87%">TRUE:self=FALSEの時に上記の動作を完了したホストがサーバである<br>FALSE:self=FALSEの時に上記の動作を完了したホストがクライアントであるか、self=TRUE</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>index</parametername></STRONG></EM></TD>
+      <TD width="87%">self=FALSEの時に、上記の動作を完了したホストの友達リストインデックス。<br>ホストが友達でないか、self=TRUEの時は-1となる。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>param</parametername></STRONG></EM></TD>
+      <TD width="87%">コールバック用パラメータ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>なし</p>
+
+<H2>説明</H2>
+
+<p><a href="DWC_ConnectToAnybodyAsync.html#dwc__main_8h_10c4e2a60e98dfa82a16b5e896d3a2203">DWC_ConnectToAnybodyAsync</a>/<a href="DWC_ConnectToFriendsAsync.html#dwc__main_8h_1dcb8be27412df5c9d5e0d9b9d035079b">DWC_ConnectToFriendsAsync</a>/<a href="DWC_SetupGameServer.html#dwc__main_8h_1230f0bb02b234d806cc51470e67647f1">DWC_SetupGameServer</a>/<a href="DWC_ConnectToGameServerAsync.html#dwc__main_8h_1254f419a2e97ad73074d232c4160cfd2">DWC_ConnectToGameServerAsync</a>/<a href="DWC_ConnectToGameServerByGroupID.html#dwc__main_8h_116b3b3faa8c7b9ee600fa77820ee1f57">DWC_ConnectToGameServerByGroupID</a>関数呼出し後、１つのコネクションが確立された時、またはエラー、キャンセルが発生した時に呼ばれます。</p><p>エラー発生時は、error,param以外の各引数の値は不定です。</p><p>本コールバック関数は<a href="DWC_ConnectToAnybodyAsync.html#dwc__main_8h_10c4e2a60e98dfa82a16b5e896d3a2203">DWC_ConnectToAnybodyAsync</a>/<a href="DWC_ConnectToFriendsAsync.html#dwc__main_8h_1dcb8be27412df5c9d5e0d9b9d035079b">DWC_ConnectToFriendsAsync</a>/<a href="DWC_SetupGameServer.html#dwc__main_8h_1230f0bb02b234d806cc51470e67647f1">DWC_SetupGameServer</a>/<a href="DWC_ConnectToGameServerAsync.html#dwc__main_8h_1254f419a2e97ad73074d232c4160cfd2">DWC_ConnectToGameServerAsync</a>/<a href="DWC_ConnectToGameServerByGroupID.html#dwc__main_8h_116b3b3faa8c7b9ee600fa77820ee1f57">DWC_ConnectToGameServerByGroupID</a>関数によって設定することができます。</p><p><h3>引数の取り得る値の組み合わせ</h3></p><p>・error==<a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed19e183029cab4bcfb2768bf5e52c81ce0a">DWC_ERROR_NONE</a>&&cancel==FALSEの場合<table border="1"><tr><td>
+self
+</td><td>
+isServer
+</td><td>
+内容
+</td></tr><tr><td>
+TRUE
+</td><td>
+TRUE
+</td><td>
+なし
+</td></tr><tr><td>
+TRUE
+</td><td>
+FALSE
+</td><td>
+自分がクライアントで、サーバとそのネットワークへの接続に成功した。indexは-1。
+</td></tr><tr><td>
+FALSE
+</td><td>
+TRUE
+</td><td>
+なし
+</td></tr><tr><td>
+FALSE
+</td><td>
+FALSE
+</td><td>
+自分はサーバかクライアントで、他のクライアントがサーバとそのネットワークへの接続に成功した。<br>indexはそのクライアントの友達リストインデックスで、友達でなければ-1。
+</td></tr></table><br></p><p>・error==<a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed19e183029cab4bcfb2768bf5e52c81ce0a">DWC_ERROR_NONE</a>&&cancel==TRUEの場合<table border="1"><tr><td>
+self
+</td><td>
+isServer
+</td><td>
+内容
+</td></tr><tr><td>
+TRUE
+</td><td>
+TRUE
+</td><td>
+自分がサーバで、自分でマッチメイクをキャンセルした。indexは-1。
+</td></tr><tr><td>
+TRUE
+</td><td>
+FALSE
+</td><td>
+自分がクライアントで、自分でマッチメイクをキャンセルした。indexは-1。
+</td></tr><tr><td>
+FALSE
+</td><td>
+TRUE
+</td><td>
+自分がクライアントで、サーバがマッチメイクをキャンセルした。indexはサーバの友達リストインデックス。
+</td></tr><tr><td>
+FALSE
+</td><td>
+FALSE
+</td><td>
+自分はサーバかクライアントで、他のクライアントがマッチメイクをキャンセルした。<br>indexはそのクライアントの友達リストインデックスで、友達でなければ-1。
+</td></tr></table></p><p>※文章中のサーバ/クライアントは、GameSpyサーバではなくWii/DS端末のことを指します。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_ConnectToAnybodyAsync.html#dwc__main_8h_10c4e2a60e98dfa82a16b5e896d3a2203">DWC_ConnectToAnybodyAsync</a></CODE>
+
+  <CODE><a href="DWC_ConnectToFriendsAsync.html#dwc__main_8h_1dcb8be27412df5c9d5e0d9b9d035079b">DWC_ConnectToFriendsAsync</a></CODE>
+
+  <CODE><a href="DWC_SetupGameServer.html#dwc__main_8h_1230f0bb02b234d806cc51470e67647f1">DWC_SetupGameServer</a></CODE>
+
+  <CODE><a href="DWC_ConnectToGameServerAsync.html#dwc__main_8h_1254f419a2e97ad73074d232c4160cfd2">DWC_ConnectToGameServerAsync</a></CODE>
+
+  <CODE><a href="DWC_ConnectToGameServerByGroupID.html#dwc__main_8h_116b3b3faa8c7b9ee600fa77820ee1f57">DWC_ConnectToGameServerByGroupID</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWCMatchedSCCallback_tag">こちら</a>　　</p>
+</body>
+</html>

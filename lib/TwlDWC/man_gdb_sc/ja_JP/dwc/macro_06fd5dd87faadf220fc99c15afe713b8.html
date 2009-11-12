@@ -1,0 +1,238 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>ダウンロード - 定数</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">ダウンロード - 定数</h1>
+<H2>定義</H2>
+<DL>
+	<DD>
+		<PRE><CODE>
+#include &lt;dwc.h&gt;
+
+#define   DWC_ND_FILENAME_LEN                     32
+#define   DWC_ND_FILEATTR_LEN                     10
+#define   DWC_ND_FILEEXPLSIN_LEN                  50
+#define   DWC_ND_THREAD_PRIORITY                  17
+#define   DWC_ND_LENGTH_GAMECODE                  4
+#define   DWC_ND_LENGTH_PASSWORD                  16
+
+enum DWCNdState {
+    DWC_ND_STATE_NOTINITIALIZED,
+    DWC_ND_STATE_READY,
+    DWC_ND_STATE_BUSY,
+    DWC_ND_STATE_COMPLETE,
+    DWC_ND_STATE_ERROR,
+    DWC_ND_STATE_MAX,
+};
+
+enum DWCNdError {
+    DWC_ND_ERROR_NONE,
+    DWC_ND_ERROR_ALLOC,
+    DWC_ND_ERROR_BUSY,
+    DWC_ND_ERROR_HTTP,
+    DWC_ND_ERROR_BUFFULL,
+    DWC_ND_ERROR_PARAM,
+    DWC_ND_ERROR_CANCELED,
+    DWC_ND_ERROR_DLSERVER,
+    DWC_ND_ERROR_FATAL,
+    DWC_ND_ERROR_MAX,
+};
+
+enum DWCNdCallbackReason {
+    DWC_ND_CBREASON_INITIALIZE,
+    DWC_ND_CBREASON_GETFILELISTNUM,
+    DWC_ND_CBREASON_GETFILELIST,
+    DWC_ND_CBREASON_GETFILE,
+    DWC_ND_CBREASON_CLEANUP,
+    DWC_ND_CBREASON_MAX,
+};
+
+		</CODE></PRE>
+	</DD>
+</DL>
+
+<H2>定数</H2>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+			<TH width="25%">DWC_ND_FILENAME_LEN</TH>
+			<TD>ファイル取得時に指定するファイル名の最大文字列長</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_ND_FILEATTR_LEN</TH>
+			<TD>ファイル取得前に指定する属性の最大文字列長</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_ND_FILEEXPLSIN_LEN</TH>
+			<TD>ファイルに指定されているUTF16LEで表現された説明文の最大文字列長</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_ND_THREAD_PRIORITY</TH>
+			<TD>ダウンロードライブラリ内部で使用するスレッドの優先度</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_ND_LENGTH_GAMECODE</TH>
+			<TD>DLゲームコード(gamecd)のバイト長</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_ND_LENGTH_PASSWORD</TH>
+			<TD>秘密鍵(passwd)のバイト長</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+<a id="dwc__nd_8h_16dd63254afcd3d1cc5f3a7851c0c8ef1"></a>
+<H2 id="TAG_ENUM_1">ダウンロードライブラリステート</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ND_STATE_NOTINITIALIZED</CODE></STRONG></EM></TD>
+	  <TD>ダウンロードライブラリが未初期化</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ND_STATE_READY</CODE></STRONG></EM></TD>
+	  <TD>初期化が完了し、他のダウンロードライブラリ関数が呼べる状態</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ND_STATE_BUSY</CODE></STRONG></EM></TD>
+	  <TD>非同期処理を実行中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ND_STATE_COMPLETE</CODE></STRONG></EM></TD>
+	  <TD>非同期処理が正常に完了した</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ND_STATE_ERROR</CODE></STRONG></EM></TD>
+	  <TD>非同期処理中にエラーが発生し、完了した</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ND_STATE_MAX</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__nd_8h_15516f9a01edfa95b9587f88bfdbd9f61"></a>
+<H2 id="TAG_ENUM_2">ダウンロードライブラリエラー列挙子</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ND_ERROR_NONE</CODE></STRONG></EM></TD>
+	  <TD>実行中の処理が完了した</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ND_ERROR_ALLOC</CODE></STRONG></EM></TD>
+	  <TD>メモリ確保に失敗した</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ND_ERROR_BUSY</CODE></STRONG></EM></TD>
+	  <TD>本来その関数を呼び出せないSTATEで呼び出した</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ND_ERROR_HTTP</CODE></STRONG></EM></TD>
+	  <TD>HTTP通信にエラーが発生した</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ND_ERROR_BUFFULL</CODE></STRONG></EM></TD>
+	  <TD>(内部エラー)ダウンロードバッファが足りない</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ND_ERROR_PARAM</CODE></STRONG></EM></TD>
+	  <TD>不正なパラメータによるエラーが発生した</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ND_ERROR_CANCELED</CODE></STRONG></EM></TD>
+	  <TD>処理のキャンセルが完了した</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ND_ERROR_DLSERVER</CODE></STRONG></EM></TD>
+	  <TD>サーバがエラーコードを返してきた</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ND_ERROR_FATAL</CODE></STRONG></EM></TD>
+	  <TD>未定義の致命的なエラーが発生した</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ND_ERROR_MAX</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__nd_8h_12589cc4824e67625368ff4b3b6353087"></a>
+<H2 id="TAG_ENUM_3">ダウンロードライブラリ進行列挙子</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ND_CBREASON_INITIALIZE</CODE></STRONG></EM></TD>
+	  <TD>ダウンロードライブラリ初期化中に通知コールバックが呼び出された</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ND_CBREASON_GETFILELISTNUM</CODE></STRONG></EM></TD>
+	  <TD>ダウンロード可能なファイル総数をダウンロード中に通知コールバックが呼び出された</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ND_CBREASON_GETFILELIST</CODE></STRONG></EM></TD>
+	  <TD>ファイル情報一覧をダウンロード中に通知コールバックが呼び出された</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ND_CBREASON_GETFILE</CODE></STRONG></EM></TD>
+	  <TD>ファイルをダウンロード中に通知コールバックが呼び出された</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ND_CBREASON_CLEANUP</CODE></STRONG></EM></TD>
+	  <TD>クリーンアップ完了時に呼び出された</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ND_CBREASON_MAX</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+</body>
+</html>

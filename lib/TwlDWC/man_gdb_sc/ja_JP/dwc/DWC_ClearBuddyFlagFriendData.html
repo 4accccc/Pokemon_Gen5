@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_ClearBuddyFlagFriendData</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__account_8h_1893ed2dabd37a096ddce9f7e11864703" align="left">DWC_ClearBuddyFlagFriendData</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>void DWC_ClearBuddyFlagFriendData(DWCFriendData *frienddata);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>frienddata</STRONG></EM></TD>
+      <TD width="87%">友達情報の格納されたDWCFriendData構造体のバッファへのポインタ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>なし</p>
+
+<H2>説明</H2>
+
+<p><a href="DWC_IsBuddyFriendData.html#dwc__account_8h_1ef07ab1dfe0f60811c29c0fe2396abe6">DWC_IsBuddyFriendData</a>関数、<a href="DWC_WasBuddyFriendData.html#dwc__account_8h_15680f424e4c763f82bf5883df7f66524">DWC_WasBuddyFriendData</a>関数でチェックできる友達成立フラグをクリアします。友達成立フラグがセットされている場合にのみクリアする処理をし、それ以外は何の処理も行いません。</p><p>GameSpyサーバ上で友達関係が成立すると、友達情報内の友達成立フラグがセットされるため、このフラグをチェックして友達関係の成立／不成立を調べることができます。</p><p>DS本体とDSカードが異なるためユーザデータを上書きした等で、成立していた友達関係が成立しなくなったとき、この関数を用いて友達成立フラグをクリアしてください。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_WasBuddyFriendData.html#dwc__account_8h_15680f424e4c763f82bf5883df7f66524">DWC_WasBuddyFriendData</a></CODE>
+
+  <CODE><a href="DWC_InitFriendsMatch.html#dwc__main_8h_1de4fba18d5d03cbccd0c86efe9e80c1c">DWC_InitFriendsMatch</a></CODE>
+
+  <CODE><a href="DWC_IsBuddyFriendData.html#dwc__account_8h_1ef07ab1dfe0f60811c29c0fe2396abe6">DWC_IsBuddyFriendData</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_ClearBuddyFlagFriendData_tag">こちら</a>　　</p>
+</body>
+</html>

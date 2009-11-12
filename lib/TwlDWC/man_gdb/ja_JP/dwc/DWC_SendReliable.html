@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_SendReliable</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__transport_8h_18af931f880aadbc50700c6c212ec64cc" align="left">DWC_SendReliable</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_SendReliable(u8 aid,
+                      const void *buffer,
+                      int size);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>aid</STRONG></EM></TD>
+      <TD width="87%">送信先のAID</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>buffer</STRONG></EM></TD>
+      <TD width="87%">送信バッファのポインタ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>size</STRONG></EM></TD>
+      <TD width="87%">送信バッファのサイズ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">送信バッファにデータセット完了。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">送信バッファにデータセット失敗。<br>エラー発生中か、前の送信処理が終わっていない、無効なAIDを指定した、もしくは送信バッファに空きが全くない。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>マッチメイク完了後、aidで指定された相手にReliable送信を行います。</p><p>Reliable送信はUDPを使用しますが、送信した順番通りにパケットの重複や欠落などがなく相手にデータが届くようにライブラリのレベルで実装されています。その代わりにパケットの到着を送信ごとに確認することになるため、このような確認を行なわないUnreliable送信に比べて時間がかかることに留意してください。</p><p>本関数によるデータ送信は、以下のように一時保留されることがあるため、この間に送信データ（buffer）の内容を変更しないでください。送信データの内容を変更しても良いかどうかは、<a href="DWC_IsSendableReliable.html#dwc__transport_8h_11578b36e82bdba244e07565cb7ac7b20">DWC_IsSendableReliable</a>関数によってReliable送信が可能な状態であることを確認するか、後述の送信完了コールバックによって送信の完了を確認することで判断できます。</p><p>本関数で送信するデータは、送信先での到着が確認されるまで<a href="DWC_InitFriendsMatch.html#dwc__main_8h_1de4fba18d5d03cbccd0c86efe9e80c1c">DWC_InitFriendsMatch</a>関数でサイズを指定した送信バッファにデータが溜まっていきます。このバッファに十分な空きがなかった場合、バッファに入らなかったデータは一時保留され、<a href="DWC_ProcessFriendsMatch.html#dwc__main_8h_1c7b64bfd61e6c336a1d382fb6d1ea2d8">DWC_ProcessFriendsMatch</a>関数内からバッファに空きができ次第、順次送信されます。なお、このバッファに「全く」空きがない場合、本関数はFALSEを返します。</p><p>ひとつのパケットで送信できる最大のサイズ(デフォルトは<a href="Macro.html#dwc__transport_8h_11bcbc577e4bac328af81cdb306e9315b">DWC_TRANSPORT_SEND_RELIABLE_MAX</a>(1465Byte))が決まっているため、このサイズより大きいデータを送信しようとするとデータは内部で分割されます。分割されて残ったデータは一時保留され、<a href="DWC_ProcessFriendsMatch.html#dwc__main_8h_1c7b64bfd61e6c336a1d382fb6d1ea2d8">DWC_ProcessFriendsMatch</a>関数内で順次送信されます。</p><p>なお、この最大データサイズは<a href="DWC_SetSendSplitMax.html#dwc__transport_8h_125d7a93f442305b24c4ccf9c7cdd1251">DWC_SetSendSplitMax</a>関数で変更することができますが、様々な設定の通信機器に対応するためには、デフォルトのサイズより大きい値には設定しないでください。</p><p>また、<a href="DWC_SetUserSendCallback.html#dwc__transport_8h_1425a597b5b1fa10e0bde22d02e3dce6c">DWC_SetUserSendCallback</a>関数で送信完了コールバックを設定していた場合はデータ送信が完了した時点でコールバックが呼び出されます。ただし、ここでいう送信の完了とは、送信バッファにデータが格納されたことを意味し、相手側にデータが到着したということではありません。</p><p>Reliable送信は直接接続しているホストにのみ行えます。そのため、スター型のときはサーバホストにのみReliable送信ができます。ハイブリッド型のときは<a href="DWC_GetDirectConnectedAIDBitmap.html#dwc__main_8h_1d15cc06cfefc572a3aa22adf150dcd05">DWC_GetDirectConnectedAIDBitmap</a>関数で取得できたAIDにのみ可能です。フルメッシュ型のときは接続している全てのホストにReliable送信が可能です。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_GetDirectConnectedAIDBitmap.html#dwc__main_8h_1d15cc06cfefc572a3aa22adf150dcd05">DWC_GetDirectConnectedAIDBitmap</a></CODE>
+
+  <CODE><a href="DWC_SendReliableBitmap.html#dwc__transport_8h_1ea79c20d9a54d219287cd7c1b906dd82">DWC_SendReliableBitmap</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_SendReliable_tag">こちら</a>　　</p>
+</body>
+</html>

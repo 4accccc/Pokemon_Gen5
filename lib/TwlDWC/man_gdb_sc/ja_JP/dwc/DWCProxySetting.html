@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWCProxySetting</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 id="struct_d_w_c_proxy_setting" align="left">
+DWCProxySetting
+</h1>
+<h2>定義</h2>
+
+<dl>
+  <dd>
+<PRE><code>
+#include &lt;dwc.h&gt;
+
+typedef struct DWCProxySetting {
+    u16 authType;
+    u16 port;
+    u8 hostName[0x64];
+    u8 authId[0x20];
+    u8 authPass[0x20];
+} DWCProxySetting;</code></PRE></dd>
+</dl>
+<H2>説明</H2>
+<p>proxy設定情報を格納するための構造体です。</p>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>authType</STRONG></EM></TD>
+      <TD width="87%">proxyの認証タイプ<ul><li>
+<a href="Macro.html#dwc__connectinet_8h_18365dfc0e2f045f82dd5344866cf8e44ceff467906afc0132d2971ec2ab174af">DWC_PROXY_AUTHTYPE_NONE</a>：認証なし
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_18365dfc0e2f045f82dd5344866cf8e44667fc52638bd571e0cc602c51797d42c">DWC_PROXY_AUTHTYPE_BASIC</a>：BASIC認証
+</li></ul></TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>port</STRONG></EM></TD>
+      <TD width="87%">proxyが使用するポート</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>hostName</STRONG></EM></TD>
+      <TD width="87%">proxyサーバのURL</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>authId</STRONG></EM></TD>
+      <TD width="87%">basic認証時のID</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>authPass</STRONG></EM></TD>
+      <TD width="87%">basic認証時のパスワード</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_GetProxySetting.html#dwc__connectinet_8h_1d2d381c369845b609cde5940ecf09a56">DWC_GetProxySetting</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWCProxySetting_tag">こちら</a>　　</p>
+</body>
+</html>

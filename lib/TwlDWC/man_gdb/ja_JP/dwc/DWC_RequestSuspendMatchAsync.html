@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_RequestSuspendMatchAsync</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__match_8h_155667bfa85dbc5bfbc501e56d2a4e4c3" align="left">DWC_RequestSuspendMatchAsync</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_RequestSuspendMatchAsync(BOOL suspend,
+                                  <a href="DWCSuspendCallback.html#dwc__match_8h_10694b2bb1c3e5ce404274abb14295bdc">DWCSuspendCallback</a> callback,
+                                  void *data);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>suspend</STRONG></EM></TD>
+      <TD width="87%">TRUE:受付拒否状態にする<br>FALSE:受付可能状態にする</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>callback</STRONG></EM></TD>
+      <TD width="87%">締め切り処理が終了したときに呼ばれる、<a href="DWCSuspendCallback.html#dwc__match_8h_10694b2bb1c3e5ce404274abb14295bdc">DWCSuspendCallback</a>型の関数ポインタ。必ず指定してください。NULLを指定するとこの関数は何も行いません。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>data</STRONG></EM></TD>
+      <TD width="87%">callbackに渡される任意データ。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">締め切り状態変更リクエストの受付に成功した。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">締め切り状態変更リクエストが受け付けられる状態では無かった。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>マッチメイクにおける新規参加の受付状態を変更する処理を開始します。</p><p>本関数が成功した場合、以後<a href="DWC_ProcessFriendsMatch.html#dwc__main_8h_1c7b64bfd61e6c336a1d382fb6d1ea2d8">DWC_ProcessFriendsMatch</a>関数内で締め切り処理が行われるようになります。締め切り処理が終了するとcallbackで指定された関数が呼ばれます。締め切り処理を行う場合は、全てのホストが同じタイミングで本関数を呼び出すようにしてください。すべてのホストで同じ要求が行われて初めて受付状態が変更されます。</p><p>既に本関数の呼び出しに成功していて、まだ締め切り処理が完了していない場合で本関数を呼び出した場合はFALSEが返ります。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_GetSuspendMatch.html#dwc__match_8h_1b5516f51a61bb6559abaa6c2a559f68c">DWC_GetSuspendMatch</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_RequestSuspendMatchAsync_tag">こちら</a>　　</p>
+</body>
+</html>

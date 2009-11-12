@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_SetRecvBuffer</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__transport_8h_19daee7d4b9c822ebc261fd7787ab1709" align="left">DWC_SetRecvBuffer</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_SetRecvBuffer(u8 aid,
+                       void *recvBuffer,
+                       int size);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>aid</STRONG></EM></TD>
+      <TD width="87%">受信相手のAID</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>recvBuffer</STRONG></EM></TD>
+      <TD width="87%">受信バッファのポインタ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>size</STRONG></EM></TD>
+      <TD width="87%">受信バッファのサイズ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">受信バッファの設定成功</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">データを受信中なので設定できない</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>マッチメイク完了後、他ホストから直接送られてくるデータを受信するための受信バッファを設定します。</p><p>受信バッファは、メッシュ型ネットワーク内の各ホストに対して個別に設定する必要があり、各ホストを指定するにはAIDを用います。接続中のホストのAIDは、<a href="DWC_GetAIDList.html#dwc__main_8h_1989c8c4ab809e9545639f4b84896be65">DWC_GetAIDList</a>関数で取得することができます。</p><p>受信バッファを設定する前に届いたデータは破棄されます。</p><p>切断した相手とのバッファは無効になるので、新しく接続する度にバッファを再設定する必要があります。</p><p>受信したデータを取得する際には、<a href="DWC_SetUserRecvCallback.html#dwc__transport_8h_12dea2e4b5383b2c9ffedf4032bbe953c">DWC_SetUserRecvCallback</a>関数で設定したコールバック内でコールバックの引数で渡されるポインタを利用するようにし、本関数で指定するバッファは直接読まないようにしてください。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_SetRecvBuffer_tag">こちら</a>　　</p>
+</body>
+</html>

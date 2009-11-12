@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWCEvalPlayerCallback</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__match_8h_1546369b77983a0a5e7b8609d236ba937" align="left">DWCEvalPlayerCallback</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>typedef int(*) DWCEvalPlayerCallback(int index,
+            void *param);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>index</parametername></STRONG></EM></TD>
+      <TD width="87%">ライブラリが使用する評価対象プレイヤーのインデックス。<br>マッチメイク指標キーを取得する<a href="DWC_GetMatchIntValue.html#dwc__match_8h_1dbbececf29f224e6e694460d01d6c6cf">DWC_GetMatchIntValue</a>/<a href="DWC_GetMatchStringValue.html#dwc__match_8h_1d02811d6603b29dc1b7cd6aa75bec05a">DWC_GetMatchStringValue</a>関数に渡してください。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>param</parametername></STRONG></EM></TD>
+      <TD width="87%"><a href="DWC_ConnectToAnybodyAsync.html#dwc__main_8h_10c4e2a60e98dfa82a16b5e896d3a2203">DWC_ConnectToAnybodyAsync</a>/<a href="DWC_ConnectToFriendsAsync.html#dwc__main_8h_1dcb8be27412df5c9d5e0d9b9d035079b">DWC_ConnectToFriendsAsync</a>関数で指定したコールバック用パラメータ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>評価値。大きい値ほどそのプレイヤーに接続を試みる確率が上がります。とりうる値の範囲はintですが、0x007fffffより大きな正の数は、全て0x007fffffと同じに扱われます。0以下の値を返した場合は、そのプレイヤーへは接続しません。</p>
+
+<H2>説明</H2>
+
+<p>友達指定・友達無指定ピアマッチメイク時に、マッチメイク対象プレイヤーを見つける度に呼ばれるプレイヤー評価コールバック関数です。本関数で設定した返り値の大きいプレイヤーほど接続先として選ばれる可能性が高くなり、0以下の値を返した場合は、そのプレイヤーはマッチメイクの対象から外されます。ただし、評価値の絶対値は重要ではなく、見つかったプレイヤーの評価値順により選ばれやすさが決まります。例えば、評価値がそれぞれ1,2,3,10万となっていた場合でも、10万のホストが圧倒的に選ばれやすくなるというわけではありません。</p><p>また、ライブラリ内部で、返り値が8,388,607（0x007fffff）以下の正の数であった場合は、8ビット左シフトし、下位8ビットに乱数を付加することで、同じ評価値となる相手でもある程度分散して接続を試みる仕様となっています。なお、返り値が8,388,607より大きい場合は、8,388,607として扱われます。</p><p>プレイヤーの評価に使うマッチメイク指標キーを取得するには、<a href="DWC_GetMatchIntValue.html#dwc__match_8h_1dbbececf29f224e6e694460d01d6c6cf">DWC_GetMatchIntValue</a>/<a href="DWC_GetMatchStringValue.html#dwc__match_8h_1d02811d6603b29dc1b7cd6aa75bec05a">DWC_GetMatchStringValue</a>関数を使用します。これらの関数は、本関数内でしか使用できません。<br>追加した指標キーがサーバに反映されるのに時間がかかるので、アプリケーション側で指標キーをセットしていても、指標キーがないと判断されてデフォルト値（デフォルト文字列）が返されることがあります。</p><p>本コールバック関数は<a href="DWC_ConnectToAnybodyAsync.html#dwc__main_8h_10c4e2a60e98dfa82a16b5e896d3a2203">DWC_ConnectToAnybodyAsync</a>/<a href="DWC_ConnectToFriendsAsync.html#dwc__main_8h_1dcb8be27412df5c9d5e0d9b9d035079b">DWC_ConnectToFriendsAsync</a>関数によって設定することができます。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.1</DT>
+<DD>評価値は順番に依存して選ばれやすさが決まることを追記</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWCEvalPlayerCallback_tag">こちら</a>　　</p>
+</body>
+</html>

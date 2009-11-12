@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_RnkPutScoreAsync</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__ranking_8h_1fdd380620052f989c748bfb45c16ccbe" align="left">DWC_RnkPutScoreAsync</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE><a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace5910">DWCRnkError</a> DWC_RnkPutScoreAsync(u32 category,
+                                 <a href="Macro.html#dwc__ranking_8h_1bc0db3fbc51ac91811958f9c51e87899">DWCRnkRegion</a> region,
+                                 s32 score,
+                                 void *data,
+                                 u32 size);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>category</STRONG></EM></TD>
+      <TD width="87%">ランキングを識別するためのカテゴリーID(0～<a href="Macro.html#dwc__ranking_8h_192c348bb621e1f4486daf931679df6d1">DWC_RNK_CATEGORY_MAX</a>までの数値)</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>region</STRONG></EM></TD>
+      <TD width="87%">リージョンコード。<a href="Macro.html#dwc__ranking_8h_1bc0db3fbc51ac91811958f9c51e87899">DWCRnkRegion</a>の中から一つ指定します。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>score</STRONG></EM></TD>
+      <TD width="87%">スコア。任意の数値を指定します。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>data</STRONG></EM></TD>
+      <TD width="87%">ユーザー定義データのバッファへのポインタ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>size</STRONG></EM></TD>
+      <TD width="87%">dataのサイズ(<a href="Macro.html#dwc__ranking_8h_13066f77a00f280132a1d64d306975777">DWC_RNK_DATA_MAX</a>以下)</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace591031d9ef7155e9c704fd07f83f72ad0077">DWC_RNK_SUCCESS</a></STRONG></EM></TD>
+      <TD width="87%">成功</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace5910a4e6c6033f467d88496af91163df0345">DWC_RNK_IN_ERROR</a></STRONG></EM></TD>
+      <TD width="87%">エラー発生中</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace5910267a9266ab011bc4ec1248366c195821">DWC_RNK_ERROR_PUT_NOTREADY</a></STRONG></EM></TD>
+      <TD width="87%">通信準備ができていない</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace5910ede038616942f938cdf5e287edf52728">DWC_RNK_ERROR_INVALID_PARAMETER</a></STRONG></EM></TD>
+      <TD width="87%">不正なパラメータ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace5910901681b3c92fa9b04925ce4b31d10ff8">DWC_RNK_ERROR_PUT_INVALID_KEY</a></STRONG></EM></TD>
+      <TD width="87%">暗号化キーが不正</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace591034f20e84c6b0bc492c176303ee5bcb65">DWC_RNK_ERROR_PUT_NOMEMORY</a></STRONG></EM></TD>
+      <TD width="87%">メモリー不足</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>スコアを登録する非同期処理を開始します。同時に実行できる非同期処理は1つのみです。複数の非同期処理を実行しようとした場合は<a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace5910267a9266ab011bc4ec1248366c195821">DWC_RNK_ERROR_PUT_NOTREADY</a>が返されます。</p><p>非同期処理中は、定期的に<a href="DWC_RnkProcess.html#dwc__ranking_8h_101ac285f5d9f2b8bdf04b20a0154233a">DWC_RnkProcess</a>関数を呼び出してください。処理中は<a href="DWC_RnkProcess.html#dwc__ranking_8h_101ac285f5d9f2b8bdf04b20a0154233a">DWC_RnkProcess</a>関数が<a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace591031d9ef7155e9c704fd07f83f72ad0077">DWC_RNK_SUCCESS</a>を返します。</p><p>非同期処理中の進行状況を取得するには、<a href="DWC_RnkGetState.html#dwc__ranking_8h_1e75ecfaae58d6e26966c97f8ae0def48">DWC_RnkGetState</a>関数を呼び出してください。</p><p><a href="DWC_RnkResGetRow.html#dwc__ranking_8h_17f7e3dca113ad8708c5ec4dffe869c1b">DWC_RnkResGetRow</a>関数で取得する<a href="DWCRnkData.html#struct_d_w_c_rnk_data">DWCRnkData</a>構造体内のメンバの一部は受信バッファを直接参照しているため、続けて非同期処理を行う場合は必要に応じて退避してください。</p><p>ユーザー定義データを使用しない場合は、dataにNULL、sizeに0を指定してください。</p><p>dataに指定したユーザー定義データのサイズはサーバ上で4の倍数のサイズに補正されます。例えばsizeに3バイトと指定した場合はダミーデータが1バイト追加され4バイトで記録されます。<a href="DWC_RnkResGetRow.html#dwc__ranking_8h_17f7e3dca113ad8708c5ec4dffe869c1b">DWC_RnkResGetRow</a>関数で取得するデータサイズはこの補正後のサイズになります。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_RnkPutScoreAsync_tag">こちら</a>　　</p>
+</body>
+</html>

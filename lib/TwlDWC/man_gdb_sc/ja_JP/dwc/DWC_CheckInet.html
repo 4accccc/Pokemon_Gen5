@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_CheckInet</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__connectinet_8h_1525ebb2790477ec1a4d430dd94d29fc7" align="left">DWC_CheckInet</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_CheckInet(void);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<p>なし</p>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">自動接続処理が完了している</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">自動接続処理中、もしくは自動接続開始前</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>自動接続処理の進行状態を確認します。<a href="DWC_ProcessInet.html#dwc__connectinet_8h_1c2a3fd1d79fee387ca123f5eb1cf0660">DWC_ProcessInet</a>関数呼出し後に、本関数で自動接続処理が完了したかどうかを確認してください。</p><p>インターネット接続状態の詳細は、<a href="DWC_GetInetStatus.html#dwc__connectinet_8h_1dc3e39b117b96fe0e2facbb529ffee10">DWC_GetInetStatus</a>関数で確認してください。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_InitInet.html#dwc__connectinet_8h_1c9ae10a55929127c552c808ebb103cc8">DWC_InitInet</a></CODE>
+
+  <CODE><a href="DWC_ConnectInetAsync.html#dwc__connectinet_8h_1ed6360e949bbab87f49275bac0a381cc">DWC_ConnectInetAsync</a></CODE>
+
+  <CODE><a href="DWC_ProcessInet.html#dwc__connectinet_8h_1c2a3fd1d79fee387ca123f5eb1cf0660">DWC_ProcessInet</a></CODE>
+
+  <CODE><a href="DWC_GetInetStatus.html#dwc__connectinet_8h_1dc3e39b117b96fe0e2facbb529ffee10">DWC_GetInetStatus</a></CODE>
+
+  <CODE><a href="DWC_CleanupInet.html#dwc__connectinet_8h_14d7f46fc1822bb3f39eed3b087e629c6">DWC_CleanupInet</a></CODE>
+
+  <CODE><a href="DWC_CleanupInetAsync.html#dwc__connectinet_8h_100a9f2169ae3e5c145607630710674ac">DWC_CleanupInetAsync</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_CheckInet_tag">こちら</a>　　</p>
+</body>
+</html>

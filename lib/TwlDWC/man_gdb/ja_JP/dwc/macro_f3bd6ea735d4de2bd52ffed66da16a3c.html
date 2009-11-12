@@ -1,0 +1,432 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>共通・ユーティリティ - 定数</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">共通・ユーティリティ - 定数</h1>
+<H2>定義</H2>
+<DL>
+	<DD>
+		<PRE><CODE>
+#include &lt;dwc.h&gt;
+
+#define   DWC_COMMONSTR_MAX_KEY_VALUE_LEN         4096
+
+enum DWCError {
+    DWC_ERROR_NONE                          =  0,
+    DWC_ERROR_DS_MEMORY_ANY,
+    DWC_ERROR_AUTH_ANY,
+    DWC_ERROR_AUTH_OUT_OF_SERVICE,
+    DWC_ERROR_AUTH_STOP_SERVICE,
+    DWC_ERROR_AC_ANY,
+    DWC_ERROR_NETWORK,
+    DWC_ERROR_GHTTP_ANY,
+    DWC_ERROR_DISCONNECTED,
+    DWC_ERROR_FATAL,
+    DWC_ERROR_FRIENDS_SHORTAGE,
+    DWC_ERROR_NOT_FRIEND_SERVER,
+    DWC_ERROR_SERVER_FULL,
+    DWC_ERROR_ND_ANY,
+    DWC_ERROR_ND_HTTP,
+    DWC_ERROR_SVL_ANY,
+    DWC_ERROR_SVL_HTTP,
+    DWC_ERROR_PROF_ANY,
+    DWC_ERROR_PROF_HTTP,
+    DWC_ERROR_GDB_ANY,
+    DWC_ERROR_SCL_ANY,
+    DWC_ERROR_SC_CONNECT_BLOCK,
+    DWC_ERROR_NETWORK_LIGHT,
+    DWC_ERROR_NUM,
+};
+
+enum DWCErrorType {
+    DWC_ETYPE_NO_ERROR                      =  0,
+    DWC_ETYPE_LIGHT,
+    DWC_ETYPE_SHOW_ERROR,
+    DWC_ETYPE_SHUTDOWN_FM,
+    DWC_ETYPE_SHUTDOWN_GHTTP,
+    DWC_ETYPE_SHUTDOWN_ND,
+    DWC_ETYPE_DISCONNECT,
+    DWC_ETYPE_FATAL,
+    DWC_ETYPE_NUM,
+};
+
+enum DWCReportFlag {
+    DWC_REPORTFLAG_NONE                     =  0x00000000,
+    DWC_REPORTFLAG_INFO                     =  0x00000001,
+    DWC_REPORTFLAG_ERROR                    =  0x00000002,
+    DWC_REPORTFLAG_DEBUG                    =  0x00000004,
+    DWC_REPORTFLAG_WARNING                  =  0x00000008,
+    DWC_REPORTFLAG_ACHECK                   =  0x00000010,
+    DWC_REPORTFLAG_LOGIN                    =  0x00000020,
+    DWC_REPORTFLAG_MATCH_NN                 =  0x00000040,
+    DWC_REPORTFLAG_MATCH_GT2                =  0x00000080,
+    DWC_REPORTFLAG_TRANSPORT                =  0x00000100,
+    DWC_REPORTFLAG_QR2_REQ                  =  0x00000200,
+    DWC_REPORTFLAG_SB_UPDATE                =  0x00000400,
+    DWC_REPORTFLAG_SEND_INFO                =  0x00008000,
+    DWC_REPORTFLAG_RECV_INFO                =  0x00010000,
+    DWC_REPORTFLAG_UPDATE_SV                =  0x00020000,
+    DWC_REPORTFLAG_CONNECTINET              =  0x00040000,
+    DWC_REPORTFLAG_AUTH                     =  0x01000000,
+    DWC_REPORTFLAG_AC                       =  0x02000000,
+    DWC_REPORTFLAG_BM                       =  0x04000000,
+    DWC_REPORTFLAG_UTIL                     =  0x08000000,
+    DWC_REPORTFLAG_OPTION_CF                =  0x10000000,
+    DWC_REPORTFLAG_OPTION_CONNTEST          =  0x20000000,
+    DWC_REPORTFLAG_GAMESPY                  =  0x80000000,
+    DWC_REPORTFLAG_TEST                     =  0x00100000,
+    DWC_REPORTFLAG_ALL                      =  0xffffffff,
+};
+
+		</CODE></PRE>
+	</DD>
+</DL>
+
+<H2>定数</H2>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+			<TH width="25%">DWC_COMMONSTR_MAX_KEY_VALUE_LEN</TH>
+			<TD>汎用key/value文字列のそれぞれの最大文字列長</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+<a id="dwc__error_8h_1c049360b665a730f7f639f014a4fed19"></a>
+<H2 id="TAG_ENUM_1">エラー列挙子</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_NONE</CODE></STRONG></EM></TD>
+	  <TD>エラーなし</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_DS_MEMORY_ANY</CODE></STRONG></EM></TD>
+	  <TD>本体セーブデータに関するエラー</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_AUTH_ANY</CODE></STRONG></EM></TD>
+	  <TD>認証に関するエラー</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_AUTH_OUT_OF_SERVICE</CODE></STRONG></EM></TD>
+	  <TD>サービス終了</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_AUTH_STOP_SERVICE</CODE></STRONG></EM></TD>
+	  <TD>サービス一時中断</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_AC_ANY</CODE></STRONG></EM></TD>
+	  <TD>自動接続に関するエラー</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_NETWORK</CODE></STRONG></EM></TD>
+	  <TD>その他のネットワークエラー</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_GHTTP_ANY</CODE></STRONG></EM></TD>
+	  <TD>HTTP通信(GameSpyHTTP)のエラー</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_DISCONNECTED</CODE></STRONG></EM></TD>
+	  <TD>切断された</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_FATAL</CODE></STRONG></EM></TD>
+	  <TD>致命的なエラー</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_FRIENDS_SHORTAGE</CODE></STRONG></EM></TD>
+	  <TD>指定の人数の有効な友達がいないのに友達指定ピアマッチメイクを始めようとした</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_NOT_FRIEND_SERVER</CODE></STRONG></EM></TD>
+	  <TD>サーバクライアントマッチメイクで、サーバに指定した友達が相互に友達ではない、もしくはサーバを立てていない</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_SERVER_FULL</CODE></STRONG></EM></TD>
+	  <TD>サーバクライアントマッチメイクのサーバが定員オーバー</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_ND_ANY</CODE></STRONG></EM></TD>
+	  <TD>ダウンロードライブラリのエラー</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_ND_HTTP</CODE></STRONG></EM></TD>
+	  <TD>ダウンロードライブラリのHTTPエラー</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_SVL_ANY</CODE></STRONG></EM></TD>
+	  <TD>サービスロケータのエラー</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_SVL_HTTP</CODE></STRONG></EM></TD>
+	  <TD>サービスロケータ情報取得中のHTTP通信エラー</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_PROF_ANY</CODE></STRONG></EM></TD>
+	  <TD>不正文字列チェックでサーバの応答がおかしいときに発生するエラー</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_PROF_HTTP</CODE></STRONG></EM></TD>
+	  <TD>不正文字列チェックのHTTPエラー</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_GDB_ANY</CODE></STRONG></EM></TD>
+	  <TD>GDBライブラリのエラー。通常のDWCでは発生しません。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_SCL_ANY</CODE></STRONG></EM></TD>
+	  <TD>SCライブラリのエラー。通常のDWCでは発生しません。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_SC_CONNECT_BLOCK</CODE></STRONG></EM></TD>
+	  <TD>サーバクライアントマッチメイクで、クライアントがサーバから接続を拒否された</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_NETWORK_LIGHT</CODE></STRONG></EM></TD>
+	  <TD>軽度として扱うネットワークエラー</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_NUM</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__error_8h_168ff183290bdb65d992a516a2496c5ec"></a>
+<H2 id="TAG_ENUM_2">エラー検出時に必要な処理を示すエラータイプ</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ETYPE_NO_ERROR</CODE></STRONG></EM></TD>
+	  <TD>エラーなし</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ETYPE_LIGHT</CODE></STRONG></EM></TD>
+	  <TD>ゲーム固有の表示のみで、エラーコード表示は必要ありません。<br><a href="DWC_ClearError.html#dwc__error_8h_1325e43a6b7d8d0a914a044c52e8cfda6">DWC_ClearError</a>関数を呼び出せば、復帰可能です。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ETYPE_SHOW_ERROR</CODE></STRONG></EM></TD>
+	  <TD>エラーコードを表示してください。<br><a href="DWC_ClearError.html#dwc__error_8h_1325e43a6b7d8d0a914a044c52e8cfda6">DWC_ClearError</a>関数を呼び出せば、復帰可能です。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ETYPE_SHUTDOWN_FM</CODE></STRONG></EM></TD>
+	  <TD><a href="DWC_ShutdownFriendsMatch.html#dwc__main_8h_1765b5089893c6d3bf5f3011723b96278">DWC_ShutdownFriendsMatch</a>関数を呼び出して、FriendsMatchライブラリを終了する必要があります。エラーコードを表示してください。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ETYPE_SHUTDOWN_GHTTP</CODE></STRONG></EM></TD>
+	  <TD>以下の各ライブラリ解放関数を必要に応じて呼び出してください。<br><a href="DWC_RnkShutdown.html#dwc__ranking_8h_1ebd54c804ee5147f740362c5cb482bfd">DWC_RnkShutdown</a>関数(汎用ランキングライブラリ)<br>エラーコードを表示してください。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ETYPE_SHUTDOWN_ND</CODE></STRONG></EM></TD>
+	  <TD><a href="DWC_NdCleanupAsync.html#dwc__nd_8h_1b5866639aee7fb3a9d693a1411625ee0">DWC_NdCleanupAsync</a>関数を呼び出して、ダウンロードライブラリを終了する必要があります。エラーコードを表示してください。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ETYPE_DISCONNECT</CODE></STRONG></EM></TD>
+	  <TD>以下の各ライブラリ解放関数を必要に応じて呼び出してください。<br><a href="DWC_ShutdownFriendsMatch.html#dwc__main_8h_1765b5089893c6d3bf5f3011723b96278">DWC_ShutdownFriendsMatch</a>関数(FriendsMatchライブラリ)<br><a href="DWC_NdCleanupAsync.html#dwc__nd_8h_1b5866639aee7fb3a9d693a1411625ee0">DWC_NdCleanupAsync</a>関数(ダウンロードライブラリ)<br><a href="DWC_RnkShutdown.html#dwc__ranking_8h_1ebd54c804ee5147f740362c5cb482bfd">DWC_RnkShutdown</a>関数(汎用ランキングライブラリ)<br>その後、<a href="DWC_CleanupInet.html#dwc__connectinet_8h_14d7f46fc1822bb3f39eed3b087e629c6">DWC_CleanupInet</a>あるいは<a href="DWC_CleanupInetAsync.html#dwc__connectinet_8h_100a9f2169ae3e5c145607630710674ac">DWC_CleanupInetAsync</a>関数で通信の切断も行う必要があります。エラーコードを表示してください。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ETYPE_FATAL</CODE></STRONG></EM></TD>
+	  <TD>FatalError相当なので、Nitroでは、電源OFFを促す必要があります。Twlではリセット(ランチャーへの戻り)を促す必要があります。エラーコードを表示してください。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_ETYPE_NUM</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__report_8h_134e9367035075892d6458b4175e11f59"></a>
+<H2 id="TAG_ENUM_3">dwcのデバッグ情報出力用フラグ</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_NONE</CODE></STRONG></EM></TD>
+	  <TD>出力なし</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_INFO</CODE></STRONG></EM></TD>
+	  <TD>情報</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_ERROR</CODE></STRONG></EM></TD>
+	  <TD>エラー</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_DEBUG</CODE></STRONG></EM></TD>
+	  <TD>デバッグ情報</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_WARNING</CODE></STRONG></EM></TD>
+	  <TD>警告</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_ACHECK</CODE></STRONG></EM></TD>
+	  <TD>GameSpyサーバーの利用可能チェック</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_LOGIN</CODE></STRONG></EM></TD>
+	  <TD>ログイン関係</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_MATCH_NN</CODE></STRONG></EM></TD>
+	  <TD>マッチング-NN関係</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_MATCH_GT2</CODE></STRONG></EM></TD>
+	  <TD>マッチング-GT2関係</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_TRANSPORT</CODE></STRONG></EM></TD>
+	  <TD>送受信関係</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_QR2_REQ</CODE></STRONG></EM></TD>
+	  <TD>QR2関係</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_SB_UPDATE</CODE></STRONG></EM></TD>
+	  <TD>SB関係</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_SEND_INFO</CODE></STRONG></EM></TD>
+	  <TD>送信情報</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_RECV_INFO</CODE></STRONG></EM></TD>
+	  <TD>受信情報</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_UPDATE_SV</CODE></STRONG></EM></TD>
+	  <TD>サーバ更新関係</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_CONNECTINET</CODE></STRONG></EM></TD>
+	  <TD>インターネット接続関係</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_AUTH</CODE></STRONG></EM></TD>
+	  <TD>認証関係</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_AC</CODE></STRONG></EM></TD>
+	  <TD>アカウント関係</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_BM</CODE></STRONG></EM></TD>
+	  <TD>WiFi設定のセーブ・ロード</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_UTIL</CODE></STRONG></EM></TD>
+	  <TD>UTIL関係</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_OPTION_CF</CODE></STRONG></EM></TD>
+	  <TD>未使用</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_OPTION_CONNTEST</CODE></STRONG></EM></TD>
+	  <TD>未使用</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_GAMESPY</CODE></STRONG></EM></TD>
+	  <TD>Gamespy関係</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_TEST</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_ALL</CODE></STRONG></EM></TD>
+	  <TD>すべて</TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<H3>履歴</H3>
+<DL>
+
+<DT>5.2</DT>
+<DD>デバッグ情報出力用フラグに関する説明を追加しました。</DD>
+
+</DL>
+
+</body>
+</html>

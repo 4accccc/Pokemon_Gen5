@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_StartUtilityEx</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__utility_8h_150e5b64241cfa2f8748540bad6c2a364" align="left">DWC_StartUtilityEx</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>int DWC_StartUtilityEx(int language,
+                       int param);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>language</STRONG></EM></TD>
+      <TD width="87%">Wi-Fiコネクション設定内の言語を指定します。<br>基本的にはアプリケーションで使用している言語を指定してください。ただし、paramで指定する仕向地によっては選択できない言語があります。本関数で*対応していない言語をアプリケーションで使用している場合は、本関数が対応している言語の中から適切なものを選択してください。<ul><li>
+DWC_LANGUAGE_JAPANESE　　//日本語
+</li><li>
+DWC_LANGUAGE_ENGLISH　　//英語
+</li><li>
+DWC_LANGUAGE_FRENCH　　　//フランス語
+</li><li>
+DWC_LANGUAGE_GERMAN　　　//ドイツ語
+</li><li>
+DWC_LANGUAGE_ITALIAN　　//イタリア語
+</li><li>
+DWC_LANGUAGE_SPANISH　　//スペイン語
+</li><li>
+DWC_LANGUAGE_HANGUL　　　//韓国語*
+</li></ul></TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>param</STRONG></EM></TD>
+      <TD width="87%">仕向地、Wi-Fiコネクション設定の開始位置を指定します。仕向地によりらくらく無線スタートの有無が変わります。<br><ul><li>
+トップメニューから開始。<b>実装が必須です。</b><ul><li>
+DWC_UTILITY_TOP_MENU_FOR_USA　　//仕向地北米
+</li><li>
+DWC_UTILITY_TOP_MENU_FOR_EUR　　//仕向地欧州
+</li><li>
+DWC_UTILITY_TOP_MENU_FOR_JPN　　//仕向地日本
+</li><li>
+DWC_UTILITY_TOP_MENU_COMMON　　//上記以外の仕向地共通<br><br>
+</li></ul>
+</li><li>
+「接続先の選択」から開始。実装は必須でありません。<ul><li>
+DWC_UTILITY_SETTING_FOR_USA　　//仕向地北米
+</li><li>
+DWC_UTILITY_SETTING_FOR_EUR　　//仕向地欧州
+</li><li>
+DWC_UTILITY_SETTING_FOR_JPN　　//仕向地日本
+</li><li>
+DWC_UTILITY_SETTING_COMMON　　　//上記以外の仕向地共通
+</li></ul>
+</li></ul></TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>DWC_UTIL_RESULT_SUCCESS</STRONG></EM></TD>
+      <TD width="87%">正常終了</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>DWC_UTIL_RESULT_FAILED</STRONG></EM></TD>
+      <TD width="87%">引数エラー</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>DWC_UTIL_RESULT_ERROR_TWL</STRONG></EM></TD>
+      <TD width="87%">Twlで起動したときのエラー</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>ワークメモリを指定せずにWi-Fiコネクション設定を開始します。詳細な説明は、<a href="DWC_StartUtility.html#dwc__utility_8h_1a6e388b33fe6c8344210c25f8acca085">DWC_StartUtility</a>関数の頁を参照下さい。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_StartUtility.html#dwc__utility_8h_1a6e388b33fe6c8344210c25f8acca085">DWC_StartUtility</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_StartUtilityEx_tag">こちら</a>　　</p>
+</body>
+</html>

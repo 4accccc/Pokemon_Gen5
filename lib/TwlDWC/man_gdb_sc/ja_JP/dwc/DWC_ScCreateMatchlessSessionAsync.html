@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_ScCreateMatchlessSessionAsync</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__sc_8h_1f89c1bf9fa185ba0f72980dcb7846a41" align="left">DWC_ScCreateMatchlessSessionAsync</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE><a href="Macro.html#dwc__sc_8h_1dca53ef710261d3406ae316e692e498d">DWCScResult</a> DWC_ScCreateMatchlessSessionAsync(<a href="DWCScCreateSessionCallback.html#dwc__sc_8h_192792ae9ebebf688d1cac969a37c27b8">DWCScCreateSessionCallback</a> theCallback,
+                                              u32 theTimeoutMs,
+                                              void *theUserData);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>theCallback</STRONG></EM></TD>
+      <TD width="87%">セッション作成結果を通知するコールバック</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>theTimeoutMs</STRONG></EM></TD>
+      <TD width="87%">タイムアウトするまでの時間(msec)</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>theUserData</STRONG></EM></TD>
+      <TD width="87%">コールバックに付与する任意のバイナリデータ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>エラーの内容</p>
+
+<H2>説明</H2>
+
+<p>ノーマッチセッションIDを作成します。</p><p>ノーマッチセッションはセッションのバリエーションです。ノーマッチとは送信されたレポートの内容を確認せず、結果を即座に反映することを意味しています。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_ScCreateMatchlessSessionAsync_tag">こちら</a>　　</p>
+</body>
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>インターネット接続 - 定数</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">インターネット接続 - 定数</h1>
+<H2>定義</H2>
+<DL>
+	<DD>
+		<PRE><CODE>
+#include &lt;dwc.h&gt;
+
+
+enum DWCInetResult {
+    DWC_CONNECTINET_STATE_NOT_INITIALIZED   =  0,
+    DWC_CONNECTINET_STATE_IDLE,
+    DWC_CONNECTINET_STATE_OPERATING,
+    DWC_CONNECTINET_STATE_OPERATED,
+    DWC_CONNECTINET_STATE_CONNECTED,
+    DWC_CONNECTINET_STATE_DISCONNECTING,
+    DWC_CONNECTINET_STATE_DISCONNECTED,
+    DWC_CONNECTINET_STATE_ERROR,
+    DWC_CONNECTINET_STATE_FATAL_ERROR,
+    DWC_CONNECTINET_STATE_LAST,
+};
+
+enum DWCInetAuthType {
+    DWC_CONNECTINET_AUTH_TEST,
+    DWC_CONNECTINET_AUTH_DEVELOP,
+    DWC_CONNECTINET_AUTH_RELEASE,
+    DWC_CONNECTINET_AUTH_LAST,
+};
+
+enum DWCApInfoArea {
+    DWC_APINFO_AREA_JPN                     =  0,
+    DWC_APINFO_AREA_USA,
+    DWC_APINFO_AREA_EUR,
+    DWC_APINFO_AREA_AUS,
+    DWC_APINFO_AREA_KOR,
+    DWC_APINFO_AREA_UNKNOWN                 =  0xff,
+};
+
+enum DWCApInfoType {
+    DWC_APINFO_TYPE_USER0                   =  0,
+    DWC_APINFO_TYPE_USER1,
+    DWC_APINFO_TYPE_USER2,
+    DWC_APINFO_TYPE_USB,
+    DWC_APINFO_TYPE_SHOP,
+    DWC_APINFO_TYPE_FREESPOT,
+    DWC_APINFO_TYPE_WAYPORT,
+    DWC_APINFO_TYPE_OTHER,
+    DWC_APINFO_TYPE_NINTENDOWFC             =  DWC_APINFO_TYPE_OTHER,
+    DWC_APINFO_TYPE_NINTENDOZONE,
+    DWC_APINFO_TYPE_USER3                   =  0x0a,
+    DWC_APINFO_TYPE_USER4,
+    DWC_APINFO_TYPE_USER5,
+    DWC_APINFO_TYPE_UNKNOWN                 =  99,
+};
+
+enum DWCApInfoSecurity {
+    DWC_APINFO_WSEC_NONE                    =  0x00,
+    DWC_APINFO_WSEC_WEPMODE_40,
+    DWC_APINFO_WSEC_WEPMODE_104,
+    DWC_APINFO_WSEC_WEPMODE_128,
+    DWC_APINFO_WSEC_WPA_PSK_TKIP,
+    DWC_APINFO_WSEC_WPA2_PSK_TKIP,
+    DWC_APINFO_WSEC_WPA_PSK_AES,
+    DWC_APINFO_WSEC_WPA2_PSK_AES,
+};
+
+enum DWCTestInetResult {
+    DWC_TESTINET_NOT_INITIALIZED            =  0,
+    DWC_TESTINET_OPERATING,
+    DWC_TESTINET_CONNECTED,
+    DWC_TESTINET_DISCONNECTED,
+};
+
+enum DWCProxyAuthType {
+    DWC_PROXY_AUTHTYPE_NONE                 =  0x00,
+    DWC_PROXY_AUTHTYPE_BASIC,
+};
+
+		</CODE></PRE>
+	</DD>
+</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+	</TBODY>
+</TABLE>
+
+<a id="dwc__connectinet_8h_17e3ebb7f6d65d55dc39f66b2c05fb8c1"></a>
+<H2 id="TAG_ENUM_1">インターネット接続状態</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_STATE_NOT_INITIALIZED</CODE></STRONG></EM></TD>
+	  <TD>初期化されていない</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_STATE_IDLE</CODE></STRONG></EM></TD>
+	  <TD>接続開始されていない</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_STATE_OPERATING</CODE></STRONG></EM></TD>
+	  <TD>処理中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_STATE_OPERATED</CODE></STRONG></EM></TD>
+	  <TD>処理完了</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_STATE_CONNECTED</CODE></STRONG></EM></TD>
+	  <TD>インターネットへ接続済み</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_STATE_DISCONNECTING</CODE></STRONG></EM></TD>
+	  <TD>インターネットから切断中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_STATE_DISCONNECTED</CODE></STRONG></EM></TD>
+	  <TD>インターネットから切断された</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_STATE_ERROR</CODE></STRONG></EM></TD>
+	  <TD>エラーが発生した</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_STATE_FATAL_ERROR</CODE></STRONG></EM></TD>
+	  <TD>致命的なエラーが発生した</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_STATE_LAST</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__connectinet_8h_16502b0658bb61602a25181e70e0e7891"></a>
+<H2 id="TAG_ENUM_2">認証サーバの種類</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_AUTH_TEST</CODE></STRONG></EM></TD>
+	  <TD>開発向け認証サーバ</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_AUTH_DEVELOP</CODE></STRONG></EM></TD>
+	  <TD>ライブラリ開発用認証サーバ(使用しないで下さい)</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_AUTH_RELEASE</CODE></STRONG></EM></TD>
+	  <TD>製品向け認証サーバ</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_AUTH_LAST</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<H3>履歴</H3>
+<DL>
+
+<DT>5.2pr1</DT>
+<DD><a href="Macro.html#dwc__connectinet_8h_16502b0658bb61602a25181e70e0e78912eb48a45d5c772f31ab1e0a12ec3e39f">DWC_CONNECTINET_AUTH_DEVELOP</a>,<a href="Macro.html#dwc__connectinet_8h_16502b0658bb61602a25181e70e0e7891663ca18d64b0313c219464a4eb6578b9">DWC_CONNECTINET_AUTH_RELEASE</a>の説明が間違っていたので修正</DD>
+
+</DL>
+
+<a id="dwc__connectinet_8h_1dabefabb4d99decae8ecdd07f2a1994b"></a>
+<H2 id="TAG_ENUM_3">ニンテンドーWi-Fiステーション/NintendoZoneの設置地域を示すエリアコード</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_AREA_JPN</CODE></STRONG></EM></TD>
+	  <TD>日本</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_AREA_USA</CODE></STRONG></EM></TD>
+	  <TD>北米</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_AREA_EUR</CODE></STRONG></EM></TD>
+	  <TD>欧州</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_AREA_AUS</CODE></STRONG></EM></TD>
+	  <TD>豪州</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_AREA_KOR</CODE></STRONG></EM></TD>
+	  <TD>韓国</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_AREA_UNKNOWN</CODE></STRONG></EM></TD>
+	  <TD>不明(ニンテンドーWi-Fiステーション/NintendoZoneではない)</TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa"></a>
+<H2 id="TAG_ENUM_4">APタイプ</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_USER0</CODE></STRONG></EM></TD>
+	  <TD>接続先1のアクセスポイント</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_USER1</CODE></STRONG></EM></TD>
+	  <TD>接続先2のアクセスポイント</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_USER2</CODE></STRONG></EM></TD>
+	  <TD>接続先3のアクセスポイント</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_USB</CODE></STRONG></EM></TD>
+	  <TD>ニンテンドーWi-FiUSBコネクタ</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_SHOP</CODE></STRONG></EM></TD>
+	  <TD>ニンテンドーWi-Fiステーション</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_FREESPOT</CODE></STRONG></EM></TD>
+	  <TD>FREESPOT（フリースポット）</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_WAYPORT</CODE></STRONG></EM></TD>
+	  <TD>Wayport(北米ホットスポット)※現在は使用できません</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_OTHER</CODE></STRONG></EM></TD>
+	  <TD>(旧定義)</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_NINTENDOWFC</CODE></STRONG></EM></TD>
+	  <TD>(予約)</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_NINTENDOZONE</CODE></STRONG></EM></TD>
+	  <TD>NintendoZone</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_USER3</CODE></STRONG></EM></TD>
+	  <TD>接続先4のアクセスポイント　※NITROROMではこの定義はありません</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_USER4</CODE></STRONG></EM></TD>
+	  <TD>接続先5のアクセスポイント　※NITROROMではこの定義はありません</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_USER5</CODE></STRONG></EM></TD>
+	  <TD>接続先6のアクセスポイント　※NITROROMではこの定義はありません</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_UNKNOWN</CODE></STRONG></EM></TD>
+	  <TD>不明</TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<H3>履歴</H3>
+<DL>
+
+<DT>5.1</DT>
+<DD>Wayport(北米ホットスポット)が現在は使用できないことについて追記</DD>
+
+</DL>
+
+<a id="dwc__connectinet_8h_1b7f75bb4a03e4b1c4b0dc05625eff428"></a>
+<H2 id="TAG_ENUM_5">無線セキュリティタイプ</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_WSEC_NONE</CODE></STRONG></EM></TD>
+	  <TD>暗号化なし</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_WSEC_WEPMODE_40</CODE></STRONG></EM></TD>
+	  <TD>RC4(40ビット)暗号化モード</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_WSEC_WEPMODE_104</CODE></STRONG></EM></TD>
+	  <TD>RC4(104ビット)暗号化モード</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_WSEC_WEPMODE_128</CODE></STRONG></EM></TD>
+	  <TD>RC4(128ビット)暗号化モード</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_WSEC_WPA_PSK_TKIP</CODE></STRONG></EM></TD>
+	  <TD>WPA-PSK(TKIP)暗号　※NITROROMではこの定義はありません</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_WSEC_WPA2_PSK_TKIP</CODE></STRONG></EM></TD>
+	  <TD>WPA2-PSK(TKIP)暗号　※NITROROMではこの定義はありません</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_WSEC_WPA_PSK_AES</CODE></STRONG></EM></TD>
+	  <TD>WPA-PSK(AES)暗号　※NITROROMではこの定義はありません</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_WSEC_WPA2_PSK_AES</CODE></STRONG></EM></TD>
+	  <TD>WPA2-PSK(AES)暗号　※NITROROMではこの定義はありません</TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__connectinet_8h_19b2a4f07ca42debd525043023f96c8e2"></a>
+<H2 id="TAG_ENUM_6">インターネットとの接続テストの通信処理結果</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_TESTINET_NOT_INITIALIZED</CODE></STRONG></EM></TD>
+	  <TD><a href="DWC_TestInetAsync.html#dwc__connectinet_8h_1d94b5d6953396eb2bd0785f5fac81b4d">DWC_TestInetAsync</a>関数が呼び出されていない</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_TESTINET_OPERATING</CODE></STRONG></EM></TD>
+	  <TD>通信処理を実行中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_TESTINET_CONNECTED</CODE></STRONG></EM></TD>
+	  <TD>インターネットに接続されている</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_TESTINET_DISCONNECTED</CODE></STRONG></EM></TD>
+	  <TD>インターネットに接続されていない</TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__connectinet_8h_18365dfc0e2f045f82dd5344866cf8e44"></a>
+<H2 id="TAG_ENUM_7">Proxy認証形式</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_PROXY_AUTHTYPE_NONE</CODE></STRONG></EM></TD>
+	  <TD>認証なし</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_PROXY_AUTHTYPE_BASIC</CODE></STRONG></EM></TD>
+	  <TD>BASIC認証</TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+</body>
+</html>

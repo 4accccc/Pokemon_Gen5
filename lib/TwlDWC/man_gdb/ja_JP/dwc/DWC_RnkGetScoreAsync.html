@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_RnkGetScoreAsync</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__ranking_8h_198665927b3a87b3218c1f58f6f3394ba" align="left">DWC_RnkGetScoreAsync</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE><a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace5910">DWCRnkError</a> DWC_RnkGetScoreAsync(<a href="Macro.html#dwc__ranking_8h_1b024592ea57f7ecd5b76caee1edc5b19">DWCRnkGetMode</a> mode,
+                                 u32 category,
+                                 <a href="Macro.html#dwc__ranking_8h_1bc0db3fbc51ac91811958f9c51e87899">DWCRnkRegion</a> region,
+                                 <a href="DWCRnkGetParam.html#struct_d_w_c_rnk_get_param">DWCRnkGetParam</a> *param);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>mode</STRONG></EM></TD>
+      <TD width="87%">取得モード</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>category</STRONG></EM></TD>
+      <TD width="87%">ランキングを識別するためのカテゴリーID(0～<a href="Macro.html#dwc__ranking_8h_192c348bb621e1f4486daf931679df6d1">DWC_RNK_CATEGORY_MAX</a>までの数値)</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>region</STRONG></EM></TD>
+      <TD width="87%">リージョンコード。<a href="Macro.html#dwc__ranking_8h_1bc0db3fbc51ac91811958f9c51e87899">DWCRnkRegion</a>の中から指定します。国をまたいで集計する場合はOR値を指定します(例：日本と欧州の場合(<a href="Macro.html#dwc__ranking_8h_1bc0db3fbc51ac91811958f9c51e87899039bfac4d629c2a463d410b07ce6ac6d">DWC_RNK_REGION_JP</a>|<a href="Macro.html#dwc__ranking_8h_1bc0db3fbc51ac91811958f9c51e87899ca3c870a3ce572a0dc69d448721ac9c8">DWC_RNK_REGION_EU</a>))。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>param</STRONG></EM></TD>
+      <TD width="87%">取得するための詳細情報を指定するパラメータ。取得モードによって構造体に指定する値が異なります。詳細は<a href="DWCRnkGetParam.html#struct_d_w_c_rnk_get_param">DWCRnkGetParam</a>構造体を参照してください。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace591031d9ef7155e9c704fd07f83f72ad0077">DWC_RNK_SUCCESS</a></STRONG></EM></TD>
+      <TD width="87%">成功</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace5910a4e6c6033f467d88496af91163df0345">DWC_RNK_IN_ERROR</a></STRONG></EM></TD>
+      <TD width="87%">エラー発生中</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace5910e6dc3c1ff6472e83774fe57aa8183aab">DWC_RNK_ERROR_GET_NOTREADY</a></STRONG></EM></TD>
+      <TD width="87%">通信準備ができていない</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace5910ede038616942f938cdf5e287edf52728">DWC_RNK_ERROR_INVALID_PARAMETER</a></STRONG></EM></TD>
+      <TD width="87%">不正なパラメータ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace59102517b337416128825178fa8daf962d5d">DWC_RNK_ERROR_GET_INVALID_KEY</a></STRONG></EM></TD>
+      <TD width="87%">暗号化キーが不正</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace5910747630e7cd85ccfc7e5a7ef010974735">DWC_RNK_ERROR_GET_NOMEMORY</a></STRONG></EM></TD>
+      <TD width="87%">メモリー不足</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>スコアを取得する非同期処理を開始します。同時に実行できる非同期処理は1つのみです。複数の非同期処理を実行しようとした場合は<a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace5910267a9266ab011bc4ec1248366c195821">DWC_RNK_ERROR_PUT_NOTREADY</a>が返されます。</p><p>非同期処理中は、定期的に<a href="DWC_RnkProcess.html#dwc__ranking_8h_101ac285f5d9f2b8bdf04b20a0154233a">DWC_RnkProcess</a>関数を呼び出してください。処理中は<a href="DWC_RnkProcess.html#dwc__ranking_8h_101ac285f5d9f2b8bdf04b20a0154233a">DWC_RnkProcess</a>関数が<a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace591031d9ef7155e9c704fd07f83f72ad0077">DWC_RNK_SUCCESS</a>を返します。</p><p>非同期処理中の進行状況を取得するには、<a href="DWC_RnkGetState.html#dwc__ranking_8h_1e75ecfaae58d6e26966c97f8ae0def48">DWC_RnkGetState</a>関数を呼び出してください。</p><p><a href="DWC_RnkResGetRow.html#dwc__ranking_8h_17f7e3dca113ad8708c5ec4dffe869c1b">DWC_RnkResGetRow</a>関数で取得する<a href="DWCRnkData.html#struct_d_w_c_rnk_data">DWCRnkData</a>構造体内のメンバの一部は受信バッファを直接参照しているため、続けて非同期処理を行う場合は必要に応じて退避してください。</p><p><table border="1"><tr><td colspan=2>引数modeに指定する値と取得できる情報</td></tr><tr><td><a href="Macro.html#dwc__ranking_8h_1b024592ea57f7ecd5b76caee1edc5b192780d834ce449ab6c433688a1301e6d2">DWC_RNK_GET_MODE_ORDER</a></td><td>順位を取得します。結果は<a href="DWC_RnkResGetOrder.html#dwc__ranking_8h_1c146bc5115b7debe546eae6588659d25">DWC_RnkResGetOrder</a>関数で取得します。</td></tr><tr><td><a href="Macro.html#dwc__ranking_8h_1b024592ea57f7ecd5b76caee1edc5b196a28982348d7e68f741fe17f02119472">DWC_RNK_GET_MODE_TOPLIST</a></td><td>ランキング上位のリストを取得します。<a href="DWC_RnkResGetRowCount.html#dwc__ranking_8h_16aacf1a0d155411ce87e4f64280e6a79">DWC_RnkResGetRowCount</a>関数で取得したリストの行数を取得し、行ごとに<a href="DWC_RnkResGetRow.html#dwc__ranking_8h_17f7e3dca113ad8708c5ec4dffe869c1b">DWC_RnkResGetRow</a>関数を呼び出してスコア情報を取得します。</td></tr><tr><td><a href="Macro.html#dwc__ranking_8h_1b024592ea57f7ecd5b76caee1edc5b1922d34a9fa74dd2c8fe71b86cda14dd45">DWC_RNK_GET_MODE_NEAR_HI</a></td><td>順位が自分よりも高い周辺のランキングのリストを取得します。<a href="DWC_RnkResGetRowCount.html#dwc__ranking_8h_16aacf1a0d155411ce87e4f64280e6a79">DWC_RnkResGetRowCount</a>関数で取得したリストの行数を取得し、行ごとに<a href="DWC_RnkResGetRow.html#dwc__ranking_8h_17f7e3dca113ad8708c5ec4dffe869c1b">DWC_RnkResGetRow</a>関数を呼び出してスコア情報を取得します。自分のデータはリストの先頭に付加されます。</td></tr><tr><td><a href="Macro.html#dwc__ranking_8h_1b024592ea57f7ecd5b76caee1edc5b19adf73378f9a269eaa9e782fe4a77109d">DWC_RNK_GET_MODE_NEAR_LOW</a></td><td>順位が自分よりも低い周辺のランキングのリストを取得します。<a href="DWC_RnkResGetRowCount.html#dwc__ranking_8h_16aacf1a0d155411ce87e4f64280e6a79">DWC_RnkResGetRowCount</a>関数で取得したリストの行数を取得し、行ごとに<a href="DWC_RnkResGetRow.html#dwc__ranking_8h_17f7e3dca113ad8708c5ec4dffe869c1b">DWC_RnkResGetRow</a>関数を呼び出してスコア情報を取得します。自分のデータはリストの先頭に付加されます。</td></tr><tr><td><a href="Macro.html#dwc__ranking_8h_1b024592ea57f7ecd5b76caee1edc5b199ed73aff5c4f370195419350b5922250">DWC_RNK_GET_MODE_NEAR</a></td><td>自分のスコアに近い順に指定数のランキングリストを取得します。<a href="DWC_RnkResGetRowCount.html#dwc__ranking_8h_16aacf1a0d155411ce87e4f64280e6a79">DWC_RnkResGetRowCount</a>関数で取得したリストの行数を取得し、行ごとに<a href="DWC_RnkResGetRow.html#dwc__ranking_8h_17f7e3dca113ad8708c5ec4dffe869c1b">DWC_RnkResGetRow</a>関数を呼び出してスコア情報を取得します。自分のデータはリストの先頭に付加されます。</td></tr><tr><td><a href="Macro.html#dwc__ranking_8h_1b024592ea57f7ecd5b76caee1edc5b19dabfeed2395ed84700e7d7510b46ca00">DWC_RNK_GET_MODE_FRIENDS</a></td><td>友達の中(最大<a href="Macro.html#dwc__ranking_8h_1913f4aa84f44c33e7a5dfbf0b48cd92d">DWC_RNK_FRIENDS_MAX</a>(64)個のPIDを指定)でのランキングのリストを取得します。<a href="DWC_RnkResGetRowCount.html#dwc__ranking_8h_16aacf1a0d155411ce87e4f64280e6a79">DWC_RnkResGetRowCount</a>関数で取得したリストの行数を取得し、行ごとに<a href="DWC_RnkResGetRow.html#dwc__ranking_8h_17f7e3dca113ad8708c5ec4dffe869c1b">DWC_RnkResGetRow</a>関数を呼び出してスコア情報を取得します。自分のデータはリストの先頭に付加されます。</td></tr></table></p><p>ユーザー定義データを利用して、フリーワードなどの友達同士限定の情報のやり取りをする場合は、ガイドラインに準拠し、友達関係が成立しているか確認した上で表示させる必要があります。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_RnkGetScoreAsync_tag">こちら</a>　　</p>
+</body>
+</html>

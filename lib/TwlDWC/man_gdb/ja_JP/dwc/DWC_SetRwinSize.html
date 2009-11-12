@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_SetRwinSize</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__connectinet_8h_1327157633915c13b3e74ece5b2389655" align="left">DWC_SetRwinSize</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>void DWC_SetRwinSize(s32 size);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>size</STRONG></EM></TD>
+      <TD width="87%">TCP受信ウィンドウサイズ。単位：バイト</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>なし</p>
+
+<H2>説明</H2>
+
+<p>TCP/IP通信で使用する、受信ウィンドウサイズRWIN(ReceiveWindow)を設定します。</p><p>TWLモードでのみ設定可能です。</p><p>設定可能な範囲は、4288バイト～65535バイトになります。</p><p>本関数を使用しない場合、4288バイトに設定されます。ユーザ設定でMTUが576バイトに設定されていた場合も、RWINは本関数による設定値に関わらず4288バイトが採用されます。</p><p>本関数は<a href="DWC_InitInet.html#dwc__connectinet_8h_1c9ae10a55929127c552c808ebb103cc8">DWC_InitInet</a>/<a href="DWC_InitInetEx.html#dwc__connectinet_8h_1da26abf4e61fc5aac47a8d65206ce5eb">DWC_InitInetEx</a>関数の呼び出しから<a href="DWC_ConnectInetAsync.html#dwc__connectinet_8h_1ed6360e949bbab87f49275bac0a381cc">DWC_ConnectInetAsync</a>/<a href="DWC_DebugConnectInetAsync.html#dwc__connectinet_8h_12e0b604bf98cdbb0db24880bdbde3ceb">DWC_DebugConnectInetAsync</a>関数の呼び出しまでに呼び出す必要があります。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_InitInet.html#dwc__connectinet_8h_1c9ae10a55929127c552c808ebb103cc8">DWC_InitInet</a></CODE>
+
+  <CODE><a href="DWC_InitInetEx.html#dwc__connectinet_8h_1da26abf4e61fc5aac47a8d65206ce5eb">DWC_InitInetEx</a></CODE>
+
+  <CODE><a href="DWC_ConnectInetAsync.html#dwc__connectinet_8h_1ed6360e949bbab87f49275bac0a381cc">DWC_ConnectInetAsync</a></CODE>
+
+  <CODE><a href="DWC_DebugConnectInetAsync.html#dwc__connectinet_8h_12e0b604bf98cdbb0db24880bdbde3ceb">DWC_DebugConnectInetAsync</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.1</DT>
+<DD>TWLモードでのみ有効な旨を追記。MTUとの関連性について追記。</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_SetRwinSize_tag">こちら</a>　　</p>
+</body>
+</html>

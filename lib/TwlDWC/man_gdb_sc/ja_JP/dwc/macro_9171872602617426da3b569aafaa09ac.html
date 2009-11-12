@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>不正文字列チェック - 定数</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">不正文字列チェック - 定数</h1>
+<H2>定義</H2>
+<DL>
+	<DD>
+		<PRE><CODE>
+#include &lt;dwc.h&gt;
+
+
+enum DWCProfState {
+    DWC_PROF_STATE_NOT_INITIALIZED          =  0,
+    DWC_PROF_STATE_OPERATING,
+    DWC_PROF_STATE_SUCCESS,
+    DWC_PROF_STATE_FAIL,
+};
+
+enum DWCProfRegion {
+    DWC_PROF_REGION_SELF                    =  0x00,
+    DWC_PROF_REGION_JP                      =  0x01,
+    DWC_PROF_REGION_US                      =  0x02,
+    DWC_PROF_REGION_EU                      =  0x04,
+    DWC_PROF_REGION_KR                      =  0x08,
+    DWC_PROF_REGION_CN                      =  0x10,
+    DWC_PROF_REGION_ALL                     =  0x80,
+};
+
+		</CODE></PRE>
+	</DD>
+</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+	</TBODY>
+</TABLE>
+
+<a id="dwc__prof_8h_1ff8674b700d1c8e3b2531e7d0a9aecfb"></a>
+<H2 id="TAG_ENUM_1">不正ネームチェック中のステート</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_PROF_STATE_NOT_INITIALIZED</CODE></STRONG></EM></TD>
+	  <TD>未初期化</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_PROF_STATE_OPERATING</CODE></STRONG></EM></TD>
+	  <TD>HTTP通信中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_PROF_STATE_SUCCESS</CODE></STRONG></EM></TD>
+	  <TD>名前チェック成功</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_PROF_STATE_FAIL</CODE></STRONG></EM></TD>
+	  <TD>名前チェック失敗</TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__prof_8h_1bd4513afb206ea295489180b696074d2"></a>
+<H2 id="TAG_ENUM_2">不正文字列チェックのリージョンを示す列挙型</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_PROF_REGION_SELF</CODE></STRONG></EM></TD>
+	  <TD>製品コードに従う</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_PROF_REGION_JP</CODE></STRONG></EM></TD>
+	  <TD>日本</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_PROF_REGION_US</CODE></STRONG></EM></TD>
+	  <TD>北米</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_PROF_REGION_EU</CODE></STRONG></EM></TD>
+	  <TD>欧州</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_PROF_REGION_KR</CODE></STRONG></EM></TD>
+	  <TD>韓国</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_PROF_REGION_CN</CODE></STRONG></EM></TD>
+	  <TD>中国</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_PROF_REGION_ALL</CODE></STRONG></EM></TD>
+	  <TD>全リージョン</TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+</body>
+</html>

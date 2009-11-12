@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_SVLProcess</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__svl_8h_18aaad8b990ad15decf763085dea2a04d" align="left">DWC_SVLProcess</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE><a href="Macro.html#dwc__svl_8h_1eac74605ac413c74cd6b770894fe426c">DWCSvlState</a> DWC_SVLProcess(void);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<p>なし</p>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__svl_8h_1eac74605ac413c74cd6b770894fe426c7fb7891ff1ed0a35f4e76ea7d10c6cda">DWC_SVL_STATE_DIRTY</a></STRONG></EM></TD>
+      <TD width="87%">サービスロケータ情報を取得する処理は開始されていません。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__svl_8h_1eac74605ac413c74cd6b770894fe426c0b0b42a1d7e1ae802ada2fea0e34b342">DWC_SVL_STATE_IDLE</a></STRONG></EM></TD>
+      <TD width="87%">サービスロケータ情報を取得する処理の開始直後の状態です。認証サーバとの通信は始まっていません。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__svl_8h_1eac74605ac413c74cd6b770894fe426ccb5731f2169fff2b24aa869980a962c7">DWC_SVL_STATE_HTTP</a></STRONG></EM></TD>
+      <TD width="87%">サービスロケータ情報を取得する処理のために認証サーバと通信中です。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__svl_8h_1eac74605ac413c74cd6b770894fe426c019427c33fa7875cb41798902e9a8b80">DWC_SVL_STATE_SUCCESS</a></STRONG></EM></TD>
+      <TD width="87%">サービスロケータ情報を取得する処理が完了し、指定した<a href="DWCSvlResult.html#struct_d_w_c_svl_result">DWCSvlResult</a>変数にサービスロケータ情報が格納されています。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__svl_8h_1eac74605ac413c74cd6b770894fe426ce69951c5455e621beaed772d4075af48">DWC_SVL_STATE_ERROR</a></STRONG></EM></TD>
+      <TD width="87%">サービスロケータ情報を取得する処理に失敗しました。<a href="DWC_GetLastErrorEx.html#dwc__error_8h_118bd79f5d5151259c19c4e552e5e633b">DWC_GetLastErrorEx</a>関数を呼び出しエラーの内容を確認し、適切な対応をしてください。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__svl_8h_1eac74605ac413c74cd6b770894fe426cb6ebccb1501c28fa2d2477cff9bcf810">DWC_SVL_STATE_CANCELED</a></STRONG></EM></TD>
+      <TD width="87%">サービスロケータ情報を取得する処理がキャンセルされました。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>サービスロケータ情報を取得する処理を進行させ、現在の状況を返り値として得ます。処理が終了するまで定期的に呼び出してください。</p><p>サービスロケータ情報を取得する処理が終了/中断して<a href="Macro.html#dwc__svl_8h_1eac74605ac413c74cd6b770894fe426c019427c33fa7875cb41798902e9a8b80">DWC_SVL_STATE_SUCCESS</a>、<a href="Macro.html#dwc__svl_8h_1eac74605ac413c74cd6b770894fe426ce69951c5455e621beaed772d4075af48">DWC_SVL_STATE_ERROR</a>、<a href="Macro.html#dwc__svl_8h_1eac74605ac413c74cd6b770894fe426cb6ebccb1501c28fa2d2477cff9bcf810">DWC_SVL_STATE_CANCELED</a>が返された時点で、処理が開始されていない状態に戻ります。このため、再度<a href="DWC_SVLGetTokenAsync.html#dwc__svl_8h_103ac491eb5bd8ad815acfdfaadfd28de">DWC_SVLGetTokenAsync</a>関数で処理を開始しない限り、以降は<a href="Macro.html#dwc__svl_8h_1eac74605ac413c74cd6b770894fe426c7fb7891ff1ed0a35f4e76ea7d10c6cda">DWC_SVL_STATE_DIRTY</a>を返すことに注意してください。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.1pr2</DT>
+<DD>返り値の定義名の誤記を修正</DD>
+<DD>処理が終了/中断したときの返り値に関する説明を追加</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_SVLProcess_tag">こちら</a>　　</p>
+</body>
+</html>

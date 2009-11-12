@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_CreateUserData</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__account_8h_193ca7d1d0b074e009d67cc3e9d9f7034" align="left">DWC_CreateUserData</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>void DWC_CreateUserData(DWCUserData *userdata);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>userdata</STRONG></EM></TD>
+      <TD width="87%">生成されたDWCUserData構造体のユーザデータを格納するポインタ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>なし</p>
+
+<H2>説明</H2>
+
+<p>ゲームプレイヤー毎のユーザデータを生成します。このユーザデータをDSカードのバックアップメモリに保存してください。Dirtyフラグがセットされた状態で生成されますので、<a href="DWC_ClearDirtyFlag.html#dwc__account_8h_139e8c6d2907d4ead951182b2a3e38713">DWC_ClearDirtyFlag</a>関数でDirtyフラグをクリアしてから保存してください。</p><p><b>注意:NITRO-DWC3.0から友達登録鍵の正当性確認に使用されるチェック値の生成方法が変更されたため過去のバージョンのNITRO-DWCで生成した友達登録鍵と互換性がありません。</b></p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_InitFriendsMatch.html#dwc__main_8h_1de4fba18d5d03cbccd0c86efe9e80c1c">DWC_InitFriendsMatch</a></CODE>
+
+  <CODE><a href="DWC_CheckDirtyFlag.html#dwc__account_8h_10a269a4a15761e7fefbf064ceea4605c">DWC_CheckDirtyFlag</a></CODE>
+
+  <CODE><a href="DWC_ClearDirtyFlag.html#dwc__account_8h_139e8c6d2907d4ead951182b2a3e38713">DWC_ClearDirtyFlag</a></CODE>
+
+  <CODE><a href="DWC_CheckFriendKey.html#dwc__account_8h_15d6cddf8fc5964570ae6de624fda280c">DWC_CheckFriendKey</a></CODE>
+
+  <CODE><a href="DWC_CreateFriendKey.html#dwc__account_8h_1643a6e9b0ada98985feebc003af5cac3">DWC_CreateFriendKey</a></CODE>
+
+  <CODE><a href="DWC_CreateExchangeToken.html#dwc__account_8h_1c2e7cfd93ddb4b6625b962647a3a7878">DWC_CreateExchangeToken</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.3</DT>
+<DD>引数にとっていたgamecodeについて、<a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で指定するように仕様変更したことに伴い、関連する記述を削除</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_CreateUserData_tag">こちら</a>　　</p>
+</body>
+</html>

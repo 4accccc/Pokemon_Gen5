@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>コンペティションライブラリ　関数リファレンスの補足</title>
+<style>
+BODY {
+  color				: black;
+  background		: #FFFFCC;
+  font-family		: Arial;
+  font-size			: 10pt;
+  margin			: 8px;
+}
+H2 {
+  font-size				: 20px;
+  border-top-style		: none;
+  border-left-style		: double;
+  border-left-width		: 8px;
+  border-bottom-style	: solid;
+  margin-left			: 1px;
+  margin-top			: 30px;
+  margin-bottom			: 10px;
+  border-bottom-width	: 2px;
+  font-weight			: bold;
+  position				: relative;
+  padding-left			: 10px;
+  border-left-color		: #663300;
+  border-bottom-color	: #663300;
+}
+H1 {
+  font-size		: 36px;
+  font-family		: Arial;
+  border-bottom-width	: 5px;
+  border-bottom-style	: solid;
+  border-bottom-color	: #663300;
+  padding-bottom		: 1px;
+  margin-bottom		: 20px;
+  letter-spacing		: normal;
+  font-weight		: bold;
+}
+TABLE {
+  margin-top		: 2pt;
+  margin-bottom		: 2pt;
+  margin-left		: 0pt;
+  margin-right		: 0pt;
+  padding-left		: 0pt;
+  padding-right		: 0pt;
+  position		: relative;
+  left			: 12px;
+  font-family		: Arial;
+  font-size		: 10pt;
+  border-style		: none none none none;
+  width			: 95%;
+}
+TD,TH {
+  padding			: 2pt;
+  border-width		: 2pt;
+  border-style		: none none none none;
+  font-style		: normal;
+  text-align		: left;
+}
+TD {
+  background		: #ffcc99;
+  font-weight		: normal;
+}
+TH {
+  background		: #ffcc99;
+  font-weight		: bold;
+}
+A:LINK {
+  color				: #663300;
+  background		: inherit;
+  text-decoration	: none;
+}
+
+A:VISITED {
+  color				: #336600;
+  background		: inherit;
+  text-decoration	: none;
+}
+
+A:HOVER {
+  color				: #663300;
+  background		: #ff9966;
+  text-decoration	: underline;
+}
+
+A:ACTIVE {
+  color				: #cc0088;
+  background		: inherit;
+  text-decoration	: underline;
+}
+P {
+  position		: relative;
+  left			: 12px;
+  top			: auto;
+  font-family		: Arial;
+  font-size		: 10pt;
+  padding-right		: 10px;
+  margin-right		: 6px;
+  border-right-width	: 8px;
+}
+CODE {
+  font-family		: "Courier New", monospace;
+  position		: static;
+  left			: 12px;
+  font-size		: 10pt;
+}
+PRE { position		: relative; left			: 12px; }
+H3 {
+  left : 6px;
+  position		: relative;
+  margin-top : 15pt;
+  border-bottom-width	: 1px;
+  border-bottom-style	: solid;
+  border-bottom-color	: #663300;
+  padding-bottom	: 1px;
+}
+h4,h5 {
+    font-size: 115%;
+    position: relative;
+    left: 6px;
+    margin-top: 20px;
+    margin-left: 8px;
+    margin-bottom: 0pt;
+}
+DL {
+  position		: relative;
+  left			: 12px;
+  top			: auto;
+  padding-right		: 10px;
+  margin-right		: 6px;
+  border-right-width	: 8px;
+}
+</style>
+
+</head>
+<body>
+<h2>この資料は、コンペティションライブラリを使用する方のための、
+関数リファレンスの補足資料です。
+</h2>
+
+<br><br>
+
+<h3>DWC_GetLastError*</h3>
+<div class="sclib">
+
+<h4>GameSpySDK：コンペティション機能関連で発生するエラーコード(-43000～-44999)</h4>
+<p>
+	コンペティション機能に関するエラーコードは、次の3種類の値の合計で表現されます。<br>
+	-43000＋「エラーが発生したプロセス」＋「エラーの詳細情報」
+</p>
+
+<h5>エラーが発生したプロセス</h5>
+<table border="1"><tbody>
+<tr><td><em><strong><code>0</code></strong></em></td><td>プロセスに該当しない</td></tr>
+<tr><td><em><strong><code>-100</code></strong></em></td><td>認証</td></tr>
+<tr><td><em><strong><code>-200</code></strong></em></td><td>初期化</td></tr>
+<tr><td><em><strong><code>-300</code></strong></em></td><td>終了</td></tr>
+<tr><td><em><strong><code>-400</code></strong></em></td><td>コンペティションプロセス処理</td></tr>
+<tr><td><em><strong><code>-500</code></strong></em></td><td>セッション作成</td></tr>
+<tr><td><em><strong><code>-600</code></strong></em></td><td>ノーマッチセッション作成</td></tr>
+<tr><td><em><strong><code>-700</code></strong></em></td><td>レポートインテンション設定</td></tr>
+<tr><td><em><strong><code>-800</code></strong></em></td><td>セッションID設定</td></tr>
+<tr><td><em><strong><code>-900</code></strong></em></td><td>レポート作成</td></tr>
+<tr><td><em><strong><code>-1000</code></strong></em></td><td>レポートデータ定義</td></tr>
+<tr><td><em><strong><code>-1100</code></strong></em></td><td>レポート送信</td></tr>
+<tr><td><em><strong><code>-1200</code></strong></em></td><td>ノーマッチセッションレポート送信</td></tr>
+<tr><td><em><strong><code>-1300</code></strong></em></td><td>レポート破棄</td></tr>
+</tbody></table>
+
+<h5>エラーの詳細情報</h5>
+<p>エラーの詳細情報に入る値とその意味は、DWCScResultです。<br></p></div>
+
+<br></br>
+
+<H3 id="dwc__error_8h_168ff183290bdb65d992a516a2496c5ec">エラー検出時に必要な処理を示すエラータイプ</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCErrorType {
+    DWC_ETYPE_NO_ERROR          =  0,
+    DWC_ETYPE_LIGHT,
+    DWC_ETYPE_SHOW_ERROR,
+    DWC_ETYPE_SHUTDOWN_FM,
+    DWC_ETYPE_SHUTDOWN_GHTTP,
+    DWC_ETYPE_SHUTDOWN_ND,
+    DWC_ETYPE_DISCONNECT,
+    DWC_ETYPE_FATAL,
+    DWC_ETYPE_NUM,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ETYPE_SHOW_ERROR</CODE></STRONG></EM></TD>
+		  <TD>エラーコードを表示してください。<br>DWC_ClearError関数を呼び出せば、復帰可能です。<strong style="color:red;" class="sclib">コンペティションライブラリを使用している場合、DWC_ScShutdown関数を呼び出してください。</strong></TD>
+		</TR>
+	</TBODY>
+</TABLE>
+
+
+</body>
+</html>
+

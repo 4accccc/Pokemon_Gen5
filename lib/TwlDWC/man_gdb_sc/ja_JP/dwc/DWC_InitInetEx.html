@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_InitInetEx</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__connectinet_8h_1da26abf4e61fc5aac47a8d65206ce5eb" align="left">DWC_InitInetEx</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>void DWC_InitInetEx(DWCInetControl *inetCntl,
+                    u16 dmaNo,
+                    u16 powerMode,
+                    u16 ssl_priority);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>inetCntl</STRONG></EM></TD>
+      <TD width="87%">自動接続制御オブジェクトのポインタ。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>dmaNo</STRONG></EM></TD>
+      <TD width="87%">自動接続処理が使用するDMA番号。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>powerMode</STRONG></EM></TD>
+      <TD width="87%">自動接続処理中のWMのパワーモード。必ず1を指定してください。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>ssl_priority</STRONG></EM></TD>
+      <TD width="87%">SSL処理のスレッド優先順位。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>なし</p>
+
+<H2>説明</H2>
+
+<p>この関数は、inetCntlで指定された自動接続制御オブジェクトの初期化を行います。アプリケーションで、DWCInetControl構造体分のバッファを準備してください。</p><p><a href="DWC_CleanupInet.html#dwc__connectinet_8h_14d7f46fc1822bb3f39eed3b087e629c6">DWC_CleanupInet</a>関数で、接続状態を解放するまで、自動接続制御オブジェクト用のバッファを保持するようにしてください。</p><p><a href="DWC_InitInetEx.html#dwc__connectinet_8h_1da26abf4e61fc5aac47a8d65206ce5eb">DWC_InitInetEx</a>関数では、自動接続処理が使用するDMA番号、WMのパワーモード、SSL処理のスレッド優先順位を設定できます。ただしWMのパワーモードには必ず1を指定してください。<br><a href="DWC_InitInet.html#dwc__connectinet_8h_1c9ae10a55929127c552c808ebb103cc8">DWC_InitInet</a>関数は、ライブラリ内部で引数にdma=3,powerMode=1,ssl_priority=20を指定して<a href="DWC_InitInetEx.html#dwc__connectinet_8h_1da26abf4e61fc5aac47a8d65206ce5eb">DWC_InitInetEx</a>関数を呼び出しています。</p><p>SSL処理には時間がかかるため、メインスレッドよりも優先順位を下げなければメインスレッドの動作に影響を及ぼします。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_CheckInet.html#dwc__connectinet_8h_1525ebb2790477ec1a4d430dd94d29fc7">DWC_CheckInet</a></CODE>
+
+  <CODE><a href="DWC_ProcessInet.html#dwc__connectinet_8h_1c2a3fd1d79fee387ca123f5eb1cf0660">DWC_ProcessInet</a></CODE>
+
+  <CODE><a href="DWC_GetInetStatus.html#dwc__connectinet_8h_1dc3e39b117b96fe0e2facbb529ffee10">DWC_GetInetStatus</a></CODE>
+
+  <CODE><a href="DWC_CleanupInet.html#dwc__connectinet_8h_14d7f46fc1822bb3f39eed3b087e629c6">DWC_CleanupInet</a></CODE>
+
+  <CODE><a href="DWC_CleanupInetAsync.html#dwc__connectinet_8h_100a9f2169ae3e5c145607630710674ac">DWC_CleanupInetAsync</a></CODE>
+
+  <CODE><a href="DWC_InitInet.html#dwc__connectinet_8h_1c9ae10a55929127c552c808ebb103cc8">DWC_InitInet</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.3</DT>
+<DD>DWC_SetAuthServer関数の廃止に伴い、関連する記述を削除</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_InitInetEx_tag">こちら</a>　　</p>
+</body>
+</html>

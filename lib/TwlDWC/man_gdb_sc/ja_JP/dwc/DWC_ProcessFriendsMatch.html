@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_ProcessFriendsMatch</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__main_8h_1c7b64bfd61e6c336a1d382fb6d1ea2d8" align="left">DWC_ProcessFriendsMatch</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>void DWC_ProcessFriendsMatch(void);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<p>なし</p>
+
+<h2>返り値</h2>
+
+<p>なし</p>
+
+<H2>説明</H2>
+
+<p>通信処理を実行する関数です。アプリケーションでは、最初に<a href="DWC_InitFriendsMatch.html#dwc__main_8h_1de4fba18d5d03cbccd0c86efe9e80c1c">DWC_InitFriendsMatch</a>関数を呼び出してFriendsMatchライブラリを初期化し、<a href="DWC_LoginAsync.html#dwc__main_8h_1ac1f7f301938afe8408be88dfa65f217">DWC_LoginAsync</a>関数を呼び出してログイン処理を開始した後、ネットワークに接続してる間、毎ゲームフレーム程度の頻度で本関数を呼び出してください。</p><p>ログイン完了後、他のホストへの接続を開始する間などのアプリケーションで意図したネットワーク処理がない場合でも、友達リストの更新などの通信処理が発生する可能性があるので、必ず呼び出すようにしてください。</p><p>本関数内で発生したエラーの処理を行うために、本関数呼出し後に<a href="DWC_GetLastErrorEx.html#dwc__error_8h_118bd79f5d5151259c19c4e552e5e633b">DWC_GetLastErrorEx</a>関数でエラー状態を取得し、必要に応じてエラーメッセージとともにエラーコードを表示してください。</p><p>なお、FriendsMatchライブラリを使用しない場合は、本関数の代わりに<a href="DWC_UpdateConnection.html#dwc__connectinet_8h_146db3e2e9aac4a3b17feafedc7dd4ea2">DWC_UpdateConnection</a>関数を呼び出してください。</p><p><b>※この関数はカレントスレッドを一時停止状態にすることがあります。</b></p><p>カレントスレッドがこの関数によって一時停止状態になっている時に、カレントスレッドを外部スレッドからOS_WakeupThread*関数等で実行可能状態にすると、意図せずライブラリ内の処理が進行し、暴走する危険性がありますのでご注意ください。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_ProcessFriendsMatch_tag">こちら</a>　　</p>
+</body>
+</html>

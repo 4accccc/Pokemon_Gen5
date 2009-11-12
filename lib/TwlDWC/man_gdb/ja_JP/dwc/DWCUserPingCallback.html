@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWCUserPingCallback</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__transport_8h_1e48ea9b6250f0a5035139182b0748828" align="left">DWCUserPingCallback</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>typedef void(*) DWCUserPingCallback(int latency,
+             u8 aid,
+             void *param);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>latency</parametername></STRONG></EM></TD>
+      <TD width="87%">Pingに要した往復時間（ミリ秒）</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>aid</parametername></STRONG></EM></TD>
+      <TD width="87%">Ping測定を行った相手のAID</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>param</parametername></STRONG></EM></TD>
+      <TD width="87%">コールバック用パラメータ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>なし</p>
+
+<H2>説明</H2>
+
+<p><a href="DWC_Ping.html#dwc__transport_8h_12ae31d147a714c085fda0588bbf00763">DWC_Ping</a>関数での測定結果を通知するコールバック関数です。</p><p>本コールバック関数は<a href="DWC_SetUserPingCallback.html#dwc__transport_8h_190e3f1fd0e1fcba45e3ced4b65c77a6a">DWC_SetUserPingCallback</a>関数によって設定することができます。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWCUserPingCallback_tag">こちら</a>　　</p>
+</body>
+</html>

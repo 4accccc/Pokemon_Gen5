@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_ScGetSessionId</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__sc_8h_11660bfb236022b213a44d14b77297d39" align="left">DWC_ScGetSessionId</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>const u8 * DWC_ScGetSessionId();</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<p>なし</p>
+
+<h2>返り値</h2>
+
+<p>セッションID</p>
+
+<H2>説明</H2>
+
+<p>セッションIDを取得します。</p><p>ホストプレイヤーによる<a href="DWC_ScCreateSessionAsync.html#dwc__sc_8h_1078c4a91feef0c7b78dd1d78cb42c389">DWC_ScCreateSessionAsync</a>呼出し後、セッションIDを取得するために、この関数を呼び出しセッションIDを参加している全プレイヤーに送信することが出来ます。</p><p><a href="DWC_ScCreateSessionAsync.html#dwc__sc_8h_1078c4a91feef0c7b78dd1d78cb42c389">DWC_ScCreateSessionAsync</a>や<a href="DWC_ScSetSessionId.html#dwc__sc_8h_14468ce9a7590086859b4b0b5311707c1">DWC_ScSetSessionId</a>の呼び出し無く、この呼び出しを行わないでください。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_ScGetSessionId_tag">こちら</a>　　</p>
+</body>
+</html>

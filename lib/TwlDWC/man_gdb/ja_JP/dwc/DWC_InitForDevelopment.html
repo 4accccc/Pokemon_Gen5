@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_InitForDevelopment</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059" align="left">DWC_InitForDevelopment</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>int DWC_InitForDevelopment(const char *gameName,
+                           u32 gameCode,
+                           <a href="DWCAllocEx.html#dwc__memfunc_8h_1b5f2b223b85ed60bd0d8e2e762b29eca">DWCAllocEx</a> alloc,
+                           <a href="DWCFreeEx.html#dwc__memfunc_8h_11be107310163287289a67f7d768cd535">DWCFreeEx</a> free);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>gameName</STRONG></EM></TD>
+      <TD width="87%">ゲーム名(GameSpyのサービスを使用しない場合はNULL)。マッチメイクできる範囲に影響します。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>gameCode</STRONG></EM></TD>
+      <TD width="87%">友達関係を結べる範囲。通常は、ゲーム毎に割り当てられるイニシャルコード（英数半角大文字）<br>【例】イニシャルコードが「NTRJ」の場合は&#39;NTRJ&#39;のように指定します。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>alloc</STRONG></EM></TD>
+      <TD width="87%">メモリ確保関数<a href="DWCAllocEx.html#dwc__memfunc_8h_1b5f2b223b85ed60bd0d8e2e762b29eca">DWCAllocEx</a>へのポインタ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>free</STRONG></EM></TD>
+      <TD width="87%">メモリ解放関数<a href="DWCFreeEx.html#dwc__memfunc_8h_11be107310163287289a67f7d768cd535">DWCFreeEx</a>へのポインタ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>DWC_INIT_RESULT_NOERROR</STRONG></EM></TD>
+      <TD width="87%">初期化成功。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>DWC_INIT_RESULT_CREATE_USERID</STRONG></EM></TD>
+      <TD width="87%">DS本体に仮のユーザIDを生成しました。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>DWC_INIT_RESULT_DESTROY_USERID</STRONG></EM></TD>
+      <TD width="87%">DS本体のユーザIDが破壊されていた可能性があるので、仮のユーザIDを生成しました。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>DWC_INIT_RESULT_DESTROY_OTHER_SETTING</STRONG></EM></TD>
+      <TD width="87%">DS本体の接続先設定が破壊された可能性があります。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>DWC_INIT_RESULT_MEMORY_FULL</STRONG></EM></TD>
+      <TD width="87%">ワークメモリの確保に失敗しました。(HYBRIDROM/LIMITEDROMで0x1000バイト、NITROROMで0x700バイト)</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>DWCライブラリを開発用サーバ向けに初期化する関数です。<br>本関数は、認証サーバや各モジュールの開発用サーバの設定に加え、DS本体に保存するユーザIDのチェック・作成、アロケータの設定などを行います。</p><p>DWCライブラリの初期化関数は、<a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>関数/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数の2種類ありますが、DWCに含まれる他のAPIを呼び出す前にそのどちらかを1回呼び出す必要があります。<br>※例外として、<a href="DWC_Debug_DWCInitError.html#dwc__init_8h_160bf26c1ae87817c808204eb0cdab6a2">DWC_Debug_DWCInitError</a>関数、<a href="DWC_SetReportLevel.html#dwc__report_8h_1a2e6e8d6f0619e3184050ee01d6e955a">DWC_SetReportLevel</a>関数はDWCライブラリの初期化関数より前に呼び出すことができます。</p><p>戻り値に応じて、適切なメッセージを表示するようにしてください。メッセージについては、「NitendoWi-FiConnectionプログラミングガイドライン」をご確認ください。</p><p>この関数へ与えるメモリ確保関数及びメモリ解放関数は、別スレッドから使用される場合がありますので、スレッド排他制御を行ってください。</p><p>本関数を呼び出す前に、OS_Init関数を呼んでおく必要があります。<br>※OS_InitTick関数、OS_InitAlarm関数、RTC_Init関数が<a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数内で呼ばれます。</p><p><b>この関数は同期を取る為にPXI割り込みを待ちますので、PXI割り込みを禁止した状態で呼び出さないようにして下さい。</b></p><p><br><br><h3>開発用・製品用サーバの切り替えについて</h3></p><p>DWC初期化関数は、以下のサーバー選択に影響します。</p><p><table border="1"><tr><td>
+DWC初期化関数
+</td><td>
+<a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>
+</td><td>
+<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>
+</td></tr><tr><td>
+認証サーバー
+</td><td>
+デバッグサーバー
+</td><td>
+本番サーバー
+</td></tr><tr><td>
+ランキングサーバー
+</td><td>
+デバッグサーバー
+</td><td>
+本番サーバー
+</td></tr><tr><td>
+データストレージサーバー
+</td><td>
+デバッグサーバー
+</td><td>
+本番サーバー
+</td></tr><tr><td>
+ダウンロードサーバ
+</td><td>
+デバッグサーバー
+</td><td>
+本番サーバー
+</td></tr></table></p><p>開発・デバッグ時には<a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>関数(開発向け認証サーバ)を使用し、最終ROM作成時に<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数(製品向け認証サーバ)に切り替えて動作確認を行ってください。開発中のテスト段階では<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数を使用しないようにしてください。また、最終ROMでは、<a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>関数のオブジェクトコードが含まれないようにし、DS_MRCやMasterEditorでミドルウェア(使用ライブラリ)を確認したとき、&quot;DEBUGDWCx.x.xx...&quot;という表示が出ないようにして下さい。</p><p>なお、<a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>関数(開発向け初期化関数)を使用した場合、ホットスポットから認証サーバへの接続ができません。<br></p><p>ビルドタイプがFINALROM版の場合、Wi-Fiコネクション設定内では、どちらのDWC初期化関数を使用したかに関わらず製品向け認証サーバを使用します。<br></p><p>友達管理やマッチメイク処理は開発向けと製品向けサーバの区別がないことに注意してください。リマスターやローカライズ版の開発時にマッチメイクのテストを行う場合、<a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>関数でDWCを初期化しても、既に一般市場で発売しているタイトルとマッチメイクしてしまうことがあります。</p><p>これを避けるためには、友達無指定ピアマッチメイクのときに、マッチメイクフィルターを使って「製品版」と「デバッグ・開発版」がマッチメイクしないようにする必要があります。（マッチメイクフィルターに関しては<a href="DWC_AddMatchKeyString.html#dwc__match_8h_1a6dc592558f9f69faff4f1911782f3a8">DWC_AddMatchKeyString</a>関数を参照してください）</p><p><br><br><h3>通信単位・友達関係の範囲の設定</h3></p><p>Wi-Fiコネクションでは、違うゲーム間での混信を避けるために、本関数で指定するgameNameを用いてゲームタイトル毎に通信単位が設定されます。また、本関数で指定するgameCodeはそれとは別に友達関係の範囲を設定するために使用します。</p><p>gameCodeには、通常タイトル毎に割り当てられるゲームコード（イニシャルコード）を指定し、仕向地を越えて友達関係を結びたい場合には、いずれかのゲームコードを共用してください。</p><p>仕向地ごとに異なるgameCodeを指定した場合は、友達情報の交換等に以下のような影響を受けます。</p><p><TABLE><TR><TH>友達登録鍵による交換</TH><TD><a href="DWC_CheckFriendKey.html#dwc__account_8h_15d6cddf8fc5964570ae6de624fda280c">DWC_CheckFriendKey</a>関数による友達登録鍵の正当性確認で不正となります。</TD></TR><TR><TH>DSワイヤレス通信による交換</TH><TD>友達情報の正当性を確認する方法はありませんが、友達リストに加えても友達関係は成立しません。<BR>詳細は<a href="DWC_CreateExchangeToken.html#dwc__account_8h_1c2e7cfd93ddb4b6625b962647a3a7878">DWC_CreateExchangeToken</a>関数のリファレンスマニュアルを参照してください。</TD></TR></TABLE><br>なお、異なるgameCodeを指定しても、gameNameが同じであれば、友達無指定ピアマッチメイクは可能です。</p><p><br><br><h3>認証サーバの稼働状況</h3></p><p>各認証サーバの稼働状況の確認は、下記のリンクを参照し、「AuthServerisup」という文字列が表示されれば稼動中と判断出来ます。</p><p><table border="1"><tr><td><a href="https://nas.nintendowifi.net/nastest.jsp">製品向け認証サーバ</a></td><td><a href="https://nas.test.nintendowifi.net/nastest.jsp">開発向け認証サーバ</a></td></tr></table></p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_CreateUserData.html#dwc__account_8h_193ca7d1d0b074e009d67cc3e9d9f7034">DWC_CreateUserData</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.3</DT>
+<DD>関数の仕様変更で、開発用・製品用サーバ用それぞれに初期化関数が分かれたこと、及びゲーム名、イニシャルコード、アロケータの指定が必要になったことに対応</DD>
+
+<DT>5.1</DT>
+<DD>DWC_Init関数の使用前に呼ばなければいけない関数は、OS_Init関数だけである点について修正して記載</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_InitForDevelopment_tag">こちら</a>　　</p>
+</body>
+</html>

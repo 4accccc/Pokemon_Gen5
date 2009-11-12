@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWCGdbValue</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 id="" align="left">
+DWCGdbValue
+</h1>
+<h2>定義</h2>
+
+<dl>
+  <dd>
+<PRE><code>
+#include &lt;dwc.h&gt;
+
+typedef union {
+    u8 int_u8;
+    s16 int_s16;
+    s32 int_s32;
+    f32 float_f64;
+    char * ascii_string;
+    u16 * wide_string;
+    int boolean;
+    DWCTick datetime;
+    <a href="DWCGdbBinaryData.html#struct_d_w_c_gdb_binary_data">DWCGdbBinaryData</a> binary_data;
+    s64 int_s64;
+} DWCGdbValue;</code></PRE></dd>
+</dl>
+<H2>説明</H2>
+<p></p>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>int_u8</STRONG></EM></TD>
+      <TD width="87%">1バイトの符号なし整数です。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>int_s16</STRONG></EM></TD>
+      <TD width="87%">2バイトの符号付き整数です。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>int_s32</STRONG></EM></TD>
+      <TD width="87%">4バイトの符号付き整数です。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>float_f64</STRONG></EM></TD>
+      <TD width="87%">8バイトの浮動小数点数です。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>ascii_string</STRONG></EM></TD>
+      <TD width="87%">一文字1バイトの文字列です。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>wide_string</STRONG></EM></TD>
+      <TD width="87%">一文字2バイトの文字列です。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>boolean</STRONG></EM></TD>
+      <TD width="87%">真偽値です。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>datetime</STRONG></EM></TD>
+      <TD width="87%">UnixTimeで表される時間です。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>binary_data</STRONG></EM></TD>
+      <TD width="87%">バイナリデータです。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>int_s64</STRONG></EM></TD>
+      <TD width="87%">8バイトの符号付き整数です。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+</body>
+</html>

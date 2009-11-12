@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_GetAuthenticatedUserId</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__init_8h_1fa8e6fd353f841e30718066d9c4fa846" align="left">DWC_GetAuthenticatedUserId</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>u64 DWC_GetAuthenticatedUserId(void);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<p>なし</p>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>0</STRONG></EM></TD>
+      <TD width="87%">認証済みのユーザIDがありません</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>0以外</STRONG></EM></TD>
+      <TD width="87%">認証済みユーザID</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>DS本体に保存されている認証済みのユーザIDを取得します。ユーザIDが認証されていない場合は0が返されます。<br>本関数は、インターネット接続処理中には呼び出さないでください。</p><p>ユーザIDは、Wi-Fiコネクション設定のオプションから確認できるWi-FiコネクションIDの下3桁を取り除いた10進で最大13桁の値です。</p><p>ユーザIDは、対応アプリケーションに関わらず該当のDS本体で最初に<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>/<a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>関数が呼び出された際に、出来る限り固有になるように仮のものが作成/保存されます。<br>その後、最初のインターネット接続処理中に仮のユーザIDが任天堂認証サーバで確認/登録されて認証済みのユーザIDになります。この際、既に仮のユーザIDと同じものが認証サーバに登録されていた場合は、重複しない別のユーザIDになります。<br>ユーザIDに関する詳細は「NintendoWi-FiConnectionNITRO-DWCプログラミングマニュアル」を参照してください。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GetAuthenticatedUserId_tag">こちら</a>　　</p>
+</body>
+</html>

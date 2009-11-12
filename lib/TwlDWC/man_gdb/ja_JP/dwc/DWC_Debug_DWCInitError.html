@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_Debug_DWCInitError</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__init_8h_160bf26c1ae87817c808204eb0cdab6a2" align="left">DWC_Debug_DWCInitError</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>void DWC_Debug_DWCInitError(void *work,
+                            int dwc_init_error);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>work</STRONG></EM></TD>
+      <TD width="87%">一時処理用バッファのポインタ。<br>32BytesアライメントされたDWC_INIT_WORK_SIZE分のバッファを指定してください。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>dwc_init_error</STRONG></EM></TD>
+      <TD width="87%">DWC_InitFor*関数で発生させたいエラー種別。以下のどれかを指定してください。(DWC_INIT_RESULT_MEMORY_FULLは指定できません)<br><ul><li>
+DWC_INIT_RESULT_CREATE_USERID
+</li><li>
+DWC_INIT_RESULT_DESTROY_USERID
+</li><li>
+DWC_INIT_RESULT_DESTROY_OTHER_SETTING
+</li></ul></TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>なし</p>
+
+<H2>説明</H2>
+
+<p><a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数の返り値にDWC_INIT_RESULT_NOERROR以外の値が返ってくるように、DSバックアップメモリのWi-Fi設定情報を破壊します。dwc_init_errorでエラー種別を指定して本関数を呼び出した後に、<a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数を呼び出せば、指定したエラー種別が返り値として返ってきます。<br>ただし、エラー種別DWC_INIT_RESULT_DESTROY_OTHER_SETTINGを返すためには、予めWi-Fiコネクション設定を使って「接続先１」を設定しておく必要があります。</p><p>workに指定したバッファは、この関数終了後、解放しても構いません。<br><b>このバッファはARM7からアクセスするため、メインメモリ等のARM7からアクセス可能な領域に指定してください。</b></p><p>これはデバッグ用の関数ですが、最終ROM版（FINALROM）ライブラリでも動作します。</p><p><b>この関数は同期を取る為にPXI割り込みを待ちますので、PXI割り込みを禁止した状態で呼び出さないようにして下さい。</b></p>
+
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.3</DT>
+<DD>DWC_Init関数が、開発用・製品用サーバ用それぞれに分かれたことに対応</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_Debug_DWCInitError_tag">こちら</a>　　</p>
+</body>
+</html>

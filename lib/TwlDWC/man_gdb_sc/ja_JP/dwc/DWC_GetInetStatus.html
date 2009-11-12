@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_GetInetStatus</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__connectinet_8h_1dc3e39b117b96fe0e2facbb529ffee10" align="left">DWC_GetInetStatus</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE><a href="Macro.html#dwc__connectinet_8h_17e3ebb7f6d65d55dc39f66b2c05fb8c1">DWCInetResult</a> DWC_GetInetStatus(void);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<p>なし</p>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__connectinet_8h_17e3ebb7f6d65d55dc39f66b2c05fb8c19e37fadfb1762fbe8017ee50e9e89f59">DWC_CONNECTINET_STATE_NOT_INITIALIZED</a></STRONG></EM></TD>
+      <TD width="87%">初期化されていない</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__connectinet_8h_17e3ebb7f6d65d55dc39f66b2c05fb8c127f1e35ba9554eafc766aef2da25e9ec">DWC_CONNECTINET_STATE_IDLE</a></STRONG></EM></TD>
+      <TD width="87%">接続開始されていない</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__connectinet_8h_17e3ebb7f6d65d55dc39f66b2c05fb8c12a68ae4b690383b95029aaa0ab4d0434">DWC_CONNECTINET_STATE_OPERATING</a></STRONG></EM></TD>
+      <TD width="87%">処理中</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__connectinet_8h_17e3ebb7f6d65d55dc39f66b2c05fb8c140d2f44ebf61f2f03dee76a84a5cd7a4">DWC_CONNECTINET_STATE_OPERATED</a></STRONG></EM></TD>
+      <TD width="87%">処理完了</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__connectinet_8h_17e3ebb7f6d65d55dc39f66b2c05fb8c13473267b96b4884231fbf8a075f4446d">DWC_CONNECTINET_STATE_CONNECTED</a></STRONG></EM></TD>
+      <TD width="87%">インターネットへ接続済み</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__connectinet_8h_17e3ebb7f6d65d55dc39f66b2c05fb8c18a73e2162ce514cac51d0c410d1c2b44">DWC_CONNECTINET_STATE_DISCONNECTING</a></STRONG></EM></TD>
+      <TD width="87%">インターネットから切断中</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__connectinet_8h_17e3ebb7f6d65d55dc39f66b2c05fb8c1de797d89ed6765c32d7d7622507b2e43">DWC_CONNECTINET_STATE_DISCONNECTED</a></STRONG></EM></TD>
+      <TD width="87%">インターネットから切断された</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__connectinet_8h_17e3ebb7f6d65d55dc39f66b2c05fb8c1d438e984373e43077842885857a9a859">DWC_CONNECTINET_STATE_ERROR</a></STRONG></EM></TD>
+      <TD width="87%">エラーが発生した</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__connectinet_8h_17e3ebb7f6d65d55dc39f66b2c05fb8c13c546b249da1705b84289db6ed08c38c">DWC_CONNECTINET_STATE_FATAL_ERROR</a></STRONG></EM></TD>
+      <TD width="87%">致命的なエラーが発生した</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>インターネット接続状態を確認します。</p><p>もしエラーが発生した場合は、<a href="DWC_GetLastErrorEx.html#dwc__error_8h_118bd79f5d5151259c19c4e552e5e633b">DWC_GetLastErrorEx</a>関数でエラー状態を取得し、必要に応じてエラーメッセージとともにエラーコードを表示してください。メッセージについては、プログラミンガイドラインをご確認ください。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_CheckInet.html#dwc__connectinet_8h_1525ebb2790477ec1a4d430dd94d29fc7">DWC_CheckInet</a></CODE>
+
+  <CODE><a href="DWC_ConnectInetAsync.html#dwc__connectinet_8h_1ed6360e949bbab87f49275bac0a381cc">DWC_ConnectInetAsync</a></CODE>
+
+  <CODE><a href="DWC_CheckInet.html#dwc__connectinet_8h_1525ebb2790477ec1a4d430dd94d29fc7">DWC_CheckInet</a></CODE>
+
+  <CODE><a href="DWC_ProcessInet.html#dwc__connectinet_8h_1c2a3fd1d79fee387ca123f5eb1cf0660">DWC_ProcessInet</a></CODE>
+
+  <CODE><a href="DWC_CleanupInet.html#dwc__connectinet_8h_14d7f46fc1822bb3f39eed3b087e629c6">DWC_CleanupInet</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GetInetStatus_tag">こちら</a>　　</p>
+</body>
+</html>

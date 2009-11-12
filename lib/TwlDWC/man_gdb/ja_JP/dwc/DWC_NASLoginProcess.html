@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_NASLoginProcess</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__nas_8h_1d2d5c12e4d48df00a83ffa8889f54526" align="left">DWC_NASLoginProcess</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE><a href="Macro.html#dwc__nas_8h_1114bd9397d08664e16b744907f8cf30b">DWCNasLoginState</a> DWC_NASLoginProcess(void);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<p>なし</p>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__nas_8h_1114bd9397d08664e16b744907f8cf30bc20d42a77226e8206c82963046addc5a">DWC_NASLOGIN_STATE_DIRTY</a></STRONG></EM></TD>
+      <TD width="87%">認証処理が開始されていません。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__nas_8h_1114bd9397d08664e16b744907f8cf30b66952ba540262fefea1767d3788855b0">DWC_NASLOGIN_STATE_HTTP</a></STRONG></EM></TD>
+      <TD width="87%">認証処理のためのHTTP通信を実行中です。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__nas_8h_1114bd9397d08664e16b744907f8cf30be05d4f7532ca15f926878b7c9a36cb45">DWC_NASLOGIN_STATE_SUCCESS</a></STRONG></EM></TD>
+      <TD width="87%">認証処理が成功しました。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__nas_8h_1114bd9397d08664e16b744907f8cf30ba60ecbf3fd27c2280e994054d4e299d7">DWC_NASLOGIN_STATE_ERROR</a></STRONG></EM></TD>
+      <TD width="87%">認証処理が失敗しました。<a href="DWC_GetLastErrorEx.html#dwc__error_8h_118bd79f5d5151259c19c4e552e5e633b">DWC_GetLastErrorEx</a>関数を呼び出しエラーの内容を確認し、適切な対応をしてください。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__nas_8h_1114bd9397d08664e16b744907f8cf30bc82e51706e74286970353ba10c904771">DWC_NASLOGIN_STATE_CANCELED</a></STRONG></EM></TD>
+      <TD width="87%">認証処理がキャンセルされました。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>実行中の任天堂認証サーバへの認証処理を進行させ、その状態を取得します。<br>認証処理が終了するまで毎ゲームフレーム程度の頻度で呼び出してください。</p><p>認証処理が終了/中断して<a href="Macro.html#dwc__nas_8h_1114bd9397d08664e16b744907f8cf30be05d4f7532ca15f926878b7c9a36cb45">DWC_NASLOGIN_STATE_SUCCESS</a>、<a href="Macro.html#dwc__nas_8h_1114bd9397d08664e16b744907f8cf30ba60ecbf3fd27c2280e994054d4e299d7">DWC_NASLOGIN_STATE_ERROR</a>、<a href="Macro.html#dwc__nas_8h_1114bd9397d08664e16b744907f8cf30bc82e51706e74286970353ba10c904771">DWC_NASLOGIN_STATE_CANCELED</a>が返された時点で、処理が開始されていない状態に戻ります。このため、再度<a href="DWC_NASLoginAsync.html#dwc__nas_8h_13c2dd14803b38aae98ee1b04118d8fb8">DWC_NASLoginAsync</a>関数で処理を開始しない限り、以降は<a href="Macro.html#dwc__nas_8h_1114bd9397d08664e16b744907f8cf30bc20d42a77226e8206c82963046addc5a">DWC_NASLOGIN_STATE_DIRTY</a>を返すことに注意してください。</p><p>本関数内で発生したエラーの処理を行うために、本関数呼出し後に<a href="DWC_GetLastErrorEx.html#dwc__error_8h_118bd79f5d5151259c19c4e552e5e633b">DWC_GetLastErrorEx</a>関数でエラー状態を取得し、必要に応じてエラーメッセージとともにエラーコードを表示してください。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.1pr2</DT>
+<DD>処理が終了/中断したときの返り値に関する説明を追加</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_NASLoginProcess_tag">こちら</a>　　</p>
+</body>
+</html>

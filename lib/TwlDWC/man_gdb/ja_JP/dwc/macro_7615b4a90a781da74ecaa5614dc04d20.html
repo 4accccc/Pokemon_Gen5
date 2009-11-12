@@ -1,0 +1,670 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>友達管理・マッチメイク - 定数</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">友達管理・マッチメイク - 定数</h1>
+<H2>定義</H2>
+<DL>
+	<DD>
+		<PRE><CODE>
+#include &lt;dwc.h&gt;
+
+#define   DWC_FRIEND_STATUS_STRING_LEN            (256)
+#define   DWC_MAX_PLAYER_NAME                     26
+#define   DWC_INVALID_AID                         (0xff)
+#define   DWC_MAX_CONNECTIONS                     32
+#define   DWC_QR2_GAME_KEY_START                  100
+#define   DWC_QR2_RESERVED_KEYS                   (100-50)
+#define   DWC_QR2_GAME_RESERVED_KEYS              (DWC_MAX_REGISTERED_KEYS-DWC_QR2_RESERVED_KEYS-DWC_QR2_RESERVED_KEYS)
+#define   DWC_CONNECTION_USERDATA_LEN             4
+#define   DWC_TRANSPORT_MTU_SIZE                  1500
+#define   DWC_TRANSPORT_RELIABLE_ALL_HEADER_SIZE  35
+#define   DWC_TRANSPORT_UNRELIABLE_ALL_HEADER_SIZE 38
+#define   DWC_TRANSPORT_SEND_RELIABLE_MAX         (DWC_TRANSPORT_MTU_SIZE-DWC_TRANSPORT_RELIABLE_ALL_HEADER_SIZE)
+#define   DWC_TRANSPORT_SEND_UNRELIABLE_MAX       (DWC_TRANSPORT_MTU_SIZE-DWC_TRANSPORT_UNRELIABLE_ALL_HEADER_SIZE)
+#define   DWC_TRANSPORT_SEND_MAX                  DWC_TRANSPORT_SEND_RELIABLE_MAX
+
+enum  {
+    DWC_PERS_STATE_INIT                     =  0,
+    DWC_PERS_STATE_LOGIN,
+    DWC_PERS_STATE_CONNECTED,
+    DWC_PERS_STATE_NUM,
+};
+
+enum  {
+    DWC_STATUS_OFFLINE                      =  0,
+    DWC_STATUS_ONLINE,
+    DWC_STATUS_PLAYING,
+    DWC_STATUS_MATCH_ANYBODY,
+    DWC_STATUS_MATCH_FRIEND,
+    DWC_STATUS_MATCH_SC_CL,
+    DWC_STATUS_MATCH_SC_SV,
+    DWC_STATUS_NUM,
+};
+
+enum DWCFriendState {
+    DWC_FRIEND_STATE_INIT                   =  0,
+    DWC_FRIEND_STATE_PERS_LOGIN,
+    DWC_FRIEND_STATE_LOGON,
+    DWC_FRIEND_STATE_NUM,
+};
+
+enum  {
+    DWC_BUDDY_UPDATE_STATE_WAIT             =  0,
+    DWC_BUDDY_UPDATE_STATE_CHECK,
+    DWC_BUDDY_UPDATE_STATE_PSEARCH,
+    DWC_BUDDY_UPDATE_STATE_COMPLETE,
+    DWC_BUDDY_UPDATE_STATE_NUM,
+};
+
+enum DWCLoginState {
+    DWC_LOGIN_STATE_INIT                    =  0,
+    DWC_LOGIN_STATE_REMOTE_AUTH,
+    DWC_LOGIN_STATE_CONNECTING,
+    DWC_LOGIN_STATE_GPGETINFO,
+    DWC_LOGIN_STATE_GPSETINFO,
+    DWC_LOGIN_STATE_CONNECTED,
+    DWC_LOGIN_STATE_NUM,
+};
+
+enum DWCState {
+    DWC_STATE_INIT                          =  0,
+    DWC_STATE_AVAILABLE_CHECK,
+    DWC_STATE_LOGIN,
+    DWC_STATE_ONLINE,
+    DWC_STATE_MATCHING,
+    DWC_STATE_CONNECTED,
+    DWC_STATE_NUM,
+};
+
+enum DWCMatchState {
+    DWC_MATCH_STATE_INIT                    =  0,
+    DWC_MATCH_STATE_CL_WAITING,
+    DWC_MATCH_STATE_CL_SEARCH_HOST,
+    DWC_MATCH_STATE_CL_WAIT_RESV,
+    DWC_MATCH_STATE_CL_SEARCH_EVAL_HOST,
+    DWC_MATCH_STATE_CL_NN,
+    DWC_MATCH_STATE_CL_GT2,
+    DWC_MATCH_STATE_CL_CANCEL_SYN,
+    DWC_MATCH_STATE_CL_SYN,
+    DWC_MATCH_STATE_CL_SVDOWN_1,
+    DWC_MATCH_STATE_CL_SVDOWN_2,
+    DWC_MATCH_STATE_CL_SVDOWN_3,
+    DWC_MATCH_STATE_CL_SEARCH_GROUPID_HOST,
+    DWC_MATCH_STATE_SV_WAITING,
+    DWC_MATCH_STATE_SV_OWN_NN,
+    DWC_MATCH_STATE_SV_OWN_GT2,
+    DWC_MATCH_STATE_SV_WAIT_CL_LINK,
+    DWC_MATCH_STATE_SV_CANCEL_SYN,
+    DWC_MATCH_STATE_SV_CANCEL_SYN_WAIT,
+    DWC_MATCH_STATE_SV_SYN,
+    DWC_MATCH_STATE_SV_SYN_WAIT,
+    DWC_MATCH_STATE_WAIT_CLOSE,
+    DWC_MATCH_STATE_SEARCH_OWN,
+    DWC_MATCH_STATE_SV_SYN_CLOSE_WAIT,
+    DWC_MATCH_STATE_NUM,
+};
+
+enum  {
+    DWC_MATCH_TYPE_ANYBODY                  =  0,
+    DWC_MATCH_TYPE_FRIEND,
+    DWC_MATCH_TYPE_SC_SV,
+    DWC_MATCH_TYPE_SC_CL,
+    DWC_MATCH_TYPE_NUM,
+};
+
+enum DWCSuspendResult {
+    DWC_SUSPEND_SUCCESS                     =  0,
+    DWC_SUSPEND_TIMEOUT,
+    DWC_SUSPEND_NUM,
+};
+
+enum DWCTopologyType {
+    DWC_TOPOLOGY_TYPE_HYBRID                =  0,
+    DWC_TOPOLOGY_TYPE_STAR,
+    DWC_TOPOLOGY_TYPE_FULLMESH,
+    DWC_TOPOLOGY_TYPE_NUM,
+};
+
+		</CODE></PRE>
+	</DD>
+</DL>
+
+<H2>定数</H2>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+			<TH width="25%">DWC_FRIEND_STATUS_STRING_LEN</TH>
+			<TD>DWC_GetOwnStatusString関数やDWC_SetOwnStatusString関数やDWC_GetFriendStatusSC関数で指定できるステータス文字列の長さ(NULL終端含む)</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_MAX_PLAYER_NAME</TH>
+			<TD>プレイヤー名（ゲーム内スクリーンネーム）の最大長（ワイド文字25文字＋&quot;￥0￥0&quot;）</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_INVALID_AID</TH>
+			<TD>無効なAIDを示す値</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_MAX_CONNECTIONS</TH>
+			<TD>最大同時接続数</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_QR2_GAME_KEY_START</TH>
+			<TD>ゲーム定義キーの開始値</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_QR2_RESERVED_KEYS</TH>
+			<TD>DWCの予約キー数</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_QR2_GAME_RESERVED_KEYS</TH>
+			<TD>ゲームで最大使用できるキーの数（154）</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_CONNECTION_USERDATA_LEN</TH>
+			<TD>マッチメイク接続条件に使われるバッファ長</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_TRANSPORT_MTU_SIZE</TH>
+			<TD>Reliable/Unreliable送信で送信できる最大IPパケットサイズ</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_TRANSPORT_RELIABLE_ALL_HEADER_SIZE</TH>
+			<TD>Reliable送信で付加されるヘッダサイズ</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_TRANSPORT_UNRELIABLE_ALL_HEADER_SIZE</TH>
+			<TD>Unreliable送信で付加されるヘッダサイズ</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_TRANSPORT_SEND_RELIABLE_MAX</TH>
+			<TD>Reliable送信で一度に送信できる最大データサイズ。</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_TRANSPORT_SEND_UNRELIABLE_MAX</TH>
+			<TD>Unreliable送信で一度に送信できる最大データサイズ。</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_TRANSPORT_SEND_MAX</TH>
+			<TD>Reliable送信で一度に送信できる最大データサイズ。(互換性のために残されています。DWC_TRANSPORT_SEND_RELIABLE_MAXを使用してください。</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+<a id="dwc__datastorage_8h_199fb83031ce9923c84392b4e92f956b5"></a>
+<H2 id="TAG_ENUM_1">Persistentサーバログイン状態</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_PERS_STATE_INIT</CODE></STRONG></EM></TD>
+	  <TD>初期状態</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_PERS_STATE_LOGIN</CODE></STRONG></EM></TD>
+	  <TD>ログイン中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_PERS_STATE_CONNECTED</CODE></STRONG></EM></TD>
+	  <TD>接続状態</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_PERS_STATE_NUM</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b04"></a>
+<H2 id="TAG_ENUM_2">友達の通信状態（GPEnumのStatus＋αを再定義して使用）</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_STATUS_OFFLINE</CODE></STRONG></EM></TD>
+	  <TD>オフライン</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_STATUS_ONLINE</CODE></STRONG></EM></TD>
+	  <TD>オンライン（GPサーバにログイン済み）</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_STATUS_PLAYING</CODE></STRONG></EM></TD>
+	  <TD>ゲームプレイ中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_STATUS_MATCH_ANYBODY</CODE></STRONG></EM></TD>
+	  <TD>友達無指定ピアマッチメイク中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_STATUS_MATCH_FRIEND</CODE></STRONG></EM></TD>
+	  <TD>友達指定ピアマッチメイク中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_STATUS_MATCH_SC_CL</CODE></STRONG></EM></TD>
+	  <TD>サーバクライアントマッチメイク中のクライアント</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_STATUS_MATCH_SC_SV</CODE></STRONG></EM></TD>
+	  <TD>サーバクライアントマッチメイク中のサーバ</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_STATUS_NUM</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__friend_8h_10004f7092fcfb8d881eea57891d952b6"></a>
+<H2 id="TAG_ENUM_3">友達管理処理状態</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_FRIEND_STATE_INIT</CODE></STRONG></EM></TD>
+	  <TD>初期状態</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_FRIEND_STATE_PERS_LOGIN</CODE></STRONG></EM></TD>
+	  <TD>Persistentサーバログイン＆友達リスト同期処理中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_FRIEND_STATE_LOGON</CODE></STRONG></EM></TD>
+	  <TD>Persistentサーバログイン後</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_FRIEND_STATE_NUM</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__friend_8h_1dc29c2ff13d900c2f185ee95427fb06c"></a>
+<H2 id="TAG_ENUM_4">ローカル友達リストとGPバディリストとの同期処理状態</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_BUDDY_UPDATE_STATE_WAIT</CODE></STRONG></EM></TD>
+	  <TD>バディリストダウンロード完了待ち</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_BUDDY_UPDATE_STATE_CHECK</CODE></STRONG></EM></TD>
+	  <TD>バディリストチェック中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_BUDDY_UPDATE_STATE_PSEARCH</CODE></STRONG></EM></TD>
+	  <TD>プロファイルサーチ中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_BUDDY_UPDATE_STATE_COMPLETE</CODE></STRONG></EM></TD>
+	  <TD>バディリスト同期処理完了</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_BUDDY_UPDATE_STATE_NUM</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__login_8h_167c3f1961a1c645d9f330db0e75a858f"></a>
+<H2 id="TAG_ENUM_5">ログイン進行状況列挙子</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_LOGIN_STATE_INIT</CODE></STRONG></EM></TD>
+	  <TD>初期状態</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_LOGIN_STATE_REMOTE_AUTH</CODE></STRONG></EM></TD>
+	  <TD>リモート認証中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_LOGIN_STATE_CONNECTING</CODE></STRONG></EM></TD>
+	  <TD>GPサーバ接続中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_LOGIN_STATE_GPGETINFO</CODE></STRONG></EM></TD>
+	  <TD>GPにloginしたときのlastname取得時</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_LOGIN_STATE_GPSETINFO</CODE></STRONG></EM></TD>
+	  <TD>GPに初めてloginしたときのlastname設定</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_LOGIN_STATE_CONNECTED</CODE></STRONG></EM></TD>
+	  <TD>コネクト完了状態</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_LOGIN_STATE_NUM</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__main_8h_1beb3cc25257ef0d9a57a5797e7ac0f5d"></a>
+<H2 id="TAG_ENUM_6">DWCネットワーク状態列挙子</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_STATE_INIT</CODE></STRONG></EM></TD>
+	  <TD>初期状態</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_STATE_AVAILABLE_CHECK</CODE></STRONG></EM></TD>
+	  <TD>ゲームの利用可能状況をチェック中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_STATE_LOGIN</CODE></STRONG></EM></TD>
+	  <TD>ログイン処理中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_STATE_ONLINE</CODE></STRONG></EM></TD>
+	  <TD>ログイン完了後オンライン状態</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_STATE_MATCHING</CODE></STRONG></EM></TD>
+	  <TD>マッチメイク処理中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_STATE_CONNECTED</CODE></STRONG></EM></TD>
+	  <TD>マッチメイク完了後、メッシュ型ネットワーク構築済み状態</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_STATE_NUM</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5b"></a>
+<H2 id="TAG_ENUM_7">マッチメイク状態列挙子</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_INIT</CODE></STRONG></EM></TD>
+	  <TD>初期状態</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_WAITING</CODE></STRONG></EM></TD>
+	  <TD>待ち状態</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_SEARCH_HOST</CODE></STRONG></EM></TD>
+	  <TD>空きホスト検索状態（友達無指定の時のみ）</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_WAIT_RESV</CODE></STRONG></EM></TD>
+	  <TD>予約に対するサーバからの返答待ち</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_SEARCH_EVAL_HOST</CODE></STRONG></EM></TD>
+	  <TD>評価する相手ホストを検索中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_NN</CODE></STRONG></EM></TD>
+	  <TD>NATネゴシエーション中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_GT2</CODE></STRONG></EM></TD>
+	  <TD>GT2コネクション確立中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_CANCEL_SYN</CODE></STRONG></EM></TD>
+	  <TD>サーバクライアントでマッチメイクキャンセル同期調整中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_SYN</CODE></STRONG></EM></TD>
+	  <TD>マッチメイク完了同期調整中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_SVDOWN_1</CODE></STRONG></EM></TD>
+	  <TD>サーバダウン検出中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_SVDOWN_2</CODE></STRONG></EM></TD>
+	  <TD>サーバダウン検出中2</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_SVDOWN_3</CODE></STRONG></EM></TD>
+	  <TD>サーバダウン検出中3</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_SEARCH_GROUPID_HOST</CODE></STRONG></EM></TD>
+	  <TD>グループIDからホストを検索</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_SV_WAITING</CODE></STRONG></EM></TD>
+	  <TD>待ち状態</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_SV_OWN_NN</CODE></STRONG></EM></TD>
+	  <TD>クライアントとのNATネゴシエーション中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_SV_OWN_GT2</CODE></STRONG></EM></TD>
+	  <TD>クライアントとのGT2コネクション確立中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_SV_WAIT_CL_LINK</CODE></STRONG></EM></TD>
+	  <TD>クライアント同士の接続完了待ち</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_SV_CANCEL_SYN</CODE></STRONG></EM></TD>
+	  <TD>サーバクライアントでマッチメイクキャンセル同期調整SYN-ACK待ち</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_SV_CANCEL_SYN_WAIT</CODE></STRONG></EM></TD>
+	  <TD>サーバクライアントでマッチメイクキャンセル同期調整終了待ち</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_SV_SYN</CODE></STRONG></EM></TD>
+	  <TD>マッチメイク終了同期調整SYN-ACK待ち</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_SV_SYN_WAIT</CODE></STRONG></EM></TD>
+	  <TD>マッチメイク終了同期調整終了待ち</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_WAIT_CLOSE</CODE></STRONG></EM></TD>
+	  <TD>コネクションクローズ完了待ち</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_SEARCH_OWN</CODE></STRONG></EM></TD>
+	  <TD>自ホスト情報検索中（以前の名称はDWC_MATCH_STATE_CL_SEARCH_OWN)</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_SV_SYN_CLOSE_WAIT</CODE></STRONG></EM></TD>
+	  <TD>CLOSEコマンド送信後の待ち時間</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_NUM</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__match_8h_161dadd085c1777f559549e05962b2c9e"></a>
+<H2 id="TAG_ENUM_8">マッチメイクタイプ列挙子</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_TYPE_ANYBODY</CODE></STRONG></EM></TD>
+	  <TD>友達無指定ピアマッチメイク</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_TYPE_FRIEND</CODE></STRONG></EM></TD>
+	  <TD>友達指定ピアマッチメイク</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_TYPE_SC_SV</CODE></STRONG></EM></TD>
+	  <TD>サーバクライアントマッチメイクのサーバ側</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_TYPE_SC_CL</CODE></STRONG></EM></TD>
+	  <TD>サーバクライアントマッチメイクのクライアント側</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_TYPE_NUM</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__match_8h_1f4bbf087a5388bc288993c3e9399c32d"></a>
+<H2 id="TAG_ENUM_9">締め切りコールバック列挙子</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SUSPEND_SUCCESS</CODE></STRONG></EM></TD>
+	  <TD>正常終了</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SUSPEND_TIMEOUT</CODE></STRONG></EM></TD>
+	  <TD>タイムアウトした(現在、使用されません)</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SUSPEND_NUM</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__match_8h_1c3ba6e33e5dd79e1d13350b71fa22250"></a>
+<H2 id="TAG_ENUM_10">接続形態列挙子</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_TOPOLOGY_TYPE_HYBRID</CODE></STRONG></EM></TD>
+	  <TD>ハイブリッド型</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_TOPOLOGY_TYPE_STAR</CODE></STRONG></EM></TD>
+	  <TD>スター型</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_TOPOLOGY_TYPE_FULLMESH</CODE></STRONG></EM></TD>
+	  <TD>フルメッシュ型</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_TOPOLOGY_TYPE_NUM</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+</body>
+</html>

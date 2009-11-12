@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWCConnectionClosedCallback</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__main_8h_137c062a13b38d3c691a1c3b1d7391657" align="left">DWCConnectionClosedCallback</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>typedef void(*) DWCConnectionClosedCallback(<a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed19">DWCError</a> error,
+             BOOL isLocal,
+             BOOL isServer,
+             u8 aid,
+             int index,
+             void *param);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>error</parametername></STRONG></EM></TD>
+      <TD width="87%">DWCエラー種別</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>isLocal</parametername></STRONG></EM></TD>
+      <TD width="87%">TRUE:自分がクローズした。<br>FALSE:他の誰かがクローズした。<br>マッチメイク中に応答のないホストを切断する時もTRUEになる。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>isServer</parametername></STRONG></EM></TD>
+      <TD width="87%">TRUE:サーバホストが切断したことを示す。<br>自分がサーバでisLoacal=TRUEの時もTRUEになる。<br>ハイブリッド型もしくはフルメッシュ型のときはサーバ交代が発生する。スター型のときは発生しない。<br>FALSE:サーバホスト以外のホストが切断したことを示す</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>aid</parametername></STRONG></EM></TD>
+      <TD width="87%">クローズしたプレイヤーのAID</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>index</parametername></STRONG></EM></TD>
+      <TD width="87%">クローズしたプレイヤーの友達リストインデックス。クローズしたプレイヤーが友達でなければ-1となる。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>param</parametername></STRONG></EM></TD>
+      <TD width="87%">コールバック用パラメータ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>なし</p>
+
+<H2>説明</H2>
+
+<p>通信相手との接続が切断するたびに呼び出されます。</p><p><a href="DWC_SetConnectionClosedCallback.html#dwc__main_8h_15518aed6ceb946c61b4e8df326715f65">DWC_SetConnectionClosedCallback</a>関数で指定します。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_SetConnectionClosedCallback.html#dwc__main_8h_15518aed6ceb946c61b4e8df326715f65">DWC_SetConnectionClosedCallback</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWCConnectionClosedCallback_tag">こちら</a>　　</p>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_GetDirectConnectedAIDBitmap</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__main_8h_1d15cc06cfefc572a3aa22adf150dcd05" align="left">DWC_GetDirectConnectedAIDBitmap</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>u32 DWC_GetDirectConnectedAIDBitmap(void);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<p>なし</p>
+
+<h2>返り値</h2>
+
+<p>自分と直接接続のある相手ホストのAIDビットマップ。自分のAIDのビットには1がセットされます。</p>
+
+<H2>説明</H2>
+
+<p>データを直接送信することが可能な、自分と直接接続のある相手ホストのAIDビットマップを取得します。</p><p>本関数で得られたビットマップにビットが立っている相手ホストに対して、データの送信(<a href="DWC_SendUnreliable.html#dwc__transport_8h_1b95f23de902cbad010e65eea8051ab27">DWC_SendUnreliable</a>/<a href="DWC_SendUnreliableBitmap.html#dwc__transport_8h_1d30a735ab4beb91f8923fa5d08bed597">DWC_SendUnreliableBitmap</a>)を行った場合、データは指定の相手ホストに直接送信されます。ビットが立っていない相手ホストに対してunreliable送信を行った場合、送信データはサーバホストを経由して指定の相手ホストに送信されます。ビットが立っていない相手ホストに対してはreliable送信を行うことはできません。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GetDirectConnectedAIDBitmap_tag">こちら</a>　　</p>
+</body>
+</html>

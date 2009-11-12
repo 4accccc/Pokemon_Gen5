@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_IsValidAID</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__main_8h_15bd88e98bc0dcdb9c8c2c7a63274160e" align="left">DWC_IsValidAID</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_IsValidAID(u8 aid);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>aid</STRONG></EM></TD>
+      <TD width="87%">調べたいAID</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">指定されたAIDを割り当てられたホストと接続中である。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">指定されたAIDを割り当てられたホストは接続されていない。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>aidで指定されたAIDが、現在自分に接続中のホストに割り当てられているかどうかを調べます。</p><p>自分のAIDを指定した場合は必ずFALSEを返します。</p><p>AIDはマッチメイクされたグループ内の各ホストの識別番号で、0～（ネットワーク構成台数-1）の数値が用いられます。例えば4人でマッチメイクを完了した場合なら、0,1,2,3の4台が存在し、AID=1の人がネットワークから抜ければ、残りは0,2,3となります。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.1pr2</DT>
+<DD>自分のAIDを指定した場合は必ずFALSEを返すことについて追記</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_IsValidAID_tag">こちら</a>　　</p>
+</body>
+</html>

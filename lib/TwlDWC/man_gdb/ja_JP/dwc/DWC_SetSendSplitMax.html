@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_SetSendSplitMax</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__transport_8h_125d7a93f442305b24c4ccf9c7cdd1251" align="left">DWC_SetSendSplitMax</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_SetSendSplitMax(u16 sendSplitMax);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>sendSplitMax</STRONG></EM></TD>
+      <TD width="87%">データ送信時の一度に送信できる最大データサイズ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">設定成功</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">FriendsMatchライブラリ非動作中で設定失敗</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>接続中のホストに一度に送信できる最大データサイズを設定します。<a href="DWC_SendReliable.html#dwc__transport_8h_18af931f880aadbc50700c6c212ec64cc">DWC_SendReliable</a>/<a href="DWC_SendReliableBitmap.html#dwc__transport_8h_1ea79c20d9a54d219287cd7c1b906dd82">DWC_SendReliableBitmap</a>関数によるReliable送信では、このサイズ以上のデータを送信しようとした場合は、送信データが分割されて、送りきれないデータはそのまま保留され、<a href="DWC_InitFriendsMatch.html#dwc__main_8h_1de4fba18d5d03cbccd0c86efe9e80c1c">DWC_InitFriendsMatch</a>関数でサイズを指定した送信バッファに空きができ次第<a href="DWC_ProcessFriendsMatch.html#dwc__main_8h_1c7b64bfd61e6c336a1d382fb6d1ea2d8">DWC_ProcessFriendsMatch</a>関数内から送信されます。</p><p>この最大送信データサイズはデフォルトは1465Byte(<a href="Macro.html#dwc__transport_8h_11bcbc577e4bac328af81cdb306e9315b">DWC_TRANSPORT_SEND_RELIABLE_MAX</a>で定義)です。<br>様々な設定の通信機器に対応するために、このサイズを超えた値を設定しないようにして下さい。<br>MTUサイズからsendSplitMaxに指定すべきサイズを割り出すには、<br>(MTUサイズ-<a href="Macro.html#dwc__transport_8h_1d83a2a2a903eea0037370dc059f37ecb">DWC_TRANSPORT_RELIABLE_ALL_HEADER_SIZE</a>)<br>としてください。</p><p><a href="DWC_InitFriendsMatch.html#dwc__main_8h_1de4fba18d5d03cbccd0c86efe9e80c1c">DWC_InitFriendsMatch</a>関数でReliable送受信のバッファサイズを小さくした場合は、本関数を用いて最大送信データサイズを小さくすることによって、バッファが溢れないように調整することができます。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_SetSendSplitMax_tag">こちら</a>　　</p>
+</body>
+</html>

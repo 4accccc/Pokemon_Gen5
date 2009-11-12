@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_SendUnreliable</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__transport_8h_1b95f23de902cbad010e65eea8051ab27" align="left">DWC_SendUnreliable</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_SendUnreliable(u8 aid,
+                        const void *buffer,
+                        int size);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>aid</STRONG></EM></TD>
+      <TD width="87%">送信先のAID</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>buffer</STRONG></EM></TD>
+      <TD width="87%">送信バッファのポインタ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>size</STRONG></EM></TD>
+      <TD width="87%">送信バッファのサイズ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">送信バッファにデータセット完了。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">送信バッファにデータセット失敗。<br>エラー発生中か、無効なAIDを指定した、もしくは最大データサイズ以上のサイズの送信を行おうとした。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>マッチメイク完了後、aidで指定されたAIDへUDPでUnreliable送信を行います。</p><p>Unreliable送信はUDP通信そのもので、送信したパケットが欠落したり、順番が入れ替わったりする可能性があります。送信したデータが届かなかったとしても、エラーを返すことはありません。その代わり、データの到着確認も再送も行わないので高速です。</p><p>本関数は<a href="Macro.html#dwc__transport_8h_19f3ab15d6a1c90c495aa694e8665dfed">DWC_TRANSPORT_SEND_UNRELIABLE_MAX</a>(1462byte)までのサイズを送信できます。これより大きなサイズを指定すると関数はFALSEを返します。</p><p><a href="DWC_SetUserSendCallback.html#dwc__transport_8h_1425a597b5b1fa10e0bde22d02e3dce6c">DWC_SetUserSendCallback</a>関数で送信完了コールバックを設定していた場合、送信に成功していれば、本関数を抜ける前にコールバックが呼び出されます。ただし、ここでいう送信の完了とは、低レイヤーの送信関数にデータを渡し終えたというだけで、相手側にデータが到着したという意味ではありません。</p><p>接続中のホストのAIDは、<a href="DWC_GetAIDList.html#dwc__main_8h_1989c8c4ab809e9545639f4b84896be65">DWC_GetAIDList</a>関数で取得することができます。</p><p><a href="DWC_SendUnreliableBitmap.html#dwc__transport_8h_1d30a735ab4beb91f8923fa5d08bed597">DWC_SendUnreliableBitmap</a>関数を使えば、複数のAIDへのUnreliable送信を一度に行うことができます。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_SendUnreliable_tag">こちら</a>　　</p>
+</body>
+</html>

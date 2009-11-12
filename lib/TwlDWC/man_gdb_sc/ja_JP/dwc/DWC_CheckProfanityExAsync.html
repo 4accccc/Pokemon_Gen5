@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_CheckProfanityExAsync</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__prof_8h_1583a36ef6c630987c29f68ac67a3d482" align="left">DWC_CheckProfanityExAsync</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_CheckProfanityExAsync(const u16 **words,
+                               int wordsnum,
+                               const char *reserved,
+                               int timeout,
+                               char *result,
+                               int *badwordsnum,
+                               <a href="Macro.html#dwc__prof_8h_1bd4513afb206ea295489180b696074d2">DWCProfRegion</a> region);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>words</STRONG></EM></TD>
+      <TD width="87%">チェックする文字列配列へのポインタ<br><ul><li>
+文字コードはUnicode（リトルエンディアンUTF16）を使用してください。<br>それ以外の文字コードを使用している場合は、Unicodeに変換してください。
+</li><li>
+スクリーンネームにUnicode及びIPLフォントにない独自の文字を使用している場合は、スペースに置き換えてください。
+</li><li>
+終端は<code>"&#92;0&#92;0"</code>（u16で0x0000）である必要があります。
+</li><li>
+配列内の全ての文字列の合計が501文字まで（各文字列の終端を含む）にする必要があります。
+</li><li>
+配列内の文字列にNULLを指定することはできません。
+</li><li>
+文字列配列および配列内の文字列は関数呼び出し後に破棄しても問題ありません。
+</li></ul></TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>wordsnum</STRONG></EM></TD>
+      <TD width="87%">wordsで指定した文字列配列の要素数(1～50)</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>reserved</STRONG></EM></TD>
+      <TD width="87%">NULLを指定します</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>timeout</STRONG></EM></TD>
+      <TD width="87%">サーバの応答タイムアウト時間(ミリ秒単位)<br>(0を指定した場合はデフォルト値の10000が使われます)</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>result</STRONG></EM></TD>
+      <TD width="87%">チェック結果の格納先へのポインタ<br>(wordsnumバイトの領域が必要です)</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>badwordsnum</STRONG></EM></TD>
+      <TD width="87%">チェック結果に含まれる不正文字列の個数の格納先へのポインタ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>region</STRONG></EM></TD>
+      <TD width="87%">対象のリージョンを指定する。<br>強制的に全リージョンを示す&#39;A&#39;を指定する<a href="Macro.html#dwc__prof_8h_1bd4513afb206ea295489180b696074d2eb521951cb74b549793bad63a6f36d06">DWC_PROF_REGION_ALL</a>か、ROM内登録データのゲームコード（イニシャルコード）の末尾に従う<a href="Macro.html#dwc__prof_8h_1bd4513afb206ea295489180b696074d2c787bc49a771f6628885b252c9ecd433">DWC_PROF_REGION_SELF</a>のどちらかを指定してください。*</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">不正文字列チェック処理を開始した</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">不正文字列チェック処理の開始に失敗した</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>引数regionに対象のリージョンを指定して不正文字列チェック処理を開始します。<br>対象のリージョンを(実質<a href="Macro.html#dwc__prof_8h_1bd4513afb206ea295489180b696074d2eb521951cb74b549793bad63a6f36d06">DWC_PROF_REGION_ALL</a>のみ)指定可能ということを除いて、<a href="DWC_CheckProfanityAsync.html#dwc__prof_8h_16e8029f668632188e74681738be0aa20">DWC_CheckProfanityAsync</a>関数と同じ仕様になります。<br>不正文字列チェックに関する説明は、<a href="DWC_CheckProfanityAsync.html#dwc__prof_8h_16e8029f668632188e74681738be0aa20">DWC_CheckProfanityAsync</a>関数の頁を参照して下さい。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_CheckProfanityProcess.html#dwc__prof_8h_1cf829b09d9ec8b42bf3987266e9983ca">DWC_CheckProfanityProcess</a></CODE>
+
+  <CODE><a href="DWC_LoginAsync.html#dwc__main_8h_1ac1f7f301938afe8408be88dfa65f217">DWC_LoginAsync</a></CODE>
+
+  <CODE><a href="DWC_CheckProfanityAsync.html#dwc__prof_8h_16e8029f668632188e74681738be0aa20">DWC_CheckProfanityAsync</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_CheckProfanityExAsync_tag">こちら</a>　　</p>
+</body>
+</html>

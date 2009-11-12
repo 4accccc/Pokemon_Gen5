@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWCGdbSearchCond</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 id="struct_d_w_c_gdb_search_cond" align="left">
+DWCGdbSearchCond
+</h1>
+<h2>定義</h2>
+
+<dl>
+  <dd>
+<PRE><code>
+#include &lt;dwc.h&gt;
+
+typedef struct DWCGdbSearchCond {
+    char * filter;
+    char * sort;
+    int offset;
+    int max;
+    char * target_filter;
+    int surrounding_num;
+    int * ownerids;
+    int ownerid_num;
+    BOOL cache_flag;
+} DWCGdbSearchCond;</code></PRE></dd>
+</dl>
+<H2>説明</H2>
+<p>target_filter、surrounding_numを設定した場合、offsetとmaxは無視されます。</p><p>ownerids、ownerid_numを設定した場合、offset、target_filter、surrounding_numは無視されます。また、設定した値は考慮されませんが、sortには有効な文字列(例えばrecordid)を、maxには0以外の正の値(例えば1)を、設定して下さい。</p><p>unicodeフィールドの検索で、sort,target_filterを指定する場合、<a href="DWC_GdbUCS2ToUTF8Str.html#dwc__gdb_8h_1b3837d6f6ead10f7f9fcf050ad520312">DWC_GdbUCS2ToUTF8Str</a>関数を使うなどして、マルチバイトのUTF-8文字列で指定する必要があります。</p>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>filter</STRONG></EM></TD>
+      <TD width="87%">SQLのWHERE句と同じ働きをします。NULLを指定した場合は指定しないことになります。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>sort</STRONG></EM></TD>
+      <TD width="87%">SQLのORDERBY句と同じ働きをします。NULLを指定した場合は指定しないことになります。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>offset</STRONG></EM></TD>
+      <TD width="87%">検索結果の何番目から取得するか指定します。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>max</STRONG></EM></TD>
+      <TD width="87%">検索結果を最大いくつ取ってくるか指定します。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>target_filter</STRONG></EM></TD>
+      <TD width="87%">surrounding_numを使用して周辺のレコードを取得するには、このフィルターをレコードが一つだけ検索されるように設定する必要があります。使用しない場合はNULLを与えることができます。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>surrounding_num</STRONG></EM></TD>
+      <TD width="87%">target_filterと組み合わせて使用します。1以上の数を指定すると、検索結果のレコードの上下指定個数ぶんのレコードを一緒に取得します。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>ownerids</STRONG></EM></TD>
+      <TD width="87%">検索するレコードの作成者のプロファイルIDを配列として指定します。ownerid_numに0を指定した場合はNULLを与えることができます。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>ownerid_num</STRONG></EM></TD>
+      <TD width="87%">owneridsで指定した配列の長さを指定します。使用しない場合は0を入れてください。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>cache_flag</STRONG></EM></TD>
+      <TD width="87%">検索結果をサーバでキャッシュするか否かを示します。キャッシュ期間は5分です。サーバの負荷を軽減するためにも、データの更新期間を短くしなければいけない場合を除いて、このフラグは有効にするようにしてください。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWCGdbSearchCond_tag">こちら</a>　　</p>
+</body>
+</html>

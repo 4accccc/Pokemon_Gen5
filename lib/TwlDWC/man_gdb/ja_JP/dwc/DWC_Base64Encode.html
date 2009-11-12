@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_Base64Encode</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__base64_8h_1a8aa39d2d18f12643553e1ea1b927a0a" align="left">DWC_Base64Encode</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>int DWC_Base64Encode(const char *src,
+                     const unsigned long srclen,
+                     char *dst,
+                     const unsigned long dstlen);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>src</STRONG></EM></TD>
+      <TD width="87%">変換元データへのポインタ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>srclen</STRONG></EM></TD>
+      <TD width="87%">変換元データのバイトサイズ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>dst</STRONG></EM></TD>
+      <TD width="87%">変換後のBase64文字列を格納するバッファへのポインタ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>dstlen</STRONG></EM></TD>
+      <TD width="87%">変換後のBase64文字列を格納するバッファのバイトサイズ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>-1</STRONG></EM></TD>
+      <TD width="87%">変換失敗。<br>変換後のBase64文字列の長さが引数dstlenの値を越えています。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>それ以外</STRONG></EM></TD>
+      <TD width="87%">変換後のBase64文字列の長さ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>srcで指定されたデータをBase64でエンコードし、Base64文字列として出力します。</p><p>dstにNULLを指定すれば、実際には変換は行わず、変換後のBase64文字列の長さを返り値として返します。</p><p>変換後のBase64文字列はヌル文字終端を含みません。</p><p>本関数は特殊なBase64を使用しており、通常使用される&#39;+&#39;、&#39;/&#39;、&#39;=&#39;がそれぞれ&#39;.&#39;、&#39;-&#39;、&#39;*&#39;に置き換えられています。<br>本関数でエンコードしたBase64文字列のデコードには、必ず<a href="DWC_Base64Decode.html#dwc__base64_8h_1ac898ae6e8de3dc936e343140ce8d07d">DWC_Base64Decode</a>関数を用いてください。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_Base64Decode.html#dwc__base64_8h_1ac898ae6e8de3dc936e343140ce8d07d">DWC_Base64Decode</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_Base64Encode_tag">こちら</a>　　</p>
+</body>
+</html>

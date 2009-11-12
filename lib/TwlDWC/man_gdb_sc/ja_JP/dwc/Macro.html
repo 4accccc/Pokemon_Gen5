@@ -1,0 +1,3136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>TWLDWC ライブラリ定数</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">TWLDWC ライブラリ定数</h1>
+
+<H2>定数</H2>
+
+<H3>定義</H3>
+		<DL>
+			<DD>
+				<PRE><CODE>
+#include &lt;dwc.h&gt;
+
+<span id="dwc__common_8h_158d3f39e6cd9417cdd95717aeab8933e">#define   DWC_COMMONSTR_MAX_KEY_VALUE_LEN         4096</span>
+<span id="dwc__friend_8h_102dc5b4389418a1a27f1c512a63aaf01">#define   DWC_FRIEND_STATUS_STRING_LEN            (256)</span>
+<span id="dwc__main_8h_1d0a7c6de725f5971b01378e162671d5b">#define   DWC_MAX_PLAYER_NAME                     26</span>
+<span id="dwc__main_8h_140d1ea4526f0887e7d67830ff74d9626">#define   DWC_INVALID_AID                         (0xff)</span>
+<span id="dwc__match_8h_1136535c9d6074238bd4c3ec9be863b59">#define   DWC_MAX_CONNECTIONS                     32</span>
+<span id="dwc__match_8h_131319dc42ba245221933c38f57edf276">#define   DWC_QR2_GAME_KEY_START                  100</span>
+<span id="dwc__match_8h_131680724841e0aa65e79d9ea2bf09e74">#define   DWC_QR2_RESERVED_KEYS                   (100-50)</span>
+<span id="dwc__match_8h_11788a808118a98f13e63a6b36ff379a0">#define   DWC_QR2_GAME_RESERVED_KEYS              (DWC_MAX_REGISTERED_KEYS-DWC_QR2_RESERVED_KEYS-DWC_QR2_RESERVED_KEYS)</span>
+<span id="dwc__match_8h_1767334491be60055db279f50c050c695">#define   DWC_CONNECTION_USERDATA_LEN             4</span>
+<span id="dwc__nd_8h_1e1609c3ec4a0ba1df802857b839de848">#define   DWC_ND_FILENAME_LEN                     32</span>
+<span id="dwc__nd_8h_19dc0d557d94ce61bf2a1675bf4cdffd1">#define   DWC_ND_FILEATTR_LEN                     10</span>
+<span id="dwc__nd_8h_17ebfd7d20c42f88baf9a3a6d47f3e23f">#define   DWC_ND_FILEEXPLSIN_LEN                  50</span>
+<span id="dwc__nd_8h_10ec8149f9d0fc0d7db5adbc40ceeafa1">#define   DWC_ND_THREAD_PRIORITY                  17</span>
+<span id="dwc__nd_8h_1acc93133e2b717337772449a2ef5ec9e">#define   DWC_ND_LENGTH_GAMECODE                  4</span>
+<span id="dwc__nd_8h_15322e645af829358a86e96cd188d4c6f">#define   DWC_ND_LENGTH_PASSWORD                  16</span>
+<span id="dwc__ranking_8h_13066f77a00f280132a1d64d306975777">#define   DWC_RNK_DATA_MAX                        764</span>
+<span id="dwc__ranking_8h_192c348bb621e1f4486daf931679df6d1">#define   DWC_RNK_CATEGORY_MAX                    1000</span>
+<span id="dwc__ranking_8h_1358c47d628992447812312fe4648a89a">#define   DWC_RNK_GET_MAX                         30</span>
+<span id="dwc__ranking_8h_1913f4aa84f44c33e7a5dfbf0b48cd92d">#define   DWC_RNK_FRIENDS_MAX                     64</span>
+<span id="dwc__svl_8h_1bcc1fba933e35c27a5a37297c659fac1">#define   DWC_SVL_HOST_LENGTH                     64</span>
+<span id="dwc__svl_8h_1b34b0d40ca3a73af44c9785bb918e42a">#define   DWC_SVL_TOKEN_LENGTH                    300</span>
+<span id="dwc__svl_8h_15a7e9249cc165d5a12719181f952f1c7">#define   DWC_SVL_STATUSDATA_LENGTH               1</span>
+<span id="dwc__transport_8h_1c64c69e175ca58c5674842638634f02b">#define   DWC_TRANSPORT_MTU_SIZE                  1500</span>
+<span id="dwc__transport_8h_1d83a2a2a903eea0037370dc059f37ecb">#define   DWC_TRANSPORT_RELIABLE_ALL_HEADER_SIZE  35</span>
+<span id="dwc__transport_8h_115452f6ece109f097504cecc3b0e39ff">#define   DWC_TRANSPORT_UNRELIABLE_ALL_HEADER_SIZE 38</span>
+<span id="dwc__transport_8h_11bcbc577e4bac328af81cdb306e9315b">#define   DWC_TRANSPORT_SEND_RELIABLE_MAX         (DWC_TRANSPORT_MTU_SIZE-DWC_TRANSPORT_RELIABLE_ALL_HEADER_SIZE)</span>
+<span id="dwc__transport_8h_19f3ab15d6a1c90c495aa694e8665dfed">#define   DWC_TRANSPORT_SEND_UNRELIABLE_MAX       (DWC_TRANSPORT_MTU_SIZE-DWC_TRANSPORT_UNRELIABLE_ALL_HEADER_SIZE)</span>
+<span id="dwc__transport_8h_15afc6b8c4764f11e8913120657af5865">#define   DWC_TRANSPORT_SEND_MAX                  DWC_TRANSPORT_SEND_RELIABLE_MAX</span>
+
+				</CODE></PRE>
+			</DD>
+		</DL>
+
+<H3>説明</H3>
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+			<TH width="25%">DWC_COMMONSTR_MAX_KEY_VALUE_LEN</TH>
+			<TD>汎用key/value文字列のそれぞれの最大文字列長</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_FRIEND_STATUS_STRING_LEN</TH>
+			<TD><a href="DWC_GetOwnStatusString.html#dwc__friend_8h_102c7ea3da0c73733bbdfdc14e3085ca5">DWC_GetOwnStatusString</a>関数や<a href="DWC_SetOwnStatusString.html#dwc__friend_8h_14cd20cf1fd60674999b9496e9cccbb5d">DWC_SetOwnStatusString</a>関数や<a href="DWC_GetFriendStatusSC.html#dwc__friend_8h_153cfc54e21a73f2fb78a2ab37f6fbad6">DWC_GetFriendStatusSC</a>関数で指定できるステータス文字列の長さ(NULL終端含む)</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_MAX_PLAYER_NAME</TH>
+			<TD>プレイヤー名（ゲーム内スクリーンネーム）の最大長（ワイド文字25文字＋&quot;&#92;0&#92;0&quot;）</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_INVALID_AID</TH>
+			<TD>無効なAIDを示す値</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_MAX_CONNECTIONS</TH>
+			<TD>最大同時接続数</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_QR2_GAME_KEY_START</TH>
+			<TD>ゲーム定義キーの開始値</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_QR2_RESERVED_KEYS</TH>
+			<TD>DWCの予約キー数</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_QR2_GAME_RESERVED_KEYS</TH>
+			<TD>ゲームで最大使用できるキーの数（154）</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_CONNECTION_USERDATA_LEN</TH>
+			<TD>マッチメイク接続条件に使われるバッファ長</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_ND_FILENAME_LEN</TH>
+			<TD>ファイル取得時に指定するファイル名の最大文字列長</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_ND_FILEATTR_LEN</TH>
+			<TD>ファイル取得前に指定する属性の最大文字列長</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_ND_FILEEXPLSIN_LEN</TH>
+			<TD>ファイルに指定されているUTF16LEで表現された説明文の最大文字列長</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_ND_THREAD_PRIORITY</TH>
+			<TD>ダウンロードライブラリ内部で使用するスレッドの優先度</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_ND_LENGTH_GAMECODE</TH>
+			<TD>DLゲームコード(gamecd)のバイト長</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_ND_LENGTH_PASSWORD</TH>
+			<TD>秘密鍵(passwd)のバイト長</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_RNK_DATA_MAX</TH>
+			<TD>ユーザー定義データに使用できる最大サイズ</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_RNK_CATEGORY_MAX</TH>
+			<TD>カテゴリーとして指定できる最大値</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_RNK_GET_MAX</TH>
+			<TD>取得するランキングリストの最大数の上限値</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_RNK_FRIENDS_MAX</TH>
+			<TD>友達の最大数</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_SVL_HOST_LENGTH</TH>
+			<TD>ホスト名の最大文字数</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_SVL_TOKEN_LENGTH</TH>
+			<TD>トークンの最大文字数</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_SVL_STATUSDATA_LENGTH</TH>
+			<TD>ステータスのサイズ</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_TRANSPORT_MTU_SIZE</TH>
+			<TD>Reliable/Unreliable送信で送信できる最大IPパケットサイズ</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_TRANSPORT_RELIABLE_ALL_HEADER_SIZE</TH>
+			<TD>Reliable送信で付加されるヘッダサイズ</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_TRANSPORT_UNRELIABLE_ALL_HEADER_SIZE</TH>
+			<TD>Unreliable送信で付加されるヘッダサイズ</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_TRANSPORT_SEND_RELIABLE_MAX</TH>
+			<TD>Reliable送信で一度に送信できる最大データサイズ。</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_TRANSPORT_SEND_UNRELIABLE_MAX</TH>
+			<TD>Unreliable送信で一度に送信できる最大データサイズ。</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_TRANSPORT_SEND_MAX</TH>
+			<TD>Reliable送信で一度に送信できる最大データサイズ。(互換性のために残されています。<a href="Macro.html#dwc__transport_8h_11bcbc577e4bac328af81cdb306e9315b">DWC_TRANSPORT_SEND_RELIABLE_MAX</a>を使用してください。</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<H2>列挙型</H2>
+
+<span id="dwc__connectinet_8h_17e3ebb7f6d65d55dc39f66b2c05fb8c19e37fadfb1762fbe8017ee50e9e89f59"></span><span id="dwc__connectinet_8h_17e3ebb7f6d65d55dc39f66b2c05fb8c127f1e35ba9554eafc766aef2da25e9ec"></span><span id="dwc__connectinet_8h_17e3ebb7f6d65d55dc39f66b2c05fb8c12a68ae4b690383b95029aaa0ab4d0434"></span><span id="dwc__connectinet_8h_17e3ebb7f6d65d55dc39f66b2c05fb8c140d2f44ebf61f2f03dee76a84a5cd7a4"></span><span id="dwc__connectinet_8h_17e3ebb7f6d65d55dc39f66b2c05fb8c13473267b96b4884231fbf8a075f4446d"></span><span id="dwc__connectinet_8h_17e3ebb7f6d65d55dc39f66b2c05fb8c18a73e2162ce514cac51d0c410d1c2b44"></span><span id="dwc__connectinet_8h_17e3ebb7f6d65d55dc39f66b2c05fb8c1de797d89ed6765c32d7d7622507b2e43"></span><span id="dwc__connectinet_8h_17e3ebb7f6d65d55dc39f66b2c05fb8c1d438e984373e43077842885857a9a859"></span><span id="dwc__connectinet_8h_17e3ebb7f6d65d55dc39f66b2c05fb8c13c546b249da1705b84289db6ed08c38c"></span><span id="dwc__connectinet_8h_17e3ebb7f6d65d55dc39f66b2c05fb8c102cd4366d961dcfd5c95a77ddc1371de"></span>
+<H3 id="dwc__connectinet_8h_17e3ebb7f6d65d55dc39f66b2c05fb8c1">インターネット接続状態</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCInetResult {
+    DWC_CONNECTINET_STATE_NOT_INITIALIZED    =  0,
+    DWC_CONNECTINET_STATE_IDLE,
+    DWC_CONNECTINET_STATE_OPERATING,
+    DWC_CONNECTINET_STATE_OPERATED,
+    DWC_CONNECTINET_STATE_CONNECTED,
+    DWC_CONNECTINET_STATE_DISCONNECTING,
+    DWC_CONNECTINET_STATE_DISCONNECTED,
+    DWC_CONNECTINET_STATE_ERROR,
+    DWC_CONNECTINET_STATE_FATAL_ERROR,
+    DWC_CONNECTINET_STATE_LAST,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_STATE_NOT_INITIALIZED</CODE></STRONG></EM></TD>
+		  <TD>初期化されていない</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_STATE_IDLE</CODE></STRONG></EM></TD>
+		  <TD>接続開始されていない</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_STATE_OPERATING</CODE></STRONG></EM></TD>
+		  <TD>処理中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_STATE_OPERATED</CODE></STRONG></EM></TD>
+		  <TD>処理完了</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_STATE_CONNECTED</CODE></STRONG></EM></TD>
+		  <TD>インターネットへ接続済み</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_STATE_DISCONNECTING</CODE></STRONG></EM></TD>
+		  <TD>インターネットから切断中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_STATE_DISCONNECTED</CODE></STRONG></EM></TD>
+		  <TD>インターネットから切断された</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_STATE_ERROR</CODE></STRONG></EM></TD>
+		  <TD>エラーが発生した</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_STATE_FATAL_ERROR</CODE></STRONG></EM></TD>
+		  <TD>致命的なエラーが発生した</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_STATE_LAST</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__connectinet_8h_16502b0658bb61602a25181e70e0e7891828772158e97f488b511962fc0630d26"></span><span id="dwc__connectinet_8h_16502b0658bb61602a25181e70e0e78912eb48a45d5c772f31ab1e0a12ec3e39f"></span><span id="dwc__connectinet_8h_16502b0658bb61602a25181e70e0e7891663ca18d64b0313c219464a4eb6578b9"></span><span id="dwc__connectinet_8h_16502b0658bb61602a25181e70e0e7891c72f388636dff1d8c4c6a202f3ff9b9a"></span>
+<H3 id="dwc__connectinet_8h_16502b0658bb61602a25181e70e0e7891">認証サーバの種類</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCInetAuthType {
+    DWC_CONNECTINET_AUTH_TEST,
+    DWC_CONNECTINET_AUTH_DEVELOP,
+    DWC_CONNECTINET_AUTH_RELEASE,
+    DWC_CONNECTINET_AUTH_LAST,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_AUTH_TEST</CODE></STRONG></EM></TD>
+		  <TD>開発向け認証サーバ</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_AUTH_DEVELOP</CODE></STRONG></EM></TD>
+		  <TD>ライブラリ開発用認証サーバ(使用しないで下さい)</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_AUTH_RELEASE</CODE></STRONG></EM></TD>
+		  <TD>製品向け認証サーバ</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_CONNECTINET_AUTH_LAST</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<H4>履歴</H3>
+<DL>
+
+<DT>5.2pr1</DT>
+<DD><a href="Macro.html#dwc__connectinet_8h_16502b0658bb61602a25181e70e0e78912eb48a45d5c772f31ab1e0a12ec3e39f">DWC_CONNECTINET_AUTH_DEVELOP</a>,<a href="Macro.html#dwc__connectinet_8h_16502b0658bb61602a25181e70e0e7891663ca18d64b0313c219464a4eb6578b9">DWC_CONNECTINET_AUTH_RELEASE</a>の説明が間違っていたので修正</DD>
+
+</DL>
+
+<span id="dwc__connectinet_8h_1dabefabb4d99decae8ecdd07f2a1994bd71d64542bf51f99071f935bc153cfed"></span><span id="dwc__connectinet_8h_1dabefabb4d99decae8ecdd07f2a1994b8bc18a79fb20a474d7b7eeec88943668"></span><span id="dwc__connectinet_8h_1dabefabb4d99decae8ecdd07f2a1994bf165e2982aee43dee8c9aada55df2868"></span><span id="dwc__connectinet_8h_1dabefabb4d99decae8ecdd07f2a1994ba2c56d65c8a6955449c2b142644d7edc"></span><span id="dwc__connectinet_8h_1dabefabb4d99decae8ecdd07f2a1994b8c5ae540377c5782fae5919642db3dde"></span><span id="dwc__connectinet_8h_1dabefabb4d99decae8ecdd07f2a1994b7f9eff0b6c739df460635ea96b00915d"></span>
+<H3 id="dwc__connectinet_8h_1dabefabb4d99decae8ecdd07f2a1994b">ニンテンドーWi-Fiステーション/NintendoZoneの設置地域を示すエリアコード</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCApInfoArea {
+    DWC_APINFO_AREA_JPN        =  0,
+    DWC_APINFO_AREA_USA,
+    DWC_APINFO_AREA_EUR,
+    DWC_APINFO_AREA_AUS,
+    DWC_APINFO_AREA_KOR,
+    DWC_APINFO_AREA_UNKNOWN    =  0xff,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_AREA_JPN</CODE></STRONG></EM></TD>
+		  <TD>日本</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_AREA_USA</CODE></STRONG></EM></TD>
+		  <TD>北米</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_AREA_EUR</CODE></STRONG></EM></TD>
+		  <TD>欧州</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_AREA_AUS</CODE></STRONG></EM></TD>
+		  <TD>豪州</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_AREA_KOR</CODE></STRONG></EM></TD>
+		  <TD>韓国</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_AREA_UNKNOWN</CODE></STRONG></EM></TD>
+		  <TD>不明(ニンテンドーWi-Fiステーション/NintendoZoneではない)</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa582b510a693306d433d44251f143c716"></span><span id="dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa18888ebc5096b47b2f4f85a0b478545a"></span><span id="dwc__connectinet_8h_19966344206c7cf7bea94389415ce18facd27cc3e55de3a797274b71ee0856faa"></span><span id="dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa8ad39d9837d65e8f3c79359fd7742eec"></span><span id="dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa0152b84d5673597d3c70d82e5a79e35e"></span><span id="dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fafb51af4b2a8f023c03ddeac93d38f066"></span><span id="dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa2db037e352ea167c22b7bb2ca0f2b186"></span><span id="dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fae03529485c3a3a1ac1664a6da3b209a9"></span><span id="dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa3bed3996455b379dde44443f6016c8b3"></span><span id="dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa46d7d9f05c46351fa1de4fcb4898f58b"></span><span id="dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa12384157ba0d65fea1ab226c08fd03ca"></span><span id="dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa690d701ffe5caf5aaa42bb28513a7af4"></span><span id="dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fafd0a17580d2b828a992ef5bb057456d3"></span><span id="dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa6773d77df412beb75b761330595537bd"></span>
+<H3 id="dwc__connectinet_8h_19966344206c7cf7bea94389415ce18fa">APタイプ</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCApInfoType {
+    DWC_APINFO_TYPE_USER0           =  0,
+    DWC_APINFO_TYPE_USER1,
+    DWC_APINFO_TYPE_USER2,
+    DWC_APINFO_TYPE_USB,
+    DWC_APINFO_TYPE_SHOP,
+    DWC_APINFO_TYPE_FREESPOT,
+    DWC_APINFO_TYPE_WAYPORT,
+    DWC_APINFO_TYPE_OTHER,
+    DWC_APINFO_TYPE_NINTENDOWFC     =  DWC_APINFO_TYPE_OTHER,
+    DWC_APINFO_TYPE_NINTENDOZONE,
+    DWC_APINFO_TYPE_USER3           =  0x0a,
+    DWC_APINFO_TYPE_USER4,
+    DWC_APINFO_TYPE_USER5,
+    DWC_APINFO_TYPE_UNKNOWN         =  99,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_USER0</CODE></STRONG></EM></TD>
+		  <TD>接続先1のアクセスポイント</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_USER1</CODE></STRONG></EM></TD>
+		  <TD>接続先2のアクセスポイント</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_USER2</CODE></STRONG></EM></TD>
+		  <TD>接続先3のアクセスポイント</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_USB</CODE></STRONG></EM></TD>
+		  <TD>ニンテンドーWi-FiUSBコネクタ</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_SHOP</CODE></STRONG></EM></TD>
+		  <TD>ニンテンドーWi-Fiステーション</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_FREESPOT</CODE></STRONG></EM></TD>
+		  <TD>FREESPOT（フリースポット）</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_WAYPORT</CODE></STRONG></EM></TD>
+		  <TD>Wayport(北米ホットスポット)※現在は使用できません</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_OTHER</CODE></STRONG></EM></TD>
+		  <TD>(旧定義)</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_NINTENDOWFC</CODE></STRONG></EM></TD>
+		  <TD>(予約)</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_NINTENDOZONE</CODE></STRONG></EM></TD>
+		  <TD>NintendoZone</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_USER3</CODE></STRONG></EM></TD>
+		  <TD>接続先4のアクセスポイント　※NITROROMではこの定義はありません</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_USER4</CODE></STRONG></EM></TD>
+		  <TD>接続先5のアクセスポイント　※NITROROMではこの定義はありません</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_USER5</CODE></STRONG></EM></TD>
+		  <TD>接続先6のアクセスポイント　※NITROROMではこの定義はありません</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_TYPE_UNKNOWN</CODE></STRONG></EM></TD>
+		  <TD>不明</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<H4>履歴</H3>
+<DL>
+
+<DT>5.1</DT>
+<DD>Wayport(北米ホットスポット)が現在は使用できないことについて追記</DD>
+
+</DL>
+
+<span id="dwc__connectinet_8h_1b7f75bb4a03e4b1c4b0dc05625eff428748d2a072cf40559645465b5929eb88e"></span><span id="dwc__connectinet_8h_1b7f75bb4a03e4b1c4b0dc05625eff428d0ea12012dde1a55d8df976d5a3c20cb"></span><span id="dwc__connectinet_8h_1b7f75bb4a03e4b1c4b0dc05625eff4288dbbe9c87d65862fe4472b4baadbd082"></span><span id="dwc__connectinet_8h_1b7f75bb4a03e4b1c4b0dc05625eff428e965780c2416cf3d8d8d972169b44cb0"></span><span id="dwc__connectinet_8h_1b7f75bb4a03e4b1c4b0dc05625eff428e07f4b4c788243a07ada2d6f4bc3a73b"></span><span id="dwc__connectinet_8h_1b7f75bb4a03e4b1c4b0dc05625eff4286301d57f4b76624c0f4250723ddc24f8"></span><span id="dwc__connectinet_8h_1b7f75bb4a03e4b1c4b0dc05625eff42856dc387ffc4e6b863e04496d7ea43d3b"></span><span id="dwc__connectinet_8h_1b7f75bb4a03e4b1c4b0dc05625eff4285c0f435dd8ad13da296de241a09a3c70"></span>
+<H3 id="dwc__connectinet_8h_1b7f75bb4a03e4b1c4b0dc05625eff428">無線セキュリティタイプ</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCApInfoSecurity {
+    DWC_APINFO_WSEC_NONE             =  0x00,
+    DWC_APINFO_WSEC_WEPMODE_40,
+    DWC_APINFO_WSEC_WEPMODE_104,
+    DWC_APINFO_WSEC_WEPMODE_128,
+    DWC_APINFO_WSEC_WPA_PSK_TKIP,
+    DWC_APINFO_WSEC_WPA2_PSK_TKIP,
+    DWC_APINFO_WSEC_WPA_PSK_AES,
+    DWC_APINFO_WSEC_WPA2_PSK_AES,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_WSEC_NONE</CODE></STRONG></EM></TD>
+		  <TD>暗号化なし</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_WSEC_WEPMODE_40</CODE></STRONG></EM></TD>
+		  <TD>RC4(40ビット)暗号化モード</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_WSEC_WEPMODE_104</CODE></STRONG></EM></TD>
+		  <TD>RC4(104ビット)暗号化モード</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_WSEC_WEPMODE_128</CODE></STRONG></EM></TD>
+		  <TD>RC4(128ビット)暗号化モード</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_WSEC_WPA_PSK_TKIP</CODE></STRONG></EM></TD>
+		  <TD>WPA-PSK(TKIP)暗号　※NITROROMではこの定義はありません</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_WSEC_WPA2_PSK_TKIP</CODE></STRONG></EM></TD>
+		  <TD>WPA2-PSK(TKIP)暗号　※NITROROMではこの定義はありません</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_WSEC_WPA_PSK_AES</CODE></STRONG></EM></TD>
+		  <TD>WPA-PSK(AES)暗号　※NITROROMではこの定義はありません</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_APINFO_WSEC_WPA2_PSK_AES</CODE></STRONG></EM></TD>
+		  <TD>WPA2-PSK(AES)暗号　※NITROROMではこの定義はありません</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__connectinet_8h_19b2a4f07ca42debd525043023f96c8e28ece6e9e48004904cf3a7edf3f23c0ec"></span><span id="dwc__connectinet_8h_19b2a4f07ca42debd525043023f96c8e214efd66d7b44cd25c54206531d13dde8"></span><span id="dwc__connectinet_8h_19b2a4f07ca42debd525043023f96c8e2ce28d0d4cd9671ab8bcf691606fd6e5d"></span><span id="dwc__connectinet_8h_19b2a4f07ca42debd525043023f96c8e29fc4f9c8c12651b41bfa9597b0bd3b36"></span>
+<H3 id="dwc__connectinet_8h_19b2a4f07ca42debd525043023f96c8e2">インターネットとの接続テストの通信処理結果</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCTestInetResult {
+    DWC_TESTINET_NOT_INITIALIZED    =  0,
+    DWC_TESTINET_OPERATING,
+    DWC_TESTINET_CONNECTED,
+    DWC_TESTINET_DISCONNECTED,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_TESTINET_NOT_INITIALIZED</CODE></STRONG></EM></TD>
+		  <TD><a href="DWC_TestInetAsync.html#dwc__connectinet_8h_1d94b5d6953396eb2bd0785f5fac81b4d">DWC_TestInetAsync</a>関数が呼び出されていない</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_TESTINET_OPERATING</CODE></STRONG></EM></TD>
+		  <TD>通信処理を実行中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_TESTINET_CONNECTED</CODE></STRONG></EM></TD>
+		  <TD>インターネットに接続されている</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_TESTINET_DISCONNECTED</CODE></STRONG></EM></TD>
+		  <TD>インターネットに接続されていない</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__connectinet_8h_18365dfc0e2f045f82dd5344866cf8e44ceff467906afc0132d2971ec2ab174af"></span><span id="dwc__connectinet_8h_18365dfc0e2f045f82dd5344866cf8e44667fc52638bd571e0cc602c51797d42c"></span>
+<H3 id="dwc__connectinet_8h_18365dfc0e2f045f82dd5344866cf8e44">Proxy認証形式</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCProxyAuthType {
+    DWC_PROXY_AUTHTYPE_NONE     =  0x00,
+    DWC_PROXY_AUTHTYPE_BASIC,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_PROXY_AUTHTYPE_NONE</CODE></STRONG></EM></TD>
+		  <TD>認証なし</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_PROXY_AUTHTYPE_BASIC</CODE></STRONG></EM></TD>
+		  <TD>BASIC認証</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__datastorage_8h_199fb83031ce9923c84392b4e92f956b5dc1562f0b7f7a342fefeaea40bd8e546"></span><span id="dwc__datastorage_8h_199fb83031ce9923c84392b4e92f956b5eb2c5bbd6559aa2ad87c4ccb21e35223"></span><span id="dwc__datastorage_8h_199fb83031ce9923c84392b4e92f956b598442526921dc1f119398ae5183c5b9a"></span><span id="dwc__datastorage_8h_199fb83031ce9923c84392b4e92f956b5e7646827a0417bb8ece7964e7f2f878e"></span>
+<H3 id="dwc__datastorage_8h_199fb83031ce9923c84392b4e92f956b5">Persistentサーバログイン状態</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum  {
+    DWC_PERS_STATE_INIT         =  0,
+    DWC_PERS_STATE_LOGIN,
+    DWC_PERS_STATE_CONNECTED,
+    DWC_PERS_STATE_NUM,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_PERS_STATE_INIT</CODE></STRONG></EM></TD>
+		  <TD>初期状態</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_PERS_STATE_LOGIN</CODE></STRONG></EM></TD>
+		  <TD>ログイン中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_PERS_STATE_CONNECTED</CODE></STRONG></EM></TD>
+		  <TD>接続状態</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_PERS_STATE_NUM</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed19e183029cab4bcfb2768bf5e52c81ce0a"></span><span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed1910a2bc3b5506355994951c32a62f2f73"></span><span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed19de3db39312c2e6559343236c3e5d124b"></span><span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed1902d53ffd4065f16526075401f89f7140"></span><span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed196e7fb055c9ea4ef36a1d72f87526a97f"></span><span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed1964b54550a1807865742c2ab36153f999"></span><span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed19d30ab70be645ed6846895062843fa684"></span><span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed1900c43d4042bea3a9fa5265d63f187b4c"></span><span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed197dde3e3cb7c85bb5425f350eb9e1b228"></span><span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed19971dfe41649d84d3b0a1f0234174e4f0"></span><span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed1902ab14be4de1ebce11878de81209174a"></span><span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed196e4598fa6c83842fcd061a2e3884c656"></span><span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed19b0925ef701e6a75c12e9029dc003b449"></span><span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed197b16c42e52c0d0caf68b2e65e23f31a3"></span><span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed19f07d4042b051b83fbb4602267d7a3988"></span><span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed1905f08e3b78f61fe4eed88f782f0022e5"></span><span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed19c442bf174e8c087607ccbb6093350a85"></span><span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed194761d89c7876cef47a7f8b721c924e86"></span><span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed198efc43ba11249b95e6f57f6e9f69fe1b"></span><span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed191b1ef43d343226245c1f79cf57f43600"></span><span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed198ba41f8748ce6194d0ade648e248cd2a"></span><span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed19d7f75811bb4ea335859571310347c8ee"></span><span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed19a58810de58a0ef045aebd719df8a9c30"></span><span id="dwc__error_8h_1c049360b665a730f7f639f014a4fed198f79c14ef5ae1a4a440260ab54c691fe"></span>
+<H3 id="dwc__error_8h_1c049360b665a730f7f639f014a4fed19">エラー列挙子</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCError {
+    DWC_ERROR_NONE                   =  0,
+    DWC_ERROR_DS_MEMORY_ANY,
+    DWC_ERROR_AUTH_ANY,
+    DWC_ERROR_AUTH_OUT_OF_SERVICE,
+    DWC_ERROR_AUTH_STOP_SERVICE,
+    DWC_ERROR_AC_ANY,
+    DWC_ERROR_NETWORK,
+    DWC_ERROR_GHTTP_ANY,
+    DWC_ERROR_DISCONNECTED,
+    DWC_ERROR_FATAL,
+    DWC_ERROR_FRIENDS_SHORTAGE,
+    DWC_ERROR_NOT_FRIEND_SERVER,
+    DWC_ERROR_SERVER_FULL,
+    DWC_ERROR_ND_ANY,
+    DWC_ERROR_ND_HTTP,
+    DWC_ERROR_SVL_ANY,
+    DWC_ERROR_SVL_HTTP,
+    DWC_ERROR_PROF_ANY,
+    DWC_ERROR_PROF_HTTP,
+    DWC_ERROR_GDB_ANY,
+    DWC_ERROR_SCL_ANY,
+    DWC_ERROR_SC_CONNECT_BLOCK,
+    DWC_ERROR_NETWORK_LIGHT,
+    DWC_ERROR_NUM,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_NONE</CODE></STRONG></EM></TD>
+		  <TD>エラーなし</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_DS_MEMORY_ANY</CODE></STRONG></EM></TD>
+		  <TD>本体セーブデータに関するエラー</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_AUTH_ANY</CODE></STRONG></EM></TD>
+		  <TD>認証に関するエラー</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_AUTH_OUT_OF_SERVICE</CODE></STRONG></EM></TD>
+		  <TD>サービス終了</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_AUTH_STOP_SERVICE</CODE></STRONG></EM></TD>
+		  <TD>サービス一時中断</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_AC_ANY</CODE></STRONG></EM></TD>
+		  <TD>自動接続に関するエラー</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_NETWORK</CODE></STRONG></EM></TD>
+		  <TD>その他のネットワークエラー</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_GHTTP_ANY</CODE></STRONG></EM></TD>
+		  <TD>HTTP通信(GameSpyHTTP)のエラー</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_DISCONNECTED</CODE></STRONG></EM></TD>
+		  <TD>切断された</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_FATAL</CODE></STRONG></EM></TD>
+		  <TD>致命的なエラー</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_FRIENDS_SHORTAGE</CODE></STRONG></EM></TD>
+		  <TD>指定の人数の有効な友達がいないのに友達指定ピアマッチメイクを始めようとした</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_NOT_FRIEND_SERVER</CODE></STRONG></EM></TD>
+		  <TD>サーバクライアントマッチメイクで、サーバに指定した友達が相互に友達ではない、もしくはサーバを立てていない</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_SERVER_FULL</CODE></STRONG></EM></TD>
+		  <TD>サーバクライアントマッチメイクのサーバが定員オーバー</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_ND_ANY</CODE></STRONG></EM></TD>
+		  <TD>ダウンロードライブラリのエラー</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_ND_HTTP</CODE></STRONG></EM></TD>
+		  <TD>ダウンロードライブラリのHTTPエラー</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_SVL_ANY</CODE></STRONG></EM></TD>
+		  <TD>サービスロケータのエラー</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_SVL_HTTP</CODE></STRONG></EM></TD>
+		  <TD>サービスロケータ情報取得中のHTTP通信エラー</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_PROF_ANY</CODE></STRONG></EM></TD>
+		  <TD>不正文字列チェックでサーバの応答がおかしいときに発生するエラー</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_PROF_HTTP</CODE></STRONG></EM></TD>
+		  <TD>不正文字列チェックのHTTPエラー</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_GDB_ANY</CODE></STRONG></EM></TD>
+		  <TD>GDBライブラリのエラー。通常のDWCでは発生しません。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_SCL_ANY</CODE></STRONG></EM></TD>
+		  <TD>SCライブラリのエラー。通常のDWCでは発生しません。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_SC_CONNECT_BLOCK</CODE></STRONG></EM></TD>
+		  <TD>サーバクライアントマッチメイクで、クライアントがサーバから接続を拒否された</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_NETWORK_LIGHT</CODE></STRONG></EM></TD>
+		  <TD>軽度として扱うネットワークエラー</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ERROR_NUM</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__error_8h_168ff183290bdb65d992a516a2496c5ec1c4e4efe043c01aea23f51816564f208"></span><span id="dwc__error_8h_168ff183290bdb65d992a516a2496c5ec7fd11b5dbab905e8c567a552c1f8ded0"></span><span id="dwc__error_8h_168ff183290bdb65d992a516a2496c5ec28aa2c307d1f494c0c8d85c88843b8bc"></span><span id="dwc__error_8h_168ff183290bdb65d992a516a2496c5ec2921aab6fee667dbf19f614fbfbb6479"></span><span id="dwc__error_8h_168ff183290bdb65d992a516a2496c5ecc93feff488a5a9f62e3670aa98200668"></span><span id="dwc__error_8h_168ff183290bdb65d992a516a2496c5ec7ca0871d2a61f90c4cd2e75be00eda28"></span><span id="dwc__error_8h_168ff183290bdb65d992a516a2496c5ece7fbe686b8425dd25dbb63014eb92862"></span><span id="dwc__error_8h_168ff183290bdb65d992a516a2496c5ec36d72083baf18ae8b6678ebddba98f14"></span><span id="dwc__error_8h_168ff183290bdb65d992a516a2496c5ec7f398267363ba636a1bac7d81914ee3e"></span>
+<H3 id="dwc__error_8h_168ff183290bdb65d992a516a2496c5ec">エラー検出時に必要な処理を示すエラータイプ</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCErrorType {
+    DWC_ETYPE_NO_ERROR          =  0,
+    DWC_ETYPE_LIGHT,
+    DWC_ETYPE_SHOW_ERROR,
+    DWC_ETYPE_SHUTDOWN_FM,
+    DWC_ETYPE_SHUTDOWN_GHTTP,
+    DWC_ETYPE_SHUTDOWN_ND,
+    DWC_ETYPE_DISCONNECT,
+    DWC_ETYPE_FATAL,
+    DWC_ETYPE_NUM,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ETYPE_NO_ERROR</CODE></STRONG></EM></TD>
+		  <TD>エラーなし</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ETYPE_LIGHT</CODE></STRONG></EM></TD>
+		  <TD>ゲーム固有の表示のみで、エラーコード表示は必要ありません。<br><a href="DWC_ClearError.html#dwc__error_8h_1325e43a6b7d8d0a914a044c52e8cfda6">DWC_ClearError</a>関数を呼び出せば、復帰可能です。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ETYPE_SHOW_ERROR</CODE></STRONG></EM></TD>
+		  <TD>エラーコードを表示してください。<br><a href="DWC_ClearError.html#dwc__error_8h_1325e43a6b7d8d0a914a044c52e8cfda6">DWC_ClearError</a>関数を呼び出せば、復帰可能です。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ETYPE_SHUTDOWN_FM</CODE></STRONG></EM></TD>
+		  <TD><a href="DWC_ShutdownFriendsMatch.html#dwc__main_8h_1765b5089893c6d3bf5f3011723b96278">DWC_ShutdownFriendsMatch</a>関数を呼び出して、FriendsMatchライブラリを終了する必要があります。エラーコードを表示してください。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ETYPE_SHUTDOWN_GHTTP</CODE></STRONG></EM></TD>
+		  <TD>以下の各ライブラリ解放関数を必要に応じて呼び出してください。<br><a href="DWC_RnkShutdown.html#dwc__ranking_8h_1ebd54c804ee5147f740362c5cb482bfd">DWC_RnkShutdown</a>関数(汎用ランキングライブラリ)<br>エラーコードを表示してください。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ETYPE_SHUTDOWN_ND</CODE></STRONG></EM></TD>
+		  <TD><a href="DWC_NdCleanupAsync.html#dwc__nd_8h_1b5866639aee7fb3a9d693a1411625ee0">DWC_NdCleanupAsync</a>関数を呼び出して、ダウンロードライブラリを終了する必要があります。エラーコードを表示してください。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ETYPE_DISCONNECT</CODE></STRONG></EM></TD>
+		  <TD>以下の各ライブラリ解放関数を必要に応じて呼び出してください。<br><a href="DWC_ShutdownFriendsMatch.html#dwc__main_8h_1765b5089893c6d3bf5f3011723b96278">DWC_ShutdownFriendsMatch</a>関数(FriendsMatchライブラリ)<br><a href="DWC_NdCleanupAsync.html#dwc__nd_8h_1b5866639aee7fb3a9d693a1411625ee0">DWC_NdCleanupAsync</a>関数(ダウンロードライブラリ)<br><a href="DWC_RnkShutdown.html#dwc__ranking_8h_1ebd54c804ee5147f740362c5cb482bfd">DWC_RnkShutdown</a>関数(汎用ランキングライブラリ)<br>その後、<a href="DWC_CleanupInet.html#dwc__connectinet_8h_14d7f46fc1822bb3f39eed3b087e629c6">DWC_CleanupInet</a>あるいは<a href="DWC_CleanupInetAsync.html#dwc__connectinet_8h_100a9f2169ae3e5c145607630710674ac">DWC_CleanupInetAsync</a>関数で通信の切断も行う必要があります。エラーコードを表示してください。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ETYPE_FATAL</CODE></STRONG></EM></TD>
+		  <TD>FatalError相当なので、Nitroでは、電源OFFを促す必要があります。Twlではリセット(ランチャーへの戻り)を促す必要があります。エラーコードを表示してください。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ETYPE_NUM</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b04bd9f9adfdcaf17f1221ae2558ad6056b"></span><span id="dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b0404108a1958f9698113f90b0f1b094bb1"></span><span id="dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b0404bd28525dc056805bf02df28ede0279"></span><span id="dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b046c2b74def19358ffebd07d0490a1d890"></span><span id="dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b0438175c08c13c94e683990f4d59299408"></span><span id="dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b04ef029ab10b7668f67c32fa66f55b8e68"></span><span id="dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b0499e36405c9849a73e1cc96fb084000c2"></span><span id="dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b04b3553c8fb4ad56e28d29bf8f24dcf470"></span>
+<H3 id="dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b04">友達の通信状態（GPEnumのStatus＋αを再定義して使用）</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum  {
+    DWC_STATUS_OFFLINE          =  0,
+    DWC_STATUS_ONLINE,
+    DWC_STATUS_PLAYING,
+    DWC_STATUS_MATCH_ANYBODY,
+    DWC_STATUS_MATCH_FRIEND,
+    DWC_STATUS_MATCH_SC_CL,
+    DWC_STATUS_MATCH_SC_SV,
+    DWC_STATUS_NUM,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_STATUS_OFFLINE</CODE></STRONG></EM></TD>
+		  <TD>オフライン</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_STATUS_ONLINE</CODE></STRONG></EM></TD>
+		  <TD>オンライン（GPサーバにログイン済み）</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_STATUS_PLAYING</CODE></STRONG></EM></TD>
+		  <TD>ゲームプレイ中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_STATUS_MATCH_ANYBODY</CODE></STRONG></EM></TD>
+		  <TD>友達無指定ピアマッチメイク中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_STATUS_MATCH_FRIEND</CODE></STRONG></EM></TD>
+		  <TD>友達指定ピアマッチメイク中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_STATUS_MATCH_SC_CL</CODE></STRONG></EM></TD>
+		  <TD>サーバクライアントマッチメイク中のクライアント</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_STATUS_MATCH_SC_SV</CODE></STRONG></EM></TD>
+		  <TD>サーバクライアントマッチメイク中のサーバ</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_STATUS_NUM</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__friend_8h_10004f7092fcfb8d881eea57891d952b618ace53fa641b3b71d67f6719006f7c4"></span><span id="dwc__friend_8h_10004f7092fcfb8d881eea57891d952b66f6e7be57db79525c201b1af59e20180"></span><span id="dwc__friend_8h_10004f7092fcfb8d881eea57891d952b6b5a05f29835eb7bf85f13f241086224b"></span><span id="dwc__friend_8h_10004f7092fcfb8d881eea57891d952b6b48222d3205d474694f287ee2aec11fe"></span>
+<H3 id="dwc__friend_8h_10004f7092fcfb8d881eea57891d952b6">友達管理処理状態</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCFriendState {
+    DWC_FRIEND_STATE_INIT          =  0,
+    DWC_FRIEND_STATE_PERS_LOGIN,
+    DWC_FRIEND_STATE_LOGON,
+    DWC_FRIEND_STATE_NUM,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_FRIEND_STATE_INIT</CODE></STRONG></EM></TD>
+		  <TD>初期状態</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_FRIEND_STATE_PERS_LOGIN</CODE></STRONG></EM></TD>
+		  <TD>Persistentサーバログイン＆友達リスト同期処理中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_FRIEND_STATE_LOGON</CODE></STRONG></EM></TD>
+		  <TD>Persistentサーバログイン後</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_FRIEND_STATE_NUM</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__friend_8h_1dc29c2ff13d900c2f185ee95427fb06cee08fa1e072deea3cc17134931cefd7b"></span><span id="dwc__friend_8h_1dc29c2ff13d900c2f185ee95427fb06cd6791387bbc859ee527c945e6472ff41"></span><span id="dwc__friend_8h_1dc29c2ff13d900c2f185ee95427fb06c72bef7aafff5d61c46786f781fa430ce"></span><span id="dwc__friend_8h_1dc29c2ff13d900c2f185ee95427fb06c0cf7fc864d3b6907fe23fc2a29f0ca6d"></span><span id="dwc__friend_8h_1dc29c2ff13d900c2f185ee95427fb06c198e0f2eba84a7150f66d79afcc9d501"></span>
+<H3 id="dwc__friend_8h_1dc29c2ff13d900c2f185ee95427fb06c">ローカル友達リストとGPバディリストとの同期処理状態</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum  {
+    DWC_BUDDY_UPDATE_STATE_WAIT        =  0,
+    DWC_BUDDY_UPDATE_STATE_CHECK,
+    DWC_BUDDY_UPDATE_STATE_PSEARCH,
+    DWC_BUDDY_UPDATE_STATE_COMPLETE,
+    DWC_BUDDY_UPDATE_STATE_NUM,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_BUDDY_UPDATE_STATE_WAIT</CODE></STRONG></EM></TD>
+		  <TD>バディリストダウンロード完了待ち</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_BUDDY_UPDATE_STATE_CHECK</CODE></STRONG></EM></TD>
+		  <TD>バディリストチェック中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_BUDDY_UPDATE_STATE_PSEARCH</CODE></STRONG></EM></TD>
+		  <TD>プロファイルサーチ中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_BUDDY_UPDATE_STATE_COMPLETE</CODE></STRONG></EM></TD>
+		  <TD>バディリスト同期処理完了</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_BUDDY_UPDATE_STATE_NUM</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__gdb_8h_10aa8159d80833f71954f89c9272d6b99accf87451a2db3accc627529ac0ee488"></span><span id="dwc__gdb_8h_10aa8159d80833f71954f89c9272d6b99ef6d997b7776ec79dba470a38f08e597"></span><span id="dwc__gdb_8h_10aa8159d80833f71954f89c9272d6b9979e37ffec943d53e1eeed2020a4c9286"></span><span id="dwc__gdb_8h_10aa8159d80833f71954f89c9272d6b99e532407fa4cb2602fa3f2f95ab7bad6f"></span>
+<H3 id="dwc__gdb_8h_10aa8159d80833f71954f89c9272d6b99">SSL通信の状態を示す列挙型です。</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCGdbSSLType {
+    DWC_GDB_SSL_TYPE_NONE,
+    DWC_GDB_SSL_TYPE_SERVER_AUTH,
+    DWC_GDB_SSL_TYPE_SERVER_CLIENT_AUTH,
+    DWC_GDB_SSL_TYPE_NUM,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_SSL_TYPE_NONE</CODE></STRONG></EM></TD>
+		  <TD>SSLを使用しません。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_SSL_TYPE_SERVER_AUTH</CODE></STRONG></EM></TD>
+		  <TD>サーバ認証を行いSSLで通信します。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_SSL_TYPE_SERVER_CLIENT_AUTH</CODE></STRONG></EM></TD>
+		  <TD>サーバ認証とクライアント認証を行いSSLで通信します。※Nitro,Twlでは使えません。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_SSL_TYPE_NUM</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4a3ae6ab45abcc3857483bf41a0793b177"></span><span id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4a33629b8eaebb990e354693c52234f3fc"></span><span id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4a481b3edf2d4044df2f13fe4797718bb0"></span><span id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4a7617a3593fd4f7481327b824b30eb216"></span><span id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4a9f1cc29c03399d6f2de8f3cda0d91036"></span><span id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4a058507b9aa1ac33c35bf5605d35c025f"></span><span id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4ace98bba1d72bbf41ad60cf09f9842eae"></span><span id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4a6278229c15d477a84d8930dee00fb6fb"></span><span id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4a6e4cfa86823d7ab75751f04e7a601c77"></span><span id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4ab77c1bfe3006a1952bfa5efd2815a0a6"></span><span id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4aea72e24b8cedbc1d63d31bfbb3a15b81"></span>
+<H3 id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4a">フィールドの型を示す列挙型です。</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCGdbFieldType {
+    DWC_GDB_FIELD_TYPE_BYTE,
+    DWC_GDB_FIELD_TYPE_SHORT,
+    DWC_GDB_FIELD_TYPE_INT,
+    DWC_GDB_FIELD_TYPE_FLOAT,
+    DWC_GDB_FIELD_TYPE_ASCII_STRING,
+    DWC_GDB_FIELD_TYPE_UNICODE_STRING,
+    DWC_GDB_FIELD_TYPE_BOOLEAN,
+    DWC_GDB_FIELD_TYPE_DATE_AND_TIME,
+    DWC_GDB_FIELD_TYPE_BINARY_DATA,
+    DWC_GDB_FIELD_TYPE_INT64,
+    DWC_GDB_FIELD_TYPE_NUM_FIELD_TYPES,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_FIELD_TYPE_BYTE</CODE></STRONG></EM></TD>
+		  <TD>1バイトの符号なし整数です。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_FIELD_TYPE_SHORT</CODE></STRONG></EM></TD>
+		  <TD>2バイトの符号付き整数です。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_FIELD_TYPE_INT</CODE></STRONG></EM></TD>
+		  <TD>4バイトの符号付き整数です。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_FIELD_TYPE_FLOAT</CODE></STRONG></EM></TD>
+		  <TD>8バイトの浮動小数点数です。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_FIELD_TYPE_ASCII_STRING</CODE></STRONG></EM></TD>
+		  <TD>一文字1バイトの文字列です。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_FIELD_TYPE_UNICODE_STRING</CODE></STRONG></EM></TD>
+		  <TD>一文字2バイトの文字列です。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_FIELD_TYPE_BOOLEAN</CODE></STRONG></EM></TD>
+		  <TD>真偽値です。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_FIELD_TYPE_DATE_AND_TIME</CODE></STRONG></EM></TD>
+		  <TD>UnixTimeで表される時間です。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_FIELD_TYPE_BINARY_DATA</CODE></STRONG></EM></TD>
+		  <TD>バイナリデータです。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_FIELD_TYPE_INT64</CODE></STRONG></EM></TD>
+		  <TD>8バイトの符号付き整数です。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_FIELD_TYPE_NUM_FIELD_TYPES</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86e9779fbe6ad274d2016ee2ab66a08582"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a8609d960ea7f626a750e856dca94bb8a7e"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86fb7833f79337fbea64f6040b987208f8"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a865c0906199233e658adee86bb72263735"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a861f6ff2e76fcb883d3646c4a92a403da1"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a8620c98f93663c044d6d43f068eef57f3b"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86d9c67158331d0e451dd21f08217604f5"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a867dc04f92726183de489ceee3814a653f"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86f4646ec9f6485759a76a7062fb6b6a32"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a867168de93939685b70ca1635c31e6ac31"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86e1207cc2506c0d726b4baed0c44ad681"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86052a3a4b58b1d89563955b69b454263a"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a863dc5a85600c9dbb923b71c4ce879f2bb"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86ee3bd215178571d38447c8645a5c3a20"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a8689d0d3e1158b9f32a59a0255aa45d0b1"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86fefb66f5925fdc654df571a8550e6827"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a861e4338ccd1b73d20cc2af7858c8ac6ae"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86b3285d92e1674f68b6271237cda7c58f"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a866ef0868a7a29170f0103fbfc38c46757"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a864378e1bc7feac65ba9b8730d908ece2a"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86c5827e448700d344fb4a3a7f54da3b31"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a860d4084c0afaea8fa7bf063bdbc8405bf"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a8668aa233fe2cb55050e065be47f22f5ee"></span>
+<H3 id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86">エラーを示す列挙型です。</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCGdbError {
+    DWC_GDB_ERROR_NONE                   =  0,
+    DWC_GDB_ERROR_OUT_OF_MEMORY          =  1,
+    DWC_GDB_ERROR_NOT_AVAILABLE          =  2,
+    DWC_GDB_ERROR_CORE_SHUTDOWN          =  3,
+    DWC_GDB_ERROR_NOT_LOGIN              =  4,
+    DWC_GDB_ERROR_NOT_AUTHENTICATED      =  5,
+    DWC_GDB_ERROR_BAD_INPUT              =  6,
+    DWC_GDB_ERROR_BAD_TABLENAME          =  7,
+    DWC_GDB_ERROR_BAD_FIELDS             =  8,
+    DWC_GDB_ERROR_BAD_NUM_FIELDS         =  9,
+    DWC_GDB_ERROR_BAD_FIELD_NAME         =  10,
+    DWC_GDB_ERROR_BAD_FIELD_TYPE         =  11,
+    DWC_GDB_ERROR_BAD_FIELD_VALUE        =  12,
+    DWC_GDB_ERROR_BAD_OFFSET             =  13,
+    DWC_GDB_ERROR_BAD_MAX                =  14,
+    DWC_GDB_ERROR_BAD_RECORDIDS          =  15,
+    DWC_GDB_ERROR_BAD_NUM_RECORDIDS      =  16,
+    DWC_GDB_ERROR_UNKNOWN                =  17,
+    DWC_GDB_ERROR_ALREADY_INITIALIZED    =  18,
+    DWC_GDB_ERROR_NOT_INITIALIZED        =  19,
+    DWC_GDB_ERROR_IN_ASYNC_PROCESS       =  20,
+    DWC_GDB_ERROR_GHTTP                  =  21,
+    DWC_GDB_ERROR_IN_DWC_ERROR           =  22,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_NONE</CODE></STRONG></EM></TD>
+		  <TD>正常に終了しました。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_OUT_OF_MEMORY</CODE></STRONG></EM></TD>
+		  <TD>DWC_Initで与えたアロケータからメモリを確保できませんでした。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_NOT_AVAILABLE</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_CORE_SHUTDOWN</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_NOT_LOGIN</CODE></STRONG></EM></TD>
+		  <TD>WiFiConnectionに正しくログインしていません。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_NOT_AUTHENTICATED</CODE></STRONG></EM></TD>
+		  <TD>WiFiConnectionに正しくログインしていません。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_BAD_INPUT</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_BAD_TABLENAME</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_BAD_FIELDS</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_BAD_NUM_FIELDS</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_BAD_FIELD_NAME</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_BAD_FIELD_TYPE</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_BAD_FIELD_VALUE</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_BAD_OFFSET</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_BAD_MAX</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_BAD_RECORDIDS</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_BAD_NUM_RECORDIDS</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_UNKNOWN</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_ALREADY_INITIALIZED</CODE></STRONG></EM></TD>
+		  <TD>既に初期化されています。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_NOT_INITIALIZED</CODE></STRONG></EM></TD>
+		  <TD>初期化が行われていません。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_IN_ASYNC_PROCESS</CODE></STRONG></EM></TD>
+		  <TD>非同期処理中です。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_GHTTP</CODE></STRONG></EM></TD>
+		  <TD>GHTTPのエラーが発生しました。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_IN_DWC_ERROR</CODE></STRONG></EM></TD>
+		  <TD>DWCのエラーが起こっています。エラーの対処を行ってください。</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a49239582be56f1785d631810373fa064a4c"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4924afd9eda2e6676392b21a965c2db2361"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4925eaf2e3b2d401a1337aa757abb3353c3"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4929a937701e15ecf0f86f0c278f174a656"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a49214d2cf2e6c12821e15a026e6fb708d39"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492c371de846ada1ddb6b0ddbeb992b2110"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a49288b05de03139c9f4fb3ed8f458fe10b5"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4929a1434edfda178e4560ac09593dd9f0e"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492faa457de6eb1ecf4e5371dac4798ee89"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492cb57b4eac8558a5448a3fbcb4fc4e5a1"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4925b61d51648199c84d9f10147d58fae09"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492b6b0195c175de57f8af717489f3cd57f"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a49255da3e7bf5d2e7837d66746ff7bd8633"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4929242ed1fc90c85c89cfe16123d916a37"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a49264eb22c56674f3ae51462fd52c5cfdcf"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492208250040efa2fb81da8f6c74404fa27"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4922529a129ed45f2b10a593b711e22e442"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492b7c2701f3a90972958e2c806d79a07b4"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492029bd09d532e35784baedf9307846086"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492321fb4eaafdc9ef75aafc230faf57524"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492e99c97b47357cb94849347e38a266c94"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492bda323d6cc560a4b0f1848f6dcaa1ac5"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492f9f0a33bd83b8d0735a2d344c2bc9e25"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492cedf1d713d3801eb5de2c75e61cbad98"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4921485315052bc9dc56b62dd1f8ac05bc2"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492185a71b85746eedc07d880925f14fa78"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492a6375a94f467544b65bc2dd7e8bbfa0a"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492b74599cbf85532473779a3978e26b599"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4929e61f0c502afeb03b98553a4705c2dc4"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492424d077c2450b9240a30f57e5ff24efd"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4923422310e6fef7b6d6de5d592f47877c7"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4925d37cf8fb137071f2f42476bef8ba96a"></span>
+<H3 id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492">非同期処理の結果を示す列挙型です。</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCGdbAsyncResult {
+    DWC_GDB_ASYNC_RESULT_NONE                     =  0,
+    DWC_GDB_ASYNC_RESULT_SUCCESS                  =  1,
+    DWC_GDB_ASYNC_RESULT_SECRET_KEY_INVALID       =  2,
+    DWC_GDB_ASYNC_RESULT_SERVICE_DISABLED         =  3,
+    DWC_GDB_ASYNC_RESULT_CONNECTION_TIMEOUT       =  4,
+    DWC_GDB_ASYNC_RESULT_CONNECTION_ERROR         =  5,
+    DWC_GDB_ASYNC_RESULT_MALFORMED_RESPONSE       =  6,
+    DWC_GDB_ASYNC_RESULT_OUT_OF_MEMORY            =  7,
+    DWC_GDB_ASYNC_RESULT_DATABASE_UNAVAILABLE     =  8,
+    DWC_GDB_ASYNC_RESULT_LOGIN_TICKET_INVALID     =  9,
+    DWC_GDB_ASYNC_RESULT_LOGIN_TICKET_EXPIRED     =  10,
+    DWC_GDB_ASYNC_RESULT_TABLE_NOT_FOUND          =  11,
+    DWC_GDB_ASYNC_RESULT_RECORD_NOT_FOUND         =  12,
+    DWC_GDB_ASYNC_RESULT_FIELD_NOT_FOUND          =  13,
+    DWC_GDB_ASYNC_RESULT_FIELD_TYPE_INVALID       =  14,
+    DWC_GDB_ASYNC_RESULT_NO_PERMISSION            =  15,
+    DWC_GDB_ASYNC_RESULT_RECORD_LIMIT_REACHED     =  16,
+    DWC_GDB_ASYNC_RESULT_ALREADY_RATED            =  17,
+    DWC_GDB_ASYNC_RESULT_NOT_RATEABLE             =  18,
+    DWC_GDB_ASYNC_RESULT_NOT_OWNED                =  19,
+    DWC_GDB_ASYNC_RESULT_FILTER_INVALID           =  20,
+    DWC_GDB_ASYNC_RESULT_SORT_INVALID             =  21,
+    DWC_GDB_ASYNC_RESULT_UNKNOWN_ERROR            =  22,
+    DWC_GDB_ASYNC_RESULT_BAD_HTTP_METHOD          =  23,
+    DWC_GDB_ASYNC_RESULT_BAD_FILE_COUNT           =  24,
+    DWC_GDB_ASYNC_RESULT_MISSING_PARAMETER        =  25,
+    DWC_GDB_ASYNC_RESULT_FILE_NOT_FOUND           =  26,
+    DWC_GDB_ASYNC_RESULT_FILE_TOO_LARGE           =  27,
+    DWC_GDB_ASYNC_RESULT_FILE_UNKNOWN_ERROR       =  28,
+    DWC_GDB_ASYNC_RESULT_GHTTP_ERROR              =  29,
+    DWC_GDB_ASYNC_RESULT_TARGET_FILTER_INVALID    =  30,
+    DWC_GDB_ASYNC_RESULT_SERVER_ERROR             =  31,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_NONE</CODE></STRONG></EM></TD>
+		  <TD>非同期処理がまだ終了していません。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_SUCCESS</CODE></STRONG></EM></TD>
+		  <TD>成功しました。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_SECRET_KEY_INVALID</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_SERVICE_DISABLED</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_CONNECTION_TIMEOUT</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_CONNECTION_ERROR</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_MALFORMED_RESPONSE</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_OUT_OF_MEMORY</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_DATABASE_UNAVAILABLE</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_LOGIN_TICKET_INVALID</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_LOGIN_TICKET_EXPIRED</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_TABLE_NOT_FOUND</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_RECORD_NOT_FOUND</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_FIELD_NOT_FOUND</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_FIELD_TYPE_INVALID</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_NO_PERMISSION</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_RECORD_LIMIT_REACHED</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_ALREADY_RATED</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_NOT_RATEABLE</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_NOT_OWNED</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_FILTER_INVALID</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_SORT_INVALID</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_UNKNOWN_ERROR</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_BAD_HTTP_METHOD</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_BAD_FILE_COUNT</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_MISSING_PARAMETER</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_FILE_NOT_FOUND</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_FILE_TOO_LARGE</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_FILE_UNKNOWN_ERROR</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_GHTTP_ERROR</CODE></STRONG></EM></TD>
+		  <TD>GHTTPのエラーが発生しました。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_TARGET_FILTER_INVALID</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_SERVER_ERROR</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb75bc98568e49f3a6eb33393882b57c3a"></span><span id="dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849ebb3a8a9018de84cb0de5bf917fa9f7b16"></span><span id="dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb605bb3a74ef4c38439052c43bdae07ce"></span><span id="dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb4ac82fc695b0ad32b22ff4a229225132"></span>
+<H3 id="dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb">DWCGdbライブラリの状態を示す列挙型です。</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCGdbState {
+    DWC_GDB_STATE_UNINITIALIZED,
+    DWC_GDB_STATE_IDLE,
+    DWC_GDB_STATE_IN_ASYNC_PROCESS,
+    DWC_GDB_STATE_ERROR_OCCURED,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_STATE_UNINITIALIZED</CODE></STRONG></EM></TD>
+		  <TD>未初期化状態</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_STATE_IDLE</CODE></STRONG></EM></TD>
+		  <TD>初期化が終了し、非同期処理が行われていない状態</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_STATE_IN_ASYNC_PROCESS</CODE></STRONG></EM></TD>
+		  <TD>非同期処理を行っている状態</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_STATE_ERROR_OCCURED</CODE></STRONG></EM></TD>
+		  <TD>エラーが発生した状態</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__login_8h_167c3f1961a1c645d9f330db0e75a858f8221243cddc87940fb402ce1bf3739a6"></span><span id="dwc__login_8h_167c3f1961a1c645d9f330db0e75a858f14ffe72054f5c005d1a4d0d7f716badd"></span><span id="dwc__login_8h_167c3f1961a1c645d9f330db0e75a858f569337c439d12f04430d24a405071c32"></span><span id="dwc__login_8h_167c3f1961a1c645d9f330db0e75a858f224ee0aecf6fc57322c88ac6f36ea799"></span><span id="dwc__login_8h_167c3f1961a1c645d9f330db0e75a858f4bce8a960c389b720072a491c83cf00d"></span><span id="dwc__login_8h_167c3f1961a1c645d9f330db0e75a858f00dbaa831456ceeb69cfad1bf519a279"></span><span id="dwc__login_8h_167c3f1961a1c645d9f330db0e75a858f75614e7aad8b7afc4d124666ca8fb925"></span>
+<H3 id="dwc__login_8h_167c3f1961a1c645d9f330db0e75a858f">ログイン進行状況列挙子</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCLoginState {
+    DWC_LOGIN_STATE_INIT           =  0,
+    DWC_LOGIN_STATE_REMOTE_AUTH,
+    DWC_LOGIN_STATE_CONNECTING,
+    DWC_LOGIN_STATE_GPGETINFO,
+    DWC_LOGIN_STATE_GPSETINFO,
+    DWC_LOGIN_STATE_CONNECTED,
+    DWC_LOGIN_STATE_NUM,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_LOGIN_STATE_INIT</CODE></STRONG></EM></TD>
+		  <TD>初期状態</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_LOGIN_STATE_REMOTE_AUTH</CODE></STRONG></EM></TD>
+		  <TD>リモート認証中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_LOGIN_STATE_CONNECTING</CODE></STRONG></EM></TD>
+		  <TD>GPサーバ接続中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_LOGIN_STATE_GPGETINFO</CODE></STRONG></EM></TD>
+		  <TD>GPにloginしたときのlastname取得時</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_LOGIN_STATE_GPSETINFO</CODE></STRONG></EM></TD>
+		  <TD>GPに初めてloginしたときのlastname設定</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_LOGIN_STATE_CONNECTED</CODE></STRONG></EM></TD>
+		  <TD>コネクト完了状態</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_LOGIN_STATE_NUM</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__main_8h_1beb3cc25257ef0d9a57a5797e7ac0f5da8ddb3f2511310666244836bef6b4fd0"></span><span id="dwc__main_8h_1beb3cc25257ef0d9a57a5797e7ac0f5d83353f30e63330fd993dd5b67181a880"></span><span id="dwc__main_8h_1beb3cc25257ef0d9a57a5797e7ac0f5dfe58bc0a870c326a0417c001982ef0d2"></span><span id="dwc__main_8h_1beb3cc25257ef0d9a57a5797e7ac0f5db39a28e875383fb5389922d3bc464dcc"></span><span id="dwc__main_8h_1beb3cc25257ef0d9a57a5797e7ac0f5d4e6c84182a2141273b7804321eb2e89a"></span><span id="dwc__main_8h_1beb3cc25257ef0d9a57a5797e7ac0f5da8d9728166ab2c7a14589f91ec28f185"></span><span id="dwc__main_8h_1beb3cc25257ef0d9a57a5797e7ac0f5db67d34330d529d028f0534b67fc054fb"></span>
+<H3 id="dwc__main_8h_1beb3cc25257ef0d9a57a5797e7ac0f5d">DWCネットワーク状態列挙子</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCState {
+    DWC_STATE_INIT               =  0,
+    DWC_STATE_AVAILABLE_CHECK,
+    DWC_STATE_LOGIN,
+    DWC_STATE_ONLINE,
+    DWC_STATE_MATCHING,
+    DWC_STATE_CONNECTED,
+    DWC_STATE_NUM,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_STATE_INIT</CODE></STRONG></EM></TD>
+		  <TD>初期状態</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_STATE_AVAILABLE_CHECK</CODE></STRONG></EM></TD>
+		  <TD>ゲームの利用可能状況をチェック中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_STATE_LOGIN</CODE></STRONG></EM></TD>
+		  <TD>ログイン処理中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_STATE_ONLINE</CODE></STRONG></EM></TD>
+		  <TD>ログイン完了後オンライン状態</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_STATE_MATCHING</CODE></STRONG></EM></TD>
+		  <TD>マッチメイク処理中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_STATE_CONNECTED</CODE></STRONG></EM></TD>
+		  <TD>マッチメイク完了後、メッシュ型ネットワーク構築済み状態</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_STATE_NUM</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5b765883ae010aaf2c16e1af40e78acd28"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5b2284f64cd3df566132e0a41a83e90b49"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5b2e75d7bbd337e89b0f048b2d36f0f84e"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5b1f1a621046e6fe838558f4f715d0395e"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5bdc76e090b7eb5a853a4062d805885a36"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5b4cfde5036a884c70343b8d2670796ba3"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5bb0684017a20aa5777d82f61141c2975f"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5b516107a987709b054464fdc2db9ff62a"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5b6418cfdc571c0f497beea2730ed24bab"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5ba5431caf3f2c77702397d554d7b6ad59"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5b4e3d938a30aa7f92b4d79d69b12aa202"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5bca3bae302c4d847322c589540dcc7a43"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5bb2f43e0abbb1788a08cc06fb40ae30a9"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5b9309a30e8d65536a4498c4778e12ea78"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5b3ef961677affad0d482bcc2f24f09dea"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5ba21db9ca92d3060b67679bf020973aba"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5bb9981ceb81edbe4afe7336ac1c069be7"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5b7b41b25da0929500b78cf12a20f56e4f"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5b49207808db3e5891b7c204f58a56be8e"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5b9cd305cb43f6a5aa8a252b36346da7f1"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5bcc29d79b4b9cbdc471f6287611901859"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5b1a406119ae56a0bd00b7009ffbd83dff"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5b8a4ceff719ebf01401234691f7360c3a"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5b7351fd352ca0ea2a96c0c8539496eaa6"></span><span id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5b0cccffd981da0e07ab2f15c96db40fd0"></span>
+<H3 id="dwc__match_8h_1eaf1ee6b1aba8d26e7863d6892385a5b">マッチメイク状態列挙子</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCMatchState {
+    DWC_MATCH_STATE_INIT                      =  0,
+    DWC_MATCH_STATE_CL_WAITING,
+    DWC_MATCH_STATE_CL_SEARCH_HOST,
+    DWC_MATCH_STATE_CL_WAIT_RESV,
+    DWC_MATCH_STATE_CL_SEARCH_EVAL_HOST,
+    DWC_MATCH_STATE_CL_NN,
+    DWC_MATCH_STATE_CL_GT2,
+    DWC_MATCH_STATE_CL_CANCEL_SYN,
+    DWC_MATCH_STATE_CL_SYN,
+    DWC_MATCH_STATE_CL_SVDOWN_1,
+    DWC_MATCH_STATE_CL_SVDOWN_2,
+    DWC_MATCH_STATE_CL_SVDOWN_3,
+    DWC_MATCH_STATE_CL_SEARCH_GROUPID_HOST,
+    DWC_MATCH_STATE_SV_WAITING,
+    DWC_MATCH_STATE_SV_OWN_NN,
+    DWC_MATCH_STATE_SV_OWN_GT2,
+    DWC_MATCH_STATE_SV_WAIT_CL_LINK,
+    DWC_MATCH_STATE_SV_CANCEL_SYN,
+    DWC_MATCH_STATE_SV_CANCEL_SYN_WAIT,
+    DWC_MATCH_STATE_SV_SYN,
+    DWC_MATCH_STATE_SV_SYN_WAIT,
+    DWC_MATCH_STATE_WAIT_CLOSE,
+    DWC_MATCH_STATE_SEARCH_OWN,
+    DWC_MATCH_STATE_SV_SYN_CLOSE_WAIT,
+    DWC_MATCH_STATE_NUM,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_INIT</CODE></STRONG></EM></TD>
+		  <TD>初期状態</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_WAITING</CODE></STRONG></EM></TD>
+		  <TD>待ち状態</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_SEARCH_HOST</CODE></STRONG></EM></TD>
+		  <TD>空きホスト検索状態（友達無指定の時のみ）</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_WAIT_RESV</CODE></STRONG></EM></TD>
+		  <TD>予約に対するサーバからの返答待ち</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_SEARCH_EVAL_HOST</CODE></STRONG></EM></TD>
+		  <TD>評価する相手ホストを検索中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_NN</CODE></STRONG></EM></TD>
+		  <TD>NATネゴシエーション中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_GT2</CODE></STRONG></EM></TD>
+		  <TD>GT2コネクション確立中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_CANCEL_SYN</CODE></STRONG></EM></TD>
+		  <TD>サーバクライアントでマッチメイクキャンセル同期調整中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_SYN</CODE></STRONG></EM></TD>
+		  <TD>マッチメイク完了同期調整中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_SVDOWN_1</CODE></STRONG></EM></TD>
+		  <TD>サーバダウン検出中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_SVDOWN_2</CODE></STRONG></EM></TD>
+		  <TD>サーバダウン検出中2</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_SVDOWN_3</CODE></STRONG></EM></TD>
+		  <TD>サーバダウン検出中3</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_CL_SEARCH_GROUPID_HOST</CODE></STRONG></EM></TD>
+		  <TD>グループIDからホストを検索</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_SV_WAITING</CODE></STRONG></EM></TD>
+		  <TD>待ち状態</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_SV_OWN_NN</CODE></STRONG></EM></TD>
+		  <TD>クライアントとのNATネゴシエーション中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_SV_OWN_GT2</CODE></STRONG></EM></TD>
+		  <TD>クライアントとのGT2コネクション確立中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_SV_WAIT_CL_LINK</CODE></STRONG></EM></TD>
+		  <TD>クライアント同士の接続完了待ち</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_SV_CANCEL_SYN</CODE></STRONG></EM></TD>
+		  <TD>サーバクライアントでマッチメイクキャンセル同期調整SYN-ACK待ち</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_SV_CANCEL_SYN_WAIT</CODE></STRONG></EM></TD>
+		  <TD>サーバクライアントでマッチメイクキャンセル同期調整終了待ち</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_SV_SYN</CODE></STRONG></EM></TD>
+		  <TD>マッチメイク終了同期調整SYN-ACK待ち</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_SV_SYN_WAIT</CODE></STRONG></EM></TD>
+		  <TD>マッチメイク終了同期調整終了待ち</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_WAIT_CLOSE</CODE></STRONG></EM></TD>
+		  <TD>コネクションクローズ完了待ち</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_SEARCH_OWN</CODE></STRONG></EM></TD>
+		  <TD>自ホスト情報検索中（以前の名称はDWC_MATCH_STATE_CL_SEARCH_OWN)</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_SV_SYN_CLOSE_WAIT</CODE></STRONG></EM></TD>
+		  <TD>CLOSEコマンド送信後の待ち時間</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_STATE_NUM</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__match_8h_161dadd085c1777f559549e05962b2c9ea95c4c76f967aca136989c1fa9609e17"></span><span id="dwc__match_8h_161dadd085c1777f559549e05962b2c9e4df03281c68af857dde0f0b7445eade0"></span><span id="dwc__match_8h_161dadd085c1777f559549e05962b2c9ebe9bb11adc1767c473083eeb405e6741"></span><span id="dwc__match_8h_161dadd085c1777f559549e05962b2c9e392db2897d6767f0628fb77800741815"></span><span id="dwc__match_8h_161dadd085c1777f559549e05962b2c9e800af97588c881355f787c942c409e14"></span>
+<H3 id="dwc__match_8h_161dadd085c1777f559549e05962b2c9e">マッチメイクタイプ列挙子</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum  {
+    DWC_MATCH_TYPE_ANYBODY    =  0,
+    DWC_MATCH_TYPE_FRIEND,
+    DWC_MATCH_TYPE_SC_SV,
+    DWC_MATCH_TYPE_SC_CL,
+    DWC_MATCH_TYPE_NUM,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_TYPE_ANYBODY</CODE></STRONG></EM></TD>
+		  <TD>友達無指定ピアマッチメイク</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_TYPE_FRIEND</CODE></STRONG></EM></TD>
+		  <TD>友達指定ピアマッチメイク</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_TYPE_SC_SV</CODE></STRONG></EM></TD>
+		  <TD>サーバクライアントマッチメイクのサーバ側</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_TYPE_SC_CL</CODE></STRONG></EM></TD>
+		  <TD>サーバクライアントマッチメイクのクライアント側</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_MATCH_TYPE_NUM</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__match_8h_1f4bbf087a5388bc288993c3e9399c32d49a4fc2084fa48fc54dc54311df306a4"></span><span id="dwc__match_8h_1f4bbf087a5388bc288993c3e9399c32d134341e19e29e1a8c40c6be29476d8bb"></span><span id="dwc__match_8h_1f4bbf087a5388bc288993c3e9399c32d044d5e85299f9e412d407512c9aa1a6a"></span>
+<H3 id="dwc__match_8h_1f4bbf087a5388bc288993c3e9399c32d">締め切りコールバック列挙子</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCSuspendResult {
+    DWC_SUSPEND_SUCCESS    =  0,
+    DWC_SUSPEND_TIMEOUT,
+    DWC_SUSPEND_NUM,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SUSPEND_SUCCESS</CODE></STRONG></EM></TD>
+		  <TD>正常終了</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SUSPEND_TIMEOUT</CODE></STRONG></EM></TD>
+		  <TD>タイムアウトした(現在、使用されません)</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SUSPEND_NUM</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__match_8h_1c3ba6e33e5dd79e1d13350b71fa222503d5fca12502cb78c9fa7cea5facf4080"></span><span id="dwc__match_8h_1c3ba6e33e5dd79e1d13350b71fa222507e31cddfcca05c40474bc020de79b911"></span><span id="dwc__match_8h_1c3ba6e33e5dd79e1d13350b71fa22250ff91129c4e20cc4fe2fb992d0f441a16"></span><span id="dwc__match_8h_1c3ba6e33e5dd79e1d13350b71fa2225042116477721ca533e505c8b28dd6d4dd"></span>
+<H3 id="dwc__match_8h_1c3ba6e33e5dd79e1d13350b71fa22250">接続形態列挙子</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCTopologyType {
+    DWC_TOPOLOGY_TYPE_HYBRID      =  0,
+    DWC_TOPOLOGY_TYPE_STAR,
+    DWC_TOPOLOGY_TYPE_FULLMESH,
+    DWC_TOPOLOGY_TYPE_NUM,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_TOPOLOGY_TYPE_HYBRID</CODE></STRONG></EM></TD>
+		  <TD>ハイブリッド型</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_TOPOLOGY_TYPE_STAR</CODE></STRONG></EM></TD>
+		  <TD>スター型</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_TOPOLOGY_TYPE_FULLMESH</CODE></STRONG></EM></TD>
+		  <TD>フルメッシュ型</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_TOPOLOGY_TYPE_NUM</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__nas_8h_1349021731a0fc769a18f1057332fd0f6504090416fac4dd9cd338ebe8b8d6910"></span><span id="dwc__nas_8h_1349021731a0fc769a18f1057332fd0f689358a48e20ef87ef8af6db3a8685c2a"></span><span id="dwc__nas_8h_1349021731a0fc769a18f1057332fd0f67927e3a04b407a12fbb36448b56a4e87"></span>
+<H3 id="dwc__nas_8h_1349021731a0fc769a18f1057332fd0f6">ingamesnチェック結果列挙子</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCIngamesnCheckResult {
+    DWC_INGAMESN_NOT_CHECKED    =  0,
+    DWC_INGAMESN_VALID          =  1,
+    DWC_INGAMESN_INVALID        =  2,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_INGAMESN_NOT_CHECKED</CODE></STRONG></EM></TD>
+		  <TD>未チェック</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_INGAMESN_VALID</CODE></STRONG></EM></TD>
+		  <TD>有効</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_INGAMESN_INVALID</CODE></STRONG></EM></TD>
+		  <TD>無効</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__nas_8h_1114bd9397d08664e16b744907f8cf30bc20d42a77226e8206c82963046addc5a"></span><span id="dwc__nas_8h_1114bd9397d08664e16b744907f8cf30bcc934bcd273914940f2ad97ab62493fe"></span><span id="dwc__nas_8h_1114bd9397d08664e16b744907f8cf30b66952ba540262fefea1767d3788855b0"></span><span id="dwc__nas_8h_1114bd9397d08664e16b744907f8cf30be05d4f7532ca15f926878b7c9a36cb45"></span><span id="dwc__nas_8h_1114bd9397d08664e16b744907f8cf30ba60ecbf3fd27c2280e994054d4e299d7"></span><span id="dwc__nas_8h_1114bd9397d08664e16b744907f8cf30bc82e51706e74286970353ba10c904771"></span><span id="dwc__nas_8h_1114bd9397d08664e16b744907f8cf30b89c66d5f99cde418c68b80800bcd6287"></span>
+<H3 id="dwc__nas_8h_1114bd9397d08664e16b744907f8cf30b">任天堂認証サーバへの認証処理の状況を示す列挙型です。</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCNasLoginState {
+    DWC_NASLOGIN_STATE_DIRTY       =  0,
+    DWC_NASLOGIN_STATE_IDLE,
+    DWC_NASLOGIN_STATE_HTTP,
+    DWC_NASLOGIN_STATE_SUCCESS,
+    DWC_NASLOGIN_STATE_ERROR,
+    DWC_NASLOGIN_STATE_CANCELED,
+    DWC_NASLOGIN_STATE_MAX,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_NASLOGIN_STATE_DIRTY</CODE></STRONG></EM></TD>
+		  <TD>認証処理が初期化されていません。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_NASLOGIN_STATE_IDLE</CODE></STRONG></EM></TD>
+		  <TD>認証処理が開始されていません。待機状態です。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_NASLOGIN_STATE_HTTP</CODE></STRONG></EM></TD>
+		  <TD>認証処理のためのHTTP通信を実行中です。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_NASLOGIN_STATE_SUCCESS</CODE></STRONG></EM></TD>
+		  <TD>認証処理が成功しました。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_NASLOGIN_STATE_ERROR</CODE></STRONG></EM></TD>
+		  <TD>認証処理が失敗しました。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_NASLOGIN_STATE_CANCELED</CODE></STRONG></EM></TD>
+		  <TD>認証処理がキャンセルされました。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_NASLOGIN_STATE_MAX</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__nd_8h_16dd63254afcd3d1cc5f3a7851c0c8ef1b31038f7b64ad58c39c5eb6a07aed921"></span><span id="dwc__nd_8h_16dd63254afcd3d1cc5f3a7851c0c8ef18dbdf61c5e51fd4b4c8dd12dcbabfd79"></span><span id="dwc__nd_8h_16dd63254afcd3d1cc5f3a7851c0c8ef14293eb5c79cb489d3d152bfd49c9fcf9"></span><span id="dwc__nd_8h_16dd63254afcd3d1cc5f3a7851c0c8ef1b92898ee1b47439262313646f2fe46ee"></span><span id="dwc__nd_8h_16dd63254afcd3d1cc5f3a7851c0c8ef18e7a759f648afeb1195a22d035819d07"></span><span id="dwc__nd_8h_16dd63254afcd3d1cc5f3a7851c0c8ef142672b6b81576305b61b23a5eb0f6d22"></span>
+<H3 id="dwc__nd_8h_16dd63254afcd3d1cc5f3a7851c0c8ef1">ダウンロードライブラリステート</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCNdState {
+    DWC_ND_STATE_NOTINITIALIZED,
+    DWC_ND_STATE_READY,
+    DWC_ND_STATE_BUSY,
+    DWC_ND_STATE_COMPLETE,
+    DWC_ND_STATE_ERROR,
+    DWC_ND_STATE_MAX,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ND_STATE_NOTINITIALIZED</CODE></STRONG></EM></TD>
+		  <TD>ダウンロードライブラリが未初期化</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ND_STATE_READY</CODE></STRONG></EM></TD>
+		  <TD>初期化が完了し、他のダウンロードライブラリ関数が呼べる状態</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ND_STATE_BUSY</CODE></STRONG></EM></TD>
+		  <TD>非同期処理を実行中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ND_STATE_COMPLETE</CODE></STRONG></EM></TD>
+		  <TD>非同期処理が正常に完了した</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ND_STATE_ERROR</CODE></STRONG></EM></TD>
+		  <TD>非同期処理中にエラーが発生し、完了した</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ND_STATE_MAX</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__nd_8h_15516f9a01edfa95b9587f88bfdbd9f613afc2fa5c21e4f49592cce997a16cace"></span><span id="dwc__nd_8h_15516f9a01edfa95b9587f88bfdbd9f6176bdb172dc00ab001c0e2c06ee5f2ba2"></span><span id="dwc__nd_8h_15516f9a01edfa95b9587f88bfdbd9f614e927ca1c3bf3b867e67ad7ce04f3d0e"></span><span id="dwc__nd_8h_15516f9a01edfa95b9587f88bfdbd9f61cb3e429dac5a6353f11bc580a7df553a"></span><span id="dwc__nd_8h_15516f9a01edfa95b9587f88bfdbd9f61bb6d05ab6643a6f17f448949aef901a2"></span><span id="dwc__nd_8h_15516f9a01edfa95b9587f88bfdbd9f610fdf52bef4f49b54e37080ce05087b43"></span><span id="dwc__nd_8h_15516f9a01edfa95b9587f88bfdbd9f61e4c41c8945905f1a227cca8eec830234"></span><span id="dwc__nd_8h_15516f9a01edfa95b9587f88bfdbd9f611664b66e43e076177f2113d69dc449e1"></span><span id="dwc__nd_8h_15516f9a01edfa95b9587f88bfdbd9f617ff7b82c0b4e88b723f5693ec38e8561"></span><span id="dwc__nd_8h_15516f9a01edfa95b9587f88bfdbd9f615276aaf3bf5b152585418286210b173b"></span>
+<H3 id="dwc__nd_8h_15516f9a01edfa95b9587f88bfdbd9f61">ダウンロードライブラリエラー列挙子</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCNdError {
+    DWC_ND_ERROR_NONE,
+    DWC_ND_ERROR_ALLOC,
+    DWC_ND_ERROR_BUSY,
+    DWC_ND_ERROR_HTTP,
+    DWC_ND_ERROR_BUFFULL,
+    DWC_ND_ERROR_PARAM,
+    DWC_ND_ERROR_CANCELED,
+    DWC_ND_ERROR_DLSERVER,
+    DWC_ND_ERROR_FATAL,
+    DWC_ND_ERROR_MAX,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ND_ERROR_NONE</CODE></STRONG></EM></TD>
+		  <TD>実行中の処理が完了した</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ND_ERROR_ALLOC</CODE></STRONG></EM></TD>
+		  <TD>メモリ確保に失敗した</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ND_ERROR_BUSY</CODE></STRONG></EM></TD>
+		  <TD>本来その関数を呼び出せないSTATEで呼び出した</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ND_ERROR_HTTP</CODE></STRONG></EM></TD>
+		  <TD>HTTP通信にエラーが発生した</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ND_ERROR_BUFFULL</CODE></STRONG></EM></TD>
+		  <TD>(内部エラー)ダウンロードバッファが足りない</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ND_ERROR_PARAM</CODE></STRONG></EM></TD>
+		  <TD>不正なパラメータによるエラーが発生した</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ND_ERROR_CANCELED</CODE></STRONG></EM></TD>
+		  <TD>処理のキャンセルが完了した</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ND_ERROR_DLSERVER</CODE></STRONG></EM></TD>
+		  <TD>サーバがエラーコードを返してきた</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ND_ERROR_FATAL</CODE></STRONG></EM></TD>
+		  <TD>未定義の致命的なエラーが発生した</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ND_ERROR_MAX</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__nd_8h_12589cc4824e67625368ff4b3b6353087637f790cefb6307ddc9213e7d8ee9083"></span><span id="dwc__nd_8h_12589cc4824e67625368ff4b3b6353087e1d4f64d44e0c517135c7ed3df03e912"></span><span id="dwc__nd_8h_12589cc4824e67625368ff4b3b6353087c7c60c32bc602598105c035f500f5639"></span><span id="dwc__nd_8h_12589cc4824e67625368ff4b3b63530871046c9fdc9ffd630b65ecff0a41341ab"></span><span id="dwc__nd_8h_12589cc4824e67625368ff4b3b63530871f7ab4c9fa2c9c7a4c85b11f96c9703d"></span><span id="dwc__nd_8h_12589cc4824e67625368ff4b3b63530873fc32ccc2c6d2534d0b65a27530ce3f2"></span>
+<H3 id="dwc__nd_8h_12589cc4824e67625368ff4b3b6353087">ダウンロードライブラリ進行列挙子</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCNdCallbackReason {
+    DWC_ND_CBREASON_INITIALIZE,
+    DWC_ND_CBREASON_GETFILELISTNUM,
+    DWC_ND_CBREASON_GETFILELIST,
+    DWC_ND_CBREASON_GETFILE,
+    DWC_ND_CBREASON_CLEANUP,
+    DWC_ND_CBREASON_MAX,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ND_CBREASON_INITIALIZE</CODE></STRONG></EM></TD>
+		  <TD>ダウンロードライブラリ初期化中に通知コールバックが呼び出された</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ND_CBREASON_GETFILELISTNUM</CODE></STRONG></EM></TD>
+		  <TD>ダウンロード可能なファイル総数をダウンロード中に通知コールバックが呼び出された</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ND_CBREASON_GETFILELIST</CODE></STRONG></EM></TD>
+		  <TD>ファイル情報一覧をダウンロード中に通知コールバックが呼び出された</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ND_CBREASON_GETFILE</CODE></STRONG></EM></TD>
+		  <TD>ファイルをダウンロード中に通知コールバックが呼び出された</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ND_CBREASON_CLEANUP</CODE></STRONG></EM></TD>
+		  <TD>クリーンアップ完了時に呼び出された</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_ND_CBREASON_MAX</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__prof_8h_1ff8674b700d1c8e3b2531e7d0a9aecfb61eb8980f00f7d18b646142be9bf5bbb"></span><span id="dwc__prof_8h_1ff8674b700d1c8e3b2531e7d0a9aecfb026cff1ac63027198caac09f7763b68b"></span><span id="dwc__prof_8h_1ff8674b700d1c8e3b2531e7d0a9aecfbee4fe0c0d0890ad73863e1ca1592fb5f"></span><span id="dwc__prof_8h_1ff8674b700d1c8e3b2531e7d0a9aecfb1a7fba9ba3d3ab2bc701e953090c9d2a"></span>
+<H3 id="dwc__prof_8h_1ff8674b700d1c8e3b2531e7d0a9aecfb">不正ネームチェック中のステート</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCProfState {
+    DWC_PROF_STATE_NOT_INITIALIZED    =  0,
+    DWC_PROF_STATE_OPERATING,
+    DWC_PROF_STATE_SUCCESS,
+    DWC_PROF_STATE_FAIL,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_PROF_STATE_NOT_INITIALIZED</CODE></STRONG></EM></TD>
+		  <TD>未初期化</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_PROF_STATE_OPERATING</CODE></STRONG></EM></TD>
+		  <TD>HTTP通信中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_PROF_STATE_SUCCESS</CODE></STRONG></EM></TD>
+		  <TD>名前チェック成功</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_PROF_STATE_FAIL</CODE></STRONG></EM></TD>
+		  <TD>名前チェック失敗</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__prof_8h_1bd4513afb206ea295489180b696074d2c787bc49a771f6628885b252c9ecd433"></span><span id="dwc__prof_8h_1bd4513afb206ea295489180b696074d2fcd54e6097b43596eac523a74df8e9f0"></span><span id="dwc__prof_8h_1bd4513afb206ea295489180b696074d2fdbd0c02aaf8c3a0f0905320ef1b95fb"></span><span id="dwc__prof_8h_1bd4513afb206ea295489180b696074d21b5e5841fca39e47c5644c1fa4628448"></span><span id="dwc__prof_8h_1bd4513afb206ea295489180b696074d21b2574f2837f1ed800183263bcd3d0c2"></span><span id="dwc__prof_8h_1bd4513afb206ea295489180b696074d29cf4a1db77b9a47dd72d3862db632105"></span><span id="dwc__prof_8h_1bd4513afb206ea295489180b696074d2eb521951cb74b549793bad63a6f36d06"></span>
+<H3 id="dwc__prof_8h_1bd4513afb206ea295489180b696074d2">不正文字列チェックのリージョンを示す列挙型</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCProfRegion {
+    DWC_PROF_REGION_SELF    =  0x00,
+    DWC_PROF_REGION_JP      =  0x01,
+    DWC_PROF_REGION_US      =  0x02,
+    DWC_PROF_REGION_EU      =  0x04,
+    DWC_PROF_REGION_KR      =  0x08,
+    DWC_PROF_REGION_CN      =  0x10,
+    DWC_PROF_REGION_ALL     =  0x80,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_PROF_REGION_SELF</CODE></STRONG></EM></TD>
+		  <TD>製品コードに従う</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_PROF_REGION_JP</CODE></STRONG></EM></TD>
+		  <TD>日本</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_PROF_REGION_US</CODE></STRONG></EM></TD>
+		  <TD>北米</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_PROF_REGION_EU</CODE></STRONG></EM></TD>
+		  <TD>欧州</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_PROF_REGION_KR</CODE></STRONG></EM></TD>
+		  <TD>韓国</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_PROF_REGION_CN</CODE></STRONG></EM></TD>
+		  <TD>中国</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_PROF_REGION_ALL</CODE></STRONG></EM></TD>
+		  <TD>全リージョン</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__ranking_8h_1726ca809ffd3d67ab4b8476646f26635827f7e5e0e54234651bde187887f7cd1"></span><span id="dwc__ranking_8h_1726ca809ffd3d67ab4b8476646f266358b29c14e4ecd065e0004e7a6444affed"></span>
+<H3 id="dwc__ranking_8h_1726ca809ffd3d67ab4b8476646f26635">取得するランキングリストの昇順と降順を示す定数</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum  {
+    DWC_RNK_ORDER_ASC    = 	0,
+    DWC_RNK_ORDER_DES    = 	1,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ORDER_ASC</CODE></STRONG></EM></TD>
+		  <TD>昇順</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ORDER_DES</CODE></STRONG></EM></TD>
+		  <TD>降順</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__ranking_8h_11e26643f8161b162f689f7031ace591031d9ef7155e9c704fd07f83f72ad0077"></span><span id="dwc__ranking_8h_11e26643f8161b162f689f7031ace5910a4e6c6033f467d88496af91163df0345"></span><span id="dwc__ranking_8h_11e26643f8161b162f689f7031ace5910ede038616942f938cdf5e287edf52728"></span><span id="dwc__ranking_8h_11e26643f8161b162f689f7031ace5910201ca7d7cfbc9ab924ee2f013b4b1546"></span><span id="dwc__ranking_8h_11e26643f8161b162f689f7031ace59107ca572bbf54ccb1735e61e5af5646dfd"></span><span id="dwc__ranking_8h_11e26643f8161b162f689f7031ace59104ff37d4f85483f8ee366f77344e652db"></span><span id="dwc__ranking_8h_11e26643f8161b162f689f7031ace5910fa8759f04ea1c401bad3c44cbcd691ca"></span><span id="dwc__ranking_8h_11e26643f8161b162f689f7031ace5910267a9266ab011bc4ec1248366c195821"></span><span id="dwc__ranking_8h_11e26643f8161b162f689f7031ace5910901681b3c92fa9b04925ce4b31d10ff8"></span><span id="dwc__ranking_8h_11e26643f8161b162f689f7031ace591034f20e84c6b0bc492c176303ee5bcb65"></span><span id="dwc__ranking_8h_11e26643f8161b162f689f7031ace5910e6dc3c1ff6472e83774fe57aa8183aab"></span><span id="dwc__ranking_8h_11e26643f8161b162f689f7031ace59102517b337416128825178fa8daf962d5d"></span><span id="dwc__ranking_8h_11e26643f8161b162f689f7031ace5910747630e7cd85ccfc7e5a7ef010974735"></span><span id="dwc__ranking_8h_11e26643f8161b162f689f7031ace591060a49ce05de08623494373d5dd3cf8a4"></span><span id="dwc__ranking_8h_11e26643f8161b162f689f7031ace59104d3bb57f97e1d5d9a61a1924231758ee"></span><span id="dwc__ranking_8h_11e26643f8161b162f689f7031ace5910d78bf27376e8312bb3f2fc0be4d7ab3a"></span><span id="dwc__ranking_8h_11e26643f8161b162f689f7031ace59101e62645cfaa2910f83cc06eee164750a"></span><span id="dwc__ranking_8h_11e26643f8161b162f689f7031ace5910c31f98c0f7509036f00873e6b1b87eaf"></span><span id="dwc__ranking_8h_11e26643f8161b162f689f7031ace591049363d66152318b102f2cb1acea8aa0c"></span>
+<H3 id="dwc__ranking_8h_11e26643f8161b162f689f7031ace5910">エラーコード</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCRnkError {
+    DWC_RNK_SUCCESS                            =  0,
+    DWC_RNK_IN_ERROR,
+    DWC_RNK_ERROR_INVALID_PARAMETER,
+    DWC_RNK_ERROR_INIT_ALREADYINITIALIZED,
+    DWC_RNK_ERROR_INIT_INVALID_INITDATASIZE,
+    DWC_RNK_ERROR_INIT_INVALID_INITDATA,
+    DWC_RNK_ERROR_INIT_INVALID_USERDATA,
+    DWC_RNK_ERROR_PUT_NOTREADY,
+    DWC_RNK_ERROR_PUT_INVALID_KEY,
+    DWC_RNK_ERROR_PUT_NOMEMORY,
+    DWC_RNK_ERROR_GET_NOTREADY,
+    DWC_RNK_ERROR_GET_INVALID_KEY,
+    DWC_RNK_ERROR_GET_NOMEMORY,
+    DWC_RNK_ERROR_CANCEL_NOTASK,
+    DWC_RNK_PROCESS_NOTASK,
+    DWC_RNK_PROCESS_TIMEOUT,
+    DWC_RNK_ERROR_INVALID_MODE,
+    DWC_RNK_ERROR_NOTCOMPLETED,
+    DWC_RNK_ERROR_EMPTY_RESPONSE,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_SUCCESS</CODE></STRONG></EM></TD>
+		  <TD>成功</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_IN_ERROR</CODE></STRONG></EM></TD>
+		  <TD>エラー発生中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_INVALID_PARAMETER</CODE></STRONG></EM></TD>
+		  <TD>不正なパラメーター</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_INIT_ALREADYINITIALIZED</CODE></STRONG></EM></TD>
+		  <TD>初期化済</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_INIT_INVALID_INITDATASIZE</CODE></STRONG></EM></TD>
+		  <TD>不正な初期化データサイズ</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_INIT_INVALID_INITDATA</CODE></STRONG></EM></TD>
+		  <TD>不正な初期化データ</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_INIT_INVALID_USERDATA</CODE></STRONG></EM></TD>
+		  <TD>ユーザー情報が不正</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_PUT_NOTREADY</CODE></STRONG></EM></TD>
+		  <TD>初期化されていない</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_PUT_INVALID_KEY</CODE></STRONG></EM></TD>
+		  <TD>暗号化キーが不正</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_PUT_NOMEMORY</CODE></STRONG></EM></TD>
+		  <TD>メモリー不足</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_GET_NOTREADY</CODE></STRONG></EM></TD>
+		  <TD>初期化されていない</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_GET_INVALID_KEY</CODE></STRONG></EM></TD>
+		  <TD>暗号化キーが不正</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_GET_NOMEMORY</CODE></STRONG></EM></TD>
+		  <TD>メモリー不足</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_CANCEL_NOTASK</CODE></STRONG></EM></TD>
+		  <TD>非同期処理中の処理なし</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_PROCESS_NOTASK</CODE></STRONG></EM></TD>
+		  <TD>非同期処理中の処理なし</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_PROCESS_TIMEOUT</CODE></STRONG></EM></TD>
+		  <TD>タイムアウト</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_INVALID_MODE</CODE></STRONG></EM></TD>
+		  <TD>不正なモード</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_NOTCOMPLETED</CODE></STRONG></EM></TD>
+		  <TD>通信未完了</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_EMPTY_RESPONSE</CODE></STRONG></EM></TD>
+		  <TD>空のレスポンス</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__ranking_8h_11103f24ff80fe1419472d4765ab4895f834d6877f549753f2574a1a4aacb0bd1"></span><span id="dwc__ranking_8h_11103f24ff80fe1419472d4765ab4895fee396b177ab53c71f49d44a3d15f718a"></span><span id="dwc__ranking_8h_11103f24ff80fe1419472d4765ab4895fde8ecfd9ccabbda747f0fd12993e22b8"></span><span id="dwc__ranking_8h_11103f24ff80fe1419472d4765ab4895f93ea430beadd39d260579f2897254bee"></span><span id="dwc__ranking_8h_11103f24ff80fe1419472d4765ab4895f510bb977fc09cd27865ff1d92fcdfe6a"></span><span id="dwc__ranking_8h_11103f24ff80fe1419472d4765ab4895f62e31ce7f1ec20bd668d195b09efeffe"></span><span id="dwc__ranking_8h_11103f24ff80fe1419472d4765ab4895f34e2f7d8e4ec0e8348ddced3c81d6223"></span>
+<H3 id="dwc__ranking_8h_11103f24ff80fe1419472d4765ab4895f">モジュールステータス</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCRnkState {
+    DWC_RNK_STATE_NOTREADY       =  0,
+    DWC_RNK_STATE_INITIALIZED,
+    DWC_RNK_STATE_PUT_ASYNC,
+    DWC_RNK_STATE_GET_ASYNC,
+    DWC_RNK_STATE_COMPLETED,
+    DWC_RNK_STATE_TIMEOUT,
+    DWC_RNK_STATE_ERROR,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_STATE_NOTREADY</CODE></STRONG></EM></TD>
+		  <TD>未初期化状態</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_STATE_INITIALIZED</CODE></STRONG></EM></TD>
+		  <TD>初期化完了</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_STATE_PUT_ASYNC</CODE></STRONG></EM></TD>
+		  <TD>PUT非同期処理中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_STATE_GET_ASYNC</CODE></STRONG></EM></TD>
+		  <TD>GET非同期処理中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_STATE_COMPLETED</CODE></STRONG></EM></TD>
+		  <TD>完了</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_STATE_TIMEOUT</CODE></STRONG></EM></TD>
+		  <TD>タイムアウト</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_STATE_ERROR</CODE></STRONG></EM></TD>
+		  <TD>エラー発生</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__ranking_8h_1bc0db3fbc51ac91811958f9c51e87899039bfac4d629c2a463d410b07ce6ac6d"></span><span id="dwc__ranking_8h_1bc0db3fbc51ac91811958f9c51e878993ca6ca4a2c3685644692e4f9b1cae147"></span><span id="dwc__ranking_8h_1bc0db3fbc51ac91811958f9c51e87899ca3c870a3ce572a0dc69d448721ac9c8"></span><span id="dwc__ranking_8h_1bc0db3fbc51ac91811958f9c51e87899c90ce5817783bde2a5461900ba18d3e7"></span><span id="dwc__ranking_8h_1bc0db3fbc51ac91811958f9c51e878995c217803023093660126c059de382197"></span><span id="dwc__ranking_8h_1bc0db3fbc51ac91811958f9c51e87899f4a243dd394626c678fb6be0e6cfab3f"></span><span id="dwc__ranking_8h_1bc0db3fbc51ac91811958f9c51e87899d89af23d855b10055425a2a2be4e67b1"></span>
+<H3 id="dwc__ranking_8h_1bc0db3fbc51ac91811958f9c51e87899">リージョンコード</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCRnkRegion {
+    DWC_RNK_REGION_JP     =  0x01,
+    DWC_RNK_REGION_US     =  0x02,
+    DWC_RNK_REGION_EU     =  0x04,
+    DWC_RNK_REGION_KR     =  0x08,
+    DWC_RNK_REGION_CH     =  0x10,
+    DWC_RNK_REGION_CN     =  0x10,
+    DWC_RNK_REGION_ALL    =  0xff,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_REGION_JP</CODE></STRONG></EM></TD>
+		  <TD>Japan</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_REGION_US</CODE></STRONG></EM></TD>
+		  <TD>UnitedStates</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_REGION_EU</CODE></STRONG></EM></TD>
+		  <TD>Europe</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_REGION_KR</CODE></STRONG></EM></TD>
+		  <TD>Korea</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_REGION_CH</CODE></STRONG></EM></TD>
+		  <TD>China(旧定義)</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_REGION_CN</CODE></STRONG></EM></TD>
+		  <TD>China</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_REGION_ALL</CODE></STRONG></EM></TD>
+		  <TD>World</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<H4>履歴</H3>
+<DL>
+
+<DT>5.2pr1</DT>
+<DD>中国の定義名を修正。旧定義も残されています。</DD>
+
+<DT>5.1pr2</DT>
+<DD>中国(<a href="Macro.html#dwc__ranking_8h_1bc0db3fbc51ac91811958f9c51e878995c217803023093660126c059de382197">DWC_RNK_REGION_CH</a>)を追加</DD>
+
+</DL>
+
+<span id="dwc__ranking_8h_1b024592ea57f7ecd5b76caee1edc5b192780d834ce449ab6c433688a1301e6d2"></span><span id="dwc__ranking_8h_1b024592ea57f7ecd5b76caee1edc5b196a28982348d7e68f741fe17f02119472"></span><span id="dwc__ranking_8h_1b024592ea57f7ecd5b76caee1edc5b199ed73aff5c4f370195419350b5922250"></span><span id="dwc__ranking_8h_1b024592ea57f7ecd5b76caee1edc5b19dabfeed2395ed84700e7d7510b46ca00"></span><span id="dwc__ranking_8h_1b024592ea57f7ecd5b76caee1edc5b1922d34a9fa74dd2c8fe71b86cda14dd45"></span><span id="dwc__ranking_8h_1b024592ea57f7ecd5b76caee1edc5b19adf73378f9a269eaa9e782fe4a77109d"></span>
+<H3 id="dwc__ranking_8h_1b024592ea57f7ecd5b76caee1edc5b19">DWC_RnkGetScoreAsync取得モード</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCRnkGetMode {
+    DWC_RNK_GET_MODE_ORDER,
+    DWC_RNK_GET_MODE_TOPLIST,
+    DWC_RNK_GET_MODE_NEAR,
+    DWC_RNK_GET_MODE_FRIENDS,
+    DWC_RNK_GET_MODE_NEAR_HI,
+    DWC_RNK_GET_MODE_NEAR_LOW,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_GET_MODE_ORDER</CODE></STRONG></EM></TD>
+		  <TD>順位</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_GET_MODE_TOPLIST</CODE></STRONG></EM></TD>
+		  <TD>ハイスコア</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_GET_MODE_NEAR</CODE></STRONG></EM></TD>
+		  <TD>周辺スコア</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_GET_MODE_FRIENDS</CODE></STRONG></EM></TD>
+		  <TD>友達指定ランキング</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_GET_MODE_NEAR_HI</CODE></STRONG></EM></TD>
+		  <TD>周辺スコア(自分よりも順位が高い)</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_GET_MODE_NEAR_LOW</CODE></STRONG></EM></TD>
+		  <TD>周辺スコア(自分よりも順位が低い)</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__report_8h_134e9367035075892d6458b4175e11f59f519ed31086e7536ad310917e696bb48"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f598d4a9a65631fe81d3df67d6a25d24869"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f5911e4f7c6385c1c78d26f81678cff77bd"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f5907d794476c026796dd2a886da7549989"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f591b1016e886134b8280d909f8c539d7a9"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f5973909a32377a8d757c877f5369bd41c1"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f59b5b74788eb1673741a9f07a89a2875af"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f59e7dc80e48addcce17850b25ad2cb2fdb"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f59a5acda1f1ace2d061720f27178cafea0"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f5993ccdbeab6626e7aa46deea5cd11da0a"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f596cf55f2bff4709724e01bf374a917ea1"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f59aeb31275fac15e0773661687bf1c1d94"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f59eb908adbe8631faa44edf30784da7e4a"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f5942f1888af8ffb9bcdc36d2227b2d3f29"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f598f99c6917b6db0d15be11c9e91438d78"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f59781032f1b9591dbd653b6c9221b5201d"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f597c9a583714c514502908b9bb030b1516"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f5900df392b194b0842207a6d052a60249c"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f59e523e25a6c9294706cbf906174dd6a59"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f592831c0617beccb51cd5915792cfd3dbe"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f590e5644c482a23e0dc495bbc5058004e4"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f5942c2c1d4ed6b3e64a770d6920e7a3a9a"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f59ab68fabd6786db644dc6132f6270bd02"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f59afb950abbc0c028c4b918eba5b302b86"></span><span id="dwc__report_8h_134e9367035075892d6458b4175e11f5971e85650fe52d47ca9ddcfb778be822a"></span>
+<H3 id="dwc__report_8h_134e9367035075892d6458b4175e11f59">dwcのデバッグ情報出力用フラグ</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCReportFlag {
+    DWC_REPORTFLAG_NONE               =  0x00000000,
+    DWC_REPORTFLAG_INFO               =  0x00000001,
+    DWC_REPORTFLAG_ERROR              =  0x00000002,
+    DWC_REPORTFLAG_DEBUG              =  0x00000004,
+    DWC_REPORTFLAG_WARNING            =  0x00000008,
+    DWC_REPORTFLAG_ACHECK             =  0x00000010,
+    DWC_REPORTFLAG_LOGIN              =  0x00000020,
+    DWC_REPORTFLAG_MATCH_NN           =  0x00000040,
+    DWC_REPORTFLAG_MATCH_GT2          =  0x00000080,
+    DWC_REPORTFLAG_TRANSPORT          =  0x00000100,
+    DWC_REPORTFLAG_QR2_REQ            =  0x00000200,
+    DWC_REPORTFLAG_SB_UPDATE          =  0x00000400,
+    DWC_REPORTFLAG_SEND_INFO          =  0x00008000,
+    DWC_REPORTFLAG_RECV_INFO          =  0x00010000,
+    DWC_REPORTFLAG_UPDATE_SV          =  0x00020000,
+    DWC_REPORTFLAG_CONNECTINET        =  0x00040000,
+    DWC_REPORTFLAG_AUTH               =  0x01000000,
+    DWC_REPORTFLAG_AC                 =  0x02000000,
+    DWC_REPORTFLAG_BM                 =  0x04000000,
+    DWC_REPORTFLAG_UTIL               =  0x08000000,
+    DWC_REPORTFLAG_OPTION_CF          =  0x10000000,
+    DWC_REPORTFLAG_OPTION_CONNTEST    =  0x20000000,
+    DWC_REPORTFLAG_GAMESPY            =  0x80000000,
+    DWC_REPORTFLAG_TEST               =  0x00100000,
+    DWC_REPORTFLAG_ALL                =  0xffffffff,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_NONE</CODE></STRONG></EM></TD>
+		  <TD>出力なし</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_INFO</CODE></STRONG></EM></TD>
+		  <TD>情報</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_ERROR</CODE></STRONG></EM></TD>
+		  <TD>エラー</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_DEBUG</CODE></STRONG></EM></TD>
+		  <TD>デバッグ情報</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_WARNING</CODE></STRONG></EM></TD>
+		  <TD>警告</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_ACHECK</CODE></STRONG></EM></TD>
+		  <TD>GameSpyサーバーの利用可能チェック</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_LOGIN</CODE></STRONG></EM></TD>
+		  <TD>ログイン関係</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_MATCH_NN</CODE></STRONG></EM></TD>
+		  <TD>マッチング-NN関係</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_MATCH_GT2</CODE></STRONG></EM></TD>
+		  <TD>マッチング-GT2関係</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_TRANSPORT</CODE></STRONG></EM></TD>
+		  <TD>送受信関係</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_QR2_REQ</CODE></STRONG></EM></TD>
+		  <TD>QR2関係</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_SB_UPDATE</CODE></STRONG></EM></TD>
+		  <TD>SB関係</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_SEND_INFO</CODE></STRONG></EM></TD>
+		  <TD>送信情報</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_RECV_INFO</CODE></STRONG></EM></TD>
+		  <TD>受信情報</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_UPDATE_SV</CODE></STRONG></EM></TD>
+		  <TD>サーバ更新関係</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_CONNECTINET</CODE></STRONG></EM></TD>
+		  <TD>インターネット接続関係</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_AUTH</CODE></STRONG></EM></TD>
+		  <TD>認証関係</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_AC</CODE></STRONG></EM></TD>
+		  <TD>アカウント関係</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_BM</CODE></STRONG></EM></TD>
+		  <TD>WiFi設定のセーブ・ロード</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_UTIL</CODE></STRONG></EM></TD>
+		  <TD>UTIL関係</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_OPTION_CF</CODE></STRONG></EM></TD>
+		  <TD>未使用</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_OPTION_CONNTEST</CODE></STRONG></EM></TD>
+		  <TD>未使用</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_GAMESPY</CODE></STRONG></EM></TD>
+		  <TD>Gamespy関係</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_TEST</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_REPORTFLAG_ALL</CODE></STRONG></EM></TD>
+		  <TD>すべて</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<H4>履歴</H3>
+<DL>
+
+<DT>5.2</DT>
+<DD>デバッグ情報出力用フラグに関する説明を追加しました。</DD>
+
+</DL>
+
+<span id="dwc__sc_8h_1dca53ef710261d3406ae316e692e498df125b7509c2a9e9db653c3cae58b3b77"></span><span id="dwc__sc_8h_1dca53ef710261d3406ae316e692e498df0eff13cfc271139538d03cfa51f776e"></span><span id="dwc__sc_8h_1dca53ef710261d3406ae316e692e498de950d5e607bb0a5ad0bde90f5f7de1f1"></span><span id="dwc__sc_8h_1dca53ef710261d3406ae316e692e498d081827869ff23e5dc9d45c69bff150c2"></span><span id="dwc__sc_8h_1dca53ef710261d3406ae316e692e498d68a8b769396143a38655bed79e755db0"></span><span id="dwc__sc_8h_1dca53ef710261d3406ae316e692e498da64a73cb4c0aaca2db428949b7aa4873"></span><span id="dwc__sc_8h_1dca53ef710261d3406ae316e692e498d6a106db8b12aca546ee284a62f80ac91"></span><span id="dwc__sc_8h_1dca53ef710261d3406ae316e692e498d1b7c7927896ecc006969a0144e091b8a"></span><span id="dwc__sc_8h_1dca53ef710261d3406ae316e692e498d4a219cfef796ff2de2d7e287ab8bc451"></span><span id="dwc__sc_8h_1dca53ef710261d3406ae316e692e498de1aee445f3d8d3ca7bf855e728cd866c"></span><span id="dwc__sc_8h_1dca53ef710261d3406ae316e692e498dbc61be42143cc3df9ad5f33326fa31e4"></span><span id="dwc__sc_8h_1dca53ef710261d3406ae316e692e498d3052be0ec48ff1cb92d05752e534be9c"></span><span id="dwc__sc_8h_1dca53ef710261d3406ae316e692e498de6116ab9e0373588eab04cc75f1f5be6"></span><span id="dwc__sc_8h_1dca53ef710261d3406ae316e692e498d308bba325858768d5505901974c2a805"></span><span id="dwc__sc_8h_1dca53ef710261d3406ae316e692e498d1843c65bd7864ea06b2f2de4c9e5dcf0"></span><span id="dwc__sc_8h_1dca53ef710261d3406ae316e692e498d3499bcd546ac218cf2d985f6152f4973"></span>
+<H3 id="dwc__sc_8h_1dca53ef710261d3406ae316e692e498d">エラーおよび失敗について示します。</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCScResult {
+    DWC_SC_RESULT_NO_ERROR                 =  0,
+    DWC_SC_RESULT_NO_AVAILABILITY_CHECK,
+    DWC_SC_RESULT_INVALID_PARAMETERS,
+    DWC_SC_RESULT_NOT_INITIALIZED,
+    DWC_SC_RESULT_CORE_NOT_INITIALIZED,
+    DWC_SC_RESULT_OUT_OF_MEMORY,
+    DWC_SC_RESULT_CALLBACK_PENDING,
+    DWC_SC_RESULT_HTTP_ERROR,
+    DWC_SC_RESULT_UNKNOWN_RESPONSE,
+    DWC_SC_RESULT_RESPONSE_INVALID,
+    DWC_SC_RESULT_INVALID_DATATYPE,
+    DWC_SC_RESULT_REPORT_INCOMPLETE,
+    DWC_SC_RESULT_REPORT_INVALID,
+    DWC_SC_RESULT_SUBMISSION_FAILED,
+    DWC_SC_RESULT_UNKNOWN_ERROR,
+    DWC_SC_RESULT_MAX,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_NO_ERROR</CODE></STRONG></EM></TD>
+		  <TD>エラーは発生しませんでした</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_NO_AVAILABILITY_CHECK</CODE></STRONG></EM></TD>
+		  <TD>初期化の前に、標準のGameSpy可用性チェックが実行されませんでした</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_INVALID_PARAMETERS</CODE></STRONG></EM></TD>
+		  <TD>インターフェース関数に渡されたパラメータが無効です</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_NOT_INITIALIZED</CODE></STRONG></EM></TD>
+		  <TD>SDKが初期化されませんでした</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_CORE_NOT_INITIALIZED</CODE></STRONG></EM></TD>
+		  <TD>コアが初期化されませんでした</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_OUT_OF_MEMORY</CODE></STRONG></EM></TD>
+		  <TD>SDKはリソースにメモリを割り当てられませんでした</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_CALLBACK_PENDING</CODE></STRONG></EM></TD>
+		  <TD>アプリケーションに対し、操作が保留中であることを伝えます</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_HTTP_ERROR</CODE></STRONG></EM></TD>
+		  <TD>バックエンドが適正なHTTPによるレスポンスに失敗した場合のエラー発生</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_UNKNOWN_RESPONSE</CODE></STRONG></EM></TD>
+		  <TD>SDKが結果を理解できない場合のエラー発生</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_RESPONSE_INVALID</CODE></STRONG></EM></TD>
+		  <TD>SDKがバックエンドからのレスポンスを読み取れない場合のエラー発生</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_INVALID_DATATYPE</CODE></STRONG></EM></TD>
+		  <TD>無効なデータタイプ</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_REPORT_INCOMPLETE</CODE></STRONG></EM></TD>
+		  <TD>レポートが不完全です</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_REPORT_INVALID</CODE></STRONG></EM></TD>
+		  <TD>レポートの一部またはすべてが無効です</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_SUBMISSION_FAILED</CODE></STRONG></EM></TD>
+		  <TD>レポートの送信に失敗しました</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_UNKNOWN_ERROR</CODE></STRONG></EM></TD>
+		  <TD>SDKが認識できないエラー</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_MAX</CODE></STRONG></EM></TD>
+		  <TD>返される可能性のある結果コードの合計数</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__sc_8h_1a051f537a3cbef748129b45b81890f5e924a5a3d9631db4d76fa742652fb94ec"></span><span id="dwc__sc_8h_1a051f537a3cbef748129b45b81890f5eb396070b68d7d987de75023770d819e9"></span><span id="dwc__sc_8h_1a051f537a3cbef748129b45b81890f5eb6ffebbacf2ac088c88affc3ea1ceeaf"></span><span id="dwc__sc_8h_1a051f537a3cbef748129b45b81890f5eda7a98b67f6dfd8fcbba87907ff4c804"></span><span id="dwc__sc_8h_1a051f537a3cbef748129b45b81890f5e35c0f724338a54ed5a44cd68ed65d6e0"></span><span id="dwc__sc_8h_1a051f537a3cbef748129b45b81890f5e32b1c338d923e96554578f9f20077683"></span><span id="dwc__sc_8h_1a051f537a3cbef748129b45b81890f5e38f5750075b11596f69d95e52d61bd07"></span>
+<H3 id="dwc__sc_8h_1a051f537a3cbef748129b45b81890f5e">対戦結果がどのように終了したかを表します。</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCScGameResult {
+    DWC_SC_GAME_RESULT_WIN,
+    DWC_SC_GAME_RESULT_LOSS,
+    DWC_SC_GAME_RESULT_DRAW,
+    DWC_SC_GAME_RESULT_DISCONNECT,
+    DWC_SC_GAME_RESULT_DESYNC,
+    DWC_SC_GAME_RESULT_NONE,
+    DWC_SC_GAME_RESULT_MAX,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_GAME_RESULT_WIN</CODE></STRONG></EM></TD>
+		  <TD>勝利</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_GAME_RESULT_LOSS</CODE></STRONG></EM></TD>
+		  <TD>敗北</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_GAME_RESULT_DRAW</CODE></STRONG></EM></TD>
+		  <TD>引き分け</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_GAME_RESULT_DISCONNECT</CODE></STRONG></EM></TD>
+		  <TD>切断</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_GAME_RESULT_DESYNC</CODE></STRONG></EM></TD>
+		  <TD>同期ミス</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_GAME_RESULT_NONE</CODE></STRONG></EM></TD>
+		  <TD>未定義</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_GAME_RESULT_MAX</CODE></STRONG></EM></TD>
+		  <TD>ゲームの結果コードの合計数</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__sc_8h_11737e72b29c2e06c7c7c461214b651e8bcbf197d1b12a808a14b676f43a3d57d"></span><span id="dwc__sc_8h_11737e72b29c2e06c7c7c461214b651e8505189ca1a0c9375c9421c3ab9d98343"></span><span id="dwc__sc_8h_11737e72b29c2e06c7c7c461214b651e8d496125787a6aec29f7f662c24c0fcae"></span><span id="dwc__sc_8h_11737e72b29c2e06c7c7c461214b651e898974daa00f05966f0741858c61b5767"></span>
+<H3 id="dwc__sc_8h_11737e72b29c2e06c7c7c461214b651e8">ゲームセッションがどのように終了しているかを示します。</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCScGameStatus {
+    DWC_SC_GAME_STATUS_COMPLETE,
+    DWC_SC_GAME_STATUS_PARTIAL,
+    DWC_SC_GAME_STATUS_BROKEN,
+    DWC_SC_GAME_STATUS_MAX,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_GAME_STATUS_COMPLETE</CODE></STRONG></EM></TD>
+		  <TD>ゲームセッションが、中断（切断、非同期化など）されることなく予定通りに終了しました。このステータスは、すべてのプレイヤーがゲーム結果を入手できることを示しています</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_GAME_STATUS_PARTIAL</CODE></STRONG></EM></TD>
+		  <TD>ゲームセッションは予定通りに終了しましたが、1人以上のプレイヤーが予想外に中止または切断しました。接続切断されたプレイヤーがゲーム結果で明確にレポートされ、正規化中、可能性のあるペナルティメトリックに使用されます</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_GAME_STATUS_BROKEN</CODE></STRONG></EM></TD>
+		  <TD>ゲームセッションは予想通りのエンドポイントに達せず、完了しませんでした。これは、終了結果が確定できないイベントが検出された場合にレポートされる必要があります</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SC_GAME_STATUS_MAX</CODE></STRONG></EM></TD>
+		  <TD>ゲームステータスコードの合計数</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<span id="dwc__svl_8h_1eac74605ac413c74cd6b770894fe426c7fb7891ff1ed0a35f4e76ea7d10c6cda"></span><span id="dwc__svl_8h_1eac74605ac413c74cd6b770894fe426c0b0b42a1d7e1ae802ada2fea0e34b342"></span><span id="dwc__svl_8h_1eac74605ac413c74cd6b770894fe426ccb5731f2169fff2b24aa869980a962c7"></span><span id="dwc__svl_8h_1eac74605ac413c74cd6b770894fe426c019427c33fa7875cb41798902e9a8b80"></span><span id="dwc__svl_8h_1eac74605ac413c74cd6b770894fe426ce69951c5455e621beaed772d4075af48"></span><span id="dwc__svl_8h_1eac74605ac413c74cd6b770894fe426cb6ebccb1501c28fa2d2477cff9bcf810"></span><span id="dwc__svl_8h_1eac74605ac413c74cd6b770894fe426ca31d3699c23806a2b76722e0dbb2401d"></span>
+<H3 id="dwc__svl_8h_1eac74605ac413c74cd6b770894fe426c">サービスロケータ情報取得中のステートを示す列挙型</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCSvlState {
+    DWC_SVL_STATE_DIRTY       =  0,
+    DWC_SVL_STATE_IDLE,
+    DWC_SVL_STATE_HTTP,
+    DWC_SVL_STATE_SUCCESS,
+    DWC_SVL_STATE_ERROR,
+    DWC_SVL_STATE_CANCELED,
+    DWC_SVL_STATE_MAX,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SVL_STATE_DIRTY</CODE></STRONG></EM></TD>
+		  <TD>未初期化</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SVL_STATE_IDLE</CODE></STRONG></EM></TD>
+		  <TD>処理実行中ではない</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SVL_STATE_HTTP</CODE></STRONG></EM></TD>
+		  <TD>HTTP通信中</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SVL_STATE_SUCCESS</CODE></STRONG></EM></TD>
+		  <TD>トークン取得成功</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SVL_STATE_ERROR</CODE></STRONG></EM></TD>
+		  <TD>トークン取得失敗</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SVL_STATE_CANCELED</CODE></STRONG></EM></TD>
+		  <TD>トークン取得キャンセル</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SVL_STATE_MAX</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+
+
+
+<H2>型定義</H2>
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+			<TH width="25%">typedef DWCAccUserData DWCUserData</TH>
+			<TD>ログインIDなどが含まれる、プレイヤーごとの個人データです。<p>この構造体のメンバには直接アクセスしないようにしてください。</p></TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">typedef DWCAccFriendData DWCFriendData</TH>
+			<TD>友達情報格納用の共用体です。<p>この共用体のメンバには直接アクセスしないようにしてください。</p></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+</body>
+</html>

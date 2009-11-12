@@ -1,0 +1,1677 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<BASE target="main">
+<TITLE>TWLDWCライブラリ(DWC) API 機能一覧</TITLE>
+<LINK rel="stylesheet" href="../css/apilist.css">
+</HEAD>
+<BODY>
+<H1>TWLDWCライブラリ(DWC) API 機能一覧</H1>
+<TABLE border="1" width="100%">
+  <TBODY>
+<!--<TR>
+      <TH width="25%"><A href="ATOK_InitWithFileDictionary.html" target="_self">ATOK_InitWithFileDictionary</A></TH>
+      <TD>ライブラリの初期化を行います。ファイルシステム上の辞書を使用します。</TD>
+    </TR>-->
+
+  </TBODY>
+</TABLE>
+<H2 id="TAG_1">共通・ユーティリティ</H2>
+
+<H3 id="TAG_2">初期化</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWC_InitForDevelopment.html" target="_self">DWC_InitForDevelopment</A></TH>
+	<TD>DWCライブラリを初期化します。(開発用サーバ向け)</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_InitForProduction.html" target="_self">DWC_InitForProduction</A></TH>
+	<TD>DWCライブラリを初期化します。(製品用サーバ向け)</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_Debug_DWCInitError.html" target="_self">DWC_Debug_DWCInitError</A></TH>
+	<TD>DWC_InitForDevelopment/DWC_InitForProduction関数のエラーチェックのための関数です。（デバッグ用）</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_3">エラー関係</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetLastError.html" target="_self">DWC_GetLastError</A></TH>
+	<TD>最後の通信エラー種別を取得します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetLastErrorEx.html" target="_self">DWC_GetLastErrorEx</A></TH>
+	<TD>最後の通信エラー種別を取得します。ライブラリの復帰種別を取得できる拡張版です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ClearError.html" target="_self">DWC_ClearError</A></TH>
+	<TD>通信エラーの記録をクリアします。</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_4">メモリ割り当て</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWCAllocEx.html" target="_self">DWCAllocEx</A></TH>
+	<TD>DWCライブラリ全体で使用するメモリ確保関数</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCFreeEx.html" target="_self">DWCFreeEx</A></TH>
+	<TD>DWCライブラリ全体で使用するメモリ開放関数</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_Alloc.html" target="_self">DWC_Alloc</A></TH>
+	<TD>アプリケーションがセットした関数でメモリを確保します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_AllocEx.html" target="_self">DWC_AllocEx</A></TH>
+	<TD>アプリケーションがセットした関数でメモリを確保します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_Free.html" target="_self">DWC_Free</A></TH>
+	<TD>アプリケーションがセットした関数でメモリを解放します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_Realloc.html" target="_self">DWC_Realloc</A></TH>
+	<TD>アプリケーションがセットした関数でメモリを拡張します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ReallocEx.html" target="_self">DWC_ReallocEx</A></TH>
+	<TD>アプリケーションがセットした関数でメモリを拡張します。</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_5">Base64変換</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWC_Base64Encode.html" target="_self">DWC_Base64Encode</A></TH>
+	<TD>指定されたデータをBase64でエンコードします。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_Base64Decode.html" target="_self">DWC_Base64Decode</A></TH>
+	<TD>指定されたBase64文字列をデコードします。</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_6">文字列操作</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetCommonKeyValueString.html" target="_self">DWC_SetCommonKeyValueString</A></TH>
+	<TD>key/value文字列を作成します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_AddCommonKeyValueString.html" target="_self">DWC_AddCommonKeyValueString</A></TH>
+	<TD>key/value文字列を追加します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetCommonValueString.html" target="_self">DWC_GetCommonValueString</A></TH>
+	<TD>key/value文字列からkey文字列に対応するvalue文字列を取得します。</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_7">デバッグ出力</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetReportLevel.html" target="_self">DWC_SetReportLevel</A></TH>
+	<TD>デバッグ表示レベルを指定します。</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_8">定数、マクロ、列挙型</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TD><A href="macro_f3bd6ea735d4de2bd52ffed66da16a3c.html" target="_self">こちらを参照してください。</A></TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+<H2 id="TAG_9">アカウント</H2>
+
+<H3 id="TAG_10">ユーザーデータ</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWC_CreateUserData.html" target="_self">DWC_CreateUserData</A></TH>
+	<TD>ユーザデータを作成します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_CheckUserData.html" target="_self">DWC_CheckUserData</A></TH>
+	<TD>ユーザデータの正当性を確認します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_CheckValidConsole.html" target="_self">DWC_CheckValidConsole</A></TH>
+	<TD>ユーザデータとセットのDS本体かどうかを確認します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_CheckHasProfile.html" target="_self">DWC_CheckHasProfile</A></TH>
+	<TD>ユーザデータが既に有効なプロファイル（ログインID）を取得しているかどうかを確認します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_CheckDirtyFlag.html" target="_self">DWC_CheckDirtyFlag</A></TH>
+	<TD>ユーザデータが更新されているかどうかを示すDirtyフラグをチェックします。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ClearDirtyFlag.html" target="_self">DWC_ClearDirtyFlag</A></TH>
+	<TD>ユーザデータが更新されているかどうかを示すDirtyフラグをクリアします。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_CreateFriendKey.html" target="_self">DWC_CreateFriendKey</A></TH>
+	<TD>ユーザデータから、相手に渡す友達登録鍵を生成します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_CreateFriendKeyLegacy.html" target="_self">DWC_CreateFriendKeyLegacy</A></TH>
+	<TD>ユーザデータから、相手に渡す友達登録鍵を生成します。(旧仕様)</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_CreateExchangeToken.html" target="_self">DWC_CreateExchangeToken</A></TH>
+	<TD>DSワイヤレス通信で交換するための友達情報をユーザデータから作成します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_CreateFriendKeyToken.html" target="_self">DWC_CreateFriendKeyToken</A></TH>
+	<TD>友達リストに格納するための友達情報を友達登録鍵から作成します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetFriendKey.html" target="_self">DWC_GetFriendKey</A></TH>
+	<TD>友達情報から友達登録鍵を取得します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_CheckFriendKey.html" target="_self">DWC_CheckFriendKey</A></TH>
+	<TD>友達登録鍵の正当性を確認します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_CheckFriendKeyLegacy.html" target="_self">DWC_CheckFriendKeyLegacy</A></TH>
+	<TD>友達登録鍵の正当性を確認します。(旧仕様)</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_FriendKeyToString.html" target="_self">DWC_FriendKeyToString</A></TH>
+	<TD>友達登録鍵を10進12桁の文字列に変換します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_StringToFriendKey.html" target="_self">DWC_StringToFriendKey</A></TH>
+	<TD>10進12桁の文字列を友達登録鍵に変換します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_IsEqualFriendData.html" target="_self">DWC_IsEqualFriendData</A></TH>
+	<TD>友達情報が同じかどうかを確認します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_IsValidFriendData.html" target="_self">DWC_IsValidFriendData</A></TH>
+	<TD>友達情報に有効なデータがセットされているかどうかを調べます。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_IsBuddyFriendData.html" target="_self">DWC_IsBuddyFriendData</A></TH>
+	<TD>友達情報が既にGameSpyサーバ上で友達関係になっているかどうかを調べます。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_WasBuddyFriendData.html" target="_self">DWC_WasBuddyFriendData</A></TH>
+	<TD>引数に指定した友達が、自分との友達関係を破棄したかどうかを調べます。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ClearBuddyFlagFriendData.html" target="_self">DWC_ClearBuddyFlagFriendData</A></TH>
+	<TD>友達情報の友達成立フラグをクリアします。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetFriendDataType.html" target="_self">DWC_GetFriendDataType</A></TH>
+	<TD>友達情報の保存されているデータタイプを取得します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetGsProfileId.html" target="_self">DWC_GetGsProfileId</A></TH>
+	<TD>友達情報からGSプロファイルIDを取得します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ReportFriendData.html" target="_self">DWC_ReportFriendData</A></TH>
+	<TD>友達情報を表示します。（デバッグ用）</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ReportUserData.html" target="_self">DWC_ReportUserData</A></TH>
+	<TD>ユーザデータを表示します。（デバッグ用）</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetGsProfileId.html" target="_self">DWC_SetGsProfileId</A></TH>
+	<TD>友達情報にGSプロファイルIDをセットします。（デバッグ用）</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_11">本体情報</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetAuthenticatedUserId.html" target="_self">DWC_GetAuthenticatedUserId</A></TH>
+	<TD>DS本体に保存されている認証済みのユーザIDを取得します。</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+  </TBODY>
+</TABLE>
+<H2 id="TAG_12">インターネット接続</H2>
+
+<H3 id="TAG_13">インターネット接続</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWC_InitInet.html" target="_self">DWC_InitInet</A></TH>
+	<TD>自動接続制御オブジェクトを初期化する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_InitInetEx.html" target="_self">DWC_InitInetEx</A></TH>
+	<TD>自動接続制御オブジェクトを初期化する関数です。（詳細指定版）</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetRwinSize.html" target="_self">DWC_SetRwinSize</A></TH>
+	<TD>TCPで使うrwinサイズを設定します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetConnectApType.html" target="_self">DWC_SetConnectApType</A></TH>
+	<TD>自動接続処理で接続するAPの種別を明示的に指定する関数です。（デバッグ用）</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ConnectInetAsync.html" target="_self">DWC_ConnectInetAsync</A></TH>
+	<TD>自動接続処理を開始する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_DebugConnectInetAsync.html" target="_self">DWC_DebugConnectInetAsync</A></TH>
+	<TD>自動接続処理を開始する関数です。<br>DS本体の設定を使わず特定のAPを指定します。（デバッグ用）</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_CheckInet.html" target="_self">DWC_CheckInet</A></TH>
+	<TD>自動接続処理の進行状態を確認する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ProcessInet.html" target="_self">DWC_ProcessInet</A></TH>
+	<TD>自動接続処理を実行する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetInetStatus.html" target="_self">DWC_GetInetStatus</A></TH>
+	<TD>インターネット接続状態を取得する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_UpdateConnection.html" target="_self">DWC_UpdateConnection</A></TH>
+	<TD>アクセスポイントとの接続を確認する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetApInfo.html" target="_self">DWC_GetApInfo</A></TH>
+	<TD>接続中のアクセスポイントに関する情報を取得する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetProxySetting.html" target="_self">DWC_GetProxySetting</A></TH>
+	<TD>接続中のアクセスポイントに関するproxy設定情報を取得する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetLinkLevel.html" target="_self">DWC_GetLinkLevel</A></TH>
+	<TD>アクセスポイントとの間の無線電波強度を取得する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_CleanupInet.html" target="_self">DWC_CleanupInet</A></TH>
+	<TD>自動接続制御を終了する関数です（同期版）</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_CleanupInetAsync.html" target="_self">DWC_CleanupInetAsync</A></TH>
+	<TD>自動接続制御を終了する関数です（非同期版）</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_TestInetAsync.html" target="_self">DWC_TestInetAsync</A></TH>
+	<TD>インターネットとの接続テストを開始する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_TestInetProcess.html" target="_self">DWC_TestInetProcess</A></TH>
+	<TD>インターネットとの接続テストの通信処理を実行する関数です。</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_14">Wi-Fiコネクション設定</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWC_StartUtility.html" target="_self">DWC_StartUtility</A></TH>
+	<TD>Wi-Fiコネクション設定を開始する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_StartUtilityEx.html" target="_self">DWC_StartUtilityEx</A></TH>
+	<TD>Wi-Fiコネクション設定を開始する関数です。（ワークメモリ無指定版）</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_15">構造体</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWCApInfo.html" target="main">DWCApInfo
+</A></TH>
+	<TD>接続中のアクセスポイントに関する情報を格納するための構造体です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCProxySetting.html" target="main">DWCProxySetting
+</A></TH>
+	<TD>接続中のアクセスポイントに関するproxy設定情報を取得する関数です。</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_16">定数、マクロ、列挙型</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TD><A href="macro_b9034400bfcbaa11b6d114bfdea392ae.html" target="_self">こちらを参照してください。</A></TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+<H2 id="TAG_17">認証サーバー</H2>
+
+<H3 id="TAG_18">ログイン</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWC_NASLoginAsync.html" target="_self">DWC_NASLoginAsync</A></TH>
+	<TD>任天堂認証サーバで認証を行いWi-Fiコネクションへの接続を行います。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_NASLoginProcess.html" target="_self">DWC_NASLoginProcess</A></TH>
+	<TD>認証処理を進行させ、その状態を取得します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_NASLoginAbort.html" target="_self">DWC_NASLoginAbort</A></TH>
+	<TD>認証処理を中断します。</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_19">サーバー時間</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetDateTime.html" target="_self">DWC_GetDateTime</A></TH>
+	<TD>現在の日付と時刻をGMTで取得します。</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_20">サービスロケータ</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWC_SVLGetTokenAsync.html" target="_self">DWC_SVLGetTokenAsync</A></TH>
+	<TD>サービスロケータ情報を取得する処理を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SVLProcess.html" target="_self">DWC_SVLProcess</A></TH>
+	<TD>サービスロケータ情報を取得する処理を進行させます。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SVLAbort.html" target="_self">DWC_SVLAbort</A></TH>
+	<TD>サービスロケータ情報を取得する処理を中断します。</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_21">構造体</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWCSvlResult.html" target="main">DWCSvlResult
+</A></TH>
+	<TD>サービスロケータ情報取得結果を格納する構造体</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_22">定数、マクロ、列挙型</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TD><A href="macro_593bc5d83d90e23b558b2f4329879869.html" target="_self">こちらを参照してください。</A></TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+<H2 id="TAG_23">友達管理・マッチメイク</H2>
+
+<H3 id="TAG_24">全般</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWCLoginCallback.html" target="_self">DWCLoginCallback</A></TH>
+	<TD>ログイン完了コールバック型</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCConnectionClosedCallback.html" target="_self">DWCConnectionClosedCallback</A></TH>
+	<TD>コネクションクローズコールバック型</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_InitFriendsMatch.html" target="_self">DWC_InitFriendsMatch</A></TH>
+	<TD>DWCFriendsMatchライブラリを初期化します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ShutdownFriendsMatch.html" target="_self">DWC_ShutdownFriendsMatch</A></TH>
+	<TD>DWCFriendsMatchライブラリを終了し、ライブラリ内部で確保しているヒープ領域を解放します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ProcessFriendsMatch.html" target="_self">DWC_ProcessFriendsMatch</A></TH>
+	<TD>通信処理を更新します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_LoginAsync.html" target="_self">DWC_LoginAsync</A></TH>
+	<TD>Wi-Fiコネクションへの接続を行います。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_UpdateServersAsync.html" target="_self">DWC_UpdateServersAsync</A></TH>
+	<TD>ローカルの友達リストとGameSpyサーバ上の友達リストとの同期をとります。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ConnectToAnybodyAsync.html" target="_self">DWC_ConnectToAnybodyAsync</A></TH>
+	<TD>友達無指定ピアマッチメイク開始関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ConnectToFriendsAsync.html" target="_self">DWC_ConnectToFriendsAsync</A></TH>
+	<TD>友達指定ピアマッチメイク開始関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetupGameServer.html" target="_self">DWC_SetupGameServer</A></TH>
+	<TD>サーバクライアントマッチメイクのサーバホスト起動関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ConnectToGameServerAsync.html" target="_self">DWC_ConnectToGameServerAsync</A></TH>
+	<TD>サーバクライアントマッチメイクのクライアントホスト接続開始関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ConnectToGameServerByGroupID.html" target="_self">DWC_ConnectToGameServerByGroupID</A></TH>
+	<TD>グループIDを指定してグループに再接続を試みます。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetConnectionClosedCallback.html" target="_self">DWC_SetConnectionClosedCallback</A></TH>
+	<TD>接続が切断されたときに呼び出されるコールバック関数を設定します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_CloseConnectionHardFromServer.html" target="_self">DWC_CloseConnectionHardFromServer</A></TH>
+	<TD>指定AIDのホストとの接続を切断する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_CloseConnectionHardBitmapFromServer.html" target="_self">DWC_CloseConnectionHardBitmapFromServer</A></TH>
+	<TD>指定AIDビットマップのホストとの接続を切断する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_CloseAllConnectionsHard.html" target="_self">DWC_CloseAllConnectionsHard</A></TH>
+	<TD>接続を切断、または進行中の接続処理をキャンセルする関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetNumConnectionHost.html" target="_self">DWC_GetNumConnectionHost</A></TH>
+	<TD>接続ホスト数を取得する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetMyAID.html" target="_self">DWC_GetMyAID</A></TH>
+	<TD>自分のAIDを取得する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetAIDList.html" target="_self">DWC_GetAIDList</A></TH>
+	<TD>接続中ホストのAIDリストを取得する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetAIDBitmap.html" target="_self">DWC_GetAIDBitmap</A></TH>
+	<TD>接続中ホストのAIDビットマップを取得する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_IsValidAID.html" target="_self">DWC_IsValidAID</A></TH>
+	<TD>指定のAIDと接続中であるかを調べる関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetState.html" target="_self">DWC_GetState</A></TH>
+	<TD>DWCFriendsMatchライブラリの内部状態を取得します。（デバッグ用）</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetServerAID.html" target="_self">DWC_GetServerAID</A></TH>
+	<TD>グループへの受付を管理するサーバホストのAIDを取得する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_IsServerMyself.html" target="_self">DWC_IsServerMyself</A></TH>
+	<TD>新規参加の受付を行っているサーバホストが自分かどうかを取得します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetDirectConnectedAIDBitmap.html" target="_self">DWC_GetDirectConnectedAIDBitmap</A></TH>
+	<TD>自分と直接接続のある相手ホストのAIDビットマップを取得します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetIngamesnCheckResult.html" target="_self">DWC_GetIngamesnCheckResult</A></TH>
+	<TD>ゲーム内スクリーンネームの認証サーバでのチェック結果を取得します。</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_25">友達リスト関係</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWCUpdateServersCallback.html" target="_self">DWCUpdateServersCallback</A></TH>
+	<TD>友達リスト同期処理コールバック型</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCFriendStatusCallback.html" target="_self">DWCFriendStatusCallback</A></TH>
+	<TD>友達状態変化通知コールバック型</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCDeleteFriendListCallback.html" target="_self">DWCDeleteFriendListCallback</A></TH>
+	<TD>友達リスト削除コールバック型</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCBuddyFriendCallback.html" target="_self">DWCBuddyFriendCallback</A></TH>
+	<TD>バディ成立コールバック型</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetFriendStatus.html" target="_self">DWC_GetFriendStatus</A></TH>
+	<TD>友達の状態を取得します。（文字列版）</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetFriendStatusSC.html" target="_self">DWC_GetFriendStatusSC</A></TH>
+	<TD>友達の状態を取得します。（文字列・サーバクライアントマッチメイク時の接続数取得版）</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetFriendStatusData.html" target="_self">DWC_GetFriendStatusData</A></TH>
+	<TD>友達の状態を取得します。（バイナリ版）</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetFriendStatusDataSC.html" target="_self">DWC_GetFriendStatusDataSC</A></TH>
+	<TD>友達の状態を取得します。（バイナリ・サーバクライアントマッチメイク時の接続数取得版）</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetNumFriend.html" target="_self">DWC_GetNumFriend</A></TH>
+	<TD>友達リストに登録されている友達の数を取得します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetOwnStatusString.html" target="_self">DWC_SetOwnStatusString</A></TH>
+	<TD>自分の状態をGameSpyサーバに登録します。（文字列版）</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetOwnStatusString.html" target="_self">DWC_GetOwnStatusString</A></TH>
+	<TD>自分の状態を取得します。（文字列版）</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetOwnStatusData.html" target="_self">DWC_SetOwnStatusData</A></TH>
+	<TD>自分の状態をGameSpyサーバに登録します。（バイナリ版）</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetOwnStatusData.html" target="_self">DWC_GetOwnStatusData</A></TH>
+	<TD>自分の状態を取得します。（バイナリ版）</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_CanChangeFriendList.html" target="_self">DWC_CanChangeFriendList</A></TH>
+	<TD>友達リストを変更してよいかどうかを確認します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_DeleteBuddyFriendData.html" target="_self">DWC_DeleteBuddyFriendData</A></TH>
+	<TD>友達リストから友達を削除し、GameSpyサーバ上の友達関係も削除します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetBuddyFriendCallback.html" target="_self">DWC_SetBuddyFriendCallback</A></TH>
+	<TD>友達関係が成立したときに呼び出されるコールバックを設定します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetFriendStatusCallback.html" target="_self">DWC_SetFriendStatusCallback</A></TH>
+	<TD>友達の通信状態が変化したときに呼び出されるコールバックを設定します。</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_26">データストレージ関係</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWCStorageLoginCallback.html" target="_self">DWCStorageLoginCallback</A></TH>
+	<TD>データストレージサーバ・ログインコールバック型</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCSaveToServerCallback.html" target="_self">DWCSaveToServerCallback</A></TH>
+	<TD>データストレージサーバ・セーブ完了コールバック型</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCLoadFromServerCallback.html" target="_self">DWCLoadFromServerCallback</A></TH>
+	<TD>データストレージサーバ・ロード完了コールバック型</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_LoginToStorageServerAsync.html" target="_self">DWC_LoginToStorageServerAsync</A></TH>
+	<TD>データストレージサーバにログインする関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_LogoutFromStorageServer.html" target="_self">DWC_LogoutFromStorageServer</A></TH>
+	<TD>データストレージサーバからログアウトする関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetStorageServerCallback.html" target="_self">DWC_SetStorageServerCallback</A></TH>
+	<TD>データストレージサーバデータセーブ・ロード完了通知コールバック登録関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SavePublicDataAsync.html" target="_self">DWC_SavePublicDataAsync</A></TH>
+	<TD>データストレージサーバPublicデータセーブ関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SavePrivateDataAsync.html" target="_self">DWC_SavePrivateDataAsync</A></TH>
+	<TD>データストレージサーバPrivateデータセーブ関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_LoadOwnPublicDataAsync.html" target="_self">DWC_LoadOwnPublicDataAsync</A></TH>
+	<TD>データストレージサーバ　自分のPublicデータロード関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_LoadOwnPrivateDataAsync.html" target="_self">DWC_LoadOwnPrivateDataAsync</A></TH>
+	<TD>データストレージサーバ　自分のPrivateデータロード関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_LoadOthersDataAsync.html" target="_self">DWC_LoadOthersDataAsync</A></TH>
+	<TD>データストレージサーバ他人のデータロード関数です。</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_27">マッチメイク関係</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWCMatchedSCCallback.html" target="_self">DWCMatchedSCCallback</A></TH>
+	<TD>マッチメイク完了コールバック型</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCNewClientCallback.html" target="_self">DWCNewClientCallback</A></TH>
+	<TD>新規接続クライアント接続開始通知コールバック型</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCEvalPlayerCallback.html" target="_self">DWCEvalPlayerCallback</A></TH>
+	<TD>プレイヤー評価コールバック型</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCConnectAttemptCallback.html" target="_self">DWCConnectAttemptCallback</A></TH>
+	<TD>マッチメイク条件判定コールバック型</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCSuspendCallback.html" target="_self">DWCSuspendCallback</A></TH>
+	<TD>締め切り完了コールバック型</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_RegisterMatchStatus.html" target="_self">DWC_RegisterMatchStatus</A></TH>
+	<TD>マッチメイク用の自ホスト情報を先行して登録する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_CancelMatch.html" target="_self">DWC_CancelMatch</A></TH>
+	<TD>マッチメイク処理をキャンセルする関数です。(非推奨)</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_IsValidCancelMatch.html" target="_self">DWC_IsValidCancelMatch</A></TH>
+	<TD>マッチメイク処理をキャンセルできるかどうか調べる関数です。(非推奨)</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_AddMatchKeyInt.html" target="_self">DWC_AddMatchKeyInt</A></TH>
+	<TD>マッチメイク指標キー追加関数int版</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_AddMatchKeyString.html" target="_self">DWC_AddMatchKeyString</A></TH>
+	<TD>マッチメイク指標キー追加関数string版</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetMatchIntValue.html" target="_self">DWC_GetMatchIntValue</A></TH>
+	<TD>マッチメイク指標キー取得関数int版</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetMatchStringValue.html" target="_self">DWC_GetMatchStringValue</A></TH>
+	<TD>マッチメイク指標キー取得関数string版</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetLastMatchType.html" target="_self">DWC_GetLastMatchType</A></TH>
+	<TD>最後に行ったマッチメイクの種別を取得する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetMatchState.html" target="_self">DWC_GetMatchState</A></TH>
+	<TD>マッチメイク中の内部状態を取得する関数です。（デバッグ用）</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetGroupID.html" target="_self">DWC_GetGroupID</A></TH>
+	<TD>現在自分が参加しているグループのIDを取得する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_RequestSuspendMatchAsync.html" target="_self">DWC_RequestSuspendMatchAsync</A></TH>
+	<TD>マッチメイクにおける新規参加の受付状態を変更する処理を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetSuspendMatch.html" target="_self">DWC_GetSuspendMatch</A></TH>
+	<TD>現在、新規ホストの参加受付を行っているかどうかを取得します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetConnectionUserData.html" target="_self">DWC_GetConnectionUserData</A></TH>
+	<TD>指定AIDのホストに対応するconnectionUserDataを取得します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetDebugMeshNNRetryMax.html" target="_self">DWC_SetDebugMeshNNRetryMax</A></TH>
+	<TD>メッシュ構築時のNAT超えに失敗した際、リトライする最大回数を設定する関数です。（デバッグ用）</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetDebugMeshNNRetryMax.html" target="_self">DWC_GetDebugMeshNNRetryMax</A></TH>
+	<TD>メッシュ構築時のNAT超えに失敗した際、リトライする最大回数を取得する関数です。（デバッグ用）</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_28">送受信</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetUdpPacketDropNum.html" target="_self">DWC_GetUdpPacketDropNum</A></TH>
+	<TD>受信バッファ溢れのためにUDPパケットを受信できなかった回数を取得する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCUserSendCallback.html" target="_self">DWCUserSendCallback</A></TH>
+	<TD>データの送信が完了したときに呼び出されるコールバック関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCUserRecvCallback.html" target="_self">DWCUserRecvCallback</A></TH>
+	<TD>データの受信があったときに呼び出されるコールバック関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCUserRecvTimeoutCallback.html" target="_self">DWCUserRecvTimeoutCallback</A></TH>
+	<TD>一定期間データの受信がないときに呼び出されるコールバック関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCUserPingCallback.html" target="_self">DWCUserPingCallback</A></TH>
+	<TD>DWC_Ping関数での測定結果を通知するコールバック関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SendReliable.html" target="_self">DWC_SendReliable</A></TH>
+	<TD>Connection確立後、指定のAIDへUDPによるReliable送信を行う関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SendReliableBitmap.html" target="_self">DWC_SendReliableBitmap</A></TH>
+	<TD>Connection確立後、指定のbitmapへUDPによるReliable送信を行う関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SendUnreliable.html" target="_self">DWC_SendUnreliable</A></TH>
+	<TD>Connection確立後、指定のAIDへUDPによるUnreliable送信を行う関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SendUnreliableBitmap.html" target="_self">DWC_SendUnreliableBitmap</A></TH>
+	<TD>Connection確立後、指定のbitmapへUDPによるUnreliable送信を行う関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_Ping.html" target="_self">DWC_Ping</A></TH>
+	<TD>接続中の指定AIDの通信遅延を測定する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetRecvBuffer.html" target="_self">DWC_SetRecvBuffer</A></TH>
+	<TD>受信バッファを設定します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetUserSendCallback.html" target="_self">DWC_SetUserSendCallback</A></TH>
+	<TD>送信コールバックの設定をする関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetUserRecvCallback.html" target="_self">DWC_SetUserRecvCallback</A></TH>
+	<TD>受信コールバックの設定をする関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetUserRecvTimeoutCallback.html" target="_self">DWC_SetUserRecvTimeoutCallback</A></TH>
+	<TD>一定時間データを受信しなかったときの受信タイムアウトを通知するコールバック関数を設定する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetRecvTimeoutTime.html" target="_self">DWC_SetRecvTimeoutTime</A></TH>
+	<TD>受信タイムアウトのタイムアウト時間を設定する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetUserPingCallback.html" target="_self">DWC_SetUserPingCallback</A></TH>
+	<TD>通信遅延の測定結果を受け取るコールバック関数を設定する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetSendSplitMax.html" target="_self">DWC_SetSendSplitMax</A></TH>
+	<TD>Reliable送信の分割送信サイズを設定する関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_IsSendableReliable.html" target="_self">DWC_IsSendableReliable</A></TH>
+	<TD>指定AIDへのReliable送信可能かどうかをチェックする関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetConnectionKeepAliveTime.html" target="_self">DWC_SetConnectionKeepAliveTime</A></TH>
+	<TD>一定時間reliable/unreliable通信の無い接続相手を切断するための判断基準となる、タイムアウト時間を設定します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GetConnectionKeepAliveTime.html" target="_self">DWC_GetConnectionKeepAliveTime</A></TH>
+	<TD>一定時間reliable/unreliable通信の無い接続相手を切断するための判断基準となる、タイムアウト時間を取得します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetSendDelay.html" target="_self">DWC_SetSendDelay</A></TH>
+	<TD>送信時に遅延させる時間（単位：ms）を設定する関数です。（デバッグ用）</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetRecvDelay.html" target="_self">DWC_SetRecvDelay</A></TH>
+	<TD>受信時に遅延させる時間（単位：ms）を設定する関数です。（デバッグ用）</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetSendDrop.html" target="_self">DWC_SetSendDrop</A></TH>
+	<TD>送信時のパケットロス率を設定する関数です。（デバッグ用）</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_SetRecvDrop.html" target="_self">DWC_SetRecvDrop</A></TH>
+	<TD>受信時のパケットロス率を設定する関数です。（デバッグ用）</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_29">定数、マクロ、列挙型</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TD><A href="macro_7615b4a90a781da74ecaa5614dc04d20.html" target="_self">こちらを参照してください。</A></TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+<H2 id="TAG_30">簡易データベース</H2>
+
+<H3 id="TAG_31">全般</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWCGdbGetRecordsCallback.html" target="_self">DWCGdbGetRecordsCallback</A></TH>
+	<TD>非同期処理の結果、レコードを取得する際のコールバックです。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCGdbDownloadFileCallback.html" target="_self">DWCGdbDownloadFileCallback</A></TH>
+	<TD>非同期処理の結果、ファイルを取得する際のコールバックです。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GdbInitialize.html" target="_self">DWC_GdbInitialize</A></TH>
+	<TD>簡易データベースライブラリを初期化します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GdbShutdown.html" target="_self">DWC_GdbShutdown</A></TH>
+	<TD>簡易データベースライブラリの使用を終了します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GdbProcess.html" target="_self">DWC_GdbProcess</A></TH>
+	<TD>簡易データベースライブラリの処理を進めます。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GdbGetState.html" target="_self">DWC_GdbGetState</A></TH>
+	<TD>簡易データベースライブラリの現在の状態を処理を取得します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GdbGetAsyncResult.html" target="_self">DWC_GdbGetAsyncResult</A></TH>
+	<TD>非同期処理の結果を取得します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GdbGetFieldByName.html" target="_self">DWC_GdbGetFieldByName</A></TH>
+	<TD>フィールドの配列から、指定した名前のフィールドを取得します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GdbCreateRecordAsync.html" target="_self">DWC_GdbCreateRecordAsync</A></TH>
+	<TD>レコードを新規に作成する非同期処理を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GdbDeleteRecordAsync.html" target="_self">DWC_GdbDeleteRecordAsync</A></TH>
+	<TD>レコードを削除する非同期処理を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GdbUpdateRecordAsync.html" target="_self">DWC_GdbUpdateRecordAsync</A></TH>
+	<TD>レコードを更新する非同期処理を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GdbDownloadFileAsync.html" target="_self">DWC_GdbDownloadFileAsync</A></TH>
+	<TD>ファイルをダウンロードする非同期処理を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GdbUploadFileAsync.html" target="_self">DWC_GdbUploadFileAsync</A></TH>
+	<TD>ファイルをアップロードする非同期処理を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GdbGetMyRecordsAsync.html" target="_self">DWC_GdbGetMyRecordsAsync</A></TH>
+	<TD>自分のレコードを全て取得する非同期処理を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GdbGetRecordLimitAsync.html" target="_self">DWC_GdbGetRecordLimitAsync</A></TH>
+	<TD>テーブルに設定された、１ユーザーが作成することのできるレコードの最大値と、現在作成している数を取得する非同期処理を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GdbGetRecordsAsync.html" target="_self">DWC_GdbGetRecordsAsync</A></TH>
+	<TD>指定したレコードIDのレコードを取得する非同期処理を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GdbRateRecordAsync.html" target="_self">DWC_GdbRateRecordAsync</A></TH>
+	<TD>指定したレコードIDのレコードを点数付けする非同期処理を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GdbSearchRecordsAsync.html" target="_self">DWC_GdbSearchRecordsAsync</A></TH>
+	<TD>指定した検索条件でレコードを取得する非同期処理を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GdbGetRandomRecordAsync.html" target="_self">DWC_GdbGetRandomRecordAsync</A></TH>
+	<TD>指定した条件でレコードをランダムに１つ取得する非同期処理を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GdbGetRecordCountAsync.html" target="_self">DWC_GdbGetRecordCountAsync</A></TH>
+	<TD>指定した条件に当てはまるレコードの数を取得する非同期処理を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_GdbUCS2ToUTF8Str.html" target="_self">DWC_GdbUCS2ToUTF8Str</A></TH>
+	<TD>srcで指定されたUCS-2文字列をUTF8に変換し、dstで指定された領域へ出力します。</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_32">構造体、共用体</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWCGdbBinaryData.html" target="main">DWCGdbBinaryData
+</A></TH>
+	<TD>バイナリデータ型の値です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCGdbField.html" target="main">DWCGdbField
+</A></TH>
+	<TD>フィールドを示します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCGdbSearchCond.html" target="main">DWCGdbSearchCond
+</A></TH>
+	<TD>検索の条件を示します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCGdbValue.html" target="_self">DWCGdbValue</A></TH>
+	<TD>フィールドの値を示します。</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_33">定数、マクロ、列挙型</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TD><A href="macro_2b800be0ca9c4705a2453a3ea4b71fba.html" target="_self">こちらを参照してください。</A></TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+<H2 id="TAG_34">統計・競争</H2>
+
+<H3 id="TAG_35">全般</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWCScCreateSessionCallback.html" target="_self">DWCScCreateSessionCallback</A></TH>
+	<TD>セッション作成処理が完了したときに呼び出されるコールバック関数。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCScSetReportIntentionCallback.html" target="_self">DWCScSetReportIntentionCallback</A></TH>
+	<TD>レポートインテンション処理が完了したときに呼び出されるコールバック関数。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCScSubmitReportCallback.html" target="_self">DWCScSubmitReportCallback</A></TH>
+	<TD>レポート送信処理が完了したときに呼び出されるコールバック関数。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScInitialize.html" target="_self">DWC_ScInitialize</A></TH>
+	<TD>コンペティションライブラリを初期化します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScShutdown.html" target="_self">DWC_ScShutdown</A></TH>
+	<TD>コンペティションライブラリの終了処理をします。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScProcess.html" target="_self">DWC_ScProcess</A></TH>
+	<TD>コンペティションライブラリの処理を進めます。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScCreateSessionAsync.html" target="_self">DWC_ScCreateSessionAsync</A></TH>
+	<TD>セッションIDを作成します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScCreateMatchlessSessionAsync.html" target="_self">DWC_ScCreateMatchlessSessionAsync</A></TH>
+	<TD>ノーマッチセッションIDを作成します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScSetReportIntentionAsync.html" target="_self">DWC_ScSetReportIntentionAsync</A></TH>
+	<TD>レポートの種類を通知します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScSubmitReportAsync.html" target="_self">DWC_ScSubmitReportAsync</A></TH>
+	<TD>レポートを送信します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScSetSessionId.html" target="_self">DWC_ScSetSessionId</A></TH>
+	<TD>セッションIDを設定します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScGetSessionId.html" target="_self">DWC_ScGetSessionId</A></TH>
+	<TD>セッションIDを取得します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScGetConnectionId.html" target="_self">DWC_ScGetConnectionId</A></TH>
+	<TD>コネクションIDを取得します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScCreateReport.html" target="_self">DWC_ScCreateReport</A></TH>
+	<TD>レポートを作成します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScReportBeginGlobalData.html" target="_self">DWC_ScReportBeginGlobalData</A></TH>
+	<TD>グローバルデータの定義を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScReportBeginPlayerData.html" target="_self">DWC_ScReportBeginPlayerData</A></TH>
+	<TD>プレイヤーデータの定義を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScReportBeginTeamData.html" target="_self">DWC_ScReportBeginTeamData</A></TH>
+	<TD>チームデータの定義を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScReportBeginNewPlayer.html" target="_self">DWC_ScReportBeginNewPlayer</A></TH>
+	<TD>新しいプレイヤーの定義を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScReportSetPlayerData.html" target="_self">DWC_ScReportSetPlayerData</A></TH>
+	<TD>プレイヤーデータの定義を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScReportBeginNewTeam.html" target="_self">DWC_ScReportBeginNewTeam</A></TH>
+	<TD>新しいチームの定義を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScReportSetTeamData.html" target="_self">DWC_ScReportSetTeamData</A></TH>
+	<TD>チームデータの定義を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScReportEnd.html" target="_self">DWC_ScReportEnd</A></TH>
+	<TD>レポートの終端を宣言します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScReportSetAsMatchless.html" target="_self">DWC_ScReportSetAsMatchless</A></TH>
+	<TD>ノーマッチセッションにおけるレポート送信。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScReportAddIntValue.html" target="_self">DWC_ScReportAddIntValue</A></TH>
+	<TD>レポートに32bit整数値を設定します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScReportAddShortValue.html" target="_self">DWC_ScReportAddShortValue</A></TH>
+	<TD>レポートに16bit整数値を設定します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScReportAddByteValue.html" target="_self">DWC_ScReportAddByteValue</A></TH>
+	<TD>レポートに8bit整数値を設定します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScReportAddFloatValue.html" target="_self">DWC_ScReportAddFloatValue</A></TH>
+	<TD>レポートに浮動小数点数を設定します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScReportAddStringValue.html" target="_self">DWC_ScReportAddStringValue</A></TH>
+	<TD>レポートに文字列を設定します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScDestroyReport.html" target="_self">DWC_ScDestroyReport</A></TH>
+	<TD>レポートを破棄します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_ScGetLoginCertificate.html" target="_self">DWC_ScGetLoginCertificate</A></TH>
+	<TD>ログイン中の認証情報を取得します。</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_36">定数、マクロ、列挙型</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TD><A href="macro_dac2e040f806bfe6b3a7cc64f6ba1710.html" target="_self">こちらを参照してください。</A></TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+<H2 id="TAG_37">汎用ランキング</H2>
+
+<H3 id="TAG_38">全般</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWC_RnkInitialize.html" target="_self">DWC_RnkInitialize</A></TH>
+	<TD>ランキングライブラリを初期化します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_RnkShutdown.html" target="_self">DWC_RnkShutdown</A></TH>
+	<TD>ランキングライブラリの終了処理を行います。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_RnkPutScoreAsync.html" target="_self">DWC_RnkPutScoreAsync</A></TH>
+	<TD>スコアを登録する非同期処理を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_RnkGetScoreAsync.html" target="_self">DWC_RnkGetScoreAsync</A></TH>
+	<TD>ランキングデータを取得する非同期処理を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_RnkCancelProcess.html" target="_self">DWC_RnkCancelProcess</A></TH>
+	<TD>非同期処理を中断します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_RnkProcess.html" target="_self">DWC_RnkProcess</A></TH>
+	<TD>非同期処理を更新します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_RnkGetState.html" target="_self">DWC_RnkGetState</A></TH>
+	<TD>現在の処理状態を取得します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_RnkResGetRow.html" target="_self">DWC_RnkResGetRow</A></TH>
+	<TD>通信結果からランキングリストの指定したインデックスの行を取得します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_RnkResGetRowCount.html" target="_self">DWC_RnkResGetRowCount</A></TH>
+	<TD>通信結果からランキングリストの行数を取得します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_RnkResGetOrder.html" target="_self">DWC_RnkResGetOrder</A></TH>
+	<TD>通信結果から順位を取得します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_RnkResGetTotal.html" target="_self">DWC_RnkResGetTotal</A></TH>
+	<TD>通信結果の順位の母数を取得します。</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_39">構造体</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWCRnkData.html" target="main">DWCRnkData
+</A></TH>
+	<TD>スコア情報格納用構造体</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCRnkGetParam_order.html" target="main">DWCRnkGetParam_order
+</A></TH>
+	<TD>順位取得モードで指定するパラメータ</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCRnkGetParam_toplist.html" target="main">DWCRnkGetParam_toplist
+</A></TH>
+	<TD>トップランキングリスト取得モードで指定するパラメータ</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCRnkGetParam_nearby.html" target="main">DWCRnkGetParam_nearby
+</A></TH>
+	<TD>周辺ランキングリスト取得モードで指定するパラメータ</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCRnkGetParam_friends.html" target="main">DWCRnkGetParam_friends
+</A></TH>
+	<TD>友達ランキングリスト取得モードで指定するパラメータ</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWCRnkGetParam.html" target="main">DWCRnkGetParam
+</A></TH>
+	<TD>DWC_RnkGetScoreAsyncで指定するパラメータ</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_40">定数、マクロ、列挙型</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TD><A href="macro_64bffac2875253def3770d57d79e2d71.html" target="_self">こちらを参照してください。</A></TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+<H2 id="TAG_41">ダウンロード</H2>
+
+<H3 id="TAG_42">全般</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWCNdCallback.html" target="_self">DWCNdCallback</A></TH>
+	<TD>ダウンロードライブラリの各種非同期処理が完了したときに呼び出されるコールバック関数です。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_NdInitAsync.html" target="_self">DWC_NdInitAsync</A></TH>
+	<TD>ダウンロードライブラリの初期化処理を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_NdProcess.html" target="_self">DWC_NdProcess</A></TH>
+	<TD>ダウンロードライブラリの処理を進めます。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_NdCleanupAsync.html" target="_self">DWC_NdCleanupAsync</A></TH>
+	<TD>ダウンロードライブラリの終了処理を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_NdSetAttr.html" target="_self">DWC_NdSetAttr</A></TH>
+	<TD>ダウンロードサーバとの通信に必要な属性情報の設定を行います。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_NdGetFileListNumAsync.html" target="_self">DWC_NdGetFileListNumAsync</A></TH>
+	<TD>現在設定されている属性に対応するダウンロード可能ファイル数を取得します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_NdGetFileListAsync.html" target="_self">DWC_NdGetFileListAsync</A></TH>
+	<TD>現在設定されている属性に対応するファイルリストを取得します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_NdGetFileAsync.html" target="_self">DWC_NdGetFileAsync</A></TH>
+	<TD>DWC_NdGetFileListAsync関数で取得したファイル情報を指定してダウンロードを開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_NdCancelAsync.html" target="_self">DWC_NdCancelAsync</A></TH>
+	<TD>現在実行中の非同期処理を中断します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_NdGetProgress.html" target="_self">DWC_NdGetProgress</A></TH>
+	<TD>現在実行中のダウンロードの進行状況を取得します。</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_43">構造体</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWCNdFileInfo.html" target="main">DWCNdFileInfo
+</A></TH>
+	<TD>個々のファイル情報を格納する構造体です。</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_44">定数、マクロ、列挙型</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TD><A href="macro_06fd5dd87faadf220fc99c15afe713b8.html" target="_self">こちらを参照してください。</A></TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+<H2 id="TAG_45">不正文字列チェック</H2>
+
+<H3 id="TAG_46">全般</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TH width="25%"><A href="DWC_CheckProfanityAsync.html" target="_self">DWC_CheckProfanityAsync</A></TH>
+	<TD>不正文字列チェック処理を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_CheckProfanityExAsync.html" target="_self">DWC_CheckProfanityExAsync</A></TH>
+	<TD>対象のリージョンを指定した不正文字列チェック処理を開始します。</TD>
+</TR>
+
+<TR>
+	<TH width="25%"><A href="DWC_CheckProfanityProcess.html" target="_self">DWC_CheckProfanityProcess</A></TH>
+	<TD>不正文字列チェック処理を進行させます。</TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+
+<H3 id="TAG_47">定数、マクロ、列挙型</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+<TR>
+	<TD><A href="macro_9171872602617426da3b569aafaa09ac.html" target="_self">こちらを参照してください。</A></TD>
+</TR>
+
+  </TBODY>
+</TABLE>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+</BODY>
+</HTML>

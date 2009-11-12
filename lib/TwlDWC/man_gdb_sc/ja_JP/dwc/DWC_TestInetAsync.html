@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_TestInetAsync</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__connectinet_8h_1d94b5d6953396eb2bd0785f5fac81b4d" align="left">DWC_TestInetAsync</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_TestInetAsync(int timeout);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>timeout</STRONG></EM></TD>
+      <TD width="87%">接続テストのタイムアウト時間[msec]<br>0以下を指定した場合に適用されるデフォルトのタイムアウト時間は、3000msecです。<br>タイムアウト時間が短すぎると正常にテストできません。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">接続テストを開始した</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">接続テストの開始に失敗した。<br>具体的には下記条件になります。<br><ul><li>
+ライブラリ内部で動的に確保するためのメモリが不足している
+</li><li>
+既に接続テストを実行中
+</li><li>
+<a href="DWC_ConnectInetAsync.html#dwc__connectinet_8h_1ed6360e949bbab87f49275bac0a381cc">DWC_ConnectInetAsync</a>関数でインターネットに接続してから<a href="DWC_CleanupInet.html#dwc__connectinet_8h_14d7f46fc1822bb3f39eed3b087e629c6">DWC_CleanupInet</a>関数か<a href="DWC_CleanupInetAsync.html#dwc__connectinet_8h_100a9f2169ae3e5c145607630710674ac">DWC_CleanupInetAsync</a>関数で切断するまでの間でない
+</li></ul></TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>接続テスト用サーバと通信することによるインターネットとの接続テストを開始します。<br></p><p>Proxy設定がされた接続先に接続した場合、本関数は1回目の呼び出しの時、接続先ドメインの解決のため長時間ブロックする可能性がありますので注意して下さい。<br>2回目以降は、staticな領域に保存されたIPアドレスを使用しますので長時間ブロックすることはありません。</p><p>本関数を呼び出した後は、接続テストの通信処理を実行するために処理が終わるまで<a href="DWC_TestInetProcess.html#dwc__connectinet_8h_162b7d89eb16a423fd4d0441ae113c8a0">DWC_TestInetProcess</a>関数を毎ゲームフレーム程度の頻度で呼び出してください。<br>接続テストの処理中に本関数を呼び出した場合は必ずFALSEを返します。</p><p>本関数によって接続テストが開始された時点で必要なメモリが確保されるため、接続テストの通信処理が終わって自動的にメモリが解放されるまで処理を続けてください。</p><p>接続テスト用サーバと通信を行いますので、短い間隔で繰り返し呼び出さないでください。<br>アクセスポイントとの接続状態を確認する<a href="DWC_UpdateConnection.html#dwc__connectinet_8h_146db3e2e9aac4a3b17feafedc7dd4ea2">DWC_UpdateConnection</a>関数も参照してください。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_TestInetProcess.html#dwc__connectinet_8h_162b7d89eb16a423fd4d0441ae113c8a0">DWC_TestInetProcess</a></CODE>
+
+  <CODE><a href="DWC_UpdateConnection.html#dwc__connectinet_8h_146db3e2e9aac4a3b17feafedc7dd4ea2">DWC_UpdateConnection</a></CODE>
+
+  <CODE><a href="DWC_ConnectInetAsync.html#dwc__connectinet_8h_1ed6360e949bbab87f49275bac0a381cc">DWC_ConnectInetAsync</a></CODE>
+
+  <CODE><a href="DWC_CleanupInet.html#dwc__connectinet_8h_14d7f46fc1822bb3f39eed3b087e629c6">DWC_CleanupInet</a></CODE>
+
+  <CODE><a href="DWC_CleanupInetAsync.html#dwc__connectinet_8h_100a9f2169ae3e5c145607630710674ac">DWC_CleanupInetAsync</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_TestInetAsync_tag">こちら</a>　　</p>
+</body>
+</html>

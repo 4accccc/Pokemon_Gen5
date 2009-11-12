@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_GetIngamesnCheckResult</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__nas_8h_19178b73ffcdb7213cd84e15374398dfa" align="left">DWC_GetIngamesnCheckResult</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE><a href="Macro.html#dwc__nas_8h_1349021731a0fc769a18f1057332fd0f6">DWCIngamesnCheckResult</a> DWC_GetIngamesnCheckResult(void);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<p>なし</p>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__nas_8h_1349021731a0fc769a18f1057332fd0f6504090416fac4dd9cd338ebe8b8d6910">DWC_INGAMESN_NOT_CHECKED</a></STRONG></EM></TD>
+      <TD width="87%">認証サーバでチェックされていません。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__nas_8h_1349021731a0fc769a18f1057332fd0f689358a48e20ef87ef8af6db3a8685c2a">DWC_INGAMESN_VALID</a></STRONG></EM></TD>
+      <TD width="87%">認証サーバで不適切と判断されませんでした。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__nas_8h_1349021731a0fc769a18f1057332fd0f67927e3a04b407a12fbb36448b56a4e87">DWC_INGAMESN_INVALID</a></STRONG></EM></TD>
+      <TD width="87%">認証サーバで不適切と判断されました。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>最後に<a href="DWC_LoginAsync.html#dwc__main_8h_1ac1f7f301938afe8408be88dfa65f217">DWC_LoginAsync</a>関数で認証サーバに送信したゲーム内スクリーンネーム（ゲーム中でプレイヤーが使用する名前）のチェック結果を取得します。Wi-Fiコネクションへの接続に成功した後に呼び出してください。</p><p>認証サーバは、<a href="DWC_LoginAsync.html#dwc__main_8h_1ac1f7f301938afe8408be88dfa65f217">DWC_LoginAsync</a>関数で認証サーバに送信したゲーム内スクリーンネームがWi-Fiコネクション上で不適切なものでないかチェックします。</p><p>チェック結果の適用方法については、「NitendoWi-FiConnectionプログラミングガイドライン」を参照してください。<br></p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_LoginAsync.html#dwc__main_8h_1ac1f7f301938afe8408be88dfa65f217">DWC_LoginAsync</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GetIngamesnCheckResult_tag">こちら</a>　　</p>
+</body>
+</html>

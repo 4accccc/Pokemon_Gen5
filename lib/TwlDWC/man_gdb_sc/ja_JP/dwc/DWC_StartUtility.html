@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_StartUtility</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__utility_8h_1a6e388b33fe6c8344210c25f8acca085" align="left">DWC_StartUtility</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>int DWC_StartUtility(void *work,
+                     int language,
+                     int param);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>work</STRONG></EM></TD>
+      <TD width="87%">32バイトアライメントされたDWC_UTILITY_WORK_SIZEバイトのバッファへのポインタ。関数終了後は破棄してかまいません。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>language</STRONG></EM></TD>
+      <TD width="87%">Wi-Fiコネクション設定内の言語を指定します。<br>基本的にはアプリケーションで使用している言語を指定してください。ただし、paramで指定する仕向地によっては選択できない言語があります。本関数で*対応していない言語をアプリケーションで使用している場合は、本関数が対応している言語の中から適切なものを選択してください。<ul><li>
+DWC_LANGUAGE_JAPANESE　　//日本語
+</li><li>
+DWC_LANGUAGE_ENGLISH　　//英語
+</li><li>
+DWC_LANGUAGE_FRENCH　　　//フランス語
+</li><li>
+DWC_LANGUAGE_GERMAN　　　//ドイツ語
+</li><li>
+DWC_LANGUAGE_ITALIAN　　//イタリア語
+</li><li>
+DWC_LANGUAGE_SPANISH　　//スペイン語
+</li><li>
+DWC_LANGUAGE_HANGUL　　　//韓国語*
+</li></ul></TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>param</STRONG></EM></TD>
+      <TD width="87%">仕向地、Wi-Fiコネクション設定の開始位置を指定します。仕向地によりらくらく無線スタートの有無が変わります。<br><ul><li>
+トップメニューから開始。<b>実装が必須です。</b><ul><li>
+DWC_UTILITY_TOP_MENU_FOR_USA　　//仕向地北米
+</li><li>
+DWC_UTILITY_TOP_MENU_FOR_EUR　　//仕向地欧州
+</li><li>
+DWC_UTILITY_TOP_MENU_FOR_JPN　　//仕向地日本
+</li><li>
+DWC_UTILITY_TOP_MENU_COMMON　　//上記以外の仕向地共通<br><br>
+</li></ul>
+</li><li>
+「接続先の選択」から開始。実装は必須でありません。<ul><li>
+DWC_UTILITY_SETTING_FOR_USA　　//仕向地北米
+</li><li>
+DWC_UTILITY_SETTING_FOR_EUR　　//仕向地欧州
+</li><li>
+DWC_UTILITY_SETTING_FOR_JPN　　//仕向地日本
+</li><li>
+DWC_UTILITY_SETTING_COMMON　　　//上記以外の仕向地共通
+</li></ul>
+</li></ul></TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>DWC_UTIL_RESULT_SUCCESS</STRONG></EM></TD>
+      <TD width="87%">正常終了</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>DWC_UTIL_RESULT_FAILED</STRONG></EM></TD>
+      <TD width="87%">引数エラー</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>DWC_UTIL_RESULT_ERROR_TWL</STRONG></EM></TD>
+      <TD width="87%">Twlで起動したときのエラー</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>Wi-Fiコネクション設定を開始します。</p><p>必要なバッファを外部から与える<a href="DWC_StartUtility.html#dwc__utility_8h_1a6e388b33fe6c8344210c25f8acca085">DWC_StartUtility</a>関数とstaticに確保されたものを使用する<a href="DWC_StartUtilityEx.html#dwc__utility_8h_150e5b64241cfa2f8748540bad6c2a364">DWC_StartUtilityEx</a>関数があります。</p><p><b>Wi-Fiコネクション設定は、TWL_ARCHGENをLIMITEDに指定したビルドの場合(TWL専用モード)は、実装する必要はありません。TWLでは、本体設定からWi-Fiコネクションの設定ができるので、ユーザーにはそちらを利用してもらいます。</b></p><p><b>TWL_ARCHGENをHYBRIDに指定したビルドの場合(NITRO/TWL両対応モード)、DS,DSLite上で動作させた場合本関数は正常に動作しますが、TWL上で動作させた場合、本関数は必ず、DWC_UTIL_RESULT_ERROR_TWLのエラーを返します。このDWC_UTIL_RESULT_ERROR_TWLエラーが返ったとき、必ずガイドラインに規定されているメッセージを表示するようにしてください。</b></p><p>Wi-Fiコネクション設定は、次の機能をプレイヤーに提供するための共通のインターフェイスです<ul><li>
+アクセスポイントの接続設定を行って本体にその設定を保存する機能(3つまで保存できます)
+</li><li>
+ニンテンドーWi-FiUSBコネクタに接続するための設定を行なう機能
+</li><li>
+インターネットへの接続テストを行なう機能
+</li><li>
+本体のMACアドレスとWi-FiコネクションIDを表示する機能
+</li><li>
+本体に保存されたWi-Fiユーザー情報(Wi-FiコネクションIDとアクセスポイントの接続設定)を消去する機能
+</li><li>
+本体に保存されたWi-Fiユーザー情報を別の本体に移行する機能
+</li></ul></p><p>呼び出し時には次の点に留意してください。</p><p>引数paramでWi-Fiコネクション設定の開始位置を指定できますが、<b>アプリケーション内には必ず「トップメニュー」から開始できるシーンが必要です。</b><br>これは、「接続先の選択」から開始するとWi-Fiコネクション設定の全ての機能が使用できないためです。<br>「接続先の選択」から開始するオプションは、インターネットへの接続エラーが発生した際に、プレイヤーを直接、接続先の設定へ導くような実装を行なうことを想定したもので、必須の実装ではありません。</p><p>すべての処理を終了させてから呼び出してください。<br>具体的な注意点は、以下のとおりです。<ul><li>
+DSワイヤレス通信の使用を中止してください。
+</li><li>
+タッチパネルのオートサンプリングを停止させてください。
+</li><li>
+割り込みやコールバック関数等により、アプリケーション側のプログラムが呼ばれることのないようにしてください。
+</li></ul></p><p>内部でTWL-DWC以外のTWL-SDK、TWL-System、TWL-WiFiの各ライブラリを呼び出しています。<br><b>これらに関連するライブラリは「Wi-Fiコネクション設定」の実行時に予めメモリにロードされている必要があります</b>ので、下記リストのライブラリをオーバレイモジュールとして使用する場合はご注意ください。また、<b>これらのライブラリをカスタマイズした場合は正常に動作しない可能性があります</b>のでご注意ください。</p><p><ul><li>
+TWL-SDK<ul><li>
+オペレーティングシステム(OS)
+</li><li>
+グラフィックス(GX/G2)
+</li><li>
+メモリインターフェイス(MI)
+</li><li>
+固定少数(FX)
+</li><li>
+数学演算(MATH)
+</li><li>
+ARM7プロセッサ周辺装置(TP/PM)
+</li><li>
+リアルタイムクロック(RTC)
+</li><li>
+ROMファイルシステム(FS)
+</li><li>
+CARDモジュール(CARD)
+</li><li>
+ワイヤレスマネージャ(WM)
+</li><li>
+マルチブートライブラリ(MB)
+</li></ul>
+</li></ul></p><p><ul><li>
+TWL-SYSTEM<ul><li>
+Foundationライブラリ(Fnd)
+</li><li>
+Graphics2Dライブラリ(G2d)
+</li><li>
+NITROコンポーザ(Snd)
+</li></ul>
+</li></ul></p><p><ul><li>
+TWL-WiFi<ul><li>
+ソケットライブラリ(SOC)
+</li><li>
+TCP/IPプロトコルスタック(CPS)
+</li><li>
+ワイヤレス接続管理ライブラリ(WCM)
+</li></ul>
+</li></ul></p><p>FINALROM版の場合、<a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数の設定に関わらず製品向け認証サーバを使用します。</p><p>Wi-Fiコネクション設定は、白単色の画面から始まるように作成されています。そのため、アプリケーションを白単色の画面にしてから呼び出すと、自然に繋がります。</p><p>また、関数が正常終了した後は次の点に留意してください。(引数エラーで終了した場合は何も処理されません)<ul><li>
+LCDへの出力がOFFの状態で終了します。
+</li><li>
+すべてのIRQ割り込みを禁止した状態で終了します。
+</li><li>
+VRAMの状態は不定です。
+</li><li>
+2Dグラフィックスエンジンの設定も不定です。
+</li><li>
+NITROコンポーザを使用していますので同ライブラリを使用している際は再設定が必要です。
+</li></ul></p><p>Wi-Fiコネクション設定は、TWL-SDKのファイルシステムによりDSカード上のファイルを参照します。＄(TWLDWC_ROOT)/file/dwc/utility.binをルートディレクトリにディレクトリ名dwc/で配置してください。アプリケーションで、ファイルシステムを使用しない場合は、ROMスペックファイルのRomSpecセッションに下記の記述を付け加え、アプリケーション側でFS_Init()を呼び出してファイルシステムを使用できるようにしてください。</p><p>RomSpec<br>{<br>　　...<br>　　#ここから<br>　　HostRoot　　./file/dwc　　　#PC側ファイルディレクトリ名<br>　　Root　　/dwc<br>　　File　　utility.bin<br>　　#ここまで<br>}<br></p><p><br>参考：言語と仕向地の組み合わせとらくらく無線スタートの有無</p><p><table border="1"><tr><th>言語</th><th>仕向地</th><th>らくらく無線スタート</th><th>備考</th></tr><tr><td>日本語</td><td>日本</td><td>有り</td><td>---</td></tr><tr><td>日本語</td><td>日本以外</td><td>---</td><td>エラー</td></tr><tr><td>日本語以外</td><td>北米・欧州・共通</td><td>無し</td><td>---</td></tr><tr><td>日本語以外</td><td>日本</td><td>---</td><td>エラー</td></tr></table></p>
+
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.3</DT>
+<DD>認証サーバの切り替えを、DWC_SetAuthServer関数ではなく<a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で行うよう仕様変更したため、関連する記述を修正</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_StartUtility_tag">こちら</a>　　</p>
+</body>
+</html>

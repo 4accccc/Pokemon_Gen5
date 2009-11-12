@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_LoginAsync</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__main_8h_1ac1f7f301938afe8408be88dfa65f217" align="left">DWC_LoginAsync</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_LoginAsync(const u16 *ingamesn,
+                    const char *reserved,
+                    <a href="DWCLoginCallback.html#dwc__login_8h_1420f25bb93cca6fdc1707b1626d8ce42">DWCLoginCallback</a> callback,
+                    void *param);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>ingamesn</STRONG></EM></TD>
+      <TD width="87%">認証サーバに送信するスクリーンネーム。<br><ul><li>
+文字コードはUnicode（ビックエンディアンUTF16）を使用してください。<br>それ以外の文字コードを使用している場合は、Unicodeに変換してください。
+</li><li>
+スクリーンネームにUnicode及びIPLフォントにない独自の文字を使用している場合は、スペースに置き換えてください。
+</li><li>
+終端はu16で0x0000である必要があります。
+</li><li>
+終端を除いて26文字以上の文字列を指定した場合は、先頭から25文字のみが認証サーバに送信されます。
+</li><li>
+友達とのコミュニケーションしかない場合や、別途不正文字列チェック(複数文字列を同時に検査するため)をする場合で、<br>本関数で不正文字列チェックを行わない場合は空文字列を指定してください。
+</li></ul></TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>reserved</STRONG></EM></TD>
+      <TD width="87%">通常は、NULLを指定してください。過去との互換性のために残されています。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>callback</STRONG></EM></TD>
+      <TD width="87%">ログイン完了コールバック関数へのポインタ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>param</STRONG></EM></TD>
+      <TD width="87%">ログイン完了コールバック用パラメータ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">ログイン処理開始。コールバック関数で結果が通知されます。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">本関数を呼んで良い状態ではないか、もしくは引数ingamesnにNULLが指定されました。コールバック関数は呼ばれません。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>アプリケーションがGameSpyサーバを利用可能であるか調べ、リモート認証を行い、Wi-Fiコネクションへ接続します。</p><p>本関数を呼び出すには、インターネット接続後、<a href="DWC_InitFriendsMatch.html#dwc__main_8h_1de4fba18d5d03cbccd0c86efe9e80c1c">DWC_InitFriendsMatch</a>関数によるFriendsMatchライブラリ初期化処理まで完了している必要があります。</p><p>本関数呼出し後、<a href="DWC_ProcessFriendsMatch.html#dwc__main_8h_1c7b64bfd61e6c336a1d382fb6d1ea2d8">DWC_ProcessFriendsMatch</a>関数を呼び続ければログイン処理が進行し、処理が完了すれば、ログイン完了コールバックが呼び出されます。</p><p>ネットワーク接続状況により、関数からしばらく処理が戻らずブロックすることがあります。</p><p>認証サーバは、ゲーム内スクリーンネーム（ゲーム中でプレイヤーが使用する名前）がWi-Fiコネクション上で不適切なものでないかチェックします。Wi-Fiコネクションへの接続に成功した後、<a href="DWC_GetIngamesnCheckResult.html#dwc__nas_8h_19178b73ffcdb7213cd84e15374398dfa">DWC_GetIngamesnCheckResult</a>関数でそのチェック結果を取得してください。不正文字列チェックの詳細については、<a href="DWC_CheckProfanityAsync.html#dwc__prof_8h_16e8029f668632188e74681738be0aa20">DWC_CheckProfanityAsync</a>関数を参照してください。</p><p>なお、ROM内登録データのメーカーコードが未指定の場合、認証サーバとの通信でエラー（エラーコード20109）が発生しますので、ご注意ください。</p><p>また、FriendsMatchライブラリを使用しない場合は、本関数の代わりにDWC_NasLoginAsync関数を呼び出してください。</p><p>本APIは、内部でNHTTPStartup()を呼び出します。本APIを呼び出してからログインが完了するまでの前後で、重複してNHTTPを使用しないようにしてください。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE>DWC_NasLoginAsync</CODE>
+
+  <CODE><a href="DWC_CheckProfanityAsync.html#dwc__prof_8h_16e8029f668632188e74681738be0aa20">DWC_CheckProfanityAsync</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.1</DT>
+<DD>誤って記載されていた情報を削除(SOライブラリ、DNSキャッシュ)</DD>
+
+<DT>5.1pr2</DT>
+<DD>引数ingamesnの説明で空文字列を指定する場合について、説明を追記</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_LoginAsync_tag">こちら</a>　　</p>
+</body>
+</html>

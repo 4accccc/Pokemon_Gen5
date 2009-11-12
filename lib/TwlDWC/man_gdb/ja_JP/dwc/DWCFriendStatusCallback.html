@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWCFriendStatusCallback</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__friend_8h_14998d3e498bc6e708d41116161731fd4" align="left">DWCFriendStatusCallback</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>typedef void(*) DWCFriendStatusCallback(int index,
+             u8 status,
+             const char *statusString,
+             void *param);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>index</parametername></STRONG></EM></TD>
+      <TD width="87%">状態が変化した友達の友達リストインデックス</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>status</parametername></STRONG></EM></TD>
+      <TD width="87%">友達の状態。DWC_STATUS_*の列挙子</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>statusString</parametername></STRONG></EM></TD>
+      <TD width="87%">ゲームで定義したGameSpystatus文字列。文字列は最大255文字＋NULL終端。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>param</parametername></STRONG></EM></TD>
+      <TD width="87%"><a href="DWC_UpdateServersAsync.html#dwc__main_8h_185472e3beb4ea521c7614ea13c9b0671">DWC_UpdateServersAsync</a>関数/<a href="DWC_SetFriendStatusCallback.html#dwc__friend_8h_1da0405297a7014f1eb256bf37e0eff55">DWC_SetFriendStatusCallback</a>関数で指定したコールバック用パラメータ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>なし</p>
+
+<H2>説明</H2>
+
+<p>友達の状態が変化したときに呼び出されます。</p><p>プレイヤーの通信状態は、statusで表されるstatusフラグと、statusStringで表されるstatus文字列から成っており、GameSpyサーバ上で管理されています。statusフラグはDWCライブラリが自動的にセットしますが、status文字列は<a href="DWC_SetOwnStatusString.html#dwc__friend_8h_14cd20cf1fd60674999b9496e9cccbb5d">DWC_SetOwnStatusString</a>/<a href="DWC_SetOwnStatusData.html#dwc__friend_8h_1681fddad129f4c6b6aba352392b6e715">DWC_SetOwnStatusData</a>関数を用いてアプリケーションが設定することができます。</p><p>本コールバック関数は<a href="DWC_UpdateServersAsync.html#dwc__main_8h_185472e3beb4ea521c7614ea13c9b0671">DWC_UpdateServersAsync</a>関数/<a href="DWC_SetFriendStatusCallback.html#dwc__friend_8h_1da0405297a7014f1eb256bf37e0eff55">DWC_SetFriendStatusCallback</a>関数によって設定することができます。</p><p><br><p>statusの値は、以下のいずれかになります。</p><table border="1"><tr><td width="13%"><em><strong><a href="Macro.html#dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b04bd9f9adfdcaf17f1221ae2558ad6056b">DWC_STATUS_OFFLINE</a></strong></em></td><td width="87%">オフライン<br>自分がオフラインの時、または相手と友達関係が成立していないとき</td></tr><tr><td width="13%"><em><strong><a href="Macro.html#dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b0404108a1958f9698113f90b0f1b094bb1">DWC_STATUS_ONLINE</a></strong></em></td><td width="87%">オンライン（Wi-Fiコネクションサーバにログイン済み）</td></tr><tr><td width="13%"><em><strong><a href="Macro.html#dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b0404bd28525dc056805bf02df28ede0279">DWC_STATUS_PLAYING</a></strong></em></td><td width="87%">・クライアントとしてゲームプレイ中（マッチメイクタイプの種類によらない）<br>・友達指定マッチメイク又はサーバクライアントマッチメイクで、一度でもサーバ交代が起こった後のサーバとしてゲームプレイ中<br>上記2状態は共通して、この相手に対して接続に行くことは出来ない事を示している。(PLAYING状態は受付可能な状態では無い)</td></tr><tr><td width="13%"><em><strong><a href="Macro.html#dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b046c2b74def19358ffebd07d0490a1d890">DWC_STATUS_MATCH_ANYBODY</a></strong></em></td><td width="87%">・友達無指定ピアマッチメイク中で接続相手を検索中<br>・友達無指定ピアマッチメイク中でサーバとしてゲームプレイ中</td></tr><tr><td width="13%"><em><strong><a href="Macro.html#dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b0438175c08c13c94e683990f4d59299408">DWC_STATUS_MATCH_FRIEND</a></strong></em></td><td width="87%">・友達指定ピアマッチメイク中で接続相手を検索中<br>・友達指定ピアマッチメイク中でサーバとしてゲームプレイ中</td></tr><tr><td width="13%"><em><strong><a href="Macro.html#dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b04ef029ab10b7668f67c32fa66f55b8e68">DWC_STATUS_MATCH_SC_CL</a></strong></em></td><td width="87%">・サーバクライアントマッチメイク中のクライアントホストとして、サーバと接続処理中<br>・グループID接続のクライアントホストとして、サーバと接続処理中</td></tr><tr><td width="13%"><em><strong><a href="Macro.html#dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b0499e36405c9849a73e1cc96fb084000c2">DWC_STATUS_MATCH_SC_SV</a></strong></em></td><td width="87%">・サーバクライアントマッチメイク中のサーバホストとしてゲームプレイ中</td></tr></table></p>
+
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.1pr2</DT>
+<DD>本コールバックをセットできる関数について追記</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWCFriendStatusCallback_tag">こちら</a>　　</p>
+</body>
+</html>

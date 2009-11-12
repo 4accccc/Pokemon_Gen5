@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_AddCommonKeyValueString</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__common_8h_1ba72325abbd5f3cd3f9485f6be8bcf6d" align="left">DWC_AddCommonKeyValueString</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>int DWC_AddCommonKeyValueString(const char *key,
+                                const char *value,
+                                char *string,
+                                char separator);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>key</STRONG></EM></TD>
+      <TD width="87%">追加したいkey文字列へのポインタ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>value</STRONG></EM></TD>
+      <TD width="87%">追加したいvalue文字列へのポインタ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>string</STRONG></EM></TD>
+      <TD width="87%">key/value文字列を追加したい文字列へのポインタ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>separator</STRONG></EM></TD>
+      <TD width="87%">key/value文字列の、それぞれの文字列の開始を示すための文字</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>stringにセットされた文字列長（ヌル文字終端は含まない）</p>
+
+<H2>説明</H2>
+
+<p>文字列の後ろにkey/value文字列を追加します。</p><p>key/value文字列とは、separatorを文字列の開始を示す記号として付加し、keyで指定された文字列とvalueで指定された文字列を並べた文字列です。</p><p>例えば、string=&quot;/key1/value1&quot;,key=&quot;key2&quot;,value=&quot;value2&quot;,separator=&#39;/&#39;と指定して本関数を呼び出した場合、stringに&quot;/key1/value1/key2/value2&quot;という文字列が返されます。</p><p>データストレージサーバへのセーブデータを作成する際などに役立ちます。データストレージサーバへのセーブについては、<a href="DWC_SavePublicDataAsync.html#dwc__datastorage_8h_172b3cdde2638884709ae0c6c5ab68ba7">DWC_SavePublicDataAsync</a>/<a href="DWC_SavePrivateDataAsync.html#dwc__datastorage_8h_1982adb8b9c1f01095b7acf2496f3390a">DWC_SavePrivateDataAsync</a>関数を参照してください。</p><p>一度に追加できるkey/value文字列の文字数は4096文字（ヌル文字終端含む）までです。</p><p>key/value文字列を作成する場合は、<a href="DWC_SetCommonKeyValueString.html#dwc__common_8h_15da1248b53189ca3688011a533236f75">DWC_SetCommonKeyValueString</a>関数を使います。また、key/value文字列から、特定のkey文字列に対応するvalue文字列を取得したい場合は、<a href="DWC_GetCommonValueString.html#dwc__common_8h_1ccb38a8c74cfbd013fb1b1cca709fada">DWC_GetCommonValueString</a>関数を使います。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_AddCommonKeyValueString_tag">こちら</a>　　</p>
+</body>
+</html>

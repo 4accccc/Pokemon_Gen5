@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_GetLinkLevel</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__connectinet_8h_1997a1da35dc076b1cb906e92a84c7739" align="left">DWC_GetLinkLevel</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>WMLinkLevel DWC_GetLinkLevel(void);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<p>なし</p>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>WM_LINK_LEVEL_0</STRONG></EM></TD>
+      <TD width="87%">リンク強度0です。電波状態が著しく悪い場合、もしくはリンクしていない状態であることを示します。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>WM_LINK_LEVEL_1</STRONG></EM></TD>
+      <TD width="87%">リンク強度1です。電波状態が比較的悪いことを示します。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>WM_LINK_LEVEL_2</STRONG></EM></TD>
+      <TD width="87%">リンク強度2です。電波状態が比較的良好であることを示します。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>WM_LINK_LEVEL_3</STRONG></EM></TD>
+      <TD width="87%">リンク強度3です。電波状態が良好であることを示します。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>接続しているアクセスポイントとの間の無線電波強度を取得します。</p><p>アクセスポイントからのデータ受信の度に電波強度を蓄積して平均値を求めているため、アプリケーションで全く通信を行っていない状態だと、取得できる強度の変化は鈍くなります。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GetLinkLevel_tag">こちら</a>　　</p>
+</body>
+</html>

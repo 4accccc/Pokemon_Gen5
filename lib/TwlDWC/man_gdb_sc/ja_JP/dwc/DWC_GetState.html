@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_GetState</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__main_8h_1ba038cd54f680d81ccfdcd355510c433" align="left">DWC_GetState</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE><a href="Macro.html#dwc__main_8h_1beb3cc25257ef0d9a57a5797e7ac0f5d">DWCState</a> DWC_GetState(void);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<p>なし</p>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__main_8h_1beb3cc25257ef0d9a57a5797e7ac0f5da8ddb3f2511310666244836bef6b4fd0">DWC_STATE_INIT</a></STRONG></EM></TD>
+      <TD width="87%">初期状態。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__main_8h_1beb3cc25257ef0d9a57a5797e7ac0f5d83353f30e63330fd993dd5b67181a880">DWC_STATE_AVAILABLE_CHECK</a></STRONG></EM></TD>
+      <TD width="87%"><a href="DWC_LoginAsync.html#dwc__main_8h_1ac1f7f301938afe8408be88dfa65f217">DWC_LoginAsync</a>関数呼出し後、GameSpyサーバの利用可能状況を調査中。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__main_8h_1beb3cc25257ef0d9a57a5797e7ac0f5dfe58bc0a870c326a0417c001982ef0d2">DWC_STATE_LOGIN</a></STRONG></EM></TD>
+      <TD width="87%"><a href="DWC_LoginAsync.html#dwc__main_8h_1ac1f7f301938afe8408be88dfa65f217">DWC_LoginAsync</a>関数呼出し後、Wi-Fiコネクションサーバへ接続中。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__main_8h_1beb3cc25257ef0d9a57a5797e7ac0f5db39a28e875383fb5389922d3bc464dcc">DWC_STATE_ONLINE</a></STRONG></EM></TD>
+      <TD width="87%">Wi-Fiコネクションサーバへの接続完了後。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__main_8h_1beb3cc25257ef0d9a57a5797e7ac0f5d4e6c84182a2141273b7804321eb2e89a">DWC_STATE_MATCHING</a></STRONG></EM></TD>
+      <TD width="87%">マッチメイク処理中。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__main_8h_1beb3cc25257ef0d9a57a5797e7ac0f5da8d9728166ab2c7a14589f91ec28f185">DWC_STATE_CONNECTED</a></STRONG></EM></TD>
+      <TD width="87%">マッチメイク完了後。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>DWCFriendsMatchライブラリの内部状態を取得します。（デバッグ用）</p><p>取得した値はデバッグ用にのみ使用してください。</p><p>これはデバッグ用の関数ですが、最終ROM版（FINALROM）ライブラリでも動作します。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.1pr2</DT>
+<DD>返値からDWC_STATE_UPDATE_SERVERSを削除</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GetState_tag">こちら</a>　　</p>
+</body>
+</html>

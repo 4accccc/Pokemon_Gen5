@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_UpdateServersAsync</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__main_8h_185472e3beb4ea521c7614ea13c9b0671" align="left">DWC_UpdateServersAsync</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_UpdateServersAsync(const char *playerName,
+                            <a href="DWCUpdateServersCallback.html#dwc__friend_8h_1d450c6973f85ed869c830337f9b3c02f">DWCUpdateServersCallback</a> updateCallback,
+                            void *updateParam,
+                            <a href="DWCFriendStatusCallback.html#dwc__friend_8h_14998d3e498bc6e708d41116161731fd4">DWCFriendStatusCallback</a> statusCallback,
+                            void *statusParam,
+                            <a href="DWCDeleteFriendListCallback.html#dwc__friend_8h_1bbcdbaabb44c850c3bbd54632b72c8a9">DWCDeleteFriendListCallback</a> deleteCallback,
+                            void *deleteParam);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>playerName</STRONG></EM></TD>
+      <TD width="87%">NULLを指定してください。過去との互換性のために残されています。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>updateCallback</STRONG></EM></TD>
+      <TD width="87%">友達リスト同期処理完了コールバック関数へのポインタ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>updateParam</STRONG></EM></TD>
+      <TD width="87%">友達リスト同期処理完了コールバック用パラメータ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>statusCallback</STRONG></EM></TD>
+      <TD width="87%">友達状態変化通知コールバック関数へのポインタ。このコールバック関数は、友達リスト同期処理が完了した後でも、友達の通信状態が変化する度に呼び出されます。<br>このコールバック関数は、<a href="DWC_SetFriendStatusCallback.html#dwc__friend_8h_1da0405297a7014f1eb256bf37e0eff55">DWC_SetFriendStatusCallback</a>関数でもセット可能で、互いに上書きし合いますので注意して下さい。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>statusParam</STRONG></EM></TD>
+      <TD width="87%">友達状態変化通知コールバック用パラメータ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>deleteCallback</STRONG></EM></TD>
+      <TD width="87%">友達リスト削除コールバック関数へのポインタ。このコールバック関数は、友達リスト同期処理が完了した後でも、友達関係が成立した時に呼び出される可能性があります。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>deleteParam</STRONG></EM></TD>
+      <TD width="87%">友達リスト削除コールバック用パラメータ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">友達リスト同期処理開始。コールバック関数で結果が通知される。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">本関数を呼んで良い状態ではない</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>GameSpyサーバとローカルの友達リストの同期処理を行います。この同期処理を行うためには、まず<a href="DWC_LoginAsync.html#dwc__main_8h_1ac1f7f301938afe8408be88dfa65f217">DWC_LoginAsync</a>関数によるログインまでを完了させておく必要があります。</p><p>友達リストは、前もって<a href="DWC_InitFriendsMatch.html#dwc__main_8h_1de4fba18d5d03cbccd0c86efe9e80c1c">DWC_InitFriendsMatch</a>関数で設定してください。</p><p>友達リストの同期処理の主な内容は、<ul><li>
+ローカル友達リストにあってGameSpyサーバ友達リストにない友達に友達関係構築要求を送信すること
+</li><li>
+GameSpyサーバ友達リストにあってローカル友達リストにない友達情報をGameSpyサーバ友達リストから削除すること
+</li><li>
+自分の友達リストに登録されている友達に対し、その友達が自分との友達関係を維持しているかを調べること
+</li></ul></p><p>の、３つになります。</p><p>友達関係構築要求を送った相手がその時オフライン状態だったとしても、この要求はGameSpyサーバ上に保存され、相手が次回<a href="DWC_LoginAsync.html#dwc__main_8h_1ac1f7f301938afe8408be88dfa65f217">DWC_LoginAsync</a>関数によるログインが完了した直後に届けられます。そして、相手もこちらの情報をローカル友達リストに持っていた場合のみ、友達関係が成立します。ただしこれは、こちらが相手を友達として登録できただけです。友達関係構築要求を受信した相手は、自動的に同様の手順を踏んで、こちらを友達として登録します。友達関係構築要求の送信は、１回のログインにつき１人の相手に対して１回だけ行われます。</p><p><b>友達リストの同期処理はGameSpyサーバとの通信が必要なため、各クライアントが定期的に呼び出すような実装を行うと、GameSpyサーバに高い負荷を与えることになります。目安としては、ログイン後に最初に呼び出した後では、アプリケーションから友達リストの変更を行ったときや、相手が友達関係を維持しているかどうかを確認する必要があるときに絞って呼び出すようにしてください。</b></p><p>注意しなければならないのは、友達リスト同期処理完了コールバックが呼び出されるのは、ローカル／GameSpyサーバ両友達リストを全てチェックし、必要な友達関係構築要求の送信と、不要な友達情報の削除を全て終えた時であるということです。コールバックが返ってきたからといって、全ての友達関係が成立したというわけではありません。</p><p>友達リスト同期処理完了コールバックの引数isChangedがTRUEの場合は、ローカル友達リスト中のいずれかの友達情報が更新されたことを示しており、ローカル友達リストをセーブする必要があります。友達リスト同期処理中以外に友達関係が成立した場合は、<a href="DWC_SetBuddyFriendCallback.html#dwc__friend_8h_129e5216998afb2aa0c15bae9410e9071">DWC_SetBuddyFriendCallback</a>関数で設定した友達関係成立コールバックが呼び出されます。</p><p>また、友達リストの同期処理の過程では、リスト内に同じ友達の友達情報を複数発見した場合には、1つを残して自動的に削除します。ただし、友達情報がWi-Fiコネクションに接続したことがないもの(DWC_FRIENDDATA_LOGIN_ID)と接続したことがあるもの(DWC_FRIENDDATA_FRIEND_KEY/DWC_FRIENDDATA_GS_PROFILE_ID)は同一確認が取れないため、実際は同じ友達の友達情報でも削除されません。そして削除した友達情報の友達リスト内でのインデックスと、同じ情報と判定された友達のインデックスを引数として、削除するごとにコールバックが呼び出されます。<br>基本的にはインデックスの小さい方が残りますが、友達関係が成立しているものと成立していないものだった場合は、友達関係が成立している方が残ります。また、友達関係が成立した際にも重複確認が行われ、こちらもインデックスが小さい方が残ります（さらに、重複した友達情報のデータのタイプが友達登録鍵とGSプロファイルIDの場合は、GSプロファイルIDに変更されます）。</p><p>友達リストの同期処理開始から友達リスト同期処理完了コールバックが呼ばれるまで、<a href="DWC_CloseAllConnectionsHard.html#dwc__main_8h_1123f5a62315e3eae575e961c8a2133e3">DWC_CloseAllConnectionsHard</a>関数や<a href="DWC_ShutdownFriendsMatch.html#dwc__main_8h_1765b5089893c6d3bf5f3011723b96278">DWC_ShutdownFriendsMatch</a>関数を呼ぶことができません。特に、<a href="DWC_ShutdownFriendsMatch.html#dwc__main_8h_1765b5089893c6d3bf5f3011723b96278">DWC_ShutdownFriendsMatch</a>を呼ぶとメモリリークしてしまいます。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.2</DT>
+<DD>友達リストの同期処理中に<a href="DWC_CloseAllConnectionsHard.html#dwc__main_8h_1123f5a62315e3eae575e961c8a2133e3">DWC_CloseAllConnectionsHard</a>関数や<a href="DWC_ShutdownFriendsMatch.html#dwc__main_8h_1765b5089893c6d3bf5f3011723b96278">DWC_ShutdownFriendsMatch</a>関数を呼べない旨を追記</DD>
+
+<DT>5.1pr2</DT>
+<DD><a href="DWC_SetFriendStatusCallback.html#dwc__friend_8h_1da0405297a7014f1eb256bf37e0eff55">DWC_SetFriendStatusCallback</a>関数によって、statusCallbackに指定したコールバック関数が上書きされる旨を追記</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_UpdateServersAsync_tag">こちら</a>　　</p>
+</body>
+</html>

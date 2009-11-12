@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWCRnkData</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 id="struct_d_w_c_rnk_data" align="left">
+DWCRnkData
+</h1>
+<h2>定義</h2>
+
+<dl>
+  <dd>
+<PRE><code>
+#include &lt;dwc.h&gt;
+
+typedef struct DWCRnkData {
+    u32 order;
+    s32 pid;
+    s32 score;
+    <a href="Macro.html#dwc__ranking_8h_1bc0db3fbc51ac91811958f9c51e87899">DWCRnkRegion</a> region;
+    u32 lastupdate;
+    u32 size;
+    void * userdata;
+} DWCRnkData;</code></PRE></dd>
+</dl>
+<H2>説明</H2>
+<p></p>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>order</STRONG></EM></TD>
+      <TD width="87%">順位</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>pid</STRONG></EM></TD>
+      <TD width="87%">GameSpyProfileID</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>score</STRONG></EM></TD>
+      <TD width="87%">スコア</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>region</STRONG></EM></TD>
+      <TD width="87%">リージョンコード</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>lastupdate</STRONG></EM></TD>
+      <TD width="87%">前回の更新からの経過時間(分)</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>size</STRONG></EM></TD>
+      <TD width="87%">userdataのサイズ(bytes)</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>userdata</STRONG></EM></TD>
+      <TD width="87%">ユーザー定義データのバッファ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWCRnkData_tag">こちら</a>　　</p>
+</body>
+</html>

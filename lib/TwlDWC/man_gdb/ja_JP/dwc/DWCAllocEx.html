@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWCAllocEx</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__memfunc_8h_1b5f2b223b85ed60bd0d8e2e762b29eca" align="left">DWCAllocEx</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>typedef void*(*) DWCAllocEx(DWCAllocType name,
+              u32 size,
+              int align);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>align</parametername></STRONG></EM></TD>
+      <TD width="87%">バイトアライメントされたsizeバイト分のバッファへのポインタを返してください。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>name</parametername></STRONG></EM></TD>
+      <TD width="87%">DWCライブラリ開発用の情報が含まれていますので、無視してください。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>メモリ確保に成功した場合、alignバイトアライメントされたsizeバイト分のバッファへのポインタ<br>メモリ確保に失敗した場合、NULL</p>
+
+<H2>説明</H2>
+
+<p>DWCライブラリから使用されるメモリ確保関数です。スレッド排他処理を行う必要があります。<br>TWLモードで動作させる場合、メインメモリ上の拡張アリーナから領域を確保する関数は指定できません。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWCFreeEx.html#dwc__memfunc_8h_11be107310163287289a67f7d768cd535">DWCFreeEx</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.3</DT>
+<DD>TWLモードで動作させた場合の注意について、廃止されたDWC_SetMemFunc関数からこちらに説明を移動</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWCAllocEx_tag">こちら</a>　　</p>
+</body>
+</html>

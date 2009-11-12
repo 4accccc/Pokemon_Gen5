@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_GdbDownloadFileAsync</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__gdb_8h_1ec9c42c94fd2891995d1778d7f8af9af" align="left">DWC_GdbDownloadFileAsync</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE><a href="Macro.html#dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86">DWCGdbError</a> DWC_GdbDownloadFileAsync(int file_id,
+                                     int buf_size,
+                                     BOOL clear_buf,
+                                     <a href="DWCGdbDownloadFileCallback.html#dwc__gdb_8h_1659e238c0c880dcd74d1bdd420dc377a">DWCGdbDownloadFileCallback</a> callback,
+                                     void *user_param);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>file_id</STRONG></EM></TD>
+      <TD width="87%">取得するファイルのファイルID</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>buf_size</STRONG></EM></TD>
+      <TD width="87%">ダウンロードするファイルを格納する受信バッファのサイズを指定します。0を指定すると、2048バイトごとに拡張されますが、処理が重いため、予め最大サイズがわかっている場合はここで指定した方が適切です。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>clear_buf</STRONG></EM></TD>
+      <TD width="87%">コールバック終了後に受信バッファを解放するか否か</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>callback</STRONG></EM></TD>
+      <TD width="87%">ダウンロードしたファイルを受け取るコールバック</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>user_param</STRONG></EM></TD>
+      <TD width="87%">コールバックに渡される任意の値</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>エラーの内容</p>
+
+<H2>説明</H2>
+
+<p>ファイルをダウンロードする非同期処理を開始します。</p><p>処理が成功すると、引数callbackで指定したコールバック関数が呼ばれ、file_idで指定したIDのファイルが取得されます。<br>処理が失敗した場合はコールバックが呼ばれませんのでご注意ください。</p><p>返値として<a href="Macro.html#dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86e9779fbe6ad274d2016ee2ab66a08582">DWC_GDB_ERROR_NONE</a>が返された場合は、非同期処理が開始しています。<a href="DWC_GdbGetState.html#dwc__gdb_8h_1369bfca6c2cd6e2e2893c03c94a5e2db">DWC_GdbGetState</a>関数が<a href="Macro.html#dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb605bb3a74ef4c38439052c43bdae07ce">DWC_GDB_STATE_IN_ASYNC_PROCESS</a>を返さなくなくなるまで待ってください。</p><p>処理の結果は、<a href="DWC_GdbGetAsyncResult.html#dwc__gdb_8h_1f700899219d0635bc4e4430fa9b7e840">DWC_GdbGetAsyncResult</a>関数で取得できます。</p><p>簡易データベースライブラリの非同期処理は、通信の切断等により、稀にいつまでたっても終わらなくなる可能性がありますので、必ずアプリケーションでタイムアウトを設定するようにして下さい。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GdbDownloadFileAsync_tag">こちら</a>　　</p>
+</body>
+</html>

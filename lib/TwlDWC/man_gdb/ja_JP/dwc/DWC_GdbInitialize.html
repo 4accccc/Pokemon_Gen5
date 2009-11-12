@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_GdbInitialize</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__gdb_8h_1fe1cac3e1fb94f1191d3e1d65b187b93" align="left">DWC_GdbInitialize</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE><a href="Macro.html#dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86">DWCGdbError</a> DWC_GdbInitialize(int game_id,
+                              const DWCUserData *userdata,
+                              <a href="Macro.html#dwc__gdb_8h_10aa8159d80833f71954f89c9272d6b99">DWCGdbSSLType</a> ssl_type);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>game_id</STRONG></EM></TD>
+      <TD width="87%">GameSpyから与えたゲームIDを与えてください。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>userdata</STRONG></EM></TD>
+      <TD width="87%"><a href="DWC_InitFriendsMatch.html#dwc__main_8h_1de4fba18d5d03cbccd0c86efe9e80c1c">DWC_InitFriendsMatch</a>で与えたユーザーデータを与えてください。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>ssl_type</STRONG></EM></TD>
+      <TD width="87%">通信にSSLを使用するか否かを設定します。製品では必ずSSLを使用するようにして下さい。認証サーバが本番向けの場合、<a href="Macro.html#dwc__gdb_8h_10aa8159d80833f71954f89c9272d6b99accf87451a2db3accc627529ac0ee488">DWC_GDB_SSL_TYPE_NONE</a>を指定すると、<a href="Macro.html#dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86d9c67158331d0e451dd21f08217604f5">DWC_GDB_ERROR_BAD_INPUT</a>エラーが返ります。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>エラーの内容</p>
+
+<H2>説明</H2>
+
+<p>簡易データベースライブラリを初期化します。</p><p>全てのDWC_Gdbライブラリの関数を呼ぶ前に実行してください。<br>事前に<a href="DWC_LoginAsync.html#dwc__main_8h_1ac1f7f301938afe8408be88dfa65f217">DWC_LoginAsync</a>でWiFiConnctionへログインしてください。</p><p>また、必要であれば、<a href="DWC_SetRwinSize.html#dwc__connectinet_8h_1327157633915c13b3e74ece5b2389655">DWC_SetRwinSize</a>関数で、受信ウィンドウサイズをアプリ毎に適切な値に設定しておいて下さい。</p><p>※簡易データベースライブラリを、ランキングライブラリと同時に使用することはできません。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GdbInitialize_tag">こちら</a>　　</p>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_SetFriendStatusCallback</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__friend_8h_1da0405297a7014f1eb256bf37e0eff55" align="left">DWC_SetFriendStatusCallback</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_SetFriendStatusCallback(<a href="DWCFriendStatusCallback.html#dwc__friend_8h_14998d3e498bc6e708d41116161731fd4">DWCFriendStatusCallback</a> callback,
+                                 void *param);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>callback</STRONG></EM></TD>
+      <TD width="87%">友達状態変化通知コールバック関数へのポインタ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>param</STRONG></EM></TD>
+      <TD width="87%">コールバック用パラメータ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">コールバック関数設定成功</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">FriendsMatchライブラリ非動作中で設定失敗</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>友達の通信状態が変化した時に呼び出されるコールバック関数を設定します。通信状態については<a href="DWC_GetFriendStatus.html#dwc__friend_8h_195e1edb244064d397cd6eb586b08bc5e">DWC_GetFriendStatus</a>関数の説明を参照してください。</p><p>このコールバック関数は、通常は友達リスト同期処理の<a href="DWC_UpdateServersAsync.html#dwc__main_8h_185472e3beb4ea521c7614ea13c9b0671">DWC_UpdateServersAsync</a>関数の引数としてセットしますが、友達リスト同期処理が必要ない場合でも友達の通信状態をリアルタイムで把握したい場合に、本関数を用いてコールバック関数を設定してください。</p><p>ここでセットしたコールバック関数は、友達の通信状態が変化する度に呼び出されます。</p><p><a href="DWC_UpdateServersAsync.html#dwc__main_8h_185472e3beb4ea521c7614ea13c9b0671">DWC_UpdateServersAsync</a>関数を呼ぶと、この関数で設定したコールバック関数を上書きしますので注意して下さい。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.1pr2</DT>
+<DD><a href="DWC_UpdateServersAsync.html#dwc__main_8h_185472e3beb4ea521c7614ea13c9b0671">DWC_UpdateServersAsync</a>関数によって、コールバック関数が上書きされる旨を追記</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_SetFriendStatusCallback_tag">こちら</a>　　</p>
+</body>
+</html>

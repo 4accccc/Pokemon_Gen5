@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_GetMatchStringValue</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__match_8h_1d02811d6603b29dc1b7cd6aa75bec05a" align="left">DWC_GetMatchStringValue</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>const char* DWC_GetMatchStringValue(int index,
+                                    const char *keyString,
+                                    const char *sdefault);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>index</STRONG></EM></TD>
+      <TD width="87%">マッチメイク候補プレイヤーのインデックス。評価コールバックの引数indexをそのまま渡す。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>keyString</STRONG></EM></TD>
+      <TD width="87%">キー識別のための文字列へのポインタ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>sdefault</STRONG></EM></TD>
+      <TD width="87%">指定したキーを持っていないプレイヤーだった場合のデフォルト文字列<br>※キーに対応する文字列が空文字の場合やサーバーとの通信中にもこのデフォルト値が返されます。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>マッチメイク候補プレイヤーが持つ、指定したキーに対応する文字列。<br>キーがない場合は引数sdefaultに渡した文字列が返ってくる。</p>
+
+<H2>説明</H2>
+
+<p>マッチメイク指標キーに対応する文字列を取得する。</p><p>プレイヤー評価コールバック内での使用のみ保証しており、それ以外の場所で呼び出した場合の戻り値は不定。</p><p><a href="DWC_AddMatchKeyString.html#dwc__match_8h_1a6dc592558f9f69faff4f1911782f3a8">DWC_AddMatchKeyString</a>で空文字(&quot;&quot;)が指定されている場合や、まだサーバーから取得が完了していない状態ではデフォルト値が返されます。</p><p>追加した指標キーがサーバに反映されるのに時間がかかるので、アプリケーション側で指標キーをセットしていても、指標キーがないと判断されてデフォルト値が返されることがあります。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GetMatchStringValue_tag">こちら</a>　　</p>
+</body>
+</html>

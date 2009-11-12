@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_AddMatchKeyString</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__match_8h_1a6dc592558f9f69faff4f1911782f3a8" align="left">DWC_AddMatchKeyString</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>u8 DWC_AddMatchKeyString(u8 keyID,
+                         const char *keyString,
+                         const char *valueSrc);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>keyID</STRONG></EM></TD>
+      <TD width="87%">新規にkeyIDを取得する場合は0を指定します。<br>既に使用中の追加キーIDを指定した場合は、使用中のものと同じkeyStringを渡せばvalueSrcをセットし直すが、違うkeyStringを渡した場合は何もしない。アプリケーションでセットできるキーは最大154個までです。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>keyString</STRONG></EM></TD>
+      <TD width="87%">キー識別のための文字列へのポインタ。<br>文字列はコピーしてライブラリ内で保持します。<br>異なるキーIDで同じキー名を使用しないでください。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>valueSrc</STRONG></EM></TD>
+      <TD width="87%">キーに対応する文字列へのポインタで、マスターサーバからのポーリングがあると、このポインタから文字列を参照してマスターサーバに文字列をアップする。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>追加したキーのキーID。パラメータエラー、もしくはキーの設定上限を越えたため追加できなかった場合は0を返す。<br><a href="DWC_InitFriendsMatch.html#dwc__main_8h_1de4fba18d5d03cbccd0c86efe9e80c1c">DWC_InitFriendsMatch</a>()が呼ばれるより前に呼び出しても0を返す。</p>
+
+<H2>説明</H2>
+
+<p>マッチメイクの指標となるキー（char*型）を追加します。</p><p>追加されたキーは<a href="DWC_ConnectToAnybodyAsync.html#dwc__main_8h_10c4e2a60e98dfa82a16b5e896d3a2203">DWC_ConnectToAnybodyAsync</a>関数のマッチメイク条件文字列や<a href="DWC_ConnectToAnybodyAsync.html#dwc__main_8h_10c4e2a60e98dfa82a16b5e896d3a2203">DWC_ConnectToAnybodyAsync</a>関数/<a href="DWC_ConnectToFriendsAsync.html#dwc__main_8h_1dcb8be27412df5c9d5e0d9b9d035079b">DWC_ConnectToFriendsAsync</a>関数のプレイヤー評価コールバック（<a href="DWCEvalPlayerCallback.html#dwc__match_8h_1546369b77983a0a5e7b8609d236ba937">DWCEvalPlayerCallback</a>）内で使用することができます。</p><p><b>ただし、キーに対応した値は、最短でも10秒毎にしかマッチメイキングサーバに通知されないため、上記の条件判定の段階では、実際に相手が設定している値より古い値を参照する可能性があります。このため、動的に値を変更すると意図しない相手とマッチメイクしてしまう可能性があることに留意してください。また、非常に稀ですが動的に値を変更しない場合でも、正常にマッチメイクが終わらなかった直後に、再度マッチメイクを開始するなどで、相手に古い値を参照されてしまう可能性があります。<br>これが許容できない場合は、マッチメイク後に条件を確認するしかありません。</b></p><p>追加されたキーに関する全てのデータは、マッチメイクが完了した時点でクリアされるため、次にマッチメイクを行う場合は再びキーを登録し直す必要があります。</p><p>一回の呼び出しでのkeyString/valueSrcの値に長さの制限はありませんが、アプリケーション全体でセットした値を文字列としたときに、合計2048バイト以下に抑える必要があります。</p><p>keyString/valueSrcには、数バイト～十数バイト程度の文字列の範囲の値なら問題ありませんが、バイナリデータをエンコードしたテキストなど比較的大きなデータはセットしないようにしてください。</p><p>キーに対応する文字列に空文字(&quot;&quot;)は指定できません。空文字を指定した場合は、<a href="DWC_GetMatchStringValue.html#dwc__match_8h_1d02811d6603b29dc1b7cd6aa75bec05a">DWC_GetMatchStringValue</a>関数ではデフォルト値が返されます。</p><p>※キー名には使用できないものがあります。以下のキー名は使用しないでください。</p><p><table border="1"><tr><td>
+country
+</td><td>
+region
+</td><td>
+hostname
+</td><td>
+gamename
+</td><td>
+gamever
+</td><td>
+hostport
+</td><td>
+mapname
+</td><td>
+gametype
+</td><td>
+gamevariant
+</td></tr><tr><td>
+numplayers
+</td><td>
+numteams
+</td><td>
+maxplayers
+</td><td>
+gamemode
+</td><td>
+teamplay
+</td><td>
+fraglimit
+</td><td>
+teamfraglimit
+</td><td>
+timeelapsed
+</td><td>
+timelimit
+</td></tr><tr><td>
+roundtime
+</td><td>
+roundelapsed
+</td><td>
+password
+</td><td>
+groupid
+</td><td>
+player_
+</td><td>
+score_
+</td><td>
+skill_
+</td><td>
+ping_
+</td><td>
+team_
+</td></tr><tr><td>
+deaths_
+</td><td>
+pid_
+</td><td>
+team_t
+</td><td>
+score_t
+</td><td>
+dwc_pid
+</td><td>
+dwc_mtype
+</td><td>
+dwc_mresv
+</td><td>
+dwc_mver
+</td><td>
+dwc_eval
+</td></tr></table></p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_AddMatchKeyInt.html#dwc__match_8h_1c6b58c2fcd1265657a5689de46e8ea7e">DWC_AddMatchKeyInt</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.1pr2</DT>
+<DD>返り値の説明を修正</DD>
+<DD>キーに対応した値の更新についての注意を追加</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_AddMatchKeyString_tag">こちら</a>　　</p>
+</body>
+</html>

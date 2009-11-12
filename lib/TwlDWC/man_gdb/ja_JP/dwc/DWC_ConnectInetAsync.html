@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_ConnectInetAsync</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__connectinet_8h_1ed6360e949bbab87f49275bac0a381cc" align="left">DWC_ConnectInetAsync</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>void DWC_ConnectInetAsync(void);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<p>なし</p>
+
+<h2>返り値</h2>
+
+<p>なし</p>
+
+<H2>説明</H2>
+
+<p>インターネットへの自動接続処理を開始します。自動接続処理では、設定ユーティリティで設定された自宅等の一般のアクセスポイントやUSBアクセスポイント、店頭アクセスポイントが周囲にあるかどうか確認し、適切なものを選択して自動で接続します。</p><p>本関数を呼び出した後は、自動接続処理を実行するために<a href="DWC_ProcessInet.html#dwc__connectinet_8h_1c2a3fd1d79fee387ca123f5eb1cf0660">DWC_ProcessInet</a>関数を毎ゲームフレーム程度の頻度で呼び出してください。</p><p>自動接続処理中に発生したエラー処理を行うためには、<a href="DWC_ProcessInet.html#dwc__connectinet_8h_1c2a3fd1d79fee387ca123f5eb1cf0660">DWC_ProcessInet</a>関数呼出し後に<a href="DWC_GetLastErrorEx.html#dwc__error_8h_118bd79f5d5151259c19c4e552e5e633b">DWC_GetLastErrorEx</a>関数でエラー状態を取得し、必要に応じてエラーメッセージとともにエラーコードを表示してください。メッセージについては、「NitendoWi-FiConnectionプログラミングガイドライン」をご確認ください。</p><p>接続状態は<a href="DWC_CheckInet.html#dwc__connectinet_8h_1525ebb2790477ec1a4d430dd94d29fc7">DWC_CheckInet</a>関数,<a href="DWC_GetInetStatus.html#dwc__connectinet_8h_1dc3e39b117b96fe0e2facbb529ffee10">DWC_GetInetStatus</a>関数を使用して取得することができます。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_CheckInet.html#dwc__connectinet_8h_1525ebb2790477ec1a4d430dd94d29fc7">DWC_CheckInet</a></CODE>
+
+  <CODE><a href="DWC_CheckInet.html#dwc__connectinet_8h_1525ebb2790477ec1a4d430dd94d29fc7">DWC_CheckInet</a></CODE>
+
+  <CODE><a href="DWC_ProcessInet.html#dwc__connectinet_8h_1c2a3fd1d79fee387ca123f5eb1cf0660">DWC_ProcessInet</a></CODE>
+
+  <CODE><a href="DWC_GetInetStatus.html#dwc__connectinet_8h_1dc3e39b117b96fe0e2facbb529ffee10">DWC_GetInetStatus</a></CODE>
+
+  <CODE><a href="DWC_CleanupInet.html#dwc__connectinet_8h_14d7f46fc1822bb3f39eed3b087e629c6">DWC_CleanupInet</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.1</DT>
+<DD>「接続中に発生したエラー処理を…」を「自動接続処理中に発生した…」に修正</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_ConnectInetAsync_tag">こちら</a>　　</p>
+</body>
+</html>

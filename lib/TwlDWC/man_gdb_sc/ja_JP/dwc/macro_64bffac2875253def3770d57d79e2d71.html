@@ -1,0 +1,375 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>汎用ランキング - 定数</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">汎用ランキング - 定数</h1>
+<H2>定義</H2>
+<DL>
+	<DD>
+		<PRE><CODE>
+#include &lt;dwc.h&gt;
+
+#define   DWC_RNK_DATA_MAX                        764
+#define   DWC_RNK_CATEGORY_MAX                    1000
+#define   DWC_RNK_GET_MAX                         30
+#define   DWC_RNK_FRIENDS_MAX                     64
+
+enum  {
+    DWC_RNK_ORDER_ASC                       = 	0,
+    DWC_RNK_ORDER_DES                       = 	1,
+};
+
+enum DWCRnkError {
+    DWC_RNK_SUCCESS                         =  0,
+    DWC_RNK_IN_ERROR,
+    DWC_RNK_ERROR_INVALID_PARAMETER,
+    DWC_RNK_ERROR_INIT_ALREADYINITIALIZED,
+    DWC_RNK_ERROR_INIT_INVALID_INITDATASIZE,
+    DWC_RNK_ERROR_INIT_INVALID_INITDATA,
+    DWC_RNK_ERROR_INIT_INVALID_USERDATA,
+    DWC_RNK_ERROR_PUT_NOTREADY,
+    DWC_RNK_ERROR_PUT_INVALID_KEY,
+    DWC_RNK_ERROR_PUT_NOMEMORY,
+    DWC_RNK_ERROR_GET_NOTREADY,
+    DWC_RNK_ERROR_GET_INVALID_KEY,
+    DWC_RNK_ERROR_GET_NOMEMORY,
+    DWC_RNK_ERROR_CANCEL_NOTASK,
+    DWC_RNK_PROCESS_NOTASK,
+    DWC_RNK_PROCESS_TIMEOUT,
+    DWC_RNK_ERROR_INVALID_MODE,
+    DWC_RNK_ERROR_NOTCOMPLETED,
+    DWC_RNK_ERROR_EMPTY_RESPONSE,
+};
+
+enum DWCRnkState {
+    DWC_RNK_STATE_NOTREADY                  =  0,
+    DWC_RNK_STATE_INITIALIZED,
+    DWC_RNK_STATE_PUT_ASYNC,
+    DWC_RNK_STATE_GET_ASYNC,
+    DWC_RNK_STATE_COMPLETED,
+    DWC_RNK_STATE_TIMEOUT,
+    DWC_RNK_STATE_ERROR,
+};
+
+enum DWCRnkRegion {
+    DWC_RNK_REGION_JP                       =  0x01,
+    DWC_RNK_REGION_US                       =  0x02,
+    DWC_RNK_REGION_EU                       =  0x04,
+    DWC_RNK_REGION_KR                       =  0x08,
+    DWC_RNK_REGION_CH                       =  0x10,
+    DWC_RNK_REGION_CN                       =  0x10,
+    DWC_RNK_REGION_ALL                      =  0xff,
+};
+
+enum DWCRnkGetMode {
+    DWC_RNK_GET_MODE_ORDER,
+    DWC_RNK_GET_MODE_TOPLIST,
+    DWC_RNK_GET_MODE_NEAR,
+    DWC_RNK_GET_MODE_FRIENDS,
+    DWC_RNK_GET_MODE_NEAR_HI,
+    DWC_RNK_GET_MODE_NEAR_LOW,
+};
+
+		</CODE></PRE>
+	</DD>
+</DL>
+
+<H2>定数</H2>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+			<TH width="25%">DWC_RNK_DATA_MAX</TH>
+			<TD>ユーザー定義データに使用できる最大サイズ</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_RNK_CATEGORY_MAX</TH>
+			<TD>カテゴリーとして指定できる最大値</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_RNK_GET_MAX</TH>
+			<TD>取得するランキングリストの最大数の上限値</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_RNK_FRIENDS_MAX</TH>
+			<TD>友達の最大数</TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
+<a id="dwc__ranking_8h_1726ca809ffd3d67ab4b8476646f26635"></a>
+<H2 id="TAG_ENUM_1">取得するランキングリストの昇順と降順を示す定数</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ORDER_ASC</CODE></STRONG></EM></TD>
+	  <TD>昇順</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ORDER_DES</CODE></STRONG></EM></TD>
+	  <TD>降順</TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__ranking_8h_11e26643f8161b162f689f7031ace5910"></a>
+<H2 id="TAG_ENUM_2">エラーコード</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_SUCCESS</CODE></STRONG></EM></TD>
+	  <TD>成功</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_IN_ERROR</CODE></STRONG></EM></TD>
+	  <TD>エラー発生中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_INVALID_PARAMETER</CODE></STRONG></EM></TD>
+	  <TD>不正なパラメーター</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_INIT_ALREADYINITIALIZED</CODE></STRONG></EM></TD>
+	  <TD>初期化済</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_INIT_INVALID_INITDATASIZE</CODE></STRONG></EM></TD>
+	  <TD>不正な初期化データサイズ</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_INIT_INVALID_INITDATA</CODE></STRONG></EM></TD>
+	  <TD>不正な初期化データ</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_INIT_INVALID_USERDATA</CODE></STRONG></EM></TD>
+	  <TD>ユーザー情報が不正</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_PUT_NOTREADY</CODE></STRONG></EM></TD>
+	  <TD>初期化されていない</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_PUT_INVALID_KEY</CODE></STRONG></EM></TD>
+	  <TD>暗号化キーが不正</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_PUT_NOMEMORY</CODE></STRONG></EM></TD>
+	  <TD>メモリー不足</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_GET_NOTREADY</CODE></STRONG></EM></TD>
+	  <TD>初期化されていない</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_GET_INVALID_KEY</CODE></STRONG></EM></TD>
+	  <TD>暗号化キーが不正</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_GET_NOMEMORY</CODE></STRONG></EM></TD>
+	  <TD>メモリー不足</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_CANCEL_NOTASK</CODE></STRONG></EM></TD>
+	  <TD>非同期処理中の処理なし</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_PROCESS_NOTASK</CODE></STRONG></EM></TD>
+	  <TD>非同期処理中の処理なし</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_PROCESS_TIMEOUT</CODE></STRONG></EM></TD>
+	  <TD>タイムアウト</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_INVALID_MODE</CODE></STRONG></EM></TD>
+	  <TD>不正なモード</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_NOTCOMPLETED</CODE></STRONG></EM></TD>
+	  <TD>通信未完了</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_ERROR_EMPTY_RESPONSE</CODE></STRONG></EM></TD>
+	  <TD>空のレスポンス</TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__ranking_8h_11103f24ff80fe1419472d4765ab4895f"></a>
+<H2 id="TAG_ENUM_3">モジュールステータス</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_STATE_NOTREADY</CODE></STRONG></EM></TD>
+	  <TD>未初期化状態</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_STATE_INITIALIZED</CODE></STRONG></EM></TD>
+	  <TD>初期化完了</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_STATE_PUT_ASYNC</CODE></STRONG></EM></TD>
+	  <TD>PUT非同期処理中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_STATE_GET_ASYNC</CODE></STRONG></EM></TD>
+	  <TD>GET非同期処理中</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_STATE_COMPLETED</CODE></STRONG></EM></TD>
+	  <TD>完了</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_STATE_TIMEOUT</CODE></STRONG></EM></TD>
+	  <TD>タイムアウト</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_STATE_ERROR</CODE></STRONG></EM></TD>
+	  <TD>エラー発生</TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__ranking_8h_1bc0db3fbc51ac91811958f9c51e87899"></a>
+<H2 id="TAG_ENUM_4">リージョンコード</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_REGION_JP</CODE></STRONG></EM></TD>
+	  <TD>Japan</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_REGION_US</CODE></STRONG></EM></TD>
+	  <TD>UnitedStates</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_REGION_EU</CODE></STRONG></EM></TD>
+	  <TD>Europe</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_REGION_KR</CODE></STRONG></EM></TD>
+	  <TD>Korea</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_REGION_CH</CODE></STRONG></EM></TD>
+	  <TD>China(旧定義)</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_REGION_CN</CODE></STRONG></EM></TD>
+	  <TD>China</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_REGION_ALL</CODE></STRONG></EM></TD>
+	  <TD>World</TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<H3>履歴</H3>
+<DL>
+
+<DT>5.2pr1</DT>
+<DD>中国の定義名を修正。旧定義も残されています。</DD>
+
+<DT>5.1pr2</DT>
+<DD>中国(<a href="Macro.html#dwc__ranking_8h_1bc0db3fbc51ac91811958f9c51e878995c217803023093660126c059de382197">DWC_RNK_REGION_CH</a>)を追加</DD>
+
+</DL>
+
+<a id="dwc__ranking_8h_1b024592ea57f7ecd5b76caee1edc5b19"></a>
+<H2 id="TAG_ENUM_5">DWC_RnkGetScoreAsync取得モード</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_GET_MODE_ORDER</CODE></STRONG></EM></TD>
+	  <TD>順位</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_GET_MODE_TOPLIST</CODE></STRONG></EM></TD>
+	  <TD>ハイスコア</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_GET_MODE_NEAR</CODE></STRONG></EM></TD>
+	  <TD>周辺スコア</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_GET_MODE_FRIENDS</CODE></STRONG></EM></TD>
+	  <TD>友達指定ランキング</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_GET_MODE_NEAR_HI</CODE></STRONG></EM></TD>
+	  <TD>周辺スコア(自分よりも順位が高い)</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_RNK_GET_MODE_NEAR_LOW</CODE></STRONG></EM></TD>
+	  <TD>周辺スコア(自分よりも順位が低い)</TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+</body>
+</html>

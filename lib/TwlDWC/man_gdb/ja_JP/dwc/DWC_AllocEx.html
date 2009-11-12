@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_AllocEx</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__memfunc_8h_10be7843a0c0d09583ec57794f5109e80" align="left">DWC_AllocEx</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>void* DWC_AllocEx(DWCAllocType name,
+                  u32 size,
+                  int align);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>name</STRONG></EM></TD>
+      <TD width="87%">ライブラリ開発用の情報です。0を指定してください。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>size</STRONG></EM></TD>
+      <TD width="87%">確保したいメモリのサイズ（バイト）。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>align</STRONG></EM></TD>
+      <TD width="87%">確保したいメモリのアライメント（バイト）。<a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で設定したメモリ確保関数に渡されます。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p><a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で指定したメモリ確保関数によって確保されたメモリの先頭から、内部管理用のヘッダサイズ(32バイト)を加えたアドレスへのポインタを返します。</p>
+
+<H2>説明</H2>
+
+<p><a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で設定したメモリ確保関数を用いてメモリを確保します。<br>実際に確保する大きさは、引数sizeに内部管理用のヘッダ32バイトを足した分になります。<br></p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_Realloc.html#dwc__memfunc_8h_19d490d1be6aee06cee99f6e554ac12b5">DWC_Realloc</a></CODE>
+
+  <CODE><a href="DWC_ReallocEx.html#dwc__memfunc_8h_1100d1fa8c69d8434b1d2b06946d529df">DWC_ReallocEx</a></CODE>
+
+  <CODE><a href="DWC_Free.html#dwc__memfunc_8h_17df5b185c0e3ea8fc73668bff37f2006">DWC_Free</a></CODE>
+
+  <CODE><a href="DWC_Alloc.html#dwc__memfunc_8h_1aff2b5d03b69fa0cc6b5cea82e5cbdd4">DWC_Alloc</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.3</DT>
+<DD>アロケータの設定をDWC_SetMemFunc関数ではなく<a href="DWC_InitForDevelopment.html#dwc__init_8h_1aa0d7afa708c455277c5fb1d6cef9059">DWC_InitForDevelopment</a>/<a href="DWC_InitForProduction.html#dwc__init_8h_1189c4f789efc589616c0bcb57aa63279">DWC_InitForProduction</a>関数で行うよう仕様変更したため、関連する記述を修正</DD>
+
+<DT>5.3pr1</DT>
+<DD>内部管理用のヘッダの存在に関して返り値及び説明部分を修正</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_AllocEx_tag">こちら</a>　　</p>
+</body>
+</html>

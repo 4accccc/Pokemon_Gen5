@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_IsEqualFriendData</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__account_8h_1768b88de3bf4c1ee4bfc4d500d215c4e" align="left">DWC_IsEqualFriendData</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_IsEqualFriendData(const DWCFriendData *frienddata1,
+                           const DWCFriendData *frienddata2);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>frienddata1</STRONG></EM></TD>
+      <TD width="87%">友達情報1の格納されたDWCFriendData構造体のバッファへのポインタ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>frienddata2</STRONG></EM></TD>
+      <TD width="87%">友達情報2の格納されたDWCFriendData構造体のバッファへのポインタ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">同じ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">違う</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>引数で渡された２つの友達情報が同じかどうかを判定します。</p><p>友達情報にはデータタイプが設定されており、<a href="DWC_GetFriendDataType.html#dwc__account_8h_197251c6e140d85efa91f52ed5ef4ff3a">DWC_GetFriendDataType</a>関数でそれを取得することができます。本関数で同じ友達情報であると判定するのは、このデータタイプまで一致している必要があります。<br>なお、<a href="DWC_UpdateServersAsync.html#dwc__main_8h_185472e3beb4ea521c7614ea13c9b0671">DWC_UpdateServersAsync</a>関数を使った友達リストの同期処理で、リスト内に同じ友達の友達情報を複数発見した場合には、１つを残して自動的に削除されます。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_CreateExchangeToken.html#dwc__account_8h_1c2e7cfd93ddb4b6625b962647a3a7878">DWC_CreateExchangeToken</a></CODE>
+
+  <CODE><a href="DWC_CreateFriendKeyToken.html#dwc__account_8h_1ee6428c09226af4095fa326f10097347">DWC_CreateFriendKeyToken</a></CODE>
+
+  <CODE><a href="DWC_GetFriendDataType.html#dwc__account_8h_197251c6e140d85efa91f52ed5ef4ff3a">DWC_GetFriendDataType</a></CODE>
+
+  <CODE><a href="DWC_UpdateServersAsync.html#dwc__main_8h_185472e3beb4ea521c7614ea13c9b0671">DWC_UpdateServersAsync</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_IsEqualFriendData_tag">こちら</a>　　</p>
+</body>
+</html>
