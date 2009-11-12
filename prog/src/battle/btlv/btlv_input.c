@@ -1007,10 +1007,17 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
         biw->button_exist[ i ] = TRUE;  //押せるボタンかどうかチェック
       }
 
+      if( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE )
+      { 
+        GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
+                                         GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
+        BTLV_INPUT_DeletePokeIcon( biw );
+      }
+
       BTLV_INPUT_CreatePokeIcon( biw, bicp );
       BTLV_INPUT_CreateWeatherIcon( biw );
 
-      if( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA )
+      if( ( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA ) || ( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE ) )
       {
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformWaza2Command, ttw, 1 );
       }
