@@ -4079,6 +4079,21 @@
   .short  EV_SEQ_GYM_GROUND_MV_LIFT
   .short  \lift_idx
   .endm
+
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　地面ジム出口リフト移動
+ * @param exit   ジムから出るとき1　ジムに入るとき0
+ */
+//--------------------------------------------------------------
+#define _GYM_GROUND_EXIT_LIFT(exit) \
+    _ASM_GYM_GROUND_EXIT_LIFT exit
+
+  .macro  _ASM_GYM_GROUND_EXIT_LIFT exit
+  .short  EV_SEQ_GYM_GROUND_EXIT_LIFT
+  .short  \exit
+  .endm
+ 
   
 //======================================================================
 //
