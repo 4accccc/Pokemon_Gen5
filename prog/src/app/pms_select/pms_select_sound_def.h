@@ -21,6 +21,7 @@
 //==============================================================
 enum
 { 
-  SE_DECIDE = SEQ_SE_DECIDE1, ///< Œˆ’è
+  SE_DECIDE       = SEQ_SE_DECIDE1, ///< Œˆ’è
+  SE_MOVE_CURSOR  = SEQ_SE_SELECT1, ///< ƒJ[ƒ\ƒ‹ˆÚ“®
 };
 

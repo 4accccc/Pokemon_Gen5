@@ -158,10 +158,10 @@ enum
 enum
 {	
   // MAIN
-	BG_FRAME_MENU_M	= GFL_BG_FRAME0_M,
-	BG_FRAME_BAR_M	= GFL_BG_FRAME1_M,
-	BG_FRAME_TEXT_M	= GFL_BG_FRAME2_M,
-	BG_FRAME_BACK_M	= GFL_BG_FRAME3_M,
+	BG_FRAME_MENU_M	  = GFL_BG_FRAME0_M,
+	BG_FRAME_TEXT_M	  = GFL_BG_FRAME1_M,
+	BG_FRAME_PLATE_M	= GFL_BG_FRAME2_M,
+	BG_FRAME_BACK_M	  = GFL_BG_FRAME3_M,  ///< TOUCHBARもこのBG
   // SUB
 	BG_FRAME_BACK_S	= GFL_BG_FRAME2_S,
   BG_FRAME_TEXT_S = GFL_BG_FRAME0_S, 
@@ -172,11 +172,11 @@ enum
 enum
 {	
 	//メインBG
-	PLTID_BG_BACK_M				= 0,
-	PLTID_BG_POKE_M				= 1,
-	PLTID_BG_TASKMENU_M		= 11,
-	PLTID_BG_TOUCHBAR_M		= 13,
-	PLTID_BG_INFOWIN_M		= 15,
+	PLTID_BG_COMMON_M			= 0,
+  PLTID_BG_TALK_M       = 11,
+	PLTID_BG_TASKMENU_M		= 12,
+	PLTID_BG_TOUCHBAR_M		= 14,
+
 	//サブBG
 	PLTID_BG_BACK_S				=	0,
 
@@ -198,9 +198,10 @@ enum
 //==============================================================
 typedef struct 
 {
-	int dummy;
+  GFL_ARCUTIL_TRANSINFO m_back_chr_pos;
+  void*             plateScrnWork;
+  NNSG2dScreenData* platescrnData;
 } PMS_SELECT_BG_WORK;
-
 
 #ifdef PMS_SELECT_PMSDRAW
 #define PMS_SELECT_PMSDRAW_NUM (4) ///< 簡易会話の個数
@@ -250,8 +251,10 @@ typedef struct
 
   UI_SCENE_CNT_PTR          cntScene;
   void*                     subproc_work;   ///< サブPROC用ワーク保存領域
-  u8    select_id;    ///< 選択したID
-  u8    padding[3];
+  u8    select_id;      ///< 選択したID
+  u8    list_head_id;   ///< リストの先頭ID
+  u8    list_max;       ///< リストの項目数
+  u8    padding[1];
 
   BOOL bProcChange; ///< PROC切替フラグ
 
@@ -282,6 +285,8 @@ static GFL_PROC_RESULT PMSSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
 static void PMSSelect_GRAPHIC_Load( PMS_SELECT_MAIN_WORK* wk );
 static void PMSSelect_GRAPHIC_UnLoad( PMS_SELECT_MAIN_WORK* wk );
 static void PMSSelect_BG_LoadResource( PMS_SELECT_BG_WORK* wk, HEAPID heapID );
+static void PMSSelect_BG_UnLoadResource( PMS_SELECT_BG_WORK* wk );
+static void PMSSelect_BG_PlateTrans( PMS_SELECT_BG_WORK* wk, u8 view_pos_id, u32 sentence_type, BOOL is_select );
 
 #ifdef PMS_SELECT_TOUCHBAR
 //-------------------------------------
@@ -310,6 +315,12 @@ static void PMSSelect_PMSDRAW_Init( PMS_SELECT_MAIN_WORK* wk );
 static void PMSSelect_PMSDRAW_Exit( PMS_SELECT_MAIN_WORK* wk );
 static void PMSSelect_PMSDRAW_Proc( PMS_SELECT_MAIN_WORK* wk );
 #endif // PMS_SELECT_PMSDRAW
+
+static void PLATE_CNT_Setup( PMS_SELECT_MAIN_WORK* wk );
+static void PLATE_CNT_UpdatePlate( PMS_SELECT_MAIN_WORK* wk );
+static void PLATE_CNT_UpdateAll( PMS_SELECT_MAIN_WORK* wk );
+static void PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk );
+static BOOL PLATE_UNIT_Draw( PMS_SELECT_MAIN_WORK* wk, u8 view_pos_id, u8 data_id, BOOL is_select, BOOL is_last );
 
 
 //=============================================================================
@@ -563,6 +574,9 @@ static void PMSSelect_GRAPHIC_UnLoad( PMS_SELECT_MAIN_WORK* wk )
 #ifdef PMS_SELECT_PMSDRAW
   PMSSelect_PMSDRAW_Exit( wk );
 #endif //PMS_SELECT_PMSDRAW
+	
+  //BGリソース破棄
+	PMSSelect_BG_UnLoadResource( &wk->wk_bg );
 
 	//描画設定破棄
 	PMS_SELECT_GRAPHIC_Exit( wk->graphic );
@@ -584,8 +598,11 @@ static void PMSSelect_BG_LoadResource( PMS_SELECT_BG_WORK* wk, HEAPID heapID )
   handle	= GFL_ARC_OpenDataHandle( ARCID_PMSI_GRAPHIC, heapID );
 
 	// 上下画面ＢＧパレット転送
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_pmsi_pms2_bg_main_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0, heapID );
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_pmsi_pms2_bg_main_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0, heapID );
+	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_pmsi_pms2_bg_main_NCLR, PALTYPE_MAIN_BG, 0x20*PLTID_BG_COMMON_M, 0, heapID );
+	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_pmsi_pms2_bg_main_NCLR, PALTYPE_SUB_BG,  0x20*PLTID_BG_BACK_S, 0, heapID );
+	
+  // 会話フォントパレット転送
+	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 0x20*PLTID_BG_TALK_M, 0x20, heapID );
 	
   //	----- 上画面 -----
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_pmsi_pms2_bg_back_NCGR,
@@ -594,17 +611,94 @@ static void PMSSelect_BG_LoadResource( PMS_SELECT_BG_WORK* wk, HEAPID heapID )
 						BG_FRAME_BACK_S, 0, 0, 0, heapID );
 
 	//	----- 下画面 -----
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_pmsi_pms2_bg_back_NCGR,
-						BG_FRAME_BACK_M, 0, 0, 0, heapID );
-	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_pmsi_pms2_bg_back01_NSCR,
-						BG_FRAME_BACK_M, 0, 0, 0, heapID );
+
+  // 背景
+	wk->m_back_chr_pos = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(	handle, NARC_pmsi_pms2_bg_back_NCGR, BG_FRAME_BACK_M, 
+            0, 0, heapID );
+
+	GF_ASSERT( wk->m_back_chr_pos != GFL_ARCUTIL_TRANSINFO_FAIL );
+
+	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_pmsi_pms2_bg_back01_NSCR, BG_FRAME_BACK_M,
+      GFL_ARCUTIL_TRANSINFO_GetPos( wk->m_back_chr_pos ), 0, 0, heapID );
 	
-  GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_pmsi_pms2_bg_back_NCGR,
-						BG_FRAME_TEXT_M, 0, 0, 0, heapID );
-	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_pmsi_pms2_bg_back01_NSCR,
-						BG_FRAME_TEXT_M, 0, 0, 0, heapID );
+  // プレート
+  GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_pmsi_pms2_bg_main_NCGR,
+						BG_FRAME_PLATE_M, 0, 0, 0, heapID );
+
+  wk->plateScrnWork = GFL_ARCHDL_UTIL_LoadScreen( handle, NARC_pmsi_pms2_bg_main1_NSCR, FALSE,
+                      &wk->platescrnData, heapID );
 
 	GFL_ARC_CloseDataHandle( handle );
+
+  // メニューのBGにもバーをロードしておく
+  
+
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  BG開放
+ *
+ *	@param	PMS_SELECT_BG_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void PMSSelect_BG_UnLoadResource( PMS_SELECT_BG_WORK* wk )
+{
+  // 背面BG開放
+	GFL_BG_FreeCharacterArea( BG_FRAME_BACK_M,
+			GFL_ARCUTIL_TRANSINFO_GetPos(wk->m_back_chr_pos),
+			GFL_ARCUTIL_TRANSINFO_GetSize(wk->m_back_chr_pos));
+
+  GFL_HEAP_FreeMemory( wk->plateScrnWork );
+}
+
+//--------------------------------------------------------------
+///	BG
+//==============================================================
+enum
+{ 
+  PLATE_BG_SX = 29,
+  PLATE_BG_SY = 6,
+  PLATE_BG_PLTT_OFS_BASE = 0x2,
+};
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  BG プレート転送
+ *
+ *	@param	PMS_SELECT_BG_WORK* wk 
+ *	@param	view_pos_id
+ *	@param	sentence_type
+ *	@param	is_select 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void PMSSelect_BG_PlateTrans( PMS_SELECT_BG_WORK* wk, u8 view_pos_id, u32 sentence_type, BOOL is_select )
+{
+  int i;
+  int sx = wk->platescrnData->screenWidth/8;
+  int sy = wk->platescrnData->screenHeight/8;
+
+  u16* buff = (u16*)&wk->platescrnData->rawData;
+
+  // パレット指定
+  for( i=0; i<(sx*sy); i++ )
+  {
+    // スクリーンデータの上位4bitでパレット指定
+    buff[i] = ( buff[i] & 0xFFF ) + 0x1000 * ( sentence_type + PLATE_BG_PLTT_OFS_BASE );
+  }
+  
+  GFL_BG_WriteScreenExpand( BG_FRAME_PLATE_M, 
+    0, view_pos_id * PLATE_BG_SY,
+    sx, PLATE_BG_SY,
+    &wk->platescrnData->rawData,
+    0,  is_select * PLATE_BG_SY,
+    sx, sy );
+
+  GFL_BG_LoadScreenV_Req( BG_FRAME_PLATE_M );
 }
 
 #ifdef PMS_SELECT_TOUCHBAR
@@ -646,7 +740,7 @@ static TOUCHBAR_WORK * PMSSelect_TOUCHBAR_Init( PMS_SELECT_MAIN_WORK *wk, GFL_CL
 	touchbar_setup.p_item		= touchbar_icon_tbl;				//上の窓情報
 	touchbar_setup.item_num	= NELEMS(touchbar_icon_tbl);//いくつ窓があるか
 	touchbar_setup.p_unit		= clunit;										//OBJ読み込みのためのCLUNIT
-	touchbar_setup.bar_frm	= BG_FRAME_BAR_M;						//BG読み込みのためのBG面
+	touchbar_setup.bar_frm	= BG_FRAME_BACK_M;						//BG読み込みのためのBG面
 	touchbar_setup.bg_plt		= PLTID_BG_TOUCHBAR_M;			//BGﾊﾟﾚｯﾄ
 	touchbar_setup.obj_plt	= PLTID_OBJ_TOUCHBAR_M;			//OBJﾊﾟﾚｯﾄ
 	touchbar_setup.mapping	= APP_COMMON_MAPPING_64K;	//マッピングモード
@@ -769,6 +863,7 @@ static void PMSSelect_TASKMENU_Main( APP_TASKMENU_WORK *menu )
 //-----------------------------------------------------------------------------
 static void PMSSelect_PMSDRAW_Init( PMS_SELECT_MAIN_WORK* wk )
 {
+  int i;
 	GFL_CLUNIT	*clunit;
   
   clunit = PMS_SELECT_GRAPHIC_GetClunit( wk->graphic );
@@ -776,30 +871,36 @@ static void PMSSelect_PMSDRAW_Init( PMS_SELECT_MAIN_WORK* wk )
   wk->pms_draw  = PMS_DRAW_Init( clunit, CLSYS_DRAW_MAIN, wk->print_que, wk->font, 
       PLTID_OBJ_PMS_DRAW, PMS_SELECT_PMSDRAW_NUM ,wk->heapID );
   
+  // リストの数を測定
+  wk->list_max = 0;
+  for( i=0; i<PMS_DATA_ENTRY_MAX; i++ )
   {
-    int i;
     PMS_DATA* pms;
-
-    // PMS表示用BMPWIN生成
-    for( i=0; i<PMS_SELECT_PMSDRAW_NUM; i++ )
-    {
-      wk->pms_win[i] = GFL_BMPWIN_Create(
-          BG_FRAME_TEXT_M,					// ＢＧフレーム
-          2, 1 + 6 * i,			      	// 表示座標(キャラ単位)
-          28, 4,    							  // 表示サイズ
-          15,												// パレット
-          GFL_BMP_CHRAREA_GET_B );	// キャラ取得方向
     
-      // 描画
-      pms = PMSW_GetDataEntry( wk->pmsw_save, i );
+    pms = PMSW_GetDataEntry( wk->pmsw_save, i );
+      
+    wk->list_max++; // 新規項目を含めるのでこのタイミング
 
-      if( PMSDAT_IsComplete( pms, wk->heapID ) == TRUE )
-      {
-        //@TODO ラップしてプレートも描画するようにする。
-        PMS_DRAW_Print( wk->pms_draw, wk->pms_win[i], pms ,i );
-      }
+    if( PMSDAT_IsComplete( pms, wk->heapID ) == FALSE )
+    {
+      HOSAKA_Printf( "list_max=%d \n", wk->list_max );
+      break;
     }
   }
+
+  // PMS表示用BMPWIN生成
+  for( i=0; i<PMS_SELECT_PMSDRAW_NUM; i++ )
+  {
+    wk->pms_win[i] = GFL_BMPWIN_Create(
+        BG_FRAME_TEXT_M,					// ＢＧフレーム
+        2, 1 + 6 * i,			      	// 表示座標(キャラ単位)
+        27, 4,    							  // 表示サイズ
+        PLTID_BG_TALK_M,					// パレット
+        GFL_BMP_CHRAREA_GET_B );	// キャラ取得方向
+  }
+
+  // 簡易会話描画 初期化
+  PLATE_CNT_Setup( wk );
 }
 
 //-----------------------------------------------------------------------------
@@ -834,34 +935,267 @@ static void PMSSelect_PMSDRAW_Exit( PMS_SELECT_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void PMSSelect_PMSDRAW_Proc( PMS_SELECT_MAIN_WORK* wk )
 {
-#if 0
-  // SELECTでクリア
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
-  {
-    int i;
-    for( i=0; i<PMS_SELECT_PMSDRAW_NUM; i++ )
-    {
-      PMS_DRAW_Clear( wk->pms_draw, i );
-    }
-  }
-  // STARTでランダム挿入（二重登録するとアサート）
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
-  {
-    int i;
-    for( i=0; i<PMS_SELECT_PMSDRAW_NUM; i++ )
-    {
-      PMS_DATA pms;
-      PMSDAT_SetDebugRandom( &pms );
-      PMSDAT_SetDeco( &pms, 0, GFUser_GetPublicRand(10)+1 );
-      PMS_DRAW_Print( wk->pms_draw, wk->pms_win[i], &pms ,i );
-    }
-  }
-#endif
-
   PMS_DRAW_Main( wk->pms_draw );
 }
 
 #endif // PMS_SELECT_PMSDRAW
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	PMS_SELECT_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void PLATE_CNT_Setup( PMS_SELECT_MAIN_WORK* wk )
+{
+  int i;
+
+  for( i=0; (wk->list_head_id+i) < wk->list_max && i < PMS_SELECT_PMSDRAW_NUM; i++ )
+  {
+    u8 data_id = wk->list_head_id + i;
+    BOOL is_select = ( wk->list_head_id + i == wk->select_id );
+  
+    if( data_id == wk->list_max-1 )
+    {
+      // 「あたらしい　メッセージを　ついかする」
+      PLATE_UNIT_Draw( wk, i, NULL, is_select, TRUE );
+    }
+    else
+    {
+      // 簡易会話描画
+      PLATE_UNIT_Draw( wk, i, i, is_select, FALSE );
+    }
+  }
+
+#if 0
+  //バー領域の確保
+	{	
+		ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), heapID );
+
+    //確保した領域に読み込み
+    wk->bar_chr_pos	= GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, APP_COMMON_GetBarCharArcIdx(),
+        BG_FRAME_TEXT_M, 8*4*0x20, FALSE, heapID );
+
+    GF_ASSERT( wk->bar_chr_pos != GFL_ARCUTIL_TRANSINFO_FAIL );
+
+    //スクリーンはメモリ上に置いて、下部32*3だけ書き込み
+    RES_UTIL_TransVramScreenEx( p_handle, APP_COMMON_GetBarScrnArcIdx(), BG_FRAME_TEXT_M,
+        GFL_ARCUTIL_TRANSINFO_GetPos(wk->bar_chr_pos), 
+        0, 21,
+        32, 24, 
+        0, 21, 32, 3,
+        PLTID_BG_TOUCHBAR_M, FALSE, heapID );
+  
+      GFL_ARC_CloseDataHandle( p_handle );
+  }
+#endif
+
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  プレート管理 全プレートBGのみ更新
+ *
+ *	@param	PMS_SELECT_MAIN_WORK* wk 
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+static void PLATE_CNT_UpdatePlate( PMS_SELECT_MAIN_WORK* wk )
+{
+  int i;
+  
+  for( i=0; (wk->list_head_id+i) < wk->list_max && i < PMS_SELECT_PMSDRAW_NUM; i++ )
+  {
+    u8 data_id = wk->list_head_id + i;
+    BOOL is_select = ( data_id == wk->select_id );
+
+    if( data_id == wk->list_max-1 )
+    {
+      // 最終項目
+      PMSSelect_BG_PlateTrans( &wk->wk_bg, i, 0, is_select );
+    }
+    else
+    {
+      PMS_DATA* pms;
+      u32 sentence_type;
+
+      pms = PMSW_GetDataEntry( wk->pmsw_save, data_id );
+      sentence_type = PMSDAT_GetSentenceType( pms );
+
+      PMSSelect_BG_PlateTrans( &wk->wk_bg, i, sentence_type, is_select );
+    }
+
+//    HOSAKA_Printf("plate flash [%d] \n", i);
+  }
+  
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  プレート管理 全プレートユニットを更新
+ *
+ *	@param	PMS_SELECT_MAIN_WORK* wk 
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+static void PLATE_CNT_UpdateAll( PMS_SELECT_MAIN_WORK* wk )
+{
+  int i;
+    
+  // まだ文字転送が終了していないものがあるときは更新しない
+  if( PMS_DRAW_IsPrintEnd( wk->pms_draw ) == FALSE )
+  {
+    // @TODO このままだと最終的に更新されない。
+    GF_ASSERT(0);
+    return;
+  }
+
+  for( i=0; (wk->list_head_id+i) < wk->list_max && i < PMS_SELECT_PMSDRAW_NUM; i++ )
+  {
+    u8 data_id = wk->list_head_id + i;
+    BOOL is_select = ( data_id == wk->select_id );
+    
+    if( data_id == wk->list_max-1 )
+    {
+      // 「あたらしい　メッセージを　ついかする」
+      PLATE_UNIT_Draw( wk, i, NULL, is_select, TRUE );
+    }
+    else
+    {
+      // 簡易会話描画
+      PLATE_UNIT_Draw( wk, i, data_id, is_select, FALSE );
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  プレート操作 主処理
+ *
+ *	@param	PMS_SELECT_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
+{
+  // キー入力
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
+  {
+    if( wk->select_id > 0 )
+    {
+      wk->select_id--;
+
+      // リストの先頭を選択していた場合はリストごと移動
+      if( wk->select_id+1 == wk->list_head_id )
+      {
+        wk->list_head_id--;
+
+        GF_ASSERT( wk->list_head_id >= 0 );
+      
+        PLATE_CNT_UpdateAll( wk );
+      }
+      else
+      {
+        PLATE_CNT_UpdatePlate( wk );
+      }
+
+      GFL_SOUND_PlaySE( SE_MOVE_CURSOR );
+      
+      HOSAKA_Printf("list_head_id=%d select_id=%d \n", wk->list_head_id, wk->select_id );
+    }
+  }
+  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
+  {
+    if( wk->select_id < wk->list_max-1 )
+    {
+      wk->select_id++;
+
+      // リストの末尾を選択していた場合はリストごと移動
+      if( ( wk->select_id-1 == wk->list_head_id + PMS_SELECT_PMSDRAW_NUM - 1 ) )
+      {
+        wk->list_head_id++;
+
+        GF_ASSERT( wk->list_head_id >= 0 );
+      
+        PLATE_CNT_UpdateAll( wk );
+      }
+      else
+      {
+        PLATE_CNT_UpdatePlate( wk );
+      }
+        
+
+      GFL_SOUND_PlaySE( SE_MOVE_CURSOR );
+     
+      HOSAKA_Printf("list_head_id=%d select_id=%d \n", wk->list_head_id, wk->select_id );
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  プレート描画
+ *
+ *	@param	PMS_SELECT_MAIN_WORK* wk
+ *	@param	view_pos_id
+ *	@param	data_id 
+ *
+ *	@retval TRUE : 転送成功
+ */
+//-----------------------------------------------------------------------------
+static BOOL PLATE_UNIT_Draw( PMS_SELECT_MAIN_WORK* wk, u8 view_pos_id, u8 data_id, BOOL is_select, BOOL is_last )
+{
+  PMS_DATA* pms;
+  
+  GF_ASSERT( view_pos_id < PMS_SELECT_PMSDRAW_NUM );
+
+  // スクリーン、キャラを一端クリア
+  GFL_BMPWIN_ClearTransWindow_VBlank( wk->pms_win[ view_pos_id ] );
+
+  // 表示中ならば消す
+  if( PMS_DRAW_IsPrinting( wk->pms_draw, view_pos_id ) )
+  {
+    PMS_DRAW_Clear( wk->pms_draw, view_pos_id );
+  }
+
+  // メッセージ転送
+  if( is_last )
+  {
+    STRBUF* buf;
+    buf = GFL_MSG_CreateString( wk->msg, pms_input01_01 );
+    PRINTSYS_PrintQue( wk->print_que, GFL_BMPWIN_GetBmp(wk->pms_win[ view_pos_id ]), 0, 0, buf, wk->font );
+    GFL_STR_DeleteBuffer( buf );
+    
+    PMSSelect_BG_PlateTrans( &wk->wk_bg, view_pos_id, 0, is_select );
+
+    GFL_BMPWIN_MakeTransWindow_VBlank( wk->pms_win[ view_pos_id ] );
+
+    return TRUE;
+  }
+      
+  pms = PMSW_GetDataEntry( wk->pmsw_save, data_id );
+      
+  if( PMSDAT_IsComplete( pms, wk->heapID ) == TRUE )
+  {
+    u32 sentence_type;
+
+    sentence_type = PMSDAT_GetSentenceType( pms );
+
+    PMSSelect_BG_PlateTrans( &wk->wk_bg, view_pos_id, sentence_type, is_select );
+    PMS_DRAW_Print( wk->pms_draw, wk->pms_win[ view_pos_id ], pms, view_pos_id );
+
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
 
 //=============================================================================
 // SCENE
@@ -902,12 +1236,6 @@ static BOOL ScenePlateSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
   PMS_SELECT_MAIN_WORK* wk = work;
   TOUCHBAR_ICON result;
 
-  // デバッグボタンでアプリ終了
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG )
-  {
-    UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
-  }
-
 	//タッチバーメイン処理
 	PMSSelect_TOUCHBAR_Main( wk->touchbar );
 
@@ -929,11 +1257,29 @@ static BOOL ScenePlateSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
 
   default : GF_ASSERT(0);
   }
+
+  // プレート操作
+  PLATE_CNT_Main( wk );
     
   // @TODO とりあえずタッチでメニューを開く
-  if( result && (GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ) ) )
+  if( (GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ) ) )
   {
-    UI_SCENE_CNT_SetNextScene( cnt, PMSS_SCENE_ID_CMD_SELECT );
+    PMS_DATA* pms;
+    
+    GFL_SOUND_PlaySE( SE_DECIDE );
+    
+    pms = PMSW_GetDataEntry( wk->pmsw_save, wk->select_id );
+
+    if( PMSDAT_IsComplete( pms, wk->heapID ) )
+    {
+      UI_SCENE_CNT_SetNextScene( cnt, PMSS_SCENE_ID_CMD_SELECT );
+    }
+    else
+    {
+      // 選択領域が新規なら直接ジャンプ
+      UI_SCENE_CNT_SetNextScene( cnt, PMSS_SCENE_ID_CALL_EDIT );
+    }
+
     return TRUE;
   }
 

@@ -3,6 +3,7 @@
 	* @file	pms_input_view.c
 	* @bfief	簡易会話入力画面
 	* @author	taya
+  * @author	genya hosaka (引継)
 	* @date	06.01.24
   *
   * @TODO メッセージ系の描画コマンドは消していい
