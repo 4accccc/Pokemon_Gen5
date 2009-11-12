@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-11-11T15:37:00"/>
+	<create user="taya" host="W00146" date="2009-11-12T11:15:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -517,33 +517,33 @@
 	<row id="BTL_STRID_STD_RotateL_NPC" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>ローテーション左 NPCトレーナー</comment>
 		<language name="JPN" width="216">[1:0E:トレーナー種別名:0]の　[1:00:トレーナー名:1]は
-ポケモンを　ひだりシフト　させた！</language>
+ポケモンを　ひだりへ　シフトさせた！</language>
 		<language name="JPN_KANJI" width="216">[1:0E:トレーナー種別名:0]の　[1:00:トレーナー名:1]は
-ポケモンを　左シフト　させた！</language>
+ポケモンを　左へ　シフトさせた！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_RotateL_Player" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>ローテーション左 通信対戦プレイヤー</comment>
 		<language name="JPN" width="216">[1:00:トレーナー名:0]は
-ポケモンを　ひだりシフト　させた！</language>
+ポケモンを　ひだりへ　シフトさせた！</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]は
-ポケモンを　左シフト　させた！</language>
+ポケモンを　左へ　シフトさせた！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_RotateR_NPC" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>ローテーション右 NPCトレーナー</comment>
 		<language name="JPN" width="216">[1:0E:トレーナー種別名:0]の　[1:00:トレーナー名:1]は
-ポケモンを　みぎシフト　させた！</language>
+ポケモンを　みぎへ　シフトさせた！</language>
 		<language name="JPN_KANJI" width="216">[1:0E:トレーナー種別名:0]の　[1:00:トレーナー名:1]は
-ポケモンを　右シフト　させた！</language>
+ポケモンを　右へ　シフトさせた！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_RotateR_Player" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>ローテーション右 通信対戦プレイヤー</comment>
 		<language name="JPN" width="216">[1:00:トレーナー名:0]は
-ポケモンを　みぎシフト　させた！</language>
+ポケモンを　みぎへ　シフトさせた！</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]は
-ポケモンを　右シフト　させた！</language>
+ポケモンを　右へ　シフトさせた！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_GetExp" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
