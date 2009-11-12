@@ -20,14 +20,68 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c05gym0101_leader
-_EVENT_DATA    ev_c05gym0101_lift_00
-_EVENT_DATA    ev_c05gym0101_lift_01
-_EVENT_DATA    ev_c05gym0101_lift_02
-_EVENT_DATA    ev_c05gym0101_lift_03
-_EVENT_DATA    ev_c05gym0101_lift_04
-_EVENT_DATA    ev_c05gym0101_lift_05
+_EVENT_DATA    ev_c05gym0101_lift_00u
+_EVENT_DATA    ev_c05gym0101_lift_00d
+_EVENT_DATA    ev_c05gym0101_lift_01u
+_EVENT_DATA    ev_c05gym0101_lift_01d
+_EVENT_DATA    ev_c05gym0101_lift_02u
+_EVENT_DATA    ev_c05gym0101_lift_02d
+_EVENT_DATA    ev_c05gym0101_lift_03u
+_EVENT_DATA    ev_c05gym0101_lift_03d
+_EVENT_DATA    ev_c05gym0101_lift_04u
+_EVENT_DATA    ev_c05gym0101_lift_04d
+_EVENT_DATA    ev_c05gym0101_lift_05u
+_EVENT_DATA    ev_c05gym0101_lift_05d
 _EVENT_DATA    ev_c05gym0101_workman_00
+_EVENT_DATA    ev_zone_c05gym0101
+_EVENT_DATA    ev_scene_c05gym0101_gymstart_01
 _EVENT_DATA_END
+
+
+//------------------------------注意--------------------------------//
+//																	//
+//	ジムギミックに FH_10～15 まで使用ししています。					//
+//	同マップ内の使用を禁止します。									//
+//	各リフトの停止位置（上下）チェックに使用します。				//
+//	0 = 上の停止位置にいる、1 = 下の停止位置にいる					//
+//																	//
+//	ジムギミックに LOCALWORK10 を使用しています。					//
+//	同マップ内の使用を禁止します。									//
+//	0 = シーンチェンジ起動 エントランスから降りてくるリフト演出		//
+//																	//
+//------------------------------------------------------------------//
+
+
+/************************************************************/
+/*					ゾーンチェンジスクリプト				*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_c05gym0101
+
+
+INIT_EVENT_END
+
+
+/************************************************************/
+/*				接続イベント エントランスから降下			*/
+/************************************************************/
+EVENT_START	ev_scene_c05gym0101_gymstart_01
+
+
+
+	//========================================//
+
+	//接続イベント終了
+	$LOCALWORK10 = 1
+
+	//リフトの上下位置フラグを初期化（初期位置が下のリフトのフラグをたてておく）
+	//ゾーンチェンジではローカルフラグの操作ができないためゾーン進入時に必ず発動するこのイベントで初期化
+	_FLAG_SET( FH_11 )
+	_FLAG_SET( FH_13 )
+	_FLAG_SET( FH_14 )
+
+	//========================================//
+
+EVENT_END
 
 
 /**************************************************************/
@@ -105,121 +159,192 @@ EVENT_END
 
 
 /************************************************************/
-/*						リフト 0号機						*/
+/*					リフト0号機 上昇ボタン					*/
 /************************************************************/
-EVENT_START		ev_c05gym0101_lift_00
-	//ローカル変数を定義
-	{
-	DEFINE_LOCAL	LWK_PLY_DIR
+EVENT_START		ev_c05gym0101_lift_00u
+	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
 
-	_PLAYER_DIR_GET( LWK_PLY_DIR )	//主人公の向き情報を取得
-
-	//上側からスイッチに話しかけた場合は無視する
-	IF $LWK_PLY_DIR != DIR_DOWN THEN
-		//リフトを動作させる（引数はリフトインデックス）
+	//スイッチの上側以外から話しかけた&リフトが下にある場合はリフト起動
+	IF $SCWK_ANSWER != DIR_DOWN && FLAG_ON( FH_10 ) THEN
+		//リフトを上昇させる（引数はリフトインデックス）
 		_GYM_GROUND_MV_LIFT( 0 )
+		_FLAG_RESET( FH_10 )
 	ENDIF
-	}
+
+EVENT_END
+
+/************************************************************/
+/*					リフト0号機 下降ボタン					*/
+/************************************************************/
+EVENT_START		ev_c05gym0101_lift_00d
+	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
+
+	//スイッチの上側以外から話しかけた&リフトが上にある場合はリフト起動
+	IF $SCWK_ANSWER != DIR_DOWN && FLAG_OFF( FH_10 ) THEN
+		//リフトを下降させる（引数はリフトインデックス）
+		_GYM_GROUND_MV_LIFT( 0 )
+		_FLAG_SET( FH_10 )
+	ENDIF
 
 EVENT_END
 
 
 /************************************************************/
-/*						リフト 1号機						*/
+/*					リフト1号機 上昇ボタン					*/
 /************************************************************/
-EVENT_START		ev_c05gym0101_lift_01
-	//ローカル変数を定義
-	{
-	DEFINE_LOCAL	LWK_PLY_DIR
+EVENT_START		ev_c05gym0101_lift_01u
+	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
 
-	_PLAYER_DIR_GET( LWK_PLY_DIR )	//主人公の向き情報を取得
-
-	//上側からスイッチに話しかけた場合は無視する
-	IF $LWK_PLY_DIR != DIR_DOWN THEN
-		//リフトを動作させる（引数はリフトインデックス）
+	//スイッチの上側以外から話しかけた&リフトが下にある場合はリフト起動
+	IF $SCWK_ANSWER != DIR_DOWN && FLAG_ON( FH_11 ) THEN
+		//リフトを上昇させる（引数はリフトインデックス）
 		_GYM_GROUND_MV_LIFT( 1 )
+		_FLAG_RESET( FH_11 )
 	ENDIF
-	}
 
 EVENT_END
 
 
 /************************************************************/
-/*						リフト 2号機						*/
+/*					リフト1号機 下降ボタン					*/
 /************************************************************/
-EVENT_START		ev_c05gym0101_lift_02
-	//ローカル変数を定義
-	{
-	DEFINE_LOCAL	LWK_PLY_DIR
+EVENT_START		ev_c05gym0101_lift_01d
+	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
 
-	_PLAYER_DIR_GET( LWK_PLY_DIR )	//主人公の向き情報を取得
+	//スイッチの上側以外から話しかけた&リフトが上にある場合はリフト起動
+	IF $SCWK_ANSWER != DIR_DOWN && FLAG_OFF( FH_11 ) THEN
+		//リフトを上昇させる（引数はリフトインデックス）
+		_GYM_GROUND_MV_LIFT( 1 )
+		_FLAG_SET( FH_11 )
+	ENDIF
 
-	//上側からスイッチに話しかけた場合は無視する
-	IF $LWK_PLY_DIR != DIR_DOWN THEN
+EVENT_END
+
+
+/************************************************************/
+/*					リフト2号機 上昇ボタン					*/
+/************************************************************/
+EVENT_START		ev_c05gym0101_lift_02u
+	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
+
+	//スイッチの上側以外から話しかけた&リフトが下にある場合はリフト起動
+	IF $SCWK_ANSWER != DIR_DOWN && FLAG_ON( FH_12 ) THEN
 		//リフトを動作させる（引数はリフトインデックス）
 		_GYM_GROUND_MV_LIFT( 2 )
+		_FLAG_RESET( FH_12 )
 	ENDIF
-	}
 
 EVENT_END
 
 
 /************************************************************/
-/*						リフト 3号機						*/
+/*					リフト2号機 下降ボタン					*/
 /************************************************************/
-EVENT_START		ev_c05gym0101_lift_03
-	//ローカル変数を定義
-	{
-	DEFINE_LOCAL	LWK_PLY_DIR
+EVENT_START		ev_c05gym0101_lift_02d
+	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
 
-	_PLAYER_DIR_GET( LWK_PLY_DIR )	//主人公の向き情報を取得
+	//スイッチの上側以外から話しかけた&リフトが上にある場合はリフト起動
+	IF $SCWK_ANSWER != DIR_DOWN && FLAG_OFF( FH_12 ) THEN
+		//リフトを動作させる（引数はリフトインデックス）
+		_GYM_GROUND_MV_LIFT( 2 )
+		_FLAG_SET( FH_12 )
+	ENDIF
 
-	//上側からスイッチに話しかけた場合は無視する
-	IF $LWK_PLY_DIR != DIR_DOWN THEN
+EVENT_END
+
+
+/************************************************************/
+/*					リフト3号機 上昇ボタン					*/
+/************************************************************/
+EVENT_START		ev_c05gym0101_lift_03u
+	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
+
+	//スイッチの上側以外から話しかけた&リフトが下にある場合はリフト起動
+	IF $SCWK_ANSWER != DIR_DOWN && FLAG_ON( FH_13 ) THEN
 		//リフトを動作させる（引数はリフトインデックス）
 		_GYM_GROUND_MV_LIFT( 3 )
+		_FLAG_RESET( FH_13 )
 	ENDIF
-	}
 
 EVENT_END
 
 
 /************************************************************/
-/*						リフト 4号機						*/
+/*					リフト3号機 下降ボタン					*/
 /************************************************************/
-EVENT_START		ev_c05gym0101_lift_04
-	//ローカル変数を定義
-	{
-	DEFINE_LOCAL	LWK_PLY_DIR
+EVENT_START		ev_c05gym0101_lift_03d
+	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
 
-	_PLAYER_DIR_GET( LWK_PLY_DIR )	//主人公の向き情報を取得
+	//スイッチの上側以外から話しかけた&リフトが上にある場合はリフト起動
+	IF $SCWK_ANSWER != DIR_DOWN && FLAG_OFF( FH_13 ) THEN
+		//リフトを動作させる（引数はリフトインデックス）
+		_GYM_GROUND_MV_LIFT( 3 )
+		_FLAG_SET( FH_13 )
+	ENDIF
 
-	//上側からスイッチに話しかけた場合は無視する
-	IF $LWK_PLY_DIR != DIR_DOWN THEN
+EVENT_END
+
+
+/************************************************************/
+/*					リフト4号機 上昇ボタン					*/
+/************************************************************/
+EVENT_START		ev_c05gym0101_lift_04u
+	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
+
+	//スイッチの上側以外から話しかけた&リフトが下にある場合はリフト起動
+	IF $SCWK_ANSWER != DIR_DOWN && FLAG_ON( FH_14 ) THEN
 		//リフトを動作させる（引数はリフトインデックス）
 		_GYM_GROUND_MV_LIFT( 4 )
+		_FLAG_RESET( FH_14 )
 	ENDIF
-	}
 
 EVENT_END
 
 
 /************************************************************/
-/*						リフト 5号機						*/
+/*					リフト4号機 下降ボタン					*/
 /************************************************************/
-EVENT_START		ev_c05gym0101_lift_05
-	//ローカル変数を定義
-	{
-	DEFINE_LOCAL	LWK_PLY_DIR
+EVENT_START		ev_c05gym0101_lift_04d
+	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
 
-	_PLAYER_DIR_GET( LWK_PLY_DIR )	//主人公の向き情報を取得
+	//スイッチの上側以外から話しかけた&リフトが上にある場合はリフト起動
+	IF $SCWK_ANSWER != DIR_DOWN && FLAG_OFF( FH_14 ) THEN
+		//リフトを動作させる（引数はリフトインデックス）
+		_GYM_GROUND_MV_LIFT( 4 )
+		_FLAG_SET( FH_14 )
+	ENDIF
 
-	//上側からスイッチに話しかけた場合は無視する
-	IF $LWK_PLY_DIR != DIR_DOWN THEN
+EVENT_END
+
+
+/************************************************************/
+/*					リフト5号機 上昇ボタン					*/
+/************************************************************/
+EVENT_START		ev_c05gym0101_lift_05u
+	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
+
+	//スイッチの上側以外から話しかけた&リフトが下にある場合はリフト起動
+	IF $SCWK_ANSWER != DIR_DOWN && FLAG_ON( FH_15 ) THEN
 		//リフトを動作させる（引数はリフトインデックス）
 		_GYM_GROUND_MV_LIFT( 5 )
+		_FLAG_RESET( FH_15 )
 	ENDIF
-	}
+
+EVENT_END
+
+
+/************************************************************/
+/*					リフト5号機 下降ボタン					*/
+/************************************************************/
+EVENT_START		ev_c05gym0101_lift_05d
+	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
+
+	//スイッチの上側以外から話しかけた&リフトが上にある場合はリフト起動
+	IF $SCWK_ANSWER != DIR_DOWN && FLAG_OFF( FH_15 ) THEN
+		//リフトを動作させる（引数はリフトインデックス）
+		_GYM_GROUND_MV_LIFT( 5 )
+		_FLAG_SET( FH_15 )
+	ENDIF
 
 EVENT_END
 
