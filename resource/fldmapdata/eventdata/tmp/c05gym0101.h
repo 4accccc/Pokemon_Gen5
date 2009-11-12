@@ -22,5 +22,10 @@
 #define C05GYM0101_LIFT_02L               10
 #define C05GYM0101_LIFT_03R               11
 #define C05GYM0101_LIFT_03L               12
+#define TR_DUMMY_01                       13
+#define TR_DUMMY_02                       14
+#define C05GYM0101_WORKMAN_03             15
+#define C05GYM0101_WORKMAN_00             16
+#define C05GYM0101_WORKMAN_04             17
 
 #endif //ZONE_C05GYM0101_EVC_H

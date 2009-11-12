@@ -26,6 +26,7 @@ _EVENT_DATA    ev_c05gym0101_lift_02
 _EVENT_DATA    ev_c05gym0101_lift_03
 _EVENT_DATA    ev_c05gym0101_lift_04
 _EVENT_DATA    ev_c05gym0101_lift_05
+_EVENT_DATA    ev_c05gym0101_workman_00
 _EVENT_DATA_END
 
 
@@ -222,5 +223,12 @@ EVENT_START		ev_c05gym0101_lift_05
 
 EVENT_END
 
+
+/************************************************************/
+/*				作業員トレーナー／メインストッパー			*/
+/************************************************************/
+EVENT_START		ev_c05gym0101_workman_00
+	_TALK_OBJ_START()
+EVENT_END
 
 
