@@ -1013,8 +1013,11 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       GFL_BMPWIN_TransVramCharacter( wk->win );
     }
   }
-  else if( key & PAD_BUTTON_START ){
-
+  else if( key & PAD_BUTTON_SELECT ){
+    setMainProc( wk, mainProc_Load );
+  }
+  else if( key & PAD_BUTTON_START )
+  {
     setMainProc( wk, mainProc_StartBattle );
   }
 
