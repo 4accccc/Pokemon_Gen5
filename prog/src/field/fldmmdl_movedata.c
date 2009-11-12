@@ -1273,40 +1273,170 @@ int (* const * const DATA_AcmdActionTbl[ACMD_MAX])( MMDL * ) =
 	DATA_AC_WalkGUR2F_Tbl,									//AC_WALKGU_R_2F
 	
 	DATA_AC_MarkGyoeTWait_Tbl,							//AC_MARK_GYOE_TWAIT
-
-  DATA_AC_RailDirU_Tbl,                   // AC_RAIL_DIR_U
-  DATA_AC_RailDirD_Tbl,                   // AC_RAIL_DIR_D
-  DATA_AC_RailDirL_Tbl,                   // AC_RAIL_DIR_L
-  DATA_AC_RailDirR_Tbl,                   // AC_RAIL_DIR_R
-  DATA_AC_RailWalkU_16F_Tbl,              // AC_RAIL_WALK_U_16F
-  DATA_AC_RailWalkD_16F_Tbl,              // AC_RAIL_WALK_D_16F
-  DATA_AC_RailWalkL_16F_Tbl,              // AC_RAIL_WALK_L_16F
-  DATA_AC_RailWalkR_16F_Tbl,              // AC_RAIL_WALK_R_16F
-  DATA_AC_RailWalkU_8F_Tbl,               // AC_RAIL_WALK_U_8F
-  DATA_AC_RailWalkD_8F_Tbl,               // AC_RAIL_WALK_D_8F
-  DATA_AC_RailWalkL_8F_Tbl,               // AC_RAIL_WALK_L_8F
-  DATA_AC_RailWalkR_8F_Tbl,               // AC_RAIL_WALK_R_8F
-  DATA_AC_RailWalkU_4F_Tbl,               // AC_RAIL_WALK_U_4F
-  DATA_AC_RailWalkD_4F_Tbl,               // AC_RAIL_WALK_D_4F
-  DATA_AC_RailWalkL_4F_Tbl,               // AC_RAIL_WALK_L_4F
-  DATA_AC_RailWalkR_4F_Tbl,               // AC_RAIL_WALK_R_4F
-  DATA_AC_RailWalkU_2F_Tbl,               // AC_RAIL_WALK_U_2F
-  DATA_AC_RailWalkD_2F_Tbl,               // AC_RAIL_WALK_D_2F
-  DATA_AC_RailWalkL_2F_Tbl,               // AC_RAIL_WALK_L_2F
-  DATA_AC_RailWalkR_2F_Tbl,               // AC_RAIL_WALK_R_2F
-  DATA_AC_RailDashU_4F_Tbl,               // AC_RAIL_DASH_U_4F
-  DATA_AC_RailDashD_4F_Tbl,               // AC_RAIL_DASH_D_4F
-  DATA_AC_RailDashL_4F_Tbl,               // AC_RAIL_DASH_L_4F
-  DATA_AC_RailDashR_4F_Tbl,               // AC_RAIL_DASH_R_4F
-  DATA_AC_RailStayWalkU_16F_Tbl,          // AC_RAIL_STAY_WALK_U_16F	
-  DATA_AC_RailStayWalkD_16F_Tbl,          // AC_RAIL_STAY_WALK_D_16F	
-  DATA_AC_RailStayWalkL_16F_Tbl,          // AC_RAIL_STAY_WALK_L_16F	
-  DATA_AC_RailStayWalkR_16F_Tbl,          // AC_RAIL_STAY_WALK_R_16F	
-  DATA_AC_RailStayWalkU_2F_Tbl,           // AC_RAIL_STAY_WALK_U_2F	
-  DATA_AC_RailStayWalkD_2F_Tbl,           // AC_RAIL_STAY_WALK_D_2F	
-  DATA_AC_RailStayWalkL_2F_Tbl,           // AC_RAIL_STAY_WALK_L_2F	
-  DATA_AC_RailStayWalkR_2F_Tbl,           // AC_RAIL_STAY_WALK_R_2F	
   
+  DATA_AC_HeroItemGet_Tbl,              // AC_HERO_ITEMGET
+};
+
+//--------------------------------------------------------------
+///	レール動作用  アニメーションコマンドテーブル。
+///	並びはfieldobj_code.h AC_DIR_U等のコードと一致。
+//--------------------------------------------------------------
+int (* const * const DATA_RailAcmdActionTbl[ACMD_MAX])( MMDL * ) =
+{
+	DATA_AC_RailDirU_Tbl,										//AC_DIR_U
+	DATA_AC_RailDirD_Tbl,								//AC_DIR_D
+	DATA_AC_RailDirL_Tbl,								//AC_DIR_L
+	DATA_AC_RailDirR_Tbl,								//AC_DIR_R
+	DATA_AC_RailDummy,									//AC_WALK_U_32F
+	DATA_AC_RailDummy,									//AC_WALK_D_32F
+	DATA_AC_RailDummy,									//AC_WALK_L_32F
+	DATA_AC_RailDummy,									//AC_WALK_R_32F
+	DATA_AC_RailWalkU_16F_Tbl,					//AC_WALK_U_16F
+	DATA_AC_RailWalkD_16F_Tbl,					//AC_WALK_D_16F
+	DATA_AC_RailWalkL_16F_Tbl,					//AC_WALK_L_16F
+	DATA_AC_RailWalkR_16F_Tbl,					//AC_WALK_R_16F
+	DATA_AC_RailWalkU_8F_Tbl,						//AC_WALK_U_8F
+	DATA_AC_RailWalkD_8F_Tbl,						//AC_WALK_D_8F
+	DATA_AC_RailWalkL_8F_Tbl,						//AC_WALK_L_8F
+	DATA_AC_RailWalkR_8F_Tbl,						//AC_WALK_R_8F
+	DATA_AC_RailWalkU_4F_Tbl,						//AC_WALK_U_4F
+	DATA_AC_RailWalkD_4F_Tbl,						//AC_WALK_D_4F
+	DATA_AC_RailWalkL_4F_Tbl,						//AC_WALK_L_4F
+	DATA_AC_RailWalkR_4F_Tbl,						//AC_WALK_R_4F
+	DATA_AC_RailWalkU_2F_Tbl,						//AC_WALK_U_2F
+	DATA_AC_RailWalkD_2F_Tbl,						//AC_WALK_D_2F
+	DATA_AC_RailWalkL_2F_Tbl,						//AC_WALK_L_2F
+	DATA_AC_RailWalkR_2F_Tbl,						//AC_WALK_R_2F
+	DATA_AC_RailDummy,								//AC_STAY_WALK_U_32F
+	DATA_AC_RailDummy,								//AC_STAY_WALK_D_32F
+	DATA_AC_RailDummy,								//AC_STAY_WALK_L_32F
+	DATA_AC_RailDummy,								//AC_STAY_WALK_R_32F
+	DATA_AC_RailStayWalkU_16F_Tbl,								//AC_STAY_WALK_U_16F
+	DATA_AC_RailStayWalkD_16F_Tbl,								//AC_STAY_WALK_D_16F
+	DATA_AC_RailStayWalkL_16F_Tbl,								//AC_STAY_WALK_L_16F
+	DATA_AC_RailStayWalkR_16F_Tbl,								//AC_STAY_WALK_R_16F
+	DATA_AC_RailDummy,								//AC_STAY_WALK_U_8F
+	DATA_AC_RailDummy,								//AC_STAY_WALK_D_8F
+	DATA_AC_RailDummy,								//AC_STAY_WALK_L_8F
+	DATA_AC_RailDummy,								//AC_STAY_WALK_R_8F
+	DATA_AC_RailDummy,								//AC_STAY_WALK_U_4F
+	DATA_AC_RailDummy,								//AC_STAY_WALK_D_4F
+	DATA_AC_RailDummy,								//AC_STAY_WALK_L_4F
+	DATA_AC_RailDummy,								//AC_STAY_WALK_R_4F
+	DATA_AC_RailStayWalkU_2F_Tbl,								//AC_STAY_WALK_U_2F
+	DATA_AC_RailStayWalkD_2F_Tbl,								//AC_STAY_WALK_D_2F
+	DATA_AC_RailStayWalkL_2F_Tbl,								//AC_STAY_WALK_L_2F
+	DATA_AC_RailStayWalkR_2F_Tbl,								//AC_STAY_WALK_R_2F
+	DATA_AC_RailDummy,								//AC_STAY_JUMP_U_16F
+	DATA_AC_RailDummy,								//AC_STAY_JUMP_D_16F
+	DATA_AC_RailDummy,								//AC_STAY_JUMP_L_16F
+	DATA_AC_RailDummy,								//AC_STAY_JUMP_R_16F
+	DATA_AC_RailDummy,								//AC_STAY_JUMP_U_8F
+	DATA_AC_RailDummy,								//AC_STAY_JUMP_D_8F
+	DATA_AC_RailDummy,								//AC_STAY_JUMP_L_8F
+	DATA_AC_RailDummy,								//AC_STAY_JUMP_R_8F
+	DATA_AC_RailDummy,								//AC_JUMP_U_1G_8F
+	DATA_AC_RailDummy,								//AC_JUMP_D_1G_8F
+	DATA_AC_RailDummy,								//AC_JUMP_L_1G_8F
+	DATA_AC_RailDummy,								//AC_JUMP_R_1G_8F
+	DATA_AC_RailDummy,								//AC_JUMP_U_2G_16F
+	DATA_AC_RailDummy,								//AC_JUMP_D_2G_16F
+	DATA_AC_RailDummy,								//AC_JUMP_L_2G_16F
+	DATA_AC_RailDummy,								//AC_JUMP_R_2G_16F
+	DATA_AC_RailDummy,									//AC_WAIT_1F
+	DATA_AC_RailDummy,									//AC_WAIT_2F
+	DATA_AC_RailDummy,									//AC_WAIT_4F
+	DATA_AC_RailDummy,									//AC_WAIT_8F
+	DATA_AC_RailDummy,									//AC_WAIT_15F
+	DATA_AC_RailDummy,									//AC_WAIT_16F
+	DATA_AC_RailDummy,									//AC_WAIT_32F
+	DATA_AC_RailDummy,										//AC_WARP_UP
+	DATA_AC_RailDummy,									//AC_WARP_DOWN
+	DATA_AC_RailDummy,									//AC_VANISH_ON
+	DATA_AC_RailDummy,									//AC_VANISH_OFF
+	DATA_AC_RailDummy,									//AC_DIR_PAUSE_ON
+	DATA_AC_RailDummy,								//AC_DIR_PAUSE_OFF
+	DATA_AC_RailDummy,									//AC_ANM_PAUSE_ON
+	DATA_AC_RailDummy,								//AC_ANM_PAUSE_OFF
+	DATA_AC_RailDummy,									//AC_MARK_GYOE
+	DATA_AC_RailDummy,									//AC_WALK_U_6F
+	DATA_AC_RailDummy,									//AC_WALK_D_6F
+	DATA_AC_RailDummy,									//AC_WALK_L_6F
+	DATA_AC_RailDummy,									//AC_WALK_R_6F
+	DATA_AC_RailDummy,									//AC_WALK_U_3F
+	DATA_AC_RailDummy,									//AC_WALK_D_3F
+	DATA_AC_RailDummy,									//AC_WALK_L_3F
+	DATA_AC_RailDummy,									//AC_WALK_R_3F
+	DATA_AC_RailDummy,									//AC_WALK_U_1F
+	DATA_AC_RailDummy,									//AC_WALK_D_1F
+	DATA_AC_RailDummy,									//AC_WALK_L_1F
+	DATA_AC_RailDummy,									//AC_WALK_R_1F
+	DATA_AC_RailDashU_4F_Tbl,									//AC_DASH_U_4F
+	DATA_AC_RailDashD_4F_Tbl,									//AC_DASH_D_4F
+	DATA_AC_RailDashL_4F_Tbl,									//AC_DASH_L_4F
+	DATA_AC_RailDashR_4F_Tbl,									//AC_DASH_R_4F
+	DATA_AC_RailDummy,								//AC_JUMPHI_L_1G_16F
+	DATA_AC_RailDummy,								//AC_JUMPHI_R_1G_16F
+	DATA_AC_RailDummy,								//AC_JUMPHI_L_3G_32F
+	DATA_AC_RailDummy,								//AC_JUMPHI_R_3G_32F
+	DATA_AC_RailDummy,									//AC_WALK_U_7F
+	DATA_AC_RailDummy,									//AC_WALK_D_7F
+	DATA_AC_RailDummy,									//AC_WALK_L_7F
+	DATA_AC_RailDummy,									//AC_WALK_R_7F
+	DATA_AC_RailDummy,										//AC_PC_BOW
+	DATA_AC_RailDummy,								//AC_HIDE_PULLOFF
+	DATA_AC_RailDummy,									//AC_HERO_BANZAI
+	DATA_AC_RailDummy,									//AC_MARK_SAISEN
+	DATA_AC_RailDummy,								//AC_HERO_BANZAI_UKE
+	DATA_AC_RailDummy,									//AC_WALKGL_U_8F
+	DATA_AC_RailDummy,									//AC_WALKGL_D_8F
+	DATA_AC_RailDummy,									//AC_WALKGL_L_8F
+	DATA_AC_RailDummy,									//AC_WALKGL_R_8F
+	DATA_AC_RailDummy,									//AC_WALKGL_U_8F
+	DATA_AC_RailDummy,									//AC_WALKGL_D_8F
+	DATA_AC_RailDummy,									//AC_WALKGL_L_8F
+	DATA_AC_RailDummy,									//AC_WALKGL_R_8F
+	DATA_AC_RailDummy,									//AC_WALKGU_U_8F
+	DATA_AC_RailDummy,									//AC_WALKGU_D_8F
+	DATA_AC_RailDummy,									//AC_WALKGU_L_8F
+	DATA_AC_RailDummy,									//AC_WALKGU_R_8F
+	DATA_AC_RailDummy,								//AC_JUMP_U_3G_24F
+	DATA_AC_RailDummy,								//AC_JUMP_D_3G_24F
+	DATA_AC_RailDummy,								//AC_JUMP_L_3G_24F
+	DATA_AC_RailDummy,								//AC_JUMP_R_3G_24F
+	DATA_AC_RailDummy,									//AC_DASHGL_U_8F
+	DATA_AC_RailDummy,									//AC_DASHGL_D_8F
+	DATA_AC_RailDummy,									//AC_DASHGL_L_8F
+	DATA_AC_RailDummy,									//AC_DASHGL_R_8F
+	DATA_AC_RailDummy,									//AC_DASHGL_U_8F
+	DATA_AC_RailDummy,									//AC_DASHGL_D_8F
+	DATA_AC_RailDummy,									//AC_DASHGL_L_8F
+	DATA_AC_RailDummy,									//AC_DASHGL_R_8F
+	DATA_AC_RailDummy,									//AC_DASHGU_U_8F
+	DATA_AC_RailDummy,									//AC_DASHGU_D_8F
+	DATA_AC_RailDummy,									//AC_DASHGU_L_8F
+	DATA_AC_RailDummy,									//AC_DASHGU_R_8F
+	DATA_AC_RailDummy,							//AC_JUMPGL_U_1G_8F
+	DATA_AC_RailDummy,
+	DATA_AC_RailDummy,
+	DATA_AC_RailDummy,
+	DATA_AC_RailDummy,
+	DATA_AC_RailDummy,
+	DATA_AC_RailDummy,
+	DATA_AC_RailDummy,
+	DATA_AC_RailDummy,
+	DATA_AC_RailDummy,
+	DATA_AC_RailDummy,
+	DATA_AC_RailDummy,							//AC_JUMPGU_R_1G_8F
+	DATA_AC_RailDummy,									//AC_WALKGU_U_4F
+	DATA_AC_RailDummy,									//AC_WALKGU_D_4F
+	DATA_AC_RailDummy,									//AC_WALKGU_L_4F
+	DATA_AC_RailDummy,									//AC_WALKGU_R_4F
+	DATA_AC_RailDummy,									//AC_WALKGU_U_2F
+	DATA_AC_RailDummy,									//AC_WALKGU_D_2F
+	DATA_AC_RailDummy,									//AC_WALKGU_L_2F
+	DATA_AC_RailDummy,									//AC_WALKGU_R_2F
+	DATA_AC_RailDummy,							//AC_MARK_GYOE_TWAIT
   DATA_AC_HeroItemGet_Tbl,              // AC_HERO_ITEMGET
 };
 
@@ -1411,24 +1541,6 @@ static const int DATA_CodeTbl_AC_JUMPGR_U_1G_8F[] =
 static const int DATA_CodeTbl_AC_JUMPGU_U_1G_8F[] =
 {AC_JUMPGU_U_1G_8F,AC_JUMPGU_D_1G_8F,AC_JUMPGU_L_1G_8F,AC_JUMPGU_R_1G_8F};
 
-// RAIL
-static const int DATA_CodeTbl_RAIL_DIR_U[] =
-{AC_RAIL_DIR_U,AC_RAIL_DIR_D,AC_RAIL_DIR_L,AC_RAIL_DIR_R};
-static const int DATA_CodeTbl_RAIL_WALK_U_16F[] =
-{AC_RAIL_WALK_U_16F,AC_RAIL_WALK_D_16F,AC_RAIL_WALK_L_16F,AC_RAIL_WALK_R_16F};
-static const int DATA_CodeTbl_RAIL_WALK_U_8F[] =
-{AC_RAIL_WALK_U_8F,AC_RAIL_WALK_D_8F,AC_RAIL_WALK_L_8F,AC_RAIL_WALK_R_8F};
-static const int DATA_CodeTbl_RAIL_WALK_U_4F[] =
-{AC_RAIL_WALK_U_4F,AC_RAIL_WALK_D_4F,AC_RAIL_WALK_L_4F,AC_RAIL_WALK_R_4F};
-static const int DATA_CodeTbl_RAIL_WALK_U_2F[] =
-{AC_RAIL_WALK_U_2F,AC_RAIL_WALK_D_2F,AC_RAIL_WALK_L_2F,AC_RAIL_WALK_R_2F};
-static const int DATA_CodeTbl_RAIL_DASH_U_4F[] =
-{AC_RAIL_DASH_U_4F,AC_RAIL_DASH_D_4F,AC_RAIL_DASH_L_4F,AC_RAIL_DASH_R_4F};
-static const int DATA_CodeTbl_RAIL_STAY_WALK_U_16F[] =
-{AC_RAIL_STAY_WALK_U_16F,AC_RAIL_STAY_WALK_D_16F,AC_RAIL_STAY_WALK_L_16F,AC_RAIL_STAY_WALK_R_16F};
-static const int DATA_CodeTbl_RAIL_STAY_WALK_U_2F[] =
-{AC_RAIL_STAY_WALK_U_2F,AC_RAIL_STAY_WALK_D_2F,AC_RAIL_STAY_WALK_L_2F,AC_RAIL_STAY_WALK_R_2F};
-
 //--------------------------------------------------------------
 ///	MMDL_ChangeDirAcmdCode()で対応するコード。
 /// 並びは不順。
@@ -1469,14 +1581,6 @@ const int * const DATA_AcmdCodeDirChangeTbl[] =
 	DATA_CodeTbl_AC_JUMPGU_U_1G_8F,
 	DATA_CodeTbl_AC_WALKGU_U_4F,
 	DATA_CodeTbl_AC_WALKGU_U_2F,
-  DATA_CodeTbl_RAIL_DIR_U,
-  DATA_CodeTbl_RAIL_WALK_U_16F,
-  DATA_CodeTbl_RAIL_WALK_U_8F,
-  DATA_CodeTbl_RAIL_WALK_U_4F,
-  DATA_CodeTbl_RAIL_WALK_U_2F,
-  DATA_CodeTbl_RAIL_DASH_U_4F,
-  DATA_CodeTbl_RAIL_STAY_WALK_U_16F,
-  DATA_CodeTbl_RAIL_STAY_WALK_U_2F,
 	NULL,	//終端識別
 };
 

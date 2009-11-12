@@ -434,42 +434,9 @@
 #define AC_WALKGU_L_2F			0x97 ///<上壁移動 左 2フレーム
 #define AC_WALKGU_R_2F			0x98 ///<上壁移動 右 2フレーム
 #define AC_MARK_GYOE_TWAIT		0x99 ///<!マークを出す グラフィックデータ転送待ち版
+#define AC_HERO_ITEMGET     0x9a ///<自機アイテムゲットアニメ
 
-#define AC_RAIL_DIR_U				0x9a ///<上に向く レール専用
-#define AC_RAIL_DIR_D				0x9b ///<下に向く レール専用
-#define AC_RAIL_DIR_L				0x9c ///<左に向く レール専用
-#define AC_RAIL_DIR_R				0x9d ///<右に向く レール専用
-#define AC_RAIL_WALK_U_16F			0x9e ///<上に移動　16フレーム レール専用
-#define AC_RAIL_WALK_D_16F			0x9f ///<下に移動　16フレーム レール専用
-#define AC_RAIL_WALK_L_16F			0xa0 ///<左に移動　16フレーム レール専用
-#define AC_RAIL_WALK_R_16F			0xa1 ///<右に移動　16フレーム レール専用
-#define AC_RAIL_WALK_U_8F			0xa2 ///<上に移動　8フレーム レール専用
-#define AC_RAIL_WALK_D_8F			0xa3 ///<下に移動　8フレーム レール専用
-#define AC_RAIL_WALK_L_8F			0xa4 ///<左に移動　8フレーム レール専用
-#define AC_RAIL_WALK_R_8F			0xa5 ///<右に移動　8フレーム レール専用
-#define AC_RAIL_WALK_U_4F			0xa6 ///<上に移動　4フレーム レール専用
-#define AC_RAIL_WALK_D_4F			0xa7 ///<下に移動　4フレーム レール専用
-#define AC_RAIL_WALK_L_4F			0xa8 ///<左に移動　4フレーム レール専用
-#define AC_RAIL_WALK_R_4F			0xa9 ///<右に移動　4フレーム レール専用
-#define AC_RAIL_WALK_U_2F			0xaa ///<上に移動　2フレーム レール専用
-#define AC_RAIL_WALK_D_2F			0xab ///<下に移動　2フレーム レール専用
-#define AC_RAIL_WALK_L_2F			0xac ///<左に移動　2フレーム レール専用
-#define AC_RAIL_WALK_R_2F			0xad ///<右に移動　2フレーム レール専用
-#define AC_RAIL_DASH_U_4F			0xae ///<上方向に移動　4フレーム(自機専用 レール専用
-#define AC_RAIL_DASH_D_4F			0xaf ///<下方向に移動　4フレーム(自機専用 レール専用
-#define AC_RAIL_DASH_L_4F			0xb0 ///<左方向に移動　4フレーム(自機専用 レール専用
-#define AC_RAIL_DASH_R_4F			0xb1 ///<右方向に移動　4フレーム(自機専用 レール専用
-#define AC_RAIL_STAY_WALK_U_16F		0xb2 ///<上向きにその場歩き　16フレーム レール専用
-#define AC_RAIL_STAY_WALK_D_16F		0xb3 ///<下向きにその場歩き　16フレーム レール専用
-#define AC_RAIL_STAY_WALK_L_16F		0xb4 ///<左向きにその場歩き　16フレーム レール専用
-#define AC_RAIL_STAY_WALK_R_16F		0xb5 ///<右向きにその場歩き　16フレーム レール専用
-#define AC_RAIL_STAY_WALK_U_2F		0xb6 ///<上向きにその場歩き　2フレーム レール専用
-#define AC_RAIL_STAY_WALK_D_2F		0xb7 ///<下向きにその場歩き　2フレーム レール専用
-#define AC_RAIL_STAY_WALK_L_2F		0xb8 ///<左向きにその場歩き　2フレーム レール専用
-#define AC_RAIL_STAY_WALK_R_2F		0xb9 ///<右向きにその場歩き　2フレーム レール専用
-#define AC_HERO_ITEMGET     0xba ///<自機アイテムゲットアニメ
-
-#define ACMD_MAX				0xbb ///<アニメーションコマンド最大数
+#define ACMD_MAX				0x9b ///<アニメーションコマンド最大数
 #define ACMD_END				0xfe ///<アニメーションコマンド終了
 #define ACMD_NOT				0xff ///<非アニメーションコマンド
 

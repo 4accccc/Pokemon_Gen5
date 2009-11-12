@@ -251,6 +251,8 @@ extern int (* const DATA_AC_MarkGyoeTWait_Tbl[])( MMDL * );
 //--------------------------------------------------------------
 ///	AC_RAILŒn
 //--------------------------------------------------------------
+//DUMMY
+extern int (* const DATA_AC_RailDummy[])( MMDL * );
 // DIRŒn
 extern int (* const DATA_AC_RailDirU_Tbl[])( MMDL * );
 extern int (* const DATA_AC_RailDirD_Tbl[])( MMDL * );

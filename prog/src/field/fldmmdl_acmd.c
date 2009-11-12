@@ -584,7 +584,16 @@ BOOL MMDL_ActionLocalAcmd( MMDL * mmdl )
 //--------------------------------------------------------------
 static int mmdl_AcmdAction( MMDL * mmdl, int code, int seq )
 {
-	return( DATA_AcmdActionTbl[code][seq](mmdl) );
+  if( !MMDL_CheckStatusBit( mmdl, MMDL_STABIT_RAIL_MOVE ) )
+  {
+    // GRID用アクションコマンド
+  	return( DATA_AcmdActionTbl[code][seq](mmdl) );
+  }
+  else
+  {
+    // RAIL用アクションコマンド
+  	return( DATA_RailAcmdActionTbl[code][seq](mmdl) );
+  }
 }
 
 //======================================================================
