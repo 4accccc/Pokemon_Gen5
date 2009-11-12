@@ -21,7 +21,7 @@
 ///#include "script.h"     //for SCRIPT_CallScript
 ///#include "../../../resource/fldmapdata/script/c03gym0101_def.h"  //for SCRID_～
 
-///#include "../../../resource/fldmapdata/gimmick/gym_ground/gym_ground_local_def.cdat"
+#include "../../../resource/fldmapdata/gimmick/gym_ground/gym_ground_local_def.cdat"
 
 //#include "sound/pm_sndsys.h"
 
@@ -37,7 +37,9 @@
 #define FLOOR_RECT_NUM  (8)
 #define LIFT_ANM_NUM    (2)
 
-#define LIFT_MOVE_SPD (FIELD_CONST_GRID_SIZE*FX32_ONE)
+#define LIFT_MOVE_SPD (LIFT_MOVE_SPEED*FX32_ONE)
+
+#define SP_LIFT_IDX (5)
 
 //ジム内部中の一時ワーク
 typedef struct GYM_GROUND_TMP_tag
@@ -72,6 +74,7 @@ typedef struct LIFT_RECT_tag
 #define F4_HEIGHT (  0*FIELD_CONST_GRID_FX32_SIZE )
 
 #define WALL_HEIGHT ( 10*FIELD_CONST_GRID_FX32_SIZE )
+#define WALL_OPEN_HEIGHT ( 20*FIELD_CONST_GRID_FX32_SIZE )
 
 #define F1_1_X  (7)
 #define F1_1_Z  (19)
@@ -250,7 +253,7 @@ static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_splift[] = {
 
 //3Dアニメ　隔壁
 static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_wall[] = {
-	{ RES_ID_WALL_ANM,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_WALL_ANM,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
 };
 
 //3Dオブジェクト設定テーブル
@@ -335,6 +338,7 @@ static void SetupLiftAnm( GYM_GROUND_SV_WORK *gmk_sv_work,
                           FLD_EXP_OBJ_CNT_PTR ptr,
                           const int inLiftIdx);
 static int GetWatchLiftAnmIdx(GYM_GROUND_SV_WORK *gmk_sv_work, const int inLiftIdx);
+static void FuncMainLiftOnly(GAMESYS_WORK *gsys);
 
 //--------------------------------------------------------------
 /**
@@ -422,6 +426,8 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *fieldWork)
     int obj_idx = OBJ_LIFT_0;
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_GROUND_UNIT_IDX, obj_idx);
     status->trans = pos;
+    //カリングする
+    FLD_EXP_OBJ_SetCulling(ptr, GYM_GROUND_UNIT_IDX, obj_idx, TRUE);
     //1回再生設定
     anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, 0);
     FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
@@ -436,11 +442,23 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *fieldWork)
     int obj_idx = OBJ_WALL;
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_GROUND_UNIT_IDX, obj_idx);
     status->trans = wall_pos;
+    //カリングする
+    FLD_EXP_OBJ_SetCulling(ptr, GYM_GROUND_UNIT_IDX, obj_idx, TRUE);
+
+    //アニメ有効
+    FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_GROUND_UNIT_IDX, obj_idx, 0, TRUE);
+    
     //1回再生設定
     anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, 0);
     FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
     //アニメ停止
     FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+    //既に隔壁開いていたら、最終フレームをセット
+    if ( gmk_sv_work->WallOpen ){
+      fx32 last = FLD_EXP_OBJ_GetAnimeLastFrame(anm);
+      //ラストフレーム
+      FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_GROUND_UNIT_IDX, obj_idx, 0, last );
+    }
   }
   
   {
@@ -687,7 +705,8 @@ static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work )
       anm_idx = GetWatchLiftAnmIdx(gmk_sv_work, tmp->TargetLiftIdx);
       anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, anm_idx );
       //アニメ待ち
-      if ( FLD_EXP_OBJ_ChkAnmEnd(anm) ){
+      if ( FLD_EXP_OBJ_ChkAnmEnd(anm) )
+      {
         u8 idx;
         //対象リフトのギミックデータ書き換え
         if ( gmk_sv_work->LiftMoved[ tmp->TargetLiftIdx ] )
@@ -721,8 +740,11 @@ static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work )
         return GMEVENT_RES_FINISH;
       }
     }
-
   }
+
+  //メインリフトのときのみの処理
+  FuncMainLiftOnly( gsys );
+
   return GMEVENT_RES_CONTINUE;
 }
 
@@ -865,4 +887,33 @@ static int GetWatchLiftAnmIdx(GYM_GROUND_SV_WORK *gmk_sv_work, const int inLiftI
   }
 
   return valid_anm_idx;
+}
+
+static void FuncMainLiftOnly(GAMESYS_WORK *gsys)
+{
+  GYM_GROUND_SV_WORK *gmk_sv_work;
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  GYM_GROUND_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_GROUND_TMP_ASSIGN_ID);
+  {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_GROUND );
+  }
+
+  if (tmp->TargetLiftIdx != SP_LIFT_IDX) return;
+  
+  ;
+  //リフトの高さが隔壁オープン開始する高さに達したか？
+  if (!gmk_sv_work->WallOpen && tmp->NowHeight<=WALL_OPEN_HEIGHT){
+    EXP_OBJ_ANM_CNT_PTR anm;
+    int obj_idx = OBJ_WALL;
+    gmk_sv_work->WallOpen = TRUE;
+    {
+      //隔壁アニメーション開始
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, 0);
+      //アニメ開始
+      FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+    }
+  }
 }

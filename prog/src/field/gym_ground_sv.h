@@ -13,5 +13,6 @@
 typedef struct GYM_GROUND_SV_WORK_tag
 {
   BOOL LiftMoved[LIFT_NUM_MAX]; //リフトが基準位置から動いたか　FALSEで基準位置
+  BOOL WallOpen;
 }GYM_GROUND_SV_WORK;
 
