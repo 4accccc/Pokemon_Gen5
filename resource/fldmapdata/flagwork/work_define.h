@@ -143,7 +143,7 @@
 #define WK_SCENE_R05                     16531 /* 0x4093 ５番道路：イベント用ワーク */
 #define WK_SCENE_D01R0101_POKE           16532 /* 0x4094 廃墟：夢ポケモン探しイベント用ワーク */
 #define WK_SCENE_R03R0301                16533 /* 0x4095 R03R0301：R03から続くポケモン誘拐イベント */
-		/* not used 16534(0x4096) */
+#define WK_SCENE_D07R0101                16534 /* 0x4096 ネジ山：ヤーコンと遭遇イベント */
 		/* not used 16535(0x4097) */
 
 #define WK_SCENE_AREA_END                16687 /* 0x412f  */
