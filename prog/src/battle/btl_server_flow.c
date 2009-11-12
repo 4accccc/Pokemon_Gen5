@@ -773,8 +773,8 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk )
     if( action->change.depleteFlag ){ continue; }
 
     BTL_Printf("クライアント_%d の位置_%d へ、%d番目のポケを出す\n",
-          i, action->change.posIdx, action->change.memberIdx );
-    scproc_MemberIn( wk, i, action->change.posIdx, action->change.memberIdx, FALSE );
+          wk->actOrder[i].clientID, action->change.posIdx, action->change.memberIdx );
+    scproc_MemberIn( wk, wk->actOrder[i].clientID, action->change.posIdx, action->change.memberIdx, FALSE );
   }
 
   scproc_AfterMemberIn( wk );
@@ -2929,45 +2929,48 @@ static void correctTargetDead( BTL_SVFLOW_WORK* wk, BtlRule rule, const BTL_POKE
           nextTarget[i] = BTL_POKECON_GetFrontPokeData( wk->pokeCon, opPos );
           if( BPP_GetID(nextTarget[i]) == BPP_GetID(target) ){
             defTargetIdx = i;
+            BTL_Printf("狙おうとしたポケの位置Idx-%d\n", i);
           }
         }
         if( defTargetIdx != BTL_POSIDX_MAX )
         {
           // 元々の対象の隣にいる生存ポケをリストアップ
           u8 refIdx[ BTL_POSIDX_MAX ];
-          u8 nextTargetIdx;
           u8 refCnt=0;
           for(i=0; i<numFrontPos; ++i)
           {
             if( !BPP_IsDead(nextTarget[i]) && (BTL_CALC_ABS((int)i-(int)defTargetIdx)==1) ){
-              BTL_Printf("狙おうとしたポケの位置Idx-%d\n", i);
               refIdx[ refCnt++ ] = i;
             }
           }
-          // 候補が１体なら決定
-          if( refCnt == 1 )
+          // 候補が１体以上なら
+          if( refCnt >= 1 )
           {
-            nextTargetIdx = refIdx[0];
-          }
-          // 候補が２体（トリプルのみ）ならHPの少ない方
-          else
-          {
-            u16 hp[2];
-            for(i=0; i<2; ++i){
-              hp[i] = BPP_GetValue( nextTarget[refIdx[i]], BPP_HP );
-            }
-            if( hp[0] < hp[1] ){
+            u8 nextTargetIdx;
+
+            if( refCnt == 1 ){
               nextTargetIdx = refIdx[0];
-            }else if( hp[1] < hp[0] ){
-              nextTargetIdx = refIdx[1];
-            }else{
-              u8 rnd = GFL_STD_MtRand( 1 );
-              nextTargetIdx = refIdx[ rnd ];
             }
+            else
+            {
+            // 候補が２体（トリプルのみ）ならHPの少ない方
+              u16 hp[2];
+              for(i=0; i<2; ++i){
+                hp[i] = BPP_GetValue( nextTarget[refIdx[i]], BPP_HP );
+              }
+              if( hp[0] < hp[1] ){
+                nextTargetIdx = refIdx[0];
+              }else if( hp[1] < hp[0] ){
+                nextTargetIdx = refIdx[1];
+              }else{
+                u8 rnd = GFL_STD_MtRand( 1 );
+                nextTargetIdx = refIdx[ rnd ];
+              }
+            }
+            BTL_Printf("補正後の対象ポケモンは 位置idx-%d, ID=%d\n",
+              nextTargetIdx, BPP_GetID(nextTarget[nextTargetIdx]) );
+            TargetPokeRec_Add( rec, nextTarget[ nextTargetIdx ] );
           }
-          BTL_Printf("補正後の対象ポケモンは 位置idx-%d, ID=%d\n",
-            nextTargetIdx, BPP_GetID(nextTarget[nextTargetIdx]) );
-          TargetPokeRec_Add( rec, nextTarget[ nextTargetIdx ] );
         }
       }
     }
