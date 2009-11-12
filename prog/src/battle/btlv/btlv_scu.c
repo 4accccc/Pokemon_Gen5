@@ -418,7 +418,7 @@ void BTLV_SCU_StartBtlIn( BTLV_SCU* wk )
       BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_trainer_double );
     // 通信対戦
     }else{
-      BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_comm_triple );
+      BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_comm_double );
     }
     break;
   }
@@ -2723,5 +2723,25 @@ static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, u8 clientID, B
       bbgp->status[ i ] = BTLV_BALL_GAUGE_STATUS_NONE;
     }
   }
+}
+
+
+//=============================================================================================
+//  「通信待機中」表示オン・オフ
+//=============================================================================================
+void BTLV_SCU_StartCommWaitInfo( BTLV_SCU* wk )
+{
+  BTL_STR_GetUIString( wk->strBuf, BTLSTR_UI_COMM_WAIT );
+  BTLV_SCU_StartMsg( wk, wk->strBuf, 0 );
+}
+
+BOOL BTLV_SCU_WaitCommWaitInfo( BTLV_SCU* wk )
+{
+  return BTLV_SCU_WaitMsg( wk );
+}
+void BTLV_SCU_ClearCommWaitInfo( BTLV_SCU* wk )
+{
+//  GFL_BMP_Clear( wk->bmp, 0x0f );
+//  GFL_BMPWIN_TransVramCharacter( wk->win );
 }
 

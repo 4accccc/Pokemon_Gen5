@@ -72,13 +72,6 @@ extern BOOL BTLV_SCD_WaitWazaSelect( BTLV_SCD* wk );
 extern void BTLV_SCD_StartTargetSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest );
 extern BOOL BTLV_SCD_WaitTargetSelect( BTLV_SCD* wk );
 
-extern void BTLV_SCD_PokeSelect_Start( BTLV_SCD* wk, const BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result );
-extern BOOL BTLV_SCD_PokeSelect_Wait( BTLV_SCD* wk );
-
-extern void BTLV_SCD_StartCommWaitInfo( BTLV_SCD* wk );
-extern BOOL BTLV_SCD_WaitCommWaitInfo( BTLV_SCD* wk );
-extern void BTLV_SCD_ClearCommWaitInfo( BTLV_SCD* wk );
-
 extern BOOL BTLV_SCD_IsSelTargetDone( BTLV_SCD* wk );
 
 extern void BTLV_SCD_FadeOut( BTLV_SCD* wk );

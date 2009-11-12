@@ -531,7 +531,6 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BTL
   BTL_POKESELECT_RESULT_Init( result, param );
   wk->pokeselResult = result;
   wk->selectItemSeq = 0;
-//  BTLV_SCD_PokeSelect_Start( core->scrnD, param, result );
 }
 
 BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
@@ -1182,15 +1181,15 @@ void BTLV_StartRankDownEffect( BTLV_CORE* wk, u8 pokeID, BppValueID statusType )
 //=============================================================================================
 void BTLV_StartCommWait( BTLV_CORE* wk )
 {
-  BTLV_SCD_StartCommWaitInfo( wk->scrnD );
+  BTLV_SCU_StartCommWaitInfo( wk->scrnU );
 }
 BOOL BTLV_WaitCommWait( BTLV_CORE* wk )
 {
-  return BTLV_SCD_WaitCommWaitInfo( wk->scrnD );
+  return BTLV_SCU_WaitCommWaitInfo( wk->scrnU );
 }
 void BTLV_ResetCommWaitInfo( BTLV_CORE* wk )
 {
-  BTLV_SCD_ClearCommWaitInfo( wk->scrnD );
+  BTLV_SCU_ClearCommWaitInfo( wk->scrnU );
 }
 
 

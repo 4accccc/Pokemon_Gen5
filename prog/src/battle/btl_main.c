@@ -128,6 +128,7 @@ static BOOL setup_alone_triple( int* seq, void* work );
 static BOOL setup_alone_rotation( int* seq, void* work );
 static BOOL setup_comm_single( int* seq, void* work );
 static BOOL setup_comm_double( int* seq, void* work );
+static BOOL setup_comm_rotation( int* seq, void* work );
 static BOOL setup_comm_triple( int* seq, void* work );
 static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq );
 static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq );
@@ -347,6 +348,9 @@ static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_
       break;
     case BTL_RULE_TRIPLE:
       BTL_UTIL_SetupProc( bp, wk, setup_comm_triple, NULL );
+      break;
+    case BTL_RULE_ROTATION:
+      BTL_UTIL_SetupProc( bp, wk, setup_comm_rotation, NULL );
       break;
     default:
       GF_ASSERT(0);
@@ -809,6 +813,45 @@ static BOOL setup_comm_double( int* seq, void* work )
       wk->posCoverClientID[BTL_POS_1ST_1] = 2;
       wk->posCoverClientID[BTL_POS_2ND_1] = 3;
     }
+    (*seq)++;
+    return FALSE;
+  }
+  else if( (*seq) < NELEMS(funcs) ){
+    if( funcs[ *seq ]( wk, &wk->subSeq ) ){
+      wk->subSeq = 0;
+      ++(*seq);
+      BTL_Printf(" setupSeq ... %d\n", (*seq) );
+    }
+    return FALSE;
+  }
+  BTL_Printf(" setupSeq ... Done\n", (*seq) );
+  return TRUE;
+}
+//--------------------------------------------------------------------------
+/**
+ * 通信／ローテーション：セットアップ
+ */
+//--------------------------------------------------------------------------
+static BOOL setup_comm_rotation( int* seq, void* work )
+{
+  static const pSetupSeq funcs[] = {
+    NULL,
+    setupseq_comm_determine_server,
+    setupseq_comm_notify_party_data,
+    setupseq_comm_notify_player_data,
+    setupseq_comm_create_server_client_double,
+    setupseq_comm_start_server,
+  };
+
+  BTL_MAIN_MODULE* wk = work;
+
+  if( (*seq) == 0 )
+  {
+    wk->numClients = 2;
+    wk->posCoverClientID[BTL_POS_1ST_0] = 0;
+    wk->posCoverClientID[BTL_POS_2ND_0] = 1;
+    wk->posCoverClientID[BTL_POS_1ST_1] = 0;
+    wk->posCoverClientID[BTL_POS_2ND_1] = 1;
     (*seq)++;
     return FALSE;
   }

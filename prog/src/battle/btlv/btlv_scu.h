@@ -95,4 +95,9 @@ extern BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk );
 
 extern BOOL BTLV_SCU_IsJustDoneMsg( BTLV_SCU* wk );
 
+extern void BTLV_SCU_StartCommWaitInfo( BTLV_SCU* wk );
+extern BOOL BTLV_SCU_WaitCommWaitInfo( BTLV_SCU* wk );
+extern void BTLV_SCU_ClearCommWaitInfo( BTLV_SCU* wk );
+
+
 #endif
