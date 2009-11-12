@@ -38,6 +38,9 @@
 
 #include "title/title.h"
 
+// サウンド読み込みスレッド
+extern OSThread soundLoadThread;
+
 static	void	SkeltonHBlankFunc(void);
 static	void	SkeltonVBlankFunc(void);
 static	void	GameInit(void);
@@ -124,8 +127,16 @@ void NitroMain(void)
 		}
 		else{
 			MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);
+      if( OS_IsThreadTerminated( &soundLoadThread ) == FALSE )
+      { // サウンド読み込みスレッド休止
+        OS_SleepThreadDirect( &soundLoadThread, NULL );
+      }
 			OS_WaitIrq(TRUE, OS_IE_V_BLANK);
 			GameVBlankFunc();
+      if( OS_IsThreadTerminated( &soundLoadThread ) == FALSE )
+      { // サウンド読み込みスレッド起動
+        OS_WakeupThreadDirect( &soundLoadThread );
+      }
 			MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
 		}
 	}
