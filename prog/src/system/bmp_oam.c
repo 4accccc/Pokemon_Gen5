@@ -177,7 +177,7 @@ BMPOAM_ACT_PTR BmpOam_ActorAdd(BMPOAM_SYS_PTR bsp, const BMPOAM_ACT_DATA *head)
 	bact->draw_type = head->draw_type;
 	
 	//キャラ登録
-	hdl = GFL_ARC_OpenDataHandle(ARCID_BMPOAM, bsp->heap_id);
+	hdl = GFL_ARC_OpenDataHandle(ARCID_BMPOAM, GetHeapLowID(bsp->heap_id));
 	for(y = 0; y < num_y; y++){
 		for(x = 0; x < num_x; x++){
 			//共通セルリソース登録
@@ -406,10 +406,22 @@ static u32 _FOLocal_CellResourceSet(BMPOAM_SYS_PTR bsp, CLSYS_DRAW_TYPE draw_typ
 	if(bsp->cell_id[index] != DATAID_NULL){
 		return index;		//このマッピングモードのセルは既に登録済み
 	}
+
+  // TEST:
+  {
+    static int* p = NULL;
+    if( p == NULL ) GFL_HEAP_AllocMemory( bsp->heap_id, 20 );
+  }
 	
 	//セル＆セルアニメ
 	bsp->cell_id[index] = GFL_CLGRP_CELLANIM_Register(hdl, 
 		OamResourceTbl[index].ncer, OamResourceTbl[index].nanr, bsp->heap_id);
+
+  // TEST:
+  {
+    static int* p = NULL;
+    if( p == NULL ) GFL_HEAP_AllocMemory( bsp->heap_id, 20 );
+  }
 	return index;
 }
 
