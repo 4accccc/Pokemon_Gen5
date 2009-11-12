@@ -444,8 +444,7 @@ static BOOL SubProc_UI_SelectRotation( BTL_CLIENT* wk, int* seq )
     {
       BtlRotateDir  dir;
       if( BTLV_UI_SelectRotation_Wait(wk->viewCore, &dir) ){
-        // @todo ¡‚Í“K“–AI‚Æ“¯‚¶ƒ‹[ƒ`ƒ“‚ÅŒˆ’è
-        wk->prevRotateDir = _testAI_dir( wk->prevRotateDir );
+        wk->prevRotateDir = dir;
         wk->returnDataPtr = &wk->prevRotateDir;
         wk->returnDataSize = sizeof(wk->prevRotateDir);
         return TRUE;

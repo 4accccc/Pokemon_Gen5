@@ -5394,13 +5394,13 @@ static void getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_E
       {
         if( BPP_AddExp(bpp, &exp, &info) )
         {
-          BTL_Printf("レベルアップする経験値: exp=%d\n", exp);
+//          BTL_Printf("レベルアップする経験値: exp=%d\n", exp);
           SCQUE_PUT_ACT_AddExpLevelup( wk->que, pokeID,
             info.level, info.hp, info.atk, info.def, info.sp_atk, info.sp_def, info.agi );
         }
         else
         {
-          BTL_Printf("レベルアップしない経験値増: exp=%d\n", exp);
+//          BTL_Printf("レベルアップしない経験値増: exp=%d\n", exp);
           SCQUE_PUT_ACT_AddExp( wk->que, pokeID, exp );
           break;
         }
