@@ -36,6 +36,8 @@
 #define LIFT_ANM_NUM    (2)
 
 #define LIFT_MOVE_SPD (LIFT_MOVE_SPEED*FX32_ONE)
+#define SP_LIFT_MOVE_SPD1 (SP_LIFT_MOVE_SPEED1*FX32_ONE)
+#define SP_LIFT_MOVE_SPD2 (SP_LIFT_MOVE_SPEED2*FX32_ONE)
 
 #define SP_LIFT_IDX (5)
 
@@ -48,6 +50,8 @@ typedef struct GYM_GROUND_TMP_tag
   fx32 AddVal;
   const VecFx32 *Watch;
   BOOL Exit;
+  BOOL LiftMvStop;
+  int StopTime;
 }GYM_GROUND_TMP;
 
 typedef struct FLOOR_RECT_tag
@@ -75,7 +79,7 @@ typedef struct LIFT_RECT_tag
 #define F4_HEIGHT (  4*FIELD_CONST_GRID_FX32_SIZE )
 
 #define WALL_HEIGHT ( 10*FIELD_CONST_GRID_FX32_SIZE )
-#define WALL_OPEN_HEIGHT ( 20*FIELD_CONST_GRID_FX32_SIZE )
+#define WALL_OPEN_HEIGHT ( WALL_ANM_START_HEIHGT*FIELD_CONST_GRID_FX32_SIZE )
 
 #define F1_1_X  (7)
 #define F1_1_Z  (19)
@@ -572,6 +576,7 @@ void GYM_GROUND_Move(FIELDMAP_WORK *fieldWork)
 //--------------------------------------------------------------
 GMEVENT *GYM_GROUND_CreateLiftMoveEvt(GAMESYS_WORK *gsys, const int inLiftIdx)
 {
+  fx32 speed;
   GMEVENT * event;
   GYM_GROUND_TMP *tmp;
   GYM_GROUND_SV_WORK *gmk_sv_work;
@@ -602,8 +607,14 @@ GMEVENT *GYM_GROUND_CreateLiftMoveEvt(GAMESYS_WORK *gsys, const int inLiftIdx)
     tmp->NowHeight = LiftRect[inLiftIdx].Height[0];
     tmp->DstHeight = LiftRect[inLiftIdx].Height[1];
   }
-  if ( tmp->DstHeight - tmp->NowHeight < 0 ) tmp->AddVal = -LIFT_MOVE_SPD;
-  else tmp->AddVal = LIFT_MOVE_SPD;
+
+  if (inLiftIdx == SP_LIFT_IDX){
+    speed = SP_LIFT_MOVE_SPD1;
+  }else{
+    speed = LIFT_MOVE_SPD;
+  }
+  if ( tmp->DstHeight - tmp->NowHeight < 0 ) tmp->AddVal = -speed;
+  else tmp->AddVal = speed;
 
   //イベント作成
   event = GMEVENT_Create( gsys, NULL, UpDownEvt, 0 );
@@ -700,7 +711,9 @@ static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work )
     //NO BREAK
   case 2:
     //変動後の高さに書き換え
-    tmp->NowHeight += tmp->AddVal;
+    if (!tmp->LiftMvStop){
+      tmp->NowHeight += tmp->AddVal;
+    }
     //目的の高さに到達したか？
     if(  CheckArrive(tmp) )
     {
@@ -1087,6 +1100,19 @@ static void FuncMainLiftOnly(GAMESYS_WORK *gsys)
       anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, 0);
       //アニメ開始
       FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+    }
+    tmp->NowHeight = WALL_OPEN_HEIGHT;
+    tmp->LiftMvStop = TRUE;
+    tmp->StopTime = 0;
+  }
+
+  if ( tmp->LiftMvStop ){
+    //停止タイマーカウント
+    tmp->StopTime++;
+    if (tmp->StopTime >= WALL_ANM_WAIT)
+    {
+      tmp->AddVal = -SP_LIFT_MOVE_SPD2;   //スピード変更
+      tmp->LiftMvStop = FALSE;            //ストップ解除
     }
   }
 }
