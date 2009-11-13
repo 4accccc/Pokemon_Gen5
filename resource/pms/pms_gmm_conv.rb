@@ -29,15 +29,19 @@ DST_GMM_PATH = "../message/src/pms/abc/"
 # GMM s‘‚«‚İ
 #====================================================
 def make_row( gmm, data )
+  cnt  =0;
+  
   data.each{|i|
     #‹ó‚ğŒ©‚Â‚¯‚½‚ç”²‚¯‚é
     if(i == nil )
       break
     end
     
-    row_name = sprintf("search_abc_%02d",1)
+    row_name = sprintf("search_abc_%02d", cnt)
     row_data = i
     gmm.make_row_kanji( row_name, row_data, row_data )
+    
+    cnt += 1
   }
 end
 
@@ -103,7 +107,6 @@ def load_resource
         end
       elsif line.include?("u16 PMS_InitialTable_")
         #€–ÚŒŸõ
-        #puts line
         output_flag = 1
         row_idx = 0
       end
