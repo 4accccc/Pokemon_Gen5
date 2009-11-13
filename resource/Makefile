@@ -96,7 +96,8 @@ SUBDIRS	=	wmi \
 			trtype_bgm \
 			local_tvt \
             op_demo \
-			battle_recorder
+			battle_recorder \
+			multiboot
 
 include $(RESOURCE_MACRO)
 

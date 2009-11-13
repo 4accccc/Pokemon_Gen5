@@ -210,3 +210,4 @@
   ARCID_ISS_ZONE "iss_zone.narc" # ゾーンISSデータ
 	ARCID_BATTLE_RECORDER_GRA	"battle_recorder_gra.narc" #バトルレコーダーグラフィック
   ARCID_GYM_GROUND	"fieldmap/gym_ground.narc"	#地面ジム
+  ARCID_MB_PARENT	"mb_parent.narc"	#マルチブート親

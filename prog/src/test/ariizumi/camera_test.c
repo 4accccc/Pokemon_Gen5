@@ -398,7 +398,8 @@ static GFL_PROC_RESULT CAM_TEST_ExitProc(GFL_PROC * proc, int * seq, void * pwk,
 //  GFL_HEAP_FreeMemory( work->capBuff[1] );
   GFL_PROC_FreeWork( proc );
 
-  MI_FreeWram( MI_WRAM_A , MI_WRAM_SIZE_256KB );
+  MI_FreeWram( MI_WRAM_B , MI_WRAM_SIZE_256KB );
+  MI_FreeWram( MI_WRAM_C , MI_WRAM_SIZE_256KB );
 
   camWork = NULL;
   GFL_HEAP_DeleteHeap( HEAPID_ARIIZUMI_DEBUG );

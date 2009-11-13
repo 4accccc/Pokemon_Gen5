@@ -267,6 +267,7 @@ void DLPlayFunc_ClearString( DLPLAY_MSG_SYS *msgSys )
 //======================================================================
 void DLPlayFunc_DispMsgID( u16 msgID , DLPLAY_MSG_SYS *msgSys )
 {
+  /*
 	//•¶Žš—ñŽæ“¾—p
 	STRBUF *strTemp;
 	
@@ -278,6 +279,7 @@ void DLPlayFunc_DispMsgID( u16 msgID , DLPLAY_MSG_SYS *msgSys )
 	PRINT_UTIL_Print( msgSys->printUtil_ , msgSys->printQue_ ,
 				0 , 0 , (void*)strTemp , msgSys->fontHandle_ );
 	GFL_STR_DeleteBuffer( strTemp );
+	*/
 }
 
 void DLPlayFunc_UpdateFont( DLPLAY_MSG_SYS *msgSys )

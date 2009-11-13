@@ -777,15 +777,17 @@ SRCS_OVERLAY_IRC_RESULT	= net_app/irc_result/irc_result.c
 #===> SRCS_OVERLAY_IRC_COMPATIBLE
 SRCS_OVERLAY_IRC_RANKING	= net_app/irc_ranking/irc_ranking.c
 
-#ダウンロードプレイ  DP/PL/GS吸い上げ
+#マルチブート  DP/PL/GS吸い上げ
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
-SRCS_OVERLAY_DOWNLOAD_PLAY = test/dlplay/dlplay_parent_sample.c \
+SRCS_OVERLAY_MULTIBOOT = test/dlplay/dlplay_parent_sample.c \
         test/dlplay/dlplay_parent_main.c \
         test/dlplay/dlplay_func.c \
-        test/dlplay/mbp.c \
         test/dlplay/dlplay_comm_func.c \
-        test/dlplay/dlplay_disp_sys.c
+        test/dlplay/dlplay_disp_sys.c \
+		multiboot/parent/mb_parent_sys.c \
+        multiboot/comm/mbp.c \
+        multiboot/comm/mb_comm_sys.c 
 
 # 大野デバッグ
 #===> SRCS_OVERLAY_DEV_IRC

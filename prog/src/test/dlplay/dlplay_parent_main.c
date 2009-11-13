@@ -11,7 +11,7 @@
 #include "ui.h"
 #include "system/main.h"
 #include "arc_def.h"
-#include "mbp.h"
+#include "multiboot/comm/mbp.h"
 
 #include "test/ariizumi/ari_debug.h"
 #include "dlplay_parent_sample.h"

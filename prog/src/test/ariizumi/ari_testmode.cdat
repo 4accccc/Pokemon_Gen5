@@ -78,6 +78,7 @@ static BOOL TESTMODE_ITEM_SelectFuncShot( TESTMODE_WORK *work , const int idx )
 #include "app/p_status.h"
 #include "app/local_tvt_sys.h"
 #include "test/ariizumi/musical_editor.h"
+#include "multiboot/mb_parent_sys.h"
 FS_EXTERN_OVERLAY(pmsinput);
 FS_EXTERN_OVERLAY(pokelist);
 FS_EXTERN_OVERLAY(poke_status);
@@ -97,6 +98,7 @@ FS_EXTERN_OVERLAY(camera_test);
 static BOOL TESTMODE_ITEM_SelectDebCameraTest( TESTMODE_WORK *work , const int idx );
 #endif
 static BOOL TESTMODE_ITEM_SelectDebLocalTvt( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectDebMultiBoot( TESTMODE_WORK *work , const int idx );
 
 static TESTMODE_MENU_LIST menuAriizumi[] = 
 {
@@ -113,6 +115,7 @@ static TESTMODE_MENU_LIST menuAriizumi[] =
 	{L"カメラテスト"			,TESTMODE_ITEM_SelectDebCameraTest },
 #endif
 	{L"LocalTVT"			,TESTMODE_ITEM_SelectDebLocalTvt },
+	{L"マルチブート"	,TESTMODE_ITEM_SelectDebMultiBoot },
 	
 	{L"もどる"				,TESTMODE_ITEM_BackTopMenu },
 };
@@ -173,5 +176,11 @@ static BOOL TESTMODE_ITEM_SelectDebCameraTest( TESTMODE_WORK *work , const int i
 static BOOL TESTMODE_ITEM_SelectDebLocalTvt( TESTMODE_WORK *work , const int idx )
 {
   TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(local_tvt), &LocalTvt_ProcData, NULL);
+  return TRUE;
+}
+
+static BOOL TESTMODE_ITEM_SelectDebMultiBoot( TESTMODE_WORK *work , const int idx )
+{
+  TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(multiboot), &MultiBoot_ProcData, NULL);
   return TRUE;
 }
