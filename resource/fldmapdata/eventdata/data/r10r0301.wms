@@ -1,7 +1,7 @@
 #WorldMap SaveData 
-#save date:2009/10/24 17:56:08
+#save date:2009/11/13 19:00:46
 #Width
-2
+1
 #Height
 1
 #block x offset
@@ -10,7 +10,6 @@
 0
 #3dp file names
 C:\home\wb_data3d\field\out40\bcgata03_00_00.3dp
-C:\home\wb_data3d\field\out40\bcgata03_01_00.3dp
 #block size
 32 32
 #End of WorldMap SaveData
