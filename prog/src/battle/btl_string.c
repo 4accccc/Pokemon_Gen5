@@ -620,6 +620,7 @@ static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
             WORDSET_RegisterPokeTypeName( wset, bufIdx, args[argIdx] );
             break;
           case TAGIDX_TOKUSEI_NAME:
+            BTL_Printf("[TAG] Set TokuseiName ... tokusei=%d\n", args[argIdx] );
             WORDSET_RegisterTokuseiName( wset, bufIdx, args[argIdx] );
             break;
           case TAGIDX_WAZA_NAME:

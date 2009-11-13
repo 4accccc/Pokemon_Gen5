@@ -2523,12 +2523,12 @@ static BOOL scProc_ACT_TraceTokusei( BTL_CLIENT* wk, int* seq, const int* args )
   switch( *seq ){
   case 0:
     {
-      BTLV_StartTokWin( wk->viewCore, pos );
+      BTLV_TokWin_DispStart( wk->viewCore, pos );
       (*seq)++;
     }
     break;
   case 1:
-    if( BTLV_StartTokWinWait( wk->viewCore, pos ) )
+    if( BTLV_TokWin_DispWait( wk->viewCore, pos ) )
     {
       BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
       BPP_ChangeTokusei( bpp, args[2] );
@@ -2567,8 +2567,16 @@ static BOOL scProc_ACT_TraceTokusei( BTL_CLIENT* wk, int* seq, const int* args )
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
-  BTLV_StartTokWin( wk->viewCore, pos );
-  return TRUE;
+  switch( *seq ){
+  case 0:
+    BTLV_TokWin_DispStart( wk->viewCore, pos );
+    (*seq)++;
+    break;
+
+  case 1:
+    return BTLV_TokWin_DispWait( wk->viewCore, pos );
+  }
+  return FALSE;
 }
 //---------------------------------------------------------------------------------------
 /**

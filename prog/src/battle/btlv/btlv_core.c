@@ -1121,11 +1121,11 @@ BOOL BTLV_IsJustDoneMsg( BTLV_CORE* wk )
  *
  */
 //=============================================================================================
-void BTLV_StartTokWin( BTLV_CORE* wk, BtlPokePos pos )
+void BTLV_TokWin_DispStart( BTLV_CORE* wk, BtlPokePos pos )
 {
   BTLV_SCU_TokWin_DispStart( wk->scrnU, pos );
 }
-BOOL BTLV_StartTokWinWait( BTLV_CORE* wk, BtlPokePos pos )
+BOOL BTLV_TokWin_DispWait( BTLV_CORE* wk, BtlPokePos pos )
 {
   return BTLV_SCU_TokWin_DispWait( wk->scrnU, pos );
 }

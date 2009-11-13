@@ -207,8 +207,8 @@ extern void BTLV_ACT_SimpleHPEffect_Start( BTLV_CORE* wk, BtlPokePos pokePos );
 extern BOOL BTLV_ACT_SimpleHPEffect_Wait( BTLV_CORE* wk );
 
 
-extern void BTLV_StartTokWin( BTLV_CORE* wk, BtlPokePos pos );
-extern BOOL BTLV_StartTokWinWait( BTLV_CORE* wk, BtlPokePos pos );
+extern void BTLV_TokWin_DispStart( BTLV_CORE* wk, BtlPokePos pos );
+extern BOOL BTLV_TokWin_DispWait( BTLV_CORE* wk, BtlPokePos pos );
 extern void BTLV_QuitTokWin( BTLV_CORE* wk, BtlPokePos pos );
 extern BOOL BTLV_QuitTokWinWait( BTLV_CORE* wk, BtlPokePos pos );
 extern void BTLV_TokWin_Renew_Start( BTLV_CORE* wk, BtlPokePos pos );
