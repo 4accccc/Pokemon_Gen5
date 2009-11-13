@@ -169,7 +169,6 @@ SRCS  +=    $(SOUNDSRC) \
         field/scrcmd_battle.c \
         field/scrcmd_pokemon.c \
         field/scrcmd_player.c \
-        field/scrcmd_sodateya.c \
         field/scrcmd_proc.c \
         test/matsuda/wflby_debug.c \
         test/ariizumi/debug_pause.c \
@@ -215,7 +214,6 @@ SRCS  +=    $(SOUNDSRC) \
 	app/waza_oshie/waza_oshie.c \
         field/scrcmd_network.c \
 				system/shortcut_data.c \
-        field/scrcmd_camera.c \
         app/bag/bag_param.c\
         field/event_poke_status.c \
         system/screentex.c \
@@ -418,6 +416,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_proc_fld.c \
         field/scrcmd_intrude.c \
         field/scrcmd_encount.c \
+        field/scrcmd_camera.c \
+        field/scrcmd_sodateya.c \
 				field/rail_editor.c \
         field/field_rail.c \
         field/field_rail_func.c \
