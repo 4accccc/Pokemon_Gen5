@@ -147,8 +147,8 @@
 #define FE_C03GYM_TRBTL2                   131 /* 0x0083 C03虫ジムトレーナーの対戦済みチェックフラグ（左下） */
 #define FE_R01_BABYGIRL_01                 132 /* 0x0084 R01：BABYGIRLきずぐすり入手フラグ */
 #define FE_R07_FIGHTREW_01                 133 /* 0x0085 R07：FIGHTREWわざマシン入手フラグ */
-		/* not used   134(0x0086) */
-		/* not used   135(0x0087) */
+#define FE_C07R0301_IKARI                  134 /* 0x0086 セッカシティ：R0301民家でイカリまんじゅう入手フラグ */
+#define FE_C07PC0101_ITEM_01               135 /* 0x0087 セッカシティ：ポケモンセンターでアイテム入手フラグ */
 		/* not used   136(0x0088) */
 		/* not used   137(0x0089) */
 		/* not used   138(0x008a) */
