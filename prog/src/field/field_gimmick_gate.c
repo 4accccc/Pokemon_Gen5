@@ -118,16 +118,19 @@ typedef enum
 {
   RES_ELBOARD_NSBMD,    // 掲示板のモデル
   RES_ELBOARD_NSBTX,    // 掲示板のテクスチャ
-  RES_ELBOARD_NSBTA_1,  // スクロールアニメーション1
-  RES_ELBOARD_NSBTA_2,  // スクロールアニメーション2
-  RES_ELBOARD_NSBTA_3,  // スクロールアニメーション3
-  RES_ELBOARD_NSBTA_4,  // スクロールアニメーション4
-  RES_ELBOARD_NSBTA_5,  // スクロールアニメーション5
-  RES_ELBOARD_NSBTA_6,  // スクロールアニメーション6
-  RES_ELBOARD_NSBTA_7,  // スクロールアニメーション7
+  RES_ELBOARD_NSBTA_1,  // ニュース・スクロール・アニメーション1
+  RES_ELBOARD_NSBTA_2,  // ニュース・スクロール・アニメーション2
+  RES_ELBOARD_NSBTA_3,  // ニュース・スクロール・アニメーション3
+  RES_ELBOARD_NSBTA_4,  // ニュース・スクロール・アニメーション4
+  RES_ELBOARD_NSBTA_5,  // ニュース・スクロール・アニメーション5
+  RES_ELBOARD_NSBTA_6,  // ニュース・スクロール・アニメーション6
+  RES_ELBOARD_NSBTA_7,  // ニュース・スクロール・アニメーション7
+  RES_MONITOR_NSBTP_1,  // モニター・テクスチャパターン・アニメーション1
+  RES_MONITOR_NSBTP_2,  // モニター・テクスチャパターン・アニメーション2
+  RES_MONITOR_NSBTP_3,  // モニター・テクスチャパターン・アニメーション3
   RES_NUM
 } RES_INDEX;
-static const GFL_G3D_UTIL_RES res_table[] = 
+static const GFL_G3D_UTIL_RES res_table[RES_NUM] = 
 {
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_nsbtx, GFL_G3D_UTIL_RESARC },
@@ -138,21 +141,27 @@ static const GFL_G3D_UTIL_RES res_table[] =
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_5_nsbta, GFL_G3D_UTIL_RESARC },
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_6_nsbta, GFL_G3D_UTIL_RESARC },
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_7_nsbta, GFL_G3D_UTIL_RESARC },
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv01_nsbtp, GFL_G3D_UTIL_RESARC },
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv02_nsbtp, GFL_G3D_UTIL_RESARC },
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv03_nsbtp, GFL_G3D_UTIL_RESARC },
 };
 
 // アニメインデックス
 typedef enum
 {
-  ANM_ELBOARD_DATE,         // 日付
-  ANM_ELBOARD_WEATHER,      // 天気
-  ANM_ELBOARD_PROPAGATION,  // 大量発生
-  ANM_ELBOARD_INFO_A,       // 情報A
-  ANM_ELBOARD_INFO_B,       // 情報B
-  ANM_ELBOARD_INFO_C,       // 情報C
-  ANM_ELBOARD_CM,           // 一言CM
+  ANM_ELBOARD_DATE,         // 掲示板ニュース・スクロール・日付
+  ANM_ELBOARD_WEATHER,      // 掲示板ニュース・スクロール・天気
+  ANM_ELBOARD_PROPAGATION,  // 掲示板ニュース・スクロール・大量発生
+  ANM_ELBOARD_INFO_A,       // 掲示板ニュース・スクロール・情報A
+  ANM_ELBOARD_INFO_B,       // 掲示板ニュース・スクロール・情報B
+  ANM_ELBOARD_INFO_C,       // 掲示板ニュース・スクロール・情報C
+  ANM_ELBOARD_CM,           // 掲示板ニュース・スクロール・一言CM
+  ANM_MONITOR_1,            // モニター・テクスチャ・アニメーション1
+  ANM_MONITOR_2,            // モニター・テクスチャ・アニメーション2
+  ANM_MONITOR_3,            // モニター・テクスチャ・アニメーション3
   ANM_NUM
 } ANM_INDEX;
-static const GFL_G3D_UTIL_ANM anm_table[] = 
+static const GFL_G3D_UTIL_ANM anm_table[ANM_NUM] = 
 {
   // アニメリソースID, アニメデータID(リソース内部INDEX)
   { RES_ELBOARD_NSBTA_1, 0 },
@@ -162,6 +171,9 @@ static const GFL_G3D_UTIL_ANM anm_table[] =
   { RES_ELBOARD_NSBTA_5, 0 },
   { RES_ELBOARD_NSBTA_6, 0 },
   { RES_ELBOARD_NSBTA_7, 0 },
+  { RES_MONITOR_NSBTP_1, 0 },
+  { RES_MONITOR_NSBTP_2, 0 },
+  { RES_MONITOR_NSBTP_3, 0 },
 };
 
 // オブジェクトインデックス
@@ -170,7 +182,7 @@ typedef enum
   OBJ_ELBOARD,  // 電光掲示板
   OBJ_NUM
 } OBJ_INDEX;
-static const GFL_G3D_UTIL_OBJ obj_table[] = 
+static const GFL_G3D_UTIL_OBJ obj_table[OBJ_NUM] = 
 {
   // モデルリソースID, 
   // モデルデータID(リソース内部INDEX), 
@@ -183,7 +195,7 @@ static const GFL_G3D_UTIL_OBJ obj_table[] =
 // ユニットインデックス
 typedef enum
 {
-  UNIT_ELBOARD, // 電光掲示板
+  UNIT_ELBOARD, // 電光掲示板 + モニター
   UNIT_NUM
 } UNIT_INDEX;
 static const GFL_G3D_UTIL_SETUP unit[UNIT_NUM] =
@@ -243,13 +255,34 @@ u32 str_id_weather[WEATHER_NO_NUM] =
 
 
 //==========================================================================================
+// ■モニターパラメータ
+//==========================================================================================
+// アニメーション番号
+typedef enum {
+  MONITOR_ANIME_1,
+  MONITOR_ANIME_2,
+  MONITOR_ANIME_3,
+  MONITOR_ANIME_NUM,
+  MONITOR_ANIME_MAX = MONITOR_ANIME_NUM - 1
+} MONITOR_ANIME_INDEX;
+
+// 実アニメーション番号
+static u16 monitor_anime[MONITOR_ANIME_NUM] = 
+{ 
+  ANM_MONITOR_1,
+  ANM_MONITOR_2,
+  ANM_MONITOR_3,
+};
+
+
+//==========================================================================================
 // ■ギミックワーク
 //==========================================================================================
 typedef struct
 { 
-  HEAPID        heapID;   // 使用するヒープID
+  HEAPID         heapID;  // 使用するヒープID
   GOBJ_ELBOARD* elboard;  // 電光掲示板管理オブジェクト
-  u32 recoveryFrame;  // 復帰フレーム
+  u32     recoveryFrame;  // 復帰フレーム
 } GATEWORK;
 
 
@@ -294,10 +327,7 @@ void GATE_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   work = CreateGateWork( fieldmap );
 
   // ギミックのセーブデータを読み込む
-  GimmickLoad( work, fieldmap );
-
-  // TEMP: 通常ニュースを放送
-  //GATE_GIMMICK_Elboard_SetupNormalNews( fieldmap );
+  GimmickLoad( work, fieldmap ); 
 }
 
 //------------------------------------------------------------------------------------------
@@ -344,6 +374,12 @@ void GATE_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
 
   // 電光掲示板メイン処理
   GOBJ_ELBOARD_Main( work->elboard, FX32_ONE ); 
+
+  // モニターアニメーション再生
+  {
+    FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
+    FLD_EXP_OBJ_PlayAnime( exobj_cnt );
+  }
 }
 
 
@@ -569,6 +605,10 @@ static GATEWORK* CreateGateWork( FIELDMAP_WORK* fieldmap )
     param.g3dObj       = FLD_EXP_OBJ_GetUnitObj( exobj_cnt, EXPOBJ_UNIT_ELBOARD, OBJ_ELBOARD );
     work->elboard      = GOBJ_ELBOARD_Create( &param );
   } 
+
+  // モニター・アニメーション開始
+  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, EXPOBJ_UNIT_ELBOARD, OBJ_ELBOARD, 
+                           monitor_anime[elboard_data.monitorAnimeIndex], TRUE ); 
 
   // ヒープIDを記憶
   work->heapID = heap_id;

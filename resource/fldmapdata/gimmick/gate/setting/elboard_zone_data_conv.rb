@@ -128,6 +128,7 @@ ROW_WEATHER_ZONE_1     = 24  # 天気を表示する場所1
 ROW_WEATHER_ZONE_2     = 25  # 天気を表示する場所2
 ROW_WEATHER_ZONE_3     = 26  # 天気を表示する場所3
 ROW_WEATHER_ZONE_4     = 27  # 天気を表示する場所4
+ROW_MONITOR_ANIME_NO   = 28  # モニター・アニメーション番号
                      
 # 出力ファイル名のリスト
 bin_file_list = Array.new
@@ -171,6 +172,7 @@ file.close
   out_data << GetZoneID("ZONE_ID_"+in_data[ROW_WEATHER_ZONE_2])
   out_data << GetZoneID("ZONE_ID_"+in_data[ROW_WEATHER_ZONE_3])
   out_data << GetZoneID("ZONE_ID_"+in_data[ROW_WEATHER_ZONE_4])
+  out_data << in_data[ROW_MONITOR_ANIME_NO].to_i
   # バイナリデータを出力
   filename = ARGV[1] + "/elboard_zone_data_" + in_data[ROW_ZONE_ID].downcase + ".bin"
   file = File.open( filename, "wb" )

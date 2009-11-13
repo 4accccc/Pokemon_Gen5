@@ -49,6 +49,7 @@ typedef struct
   u32 zoneID_weather_2;   // 天気を表示するゾーン
   u32 zoneID_weather_3;   // 天気を表示するゾーン
   u32 zoneID_weather_4;   // 天気を表示するゾーン
+  u32 monitorAnimeIndex;  // モニター・アニメーション番号
 
 } ELBOARD_ZONE_DATA;
 
