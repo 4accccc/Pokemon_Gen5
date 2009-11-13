@@ -1376,6 +1376,97 @@ u32 PRINTSYS_GetStrWidth( const STRBUF* str, GFL_FONT* font, u16 margin )
 
   return max;
 }
+//=============================================================================================
+/**
+ * 文字列をBitmap表示する際の幅（ドット数）を計算
+ * ※文字列が複数行ある場合、行ごとの幅を取得できる
+ *
+ * @param   str       文字列
+ * @param   font      フォントハンドル
+ * @param   margin    字間スペース（ドット）
+ * @param   dst       行ごとの幅を取得するための配列
+ * @param   dstElems  dst の配列要素数（これを越えないように書き込みます）
+ *
+ * @retval  u32       dst に格納した件数（最大でも dstElemsを越えない）
+ */
+//=============================================================================================
+u32 PRINTSYS_GetStrLineWidth( const STRBUF* str, GFL_FONT* font, u16 margin, u32* dst, u32 dstElems )
+{
+  const STRCODE* sp;
+  u32 cnt;
+
+  sp = GFL_STR_GetStringCodePointer( str );
+  cnt = 0;
+  while( cnt < dstElems )
+  {
+    while( *sp != EOM_CODE )
+    {
+      dst[cnt++] = get_line_width( sp, font, margin, &sp );
+      if( cnt >= dstElems ){
+        break;
+      }
+    }
+  }
+  return cnt;
+}
+
+//=============================================================================================
+/**
+ * 複数行ある文字列から指定行の文字列のみを取り出す
+ * ※ローカライズ注意！　使用は許可制です。※
+ *
+ * @param   src     読み取り元の文字列
+ * @param   dst     読み取り先バッファ
+ * @param   line    行番号（0～）
+ *
+ * @retval  BOOL    指定 line が大きすぎて読み取れない場合FALSE／それ以外はTRUE
+ */
+//=============================================================================================
+BOOL PRINTSYS_CopyLineStr( const STRBUF* src, STRBUF* dst, u32 line )
+{
+  const STRCODE* sp = GFL_STR_GetStringCodePointer( src );
+
+  while( line )
+  {
+    while( *sp != EOM_CODE && *sp != CR_CODE )
+    {
+      if( *sp != SPCODE_TAG_START_ ){
+        ++sp;
+      }else{
+        sp = STR_TOOL_SkipTag( sp );
+      }
+    }
+    --line;
+    if( *sp == EOM_CODE ){
+      break;
+    }
+    else{
+      ++sp;
+    }
+  }
+
+  if( line == 0 && *sp != EOM_CODE)
+  {
+    while( *sp != EOM_CODE && *sp != CR_CODE )
+    {
+      if( *sp != SPCODE_TAG_START_ )
+      {
+        GFL_STR_AddCode( dst, *sp++ );
+      }
+      else
+      {
+        const STRCODE* next = STR_TOOL_SkipTag( sp );
+        while( sp < next ){
+          GFL_STR_AddCode( dst, *sp++ );
+        }
+      }
+    }
+    GFL_STR_AddCode( dst, EOM_CODE );
+    return TRUE;
+  }
+
+  return FALSE;
+}
 
 //=============================================================================================
 /**
@@ -1455,7 +1546,7 @@ u16 PRINTSYS_GetTagCount( const STRBUF* str )
  * @param   tag_id  タグインデックス（バッファ番号）
  *
  * @retval  u8      行数
- * 
+ *
  * @note  add by genya hosaka
  */
 //=============================================================================================
@@ -1465,7 +1556,7 @@ u8 PRINTSYS_GetTagLine( const STRBUF* str, u8 tag_id )
   u16 line = 0;
 
   sp = GFL_STR_GetStringCodePointer( str );
-  
+
 #if 0
   HOSAKA_Printf("================\n");
   // 一端全てプリント
@@ -1476,9 +1567,9 @@ u8 PRINTSYS_GetTagLine( const STRBUF* str, u8 tag_id )
   }
   HOSAKA_Printf("================\n");
 #endif
-  
+
   sp = GFL_STR_GetStringCodePointer( str );
-  
+
   while( *sp != EOM_CODE )
   {
 //  HOSAKA_Printf("tag_id=%d sp=%x \n", tag_id, *sp);
@@ -1488,7 +1579,7 @@ u8 PRINTSYS_GetTagLine( const STRBUF* str, u8 tag_id )
     {
       line++;
     }
-    
+
     // タグ検出
     if( *sp == SPCODE_TAG_START_ )
     {
@@ -1525,7 +1616,7 @@ u8 PRINTSYS_GetTagLine( const STRBUF* str, u8 tag_id )
  * @param   margin  字間スペース（ドット）
  *
  * @retval  u8      X座標（ドット）
- * 
+ *
  * @note  add by genya hosaka
  */
 //=============================================================================================
