@@ -2411,90 +2411,90 @@ $(DIR_TEMP)/h03_a01_05.nsbmd: $(DIR_RES)/h03_a01_05.imd
 	@$(G3DCVTR) $(DIR_RES)/h03_a01_05.imd -o $(DIR_TEMP)/h03_a01_05.nsbmd
 
 #h04_a00_00
-$(DIR_OUTPUT)/h04_a00_00.3dppack: $(DIR_TEMP)/h04_a00_00.nsbmd $(DIR_RES)/h04_a00_00.bin $(DIR_RES)/h04_a00_00.3dmd
+$(DIR_OUTPUT)/h04_a00_00.3dppack: $(DIR_TEMP)/h04_a00_00.nsbmd $(DIR_RES)/h04_a00_00.bin $(DIR_RES)/h04_a00_00_ex.bin $(DIR_RES)/h04_a00_00.3dmd
 	@echo create 3dppack h04_a00_00
-	@$(BINLINKER) $(DIR_TEMP)/h04_a00_00.nsbmd $(DIR_RES)/h04_a00_00.bin $(DIR_RES)/h04_a00_00.3dmd $(DIR_OUTPUT)/h04_a00_00.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/h04_a00_00.nsbmd $(DIR_RES)/h04_a00_00.bin $(DIR_RES)/h04_a00_00_ex.bin $(DIR_RES)/h04_a00_00.3dmd $(DIR_OUTPUT)/h04_a00_00.3dppack GC
 
 $(DIR_TEMP)/h04_a00_00.nsbmd: $(DIR_RES)/h04_a00_00.imd
 	@echo create_nsbmd h04_a00_00
 	@$(G3DCVTR) $(DIR_RES)/h04_a00_00.imd -o $(DIR_TEMP)/h04_a00_00.nsbmd
 
 #h04_a01_00
-$(DIR_OUTPUT)/h04_a01_00.3dppack: $(DIR_TEMP)/h04_a01_00.nsbmd $(DIR_RES)/h04_a01_00.bin $(DIR_RES)/h04_a01_00.3dmd
+$(DIR_OUTPUT)/h04_a01_00.3dppack: $(DIR_TEMP)/h04_a01_00.nsbmd $(DIR_RES)/h04_a01_00.bin $(DIR_RES)/h04_a01_00_ex.bin $(DIR_RES)/h04_a01_00.3dmd
 	@echo create 3dppack h04_a01_00
-	@$(BINLINKER) $(DIR_TEMP)/h04_a01_00.nsbmd $(DIR_RES)/h04_a01_00.bin $(DIR_RES)/h04_a01_00.3dmd $(DIR_OUTPUT)/h04_a01_00.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/h04_a01_00.nsbmd $(DIR_RES)/h04_a01_00.bin $(DIR_RES)/h04_a01_00_ex.bin $(DIR_RES)/h04_a01_00.3dmd $(DIR_OUTPUT)/h04_a01_00.3dppack GC
 
 $(DIR_TEMP)/h04_a01_00.nsbmd: $(DIR_RES)/h04_a01_00.imd
 	@echo create_nsbmd h04_a01_00
 	@$(G3DCVTR) $(DIR_RES)/h04_a01_00.imd -o $(DIR_TEMP)/h04_a01_00.nsbmd
 
 #h04_a02_00
-$(DIR_OUTPUT)/h04_a02_00.3dppack: $(DIR_TEMP)/h04_a02_00.nsbmd $(DIR_RES)/h04_a02_00.bin $(DIR_RES)/h04_a02_00.3dmd
+$(DIR_OUTPUT)/h04_a02_00.3dppack: $(DIR_TEMP)/h04_a02_00.nsbmd $(DIR_RES)/h04_a02_00.bin $(DIR_RES)/h04_a02_00_ex.bin $(DIR_RES)/h04_a02_00.3dmd
 	@echo create 3dppack h04_a02_00
-	@$(BINLINKER) $(DIR_TEMP)/h04_a02_00.nsbmd $(DIR_RES)/h04_a02_00.bin $(DIR_RES)/h04_a02_00.3dmd $(DIR_OUTPUT)/h04_a02_00.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/h04_a02_00.nsbmd $(DIR_RES)/h04_a02_00.bin $(DIR_RES)/h04_a02_00_ex.bin $(DIR_RES)/h04_a02_00.3dmd $(DIR_OUTPUT)/h04_a02_00.3dppack GC
 
 $(DIR_TEMP)/h04_a02_00.nsbmd: $(DIR_RES)/h04_a02_00.imd
 	@echo create_nsbmd h04_a02_00
 	@$(G3DCVTR) $(DIR_RES)/h04_a02_00.imd -o $(DIR_TEMP)/h04_a02_00.nsbmd
 
 #h04_a03_00
-$(DIR_OUTPUT)/h04_a03_00.3dppack: $(DIR_TEMP)/h04_a03_00.nsbmd $(DIR_RES)/h04_a03_00.bin $(DIR_RES)/h04_a03_00.3dmd
+$(DIR_OUTPUT)/h04_a03_00.3dppack: $(DIR_TEMP)/h04_a03_00.nsbmd $(DIR_RES)/h04_a03_00.bin $(DIR_RES)/h04_a03_00_ex.bin $(DIR_RES)/h04_a03_00.3dmd
 	@echo create 3dppack h04_a03_00
-	@$(BINLINKER) $(DIR_TEMP)/h04_a03_00.nsbmd $(DIR_RES)/h04_a03_00.bin $(DIR_RES)/h04_a03_00.3dmd $(DIR_OUTPUT)/h04_a03_00.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/h04_a03_00.nsbmd $(DIR_RES)/h04_a03_00.bin $(DIR_RES)/h04_a03_00_ex.bin $(DIR_RES)/h04_a03_00.3dmd $(DIR_OUTPUT)/h04_a03_00.3dppack GC
 
 $(DIR_TEMP)/h04_a03_00.nsbmd: $(DIR_RES)/h04_a03_00.imd
 	@echo create_nsbmd h04_a03_00
 	@$(G3DCVTR) $(DIR_RES)/h04_a03_00.imd -o $(DIR_TEMP)/h04_a03_00.nsbmd
 
 #h04_a04_00
-$(DIR_OUTPUT)/h04_a04_00.3dppack: $(DIR_TEMP)/h04_a04_00.nsbmd $(DIR_RES)/h04_a04_00.bin $(DIR_RES)/h04_a04_00.3dmd
+$(DIR_OUTPUT)/h04_a04_00.3dppack: $(DIR_TEMP)/h04_a04_00.nsbmd $(DIR_RES)/h04_a04_00.bin $(DIR_RES)/h04_a04_00_ex.bin $(DIR_RES)/h04_a04_00.3dmd
 	@echo create 3dppack h04_a04_00
-	@$(BINLINKER) $(DIR_TEMP)/h04_a04_00.nsbmd $(DIR_RES)/h04_a04_00.bin $(DIR_RES)/h04_a04_00.3dmd $(DIR_OUTPUT)/h04_a04_00.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/h04_a04_00.nsbmd $(DIR_RES)/h04_a04_00.bin $(DIR_RES)/h04_a04_00_ex.bin $(DIR_RES)/h04_a04_00.3dmd $(DIR_OUTPUT)/h04_a04_00.3dppack GC
 
 $(DIR_TEMP)/h04_a04_00.nsbmd: $(DIR_RES)/h04_a04_00.imd
 	@echo create_nsbmd h04_a04_00
 	@$(G3DCVTR) $(DIR_RES)/h04_a04_00.imd -o $(DIR_TEMP)/h04_a04_00.nsbmd
 
 #h04_a00_01
-$(DIR_OUTPUT)/h04_a00_01.3dppack: $(DIR_TEMP)/h04_a00_01.nsbmd $(DIR_RES)/h04_a00_01.bin $(DIR_RES)/h04_a00_01.3dmd
+$(DIR_OUTPUT)/h04_a00_01.3dppack: $(DIR_TEMP)/h04_a00_01.nsbmd $(DIR_RES)/h04_a00_01.bin $(DIR_RES)/h04_a00_01_ex.bin $(DIR_RES)/h04_a00_01.3dmd
 	@echo create 3dppack h04_a00_01
-	@$(BINLINKER) $(DIR_TEMP)/h04_a00_01.nsbmd $(DIR_RES)/h04_a00_01.bin $(DIR_RES)/h04_a00_01.3dmd $(DIR_OUTPUT)/h04_a00_01.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/h04_a00_01.nsbmd $(DIR_RES)/h04_a00_01.bin $(DIR_RES)/h04_a00_01_ex.bin $(DIR_RES)/h04_a00_01.3dmd $(DIR_OUTPUT)/h04_a00_01.3dppack GC
 
 $(DIR_TEMP)/h04_a00_01.nsbmd: $(DIR_RES)/h04_a00_01.imd
 	@echo create_nsbmd h04_a00_01
 	@$(G3DCVTR) $(DIR_RES)/h04_a00_01.imd -o $(DIR_TEMP)/h04_a00_01.nsbmd
 
 #h04_a01_01
-$(DIR_OUTPUT)/h04_a01_01.3dppack: $(DIR_TEMP)/h04_a01_01.nsbmd $(DIR_RES)/h04_a01_01.bin $(DIR_RES)/h04_a01_01.3dmd
+$(DIR_OUTPUT)/h04_a01_01.3dppack: $(DIR_TEMP)/h04_a01_01.nsbmd $(DIR_RES)/h04_a01_01.bin $(DIR_RES)/h04_a01_01_ex.bin $(DIR_RES)/h04_a01_01.3dmd
 	@echo create 3dppack h04_a01_01
-	@$(BINLINKER) $(DIR_TEMP)/h04_a01_01.nsbmd $(DIR_RES)/h04_a01_01.bin $(DIR_RES)/h04_a01_01.3dmd $(DIR_OUTPUT)/h04_a01_01.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/h04_a01_01.nsbmd $(DIR_RES)/h04_a01_01.bin $(DIR_RES)/h04_a01_01_ex.bin $(DIR_RES)/h04_a01_01.3dmd $(DIR_OUTPUT)/h04_a01_01.3dppack GC
 
 $(DIR_TEMP)/h04_a01_01.nsbmd: $(DIR_RES)/h04_a01_01.imd
 	@echo create_nsbmd h04_a01_01
 	@$(G3DCVTR) $(DIR_RES)/h04_a01_01.imd -o $(DIR_TEMP)/h04_a01_01.nsbmd
 
 #h04_a02_01
-$(DIR_OUTPUT)/h04_a02_01.3dppack: $(DIR_TEMP)/h04_a02_01.nsbmd $(DIR_RES)/h04_a02_01.bin $(DIR_RES)/h04_a02_01.3dmd
+$(DIR_OUTPUT)/h04_a02_01.3dppack: $(DIR_TEMP)/h04_a02_01.nsbmd $(DIR_RES)/h04_a02_01.bin $(DIR_RES)/h04_a02_01_ex.bin $(DIR_RES)/h04_a02_01.3dmd
 	@echo create 3dppack h04_a02_01
-	@$(BINLINKER) $(DIR_TEMP)/h04_a02_01.nsbmd $(DIR_RES)/h04_a02_01.bin $(DIR_RES)/h04_a02_01.3dmd $(DIR_OUTPUT)/h04_a02_01.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/h04_a02_01.nsbmd $(DIR_RES)/h04_a02_01.bin $(DIR_RES)/h04_a02_01_ex.bin $(DIR_RES)/h04_a02_01.3dmd $(DIR_OUTPUT)/h04_a02_01.3dppack GC
 
 $(DIR_TEMP)/h04_a02_01.nsbmd: $(DIR_RES)/h04_a02_01.imd
 	@echo create_nsbmd h04_a02_01
 	@$(G3DCVTR) $(DIR_RES)/h04_a02_01.imd -o $(DIR_TEMP)/h04_a02_01.nsbmd
 
 #h04_a03_01
-$(DIR_OUTPUT)/h04_a03_01.3dppack: $(DIR_TEMP)/h04_a03_01.nsbmd $(DIR_RES)/h04_a03_01.bin $(DIR_RES)/h04_a03_01.3dmd
+$(DIR_OUTPUT)/h04_a03_01.3dppack: $(DIR_TEMP)/h04_a03_01.nsbmd $(DIR_RES)/h04_a03_01.bin $(DIR_RES)/h04_a03_01_ex.bin $(DIR_RES)/h04_a03_01.3dmd
 	@echo create 3dppack h04_a03_01
-	@$(BINLINKER) $(DIR_TEMP)/h04_a03_01.nsbmd $(DIR_RES)/h04_a03_01.bin $(DIR_RES)/h04_a03_01.3dmd $(DIR_OUTPUT)/h04_a03_01.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/h04_a03_01.nsbmd $(DIR_RES)/h04_a03_01.bin $(DIR_RES)/h04_a03_01_ex.bin $(DIR_RES)/h04_a03_01.3dmd $(DIR_OUTPUT)/h04_a03_01.3dppack GC
 
 $(DIR_TEMP)/h04_a03_01.nsbmd: $(DIR_RES)/h04_a03_01.imd
 	@echo create_nsbmd h04_a03_01
 	@$(G3DCVTR) $(DIR_RES)/h04_a03_01.imd -o $(DIR_TEMP)/h04_a03_01.nsbmd
 
 #h04_a04_01
-$(DIR_OUTPUT)/h04_a04_01.3dppack: $(DIR_TEMP)/h04_a04_01.nsbmd $(DIR_RES)/h04_a04_01.bin $(DIR_RES)/h04_a04_01.3dmd
+$(DIR_OUTPUT)/h04_a04_01.3dppack: $(DIR_TEMP)/h04_a04_01.nsbmd $(DIR_RES)/h04_a04_01.bin $(DIR_RES)/h04_a04_01_ex.bin $(DIR_RES)/h04_a04_01.3dmd
 	@echo create 3dppack h04_a04_01
-	@$(BINLINKER) $(DIR_TEMP)/h04_a04_01.nsbmd $(DIR_RES)/h04_a04_01.bin $(DIR_RES)/h04_a04_01.3dmd $(DIR_OUTPUT)/h04_a04_01.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/h04_a04_01.nsbmd $(DIR_RES)/h04_a04_01.bin $(DIR_RES)/h04_a04_01_ex.bin $(DIR_RES)/h04_a04_01.3dmd $(DIR_OUTPUT)/h04_a04_01.3dppack GC
 
 $(DIR_TEMP)/h04_a04_01.nsbmd: $(DIR_RES)/h04_a04_01.imd
 	@echo create_nsbmd h04_a04_01
