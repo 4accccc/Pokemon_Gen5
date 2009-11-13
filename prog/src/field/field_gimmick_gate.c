@@ -85,14 +85,15 @@ static BOOL IsGimmickIDEntried( int gmk_id )
 // ニュース番号
 typedef enum
 {
-  NEWS_DATE,      // 日時
-  NEWS_WEATHER,   // 天気
-  NEWS_INFO_A,    // 情報A
-  NEWS_INFO_B,    // 情報B
-  NEWS_INFO_C,    // 情報C
-  NEWS_CM,        // 一言CM
+  NEWS_DATE,         // 日時
+  NEWS_WEATHER,      // 天気
+  NEWS_PROPAGATION,  // 大量発生
+  NEWS_INFO_A,       // 情報A
+  NEWS_INFO_B,       // 情報B
+  NEWS_INFO_C,       // 情報C
+  NEWS_CM,           // 一言CM
   NEWS_NUM,
-  NEWS_MAX = NEWS_NUM-1
+  NEWS_MAX = NEWS_NUM -1
 } NEWS_INDEX; 
 
 // 一度に表示する地域情報の数
@@ -123,6 +124,7 @@ typedef enum
   RES_ELBOARD_NSBTA_4,  // スクロールアニメーション4
   RES_ELBOARD_NSBTA_5,  // スクロールアニメーション5
   RES_ELBOARD_NSBTA_6,  // スクロールアニメーション6
+  RES_ELBOARD_NSBTA_7,  // スクロールアニメーション7
   RES_NUM
 } RES_INDEX;
 static const GFL_G3D_UTIL_RES res_table[] = 
@@ -135,17 +137,19 @@ static const GFL_G3D_UTIL_RES res_table[] =
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_4_nsbta, GFL_G3D_UTIL_RESARC },
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_5_nsbta, GFL_G3D_UTIL_RESARC },
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_6_nsbta, GFL_G3D_UTIL_RESARC },
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_7_nsbta, GFL_G3D_UTIL_RESARC },
 };
 
 // アニメインデックス
 typedef enum
 {
-  ANM_ELBOARD_DATE,    // 日付
-  ANM_ELBOARD_WEATHER, // 天気
-  ANM_ELBOARD_INFO_A,  // 情報A
-  ANM_ELBOARD_INFO_B,  // 情報B
-  ANM_ELBOARD_INFO_C,  // 情報C
-  ANM_ELBOARD_CM,      // 一言CM
+  ANM_ELBOARD_DATE,         // 日付
+  ANM_ELBOARD_WEATHER,      // 天気
+  ANM_ELBOARD_PROPAGATION,  // 大量発生
+  ANM_ELBOARD_INFO_A,       // 情報A
+  ANM_ELBOARD_INFO_B,       // 情報B
+  ANM_ELBOARD_INFO_C,       // 情報C
+  ANM_ELBOARD_CM,           // 一言CM
   ANM_NUM
 } ANM_INDEX;
 static const GFL_G3D_UTIL_ANM anm_table[] = 
@@ -157,6 +161,7 @@ static const GFL_G3D_UTIL_ANM anm_table[] =
   { RES_ELBOARD_NSBTA_4, 0 },
   { RES_ELBOARD_NSBTA_5, 0 },
   { RES_ELBOARD_NSBTA_6, 0 },
+  { RES_ELBOARD_NSBTA_7, 0 },
 };
 
 // オブジェクトインデックス
@@ -190,15 +195,16 @@ static const GFL_G3D_UTIL_SETUP unit[UNIT_NUM] =
 //==========================================================================================
 // ■ニュースパラメータ
 //==========================================================================================
-// アニメーション・インデックス
+// スクロール・アニメーション・インデックス
 static u16 news_anm_index[NEWS_NUM] = 
 {
-  ANM_ELBOARD_DATE,    // 日付
-  ANM_ELBOARD_WEATHER, // 天気
-  ANM_ELBOARD_INFO_A,  // 情報A
-  ANM_ELBOARD_INFO_B,  // 情報B
-  ANM_ELBOARD_INFO_C,  // 情報C
-  ANM_ELBOARD_CM,      // 一言CM
+  ANM_ELBOARD_DATE,        // 日付
+  ANM_ELBOARD_WEATHER,     // 天気
+  ANM_ELBOARD_PROPAGATION, // 大量発生
+  ANM_ELBOARD_INFO_A,      // 情報A
+  ANM_ELBOARD_INFO_B,      // 情報B
+  ANM_ELBOARD_INFO_C,      // 情報C
+  ANM_ELBOARD_CM,          // 一言CM
 };
 // テクスチャ名
 static char* news_tex_name[NEWS_NUM] =
@@ -209,6 +215,7 @@ static char* news_tex_name[NEWS_NUM] =
   "gelboard_4",
   "gelboard_5",
   "gelboard_6",
+  "gelboard_7",
 };
 // パレット名
 static char* news_plt_name[NEWS_NUM] =
@@ -219,6 +226,7 @@ static char* news_plt_name[NEWS_NUM] =
   "gelboard_4_pl",
   "gelboard_5_pl",
   "gelboard_6_pl",
+  "gelboard_7_pl",
 };
 // 天気に使用するメッセージ
 u32 str_id_weather[WEATHER_NO_NUM] = 
@@ -254,6 +262,7 @@ static GATEWORK* CreateGateWork( FIELDMAP_WORK* fieldmap );
 static BOOL LoadGateData( ELBOARD_ZONE_DATA* buf, FIELDMAP_WORK* fieldmap );
 static void SetElboardPos( GFL_G3D_OBJSTATUS* status, ELBOARD_ZONE_DATA* data );
 static void AddNews_DATE( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data );
+static void AddNews_PROPAGATION( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data );
 static void AddNews_WEATHER( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data );
 static void AddNews_INFO( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data );
 static void AddNews_CM( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data );
@@ -385,10 +394,11 @@ void GATE_GIMMICK_Elboard_SetupNormalNews( FIELDMAP_WORK* fieldmap )
   }
 
   // ニュースを追加
-  AddNews_DATE( work->elboard, &elboard_data );     // 日付
-  AddNews_WEATHER( work->elboard, &elboard_data );  // 天気
-  AddNews_INFO( work->elboard, &elboard_data );     // 地域情報
-  AddNews_CM( work->elboard, &elboard_data );       // 一言CM
+  AddNews_DATE( work->elboard, &elboard_data );         // 日付
+  AddNews_WEATHER( work->elboard, &elboard_data );      // 天気
+  AddNews_PROPAGATION( work->elboard, &elboard_data );  // 大量発生
+  AddNews_INFO( work->elboard, &elboard_data );         // 地域情報
+  AddNews_CM( work->elboard, &elboard_data );           // 一言CM
 }
 
 //------------------------------------------------------------------------------------------
@@ -628,7 +638,7 @@ static void SetElboardPos( GFL_G3D_OBJSTATUS* status, ELBOARD_ZONE_DATA* data )
   case DIR_LEFT:  rot = 270;  break;
   default:        rot = 0;    break;
   }
-  rot *= 182;  // 65536/360 = 182.044...
+  rot *= 182;  // 65536÷360 = 182.044...
   GFL_CALC3D_MTX_CreateRot( 0, rot, 0, &status->rotate );
 }
 
@@ -776,6 +786,33 @@ static void AddNews_WEATHER( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* dat
 
   // ワードセット破棄
   WORDSET_Delete( wordset );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @breif 掲示板のニュースを追加する(大量発生)
+ *
+ * @param elboard 追加する掲示板
+ * @param data    電光掲示板データ
+ */
+//------------------------------------------------------------------------------------------
+static void AddNews_PROPAGATION( GOBJ_ELBOARD* elboard, const ELBOARD_ZONE_DATA* data )
+{
+  HEAPID heap_id; 
+  NEWS_PARAM news;
+  RTCDate date;
+
+  // ニュースパラメータを作成
+  news.animeIndex = news_anm_index[NEWS_PROPAGATION];
+  news.texName    = news_tex_name[NEWS_PROPAGATION];
+  news.pltName    = news_plt_name[NEWS_PROPAGATION];
+  news.msgArcID   = ARCID_MESSAGE;
+  news.msgDatID   = NARC_message_gate_dat;
+  news.msgStrID   = data->msgID_propagation;
+  news.wordset    = NULL;
+
+  // ニュースを追加
+  GOBJ_ELBOARD_AddNews( elboard, &news );
 }
 
 //------------------------------------------------------------------------------------------

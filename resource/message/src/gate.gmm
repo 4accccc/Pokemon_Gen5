@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2009-11-06T17:44:38"/>
+	<create user="obata_toshihiro" host="W00209" date="2009-11-13T11:39:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -319,7 +319,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -536,6 +536,46 @@
 	<row id="msg_gate_weather_set_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]　　[1:00:トレーナー名:1]　　[1:00:トレーナー名:2]　　[1:00:トレーナー名:3]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]　　[1:00:トレーナー名:1]　　[1:00:トレーナー名:2]　　[1:00:トレーナー名:3]</language>
+	</row>
+
+	<row id="msg_gate_propagation">
+		<language name="JPN" width="256">たいりょうはっせい</language>
+		<language name="JPN_KANJI" width="256">大量発生</language>
+	</row>
+
+	<row id="msg_gate_cm_mon">
+		<language name="JPN" width="256">CMげつようび</language>
+		<language name="JPN_KANJI" width="256">CM月曜日</language>
+	</row>
+
+	<row id="msg_gate_cm_tue">
+		<language name="JPN" width="256">CMかようび</language>
+		<language name="JPN_KANJI" width="256">CM火曜日</language>
+	</row>
+
+	<row id="msg_gate_cm_wed">
+		<language name="JPN" width="256">CMすいようび</language>
+		<language name="JPN_KANJI" width="256">CM水曜日</language>
+	</row>
+
+	<row id="msg_gate_cm_thu">
+		<language name="JPN" width="256">CMもくようび</language>
+		<language name="JPN_KANJI" width="256">CM木曜日</language>
+	</row>
+
+	<row id="msg_gate_cm_fri">
+		<language name="JPN" width="256">CMきんようび</language>
+		<language name="JPN_KANJI" width="256">CM金曜日</language>
+	</row>
+
+	<row id="msg_gate_cm_sat">
+		<language name="JPN" width="256">CMどようび</language>
+		<language name="JPN_KANJI" width="256">CM土曜日</language>
+	</row>
+
+	<row id="msg_gate_cm_sun">
+		<language name="JPN" width="256">CMにちようび</language>
+		<language name="JPN_KANJI" width="256">CM日曜日</language>
 	</row>
 
 	<flowchart-group-list>

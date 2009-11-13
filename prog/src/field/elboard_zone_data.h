@@ -21,33 +21,34 @@
 //====================================================================================
 typedef struct
 {
-  u32 zone_id;        // ゾーンID
-  u32 x;              // x座標
-  u32 y;              // y座標
-  u32 z;              // z座標
-  u32 dir;            // 向き
-  u32 msgID_date;     // 日付に使用するメッセージID
-  u32 msgID_weather;  // 天気に使用するメッセージID
-  u32 msgID_infoA;    // 地域情報(A)に使用するメッセージID
-  u32 msgID_infoB;    // 地域情報(B)に使用するメッセージID
-  u32 msgID_infoC;    // 地域情報(C)に使用するメッセージID
-  u32 msgID_infoD;    // 地域情報(C)に使用するメッセージID
-  u32 msgID_infoE;    // 地域情報(E)に使用するメッセージID
-  u32 msgID_infoF;    // 地域情報(F)に使用するメッセージID
-  u32 msgID_infoG;    // 地域情報(G)に使用するメッセージID
-  u32 msgID_infoH;    // 地域情報(H)に使用するメッセージID
-  u32 msgID_infoI;    // 地域情報(I)に使用するメッセージID
-  u32 msgID_cmMon;    // 一言CM(月)に使用するメッセージID
-  u32 msgID_cmTue;    // 一言CM(火)に使用するメッセージID
-  u32 msgID_cmWed;    // 一言CM(水)に使用するメッセージID
-  u32 msgID_cmThu;    // 一言CM(木)に使用するメッセージID
-  u32 msgID_cmFri;    // 一言CM(金)に使用するメッセージID
-  u32 msgID_cmSat;    // 一言CM(土)に使用するメッセージID
-  u32 msgID_cmSun;    // 一言CM(日)に使用するメッセージID
-  u32 zoneID_weather_1; // 天気を表示するゾーン
-  u32 zoneID_weather_2; // 天気を表示するゾーン
-  u32 zoneID_weather_3; // 天気を表示するゾーン
-  u32 zoneID_weather_4; // 天気を表示するゾーン
+  u32 zone_id;            // ゾーンID
+  u32 x;                  // x座標
+  u32 y;                  // y座標
+  u32 z;                  // z座標
+  u32 dir;                // 向き
+  u32 msgID_date;         // 日付に使用するメッセージID
+  u32 msgID_weather;      // 天気に使用するメッセージID
+  u32 msgID_propagation;  // 大量発生に使用するメッセージID
+  u32 msgID_infoA;        // 地域情報(A)に使用するメッセージID
+  u32 msgID_infoB;        // 地域情報(B)に使用するメッセージID
+  u32 msgID_infoC;        // 地域情報(C)に使用するメッセージID
+  u32 msgID_infoD;        // 地域情報(C)に使用するメッセージID
+  u32 msgID_infoE;        // 地域情報(E)に使用するメッセージID
+  u32 msgID_infoF;        // 地域情報(F)に使用するメッセージID
+  u32 msgID_infoG;        // 地域情報(G)に使用するメッセージID
+  u32 msgID_infoH;        // 地域情報(H)に使用するメッセージID
+  u32 msgID_infoI;        // 地域情報(I)に使用するメッセージID
+  u32 msgID_cmMon;        // 一言CM(月)に使用するメッセージID
+  u32 msgID_cmTue;        // 一言CM(火)に使用するメッセージID
+  u32 msgID_cmWed;        // 一言CM(水)に使用するメッセージID
+  u32 msgID_cmThu;        // 一言CM(木)に使用するメッセージID
+  u32 msgID_cmFri;        // 一言CM(金)に使用するメッセージID
+  u32 msgID_cmSat;        // 一言CM(土)に使用するメッセージID
+  u32 msgID_cmSun;        // 一言CM(日)に使用するメッセージID
+  u32 zoneID_weather_1;   // 天気を表示するゾーン
+  u32 zoneID_weather_2;   // 天気を表示するゾーン
+  u32 zoneID_weather_3;   // 天気を表示するゾーン
+  u32 zoneID_weather_4;   // 天気を表示するゾーン
 
 } ELBOARD_ZONE_DATA;
 

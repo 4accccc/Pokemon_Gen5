@@ -19,19 +19,20 @@ enum {
 	NARC_gate_gelboard01_4_nsbta = 5,
 	NARC_gate_gelboard01_5_nsbta = 6,
 	NARC_gate_gelboard01_6_nsbta = 7,
-	NARC_gate_elboard_zone_data_c04r0601_bin = 8,
-	NARC_gate_elboard_zone_data_c08r0601_bin = 9,
-	NARC_gate_elboard_zone_data_r13r0201_bin = 10,
-	NARC_gate_elboard_zone_data_r02r0101_bin = 11,
-	NARC_gate_elboard_zone_data_c04r0701_bin = 12,
-	NARC_gate_elboard_zone_data_c04r0801_bin = 13,
-	NARC_gate_elboard_zone_data_c02r0701_bin = 14,
-	NARC_gate_elboard_zone_data_r14r0101_bin = 15,
-	NARC_gate_elboard_zone_data_c08r0501_bin = 16,
-	NARC_gate_elboard_zone_data_c08r0701_bin = 17,
-	NARC_gate_elboard_zone_data_h01r0101_bin = 18,
-	NARC_gate_elboard_zone_data_h01r0201_bin = 19,
-	NARC_gate_elboard_zone_data_c03r0601_bin = 20
+	NARC_gate_gelboard01_7_nsbta = 8,
+	NARC_gate_elboard_zone_data_c04r0601_bin = 9,
+	NARC_gate_elboard_zone_data_c08r0601_bin = 10,
+	NARC_gate_elboard_zone_data_r13r0201_bin = 11,
+	NARC_gate_elboard_zone_data_r02r0101_bin = 12,
+	NARC_gate_elboard_zone_data_c04r0701_bin = 13,
+	NARC_gate_elboard_zone_data_c04r0801_bin = 14,
+	NARC_gate_elboard_zone_data_c02r0701_bin = 15,
+	NARC_gate_elboard_zone_data_r14r0101_bin = 16,
+	NARC_gate_elboard_zone_data_c08r0501_bin = 17,
+	NARC_gate_elboard_zone_data_c08r0701_bin = 18,
+	NARC_gate_elboard_zone_data_h01r0101_bin = 19,
+	NARC_gate_elboard_zone_data_h01r0201_bin = 20,
+	NARC_gate_elboard_zone_data_c03r0601_bin = 21
 };
 
 /* NARC_GATE_NAIX_ */

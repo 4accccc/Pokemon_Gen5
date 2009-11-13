@@ -47,6 +47,7 @@ CONVERTDATA = $(GRAPHIC_BIN)/gelboard01.nsbmd \
 							$(GRAPHIC_BIN)/gelboard01_4.nsbta \
 							$(GRAPHIC_BIN)/gelboard01_5.nsbta \
 							$(GRAPHIC_BIN)/gelboard01_6.nsbta \
+							$(GRAPHIC_BIN)/gelboard01_7.nsbta \
 							$(ELBOARD_ZONE_DATA)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
@@ -74,6 +75,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_4.ita -o $(GRAPHIC_BIN)/gelboard01_4.nsbta
 	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_5.ita -o $(GRAPHIC_BIN)/gelboard01_5.nsbta
 	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_6.ita -o $(GRAPHIC_BIN)/gelboard01_6.nsbta
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_7.ita -o $(GRAPHIC_BIN)/gelboard01_7.nsbta
 
 $(ELBOARD_ZONE_DATA): $(SETTING_SOURCE)/elboard_zone_data.txt
 	ruby $(SETTING_SOURCE)/elboard_zone_data_conv.rb $(SETTING_SOURCE)/elboard_zone_data.txt $(SETTING_BIN)

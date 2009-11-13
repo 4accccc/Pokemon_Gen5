@@ -37,6 +37,7 @@ BOOL ELBOARD_ZONE_DATA_Load( ELBOARD_ZONE_DATA* buf, ARCID arc_id, ARCDATID dat_
   OBATA_Printf( "dir = %d\n", buf->dir );
   OBATA_Printf( "msgID_date = %d\n", buf->msgID_date );
   OBATA_Printf( "msgID_weather = %d\n", buf->msgID_weather );
+  OBATA_Printf( "msgID_propagation = %d\n", buf->msgID_propagation );
   OBATA_Printf( "msgID_infoA = %d\n", buf->msgID_infoA );
   OBATA_Printf( "msgID_infoB = %d\n", buf->msgID_infoB );
   OBATA_Printf( "msgID_infoC = %d\n", buf->msgID_infoC );
