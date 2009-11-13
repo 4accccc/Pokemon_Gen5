@@ -1399,14 +1399,17 @@ u32 PRINTSYS_GetStrLineWidth( const STRBUF* str, GFL_FONT* font, u16 margin, u32
   cnt = 0;
   while( cnt < dstElems )
   {
-    while( *sp != EOM_CODE )
+    if( *sp != EOM_CODE )
     {
       dst[cnt++] = get_line_width( sp, font, margin, &sp );
-      if( cnt >= dstElems ){
-        break;
-      }
+      TAYA_Printf("çs[%d]ÇÃwidth=%d\n", cnt-1, dst[cnt-1]);
+    }
+    else
+    {
+      break;
     }
   }
+  TAYA_Printf("çsêî=%d\n", cnt);
   return cnt;
 }
 
@@ -1425,6 +1428,8 @@ u32 PRINTSYS_GetStrLineWidth( const STRBUF* str, GFL_FONT* font, u16 margin, u32
 BOOL PRINTSYS_CopyLineStr( const STRBUF* src, STRBUF* dst, u32 line )
 {
   const STRCODE* sp = GFL_STR_GetStringCodePointer( src );
+
+  GFL_STR_ClearBuffer( dst );
 
   while( line )
   {
@@ -1445,7 +1450,7 @@ BOOL PRINTSYS_CopyLineStr( const STRBUF* src, STRBUF* dst, u32 line )
     }
   }
 
-  if( line == 0 && *sp != EOM_CODE)
+  if( (line == 0) && (*sp != EOM_CODE) )
   {
     while( *sp != EOM_CODE && *sp != CR_CODE )
     {
