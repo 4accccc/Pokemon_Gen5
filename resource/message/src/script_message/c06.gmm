@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-29T18:26:18"/>
+	<create user="matsumiya" host="W00207" date="2009-11-13T17:29:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -336,121 +336,262 @@
 	</lock>
 
 
-	<row id="msg_c06_hakase2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_hakase2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・GRIDX=101～104、GRIDZ=301の
-　POSを踏むとイベント開始
-・ポケモンセンターから登場すると
-　！マーク表示後にメッセージ表示
-・表示後、倍速移動で
-　主人公に隣接し次メッセージ</comment>
-		<attribute name="キャラクター">博士２</attribute>
+・pos（GRIDX=89、GRIDZ=296~299）で発動
+・画面左上方向から
+　博士（父）とc06ジムリーダーが登場
+・博士（父）、GRIDX=86、GRIDZ=294に到達すると
+　！マークを表示後、主人公に隣接して
+　メッセージ表示
+・0＝主人公名前</comment>
+		<attribute name="キャラクター">博士２（父）</attribute>
 		<language name="JPN" width="256">おお！　きみ！
 [1:00:トレーナー名:0]だろ！！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">おお！　きみ！
 [1:00:トレーナー名:0]だろ！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
+	<row id="msg_c06_hakase2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・！マーク表示後
-　次メッセージ</comment>
-		<language name="JPN" width="256">どれどれ……[BE:01:ページ切り替え（クリア）]
-その　ポケモンずかんを
-みせてくれるかね[BE:01:ページ切り替え（クリア）]
-……　……　……
-……　……　ほお！！[BE:01:ページ切り替え（クリア）]
-なるほどなあ……　アイツめ
-いいトレーナーを　みつけおったな[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">どれどれ……[BE:01:ページ切り替え（クリア）]
-その　ポケモン図鑑を
-みせてくれるかね[BE:01:ページ切り替え（クリア）]
-……　……　……
-……　……　ほお！！[BE:01:ページ切り替え（クリア）]
-なるほどなあ……　アイツめ
-いいトレーナーを　みつけおったな[BE:01:ページ切り替え（クリア）]</language>
+・画面下向きでメッセージ表示
+・ポケモン「ギアン」を
+　捕獲済み→msg_c06_hakase2_03
+　未捕獲→msg_c06_hakase2_04
+・0＝捕まえた数</comment>
+		<attribute name="キャラクター">博士２（父）</attribute>
+		<language name="JPN" width="256">ちょいと　ずかんを　みせてもらうよ
+……どれどれ[BE:01:ページ切り替え（クリア）]
+つかまえた　かずは
+[2:02:３桁:0]ひき　か！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ちょいと　図鑑を　みせてもらうよ
+……どれどれ[BE:01:ページ切り替え（クリア）]
+捕まえた数は
+[2:02:３桁:0]匹　か！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
+	<row id="msg_c06_hakase2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・表示後、次メッセージ</comment>
+・続けてmsg_c06_hakase2_05
+（この処理は暫定）</comment>
+		<attribute name="キャラクター">博士２（父）</attribute>
+		<language name="JPN" width="256">おお！　ギアンを　つかまえておるのか！
+なかなかの　トレーナーじゃな！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">おお！　ギアンを　捕まえておるのか！
+なかなかの　トレーナーじゃな！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c06_hakase2_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・続けてmsg_c06_hakase2_05
+（この処理は暫定）</comment>
+		<attribute name="キャラクター">博士２（父）</attribute>
+		<language name="JPN" width="256">ふむう……
+ギアンは　つかまえて　おらぬのか[BE:01:ページ切り替え（クリア）]
+だが　たいした　ポケモンずかん　だ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ふむう……
+ギアンは　捕まえて　おらぬのか[BE:01:ページ切り替え（クリア）]
+だが　たいした　ポケモン図鑑　だ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c06_hakase2_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・続けてmsg_c06_hakase2_06</comment>
+		<attribute name="キャラクター">博士２（父）</attribute>
 		<language name="JPN" width="256">おぉ　すまない！
-ちと　こうふんしてな[BE:01:ページ切り替え（クリア）]
+ちと　こうふん　してな[BE:01:ページ切り替え（クリア）]
 わたしの　なまえも
 アララギ[BE:01:ページ切り替え（クリア）]
 そう！　きみに
-ポケモンと　ずかんを　たくした[BE:00:ページ切り替え（行送り）]
-じんぶつの　ちちおや　なんじゃ！[BE:01:ページ切り替え（クリア）]
-きみのことは　むすめから
-いろいろ　おしえてもらっていてな[BE:01:ページ切り替え（クリア）]
-かいがいから　もどってきて　すぐに
-ここで　こうして　あえたのは[BE:00:ページ切り替え（行送り）]
-なんとも　うれしい　かぎりじゃ[BE:01:ページ切り替え（クリア）]</language>
+ポケモンと　ずかんを　たくしたのは[BE:00:ページ切り替え（行送り）]
+わたしの　むすめ　なんだ！[BE:01:ページ切り替え（クリア）]
+きみのことは　アイツから
+いろいろ　おしえて　もらっていてな[BE:01:ページ切り替え（クリア）]
+ここで　あえたのは
+なんとも　うれしい　かぎりだ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">おぉ　すまない！
-ちと　興奮してな[BE:01:ページ切り替え（クリア）]
-わたしの　名前は
+ちと　興奮　してな[BE:01:ページ切り替え（クリア）]
+わたしの　名前も
 アララギ[BE:01:ページ切り替え（クリア）]
 そう！　きみに
-ポケモンと　図鑑を　託した[BE:00:ページ切り替え（行送り）]
-人物の父親　なんじゃ！[BE:01:ページ切り替え（クリア）]
-きみのことは　娘から
-いろいろ　教えてもらっていてな[BE:01:ページ切り替え（クリア）]
-海外から　もどってきて　すぐに
-ここで　こうして　会えたのは[BE:00:ページ切り替え（行送り）]
-なんとも　うれしい　かぎりじゃ[BE:01:ページ切り替え（クリア）]</language>
+ポケモンと　図鑑を　託したのは[BE:00:ページ切り替え（行送り）]
+わたしの　娘　なんだ！[BE:01:ページ切り替え（クリア）]
+きみのことは　アイツから
+いろいろ　教えて　もらっていてな[BE:01:ページ切り替え（クリア）]
+ここで　会えたのは
+なんとも　うれしい　かぎりだ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase2_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
-		<comment>・図鑑パワーアップがあれば
-・msg_c06_hakase2_03表示後に
-　また！マーク表示し、このメッセージ</comment>
-		<language name="JPN" width="256">そうだ！　きみの　ポケモンずかんを
-パワーアップ　しておこうか！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">そうだ！　きみの　ポケモン図鑑を
-パワーアップ　しておこうか！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_c06_hakase2_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
+	<row id="msg_c06_hakase2_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・メッセージ表示後
-　c06のストッパーポケモンの方に移動
-※仮だけど！</comment>
-		<language name="JPN" width="256">アララギちち『おっと　そうだった……[BE:01:ページ切り替え（クリア）]
-フウロに　たのまれた
-ポケモンを　みるとするかね[BE:01:ページ切り替え（クリア）]
-ではな　[1:00:トレーナー名:0]
-ずかんのほう　よろしくな[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アララギ父『おっと　そうだった……[BE:01:ページ切り替え（クリア）]
-フウロに　頼まれた
-ポケモンを　みるとするかね[BE:01:ページ切り替え（クリア）]
-ではな　[1:00:トレーナー名:0]
-図鑑のほう　よろしくな[BE:01:ページ切り替え（クリア）]</language>
+・ポケモン図鑑に
+　フォルムチェンジ確認機能（仮）追加予定
+（この処理は暫定）
+・続けてmsg_c06_hakase2_07</comment>
+		<attribute name="キャラクター">博士２（父）</attribute>
+		<language name="JPN" width="256">では　であいを　きねんして
+きみの　ポケモンずかんを[BE:00:ページ切り替え（行送り）]
+パワーアップ！　だな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">では　出会いを　記念して
+きみの　ポケモン図鑑を[BE:00:ページ切り替え（行送り）]
+パワーアップ！　だな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase2_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_hakase2_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・7番道路
-　ストッパーポケモンの手前で
-・？？まで
-※仮だけど！！</comment>
-		<language name="JPN" width="256">アララギ父『ふむう……
-これは　ちと　やっかいじゃな（仮）</language>
-		<language name="JPN_KANJI" width="256">アララギ父『ふむう……
-これは　ちと　やっかいじゃな（仮）</language>
+・続けてmsg_c06_leader6_01
+（この処理は暫定）</comment>
+		<attribute name="キャラクター">博士２（父）</attribute>
+		<language name="JPN" width="256">アララギ『よし！　これで
+ポケモンの　みた　すがたなら[BE:00:ページ切り替え（行送り）]
+いつでも　みられるように　なったぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『よし！　これで
+ポケモンの　みた　すがたなら[BE:00:ページ切り替え（行送り）]
+いつでも　みられるように　なったぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_stoppoke_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>ポケモン
-※仮だけど！！！</comment>
-		<attribute name="キャラクター">ストッパーポケモン</attribute>
-		<language name="JPN" width="256">……　……　……
-……　……　……[BE:01:ページ切り替え（クリア）]
-このままでは
-ピクリとも　うごきそうにない</language>
-		<language name="JPN_KANJI" width="256">……　……　……
-……　……　……[BE:01:ページ切り替え（クリア）]
-このままでは
-ピクリとも　動きそうにない</language>
+	<row id="msg_c06_leader6_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けてmsg_c06_hakase2_08</comment>
+		<attribute name="キャラクター">c06ジムリーダー
+フウロ</attribute>
+		<language name="JPN" width="256">？？？『アララギはかせ
+そちらの　トレーナーは？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">？？？『アララギ博士
+そちらの　トレーナーは？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c06_hakase2_08" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・フウロのほうを向いてメッセージ表示
+※男女性別関係なくこの台詞
+・続けてmsg_c06_leader6_02</comment>
+		<attribute name="キャラクター">博士２（父）</attribute>
+		<language name="JPN" width="256">アララギ『おお！　おう！
+すまんすまん[BE:01:ページ切り替え（クリア）]
+フウロくん　こちらは
+[1:00:トレーナー名:0]くんと　いって[BE:00:ページ切り替え（行送り）]
+わたしの　むすめの　しりあいだよ！[BE:01:ページ切り替え（クリア）]
+ポケモンずかん　かんせいを　めざし
+イッシュを　たび　しているのだ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『おお！　おう！
+すまんすまん[BE:01:ページ切り替え（クリア）]
+フウロくん　こちらは
+[1:00:トレーナー名:0]くんと　いって[BE:00:ページ切り替え（行送り）]
+わたしの　娘の　知り合いだよ！[BE:01:ページ切り替え（クリア）]
+ポケモン図鑑　完成を　めざし
+イッシュを　旅しているのだ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c06_leader6_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けてmsg_c06_hakase2_09</comment>
+		<attribute name="キャラクター">c06ジムリーダー
+フウロ</attribute>
+		<language name="JPN" width="256">フウロ『わあ！　だったら
+ジムに　ちょうせん　するよね！[BE:00:ページ切り替え（行送り）]
+わあ！　とっても　たのしみ！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">フウロ『わあ！　だったら
+ジムに　挑戦するよね！[BE:00:ページ切り替え（行送り）]
+わあ！　とっても　楽しみ！！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c06_hakase2_09" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・主人公を向いてメッセージ表示
+・続けてmsg_c06_hakase2_10</comment>
+		<attribute name="キャラクター">博士２（父）</attribute>
+		<language name="JPN" width="256">アララギ『そうだな　[1:00:トレーナー名:0]くん
+ぜひ　ちょうせんすると　いいぞ！[BE:01:ページ切り替え（クリア）]
+なにしろ　ここの　ジムは
+ぶっとんで　おるからな！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『そうだな　[1:00:トレーナー名:0]くん
+ぜひ　挑戦すると　いいぞ！[BE:01:ページ切り替え（クリア）]
+なにしろ　ここの　ジムは
+ぶっとんで　おるからな！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c06_hakase2_10" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・フウロの方を向いてメッセージ表示
+・続けてmsg_c06_leader6_03</comment>
+		<attribute name="キャラクター">博士２（父）</attribute>
+		<language name="JPN" width="256">ではな　フウロくん
+また　なにかあったら　たのむぞ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ではな　フウロくん
+また　なにかあったら　頼むぞ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c06_leader6_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・続けてmsg_c06_hakase2_11</comment>
+		<attribute name="キャラクター">c06ジムリーダー
+フウロ</attribute>
+		<language name="JPN" width="256">フウロ『……はかせ
+アタシの　ひこうきは　かもつき！[BE:01:ページ切り替え（クリア）]
+はこぶのは　にもつで
+ひとは　のせないんだよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">フウロ『……博士
+アタシの　飛行機は　貨物機！[BE:01:ページ切り替え（クリア）]
+運ぶのは　荷物で
+人は　乗せないんだよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c06_hakase2_11" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・メッセージ表示後、画面右方面に移動
+・画面外に消えると
+　続けてmsg_c06_leader6_04</comment>
+		<attribute name="キャラクター">博士２（父）</attribute>
+		<language name="JPN" width="256">アララギ『おいおい
+かわいい　かおして[BE:00:ページ切り替え（行送り）]
+そんな　かたいことを　いうな[BE:01:ページ切り替え（クリア）]
+にんげんは　たすけあい
+ポケモンとも　たすけあい　だ！[BE:01:ページ切り替え（クリア）]
+それでは　しょくん
+また　あおうぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『おいおい
+かわいい　顔して[BE:00:ページ切り替え（行送り）]
+そんな　固いことを　いうな[BE:01:ページ切り替え（クリア）]
+人間は　助け合い
+ポケモンとも　助け合い　だ！[BE:01:ページ切り替え（クリア）]
+それでは　諸君
+また　会おうぞ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c06_leader6_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・画面右を向いてメッセージ表示
+・続けてmsg_c06_leader6_05</comment>
+		<attribute name="キャラクター">c06ジムリーダー
+フウロ</attribute>
+		<language name="JPN" width="256">フウロ『……ったく！[BE:01:ページ切り替え（クリア）]
+あんな　いいかげんな　かんじで
+せかいてきな　ポケモンはかせって[BE:00:ページ切り替え（行送り）]
+いまだに　しんじられないな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">フウロ『……もうッ！[BE:01:ページ切り替え（クリア）]
+あんな　いいかげんな　感じで
+世界的な　ポケモン博士って[BE:00:ページ切り替え（行送り）]
+いまだに　信じられないな[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c06_leader6_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・主人公に隣接してメッセージ
+・メッセージ表示後、画面左上に移動
+　画面外に消えると、主人公操作可能に</comment>
+		<attribute name="キャラクター">c06ジムリーダー
+フウロ</attribute>
+		<language name="JPN" width="256">さてと……
+[1:00:トレーナー名:0]くん　だっけ！[BE:01:ページ切り替え（クリア）]
+じゅんびが　ととのったら
+ジムに　おいでよね！[BE:00:ページ切り替え（行送り）]
+だいかんげい　しちゃうから！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">さてと……
+[1:00:トレーナー名:0]くん　だっけ！[BE:01:ページ切り替え（クリア）]
+準備が　整ったら
+ジムに　おいでよね！[BE:00:ページ切り替え（行送り）]
+大歓迎しちゃうから！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c06_boy3_01">
