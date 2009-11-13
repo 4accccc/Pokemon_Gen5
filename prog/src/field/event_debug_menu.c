@@ -51,6 +51,7 @@
 #include "net_app/worldtrade.h"
 #include "../ui/debug/ui_template.h"
 #include "savedata/shortcut.h"
+#include "event_debug_beacon.h"
 
 #include "field_sound.h"
 
@@ -210,6 +211,7 @@ static BOOL debugMenuCallProc_Jump( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_Kairiki( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_ControlLinerCamera( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenu_ControlShortCut( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_BeaconFriendCode( DEBUG_MENU_EVENT_WORK *wk );
 
 //======================================================================
 //  デバッグメニューリスト
@@ -251,6 +253,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR45, debugMenuCallProc_Kairiki },
   { DEBUG_FIELD_STR46, debugMenuCallProc_ControlLinerCamera },
 	{	DEBUG_FIELD_STR47, debugMenu_ControlShortCut },
+	{	DEBUG_FIELD_STR49, debugMenuCallProc_BeaconFriendCode },
 };
 
 
@@ -3597,4 +3600,19 @@ static BOOL debugMenu_ControlShortCut( DEBUG_MENU_EVENT_WORK *wk )
 	}
 	
 	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ビーコンでの友達コード配信
+ *
+ *	@param	DEBUG_MENU_EVENT_WORK *wk		ワーク
+ *
+ *	@return	TRUEイベント継続
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_BeaconFriendCode( DEBUG_MENU_EVENT_WORK *wk )
+{	
+	EVENT_DebugBeacon( wk->gmSys, wk->fieldWork, FIELDMAP_GetFldMsgBG( wk->fieldWork ), wk->gmEvent, wk->heapID );
+	return TRUE;
 }
