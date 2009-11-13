@@ -240,6 +240,9 @@ NNSARC_DEPEND_FILES	= \
 	nsbtx_files/tex_set_in52.nsbtx \
 	nsbtx_files/tex_set_in53.nsbtx \
 	nsbtx_files/tex_set_in54.nsbtx \
+	nsbtx_files/tex_set_in55.nsbtx \
+	nsbtx_files/tex_set_in56.nsbtx \
+	nsbtx_files/tex_set_in57.nsbtx \
 	nsbtx_files/tex_set_in_pc.nsbtx \
 	nsbtx_files/tex_set_dun01.nsbtx \
 	nsbtx_files/tex_set_dun02.nsbtx \
