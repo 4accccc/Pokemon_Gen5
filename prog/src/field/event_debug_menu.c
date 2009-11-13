@@ -3034,7 +3034,7 @@ static GMEVENT_RESULT debugMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk
 		break;
 
 	case SEQ_CHANGE_MAP:
-		GMEVENT_CallEvent( p_wk->p_event, DEBUG_EVENT_ChangeMapDefaultPosByWarp( p_wk->p_gamesys, p_wk->p_field, p_wk->p_param->zoneID ) );
+		GMEVENT_CallEvent( p_wk->p_event, DEBUG_EVENT_ChangeMapDefaultPos( p_wk->p_gamesys, p_wk->p_field, p_wk->p_param->zoneID ) );
 		*p_seq	= SEQ_EXIT;
 		break;
 
