@@ -9,3 +9,9 @@
 
 //ƒŠƒtƒgˆÚ“®‘¬“x
 #define LIFT_MOVE_SPEED (4)
+#define SP_LIFT_MOVE_SPEED1 (4)
+#define SP_LIFT_MOVE_SPEED2 (4)
+#define WALL_ANM_WAIT (40)
+#define WALL_ANM_START_HEIHGT (20)
+#define LIFT_SHAKE (2)
+#define SP_LIFT_SHAKE (4)
