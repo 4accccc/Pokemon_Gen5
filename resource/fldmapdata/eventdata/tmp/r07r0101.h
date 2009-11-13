@@ -14,5 +14,7 @@
 #ifndef ZONE_R07R0101_EVC_H
 #define ZONE_R07R0101_EVC_H
 
+#define R07R0101_POLICEMAN_01              0
+#define R07R0101_MAID_01                   1
 
 #endif //ZONE_R07R0101_EVC_H
