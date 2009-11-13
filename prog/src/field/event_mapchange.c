@@ -349,26 +349,27 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 	GAMEDATA * gamedata = mcw->gamedata;
 	switch (*seq) {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, fieldmap) );
-    (*seq) ++;
-    break;
-	case 1:
+    // 動作モデルの移動を止める
+    {
+      MMDLSYS *fmmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+      MMDLSYS_PauseMoveProc( fmmdlsys );
+    }
     // 入口進入イベント
     GMEVENT_CallEvent( event, 
         EVENT_EntranceIn( event, gsys, gamedata, fieldmap, mcw->loc_req, mcw->exit_type ) );
 		(*seq)++;
 		break;
-  case 2:
+  case 1:
     // マップチェンジ・コア・イベント
     GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw ) );
 		(*seq)++;
     break;
-	case 3:
+	case 2:
     // 入口退出イベント
     GMEVENT_CallEvent( event, EVENT_EntranceOut( event, gsys, gamedata, fieldmap, mcw->loc_req ) );
 		(*seq) ++;
 		break;
-  case 4:
+  case 3:
 		return GMEVENT_RES_FINISH; 
 	}
 	return GMEVENT_RES_CONTINUE;
