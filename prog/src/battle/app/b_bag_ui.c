@@ -49,6 +49,8 @@ static const CURSORMOVE_DATA P1_CursorPosTbl[] =
 	{ 192, 114, 112+20,  44+16, 2, 5, 1, 3, { 10*8, 18*8-1, 16*8, 32*8-1 } },					// 3 : 戦闘用ポケット
 	{ 108, 176, 184+20,  24+16, 1, 4, 4, 5, { 19*8, 24*8-1,  1*8, 26*8-1 } },					// 4 : 最後に使用した道具
 	{ 240, 174,  32+20,  28+16, CURSORMOVE_RETBIT|3, 5, 4, 5, { 19*8, 24*8-1, 27*8, 32*8-1 } },	// 5 : 戻る
+
+	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK P1_CallBack = {
 	CallBack_On,
@@ -69,6 +71,8 @@ static const CURSORMOVE_DATA P2_CursorPosTbl[] =
 	{ 240, 174,  32+20,  28+16, CURSORMOVE_RETBIT|5, 6, 6, 6, { 19*8, 24*8-1, 27*8, 32*8-1 } },	// 6 : 戻る
 	{ 0, 0, 0+20, 0+16, 7, 7, 7, 7, { 19*8, 24*8-1,  0*8,  5*8-1 } },	// 7 : 前へ
 	{ 0, 0, 0+20, 0+16, 8, 8, 8, 8, { 19*8, 24*8-1,  5*8, 10*8-1 } },	// 8 : 次へ
+
+	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK P2_CallBack = {
 	CallBack_OnItemList,
@@ -82,6 +86,8 @@ static const CURSORMOVE_DATA P3_CursorPosTbl[] =
 {
 	{ 108, 176, 184+20,  24+16, 0, 0, 0, 1, { 19*8, 24*8-1,  1*8, 26*8-1 } },	// 0 : 使う
 	{ 240, 174,  32+20,  28+16, 1, 1, 0, 1, { 19*8, 24*8-1, 27*8, 32*8-1 } },	// 1 : 戻る
+
+	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK P3_CallBack = {
 	CallBack_On,
