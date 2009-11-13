@@ -98,6 +98,7 @@ static const GFL_G3D_UTIL_SETUP Setup = {
 
 static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work );
 static BOOL CheckArrive(GYM_GROUND_ENT_TMP *tmp);
+static void SetExitLiftDefaultSt(FLD_EXP_OBJ_CNT_PTR ptr);
 
 //--------------------------------------------------------------
 /**
@@ -139,8 +140,7 @@ void GYM_GROUND_ENT_Setup(FIELDMAP_WORK *fieldWork)
       FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
     }
     
-    FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, 1, TRUE);
-    FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, 0, FALSE);
+    SetExitLiftDefaultSt(ptr);
   }
 }
 
@@ -227,7 +227,12 @@ GMEVENT *GYM_GROUND_ENT_CreateExitLiftMoveEvt(GAMESYS_WORK *gsys, const BOOL inE
     //移動後位置→基準位置
     tmp->NowHeight = DOWN_HEIGHT;
     tmp->DstHeight = BASE_HEIGHT;
-    
+    {
+      int obj_idx = OBJ_LIFT_0;
+      FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+      FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, 0, TRUE);
+      FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, 1, FALSE);
+    }
   }
   if ( tmp->DstHeight - tmp->NowHeight < 0 ) tmp->AddVal = -LIFT_MOVE_SPD;
   else tmp->AddVal = LIFT_MOVE_SPD;
@@ -293,11 +298,42 @@ static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work )
     }
     break;
   case 2:
-    //カメラを再バインド
-    if ( (!tmp->Exit)&&(tmp->Watch != NULL) ){
-      FIELD_CAMERA_BindTarget(camera, tmp->Watch);
+    if (tmp->Exit) return GMEVENT_RES_FINISH;
+    else
+    {
+      //カメラを再バインド
+      if ( (tmp->Watch != NULL) ){
+        FIELD_CAMERA_BindTarget(camera, tmp->Watch);
+      }
+      //アニメ開始
+      {
+        EXP_OBJ_ANM_CNT_PTR anm;
+        int obj_idx;
+        int anm_idx;
+        obj_idx = OBJ_LIFT_0;
+        anm_idx = 0;
+        anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, anm_idx );
+        //アニメ停止解除
+        FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+      }
+      //次のシーケンスへ
+      (*seq)++;
     }
-    return GMEVENT_RES_FINISH;
+    break;
+  case 3:
+    {
+      EXP_OBJ_ANM_CNT_PTR anm;
+      int obj_idx;
+      int anm_idx;
+      obj_idx = OBJ_LIFT_0;
+      anm_idx = 0;
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, anm_idx );
+      //アニメ待ち
+      if( FLD_EXP_OBJ_ChkAnmEnd(anm) ){
+        SetExitLiftDefaultSt(ptr);
+        return GMEVENT_RES_FINISH;
+      }
+    }
   }
   return GMEVENT_RES_CONTINUE;
 }
@@ -320,4 +356,27 @@ static BOOL CheckArrive(GYM_GROUND_ENT_TMP *tmp)
   return FALSE;
 }
 
+//--------------------------------------------------------------
+/**
+ * 出口リフトアニメ初期状態セット
+ * @param	  FLD_EXP_OBJ_CNT_PTR ptr   拡張ＯＢＪコントローラポインタ
+ * @return  none
+ */
+//--------------------------------------------------------------
+static void SetExitLiftDefaultSt(FLD_EXP_OBJ_CNT_PTR ptr)
+{
+  EXP_OBJ_ANM_CNT_PTR anm;
+  int obj_idx;
+  int anm_idx;
+  obj_idx = OBJ_LIFT_0;
+  anm_idx = 1;
+
+  FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, 1, TRUE);
+  FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, 0, FALSE);
+  //頭だし
+  FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, anm_idx, 0 );
+  //停止にしておく
+  anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, anm_idx);
+  FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+}
 
