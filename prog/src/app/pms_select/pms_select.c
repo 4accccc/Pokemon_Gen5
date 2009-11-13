@@ -82,6 +82,17 @@ enum
 };
 
 //--------------------------------------------------------------
+///	BG
+//==============================================================
+enum
+{ 
+  PLATE_BG_SX = 29,
+  PLATE_BG_SY = 6,
+  PLATE_BG_START_PY = 1,
+  PLATE_BG_PLTT_OFS_BASE = 0x2,
+};
+
+//--------------------------------------------------------------
 ///	シーケンス
 //==============================================================
 
@@ -327,6 +338,8 @@ static void PLATE_CNT_Trans( PMS_SELECT_MAIN_WORK* wk );
 static BOOL PLATE_UNIT_Trans( PRINT_QUE* print_que, GFL_BMPWIN* win, BOOL *transReq );
 static void PLATE_UNIT_DrawLastMessage( PMS_SELECT_MAIN_WORK* wk, u8 view_pos_id, u8 data_id, BOOL is_select );
 static void PLATE_UNIT_DrawNormal( PMS_SELECT_MAIN_WORK* wk, u8 view_pos_id, u8 data_id, BOOL is_select );
+
+static BOOL TOUCH_IsListArea( void );
 
 
 //=============================================================================
@@ -662,16 +675,6 @@ static void PMSSelect_BG_UnLoadResource( PMS_SELECT_BG_WORK* wk )
 
   GFL_HEAP_FreeMemory( wk->plateScrnWork );
 }
-
-//--------------------------------------------------------------
-///	BG
-//==============================================================
-enum
-{ 
-  PLATE_BG_SX = 29,
-  PLATE_BG_SY = 6,
-  PLATE_BG_PLTT_OFS_BASE = 0x2,
-};
 
 //-----------------------------------------------------------------------------
 /**
@@ -1083,8 +1086,6 @@ static void PLATE_CNT_UpdateCore( PMS_SELECT_MAIN_WORK* wk, BOOL is_check_print_
 //-----------------------------------------------------------------------------
 static void PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
 {
-      
-  
   // キー入力
   if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
   {
@@ -1131,6 +1132,41 @@ static void PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
       HOSAKA_Printf("list_head_id=%d select_id=%d \n", wk->list_head_id, wk->select_id );
     }
   }
+
+  // タッチ入力
+  if( TOUCH_IsListArea() )
+  {
+    u32 px, py;
+
+    if( GFL_UI_TP_GetPointTrg( &px, &py ) )
+    {
+      if( py > PLATE_BG_START_PY * 8 )
+      {
+        // キャラに変換
+        py /= 8;
+        // 先頭までずらし
+        py -= PLATE_BG_START_PY;
+        // リストの場所を取得
+        py /= PLATE_BG_SY;
+
+        // タッチ可能なのは3項目
+        if( py < PMS_SELECT_PMSDRAW_NUM-1 )
+        {
+          wk->select_id =  wk->list_head_id + py;
+          
+//          if( wk->select_id != wk->list_max-1 )
+          {
+            GFL_SOUND_PlaySE( SE_MOVE_CURSOR );
+          }
+
+          HOSAKA_Printf("py = %d, select_id = %d \n", py, wk->select_id );
+          
+          PLATE_CNT_UpdateAll( wk );
+        }
+      }
+    }
+  }
+
 }
 
 //-----------------------------------------------------------------------------
@@ -1273,6 +1309,30 @@ static void PLATE_UNIT_DrawNormal( PMS_SELECT_MAIN_WORK* wk, u8 view_pos_id, u8 
   
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  リストの範囲をタッチしているか？
+ *
+ *	@param	void
+ *
+ *	@retval TRUE : している
+ */
+//-----------------------------------------------------------------------------
+static BOOL TOUCH_IsListArea( void )
+{
+  u32 px, py;
+
+  if( GFL_UI_TP_GetPointTrg( &px, &py ) )
+  {
+    if( px < GX_LCD_SIZE_X - 8 * 3 )
+    {
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
+
 //=============================================================================
 // SCENE
 //=============================================================================
@@ -1338,7 +1398,8 @@ static BOOL ScenePlateSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
   PLATE_CNT_Main( wk );
     
   // @TODO とりあえずタッチでメニューを開く
-  if( (GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ) ) )
+
+  if( TOUCH_IsListArea() || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ) )
   {
     PMS_DATA* pms;
     
