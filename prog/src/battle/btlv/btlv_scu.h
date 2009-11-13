@@ -38,7 +38,8 @@ enum {
 
 
 extern BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainModule,
-                const BTL_POKE_CONTAINER* pokeCon, GFL_TCBLSYS* tcbl, GFL_FONT* defaultFont, u8 playerClientID, HEAPID heapID );
+                const BTL_POKE_CONTAINER* pokeCon, GFL_TCBLSYS* tcbl,
+                GFL_FONT* defaultFont, GFL_FONT* smallFont, u8 playerClientID, HEAPID heapID );
 extern void BTLV_SCU_Delete( BTLV_SCU* wk );
 extern void BTLV_SCU_Setup( BTLV_SCU* wk );
 extern void BTLV_SCU_StartBtlIn( BTLV_SCU* wk );
@@ -58,8 +59,11 @@ extern void BTLV_SCU_StartWazaEffect( BTLV_SCU* wk, BtlvMcssPos atPos, BtlvMcssP
   WazaID waza, BtlvWazaEffect_TurnType turnType, u8 continueCount );
 extern BOOL BTLV_SCU_WaitWazaEffect( BTLV_SCU* wk );
 
-extern void BTLV_SCU_DispTokWin( BTLV_SCU* wk, BtlPokePos pos );
-extern void BTLV_SCU_HideTokWin( BTLV_SCU* wk, BtlPokePos pos );
+extern void BTLV_SCU_TokWin_DispStart( BTLV_SCU* wk, BtlPokePos pos );
+extern BOOL BTLV_SCU_TokWin_DispWait( BTLV_SCU* wk, BtlPokePos pos );
+extern void BTLV_SCU_TokWin_HideStart( BTLV_SCU* wk, BtlPokePos pos );
+extern BOOL BTLV_SCU_TokWin_HideWait( BTLV_SCU* wk, BtlPokePos pos );
+
 extern void BTLV_SCU_TokWin_Renew_Start( BTLV_SCU* wk, BtlPokePos pos );
 extern BOOL BTLV_SCU_TokWin_Renew_Wait( BTLV_SCU* wk, BtlPokePos pos );
 

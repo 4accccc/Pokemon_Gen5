@@ -183,6 +183,7 @@ typedef struct
   HEAPID                heapID;
   GFL_MSGDATA*          msg;
   GFL_FONT*             font;
+  GFL_FONT*             small_font;
 
   int                   seq_no;
   int                   mcs_enable;
@@ -367,10 +368,14 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
     GFL_BG_SetBGControl3D( 1 );
   }
 
+  // フォント
+    pvw->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, TRUE, pvw->heapID );
+    pvw->small_font = GFL_FONT_Create( ARCID_FONT, NARC_font_small_batt_gftr, GFL_FONT_LOADTYPE_FILE, TRUE, pvw->heapID );
+
   //戦闘エフェクト初期化
   {
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, pvw->heapID );
-    BTLV_EFFECT_Init( 0, 0, pvw->heapID );
+    BTLV_EFFECT_Init( 0, 0, pvw->small_font, pvw->heapID );
   }
 
 //  set_pokemon( pvw );
@@ -437,7 +442,6 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
     //メッセージ系初期化
     GFL_FONTSYS_Init();
     pvw->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_soga_dat, pvw->heapID );
-    pvw->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, TRUE, pvw->heapID );
 
     for( i = 0 ; i < BMPWIN_MAX ; i++ ){
       pvw->bmpwin[ i ] = GFL_BMPWIN_Create(
@@ -661,6 +665,7 @@ static GFL_PROC_RESULT PokemonViewerProcExit( GFL_PROC * proc, int * seq, void *
 
   GFL_MSG_Delete( pvw->msg );
   GFL_FONT_Delete( pvw->font );
+  GFL_FONT_Delete( pvw->small_font );
 
   for( i = 0 ; i < BMPWIN_MAX ; i++ ){
     GFL_BMPWIN_Delete( pvw->bmpwin[ i ] );

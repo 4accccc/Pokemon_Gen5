@@ -169,6 +169,7 @@ typedef struct
   HEAPID                heapID;
   GFL_MSGDATA*          msg;
   GFL_FONT*             font;
+  GFL_FONT*             small_font;
 
   int                   seq_no;
   int                   mcs_enable;
@@ -316,10 +317,14 @@ static GFL_PROC_RESULT TrainerViewerProcInit( GFL_PROC * proc, int * seq, void *
     GFL_BG_SetBGControl3D( 1 );
   }
 
+  // フォント作成
+  tvw->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, TRUE, tvw->heapID );
+  tvw->small_font = GFL_FONT_Create( ARCID_FONT, NARC_font_small_gftr, GFL_FONT_LOADTYPE_FILE, TRUE, tvw->heapID );
+
   //戦闘エフェクト初期化
   {
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, tvw->heapID );
-    BTLV_EFFECT_Init( 0, 0, tvw->heapID );
+    BTLV_EFFECT_Init( 0, 0, tvw->small_font, tvw->heapID );
   }
 
   //2D画面初期化
@@ -383,7 +388,6 @@ static GFL_PROC_RESULT TrainerViewerProcInit( GFL_PROC * proc, int * seq, void *
     //メッセージ系初期化
     GFL_FONTSYS_Init();
     tvw->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_soga_dat, tvw->heapID );
-    tvw->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, TRUE, tvw->heapID );
 
     for( i = 0 ; i < BMPWIN_MAX ; i++ ){
       tvw->bmpwin[ i ] = GFL_BMPWIN_Create(
@@ -547,6 +551,7 @@ static GFL_PROC_RESULT TrainerViewerProcExit( GFL_PROC * proc, int * seq, void *
 
   GFL_MSG_Delete( tvw->msg );
   GFL_FONT_Delete( tvw->font );
+  GFL_FONT_Delete( tvw->small_font );
 
   for( i = 0 ; i < BMPWIN_MAX ; i++ ){
     GFL_BMPWIN_Delete( tvw->bmpwin[ i ] );

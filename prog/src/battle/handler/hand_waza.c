@@ -2794,6 +2794,10 @@ static BTL_EVENT_FACTOR*  ADD_Korogaru( u16 pri, WazaID waza, u8 pokeID )
 }
 static void handler_Korogaru_ExeFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  enum {
+    KOROGARU_TURNS = 5,
+  };
+
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     // 自分がワザロック状態になっていないなら、ワザロック状態にする
@@ -2803,17 +2807,16 @@ static void handler_Korogaru_ExeFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
     ){
       BTL_HANDEX_PARAM_ADD_SICK* param;
 
-      u8 turns = 5;
-
       param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
       param->sickID = WAZASICK_WAZALOCK;
-      param->sickCont = BPP_SICKCONT_MakeTurn( turns );
+      param->sickCont = BPP_SICKCONT_MakeTurn( KOROGARU_TURNS );
       param->fAlmost = FALSE;
       param->poke_cnt = 1;
       param->pokeID[0] = pokeID;
 
       work[0] = 0;
       work[ WORKIDX_STICK ] = 1;
+      BTL_Printf("ポケ(%d)がころがる。ワザハンドラ貼り付き\n", pokeID);
     }
   }
 }

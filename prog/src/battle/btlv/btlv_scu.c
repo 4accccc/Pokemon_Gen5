@@ -38,11 +38,12 @@ enum {
   TEST_TOKWIN_CHAR_WIDTH = 10,
   TEST_TOKWIN_DOT_WIDTH  = TEST_TOKWIN_CHAR_WIDTH*8,
 
-  STRBUF_LEN = 512,
+  MAIN_STRBUF_LEN = 512,
+  SUB_STRBUF_LEN  = 32,
   SUBPROC_WORK_SIZE = 64,
 
   PALIDX_MSGWIN     = 0,
-  PALIDX_POKEWIN    = 1,
+  PALIDX_TOKWIN1    = 1,
 
   COLIDX_MSGWIN_CLEAR  = 0x0c,
   COLIDX_MSGWIN_LETTER = 0x01,
@@ -54,7 +55,26 @@ enum {
   MSGWIN_EVB_MIN = 3,
   MSGWIN_EVB_MAX = 16,
   MSGWIN_VISIBLE_STEP = 6,
+
+  BGFRAME_MAIN_MESSAGE  = GFL_BG_FRAME1_M,
+  BGFRAME_TOKWIN_FRIEND = GFL_BG_FRAME2_M,
+  BGFRAME_TOKWIN_ENEMY  = GFL_BG_FRAME3_M,
+
+  TOKWIN_CGRDATA_CHAR_W = 18,   // とくせいウィンドウCGRデータ横キャラ数
+  TOKWIN_DRAWAREA_CHAR_W = 17,  // とくせいウィンドウ書き込み可能領域の横キャラ数
+  TOKWIN_DRAWAREA_CHAR_H = 4,   // とくせいウィンドウ書き込み可能領域の縦キャラ数
+  TOKWIN_CGRDATA_TRANS_SIZE = (TOKWIN_CGRDATA_CHAR_W * TOKWIN_DRAWAREA_CHAR_H * 0x20),
+
+  TOKWIN_DRAWAREA_WIDTH = TOKWIN_DRAWAREA_CHAR_W * 8,
+  TOKWIN_LINE_CROSS_WIDTH = 12, // とくせいウィンドウに書く２行の文字が交差する最低ドット数
+  TOKWIN_DRAWAREA_LINE1_OY = 5,
+  TOKWIN_DRAWAREA_LINE2_OY = 16,
+
+  TOKWIN_MARGIN_R = 4,
+  TOKWIN_MARGIN_L = 4,
+
 };
+
 
 typedef enum {
 
@@ -74,6 +94,13 @@ typedef enum {
 
 }MsgWinState;
 
+typedef enum {
+
+  TOKWIN_SIDE_FRIEND,
+  TOKWIN_SIDE_ENEMY,
+
+}TokwinSide;
+
 /*--------------------------------------------------------------------------*/
 /* Typedefs                                                                 */
 /*--------------------------------------------------------------------------*/
@@ -83,24 +110,25 @@ typedef BOOL (*BtlinEffectSeq)( BTLV_SCU*, int* );
 /* Structures                                                               */
 /*--------------------------------------------------------------------------*/
 typedef struct {
-  GFL_BMPWIN*       win;
-  GFL_BMP_DATA*     bmp;
   const BTL_POKEPARAM*  bpp;
   BTLV_SCU*         parentWk;
-  u16               hp;
   u8                pokePos;
   u8                vpos;
   u8                dispFlag;
+  u8                enableFlag;
 }STATUS_WIN;
 
 typedef struct {
-  GFL_BMPWIN*     win;
+  BTLV_SCU*       parentWk;
   GFL_BMP_DATA*   bmp;
   u16             tokusei;
+  u8              mySide;
   u8              pokeID;
+  u8              seq;
+
   u8              pokePos;
   u8              renewingFlag;
-  BTLV_SCU*     parentWk;
+
 }TOK_WIN;
 
 typedef struct {
@@ -126,15 +154,21 @@ struct _BTLV_SCU {
   PRINT_QUE*      printQue;
   PRINT_UTIL      printUtil;
   GFL_FONT*       defaultFont;
+  GFL_FONT*       smallFont;
   GFL_TCBLSYS*    tcbl;
   PRINT_STREAM*      printStream;
-  STRBUF*            strBuf;
+  STRBUF*            strBufMain;
+  STRBUF*            strBufSubA;
+  STRBUF*            strBufSubB;
 
   u8              taskCounter[TASKTYPE_MAX];
 
 
   STATUS_WIN    statusWin[ BTL_POS_MAX ];
-  TOK_WIN       tokWin[ BTL_POS_MAX ];
+  TOK_WIN       tokWin[ BTL_SIDE_MAX ];
+  void*         tokWinCgrHead;
+  NNSG2dCharacterData*  tokWinCgr;
+
 
   BTL_PROC          proc;
   u8                procWork[ SUBPROC_WORK_SIZE ];
@@ -175,31 +209,25 @@ static BOOL btlinEff_MyPokeInSingle( BTLV_SCU* wk, int* seq );
 static BOOL btlinEff_MyPokeInDouble( BTLV_SCU* wk, int* seq );
 static BOOL btlinEff_MyPokeInTriple( BTLV_SCU* wk, int* seq );
 static u16 btlfinEffsub_getOpponentPokeInStrID( BTLV_SCU* wk, u8 pokeCount );
-static void tokwinRenewTask( GFL_TCBL* tcbl, void* wk_adrs );
-static void taskDamageEffect( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskPokeOutAct( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskPokeInEffect( GFL_TCBL* tcbl, void* wk_adrs );
-static void taskHPGauge( GFL_TCBL* tcbl, void* wk_adrs );
 static void msgWinVisible_Init( MSGWIN_VISIBLE* wk, GFL_BMPWIN* win );
 static void msgWinVisible_Hide( MSGWIN_VISIBLE* wk );
 static void msgWinVisible_Disp( MSGWIN_VISIBLE* wk );
 static BOOL msgWinVisible_Update( MSGWIN_VISIBLE* wk );
 static void statwin_setupAll( BTLV_SCU* wk );
 static void statwin_cleanupAll( BTLV_SCU* wk );
-static void tokwin_setupAll( BTLV_SCU* wk );
-static void tokwin_cleanupAll( BTLV_SCU* wk );
 static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, BtlPokePos pokePos );
 static void statwin_cleanup( STATUS_WIN* stwin );
-static void statwin_reset_data( STATUS_WIN* stwin );
 static void statwin_disp_start( STATUS_WIN* stwin );
-static void statwin_disp( STATUS_WIN* stwin );
-static BOOL statwin_erase( STATUS_WIN* stwin, u8 line );
-static void statwin_update( STATUS_WIN* stwin, u16 hp, u8 col );
-static void tokwin_setup( TOK_WIN* tokwin, BTLV_SCU* wk, BtlPokePos pos );
-static void tokwin_update_cgx( TOK_WIN* tokwin );
-static void tokwin_check_update_cgx( TOK_WIN* tokwin );
-static void tokwin_cleanup( TOK_WIN* tokwin );
-static void tokwin_disp_first( TOK_WIN* tokwin );
+static TokwinSide PokePosToTokwinSide( const BTL_MAIN_MODULE* mainModule, BtlPokePos pos );
+static void tokwinRenewTask( GFL_TCBL* tcbl, void* wk_adrs );
+static void tokwin_setupAll( BTLV_SCU* wk );
+static void tokwin_cleanupAll( BTLV_SCU* wk );
+static void tokwin_disp_first( TOK_WIN* tokwin, BtlPokePos pos );
+static BOOL tokwin_disp_progress( TOK_WIN* tokwin );
+static void tokwin_update_cgr( TOK_WIN* tokwin );
+static void tokwin_check_update_cgr( TOK_WIN* tokwin );
 static void tokwin_hide( TOK_WIN* tokwin );
 static void tokwin_disp( TOK_WIN* tokwin );
 static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, u8 clientID, BTLV_BALL_GAUGE_TYPE type );
@@ -208,7 +236,7 @@ static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, u8 clientID, B
 
 BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore,
   const BTL_MAIN_MODULE* mainModule, const BTL_POKE_CONTAINER* pokeCon,
-  GFL_TCBLSYS* tcbl, GFL_FONT* defaultFont, u8 playerClientID, HEAPID heapID )
+  GFL_TCBLSYS* tcbl, GFL_FONT* defaultFont, GFL_FONT* smallFont, u8 playerClientID, HEAPID heapID )
 {
   BTLV_SCU* wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTLV_SCU) );
 
@@ -218,10 +246,13 @@ BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore,
   wk->heapID = heapID;
   wk->playerClientID = playerClientID;
   wk->defaultFont = defaultFont;
+  wk->smallFont = smallFont;
 
   wk->printStream = NULL;
   wk->tcbl = tcbl;
-  wk->strBuf = GFL_STR_CreateBuffer( STRBUF_LEN, heapID );
+  wk->strBufMain = GFL_STR_CreateBuffer( MAIN_STRBUF_LEN, heapID );
+  wk->strBufSubA = GFL_STR_CreateBuffer( SUB_STRBUF_LEN, heapID );
+  wk->strBufSubB = GFL_STR_CreateBuffer( SUB_STRBUF_LEN, heapID );
   wk->msgwinVisibleFlag = FALSE;
 
   wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
@@ -232,39 +263,38 @@ BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore,
 
 void BTLV_SCU_Setup( BTLV_SCU* wk )
 {
-  // 個別フレーム設定
+  // 個別フレーム設定：メインメッセージウィンドウ用
   static const GFL_BG_BGCNT_HEADER bgcntText = {
     0, 0, 0x800, 0,
     GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-    GX_BG_SCRBASE_0x5000, GX_BG_CHARBASE_0x10000, 0x8000,
+    GX_BG_SCRBASE_0x5800, GX_BG_CHARBASE_0x10000, 0x8000,
     GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
   };
-  // 個別フレーム設定
-  static const GFL_BG_BGCNT_HEADER bgcntTok = {
-    0, 0, 0x800, 0,
-    GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-    GX_BG_SCRBASE_0x5800, GX_BG_CHARBASE_0x08000, 0x8000,
-    GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
-  };
-  // 個別フレーム設定
-  static const GFL_BG_BGCNT_HEADER bgcntStat = {
-    0, 0, 0x2000, 0,
-    GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
+  // 個別フレーム設定：味方側とくせいウィンドウ用
+  static const GFL_BG_BGCNT_HEADER bgcntTok1 = {
+    0, 0, 0x1000, 0,
+    GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
     GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x08000, 0x8000,
-    GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
+    GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+  };
+  // 個別フレーム設定：敵側とくせいウィンドウ用
+  static const GFL_BG_BGCNT_HEADER bgcntTok2 = {
+    0, 0, 0x1000, 0,
+    GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+    GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x08000, 0x8000,
+    GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
   };
   u32 winfrm_charpos;
 
-  GFL_BG_SetBGControl( GFL_BG_FRAME1_M,   &bgcntText,   GFL_BG_MODE_TEXT );
-  GFL_BG_SetBGControl( GFL_BG_FRAME2_M,   &bgcntTok,   GFL_BG_MODE_TEXT );
-  GFL_BG_SetBGControl( GFL_BG_FRAME3_M,   &bgcntStat,   GFL_BG_MODE_TEXT );
+  GFL_BG_SetBGControl( BGFRAME_MAIN_MESSAGE,  &bgcntText,   GFL_BG_MODE_TEXT );
+  GFL_BG_SetBGControl( BGFRAME_TOKWIN_FRIEND, &bgcntTok1,   GFL_BG_MODE_TEXT );
+  GFL_BG_SetBGControl( BGFRAME_TOKWIN_ENEMY,  &bgcntTok2,   GFL_BG_MODE_TEXT );
 
-//  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 0, 0, wk->heapID );
-  PaletteWorkSetEx_Arc( BTLV_EFFECT_GetPfd(), ARCID_FONT, NARC_font_default_nclr, wk->heapID, FADE_MAIN_BG, 0x20,
-        PALIDX_POKEWIN*16, 0 );
+  PaletteWorkSetEx_Arc( BTLV_EFFECT_GetPfd(), ARCID_BATTGRA, NARC_battgra_wb_msgwin_frm_NCLR, wk->heapID,
+      FADE_MAIN_BG, 0x20, PALIDX_MSGWIN*16, 0 );
 
-  PaletteWorkSetEx_Arc( BTLV_EFFECT_GetPfd(), ARCID_BATTGRA, NARC_battgra_wb_msgwin_frm_NCLR, wk->heapID, FADE_MAIN_BG, 0x20,
-        PALIDX_MSGWIN*16, 0 );
+  PaletteWorkSetEx_Arc( BTLV_EFFECT_GetPfd(), ARCID_BATTGRA, NARC_battgra_wb_tokusei_w_NCLR, wk->heapID,
+        FADE_MAIN_BG, 0x40, PALIDX_TOKWIN1*16, PALIDX_TOKWIN1*16 );
 
   //BD面カラーを黒にする
   {
@@ -272,29 +302,31 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
     PaletteWorkSet( BTLV_EFFECT_GetPfd(), &dat, FADE_MAIN_BG, 0, 2 );
   }
 
-  GFL_BG_FillScreen( GFL_BG_FRAME1_M, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-  GFL_BG_FillCharacter( GFL_BG_FRAME1_M, 0x00, 1, 0 );
+  GFL_BG_FillScreen( BGFRAME_MAIN_MESSAGE, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+  GFL_BG_FillCharacter( BGFRAME_MAIN_MESSAGE, 0x00, 1, 0 );
   {
     ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, GFL_HEAP_LOWID(wk->heapID) );
     GFL_ARCUTIL_TRANSINFO transInfo;
     transInfo = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( handle, NARC_battgra_wb_msgwin_frm_NCGR,
-                GFL_BG_FRAME1_M, 0, FALSE, GFL_HEAP_LOWID(wk->heapID) );
+                BGFRAME_MAIN_MESSAGE, 0, FALSE, GFL_HEAP_LOWID(wk->heapID) );
     winfrm_charpos = GFL_ARCUTIL_TRANSINFO_GetPos( transInfo );
     GFL_ARC_CloseDataHandle( handle );
   }
 
-  GFL_BG_FillCharacter( GFL_BG_FRAME3_M, 0x00, 1, 0 );
-  GFL_BG_FillCharacter( GFL_BG_FRAME3_M, 0xff, 1, 1 );
-  GFL_BG_FillScreen( GFL_BG_FRAME2_M, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-//  GFL_BG_FillScreen( GFL_BG_FRAME3_M, 0x0001, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-  GFL_BG_FillScreen( GFL_BG_FRAME3_M, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 
+//  GFL_BG_FillScreen( BGFRAME_TOKWIN_FRIEND, 0x0000, 0, 0, 64, 32, GFL_BG_SCRWRT_PALIN );
+//  GFL_BG_FillScreen( BGFRAME_TOKWIN_ENEMY,  0x0000, 0, 0, 64, 32, GFL_BG_SCRWRT_PALIN );
+  GFL_ARC_UTIL_TransVramBgCharacterAreaMan( ARCID_BATTGRA, NARC_battgra_wb_tokusei_w_NCGR, BGFRAME_TOKWIN_FRIEND,
+                              0, FALSE, wk->heapID );
+  GFL_ARC_UTIL_TransVramScreen( ARCID_BATTGRA, NARC_battgra_wb_tokusei_w01_NSCR, BGFRAME_TOKWIN_FRIEND,
+          0, 0, FALSE, wk->heapID );
+  GFL_ARC_UTIL_TransVramScreen( ARCID_BATTGRA, NARC_battgra_wb_tokusei_w02_NSCR, BGFRAME_TOKWIN_ENEMY,
+          0, 0, FALSE, wk->heapID );
 
-  wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME1_M, 1, 19, 30, 4, PALIDX_MSGWIN, GFL_BMP_CHRAREA_GET_F );
+  wk->win = GFL_BMPWIN_Create( BGFRAME_MAIN_MESSAGE, 1, 19, 30, 4, PALIDX_MSGWIN, GFL_BMP_CHRAREA_GET_F );
   wk->bmp = GFL_BMPWIN_GetBmp( wk->win );
   GFL_BMPWIN_MakeScreen( wk->win );
 
-//    GFL_BG_FillCharacter( GFL_BG_FRAME1_M, 0xaa, 9, 1 );
   GFL_BMPWIN_MakeFrameScreen( wk->win, winfrm_charpos, PALIDX_MSGWIN );
 
   GFL_BMP_Clear( wk->bmp, COLIDX_MSGWIN_CLEAR );
@@ -305,15 +337,15 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
   statwin_setupAll( wk );
   tokwin_setupAll( wk );
 
-  GFL_BG_LoadScreenReq( GFL_BG_FRAME1_M );
-  GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
-  GFL_BG_LoadScreenReq( GFL_BG_FRAME3_M );
+  GFL_BG_LoadScreenReq( BGFRAME_MAIN_MESSAGE  );
+  GFL_BG_LoadScreenReq( BGFRAME_TOKWIN_FRIEND );
+  GFL_BG_LoadScreenReq( BGFRAME_TOKWIN_ENEMY  );
 
 //  GFL_BG_SetVisible( GFL_BG_FRAME0_M,   VISIBLE_OFF );
   GFL_BG_SetVisible( GFL_BG_FRAME0_M,   VISIBLE_ON );
-  GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_ON  );
-  GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_ON  );
-  GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_ON );
+  GFL_BG_SetVisible( BGFRAME_MAIN_MESSAGE,   VISIBLE_ON  );
+  GFL_BG_SetVisible( BGFRAME_TOKWIN_FRIEND,  VISIBLE_ON  );
+  GFL_BG_SetVisible( BGFRAME_TOKWIN_ENEMY,   VISIBLE_ON );
   ///<obj
   GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 }
@@ -324,12 +356,14 @@ void BTLV_SCU_Delete( BTLV_SCU* wk )
   statwin_cleanupAll( wk );
 
   GFL_BMPWIN_Delete( wk->win );
-  GFL_BG_FreeBGControl( GFL_BG_FRAME1_M );
-  GFL_BG_FreeBGControl( GFL_BG_FRAME2_M );
+  GFL_BG_FreeBGControl( BGFRAME_MAIN_MESSAGE );
+  GFL_BG_FreeBGControl( BGFRAME_TOKWIN_FRIEND );
   GFL_BG_FreeBGControl( GFL_BG_FRAME3_M );
 
   PRINTSYS_QUE_Delete( wk->printQue );
-  GFL_STR_DeleteBuffer( wk->strBuf );
+  GFL_STR_DeleteBuffer( wk->strBufSubB );
+  GFL_STR_DeleteBuffer( wk->strBufSubA );
+  GFL_STR_DeleteBuffer( wk->strBufMain );
 
   GFL_HEAP_FreeMemory( wk );
 }
@@ -476,8 +510,8 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
   case 2:
     if( !BTLV_EFFECT_CheckExecute() )
     {
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount_Wild1, 1, subwk->pokeID );
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
+      BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_Encount_Wild1, 1, subwk->pokeID );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
     break;
@@ -509,8 +543,8 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
       subwk->pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pokePos );
       subwk->pokeID = BPP_GetID( subwk->pp );
 
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle, 1, subwk->pokeID );
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
+      BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_PutSingle, 1, subwk->pokeID );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
     break;
@@ -594,8 +628,8 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
 
       bbgp_make( wk, &bbgp, subwk->clientID, BTLV_BALL_GAUGE_TYPE_ENEMY );
       BTLV_EFFECT_SetBallGauge( &bbgp );
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount_NPC1, 1, subwk->clientID );
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
+      BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_Encount_NPC1, 1, subwk->clientID );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
     break;
@@ -612,8 +646,8 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
         ( !BTLV_EFFECT_CheckExecute() ) )
     {
       TrainerID  trID = BTL_MAIN_GetTrainerID( wk->mainModule );
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle_NPC, 2, 1, subwk->pokeID );
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
+      BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_PutSingle_NPC, 2, 1, subwk->pokeID );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
     break;
@@ -659,8 +693,8 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
       subwk->pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pokePos );
       subwk->pokeID = BPP_GetID( subwk->pp );
 
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle, 1, subwk->pokeID );
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
+      BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_PutSingle, 1, subwk->pokeID );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
     break;
@@ -746,8 +780,8 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
       subwk[1].pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk[1].pos );
       subwk[1].pokeID = BPP_GetID( subwk[1].pp );
 
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount_Wild2, 2, subwk[0].pokeID, subwk[1].pokeID );
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
+      BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_Encount_Wild2, 2, subwk[0].pokeID, subwk[1].pokeID );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
       GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
       (*seq)++;
     }
@@ -780,11 +814,11 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
       subwk[1].pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk[1].pos );
       subwk[1].pokeID = BPP_GetID( subwk[1].pp );
       if( !BPP_IsDead(subwk[1].pp) ){
-        BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutDouble, 2, subwk[0].pokeID, subwk[1].pokeID );
+        BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_PutDouble, 2, subwk[0].pokeID, subwk[1].pokeID );
       }else{
-        BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle, 1, subwk[0].pokeID );
+        BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_PutSingle, 1, subwk[0].pokeID );
       }
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
     break;
@@ -901,8 +935,8 @@ static BOOL btlin_comm_double_multi( int* seq, void* wk_adrs )
       subwk[1].pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk[1].pos );
       subwk[1].pokeID = BPP_GetID( subwk[1].pp );
 
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount_Wild2, 2, subwk[0].pokeID, subwk[1].pokeID );
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
+      BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_Encount_Wild2, 2, subwk[0].pokeID, subwk[1].pokeID );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
       GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
       (*seq)++;
     }
@@ -935,8 +969,8 @@ static BOOL btlin_comm_double_multi( int* seq, void* wk_adrs )
       subwk[1].pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk[1].pos );
       subwk[1].pokeID = BPP_GetID( subwk[1].pp );
 
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutDouble, 2, subwk[0].pokeID, subwk[1].pokeID );
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
+      BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_PutDouble, 2, subwk[0].pokeID, subwk[1].pokeID );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
     break;
@@ -1082,8 +1116,8 @@ static BOOL  btlinEff_OpponentTrainerIn( BTLV_SCU* wk, int* seq )
       bbgp_make( wk, &bbgp, subwk->enemyClientID, BTLV_BALL_GAUGE_TYPE_ENEMY );
       BTLV_EFFECT_SetBallGauge( &bbgp );
 
-      BTL_STR_MakeStringStd( wk->strBuf, strID, 1, subwk->enemyClientID );
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
+      BTL_STR_MakeStringStd( wk->strBufMain, strID, 1, subwk->enemyClientID );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
     break;
@@ -1138,8 +1172,8 @@ static BOOL btlinEff_OpponentPokeInSingle( BTLV_SCU* wk, int* seq )
       subwk->pokeID = BPP_GetID( subwk->bpp );
 
       strID = btlfinEffsub_getOpponentPokeInStrID( wk, 1 );
-      BTL_STR_MakeStringStd( wk->strBuf, strID, 2, subwk->clientID, subwk->pokeID );
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
+      BTL_STR_MakeStringStd( wk->strBufMain, strID, 2, subwk->clientID, subwk->pokeID );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
     break;
@@ -1212,8 +1246,8 @@ static BOOL btlinEff_OpponentPokeInDouble( BTLV_SCU* wk, int* seq )
       }
 
       strID = btlfinEffsub_getOpponentPokeInStrID( wk, subwk->aliveCnt );
-      BTL_STR_MakeStringStd( wk->strBuf, strID, 3, subwk->clientID, subwk->pokeID[0], subwk->pokeID[1] );
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
+      BTL_STR_MakeStringStd( wk->strBufMain, strID, 3, subwk->clientID, subwk->pokeID[0], subwk->pokeID[1] );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
     break;
@@ -1293,8 +1327,8 @@ static BOOL btlinEff_OpponentPokeInTriple( BTLV_SCU* wk, int* seq )
       }
 
       strID = btlfinEffsub_getOpponentPokeInStrID( wk, subwk->aliveCnt );
-      BTL_STR_MakeStringStd( wk->strBuf, strID, 4, subwk->clientID, subwk->pokeID[0], subwk->pokeID[1], subwk->pokeID[2] );
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
+      BTL_STR_MakeStringStd( wk->strBufMain, strID, 4, subwk->clientID, subwk->pokeID[0], subwk->pokeID[1], subwk->pokeID[2] );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
     break;
@@ -1390,8 +1424,8 @@ static BOOL btlinEff_MyPokeInSingle( BTLV_SCU* wk, int* seq )
       subwk->bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pos );
       subwk->pokeID = BPP_GetID( subwk->bpp );
 
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle, 1, subwk->pokeID );
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
+      BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_PutSingle, 1, subwk->pokeID );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
     break;
@@ -1484,8 +1518,8 @@ static BOOL btlinEff_MyPokeInDouble( BTLV_SCU* wk, int* seq )
       }
 
       strID = ( subwk->aliveCnt == 2 )? BTL_STRID_STD_PutDouble : BTL_STRID_STD_PutSingle;
-      BTL_STR_MakeStringStd( wk->strBuf, strID, 2, subwk->pokeID[0], subwk->pokeID[1] );
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
+      BTL_STR_MakeStringStd( wk->strBufMain, strID, 2, subwk->pokeID[0], subwk->pokeID[1] );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
     break;
@@ -1588,8 +1622,8 @@ static BOOL btlinEff_MyPokeInTriple( BTLV_SCU* wk, int* seq )
       }else{
         strID = ( subwk->aliveCnt == 2 )? BTL_STRID_STD_PutDouble : BTL_STRID_STD_PutSingle;
       }
-      BTL_STR_MakeStringStd( wk->strBuf, strID, 3, subwk->pokeID[0], subwk->pokeID[1], subwk->pokeID[2] );
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
+      BTL_STR_MakeStringStd( wk->strBufMain, strID, 3, subwk->pokeID[0], subwk->pokeID[1], subwk->pokeID[2] );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
     break;
@@ -1665,106 +1699,6 @@ static u16 btlfinEffsub_getOpponentPokeInStrID( BTLV_SCU* wk, u8 pokeCount )
     return BTL_STRID_STD_PutTriple_Player;
   }
 }
-
-
-//=============================================================================================
-/**
- * とくせいウィンドウ表示オン
- *
- * @param   wk
- * @param   pos
- *
- */
-//=============================================================================================
-void BTLV_SCU_DispTokWin( BTLV_SCU* wk, BtlPokePos pos )
-{
-  tokwin_disp_first( &wk->tokWin[pos] );
-}
-//=============================================================================================
-/**
- * とくせいウィンドウ表示オフ
- *
- * @param   wk
- * @param   clientID
- *
- */
-//=============================================================================================
-void BTLV_SCU_HideTokWin( BTLV_SCU* wk, BtlPokePos pos )
-{
-  tokwin_hide( &wk->tokWin[pos] );
-}
-
-//----------------------------------------------
-
-typedef struct {
-
-  TOK_WIN*  tokwin;
-  u16       seq;
-  u16       timer;
-  u16       count;
-
-}TOKWIN_RENEW_WORK;
-
-//=============================================================================================
-/**
- * とくせいウィンドウの内容更新（開始）
- *
- * @param   wk
- * @param   pos
- *
- */
-//=============================================================================================
-void BTLV_SCU_TokWin_Renew_Start( BTLV_SCU* wk, BtlPokePos pos )
-{
-  GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, tokwinRenewTask, sizeof(TOKWIN_RENEW_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
-  TOKWIN_RENEW_WORK* twk = GFL_TCBL_GetWork( tcbl );
-
-  twk->tokwin = &wk->tokWin[pos];
-  twk->tokwin->renewingFlag = TRUE;
-  twk->seq = 0;
-  twk->timer = 0;
-  twk->count = 0;
-}
-//=============================================================================================
-/**
- * とくせいウィンドウの内容更新（終了待ち）
- *
- * @param   wk
- * @param   pos
- *
- * @retval  BOOL    終了したらTRUE
- */
-//=============================================================================================
-BOOL BTLV_SCU_TokWin_Renew_Wait( BTLV_SCU* wk, BtlPokePos pos )
-{
-  return (wk->tokWin[pos].renewingFlag == FALSE);
-}
-
-// とくせいウィンドウの内容更新タスク
-static void tokwinRenewTask( GFL_TCBL* tcbl, void* wk_adrs )
-{
-  TOKWIN_RENEW_WORK* wk = wk_adrs;
-
-  if( ++(wk->timer) > 4 )
-  {
-    wk->timer = 0;
-    wk->count++;
-    if( wk->count & 1 ){
-      tokwin_hide( wk->tokwin );
-      if( wk->count == 11 ){
-        tokwin_check_update_cgx( wk->tokwin );
-      }
-    }else{
-      tokwin_disp( wk->tokwin );
-      if( wk->count == 20 ){
-        wk->tokwin->renewingFlag = FALSE;
-        GFL_TCBL_Delete( tcbl );
-      }
-    }
-  }
-}
-
-//----------------------------------------------
 
 //=============================================================================================
 /**
@@ -2013,37 +1947,6 @@ BOOL BTLV_SCU_WaitWazaDamageAct( BTLV_SCU* wk )
   return !( BTLV_EFFECT_CheckExecute() | BTLV_EFFECT_CheckExecuteGauge() );
 }
 
-static void taskDamageEffect( GFL_TCBL* tcbl, void* wk_adrs )
-{
-  DMG_EFF_TASK_WORK* wk = wk_adrs;
-
-  if( wk->timer )
-  {
-    u16 hp;
-    u8 col;
-
-    if( --(wk->timer) )
-    {
-      wk->hpVal -= wk->hpMinusVal;
-      hp = wk->hpVal >> FX32_SHIFT;
-      col = ((wk->timer % 16) <= 7)? TEST_STATWIN_BGCOL : TEST_STATWIN_BGCOL_FLASH;
-      statwin_update( wk->statWin, hp, col );
-    }
-    else
-    {
-      statwin_update( wk->statWin, wk->hpEnd, TEST_STATWIN_BGCOL );
-    }
-  }
-  else
-  {
-    if( !BTLV_EFFECT_CheckExecute() )
-    {
-      (*(wk->taskCounter))--;
-      GFL_TCBL_Delete( tcbl );
-    }
-  }
-}
-
 //=============================================================================================
 /**
  * ポケモンひんしアクション開始
@@ -2180,14 +2083,10 @@ static void taskPokeInEffect( GFL_TCBL* tcbl, void* wk_adrs )
 
   switch( wk->seq ){
   case 0:
-    statwin_reset_data( wk->statWin );
-    wk->seq++;
-    break;
-  case 1:
     statwin_disp_start( wk->statWin );
     wk->seq++;
     break;
-  case 2:
+  case 1:
     *(wk->endFlag) = TRUE;
     GFL_TCBL_Delete( tcbl );
   }
@@ -2238,35 +2137,6 @@ BOOL BTLV_SCU_WaitHPGauge( BTLV_SCU* wk )
   return !(BTLV_EFFECT_CheckExecuteGauge());
 }
 
-static void taskHPGauge( GFL_TCBL* tcbl, void* wk_adrs )
-{
-  HP_GAUGE_EFFECT* wk = wk_adrs;
-  if( wk->timer )
-  {
-    u16 hp;
-    u8 col;
-
-    if( --(wk->timer) )
-    {
-      wk->hpVal += wk->hpAddVal;
-      hp = wk->hpVal >> FX32_SHIFT;
-      statwin_update( wk->statWin, hp, TEST_STATWIN_BGCOL );
-    }
-    else
-    {
-      statwin_update( wk->statWin, wk->hpEnd, TEST_STATWIN_BGCOL );
-    }
-  }
-  else
-  {
-    if( !BTLV_EFFECT_CheckExecute() )
-    {
-      (*(wk->taskCounter))--;
-      GFL_TCBL_Delete( tcbl );
-    }
-  }
-}
-
 //=============================================================================================
 /**
  * HPゲージのムーブ動作を開始
@@ -2278,15 +2148,6 @@ static void taskHPGauge( GFL_TCBL* tcbl, void* wk_adrs )
 //=============================================================================================
 void BTLV_SCU_MoveGauge_Start( BTLV_SCU* wk, BtlPokePos pos1, BtlPokePos pos2 )
 {
-  statwin_cleanup( &wk->statusWin[ pos1 ] );
-  statwin_cleanup( &wk->statusWin[ pos2 ] );
-
-  statwin_setup( &wk->statusWin[ pos1 ], wk, pos1 );
-  statwin_setup( &wk->statusWin[ pos2 ], wk, pos2 );
-
-  statwin_reset_data( &wk->statusWin[ pos1 ] );
-  statwin_reset_data( &wk->statusWin[ pos2 ] );
-
   statwin_disp_start( &wk->statusWin[ pos1 ] );
   statwin_disp_start( &wk->statusWin[ pos2 ] );
 }
@@ -2432,8 +2293,10 @@ static void statwin_setupAll( BTLV_SCU* wk )
   u32 pos_end;
   u32 i;
 
-  for(i=0; i<NELEMS(wk->statusWin); i++){
-    wk->statusWin[i].win = NULL;
+  for(i=0; i<=NELEMS(wk->statusWin); ++i)
+  {
+    wk->statusWin[i].enableFlag = FALSE;
+    wk->statusWin[i].bpp = NULL;
   }
 
   pos_end = BTL_MAIN_GetEnablePosEnd( wk->mainModule );
@@ -2445,203 +2308,287 @@ static void statwin_setupAll( BTLV_SCU* wk )
 static void statwin_cleanupAll( BTLV_SCU* wk )
 {
   int i;
-  for(i=0; i<NELEMS(wk->statusWin); i++)
+  for(i=0; i<NELEMS(wk->statusWin); i++){
+    statwin_cleanup( &wk->statusWin[i] );
+  }
+}
+
+static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, BtlPokePos pokePos )
+{
+  stwin->pokePos = pokePos;
+  stwin->vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pokePos );
+  stwin->parentWk = wk;
+  stwin->dispFlag = FALSE;
+  stwin->enableFlag = TRUE;
+  stwin->bpp = NULL;
+}
+
+static void statwin_cleanup( STATUS_WIN* stwin )
+{
+  if( stwin->enableFlag )
   {
-    if( wk->statusWin[i].win != NULL)
+    if( stwin->dispFlag ){
+      BTLV_EFFECT_DelGauge( stwin->vpos );
+      stwin->dispFlag = FALSE;
+    }
+    stwin->bpp = NULL;
+    stwin->enableFlag = FALSE;
+  }
+}
+
+static void statwin_disp_start( STATUS_WIN* stwin )
+{
+  if( stwin->enableFlag )
+  {
+    stwin->bpp = BTL_POKECON_GetFrontPokeDataConst( stwin->parentWk->pokeCon, stwin->pokePos );
+    if( !BPP_IsDead(stwin->bpp) )
     {
-      statwin_cleanup( &wk->statusWin[i] );
+      BTLV_EFFECT_SetGauge( stwin->bpp, stwin->vpos );
+      stwin->dispFlag = TRUE;
+    }
+  }
+  else
+  {
+    GF_ASSERT(0);
+  }
+}
+
+
+//----------------------------------------------------------------------------------------------
+// とくせいウィンドウ
+//----------------------------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------------
+/**
+ * 戦闘位置 -> とくせいウィンドウ位置へ変換
+ *
+ * @param   mainModule
+ * @param   pos
+ *
+ * @retval  TokwinSide
+ */
+//----------------------------------------------------------------------------------
+static TokwinSide PokePosToTokwinSide( const BTL_MAIN_MODULE* mainModule, BtlPokePos pos )
+{
+  BtlSide btlSide = BTL_MAINUTIL_PosToSide( pos );
+  return BTL_MAIN_IsPlayerSide( mainModule, btlSide )? TOKWIN_SIDE_FRIEND : TOKWIN_SIDE_ENEMY;
+}
+
+//=============================================================================================
+/**
+ * とくせいウィンドウ表示開始
+ *
+ * @param   wk
+ * @param   pos
+ *
+ */
+//=============================================================================================
+void BTLV_SCU_TokWin_DispStart( BTLV_SCU* wk, BtlPokePos pos )
+{
+  TokwinSide side = PokePosToTokwinSide( wk->mainModule, pos );
+  tokwin_disp_first( &wk->tokWin[side], pos );
+}
+BOOL BTLV_SCU_TokWin_DispWait( BTLV_SCU* wk, BtlPokePos pos )
+{
+  TokwinSide side = PokePosToTokwinSide( wk->mainModule, pos );
+  return tokwin_disp_progress( &wk->tokWin[side] );
+}
+
+
+//=============================================================================================
+/**
+ * とくせいウィンドウ表示オフ
+ *
+ * @param   wk
+ * @param   clientID
+ *
+ */
+//=============================================================================================
+void BTLV_SCU_TokWin_HideStart( BTLV_SCU* wk, BtlPokePos pos )
+{
+  BtlSide side = BTL_MAINUTIL_PosToSide( pos );
+  tokwin_hide( &wk->tokWin[side] );
+}
+BOOL BTLV_SCU_TokWin_HideWait( BTLV_SCU* wk, BtlPokePos pos )
+{
+  // @todo あとで
+  return TRUE;
+}
+
+//----------------------------------------------
+
+typedef struct {
+
+  TOK_WIN*  tokwin;
+  u16       seq;
+  u16       timer;
+  u16       count;
+
+}TOKWIN_RENEW_WORK;
+
+//=============================================================================================
+/**
+ * とくせいウィンドウの内容更新（開始）
+ *
+ * @param   wk
+ * @param   pos
+ *
+ */
+//=============================================================================================
+void BTLV_SCU_TokWin_Renew_Start( BTLV_SCU* wk, BtlPokePos pos )
+{
+  GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, tokwinRenewTask, sizeof(TOKWIN_RENEW_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
+  TOKWIN_RENEW_WORK* twk = GFL_TCBL_GetWork( tcbl );
+  BtlSide side = BTL_MAINUTIL_PosToSide( pos );
+
+  twk->tokwin = &wk->tokWin[pos];
+  twk->tokwin->renewingFlag = TRUE;
+  twk->seq = 0;
+  twk->timer = 0;
+  twk->count = 0;
+}
+//=============================================================================================
+/**
+ * とくせいウィンドウの内容更新（終了待ち）
+ *
+ * @param   wk
+ * @param   pos
+ *
+ * @retval  BOOL    終了したらTRUE
+ */
+//=============================================================================================
+BOOL BTLV_SCU_TokWin_Renew_Wait( BTLV_SCU* wk, BtlPokePos pos )
+{
+  return (wk->tokWin[pos].renewingFlag == FALSE);
+}
+
+// とくせいウィンドウの内容更新タスク
+static void tokwinRenewTask( GFL_TCBL* tcbl, void* wk_adrs )
+{
+  TOKWIN_RENEW_WORK* wk = wk_adrs;
+
+  if( ++(wk->timer) > 4 )
+  {
+    wk->timer = 0;
+    wk->count++;
+    if( wk->count & 1 ){
+      tokwin_hide( wk->tokwin );
+      if( wk->count == 11 ){
+        tokwin_check_update_cgr( wk->tokwin );
+      }
+    }else{
+      tokwin_disp( wk->tokwin );
+      if( wk->count == 20 ){
+        wk->tokwin->renewingFlag = FALSE;
+        GFL_TCBL_Delete( tcbl );
+      }
     }
   }
 }
 
 static void tokwin_setupAll( BTLV_SCU* wk )
 {
-  u32 pos_end;
   u32 i;
 
-  for(i=0; i<NELEMS(wk->tokWin); i++){
-    wk->tokWin[i].win = NULL;
-  }
+  wk->tokWinCgrHead = GFL_ARC_UTIL_LoadBGCharacter( ARCID_BATTGRA, NARC_battgra_wb_tokusei_w_NCGR,
+                        FALSE, &wk->tokWinCgr, wk->heapID );
 
-  pos_end = BTL_MAIN_GetEnablePosEnd( wk->mainModule );
-  for(i=0; i<=pos_end; ++i){
-    tokwin_setup( &wk->tokWin[ i ], wk, i );
+  for(i=0; i<NELEMS(wk->tokWin); ++i)
+  {
+    wk->tokWin[i].parentWk = wk;
+    wk->tokWin[i].mySide = i;
+    wk->tokWin[i].bmp = GFL_BMP_Create( TOKWIN_CGRDATA_CHAR_W, TOKWIN_DRAWAREA_CHAR_H, GFL_BMP_16_COLOR, wk->heapID );
+    wk->tokWin[i].tokusei = POKETOKUSEI_NULL;
+    wk->tokWin[i].pokeID = BTL_POKEID_NULL;
   }
 }
-
 static void tokwin_cleanupAll( BTLV_SCU* wk )
 {
   int i;
   for(i=0; i<NELEMS(wk->tokWin); i++)
   {
-    if( wk->tokWin[i].win != NULL)
+    if( wk->tokWin[i].bmp != NULL ){
+      GFL_BMP_Delete( wk->tokWin[i].bmp );
+      wk->tokWin[i].bmp = NULL;
+    }
+  }
+  GFL_HEAP_FreeMemory( wk->tokWinCgrHead );
+}
+// 表示開始
+static void tokwin_disp_first( TOK_WIN* tokwin, BtlPokePos pos )
+{
+  const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( tokwin->parentWk->pokeCon, pos );
+  u16 tokusei = BPP_GetValue( bpp, BPP_TOKUSEI );
+  u8  pokeID = BPP_GetID( bpp );
+
+  if( (tokusei != tokwin->tokusei) || (pokeID != tokwin->pokeID) )
+  {
+    tokwin->tokusei = tokusei;
+    tokwin->pokeID = pokeID;
+
+    tokwin_update_cgr( tokwin );
+  }
+
+  tokwin->seq = 0;
+}
+// 表示更新
+static BOOL tokwin_disp_progress( TOK_WIN* tokwin )
+{
+  return FALSE;
+}
+
+// CGR更新
+static void tokwin_update_cgr( TOK_WIN* tokwin )
+{
+  BTLV_SCU* wk = tokwin->parentWk;
+
+  // 自前CGR領域を元データで初期化する
+  {
+    u32 bmp_size = GFL_BMP_GetBmpDataSize( tokwin->bmp );
+    u8* dst_p = GFL_BMP_GetCharacterAdrs( tokwin->bmp );
+    u8* src_p = ((u8*)(tokwin->parentWk->tokWinCgr->pRawData)) + (tokwin->mySide * TOKWIN_CGRDATA_TRANS_SIZE);
+    GFL_STD_MemCopy32( src_p, dst_p, bmp_size );
+  }
+
+  {
+    u32 width[ 2 ];
+    u8  lines;
+
+    // ２行ある場合、文字列をイイ感じに配置する
+    BTL_STR_MakeStringStd( wk->strBufSubA, BTL_STRID_STD_TokWin, tokwin->pokeID, tokwin->tokusei );
+    lines = PRINTSYS_GetStrLineWidth( wk->strBufSubA, wk->smallFont, 0, width, NELEMS(width) );
+    if( lines > 1 )
     {
-      tokwin_cleanup( &wk->tokWin[i] );
+      int line1_end  = TOKWIN_MARGIN_R + width[0];
+      int line2_head = TOKWIN_DRAWAREA_WIDTH - TOKWIN_MARGIN_L - width[1];
+      int diff = line1_end - line2_head;
+      if( diff < TOKWIN_LINE_CROSS_WIDTH )
+      {
+        diff = TOKWIN_LINE_CROSS_WIDTH - diff;
+        line1_end += (diff / 2);
+        line2_head -= (diff - (diff / 2));
+      }
+
+      PRINTSYS_CopyLineStr( wk->strBufSubA, wk->strBufSubB, 0 );
+      PRINTSYS_Print( tokwin->bmp, line1_end-width[0], TOKWIN_DRAWAREA_LINE1_OY, wk->strBufSubB, wk->smallFont );
+
+      PRINTSYS_CopyLineStr( wk->strBufSubA, wk->strBufSubB, 1 );
+      PRINTSYS_Print( tokwin->bmp, line2_head, TOKWIN_DRAWAREA_LINE2_OY, wk->strBufSubB, wk->smallFont );
+    }
+    // １行なら単純なセンタリング表示
+    else
+    {
+      int xpos = (TOKWIN_DRAWAREA_WIDTH - PRINTSYS_GetStrWidth(wk->strBufSubA, wk->smallFont, 0)) / 2;
+      if( xpos < 0 ){
+        xpos = 0;
+      }
+      PRINTSYS_Print( tokwin->bmp, xpos, TOKWIN_DRAWAREA_LINE2_OY, wk->strBufSubA, wk->smallFont );
     }
   }
 }
 
-
-
-
-static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, BtlPokePos pokePos )
-{
-  enum {
-    STATWIN_WIDTH = 7,
-    STATWIN_HEIGHT = 4,
-  };
-  static const struct {
-    u8 x;
-    u8 y;
-  } winpos[] = {
-    { 18, 13 },
-    {  4,  2 },
-
-    { 17, 13 },
-    {  8,  2 },
-    { 25, 14 },
-    {  0,  1 },
-  };
-
-  u8 viewPos, px, py;
-
-  stwin->pokePos = pokePos;
-  stwin->parentWk = wk;
-
-  viewPos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pokePos );
-
-  px = winpos[viewPos].x;
-  py = winpos[viewPos].y;
-
-
-  stwin->win = GFL_BMPWIN_Create( GFL_BG_FRAME3_M, px, py, STATWIN_WIDTH, STATWIN_HEIGHT,
-      PALIDX_POKEWIN, GFL_BMP_CHRAREA_GET_F );
-  stwin->bmp = GFL_BMPWIN_GetBmp( stwin->win );
-
-  stwin->dispFlag = FALSE;
-  stwin->vpos = viewPos;
-
-  statwin_reset_data( stwin );
-}
-
-static void statwin_cleanup( STATUS_WIN* stwin )
-{
-  GFL_BMPWIN_Delete( stwin->win );
-  if( stwin->dispFlag ){
-    BTLV_EFFECT_DelGauge( stwin->vpos );
-    stwin->dispFlag = FALSE;
-  }
-}
-
-static void statwin_reset_data( STATUS_WIN* stwin )
-{
-  BTLV_SCU* wk = stwin->parentWk;
-
-  stwin->bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, stwin->pokePos );
-  stwin->hp = BPP_GetValue( stwin->bpp, BPP_HP );
-
-  GFL_BMP_Clear( stwin->bmp, TEST_STATWIN_BGCOL );
-  BTL_STR_MakeStatusWinStr( wk->strBuf, stwin->bpp, stwin->hp );
-  PRINTSYS_Print( stwin->bmp, 0, 0, wk->strBuf, wk->defaultFont );
-}
-
-
-static void statwin_disp_start( STATUS_WIN* stwin )
-{
-  if( !BPP_IsDead(stwin->bpp) )
-  {
-    u8 viewPos = BTL_MAIN_BtlPosToViewPos( stwin->parentWk->mainModule, stwin->pokePos );
-    BTLV_EFFECT_SetGauge( stwin->bpp, viewPos );
-    stwin->dispFlag = TRUE;
-  }
-}
-
-static void statwin_disp( STATUS_WIN* stwin )
-{
-  GFL_BMPWIN_MakeScreen( stwin->win );
-  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(stwin->win) );
-}
-
-// １行ずつ消す。全部消えたらTRUE
-static BOOL statwin_erase( STATUS_WIN* stwin, u8 line )
-{
-  // @todo 未対応？
-  return TRUE;
-}
-
-static void statwin_update( STATUS_WIN* stwin, u16 hp, u8 col )
-{
-  BTLV_SCU* wk = stwin->parentWk;
-
-  stwin->hp = hp;
-
-  GFL_BMP_Clear( stwin->bmp, col );
-  BTL_STR_MakeStatusWinStr( wk->strBuf, stwin->bpp, stwin->hp );
-  PRINTSYS_Print( stwin->bmp, 0, 0, wk->strBuf, wk->defaultFont );
-  GFL_BMPWIN_TransVramCharacter( stwin->win );
-}
-
-//----------------------------
-
-static void tokwin_setup( TOK_WIN* tokwin, BTLV_SCU* wk, BtlPokePos pos )
-{
-  static const struct {
-    u8 x;
-    u8 y;
-  } winpos[] = {
-    {  4, 14 },   // VPOS_AA
-    { 18,  3 },   // VPOS_BB
-    {  2, 14 },   // VPOS_A
-    { 20,  4 },   // VPOS_B
-    {  6, 15 },   // VPOS_C
-    { 15,  3 },   // VPOS_D
-    {  4, 16 },   // VPOS_E
-    { 18,  1 },   // VPOS_F
-  };
-
-  u8 isPlayer, playerClientID, px, py;
-  u8 vpos;
-
-  tokwin->parentWk = wk;
-  tokwin->pokePos = pos;
-  tokwin->renewingFlag = FALSE;
-
-  playerClientID = BTLV_CORE_GetPlayerClientID( wk->vcore );
-  vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
-  px = winpos[vpos].x;
-  py = winpos[vpos].y;
-
-  tokwin->win = GFL_BMPWIN_Create( GFL_BG_FRAME2_M, px, py, TEST_TOKWIN_CHAR_WIDTH, 2,
-      PALIDX_POKEWIN, GFL_BMP_CHRAREA_GET_F );
-  tokwin->bmp = GFL_BMPWIN_GetBmp( tokwin->win );
-
-  {
-    const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, pos );
-    tokwin->tokusei = BPP_GetValue( bpp, BPP_TOKUSEI );
-    tokwin->pokeID = BPP_GetID( bpp );
-  }
-
-  tokwin_update_cgx( tokwin );
-}
-// CGX更新
-static void tokwin_update_cgx( TOK_WIN* tokwin )
-{
-  BTLV_SCU* wk = tokwin->parentWk;
-  GFL_MSGDATA* msg;
-  u16 xpos;
-
-  msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_tokusei_dat, GFL_HEAP_LOWID(wk->heapID) );
-
-  GFL_BMP_Clear( tokwin->bmp, TEST_TOKWIN_BGCOL );
-  GFL_MSG_GetString( msg, tokwin->tokusei, wk->strBuf );
-  xpos = (TEST_TOKWIN_DOT_WIDTH - PRINTSYS_GetStrWidth(wk->strBuf, wk->defaultFont, 0)) / 2;
-  PRINTSYS_Print( tokwin->bmp, xpos, 2, wk->strBuf, wk->defaultFont );
-  GFL_MSG_Delete( msg );
-
-  GFL_BMPWIN_TransVramCharacter( tokwin->win );
-}
 // 更新の必要があればCGX更新
-static void tokwin_check_update_cgx( TOK_WIN* tokwin )
+static void tokwin_check_update_cgr( TOK_WIN* tokwin )
 {
   BTLV_SCU* wk = tokwin->parentWk;
   const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, tokwin->pokePos );
@@ -2650,33 +2597,22 @@ static void tokwin_check_update_cgx( TOK_WIN* tokwin )
   if( (pokeID != tokwin->pokeID)
   ||  (tokusei != tokwin->tokusei)
   ){
-    BTL_Printf("とくせいウィンドウ書き換わり pos=%d, tok=%d -> %d\n", tokwin->pokePos, tokwin->tokusei, tokusei );
     tokwin->pokeID = pokeID;
     tokwin->tokusei = tokusei;
-
-    tokwin_update_cgx( tokwin );
+    tokwin_update_cgr( tokwin );
   }
 }
 
-static void tokwin_cleanup( TOK_WIN* tokwin )
-{
-  GFL_BMPWIN_Delete( tokwin->win );
-}
-static void tokwin_disp_first( TOK_WIN* tokwin )
-{
-  tokwin_check_update_cgx( tokwin );
-  tokwin_disp( tokwin );
-}
 static void tokwin_hide( TOK_WIN* tokwin )
 {
-  GFL_BMPWIN_ClearScreen( tokwin->win );
-  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(tokwin->win) );
+//  GFL_BMPWIN_ClearScreen( tokwin->win );
+//  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(tokwin->win) );
 }
 
 static void tokwin_disp( TOK_WIN* tokwin )
 {
-  GFL_BMPWIN_MakeScreen( tokwin->win );
-  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(tokwin->win) );
+//  GFL_BMPWIN_MakeScreen( tokwin->win );
+//  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(tokwin->win) );
 }
 
 
@@ -2731,8 +2667,8 @@ static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, u8 clientID, B
 //=============================================================================================
 void BTLV_SCU_StartCommWaitInfo( BTLV_SCU* wk )
 {
-  BTL_STR_GetUIString( wk->strBuf, BTLSTR_UI_COMM_WAIT );
-  BTLV_SCU_StartMsg( wk, wk->strBuf, 0 );
+  BTL_STR_GetUIString( wk->strBufMain, BTLSTR_UI_COMM_WAIT );
+  BTLV_SCU_StartMsg( wk, wk->strBufMain, 0 );
 }
 
 BOOL BTLV_SCU_WaitCommWaitInfo( BTLV_SCU* wk )

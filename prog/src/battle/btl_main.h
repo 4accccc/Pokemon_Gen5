@@ -95,7 +95,7 @@ extern BtlSide BTL_MAINUTIL_PokeIDtoSide( u8 pokeID );
 extern BtlPokePos BTL_MAINUTIL_GetFriendPokePos( BtlPokePos basePos, u8 idx );
 extern BtlPokePos BTL_MAINUTIL_GetOpponentPokePos( BtlRule rule, BtlPokePos basePos, u8 idx );
 extern u32 BTL_MAIN_GetOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID, u8 idx );
-
+extern BOOL BTL_MAIN_IsPlayerSide( const BTL_MAIN_MODULE* wk, BtlSide side );
 
 static inline BtlSide BTL_MAINUTIL_GetOpponentSide( BtlSide side )
 {
@@ -115,6 +115,11 @@ static inline BtlSide BTL_MAINUTIL_PokeIDtoOpponentSide( u8 pokeID )
 {
   BtlSide  side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
   return BTL_MAINUTIL_GetOpponentSide( side );
+}
+
+static inline BtlSide BTL_MAINUTIL_PosToSide( BtlPokePos pos )
+{
+  return pos & 1;
 }
 
 //-------------------------------------------------------------------------------

@@ -123,6 +123,7 @@ typedef struct
 
   GFL_MSGDATA   *msg;
   GFL_FONT      *font;
+  GFL_FONT      *small_font;
 
   int           menu_list;
 
@@ -268,10 +269,15 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
     GFL_BG_SetBGControl3D( 1 );
   }
 
+  // フォント作成
+  evw->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, TRUE, evw->heapID );
+  evw->small_font = GFL_FONT_Create( ARCID_FONT, NARC_font_small_batt_gftr, GFL_FONT_LOADTYPE_FILE, TRUE, evw->heapID );
+
   //戦闘エフェクト初期化
   {
+
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, evw->heapID );
-    BTLV_EFFECT_Init( 0, 0, evw->heapID );
+    BTLV_EFFECT_Init( 0, 0, evw->small_font, evw->heapID );
   }
 
   set_pokemon( evw );
@@ -351,7 +357,6 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
   //メッセージ系初期化
   GFL_FONTSYS_Init();
   evw->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_soga_dat, evw->heapID );
-  evw->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, TRUE, evw->heapID );
 
   EffectViewerInitMenuList( evw, MENULIST_TITLE );
 
@@ -432,6 +437,7 @@ static GFL_PROC_RESULT EffectViewerProcExit( GFL_PROC * proc, int * seq, void * 
 
   GFL_MSG_Delete( evw->msg );
   GFL_FONT_Delete( evw->font );
+  GFL_FONT_Delete( evw->small_font );
 
   MCS_Exit();
 

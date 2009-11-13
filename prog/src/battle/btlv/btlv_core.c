@@ -62,7 +62,8 @@ struct _BTLV_CORE {
   u8        genericWork[ GENERIC_WORK_SIZE ];
 
   STRBUF*           strBuf;
-  GFL_FONT*         fontHandle;
+  GFL_FONT*         largeFontHandle;
+  GFL_FONT*         smallFontHandle;
   BTL_ACTION_PARAM* actionParam;
   const BTL_POKEPARAM*  procPokeParam;
   u32                   procPokeID;
@@ -121,13 +122,18 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
   core->processingCmd = BTLV_CMD_NULL;
   core->heapID = heapID;
   core->strBuf = GFL_STR_CreateBuffer( STR_BUFFER_SIZE, heapID );
-  core->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
+  core->largeFontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
+            GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+  core->smallFontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_small_batt_gftr,
             GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
 
-
   core->tcbl = GFL_TCBL_Init( heapID, heapID, 64, 128 );
-  core->scrnU = BTLV_SCU_Create( core, core->mainModule, pokeCon, core->tcbl, core->fontHandle, core->myClientID, heapID );
-  core->scrnD = BTLV_SCD_Create( core, core->mainModule, pokeCon, core->tcbl, core->fontHandle, core->myClientID, heapID );
+
+  core->scrnU = BTLV_SCU_Create( core, core->mainModule, pokeCon, core->tcbl,
+          core->largeFontHandle, core->smallFontHandle, core->myClientID, heapID );
+
+  core->scrnD = BTLV_SCD_Create( core, core->mainModule, pokeCon, core->tcbl,
+          core->largeFontHandle, core->myClientID, heapID );
 
   core->mainProc = NULL;
   core->mainSeq = 0;
@@ -156,7 +162,7 @@ void BTLV_Delete( BTLV_CORE* core )
 
   GFL_TCBL_Exit( core->tcbl );
   GFL_STR_DeleteBuffer( core->strBuf );
-  GFL_FONT_Delete( core->fontHandle );
+  GFL_FONT_Delete( core->largeFontHandle );
   GFL_HEAP_FreeMemory( core );
 }
 
@@ -263,7 +269,7 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
   switch( *seq ){
   case 0:
     setup_core( core, core->heapID );
-    BTLV_EFFECT_Init( BTL_MAIN_GetRule(core->mainModule), 0, core->heapID );
+    BTLV_EFFECT_Init( BTL_MAIN_GetRule(core->mainModule), 0, core->smallFontHandle, core->heapID );
 
     BTLV_SCU_Setup( core->scrnU );
     BTLV_SCD_Init( core->scrnD );
@@ -507,7 +513,7 @@ void BTLV_UI_Restart( BTLV_CORE* core )
 void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result )
 {
   wk->plistData.pp = BTL_MAIN_GetPlayerPokeParty( wk->mainModule );
-  wk->plistData.font = wk->fontHandle;
+  wk->plistData.font = wk->largeFontHandle;
   wk->plistData.heap = wk->heapID;
   wk->plistData.mode = BPL_MODE_NORMAL;
   wk->plistData.end_flg = FALSE;
@@ -585,7 +591,7 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->bagData.myitem = BTL_MAIN_GetItemDataPtr( wk->mainModule );
     wk->bagData.bagcursor = BTL_MAIN_GetBagCursorData( wk->mainModule );
     wk->bagData.mode = bagMode;
-    wk->bagData.font = wk->fontHandle;
+    wk->bagData.font = wk->largeFontHandle;
     wk->bagData.heap = wk->heapID;
     wk->bagData.energy = energy;
     wk->bagData.reserved_energy = reserved_energy;
@@ -594,7 +600,7 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->bagData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
 
     wk->plistData.pp = BTL_MAIN_GetPlayerPokeParty( wk->mainModule );
-    wk->plistData.font = wk->fontHandle;
+    wk->plistData.font = wk->largeFontHandle;
     wk->plistData.heap = wk->heapID;
     wk->plistData.mode = BPL_MODE_ITEMUSE;
     wk->plistData.end_flg = FALSE;
@@ -1117,22 +1123,19 @@ BOOL BTLV_IsJustDoneMsg( BTLV_CORE* wk )
 //=============================================================================================
 void BTLV_StartTokWin( BTLV_CORE* wk, BtlPokePos pos )
 {
-  BTLV_SCU_DispTokWin( wk->scrnU, pos );
+  BTLV_SCU_TokWin_DispStart( wk->scrnU, pos );
 }
 BOOL BTLV_StartTokWinWait( BTLV_CORE* wk, BtlPokePos pos )
 {
-  // @@@ ¡‚Í‚·‚®I‚í‚Á‚Ä‚é
-  return TRUE;
+  return BTLV_SCU_TokWin_DispWait( wk->scrnU, pos );
 }
-
 void BTLV_QuitTokWin( BTLV_CORE* wk, BtlPokePos pos )
 {
-  BTLV_SCU_HideTokWin( wk->scrnU, pos );
+  BTLV_SCU_TokWin_HideStart( wk->scrnU, pos );
 }
 BOOL BTLV_QuitTokWinWait( BTLV_CORE* wk, BtlPokePos pos )
 {
-  // @@@ ¡‚Í‚·‚®I‚í‚Á‚Ä‚é
-  return TRUE;
+  return BTLV_SCU_TokWin_HideWait( wk->scrnU, pos );
 }
 
 //=============================================================================================
@@ -1437,7 +1440,7 @@ typedef struct {
 }ROTATE_MEMBER_WORK;
 
 
-
+#define TMP_SELROT_SKIP
 
 //=============================================================================================
 /**
@@ -1460,7 +1463,9 @@ void BTLV_UI_SelectRotation_Start( BTLV_CORE* wk, BtlRotateDir prevDir )
   }
   rotateParam->before_select_dir = prevDir;
 
+#ifndef TMP_SELROT_SKIP
   BTLV_SCD_SelectRotate_Start( wk->scrnD, rotateParam );
+#endif
 }
 //=============================================================================================
 /**
@@ -1474,10 +1479,30 @@ void BTLV_UI_SelectRotation_Start( BTLV_CORE* wk, BtlRotateDir prevDir )
 //=============================================================================================
 BOOL BTLV_UI_SelectRotation_Wait( BTLV_CORE* wk, BtlRotateDir* result )
 {
+  #ifndef TMP_SELROT_SKIP
   if( BTLV_SCD_SelectRotate_Wait(wk->scrnD, result) ){
     return TRUE;
   }
   return FALSE;
+  #else
+  BTLV_INPUT_ROTATE_PARAM* rotateParam = getGenericWork( wk, sizeof(BTLV_INPUT_ROTATE_PARAM) );
+  u8 rnd = GFL_STD_MtRand( 100 );
+  switch( rotateParam->before_select_dir ){
+  case BTL_ROTATEDIR_STAY:
+    *result = (rnd < 50)? BTL_ROTATEDIR_L : BTL_ROTATEDIR_R;
+    break;
+  case BTL_ROTATEDIR_L:
+    *result = (rnd < 50)? BTL_ROTATEDIR_STAY : BTL_ROTATEDIR_R;
+    break;
+  case BTL_ROTATEDIR_R:
+    *result = (rnd < 50)? BTL_ROTATEDIR_STAY : BTL_ROTATEDIR_L;
+    break;
+  default:
+    *result = BTL_ROTATEDIR_STAY;
+    break;
+  }
+  return TRUE;
+  #endif
 }
 
 //=============================================================================================

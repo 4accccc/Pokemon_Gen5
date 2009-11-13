@@ -10,11 +10,14 @@
 
 #pragma once
 
+#include "print/gf_font.h"
+
 #include "../btl_common.h"
 #include "../btl_pokeparam.h"
 
+
 typedef enum
-{ 
+{
   BTLV_GAUGE_TYPE_1vs1 = 0,
   BTLV_GAUGE_TYPE_2vs2,
   BTLV_GAUGE_TYPE_3vs3,
@@ -24,7 +27,7 @@ typedef enum
 typedef struct _BTLV_GAUGE_WORK BTLV_GAUGE_WORK;
 typedef struct _BTLV_GAUGE_CLWK BTLV_GAUGE_CLWK;
 
-extern  BTLV_GAUGE_WORK*  BTLV_GAUGE_Init( HEAPID heapID );
+extern  BTLV_GAUGE_WORK*  BTLV_GAUGE_Init( GFL_FONT* fontHandle, HEAPID heapID );
 extern  void              BTLV_GAUGE_Exit( BTLV_GAUGE_WORK *bgw );
 extern  void              BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw );
 extern  void              BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp, BTLV_GAUGE_TYPE type, BtlvMcssPos pos );

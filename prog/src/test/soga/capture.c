@@ -23,6 +23,8 @@
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
 
+#include "font/font.naix"
+
 #define MCS_ENABLE    //MCS‚ðŽg—p‚·‚é
 #define BTLV_MCSS_1vs1    //1vs1•`‰æ
 
@@ -119,6 +121,8 @@ typedef struct
   int         key_repeat_wait;
   int         ortho_mode;
   VecFx32       scale;
+
+  GFL_FONT*   font;
 }SOGA_WORK;
 
 //MCS
@@ -250,8 +254,9 @@ static GFL_PROC_RESULT CaptureTestProcInit( GFL_PROC * proc, int * seq, void * p
   wk->seq_no = 0;
 #if 1
   {
+    wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_small_batt_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, wk->heapID );
-    BTLV_EFFECT_Init( 0, 0, wk->heapID );
+    BTLV_EFFECT_Init( 0, 0, wk->font, wk->heapID );
     wk->bcw = BTLV_EFFECT_GetCameraWork();
   }
 
@@ -393,6 +398,7 @@ static GFL_PROC_RESULT CaptureTestProcExit( GFL_PROC * proc, int * seq, void * p
 
   GFL_BG_Exit();
   GFL_BMPWIN_Exit();
+  GFL_FONT_Delete( wk->font );
 
   GFL_PROC_FreeWork( proc );
 

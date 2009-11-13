@@ -100,7 +100,7 @@ void  BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position
  * @param[in] heapID    ヒープID
  */
 //============================================================================================
-void  BTLV_EFFECT_Init( BtlRule rule, int index, HEAPID heapID )
+void  BTLV_EFFECT_Init( BtlRule rule, int index, GFL_FONT* fontHandle, HEAPID heapID )
 {
   GF_ASSERT( bew == NULL );
   bew = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_EFFECT_WORK ) );
@@ -125,7 +125,7 @@ void  BTLV_EFFECT_Init( BtlRule rule, int index, HEAPID heapID )
   bew->bfw  = BTLV_FIELD_Init( index, heapID );
   bew->bcw  = BTLV_CAMERA_Init( bew->tcb_sys, heapID );
   bew->bclw = BTLV_CLACT_Init( bew->tcb_sys, heapID );
-  bew->bgw  = BTLV_GAUGE_Init( heapID );
+  bew->bgw  = BTLV_GAUGE_Init( fontHandle, heapID );
   bew->btw  = BTLV_TIMER_Init( heapID );
   bew->bbw  = BTLV_BG_Init( bew->tcb_sys, heapID );
   //BTLV_TIMER_Create( bew->btw, 30, 1 );
@@ -301,12 +301,12 @@ void BTLV_EFFECT_Damage( BtlvMcssPos target, WazaID waza )
   bew->tcb_execute_flag = 1;
 
   if( WAZADATA_GetDamageType( waza ) == WAZADATA_DMG_PHYSIC )
-  { 
+  {
     //物理ダメージ
     bet->color = BTLV_EFFECT_BLINK_PHYSIC;
   }
   else
-  { 
+  {
     //特殊ダメージ
     bet->color = BTLV_EFFECT_BLINK_SPECIAL;
   }
@@ -321,7 +321,7 @@ void BTLV_EFFECT_Damage( BtlvMcssPos target, WazaID waza )
  */
 //=============================================================================================
 void BTLV_EFFECT_Hinshi( BtlvMcssPos target )
-{ 
+{
   BTLV_EFFECT_AddByPos( target, BTLEFF_HINSHI );
 }
 

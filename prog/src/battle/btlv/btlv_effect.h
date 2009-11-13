@@ -46,7 +46,7 @@ enum{
 typedef struct _BTLV_EFFECT_WORK BTLV_EFFECT_WORK;
 
 //OBJパレット使用内訳
-enum{ 
+enum{
   BTLV_OBJ_PLTT_HP_GAUGE    = 0x20 * 0,   //0:HPゲージ
   BTLV_OBJ_PLTT_TIMER       = 0x20 * 1,   //1:タイマー
   BTLV_OBJ_PLTT_RED_TIMER   = 0x20 * 2,   //2:時間切れ迫ったタイマー
@@ -79,7 +79,7 @@ typedef struct {
   u8           continue_count;  ///< 連続して出すとエフェクトが異なる場合の連続カウンタ（ex. ころがる）
 }BTLV_WAZAEFFECT_PARAM;
 
-extern  void              BTLV_EFFECT_Init( BtlRule rule, int index, HEAPID heapID );
+extern  void              BTLV_EFFECT_Init( BtlRule rule, int index, GFL_FONT* fontHandle, HEAPID heapID );
 extern  void              BTLV_EFFECT_Exit( void );
 extern  void              BTLV_EFFECT_Main( void );
 extern  void              BTLV_EFFECT_Add( int eff_no );

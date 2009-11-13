@@ -1000,6 +1000,8 @@ static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BT
     }
     return TRUE;
   }
+
+  BTL_Printf("ポケ[%d]はワザ選べます\n", BPP_GetID(bpp));
   return FALSE;
 }
 //----------------------------------------------------------------------------------

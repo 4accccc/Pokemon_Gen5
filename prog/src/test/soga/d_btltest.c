@@ -88,6 +88,7 @@ typedef struct
   BTLV_INPUT_WORK*    biw;
   GFL_MSGDATA         *msg;
   GFL_FONT            *font;
+  GFL_FONT            *small_font;
   fx32                scale;
   fx32                scale_value;
   BTLV_BALL_GAUGE_WORK* bbgw[ 2 ];
@@ -203,10 +204,14 @@ static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void
     GFL_BG_SetBGControl3D( 1 );
   }
 
+  // フォント作成を前に  taya
+  wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
+  wk->small_font = GFL_FONT_Create( ARCID_FONT, NARC_font_small_batt_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
+
   wk->seq_no = 0;
   {
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, wk->heapID );
-    BTLV_EFFECT_Init( 0, 0, wk->heapID );
+    BTLV_EFFECT_Init( 0, 0, wk->small_font, wk->heapID );
     wk->bcw = BTLV_EFFECT_GetCameraWork();
   }
 
@@ -256,8 +261,6 @@ static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void
   }
 
   GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
-
-  wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
   wk->biw = BTLV_INPUT_Init( BTLV_INPUT_TYPE_SINGLE, wk->font, &wk->cursor_flag, wk->heapID );
 

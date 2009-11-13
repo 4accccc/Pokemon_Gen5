@@ -1671,6 +1671,21 @@ BtlSide BTL_MAIN_GetClientSide( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
   return clientID_to_side( clientID );
 }
+//=============================================================================================
+/**
+ * プレイヤーサイドかどうか判定
+ *
+ * @param   wk
+ * @param   side
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_MAIN_IsPlayerSide( const BTL_MAIN_MODULE* wk, BtlSide side )
+{
+  return ( BTL_MAIN_GetClientSide(wk, wk->myClientID) == side );
+}
+
 
 //=============================================================================================
 /**
