@@ -27,6 +27,7 @@
 #include "savedata/c_gear_data.h" //
 
 #include "savedata/save_control.h"
+#include "savedata/zukan_savedata.h"
 
 
 
@@ -397,15 +398,31 @@ VMCMD_RESULT EvCmdSetWarpID( VMHANDLE * core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdSetZukanFlag( VMHANDLE * core, void *wk )
 {
-  u16 set_mode = SCRCMD_GetVMWorkValue( core, wk );
-  u16 monsno = SCRCMD_GetVMWorkValue( core, wk );
+  SCRCMD_WORK* work = wk;
+  GAMEDATA* gamedata = SCRCMD_WORK_GetGameData( work );
+  const ZUKAN_SAVEDATA* zukan = GAMEDATA_GetZukanSave( gamedata );
+  u16 set_mode = SCRCMD_GetVMWorkValue( core, work ); // 引数1
+  u16 monsno = SCRCMD_GetVMWorkValue( core, work ); // 引数2
 
-  /* 未実装 */
+  switch( set_mode )
+  {
+  case ZUKANCTRL_MODE_SEE:  // 見た
+    // @todo フラグセット
+    break;
+  case ZUKANCTRL_MODE_GET:  // 捕まえた
+    // @todo フラグセット
+    break;
+  default:
+    OS_Printf( "==============================================================\n" );
+    OS_Printf( "スクリプト: 図鑑セットコマンドに指定する引数に誤りがあります。\n" );
+    OS_Printf( "==============================================================\n" );
+    break;
+  } 
   return VMCMD_RESULT_CONTINUE;
 }
 //--------------------------------------------------------------
 /**
- * @brief 
+ * @brief 図鑑フラグのカウント
  * @param  core    仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
@@ -414,9 +431,26 @@ VMCMD_RESULT EvCmdSetZukanFlag( VMHANDLE * core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGetZukanCount( VMHANDLE * core, void *wk )
 {
-  u16 get_mode = SCRCMD_GetVMWorkValue( core, wk );
-  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  SCRCMD_WORK* work = wk;
+  GAMEDATA* gamedata = SCRCMD_WORK_GetGameData( work );
+  const ZUKAN_SAVEDATA* zukan = GAMEDATA_GetZukanSave( gamedata );
+  u16 get_mode = SCRCMD_GetVMWorkValue( core, work );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, work );
 
-  /* 未実装 */
+  switch( get_mode )
+  {
+  case ZUKANCTRL_MODE_SEE:  // 見た数
+    *ret_wk = ZUKANSAVE_GetPokeSeeCount( zukan );
+    break;
+  case ZUKANCTRL_MODE_GET:  // 捕まえた数
+    *ret_wk = ZUKANSAVE_GetPokeGetCount( zukan );
+    break;
+  default:
+    *ret_wk = 0;
+    OS_Printf( "================================================================\n" );
+    OS_Printf( "スクリプト: 図鑑カウントコマンドに指定する引数に誤りがあります。\n" );
+    OS_Printf( "================================================================\n" );
+    break;
+  } 
   return VMCMD_RESULT_CONTINUE;
 }
