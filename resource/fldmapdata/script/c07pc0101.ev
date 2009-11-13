@@ -20,6 +20,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c07pc0101_shop
+_EVENT_DATA    ev_c07pc0101_oldwoman1_01
 _EVENT_DATA_END
 
 
@@ -31,4 +32,9 @@ EVENT_START	ev_c07pc0101_shop
 	_SHOP_CALL()
 EVENT_END
 
-
+/**************************************************************/
+/* 【仮】プレゼントくれるおばあさん                           */
+/**************************************************************/
+EVENT_START   ev_c07pc0101_oldwoman1_01
+  _EASY_TALK_ITEM_EVENT(ITEM_KIZUGUSURI, 1, FE_C07PC0101_ITEM_01, msg_c07pc0101_oldwoman1_01, msg_c07pc0101_oldwoman1_02, msg_c07pc0101_oldwoman1_02 )
+EVENT_END

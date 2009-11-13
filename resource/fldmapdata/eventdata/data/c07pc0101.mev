@@ -1,15 +1,15 @@
 #event data
-#save date:2009/10/23 17:05:44
+#save date:2009/11/13 15:35:11
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c07pc0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/23 17:05:44
+#save date:2009/11/13 15:35:11
 2
 #hold event type:
 1
 #hold event number:
-2
+3
 #event number: 0
 #type
 1
@@ -68,11 +68,40 @@ DIR_LEFT
 0
 #position
 -72 0 -24
+#event number: 2
+#type
+1
+#ID name
+C07PC0101_OLDWOMAN1_01
+#OBJ CODE Number
+OLDWOMAN1
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C07PC0101_OLDWOMAN1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+3
+#position
+-184 0 24
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/23 17:05:44
+#save date:2009/11/13 15:35:11
 2
 #hold event type:
 1
@@ -82,7 +111,7 @@ DIR_LEFT
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/23 17:05:44
+#save date:2009/11/13 15:35:11
 2
 #hold event type:
 1
@@ -92,7 +121,7 @@ DIR_LEFT
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/23 17:05:44
+#save date:2009/11/13 15:35:11
 2
 #hold event type:
 1

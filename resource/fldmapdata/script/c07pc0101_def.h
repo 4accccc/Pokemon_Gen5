@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_C07PC0101_SHOP (1)
+#define SCRID_C07PC0101_OLDWOMAN1_01 (2)
 
 #endif //_C07PC0101_DEF_H_
