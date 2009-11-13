@@ -23,8 +23,6 @@
 
 #include "field_rail.h"
 
-#include "field_data.h"
-
 //#include "mapdefine.h"		//ZONE_ID_～
 //#include "fieldobj_code.h"	//DIR_DOWN
 
@@ -199,6 +197,27 @@ void LOCATION_SetRailLocation( LOCATION * loc, const RAIL_LOCATION * location )
 
 
 
+#ifdef PM_DEBUG
+//----------------------------------------------------------------------------
+/**
+ *	@brief  純粋なレールマップチェック  （ハイブリッドを含まない）
+ *	  デバック用のチェックなので、これでOKとする
+ */
+//-----------------------------------------------------------------------------
+static BOOL IsRailMap( u16 zone_id )
+{
+  switch( zone_id )
+  {
+  case ZONE_ID_C03:
+  case ZONE_ID_H01:
+  case ZONE_ID_C03P02:
+  case ZONE_ID_D09:
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void LOCATION_DEBUG_SetDefaultPos(LOCATION * loc, u16 zone_id)
@@ -210,7 +229,7 @@ void LOCATION_DEBUG_SetDefaultPos(LOCATION * loc, u16 zone_id)
 	loc->zone_id = zone_id;
 	loc->exit_id = DOOR_ID_JUMP_CODE;
 	loc->dir_id = 0;
-  if( FIELDDATA_GetFieldCtrlType(zone_id) == FLDMAP_CTRLTYPE_NOGRID )
+  if( IsRailMap(zone_id) )
   {
     // レール用初期化
     ZONEDATA_DEBUG_GetStartRailPos(zone_id, &pos);
@@ -228,6 +247,7 @@ void LOCATION_DEBUG_SetDefaultPos(LOCATION * loc, u16 zone_id)
     loc->location_pos.pos = pos;
   }
 }
+#endif
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
