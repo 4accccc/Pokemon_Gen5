@@ -1622,10 +1622,11 @@ static GMEVENT_RESULT PoleEvt( GMEVENT* event, int* seq, void* work )
   case 2:
     {
       u8 wall_obj_idx;
+      u8 anm_idx;
       EXP_OBJ_ANM_CNT_PTR anm;
       wall_obj_idx = OBJ_WALL1 + tmp->BrkWallIdx;
-      //↓アニメ終了判定はくっついている始めアニメで行うことにする
-      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_INSECT_UNIT_IDX, wall_obj_idx, 0);
+      anm_idx = ANM_WALL_CHG1;   //アニメ終了判定用
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_INSECT_UNIT_IDX, wall_obj_idx, anm_idx);
       //弱体化アニメ待ち
       if ( FLD_EXP_OBJ_ChkAnmEnd(anm) )
       {
