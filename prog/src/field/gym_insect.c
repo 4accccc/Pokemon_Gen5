@@ -170,8 +170,16 @@ static const s8 PolePairIdx[INSECT_PL_MAX] = {
 //トラップの位置
 static const VecFx32 TrapPos[TRAP_NUM] = 
 {
-  {TRAP1_GX, 0, TRAP1_GZ},
-  {TRAP2_GX, 0, TRAP2_GZ},
+  {
+    TRAP1_GX*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE,
+    0,
+    TRAP1_GZ*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE
+  },
+  {
+    TRAP2_GX*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE,
+    0,
+    TRAP2_GZ*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE
+  },
 };
 
 //ジム内部中の一時ワーク
@@ -768,6 +776,8 @@ void GYM_INSECT_Setup(FIELDMAP_WORK *fieldWork)
       EXP_OBJ_ANM_CNT_PTR anm;
       anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_INSECT_UNIT_IDX, nrm_idx, j);
       FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+      //無効化
+      FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_INSECT_UNIT_IDX, nrm_idx, j, FALSE);
     }
     for (j=0;j<WALL_BRK_ANM_NUM;j++)
     {
@@ -792,6 +802,22 @@ void GYM_INSECT_Setup(FIELDMAP_WORK *fieldWork)
       FLD_EXP_OBJ_SetVanish( ptr, GYM_INSECT_UNIT_IDX, brk_idx, TRUE );
     default:
       GF_ASSERT(0);
+    }
+  }
+  
+  {
+    int j;
+    int eff_idx = OBJ_EFF;
+    //カリングする
+    FLD_EXP_OBJ_SetCulling(ptr, GYM_INSECT_UNIT_IDX, eff_idx, TRUE);
+    for (j=0;j<EFF_ANM_NUM;j++)
+    {
+      //1回再生設定
+      EXP_OBJ_ANM_CNT_PTR anm;
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_INSECT_UNIT_IDX, eff_idx, j);
+      FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+      //アニメ停止
+      FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
     }
   }
   //スイッチのセットアップ
@@ -1566,7 +1592,7 @@ static GMEVENT_RESULT PoleEvt( GMEVENT* event, int* seq, void* work )
             EXP_OBJ_ANM_CNT_PTR anm;
             u8 wall_obj_idx;
             u8 wall_anm_idx;
-             wall_obj_idx = OBJ_WALL1 + check_idx;
+            wall_obj_idx = OBJ_WALL1 + check_idx;
             //壊れる壁のインデックスを保存
             tmp->BrkWallIdx = check_idx;
             for (i=0;i<WALL_CHG_ANM_NUM;i++)
@@ -1655,6 +1681,14 @@ static GMEVENT_RESULT TrTrapEvt( GMEVENT* event, int* seq, void* work )
         FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_INSECT_UNIT_IDX, obj_idx, i, TRUE);
         anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_INSECT_UNIT_IDX, obj_idx, i);
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+        //頭だし
+        FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_INSECT_UNIT_IDX, obj_idx, i, 0 );
+      }
+      //位置セット
+      {
+        GFL_G3D_OBJSTATUS *status;
+        status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_INSECT_UNIT_IDX, obj_idx);
+        status->trans = TrapPos[tmp->TrEvtIdx];
       }
     }
     (*seq)++;
