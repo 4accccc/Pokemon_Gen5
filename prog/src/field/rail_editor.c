@@ -297,6 +297,7 @@ static void RE_InputPoint_Rail( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_InputCamera_Pos( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_InputCamera_Target( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_InputLinePos_CenterPos( DEBUG_RAIL_EDITOR* p_wk );
+static void RE_InputPoint_FreeGrid( DEBUG_RAIL_EDITOR* p_wk );
 
 static void RE_InitInputPoint_FreeNormal( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_InitInputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk );
@@ -304,6 +305,7 @@ static void RE_InitInputPoint_Rail( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_InitInputCamera_Pos( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_InitInputCamera_Target( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_InitInputLinePos_CenterPos( DEBUG_RAIL_EDITOR* p_wk );
+static void RE_InitInputPoint_FreeGrid( DEBUG_RAIL_EDITOR* p_wk );
 
 static void RE_ExitInputPoint_FreeNormal( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_ExitInputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk );
@@ -311,6 +313,7 @@ static void RE_ExitInputPoint_Rail( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_ExitInputCamera_Pos( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_ExitInputCamera_Target( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_ExitInputLinePos_CenterPos( DEBUG_RAIL_EDITOR* p_wk );
+static void RE_ExitInputPoint_FreeGrid( DEBUG_RAIL_EDITOR* p_wk );
 
 // 送信関数
 static void RE_SendControl( DEBUG_RAIL_EDITOR* p_wk );
@@ -1591,6 +1594,7 @@ static void RE_InputControl( DEBUG_RAIL_EDITOR* p_wk )
 		NULL,
 		RE_InitInputPoint_FreeNormal,
 		RE_InitInputPoint_FreeCircle,
+		RE_InitInputPoint_FreeGrid,
 		RE_InitInputPoint_Rail,
 		RE_InitInputCamera_Pos,
 		RE_InitInputCamera_Target,
@@ -1602,6 +1606,7 @@ static void RE_InputControl( DEBUG_RAIL_EDITOR* p_wk )
 		NULL,
 		RE_ExitInputPoint_FreeNormal,
 		RE_ExitInputPoint_FreeCircle,
+		RE_ExitInputPoint_FreeGrid,
 		RE_ExitInputPoint_Rail,
 		RE_ExitInputCamera_Pos,
 		RE_ExitInputCamera_Target,
@@ -1613,6 +1618,7 @@ static void RE_InputControl( DEBUG_RAIL_EDITOR* p_wk )
 		NULL,
 		RE_InputPoint_FreeNormal,
 		RE_InputPoint_FreeCircle,
+		RE_InputPoint_FreeGrid,
 		RE_InputPoint_Rail,
 		RE_InputCamera_Pos,
 		RE_InputCamera_Target,
@@ -1907,6 +1913,64 @@ static void RE_InputLinePos_CenterPos( DEBUG_RAIL_EDITOR* p_wk )
 
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自由移動　グリッド単位
+ *
+ *	@param	p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void RE_InputPoint_FreeGrid( DEBUG_RAIL_EDITOR* p_wk )
+{
+	FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
+	FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
+  MMDL* p_mmdl = FIELD_PLAYER_GetMMdl( p_player );
+  s16 gx, gy, gz;
+  int key = GFL_UI_KEY_GetRepeat();
+  VecFx32 pos;
+  int dir;
+
+
+  gx = MMDL_GetGridPosX( p_mmdl );
+  gy = MMDL_GetGridPosY( p_mmdl );
+  gz = MMDL_GetGridPosZ( p_mmdl );
+  
+  dir = MMDL_GetDirDisp( p_mmdl );
+
+	// グリッドサイズで動く
+  if( key & PAD_KEY_UP )
+  {
+    gz --;
+  }
+  if( key & PAD_KEY_DOWN )
+  {
+    gz ++;
+  }
+  if( key & PAD_KEY_LEFT )
+  {
+    gx --;
+  }
+  if( key & PAD_KEY_RIGHT )
+  {
+    gx ++;
+  }
+  if( key & PAD_BUTTON_Y )
+  {
+    gy --;
+  }
+  if( key & PAD_BUTTON_X )
+  {
+    gy ++;
+  }
+  MMDL_InitGridPosition( p_mmdl, gx, gy, gz, dir );
+  MMDL_GetVectorPos( p_mmdl, &pos );
+
+  FIELD_PLAYER_SetPos( p_player, &pos );
+  p_wk->camera_target = pos;
+}
+
+
+
 // 初期化
 //----------------------------------------------------------------------------
 /**
@@ -1920,6 +1984,11 @@ static void RE_InitInputPoint_FreeNormal( DEBUG_RAIL_EDITOR* p_wk )
   FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
 	VecFx32 pos;
 
+  OS_TPrintf( "::::::自由動作 操作方法::::::\n" );
+  OS_TPrintf( "上下左右 移動\n" );
+  OS_TPrintf( "YorX　上下移動\n" );
+  OS_TPrintf( "B  強制移動（アトリビュートなどみない）\n" );
+  OS_TPrintf( "LorR   カメラ方向回転\n" );
 
 	FIELD_CAMERA_BindDefaultTarget( p_camera );
 
@@ -1958,6 +2027,12 @@ static void RE_InitInputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
 	u16 yaw;
 	fx32 len;
 	u32 linepos_set;
+
+  OS_TPrintf( "::::::自由回転動作 操作方法::::::\n" );
+  OS_TPrintf( "左右 回転移動\n" );
+  OS_TPrintf( "上下　中心からの距離を変更\n" );
+  OS_TPrintf( "LorR   カメラズーム操作\n" );
+  OS_TPrintf( "A＋上下左右　回転中心座標を変更\n" );
 
 	FLDNOGRID_MAPPER_SetActive(p_mapper, FALSE);
   FLDNOGRID_MAPPER_SetRailCameraActive(p_mapper, FALSE);
@@ -2100,6 +2175,46 @@ static void RE_InitInputLinePos_CenterPos( DEBUG_RAIL_EDITOR* p_wk )
 	FIELD_CAMERA_SetAngleLen( p_camera, 0x150000 );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フリーグリッド移動の初期化
+ *
+ *	@param	p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void RE_InitInputPoint_FreeGrid( DEBUG_RAIL_EDITOR* p_wk )
+{
+	FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
+	FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
+  MMDL* p_mmdl = FIELD_PLAYER_GetMMdl( p_player );
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
+	VecFx32 pos;
+  int dir;
+
+
+  OS_TPrintf( "::::::自由グリッド動作 操作方法::::::\n" );
+  OS_TPrintf( "上下左右 移動\n" );
+  OS_TPrintf( "Y X　高さ移動\n" );
+
+	FIELD_CAMERA_BindDefaultTarget( p_camera );
+
+	FLDNOGRID_MAPPER_SetActive(p_mapper, FALSE);
+  FLDNOGRID_MAPPER_SetRailCameraActive(p_mapper, FALSE);
+
+	FIELD_CAMERA_ChangeMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+
+	// プレイヤー座標グリッドに合わせる
+	FIELD_PLAYER_GetPos( p_player, &pos );
+	pos.x = SIZE_GRID_FX32(pos.x);
+	pos.y = SIZE_GRID_FX32(pos.y);
+	pos.z = SIZE_GRID_FX32(pos.z);
+  dir = MMDL_GetDirDisp( p_mmdl );
+	MMDL_InitGridPosition( p_mmdl, pos.x, pos.y, pos.z, dir );
+  MMDL_GetVectorPos( p_mmdl, &pos );
+
+  FIELD_PLAYER_SetPos( p_player, &pos );
+}
+
 // 破棄
 //----------------------------------------------------------------------------
 /**
@@ -2185,6 +2300,17 @@ static void RE_ExitInputCamera_Target( DEBUG_RAIL_EDITOR* p_wk )
  */
 //-----------------------------------------------------------------------------
 static void RE_ExitInputLinePos_CenterPos( DEBUG_RAIL_EDITOR* p_wk )
+{
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  グリッド動作終了
+ *
+ *	@param	p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void RE_ExitInputPoint_FreeGrid( DEBUG_RAIL_EDITOR* p_wk )
 {
 }
 
