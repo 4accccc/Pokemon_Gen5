@@ -17,18 +17,22 @@
 // define
 //----------------------------------------------------------------------------
 
-#define GAME_NAME        "ninTest1" // このサンプルが使用するゲーム名
-#define GAME_SECRET_KEY  "EdD7Ve"  // このサンプルが使用するシークレットキー
-#define GAME_PRODUCTID   11735     // このサンプルが使用するプロダクトID
+#define GAME_NAME        "syachi2ds" // このサンプルが使用するゲーム名
+//#define GAME_SECRET_KEY  "EdD7Ve"  // このサンプルが使用するシークレットキー
+//#define GAME_PRODUCTID   11735     // このサンプルが使用するプロダクトID
+
+#define GAME_SECRET_KEY		"tXH2sN"					// 使用するシークレットキー
+#define GAME_PRODUCTID		12230							// 使用するプロダクトID
+
 
 //#define GAME_NAME        "dwctest" // このサンプルが使用するゲーム名
-#define INITIAL_CODE     'NTRJ'    // このサンプルが仕様するイニシャルコード
+#define INITIAL_CODE     'IRBJ'    // このサンプルが仕様するイニシャルコード
 //#define GAME_SECRET_KEY  "d4q9GZ"  // このサンプルが使用するシークレットキー
 //#define GAME_PRODUCTID   10824     // このサンプルが使用するプロダクトID
-#define	MAX_PLAYERS		 4	       // 自分も含めた接続人数
+#define	MAX_PLAYERS		 2	       // 自分も含めた接続人数
 #define APP_CONNECTION_KEEPALIVE_TIME 300000 // キープアライブ時間
 #define KEEPALIVE_INTERVAL (APP_CONNECTION_KEEPALIVE_TIME/5) // キー入力を待たずデータを転送する時間
-#define FILTER_STRING "sample_filter"	// フィルタ文字列. 適宜変更してください
+#define FILTER_STRING "syachi_filter"	// フィルタ文字列. 適宜変更してください
 #define FILTER_KEY "str_key"
 #define GAME_FRAME       1         // 想定するゲームフレーム（1/60を1とする）
 #define GAME_NUM_MATCH_KEYS 3      // マッチメイク用追加キー個数

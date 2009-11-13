@@ -29,6 +29,10 @@
 #define PLAYER_NUM   2          // プレイヤー数
 #define TEAM_NUM     0          // チーム数
 
+#define ARENA_ELO_RATING_1V1 3  // [TYPE: int]
+#define CAREER_LOSSES 2  // [TYPE: int]
+#define CAREER_WINS 1  // [TYPE: int]
+
 //----------------------------------
 // prototype
 //----------------------------------
@@ -289,6 +293,25 @@ BOOL ScMain( BOOL host )
             ScFinalize();
             return FALSE;
         }
+
+
+        if(DWC_ScReportAddIntValue(
+          work.myPlayerData.mReport, ARENA_ELO_RATING_1V1, 1)){
+            ScFinalize();
+            return FALSE;
+        }
+        if(DWC_ScReportAddIntValue(
+          work.myPlayerData.mReport, CAREER_LOSSES, host ? 1 : 0)){
+            ScFinalize();
+            return FALSE;
+        }
+        if(DWC_ScReportAddIntValue(
+          work.myPlayerData.mReport, CAREER_WINS, host ? 0 : 1)){
+            ScFinalize();
+            return FALSE;
+        }
+
+
     }
 
     {
@@ -311,6 +334,24 @@ BOOL ScMain( BOOL host )
             ScFinalize();
             return FALSE;
         }
+
+        if(DWC_ScReportAddIntValue(
+          work.myPlayerData.mReport, ARENA_ELO_RATING_1V1, 1)){
+            ScFinalize();
+            return FALSE;
+        }
+        if(DWC_ScReportAddIntValue(
+          work.myPlayerData.mReport, CAREER_LOSSES, host ? 0 : 1)){
+            ScFinalize();
+            return FALSE;
+        }
+        if(DWC_ScReportAddIntValue(
+          work.myPlayerData.mReport, CAREER_WINS, host ? 1 : 0)){
+            ScFinalize();
+            return FALSE;
+        }
+
+
     }
 
     // レポートにチームデータを書き込む
