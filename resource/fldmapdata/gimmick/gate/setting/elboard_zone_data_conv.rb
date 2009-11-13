@@ -90,6 +90,44 @@ def GetDir( dir )
   abort("向き:#{dir}は定義されていません")
 end
 
+#-------------------------------------------------------------------------------------
+# @brief 指定した文字列に対応するモニターのアニメ番号を取得する
+# @param no_str アニメ番号を文字列で指定
+# @return 指定した文字列に対応するモニターアニメ番号
+#-------------------------------------------------------------------------------------
+def GetMonitorAnimeNo( no_str )
+
+  # ハッシュテーブル作成
+  hash_table = Hash::new
+  hash_table["T02"]   = 0
+  hash_table["C01"]   = 1
+  hash_table["C02"]   = 2
+  hash_table["C03"]   = 3
+  hash_table["C04"]   = 4
+  hash_table["C05"]   = 5
+  hash_table["C06"]   = 6
+  hash_table["C07"]   = 7
+  hash_table["C08_W"] = 8
+  hash_table["C08_B"] = 9
+  hash_table["TG"]    = 10
+  hash_table["ST"]    = 11
+  hash_table["WF"]    = 12
+  hash_table["BC"]    = 13
+  hash_table["D03"]   = 14
+  hash_table["D08"]   = 15
+  hash_table["D10"]   = 16
+  hash_table["D12"]   = 17
+  hash_table["D13"]   = 18
+
+  # 存在しないキーが指定されたらコンバートを止める
+  if hash_table.has_key?(no_str) != true then
+    abort("モニターのアニメ番号[#{no_str}]は定義されていません")
+  end
+
+  # 指定されたキーに対応する値を返す
+  return hash_table[no_str]
+end
+
 
 #-------------------------------------------------------------------------------------
 # @brief main 指定したファイルをコンバートする
@@ -172,7 +210,7 @@ file.close
   out_data << GetZoneID("ZONE_ID_"+in_data[ROW_WEATHER_ZONE_2])
   out_data << GetZoneID("ZONE_ID_"+in_data[ROW_WEATHER_ZONE_3])
   out_data << GetZoneID("ZONE_ID_"+in_data[ROW_WEATHER_ZONE_4])
-  out_data << in_data[ROW_MONITOR_ANIME_NO].to_i
+  out_data << GetMonitorAnimeNo(in_data[ROW_MONITOR_ANIME_NO])
   # バイナリデータを出力
   filename = ARGV[1] + "/elboard_zone_data_" + in_data[ROW_ZONE_ID].downcase + ".bin"
   file = File.open( filename, "wb" )
