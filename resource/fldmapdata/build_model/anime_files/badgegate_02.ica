@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ica version="1.6.0">
+
+<head>
+	<create user="ohkubo_tomohiko" host="W00195" date="2009-11-13T10:21:24" source="badgegate_02_003_testm.mb"/>
+	<title>Character Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<node_anm_info
+	frame_size="70"
+	scaling_rule="standard"
+	magnify="1.000000"
+	tool_start_frame="1"
+	tool_end_frame="70"
+	interpolation="frame"
+	compress_node="merge" node_size="6 6"
+	frame_step_mode="1"
+	tolerance_scale="0.100000"
+	tolerance_rotate="0.100000"
+	tolerance_translate="0.100000"
+/>
+
+<node_scale_data size="1">
+	1.000000
+</node_scale_data>
+
+<node_rotate_data size="281">
+	0.000000 0.000000 1.159424 2.318848 3.478271 4.637695 5.797119 6.956543 8.115967 9.275391
+	10.434814 11.594238 12.753662 13.913086 15.072510 16.231934 17.391357 18.550781 19.710205 20.869629
+	22.029053 23.188477 24.347900 25.507324 26.666748 27.826172 28.985596 30.145020 31.304443 32.463867
+	33.623291 34.782715 35.942139 37.101563 38.260986 39.420410 40.579834 41.739014 42.898438 44.057861
+	45.217285 46.376709 47.536133 48.695557 49.854980 51.014404 52.173828 53.333252 54.492676 55.652100
+	56.811523 57.970947 59.130371 60.289795 61.449219 62.608643 63.768066 64.927490 66.086914 67.246338
+	68.405762 69.565186 70.724609 71.884033 73.043457 74.202881 75.362305 76.521729 77.681152 78.840576
+	80.000000 0.000000 -1.159424 -2.318848 -3.478271 -4.637695 -5.797119 -6.956543 -8.115967 -9.275391
+	-10.434814 -11.594238 -12.753662 -13.913086 -15.072510 -16.231934 -17.391357 -18.550781 -19.710205 -20.869629
+	-22.029053 -23.188477 -24.347900 -25.507324 -26.666748 -27.826172 -28.985596 -30.145020 -31.304443 -32.463867
+	-33.623291 -34.782715 -35.942139 -37.101563 -38.260986 -39.420410 -40.579834 -41.739014 -42.898438 -44.057861
+	-45.217285 -46.376709 -47.536133 -48.695557 -49.854980 -51.014404 -52.173828 -53.333252 -54.492676 -55.652100
+	-56.811523 -57.970947 -59.130371 -60.289795 -61.449219 -62.608643 -63.768066 -64.927490 -66.086914 -67.246338
+	-68.405762 -69.565186 -70.724609 -71.884033 -73.043457 -74.202881 -75.362305 -76.521729 -77.681152 -78.840576
+	-80.000000 0.000000 -10.434814 -20.869629 -31.304443 -41.739014 -52.173828 -62.608643 -73.043457 -83.478271
+	-93.913086 -104.347900 -114.782715 -125.217285 -135.652100 -146.086914 -156.521729 -166.956543 -177.391357 172.173828
+	161.739258 151.304443 140.869629 130.434814 120.000000 109.565186 99.130371 88.695557 78.260986 67.826172
+	57.391357 46.956543 36.521729 26.086914 15.652100 5.217285 -5.217285 -15.652100 -26.086914 -36.521729
+	-46.956543 -57.391357 -67.826172 -78.260986 -88.695557 -99.130371 -109.565186 -120.000000 -130.434814 -140.869629
+	-151.304443 -161.739258 -172.173828 177.391357 166.956543 156.521729 146.086914 135.652100 125.217529 114.782715
+	104.347900 93.913086 83.478271 73.043457 62.608643 52.173828 41.739258 31.304443 20.869629 10.434814
+	0.000000 0.000000 10.434814 20.869629 31.304443 41.739014 52.173828 62.608643 73.043457 83.478271
+	93.913086 104.347900 114.782715 125.217285 135.652100 146.086914 156.521729 166.956543 177.391357 -172.173828
+	-161.739258 -151.304443 -140.869629 -130.434814 -120.000000 -109.565186 -99.130371 -88.695557 -78.260986 -67.826172
+	-57.391357 -46.956543 -36.521729 -26.086914 -15.652100 -5.217285 5.217285 15.652100 26.086914 36.521729
+	46.956543 57.391357 67.826172 78.260986 88.695557 99.130371 109.565186 120.000000 130.434814 140.869629
+	151.304443 161.739258 172.173828 -177.391357 -166.956543 -156.521729 -146.086914 -135.652100 -125.217529 -114.782715
+	-104.347900 -93.913086 -83.478271 -73.043457 -62.608643 -52.173828 -41.739258 -31.304443 -20.869629 -10.434814
+	0.000000
+</node_rotate_data>
+
+<node_translate_data size="8">
+	0.000000 -56.000000 47.000000 56.000000 -80.000000 44.000000 14.000000 80.000000
+</node_translate_data>
+
+<node_anm_array size="6">
+	<node_anm index="0">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="0"/>
+		<translate_y frame_step="1" data_size="1" data_head="0"/>
+		<translate_z frame_step="1" data_size="1" data_head="0"/>
+	</node_anm>
+	<node_anm index="1">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="70" data_head="1"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="1"/>
+		<translate_y frame_step="1" data_size="1" data_head="2"/>
+		<translate_z frame_step="1" data_size="1" data_head="0"/>
+	</node_anm>
+	<node_anm index="2">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="70" data_head="71"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="3"/>
+		<translate_y frame_step="1" data_size="1" data_head="2"/>
+		<translate_z frame_step="1" data_size="1" data_head="0"/>
+	</node_anm>
+	<node_anm index="3">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="0"/>
+		<translate_y frame_step="1" data_size="1" data_head="0"/>
+		<translate_z frame_step="1" data_size="1" data_head="0"/>
+	</node_anm>
+	<node_anm index="4">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="70" data_head="141"/>
+		<translate_x frame_step="1" data_size="1" data_head="4"/>
+		<translate_y frame_step="1" data_size="1" data_head="5"/>
+		<translate_z frame_step="1" data_size="1" data_head="6"/>
+	</node_anm>
+	<node_anm index="5">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="70" data_head="211"/>
+		<translate_x frame_step="1" data_size="1" data_head="7"/>
+		<translate_y frame_step="1" data_size="1" data_head="5"/>
+		<translate_z frame_step="1" data_size="1" data_head="6"/>
+	</node_anm>
+</node_anm_array>
+
+</body>
+
+</ica>

@@ -11,7 +11,7 @@
 #define NARC_BUILDMODEL_ANIME_NAIX_
 
 enum {
-	NARC_buildmodel_anime_badgegate_02_nsbmd = 0,
+	NARC_buildmodel_anime_badgegate_02_nsbca = 0,
 	NARC_buildmodel_anime_c01fountain_01_nsbta = 1,
 	NARC_buildmodel_anime_c04_object01_nsbca = 2,
 	NARC_buildmodel_anime_c04_object01_nsbta = 3,
