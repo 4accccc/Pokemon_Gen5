@@ -21,6 +21,11 @@
 #define DEBUG_BGFRAME (GFL_BG_FRAME2_M) //使用するBGフレーム
 #define DEBUG_PANO_FONT (15) //フォントで使用するパレットNo
 
+
+#define BG_COLORMODE    (GX_BG_COLORMODE_16)
+#define BG_SCRBASE      (GX_BG_SCRBASE_0xf800)
+#define BG_CHARBASE      (GX_BG_CHARBASE_0x18000)
+
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -108,6 +113,23 @@ void FIELD_DEBUG_UpdateProc( FIELD_DEBUG_WORK *work )
 		GFL_BG_LoadScreenReq( work->bgFrame );
 		work->flag_bgscr_load = FALSE;
 	}
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドデバッグシステム　ＢＧ設定復帰
+ * @param	work	FIELD_DEBUG_WORK
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FIELD_DEBUG_RecoverBgCont( FIELD_DEBUG_WORK *work )
+{
+  //セットアップしなおし
+  G2_SetBG2ControlText(
+      GX_BG_SCRSIZE_TEXT_256x256,
+      BG_COLORMODE,
+      BG_SCRBASE,
+      BG_CHARBASE);
 }
 
 //======================================================================
@@ -306,8 +328,8 @@ static void DebugFont_Init( FIELD_DEBUG_WORK *work )
 	{	//BG Frame
 		GFL_BG_BGCNT_HEADER bgcntText = {
 			0, 0, 0x800, 0,
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x18000, 0x8000,
+			GFL_BG_SCRSIZ_256x256, BG_COLORMODE,
+			BG_SCRBASE, BG_CHARBASE, 0x8000,
 			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 		};
 		

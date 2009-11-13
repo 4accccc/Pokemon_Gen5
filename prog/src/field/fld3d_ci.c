@@ -334,17 +334,17 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     if (ptr->CapEndFlg){
       //キャプチャ終わったら、プライオリティ変更と表示変更
       GFL_BG_SetPriority( 0, 0 );
-      GFL_BG_SetPriority( 3, 3 );
+      GFL_BG_SetPriority( 2, 3 );
       //描画モード変更
       {
         const GFL_BG_SYS_HEADER bg_sys_header = 
           {
-            GX_DISPMODE_GRAPHICS,GX_BGMODE_3,GX_BGMODE_0,GX_BG0_AS_3D
+            GX_DISPMODE_GRAPHICS,GX_BGMODE_5,GX_BGMODE_0,GX_BG0_AS_3D
           };
         GFL_BG_SetBGMode( &bg_sys_header );
       }
       //ＢＧセットアップ
-      G2_SetBG3ControlDCBmp(
+      G2_SetBG2ControlDCBmp(
           GX_BG_SCRSIZE_DCBMP_256x256,
           GX_BG_AREAOVER_XLU,
           GX_BG_BMPSCRBASE_0x00000
@@ -352,9 +352,9 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       GX_SetBankForBG(GX_VRAM_BG_128_D);
       //アルファブレンド
       G2_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE,
-				GX_BLEND_PLANEMASK_BG3, 0,0);
+				GX_BLEND_PLANEMASK_BG2, 0,0);
       //ここではまだキャプチャ面のみ表示(パシリ防止)
-      GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
+      GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
       (*seq)++;
     }
     break;
@@ -362,7 +362,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     //リソースロード
     SetupResource(ptr, &evt_work->SetupDat, ptr->CutInNo);
     //セットアップ終了したので3Ｄ面もオン
-    GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
     {
       int size = GFL_HEAP_GetHeapFreeSize(ptr->HeapID);
@@ -401,8 +401,6 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     (*seq)++;
     break;
   case 7:
-    //表示状態の復帰
-    PopDisp(ptr);
     {
       int size = GFL_HEAP_GetHeapFreeSize(ptr->HeapID);
       OS_Printf("END::FLD3DCUTIN_HEAP_REST %x\n",size);
@@ -418,15 +416,24 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     }
 
     {
-      FLDMSGBG * fmb = FIELDMAP_GetFldMsgBG( fieldmap );
+      FLDMSGBG *fmb = FIELDMAP_GetFldMsgBG( fieldmap );
+      FIELD_PLACE_NAME *place_name_sys = FIELDMAP_GetPlaceNameSys( fieldmap );
+      FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( fieldmap );
       FLDMSGBG_RecoveryBG( fmb );
+      FIELD_PLACE_NAME_RecoverBG( place_name_sys );
+      FIELD_DEBUG_RecoverBgCont( debug );
+      //ＢＧ2面クリア
+      GFL_BG_ClearFrame( GFL_BG_FRAME2_M );
     }
+    
     //プライオリティの復帰
     PopPriority(ptr);
+    //表示状態の復帰
+    PopDisp(ptr);
 
     //@todo ＯＢＪのポーズ解除
     ;
-#if 1
+#if 0
     //マップ遷移を入れて、ＢＧのセットアップをする
     {
       GMEVENT * child;
@@ -1005,7 +1012,7 @@ static void PushPriority(FLD3D_CI_PTR ptr)
 //-----------------------------------------------------------------------------
 static void PushDisp(FLD3D_CI_PTR ptr)
 {
-  ptr->Mask = GX_GetVisiblePlane();
+  ptr->Mask = GFL_DISP_GetMainVisible();
 }
 
 //----------------------------------------------------------------------------
@@ -1034,7 +1041,7 @@ static void PopPriority(FLD3D_CI_PTR ptr)
 //-----------------------------------------------------------------------------
 static void PopDisp(FLD3D_CI_PTR ptr)
 {
-  GX_SetVisiblePlane( ptr->Mask );
+  GFL_DISP_GX_SetVisibleControlDirect(ptr->Mask);
 }
 
 

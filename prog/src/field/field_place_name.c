@@ -711,6 +711,22 @@ void FIELD_PLACE_NAME_Hide( FIELD_PLACE_NAME* sys )
 	SetState( sys, STATE_HIDE );
 }
 
+//------------------------------------------------------------------------------------
+/**
+ * @brief 地名表示ＢＧ復帰
+ *
+ * @param sys 表示を終了するシステム
+ */
+//------------------------------------------------------------------------------------
+void FIELD_PLACE_NAME_RecoverBG(FIELD_PLACE_NAME* sys)
+{
+  GFL_BG_FillCharacterRelease( BG_FRAME, 1, 0 );
+  GFL_BG_FillCharacter( BG_FRAME, 0, 1, 0 );
+	
+  RecoveryBitmapWindow(sys);
+	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(sys->bmpWin) );
+}
+
 
 //===================================================================================
 // ■非公開関数

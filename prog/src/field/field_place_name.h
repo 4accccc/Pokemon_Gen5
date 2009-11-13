@@ -112,3 +112,5 @@ extern void FIELD_PLACE_NAME_DisplayForce( FIELD_PLACE_NAME* p_sys, u32 zone_id 
  */
 //------------------------------------------------------------------------------------
 extern void FIELD_PLACE_NAME_Hide( FIELD_PLACE_NAME* p_sys );
+
+extern void FIELD_PLACE_NAME_RecoverBG(FIELD_PLACE_NAME* sys);

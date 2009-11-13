@@ -36,5 +36,6 @@ extern void FIELD_DEBUG_Delete( FIELD_DEBUG_WORK *work );
 extern void FIELD_DEBUG_UpdateProc( FIELD_DEBUG_WORK *work );
 
 extern void FIELD_DEBUG_SetPosPrint( FIELD_DEBUG_WORK *work );
+extern void FIELD_DEBUG_RecoverBgCont( FIELD_DEBUG_WORK *work );
 
 #endif //FIELD_DEBUG_H_FILE
