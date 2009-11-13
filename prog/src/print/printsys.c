@@ -1402,14 +1402,12 @@ u32 PRINTSYS_GetStrLineWidth( const STRBUF* str, GFL_FONT* font, u16 margin, u32
     if( *sp != EOM_CODE )
     {
       dst[cnt++] = get_line_width( sp, font, margin, &sp );
-      TAYA_Printf("çs[%d]ÇÃwidth=%d\n", cnt-1, dst[cnt-1]);
     }
     else
     {
       break;
     }
   }
-  TAYA_Printf("çsêî=%d\n", cnt);
   return cnt;
 }
 
