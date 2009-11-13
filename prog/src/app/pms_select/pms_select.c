@@ -339,7 +339,7 @@ static BOOL PLATE_UNIT_Trans( PRINT_QUE* print_que, GFL_BMPWIN* win, BOOL *trans
 static void PLATE_UNIT_DrawLastMessage( PMS_SELECT_MAIN_WORK* wk, u8 view_pos_id, u8 data_id, BOOL is_select );
 static void PLATE_UNIT_DrawNormal( PMS_SELECT_MAIN_WORK* wk, u8 view_pos_id, u8 data_id, BOOL is_select );
 
-static BOOL TOUCH_IsListArea( void );
+static int TOUCH_GetListPos( void );
 
 
 //=============================================================================
@@ -1134,36 +1134,18 @@ static void PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
   }
 
   // タッチ入力
-  if( TOUCH_IsListArea() )
   {
-    u32 px, py;
+    int list_pos = TOUCH_GetListPos();
 
-    if( GFL_UI_TP_GetPointTrg( &px, &py ) )
+    if( list_pos != -1 )
     {
-      if( py > PLATE_BG_START_PY * 8 )
-      {
-        // キャラに変換
-        py /= 8;
-        // 先頭までずらし
-        py -= PLATE_BG_START_PY;
-        // リストの場所を取得
-        py /= PLATE_BG_SY;
+      wk->select_id =  wk->list_head_id + list_pos;
 
-        // タッチ可能なのは3項目
-        if( py < PMS_SELECT_PMSDRAW_NUM-1 )
-        {
-          wk->select_id =  wk->list_head_id + py;
-          
-//          if( wk->select_id != wk->list_max-1 )
-          {
-            GFL_SOUND_PlaySE( SE_MOVE_CURSOR );
-          }
+      GFL_SOUND_PlaySE( SE_DECIDE );
 
-          HOSAKA_Printf("py = %d, select_id = %d \n", py, wk->select_id );
-          
-          PLATE_CNT_UpdateAll( wk );
-        }
-      }
+      HOSAKA_Printf("list_pos = %d, select_id = %d \n", list_pos, wk->select_id );
+      
+      PLATE_CNT_UpdateAll( wk );
     }
   }
 
@@ -1232,6 +1214,12 @@ static void PLATE_UNIT_DrawLastMessage( PMS_SELECT_MAIN_WORK* wk, u8 view_pos_id
   STRBUF* buf;
 
   GF_ASSERT( view_pos_id < PMS_SELECT_PMSDRAW_NUM );
+  
+  // 簡易会話を表示中ならば消す
+  if( PMS_DRAW_IsPrinting( wk->pms_draw, view_pos_id ) )
+  {
+    PMS_DRAW_Clear( wk->pms_draw, view_pos_id, FALSE );
+  }
 
   buf = GFL_MSG_CreateString( wk->msg, pms_input01_01 );
   
@@ -1318,19 +1306,30 @@ static void PLATE_UNIT_DrawNormal( PMS_SELECT_MAIN_WORK* wk, u8 view_pos_id, u8 
  *	@retval TRUE : している
  */
 //-----------------------------------------------------------------------------
-static BOOL TOUCH_IsListArea( void )
+static int TOUCH_GetListPos( void )
 {
   u32 px, py;
 
   if( GFL_UI_TP_GetPointTrg( &px, &py ) )
   {
-    if( px < GX_LCD_SIZE_X - 8 * 3 )
+    if( px < GX_LCD_SIZE_X - (8*3) && py > PLATE_BG_START_PY * 8 )
     {
-      return TRUE;
+        // キャラに変換
+        py /= 8;
+        // 先頭までずらし
+        py -= PLATE_BG_START_PY;
+        // リストの場所を取得
+        py /= PLATE_BG_SY;
+
+        // タッチ可能なのは3項目
+        if( py < PMS_SELECT_PMSDRAW_NUM-1 )
+        {
+          return py;
+        }
     }
   }
 
-  return FALSE;
+  return -1;
 }
 
 //=============================================================================
@@ -1397,13 +1396,10 @@ static BOOL ScenePlateSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
   // プレート操作
   PLATE_CNT_Main( wk );
     
-  // @TODO とりあえずタッチでメニューを開く
-
-  if( TOUCH_IsListArea() || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ) )
+  // メニューを開く
+  if( ( TOUCH_GetListPos() != -1 ) || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ) )
   {
     PMS_DATA* pms;
-    
-    GFL_SOUND_PlaySE( SE_DECIDE );
     
     pms = PMSW_GetDataEntry( wk->pmsw_save, wk->select_id );
 
