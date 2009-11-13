@@ -62,6 +62,7 @@ struct _PMS_DRAW_WORK {
   // [PRIVATE]
   PMS_DRAW_UNIT*  unit;
   PMS_DRAW_OBJ wk_obj;
+  PRINTSYS_LSB print_color;
   BOOL    b_print_end;  ///< プリント終了フラグ
   u8      unit_num;
   u8      null_color;   ///< 空欄を塗りつぶすパレット番号
@@ -83,8 +84,8 @@ static void _obj_set_deco( GFL_CLWK* act, GFL_BMPWIN* win, u8 width, u8 line, PM
 static void _unit_init( PMS_DRAW_UNIT* unit, PMS_DRAW_OBJ* obj, HEAPID heap_id );
 static void _unit_exit( PMS_DRAW_UNIT* unit );
 static BOOL _unit_main( PMS_DRAW_UNIT* unit, PRINT_QUE* que );
-static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* font, GFL_BMPWIN* win, PMS_DATA* pms, GFL_POINT* offset, u8 null_color, HEAPID heap_id );
-static void _unit_clear( PMS_DRAW_UNIT* unit );
+static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* font, GFL_BMPWIN* win, PMS_DATA* pms, GFL_POINT* offset, PRINTSYS_LSB print_color, u8 null_color, HEAPID heap_id );
+static void _unit_clear( PMS_DRAW_UNIT* unit, BOOL is_trans );
 static CLSYS_DRAW_TYPE BGFrameToVramType( u8 frame );
 
 //=============================================================================
@@ -133,6 +134,8 @@ PMS_DRAW_WORK* PMS_DRAW_Init( GFL_CLUNIT* clunit, CLSYS_DRAW_TYPE vram_type, PRI
   // OBJリソース管理ワーク初期化
   wk->wk_obj.clwk_unit = clunit;
   wk->wk_obj.vram_type = vram_type;
+
+  wk->print_color = PRINTSYS_LSB_Make( 0x1, 0x2, 0x0 );
 
   // OBJリソースロード
   _obj_loadres( &wk->wk_obj, obj_pltt_ofs, wk->heap_id );
@@ -218,7 +221,6 @@ void PMS_DRAW_Print( PMS_DRAW_WORK* wk, GFL_BMPWIN* win, PMS_DATA* pms, u8 id )
   GFL_POINT offset = {0};
   PMS_DRAW_PrintOffset( wk, win, pms, id, &offset );
 }
-
 //-----------------------------------------------------------------------------
 /**
  *	@brief  指定IDに簡易会話を表示(表示オフセット指定版)
@@ -239,9 +241,9 @@ void PMS_DRAW_PrintOffset( PMS_DRAW_WORK* wk, GFL_BMPWIN* win, PMS_DATA* pms, u8
   GF_ASSERT( wk && win && pms );
   GF_ASSERT( id < wk->unit_num );
 
-  HOSAKA_Printf("*** print id=%d ***\n", id);
+//  HOSAKA_Printf("*** print id=%d ***\n", id);
 
-  _unit_print( &wk->unit[id], wk->print_que, wk->font, win, pms, offset, wk->null_color, wk->heap_id );
+  _unit_print( &wk->unit[id], wk->print_que, wk->font, win, pms, offset, wk->print_color, wk->null_color, wk->heap_id );
     
   // Mainを通るまでは転送されない
   wk->b_print_end = FALSE;
@@ -267,18 +269,19 @@ BOOL PMS_DRAW_IsPrintEnd( PMS_DRAW_WORK* wk )
  *
  *	@param	PMS_DRAW_WORK* wk ワーク
  *	@param	id 表示ユニット管理ID
+ *	@param	is_trans TRUE：スクリーン、キャラを転送する
  *
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-void PMS_DRAW_Clear( PMS_DRAW_WORK* wk, u8 id )
+void PMS_DRAW_Clear( PMS_DRAW_WORK* wk, u8 id, BOOL is_trans )
 { 
   PMS_DRAW_UNIT* unit;
 
   GF_ASSERT( wk );
   GF_ASSERT( id < wk->unit_num );
   
-  _unit_clear( &wk->unit[id] );
+  _unit_clear( &wk->unit[id], is_trans );
 }
 
 //-----------------------------------------------------------------------------
@@ -384,6 +387,22 @@ void PMS_DRAW_SetNullColorPallet( PMS_DRAW_WORK* wk, u8 pltt_pos )
   wk->null_color = pltt_pos;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  文字描画色を指定
+ *
+ *	@param	PMS_DRAW_WORK* wk ワーク
+ *	@param	color 描画色
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void PMS_DRAW_SetPrintColor( PMS_DRAW_WORK* wk, PRINTSYS_LSB color )
+{
+  wk->print_color = color;
+}
+
+
 //=============================================================================
 /**
  *								static関数
@@ -408,7 +427,7 @@ static void _get_write_pos( GFL_BMPWIN* win, u8 width, u8 line, GFL_POINT* offse
   out_pos->x = GFL_BMPWIN_GetPosX( win ) * 8 + width + offset->x;
   out_pos->y = GFL_BMPWIN_GetPosY( win ) * 8 + line * 16 + offset->y;
 
-  HOSAKA_Printf("pos=%d,%d line=%d width=%d offset=%d,%d \n",out_pos->x, out_pos->y, line, width, offset->x, offset->y );
+//  HOSAKA_Printf("pos=%d,%d line=%d width=%d offset=%d,%d \n",out_pos->x, out_pos->y, line, width, offset->x, offset->y );
 }
 
 //-----------------------------------------------------------------------------
@@ -682,7 +701,7 @@ static BOOL _unit_main( PMS_DRAW_UNIT* unit, PRINT_QUE* que )
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* font, GFL_BMPWIN* win, PMS_DATA* pms, GFL_POINT* offset, u8 null_color, HEAPID heap_id )
+static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* font, GFL_BMPWIN* win, PMS_DATA* pms, GFL_POINT* offset, PRINTSYS_LSB print_color, u8 null_color, HEAPID heap_id )
 {
   int i;
   STRBUF* buf;
@@ -700,7 +719,7 @@ static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* fo
 
   wordCount = PRINTSYS_GetTagCount( buf_src );
 
-  HOSAKA_Printf("wordCount=%d\n", wordCount);
+//  HOSAKA_Printf("wordCount=%d\n", wordCount);
 
   for( i=0; i<wordCount; i++ )
   {
@@ -719,7 +738,19 @@ static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* fo
   // プリントリクエスト
 //  buf = PMSDAT_ToString( pms, heap_id );
   buf = PMSDAT_ToStringWithWordCount( pms, heap_id, wordCount );
-  PRINT_UTIL_Print( &unit->print_util, print_que, offset->x, offset->y, buf, font );
+
+#if 0
+  {
+    u8 l,s,b;
+    PRINTSYS_LSB_GetLSB(print_color,&l,&s,&b);
+    HOSAKA_Printf("lsb= %d %d %d \n", l,s,b); 
+  }
+#endif 
+
+// PRINT_UTIL_Print( &unit->print_util, print_que, offset->x, offset->y, buf, font );
+  PRINTSYS_PrintQueColor( print_que, GFL_BMPWIN_GetBmp(unit->print_util.win), offset->x, offset->y, buf, font, print_color );
+	unit->print_util.transReq = TRUE;
+
   GFL_STR_DeleteBuffer( buf );
   
   for( i=0; i<wordCount; i++ )
@@ -735,7 +766,7 @@ static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* fo
     
       deco_id = PMSDAT_GetWordNumber( pms, i );
 
-      HOSAKA_Printf("[%d]deco_id=%d\n",i, deco_id);
+//      HOSAKA_Printf("[%d]deco_id=%d\n",i, deco_id);
 
       _obj_set_deco( unit->clwk[i], win, width, line, deco_id, offset );
     }
@@ -748,7 +779,7 @@ static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* fo
         width = PRINTSYS_GetTagWidth( buf_src, i, font, 0 );
         line  = PRINTSYS_GetTagLine( buf_src, i );
 
-        HOSAKA_Printf("wordpos [%d] is null \n",i );
+//        HOSAKA_Printf("wordpos [%d] is null \n",i );
 
         // BMPWINを特殊カラーで埋める
         GFL_BMP_Fill( GFL_BMPWIN_GetBmp(win), 
@@ -762,9 +793,9 @@ static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* fo
   // もしくはPMSDATの方で後からレジストする関数を作る。
   GFL_STR_DeleteBuffer( buf_src );
       
-  // 転送
+  // スクリーン転送
 	GFL_BMPWIN_MakeScreen( unit->print_util.win );
-	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(unit->print_util.win) );
+	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(unit->print_util.win) );
 
   unit->b_useflag = TRUE;
 }
@@ -778,15 +809,21 @@ static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* fo
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-static void _unit_clear( PMS_DRAW_UNIT* unit )
+static void _unit_clear( PMS_DRAW_UNIT* unit, BOOL is_trans )
 {
   GF_ASSERT( unit->b_useflag == TRUE );
 
-  // キャラ・スクリーンをクリアして転送
+  // キャラをクリア
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(unit->print_util.win), 0 );
-	GFL_BMPWIN_TransVramCharacter( unit->print_util.win );
-	GFL_BMPWIN_ClearTransWindow( unit->print_util.win );
 
+  if( is_trans )
+  {
+    // VRAMキャラクタを即時転送
+    GFL_BMPWIN_TransVramCharacter( unit->print_util.win );
+    // スクリーンをクリアして即時転送
+    GFL_BMPWIN_ClearTransWindow( unit->print_util.win );
+  }
+  
   // 画像非表示
   {
     int i;

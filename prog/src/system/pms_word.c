@@ -217,6 +217,14 @@ struct _PMSW_SAVEDATA{
 PMS_DATA* PMSW_GetDataEntry( PMSW_SAVEDATA* saveData, int id )
 {
   GF_ASSERT( id < PMS_DATA_ENTRY_MAX );
+
+#if PM_DEBUG
+  if( GFL_UI_KEY_GetCont()&PAD_BUTTON_DEBUG )
+  {
+    PMSDAT_SetDebugRandom( &saveData->entry[id] );
+  }
+#endif
+
   return &saveData->entry[id];
 }
 

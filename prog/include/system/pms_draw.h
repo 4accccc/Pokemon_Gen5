@@ -118,11 +118,12 @@ extern BOOL PMS_DRAW_IsPrintEnd( PMS_DRAW_WORK* wk );
  *
  *	@param	PMS_DRAW_WORK* wk ワーク
  *	@param	id 表示ユニット管理ID
+ *	@param	is_trans TRUE：スクリーン、キャラを転送する
  *
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-extern void PMS_DRAW_Clear( PMS_DRAW_WORK* wk, u8 id );
+extern void PMS_DRAW_Clear( PMS_DRAW_WORK* wk, u8 id, BOOL is_trans );
 //-----------------------------------------------------------------------------
 /**
  *	@brief  指定表示ユニットが表示中かどうかを返す
@@ -157,4 +158,16 @@ extern void PMS_DRAW_Copy( PMS_DRAW_WORK* wk, u8 id_src, u8 id_dst );
  */
 //-----------------------------------------------------------------------------
 extern void PMS_DRAW_SetNullColorPallet( PMS_DRAW_WORK* wk, u8 pltt_pos );
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  文字描画色を指定
+ *
+ *	@param	PMS_DRAW_WORK* wk ワーク
+ *	@param	color 描画色
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+extern void PMS_DRAW_SetPrintColor( PMS_DRAW_WORK* wk, PRINTSYS_LSB color );
 

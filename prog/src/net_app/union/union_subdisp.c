@@ -838,7 +838,7 @@ void _UniSub_Chat_DispWrite(UNION_SUBDISP_PTR unisub, UNION_CHAT_DATA *chat, u8 
     GFL_POINT point = {0, 16};
     
     if(PMS_DRAW_IsPrinting(unisub->pmsdraw, write_pos) == TRUE){
-      PMS_DRAW_Clear(unisub->pmsdraw, write_pos);
+      PMS_DRAW_Clear(unisub->pmsdraw, write_pos, TRUE);
     }
     
     //–¼‘O

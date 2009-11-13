@@ -1774,7 +1774,7 @@ static void UITemplate_PMSDRAW_Proc( UI_TEMPLATE_MAIN_WORK* wk )
     int i;
     for( i=0; i<UI_TEMPLATE_PMSDRAW_NUM; i++ )
     {
-      PMS_DRAW_Clear( wk->pms_draw, i );
+      PMS_DRAW_Clear( wk->pms_draw, i, TRUE );
     }
   }
   // STARTでランダム挿入（二重登録するとアサート）
