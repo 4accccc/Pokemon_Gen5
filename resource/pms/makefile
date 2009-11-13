@@ -36,9 +36,11 @@ $(INPUT_DAT_DIR)/$(INPUT_DAT_FILE): $(INPUT_DAT_FILE)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートする
 $(WORD_DAT_FILE): $(SOURCE)
 	perl pmsconv.pl  $(INPUT_DAT_FILE) $(WORD_DAT_FILE)
+	pms_gmm_conv.rb
 
 $(SOURCE_LIST):
 	perl pmsconv.pl  $(SOURCE_LIST)
+
 
 endif
 
