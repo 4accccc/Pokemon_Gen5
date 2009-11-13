@@ -24,6 +24,39 @@
 #include "../../resource/fldmapdata/zonetable/header/maptype.h"
 
 
+// アーカイブハンドル
+static ARCHANDLE* handle = NULL;
+
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief アーカイブハンドル・オープン
+ */
+//------------------------------------------------------------------
+void ZONEDATA_Open( HEAPID heap_id )
+{
+  if( handle == NULL )
+  {
+    handle = GFL_ARC_OpenDataHandle( ARCID_ZONEDATA, heap_id );
+  }
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief アーカイブハンドル・クローズ
+ */
+//------------------------------------------------------------------
+void ZONEDATA_Close()
+{
+  if( handle != NULL )
+  {
+    GFL_ARC_CloseDataHandle( handle );
+    handle = NULL;
+  }
+}
+
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -57,7 +90,14 @@ u16 ZONEDATA_GetZoneIDMax(void)
 static ZONEDATA * loadZoneData(HEAPID heapID)
 {
 	ZONEDATA * buffer;
-	buffer = GFL_ARC_LoadDataAlloc(ARCID_ZONEDATA, NARC_zonedata_zonetable_bin, heapID);
+  if( handle != NULL )
+  {
+    buffer = GFL_ARC_LoadDataAllocByHandle(handle, NARC_zonedata_zonetable_bin, heapID);
+  }
+  else
+  {
+    buffer = GFL_ARC_LoadDataAlloc(ARCID_ZONEDATA, NARC_zonedata_zonetable_bin, heapID);
+  }
 	return buffer;
 }
 
@@ -65,10 +105,26 @@ static ZONEDATA * loadZoneData(HEAPID heapID)
 //------------------------------------------------------------------
 static ZONEDATA * getZoneData(ZONEDATA * zdbuf, u16 zone_id)
 {
+  if( handle == NULL )
+  {
+    OS_Printf( "アーカイブハンドルがオープンさせていません。\n" );
+    return zdbuf;
+  }
+
 	CHECK_RANGE(zone_id);	//範囲外チェック
-	GFL_ARC_LoadDataOfs(zdbuf,
-			ARCID_ZONEDATA, NARC_zonedata_zonetable_bin,
-			sizeof(ZONEDATA) * zone_id, sizeof(ZONEDATA));
+
+  if( handle != NULL )
+  {
+    GFL_ARC_LoadDataOfsByHandle(handle,
+        NARC_zonedata_zonetable_bin,
+        sizeof(ZONEDATA) * zone_id, sizeof(ZONEDATA), zdbuf);
+  }
+  else
+  {
+    GFL_ARC_LoadDataOfs(zdbuf,
+        ARCID_ZONEDATA, NARC_zonedata_zonetable_bin,
+        sizeof(ZONEDATA) * zone_id, sizeof(ZONEDATA));
+  }
 	return zdbuf;
 }
 
@@ -530,9 +586,18 @@ u8 ZONEDATA_GetBattleBGType(u16 zone_id)
 void ZONEDATA_DEBUG_GetZoneName(char * buffer, u16 zone_id)
 {
 	CHECK_RANGE(zone_id);	//範囲外チェック
-	GFL_ARC_LoadDataOfs(buffer,
-			ARCID_ZONEDATA, NARC_zonedata_zonename_bin,
-			ZONEDATA_NAME_LENGTH * zone_id, ZONEDATA_NAME_LENGTH);
+  if( handle != NULL )
+  {
+    GFL_ARC_LoadDataOfsByHandle(handle,
+        NARC_zonedata_zonename_bin,
+        ZONEDATA_NAME_LENGTH * zone_id, ZONEDATA_NAME_LENGTH, buffer);
+  }
+  else
+  {
+    GFL_ARC_LoadDataOfs(buffer,
+        ARCID_ZONEDATA, NARC_zonedata_zonename_bin,
+        ZONEDATA_NAME_LENGTH * zone_id, ZONEDATA_NAME_LENGTH);
+  }
 }
 
 //------------------------------------------------------------------
@@ -540,8 +605,16 @@ void ZONEDATA_DEBUG_GetZoneName(char * buffer, u16 zone_id)
 const char * ZONEDATA_GetAllZoneName(HEAPID heapID)
 {
 	char * namedata;
-	namedata = GFL_ARC_LoadDataAlloc(
-			ARCID_ZONEDATA, NARC_zonedata_zonename_bin, heapID);
+  if( handle != NULL )
+  {
+    namedata = GFL_ARC_LoadDataAllocByHandle(
+        handle, NARC_zonedata_zonename_bin, heapID);
+  }
+  else
+  {
+    namedata = GFL_ARC_LoadDataAlloc(
+        ARCID_ZONEDATA, NARC_zonedata_zonename_bin, heapID);
+  }
 	return namedata;
 }
 

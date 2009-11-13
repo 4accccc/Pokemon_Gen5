@@ -23,6 +23,8 @@
 #include "src/field/field_sound.h"
 #include "system/net_err.h"
 
+#include "field/zonedata.h"
+
 #ifdef PM_DEBUG
 #include "debug_data.h"
 FS_EXTERN_OVERLAY(debug_data);
@@ -246,11 +248,14 @@ static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK
 	gsys->game_comm = GameCommSys_Alloc(gsys->heapID, gsys->gamedata);
 	gsys->comm_infowin = NULL;
 	gsys->iss_sys = ISS_SYS_Create( gsys->gamedata, heapID );
+
+  ZONEDATA_Open( heapID ); // ゾーンデータのアーカイブハンドルを開く
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void GAMESYS_WORK_Delete(GAMESYS_WORK * gsys)
 {
+  ZONEDATA_Close();        // ゾーンデータのアーカイブハンドルを閉じる
 	ISS_SYS_Delete(gsys->iss_sys);
 	GAMEDATA_Delete(gsys->gamedata);
 	GameCommSys_Free(gsys->game_comm);
