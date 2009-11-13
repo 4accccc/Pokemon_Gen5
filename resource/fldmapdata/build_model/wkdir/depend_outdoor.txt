@@ -176,4 +176,7 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/badgegate_09.nsbmd \
 	$(RESDIR)/badgegate_10.nsbmd \
 	$(RESDIR)/door_c01gym.nsbmd \
+	$(RESDIR)/d19_shirne01.nsbmd \
+	$(RESDIR)/d19_house01.nsbmd \
+	$(RESDIR)/panhouse01.nsbmd \
 

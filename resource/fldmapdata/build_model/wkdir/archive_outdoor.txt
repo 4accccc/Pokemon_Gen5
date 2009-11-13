@@ -175,3 +175,6 @@
 "nsbmdfiles/badgegate_09.nsbmd"
 "nsbmdfiles/badgegate_10.nsbmd"
 "nsbmdfiles/door_c01gym.nsbmd"
+"nsbmdfiles/d19_shirne01.nsbmd"
+"nsbmdfiles/d19_house01.nsbmd"
+"nsbmdfiles/panhouse01.nsbmd"
