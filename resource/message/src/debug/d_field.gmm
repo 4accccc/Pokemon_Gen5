@@ -766,6 +766,11 @@
 		<language name="JPN_KANJI" width="160">友達コード配信</language>
 	</row>
 
+	<row id="DEBUG_FIELD_STR50">
+		<language name="JPN" width="160">わざおしえ</language>
+		<language name="JPN_KANJI" width="160">技教え</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
