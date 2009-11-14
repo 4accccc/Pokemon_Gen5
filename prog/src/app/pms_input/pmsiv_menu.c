@@ -21,7 +21,7 @@
 //タスクメニュー
 #include "app/app_taskmenu.h"
 
-#include "print\printsys.h"
+#include "print/printsys.h"
 
 #include "pms_input_prv.h"
 #include "pms_input_view.h"

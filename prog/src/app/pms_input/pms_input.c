@@ -19,6 +19,8 @@
 #include "pms_input_prv.h"
 #include "pmsi_initial_data.h"
 
+#include "pmsi_search.h"
+
 #include "test/ariizumi/ari_debug.h"
 
 FS_EXTERN_OVERLAY(ui_common);
@@ -29,8 +31,8 @@ FS_EXTERN_OVERLAY(ui_common);
 	*/
 //------------------------------------------------------
 enum {
-	HEAPSIZE_SYS = 0x10000,
-	HEAPSIZE_VIEW = 0x38000,
+	HEAPSIZE_SYS = 0x18000,
+	HEAPSIZE_VIEW = 0x30000,
 };
 
 enum {
@@ -223,6 +225,7 @@ struct _PMS_INPUT_WORK{
 
 	PMS_INPUT_VIEW*   vwk;
 	PMS_INPUT_DATA*   dwk;
+  PMS_INPUT_SEARCH* swk;
 
 	int        main_seq;
 	MainProc   main_proc;
@@ -568,6 +571,8 @@ static PMS_INPUT_WORK* ConstructWork( GFL_PROC* proc , void* pwk )
 	wk->edit_pos = 0;
 
 	wk->touch_button = TOUCH_BUTTON_NULL;
+  
+  wk->swk = PMSI_SEARCH_Create( wk, wk->dwk, HEAPID_PMS_INPUT_SYSTEM );
 
 	ChangeMainProc(wk, MainProc_EditArea);
 	SetSubProc( wk, SubProc_FadeIn );
@@ -637,6 +642,7 @@ static void DestructWork( PMS_INPUT_WORK* wk, GFL_PROC* proc )
 	GFL_BMN_Delete( wk->bmn );
 	PMSIView_Delete( wk->vwk );
 	PMSI_DATA_Delete( wk->dwk );
+  PMSI_SEARCH_Delete( wk->swk );
 	GFL_PROC_FreeWork( proc );
 }
 
@@ -1848,10 +1854,18 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
   // キャンセル
 	if( wk->key_trg & PAD_BUTTON_B )
 	{
-		GFL_SOUND_PlaySE(SOUND_CANCEL);
-		PMSIView_SetCommand( wk->vwk, VCMD_CATEGORY_TO_EDITAREA );
-		wk->next_proc = MainProc_EditArea;
-		*seq = SEQ_CA_NEXTPROC;
+    // INITIALなら文字消去→これ以上消すものがなければ画面から抜ける
+    if( wk->category_mode == CATEGORY_MODE_INITIAL && PMSI_SEARCH_DelWord( wk->swk ) )
+    {
+		  GFL_SOUND_PlaySE(SOUND_WORD_DELETE);
+    }
+    else
+    {
+      GFL_SOUND_PlaySE(SOUND_CANCEL);
+      PMSIView_SetCommand( wk->vwk, VCMD_CATEGORY_TO_EDITAREA );
+      wk->next_proc = MainProc_EditArea;
+		  *seq = SEQ_CA_NEXTPROC;
+    }
 		return;
 	}
 
@@ -1861,10 +1875,13 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
 		if( wk->category_pos == CATEGORY_POS_SELECT )
     {
       HOSAKA_Printf("push select!\n");
+      PMSI_SEARCH_Start( wk->swk );
     }
     else if( wk->category_pos == CATEGORY_POS_ERASE )
     {
+		  GFL_SOUND_PlaySE(SOUND_WORD_DELETE);
       HOSAKA_Printf("push erase!\n");
+      PMSI_SEARCH_DelWord( wk->swk );
     }
     else if( wk->category_pos == CATEGORY_POS_BACK )
     {
@@ -1895,7 +1912,9 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
     // イニシャルモードは文字選択
     else
     {
-      HOSAKA_Printf("push code=%d \n", wk->category_pos );
+      HOSAKA_Printf("push input!\n");
+      PMSI_SEARCH_AddWord( wk->swk, wk->category_pos );
+      GFL_SOUND_PlaySE( SOUND_WORD_INPUT );
     }
   }
 

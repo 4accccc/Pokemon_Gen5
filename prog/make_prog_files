@@ -816,6 +816,7 @@ SRCS_OVERLAY_OHNO_DEBUGAPP  = test/ohno/debug_ohno.c \
 #===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_PMSINPUT = app/pms_input/pms_input_data.c \
         app/pms_input/pms_input_view.c \
+        app/pms_input/pmsi_search.c \
         app/pms_input/pmsi_initial_data.c \
         app/pms_input/pmsiv_category.c \
         app/pms_input/pmsiv_edit.c \

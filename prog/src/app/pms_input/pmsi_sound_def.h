@@ -32,6 +32,9 @@
 #define  SOUND_DISABLE_BUTTON	(SEQ_SE_BEEP)	// 無効なボタンタッチ
 //#define  SOUND_DISABLE_BUTTON	(SEQ_SE_DP_CUSTOM06)	// 無効なボタンタッチ
 
+#define SOUND_WORD_INPUT (SEQ_SE_DP_SELECT)  // 文字入力
+#define SOUND_WORD_DELETE (SEQ_SE_CANCEL1)  // 文字削除
+
 #endif //PMS_USE_SND
 
 #endif	//__PMSI_SOUND_DEF_H__
