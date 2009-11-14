@@ -7355,7 +7355,7 @@ static void handler_Acrobat( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
   {
     // Ž©•ª‚ª‚Ç‚¤‚®‚ð‘•”õ‚µ‚Ä‚¢‚È‚¢Žž‚ÉˆÐ—Í‚Q”{
     const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
-    if( BPP_GetItem(bpp) == ITEM_DUMMY_DATA )
+    if( BPP_GetItem(bpp) == ITEM_DUMMY_DATA ){
       BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
     }
   }
