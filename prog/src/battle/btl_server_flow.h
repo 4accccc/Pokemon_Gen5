@@ -288,6 +288,9 @@ typedef struct {
 }BTL_HANDEX_PARAM_MESSAGE;
 
 
+/**
+ * HP回復処理
+ */
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  u16  recoverHP;                     ///< 回復HP量
@@ -295,6 +298,9 @@ typedef struct {
  BTL_HANDEX_STR_PARAMS     exStr;    ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_RECOVER_HP;
 
+/**
+ * HP吸収
+ */
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  u16  recoverHP;                     ///< 回復HP量
@@ -303,6 +309,9 @@ typedef struct {
  BTL_HANDEX_STR_PARAMS     exStr;    ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_DRAIN;
 
+/**
+ * ダメージを与える
+ */
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  u8   poke_cnt;                      ///< 対象ポケモン数
@@ -311,6 +320,9 @@ typedef struct {
  BTL_HANDEX_STR_PARAMS     exStr;    ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_DAMAGE;
 
+/**
+ * HPを増減（ダメージ・回復とは見なされない）
+ */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
   u8     poke_cnt;
@@ -318,6 +330,9 @@ typedef struct {
   int    volume[ BTL_POS_MAX ];
 }BTL_HANDEX_PARAM_SHIFT_HP;
 
+/**
+ * PPを回復
+ */
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  u8   volume;                        ///< PP量
@@ -326,6 +341,9 @@ typedef struct {
  BTL_HANDEX_STR_PARAMS     exStr;    ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_PP;
 
+/**
+ * 対象の状態異常を回復
+ */
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  BtlWazaSickEx   sickCode;           ///< 対応する状態異常コード（拡張可）
@@ -336,6 +354,9 @@ typedef struct {
  u16  exStrID;
 }BTL_HANDEX_PARAM_CURE_SICK;
 
+/**
+ * 対象を状態異常にする
+ */
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  WazaSick       sickID;              ///< 状態異常ID
@@ -347,6 +368,9 @@ typedef struct {
  BTL_HANDEX_STR_PARAMS  exStr;       ///< 特殊メッセージ詳細
 }BTL_HANDEX_PARAM_ADD_SICK;
 
+/**
+ * ランク効果（上昇、下降）
+ */
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  WazaRankEffect rankType;            ///< ランク増減種類
@@ -357,6 +381,9 @@ typedef struct {
  u8   pokeID[ BTL_POS_MAX ];         ///< 対象ポケモンID
 }BTL_HANDEX_PARAM_RANK_EFFECT;
 
+/**
+ * ランク効果を特定値にセット
+ */
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  u8 pokeID;                          ///< 対象ポケモンID
@@ -367,41 +394,61 @@ typedef struct {
  s8 agility;
 }BTL_HANDEX_PARAM_SET_RANK;
 
-
+/**
+ * 対象の下がっているランク効果をフラットに戻す
+ */
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  u8 pokeID;                          ///< 対象ポケモンID
 }BTL_HANDEX_PARAM_RECOVER_RANK;
 
+/**
+ * 対象の全てのランク効果をフラットに戻す
+ */
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  u8   poke_cnt;                      ///< 対象ポケモン数
  u8   pokeID[ BTL_POS_MAX ];         ///< 対象ポケモンID
 }BTL_HANDEX_PARAM_RESET_RANK;
 
+/**
+ * 対象をひん死にする
+ */
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  u32   pokeID;
 }BTL_HANDEX_PARAM_KILL;
 
+/**
+ * タイプ変更処理ワーク
+ */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   PokeTypePair    next_type;
   u8              pokeID;
 }BTL_HANDEX_PARAM_CHANGE_TYPE;
 
+/**
+ * ターンフラグセット処理ワーク
+ */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   BppTurnFlag     flag;
   u8              pokeID;
 }BTL_HANDEX_PARAM_TURNFLAG;
 
+/**
+ * 永続フラグセット処理ワーク
+ */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   BppContFlag     flag;
   u8              pokeID;
 }BTL_HANDEX_PARAM_SET_CONTFLAG;
 
+/**
+ * サイドエフェクト追加処理ワーク
+ */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   BtlSideEffect   effect;
@@ -409,6 +456,9 @@ typedef struct {
   u8              pokeID;
 }BTL_HANDEX_PARAM_SIDE_EFFECT;
 
+/**
+ * サイドエフェクト除去処理ワーク
+ */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   u8              flags[ BTL_SIDEEFF_BITFLG_BYTES ];
@@ -417,6 +467,9 @@ typedef struct {
   u16             exStrID;
 }BTL_HANDEX_PARAM_SIDEEFF_REMOVE;
 
+/**
+ * フィールドエフェクト追加処理ワーク
+ */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   BtlFieldEffect           effect;
@@ -427,6 +480,9 @@ typedef struct {
 
 }BTL_HANDEX_PARAM_ADD_FLDEFF;
 
+/**
+ * フィールドエフェクト除去処理ワーク
+ */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   BtlFieldEffect           effect;
@@ -443,10 +499,14 @@ typedef struct {
   u8                       param_cnt;
 }BTL_HANDEX_PARAM_POSEFF_ADD;
 
+/**
+ *  とくせい書き換え処理ワーク
+ */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   u16             tokuseiID;    ///< 書き換え後のとくせい（POKETOKUSEI_NULLならとくせいを消す）
   u8              pokeID;       ///< 対象ポケモンID
+  BTL_HANDEX_STR_PARAMS  exStr; ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_CHANGE_TOKUSEI;
 
 typedef struct {
@@ -477,7 +537,9 @@ typedef struct {
   u16             itemID;
 }BTL_HANDEX_PARAM_EQUIP_ITEM;
 
-
+/**
+ * ワザ書き換え処理ワーク
+ */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   u8              pokeID;            ///< 対象ポケモンID
@@ -487,6 +549,9 @@ typedef struct {
   WazaID          waza;
 }BTL_HANDEX_PARAM_UPDATE_WAZA;
 
+/**
+ * カウンタ書き換え処理ワーク
+ */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   u8              pokeID;            ///< 対象ポケモンID
@@ -504,12 +569,18 @@ typedef struct {
   WazaID                   wazaID;
 }BTL_HANDEX_PARAM_DELAY_WAZADMG;
 
+/**
+ * メンバー入れ替え処理ワーク
+ */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   BTL_HANDEX_STR_PARAMS    exStr;   ///< 成功時メッセージ
   u8                       pokeID;
 }BTL_HANDEX_PARAM_CHANGE_MEMBER;
 
+/**
+ * バトンタッチ処理ワーク
+ */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   u8  userPokeID;     ///< 状態を引き継がせるポケID

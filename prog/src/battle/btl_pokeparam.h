@@ -39,7 +39,7 @@ typedef enum {
   BPP_AGILITY,
   BPP_HIT_RATIO,
   BPP_AVOID_RATIO,
-  //--- ここまでランクアップ／ダウン効果の引数としても用いる ---
+  //--- ここまで能力ランクアップ／ダウン効果の引数としても用いる ---
 
   BPP_HP,
   BPP_MAX_HP,
@@ -55,7 +55,9 @@ typedef enum {
   BPP_EXP,
   BPP_HEAVY,
 
-  BPP_RANKTYPE_MAX = BPP_AVOID_RATIO+1,
+  BPP_RANKVALUE_START = BPP_ATTACK_RANK,
+  BPP_RANKVALUE_END = BPP_AGILITY_RANK,
+
 
 }BppValueID;
 

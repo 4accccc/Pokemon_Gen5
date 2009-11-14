@@ -9571,16 +9571,23 @@ static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
   const BTL_HANDEX_PARAM_CHANGE_TOKUSEI* param = (const BTL_HANDEX_PARAM_CHANGE_TOKUSEI*)(param_header);
 
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+  u16 prevTokusei = BPP_GetValue( bpp, BPP_TOKUSEI );
 
-  BTL_HANDLER_TOKUSEI_Remove( bpp );
-  SCQUE_PUT_OP_ChangeTokusei( wk->que, param->pokeID, param->tokuseiID );
-  BPP_ChangeTokusei( bpp, param->tokuseiID );
-
-  if( param->tokuseiID != POKETOKUSEI_NULL )
+  if( param->tokuseiID != prevTokusei )
   {
-    BTL_HANDLER_TOKUSEI_Add( bpp );
+    BTL_HANDLER_TOKUSEI_Remove( bpp );
+    SCQUE_PUT_OP_ChangeTokusei( wk->que, param->pokeID, param->tokuseiID );
+    BPP_ChangeTokusei( bpp, param->tokuseiID );
+
+    if( param->tokuseiID != POKETOKUSEI_NULL )
+    {
+      BTL_HANDLER_TOKUSEI_Add( bpp );
+    }
+    handexSub_putString( wk, &param->exStr );
+
+    return 1;
   }
-  return 1;
+  return 0;
 }
 /**
  * ポケモン装備アイテム書き換え
