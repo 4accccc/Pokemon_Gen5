@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-10-21T16:13:01"/>
+	<create user="taya" host="W00146" date="2009-11-14T16:35:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -431,7 +431,7 @@
 		<band id="2" index="3" style="0000" width="496"/>
 		<band id="3" index="4" style="0000" width="175"/>
 		<band id="4" index="0" style="0000" width="673"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -762,6 +762,14 @@
 かいひりつは　もう　さがらない！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 かいひ率は　もう　下がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankReset">
+		<comment>能力ランクの変化が全てリセット</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
+のうりょくへんかが　もとにもどった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
+のうりょくへんかが　元にもどった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_RankdownFail" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
@@ -1121,6 +1129,14 @@
 すべての　わざの　ＰＰを　かいふくした！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 全てのワザの　ＰＰを回復した！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_TokuseiChange">
+		<comment>とくせい変化</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+[1:06:とくせい名:1]に　なった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+[1:06:とくせい名:1]に　なった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_MoraibiExe" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
