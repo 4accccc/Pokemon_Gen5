@@ -914,11 +914,11 @@ static void Cmd_EditAreaToCategory( GFL_TCB *tcb, void* wk_adrs )
 	switch( wk->seq ){
 	case 0:
     HOSAKA_Printf("Cmd_EditAreaToCategory\n");
+    PMSIV_MENU_SetupCategory( vwk->menu_wk );
 		PMSIV_EDIT_StopCursor( vwk->edit_wk );
 		PMSIV_EDIT_StopArrow( vwk->edit_wk );
 		PMSIV_EDIT_ChangeSMsgWin(vwk->edit_wk,1);
 		PMSIV_EDIT_SetSystemMessage( vwk->edit_wk,PMSIV_MSG_GUIDANCE);
-    PMSIV_MENU_SetupCategory( vwk->menu_wk );
 //		PMSIV_BUTTON_Hide( vwk->button_wk );
 		PMSIV_CATEGORY_StartEnableBG( vwk->category_wk );
 		PMSIV_EDIT_ScrollSet( vwk->edit_wk,0);
@@ -958,10 +958,9 @@ static void Cmd_ChangeCategoryModeDisable( GFL_TCB *tcb, void* wk_adrs )
 //		break;
 
 	case 1:
+    PMSIV_MENU_SetupCategory( vwk->menu_wk );
     PMSIV_CATEGORY_StartModeChange( vwk->category_wk );
 		PMSIV_CATEGORY_ChangeModeBG( vwk->category_wk );
-
-    PMSIV_MENU_SetupCategory( vwk->menu_wk );
 		wk->seq++;
 		break;
 
@@ -998,11 +997,11 @@ static void Cmd_ChangeCategoryModeEnable( GFL_TCB *tcb, void* wk_adrs )
 		break;
 
 	case 1:
+    PMSIV_MENU_SetupCategory( vwk->menu_wk );
+
 		PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, FALSE );
 		PMSIV_CATEGORY_StartModeChange( vwk->category_wk );
 		PMSIV_CATEGORY_ChangeModeBG( vwk->category_wk );
-
-    PMSIV_MENU_SetupCategory( vwk->menu_wk );
 		wk->seq++;
 		break;
 
@@ -1042,17 +1041,29 @@ static void Cmd_CategoryToEditArea( GFL_TCB *tcb, void* wk_adrs )
 	switch( wk->seq ){
 	case 0:
     HOSAKA_Printf("Cmd_CategoryToEditArea\n");
+    PMSIV_MENU_SetDecideCategory( vwk->menu_wk, MENU_DECIDE_ID_CANCEL );
 //	PMSIV_BUTTON_Appear( vwk->button_wk );
-    PMSIV_MENU_SetupEdit( vwk->menu_wk );
-		PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, FALSE );
-		PMSIV_CATEGORY_StartDisableBG( vwk->category_wk );
-		PMSIV_EDIT_ChangeSMsgWin(vwk->edit_wk,0);
-		PMSIV_EDIT_SetSystemMessage( vwk->edit_wk,PMSIV_MSG_GUIDANCE);
-		PMSIV_EDIT_ScrollSet( vwk->edit_wk,1);
 		wk->seq++;
 		break;
 
 	case 1:
+    if( PMSIV_MENU_IsFinishCategory( vwk->menu_wk, MENU_DECIDE_ID_CANCEL ) )
+    {
+      wk->seq++;
+    }
+    break;
+
+  case 2:
+    PMSIV_MENU_SetupEdit( vwk->menu_wk );
+    PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, FALSE );
+    PMSIV_CATEGORY_StartDisableBG( vwk->category_wk );
+    PMSIV_EDIT_ChangeSMsgWin(vwk->edit_wk,0);
+    PMSIV_EDIT_SetSystemMessage( vwk->edit_wk,PMSIV_MSG_GUIDANCE);
+    PMSIV_EDIT_ScrollSet( vwk->edit_wk,1);
+    wk->seq++;
+    break;
+
+	case 3:
 		flag1 = PMSIV_CATEGORY_WaitDisableBG( vwk->category_wk );
 		flag2 = PMSIV_EDIT_ScrollWait( vwk->edit_wk);
 		if(flag1 && flag2){
@@ -1666,6 +1677,11 @@ int PMSIView_WaitYesNo(PMS_INPUT_VIEW* wk)
 //==============================================================================================
 // ‰º¿‚¯ƒ‚ƒWƒ…[ƒ‹‚Ö‚Ìî•ñ’ñ‹Ÿ
 //==============================================================================================
+
+PMSIV_MENU* PMSIView_GetMenuWork( PMS_INPUT_VIEW* vwk )
+{
+  return vwk->menu_wk;
+}
 
 GFL_CLUNIT*  PMSIView_GetCellUnit( PMS_INPUT_VIEW* vwk )
 {

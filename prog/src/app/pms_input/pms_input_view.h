@@ -11,7 +11,6 @@
 
 #include "pmsi.naix"
 
-
 #define  PMSI_FPS_60		// これが有効だと各種エフェクトを60fpsで動かす
 
 #ifdef PMSI_FPS_60
@@ -192,6 +191,9 @@ typedef struct
 	u32 anmIdx;
 }PMSIV_CELL_RES;
 
+//==============================================================================================
+// 下請けモジュールへの情報提供
+//==============================================================================================
 extern GFL_TCB* PMSIView_AddVTask( GFL_TCB_FUNC func, void* wk, int pri );
 extern GFL_CLUNIT*  PMSIView_GetCellUnit( PMS_INPUT_VIEW* vwk );
 extern GFL_FONT*  PMSIView_GetFontHandle( PMS_INPUT_VIEW* vwk );
@@ -330,6 +332,15 @@ extern void PMSIV_SUB_ChangeArrowButton( PMSIV_SUB* wk, int pos, int state );
 //==============================================================
 typedef struct _PMSIV_MENU PMSIV_MENU;
 
+//-----------------------------
+///	決定ID
+//=============================
+typedef enum
+{ 
+  MENU_DECIDE_ID_CANCEL = 0,  ///< キャンセル
+  MENU_DECIDE_ID_MAX,
+} MENU_DECIDE_ID;
+
 extern PMSIV_MENU* PMSIV_MENU_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, const PMS_INPUT_DATA* dwk );
 extern void PMSIV_MENU_Delete( PMSIV_MENU* wk );
 extern void PMSIV_MENU_Main( PMSIV_MENU* wk );
@@ -339,7 +350,10 @@ extern void PMSIV_MENU_SetupCategory( PMSIV_MENU* wk );
 extern void PMSIV_MENU_SetupWordWin( PMSIV_MENU* wk );
 extern void PMSIV_MENU_UpdateEditIcon( PMSIV_MENU* wk );
 extern void PMSIV_MENU_TaskMenuSetActive( PMSIV_MENU* wk, u8 pos, BOOL is_on );
-extern void PMSIV_MENU_TaskMenuSetDecide( PMSIV_MENU* wk, u8 pos, BOOL is_on );
 extern BOOL PMSIV_MENU_TaskMenuIsFinish( PMSIV_MENU* wk, u8 pos );
+extern void PMSIV_MENU_SetDecideCategory( PMSIV_MENU* wk, MENU_DECIDE_ID id );
+extern void PMSIV_MENU_TaskMenuSetDecide( PMSIV_MENU* wk, u8 pos, BOOL is_on );
+extern BOOL PMSIV_MENU_IsFinishCategory( PMSIV_MENU* wk, MENU_DECIDE_ID id );
+extern PMSIV_MENU* PMSIView_GetMenuWork( PMS_INPUT_VIEW* vwk );
 
 #endif

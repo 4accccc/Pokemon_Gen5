@@ -464,33 +464,49 @@ void PMSIV_CATEGORY_MoveCursor( PMSIV_CATEGORY* wk, u32 pos )
 	u32  anm;
 
 	mode = PMSI_GetCategoryMode(wk->mwk);
+		
+  if( mode == CATEGORY_MODE_GROUP && pos != CATEGORY_POS_BACK )
+	{
+    GF_ASSERT( pos != CATEGORY_POS_SELECT );
+    GF_ASSERT( pos != CATEGORY_POS_ERASE );
 
-	if( pos == CATEGORY_POS_BACK )
-	{
-		clPos.x = CATEGORY_CURSOR_BACK_XPOS;
-		clPos.y = CATEGORY_CURSOR_BACK_YPOS;
-		anm = ANM_CATEGORY_BACK_CURSOR_ACTIVE;
-	}
-	else
-	{
-		if( mode == CATEGORY_MODE_GROUP )
-		{
-			clPos.x = CATEGORY_CURSOR_OX + CATEGORY_CURSOR_X_MARGIN * (pos % CATEGORY_WIN_ROWS);
-			clPos.y = CATEGORY_CURSOR_OY + CATEGORY_CURSOR_Y_MARGIN * (pos / CATEGORY_WIN_ROWS);
-			anm = ANM_CATEGORY_CURSOR_ACTIVE;
-		}
-		else
-		{
+    clPos.x = CATEGORY_CURSOR_OX + CATEGORY_CURSOR_X_MARGIN * (pos % CATEGORY_WIN_ROWS);
+    clPos.y = CATEGORY_CURSOR_OY + CATEGORY_CURSOR_Y_MARGIN * (pos / CATEGORY_WIN_ROWS);
+    anm = ANM_CATEGORY_CURSOR_ACTIVE;
+  }
+  else
+  {
+    PMSIV_MENU* menu_wk = PMSIView_GetMenuWork( wk->vwk );
+			
+		anm = ANM_CATEGORY_BACK_CURSOR_ACTIVE; // ‰½‚à•\Ž¦‚µ‚È‚¢OAM
+
+    if( pos == CATEGORY_POS_SELECT )
+    {
+      PMSIV_MENU_TaskMenuSetActive( menu_wk, 0 ,TRUE );
+    }
+    else if( pos == CATEGORY_POS_ERASE )
+    {
+      PMSIV_MENU_TaskMenuSetActive( menu_wk, 1 ,TRUE );
+    }
+    else if( pos == CATEGORY_POS_BACK )
+    {
+      PMSIV_MENU_TaskMenuSetActive( menu_wk, 2 ,TRUE );
+    }
+    else
+    {
 			u32 x, y;
-			PMSI_INITIAL_DAT_GetPrintPos(pos, &x, &y);
+      
+      PMSIV_MENU_TaskMenuSetActive( menu_wk, NULL , FALSE );
+			
+      PMSI_INITIAL_DAT_GetPrintPos(pos, &x, &y);
 			clPos.x = INITIAL_CURSOR_OX + x;
 			clPos.y = INITIAL_CURSOR_OY + y;
 			anm = ANM_INITIAL_CURSOR_ACTIVE;
-		}
-	}
-
-	GFL_CLACT_WK_SetPos( wk->cursor_actor, &clPos , CLSYS_DEFREND_MAIN );
-	GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor, anm );
+    }
+  }
+    
+  GFL_CLACT_WK_SetPos( wk->cursor_actor, &clPos , CLSYS_DEFREND_MAIN );
+  GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor, anm );
 }
 
 //------------------------------------------------------------------

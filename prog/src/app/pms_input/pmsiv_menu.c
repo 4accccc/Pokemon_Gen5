@@ -362,6 +362,7 @@ void PMSIV_MENU_SetupWordWin( PMSIV_MENU* wk )
   PMSIV_MENU_Clear( wk );
   // タッチバーのリターンボタン表示
   TOUCHBAR_SetVisibleAll( wk->touchbar, TRUE );
+  TOUCHBAR_SetActiveAll( wk->touchbar, TRUE );
 }
 
 //-----------------------------------------------------------------------------
@@ -397,6 +398,66 @@ void PMSIV_MENU_UpdateEditIcon( PMSIV_MENU* wk )
   }
 }
 
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  カテゴリモードのメニュー決定
+ *
+ *	@param	PMSIV_MENU* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void PMSIV_MENU_SetDecideCategory( PMSIV_MENU* wk, MENU_DECIDE_ID id )
+{
+  GF_ASSERT( wk )
+  GF_ASSERT( id < MENU_DECIDE_ID_MAX );
+
+  if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_INITIAL )
+  {
+    if( id == MENU_DECIDE_ID_CANCEL )
+    {
+      PMSIV_MENU_TaskMenuSetDecide( wk, 2, TRUE );
+    }
+  }
+  else
+  {
+    // @TODO
+    // タッチバーのキャンセルボタン
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  カテゴリモードのメニュー決定演出終了待ち
+ *
+ *	@param	PMSIV_MENU* wk
+ *	@param	id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+BOOL PMSIV_MENU_IsFinishCategory( PMSIV_MENU* wk, MENU_DECIDE_ID id )
+{
+  GF_ASSERT( wk )
+  GF_ASSERT( id < MENU_DECIDE_ID_MAX );
+		
+  if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_INITIAL )
+  {
+    if( PMSIV_MENU_TaskMenuIsFinish( wk, 2 ) )
+    {
+      return TRUE;
+    }
+  }
+  else
+  {
+    //@ TODO タッチバーのウェイト
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  タスクメニューをアクティブに
@@ -413,7 +474,12 @@ void PMSIV_MENU_TaskMenuSetActive( PMSIV_MENU* wk, u8 pos, BOOL is_on )
   int i;
 
   GF_ASSERT( pos < TASKMENU_WIN_MAX );
-  GF_ASSERT( wk->menu_win[pos] != NULL );
+
+  if( wk->menu_win[pos] == NULL )
+  {
+    GF_ASSERT(0);
+    return;
+  }
 
   // 一端全てを非アクティブに
   for( i=0; i<TASKMENU_WIN_MAX; i++ )
@@ -454,7 +520,12 @@ void PMSIV_MENU_TaskMenuSetDecide( PMSIV_MENU* wk, u8 pos, BOOL is_on )
     }
   }
 
-  APP_TASKMENU_WIN_SetDecide( wk->menu_win[ pos ], is_on );
+  // 決定演出開始
+  if( wk->menu_win[pos] != NULL )
+  {
+    APP_TASKMENU_WIN_SetDecide( wk->menu_win[ pos ], is_on );
+  }
+
 }
 
 //-----------------------------------------------------------------------------
@@ -646,8 +717,9 @@ static TOUCHBAR_WORK* _touchbar_init( GFL_CLUNIT* clunit, HEAPID heap_id )
 //-----------------------------------------------------------------------------
 static void _setup_category_group( PMSIV_MENU* wk )
 {
-  // タッチバーのリターンボタン表示
+  // タッチバー表示(リターンボタンのみ)
   TOUCHBAR_SetVisibleAll( wk->touchbar, TRUE );
+  TOUCHBAR_SetActiveAll( wk->touchbar, TRUE );
 
   HOSAKA_Printf(" _setup_category_group \n");
 }

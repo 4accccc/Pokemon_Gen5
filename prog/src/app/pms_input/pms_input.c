@@ -69,8 +69,7 @@ enum {
 };
 
 enum TOUCH_BUTTON {
-	TOUCH_BUTTON_GROUP,
-	TOUCH_BUTTON_INITIAL,
+	TOUCH_BUTTON_CHANGE, ///< カテゴリモード切替
 	TOUCH_BUTTON_UP,
 	TOUCH_BUTTON_DOWN,
 
@@ -102,11 +101,12 @@ enum{
 	TPCA_RET_SX = 7*8,
 	TPCA_RET_SY = 22,
 
-	TPCA_GMODE_PX = 2*8,
-	TPCA_IMODE_PX = 22*8,
-	TPCA_MODE_PY = 0,
-	TPCA_MODE_SX = 8*8,
-	TPCA_MODE_SY = 5*8+2,
+	TPCA_CHANGE_PX = 0*8,  ///< カテゴリ切替ボタン
+//	TPCA_IMODE_PX = 22*8,
+
+	TPCA_MODE_PY = 8*21,
+	TPCA_MODE_SX = 8*6,
+	TPCA_MODE_SY = 8*3,
 
 	TPCA_GMA_SX = 9*8,
 	TPCA_GMA_SY = 2*8,
@@ -528,8 +528,8 @@ static PMS_INPUT_WORK* ConstructWork( GFL_PROC* proc , void* pwk )
 {
 	// enum TOUCH_BUTTON と一致させる
 	static const GFL_UI_TP_HITTBL hit_tbl[] = {
-		{ BUTTON_GROUP_TOUCH_TOP, BUTTON_GROUP_TOUCH_BOTTOM, BUTTON_GROUP_TOUCH_LEFT, BUTTON_GROUP_TOUCH_RIGHT },
-		{ BUTTON_INITIAL_TOUCH_TOP, BUTTON_INITIAL_TOUCH_BOTTOM, BUTTON_INITIAL_TOUCH_LEFT, BUTTON_INITIAL_TOUCH_RIGHT },
+		{ BUTTON_CHANGE_TOUCH_TOP, BUTTON_CHANGE_TOUCH_BOTTOM, BUTTON_CHANGE_TOUCH_LEFT, BUTTON_CHANGE_TOUCH_RIGHT },
+//	{ BUTTON_INITIAL_TOUCH_TOP, BUTTON_INITIAL_TOUCH_BOTTOM, BUTTON_INITIAL_TOUCH_LEFT, BUTTON_INITIAL_TOUCH_RIGHT },
 		{ BUTTON_UP_TOUCH_TOP, BUTTON_UP_TOUCH_BOTTOM, BUTTON_UP_TOUCH_LEFT, BUTTON_UP_TOUCH_RIGHT },
 		{ BUTTON_DOWN_TOUCH_TOP, BUTTON_DOWN_TOUCH_BOTTOM, BUTTON_DOWN_TOUCH_LEFT, BUTTON_DOWN_TOUCH_RIGHT },
 		{ GFL_UI_TP_HIT_END, 0, 0, 0 },
@@ -1832,13 +1832,10 @@ static GFL_PROC_RESULT MainProc_Category( PMS_INPUT_WORK* wk, int* seq )
 	*/
 static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
 {
-	if(	(wk->touch_button == TOUCH_BUTTON_GROUP) && (wk->category_mode != CATEGORY_MODE_GROUP)
-	||	(wk->touch_button == TOUCH_BUTTON_INITIAL) && (wk->category_mode !=CATEGORY_MODE_INITIAL)
-	||	(wk->key_trg & PAD_BUTTON_SELECT)
+  //切替ボタン
+	if(	(wk->touch_button == TOUCH_BUTTON_CHANGE) ||	(wk->key_trg & PAD_BUTTON_SELECT)
 	){
-#if PMS_USE_SND
 		GFL_SOUND_PlaySE(SOUND_CHANGE_CATEGORY);
-#endif //PMS_USE_SND
 		wk->category_mode ^= 1;
 		wk->category_pos = 0;
 		PMSIView_SetCommand( wk->vwk, VCMD_CHANGE_CATEGORY_MODE_ENABLE );
@@ -1846,46 +1843,64 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
 		return;
 	}
 
+  // キャンセル
 	if( wk->key_trg & PAD_BUTTON_B )
 	{
-#if PMS_USE_SND
 		GFL_SOUND_PlaySE(SOUND_CANCEL);
-#endif //PMS_USE_SND
-
 		PMSIView_SetCommand( wk->vwk, VCMD_CATEGORY_TO_EDITAREA );
 		wk->next_proc = MainProc_EditArea;
 		*seq = SEQ_CA_NEXTPROC;
 		return;
 	}
-	if( wk->key_trg & PAD_BUTTON_A ){
-		if( wk->category_pos == CATEGORY_POS_BACK ){
-#if PMS_USE_SND
+
+  // 決定
+	if( wk->key_trg & PAD_BUTTON_A )
+  {
+		if( wk->category_pos == CATEGORY_POS_SELECT )
+    {
+      HOSAKA_Printf("push select!\n");
+    }
+    else if( wk->category_pos == CATEGORY_POS_ERASE )
+    {
+      HOSAKA_Printf("push erase!\n");
+    }
+    else if( wk->category_pos == CATEGORY_POS_BACK )
+    {
 			GFL_SOUND_PlaySE(SOUND_CANCEL);
-#endif //PMS_USE_SND
 
 			PMSIView_SetCommand( wk->vwk, VCMD_CATEGORY_TO_EDITAREA );
 			wk->next_proc = MainProc_EditArea;
 			*seq = SEQ_CA_NEXTPROC;
-		}else if( check_category_enable( wk ) ){
-#if PMS_USE_SND
-			GFL_SOUND_PlaySE(SOUND_DECIDE);
-#endif //PMS_USE_SND
-
-			setup_wordwin_params( &wk->word_win, wk );
-			wk->next_proc = MainProc_WordWin;
-			PMSIView_SetCommand( wk->vwk, VCMD_CATEGORY_TO_WORDWIN );
-			*seq = SEQ_CA_NEXTPROC;
-		}else{
-#if PMS_USE_SND
-			GFL_SOUND_PlaySE( SOUND_DISABLE_CATEGORY );
-#endif //PMS_USE_SND
 		}
-		return;
-	}
-	if( check_category_cursor_move( wk ) ){
-#if PMS_USE_SND
+    // カテゴリ選択
+    else if( wk->category_mode == CATEGORY_MODE_GROUP )
+    {
+      if(check_category_enable( wk ) )
+      {
+        GFL_SOUND_PlaySE(SOUND_DECIDE);
+      
+        setup_wordwin_params( &wk->word_win, wk );
+        wk->next_proc = MainProc_WordWin;
+        PMSIView_SetCommand( wk->vwk, VCMD_CATEGORY_TO_WORDWIN );
+        *seq = SEQ_CA_NEXTPROC;
+      }
+      else
+      {
+        GFL_SOUND_PlaySE( SOUND_DISABLE_CATEGORY );
+      }
+		  return;
+	  }
+    // イニシャルモードは文字選択
+    else
+    {
+      HOSAKA_Printf("push code=%d \n", wk->category_pos );
+    }
+  }
+
+  // カーソル移動チェック
+	if( check_category_cursor_move( wk ) )
+  {
 		GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
-#endif //PMS_USE_SND
 		PMSIView_SetCommand( wk->vwk, VCMD_MOVE_CATEGORY_CURSOR );
 		return;
 	}
@@ -1901,8 +1916,8 @@ static int input_category_word_btn(PMS_INPUT_WORK* wk)
 	static const GFL_UI_TP_HITTBL Btn_TpRect[] = {
 //		{0,191,0,255}, ty,by,lx,rx
 		{TPCA_RET_PY,TPCA_RET_PY+TPCA_RET_SY,TPCA_RET_PX,TPCA_RET_PX+TPCA_RET_SX},
-		{TPCA_MODE_PY,TPCA_MODE_PY+TPCA_MODE_SY,TPCA_GMODE_PX,TPCA_GMODE_PX+TPCA_MODE_SX},
-		{TPCA_MODE_PY,TPCA_MODE_PY+TPCA_MODE_SY,TPCA_IMODE_PX,TPCA_IMODE_PX+TPCA_MODE_SX},
+		{TPCA_MODE_PY,TPCA_MODE_PY+TPCA_MODE_SY,TPCA_CHANGE_PX,TPCA_CHANGE_PX+TPCA_MODE_SX},
+//		{TPCA_MODE_PY,TPCA_MODE_PY+TPCA_MODE_SY,TPCA_IMODE_PX,TPCA_IMODE_PX+TPCA_MODE_SX},
 		{GFL_UI_TP_HIT_END,0,0,0}
 	};
 	ret = GFL_UI_TP_HitTrg(Btn_TpRect);
@@ -1913,14 +1928,10 @@ static int input_category_word_btn(PMS_INPUT_WORK* wk)
 	case 0:	//戻る
 		return 1;
 	case 1:	//グループ
-		if(wk->touch_button == TOUCH_BUTTON_GROUP){
+		if(wk->touch_button == TOUCH_BUTTON_CHANGE){
 			return 0;
 		}
 		break;
-	case 2:	//やめる
-		if(wk->touch_button == TOUCH_BUTTON_INITIAL){
-			return 0;
-		}
 	}
 	return 2;
 }
@@ -2202,12 +2213,20 @@ static BOOL keycheck_category_group_mode( PMS_INPUT_WORK* wk )
 	return FALSE;
 }
 
-//----------------------------------------------
-// イニシャルモード
-//----------------------------------------------
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  イニシャルモード キー入力
+ *
+ *	@param	PMS_INPUT_WORK* wk  ワーク
+ *
+ *	@retval TRUE
+ */
+//-----------------------------------------------------------------------------
 static BOOL keycheck_category_initial_mode( PMS_INPUT_WORK* wk )
 {
-	if( wk->category_pos != CATEGORY_POS_BACK )
+	if( wk->category_pos != CATEGORY_POS_BACK &&
+      wk->category_pos != CATEGORY_POS_SELECT &&
+      wk->category_pos != CATEGORY_POS_ERASE )
 	{
 		int  next_pos = CATEGORY_POS_DISABLE;
 
@@ -2249,14 +2268,41 @@ static BOOL keycheck_category_initial_mode( PMS_INPUT_WORK* wk )
 		if( wk->key_repeat & PAD_KEY_UP )
 		{
 			wk->category_pos = PMSI_INITIAL_DAT_GetColBottomCode( wk->category_pos_prv );
+
 			return TRUE;
 		}
-		if( wk->key_repeat & PAD_KEY_DOWN )
+		else if( wk->key_repeat & PAD_KEY_DOWN )
 		{
 			wk->category_pos = PMSI_INITIAL_DAT_GetColTopCode( wk->category_pos_prv );
+
 			return TRUE;
 		}
+    else if( wk->key_repeat & PAD_KEY_LEFT )
+    {
+      switch( wk->category_pos )
+      {
+      case CATEGORY_POS_BACK    : wk->category_pos = CATEGORY_POS_ERASE; break;
+      case CATEGORY_POS_ERASE   : wk->category_pos = CATEGORY_POS_SELECT; break;
+      case CATEGORY_POS_SELECT  : wk->category_pos = CATEGORY_POS_BACK; break;
+      default : GF_ASSERT(0);
+      }
+
+      return TRUE;
+    }
+    else if( wk->key_repeat & PAD_KEY_RIGHT )
+    {
+      switch( wk->category_pos )
+      {
+      case CATEGORY_POS_BACK    : wk->category_pos = CATEGORY_POS_SELECT; break;
+      case CATEGORY_POS_ERASE   : wk->category_pos = CATEGORY_POS_BACK; break;
+      case CATEGORY_POS_SELECT  : wk->category_pos = CATEGORY_POS_ERASE; break;
+      default : GF_ASSERT(0);
+      }
+      
+      return TRUE;
+    }
 	}
+
 	return FALSE;
 }
 
@@ -2359,10 +2405,9 @@ static GFL_PROC_RESULT MainProc_WordWin( PMS_INPUT_WORK* wk, int* seq )
 
 static void word_input_key(PMS_INPUT_WORK* wk,int* seq)
 {
-	if(	(wk->touch_button == TOUCH_BUTTON_GROUP) && (wk->category_mode != CATEGORY_MODE_GROUP)
-	||	(wk->touch_button == TOUCH_BUTTON_INITIAL) && (wk->category_mode !=CATEGORY_MODE_INITIAL)
-	||	(wk->key_trg & PAD_BUTTON_SELECT)
-	){
+#if 0
+	if(	(wk->touch_button == TOUCH_BUTTON_CHANGE) ||	(wk->key_trg & PAD_BUTTON_SELECT) )
+  {
 #if PMS_USE_SND
 		GFL_SOUND_PlaySE(SOUND_CHANGE_CATEGORY);
 #endif //PMS_USE_SND
@@ -2373,6 +2418,7 @@ static void word_input_key(PMS_INPUT_WORK* wk,int* seq)
 		*seq = SEQ_WORD_CHANGE_NEXTPROC;
 		return;
 	}
+#endif
 
 	{
 		int result;

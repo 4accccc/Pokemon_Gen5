@@ -93,6 +93,8 @@ enum PMSI_CATEGORY_INITIAL {
 
 // グループ・イニシャルのどのナンバーとも重複しない値（1byte）
 enum {
+	CATEGORY_POS_SELECT  = 0xfc,	///< 「えらぶ」位置データ
+	CATEGORY_POS_ERASE   = 0xfd,	///< 「けす」位置データ
 	CATEGORY_POS_BACK    = 0xfe,	///< 「もどる」位置データ
 	CATEGORY_POS_DISABLE = 0xff,	///< 無効位置データ
 };

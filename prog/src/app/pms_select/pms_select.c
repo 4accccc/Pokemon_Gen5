@@ -1141,8 +1141,6 @@ static void PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
     {
       wk->select_id =  wk->list_head_id + list_pos;
 
-      GFL_SOUND_PlaySE( SE_DECIDE );
-
       HOSAKA_Printf("list_pos = %d, select_id = %d \n", list_pos, wk->select_id );
       
       PLATE_CNT_UpdateAll( wk );
@@ -1400,6 +1398,8 @@ static BOOL ScenePlateSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
   if( ( TOUCH_GetListPos() != -1 ) || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ) )
   {
     PMS_DATA* pms;
+
+    GFL_SOUND_PlaySE( SE_DECIDE );
     
     pms = PMSW_GetDataEntry( wk->pmsw_save, wk->select_id );
 
