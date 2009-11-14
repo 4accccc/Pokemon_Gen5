@@ -121,7 +121,7 @@ end
 # データ解析
 load_resource
 
-# 出力
+# GMM出力
 cnt = 0
 $data.each{|data|
   #空を見つけたら抜ける
@@ -135,7 +135,36 @@ $data.each{|data|
   cnt += 1
 }
 
+#ヘッダファイル出力
+DST_FILENAME = "pms_abc_gmm_def.h"  #出力ファイル名
+DST_BRIEF = "50音並替用のデータテーブルです。"
+DST_AUTOR = "genya_hosaka"
+DST_NOTE = "このファイルはpms_gmm_conv.rbによって自動生成されたものです。"
+DST_MAX_DEF = "PMS_ABC_GMMTBL_MAX"
 
+File::open( DST_FILENAME ,"w"){ |file|
+    file.puts("//=========================================================================");
+    file.puts("/**");
+    file.puts(" * @file\t" + DST_FILENAME);
+    file.puts(" * @brief\t" + DST_BRIEF);
+    file.puts(" * @autor\t" + DST_AUTOR);
+    file.puts(" * @note\t" + DST_NOTE);
+    file.puts(" */");
+    file.puts("//=========================================================================\n");
+    file.puts("#pragma once\n\n");
+    file.puts("#include \"message.naix\"\n\n");
 
+    file.puts("#define " + DST_MAX_DEF + " (" + $filenum.to_s + ") // 最大数\n\n" );
 
+    file.puts("static const u16 pms_abc_gmmtbl[ " + DST_MAX_DEF + " ] = {")
+    
+    #データテーブル出力
 
+    for cnt in 0..$filenum-1
+      line = "\tNARC_message_pms_abc" + sprintf("%02d",cnt) + "_dat,";
+      file.puts( line );
+    end
+    
+    file.puts("};");
+    
+}
