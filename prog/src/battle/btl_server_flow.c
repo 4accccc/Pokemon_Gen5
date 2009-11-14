@@ -302,14 +302,14 @@ static void scPut_ReqWazaEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaID
 static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, TARGET_POKE_REC* targetRec );
 static u8 flowsub_registerWazaTargets( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
   const SVFL_WAZAPARAM* wazaParam, TARGET_POKE_REC* rec );
-static void correctTargetDead( BTL_SVFLOW_WORK* wk, BtlRule rule, const BTL_POKEPARAM* attacker,
-  const SVFL_WAZAPARAM* wazaParam, TARGET_POKE_REC* rec );
 static u8 registerTarget_single( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
   const SVFL_WAZAPARAM* wazaParam, u8 intrPokeID, TARGET_POKE_REC* rec );
 static u8 registerTarget_double( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
   const SVFL_WAZAPARAM* wazaParam, u8 intrPokeID, TARGET_POKE_REC* rec );
 static u8 registerTarget_triple( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
   const SVFL_WAZAPARAM* wazaParam, u8 intrPokeID, TARGET_POKE_REC* rec );
+static void correctTargetDead( BTL_SVFLOW_WORK* wk, BtlRule rule, const BTL_POKEPARAM* attacker,
+  const SVFL_WAZAPARAM* wazaParam, TARGET_POKE_REC* rec );
 static BOOL IsMustHit( const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target );
 static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
 static void flowsub_checkWazaAvoid( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
@@ -548,6 +548,7 @@ static void scEvent_AfterChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather 
 static int scEvent_CalcWeatherDamage( BTL_SVFLOW_WORK* wk, BtlWeather weather, BTL_POKEPARAM* bpp, u8 *tok_cause_flg );
 static u32 scEvent_CalcRecoverHP( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* bpp );
 static BOOL scEventSetItem( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
+static void scEvent_ChangeTokusei( BTL_SVFLOW_WORK* wk, u8 pokeID );
 static void Hem_Init( HANDLER_EXHIBISION_MANAGER* wk );
 static u32 Hem_PushState( HANDLER_EXHIBISION_MANAGER* wk );
 static void Hem_PopState( HANDLER_EXHIBISION_MANAGER* wk, u32 state );
@@ -4768,7 +4769,7 @@ static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
   atk_tok = BPP_GetValue( attacker, BPP_TOKUSEI );
   tgt_tok = BPP_GetValue( target, BPP_TOKUSEI );
 
-  if( (!BTL_CALC_TOK_CheckCant_Swap(atk_tok)) && (!BTL_CALC_TOK_CheckCant_Swap(tgt_tok)) )
+  if( (!BTL_CALC_TOK_CheckCantChange(atk_tok)) && (!BTL_CALC_TOK_CheckCantChange(tgt_tok)) )
   {
     u8 atkPokeID = BPP_GetID( attacker );
     u8 tgtPokeID = BPP_GetID( target );
@@ -4777,13 +4778,13 @@ static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
 
     BPP_ChangeTokusei( attacker, tgt_tok );
     BPP_ChangeTokusei( target, atk_tok );
+    SCQUE_PUT_OP_ChangeTokusei( wk->que, atkPokeID, atk_tok );
+    SCQUE_PUT_OP_ChangeTokusei( wk->que, tgtPokeID, tgt_tok );
+
     BTL_HANDLER_TOKUSEI_Swap( attacker, target );
 
-    BTL_EVENTVAR_Push();
-      BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, atkPokeID );
-      BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, tgtPokeID );
-      BTL_EVENT_CallHandlers( wk, BTL_EVENT_SKILL_SWAP );
-    BTL_EVENTVAR_Pop();
+    scEvent_ChangeTokusei( wk, atkPokeID );
+    scEvent_ChangeTokusei( wk, tgtPokeID );
   }
 }
 // へんしん
@@ -8074,6 +8075,21 @@ static BOOL scEventSetItem( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
 
   return failed;
 }
+//----------------------------------------------------------------------------------
+/**
+ * [Event] とくせいが変更された
+ *
+ * @param   wk
+ * @param   pokeID
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_ChangeTokusei( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, pokeID );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHANGE_TOKUSEI );
+  BTL_EVENTVAR_Pop();
+}
 
 //----------------------------------------------------------------------------------------------------------
 // 以下、ハンドラからの応答受信関数とユーティリティ群
@@ -8485,27 +8501,6 @@ void BTL_SVFLOW_RECEPT_CantEscapeAdd( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlCantEsc
 void BTL_SVFLOW_RECEPT_CantEscapeSub( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlCantEscapeCode code )
 {
   SCQUE_PUT_OP_CantEscape_Sub( wk->que, pokeID, code );
-}
-//=============================================================================================
-/**
- * [ハンドラ受信] とくせい「トレース」処理
- *
- * @param   wk
- * @param   pokeID        トレース使う側ポケモンID
- * @param   targetPokeID  トレースされる側ポケモンID
- *
- */
-//=============================================================================================
-void BTL_SVFLOW_RECEPT_TraceTokusei( BTL_SVFLOW_WORK* wk, u8 pokeID, u8 targetPokeID )
-{
-  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
-  BTL_POKEPARAM* bppTgt = BTL_POKECON_GetPokeParam( wk->pokeCon, targetPokeID );
-  PokeTokusei tok = BPP_GetValue( bppTgt, BPP_TOKUSEI );
-
-  BTL_Printf("トレースで書き換えるとくせい=%d\n", tok);
-  BPP_ChangeTokusei( bpp, tok );
-  SCQUE_PUT_ACT_TokTrace( wk->que, pokeID, targetPokeID, tok );
-  BTL_HANDLER_TOKUSEI_Add( bpp );
 }
 
 //=============================================================================================
@@ -9573,17 +9568,25 @@ static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
   u16 prevTokusei = BPP_GetValue( bpp, BPP_TOKUSEI );
 
-  if( param->tokuseiID != prevTokusei )
-  {
+  if( ( param->tokuseiID != prevTokusei )
+  &&  !BTL_CALC_TOK_CheckCantChange(param->tokuseiID)
+  ){
     BTL_HANDLER_TOKUSEI_Remove( bpp );
-    SCQUE_PUT_OP_ChangeTokusei( wk->que, param->pokeID, param->tokuseiID );
-    BPP_ChangeTokusei( bpp, param->tokuseiID );
 
-    if( param->tokuseiID != POKETOKUSEI_NULL )
-    {
-      BTL_HANDLER_TOKUSEI_Add( bpp );
-    }
+    BPP_ChangeTokusei( bpp, param->tokuseiID );
+    SCQUE_PUT_ACT_ChangeTokusei( wk->que, param->pokeID, param->tokuseiID );
+    SCQUE_PUT_OP_ChangeTokusei( wk->que, param->pokeID, param->tokuseiID );
+    BTL_HANDLER_TOKUSEI_Add( bpp );
+
     handexSub_putString( wk, &param->exStr );
+    SCQUE_PUT_TOKWIN_OUT( wk->que, param->pokeID );
+
+    {
+      u32 hem_state = Hem_PushState( &wk->HEManager );
+      scEvent_ChangeTokusei( wk, param->pokeID );
+      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+      Hem_PopState( &wk->HEManager, hem_state );
+    }
 
     return 1;
   }

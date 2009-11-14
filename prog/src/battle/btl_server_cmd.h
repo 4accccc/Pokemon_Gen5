@@ -82,7 +82,6 @@ typedef enum {
   SC_ACT_WEATHER_START,     ///< 天候変化
   SC_ACT_WEATHER_END,       ///< ターンチェックで天候終了
   SC_ACT_SIMPLE_HP,         ///< シンプルなHPゲージ増減処理
-  SC_ACT_TRACE_TOKUSEI,     ///< とくせいトレース[ pokeID, targetPokeID, tokusei ]
   SC_ACT_KINOMI,            ///< きのみを食べる
   SC_ACT_KILL,              ///< 強制瀕死演出（みちづれ、一撃ワザなど）
   SC_ACT_MOVE,              ///< ムーブ
@@ -90,6 +89,7 @@ typedef enum {
   SC_ACT_EXP_LVUP,          ///< 経験値取得＋レベルアップ
   SC_ACT_BALL_THROW,        ///< ボール投げ
   SC_ACT_ROTATION,          ///< ローテーション
+  SC_ACT_CHANGE_TOKUSEI,    ///< とくせい変更
   SC_TOKWIN_IN,             ///< とくせいウィンドウ表示イン [ClientID]
   SC_TOKWIN_OUT,            ///< とくせいウィンドウ表示アウト [ClientID]
   SC_MSG_WAZA,              ///< ワザメッセージ表示[ ClientID, wazaIdx ]
@@ -460,10 +460,6 @@ static inline void SCQUE_PUT_ACT_SimpleHP( BTL_SERVER_CMD_QUE* que, u8 pokeID )
   SCQUE_PUT_Common( que, SC_ACT_SIMPLE_HP, pokeID );
 }
 
-static inline void SCQUE_PUT_ACT_TokTrace( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 targetPokeID, PokeTokusei tok )
-{
-  SCQUE_PUT_Common( que, SC_ACT_TRACE_TOKUSEI, pokeID, targetPokeID, tok );
-}
 static inline void SCQUE_PUT_ACT_KINOMI( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {
   SCQUE_PUT_Common( que, SC_ACT_KINOMI, pokeID );
@@ -491,6 +487,10 @@ static inline void SCQUE_PUT_ACT_BallThrow( BTL_SERVER_CMD_QUE* que, BtlPokePos 
 static inline void SCQUE_PUT_ACT_Rotation( BTL_SERVER_CMD_QUE* que, u8 clientID, BtlRotateDir dir )
 {
   SCQUE_PUT_Common( que, SC_ACT_ROTATION, clientID, dir );
+}
+static inline void SCQUE_PUT_ACT_ChangeTokusei( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 tokuseiID )
+{
+  SCQUE_PUT_Common( que, SC_ACT_CHANGE_TOKUSEI, pokeID, tokuseiID );
 }
 
 

@@ -180,25 +180,15 @@ extern WazaID  BTL_CALC_SideEffectIDtoWazaID( BtlSideEffect sideEffect );
 
 //=============================================================================================
 /**
- * 「トレース」によってコピーできないとくせい判定
+ * 変更できないとくせいのチェック
  *
- * @param   tok
+ * @param   tok     とくせい指定
  *
- * @retval  BOOL    コピーできない場合はTRUE
+ * @retval  BOOL    指定されたとくせいに変更するのが禁止ならTRUE
  */
 //=============================================================================================
-extern BOOL BTL_CALC_TOK_CheckCant_Trace( PokeTokusei tok );
+extern BOOL BTL_CALC_TOK_CheckCantChange( PokeTokusei tok );
 
-//=============================================================================================
-/**
- * 「スキルスワップ」によってコピーできないとくせい判定
- *
- * @param   tok
- *
- * @retval  BOOL    コピーできない場合はTRUE
- */
-//=============================================================================================
-extern BOOL BTL_CALC_TOK_CheckCant_Swap( PokeTokusei tok );
 
 extern void BTL_CALC_ITEM_InitSystem( HEAPID heapID );
 extern void BTL_CALC_ITEM_QuitSystem(void);

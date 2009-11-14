@@ -1118,12 +1118,12 @@ BOOL BTLV_IsJustDoneMsg( BTLV_CORE* wk )
  *
  * @param   wk
  * @param   pos
- *
+ * @param   fFlash  効果発動を示すフラッシュ動作を入れるか？
  */
 //=============================================================================================
-void BTLV_TokWin_DispStart( BTLV_CORE* wk, BtlPokePos pos )
+void BTLV_TokWin_DispStart( BTLV_CORE* wk, BtlPokePos pos, BOOL fFlash )
 {
-  BTLV_SCU_TokWin_DispStart( wk->scrnU, pos );
+  BTLV_SCU_TokWin_DispStart( wk->scrnU, pos, fFlash );
 }
 BOOL BTLV_TokWin_DispWait( BTLV_CORE* wk, BtlPokePos pos )
 {

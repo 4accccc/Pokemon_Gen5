@@ -358,6 +358,65 @@ void BTL_EVENT_CallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID )
     factor = next_factor;
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * 登録ハンドラ呼び出し
+ *
+ * @param   factor
+ * @param   eventType
+ * @param   flowWork
+ */
+//----------------------------------------------------------------------------------
+static void callHandlers( BTL_EVENT_FACTOR* factor, BtlEventType eventType, BTL_SVFLOW_WORK* flowWork )
+{
+  if( (factor->callingFlag == FALSE) && (factor->sleepFlag == FALSE) )
+  {
+    const BtlEventHandlerTable* tbl = factor->handlerTable;
+
+    int i;
+    for(i=0; tbl[i].eventType!=BTL_EVENT_NULL; i++)
+    {
+      if( tbl[i].eventType == eventType )
+      {
+        if( !check_handler_skip(flowWork, factor->factorType, eventType, factor->subID, factor->pokeID) )
+        {
+          factor->callingFlag = TRUE;
+          tbl[i].handler( factor, flowWork, factor->pokeID, factor->work );
+          factor->callingFlag = FALSE;
+        }
+      }
+    }
+  }
+}
+/**
+ *  特定ハンドラをスキップするかチェック
+ */
+static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BtlEventFactor factorType, BtlEventType eventType, u16 subID, u8 pokeID )
+{
+  BTL_EVENT_FACTOR* factor;
+  const BTL_POKEPARAM* bpp;
+
+  for( factor=FirstFactorPtr; factor!=NULL; factor=factor->next )
+  {
+    // 「いえき」状態のポケモンは、とくせいハンドラを呼び出さない
+    bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWork, pokeID );
+    if( BPP_CheckSick(bpp, WAZASICK_IEKI) && (factorType == BTL_EVENT_FACTOR_TOKUSEI) ){
+      return TRUE;
+    }
+
+    // スキップチェックハンドラが登録されていたら判断させる
+    if( factor->skipCheckHandler ){
+      if( factor->skipCheckHandler( factor, factorType, eventType, subID, pokeID) ){
+        return TRUE;
+      }
+    }
+  }
+  return FALSE;
+}
+
+
+
+
 
 BTL_EVENT_FACTOR* BTL_EVENT_SeekFactorCore( BtlEventFactor factorType )
 {
@@ -456,46 +515,6 @@ static void clearFactorWork( BTL_EVENT_FACTOR* factor )
 static inline u32 calcFactorPriority( BtlEventFactor factorType, u16 subPri )
 {
   return (factorType << 16) | subPri;
-}
-
-static void callHandlers( BTL_EVENT_FACTOR* factor, BtlEventType eventType, BTL_SVFLOW_WORK* flowWork )
-{
-  if( (factor->callingFlag == FALSE) && (factor->sleepFlag == FALSE) )
-  {
-    const BtlEventHandlerTable* tbl = factor->handlerTable;
-
-    int i;
-    for(i=0; tbl[i].eventType!=BTL_EVENT_NULL; i++)
-    {
-      if( tbl[i].eventType == eventType )
-      {
-        if( !check_handler_skip(flowWork, factor->factorType, eventType, factor->subID, factor->pokeID) )
-        {
-          factor->callingFlag = TRUE;
-          tbl[i].handler( factor, flowWork, factor->pokeID, factor->work );
-          factor->callingFlag = FALSE;
-        }
-      }
-    }
-  }
-}
-/**
- *  特定ハンドラをスキップするかチェック
- */
-static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BtlEventFactor factorType, BtlEventType eventType, u16 subID, u8 pokeID )
-{
-  BTL_EVENT_FACTOR* factor;
-  int sleepFlag = FALSE;
-
-  for( factor=FirstFactorPtr; factor!=NULL; factor=factor->next )
-  {
-    if( factor->skipCheckHandler ){
-      if( factor->skipCheckHandler( factor, factorType, eventType, subID, pokeID) ){
-        return TRUE;
-      }
-    }
-  }
-  return FALSE;
 }
 
 

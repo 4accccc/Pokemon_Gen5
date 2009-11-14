@@ -75,7 +75,7 @@ enum {
   TOKWIN_DRAWAREA_LINE2_OY = 18,
 
   TOKWIN_MARGIN_R = 4,
-  TOKWIN_MARGIN_L = 4,
+  TOKWIN_MARGIN_L = 8,
   TOKWIN_HIDEPOS_FRIEND = (TOKWIN_CGRDATA_CHAR_W * 8),
   TOKWIN_HIDEPOS_ENEMY = -(TOKWIN_CGRDATA_CHAR_W * 8),
 
@@ -139,9 +139,8 @@ typedef struct {
   fx32            speedX;
   u8              moveTimer;
   u8              writeRaw;
-
-  u8              pokePos;
-  u8              renewingFlag;
+  u8              dispFlag;
+  u8              fFlash;
 
 }TOK_WIN;
 
@@ -235,18 +234,15 @@ static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, BtlPokePos pokePos )
 static void statwin_cleanup( STATUS_WIN* stwin );
 static void statwin_disp_start( STATUS_WIN* stwin );
 static TokwinSide PokePosToTokwinSide( const BTL_MAIN_MODULE* mainModule, BtlPokePos pos );
-static void tokwinRenewTask( GFL_TCBL* tcbl, void* wk_adrs );
 static void tokwin_setupAll( BTLV_SCU* wk );
 static void tokwin_cleanupAll( BTLV_SCU* wk );
-static void tokwin_disp_first( TOK_WIN* tokwin, BtlPokePos pos );
+static void tokwin_disp_first( TOK_WIN* tokwin, BtlPokePos pos, BOOL fFlash );
 static BOOL tokwin_disp_progress( TOK_WIN* tokwin );
 static void tokwin_update_cgr( TOK_WIN* tokwin );
 static void tokwin_hide_first( TOK_WIN* tokwin );
 static BOOL tokwin_hide_progress( TOK_WIN* tokwin );
 static void tokwin_renew_start( TOK_WIN* tokwin, BtlPokePos pos );
 static BOOL tokwin_renew_progress( TOK_WIN* tokwin );
-static void tokwin_check_update_cgr( TOK_WIN* tokwin );
-static void tokwin_disp( TOK_WIN* tokwin );
 static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, u8 clientID, BTLV_BALL_GAUGE_TYPE type );
 
 
@@ -2399,13 +2395,13 @@ static TokwinSide PokePosToTokwinSide( const BTL_MAIN_MODULE* mainModule, BtlPok
  *
  * @param   wk
  * @param   pos
- *
+ * @param   fFlash    効果発動を示すフラッシュ動作を入れるか?
  */
 //=============================================================================================
-void BTLV_SCU_TokWin_DispStart( BTLV_SCU* wk, BtlPokePos pos )
+void BTLV_SCU_TokWin_DispStart( BTLV_SCU* wk, BtlPokePos pos, BOOL fFlash )
 {
   TokwinSide side = PokePosToTokwinSide( wk->mainModule, pos );
-  tokwin_disp_first( &wk->tokWin[side], pos );
+  tokwin_disp_first( &wk->tokWin[side], pos, fFlash );
 }
 BOOL BTLV_SCU_TokWin_DispWait( BTLV_SCU* wk, BtlPokePos pos )
 {
@@ -2477,6 +2473,7 @@ static void tokwin_setupAll( BTLV_SCU* wk )
     wk->tokWin[i].bmp = GFL_BMP_Create( TOKWIN_CGRDATA_CHAR_W, TOKWIN_DRAWAREA_CHAR_H, GFL_BMP_16_COLOR, wk->heapID );
     wk->tokWin[i].tokusei = POKETOKUSEI_NULL;
     wk->tokWin[i].pokeID = BTL_POKEID_NULL;
+    wk->tokWin[i].dispFlag = FALSE;
   }
 }
 static void tokwin_cleanupAll( BTLV_SCU* wk )
@@ -2492,20 +2489,23 @@ static void tokwin_cleanupAll( BTLV_SCU* wk )
   GFL_HEAP_FreeMemory( wk->tokWinCgrHead );
 }
 // 表示開始
-static void tokwin_disp_first( TOK_WIN* tokwin, BtlPokePos pos )
+static void tokwin_disp_first( TOK_WIN* tokwin, BtlPokePos pos, BOOL fFlash )
 {
-  const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( tokwin->parentWk->pokeCon, pos );
-  u16 tokusei = BPP_GetValue( bpp, BPP_TOKUSEI );
-  u8  pokeID = BPP_GetID( bpp );
-
-  if( (tokusei != tokwin->tokusei) || (pokeID != tokwin->pokeID) )
+  if( tokwin->dispFlag == FALSE )
   {
-    tokwin->tokusei = tokusei;
-    tokwin->pokeID = pokeID;
-    tokwin_update_cgr( tokwin );
-  }
+    const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( tokwin->parentWk->pokeCon, pos );
+    u16 tokusei = BPP_GetValue( bpp, BPP_TOKUSEI );
+    u8  pokeID = BPP_GetID( bpp );
 
-  tokwin->seq = 0;
+    if( (tokusei != tokwin->tokusei) || (pokeID != tokwin->pokeID) )
+    {
+      tokwin->tokusei = tokusei;
+      tokwin->pokeID = pokeID;
+      tokwin_update_cgr( tokwin );
+    }
+    tokwin->fFlash = fFlash;
+    tokwin->seq = 0;
+  }
 }
 // 表示更新
 static BOOL tokwin_disp_progress( TOK_WIN* tokwin )
@@ -2564,8 +2564,12 @@ static BOOL tokwin_disp_progress( TOK_WIN* tokwin )
     }
     else
     {
-//      return TRUE;
-      tokwin->seq++;
+      tokwin->dispFlag = TRUE;
+      if( tokwin->fFlash ){
+        tokwin->seq++;
+      }else{
+        return TRUE;
+      }
     }
     break;
   case 4:
@@ -2589,7 +2593,10 @@ static BOOL tokwin_disp_progress( TOK_WIN* tokwin )
     }
     break;
   case 6:
-    return TRUE;
+    if(  !PMSND_CheckPlaySE() ){
+      return TRUE;
+    }
+    break;
   }
   return FALSE;
 }
@@ -2626,11 +2633,17 @@ static void tokwin_update_cgr( TOK_WIN* tokwin )
         line2_head -= (diff - (diff / 2));
       }
 
-      PRINTSYS_CopyLineStr( wk->strBufSubA, wk->strBufSubB, 0 );
-      PRINTSYS_Print( tokwin->bmp, line1_end-width[0], TOKWIN_DRAWAREA_LINE1_OY, wk->strBufSubB, wk->smallFont );
+      {
+        int line1_head = line1_end - width[0];
+        if( line1_head < 0 ){ line1_head = 0; }
+        if( line2_head < 0 ){ line2_head = 0; }
 
-      PRINTSYS_CopyLineStr( wk->strBufSubA, wk->strBufSubB, 1 );
-      PRINTSYS_Print( tokwin->bmp, line2_head, TOKWIN_DRAWAREA_LINE2_OY, wk->strBufSubB, wk->smallFont );
+        PRINTSYS_CopyLineStr( wk->strBufSubA, wk->strBufSubB, 0 );
+        PRINTSYS_Print( tokwin->bmp, line1_head, TOKWIN_DRAWAREA_LINE1_OY, wk->strBufSubB, wk->smallFont );
+
+        PRINTSYS_CopyLineStr( wk->strBufSubA, wk->strBufSubB, 1 );
+        PRINTSYS_Print( tokwin->bmp, line2_head, TOKWIN_DRAWAREA_LINE2_OY, wk->strBufSubB, wk->smallFont );
+      }
     }
     // １行なら単純なセンタリング表示
     else
@@ -2651,6 +2664,7 @@ static void tokwin_hide_first( TOK_WIN* tokwin )
   }else{
     GFL_BG_SetScroll( tokwin->bgFrame, GFL_BG_SCROLL_X_SET, TOKWIN_HIDEPOS_ENEMY );
   }
+  tokwin->dispFlag = FALSE;
 }
 static BOOL tokwin_hide_progress( TOK_WIN* tokwin )
 {
@@ -2674,7 +2688,7 @@ static void tokwin_renew_start( TOK_WIN* tokwin, BtlPokePos pos )
 static BOOL tokwin_renew_progress( TOK_WIN* tokwin )
 {
   enum {
-    MOSAIC_WAIT_FRAMES = 2,
+    MOSAIC_WAIT_FRAMES = 1,
   };
   switch( tokwin->seq ){
   case 0:
@@ -2686,6 +2700,7 @@ static BOOL tokwin_renew_progress( TOK_WIN* tokwin )
     }
     tokwin->moveTimer = 0;
     tokwin->writeRaw = 0;
+    PMSND_PlaySE( BANK_SE_WB_DECIDE3 );  // @TODO 仮
     tokwin->seq++;
     break;
   case 1:
@@ -2728,28 +2743,6 @@ static BOOL tokwin_renew_progress( TOK_WIN* tokwin )
     return TRUE;
   }
   return FALSE;
-}
-
-// 更新の必要があればCGR更新
-static void tokwin_check_update_cgr( TOK_WIN* tokwin )
-{
-  BTLV_SCU* wk = tokwin->parentWk;
-  const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, tokwin->pokePos );
-  u8 pokeID = BPP_GetID( bpp );
-  u16 tokusei = BPP_GetValue( bpp, BPP_TOKUSEI );
-  if( (pokeID != tokwin->pokeID)
-  ||  (tokusei != tokwin->tokusei)
-  ){
-    tokwin->pokeID = pokeID;
-    tokwin->tokusei = tokusei;
-    tokwin_update_cgr( tokwin );
-  }
-}
-
-static void tokwin_disp( TOK_WIN* tokwin )
-{
-//  GFL_BMPWIN_MakeScreen( tokwin->win );
-//  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(tokwin->win) );
 }
 
 

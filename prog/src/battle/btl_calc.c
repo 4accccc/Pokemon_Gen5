@@ -446,17 +446,17 @@ void BTL_CALC_MakeDefaultWazaSickCont( WazaSick sick, const BTL_POKEPARAM* attac
 
 //=============================================================================================
 /**
- * 「トレース」によってコピーできないとくせい判定
+ * 「スキルスワップ」によって交換できないとくせい判定
  *
  * @param   tok
  *
  * @retval  BOOL    コピーできない場合はTRUE
  */
 //=============================================================================================
-BOOL BTL_CALC_TOK_CheckCant_Trace( PokeTokusei tok )
+BOOL BTL_CALC_TOK_CheckCantChange( PokeTokusei tok )
 {
   static const u16 prohibits[] = {
-    POKETOKUSEI_TOREESU, POKETOKUSEI_FUSIGINAMAMORI, POKETOKUSEI_MARUTITAIPU,
+    POKETOKUSEI_FUSIGINAMAMORI, POKETOKUSEI_MARUTITAIPU,
     POKETOKUSEI_SUROOSUTAATO, POKETOKUSEI_TENKIYA,
   };
   u16 i;
@@ -469,20 +469,8 @@ BOOL BTL_CALC_TOK_CheckCant_Trace( PokeTokusei tok )
   }
   return FALSE;
 }
-//=============================================================================================
-/**
- * 「スキルスワップ」によって交換できないとくせい判定
- *
- * @param   tok
- *
- * @retval  BOOL    コピーできない場合はTRUE
- */
-//=============================================================================================
-BOOL BTL_CALC_TOK_CheckCant_Swap( PokeTokusei tok )
-{
-  // @@@ 今のところトレースと一緒にしておく
-  return BTL_CALC_TOK_CheckCant_Trace( tok );
-}
+
+
 //=============================================================================================
 // サイドエフェクト関連
 //=============================================================================================

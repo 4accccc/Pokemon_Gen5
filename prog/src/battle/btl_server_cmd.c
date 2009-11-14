@@ -137,7 +137,6 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_1byte,            // SC_ACT_WEATHER_START,
   SC_ARGFMT_1byte,            // SC_ACT_WEATHER_END,
   SC_ARGFMT_1byte,            // SC_ACT_SIMPLE_HP
-  SC_ARGFMT_5_5_14bit,        // SC_ACT_TRACE_TOKUSEI
   SC_ARGFMT_1byte,            // SC_ACT_KINOMI
   SC_ARGFMT_5_3bit,           // SC_ACT_KILL
   SC_ARGFMT_5_3bit,           // SC_ACT_MOVE
@@ -145,6 +144,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_1x8byte,          // SC_ACT_EXP_LVUP
   SC_ARGFMT_5_5_6_2byte,      // SC_ACT_BALL_THROW
   SC_ARGFMT_4_4bit,           // SC_ACT_ROTATION
+  SC_ARGFMT_12byte,           // SC_ACT_CHANGE_TOKUSEI
   SC_ARGFMT_1byte,            // SC_TOKWIN_IN
   SC_ARGFMT_1byte,            // SC_TOKWIN_OUT
 
@@ -534,6 +534,8 @@ void SCQUE_PUT_Common( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ... )
     fmt = ServerCmdToFmtTbl[ cmd ];
     arg_cnt = SC_ARGFMT_GetArgCount( fmt );
 
+    GF_ASSERT(arg_cnt <= NELEMS(ArgBuffer));
+
     va_start( list, cmd );
     for(i=0; i<arg_cnt; ++i)
     {
@@ -573,6 +575,7 @@ u16 SCQUE_RESERVE_Pos( BTL_SERVER_CMD_QUE* que, ServerCmd cmd )
 
     fmt = ServerCmdToFmtTbl[ cmd ];
     arg_cnt = SC_ARGFMT_GetArgCount( fmt );
+    GF_ASSERT(arg_cnt <= NELEMS(ArgBuffer));
 
     for(i=0; i<arg_cnt; ++i)
     {
@@ -607,6 +610,7 @@ void SCQUE_PUT_ReservedPos( BTL_SERVER_CMD_QUE* que, u16 pos, ServerCmd cmd, ...
 
     fmt = ServerCmdToFmtTbl[ cmd ];
     arg_cnt = SC_ARGFMT_GetArgCount( fmt );
+    GF_ASSERT(arg_cnt <= NELEMS(ArgBuffer));
 
     va_start( list, cmd );
     for(i=0; i<arg_cnt; ++i)

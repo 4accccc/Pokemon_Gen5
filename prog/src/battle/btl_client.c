@@ -155,7 +155,6 @@ static BtlCantEscapeCode is_prohibit_escape( BTL_CLIENT* wk, u8* pokeID );
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq );
 static void abandon_cover_pos( BTL_CLIENT* wk, u8 numPos );
 static u8 calcPuttablePokemons( BTL_CLIENT* wk, u8* list );
-static u8 calc_front_dead_pokemons( BTL_CLIENT* wk, u8* list );
 static void setup_pokesel_param_change( BTL_CLIENT* wk, BTL_POKESELECT_PARAM* param );
 static void setup_pokesel_param_dead( BTL_CLIENT* wk, u8 numSelect, BTL_POKESELECT_PARAM* param );
 static void store_pokesel_to_action( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT* res );
@@ -192,6 +191,7 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Rotation( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_TraceTokusei( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args );
@@ -899,7 +899,6 @@ static BOOL selact_Finish( BTL_CLIENT* wk, int* seq )
     }
     else
     {
-      BTL_Printf("通信中じゃないので待機中メッセージだしません\n");
       (*seq)+=2;
     }
     break;
@@ -1001,7 +1000,6 @@ static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BT
     return TRUE;
   }
 
-  BTL_Printf("ポケ[%d]はワザ選べます\n", BPP_GetID(bpp));
   return FALSE;
 }
 //----------------------------------------------------------------------------------
@@ -1565,7 +1563,6 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_WEATHER_START,     scProc_ACT_WeatherStart   },
     { SC_ACT_WEATHER_END,       scProc_ACT_WeatherEnd     },
     { SC_ACT_SIMPLE_HP,         scProc_ACT_SimpleHP       },
-    { SC_ACT_TRACE_TOKUSEI,     scProc_ACT_TraceTokusei   },
     { SC_ACT_KINOMI,            scProc_ACT_Kinomi         },
     { SC_TOKWIN_IN,             scProc_TOKWIN_In          },
     { SC_TOKWIN_OUT,            scProc_TOKWIN_Out         },
@@ -1614,6 +1611,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_EXP_LVUP,          scProc_ACT_ExpLvup        },
     { SC_ACT_BALL_THROW,        scProc_ACT_BallThrow      },
     { SC_ACT_ROTATION,          scProc_ACT_Rotation       },
+    { SC_ACT_CHANGE_TOKUSEI,    scProc_ACT_ChangeTokusei  },
   };
 
 restart:
@@ -2511,11 +2509,11 @@ static BOOL scProc_ACT_Rotation( BTL_CLIENT* wk, int* seq, const int* args )
 }
 //---------------------------------------------------------------------------------------
 /**
- *  とくせい「トレース」の発動処理
- *  args .. [0]:トレース持ちのポケID  [1]:コピー対象のポケID  [2]:コピーするとくせい
+ *  とくせい書き換えアクション
+ *  args .. [0]:対象のポケモンID [1]:書き換え後のとくせい
  */
 //---------------------------------------------------------------------------------------
-static BOOL scProc_ACT_TraceTokusei( BTL_CLIENT* wk, int* seq, const int* args )
+static BOOL scProc_ACT_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args )
 {
   u8 pokeID = args[0];
   BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, pokeID );
@@ -2523,7 +2521,7 @@ static BOOL scProc_ACT_TraceTokusei( BTL_CLIENT* wk, int* seq, const int* args )
   switch( *seq ){
   case 0:
     {
-      BTLV_TokWin_DispStart( wk->viewCore, pos );
+      BTLV_TokWin_DispStart( wk->viewCore, pos, FALSE );
       (*seq)++;
     }
     break;
@@ -2531,8 +2529,7 @@ static BOOL scProc_ACT_TraceTokusei( BTL_CLIENT* wk, int* seq, const int* args )
     if( BTLV_TokWin_DispWait( wk->viewCore, pos ) )
     {
       BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
-      BPP_ChangeTokusei( bpp, args[2] );
-      BTL_Printf("トレースでとくせい変更->%d\n", args[2]);
+      BPP_ChangeTokusei( bpp, args[1] );
       BTLV_TokWin_Renew_Start( wk->viewCore, pos );
       (*seq)++;
     }
@@ -2540,22 +2537,11 @@ static BOOL scProc_ACT_TraceTokusei( BTL_CLIENT* wk, int* seq, const int* args )
   case 2:
     if( BTLV_TokWin_Renew_Wait( wk->viewCore, pos ) )
     {
-      BTLV_StartMsgSet( wk->viewCore, BTL_STRID_SET_Trace, args );
       (*seq)++;
     }
     break;
-  case 3:
-    if( BTLV_WaitMsg(wk->viewCore) )
-    {
-      BTLV_QuitTokWin( wk->viewCore, pos );
-      (*seq)++;
-    }
-    break;
-  case 4:
-    if( BTLV_QuitTokWinWait(wk->viewCore, pos) )
-    {
-      return TRUE;
-    }
+  default:
+    return TRUE;
   }
   return FALSE;
 }
@@ -2569,12 +2555,18 @@ static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args )
   BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
   switch( *seq ){
   case 0:
-    BTLV_TokWin_DispStart( wk->viewCore, pos );
+    BTLV_TokWin_DispStart( wk->viewCore, pos, TRUE );
     (*seq)++;
     break;
 
   case 1:
-    return BTLV_TokWin_DispWait( wk->viewCore, pos );
+    if( BTLV_TokWin_DispWait(wk->viewCore, pos) ){
+      (*seq)++;
+    }
+    break;
+
+  default:
+    return TRUE;
   }
   return FALSE;
 }

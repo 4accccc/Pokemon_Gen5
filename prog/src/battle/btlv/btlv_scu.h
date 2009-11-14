@@ -59,7 +59,7 @@ extern void BTLV_SCU_StartWazaEffect( BTLV_SCU* wk, BtlvMcssPos atPos, BtlvMcssP
   WazaID waza, BtlvWazaEffect_TurnType turnType, u8 continueCount );
 extern BOOL BTLV_SCU_WaitWazaEffect( BTLV_SCU* wk );
 
-extern void BTLV_SCU_TokWin_DispStart( BTLV_SCU* wk, BtlPokePos pos );
+extern void BTLV_SCU_TokWin_DispStart( BTLV_SCU* wk, BtlPokePos pos, BOOL fFlash );
 extern BOOL BTLV_SCU_TokWin_DispWait( BTLV_SCU* wk, BtlPokePos pos );
 extern void BTLV_SCU_TokWin_HideStart( BTLV_SCU* wk, BtlPokePos pos );
 extern BOOL BTLV_SCU_TokWin_HideWait( BTLV_SCU* wk, BtlPokePos pos );

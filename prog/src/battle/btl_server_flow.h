@@ -120,7 +120,6 @@ extern void BTL_SVFLOW_RECEPT_CurePokeSick( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern void BTL_SVFLOW_RECEPT_CureWazaSick( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaSick sick );
 extern void BTL_SVFLOW_RECEPT_CantEscapeAdd( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlCantEscapeCode code );
 extern void BTL_SVFLOW_RECEPT_CantEscapeSub( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlCantEscapeCode code );
-extern void BTL_SVFLOW_RECEPT_TraceTokusei( BTL_SVFLOW_WORK* wk, u8 pokeID, u8 targetPokeID );
 extern HEAPID BTL_SVFLOW_RECEPT_GetHeapID( BTL_SVFLOW_WORK* wk );
 extern u32 BTL_SVFLOW_SimulationDamage( BTL_SVFLOW_WORK* flowWk, u8 atkPokeID, u8 defPokeID, WazaID waza, BOOL fAffinity, BOOL fCritical );
 extern BtlLandForm BTL_SVFLOW_GetLandForm( BTL_SVFLOW_WORK* wk );
@@ -278,9 +277,6 @@ typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
 }BTL_HANDEX_PARAM_USE_ITEM;
 
-typedef struct {
- BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
-}BTL_HANDEX_PARAM_TOKWIN_INOUT;
 
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
