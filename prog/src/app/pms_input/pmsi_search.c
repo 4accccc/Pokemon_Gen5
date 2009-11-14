@@ -199,8 +199,8 @@ BOOL PMSI_SEARCH_DelWord( PMS_INPUT_SEARCH* wk )
     return FALSE;
   }
 
-  // ––”ö‚Å‚È‚¯‚ê‚Îˆê‚Â‘O‚Ì•¶Žš‚ðÁ‚·
-  if( wk->word_code_pos != WORD_CODE_MAX-1 )
+  // ––”ö‚ª‹ó‚È‚ç1•¶Žš‘O‚Ö
+  if( wk->word_code[ WORD_CODE_MAX-1 ] == INI_DIS )
   {
     wk->word_code_pos--;
   }
