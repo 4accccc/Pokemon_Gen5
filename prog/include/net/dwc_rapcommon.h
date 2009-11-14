@@ -52,6 +52,15 @@ extern void mydwc_createUserData( DWCUserData *userdata );
 //==============================================================================
 extern BOOL mydwc_checkMyGSID(void);
 
+//==============================================================================
+/**
+ * @brief   WIFIで使うHEAPIDをセットする
+ * @param   id     変更するHEAPID
+ * @retval  none
+ */
+//==============================================================================
+extern void DWC_RAPCOMMON_SetHeapID(HEAPID id);
+
 #endif //
 
 #ifdef __cplusplus

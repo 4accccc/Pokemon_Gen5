@@ -138,4 +138,5 @@ enum{
 
 #define HEAPSIZE_SYSTEM (0x008000)
 #define HEAPSIZE_APP  (0x186000)   // PL,GS‚Í–ñ0x13A000
+#define HEAPSIZE_DSI  (0x486000)   // DSI‚Í16M
 

@@ -145,13 +145,18 @@ static void _keyWait(SAVEADDR_WORK* pWork)
 	case PAD_BUTTON_X:
     {
       u32 size;
+      u8* pAddr;
       u8* topAddr = (u8*)SaveControl_GetSaveWorkAdrs(pWork->pSaveData, &size);
 
+      OS_TPrintf("SAVESIZE ,%x\n", size);
+      
       {//DreamWorldŠÖ˜A
         DREAMWORLD_SAVEDATA* pDW = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
+        pAddr = (u8*)DREAMWORLD_SV_GetSleepPokemon(pDW);
+
+        OS_TPrintf("SLEEP POKEMON ,0x%x\n", (u32)pAddr-(u32)topAddr);
         
 
-        
       }
 
       

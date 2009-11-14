@@ -60,9 +60,11 @@ void MYSTERYDATA_Init(MYSTERY_DATA * fd)
   // Ç±ÇÃèàóùÇÕsaveload_system.cÇÃSVDT_InitÇ≈çsÇÌÇÍÇƒÇ¢ÇÈÇÃÇ≈âΩÇ‡ÇµÇ»Ç¢
   MI_CpuClearFast(fd, sizeof(MYSTERY_DATA));
 #endif
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_MYSTERYDATA)
-	SVLD_SetCrc(GMDATA_ID_MYSTERYDATA);
-#endif //CRC_LOADCHECK
+
+
+  OS_TPrintf("GIFT_DELIVERY %d\n",sizeof(GIFT_DELIVERY));
+  OS_TPrintf("GIFT_CARD %d\n",sizeof(GIFT_CARD));
+
 }
 
 //============================================================================================

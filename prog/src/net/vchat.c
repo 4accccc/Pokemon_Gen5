@@ -23,7 +23,7 @@
 #define VCHAT_WAVE_SAMPLE ((int) (VCHAT_SAMPLING_RATE * MAX_SAMPLING_TIME * SAMPLING_BYTE) / 1000)  //1088
 //-----------------
 
-//#define VCFINFO_SHOW
+#define VCFINFO_SHOW
 //#define VCT_ERROR_NONE (VCT_SUCCESS)
 
 

@@ -1168,6 +1168,22 @@ static GFLNetInitializeStruct aGFLNetInit = {
 
 
 
+static void _GFL_NET_InitAndStruct(WIFIP2PMATCH_WORK *wk,BOOL bInit)
+{
+
+  if( OS_IsRunOnTwl() ){//DSIなら
+    aGFLNetInit.heapSize = GFL_NET_DWCLOBBY_HEAPSIZE;
+  }
+  else{
+    aGFLNetInit.heapSize = GFL_NET_DWC_HEAPSIZE;
+  }
+  if(bInit){
+    GFL_NET_Init(&aGFLNetInit, NULL, wk);
+  }
+  else{
+    GFL_NET_ChangeInitStruct(&aGFLNetInit);
+  }
+}
 
 static const u8 ViewButtonFrame_y[ 4 ] = {
   8, 7, 5, 7
@@ -1350,12 +1366,12 @@ static int _convertState(int state)
  */
 //--------------------------------------------------------------------------------------------
 
-static void _commStateChange(int status)
+static void _commStateChange(WIFIP2PMATCH_WORK * wk,int status)
 {
   if(status == WIFI_STATUS_LOGIN_WAIT){
     //        GFL_NET_StateChangeWiFiLogin();   // @@OO ログイン用
     GFL_NET_SetWifiBothNet(FALSE);
-    GFL_NET_ChangeInitStruct(&aGFLNetInit);
+    _GFL_NET_InitAndStruct(wk,FALSE);
   }
   else if( (status == WIFI_STATUS_FRONTIER_WAIT) || (status == WIFI_STATUS_FRONTIER) || (status == WIFI_STATUS_VCT) ){
     GFL_NET_SetWifiBothNet(FALSE);
@@ -3016,7 +3032,8 @@ static int _normalConnectWait( WIFIP2PMATCH_WORK *wk, int seq )
     if(ret == 0)
     { // はいを選択した場合
       //接続開始
-      GFL_NET_Init(&aGFLNetInit, NULL, wk);
+      _GFL_NET_InitAndStruct(wk,TRUE);
+//      GFL_NET_Init(&aGFLNetInit, NULL, wk);
       GFL_NET_StateWifiEnterLogin();
 
       WifiP2PMatchMessagePrint(wk, dwc_message_0008, TRUE);
@@ -3123,7 +3140,8 @@ static int _differMachineOneMore( WIFIP2PMATCH_WORK *wk, int seq )
     wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
     if(ret == 0){ // はいを選択した場合
 
-      GFL_NET_Init(&aGFLNetInit, NULL, wk);
+      _GFL_NET_InitAndStruct(wk,TRUE);
+//      GFL_NET_Init(&aGFLNetInit, NULL, wk);
       //接続開始
       WifiList_Init(wk->pList);
       EMAILSAVE_Init(SaveData_Get(wk->pSaveData, GMDATA_ID_EMAIL));
@@ -3172,7 +3190,8 @@ static int _firstYesNo( WIFIP2PMATCH_WORK *wk, int seq )
 
     wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
     if(ret == 0){ // はいを選択した場合
-      GFL_NET_Init(&aGFLNetInit, NULL, wk);
+//      GFL_NET_Init(&aGFLNetInit, NULL, wk);
+    _GFL_NET_InitAndStruct(wk,TRUE);
 
       //接続開始
       _CHANGESTATE(wk,WIFIP2PMATCH_CONNECTING_INIT);
@@ -3688,7 +3707,8 @@ static int _retry( WIFIP2PMATCH_WORK *wk, int seq )
     }
 #endif
     MainMenuMsgInit(wk);
-    GFL_NET_Init(&aGFLNetInit, NULL, wk);
+    _GFL_NET_InitAndStruct(wk,FALSE);
+//    GFL_NET_Init(&aGFLNetInit, NULL, wk);
     GFL_NET_StateWifiEnterLogin();
     //        wk->pMatch = GFL_NET_StateWifiEnterLogin(wk->pSaveData,sizeof(TEST_MATCH_WORK));
     WifiP2PMatchMessagePrint(wk, dwc_message_0008, TRUE);
@@ -4548,8 +4568,9 @@ static int WifiP2PMatch_FriendListInit( WIFIP2PMATCH_WORK *wk, int seq )
 
   // 通信状態を元に戻す
   //  GFL_NET_StateChangeWiFiLogin(); //@@OO
-  _commStateChange(WIFI_STATUS_LOGIN_WAIT);
-  GFL_NET_ChangeInitStruct(&aGFLNetInit);
+  _commStateChange(wk,WIFI_STATUS_LOGIN_WAIT);
+//  GFL_NET_ChangeInitStruct(&aGFLNetInit);
+    _GFL_NET_InitAndStruct(wk,FALSE);
 
   wk->preConnect = -1;
 
@@ -4850,7 +4871,7 @@ static int WifiP2PMatch_FriendList( WIFIP2PMATCH_WORK *wk, int seq )
           WIFI_STATUS_SetVChatMac(wk->pMatch, WifiFriendMatchStatusGet( j ));
           wk->cancelEnableTimer = _CANCELENABLE_TIMER;
           status = WIFI_STATUS_VCT;
-          _commStateChange(status);
+          _commStateChange(wk,status);
           _myStatusChange(wk, status);  // 接続中になる
           _friendNameExpand(wk, j);
           WifiP2PMatchMessagePrint(wk,msg_wifilobby_014, FALSE);
@@ -5358,7 +5379,8 @@ static int WifiP2PMatch_VCTDisconnect(WIFIP2PMATCH_WORK *wk, int seq)
 
     // 通信状態を元に戻す
     //GFL_NET_StateChangeWiFiLogin();
-    GFL_NET_ChangeInitStruct(&aGFLNetInit);
+//    GFL_NET_ChangeInitStruct(&aGFLNetInit);
+    _GFL_NET_InitAndStruct(wk,FALSE);
 
     //        if(wk->menulist==NULL){
     if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == FALSE ){
@@ -5421,7 +5443,8 @@ static int WifiP2PMatch_Disconnect(WIFIP2PMATCH_WORK *wk, int seq)
 
     // 通信状態を元に戻す
     //GFL_NET_StateChangeWiFiLogin();
-    GFL_NET_ChangeInitStruct(&aGFLNetInit);
+//    GFL_NET_ChangeInitStruct(&aGFLNetInit);
+    _GFL_NET_InitAndStruct(wk,FALSE);
 
     //        if(wk->menulist==NULL){
     if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == FALSE ){
@@ -5588,7 +5611,8 @@ static int _parentModeSelectRelWait( WIFIP2PMATCH_WORK* wk, int seq )
 
     // 通信状態を元に戻す
     //    GFL_NET_StateChangeWiFiLogin();
-    GFL_NET_ChangeInitStruct(&aGFLNetInit);
+//    GFL_NET_ChangeInitStruct(&aGFLNetInit);
+    _GFL_NET_InitAndStruct(wk,FALSE);
 
     // 主人公の動作を許可
     FriendRequestWaitOff( wk );
@@ -5878,7 +5902,7 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
 
       {
         WifiP2PMatch_CommWifiBattleStart( wk, -1, ret );  // 交換でも通信方法を変更するためにここに移動
-        _commStateChange( ret );
+        _commStateChange(wk, ret );
         /*        ↑commStateChangeでよい
         if(ret == WIFI_STATUS_FRONTIER_WAIT){
 //          WifiP2PMatch_CommWifiBattleStart( wk, -1, ret );
@@ -6080,7 +6104,7 @@ static int _parentModeSubSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
     //@@OO            GFL_NET_StateChangeWiFiBattle();
     // 動作停止させる
     FriendRequestWaitOn( wk, msg_on );
-    //    _commStateChange(ret);
+    //    _commStateChange(wk,ret);
   }
 
 
@@ -6613,7 +6637,7 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
               WIFI_STATUS_SetVChatMac(wk->pMatch, WifiFriendMatchStatusGet( friendNo - 1 ));
             }
             wk->cancelEnableTimer = _CANCELENABLE_TIMER;
-            _commStateChange(status);
+            _commStateChange(wk,status);
             _myStatusChange(wk, status);  // 接続中になる
             _friendNameExpand(wk, friendNo - 1);
             WifiP2PMatchMessagePrint(wk,msg_wifilobby_014, FALSE);
@@ -6639,7 +6663,7 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
         else if( ( fst == DWC_STATUS_ONLINE || fst == DWC_STATUS_MATCH_SC_SV) && (WIFI_STATUS_TRADE==status) ){
           if( WifiP2PMatch_CommWifiBattleStart( wk, friendNo - 1, status ) ){
             wk->cancelEnableTimer = _CANCELENABLE_TIMER;
-            _commStateChange(status);
+            _commStateChange(wk,status);
             _myStatusChange(wk, status);  // 接続中になる
             _friendNameExpand(wk, friendNo - 1);
             WifiP2PMatchMessagePrint(wk,msg_wifilobby_014, FALSE);
@@ -6671,7 +6695,7 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
 
           if( WifiP2PMatch_CommWifiBattleStart( wk, friendNo - 1, status ) ){
             wk->cancelEnableTimer = _CANCELENABLE_TIMER;
-            _commStateChange(status);
+            _commStateChange(wk,status);
             _myStatusChange(wk, status);  // 接続中になる
             _friendNameExpand(wk, friendNo - 1);
             WifiP2PMatchMessagePrint(wk,msg_wifilobby_014, FALSE);
@@ -7691,7 +7715,7 @@ static int _vchatNegoWait( WIFIP2PMATCH_WORK *wk, int seq )
         _myVChatStatusToggle(wk); // 自分のVCHATを反転
         if( WifiP2PMatch_CommWifiBattleStart( wk, wk->friendNo - 1, status ) ){
           wk->cancelEnableTimer = _CANCELENABLE_TIMER;
-          _commStateChange(status);
+          _commStateChange(wk,status);
           GFL_NET_SetWifiBothNet(FALSE);  // VCT中は同期送信の必要ない
           _myStatusChange(wk, status);  // 接続中になる
           _friendNameExpand(wk, wk->friendNo - 1);
@@ -7969,7 +7993,7 @@ static void _myStatusChange_not_send(WIFIP2PMATCH_WORK *wk, int status)
   org_status = _WifiMyStatusGet( wk, wk->pMatch );
 
   if(org_status != status){
-    _commStateChange(status);
+    _commStateChange(wk,status);
 
     WIFI_STATUS_SetWifiMode(wk->pMatch,status);
     //    wk->pMatch->myMatchStatus.status = status;

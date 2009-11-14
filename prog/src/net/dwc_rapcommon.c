@@ -11,6 +11,7 @@
 #include <nnsys.h>
 #include "gflib.h"
 #include "net/network_define.h"
+#include "system/main.h"
 
 #if GFL_NET_WIFI
 #include <dwc.h>
@@ -42,10 +43,9 @@ static void* mydwc_alloc( DWCAllocType name, u32 size, int align )
 #endif
 
 	GF_ASSERT_MSG( sc_heapID != 0, "DWC＿Alloc関数がヒープID設定されずに呼ばれました" );
-
 	GF_ASSERT(align <= 32);  // これをこえたら再対応
 	old = OS_DisableInterrupts();
-	ptr = GFL_NET_Align32Alloc(sc_heapID, size);
+  ptr = GFL_NET_Align32Alloc(sc_heapID, size);
 	OS_RestoreInterrupts( old );
 
   if(ptr == NULL){
@@ -83,6 +83,19 @@ static void mydwc_free( DWCAllocType name, void *ptr, u32 size )
 
 //==============================================================================
 /**
+ * @brief   WIFIで使うHEAPIDをセットする
+ * @param   id     変更するHEAPID
+ * @retval  none
+ */
+//==============================================================================
+
+void DWC_RAPCOMMON_SetHeapID(HEAPID id)
+{
+  sc_heapID = id;
+}
+
+//==============================================================================
+/**
  * DWCライブラリ初期化
  * @param   GFL_WIFI_FRIENDLIST  ユーザーデータがない場合作成
  * @retval  DS本体に保存するユーザIDのチェック・作成結果。
@@ -102,6 +115,8 @@ int mydwc_init(HEAPID heapID)
 #else
 	ret	= DWC_InitForProduction( GF_DWC_GAMENAME, GF_DWC_GAMECODE, mydwc_alloc, mydwc_free );
 #endif
+
+  sc_heapID = 0;
 
   return ret;
 }

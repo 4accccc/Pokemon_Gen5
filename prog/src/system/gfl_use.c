@@ -63,6 +63,12 @@ static const HEAP_INIT_HEADER hih[]={
   { HEAPSIZE_APP,   OS_ARENA_MAIN },
 };
 
+static const HEAP_INIT_HEADER hihDSi[]={  //DSI用
+  { HEAPSIZE_SYSTEM,  OS_ARENA_MAIN },
+  { HEAPSIZE_DSI,   OS_ARENA_MAIN },
+};
+
+
 static GFL_USE_WORK * gfl_work = NULL;
 static int        GFL_USE_VintrCounter;
 
@@ -112,7 +118,14 @@ void GFLUser_Init(void)
 #endif
 
   //ヒープシステム初期化
-  GFL_HEAP_Init(&hih[0],GFL_HEAPID_MAX,HEAPID_CHILD_MAX,0); //メインアリーナ
+  if( OS_IsRunOnTwl() ){//DSIなら
+    GFL_HEAP_Init(&hihDSi[0],GFL_HEAPID_MAX,HEAPID_CHILD_MAX,0); //メインアリーナ
+  }
+  else{
+    GFL_HEAP_Init(&hih[0],GFL_HEAPID_MAX,HEAPID_CHILD_MAX,0); //メインアリーナ
+  }
+
+  
   GFL_HEAP_DTCM_Init( 0x2000 );       //ＤＴＣＭアリーナ
 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_SAVE, HEAPSIZE_SAVE );

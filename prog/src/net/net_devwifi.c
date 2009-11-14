@@ -172,6 +172,10 @@ static BOOL _DevInitFunc(HEAPID heapID, GFL_NETSYS* pNet,NetDevEndCallback callb
   if(_pWork){
     return FALSE;  //‚·‚Å‚É‰Šú‰»Ï‚Ý
   }
+  {
+    GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
+    DWC_RAPCOMMON_SetHeapID(pNetInit->wifiHeapID);
+  }
   _pWork = GFL_HEAP_AllocClearMemory(heapID, sizeof(NetWork));
   _pWork->pNet = pNet;
   return TRUE;
@@ -246,6 +250,7 @@ static BOOL _DevExitFunc(NetDevEndCallback callback)
     GFL_HEAP_FreeMemory(_pWork);
     _pWork = NULL;
   }
+  DWC_RAPCOMMON_SetHeapID(0);
   return TRUE;
 }
 

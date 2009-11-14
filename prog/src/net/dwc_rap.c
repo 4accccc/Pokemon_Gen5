@@ -106,6 +106,7 @@ typedef struct
   u8 connectionUserData[DWC_CONNECTION_USERDATA_LEN];// 新機能 繋ぐ時のユーザーデータただし4バイト
   
   int state;
+  int stepMatchResult;
   int matching_type;
 
   int sendbufflag;
@@ -231,9 +232,9 @@ static void _FuncNonSave(void);
 
 static void _setStateDebug(int state,int line)
 {
-   _dWork->state = MDSTATE_INIT;
+  NET_PRINT("rap%d\n",line);
+   _dWork->state = state;
 }
-
 #define   _CHANGE_STATE(state)  _setStateDebug(state, __LINE__)
 
 #else  //DEBUGPRINT_ON
@@ -242,7 +243,6 @@ static void _setState(int state)
 {
    _dWork->state = state;
 }
-
 #define   _CHANGE_STATE(state)  _setState(state)
 
 #endif //DEBUGPRINT_ON
@@ -301,8 +301,8 @@ int GFL_NET_DWC_startConnect(DWCUserData* pUserData, DWCFriendData* pFriendData)
   }
 
 
-
-  _dWork->state = MDSTATE_INIT;
+  _CHANGE_STATE(MDSTATE_INIT);
+//  _dWork->state = MDSTATE_INIT;
 
   _dWork->vchatcodec = VCHAT_NONE;
   _dWork->friendindex = -1;
@@ -405,7 +405,8 @@ int GFL_NET_DWC_connect()
       // 非同期にネットに接続
       DWC_ConnectInetAsync();
 
-      _dWork->state = MDSTATE_CONNECTING;
+      _CHANGE_STATE(MDSTATE_CONNECTING);
+      //_dWork->state = MDSTATE_CONNECTING;
       _dWork->isvchat = 0;
     }
 
@@ -416,11 +417,13 @@ int GFL_NET_DWC_connect()
       {
         if( DWC_GetInetStatus() == DWC_CONNECTINET_STATE_CONNECTED )
         {
-          _dWork->state = MDSTATE_CONNECTED;
+          _CHANGE_STATE(MDSTATE_CONNECTED);
+          //_dWork->state = MDSTATE_CONNECTED;
         }
         else
         {
-          _dWork->state = MDSTATE_ERROR;
+          _CHANGE_STATE(MDSTATE_ERROR);
+          //_dWork->state = MDSTATE_ERROR;
         }
       }
       else
@@ -482,7 +485,8 @@ int GFL_NET_DWC_connect()
       OS_GetOwnerInfo( &info );
       DWC_LoginAsync( &(info.nickName[0]), NULL, LoginCallback, NULL);
     }
-    _dWork->state = MDSTATE_TRYLOGIN;
+    _CHANGE_STATE(MDSTATE_TRYLOGIN);
+    //_dWork->state = MDSTATE_TRYLOGIN;
 
   case MDSTATE_TRYLOGIN:
     // ログインが完了するまで待つ。
@@ -491,6 +495,7 @@ int GFL_NET_DWC_connect()
 
   case MDSTATE_LOGIN:
     DWC_ProcessFriendsMatch();   // 2006.04.07 k.ohno ログインしただけの状態を持続する為
+    _dWork->stepMatchResult = STEPMATCH_CONNECT;
     return STEPMATCH_CONNECT;
   }
   return mydwc_HandleError();
@@ -637,7 +642,8 @@ int GFL_NET_DWC_StartMatch( u8* keyStr,int numEntry, BOOL bParent, u32 timelimit
     }
   }
 
-  _dWork->state = MDSTATE_MATCHING;
+  _CHANGE_STATE(MDSTATE_MATCHING);
+ // _dWork->state = MDSTATE_MATCHING;
 
   MYDWC_DEBUGPRINT("mydwc_startmatch %d ",numEntry);
   _dWork->maxConnectNum = numEntry;
@@ -683,11 +689,13 @@ int GFL_NET_DWC_StartMatch( u8* keyStr,int numEntry, BOOL bParent, u32 timelimit
 static void finishcancel()
 {
   if( _dWork->state == MDSTATE_FAIL ){
-    _dWork->state = MDSTATE_FAILFINISH;
+    _CHANGE_STATE(MDSTATE_FAILFINISH);
+    //_dWork->state = MDSTATE_FAILFINISH;
   }
   else
   {
-    _dWork->state = MDSTATE_CANCELFINISH;
+    _CHANGE_STATE(MDSTATE_CANCELFINISH);
+  //  _dWork->state = MDSTATE_CANCELFINISH;
   }
 }
 
@@ -710,12 +718,14 @@ int GFL_NET_DWC_stepmatch( int isCancel )
   case MDSTATE_CONNECTING:
   case MDSTATE_CONNECTED:
   case MDSTATE_TRYLOGIN:
+
     return GFL_NET_DWC_connect();
   case MDSTATE_MATCHING:
     // 現在探索中
     if( isCancel )
     {
-      _dWork->state = MDSTATE_CANCEL;
+      _CHANGE_STATE(MDSTATE_CANCEL);
+     // _dWork->state = MDSTATE_CANCEL;
     }
     // 2006.7.4 yoshihara修正 ここから
     // 子機の場合、つなぎにいってる親が現在もサーバモードかどうかチェックする。
@@ -727,7 +737,8 @@ int GFL_NET_DWC_stepmatch( int isCancel )
         {
           MYDWC_DEBUGPRINT("相手がサーバをやめてしまったので、キャンセルします。\n");
           // 既に親でなくなってしまっている。キャンセルへ移項
-          _dWork->state = MDSTATE_FAIL;
+          _CHANGE_STATE(MDSTATE_FAIL);
+         // _dWork->state = MDSTATE_FAIL;
         }
       }
     }
@@ -758,23 +769,29 @@ int GFL_NET_DWC_stepmatch( int isCancel )
       }
 
 #endif
-      _dWork->state = MDSTATE_PLAYING;
-      return STEPMATCH_SUCCESS;
+      _CHANGE_STATE(MDSTATE_PLAYING);
+//      _dWork->state = MDSTATE_PLAYING;
+      _dWork->stepMatchResult = STEPMATCH_SUCCESS;
+      return _dWork->stepMatchResult;
     }
     break;
   case MDSTATE_CANCELFINISH:
     // ログイン直後の状態に
-    _dWork->state = MDSTATE_LOGIN;
+    _CHANGE_STATE(MDSTATE_LOGIN);
+//    _dWork->state = MDSTATE_LOGIN;
     _dWork->sendbufflag = 0;
     _dWork->newFriendConnect = -1;
     MYDWC_DEBUGPRINT("キャンセル処理完了\n");
+    _dWork->stepMatchResult = STEPMATCH_CANCEL;
     return STEPMATCH_CANCEL;
   case MDSTATE_FAILFINISH:
     // ログイン直後の状態に
-    _dWork->state = MDSTATE_LOGIN;
+    _CHANGE_STATE(MDSTATE_LOGIN);
+//    _dWork->state = MDSTATE_LOGIN;
     _dWork->sendbufflag = 0;
     _dWork->newFriendConnect = -1;
     MYDWC_DEBUGPRINT("フィニッシュ処理完了\n");
+    _dWork->stepMatchResult=STEPMATCH_FAIL;
     return STEPMATCH_FAIL;
   case MDSTATE_ERROR:
     return  mydwc_HandleError();
@@ -785,13 +802,15 @@ int GFL_NET_DWC_stepmatch( int isCancel )
       // 通信自体を切る。
       MYDWC_DEBUGPRINT("ボイスチャットの切断完了。\n");
       DWC_CloseAllConnectionsHard( );
-      _dWork->state = MDSTATE_DISCONNECT;
+      _CHANGE_STATE(MDSTATE_DISCONNECT);
+     // _dWork->state = MDSTATE_DISCONNECT;
       break;
     }
   case MDSTATE_LOGIN:
     {
       int ret = mydwc_step();
       if(0==ret){
+        _dWork->stepMatchResult = STEPMATCH_CONNECT;
         return STEPMATCH_CONNECT;
       }
       return ret;
@@ -1023,25 +1042,6 @@ static void LoginCallback(DWCError error, int profileID, void *param)
 
   if (error == DWC_ERROR_NONE){
     // 認証成功、プロファイルID取得
-#if 0
-    if(CommStateGetServiceNo() == COMM_MODE_LOBBY_WIFI){
-      _dWork->state = MDSTATE_LOGIN;		// ログイン完了
-    }
-    else{
-      result = DWC_UpdateServersAsync(NULL, //（過去との互換性のため、必ずNULL)
-                                      UpdateServersCallback, &_dWork->myUserData,
-                                      FriendStatusCallback, param,
-                                      DeleteFriendListCallback, param);
-
-      if (result == FALSE){
-        // 呼んでもいい状態（ログインが完了していない状態）で呼んだ時のみ
-        // FALSEが返ってくるので、普通はTRUE
-        MYDWC_DEBUGPRINT("DWC_UpdateServersAsync error teminated.\n");
-        GFL_NET_StateSetError(GFL_NET_ERROR_RESET_SAVEPOINT);
-        return;
-      }
-    }
-#else
     result = DWC_UpdateServersAsync(NULL, //（過去との互換性のため、必ずNULL)
                                     UpdateServersCallback, &_dWork->myUserData,
                                     FriendStatusCallback, param,
@@ -1054,14 +1054,14 @@ static void LoginCallback(DWCError error, int profileID, void *param)
       GFL_NET_StateSetError(GFL_NET_ERROR_RESET_SAVEPOINT);
       return;
     }
-#endif
     // GameSpyサーバ上バディ成立コールバックを登録する
     DWC_SetBuddyFriendCallback(BuddyFriendCallback, NULL);
   }
   else
   {
     // 認証失敗
-    _dWork->state = MDSTATE_ERROR;
+    _CHANGE_STATE(MDSTATE_ERROR);
+   // _dWork->state = MDSTATE_ERROR;
   }
 }
 
@@ -1078,7 +1078,8 @@ static void recvTimeoutCallback(u8 aid, void* param)
     DWC_CloseAllConnectionsHard( );
     _dWork->newFriendConnect = -1;
     // タイムアウト
-    _dWork->state = MDSTATE_TIMEOUT;
+    _CHANGE_STATE(MDSTATE_TIMEOUT);
+ //   _dWork->state = MDSTATE_TIMEOUT;
   }
 }
 
@@ -1092,11 +1093,13 @@ static void UpdateServersCallback(DWCError error, BOOL isChanged, void* param)
     if (isChanged){
       // 友達リストが変更されていた
     }
-    _dWork->state = MDSTATE_LOGIN;		// ログイン完了
+    _CHANGE_STATE(MDSTATE_LOGIN);
+  //  _dWork->state = MDSTATE_LOGIN;		// ログイン完了
   }
   else {
     // ログイン失敗扱いにしとく？
-    _dWork->state = MDSTATE_ERROR;
+    _CHANGE_STATE(MDSTATE_ERROR);
+ //   _dWork->state = MDSTATE_ERROR;
   }
 }
 
@@ -1196,7 +1199,8 @@ static void setTimerAndFlg(int index)
   int i,j;
 
   OS_TPrintf("接続しました%s%d\n",__FILE__,__LINE__);
-  _dWork->state = MDSTATE_MATCHED;
+//  _dWork->state = MDSTATE_MATCHED;
+     _CHANGE_STATE(MDSTATE_MATCHED);
 
   setTimeoutTime();
 }
@@ -1229,7 +1233,8 @@ static void ConnectToAnybodyCallback(DWCError error,
   }
   else {
     MYDWC_DEBUGPRINT("マッチング中にエラーが発生しました。 %d\n\n", error);
-    _dWork->state = MDSTATE_ERROR;
+//    _dWork->state = MDSTATE_ERROR;
+     _CHANGE_STATE(MDSTATE_ERROR);
   }
   if( _dWork->connectCallback ){
     // 何人とつながっても一回しか呼ばれないので自分のIDを入れている
@@ -1384,7 +1389,9 @@ static void ConnectionClosedCallback(DWCError error,
         //                OHNO_PRINT("DWC_CloseAllConnectionsHard");
         //                DWC_CloseAllConnectionsHard( );
         //				_dWork->state = MDSTATE_DISCONNECT;
-        _dWork->state = MDSTATE_DISCONNECTTING;
+   //     _dWork->state = MDSTATE_DISCONNECTTING;
+     _CHANGE_STATE(MDSTATE_DISCONNECTTING);
+ 
         MYDWC_DEBUGPRINT("MDSTATE_DISCONNECTTING\n");
       }
       if( _dWork->isvchat )
@@ -1541,13 +1548,15 @@ int mydwc_HandleError(void)
         DWC_ClearError();
       }
       if(_dWork){
-        _dWork->state = MDSTATE_ERROR_DISCONNECT;
+    //    _dWork->state = MDSTATE_ERROR_DISCONNECT;
+      _CHANGE_STATE(MDSTATE_ERROR_DISCONNECT);
       }
       break;
     case DWC_ETYPE_FATAL:
       // FatalError相当なので、電源OFFを促す必要がある。
       if(_dWork){
-        _dWork->state = MDSTATE_ERROR_FETAL;
+//        _dWork->state = MDSTATE_ERROR_FETAL;
+      _CHANGE_STATE(MDSTATE_ERROR_FETAL);
         // このコールバックから処理がかえってこないはず。
         if( _dWork->fetalErrorCallback != NULL ){
           _dWork->fetalErrorCallback( -errorCode );
@@ -1918,7 +1927,8 @@ int GFL_NET_DWC_disconnect( int sync )
         MYDWC_DEBUGPRINT("ボイスチャット稼働中 止める\n");
         myvct_endConnection();
       }
-      _dWork->state = MDSTATE_DISCONNECTTING;
+      _CHANGE_STATE(MDSTATE_DISCONNECTTING);
+//      _dWork->state = MDSTATE_DISCONNECTTING;
       break;
     case MDSTATE_LOGIN:     //親機切断時に動きを合わせるために追加 k.ohno 06.07.04
     case MDSTATE_ERROR_DISCONNECT:
@@ -1949,7 +1959,8 @@ int GFL_NET_DWC_returnLobby()
 {
   if( _dWork->state == MDSTATE_DISCONNECT || _dWork->state == MDSTATE_TIMEOUT || _dWork->state == MDSTATE_LOGIN) {
     //        _dWork->op_aid = -1;
-    _dWork->state = MDSTATE_LOGIN;
+    _CHANGE_STATE(MDSTATE_LOGIN);
+//    _dWork->state = MDSTATE_LOGIN;
     _dWork->newFriendConnect = -1;
     GFL_NET_DWC_ResetClientBlock();
     return 1;
@@ -2131,7 +2142,8 @@ int GFL_NET_DWC_StartGame( int target,int maxnum, BOOL bVCT )
       mydwc_allocRecvBuff(i);
     }
   }
-  _dWork->state = MDSTATE_MATCHING;
+  _CHANGE_STATE(MDSTATE_MATCHING);
+  //_dWork->state = MDSTATE_MATCHING;
 
   // 送信コールバックの設定
   DWC_SetUserSendCallback( SendDoneCallback,NULL );
@@ -2216,21 +2228,6 @@ DWCConnectionClosedCallbackが呼び出されます。
         }
       }
 
-#if 0
-      if (_dWork->blockClient || bFriendOnly){
-        u32 bitmap = ~_dWork->BlockUse_BackupBitmap & DWC_GetAIDBitmap();
-        u32 aidbitmap = DWC_GetAIDBitmap();	// (DWC_CloseConnectionHardBitmapのなかで、ClosedCallbackがよばれるため)
-        if(bitmap){
-          DWC_CloseConnectionHardBitmap(&bitmap);
-          MYDWC_DEBUGPRINT("受け付けた子機を切断 %x %x\n",bitmap,_dWork->BlockUse_BackupBitmap);
-          if((bitmap ^ aidbitmap) == 0x01){ //自分しかいなかったら自分CANCEL
-            MYDWC_DEBUGPRINT("自分キャンセル %x %x \n",bitmap,aidbitmap);
-            _dWork->state = MDSTATE_CANCEL;
-          }
-          return;
-        }
-      }
-#endif
       
       // 接続が確立したときのみ、
       // 代入する形に修正
@@ -2241,7 +2238,8 @@ DWCConnectionClosedCallbackが呼び出されます。
 
       _dWork->BlockUse_BackupBitmap = DWC_GetAIDBitmap();
       if(_dWork->BlockUse_BackupBitmap==0x01){ //自分だけつながったときにはタイムアウトにする
-        _dWork->state = MDSTATE_CANCEL;
+    _CHANGE_STATE(MDSTATE_CANCEL);
+    //    _dWork->state = MDSTATE_CANCEL;
         MYDWC_DEBUGPRINT("自分タイムアウト %x\n",_dWork->BlockUse_BackupBitmap);
       }
       else{
@@ -2820,7 +2818,8 @@ BOOL GFL_NET_DWC_SetCancelState(void)
 {
   if(_dWork->state == MDSTATE_MATCHING)
   {
-    _dWork->state = MDSTATE_CANCEL;
+    _CHANGE_STATE(MDSTATE_CANCEL);
+//    _dWork->state = MDSTATE_CANCEL;
     return TRUE;
   }
   return FALSE;
@@ -2839,10 +2838,7 @@ BOOL GFL_NET_DWC_SetCancelState(void)
 
 int GFL_NET_DWC_GetStepMatchResult(void)
 {
-  //@todo 作り途中
-  return STEPMATCH_CONTINUE;
-
-  
+  return _dWork->stepMatchResult;
 }
 
 
