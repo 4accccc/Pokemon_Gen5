@@ -398,27 +398,13 @@ void PMSIV_MENU_UpdateEditIcon( PMSIV_MENU* wk )
   }
 }
 
-
 //-----------------------------------------------------------------------------
-/**
- *	@brief  カテゴリモードのメニュー決定
- *
- *	@param	PMSIV_MENU* wk 
- *
- *	@retval
- */
 //-----------------------------------------------------------------------------
-void PMSIV_MENU_SetDecideCategory( PMSIV_MENU* wk, MENU_DECIDE_ID id )
+static void _decide_category_cancel( PMSIV_MENU* wk )
 {
-  GF_ASSERT( wk )
-  GF_ASSERT( id < MENU_DECIDE_ID_MAX );
-
   if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_INITIAL )
   {
-    if( id == MENU_DECIDE_ID_CANCEL )
-    {
       PMSIV_MENU_TaskMenuSetDecide( wk, 2, TRUE );
-    }
   }
   else
   {
@@ -428,20 +414,23 @@ void PMSIV_MENU_SetDecideCategory( PMSIV_MENU* wk, MENU_DECIDE_ID id )
 }
 
 //-----------------------------------------------------------------------------
-/**
- *	@brief  カテゴリモードのメニュー決定演出終了待ち
- *
- *	@param	PMSIV_MENU* wk
- *	@param	id 
- *
- *	@retval
- */
 //-----------------------------------------------------------------------------
-BOOL PMSIV_MENU_IsFinishCategory( PMSIV_MENU* wk, MENU_DECIDE_ID id )
+static void _decide_category_change( PMSIV_MENU* wk )
 {
-  GF_ASSERT( wk )
-  GF_ASSERT( id < MENU_DECIDE_ID_MAX );
-		
+  _clwk_setanm( wk, MENU_CLWKICON_CATEGORY_CHANGE, TRUE );
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static BOOL _wait_category_change( PMSIV_MENU* wk )
+{
+  return GFL_CLACT_WK_CheckAnmActive( wk->clwk_icon[ MENU_CLWKICON_CATEGORY_CHANGE ] ) == FALSE;
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static BOOL _wait_category_cancel( PMSIV_MENU* wk )
+{ 
   if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_INITIAL )
   {
     if( PMSIV_MENU_TaskMenuIsFinish( wk, 2 ) )
@@ -456,6 +445,63 @@ BOOL PMSIV_MENU_IsFinishCategory( PMSIV_MENU* wk, MENU_DECIDE_ID id )
   }
 
   return FALSE;
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  カテゴリモードのメニュー決定
+ *
+ *	@param	PMSIV_MENU* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void PMSIV_MENU_SetDecideCategory( PMSIV_MENU* wk, CATEGORY_DECIDE_ID id )
+{
+  GF_ASSERT( wk )
+
+  switch( id )
+  {
+  case CATEGORY_DECIDE_ID_CANCEL :
+    _decide_category_cancel( wk );
+    break;
+
+  case CATEGORY_DECIDE_ID_CHANGE :
+    _decide_category_change( wk );
+    break;
+
+  default : GF_ASSERT(0);
+  }
+
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  カテゴリモードのメニュー決定演出終了待ち
+ *
+ *	@param	PMSIV_MENU* wk
+ *	@param	id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+BOOL PMSIV_MENU_IsFinishCategory( PMSIV_MENU* wk, CATEGORY_DECIDE_ID id )
+{
+  GF_ASSERT( wk );
+
+  switch( id )
+  {
+  case CATEGORY_DECIDE_ID_CANCEL :
+    return _wait_category_cancel( wk );
+
+  case CATEGORY_DECIDE_ID_CHANGE :
+    return _wait_category_change( wk );
+
+  default : GF_ASSERT(0);
+  }	
+
+  return TRUE;
 }
 
 //-----------------------------------------------------------------------------

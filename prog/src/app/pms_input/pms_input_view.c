@@ -993,16 +993,20 @@ static void Cmd_ChangeCategoryModeEnable( GFL_TCB *tcb, void* wk_adrs )
 	case 0:
 //		PMSIV_SUB_ChangeCategoryButton( vwk->sub_wk );
 //		PMSIV_BUTTON_ChangeCategoryButton( vwk->button_wk );
+    PMSIV_MENU_SetDecideCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_CHANGE );
 		wk->seq++;
 		break;
 
 	case 1:
-    PMSIV_MENU_SetupCategory( vwk->menu_wk );
+    if( PMSIV_MENU_IsFinishCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_CHANGE ) )
+    {
+      PMSIV_MENU_SetupCategory( vwk->menu_wk );
 
-		PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, FALSE );
-		PMSIV_CATEGORY_StartModeChange( vwk->category_wk );
-		PMSIV_CATEGORY_ChangeModeBG( vwk->category_wk );
-		wk->seq++;
+      PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, FALSE );
+      PMSIV_CATEGORY_StartModeChange( vwk->category_wk );
+      PMSIV_CATEGORY_ChangeModeBG( vwk->category_wk );
+      wk->seq++;
+    }
 		break;
 
 	case 2:
@@ -1041,13 +1045,13 @@ static void Cmd_CategoryToEditArea( GFL_TCB *tcb, void* wk_adrs )
 	switch( wk->seq ){
 	case 0:
     HOSAKA_Printf("Cmd_CategoryToEditArea\n");
-    PMSIV_MENU_SetDecideCategory( vwk->menu_wk, MENU_DECIDE_ID_CANCEL );
+    PMSIV_MENU_SetDecideCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_CANCEL );
 //	PMSIV_BUTTON_Appear( vwk->button_wk );
 		wk->seq++;
 		break;
 
 	case 1:
-    if( PMSIV_MENU_IsFinishCategory( vwk->menu_wk, MENU_DECIDE_ID_CANCEL ) )
+    if( PMSIV_MENU_IsFinishCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_CANCEL ) )
     {
       wk->seq++;
     }

@@ -2,8 +2,10 @@
 /**
 	* @file	pms_input.c
 	* @bfief	簡易会話入力画面
-	* @author	taya
-  * @author	genya hosaka (引継)
+	* @author	taya (DP)
+  * @author	iwasawaさん  (GS)
+  * @author ariizumiくん (WB移植)
+  * @author	genya hosaka (WB)
 	* @date	06.01.20
 	*/
 //============================================================================================
@@ -1917,7 +1919,6 @@ static int input_category_word_btn(PMS_INPUT_WORK* wk)
 //		{0,191,0,255}, ty,by,lx,rx
 		{TPCA_RET_PY,TPCA_RET_PY+TPCA_RET_SY,TPCA_RET_PX,TPCA_RET_PX+TPCA_RET_SX},
 		{TPCA_MODE_PY,TPCA_MODE_PY+TPCA_MODE_SY,TPCA_CHANGE_PX,TPCA_CHANGE_PX+TPCA_MODE_SX},
-//		{TPCA_MODE_PY,TPCA_MODE_PY+TPCA_MODE_SY,TPCA_IMODE_PX,TPCA_IMODE_PX+TPCA_MODE_SX},
 		{GFL_UI_TP_HIT_END,0,0,0}
 	};
 	ret = GFL_UI_TP_HitTrg(Btn_TpRect);
@@ -1929,11 +1930,11 @@ static int input_category_word_btn(PMS_INPUT_WORK* wk)
 		return 1;
 	case 1:	//グループ
 		if(wk->touch_button == TOUCH_BUTTON_CHANGE){
-			return 0;
+			return 2;
 		}
 		break;
 	}
-	return 2;
+	return 0;
 }
 
 static int category_touch_group(PMS_INPUT_WORK* wk)
@@ -2041,6 +2042,8 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
 		(*seq) = SEQ_CA_WAIT_MODE_CHANGE;
 		return;
 	}
+
+
 	if( wk->category_mode == CATEGORY_MODE_GROUP ){
     // グループ
 		ret = category_touch_group(wk);

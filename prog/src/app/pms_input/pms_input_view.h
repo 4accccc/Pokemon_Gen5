@@ -337,9 +337,10 @@ typedef struct _PMSIV_MENU PMSIV_MENU;
 //=============================
 typedef enum
 { 
-  MENU_DECIDE_ID_CANCEL = 0,  ///< キャンセル
-  MENU_DECIDE_ID_MAX,
-} MENU_DECIDE_ID;
+  CATEGORY_DECIDE_ID_CANCEL = 0,  ///< キャンセル
+  CATEGORY_DECIDE_ID_CHANGE,  ///< 切替ボタン
+  CATEGORY_DECIDE_ID_MAX,
+} CATEGORY_DECIDE_ID;
 
 extern PMSIV_MENU* PMSIV_MENU_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, const PMS_INPUT_DATA* dwk );
 extern void PMSIV_MENU_Delete( PMSIV_MENU* wk );
@@ -351,9 +352,9 @@ extern void PMSIV_MENU_SetupWordWin( PMSIV_MENU* wk );
 extern void PMSIV_MENU_UpdateEditIcon( PMSIV_MENU* wk );
 extern void PMSIV_MENU_TaskMenuSetActive( PMSIV_MENU* wk, u8 pos, BOOL is_on );
 extern BOOL PMSIV_MENU_TaskMenuIsFinish( PMSIV_MENU* wk, u8 pos );
-extern void PMSIV_MENU_SetDecideCategory( PMSIV_MENU* wk, MENU_DECIDE_ID id );
 extern void PMSIV_MENU_TaskMenuSetDecide( PMSIV_MENU* wk, u8 pos, BOOL is_on );
-extern BOOL PMSIV_MENU_IsFinishCategory( PMSIV_MENU* wk, MENU_DECIDE_ID id );
+extern void PMSIV_MENU_SetDecideCategory( PMSIV_MENU* wk, CATEGORY_DECIDE_ID id );
+extern BOOL PMSIV_MENU_IsFinishCategory( PMSIV_MENU* wk, CATEGORY_DECIDE_ID id );
 extern PMSIV_MENU* PMSIView_GetMenuWork( PMS_INPUT_VIEW* vwk );
 
 #endif
