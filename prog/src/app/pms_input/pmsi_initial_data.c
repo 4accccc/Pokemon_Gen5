@@ -202,6 +202,22 @@ void PMSI_INITIAL_DAT_GetStr( u32 initial, STRBUF* buf )
 	GFL_STR_SetStringCodeOrderLength( buf, &(InitialParamTbl[initial].code), 2);
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  指定イニシャルナンバーのSTRCODEを返す
+ *
+ *	@param	u32 initial イニシャルナンバー
+ *
+ *	@retval STRCODE 
+ */
+//-----------------------------------------------------------------------------
+STRCODE PMSI_INITIAL_DAT_GetStrCode( u32 initial )
+{
+	GF_ASSERT(initial < NELEMS(InitialParamTbl));
+
+  return InitialParamTbl[initial].code;
+}
+
 //------------------------------------------------------------------
 /**
 	* 描画用基準位置（ドット単位）を取得

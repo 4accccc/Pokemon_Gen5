@@ -11,6 +11,7 @@
 
 extern u32 PMSI_INITIAL_DAT_GetInitialMax(void);
 extern void PMSI_INITIAL_DAT_GetStr( u32 initial, STRBUF* buf );
+extern STRCODE PMSI_INITIAL_DAT_GetStrCode( u32 initial );
 extern void PMSI_INITIAL_DAT_GetPrintPos( u32 initial, u32* x, u32* y );
 extern int PMSI_INITIAL_DAT_GetUpCode( u32 initial );
 extern int PMSI_INITIAL_DAT_GetDownCode( u32 initial );
