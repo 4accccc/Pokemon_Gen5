@@ -10,7 +10,9 @@
 
 #include "message.naix"
 
-#define PMS_ABC_GMMTBL_MAX (45) // Å‘å”
+#define PMS_ABC_GMMROW_MAX (87) // €–ÚÅ‘å”
+
+#define PMS_ABC_GMMTBL_MAX (45) // ƒtƒ@ƒCƒ‹Å‘å”
 
 static const u16 pms_abc_gmmtbl[ PMS_ABC_GMMTBL_MAX ] = {
 	NARC_message_pms_abc00_dat,

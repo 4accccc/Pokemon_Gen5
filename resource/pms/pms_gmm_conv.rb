@@ -80,6 +80,7 @@ def make_nm_array(n,m)
 end
 
 $filenum = 0
+$rowmax = 0
 $data = make_nm_array( 50, 200 )
 
 #====================================================
@@ -95,6 +96,9 @@ def load_resource
         if line.include?("PMS_WORDID_END")
           #出力終了判定
           output_flag = 0
+          if $rowmax < row_idx
+            $rowmax = row_idx;
+          end
           $filenum += 1
         else
           #余分な文字列を除去
@@ -140,7 +144,8 @@ DST_FILENAME = "pms_abc_gmm_def.h"  #出力ファイル名
 DST_BRIEF = "50音並替用のデータテーブルです。"
 DST_AUTOR = "genya_hosaka"
 DST_NOTE = "このファイルはpms_gmm_conv.rbによって自動生成されたものです。"
-DST_MAX_DEF = "PMS_ABC_GMMTBL_MAX"
+DST_TBLMAX_DEF = "PMS_ABC_GMMTBL_MAX"
+DST_ROWMAX_DEF = "PMS_ABC_GMMROW_MAX"
 
 File::open( DST_FILENAME ,"w"){ |file|
     file.puts("//=========================================================================");
@@ -154,10 +159,12 @@ File::open( DST_FILENAME ,"w"){ |file|
     file.puts("#pragma once\n\n");
     file.puts("#include \"message.naix\"\n\n");
 
-    file.puts("#define " + DST_MAX_DEF + " (" + $filenum.to_s + ") // 最大数\n\n" );
+    file.puts("#define " + DST_ROWMAX_DEF + " (" + $rowmax.to_s + ") // 項目最大数\n\n" );
+    file.puts("#define " + DST_TBLMAX_DEF + " (" + $filenum.to_s + ") // ファイル最大数\n\n" );
 
-    file.puts("static const u16 pms_abc_gmmtbl[ " + DST_MAX_DEF + " ] = {")
+    file.puts("static const u16 pms_abc_gmmtbl[ " + DST_TBLMAX_DEF + " ] = {");
     
+
     #データテーブル出力
 
     for cnt in 0..$filenum-1
