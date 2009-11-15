@@ -1,9 +1,9 @@
 //============================================================================================
 /**
- * @file  event_ircbattle.c
- * @brief イベント：赤外線バトル
+ * @file    event_gsync.c
+ * @brief   イベント：ゲームシンク
  * @author  k.ohno
- * @date  2009.03.24
+ * @date    2009.11.15
  */
 //============================================================================================
 
@@ -29,6 +29,7 @@
 #include "net_app/friend_trade/ircbattlefriend.h"
 #include "net_app/pokemontrade.h"
 #include "net_app/irc_compatible.h"
+#include "net_app/gsync.h"
 #include "sound/pm_sndsys.h"
 #include "battle/battle.h"
 #include "poke_tool/monsno_def.h"
@@ -45,15 +46,15 @@ extern const NetRecvFuncTable BtlRecvFuncTable[];
 //----------------------------------------------------------------
 
 
-FS_EXTERN_OVERLAY(irc_compatible);
-
 #define HEAPID_CORE GFL_HEAPID_APP
 
+FS_EXTERN_OVERLAY(gamesync);
+FS_EXTERN_OVERLAY(irc_compatible);
 FS_EXTERN_OVERLAY(ohno_debugapp);
 FS_EXTERN_OVERLAY(fieldmap);
 FS_EXTERN_OVERLAY(ircbattlematch);
 FS_EXTERN_OVERLAY(pokemon_trade);
-extern const GFL_PROC_DATA G_SYNC_ProcData;
+
 
 #define _LOCALMATCHNO (100)
 
@@ -94,9 +95,6 @@ struct _EVENT_GSYNC_WORK{
   int selectType;
   IRC_COMPATIBLE_PARAM  compatible_param; //赤外線メニューに渡す情報
   BOOL push;
-#if PM_DEBUG
-  int debugseq;
-#endif
 
 };
 
@@ -111,13 +109,6 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
   EVENT_GSYNC_WORK * dbw = work;
   GAMESYS_WORK * gsys = dbw->gsys;
 
-#if PM_DEBUG
-  if(dbw->debugseq != *seq){
-    OS_TPrintf("e irc %d\n");
-    dbw->debugseq = *seq;
-  }
-#endif
-
   switch (*seq) {
   case _IRCBATTLE_START:
     GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, dbw->fieldmap, FIELD_FADE_BLACK));
@@ -130,7 +121,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     break;
   case _CALL_IRCBATTLE_MENU:
     dbw->isEndProc = FALSE;
-    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(ohno_debugapp), &G_SYNC_ProcData, dbw);
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(gamesync), &GameSyncMenuProcData, dbw);
     (*seq)++;
     break;
   case _WAIT_IRCBATTLE_MENU:
@@ -163,23 +154,17 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     (*seq)++;
     break;
   case _FIELD_END_IRCBATTLE:
-    //すでにCloseされている
-    //GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
     (*seq)++;
     break;
   case _CALL_IRCCOMMPATIBLE:  //相性チェック画面へ
     dbw->compatible_param.p_gamesys   = dbw->gsys;
-#ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
-    dbw->compatible_param.is_only_play  = FALSE;
-#endif //DEBUG_IRC_COMPATIBLE_ONLYPLAY
-    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(irc_compatible), &IrcCompatible_ProcData, &dbw->compatible_param );
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(gamesync), &G_SYNC_ProcData, &dbw->compatible_param );
     (*seq)++;
     break;
   case _WAIT_IRCCOMMPATIBLE:
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL)
     {
       GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
-      NET_PRINT("相性チェック画面おわり\n");
       (*seq)=_CALL_IRCBATTLE_MENU;
     }
     break;

@@ -11,6 +11,7 @@
 #include "gflib.h"
 #include "arc_def.h"
 #include "libdpw/dwci_ghttp.h"
+#include "net_app/gsync.h"
 
 #include "system/main.h"  //HEAPID
 #include "message.naix"
@@ -29,7 +30,7 @@
 
 #if _TWLDWC_HTTP
 
-typedef struct _G_SYNC_WORK G_SYNC_WORK;
+//typedef struct _G_SYNC_WORK G_SYNC_WORK;
 
 typedef void (StateFunc)(G_SYNC_WORK* pState);
 

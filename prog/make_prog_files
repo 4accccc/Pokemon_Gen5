@@ -327,7 +327,7 @@ SRCS_OVERLAY_DEV_IRC    =   net/net_devirc.c \
                 net/net_irc.c
 
 #wifi設定画面
-#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_WIFILIB
 #LIB=>          libdwcutil.$HYB.a
 SRCS_OVERLAY_WIFI_UTIL  = net/dwc_raputil.c
 
@@ -805,7 +805,6 @@ SRCS_OVERLAY_OHNO_DEBUG = test/ohno/d_ohno_list.c
 # 大野デバッグ
 #===> SRCS_OVERLAY_OHNO_DEBUG
 SRCS_OVERLAY_OHNO_DEBUGAPP  = test/ohno/debug_ohno.c \
-			  net_app/gsync/gsync_state.c \
 			  test/ohno/debug_vtr.c \
         test/ohno/fatal_error.c \
         test/ohno/debug_saveaddr.c \
@@ -874,6 +873,14 @@ SRCS_OVERLAY_PALACE = app/palace/palace_edit.c \
 SRCS_OVERLAY_DPW_COMMON   = libdpw/dpwi_encrypt.c \
               libdpw/dpwi_session.c \
 							libdpw/dpw_tr.c
+
+
+
+# GAMESYNC
+#===> SRCS_OVERLAY_DPW_COMMON
+SRCS_OVERLAY_GAMESYNC   = net_app/gsync/gsync_menu.c \
+									net_app/gsync/gsync_state.c
+
 
 
 #GDS通信制御

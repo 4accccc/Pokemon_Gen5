@@ -1586,13 +1586,13 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
 	_modeInit(pWork);
 
 
-
-  {
+#if DEBUG_ONLY_FOR_ohno
+  {  //@todo ¼“c‚³‚ñ‚ª“ü‚ê‚Ä‚­‚ê‚é‚Ü‚Å‰¼
 		GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys);
 
     GameCommSys_Boot(pGC, GAME_COMM_NO_FIELD_BEACON_SEARCH, pWork->pGameSys);
   }
-
+#endif
   
 	//	_CHANGE_STATE( pWork, _modeInit);
 	return pWork;
