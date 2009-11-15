@@ -275,7 +275,6 @@ SRCS  +=    $(SOUNDSRC) \
 #
 
 #
-#   VCTはランダムマッチにいらない
 # wifiプログラムのライブラリ
 #===> main
 #LIB=>          libcps.$HYB.a
@@ -300,17 +299,25 @@ SRCS  +=    $(SOUNDSRC) \
 #LIB=>          libdwcgsnatneg.$HYB.a
 #LIB=>          libdwcgsqr2.$HYB.a
 #LIB=>          libdwcgsserverbrowsing.$HYB.a
-#LIB=>          libvct.$HYB.a
-SRCS_OVERLAY_DEV_WIFILIB   = net/net_dummy.c
+SRCS_OVERLAY_DEV_WIFILIB   = net/net_devwifi.c \
+                net/dwc_rap.c \
+                net/dwc_rapinitialize.c \
+                net/dwc_rapcommon.c
 
 
 # wifiプログラム
 #===> SRCS_OVERLAY_DEV_WIFILIB
-SRCS_OVERLAY_DEV_WIFI   = net/net_devwifi.c \
-                net/dwc_rap.c \
-                net/dwc_rapinitialize.c \
-                net/dwc_rapcommon.c \
-                net/vchat.c
+#LIB=>          libvct.$HYB.a
+SRCS_OVERLAY_DEV_WIFI   = net/vchat.c
+
+
+
+# wifiランダムマッチプログラム
+#===> SRCS_OVERLAY_DEV_WIFILIB
+#LIB=>          libdwcgssake.$HYB.a
+#LIB=>          libdwcgssc.$HYB.a
+#LIB=>          libdwcgswebservices.$HYB.a
+SRCS_OVERLAY_DEV_WIFI_RANDOM   = net/net_dummy.c
 
 
 # wirelessプログラム
@@ -327,7 +334,7 @@ SRCS_OVERLAY_DEV_IRC    =   net/net_devirc.c \
                 net/net_irc.c
 
 #wifi設定画面
-#===> SRCS_OVERLAY_DEV_WIFILIB
+#===> SRCS_OVERLAY_DEV_WIFI
 #LIB=>          libdwcutil.$HYB.a
 SRCS_OVERLAY_WIFI_UTIL  = net/dwc_raputil.c
 
@@ -725,17 +732,6 @@ SRCS_OVERLAY_APP_MAIL = app/mail/mailtool.c
 
 
 
-# 不思議な贈り物
-#===> SRCS_OVERLAY_DEV_WIFI
-#===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_IRC
-SRCS_OVERLAY_MYSTERY = mystery/comm_mystery_func.c \
-      mystery/comm_mystery_gift.c \
-      mystery/comm_mystery_state.c \
-      mystery/comm_mystery_card.c \
-      mystery/mysterylib.c \
-      mystery/beacondownload.c
-
 # トレーナーカード
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
@@ -874,6 +870,15 @@ SRCS_OVERLAY_DPW_COMMON   = libdpw/dpwi_encrypt.c \
               libdpw/dpwi_session.c \
 							libdpw/dpw_tr.c
 
+
+# 不思議な贈り物
+#===> SRCS_OVERLAY_DPW_COMMON
+SRCS_OVERLAY_MYSTERY = mystery/comm_mystery_func.c \
+      mystery/comm_mystery_gift.c \
+      mystery/comm_mystery_state.c \
+      mystery/comm_mystery_card.c \
+      mystery/mysterylib.c \
+      mystery/beacondownload.c
 
 
 # GAMESYNC

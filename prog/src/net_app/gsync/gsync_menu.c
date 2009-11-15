@@ -45,7 +45,6 @@
 #define _SE_CANCEL (0)
 static void Snd_SePlay(int a){}
 
-FS_EXTERN_OVERLAY(ircbattlematch);
 
 //--------------------------------------------
 // 画面構成定義
@@ -552,32 +551,18 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,GAMESYNC_MENU* pWork)
   switch( bttnid ){
   case _SELECTMODE_BATTLE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    if(WIRELESSSAVE_ON == CONFIG_GetWirelessSaveMode(SaveData_GetConfig(IrcBattle_GetSAVE_CONTROL_WORK(pWork->dbw)))){
-      _CHANGE_STATE(pWork,_modeReportInit);
-    }
-    else{
-      _CHANGE_STATE(pWork,_modeSelectEntryNumInit);
-    }
-    pWork->selectType = EVENTIRCBTL_ENTRYMODE_SINGLE;
+    _CHANGE_STATE(pWork,_modeReportInit);
+    pWork->selectType = GAMESYNC_RETURNMODE_SYNC;
     return TRUE;
   case _SELECTMODE_POKE_CHANGE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    pWork->selectType = EVENTIRCBTL_ENTRYMODE_TRADE;
-    if(WIRELESSSAVE_ON == CONFIG_GetWirelessSaveMode(SaveData_GetConfig(IrcBattle_GetSAVE_CONTROL_WORK(pWork->dbw)))){
-      _CHANGE_STATE(pWork,_modeReportInit);
-    }
-    else{
-      _CHANGE_STATE(pWork,_modeSelectChangeInit);
-    }
+    pWork->selectType = GAMESYNC_RETURNMODE_UTIL;
+    _CHANGE_STATE(pWork,_modeReportInit);
     return TRUE;
 	case _SELECTMODE_COMPATIBLE:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    pWork->selectType = EVENTIRCBTL_ENTRYMODE_COMPATIBLE;
-    _CHANGE_STATE(pWork,NULL);        // 相性診断モードへ移るために終了
-		return TRUE;
   case _SELECTMODE_EXIT:
 		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-    pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
+    pWork->selectType = GAMESYNC_RETURNMODE_NONE;
 		WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
 										WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
     _CHANGE_STATE(pWork,_modeFadeout);        // 終わり
@@ -914,6 +899,17 @@ static void _modeReportInit(GAMESYNC_MENU* pWork)
   _CHANGE_STATE(pWork,_modeReportWait);
 }
 
+
+static void _FadeWait(GAMESYNC_MENU* pWork)
+{
+  if(GFL_FADE_CheckFade()){
+    return;
+  }
+  _CHANGE_STATE(pWork,NULL);
+}
+
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   セーブ中
@@ -930,20 +926,13 @@ static void _modeReporting(GAMESYNC_MENU* pWork)
     SAVE_RESULT svr = SaveControl_SaveAsyncMain(IrcBattle_GetSAVE_CONTROL_WORK(pWork->dbw));
 
     if(svr == SAVE_RESULT_OK){
-
 			BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
       GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
       GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
 
-      
-      if( pWork->selectType == EVENTIRCBTL_ENTRYMODE_SINGLE){
-        _CHANGE_STATE(pWork,_modeSelectEntryNumInit);
-      }
-      else if( pWork->selectType == EVENTIRCBTL_ENTRYMODE_TRADE){
-        _CHANGE_STATE(pWork,_modeSelectChangeInit);
-      }
-      pWork->IsIrc = TRUE;  //赤外線接続開始
-//      _CHANGE_STATE(pWork,NULL);
+      GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 1);
+
+      _CHANGE_STATE(pWork,_FadeWait);
     }
   }
 }
@@ -975,7 +964,7 @@ static void _modeReportWait2(GAMESYNC_MENU* pWork)
     }
     else{
       GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
-      pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
+      pWork->selectType = GAMESYNC_RETURNMODE_NONE;
       _CHANGE_STATE(pWork,NULL);
     }
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
@@ -1040,6 +1029,9 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
     GFL_STD_MemClear(pWork, sizeof(GAMESYNC_MENU));
     pWork->heapID = HEAPID_IRCBATTLE;
 
+    GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
+    GXS_DispOn();
+    GX_DispOn();
 
 		GFL_BG_Init(pWork->heapID);
 		GFL_BMPWIN_Init(pWork->heapID);
@@ -1058,6 +1050,9 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
 		_modeInit(pWork);
     pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 1 , 0 );
     pWork->SysMsgQue = PRINTSYS_QUE_Create( pWork->heapID );
+    pWork->pAppTaskRes =
+      APP_TASKMENU_RES_Create( GFL_BG_FRAME1_S, _SUBLIST_NORMAL_PAL,
+                               pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID  );
 
 		{
 			GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(IrcBattle_GetGAMESYS_WORK(pwk));
@@ -1126,6 +1121,7 @@ static GFL_PROC_RESULT GameSyncMenuProcEnd( GFL_PROC * proc, int * seq, void * p
   if(pWork->infoDispWin){
     GFL_BMPWIN_Delete(pWork->infoDispWin);
   }
+  APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
 
 
 	GFL_BMPWIN_Exit();

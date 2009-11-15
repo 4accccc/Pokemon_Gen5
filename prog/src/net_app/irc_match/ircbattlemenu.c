@@ -1057,7 +1057,11 @@ static GFL_PROC_RESULT IrcBattleMenuProcInit( GFL_PROC * proc, int * seq, void *
     pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 1 , 0 );
     pWork->SysMsgQue = PRINTSYS_QUE_Create( pWork->heapID );
 
-		{
+    pWork->pAppTaskRes =
+      APP_TASKMENU_RES_Create( GFL_BG_FRAME1_S, _SUBLIST_NORMAL_PAL,
+                               pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID  );
+
+    {
 			GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(IrcBattle_GetGAMESYS_WORK(pwk));
 			INFOWIN_Init( _SUBSCREEN_BGPLANE , _SUBSCREEN_PALLET , pGC , pWork->heapID);
 		}
@@ -1124,7 +1128,7 @@ static GFL_PROC_RESULT IrcBattleMenuProcEnd( GFL_PROC * proc, int * seq, void * 
   if(pWork->infoDispWin){
     GFL_BMPWIN_Delete(pWork->infoDispWin);
   }
-
+  APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
 
 	GFL_BMPWIN_Exit();
 	GFL_BG_Exit();

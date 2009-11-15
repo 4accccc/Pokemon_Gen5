@@ -10,8 +10,7 @@ extern "C" {
  */
 //=============================================================================
 
-#ifndef DWC_RAPUTIL_H__
-#define DWC_RAPUTIL_H__
+#pragma once
 
 #include <gflib.h>
 
@@ -23,14 +22,12 @@ extern "C" {
  */
 //==============================================================================
 
-extern void mydwc_callWifiUtil( HEAPID HeapID );
-
 
 FS_EXTERN_OVERLAY(wifi_util);
 extern const GFL_PROC_DATA WifiUtilProcData;
+extern const GFL_PROC_DATA WifiUtilGSyncProcData;
 
 
-#endif //DWC_RAPUTIL_H__
 
 
 #ifdef __cplusplus

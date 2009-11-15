@@ -20,14 +20,14 @@
  * @retval  none
  */
 //==============================================================================
-void mydwc_callWifiUtil( HEAPID HeapID )
+static void mydwc_callWifiUtil( HEAPID HeapID )
 {
 	OSIntrMode old;
 	void *work;
 
 	// アラームシステムを初期化しておかないとDWC_StartUtility呼出し後にPanicが発生する
-	OS_InitTick();
-	OS_InitAlarm();
+//	OS_InitTick();
+//	OS_InitAlarm();
 
   //DWC_SetAuthServer(GF_DWC_CONNECTINET_AUTH_TYPE);
 
@@ -36,7 +36,11 @@ void mydwc_callWifiUtil( HEAPID HeapID )
 
 	// WiFi設定メニュー呼び出し（終わるまで帰ってこない)
 	work = GFL_HEAP_AllocClearMemory( HeapID, DWC_UTILITY_WORK_SIZE );
-	GF_ASSERT(DWC_UTIL_RESULT_SUCCESS==DWC_StartUtility( work, DWC_LANGUAGE_JAPANESE, DWC_UTILITY_TOP_MENU_FOR_JPN ));
+
+  if( !OS_IsRunOnTwl() ){//DSIは呼ぶことが出来ない
+    DWC_StartUtility( work, DWC_LANGUAGE_JAPANESE, DWC_UTILITY_TOP_MENU_FOR_JPN );
+  }
+  
 	GFL_HEAP_FreeMemory( work );
 
 	// 禁止した割り込み処理を復帰
@@ -69,10 +73,23 @@ static GFL_PROC_RESULT WifiUtilMainProcEnd(GFL_PROC * proc, int * seq, void * pw
     return GFL_PROC_RES_FINISH;
 }
 
+static GFL_PROC_RESULT WifiUtil2MainProcEnd(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+  NET_DeviceUnload(GFL_NET_TYPE_WIFI);
+  GFL_HEAP_DeleteHeap( HEAPID_WIFI );
+  return GFL_PROC_RES_FINISH;
+}
+
 
 const GFL_PROC_DATA WifiUtilProcData = {
 	WifiUtilMainProcInit,
 	WifiUtilMainProcMain,
 	WifiUtilMainProcEnd,
+};
+
+const GFL_PROC_DATA WifiUtilGSyncProcData = {
+	WifiUtilMainProcInit,
+	WifiUtilMainProcMain,
+	WifiUtil2MainProcEnd,
 };
 
