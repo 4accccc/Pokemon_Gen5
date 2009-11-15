@@ -1,0 +1,23 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: gtsnego.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_GTSNEGO_NAIX_
+#define NARC_GTSNEGO_NAIX_
+
+enum {
+	NARC_gtsnego_connect_NCLR = 0,
+	NARC_gtsnego_connect_anm_NCLR = 1,
+	NARC_gtsnego_connect_NCGR = 2,
+	NARC_gtsnego_connect_sub_NCGR = 3,
+	NARC_gtsnego_connect_01_NSCR = 4,
+	NARC_gtsnego_connect_sub_NSCR = 5
+};
+
+/* NARC_GTSNEGO_NAIX_ */
+#endif

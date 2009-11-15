@@ -49,6 +49,7 @@ SUBDIRS	=	wmi \
 			infowin \
 			c_gear \
 			gsync \
+			gtsnego \
 			bmpoam \
 			shop \
 			code_input \
