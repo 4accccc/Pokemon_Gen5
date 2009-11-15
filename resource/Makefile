@@ -48,6 +48,7 @@ SUBDIRS	=	wmi \
 			musical \
 			infowin \
 			c_gear \
+			gsync \
 			bmpoam \
 			shop \
 			code_input \

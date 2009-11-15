@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-11-15T11:34:18"/>
+	<create user="ohno" host="W00141" date="2009-11-15T12:38:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -346,6 +346,30 @@
 	<row id="GAMESYNC_003">
 		<language name="JPN" width="256">もどる</language>
 		<language name="JPN_KANJI" width="256">戻る</language>
+	</row>
+
+	<row id="GAMESYNC_004">
+		<language name="JPN" width="256">ここまでの　かつやくを
+ポケモンレポートに　かきこみますか？</language>
+		<language name="JPN_KANJI" width="256">ここまでの　かつやくを
+ポケモンレポートに　書き込みますか？</language>
+	</row>
+
+	<row id="GAMESYNC_005">
+		<language name="JPN" width="256">はい</language>
+		<language name="JPN_KANJI" width="256">はい</language>
+	</row>
+
+	<row id="GAMESYNC_006">
+		<language name="JPN" width="256">いいえ</language>
+		<language name="JPN_KANJI" width="256">いいえ</language>
+	</row>
+
+	<row id="GAMESYNC_007">
+		<language name="JPN" width="256">セーブしています
+しばらくおまちください</language>
+		<language name="JPN_KANJI" width="256">セーブしています
+しばらくおまちください</language>
 	</row>
 
 	<flowchart-group-list>

@@ -1,0 +1,23 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: gsync.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_GSYNC_NAIX_
+#define NARC_GSYNC_NAIX_
+
+enum {
+	NARC_gsync_connect_NCLR = 0,
+	NARC_gsync_connect_anm_NCLR = 1,
+	NARC_gsync_connect_NCGR = 2,
+	NARC_gsync_connect_sub_NCGR = 3,
+	NARC_gsync_connect_01_NSCR = 4,
+	NARC_gsync_connect_sub_NSCR = 5
+};
+
+/* NARC_GSYNC_NAIX_ */
+#endif
