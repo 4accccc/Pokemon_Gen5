@@ -43,10 +43,6 @@
 //============================================================================================
 //============================================================================================
 
-//----------------------------------------------------------------
-// バトル用定義
-extern const NetRecvFuncTable BtlRecvFuncTable[];
-//----------------------------------------------------------------
 
 
 #define HEAPID_CORE GFL_HEAPID_APP
@@ -58,23 +54,15 @@ FS_EXTERN_OVERLAY(fieldmap);
 #define _LOCALMATCHNO (100)
 
 enum _EVENT_IRCBATTLE {
-  _IRCBATTLE_START,
-  _IRCBATTLE_START_FIELD_CLOSE,
-  _CALL_IRCBATTLE_MENU,
-  _WAIT_IRCBATTLE_MENU,
+  _FIELD_FADE_START,
+  _FIELD_FADE_CLOSE,
+  _CALL_GAMESYNC_MENU,
+  _WAIT_GAMESYNC_MENU,
   _FIELD_FADEOUT,
   _CALL_IRCBATTLE_MATCH,
   _WAIT_IRCBATTLE_MATCH,
   _BATTLE_MATCH_START,
   _TIMING_SYNC_CALL_BATTLE,
-  _CALL_BATTLE,
-  _WAIT_BATTLE,
-  _CALL_IRCBATTLE_FRIEND,
-  _WAIT_IRCBATTLE_FRIEND,
-  _CALL_TRADE,
-  _WAIT_TRADE,
-  _CALL_NET_END,
-  _WAIT_NET_END,
   _FIELD_OPEN,
   _FIELD_FADEIN,
   _FIELD_END,
@@ -82,7 +70,7 @@ enum _EVENT_IRCBATTLE {
 
   _FIELD_FADEOUT_IRCBATTLE,
   _FIELD_END_IRCBATTLE,
-  _CALL_IRCCOMMPATIBLE,
+  _CALL_GAMESYNC,
   _WAIT_IRCCOMMPATIBLE,
 };
 
@@ -110,27 +98,27 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
   GAMESYS_WORK * gsys = dbw->gsys;
 
   switch (*seq) {
-  case _IRCBATTLE_START:
+  case _FIELD_FADE_START:
     GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, dbw->fieldmap, FIELD_FADE_BLACK));
     (*seq) ++;
     break;
-  case _IRCBATTLE_START_FIELD_CLOSE:
+  case _FIELD_FADE_CLOSE:
     GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
     //
-    (*seq) = _CALL_IRCBATTLE_MENU;
+    (*seq) = _CALL_GAMESYNC_MENU;
     break;
-  case _CALL_IRCBATTLE_MENU:
+  case _CALL_GAMESYNC_MENU:
     dbw->isEndProc = FALSE;
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(gamesync), &GameSyncMenuProcData, dbw);
     (*seq)++;
     break;
-  case _WAIT_IRCBATTLE_MENU:
+  case _WAIT_GAMESYNC_MENU:
     if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
       break;
     }
     if(dbw->selectType == GAMESYNC_RETURNMODE_SYNC )
     {
-      *seq = _FIELD_FADEOUT_IRCBATTLE;
+      *seq = _CALL_GAMESYNC;
     }
     else if(dbw->selectType == GAMESYNC_RETURNMODE_UTIL )
     {
@@ -160,7 +148,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
    	PMSND_Init();
     GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, 1);
     
-    (*seq) = _CALL_IRCBATTLE_MENU;
+    (*seq) = _CALL_GAMESYNC_MENU;
     break;
   case _FIELD_OPEN:
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
@@ -188,7 +176,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
   case _FIELD_END_IRCBATTLE:
     (*seq)++;
     break;
-  case _CALL_IRCCOMMPATIBLE:  //相性チェック画面へ
+  case _CALL_GAMESYNC:
     dbw->compatible_param.p_gamesys   = dbw->gsys;
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(gamesync), &G_SYNC_ProcData, &dbw->compatible_param );
     (*seq)++;
@@ -197,7 +185,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL)
     {
       GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
-      (*seq)=_CALL_IRCBATTLE_MENU;
+      (*seq)=_CALL_GAMESYNC_MENU;
     }
     break;
   default:

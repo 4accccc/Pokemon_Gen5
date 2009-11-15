@@ -9,7 +9,7 @@
 //=============================================================================
 
 #include <gflib.h>
-#include <dwc.h>
+//#include <dwc.h>
 
 /*
   Project:  NitroSDK - wireless_shared - demos - wh
@@ -3689,7 +3689,7 @@ void WH_AllBeaconStart(int num)
   for(i=0;i<num;i++){
     _pWmInfo->pBeaconCatch[i] = GFL_NET_Align32Alloc(_pWmInfo->heapID , sizeof(_BEACONCATCH_STR));
   }
-  _pWmInfo->ScanMemory =GFL_NET_Align32Alloc(_pWmInfo->heapID ,DWC_GetParseWMBssDescWorkSize());
+//  _pWmInfo->ScanMemory =GFL_NET_Align32Alloc(_pWmInfo->heapID ,DWC_GetParseWMBssDescWorkSize());
 
 }
 
@@ -3707,7 +3707,7 @@ void WH_AllBeaconEnd(void)
   for(i=0;i<_pWmInfo->AllBeaconNum;i++){
     GFL_NET_Align32Free(_pWmInfo->pBeaconCatch[i]);
   }
-  GFL_NET_Align32Free(_pWmInfo->ScanMemory);
+ // GFL_NET_Align32Free(_pWmInfo->ScanMemory);
   _pWmInfo->ScanMemory=NULL;
   _pWmInfo->AllBeaconNum = 0;
 }
@@ -3770,7 +3770,7 @@ void WH_MainLoopScanBeaconData(void)
  * @retval  GAME_COMM_STATUS
  */
 //------------------------------------------------------------------------------
-
+#if 0
 GAME_COMM_STATUS WH_GetAllBeaconType(void)
 {
   int i;
@@ -3815,3 +3815,4 @@ GAME_COMM_STATUS WH_GetAllBeaconType(void)
   return retcode;
 }
 
+#endif

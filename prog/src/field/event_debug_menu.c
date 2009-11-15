@@ -31,6 +31,7 @@
 #include "net_app/irc_match/ircbattlemenu.h"
 #include "event_ircbattle.h"
 #include "event_wificlub.h"
+#include "event_gtsnego.h"
 #include "field_subscreen.h"
 #include "sound/pm_sndsys.h"
 
@@ -168,6 +169,7 @@ static BOOL debugMenuCallProc_OpenStartInvasion( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_OpenClubMenu( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_OpenGTSNegoMenu( DEBUG_MENU_EVENT_WORK *wk );
 
 static debugMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk );
 static debugMenuCallProc_SubscreenSelect( DEBUG_MENU_EVENT_WORK *wk );
@@ -240,6 +242,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR13, debugMenuCallProc_MMdlList },
   { DEBUG_FIELD_C_CHOICE00, debugMenuCallProc_OpenCommDebugMenu },
   { DEBUG_FIELD_STR19, debugMenuCallProc_OpenClubMenu },
+  { DEBUG_FIELD_STR51  , debugMenuCallProc_OpenGTSNegoMenu },
   { DEBUG_FIELD_STR22, debugMenuCallProc_ControlRtcList },
   { DEBUG_FIELD_STR15, debugMenuCallProc_ControlLight },
   { DEBUG_FIELD_STR16, debugMenuCallProc_WeatherList },
@@ -532,6 +535,23 @@ static BOOL debugMenuCallProc_OpenClubMenu( DEBUG_MENU_EVENT_WORK *wk )
   GAMESYS_WORK  *gameSys  = wk->gmSys;
 
   EVENT_WiFiClubChange(gameSys, fieldWork, event);
+  return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * GTSNegoメニュー呼びだし
+ * @param wk  DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_OpenGTSNegoMenu( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GMEVENT *event = wk->gmEvent;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  GAMESYS_WORK  *gameSys  = wk->gmSys;
+
+  EVENT_GTSNegoChange(gameSys, fieldWork, event);
   return( TRUE );
 }
 
@@ -3671,6 +3691,7 @@ static BOOL debugMenuCallProc_WazaOshie( DEBUG_MENU_EVENT_WORK *p_wk )
   p_param->param.pp   = PokeParty_GetMemberPointer( party, 0 );
   p_param->param.myst = SaveData_GetMyStatus(sv);   // 自分データ
   p_param->param.cfg  = SaveData_GetConfig(sv);     // コンフィグデータ
+
   p_param->param.waza_tbl   = WAZAOSHIE_GetRemaindWaza( p_param->param.pp, HEAPID_WORLD );
 
   OS_Printf( "技教え Start\n" );
@@ -3702,8 +3723,10 @@ static GMEVENT_RESULT debugMenuWazaOshie( GMEVENT *p_event, int *p_seq, void *p_
   switch(*p_seq )
   { 
   case SEQ_CALL_PROC:
-      GMEVENT_CallEvent( p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
-        FS_OVERLAY_ID(waza_oshie), &WazaOshieProcData, &p_wk->param ) );
+
+    GMEVENT_CallEvent( p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
+                                                    FS_OVERLAY_ID(waza_oshie), &WazaOshieProcData, &p_wk->param ) );
+
     *p_seq  = SEQ_EXIT;
     break;
 

@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- * @file	  gsync_menu.h
+ * @file	  gsync.h
  * @bfief	  ゲームシンク関連のヘッダー
  * @author	ohno_katsumi@gamefreak.co.jp
  * @date	  09/11/15

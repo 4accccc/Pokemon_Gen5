@@ -408,7 +408,8 @@ GAME_COMM_STATUS GameCommSys_GetCommStatus(GAME_COMM_SYS_PTR gcsp)
   case GFL_NET_TYPE_WIRELESS_SCANONLY:	///<ワイヤレス通信(スキャン専用・電源ランプ非点滅)
     {
       u8 i;
-      gcsp->comm_status = WH_GetAllBeaconType();
+//      gcsp->comm_status = WH_GetAllBeaconType();
+      gcsp->comm_status = GAME_COMM_STATUS_NULL;
       if(gcsp->comm_status == GAME_COMM_STATUS_NULL){
         for( i=0;i < aNetStruct->maxBeaconNum;i++ )
         {

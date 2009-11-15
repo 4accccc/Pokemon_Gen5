@@ -132,31 +132,11 @@ static const GFL_UI_TP_HITTBL bttndata[] = {
 // 内部ワーク
 //--------------------------------------------
 
-enum _BATTLETYPE_SELECT {
-  _SELECTBT_SINGLE = 0,
-  _SELECTBT_DOUBLE,
-  _SELECTBT_TRI,
-  _SELECTBT_EXIT
-};
-
 
 enum _IBMODE_SELECT {
-  _SELECTMODE_BATTLE = 0,
-  _SELECTMODE_POKE_CHANGE,
-	_SELECTMODE_COMPATIBLE,	//相性チェック
+  _SELECTMODE_GSYNC = 0,
+  _SELECTMODE_UTIL,
   _SELECTMODE_EXIT
-};
-
-enum _IBMODE_ENTRY {
-  _ENTRYNUM_DOUBLE = 0,
-  _ENTRYNUM_FOUR,
-  _ENTRYNUM_EXIT,
-};
-
-enum _IBMODE_CHANGE {
-	_CHANGE_TRADE=0,
-  _CHANGE_FRIENDCHANGE,
-  _CHANGE_EXIT,
 };
 
 
@@ -210,17 +190,12 @@ static void _changeStateDebug(GAMESYNC_MENU* pWork,StateFunc* state, int line);
 static void _buttonWindowCreate(int num,int* pMsgBuff,GAMESYNC_MENU* pWork);
 static void _modeSelectMenuInit(GAMESYNC_MENU* pWork);
 static void _modeSelectMenuWait(GAMESYNC_MENU* pWork);
-static void _modeSelectEntryNumInit(GAMESYNC_MENU* pWork);
-static void _modeSelectEntryNumWait(GAMESYNC_MENU* pWork);
+
 static void _modeReportInit(GAMESYNC_MENU* pWork);
 static void _modeReportWait(GAMESYNC_MENU* pWork);
 static BOOL _modeSelectMenuButtonCallback(int bttnid,GAMESYNC_MENU* pWork);
-static BOOL _modeSelectEntryNumButtonCallback(int bttnid,GAMESYNC_MENU* pWork);
-static BOOL _modeSelectBattleTypeButtonCallback(int bttnid,GAMESYNC_MENU* pWork);
 static void _modeSelectBattleTypeInit(GAMESYNC_MENU* pWork);
-static BOOL _modeSelectChangeButtonCallback(int bttnid,GAMESYNC_MENU* pWork);
-static void _modeSelectChangWait(GAMESYNC_MENU* pWork);
-static void _modeSelectChangeInit(GAMESYNC_MENU* pWork);
+
 static void _buttonWindowDelete(GAMESYNC_MENU* pWork);
 
 
@@ -466,7 +441,7 @@ static void _modeInit(GAMESYNC_MENU* pWork)
   //    GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
 
 	{
-    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_IRCBATTLE, pWork->heapID );
+    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GSYNC, pWork->heapID );
 
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_gsync_connect_NCLR,
                                       PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
@@ -498,9 +473,15 @@ static void _modeInit(GAMESYNC_MENU* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectMenuInit(GAMESYNC_MENU* pWork)
 {
-	int aMsgBuff[]={GAMESYNC_001,GAMESYNC_002,GAMESYNC_003};
-	
-	_buttonWindowCreate(NELEMS(aMsgBuff), aMsgBuff, pWork);
+
+  if( !OS_IsRunOnTwl() ){//DSIは呼ぶことが出来ない
+    int aMsgBuff[]={GAMESYNC_001,GAMESYNC_002,GAMESYNC_003};
+    _buttonWindowCreate(NELEMS(aMsgBuff), aMsgBuff, pWork);
+  }
+  else{
+    int aMsgBuff[]={GAMESYNC_001,GAMESYNC_003};
+    _buttonWindowCreate(NELEMS(aMsgBuff), aMsgBuff, pWork);
+  }
 
 	pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
 	pWork->touch = &_modeSelectMenuButtonCallback;
@@ -549,17 +530,19 @@ static void _modeFadeout(GAMESYNC_MENU* pWork)
 static BOOL _modeSelectMenuButtonCallback(int bttnid,GAMESYNC_MENU* pWork)
 {
   switch( bttnid ){
-  case _SELECTMODE_BATTLE:
+  case _SELECTMODE_GSYNC:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     _CHANGE_STATE(pWork,_modeReportInit);
     pWork->selectType = GAMESYNC_RETURNMODE_SYNC;
     return TRUE;
-  case _SELECTMODE_POKE_CHANGE:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    pWork->selectType = GAMESYNC_RETURNMODE_UTIL;
-    _CHANGE_STATE(pWork,_modeReportInit);
-    return TRUE;
-	case _SELECTMODE_COMPATIBLE:
+  case _SELECTMODE_UTIL:
+    if( !OS_IsRunOnTwl() ){//DSIは呼ぶことが出来ない
+      PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+      pWork->selectType = GAMESYNC_RETURNMODE_UTIL;
+      _CHANGE_STATE(pWork,_modeReportInit);
+      return TRUE;
+    }
+    //break throw
   case _SELECTMODE_EXIT:
 		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
     pWork->selectType = GAMESYNC_RETURNMODE_NONE;
@@ -584,196 +567,6 @@ static void _modeSelectMenuWait(GAMESYNC_MENU* pWork)
 	if(WIPE_SYS_EndCheck()){
 		GFL_BMN_Main( pWork->pButton );
 	}
-}
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   交換画面初期化
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeSelectChangeInit(GAMESYNC_MENU* pWork)
-{
-/*
-  int aMsgBuff[]={IRCBTL_STR_18, IRCBTL_STR_14, IRCBTL_STR_03};
-
-  _buttonWindowCreate(NELEMS(aMsgBuff),aMsgBuff,pWork);
-
-  pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
-  pWork->touch = &_modeSelectChangeButtonCallback;
-*/
-  _CHANGE_STATE(pWork,_modeSelectChangWait);
-
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   交換画面タッチ処理
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static BOOL _modeSelectChangeButtonCallback(int bttnid,GAMESYNC_MENU* pWork)
-{
-  switch(bttnid){
-	case _CHANGE_TRADE:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    pWork->selectType = EVENTIRCBTL_ENTRYMODE_TRADE;
-//    _CHANGE_STATE(pWork,_modeReportInit);
-    _CHANGE_STATE(pWork,NULL);
-    return TRUE;
-	case _CHANGE_FRIENDCHANGE:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    pWork->selectType = EVENTIRCBTL_ENTRYMODE_FRIEND;
-//    _CHANGE_STATE(pWork,_modeReportInit);
-    _CHANGE_STATE(pWork,NULL);
-    return TRUE;
-  case _ENTRYNUM_EXIT:
-		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-    _CHANGE_STATE(pWork,_modeSelectMenuInit);
-	default:
-    break;
-  }
-  return FALSE;
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   交換画面待機
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeSelectChangWait(GAMESYNC_MENU* pWork)
-{
-  GFL_BMN_Main( pWork->pButton );
-
-}
-
-
-
-
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   人数選択画面初期化
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeSelectEntryNumInit(GAMESYNC_MENU* pWork)
-{
-#if 0
-  int aMsgBuff[]={IRCBTL_STR_04,IRCBTL_STR_05,IRCBTL_STR_03};
-
-  _buttonWindowCreate(3,aMsgBuff,pWork);
-
-  pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
-  pWork->touch = &_modeSelectEntryNumButtonCallback;
-#endif
-  _CHANGE_STATE(pWork,_modeSelectEntryNumWait);
-
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   モードセレクト画面タッチ処理
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static BOOL _modeSelectEntryNumButtonCallback(int bttnid,GAMESYNC_MENU* pWork)
-{
-  switch(bttnid){
-  case _ENTRYNUM_DOUBLE:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    _CHANGE_STATE(pWork,_modeSelectBattleTypeInit);
-    return TRUE;
-  case _ENTRYNUM_FOUR:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    pWork->selectType = EVENTIRCBTL_ENTRYMODE_MULTH;
-    _CHANGE_STATE(pWork,NULL);
-//    _CHANGE_STATE(pWork,_modeReportInit);
-    return TRUE;
-  case _ENTRYNUM_EXIT:
-		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-    _CHANGE_STATE(pWork,_modeSelectMenuInit);
-    return TRUE;
-  default:
-    break;
-  }
-  return FALSE;
-}
-
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   人数選択画面初期化
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeSelectBattleTypeInit(GAMESYNC_MENU* pWork)
-{
-#if 0
-  int aMsgBuff[]={IRCBTL_STR_06,IRCBTL_STR_07,IRCBTL_STR_08,IRCBTL_STR_03};
-
-  _buttonWindowCreate(4,aMsgBuff,pWork);
-
-  pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
-  pWork->touch = &_modeSelectBattleTypeButtonCallback;
-#endif
-  _CHANGE_STATE(pWork,_modeSelectEntryNumWait);
-
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   モードセレクト画面タッチ処理
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static BOOL _modeSelectBattleTypeButtonCallback(int bttnid,GAMESYNC_MENU* pWork)
-{
-  switch(bttnid){
-  case _SELECTBT_SINGLE:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    pWork->selectType = EVENTIRCBTL_ENTRYMODE_SINGLE;
-  //  _buttonWindowDelete(pWork);
-//    _CHANGE_STATE(pWork,_modeReportInit);
-        _CHANGE_STATE(pWork,NULL);
-
-    break;
-  case _SELECTBT_DOUBLE:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    pWork->selectType = EVENTIRCBTL_ENTRYMODE_DOUBLE;
-    //_buttonWindowDelete(pWork);
-//    _CHANGE_STATE(pWork,_modeReportInit);
-    _CHANGE_STATE(pWork,NULL);
-    break;
-  case _SELECTBT_TRI:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    pWork->selectType = EVENTIRCBTL_ENTRYMODE_TRI;
-    //_buttonWindowDelete(pWork);
-//    _CHANGE_STATE(pWork,_modeReportInit);
-    _CHANGE_STATE(pWork,NULL);
-    break;
-  default:
-		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-    //_buttonWindowDelete(pWork);
-    _CHANGE_STATE(pWork,_modeSelectMenuInit);
-    break;
-  }
-  return TRUE;
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   人数選択画面待機
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeSelectEntryNumWait(GAMESYNC_MENU* pWork)
-{
-  GFL_BMN_Main( pWork->pButton );
 }
 
 

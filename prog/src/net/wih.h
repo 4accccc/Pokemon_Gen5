@@ -165,7 +165,7 @@
 #pragma once
 
 #include "net.h"
-#include "gamesystem/game_comm.h"
+//#include "gamesystem/game_comm.h"
 
 // ñ≥ê¸Ç≈égópÇ∑ÇÈDMAî‘çÜ
 #define WH_DMA_NO                 _NETWORK_DMA_NO
@@ -814,6 +814,6 @@ extern void WH_AllBeaconEnd(void);
  *---------------------------------------------------------------------------*/
 
 extern void WH_MainLoopScanBeaconData(void);
-extern GAME_COMM_STATUS WH_GetAllBeaconType(void);
+//extern GAME_COMM_STATUS WH_GetAllBeaconType(void);
 
 
