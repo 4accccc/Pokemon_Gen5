@@ -672,9 +672,10 @@ class PosEvent < AllEvent
     else
       @pos_type = read(lines, /#Pos Type/)
       if @pos_type == EVENTDATA_POS_TYPE_GRID
-        @sizex = read(lines, /#Pos Event Size X/)
-        @sizez = read(lines, /#Pos Event Size Z/)
+        #@sizex = read(lines, /#Pos Event Size X/)
+        #@sizez = read(lines, /#Pos Event Size Z/)
         @x, @y, @z = readPosition(lines)
+        @sizex, @sizez = readSize(lines)
       else
         @rail_index, @rail_front, @rail_side = readPosition(lines)
         @rail_front_size, @rail_side_size = readSize(lines)
