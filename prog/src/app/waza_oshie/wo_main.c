@@ -31,6 +31,7 @@
 #include "font/font.naix"
 #include "print/printsys.h"
 #include "print/wordset.h"
+#include "system/gfl_use.h"
 
 #include "system/wipe.h"
 #include "system/bmp_menu.h"
@@ -72,7 +73,9 @@ FS_EXTERN_OVERLAY( poke_status );
 
 
 enum {
-  WIN_STR_CLASS = 0,    // 「ぶんるい」
+  WIN_SPACE_M=0,
+  WIN_SPACE_S,
+  WIN_STR_CLASS,    // 「ぶんるい」
   WIN_STR_ATTACK,     // 「いりょく」
   WIN_STR_HIT,      // 「めいちゅう」
   WIN_PRM_ATTACK,     // 威力値
@@ -84,7 +87,7 @@ enum {
   WIN_BACK,       // 戻るボタンウィンドウ
   WIN_LIST,       // 技リスト
   WIN_YESNO,        // はい/いいえ
-
+  
   WIN_TITLE,        // タイトル
   WIN_MWAZA,        // 上　技リスト
   WIN_MPRM,       // 上　パラメータ
@@ -324,12 +327,29 @@ typedef struct{
   int frm, x, y, w, h, pal, offset;
 }BMPWIN_DAT;
 
+const GFL_PROC_DATA WazaOshieProcData = {
+  WazaOshieProc_Init,
+  WazaOshieProc_Main,
+  WazaOshieProc_End,
+};
+
+
 //============================================================================================
 //  グローバル変数
 //============================================================================================
 // BMPウィンドウデータ
 static const BMPWIN_DAT BmpWinData[] =
 {
+  
+  { // メイン面用１キャラ押さえ
+    MFRM_PARAM, 0, 25,
+    1, 1, 0, 0
+  },
+  { // サブ面用１キャラ押さえWIN_SPACE_M
+    SFRM_PARAM, 0,25,
+    1, 1, 0, 0
+  },
+
   { // 「ぶんるい」
     SFRM_PARAM, WIN_STR_CLASS_PX, WIN_STR_CLASS_PY,
     WIN_STR_CLASS_SX, WIN_STR_CLASS_SY, WIN_STR_CLASS_PAL, WIN_STR_CLASS_CGX
@@ -362,7 +382,7 @@ static const BMPWIN_DAT BmpWinData[] =
     SFRM_PARAM, WIN_EXP_PX, WIN_EXP_PY,
     WIN_EXP_SX, WIN_EXP_SY, WIN_EXP_PAL, WIN_EXP_CGX,
   },
-  { // Aボタン
+  { // Aボタン 
     SFRM_PARAM, WIN_ABTN_PX, WIN_ABTN_PY,
     WIN_ABTN_SX, WIN_ABTN_SY, WIN_ABTN_PAL, WIN_ABTN_CGX
   },
@@ -378,12 +398,12 @@ static const BMPWIN_DAT BmpWinData[] =
     SFRM_MSG, WIN_YESNO_PX, WIN_YESNO_PY,
     WIN_YESNO_SX, WIN_YESNO_SY, WIN_YESNO_PAL, WIN_YESNO_CGX
   },
-
+    
   { // タイトル
     MFRM_PARAM, WIN_TITLE_PX, WIN_TITLE_PY,
     WIN_TITLE_SX, WIN_TITLE_SY, WIN_TITLE_PAL, WIN_TITLE_CGX
   },
-  { // 技リスト
+  { // 技リスト 
     MFRM_PARAM, WIN_MWAZA_PX, WIN_MWAZA_PY,
     WIN_MWAZA_SX, WIN_MWAZA_SY, WIN_MWAZA_PAL, WIN_MWAZA_CGX
   },
@@ -482,50 +502,50 @@ static const CLACT_ENTRY_DATA ClactParamTbl[] =
     { WO_CHR_ID_KIND, WO_PAL_ID_OBJ, WO_CEL_ID_TYPE, WO_ANM_ID_TYPE, },
     2, 0
   },
-  { // タイプアイコン１
+  { // タイプアイコン１(下画面）
     TYPE_ICON1_PX, TYPE_ICON1_PY, 0,
     0, 1, TICON_ACTPAL_IDX, CLSYS_DEFREND_SUB,
     { WO_CHR_ID_TYPE1, WO_PAL_ID_TYPE, WO_CEL_ID_TYPE, WO_ANM_ID_TYPE,  },
     2, 0
   },
-  { // タイプアイコン２
+  { // タイプアイコン２(下画面）
     TYPE_ICON2_PX, TYPE_ICON2_PY, 0,
     0, 1, TICON_ACTPAL_IDX, CLSYS_DEFREND_SUB,
     { WO_CHR_ID_TYPE2, WO_PAL_ID_TYPE, WO_CEL_ID_TYPE, WO_ANM_ID_TYPE,  },
     2, 0
   },
-  { // タイプアイコン３
+  { // タイプアイコン３(下画面）
     TYPE_ICON3_PX, TYPE_ICON3_PY, 0,
     0, 1, TICON_ACTPAL_IDX, CLSYS_DEFREND_SUB,
     { WO_CHR_ID_TYPE3, WO_PAL_ID_TYPE, WO_CEL_ID_TYPE, WO_ANM_ID_TYPE,  },
     2, 0
   },
-  { // タイプアイコン４
+  { // タイプアイコン４(下画面）
     TYPE_ICON4_PX, TYPE_ICON4_PY, 0,
     0, 1, TICON_ACTPAL_IDX, CLSYS_DEFREND_SUB,
     { WO_CHR_ID_TYPE4, WO_PAL_ID_TYPE, WO_CEL_ID_TYPE, WO_ANM_ID_TYPE,  },
     2, 0
   },
-
-  { // タイプアイコン５
+  
+  { // タイプアイコン５(上画面）
     TYPE_ICON5_PX, TYPE_ICON5_PY, 0,
     0, 1, TICON_ACTPAL_IDX_M, CLSYS_DEFREND_MAIN,
     { WO_CHR_ID_TYPE5, WO_PAL_ID_TYPE_M, WO_CEL_ID_TYPE, WO_ANM_ID_TYPE, },
     2, 0
   },
-  { // タイプアイコン６
+  { // タイプアイコン６(上画面）
     TYPE_ICON6_PX, TYPE_ICON6_PY, 0,
     0, 1, TICON_ACTPAL_IDX_M, CLSYS_DEFREND_MAIN,
     { WO_CHR_ID_TYPE6, WO_PAL_ID_TYPE_M, WO_CEL_ID_TYPE, WO_ANM_ID_TYPE, },
     2, 0
   },
-  { // タイプアイコン７
+  { // タイプアイコン７(上画面）
     TYPE_ICON7_PX, TYPE_ICON7_PY, 0,
     0, 1, TICON_ACTPAL_IDX_M, CLSYS_DEFREND_MAIN,
     { WO_CHR_ID_TYPE7, WO_PAL_ID_TYPE_M, WO_CEL_ID_TYPE, WO_ANM_ID_TYPE, },
     2, 0
   },
-  { // タイプアイコン８
+  { // タイプアイコン８(上画面）
     TYPE_ICON8_PX, TYPE_ICON8_PY, 0,
     0, 1, TICON_ACTPAL_IDX_M, CLSYS_DEFREND_MAIN,
     { WO_CHR_ID_TYPE8, WO_PAL_ID_TYPE_M, WO_CEL_ID_TYPE, WO_ANM_ID_TYPE, },
@@ -543,17 +563,17 @@ static const CLACT_ENTRY_DATA ClactParamTbl[] =
  * プロセス関数：初期化
  *
  * @param proc  プロセスデータ
- * @param pwk   プラメータワーク
+ * @param pwk   パラメータワーク
  * @param mywk  アプリケーションワーク
  *
  * @return  処理状況
  */
 //--------------------------------------------------------------------------------------------
-GFL_PROC_RESULT WazaOshieProc_Init( GFL_PROC * proc, void *pwk, void *mywk )
+GFL_PROC_RESULT WazaOshieProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
 {
   WO_WORK * wk;
 
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WAZAOSHIE, 0x24000 );   // ヒープ作成
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WAZAOSHIE, 0x50000 );   // ヒープ作成
 
   wk = GFL_PROC_AllocWork( proc, sizeof(WO_WORK), HEAPID_WAZAOSHIE ); // ワーク確保＆クリア
   GFL_STD_MemFill( wk, 0, sizeof(WO_WORK) );
@@ -563,7 +583,7 @@ GFL_PROC_RESULT WazaOshieProc_Init( GFL_PROC * proc, void *pwk, void *mywk )
   wk->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr ,
                                     GFL_FONT_LOADTYPE_FILE , FALSE , HEAPID_WAZAOSHIE );
 
-  wk->pMsgTcblSys = GFL_TCBL_Init( HEAPID_WAZAOSHIE , HEAPID_WAZAOSHIE , 1 , 0 );
+  wk->pMsgTcblSys = GFL_TCBL_Init( HEAPID_WAZAOSHIE , HEAPID_WAZAOSHIE , 32 , 32 );
 
 
   WO_DispInit( wk );
@@ -588,82 +608,79 @@ GFL_PROC_RESULT WazaOshieProc_Init( GFL_PROC * proc, void *pwk, void *mywk )
  * @return  処理状況
  */
 //--------------------------------------------------------------------------------------------
-GFL_PROC_RESULT WazaOshieProc_Main( GFL_PROC * proc, void *pwk, void *mywk )
+GFL_PROC_RESULT WazaOshieProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
 /*↑[GS_CONVERT_TAG]*/
 {
   WO_WORK * wk  = mywk;
-/*↑[GS_CONVERT_TAG]*/
 
-  switch( wk->seq ){
+  switch( *seq ){
   case SEQ_FADE_WAIT:   // フェード終了待ち
-    wk->seq = WO_SeqFadeWait( wk );
+    *seq = WO_SeqFadeWait( wk );
     break;
 
   case SEQ_SELECT:    // 技セレクト
-    wk->seq = WO_SeqSelect( wk );
+    *seq = WO_SeqSelect( wk );
     break;
 
   case SEQ_MSG_WAIT:    // メッセージ終了待ち
-    wk->seq = WO_SeqMsgWait( wk );
+    *seq = WO_SeqMsgWait( wk );
     break;
 
   case SEQ_YESNO_PUT:   // はい・いいえセット
-    wk->seq = WO_SeqYesNoPut( wk );
+    *seq = WO_SeqYesNoPut( wk );
     break;
 
   case SEQ_YESNO_WAIT:  // はい・いいえ選択待ち
-    wk->seq = WO_SeqYesNoWait( wk );
+    *seq = WO_SeqYesNoWait( wk );
     break;
 
   case SEQ_WAZA_SET:    // 技覚え
-    wk->seq = WO_SeqWazaSet( wk );
+    *seq = WO_SeqWazaSet( wk );
     break;
 
   case SEQ_WAZADEL_SET: // 忘れて技覚え
-    wk->seq = WO_SeqWazaDelSet( wk );
+    *seq = WO_SeqWazaDelSet( wk );
     break;
 
   case SEQ_DEL_CHECK:   // 忘れさせる技をチェック
-    wk->seq = WO_SeqDelCheck( wk );
+    *seq = WO_SeqDelCheck( wk );
     break;
 
   case SEQ_FADEOUT_SET: // フェードアウトセット
-    wk->seq = WO_SeqFadeOutSet( wk );
+    *seq = WO_SeqFadeOutSet( wk );
     break;
 
   case SEQ_END:     // 終了
     return GFL_PROC_RES_FINISH;
-/*↑[GS_CONVERT_TAG]*/
 
   case SEQ_PST_INIT:    // ステータス画面へ
-    wk->seq = WO_SeqPstInit( wk );
+    *seq = WO_SeqPstInit( wk );
     break;
 
   case SEQ_PST_CALL:    // ステータス画面呼び出し
-    wk->seq = WO_SeqPstCall( wk );
+    *seq = WO_SeqPstCall( wk );
     return GFL_PROC_RES_CONTINUE;
-/*↑[GS_CONVERT_TAG]*/
 
   case SEQ_PST_WAIT:    // ステータス画面終了待ち
-    wk->seq = WO_SeqPstWait( wk );
+    *seq = WO_SeqPstWait( wk );
     return GFL_PROC_RES_CONTINUE;
-/*↑[GS_CONVERT_TAG]*/
 
   case SEQ_BUTTON_ANM:
-    wk->seq = ButtonAnmMaun( wk );
+    *seq = ButtonAnmMaun( wk );
     break;
 
   case SEQ_RET_BUTTON:
-    wk->seq = WO_SeqRetButton( wk );
+    *seq = WO_SeqRetButton( wk );
     break;
 
   case SEQ_ENTER_BUTTON:
-    wk->seq = WO_SeqEnterButton( wk );
+    *seq = WO_SeqEnterButton( wk );
     break;
   }
 
   WO_3DMain(&wk->p3d);
   GFL_CLACT_SYS_Main( );
+  GFL_TCBL_Main( wk->pMsgTcblSys );
 
   return GFL_PROC_RES_CONTINUE;
 /*↑[GS_CONVERT_TAG]*/
@@ -679,7 +696,7 @@ GFL_PROC_RESULT WazaOshieProc_Main( GFL_PROC * proc, void *pwk, void *mywk )
  * @return  処理状況
  */
 //--------------------------------------------------------------------------------------------
-GFL_PROC_RESULT WazaOshieProc_End( GFL_PROC * proc, void *pwk, void *mywk )
+GFL_PROC_RESULT WazaOshieProc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
 /*↑[GS_CONVERT_TAG]*/
 {
   WO_WORK * wk  = mywk;
@@ -723,11 +740,6 @@ static void WO_DispInit( WO_WORK * wk )
   GFL_DISP_GXS_InitVisibleControl();
   GX_SetVisiblePlane( 0 );
   GXS_SetVisiblePlane( 0 );
-
-//  MsgPrintTouchPanelFlagSet( MSG_TP_ON );
-
-
-  GFL_BG_Init( HEAPID_WAZAOSHIE );
 
   p_handle = GFL_ARC_OpenDataHandle( ARCID_WAZAOSHIE_GRA, HEAPID_WAZAOSHIE );
 
@@ -828,7 +840,11 @@ static const GFL_DISP_VRAM waza_oshie_vram = {
     GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
 
     GX_VRAM_TEX_0_A,        // テクスチャイメージスロット
-    GX_VRAM_TEXPLTT_0_F     // テクスチャパレットスロット
+    GX_VRAM_TEXPLTT_0_F,      // テクスチャパレットスロット
+
+    GX_OBJVRAMMODE_CHAR_1D_32K,
+    GX_OBJVRAMMODE_CHAR_1D_32K
+
 };
 
 
@@ -858,18 +874,23 @@ static void WO_VramBankSet(void)
 //--------------------------------------------------------------------------------------------
 static void WO_BgSet( void )
 {
+  
+  GFL_BG_Init( HEAPID_WAZAOSHIE );
+  // BMPWINシステム開始
+  GFL_BMPWIN_Init( HEAPID_WAZAOSHIE );
+  
   { // BG SYSTEM
     GFL_BG_SYS_HEADER BGsys_data = {
       GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
     };
     GFL_BG_SetBGMode( &BGsys_data );
   }
-
+  
   { // PARAM FONT (BMP)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
-      MFRM_PARAM_PRI, 0, 0, FALSE
+      GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,
+      GX_BG_EXTPLTT_01, MFRM_PARAM_PRI, 0, 0, FALSE
     };
     GFL_BG_SetBGControl( MFRM_PARAM, &TextBgCntDat, GFL_BG_MODE_TEXT );
     GFL_BG_ClearScreen(  MFRM_PARAM );
@@ -877,42 +898,52 @@ static void WO_BgSet( void )
   { // PLATE (CHAR)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x04000, GX_BG_EXTPLTT_01,
-      MFRM_BACK_PRI, 0, 0, FALSE
+      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
+      GX_BG_EXTPLTT_01, MFRM_BACK_PRI, 0, 0, FALSE
     };
     GFL_BG_SetBGControl(  MFRM_BACK, &TextBgCntDat, GFL_BG_MODE_TEXT );
-    GFL_BG_ClearScreen( MFRM_BACK );
+    GFL_BG_ClearScreen(   MFRM_BACK );
   }
 
   { // WINDOW (BMP)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
-      SFRM_MSG_PRI, 0, 0, FALSE
+      GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,
+      GX_BG_EXTPLTT_01, SFRM_MSG_PRI, 0, 0, FALSE
     };
     GFL_BG_SetBGControl( SFRM_MSG, &TextBgCntDat, GFL_BG_MODE_TEXT );
-    GFL_BG_ClearScreen( SFRM_MSG );
+    GFL_BG_ClearScreen(  SFRM_MSG );
   }
 
   { // PARAM FONT (BMP)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
-      SFRM_PARAM_PRI, 0, 0, FALSE
+      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,
+      GX_BG_EXTPLTT_01, SFRM_PARAM_PRI, 0, 0, FALSE
     };
     GFL_BG_SetBGControl( SFRM_PARAM, &TextBgCntDat, GFL_BG_MODE_TEXT );
-    GFL_BG_ClearScreen( SFRM_PARAM );
+    GFL_BG_ClearScreen(  SFRM_PARAM );
   }
 
   { // PLATE (CHAR)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x10000, GX_BG_EXTPLTT_01,
-      SFRM_BACK_PRI, 0, 0, FALSE
+      GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_128x128,
+      GX_BG_EXTPLTT_01,   SFRM_BACK_PRI, 0, 0, FALSE
     };
     GFL_BG_SetBGControl( SFRM_BACK, &TextBgCntDat, GFL_BG_MODE_TEXT );
-    GFL_BG_ClearScreen( SFRM_BACK );
+    GFL_BG_ClearScreen(  SFRM_BACK );
   }
+
+  // BG面表示ON
+  GFL_BG_SetVisible( MFRM_PARAM, VISIBLE_ON );
+  GFL_BG_SetVisible( MFRM_BACK,  VISIBLE_ON );
+  GFL_BG_SetVisible( SFRM_MSG,   VISIBLE_ON );
+  GFL_BG_SetVisible( SFRM_PARAM, VISIBLE_ON );
+  GFL_BG_SetVisible( SFRM_BACK,  VISIBLE_ON );
+
+  GFL_BG_SetClearCharacter( MFRM_PARAM, 32, 0, HEAPID_WAZAOSHIE );
+  GFL_BG_SetClearCharacter( SFRM_MSG,   32, 0, HEAPID_WAZAOSHIE );
 
   GFL_BG_SetClearCharacter( MFRM_PARAM, 32, 0, HEAPID_WAZAOSHIE );
   GFL_BG_SetClearCharacter( SFRM_MSG,   32, 0, HEAPID_WAZAOSHIE );
@@ -974,30 +1005,6 @@ static void WO_BgGraphicSet( WO_WORK * wk, ARCHANDLE* p_handle )
                                         PALTYPE_SUB_BG,0,0, HEAPID_WAZAOSHIE);
 
 
-//  APP_ArcFileVramLoad(wk->bgl,HEAPID_WAZAOSHIE,
-//    p_handle,ARC_WAZAOSHIE_GRA,NARC_waza_oshie_gra_bgd_NCGR,
-//    MFRM_BACK,AFVL_MODE_CHAR,0,0);
-
-//  APP_ArcFileVramLoad(wk->bgl,HEAPID_WAZAOSHIE,
-//    p_handle,ARC_WAZAOSHIE_GRA,NARC_waza_oshie_gra_bgu_back_NSCR,
-//    MFRM_BACK,AFVL_MODE_SCRN,0x800,0);
-
-//  APP_ArcFileVramLoad(wk->bgl,HEAPID_WAZAOSHIE,
-//    p_handle,ARC_WAZAOSHIE_GRA,NARC_waza_oshie_gra_bgd_NCLR,
-//    MFRM_BACK,AFVL_MODE_PLTT,0,0);
-
-//  APP_ArcFileVramLoad(wk->bgl,HEAPID_WAZAOSHIE,
-//    p_handle,ARC_WAZAOSHIE_GRA,NARC_waza_oshie_gra_bgd_NCGR,
-//    SFRM_BACK,AFVL_MODE_CHAR,0,0);
-
-
-//  APP_ArcFileVramLoad(wk->bgl,HEAPID_WAZAOSHIE,
-//    p_handle,ARC_WAZAOSHIE_GRA,NARC_waza_oshie_gra_bgd_back_NSCR,
-//    SFRM_BACK,AFVL_MODE_SCRN,0x800,0);
-
-//  APP_ArcFileVramLoad(wk->bgl,HEAPID_WAZAOSHIE,
-//    p_handle,ARC_WAZAOSHIE_GRA,NARC_waza_oshie_gra_bgd_NCLR,
-//    SFRM_BACK,AFVL_MODE_PLTT,0,0);
 
   //スクリーンリソース取得
   wk->pSBufDParts = GFL_ARCHDL_UTIL_LoadScreen(
@@ -1007,17 +1014,12 @@ static void WO_BgGraphicSet( WO_WORK * wk, ARCHANDLE* p_handle )
             &wk->pSDParts,
             HEAPID_WAZAOSHIE );
 
-
-  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG ,
-                                  WO_PAL_TALK_FONT * 32, 16*2, HEAPID_CODEIN );
-  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG ,
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG ,  
+                                  WO_PAL_TALK_FONT * 32, 16*2, HEAPID_WAZAOSHIE );
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , 
                                   WO_PAL_SYS_FONT*32, 16*2,HEAPID_WAZAOSHIE );
-  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG ,
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG ,  
                                   WO_PAL_SYS_FONT*32, 16*2,HEAPID_WAZAOSHIE );
-
-//  TalkFontPaletteLoad( PALTYPE_SUB_BG, WO_PAL_TALK_FONT * 32, HEAPID_WAZAOSHIE );
-//  SystemFontPaletteLoad( PALTYPE_MAIN_BG, WO_PAL_SYS_FONT*32, HEAPID_WAZAOSHIE);
-//  SystemFontPaletteLoad( PALTYPE_SUB_BG,  WO_PAL_SYS_FONT*32, HEAPID_WAZAOSHIE);
 
   // 会話ウィンドウセット
   BmpWinFrame_GraphicSet( SFRM_MSG, WO_TALK_WIN_CGX,WO_PAL_TALK_WIN,
@@ -1027,7 +1029,6 @@ static void WO_BgGraphicSet( WO_WORK * wk, ARCHANDLE* p_handle )
 static void WO_BgGraphicRelease( WO_WORK * wk )
 {
   GFL_HEAP_FreeMemory(wk->pSBufDParts);
-/*↑[GS_CONVERT_TAG]*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1045,13 +1046,11 @@ static void WO_BmpWinSet( WO_WORK * wk )
   const BMPWIN_DAT *bmp;
   GFL_BMP_DATA *bmpdat;
 
-  // BMPWINシステム開始
-  GFL_BMPWIN_Init( HEAPID_WAZAOSHIE );
-
   for( i=0; i<WIN_MAX; i++ ){
 //    GF_BGL_BmpWinAddEx( wk->bgl, &wk->win[i], &BmpWinData[i] );
     bmp = &BmpWinData[i];
-    wk->win[i] = GFL_BMPWIN_Create( bmp->frm, bmp->x, bmp->y, bmp->w, bmp->h, bmp->pal, GFL_BMP_CHRAREA_GET_F );
+    OS_Printf("frm=%d, x=%d, y=%d,w=%d, h=%d, pal=%d\n", bmp->frm, bmp->x, bmp->y, bmp->w, bmp->h, bmp->pal);
+    wk->win[i] = GFL_BMPWIN_Create( bmp->frm, bmp->x, bmp->y, bmp->w, bmp->h, bmp->pal, GFL_BMP_CHRAREA_GET_B );
     bmpdat = GFL_BMPWIN_GetBmp( wk->win[i] );
     GFL_BMP_Clear( bmpdat, 0 );
   }
@@ -1165,7 +1164,7 @@ static int WO_SeqSelectDecide(WO_WORK* wk)
     WO_TalkMsgSet( wk, MSG_END_CHECK );
     wk->ynidx = YESNO_END_CHECK;
     wk->next_seq = SEQ_YESNO_PUT;
-    return SEQ_MSG_WAIT;
+    return SEQ_MSG_WAIT;  
   }
   //ページスクロール
   if(wk->cur_pos == CPOS_PAGE_DW){
@@ -1278,9 +1277,9 @@ static int WO_SeqSelectInputCheck( WO_WORK * wk )
 static int WO_SeqSelect( WO_WORK * wk )
 {
   u32 ret;
-
+  
   wk->cm_pos = CURSORMOVE_PosGet( wk->cmwk );   // 前回の位置保存
-  ret = CURSORMOVE_MainCont( wk->cmwk );
+  ret        = CURSORMOVE_MainCont( wk->cmwk );
 
   switch( ret ){
   case 0:   // 技１
@@ -1288,7 +1287,6 @@ static int WO_SeqSelect( WO_WORK * wk )
   case 2:   // 技３
   case 3:   // 技４
     if( GFL_UI_TP_GetTrg() == FALSE ){
-/*↑[GS_CONVERT_TAG]*/
       if( wk->dat->scr + ret < wk->sel_max ){
         GFL_SOUND_PlaySE( WO_SE_DECIDE );
         WazaSelBgChange( wk, ret );
@@ -1358,6 +1356,7 @@ static int WO_SeqSelect( WO_WORK * wk )
 static int WO_SeqMsgWait( WO_WORK * wk )
 {
   if( PRINTSYS_PrintStreamGetState( wk->printStream ) == PRINTSTREAM_STATE_DONE ){
+    PRINTSYS_PrintStreamDelete( wk->printStream );
     return wk->next_seq;
   }
   return SEQ_MSG_WAIT;
@@ -1585,7 +1584,7 @@ static void NumPrmSet( WO_WORK * wk, u32 msg_id, u32 num, u8 keta, u8 type )
   STRBUF * str;
 
   str = GFL_MSG_CreateString( wk->mman, msg_id );
-  WORDSET_RegisterNumber( wk->wset, 0, num, keta, type, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wset, 0, num, keta, type, STR_NUM_CODE_HANKAKU );
   WORDSET_ExpandStr( wk->wset, wk->mbuf, str );
   GFL_STR_DeleteBuffer( str );
 }
@@ -1604,7 +1603,6 @@ static void WO_DefStrWrite( WO_WORK * wk )
 {
   STRBUF  *str;
   GFL_MSGDATA * waza_man;
-/*↑[GS_CONVERT_TAG]*/
   const POKEMON_PASO_PARAM* ppp;
   u32 siz,i;
 
@@ -1677,10 +1675,8 @@ static void WO_DefStrWrite( WO_WORK * wk )
     //PP/MPP
     WORDSET_RegisterNumber( wk->wset, 0,
       PPP_Get(ppp,ID_PARA_pp1+i,NULL),2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-/*↑[GS_CONVERT_TAG]*/
     WORDSET_RegisterNumber( wk->wset, 1,
-      PPP_Get(ppp,ID_PARA_pp_max1+i,NULL),2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-/*↑[GS_CONVERT_TAG]*/
+      PPP_Get(ppp,ID_PARA_pp_max1+i,NULL),2, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
     WORDSET_ExpandStr( wk->wset, wk->mbuf, wk->pp2_str );
     PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(wk->win[WIN_MWAZA]), F_WLIST_PP2_OX, 32*i+16,
                        wk->mbuf, wk->fontHandle, WOFCOL_N_BLACK );
@@ -1696,11 +1692,11 @@ static void WO_DefStrWrite( WO_WORK * wk )
   PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(wk->win[WIN_MPRM]), F_WLIST_NAME_OX, 0,wk->mbuf,
                        wk->fontHandle,  WOFCOL_N_BLACK);
   GFL_BMPWIN_MakeTransWindow_VBlank( wk->win[WIN_MPRM] );
-
+  
   GFL_MSG_GetString( wk->mman, msg_param_level, str );
   WORDSET_RegisterNumber( wk->wset, 0,
-      PPP_Get(ppp,ID_PARA_level,NULL),3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-/*↑[GS_CONVERT_TAG]*/
+      PPP_Get(ppp,ID_PARA_level,NULL),3, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
+
   WORDSET_ExpandStr( wk->wset, wk->mbuf, str );
   StrPut( wk, WIN_MPRM, wk->fontHandle, WOFCOL_N_BLACK, STR_MODE_RIGHT ,16);
 
@@ -1783,10 +1779,10 @@ static void WO_WazaListLineDraw( WO_WORK * wk ,u8 scr,u8 pos)
 
   // PP/MPP
   tmp = WT_PPMaxGet( wk->ld[scr+pos].param, 0 );
-  WORDSET_RegisterNumber( wk->wset, 0, tmp,2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-/*↑[GS_CONVERT_TAG]*/
-  WORDSET_RegisterNumber( wk->wset, 1, tmp,2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-/*↑[GS_CONVERT_TAG]*/
+  WORDSET_RegisterNumber( wk->wset, 0, tmp,2, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
+
+  WORDSET_RegisterNumber( wk->wset, 1, tmp,2, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+
   WORDSET_ExpandStr( wk->wset, wk->mbuf, wk->pp2_str );
   PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(wk->win[WIN_LIST]), F_WLIST_PP2_OX, py+16, wk->mbuf,
                        wk->fontHandle, WOFCOL_N_BLACK );
@@ -2093,6 +2089,8 @@ static void WO_TalkMsgSet( WO_WORK * wk, u32 id )
     wk->win[WIN_MSG], 0, 0, wk->mbuf, wk->fontHandle,
     MSGSPEED_GetWait(), wk->pMsgTcblSys,
     0, HEAPID_WAZAOSHIE, 0xffff, WO_TalkMsgCallBack );
+
+  GFL_BMPWIN_MakeTransWindow(wk->win[WIN_MSG]);
 
 }
 
@@ -2459,14 +2457,14 @@ static void WO_ResourceLoad( WO_WORK * wk, ARCHANDLE* p_handle )
   // 技タイプアイコン
   for( i=WO_CHR_ID_TYPE1; i<=WO_CHR_ID_TYPE_MAX; i++ ){
     if(i < WO_CHR_ID_TYPE5){
-      wk->clres[0][WO_CHR_ID_TYPE1+i] = GFL_CLGRP_CGR_Register( c_handle,
-                                        APP_COMMON_GetPokeTypeCharArcIdx(i), 0,
+      wk->clres[0][i] = GFL_CLGRP_CGR_Register( c_handle, 
+                                        APP_COMMON_GetPokeTypeCharArcIdx(0), 0,
                                         CLSYS_DRAW_SUB, HEAPID_WAZAOSHIE );
 //      WazaTypeIcon_CharResourceLoad( wk->csp, wk->crp, NNS_G2D_VRAM_TYPE_2DSUB, 0, i );
     }else{
 //      WazaTypeIcon_CharResourceLoad( wk->csp, wk->crp, NNS_G2D_VRAM_TYPE_2DMAIN, 0, i );
-      wk->clres[0][WO_CHR_ID_TYPE1+i] = GFL_CLGRP_CGR_Register( c_handle,
-                                        APP_COMMON_GetPokeTypeCharArcIdx(i), 0,
+      wk->clres[0][i] = GFL_CLGRP_CGR_Register( c_handle, 
+                                        APP_COMMON_GetPokeTypeCharArcIdx(0), 0,
                                         CLSYS_DRAW_MAIN, HEAPID_WAZAOSHIE );
     }
   }
@@ -2485,12 +2483,13 @@ static void WO_ResourceLoad( WO_WORK * wk, ARCHANDLE* p_handle )
                                 p_handle, NARC_waza_oshie_gra_oam_dw_NCLR,
                                 CLSYS_DRAW_SUB, 0, HEAPID_WAZAOSHIE );
 
-  wk->clres[1][WO_PAL_ID_TYPE]   = GFL_CLGRP_PLTT_RegisterEx(
-                                    c_handle, APP_COMMON_GetPokeTypePltOffset(0),
-                                    CLSYS_DRAW_SUB, DW_ACTPAL_NUM*32,
+  wk->clres[1][WO_PAL_ID_TYPE]   = GFL_CLGRP_PLTT_RegisterEx( 
+                                    c_handle, APP_COMMON_GetPokeTypePltArcIdx(), 
+                                    CLSYS_DRAW_SUB, DW_ACTPAL_NUM*32, 
                                     0,3,HEAPID_WAZAOSHIE );
-  wk->clres[1][WO_PAL_ID_TYPE_M] = GFL_CLGRP_PLTT_Register(
-                                    c_handle, APP_COMMON_GetPokeTypePltOffset(0),
+
+  wk->clres[1][WO_PAL_ID_TYPE_M] = GFL_CLGRP_PLTT_Register( 
+                                    c_handle, APP_COMMON_GetPokeTypePltArcIdx(), 
                                     CLSYS_DRAW_MAIN, 0, HEAPID_WAZAOSHIE );
 
 
@@ -2531,6 +2530,28 @@ static void WO_ResourceLoad( WO_WORK * wk, ARCHANDLE* p_handle )
 }
 
 
+static void CGR_Replace( ARCHANDLE *handle, u32 res_index, u32 ArcId, BOOL compressFlag, HEAPID heapId );
+//----------------------------------------------------------------------------------
+/**
+ * @brief 常駐型OBJのキャラリソースを差し替える
+ *
+ * @param   handle        読み出すデータのファイルハンドル
+ * @param   res_index     差し替えるOBJキャラリソースハンドル
+ * @param   ArcId         読み込むOBJキャラデータ
+ * @param   compressFlag  圧縮フラグ
+ * @param   heapId        ヒープID
+ */
+//----------------------------------------------------------------------------------
+static void CGR_Replace( ARCHANDLE *handle, u32 res_index, u32 ArcId, BOOL compressFlag, HEAPID heapId )
+{
+  NNSG2dCharacterData* charData;
+  void *buf = GFL_ARCHDL_UTIL_LoadOBJCharacter( handle, ArcId, compressFlag, &charData, heapId );
+
+  GFL_CLGRP_CGR_Replace( res_index, charData );
+
+  GFL_HEAP_FreeMemory( buf );
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * タイプアイコン切り替え
@@ -2553,17 +2574,16 @@ static void WO_TypeIconChange( WO_WORK * wk, u16 waza, u16 num )
     type = WT_WazaDataParaGet( waza, ID_WTD_contype ) + ICONTYPE_STYLE;
   }
 
-//  CATS_ChangeResourceCharArc(
-//    wk->csp, wk->crp, WazaTypeIcon_ArcIDGet(),
-//    WazaTypeIcon_CgrIDGet(type), WAZATYPEICON_COMP_CHAR, WO_CHR_ID_TYPE1+num );
+//  GFL_CLGRP_CGR_ReplaceSrc_VramTransfer( wk->clres[0][num], 
+//                                         handle, APP_COMMON_GetPokeTypeCharArcIdx(type),
+//                                       0, HEAPID_WAZAOSHIE );
+    CGR_Replace( handle, wk->clres[0][num], 
+                 APP_COMMON_GetPokeTypeCharArcIdx(type), 0, HEAPID_WAZAOSHIE );
 
-  GFL_CLGRP_CGR_ReplaceSrc_VramTransfer( wk->clres[0][WO_CHR_ID_TYPE1+num],
-                                         handle, APP_COMMON_GetPokeTypeCharArcIdx(type),
-                                         0, HEAPID_WAZAOSHIE );
 
   if(num < LIST_NUM){
 //    CATS_ObjectPaletteSetCap( wk->cap[WO_CLA_TYPE1+num], WazaTypeIcon_PlttOffsetGet(type)+ TICON_ACTPAL_IDX);
-      GFL_CLACT_WK_SetPlttOffs(wk->cap[WO_CLA_TYPE1+num],
+      GFL_CLACT_WK_SetPlttOffs(wk->cap[WO_CLA_TYPE1+num], 
                                APP_COMMON_GetPokeTypePltOffset(type),CLWK_PLTTOFFS_MODE_PLTT_TOP);
   }else{
 //    CATS_ObjectPaletteSetCap( wk->cap[WO_CLA_TYPE1+num], WazaTypeIcon_PlttOffsetGet(type)+ TICON_ACTPAL_IDX_M);
@@ -2592,7 +2612,7 @@ static void WO_TypeIconInit( WO_WORK * wk )
   for( i=0; i<LIST_NUM; i++ ){
     clpos.x = TYPE_ICON1_PX;
     clpos.y = TYPE_ICON1_PY+SEL_CURSOR_SY*i;
-    GFL_CLACT_WK_SetWldPos( wk->cap[WO_CLA_TYPE1+i], &clpos );
+    GFL_CLACT_WK_SetPos( wk->cap[WO_CLA_TYPE1+i], &clpos, CLSYS_DEFREND_SUB );
     if( wk->dat->scr + i >= wk->sel_max ){
       GFL_CLACT_WK_SetDrawEnable( wk->cap[WO_CLA_TYPE1+i], 0 );
     }else{
@@ -2617,10 +2637,10 @@ static void WO_TypeIconScroll( WO_WORK * wk, u16 old_scr, u16 new_scr )
 {
   u32 i;
   GFL_CLACTPOS clpos;
-
+  
   if( old_scr < new_scr ){
     for( i=0; i<LIST_NUM; i++ ){
-      GFL_CLACT_WK_GetWldPos( wk->cap[WO_CLA_TYPE1+i], &clpos);
+      GFL_CLACT_WK_GetPos( wk->cap[WO_CLA_TYPE1+i], &clpos, CLSYS_DEFREND_SUB);
       if( clpos.y == TYPE_ICON1_PY ){
         clpos.y = TYPE_ICON4_PY;
         if( wk->dat->waza_tbl[new_scr+LIST_NUM_OFS] != WAZAOSHIE_TBL_MAX ){
@@ -2629,11 +2649,11 @@ static void WO_TypeIconScroll( WO_WORK * wk, u16 old_scr, u16 new_scr )
       }else{
         clpos.y -= SEL_CURSOR_SY;
       }
-      GFL_CLACT_WK_SetWldPos( wk->cap[WO_CLA_TYPE1+i], &clpos );
+      GFL_CLACT_WK_SetPos( wk->cap[WO_CLA_TYPE1+i], &clpos, CLSYS_DEFREND_SUB );
     }
   }else if( old_scr > new_scr ){
     for( i=0; i<LIST_NUM; i++ ){
-      GFL_CLACT_WK_GetWldPos( wk->cap[WO_CLA_TYPE1+i], &clpos );
+      GFL_CLACT_WK_GetPos( wk->cap[WO_CLA_TYPE1+i], &clpos, CLSYS_DEFREND_SUB );
       if( clpos.y == TYPE_ICON4_PY ){
         clpos.y = TYPE_ICON1_PY;
         if( wk->dat->waza_tbl[new_scr] != WAZAOSHIE_TBL_MAX ){
@@ -2642,14 +2662,14 @@ static void WO_TypeIconScroll( WO_WORK * wk, u16 old_scr, u16 new_scr )
       }else{
         clpos.y += SEL_CURSOR_SY;
       }
-      GFL_CLACT_WK_SetWldPos( wk->cap[WO_CLA_TYPE1+i], &clpos );
+      GFL_CLACT_WK_SetPos( wk->cap[WO_CLA_TYPE1+i], &clpos, CLSYS_DEFREND_SUB );
     }
   }else{
     return;
   }
 
   for( i=0; i<LIST_NUM; i++ ){
-    GFL_CLACT_WK_GetWldPos( wk->cap[WO_CLA_TYPE1+i], &clpos );
+    GFL_CLACT_WK_GetPos( wk->cap[WO_CLA_TYPE1+i], &clpos, CLSYS_DEFREND_SUB );
     clpos.y = ( clpos.y - TYPE_ICON1_PY ) / SEL_CURSOR_SY;
     if( new_scr + clpos.y >= wk->sel_max ){
       GFL_CLACT_WK_SetDrawEnable( wk->cap[WO_CLA_TYPE1+i], 0 );
@@ -2679,12 +2699,16 @@ static void WO_KindIconChange( WO_WORK * wk, u16 waza )
 //    wk->csp, wk->crp, WazaKindIcon_ArcIDGet(),
 //    WazaKindIcon_CgrIDGet(kind), WAZAKINDICON_COMP_CHAR, WO_CHR_ID_KIND );
 
-  GFL_CLGRP_CGR_ReplaceSrc_VramTransfer( wk->clres[0][WO_CHR_ID_KIND],
-                                         handle, APP_COMMON_GetWazaKindCharArcIdx(kind),
-                                         0, HEAPID_WAZAOSHIE );
+//  GFL_CLGRP_CGR_ReplaceSrc_VramTransfer( wk->clres[0][WO_CHR_ID_KIND], 
+//                                         handle, APP_COMMON_GetWazaKindCharArcIdx(kind),
+//                                         0, HEAPID_WAZAOSHIE );
+
+  CGR_Replace( handle, wk->clres[0][WO_CHR_ID_KIND], 
+               APP_COMMON_GetWazaKindCharArcIdx(kind), 0, HEAPID_WAZAOSHIE );
+
 
 //  CATS_ObjectPaletteSetCap( wk->cap[WO_CLA_KIND], WazaKindIcon_PlttOffsetGet(kind)+TICON_ACTPAL_IDX );
-  GFL_CLACT_WK_SetPlttOffs( wk->cap[WO_CLA_KIND],
+  GFL_CLACT_WK_SetPlttOffs( wk->cap[WO_CLA_KIND], 
                             APP_COMMON_GetWazaKindPltOffset(kind), CLWK_PLTTOFFS_MODE_PLTT_TOP );
 
   GFL_ARC_CloseDataHandle( handle );
@@ -2716,9 +2740,9 @@ static void WO_ObjInit( WO_WORK * wk, ARCHANDLE* p_handle )
     dat.softpri = ClactParamTbl[i].pri;     // ソフト優先順位 0>0xff
     dat.bgpri   = ClactParamTbl[i].bg_pri;        // BG優先順位
 
-    wk->cap[i] = GFL_CLACT_WK_Create( wk->csp, ClactParamTbl[i].id[0],
-                                               ClactParamTbl[i].id[1],
-                                               ClactParamTbl[i].id[2], &dat,
+    wk->cap[i] = GFL_CLACT_WK_Create( wk->csp, wk->clres[0][ClactParamTbl[i].id[0]], 
+                                               wk->clres[1][ClactParamTbl[i].id[1]],
+                                               wk->clres[2][ClactParamTbl[i].id[2]], &dat, 
                                                ClactParamTbl[i].d_area, HEAPID_WAZAOSHIE );
     GFL_CLACT_WK_SetAutoAnmFlag(wk->cap[i],FALSE);
   }
@@ -2889,16 +2913,16 @@ static void WO_SelCursorChange( WO_WORK * wk, u8 pos, u8 pal )
   GFL_CLACTPOS clpos;
   if(pos < LIST_NUM){
     clpos.x = SEL_CURSOR_PX; clpos.y = SEL_CURSOR_PY+SEL_CURSOR_SY*pos;
-    GFL_CLACT_WK_SetWldPos(wk->cap[WO_CLA_CURSOR], &clpos );
+    GFL_CLACT_WK_SetPos(wk->cap[WO_CLA_CURSOR], &clpos, CLSYS_DEFREND_SUB );
     GFL_CLACT_WK_SetAnmFrame(wk->cap[WO_CLA_CURSOR],0);
   }else if(pos < (LIST_NUM+2)){
     clpos.x = SEL_CURSOR_P_PX+(pos-LIST_NUM)*SEL_CURSOR_P_SX; clpos.y = SEL_CURSOR_P_PY;
-    GFL_CLACT_WK_SetWldPos(wk->cap[WO_CLA_CURSOR], &clpos );
-
+    GFL_CLACT_WK_SetPos(wk->cap[WO_CLA_CURSOR], &clpos, CLSYS_DEFREND_SUB );
+      
     GFL_CLACT_WK_SetAnmFrame(wk->cap[WO_CLA_CURSOR],1);
   }else{
     clpos.x = SEL_CURSOR_B_PX; clpos.y = SEL_CURSOR_B_PY;
-    GFL_CLACT_WK_SetWldPos(wk->cap[WO_CLA_CURSOR], &clpos );
+    GFL_CLACT_WK_SetPos(wk->cap[WO_CLA_CURSOR], &clpos, CLSYS_DEFREND_SUB );
     GFL_CLACT_WK_SetAnmFrame(wk->cap[WO_CLA_CURSOR],2);
   }
   GFL_CLACT_WK_SetPlttOffs( wk->cap[WO_CLA_CURSOR], pal, CLWK_PLTTOFFS_MODE_PLTT_TOP );

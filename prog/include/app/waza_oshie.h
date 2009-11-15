@@ -1,9 +1,9 @@
 //============================================================================================
 /**
- * @file	waza_oshie.h
- * @brief	技教え/思い出し処理
- * @author	Hiroyuki Nakamura/Akito Mori(WBに引越し）
- * @date	09.10.13
+ * @file  waza_oshie.h
+ * @brief 技教え/思い出し処理
+ * @author  Hiroyuki Nakamura/Akito Mori(WBに引越し）
+ * @date  09.10.13
  */
 //============================================================================================
 #ifndef __WAZA_OSHIE_H__
@@ -13,132 +13,135 @@
 
 
 //============================================================================================
-//	定数定義
+//  定数定義
 //============================================================================================
 typedef struct {
-	POKEMON_PARAM * pp;		// ポケモン
-	MYSTATUS * myst;		// 自分データ
-	CONFIG * cfg;			// コンフィグデータ
+  POKEMON_PARAM * pp;   // ポケモン
+  MYSTATUS * myst;    // 自分データ
+  CONFIG * cfg;     // コンフィグデータ
   GAMESYS_WORK *gsys;
-	u16 * waza_tbl;			// 技テーブル
-	u16	pos;
-	u16	scr;
-	u8	page;
-	u8	mode;				// 処理モード
-	u8	ret;				// 戻り値
-	u8	del_pos;
+  u16 * waza_tbl;     // 技テーブル
+  u16 pos;
+  u16 scr;
+  u8  page;
+  u8  mode;       // 処理モード
+  u8  ret;        // 戻り値
+  u8  del_pos;
 }WAZAOSHIE_DATA;
 
 enum {
-	WAZAOSHIE_MODE_TEACH = 0,	// 教え
-	WAZAOSHIE_MODE_REMIND,		// 思い出し
+  WAZAOSHIE_MODE_TEACH = 0, // 教え
+  WAZAOSHIE_MODE_REMIND,    // 思い出し
 };
 
 enum {
-	WAZAOSHIE_RET_SET = 0,	// 覚えた
-	WAZAOSHIE_RET_CANCEL,	// キャンセル
+  WAZAOSHIE_RET_SET = 0,  // 覚えた
+  WAZAOSHIE_RET_CANCEL, // キャンセル
 };
 
-#define	WAZAOSHIE_TBL_MAX		( 0xffff )	// 技テーブルの最後に追加
+#define WAZAOSHIE_TBL_MAX   ( 0xffff )  // 技テーブルの最後に追加
 
 #ifdef PM_DEBUG
 
 ///デバッグメニュー用データ型
 typedef struct {
-	WAZAOSHIE_DATA	dat;
-	u32	seq;
+  WAZAOSHIE_DATA  dat;
+  u32 seq;
 }D_WO_WORK;
 
-#endif	//PM_DEBUG
+#endif  //PM_DEBUG
+
+extern const GFL_PROC_DATA WazaOshieProcData;
+
 
 //============================================================================================
-//	プロトタイプ宣言
+//  プロトタイプ宣言
 //============================================================================================
 
 //--------------------------------------------------------------------------------------------
 /**
  * プロセス関数：初期化
  *
- * @param	proc	プロセスデータ
- * @param	seq		シーケンス
+ * @param proc  プロセスデータ
+ * @param seq   シーケンス
  *
- * @return	処理状況
+ * @return  処理状況
  */
 //--------------------------------------------------------------------------------------------
-extern GFL_PROC_RESULT WazaOshieProc_Init( GFL_PROC * proc, void *pwk, void *mywk );
+extern GFL_PROC_RESULT WazaOshieProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
 
 //--------------------------------------------------------------------------------------------
 /**
  * プロセス関数：メイン
  *
- * @param	proc	プロセスデータ
- * @param	seq		シーケンス
+ * @param proc  プロセスデータ
+ * @param seq   シーケンス
  *
- * @return	処理状況
+ * @return  処理状況
  */
 //--------------------------------------------------------------------------------------------
-extern GFL_PROC_RESULT WazaOshieProc_Main( GFL_PROC * proc, void *pwk, void *mywk );
+extern GFL_PROC_RESULT WazaOshieProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
 
 //--------------------------------------------------------------------------------------------
 /**
  * プロセス関数：終了
  *
- * @param	proc	プロセスデータ
- * @param	seq		シーケンス
+ * @param proc  プロセスデータ
+ * @param seq   シーケンス
  *
- * @return	処理状況
+ * @return  処理状況
  */
 //--------------------------------------------------------------------------------------------
-extern GFL_PROC_RESULT WazaOshieProc_End( GFL_PROC * proc, void *pwk, void *mywk );
+extern GFL_PROC_RESULT WazaOshieProc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
 
 
 //--------------------------------------------------------------------------------------------
 /**
  * 技教えデータ領域取得
  *
- * @param	heap	ヒープID
+ * @param heap  ヒープID
  *
- * @return	技教えデータ領域
+ * @return  技教えデータ領域
  */
 //--------------------------------------------------------------------------------------------
-extern WAZAOSHIE_DATA * WazaOshie_DataAlloc( u32 heap );
+extern WAZAOSHIE_DATA * WAZAOSHIE_DataAlloc( HEAPID heap );
 
 //--------------------------------------------------------------------------------------------
 /**
  * 技教えデータ領域解放
  *
- * @param	heap	ヒープID
+ * @param heap  ヒープID
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
-extern void WazaOshie_DataFree( WAZAOSHIE_DATA * dat );
+extern void WAZAOSHIE_DataFree( WAZAOSHIE_DATA * dat );
 
 //--------------------------------------------------------------------------------------------
 /**
  * 思い出し可能な技を取得
  *
- * @param	pp		ポケモンデータ
- * @param	heap	ヒープID
+ * @param pp    ポケモンデータ
+ * @param heap  ヒープID
  *
- * @return	取得した技データ
+ * @return  取得した技データ
  *
- *	解放は各自で
+ *  解放は各自で
  */
 //--------------------------------------------------------------------------------------------
-extern u16 * RemaindWazaGet( POKEMON_PARAM * pp, u32 heap );
+extern u16 * WAZAOSHIE_GetRemaindWaza( POKEMON_PARAM * pp, HEAPID heap );
 
 //--------------------------------------------------------------------------------------------
 /**
  * 教えられる/思い出せる技があるかチェック
  *
- * @param	tbl		技テーブル
+ * @param tbl   技テーブル
  *
- * @retval	"TRUE = あり"
- * @retval	"FALSE = なし"
+ * @retval  "TRUE = あり"
+ * @retval  "FALSE = なし"
  */
 //--------------------------------------------------------------------------------------------
-extern BOOL WazaOshie_WazaTableChack( u16 * tbl );
+extern BOOL WAZAOSHIE_WazaTableChack( u16 * tbl );
 
 
-#endif	// __WAZA_OSHIE_H__
+#endif  // __WAZA_OSHIE_H__
