@@ -1586,7 +1586,7 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
 	_modeInit(pWork);
 
 
-#if DEBUG_ONLY_FOR_ohno
+#if 0
   {  //@todo ¼“c‚³‚ñ‚ª“ü‚ê‚Ä‚­‚ê‚é‚Ü‚Å‰¼
 		GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys);
 
