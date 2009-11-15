@@ -24,6 +24,10 @@ extern void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction );
 extern void CGEAR_ActionCallback( C_GEAR_WORK* pWork , FIELD_SUBSCREEN_ACTION actionno);
 extern void CGEAR_Exit(C_GEAR_WORK* pWork);
 
+extern void CGEAR_SetCrossColor(C_GEAR_WORK* pWork,int color,int index);
+extern void CGEAR_ResetCrossColor(C_GEAR_WORK* pWork,int index);
+
+
 //extern const GFL_PROC_DATA CGEARProcData;
 
 

@@ -10,10 +10,11 @@ extern "C" {
  */
 //=============================================================================
 
-
 #pragma once
 
 #if GFL_NET_WIFI
+#include "gamesystem/game_comm.h"  //GAME_COMM_STATUS
+#include <dwc.h>
 
 
 //==============================================================================
@@ -60,6 +61,15 @@ extern BOOL mydwc_checkMyGSID(void);
  */
 //==============================================================================
 extern void DWC_RAPCOMMON_SetHeapID(HEAPID id);
+//------------------------------------------------------------------------------
+/**
+ * @brief   ビーコンのタイプを得る
+ * @param   ビーコン数
+ * @param   ヒープID
+ * @retval  GAME_COMM_STATUS
+ */
+//------------------------------------------------------------------------------
+extern GAME_COMM_STATUS DWC_RAPCOMMON_GetBeaconType(int num, HEAPID heap);
 
 #endif //
 

@@ -271,7 +271,7 @@ void	INFOWIN_Update( void )
     const GAME_COMM_STATUS state = GameCommSys_GetCommStatus( infoWk->commSys );
     
     //ƒƒCƒ„ƒŒƒX
-    if( state == GAME_COMM_STATUS_WIRELESS )
+    if( state >= GAME_COMM_STATUS_WIRELESS && state <= GAME_COMM_STATUS_WIRELESS_FU)
     {
       if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_BEACON) == FALSE )
       {
@@ -307,7 +307,7 @@ void	INFOWIN_Update( void )
     }
     
     //Wifi
-    if( state == GAME_COMM_STATUS_WIFI )
+    if( state >= GAME_COMM_STATUS_WIFI  && state <= GAME_COMM_STATUS_WIFI_LOCK)
     {
       if( infoWk->wifiState == IWS_DISABLE )
       {

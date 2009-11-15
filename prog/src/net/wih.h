@@ -162,10 +162,10 @@
 */
 
 
-#ifndef __WMHIGH_H__
-#define __WMHIGH_H__
+#pragma once
 
 #include "net.h"
+#include "gamesystem/game_comm.h"
 
 // 無線で使用するDMA番号
 #define WH_DMA_NO                 _NETWORK_DMA_NO
@@ -258,6 +258,9 @@ enum
     WH_ERRCODE_FATAL,   //FATALエラー
     WH_ERRCODE_MAX
 };
+
+#define DEFAULT_TIMEOUT_FRAME (60 * 10)  //拾ったビーコンを保存しておく時間 60frame * 10sec
+
 
 typedef BOOL (*WHStartScanCallbackFunc) (WMBssDesc *bssDesc);
 
@@ -796,5 +799,21 @@ extern void WHSetDisconnectCallBack(WHDisconnectCallBack callBack);
 
 extern void WHSetConnectCallBack(WHDisconnectCallBack callBack);
 
+/*---------------------------------------------------------------------------*
+  Name:         WH_AllBeaconStart
+  Description:  ビーコンなら何でも収集 GEAR用
+  Arguments:    num ビーコン収集数
+ *---------------------------------------------------------------------------*/
 
-#endif
+extern void WH_AllBeaconStart(int num);
+extern void WH_AllBeaconEnd(void);
+
+/*---------------------------------------------------------------------------*
+  Name:         WH_MainLoopScanBeaconData
+  Description:  CGEAR用なんでもビーコン収集MAIN
+ *---------------------------------------------------------------------------*/
+
+extern void WH_MainLoopScanBeaconData(void);
+extern GAME_COMM_STATUS WH_GetAllBeaconType(void);
+
+

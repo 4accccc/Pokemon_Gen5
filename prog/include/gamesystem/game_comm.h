@@ -33,9 +33,15 @@ typedef int GAME_COMM_NO; ///GAME_COMM_NO_XXXの定義値を返す型
 typedef enum{
   GAME_COMM_STATUS_NULL,              ///<何もしていない
   
-  GAME_COMM_STATUS_WIRELESS,          ///<ワイヤレス通信
-  GAME_COMM_STATUS_WIFI,              ///<Wi-Fi通信
   GAME_COMM_STATUS_IRC,               ///<赤外線通信
+  GAME_COMM_STATUS_WIRELESS,          ///<ワイヤレス通信 パレス
+  GAME_COMM_STATUS_WIRELESS_TR,       ///<ワイヤレス通信 トランシーバー
+  GAME_COMM_STATUS_WIRELESS_UN,       ///<ワイヤレス通信 ユニオン
+  GAME_COMM_STATUS_WIRELESS_FU,       ///<ワイヤレス通信 不思議
+  GAME_COMM_STATUS_WIFI,              ///<Wi-Fi通信 登録済み
+  GAME_COMM_STATUS_WIFI_ZONE,              ///<Wi-Fi通信 任天堂ゾーン等任天堂公式
+  GAME_COMM_STATUS_WIFI_FREE,              ///<Wi-Fi通信 鍵が無い
+  GAME_COMM_STATUS_WIFI_LOCK,              ///<Wi-Fi通信 鍵がある
 }GAME_COMM_STATUS;
 
 

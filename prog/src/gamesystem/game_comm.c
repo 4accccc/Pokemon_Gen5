@@ -14,9 +14,11 @@
 #include "message.naix"
 #include "msg/msg_invasion.h"
 #include "net_app/union/union_main.h"
+#include "net/wih.h"
 #include "field/fieldmap_proc.h"
 #include "field/intrude_comm.h"
 #include "system/net_err.h"
+#include "system/main.h"
 #include "field/zonedata.h"
 
 
@@ -405,14 +407,15 @@ GAME_COMM_STATUS GameCommSys_GetCommStatus(GAME_COMM_SYS_PTR gcsp)
 
   case GFL_NET_TYPE_WIRELESS_SCANONLY:	///<ワイヤレス通信(スキャン専用・電源ランプ非点滅)
     {
-      //FIXME 正しいビーコン数のチェックを
       u8 i;
-      gcsp->comm_status = GAME_COMM_STATUS_NULL;
-      for( i=0;i<4;i++ )
-      {
-        if( GFL_NET_GetBeaconData( i ) != NULL )
+      gcsp->comm_status = WH_GetAllBeaconType();
+      if(gcsp->comm_status == GAME_COMM_STATUS_NULL){
+        for( i=0;i < aNetStruct->maxBeaconNum;i++ )
         {
-          gcsp->comm_status = GAME_COMM_STATUS_WIRELESS;
+          if( GFL_NET_GetBeaconData( i ) != NULL )
+          {
+            gcsp->comm_status = GAME_COMM_STATUS_WIRELESS;
+          }
         }
       }
     }

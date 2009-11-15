@@ -9,20 +9,13 @@
 
 #include "gflib.h"
 
-//#include "../net_local.h"
-//#include "../net_def.h"
-//#include "../net_system.h"
-//#include "wm_icon.h"
-
 #include <nitro.h>
 #include <nitro/wm.h>
 #include <nitro/cht.h>
 
 #include "net_whpipe.h"
-//#include "gf_standard.h"
 #include "system/gfl_use.h"
 
-//#include "../tool/net_ring_buff.h"
 
 
 
@@ -98,7 +91,6 @@ typedef struct{
 // 定義
 //-------------------------------------------------------------
 
-#define _DEFAULT_TIMEOUT_FRAME (60 * 10)  //拾ったビーコンを保存しておく時間 60frame * 10sec
 //#define _PORT_DATA_RETRANSMISSION   (14)    // 切断するまで無限再送を行う  こちらを使用している
 #define _NOT_INIT_BITMAP  (0xffff)   // 接続人数を固定に指定ない場合の値
 
@@ -412,7 +404,7 @@ static BOOL _scanCallback(WMBssDesc *bssdesc)
 		if (0==GFL_STD_MemComp(pNetWL->sBssDesc[i].bssid, bssdesc->bssid, WM_SIZE_BSSID)) {
 			// もう一度拾った場合にタイマー加算
 			NET_PRINT("もう一度拾った場合にタイマー加算\n");
-			pNetWL->bconUnCatchTime[i] = _DEFAULT_TIMEOUT_FRAME;
+			pNetWL->bconUnCatchTime[i] = DEFAULT_TIMEOUT_FRAME;
 			// 新しい親情報を保存しておく。
 			MI_CpuCopy8( bssdesc, &pNetWL->sBssDesc[i], sizeof(WMBssDesc));
 			return TRUE;
@@ -430,7 +422,7 @@ static BOOL _scanCallback(WMBssDesc *bssdesc)
 		return FALSE;
 	}
 	// 新しい親情報を保存しておく。
-	pNetWL->bconUnCatchTime[i] = _DEFAULT_TIMEOUT_FRAME;
+	pNetWL->bconUnCatchTime[i] = DEFAULT_TIMEOUT_FRAME;
 	MI_CpuCopy8( bssdesc, &pNetWL->sBssDesc[i],sizeof(WMBssDesc));
 	pNetWL->bScanCallBack = TRUE;
 	NET_PRINT("_scanCallback追加\n");
@@ -1072,6 +1064,7 @@ void GFI_NET_MLProcess(u16 bitmap)
 	if(_pNetWL && GFL_NET_WLIsChildStateScan() ){
 		_WLParentBconCheck();
 	}
+  WH_MainLoopScanBeaconData();
 }
 
 //-------------------------------------------------------------
@@ -1975,4 +1968,6 @@ void GFL_NET_WL_DisconnectError(void)
     pNetWL->bErrorState = TRUE;   ///< エラーを引き起こしている場合その状態をもちます
   }
 }
+
+
 

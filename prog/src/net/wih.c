@@ -8,7 +8,8 @@
  */
 //=============================================================================
 
-#include "gflib.h"
+#include <gflib.h>
+#include <dwc.h>
 
 /*
   Project:  NitroSDK - wireless_shared - demos - wh
@@ -494,10 +495,19 @@ static WMParentParam sParentParam ATTRIBUTE_ALIGN(32) =
  */
 
 typedef struct{
+	WMBssDesc sBssDesc;
+  int timer;
+} _BEACONCATCH_STR;
+
+#define _ALLBEACON_MAX (4)
+
+typedef struct{
 	WMParentParam sParentParam;
 	/* WM 用システムワーク領域バッファ */
 	u8 sWmBuffer[WM_SYSTEM_BUF_SIZE];
 	WMBssDesc sBssDesc;
+  _BEACONCATCH_STR* pBeaconCatch[_ALLBEACON_MAX];
+  void* ScanMemory;
 	u8 sScanBuf[WM_SIZE_SCAN_EX_BUF];
 	WMScanExParam sScanExParam;
 	/* データシェアリング用 */
@@ -544,14 +554,15 @@ typedef struct{
 	u16 sChannelBitmap;
 	u16 sChannelIndex;
 	u16 sAutoConnectFlag;
+	u16 AllBeaconNum;
 	// ネゴシエーション用
 	u16 negoIDSend;
 	u16 negoIDRecv;
 	u16 beaconSendNum;
   u16 beaconScanNum;
+	HEAPID heapID;
 	/* 親機接続時に使用する設定 */
 	u8 sConnectionSsid[(WM_SIZE_CHILD_SSID/4)*4];
-	HEAPID heapID;
 } _WM_INFO_STRUCT;
 
 static _WM_INFO_STRUCT* _pWmInfo;  //通信用構造体
@@ -649,6 +660,10 @@ static void WH_StateOutEnd(void *arg);
 /* X -> IDLE */
 static BOOL WH_StateInReset(void);
 static void WH_StateOutReset(void *arg);
+
+
+static void _SetScanBeaconData(WMBssDesc* pBss);
+static void _MainLoopScanBeaconData(void);
 
 
 /* ======================================================================
@@ -1586,50 +1601,44 @@ static void WH_StateOutStartScan(void *arg)
 		found = FALSE;
 		for ( i = 0; i < cb->bssDescCount; i++ )
 		{
-			WMBssDesc* bd = cb->bssDesc[i];
+			WMBssDesc* bd = &_pWmInfo->sBssDesc;
+			WMBssDesc* bddmy = cb->bssDesc[i];
+      MI_CpuCopy8(bddmy, bd, sizeof(WMBssDesc)); // キャッシュセーフなバッファへコピー
 
-			// GUIDELINE : ガイドライン準拠ポイント(6.3.5)
-			// ggid を比較し、違っていたら失敗とします。
-			// まず、WMBssDesc.gameInfoLength を確認し、
-			// ggid に有効な値が入っていることから調べる必要があります。
+      _SetScanBeaconData(bd);
+      
+        // GUIDELINE : ガイドライン準拠ポイント(6.3.5)
+        // ggid を比較し、違っていたら失敗とします。
+        // まず、WMBssDesc.gameInfoLength を確認し、
+        // ggid に有効な値が入っていることから調べる必要があります。
+        
+        if ((!WM_IsValidGameInfo(&bd->gameInfo, bd->gameInfoLength)) || (bd->gameInfoLength < 8)
+            || (bd->gameInfo.ggid != _pWmInfo->sParentParam.ggid))
+        {
+          // GGIDが違っていれば無視する
+          //WH_TRACE("not my parent ggid %d %d\n",bd->gameInfo.ggid, _pWmInfo->sParentParam.ggid);
+          continue;
+        }
+        
+        // エントリーフラグが立っていなければ子機を受付中でないので無視する
+        // またマルチブートフラグが立っている場合は、DSダウンロード親機であるので無視する。
+        if ((bd->gameInfo.gameNameCount_attribute & (WM_ATTR_FLAG_ENTRY | WM_ATTR_FLAG_MB))
+            != WM_ATTR_FLAG_ENTRY)
+        {
+          WH_TRACE("not recieve entry\n");
+          continue;
+        }
 
-			if ((!WM_IsValidGameInfo(&bd->gameInfo, bd->gameInfoLength)) || (bd->gameInfoLength < 8)
-					|| (bd->gameInfo.ggid != _pWmInfo->sParentParam.ggid))
-			{
-				// GGIDが違っていれば無視する
-				//WH_TRACE("not my parent ggid %d %d\n",bd->gameInfo.ggid, _pWmInfo->sParentParam.ggid);
-				continue;
-			}
-
-			// エントリーフラグが立っていなければ子機を受付中でないので無視する
-			// またマルチブートフラグが立っている場合は、DSダウンロード親機であるので無視する。
-			if ((bd->gameInfo.gameNameCount_attribute & (WM_ATTR_FLAG_ENTRY | WM_ATTR_FLAG_MB))
-					!= WM_ATTR_FLAG_ENTRY)
-			{
-				WH_TRACE("not recieve entry\n");
-				continue;
-			}
-
-
-//			WH_TRACE("強度 %d\n",WMSP_GetRssi8(bd->rssi));
-#if 0
-			if(WMSP_GetRssi8(bd->rssi) < 30){
-				continue;
-			}
-#endif
-
-
-			WH_TRACE(" parent: MAC=%02x%02x%02x%02x%02x%02x ",
-							 bd->bssid[0], bd->bssid[1], bd->bssid[2],
-							 bd->bssid[3], bd->bssid[4], bd->bssid[5]);
-			WH_TRACE("parent find\n");
-
- 			GF_ASSERT(_pWmInfo->sScanCallback);
-			if(_pWmInfo->sScanCallback(bd)){
-  			// コールバックが必要ならば呼び出し
-  			MI_CpuCopy8(bd, &_pWmInfo->sBssDesc, sizeof(WMBssDesc)); // キャッシュセーフなバッファへコピー
-  			found = TRUE;
-  		}
+        WH_TRACE(" parent: MAC=%02x%02x%02x%02x%02x%02x ",
+                 bd->bssid[0], bd->bssid[1], bd->bssid[2],
+                 bd->bssid[3], bd->bssid[4], bd->bssid[5]);
+        WH_TRACE("parent find\n");
+        GF_ASSERT(_pWmInfo->sScanCallback);
+        if(_pWmInfo->sScanCallback(bd)){
+          // コールバックが必要ならば呼び出し
+          found = TRUE;
+        }
+     
 		}
 
 		if (_pWmInfo->sAutoConnectFlag && found){
@@ -3663,5 +3672,146 @@ void WHSetDisconnectCallBack(WHDisconnectCallBack callBack)
 void WHSetConnectCallBack(WHDisconnectCallBack callBack)
 {
 	_pWmInfo->connectCallBack = callBack;
+}
+
+/*---------------------------------------------------------------------------*
+  Name:         WHSetAllBeaconFlg
+  Description:  ビーコンなら何でも収集して表示するCGEAR用
+  Arguments:    bFlg  ONなら収集
+ *---------------------------------------------------------------------------*/
+
+void WH_AllBeaconStart(int num)
+{
+  int i;
+  GF_ASSERT( _pWmInfo->ScanMemory==NULL);
+  GF_ASSERT(num <= _ALLBEACON_MAX);
+  _pWmInfo->AllBeaconNum = num;
+  for(i=0;i<num;i++){
+    _pWmInfo->pBeaconCatch[i] = GFL_NET_Align32Alloc(_pWmInfo->heapID , sizeof(_BEACONCATCH_STR));
+  }
+  _pWmInfo->ScanMemory =GFL_NET_Align32Alloc(_pWmInfo->heapID ,DWC_GetParseWMBssDescWorkSize());
+
+}
+
+/*---------------------------------------------------------------------------*
+  Name:         WHSetAllBeaconFlg
+  Description:  ビーコンなら何でも収集して表示するCGEAR用
+  Arguments:    bFlg  ONなら収集
+ *---------------------------------------------------------------------------*/
+
+void WH_AllBeaconEnd(void)
+{
+  int i;
+
+  GF_ASSERT( _pWmInfo->ScanMemory);
+  for(i=0;i<_pWmInfo->AllBeaconNum;i++){
+    GFL_NET_Align32Free(_pWmInfo->pBeaconCatch[i]);
+  }
+  GFL_NET_Align32Free(_pWmInfo->ScanMemory);
+  _pWmInfo->ScanMemory=NULL;
+  _pWmInfo->AllBeaconNum = 0;
+}
+
+/*---------------------------------------------------------------------------*
+  Name:         WHSetAllBeaconFlg
+  Description:  ビーコンなら何でも収集して表示するCGEAR用
+  Arguments:    bFlg  ONなら収集
+ *---------------------------------------------------------------------------*/
+
+static void _SetScanBeaconData(WMBssDesc* pBss)
+{
+  int i;
+
+  if(_pWmInfo->AllBeaconNum==0){
+    return;
+  }
+  
+  for(i=0;i<_pWmInfo->AllBeaconNum;i++){
+    _BEACONCATCH_STR* pS = _pWmInfo->pBeaconCatch[i];
+      if(GFL_STD_MemComp(&pS->sBssDesc, pBss, sizeof(WMBssDesc))==0){ //一致
+        pS->timer = DEFAULT_TIMEOUT_FRAME;
+        return;
+      }
+  }
+  for(i=0;i<_pWmInfo->AllBeaconNum;i++){
+    _BEACONCATCH_STR* pS = _pWmInfo->pBeaconCatch[i];
+    if(pS->timer==0){
+      GFL_STD_MemCopy(pBss, &pS->sBssDesc, sizeof(WMBssDesc));
+      pS->timer = DEFAULT_TIMEOUT_FRAME;
+      return;
+    }
+  }
+}
+
+/*---------------------------------------------------------------------------*
+  Name:         WH_MainLoopScanBeaconData
+  Description:  CGEAR用なんでもビーコン収集MAIN
+ *---------------------------------------------------------------------------*/
+
+void WH_MainLoopScanBeaconData(void)
+{
+  int i;
+
+  if(_pWmInfo && _pWmInfo->pBeaconCatch){
+    for(i=0;i<_pWmInfo->AllBeaconNum;i++){
+      _BEACONCATCH_STR* pS = _pWmInfo->pBeaconCatch[i];
+      if(pS->timer > 0){
+        pS->timer--;
+      }
+    }
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ビーコンのタイプを得る
+ * @param   ビーコン数
+ * @param   ヒープID
+ * @retval  GAME_COMM_STATUS
+ */
+//------------------------------------------------------------------------------
+
+GAME_COMM_STATUS WH_GetAllBeaconType(void)
+{
+  int i;
+  int retcode = GAME_COMM_STATUS_NULL;
+
+  for(i=0;i < _pWmInfo->AllBeaconNum;i++){
+    _BEACONCATCH_STR* pS = _pWmInfo->pBeaconCatch[i];
+    if(pS->timer == 0){
+      continue;
+    }
+    {
+      WMBssDesc* bss = &pS->sBssDesc;
+    
+      DWCApInfo ap;
+
+      if(DWC_ParseWMBssDesc(_pWmInfo->ScanMemory,bss,&ap)){
+        OS_TPrintf("DWCApInfo %d\n",ap.aptype);
+        switch(ap.aptype){
+        case DWC_APINFO_TYPE_USER0:
+        case DWC_APINFO_TYPE_USER1:
+        case DWC_APINFO_TYPE_USER2:
+        case DWC_APINFO_TYPE_USER3:
+        case DWC_APINFO_TYPE_USER4:
+        case DWC_APINFO_TYPE_USER5:
+        case DWC_APINFO_TYPE_USB://          :  ニンテンドーWi-Fi USBコネクタ
+          retcode = GAME_COMM_STATUS_WIFI;
+          break;
+        case DWC_APINFO_TYPE_SHOP://         :  ニンテンドーWi-Fiステーション
+        case DWC_APINFO_TYPE_FREESPOT://     :  FREESPOT（フリースポット）
+        case DWC_APINFO_TYPE_WAYPORT://      :  Wayport(北米ホットスポット)※現在は使用できません
+        case DWC_APINFO_TYPE_NINTENDOZONE:// : Nintendo Zone
+          retcode = GAME_COMM_STATUS_WIFI_ZONE;
+          break;
+        }
+        if(retcode!=GAME_COMM_STATUS_NULL){
+          return retcode;
+        }
+      }
+    }
+  }
+  ///@todo セキュリティーがかかっているかどうか
+  return retcode;
 }
 

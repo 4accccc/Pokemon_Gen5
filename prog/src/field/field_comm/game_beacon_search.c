@@ -9,6 +9,7 @@
 #include <gflib.h>
 #include "system/main.h"
 #include "net/network_define.h"
+#include "net/wih.h"
 #include "system/net_err.h"
 #include "gamesystem/gamesystem.h"
 
@@ -177,6 +178,8 @@ static void GameBeacon_InitCallback(void *pWork)
   GAME_BEACON_SYS_PTR gbs = pWork;
   
   gbs->status = GBS_STATUS_INIT;
+  //全部のビーコンを探知する
+  WH_AllBeaconStart(aGFLNetInit.maxBeaconNum);
 }
 
 //==================================================================
@@ -193,6 +196,7 @@ BOOL GameBeacon_Exit(int *seq, void *pwk, void *pWork)
   GAME_BEACON_SYS_PTR gbs = pWork;
   
   OS_TPrintf("GameBeaconExit\n");
+  WH_AllBeaconEnd();
 	GFL_NET_Exit(GameBeacon_ExitCallback);
 	return TRUE;
 }
