@@ -12,7 +12,7 @@
 #define HEIGHT1 (50)	//‘æ1‘w
 #define HEIGHT2 (40)	//‘æ2‘w
 #define HEIGHT3 (30)	//‘æ3‘w
-#define HEIGHT4 (-53)	//‘æ4‘w
+#define HEIGHT4 (-59)	//‘æ4‘w
 //ƒŠƒtƒgˆÚ“®‘¬“x
 #define LIFT_MOVE_SPEED (4)
 #define SP_LIFT_MOVE_SPEED1 (10)
