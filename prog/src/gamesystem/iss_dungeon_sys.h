@@ -15,17 +15,19 @@
 typedef struct _ISS_DUNGEON_SYS ISS_DUNGEON_SYS;
 
 
-//----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
 /**
  * @brief  ダンジョンISSシステムを作成する
  *
+ * @param  gdata    ゲームデータ
  * @param  p_player 監視対象のプレイヤー
  * @param  heap_id  使用するヒープID
  * 
  * @return ダンジョンISSシステム
  */
-//----------------------------------------------------------------------------
-extern ISS_DUNGEON_SYS* ISS_DUNGEON_SYS_Create( PLAYER_WORK* p_player, HEAPID heap_id );
+//-----------------------------------------------------------------------------------------
+extern ISS_DUNGEON_SYS* ISS_DUNGEON_SYS_Create( GAMEDATA* gdata, 
+                                         PLAYER_WORK* p_player, HEAPID heap_id );
 
 //----------------------------------------------------------------------------
 /**

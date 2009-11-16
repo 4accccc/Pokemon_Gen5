@@ -112,7 +112,7 @@ ISS_SYS* ISS_SYS_Create( GAMEDATA* p_gdata, HEAPID heap_id )
 	p_sys->surfing   = FALSE;
 	p_sys->issC      = ISS_CITY_SYS_Create( p_player, heap_id );
 	p_sys->issR      = ISS_ROAD_SYS_Create( p_player, heap_id );
-	p_sys->issD      = ISS_DUNGEON_SYS_Create( p_player, heap_id );
+	p_sys->issD      = ISS_DUNGEON_SYS_Create( p_gdata, p_player, heap_id );
   p_sys->issZ      = ISS_ZONE_SYS_Create( p_gdata, p_player, heap_id );
 	p_sys->bgmNo     = INVALID_BGM_NO;
 	p_sys->frame     = 0;

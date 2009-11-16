@@ -44,14 +44,8 @@ end
 #----------------------------------------------------------------------------------
 def ConvertTempo( tempo )
 
-  # テンポの値域を [-512, 512] に補正
-  if tempo < -512 then tempo = -512 end
-  if 512 < tempo then tempo = 512 end
-
-  # テンポの値域 [-512, 512] を [0, 512] に変換する
-  tempo = ( tempo + 512 ) / 2 
-
-  return tempo
+  # 256 が等倍になるように変換
+  return tempo * 256
 end
 
 #----------------------------------------------------------------------------------
@@ -73,10 +67,19 @@ end
 #----------------------------------------------------------------------------------
 
 # データ・インデックス
-ROW_ZONE   = 0  # ゾーンID
-ROW_KEY    = 1  # キー
-ROW_TEMPO  = 2  # テンポ
-ROW_REVERB = 3  # リバーブ
+ROW_ZONE          = 0   # ゾーンID
+ROW_KEY_SPRING    = 1   # キー(春)
+ROW_KEY_SUMMER    = 2   # キー(夏)
+ROW_KEY_AUTUMN    = 3   # キー(秋)
+ROW_KEY_WINTER    = 4   # キー(冬)
+ROW_TEMPO_SPRING  = 5   # テンポ(春)
+ROW_TEMPO_SUMMER  = 6   # テンポ(夏)
+ROW_TEMPO_AUTUMN  = 7   # テンポ(秋)
+ROW_TEMPO_WINTER  = 8   # テンポ(冬)
+ROW_REVERB_SPRING = 9   # リバーブ(春)
+ROW_REVERB_SUMMER = 10  # リバーブ(夏)
+ROW_REVERB_AUTUMN = 11  # リバーブ(秋)
+ROW_REVERB_WINTER = 12  # リバーブ(冬)
 
 # 出力ファイル名のリスト
 bin_file_list = Array.new
@@ -97,14 +100,21 @@ file.close
   if in_data[0]==nil then break end # 空データを発見==>終了
   # 出力データを作成
   out_data = Array.new
-  out_data << GetZoneID("ZONE_ID_"+in_data[ROW_ZONE])
-  out_data << ConvertKey(in_data[ROW_KEY].to_i)
-  out_data << ConvertTempo(in_data[ROW_TEMPO].to_i)
-  out_data << ConvertReverb(in_data[ROW_REVERB].to_i)
+  out_data << GetZoneID("ZONE_ID_"+in_data[ROW_ZONE])  # ゾーンID
+  out_data << 0   # padding
+  0.upto(3) do |season|
+    out_data << ConvertKey(in_data[ROW_KEY_SPRING+season].to_i)  # キー
+  end
+  0.upto(3) do |season|
+    out_data << ConvertTempo(in_data[ROW_TEMPO_SPRING+season].to_f)  # テンポ
+  end
+  0.upto(3) do |season|
+    out_data << ConvertReverb(in_data[ROW_REVERB_SPRING+season].to_i)  # リバーブ
+  end
   # バイナリデータを出力
   filename = ARGV[1] + "/iss_dungeon_data_" + in_data[ROW_ZONE].downcase + ".bin"
   file = File.open( filename, "wb" )
-  file.write( out_data.pack("SsSS") )
+  file.write( out_data.pack("SSssssSSSSSSSS") )
   file.close
   # 出力ファイル名を記憶
   bin_file_list << filename

@@ -12,6 +12,7 @@
 #include "gamesystem/playerwork.h"
 #include "arc/arc_def.h"
 #include "arc/iss.naix"
+#include "gamesystem/pm_season.h"
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"
 #include "../../../resource/iss/dungeon/entry_table.cdat"
 
@@ -36,11 +37,11 @@
 //========================================================================================== 
 typedef struct
 {
-  u32 season; // 季節
-	u16 zoneID;	// ゾーンID
-	s16 pitch;	// ピッチ(キー)
-	u16 tempo;	// テンポ
-	u16 reverb;	// リバーブ
+	u16 zoneID;	                // ゾーンID
+  u16 padding;
+	s16 pitch[PMSEASON_TOTAL];	// ピッチ(キー)
+	u16 tempo[PMSEASON_TOTAL];	// テンポ
+	u16 reverb[PMSEASON_TOTAL];	// リバーブ
 
 } BGM_PARAM; 
 
@@ -48,19 +49,20 @@ typedef struct
 /**
  * @brief 指定パラメータを反映させる
  *
- * @param 設定するパラメータ
+ * @param param  設定するパラメータ
+ * @param season 季節を指定
  */
 //------------------------------------------------------------------------------------------
-static void SetBGMStatus( const BGM_PARAM* param )
+static void SetBGMStatus( const BGM_PARAM* param, u8 season )
 {
 	if( !param ) return;
+  if( PMSEASON_TOTAL <= season ) return;
 
   // テンポ
-	PMSND_SetStatusBGM( param->tempo, PMSND_NOEFFECT, 0 );
-
+	PMSND_SetStatusBGM( param->tempo[season], PMSND_NOEFFECT, 0 ); 
   // ピッチ
-	NNS_SndPlayerSetTrackPitch( PMSND_GetBGMhandlePointer(), PITCH_TRACK_MASK, param->pitch );
-
+	NNS_SndPlayerSetTrackPitch( 
+      PMSND_GetBGMhandlePointer(), PITCH_TRACK_MASK, param->pitch[season] ); 
   // リバーブ
   if( param->reverb == 0 )
   {
@@ -69,14 +71,14 @@ static void SetBGMStatus( const BGM_PARAM* param )
   else
   {
     PMSND_EnableCaptureReverb( 
-        param->reverb, REVERB_SAMPLE_RATE, REVERB_VOLUME, REVERB_STOP_FRAME );
+        param->reverb[season], REVERB_SAMPLE_RATE, REVERB_VOLUME, REVERB_STOP_FRAME );
   }
 
 	// DEBUG:
 	OBATA_Printf( "ISS-D: Set BGM status\n" );
-	OBATA_Printf( "- pitch  = %d\n", param->pitch );
-	OBATA_Printf( "- tempo  = %d\n", param->tempo );
-	OBATA_Printf( "- reverb = %d\n", param->reverb );
+	OBATA_Printf( "- pitch  = %d\n", param->pitch[season] );
+	OBATA_Printf( "- tempo  = %d\n", param->tempo[season] );
+	OBATA_Printf( "- reverb = %d\n", param->reverb[season] );
 }
 
 
@@ -127,9 +129,21 @@ static BGM_PARAMSET* LoadParamset( HEAPID heap_id )
 	for( i=0; i<paramset->dataNum; i++ )
 	{ 
 		OBATA_Printf( "- data[%d].zoneID = %d\n", i, paramset->param[i].zoneID ); 
-		OBATA_Printf( "- data[%d].pitch  = %d\n", i, paramset->param[i].pitch ); 
-		OBATA_Printf( "- data[%d].tempo  = %d\n", i, paramset->param[i].tempo ); 
-		OBATA_Printf( "- data[%d].reverb = %d\n", i, paramset->param[i].reverb ); 
+		OBATA_Printf( "- data[%d].pitch  = %d, %d, %d, %d\n", i, 
+        paramset->param[i].pitch[PMSEASON_SPRING], 
+        paramset->param[i].pitch[PMSEASON_SUMMER], 
+        paramset->param[i].pitch[PMSEASON_AUTUMN], 
+        paramset->param[i].pitch[PMSEASON_WINTER] );
+		OBATA_Printf( "- data[%d].tempo  = %d, %d, %d, %d\n", i,
+        paramset->param[i].tempo[PMSEASON_SPRING], 
+        paramset->param[i].tempo[PMSEASON_SUMMER], 
+        paramset->param[i].tempo[PMSEASON_AUTUMN], 
+        paramset->param[i].tempo[PMSEASON_WINTER] );
+		OBATA_Printf( "- data[%d].reverb = %d, %d, %d, %d\n", i,
+        paramset->param[i].reverb[PMSEASON_SPRING], 
+        paramset->param[i].reverb[PMSEASON_SUMMER], 
+        paramset->param[i].reverb[PMSEASON_AUTUMN], 
+        paramset->param[i].reverb[PMSEASON_WINTER] );
 	}
 
 	// 読み込んだデータを返す
@@ -190,8 +204,9 @@ struct _ISS_DUNGEON_SYS
 	// 使用するヒープID
 	HEAPID heapID;
 
-	// 監視対象プレイヤー
-	PLAYER_WORK* pPlayer;
+	// 監視対象
+	PLAYER_WORK* player; // プレイヤー
+  GAMEDATA* gdata;  // ゲームデータ
 
 	// 起動状態
 	BOOL isActive; 
@@ -219,13 +234,15 @@ struct _ISS_DUNGEON_SYS
 /**
  * @brief  ダンジョンISSシステムを作成する
  *
+ * @param  gdata    ゲームデータ
  * @param  p_player 監視対象のプレイヤー
  * @param  heap_id  使用するヒープID
  * 
  * @return ダンジョンISSシステム
  */
 //-----------------------------------------------------------------------------------------
-ISS_DUNGEON_SYS* ISS_DUNGEON_SYS_Create( PLAYER_WORK* p_player, HEAPID heap_id )
+ISS_DUNGEON_SYS* ISS_DUNGEON_SYS_Create( GAMEDATA* gdata, 
+                                         PLAYER_WORK* p_player, HEAPID heap_id )
 {
 	ISS_DUNGEON_SYS* p_sys;
 
@@ -234,16 +251,24 @@ ISS_DUNGEON_SYS* ISS_DUNGEON_SYS_Create( PLAYER_WORK* p_player, HEAPID heap_id )
 
 	// 初期化
 	p_sys->heapID        = heap_id;
+  p_sys->gdata         = gdata;
 	p_sys->pPlayer       = p_player;
 	p_sys->isActive      = FALSE;
 	p_sys->currentZoneID = INVALID_ZONE_ID;
 	p_sys->nextZoneID    = INVALID_ZONE_ID;
 	p_sys->paramset      = LoadParamset( heap_id );
 	p_sys->pActiveParam  = NULL;
-  p_sys->defaultParam.zoneID = INVALID_ZONE_ID;
-  p_sys->defaultParam.pitch  = 0;
-  p_sys->defaultParam.tempo  = 256;
-  p_sys->defaultParam.reverb = 0;
+  // デフォルトパラメータ設定
+  {
+    int i;
+    p_sys->defaultParam.zoneID = INVALID_ZONE_ID;
+    for( i=0; i<PMSEASON_TOTAL; i++ )
+    {
+      p_sys->defaultParam.pitch[i]  = 0;
+      p_sys->defaultParam.tempo[i]  = 256;
+      p_sys->defaultParam.reverb[i] = 0;
+    }
+  }
 
 	// DEBUG:
 	OBATA_Printf( "ISS-D: Create\n" );
@@ -303,7 +328,10 @@ void ISS_DUNGEON_SYS_Update( ISS_DUNGEON_SYS* p_sys )
     }
 
 		// BGMの設定を反映させる
-		SetBGMStatus( p_sys->pActiveParam ); 
+    {
+      u8 season = GAMEDATA_GetSeasonID( p_sys->gdata );
+      SetBGMStatus( p_sys->pActiveParam, season ); 
+    }
 	} 
 } 
 
@@ -337,7 +365,10 @@ void ISS_DUNGEON_SYS_On( ISS_DUNGEON_SYS* p_sys )
 	p_sys->isActive = TRUE;
 
   // パラメータ設定
-	SetBGMStatus( p_sys->pActiveParam );
+  {
+    u8 season = GAMEDATA_GetSeasonID( p_sys->gdata );
+    SetBGMStatus( p_sys->pActiveParam, season ); 
+  }
 
   // DEBUG:
   OBATA_Printf( "ISS-D: On\n" );
@@ -356,7 +387,7 @@ void ISS_DUNGEON_SYS_Off( ISS_DUNGEON_SYS* p_sys )
 	p_sys->isActive = FALSE;
 
   // デフォルト・パラメータに戻す
-  SetBGMStatus( &p_sys->defaultParam );
+  SetBGMStatus( &p_sys->defaultParam, 0 );
 
   // DEBUG:
   OBATA_Printf( "ISS-D: Off\n" );
