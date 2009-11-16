@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<imd version="1.6.0">
+
+<head>
+	<create user="james_turner" host="W00212" date="2009-11-16T13:06:25" source="door_c05_build.mb"/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<original_create user="james_turner" host="W00212" date="2009-11-16T13:06:25" source="door_c05_build.mb"/>
+<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+
+<model_info
+	pos_scale="2"
+	scaling_rule="standard"
+	vertex_style="direct"
+	magnify="1.000000"
+	tool_start_frame="0"
+	tex_matrix_mode="maya"
+	compress_node="merge" node_size="3 3"
+	compress_material="on" material_size="1 1"
+	output_texture="used"
+	force_full_weight="off"
+	use_primitive_strip="on"
+/>
+
+<box_test pos_scale="3" xyz="-1.957764 0.308594 3.539551" whd="3.915283 3.959473 0.774658"/>
+
+<tex_image_array size="1">
+	<tex_image index="0" name="door"
+		width="16" height="32" original_width="16" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="door_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/c5_build_01/tex/door.tga"
+	>
+		<bitmap size="128">
+			2222 2222 2222 2022 2222 2222 2222 2022
+			2222 2222 2222 2022 2222 2222 2222 2022
+			2222 2222 2222 2022 2222 2222 2222 2022
+			2222 2222 2222 2022 2222 2222 2222 2022
+			2222 2222 2222 2022 2222 2222 2222 2022
+			2222 2222 2222 2022 2222 2222 2222 2022
+			4444 4444 8664 3148 6666 6666 b886 316b
+			6666 6666 b886 3c6b 6666 6666 b886 3c6b
+			6666 6666 b886 3c6b 6666 6666 ca86 3ccc
+			6666 6666 c9a6 3ccc 6666 6666 799a 3c67
+			6666 1a66 8a99 3c6b 1111 1111 b6a9 3c6b
+			1111 a111 b866 3c6b 6666 6666 b886 396b
+			6666 6666 b886 396b 6666 6666 b886 396b
+			6666 6666 b886 396b 6666 6666 b886 396b
+			6666 6666 6666 3c66 1111 1111 9991 3cc9
+			1111 1111 9991 3cc9 5555 5555 5555 3555
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="1">
+	<tex_palette index="0" name="door_pl" color_size="16">
+		0575 0a9c 108e 15f7 18d5 1a39 2119 211b
+		211c 273e 29fb 2d7e 337f 7fff 7fff 7fff
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size="1">
+	<material index="0" name="door"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="18"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="28 28 28"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+</material_array>
+
+<matrix_array size="2">
+	<matrix index="0" mtx_weight="1" node_idx="1"/>
+	<matrix index="1" mtx_weight="1" node_idx="2"/>
+</matrix_array>
+
+<polygon_array size="2">
+	<polygon index="0" name="polygon0"
+		vertex_size="6" polygon_size="2"
+		triangle_size="0" quad_size="2"
+		volume_min="-3.915283 -3.959473 4.403809"
+		volume_max="0.000000 3.959473 5.953125"
+		volume_r="7.149658"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quad_strip" vertex_size="6">
+					<mtx idx="0"/>
+					<tex st="15.750000 31.812500"/>
+					<nrm xyz="-0.216797 0.000000 0.976563"/>
+					<pos_xyz xyz="0.000000 -3.959473 5.953125"/>
+					<tex st="15.750000 5.000000"/>
+					<pos_xy xy="0.000000 3.959473"/>
+					<tex st="6.500000 31.812500"/>
+					<nrm xyz="-0.378906 0.000000 0.925781"/>
+					<pos_xyz xyz="-2.235840 -3.959473 5.456055"/>
+					<tex st="6.500000 5.000000"/>
+					<pos_xy xy="-2.235840 3.959473"/>
+					<tex st="0.125000 31.812500"/>
+					<nrm xyz="-0.531250 0.000000 0.847656"/>
+					<pos_xyz xyz="-3.915283 -3.959473 4.403809"/>
+					<tex st="0.125000 5.000000"/>
+					<pos_xy xy="-3.915283 3.959473"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="1" name="polygon1"
+		vertex_size="6" polygon_size="2"
+		triangle_size="0" quad_size="2"
+		volume_min="-3.915283 -3.959473 4.403809"
+		volume_max="0.000000 3.959473 5.953125"
+		volume_r="7.149658"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">1</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quad_strip" vertex_size="6">
+					<mtx idx="0"/>
+					<tex st="15.750000 31.812500"/>
+					<nrm xyz="-0.216797 0.000000 0.976563"/>
+					<pos_xyz xyz="0.000000 -3.959473 5.953125"/>
+					<tex st="15.750000 5.000000"/>
+					<pos_xy xy="0.000000 3.959473"/>
+					<tex st="6.500000 31.812500"/>
+					<nrm xyz="-0.378906 0.000000 0.925781"/>
+					<pos_xyz xyz="-2.235840 -3.959473 5.456055"/>
+					<tex st="6.500000 5.000000"/>
+					<pos_xy xy="-2.235840 3.959473"/>
+					<tex st="0.125000 31.812500"/>
+					<nrm xyz="-0.531250 0.000000 0.847656"/>
+					<pos_xyz xyz="-3.915283 -3.959473 4.403809"/>
+					<tex st="0.125000 5.000000"/>
+					<pos_xy xy="-3.915283 3.959473"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size="3">
+	<node index="0" name="top1" kind="null"
+		parent="-1"
+		child="1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="off"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="0"
+	>
+	</node>
+	<node index="1" name="door_l" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="2"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 18.308350 10.701660"
+		visibility="on"
+		display_size="1"
+		vertex_size="6" polygon_size="2"
+		triangle_size="0" quad_size="2"
+		volume_min="-3.915283 -3.959473 4.403809"
+		volume_max="0.000000 3.959473 5.953125"
+		volume_r="7.149658"
+	>
+		<display index="0" material="0" polygon="0" priority="0"/>
+	</node>
+	<node index="2" name="door_r" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="-1"
+		brother_prev="1"
+		draw_mtx="on"
+		billboard="off"
+		scale="-1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 18.308350 10.701660"
+		visibility="on"
+		display_size="1"
+		vertex_size="6" polygon_size="2"
+		triangle_size="0" quad_size="2"
+		volume_min="-3.915283 -3.959473 4.403809"
+		volume_max="0.000000 3.959473 5.953125"
+		volume_r="7.149658"
+	>
+		<display index="0" material="0" polygon="1" priority="0"/>
+	</node>
+</node_array>
+
+<output_info vertex_size="12" polygon_size="4"
+	triangle_size="0" quad_size="4"/>
+
+</body>
+
+</imd>
