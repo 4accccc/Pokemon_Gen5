@@ -40,11 +40,11 @@ enum {
 	WORDWIN_CHARPOS = CLEAR_CHARPOS+1,
 
 
-	WORDWIN_DISP_LINE_MAX = 5,
+	WORDWIN_DISP_LINE_MAX = 8,
 	WORDWIN_DISP_COL_MAX = 2,
 	WORDWIN_DISP_WORD_MAX = WORDWIN_DISP_LINE_MAX * WORDWIN_DISP_COL_MAX,
 
-	WORDWIN_WRITE_LINE_INIT = 48,
+	WORDWIN_WRITE_LINE_INIT = 0,
 	WORDWIN_WRITE_LINE_MAX = 256,
 	WORDWIN_WRITE_LINE_UNIT = 16, 
 	WORDWIN_WRITE_LINE_ROUND_BORDER = WORDWIN_WRITE_LINE_MAX - WORDWIN_WRITE_LINE_UNIT, ///< 描画領域
@@ -68,7 +68,8 @@ enum {
 	CURSOR_WIDTH = 12*8,
 	CURSOR_HEIGHT = 16,
 	CURSOR_OX = (WORDWIN_XORG*8)+(CURSOR_WIDTH/2) - 8,
-	CURSOR_OY = (WORDWIN_YORG*8)+(WORDWIN_WRITE_LINE_INIT)+(CURSOR_HEIGHT/2),
+//	CURSOR_OY = (WORDWIN_YORG*8)+(WORDWIN_WRITE_LINE_INIT)+(CURSOR_HEIGHT/2),
+	CURSOR_OY = 24,
 	CURSOR_X_MARGIN = (CURSOR_WIDTH+16),
 	CURSOR_Y_MARGIN = WORDWIN_WRITE_Y_MARGIN,
 
@@ -80,6 +81,8 @@ enum {
 	ARROW_DOWN_X = 240,
 	ARROW_DOWN_Y = 16*8,
 
+	SCRLL_BAR_X = 244,
+	SCRLL_BAR_Y = 12,
 };
 
 enum {
@@ -89,6 +92,9 @@ enum {
 };
 
 #define WORDWIN_DECO_ACT_NUM (PMS_DECOID_MAX-1)
+
+#define	WORDWIN_DEFAOULT_SCROLL_Y		( 8 )		// デフォルトのスクロール値
+
 
 //======================================================================
 
@@ -107,8 +113,9 @@ struct _PMSIV_WORDWIN {
 	GFL_BMPWIN  *tmp_win;
 
 	GFL_CLWK*	cursor_actor;
-	GFL_CLWK*	up_arrow_actor;
-	GFL_CLWK*	down_arrow_actor;
+//	GFL_CLWK*	up_arrow_actor;
+//	GFL_CLWK*	down_arrow_actor;
+	GFL_CLWK*	scroll_bar_actor;
   GFL_CLWK* deco_actor[ WORDWIN_DECO_ACT_NUM ];
 	STRBUF*		tmpbuf;
 
@@ -166,8 +173,8 @@ PMSIV_WORDWIN*  PMSIV_WORDWIN_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK*
 
 
 	wk->cursor_actor = NULL;
-	wk->up_arrow_actor = NULL;
-	wk->down_arrow_actor = NULL;
+//	wk->up_arrow_actor = NULL;
+//	wk->down_arrow_actor = NULL;
 
 	wk->p_key_mode = PMSI_GetKTModePointer(wk->mwk);
 
@@ -188,6 +195,11 @@ void PMSIV_WORDWIN_Delete( PMSIV_WORDWIN* wk )
 	{
 		GFL_CLACT_WK_Remove( wk->cursor_actor );
 	}
+	if( wk->scroll_bar_actor )
+	{
+		GFL_CLACT_WK_Remove( wk->scroll_bar_actor );
+	}
+/*
 	if( wk->up_arrow_actor )
 	{
 		GFL_CLACT_WK_Remove( wk->up_arrow_actor );
@@ -196,6 +208,7 @@ void PMSIV_WORDWIN_Delete( PMSIV_WORDWIN* wk )
 	{
 		GFL_CLACT_WK_Remove( wk->down_arrow_actor );
 	}
+*/
 	if( wk->tmpbuf )
 	{
 		GFL_STR_DeleteBuffer( wk->tmpbuf );
@@ -250,7 +263,12 @@ static void setup_actor( PMSIV_WORDWIN* wk )
 	GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor, ANM_WORDWIN_CURSOR_ACTIVE );
 	GFL_CLACT_WK_SetDrawEnable( wk->cursor_actor, FALSE );
 
+	wk->scroll_bar_actor = PMSIView_AddActor( wk->vwk, &header, SCRLL_BAR_X, SCRLL_BAR_Y,
+			ACTPRI_WORDWIN_ARROW, NNS_G2D_VRAM_TYPE_2DMAIN );
+	GFL_CLACT_WK_SetAnmSeq( wk->scroll_bar_actor, ANM_EDITAREA_SCR_BTN );
+	GFL_CLACT_WK_SetDrawEnable( wk->scroll_bar_actor, FALSE );
 
+/*
 	wk->up_arrow_actor = PMSIView_AddActor( wk->vwk, &header, ARROW_UP_X, ARROW_UP_Y,
 			ACTPRI_WORDWIN_ARROW, NNS_G2D_VRAM_TYPE_2DMAIN );
 	GFL_CLACT_WK_SetAnmSeq( wk->up_arrow_actor, ANM_WORD_SCR_U01 );
@@ -260,6 +278,7 @@ static void setup_actor( PMSIV_WORDWIN* wk )
 			ACTPRI_WORDWIN_ARROW, NNS_G2D_VRAM_TYPE_2DMAIN );
 	GFL_CLACT_WK_SetAnmSeq( wk->down_arrow_actor, ANM_WORD_SCR_D01 );
 	GFL_CLACT_WK_SetDrawEnable( wk->down_arrow_actor, FALSE );
+*/
 
   // デコメ
   for( i=0; i<WORDWIN_DECO_ACT_NUM; i++ )
@@ -316,6 +335,39 @@ void PMSIV_WORDWIN_SetupWord( PMSIV_WORDWIN* wk )
 
 }
 
+// 指定位置からの単語内容をBitmapWindowに描画
+void PMSIV_WORDWIN_SetupWordBar( PMSIV_WORDWIN* wk, int idx )
+{
+	u32 word_max, v_line, i;
+
+//	GF_BGL_BmpWinDataFill(&wk->win, WORD_COL_GROUND);
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->win ), WORD_COL_GROUND);
+	init_write_params( wk );
+	wk->write_word_idx = idx * 2;		// ２行なのでｘ２
+
+//	OS_Printf( "linemax = %d\n", idx );
+
+	word_max = PMSI_GetCategoryWordMax( wk->mwk );
+	if( word_max > WORDWIN_DISP_WORD_MAX )
+	{
+		word_max = WORDWIN_DISP_WORD_MAX;
+	}
+
+	v_line = wk->write_v_line;
+	for(i=0; i<word_max; i++)
+	{
+		print_word( wk, wk->write_word_idx+i, v_line );
+		if( i & 1 )
+		{
+			v_line += WORDWIN_WRITE_Y_MARGIN;
+		}
+	}
+
+
+//	GF_BGL_BmpWinCgxOn( &wk->win );
+	GFL_BMPWIN_TransVramCharacter( wk->win );
+
+}
 
 
 //------------------------------------------------------------------
@@ -351,7 +403,8 @@ void PMSIV_WORDWIN_StartFadeIn( PMSIV_WORDWIN* wk )
 	wk->winout_backup = G2_GetWndOutsidePlane();
 	wk->win_visible_backup = GX_GetVisibleWnd();
 	G2_SetWndOutsidePlane(PMSVI_PLANEMASK_ALL^FRM_MAIN_WORDWIN_WNDMASK, TRUE);
-	G2_SetWnd1Position(0,46,255,160);
+//	G2_SetWnd1Position(0,46,255,160);
+	G2_SetWnd1Position(0,0,255,168);
 	GX_SetVisibleWnd( GX_WNDMASK_W1 );
 
 	wk->eff_seq = 0;
@@ -455,14 +508,16 @@ void PMSIV_WORDWIN_VisibleCursor( PMSIV_WORDWIN* wk, BOOL flag )
 		}else{
 			GFL_CLACT_WK_SetDrawEnable( wk->cursor_actor,FALSE);
 		}
-		GFL_CLACT_WK_SetDrawEnable( wk->up_arrow_actor, PMSI_GetWordWinUpArrowVisibleFlag(wk->mwk) );
-		GFL_CLACT_WK_SetDrawEnable( wk->down_arrow_actor, PMSI_GetWordWinDownArrowVisibleFlag(wk->mwk) );
+		GFL_CLACT_WK_SetDrawEnable( wk->scroll_bar_actor, TRUE );
+//		GFL_CLACT_WK_SetDrawEnable( wk->up_arrow_actor, PMSI_GetWordWinUpArrowVisibleFlag(wk->mwk) );
+//		GFL_CLACT_WK_SetDrawEnable( wk->down_arrow_actor, PMSI_GetWordWinDownArrowVisibleFlag(wk->mwk) );
 	}
 	else
 	{
 		GFL_CLACT_WK_SetDrawEnable( wk->cursor_actor, flag );
-		GFL_CLACT_WK_SetDrawEnable( wk->up_arrow_actor, FALSE );
-		GFL_CLACT_WK_SetDrawEnable( wk->down_arrow_actor, FALSE );
+		GFL_CLACT_WK_SetDrawEnable( wk->scroll_bar_actor, FALSE );
+//		GFL_CLACT_WK_SetDrawEnable( wk->up_arrow_actor, FALSE );
+//		GFL_CLACT_WK_SetDrawEnable( wk->down_arrow_actor, FALSE );
 	}
 }
 
@@ -572,12 +627,79 @@ BOOL PMSIV_WORDWIN_WaitScroll( PMSIV_WORDWIN* wk )
 {
 	if( PMSIV_TOOL_WaitScroll(&wk->scroll_work) )
 	{
-		GFL_CLACT_WK_SetDrawEnable( wk->up_arrow_actor, PMSI_GetWordWinUpArrowVisibleFlag(wk->mwk) );
-		GFL_CLACT_WK_SetDrawEnable( wk->down_arrow_actor, PMSI_GetWordWinDownArrowVisibleFlag(wk->mwk) );
+//		GFL_CLACT_WK_SetDrawEnable( wk->up_arrow_actor, PMSI_GetWordWinUpArrowVisibleFlag(wk->mwk) );
+//		GFL_CLACT_WK_SetDrawEnable( wk->down_arrow_actor, PMSI_GetWordWinDownArrowVisibleFlag(wk->mwk) );
+		u16	now, max;
+		PMSI_GetWorkScrollData( wk->mwk, &now, &max );
+		PMSIV_WORDWIN_SetScrollBarPos( wk, now, max );
 		return TRUE;
 	}
 	return FALSE;
 }
+
+// スクロールバーの座標取得
+void PMSIV_WINDOW_GetScrollBarPos( PMSIV_WORDWIN * wk, GFL_CLACTPOS * pos )
+{
+	GFL_CLACT_WK_GetPos( wk->scroll_bar_actor, pos, CLSYS_DEFREND_MAIN );
+}
+
+// スクロール値からバーの座標を設定
+void PMSIV_WORDWIN_SetScrollBarPos( PMSIV_WORDWIN * wk, u32 now, u32 max )
+{
+	GFL_CLACTPOS	pos;
+
+//	OS_Printf( "now, max : %d, %d\n", now, max );
+
+	pos.x = SCRLL_BAR_X;
+
+	if( now == 0 ){
+		pos.y = SCRLL_BAR_Y;
+	}else if( now == max ){
+		pos.y = PMSIV_TPWD_RAIL_SY - PMSIV_TPWD_BAR_SY/2;
+	}else{
+		u32	y = PMSIV_TPWD_RAIL_SY - PMSIV_TPWD_BAR_SY;
+
+		y = ((y<<8)/max*now) >> 8;
+		pos.y = SCRLL_BAR_Y + y;
+	}
+
+	GFL_CLACT_WK_SetPos( wk->scroll_bar_actor, &pos, CLSYS_DEFREND_MAIN );
+}
+
+// スクロールバーの座標を設定
+void PMSIV_WORDWIN_MoveScrollBar( PMSIV_WORDWIN * wk, u32 py )
+{
+	GFL_CLACTPOS	pos;
+
+	GFL_CLACT_WK_GetPos( wk->scroll_bar_actor, &pos, CLSYS_DEFREND_MAIN );
+	pos.y = py;
+	if( pos.y < SCRLL_BAR_Y ){
+		pos.y = SCRLL_BAR_Y;
+	}
+	if( pos.y > (PMSIV_TPWD_RAIL_SY-PMSIV_TPWD_BAR_SY/2) ){
+		pos.y = PMSIV_TPWD_RAIL_SY - PMSIV_TPWD_BAR_SY/2;
+	}
+	GFL_CLACT_WK_SetPos( wk->scroll_bar_actor, &pos, CLSYS_DEFREND_MAIN );
+}
+
+// スクロールバーの座標からスクロール値を取得
+u32 PMSIV_WORDWIN_GetScrollBarPosCount( PMSIV_WORDWIN * wk, u32 max )
+{
+	GFL_CLACTPOS	pos;
+	u32	cnt;
+	u32	sy;
+
+	PMSIV_WINDOW_GetScrollBarPos( wk, &pos );
+
+	sy = PMSIV_TPWD_RAIL_SY - PMSIV_TPWD_BAR_SY;
+	cnt = ( ((pos.y-SCRLL_BAR_Y)<<8) / ((sy<<8)/max) );
+	if( cnt > max ){
+		cnt = max;
+	}
+	return cnt;
+}
+
+
 
 static void clear_scroll_area( PMSIV_WORDWIN* wk, int vector )
 {
@@ -611,13 +733,18 @@ static void init_write_params( PMSIV_WORDWIN* wk )
 {
 	wk->write_v_line = WORDWIN_WRITE_LINE_INIT;
 	wk->write_word_idx = 0;
-	GFL_BG_SetScroll( FRM_MAIN_WORDWIN, GFL_BG_SCROLL_Y_SET, 0 );
+	GFL_BG_SetScroll( FRM_MAIN_WORDWIN, GFL_BG_SCROLL_Y_SET, WORDWIN_DEFAOULT_SCROLL_Y );
 }
 
 
 static void print_word( PMSIV_WORDWIN* wk, u32 wordnum, u32 v_line )
 {
 	GFL_FONT *fontHandle = PMSIView_GetFontHandle(wk->vwk);
+
+	// リストの最上段は空欄とするため、総数を＋２　2009/11/14 by nakahiro
+	if( wordnum < PMSI_DUMMY_LABEL_NUM ){ return; }
+	if( wordnum >= PMSI_GetCategoryWordMax( wk->mwk ) ){ return; }
+	wordnum -= PMSI_DUMMY_LABEL_NUM;
 	
   // デコメ例外処理
   if( PMSI_GetCategoryCursorPos( wk->mwk ) == CATEGORY_GROUP_PICTURE )
@@ -627,7 +754,7 @@ static void print_word( PMSIV_WORDWIN* wk, u32 wordnum, u32 v_line )
     GF_ASSERT( wordnum < WORDWIN_DECO_ACT_NUM );
 
     pos.x = WORDWIN_WRITE_DECO_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN;
-    pos.y = v_line;
+    pos.y = v_line-WORDWIN_DEFAOULT_SCROLL_Y;
 
     HOSAKA_Printf("[%d] deco pos[%d,%d] \n",wordnum, pos.x, pos.y);
     GFL_CLACT_WK_SetWldPos( wk->deco_actor[ wordnum ], &pos );
@@ -652,13 +779,22 @@ static void print_word( PMSIV_WORDWIN* wk, u32 wordnum, u32 v_line )
       GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->tmp_win ), WORD_COL_GROUND);
 
       PRINTSYS_Print( GFL_BMPWIN_GetBmp( wk->tmp_win ) , 0, 0,wk->tmpbuf,fontHandle);
-      
-      GFL_BMP_Print( GFL_BMPWIN_GetBmp(wk->tmp_win), GFL_BMPWIN_GetBmp(wk->win), 0, 0,
-          WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN,   v_line,
-          WORD_TMPWIN_WIDTH*8, write_v_range , GF_BMPPRT_NOTNUKI);
-      GFL_BMP_Print( GFL_BMPWIN_GetBmp(wk->tmp_win), GFL_BMPWIN_GetBmp(wk->win), 0, write_v_range,
-          WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN,   0,
-          WORD_TMPWIN_WIDTH*8, (WORD_TMPWIN_HEIGHT*8) - write_v_range , GF_BMPPRT_NOTNUKI);
+
+      GFL_BMP_Print(
+				GFL_BMPWIN_GetBmp(wk->tmp_win),
+				GFL_BMPWIN_GetBmp(wk->win),
+				0, 0,
+        WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN,   v_line,
+        WORD_TMPWIN_WIDTH*8, write_v_range,
+				GF_BMPPRT_NOTNUKI);
+
+      GFL_BMP_Print(
+				GFL_BMPWIN_GetBmp(wk->tmp_win),
+				GFL_BMPWIN_GetBmp(wk->win),
+				0, write_v_range,
+        WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN,   0,
+        WORD_TMPWIN_WIDTH*8, (WORD_TMPWIN_HEIGHT*8) - write_v_range ,
+				GF_BMPPRT_NOTNUKI);
     }
   }
 }

@@ -58,6 +58,7 @@ enum {
 	VCMD_BUTTON_UP_RELEASE,
 	VCMD_BUTTON_DOWN_RELEASE,
 
+	VCMD_SCROLL_WORDWIN_BAR,		///< 単語ウィンドウスクロールバー
 
 };
 
@@ -243,6 +244,12 @@ enum {
 	CATEGORY_MODE_INITIAL,
 };
 
+
+
+// リストの最上段は空欄とするため、総数を＋２　2009/11/14 by nakahiro
+#define	PMSI_DUMMY_LABEL_NUM	( 2 )
+
+
 //------------------------------------------------------
 /**
 	* システム関連関数プロトタイプ
@@ -262,6 +269,7 @@ extern u32 PMSI_GetCategoryWordMax( const PMS_INPUT_WORK* wk );
 extern void PMSI_GetCategoryWord( const PMS_INPUT_WORK* wk, u32 word_num, STRBUF* buf );
 extern u32 PMSI_GetWordWinCursorPos( const PMS_INPUT_WORK* wk );
 extern int PMSI_GetWordWinScrollVector( const PMS_INPUT_WORK* wk );
+extern int PMSI_GetWordWinLinePos( const PMS_INPUT_WORK* wk );
 extern BOOL PMSI_GetWordWinUpArrowVisibleFlag( const PMS_INPUT_WORK* wk );
 extern BOOL PMSI_GetWordWinDownArrowVisibleFlag( const PMS_INPUT_WORK* wk );
 extern int PMSI_GetTalkWindowType( const PMS_INPUT_WORK* wk );
@@ -284,5 +292,8 @@ extern u32 PMSIView_GetSentenceEditPosMax( PMS_INPUT_VIEW* wk );
 extern void PMSIView_GetSentenceWordArea( PMS_INPUT_VIEW* wk ,GFL_UI_TP_HITTBL* tbl,u8 idx);
 
 extern int PMSIView_WaitYesNo(PMS_INPUT_VIEW* wk);
+
+extern void PMSI_GetWorkScrollData( const PMS_INPUT_WORK * wk, u16 * line, u16 * line_max );
+
 
 #endif

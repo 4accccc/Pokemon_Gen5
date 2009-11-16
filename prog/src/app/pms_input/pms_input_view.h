@@ -195,7 +195,7 @@ typedef struct
 // 下請けモジュールへの情報提供
 //==============================================================================================
 extern GFL_TCB* PMSIView_AddVTask( GFL_TCB_FUNC func, void* wk, int pri );
-extern GFL_CLUNIT*  PMSIView_GetCellUnit( PMS_INPUT_VIEW* vwk );
+extern GFL_CLUNIT* PMSIView_GetCellUnit( PMS_INPUT_VIEW* vwk );
 extern GFL_FONT*  PMSIView_GetFontHandle( PMS_INPUT_VIEW* vwk );
 extern PRINT_QUE* PMSIView_GetPrintQue( PMS_INPUT_VIEW* vwk );
 //extern NNSG2dImageProxy*  PMSIView_GetObjImageProxy( PMS_INPUT_VIEW* vwk, int lcd );
@@ -203,6 +203,10 @@ extern PRINT_QUE* PMSIView_GetPrintQue( PMS_INPUT_VIEW* vwk );
 extern void PMSIView_SetupDefaultActHeader( PMS_INPUT_VIEW* vwk, PMSIV_CELL_RES* header, u32 lcd, u32 bgpri );
 extern GFL_CLWK* PMSIView_AddActor( PMS_INPUT_VIEW* vwk, PMSIV_CELL_RES* header, u32 x, u32 y, u32 actpri, int drawArea );
 extern void PMSIView_GetDecoResource( PMS_INPUT_VIEW* vwk, PMSIV_CELL_RES* out_res, u32 lcd );
+
+extern u32 PMSIView_GetScrollBarPos( PMS_INPUT_VIEW* vwk, u32 px, u32 py );
+extern void PMSIView_SetScrollBarPos( PMS_INPUT_VIEW* vwk, u32 py );
+extern u32 PMSIView_GetScrollBarPosCount( PMS_INPUT_VIEW* vwk, u32 max );
 
 //================================================================================
 //  入力欄処理
@@ -291,10 +295,23 @@ extern BOOL PMSIV_CATEGORY_WaitBrightDown( PMSIV_CATEGORY* wk );
 //================================================================================
 typedef struct _PMSIV_WORDWIN	PMSIV_WORDWIN;
 
+// スクロールバーのサイズ
+enum {
+	PMSIV_TPWD_RAIL_PX = 236,
+	PMSIV_TPWD_RAIL_PY = 0,
+	PMSIV_TPWD_RAIL_SX = 16,
+	PMSIV_TPWD_RAIL_SY = 168,
+
+	PMSIV_TPWD_BAR_SX = 16,
+	PMSIV_TPWD_BAR_SY = 24,
+};
+
+
 extern PMSIV_WORDWIN*  PMSIV_WORDWIN_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, const PMS_INPUT_DATA* dwk );
 extern void PMSIV_WORDWIN_Delete( PMSIV_WORDWIN* wk );
 extern void PMSIV_WORDWIN_SetupGraphicDatas( PMSIV_WORDWIN* wk );
 extern void PMSIV_WORDWIN_SetupWord( PMSIV_WORDWIN* wk );
+extern void PMSIV_WORDWIN_SetupWordBar( PMSIV_WORDWIN* wk, int idx );
 extern void PMSIV_WORDWIN_StartFadeIn( PMSIV_WORDWIN* wk );
 extern BOOL PMSIV_WORDWIN_WaitFadeIn( PMSIV_WORDWIN* wk );
 extern void PMSIV_WORDWIN_VisibleCursor( PMSIV_WORDWIN* wk, BOOL flag );
@@ -303,6 +320,11 @@ extern void PMSIV_WORDWIN_StartScroll( PMSIV_WORDWIN* wk, int vector );
 extern BOOL PMSIV_WORDWIN_WaitScroll( PMSIV_WORDWIN* wk );
 extern void PMSIV_WORDWIN_StartFadeOut( PMSIV_WORDWIN* wk );
 extern BOOL PMSIV_WORDWIN_WaitFadeOut( PMSIV_WORDWIN* wk );
+
+extern void PMSIV_WINDOW_GetScrollBarPos( PMSIV_WORDWIN * wk, GFL_CLACTPOS * pos );
+extern void PMSIV_WORDWIN_MoveScrollBar( PMSIV_WORDWIN * wk, u32 py );
+extern u32 PMSIV_WORDWIN_GetScrollBarPosCount( PMSIV_WORDWIN * wk, u32 max );
+extern void PMSIV_WORDWIN_SetScrollBarPos( PMSIV_WORDWIN * wk, u32 now, u32 max );
 
 
 //================================================================================

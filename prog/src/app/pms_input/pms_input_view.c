@@ -136,6 +136,7 @@ static void Cmd_ButtonUpHold(GFL_TCB *tcb, void* wk_adrs);
 static void Cmd_ButtonDownHold(GFL_TCB *tcb, void* wk_adrs);
 static void Cmd_ButtonUpRelease(GFL_TCB *tcb, void* wk_adrs);
 static void Cmd_ButtonDownRelease(GFL_TCB *tcb, void* wk_adrs);
+static void Cmd_ScrollWordWinBar(GFL_TCB *tcb, void* wk_adrs);
 
 static const GFL_DISP_VRAM bank_data = {
 	GX_VRAM_BG_128_B,				// メイン2DエンジンのBG
@@ -352,6 +353,7 @@ void PMSIView_SetCommand( PMS_INPUT_VIEW* vwk, int cmd )
 		Cmd_ButtonUpRelease,
 		Cmd_ButtonDownRelease,
 
+		Cmd_ScrollWordWinBar,
 
 	};
 
@@ -1623,6 +1625,25 @@ static void Cmd_ButtonDownRelease(GFL_TCB *tcb, void* wk_adrs)
 	DeleteCommand( wk );
 }
 
+//----------------------------------------------------------------------------------------------
+/**
+	* 描画コマンド：単語ウィンドウスクロールバー
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
+//----------------------------------------------------------------------------------------------
+static void Cmd_ScrollWordWinBar( GFL_TCB *tcb, void* wk_adrs  )
+{
+	COMMAND_WORK* wk = wk_adrs;
+	PMS_INPUT_VIEW* vwk = wk->vwk;
+
+	PMSIV_WORDWIN_SetupWordBar( vwk->wordwin_wk, PMSI_GetWordWinLinePos(vwk->main_wk) );
+	DeleteCommand( wk );
+	return;
+}
+
 
 
 //==============================================================================================
@@ -1762,3 +1783,35 @@ GFL_CLWK* PMSIView_AddActor( PMS_INPUT_VIEW* vwk, PMSIV_CELL_RES* header, u32 x,
 	return act;
 }
 
+// スクロールバーの座標と指定座標の位置関係を取得
+u32 PMSIView_GetScrollBarPos( PMS_INPUT_VIEW* vwk, u32 px, u32 py )
+{
+	GFL_CLACTPOS pos;
+
+	PMSIV_WINDOW_GetScrollBarPos( vwk->wordwin_wk, &pos );
+	if( py < (pos.y-(PMSIV_TPWD_BAR_SY/2)) ){
+		return 1;		// 上
+	}
+	if( py >= (pos.y+(PMSIV_TPWD_BAR_SY/2)) ){
+		return 2;		// 下
+	}
+	if( py >= (pos.y-(PMSIV_TPWD_BAR_SY/2)) &&
+			py < (pos.y+(PMSIV_TPWD_BAR_SY/2)) &&
+			px >= (pos.x-(PMSIV_TPWD_BAR_SX/2)) &&
+			px < (pos.x+(PMSIV_TPWD_BAR_SX/2)) ){
+		return 0;		// 同じ
+	}
+	return 3;			// その他
+}
+
+// スクロールバー座標セット
+void PMSIView_SetScrollBarPos( PMS_INPUT_VIEW* vwk, u32 py )
+{
+	PMSIV_WORDWIN_MoveScrollBar( vwk->wordwin_wk, py );
+}
+
+// スクロールバーの座標からスクロール値を取得
+u32 PMSIView_GetScrollBarPosCount( PMS_INPUT_VIEW* vwk, u32 max )
+{
+	return PMSIV_WORDWIN_GetScrollBarPosCount( vwk->wordwin_wk, max );
+}

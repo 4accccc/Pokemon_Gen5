@@ -15,9 +15,11 @@
 #include "savedata/save_control.h"
 
 #include "system\pms_data.h"
+#include "print\printsys.h"
 #include "pmsi_sound_def.h"
 #include "pms_input_prv.h"
 #include "pmsi_initial_data.h"
+#include "pms_input_view.h"
 
 #include "pmsi_search.h"
 
@@ -66,8 +68,8 @@ enum {
 
 enum {
 	WORDWIN_CURSOR_X_MAX = 1,
-	WORDWIN_CURSOR_Y_MAX = 4,
-	WORDWIN_DISP_MAX = 10,
+	WORDWIN_CURSOR_Y_MAX = 5,
+	WORDWIN_DISP_MAX = 12,
 
 	WORDWIN_PAGE_LINES = WORDWIN_CURSOR_Y_MAX+1,
 };
@@ -100,10 +102,16 @@ enum{
 	TPED_SBTN_SX = 4*8,
 	TPED_SBTN_SY = 3*8,
 
+/*
 	TPCA_RET_PX = 24*8+4,
 	TPCA_RET_PY = 20*8+4,
 	TPCA_RET_SX = 7*8,
 	TPCA_RET_SY = 22,
+*/
+	TPCA_RET_PX = 29*8,
+	TPCA_RET_PY = 21*8,
+	TPCA_RET_SX = 3*8,
+	TPCA_RET_SY = 3*8,
 
 	TPCA_CHANGE_PX = 0*8,  ///< カテゴリ切替ボタン
 //	TPCA_IMODE_PX = 22*8,
@@ -131,7 +139,7 @@ enum{
 	TPWD_SCR_PY1 = TPWD_SCR_PY0+TPWD_SCR_SY,
 
 	TPWD_WORD_PX = 4*8,
-	TPWD_WORD_PY = 6*8,
+	TPWD_WORD_PY = 2*8,
 	TPWD_WORD_SX = 9*8,
 	TPWD_WORD_SY = 2*8,
 	TPWD_WORD_OX = TPWD_WORD_SX+32,
@@ -170,6 +178,7 @@ enum {
 	SEQ_WORD_KEYWAIT,
 	SEQ_WORD_SCROLL_WAIT,
 	SEQ_WORD_SCROLL_WAIT_AND_CURSOR_MOVE,
+	SEQ_WORD_SCROLL_BAR_WAIT,
 	SEQ_WORD_CHANGE_NEXTPROC,
 };
 
@@ -255,6 +264,7 @@ struct _PMS_INPUT_WORK{
 	u8         sentence_edit_pos_max;
 	u8         category_mode;
 
+	u8	scroll_bar_flg;		// スクロールバータッチ済みフラグ
 
 	MENU_WORK  menu;
 
@@ -306,6 +316,9 @@ static void word_input(PMS_INPUT_WORK* wk,int* seq);
 static int check_wordwin_key( WORDWIN_WORK* wordwin, u16 key );
 static int check_wordwin_scroll_up( WORDWIN_WORK* wordwin );
 static int check_wordwin_scroll_down( WORDWIN_WORK* wordwin );
+static int check_wordwin_scroll_up_pos( PMS_INPUT_VIEW* vwk, WORDWIN_WORK* wordwin );
+static int check_wordwin_scroll_down_pos( PMS_INPUT_VIEW* vwk, WORDWIN_WORK* wordwin );
+static int check_wordwin_scroll_pos( PMS_INPUT_VIEW* vwk, WORDWIN_WORK* wordwin );
 static BOOL set_select_word( PMS_INPUT_WORK* wk );
 static GFL_PROC_RESULT MainProc_Quit( PMS_INPUT_WORK* wk, int* seq );
 static void SetSubProc( PMS_INPUT_WORK* wk, SubProc sub_proc );
@@ -1956,6 +1969,18 @@ static int input_category_word_btn(PMS_INPUT_WORK* wk)
 	return 0;
 }
 
+// 戻るボタンチェック
+static int input_word_btn(PMS_INPUT_WORK* wk)
+{
+	static const GFL_UI_TP_HITTBL Btn_TpRect[] = {
+//		{0,191,0,255}, ty,by,lx,rx
+		{TPCA_RET_PY,TPCA_RET_PY+TPCA_RET_SY-1,TPCA_RET_PX,TPCA_RET_PX+TPCA_RET_SX-1},
+		{GFL_UI_TP_HIT_END,0,0,0}
+	};
+
+	return GFL_UI_TP_HitTrg(Btn_TpRect);
+}
+
 static int category_touch_group(PMS_INPUT_WORK* wk)
 {
 	int i,j;
@@ -2350,13 +2375,13 @@ static void setup_wordwin_params( WORDWIN_WORK* word_win, PMS_INPUT_WORK* wk )
 
 	if( word_win->word_max > WORDWIN_DISP_MAX )
 	{
-		word_win->line_max = ((word_win->word_max - WORDWIN_DISP_MAX) / 2) + (word_win->word_max & 1);
+//		word_win->line_max = ((word_win->word_max - WORDWIN_DISP_MAX) / 2) + (word_win->word_max & 1);
+		word_win->line_max = (((word_win->word_max-PMSI_DUMMY_LABEL_NUM) - WORDWIN_DISP_MAX) / 2) + (word_win->word_max & 1);
 	}
 	else
 	{
 		word_win->line_max = 0;
 	}
-
 }
 
 static u32 get_wordwin_cursorpos( const WORDWIN_WORK* wordwin )
@@ -2408,6 +2433,13 @@ static GFL_PROC_RESULT MainProc_WordWin( PMS_INPUT_WORK* wk, int* seq )
 		if( PMSIView_WaitCommand( wk->vwk, VCMD_SCROLL_WORDWIN ) )
 		{
 			PMSIView_SetCommand( wk->vwk, VCMD_MOVE_WORDWIN_CURSOR );
+			(*seq) = SEQ_WORD_KEYWAIT;
+		}
+		break;
+
+	case SEQ_WORD_SCROLL_BAR_WAIT:
+		if( PMSIView_WaitCommand( wk->vwk, VCMD_SCROLL_WORDWIN_BAR ) )
+		{
 			(*seq) = SEQ_WORD_KEYWAIT;
 		}
 		break;
@@ -2522,6 +2554,7 @@ static int word_input_scr_btn(PMS_INPUT_WORK* wk)
 	u16	pos,end_f;
 	GFL_UI_TP_HITTBL tbl[2] = { {GFL_UI_TP_HIT_END,0,0,0}, {GFL_UI_TP_HIT_END,0,0,0} };
 
+/*
 	static const GFL_UI_TP_HITTBL Btn_TpRect[] = {
 //		{0,191,0,255}, ty,by,lx,rx
 		{TPWD_SCR_PY0,TPWD_SCR_PY0+TPWD_SCR_SY,TPWD_SCR_PX,TPWD_SCR_PX+TPWD_SCR_SX},
@@ -2538,10 +2571,38 @@ static int word_input_scr_btn(PMS_INPUT_WORK* wk)
 	case 1:
 		return check_wordwin_scroll_down( &(wk->word_win) );
 	}
+*/
+	static const GFL_UI_TP_HITTBL Btn_TpRect[] = {
+//		{0,191,0,255}, ty,by,lx,rx
+		{PMSIV_TPWD_RAIL_PY,PMSIV_TPWD_RAIL_PY+PMSIV_TPWD_RAIL_SY-1,PMSIV_TPWD_RAIL_PX,PMSIV_TPWD_RAIL_PX+PMSIV_TPWD_RAIL_SX-1},
+		{GFL_UI_TP_HIT_END,0,0,0}
+	};
+
+	// スクロールバーチェック
+	if( GFL_UI_TP_HitTrg(Btn_TpRect) == 0 ){
+		u32	tpypos;
+		GFL_UI_TP_GetPointTrg( &tpx,&tpy );
+		tpypos = PMSIView_GetScrollBarPos( wk->vwk, tpx, tpy );
+		switch( tpypos ){
+		case 0:	// タッチ座標にスクロールバーがある
+			wk->scroll_bar_flg = 1;
+			return WORDWIN_RESULT_NONE;
+		case 1:	// タッチ座標よりスクロールバーが下にある（上にスクロール）
+			wk->scroll_bar_flg = 1;
+			PMSIView_SetScrollBarPos( wk->vwk, tpy );
+			return check_wordwin_scroll_up_pos( wk->vwk, &(wk->word_win) );
+		case 2:	// タッチ座標よりスクロールバーが上にある（下にスクロール）
+			wk->scroll_bar_flg = 1;
+			PMSIView_SetScrollBarPos( wk->vwk, tpy );
+			return check_wordwin_scroll_down_pos( wk->vwk, &(wk->word_win) );
+		}
+	}
+
+
 	GFL_UI_TP_GetPointTrg( &tpx,&tpy );
 	pos = wk->word_win.line*2;
 	end_f = 0;
-	for(i = 0;i < 5;i++){
+	for(i = 0;i < 6;i++){
 		tbl[0].rect.top = i*TPWD_WORD_OY+TPWD_WORD_PY;
 		tbl[0].rect.bottom = tbl[0].rect.top+TPWD_WORD_SY;
 		for(j = 0;j < 2;j++){
@@ -2554,7 +2615,7 @@ static int word_input_scr_btn(PMS_INPUT_WORK* wk)
 				ARI_TPrintf(" Select Pos = %d -> %d\n",i*2+j , pos);
 				return WORDWIN_RESULT_SELECT;
 			}
-			if(++pos >= wk->word_win.word_max){
+			if(++pos >= (wk->word_win.word_max-PMSI_DUMMY_LABEL_NUM)){
 				end_f = 1;
 				break;
 			}
@@ -2566,10 +2627,26 @@ static int word_input_scr_btn(PMS_INPUT_WORK* wk)
 	return WORDWIN_RESULT_NONE;
 }
 
+// スクロールバータッチ継続チェック
+static BOOL word_input_scroll_bar_touch(PMS_INPUT_WORK* wk)
+{
+	u32	tpx, tpy;
+
+	if( GFL_UI_TP_GetPointCont( &tpx, &tpy ) == TRUE ){
+		if( wk->scroll_bar_flg == 1 ){
+			PMSIView_SetScrollBarPos( wk->vwk, tpy );
+			return TRUE;
+		}
+	}
+	wk->scroll_bar_flg = 0;
+	return FALSE;
+}
+
 static void word_input_touch(PMS_INPUT_WORK* wk,int* seq)
 {
 	int ret;
-	
+
+/*
 	ret = input_category_word_btn(wk);
 	switch(ret){
 	case 1:
@@ -2592,6 +2669,27 @@ static void word_input_touch(PMS_INPUT_WORK* wk,int* seq)
 		*seq = SEQ_WORD_CHANGE_NEXTPROC;
 		return;
 	}
+*/
+
+	// 戻るボタンチェック
+	if( input_word_btn(wk) == 0 ){
+#if PMS_USE_SND
+		GFL_SOUND_PlaySE(SOUND_CANCEL);
+#endif //PMS_USE_SND
+		PMSIView_SetCommand( wk->vwk, VCMD_WORDWIN_TO_CATEGORY );
+		wk->next_proc = MainProc_Category;
+		*seq = SEQ_WORD_CHANGE_NEXTPROC;
+		return;
+	}
+
+	// スクロールバータッチ継続チェック
+	if( word_input_scroll_bar_touch(wk) == TRUE ){
+		check_wordwin_scroll_pos( wk->vwk, &(wk->word_win) );
+		PMSIView_SetCommand( wk->vwk, VCMD_SCROLL_WORDWIN_BAR );
+		(*seq) = SEQ_WORD_SCROLL_BAR_WAIT;
+		return;
+	}
+
 	ret = word_input_scr_btn(wk);
 
 	switch( ret ){
@@ -2616,8 +2714,10 @@ static void word_input_touch(PMS_INPUT_WORK* wk,int* seq)
 #if PMS_USE_SND
 		GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
 #endif //PMS_USE_SND
-		PMSIView_SetCommand( wk->vwk, VCMD_SCROLL_WORDWIN );
-		(*seq) = SEQ_WORD_SCROLL_WAIT;
+//		PMSIView_SetCommand( wk->vwk, VCMD_SCROLL_WORDWIN );
+//		(*seq) = SEQ_WORD_SCROLL_WAIT;
+		PMSIView_SetCommand( wk->vwk, VCMD_SCROLL_WORDWIN_BAR );
+		(*seq) = SEQ_WORD_SCROLL_BAR_WAIT;
 		return;
 
 	case WORDWIN_RESULT_SCROLL_AND_CURSOR_MOVE:
@@ -2848,6 +2948,36 @@ static int check_wordwin_scroll_down( WORDWIN_WORK* wordwin )
 		}
 	}
 	return WORDWIN_RESULT_INVALID;
+}
+
+// スクロールバーの上をタッチしたときのスクロール設定
+static int check_wordwin_scroll_up_pos( PMS_INPUT_VIEW* vwk, WORDWIN_WORK* wordwin )
+{
+	if( wordwin->line ){
+		wordwin->line = PMSIView_GetScrollBarPosCount( vwk, wordwin->line_max );
+		wordwin->scroll_lines = 0;
+		return WORDWIN_RESULT_SCROLL;
+	}
+	return WORDWIN_RESULT_INVALID;
+}
+
+// スクロールバーの下をタッチしたときのスクロール設定
+static int check_wordwin_scroll_down_pos( PMS_INPUT_VIEW* vwk, WORDWIN_WORK* wordwin )
+{
+	if( wordwin->line < wordwin->line_max ){
+		wordwin->line = PMSIView_GetScrollBarPosCount( vwk, wordwin->line_max );
+		wordwin->scroll_lines = 0;
+		return WORDWIN_RESULT_SCROLL;
+	}
+	return WORDWIN_RESULT_INVALID;
+}
+
+// スクロールバーをタッチしたときのスクロール設定
+static int check_wordwin_scroll_pos( PMS_INPUT_VIEW* vwk, WORDWIN_WORK* wordwin )
+{
+	wordwin->line = PMSIView_GetScrollBarPosCount( vwk, wordwin->line_max );
+	wordwin->scroll_lines = 0;
+	return WORDWIN_RESULT_SCROLL;
 }
 
 
@@ -3461,7 +3591,8 @@ u32 PMSI_GetCategoryWordMax( const PMS_INPUT_WORK* wk )
 {
 	if( wk->category_mode == CATEGORY_MODE_GROUP )
 	{
-		return PMSI_DATA_GetGroupEnableWordCount( wk->dwk, wk->category_pos );
+		// リストの最上段は空欄とするため、総数を＋２　2009/11/14 by nakahiro
+		return PMSI_DATA_GetGroupEnableWordCount( wk->dwk, wk->category_pos ) + PMSI_DUMMY_LABEL_NUM;
 	}
 	else
 	{
@@ -3502,6 +3633,10 @@ u32 PMSI_GetWordWinCursorPos( const PMS_INPUT_WORK* wk )
 int PMSI_GetWordWinScrollVector( const PMS_INPUT_WORK* wk )
 {
 	return get_wordwin_scroll_vector( &(wk->word_win) );
+}
+int PMSI_GetWordWinLinePos( const PMS_INPUT_WORK* wk )
+{
+	return get_wordwin_linepos(&(wk->word_win));
 }
 BOOL PMSI_GetWordWinUpArrowVisibleFlag( const PMS_INPUT_WORK* wk )
 {
@@ -3615,4 +3750,10 @@ static PMS_WORD PMSI_WordToDeco( PMS_WORD word )
 	return word;
 }
 
+// スクロールデータ取得
+void PMSI_GetWorkScrollData( const PMS_INPUT_WORK * wk, u16 * line, u16 * line_max )
+{
+	*line = wk->word_win.line;
+	*line_max = wk->word_win.line_max;
+}
 
