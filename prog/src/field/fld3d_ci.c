@@ -10,6 +10,7 @@
 #include "arc_def.h"
 #include "gamesystem/game_event.h"
 
+#define EMITCOUNT_MAX  (2)
 #define OBJCOUNT_MAX  (2)
 #define ANM_TYPE_MAX  (4)
 #define RESCOUNT_MAX  (8)
@@ -41,21 +42,23 @@ typedef struct FLD3D_CI_tag
 
   GFL_PTC_PTR PrtclPtr;
 
-  u16 PrtclWait;
+  u16 PrtclWait[EMITCOUNT_MAX];
   u16 MdlAnm1Wait;
   u16 MdlAnm2Wait;
-  u8 PartGene;
-  u8 CutInNo;
+  u16 PartGene;
+  u16 CutInNo;
 
   GXPlaneMask Mask;
   u8 BgPriority[4];
   BOOL CapEndFlg;
+  BOOL Emit1;
+  BOOL Emit2;
 }FLD3D_CI;
 
 //バイナリデータフォーマット
 typedef struct {
-  u16 SpaIdx;
-  u16 SpaWait;
+  u32 SpaIdx;
+  u16 SpaWait[EMITCOUNT_MAX];
   u16 MdlObjIdx[OBJCOUNT_MAX]; //0：Ａ　1：Ｂ
   u16 MdlAAnmWait;
   u16 MdlBAnmWait;
@@ -69,14 +72,13 @@ typedef struct {
   GFL_G3D_UTIL_ANM *Anm1;
   GFL_G3D_UTIL_ANM *Anm2;
   GFL_G3D_UTIL_SETUP Setup;
-  u16 SpaWait;
+  u16 SpaWait[EMITCOUNT_MAX];
   u16 MdlAAnmWait;
   u16 MdlBAnmWait;
   u8 ResNum;
   u8 ObjNum;
   u8 AnmNum;
   u8 SpaIdx;
-  u8 Dummy[2];
 }RES_SETUP_DAT;
 
 typedef struct {
@@ -107,8 +109,8 @@ static BOOL CheckAnmEnd(FLD3D_CI_PTR ptr);
 static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work );
 
 
-static void ParticleCallBack(GFL_EMIT_PTR emit);    //@todo
-static void Generate(FLD3D_CI_PTR ptr);    //@todo
+static void ParticleCallBack(GFL_EMIT_PTR emit);
+static void Generate(FLD3D_CI_PTR ptr, const u32 inResNo);
 
 static void CreateRes(RES_SETUP_DAT *outDat, const u8 inResArcIdx, const HEAPID inHeapID);
 static void DeleteRes(RES_SETUP_DAT *outDat);
@@ -482,11 +484,31 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
 static BOOL PlayParticle(FLD3D_CI_PTR ptr)
 {
   if (!ptr->PartGene){
-    if (ptr->PrtclWait > 0){
-      ptr->PrtclWait--;
-    }else{
-      //パーティクルジェネレート
-      Generate(ptr);
+    //エミッター1つ目
+    if ( ptr->Emit1==FALSE )
+    {
+      if ( ptr->PrtclWait[0] > 0 ){
+        ptr->PrtclWait[0]--;
+      }else{
+        //パーティクルジェネレート
+        Generate(ptr, 0);
+        ptr->Emit1 = TRUE;
+      }
+    }
+
+    //エミッター2つ目
+    if ( ptr->Emit2==FALSE )
+    {
+      if ( ptr->PrtclWait[1] > 0 ){
+        ptr->PrtclWait[1]--;
+      }else{
+        //パーティクルジェネレート
+        Generate(ptr, 1);
+        ptr->Emit2 = TRUE;
+      }
+    }
+
+    if ( ptr->Emit1 && ptr->Emit2 ){
       ptr->PartGene = 1;
     }
   }else{
@@ -549,6 +571,7 @@ static BOOL PlayMdlAnm2(FLD3D_CI_PTR ptr)
 
 static void SetupResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCutInNo)
 {
+  void *resource;
   //パーティクル生成
   ptr->PrtclPtr = FLD_PRTCL_Create(ptr->PrtclSys);
   //セットアップデータ作成
@@ -558,7 +581,6 @@ static void SetupResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCu
   SetupResourceCore(ptr, &outDat->Setup);
   //パーティクルリソースセットアップ
   {
-    void *resource;
     resource = FLD_PRTCL_LoadResource(ptr->PrtclSys,
 			ARCID_FLD3D_CI, outDat->SpaIdx);
 
@@ -581,10 +603,30 @@ static void SetupResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCu
     }
   }
   //ウェイト設定
-  ptr->PrtclWait = outDat->SpaWait;
+  ptr->PrtclWait[0] = outDat->SpaWait[0];
+  ptr->PrtclWait[1] = outDat->SpaWait[1];
   ptr->MdlAnm1Wait = outDat->MdlAAnmWait;
   ptr->MdlAnm2Wait = outDat->MdlBAnmWait;
-  
+  //リソースの中のｓｐｒの数で分岐
+  {
+    u16 res_num = GFL_PTC_GetResNum( resource );
+    OS_Printf("resnum=%d\n",res_num);
+    if ( res_num == EMITCOUNT_MAX )
+    {
+      ptr->Emit1 = FALSE;
+      ptr->Emit2 = FALSE;
+    }
+    else if( res_num == 1 )
+    {
+      ptr->Emit1 = FALSE;
+      ptr->Emit2 = TRUE;
+    }
+    else
+    {
+      ptr->Emit1 = TRUE;
+      ptr->Emit2 = TRUE;
+    }
+  }
 }
 
 static void DeleteResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat)
@@ -607,17 +649,11 @@ static BOOL CheckAnmEnd(FLD3D_CI_PTR ptr)
 
 
 
-static void Generate(FLD3D_CI_PTR ptr)
+static void Generate(FLD3D_CI_PTR ptr, const u32 inResNo)
 {
 ///  GFL_PTC_SetCameraType(sys->PrtclPtr, GFL_G3D_PRJORTH);
-	GFL_PTC_CreateEmitterCallback(ptr->PrtclPtr, 0,
-									ParticleCallBack, NULL);
-/**  
-	GFL_PTC_CreateEmitterCallback(ptr->PrtclPtr, 1,
-									ParticleCallBack, NULL);
-	GFL_PTC_CreateEmitterCallback(ptr->PrtclPtr, 2,
-									ParticleCallBack, NULL);
-*/                  
+	GFL_PTC_CreateEmitterCallback(ptr->PrtclPtr, inResNo,
+									ParticleCallBack, NULL);                 
 }
 
 //--------------------------------------------------------------
@@ -712,7 +748,8 @@ static void CreateRes(RES_SETUP_DAT *outDat, const u8 inResArcIdx, const HEAPID 
   outDat->ObjNum = obj_num;
   outDat->AnmNum = anm1_num+anm2_num;
   //ウェイト記憶
-  outDat->SpaWait = def_dat.SpaWait;
+  outDat->SpaWait[0] = def_dat.SpaWait[0];
+  outDat->SpaWait[1] = def_dat.SpaWait[1];
   outDat->MdlAAnmWait = def_dat.MdlAAnmWait;
   outDat->MdlBAnmWait = def_dat.MdlBAnmWait;
 
