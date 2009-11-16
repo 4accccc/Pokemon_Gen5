@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-11-14T16:35:55"/>
+	<create user="taya" host="W00146" date="2009-11-16T15:55:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -4184,6 +4184,26 @@
 みがわりは　きえてしまった…</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]の
 身代わりは　消えてしまった…</language>
+	</row>
+
+	<row id="BTL_STRID_SET_WideGuard">
+		<comment>ワイドガード</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+ワイドガードで　まもられた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+ワイドガードで　守られた！</language>
+	</row>
+	<row id="BTL_STRID_SET_WideGuard_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+ワイドガードで　まもられた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+ワイドガードで　守られた！</language>
+	</row>
+	<row id="BTL_STRID_SET_WideGuard_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+ワイドガードで　まもられた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+ワイドガードで　守られた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_SinpiNoMamori_Exe">
