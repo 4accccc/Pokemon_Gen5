@@ -1852,11 +1852,17 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
     if( wk->category_mode == CATEGORY_MODE_INITIAL )
     {
       // 検索開始
-      PMSI_SEARCH_Start( wk->swk );
+      if( PMSI_SEARCH_Start( wk->swk ) )
+      {
+        // 単語リストへ
+        set_nextproc_category_to_wordwin( wk );
+        *seq = SEQ_CA_NEXTPROC;
+      }
+      else
+      {
+        GFL_SOUND_PlaySE( SOUND_SEARCH_DISABLE );
+      }
       
-      // 単語リストへ
-      set_nextproc_category_to_wordwin( wk );
-      *seq = SEQ_CA_NEXTPROC;
       return;
     }
   }
@@ -1898,11 +1904,17 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
 		if( wk->category_pos == CATEGORY_POS_SELECT )
     {
       HOSAKA_Printf("push select!\n");
-      PMSI_SEARCH_Start( wk->swk );
+      if( PMSI_SEARCH_Start( wk->swk ) )
+      {
+        // 単語リストへ
+        set_nextproc_category_to_wordwin( wk );
+        *seq = SEQ_CA_NEXTPROC;
+      }
+      else
+      {
+        GFL_SOUND_PlaySE( SOUND_SEARCH_DISABLE );
+      }
       
-      // 単語リストへ
-      set_nextproc_category_to_wordwin( wk );
-      *seq = SEQ_CA_NEXTPROC;
     }
     else if( wk->category_pos == CATEGORY_POS_ERASE )
     {

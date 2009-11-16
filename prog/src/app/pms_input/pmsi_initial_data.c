@@ -163,7 +163,7 @@ static const struct {
 	{ L'よ',  INITIAL_XPOS(8), INITIAL_YPOS(2), INI_MU,     INI_RU,    INI_YU,    INI_SA,   INI_HU,  INI_OTHER, },
 
 	{ L'ら',  INITIAL_XPOS(6),  INITIAL_YPOS(3), INI_YA,    INI_WA,    INI_TO,    INI_RI,    INI_HA,  INI_WA, },
-	{ L'り',  INITIAL_XPOS(7),  INITIAL_YPOS(3), INI_YU,    INI_BOU, INI_RA,    INI_RU,    INI_HI,  INI_BOU, },
+	{ L'り',  INITIAL_XPOS(7),  INITIAL_YPOS(3), INI_YU,    INI_BOU,    INI_RA,    INI_RU,    INI_HI,  INI_BOU, },
 	{ L'る',  INITIAL_XPOS(8),  INITIAL_YPOS(3), INI_YO,    INI_OTHER,  INI_RI,    INI_RE,    INI_HU,  INI_OTHER, },
 	{ L'れ',  INITIAL_XPOS(9),  INITIAL_YPOS(3), INI_ME,    INI_BACK,  INI_RU,    INI_RO,    INI_HE,  INI_RE, },
 	{ L'ろ',  INITIAL_XPOS(10), INITIAL_YPOS(3), INI_MO,    INI_BACK,  INI_RE,    INI_TA,    INI_HO,  INI_RO, },
@@ -172,7 +172,7 @@ static const struct {
 	{ L'！',  INITIAL_XPOS(8), INITIAL_YPOS(4), INI_RU,     INI_BACK,  INI_BOU,   INI_NA,    INI_HU,  INI_OTHER },
   
   // ↑50音検索のgmmテーブルと対応しているので順番固定↑
-  // WB追加  わ, －, ！
+  // WB追加 
 	{ L'ー',  INITIAL_XPOS(7), INITIAL_YPOS(4), INI_RI,     INI_BACK,  INI_WA,    INI_OTHER, INI_HI,  INI_BOU },
 };
 

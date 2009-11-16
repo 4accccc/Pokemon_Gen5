@@ -188,8 +188,9 @@ enum {
 	INI_YO,
 #endif
 	INI_WA,
-	INI_BOU,
 	INI_OTHER,
+  // ª50‰¹ŒŸõ‚Ìgmmƒe[ƒuƒ‹‚Æ‘Î‰ž‚µ‚Ä‚¢‚é‚Ì‚Å‡”ÔŒÅ’èª
+	INI_BOU,
 
 	INI_BACK    = CATEGORY_POS_BACK,
 	INI_ERASE   = CATEGORY_POS_ERASE,

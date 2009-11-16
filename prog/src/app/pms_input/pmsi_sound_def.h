@@ -35,6 +35,8 @@
 #define SOUND_WORD_INPUT (SEQ_SE_DP_SELECT)  // •¶Žš“ü—Í
 #define SOUND_WORD_DELETE (SEQ_SE_CANCEL1)  // •¶Žšíœ
 
+#define SOUND_SEARCH_DISABLE (SEQ_SE_BEEP) // ŒŸõŽ¸”s
+
 #endif //PMS_USE_SND
 
 #endif	//__PMSI_SOUND_DEF_H__
