@@ -1440,7 +1440,7 @@ typedef struct {
 }ROTATE_MEMBER_WORK;
 
 
-#define TMP_SELROT_SKIP
+//#define TMP_SELROT_SKIP
 
 //=============================================================================================
 /**
