@@ -213,3 +213,4 @@
   ARCID_MB_PARENT	"mb_parent.narc"	#マルチブート親
 	ARCID_GSYNC "gsync.narc"   #GAMESYNC
 	ARCID_GTSNEGO "gtsnego.narc"   #GTSネゴシエーション
+  ARCID_ISS_DUNGEON "iss_dungeon.narc"  # ダンジョンISSデータ

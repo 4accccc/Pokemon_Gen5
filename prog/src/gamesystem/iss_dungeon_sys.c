@@ -12,6 +12,8 @@
 #include "gamesystem/playerwork.h"
 #include "arc/arc_def.h"
 #include "arc/iss.naix"
+#include "../../../resource/fldmapdata/zonetable/zone_id.h"
+#include "../../../resource/iss/dungeon/entry_table.cdat"
 
 
 //==========================================================================================
@@ -21,12 +23,12 @@
 #define INVALID_ZONE_ID (0xffff)
 
 // ピッチ(キー)設定対象トラック
-#define PITCH_TRACK_MASK (~((1<<(9-1)) | (1<<(10-1))))
+#define PITCH_TRACK_MASK (~((1<<(9-1)) | (1<<(10-1))))  // 9, 10トラック
 
 // リバーブ設定
 #define REVERB_SAMPLE_RATE (16000)	// サンプリングレート
-#define REVERB_VOLUME      (63)		// ボリューム
-#define REVERB_STOP_FRAME  (0)		// 停止までのフレーム数
+#define REVERB_VOLUME      (63)		  // ボリューム
+#define REVERB_STOP_FRAME  (0)		  // 停止までのフレーム数
 
 
 //========================================================================================== 
@@ -34,6 +36,7 @@
 //========================================================================================== 
 typedef struct
 {
+  u32 season; // 季節
 	u16 zoneID;	// ゾーンID
 	s16 pitch;	// ピッチ(キー)
 	u16 tempo;	// テンポ
@@ -84,27 +87,9 @@ typedef struct
 {
 	u8         dataNum;	// 保持情報数
 	BGM_PARAM* param;	  // パラメータ配列
+
 } BGM_PARAMSET;
 
-//------------------------------------------------------------------------------------------
-/**
- * @brief data + pos の位置から始まる2バイトを, 
- *        リトルエンディアンで並んだu16のデータとして解釈し値を取得する
- *
- * @param data データ開始位置
- * @param pos  開始位置オフセット
- *
- * @return u16
- */
-//------------------------------------------------------------------------------------------
-static u16 GetU16( u8* data, int pos )
-{
-	u16 lower = (u16)( data[ pos ] );
-	u16 upper = (u16)( data[ pos + 1 ] );
-	u16 value = ( upper << 8 ) | lower;
-
-	return value;
-}
 
 //-----------------------------------------------------------------------------------------
 /**
@@ -119,46 +104,32 @@ static BGM_PARAMSET* LoadParamset( HEAPID heap_id )
 {
 	int i;
 	BGM_PARAMSET* paramset;
-	u32 size;
-	u8* data;
-	u8 data_num;
 
 	// 本体を作成
-	paramset = (BGM_PARAMSET*)GFL_HEAP_AllocMemory( heap_id, sizeof( BGM_PARAMSET ) );
-
-	// データ読み込み
-	data = (u8*)GFL_ARC_UTIL_LoadEx( ARCID_ISS_UNIT, NARC_iss_dungeon_bin, FALSE, heap_id, &size );
+	paramset = (BGM_PARAMSET*)GFL_HEAP_AllocMemory( heap_id, sizeof(BGM_PARAMSET) );
 
 	// データ数を取得
-	data_num = data[0];
+	paramset->dataNum = NELEMS(entry_table);
 
 	// バッファ確保
-	paramset->dataNum = data_num; 
-	paramset->param   = (BGM_PARAM*)GFL_HEAP_AllocMemory( heap_id, sizeof( BGM_PARAM ) * data_num );
+	paramset->param = GFL_HEAP_AllocMemory( heap_id, sizeof(BGM_PARAM) * paramset->dataNum );
 
 	// 各データを取得
-	for( i=0; i<data_num; i++ )
+	for( i=0; i<paramset->dataNum; i++ )
 	{
-		int pos     = 1 + ( sizeof(u16) + sizeof(u16) ) * i;
-		u16 zone_id = GetU16( data, pos );
-		u16 offset  = GetU16( data, pos + 2 );
-
-		paramset->param[i].zoneID = GetU16( data, offset );
-		paramset->param[i].pitch  = (s16)GetU16( data, offset + 2 );
-		paramset->param[i].tempo  = GetU16( data, offset + 4 );
-		paramset->param[i].reverb = GetU16( data, offset + 6 );
+    GFL_ARC_LoadDataOfs( &paramset->param[i], 
+        ARCID_ISS_DUNGEON, entry_table[i].datID, 0, sizeof(BGM_PARAM) );
 	} 
-
 
 	// DEBUG:
 	OBATA_Printf( "ISS-D: Load BGM parameters\n" );
-	OBATA_Printf( "- data_num = %d\n", data_num );
-	for( i=0; i<data_num; i++ )
+	OBATA_Printf( "- dataNum = %d\n", paramset->dataNum );
+	for( i=0; i<paramset->dataNum; i++ )
 	{ 
-		OBATA_Printf( "- data[%d].zone_id = %d\n", i, paramset->param[i].zoneID ); 
-		OBATA_Printf( "- data[%d].pitch   = %d\n", i, paramset->param[i].pitch ); 
-		OBATA_Printf( "- data[%d].tempo   = %d\n", i, paramset->param[i].tempo ); 
-		OBATA_Printf( "- data[%d].reverb  = %d\n", i, paramset->param[i].reverb ); 
+		OBATA_Printf( "- data[%d].zoneID = %d\n", i, paramset->param[i].zoneID ); 
+		OBATA_Printf( "- data[%d].pitch  = %d\n", i, paramset->param[i].pitch ); 
+		OBATA_Printf( "- data[%d].tempo  = %d\n", i, paramset->param[i].tempo ); 
+		OBATA_Printf( "- data[%d].reverb = %d\n", i, paramset->param[i].reverb ); 
 	}
 
 	// 読み込んだデータを返す

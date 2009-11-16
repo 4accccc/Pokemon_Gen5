@@ -22,13 +22,13 @@ TARGETDIR = $(PROJECT_ARCDIR)
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-SUBDIRS	= city zone
+SUBDIRS	= city zone dungeon
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
 
 
-CONVERTDATA = dungeon.bin 3d_sound_h01.bin
+CONVERTDATA = 3d_sound_h01.bin
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -58,12 +58,6 @@ $(targetname).narc: $(CONVERTDATA)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 
-dungeon.txt: dungeon.xls
-	$(PROJECT_ROOT)tools/exceltool/exceltabconv dungeon.xls
-
-dungeon.bin: dungeon.txt
-	ruby dungeon.rb dungeon.txt
-
 3d_sound.txt: 3d_sound.xls
 	$(PROJECT_ROOT)tools/exceltool/exceltabconv 3d_sound.xls
 
@@ -82,7 +76,6 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f $(CONVERTDATA)
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
-	rm -f dungeon.txt
 	rm -f 3d_sound.txt
 endif
 	rm -f $(TARGETDIR)/$(targetname).narc

@@ -1,0 +1,22 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: iss_dungeon.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_ISS_DUNGEON_NAIX_
+#define NARC_ISS_DUNGEON_NAIX_
+
+enum {
+	NARC_iss_dungeon_iss_dungeon_data_d01r0101_bin = 0,
+	NARC_iss_dungeon_iss_dungeon_data_d01r0201_bin = 1,
+	NARC_iss_dungeon_iss_dungeon_data_d06r0101_bin = 2,
+	NARC_iss_dungeon_iss_dungeon_data_d06r0201_bin = 3,
+	NARC_iss_dungeon_iss_dungeon_data_d06r0301_bin = 4
+};
+
+/* NARC_ISS_DUNGEON_NAIX_ */
+#endif

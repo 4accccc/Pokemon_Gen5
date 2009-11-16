@@ -234,7 +234,7 @@ static void InitBGMVolume( ISS_ZONE_SYS* sys )
   if( sys->initFlag != TRUE )
   {
     return;
-  } 
+  }
   // Ž©‹@‚ªŽw’èƒ][ƒ“‚É‚¢‚È‚¢
   if( sys->initZoneID != zone_id )
   {

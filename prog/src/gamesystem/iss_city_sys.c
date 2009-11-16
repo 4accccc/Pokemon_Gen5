@@ -156,22 +156,14 @@ void ISS_CITY_SYS_Update( ISS_CITY_SYS* sys )
 //------------------------------------------------------------------------------------------
 void ISS_CITY_SYS_ZoneChange( ISS_CITY_SYS* sys, u16 next_zone_id )
 { 
-  BOOL found;
-
   // 停止中なら, 何もしない
   if( sys->isActive != TRUE ) return;
 
   // ユニットを切り替える
-  found = ChangeUnit( sys, next_zone_id );
-
-	// 指定ゾーンIDにISSユニットが存在しない場合 ==> 音量0
-  if( found != TRUE )
-  {
-    sys->activeUnitNo = INVALID_UNIT_NO;
-  }
+  ChangeUnit( sys, next_zone_id );
 
   // 音量を調整
-  ISS_CITY_SYS_Update( sys );
+  UpdateVolume( sys );
 }
 
 //------------------------------------------------------------------------------------------
@@ -184,7 +176,6 @@ void ISS_CITY_SYS_ZoneChange( ISS_CITY_SYS* sys, u16 next_zone_id )
 void ISS_CITY_SYS_On( ISS_CITY_SYS* sys )
 { 
   u16 zone_id;
-  BOOL found;
 
   // すでに起動しているなら, 何もしない
   if( sys->isActive == TRUE ) return;
@@ -194,16 +185,10 @@ void ISS_CITY_SYS_On( ISS_CITY_SYS* sys )
 
   // システム起動
   sys->isActive = TRUE;
-  sys->volume = INVALID_VOLUME;
+  sys->volume   = INVALID_VOLUME;
 
   // ユニットを切り替える
-  found = ChangeUnit( sys, zone_id );
-
-	// 指定ゾーンIDにISSユニットが存在しない場合 ==> システム停止
-  if( found != TRUE )
-  {
-    ISS_CITY_SYS_Off( sys );
-  }
+  ChangeUnit( sys, zone_id );
 
   // DEBUG:
   OBATA_Printf( "ISS-C: On\n" );
@@ -310,20 +295,23 @@ static void UpdateVolume( ISS_CITY_SYS* sys )
 //-------------------------------------------------------------------------------------------
 static BOOL ChangeUnit( ISS_CITY_SYS* sys, u16 zone_id )
 {
-	int i;
-  BOOL found = FALSE; // 指定ゾーンのユニットが見つかったかどうか
+	int unit_idx;
 
-	for( i=0; i<sys->unitNum; i++ )
+  // 配置されていなかったら INVALID_UNIT_NO になる
+  sys->activeUnitNo = INVALID_UNIT_NO; 
+
+  // 検索
+	for( unit_idx=0; unit_idx<sys->unitNum; unit_idx++ )
 	{
 		// 発見 ==> ユニット番号を更新
-		if( ISS_C_UNIT_GetZoneID( sys->unit[i] ) == zone_id )
+		if( ISS_C_UNIT_GetZoneID( sys->unit[unit_idx] ) == zone_id )
 		{ 
-			sys->activeUnitNo = i;
-      found = TRUE;
+			sys->activeUnitNo = unit_idx;
       // DEBUG:
-      OBATA_Printf( "ISS-C: change unit index = %d\n", sys->activeUnitNo );
+      OBATA_Printf( "ISS-C: change unit index ==> %d\n", sys->activeUnitNo );
       break;
 		}
 	}
-  return found;
+
+  return (sys->activeUnitNo != INVALID_UNIT_NO);
 }
