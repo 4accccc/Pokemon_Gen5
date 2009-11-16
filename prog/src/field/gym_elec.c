@@ -730,6 +730,12 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
   //イベント未起動状態セット
   tmp->RideEvt = -1;
   tmp->RadeRaleIdx = RIDE_NONE;
+
+  //ＳＥ鳴らしっぱなし
+  PMSND_PlaySE_byPlayerID( GYM_ELEC_SE_DRIVE, SEPLAYER_SE1 );
+  //始めはボリューム0
+  NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE1 ), 0 );
+
 }
 
 //--------------------------------------------------------------
@@ -852,6 +858,43 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
       FIELD_PLAYER_SetPos( FIELDMAP_GetFieldPlayer( fieldWork ), &dst_vec );
     }
   }
+
+  //ボリューム変更
+  {
+    //アニメデータ取得
+    fx32 now_frm;
+    VecFx32 now, player_pos, dst;
+    fx32 len;
+    NNSG3dAnmObj* anm_obj_ptr;
+    GFL_G3D_ANM*  gfl_anm;
+    u8 obj_idx = OBJ_CAP_1 + 1;
+    GFL_G3D_OBJ* g3Dobj = FLD_EXP_OBJ_GetUnitObj(obj_cnt_ptr, GYM_ELEC_UNIT_IDX, obj_idx);
+    u8 anm_idx = ANM_CAP_MOV1 + tmp->NowRaleIdx[1];
+    EXP_OBJ_ANM_CNT_PTR anm_ptr = FLD_EXP_OBJ_GetAnmCnt(obj_cnt_ptr, GYM_ELEC_UNIT_IDX, obj_idx, anm_idx);
+
+    now_frm = GetAnimeFrame(obj_cnt_ptr, obj_idx, anm_idx);
+
+    gfl_anm = GFL_G3D_OBJECT_GetG3Danm( g3Dobj, anm_idx );
+    anm_obj_ptr = GFL_G3D_ANIME_GetAnmObj( gfl_anm );
+    getJntSRTAnmResult_(anm_obj_ptr->resAnm,
+                        0,
+                        now_frm,
+                        &now);
+    VEC_Add( &now, &CapPos[1] ,&now );
+    FIELD_PLAYER_GetPos( FIELDMAP_GetFieldPlayer( fieldWork ), &player_pos );
+    VEC_Subtract( &now, &player_pos ,&dst );
+    len = VEC_Mag( &dst );
+
+    OS_Printf("len=%x\n",len);
+    {
+      int volume;
+      fx32 max = 6*16*FX32_ONE;
+      volume = 127* (max - (len - (2*16*FX32_ONE))) / max;
+      OS_Printf("vol=%d\n",volume);
+      if (volume < 0) volume = 0;
+      NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE1 ), volume );
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -865,6 +908,9 @@ void GYM_ELEC_End(FIELDMAP_WORK *fieldWork)
 {
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   GYM_ELEC_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ELEC_TMP_ASSIGN_ID);
+
+  //ＳＥストップ
+  PMSND_StopSE_byPlayerID( SEPLAYER_SE1 );
 
   //監視ＴＣＢ削除
   GFL_TCB_DeleteTask( tmp->CapStopTcbPtr );
@@ -1567,6 +1613,11 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       //乗降終了
       tmp->RideEvt = -1;
       tmp->RadeRaleIdx = RIDE_NONE;
+      {
+        PMSND_PlaySE_byPlayerID( GYM_ELEC_SE_DRIVE, SEPLAYER_SE1 );
+        //始めはボリューム0
+        NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE1 ), 0 );
+      }
       return GMEVENT_RES_FINISH;
     }
   }
