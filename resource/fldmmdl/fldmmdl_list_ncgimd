@@ -76,6 +76,11 @@ FMMDL_RESLIST_NCGIMD = \
 	blackmonolith.imd \
 	whitemonolith.imd \
 	mama.imd \
+	spider.imd \
+	pipe.imd \
+	grasssound.imd \
+	fiddle.imd \
+	guitar.imd \
 	tsure_001.imd \
 	tsure_002.imd \
 	tsure_003.imd \
