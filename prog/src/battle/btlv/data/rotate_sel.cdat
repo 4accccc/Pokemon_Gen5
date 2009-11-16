@@ -24,10 +24,10 @@ static const BTLV_INPUT_KEYTBL  RotateKeyL[] = {
 };
 
 static const BTLV_INPUT_KEYTBL  RotateKeyR[] = {  
-  //  LU  RU  LD  RD  LD2 RD2   U                   D                   L                   R   A   B
-  { { 1,  1,  1,  1,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  1,  1,  BTLV_INPUT_NOMOVE },  //0
   //  LU  RU  LD  RD  LD2 RD2   U                   D                   L   R                   A   B
-  { { 2,  2,  2,  2,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  BTLV_INPUT_NOMOVE,  2,  BTLV_INPUT_NOMOVE },  //1
+  { { 1,  1,  1,  1,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE },  //0
+  //  LU  RU  LD  RD  LD2 RD2   U                   D                   L                   R   A   B
+  { { 2,  2,  2,  2,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  2,  BTLV_INPUT_NOMOVE },  //1
 };
 
 static const BTLV_INPUT_KEYTBL  RotateKeyC[] = {  
@@ -39,11 +39,11 @@ static const BTLV_INPUT_KEYTBL  RotateKeyC[] = {
 
 static const BTLV_INPUT_KEYTBL  RotateKeyC_All[] = {  
   //  LU  RU  LD  RD  LD2 RD2   U                   D                   L                   R   A   B
-  { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  1,  0,  BTLV_INPUT_NOMOVE },  //0
-  //  LU  RU  LD  RD  LD2 RD2   U                   D                   L   R   A   B
-  { { 2,  2,  2,  2,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  2,  2,  BTLV_INPUT_NOMOVE },  //1
+  { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  2,  0,  BTLV_INPUT_NOMOVE },  //0
   //  LU  RU  LD  RD  LD2 RD2   U                   D                   L   R                   A   B
-  { { 1,  1,  1,  1,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE },  //2
+  { { 1,  1,  1,  1,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  2,  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE },  //1
+  //  LU  RU  LD  RD  LD2 RD2   U                   D                   L   R   A   B
+  { { 2,  2,  2,  2,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  1,  2,  BTLV_INPUT_NOMOVE },  //2
 };
 
 static const BTLV_INPUT_KEYTBL  *RotateKeyData[ 4 ] = { 
