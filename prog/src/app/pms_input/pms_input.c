@@ -1847,6 +1847,20 @@ static GFL_PROC_RESULT MainProc_Category( PMS_INPUT_WORK* wk, int* seq )
 	*/
 static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
 {
+  if( wk->key_trg & PAD_BUTTON_START )
+  {
+    if( wk->category_mode == CATEGORY_MODE_INITIAL )
+    {
+      // 検索開始
+      PMSI_SEARCH_Start( wk->swk );
+      
+      // 単語リストへ
+      set_nextproc_category_to_wordwin( wk );
+      *seq = SEQ_CA_NEXTPROC;
+      return;
+    }
+  }
+  
   //切替ボタン
 	if(	(wk->touch_button == TOUCH_BUTTON_CHANGE) || (wk->key_trg & PAD_BUTTON_SELECT)
 	){
@@ -1918,7 +1932,6 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
       {
         GFL_SOUND_PlaySE( SOUND_DISABLE_CATEGORY );
       }
-		  return;
 	  }
     // イニシャルモードは文字入力
     else
@@ -1927,6 +1940,7 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
       PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
       GFL_SOUND_PlaySE( SOUND_WORD_INPUT );
     }
+    return;
   }
 
   // カーソル移動チェック
@@ -2812,11 +2826,11 @@ static int check_wordwin_key( WORDWIN_WORK* wordwin, u16 key )
 			wordwin->cursor_y++;
 			pos = get_wordwin_pos( wordwin );
 
-			if( pos < wordwin->word_max )
+			if( pos < wordwin->word_max - PMSI_DUMMY_LABEL_NUM )
 			{
 				return WORDWIN_RESULT_CURSOR_MOVE;
 			}
-			if( pos == wordwin->word_max )
+			else if( pos == wordwin->word_max - PMSI_DUMMY_LABEL_NUM )
 			{
 				if( pos & 1 )
 				{
@@ -2824,17 +2838,18 @@ static int check_wordwin_key( WORDWIN_WORK* wordwin, u16 key )
 					return WORDWIN_RESULT_CURSOR_MOVE;
 				}
 			}
-			wordwin->cursor_y--;
-			wordwin->back_f = TRUE;
-			return WORDWIN_RESULT_CURSOR_MOVE;
-	//		return WORDWIN_RESULT_INVALID;
+      else
+      {
+			  wordwin->cursor_y--;
+			  return WORDWIN_RESULT_INVALID;
+      }
 		}
 		else if( wordwin->line < wordwin->line_max )
 		{
 			wordwin->scroll_lines = 1;
 			wordwin->line++;
 			
-			if( get_wordwin_pos( wordwin ) < wordwin->word_max )
+			if( get_wordwin_pos( wordwin ) < wordwin->word_max - PMSI_DUMMY_LABEL_NUM )
 			{
 				return WORDWIN_RESULT_SCROLL;
 			}
@@ -2877,7 +2892,7 @@ static int check_wordwin_key( WORDWIN_WORK* wordwin, u16 key )
 	if( key & (PAD_KEY_LEFT | PAD_KEY_RIGHT ) )
 	{
 		wordwin->cursor_x ^= 1;
-		if( get_wordwin_pos( wordwin ) < wordwin->word_max )
+		if( get_wordwin_pos( wordwin ) < wordwin->word_max - PMSI_DUMMY_LABEL_NUM )
 		{
 			return WORDWIN_RESULT_CURSOR_MOVE;
 		}
@@ -3000,8 +3015,8 @@ static BOOL set_select_word( PMS_INPUT_WORK* wk )
 	if( wk->category_mode == CATEGORY_MODE_GROUP ){
 		word = PMSI_DATA_GetGroupEnableWordCode( wk->dwk, wk->category_pos, word_idx );
 	}else{
-//    word = PMSI_SEARCH_GetWordCode( wk->swk, wk->category_pos, word_idx );
-		word = PMSI_DATA_GetInitialEnableWordCode( wk->dwk, wk->category_pos, word_idx );
+    word = PMSI_SEARCH_GetWordCode( wk->swk, word_idx );
+//  word = PMSI_DATA_GetInitialEnableWordCode( wk->dwk, wk->category_pos, word_idx );
 	}
 
 	OS_TPrintf(" WordSet pos=%d, idx = %d, word = 0x%f \n",wk->edit_pos,word_idx,word);
@@ -3574,7 +3589,6 @@ u32 PMSI_GetCategoryCursorPos( const PMS_INPUT_WORK* wk )
 }
 
 
-
 //------------------------------------------------------------------
 /**
 	* カテゴリ内の有効単語総数を返す
@@ -3593,7 +3607,7 @@ u32 PMSI_GetCategoryWordMax( const PMS_INPUT_WORK* wk )
 	}
 	else
 	{
-    return PMSI_SEARCH_GetResultCount( wk->swk );
+    return PMSI_SEARCH_GetResultCount( wk->swk ) + PMSI_DUMMY_LABEL_NUM;
 //		return PMSI_DATA_GetInitialEnableWordCount( wk->dwk, wk->category_pos );
 	}
 }

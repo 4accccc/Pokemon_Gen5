@@ -42,5 +42,6 @@ extern void PMSI_SEARCH_GetInputWord( PMS_INPUT_SEARCH* wk, STRBUF* out_buf );
 extern BOOL PMSI_SEARCH_Start( PMS_INPUT_SEARCH*wk );
 extern u16 PMSI_SEARCH_GetResultCount( PMS_INPUT_SEARCH* wk );
 extern void PMSI_SEARCH_GetResultString( PMS_INPUT_SEARCH* wk, u8 result_idx, STRBUF* dst_buf );
+extern PMS_WORD PMSI_SEARCH_GetWordCode( PMS_INPUT_SEARCH* wk, u32 cur_pos );
 
 

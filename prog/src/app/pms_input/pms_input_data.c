@@ -527,7 +527,6 @@ void PMSI_DATA_GetInitialEnableWord( const PMS_INPUT_DATA* pmsi, u32 initial, u3
 //------------------------------------------------------------------
 PMS_WORD PMSI_DATA_GetInitialEnableWordCode( const PMS_INPUT_DATA* pmsi, u32 initial, u32 word_idx )
 {
-  GF_ASSERT(0);
 	if( pmsi->InitialEnableWordCnt[initial] )
 	{
 		u32 pos = pmsi->InitialEnableWordPos[initial] + word_idx;

@@ -536,7 +536,7 @@ void PMSIV_WORDWIN_MoveCursor( PMSIV_WORDWIN* wk, u32 pos )
 	u32 x, y;
 
 	if(pos == 0xFFFFFFFF){	//back
-    GF_ASSERT(0); // 「もどる」カーソルは廃止
+//    GF_ASSERT(0); // 「もどる」カーソルは廃止
 #if 0
 		clPos.x = CURSOR_BACK_XPOS;
 		clPos.y = CURSOR_BACK_YPOS;
@@ -747,7 +747,7 @@ static void print_word( PMSIV_WORDWIN* wk, u32 wordnum, u32 v_line )
 	wordnum -= PMSI_DUMMY_LABEL_NUM;
 	
   // デコメ例外処理
-  if( PMSI_GetCategoryCursorPos( wk->mwk ) == CATEGORY_GROUP_PICTURE )
+  if( PMSI_GetCategoryMode( wk->mwk ) == CATEGORY_MODE_GROUP && PMSI_GetCategoryCursorPos( wk->mwk ) == CATEGORY_GROUP_PICTURE )
   {
     GFL_CLACTPOS pos;
 

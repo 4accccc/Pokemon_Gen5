@@ -361,6 +361,34 @@ void PMSI_SEARCH_GetResultString( PMS_INPUT_SEARCH* wk, u8 result_idx, STRBUF* d
   GFL_STR_DeleteBuffer( buf );
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  検索結果のインデックスから PMS_WORD を取得
+ *
+ *	@param	PMS_INPUT_SEARCH* wk
+ *	@param	cur_pos
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+PMS_WORD PMSI_SEARCH_GetWordCode( PMS_INPUT_SEARCH* wk, u32 cur_pos )
+{
+  u32 initial;
+  u32 word_idx;
+
+  GF_ASSERT( wk );
+  GF_ASSERT( cur_pos <  wk->search_hitnum );
+  GF_ASSERT( wk->word_code[0] != INI_DIS );
+
+  initial = wk->word_code[0];
+
+  word_idx = wk->search_result[ cur_pos ].str_idx;
+
+  HOSAKA_Printf("cur_pos=%d word_idx=%d \n", cur_pos, word_idx );
+
+  return PMSI_DATA_GetInitialEnableWordCode( wk->dwk, initial, word_idx );
+}
+
 //=============================================================================
 /**
  *								static関数

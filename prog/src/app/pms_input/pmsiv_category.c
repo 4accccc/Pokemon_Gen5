@@ -394,14 +394,16 @@ static u32 setup_initial_window( PMSIV_CATEGORY* wk, u32 charpos )
 
 #if 0
 		if( PMSI_DATA_GetInitialEnableWordCount(wk->dwk, i) )
+#endif
 		{
 			GFL_FONTSYS_SetColor( CATEGORY_WIN_COL_LETTER, CATEGORY_WIN_COL_SHADOW, CATEGORY_WIN_COL_GROUND );
 		}
+#if 0
 		else
-#endif
 		{
 			GFL_FONTSYS_SetColor( CATEGORY_WIN_UNKNOWN_COL_LETTER, CATEGORY_WIN_UNKNOWN_COL_SHADOW, CATEGORY_WIN_COL_GROUND );
 		}
+#endif
 		
 		PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), x, y, buf,fontHandle );
 	}
@@ -438,7 +440,7 @@ static u32 setup_input_window( PMSIV_CATEGORY* wk, u32 charpos )
   charpos += INPUT_WIN_CHARSIZE;
 
   // ‚Ü‚¾ƒXƒNƒŠ[ƒ“‚Íì‚ç‚È‚¢
-	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(win),CATEGORY_WIN_COL_GROUND);
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win), CATEGORY_INPUT_WIN_COL_B);
   GFL_BMPWIN_TransVramCharacter(win);
 
 	wk->winInput = win;
@@ -828,6 +830,7 @@ void PMSIV_CATEGORY_StartModeChange( PMSIV_CATEGORY* wk )
 		  FRM_MAIN_CATEGORY, 0, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 	  
     GFL_BMPWIN_MakeScreen( wk->winInitial );
+    GFL_BMPWIN_MakeScreen( wk->winInput );
   }
 	
   GFL_ARC_CloseDataHandle( p_handle );
