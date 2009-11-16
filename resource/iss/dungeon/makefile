@@ -56,7 +56,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 $(ISS_D_DATA): dungeon.txt
 	ruby dungeon.rb dungeon.txt $(BIN)
 
-$dungeon.txt: dungeon.xls
+dungeon.txt: dungeon.xls
 	ruby $(XLSCONV) dungeon.xls > dungeon.txt
 
 $(BIN)/iss_dungeon_data.list: dungeon.xls
