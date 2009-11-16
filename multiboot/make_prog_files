@@ -1,11 +1,12 @@
 #こんな感じで各自のソースを追加してください
-SRCS	+=	ohno/dl_fatal_error.c \
-		gfl_graphic/net_icondata.c \
-		net_define.c \
-		net/net_dev.c \
+SRCS	+= \
 		dl_child/dlplay_child_main.c \
 		dl_child/dlplay_data_main.c \
 		dl_child/dlplay_child_pt.c \
+		net_err_dl.c \
+		fatal_error_dl.c \
+		$(PARENT_SRC)/net/net_dev.c \
+		$(PARENT_SRC)/net/net_icondata.c \
 		$(PARENT_SRC)/net/net_devwireless.c \
 		$(PARENT_SRC)/net/wih.c \
 		$(PARENT_SRC)/net/net_whpipe.c \
@@ -13,7 +14,7 @@ SRCS	+=	ohno/dl_fatal_error.c \
 		$(PARENT_SRC)/test/dlplay/dlplay_func.c \
 		$(PARENT_SRC)/print/gf_font.c \
 		$(PARENT_SRC)/print/printsys.c \
-		$(PARENT_SRC)/system/net_err.c \
+		$(PARENT_SRC)/system/net_define.c \
 		$(PARENT_SRC)/system/wipe.c \
 		$(PARENT_SRC)/system/wipe_sub.c \
 		$(PARENT_SRC)/system/wipe_wnd.c \

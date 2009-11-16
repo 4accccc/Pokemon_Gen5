@@ -70,6 +70,7 @@ void NitroMain(void)
   // ïKóvÇ»TCBÇ∆Ç©ìoò^ÇµÇƒÅc
   GameInit();
 
+/*
 #ifdef PM_DEBUG
   DEBUG_PAUSE_Init();
   {
@@ -80,7 +81,8 @@ void NitroMain(void)
     DEBUGWIN_InitSystem(charArea , scrnArea , plttArea);
   }
 #endif
-
+*/
+  OS_TPrintf("[%d]\n",PM_DEBUG);
 
   while(TRUE){
 #ifdef PM_DEBUG
@@ -101,7 +103,7 @@ void NitroMain(void)
 
 #ifdef PM_DEBUG
     //DEBUG_PerformanceDisp();
-    DEBUG_PerformanceEndLine(PERFORMANCE_ID_MAIN);
+    //DEBUG_PerformanceEndLine(PERFORMANCE_ID_MAIN);
 #endif //PM_DEBUG
 
     // VBLANKë“Çø
@@ -170,7 +172,7 @@ static void GameVBlankFunc(void)
   GFLUser_VIntr();
 }
 
-#include "src/ohno/dl_fatal_error.h"
+#include "../prog/src/test/ohno/fatal_error.h"
 //------------------------------------------------------------------
 /**
  * @brief   ÉQÅ[ÉÄÇ≤Ç∆ÇÃèâä˙âªèàóù

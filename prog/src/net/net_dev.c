@@ -17,10 +17,21 @@
 
 
 //対応する通信は1 しない場合0
+#ifndef MULTI_BOOT_MAKE
+
 #define SUPPORT_WIFI_  (1)   // WIFI通信
 #define SUPPORT_WIRELESS_  (1)   // ワイヤレス通信
 #define SUPPORT_IRC_  (1)   // IRC通信
 #define SUPPORT_OVERLAY_ (1)  //オーバーレイを行う場合
+
+#else
+
+#define SUPPORT_WIFI_  (0)   // WIFI通信
+#define SUPPORT_WIRELESS_  (1)   // ワイヤレス通信
+#define SUPPORT_IRC_  (0)   // IRC通信
+#define SUPPORT_OVERLAY_ (0)  //オーバーレイを行う場合
+
+#endif //MULTI_BOOT_MAKE
 
 
 extern GFLNetDevTable *NET_GetIrcDeviceTable(void);
