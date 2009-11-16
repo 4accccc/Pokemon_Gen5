@@ -188,6 +188,7 @@ enum {
 	INI_YO,
 #endif
 	INI_WA,
+	INI_BOU,
 	INI_OTHER,
 
 	INI_BACK    = CATEGORY_POS_BACK,

@@ -111,7 +111,7 @@ extern u32  PMSI_DATA_GetInitialEnableWordCount( const PMS_INPUT_DATA* pmsi, u32
 extern void PMSI_DATA_GetInitialEnableWord( const PMS_INPUT_DATA* pmsi, u32 initial, u32 word_idx, STRBUF* buf );
 extern PMS_WORD PMSI_DATA_GetInitialEnableWordCode( const PMS_INPUT_DATA* pmsi, u32 initial, u32 word_idx );
 
-
+extern BOOL PMSI_DATA_GetWordEnableFlag( const PMS_INPUT_DATA* data, u32 initial, u32 index );
 
 
 

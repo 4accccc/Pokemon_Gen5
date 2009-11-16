@@ -3019,7 +3019,7 @@ static BOOL set_select_word( PMS_INPUT_WORK* wk )
 //  word = PMSI_DATA_GetInitialEnableWordCode( wk->dwk, wk->category_pos, word_idx );
 	}
 
-	OS_TPrintf(" WordSet pos=%d, idx = %d, word = 0x%f \n",wk->edit_pos,word_idx,word);
+	OS_TPrintf(" WordSet pos=%d, idx = %d, word = %d \n",wk->edit_pos,word_idx,word);
 	
   switch( wk->input_mode ){
 	case PMSI_MODE_SINGLE:

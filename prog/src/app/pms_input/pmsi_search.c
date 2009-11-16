@@ -270,6 +270,44 @@ void PMSI_SEARCH_GetInputWord( PMS_INPUT_SEARCH* wk, STRBUF* out_buf )
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  ñ≥å¯ï∂éöÇå„ÇÎÇ…âÒÇ∑
+ *
+ *	@param	void* elem1
+ *	@param	elem2 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static s32 qsort_result( void* elem1, void* elem2 )
+{
+  MSGSEARCH_RESULT* p1 = (MSGSEARCH_RESULT*) elem1;
+  MSGSEARCH_RESULT* p2 = (MSGSEARCH_RESULT*) elem2;
+  
+  // ìôÇµÇ¢
+  if( p1->str_idx  == p2->str_idx )
+  {
+    return 0;
+  }
+  // ç~èá
+  else if( p1->str_idx > p2->str_idx )
+  {
+    return 1;
+  }
+  else
+  {
+    return -1;
+  }
+
+
+  GF_ASSERT(0);
+    
+  return 0;
+
+}
+
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  åüçıäJén
  *
  *	@param	PMSI_INPUT_SEARCH*wk 
@@ -296,7 +334,7 @@ BOOL PMSI_SEARCH_Start( PMS_INPUT_SEARCH*wk )
   GFL_STR_ClearBuffer( wk->str_search );
   PMSI_SEARCH_GetInputWord( wk, wk->str_search );
 
-#if 1
+#if 0
   {
     const STRCODE *p1 = GFL_STR_GetStringCodePointer( wk->str_search );
     
@@ -311,9 +349,49 @@ BOOL PMSI_SEARCH_Start( PMS_INPUT_SEARCH*wk )
   
   // åüçı
   {
-    wk->search_hitnum = MSGSEARCH_Search( wk->search_wk, search_idx, 0, wk->str_search, wk->search_result ,WORD_SEARCH_MAX );
+    int i;
+    u32 hitnum;
+    u32 desable_cnt = 0;
+
+    hitnum = MSGSEARCH_Search( wk->search_wk, search_idx, 0, wk->str_search, wk->search_result ,WORD_SEARCH_MAX );
+    
+    HOSAKA_Printf("search hitnum = %d \n\n", hitnum);
+
+    // åüçıåãâ Ç©ÇÁñ≥å¯Ç»Ç‡ÇÃÇîrèú
+    for( i=0; i<hitnum; i++ )
+    {
+      u32 str_idx = wk->search_result[i].str_idx;
+
+      if( PMSI_DATA_GetWordEnableFlag( wk->dwk, search_idx, str_idx ) == FALSE )
+      {
+        wk->search_result[i].str_idx = 0xffff; // ñ≥å¯íl
+        desable_cnt++;
+      }
+    }
+
+#ifdef PM_DEBUG 
+    for( i=0; i<hitnum; i++ )
+    {
+      HOSAKA_Printf("[%d] str_idx=%d\n", i, wk->search_result[i].str_idx );
+    }
+#endif
+      
+    HOSAKA_Printf("=======\n");
+
+    MATH_QSort( (void*)wk->search_result, hitnum, sizeof(MSGSEARCH_RESULT), qsort_result, NULL );
+    
+#ifdef PM_DEBUG 
+    for( i=0; i<hitnum; i++ )
+    {
+      HOSAKA_Printf("[%d] str_idx=%d\n", i, wk->search_result[i].str_idx );
+    }
+#endif
+
+    // åüçıåãâ Ç©ÇÁñ≥å¯Ç…ÇµÇΩå¬êîÇéÊìæ
+    wk->search_hitnum = hitnum - desable_cnt;
+
+    HOSAKA_Printf("hit enable num = %d \n\n", wk->search_hitnum);
   
-    HOSAKA_Printf("hitnum = %d \n\n", wk->search_hitnum);
   
     return wk->search_hitnum > 0;
   }
@@ -350,15 +428,32 @@ u16 PMSI_SEARCH_GetResultCount( PMS_INPUT_SEARCH* wk )
 //-----------------------------------------------------------------------------
 void PMSI_SEARCH_GetResultString( PMS_INPUT_SEARCH* wk, u8 result_idx, STRBUF* dst_buf )
 {
-  STRBUF* buf;
+  u32 initial;
+  u32 word_idx;
 
   GF_ASSERT( wk );
   GF_ASSERT( result_idx <  wk->search_hitnum );
+  GF_ASSERT( wk->word_code[0] != INI_DIS );
+  
+  initial = wk->word_code[0];
 
-  buf = MSGSEARCH_CreateString( wk->search_wk, &wk->search_result[ result_idx ] );
+  word_idx = wk->search_result[ result_idx ].str_idx;
 
-  GFL_STR_CopyBuffer( dst_buf, buf );
-  GFL_STR_DeleteBuffer( buf );
+  HOSAKA_Printf("getresult initial=%d result_idx=%d word_idx=%d \n",initial, result_idx, word_idx );
+
+  PMSI_DATA_GetInitialEnableWord( wk->dwk, initial, word_idx, dst_buf );
+
+#if 0
+  {
+    STRBUF* buf;
+
+    buf = MSGSEARCH_CreateString( wk->search_wk, &wk->search_result[ result_idx ] );
+    GFL_STR_CopyBuffer( dst_buf, buf );
+    GFL_STR_DeleteBuffer( buf );
+  }
+#endif
+
+
 }
 
 //-----------------------------------------------------------------------------
@@ -384,7 +479,7 @@ PMS_WORD PMSI_SEARCH_GetWordCode( PMS_INPUT_SEARCH* wk, u32 cur_pos )
 
   word_idx = wk->search_result[ cur_pos ].str_idx;
 
-  HOSAKA_Printf("cur_pos=%d word_idx=%d \n", cur_pos, word_idx );
+  HOSAKA_Printf("initial=%d cur_pos=%d word_idx=%d \n",initial, cur_pos, word_idx );
 
   return PMSI_DATA_GetInitialEnableWordCode( wk->dwk, initial, word_idx );
 }

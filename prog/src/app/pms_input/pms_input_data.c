@@ -507,10 +507,10 @@ u32 PMSI_DATA_GetInitialEnableWordCount( const PMS_INPUT_DATA* pmsi, u32 initial
 //------------------------------------------------------------------
 void PMSI_DATA_GetInitialEnableWord( const PMS_INPUT_DATA* pmsi, u32 initial, u32 word_idx, STRBUF* buf )
 {
-  GF_ASSERT(0); //未使用
 	if( pmsi->InitialEnableWordCnt[initial] )
 	{
 		PMS_WORD  word_code = PMSI_DATA_GetInitialEnableWordCode(pmsi, initial, word_idx);
+    HOSAKA_Printf("word_code=%d \n");
 		PMSW_MAN_CopyStr( pmsi->word_man, word_code, buf );
 	}
 }
@@ -538,6 +538,29 @@ PMS_WORD PMSI_DATA_GetInitialEnableWordCode( const PMS_INPUT_DATA* pmsi, u32 ini
 	}
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  指定単語IDの有効無効チェック
+ *
+ *	@param	const PMS_INPUT_DATA* data
+ *	@param	word 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+BOOL PMSI_DATA_GetWordEnableFlag( const PMS_INPUT_DATA* data, u32 initial, u32 index )
+{
+  PMS_WORD word;
+
+  GF_ASSERT( initial < INITIAL_MAX );
+  
+  word = PMS_InitialTable[ initial ][ index ];
+
+  HOSAKA_Printf("PMSI_DATA_GetWordEnableFlag initial=%d, index=%d, word=%d \n", 
+      initial, index, word);
+
+  return GetWordEnableFlag( data, word );
+}
 
 
 //======================================================================================
