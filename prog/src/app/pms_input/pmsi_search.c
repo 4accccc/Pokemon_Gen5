@@ -96,7 +96,7 @@ static void debug_word_code_print( PMS_INPUT_SEARCH* wk )
  *	@brief  検索モジュール 生成
  *
  *	@param	const PMS_INPUT_WORK* mwk
- *	@param	PMS_INPUT_DATA* dwk
+ *	@param	const PMS_INPUT_DATA* dwk
  *	@param	heap_id 
  *
  *	@retval
@@ -236,7 +236,7 @@ void PMSI_SEARCH_ClearWord( PMS_INPUT_SEARCH* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  入力された文字列をセット
+ *	@brief  入力された文字列をout_bufにセット
  *
  *	@param	PMSI_INPUT_SEARCH* wk
  *	@param	out_buf 
@@ -244,7 +244,7 @@ void PMSI_SEARCH_ClearWord( PMS_INPUT_SEARCH* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void PMSI_SEARCH_SetInputWord( PMS_INPUT_SEARCH* wk, STRBUF* out_buf )
+void PMSI_SEARCH_GetInputWord( PMS_INPUT_SEARCH* wk, STRBUF* out_buf )
 {
   int i;
   STRCODE code[ WORD_CODE_MAX + 1 ];
@@ -294,7 +294,7 @@ BOOL PMSI_SEARCH_Start( PMS_INPUT_SEARCH*wk )
 
   // 文字生成
   GFL_STR_ClearBuffer( wk->str_search );
-  PMSI_SEARCH_SetInputWord( wk, wk->str_search );
+  PMSI_SEARCH_GetInputWord( wk, wk->str_search );
 
 #if 1
   {
@@ -343,16 +343,22 @@ u16 PMSI_SEARCH_GetResultCount( PMS_INPUT_SEARCH* wk )
  *
  *	@param	PMS_INPUT_SEARCH* wk
  *	@param	result_idx  
+ *	@param  dst_buf
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-STRBUF* PMSI_SEARCH_CreateResultString( PMS_INPUT_SEARCH* wk, u8 result_idx )
+void PMSI_SEARCH_GetResultString( PMS_INPUT_SEARCH* wk, u8 result_idx, STRBUF* dst_buf )
 {
+  STRBUF* buf;
+
   GF_ASSERT( wk );
   GF_ASSERT( result_idx <  wk->search_hitnum );
 
-  return MSGSEARCH_CreateString( wk->search_wk, &wk->search_result[ result_idx ] );
+  buf = MSGSEARCH_CreateString( wk->search_wk, &wk->search_result[ result_idx ] );
+
+  GFL_STR_CopyBuffer( dst_buf, buf );
+  GFL_STR_DeleteBuffer( buf );
 }
 
 //=============================================================================
