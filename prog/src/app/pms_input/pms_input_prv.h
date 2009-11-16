@@ -278,7 +278,7 @@ extern u32 PMSI_GetMenuCursorPos( const PMS_INPUT_WORK* wk );
 extern BOOL PMSI_GetLockFlag( const PMS_INPUT_WORK* wk );
 
 extern GFL_TCBSYS* PMSI_GetTcbSystem( const PMS_INPUT_WORK* wk );
-extern void PMSI_SetInputWord( const PMS_INPUT_WORK* wk, STRBUF* out_buf );
+extern void PMSI_GetInputWord( const PMS_INPUT_WORK* wk, STRBUF* out_buf );
 
 //------------------------------------------------------
 /**
