@@ -52,7 +52,7 @@ struct _ISS_SYS
 	ISS_CITY_SYS*    issC;	// ŠX
 	ISS_ROAD_SYS*    issR;	// “¹˜H
 	ISS_DUNGEON_SYS* issD;	// ƒ_ƒ“ƒWƒ‡ƒ“ 
-  ISS_ZONE_SYS*    issZ;  // ƒ][ƒ“
+  //ISS_ZONE_SYS*    issZ;  // ƒ][ƒ“
 
 	// Ä¶’†‚ÌBGM”Ô†
 	u16 bgmNo; 
@@ -113,7 +113,7 @@ ISS_SYS* ISS_SYS_Create( GAMEDATA* p_gdata, HEAPID heap_id )
 	p_sys->issC      = ISS_CITY_SYS_Create( p_player, heap_id );
 	p_sys->issR      = ISS_ROAD_SYS_Create( p_player, heap_id );
 	p_sys->issD      = ISS_DUNGEON_SYS_Create( p_gdata, p_player, heap_id );
-  p_sys->issZ      = ISS_ZONE_SYS_Create( p_gdata, p_player, heap_id );
+  //p_sys->issZ      = ISS_ZONE_SYS_Create( p_gdata, p_player, heap_id );
 	p_sys->bgmNo     = INVALID_BGM_NO;
 	p_sys->frame     = 0;
 
@@ -134,7 +134,7 @@ void ISS_SYS_Delete( ISS_SYS* p_sys )
 	ISS_CITY_SYS_Delete( p_sys->issC );
 	ISS_ROAD_SYS_Delete( p_sys->issR );
 	ISS_DUNGEON_SYS_Delete( p_sys->issD );
-  ISS_ZONE_SYS_Delete( p_sys->issZ );
+  //ISS_ZONE_SYS_Delete( p_sys->issZ );
 
 	// –{‘Ì‚ð”jŠü
 	GFL_HEAP_FreeMemory( p_sys );
@@ -173,7 +173,7 @@ void ISS_SYS_Update( ISS_SYS* p_sys )
 	ISS_DUNGEON_SYS_Update( p_sys->issD );
 
   // ƒ][ƒ“ISS
-  ISS_ZONE_SYS_Update( p_sys->issZ );
+  //ISS_ZONE_SYS_Update( p_sys->issZ );
 }
 	
 
@@ -200,7 +200,7 @@ void ISS_SYS_ZoneChange( ISS_SYS* p_sys, u16 next_zone_id )
 	ISS_DUNGEON_SYS_ZoneChange( p_sys->issD, next_zone_id );
 
   // ƒ][ƒ“ISS
-  ISS_ZONE_SYS_ZoneChange( p_sys->issZ, next_zone_id );
+  //ISS_ZONE_SYS_ZoneChange( p_sys->issZ, next_zone_id );
 
 	// DEBUG:
 	//OBATA_Printf( "ISS_SYS_ZoneChange()\n" );
