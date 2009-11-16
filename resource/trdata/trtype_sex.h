@@ -3,7 +3,7 @@
  * @file	trtype_sex.h
  * @bfief	トレーナー性別定義
  * @author	TrainerDataConverter
- * @date	2009-10-30
+ * @date	2009-11-16
  * @author	このファイルは、コンバータが吐き出したファイルです
 */
 //============================================================================================
@@ -59,5 +59,32 @@ static	const	u8	TrTypeSexTable[]={
 	PTL_SEX_MALE,		//さぎょういん
 	PTL_SEX_MALE,		//バスケせんしゅ
 	PTL_SEX_FEMALE,		//けんきゅういん
+	PTL_SEX_FEMALE,		//ＯＬ
+	PTL_SEX_FEMALE,		//エリートトレーナー
+	PTL_SEX_MALE,		//エリートトレーナー
+	PTL_SEX_MALE,		//カラテおう
+	PTL_SEX_MALE,		//けんきゅういん
+	PTL_SEX_MALE,		//サッカーせんしゅ
+	PTL_SEX_MALE,		//ジムリーダー
+	PTL_SEX_FEMALE,		//ジムリーダー
+	PTL_SEX_MALE,		//ジムリーダー
+	PTL_SEX_MALE,		//スキンヘッズ
+	PTL_SEX_MALE,		//せいそういん
+	PTL_SEX_MALE,		//だいすきクラブ
+	PTL_SEX_FEMALE,		//だいすきクラブ
+	PTL_SEX_MALE,		//ドクター
+	PTL_SEX_FEMALE,		//ナース
+	PTL_SEX_MALE,		//バッドチーム
+	PTL_SEX_FEMALE,		//バトルガール
+	PTL_SEX_FEMALE,		//パラソルおねえさん
+	PTL_SEX_MALE,		//ビジネスマン
+	PTL_SEX_MALE,		//ビジネスマン
+	PTL_SEX_MALE,		//ファンクラブ
+	PTL_SEX_FEMALE,		//ファンクラブ
+	PTL_SEX_MALE,		//ベテラントレーナー
+	PTL_SEX_FEMALE,		//ベテラントレーナー
+	PTL_SEX_MALE,		//ぼうそうぞく
+	PTL_SEX_MALE,		//やきゅうせんしゅ
+	PTL_SEX_MALE,		//やまおとこ
 };
 

@@ -528,6 +528,114 @@
 		<language name="JPN" width="216">けんきゅういん</language>
 	</row>
 
+	<row id="MSG_TRTYPE_OL">
+		<language name="JPN" width="216">ＯＬ</language>
+	</row>
+
+	<row id="MSG_TRTYPE_ELITEW">
+		<language name="JPN" width="216">エリートトレーナー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_ELITEM">
+		<language name="JPN" width="216">エリートトレーナー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_KARATE">
+		<language name="JPN" width="216">カラテおう</language>
+	</row>
+
+	<row id="MSG_TRTYPE_SCIENTISTM">
+		<language name="JPN" width="216">けんきゅういん</language>
+	</row>
+
+	<row id="MSG_TRTYPE_SOCCER">
+		<language name="JPN" width="216">サッカーせんしゅ</language>
+	</row>
+
+	<row id="MSG_TRTYPE_LEADER7">
+		<language name="JPN" width="216">ジムリーダー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_LEADER8A">
+		<language name="JPN" width="216">ジムリーダー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_LEADER8B">
+		<language name="JPN" width="216">ジムリーダー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_HEADS">
+		<language name="JPN" width="216">スキンヘッズ</language>
+	</row>
+
+	<row id="MSG_TRTYPE_CLEANING">
+		<language name="JPN" width="216">せいそういん</language>
+	</row>
+
+	<row id="MSG_TRTYPE_DAISUKIM">
+		<language name="JPN" width="216">だいすきクラブ</language>
+	</row>
+
+	<row id="MSG_TRTYPE_DAISUKIW">
+		<language name="JPN" width="216">だいすきクラブ</language>
+	</row>
+
+	<row id="MSG_TRTYPE_DOCTOR">
+		<language name="JPN" width="216">ドクター</language>
+	</row>
+
+	<row id="MSG_TRTYPE_NURSE">
+		<language name="JPN" width="216">ナース</language>
+	</row>
+
+	<row id="MSG_TRTYPE_BADTEAM">
+		<language name="JPN" width="216">バッドチーム</language>
+	</row>
+
+	<row id="MSG_TRTYPE_BATTLEG">
+		<language name="JPN" width="216">バトルガール</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PARASOL">
+		<language name="JPN" width="216">パラソルおねえさん</language>
+	</row>
+
+	<row id="MSG_TRTYPE_BUSINESS1">
+		<language name="JPN" width="216">ビジネスマン</language>
+	</row>
+
+	<row id="MSG_TRTYPE_BUSINESS2">
+		<language name="JPN" width="216">ビジネスマン</language>
+	</row>
+
+	<row id="MSG_TRTYPE_FANM">
+		<language name="JPN" width="216">ファンクラブ</language>
+	</row>
+
+	<row id="MSG_TRTYPE_FANW">
+		<language name="JPN" width="216">ファンクラブ</language>
+	</row>
+
+	<row id="MSG_TRTYPE_VETERANM">
+		<language name="JPN" width="216">ベテラントレーナー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_VETERANW">
+		<language name="JPN" width="216">ベテラントレーナー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_BADRIDER">
+		<language name="JPN" width="216">ぼうそうぞく</language>
+	</row>
+
+	<row id="MSG_TRTYPE_BASEBALL">
+		<language name="JPN" width="216">やきゅうせんしゅ</language>
+	</row>
+
+	<row id="MSG_TRTYPE_MOUNT">
+		<language name="JPN" width="216">やまおとこ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

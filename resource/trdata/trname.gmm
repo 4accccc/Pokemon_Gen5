@@ -712,6 +712,418 @@
 		<language name="JPN" width="216">ライバル</language>
 	</row>
 
+	<row id="ol_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="ol_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="ol_03">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="ol_04">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="waiter_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="waitress_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="elitew_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="elitew_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="elitew_03">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="elitew_04">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="elitem_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="elitem_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="elitem_03">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="elitem_04">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="princess_03">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="prince_03">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="karate_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="karate_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="karate_03">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="scientistm_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="scientistm_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="scientistm_03">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="scientistm_04">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="scientistw_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="scientistw_03">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="espm_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="espm_03">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="espw_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="espw_03">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="worker2_05">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="worker2_06">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="worker2_07">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="worker2_08">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="worker2_09">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="worker2_10">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="worker2_11">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="soccer_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="soccer_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="leader7_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="leader8a_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="leader8b_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="heads_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="heads_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="heads_03">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="cleaning_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="daisukim_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="daisukiw_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="tanpan_05">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="tanpan_06">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="tanpan_07">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="tanpan_08">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="tanpan_09">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="tanpan_10">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="tanpan_11">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="tanpan_12">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="fishing_03">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="fishing_04">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="doctor_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="doctor_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="nurse_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="backpackerm_03">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="backpackerm_04">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="backpackerw_03">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="backpackerw_04">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="badteam_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="battleg_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="battleg_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="battleg_03">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="parasol_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="parasol_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="parasol_03">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="parasol_04">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="business1_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="business1_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="business1_03">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="business1_04">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="business1_05">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="business2_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="business2_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="fanm_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="fanm_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="fanm_03">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="fanw_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="fanw_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="football_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="veteranm_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="veteranw_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="badrider_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="badrider_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="rangerm_03">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="rangerm_04">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="rangerm_05">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="rangerm_06">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="rangerw_03">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="rangerw_04">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="rangerw_05">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="rangerw_06">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="mini_04">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="baseball_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="baseball_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="mount_01">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="mount_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="mount_03">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
