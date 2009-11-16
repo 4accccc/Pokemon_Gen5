@@ -5,10 +5,10 @@
 #
 # 使用方法：convAttr24.rb imput.bin output.bin
 #
-#  xyz xyz dd attrの並びを
+#  xyz xyz dd attr value tribitの並びを
 #
-#  xyz xyz dd
-#  attr  に変更する
+#  xyz xyz dd  attr value と
+#  tribitarray  に変更する
 #
 STR_USAGE = "use: ruby convAttr24.rb imput.bin output.bin"
 
@@ -56,14 +56,23 @@ class AttrData
     outFH.write(@Z2.pack("s"))
     outFH.write(@D1.pack("l"))
     outFH.write(@D2.pack("l"))
+    outFH.write(@attrPattern.pack("c"))
+    outFH.write(@value.pack("c"))
   end
   
   
   def outData2(outFH)
-    outFH.write(@attrPattern.pack("s"))
-    outFH.write(@value.pack("c"))
+#    outFH.write(@attrPattern.pack("B1"))
   end
   
+  def GetTriBit()
+    num = @value[0]
+    if num < 0
+      return 1
+    else
+      return 0
+    end
+  end
   
   
 end
@@ -110,10 +119,22 @@ def OutFile(dp3Array, file , xyarray )
   dp3Array.each{ | bm3dp |
     bm3dp.outData1(outFH)
   }
-  dp3Array.each{ | bm3dp |
-    bm3dp.outData2(outFH)
-  }
   
+  cnt = 0
+  bitshift = 0
+  dp3Array.each{ | bm3dp |
+    bit = bm3dp.GetTriBit()
+    bitshift = bitshift << 1
+    bitshift = bitshift + bit
+    cnt = cnt + 1
+    if cnt==8
+      ar = Array.new
+      ar.push(bitshift)
+      outFH.write(ar.pack("c"))
+      bitshift=0
+      cnt=0
+    end
+  }
   outFH.close
 end
 
