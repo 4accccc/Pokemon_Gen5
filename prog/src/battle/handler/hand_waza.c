@@ -537,6 +537,8 @@ static BTL_EVENT_FACTOR*  ADD_Tatarime( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Tatarime( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Acrobat( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Acrobat( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_WideGuard( u16 pri, WazaID waza, u8 pokeID );
+static void handler_WideGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 //=============================================================================================
@@ -754,6 +756,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_TATARIME,        ADD_Tatarime      },
     { WAZANO_AKUROBATTO,      ADD_Acrobat       },
     { WAZANO_BORUTOCHENZI,    ADD_TonboGaeri    },  // ボルトチェンジ=とんぼがえり
+    { WAZANO_WAIDOGAADO,      ADD_WideGuard     },
   };
 
   int i;
@@ -4295,7 +4298,7 @@ static BTL_EVENT_FACTOR*  ADD_Mamoru( u16 pri, WazaID waza, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_EXECUTE_CHECK,  handler_Mamoru_ExeCheck }, // ワザ出し成否チェックハンドラ
-    { BTL_EVENT_UNCATEGORIZE_WAZA,     handler_Mamoru },          // 未分類ワザハンドラ
+    { BTL_EVENT_UNCATEGORIZE_WAZA,   handler_Mamoru },          // 未分類ワザハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
@@ -5504,9 +5507,16 @@ static BTL_EVENT_FACTOR*  ADD_SinpiNoMamori( u16 pri, WazaID waza, u8 pokeID )
 }
 static void handler_SinpiNoMamori( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  BPP_SICK_CONT  cont = BPP_SICKCONT_MakeTurn( 5 );
   BtlSide side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
+#if 1
+  BPP_SICK_CONT  cont = BPP_SICKCONT_MakeTurn( 5 );
   common_SideEffect( myHandle, flowWk, pokeID, work, side, BTL_SIDEEFF_SINPINOMAMORI, cont, BTL_STRID_STD_SinpiNoMamori );
+#else
+// @todo ワイドガードを試すための一時的措置
+  BPP_SICK_CONT  cont = BPP_SICKCONT_MakeTurn( 1 );
+  common_SideEffect( myHandle, flowWk, pokeID, work, side, BTL_SIDEEFF_WIDEGUARD, cont, BTL_STRID_STD_WideGuard );
+#endif
+
 }
 //----------------------------------------------------------------------------------
 /**
@@ -5622,10 +5632,35 @@ static void handler_StealthRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
   BtlSide side = BTL_MAINUTIL_PokeIDtoOpponentSide( pokeID );
   common_SideEffect( myHandle, flowWk, pokeID, work, side, BTL_SIDEEFF_STEALTHROCK, cont, BTL_STRID_STD_StealthRock );
 }
+//----------------------------------------------------------------------------------
+/**
+ * ワイドガード
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_WideGuard( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,  handler_WideGuard   },  // 未分類ワザ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_WideGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  BPP_SICK_CONT  cont = BPP_SICKCONT_MakeTurn( 1 );
+  BtlSide side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
+  common_SideEffect( myHandle, flowWk, pokeID, work, side, BTL_SIDEEFF_WIDEGUARD, cont, BTL_STRID_STD_WideGuard );
+}
+
+//-------------------------------------
+/**
+ *  サイドエフェクトワザ共通
+ */
+//-------------------------------------
 static void common_SideEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work,
   BtlSide side, BtlSideEffect effect, BPP_SICK_CONT cont, u16 strID )
 {
-  BTL_Printf("ワシ=%d, 使ったポケ=%dよ\n", pokeID, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK));
+  BTL_Printf("ワシ=%d, 使ったポケ=%d, エフェクト=%d\n", pokeID, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK), effect);
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     if( BTL_HANDLER_SIDE_Add(side, effect, cont) )
@@ -5633,7 +5668,7 @@ static void common_SideEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
       HANDEX_STR_Setup( &param->str, BTL_STRTYPE_STD, strID );
       HANDEX_STR_AddArg( &param->str, side );
-      BTL_Printf("サイドエフェクト発動　文字列=%d\n", strID);
+      BTL_Printf("サイドエフェクト[%d]発動　文字列=%d\n", effect, strID);
     }
   }
 }
@@ -6307,7 +6342,7 @@ static BTL_EVENT_FACTOR*  ADD_ShadowDive( u16 pri, WazaID waza, u8 pokeID )
     { BTL_EVENT_TAME_START,         handler_ShadowDive_TameStart },     // 溜め開始
     { BTL_EVENT_TAME_RELEASE,       handler_ShadowDive_TameRelease },   // 溜め解放
     { BTL_EVENT_CHECK_MAMORU_BREAK, handler_Feint_MamoruBreak },        // まもる無効化チェック
-    { BTL_EVENT_DAMAGEPROC_END,       handler_ShadowDive_AfterDamage },   // ダメージ処理後
+    { BTL_EVENT_DAMAGEPROC_END,     handler_ShadowDive_AfterDamage },   // ダメージ処理後
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );

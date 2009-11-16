@@ -206,6 +206,7 @@ struct _BTL_SVFLOW_WORK {
   TARGET_POKE_REC     damagedPokemon;
   SVFL_WAZAPARAM      wazaParam;
   BTL_POSPOKE_WORK    pospokeWork;
+  BTL_HANDEX_STR_PARAMS strParam;
   CALC_EXP_WORK       calcExpWork[ BTL_PARTY_MEMBER_MAX ];
 
   BTL_EVENT_WORK_STACK        eventWork;
@@ -494,7 +495,7 @@ static u8 scEvent_getHitPer( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker,
 static BOOL scEvent_IchigekiCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static BOOL scEvent_CheckNotEffect_byType( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender );
 static BOOL scEvent_CheckNotEffect( BTL_SVFLOW_WORK* wk, WazaID waza, u8 lv,
-    const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender );
+    const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, BTL_HANDEX_STR_PARAMS* customMsg );
 static BOOL scEvent_CheckDmgToRecover( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender,
   const SVFL_WAZAPARAM* wazaParam );
 static void scEvent_DmgToRecover( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender );
@@ -2339,7 +2340,6 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, REQWAZA_
 {
   WazaID  orgWaza, actWaza;
   BtlPokePos  orgTargetPos, actTargetPos;
-  BTL_HANDEX_STR_PARAMS  strParam;
   u8 waza_exe_flag, waza_lock_flag;
 
   orgWaza = action->fight.waza;
@@ -2377,9 +2377,9 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, REQWAZA_
     scEvent_GetWazaParam( wk, actWaza, attacker, &wk->wazaParam );
 
     // ワザメッセージ出力
-    if( scEvent_CheckWazaMsgCustom(wk, attacker, orgWaza, actWaza, &strParam) ){
+    if( scEvent_CheckWazaMsgCustom(wk, attacker, orgWaza, actWaza, &wk->strParam) ){
       // 他ワザ呼び出し時など、ワザ名メッセージをカスタマイズした場合
-      handexSub_putString( wk, &strParam );
+      handexSub_putString( wk, &wk->strParam );
     }else{
       scPut_WazaMsg( wk, attacker, actWaza );
     }
@@ -2395,11 +2395,11 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, REQWAZA_
     {
       BTL_POKEPARAM* wazaUser;
       u8 robberPokeID;
-      robberPokeID = scproc_Check_WazaRob(wk, attacker, actWaza, &wk->targetPokemon, &strParam);
+      robberPokeID = scproc_Check_WazaRob(wk, attacker, actWaza, &wk->targetPokemon, &wk->strParam);
       if( robberPokeID != BTL_POKEID_NULL )
       {
         wazaUser = BTL_POKECON_GetPokeParam( wk->pokeCon, robberPokeID );
-        handexSub_putString( wk, &strParam );
+        handexSub_putString( wk, &wk->strParam );
       }
       else
       {
@@ -3046,10 +3046,14 @@ static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
   {
     if( !IsMustHit(attacker, bpp) )
     {
-      if( scEvent_CheckNotEffect(wk, wazaParam->wazaID, 0, attacker, bpp) )
+      if( scEvent_CheckNotEffect(wk, wazaParam->wazaID, 0, attacker, bpp, &wk->strParam) )
       {
         TargetPokeRec_Remove( targets, bpp );
-        SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NoEffect, BPP_GetID(bpp) );
+        if( HANDEX_STR_IsEnable(&wk->strParam) ){
+          handexSub_putString( wk, &wk->strParam );
+        }else{
+          SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NoEffect, BPP_GetID(bpp) );
+        }
       }
     }
   }
@@ -3058,10 +3062,14 @@ static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
   TargetPokeRec_GetStart( targets );
   while( (bpp = TargetPokeRec_GetNext(targets)) != NULL )
   {
-    if( scEvent_CheckNotEffect(wk, wazaParam->wazaID, 1, attacker, bpp) )
+    if( scEvent_CheckNotEffect(wk, wazaParam->wazaID, 1, attacker, bpp, &wk->strParam) )
     {
       TargetPokeRec_Remove( targets, bpp );
-      SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NoEffect, BPP_GetID(bpp) );
+      if( HANDEX_STR_IsEnable(&wk->strParam) ){
+        handexSub_putString( wk, &wk->strParam );
+      }else{
+        SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NoEffect, BPP_GetID(bpp) );
+      }
     }
   }
 
@@ -3855,9 +3863,8 @@ static BOOL scproc_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKE
     BTL_SICK_AddProc( wk, target, sick );
 
     if( msgCallbackParam == NULL ){
-      BTL_HANDEX_STR_PARAMS   str;
-      BTL_SICK_MakeDefaultMsg( sick, sickCont, target, &str );
-      handexSub_putString( wk, &str );
+      BTL_SICK_MakeDefaultMsg( sick, sickCont, target, &wk->strParam );
+      handexSub_putString( wk, &wk->strParam );
     }else{
       msgCallbackParam->func( wk, target, msgCallbackParam->arg );
     }
@@ -4243,10 +4250,9 @@ static void scproc_Fight_Damage_Kickback( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* at
   u32 damage = scEvent_CalcKickBack( wk, attacker, waza, wazaDamage );
   if( damage )
   {
-    BTL_HANDEX_STR_PARAMS  str;
-    HANDEX_STR_Setup( &str, BTL_STRTYPE_SET, BTL_STRID_SET_ReactionDmg );
-    HANDEX_STR_AddArg( &str, BPP_GetID(attacker) );
-    scproc_SimpleDamage( wk, attacker, damage, &str );
+    HANDEX_STR_Setup( &wk->strParam, BTL_STRTYPE_SET, BTL_STRID_SET_ReactionDmg );
+    HANDEX_STR_AddArg( &wk->strParam, BPP_GetID(attacker) );
+    scproc_SimpleDamage( wk, attacker, damage, &wk->strParam );
   }
 }
 //---------------------------------------------------------------------------------------------
@@ -7040,20 +7046,23 @@ static BOOL scEvent_CheckNotEffect_byType( BTL_SVFLOW_WORK* wk, const SVFL_WAZAP
  * @param   waza
  * @param   attacker
  * @param   defender
+ * @param   customMsg   無効化した場合に特定のメッセージを出力する場合のパラメータ
  *
  * @retval  BOOL    無効な場合TRUE
  */
 //--------------------------------------------------------------------------
 static BOOL scEvent_CheckNotEffect( BTL_SVFLOW_WORK* wk, WazaID waza, u8 lv,
-    const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender )
+    const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, BTL_HANDEX_STR_PARAMS* customMsg )
 {
   BOOL fNoEffect = FALSE;
+  HANDEX_STR_Clear( customMsg );
 
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_NOEFFECT_FLAG, fNoEffect );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_WORK_ADRS, (int)customMsg );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_NOEFFECT_FLAG, fNoEffect );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_NOEFFECT_CHECK_L1+lv );
     fNoEffect = BTL_EVENTVAR_GetValue( BTL_EVAR_NOEFFECT_FLAG );
   BTL_EVENTVAR_Pop();
@@ -9227,9 +9236,8 @@ static u8 scproc_HandEx_cureSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
         {
           if( !param->fStdMsgDisable )
           {
-            BTL_HANDEX_STR_PARAMS  str;
-            if( BTL_SICK_MakeDefaultCureMsg(cured_sick, oldCont, pp_target, itemID, &str) ){
-              handexSub_putString( wk, &str );
+            if( BTL_SICK_MakeDefaultCureMsg(cured_sick, oldCont, pp_target, itemID, &wk->strParam) ){
+              handexSub_putString( wk, &wk->strParam );
             }
           }
           else if( param->fExMsg ){
@@ -9284,12 +9292,11 @@ static void handex_addsick_msg( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target
 {
   const BTL_HANDEX_PARAM_ADD_SICK* param = arg;
 
-  if( param->exStr.type != BTL_STRTYPE_NULL ){
+  if( HANDEX_STR_IsEnable(&param->exStr) ){
     handexSub_putString( wk, &param->exStr );
   }else{
-    BTL_HANDEX_STR_PARAMS  str;
-    BTL_SICK_MakeDefaultMsg( param->sickID, param->sickCont, target, &str );
-    handexSub_putString( wk, &param->exStr );
+    BTL_SICK_MakeDefaultMsg( param->sickID, param->sickCont, target, &wk->strParam );
+    handexSub_putString( wk, &wk->strParam );
   }
 }
 /**
@@ -9853,4 +9860,55 @@ static u8 scproc_HandEx_relive( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
   return 1;
 }
 
+/*
 
+typedef struct {
+
+  u8    type;       ///< ほのお、みず、くさなどのタイプ
+  u8    category;   ///< ワザカテゴリ（※１）
+  s8    priority;   ///< 優先度
+  u8    hitPer;     ///< 命中率
+  u8    damageType; ///< ダメージタイプ（"なし"=0, "物理"=1, "特殊"=2）
+  u8    power;      ///< 威力値
+  u8    critical;   ///< クリティカルランク
+  u8    hitMax;     ///< 最大ヒット回数
+  u8    hitMin;     ///< 最小ヒット回数
+  u8    shrinkPer;  ///< ひるみ確率
+
+  u8    sickID;     ///< 状態異常効果
+  u8    sickCont;   ///< 状態異常の継続パターン
+  u8    sickTurnMin;///< 状態異常の最小ターン数
+  u8    sickTurnMax;///< 状態異常の最大ターン数
+  u8    sickPer;    ///< 追加効果による状態異常の発生率
+
+  struct {
+    u8 statusID;
+    s8 value;
+    u8 per;
+  }rankEffect[ 3 ];
+
+  s8    recoverRatio_damage;
+  s8    recoverRatio_HP;
+
+  u8    coverArea;
+
+  u16   touchFlag : 1;      ///< 接触ワザ
+  u16   tameFlag  : 1;      ///< １ターン溜め
+  u16   tireFlag  : 1;      ///< １ターン反動で動けない
+  u16   guardFlag : 1;      ///< 「まもる」「みきり」の対象
+  u16   magicCoatFlag : 1;  ///< 「マジックコート」の対象
+  u16   yokodoriFlag : 1;   ///< 「よこどり」の対象
+  u16   oumuFlag  : 1;      ///< 「オウムがえし」の対象
+  u16   hitFarFlag : 1;     ///< トリプルで離れたポケモンにも当たる
+
+
+
+}WAZADATA;
+
+/*
+※１
+"シンプルダメージ"=0
+"シンプルシック"
+"
+
+*/

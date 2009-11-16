@@ -258,6 +258,17 @@ typedef struct {
 
 }BTL_HANDEX_STR_PARAMS;
 
+static inline void HANDEX_STR_Clear( BTL_HANDEX_STR_PARAMS* param )
+{
+  GFL_STD_MemClear( param, sizeof(*param) );
+  param->type = BTL_STRTYPE_NULL;
+}
+
+static inline BOOL HANDEX_STR_IsEnable( const BTL_HANDEX_STR_PARAMS* param )
+{
+  return param->type != BTL_STRTYPE_NULL;
+}
+
 static inline void HANDEX_STR_Setup( BTL_HANDEX_STR_PARAMS* param, BtlStrType type, u16 strID )
 {
   param->type = type;

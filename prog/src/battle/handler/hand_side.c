@@ -63,6 +63,8 @@ static BTL_EVENT_FACTOR* ADD_SIDE_Omajinai( u16 pri, BtlSide side, BtlSideEffect
 static void handler_side_Omajinai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
 static BTL_EVENT_FACTOR* ADD_SIDE_StealthRock( u16 pri, BtlSide side, BtlSideEffect eff );
 static void handler_side_StealthRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
+static BTL_EVENT_FACTOR* ADD_SIDE_WideGuard( u16 pri, BtlSide side, BtlSideEffect eff );
+static void handler_side_WideGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
 static BTL_EVENT_FACTOR* ADD_SIDE_Makibisi( u16 pri, BtlSide side, BtlSideEffect eff );
 static void handler_side_Makibisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
 static BTL_EVENT_FACTOR* ADD_SIDE_Dokubisi( u16 pri, BtlSide side, BtlSideEffect eff );
@@ -112,6 +114,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_SIDE_Add( BtlSide side, BtlSideEffect sideEffect,
     { BTL_SIDEEFF_MAKIBISI,       ADD_SIDE_Makibisi,       3   },
     { BTL_SIDEEFF_DOKUBISI,       ADD_SIDE_Dokubisi,       2   },
     { BTL_SIDEEFF_STEALTHROCK,    ADD_SIDE_StealthRock,    1   },
+    { BTL_SIDEEFF_WIDEGUARD,      ADD_SIDE_WideGuard,      1   },
   };
 
   GF_ASSERT(side < BTL_SIDE_MAX);
@@ -442,6 +445,40 @@ static void handler_side_StealthRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
       param->damage[0] = BTL_CALC_QuotMaxHP( bpp, denom );
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_StealthRockDamage );
       HANDEX_STR_AddArg( &param->exStr, pokeID );
+    }
+  }
+}
+//--------------------------------------------------------------------------------------
+/**
+ *  ワイドガード
+ */
+//--------------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR* ADD_SIDE_WideGuard( u16 pri, BtlSide side, BtlSideEffect eff )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_NOEFFECT_CHECK_L2,  handler_side_WideGuard  },  // ワザ無効化レベル２
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, eff, pri, side, HandlerTable );
+}
+static void handler_side_WideGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
+{
+  // 防御ポケが自分サイドで
+  u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+  if( BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
+  {
+    // ワザが「敵全体」「自分以外全部」の効果範囲でダメージワザなら無効化
+    WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+    WazaTarget  targetType = WAZADATA_GetTarget( waza );
+    if( (WAZADATA_IsDamage(waza) )
+    &&  ((targetType == WAZA_TARGET_ENEMY_ALL) || (targetType == WAZA_TARGET_OTHER_ALL))
+    ){
+      if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_NOEFFECT_FLAG, TRUE) )
+      {
+        BTL_HANDEX_STR_PARAMS* strParam = (BTL_HANDEX_STR_PARAMS*)BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
+        HANDEX_STR_Setup( strParam, BTL_STRTYPE_SET, BTL_STRID_SET_WideGuard );
+        HANDEX_STR_AddArg( strParam, pokeID );
+      }
     }
   }
 }

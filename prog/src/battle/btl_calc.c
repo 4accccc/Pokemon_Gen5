@@ -487,6 +487,7 @@ static const struct {
   { WAZANO_MAKIBISI,       BTL_SIDEEFF_MAKIBISI },       ///< 入れ替えて出てきたポケモンにダメージ（３段階）
   { WAZANO_DOKUBISI,       BTL_SIDEEFF_DOKUBISI },       ///< 入れ替えて出てきたポケモンに毒（２段階）
   { WAZANO_SUTERUSUROKKU,  BTL_SIDEEFF_STEALTHROCK },    ///< 入れ替えて出てきたポケモンにダメージ（相性計算あり）
+//  { WAZANO_WAIDOGAADO,     BTL_SIDEEFF_WIDEGUARD },      ///< 「敵全体」「自分以外全部」の攻撃ワザを防ぐ
 };
 
 
