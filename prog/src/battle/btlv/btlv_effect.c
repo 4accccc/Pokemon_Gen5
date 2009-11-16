@@ -545,8 +545,6 @@ BOOL  BTLV_EFFECT_CheckExecuteGauge( void )
   return BTLV_GAUGE_CheckExecute( bew->bgw );
 }
 
-
-
 //============================================================================================
 /**
  * @brief  ゲージ表示/非表示
@@ -555,6 +553,19 @@ BOOL  BTLV_EFFECT_CheckExecuteGauge( void )
 void  BTLV_EFFECT_SetGaugeDrawEnable( BOOL on_off )
 {
   BTLV_GAUGE_SetDrawEnable( bew->bgw, on_off );
+}
+
+//============================================================================================
+/**
+ * @brief  ゲージにステータスアイコンを表示
+ *
+ * @param[in] sick  セットする状態異常
+ * @param[in] pos   セットするポケモンの立ち位置
+ */
+//============================================================================================
+void  BTLV_EFFECT_SetGaugeStatus( PokeSick sick,  BtlvMcssPos pos )
+{
+  BTLV_GAUGE_SetStatus( bew->bgw, sick, pos );
 }
 
 //============================================================================================
