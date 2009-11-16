@@ -222,6 +222,11 @@ extern	void			GFL_PTC_SetCallbackFunc( GFL_EMIT_PTR emit, pEmitCBFunc func );
 extern	void			GFL_PTC_SetUserData( GFL_EMIT_PTR emit, void *work );
 extern	void			*GFL_PTC_GetUserData( GFL_EMIT_PTR emit );
 
+// -----------------------------------------
+//	公開データアクセス
+// -----------------------------------------
+extern u16 GFL_PTC_GetResNum( const void* p_spa );
+
 #ifdef __cplusplus
 }/* extern "C" */
 #endif
