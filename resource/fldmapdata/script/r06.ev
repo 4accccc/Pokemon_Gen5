@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_r06.h"
-  //.include  "r06.h"
+  .include  "r06.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,11 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r06
+_EVENT_DATA		ev_pos_r06_mountain_01
+_EVENT_DATA		ev_r06_sportsw_01
+_EVENT_DATA		ev_bg_r06_sign1_01
+_EVENT_DATA		ev_bg_r06_sign2_01
+_EVENT_DATA		ev_bg_r06_sign4_01
 _EVENT_DATA_END
 
 
@@ -30,9 +34,102 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  R06 mountain_01のPOSイベントスクリプト*/
 /**************************************************************/
-ev_r06:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START  ev_pos_r06_mountain_01
+//【仮】11/13_アニメーションとフラグがまだ。
+	IF FLAG_OFF( FH_01) THEN
+		
+		_OBJ_ANIME( R06_MOUNTAIN_01, anm_mountain_01_kiduku )
+		_OBJ_ANIME_WAIT()
+		
+		_BALLOONWIN_OBJMSG_OPEN( msg_r06_mountain_01 , R06_MOUNTAIN_01 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+		
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
+		_OBJ_ANIME_WAIT()
+		
+	ELSE
+		
+		_BALLOONWIN_OBJMSG_OPEN( msg_r06_mountain_02 , R06_MOUNTAIN_01 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+		
+	ENDIF
+EVENT_END
 
+//--------------------------------------------------------------------
+//電気洞窟ストッパー:プレイヤーに気づく                             
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mountain_01_kiduku
+
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//電気洞窟ストッパー:プレイヤーを押し返す                             
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mountain_01_push
+
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//電気洞窟ストッパー:元の位置に戻る                           
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mountain_01_back
+
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//プレイヤー:押し返される                           
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_back
+
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+/**************************************************************/
+/*  R02 GIRL2の会話のイベントスクリプト*/
+/**************************************************************/
+EVENT_START  ev_r06_sportsw_01
+		
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r06_sportsw_01_01)
+
+EVENT_END
+/**************************************************************/
+/*  R02 看板2のイベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_bg_r06_sign1_01
+
+	_EASY_MSG(msg_r06_sign1_01) //看板1:6番道路
+
+EVENT_END
+/**************************************************************/
+/*  R02 看板2のイベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_bg_r06_sign2_01
+
+	_EASY_MSG(msg_r06_sign2_01) //看板2:6番道路
+
+EVENT_END
+/**************************************************************/
+/*  R02 看板2のイベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_bg_r06_sign4_01
+	
+//【仮】季節研究所の前が、お得な掲示板でいいのか不明
+/*
+	_TALKWIN_OPEN()
+	_TALKMSG   ( msg_r06_sign3_01)
+    _TALKWIN_CLOSE()
+*/  
+    _TALKWIN_OPEN()
+	_TALKMSG   ( msg_r06_sign3_02)
+    _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
+    
+    	
+EVENT_END

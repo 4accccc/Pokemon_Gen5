@@ -11,5 +11,7 @@
 #ifndef ZONE_R06R0101_EVC_H
 #define ZONE_R06R0101_EVC_H
 
+#define R06R0101_ASSISTANTM_01             0
+#define R06R0101_ASSISTANTM_02             1
 
 #endif //ZONE_R06R0101_EVC_H

@@ -11,5 +11,7 @@
 #ifndef ZONE_R06_EVC_H
 #define ZONE_R06_EVC_H
 
+#define R06_MOUNTAIN_01                    0
+#define R06_SPORTSW_01                     1
 
 #endif //ZONE_R06_EVC_H
