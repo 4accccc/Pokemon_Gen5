@@ -232,6 +232,7 @@ static void statwin_setupAll( BTLV_SCU* wk );
 static void statwin_cleanupAll( BTLV_SCU* wk );
 static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, BtlPokePos pokePos );
 static void statwin_cleanup( STATUS_WIN* stwin );
+static void statwin_hide( STATUS_WIN* stWin );
 static void statwin_disp_start( STATUS_WIN* stwin );
 static TokwinSide PokePosToTokwinSide( const BTL_MAIN_MODULE* mainModule, BtlPokePos pos );
 static void tokwin_setupAll( BTLV_SCU* wk );
@@ -307,7 +308,7 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
       FADE_MAIN_BG, 0x20, PALIDX_MSGWIN*16, 0 );
 
   PaletteWorkSetEx_Arc( BTLV_EFFECT_GetPfd(), ARCID_BATTGRA, NARC_battgra_wb_tokusei_w_NCLR, wk->heapID,
-        FADE_MAIN_BG, 0x40, PALIDX_TOKWIN1*16, PALIDX_TOKWIN1*16 );
+        FADE_MAIN_BG, 0x40, PALIDX_TOKWIN1*16, 0 );
 
   //BD面カラーを黒にする
   {
@@ -2166,6 +2167,7 @@ void BTLV_SCU_MoveGauge_Start( BTLV_SCU* wk, BtlPokePos pos1, BtlPokePos pos2 )
   statwin_disp_start( &wk->statusWin[ pos1 ] );
   statwin_disp_start( &wk->statusWin[ pos2 ] );
 }
+
 //=============================================================================================
 /**
  * HPゲージのムーブ動作 終了待ち
@@ -2176,6 +2178,31 @@ void BTLV_SCU_MoveGauge_Start( BTLV_SCU* wk, BtlPokePos pos1, BtlPokePos pos2 )
  */
 //=============================================================================================
 BOOL BTLV_SCU_MoveGauge_Wait( BTLV_SCU* wk )
+{
+  return TRUE;
+}
+
+//=============================================================================================
+/**
+ * HPゲージ更新（対象ポケモンの変更などによる）
+ *
+ * @param   wk
+ * @param   pos
+ */
+//=============================================================================================
+void BTLV_SCU_UpdateGauge_Start( BTLV_SCU* wk, BtlPokePos pos )
+{
+  statwin_hide( &wk->statusWin[ pos ] );
+  statwin_disp_start( &wk->statusWin[ pos ] );
+}
+//=============================================================================================
+/**
+ * HPゲージ更新（対象ポケモンの変更などによる）終了待ち
+ *
+ * @param   wk
+ */
+//=============================================================================================
+BOOL BTLV_SCU_UpdateGauge_Wait( BTLV_SCU* wk, BtlPokePos pos )
 {
   return TRUE;
 }
@@ -2348,6 +2375,14 @@ static void statwin_cleanup( STATUS_WIN* stwin )
     }
     stwin->bpp = NULL;
     stwin->enableFlag = FALSE;
+  }
+}
+
+static void statwin_hide( STATUS_WIN* stwin )
+{
+  if( stwin->dispFlag ){
+    BTLV_EFFECT_DelGauge( stwin->vpos );
+    stwin->dispFlag = FALSE;
   }
 }
 

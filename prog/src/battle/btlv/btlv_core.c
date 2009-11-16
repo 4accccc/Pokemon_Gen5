@@ -1582,14 +1582,24 @@ static BOOL subprocRotateMember( int* seq, void* wk_adrs )
 
   case 2:
     if( !BTLV_EFFECT_CheckExecute() ){
-      BTLV_SCU_MoveGauge_Start( wk->scrnU, subwk->pos1, subwk->pos2 );
+      BTLV_SCU_UpdateGauge_Start( wk->scrnU, subwk->pos1 );
+      BTLV_SCU_UpdateGauge_Start( wk->scrnU, subwk->pos2 );
       (*seq)++;
     }
     break;
 
   case 3:
-    if( BTLV_SCU_MoveGauge_Wait(wk->scrnU) ){
-      return TRUE;
+    {
+      BOOL fEnd = TRUE;
+      if( BTLV_SCU_UpdateGauge_Wait(wk->scrnU, subwk->pos1) == FALSE ){
+        fEnd = FALSE;
+      }
+      if( BTLV_SCU_UpdateGauge_Wait(wk->scrnU, subwk->pos2) == FALSE ){
+        fEnd = FALSE;
+      }
+      if( fEnd ){
+        return TRUE;
+      }
     }
     break;
   }
