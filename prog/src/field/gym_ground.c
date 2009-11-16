@@ -429,6 +429,14 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *fieldWork)
     int idx = OBJ_LIFT_1 + i;
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_GROUND_UNIT_IDX, idx);
     status->trans = LiftBasePos[i];
+    //セーブデータで分岐してリフトのＹ座標をセット
+    {
+      u8 height;
+      if ( gmk_sv_work->LiftMoved[i] ) height = 1;
+      else height = 0;
+      status->trans.y = LiftRect[i].Height[height];
+    }
+
     //カリングする
     FLD_EXP_OBJ_SetCulling(ptr, GYM_GROUND_UNIT_IDX, idx, TRUE);
 
