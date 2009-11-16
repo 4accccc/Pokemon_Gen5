@@ -1020,10 +1020,6 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       {
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformWaza2Command, ttw, 1 );
       }
-      else if( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE )
-      { 
-        GFL_TCB_AddTask( biw->tcbsys, TCB_TransformRotate2Command, ttw, 1 );
-      }
       else
       {
         BTLV_INPUT_CreateBallGauge( biw, bicp, BALL_GAUGE_TYPE_MINE );
@@ -1032,7 +1028,14 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
           BTLV_INPUT_CreateBallGauge( biw, bicp, BALL_GAUGE_TYPE_ENEMY );
         }
         biw->trainer_flag = bicp->trainer_flag;
-        GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2Command, ttw, 1 );
+        if( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE )
+        { 
+          GFL_TCB_AddTask( biw->tcbsys, TCB_TransformRotate2Command, ttw, 1 );
+        }
+        else
+        { 
+          GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2Command, ttw, 1 );
+        }
       }
     }
     break;
