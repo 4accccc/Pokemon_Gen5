@@ -111,8 +111,11 @@ extern u32  PMSI_DATA_GetInitialEnableWordCount( const PMS_INPUT_DATA* pmsi, u32
 extern void PMSI_DATA_GetInitialEnableWord( const PMS_INPUT_DATA* pmsi, u32 initial, u32 word_idx, STRBUF* buf );
 extern PMS_WORD PMSI_DATA_GetInitialEnableWordCode( const PMS_INPUT_DATA* pmsi, u32 initial, u32 word_idx );
 
-extern BOOL PMSI_DATA_GetWordEnableFlag( const PMS_INPUT_DATA* data, u32 initial, u32 index );
-
+extern PMS_WORD PMSI_DATA_GetWordToOriginalPos( const PMS_INPUT_DATA* data, u32 file_idx, u32 file_pos );
+extern u32 PMSI_DATA_GetInitialEnableWordTable( const PMS_INPUT_DATA* data, const PMS_WORD* src_tbl, PMS_WORD* dst_tbl );
+extern void PMSI_DATA_GetWordString( const PMS_INPUT_DATA* pmsi, PMS_WORD word, STRBUF* dst_buf );
+extern BOOL PMSI_DATA_GetWordEnableFlag( const PMS_INPUT_DATA* data, PMS_WORD word );
+extern u32 PMSI_DATA_GetWordTableEndData( const PMS_INPUT_DATA* data );
 
 
 //====================================================================================

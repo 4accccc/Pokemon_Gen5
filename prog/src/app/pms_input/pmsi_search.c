@@ -54,6 +54,7 @@ struct _PMS_INPUT_SEARCH {
   GFL_MSGDATA* msg_tbl[ PMS_ABC_GMMTBL_MAX ];
   MSGSEARCH_WORK* search_wk;
   MSGSEARCH_RESULT search_result[ WORD_SEARCH_MAX ];
+  PMS_WORD result_word[ WORD_SEARCH_MAX + 1 ];
   STRBUF* str_search;
   u16 word_code[ WORD_CODE_MAX ];
   u16 padding_u16;
@@ -352,46 +353,26 @@ BOOL PMSI_SEARCH_Start( PMS_INPUT_SEARCH*wk )
     int i;
     u32 hitnum;
     u32 desable_cnt = 0;
+    PMS_WORD rslt_tbl[ WORD_SEARCH_MAX+1 ] = {0};
 
     hitnum = MSGSEARCH_Search( wk->search_wk, search_idx, 0, wk->str_search, wk->search_result ,WORD_SEARCH_MAX );
     
     HOSAKA_Printf("search hitnum = %d \n\n", hitnum);
 
-    // 検索結果から無効なものを排除
+    // 検索結果からPMS_WORDを生成
     for( i=0; i<hitnum; i++ )
     {
-      u32 str_idx = wk->search_result[i].str_idx;
-
-      if( PMSI_DATA_GetWordEnableFlag( wk->dwk, search_idx, str_idx ) == FALSE )
-      {
-        wk->search_result[i].str_idx = 0xffff; // 無効値
-        desable_cnt++;
-      }
+      rslt_tbl[i] = PMSI_DATA_GetWordToOriginalPos( wk->dwk, search_idx, wk->search_result[i].str_idx );
+      HOSAKA_Printf("[%d] word=%d str_idx=%d \n",i, rslt_tbl[i], wk->search_result[i].str_idx );
     }
 
-#ifdef PM_DEBUG 
-    for( i=0; i<hitnum; i++ )
-    {
-      HOSAKA_Printf("[%d] str_idx=%d\n", i, wk->search_result[i].str_idx );
-    }
-#endif
-      
-    HOSAKA_Printf("=======\n");
+    // テーブル末尾に末尾データ
+    rslt_tbl[hitnum] = PMSI_DATA_GetWordTableEndData( wk->dwk );
 
-    MATH_QSort( (void*)wk->search_result, hitnum, sizeof(MSGSEARCH_RESULT), qsort_result, NULL );
+    // 無効データを排除
+    wk->search_hitnum = PMSI_DATA_GetInitialEnableWordTable( wk->dwk, rslt_tbl, wk->result_word );
     
-#ifdef PM_DEBUG 
-    for( i=0; i<hitnum; i++ )
-    {
-      HOSAKA_Printf("[%d] str_idx=%d\n", i, wk->search_result[i].str_idx );
-    }
-#endif
-
-    // 検索結果から無効にした個数を取得
-    wk->search_hitnum = hitnum - desable_cnt;
-
-    HOSAKA_Printf("hit enable num = %d \n\n", wk->search_hitnum);
-  
+    HOSAKA_Printf("search enable hitnum = %d \n", wk->search_hitnum );
   
     return wk->search_hitnum > 0;
   }
@@ -428,20 +409,17 @@ u16 PMSI_SEARCH_GetResultCount( PMS_INPUT_SEARCH* wk )
 //-----------------------------------------------------------------------------
 void PMSI_SEARCH_GetResultString( PMS_INPUT_SEARCH* wk, u8 result_idx, STRBUF* dst_buf )
 {
-  u32 initial;
   u32 word_idx;
 
   GF_ASSERT( wk );
   GF_ASSERT( result_idx <  wk->search_hitnum );
   GF_ASSERT( wk->word_code[0] != INI_DIS );
-  
-  initial = wk->word_code[0];
 
-  word_idx = wk->search_result[ result_idx ].str_idx;
+  word_idx = wk->result_word[ result_idx ];
 
-  HOSAKA_Printf("getresult initial=%d result_idx=%d word_idx=%d \n",initial, result_idx, word_idx );
+  HOSAKA_Printf("getresult result_idx=%d word_idx=%d \n", result_idx, word_idx );
 
-  PMSI_DATA_GetInitialEnableWord( wk->dwk, initial, word_idx, dst_buf );
+  PMSI_DATA_GetWordString( wk->dwk, word_idx, dst_buf );
 
 #if 0
   {
@@ -468,20 +446,13 @@ void PMSI_SEARCH_GetResultString( PMS_INPUT_SEARCH* wk, u8 result_idx, STRBUF* d
 //-----------------------------------------------------------------------------
 PMS_WORD PMSI_SEARCH_GetWordCode( PMS_INPUT_SEARCH* wk, u32 cur_pos )
 {
-  u32 initial;
-  u32 word_idx;
-
   GF_ASSERT( wk );
   GF_ASSERT( cur_pos <  wk->search_hitnum );
   GF_ASSERT( wk->word_code[0] != INI_DIS );
 
-  initial = wk->word_code[0];
+  HOSAKA_Printf("getwordcode cur_pos=%d word=%d \n", cur_pos, wk->result_word[cur_pos] );
 
-  word_idx = wk->search_result[ cur_pos ].str_idx;
-
-  HOSAKA_Printf("initial=%d cur_pos=%d word_idx=%d \n",initial, cur_pos, word_idx );
-
-  return PMSI_DATA_GetInitialEnableWordCode( wk->dwk, initial, word_idx );
+  return wk->result_word[ cur_pos ];
 }
 
 //=============================================================================

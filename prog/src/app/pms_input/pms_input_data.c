@@ -510,7 +510,6 @@ void PMSI_DATA_GetInitialEnableWord( const PMS_INPUT_DATA* pmsi, u32 initial, u3
 	if( pmsi->InitialEnableWordCnt[initial] )
 	{
 		PMS_WORD  word_code = PMSI_DATA_GetInitialEnableWordCode(pmsi, initial, word_idx);
-    HOSAKA_Printf("word_code=%d \n");
 		PMSW_MAN_CopyStr( pmsi->word_man, word_code, buf );
 	}
 }
@@ -540,7 +539,57 @@ PMS_WORD PMSI_DATA_GetInitialEnableWordCode( const PMS_INPUT_DATA* pmsi, u32 ini
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  指定単語IDの有効無効チェック
+ *	@brief  イニシャルテーブルから無効データを除去
+ *
+ *	@param	const PMS_INPUT_DATA* data
+ *	@param	initial
+ *	@param	index 
+ *
+ *	@retval count
+ */
+//-----------------------------------------------------------------------------
+u32 PMSI_DATA_GetInitialEnableWordTable( const PMS_INPUT_DATA* data, const PMS_WORD* src_tbl, PMS_WORD* dst_tbl )
+{
+  int dummy_pos = 0;
+  // const版の関数を作るのも微妙なのでやむなくキャスト..
+  return CountupInitialWord( (PMS_INPUT_DATA*)data, src_tbl, dst_tbl, dummy_pos );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	const PMS_INPUT_DATA* data 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+PMS_WORD PMSI_DATA_GetWordToOriginalPos( const PMS_INPUT_DATA* data, u32 file_idx, u32 file_pos )
+{
+  GF_ASSERT( file_idx < NELEMS(PMS_InitialTable) );
+
+  return PMS_InitialTable[ file_idx ][ file_pos ];
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  PMS_WORDから文字列バッファを取得
+ *
+ *	@param	const PMS_INPUT_DATA* pmsi
+ *	@param	word
+ *	@param	dst_buf 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void PMSI_DATA_GetWordString( const PMS_INPUT_DATA* pmsi, PMS_WORD word, STRBUF* dst_buf )
+{
+	PMSW_MAN_CopyStr( pmsi->word_man, word, dst_buf );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  指定PMS_WORDの有効無効を取得
  *
  *	@param	const PMS_INPUT_DATA* data
  *	@param	word 
@@ -548,20 +597,24 @@ PMS_WORD PMSI_DATA_GetInitialEnableWordCode( const PMS_INPUT_DATA* pmsi, u32 ini
  *	@retval
  */
 //-----------------------------------------------------------------------------
-BOOL PMSI_DATA_GetWordEnableFlag( const PMS_INPUT_DATA* data, u32 initial, u32 index )
+BOOL PMSI_DATA_GetWordEnableFlag( const PMS_INPUT_DATA* data, PMS_WORD word )
 {
-  PMS_WORD word;
-
-  GF_ASSERT( initial < INITIAL_MAX );
-  
-  word = PMS_InitialTable[ initial ][ index ];
-
-  HOSAKA_Printf("PMSI_DATA_GetWordEnableFlag initial=%d, index=%d, word=%d \n", 
-      initial, index, word);
-
   return GetWordEnableFlag( data, word );
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  テーブル末尾につけるデータを取得
+ *
+ *	@param	const PMS_INPUT_DATA* data 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u32 PMSI_DATA_GetWordTableEndData( const PMS_INPUT_DATA* data )
+{
+  return PMS_WORDID_END;
+}
 
 //======================================================================================
 // ボックス壁紙パスワード用処理
