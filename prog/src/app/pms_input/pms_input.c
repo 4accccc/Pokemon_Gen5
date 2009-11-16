@@ -1854,7 +1854,7 @@ static GFL_PROC_RESULT MainProc_Category( PMS_INPUT_WORK* wk, int* seq )
 static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
 {
   //切替ボタン
-	if(	(wk->touch_button == TOUCH_BUTTON_CHANGE) ||	(wk->key_trg & PAD_BUTTON_SELECT)
+	if(	(wk->touch_button == TOUCH_BUTTON_CHANGE) || (wk->key_trg & PAD_BUTTON_SELECT)
 	){
 		GFL_SOUND_PlaySE(SOUND_CHANGE_CATEGORY);
 		wk->category_mode ^= 1;
@@ -1871,7 +1871,9 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
     if( wk->category_mode == CATEGORY_MODE_INITIAL && PMSI_SEARCH_DelWord( wk->swk ) )
     {
 		  GFL_SOUND_PlaySE(SOUND_WORD_DELETE);
+      PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
     }
+    // GROUPは無条件で画面から抜ける
     else
     {
       GFL_SOUND_PlaySE(SOUND_CANCEL);
@@ -1895,6 +1897,7 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
 		  GFL_SOUND_PlaySE(SOUND_WORD_DELETE);
       HOSAKA_Printf("push erase!\n");
       PMSI_SEARCH_DelWord( wk->swk );
+      PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
     }
     else if( wk->category_pos == CATEGORY_POS_BACK )
     {
@@ -1909,7 +1912,7 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
     {
       if(check_category_enable( wk ) )
       {
-        GFL_SOUND_PlaySE(SOUND_DECIDE);
+        GFL_SOUND_PlaySE( SOUND_DECIDE );
       
         setup_wordwin_params( &wk->word_win, wk );
         wk->next_proc = MainProc_WordWin;
@@ -1922,11 +1925,11 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
       }
 		  return;
 	  }
-    // イニシャルモードは文字選択
+    // イニシャルモードは文字入力
     else
     {
-      HOSAKA_Printf("push input!\n");
       PMSI_SEARCH_AddWord( wk->swk, wk->category_pos );
+      PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
       GFL_SOUND_PlaySE( SOUND_WORD_INPUT );
     }
   }
@@ -2012,6 +2015,9 @@ static int category_touch_initial(PMS_INPUT_WORK* wk)
 	int ret;
 	u32 tpx,tpy;
 	s16 x,y;
+    
+  // @TODO 「けす」タッチ
+  // @TODO 当たり判定調整
 	static const GFL_UI_TP_HITTBL Btn_TpRect[] = {
 //		{0,191,0,255}, ty,by,lx,rx
 		{TPCA_IMA_PY,TPCA_IMA_PY+TPCA_IMA_SY*4,TPCA_IMA_PX,TPCA_IMA_PX+TPCA_IMA_SX*15},
@@ -2029,19 +2035,19 @@ static int category_touch_initial(PMS_INPUT_WORK* wk)
 		return -1;
 	}
 	if(x < 5){
-		ARI_TPrintf(" Initial Hit0 = %d\n",y*5+x);
+		HOSAKA_Printf(" Initial Hit0 = %d\n",y*5+x);
 		return y*5+x;
 	}
 	if(x < 11){
-		ARI_TPrintf(" Initial Hit1 = %d\n",y*5+(x-6)+20);
+		HOSAKA_Printf(" Initial Hit1 = %d\n",y*5+(x-6)+20);
 		return y*5+(x-6)+20;
 	}
 	if(y == 0){
-		ARI_TPrintf(" Initial Hit2 = %d\n",(x-12)+40);
+		HOSAKA_Printf(" Initial Hit2 = %d\n",(x-12)+40);
 		return (x-12)+40;
 	}
 	if(y == 1 && x < 14){
-		ARI_TPrintf(" Initial Hit3 = %d\n",(x-12)+43);
+		HOSAKA_Printf(" Initial Hit3 = %d\n",(x-12)+43);
 		return (x-12)+43;
 	}
 	return -1;
@@ -2088,14 +2094,14 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
 	}
 
 
-	if( wk->category_mode == CATEGORY_MODE_GROUP ){
-    // グループ
+  // グループ
+	if( wk->category_mode == CATEGORY_MODE_GROUP )
+  {
 		ret = category_touch_group(wk);
     // タッチなし
-		if(ret < 0 ) {
-			return;
-		}
+		if(ret < 0 ) { return; }
 		wk->category_pos = ret;
+    // 無効判定
 		if( ( ret >= CATEGORY_GROUP_MAX ) ||
         ( PMSI_DATA_GetGroupEnableWordCount( wk->dwk, wk->category_pos ) == 0 ) )
     {
@@ -2104,28 +2110,35 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
 #endif //PMS_USE_SND
 			return;
 		}
-	}else{
-    // イニシャル
-		ret = category_touch_initial(wk);
-		if(ret < 0){
-			return;
-		}
-		wk->category_pos = ini_idx[ret];
-		if(PMSI_DATA_GetInitialEnableWordCount( wk->dwk, wk->category_pos ) == 0 ){
-#if PMS_USE_SND
-			GFL_SOUND_PlaySE( SOUND_DISABLE_CATEGORY );
-#endif //PMS_USE_SND
-			return;
-		}
-	}
-#if PMS_USE_SND
-	GFL_SOUND_PlaySE(SOUND_DECIDE);
-#endif //PMS_USE_SND
+    // 単語リストへ
+    GFL_SOUND_PlaySE(SOUND_DECIDE);
 
-	setup_wordwin_params( &wk->word_win, wk );
-	wk->next_proc = MainProc_WordWin;
-	PMSIView_SetCommand( wk->vwk, VCMD_CATEGORY_TO_WORDWIN );
-	*seq = SEQ_CA_NEXTPROC;
+    setup_wordwin_params( &wk->word_win, wk );
+    wk->next_proc = MainProc_WordWin;
+    PMSIView_SetCommand( wk->vwk, VCMD_CATEGORY_TO_WORDWIN );
+    *seq = SEQ_CA_NEXTPROC;
+	}
+  // イニシャル
+  else
+  {
+		ret = category_touch_initial(wk);
+
+    // タッチなし
+		if(ret < 0){ return; }
+
+    // 文字入力
+		wk->category_pos = ini_idx[ret];
+    PMSI_SEARCH_AddWord( wk->swk, wk->category_pos );
+    PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
+
+    GFL_SOUND_PlaySE( SOUND_WORD_INPUT );
+#if 0
+		if(PMSI_DATA_GetInitialEnableWordCount( wk->dwk, wk->category_pos ) == 0 ){
+			GFL_SOUND_PlaySE( SOUND_DISABLE_CATEGORY );
+			return;
+		}
+#endif
+	}
 }
 
 /**
@@ -3689,6 +3702,11 @@ BOOL PMSI_GetLockFlag( const PMS_INPUT_WORK* wk )
 GFL_TCBSYS* PMSI_GetTcbSystem( const PMS_INPUT_WORK* wk )
 {
 	return wk->tcbSys;
+}
+
+void PMSI_SetInputWord( const PMS_INPUT_WORK* wk, STRBUF* out_buf )
+{
+  PMSI_SEARCH_SetInputWord( wk->swk, out_buf );
 }
 
 //----------------------------------------------------------------------------

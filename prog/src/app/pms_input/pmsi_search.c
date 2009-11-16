@@ -32,7 +32,7 @@
 
 enum
 { 
-  WORD_CODE_MAX = 7,  ///< 入力できる最大文字数
+  WORD_CODE_MAX = PMS_INPUTWORD_MAX,  ///< 入力できる最大文字数
   WORD_SEARCH_MAX = PMS_ABC_GMMROW_MAX,
 };  
 
@@ -113,11 +113,7 @@ PMS_INPUT_SEARCH* PMSI_SEARCH_Create( const PMS_INPUT_WORK* mwk, const PMS_INPUT
   wk->dwk = dwk;
   wk->heap_id =  heap_id;
 
-  // 入力情報初期化
-  for( i=0; i<WORD_CODE_MAX; i++ )
-  {
-    wk->word_code[i] = INI_DIS;
-  }
+  PMSI_SEARCH_ClearWord( wk );
 
   // GMM生成
   for( i=0; i<PMS_ABC_GMMTBL_MAX; i++ )
@@ -218,30 +214,41 @@ BOOL PMSI_SEARCH_DelWord( PMS_INPUT_SEARCH* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  検索開始
+ *	@brief  入力された文字情報をクリア
  *
- *	@param	PMSI_INPUT_SEARCH*wk 
+ *	@param	PMS_INPUT_SEARCH* wk 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-BOOL PMSI_SEARCH_Start( PMS_INPUT_SEARCH*wk )
+void PMSI_SEARCH_ClearWord( PMS_INPUT_SEARCH* wk )
 {
   int i;
-  u16 search_idx;
-  STRCODE code[ WORD_CODE_MAX + 1 ];
-  
-  // 1文字目で検索対象のGMMを変更
-  search_idx = wk->word_code[0];
-  HOSAKA_Printf("search idx =%d\n", search_idx );
- 
-  // 無効文字なら検索しない
-  if( search_idx == INI_DIS )
+
+  // 入力情報初期化
+  for( i=0; i<WORD_CODE_MAX; i++ )
   {
-    return FALSE;
+    wk->word_code[i] = INI_DIS;
   }
 
-  // 絞り込み文字列生成
+  wk->word_code_pos = 0;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  入力された文字列をセット
+ *
+ *	@param	PMSI_INPUT_SEARCH* wk
+ *	@param	out_buf 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void PMSI_SEARCH_SetInputWord( PMS_INPUT_SEARCH* wk, STRBUF* out_buf )
+{
+  int i;
+  STRCODE code[ WORD_CODE_MAX + 1 ];
+
   for( i=0; i<WORD_CODE_MAX; i++ )
   {
     if( wk->word_code[i] == INI_DIS )
@@ -255,11 +262,39 @@ BOOL PMSI_SEARCH_Start( PMS_INPUT_SEARCH*wk )
   }
   
   // 最後に終了文字追加
-  code[ WORD_SEARCH_MAX ] = GFL_STR_GetEOMCode();
-    
+  code[ WORD_CODE_MAX ] = GFL_STR_GetEOMCode();
+  
+  // 文字列セット
+  GFL_STR_SetStringCode( out_buf, code );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  検索開始
+ *
+ *	@param	PMSI_INPUT_SEARCH*wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+BOOL PMSI_SEARCH_Start( PMS_INPUT_SEARCH*wk )
+{
+  int i;
+  u16 search_idx;
+  
+  // 1文字目で検索対象のGMMを変更
+  search_idx = wk->word_code[0];
+  HOSAKA_Printf("search idx =%d\n", search_idx );
+ 
+  // 無効文字なら検索しない
+  if( search_idx == INI_DIS )
+  {
+    return FALSE;
+  }
+
   // 文字生成
   GFL_STR_ClearBuffer( wk->str_search );
-  GFL_STR_SetStringCode( wk->str_search, code );
+  PMSI_SEARCH_SetInputWord( wk, wk->str_search );
 
 #if 1
   {

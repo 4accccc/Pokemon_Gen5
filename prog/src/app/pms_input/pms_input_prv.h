@@ -58,6 +58,7 @@ enum {
 	VCMD_BUTTON_UP_RELEASE,
 	VCMD_BUTTON_DOWN_RELEASE,
 
+  VCMD_INPUTWORD_UPDATE,  ///< カテゴリで入力された文字表示を更新
 	VCMD_SCROLL_WORDWIN_BAR,		///< 単語ウィンドウスクロールバー
 
 };
@@ -277,6 +278,7 @@ extern u32 PMSI_GetMenuCursorPos( const PMS_INPUT_WORK* wk );
 extern BOOL PMSI_GetLockFlag( const PMS_INPUT_WORK* wk );
 
 extern GFL_TCBSYS* PMSI_GetTcbSystem( const PMS_INPUT_WORK* wk );
+extern void PMSI_SetInputWord( const PMS_INPUT_WORK* wk, STRBUF* out_buf );
 
 //------------------------------------------------------
 /**

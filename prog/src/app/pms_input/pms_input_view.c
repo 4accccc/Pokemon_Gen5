@@ -58,7 +58,7 @@ struct _PMS_INPUT_VIEW {
 
 	// メインとサブで２つずつ	
 	PMSIV_CELL_RES	resCell[2];
-	PMSIV_CELL_RES	resCellDeco[2];
+	PMSIV_CELL_RES	resCellDeco[2]; ///< デコメ
 
 	PMSIV_EDIT*			  edit_wk;
 //	PMSIV_BUTTON*		button_wk;
@@ -72,8 +72,8 @@ struct _PMS_INPUT_VIEW {
 
 	int*				p_key_mode;
 	
-  PRINT_QUE*     print_que;
-	GFL_FONT			*fontHandle;
+  PRINT_QUE*  print_que;
+	GFL_FONT		*fontHandle;
 };
 
 //------------------------------------------------------
@@ -89,8 +89,6 @@ typedef struct {
 	u32   command_no;
 	int   store_pos;
 	int   seq;
-
-
 }COMMAND_WORK;
 
 
@@ -136,6 +134,7 @@ static void Cmd_ButtonUpHold(GFL_TCB *tcb, void* wk_adrs);
 static void Cmd_ButtonDownHold(GFL_TCB *tcb, void* wk_adrs);
 static void Cmd_ButtonUpRelease(GFL_TCB *tcb, void* wk_adrs);
 static void Cmd_ButtonDownRelease(GFL_TCB *tcb, void* wk_adrs);
+static void Cmd_InputWordUpdate( GFL_TCB* tcb, void* wk_adrs );
 static void Cmd_ScrollWordWinBar(GFL_TCB *tcb, void* wk_adrs);
 
 static const GFL_DISP_VRAM bank_data = {
@@ -353,8 +352,8 @@ void PMSIView_SetCommand( PMS_INPUT_VIEW* vwk, int cmd )
 		Cmd_ButtonUpRelease,
 		Cmd_ButtonDownRelease,
 
+    Cmd_InputWordUpdate,
 		Cmd_ScrollWordWinBar,
-
 	};
 
 
@@ -1625,6 +1624,26 @@ static void Cmd_ButtonDownRelease(GFL_TCB *tcb, void* wk_adrs)
 	DeleteCommand( wk );
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  描画コマンド：文字入力情報を更新
+ *
+ *	@param	GFL_TCB* tcb
+ *	@param	wk_adrs 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void Cmd_InputWordUpdate( GFL_TCB* tcb, void* wk_adrs )
+{
+	COMMAND_WORK* wk = wk_adrs;
+  PMS_INPUT_VIEW* vwk = wk->vwk;
+  
+  PMSIV_CATEGORY_InputWordUpdate( vwk->category_wk );
+
+  DeleteCommand( wk );
+}
+
 //----------------------------------------------------------------------------------------------
 /**
 	* 描画コマンド：単語ウィンドウスクロールバー
@@ -1634,16 +1653,15 @@ static void Cmd_ButtonDownRelease(GFL_TCB *tcb, void* wk_adrs)
 	*
 	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_ScrollWordWinBar( GFL_TCB *tcb, void* wk_adrs  )
+static void Cmd_ScrollWordWinBar( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
 
 	PMSIV_WORDWIN_SetupWordBar( vwk->wordwin_wk, PMSI_GetWordWinLinePos(vwk->main_wk) );
-	DeleteCommand( wk );
-	return;
-}
 
+	DeleteCommand( wk );
+}
 
 
 //==============================================================================================

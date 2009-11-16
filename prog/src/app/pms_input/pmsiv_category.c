@@ -57,9 +57,17 @@ enum {
 	INITIAL_WIN_HEIGHT = 14,
 	INITIAL_WIN_CHARSIZE = INITIAL_WIN_WIDTH*INITIAL_WIN_HEIGHT,
 
+  INPUT_WIN_XORG    = 10,
+  INPUT_WIN_YORG    = 3,
+  INPUT_WIN_WIDTH   = 11,
+  INPUT_WIN_HEIGHT  = 2,
+	INPUT_WIN_CHARSIZE = INPUT_WIN_WIDTH * INPUT_WIN_HEIGHT,
+
+#if 0
 	BACK_WIN_WIDTH = 8,
 	BACK_WIN_HEIGHT = 2,
 	BACK_WIN_CHARSIZE = BACK_WIN_WIDTH*BACK_WIN_HEIGHT,
+#endif
 
 	CATEGORY_BACK_WIN_XORG = 12,
 	CATEGORY_BACK_WIN_YORG = 21,
@@ -98,6 +106,10 @@ enum {
 	CATEGORY_WIN_COL_LETTER = 0x01,
 	CATEGORY_WIN_COL_SHADOW = 0x02,
 	CATEGORY_WIN_COL_GROUND = 0x0f,
+
+  CATEGORY_INPUT_WIN_COL_L = 0xF,
+  CATEGORY_INPUT_WIN_COL_S = 0xE,
+  CATEGORY_INPUT_WIN_COL_B = 0x1,
 
 	CATEGORY_WIN_UNKNOWN_COL_LETTER = 0x03,
 	CATEGORY_WIN_UNKNOWN_COL_SHADOW = 0x04,
@@ -139,6 +151,7 @@ struct _PMSIV_CATEGORY {
 	
 	GFL_BMPWIN		*winGroup[CATEGORY_GROUP_MAX];
 	GFL_BMPWIN		*winInitial;
+  GFL_BMPWIN    *winInput;
 };
 
 
@@ -147,6 +160,7 @@ struct _PMSIV_CATEGORY {
 //==============================================================
 static u32 setup_group_window( PMSIV_CATEGORY* wk, u32 charpos );
 static u32 setup_initial_window( PMSIV_CATEGORY* wk, u32 charpos );
+static u32 setup_input_window( PMSIV_CATEGORY* wk, u32 charpos );
 static void setup_actor( PMSIV_CATEGORY* wk );
 
 
@@ -206,6 +220,10 @@ void PMSIV_CATEGORY_Delete( PMSIV_CATEGORY* wk )
 	{
 		GFL_BMPWIN_Delete( wk->winInitial );
 	}
+  if( wk->winInput != NULL )
+  {
+		GFL_BMPWIN_Delete( wk->winInput );
+  }
 	GFL_HEAP_FreeMemory( wk );
 }
 
@@ -248,6 +266,10 @@ void PMSIV_CATEGORY_SetupGraphicDatas( PMSIV_CATEGORY* wk, ARCHANDLE* p_handle )
   
   HOSAKA_Printf("BG FRM_MAIN_CATEGORY initial charpos=%d \n", charpos);
 
+  charpos = setup_input_window( wk, charpos );
+  
+  HOSAKA_Printf("BG FRM_MAIN_CATEGORY inputword charpos=%d \n", charpos);
+
 	GFL_BG_SetScroll( FRM_MAIN_CATEGORY, GFL_BG_SCROLL_X_SET, GROUPMODE_BG_XOFS );
 	GFL_BG_SetScroll( FRM_MAIN_CATEGORY, GFL_BG_SCROLL_Y_SET, CATEGORY_BG_DISABLE_YOFS );
 
@@ -282,8 +304,8 @@ static u32 setup_group_window( PMSIV_CATEGORY* wk, u32 charpos )
 	STRBUF* str;
 	u32   print_color, print_xpos;
 	GFL_FONT *fontHandle;
-	fontHandle = PMSIView_GetFontHandle(wk->vwk);
 
+	fontHandle = PMSIView_GetFontHandle(wk->vwk);
 	msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pms_category_dat, HEAPID_PMS_INPUT_VIEW );
 
 	x = CATEGORY_WIN_XORG;
@@ -360,7 +382,6 @@ static u32 setup_initial_window( PMSIV_CATEGORY* wk, u32 charpos )
 					PALNUM_MAIN_CATEGORY,GFL_BMP_CHRAREA_GET_B );
 	charpos += INITIAL_WIN_CHARSIZE;
 
-
 	buf = GFL_STR_CreateBuffer(4, HEAPID_PMS_INPUT_VIEW);
 
 	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(win),CATEGORY_WIN_COL_GROUND);
@@ -391,6 +412,36 @@ static u32 setup_initial_window( PMSIV_CATEGORY* wk, u32 charpos )
 	wk->winInitial = win;
 
 	return charpos;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  入力ウィンドウ生成
+ *
+ *	@param	PMSIV_CATEGORY* wk
+ *	@param	charpos 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static u32 setup_input_window( PMSIV_CATEGORY* wk, u32 charpos )
+{
+	GFL_BMPWIN  *win;
+	
+  GF_ASSERT(charpos < (1024-INPUT_WIN_CHARSIZE));
+
+  win = GFL_BMPWIN_Create( FRM_MAIN_CATEGORY, INPUT_WIN_XORG, INPUT_WIN_YORG, 
+					INPUT_WIN_WIDTH, INPUT_WIN_HEIGHT, 
+					PALNUM_MAIN_CATEGORY,GFL_BMP_CHRAREA_GET_B );
+  charpos += INPUT_WIN_CHARSIZE;
+
+  // まだスクリーンは作らない
+	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(win),CATEGORY_WIN_COL_GROUND);
+  GFL_BMPWIN_TransVramCharacter(win);
+
+	wk->winInput = win;
+
+  return charpos;
 }
 
 //-----------------------------------------------------------------------------
@@ -770,6 +821,7 @@ void PMSIV_CATEGORY_StartModeChange( PMSIV_CATEGORY* wk )
   }
   else
   {
+    //@TODO ↓1キャラが削れる
 	  GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(p_handle, NARC_pmsi_pms_bg_main01_NSCR,
 		  FRM_MAIN_CATEGORY, 0, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 	  
@@ -804,3 +856,42 @@ BOOL PMSIV_CATEGORY_WaitModeChange( PMSIV_CATEGORY* wk )
   return TRUE;
 //	return PMSIV_TOOL_WaitScroll( &(wk->scroll_work) );
 }
+
+#include "pmsi_search.h"
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  入力された文字描画を更新
+ *
+ *	@param	PMSIV_CATEGORY* wk 
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void PMSIV_CATEGORY_InputWordUpdate( PMSIV_CATEGORY* wk )
+{
+	GFL_FONT *fontHandle;
+  GFL_BMPWIN* win;
+  STRBUF* buf;
+
+  GF_ASSERT( wk );
+
+	fontHandle = PMSIView_GetFontHandle(wk->vwk);
+  win = wk->winInput;
+
+  buf = GFL_STR_CreateBuffer( PMS_INPUTWORD_MAX+1, HEAPID_PMS_INPUT_VIEW );
+
+  PMSI_SetInputWord( wk->mwk, buf );
+
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win), CATEGORY_INPUT_WIN_COL_B);
+  GFL_FONTSYS_SetColor( CATEGORY_INPUT_WIN_COL_L, CATEGORY_INPUT_WIN_COL_S, CATEGORY_INPUT_WIN_COL_B );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, 0, buf, fontHandle );
+
+  GFL_STR_DeleteBuffer( buf );
+		
+	GFL_BMPWIN_MakeScreen( win );
+  GFL_BMPWIN_TransVramCharacter( win );
+	
+  GFL_BG_LoadScreenV_Req( FRM_MAIN_CATEGORY );
+}
+

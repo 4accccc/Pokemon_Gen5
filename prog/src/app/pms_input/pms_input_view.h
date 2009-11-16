@@ -288,6 +288,7 @@ extern void PMSIV_CATEGORY_StartModeChange( PMSIV_CATEGORY* wk );
 extern BOOL PMSIV_CATEGORY_WaitModeChange( PMSIV_CATEGORY* wk );
 extern void PMSIV_CATEGORY_StartBrightDown( PMSIV_CATEGORY* wk );
 extern BOOL PMSIV_CATEGORY_WaitBrightDown( PMSIV_CATEGORY* wk );
+extern void PMSIV_CATEGORY_InputWordUpdate( PMSIV_CATEGORY* wk );
 
 
 //================================================================================
