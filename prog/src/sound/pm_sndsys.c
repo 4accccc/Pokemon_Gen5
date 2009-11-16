@@ -99,6 +99,7 @@ typedef struct {
 //============================================================================================
 #define	SOUND_HEAP_SIZE	(0x0a0000 - 30000 - 12288)   //640K - 30000 - 0x3000
 #define CAPTURE_BUFSIZE (0x2000)
+#define TRACK_NUM	(16)
 
 static u8												PmSoundHeap[SOUND_HEAP_SIZE];
 static u8												captureBuffer[ CAPTURE_BUFSIZE ] ATTRIBUTE_ALIGN(32);
@@ -110,6 +111,8 @@ static PMSND_REVERB							reverbStatus;
 static SOUNDMAN_PRESET_HANDLE*	systemPresetHandle;
 static SOUNDMAN_PRESET_HANDLE*	usrPresetHandle1;
 static PMSND_SEPLAYER_DATA			sePlayerData[SEPLAYER_MAX];
+static SNDTrackInfo							trackInfo[TRACK_NUM];
+static u16											trackActiveBit;	
 //static OSMutex									sndTreadMutex;		
 //
 #ifdef PM_DEBUG
@@ -175,6 +178,7 @@ void	PMSND_Init( void )
 	// 排他制御用Mutex初期化(NNS_SndMainがスレッドセーフ設計ではないため)
 	//OS_InitMutex(&sndTreadMutex);		
 
+	trackActiveBit = 0;	
 	bgmFadeCounter = 0;
 
 	// 常駐サウンドデータ読み込み
@@ -200,7 +204,18 @@ void	PMSND_Main( void )
 	NNS_SndMain();
 	// サウンドドライバ情報更新
 	NNS_SndUpdateDriverInfo();
+	// 現在のトラック状態を取得
+	{
+		NNSSndHandle* sndHandle = PMSND_GetBGMhandlePointer();
+		int i;
 
+		trackActiveBit = 0;
+		for( i=0; i<TRACK_NUM; i++ ){
+			if(NNS_SndPlayerReadDriverTrackInfo(sndHandle, i, &trackInfo[i]) == TRUE){
+				trackActiveBit |= (0x0001 << i);	// 有効/無効をBitFieldに変換
+			}
+		}
+	}
 	if( bgmFadeCounter ){ bgmFadeCounter--; }
 }
 
@@ -278,6 +293,15 @@ u32 PMSND_GetBGMplayerNoIdx( void )
 BOOL PMSND_CheckOnReverb( void )
 {
 	return reverbStatus.active;
+}
+
+u8 PMSND_GetBGMTrackVolume( int trackNo )
+{
+	if(trackNo >= TRACK_NUM){ return 0; }
+	if(trackActiveBit	& (0x0001 << trackNo)){
+		return trackInfo[TRACK_NUM].volume;
+	}
+	return 0;
 }
 
 //============================================================================================

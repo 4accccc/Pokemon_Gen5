@@ -69,6 +69,7 @@ extern u32						PMSND_GetBGMsoundNo( void );
 extern u32						PMSND_GetNextBGMsoundNo( void );	//Ä¶—\’èorÄ¶’†‚ÌIDXæ“¾
 extern u32						PMSND_GetBGMplayerNoIdx( void );
 extern BOOL						PMSND_CheckOnReverb( void );
+extern u8							PMSND_GetBGMTrackVolume( int trackNo );
 
 //	ƒŠƒo[ƒuİ’è
 extern void PMSND_EnableCaptureReverb( u32 depth, u32 samplingRate, int volume, int stopFrames );
