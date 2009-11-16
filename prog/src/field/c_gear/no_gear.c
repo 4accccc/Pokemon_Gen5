@@ -147,34 +147,18 @@ typedef BOOL (TouchFunc)(int no, NO_GEAR_WORK* pState);
 
 struct _NO_GEAR_WORK {
 	StateFunc* state;      ///< ハンドルのプログラム状態
-	TouchFunc* touch;
 	int selectType;   // 接続タイプ
 	HEAPID heapID;
 	GFL_BUTTON_MAN* pButton;
 	u32 bgchar;  //GFL_ARCUTIL_TRANSINFO
 
 	GFL_ARCUTIL_TRANSINFO subchar;
-	int windowNum;
-	FIELD_SUBSCREEN_WORK* subscreen;
+//	FIELD_SUBSCREEN_WORK* subscreen;
 	GAMESYS_WORK* pGameSys;
-	CGEAR_SAVEDATA* pCGSV;
-	u32 objRes[3];  //CLACTリソース
 
-	int msgCountDown;
 	u16 tpx;
 	u16 tpy;
 
-	u8 typeAnim[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
-
-	u8 plt_counter;  //パレットアニメカウンタ
-	u8 beacon_bit;   //ビーコンbit
-	u8 touchx;    //タッチされた場所
-	u8 touchy;    //タッチされた場所
-	u8 select_counter;  //選択した時のアニメカウンタ
-	u8 bAction;
-	u8 cellMoveCreateCount;
-	u8 cellMoveType;
-	BOOL bPanelEdit;
 	
 };
 
@@ -237,9 +221,6 @@ static u32 _bgpal[]={NARC_c_gear_c_gear_NCLR,NARC_c_gear_c_gear2_NCLR,NARC_c_gea
 static u32 _bgcgx[]={NARC_c_gear_c_gear_NCGR,NARC_c_gear_c_gear2_NCGR,NARC_c_gear_c_gear_NCGR};
 
 
-static u32 _objpal[]={NARC_c_gear_c_gear_obj_NCLR,NARC_c_gear_c_gear2_obj_NCLR,NARC_c_gear_c_gear_obj_NCLR};
-static u32 _objcgx[]={NARC_c_gear_c_gear_obj_NCGR,NARC_c_gear_c_gear2_obj_NCGR,NARC_c_gear_c_gear_obj_NCGR};
-
 static void _gearArcCreate(NO_GEAR_WORK* pWork)
 {
 	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, pWork->heapID );
@@ -262,24 +243,6 @@ static void _gearArcCreate(NO_GEAR_WORK* pWork)
 																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
 																				 pWork->heapID);
 
-	pWork->objRes[_CLACT_PLT] = GFL_CLGRP_PLTT_Register( p_handle ,
-																											 _objpal[sex],
-																											 CLSYS_DRAW_SUB , 0 , pWork->heapID );
-
-
-
-	pWork->objRes[_CLACT_CHR] = GFL_CLGRP_CGR_Register( p_handle ,
-																											_objcgx[sex] ,
-																											FALSE , CLSYS_DRAW_SUB , pWork->heapID );
-
-	pWork->objRes[_CLACT_ANM] = GFL_CLGRP_CELLANIM_Register( p_handle ,
-																													 NARC_c_gear_c_gear_obj_NCER ,
-																													 NARC_c_gear_c_gear_obj_NANR ,
-																													 pWork->heapID );
-
-
-	//パレットアニメシステム作成
-	//    ConnectBGPalAnm_Init(&pWork->cbp, p_handle, NARC_ircbattle_connect_anm_NCLR, pWork->heapID);
 	GFL_ARC_CloseDataHandle( p_handle );
 
 	GFL_NET_ChangeIconPosition(240-22,10);
@@ -414,10 +377,9 @@ NO_GEAR_WORK* NOGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAME
 
 	pWork = GFL_HEAP_AllocClearMemory( HEAPID_FIELDMAP, sizeof( NO_GEAR_WORK ) );
 	pWork->heapID = HEAPID_FIELDMAP;
-	pWork->pCGSV = pCGSV;
-	pWork->subscreen = pSub;
+//	pWork->pCGSV = pCGSV;
+//	pWork->subscreen = pSub;
 	pWork->pGameSys = pGameSys;
-	pWork->bAction = TRUE;
 
 	_modeInit(pWork);
 
