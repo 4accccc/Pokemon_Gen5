@@ -134,11 +134,11 @@ static const GFL_DISP_VRAM vramBank = {
 //------------------------------------------------------------------
 static GFL_PROC_RESULT DebugDLPlayMainProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
-	static const HEAPID heapID = HEAPID_ARIIZUMI_DEBUG;
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ARIIZUMI_DEBUG, 0x150000 );
+	static const HEAPID heapID = HEAPID_MULTIBOOT;
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MULTIBOOT, 0x150000 );
 
-	parentData = GFL_HEAP_AllocClearMemory( HEAPID_ARIIZUMI_DEBUG, sizeof( DLPLAY_PARENT_DATA ) );
-	parentData->heapID_ = HEAPID_ARIIZUMI_DEBUG;
+	parentData = GFL_HEAP_AllocClearMemory( HEAPID_MULTIBOOT, sizeof( DLPLAY_PARENT_DATA ) );
+	parentData->heapID_ = HEAPID_MULTIBOOT;
 	parentData->mainSeq_ = DPM_INIT_COMM;
 	parentData->subSeq_ = 0;
 
@@ -204,11 +204,11 @@ static void DLPlayMain_InitBg(void)
 	
 	//BG読み込み開始
 	GFL_ARC_UTIL_TransVramBgCharacter( ARCID_MB_TEST , NARC_mb_test_test_bg_NCGR ,
-			DLPLAY_MSGWIN_PLANE , 0 , 0 , FALSE , HEAPID_ARIIZUMI_DEBUG );
+			DLPLAY_MSGWIN_PLANE , 0 , 0 , FALSE , HEAPID_MULTIBOOT );
 	GFL_ARC_UTIL_TransVramScreen( ARCID_MB_TEST , NARC_mb_test_test_bg_NSCR ,
-			DLPLAY_MSGWIN_PLANE , 0 , 0 , FALSE , HEAPID_ARIIZUMI_DEBUG );
+			DLPLAY_MSGWIN_PLANE , 0 , 0 , FALSE , HEAPID_MULTIBOOT );
 	GFL_ARC_UTIL_TransVramPalette( ARCID_MB_TEST , NARC_mb_test_test_bg_NCLR ,
-			PALTYPE_MAIN_BG , 0 , 0 , HEAPID_ARIIZUMI_DEBUG );
+			PALTYPE_MAIN_BG , 0 , 0 , HEAPID_MULTIBOOT );
 
 //ビットマップウインドウシステムの起動
 	GFL_BMPWIN_Init( parentData->heapID_ );
@@ -235,7 +235,7 @@ static GFL_PROC_RESULT DebugDLPlayMainProcEnd(GFL_PROC * proc, int * seq, void *
 
 	GFL_HEAP_FreeMemory( parentData );
 
-	GFL_HEAP_DeleteHeap( HEAPID_ARIIZUMI_DEBUG );
+	GFL_HEAP_DeleteHeap( HEAPID_MULTIBOOT );
 
 	return GFL_PROC_RES_FINISH;
 }

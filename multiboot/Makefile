@@ -16,6 +16,9 @@ NITRO_NO_STD_PCHDR = True
 #マルチブートにDSIバージョンはない
 TWLSDK_PLATFORM = NITRO
 
+PARENT_SRC		=	../prog/src
+PARENT_INC		=	../prog/include
+PARENT_ARC		=	../prog/arc
 
 #----------------------------------------------------------------------------
 #	ロム作成用定義　（ＲＯＭ提出の際は有効にしてsrl作成）
@@ -33,8 +36,11 @@ ifeq	($(MULTI_BOOT_MAKE),yes)
 MACRO_FLAGS	+=	-DMULTI_BOOT_MAKE
 endif
 
+#子機で親側のソースを見に行くので追加
 LINCLUDES	=	./include \
-				./arc
+				./arc \
+				$(PARENT_INC) \
+				$(PARENT_ARC) \
 
 
 # GF-Library
@@ -55,11 +61,6 @@ LLIBRARY_DIRS	+= ./library/spl/$(NITRO_BUILDTYPE)
 LLIBRARIES		+= ./libjn_spl.a
 
 #----------------------------------------------------------------------------
-# 任天堂Cryptライブラリを追加
-#----------------------------------------------------------------------------
-LLIBARIES += libcrypto$(NITRO_LIBSUFFIX).a
-
-#----------------------------------------------------------------------------
 #	NitroのデフォルトLCFファイルでなく、作成したものを読み込む	
 #----------------------------------------------------------------------------
 LCFILE_SPEC	=	overlay/main.lsf
@@ -75,7 +76,7 @@ MACRO_FLAGS += -DDEBUG_ONLY_FOR_$(USERNAME)
 TARGET_BIN		=	main.bin
 
 # ソースファイル
-SRCS			=	main.c gfl_use.c machine_use.c
+SRCS			=	main.c gfl_use.c $(PARENT_SRC)/system/machine_use.c
 
 include make_prog_files
 -include overlay/overlay_files

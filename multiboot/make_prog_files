@@ -6,13 +6,18 @@ SRCS	+=	ohno/dl_fatal_error.c \
 		dl_child/dlplay_child_main.c \
 		dl_child/dlplay_data_main.c \
 		dl_child/dlplay_child_pt.c \
-		../prog/src/net/net_devwireless.c \
-		../prog/src/net/wih.c \
-		../prog/src/net/net_whpipe.c \
-		../prog/src/test/dlplay/dlplay_comm_func.c \
-		../prog/src/test/dlplay/dlplay_func.c \
-		../prog/src/print/gf_font.c \
-		../prog/src/print/printsys.c 
+		$(PARENT_SRC)/net/net_devwireless.c \
+		$(PARENT_SRC)/net/wih.c \
+		$(PARENT_SRC)/net/net_whpipe.c \
+		$(PARENT_SRC)/test/dlplay/dlplay_comm_func.c \
+		$(PARENT_SRC)/test/dlplay/dlplay_func.c \
+		$(PARENT_SRC)/print/gf_font.c \
+		$(PARENT_SRC)/print/printsys.c \
+		$(PARENT_SRC)/system/net_err.c \
+		$(PARENT_SRC)/system/wipe.c \
+		$(PARENT_SRC)/system/wipe_sub.c \
+		$(PARENT_SRC)/system/wipe_wnd.c \
+		$(PARENT_SRC)/system/brightness.c 
 				
 #================================================
 # ここから下はオーバーレイプログラム定義

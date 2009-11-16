@@ -57,7 +57,7 @@
 
 #include "mbp.h"
 
-#define MB_HEAP_ID HEAPID_ARIIZUMI_DEBUG
+#define MB_HEAP_ID HEAPID_MULTIBOOT
 
 
 //============================================================================
@@ -116,7 +116,7 @@ static u8 *sFilebuf = NULL;
 
   Returns:      None.
  *---------------------------------------------------------------------------*/
-void MBP_Init(u32 ggid, u16 tgid)
+void MBP_Init(u32 ggid, u32 tgid )
 {
     /* 子機画面へ表示する親機情報設定用 */
     MBUserInfo myUser;

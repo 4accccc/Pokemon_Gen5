@@ -92,8 +92,8 @@ $(SCRIPT_ARCHIVE_DATA_PATH) : $(wildcard $(DST_SCRIPT_DIR)/*.dat)
 	cp -u $(SCRIPT_ARCHIVE_DATA_NAME) $(SCRIPT_ARCHIVE_DATA_PATH)
 	perl naixcopy.pl $(SCRIPT_ARCHIVE_HEADER_NAME) $(SCRIPT_ARCHIVE_HEADER_PATH)
 
-$(ARCHIVE_DATA_PATH_DL) : $(DST_ROOT_DIR)/d_dlplay.dat
-	nnsarc -c -l -n -i $(ARCHIVE_DATA_NAME_DL) $(DST_ROOT_DIR)/d_dlplay.dat
+$(ARCHIVE_DATA_PATH_DL) : $(wildcard $(DST_ROOT_DIR)/*.dat)
+	nnsarc -c -l -n -i $(ARCHIVE_DATA_NAME_DL) -S dlplay_list.dat
 	cp -u $(ARCHIVE_DATA_NAME_DL) $(ARCHIVE_DATA_PATH_DL)
 	perl naixcopy.pl $(ARCHIVE_HEADER_NAME_DL) $(ARCHIVE_HEADER_PATH_DL)
 

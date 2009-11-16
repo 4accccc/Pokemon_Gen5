@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-11-13T19:29:13"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-11-13T21:17:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="116" top="176" right="821" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="-16" top="176" right="689" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -356,7 +356,7 @@
 		<language name="JPN_KANJI" width="208"></language>
 	</row>
 
-	<row id="MSG_MB_PAERNT_ROM_NAME">
+	<row id="MSG_MB_PAERNT_ROM_TITLE">
 		<comment>DLROMの名前
 48文字185ドット以内
 DSシステムフォントなので

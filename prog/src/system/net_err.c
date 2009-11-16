@@ -528,11 +528,19 @@ static void Local_ErrMessagePrint(void)
 		GFL_MSGDATA		*mm;
 		STRBUF *strbuf;
 
+#ifndef MULTI_BOOT_MAKE
 		fontHandle = GFL_FONT_Create(ARCID_FONT, NARC_font_large_gftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_NET_TEMP );
 		
 		mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
 			ARCID_MESSAGE, NARC_message_d_matsu_dat, HEAPID_NET_TEMP);
+#else
+		fontHandle = GFL_FONT_Create(ARCID_FONT_DL, NARC_font_large_gftr,
+			GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_NET_TEMP );
+		
+		mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
+			ARCID_MESSAGE_DL, NARC_message_d_matsu_dat, HEAPID_NET_TEMP);
+#endif
 		strbuf = GFL_MSG_CreateString(mm, DM_MSG_ERR001);
 		PRINTSYS_Print(bmpdata, 0, 0, strbuf, fontHandle);
 

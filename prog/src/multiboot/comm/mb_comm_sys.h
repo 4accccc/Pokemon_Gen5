@@ -35,4 +35,8 @@ typedef struct _MB_COMM_WORK MB_COMM_WORK;
 
 extern MB_COMM_WORK* MB_COMM_CreateSystem( const HEAPID heapId );
 extern void MB_COMM_DeleteSystem( MB_COMM_WORK* commWork );
+extern void MB_COMM_InitComm( MB_COMM_WORK* commWork );
+extern void MB_COMM_ExitComm( MB_COMM_WORK* work );
+extern const BOOL MB_COMM_IsInitComm( MB_COMM_WORK* work );
+extern const BOOL MB_COMM_IsFinishComm( MB_COMM_WORK* work );
 

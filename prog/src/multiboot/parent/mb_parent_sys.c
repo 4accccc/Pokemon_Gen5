@@ -1,9 +1,9 @@
 //======================================================================
 /**
- * @file	mb_parent_sys.c
- * @brief	マルチブート・親機メイン
- * @author	ariizumi
- * @data	09/11/13
+ * @file  mb_parent_sys.c
+ * @brief マルチブート・親機メイン
+ * @author  ariizumi
+ * @data  09/11/13
  *
  * モジュール名：MP_PARENT
  */
@@ -13,6 +13,7 @@
 #include "system/gfl_use.h"
 #include "app/app_taskmenu.h"
 #include "gamesystem/msgspeed.h"
+#include "net/wih.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "system/bmp_winframe.h"
@@ -26,8 +27,10 @@
 
 #include "multiboot/mb_parent_sys.h"
 #include "multiboot/comm/mb_comm_sys.h"
+#include "multiboot/comm/mbp.h"
+#include "multiboot/mb_local_def.h"
 //======================================================================
-//	define
+//  define
 //======================================================================
 #pragma mark [> define
 #define MB_PARENT_FRAME_MSG (GFL_BG_FRAME1_M)
@@ -50,7 +53,7 @@
 #define MB_PARENT_YESNO_COLOR (APP_TASKMENU_ITEM_MSGCOLOR)
 
 //======================================================================
-//	enum
+//  enum
 //======================================================================
 #pragma mark [> enum
 typedef enum
@@ -67,9 +70,11 @@ typedef enum
 
 typedef enum
 {
-  MPSS_SEND_IMAGE_INIT,
-  MPSS_SEND_IMAGE_SEARCH_CHILD,
-  MPSS_SEND_IMAGE_SEND_IMAGE,
+  MPSS_SEND_IMAGE_INIT_COMM,
+  MPSS_SEND_IMAGE_INIT_COMM_WAIT,
+  MPSS_SEND_IMAGE_WAIT_SEARCH_CH,
+  MPSS_SEND_IMAGE_MBSYS_MAIN,
+  
   MPSS_SEND_IMAGE_WAIT_BOOT,
 //-------------------------------
 
@@ -78,7 +83,7 @@ typedef enum
 
 
 //======================================================================
-//	typedef struct
+//  typedef struct
 //======================================================================
 #pragma mark [> struct
 typedef struct
@@ -89,6 +94,12 @@ typedef struct
   
   MB_PARENT_STATE state;
   u8              subState;
+  
+  //SendImage
+  STRBUF *romTitle; //DLROMタイトル
+  STRBUF *romInfo;  //DLROM説明
+  u16    *romTitleStr;
+  u16    *romInfoStr;
   
   //メッセージ用
   GFL_TCBLSYS     *tcblSys;
@@ -101,12 +112,12 @@ typedef struct
   
   PRINT_QUE *printQue;
   APP_TASKMENU_WORK *yesNoWork;
-	APP_TASKMENU_RES	*takmenures;
+  APP_TASKMENU_RES  *takmenures;
 }MB_PARENT_WORK;
 
 
 //======================================================================
-//	proto
+//  proto
 //======================================================================
 #pragma mark [> proto
 
@@ -358,12 +369,57 @@ static void MB_PARENT_LoadResource( MB_PARENT_WORK *work )
 
 
 #pragma mark [>SendImage func
+static void MP_PARENT_SendImage_MBPInit( MB_PARENT_WORK *work );
+static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work );
+
 //--------------------------------------------------------------
 //  ROM送信部分 初期化
 //--------------------------------------------------------------
 static void MP_PARENT_SendImage_Init( MB_PARENT_WORK *work )
 {
-  work->subState = MPSS_SEND_IMAGE_INIT;
+  int i;
+  STRBUF *titleStr;
+  STRBUF *infoStr;
+  u16 titleLen,infoLen;
+  
+  work->subState = MPSS_SEND_IMAGE_INIT_COMM;
+  work->romTitleStr = GFL_HEAP_AllocClearMemory( work->heapId , MB_GAME_NAME_LENGTH*2 );
+  work->romInfoStr = GFL_HEAP_AllocClearMemory( work->heapId , MB_GAME_INTRO_LENGTH*2 );
+  MB_PARENT_MessageCreateWordset( work );
+  MB_PARENT_MessageWordsetName( work , 0 );
+  {
+    STRBUF *workStr = GFL_MSG_CreateString( work->msgHandle , MSG_MB_PAERNT_ROM_TITLE );
+    titleStr = GFL_STR_CreateBuffer( 128 , work->heapId );
+    WORDSET_ExpandStr( work->wordSet , titleStr , workStr );
+    GFL_STR_DeleteBuffer( workStr );
+  }
+  MB_PARENT_MessageDeleteWordset( work );
+
+  infoStr  = GFL_MSG_CreateString( work->msgHandle , MSG_MB_PAERNT_ROM_INFO );
+  titleLen = GFL_STR_GetBufferLength( titleStr );
+  infoLen = GFL_STR_GetBufferLength( infoStr );
+  
+  GFL_STD_MemCopy16( GFL_STR_GetStringCodePointer( titleStr ) ,
+                     work->romTitleStr ,
+                     titleLen*2 );
+  GFL_STD_MemCopy16( GFL_STR_GetStringCodePointer( infoStr ) ,
+                     work->romInfoStr ,
+                     infoLen*2 );
+  GFL_STR_DeleteBuffer( titleStr );
+  GFL_STR_DeleteBuffer( infoStr );
+
+  //終端コードを変換
+  work->romTitleStr[titleLen] = 0x0000;
+  work->romInfoStr[infoLen] = 0x0000;
+  
+  //改行コード変換
+  for( i=0;i<MB_GAME_INTRO_LENGTH;i++ )
+  {
+    if( work->romInfoStr[i] == 0xFFFE )
+    {
+      work->romInfoStr[i] = 0x000a;
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -371,6 +427,8 @@ static void MP_PARENT_SendImage_Init( MB_PARENT_WORK *work )
 //--------------------------------------------------------------
 static void MP_PARENT_SendImage_Term( MB_PARENT_WORK *work )
 {
+  GFL_HEAP_FreeMemory( work->romTitle );
+  GFL_HEAP_FreeMemory( work->romInfo );
 }
 
 //--------------------------------------------------------------
@@ -380,25 +438,170 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
 {
   switch( work->subState )
   {
-  case MPSS_SEND_IMAGE_INIT:
-    MB_PARENT_MessageCreateWordset( work );
-    MB_PARENT_MessageWordsetName( work , 0 );
-    MB_PARENT_MessageDisp( work , MSG_MB_PAERNT_01 );
-    MB_PARENT_MessageDeleteWordset( work );
+  case MPSS_SEND_IMAGE_INIT_COMM:
+    MB_COMM_InitComm( work->commWork );
+    work->subState = MPSS_SEND_IMAGE_INIT_COMM_WAIT;
+    break;
+  case MPSS_SEND_IMAGE_INIT_COMM_WAIT:
+    if( MB_COMM_IsInitComm( work->commWork ) == TRUE )
+    {
+      if( WH_StartMeasureChannel() == TRUE )
+      {
+        work->subState = MPSS_SEND_IMAGE_WAIT_SEARCH_CH;
+      }
+    }
+    break;
+  case MPSS_SEND_IMAGE_WAIT_SEARCH_CH:
+    if( WH_GetSystemState() == WH_SYSSTATE_MEASURECHANNEL )
+    {
+      MP_PARENT_SendImage_MBPInit( work );
 
-    work->subState = MPSS_SEND_IMAGE_SEARCH_CHILD;
+      MB_PARENT_MessageCreateWordset( work );
+      MB_PARENT_MessageWordsetName( work , 0 );
+      MB_PARENT_MessageDisp( work , MSG_MB_PAERNT_01 );
+      MB_PARENT_MessageDeleteWordset( work );
+
+      work->subState = MPSS_SEND_IMAGE_MBSYS_MAIN;
+    }
     break;
-  case MPSS_SEND_IMAGE_SEARCH_CHILD:
+  case MPSS_SEND_IMAGE_MBSYS_MAIN:
+    MP_PARENT_SendImage_MBPMain( work );
     break;
-  case MPSS_SEND_IMAGE_SEND_IMAGE:
-    break;
+
   case MPSS_SEND_IMAGE_WAIT_BOOT:
+    OS_TPrintf("!");
     break;
   }
   
   return FALSE;
 }
 
+//--------------------------------------------------------------
+//  MBPシステム起動
+//--------------------------------------------------------------
+static void MP_PARENT_SendImage_MBPInit( MB_PARENT_WORK *work )
+{
+  /* このデモがダウンロードさせるプログラム情報 */
+  //staticじゃないと動かない！！！
+  static MBGameRegistry mbGameList = {
+    "/dl_rom/child.srl",    // 子機バイナリコード
+    NULL ,                  // ゲーム名
+    NULL ,                  // ゲーム内容説明
+    "/dl_rom/icon.char",    // アイコンキャラクタデータ
+    "/dl_rom/icon.plt",     // アイコンパレットデータ
+    MB_DEF_GGID,            // GGID
+    2,                      // 最大プレイ人数、親機の数も含めた人数
+  };
+
+  const u16 channel = WH_GetMeasureChannel();
+  mbGameList.gameNamep = work->romTitleStr;
+  mbGameList.gameIntroductionp = work->romInfoStr;
+  MBP_Init( MB_DEF_GGID , MB_TGID_AUTO );
+  MBP_Start( &mbGameList , channel );
+}
+
+static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
+{
+  const u16 mbpState = MBP_GetState();
+
+  //以下サンプル流用
+  switch (MBP_GetState())
+  {
+    //-----------------------------------------
+    // アイドル状態
+  case MBP_STATE_IDLE:
+    //ココには来ない(MP_PARENT_SendImage_MBPInitでStartしてるから)
+    break;
+    //-----------------------------------------
+    // 子機からのエントリー受付中
+  case MBP_STATE_ENTRY:
+    {
+      if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B )
+      {
+        // Bボタンでマルチブートキャンセル
+        MBP_Cancel();
+        break;
+      }
+      // エントリー中の子機が一台でも存在すれば開始可能とする
+      if (MBP_GetChildBmp(MBP_BMPTYPE_ENTRY) ||
+          MBP_GetChildBmp(MBP_BMPTYPE_DOWNLOADING) ||
+          MBP_GetChildBmp(MBP_BMPTYPE_BOOTABLE))
+      {
+        //子機が来たらとりあえず始めてしまう
+        {
+          // ダウンロード開始
+          MBP_StartDownloadAll();
+        }
+      }
+    }
+    break;
+
+    //-----------------------------------------
+    // プログラム配信処理
+  case MBP_STATE_DATASENDING:
+    {
+      // 全員がダウンロード完了しているならばスタート可能.
+      if (MBP_IsBootableAll())
+      {
+        // ブート開始
+        MBP_StartRebootAll();
+      }
+    }
+    break;
+
+    //-----------------------------------------
+    // リブート処理
+  case MBP_STATE_REBOOTING:
+    {
+    }
+    break;
+
+    //-----------------------------------------
+    // 再接続処理
+  case MBP_STATE_COMPLETE:
+    {
+      // 全員無事に接続完了したらマルチブート処理は終了し
+      // 通常の親機として無線を再起動する。
+      work->subState = MPSS_SEND_IMAGE_WAIT_BOOT;
+    }
+    break;
+
+    //-----------------------------------------
+    // エラー発生
+  case MBP_STATE_ERROR:
+    {
+      // 通信をキャンセルする
+      MBP_Cancel();
+    }
+    break;
+
+    //-----------------------------------------
+    // 通信キャンセル処理中
+  case MBP_STATE_CANCEL:
+    // None
+    break;
+
+    //-----------------------------------------
+    // 通信異常終了
+  case MBP_STATE_STOP:
+    /*
+    switch (WH_GetSystemState())
+    {
+    case WH_SYSSTATE_IDLE:
+      (void)WH_End();
+      break;
+    case WH_SYSSTATE_BUSY:
+      break;
+    case WH_SYSSTATE_STOP:
+      return FALSE;
+    default:
+      OS_Panic("illegal state\n");
+    }
+    */
+    break;
+  }
+  
+}
 
 #pragma mark [>Message func
 //--------------------------------------------------------------
@@ -436,7 +639,7 @@ static void MB_PARENT_MessageInit( MB_PARENT_WORK *work )
   
   //YesNo用
   work->printQue = PRINTSYS_QUE_Create( work->heapId );
-	work->takmenures	= APP_TASKMENU_RES_Create( MB_PARENT_FRAME_MSG, MB_PARENT_PLT_MAIN_TASKMENU, work->fontHandle, work->printQue, work->heapId );
+  work->takmenures  = APP_TASKMENU_RES_Create( MB_PARENT_FRAME_MSG, MB_PARENT_PLT_MAIN_TASKMENU, work->fontHandle, work->printQue, work->heapId );
 }
 
 //--------------------------------------------------------------

@@ -44,4 +44,5 @@
 	ARCID_POKE_PERSONAL		"personal.narc"		#パーソナルデータ
 	ARCID_MB_TEST			"mb_test.narc"		#テストグラフィック
 	ARCID_MESSAGE_DL		"message_dl.narc"	#メッセージデータ
-	ARCID_FONT_DL			"font.narc"		#フォントデータ
+	ARCID_FONT_DL			"font/font_dl.narc"	#フォントデータ
+	ARCID_NET_ERR			"../../prog/arc/net_err.narc"
