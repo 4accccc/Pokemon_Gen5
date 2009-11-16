@@ -373,7 +373,7 @@ def conv_drawtype_blact(
   ncgpath = sprintf( "%s\/%s", dir_res_ncgimd, ncgname )
   
 	if( FileTest.exist?(ncgpath) != true )
-    if( flag_dummy )
+    if( flag_dummy == 0 )
 		  printf( "ERROR %s ‚ª‚ ‚è‚Ü‚¹‚ñ\n", ncgpath )
       return RET_ERROR
     end
@@ -387,7 +387,7 @@ def conv_drawtype_blact(
   nclpath = sprintf( "%s\/%s", dir_res_ncgimd, nclname )
 
   if( FileTest.exist?(nclpath) != true )
-    if( flag_dummy == nil )
+    if( flag_dummy == 0 )
 		  printf( "ERROR %s ‚ª‚ ‚è‚Ü‚¹‚ñ\n", nclpath )
       return RET_ERROR
     end
