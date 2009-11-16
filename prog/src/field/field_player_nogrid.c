@@ -512,6 +512,10 @@ void FIELD_PLAYER_NOGRID_Free_Move( FIELD_PLAYER *fld_player, int key, fx32 oned
 	
 	if (key & PAD_BUTTON_B) {
 		VEC_Add( &pos, &vecMove, &pos );
+    // è≠êîì_ÇéÃÇƒÇÈ
+    pos.x = FX_Floor( pos.x );  
+    pos.y = FX_Floor( pos.y );  
+    pos.z = FX_Floor( pos.z );  
 		FIELD_PLAYER_SetPos( fld_player, &pos );
 	} else {
 		fx32 diff;
@@ -519,6 +523,10 @@ void FIELD_PLAYER_NOGRID_Free_Move( FIELD_PLAYER *fld_player, int key, fx32 oned
 				FIELDMAP_GetFieldG3Dmapper(fieldWork),
 				FIELD_PLAYER_GetGridInfoData(fld_player),
 				&pos, &vecMove, MV_SPEED );
+
+    pos.x = FX_Floor( pos.x );  
+    pos.y = FX_Floor( pos.y );  
+    pos.z = FX_Floor( pos.z );  
 		FIELD_PLAYER_SetPos( fld_player, &pos );
 	}
 }
