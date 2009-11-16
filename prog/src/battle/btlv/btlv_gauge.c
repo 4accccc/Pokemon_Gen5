@@ -243,7 +243,6 @@ static  void  PutGaugeOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, BTLV_GAU
 static  void  PutHPNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, s32 nowHP );
 static  void  PutLVNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl );
 static  void  Gauge_LevelUp( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl );
-static  void  Gauge_SetStatus( BTLV_GAUGE_WORK* bgw, PokeSick sick, BtlvMcssPos pos );
 
 static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw );
 
@@ -296,10 +295,7 @@ BTLV_GAUGE_WORK*  BTLV_GAUGE_Init( GFL_FONT* fontHandle, HEAPID heapID )
     bgw->parts_address = ( u8 * )char_data->pRawData;
   }
 
-  // フォント読み込み（独自フォントになる可能性があるので　現状はデフォルトフォントを読んでおく）
-  // 09.11.13 フォントをcoreから受け継ぐようにしました  taya
   bgw->font = fontHandle;
-  //bgw->font = GFL_FONT_Create( ARCID_FONT, NARC_font_small_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, bgw->heapID );
 
   //今鳴っているBGMを保存
   bgw->now_bgm_no = PMSND_GetBGMsoundNo();
@@ -463,8 +459,7 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp, BTLV_GAUGE
                                                         bgw->status_charID, bgw->status_plttID, bgw->status_cellID,
                                                         &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
     GFL_CLACT_WK_SetAutoAnmFlag( bgw->bgcl[ pos ].status_clwk, TRUE );
-    Gauge_SetStatus( bgw, BPP_GetPokeSick( bpp ), pos );
-    //Gauge_SetStatus( bgw, POKESICK_DOKU, pos );
+    BTLV_GAUGE_SetStatus( bgw, BPP_GetPokeSick( bpp ), pos );
     if( ( ( pos & 1 ) == 0 ) && ( bgw->bgcl[ pos ].gauge_type != BTLV_GAUGE_TYPE_3vs3 ) )
     {
       bgw->bgcl[ pos ].exp_clwk = GFL_CLACT_WK_Create( bgw->clunit,
@@ -1437,10 +1432,11 @@ static  void  Gauge_LevelUp( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl )
  * @brief   状態異常アイコンセット
  *
  * @param bgw   BTLV_GAUGE_WORK管理構造体へのポインタ
- * @param bgcl  ゲージワークへのポインタ
+ * @param sick  セットする状態異常
+ * @param pos   セットするポケモンの立ち位置
  */
 //--------------------------------------------------------------
-static  void  Gauge_SetStatus( BTLV_GAUGE_WORK* bgw, PokeSick sick, BtlvMcssPos pos )
+void  BTLV_GAUGE_SetStatus( BTLV_GAUGE_WORK* bgw, PokeSick sick, BtlvMcssPos pos )
 {
   int sick_anm[]={
     APP_COMMON_ST_ICON_NONE,        // なし（アニメ番号的にもなし）
