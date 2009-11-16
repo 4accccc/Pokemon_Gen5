@@ -540,7 +540,7 @@ static void Local_ErrMessagePrint(void)
 		
 		mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
 			ARCID_MESSAGE_DL, NARC_message_d_matsu_dat, HEAPID_NET_TEMP);
-#endif
+#endif  //MULTI_BOOT_MAKE
 		strbuf = GFL_MSG_CreateString(mm, DM_MSG_ERR001);
 		PRINTSYS_Print(bmpdata, 0, 0, strbuf, fontHandle);
 

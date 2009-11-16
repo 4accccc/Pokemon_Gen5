@@ -133,7 +133,11 @@ void GFLUser_Init(void)
   //STD 標準ライブラリ初期化（乱数やCRC）
   GFL_STD_Init(GFL_HEAPID_SYSTEM);
   //アーカイブシステム初期化
+#ifndef MULTI_BOOT_MAKE
   GFL_ARC_Init(&ArchiveFileTable[0],ARCID_TABLE_MAX);
+#else
+	GFL_ARC_InitMultiBoot(&ArchiveFileTable[0],ARCID_TABLE_MAX);
+#endif //MULTI_BOOT_MAKE
 
   //UIシステム初期化
   GFL_UI_Boot(GFL_HEAPID_SYSTEM);
@@ -182,10 +186,12 @@ void GFLUser_Init(void)
 
   //MCSライブラリを拡張メモリにロード
 #ifdef PM_DEBUG
+#ifndef MULTI_BOOT_MAKE
   if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER ){
     GFL_OVERLAY_Load( FS_OVERLAY_ID( mcs_lib ) );
 		GFL_MCS_Init();
   }
+#endif //MULTI_BOOT_MAKE
 #endif
 
 }
@@ -205,11 +211,13 @@ void GFLUser_Main(void)
 //  NetOld_Update();
 
 #ifdef PM_DEBUG
+#ifndef MULTI_BOOT_MAKE
   //デバッグシステム
   DEBUGWIN_UpdateSystem();
   //Lを押している間停止。L押しながらRで1コマ送る
   if( DEBUG_PAUSE_Update() == TRUE &&
       DEBUGWIN_IsActive() == FALSE )
+#endif MULTI_BOOT_MAKE
 #endif
   {
     GFL_PROC_Main();
@@ -219,12 +227,14 @@ void GFLUser_Main(void)
   //GFL_SOUND_Main();
 	//
 #ifdef PM_DEBUG
+#ifndef MULTI_BOOT_MAKE
   //MCS受信
   if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER ){
 	  GFL_MCS_Main();
 	  GFL_MCS_SNDVIEWER_Main();
 		GFL_MCS_Resident();
   }
+#endif MULTI_BOOT_MAKE
 #endif
 }
 
@@ -249,9 +259,11 @@ void GFLUser_Display(void)
 void GFLUser_Exit(void)
 {
 #ifdef PM_DEBUG
+#ifndef MULTI_BOOT_MAKE
   if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER ){
 	  GFL_MCS_Exit();
   }
+#endif //MULTI_BOOT_MAKE
 #endif
   GFL_TEXT_DeleteSystem();
   GFL_BACKUP_Exit();
@@ -306,10 +318,12 @@ void GFLUser_VIntr(void)
     // 通信アイコンの描画のためにあります。通信自体は行っていません
     //GFL_NET_VBlankFunc();
 #ifdef PM_DEBUG
+#ifndef MULTI_BOOT_MAKE
   //MCS受信
   if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER ){
 	  GFL_MCS_VIntrFunc();
   }
+#endif //MULTI_BOOT_MAKE
 #endif
   GFL_DMA_Main();
   GFL_USE_VintrCounter++;

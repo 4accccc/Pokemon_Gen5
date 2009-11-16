@@ -95,7 +95,7 @@ MACRO_FLAGS += -DDEBUG_ONLY_FOR_$(USERNAME)
 TARGET_BIN		=	main.bin
 
 # ソースファイル
-SRCS			=	main.c gfl_use.c $(PARENT_SRC)/system/machine_use.c
+SRCS			=	main.c $(PARENT_SRC)/system/gfl_use.c $(PARENT_SRC)/system/machine_use.c
 
 include make_prog_files
 -include overlay/overlay_files
