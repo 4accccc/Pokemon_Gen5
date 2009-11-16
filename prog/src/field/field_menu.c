@@ -231,9 +231,9 @@ static const u32 FIELD_MENU_ITEM_ICON_RES_ARR[FMIT_MAX][3] =
     NARC_field_menu_menu_icon_confing_NCER,
     NARC_field_menu_menu_icon_confing_NANR},
   //É_É~Å[
-  { NARC_field_menu_menu_obj_common_NCGR, 
-    NARC_field_menu_menu_obj_common_NCER,
-    NARC_field_menu_menu_obj_common_NANR},
+  { NARC_field_menu_menu_icon_poke_NCGR, 
+    NARC_field_menu_menu_icon_poke_NCER,
+    NARC_field_menu_menu_icon_poke_NANR},
 
 
 };

@@ -701,7 +701,14 @@ static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN
 	GAMESYS_WORK *gameSys = FIELDMAP_GetGameSysWork( pWork->fieldmap );
   GAME_COMM_SYS_PTR commSys = GAMESYSTEM_GetGameCommSysPtr(gameSys);
 
-	const BOOL isScrollIn = ( prevMode == FIELD_SUBSCREEN_NORMAL ? TRUE : FALSE );
+	BOOL isScrollIn = FALSE;
+
+  if( prevMode == FIELD_SUBSCREEN_NORMAL ||
+      prevMode == FIELD_SUBSCREEN_NOGEAR ||
+      prevMode == FIELD_SUBSCREEN_UNION )
+  {
+    isScrollIn = TRUE;
+  }
 
 	GFL_BG_SetBGControl( FIELD_SUBSCREEN_BGPLANE, &header_sub3, GFL_BG_MODE_TEXT );
 	GFL_BG_SetVisible( FIELD_SUBSCREEN_BGPLANE, VISIBLE_ON );
