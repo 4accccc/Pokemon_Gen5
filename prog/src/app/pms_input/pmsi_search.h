@@ -33,7 +33,7 @@ enum
  *								EXTERNêÈåæ
  */
 //=============================================================================
-extern PMS_INPUT_SEARCH* PMSI_SEARCH_Create( const PMS_INPUT_WORK* mwk, HEAPID heap_id );
+PMS_INPUT_SEARCH* PMSI_SEARCH_Create( const PMS_INPUT_WORK* mwk, const PMS_INPUT_DATA* dwk, HEAPID heap_id );
 extern void PMSI_SEARCH_Delete( PMS_INPUT_SEARCH* wk );
 extern void PMSI_SEARCH_AddWord( PMS_INPUT_SEARCH* wk, u16 word_code );
 extern BOOL PMSI_SEARCH_DelWord( PMS_INPUT_SEARCH* wk );

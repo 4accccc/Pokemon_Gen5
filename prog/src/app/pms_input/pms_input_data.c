@@ -491,6 +491,7 @@ PMS_WORD  PMSI_DATA_GetGroupEnableWordCode( const PMS_INPUT_DATA* pmsi, u32 grou
 //------------------------------------------------------------------
 u32 PMSI_DATA_GetInitialEnableWordCount( const PMS_INPUT_DATA* pmsi, u32 initial )
 {
+  GF_ASSERT(0); //未使用
 	return pmsi->InitialEnableWordCnt[initial];
 }
 
@@ -506,6 +507,7 @@ u32 PMSI_DATA_GetInitialEnableWordCount( const PMS_INPUT_DATA* pmsi, u32 initial
 //------------------------------------------------------------------
 void PMSI_DATA_GetInitialEnableWord( const PMS_INPUT_DATA* pmsi, u32 initial, u32 word_idx, STRBUF* buf )
 {
+  GF_ASSERT(0); //未使用
 	if( pmsi->InitialEnableWordCnt[initial] )
 	{
 		PMS_WORD  word_code = PMSI_DATA_GetInitialEnableWordCode(pmsi, initial, word_idx);
@@ -525,6 +527,7 @@ void PMSI_DATA_GetInitialEnableWord( const PMS_INPUT_DATA* pmsi, u32 initial, u3
 //------------------------------------------------------------------
 PMS_WORD PMSI_DATA_GetInitialEnableWordCode( const PMS_INPUT_DATA* pmsi, u32 initial, u32 word_idx )
 {
+  GF_ASSERT(0);
 	if( pmsi->InitialEnableWordCnt[initial] )
 	{
 		u32 pos = pmsi->InitialEnableWordPos[initial] + word_idx;

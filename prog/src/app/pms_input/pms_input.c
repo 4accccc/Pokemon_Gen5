@@ -2159,17 +2159,7 @@ static void category_input(PMS_INPUT_WORK* wk,int* seq)
 //------------------------------------------------------------------
 static BOOL check_category_enable( PMS_INPUT_WORK* wk )
 {
-	if( wk->category_mode == CATEGORY_MODE_GROUP )
-	{
-		return (PMSI_DATA_GetGroupEnableWordCount( wk->dwk, wk->category_pos ) != 0);
-	}
-	else
-	{
-    // –¢Žg—p
-    GF_ASSERT(0);
-		return (PMSI_DATA_GetInitialEnableWordCount( wk->dwk, wk->category_pos ) != 0 );
-	}
-	
+	return (PMSI_DATA_GetGroupEnableWordCount( wk->dwk, wk->category_pos ) != 0);
 }
 
 //------------------------------------------------------------------
@@ -3010,6 +3000,7 @@ static BOOL set_select_word( PMS_INPUT_WORK* wk )
 	if( wk->category_mode == CATEGORY_MODE_GROUP ){
 		word = PMSI_DATA_GetGroupEnableWordCode( wk->dwk, wk->category_pos, word_idx );
 	}else{
+//    word = PMSI_SEARCH_GetWordCode( wk->swk, wk->category_pos, word_idx );
 		word = PMSI_DATA_GetInitialEnableWordCode( wk->dwk, wk->category_pos, word_idx );
 	}
 
@@ -3602,7 +3593,8 @@ u32 PMSI_GetCategoryWordMax( const PMS_INPUT_WORK* wk )
 	}
 	else
 	{
-		return PMSI_DATA_GetInitialEnableWordCount( wk->dwk, wk->category_pos );
+    return PMSI_SEARCH_GetResultCount( wk->swk );
+//		return PMSI_DATA_GetInitialEnableWordCount( wk->dwk, wk->category_pos );
 	}
 }
 
@@ -3624,7 +3616,8 @@ void PMSI_GetCategoryWord( const PMS_INPUT_WORK* wk, u32 word_num, STRBUF* buf )
 	}
 	else
 	{
-		PMSI_DATA_GetInitialEnableWord( wk->dwk, wk->category_pos, word_num, buf );
+    PMSI_SEARCH_GetResultString( wk->swk, word_num, buf );
+//		PMSI_DATA_GetInitialEnableWord( wk->dwk, wk->category_pos, word_num, buf );
 	}
 }
 
