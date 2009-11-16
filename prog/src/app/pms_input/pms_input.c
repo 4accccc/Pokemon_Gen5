@@ -333,10 +333,6 @@ static MENU_RESULT  CtrlMenuState( MENU_WORK* menu , u16 key );
 static u32 get_menu_cursor_pos( const MENU_WORK* menu );
 static void SubProc_ChangeCategoryMode( PMS_INPUT_WORK* wk, int* seq );
 
-//@todo 仮用の関数	あとで消してください
-static PMS_WORD PMSI_WordToDeco( PMS_WORD word );
-
-
 //==============================================================
 // GFL_PROC-DATA
 //==============================================================
@@ -502,27 +498,6 @@ static void BmnCallBack( u32 buttonID, u32 event, void* wk_ptr )
 //------------------------------------------------------------------
 GFL_PROC_RESULT PMSInput_Quit( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
-#if 0
-	{	
-		int i;
-
-		PMS_INPUT_WORK* wk	= mywk;
-
-		//↓@todo  GMM文字列をデコメに変換する処理
-		for( i = 0; i < PMS_INPUT_WORD_MAX; i++ )
-		{	
-			wk->edit_word[i]	= PMSI_WordToDeco( wk->edit_word[i] );
-		}
-		for( i = 0; i < PMS_WORD_MAX; i++ )
-		{	
-			wk->edit_pms.word[i]	= PMSI_WordToDeco( wk->edit_pms.word[i] );
-		}
-    //@TODO これだとmodifiredが上書きされてしまう
-    PMSI_PARAM_WriteBackData( wk->input_param, wk->edit_word, &wk->edit_pms );
-		//↑ここまで
-	}
-#endif
-
 	DestructWork( mywk, proc );
 
 	GFL_HEAP_DeleteHeap( HEAPID_PMS_INPUT_SYSTEM );
@@ -714,6 +689,25 @@ static int KeyStatusChange(PMS_INPUT_WORK* wk,int* seq)
 
 }
 
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  単語リストへ
+ *
+ *	@param	PMS_INPUT_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void set_nextproc_category_to_wordwin( PMS_INPUT_WORK* wk )
+{
+  GFL_SOUND_PlaySE(SOUND_DECIDE);
+  
+  setup_wordwin_params( &wk->word_win, wk );
+
+  wk->next_proc = MainProc_WordWin;
+  PMSIView_SetCommand( wk->vwk, VCMD_CATEGORY_TO_WORDWIN );
+}
 
 
 //----------------------------------------------------------------------------------------------
@@ -1891,6 +1885,10 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
     {
       HOSAKA_Printf("push select!\n");
       PMSI_SEARCH_Start( wk->swk );
+      
+      // 単語リストへ
+      set_nextproc_category_to_wordwin( wk );
+      *seq = SEQ_CA_NEXTPROC;
     }
     else if( wk->category_pos == CATEGORY_POS_ERASE )
     {
@@ -1912,11 +1910,8 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
     {
       if(check_category_enable( wk ) )
       {
-        GFL_SOUND_PlaySE( SOUND_DECIDE );
-      
-        setup_wordwin_params( &wk->word_win, wk );
-        wk->next_proc = MainProc_WordWin;
-        PMSIView_SetCommand( wk->vwk, VCMD_CATEGORY_TO_WORDWIN );
+        // 単語リストへ
+        set_nextproc_category_to_wordwin( wk );
         *seq = SEQ_CA_NEXTPROC;
       }
       else
@@ -2111,11 +2106,7 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
 			return;
 		}
     // 単語リストへ
-    GFL_SOUND_PlaySE(SOUND_DECIDE);
-
-    setup_wordwin_params( &wk->word_win, wk );
-    wk->next_proc = MainProc_WordWin;
-    PMSIView_SetCommand( wk->vwk, VCMD_CATEGORY_TO_WORDWIN );
+    set_nextproc_category_to_wordwin( wk );
     *seq = SEQ_CA_NEXTPROC;
 	}
   // イニシャル
@@ -2174,6 +2165,8 @@ static BOOL check_category_enable( PMS_INPUT_WORK* wk )
 	}
 	else
 	{
+    // 未使用
+    GF_ASSERT(0);
 		return (PMSI_DATA_GetInitialEnableWordCount( wk->dwk, wk->category_pos ) != 0 );
 	}
 	
@@ -3455,7 +3448,7 @@ int* PMSI_GetKTModePointer(const PMS_INPUT_WORK* wk)
 }
 
 //------------------------------------------------------------------
-/*int**
+/**
 	* 入力モード取得
 	*
 	* @param   wk		ワークポインタ
@@ -3699,73 +3692,33 @@ BOOL PMSI_GetLockFlag( const PMS_INPUT_WORK* wk )
 }
 
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	const PMS_INPUT_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 GFL_TCBSYS* PMSI_GetTcbSystem( const PMS_INPUT_WORK* wk )
 {
 	return wk->tcbSys;
 }
 
-void PMSI_SetInputWord( const PMS_INPUT_WORK* wk, STRBUF* out_buf )
-{
-  PMSI_SEARCH_SetInputWord( wk->swk, out_buf );
-}
-
-//----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 /**
- *	@brief	仮文字をデコメに変換する関数
- *					@todo 後ほど消してください
+ *	@brief
  *
- *	@param	PMS_WORD word 
+ *	@param	const PMS_INPUT_WORK* wk
+ *	@param	out_buf 
  *
- *	@return
+ *	@retval
  */
 //-----------------------------------------------------------------------------
-static PMS_WORD PMSI_WordToDeco( PMS_WORD word )
-{	
-	// きもち
-	static const s16 deco_tbl[ PMS_DECOID_MAX ] = {
-		-1,	//1オリジン
-		1480,	//はじめまして
-		1481,	//こんにちは
-		1482,	//だいすき
-		1484,	//たのしい
-		1483,	//がんばれ！
-		1485,	//うれしい
-		1486,	//ありがとう
-		1487,	//さいこう
-		1488,	//ごめんね
-		1489,	//バイバイ
-	};
-
-	//仮に、選ばれた文字列をデコメ文字に変換する
-	
-	u32	word_bit;
-	u32	deco_bit;
-	u32 local_bit;
-	
-
-	//ビットを取り出す
-	word_bit	= word &  PMS_WORD_NUM_MASK;
-	deco_bit	= word &  (PMS_WORD_DECO_MASK << PMS_WORD_DECO_BITSHIFT);
-	local_bit	= word &  (PMS_WORD_LOCALIZE_MASK << PMS_WORD_LOCALIZE_BITSHIFT);
-
-	OS_Printf( "check word %d num %d deco %d local %d\n", word, word_bit, deco_bit, local_bit );
-	{	
-		int i;
-		for( i = 0; i < PMS_DECOID_MAX; i++ )
-		{	
-			//でこ用文字なので変換
-			if( deco_tbl[i] == word_bit )
-			{	
-				word_bit	= i;	//デコの番号
-				deco_bit	= 1 << PMS_WORD_DECO_BITSHIFT;
-
-				word	= local_bit | deco_bit | word_bit;
-				break;
-			}
-		}
-	}
-	
-	return word;
+void PMSI_GetInputWord( const PMS_INPUT_WORK* wk, STRBUF* out_buf )
+{
+  PMSI_SEARCH_GetInputWord( wk->swk, out_buf );
 }
 
 // スクロールデータ取得

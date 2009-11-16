@@ -392,11 +392,13 @@ static u32 setup_initial_window( PMSIV_CATEGORY* wk, u32 charpos )
 		PMSI_INITIAL_DAT_GetStr(i, buf);
 		PMSI_INITIAL_DAT_GetPrintPos(i, &x, &y);
 
+#if 0
 		if( PMSI_DATA_GetInitialEnableWordCount(wk->dwk, i) )
 		{
 			GFL_FONTSYS_SetColor( CATEGORY_WIN_COL_LETTER, CATEGORY_WIN_COL_SHADOW, CATEGORY_WIN_COL_GROUND );
 		}
 		else
+#endif
 		{
 			GFL_FONTSYS_SetColor( CATEGORY_WIN_UNKNOWN_COL_LETTER, CATEGORY_WIN_UNKNOWN_COL_SHADOW, CATEGORY_WIN_COL_GROUND );
 		}
@@ -881,7 +883,7 @@ void PMSIV_CATEGORY_InputWordUpdate( PMSIV_CATEGORY* wk )
 
   buf = GFL_STR_CreateBuffer( PMS_INPUTWORD_MAX+1, HEAPID_PMS_INPUT_VIEW );
 
-  PMSI_SetInputWord( wk->mwk, buf );
+  PMSI_GetInputWord( wk->mwk, buf );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win), CATEGORY_INPUT_WIN_COL_B);
   GFL_FONTSYS_SetColor( CATEGORY_INPUT_WIN_COL_L, CATEGORY_INPUT_WIN_COL_S, CATEGORY_INPUT_WIN_COL_B );
