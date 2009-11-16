@@ -34,14 +34,15 @@
 #include "../../field/event_ircbattle.h"
 #include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
 
+#include "gtsnego_local.h"
 #include "msg/msg_gtsnego.h"
 #include "gtsnego.naix"
 
 
 
 struct _GTSNEGO_DISP_WORK {
-  u32 bgchar;  //GFL_ARCUTIL_TRANSINFO
 	u32 subchar;
+  u32 mainchar;
   HEAPID heapID;
 
 };
@@ -106,8 +107,6 @@ void GTSNEGO_DISP_Main(GTSNEGO_DISP_WORK* pWork)
 void GTSNEGO_DISP_End(GTSNEGO_DISP_WORK* pWork)
 {
   GFL_BG_FillCharacterRelease( GFL_BG_FRAME1_S, 1, 0);
-  GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
-                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar));
   GFL_BG_FreeBGControl(GFL_BG_FRAME1_S);
   GFL_BG_FreeBGControl(GFL_BG_FRAME0_S);
   GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
@@ -185,22 +184,32 @@ static void dispInit(GTSNEGO_DISP_WORK* pWork)
 	{
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
 
-    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_gsync_connect_NCLR,
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_gtsnego_connect_NCLR,
                                       PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
     // サブ画面BG0キャラ転送
-    pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_gsync_connect_sub_NCGR,
+    pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_gtsnego_connect_sub_NCGR,
                                                                   GFL_BG_FRAME0_S, 0, 0, pWork->heapID);
 
     // サブ画面BG0スクリーン転送
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gsync_connect_sub_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gtsnego_connect_sub_NSCR,
                                               GFL_BG_FRAME0_S, 0,
                                               GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
                                               pWork->heapID);
-		GFL_ARC_CloseDataHandle(p_handle);
+
+
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_gtsnego_nego_back_NCLR,
+                                      PALTYPE_MAIN_BG, 0, 0,  pWork->heapID);
+    // サブ画面BG0キャラ転送
+    pWork->mainchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_gtsnego_nego_back_NCGR,
+                                                                  GFL_BG_FRAME0_M, 0, 0, pWork->heapID);
+
+    // サブ画面BG0スクリーン転送
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gtsnego_nego_back_NSCR,
+                                              GFL_BG_FRAME0_M, 0,
+                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
+                                              pWork->heapID);
+
+    GFL_ARC_CloseDataHandle(p_handle);
 	}
 
-  pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME1_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
-	
-	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
-																0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
 }

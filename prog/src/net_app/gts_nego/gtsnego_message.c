@@ -34,6 +34,7 @@
 #include "../../field/event_ircbattle.h"
 #include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
 
+#include "gtsnego_local.h"
 #include "msg/msg_gtsnego.h"
 #include "gtsnego.naix"
 
@@ -48,8 +49,6 @@
 #define _BUTTON_WIN_CENTERY (13)   //
 #define _BUTTON_WIN_WIDTH (22)    // ウインドウ幅
 #define _BUTTON_WIN_HEIGHT (3)    // ウインドウ高さ
-#define _BUTTON_WIN_PAL   (12)  // ウインドウ
-#define _BUTTON_MSG_PAL   (11)  // メッセージフォント
 
 
 //-------------------------------------------------------------------------
@@ -74,6 +73,7 @@
 #define	FBMP_COL_PNK_SDW	(10)
 #define	FBMP_COL_WHITE		(15)
 
+#define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット
 
 typedef struct {
   int leftx;
@@ -93,6 +93,7 @@ static _WINDOWPOS wind4[]={
 
 
 struct _GTSNEGO_MESSAGE_WORK {
+  u32 bgchar;  //GFL_ARCUTIL_TRANSINFO
 
   GFL_BMPWIN* buttonWin[_WINDOW_MAXNUM]; /// ウインドウ管理
   GFL_BUTTON_MAN* pButton;
@@ -106,10 +107,10 @@ struct _GTSNEGO_MESSAGE_WORK {
 	GFL_TCBLSYS *pMsgTcblSys;
   PRINT_QUE*            SysMsgQue;
 
-  APP_TASKMENU_WORK* pAppTask;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
 	APP_TASKMENU_RES* pAppTaskRes;
 //  int windowNum;
+  HEAPID heapID;
   
 };
 
@@ -148,6 +149,10 @@ GTSNEGO_MESSAGE_WORK* GTSNEGO_MESSAGE_Init(HEAPID id)
     APP_TASKMENU_RES_Create( GFL_BG_FRAME1_S, _SUBLIST_NORMAL_PAL,
                              pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID  );
 
+  pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME1_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
+	
+	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
+																0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
   
   return pWork;
 }
@@ -161,6 +166,8 @@ void GTSNEGO_MESSAGE_Main(GTSNEGO_MESSAGE_WORK* pWork)
 
 void GTSNEGO_MESSAGE_End(GTSNEGO_MESSAGE_WORK* pWork)
 {
+  GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
+                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar));
 
   GTSNEGO_MESSAGE_ButtonWindowDelete(pWork);
 
@@ -267,13 +274,13 @@ void GTSNEGO_MESSAGE_InfoMessageEnd(GTSNEGO_MESSAGE_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-#define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット
 
 
-void GTSNEGO_MESSAGE_YesNoStart(GTSNEGO_MESSAGE_WORK* pWork)
+APP_TASKMENU_WORK* GTSNEGO_MESSAGE_YesNoStart(GTSNEGO_MESSAGE_WORK* pWork)
 {
   int i;
   APP_TASKMENU_INITWORK appinit;
+  APP_TASKMENU_WORK* pAppTask;
 
   appinit.heapId = pWork->heapID;
   appinit.itemNum =  2;
@@ -286,15 +293,16 @@ void GTSNEGO_MESSAGE_YesNoStart(GTSNEGO_MESSAGE_WORK* pWork)
 	appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
 
   pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
-  GFL_MSG_GetString(pWork->pMsgData, GAMESYNC_005, pWork->appitem[0].str);
+  GFL_MSG_GetString(pWork->pMsgData, GTSNEGO_002, pWork->appitem[0].str);
   pWork->appitem[0].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
   pWork->appitem[1].str = GFL_STR_CreateBuffer(100, pWork->heapID);
-  GFL_MSG_GetString(pWork->pMsgData, GAMESYNC_006, pWork->appitem[1].str);
+  GFL_MSG_GetString(pWork->pMsgData, GTSNEGO_003, pWork->appitem[1].str);
   pWork->appitem[1].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
-  pWork->pAppTask			= APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
+  pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
   GFL_STR_DeleteBuffer(pWork->appitem[1].str);
   G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , -8 );
+  return pAppTask;
 }
 
 //------------------------------------------------------------------------------
@@ -304,7 +312,7 @@ void GTSNEGO_MESSAGE_YesNoStart(GTSNEGO_MESSAGE_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-void GTSNEGO_MESSAGE_ButtonWindowCreate(int num,int* pMsgBuff,GTSNEGO_MESSAGE_WORK* pWork)
+void GTSNEGO_MESSAGE_ButtonWindowCreate(int num,int* pMsgBuff,GTSNEGO_MESSAGE_WORK* pWork,pBmnCallBackFunc callback,void* pParentWork)
 {
   int i;
   u32 cgx;
@@ -353,7 +361,7 @@ void GTSNEGO_MESSAGE_ButtonWindowCreate(int num,int* pMsgBuff,GTSNEGO_MESSAGE_WO
 		}
     pWork->buttonWin[i] = NULL;
   }
-	pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
+	pWork->pButton = GFL_BMN_Create( bttndata, callback, pParentWork,  pWork->heapID );
 	 
 }
 
@@ -385,5 +393,20 @@ void GTSNEGO_MESSAGE_ButtonWindowDelete(GTSNEGO_MESSAGE_WORK* pWork)
     pWork->buttonWin[i] = NULL;
   }
 //  pWork->windowNum = 0;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ボタンイベント実行関数
+ *
+ *	@param	bttnid		ボタンID
+ *	@param	event		イベント種類
+ *	@param	p_work		ワーク
+ */
+//-----------------------------------------------------------------------------
+
+void GTSNEGO_MESSAGE_ButtonWindowMain(GTSNEGO_MESSAGE_WORK* pWork)
+{
+  GFL_BMN_Main( pWork->pButton );
 }
 

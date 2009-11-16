@@ -324,6 +324,7 @@ SRCS_OVERLAY_DEV_WIFI_RANDOM   = net/net_dummy.c
 #===> main
 SRCS_OVERLAY_DEV_WIRELESS   =   net/net_devwireless.c \
                   net/net_whpipe.c \
+									net/wih_dwc.c \
                   net/wih.c
 
 
@@ -865,11 +866,10 @@ SRCS_OVERLAY_POKEMON_TRADE = net_app/poke_trade/ircpokemontrade.c \
 								net_app/poke_trade/pokemontrade_ircdemo.c \
 								net_app/poke_trade/pokemontrade_save.c \
 								net_app/poke_trade/ircpoketrade_3d.c \
-								net_app/poke_trade/ircpoketrade_gra.c
-
-##								net_app/gts_nego/gtsnego_proc.c \
-##								net_app/gts_nego/gtsnego_disp.c \
-##								net_app/gts_nego/gtsnego_message.c
+								net_app/poke_trade/ircpoketrade_gra.c \
+								net_app/gts_nego/gtsnego_proc.c \
+								net_app/gts_nego/gtsnego_disp.c \
+								net_app/gts_nego/gtsnego_message.c
 
 # メールアプリケーション
 #===> SRCS_OVERLAY_POKEMON_TRADE

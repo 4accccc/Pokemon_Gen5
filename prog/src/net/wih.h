@@ -165,7 +165,7 @@
 #pragma once
 
 #include "net.h"
-//#include "gamesystem/game_comm.h"
+
 
 // 無線で使用するDMA番号
 #define WH_DMA_NO                 _NETWORK_DMA_NO
@@ -799,21 +799,16 @@ extern void WHSetDisconnectCallBack(WHDisconnectCallBack callBack);
 
 extern void WHSetConnectCallBack(WHDisconnectCallBack callBack);
 
-/*---------------------------------------------------------------------------*
-  Name:         WH_AllBeaconStart
-  Description:  ビーコンなら何でも収集 GEAR用
-  Arguments:    num ビーコン収集数
- *---------------------------------------------------------------------------*/
 
-extern void WH_AllBeaconStart(int num);
-extern void WH_AllBeaconEnd(void);
+// ビーコンを収集する為に必要な関数の型  マルチブートには必要ない
+typedef void (*WIHDWCBeaconGetFunc) (WMBssDesc* pBss);
 
 /*---------------------------------------------------------------------------*
-  Name:         WH_MainLoopScanBeaconData
-  Description:  CGEAR用なんでもビーコン収集MAIN
+  Name:         WHSetWIHDWCBeaconGetFunc
+  Description:  ビーコンを収集する関数をセットする
+  Arguments:    getfunc ビーコンを収集する為に必要な関数
+  Returns:      none
  *---------------------------------------------------------------------------*/
 
-extern void WH_MainLoopScanBeaconData(void);
-//extern GAME_COMM_STATUS WH_GetAllBeaconType(void);
-
+extern void WHSetWIHDWCBeaconGetFunc(WIHDWCBeaconGetFunc getfunc);
 

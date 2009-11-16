@@ -31,9 +31,11 @@
 #include "system/bmp_menu.h"
 #include "sound/pm_sndsys.h"
 
-#include "msg/msg_gsync.h"
-#include "../../field/event_ircbattle.h"
-#include "gsync.naix"
+#include "savedata/wifilist.h"
+
+#include "msg/msg_gtsnego.h"
+#include "../../field/event_gtsnego.h"
+#include "gtsnego.naix"
 #include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
 #include "gtsnego_local.h"
 
@@ -83,8 +85,8 @@ enum _IBMODE_SELECT {
 
 
 
-typedef void (StateFunc)(GAMESYNC_MENU* pState);
-typedef BOOL (TouchFunc)(int no, GAMESYNC_MENU* pState);
+typedef void (StateFunc)(GTSNEGO_WORK* pState);
+typedef BOOL (TouchFunc)(int no, GTSNEGO_WORK* pState);
 
 
 struct _GTSNEGO_WORK {
@@ -93,10 +95,11 @@ struct _GTSNEGO_WORK {
   int selectType;   // 接続タイプ
   HEAPID heapID;
 
+  APP_TASKMENU_WORK* pAppTask;
   GTSNEGO_DISP_WORK* pDispWork;  // 描画系
-  GTSNEGO_MESSAGE_WORK* pMsgWork; //メッセージ系
-
-  EVENT_IRCBATTLE_WORK * dbw;  //親のワーク
+  GTSNEGO_MESSAGE_WORK* pMessageWork; //メッセージ系
+  WIFI_LIST* pList;
+  EVENT_GTSNEGO_WORK * dbw;  //親のワーク
   BOOL IsIrc;
   GAMESYS_WORK *gameSys_;
   FIELDMAP_WORK *fieldWork_;
@@ -113,9 +116,11 @@ static void _changeStateDebug(GTSNEGO_WORK* pWork,StateFunc* state, int line);
 
 static void _modeSelectMenuInit(GTSNEGO_WORK* pWork);
 static void _modeSelectMenuWait(GTSNEGO_WORK* pWork);
+static void _profileIDCheck(GTSNEGO_WORK* pWork);
 
 static void _modeReportInit(GTSNEGO_WORK* pWork);
 static void _modeReportWait(GTSNEGO_WORK* pWork);
+static void _modeReportWait2(GTSNEGO_WORK* pWork);
 static BOOL _modeSelectMenuButtonCallback(int bttnid,GTSNEGO_WORK* pWork);
 static void _modeSelectBattleTypeInit(GTSNEGO_WORK* pWork);
 
@@ -154,7 +159,7 @@ static void _changeState(GTSNEGO_WORK* pWork,StateFunc state)
 #ifdef GFL_NET_DEBUG
 static void _changeStateDebug(GTSNEGO_WORK* pWork,StateFunc state, int line)
 {
-  NET_PRINT("ircbtl: %d\n",line);
+  NET_PRINT("neg: %d\n",line);
   _changeState(pWork, state);
 }
 #endif
@@ -190,22 +195,6 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
   }
 }
 
-//------------------------------------------------------------------------------
-/**
- * @brief   モードセレクト全体の初期化
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeInit(GTSNEGO_WORK* pWork)
-{
-  pWork->IsIrc=FALSE;
-
-  //    GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
-
-}
-
-
-
 
 //------------------------------------------------------------------------------
 /**
@@ -218,7 +207,7 @@ static void _modeProfileWait(GTSNEGO_WORK* pWork)
   if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-  _YesNoStart(pWork);
+  pWork->pAppTask = GTSNEGO_MESSAGE_YesNoStart(pWork->pMessageWork);
   _CHANGE_STATE(pWork,_modeReportWait2);
 }
 
@@ -232,11 +221,11 @@ static void _modeProfileWait(GTSNEGO_WORK* pWork)
 static void _profileIDCheck(GTSNEGO_WORK* pWork)
 {
   // 初めての場合
-  if( !DWC_CheckHasProfile( WifiList_GetMyUserInfo(wk->pList) ) )
+  if( !DWC_CheckHasProfile( WifiList_GetMyUserInfo(pWork->pList) ) ){
 
 
   }
-  else if( !DWC_CheckValidConsole(WifiList_GetMyUserInfo(wk->pList)) ){  //別DSの場合
+  else if( !DWC_CheckValidConsole(WifiList_GetMyUserInfo(pWork->pList)) ){  //別DSの場合
   }
   else  //普通の接続
   {
@@ -252,7 +241,7 @@ static void _modeSelectMenuInit(GTSNEGO_WORK* pWork)
 { 
   int aMsgBuff[]={GTSNEGO_005,GTSNEGO_006};
 
-  GTSNEGO_MESSAGE_ButtonWindowCreate(NELEMS(aMsgBuff), aMsgBuff, pWork);
+  GTSNEGO_MESSAGE_ButtonWindowCreate(NELEMS(aMsgBuff), aMsgBuff, pWork->pMessageWork, _BttnCallBack, pWork);
 
 	pWork->touch = &_modeSelectMenuButtonCallback;
 
@@ -286,16 +275,16 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,GTSNEGO_WORK* pWork)
   case _SELECTMODE_GSYNC:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     _CHANGE_STATE(pWork,_modeReportInit);
-    pWork->selectType = GAMESYNC_RETURNMODE_SYNC;
+//    pWork->selectType = GAMESYNC_RETURNMODE_SYNC;
     return TRUE;
   case _SELECTMODE_UTIL:
     PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    pWork->selectType = GAMESYNC_RETURNMODE_UTIL;
+  //  pWork->selectType = GAMESYNC_RETURNMODE_UTIL;
     _CHANGE_STATE(pWork,_modeReportInit);
     return TRUE;
   case _SELECTMODE_EXIT:
 		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-    pWork->selectType = GAMESYNC_RETURNMODE_NONE;
+   // pWork->selectType = GAMESYNC_RETURNMODE_NONE;
 		WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
 										WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
     _CHANGE_STATE(pWork,_modeFadeout);        // 終わり
@@ -315,7 +304,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,GTSNEGO_WORK* pWork)
 static void _modeSelectMenuWait(GTSNEGO_WORK* pWork)
 {
 	if(WIPE_SYS_EndCheck()){
-		GFL_BMN_Main( pWork->pButton );
+		GTSNEGO_MESSAGE_ButtonWindowMain( pWork->pMessageWork );
 	}
 }
 
@@ -333,7 +322,7 @@ static void _modeReportInit(GTSNEGO_WORK* pWork)
 
   GFL_BG_ClearScreenCodeVReq(GFL_BG_FRAME1_S,0);
   
-  GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GAMESYNC_004);
+ // GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GAMESYNC_004);
 
   
   _CHANGE_STATE(pWork,_modeReportWait);
@@ -365,7 +354,7 @@ static void _modeReporting(GTSNEGO_WORK* pWork)
 
 
   {
-    SAVE_RESULT svr = SaveControl_SaveAsyncMain(IrcBattle_GetSAVE_CONTROL_WORK(pWork->dbw));
+    SAVE_RESULT svr = SaveControl_SaveAsyncMain(pWork->dbw->ctrl);
 
     if(svr == SAVE_RESULT_OK){
       GTSNEGO_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
@@ -392,14 +381,14 @@ static void _modeReportWait2(GTSNEGO_WORK* pWork)
     if(selectno==0){
 
 
-      GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GAMESYNC_007);
+//      GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GAMESYNC_007);
 
-      SaveControl_SaveAsyncInit( IrcBattle_GetSAVE_CONTROL_WORK(pWork->dbw) );
+      SaveControl_SaveAsyncInit(pWork->dbw->ctrl );
       _CHANGE_STATE(pWork,_modeReporting);
     }
     else{
       GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
-      pWork->selectType = GAMESYNC_RETURNMODE_NONE;
+   //   pWork->selectType = GAMESYNC_RETURNMODE_NONE;
       _CHANGE_STATE(pWork,NULL);
     }
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
@@ -421,7 +410,7 @@ static void _modeReportWait(GTSNEGO_WORK* pWork)
   if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-  GTSNEGO_MESSAGE_YesNoStart(pWork->pMessageWork);
+  pWork->pAppTask = GTSNEGO_MESSAGE_YesNoStart(pWork->pMessageWork);
   _CHANGE_STATE(pWork,_modeReportWait2);
 }
 
@@ -434,6 +423,7 @@ static void _modeReportWait(GTSNEGO_WORK* pWork)
 //------------------------------------------------------------------------------
 static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+  EVENT_GTSNEGO_WORK* pEv=pwk;
 	
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x18000 );
 
@@ -445,11 +435,15 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
     pWork->pDispWork = GTSNEGO_DISP_Init(pWork->heapID);
     pWork->pMessageWork = GTSNEGO_MESSAGE_Init(pWork->heapID);
 
-    _modeInit(pWork);
+    pWork->pList = SaveData_GetWifiListData(
+      GAMEDATA_GetSaveControlWork(
+        GAMESYSTEM_GetGameData(
+          ((pEv->gsys))) ));
+    pWork->IsIrc=FALSE;
 
 
 		{
-			GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(IrcBattle_GetGAMESYS_WORK(pwk));
+			GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(pEv->gsys);
 			INFOWIN_Init( _SUBSCREEN_BGPLANE , _SUBSCREEN_PALLET , pGC , pWork->heapID);
 		}
 
@@ -511,10 +505,10 @@ static GFL_PROC_RESULT GameSyncMenuProcMain( GFL_PROC * proc, int * seq, void * 
 //------------------------------------------------------------------------------
 static GFL_PROC_RESULT GameSyncMenuProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+  EVENT_GTSNEGO_WORK* pEv=pwk;
   GTSNEGO_WORK* pWork = mywk;
-  EVENT_IRCBATTLE_WORK* pParentWork =pwk;
 
-  EVENT_IrcBattleSetType(pParentWork, pWork->selectType);
+//  EVENT_IrcBattleSetType(pParentWork, pWork->selectType);
 
   GFL_PROC_FreeWork(proc);
 
@@ -526,7 +520,7 @@ static GFL_PROC_RESULT GameSyncMenuProcEnd( GFL_PROC * proc, int * seq, void * p
   GTSNEGO_DISP_End(pWork->pDispWork);
 
 	GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
-  EVENT_IrcBattle_SetEnd(pParentWork);
+  //EVENT_IrcBattle_SetEnd(pParentWork);
 
 
 	

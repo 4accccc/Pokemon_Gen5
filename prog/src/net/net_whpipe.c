@@ -1064,7 +1064,6 @@ void GFI_NET_MLProcess(u16 bitmap)
 	if(_pNetWL && GFL_NET_WLIsChildStateScan() ){
 		_WLParentBconCheck();
 	}
-  WH_MainLoopScanBeaconData();
 }
 
 //-------------------------------------------------------------

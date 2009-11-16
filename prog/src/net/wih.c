@@ -9,7 +9,6 @@
 //=============================================================================
 
 #include <gflib.h>
-//#include <dwc.h>
 
 /*
   Project:  NitroSDK - wireless_shared - demos - wh
@@ -494,20 +493,13 @@ static WMParentParam sParentParam ATTRIBUTE_ALIGN(32) =
 };
  */
 
-typedef struct{
-	WMBssDesc sBssDesc;
-  int timer;
-} _BEACONCATCH_STR;
 
-#define _ALLBEACON_MAX (4)
 
 typedef struct{
 	WMParentParam sParentParam;
 	/* WM 用システムワーク領域バッファ */
 	u8 sWmBuffer[WM_SYSTEM_BUF_SIZE];
 	WMBssDesc sBssDesc;
-  _BEACONCATCH_STR* pBeaconCatch[_ALLBEACON_MAX];
-  void* ScanMemory;
 	u8 sScanBuf[WM_SIZE_SCAN_EX_BUF];
 	WMScanExParam sScanExParam;
 	/* データシェアリング用 */
@@ -529,6 +521,10 @@ typedef struct{
 	WHDisconnectCallBack disconnectCallBack;
 	/// 子機接続時のコールバック
 	WHDisconnectCallBack connectCallBack;
+
+	// ビーコンを集めている際のコールバック
+  WIHDWCBeaconGetFunc SetBeaconData;
+  
 	// ビーコンを集めている際のコールバック
 	//    WHBeaconScanCallBack sBeaconBuffScanCallback;
 	// 内部使用する送受信バッファとそのサイズ
@@ -541,6 +537,8 @@ typedef struct{
 	// 乱数用
 	u32 sRand;
 
+  
+  
 	u32 SendSizeMax;
 	u32 ConnectNumMax;
 
@@ -554,7 +552,6 @@ typedef struct{
 	u16 sChannelBitmap;
 	u16 sChannelIndex;
 	u16 sAutoConnectFlag;
-	u16 AllBeaconNum;
 	// ネゴシエーション用
 	u16 negoIDSend;
 	u16 negoIDRecv;
@@ -662,7 +659,6 @@ static BOOL WH_StateInReset(void);
 static void WH_StateOutReset(void *arg);
 
 
-static void _SetScanBeaconData(WMBssDesc* pBss);
 static void _MainLoopScanBeaconData(void);
 
 
@@ -1605,7 +1601,9 @@ static void WH_StateOutStartScan(void *arg)
 			WMBssDesc* bddmy = cb->bssDesc[i];
       MI_CpuCopy8(bddmy, bd, sizeof(WMBssDesc)); // キャッシュセーフなバッファへコピー
 
-      _SetScanBeaconData(bd);
+      if(_pWmInfo->SetBeaconData){
+        _pWmInfo->SetBeaconData(bd);
+      }
       
         // GUIDELINE : ガイドライン準拠ポイント(6.3.5)
         // ggid を比較し、違っていたら失敗とします。
@@ -3675,144 +3673,14 @@ void WHSetConnectCallBack(WHDisconnectCallBack callBack)
 }
 
 /*---------------------------------------------------------------------------*
-  Name:         WHSetAllBeaconFlg
-  Description:  ビーコンなら何でも収集して表示するCGEAR用
-  Arguments:    bFlg  ONなら収集
+  Name:         WHSetWIHDWCBeaconGetFunc
+  Description:  ビーコンを収集する関数をセットする
+  Arguments:    getfunc ビーコンを収集する為に必要な関数
+  Returns:      none
  *---------------------------------------------------------------------------*/
 
-void WH_AllBeaconStart(int num)
+void WHSetWIHDWCBeaconGetFunc(WIHDWCBeaconGetFunc getfunc)
 {
-  int i;
-  GF_ASSERT( _pWmInfo->ScanMemory==NULL);
-  GF_ASSERT(num <= _ALLBEACON_MAX);
-  _pWmInfo->AllBeaconNum = num;
-  for(i=0;i<num;i++){
-    _pWmInfo->pBeaconCatch[i] = GFL_NET_Align32Alloc(_pWmInfo->heapID , sizeof(_BEACONCATCH_STR));
-  }
-//  _pWmInfo->ScanMemory =GFL_NET_Align32Alloc(_pWmInfo->heapID ,DWC_GetParseWMBssDescWorkSize());
-
+  _pWmInfo->SetBeaconData = getfunc;
 }
 
-/*---------------------------------------------------------------------------*
-  Name:         WHSetAllBeaconFlg
-  Description:  ビーコンなら何でも収集して表示するCGEAR用
-  Arguments:    bFlg  ONなら収集
- *---------------------------------------------------------------------------*/
-
-void WH_AllBeaconEnd(void)
-{
-  int i;
-
-  GF_ASSERT( _pWmInfo->ScanMemory);
-  for(i=0;i<_pWmInfo->AllBeaconNum;i++){
-    GFL_NET_Align32Free(_pWmInfo->pBeaconCatch[i]);
-  }
- // GFL_NET_Align32Free(_pWmInfo->ScanMemory);
-  _pWmInfo->ScanMemory=NULL;
-  _pWmInfo->AllBeaconNum = 0;
-}
-
-/*---------------------------------------------------------------------------*
-  Name:         WHSetAllBeaconFlg
-  Description:  ビーコンなら何でも収集して表示するCGEAR用
-  Arguments:    bFlg  ONなら収集
- *---------------------------------------------------------------------------*/
-
-static void _SetScanBeaconData(WMBssDesc* pBss)
-{
-  int i;
-
-  if(_pWmInfo->AllBeaconNum==0){
-    return;
-  }
-  
-  for(i=0;i<_pWmInfo->AllBeaconNum;i++){
-    _BEACONCATCH_STR* pS = _pWmInfo->pBeaconCatch[i];
-      if(GFL_STD_MemComp(&pS->sBssDesc, pBss, sizeof(WMBssDesc))==0){ //一致
-        pS->timer = DEFAULT_TIMEOUT_FRAME;
-        return;
-      }
-  }
-  for(i=0;i<_pWmInfo->AllBeaconNum;i++){
-    _BEACONCATCH_STR* pS = _pWmInfo->pBeaconCatch[i];
-    if(pS->timer==0){
-      GFL_STD_MemCopy(pBss, &pS->sBssDesc, sizeof(WMBssDesc));
-      pS->timer = DEFAULT_TIMEOUT_FRAME;
-      return;
-    }
-  }
-}
-
-/*---------------------------------------------------------------------------*
-  Name:         WH_MainLoopScanBeaconData
-  Description:  CGEAR用なんでもビーコン収集MAIN
- *---------------------------------------------------------------------------*/
-
-void WH_MainLoopScanBeaconData(void)
-{
-  int i;
-
-  if(_pWmInfo && _pWmInfo->pBeaconCatch){
-    for(i=0;i<_pWmInfo->AllBeaconNum;i++){
-      _BEACONCATCH_STR* pS = _pWmInfo->pBeaconCatch[i];
-      if(pS->timer > 0){
-        pS->timer--;
-      }
-    }
-  }
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   ビーコンのタイプを得る
- * @param   ビーコン数
- * @param   ヒープID
- * @retval  GAME_COMM_STATUS
- */
-//------------------------------------------------------------------------------
-#if 0
-GAME_COMM_STATUS WH_GetAllBeaconType(void)
-{
-  int i;
-  int retcode = GAME_COMM_STATUS_NULL;
-
-  for(i=0;i < _pWmInfo->AllBeaconNum;i++){
-    _BEACONCATCH_STR* pS = _pWmInfo->pBeaconCatch[i];
-    if(pS->timer == 0){
-      continue;
-    }
-    {
-      WMBssDesc* bss = &pS->sBssDesc;
-    
-      DWCApInfo ap;
-
-      if(DWC_ParseWMBssDesc(_pWmInfo->ScanMemory,bss,&ap)){
-        OS_TPrintf("DWCApInfo %d\n",ap.aptype);
-        switch(ap.aptype){
-        case DWC_APINFO_TYPE_USER0:
-        case DWC_APINFO_TYPE_USER1:
-        case DWC_APINFO_TYPE_USER2:
-        case DWC_APINFO_TYPE_USER3:
-        case DWC_APINFO_TYPE_USER4:
-        case DWC_APINFO_TYPE_USER5:
-        case DWC_APINFO_TYPE_USB://          :  ニンテンドーWi-Fi USBコネクタ
-          retcode = GAME_COMM_STATUS_WIFI;
-          break;
-        case DWC_APINFO_TYPE_SHOP://         :  ニンテンドーWi-Fiステーション
-        case DWC_APINFO_TYPE_FREESPOT://     :  FREESPOT（フリースポット）
-        case DWC_APINFO_TYPE_WAYPORT://      :  Wayport(北米ホットスポット)※現在は使用できません
-        case DWC_APINFO_TYPE_NINTENDOZONE:// : Nintendo Zone
-          retcode = GAME_COMM_STATUS_WIFI_ZONE;
-          break;
-        }
-        if(retcode!=GAME_COMM_STATUS_NULL){
-          return retcode;
-        }
-      }
-    }
-  }
-  ///@todo セキュリティーがかかっているかどうか
-  return retcode;
-}
-
-#endif

@@ -1,7 +1,21 @@
+//=============================================================================
+/**
+ * @file	  wih_dwc.h
+ * @brief	  ビーコン解析を行い、APの判別を行う
+ * @author	k.ohno
+ * @date    2009.11.15
+ */
+//=============================================================================
 #pragma once
 
 #include "net.h"
+#include <dwc.h>
 #include "gamesystem/game_comm.h"
+#include "wih.h"
+
+
+typedef struct _WIH_DWC_WORK  WIH_DWC_WORK;
+
 
 /*---------------------------------------------------------------------------*
   Name:         WH_AllBeaconStart
@@ -9,15 +23,15 @@
   Arguments:    num ビーコン収集数
  *---------------------------------------------------------------------------*/
 
-extern void WH_AllBeaconStart(int num);
-extern void WH_AllBeaconEnd(void);
+extern WIH_DWC_WORK* WIH_DWC_AllBeaconStart(int num, HEAPID id);
+extern void WIH_DWC_AllBeaconEnd(WIH_DWC_WORK* pWork);
 
 /*---------------------------------------------------------------------------*
   Name:         WH_MainLoopScanBeaconData
   Description:  CGEAR用なんでもビーコン収集MAIN
  *---------------------------------------------------------------------------*/
 
-extern void WH_MainLoopScanBeaconData(void);
-extern GAME_COMM_STATUS WH_GetAllBeaconType(void);
+extern void WIH_DWC_MainLoopScanBeaconData(void);
+extern GAME_COMM_STATUS WIH_DWC_GetAllBeaconType(void);
 
 

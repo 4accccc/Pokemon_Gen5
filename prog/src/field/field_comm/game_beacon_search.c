@@ -9,7 +9,7 @@
 #include <gflib.h>
 #include "system/main.h"
 #include "net/network_define.h"
-#include "net/wih.h"
+#include "net/wih_dwc.h"
 #include "system/net_err.h"
 #include "gamesystem/gamesystem.h"
 
@@ -49,6 +49,8 @@ typedef struct _GAME_BEACON_SYS
   GBS_TARGET_INFO target_info;    ///<ビーコンで見つけた相手の情報
   
   FIELD_BEACON_MSG_SYS *fbmSys;
+  WIH_DWC_WORK* pWDWork;
+  
 }GAME_BEACON_SYS;
 
 
@@ -179,7 +181,7 @@ static void GameBeacon_InitCallback(void *pWork)
   
   gbs->status = GBS_STATUS_INIT;
   //全部のビーコンを探知する
-  WH_AllBeaconStart(aGFLNetInit.maxBeaconNum);
+  gbs->pWDWork = WIH_DWC_AllBeaconStart(aGFLNetInit.maxBeaconNum, GFL_HEAP_LOWID(HEAPID_PROC));
 }
 
 //==================================================================
@@ -196,7 +198,7 @@ BOOL GameBeacon_Exit(int *seq, void *pwk, void *pWork)
   GAME_BEACON_SYS_PTR gbs = pWork;
   
   OS_TPrintf("GameBeaconExit\n");
-  WH_AllBeaconEnd();
+  WIH_DWC_AllBeaconEnd(gbs->pWDWork);
 	GFL_NET_Exit(GameBeacon_ExitCallback);
 	return TRUE;
 }
@@ -277,6 +279,7 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
       break;
     }
   }
+  WIH_DWC_MainLoopScanBeaconData();
 }
 
 //--------------------------------------------------------------
