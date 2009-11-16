@@ -345,57 +345,58 @@ ex)
 //命令シンボル宣言
 //COMMAND_START
 #define	EC_CAMERA_MOVE							( 0 )
-#define	EC_CAMERA_MOVE_COORDINATE		( EC_CAMERA_MOVE              + 1 )
-#define	EC_CAMERA_MOVE_ANGLE				( EC_CAMERA_MOVE_COORDINATE   + 1 )
-#define	EC_CAMERA_SHAKE				      ( EC_CAMERA_MOVE_ANGLE        + 1 )
-#define	EC_CAMERA_PROJECTION				( EC_CAMERA_SHAKE             + 1 )
-#define	EC_PARTICLE_LOAD						( EC_CAMERA_PROJECTION        + 1 )
-#define	EC_PARTICLE_PLAY						( EC_PARTICLE_LOAD            + 1 )
-#define	EC_PARTICLE_PLAY_COORDINATE	( EC_PARTICLE_PLAY            + 1 )
-#define	EC_PARTICLE_DELETE					( EC_PARTICLE_PLAY_COORDINATE + 1 )
-#define	EC_EMITTER_MOVE							( EC_PARTICLE_DELETE          + 1 )
-#define	EC_EMITTER_MOVE_COORDINATE	( EC_EMITTER_MOVE             + 1 )
-#define	EC_EMITTER_CIRCLE_MOVE      ( EC_EMITTER_MOVE_COORDINATE  + 1 )
-#define	EC_POKEMON_MOVE							( EC_EMITTER_CIRCLE_MOVE      + 1 )
-#define	EC_POKEMON_CIRCLE_MOVE			( EC_POKEMON_MOVE             + 1 )
-#define	EC_POKEMON_SCALE						( EC_POKEMON_CIRCLE_MOVE      + 1 )
-#define	EC_POKEMON_ROTATE						( EC_POKEMON_SCALE            + 1 )
-#define	EC_POKEMON_ALPHA						( EC_POKEMON_ROTATE           + 1 )
-#define	EC_POKEMON_SET_MEPACHI_FLAG	( EC_POKEMON_ALPHA            + 1 )
-#define	EC_POKEMON_SET_ANM_FLAG			( EC_POKEMON_SET_MEPACHI_FLAG + 1 )
-#define	EC_POKEMON_PAL_FADE					( EC_POKEMON_SET_ANM_FLAG     + 1 )
-#define	EC_POKEMON_VANISH					  ( EC_POKEMON_PAL_FADE         + 1 )
-#define	EC_POKEMON_SHADOW_VANISH	  ( EC_POKEMON_VANISH           + 1 )
-#define	EC_POKEMON_DEL	            ( EC_POKEMON_SHADOW_VANISH    + 1 )
-#define	EC_TRAINER_SET							( EC_POKEMON_DEL              + 1 )
-#define	EC_TRAINER_MOVE							( EC_TRAINER_SET              + 1 )
-#define	EC_TRAINER_ANIME_SET				( EC_TRAINER_MOVE             + 1 )
-#define	EC_TRAINER_DEL							( EC_TRAINER_ANIME_SET        + 1 )
-#define	EC_BG_LOAD	   				      ( EC_TRAINER_DEL              + 1 )
-#define	EC_BG_SCROLL		   				  ( EC_BG_LOAD                  + 1 )
-#define	EC_BG_RASTER_SCROLL		   	  ( EC_BG_SCROLL                + 1 )
-#define	EC_BG_PAL_ANM		   				  ( EC_BG_RASTER_SCROLL         + 1 )
-#define	EC_BG_PRIORITY		   				( EC_BG_PAL_ANM               + 1 )
-#define	EC_BG_ALPHA		   				    ( EC_BG_PRIORITY              + 1 )
-#define	EC_BG_PAL_FADE		   				( EC_BG_ALPHA                 + 1 )
-#define	EC_BG_VANISH								( EC_BG_PAL_FADE              + 1 )
-#define	EC_OBJ_SET	   				      ( EC_BG_VANISH                + 1 )
-#define	EC_OBJ_MOVE	   				      ( EC_OBJ_SET                  + 1 )
-#define	EC_OBJ_SCALE	   				    ( EC_OBJ_MOVE                 + 1 )
-#define	EC_OBJ_ANIME_SET	   				( EC_OBJ_SCALE                + 1 )
-#define	EC_OBJ_DEL	   				      ( EC_OBJ_ANIME_SET            + 1 )
-#define	EC_SE_PLAY									( EC_OBJ_DEL                  + 1 )
-#define	EC_SE_STOP									( EC_SE_PLAY                  + 1 )
-#define	EC_SE_PAN								    ( EC_SE_STOP                  + 1 )
-#define	EC_SE_EFFECT								( EC_SE_PAN                   + 1 )
-#define	EC_EFFECT_END_WAIT					( EC_SE_EFFECT                + 1 )
-#define	EC_WAIT											( EC_EFFECT_END_WAIT          + 1 )
-#define	EC_CONTROL_MODE							( EC_WAIT                     + 1 )
-#define	EC_IF						            ( EC_CONTROL_MODE             + 1 )
-#define	EC_MCSS_POS_CHECK						( EC_IF                       + 1 )
+#define	EC_CAMERA_MOVE_COORDINATE		( 1 )
+#define	EC_CAMERA_MOVE_ANGLE				( 2 )
+#define	EC_CAMERA_SHAKE				      ( 3 )
+#define	EC_CAMERA_PROJECTION				( 4 )
+#define	EC_PARTICLE_LOAD						( 5 )
+#define	EC_PARTICLE_PLAY						( 6 )
+#define	EC_PARTICLE_PLAY_COORDINATE	( 7 )
+#define	EC_PARTICLE_PLAY_ORTHO			( 8 )
+#define	EC_PARTICLE_DELETE					( 9 )
+#define	EC_EMITTER_MOVE							( 10 )
+#define	EC_EMITTER_MOVE_COORDINATE	( 11 )
+#define	EC_EMITTER_CIRCLE_MOVE      ( 12 )
+#define	EC_POKEMON_MOVE							( 13 )
+#define	EC_POKEMON_CIRCLE_MOVE			( 14 )
+#define	EC_POKEMON_SCALE						( 15 )
+#define	EC_POKEMON_ROTATE						( 16 )
+#define	EC_POKEMON_ALPHA						( 17 )
+#define	EC_POKEMON_SET_MEPACHI_FLAG	( 18 )
+#define	EC_POKEMON_SET_ANM_FLAG			( 19 )
+#define	EC_POKEMON_PAL_FADE					( 20 )
+#define	EC_POKEMON_VANISH					  ( 21 )
+#define	EC_POKEMON_SHADOW_VANISH	  ( 22 )
+#define	EC_POKEMON_DEL	            ( 23 )
+#define	EC_TRAINER_SET							( 24 )
+#define	EC_TRAINER_MOVE							( 25 )
+#define	EC_TRAINER_ANIME_SET				( 26 )
+#define	EC_TRAINER_DEL							( 27 )
+#define	EC_BG_LOAD	   				      ( 28 )
+#define	EC_BG_SCROLL		   				  ( 29 )
+#define	EC_BG_RASTER_SCROLL		   	  ( 30 )
+#define	EC_BG_PAL_ANM		   				  ( 31 )
+#define	EC_BG_PRIORITY		   				( 32 )
+#define	EC_BG_ALPHA		   				    ( 33 )
+#define	EC_BG_PAL_FADE		   				( 34 )
+#define	EC_BG_VANISH								( 35 )
+#define	EC_OBJ_SET	   				      ( 36 )
+#define	EC_OBJ_MOVE	   				      ( 37 )
+#define	EC_OBJ_SCALE	   				    ( 38 )
+#define	EC_OBJ_ANIME_SET	   				( 39 )
+#define	EC_OBJ_DEL	   				      ( 40 )
+#define	EC_SE_PLAY									( 41 )
+#define	EC_SE_STOP									( 42 )
+#define	EC_SE_PAN								    ( 43 )
+#define	EC_SE_EFFECT								( 44 )
+#define	EC_EFFECT_END_WAIT					( 45 )
+#define	EC_WAIT											( 46 )
+#define	EC_CONTROL_MODE							( 47 )
+#define	EC_IF						            ( 48 )
+#define	EC_MCSS_POS_CHECK						( 49 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END									( EC_MCSS_POS_CHECK + 1 )
+#define	EC_SEQ_END									( 50 )
 
 #ifndef __C_NO_DEF_
 
@@ -624,6 +625,33 @@ ex)
 	.long		\dir_pos_z
 	.long		\ofs_y
 	.long		\dir_angle
+	.endm
+
+//======================================================================
+/**
+ * @brief	パーティクル再生（正射影）
+ *
+ * #param_num	4
+ * @param	num				再生パーティクルナンバー
+ * @param	index			spa内インデックスナンバー
+ * @param	start_pos	パーティクル再生開始立ち位置
+ * @param	ofs			  パーティクル再生オフセット
+ *
+ * #param	FILE_DIALOG_COMBOBOX .spa
+ * #param	COMBOBOX_HEADER
+ * #param	COMBOBOX_TEXT	攻撃側	防御側	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D POS_E POS_F
+ * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE	BTLEFF_PARTICLE_PLAY_POS_AA	BTLEFF_PARTICLE_PLAY_POS_BB	BTLEFF_PARTICLE_PLAY_POS_A  BTLEFF_PARTICLE_PLAY_POS_B	BTLEFF_PARTICLE_PLAY_POS_C  BTLEFF_PARTICLE_PLAY_POS_D  BTLEFF_PARTICLE_PLAY_POS_E  BTLEFF_PARTICLE_PLAY_POS_F
+ * #param	VALUE_VECFX32 ofs_x ofs_y ofs_z
+ */
+//======================================================================
+	.macro	PARTICLE_PLAY_ORTHO	num, index, start_pos, ofs_x, ofs_y, ofs_z
+	.short	EC_PARTICLE_PLAY_ORTHO
+	.long		\num
+	.long		\index
+	.long		\start_pos
+	.long		\ofs_x
+	.long		\ofs_y
+	.long		\ofs_z
 	.endm
 
 //======================================================================

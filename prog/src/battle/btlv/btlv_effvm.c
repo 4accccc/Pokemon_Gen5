@@ -28,6 +28,9 @@ enum{
   TEMP_WORK_SIZE = 16,          //テンポラリワークのサイズ
   BTLV_EFFVM_BG_PAL = 8,        //エフェクトBGのパレット開始位置
   EFFVM_OBJ_MAX = 4,            //エフェクト中に使用できるOBJMAX
+
+	ORTHO_WIDTH = 4,
+	ORTHO_HEIGHT = 3,
 };
 
 #ifdef PM_DEBUG
@@ -78,13 +81,16 @@ typedef struct{
   VMHANDLE* vmh;
   int       src;
   int       dst;
+  fx32      ofs_x;
   fx32      ofs_y;
+  fx32      ofs_z;
   fx32      angle;
   fx32      top;
   int       move_type;
   int       move_frame; //移動するフレーム数
   VecFx32   src_pos;
   VecFx32   dst_pos;
+  int       ortho_mode;
 }BTLV_EFFVM_EMIT_INIT_WORK;
 
 //エミッタ移動用パラメータ構造体
@@ -171,6 +177,7 @@ static VMCMD_RESULT VMEC_CAMERA_PROJECTION( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_PARTICLE_PLAY_COORDINATE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_PARTICLE_PLAY_ORTHO( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_PARTICLE_DELETE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_EMITTER_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_EMITTER_MOVE_COORDINATE( VMHANDLE *vmh, void *context_work );
@@ -293,6 +300,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_PARTICLE_LOAD,
   VMEC_PARTICLE_PLAY,
   VMEC_PARTICLE_PLAY_COORDINATE,
+  VMEC_PARTICLE_PLAY_ORTHO,
   VMEC_PARTICLE_DELETE,
   VMEC_EMITTER_MOVE,
   VMEC_EMITTER_MOVE_COORDINATE,
@@ -797,7 +805,6 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
     return bevw->control_mode;
   }
 #endif
-
   heap = GFL_HEAP_AllocMemory( bevw->heapID, PARTICLE_LIB_HEAP_SIZE );
   bevw->ptc[ ptc_no ] = GFL_PTC_Create( heap, PARTICLE_LIB_HEAP_SIZE, FALSE, bevw->heapID );
   resource = GFL_PTC_LoadArcResource( ARCID_PTC, datID, bevw->heapID );
@@ -873,6 +880,56 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_COORDINATE( VMHANDLE *vmh, void *context_
   beeiw->dst_pos.z = ( fx32 )VMGetU32( vmh );
   beeiw->ofs_y = ( fx32 )VMGetU32( vmh );
   beeiw->angle = ( fx32 )VMGetU32( vmh );
+
+  GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw );
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief パーティクル再生（正射影）
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_PARTICLE_PLAY_ORTHO( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  BTLV_EFFVM_EMIT_INIT_WORK *beeiw = GFL_HEAP_AllocClearMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
+  ARCDATID  datID   = ( ARCDATID )VMGetU32( vmh );
+  int       ptc_no  = EFFVM_GetPtcNo( bevw, datID );
+  int       index   = ( int )VMGetU32( vmh );
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_PARTICLE_PLAY\n");
+#endif DEBUG_OS_PRINT
+
+  { 
+    GFL_G3D_PROJECTION  proj;
+	  VecFx32 Eye    = { 0, 0, 0 };          // Eye position
+	  VecFx32 vUp    = { 0, FX32_ONE, 0 };  // Up
+	  VecFx32 at     = { 0, 0, -FX32_ONE }; // Viewpoint
+
+    proj.type = GFL_G3D_PRJORTH;
+    proj.param1 = FX32_CONST( ORTHO_HEIGHT );
+    proj.param2 = -FX32_CONST( ORTHO_HEIGHT );
+    proj.param3 = -FX32_CONST( ORTHO_WIDTH );
+    proj.param4 = FX32_CONST( ORTHO_WIDTH );
+	  proj.near		= FX32_ONE * 1;
+    proj.far    = FX32_ONE * 1024;
+	  proj.scaleW	= FX32_ONE;
+
+    GFL_PTC_PersonalCameraCreate( bevw->ptc[ ptc_no ], &proj, DEFAULT_PERSP_WAY, &Eye, &vUp, &at, bevw->heapID );
+  }
+
+  beeiw->vmh = vmh;
+  beeiw->src = ( int )VMGetU32( vmh );
+  beeiw->ofs_x = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs_y = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs_z = ( fx32 )VMGetU32( vmh );
+  beeiw->ortho_mode = 1;
 
   GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw );
 
@@ -2763,6 +2820,46 @@ static  int EFFVM_GetPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID )
   return i;
 }
 
+//神王蟲からいただき
+//----------------------------------------------------------------------------
+/**
+ *	@brief	4x4行列に座標を掛け合わせる
+ *			Vecをx,y,z,1として計算し、計算後のVecとwを返します。
+ *
+ *	@param	*cp_src	Vector座標
+ *	@param	*cp_m	4*4行列
+ *	@param	*p_dst	Vecror計算結果
+ *	@param	*p_w	4つ目の要素の値
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static	void MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 *p_dst, fx32 *p_w )
+{
+
+	fx32 x = cp_src->x;
+    fx32 y = cp_src->y;
+    fx32 z = cp_src->z;
+	fx32 w = FX32_ONE;
+
+	GF_ASSERT( cp_src );
+	GF_ASSERT( cp_m );
+	GF_ASSERT( p_dst );
+	GF_ASSERT( p_w );
+
+    p_dst->x = (fx32)(((fx64)x * cp_m->_00 + (fx64)y * cp_m->_10 + (fx64)z * cp_m->_20) >> FX32_SHIFT);
+    p_dst->x += cp_m->_30;	//	W=1なので足すだけ
+
+    p_dst->y = (fx32)(((fx64)x * cp_m->_01 + (fx64)y * cp_m->_11 + (fx64)z * cp_m->_21) >> FX32_SHIFT);
+    p_dst->y += cp_m->_31;//	W=1なので足すだけ
+
+    p_dst->z = (fx32)(((fx64)x * cp_m->_02 + (fx64)y * cp_m->_12 + (fx64)z * cp_m->_22) >> FX32_SHIFT);
+    p_dst->z += cp_m->_32;//	W=1なので足すだけ
+
+	*p_w	= (fx32)(((fx64)x * cp_m->_03 + (fx64)y * cp_m->_13 + (fx64)z * cp_m->_23) >> FX32_SHIFT);
+    *p_w	+= cp_m->_33;//	W=1なので足すだけ
+}
+
 //============================================================================================
 /**
  * @brief エミッタ生成時に呼ばれるエミッタ初期化用コールバック関数（立ち位置から計算）
@@ -2838,7 +2935,29 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     BTLV_MCSS_GetPokeDefaultPos( BTLV_EFFECT_GetMcssWork(), &dst, beeiw->dst );
   }
 
-  src.y += beeiw->ofs_y;
+  if( beeiw->ortho_mode )
+  {
+    MtxFx44	mtx;
+	  fx32	w;
+
+	  MTX_Copy43To44( NNS_G3dGlbGetCameraMtx(), &mtx );
+	  MTX_Concat44( &mtx, NNS_G3dGlbGetProjectionMtx(), &mtx );
+
+    src.x += beeiw->ofs_x;
+    src.y += beeiw->ofs_y;
+    src.z += beeiw->ofs_z;
+
+	  MTX_MultVec44( &src, &mtx, &src, &w );
+
+	  src.x = FX_Mul( FX_Div( src.x, w ), ORTHO_WIDTH * FX32_ONE );
+	  src.y = FX_Mul( FX_Div( src.y, w ), ORTHO_HEIGHT * FX32_ONE );
+    src.z = -src.z;
+  }
+  else
+  { 
+    src.y += beeiw->ofs_y;
+  }
+
   dst.y += beeiw->ofs_y;
 
   if( beeiw->move_type )
