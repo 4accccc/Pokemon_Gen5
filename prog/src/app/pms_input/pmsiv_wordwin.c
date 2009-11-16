@@ -764,6 +764,9 @@ static void print_word( PMSIV_WORDWIN* wk, u32 wordnum, u32 v_line )
   {
     PMSI_GetCategoryWord( wk->mwk, wordnum, wk->tmpbuf );
 
+    // @TODO
+    GFL_FONTSYS_SetDefaultColor();
+
     if( v_line <= WORDWIN_WRITE_LINE_ROUND_BORDER )
     {
       PRINTSYS_Print( GFL_BMPWIN_GetBmp( wk->win ) , 
