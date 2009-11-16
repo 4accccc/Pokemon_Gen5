@@ -234,39 +234,39 @@ struct _ISS_DUNGEON_SYS
 /**
  * @brief  ダンジョンISSシステムを作成する
  *
- * @param  gdata    ゲームデータ
- * @param  p_player 監視対象のプレイヤー
- * @param  heap_id  使用するヒープID
+ * @param  gdata   ゲームデータ
+ * @param  player  監視対象のプレイヤー
+ * @param  heap_id 使用するヒープID
  * 
  * @return ダンジョンISSシステム
  */
 //-----------------------------------------------------------------------------------------
 ISS_DUNGEON_SYS* ISS_DUNGEON_SYS_Create( GAMEDATA* gdata, 
-                                         PLAYER_WORK* p_player, HEAPID heap_id )
+                                         PLAYER_WORK* player, HEAPID heap_id )
 {
-	ISS_DUNGEON_SYS* p_sys;
+	ISS_DUNGEON_SYS* sys;
 
 	// メモリ確保
-	p_sys = (ISS_DUNGEON_SYS*)GFL_HEAP_AllocMemory( heap_id, sizeof(ISS_DUNGEON_SYS) );
+	sys = (ISS_DUNGEON_SYS*)GFL_HEAP_AllocMemory( heap_id, sizeof(ISS_DUNGEON_SYS) );
 
 	// 初期化
-	p_sys->heapID        = heap_id;
-  p_sys->gdata         = gdata;
-	p_sys->pPlayer       = p_player;
-	p_sys->isActive      = FALSE;
-	p_sys->currentZoneID = INVALID_ZONE_ID;
-	p_sys->nextZoneID    = INVALID_ZONE_ID;
-	p_sys->paramset      = LoadParamset( heap_id );
-	p_sys->pActiveParam  = NULL;
+	sys->heapID        = heap_id;
+  sys->gdata         = gdata;
+	sys->player        = player;
+	sys->isActive      = FALSE;
+	sys->currentZoneID = INVALID_ZONE_ID;
+	sys->nextZoneID    = INVALID_ZONE_ID;
+	sys->paramset      = LoadParamset( heap_id );
+	sys->pActiveParam  = NULL;
   // デフォルトパラメータ設定
   {
     int i;
-    p_sys->defaultParam.zoneID = INVALID_ZONE_ID;
+    sys->defaultParam.zoneID = INVALID_ZONE_ID;
     for( i=0; i<PMSEASON_TOTAL; i++ )
     {
-      p_sys->defaultParam.pitch[i]  = 0;
-      p_sys->defaultParam.tempo[i]  = 256;
-      p_sys->defaultParam.reverb[i] = 0;
+      sys->defaultParam.pitch[i]  = 0;
+      sys->defaultParam.tempo[i]  = 256;
+      sys->defaultParam.reverb[i] = 0;
     }
   }
 
@@ -274,26 +274,26 @@ ISS_DUNGEON_SYS* ISS_DUNGEON_SYS_Create( GAMEDATA* gdata,
 	OBATA_Printf( "ISS-D: Create\n" );
 
 	// 作成したダンジョンISSシステムを返す
-	return p_sys;
+	return sys;
 }
 
 //-----------------------------------------------------------------------------------------
 /**
  * @brief  ダンジョンISSシステムを破棄する
  *
- * @param p_sys 破棄するダンジョンISSシステム
+ * @param sys 破棄するダンジョンISSシステム
  */
 //-----------------------------------------------------------------------------------------
-void ISS_DUNGEON_SYS_Delete( ISS_DUNGEON_SYS* p_sys )
+void ISS_DUNGEON_SYS_Delete( ISS_DUNGEON_SYS* sys )
 {
 	// システム停止
-	ISS_DUNGEON_SYS_Off( p_sys );
+	ISS_DUNGEON_SYS_Off( sys );
 	
 	// データを破棄
-	UnloadIssData( p_sys->paramset );
+	UnloadIssData( sys->paramset );
 
 	// 本体を破棄
-	GFL_HEAP_FreeMemory( p_sys );
+	GFL_HEAP_FreeMemory( sys );
 
 	// DEBUG:
 	OBATA_Printf( "ISS-D: Delete\n" );
@@ -303,34 +303,34 @@ void ISS_DUNGEON_SYS_Delete( ISS_DUNGEON_SYS* p_sys )
 /**
  * @brief プレイヤーを監視し, 音量を調整する
  *
- * @param p_sys 動作対象のダンジョンISSシステム
+ * @param sys 動作対象のダンジョンISSシステム
  */
 //----------------------------------------------------------------------------
-void ISS_DUNGEON_SYS_Update( ISS_DUNGEON_SYS* p_sys )
+void ISS_DUNGEON_SYS_Update( ISS_DUNGEON_SYS* sys )
 {
 	// 起動していなければ, 何もしない
-	if( p_sys->isActive != TRUE ) return; 
+	if( sys->isActive != TRUE ) return; 
 
 	// ゾーン切り替えが通知された場合
-	if( p_sys->currentZoneID != p_sys->nextZoneID )
+	if( sys->currentZoneID != sys->nextZoneID )
 	{
 		// 更新
-		p_sys->currentZoneID = p_sys->nextZoneID;
+		sys->currentZoneID = sys->nextZoneID;
 
 		// 新ゾーンIDのBGMパラメータを検索
-		p_sys->pActiveParam = GetBGMParam( p_sys->paramset, p_sys->nextZoneID );
+		sys->pActiveParam = GetBGMParam( sys->paramset, sys->nextZoneID );
 
     // BGMパラメータが設定されていない場合 ==> システム停止
-    if( p_sys->pActiveParam == NULL )
+    if( sys->pActiveParam == NULL )
     {
-      ISS_DUNGEON_SYS_Off( p_sys );
+      ISS_DUNGEON_SYS_Off( sys );
       return;
     }
 
 		// BGMの設定を反映させる
     {
-      u8 season = GAMEDATA_GetSeasonID( p_sys->gdata );
-      SetBGMStatus( p_sys->pActiveParam, season ); 
+      u8 season = GAMEDATA_GetSeasonID( sys->gdata );
+      SetBGMStatus( sys->pActiveParam, season ); 
     }
 	} 
 } 
@@ -339,13 +339,13 @@ void ISS_DUNGEON_SYS_Update( ISS_DUNGEON_SYS* p_sys )
 /**
  * @brief ゾーン切り替えを通知する
  *
- * @param p_sys        通知対象のダンジョンISSシステム
+ * @param sys        通知対象のダンジョンISSシステム
  * @param next_zone_id 新しいゾーンID
  */
 //-----------------------------------------------------------------------------------------
-void ISS_DUNGEON_SYS_ZoneChange( ISS_DUNGEON_SYS* p_sys, u16 next_zone_id )
+void ISS_DUNGEON_SYS_ZoneChange( ISS_DUNGEON_SYS* sys, u16 next_zone_id )
 { 
-	p_sys->nextZoneID = next_zone_id; 
+	sys->nextZoneID = next_zone_id; 
 
   // DEBUG:
   OBATA_Printf( "ISS-D: ZoneChange\n" );
@@ -356,18 +356,18 @@ void ISS_DUNGEON_SYS_ZoneChange( ISS_DUNGEON_SYS* p_sys, u16 next_zone_id )
 /**
  * @brief システムを起動する
  *
- * @param p_sys 起動するシステム
+ * @param sys 起動するシステム
  */
 //-----------------------------------------------------------------------------------------
-void ISS_DUNGEON_SYS_On( ISS_DUNGEON_SYS* p_sys )
+void ISS_DUNGEON_SYS_On( ISS_DUNGEON_SYS* sys )
 {
   // 起動
-	p_sys->isActive = TRUE;
+	sys->isActive = TRUE;
 
   // パラメータ設定
   {
-    u8 season = GAMEDATA_GetSeasonID( p_sys->gdata );
-    SetBGMStatus( p_sys->pActiveParam, season ); 
+    u8 season = GAMEDATA_GetSeasonID( sys->gdata );
+    SetBGMStatus( sys->pActiveParam, season ); 
   }
 
   // DEBUG:
@@ -378,16 +378,16 @@ void ISS_DUNGEON_SYS_On( ISS_DUNGEON_SYS* p_sys )
 /**
  * @brief システムを停止させる
  *
- * @param p_sys 停止させるシステム
+ * @param sys 停止させるシステム
  */
 //-----------------------------------------------------------------------------------------
-void ISS_DUNGEON_SYS_Off( ISS_DUNGEON_SYS* p_sys )
+void ISS_DUNGEON_SYS_Off( ISS_DUNGEON_SYS* sys )
 {
 	// 停止
-	p_sys->isActive = FALSE;
+	sys->isActive = FALSE;
 
   // デフォルト・パラメータに戻す
-  SetBGMStatus( &p_sys->defaultParam, 0 );
+  SetBGMStatus( &sys->defaultParam, 0 );
 
   // DEBUG:
   OBATA_Printf( "ISS-D: Off\n" );
@@ -397,12 +397,12 @@ void ISS_DUNGEON_SYS_Off( ISS_DUNGEON_SYS* p_sys )
 /**
  * @breif 動作状態を取得する
  *
- * @param p_sys 状態を調べるISSシステム
+ * @param sys 状態を調べるISSシステム
  * 
  * @return 動作中かどうか
  */
 //----------------------------------------------------------------------------
-BOOL ISS_DUNGEON_SYS_IsOn( const ISS_DUNGEON_SYS* p_sys )
+BOOL ISS_DUNGEON_SYS_IsOn( const ISS_DUNGEON_SYS* sys )
 {
-	return p_sys->isActive; 
+	return sys->isActive; 
 }
