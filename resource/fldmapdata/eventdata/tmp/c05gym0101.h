@@ -2,7 +2,6 @@
 #ifndef ZONE_C05GYM0101_EVD_H
 #define ZONE_C05GYM0101_EVD_H
 
-#define DOOR_ID_C05GYM0101_EXIT02         0
 
 #endif //ZONE_C05GYM0101_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c05gym0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -27,5 +26,9 @@
 #define C05GYM0101_WORKMAN_03             15
 #define C05GYM0101_WORKMAN_00             16
 #define C05GYM0101_WORKMAN_04             17
+#define C05GYM0101_EXITLIFT_00D           18
+#define C05GYM0101_EXITLIFT_00U           19
+#define C05GYM0101_DUMMY_00               20
+#define C05GYM0101_DUMMY_01               21
 
 #endif //ZONE_C05GYM0101_EVC_H

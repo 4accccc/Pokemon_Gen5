@@ -153,15 +153,15 @@
 
 #define WK_AREA_START                    16688 /* 0x4130  */
 
-#define WK_SCENE_COMM_ID                 16688 /* 0x4130 スクリプト通信受付ID */
-#define WK_BADGE_COUNT_R                 16689 /* 0x4131 ラジオ塔占拠イベント用所得バッジ数管理ワーク */
-#define WK_BADGE_COUNT_K                 16690 /* 0x4132 カントー地方ジムのバッジ所得数ワーク */
-#define WK_SCENE_KUJI_AZUKE_ITEM         16691 /* 0x4133 ＩＤクジで当たったアイテムを記録 */
-#define WK_SCENE_PC_UG_HIROBA            16692 /* 0x4134  */
-#define WK_SCENE_POSTMAN                 16693 /* 0x4135 ふしぎ配達員判定用ワーク */
-#define WK_SCENE_PKTH_DCSHOP             16694 /* 0x4136 ポケスロン会場エントランス：データカードSHOPでのみ使用 */
-#define WK_BLUECARD_POINT                16695 /* 0x4137 ブルーカードのポイント（0&#xff5e;30） */
-#define WK_SCENE_T23R0501_BALL           16696 /* 0x4138 ガンテツにぼんぐりボールを作ってもらった回数（0&#xff5e;10回 */
+#define WK_C05GYM_EXIT                   16688 /* 0x4130 Ｃ05地面ジムの接続リフト用ワーク */
+		/* not used 16689(0x4131) */
+		/* not used 16690(0x4132) */
+		/* not used 16691(0x4133) */
+		/* not used 16692(0x4134) */
+		/* not used 16693(0x4135) */
+		/* not used 16694(0x4136) */
+		/* not used 16695(0x4137) */
+		/* not used 16696(0x4138) */
 		/* not used 16697(0x4139) */
 		/* not used 16698(0x413a) */
 		/* not used 16699(0x413b) */

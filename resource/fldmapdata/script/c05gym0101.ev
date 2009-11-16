@@ -35,6 +35,8 @@ _EVENT_DATA    ev_c05gym0101_lift_05d
 _EVENT_DATA    ev_c05gym0101_workman_00
 _EVENT_DATA    ev_zone_c05gym0101
 _EVENT_DATA    ev_scene_c05gym0101_gymstart_01
+_EVENT_DATA    ev_c05gym0101_exitlift_00u
+_EVENT_DATA    ev_c05gym0101_exitlift_00d
 _EVENT_DATA_END
 
 
@@ -66,6 +68,13 @@ INIT_EVENT_END
 /************************************************************/
 EVENT_START	ev_scene_c05gym0101_gymstart_01
 
+	//ブラックイン
+	_BLACK_IN()
+
+	//エントランスからリフトが降りる演出（引数0 = 降下アニメ）
+	_GYM_GROUND_EXIT_LIFT( 0 )
+
+	_DISP_FADE_END_CHECK()
 
 
 	//========================================//
@@ -354,6 +363,45 @@ EVENT_END
 /************************************************************/
 EVENT_START		ev_c05gym0101_workman_00
 	_TALK_OBJ_START()
+EVENT_END
+
+
+/************************************************************/
+/*				接続リフト 至ジムエントランス				*/
+/************************************************************/
+EVENT_START	ev_c05gym0101_exitlift_00u
+	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
+
+	//スイッチの上側以外から話しかけた場合はリフト起動
+	IF $SCWK_ANSWER != DIR_DOWN THEN
+		//ブラックアウト
+		_BLACK_OUT()
+
+		//リフトを上昇させる（1 = エントランスに移動アニメ）
+		_GYM_GROUND_EXIT_LIFT( 1 )
+
+		_DISP_FADE_END_CHECK()
+
+		//========================================//
+
+		//エントランスリフトのジム戻り演出イベントを有効にする
+		$WK_C05GYM_EXIT = 1
+
+		//========================================//
+
+		//マップチェンジ
+		_MAP_CHANGE_NO_FADE( ZONE_ID_C05GYM0201, 5, 0, 4, DIR_UP )
+
+	ENDIF
+
+EVENT_END
+
+
+/************************************************************/
+/*					接続リフト 下降スイッチ					*/
+/************************************************************/
+EVENT_START	ev_c05gym0101_exitlift_00d
+	//現状は押しても反応無し　【保留】反応が無いメッセージを表示するか
 EVENT_END
 
 

@@ -15,6 +15,12 @@
 //--------------------------------------------------------------
 //              特殊スクリプト
 //--------------------------------------------------------------
+_SCENE_CHANGE_LABEL		sp_c05gym0201_tbl
 _SP_EVENT_DATA_END
+
+//テーブル定義
+sp_c05gym0201_tbl:
+	_SCENE_CHANGE_DATA		WK_C05GYM_EXIT,1,SCRID_SCENE_C05GYM0201_GYMBACK_01
+	_SCENE_CHANGE_END
 
 
