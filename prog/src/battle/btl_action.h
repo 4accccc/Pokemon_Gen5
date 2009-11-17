@@ -10,6 +10,8 @@
 #ifndef __BTL_ACTION_H__
 #define __BTL_ACTION_H__
 
+#include "waza_tool\wazano_def.h"
+
 //--------------------------------------------------------------
 /**
  *  コマンド選択
