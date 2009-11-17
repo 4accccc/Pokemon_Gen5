@@ -1475,12 +1475,12 @@ static u16 searchSceneScript( GAMEDATA * gamedata, const u8 * p, u8 key )
 			return SCRIPT_NOT_EXIST_ID;
 		};
 		p += 2;									//ワーク分足す
-		OS_Printf( "work1 = %d\n", work1 );
+		//OS_Printf( "work1 = %d\n", work1 );
 
 		//比較する値(ワーク可)取得
 		work2 = ( *p + ( *(p+1)<<8 ) );
 		p += 2;									//比較する値分足す(ワーク可)
-		OS_Printf( "work2 = %d\n", work2 );
+		//OS_Printf( "work2 = %d\n", work2 );
 
 		//条件チェック
 		//if( EVENTWORK_GetEventWorkAdrs(ev,work1) == EVENTWORK_GetEventWorkAdrs(ev,work2) ){
