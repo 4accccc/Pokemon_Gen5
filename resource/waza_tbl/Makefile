@@ -70,7 +70,7 @@ $(WAZANO_DEF_DIR)$(WAZANO_DEF): $(WAZANO_DEF)
 #------------------------------------------------------------------------------
 #	ファイル削除ルール
 #------------------------------------------------------------------------------
-LDIRT_CLEAN = $(TARGETDIR)/$(NARCNAME) $(WAZANAME_GMM_DIR)$(WAZANAME_GMM) $(WAZANAME_HASH_DIR)$(WAZANAME_HASH) $(WAZANO_DEFH_DIR)$(WAZANO_DEF)
+LDIRT_CLEAN = $(TARGETDIR)/$(NARCNAME) $(WAZANAME_GMM_DIR)$(WAZANAME_GMM) $(WAZANAME_HASH_DIR)$(WAZANAME_HASH) $(WAZANO_DEF_DIR)$(WAZANO_DEF)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 #LDIRT_CLEAN += $(NARCNAME) $(WAZANAME_GMM) $(WAZANAME_HASH) $(WAZANO_DEF)
