@@ -204,7 +204,7 @@ void FLD_G3DOBJ_CTRL_Draw( FLD_G3DOBJ_CTRL *ctrl )
 {
   u32 i = 0;
   FLD_G3DOBJ *obj = ctrl->pObjTbl;
-  
+#if 0  
   while( ctrl->obj_max ){
     if( obj->useFlag == OBJ_USE_TRUE ){
       if( obj->vanishFlag == FALSE ){
@@ -218,6 +218,7 @@ void FLD_G3DOBJ_CTRL_Draw( FLD_G3DOBJ_CTRL *ctrl )
     obj++;
     i++;
   }
+#endif
 }
 
 //--------------------------------------------------------------

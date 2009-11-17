@@ -74,6 +74,7 @@ void MMDL_G3DOBJCONT_Setup( MMDLSYS *mmdlsys, FLD_G3DOBJ_CTRL *g3dobj_ctrl )
   objcont->max = MMDLSYS_GetMMdlMax( mmdlsys );
   
   rescode_Init( objcont, heapID );
+  MMDLSYS_SetG3dObjCont( mmdlsys, objcont );
 }
 
 //--------------------------------------------------------------
@@ -88,6 +89,7 @@ void MMDL_G3DOBJCONT_Delete( MMDLSYS *mmdlsys )
   MMDL_G3DOBJCONT *objcont;
   objcont = MMDLSYS_GetG3dObjCont( mmdlsys );
   rescode_Delete( objcont );
+  GFL_HEAP_FreeMemory( objcont );
 }
 
 //--------------------------------------------------------------
