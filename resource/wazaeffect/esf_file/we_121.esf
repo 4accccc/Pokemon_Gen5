@@ -4,8 +4,8 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_121.spa
 #001
 %00
 制御モード変更	継続
-SE再生	SEQ_SE_W015_01	SE1	0	-200	110	0	0
-SEパン	SE1	追従	攻撃側	防御側	0	10:0:0
+SE再生	SEQ_SE_W088_01	SE1	0	0	110	0	0
+SEパン	SE1	追従	攻撃側	防御側	0	30:0:0
 制御モード変更	逐次
 パーティクルデータロード	w_121
 エミッタ移動	w_121	W_121_121_EGGBOM_EGG	放物線	攻撃側	防御側	2:40:4
