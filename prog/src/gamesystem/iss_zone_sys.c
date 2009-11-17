@@ -365,9 +365,7 @@ static u8 SearchZoneData( const ISS_ZONE_SYS* sys, u16 zone_id )
   }
 
   // ë∂ç›ÇµÇ»Ç¢
-  OBATA_Printf( "====================================\n" );
   OBATA_Printf( "ISS-Z: don't have data (zoneID = %d)\n", zone_id );
-  OBATA_Printf( "====================================\n" );
   return INVALID_DATA_INDEX;  
 }
 

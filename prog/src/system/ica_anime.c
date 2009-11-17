@@ -12,7 +12,7 @@
 #include "system/ica_anime.h"
 
 // デバッグ出力スイッチ
-#define ICA_ANIME_DEBUG
+//#define ICA_ANIME_DEBUG
 
 
 //===================================================================================
