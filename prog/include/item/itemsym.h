@@ -581,8 +581,9 @@
 #define ITEM_TIRYOKUNOHANE		( 592 )		// ちりょくのハネ
 #define ITEM_SEISINNOHANE		( 593 )		// せいしんのハネ
 #define ITEM_SYUNPATUNOHANE		( 594 )		// しゅんぱつのハネ
+#define ITEM_HAATONOHANE		( 595 )		// ハートのハネ
 
-#define ITEM_DATA_MAX		( 594 )		// アイテム最大数
+#define ITEM_DATA_MAX		( 595 )		// アイテム最大数
 
 #define ITEM_MAIL_MAX	( 12 )	// メール数
 #define ITEM_NUTS_MAX	( 64 )	// きのみ数

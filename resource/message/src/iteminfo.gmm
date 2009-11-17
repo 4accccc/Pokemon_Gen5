@@ -5188,231 +5188,306 @@
 		<language name="JPN" width="256">とても　かるい　いし。
 もたせると　ポケモンの
 たいじゅうが　かるくなる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">とても　かるい　いし。
+もたせると　ポケモンの
+たいじゅうが　かるくなる。</language>
 	</row>
 
 	<row id="ITEMINFO_563">
 		<language name="JPN" width="256">しんかの　ふしぎな　かたまり。
 もたせると　しんかまえ　ポケモンの
 ぼうぎょと　とくぼうが　あがる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">しんかの　ふしぎな　かたまり。
+もたせると　しんかまえ　ポケモンの
+ぼうぎょと　とくぼうが　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_564">
 		<language name="JPN" width="256">ポケモンに　もたせると
 だげきわざを　うけたとき
 あいてにも　ダメージを　あたえる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
+だげきわざを　うけたとき
+あいてにも　ダメージを　あたえる。</language>
 	</row>
 
 	<row id="ITEMINFO_565">
 		<language name="JPN" width="256">ポケモンに　もたせると
 ポケモンが　ちゅうに　うく。
 こうげきを　うけると　われてしまう。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
+ポケモンが　ちゅうに　うく。
+こうげきを　うけると　われてしまう。</language>
 	</row>
 
 	<row id="ITEMINFO_566">
 		<language name="JPN" width="256">ふしぎな　ちからのある　カード。
 もたせると　わざをうけた　あいてを
 たいじょう　させることが　できる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">ふしぎな　ちからのある　カード。
+もたせると　わざをうけた　あいてを
+たいじょう　させることが　できる。</language>
 	</row>
 
 	<row id="ITEMINFO_567">
 		<language name="JPN" width="256">あいてから　ねらわれやすくなる　まと。
 もたせると　こうかがない　わざが
 あたるように　なってしまう。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">あいてから　ねらわれやすくなる　まと。
+もたせると　こうかがない　わざが
+あたるように　なってしまう。</language>
 	</row>
 
 	<row id="ITEMINFO_568">
 		<language name="JPN" width="256">しめつけるわざを　ほじょする　バンド。
 もたせると　しめつけるわざの
 いりょくが　つよく　なる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">しめつけるわざを　ほじょする　バンド。
+もたせると　しめつけるわざの
+いりょくが　つよく　なる。</language>
 	</row>
 
 	<row id="ITEMINFO_569">
 		<language name="JPN" width="256">つかいすての　きゅうこん。
 もたせて　みずの　わざを　うけると
 とくこうが　あがる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">つかいすての　きゅうこん。
+もたせて　みずの　わざを　うけると
+とくこうが　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_570">
 		<language name="JPN" width="256">つかいすての　じゅうでんち。
 もたせて　でんきの　わざを　うけると
 こうげきが　あがる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">つかいすての　じゅうでんち。
+もたせて　でんきの　わざを　うけると
+こうげきが　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_571">
 		<language name="JPN" width="256">もたせて　わざを　うけると
 せんとうから　だっしゅつして
 てもちと　いれかわる　ことができる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">もたせて　わざを　うけると
+せんとうから　だっしゅつして
+てもちと　いれかわる　ことができる。</language>
 	</row>
 
 	<row id="ITEMINFO_572">
 		<language name="JPN" width="256">ほのおの　タイプの　ジュエル。
 もたせると　いちどだけ　ほのおの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">ほのおの　タイプの　ジュエル。
+もたせると　いちどだけ　ほのおの
+わざの　いりょくが　つよまる。</language>
 	</row>
 
 	<row id="ITEMINFO_573">
 		<language name="JPN" width="256">みずの　タイプの　ジュエル。
 もたせると　いちどだけ　みずの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">みずの　タイプの　ジュエル。
+もたせると　いちどだけ　みずの
+わざの　いりょくが　つよまる。</language>
 	</row>
 
 	<row id="ITEMINFO_574">
 		<language name="JPN" width="256">でんきの　タイプの　ジュエル。
 もたせると　いちどだけ　でんきの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">でんきの　タイプの　ジュエル。
+もたせると　いちどだけ　でんきの
+わざの　いりょくが　つよまる。</language>
 	</row>
 
 	<row id="ITEMINFO_575">
 		<language name="JPN" width="256">くさの　タイプの　ジュエル。
 もたせると　いちどだけ　くさの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">くさの　タイプの　ジュエル。
+もたせると　いちどだけ　くさの
+わざの　いりょくが　つよまる。</language>
 	</row>
 
 	<row id="ITEMINFO_576">
 		<language name="JPN" width="256">こおりの　タイプの　ジュエル。
 もたせると　いちどだけ　こおりの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">こおりの　タイプの　ジュエル。
+もたせると　いちどだけ　こおりの
+わざの　いりょくが　つよまる。</language>
 	</row>
 
 	<row id="ITEMINFO_577">
 		<language name="JPN" width="256">かくとうの　タイプの　ジュエル。
 もたせると　いちどだけ　かくとうの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">かくとうの　タイプの　ジュエル。
+もたせると　いちどだけ　かくとうの
+わざの　いりょくが　つよまる。</language>
 	</row>
 
 	<row id="ITEMINFO_578">
 		<language name="JPN" width="256">どくの　タイプの　ジュエル。
 もたせると　いちどだけ　どくの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">どくの　タイプの　ジュエル。
+もたせると　いちどだけ　どくの
+わざの　いりょくが　つよまる。</language>
 	</row>
 
 	<row id="ITEMINFO_579">
 		<language name="JPN" width="256">じめんの　タイプの　ジュエル。
 もたせると　いちどだけ　じめんの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">じめんの　タイプの　ジュエル。
+もたせると　いちどだけ　じめんの
+わざの　いりょくが　つよまる。</language>
 	</row>
 
 	<row id="ITEMINFO_580">
 		<language name="JPN" width="256">ひこうの　タイプの　ジュエル。
 もたせると　いちどだけ　ひこうの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">ひこうの　タイプの　ジュエル。
+もたせると　いちどだけ　ひこうの
+わざの　いりょくが　つよまる。</language>
 	</row>
 
 	<row id="ITEMINFO_581">
 		<language name="JPN" width="256">エスパーの　タイプの　ジュエル。
 もたせると　いちどだけ　エスパーの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">エスパーの　タイプの　ジュエル。
+もたせると　いちどだけ　エスパーの
+わざの　いりょくが　つよまる。</language>
 	</row>
 
 	<row id="ITEMINFO_582">
 		<language name="JPN" width="256">むしの　タイプの　ジュエル。
 もたせると　いちどだけ　むしの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">むしの　タイプの　ジュエル。
+もたせると　いちどだけ　むしの
+わざの　いりょくが　つよまる。</language>
 	</row>
 
 	<row id="ITEMINFO_583">
 		<language name="JPN" width="256">いわの　タイプの　ジュエル。
 もたせると　いちどだけ　いわの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">いわの　タイプの　ジュエル。
+もたせると　いちどだけ　いわの
+わざの　いりょくが　つよまる。</language>
 	</row>
 
 	<row id="ITEMINFO_584">
 		<language name="JPN" width="256">ゴーストの　タイプの　ジュエル。
 もたせると　いちどだけ　ゴーストの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">ゴーストの　タイプの　ジュエル。
+もたせると　いちどだけ　ゴーストの
+わざの　いりょくが　つよまる。</language>
 	</row>
 
 	<row id="ITEMINFO_585">
 		<language name="JPN" width="256">ドラゴンの　タイプの　ジュエル。
 もたせると　いちどだけ　ドラゴンの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">ドラゴンの　タイプの　ジュエル。
+もたせると　いちどだけ　ドラゴンの
+わざの　いりょくが　つよまる。</language>
 	</row>
 
 	<row id="ITEMINFO_586">
 		<language name="JPN" width="256">あくの　タイプの　ジュエル。
 もたせると　いちどだけ　あくの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">あくの　タイプの　ジュエル。
+もたせると　いちどだけ　あくの
+わざの　いりょくが　つよまる。</language>
 	</row>
 
 	<row id="ITEMINFO_587">
 		<language name="JPN" width="256">はがねの　タイプの　ジュエル。
 もたせると　いちどだけ　はがねの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">はがねの　タイプの　ジュエル。
+もたせると　いちどだけ　はがねの
+わざの　いりょくが　つよまる。</language>
 	</row>
 
 	<row id="ITEMINFO_588">
 		<language name="JPN" width="256">ノーマルの　タイプの　ジュエル。
 もたせると　いちどだけ　ノーマルの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">ノーマルの　タイプの　ジュエル。
+もたせると　いちどだけ　ノーマルの
+わざの　いりょくが　つよまる。</language>
 	</row>
 
 	<row id="ITEMINFO_589">
 		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
 ポケモン　１ひきの　ＨＰの
 きそポイントを　ちょっと　あげる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">ポケモンに　つかう　どうぐ。
+ポケモン　１ひきの　ＨＰの
+きそポイントを　ちょっと　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_590">
 		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
 ポケモン　１ひきの　こうげきの
 きそポイントを　ちょっと　あげる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">ポケモンに　つかう　どうぐ。
+ポケモン　１ひきの　こうげきの
+きそポイントを　ちょっと　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_591">
 		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
 ポケモン　１ひきの　ぼうぎょの
 きそポイントを　ちょっと　あげる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">ポケモンに　つかう　どうぐ。
+ポケモン　１ひきの　ぼうぎょの
+きそポイントを　ちょっと　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_592">
 		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
 ポケモン　１ひきの　すばやさの
 きそポイントを　ちょっと　あげる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">ポケモンに　つかう　どうぐ。
+ポケモン　１ひきの　すばやさの
+きそポイントを　ちょっと　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_593">
 		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
 ポケモン　１ひきの　とくこうの
 きそポイントを　ちょっと　あげる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">ポケモンに　つかう　どうぐ。
+ポケモン　１ひきの　とくこうの
+きそポイントを　ちょっと　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_594">
 		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
 ポケモン　１ひきの　とくぼうの
 きそポイントを　ちょっと　あげる。</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">ポケモンに　つかう　どうぐ。
+ポケモン　１ひきの　とくぼうの
+きそポイントを　ちょっと　あげる。</language>
+	</row>
+
+	<row id="ITEMINFO_595">
+		<language name="JPN" width="256">きれいな　ハートの　かたちの
+とても　めずらしい　ハネ。
+</language>
+		<language name="JPN_KANJI" width="256">きれいな　ハートの　かたちの
+とても　めずらしい　ハネ。
+</language>
 	</row>
 
 

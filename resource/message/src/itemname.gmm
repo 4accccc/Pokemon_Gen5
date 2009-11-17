@@ -3105,6 +3105,11 @@
 		<language name="JPN_KANJI" width="256">しゅんぱつのハネ</language>
 	</row>
 
+	<row id="ITEMNAME_595">
+		<language name="JPN" width="256">ハートのハネ</language>
+		<language name="JPN_KANJI" width="256">ハートのハネ</language>
+	</row>
+
 
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
