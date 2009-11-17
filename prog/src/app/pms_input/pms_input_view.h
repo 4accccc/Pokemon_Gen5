@@ -358,6 +358,7 @@ extern void PMSIV_SUB_ChangeArrowButton( PMSIV_SUB* wk, int pos, int state );
 //==============================================================
 typedef struct _PMSIV_MENU PMSIV_MENU;
 
+
 //-----------------------------
 ///	決定ID
 //=============================
@@ -365,6 +366,8 @@ typedef enum
 { 
   CATEGORY_DECIDE_ID_CANCEL = 0,  ///< キャンセル
   CATEGORY_DECIDE_ID_CHANGE,  ///< 切替ボタン
+  CATEGORY_DECIDE_ID_ERASE,  ///< けすボタン
+  CATEGORY_DECIDE_ID_SEARCH,  ///< 検索ボタン
   CATEGORY_DECIDE_ID_MAX,
 } CATEGORY_DECIDE_ID;
 

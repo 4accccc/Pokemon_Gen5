@@ -1118,30 +1118,39 @@ static void Cmd_CategoryToWordWin( GFL_TCB *tcb, void* wk_adrs )
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
 
-	switch( wk->seq ){
+	switch( wk->seq )
+  {
 	case 0:
-		PMSIV_WORDWIN_SetupWord( vwk->wordwin_wk );
-		PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, FALSE );
-		PMSIV_CATEGORY_StartFadeOut( vwk->category_wk );
-    PMSIV_MENU_SetupWordWin( vwk->menu_wk );
-    PMSIV_CATEGORY_StartMoveSubWinList( vwk->category_wk, FALSE );
+    PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, FALSE );
+    PMSIV_MENU_SetDecideCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_SEARCH );
     wk->seq++;
     break;
 
-  case 1 :
+  case 1:
+    if( PMSIV_MENU_IsFinishCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_SEARCH ) )
+    {
+      PMSIV_CATEGORY_StartFadeOut( vwk->category_wk );
+      PMSIV_CATEGORY_StartMoveSubWinList( vwk->category_wk, FALSE );
+      wk->seq++;
+    }
+    break;
+
+  case 2 :
     {
       BOOL flag1 = PMSIV_CATEGORY_WaitMoveSubWinList( vwk->category_wk, FALSE );
       BOOL flag2 = PMSIV_CATEGORY_WaitFadeOut( vwk->category_wk );
 
       if( flag1 && flag2 )
       {
+        PMSIV_MENU_SetupWordWin( vwk->menu_wk );
+		    PMSIV_WORDWIN_SetupWord( vwk->wordwin_wk );
         PMSIV_WORDWIN_StartFadeIn( vwk->wordwin_wk );
         wk->seq++;
       }
 		}
 		break;
 
-	case 2:
+	case 3:
 		if( PMSIV_WORDWIN_WaitFadeIn( vwk->wordwin_wk ) )
 		{
 			PMSIV_WORDWIN_MoveCursor( vwk->wordwin_wk, PMSI_GetWordWinCursorPos(vwk->main_wk) );
@@ -1150,6 +1159,8 @@ static void Cmd_CategoryToWordWin( GFL_TCB *tcb, void* wk_adrs )
 			DeleteCommand( wk );
 		}
 		break;
+
+  default : GF_ASSERT(0);
 	}
 }
 //----------------------------------------------------------------------------------------------

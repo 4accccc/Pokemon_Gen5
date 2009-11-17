@@ -267,7 +267,6 @@ struct _PMS_INPUT_WORK{
 
 	u8         sentence_edit_pos_max;
 	u8         category_mode;
-  u8         edit_btn_pos;
 
 	u8	scroll_bar_flg;		// スクロールバータッチ済みフラグ
 
@@ -2010,8 +2009,8 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
     if( wk->category_mode == CATEGORY_MODE_INITIAL && PMSI_SEARCH_DelWord( wk->swk ) )
     {
 		  GFL_SOUND_PlaySE(SOUND_WORD_DELETE);
+
       PMSI_SEARCH_Start( wk->swk );
-      
       PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
     }
     // GROUPは無条件で画面から抜ける
@@ -2046,7 +2045,7 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
     else if( wk->category_pos == CATEGORY_POS_ERASE )
     {
 		  GFL_SOUND_PlaySE(SOUND_WORD_DELETE);
-      HOSAKA_Printf("push erase!\n");
+
       PMSI_SEARCH_DelWord( wk->swk );
       PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
     }
@@ -2255,26 +2254,24 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
   // イニシャル
   else
   {
+    // 文字入力
 		ret = category_touch_initial(wk);
 
-    // タッチなし
-		if(ret < 0){ return; }
+		if(ret > -1)
+    {
+      wk->category_pos = ret;
+      PMSI_SEARCH_AddWord( wk->swk, wk->category_pos );
 
-    // 文字入力
+      PMSI_SEARCH_Start( wk->swk );
+      PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
 
-    wk->category_pos = ret;
-    PMSI_SEARCH_AddWord( wk->swk, wk->category_pos );
-
-    PMSI_SEARCH_Start( wk->swk );
-    PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
-
-    GFL_SOUND_PlaySE( SOUND_WORD_INPUT );
-#if 0
-		if(PMSI_DATA_GetInitialEnableWordCount( wk->dwk, wk->category_pos ) == 0 ){
-			GFL_SOUND_PlaySE( SOUND_DISABLE_CATEGORY );
-			return;
-		}
-#endif
+      GFL_SOUND_PlaySE( SOUND_WORD_INPUT );
+      return;
+    }
+    else
+    {
+      // ボタン当たり判定
+    }
 	}
 }
 
@@ -3923,4 +3920,5 @@ void PMSI_GetSearchResultString( const PMS_INPUT_WORK* wk, u32 result_idx, STRBU
 {
   PMSI_SEARCH_GetResultString( wk->swk, result_idx, dst_buf );
 }
+
 

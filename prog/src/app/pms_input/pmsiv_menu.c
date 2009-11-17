@@ -413,22 +413,6 @@ static void _decide_category_cancel( PMSIV_MENU* wk )
   }
 }
 
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-static void _decide_category_change( PMSIV_MENU* wk )
-{
-  _clwk_setanm( wk, MENU_CLWKICON_CATEGORY_CHANGE, TRUE );
-}
-
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-static BOOL _wait_category_change( PMSIV_MENU* wk )
-{
-  return GFL_CLACT_WK_CheckAnmActive( wk->clwk_icon[ MENU_CLWKICON_CATEGORY_CHANGE ] ) == FALSE;
-}
-
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
 static BOOL _wait_category_cancel( PMSIV_MENU* wk )
 { 
   if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_INITIAL )
@@ -441,6 +425,73 @@ static BOOL _wait_category_cancel( PMSIV_MENU* wk )
   else
   {
     //@ TODO タッチバーのウェイト
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static void _decide_category_change( PMSIV_MENU* wk )
+{
+  _clwk_setanm( wk, MENU_CLWKICON_CATEGORY_CHANGE, TRUE );
+}
+
+static BOOL _wait_category_change( PMSIV_MENU* wk )
+{
+  return GFL_CLACT_WK_CheckAnmActive( wk->clwk_icon[ MENU_CLWKICON_CATEGORY_CHANGE ] ) == FALSE;
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static void _decide_category_erase( PMSIV_MENU* wk )
+{
+  if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_INITIAL )
+  {
+      PMSIV_MENU_TaskMenuSetDecide( wk, 1, TRUE );
+  }
+}
+
+static BOOL _wait_category_erase( PMSIV_MENU* wk )
+{
+  if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_INITIAL )
+  {
+    if( PMSIV_MENU_TaskMenuIsFinish( wk, 1 ) )
+    {
+      return TRUE;
+    }
+  }
+  else
+  {
+     return TRUE;
+  }
+
+  return FALSE;
+
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static void _decide_category_search( PMSIV_MENU* wk )
+{
+  if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_INITIAL )
+  {
+    PMSIV_MENU_TaskMenuSetDecide( wk, 0, TRUE );
+  }
+}
+
+static BOOL _wait_category_search( PMSIV_MENU* wk )
+{
+  if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_INITIAL )
+  {
+    if( PMSIV_MENU_TaskMenuIsFinish( wk, 0 ) )
+    {
+      return TRUE;
+    }
+  }
+  else
+  {
     return TRUE;
   }
 
@@ -471,13 +522,21 @@ void PMSIV_MENU_SetDecideCategory( PMSIV_MENU* wk, CATEGORY_DECIDE_ID id )
     _decide_category_change( wk );
     break;
 
+  case CATEGORY_DECIDE_ID_ERASE :
+    _decide_category_erase( wk );
+    break;
+
+  case CATEGORY_DECIDE_ID_SEARCH :
+    _decide_category_search( wk );
+    break;
+
   default : GF_ASSERT(0);
   }
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  タッチボタン処理
+ *	@brief  エディット画面タッチボタン処理
  *
  *	@param	PMSIV_MENU* wk ワーク
  *	@param	id ボタンID
@@ -511,7 +570,7 @@ void PMSIV_MENU_TouchEditButton( PMSIV_MENU* wk, EDIT_BUTTON_ID id )
  *	@param	PMSIV_MENU* wk
  *	@param	id 
  *
- *	@retval
+ *	@retval TRUE:終了
  */
 //-----------------------------------------------------------------------------
 BOOL PMSIV_MENU_IsFinishCategory( PMSIV_MENU* wk, CATEGORY_DECIDE_ID id )
@@ -525,6 +584,12 @@ BOOL PMSIV_MENU_IsFinishCategory( PMSIV_MENU* wk, CATEGORY_DECIDE_ID id )
 
   case CATEGORY_DECIDE_ID_CHANGE :
     return _wait_category_change( wk );
+  
+  case CATEGORY_DECIDE_ID_ERASE :
+    return _wait_category_erase( wk );
+  
+  case CATEGORY_DECIDE_ID_SEARCH :
+    return _wait_category_search( wk );
 
   default : GF_ASSERT(0);
   }	
