@@ -14,4 +14,12 @@ ARC_TARGET_DATA = \
 	cut_get2_bg.nsbta \
 	cut_get2_item.nsbta \
 	cut_get2_item.nsbma \
-	cut_get2_item.nsbca
+	cut_get2_item.nsbca \
+	gym1.spa \
+	gymbadge1.nsbmd \
+	badgecase_1.nsbmd \
+	gymbadge1.nsbca \
+	gymbadge1.nsbta \
+	badgecase_1.nsbta \
+	badgecase_1.nsbma \
+	badgecase_1.nsbca

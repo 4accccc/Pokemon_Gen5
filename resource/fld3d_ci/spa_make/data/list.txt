@@ -5,3 +5,7 @@ get1.spa
 
 get2.spa
 	cut_get2_kira2.spr
+
+gym1.spa
+	gym_kira1.spr
+	gym_kira2.spr
