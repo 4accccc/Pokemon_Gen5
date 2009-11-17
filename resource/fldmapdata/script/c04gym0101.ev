@@ -108,6 +108,10 @@ ev_leader4_btl:
 	//～～はボルトバッジを入手した！
 	_TALKMSG_ALLPUT( msg_c04gym0101_leader_03 )
 	_ME_PLAY( SEQ_ME_BADGE )
+
+	//バッジ入手演出再生
+	_CALL_FLD3D_CUTIN( FLDCIID_GYM04 )
+
 	_ME_WAIT()
 	_TALKWIN_CLOSE()
 
