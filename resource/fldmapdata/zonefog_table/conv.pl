@@ -37,7 +37,7 @@ exit(0);
 sub getParam
 {
 	my( $data, $key ) = @_;
-	my( $i, $onedata );
+	my( $i, $onedata, $tmp );
 	
 	for( $i=0; $i<@$data; $i++ )
 	{
@@ -47,7 +47,12 @@ sub getParam
 
 		if( $onedata =~ /$key\:\:(.*)/ )
 		{
-			return oct($1);
+			$tmp = $1;
+			if( $tmp =~ /0x/ )	#16進数チェック
+			{
+				$tmp = oct($tmp);
+			}
+			return $tmp;
 		}
 	}
 

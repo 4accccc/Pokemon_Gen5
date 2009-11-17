@@ -11,9 +11,10 @@
 #define NARC_FIELD_FOG_TABLE_NAIX_
 
 enum {
-	NARC_field_fog_table_zonefog_h01_dat = 0,
-	NARC_field_fog_table_zonefog_h03_dat = 1,
-	NARC_field_fog_table_zonefog_table_bin = 2
+	NARC_field_fog_table_zonefog_c05gym_dat = 0,
+	NARC_field_fog_table_zonefog_h01_dat = 1,
+	NARC_field_fog_table_zonefog_h03_dat = 2,
+	NARC_field_fog_table_zonefog_table_bin = 3
 };
 
 /* NARC_FIELD_FOG_TABLE_NAIX_ */
