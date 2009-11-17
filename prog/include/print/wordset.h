@@ -43,6 +43,7 @@ extern void WORDSET_RegisterItemName( WORDSET* wordset, u32 bufID, u32 itemID );
 extern void WORDSET_RegisterTokuseiName( WORDSET* wordset, u32 bufID, u32 tokuseiID );
 extern void WORDSET_RegisterSeikaku( WORDSET* wordset, u32 bufID, u32 seikakuID );
 extern void WORDSET_RegisterNumber( WORDSET* wordset, u32 bufID, s32 number, u32 keta, StrNumberDispType dispType, StrNumberCodeType codeType );
+extern void WORDSET_RegisterHexNumber( WORDSET* wordset, u32 bufID, u32 number, u32 keta, StrNumberDispType dispType, StrNumberCodeType codeType );
 extern void WORDSET_RegisterPMSWord( WORDSET* wordset, u32 bufID, PMS_WORD word );
 extern void WORDSET_RegisterPMSDeco( WORDSET* wordset, u32 bufID, PMS_DECO_ID decoID );
 extern void WORDSET_RegisterPokeTypeName( WORDSET* wordset, u32 bufID, u32 typeID );

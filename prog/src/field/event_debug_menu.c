@@ -10,6 +10,7 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "system/main.h"
+#include "system/bmp_winframe.h"
 #include "arc_def.h"
 
 #include "field/field_msgbg.h"
@@ -213,6 +214,7 @@ static BOOL debugMenuCallProc_Jump( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_Kairiki( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_ControlLinerCamera( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_ControlDelicateCamera( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenu_ControlShortCut( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_BeaconFriendCode( DEBUG_MENU_EVENT_WORK *wk );
 
@@ -263,6 +265,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR47, debugMenu_ControlShortCut },
   { DEBUG_FIELD_STR49, debugMenuCallProc_BeaconFriendCode },
   { DEBUG_FIELD_STR50, debugMenuCallProc_WazaOshie },
+	{	DEBUG_FIELD_STR52, debugMenuCallProc_ControlDelicateCamera },
 };
 
 
@@ -323,17 +326,17 @@ GMEVENT * DEBUG_EVENT_DebugMenu(
   GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
   HEAPID heapID, u16 page_id )
 {
-  DEBUG_MENU_EVENT_WORK * dmew;
-  GMEVENT * event;
-  
-  event = GMEVENT_Create(
-    gsys, NULL, DebugMenuEvent, sizeof(DEBUG_MENU_EVENT_WORK));
-  
-  dmew = GMEVENT_GetEventWork(event);
-  MI_CpuClear8( dmew, sizeof(DEBUG_MENU_EVENT_WORK) );
-  
-  dmew->gmSys = gsys;
-  dmew->gmEvent = event;
+	DEBUG_MENU_EVENT_WORK * dmew;
+	GMEVENT * event;
+	
+	event = GMEVENT_Create(
+		gsys, NULL, DebugMenuEvent, sizeof(DEBUG_MENU_EVENT_WORK));
+	
+	dmew = GMEVENT_GetEventWork(event);
+	GFL_STD_MemClear( dmew, sizeof(DEBUG_MENU_EVENT_WORK) );
+	
+	dmew->gmSys = gsys;
+	dmew->gmEvent = event;
   dmew->gdata = GAMESYSTEM_GetGameData( gsys );
   dmew->fieldWork = fieldWork;
   dmew->heapID = heapID;
@@ -578,12 +581,12 @@ typedef struct
 static void initDZEW(DEBUG_ZONESEL_EVENT_WORK * dzew,
     GAMESYS_WORK * gsys, GMEVENT * event, HEAPID heapID)
 {
-  MI_CpuClear8( dzew, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
-  
-  dzew->gmSys = gsys;
-  dzew->gmEvent = event;
-  dzew->heapID = heapID;
-  dzew->fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
+	GFL_STD_MemClear( dzew, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
+	
+	dzew->gmSys = gsys;
+	dzew->gmEvent = event;
+	dzew->heapID = heapID;
+	dzew->fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
 }
 //--------------------------------------------------------------
 /// proto
@@ -635,23 +638,23 @@ static const DEBUG_MENU_INITIALIZER DebugZoneSelectData = {
 //--------------------------------------------------------------
 static BOOL debugMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk )
 {
-  GAMESYS_WORK *gsys = wk->gmSys;
-  GMEVENT *event = wk->gmEvent;
-  HEAPID heapID = wk->heapID;
-  FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  DEBUG_ZONESEL_EVENT_WORK *work;
-  
-  GMEVENT_Change( event,
-    debugMenuZoneSelectEvent, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
-  
-  work = GMEVENT_GetEventWork( event );
-  MI_CpuClear8( work, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
-  
-  work->gmSys = gsys;
-  work->gmEvent = event;
-  work->heapID = heapID;
-  work->fieldWork = fieldWork;
-  return( TRUE );
+	GAMESYS_WORK *gsys = wk->gmSys;
+	GMEVENT *event = wk->gmEvent;
+	HEAPID heapID = wk->heapID;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
+	DEBUG_ZONESEL_EVENT_WORK *work;
+	
+	GMEVENT_Change( event,
+		debugMenuZoneSelectEvent, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
+	
+	work = GMEVENT_GetEventWork( event );
+	GFL_STD_MemClear( work, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
+	
+	work->gmSys = gsys;
+	work->gmEvent = event;
+	work->heapID = heapID;
+	work->fieldWork = fieldWork;
+	return( TRUE );
 }
 
 //--------------------------------------------------------------
@@ -1002,21 +1005,21 @@ static void setupDebugLightSubscreen(DMESSWORK * dmess);
 //--------------------------------------------------------------
 static debugMenuCallProc_SubscreenSelect( DEBUG_MENU_EVENT_WORK *wk )
 {
-  HEAPID heapID = wk->heapID;
-  GMEVENT *event = wk->gmEvent;
-  GAMESYS_WORK *gsys = wk->gmSys;
-  FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  DMESSWORK *work;
-  
-    GMEVENT_Change( event,
-      debugMenuSubscreenSelectEvent, sizeof(DMESSWORK) );
-    work = GMEVENT_GetEventWork( event );
-    MI_CpuClear8( work, sizeof(DMESSWORK) );
-  
-    work->gmSys = gsys;
-    work->gmEvent = event;
-    work->heapID = heapID;
-    work->fieldWork = fieldWork;
+	HEAPID heapID = wk->heapID;
+	GMEVENT *event = wk->gmEvent;
+	GAMESYS_WORK *gsys = wk->gmSys;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
+	DMESSWORK *work;
+	
+		GMEVENT_Change( event,
+			debugMenuSubscreenSelectEvent, sizeof(DMESSWORK) );
+		work = GMEVENT_GetEventWork( event );
+		GFL_STD_MemClear( work, sizeof(DMESSWORK) );
+	
+		work->gmSys = gsys;
+		work->gmEvent = event;
+		work->heapID = heapID;
+		work->fieldWork = fieldWork;
     work->subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
     return( TRUE );
 }
@@ -1185,26 +1188,26 @@ static void setupMusicarAll(DEB_MENU_MUS_WORK * work);
 //--------------------------------------------------------------
 static debugMenuCallProc_MusicalSelect( DEBUG_MENU_EVENT_WORK *wk )
 {
-  HEAPID heapID = wk->heapID;
-  GMEVENT *event = wk->gmEvent;
-  GAMESYS_WORK *gsys = wk->gmSys;
-  FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  DEB_MENU_MUS_WORK *work;
-  
-    GMEVENT_Change( event,
-      debugMenuMusicalSelectEvent, sizeof(DEB_MENU_MUS_WORK) );
-    work = GMEVENT_GetEventWork( event );
-    MI_CpuClear8( work, sizeof(DEB_MENU_MUS_WORK) );
-  
-    work->gmSys = gsys;
-    work->gmEvent = event;
-    work->heapID = heapID;
-    work->fieldWork = fieldWork;
-    work->musInitWork = NULL;
-    work->dupInitWork = NULL;
-    work->musPoke = NULL;
-    work->pokePara = NULL;
-    return( TRUE );
+	HEAPID heapID = wk->heapID;
+	GMEVENT *event = wk->gmEvent;
+	GAMESYS_WORK *gsys = wk->gmSys;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
+	DEB_MENU_MUS_WORK *work;
+	
+		GMEVENT_Change( event,
+			debugMenuMusicalSelectEvent, sizeof(DEB_MENU_MUS_WORK) );
+		work = GMEVENT_GetEventWork( event );
+		GFL_STD_MemClear( work, sizeof(DEB_MENU_MUS_WORK) );
+	
+		work->gmSys = gsys;
+		work->gmEvent = event;
+		work->heapID = heapID;
+		work->fieldWork = fieldWork;
+		work->musInitWork = NULL;
+		work->dupInitWork = NULL;
+		work->musPoke = NULL;
+		work->pokePara = NULL;
+		return( TRUE );
 }
 
 //--------------------------------------------------------------
@@ -1560,20 +1563,20 @@ static BOOL LinerCamKeyContCtl(DEBUG_CTL_LINERCAMERA_WORK *work, const fx32 inAd
 //--------------------------------------------------------------
 static BOOL debugMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk )
 {
-  DEBUG_CTLCAMERA_WORK *work;
-  GAMESYS_WORK *gsys = wk->gmSys;
-  GMEVENT *event = wk->gmEvent;
-  HEAPID heapID = wk->heapID;
-  FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  
-  GMEVENT_Change( event, debugMenuControlCamera, sizeof(DEBUG_CTLCAMERA_WORK) );
-  work = GMEVENT_GetEventWork( event );
-  MI_CpuClear8( work, sizeof(DEBUG_CTLCAMERA_WORK) );
-  
-  work->gsys = gsys;
-  work->event = event;
-  work->heapID = heapID;
-  work->fieldWork = fieldWork;
+	DEBUG_CTLCAMERA_WORK *work;
+	GAMESYS_WORK *gsys = wk->gmSys;
+	GMEVENT *event = wk->gmEvent;
+	HEAPID heapID = wk->heapID;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
+	
+	GMEVENT_Change( event, debugMenuControlCamera, sizeof(DEBUG_CTLCAMERA_WORK) );
+	work = GMEVENT_GetEventWork( event );
+	GFL_STD_MemClear( work, sizeof(DEBUG_CTLCAMERA_WORK) );
+	
+	work->gsys = gsys;
+	work->event = event;
+	work->heapID = heapID;
+	work->fieldWork = fieldWork;
 
   {
 
@@ -1594,7 +1597,7 @@ static BOOL debugMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk )
   {
     FLDNOGRID_MAPPER* mapper;
     
-    if( FIELDMAP_GetMapControlType( work->fieldWork ) == FLDMAP_CTRLTYPE_NOGRID )
+    if( FIELDMAP_GetBaseSystemType( work->fieldWork ) == FLDMAP_BASESYS_RAIL )
     {
       mapper = FIELDMAP_GetFldNoGridMapper( work->fieldWork );
       FLDNOGRID_MAPPER_SetRailCameraActive( mapper, FALSE );
@@ -1612,20 +1615,20 @@ static BOOL debugMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk )
 //--------------------------------------------------------------
 static BOOL debugMenuCallProc_ControlTarget( DEBUG_MENU_EVENT_WORK *wk )
 {
-  DEBUG_CTLCAMERA_WORK *work;
-  GAMESYS_WORK *gsys = wk->gmSys;
-  GMEVENT *event = wk->gmEvent;
-  HEAPID heapID = wk->heapID;
-  FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  
-  GMEVENT_Change( event, debugMenuControlCamera, sizeof(DEBUG_CTLCAMERA_WORK) );
-  work = GMEVENT_GetEventWork( event );
-  MI_CpuClear8( work, sizeof(DEBUG_CTLCAMERA_WORK) );
-  
-  work->gsys = gsys;
-  work->event = event;
-  work->heapID = heapID;
-  work->fieldWork = fieldWork;
+	DEBUG_CTLCAMERA_WORK *work;
+	GAMESYS_WORK *gsys = wk->gmSys;
+	GMEVENT *event = wk->gmEvent;
+	HEAPID heapID = wk->heapID;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
+	
+	GMEVENT_Change( event, debugMenuControlCamera, sizeof(DEBUG_CTLCAMERA_WORK) );
+	work = GMEVENT_GetEventWork( event );
+	GFL_STD_MemClear( work, sizeof(DEBUG_CTLCAMERA_WORK) );
+	
+	work->gsys = gsys;
+	work->event = event;
+	work->heapID = heapID;
+	work->fieldWork = fieldWork;
 
   {
     FIELD_SUBSCREEN_WORK * subscreen;
@@ -1645,7 +1648,7 @@ static BOOL debugMenuCallProc_ControlTarget( DEBUG_MENU_EVENT_WORK *wk )
   {
     FLDNOGRID_MAPPER* mapper;
     
-    if( FIELDMAP_GetMapControlType( work->fieldWork ) == FLDMAP_CTRLTYPE_NOGRID )
+    if( FIELDMAP_GetBaseSystemType( work->fieldWork ) == FLDMAP_BASESYS_RAIL )
     {
       mapper = FIELDMAP_GetFldNoGridMapper( work->fieldWork );
       FLDNOGRID_MAPPER_SetRailCameraActive( mapper, FALSE );
@@ -1677,7 +1680,7 @@ static GMEVENT_RESULT debugMenuControlCamera(
     {
       FLDNOGRID_MAPPER* mapper;
       
-      if( FIELDMAP_GetMapControlType( work->fieldWork ) == FLDMAP_CTRLTYPE_NOGRID )
+      if( FIELDMAP_GetBaseSystemType( work->fieldWork ) == FLDMAP_BASESYS_RAIL )
       {
         mapper = FIELDMAP_GetFldNoGridMapper( work->fieldWork );
         FLDNOGRID_MAPPER_SetRailCameraActive( mapper, TRUE );
@@ -1766,23 +1769,23 @@ static const DEBUG_MENU_INITIALIZER DebugCameraMenuListData = {
 //--------------------------------------------------------------
 static BOOL debugMenuCallProc_CameraList( DEBUG_MENU_EVENT_WORK *wk )
 {
-  GAMESYS_WORK *gsys = wk->gmSys;
-  GMEVENT *event = wk->gmEvent;
-  HEAPID heapID = wk->heapID;
-  FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  DEBUG_TESTCAMERALIST_EVENT_WORK *work;
-  
-  GMEVENT_Change( event,
-    debugMenuTestCameraListEvent, sizeof(DEBUG_TESTCAMERALIST_EVENT_WORK) );
-  
-  work = GMEVENT_GetEventWork( event );
-  MI_CpuClear8( work, sizeof(DEBUG_TESTCAMERALIST_EVENT_WORK) );
-  
-  work->gmSys = gsys;
-  work->gmEvent = event;
-  work->heapID = heapID;
-  work->fieldWork = fieldWork;
-  return( TRUE );
+	GAMESYS_WORK *gsys = wk->gmSys;
+	GMEVENT *event = wk->gmEvent;
+	HEAPID heapID = wk->heapID;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
+	DEBUG_TESTCAMERALIST_EVENT_WORK *work;
+	
+	GMEVENT_Change( event,
+		debugMenuTestCameraListEvent, sizeof(DEBUG_TESTCAMERALIST_EVENT_WORK) );
+	
+	work = GMEVENT_GetEventWork( event );
+	GFL_STD_MemClear( work, sizeof(DEBUG_TESTCAMERALIST_EVENT_WORK) );
+	
+	work->gmSys = gsys;
+	work->gmEvent = event;
+	work->heapID = heapID;
+	work->fieldWork = fieldWork;
+	return( TRUE );
 }
 
 //--------------------------------------------------------------
@@ -1923,24 +1926,24 @@ static const DEBUG_MENU_INITIALIZER DebugMMdlListData = {
 //--------------------------------------------------------------
 static BOOL debugMenuCallProc_MMdlList( DEBUG_MENU_EVENT_WORK *wk )
 {
-  GAMESYS_WORK *gsys = wk->gmSys;
-  GMEVENT *event = wk->gmEvent;
-  HEAPID heapID = wk->heapID;
-  FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  DEBUG_MMDLLIST_EVENT_WORK *work;
-  
-  GMEVENT_Change( event,
-    debugMenuMMdlListEvent, sizeof(DEBUG_MMDLLIST_EVENT_WORK) );
-  
-  work = GMEVENT_GetEventWork( event );
-  MI_CpuClear8( work, sizeof(DEBUG_MMDLLIST_EVENT_WORK) );
-  
-  work->gmSys = gsys;
-  work->gmEvent = event;
-  work->heapID = heapID;
-  work->fieldWork = fieldWork;
-  
-  {
+	GAMESYS_WORK *gsys = wk->gmSys;
+	GMEVENT *event = wk->gmEvent;
+	HEAPID heapID = wk->heapID;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
+	DEBUG_MMDLLIST_EVENT_WORK *work;
+	
+	GMEVENT_Change( event,
+		debugMenuMMdlListEvent, sizeof(DEBUG_MMDLLIST_EVENT_WORK) );
+	
+	work = GMEVENT_GetEventWork( event );
+	GFL_STD_MemClear( work, sizeof(DEBUG_MMDLLIST_EVENT_WORK) );
+	
+	work->gmSys = gsys;
+	work->gmEvent = event;
+	work->heapID = heapID;
+	work->fieldWork = fieldWork;
+	
+	{
     GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
     work->fldmmdlsys = GAMEDATA_GetMMdlSys( gdata );
   }
@@ -2152,21 +2155,21 @@ static GMEVENT_RESULT debugMenuControlLight(
 //--------------------------------------------------------------
 static BOOL debugMenuCallProc_ControlLight( DEBUG_MENU_EVENT_WORK *wk )
 {
-  DEBUG_CTLLIGHT_WORK *work;
-  GAMESYS_WORK *gsys = wk->gmSys;
-  GMEVENT *event = wk->gmEvent;
-  HEAPID heapID = wk->heapID;
-  FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  
-  GMEVENT_Change( event, debugMenuControlLight, sizeof(DEBUG_CTLLIGHT_WORK) );
-  work = GMEVENT_GetEventWork( event );
-  MI_CpuClear8( work, sizeof(DEBUG_CTLLIGHT_WORK) );
-  
-  work->gsys = gsys;
-  work->event = event;
-  work->heapID = heapID;
-  work->fieldWork = fieldWork;
-  return( TRUE );
+	DEBUG_CTLLIGHT_WORK *work;
+	GAMESYS_WORK *gsys = wk->gmSys;
+	GMEVENT *event = wk->gmEvent;
+	HEAPID heapID = wk->heapID;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
+	
+	GMEVENT_Change( event, debugMenuControlLight, sizeof(DEBUG_CTLLIGHT_WORK) );
+	work = GMEVENT_GetEventWork( event );
+	GFL_STD_MemClear( work, sizeof(DEBUG_CTLLIGHT_WORK) );
+	
+	work->gsys = gsys;
+	work->event = event;
+	work->heapID = heapID;
+	work->fieldWork = fieldWork;
+	return( TRUE );
 }
 
 
@@ -2217,12 +2220,16 @@ static GMEVENT_RESULT debugMenuControlLight(
       
       // ビットマップウィンドウを作成
       work->p_win = GFL_BMPWIN_Create( FIELD_SUBSCREEN_BGPLANE,
-        0, 0, 32, 24,
-        FIELD_SUBSCREEN_PALLET, GFL_BMP_CHRAREA_GET_F );
+        1, 1, 30, 22,
+        FIELD_SUBSCREEN_PALLET, GFL_BMP_CHRAREA_GET_B );
       GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->p_win ), 0xf );
       GFL_BMPWIN_MakeScreen( work->p_win );
       GFL_BMPWIN_TransVramCharacter( work->p_win );
       GFL_BG_LoadScreenReq( FIELD_SUBSCREEN_BGPLANE );
+
+      // ウィンドウ
+      BmpWinFrame_GraphicSet( FIELD_SUBSCREEN_BGPLANE, 1, 15, 0, work->heapID );
+      BmpWinFrame_Write( work->p_win, TRUE, 1, 15 );
     }
 
     FIELD_LIGHT_DEBUG_PrintData( p_light, work->p_win );
@@ -2284,21 +2291,21 @@ static GMEVENT_RESULT debugMenuControlFog(
 
 static BOOL debugMenuCallProc_ControlFog( DEBUG_MENU_EVENT_WORK *wk )
 {
-  DEBUG_CTLFOG_WORK *work;
-  GAMESYS_WORK *gsys = wk->gmSys;
-  GMEVENT *event = wk->gmEvent;
-  HEAPID heapID = wk->heapID;
-  FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  
-  GMEVENT_Change( event, debugMenuControlFog, sizeof(DEBUG_CTLFOG_WORK) );
-  work = GMEVENT_GetEventWork( event );
-  MI_CpuClear8( work, sizeof(DEBUG_CTLFOG_WORK) );
-  
-  work->gsys = gsys;
-  work->event = event;
-  work->heapID = heapID;
-  work->fieldWork = fieldWork;
-  return( TRUE );
+	DEBUG_CTLFOG_WORK *work;
+	GAMESYS_WORK *gsys = wk->gmSys;
+	GMEVENT *event = wk->gmEvent;
+	HEAPID heapID = wk->heapID;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
+	
+	GMEVENT_Change( event, debugMenuControlFog, sizeof(DEBUG_CTLFOG_WORK) );
+	work = GMEVENT_GetEventWork( event );
+	GFL_STD_MemClear( work, sizeof(DEBUG_CTLFOG_WORK) );
+	
+	work->gsys = gsys;
+	work->event = event;
+	work->heapID = heapID;
+	work->fieldWork = fieldWork;
+	return( TRUE );
 }
 
 
@@ -2347,12 +2354,16 @@ static GMEVENT_RESULT debugMenuControlFog(
       
       // ビットマップウィンドウを作成
       work->p_win = GFL_BMPWIN_Create( FIELD_SUBSCREEN_BGPLANE,
-        0, 0, 32, 24,
-        FIELD_SUBSCREEN_PALLET, GFL_BMP_CHRAREA_GET_F );
+        1, 1, 30, 22,
+        FIELD_SUBSCREEN_PALLET, GFL_BMP_CHRAREA_GET_B );
       GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->p_win ), 0xf );
       GFL_BMPWIN_MakeScreen( work->p_win );
       GFL_BMPWIN_TransVramCharacter( work->p_win );
       GFL_BG_LoadScreenReq( FIELD_SUBSCREEN_BGPLANE );
+
+      // ウィンドウ
+      BmpWinFrame_GraphicSet( FIELD_SUBSCREEN_BGPLANE, 1, 15, 0, work->heapID );
+      BmpWinFrame_Write( work->p_win, TRUE, 1, 15 );
     }
 
     FIELD_FOG_DEBUG_Init( p_fog, work->heapID );
@@ -2470,23 +2481,23 @@ static const DEBUG_MENU_INITIALIZER DebugWeatherMenuListData = {
 //--------------------------------------------------------------
 static BOOL debugMenuCallProc_WeatherList( DEBUG_MENU_EVENT_WORK *wk )
 {
-  GAMESYS_WORK *gsys = wk->gmSys;
-  GMEVENT *event = wk->gmEvent;
-  HEAPID heapID = wk->heapID;
-  FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  DEBUG_WEATERLIST_EVENT_WORK *work;
-  
-  GMEVENT_Change( event,
-    debugMenuWeatherListEvent, sizeof(DEBUG_WEATERLIST_EVENT_WORK) );
-  
-  work = GMEVENT_GetEventWork( event );
-  MI_CpuClear8( work, sizeof(DEBUG_WEATERLIST_EVENT_WORK) );
-  
-  work->gmSys = gsys;
-  work->gmEvent = event;
-  work->heapID = heapID;
-  work->fieldWork = fieldWork;
-  return( TRUE );
+	GAMESYS_WORK *gsys = wk->gmSys;
+	GMEVENT *event = wk->gmEvent;
+	HEAPID heapID = wk->heapID;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
+	DEBUG_WEATERLIST_EVENT_WORK *work;
+	
+	GMEVENT_Change( event,
+		debugMenuWeatherListEvent, sizeof(DEBUG_WEATERLIST_EVENT_WORK) );
+	
+	work = GMEVENT_GetEventWork( event );
+	GFL_STD_MemClear( work, sizeof(DEBUG_WEATERLIST_EVENT_WORK) );
+	
+	work->gmSys = gsys;
+	work->gmEvent = event;
+	work->heapID = heapID;
+	work->fieldWork = fieldWork;
+	return( TRUE );
 }
 
 //--------------------------------------------------------------
@@ -2645,23 +2656,23 @@ static const DEBUG_MENU_INITIALIZER DebugControlTimeMenuListData = {
 //--------------------------------------------------------------
 static BOOL debugMenuCallProc_ControlRtcList( DEBUG_MENU_EVENT_WORK *wk )
 {
-  GAMESYS_WORK *gsys = wk->gmSys;
-  GMEVENT *event = wk->gmEvent;
-  HEAPID heapID = wk->heapID;
-  FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  DEBUG_CONTROL_TIME_LIST_EVENT_WORK *work;
-  
-  GMEVENT_Change( event,
-    debugMenuControlTimeListEvent, sizeof(DEBUG_CONTROL_TIME_LIST_EVENT_WORK) );
-  
-  work = GMEVENT_GetEventWork( event );
-  MI_CpuClear8( work, sizeof(DEBUG_CONTROL_TIME_LIST_EVENT_WORK) );
-  
-  work->gmSys = gsys;
-  work->gmEvent = event;
-  work->heapID = heapID;
-  work->fieldWork = fieldWork;
-  return( TRUE );
+	GAMESYS_WORK *gsys = wk->gmSys;
+	GMEVENT *event = wk->gmEvent;
+	HEAPID heapID = wk->heapID;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
+	DEBUG_CONTROL_TIME_LIST_EVENT_WORK *work;
+	
+	GMEVENT_Change( event,
+		debugMenuControlTimeListEvent, sizeof(DEBUG_CONTROL_TIME_LIST_EVENT_WORK) );
+	
+	work = GMEVENT_GetEventWork( event );
+	GFL_STD_MemClear( work, sizeof(DEBUG_CONTROL_TIME_LIST_EVENT_WORK) );
+	
+	work->gmSys = gsys;
+	work->gmEvent = event;
+	work->heapID = heapID;
+	work->fieldWork = fieldWork;
+	return( TRUE );
 }
 
 //--------------------------------------------------------------
@@ -3439,23 +3450,22 @@ static BOOL debugMenuCallProc_Kairiki( DEBUG_MENU_EVENT_WORK *wk )
 //--------------------------------------------------------------
 static BOOL debugMenuCallProc_ControlLinerCamera( DEBUG_MENU_EVENT_WORK *wk )
 {
-  DEBUG_CTL_LINERCAMERA_WORK *work;
-  GAMESYS_WORK *gsys = wk->gmSys;
-  GMEVENT *event = wk->gmEvent;
-  HEAPID heapID = wk->heapID;
-  FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  
-  GMEVENT_Change( event, debugMenuControlLinerCamera, sizeof(DEBUG_CTL_LINERCAMERA_WORK) );
-  work = GMEVENT_GetEventWork( event );
-  MI_CpuClear8( work, sizeof(DEBUG_CTL_LINERCAMERA_WORK) );
-  
-  work->gsys = gsys;
-  work->event = event;
-  work->heapID = heapID;
-  work->fieldWork = fieldWork;
+	DEBUG_CTL_LINERCAMERA_WORK *work;
+	GAMESYS_WORK *gsys = wk->gmSys;
+	GMEVENT *event = wk->gmEvent;
+	HEAPID heapID = wk->heapID;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
+	
+	GMEVENT_Change( event, debugMenuControlLinerCamera, sizeof(DEBUG_CTL_LINERCAMERA_WORK) );
+	work = GMEVENT_GetEventWork( event );
+	GFL_STD_MemClear( work, sizeof(DEBUG_CTL_LINERCAMERA_WORK) );
+	
+	work->gsys = gsys;
+	work->event = event;
+	work->heapID = heapID;
+	work->fieldWork = fieldWork;
 
   {
-
     FIELD_SUBSCREEN_WORK * subscreen;
     
 
@@ -3476,7 +3486,7 @@ static BOOL debugMenuCallProc_ControlLinerCamera( DEBUG_MENU_EVENT_WORK *wk )
   {
     FLDNOGRID_MAPPER* mapper;
     
-    if( FIELDMAP_GetMapControlType( work->fieldWork ) == FLDMAP_CTRLTYPE_NOGRID )
+    if( FIELDMAP_GetBaseSystemType( work->fieldWork ) == FLDMAP_BASESYS_RAIL )
     {
       mapper = FIELDMAP_GetFldNoGridMapper( work->fieldWork );
       FLDNOGRID_MAPPER_SetRailCameraActive( mapper, FALSE );
@@ -3512,7 +3522,7 @@ static GMEVENT_RESULT debugMenuControlLinerCamera(
     {
       FLDNOGRID_MAPPER* mapper;
       
-      if( FIELDMAP_GetMapControlType( work->fieldWork ) == FLDMAP_CTRLTYPE_NOGRID )
+      if( FIELDMAP_GetBaseSystemType( work->fieldWork ) == FLDMAP_BASESYS_RAIL )
       {
         mapper = FIELDMAP_GetFldNoGridMapper( work->fieldWork );
         FLDNOGRID_MAPPER_SetRailCameraActive( mapper, TRUE );
@@ -3642,6 +3652,182 @@ static BOOL debugMenuCallProc_BeaconFriendCode( DEBUG_MENU_EVENT_WORK *wk )
   EVENT_DebugBeacon( wk->gmSys, wk->fieldWork, FIELDMAP_GetFldMsgBG( wk->fieldWork ), wk->gmEvent, wk->heapID );
   return TRUE;
 }
+
+
+
+
+
+//-----------------------------------------------------------------------------
+/**
+ *    グラフィッカー用
+ *      カメラ　こまかく設定
+ */
+//-----------------------------------------------------------------------------
+//-------------------------------------
+///	デバッグカメラ　こまかく設定用ワーク	
+//=====================================
+typedef struct 
+{
+	FIELDMAP_WORK*  p_field;
+  FIELD_CAMERA*   p_camera;
+  HEAPID heapID;
+
+  BOOL draw_help;
+  BOOL param_change;
+
+	GFL_BMPWIN* p_win;
+} DEBUG_DELICATE_CAMERA_EVENT_WORK;
+static GMEVENT_RESULT debugMenuDelicateCamera( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  起動
+ *
+ *	@param	wk 
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_ControlDelicateCamera( DEBUG_MENU_EVENT_WORK *wk )
+{
+	DEBUG_DELICATE_CAMERA_EVENT_WORK* p_work;
+	GMEVENT* p_event = wk->gmEvent;
+  FIELDMAP_WORK* p_fieldWork = wk->fieldWork;
+  HEAPID heapID = wk->heapID;
+	
+	GMEVENT_Change( p_event, debugMenuDelicateCamera, sizeof(DEBUG_DELICATE_CAMERA_EVENT_WORK) );
+	p_work = GMEVENT_GetEventWork( p_event );
+	GFL_STD_MemClear( p_work, sizeof(DEBUG_DELICATE_CAMERA_EVENT_WORK) );
+	
+	p_work->p_field   = p_fieldWork;
+  p_work->p_camera  = FIELDMAP_GetFieldCamera( p_fieldWork );
+  p_work->heapID    = heapID;
+
+  FIELD_CAMERA_DEBUG_InitControl( p_work->p_camera, heapID );
+
+  // レールカメラ反映の停止
+  {
+    FLDNOGRID_MAPPER* mapper;
+    
+    if( FIELDMAP_GetBaseSystemType( p_fieldWork ) == FLDMAP_BASESYS_RAIL )
+    {
+      mapper = FIELDMAP_GetFldNoGridMapper( p_fieldWork );
+      FLDNOGRID_MAPPER_SetRailCameraActive( mapper, FALSE );
+    }
+  }
+
+
+  // 表示面の作成
+  {
+		// インフォーバーの非表示
+		FIELD_SUBSCREEN_Exit(FIELDMAP_GetFieldSubscreenWork(p_fieldWork));
+		GFL_BG_SetVisible( FIELD_SUBSCREEN_BGPLANE, VISIBLE_OFF );
+
+		// ビットマップウィンドウ初期化
+		{
+			static const GFL_BG_BGCNT_HEADER header_sub3 = {
+				0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
+				GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000,0x7000,
+				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
+			};
+
+			GFL_BG_SetBGControl( FIELD_SUBSCREEN_BGPLANE, &header_sub3, GFL_BG_MODE_TEXT );
+			GFL_BG_ClearFrame( FIELD_SUBSCREEN_BGPLANE );
+			GFL_BG_SetVisible( FIELD_SUBSCREEN_BGPLANE, VISIBLE_ON );
+
+			// パレット情報を転送
+			GFL_ARC_UTIL_TransVramPalette(
+				ARCID_FONT, NARC_font_default_nclr,
+				PALTYPE_SUB_BG, FIELD_SUBSCREEN_PALLET*32, 32, heapID );
+			
+			// ビットマップウィンドウを作成
+			p_work->p_win = GFL_BMPWIN_Create( FIELD_SUBSCREEN_BGPLANE,
+				1, 1, 30, 22,
+				FIELD_SUBSCREEN_PALLET, GFL_BMP_CHRAREA_GET_B );
+			GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_work->p_win ), 0xf );
+			GFL_BMPWIN_MakeScreen( p_work->p_win );
+			GFL_BMPWIN_TransVramCharacter( p_work->p_win );
+			GFL_BG_LoadScreenReq( FIELD_SUBSCREEN_BGPLANE );
+
+      // ウィンドウ
+      BmpWinFrame_GraphicSet( FIELD_SUBSCREEN_BGPLANE, 1, 15, 0, heapID );
+      BmpWinFrame_Write( p_work->p_win, TRUE, 1, 15 );
+
+      FIELD_CAMERA_DEBUG_DrawInfo( p_work->p_camera, p_work->p_win );
+		}
+  }
+
+	return( TRUE );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ　詳細操作　メイン
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT debugMenuDelicateCamera( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
+{
+	DEBUG_DELICATE_CAMERA_EVENT_WORK* p_work = p_wk_adrs;
+  BOOL result;
+  int trg = GFL_UI_KEY_GetTrg();
+  int cont = GFL_UI_KEY_GetCont();
+  int repeat = GFL_UI_KEY_GetRepeat();
+
+  // SELECT終了
+  if( trg & PAD_BUTTON_SELECT )
+  {
+		// ビットマップウィンドウ破棄
+		{
+      BmpWinFrame_Clear( p_work->p_win, TRUE );
+			GFL_BMPWIN_Delete( p_work->p_win );
+			GFL_BG_FreeBGControl(FIELD_SUBSCREEN_BGPLANE);
+		}
+
+    FIELD_CAMERA_DEBUG_ExitControl( p_work->p_camera );
+
+		// インフォーバーの表示
+    FIELDMAP_SetFieldSubscreenWork(p_work->p_field,
+        FIELD_SUBSCREEN_Init( p_work->heapID, p_work->p_field, FIELD_SUBSCREEN_NORMAL ));
+    return ( GMEVENT_RES_FINISH );
+  }
+  
+  // カメラデバック入力
+  result = FIELD_CAMERA_DEBUG_Control( p_work->p_camera, trg, cont, repeat );
+
+  // タッチでヘルプ表示切替
+  if( GFL_UI_TP_GetTrg() )
+  {
+    p_work->draw_help ^= 1;
+    result = TRUE;
+  }
+
+  // ヘルプ表示
+  if( result )
+  {
+    p_work->param_change = TRUE;
+  }
+  // 描画が重いので、操作が完了してから描画更新
+  else if( p_work->param_change )
+  {
+    p_work->param_change = FALSE;
+    if( p_work->draw_help )
+    {
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_work->p_win ), 0xf );
+      FIELD_CAMERA_DEBUG_DrawControlHelp( p_work->p_camera, p_work->p_win );
+    }
+    else
+    {
+      // カメラ情報を更新
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_work->p_win ), 0xf );
+      FIELD_CAMERA_DEBUG_DrawInfo( p_work->p_camera, p_work->p_win );
+    }
+  }
+  
+
+  return( GMEVENT_RES_CONTINUE );
+}
+
+
+
 
 //======================================================================
 //  技思い出し画面テスト呼び出し

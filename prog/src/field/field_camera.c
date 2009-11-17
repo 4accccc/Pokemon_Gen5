@@ -6,12 +6,29 @@
  */
 //============================================================================================
 #include <gflib.h>
+#include <calctool.h>
+
 #include "field_g3d_mapper.h"
 #include "field_common.h"
 #include "field_camera.h"
 	
 #include "arc_def.h"
 #include "arc/fieldmap/field_camera_data.naix"
+
+
+#ifdef PM_DEBUG
+// カメラパラメータ　デバック表示用
+#include "message.naix"
+
+#include "print/wordset.h"
+#include "print/gf_font.h"
+#include "print/printsys.h"
+
+#include "msg/msg_d_tomoya.h"
+
+#include "font/font.naix"
+#endif
+
 //============================================================================================
 //============================================================================================
 
@@ -129,7 +146,8 @@ struct _FIELD_CAMERA {
   u32               camera_area_num;
   
 #ifdef PM_DEBUG
-  u32 debug_subscreen_type;
+  u16 debug_subscreen_type;
+  u16 debug_trace_off;
 
   // ターゲット操作用
   u16         debug_target_pitch;
@@ -139,7 +157,22 @@ struct _FIELD_CAMERA {
 
   fx32        debug_far;
 
-  u32 debug_save_camera_mode;
+  u16 debug_save_camera_mode;
+  u16 debug_save_buffer_mode;
+
+
+  // デバック表示用
+  WORDSET*    p_debug_wordset;
+  GFL_FONT*   p_debug_font;
+  GFL_MSGDATA*  p_debug_msgdata;
+  STRBUF*     p_debug_strbuff;
+  STRBUF*     p_debug_strbuff_tmp;
+
+  // デバックコントロール用ワーク
+  VecFx32 debug_camera;
+  u32 debug_control_on;
+
+  
 #endif
 
   CAMERA_TRACE * Trace;
@@ -178,6 +211,7 @@ static void ControlParameterInit_Direct( FIELD_CAMERA * camera );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+static void modeChange_CalcVecAngel( const VecFx32* cp_vec, u16* p_pitch, u16* p_yaw, fx32* p_len );
 static void modeChange_SetVecAngel( FIELD_CAMERA * camera, const VecFx32* cp_vec );
 static void modeChange_CalcCameraPos( FIELD_CAMERA * camera );
 static void modeChange_CalcTargetPos( FIELD_CAMERA * camera );
@@ -394,9 +428,9 @@ void FIELD_CAMERA_ChangeMode( FIELD_CAMERA * camera, FIELD_CAMERA_MODE mode )
   
   if( camera->mode != mode )
   {
-    FIELD_CAMERA_SetMode( camera, mode );
-
     pFunc[ camera->mode ]( camera );
+
+    FIELD_CAMERA_SetMode( camera, mode );
   }
 }
 
@@ -440,6 +474,17 @@ static void loadCameraParameters(FIELD_CAMERA * camera)
   TOMOYA_Printf("shift = %08x,%08x,%08x\n", param.Shift.x, param.Shift.y, param.Shift.z );
   TOMOYA_Printf("now near = %d\n", FX_Whole( FIELD_CAMERA_GetNear(camera) ) );
   TOMOYA_Printf("now far = %d\n", FX_Whole( FIELD_CAMERA_GetFar(camera) ) );
+#endif
+
+#ifdef PM_DEBUG
+  if( param.depthType == DEPTH_TYPE_ZBUF)
+  {
+    camera->debug_save_buffer_mode = 0; // CAMERA_DEBUG_BUFFER_MODE_ZBUFF_AUTO
+  }
+  else
+  {
+    camera->debug_save_buffer_mode = 1; // CAMERA_DEBUG_BUFFER_MODE_WBUFF_AUTO
+  }
 #endif
 
   camera->angle_len = param.Distance * FX32_ONE;
@@ -539,9 +584,12 @@ static void calcAnglePos( const VecFx32* cp_target, VecFx32* p_pos, u16 yaw, u16
 	if(cosPitch < PITCH_LIMIT){ cosPitch = PITCH_LIMIT; }	// 0値近辺は不正表示になるため補正
 
 	// カメラの座標計算
-	VEC_Set( &cameraPos, FX_Mul(sinYaw, cosPitch), sinPitch, FX_Mul(cosYaw, cosPitch) );
-	VEC_Normalize(&cameraPos, &cameraPos);
-	VEC_MultAdd( len, &cameraPos, cp_target, &cameraPos );
+  {
+    VEC_Set( &cameraPos, FX_Mul(sinYaw, cosPitch), sinPitch, FX_Mul(cosYaw, cosPitch) );
+    VEC_Normalize(&cameraPos, &cameraPos);
+    VEC_MultAdd( len, &cameraPos, cp_target, &cameraPos );
+  }
+
   //cameraPos = cameraPos * length + camera->target
   *p_pos = cameraPos;
 }
@@ -648,7 +696,7 @@ static void updateG3Dcamera(FIELD_CAMERA * camera)
 
     updateGlobalAngleYaw( camera, &cameraTarget, &camera->campos_write );
 
-		if( camera->debug_subscreen_type == FIELD_CAMERA_DEBUG_BIND_NONE )
+		if( camera->debug_trace_off )
 		{
 			traceUpdate( camera );
 		}
@@ -789,13 +837,10 @@ static void ControlParameterInit_Direct( FIELD_CAMERA * camera )
 //------------------------------------------------------------------
 //----------------------------------------------------------------------------
 /**
- *	@brief
- *
- *	@param	camera
- *	@param	cp_vec 
+ *	@brief  アングルを求める
  */
 //-----------------------------------------------------------------------------
-static void modeChange_SetVecAngel( FIELD_CAMERA * camera, const VecFx32* cp_vec )
+static void modeChange_CalcVecAngel( const VecFx32* cp_vec, u16* p_pitch, u16* p_yaw, fx32* p_len )
 {
   VecFx32 dist, xz_dist;
   fx32 len;
@@ -818,6 +863,24 @@ static void modeChange_SetVecAngel( FIELD_CAMERA * camera, const VecFx32* cp_vec
   // yaw
   yaw = FX_Atan2Idx( dist.x, dist.z );
 
+  *p_pitch = pitch;
+  *p_yaw = yaw;
+  *p_len = len;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	camera
+ *	@param	cp_vec 
+ */
+//-----------------------------------------------------------------------------
+static void modeChange_SetVecAngel( FIELD_CAMERA * camera, const VecFx32* cp_vec )
+{
+  u16 pitch, yaw;
+  fx32 len;
+
+  modeChange_CalcVecAngel( cp_vec, &pitch, &yaw, &len );
   // 設定
   camera->angle_pitch   = pitch;
   camera->angle_yaw     = yaw;
@@ -834,11 +897,23 @@ static void modeChange_SetVecAngel( FIELD_CAMERA * camera, const VecFx32* cp_vec
 static void modeChange_CalcCameraPos( FIELD_CAMERA * camera )
 {
   VecFx32 dist;
-  
-  // ターゲットからカメラまでのベクトルを求める
-  VEC_Subtract( &camera->camPos, &camera->target, &dist );
 
-  modeChange_SetVecAngel( camera, &dist );
+  // 1つ前が、ターゲット計算モードの場合
+  if( camera->mode == FIELD_CAMERA_MODE_CALC_TARGET_POS )
+  {
+    // アングルの反転でＯＫ
+    camera->angle_yaw += 0x8000;
+    camera->angle_pitch += 0x8000;
+  }
+  // 直値の場合
+  else
+  {
+    // ターゲットからカメラまでのベクトルを求める
+    VEC_Subtract( &camera->camPos, &camera->target, &dist );
+
+    modeChange_SetVecAngel( camera, &dist );
+  }
+  
 }
 
 //----------------------------------------------------------------------------
@@ -851,11 +926,23 @@ static void modeChange_CalcCameraPos( FIELD_CAMERA * camera )
 static void modeChange_CalcTargetPos( FIELD_CAMERA * camera )
 {
   VecFx32 dist;
-  
-  // カメラからターゲットまでのベクトルを求める
-  VEC_Subtract( &camera->target, &camera->camPos, &dist );
 
-  modeChange_SetVecAngel( camera, &dist );
+  // 1つ前が、カメラ計算モードの場合
+  if( camera->mode == FIELD_CAMERA_MODE_CALC_CAMERA_POS )
+  {
+    // アングルの反転でＯＫ
+    camera->angle_yaw += 0x8000;
+    camera->angle_pitch += 0x8000;
+  }
+  // 直値の場合
+  else
+  {
+    // カメラからターゲットまでのベクトルを求める
+    VEC_Subtract( &camera->target, &camera->camPos, &dist );
+
+    modeChange_SetVecAngel( camera, &dist );
+  }
+  
 }
 
 //----------------------------------------------------------------------------
@@ -907,6 +994,7 @@ const GFL_G3D_CAMERA * FIELD_CAMERA_GetCameraPtr(const FIELD_CAMERA * camera)
 {
 	return camera->g3Dcamera;
 }
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void FIELD_CAMERA_BindTarget(FIELD_CAMERA * camera, const VecFx32 * watch_target)
@@ -1227,6 +1315,7 @@ void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param, FIELD
   GFL_G3D_CAMERA_GetFar( camera->g3Dcamera, &camera->debug_far );
 
   camera->debug_subscreen_type = type;
+  camera->debug_trace_off = TRUE;
   if( type == FIELD_CAMERA_DEBUG_BIND_CAMERA_POS )
   {
     camera->debug_save_camera_mode = camera->mode;
@@ -1269,6 +1358,7 @@ void FIELD_CAMERA_DEBUG_ReleaseSubScreen(FIELD_CAMERA * camera)
   }
 
   camera->debug_subscreen_type = FIELD_CAMERA_DEBUG_BIND_NONE;
+  camera->debug_trace_off = FALSE;
 
   FIELD_CAMERA_ChangeMode( camera, camera->debug_save_camera_mode );
 }
@@ -1313,6 +1403,572 @@ void FIELD_CAMERA_GetInitialParameter( const FIELD_CAMERA* camera, FLD_CAMERA_PA
 {
   // パラメータ読み込み
   loadInitialParameter( camera, result );
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デバックコントロール　情報管理
+ */
+//-----------------------------------------------------------------------------
+static void DEBUG_ControlWork( FIELD_CAMERA* camera )
+{
+  // 現状のfield_cameraを維持したまま、カメラの平行移動などを行うために、
+  // 実際に、gflibのカメラに渡したいカメラ座標から、
+  // FIELD_CAMERA_MODE_CALC_CAMERA_POS用のアングルや、
+  // ターゲットオフセットを割り出す。
+  
+  // アングルからデバックカメラ座標を計算
+  calcAnglePos( &camera->debug_target, &camera->debug_camera, camera->debug_target_yaw, camera->debug_target_pitch, camera->debug_target_len );
+  
+  // デバックターゲット
+  // デバックカメラの位置から、
+  // ターゲットオフセットと
+  // アングルを求める
+  {
+    VecFx32 move_camera;
+    
+    // ターゲットオフセット
+    VEC_Subtract( &camera->debug_target, &camera->target_write, &camera->target_offset );
+
+    // カメラアングル
+    VEC_Subtract( &camera->debug_camera, &camera->target_write, &move_camera ); 
+    modeChange_CalcVecAngel( &move_camera, &camera->angle_pitch, &camera->angle_yaw, &camera->angle_len );
+  }
+  
+  // カメラ情報を設定
+  ControlParameter( camera, 0 );
+}
+
+
+
+
+//-----------------------------------------------------------------------------
+/**
+ *
+ */
+//-----------------------------------------------------------------------------
+#define CAMERA_DEBUG_ANGLE_MOVE  (64)
+#define CAMERA_DEBUG_PAERS_MOVE  (64)
+#define CAMERA_DEBUG_NEARFAR_MOVE  (FX32_CONST(2))
+#define CAMERA_DEBUG_POS_MOVE  (FX32_ONE)
+enum
+{
+  CAMERA_DEBUG_BUFFER_MODE_ZBUFF_MANUAL,
+  CAMERA_DEBUG_BUFFER_MODE_WBUFF_MANUAL,
+  CAMERA_DEBUG_BUFFER_MODE_ZBUFF_AUTO,
+  CAMERA_DEBUG_BUFFER_MODE_WBUFF_AUTO,
+
+  CAMERA_DEBUG_BUFFER_MODE_MAX,
+};
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デバックコントロール初期化
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_DEBUG_InitControl( FIELD_CAMERA* camera, HEAPID heapID )
+{
+  GF_ASSERT( !camera->p_debug_wordset );
+  GF_ASSERT( !camera->p_debug_msgdata );
+
+  // trace OFF
+  camera->debug_trace_off = TRUE;
+
+  // ワードセット作成
+  camera->p_debug_wordset = WORDSET_Create( heapID );
+  camera->p_debug_msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_tomoya_dat, heapID );
+
+  camera->p_debug_strbuff   = GFL_STR_CreateBuffer( 512, heapID );
+  camera->p_debug_strbuff_tmp = GFL_STR_CreateBuffer( 512, heapID );
+
+  // フォントデータ
+  camera->p_debug_font = GFL_FONT_Create(
+    ARCID_FONT, NARC_font_large_gftr,
+    GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+
+  GFL_UI_KEY_SetRepeatSpeed( 1,8 );
+
+  // 今の設定カメラパラメータを取得
+  {
+    VecFx32 move_camera;
+    GFL_G3D_CAMERA_GetTarget( camera->g3Dcamera, &camera->debug_target );
+    GFL_G3D_CAMERA_GetPos( camera->g3Dcamera, &camera->debug_camera );
+
+    // アングルを求る
+    VEC_Subtract( &camera->debug_camera, &camera->debug_target, &move_camera );
+    modeChange_CalcVecAngel( &move_camera, &camera->debug_target_pitch, &camera->debug_target_yaw, &camera->debug_target_len );
+  }
+  
+  DEBUG_ControlWork( camera );
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デバックコントロール破棄
+ *
+ *	@param	camera 
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_DEBUG_ExitControl( FIELD_CAMERA* camera )
+{
+  // フォントデータ
+  GFL_FONT_Delete( camera->p_debug_font );
+  camera->p_debug_font = NULL;
+
+
+  GFL_MSG_Delete( camera->p_debug_msgdata );
+  camera->p_debug_msgdata = NULL;
+
+  WORDSET_Delete( camera->p_debug_wordset );
+  camera->p_debug_wordset = NULL;
+
+  GFL_STR_DeleteBuffer( camera->p_debug_strbuff );
+  camera->p_debug_strbuff = NULL;
+  GFL_STR_DeleteBuffer( camera->p_debug_strbuff_tmp );
+  camera->p_debug_strbuff_tmp = NULL;
+
+  GFL_UI_KEY_SetRepeatSpeed( 8,15 );
+
+  // trace ON
+  camera->debug_trace_off = FALSE;
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アングル動作の有無チェック
+ *
+ *	@param	pitch 
+ *
+ *	@retval TRUE    ＯＫ
+ *	@retval FALSE   ＮＧ
+ */
+//-----------------------------------------------------------------------------
+static BOOL DEBUG_is_PitchAngleMove( u16 pitch )
+{
+  if( (((pitch - CAMERA_DEBUG_ANGLE_MOVE) > GFL_CALC_GET_ROTA_NUM(270)) && ((pitch - CAMERA_DEBUG_ANGLE_MOVE) < 0x10000)) ||
+      (((pitch - CAMERA_DEBUG_ANGLE_MOVE) >= GFL_CALC_GET_ROTA_NUM(0)) && ((pitch - CAMERA_DEBUG_ANGLE_MOVE) < GFL_CALC_GET_ROTA_NUM(90))) )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールドカメラ  コントロール詳細
+ *
+ *	@param	camera      カメラ  
+ *	@param	trg         キー情報
+ *	@param	cont        
+ *	@param	repeat      
+ *
+ *  NONE：ターゲット、カメラ平行移動
+ *	B：カメラ公転（ターゲット座標が変わる）
+ *	Y：カメラ自転（カメラ座標が変わる）
+ *	A：パース操作
+ *	X：ターゲットカメラバインドのON・OFF
+ *	
+ *	START：バッファリングモード変更
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_CAMERA_DEBUG_Control( FIELD_CAMERA* camera, int trg, int cont, int repeat )
+{
+  BOOL ret = FALSE;
+  
+  FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+
+  // カメラ公転（ターゲット座標変更　カメラオフセットを動かす）
+  if( cont & PAD_BUTTON_B )
+  {
+    u16 pitch, yaw;
+
+    // ターゲットを動かすためのアングルに変換
+    pitch = camera->debug_target_pitch;
+    yaw   = camera->debug_target_yaw;
+     
+    if( repeat & PAD_KEY_UP )
+    {
+      if( DEBUG_is_PitchAngleMove(pitch - CAMERA_DEBUG_ANGLE_MOVE) )
+      {
+        pitch -= CAMERA_DEBUG_ANGLE_MOVE;
+        ret = TRUE;
+      }
+    }
+    else if( repeat & PAD_KEY_DOWN )
+    {
+      if( DEBUG_is_PitchAngleMove(pitch + CAMERA_DEBUG_ANGLE_MOVE) )
+      {
+        pitch += CAMERA_DEBUG_ANGLE_MOVE;
+        ret = TRUE;
+      }
+    }
+
+    if( repeat & PAD_KEY_LEFT )
+    {
+      yaw += CAMERA_DEBUG_ANGLE_MOVE;
+      ret = TRUE;
+    }
+    else if( repeat & PAD_KEY_RIGHT )
+    {
+      yaw -= CAMERA_DEBUG_ANGLE_MOVE;
+      ret = TRUE;
+    }
+
+    // 変更地を保存
+    camera->debug_target_pitch  = pitch;
+    camera->debug_target_yaw    = yaw;
+
+    // 変更座標を求める
+    if( ret )
+    {
+      pitch += 0x8000;  // 方向を反転
+      yaw   += 0x8000;
+      
+      // ターゲットの座標を求める
+      calcAnglePos( &camera->debug_camera, &camera->debug_target, yaw, pitch, camera->debug_target_len );
+    }
+  }
+  // カメラ自転（カメラ座標変更）
+  else if( cont & PAD_BUTTON_Y )
+  {
+
+    if( repeat & PAD_KEY_UP )
+    {
+      if( DEBUG_is_PitchAngleMove(camera->debug_target_pitch + CAMERA_DEBUG_ANGLE_MOVE) )
+      {
+        camera->debug_target_pitch += CAMERA_DEBUG_ANGLE_MOVE;
+        ret = TRUE;
+      }
+    }
+    else if( repeat & PAD_KEY_DOWN )
+    {
+      if( DEBUG_is_PitchAngleMove(camera->angle_pitch - CAMERA_DEBUG_ANGLE_MOVE) )
+      {
+        camera->debug_target_pitch -= CAMERA_DEBUG_ANGLE_MOVE;
+        ret = TRUE;
+      }
+    }
+
+    if( repeat & PAD_KEY_LEFT )
+    {
+      camera->debug_target_yaw -= CAMERA_DEBUG_ANGLE_MOVE;
+      ret = TRUE;
+    }
+    else if( repeat & PAD_KEY_RIGHT )
+    {
+      camera->debug_target_yaw += CAMERA_DEBUG_ANGLE_MOVE;
+      ret = TRUE;
+    }
+  }
+  // パース操作
+  else if( cont & PAD_BUTTON_A )
+  {
+    if( repeat & PAD_KEY_UP )
+    {
+      if( (camera->fovy + CAMERA_DEBUG_PAERS_MOVE) < GFL_CALC_GET_ROTA_NUM(90) )
+      {
+        camera->fovy += CAMERA_DEBUG_PAERS_MOVE;
+        ret = TRUE;
+      }
+    }
+    else if( repeat & PAD_KEY_DOWN )
+    {
+      if( (camera->fovy - CAMERA_DEBUG_PAERS_MOVE) > 0 )
+      {
+        camera->fovy -= CAMERA_DEBUG_PAERS_MOVE;
+        ret = TRUE;
+      }
+    }
+    // 左右では、ドット崩れのない座標を求める 
+    else if( (repeat & PAD_KEY_LEFT) || (repeat & PAD_KEY_RIGHT) )
+    {
+      fx32 dist;
+
+      if( repeat & PAD_KEY_LEFT )
+      {
+        if( (camera->fovy + CAMERA_DEBUG_PAERS_MOVE) < GFL_CALC_GET_ROTA_NUM(90) )
+        {
+          camera->fovy += CAMERA_DEBUG_PAERS_MOVE;
+          ret = TRUE;
+        }
+      }
+      else if( repeat & PAD_KEY_RIGHT )
+      {  
+        if( (camera->fovy - CAMERA_DEBUG_PAERS_MOVE) > 0 )
+        {
+          camera->fovy -= CAMERA_DEBUG_PAERS_MOVE;
+          ret = TRUE;
+        }
+      }
+
+      //カメラの中心にある2D画像が、崩れずに表示できる距離を求める
+      //つぶれずに表示するためには、1Dot　＝　1Unitで計算すればよい
+      //カメラが画面中心を見つめるとき、画面半分のサイズは、96Dot
+      //表示させたい、カメラのパースを考え、96Dot　＝　96Unitになる距離にすればよい
+      dist = FX_Div( FX_Mul( FX_CosIdx( camera->fovy ), FX_F32_TO_FX32(96) ),	
+                 FX_SinIdx( camera->fovy ));					
+
+      camera->debug_target_len = dist; 
+    }
+
+    if( ret )
+    {
+      GFL_G3D_CAMERA_SetfovySin( camera->g3Dcamera, FX_SinIdx( camera->fovy ) );
+      GFL_G3D_CAMERA_SetfovyCos( camera->g3Dcamera, FX_CosIdx( camera->fovy ) );
+    }
+  }
+  // Near Far操作
+  else if( cont & PAD_BUTTON_DEBUG )
+  {
+    fx32 near, far;
+
+    GFL_G3D_CAMERA_GetNear(camera->g3Dcamera, &near);
+    GFL_G3D_CAMERA_GetFar(camera->g3Dcamera, &far);
+
+    if( repeat & PAD_KEY_UP )
+    {
+      if( (near + CAMERA_DEBUG_NEARFAR_MOVE) < far )
+      {
+        near += CAMERA_DEBUG_NEARFAR_MOVE;
+        ret = TRUE;
+      }
+    }
+    else if( repeat & PAD_KEY_DOWN )
+    {
+      if( (near - CAMERA_DEBUG_NEARFAR_MOVE) > 0 )
+      {
+        near -= CAMERA_DEBUG_NEARFAR_MOVE;
+        ret = TRUE;
+      }
+    }
+
+    if( repeat & PAD_KEY_LEFT )
+    {
+      if( (far - CAMERA_DEBUG_NEARFAR_MOVE) > near )
+      {
+        far -= CAMERA_DEBUG_NEARFAR_MOVE;
+        ret = TRUE;
+      }
+    }
+    else if( repeat & PAD_KEY_RIGHT )
+    {
+      far += CAMERA_DEBUG_NEARFAR_MOVE;
+      ret = TRUE;
+    }
+
+    if( ret )
+    {
+      GFL_G3D_CAMERA_SetNear(camera->g3Dcamera, &near);
+      GFL_G3D_CAMERA_SetFar(camera->g3Dcamera, &far);
+    }
+  }
+  // 平行移動
+  else 
+  {
+    // ターゲットオフセットを変更
+    if( repeat & PAD_KEY_UP )
+    {
+      camera->debug_target.z -= CAMERA_DEBUG_POS_MOVE;
+      ret = TRUE;
+    }
+    else if( repeat & PAD_KEY_DOWN )
+    {
+      camera->debug_target.z += CAMERA_DEBUG_POS_MOVE;
+      ret = TRUE;
+    }
+    if( repeat & PAD_KEY_LEFT )
+    {
+      camera->debug_target.x -= CAMERA_DEBUG_POS_MOVE;
+      ret = TRUE;
+    }
+    else if( repeat & PAD_KEY_RIGHT )
+    {
+      camera->debug_target.x += CAMERA_DEBUG_POS_MOVE;
+      ret = TRUE;
+    }
+    if( repeat & PAD_BUTTON_L )
+    {
+      camera->debug_target.y -= CAMERA_DEBUG_POS_MOVE;
+      ret = TRUE;
+    }
+    else if( repeat & PAD_BUTTON_R )
+    {
+      camera->debug_target.y += CAMERA_DEBUG_POS_MOVE;
+      ret = TRUE;
+    }
+
+  }
+   
+  //  ターゲットのバインドOn・Off
+  if( trg & PAD_BUTTON_X )
+  {
+    if( camera->watch_target )
+    {
+      FIELD_CAMERA_FreeTarget( camera );
+    }
+    else
+    {
+      FIELD_CAMERA_BindDefaultTarget( camera );
+    }
+    ret = TRUE;
+  }
+
+  // バッファリングモード変更
+  if( trg & PAD_BUTTON_START )
+  {
+    camera->debug_save_buffer_mode = (camera->debug_save_buffer_mode + 1) % CAMERA_DEBUG_BUFFER_MODE_MAX;
+    
+    switch( camera->debug_save_buffer_mode )
+    {
+    case CAMERA_DEBUG_BUFFER_MODE_ZBUFF_MANUAL:
+      GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
+      ret = TRUE;
+      break;
+    case CAMERA_DEBUG_BUFFER_MODE_WBUFF_MANUAL:
+      GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_W );
+      ret = TRUE;
+      break;
+    case CAMERA_DEBUG_BUFFER_MODE_ZBUFF_AUTO:
+      GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
+      ret = TRUE;
+      break;
+    case CAMERA_DEBUG_BUFFER_MODE_WBUFF_AUTO:
+      GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_W );
+      ret = TRUE;
+      break;
+    }
+  }
+
+  DEBUG_ControlWork( camera );
+
+  return ret;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ情報を書き込む
+ *
+ *	@param	camera    カメラ
+ *	@param	p_win     ウィンドウ
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_DEBUG_DrawInfo( FIELD_CAMERA* camera, GFL_BMPWIN* p_win )
+{
+  //クリア
+  
+  // カメラアングル
+  {
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 0, camera->angle_pitch, 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 1, camera->angle_yaw, 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 2, FX_Whole(camera->angle_len), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+
+    GFL_MSG_GetString( camera->p_debug_msgdata, CAMERA_DELICATE_ANGLE, camera->p_debug_strbuff_tmp );
+
+    WORDSET_ExpandStr( camera->p_debug_wordset, camera->p_debug_strbuff, camera->p_debug_strbuff_tmp );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), 0, 0, camera->p_debug_strbuff, camera->p_debug_font );
+  }
+
+  // 座標
+  {
+    VecFx32 camerapos, target;
+
+    GFL_G3D_CAMERA_GetTarget( camera->g3Dcamera, &target );
+    GFL_G3D_CAMERA_GetPos( camera->g3Dcamera, &camerapos );
+    
+    // カメラ
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 0, FX_Whole(camerapos.x), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 1, FX_Whole(camerapos.y), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 2, FX_Whole(camerapos.z), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 3, FX_Whole(target.x), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 4, FX_Whole(target.y), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 5, FX_Whole(target.z), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+
+    GFL_MSG_GetString( camera->p_debug_msgdata, CAMERA_DELICATE_, camera->p_debug_strbuff_tmp );
+
+    WORDSET_ExpandStr( camera->p_debug_wordset, camera->p_debug_strbuff, camera->p_debug_strbuff_tmp );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), 0, 32, camera->p_debug_strbuff, camera->p_debug_font );
+  }
+
+  // ターゲットオフセット
+  {
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 0, FX_Whole(camera->target_offset.x), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 1, FX_Whole(camera->target_offset.y), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 2, FX_Whole(camera->target_offset.z), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+
+    GFL_MSG_GetString( camera->p_debug_msgdata, CAMERA_DELICATE_OFFSET, camera->p_debug_strbuff_tmp );
+
+    WORDSET_ExpandStr( camera->p_debug_wordset, camera->p_debug_strbuff, camera->p_debug_strbuff_tmp );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), 0, 64, camera->p_debug_strbuff, camera->p_debug_font );
+  }
+
+  // パース
+  // Near Far
+  {
+    fx32 near, far;
+    
+    GFL_G3D_CAMERA_GetNear(camera->g3Dcamera, &near);
+    GFL_G3D_CAMERA_GetFar(camera->g3Dcamera, &far);
+
+    OS_TPrintf( "far = 0x%x\n", far );
+    
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 0, camera->fovy, 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 1, FX_Whole(near), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 2, FX_Whole(far), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+
+    GFL_MSG_GetString( camera->p_debug_msgdata, CAMERA_DELICATE_PARS, camera->p_debug_strbuff_tmp );
+
+    WORDSET_ExpandStr( camera->p_debug_wordset, camera->p_debug_strbuff, camera->p_debug_strbuff_tmp );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), 0, 96, camera->p_debug_strbuff, camera->p_debug_font );
+  }
+  
+
+  // バッファリング
+  {
+    GFL_MSG_GetString( camera->p_debug_msgdata, CAMERA_DELICATE_BUFF + camera->debug_save_buffer_mode, camera->p_debug_strbuff_tmp );
+
+    WORDSET_ExpandStr( camera->p_debug_wordset, camera->p_debug_strbuff, camera->p_debug_strbuff_tmp );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), 0, 112, camera->p_debug_strbuff, camera->p_debug_font );
+  }
+
+  // 主人公追尾
+  {
+    if( camera->watch_target )
+    {
+      GFL_MSG_GetString( camera->p_debug_msgdata, CAMERA_DELICATE_BIND, camera->p_debug_strbuff_tmp );
+    }
+    else
+    {
+      GFL_MSG_GetString( camera->p_debug_msgdata, CAMERA_DELICATE_BIND0002, camera->p_debug_strbuff_tmp );
+    }
+
+    WORDSET_ExpandStr( camera->p_debug_wordset, camera->p_debug_strbuff, camera->p_debug_strbuff_tmp );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), 0, 128, camera->p_debug_strbuff, camera->p_debug_font );
+  }
+
+  GFL_BMPWIN_TransVramCharacter( p_win );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ操作方法を書き込む
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_DEBUG_DrawControlHelp( FIELD_CAMERA* camera, GFL_BMPWIN* p_win )
+{
+  GFL_MSG_GetString( camera->p_debug_msgdata, CAMERA_DELICATE_HELP, camera->p_debug_strbuff_tmp );
+
+  WORDSET_ExpandStr( camera->p_debug_wordset, camera->p_debug_strbuff, camera->p_debug_strbuff_tmp );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), 0, 0, camera->p_debug_strbuff, camera->p_debug_font );
+
+  GFL_BMPWIN_TransVramCharacter( p_win );
 }
 
 #endif  //PM_DEBUG

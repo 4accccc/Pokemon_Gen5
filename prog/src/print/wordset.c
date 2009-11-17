@@ -445,6 +445,32 @@ void WORDSET_RegisterNumber( WORDSET* wordset, u32 bufID, s32 number, u32 keta, 
   STRTOOL_SetNumber( wordset->tmpBuf, number, keta, dispType, codeType );
   RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
 }
+//------------------------------------------------------------------
+/**
+ * 指定バッファに16進数数字を登録
+ *
+ * @param   bufID   バッファID
+ * @param   number    数値
+ * @param   keta    桁数
+ * @param   dispType  整形タイプ
+ * @param   codeType  文字コードタイプ
+ *
+ * dispType :  STR_NUM_DISP_LEFT    左詰め
+ *             STR_NUM_DISP_RIGHT   右詰め（スペース埋め）
+ *             STR_NUM_DISP_ZERO    右詰め（ゼロ埋め）
+ *
+ *
+ * codeType :  STR_NUM_CODE_DEFAULT  ローカライズ時のデフォルト幅（日本＝全角幅／海外＝半角幅）になる
+ *             STR_NUM_CODE_ZENKAKU  全角幅指定
+ *             STR_NUM_CODE_HANKAKU  半角幅指定
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterHexNumber( WORDSET* wordset, u32 bufID, u32 number, u32 keta, StrNumberDispType dispType, StrNumberCodeType codeType )
+{
+  STRTOOL_SetHexNumber( wordset->tmpBuf, number, keta, dispType, codeType );
+  RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
+}
+
 
 //------------------------------------------------------------------
 /**
