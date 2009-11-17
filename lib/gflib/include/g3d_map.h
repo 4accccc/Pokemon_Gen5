@@ -139,6 +139,7 @@ typedef struct {
 	u32								texVramSize;
 	const GFL_G3D_MAP_FILE_FUNC*	mapFileFunc;
 	void *						externalWork;
+  u32               mapLoadSize;
 
 }GFL_G3D_MAP_SETUP;
 
