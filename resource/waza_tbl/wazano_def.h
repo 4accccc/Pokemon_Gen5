@@ -10,6 +10,7 @@
 
 #pragma once
 
+#define		WAZANO_NULL						( 0 )
 #define		WAZANO_HATAKU					( 1 )		//はたく
 #define		WAZANO_KARATETYOPPU		( 2 )		//からてチョップ
 #define		WAZANO_OUHUKUBINTA		( 3 )		//おうふくビンタ
@@ -539,4 +540,4 @@
 #define		WAZANO_HURUITATERU		( 527 )		//ふるいたてる
 #define		WAZANO_EREKINETTO			( 528 )		//エレキネット
 #define		WAZANO_WAIRUDOBORUTO	( 529 )		//ワイルドボルト
-#define		WAZANO_MAX						( 530 )
+#define		WAZANO_MAX						( 529 )
