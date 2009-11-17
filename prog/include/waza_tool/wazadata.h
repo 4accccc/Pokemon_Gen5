@@ -173,19 +173,23 @@ typedef enum {
 typedef enum {
 
   // ポケモン対象
-  WAZA_TARGET_OTHER_SELECT,       ///< 自分以外１体（選択）
-  WAZA_TARGET_OTHER_ALL,          ///< 自分以外全て
-  WAZA_TARGET_ENEMY_SELECT,       ///< 相手側１体（選択）
-  WAZA_TARGET_ENEMY_ALL,          ///< 相手側全て
-  WAZA_TARGET_ENEMY_RANDOM,       ///< 相手側１体ランダム
-  WAZA_TARGET_FRIEND_USER_SELECT, ///< 自分を含む味方１体（選択）
-  WAZA_TARGET_FRIEND_SELECT,      ///< 自分以外の味方１体（選択）
+  WAZA_TARGET_OTHER_SELECT,       ///< 通常ポケ（１体選択）
+  WAZA_TARGET_FRIEND_USER_SELECT, ///< 自分を含む味方ポケ（１体選択）
+  WAZA_TARGET_FRIEND_SELECT,      ///< 自分以外の味方ポケ（１体選択）
+  WAZA_TARGET_ENEMY_SELECT,       ///< 相手側ポケ（１体選択）
+  WAZA_TARGET_OTHER_ALL,          ///< 自分以外の全ポケ
+  WAZA_TARGET_ENEMY_ALL,          ///< 相手側全ポケ
+  WAZA_TARGET_FRIEND_ALL,         ///< 味方側全ポケ
   WAZA_TARGET_USER,               ///< 自分のみ
-  WAZA_TARGET_ALL,                ///< 場に出ているポケモン全て
+  WAZA_TARGET_ALL,                ///< 場に出ている全ポケ
+  WAZA_TARGET_ENEMY_RANDOM,       ///< 相手ポケ１体ランダム
+
   // ポケモン以外対象
-  WAZA_TARGET_SIDE_FRIEND,        ///< 自分側陣営
-  WAZA_TARGET_SIDE_ENEMY,         ///< 敵側陣営
   WAZA_TARGET_FIELD,              ///< 場全体（天候など）
+  WAZA_TARGET_SIDE_ENEMY,         ///< 敵側陣営
+  WAZA_TARGET_SIDE_FRIEND,        ///< 自分側陣営
+
+  // 特殊
   WAZA_TARGET_UNKNOWN,            ///< ゆびをふるなど特殊型
 
 }WazaTarget;
@@ -241,8 +245,6 @@ typedef enum {
 //------------------------------------------------------------------------------
 enum {
   WAZA_RANKEFF_NUM_MAX = 2,   ///< １つのワザに割り当てられるランク効果の種類数最大値
-
-  WAZANO_NULL = 0,  // @@@ ホントは wazano_def.h に入れたい
 };
 
 extern u16  WAZADATA_GetPower( WazaID id );
