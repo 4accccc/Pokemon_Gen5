@@ -56,7 +56,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 $(ISS_Z_DATA): zone.txt
 	ruby zone.rb zone.txt $(BIN)
 
-$zone.txt: zone.xls
+zone.txt: zone.xls
 	ruby $(XLSCONV) zone.xls > zone.txt
 
 $(BIN)/iss_zone_data.list: zone.xls
