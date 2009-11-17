@@ -8,6 +8,7 @@
 //============================================================================================
 #include    <gflib.h>
 
+#include    "waza_tool/wazano_def.h"
 #include    "poke_tool/poke_personal.h"
 #include    "poke_tool/poke_tool.h"
 #include    "poke_tool/monsno_def.h"
