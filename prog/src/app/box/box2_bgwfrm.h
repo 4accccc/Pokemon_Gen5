@@ -123,6 +123,7 @@ extern void BOX2BGWFRM_SubDispItemFrmOutSet( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_BoxMoveButtonInSet( BGWINFRM_WORK * wk );
 
 extern void BOX2BGWFRM_BoxMoveFrmOutSet( BGWINFRM_WORK * wk );
+extern BOOL BOX2BGWFRM_CheckBoxMoveFrm( BGWINFRM_WORK * wk );
 
 extern void BOX2BGWFRM_IdouButtonInSet( BGWINFRM_WORK * wk );
 

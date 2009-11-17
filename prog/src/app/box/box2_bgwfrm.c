@@ -46,8 +46,8 @@
 #define	WINFRM_PARTYPOKE_RET_PY		( 15 )
 
 // ボックス移動フレーム
-#define BOXMOVE_FRM_SX		( 32 )		// ボックス移動フレームＸサイズ
-#define BOXMOVE_FRM_SY		( 6 )		// ボックス移動フレームＹサイズ
+#define BOXMOVE_FRM_SX			( 11 )		// ボックス移動フレームＸサイズ
+#define BOXMOVE_FRM_SY			( 21 )		// ボックス移動フレームＹサイズ
 #define BOXMV_PTOUT_FRM_SX	( 32 )		// ボックス移動フレームＸサイズ
 #define BOXMV_PTOUT_FRM_SY	( 7 )		// ボックス移動フレームＹサイズ
 
@@ -113,8 +113,10 @@
 #define	WINFRM_BOXMV_MENU_SX		( 11 )
 
 // トレイ選択フレームデータ
-#define	WINFRM_TRAYMOVE_IN_PX	( 0 )
-#define	WINFRM_TRAYMOVE_IN_PY	( -BOXMOVE_FRM_SY )
+#define	WINFRM_TRAYMOVE_IN_PX		( 32 )
+#define	WINFRM_TRAYMOVE_IN_PY		( 0 )
+#define	WINFRM_TRAYMOVE_OUT_PX	( 21 )
+#define	WINFRM_TRAYMOVE_OUT_PY	( 0 )
 
 // ボックステーマ変更メニューフレームデータ
 #define	WINFRM_BOXTHEMA_MENU_SX		( 11 )
@@ -1569,7 +1571,7 @@ void BOX2BGWFRM_BoxMoveFrmPut( BOX2_SYS_WORK * syswk )
 void BOX2BGWFRM_BoxMoveFrmInSet( BGWINFRM_WORK * wk )
 {
 	BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_MOVE, WINFRM_TRAYMOVE_IN_PX, WINFRM_TRAYMOVE_IN_PY );
-	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_MOVE, 0, 1, BOXMOVE_FRM_SY );
+	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_MOVE, -1, 0, BOXMOVE_FRM_SX );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1583,8 +1585,21 @@ void BOX2BGWFRM_BoxMoveFrmInSet( BGWINFRM_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_BoxMoveFrmOutSet( BGWINFRM_WORK * wk )
 {
-	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_MOVE, 0, -1, BOXMOVE_FRM_SY );
+	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_MOVE, 1, 0, BOXMOVE_FRM_SX );
 }
+
+// トレイ選択フレームが表示されているか
+BOOL BOX2BGWFRM_CheckBoxMoveFrm( BGWINFRM_WORK * wk )
+{
+	s8	x, y;
+
+	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_MOVE, &x, &y );
+	if( x == WINFRM_TRAYMOVE_OUT_PX ){
+		return TRUE;
+	}
+	return FALSE;
+}
+
 
 
 //============================================================================================

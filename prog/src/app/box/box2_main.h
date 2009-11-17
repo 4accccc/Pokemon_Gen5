@@ -15,6 +15,7 @@
 #include "system/palanm.h"
 #include "system/bgwinfrm.h"
 #include "system/cursor_move.h"
+#include "system/bmp_oam.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "app/app_taskmenu.h"
@@ -60,10 +61,13 @@
 #define	BOX2OBJ_POKEICON_H_MAX		( BOX_MAX_COLUMN )
 #define	BOX2OBJ_POKEICON_V_MAX		( BOX_MAX_RAW )
 #define	BOX2OBJ_POKEICON_TRAY_MAX	( BOX_MAX_POS )
-
 #define	BOX2OBJ_POKEICON_MINE_MAX	( TEMOTI_POKEMAX )
-
-#define	BOX2OBJ_POKEICON_MAX		( BOX2OBJ_POKEICON_TRAY_MAX + BOX2OBJ_POKEICON_MINE_MAX )
+// トレイ＋手持ち
+#define	BOX2OBJ_POKEICON_PUT_MAX	( BOX2OBJ_POKEICON_TRAY_MAX + BOX2OBJ_POKEICON_MINE_MAX )
+// トレイ＋手持ち＋取得中
+#define	BOX2OBJ_POKEICON_MAX		( BOX2OBJ_POKEICON_PUT_MAX + 1 )
+// 取得中アイコン位置
+#define	BOX2OBJ_POKEICON_GET_POS	( BOX2OBJ_POKEICON_MAX - 1 )
 
 #define	BOX2OBJ_PI_OUTLINE_MAX		( 8 )
 
@@ -127,8 +131,8 @@ enum {
 	BOX2OBJ_ID_L_ARROW = 0,
 	BOX2OBJ_ID_R_ARROW,
 
-	BOX2OBJ_ID_BOXMV_LA,	// ボックス移動矢印（左）
-	BOX2OBJ_ID_BOXMV_RA,	// ボックス移動矢印（右）
+//	BOX2OBJ_ID_BOXMV_LA,	// ボックス移動矢印（左）
+//	BOX2OBJ_ID_BOXMV_RA,	// ボックス移動矢印（右）
 	BOX2OBJ_ID_TRAY_CUR,	// トレイカーソル
 	BOX2OBJ_ID_TRAY_NAME,	// トレイ名背景
 	BOX2OBJ_ID_TRAY_ARROW,	// トレイ矢印
@@ -239,12 +243,12 @@ enum {
 
 	BOX2MAIN_WINFRM_MARK,				// マーキングフレーム
 	BOX2MAIN_WINFRM_PARTY,			// 手持ちポケモンフレーム
+	BOX2MAIN_WINFRM_MOVE,				// ボックス移動フレーム
 // ↑使用確定------------------------------------------------
 
 
 
 
-	BOX2MAIN_WINFRM_MOVE,			// ボックス移動フレーム
 
 //	BOX2MAIN_WINFRM_POKE_BTN,	//「てもちポケモン」ボタン
 //	BOX2MAIN_WINFRM_MV_BTN,		//「ポケモンいどう」ボタン
@@ -260,14 +264,12 @@ enum {
 	BOX2MAIN_WINFRM_MAX,
 };
 
-/*
 // ＯＡＭフォント
 enum {
 	BOX2MAIN_FNTOAM_TRAY_NAME = 0,
 	BOX2MAIN_FNTOAM_TRAY_NUM,
 	BOX2MAIN_FNTOAM_MAX
 };
-*/
 
 // VBLANK関数ワーク
 typedef struct {
@@ -279,13 +281,11 @@ typedef struct {
 //	BOOL flg;		// 稼動フラグ
 }BOX2_IRQWK;
 
-/*
 // ＯＡＭフォントワーク
 typedef struct {
-	FONTOAM_OBJ_PTR oam;
-	CHAR_MANAGER_ALLOCDATA	cma;
+	BMPOAM_ACT_PTR oam;
+//	CHAR_MANAGER_ALLOCDATA	cma;
 }BOX2_FONTOAM;
-*/
 
 // ボタンアニメモード
 enum {
@@ -310,11 +310,11 @@ typedef struct {
 
 // ボックス画面アプリワーク
 typedef struct {
-/*
 	// ＯＡＭフォント
-	FONTOAM_SYS_PTR	fntoam;
+	BMPOAM_SYS_PTR	fntoam;
 	BOX2_FONTOAM	fobj[BOX2MAIN_FNTOAM_MAX];
 
+/*
 	// はい・いいえ関連
 	TOUCH_SW_SYS * tsw;		// タッチウィンドウ
 	u16	ynID;				// はい・いいえＩＤ
@@ -325,7 +325,8 @@ typedef struct {
 */
 	GFL_TCB * vtask;					// TCB ( VBLANK )
 
-	BOX2_IRQWK	vfunk;			// VBLANK関数ワーク
+	BOX2_IRQWK	vfunk;				// VBLANK関数ワーク
+	int	vnext_seq;
 
 	PALETTE_FADE_PTR	pfd;		// パレットフェードデータ
 
@@ -402,6 +403,7 @@ typedef struct {
 
 	u8	poke_get_key;		// キーでの取得位置
 	u8	poke_put_key;		// キーでの配置位置
+	u8	chg_tray_pos;		// 切り替えるトレイ
 
 	u32	tpx;				// タッチＸ座標
 	u32	tpy;				// タッチＹ座標
@@ -430,17 +432,20 @@ typedef struct {
 
 	BOX2_GFL_PROC_PARAM * dat;	// 外部データ
 
-//	GFL_PROC * subProcFunc;		// サブプロセス
-	void * subProcWork;		// サブプロセスで使用するワーク
-	u16	subRet;				// サブプロセスの戻り値などを保存する場所
-	u8	subProcType;		// サブプロセスの種類
+	void * subProcWork;				// サブプロセスで使用するワーク
+	u16	subRet;								// サブプロセスの戻り値などを保存する場所
+	u16	subProcType;					// サブプロセスの種類
 
 	u8	tray;										// 現在のトレイ
 	u8	trayMax;								// 開放されているトレイ数
 
+	POKEMON_PARAM * getPP;			// 取得したポケモンをコピーしておく領域
+
 	u8	get_pos;								// 取得位置
+	u8	get_tray;								// 取得トレイ
 
 	u8	box_mv_pos;							// ボックス移動選択位置
+//	u8	box_mv_scroll;
 
 	u8	move_mode;			// ポケモン移動モード
 
@@ -596,6 +601,9 @@ typedef struct {
 }BOX2_POKEINFO_DATA;
 
 
+#define	BOX2MAIN_TRAY_SCROLL_CNT		( 9 )
+
+
 //============================================================================================
 //	プロトタイプ宣言
 //============================================================================================
@@ -735,7 +743,7 @@ extern void BOX2MAIN_MsgExit( BOX2_SYS_WORK * syswk );
  * @return	取得データ
  */
 //--------------------------------------------------------------------------------------------
-extern u32 BOX2MAIN_PokeParaGet( BOX2_SYS_WORK * syswk, u32 pos, int prm, void * buf );
+extern u32 BOX2MAIN_PokeParaGet( BOX2_SYS_WORK * syswk, u16 pos, u16 tray, int prm, void * buf );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -763,6 +771,13 @@ extern void BOX2MAIN_PokeParaPut( BOX2_SYS_WORK * syswk, u32 pos, int prm, u32 b
  */
 //--------------------------------------------------------------------------------------------
 extern POKEMON_PASO_PARAM * BOX2MAIN_PPPGet( BOX2_SYS_WORK * syswk, u32 tray, u32 pos );
+
+// ポケモンデータ取得
+extern void BOX2MAIN_GetPokeData( BOX2_SYS_WORK * syswk, u32 tray, u32 pos );
+
+// 取得したポケモンデータを配置
+extern void BOX2MAIN_PutPokeData( BOX2_SYS_WORK * syswk, u32 tray, u32 pos );
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -793,6 +808,7 @@ extern u32 BOX2MAIN_GetWallPaperNumber( BOX2_SYS_WORK * syswk, u32 num );
 
 
 
+extern u8 BOX2MAIN_GetBoxMoveTrayNum( BOX2_SYS_WORK * syswk, s8 mv );
 
 
 
@@ -1029,27 +1045,13 @@ extern void BOX2MAIN_KeyTouchStatusSet( BOX2_SYS_WORK * syswk );
 
 extern void BOX2MAIN_ResetTouchBar( BOX2_SYS_WORK * syswk );
 
+extern void BOX2MAIN_InitTrayScroll( BOX2_SYS_WORK * syswk, u32 mvID );
 
 
 //============================================================================================
 //	ポケモンデータ
 //============================================================================================
 
-//--------------------------------------------------------------------------------------------
-/**
- * ポケモンデータ取得
- *
- * @param	syswk	ボックス画面システムワーク
- * @param	pos		位置
- * @param	prm		取得パラメータ
- * @param	buf		取得バッファ
- *
- * @return	取得データ
- *
- * @li	ポケモンが存在したいときは"NULL"を返す
- */
-//--------------------------------------------------------------------------------------------
-extern u32 BOX2MAIN_PokeParaGet( BOX2_SYS_WORK * syswk, u32 pos, int prm, void * buf );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1218,7 +1220,6 @@ extern void BOX2MAIN_PokeInfoOff( BOX2_SYS_WORK * syswk );
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2MAIN_PokeSelectOff( BOX2_SYS_WORK * syswk );
-
 
 //============================================================================================
 //	壁紙
@@ -2683,5 +2684,12 @@ extern int BOX2MAIN_VFuncItemIconPartyChange( BOX2_SYS_WORK * syswk );
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2MAIN_HandGetPokeSet( BOX2_SYS_WORK * syswk );
+
+
+
+extern int BOX2MAIN_VFuncTrayIconScrollUp( BOX2_SYS_WORK * syswk );
+
+extern int BOX2MAIN_VFuncTrayIconScrollDown( BOX2_SYS_WORK * syswk );
+
 
 #endif

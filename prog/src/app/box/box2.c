@@ -65,7 +65,12 @@ static GFL_PROC_RESULT Box2Proc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 	syswk->dat      = pwk;
 	syswk->tray     = BOXDAT_GetCureentTrayNumber( syswk->dat->sv_box );
 	syswk->trayMax  = BOXDAT_GetTrayMax( syswk->dat->sv_box );
+	syswk->get_tray = BOX2MAIN_GETPOS_NONE;
 	syswk->next_seq = BOX2SEQ_MAINSEQ_START;
+
+	// 取得用領域作成
+//	syswk->getPP = PP_CreateByPPP( BOXDAT_GetPokeDataAddress(syswk->dat->sv_box,0,0), HEAPID_BOX_SYS );
+//	PPP_Clear( syswk->getPPP );
 
 	// トレイの開放
 	if( syswk->trayMax != BOX_MAX_TRAY ){
@@ -140,13 +145,15 @@ static GFL_PROC_RESULT Box2Proc_Main( GFL_PROC * proc, int * seq, void * pwk, vo
 //--------------------------------------------------------------------------------------------
 static GFL_PROC_RESULT Box2Proc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+//	BOX2_SYS_WORK * syswk = mywk;
+
+//	GFL_HEAP_FreeMemory( syswk->getPP );
 	GFL_PROC_FreeWork( proc );
 	GFL_HEAP_DeleteHeap( HEAPID_BOX_SYS );
 
 	OS_Printf( "↑↑↑↑↑　ボックス処理終了　↑↑↑↑↑\n" );
 
 /*
-	BOX2_SYS_WORK * syswk = GFL_PROC_GetWork( proc );
 
 	BOXDAT_SetCureentTrayNumber( syswk->box, syswk->tray );		// カレントトレイ更新
 */

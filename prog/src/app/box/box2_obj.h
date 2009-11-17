@@ -589,6 +589,10 @@ extern void BOX2OBJ_PokeIconBlendSet( BOX2_APP_WORK * appwk, u32 pos, BOOL flg )
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PokeIconBlendSetItem( BOX2_SYS_WORK * syswk, u32 pos );
 
+extern void BOX2OBJ_GetPokeIcon( BOX2_APP_WORK * appwk, u32 pos );
+
+extern void BOX2OBJ_MovePokeIconHand( BOX2_SYS_WORK * syswk );
+
 
 //============================================================================================
 //	ポケモングラフィック
@@ -824,7 +828,8 @@ extern void BOX2OBJ_PokeCursorVanish( BOX2_SYS_WORK * syswk, BOOL flg );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2OBJ_PokeCursorMove( BOX2_SYS_WORK * syswk );
+//extern void BOX2OBJ_PokeCursorMove( BOX2_SYS_WORK * syswk );
+extern void BOX2OBJ_PokeCursorMove( BOX2_APP_WORK * appwk, u32 pos );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -927,6 +932,8 @@ extern void BOX2OBJ_BoxMoveObjInit( BOX2_SYS_WORK * syswk );
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_BoxMoveFrmScroll( BOX2_SYS_WORK * syswk, s16 mv );
 
+extern void BOX2OBJ_InitBoxMoveCursorPos( BOX2_APP_WORK * appwk );
+
 //--------------------------------------------------------------------------------------------
 /**
  * ボックス移動：カーソルセット
@@ -962,6 +969,11 @@ extern void BOX2OBJ_BoxMoveNameSet( BOX2_SYS_WORK * syswk );
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_TrayIconPosGet( BOX2_APP_WORK * appwk, u32 pos, s16 * x, s16 * y );
+
+extern void BOX2OBJ_InitTrayIconScroll( BOX2_SYS_WORK * syswk );
+extern void BOX2OBJ_TrayIconCgxTransIdx( BOX2_SYS_WORK * syswk, u32 tray, u32 idx );
+extern void BOX2OBJ_TrayIconCgxTransPos( BOX2_SYS_WORK * syswk, u32 tray, u32 pos );
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1010,6 +1022,11 @@ extern void BOX2OBJ_TrayIconChange( BOX2_SYS_WORK * syswk );
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_TrayIconCgxTrans( BOX2_SYS_WORK * syswk, u32 tray );
+
+extern void BOX2OBJ_TrayIconScroll( BOX2_SYS_WORK * syswk, s16 mv );
+
+extern void BOX2OBJ_InitTrayCursorScroll( BOX2_SYS_WORK * syswk, s32 mv );
+extern void BOX2OBJ_EndTrayCursorScroll( BOX2_SYS_WORK * syswk );
 
 
 //============================================================================================

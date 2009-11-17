@@ -112,7 +112,9 @@ static const CURSORMOVE_DATA PartyOutMainCursorMoveData[] =
 	{ 212,  88, 0, 0,	 7,  9,  8,  8, {  88, 111, 168, 255 } },		// 08: ようすをみる
 	{ 212, 112, 0, 0,	 8, 10,  9,  9, { 112, 135, 168, 255 } },		// 09: マーキング
 	{ 212, 136, 0, 0,	 9, 11, 10, 10, { 136, 159, 168, 255 } },		// 10: にがす
-	{ 224, 168, 0, 0,	10,  7, 11, 11, { 168, 191, 192, 255 } }		// 11: とじる
+	{ 224, 168, 0, 0,	10,  7, 11, 11, { 168, 191, 192, 255 } },		// 11: とじる
+
+	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 /*
 static const GFL_UI_TP_HITTBL PartyOutMainHitTbl[] =
@@ -175,6 +177,8 @@ static const CURSORMOVE_DATA PartyOutBoxSelCursorMoveData[] =
 
 	{ 212, 112, 0, 0,	0, 9, 8, 8, { 112, 159, 168, 255 } },		// 08:「ポケモンをあずける」
 	{ 224, 168, 0, 0,	8, 9, 9, 9, { 168, 191, 192, 255 } },		// 09:「やめる」
+
+	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 /*
 static const GFL_UI_TP_HITTBL PartyOutBoxSelHitTbl[] =
@@ -228,6 +232,8 @@ static const CURSORMOVE_DATA MarkingCursorMoveData[] =
 	{ 236,  90, 0, 0,	3, 6, 4, 5, { 92, 107, 220, 235 } },		// 05: ◆
 	{ 212, 112, 0, 0,	CURSORMOVE_RETBIT|4, 7, 6, 6, { 112, 135, 178, 245 } },		// 06:「けってい」
 	{ 212, 136, 0, 0,	6, 7, 7, 7, { 136, 159, 178, 245 } },		// 07:「やめる」
+
+	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 /*
 static const GFL_UI_TP_HITTBL MarkingHitTbl[] =
@@ -310,6 +316,8 @@ static const CURSORMOVE_DATA PartyInMainCursorMoveData[] =
 	{ 212, 112, 0, 0,	35, 37, 36, 36, { 112, 135, 168, 255 } },		// 36: マーキング
 	{ 212, 136, 0, 0,	36, 38, 37, 37, { 136, 159, 168, 255 } },		// 37: にがす
 	{ 224, 168, 0, 0,	37, 34, 38, 38, { 168, 191, 192, 255 } },		// 38: とじる
+
+	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 /*
 static const GFL_UI_TP_HITTBL PartyInMainHitTbl[] =
@@ -439,6 +447,8 @@ static const CURSORMOVE_DATA BoxThemaChgCursorMoveData[] =
 	{ 212, 112, 0, 0,	 8, 10,  9,  9, { 112, 135, 168, 255 } },		// 09: かべがみ
 	{ 212, 136, 0, 0,	 9, 11, 10, 10, { 136, 159, 168, 255 } },		// 10: なまえ
 	{ 224, 168, 0, 0,	10, 11, 11, 11, { 168, 191, 192, 255 } },		// 11: やめる
+
+	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 /*
 static const GFL_UI_TP_HITTBL BoxThemaChgHitTbl[] =
@@ -498,6 +508,8 @@ static const CURSORMOVE_DATA WallPaperChgCursorMoveData[] =
 
 	{ 212, 112, 0, 0,	0, 7, 6, 6,	{ 112, 159, 168, 255 } },	// 06: 変更
 	{ 224, 168, 0, 0,	6, 7, 7, 7,	{ 168, 191, 192, 255 } },	// 07: キャンセル
+
+	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 /*
 static const GFL_UI_TP_HITTBL WallPaperChgHitTbl[] =
@@ -589,6 +601,8 @@ static const CURSORMOVE_DATA BoxArrangeMainCursorMoveData[] =
 	{ 212,  88, 0, 0,	38, 40, 39, 39, {  88, 111, 168, 255 } },	// 39: マーキング
 	{ 212, 112, 0, 0,	39, 41, 40, 40, { 112, 135, 168, 255 } },	// 40: にがす
 	{ 212, 136, 0, 0,	40, 36, 41, 41, { 136, 159, 192, 255 } },	// 41: とじる
+
+	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 /*
 static const GFL_UI_TP_HITTBL BoxArrangeMainHitTbl[] =
@@ -707,62 +721,59 @@ static const CURSORMOVE_CALLBACK BoxArrangeMainCallBack = {
 // ボックス整理・ポケモン移動
 static const CURSORMOVE_DATA BoxArrangePokeMoveCursorMoveData[] =
 {
-	{ TRAYPOKE_PX(0)+PICUR_X,TRAYPOKE_PY(0)+PICUR_Y, 0, 0,	37,  6, 31, 1, { TRAYPOKE_PY(0), TRAYPOKE_PY(1)-1, TRAYPOKE_PX(0),	TRAYPOKE_PX(1)-1 } },	// 00: ポケモン
-	{ TRAYPOKE_PX(1)+PICUR_X,TRAYPOKE_PY(0)+PICUR_Y, 0, 0,	37,  7,  0, 2, { TRAYPOKE_PY(0), TRAYPOKE_PY(1)-1, TRAYPOKE_PX(1),	TRAYPOKE_PX(2)-1 } },
-	{ TRAYPOKE_PX(2)+PICUR_X,TRAYPOKE_PY(0)+PICUR_Y, 0, 0,	37,  8,  1, 3, { TRAYPOKE_PY(0), TRAYPOKE_PY(1)-1, TRAYPOKE_PX(2),	TRAYPOKE_PX(3)-1 } },
-	{ TRAYPOKE_PX(3)+PICUR_X,TRAYPOKE_PY(0)+PICUR_Y, 0, 0,	37,  9,  2, 4, { TRAYPOKE_PY(0), TRAYPOKE_PY(1)-1, TRAYPOKE_PX(3),	TRAYPOKE_PX(4)-1 } },
-	{ TRAYPOKE_PX(4)+PICUR_X,TRAYPOKE_PY(0)+PICUR_Y, 0, 0,	37, 10,  3, 5, { TRAYPOKE_PY(0), TRAYPOKE_PY(1)-1, TRAYPOKE_PX(4),	TRAYPOKE_PX(5)-1 } },
-	{ TRAYPOKE_PX(5)+PICUR_X,TRAYPOKE_PY(0)+PICUR_Y, 0, 0,	37, 11,  4, CURSORMOVE_RETBIT|30, { TRAYPOKE_PY(0), TRAYPOKE_PY(1)-1, TRAYPOKE_PX(5),	TRAYPOKE_PX(6)-1 } },
+	{ TRAYPOKE_PX(0)+PICUR_X,TRAYPOKE_PY(0)+PICUR_Y, 0, 0,	30,  6, 34, 1, { TRAYPOKE_PY(0), TRAYPOKE_PY(1)-1, TRAYPOKE_PX(0),	TRAYPOKE_PX(1)-1 } },	// 00: ポケモン
+	{ TRAYPOKE_PX(1)+PICUR_X,TRAYPOKE_PY(0)+PICUR_Y, 0, 0,	30,  7,  0, 2, { TRAYPOKE_PY(0), TRAYPOKE_PY(1)-1, TRAYPOKE_PX(1),	TRAYPOKE_PX(2)-1 } },
+	{ TRAYPOKE_PX(2)+PICUR_X,TRAYPOKE_PY(0)+PICUR_Y, 0, 0,	30,  8,  1, 3, { TRAYPOKE_PY(0), TRAYPOKE_PY(1)-1, TRAYPOKE_PX(2),	TRAYPOKE_PX(3)-1 } },
+	{ TRAYPOKE_PX(3)+PICUR_X,TRAYPOKE_PY(0)+PICUR_Y, 0, 0,	30,  9,  2, 4, { TRAYPOKE_PY(0), TRAYPOKE_PY(1)-1, TRAYPOKE_PX(3),	TRAYPOKE_PX(4)-1 } },
+	{ TRAYPOKE_PX(4)+PICUR_X,TRAYPOKE_PY(0)+PICUR_Y, 0, 0,	30, 10,  3, 5, { TRAYPOKE_PY(0), TRAYPOKE_PY(1)-1, TRAYPOKE_PX(4),	TRAYPOKE_PX(5)-1 } },
+	{ TRAYPOKE_PX(5)+PICUR_X,TRAYPOKE_PY(0)+PICUR_Y, 0, 0,	30, 11,  4, CURSORMOVE_RETBIT|34, { TRAYPOKE_PY(0), TRAYPOKE_PY(1)-1, TRAYPOKE_PX(5),	TRAYPOKE_PX(6)-1 } },
 
-	{ TRAYPOKE_PX(0)+PICUR_X,TRAYPOKE_PY(1)+PICUR_Y, 0, 0,	0, 12, 31,  7, { TRAYPOKE_PY(1), TRAYPOKE_PY(2)-1, TRAYPOKE_PX(0),	TRAYPOKE_PX(1)-1 } },	// 06: ポケモン
+	{ TRAYPOKE_PX(0)+PICUR_X,TRAYPOKE_PY(1)+PICUR_Y, 0, 0,	0, 12, 35,  7, { TRAYPOKE_PY(1), TRAYPOKE_PY(2)-1, TRAYPOKE_PX(0),	TRAYPOKE_PX(1)-1 } },	// 06: ポケモン
 	{ TRAYPOKE_PX(1)+PICUR_X,TRAYPOKE_PY(1)+PICUR_Y, 0, 0,	1, 13,  6,  8, { TRAYPOKE_PY(1), TRAYPOKE_PY(2)-1, TRAYPOKE_PX(1),	TRAYPOKE_PX(2)-1 } },
 	{ TRAYPOKE_PX(2)+PICUR_X,TRAYPOKE_PY(1)+PICUR_Y, 0, 0,	2, 14,  7,  9, { TRAYPOKE_PY(1), TRAYPOKE_PY(2)-1, TRAYPOKE_PX(2),	TRAYPOKE_PX(3)-1 } },
 	{ TRAYPOKE_PX(3)+PICUR_X,TRAYPOKE_PY(1)+PICUR_Y, 0, 0,	3, 15,  8, 10, { TRAYPOKE_PY(1), TRAYPOKE_PY(2)-1, TRAYPOKE_PX(3),	TRAYPOKE_PX(4)-1 } },
 	{ TRAYPOKE_PX(4)+PICUR_X,TRAYPOKE_PY(1)+PICUR_Y, 0, 0,	4, 16,  9, 11, { TRAYPOKE_PY(1), TRAYPOKE_PY(2)-1, TRAYPOKE_PX(4),	TRAYPOKE_PX(5)-1 } },
-	{ TRAYPOKE_PX(5)+PICUR_X,TRAYPOKE_PY(1)+PICUR_Y, 0, 0,	5, 17, 10, CURSORMOVE_RETBIT|30, { TRAYPOKE_PY(1), TRAYPOKE_PY(2)-1, TRAYPOKE_PX(5),	TRAYPOKE_PX(6)-1 } },
+	{ TRAYPOKE_PX(5)+PICUR_X,TRAYPOKE_PY(1)+PICUR_Y, 0, 0,	5, 17, 10, CURSORMOVE_RETBIT|35, { TRAYPOKE_PY(1), TRAYPOKE_PY(2)-1, TRAYPOKE_PX(5),	TRAYPOKE_PX(6)-1 } },
 
-	{ TRAYPOKE_PX(0)+PICUR_X,TRAYPOKE_PY(2)+PICUR_Y, 0, 0,	 6, 18, 33, 13, { TRAYPOKE_PY(2), TRAYPOKE_PY(3)-1, TRAYPOKE_PX(0),	TRAYPOKE_PX(1)-1 } },	// 12: ポケモン
+	{ TRAYPOKE_PX(0)+PICUR_X,TRAYPOKE_PY(2)+PICUR_Y, 0, 0,	 6, 18, 36, 13, { TRAYPOKE_PY(2), TRAYPOKE_PY(3)-1, TRAYPOKE_PX(0),	TRAYPOKE_PX(1)-1 } },	// 12: ポケモン
 	{ TRAYPOKE_PX(1)+PICUR_X,TRAYPOKE_PY(2)+PICUR_Y, 0, 0,	 7, 19, 12, 14, { TRAYPOKE_PY(2), TRAYPOKE_PY(3)-1, TRAYPOKE_PX(1),	TRAYPOKE_PX(2)-1 } },
 	{ TRAYPOKE_PX(2)+PICUR_X,TRAYPOKE_PY(2)+PICUR_Y, 0, 0,	 8, 20, 13, 15, { TRAYPOKE_PY(2), TRAYPOKE_PY(3)-1, TRAYPOKE_PX(2),	TRAYPOKE_PX(3)-1 } },
 	{ TRAYPOKE_PX(3)+PICUR_X,TRAYPOKE_PY(2)+PICUR_Y, 0, 0,	 9, 21, 14, 16, { TRAYPOKE_PY(2), TRAYPOKE_PY(3)-1, TRAYPOKE_PX(3),	TRAYPOKE_PX(4)-1 } },
 	{ TRAYPOKE_PX(4)+PICUR_X,TRAYPOKE_PY(2)+PICUR_Y, 0, 0,	10, 22, 15, 17, { TRAYPOKE_PY(2), TRAYPOKE_PY(3)-1, TRAYPOKE_PX(4),	TRAYPOKE_PX(5)-1 } },
-	{ TRAYPOKE_PX(5)+PICUR_X,TRAYPOKE_PY(2)+PICUR_Y, 0, 0,	11, 23, 16, CURSORMOVE_RETBIT|32, { TRAYPOKE_PY(2), TRAYPOKE_PY(3)-1, TRAYPOKE_PX(5),	TRAYPOKE_PX(6)-1 } },
+	{ TRAYPOKE_PX(5)+PICUR_X,TRAYPOKE_PY(2)+PICUR_Y, 0, 0,	11, 23, 16, CURSORMOVE_RETBIT|36, { TRAYPOKE_PY(2), TRAYPOKE_PY(3)-1, TRAYPOKE_PX(5),	TRAYPOKE_PX(6)-1 } },
 
-	{ TRAYPOKE_PX(0)+PICUR_X,TRAYPOKE_PY(3)+PICUR_Y, 0, 0,	12, 24, 33, 19, { TRAYPOKE_PY(3), TRAYPOKE_PY(4)-1, TRAYPOKE_PX(0),	TRAYPOKE_PX(1)-1 } },	// 18: ポケモン
+	{ TRAYPOKE_PX(0)+PICUR_X,TRAYPOKE_PY(3)+PICUR_Y, 0, 0,	12, 24, 37, 19, { TRAYPOKE_PY(3), TRAYPOKE_PY(4)-1, TRAYPOKE_PX(0),	TRAYPOKE_PX(1)-1 } },	// 18: ポケモン
 	{ TRAYPOKE_PX(1)+PICUR_X,TRAYPOKE_PY(3)+PICUR_Y, 0, 0,	13, 25, 18, 20, { TRAYPOKE_PY(3), TRAYPOKE_PY(4)-1, TRAYPOKE_PX(1),	TRAYPOKE_PX(2)-1 } },
 	{ TRAYPOKE_PX(2)+PICUR_X,TRAYPOKE_PY(3)+PICUR_Y, 0, 0,	14, 26, 19, 21, { TRAYPOKE_PY(3), TRAYPOKE_PY(4)-1, TRAYPOKE_PX(2),	TRAYPOKE_PX(3)-1 } },
 	{ TRAYPOKE_PX(3)+PICUR_X,TRAYPOKE_PY(3)+PICUR_Y, 0, 0,	15, 27, 20, 22, { TRAYPOKE_PY(3), TRAYPOKE_PY(4)-1, TRAYPOKE_PX(3),	TRAYPOKE_PX(4)-1 } },
 	{ TRAYPOKE_PX(4)+PICUR_X,TRAYPOKE_PY(3)+PICUR_Y, 0, 0,	16, 28, 21, 23, { TRAYPOKE_PY(3), TRAYPOKE_PY(4)-1, TRAYPOKE_PX(4),	TRAYPOKE_PX(5)-1 } },
-	{ TRAYPOKE_PX(5)+PICUR_X,TRAYPOKE_PY(3)+PICUR_Y, 0, 0,	17, 29, 22, CURSORMOVE_RETBIT|34, { TRAYPOKE_PY(3), TRAYPOKE_PY(4)-1, TRAYPOKE_PX(5),	TRAYPOKE_PX(6)-1 } },
+	{ TRAYPOKE_PX(5)+PICUR_X,TRAYPOKE_PY(3)+PICUR_Y, 0, 0,	17, 29, 22, CURSORMOVE_RETBIT|37, { TRAYPOKE_PY(3), TRAYPOKE_PY(4)-1, TRAYPOKE_PX(5),	TRAYPOKE_PX(6)-1 } },
 
-	{ TRAYPOKE_PX(0)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	18, 37, 35, 25, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(0),	TRAYPOKE_PX(1)-1 } },	// 24: ポケモン
-	{ TRAYPOKE_PX(1)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	19, 37, 24, 26, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(1),	TRAYPOKE_PX(2)-1 } },
-	{ TRAYPOKE_PX(2)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	20, 37, 25, 27, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(2),	TRAYPOKE_PX(3)-1 } },
-	{ TRAYPOKE_PX(3)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	21, 37, 26, 28, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(3),	TRAYPOKE_PX(4)-1 } },
-	{ TRAYPOKE_PX(4)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	22, 37, 27, 29, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(4),	TRAYPOKE_PX(5)-1 } },
-	{ TRAYPOKE_PX(5)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	23, 37, 28, CURSORMOVE_RETBIT|34, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(5),	TRAYPOKE_PX(6)-1 } },
+	{ TRAYPOKE_PX(0)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	18, 39, 37, 25, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(0),	TRAYPOKE_PX(1)-1 } },	// 24: ポケモン
+	{ TRAYPOKE_PX(1)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	19, 39, 24, 26, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(1),	TRAYPOKE_PX(2)-1 } },
+	{ TRAYPOKE_PX(2)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	20, 39, 25, 27, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(2),	TRAYPOKE_PX(3)-1 } },
+	{ TRAYPOKE_PX(3)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	21, 39, 26, 28, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(3),	TRAYPOKE_PX(4)-1 } },
+	{ TRAYPOKE_PX(4)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	22, 39, 27, 29, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(4),	TRAYPOKE_PX(5)-1 } },
+	{ TRAYPOKE_PX(5)+PICUR_X,TRAYPOKE_PY(4)+PICUR_Y, 0, 0,	23, 39, 28, CURSORMOVE_RETBIT|37, { TRAYPOKE_PY(4), TRAYPOKE_PY(5)-1, TRAYPOKE_PX(5),	TRAYPOKE_PX(6)-1 } },
 
-	{ 192,  52, 0, 0,	37, 32, CURSORMOVE_RETBIT|5, 31, {  68-12,  68+12-1, 194-12, 194+12-1 } },		// 30: 手持ちポケモン
-	{ 232,  60, 0, 0,	37, 33, 30, CURSORMOVE_RETBIT|0, {  76-12,  76+12-1, 230-12, 230+12-1 } },
-	{ 192,  84, 0, 0,	30, 34, CURSORMOVE_RETBIT|17, 33, { 100-12, 100+12-1, 194-12, 194+12-1 } },
-	{ 232,  92, 0, 0,	31, 35, 32, CURSORMOVE_RETBIT|12, { 108-12, 108+12-1, 230-12, 230+12-1 } },
-	{ 192, 116, 0, 0,	32, 36, CURSORMOVE_RETBIT|23, 35, { 132-12, 132+12-1, 194-12, 194+12-1 } },
-	{ 232, 124, 0, 0,	33, 36, 34, CURSORMOVE_RETBIT|24, { 140-12, 140+12-1, 230-12, 230+12-1 } },
+	{ 84, 16, 0, 0,	39, CURSORMOVE_RETBIT|0, 30, 30, { 17, 39, 26, 141 } },		// 30: ボックス名
+	{  0,  0, 0, 0,	31, 31, 31, 31, { 17, 38,   1,  22 } },		// 31: ボックス切り替え矢印（左）
+	{  0,  0, 0, 0,	32, 32, 32, 32, { 17, 38, 145, 166 } },		// 32: ボックス切り替え矢印（右）
 
-	{ 212, 162, 0, 0,	CURSORMOVE_RETBIT|35, 37, 36, 36, { 162, 189, 178, 245 } },		// 36: やめる
+	{   0,   0, 0, 0,	33, 33, CURSORMOVE_RETBIT|33, 33, {   0,  11, 200, 223 } },		// 33: トレイアイコン
+	{ 212,  22, 0, 0,	34, 35, CURSORMOVE_RETBIT| 5,  0, {  22,  45, 200, 223 } },		// 34: トレイアイコン
+	{ 212,  56, 0, 0,	34, 36, CURSORMOVE_RETBIT|11,  6, {  56,  79, 200, 223 } },		// 35: トレイアイコン
+	{ 212,  90, 0, 0,	35, 37, CURSORMOVE_RETBIT|17, 12, {  90, 113, 200, 223 } },		// 36: トレイアイコン
+	{ 212, 124, 0, 0,	36, 37, CURSORMOVE_RETBIT|23, 18, { 124, 147, 200, 223 } },		// 37: トレイアイコン
+	{   0,   0, 0, 0,	38, 38, CURSORMOVE_RETBIT|38, 38, { 158, 167, 200, 223 } },		// 38: トレイアイコン
 
-	{  43, 23, 0, 0,	24, CURSORMOVE_RETBIT|0, 42, 38, {  15,  38,  31,  54 } },		// 37: トレイアイコン
-	{  77, 23, 0, 0,	24, CURSORMOVE_RETBIT|0, 37, 39, {  15,  38,  65,  88 } },		// 38: トレイアイコン
-	{ 111, 23, 0, 0,	24, CURSORMOVE_RETBIT|0, 38, 40, {  15,  38,  99, 122 } },		// 39: トレイアイコン
-	{ 145, 23, 0, 0,	24, CURSORMOVE_RETBIT|0, 39, 41, {  15,  38, 133, 156 } },		// 40: トレイアイコン
-	{ 179, 23, 0, 0,	24, CURSORMOVE_RETBIT|0, 40, 42, {  15,  38, 167, 190 } },		// 41: トレイアイコン
-	{ 213, 23, 0, 0,	24, CURSORMOVE_RETBIT|0, 41, 37, {  15,  38, 201, 224 } },		// 42: トレイアイコン
+	{ 44, 168, 0, 0,	CURSORMOVE_RETBIT|24, 30, 39, 39, { 168, 191, 0, 87 } },			// 39: 手持ちポケモン
+	{  0,   0, 0, 0,	40, 40, 40, 40, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_03, TOUCHBAR_ICON_X_03+TOUCHBAR_ICON_WIDTH-1 } },		// 40: ステータス
+	{  0,   0, 0, 0,	41, 41, 41, 41, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 } },		// 41: 戻る
 
-	{ 0, 0, 0, 0,	43, 43, 43, 43, {  15,  38,   1,  22 } },		// 43: トレイ矢印（左）
-	{ 0, 0, 0, 0,	44, 44, 44, 44, {  15,  38, 233, 254 } },		// 44: トレイ矢印（右）
-
-	{ 68, 168, 0, 0,	45, 45, 45, 45, { 168, 191,   0, 135 } },	// 45: ボックスをきりかえる
+	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
+
 /*
 static const GFL_UI_TP_HITTBL BoxArrangePokeMoveHitTbl[] =
 {
@@ -910,6 +921,8 @@ static const CURSORMOVE_DATA BoxArrangePartyPokeCursorMoveData[] =
 	{ 212, 112, 0, 0,	10, 12, 11, 11, { 112, 135, 168, 255 } },	// 11: マーキング
 	{ 212, 136, 0, 0,	11, 13, 12, 12, { 136, 159, 168, 255 } },	// 12: にがす
 	{ 224, 168, 0, 0,	12,  8, 13, 13, { 168, 191, 192, 255 } },	// 13: とじる
+
+	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 /*
 static const GFL_UI_TP_HITTBL BoxArrangePartyPokeHitTbl[] =
@@ -1009,6 +1022,8 @@ static const CURSORMOVE_DATA BoxItemArrangeMainCursorMoveData[] =
 
 	{ 212, 136, 0, 0,	37, 37, 36, 36, { 136, 159, 168, 255 } },	// 36: バッグへ or もたせる
 	{ 224, 168, 0, 0,	36, 36, 37, 37, { 168, 191, 192, 255 } },	// 37: とじる
+
+	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 /*
 static const GFL_UI_TP_HITTBL BoxItemArrangeMainHitTbl[] =
@@ -1131,6 +1146,8 @@ static const CURSORMOVE_DATA BoxItemArrangePartyPokeCursorMoveData[] =
 
 	{ 212, 136, 0, 0,	9, 9, 8, 8, { 136, 159, 168, 255 } },	// 08: バッグへ or  もたせる
 	{ 224, 168, 0, 0,	8, 8, 9, 9, { 168, 191, 192, 255 } },	// 09: とじる
+
+	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 /*
 static const GFL_UI_TP_HITTBL BoxItemArrangePartyPokeHitTbl[] =
@@ -1181,6 +1198,8 @@ static const GFL_UI_TP_HITTBL YStatusHitTbl[] =
 	{ 168, 191, 0, 135 },
 	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
+
+
 
 // タッチチェックの終了データ
 static const GFL_UI_TP_HITTBL TpCheckEnd = { GFL_UI_TP_HIT_END, 0, 0, 0 };
@@ -1346,6 +1365,7 @@ static void CursorObjMove( BOX2_SYS_WORK * syswk, int pos )
 	x = pw->px;
 	y = pw->py;
 	BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_HAND_CURSOR, x, y, CLSYS_DEFREND_MAIN );
+	BOX2OBJ_MovePokeIconHand( syswk );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1598,7 +1618,7 @@ static void PartyOutBoxSelCallBack_Move( void * work, int now_pos, int old_pos )
 		BOX2OBJ_BoxMoveNameSet( syswk );
 		BOX2OBJ_BoxMoveCursorSet( syswk );
 		BOX2BMP_BoxMoveNameNumWrite( syswk );
-		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_RA, BOX2OBJ_ANM_R_ARROW_ON );
+//		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_RA, BOX2OBJ_ANM_R_ARROW_ON );
 		BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 		BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
 		return;
@@ -1615,7 +1635,7 @@ static void PartyOutBoxSelCallBack_Move( void * work, int now_pos, int old_pos )
 		BOX2OBJ_BoxMoveNameSet( syswk );
 		BOX2OBJ_BoxMoveCursorSet( syswk );
 		BOX2BMP_BoxMoveNameNumWrite( syswk );
-		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_LA, BOX2OBJ_ANM_L_ARROW_ON );
+//		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_LA, BOX2OBJ_ANM_L_ARROW_ON );
 		BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 		BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
 		return;
@@ -1789,7 +1809,7 @@ u32 BOX2UI_BoxArrangeMain( BOX2_SYS_WORK * syswk )
 
 	// メニュー非表示
 	if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE ){
-		if( ret >= BOX2UI_ARRANGE_MAIN_GET && ret <= BOX2UI_ARRANGE_MAIN_FREE ){
+		if( ret >= BOX2UI_ARRANGE_MAIN_GET && ret <= BOX2UI_ARRANGE_MAIN_CLOSE ){
 			CURSORMOVE_PosSet( syswk->app->cmwk, now );
 			CursorObjMove( syswk, now );
 			return CURSORMOVE_NONE;
@@ -1948,6 +1968,7 @@ u32 BOX2UI_BoxArrangePokeMove( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 static void BoxArrangePokeMoveCallBack_On( void * work, int now_pos, int old_pos )
 {
+/*
 	BOX2_SYS_WORK * syswk;
 	const CURSORMOVE_DATA * pw;
 	u8	x, y;
@@ -1976,6 +1997,7 @@ static void BoxArrangePokeMoveCallBack_On( void * work, int now_pos, int old_pos
 			BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_NORMAL );
 		}
 	}
+*/
 }
 
 // カーソルループのための位置
@@ -2001,6 +2023,7 @@ static void BoxArrangePokeMoveCallBack_Move( void * work, int now_pos, int old_p
 {
 	BOX2_SYS_WORK * syswk = work;
 
+/*
 	if( syswk->app->poke_get_key == 0 ){
 		if( now_pos >= BOX2UI_ARRANGE_MOVE_TRAY1 && now_pos <= BOX2UI_ARRANGE_MOVE_TRAY6 ){
 			BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_TRAY );
@@ -2036,7 +2059,7 @@ static void BoxArrangePokeMoveCallBack_Move( void * work, int now_pos, int old_p
 		BOX2OBJ_BoxMoveNameSet( syswk );
 		BOX2OBJ_BoxMoveCursorSet( syswk );
 		BOX2BMP_BoxMoveNameNumWrite( syswk );
-		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_RA, BOX2OBJ_ANM_R_ARROW_ON );
+//		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_RA, BOX2OBJ_ANM_R_ARROW_ON );
 		BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 		BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
 		return;
@@ -2053,7 +2076,7 @@ static void BoxArrangePokeMoveCallBack_Move( void * work, int now_pos, int old_p
 		BOX2OBJ_BoxMoveNameSet( syswk );
 		BOX2OBJ_BoxMoveCursorSet( syswk );
 		BOX2BMP_BoxMoveNameNumWrite( syswk );
-		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_LA, BOX2OBJ_ANM_L_ARROW_ON );
+//		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_LA, BOX2OBJ_ANM_L_ARROW_ON );
 		BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 		BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
 		return;
@@ -2066,9 +2089,12 @@ static void BoxArrangePokeMoveCallBack_Move( void * work, int now_pos, int old_p
 			BOX2BMP_BoxMoveNameNumWrite( syswk );
 		}
 	}
+*/
 
 	BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 	BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
+
+	syswk->app->old_cur_pos = now_pos;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2085,7 +2111,7 @@ static void BoxArrangePokeMoveCallBack_Move( void * work, int now_pos, int old_p
 static void BoxArrangePokeMoveCallBack_Touch( void * work, int now_pos, int old_pos )
 {
 	BOX2_SYS_WORK * syswk = work;
-
+/*
 	// 前回位置更新
 	if( now_pos >= BOX2UI_ARRANGE_MOVE_TRAY1 && now_pos <= BOX2UI_ARRANGE_MOVE_TRAY6 ){
 		syswk->app->old_cur_pos = now_pos;
@@ -2095,6 +2121,20 @@ static void BoxArrangePokeMoveCallBack_Touch( void * work, int now_pos, int old_
 		CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
 		CursorObjMove( syswk, now_pos );
 	}
+*/
+	if( now_pos == BOX2UI_ARRANGE_PGT_LEFT ||			// 31: ボックス切り替え矢印（左）
+			now_pos == BOX2UI_ARRANGE_PGT_RIGHT ||		// 32: ボックス切り替え矢印（右）
+			now_pos == BOX2UI_ARRANGE_PGT_TRAY1 ||		// 33: トレイアイコン
+			now_pos == BOX2UI_ARRANGE_PGT_TRAY6 ||		// 38: トレイアイコン
+			now_pos == BOX2UI_ARRANGE_PGT_STTUS ||		// 40: ステータス
+			now_pos == BOX2UI_ARRANGE_PGT_RET ){			// 41: 戻る
+		CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
+		now_pos = syswk->app->old_cur_pos;
+	}else{
+		CursorObjMove( syswk, now_pos );
+	}
+
+	syswk->app->old_cur_pos = now_pos;
 }
 
 
@@ -2110,20 +2150,22 @@ static void BoxArrangePokeMoveCallBack_Touch( void * work, int now_pos, int old_
  * @return	動作結果
  */
 //--------------------------------------------------------------------------------------------
-u32 BOX2UI_BoxArrangePokeMoveHand( BOX2_SYS_WORK * syswk )
+u32 BOX2UI_ArrangePokeGetMain( BOX2_SYS_WORK * syswk )
 {
 	u32	ret;
-	
+
+/*
 	if( BOX2BGWFRM_BoxMoveButtonCheck( syswk->app->wfrm ) == FALSE ){
 		CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_MOVE_CHANGE );
 	}
 
 	CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_MOVE_LEFT );
 	CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_MOVE_RIGHT );
+*/
 
 	ret = CURSORMOVE_MainCont( syswk->app->cmwk );
 
-	CURSORMOVE_MoveTableInit( syswk->app->cmwk );
+//	CURSORMOVE_MoveTableInit( syswk->app->cmwk );
 
 	return ret;
 }
@@ -2558,7 +2600,7 @@ static void BoxThemaChgCallBack_Move( void * work, int now_pos, int old_pos )
 		BOX2OBJ_BoxMoveNameSet( syswk );
 		BOX2OBJ_BoxMoveCursorSet( syswk );
 		BOX2BMP_BoxMoveNameNumWrite( syswk );
-		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_RA, BOX2OBJ_ANM_R_ARROW_ON );
+//		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_RA, BOX2OBJ_ANM_R_ARROW_ON );
 
 		BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 		BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
@@ -2576,7 +2618,7 @@ static void BoxThemaChgCallBack_Move( void * work, int now_pos, int old_pos )
 		BOX2OBJ_BoxMoveNameSet( syswk );
 		BOX2OBJ_BoxMoveCursorSet( syswk );
 		BOX2BMP_BoxMoveNameNumWrite( syswk );
-		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_LA, BOX2OBJ_ANM_L_ARROW_ON );
+//		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_LA, BOX2OBJ_ANM_L_ARROW_ON );
 
 		BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 		BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
@@ -2690,7 +2732,7 @@ static void WallPaperChgCallBack_Move( void * work, int now_pos, int old_pos )
 		BOX2OBJ_WallPaperCursorSet( syswk );
 		BOX2OBJ_WallPaperNameSet( syswk );
 		BOX2BMP_WallPaperNameWrite( syswk );
-		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_RA, BOX2OBJ_ANM_R_ARROW_ON );
+//		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_RA, BOX2OBJ_ANM_R_ARROW_ON );
 
 		BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 		BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
@@ -2708,7 +2750,7 @@ static void WallPaperChgCallBack_Move( void * work, int now_pos, int old_pos )
 		BOX2OBJ_WallPaperCursorSet( syswk );
 		BOX2OBJ_WallPaperNameSet( syswk );
 		BOX2BMP_WallPaperNameWrite( syswk );
-		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_LA, BOX2OBJ_ANM_L_ARROW_ON );
+//		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_LA, BOX2OBJ_ANM_L_ARROW_ON );
 
 		BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 		BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
@@ -2867,7 +2909,7 @@ BOOL BOX2UI_YStatusButtonCheck( BOX2_SYS_WORK * syswk )
 }
 
 
-static u32 PokeHitCheck( const CURSORMOVE_DATA * dat, u32 max )
+static u32 HitCheckTrg( const CURSORMOVE_DATA * dat, u32 max )
 {
 	GFL_UI_TP_HITTBL	rect[2];
 	u32	i;
@@ -2884,6 +2926,24 @@ static u32 PokeHitCheck( const CURSORMOVE_DATA * dat, u32 max )
 	return GFL_UI_TP_HIT_NONE;
 }
 
+static u32 HitCheckCont( const CURSORMOVE_DATA * dat, u32 max )
+{
+	GFL_UI_TP_HITTBL	rect[2];
+	u32	i;
+
+	rect[1] = TpCheckEnd;
+
+	for( i=0; i<max; i++ ){
+		rect[0] = dat[i].rect;
+		if( GFL_UI_TP_HitCont( rect ) != GFL_UI_TP_HIT_NONE ){
+			return i;
+		}
+	}
+
+	return GFL_UI_TP_HIT_NONE;
+}
+
+
 //--------------------------------------------------------------------------------------------
 /**
  * タッチチェック：トレイのポケモン
@@ -2895,7 +2955,7 @@ static u32 PokeHitCheck( const CURSORMOVE_DATA * dat, u32 max )
 //--------------------------------------------------------------------------------------------
 u32 BOX2UI_HitTrayPokeTrg(void)
 {
-	return PokeHitCheck( BoxArrangeMainCursorMoveData, BOX2OBJ_POKEICON_TRAY_MAX );
+	return HitCheckTrg( BoxArrangeMainCursorMoveData, BOX2OBJ_POKEICON_TRAY_MAX );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2910,7 +2970,7 @@ u32 BOX2UI_HitTrayPokeTrg(void)
 //--------------------------------------------------------------------------------------------
 u32 BOX2UI_HitCheckTrgPartyPokeLeft(void)
 {
-	return PokeHitCheck( BoxArrangePartyPokeCursorMoveData, BOX2OBJ_POKEICON_MINE_MAX );
+	return HitCheckTrg( BoxArrangePartyPokeCursorMoveData, BOX2OBJ_POKEICON_MINE_MAX );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2925,9 +2985,30 @@ u32 BOX2UI_HitCheckTrgPartyPokeLeft(void)
 //--------------------------------------------------------------------------------------------
 u32 BOX2UI_HitCheckTrgPartyPokeRight(void)
 {
-	return PokeHitCheck(
+	return HitCheckTrg(
 					&BoxArrangePartyPokeCursorMoveData[BOX2UI_ARRANGE_MOVE_PARTY1], BOX2OBJ_POKEICON_MINE_MAX );
 }
+
+
+
+u32 BOX2UI_HitCheckContTrayArrow(void)
+{
+	return HitCheckCont( &BoxArrangeMainCursorMoveData[BOX2UI_ARRANGE_MAIN_LEFT], 2 );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

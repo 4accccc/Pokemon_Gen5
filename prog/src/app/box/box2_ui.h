@@ -36,6 +36,51 @@ enum {
 
 // ボタンＩＤ
 enum {
+	// ボックス整理・メイン操作
+	BOX2UI_ARRANGE_MAIN_POKE1 = 0,	// 00: ポケモン
+	BOX2UI_ARRANGE_MAIN_NAME = BOX2UI_ARRANGE_MAIN_POKE1 + BOX2OBJ_POKEICON_TRAY_MAX,	// 30: ボックス名
+	BOX2UI_ARRANGE_MAIN_LEFT,			// 31: トレイ切り替え矢印・左
+	BOX2UI_ARRANGE_MAIN_RIGHT,		// 32: トレイ切り替え矢印・右
+	BOX2UI_ARRANGE_MAIN_PARTY,		// 33: 手持ちポケモン
+	BOX2UI_ARRANGE_MAIN_RETURN1,	// 34: 戻る１
+	BOX2UI_ARRANGE_MAIN_RETURN2,	// 35: 戻る２
+
+	BOX2UI_ARRANGE_MAIN_GET,			// 36: つかむ
+	BOX2UI_ARRANGE_MAIN_STATUS,		// 37: ようすをみる
+	BOX2UI_ARRANGE_MAIN_ITEM,			// 38: もちもの
+	BOX2UI_ARRANGE_MAIN_MARKING,	// 39: マーキング
+	BOX2UI_ARRANGE_MAIN_FREE,			// 40: にがす
+	BOX2UI_ARRANGE_MAIN_CLOSE,		// 41: とじる
+
+	// ボックス整理・「つかむ」トレイ移動
+	BOX2UI_ARRANGE_PGT_POKE1 = 0,	// 00: ポケモン
+	BOX2UI_ARRANGE_PGT_NAME = BOX2UI_ARRANGE_PGT_POKE1 + BOX2OBJ_POKEICON_TRAY_MAX,		// 30: ボックス名
+	BOX2UI_ARRANGE_PGT_LEFT,		// 31: ボックス切り替え矢印（左）
+	BOX2UI_ARRANGE_PGT_RIGHT,		// 32: ボックス切り替え矢印（右）
+
+	BOX2UI_ARRANGE_PGT_TRAY1,		// 33: トレイアイコン
+	BOX2UI_ARRANGE_PGT_TRAY2,		// 34: トレイアイコン
+	BOX2UI_ARRANGE_PGT_TRAY3,		// 35: トレイアイコン
+	BOX2UI_ARRANGE_PGT_TRAY4,		// 36: トレイアイコン
+	BOX2UI_ARRANGE_PGT_TRAY5,		// 37: トレイアイコン
+	BOX2UI_ARRANGE_PGT_TRAY6,		// 38: トレイアイコン
+
+	BOX2UI_ARRANGE_PGT_PARTY,		// 39: 手持ちポケモン
+	BOX2UI_ARRANGE_PGT_STTUS,		// 40: ステータス
+	BOX2UI_ARRANGE_PGT_RET,			// 41: 戻る
+
+
+
+
+
+
+
+
+
+
+
+
+
 	// 預ける・メイン操作
 	BOX2UI_PTOUT_MAIN_POKE1 = 0,	// 手持ちポケモン
 	BOX2UI_PTOUT_MAIN_POKE2,
@@ -78,22 +123,6 @@ enum {
 	BOX2UI_PTIN_MAIN_MARKING,		// 36: マーキング
 	BOX2UI_PTIN_MAIN_FREE,			// 37: にがす
 	BOX2UI_PTIN_MAIN_CLOSE,		// 38: とじる
-
-	// ボックス整理・メイン操作
-	BOX2UI_ARRANGE_MAIN_POKE1 = 0,	// 00: ポケモン
-	BOX2UI_ARRANGE_MAIN_NAME = BOX2UI_ARRANGE_MAIN_POKE1 + BOX2OBJ_POKEICON_TRAY_MAX,	// 30: ボックス名
-	BOX2UI_ARRANGE_MAIN_LEFT,			// 31: トレイ切り替え矢印・左
-	BOX2UI_ARRANGE_MAIN_RIGHT,		// 32: トレイ切り替え矢印・右
-	BOX2UI_ARRANGE_MAIN_PARTY,		// 33: 手持ちポケモン
-	BOX2UI_ARRANGE_MAIN_RETURN1,	// 34: 戻る１
-	BOX2UI_ARRANGE_MAIN_RETURN2,	// 35: 戻る２
-
-	BOX2UI_ARRANGE_MAIN_GET,			// 36: つかむ
-	BOX2UI_ARRANGE_MAIN_STATUS,		// 37: ようすをみる
-	BOX2UI_ARRANGE_MAIN_ITEM,			// 38: もちもの
-	BOX2UI_ARRANGE_MAIN_MARKING,	// 39: マーキング
-	BOX2UI_ARRANGE_MAIN_FREE,			// 40: にがす
-	BOX2UI_ARRANGE_MAIN_CLOSE,		// 41: とじる
 
 	// ボックス整理・ポケモン移動
 	BOX2UI_ARRANGE_MOVE_POKE1 = 0,	// 00: ポケモン
@@ -289,7 +318,7 @@ extern u32 BOX2UI_BoxArrangePokeMove( BOX2_SYS_WORK * syswk );
  * @return	動作結果
  */
 //--------------------------------------------------------------------------------------------
-extern u32 BOX2UI_BoxArrangePokeMoveHand( BOX2_SYS_WORK * syswk );
+extern u32 BOX2UI_ArrangePokeGetMain( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -395,3 +424,6 @@ extern u32 BOX2UI_HitCheckTrgPartyPokeLeft(void);
  */
 //--------------------------------------------------------------------------------------------
 extern u32 BOX2UI_HitCheckTrgPartyPokeRight(void);
+
+
+extern u32 BOX2UI_HitCheckContTrayArrow(void);
