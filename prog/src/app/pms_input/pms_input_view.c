@@ -1064,14 +1064,20 @@ static void Cmd_CategoryToEditArea( GFL_TCB *tcb, void* wk_adrs )
 	case 0:
     HOSAKA_Printf("Cmd_CategoryToEditArea\n");
     PMSIV_MENU_SetDecideCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_CANCEL );
+    PMSIV_CATEGORY_StartMoveSubWinList( vwk->category_wk, FALSE );
 //	PMSIV_BUTTON_Appear( vwk->button_wk );
 		wk->seq++;
 		break;
 
 	case 1:
-    if( PMSIV_MENU_IsFinishCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_CANCEL ) )
     {
-      wk->seq++;
+      flag1 = PMSIV_CATEGORY_WaitMoveSubWinList( vwk->category_wk, FALSE );
+      flag2 = PMSIV_MENU_IsFinishCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_CANCEL );
+		  
+      if(flag1 && flag2)
+      {
+        wk->seq++;
+      }
     }
     break;
 
@@ -1088,7 +1094,8 @@ static void Cmd_CategoryToEditArea( GFL_TCB *tcb, void* wk_adrs )
 	case 3:
 		flag1 = PMSIV_CATEGORY_WaitDisableBG( vwk->category_wk );
 		flag2 = PMSIV_EDIT_ScrollWait( vwk->edit_wk);
-		if(flag1 && flag2){
+		if(flag1 && flag2)
+    {
 			PMSIV_EDIT_ActiveArrow( vwk->edit_wk );
 			PMSIV_EDIT_ActiveCursor( vwk->edit_wk );
 			vwk->status = PMSI_ST_EDIT;
@@ -1117,14 +1124,20 @@ static void Cmd_CategoryToWordWin( GFL_TCB *tcb, void* wk_adrs )
 		PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, FALSE );
 		PMSIV_CATEGORY_StartFadeOut( vwk->category_wk );
     PMSIV_MENU_SetupWordWin( vwk->menu_wk );
-		wk->seq++;
-		break;
+    PMSIV_CATEGORY_StartMoveSubWinList( vwk->category_wk, FALSE );
+    wk->seq++;
+    break;
 
-	case 1:
-		if( PMSIV_CATEGORY_WaitFadeOut( vwk->category_wk ) )
-		{
-			PMSIV_WORDWIN_StartFadeIn( vwk->wordwin_wk );
-			wk->seq++;
+  case 1 :
+    {
+      BOOL flag1 = PMSIV_CATEGORY_WaitMoveSubWinList( vwk->category_wk, FALSE );
+      BOOL flag2 = PMSIV_CATEGORY_WaitFadeOut( vwk->category_wk );
+
+      if( flag1 && flag2 )
+      {
+        PMSIV_WORDWIN_StartFadeIn( vwk->wordwin_wk );
+        wk->seq++;
+      }
 		}
 		break;
 

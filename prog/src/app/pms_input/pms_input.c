@@ -83,12 +83,14 @@ enum TOUCH_BUTTON {
 };
 
 enum{
-	TPED_DCBTN_PX = 24*8,
-	TPED_DCBTN_PY0 = 14*8,
-	TPED_DCBTN_PY1 = 17*8,
-	TPED_DCBTN_SX = 8*8,
-	TPED_DCBTN_SY = 2*8,
+  // エディット画面 けってい・やめる
+	TPED_DCBTN_PX = 23*8,
+	TPED_DCBTN_PY0 = 18*8,  // けってい Y
+	TPED_DCBTN_PY1 = 21*8,  // やめる Y
+	TPED_DCBTN_SX = 9*8,
+	TPED_DCBTN_SY = 3*8,
 
+  // エディット画面 単語モードの単語
 	TPED_WORD1_PX = 10*8,
 	TPED_WORD_PY = 2*8,
 	TPED_WORD_SX = 12*8,
@@ -96,11 +98,12 @@ enum{
 	TPED_WORD2_PX0 = 3*8,
 	TPED_WORD2_PX1 = 17*8,
 
-	TPED_SBTN_PX0 = 8,
-	TPED_SBTN_PX1 = 27*8,
-	TPED_SBTN_PY = 6*8+4,
-	TPED_SBTN_SX = 4*8,
+  // エディット画面 左右ボタン
+	TPED_SBTN_SX = 3*8,
 	TPED_SBTN_SY = 3*8,
+	TPED_SBTN_PX0 = 0,
+	TPED_SBTN_PX1 = TPED_SBTN_PX0 + TPED_SBTN_SX * 6,
+	TPED_SBTN_PY = 21*8,
 
 /*
 	TPCA_RET_PX = 24*8+4,
@@ -108,6 +111,7 @@ enum{
 	TPCA_RET_SX = 7*8,
 	TPCA_RET_SY = 22,
 */
+
 	TPCA_RET_PX = 29*8,
 	TPCA_RET_PY = 21*8,
 	TPCA_RET_SX = 3*8,
@@ -263,6 +267,7 @@ struct _PMS_INPUT_WORK{
 
 	u8         sentence_edit_pos_max;
 	u8         category_mode;
+  u8         edit_btn_pos;
 
 	u8	scroll_bar_flg;		// スクロールバータッチ済みフラグ
 
@@ -284,6 +289,7 @@ static PMS_INPUT_WORK* ConstructWork( GFL_PROC* proc , void* pwk );
 static void setup_sentence_work( SENTENCE_WORK* s_wk, PMS_DATA* pms );
 static void sentence_increment( SENTENCE_WORK* s_wk, PMS_DATA* pms );
 static void sentence_decrement( SENTENCE_WORK* s_wk, PMS_DATA* pms );
+static void sentence_change_type( SENTENCE_WORK* s_wk, PMS_DATA* pms, enum PMS_TYPE type );
 static void DestructWork( PMS_INPUT_WORK* wk, GFL_PROC* proc );
 static void ChangeMainProc( PMS_INPUT_WORK* wk, MainProc main_proc );
 static void ChangeMainProc_ToCommandButtonArea( PMS_INPUT_WORK* wk );
@@ -609,7 +615,27 @@ static void sentence_decrement( SENTENCE_WORK* s_wk, PMS_DATA* pms )
 	PMSDAT_SetSentence( pms, s_wk->sentence_type, s_wk->sentence_id );
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  タッチによるTYPEチェンジ
+ *
+ *	@param	SENTENCE_WORK* s_wk
+ *	@param	pms
+ *	@param	type 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void sentence_change_type( SENTENCE_WORK* s_wk, PMS_DATA* pms, enum PMS_TYPE type )
+{
+  GF_ASSERT( type < PMS_TYPE_MAX );
 
+	s_wk->sentence_id = 0;
+  s_wk->sentence_type = type;
+	s_wk->sentence_id_max = PMSDAT_GetSentenceIdMax( s_wk->sentence_type );
+
+	PMSDAT_SetSentence( pms, s_wk->sentence_type, s_wk->sentence_id );
+}
 
 //------------------------------------------------------------------
 /**
@@ -906,6 +932,15 @@ static GFL_PROC_RESULT mp_input_single_key(PMS_INPUT_WORK* wk,int *seq )
 }
 
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static int edit_single_touch(PMS_INPUT_WORK* wk)
 {
 	int ret;
@@ -925,7 +960,15 @@ static int edit_single_touch(PMS_INPUT_WORK* wk)
 	return ret;
 }
 
-
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static int edit_double_touch(PMS_INPUT_WORK* wk)
 {
 	int ret;
@@ -941,6 +984,16 @@ static int edit_double_touch(PMS_INPUT_WORK* wk)
 	ret = GFL_UI_TP_HitTrg(Btn_TpRect);
 	return ret;
 }
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static int edit_sentence_touch(PMS_INPUT_WORK* wk)
 {
 	int ret,num,i;
@@ -949,23 +1002,40 @@ static int edit_sentence_touch(PMS_INPUT_WORK* wk)
 
 	static const GFL_UI_TP_HITTBL Btn_TpRect[] = {
 //		{0,191,0,255}, ty,by,lx,rx
-		{TPED_DCBTN_PY0,TPED_DCBTN_PY0+TPED_DCBTN_SY,TPED_DCBTN_PX,TPED_DCBTN_PX+TPED_DCBTN_SX},
-		{TPED_DCBTN_PY1,TPED_DCBTN_PY1+TPED_DCBTN_SY,TPED_DCBTN_PX,TPED_DCBTN_PX+TPED_DCBTN_SX},
+		{TPED_DCBTN_PY0,TPED_DCBTN_PY0+TPED_DCBTN_SY,TPED_DCBTN_PX,TPED_DCBTN_PX+TPED_DCBTN_SX}, // けってい
+		{TPED_DCBTN_PY1,TPED_DCBTN_PY1+TPED_DCBTN_SY,TPED_DCBTN_PX,TPED_DCBTN_PX+TPED_DCBTN_SX}, // やめる
 //		{TPED_WORD_PY,TPED_WORD_PY+TPED_WORD_SY,TPED_WORD2_PX0,TPED_WORD2_PX0+TPED_WORD_SX},
 //		{TPED_WORD_PY,TPED_WORD_PY+TPED_WORD_SY,TPED_WORD2_PX1,TPED_WORD2_PX1+TPED_WORD_SX},
-		{TPED_SBTN_PY,TPED_SBTN_PY+TPED_SBTN_SY,TPED_SBTN_PX0,TPED_SBTN_PX0+TPED_SBTN_SX},
-		{TPED_SBTN_PY,TPED_SBTN_PY+TPED_SBTN_SY,TPED_SBTN_PX1,TPED_SBTN_PX1+TPED_SBTN_SX},
+		{TPED_SBTN_PY,TPED_SBTN_PY+TPED_SBTN_SY,TPED_SBTN_PX0,TPED_SBTN_PX0+TPED_SBTN_SX},  // 左
+		{TPED_SBTN_PY,TPED_SBTN_PY+TPED_SBTN_SY,TPED_SBTN_PX1,TPED_SBTN_PX1+TPED_SBTN_SX},  // 右
 		{GFL_UI_TP_HIT_END,0,0,0}
 	};
-	if(GFL_UI_TP_GetTrg() == 0){
+
+  if(GFL_UI_TP_GetTrg() == 0)
+  {
 		return GFL_UI_TP_HIT_NONE;
 	}
-	ret = GFL_UI_TP_HitTrg(Btn_TpRect);
-	if(ret != GFL_UI_TP_HIT_NONE){
-		return ret;
-	}
 
-  // 単語判定
+	ret = GFL_UI_TP_HitTrg(Btn_TpRect);
+
+	if(ret != GFL_UI_TP_HIT_NONE)
+  {
+     // 文章固定モードは左右無効
+    if( PMSI_PARAM_GetLockFlag( wk->input_param ) )
+    {
+      if( ret == 2 || ret == 3 )
+      {
+        HOSAKA_Printf("lock mode scroll failed! \n");
+        return GFL_UI_TP_HIT_NONE;
+      }
+    }
+    else
+    {
+		  return ret;
+    }
+	}
+    
+  // エディットエリア単語のあたり判定
 	num = PMSIView_GetSentenceEditPosMax( wk->vwk );
 	//TODO Cont? Trg?
 	GFL_UI_TP_GetPointTrg( &tpx,&tpy );
@@ -979,7 +1049,51 @@ static int edit_sentence_touch(PMS_INPUT_WORK* wk)
 	return GFL_UI_TP_HIT_NONE;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  センテンス変更ボタン
+ *
+ *	@param	PMS_INPUT_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static int edit_sentence_check_flipbtn( PMS_INPUT_WORK* wk )
+{
+	u32 tpx,tpy;
+	
+	if( GFL_UI_TP_GetPointTrg( &tpx, &tpy ) == FALSE )
+  {
+    return -1; 
+  }
 
+  if( tpy > 21 * 8 )
+  {
+    int idx;
+
+    idx = tpx / TPED_SBTN_SX;
+    idx -= 1;
+      
+    if( idx >= 0 && idx < PMS_TYPE_MAX )
+    {
+      HOSAKA_Printf("tp flipbtn=%d \n", idx);
+      return idx;
+    }
+  }
+
+  return -1;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	wk
+ *	@param	*seq 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static GFL_PROC_RESULT mp_input_touch(PMS_INPUT_WORK* wk,int *seq )
 {
 	int ret;
@@ -1485,29 +1599,33 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 {
 	int ret;
-	u16 pat;
 
 	switch( *seq ){
 	case SEQ_EDS_INIT:
 		wk->sentence_edit_pos_max = PMSIView_GetSentenceEditPosMax( wk->vwk );
 		(*seq) = SEQ_EDS_KEYWAIT;
-
 		/* fallthru */
-
 
 	case SEQ_EDS_KEYWAIT:
 	case SEQ_EDS_BUTTON_KEYWAIT:
-		ret = edit_sentence_touch(wk);
-
-    // 文章固定モードは左右無効
-    if( PMSI_PARAM_GetLockFlag( wk->input_param ) )
+    
     {
-      if( ret == 2 || ret == 3 )
+      int idx;
+
+      // フリップボタンチェック
+      idx = edit_sentence_check_flipbtn(wk);
+
+      if( idx > -1 )
       {
-        HOSAKA_Printf("lock mode scroll failed! \n");
+        sentence_change_type( &wk->sentence_wk, &wk->edit_pms, idx );
+        PMSIView_SetCommand( wk->vwk, VCMD_UPDATE_EDITAREA );
+        GFL_SOUND_PlaySE( SOUND_TOUCH_FLIPBUTTON );
+        (*seq) = SEQ_EDS_WAIT_EDITAREA_UPDATE;
         break;
       }
     }
+
+		ret = edit_sentence_touch(wk);
 
 		switch(ret){
 		case 0:	//決定
@@ -1517,7 +1635,7 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 #endif //PMS_USE_SND
 			*seq = SEQ_EDS_TO_SUBPROC_OK+ret;
 			break;
-		case 2:	//スクロールボタン
+		case 2:	// 左
 #if PMS_USE_SND
 			GFL_SOUND_PlaySE(SOUND_CHANGE_SENTENCE);
 #endif //PMS_USE_SND
@@ -1527,7 +1645,7 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 			PMSIView_SetCommand( wk->vwk, VCMD_UPDATE_EDITAREA );
 			(*seq) = SEQ_EDS_WAIT_EDITAREA_UPDATE;
 			break;
-		case 3:
+		case 3: // 右
 #if PMS_USE_SND
 			GFL_SOUND_PlaySE(SOUND_CHANGE_SENTENCE);
 #endif //PMS_USE_SND
@@ -2024,7 +2142,8 @@ static int category_touch_group(PMS_INPUT_WORK* wk)
 	if(GFL_UI_TP_GetTrg() == 0){
 		return -1;
 	}
-	//TODO Cont? Trg?
+
+  // リスト
 	GFL_UI_TP_GetPointTrg( &tpx,&tpy );
 	for(i = 0;i < 4;i++){
 		tbl[0].rect.top = TPCA_GMA_PY+TPCA_GMA_OY*i - CATEGORY_BG_ENABLE_YOFS;
@@ -3557,7 +3676,7 @@ PMS_WORD  PMSI_GetEditWord( const PMS_INPUT_WORK* wk, int pos )
 
 //------------------------------------------------------------------
 /**
-	* 
+	* 文字列を返す
 	*
 	* @param   wk			
 	* @param   heapID		
@@ -3659,6 +3778,15 @@ void PMSI_GetCategoryWord( const PMS_INPUT_WORK* wk, u32 word_num, STRBUF* buf )
 	}
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  単語リストウィンドウカーソル座標
+ *
+ *	@param	const PMS_INPUT_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 u32 PMSI_GetWordWinCursorPos( const PMS_INPUT_WORK* wk )
 {
 	if(wk->word_win.back_f){
@@ -3689,6 +3817,15 @@ BOOL PMSI_GetWordWinDownArrowVisibleFlag( const PMS_INPUT_WORK* wk )
 	return ( line < line_max );
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	const PMS_INPUT_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 int PMSI_GetTalkWindowType( const PMS_INPUT_WORK* wk )
 {
 	return PMSI_PARAM_GetWindowType( wk->input_param );
@@ -3710,11 +3847,11 @@ u32 PMSI_GetMenuCursorPos( const PMS_INPUT_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  
+ *	@brief  センテンス変更抑制モードフラグを取得
  *
- *	@param	const PMS_INPUT_WORK* wk 
+ *	@param	const PMS_INPUT_WORK* wk ワーク
  *
- *	@retval
+ *	@retval TRUE : 抑制モード
  */
 //-----------------------------------------------------------------------------
 BOOL PMSI_GetLockFlag( const PMS_INPUT_WORK* wk )
@@ -3725,11 +3862,11 @@ BOOL PMSI_GetLockFlag( const PMS_INPUT_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  TBCを取得
  *
  *	@param	const PMS_INPUT_WORK* wk 
  *
- *	@retval
+ *	@retval GFL_TCBSYS* TCB
  */
 //-----------------------------------------------------------------------------
 GFL_TCBSYS* PMSI_GetTcbSystem( const PMS_INPUT_WORK* wk )
@@ -3739,12 +3876,12 @@ GFL_TCBSYS* PMSI_GetTcbSystem( const PMS_INPUT_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  検索画面（カテゴリ＞イニシャル）で入力された文字列を受け取る
  *
- *	@param	const PMS_INPUT_WORK* wk
- *	@param	out_buf 
+ *	@param	const PMS_INPUT_WORK* wk ワーク
+ *	@param	out_buf [OUT] コピー先
  *
- *	@retval
+ *	@retval none
  */
 //-----------------------------------------------------------------------------
 void PMSI_GetInputWord( const PMS_INPUT_WORK* wk, STRBUF* out_buf )
@@ -3752,7 +3889,17 @@ void PMSI_GetInputWord( const PMS_INPUT_WORK* wk, STRBUF* out_buf )
   PMSI_SEARCH_GetInputWord( wk->swk, out_buf );
 }
 
-// スクロールデータ取得
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  スクロールデータ取得
+ *
+ *	@param	const PMS_INPUT_WORK * wk ワーク
+ *	@param	* line      ライン
+ *	@param	* line_max  ライン最大値
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
 void PMSI_GetWorkScrollData( const PMS_INPUT_WORK * wk, u16 * line, u16 * line_max )
 {
 	*line = wk->word_win.line;
@@ -3761,11 +3908,11 @@ void PMSI_GetWorkScrollData( const PMS_INPUT_WORK * wk, u16 * line, u16 * line_m
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  検索結果数を取得
  *
- *	@param	const PMS_INPUT_WORK* wk 
+ *	@param	const PMS_INPUT_WORK* wk ワーク
  *
- *	@retval
+ *	@retval 個数
  */
 //-----------------------------------------------------------------------------
 u32 PMSI_GetSearchResultCount( const PMS_INPUT_WORK* wk )
@@ -3775,13 +3922,13 @@ u32 PMSI_GetSearchResultCount( const PMS_INPUT_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  検索結果を文字列で取得
  *
- *	@param	const PMS_INPUT_WORK* wk
- *	@param	result_idx
- *	@param	dst_buf 
+ *	@param	const PMS_INPUT_WORK* wk ワーク
+ *	@param	result_idx 検索結果ID
+ *	@param	dst_buf [OUT] コピー先 
  *
- *	@retval
+ *	@retval none
  */
 //-----------------------------------------------------------------------------
 void PMSI_GetSearchResultString( const PMS_INPUT_WORK* wk, u32 result_idx, STRBUF* dst_buf )

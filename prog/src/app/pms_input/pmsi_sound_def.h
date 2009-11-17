@@ -37,6 +37,8 @@
 
 #define SOUND_SEARCH_DISABLE (SEQ_SE_BEEP) // 検索失敗
 
+#define SOUND_TOUCH_FLIPBUTTON (SEQ_SE_DP_SELECT) // センテンス変更ボタンタッチ
+
 #endif //PMS_USE_SND
 
 #endif	//__PMSI_SOUND_DEF_H__
