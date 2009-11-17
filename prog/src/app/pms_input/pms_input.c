@@ -1643,6 +1643,7 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 			wk->edit_pos = 0;
 			sentence_decrement( &wk->sentence_wk, &wk->edit_pms );
 			PMSIView_SetCommand( wk->vwk, VCMD_UPDATE_EDITAREA );
+      PMSIView_TouchEditButton( wk->vwk, EDIT_BUTTON_ID_LEFT );
 			(*seq) = SEQ_EDS_WAIT_EDITAREA_UPDATE;
 			break;
 		case 3: // ‰E
@@ -1653,6 +1654,7 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 			wk->edit_pos = 0;
 			sentence_increment( &wk->sentence_wk, &wk->edit_pms );
 			PMSIView_SetCommand( wk->vwk, VCMD_UPDATE_EDITAREA );
+      PMSIView_TouchEditButton( wk->vwk, EDIT_BUTTON_ID_RIGHT );
 			(*seq) = SEQ_EDS_WAIT_EDITAREA_UPDATE;
 			break;
 		case 4:	//’PŒê‘I‘ð

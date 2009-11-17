@@ -297,6 +297,7 @@ extern u32 PMSIView_GetSentenceEditPosMax( PMS_INPUT_VIEW* wk );
 extern void PMSIView_GetSentenceWordArea( PMS_INPUT_VIEW* wk ,GFL_UI_TP_HITTBL* tbl,u8 idx);
 
 extern int PMSIView_WaitYesNo(PMS_INPUT_VIEW* wk);
+extern void PMSIView_TouchEditButton( PMS_INPUT_VIEW* wk, int btn_id );
 
 extern void PMSI_GetWorkScrollData( const PMS_INPUT_WORK * wk, u16 * line, u16 * line_max );
 

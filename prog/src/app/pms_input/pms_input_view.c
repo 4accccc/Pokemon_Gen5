@@ -1774,6 +1774,11 @@ int PMSIView_WaitYesNo(PMS_INPUT_VIEW* wk)
 //	return PMSIV_EDIT_WaitYesNoBtn(wk->edit_wk);
 }
 
+void PMSIView_TouchEditButton( PMS_INPUT_VIEW* wk, int btn_id )
+{
+  PMSIV_MENU_TouchEditButton( wk->menu_wk, btn_id );
+}
+
 //==============================================================================================
 // ‰º¿‚¯ƒ‚ƒWƒ…[ƒ‹‚Ö‚Ìî•ñ’ñ‹Ÿ
 //==============================================================================================

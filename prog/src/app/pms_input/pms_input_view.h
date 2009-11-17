@@ -368,6 +368,13 @@ typedef enum
   CATEGORY_DECIDE_ID_MAX,
 } CATEGORY_DECIDE_ID;
 
+typedef enum
+{ 
+  EDIT_BUTTON_ID_LEFT = 0, ///< 左ボタン
+  EDIT_BUTTON_ID_RIGHT,    ///< 右ボタン
+  EDIT_BUTTON_ID_MAX,
+} EDIT_BUTTON_ID;
+
 extern PMSIV_MENU* PMSIV_MENU_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, const PMS_INPUT_DATA* dwk );
 extern void PMSIV_MENU_Delete( PMSIV_MENU* wk );
 extern void PMSIV_MENU_Main( PMSIV_MENU* wk );
@@ -381,6 +388,9 @@ extern BOOL PMSIV_MENU_TaskMenuIsFinish( PMSIV_MENU* wk, u8 pos );
 extern void PMSIV_MENU_TaskMenuSetDecide( PMSIV_MENU* wk, u8 pos, BOOL is_on );
 extern void PMSIV_MENU_SetDecideCategory( PMSIV_MENU* wk, CATEGORY_DECIDE_ID id );
 extern BOOL PMSIV_MENU_IsFinishCategory( PMSIV_MENU* wk, CATEGORY_DECIDE_ID id );
+extern void PMSIV_MENU_TouchEditButton( PMSIV_MENU* wk, EDIT_BUTTON_ID id );
+
 extern PMSIV_MENU* PMSIView_GetMenuWork( PMS_INPUT_VIEW* vwk );
+
 
 #endif

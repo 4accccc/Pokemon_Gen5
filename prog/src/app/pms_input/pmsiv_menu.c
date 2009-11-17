@@ -459,7 +459,7 @@ static BOOL _wait_category_cancel( PMSIV_MENU* wk )
 //-----------------------------------------------------------------------------
 void PMSIV_MENU_SetDecideCategory( PMSIV_MENU* wk, CATEGORY_DECIDE_ID id )
 {
-  GF_ASSERT( wk )
+  GF_ASSERT( wk );
 
   switch( id )
   {
@@ -469,6 +469,34 @@ void PMSIV_MENU_SetDecideCategory( PMSIV_MENU* wk, CATEGORY_DECIDE_ID id )
 
   case CATEGORY_DECIDE_ID_CHANGE :
     _decide_category_change( wk );
+    break;
+
+  default : GF_ASSERT(0);
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  タッチボタン処理
+ *
+ *	@param	PMSIV_MENU* wk ワーク
+ *	@param	id ボタンID
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void PMSIV_MENU_TouchEditButton( PMSIV_MENU* wk, EDIT_BUTTON_ID id )
+{
+  GF_ASSERT( wk );
+
+  switch( id )
+  {
+  case EDIT_BUTTON_ID_LEFT :
+    _clwk_setanm( wk, MENU_CLWKICON_L, TRUE );
+    break;
+
+  case EDIT_BUTTON_ID_RIGHT :
+    _clwk_setanm( wk, MENU_CLWKICON_R, TRUE );
     break;
 
   default : GF_ASSERT(0);
