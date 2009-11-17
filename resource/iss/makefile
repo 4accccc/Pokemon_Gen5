@@ -22,7 +22,7 @@ TARGETDIR = $(PROJECT_ARCDIR)
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-SUBDIRS	= city zone dungeon
+SUBDIRS	= city zone dungeon switch
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
