@@ -11,6 +11,7 @@
 #include "iss_road_sys.h"
 #include "iss_dungeon_sys.h"
 #include "iss_zone_sys.h"
+#include "iss_switch_sys.h"
 #include "../field/field_sound.h"
 #include "sound/bgm_info.h"
 #include "../../../resource/sound/bgm_info/iss_type.h"
@@ -53,6 +54,7 @@ struct _ISS_SYS
 	ISS_ROAD_SYS*    issR;	// 道路
 	ISS_DUNGEON_SYS* issD;	// ダンジョン 
   ISS_ZONE_SYS*    issZ;  // ゾーン
+  ISS_SWITCH_SYS*  issS;  // スイッチ
 
 	// 再生中のBGM番号
 	u16 bgmNo; 
@@ -88,32 +90,33 @@ void BGMChangeCheck( ISS_SYS* sys );
 /**
  * @brief  ISSシステムを作成する
  *
- * @param p_gdata	監視対象ゲームデータ
- * @param heap_id   使用するヒープID
+ * @param gdata	  監視対象ゲームデータ
+ * @param heap_id 使用するヒープID
  * 
  * @return ISSシステム
  */
 //----------------------------------------------------------------------------
-ISS_SYS* ISS_SYS_Create( GAMEDATA* p_gdata, HEAPID heap_id )
+ISS_SYS* ISS_SYS_Create( GAMEDATA* gdata, HEAPID heap_id )
 {
 	ISS_SYS* sys;
 	PLAYER_WORK* player;
 
 	// 監視対象の主人公を取得
-	player = GAMEDATA_GetMyPlayerWork( p_gdata );
+	player = GAMEDATA_GetMyPlayerWork( gdata );
 
 	// メモリ確保
 	sys = (ISS_SYS*)GFL_HEAP_AllocMemory( heap_id, sizeof( ISS_SYS ) );
 
 	// 初期設定
 	sys->heapID  = heap_id;
-	sys->gdata   = p_gdata;
+	sys->gdata   = gdata;
 	sys->cycle   = FALSE;
 	sys->surfing = FALSE;
 	sys->issC    = ISS_CITY_SYS_Create( player, heap_id );
 	sys->issR    = ISS_ROAD_SYS_Create( player, heap_id );
-	sys->issD    = ISS_DUNGEON_SYS_Create( p_gdata, player, heap_id );
+	sys->issD    = ISS_DUNGEON_SYS_Create( gdata, player, heap_id );
   sys->issZ    = ISS_ZONE_SYS_Create( heap_id );
+  sys->issS    = ISS_SWITCH_SYS_Create( heap_id );
 	sys->bgmNo   = INVALID_BGM_NO;
 	sys->frame   = 0;
 
@@ -135,6 +138,7 @@ void ISS_SYS_Delete( ISS_SYS* sys )
 	ISS_ROAD_SYS_Delete( sys->issR );
 	ISS_DUNGEON_SYS_Delete( sys->issD );
   ISS_ZONE_SYS_Delete( sys->issZ );
+  ISS_SWITCH_SYS_Delete( sys->issS );
 
 	// 本体を破棄
 	GFL_HEAP_FreeMemory( sys );
@@ -174,6 +178,9 @@ void ISS_SYS_Update( ISS_SYS* sys )
 
   // ゾーンISS
   ISS_ZONE_SYS_Update( sys->issZ );
+
+  // スイッチISS
+  ISS_SWITCH_SYS_Update( sys->issS );
 }
 	
 
@@ -232,6 +239,7 @@ void CycleCheck( ISS_SYS* sys )
 		ISS_ROAD_SYS_Off( sys->issR );
 		ISS_DUNGEON_SYS_Off( sys->issD );
 		ISS_ZONE_SYS_Off( sys->issZ );
+		ISS_SWITCH_SYS_Off( sys->issS );
 	}
 
 	// 自転車から降りるのを検出したら, ゾーン切り替え時と同じ処理
@@ -264,6 +272,7 @@ void SurfingCheck( ISS_SYS* sys )
 		ISS_ROAD_SYS_Off( sys->issR );
 		ISS_DUNGEON_SYS_Off( sys->issD );
 		ISS_ZONE_SYS_Off( sys->issZ );
+		ISS_SWITCH_SYS_Off( sys->issS );
 	}
 
 	// 自転車から降りるのを検出したら, ゾーン切り替え時と同じ処理
@@ -303,33 +312,60 @@ void BGMChangeCheck( ISS_SYS* sys )
       ISS_CITY_SYS_Off( sys->issC );
       ISS_DUNGEON_SYS_Off( sys->issD );
       ISS_ZONE_SYS_Off( sys->issZ );
+      ISS_SWITCH_SYS_Off( sys->issS );
     break;
   case ISS_TYPE_CITY:  // 街
       ISS_ROAD_SYS_Off( sys->issR );
       ISS_CITY_SYS_On( sys->issC );
       ISS_DUNGEON_SYS_Off( sys->issD );
       ISS_ZONE_SYS_Off( sys->issZ );
+      ISS_SWITCH_SYS_Off( sys->issS );
     break;
   case ISS_TYPE_DUNGEON:  // ダンジョン
       ISS_ROAD_SYS_Off( sys->issR );
       ISS_CITY_SYS_Off( sys->issC );
       ISS_DUNGEON_SYS_On( sys->issD );
       ISS_ZONE_SYS_Off( sys->issZ );
+      ISS_SWITCH_SYS_Off( sys->issS );
     break;
   case ISS_TYPE_ZONE:  // ゾーン
       ISS_ROAD_SYS_Off( sys->issR );
       ISS_CITY_SYS_Off( sys->issC );
       ISS_DUNGEON_SYS_Off( sys->issD );
       ISS_ZONE_SYS_On( sys->issZ, zone_id );
+      ISS_SWITCH_SYS_Off( sys->issS );
       break;
+  case ISS_TYPE_SWITCH:  // スイッチ
+      ISS_ROAD_SYS_Off( sys->issR );
+      ISS_CITY_SYS_Off( sys->issC );
+      ISS_DUNGEON_SYS_Off( sys->issD );
+      ISS_ZONE_SYS_Off( sys->issZ );
+      ISS_SWITCH_SYS_On( sys->issS );
+    break;
   default:  // その他
       ISS_ROAD_SYS_Off( sys->issR );
       ISS_CITY_SYS_Off( sys->issC );
       ISS_DUNGEON_SYS_Off( sys->issD );
       ISS_ZONE_SYS_Off( sys->issZ );
+      ISS_SWITCH_SYS_Off( sys->issS );
+    break;
     break;
   } 
 
   // BGM番号を記憶
   sys->bgmNo = bgm_no;
+}
+
+//----------------------------------------------------------------------------
+/**
+ * @brief スイッチISSシステムを取得する
+ *
+ * @param sys 取得対象システム
+ *
+ * @return スイッチISSシステム
+ */
+//----------------------------------------------------------------------------
+ISS_SWITCH_SYS* ISS_SYS_GetISSSwitchSystem( const ISS_SYS* sys )
+{
+  return sys->issS;
 }

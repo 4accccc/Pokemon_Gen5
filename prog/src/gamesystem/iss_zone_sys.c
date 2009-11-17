@@ -229,22 +229,22 @@ static void LoadZoneData( ISS_ZONE_SYS* sys, HEAPID heap_id )
     int j;
     OBATA_Printf( "- zoneData[%d]\n", data_idx );
     OBATA_Printf( "-- zoneID = %d\n", sys->zoneData[data_idx].zoneID ); 
-    OBATA_Printf( "-- openTrack = " );
+    OBATA_Printf( "-- openTrack  = " );
     for( j=0; j<16; j++ )
     {
       if( sys->zoneData[data_idx].openTrackBit & (1 << (MAX_TRACK_NO-j)) ) 
-        OBATA_Printf( "1" );
+        OBATA_Printf( "¡" );
       else                                                       
-        OBATA_Printf( "0" );
+        OBATA_Printf( " " );
     }
     OBATA_Printf( "\n" );
     OBATA_Printf( "-- closeTrack = " );
     for( j=0; j<16; j++ )
     {
       if( sys->zoneData[data_idx].closeTrackBit & (1 << (MAX_TRACK_NO-j)) ) 
-        OBATA_Printf( "1" );
+        OBATA_Printf( "¡" );
       else                                                       
-        OBATA_Printf( "0" );
+        OBATA_Printf( " " );
     }
     OBATA_Printf( "\n" );
     OBATA_Printf( "-- fadeFrame = %d\n", sys->zoneData[data_idx].fadeFrame ); 

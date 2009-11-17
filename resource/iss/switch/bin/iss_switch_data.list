@@ -1,0 +1,3 @@
+ISS_S_DATA = \
+./bin/iss_switch_data_seq_bgm_t_01.bin \
+./bin/iss_switch_data_seq_bgm_t_02.bin 

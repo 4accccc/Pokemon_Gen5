@@ -9,6 +9,7 @@
 #pragma once
 #include <gflib.h>
 #include "gamesystem/game_data.h"
+#include "iss_switch_sys.h"  // for ISS_SWITCH_SYS
 
 
 // ISSシステム構造体の不完全型の宣言
@@ -19,38 +20,49 @@ typedef struct _ISS_SYS ISS_SYS;
 /**
  * @brief  ISSシステムを作成する
  *
- * @param p_gdata	監視対象ゲームデータ
- * @param heap_id   使用するヒープID
+ * @param gdata	  監視対象ゲームデータ
+ * @param heap_id 使用するヒープID
  * 
  * @return ISSシステム
  */
 //----------------------------------------------------------------------------
-extern ISS_SYS* ISS_SYS_Create( GAMEDATA* p_gdata, HEAPID heap_id );
+extern ISS_SYS* ISS_SYS_Create( GAMEDATA* gdata, HEAPID heap_id );
 
 //----------------------------------------------------------------------------
 /**
  * @brief  ISSシステムを破棄する
  *
- * @param p_unit 破棄するISSシステム 
+ * @param sys 破棄するISSシステム 
  */
 //----------------------------------------------------------------------------
-extern void ISS_SYS_Delete( ISS_SYS* p_unit );
+extern void ISS_SYS_Delete( ISS_SYS* sys );
 
 //----------------------------------------------------------------------------
 /**
  * @brief プレイヤーを監視し, 音量を調整する
  *
- * @param p_unit 操作対象のシステム
+ * @param sys 操作対象のシステム
  */
 //----------------------------------------------------------------------------
-extern void ISS_SYS_Update( ISS_SYS* p_unit );
+extern void ISS_SYS_Update( ISS_SYS* sys );
 
 //----------------------------------------------------------------------------
 /**
  * @brief ゾーン切り替えを通知する
  *
- * @param p_unit       通知対象のISSシステム
+ * @param sys       通知対象のISSシステム
  * @param next_zone_id 新しいゾーンID
  */
 //----------------------------------------------------------------------------
-extern void ISS_SYS_ZoneChange( ISS_SYS* p_unit, u16 next_zone_id );
+extern void ISS_SYS_ZoneChange( ISS_SYS* sys, u16 next_zone_id );
+
+//----------------------------------------------------------------------------
+/**
+ * @brief スイッチISSシステムを取得する
+ *
+ * @param sys 取得対象システム
+ *
+ * @return スイッチISSシステム
+ */
+//----------------------------------------------------------------------------
+extern ISS_SWITCH_SYS* ISS_SYS_GetISSSwitchSystem( const ISS_SYS* sys );
