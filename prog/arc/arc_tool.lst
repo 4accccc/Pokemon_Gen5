@@ -213,5 +213,6 @@
   ARCID_MB_PARENT	"mb_parent.narc"	#マルチブート親
 	ARCID_GSYNC "gsync.narc"   #GAMESYNC
 	ARCID_GTSNEGO "gtsnego.narc"   #GTSネゴシエーション
+	ARCID_WIFI_LOGIN		"wifi_login.narc" # WIFIログインデータ
   ARCID_ISS_DUNGEON "iss_dungeon.narc"  # ダンジョンISSデータ
   ARCID_ISS_SWITCH "iss_switch.narc"  # スイッチISSデータ

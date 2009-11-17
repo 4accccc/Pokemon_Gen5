@@ -1171,7 +1171,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
 static void _GFL_NET_InitAndStruct(WIFIP2PMATCH_WORK *wk,BOOL bInit)
 {
 
-  if( OS_IsRunOnTwl() ){//DSI‚È‚ç
+  if( OS_IsRunOnTwl() ){//DSI‚È‚çVCT—p‚Ìƒƒ‚ƒŠ‚ª‘å‚«‚­‚Æ‚ç‚ê‚éˆ×A—Ìˆæ‚ğ‘½‚­‚µ‚È‚¢‚Æ‚¢‚¯‚È‚¢
     aGFLNetInit.heapSize = GFL_NET_DWCLOBBY_HEAPSIZE;
   }
   else{

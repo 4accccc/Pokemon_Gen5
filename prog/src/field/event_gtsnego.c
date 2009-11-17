@@ -28,6 +28,7 @@
 #include "system/main.h"      //GFL_HEAPID_APPŽQÆ
 
 #include "net_app/gtsnego.h"
+#include "net_app/wifi_login.h"
 
 #include "poke_tool/pokeparty.h"
 #include "poke_tool/poke_tool.h"
@@ -41,8 +42,10 @@ FS_EXTERN_OVERLAY(pokemon_trade);
 
 enum _EVENT_GTSNEGO {
   _FIELD_CLOSE,
-  _CALL_WIFICLUB,
-  _WAIT_WIFICLUB,
+  _CALL_WIFILOGIN,
+  _WAIT_WIFILOGIN,
+  _CALL_WIFINEGO,
+  _WAIT_WIFINEGO,
   _WAIT_NET_END,
   _FIELD_OPEN,
   _FIELD_END
@@ -62,21 +65,27 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
 
   switch (*seq) {
   case _FIELD_CLOSE:
-
     if(GAME_COMM_NO_NULL == GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gsys)))
     {
       dbw->isEndProc = FALSE;
       GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
       (*seq)++;
     }
-
-
     break;
-  case _CALL_WIFICLUB:
+  case _CALL_WIFILOGIN:
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, dbw);
+    (*seq)++;
+    break;
+  case _WAIT_WIFILOGIN:
+    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
+      (*seq) ++;
+    }
+    break;
+  case _CALL_WIFINEGO:
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokemon_trade), &GtsNego_ProcData, dbw);
     (*seq)++;
     break;
-  case _WAIT_WIFICLUB:
+  case _WAIT_WIFINEGO:
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
       (*seq) ++;
     }

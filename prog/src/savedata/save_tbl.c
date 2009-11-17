@@ -45,6 +45,7 @@
 #include "savedata/musical_dist_save.h"
 #include "savedata/zukan_savedata.h"
 #include "savedata/encount_sv.h"
+#include "savedata/c_gear_picture.h"
 
 //==============================================================================
 //  定数定義
@@ -79,7 +80,8 @@ enum{
   EXTRA_MM_REC_DL_2 = EXTRA_MM_REC_DL_1_MIRROR + SAVESIZE_EXTRA_BATTLE_REC,
   EXTRA_MM_REC_DL_2_MIRROR = EXTRA_MM_REC_DL_2 + SAVESIZE_EXTRA_BATTLE_REC,
   
-  EXTRA_MM_STREAMING = EXTRA_MM_REC_DL_2_MIRROR + SAVESIZE_EXTRA_BATTLE_REC,
+  EXTRA_MM_CGEAR = EXTRA_MM_REC_DL_2_MIRROR + SAVESIZE_EXTRA_BATTLE_REC,
+  EXTRA_MM_STREAMING = EXTRA_MM_CGEAR + sizeof(CGEAR_PICTURE_SAVEDATA),
 };
 
 
@@ -418,6 +420,14 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_RecDl_2[] = {
 //--------------------------------------------------------------
 //  外部セーブデータのテーブル(ミラーリング無)
 //--------------------------------------------------------------
+///CGEAR絵のデータ
+static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_CGEARPicture[] = {
+  {
+    EXGMDATA_ID_CGEAR_PICTURE,
+    (FUNC_GET_SIZE)CGEAR_PICTURE_SAVE_GetWorkSize,
+    (FUNC_INIT_WORK)CGEAR_PICTURE_SAVE_Init,
+  },
+};
 ///ストリーミング
 static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_Streaming[] = {
   {
@@ -482,6 +492,14 @@ const GFL_SVLD_PARAM SaveParam_ExtraTbl[] = {
     EXTRA_MM_REC_DL_2,              //バックアップ領域先頭アドレス
     EXTRA_MM_REC_DL_2_MIRROR,       //ミラーリング領域先頭アドレス
     SAVESIZE_EXTRA_BATTLE_REC,      //使用するバックアップ領域の大きさ
+    MAGIC_NUMBER,
+  },
+  {//外部セーブパラメータテーブル：ストリーミング(ミラーリング無)
+    SaveDataTbl_Extra_CGEARPicture,
+    NELEMS(SaveDataTbl_Extra_CGEARPicture),
+    EXTRA_MM_STREAMING,             //バックアップ領域先頭アドレス
+    EXTRA_MM_STREAMING,             //ミラーリング領域先頭アドレス ※ミラー無し指定
+    sizeof(CGEAR_PICTURE_SAVEDATA),       //使用するバックアップ領域の大きさ
     MAGIC_NUMBER,
   },
   {//外部セーブパラメータテーブル：ストリーミング(ミラーリング無)

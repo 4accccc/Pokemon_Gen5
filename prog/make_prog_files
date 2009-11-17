@@ -44,6 +44,7 @@ SAVEDATASRC =   savedata/save_tbl.c \
 				savedata/misc.c \
 				savedata/shortcut.c \
 				savedata/musical_dist_save.c \
+				savedata/c_gear_picture.c \
 				savedata/zukan_savedata.c \
 				savedata/encount_sv.c \
 				savedata/gds_profile.c
@@ -861,6 +862,14 @@ SRCS_OVERLAY_PALACE = app/palace/palace_edit.c \
 SRCS_OVERLAY_DPW_COMMON   = libdpw/dpwi_encrypt.c \
               libdpw/dpwi_session.c \
 							libdpw/dpw_tr.c
+
+
+# WIFIログイン
+#===> SRCS_OVERLAY_DPW_COMMON
+SRCS_OVERLAY_WIFI_LOGIN =  net_app/wifi_login/wifilogin_proc.c \
+								net_app/wifi_login/wifilogin_disp.c \
+								net_app/wifi_login/wifilogin_message.c
+
 
 
 # ポケモン交換

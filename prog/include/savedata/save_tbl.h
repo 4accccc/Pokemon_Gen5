@@ -106,6 +106,12 @@ enum{
   EXGMDATA_ID_BATTLE_REC_DL_2,
 };
 
+
+///外部セーブデータ識別ID：CGEARピクチャー
+enum{
+  EXGMDATA_ID_CGEAR_PICTURE,
+};
+
 ///外部セーブデータ識別ID：ストリーミング
 enum{
   EXGMDATA_ID_STREAMING,

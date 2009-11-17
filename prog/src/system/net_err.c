@@ -86,6 +86,7 @@ typedef struct{
 //==============================================================================
 static NET_ERR_SYSTEM NetErrSystem = {0};
 
+static const int asd[]={1,2,3,4,5};
 
 //==============================================================================
 //	プロトタイプ宣言
@@ -112,8 +113,10 @@ static void Local_ErrMessagePrint(void);
 //--------------------------------------------------------------
 void NetErr_SystemInit(void)
 {
+  int a;
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_NET_ERR, NETERR_PUSH_CHARVRAM_SIZE + NETERR_PUSH_SCRNVRAM_SIZE + NETERR_PUSH_PLTTVRAM_SIZE + 0x100);  //+0x100はヘッダ分
-  
+  a=asd[0];
+  a++;
 	GFL_STD_MemClear(&NetErrSystem, sizeof(NET_ERR_SYSTEM));
 }
 
