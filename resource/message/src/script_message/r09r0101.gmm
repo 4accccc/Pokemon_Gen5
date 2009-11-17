@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-08T11:16:35"/>
+	<create user="matsumiya" host="W00207" date="2009-11-17T21:40:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,12 +292,32 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？
+	<row id="msg_r09r0101_boy2_01">
+		<comment>♂
 ・橋ゲート</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">BOY2
+活発</attribute>
+		<language name="JPN" width="256">……ここだけの　はなし[BE:01:ページ切り替え（クリア）]
+ショッピングモールには
+ひみつの　そうこが　あるんだって！</language>
+		<language name="JPN_KANJI" width="256">……ここだけの　話[BE:01:ページ切り替え（クリア）]
+ショッピングモールには
+秘密の　倉庫が　あるんだって！</language>
+	</row>
+
+	<row id="msg_r09r0101_woman2_01">
+		<comment>♀
+・橋ゲート</comment>
+		<attribute name="キャラ指定">WOMAN2
+お洒落（金髪）</attribute>
+		<language name="JPN" width="256">はふう……
+がんばりすぎちゃったな[BE:01:ページ切り替え（クリア）]
+ショッピングモールで
+かいもの　しすぎちゃった！</language>
+		<language name="JPN_KANJI" width="256">はふう……
+がんばりすぎちゃったな[BE:01:ページ切り替え（クリア）]
+ショッピングモールで
+買い物　しすぎちゃった！</language>
 	</row>
 
 	<flowchart-group-list>
