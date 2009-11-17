@@ -39,8 +39,8 @@ struct _ISS_SYS
 	// 使用するヒープID
 	HEAPID heapID;
 
-	// 監視対象ゲームデータ
-	GAMEDATA* pGameData;
+	// 監視対象
+	GAMEDATA* gdata;  // ゲームデータ
 
 	// 自転車状態かどうか
 	BOOL cycle;
@@ -52,7 +52,7 @@ struct _ISS_SYS
 	ISS_CITY_SYS*    issC;	// 街
 	ISS_ROAD_SYS*    issR;	// 道路
 	ISS_DUNGEON_SYS* issD;	// ダンジョン 
-  //ISS_ZONE_SYS*    issZ;  // ゾーン
+  ISS_ZONE_SYS*    issZ;  // ゾーン
 
 	// 再生中のBGM番号
 	u16 bgmNo; 
@@ -69,13 +69,13 @@ struct _ISS_SYS
 //=========================================================================================
 
 // 主人公の自転車状態を監視する
-void CycleCheck( ISS_SYS* p_sys );
+void CycleCheck( ISS_SYS* sys );
 
 // 主人公のなみのり状態を監視する
-void SurfingCheck( ISS_SYS* p_sys );
+void SurfingCheck( ISS_SYS* sys );
 
 // BGMの変化を監視する
-void BGMChangeCheck( ISS_SYS* p_sys );
+void BGMChangeCheck( ISS_SYS* sys );
 
 
 //=========================================================================================
@@ -96,48 +96,48 @@ void BGMChangeCheck( ISS_SYS* p_sys );
 //----------------------------------------------------------------------------
 ISS_SYS* ISS_SYS_Create( GAMEDATA* p_gdata, HEAPID heap_id )
 {
-	ISS_SYS* p_sys;
-	PLAYER_WORK* p_player;
+	ISS_SYS* sys;
+	PLAYER_WORK* player;
 
 	// 監視対象の主人公を取得
-	p_player = GAMEDATA_GetMyPlayerWork( p_gdata );
+	player = GAMEDATA_GetMyPlayerWork( p_gdata );
 
 	// メモリ確保
-	p_sys = (ISS_SYS*)GFL_HEAP_AllocMemory( heap_id, sizeof( ISS_SYS ) );
+	sys = (ISS_SYS*)GFL_HEAP_AllocMemory( heap_id, sizeof( ISS_SYS ) );
 
 	// 初期設定
-	p_sys->heapID    = heap_id;
-	p_sys->pGameData = p_gdata;
-	p_sys->cycle     = FALSE;
-	p_sys->surfing   = FALSE;
-	p_sys->issC      = ISS_CITY_SYS_Create( p_player, heap_id );
-	p_sys->issR      = ISS_ROAD_SYS_Create( p_player, heap_id );
-	p_sys->issD      = ISS_DUNGEON_SYS_Create( p_gdata, p_player, heap_id );
-  //p_sys->issZ      = ISS_ZONE_SYS_Create( p_gdata, p_player, heap_id );
-	p_sys->bgmNo     = INVALID_BGM_NO;
-	p_sys->frame     = 0;
+	sys->heapID  = heap_id;
+	sys->gdata   = p_gdata;
+	sys->cycle   = FALSE;
+	sys->surfing = FALSE;
+	sys->issC    = ISS_CITY_SYS_Create( player, heap_id );
+	sys->issR    = ISS_ROAD_SYS_Create( player, heap_id );
+	sys->issD    = ISS_DUNGEON_SYS_Create( p_gdata, player, heap_id );
+  sys->issZ    = ISS_ZONE_SYS_Create( heap_id );
+	sys->bgmNo   = INVALID_BGM_NO;
+	sys->frame   = 0;
 
 
 	// 作成したISSシステムを返す
-	return p_sys;
+	return sys;
 }
 
 //----------------------------------------------------------------------------
 /**
  * @brief  ISSシステムを破棄する
- * * @param p_sys 破棄するISSシステム 
+ * * @param sys 破棄するISSシステム 
  */
 //----------------------------------------------------------------------------
-void ISS_SYS_Delete( ISS_SYS* p_sys )
+void ISS_SYS_Delete( ISS_SYS* sys )
 {
 	// 各ISSシステムを破棄
-	ISS_CITY_SYS_Delete( p_sys->issC );
-	ISS_ROAD_SYS_Delete( p_sys->issR );
-	ISS_DUNGEON_SYS_Delete( p_sys->issD );
-  //ISS_ZONE_SYS_Delete( p_sys->issZ );
+	ISS_CITY_SYS_Delete( sys->issC );
+	ISS_ROAD_SYS_Delete( sys->issR );
+	ISS_DUNGEON_SYS_Delete( sys->issD );
+  ISS_ZONE_SYS_Delete( sys->issZ );
 
 	// 本体を破棄
-	GFL_HEAP_FreeMemory( p_sys );
+	GFL_HEAP_FreeMemory( sys );
 
 	// 9, 10トラックの音量を元に戻す
   PMSND_ChangeBGMVolume( (1<<8)|(1<<9), 127 );
@@ -147,33 +147,33 @@ void ISS_SYS_Delete( ISS_SYS* p_sys )
 /**
  * @brief プレイヤーを監視し, 音量を調整する
  *
- * @param p_sys 操作対象のシステム
+ * @param sys 操作対象のシステム
  */
 //----------------------------------------------------------------------------
-void ISS_SYS_Update( ISS_SYS* p_sys )
+void ISS_SYS_Update( ISS_SYS* sys )
 { 
-	p_sys->frame++;
+	sys->frame++;
 
 	// 自転車チェック
-	CycleCheck( p_sys );
+	CycleCheck( sys );
 
 	// なみのりチェック
-	SurfingCheck( p_sys );
+	SurfingCheck( sys );
 
 	// BGM変更チェック
-	BGMChangeCheck( p_sys );
+	BGMChangeCheck( sys );
 
 	// 街ISS
-	ISS_CITY_SYS_Update( p_sys->issC );
+	ISS_CITY_SYS_Update( sys->issC );
 
 	// 道路ISS(主人公が30fpsで動作するため, 道路ISSもそれに合わせる)
-	if( p_sys->frame % 2 == 0 ) ISS_ROAD_SYS_Update( p_sys->issR ); 
+	if( sys->frame % 2 == 0 ) ISS_ROAD_SYS_Update( sys->issR ); 
 	
 	// ダンジョンISS
-	ISS_DUNGEON_SYS_Update( p_sys->issD );
+	ISS_DUNGEON_SYS_Update( sys->issD );
 
   // ゾーンISS
-  //ISS_ZONE_SYS_Update( p_sys->issZ );
+  ISS_ZONE_SYS_Update( sys->issZ );
 }
 	
 
@@ -181,26 +181,23 @@ void ISS_SYS_Update( ISS_SYS* p_sys )
 /**
  * @brief ゾーン切り替えを通知する
  *
- * @param p_sys       通知対象のISSシステム
+ * @param sys       通知対象のISSシステム
  * @param next_zone_id 新しいゾーンID
  */
 //---------------------------------------------------------------------------
-void ISS_SYS_ZoneChange( ISS_SYS* p_sys, u16 next_zone_id )
+void ISS_SYS_ZoneChange( ISS_SYS* sys, u16 next_zone_id )
 {
-	PLAYER_MOVE_FORM form;
-	BGM_INFO_SYS*    p_bgm_info_sys;
-
 	// 自転車 or なみのり中なら, ISSに変更はない
-	if( p_sys->cycle | p_sys->surfing ) return;
+	if( sys->cycle | sys->surfing ) return;
 
 	// 街ISS
-	ISS_CITY_SYS_ZoneChange( p_sys->issC, next_zone_id );
+	ISS_CITY_SYS_ZoneChange( sys->issC, next_zone_id );
 
 	// ダンジョンISS
-	ISS_DUNGEON_SYS_ZoneChange( p_sys->issD, next_zone_id );
+	ISS_DUNGEON_SYS_ZoneChange( sys->issD, next_zone_id );
 
   // ゾーンISS
-  //ISS_ZONE_SYS_ZoneChange( p_sys->issZ, next_zone_id );
+  ISS_ZONE_SYS_ZoneChange( sys->issZ, next_zone_id );
 
 	// DEBUG:
 	//OBATA_Printf( "ISS_SYS_ZoneChange()\n" );
@@ -218,29 +215,30 @@ void ISS_SYS_ZoneChange( ISS_SYS* p_sys, u16 next_zone_id )
  * @brief 主人公の自転車状態を監視する
  */
 //----------------------------------------------------------------------------
-void CycleCheck( ISS_SYS* p_sys )
+void CycleCheck( ISS_SYS* sys )
 {
-	PLAYER_WORK*     p_player;
+	PLAYER_WORK*     player;
 	PLAYER_MOVE_FORM form;
 
 	// 自機の状態を取得
-	p_player = GAMEDATA_GetMyPlayerWork( p_sys->pGameData );
-	form     = PLAYERWORK_GetMoveForm( p_player );
+	player = GAMEDATA_GetMyPlayerWork( sys->gdata );
+	form   = PLAYERWORK_GetMoveForm( player );
 
 	// 自転車に乗るのを検出したら, ISSを停止
-	if( ( p_sys->cycle == FALSE ) && ( form == PLAYER_MOVE_FORM_CYCLE ) )
+	if( ( sys->cycle == FALSE ) && ( form == PLAYER_MOVE_FORM_CYCLE ) )
 	{
-		p_sys->cycle = TRUE;
-		ISS_CITY_SYS_Off( p_sys->issC );
-		ISS_ROAD_SYS_Off( p_sys->issR );
-		ISS_DUNGEON_SYS_Off( p_sys->issD );
+		sys->cycle = TRUE;
+		ISS_CITY_SYS_Off( sys->issC );
+		ISS_ROAD_SYS_Off( sys->issR );
+		ISS_DUNGEON_SYS_Off( sys->issD );
+		ISS_ZONE_SYS_Off( sys->issZ );
 	}
 
 	// 自転車から降りるのを検出したら, ゾーン切り替え時と同じ処理
-	if( ( p_sys->cycle == TRUE ) && ( form != PLAYER_MOVE_FORM_CYCLE ) )
+	if( ( sys->cycle == TRUE ) && ( form != PLAYER_MOVE_FORM_CYCLE ) )
 	{
-		p_sys->cycle = FALSE;
-		ISS_SYS_ZoneChange( p_sys, PLAYERWORK_getZoneID( p_player ) );
+		sys->cycle = FALSE;
+		ISS_SYS_ZoneChange( sys, PLAYERWORK_getZoneID( player ) );
 	}
 }
 
@@ -249,29 +247,30 @@ void CycleCheck( ISS_SYS* p_sys )
  * @brief 主人公のなみのり状態を監視する
  */
 //----------------------------------------------------------------------------
-void SurfingCheck( ISS_SYS* p_sys )
+void SurfingCheck( ISS_SYS* sys )
 {
-	PLAYER_WORK*     p_player;
+	PLAYER_WORK*     player;
 	PLAYER_MOVE_FORM form;
 
 	// 自機の状態を取得
-	p_player = GAMEDATA_GetMyPlayerWork( p_sys->pGameData );
-	form     = PLAYERWORK_GetMoveForm( p_player );
+	player = GAMEDATA_GetMyPlayerWork( sys->gdata );
+	form     = PLAYERWORK_GetMoveForm( player );
 
 	// なみのり開始を検出したら, ISSを停止
-	if( ( p_sys->surfing == FALSE ) && ( form == PLAYER_MOVE_FORM_SWIM ) )
+	if( ( sys->surfing == FALSE ) && ( form == PLAYER_MOVE_FORM_SWIM ) )
 	{
-		p_sys->surfing = TRUE;
-		ISS_CITY_SYS_Off( p_sys->issC );
-		ISS_ROAD_SYS_Off( p_sys->issR );
-		ISS_DUNGEON_SYS_Off( p_sys->issD );
+		sys->surfing = TRUE;
+		ISS_CITY_SYS_Off( sys->issC );
+		ISS_ROAD_SYS_Off( sys->issR );
+		ISS_DUNGEON_SYS_Off( sys->issD );
+		ISS_ZONE_SYS_Off( sys->issZ );
 	}
 
 	// 自転車から降りるのを検出したら, ゾーン切り替え時と同じ処理
-	if( ( p_sys->surfing == TRUE ) && ( form != PLAYER_MOVE_FORM_SWIM ) )
+	if( ( sys->surfing == TRUE ) && ( form != PLAYER_MOVE_FORM_SWIM ) )
 	{
-		p_sys->surfing = FALSE;
-		ISS_SYS_ZoneChange( p_sys, PLAYERWORK_getZoneID( p_player ) );
+		sys->surfing = FALSE;
+		ISS_SYS_ZoneChange( sys, PLAYERWORK_getZoneID( player ) );
 	}
 } 
 
@@ -282,44 +281,55 @@ void SurfingCheck( ISS_SYS* p_sys )
  * @param 動かすシステム
  */
 //----------------------------------------------------------------------------
-void BGMChangeCheck( ISS_SYS* p_sys )
+void BGMChangeCheck( ISS_SYS* sys )
 {
-	BGM_INFO_SYS* p_bgm_info_sys = GAMEDATA_GetBGMInfoSys( p_sys->pGameData );
 	int bgm_no, iss_type;
+	BGM_INFO_SYS* bgm_info_sys = GAMEDATA_GetBGMInfoSys( sys->gdata );
+	PLAYER_WORK* player = GAMEDATA_GetMyPlayerWork( sys->gdata );
+  u16 zone_id = PLAYERWORK_getZoneID( player );
 
-	// 次に再生予定のBGMのISSタイプを取得
-	// (次のBGMが指定されていない場合, 現在再生中のBGMのISSタイプを取得する)
+	// 再生中のBGMのISSタイプを取得
 	bgm_no   = PMSND_GetBGMsoundNo();
-	iss_type = BGM_INFO_GetIssType( p_bgm_info_sys, bgm_no ); 
+	iss_type = BGM_INFO_GetIssType( bgm_info_sys, bgm_no ); 
 
   // BGMに変化がなければ何もしない
-  if( p_sys->bgmNo == bgm_no ) return;
+  if( sys->bgmNo == bgm_no ) return;
 
   // 各ISSシステムの起動状態を変更
   switch( iss_type )
   {
   case ISS_TYPE_LOAD:  // 道路
-      ISS_ROAD_SYS_On( p_sys->issR );
-      ISS_CITY_SYS_Off( p_sys->issC );
-      ISS_DUNGEON_SYS_Off( p_sys->issD );
+      ISS_ROAD_SYS_On( sys->issR );
+      ISS_CITY_SYS_Off( sys->issC );
+      ISS_DUNGEON_SYS_Off( sys->issD );
+      ISS_ZONE_SYS_Off( sys->issZ );
     break;
   case ISS_TYPE_CITY:  // 街
-      ISS_ROAD_SYS_Off( p_sys->issR );
-      ISS_CITY_SYS_On( p_sys->issC );
-      ISS_DUNGEON_SYS_Off( p_sys->issD );
+      ISS_ROAD_SYS_Off( sys->issR );
+      ISS_CITY_SYS_On( sys->issC );
+      ISS_DUNGEON_SYS_Off( sys->issD );
+      ISS_ZONE_SYS_Off( sys->issZ );
     break;
   case ISS_TYPE_DUNGEON:  // ダンジョン
-      ISS_ROAD_SYS_Off( p_sys->issR );
-      ISS_CITY_SYS_Off( p_sys->issC );
-      ISS_DUNGEON_SYS_On( p_sys->issD );
+      ISS_ROAD_SYS_Off( sys->issR );
+      ISS_CITY_SYS_Off( sys->issC );
+      ISS_DUNGEON_SYS_On( sys->issD );
+      ISS_ZONE_SYS_Off( sys->issZ );
     break;
+  case ISS_TYPE_ZONE:  // ゾーン
+      ISS_ROAD_SYS_Off( sys->issR );
+      ISS_CITY_SYS_Off( sys->issC );
+      ISS_DUNGEON_SYS_Off( sys->issD );
+      ISS_ZONE_SYS_On( sys->issZ, zone_id );
+      break;
   default:  // その他
-      ISS_ROAD_SYS_Off( p_sys->issR );
-      ISS_CITY_SYS_Off( p_sys->issC );
-      ISS_DUNGEON_SYS_Off( p_sys->issD );
+      ISS_ROAD_SYS_Off( sys->issR );
+      ISS_CITY_SYS_Off( sys->issC );
+      ISS_DUNGEON_SYS_Off( sys->issD );
+      ISS_ZONE_SYS_Off( sys->issZ );
     break;
   } 
 
   // BGM番号を記憶
-  p_sys->bgmNo = bgm_no;
+  sys->bgmNo = bgm_no;
 }

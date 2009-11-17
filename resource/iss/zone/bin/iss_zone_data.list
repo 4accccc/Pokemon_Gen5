@@ -1,3 +1,6 @@
 ISS_Z_DATA = \
-./bin/iss_zone_data_h01.bin \
-./bin/iss_zone_data_h03.bin 
+./bin/iss_zone_data_d04r0101.bin \
+./bin/iss_zone_data_d04r0201.bin \
+./bin/iss_zone_data_d04r0301.bin \
+./bin/iss_zone_data_d04r0401.bin \
+./bin/iss_zone_data_d04r0501.bin 
