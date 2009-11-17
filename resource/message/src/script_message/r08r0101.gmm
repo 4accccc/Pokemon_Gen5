@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-08T11:16:24"/>
+	<create user="matsumiya" host="W00207" date="2009-11-17T12:39:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -293,8 +293,7 @@
 
 
 	<row id="msg_mapscript_dummy">
-		<comment>？？？
-・橋ゲート</comment>
+		<comment>未使用ファイル</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
