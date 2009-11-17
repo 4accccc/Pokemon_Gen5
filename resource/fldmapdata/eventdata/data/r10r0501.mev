@@ -1,10 +1,10 @@
 #event data
-#save date:2009/11/14 14:36:37
+#save date:2009/11/17 20:23:39
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r10r0501.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/11/14 14:36:37
+#save date:2009/11/17 20:23:39
 2
 #hold event type:
 1
@@ -14,7 +14,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r10r0501.wms
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/11/14 14:36:37
+#save date:2009/11/17 20:23:39
 2
 #hold event type:
 1
@@ -24,7 +24,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r10r0501.wms
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/11/14 14:36:37
+#save date:2009/11/17 20:23:39
 2
 #hold event type:
 1
@@ -34,7 +34,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r10r0501.wms
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/11/14 14:36:37
+#save date:2009/11/17 20:23:39
 2
 #hold event type:
 1
@@ -50,7 +50,7 @@ DOOR_ID_R10R0401_R10R0501_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_NONE
+EXIT_TYPE_MAT
 #position
 -40 0 -120
 #event number: 1
@@ -63,7 +63,7 @@ DOOR_ID_R10R0401_R10R0501_EXIT05
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_NONE
+EXIT_TYPE_MAT
 #position
 24 0 -120
 #event number: 2
@@ -76,7 +76,7 @@ DOOR_ID_R10R0401_R10R0501_EXIT03
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_NONE
+EXIT_TYPE_MAT
 #position
 -8 0 -120
 #event number: 3
@@ -89,7 +89,7 @@ DOOR_ID_R10R0401_R10R0501_EXIT02
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_NONE
+EXIT_TYPE_MAT
 #position
 -24 0 -120
 #event number: 4
@@ -102,7 +102,7 @@ DOOR_ID_R10R0601_R10R0501_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_NONE
+EXIT_TYPE_MAT
 #position
 -40 0 120
 #event number: 5
@@ -115,7 +115,7 @@ DOOR_ID_R10R0601_R10R0501_EXIT05
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_NONE
+EXIT_TYPE_MAT
 #position
 24 0 120
 #event number: 6
@@ -128,7 +128,7 @@ DOOR_ID_R10R0601_R10R0501_EXIT03
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_NONE
+EXIT_TYPE_MAT
 #position
 -8 0 120
 #event number: 7
@@ -141,7 +141,7 @@ DOOR_ID_R10R0601_R10R0501_EXIT02
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_NONE
+EXIT_TYPE_MAT
 #position
 -24 0 120
 #event number: 8
@@ -154,7 +154,7 @@ DOOR_ID_R10R0401_R10R0501_EXIT04
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_NONE
+EXIT_TYPE_MAT
 #position
 8 0 -120
 #event number: 9
@@ -167,7 +167,7 @@ DOOR_ID_R10R0601_R10R0501_EXIT04
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_NONE
+EXIT_TYPE_MAT
 #position
 8 0 120
 #Map Event List Data End
