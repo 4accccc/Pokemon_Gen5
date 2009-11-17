@@ -26,8 +26,10 @@ struct _FLD_WIPEOBJ {
 	GFL_G3D_OBJ*	g3Dobj;
 };
 
+#if 0
 static void	drawObject(GFL_G3D_OBJ* g3Dobj, GFL_G3D_OBJSTATUS* pStatus);
 static void	rotateCalc(MtxFx33* pRotate, u16 offs);
+#endif
 //-------------------------------------------------------------------------------------
 FLD_WIPEOBJ* FLD_WIPEOBJ_Create( HEAPID heapID ) 
 {
@@ -79,15 +81,16 @@ void FLD_WIPEOBJ_Main( FLD_WIPEOBJ* fw, fx32 scale )
 		NNSG3dResMdl*	pMdl = NNS_G3dRenderObjGetResMdl
 						(GFL_G3D_RENDER_GetRenderObj(GFL_G3D_OBJECT_GetG3Drnd(fw->g3Dobj)) );
 
-		NNS_G3dMdlSetMdlLightEnableFlag(pMdl, 0, 0x0);
-		NNS_G3dMdlSetMdlPolygonID(pMdl, 0, 0);
-		NNS_G3dMdlSetMdlCullMode(pMdl, 0, GX_CULL_NONE); 
+		NNS_G3dMdlSetMdlLightEnableFlag(pMdl, 0, 0);
+		NNS_G3dMdlSetMdlPolygonID(pMdl, 0, 63);
+		NNS_G3dMdlSetMdlCullMode(pMdl, 0, GX_CULL_BACK); 
 		NNS_G3dMdlSetMdlAlpha(pMdl, 0, 20);
 		NNS_G3dMdlSetMdlPolygonMode(pMdl, 0, GX_POLYGONMODE_MODULATE);
 	}
 	GFL_G3D_DRAW_DrawObject(fw->g3Dobj, &status);
 }
 
+#if 0
 //--------------------------------------------------------------
 static void	rotateCalc(MtxFx33* pRotate, u16 offs)
 {
@@ -130,5 +133,6 @@ static void	drawObject(GFL_G3D_OBJ* g3Dobj, GFL_G3D_OBJSTATUS* pStatus)
 	NNS_G3dMdlSetMdlPolygonMode( pMdl, 0, GX_POLYGONMODE_SHADOW );
 	GFL_G3D_DRAW_DrawObject(g3Dobj, pStatus);
 }
+#endif
 
 
