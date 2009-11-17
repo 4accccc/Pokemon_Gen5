@@ -117,6 +117,8 @@ typedef struct FLD_MOVE_CAM_DATA_tag
 //------------------------------------------------------------------
 struct _FIELD_CAMERA {
 	HEAPID				heapID;			///<使用するヒープ指定ID
+  ARCHANDLE * init_param_handle;
+  ARCHANDLE * camera_area_handle;
 	GFL_G3D_CAMERA * g3Dcamera;			///<カメラ構造体へのポインタ
 
 	FIELD_CAMERA_TYPE	type;			///<カメラのタイプ指定
@@ -300,12 +302,20 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
   camera->angle_pitch = 0;
   camera->angle_len = 0x0078;
 
+
   // パースをカメラの情報から取得
   if( GFL_G3D_CAMERA_GetProjectionType( cam ) == GFL_G3D_PRJPERS ){
     fx32 fovyCos;
     GFL_G3D_CAMERA_GetfovyCos( cam, &fovyCos );
     camera->fovy = FX_AcosIdx( fovyCos );
   }
+
+  // ハンドルオープン
+  {
+    camera->init_param_handle   = GFL_ARC_OpenDataHandle(ARCID_FIELD_CAMERA, camera->heapID);
+    camera->camera_area_handle  = GFL_ARC_OpenDataHandle(ARCID_FLD_CAMSCRLL, camera->heapID);
+  }
+
 
   loadCameraParameters(camera);
 
@@ -324,6 +334,12 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
 //------------------------------------------------------------------
 void	FIELD_CAMERA_Delete( FIELD_CAMERA* camera )
 {
+  // ハンドルクローズ
+  {
+    GFL_ARC_CloseDataHandle(camera->init_param_handle);
+    GFL_ARC_CloseDataHandle(camera->camera_area_handle);
+  }
+  
   deleteTraceData( camera );
 	GFL_HEAP_FreeMemory( camera );
 }
@@ -479,11 +495,11 @@ static void loadCameraParameters(FIELD_CAMERA * camera)
 #ifdef PM_DEBUG
   if( param.depthType == DEPTH_TYPE_ZBUF)
   {
-    camera->debug_save_buffer_mode = 0; // CAMERA_DEBUG_BUFFER_MODE_ZBUFF_AUTO
+    camera->debug_save_buffer_mode = 2; // CAMERA_DEBUG_BUFFER_MODE_ZBUFF_AUTO
   }
   else
   {
-    camera->debug_save_buffer_mode = 1; // CAMERA_DEBUG_BUFFER_MODE_WBUFF_AUTO
+    camera->debug_save_buffer_mode = 3; // CAMERA_DEBUG_BUFFER_MODE_WBUFF_AUTO
   }
 #endif
 
@@ -498,10 +514,10 @@ static void loadCameraParameters(FIELD_CAMERA * camera)
   switch (param.depthType)
   {
   case DEPTH_TYPE_ZBUF:
-    GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
+    GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
     break;
   case DEPTH_TYPE_WBUF:
-    GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_W );
+    GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_W );
     break;
   }
   if( GFL_G3D_CAMERA_GetProjectionType(camera->g3Dcamera) == GFL_G3D_PRJPERS ){
@@ -523,19 +539,16 @@ static void loadInitialParameter( const FIELD_CAMERA* camera, FLD_CAMERA_PARAM *
 {
   enum {
     FILE_ID = NARC_field_camera_data_field_camera_bin,
-    ARC_ID  = ARCID_FIELD_CAMERA,
   };
-  ARCHANDLE * handle = GFL_ARC_OpenDataHandle(ARC_ID, camera->heapID);
-  u16 size = GFL_ARC_GetDataSizeByHandle(handle, FILE_ID);
+  u16 size = GFL_ARC_GetDataSizeByHandle(camera->init_param_handle, FILE_ID);
   if ( camera->type * sizeof(FLD_CAMERA_PARAM) >= size )
   {
     OS_TPrintf("カメラタイプ（%d）が指定できません\n", camera->type);
     GF_ASSERT(0);
   }
-  GFL_ARC_LoadDataOfsByHandle(handle, FILE_ID,
+  GFL_ARC_LoadDataOfsByHandle(camera->init_param_handle, FILE_ID,
       camera->type * sizeof(FLD_CAMERA_PARAM), sizeof(FLD_CAMERA_PARAM), result);
 
-	GFL_ARC_CloseDataHandle(handle);
 }
 
 //============================================================================================
@@ -2314,6 +2327,32 @@ FIELD_CAMERA_AREA_CONT FIELD_CAMERA_GetCameraAreaCont( const FIELD_CAMERA * came
   GF_ASSERT( camera );
   GF_ASSERT( camera->camera_area_num > idx );
   return camera->camera_area[idx].area_cont;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラエリアの読み込み
+ *
+ *	@param	camera    カメラワーク
+ *	@param	area_id   エリアID
+ *	@param	heapID    ヒープID
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_LoadCameraArea( FIELD_CAMERA * camera, u32 area_id, HEAPID heapID )
+{
+  FIELD_CAMERA_AREA_SET* p_rect;
+  GF_ASSERT( camera );
+
+  p_rect = GFL_ARCHDL_UTIL_Load( camera->camera_area_handle, 
+      area_id, 
+      FALSE, GFL_HEAP_LOWID(heapID) );
+
+  TOMOYA_Printf( "camera area rect x_min[%d] x_max[%d] z_min[%d] z_max[%d]\n", 
+      p_rect->buff[0].rect.x_min, p_rect->buff[0].rect.x_max,
+      p_rect->buff[0].rect.z_min, p_rect->buff[0].rect.z_max );
+  
+  FIELD_CAMERA_SetCameraArea( camera, p_rect );
+  GFL_HEAP_FreeMemory( p_rect );
 }
 
 //----------------------------------------------------------------------------

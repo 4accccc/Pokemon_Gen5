@@ -328,6 +328,7 @@ extern u32 FIELD_CAMERA_GetCameraAreaNum( const FIELD_CAMERA * camera );
 extern FIELD_CAMERA_AREA_TYPE FIELD_CAMERA_GetCameraAreaType( const FIELD_CAMERA * camera, u32 idx );
 extern FIELD_CAMERA_AREA_CONT FIELD_CAMERA_GetCameraAreaCont( const FIELD_CAMERA * camera, u32 idx );
 
+extern void FIELD_CAMERA_LoadCameraArea( FIELD_CAMERA * camera, u32 area_id, HEAPID heapID );
 
 //-----------------------------------------------------------------------------
 /**

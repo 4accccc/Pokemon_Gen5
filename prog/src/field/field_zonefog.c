@@ -70,6 +70,8 @@ struct _FIELD_ZONEFOGLIGHT
 
   u16 fog_list_max;
   u16 light_list_max;
+
+  ARCHANDLE* p_handle;
 };
 
 //-----------------------------------------------------------------------------
@@ -97,10 +99,12 @@ FIELD_ZONEFOGLIGHT* FIELD_ZONEFOGLIGHT_Create( u32 heapID )
 
 	p_sys->light = FIELD_ZONEFOGLIGHT_DATA_NONE;
 
-  p_sys->p_fog_list = GFL_ARC_UTIL_LoadEx( ARCID_ZONEFOG_TABLE, NARC_field_fog_table_zonefog_table_bin, FALSE, heapID, &size );
+  p_sys->p_handle = GFL_ARC_OpenDataHandle( ARCID_ZONEFOG_TABLE, heapID );
+
+  p_sys->p_fog_list = GFL_ARCHDL_UTIL_LoadEx( p_sys->p_handle, NARC_field_fog_table_zonefog_table_bin, FALSE, heapID, &size );
   p_sys->fog_list_max = size / sizeof(ZONE_FOG_DATA);
   
-  p_sys->p_light_list = GFL_ARC_UTIL_LoadEx( ARCID_ZONELIGHT_TABLE, NARC_field_zone_light_light_list_bin, FALSE, heapID, &size );
+  p_sys->p_light_list = GFL_ARCHDL_UTIL_LoadEx( p_sys->p_handle, NARC_field_zone_light_light_list_bin, FALSE, heapID, &size );
   p_sys->light_list_max = size / sizeof(ZONE_LIGHT_DATA);
   
 
@@ -116,6 +120,8 @@ FIELD_ZONEFOGLIGHT* FIELD_ZONEFOGLIGHT_Create( u32 heapID )
 //-----------------------------------------------------------------------------
 void FIELD_ZONEFOGLIGHT_Delete( FIELD_ZONEFOGLIGHT* p_sys )
 {
+  GFL_ARC_CloseDataHandle( p_sys->p_handle );
+  
   GFL_HEAP_FreeMemory( p_sys->p_fog_list );
   GFL_HEAP_FreeMemory( p_sys->p_light_list );
   
@@ -179,7 +185,7 @@ void FIELD_ZONEFOGLIGHT_Load( FIELD_ZONEFOGLIGHT* p_sys, u32 fogno, u32 lightno,
 
 	if( fogno != FIELD_ZONEFOGLIGHT_DATA_NONE )
 	{
-		p_sys->p_data = GFL_ARC_UTIL_Load( ARCID_ZONEFOG_TABLE, fogno, FALSE, heapID );
+		p_sys->p_data = GFL_ARCHDL_UTIL_Load( p_sys->p_handle, fogno, FALSE, heapID );
 	}
 	p_sys->light	= lightno;
 }

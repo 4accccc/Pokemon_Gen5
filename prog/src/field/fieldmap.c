@@ -2538,17 +2538,7 @@ static void setupCameraArea( FIELDMAP_WORK *fieldWork, u32 zone_id, HEAPID heapI
 
   if ( cameraarea != ZONEDATA_NO_CAMERA_AREA_ID )
   {
-    FIELD_CAMERA_AREA_SET* p_rect;
-    p_rect = GFL_ARC_UTIL_Load( ARCID_FLD_CAMSCRLL, 
-        cameraarea, 
-        FALSE, heapID );
-
-    TOMOYA_Printf( "camera area rect x_min[%d] x_max[%d] z_min[%d] z_max[%d]\n", 
-        p_rect->buff[0].rect.x_min, p_rect->buff[0].rect.x_max,
-        p_rect->buff[0].rect.z_min, p_rect->buff[0].rect.z_max );
-    
-    FIELD_CAMERA_SetCameraArea( fieldWork->camera_control, p_rect );
-    GFL_HEAP_FreeMemory( p_rect );
+    FIELD_CAMERA_LoadCameraArea( fieldWork->camera_control, cameraarea, heapID );
   }
   else
   {
