@@ -33,8 +33,13 @@ TARGETDIR	= $(PROJECT_ARCDIR)
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)\macro_define
 
+ARC_TARGET = arc_target_data
 
-include nsbdata
+include $(ARC_TARGET)
+
+XLS_DATA = fld3d_ci.xls
+CSV_DATA = fld3d_ci.csv
+FLD_CI_LIST = fld_ci.lst
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -90,15 +95,30 @@ $(TARGETDIR)/$(targetname2).narc:  $(targetname2).narc
 
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
-# コピー先のnarcが古い場合実行する
-$(targetname).narc: $(NSB_DATA)
-	nnsarc -cl -l -n -i $(NARCNAME) -S fld_ci.lst > arc_rsult.txt
 
-$(targetname2).narc: fld3d_ci.xls
-	ruby $(XLS_CNV) -c fld3d_ci.xls > fld3d_ci.csv
-	ruby setupdat.rb fld3d_ci.csv fld_ci.lst
+$(CSV_DATA): $(XLS_DATA)
+#	@echo __CVS CONVERT
+	ruby $(XLS_CNV) -c $(XLS_DATA) > $(CSV_DATA)
+
+$(FLD_CI_LIST): $(CSV_DATA)
+#	@echo __NAKE ARC TARGET LST
+	ruby make_arc_target_lst.rb $(CSV_DATA) $(FLD_CI_LIST)
+
+$(ARC_TARGET): $(CSV_DATA)
+#	@echo __NAKE ARC TARGET
+	ruby make_arc_target.rb $(CSV_DATA) $(ARC_TARGET)
+
+# コピー先のnarcが古い場合実行する
+$(targetname).narc: $(ARC_TARGET) $(ARC_TARGET_DATA)
+#	@echo __NAKE TARGET1
+	nnsarc -cl -l -n -i $(NARCNAME) -S $(FLD_CI_LIST) > arc_rsult.txt
+
+$(targetname2).narc: $(CSV_DATA)
+#	@echo __NAKE TARGET2
+	ruby setupdat.rb $(CSV_DATA) $(FLD_CI_LIST)
 	nnsarc -cl -l -n -i $(NARCNAME2) -S ci_list > arc_rsult2.txt
 
+#3Dアニメコンバート
 %.nsbmd: data/%.imd
 	@g3dcvtr $<
 
@@ -110,6 +130,12 @@ $(targetname2).narc: fld3d_ci.xls
 
 %.nsbma: data/%.ima
 	@g3dcvtr $<
+
+%.nsbtp: data/%.itp
+	@g3dcvtr $<
+
+%.nsbva: data/%.iva
+	@g3dcvtr $<	
 	
 endif
 
