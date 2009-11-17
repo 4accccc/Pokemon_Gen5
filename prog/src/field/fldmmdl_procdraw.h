@@ -29,4 +29,9 @@ extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActPCWoman;
 extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_TsurePoke;
 extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_TsurePokeFly;
 
+//--------------------------------------------------------------
+//  fldmmdl_draw_1.c
+//--------------------------------------------------------------
+extern const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_Model;
+
 #endif	//MMDL_PROCDRAW_H_FILE

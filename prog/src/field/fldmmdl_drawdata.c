@@ -33,6 +33,7 @@ const MMDL_DRAW_PROC_LIST * const
   &DATA_MMDL_DRAWPROCLIST_BlActPCWoman, //PCお姉さん
   &DATA_MMDL_DRAWPROCLIST_TsurePoke, //連れ歩きポケモン
   &DATA_MMDL_DRAWPROCLIST_TsurePokeFly, //連れ歩きポケモン 縦揺れ付き
+  &DATA_MMDL_DRAWPROCLIST_Model, //モデル描画
 };
 
 //======================================================================

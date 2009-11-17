@@ -167,11 +167,11 @@ enum {
   ///DTCMエリアのサイズ
   FIELD_3D_DTCM_SIZE    =   0x1000, 
 
-///billboardActで使用するリソースの最大設定可能数
+  ///billboardActで使用するリソースの最大設定可能数
   FIELD_G3D_BBDACT_RESMAX	    =   64,
-///billboardActで使用するオブジェクトの最大設定可能数
+  ///billboardActで使用するオブジェクトの最大設定可能数
   FIELD_G3D_BBDACT_ACTMAX	    =   256,
-
+  
   ///<セルアクターリソース最大
   FIELD_CLSYS_RESOUCE_MAX		  =   64,
 
@@ -179,6 +179,11 @@ enum {
   FIELD_DEFAULT_FOG_COLOR		  =   (GX_RGB(31,31,31)),
   ///背景色
   FIELD_DEFAULT_BG_COLOR	    =   (GX_RGB(30,31,31)),
+  
+  ///FLD_G3DOBJ リソース最大
+  FIELD_G3DOBJ_RES_MAX = 64,
+  ///FLD_G3DOBJ オブジェクト最大
+  FIELD_G3DOBJ_OBJ_MAX = 64,
 };
 
 ///g3Dutilで使用するリソースの最大設定可能数
@@ -301,7 +306,8 @@ struct _FIELDMAP_WORK
   SODATEYA* sodateya;  // 育て屋
 
   DRAW3DMODE Draw3DMode;
-
+  
+  FLD_G3DOBJ_CTRL *fieldG3dObjCtrl;
 };
 
 fx32	fldWipeScale;
@@ -1830,6 +1836,11 @@ static void fldmap_G3D_Load( FIELDMAP_WORK *fieldWork )
     GFL_BBD_SYS * bbdsys = GFL_BBDACT_GetBBDSystem(fieldWork->bbdActSys);
     GFL_BBD_SetOrigin(bbdsys, GFL_BBD_ORIGIN_BOTTOM);
   }
+  
+  //G3dObj作成
+  fieldWork->fieldG3dObjCtrl = FLD_G3DOBJ_CTRL_Create(
+      fieldWork->heapID, FIELD_G3DOBJ_RES_MAX, FIELD_G3DOBJ_OBJ_MAX );
+  
 	//カメラ作成
 	fieldWork->g3Dcamera = GFL_G3D_CAMERA_CreateDefault(
 			&fldmapdata_cameraPos, &fldmapdata_cameraTarget, fieldWork->heapID );
@@ -1855,7 +1866,7 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
 {
 	FLDMAPPER_Main( fieldWork->g3Dmapper );
 	GFL_BBDACT_Main( fieldWork->bbdActSys );
-
+  
   // NOGRID動作制御
   FLDNOGRID_MAPPER_Main( fieldWork->nogridMapper );
 	
@@ -2011,6 +2022,7 @@ static void fldmap_G3D_Unload( FIELDMAP_WORK * fieldWork )
 	GFL_G3D_LIGHT_Delete( fieldWork->g3Dlightset );
 	GFL_G3D_CAMERA_Delete( fieldWork->g3Dcamera );
 	GFL_BBDACT_DeleteSys( fieldWork->bbdActSys );
+  FLD_G3DOBJ_CTRL_Delete( fieldWork->fieldG3dObjCtrl );
 }
 
 //--------------------------------------------------------------
@@ -2027,6 +2039,10 @@ static void	fldmap_G3D_VBlank( GFL_TCB *tcb, void *work )
   
   if( fieldWork->fldMMdlSys != NULL ){
     MMDLSYS_VBlankProc( fieldWork->fldMMdlSys );
+  }
+  
+  if( fieldWork->fieldG3dObjCtrl != NULL ){
+    FLD_G3DOBJ_CTRL_Trans( fieldWork->fieldG3dObjCtrl );
   }
 
 	GFL_CLACT_SYS_VBlankFunc();	//セルアクターVBlank
@@ -2097,10 +2113,10 @@ static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork )
 
 	MMDLSYS_SetupProc( fmmdlsys,	//動作モデルシステム　セットアップ
 		fieldWork->heapID, fieldWork->g3Dmapper, fieldWork->nogridMapper );
-		
+	
 	MMDL_BLACTCONT_Setup(		//動作モデルビルボード　セットアップ
 		fieldWork->fldMMdlSys, fieldWork->bbdActSys, 32 );
-	
+
 	{ //ビルボードリソース登録
 	  MMDL_LIST mlist;
 	  int list_area_id = 0; //仮
@@ -2108,7 +2124,10 @@ static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork )
 	  MMDL_BLACTCONT_AddResourceTex(
 	    fieldWork->fldMMdlSys, mlist.id_list, mlist.count );
 	}
-  
+	
+  MMDL_G3DOBJCONT_Setup( //動作モデルオブジェクト　セットアップ
+      fieldWork->fldMMdlSys, fieldWork->fieldG3dObjCtrl );
+
 	//動作モデル描画　セットアップ
   {
     const u16 *pAngle = FIELD_CAMERA_GetAngleYawAddress( fieldWork->camera_control );
@@ -2832,7 +2851,9 @@ static void Draw3DNormalMode( FIELDMAP_WORK * fieldWork )
     NNS_G3dGeFlushBuffer(); // 転送まち
 
     FLDEFF_CTRL_Draw( fieldWork->fldeff_ctrl );
-  
+    
+    FLD_G3DOBJ_CTRL_Draw( fieldWork->fieldG3dObjCtrl );
+    
     GFL_BBDACT_Draw(
         fieldWork->bbdActSys, fieldWork->g3Dcamera, fieldWork->g3Dlightset );
 

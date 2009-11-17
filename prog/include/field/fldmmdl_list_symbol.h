@@ -1,6 +1,6 @@
 //動作モデル管理表で使用するシンボル郡
 //define定義が可能です。数値は10進もしくは16進表記が有効です。
-//"//"以降の文字列をコメントと判断します。
+//行間"//"以降の文字列をコメントと判断します。
 
 //DRAWTYPE 表示タイプで指定するシンボルです。
 #define DRAWTYPE_NON 0 //表示無し
@@ -20,6 +20,7 @@
 #define PROC_PCWOMAN 9 //PC姉
 #define PROC_POKE 10 //連れ歩きポケモン
 #define PROC_POKE_FLY 11 //連れ歩きポケモン 浮遊演出
+#define PROC_MODEL 12 //ポリゴンモデル
 
 //FOOTMARK 足跡種類で指定するシンボルです。
 #define FOOTMARK_NON 0 //足跡無し

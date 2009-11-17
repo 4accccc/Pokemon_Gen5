@@ -70,12 +70,13 @@ struct _TAG_MMDLSYS
 	u16 dummy;						///<余り
 	const FLDMAPPER *pG3DMapper;	///<FLDMAPPER
 	FLDNOGRID_MAPPER *pNOGRIDMapper;	///<FLDNOGRID_MAPPER
-
+  
 	void *pTCBSysWork;				///<TCBワーク
 	GFL_TCBSYS *pTCBSys;			///<TCBSYS*
 	
 	MMDL_BLACTCONT *pBlActCont;	///<MMDL_BLACTCONT
-	
+  MMDL_G3DOBJCONT *pObjCont; ///<MMDL_G3DOBJCONT
+
 	u8 *pOBJCodeParamBuf;			///<OBJCODE_PARAMバッファ
 	const OBJCODE_PARAM *pOBJCodeParamTbl; ///<OBJCODE_PARAM
   
@@ -84,6 +85,8 @@ struct _TAG_MMDLSYS
   MMDL_ROCKPOS *rockpos; ///<かいりき岩座標 セーブデータポインタ
   
   const u16 *targetCameraAngleYaw; //グローバルで参照するカメラ
+  
+  ARCHANDLE *arcH_res; ///<動作モデルリソースアーカイブハンドル
 };
 
 #define MMDLSYS_SIZE (sizeof(MMDLSYS)) ///<MMDLSYSサイズ
@@ -135,7 +138,7 @@ struct _TAG_MMDL
 	u32 old_attr;				///<過去のマップアトリビュート
 	
 	GFL_TCB *pTCB;				///<動作関数TCB*
-	const MMDLSYS *pMMdlSys;///<MMDLSYS*
+	MMDLSYS *pMMdlSys;///<MMDLSYS*
 	
 	const MMDL_MOVE_PROC_LIST *move_proc_list; ///<動作関数リスト
 	const MMDL_DRAW_PROC_LIST *draw_proc_list; ///<描画関数リスト
@@ -225,7 +228,7 @@ static void MMdl_SetHeaderBefore(
 static void MMdl_SetHeaderAfter(
 	MMDL * mmdl, const MMDL_HEADER *head, void *sys );
 static void MMdl_SetHeaderPos(MMDL *mmdl,const MMDL_HEADER *head);
-static void MMdl_InitWork( MMDL * mmdl, const MMDLSYS *sys );
+static void MMdl_InitWork( MMDL * mmdl, MMDLSYS *sys );
 static void MMdl_InitCallMoveProcWork( MMDL * mmdl );
 static void MMdl_InitMoveWork( const MMDLSYS *fos, MMDL * mmdl );
 static void MMdl_InitMoveProc( const MMDLSYS *fos, MMDL * mmdl );
@@ -243,7 +246,7 @@ static void MMdl_TCB_DrawProc( MMDL * mmdl );
 static void MMdl_SaveData_SaveMMdl(
 	const MMDL *mmdl, MMDL_SAVEWORK *save );
 static void MMdl_SaveData_LoadMMdl(
-	MMDL *mmdl, const MMDL_SAVEWORK *save, const MMDLSYS *fos );
+	MMDL *mmdl, const MMDL_SAVEWORK *save, MMDLSYS *fos );
 
 //MMDLSYS 設定、参照
 static void MMdlSys_OnStatusBit(
@@ -360,11 +363,11 @@ void MMDLSYS_SetupProc(
 		heapID, GFL_TCB_CalcSystemWorkSize(fos->mmdl_max) );
 	fos->pTCBSys = GFL_TCB_Init( fos->mmdl_max, fos->pTCBSysWork );
 
-
+  fos->arcH_res = GFL_ARC_OpenDataHandle( ARCID_MMDL_RES, heapID );
+  
   // ノーグリッド移動設定
 	fos->pNOGRIDMapper = pNOGRIDMapper;
 	MMdlSys_OnStatusBit( fos, MMDLSYS_STABIT_MOVE_INIT_COMP );
-
 }
 
 //--------------------------------------------------------------
@@ -379,6 +382,7 @@ static void MMdlSys_DeleteProc( MMDLSYS *fos )
 	MMdlSys_DeleteOBJCodeParam( fos );
 	GFL_TCB_Exit( fos->pTCBSys );
 	GFL_HEAP_FreeMemory( fos->pTCBSysWork );
+  GFL_ARC_CloseDataHandle( fos->arcH_res );
 	MMdlSys_OffStatusBit( fos, MMDLSYS_STABIT_MOVE_INIT_COMP );
 }
 
@@ -461,7 +465,7 @@ void MMDLSYS_SetupDrawProc( MMDLSYS *fos, const u16 *angleYaw )
  */
 //--------------------------------------------------------------
 MMDL * MMDLSYS_AddMMdl(
-	const MMDLSYS *fos, const MMDL_HEADER *header, int zone_id )
+	MMDLSYS *fos, const MMDL_HEADER *header, int zone_id )
 {
 	MMDL *mmdl;
 	MMDL_HEADER header_data = *header;
@@ -517,7 +521,7 @@ MMDL * MMDLSYS_AddMMdl(
  * @retval MMDL 追加されたMMDL*
  */
 //--------------------------------------------------------------
-MMDL * MMDLSYS_AddMMdlParam( const MMDLSYS *fos,
+MMDL * MMDLSYS_AddMMdlParam( MMDLSYS *fos,
     s16 gx, s16 gz, u16 dir,
     u16 id, u16 code, u16 move, int zone_id )
 {
@@ -550,7 +554,7 @@ MMDL * MMDLSYS_AddMMdlParam( const MMDLSYS *fos,
  * @note イベントフラグが立っているヘッダーは追加しない。
  */
 //--------------------------------------------------------------
-void MMDLSYS_SetMMdl( const MMDLSYS *fos,
+void MMDLSYS_SetMMdl( MMDLSYS *fos,
 	const MMDL_HEADER *header, int zone_id, int count, EVENTWORK *eventWork )
 {
 	GF_ASSERT( count > 0 );
@@ -586,7 +590,7 @@ void MMDLSYS_SetMMdl( const MMDLSYS *fos,
  * @note イベントフラグが立っているヘッダーは追加しない。
  */
 //--------------------------------------------------------------
-MMDL * MMDLSYS_AddMMdlHeaderID( const MMDLSYS *fos,
+MMDL * MMDLSYS_AddMMdlHeaderID( MMDLSYS *fos,
 	const MMDL_HEADER *header, int zone_id, int count, EVENTWORK *eventWork,
   u16 objID )
 {
@@ -806,7 +810,7 @@ static void MMdl_SetHeaderPos( MMDL *mmdl, const MMDL_HEADER *head )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdl_InitWork( MMDL * mmdl, const MMDLSYS *sys )
+static void MMdl_InitWork( MMDL * mmdl, MMDLSYS *sys )
 {
 	MMDL_OnStatusBit( mmdl,
 		MMDL_STABIT_USE |				//使用中
@@ -1142,7 +1146,7 @@ static void MMdl_SaveData_SaveMMdl(
  */
 //--------------------------------------------------------------
 static void MMdl_SaveData_LoadMMdl(
-	MMDL *mmdl, const MMDL_SAVEWORK *save, const MMDLSYS *fos )
+	MMDL *mmdl, const MMDL_SAVEWORK *save, MMDLSYS *fos )
 {
 	MMdl_ClearWork( mmdl );
 
@@ -1529,6 +1533,18 @@ GFL_TCBSYS * MMDLSYS_GetTCBSYS( MMDLSYS *fos )
 
 //--------------------------------------------------------------
 /**
+ * MMDLSYS リソースアーカイブハンドル取得
+ * @param fos MMDLSYS*
+ * @retval ARCHANDLE*
+ */
+//--------------------------------------------------------------
+ARCHANDLE * MMDLSYS_GetResArcHandle( MMDLSYS *fos )
+{
+  return( fos->arcH_res );
+}
+
+//--------------------------------------------------------------
+/**
  * MMDLSYS MMDL_BLACTCONTセット
  * @param	mmdlsys	MMDLSYS
  * @retval	nothing
@@ -1551,6 +1567,34 @@ MMDL_BLACTCONT * MMDLSYS_GetBlActCont( MMDLSYS *mmdlsys )
 {
 	GF_ASSERT( mmdlsys->pBlActCont != NULL );
 	return( mmdlsys->pBlActCont );
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDLSYS MMDL_G3DOBJCONTセット
+ * @param	mmdlsys	MMDLSYS
+ * @param objcont MMDL_G3DOBJCONT*
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void MMDLSYS_SetG3dObjCont(
+	MMDLSYS *mmdlsys, MMDL_G3DOBJCONT *objcont )
+{
+  mmdlsys->pObjCont = objcont;
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDLSYS MMDL_G3DOBJCONT取得
+ * @param	mmdlsys	MMDLSYS
+ * @param objcont MMDL_G3DOBJCONT*
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+MMDL_G3DOBJCONT * MMDLSYS_GetG3dObjCont( MMDLSYS *mmdlsys )
+{
+  GF_ASSERT( mmdlsys->pObjCont != NULL );
+  return( mmdlsys->pObjCont );
 }
 
 //--------------------------------------------------------------
@@ -2164,7 +2208,7 @@ u16 MMDL_GetDrawStatus( const MMDL * mmdl )
  * @retval	MMDLSYS	MMDLSYS *
  */
 //--------------------------------------------------------------
-const MMDLSYS * MMDL_GetMMdlSys( const MMDL *mmdl )
+MMDLSYS * MMDL_GetMMdlSys( const MMDL *mmdl )
 {
 	return( mmdl->pMMdlSys );
 }
@@ -4524,6 +4568,32 @@ const OBJCODE_PARAM * MMDL_GetOBJCodeParam(
 {
 	const MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
 	return( MMDLSYS_GetOBJCodeParam(mmdlsys,code) );
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDL OBJCODE_PARAMからOBJCODE_PARAM_BUF_BBD取得
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+const OBJCODE_PARAM_BUF_BBD * MMDL_GetOBJCodeParamBufBBD(
+    const OBJCODE_PARAM *param )
+{
+  return (const OBJCODE_PARAM_BUF_BBD*)param->buf;
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDL OBJCODE_PARAMからOBJCODE_PARAM_BUF_MDL取得
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+const OBJCODE_PARAM_BUF_MDL * MMDL_GetOBJCodeParamBufMDL(
+    const OBJCODE_PARAM *param )
+{
+  return (const OBJCODE_PARAM_BUF_MDL*)param->buf;
 }
 
 //======================================================================

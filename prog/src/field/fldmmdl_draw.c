@@ -75,9 +75,14 @@ void MMDLSYS_DeleteDraw( MMDLSYS *fos )
 	MMDLSYS_StatusBit_OFF( fos, MMDLSYS_STABIT_DRAW_INIT_COMP );
 	MMdlSys_ArcHandleClose( fos );
 	#else
-	if( MMDLSYS_GetBlActCont(fos) != NULL ){
+  if( MMDLSYS_GetBlActCont(fos) != NULL ){
 		MMDL_BLACTCONT_Release( fos );
 	}
+
+  if( MMDLSYS_GetG3dObjCont(fos) != NULL ){
+    MMDL_G3DOBJCONT_Delete( fos );
+  }
+  
 	MMDLSYS_SetCompleteDrawInit( fos, FALSE );
 	#endif
 }

@@ -19,16 +19,17 @@ load "rbdefine"
 #
 #  パラメーターフォーマット
 #  0-1 OBJコード
+#  2  表示タイプ
+#  3  処理関数
+#  4  影表示
+#  5  足跡種類
+#  6  映り込み
+#  7  モデルサイズ
+#  8  テクスチャサイズ
+#  9  アニメID
+#  10 性別
+#
 #  2-3 リソースアーカイブインデックス
-#  4  表示タイプ
-#  5  処理関数
-#  6  影表示
-#  7  足跡種類
-#  8  映り込み
-#  9  モデルサイズ
-#  10  テクスチャサイズ
-#  11  アニメID
-#  12 性別
 #  13-15 4bit差分用ダミー
 #=======================================================================
 
@@ -60,14 +61,16 @@ STR_CODEEND_BBD = "OBJCODEEND_BBD" #コード終了 ビルボード
 STR_CODESTART_POKE = "OBJCODESTART_TPOKE" #コード開始 ポケモン
 STR_CODEEND_POKE = "OBJCODEEND_TPOKE" #コード終了 ポケモン
 
+STR_CODESTART_MDL = "OBJCODESTART_MDL" #コード開始 モデル
+STR_CODEEND_MDL = "OBJCODEEND_MDL" #コード開始 モデル
+
 STR_CODETOTAL = "OBJCODETOTAL" #コード総数
 STR_CODEMAX = "OBJCODEMAX" #コード最大
-
-STR_DRAWTYPE_NON = "DRAWTYPE_NON" #表示タイプ無し
 
 #コード開始位置
 CODE_STARTNUM_BBD = 0x0000 #ビルボード
 CODE_STARTNUM_POKE = 0x1000 #ポケモン
+CODE_STARTNUM_MDL = 0x2000 #モデル
 CODE_MAX = 0xffff #最大コード
 
 #表示コード文字列 一文字列最長 ヌル文字含む
@@ -82,6 +85,7 @@ ARGVNO_FNAME_CODESTR = 4 #コード文字列ファイルネーム
 ARGVNO_FNAME_SYMNBOL = 5 #シンボルファイルネーム
 ARGVNO_FLAG_SELRES = 6 #リソース選択
 ARGVNO_FNAME_LISTCSV_POKE = 7 #リストcsvファイルネーム　ポケモン
+ARGVNO_FNAME_LISTCSV_MDL = 8 #リストcsvファイルネーム　モデル
 
 #=======================================================================
 #  関数
@@ -91,7 +95,7 @@ ARGVNO_FNAME_LISTCSV_POKE = 7 #リストcsvファイルネーム　ポケモン
 #-----------------------------------------------------------------------
 def error_end(
   path_delfile0, path_delfile1, path_delfile2,
-  file0, file1, file2, file3, file4, file5, file6 )
+  file0, file1, file2, file3, file4, file5, file6, file7 )
   printf( "ERROR fldmmdl list convert\n" )
   file0.close
   file1.close
@@ -99,9 +103,46 @@ def error_end(
   file3.close
   file4.close
   file5.close
+  file6.close
+  file7.close
   File.delete( path_delfile0 )
   File.delete( path_delfile1 )
   File.delete( path_delfile2 )
+end
+
+#-----------------------------------------------------------------------
+#  ファイルを指定の値で埋める
+#-----------------------------------------------------------------------
+def file_write_filldata( file, size, data )
+  i = 0
+  ary = Array( data )
+  
+  while i < size
+    file.write( ary.pack("C*") )
+    i = i + 1
+  end
+end
+
+#-----------------------------------------------------------------------
+#  ニトロG3Dファイル　コンバート後のファイル名を返す
+#-----------------------------------------------------------------------
+def nitro_anime_convert_name( name )
+  extname = File.extname( name )
+  
+  if( extname == "\.itp" )
+    name = name.gsub( "\.itp", "_nsbtp" )
+  elsif( extname == "\.ica" )
+    name = name.gsub( "\.ica", "_nsbca" )
+  elsif( extname == "\.ima" )
+    name = name.gsub( "\.ima", "_nsbma" )
+  elsif( extname == "\.ita" )
+    name = name.gsub( "\.ita", "_nsbta" )
+  elsif( extname == "\.iva" )
+    name = name.gsub( "\.iva", "_nsbva" )
+  end
+
+  name = sprintf( "_%s", name ) #例 test_nsbtx -> _test_nsbtx
+  return name
 end
 
 #-----------------------------------------------------------------------
@@ -154,12 +195,11 @@ def arcidx_search( idxfile, search )
   num = RET_ERROR
   
   search = search.strip #先頭末尾の空白、改行削除
-  check = sprintf( "_%s_", search )
   
   while line = idxfile.gets
     if( line =~ /^enum.*\{/ )
       while line = idxfile.gets
-        if( line.index(check) != nil )
+        if( line.index(search) != nil )
           /(\s[0-9]+)/ =~ line
           str = $1
           num = str.to_i
@@ -183,7 +223,7 @@ end
 #  戻り値　RET_FALSE=異常終了
 #-----------------------------------------------------------------------
 def file_code_write_main(
-  file_code, file_codestr, file_listcsv, code_no, count )
+  file_code, file_codestr, file_listcsv, code_no, count, code_num, start_no )
   start_code = code_no
   
   pos = file_listcsv.pos
@@ -203,14 +243,14 @@ def file_code_write_main(
     
     str = line.split( "," )
     
-    file_code.printf( "#define %s (0x%x) //%d(total %d) %s\n",
-      str[RBDEF_NUM_CODE], code_no, code_no, count, str[RBDEF_NUM_CODENAME] );
+    file_code.printf( "#define %s (0x%x) //%d(%d,total %d) %s\n",
+      str[code_num], code_no, code_no, code_no-start_no, count, str[RBDEF_NUM_CODENAME]  )
     
     codestr = Array.new( CODESTRBUF );  #文字列バッファ
     codestr.fill( "\000".unpack('C*'), 0..CODESTRBUF ) #ヌル文字で埋め尽くし
     
     i = 0
-    strbuf = str[RBDEF_NUM_CODE]
+    strbuf = str[code_num]
     while strbuf[i]
       codestr[i] = strbuf[i]
       i = i + 1
@@ -234,7 +274,7 @@ def file_code_write_main(
     printf( "OBJコードが定義されていません\n" );
     return nil
   end
-
+  
   file_listcsv.pos = pos
   
   param = Hash.new
@@ -248,7 +288,7 @@ end
 #  戻り値　RET_FALSE=異常終了
 #-----------------------------------------------------------------------
 def file_code_write( file_code, file_codestr,
-      file_listcsv, file_listcsv_poke )
+      file_listcsv, file_listcsv_poke, file_listcsv_mdl )
   pos = file_listcsv.pos
   file_listcsv.pos = 0 #先頭に
   line = file_listcsv.gets #一行飛ばし
@@ -271,7 +311,8 @@ def file_code_write( file_code, file_codestr,
   file_code.printf( "#define %s (0x%x)\n", STR_CODESTART_BBD, code_no )
   
   ret = file_code_write_main(
-    file_code, file_codestr, file_listcsv, code_no, count )
+    file_code, file_codestr, file_listcsv, code_no, count,
+    RBDEF_NUM_BBD_CODE, CODE_STARTNUM_BBD )
   
   if( ret == nil )
     return RET_FALSE
@@ -291,7 +332,8 @@ def file_code_write( file_code, file_codestr,
   file_code.printf( "#define %s (0x%x)\n", STR_CODESTART_POKE, code_no )
   
   ret = file_code_write_main(
-    file_code, file_codestr, file_listcsv_poke, code_no, count )
+    file_code, file_codestr, file_listcsv_poke, code_no, count,
+    RBDEF_NUM_BBD_CODE, CODE_STARTNUM_POKE )
   
   if( ret == nil )
     return RET_FALSE
@@ -303,12 +345,33 @@ def file_code_write( file_code, file_codestr,
   file_code.printf(
     "#define %s (0x%x) //%d(total %d) %s\n\n",
     STR_CODEEND_POKE, code_no, code_no, count, "ポケモンコード終端" );
+
+  #モデルコード記述
+  code_no = CODE_STARTNUM_MDL
+  
+  file_code.printf( "//モデル\n" )
+  file_code.printf( "#define %s (0x%x)\n", STR_CODESTART_MDL, code_no )
+  
+  ret = file_code_write_main(
+    file_code, file_codestr, file_listcsv_mdl, code_no, count,
+    RBDEF_NUM_MDL_CODE, CODE_STARTNUM_MDL )
+  
+  if( ret == nil )
+    return RET_FALSE
+  end
+  
+  code_no = ret['str_code_no']
+  count = ret['str_count']
+  
+  file_code.printf(
+    "#define %s (0x%x) //%d(total %d) %s\n\n",
+    STR_CODEEND_MDL, code_no, code_no, count, "モデルコード終端" );
   
   #終端記述
   file_code.printf(
     "#define %s (0x%x) //%d %s\n", STR_CODETOTAL, count, count, "総数" )
   file_code.printf(
-    "#define %s (0x%x) //%d %s\n\n", STR_CODEMAX, CODE_MAX, CODE_MAX, "最大" )
+    "#define %s (0x%x) //%d %s\n\n", STR_CODEMAX, CODE_MAX, CODE_MAX, "無効コード" )
   
   file_code.printf( "#endif //_%s_", name );
   return RET_TRUE
@@ -318,45 +381,16 @@ end
 #  動作モデルパラメタコンバート
 #=======================================================================
 #-----------------------------------------------------------------------
-#  動作モデルデータ一行コンバート
+#  動作モデルデータ一行コンバート　ビルボード
 #-----------------------------------------------------------------------
-def convert_line( no, line, wfile, idxfile, file_symbol, flag_selres )
+def convert_line_bbd( no, line, wfile, idxfile, file_symbol, flag_selres )
   str = line.split( "," )
   
   #OBJコード 2
   ary = Array( no )
   wfile.write( ary.pack("S*") )
   
-  #アーカイブインデックス テクスチャ 2 (4)
-  word = str[RBDEF_NUM_DRAWTYPE]
-  if( word == STR_DRAWTYPE_NON ) #表示タイプ　無し
-    ret = 0
-  else
-    xlsline = RBDEF_NUM_RESFILE_NAME_0
-    
-    if( flag_selres != "0" )
-      xlsline = RBDEF_NUM_RESFILE_NAME_1
-    end
-    
-    word = str[xlsline]
-    
-    #正規表現で文字列".imd"を削除する。が、何故か'm'文字まで削除してしまう
-    #/(\A.*[^\.imd])/ =~ word
-    #mdlname = $1
-    #
-    #代わりとしてgsubで".imd"を削除する。
-    mdlname = word.gsub( "\.imd", "" )
-    
-    ret = arcidx_search( idxfile, mdlname )
-    if( ret == RET_ERROR )
-      printf( "ERROR モデルファイル名異常 %s\n", word )
-      return RET_FALSE
-    end
-  end
-  ary = Array( ret )
-  wfile.write( ary.pack("S*") )
-  
-  #表示タイプ 1 (5)
+  #表示タイプ 1 (3)
   word = str[RBDEF_NUM_DRAWTYPE]
   ret = hfile_search( file_symbol, word )
   if( ret == RET_ERROR )
@@ -366,18 +400,18 @@ def convert_line( no, line, wfile, idxfile, file_symbol, flag_selres )
   ary = Array( ret )
   wfile.write( ary.pack("C*") )
   
-  #処理関数 1 (6)
-  word = str[RBDEF_NUM_DRAWPROC]
+  #処理関数 1 (4)
+  word = str[RBDEF_NUM_BBD_DRAWPROC]
   ret = hfile_search( file_symbol, word )
   if( ret == RET_ERROR )
-    printf( "ERROR 処理関数異常異常 %s\n", word )
+    printf( "ERROR 処理関数異常 %s\n", word )
     return RET_FALSE
   end
   ary = Array( ret )
   wfile.write( ary.pack("C*") )
   
-  #影表示 1 (7)
-  word = str[RBDEF_NUM_SHADOW]
+  #影表示 1 (5)
+  word = str[RBDEF_NUM_BBD_SHADOW]
   if( word != "○" )
     ret = 0 
   else
@@ -386,8 +420,8 @@ def convert_line( no, line, wfile, idxfile, file_symbol, flag_selres )
   ary = Array( ret )
   wfile.write( ary.pack("C*") )
   
-  #足跡種類 1 (8)
-  word = str[RBDEF_NUM_FOOTMARK]
+  #足跡種類 1 (6)
+  word = str[RBDEF_NUM_BBD_FOOTMARK]
   ret = hfile_search( file_symbol, word )
   if( ret == RET_ERROR )
     printf( "ERROR 足跡種類異常 %s\n", word )
@@ -396,8 +430,8 @@ def convert_line( no, line, wfile, idxfile, file_symbol, flag_selres )
   ary = Array( ret )
   wfile.write( ary.pack("C*") )
   
-  #映り込み 1 (9)
-  word = str[RBDEF_NUM_REFLECT]
+  #映り込み 1 (7)
+  word = str[RBDEF_NUM_BBD_REFLECT]
   if( word != "○" )
     ret = 0
   else
@@ -406,8 +440,8 @@ def convert_line( no, line, wfile, idxfile, file_symbol, flag_selres )
   ary = Array( ret )
   wfile.write( ary.pack("C*") )
   
-  #モデルサイズ 1 (10)
-  word = str[RBDEF_NUM_MDLSIZE]
+  #モデルサイズ 1 (8)
+  word = str[RBDEF_NUM_BBD_MDLSIZE]
   ret = hfile_search( file_symbol, word )
   if( ret == RET_ERROR )
     printf( "ERROR モデルサイズ異常 %s\n", word )
@@ -416,8 +450,8 @@ def convert_line( no, line, wfile, idxfile, file_symbol, flag_selres )
   ary = Array( ret )
   wfile.write( ary.pack("C*") )
   
-  #テクスチャサイズ 1 (11)
-  word = str[RBDEF_NUM_TEXSIZE]
+  #テクスチャサイズ 1 (9)
+  word = str[RBDEF_NUM_BBD_TEXSIZE]
   ret = hfile_search( file_symbol, word )
   if( ret == RET_ERROR )
     printf( "ERROR テクスチャサイズ異常 %s\n", word )
@@ -426,8 +460,8 @@ def convert_line( no, line, wfile, idxfile, file_symbol, flag_selres )
   ary = Array( ret )
   wfile.write( ary.pack("C*") )
   
-  #アニメID 1 (12)
-  word = str[RBDEF_NUM_ANMID]
+  #アニメID 1 (10)
+  word = str[RBDEF_NUM_BBD_ANMID]
   ret = hfile_search( file_symbol, word )
   if( ret == RET_ERROR )
     printf( "ERROR アニメID異常 _%s_\n", word )
@@ -436,8 +470,8 @@ def convert_line( no, line, wfile, idxfile, file_symbol, flag_selres )
   ary = Array( ret )
   wfile.write( ary.pack("C*") )
   
-  #性別 1 (13)
-  word = str[RBDEF_NUM_SEX]
+  #性別 1 (11)
+  word = str[RBDEF_NUM_BBD_SEX]
   if( word == "男" )
     ret = 0
   elsif( word == "女" )
@@ -448,14 +482,261 @@ def convert_line( no, line, wfile, idxfile, file_symbol, flag_selres )
   ary = Array( ret )
   wfile.write( ary.pack("C*") )
   
-  #４ビット境界用ダミーデータ 3 (14-16)
+  #４ビット境界用ダミーデータ 1 (12)
   ret = 0
   ary = Array( ret )
   wfile.write( ary.pack("C*") )
-  wfile.write( ary.pack("C*") )
-  wfile.write( ary.pack("C*") )
+  
+  #リソースインデックス 2 (14)
+  word = str[RBDEF_NUM_DRAWTYPE]
+  
+  if( word == RBSTR_DRAWTYPE_NON ) #表示タイプ　無し
+    ret = 0
+  else
+    xlsline = RBDEF_NUM_BBD_RESFILE_NAME_0
+    
+    if( flag_selres != "0" )
+      xlsline = RBDEF_NUM_BBD_RESFILE_NAME_1
+    end
+    
+    word = str[xlsline]
+    
+    #正規表現で文字列".imd"を削除する。が、何故か'm'文字まで削除してしまう
+    #/(\A.*[^\.imd])/ =~ word
+    #mdlname = $1
+    #
+    #代わりとしてgsubで".imd"を削除する。
+    #mdlname = word.gsub( "\.imd", "" )
+    
+    #imd -> nsbtx
+    mdlname = word.gsub( "\.imd", "_nsbtx" )
+    mdlname = sprintf( "_%s", mdlname ) #例 test_nsbtx -> _test_nsbtx
+    
+    ret = arcidx_search( idxfile, mdlname )
+    if( ret == RET_ERROR )
+      printf( "ERROR モデルファイル名異常 %s\n", word )
+      return RET_FALSE
+    end
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("S*") )
+  
+  #４ビット境界用ダミーデータ 14 (28)
+  file_write_filldata( wfile, 14, 0 )
   
   return RET_TRUE
+end
+
+#-----------------------------------------------------------------------
+#  動作モデルデータ一行コンバート　モデル
+#-----------------------------------------------------------------------
+def convert_line_mdl( no, line, wfile, idxfile, file_symbol, flag_selres )
+  str = line.split( "," )
+  
+  #OBJコード 2
+  ary = Array( no )
+  wfile.write( ary.pack("S*") )
+  
+  #表示タイプ 1 (3)
+  word = str[RBDEF_NUM_DRAWTYPE]
+  ret = hfile_search( file_symbol, word )
+  if( ret == RET_ERROR )
+    printf( "ERROR 表示タイプ異常 %s\n", word )
+    return RET_FALSE
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+  
+  #処理関数 1 (4)
+  word = str[RBDEF_NUM_MDL_DRAWPROC]
+  ret = hfile_search( file_symbol, word )
+  if( ret == RET_ERROR )
+    printf( "ERROR 処理関数異常異常 %s\n", word )
+    return RET_FALSE
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+  
+  #影表示 1 (5)
+  word = str[RBDEF_NUM_MDL_SHADOW]
+  if( word != "○" )
+    ret = 0 
+  else
+    ret = 1
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+  
+  #足跡種類 1 (6)
+  word = str[RBDEF_NUM_MDL_FOOTMARK]
+  ret = hfile_search( file_symbol, word )
+  if( ret == RET_ERROR )
+    printf( "ERROR 足跡種類異常 %s\n", word )
+    return RET_FALSE
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+  
+  #映り込み 1 (7)
+  ret = 1 #非表示
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+  
+  #モデルサイズ 1 (8)
+  word = str[RBDEF_NUM_MDL_MDLSIZE]
+  ret = hfile_search( file_symbol, word )
+  if( ret == RET_ERROR )
+    printf( "ERROR モデルサイズ異常 %s\n", word )
+    return RET_FALSE
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+  
+  #テクスチャサイズ 1 (9)
+  ret = 0 #ダミー
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+  
+  #アニメID 1 (10)
+  ret = 0 #ダミー
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+  
+  #性別 1 (11)
+  word = str[RBDEF_NUM_MDL_SEX]
+  if( word == "男" )
+    ret = 0
+  elsif( word == "女" )
+    ret = 1
+  else
+    ret = 2
+  end
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+  
+  #４ビット境界用ダミーデータ 1 (12)
+  ret = 0
+  ary = Array( ret )
+  wfile.write( ary.pack("C*") )
+  
+  #リソースインデックス 各2 (22)
+  word = str[RBDEF_NUM_DRAWTYPE]
+  
+  if( word == RBSTR_DRAWTYPE_NON ) #表示タイプ　無し
+    file_write_filldata( wfile, 12, 0 )
+  else
+    #imd
+    word = str[RBDEF_NUM_MDL_RESFILE_NAME_IMD]
+    name = word.gsub( "\.imd", "_nsbmd" )
+    name = sprintf( "_%s", name )
+    
+    ret = arcidx_search( idxfile, name )
+    if( ret == RET_ERROR )
+      printf( "ERROR モデルファイル名異常 %s\n", name )
+      return RET_FALSE
+    end
+    
+    ary = Array( ret )
+    wfile.write( ary.pack("S*") )
+    
+    #tex
+    word = str[RBDEF_NUM_MDL_RESFILE_NAME_TEX]
+    
+    if( word == "" )
+      file_write_filldata( wfile, 2, 0xff )
+    else
+      name = word.gsub( "\.imd", "_nsbtx" )
+      name = sprintf( "_%s", name )
+      ret = arcidx_search( idxfile, name )
+      
+      if( ret == RET_ERROR )
+        printf( "ERROR ファイル名異常 %s\n", name )
+        return RET_FALSE
+      end
+    
+      ary = Array( ret )
+      wfile.write( ary.pack("S*") )
+    end
+
+    #anime 0
+    word = str[RBDEF_NUM_MDL_RESFILE_NAME_ANM0]
+    
+    if( word == "" )
+      file_write_filldata( wfile, 2, 0xff )
+    else
+      name = nitro_anime_convert_name( word )
+      ret = arcidx_search( idxfile, name )
+      
+      if( ret == RET_ERROR )
+        printf( "ERROR ファイル名異常 %s\n", name )
+        return RET_FALSE
+      end
+    
+      ary = Array( ret )
+      wfile.write( ary.pack("S*") )
+    end
+    
+    #anime 1
+    word = str[RBDEF_NUM_MDL_RESFILE_NAME_ANM1]
+    
+    if( word == "" )
+      file_write_filldata( wfile, 2, 0xff )
+    else
+      name = nitro_anime_convert_name( word )
+      ret = arcidx_search( idxfile, name )
+      
+      if( ret == RET_ERROR )
+        printf( "ERROR ファイル名異常 %s\n", name )
+        return RET_FALSE
+      end
+    
+      ary = Array( ret )
+      wfile.write( ary.pack("S*") )
+    end
+
+    #anime 2
+    word = str[RBDEF_NUM_MDL_RESFILE_NAME_ANM2]
+    
+    if( word == "" )
+      file_write_filldata( wfile, 2, 0xff )
+    else
+      name = nitro_anime_convert_name( word )
+      ret = arcidx_search( idxfile, name )
+      
+      if( ret == RET_ERROR )
+        printf( "ERROR ファイル名異常 %s\n", name )
+        return RET_FALSE
+      end
+    
+      ary = Array( ret )
+      wfile.write( ary.pack("S*") )
+    end
+  end
+  
+  #４ビット境界用ダミーデータ 6 (28)
+  file_write_filldata( wfile, 6, 0 )
+  
+  return RET_TRUE
+end
+
+#-----------------------------------------------------------------------
+#  動作モデルデータ一行コンバート
+#-----------------------------------------------------------------------
+def convert_line( no, line, wfile, idxfile, file_symbol, flag_selres )
+  ret = RET_FALSE
+
+  str = line.split( "," )
+  
+  if( str[RBDEF_NUM_DRAWTYPE] == RBSTR_DRAWTYPE_NON ||
+      str[RBDEF_NUM_DRAWTYPE] == RBSTR_DRAWTYPE_BBD )
+    ret = convert_line_bbd(
+      no, line, wfile, idxfile, file_symbol, flag_selres )
+  elsif( str[RBDEF_NUM_DRAWTYPE] == RBSTR_DRAWTYPE_MDL )
+    ret = convert_line_mdl(
+      no, line, wfile, idxfile, file_symbol, flag_selres )
+  end
+   
+  return ret
 end
 
 #-----------------------------------------------------------------------
@@ -492,7 +773,7 @@ end
 #  動作モデル　データコンバート　メイン
 #-----------------------------------------------------------------------
 def convert_code_param( file_bin,
-    file_listcsv, file_listcsv_poke,
+    file_listcsv, file_listcsv_poke, file_listcsv_mdl,
     file_residx, file_symbol, flag_selres )
   count = 0 #ダミー総数記述
   ary = Array( count )
@@ -512,6 +793,16 @@ def convert_code_param( file_bin,
   #ポケモン
   ret = convert_code_param_main( CODE_STARTNUM_POKE,
     file_bin, file_listcsv_poke, file_residx, file_symbol, flag_selres )
+  
+  if( ret == RET_ERROR )
+    return RET_FALSE
+  end
+  
+  count = count + ret
+  
+  #モデル
+  ret = convert_code_param_main( CODE_STARTNUM_MDL,
+    file_bin, file_listcsv_mdl, file_residx, file_symbol, flag_selres )
   
   if( ret == RET_ERROR )
     return RET_FALSE
@@ -541,6 +832,13 @@ end
 fname_listcsv_poke = ARGV[ARGVNO_FNAME_LISTCSV_POKE]
 
 if( fname_listcsv_poke == nil )
+  printf( "ERROR fmmdl_mdllist xlstxt poke filename\n" )
+  exit 1
+end
+
+fname_listcsv_mdl = ARGV[ARGVNO_FNAME_LISTCSV_MDL]
+
+if( fname_listcsv_mdl == nil )
   printf( "ERROR fmmdl_mdllist xlstxt poke filename\n" )
   exit 1
 end
@@ -592,6 +890,7 @@ end
 #---------------------------------------------------------------
 file_listcsv = File.open( fname_listcsv, "r" );
 file_listcsv_poke = File.open( fname_listcsv_poke, "r" );
+file_listcsv_mdl = File.open( fname_listcsv_mdl, "r" );
 file_residx = File.open( fname_residx, "r" );
 file_bin = File.open( fname_bin, "wb" );
 file_code = File.open( fname_code, "w" );
@@ -602,12 +901,12 @@ file_symbol = File.open( fname_symbol, "r" );
 # 表示コードヘッダーファイル作成
 #---------------------------------------------------------------
 ret = file_code_write(
-  file_code, file_codestr, file_listcsv, file_listcsv_poke )
+  file_code, file_codestr, file_listcsv, file_listcsv_poke, file_listcsv_mdl )
 
 if( ret == RET_FALSE )
   error_end( fname_bin, fname_code, fname_codestr,
      file_listcsv, file_residx, file_bin, file_code,
-     file_codestr, file_symbol, file_listcsv_poke )
+     file_codestr, file_symbol, file_listcsv_poke, file_listcsv_mdl )
   exit 1
 end
 
@@ -615,13 +914,13 @@ end
 # コードパラメタファイル作成
 #---------------------------------------------------------------
 ret = convert_code_param( file_bin,
-  file_listcsv, file_listcsv_poke,
+  file_listcsv, file_listcsv_poke, file_listcsv_mdl,
   file_residx, file_symbol, flag_selres )
 
 if( ret == RET_FALSE )
   error_end( fname_bin, fname_code, fname_codestr,
      file_listcsv, file_residx, file_bin, file_code,
-     file_codestr, file_symbol, file_listcsv_poke )
+     file_codestr, file_symbol, file_listcsv_poke, file_listcsv_mdl )
   exit 1
 end
 
@@ -630,6 +929,7 @@ end
 #---------------------------------------------------------------
 file_listcsv.close
 file_listcsv_poke.close
+file_listcsv_mdl.close
 file_residx.close
 file_bin.close
 file_code.close

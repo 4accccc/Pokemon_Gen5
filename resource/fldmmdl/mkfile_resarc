@@ -22,21 +22,65 @@ IMDSORTCVTR = $(PROJECT_ROOT)/tools/imd_tex_sort.rb
 #---------------------------------------------------------------
 #	リスト置き換え
 #---------------------------------------------------------------
-#拡張子imdからnsbtxに置き換え
-RESLIST_NSBTX = $(notdir $(FMMDL_RESLIST:.imd=.nsbtx))
+#拡張子置き換え
+RESLIST_NSBMD = $(notdir $(FMMDL_RESLIST_IMD:.imd=.nsbmd))
+RESLIST_NSBTX = $(notdir $(FMMDL_RESLIST_IMDTEX:.imd=.nsbtx))
+RESLIST_NSBTP = $(notdir $(FMMDL_RESLIST_ITP:.itp=.nsbtp))
+RESLIST_NSBCA = $(notdir $(FMMDL_RESLIST_ICA:.ica=.nsbca))
+RESLIST_NSBTA = $(notdir $(FMMDL_RESLIST_ITA:.ica=.nsbta))
+RESLIST_NSBMA = $(notdir $(FMMDL_RESLIST_IMA:.ica=.nsbma))
+RESLIST_NSBVA = $(notdir $(FMMDL_RESLIST_IVA:.iva=.nsbva))
+
 #リソースディレクトリ　リソースファイル一覧
-RESDATA_IMD = $(addprefix $(DIR_RES)/,$(FMMDL_RESLIST))
+#RESDATA_IMD = $(addprefix $(DIR_RES)/,$(FMMDL_RESLIST))
+
 #テンポラリディレクトリ　リソースファイル一覧
 #RESDATA_TMPIMD = $(addprefix $(DIR_TMP)/,$(FMMDL_RESLIST))
+RESDATA_NSBMD = $(addprefix $(DIR_TMP)/,$(RESLIST_NSBMD))
 RESDATA_NSBTX = $(addprefix $(DIR_TMP)/,$(RESLIST_NSBTX))
+RESDATA_NSBTP = $(addprefix $(DIR_TMP)/,$(RESLIST_NSBTP))
+RESDATA_NSBCA = $(addprefix $(DIR_TMP)/,$(RESLIST_NSBCA))
+RESDATA_NSBTA = $(addprefix $(DIR_TMP)/,$(RESLIST_NSBTA))
+RESDATA_NSBMA = $(addprefix $(DIR_TMP)/,$(RESLIST_NSBMA))
+RESDATA_NSBVA = $(addprefix $(DIR_TMP)/,$(RESLIST_NSBVA))
 
 #---------------------------------------------------------------
 #	拡張子別処理
 #---------------------------------------------------------------
+#imd --> nsbmd
+$(DIR_TMP)/%.nsbmd: $(DIR_RES)/%.imd
+	@echo Texture Data Convert: $^ → $@
+	@$(G3DCVTR) $^ -o $@
+
 #imd --> nsbtxへの変換ルール定義
 $(DIR_TMP)/%.nsbtx: $(DIR_RES)/%.imd
 	@echo Texture Data Convert: $^ → $@
 	@$(G3DCVTR) $^ -o $@ -etex
+
+#itp --> nsbtp
+$(DIR_TMP)/%.nsbtp: $(DIR_RES)/%.itp
+	@echo Anime Data Convert: $^ → $@
+	@$(G3DCVTR) $^ -o $@
+
+#ica --> nsbca
+$(DIR_TMP)/%.nsbca: $(DIR_RES)/%.ica
+	@echo Anime Data Convert: $^ → $@
+	@$(G3DCVTR) $^ -o $@
+
+#ita --> nsbta
+$(DIR_TMP)/%.nsbta: $(DIR_RES)/%.ita
+	@echo Anime Data Convert: $^ → $@
+	@$(G3DCVTR) $^ -o $@
+
+#ima --> nsbma
+$(DIR_TMP)/%.nsbma: $(DIR_RES)/%.ima
+	@echo Anime Data Convert: $^ → $@
+	@$(G3DCVTR) $^ -o $@
+
+#iva --> nsbva
+$(DIR_TMP)/%.nsbva: $(DIR_RES)/%.iva
+	@echo Anime Data Convert: $^ → $@
+	@$(G3DCVTR) $^ -o $@
 
 #$(DIR_TMP)/%.nsbtx: $(DIR_RES)/%.imd
 #	@echo Texture Data Convert: $^ → $@
@@ -62,8 +106,8 @@ $(DIR_TARGET_COPY)/$(TARGET_RES_ARC): $(TARGET_RES_ARC)
 	$(COPY) $(TARGET_RES_ARCIDX) $(DIR_TARGET_COPY)
 
 ifeq	($(CONVERTUSER),true) #CONVERTUSER
-$(TARGET_RES_ARC): $(FMMDLLIST_RES) $(RESDATA_NSBTX)
-	nnsarc -i -c -l -n $(TARGET_RES_ARC) $(RESDATA_NSBTX) > arc_result_res.txt
+$(TARGET_RES_ARC): $(FMMDLLIST_RES) $(RESDATA_NSBMD) $(RESDATA_NSBTX) $(RESDATA_NSBTP) $(RESDATA_NSBCA) $(RESDATA_NSBTA) $(RESDATA_NSBMA) $(RESDATA_NSBVA)
+	nnsarc -i -c -l -n $(TARGET_RES_ARC) $(RESDATA_NSBMD) $(RESDATA_NSBTX) $(RESDATA_NSBTP) $(RESDATA_NSBCA) $(RESDATA_NSBTA) $(RESDATA_NSBMA) $(RESDATA_NSBVA) > arc_result_res.txt
 	$(NAIXCUT) $(TARGET_RES_ARCIDX)
 endif
 
@@ -74,5 +118,11 @@ ifeq	($(CONVERTUSER),true) #CONVERTUSER
 	rm -f $(TARGET_RES_ARC)
 	rm -f $(TARGET_RES_ARCIDX)
 	rm -f $(RESDATA_NSBTX)
+	rm -f $(RESDATA_NSBMD)
+	rm -f $(RESDATA_NSBTP)
+	rm -f $(RESDATA_NSBCA)
+	rm -f $(RESDATA_NSBTA)
+	rm -f $(RESDATA_NSBMA)
+	rm -f $(RESDATA_NSBVA)
 #	rm -f $(RESDATA_TMPIMD)
 endif

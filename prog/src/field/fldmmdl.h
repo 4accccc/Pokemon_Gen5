@@ -15,6 +15,8 @@
 
 #include "include/field/field_dir.h"
 
+#include "field_g3dobj.h"
+
 #include "field_g3d_mapper.h"
 #include "field_nogrid_mapper.h"
 #include "eventwork.h"
@@ -325,6 +327,7 @@ typedef enum
   MMDL_DRAWPROCNO_PCWOMAN, //PC姉
   MMDL_DRAWPROCNO_TPOKE, //連れ歩きポケモン
   MMDL_DRAWPROCNO_TPOKE_FLY, //連れ歩きポケモン 縦揺れ付き
+  MMDL_DRAWPROCNO_MODEL, //ポリゴンモデル
 	MMDL_DRAWPROCNO_MAX,		///<最大
 }MMDL_DRAWPROCNO;
 
@@ -398,6 +401,8 @@ typedef struct _TAG_MMDL_BLACTCONT MMDL_BLACTCONT;
 typedef struct _TAG_MMDL_SAVEDATA MMDL_SAVEDATA;
 ///MMDL_ROCKPOS
 typedef struct _TAG_MMDL_ROCKPOS MMDL_ROCKPOS;
+///MMDL_G3DOBJCONT
+typedef struct _TAG_MMDL_G3DOBJCONT MMDL_G3DOBJCONT;
 
 //--------------------------------------------------------------
 ///	アトリビュート型 元:pl map_attr.h 後に消します。
@@ -562,20 +567,37 @@ typedef struct
 typedef struct
 {
 	u16 code;			///<OBJコード
-	u16 res_idx;		///<リソースインデックス
 	u8 draw_type;		///<MMDL_DRAWTYPE
 	u8 draw_proc_no;	///<MMDL_DRAWPROCNO
+  
 	u8 shadow_type;		///<MMDL_SHADOWTYPE
 	u8 footmark_type;	///<MMDL_FOOTMARKTYPE
 	u8 reflect_type;	///<MMDL_REFLECTTYPE
 	u8 mdl_size;		///<MMDL_BLACT_MDLSIZE
+  
 	u8 tex_size;		///<GFL_BBD_TEXSIZDEF... テクスチャサイズ
 	u8 anm_id;			///<MMDL_BLACT_ANMTBLNO
-  u8 sex; ///<MMDL_OBJCODESEX
-  u8 dmy0; ///<ダミー0
-  u8 dmy1; ///<ダミー1
-  u8 dmy2; ///<ダミー2
+  u8 sex;         ///<MMDL_OBJCODESEX
+  u8 padding00;   ///<4byte境界ダミー
+  
+  u8 buf[16];     ///<データバッファ
 }OBJCODE_PARAM;
+
+typedef struct 
+{
+	u16 res_idx;		///<リソースインデックス
+  u8 padding[14];
+}OBJCODE_PARAM_BUF_BBD;
+
+typedef struct
+{
+  u16 res_idx_mdl;
+  u16 res_idx_tex;
+  u16 res_idx_anm0;
+  u16 res_idx_anm1;
+  u16 res_idx_anm2;
+  u8 padding[6];
+}OBJCODE_PARAM_BUF_MDL;
 
 ///外部から生成されるOBJCODE_PARAM配列の要素数の格納サイズ
 /// 0-3 OBJCODE_PARAM要素数
@@ -645,13 +667,13 @@ extern void MMDLSYS_VBlankProc( MMDLSYS *fos );
 extern void MMDLSYS_SetupDrawProc( MMDLSYS *fos, const u16 *angleYaw );
 
 extern MMDL * MMDLSYS_AddMMdl(
-	const MMDLSYS *fos, const MMDL_HEADER *header, int zone_id );
-extern MMDL * MMDLSYS_AddMMdlParam( const MMDLSYS *fos,
+	MMDLSYS *fos, const MMDL_HEADER *header, int zone_id );
+extern MMDL * MMDLSYS_AddMMdlParam( MMDLSYS *fos,
     s16 gx, s16 gz, u16 dir,
     u16 id, u16 code, u16 move, int zone_id );
-extern void MMDLSYS_SetMMdl( const MMDLSYS *fos,
+extern void MMDLSYS_SetMMdl( MMDLSYS *fos,
 	const MMDL_HEADER *header, int zone_id, int count, EVENTWORK *eventWork );
-extern MMDL * MMDLSYS_AddMMdlHeaderID( const MMDLSYS *fos,
+extern MMDL * MMDLSYS_AddMMdlHeaderID( MMDLSYS *fos,
 	const MMDL_HEADER *header, int zone_id, int count, EVENTWORK *eventWork,
   u16 objID );
 extern void MMDL_Delete( MMDL * mmdl );
@@ -693,9 +715,13 @@ extern void MMDLSYS_SetArcHandle(
 		MMDLSYS *mmdlsys, ARCHANDLE *handle );
 extern ARCHANDLE * MMDLSYS_GetArcHandle( MMDLSYS *mmdlsys );
 extern GFL_TCBSYS * MMDLSYS_GetTCBSYS( MMDLSYS *fos );
+extern ARCHANDLE * MMDLSYS_GetResArcHandle( MMDLSYS *fos );
 extern void MMDLSYS_SetBlActCont(
 		MMDLSYS *mmdlsys, MMDL_BLACTCONT *pBlActCont );
 extern MMDL_BLACTCONT * MMDLSYS_GetBlActCont( MMDLSYS *mmdlsys );
+extern void MMDLSYS_SetG3dObjCont(
+	MMDLSYS *mmdlsys, MMDL_G3DOBJCONT *objcont );
+extern MMDL_G3DOBJCONT * MMDLSYS_GetG3dObjCont( MMDLSYS *mmdlsys );
 
 extern const FLDMAPPER * MMDLSYS_GetG3DMapper( const MMDLSYS *fos );
 extern FLDNOGRID_MAPPER * MMDLSYS_GetNOGRIDMapper( const MMDLSYS *fos );
@@ -744,7 +770,7 @@ extern void MMDL_SetMoveLimitZ( MMDL * mmdl, s16 z );
 extern s16 MMDL_GetMoveLimitZ( const MMDL * mmdl );
 extern void MMDL_SetDrawStatus( MMDL * mmdl, u16 st );
 extern u16 MMDL_GetDrawStatus( const MMDL * mmdl );
-extern const MMDLSYS * MMDL_GetMMdlSys( const MMDL * mmdl );
+extern MMDLSYS * MMDL_GetMMdlSys( const MMDL * mmdl );
 extern void * MMDL_InitMoveProcWork( MMDL * mmdl, int size );
 extern void * MMDL_GetMoveProcWork( MMDL * mmdl );
 extern void * MMDL_InitMoveSubProcWork( MMDL * mmdl, int size );
@@ -772,7 +798,6 @@ extern void MMDL_SetMapAttr( MMDL * mmdl, u32 attr );
 extern u32 MMDL_GetMapAttr( const MMDL * mmdl );
 extern void MMDL_SetMapAttrOld( MMDL * mmdl, u32 attr );
 extern u32 MMDL_GetMapAttrOld( const MMDL * mmdl );
-extern const MMDLSYS * MMDL_GetMMdlSys( const MMDL *mmdl );
 extern u16 MMDL_GetZoneIDAlies( const MMDL * mmdl );
 extern s16 MMDL_GetInitGridPosX( const MMDL * mmdl );
 extern void MMDL_SetInitGridPosX( MMDL * mmdl, s16 x );
@@ -898,6 +923,10 @@ extern const OBJCODE_PARAM * MMDLSYS_GetOBJCodeParam(
 		const MMDLSYS *mmdlsys, u16 code );
 extern const OBJCODE_PARAM * MMDL_GetOBJCodeParam(
 		const MMDL *mmdl, u16 code );
+extern const OBJCODE_PARAM_BUF_BBD * MMDL_GetOBJCodeParamBufBBD(
+    const OBJCODE_PARAM *param );
+extern const OBJCODE_PARAM_BUF_MDL * MMDL_GetOBJCodeParamBufMDL(
+    const OBJCODE_PARAM *param );
 
 extern void MMDL_MoveInitProcDummy( MMDL * mmdl );
 extern void MMDL_MoveProcDummy( MMDL * mmdl );
@@ -1137,5 +1166,16 @@ extern MMDL * MMDLSYS_SearchRailLocation( const MMDLSYS *sys, const RAIL_LOCATIO
 // レール移動　今の前方方向
 extern void MMDL_Rail_GetFrontWay( const MMDL *mmdl, VecFx16* way );
 extern void MMDL_Rail_GetDirLineWay( const MMDL *mmdl, u16 dir, VecFx16* way );
+
+//--------------------------------------------------------------
+//	fldmmdl_g3dobj.c
+//--------------------------------------------------------------
+extern void MMDL_G3DOBJCONT_Setup(
+    MMDLSYS *mmdlsys, FLD_G3DOBJ_CTRL *g3dobj_ctrl );
+extern void MMDL_G3DOBJCONT_Delete( MMDLSYS *mmdlsys );
+extern FLD_G3DOBJ_CTRL * MMDL_G3DOBJCONT_GetFldG3dObjCtrl( MMDL *mmdl );
+extern FLD_G3DOBJ_OBJIDX MMDL_G3DOBJCONT_AddObject( MMDL *mmdl, u16 code );
+extern void MMDL_G3DOBJCONT_DeleteObject(
+    MMDL *mmdl, FLD_G3DOBJ_OBJIDX idx );
 
 #endif //MMDL_H_FILE

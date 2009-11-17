@@ -54,7 +54,7 @@ void MINIMONO_AddMMdl(FIELDMAP_WORK *fieldWork, u16 grid_x, u16 grid_z, fx32 fx_
 {
   MMDL_HEADER head;
   MMDL_HEADER_GRIDPOS *grid_pos;
-  const MMDLSYS *mmdl_sys;
+  MMDLSYS *mmdl_sys;
   ZONEID zone_id;
   
   mmdl_sys = FIELDMAP_GetMMdlSys( fieldWork );

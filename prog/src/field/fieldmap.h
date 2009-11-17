@@ -33,6 +33,7 @@
 #include "field_place_name.h"
 #include "fieldmap_func_def.h"
 #include "fld_exp_obj.h"
+#include "field_g3dobj.h"
 
 #include "savedata/sodateya_work.h"
 #include "sodateya.h"

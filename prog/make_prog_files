@@ -377,6 +377,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/fldmmdl_movedata.c \
 				field/fldmmdl_drawdata.c \
 				field/fldmmdl_blact.c \
+				field/fldmmdl_g3dobj.c \
 				field/fldmmdl_railmove.c \
 				field/fldmmdl_railacmd.c \
 				field/fldmmdl_railmove_0.c \
@@ -384,6 +385,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/event_fieldtalk.c \
 				field/event_debug_item.c \
 				field/fldmmdl_draw_0.c \
+				field/fldmmdl_draw_1.c \
 				field/field_fog.c \
 				field/field_zonefog.c \
 				field/field_light.c \
@@ -490,8 +492,10 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_gate.c \
         field/gym_insect.c \
         field/gym_ground.c \
+        field/gym_ground.c \
         field/gym_ground_ent.c \
-				field/event_debug_beacon.c
+				field/event_debug_beacon.c \
+        field/field_g3dobj.c
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP

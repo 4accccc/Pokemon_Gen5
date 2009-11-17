@@ -132,8 +132,6 @@ struct _TAG_MMDL_BLACTCONT
 	u16 bbdActResCount;
 	u16 bbdActActCount;
   
-  ARCHANDLE *arcH_res;
-  
 	MMDLSYS *mmdlsys;
   
 	IDCODEIDX BBDResUnitIdx;
@@ -225,7 +223,6 @@ void MMDL_BLACTCONT_Setup( MMDLSYS *mmdlsys,
 	pBlActCont = GFL_HEAP_AllocClearMemory( heapID, sizeof(MMDL_BLACTCONT) );
 	pBlActCont->mmdlsys = mmdlsys;
 	pBlActCont->pBbdActSys = pBbdActSys;
-  pBlActCont->arcH_res = GFL_ARC_OpenDataHandle( ARCID_MMDL_RES, heapID );
   pBlActCont->resourceMax = res_max;
   
 	MMDLSYS_SetBlActCont( mmdlsys, pBlActCont );
@@ -262,8 +259,6 @@ void MMDL_BLACTCONT_Release( MMDLSYS *mmdlsys )
   BlActAddReserve_Delete( pBlActCont );
 	BBDResUnitIndex_Delete( pBlActCont );
   
-  GFL_ARC_CloseDataHandle( pBlActCont->arcH_res );
-	
 	GFL_HEAP_FreeMemory( pBlActCont );
 	MMDLSYS_SetBlActCont( mmdlsys, NULL );
 }
@@ -1029,10 +1024,13 @@ static void BBDResUnitIndex_AddResUnit(
 {
   GFL_G3D_RES *g3dres;
 	const OBJCODE_PARAM *prm;
+  const OBJCODE_PARAM_BUF_BBD *prm_bbd;
   
 	prm = MMDLSYS_GetOBJCodeParam( pBlActCont->mmdlsys, obj_code );
+  prm_bbd = MMDL_GetOBJCodeParamBufBBD( prm );
+  
   g3dres = GFL_G3D_CreateResourceHandle(
-      pBlActCont->arcH_res, prm->res_idx );
+      MMDLSYS_GetResArcHandle(pBlActCont->mmdlsys), prm_bbd->res_idx );
   BBDResUnitIndex_AddResource( pBlActCont, g3dres, obj_code, flag );
 }
 
@@ -1310,18 +1308,20 @@ static BOOL BlActAddReserve_RegistResource(
   for( ; i < pReserve->resDigestFrameMax; i++, pRes++ ){
     if( pRes->pG3dRes == NULL ){
 	    const OBJCODE_PARAM *prm;
+      const OBJCODE_PARAM_BUF_BBD  *prm_bbd;
       prm = MMDLSYS_GetOBJCodeParam( pBlActCont->mmdlsys, code );
+      prm_bbd = MMDL_GetOBJCodeParamBufBBD( prm );
       
       pRes->compFlag = FALSE;
       pRes->code = code;
       pRes->flag = flag;
       pRes->pG3dRes = GFL_G3D_CreateResourceHandle(
-      pBlActCont->arcH_res, prm->res_idx );
+          MMDLSYS_GetResArcHandle(pBlActCont->mmdlsys), prm_bbd->res_idx );
       pRes->compFlag = TRUE;
       
       KAGAYA_Printf(
         "MMDL BLACT RESERVE ADD RESOURCE CODE=%d,ARCIDX=%d\n",
-        pRes->code, prm->res_idx );
+        pRes->code, prm_bbd->res_idx );
       return( TRUE );
     }
   }
