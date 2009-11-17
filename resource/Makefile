@@ -37,6 +37,7 @@ SUBDIRS	=	wmi \
 			palace \
 			ircbattle \
 			wificlub \
+			wifi_login \
 			wifi_union_obj \
 			wifi_2dchar \
 			trainer_case \

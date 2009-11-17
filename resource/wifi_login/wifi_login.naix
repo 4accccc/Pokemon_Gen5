@@ -1,0 +1,25 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: wifi_login.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_WIFI_LOGIN_NAIX_
+#define NARC_WIFI_LOGIN_NAIX_
+
+enum {
+	NARC_wifi_login_conect_NCLR = 0,
+	NARC_wifi_login_conect_NCGR = 1,
+	NARC_wifi_login_conect_sub_NCGR = 2,
+	NARC_wifi_login_conect_01_NSCR = 3,
+	NARC_wifi_login_conect_02_NSCR = 4,
+	NARC_wifi_login_conect_02a_NSCR = 5,
+	NARC_wifi_login_conect_03_NSCR = 6,
+	NARC_wifi_login_conect_sub_NSCR = 7
+};
+
+/* NARC_WIFI_LOGIN_NAIX_ */
+#endif

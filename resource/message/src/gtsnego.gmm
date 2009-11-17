@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-11-15T20:01:22"/>
+	<create user="ohno" host="W00141" date="2009-11-16T16:24:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -332,30 +332,6 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
-
-	<row id="GTSNEGO_001">
-		<language name="JPN" width="256">Wi-Fiコネクション に
-せつぞく　しますか？</language>
-		<language name="JPN_KANJI" width="256">Wi-Fiコネクション に
-せつぞく　しますか？</language>
-	</row>
-
-	<row id="GTSNEGO_002">
-		<language name="JPN" width="256">はい</language>
-		<language name="JPN_KANJI" width="256">はい</language>
-	</row>
-
-	<row id="GTSNEGO_003">
-		<language name="JPN" width="256">いいえ</language>
-		<language name="JPN_KANJI" width="256">いいえ</language>
-	</row>
-
-	<row id="GTSNEGO_004">
-		<language name="JPN" width="256">Wi-Fiコネクションに　せつぞく
-しています。しばらく　おまちください</language>
-		<language name="JPN_KANJI" width="256">Wi-Fiコネクションに　せつぞく
-しています。しばらく　おまちください</language>
-	</row>
 
 	<row id="GTSNEGO_005">
 		<language name="JPN" width="256">だれでも　こうかん</language>
