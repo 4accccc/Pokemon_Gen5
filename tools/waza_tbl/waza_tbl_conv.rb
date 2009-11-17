@@ -59,6 +59,7 @@ end
   fp_wazano.print( "*/\n")
   fp_wazano.print( "//============================================================================================\n" )
   fp_wazano.print( "\n#pragma once\n\n" )
+  fp_wazano.printf( "#define\t\tWAZANO_NULL\t\t\t\t\t\t( 0 )\n" )
 
   #ƒnƒbƒVƒ…
   fp_hash = open( "wazano_hash.rb", "w" )
