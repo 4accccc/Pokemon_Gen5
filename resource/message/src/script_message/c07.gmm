@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-17T21:09:32"/>
+	<create user="matsumiya" host="W00207" date="2009-11-17T21:38:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -336,50 +336,50 @@
 	</lock>
 
 
-	<row id="msg_c07_hakase2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c07_hakase1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・pos（GRIDX=175、GRIDZ=13~15）で発動、座標は暫定
 ・0＝先頭のポケモン名
 ・先頭のポケモン（タマゴ、ひん死除く）のなつき度が
-　70以上→msg_c07_hakase2_02
-　69以下→msg_c07_hakase2_03</comment>
-		<attribute name="キャラクター">博士２（父）</attribute>
+　70以上→msg_c07_hakase1_02
+　69以下→msg_c07_hakase1_03</comment>
+		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">アララギ『おう！　[1:00:トレーナー名:0]くん
 [1:01:ポケモン種族名:0]の　ようすは　どうかね？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">アララギ『おう！　[1:00:トレーナー名:0]くん
 [1:01:ポケモン種族名:0]の　様子は　どうかね？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c07_hakase2_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c07_hakase1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・先頭のポケモン（タマゴ、ひん死除く）のなつき度が
 　70以上
-・続けてmsg_c07_hakase2_04</comment>
-		<attribute name="キャラクター">博士２（父）</attribute>
+・続けてmsg_c07_hakase1_04</comment>
+		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">おお！　この　[1:01:ポケモン種族名:0]
 おまえさんに　なついているんだな[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">おお！　この　[1:01:ポケモン種族名:0]
 おまえさんに　なついているんだな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c07_hakase2_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c07_hakase1_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・先頭のポケモン（タマゴ、ひん死除く）のなつき度が
 　69以下
-・続けてmsg_c07_hakase2_04</comment>
-		<attribute name="キャラクター">博士２（父）</attribute>
+・続けてmsg_c07_hakase1_04</comment>
+		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">なるほど　おまえさん
 [1:01:ポケモン種族名:0]を　きびしく　そだてるのか[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">なるほど　おまえさん
 [1:01:ポケモン種族名:0]を　厳しく　育てるのか[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c07_hakase2_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c07_hakase1_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・はい/いいえの選択肢表示
-・はい→msg_c07_hakase2_05
-　いいえ→msg_c07_hakase2_06</comment>
-		<attribute name="キャラクター">博士２（父）</attribute>
+・はい→msg_c07_hakase1_05
+　いいえ→msg_c07_hakase1_06</comment>
+		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">ポケモンずかんも　だいじだが
 こうして　いっしょに　すごす[BE:00:ページ切り替え（行送り）]
 じかんが　なにより　だもんな[BE:01:ページ切り替え（クリア）]
@@ -393,33 +393,33 @@
 リュウラセンの塔を　知っておるかね？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c07_hakase2_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c07_hakase1_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・はい選択
-・続けてmsg_c07_hakase2_07</comment>
-		<attribute name="キャラクター">博士２（父）</attribute>
+・続けてmsg_c07_hakase1_07</comment>
+		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">おお！
 かんしん　かんしん[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">おお！
 感心　感心[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c07_hakase2_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c07_hakase1_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・いいえ選択
-・続けてmsg_c07_hakase2_07</comment>
-		<attribute name="キャラクター">博士２（父）</attribute>
+・続けてmsg_c07_hakase1_07</comment>
+		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">まあな
 しらなくても　むりはない[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">まあな
 知らなくても　無理はない[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c07_hakase2_07w" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c07_hakase1_07w" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・WHITEver用
-・続けてmsg_c07_hakase2_08</comment>
-		<attribute name="キャラクター">博士２（父）</attribute>
+・続けてmsg_c07_hakase1_08</comment>
+		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">よし！　おまえさん　ちょいと
 ジジイの　はなしを　きいていけ[BE:01:ページ切り替え（クリア）]
 リュウラセンのとう　とは
@@ -438,10 +438,10 @@
 眠る　場所とも　伝わっているな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c07_hakase2_07b" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c07_hakase1_07b" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・BLACKver用
-・続けてmsg_c07_hakase2_08</comment>
+・続けてmsg_c07_hakase1_08</comment>
 		<language name="JPN" width="256">よし！　おまえさん　ちょいと
 ジジイの　はなしを　きいていけ[BE:01:ページ切り替え（クリア）]
 リュウラセンのとう　とは
@@ -460,11 +460,11 @@
 眠る　場所とも　伝わっているな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c07_hakase2_08" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c07_hakase1_08" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・画面上を向いてメッセージ表示
-・続けてmsg_c07_hakase2_09</comment>
-		<attribute name="キャラクター">博士２（父）</attribute>
+・続けてmsg_c07_hakase1_09</comment>
+		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">この　セッカシティを
 ぬけた　さきに　あるのだが[BE:01:ページ切り替え（クリア）]
 くわしいことは
@@ -479,12 +479,12 @@
 入った　人間が　いないのでな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c07_hakase2_09" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c07_hakase1_09" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・再度、主人公と向き合ってメッセージ表示
 ・メッセージ表示後、画面上に移動
 　画面外に消えると、主人公操作可能に</comment>
-		<attribute name="キャラクター">博士２（父）</attribute>
+		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">わしの　むすめも
 なかを　しらべたがっているが[BE:01:ページ切り替え（クリア）]
 なあに　わからないことがある
