@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T16:14:39"/>
+	<create user="matsumiya" host="W00207" date="2009-11-17T21:17:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,10 +337,18 @@
 	<row id="msg_c07gym0101_leader_06" back-color=",,,#ffff80,,,,,,,,,,,,,,,">
 		<comment>・msg_c07gym0101_leader_05
 　表示後に表示
-・表示後、ジムの外に</comment>
+・msg_c07_leader7_01を表示後
+　d08最上階イベント終了（仮）まで
+　ここから動作モデルを削除</comment>
 		<attribute name="キャラ指定">LEADER7</attribute>
-		<language name="JPN" width="256">……そとが　さわがしいな</language>
-		<language name="JPN_KANJI" width="256">……外が　騒がしいな</language>
+		<language name="JPN" width="256">……いくら　たたかえど
+つよさ　とは　なにか　わからない[BE:01:ページ切り替え（クリア）]
+だが　おまえなら
+なにか　こたえを　みつけるやもな</language>
+		<language name="JPN_KANJI" width="256">……いくら　闘えど
+強さとは　なにか　わからない[BE:01:ページ切り替え（クリア）]
+だが　おまえなら
+なにか　答えを　みつけるやもな</language>
 	</row>
 
 	<row id="msg_c07gym0101_leader_07" back-color=",,,#ffff80,,,,,,,,,,,,,,,">
