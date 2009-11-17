@@ -1400,7 +1400,7 @@ static void rememberExitInfo(EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int id
 {
 	//マップ遷移発生の場合、出入口を記憶しておく
   LOCATION ent_loc;
-  LOCATION_Set( &ent_loc, FIELDMAP_GetZoneID(fieldWork), idx, 0,
+  LOCATION_Set( &ent_loc, FIELDMAP_GetZoneID(fieldWork), idx, 0, LOCATION_DEFAULT_EXIT_OFS,
       pos->x, pos->y, pos->z);
   GAMEDATA_SetEntranceLocation(req->gamedata, &ent_loc);
 }
@@ -1825,7 +1825,7 @@ static void rememberExitRailInfo(const EV_REQUEST * req, FIELDMAP_WORK * fieldWo
 {
 	//マップ遷移発生の場合、出入口を記憶しておく
   LOCATION ent_loc;
-  LOCATION_SetRail( &ent_loc, FIELDMAP_GetZoneID(fieldWork), idx, 0,
+  LOCATION_SetRail( &ent_loc, FIELDMAP_GetZoneID(fieldWork), idx, 0, LOCATION_DEFAULT_EXIT_OFS,
       loc->rail_index, loc->line_grid, loc->width_grid);
   GAMEDATA_SetEntranceLocation(req->gamedata, &ent_loc);
 }

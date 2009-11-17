@@ -53,6 +53,7 @@ void LOCATION_Init(LOCATION * loc)
 	loc->zone_id = 0;
 	loc->exit_id = 0;
 	loc->dir_id = 0;
+  loc->exit_ofs = LOCATION_DEFAULT_EXIT_OFS;
 	loc->location_pos.type = LOCATION_POS_TYPE_3D;
 	loc->location_pos.pos.x = 0;
 	loc->location_pos.pos.y = 0;
@@ -64,12 +65,13 @@ void LOCATION_Init(LOCATION * loc)
  * @brief	LOCATIONのセット
  */
 //--------------------------------------------------------------
-void LOCATION_Set(LOCATION * loc, int zone, s16 door, s16 dir, fx32 x, fx32 y, fx32 z)
+void LOCATION_Set(LOCATION * loc, int zone, s16 door, s16 dir, u16 ofs, fx32 x, fx32 y, fx32 z)
 {
 	loc->type = LOCATION_TYPE_INIT;
 	loc->zone_id = zone;
 	loc->exit_id = door;
 	loc->dir_id = dir;
+  loc->exit_ofs = ofs;
 	loc->location_pos.type = LOCATION_POS_TYPE_3D;
 	loc->location_pos.pos.x = x;
 	loc->location_pos.pos.y = y;
@@ -81,12 +83,13 @@ void LOCATION_Set(LOCATION * loc, int zone, s16 door, s16 dir, fx32 x, fx32 y, f
  *	@brief  ロケーションセット　レールロケーション
  */
 //-----------------------------------------------------------------------------
-void LOCATION_SetRail(LOCATION * loc, int zone, s16 door, s16 dir, u16 rail_index, u16 line_grid, s16 width_grid)
+void LOCATION_SetRail(LOCATION * loc, int zone, s16 door, s16 dir, u16 ofs, u16 rail_index, u16 line_grid, s16 width_grid)
 {
 	loc->type = LOCATION_TYPE_INIT;
 	loc->zone_id = zone;
 	loc->exit_id = door;
 	loc->dir_id = dir;
+  loc->exit_ofs = ofs;
 	loc->location_pos.type = LOCATION_POS_TYPE_RAIL;
   loc->location_pos.railpos.type        = FIELD_RAIL_TYPE_LINE;
 	loc->location_pos.railpos.rail_index  = rail_index;
@@ -97,11 +100,12 @@ void LOCATION_SetRail(LOCATION * loc, int zone, s16 door, s16 dir, u16 rail_inde
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-void LOCATION_SetID(LOCATION * loc, u16 zone_id, u16 exit_id)
+void LOCATION_SetID(LOCATION * loc, u16 zone_id, u16 exit_id, u16 ofs)
 {
 	LOCATION_Init(loc);
 	loc->zone_id = zone_id;
 	loc->exit_id = exit_id;
+  loc->exit_ofs = ofs;
 }
 //--------------------------------------------------------------
 /**
@@ -114,6 +118,7 @@ void LOCATION_SetDirect(LOCATION * loc, int zone, s16 dir, fx32 x, fx32 y, fx32 
 	loc->zone_id = zone;
 	loc->exit_id = DOOR_ID_JUMP_CODE;
 	loc->dir_id = dir;
+  loc->exit_ofs = LOCATION_DEFAULT_EXIT_OFS;
   loc->location_pos.type  = LOCATION_POS_TYPE_3D;
 	loc->location_pos.pos.x = x;
 	loc->location_pos.pos.y = y;
@@ -131,6 +136,7 @@ void LOCATION_SetDirectRail(LOCATION * loc, int zone, s16 dir, u16 rail_index, u
 	loc->zone_id = zone;
 	loc->exit_id = DOOR_ID_JUMP_CODE;
 	loc->dir_id = dir;
+  loc->exit_ofs = LOCATION_DEFAULT_EXIT_OFS;
   loc->location_pos.type        = LOCATION_POS_TYPE_RAIL;
   loc->location_pos.railpos.type        = FIELD_RAIL_TYPE_LINE;
 	loc->location_pos.railpos.rail_index  = rail_index;
@@ -229,6 +235,7 @@ void LOCATION_DEBUG_SetDefaultPos(LOCATION * loc, u16 zone_id)
 	loc->zone_id = zone_id;
 	loc->exit_id = DOOR_ID_JUMP_CODE;
 	loc->dir_id = 0;
+  loc->exit_ofs = LOCATION_DEFAULT_EXIT_OFS;
   if( IsRailMap(zone_id) )
   {
     // レール用初期化
@@ -259,6 +266,7 @@ void LOCATION_SetGameStart(LOCATION * loc)
   loc->zone_id = ZONE_ID_GAMESTART;
   loc->exit_id = DOOR_ID_JUMP_CODE;
   loc->dir_id = EXIT_DIR_DOWN;
+  loc->exit_ofs = LOCATION_DEFAULT_EXIT_OFS;
   loc->location_pos.type = LOCATION_POS_TYPE_3D;
   loc->location_pos.pos.x = 72 * FX32_ONE;
   loc->location_pos.pos.y =  0 * FX32_ONE;

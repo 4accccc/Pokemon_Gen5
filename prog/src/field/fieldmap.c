@@ -580,7 +580,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 
   //フィールドマップ用ロケーション作成
 
-  LOCATION_Set( &fieldWork->location, fieldWork->map_id, 0, 0, 
+  LOCATION_Set( &fieldWork->location, fieldWork->map_id, 0, 0, LOCATION_DEFAULT_EXIT_OFS,
       fieldWork->now_pos.x, fieldWork->now_pos.y, fieldWork->now_pos.z );
   
   //マップデータ登録
@@ -2295,6 +2295,32 @@ static BOOL fldmap_CheckMoveZoneChange( FIELDMAP_WORK *fieldWork )
 	return( FALSE );
 }
 
+#ifdef DEBUG_FIELDMAP_ZONE_CHANGE_SYNC
+static u64 checks[10];
+static u32 check_count;
+static void init_checks(void){check_count = 0;}
+static void SET_CHECK(void){
+  if (check_count >= NELEMS(checks)) return;
+  checks[check_count] = OS_GetTick();
+  check_count ++;
+}
+static void put_checks(OSTick start)
+{
+  int i;
+  u64 value;
+  for (i = 1; i < check_count; i++) {
+    OS_Printf("%6ld:", checks[i] );
+    value = checks[i] - checks[i-1];
+    OS_Printf("%6ld\n", value);
+  }
+}
+
+#else
+
+#define SET_CHECK()   /* DO NOTHING */
+
+#endif
+ 
 //--------------------------------------------------------------
 /**
  * ゾーン切り替え時の処理
@@ -2317,6 +2343,8 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 #ifdef DEBUG_FIELDMAP_ZONE_CHANGE_SYNC
   OSTick debug_fieldmap_start_tick = OS_GetTick(); 
   OSTick debug_fieldmap_end_tick;
+  init_checks();
+  SET_CHECK();
 #endif
 
   LOCATION_Get3DPos( lc, &lc_pos );
@@ -2328,32 +2356,40 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	
 	//旧ゾーン配置動作モデル削除
 	MMDLSYS_DeleteZoneUpdateMMdl( fmmdlsys );
+
+  SET_CHECK();
 	
 	//次のイベントデータをロード
 	EVENTDATA_SYS_Load( evdata, new_zone_id, GAMEDATA_GetSeasonID(gdata) );
 	
+  SET_CHECK();
 	//新規ゾーンに配置する動作モデルセット
 	zoneChange_SetMMdl( gdata, fmmdlsys, evdata, new_zone_id );
   zoneChange_SetMMdlZoneWFBC( gdata, fieldWork, new_zone_id );
 	
+  SET_CHECK();
 	//BGM切り替え
 	zoneChange_SetBGM( gdata, new_zone_id );
 
+  SET_CHECK();
 	// ZONEフォグライト設定
 	zoneChange_SetZoneFogLight( fieldWork, new_zone_id );
 	
 	//天候リクエスト
 	zoneChange_SetWeather( fieldWork, new_zone_id );
 
+  SET_CHECK();
   //カメラエリアの設定
   zoneChange_SetCameraArea( fieldWork, new_zone_id );
 	
+  SET_CHECK();
 	//PLAYER_WORK更新
 	zoneChange_UpdatePlayerWork( gdata, new_zone_id );
 
 	// 地名表示システムに, ゾーンの切り替えを通達
 	FIELD_PLACE_NAME_Display( fieldWork->placeNameSys, new_zone_id );
 
+  SET_CHECK();
 	//ゾーンID更新
 	lc->zone_id = new_zone_id;
 	
@@ -2363,6 +2399,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
   //特殊スクリプト呼び出し：ゾーン切り替え
   SCRIPT_CallZoneChangeScript( fieldWork->gsys, HEAPID_PROC );
 
+  SET_CHECK();
 #ifdef DEBUG_FIELDMAP_ZONE_CHANGE_SYNC
   debug_fieldmap_end_tick = OS_GetTick();
   debug_fieldmap_end_tick -= debug_fieldmap_start_tick;
@@ -2374,6 +2411,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
     OS_TPrintf( "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" );
     OS_TPrintf( "!!!!!!zone_change TickOver  [%d] micro second !!!!!!\n", debug_fieldmap_end_tick );
     OS_TPrintf( "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" );
+    put_checks(debug_fieldmap_start_tick);
   }
 #endif
 

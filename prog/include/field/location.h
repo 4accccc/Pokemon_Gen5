@@ -13,6 +13,13 @@
 
 #include "field/rail_location.h"
 
+//=============================================================================
+//=============================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+enum {
+  LOCATION_DEFAULT_EXIT_OFS = 0,
+};
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 typedef enum {
@@ -55,6 +62,7 @@ typedef struct {
 	s16 zone_id;
 	s16 exit_id;
 	s16 dir_id;
+  u16 exit_ofs;
 	LOCATION_POS location_pos;
 }LOCATION;
 
@@ -85,15 +93,15 @@ extern void LOCATION_Init(LOCATION * loc);
  * @brief	LOCATIONのセット
  */
 //--------------------------------------------------------------
-extern void LOCATION_Set(LOCATION * loc, int zone, s16 door, s16 dir, fx32 x, fx32 y, fx32 z);
-extern void LOCATION_SetRail(LOCATION * loc, int zone, s16 door, s16 dir, u16 rail_index, u16 line_grid, s16 width_grid);
+extern void LOCATION_Set(LOCATION * loc, int zone, s16 door, s16 dir, u16 ofs, fx32 x, fx32 y, fx32 z);
+extern void LOCATION_SetRail(LOCATION * loc, int zone, s16 door, s16 dir, u16 ofs, u16 rail_index, u16 line_grid, s16 width_grid);
 
 //--------------------------------------------------------------
 /**
  * @brief	LOCATIONのセット（zone_id,exit_idのみ)
  */
 //--------------------------------------------------------------
-extern void LOCATION_SetID(LOCATION * loc, u16 zone_id, u16 exit_id);
+extern void LOCATION_SetID(LOCATION * loc, u16 zone_id, u16 exit_id, u16 ofs);
 //--------------------------------------------------------------
 /**
  * @brief	LOCATIONのセット（直接位置指定）
