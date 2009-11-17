@@ -8,6 +8,7 @@ RESOURCE_MACRO	= $(PROJECT_RSCDIR)\macro_define
 
 
 SUBDIRS	=	wmi \
+			waza_tbl\
 			personal\
 			trdata \
 			trmsg \
@@ -25,7 +26,6 @@ SUBDIRS	=	wmi \
 			fldmapdata\
 			pokegra\
 			battle\
-			waza_tbl\
 			net_err\
 			font\
 			itemconv\
