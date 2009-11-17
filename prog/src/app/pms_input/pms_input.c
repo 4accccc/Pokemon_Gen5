@@ -1847,6 +1847,12 @@ static GFL_PROC_RESULT MainProc_Category( PMS_INPUT_WORK* wk, int* seq )
 	*/
 static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
 {
+  // ‰‰o’†‚ÍŽó‚¯•t‚¯‚È‚¢
+  if( PMSIView_WaitCommand( wk->vwk, VCMD_INPUTWORD_UPDATE ) == FALSE )
+  {
+    return;
+  }
+
   if( wk->key_trg & PAD_BUTTON_START )
   {
     if( wk->category_mode == CATEGORY_MODE_INITIAL )
@@ -1885,6 +1891,8 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
     if( wk->category_mode == CATEGORY_MODE_INITIAL && PMSI_SEARCH_DelWord( wk->swk ) )
     {
 		  GFL_SOUND_PlaySE(SOUND_WORD_DELETE);
+      PMSI_SEARCH_Start( wk->swk );
+      
       PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
     }
     // GROUP‚Í–³ðŒ‚Å‰æ–Ê‚©‚ç”²‚¯‚é
@@ -1949,8 +1957,10 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
     else
     {
       PMSI_SEARCH_AddWord( wk->swk, wk->category_pos );
-      PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
       GFL_SOUND_PlaySE( SOUND_WORD_INPUT );
+      
+      PMSI_SEARCH_Start( wk->swk );
+      PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
     }
     return;
   }
@@ -2146,6 +2156,8 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
     // •¶Žš“ü—Í
 		wk->category_pos = ini_idx[ret];
     PMSI_SEARCH_AddWord( wk->swk, wk->category_pos );
+
+    PMSI_SEARCH_Start( wk->swk );
     PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
 
     GFL_SOUND_PlaySE( SOUND_WORD_INPUT );
@@ -3745,5 +3757,35 @@ void PMSI_GetWorkScrollData( const PMS_INPUT_WORK * wk, u16 * line, u16 * line_m
 {
 	*line = wk->word_win.line;
 	*line_max = wk->word_win.line_max;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	const PMS_INPUT_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u32 PMSI_GetSearchResultCount( const PMS_INPUT_WORK* wk )
+{
+  return PMSI_SEARCH_GetResultCount( wk->swk );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	const PMS_INPUT_WORK* wk
+ *	@param	result_idx
+ *	@param	dst_buf 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void PMSI_GetSearchResultString( const PMS_INPUT_WORK* wk, u32 result_idx, STRBUF* dst_buf )
+{
+  PMSI_SEARCH_GetResultString( wk->swk, result_idx, dst_buf );
 }
 

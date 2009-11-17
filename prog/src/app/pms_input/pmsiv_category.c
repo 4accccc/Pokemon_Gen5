@@ -56,6 +56,14 @@ enum {
 	INITIAL_WIN_WIDTH = 30,
 	INITIAL_WIN_HEIGHT = 14,
 	INITIAL_WIN_CHARSIZE = INITIAL_WIN_WIDTH*INITIAL_WIN_HEIGHT,
+	
+  SUBLIST_WIN_XORG = 1,     ///< キャラ単位
+	SUBLIST_WIN_YORG = 1,     ///< キャラ単位
+	SUBLIST_WIN_WIDTH = 30,
+	SUBLIST_WIN_HEIGHT = 22,
+	SUBLIST_WIN_CHARSIZE = SUBLIST_WIN_WIDTH*SUBLIST_WIN_HEIGHT,
+  SUBLIST_WIN_STR_NUM = SUBLIST_WIN_HEIGHT / 2 * 2, ///< 最大項目数
+  SUBLIST_WIN_SCROLL_SYNC = PMSI_FRAMES(4), ///< スクロールにかけるSYNC
 
   INPUT_WIN_XORG    = 10,
   INPUT_WIN_YORG    = 3,
@@ -111,6 +119,10 @@ enum {
   CATEGORY_INPUT_WIN_COL_S = 0xE,
   CATEGORY_INPUT_WIN_COL_B = 0x1,
 
+  CATEGORY_SUBLIST_WIN_COL_L = 0x1,
+  CATEGORY_SUBLIST_WIN_COL_S = 0x2,
+  CATEGORY_SUBLIST_WIN_COL_B = 0xF,
+
 	CATEGORY_WIN_UNKNOWN_COL_LETTER = 0x03,
 	CATEGORY_WIN_UNKNOWN_COL_SHADOW = 0x04,
 };
@@ -152,6 +164,8 @@ struct _PMSIV_CATEGORY {
 	GFL_BMPWIN		*winGroup[CATEGORY_GROUP_MAX];
 	GFL_BMPWIN		*winInitial;
   GFL_BMPWIN    *winInput;
+  GFL_BMPWIN    *winSubList;
+  PRINT_UTIL    printSubList;
 };
 
 
@@ -161,6 +175,7 @@ struct _PMSIV_CATEGORY {
 static u32 setup_group_window( PMSIV_CATEGORY* wk, u32 charpos );
 static u32 setup_initial_window( PMSIV_CATEGORY* wk, u32 charpos );
 static u32 setup_input_window( PMSIV_CATEGORY* wk, u32 charpos );
+static void setup_sublist_window( PMSIV_CATEGORY* wk );
 static void setup_actor( PMSIV_CATEGORY* wk );
 
 
@@ -224,6 +239,10 @@ void PMSIV_CATEGORY_Delete( PMSIV_CATEGORY* wk )
   {
 		GFL_BMPWIN_Delete( wk->winInput );
   }
+  if( wk->winSubList != NULL )
+  {
+		GFL_BMPWIN_Delete( wk->winSubList );
+  }
 	GFL_HEAP_FreeMemory( wk );
 }
 
@@ -269,6 +288,9 @@ void PMSIV_CATEGORY_SetupGraphicDatas( PMSIV_CATEGORY* wk, ARCHANDLE* p_handle )
   charpos = setup_input_window( wk, charpos );
   
   HOSAKA_Printf("BG FRM_MAIN_CATEGORY inputword charpos=%d \n", charpos);
+
+  // SUB画面入力候補リスト初期化
+  setup_sublist_window( wk );
 
 	GFL_BG_SetScroll( FRM_MAIN_CATEGORY, GFL_BG_SCROLL_X_SET, GROUPMODE_BG_XOFS );
 	GFL_BG_SetScroll( FRM_MAIN_CATEGORY, GFL_BG_SCROLL_Y_SET, CATEGORY_BG_DISABLE_YOFS );
@@ -355,7 +377,6 @@ static u32 setup_group_window( PMSIV_CATEGORY* wk, u32 charpos )
 
 	return charpos;
 }
-
 
 //-----------------------------------------------------------------------------
 /**
@@ -446,6 +467,33 @@ static u32 setup_input_window( PMSIV_CATEGORY* wk, u32 charpos )
 	wk->winInput = win;
 
   return charpos;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  単語候補リスト
+ *
+ *	@param	PMSIV_CATEGORY* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void setup_sublist_window( PMSIV_CATEGORY* wk )
+{
+	GFL_BMPWIN  *win;
+	STRBUF* buf;
+	
+  win = GFL_BMPWIN_Create( FRM_SUB_SEARCH_LIST, SUBLIST_WIN_XORG, SUBLIST_WIN_YORG, 
+					SUBLIST_WIN_WIDTH, SUBLIST_WIN_HEIGHT, 
+					0, GFL_BMP_CHRAREA_GET_B );
+
+  GFL_BMPWIN_MakeScreen( win );
+  GFL_BG_LoadScreenReq( FRM_SUB_SEARCH_LIST );
+  
+  // 初期座標設定
+  GFL_BG_SetScroll( FRM_SUB_SEARCH_LIST, GFL_BG_SCROLL_Y_SET, -GX_LCD_SIZE_Y ); 
+
+  wk->winSubList = win;
 }
 
 //-----------------------------------------------------------------------------
@@ -898,5 +946,201 @@ void PMSIV_CATEGORY_InputWordUpdate( PMSIV_CATEGORY* wk )
   GFL_BMPWIN_TransVramCharacter( win );
 	
   GFL_BG_LoadScreenV_Req( FRM_MAIN_CATEGORY );
+}
+
+static void start_move_sublist_down( PMSIV_CATEGORY* wk );
+static void start_move_sublist_up( PMSIV_CATEGORY* wk, u32 count );
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  単語候補リスト移動開始
+ *
+ *	@param	PMSIV_CATEGORY* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void PMSIV_CATEGORY_StartMoveSubWinList( PMSIV_CATEGORY* wk, BOOL is_enable )
+{ 
+  int i; 
+  u32 count;
+
+  count = PMSI_GetSearchResultCount(wk->mwk);
+  
+  // 最大値制限
+  count = MATH_CLAMP( count, 0, SUBLIST_WIN_STR_NUM );
+  
+  if( is_enable )
+  {
+    // 出現設定
+    start_move_sublist_up( wk, count );
+  }
+  else
+  {
+    start_move_sublist_down( wk );
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  ひっこむ 開始
+ *
+ *	@param	PMSIV_CATEGORY* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void start_move_sublist_down( PMSIV_CATEGORY* wk )
+{
+  u32 vector;
+
+  // 出ている分だけ下げる
+  vector = GFL_BG_GetScrollY( FRM_SUB_SEARCH_LIST );
+
+  PMSIV_TOOL_SetupScrollWork( &wk->scroll_work,
+      FRM_SUB_SEARCH_LIST, PMSIV_TOOL_SCROLL_DIRECTION_Y,
+      vector, SUBLIST_WIN_SCROLL_SYNC );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  でてくる 開始
+ *
+ *	@param	PMSIV_CATEGORY* wk
+ *	@param	count 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void start_move_sublist_up( PMSIV_CATEGORY* wk, u32 count )
+{
+  int i; 
+  PRINTSYS_LSB color;
+  PRINT_QUE* print_que;
+	GFL_FONT *fontHandle;
+  STRBUF* buf;
+  
+  color = PRINTSYS_LSB_Make( CATEGORY_SUBLIST_WIN_COL_L, CATEGORY_SUBLIST_WIN_COL_S, CATEGORY_SUBLIST_WIN_COL_B );
+  print_que = PMSIView_GetPrintQue(wk->vwk);
+	fontHandle = PMSIView_GetFontHandle(wk->vwk);
+  buf = GFL_STR_CreateBuffer( 7*2+1, HEAPID_PMS_INPUT_VIEW );
+
+  // 一端クリア
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->winSubList), CATEGORY_SUBLIST_WIN_COL_B );
+
+  PRINT_UTIL_Setup( &wk->printSubList, wk->winSubList );
+
+  // 検索結果描画
+  for( i=0; i<count; i++ )
+  {
+    int px, py;
+    
+    if( i%2 == 0 )
+    {
+      px = SUBLIST_WIN_XORG * 8;
+    }
+    else
+    {
+      px = ( SUBLIST_WIN_XORG + SUBLIST_WIN_WIDTH / 2 ) * 8;
+    }
+
+    py = (i/2) * 8 * 2;
+
+    PMSI_GetSearchResultString( wk->mwk, i, buf );
+
+    PRINT_UTIL_PrintColor( &wk->printSubList, print_que, px, py, buf, fontHandle, color );
+  }
+
+  GFL_STR_DeleteBuffer( buf );
+
+  // 移動設定
+//  GFL_BG_SetScroll( FRM_SUB_SEARCH_LIST, GFL_BG_SCROLL_Y_SET, -GX_LCD_SIZE_Y ); 
+    
+  // 現在の座標から移動量を計算
+  {
+    u32 row;
+    int newofs;
+    int oldofs; 
+    int tarofs; 
+
+    // 行数
+    row = (count+1)/2; ///< 繰り上がり
+
+    // 初期値からの移動量
+    oldofs = GFL_BG_GetScrollY( FRM_SUB_SEARCH_LIST ) + GX_LCD_SIZE_Y;
+
+    newofs = SUBLIST_WIN_YORG * 8 + row * 8 * 2; //< -192からの移動量
+    
+    // 座標制限( 最低限エディットウィンドウは隠れる )
+    newofs = MATH_CLAMP( newofs, 6*8, GX_LCD_SIZE_Y );
+
+    // 目的地計算
+    tarofs = newofs - oldofs;
+  
+    PMSIV_TOOL_SetupScrollWork( &wk->scroll_work,
+        FRM_SUB_SEARCH_LIST, PMSIV_TOOL_SCROLL_DIRECTION_Y,
+        tarofs, SUBLIST_WIN_SCROLL_SYNC );
+
+    HOSAKA_Printf("set newofs=%d oldofs=%d tarofs=%d \n", newofs, oldofs, tarofs );
+  }
+
+  // スクリーン生成
+  GFL_BMPWIN_MakeScreen( wk->winSubList );
+  GFL_BG_LoadScreenV_Req( FRM_SUB_SEARCH_LIST );
+
+  // 表示
+  GFL_BG_SetVisible( FRM_SUB_SEARCH_LIST, TRUE );
+}
+
+//@TODO 何故か本元のinline関数を使うと0しか帰ってこなくなる
+static BOOL _PRINT_UTIL_Trans( PRINT_UTIL* wk, PRINT_QUE* que )
+{
+	if( wk->transReq )
+	{
+		if( !PRINTSYS_QUE_IsExistTarget(que, GFL_BMPWIN_GetBmp(wk->win)) )
+		{
+			GFL_BMPWIN_TransVramCharacter( wk->win );
+			wk->transReq = FALSE;
+		}
+	}
+	return wk->transReq;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  単語候補リスト出現処理
+ *
+ *	@param	PMSIV_CATEGORY* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+BOOL PMSIV_CATEGORY_WaitMoveSubWinList( PMSIV_CATEGORY* wk, BOOL is_enable )
+{
+  PRINT_QUE* print_que = PMSIView_GetPrintQue( wk->vwk );
+  BOOL flag1 = TRUE;
+  BOOL flag2;
+
+  // プリントを行なうのはUPのみ
+  if( is_enable )
+  {
+    flag1 = _PRINT_UTIL_Trans( &wk->printSubList, print_que ) == FALSE;
+  }
+
+  flag2 = PMSIV_TOOL_WaitScroll( &(wk->scroll_work) );
+
+  HOSAKA_Printf("f1=%d f2=%d \n",flag1, flag2);
+  
+  if( flag1 && flag2 )
+  {
+    // DOWN終了処理
+    if( is_enable == FALSE )
+    {
+      // 非表示に
+      GFL_BG_SetVisible( FRM_SUB_SEARCH_LIST, FALSE );
+    }
+    return TRUE;
+  }
+
+  return FALSE;
 }
 

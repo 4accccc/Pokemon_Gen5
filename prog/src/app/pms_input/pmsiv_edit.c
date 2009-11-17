@@ -415,6 +415,8 @@ static void pmsiv_edit_hblank(GFL_TCB *, void *vwork)
 	PMSIV_EDIT* wk = (PMSIV_EDIT*)vwork;
 
 	vc = GX_GetVCount();
+  
+// HOSAKA_Printf("vc=%d\n", vc);
 
 	if(vc < 6*8){
 		GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,wk->main_scr);
@@ -423,6 +425,16 @@ static void pmsiv_edit_hblank(GFL_TCB *, void *vwork)
 	}
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	PMSIV_EDIT* wk
+ *	@param	scr_dir
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 void PMSIV_EDIT_ScrollSet( PMSIV_EDIT* wk,u8 scr_dir)
 {
 	wk->scr_ct = 0;
@@ -451,6 +463,8 @@ int PMSIV_EDIT_ScrollWait( PMSIV_EDIT* wk)
 	s16	posY;
 	
 	if(wk->scr_ct > 5){
+    // スクリーンをクリア @TODO hosaka test > これでチラつきはなくなるが、一部残る。
+    GFL_BG_FillScreen( FRM_MAIN_EDITAREA, 0x0, 0, 0, 32*8, 4*8, 0 );
 		return TRUE;
 	}
 	
@@ -482,7 +496,10 @@ int PMSIV_EDIT_ScrollWait( PMSIV_EDIT* wk)
 
 	wk->scr_ct++;
 
+  HOSAKA_Printf("scr_ct=%d \n", wk->scr_ct );
+
 	if(wk->scr_dir && (wk->scr_ct == 6)){
+    HOSAKA_Printf("task delete \n" );
 		GFL_TCB_DeleteTask( wk->hBlankTask );
 		wk->hBlankTask = NULL;
 //		sys_HBlankIntrSet(NULL,NULL);
@@ -509,14 +526,13 @@ static void setup_pal_datas( PMSIV_EDIT* wk, ARCHANDLE* p_handle )
 	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_pmsi_pms_bg_main_NCLR, PALTYPE_MAIN_BG,
 		 0, 14*0x20, HEAPID_PMS_INPUT_VIEW );
 	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_pmsi_pms_bg_sub_NCLR, PALTYPE_SUB_BG,
-		 0, 4*0x20, HEAPID_PMS_INPUT_VIEW );
+		 0, 5*0x20, HEAPID_PMS_INPUT_VIEW );
 
 	// 後の色変え用にヒープにも読み込んでおく
 	data_ptr = GFL_ARCHDL_UTIL_LoadPalette( p_handle, NARC_pmsi_pms_bgm_dat_NCLR, &palDat, HEAPID_PMS_INPUT_VIEW );
 
 	MI_CpuCopy16( palDat->pRawData, wk->pal_data, sizeof(wk->pal_data) );
 	DC_FlushRange( wk->pal_data, sizeof(wk->pal_data) );
-
 
 	GFL_HEAP_FreeMemory( data_ptr );
 }
@@ -593,6 +609,7 @@ static void setup_obj( PMSIV_EDIT* wk )
 	wk->cursor_actor[1] = PMSIView_AddActor( wk->vwk, &header, actpos.x, actpos.y + GX_LCD_SIZE_Y,
 			ACTPRI_EDITAREA_CURSOR, NNS_G2D_VRAM_TYPE_2DSUB );
 	GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor[1], 1);
+  GFL_CLACT_WK_SetBgPri( wk->cursor_actor[1], 1 );
 
 	PMSIView_SetupDefaultActHeader( wk->vwk, &header, PMSIV_LCD_MAIN, BGPRI_MAIN_EDITAREA );
 	wk->cursor_actor[0] = PMSIView_AddActor( wk->vwk, &header, actpos.x, actpos.y,

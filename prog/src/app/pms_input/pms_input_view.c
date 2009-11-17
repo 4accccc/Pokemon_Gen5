@@ -67,6 +67,7 @@ struct _PMS_INPUT_VIEW {
 	PMSIV_SUB*			  sub_wk; // Œ»óSUBBG‚Ì“Ç‚Ýž‚Ý‚¾‚¯‚ÉŽg‚í‚ê‚Ä‚¢‚é‚æ‚¤‚¾‚Á‚½‚Ì‚Å‘S‚ÄƒRƒƒ“ƒgƒAƒEƒg‚µ‚½
   PMSIV_MENU*       menu_wk;
 
+
 	u8					status;
 	u8					key_mode;
 
@@ -497,9 +498,15 @@ static void Cmd_Init( GFL_TCB *tcb, void* wk_adrs )
 	PMSIV_WORDWIN_SetupGraphicDatas( cwk->vwk->wordwin_wk );
 
   // SUB BG‚Ì“WŠJ 
+  // ”wŒi–Ê
 	GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_pmsi_pms_bg_sub_NSCR, FRM_SUB_BG, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_pmsi_pms_bg_sub_NCGR, FRM_SUB_BG, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
+  // “ü—Í—\‘ªƒŠƒXƒg–Ê
+  GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_pmsi_pms_bg_sub2_NSCR, FRM_SUB_SEARCH_LIST, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_pmsi_pms_bg_sub_NCGR, FRM_SUB_SEARCH_LIST, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
+	GFL_BG_SetVisible( FRM_SUB_SEARCH_LIST, FALSE );
 	
+  // ”wŒi–Ê“]‘—
 	GFL_ARCHDL_UTIL_TransVramScreen(p_handle, NARC_pmsi_pms_bg_main3_NSCR,
 		FRM_MAIN_BACK, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 
@@ -613,6 +620,7 @@ static void Cmd_Quit( GFL_TCB *tcb, void* wk_adrs )
 			GFL_BG_FreeBGControl( FRM_MAIN_BACK );
 			GFL_BG_FreeBGControl( FRM_SUB_EDITAREA );
 			GFL_BG_FreeBGControl( FRM_SUB_BG );
+			GFL_BG_FreeBGControl( FRM_SUB_SEARCH_LIST );
 	
 			GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
 
@@ -666,18 +674,26 @@ static void setup_bg_params( COMMAND_WORK* cwk )
 		GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x08000,0x6000,
 		GX_BG_EXTPLTT_01, 3, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
 	};
-	// BG0 SUB
+	// BG0 SUB ƒGƒfƒBƒbƒgƒGƒŠƒA
 	static const GFL_BG_BGCNT_HEADER header_sub0 = {
 		0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000,0x8000,
-		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
+		GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000,0x8000,
+		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
 	};
+  // ”wŒi
 	static const GFL_BG_BGCNT_HEADER header_sub1 = {
 		0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x08000,0x6000,
-		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
+		GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x0c000,0x8000,
+		GX_BG_EXTPLTT_01, 3, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
+	};
+  // ’PŒê—\‘ªƒŠƒXƒg
+	static const GFL_BG_BGCNT_HEADER header_sub2 = {
+		0, 0, 0x1000, 0,	// scrX, scrY, scrbufSize, scrbufofs,
+		GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
+		GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x14000,0x8000,
+		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
 	};
 
 	PMS_INPUT_VIEW* vwk = cwk->vwk;
@@ -697,8 +713,9 @@ static void setup_bg_params( COMMAND_WORK* cwk )
 
 	GFL_BG_SetBGControl( FRM_SUB_EDITAREA, &header_sub0, GFL_BG_MODE_TEXT );
 	GFL_BG_SetBGControl( FRM_SUB_BG, &header_sub1, GFL_BG_MODE_TEXT );
+	GFL_BG_SetBGControl( FRM_SUB_SEARCH_LIST, &header_sub2, GFL_BG_MODE_TEXT );
 
-	for(i = 0;i < 6;i++){
+	for(i = 0;i < 7;i++){
 		GFL_BG_ClearScreen(GFL_BG_FRAME0_M+i);
 		GFL_BG_SetVisible(GFL_BG_FRAME0_M+i,TRUE);
 	}
@@ -1636,12 +1653,32 @@ static void Cmd_ButtonDownRelease(GFL_TCB *tcb, void* wk_adrs)
 //-----------------------------------------------------------------------------
 static void Cmd_InputWordUpdate( GFL_TCB* tcb, void* wk_adrs )
 {
-	COMMAND_WORK* wk = wk_adrs;
-  PMS_INPUT_VIEW* vwk = wk->vwk;
+	COMMAND_WORK* cwk = wk_adrs;
+  PMS_INPUT_VIEW* vwk = cwk->vwk;
+  u32 count;
   
-  PMSIV_CATEGORY_InputWordUpdate( vwk->category_wk );
+  count = PMSI_GetSearchResultCount(cwk->mwk);
 
-  DeleteCommand( wk );
+  switch( cwk->seq )
+  {
+  case 0 :
+    PMSIV_CATEGORY_InputWordUpdate( vwk->category_wk );
+    PMSIV_CATEGORY_StartMoveSubWinList( vwk->category_wk, (count>0) );
+    cwk->seq++;
+    break;
+  case 1 :
+    if( PMSIV_CATEGORY_WaitMoveSubWinList( vwk->category_wk, (count>0) ) )
+    {
+      cwk->seq++;
+    }
+    break;
+  case 2 :
+    DeleteCommand( cwk );
+    break;
+  default : GF_ASSERT(0);
+  }
+  
+
 }
 
 //----------------------------------------------------------------------------------------------

@@ -43,6 +43,7 @@ enum {
 
 	FRM_SUB_EDITAREA = GFL_BG_FRAME0_S,
 	FRM_SUB_BG = GFL_BG_FRAME1_S,
+  FRM_SUB_SEARCH_LIST = GFL_BG_FRAME2_S,
 
 	FRM_MAIN_EDITAREA_BLENDMASK = GX_BLEND_PLANEMASK_BG0,
 	FRM_MAIN_CATEGORY_BLENDMASK = GX_BLEND_PLANEMASK_BG1,
@@ -289,6 +290,8 @@ extern BOOL PMSIV_CATEGORY_WaitModeChange( PMSIV_CATEGORY* wk );
 extern void PMSIV_CATEGORY_StartBrightDown( PMSIV_CATEGORY* wk );
 extern BOOL PMSIV_CATEGORY_WaitBrightDown( PMSIV_CATEGORY* wk );
 extern void PMSIV_CATEGORY_InputWordUpdate( PMSIV_CATEGORY* wk );
+extern void PMSIV_CATEGORY_StartMoveSubWinList( PMSIV_CATEGORY* wk, BOOL is_enable );
+extern BOOL PMSIV_CATEGORY_WaitMoveSubWinList( PMSIV_CATEGORY* wk, BOOL is_enable );
 
 
 //================================================================================

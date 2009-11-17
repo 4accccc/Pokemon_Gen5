@@ -555,21 +555,80 @@ u32 PMSI_DATA_GetInitialEnableWordTable( const PMS_INPUT_DATA* data, const PMS_W
   return CountupInitialWord( (PMS_INPUT_DATA*)data, src_tbl, dst_tbl, dummy_pos );
 }
 
+
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  PMS_WORDID_DUP を末尾までスキップする
+ *
+ *	@param	const PMS_WORD* p_src_tbl 入力
+ *
+ *	@retval const PMS_WORD* 出力
+ */
+//-----------------------------------------------------------------------------
+static const PMS_WORD* skip_dup( const PMS_WORD* p_src_tbl )
+{
+  u32 dup;
+
+  p_src_tbl++;
+  dup = *p_src_tbl++;
+  p_src_tbl += (dup-1); // DUP行の末尾にあわせる
+
+  return p_src_tbl;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  ファイル座標からPMS_WORDを算出
  *
  *	@param	const PMS_INPUT_DATA* data 
+ *
+ *	@note   テーブル中の PMS_WORDID_DUP をスキップするのでテーブルに直接アクセスではいけない。
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
 PMS_WORD PMSI_DATA_GetWordToOriginalPos( const PMS_INPUT_DATA* data, u32 file_idx, u32 file_pos )
 {
-  GF_ASSERT( file_idx < NELEMS(PMS_InitialTable) );
+  int cnt = 0;
+  const PMS_WORD* src_tbl;
 
-  return PMS_InitialTable[ file_idx ][ file_pos ];
+  GF_ASSERT( file_idx < NELEMS(PMS_InitialTable) );
+  
+  src_tbl = &PMS_InitialTable[ file_idx ][0];
+
+  while( *src_tbl != PMS_WORDID_END )
+  {
+    // 一致
+    if( cnt == file_pos )
+    {
+      // 一致した行がDUPだったら
+      if( *src_tbl == PMS_WORDID_DUP )
+      {
+        src_tbl = skip_dup( src_tbl );
+      }
+
+      return *src_tbl;
+    }
+
+    // 次の単語を参照
+		if( *src_tbl == PMS_WORDID_DUP )
+    {
+      src_tbl = skip_dup( src_tbl );
+    }
+    else
+    {
+			src_tbl++;
+    }
+    
+    cnt++;
+  };
+
+  GF_ASSERT(0);
+
+  return 0;
 }
+
+
 
 //-----------------------------------------------------------------------------
 /**

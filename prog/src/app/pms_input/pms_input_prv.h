@@ -191,6 +191,7 @@ enum {
 	INI_OTHER,
   // ª50‰¹ŒŸõ‚Ìgmmƒe[ƒuƒ‹‚Æ‘Î‰‚µ‚Ä‚¢‚é‚Ì‚Å‡”ÔŒÅ’èª
 	INI_BOU,
+  INI_SEARCH_MAX = INI_BOU,
 
 	INI_BACK    = CATEGORY_POS_BACK,
 	INI_ERASE   = CATEGORY_POS_ERASE,
@@ -298,6 +299,9 @@ extern void PMSIView_GetSentenceWordArea( PMS_INPUT_VIEW* wk ,GFL_UI_TP_HITTBL* 
 extern int PMSIView_WaitYesNo(PMS_INPUT_VIEW* wk);
 
 extern void PMSI_GetWorkScrollData( const PMS_INPUT_WORK * wk, u16 * line, u16 * line_max );
+
+extern u32 PMSI_GetSearchResultCount( const PMS_INPUT_WORK* wk );
+extern void PMSI_GetSearchResultString( const PMS_INPUT_WORK* wk, u32 result_idx, STRBUF* dst_buf );
 
 
 #endif

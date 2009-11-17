@@ -54,7 +54,7 @@ struct _PMS_INPUT_SEARCH {
   GFL_MSGDATA* msg_tbl[ PMS_ABC_GMMTBL_MAX ];
   MSGSEARCH_WORK* search_wk;
   MSGSEARCH_RESULT search_result[ WORD_SEARCH_MAX ];
-  PMS_WORD result_word[ WORD_SEARCH_MAX + 1 ];
+  PMS_WORD result_word[ WORD_SEARCH_MAX+1 ];
   STRBUF* str_search;
   u16 word_code[ WORD_CODE_MAX ];
   u16 padding_u16;
@@ -326,8 +326,9 @@ BOOL PMSI_SEARCH_Start( PMS_INPUT_SEARCH*wk )
   HOSAKA_Printf("search idx =%d\n", search_idx );
  
   // –³Œø•¶Žš‚È‚çŒŸõ‚µ‚È‚¢
-  if( search_idx == INI_DIS )
+  if( search_idx >= INI_SEARCH_MAX )
   {
+    wk->search_hitnum = 0; // Œ‹‰Ê‚ð0‚É
     return FALSE;
   }
 
