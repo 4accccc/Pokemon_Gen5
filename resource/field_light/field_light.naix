@@ -11,18 +11,22 @@
 #define NARC_FIELD_LIGHT_NAIX_
 
 enum {
-	NARC_field_light_indoor00_00_dat = 0,
-	NARC_field_light_indoor00_01_dat = 1,
-	NARC_field_light_indoor00_02_dat = 2,
-	NARC_field_light_indoor00_03_dat = 3,
-	NARC_field_light_light00_00_dat = 4,
-	NARC_field_light_light00_01_dat = 5,
-	NARC_field_light_light00_02_dat = 6,
-	NARC_field_light_light00_03_dat = 7,
-	NARC_field_light_lightC03_00_dat = 8,
-	NARC_field_light_lightC03_01_dat = 9,
-	NARC_field_light_lightC03_02_dat = 10,
-	NARC_field_light_lightC03_03_dat = 11
+	NARC_field_light_in_c5gym_00_dat = 0,
+	NARC_field_light_in_c5gym_01_dat = 1,
+	NARC_field_light_in_c5gym_02_dat = 2,
+	NARC_field_light_in_c5gym_03_dat = 3,
+	NARC_field_light_indoor00_00_dat = 4,
+	NARC_field_light_indoor00_01_dat = 5,
+	NARC_field_light_indoor00_02_dat = 6,
+	NARC_field_light_indoor00_03_dat = 7,
+	NARC_field_light_light00_00_dat = 8,
+	NARC_field_light_light00_01_dat = 9,
+	NARC_field_light_light00_02_dat = 10,
+	NARC_field_light_light00_03_dat = 11,
+	NARC_field_light_lightC03_00_dat = 12,
+	NARC_field_light_lightC03_01_dat = 13,
+	NARC_field_light_lightC03_02_dat = 14,
+	NARC_field_light_lightC03_03_dat = 15
 };
 
 /* NARC_FIELD_LIGHT_NAIX_ */
