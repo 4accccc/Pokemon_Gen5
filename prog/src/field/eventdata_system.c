@@ -287,7 +287,6 @@ static void loadEncountDataTable(EVENTDATA_SYSTEM* evdata, u16 zone_id, u8 seaso
 {
   u32 size;
   u16 id,season;
-  ENCOUNT_TABLE* tbl;
   MI_CpuClear8(&evdata->encount_work,sizeof(ENCOUNT_DATA));
 
   id = ZONEDATA_GetEncountDataID(zone_id);
@@ -295,24 +294,21 @@ static void loadEncountDataTable(EVENTDATA_SYSTEM* evdata, u16 zone_id, u8 seaso
     return;
   }
   //データの個数を取得
-  size = GFL_ARC_GetDataSize(ARCID_ENCOUNT,id) / sizeof(ENCOUNT_DATA);
+  size = GFL_ARC_GetDataSizeByHandle( evdata->encountHandle, id ) / sizeof(ENCOUNT_DATA);
   if(size != 1 && size != 4){
     GF_ASSERT(0);
     return;
   }
-  //テンポラリ確保
-  tbl = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(ENCOUNT_TABLE));
-  //ロード
-  GFL_ARC_LoadData(tbl,ARCID_ENCOUNT,id);
   //季節を取得
   if(size == 1){
     season = 0;
   }else{
     season = season_id;
   }
-  MI_CpuCopy8(&tbl->enc_tbl[season],&evdata->encount_work,sizeof(ENCOUNT_DATA));
+  //ロード
+  GFL_ARC_LoadDataOfsByHandle(evdata->encountHandle, id,
+      season*sizeof(ENCOUNT_DATA), sizeof(ENCOUNT_DATA), &evdata->encount_work);
   evdata->encount_work.enable_f = TRUE;
-  GFL_HEAP_FreeMemory(tbl);
 }
 
 //------------------------------------------------------------------
