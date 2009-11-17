@@ -4,29 +4,29 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2009-11-17T13:41:20
+	Update:2009-11-17T14:22:21
  *****************************************************************************/
 
 #ifndef NARC_FLD3D_CI_NAIX_
 #define NARC_FLD3D_CI_NAIX_
 
 enum {
-	NARC_fld3d_ci_cut_get1_bg_nsbmd = 0,
-	NARC_fld3d_ci_cut_get1_bg_nsbca = 1,
-	NARC_fld3d_ci_cut_get1_bg_nsbma = 2,
-	NARC_fld3d_ci_cut_get1_item_nsbmd = 3,
-	NARC_fld3d_ci_cut_get1_item_nsbca = 4,
+	NARC_fld3d_ci_get1_spa = 0,
+	NARC_fld3d_ci_cut_get1_bg_nsbmd = 1,
+	NARC_fld3d_ci_cut_get1_item_nsbmd = 2,
+	NARC_fld3d_ci_cut_get1_bg_nsbca = 3,
+	NARC_fld3d_ci_cut_get1_bg_nsbma = 4,
 	NARC_fld3d_ci_cut_get1_item_nsbta = 5,
-	NARC_fld3d_ci_cut_get1_item_nsbma = 6,
-	NARC_fld3d_ci_cut_get2_bg_nsbmd = 7,
-	NARC_fld3d_ci_cut_get2_bg_nsbca = 8,
-	NARC_fld3d_ci_cut_get2_bg_nsbta = 9,
+	NARC_fld3d_ci_cut_get1_item_nsbca = 6,
+	NARC_fld3d_ci_cut_get1_item_nsbma = 7,
+	NARC_fld3d_ci_get2_spa = 8,
+	NARC_fld3d_ci_cut_get2_bg_nsbmd = 9,
 	NARC_fld3d_ci_cut_get2_item_nsbmd = 10,
-	NARC_fld3d_ci_cut_get2_item_nsbma = 11,
-	NARC_fld3d_ci_cut_get2_item_nsbta = 12,
-	NARC_fld3d_ci_cut_get2_item_nsbca = 13,
-	NARC_fld3d_ci_get1_spa = 14,
-	NARC_fld3d_ci_get2_spa = 15
+	NARC_fld3d_ci_cut_get2_bg_nsbca = 11,
+	NARC_fld3d_ci_cut_get2_bg_nsbta = 12,
+	NARC_fld3d_ci_cut_get2_item_nsbta = 13,
+	NARC_fld3d_ci_cut_get2_item_nsbma = 14,
+	NARC_fld3d_ci_cut_get2_item_nsbca = 15
 };
 
 /* NARC_FLD3D_CI_NAIX_ */

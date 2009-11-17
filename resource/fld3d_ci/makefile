@@ -97,24 +97,24 @@ $(TARGETDIR)/$(targetname2).narc:  $(targetname2).narc
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 
 $(CSV_DATA): $(XLS_DATA)
-#	@echo __CVS CONVERT
+	@echo __CVS CONVERT
 	ruby $(XLS_CNV) -c $(XLS_DATA) > $(CSV_DATA)
 
 $(FLD_CI_LIST): $(CSV_DATA)
-#	@echo __NAKE ARC TARGET LST
+	@echo __MAKE ARC TARGET LST
 	ruby make_arc_target_lst.rb $(CSV_DATA) $(FLD_CI_LIST)
 
 $(ARC_TARGET): $(CSV_DATA)
-#	@echo __NAKE ARC TARGET
+	@echo __MAKE ARC TARGET
 	ruby make_arc_target.rb $(CSV_DATA) $(ARC_TARGET)
 
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(ARC_TARGET) $(ARC_TARGET_DATA)
-#	@echo __NAKE TARGET1
+$(targetname).narc: $(ARC_TARGET) $(ARC_TARGET_DATA) $(FLD_CI_LIST)
+	@echo __NAKE TARGET1
 	nnsarc -cl -l -n -i $(NARCNAME) -S $(FLD_CI_LIST) > arc_rsult.txt
 
-$(targetname2).narc: $(CSV_DATA)
-#	@echo __NAKE TARGET2
+$(targetname2).narc: $(CSV_DATA) $(FLD_CI_LIST)
+	@echo __NAKE TARGET2
 	ruby setupdat.rb $(CSV_DATA) $(FLD_CI_LIST)
 	nnsarc -cl -l -n -i $(NARCNAME2) -S ci_list > arc_rsult2.txt
 
