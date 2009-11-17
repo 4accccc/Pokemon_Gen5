@@ -111,7 +111,7 @@ static void DEBUG_INTRUDE_Pokemon_AddMMdl(FIELDMAP_WORK *fieldWork, u16 grid_x, 
 {
   MMDL_HEADER head;
   MMDL_HEADER_GRIDPOS *grid_pos;
-  const MMDLSYS *mmdl_sys;
+  MMDLSYS *mmdl_sys;
   ZONEID zone_id;
   
   mmdl_sys = FIELDMAP_GetMMdlSys( fieldWork );
