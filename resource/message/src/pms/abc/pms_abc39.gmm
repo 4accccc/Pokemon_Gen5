@@ -446,6 +446,11 @@
 	</row>
 
 	<row id="search_abc_21">
+		<language name="JPN" width="216">りんしよう</language>
+		<language name="JPN_KANJI" width="216">りんしよう</language>
+	</row>
+
+	<row id="search_abc_22">
 		<language name="JPN" width="216">りんふん</language>
 		<language name="JPN_KANJI" width="216">りんふん</language>
 	</row>

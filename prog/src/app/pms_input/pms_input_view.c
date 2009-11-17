@@ -1165,6 +1165,12 @@ static void Cmd_WordWinToCategory( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
+  BOOL flag1;
+  BOOL flag2;
+  u32 count;
+  
+  // ŒŸõŒÂ”‚ðŽæ“¾
+  count = PMSI_GetSearchResultCount(wk->mwk);
 
 	switch( wk->seq ){
 	case 0:
@@ -1191,14 +1197,15 @@ static void Cmd_WordWinToCategory( GFL_TCB *tcb, void* wk_adrs )
 
 	case 3:
 		PMSIV_CATEGORY_StartFadeIn( vwk->category_wk );
+    PMSIV_CATEGORY_StartMoveSubWinList( vwk->category_wk, (count>0) );
 		wk->seq++;
 		break;
 
 	case 4:
-		if( PMSIV_CATEGORY_WaitFadeIn( vwk->category_wk ) 
-//		&&	PMSIV_SUB_WaitChangeCategoryButton( vwk->sub_wk )
-//		&&	PMSIV_BUTTON_WaitChangeCategoryButton( vwk->button_wk )
-		)
+		flag1 = PMSIV_CATEGORY_WaitFadeIn( vwk->category_wk );
+    flag2 = PMSIV_CATEGORY_WaitMoveSubWinList( vwk->category_wk, (count>0) );
+
+		if( flag1 && flag2 )
 		{
 			PMSIV_CATEGORY_MoveCursor( vwk->category_wk, PMSI_GetCategoryCursorPos(vwk->main_wk) );
 			PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, TRUE );

@@ -731,31 +731,36 @@
 	</row>
 
 	<row id="search_abc_78">
+		<language name="JPN" width="216">はわーしえあ</language>
+		<language name="JPN_KANJI" width="216">はわーしえあ</language>
+	</row>
+
+	<row id="search_abc_79">
 		<language name="JPN" width="216">はわーしえむ</language>
 		<language name="JPN_KANJI" width="216">はわーしえむ</language>
 	</row>
 
-	<row id="search_abc_79">
+	<row id="search_abc_80">
 		<language name="JPN" width="216">はわーすわつふ</language>
 		<language name="JPN_KANJI" width="216">はわーすわつふ</language>
 	</row>
 
-	<row id="search_abc_80">
+	<row id="search_abc_81">
 		<language name="JPN" width="216">はわーとりつく</language>
 		<language name="JPN_KANJI" width="216">はわーとりつく</language>
 	</row>
 
-	<row id="search_abc_81">
+	<row id="search_abc_82">
 		<language name="JPN" width="216">はんきらす</language>
 		<language name="JPN_KANJI" width="216">はんきらす</language>
 	</row>
 
-	<row id="search_abc_82">
+	<row id="search_abc_83">
 		<language name="JPN" width="216">はんてーる</language>
 		<language name="JPN_KANJI" width="216">はんてーる</language>
 	</row>
 
-	<row id="search_abc_83">
+	<row id="search_abc_84">
 		<language name="JPN" width="216">はんひーな</language>
 		<language name="JPN_KANJI" width="216">はんひーな</language>
 	</row>
