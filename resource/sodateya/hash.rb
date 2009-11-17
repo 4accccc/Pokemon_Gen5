@@ -27,7 +27,8 @@ file.each do |line|
     i1 = line.length - 1
     name = line[i0..i1]
     name.strip!
-  elsif line.index("define")!=nil then
+  end
+  if line.index("define")!=nil then
     i0 = line.index("(") + 1
     i1 = line.index(")") - 1
     str = line[i0..i1]
