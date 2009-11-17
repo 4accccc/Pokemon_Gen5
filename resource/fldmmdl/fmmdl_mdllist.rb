@@ -124,7 +124,7 @@ def file_write_filldata( file, size, data )
 end
 
 #-----------------------------------------------------------------------
-#  ニトロG3Dファイル　コンバート後のファイル名を返す
+#  ニトロG3Dファイル　コンバート後のアーカイブインデックス名を返す
 #-----------------------------------------------------------------------
 def nitro_anime_convert_name( name )
   extname = File.extname( name )
@@ -900,13 +900,13 @@ file_symbol = File.open( fname_symbol, "r" );
 #---------------------------------------------------------------
 # 表示コードヘッダーファイル作成
 #---------------------------------------------------------------
-ret = file_code_write(
-  file_code, file_codestr, file_listcsv, file_listcsv_poke, file_listcsv_mdl )
+ret = file_code_write( file_code, file_codestr,
+  file_listcsv, file_listcsv_poke, file_listcsv_mdl )
 
 if( ret == RET_FALSE )
   error_end( fname_bin, fname_code, fname_codestr,
-     file_listcsv, file_residx, file_bin, file_code,
-     file_codestr, file_symbol, file_listcsv_poke, file_listcsv_mdl )
+    file_listcsv, file_listcsv_poke, file_listcsv_mdl,
+    file_residx, file_bin, file_code, file_codestr, file_symbol )
   exit 1
 end
 
@@ -919,8 +919,8 @@ ret = convert_code_param( file_bin,
 
 if( ret == RET_FALSE )
   error_end( fname_bin, fname_code, fname_codestr,
-     file_listcsv, file_residx, file_bin, file_code,
-     file_codestr, file_symbol, file_listcsv_poke, file_listcsv_mdl )
+    file_listcsv, file_listcsv_poke, file_listcsv_mdl,
+    file_residx, file_bin, file_code, file_codestr, file_symbol )
   exit 1
 end
 
