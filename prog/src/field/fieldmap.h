@@ -38,6 +38,8 @@
 #include "savedata/sodateya_work.h"
 #include "sodateya.h"
 
+#include "fld3d_ci.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -119,4 +121,5 @@ extern GAME_COMM_NO FIELDCOMM_CheckCommNo(GAME_COMM_SYS_PTR game_comm);
 extern DRAW3DMODE FIELDMAP_GetDraw3DMode(FIELDMAP_WORK *fieldWork);
 extern void FIELDMAP_SetDraw3DMode(FIELDMAP_WORK *fieldWork, DRAW3DMODE mode);
 
+extern FLD3D_CI_PTR FIELDMAP_GetFld3dCiPtr(FIELDMAP_WORK *fieldWork);
 

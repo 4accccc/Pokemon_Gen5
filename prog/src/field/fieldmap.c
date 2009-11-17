@@ -96,7 +96,6 @@
 #include "script.h"   //SCRIPT_CallZoneChangeScript
 
 #include "fld_particle.h"
-#include "fld3d_ci.h"
 
 #include "field_wfbc.h"
 
@@ -569,7 +568,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     }
     //とりあえずここで配置モデルリストをセットする
     FIELD_BMODEL_MAN_Load(bmodel_man, fieldWork->map_id, fieldWork->areadata);
-
     // WFBC街情報を設定
     // @TODO　後々は、パレス接続先の人の街情報を設定する
     {
@@ -579,7 +577,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       zoneChange_SetMMdlZoneWFBC( gdata, fieldWork, fieldWork->map_id );
     }
   }
-  
+
   //フィールドマップ用ロケーション作成
 
   LOCATION_Set( &fieldWork->location, fieldWork->map_id, 0, 0, 
@@ -595,7 +593,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       FLDNOGRID_MAPPER_ResistDataArc( fieldWork->nogridMapper, raildata, fieldWork->heapID );  
     }
   }
-  
+
   //CAMERA_AREAの反映
   setupCameraArea( fieldWork, fieldWork->map_id, fieldWork->heapID );
   
@@ -650,8 +648,8 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 
   // フォグシステム生成
   fieldWork->fog	= FIELD_FOG_Create( fieldWork->heapID );
-
-	// ゾーンフォグシステム生成
+	
+  // ゾーンフォグシステム生成
 	fieldWork->zonefog = FIELD_ZONEFOGLIGHT_Create( fieldWork->heapID );
 	FIELD_ZONEFOGLIGHT_LoadZoneID( fieldWork->zonefog, fieldWork->map_id, fieldWork->heapID );
 
@@ -2956,4 +2954,19 @@ void FIELDMAP_SetDraw3DMode(FIELDMAP_WORK *fieldWork, DRAW3DMODE mode)
 {
   fieldWork->Draw3DMode = mode;
 }
+
+//==================================================================
+/**
+ * カットイン管理ポインタ取得
+ *
+ * @param   fieldWork   フィールドワークポインタ
+ *
+ * @return  FLD3D_CI_PTR    カットイン管理ポインタ
+ */
+//==================================================================
+FLD3D_CI_PTR FIELDMAP_GetFld3dCiPtr(FIELDMAP_WORK *fieldWork)
+{
+  return fieldWork->Fld3dCiPtr;
+}
+
 

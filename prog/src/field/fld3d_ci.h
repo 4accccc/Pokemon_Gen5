@@ -24,6 +24,7 @@ extern FLD3D_CI_PTR FLD3D_CI_Init(const HEAPID inHeapID, FLD_PRTCL_SYS_PTR inPrt
 extern void FLD3D_CI_End(FLD3D_CI_PTR ptr);
 extern void FLD3D_CI_Draw( FLD3D_CI_PTR ptr );
 extern void FLD3D_CI_CallCutIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInNo );
+extern GMEVENT *FLD3D_CI_CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInNo);
 
 #ifdef PM_DEBUG
 extern void FLD3D_CI_FlySkyCameraDebug(

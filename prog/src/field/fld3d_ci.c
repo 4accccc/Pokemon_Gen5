@@ -115,8 +115,6 @@ static void Generate(FLD3D_CI_PTR ptr, const u32 inResNo);
 static void CreateRes(RES_SETUP_DAT *outDat, const u8 inResArcIdx, const HEAPID inHeapID);
 static void DeleteRes(RES_SETUP_DAT *outDat);
 
-static GMEVENT *CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInNo);
-
 static void PushPriority(FLD3D_CI_PTR ptr);
 static void PushDisp(FLD3D_CI_PTR ptr);
 static void PopPriority(FLD3D_CI_PTR ptr);
@@ -274,12 +272,12 @@ void FLD3D_CI_Draw( FLD3D_CI_PTR ptr )
 void FLD3D_CI_CallCutIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInNo )
 {
   GMEVENT * event;
-  event = CreateCutInEvt(gsys, ptr, inCutInNo);
+  event = FLD3D_CI_CreateCutInEvt(gsys, ptr, inCutInNo);
   GAMESYSTEM_SetEvent(gsys, event);
 }
 
 //カットインイベント作成
-static GMEVENT *CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInNo)
+GMEVENT *FLD3D_CI_CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInNo)
 {
   GMEVENT * event;
   FLD3D_CI_EVENT_WORK *work;
@@ -946,7 +944,7 @@ static GMEVENT_RESULT DebugFlySkyEffEvt( GMEVENT* event, int* seq, void* work )
       }
 #endif      
       //カットイン演出開始
-      child = CreateCutInEvt(wk->gsys, wk->CiPtr, 0);
+      child = FLD3D_CI_CreateCutInEvt(wk->gsys, wk->CiPtr, 0);
       GMEVENT_CallEvent(event, child);
       (*seq)++;
     }

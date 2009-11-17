@@ -650,6 +650,12 @@
   NO_CMD()
   NO_CMD()
 
+  //フィールドカットイン関連
+  DEF_CMD( EvCmdFldCi_CallCutin, EV_SEQ_CALL_FLD3D_CUTIN )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

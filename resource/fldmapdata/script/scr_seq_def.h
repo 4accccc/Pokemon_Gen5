@@ -4852,3 +4852,17 @@
   .short  EV_SEQ_INTRUDE_CONNECT_MAP_SETTING
   .endm
 
+//--------------------------------------------------------------
+/**
+ * フィールドカットイン
+ * @param no      カットインナンバー    fldci_id_def.h参照
+ */
+//--------------------------------------------------------------
+#define _CALL_FLD3D_CUTIN(no) _ASM_CALL_FLD3D_CUTIN no
+
+  .macro  _ASM_CALL_FLD3D_CUTIN no
+  .short  EV_SEQ_CALL_FLD3D_CUTIN
+  .short  \no
+  .endm
+  
+

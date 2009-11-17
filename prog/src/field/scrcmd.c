@@ -62,6 +62,7 @@
 #include "scrcmd_intrude.h"
 #include "scrcmd_encount.h"
 #include "scrcmd_gate.h"
+#include "scrcmd_fldci.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

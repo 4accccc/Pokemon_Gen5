@@ -224,6 +224,8 @@
 
 #include "../../../prog/include/waza_tool/wazano_def.h" //ワザNo
 
+#include "../../fld3d_ci/fldci_id_def.h"    //フィールドカットインナンバー定義
+
 //ワイプフェードの基本の値
 #define SCR_WIPE_DIV				(WIPE_DEF_DIV)
 #define SCR_WIPE_SYNC				(WIPE_DEF_SYNC)
