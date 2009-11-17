@@ -615,13 +615,13 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 			setup.texVramSize = 0;
 			setup.mapFileFunc = mapFileFuncTbl;
 			setup.externalWork = NULL;
-      setup.mapLoadSize = 0x0800;
+      setup.mapLoadSize = 0x2000;
 		} else {
 			setup.mapDataHeapSize = resistData->memsize;
 			setup.texVramSize = FLD_MAPPER_MAPTEX_SIZE;
 			setup.mapFileFunc = mapFileFuncTbl;
 			setup.externalWork = NULL;
-      setup.mapLoadSize = 0x0800;
+      setup.mapLoadSize = 0x2000;
 		}
 		
 		if( resistData->g3DmapFileType == FLDMAPPER_FILETYPE_RANDOM )
