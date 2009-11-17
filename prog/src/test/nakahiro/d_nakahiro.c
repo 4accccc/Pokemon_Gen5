@@ -378,8 +378,8 @@ static void SetBoxPoke( NAKAHIRO_MAIN_WORK * wk )
 	str = GFL_MSG_CreateString( man, pokename );
 
 //	for( i=MONSNO_HUSIGIDANE; i<=MONSNO_END; i++ ){
-//	for( i=MONSNO_HUSIGIDANE; i<=40; i++ ){
-	for( i=MONSNO_HUSIGIDANE; i<=8; i++ ){
+	for( i=MONSNO_HUSIGIDANE; i<=40; i++ ){
+//	for( i=MONSNO_HUSIGIDANE; i<=8; i++ ){
 		pp  = PP_Create( i, 50, 0, wk->heapID );
     PP_Put( pp, ID_PARA_oyaname, (u32)str );
     PP_Put( pp, ID_PARA_oyasex, PTL_SEX_MALE );
