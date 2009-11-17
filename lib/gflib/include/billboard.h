@@ -262,6 +262,9 @@ extern GFL_BBD_SYS*	GFL_BBD_CreateSys( const GFL_BBD_SETUP* setup, HEAPID heapID
 extern void	GFL_BBD_DeleteSys( GFL_BBD_SYS* billboardSys );
 
 //	ビルボードシステム各種パラメータの取得と変更
+extern void	GFL_BBD_SetUseCustomVecN( GFL_BBD_SYS* billboardSys, VecFx16* pVecN );
+extern void	GFL_BBD_ResetUseCustomVecN( GFL_BBD_SYS* billboardSys );
+
 extern void	GFL_BBD_GetScale( GFL_BBD_SYS* billboardSys, VecFx32* scale );
 extern void	GFL_BBD_SetScale( GFL_BBD_SYS* billboardSys, VecFx32* scale );
 extern void	GFL_BBD_GetDiffuse( GFL_BBD_SYS* billboardSys, GXRgb* diffuse );
