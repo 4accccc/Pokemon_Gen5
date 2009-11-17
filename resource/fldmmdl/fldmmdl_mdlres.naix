@@ -11,7 +11,7 @@
 #define NARC_FLDMMDL_MDLRES_NAIX_
 
 enum {
-	NARC_fldmmdl_mdlres_taki_start_f_nsbmd = 0,
+	NARC_fldmmdl_mdlres_accordion_nsbmd = 0,
 	NARC_fldmmdl_mdlres_hero_nsbtx = 1,
 	NARC_fldmmdl_mdlres_cyclehero_nsbtx = 2,
 	NARC_fldmmdl_mdlres_swimhero_nsbtx = 3,
@@ -659,9 +659,7 @@ enum {
 	NARC_fldmmdl_mdlres_tsure_518_phyc_nsbtx = 645,
 	NARC_fldmmdl_mdlres_tsure_518_ice_nsbtx = 646,
 	NARC_fldmmdl_mdlres_tsure_518_dra_nsbtx = 647,
-	NARC_fldmmdl_mdlres_tsure_518_dark_nsbtx = 648,
-	NARC_fldmmdl_mdlres_taki_start_f_nsbtp = 649,
-	NARC_fldmmdl_mdlres_taki_start_f_nsbca = 650
+	NARC_fldmmdl_mdlres_tsure_518_dark_nsbtx = 648
 };
 
 /* NARC_FLDMMDL_MDLRES_NAIX_ */

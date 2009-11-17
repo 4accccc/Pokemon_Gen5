@@ -130,7 +130,7 @@ def listcsv_getlinestr( file_listcsv, get_no )
   
   line = file_listcsv.gets
   line = line.strip
-
+  
   if( line == nil )
     return STR_ERROR
   end
@@ -202,9 +202,9 @@ end
 #	戻り値 nil=無し,STR_ERROR=エラー,STR_END=終了
 #=======================================================================
 def csvlist_check_repeat_filename( buf, check_str )
-  no = 0
+  no = 1 #最初のマクロ定義を飛ばす
   max = buf.size
-
+  
 #debug
 =begin
   printf( "重複チェック %d以下に%sが在るか探しています\n",
@@ -213,6 +213,7 @@ def csvlist_check_repeat_filename( buf, check_str )
 
 	while no < max
     str = buf[no]
+    str = str.strip
     
 	  if( str == check_str )
 		  return RET_TRUE
@@ -342,7 +343,6 @@ def conv_drawtype_blact(
   file_listcsv, no, dir_res, sel_res, flag_dummy,
   file_prmcsv_ncgimd,
   file_make_ncgimd, dir_res_ncgimd, path_conv_ncgimd,
-  strbuf_res,
   buf_imdtex, buf_ncgimd )
 	
   imdname = listcsv_get_bbd_filename( file_listcsv, no, sel_res )
@@ -366,8 +366,8 @@ def conv_drawtype_blact(
   end
 =end
   
-  if( csvlist_check_repeat_filename(strbuf_res,imdname) == RET_TRUE )
-    return RET_FALSE
+  if( csvlist_check_repeat_filename(buf_imdtex,imdname) == RET_TRUE )
+    return RET_TRUE #リソース既に追加済み
   end
 
   buf_imdtex << " \\\n"
@@ -394,7 +394,6 @@ def conv_drawtype_blact(
       return RET_ERROR
     end
     
-    strbuf_res << imdname
     buf_imdtex << sprintf( "\t%s", imdname )
     return RET_TRUE
   end
@@ -446,8 +445,6 @@ def conv_drawtype_blact(
     imdpath, ncgpath, nclpath, name,
     path_conv_ncgimd, ncgpath, dir_res, dmyimdpath, 
     param['str_width'], param['str_height'], param['str_count'] )
-  
-  strbuf_res << imdname
   return RET_TRUE
 end
 
@@ -457,7 +454,6 @@ end
 #=======================================================================
 def conv_drawtype_mdl(
   file_listcsv, no, dir_res, sel_res, flag_dummy,
-  strbuf_res,
   buf_imd, buf_imdtex, buf_itp, buf_ica, buf_ita, buf_ima, buf_iva )
 	
   str = listcsv_getlinestr( file_listcsv, no )
@@ -472,14 +468,13 @@ def conv_drawtype_mdl(
    
   #imd
   name = str[RBDEF_NUM_MDL_RESFILE_NAME_IMD]
-  p name
   
   if( name == nil || name =="" )
     return RET_FALSE
   end
   
-  if( csvlist_check_repeat_filename(strbuf_res,name) == RET_TRUE )
-    return RET_FALSE
+  if( csvlist_check_repeat_filename(buf_imd,name) == RET_TRUE )
+    return RET_TRUE
   end
   
   buf_imd << " \\\n"
@@ -495,23 +490,20 @@ def conv_drawtype_mdl(
     #ダミーファイル作成
     ################
     
-    strbuf_res << name
     buf_imd << sprintf( "\t%s", name )
     return RET_TRUE
   end
    
-  strbuf_res << name
   buf_imd << sprintf( "\t%s", name )
   
   #tex
   name = str[RBDEF_NUM_MDL_RESFILE_NAME_TEX]
-  p name
   
 	if( name != "" && name != nil )
-    if( csvlist_check_repeat_filename(strbuf_res,name) != RET_TRUE )
+    if( csvlist_check_repeat_filename(buf_imdtex,name) != RET_TRUE )
       path = sprintf( "%s\/%s", dir_res, name )
       p path
-
+      
       if( FileTest.exist?(path) != true ) #ファイルが存在しない
 		    printf( "ERROR %s がありません\n", name )
         return RET_ERROR
@@ -519,7 +511,6 @@ def conv_drawtype_mdl(
    
       buf_add_convname( name,
         buf_imdtex, buf_itp, buf_ica, buf_ita, buf_ima, buf_iva )
-      strbuf_res << name
     end
   end
   
@@ -527,9 +518,13 @@ def conv_drawtype_mdl(
   name = str[RBDEF_NUM_MDL_RESFILE_NAME_ANM0]
   
 	if( name != "" && name != nil )
-    if( csvlist_check_repeat_filename(strbuf_res,name) != RET_TRUE )
+    if( csvlist_check_repeat_filename(buf_itp,name) != RET_TRUE &&
+        csvlist_check_repeat_filename(buf_ica,name) != RET_TRUE &&
+        csvlist_check_repeat_filename(buf_ita,name) != RET_TRUE &&
+        csvlist_check_repeat_filename(buf_ima,name) != RET_TRUE &&
+        csvlist_check_repeat_filename(buf_iva,name) != RET_TRUE )
       path = sprintf( "%s\/%s", dir_res, name )
-    
+      
       if( FileTest.exist?(path) != true ) #ファイルが存在しない
 		    printf( "ERROR %s がありません\n", name )
         return RET_ERROR
@@ -537,7 +532,6 @@ def conv_drawtype_mdl(
    
       buf_add_convname( name,
         buf_imdtex, buf_itp, buf_ica, buf_ita, buf_ima, buf_iva )
-      strbuf_res << name
     end
   end
  
@@ -545,7 +539,11 @@ def conv_drawtype_mdl(
   name = str[RBDEF_NUM_MDL_RESFILE_NAME_ANM1]
   
 	if( name != "" && name != nil )
-    if( csvlist_check_repeat_filename(strbuf_res,name) != RET_TRUE )
+    if( csvlist_check_repeat_filename(buf_itp,name) != RET_TRUE &&
+        csvlist_check_repeat_filename(buf_ica,name) != RET_TRUE &&
+        csvlist_check_repeat_filename(buf_ita,name) != RET_TRUE &&
+        csvlist_check_repeat_filename(buf_ima,name) != RET_TRUE &&
+        csvlist_check_repeat_filename(buf_iva,name) != RET_TRUE )
       path = sprintf( "%s\/%s", dir_res, name )
     
       if( FileTest.exist?(path) != true ) #ファイルが存在しない
@@ -555,7 +553,6 @@ def conv_drawtype_mdl(
    
       buf_add_convname( name,
         buf_imdtex, buf_itp, buf_ica, buf_ita, buf_ima, buf_iva )
-      strbuf_res << name
     end
   end
 
@@ -563,7 +560,11 @@ def conv_drawtype_mdl(
   name = str[RBDEF_NUM_MDL_RESFILE_NAME_ANM2]
   
 	if( name != "" && name != nil )
-    if( csvlist_check_repeat_filename(strbuf_res,name) != RET_TRUE )
+    if( csvlist_check_repeat_filename(buf_itp,name) != RET_TRUE &&
+        csvlist_check_repeat_filename(buf_ica,name) != RET_TRUE &&
+        csvlist_check_repeat_filename(buf_ita,name) != RET_TRUE &&
+        csvlist_check_repeat_filename(buf_ima,name) != RET_TRUE &&
+        csvlist_check_repeat_filename(buf_iva,name) != RET_TRUE )
       path = sprintf( "%s\/%s", dir_res, name )
     
       if( FileTest.exist?(path) != true ) #ファイルが存在しない
@@ -573,7 +574,6 @@ def conv_drawtype_mdl(
    
       buf_add_convname( name,
         buf_imdtex, buf_itp, buf_ica, buf_ita, buf_ima, buf_iva )
-      strbuf_res << name
     end
   end
   
@@ -714,7 +714,6 @@ buf_ncgimd << "FMMDL_RESLIST_NCGIMD ="
 no = 0
 flag = 0
 ret = RET_FALSE
-strbuf_res = Array.new()
 
 #---------------------------------------------------------------
 # ビルボード変換
@@ -730,7 +729,6 @@ loop{
       file_listcsv, no, dir_res, sel_res, flag_dummy,
       file_prmcsv_ncgimd,
       file_make_ncgimd, dir_res_ncgimd, path_conv_ncgimd,
-      strbuf_res,
       buf_imdtex, buf_ncgimd )
   when "DRAWTYPE_MDL"
     #現状無し
@@ -753,7 +751,7 @@ loop{
 }
 
 if( flag == 0 ) #リソースが一つも存在していない
-	printf( "fmmdl_restbl.rb リソース対象がありません\n" )
+	printf( "fmmdl_restbl.rb リソースがありません\n" )
   error_end( fname_restbl, file_listcsv, file_restbl,
             file_prmcsv_ncgimd, file_restbl_ncgimd )
 	exit 1
@@ -779,7 +777,6 @@ loop{
       file_make_ncgimd,
       dir_res_ncgimd + "\/pokemon\/",
       path_conv_ncgimd,
-      strbuf_res,
       buf_imdtex, buf_ncgimd )
   when "DRAWTYPE_MDL"
     #現状無し
@@ -829,7 +826,6 @@ loop{
   when "DRAWTYPE_MDL"
     ret = conv_drawtype_mdl(
       file_listcsv_mdl, no, dir_res, sel_res, flag_dummy,
-      strbuf_res,
       buf_imd, buf_imdtex, buf_itp, buf_ica, buf_ita, buf_ima, buf_iva )
   when STR_END
     break
