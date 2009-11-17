@@ -52,7 +52,7 @@ typedef struct
 {
   u16 monsno;
   u8  trainerType;
-  u8 pad;
+  u8  trainerName;
   MUSICAL_PROGRAM_EQUIP_DATA equipData[MUS_PROG_DATA_EQUIP_NUM];
 }MUSICAL_PROGRAM_POKE_DATA;
 

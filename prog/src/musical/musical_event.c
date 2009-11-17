@@ -43,6 +43,7 @@
 
 #include "musical/musical_event.h"
 
+#include "debug/debug_flg.h"
 //======================================================================
 //  define
 //======================================================================
@@ -828,15 +829,18 @@ static const void MUSICAL_EVENT_JumpMusicalHall( GMEVENT *event, MUSICAL_EVENT_W
 //--------------------------------------------------------------
 static const void MUSICAL_EVENT_RunScript( GMEVENT *event, MUSICAL_EVENT_WORK *evWork , u16 scriptId )
 {
-  GMEVENT *newEvent;
-  SCRIPT_FLDPARAM fparam;
-  SCRIPT_WORK *scWork;
+  if( DEBUG_FLG_GetFlg( DEBUG_FLG_MusicalEventSkip ) == FALSE )
+  {
+    GMEVENT *newEvent;
+    SCRIPT_FLDPARAM fparam;
+    SCRIPT_WORK *scWork;
 
-  newEvent = SCRIPT_SetEventScript( evWork->gsys, scriptId , NULL , HEAPID_FIELDMAP );
-  scWork = SCRIPT_GetEventWorkToScriptWork( newEvent );
-  
-  SCRIPT_SetMemberWork_Musical( scWork , evWork );
-  GMEVENT_CallEvent(event, newEvent);
+    newEvent = SCRIPT_SetEventScript( evWork->gsys, scriptId , NULL , HEAPID_FIELDMAP );
+    scWork = SCRIPT_GetEventWorkToScriptWork( newEvent );
+    
+    SCRIPT_SetMemberWork_Musical( scWork , evWork );
+    GMEVENT_CallEvent(event, newEvent);
+  }
 }
 
 

@@ -30,15 +30,17 @@ DATA_IDX_POKE_DATA_START = 10
 
 POKEDATA_IDX_MONSNO = 0
 POKEDATA_IDX_TRAINER = 1
-POKEDATA_IDX_GOODS_BASE = 2
+POKEDATA_IDX_TR_NAME = 2
+POKEDATA_IDX_GOODS_BASE = 3
 
 GOODSDATA_IDX_NO = 0
 GOODSDATA_IDX_POS = 1
 
+#上の個数変えたらココも対応すること
 GOODS_NUM = 8
 GOODSDATA_NUM = 2
 POKE_NUM = 3
-POKEDATA_NUM = 2 + GOODSDATA_NUM*GOODS_NUM
+POKEDATA_NUM = 3 + GOODSDATA_NUM*GOODS_NUM
 
 #============================
 #	proto
@@ -109,7 +111,8 @@ begin
     outFile.write( ary.pack("S") )
     ary = Array( sheet[dataCol,rowBase+POKEDATA_IDX_TRAINER].to_i )
     outFile.write( ary.pack("C") )
-    outFile.write( padAry.pack("C") ) #パディング
+    ary = Array( sheet[dataCol,rowBase+POKEDATA_IDX_TR_NAME].to_i )
+    outFile.write( ary.pack("C") )
     
     goodsIdx = 0
     while goodsIdx < GOODS_NUM

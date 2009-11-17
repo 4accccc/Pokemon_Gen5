@@ -16,7 +16,7 @@
 DEBUG_FLG_DEF( DisableEncount , "EncountOff" )
 DEBUG_FLG_DEF( DisableTrainerEye , "TrainerEyeOff")
 DEBUG_FLG_DEF( DisableEvents , "Pos & Scene Off")
-DEBUG_FLG_DEF( TestFlg3 , "テスト3")
+DEBUG_FLG_DEF( MusicalEventSkip , "MusEveSkip")
 DEBUG_FLG_DEF( TestFlg4 , "テスト4")
 DEBUG_FLG_DEF( TestFlg5 , "テスト5")
 DEBUG_FLG_DEF( TestFlg6 , "テスト6")
