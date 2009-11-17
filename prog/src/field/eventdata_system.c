@@ -59,6 +59,8 @@ enum {
 struct _EVDATA_SYS {
 	HEAPID heapID;
 
+  ARCHANDLE * eventHandle;
+  ARCHANDLE * encountHandle;
 	u16 now_zone_id;
 	u16 bg_count;
 	u16 npc_count;
@@ -96,53 +98,6 @@ typedef struct {
 //------------------------------------------------------------------
 
 #include "arc/fieldmap/zone_id.h"
-//#include "eventwork_def.h"
-
-//#define WORKID_DUMMY    LOCAL_WORK_START
-//生成したイベントデータを全部インクルード
-//binaryを読み込む形に変更  prog/arc/fieldmap/eventdata.narc
-//#include "../../../resource/fldmapdata/eventdata/eventdata_table.cdat"
-
-
-#if 0
-static const CONNECT_DATA ConnectData_H01[] = {
-	{//DOOR_ID_H01_EXIT01 = 0
-		{559, 0, 2139},
-		//{559, 0, 2143},
-		ZONE_ID_H01P01, DOOR_ID_H01P01_EXIT04,
-		2,//direction
-		0 //type
-	},
-	{//DOOR_ID_H01_EXIT02 = 1
-		{703, 0, 128},
-		ZONE_ID_C03, 0,
-		2,//direction
-		0 //type
-	},
-};
-static const int ConnectCount_H01 = NELEMS(ConnectData_H01);
-#endif
-
-#if 0
-static const CONNECT_DATA ConnectData_C03[] = {
-	{//DOOR_ID_C03_EXIT01 = 0
-		{1101, 0, 493},
-		ZONE_ID_H01, 1 /* DOOR_ID_H01_EXIT01*/,
-		2,//direction
-		0 //type
-	},
-#if 0
-	{//DOOR_ID_C03_EXIT02 = 1
-		{703, 0, 128},
-		ZONE_ID_T01, DOOR_ID_T01_EXIT02
-		2,//direction
-		0 //type
-	},
-#endif
-};
-static const int ConnectCount_C03 = NELEMS(ConnectData_C03);
-#endif
-
 
 //============================================================================================
 //============================================================================================
@@ -200,6 +155,8 @@ static BOOL PosEventData_RPOS_IsHit( const POS_EVENT_DATA* cp_data, const RAIL_L
 EVENTDATA_SYSTEM * EVENTDATA_SYS_Create(HEAPID heapID)
 {
 	EVENTDATA_SYSTEM * evdata = GFL_HEAP_AllocClearMemory(heapID, sizeof(EVENTDATA_SYSTEM));
+  evdata->eventHandle = GFL_ARC_OpenDataHandle( ARCID_FLD_EVENTDATA, heapID );
+  evdata->encountHandle = GFL_ARC_OpenDataHandle( ARCID_ENCOUNT, heapID );
 	return evdata;
 }
 
@@ -207,6 +164,8 @@ EVENTDATA_SYSTEM * EVENTDATA_SYS_Create(HEAPID heapID)
 //------------------------------------------------------------------
 void EVENTDATA_SYS_Delete(EVENTDATA_SYSTEM * evdata)
 {
+  GFL_ARC_CloseDataHandle( evdata->eventHandle );
+  GFL_ARC_CloseDataHandle( evdata->encountHandle );
 	GFL_HEAP_FreeMemory(evdata);
 }
 
@@ -226,8 +185,6 @@ void EVENTDATA_SYS_Clear(EVENTDATA_SYSTEM * evdata)
 	GFL_STD_MemClear(evdata->spscr_buffer, SPSCR_DATA_SIZE);
 }
 
-
-
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void EVENTDATA_SYS_Load( EVENTDATA_SYSTEM * evdata, u16 zone_id, u8 season_id )
@@ -238,21 +195,8 @@ void EVENTDATA_SYS_Load( EVENTDATA_SYSTEM * evdata, u16 zone_id, u8 season_id )
   loadSpecialScriptData( evdata, zone_id );
   loadEventDataTable(evdata, zone_id);
   loadEncountDataTable( evdata, zone_id, season_id );
-
-	/* テスト的に接続データを設定 */
-	switch (zone_id) {
-#if 0
- case ZONE_ID_H01:
-    evdata->connect_count = ConnectCount_H01;
-    evdata->connect_data = ConnectData_H01;
-    break;
- case ZONE_ID_C03:
-    evdata->connect_count = ConnectCount_C03;
-    evdata->connect_data = ConnectData_C03;
-    break;
-#endif
-	}
 }
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void * EVENTDATA_GetSpecialScriptData( EVENTDATA_SYSTEM * evdata )
@@ -277,13 +221,13 @@ static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id)
   s32 ofs;
   const u8* buf;
   u32 arcID;
+  u32 size;
 
   arcID = ZONEDATA_GetEventDataArcID(zone_id);
-  GFL_ARC_LoadData(evdata->load_buffer, ARCID_FLD_EVENTDATA,  
-      ZONEDATA_GetEventDataArcID(zone_id) );
-
+  size = GFL_ARC_GetDataSizeByHandle( evdata->eventHandle, arcID );
   // サイズオーバーチェック
-  GF_ASSERT( EVDATA_SIZE > GFL_ARC_GetDataSize( ARCID_FLD_EVENTDATA, ZONEDATA_GetEventDataArcID(zone_id) ) );
+  GF_ASSERT( EVDATA_SIZE > size );
+  GFL_ARC_LoadDataOfsByHandle(evdata->eventHandle, arcID, 0, size, evdata->load_buffer);
   
   table = (const EVENTDATA_TABLE*)evdata->load_buffer; 
   buf = (const u8*)table->buf;
@@ -301,25 +245,6 @@ static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id)
   ofs += sizeof(CONNECT_DATA) * table->connect_count;
   evdata->pos_count = table->pos_count;
   evdata->pos_data = (const POS_EVENT_DATA*)&buf[ofs];
-
-  for (i = 0; i < evdata->connect_count; i++)
-  {
-    const CONNECT_DATA * cnct = &evdata->connect_data[i];
-    if( cnct->pos_type == EVENTDATA_POSTYPE_GRID )
-    {
-      const CONNECT_DATA_GPOS* cp_pos = (const CONNECT_DATA_GPOS*)cnct->pos_buf;
-      TAMADA_Printf("CNCT:ID%02d (%08x, %08x, %08x)", i, cp_pos->x, cp_pos->y, cp_pos->z);
-      TAMADA_Printf(" (%3d, %3d, %3d)\n",
-          cp_pos->x / FIELD_CONST_GRID_SIZE,
-          cp_pos->y / FIELD_CONST_GRID_SIZE,
-          cp_pos->z / FIELD_CONST_GRID_SIZE);
-    }
-    else
-    {
-      const CONNECT_DATA_RPOS* cp_pos = (const CONNECT_DATA_RPOS*)cnct->pos_buf;
-      TAMADA_Printf("CNCT:ID%02d (rail_index:%d line:%d width:%d)\n", i, cp_pos->rail_index, cp_pos->front_grid, cp_pos->side_grid);
-    }
-  }
 
 
 #ifdef DEBUG_EVENTDATA_PRINT
