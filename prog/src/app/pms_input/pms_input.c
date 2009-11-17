@@ -131,10 +131,10 @@ enum{
 	TPCA_GMA_OX = TPCA_GMA_SX+1*8,
 	TPCA_GMA_OY = TPCA_GMA_SY+1*8,
 
-	TPCA_IMA_SX = 13,
-	TPCA_IMA_SY = 16,
-	TPCA_IMA_PX = 2*8-GROUPMODE_BG_XOFS,
-	TPCA_IMA_PY = 10*8-CATEGORY_BG_ENABLE_YOFS,
+	TPCA_IMA_SX = 16,   // ドット単位
+	TPCA_IMA_SY = 16,   // ドット単位
+	TPCA_IMA_PX = 1*8, //2*8-GROUPMODE_BG_XOFS,
+	TPCA_IMA_PY = 8*8 - CATEGORY_BG_ENABLE_YOFS, //10*8-CATEGORY_BG_ENABLE_YOFS,
 
 	TPWD_SCR_PX = 28*8+4,
 	TPWD_SCR_SX = 24,
@@ -370,7 +370,6 @@ GFL_PROC_RESULT PMSInput_Init( GFL_PROC * proc, int * seq , void *pwk, void *myw
 	  GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
 
 #if PMS_USE_SND
-    ///@TODO データはどうなってる？ 
 //		Snd_DataSetByScene( SND_SCENE_SUB_PMS, 0, 0 );	// サウンドデータロード(PMS)(BGM引継ぎ)
 #endif
 		GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_PMS_INPUT_SYSTEM, HEAPSIZE_SYS );
@@ -1037,8 +1036,8 @@ static int edit_sentence_touch(PMS_INPUT_WORK* wk)
     
   // エディットエリア単語のあたり判定
 	num = PMSIView_GetSentenceEditPosMax( wk->vwk );
-	//TODO Cont? Trg?
-	GFL_UI_TP_GetPointTrg( &tpx,&tpy );
+	
+  GFL_UI_TP_GetPointTrg( &tpx,&tpy );
 	for(i = 0;i < num;i++){
 		PMSIView_GetSentenceWordArea( wk->vwk ,&tbl[0],i);
 		if(GFL_UI_TP_HitSelf( tbl, tpx , tpy ) != GFL_UI_TP_HIT_NONE ){
@@ -2164,44 +2163,42 @@ static int category_touch_group(PMS_INPUT_WORK* wk)
 
 static int category_touch_initial(PMS_INPUT_WORK* wk)
 {
+  int i;
 	int ret;
+  int initial_max;
 	u32 tpx,tpy;
 	s16 x,y;
     
-  // @TODO 「けす」タッチ
-  // @TODO 当たり判定調整
-	static const GFL_UI_TP_HITTBL Btn_TpRect[] = {
-//		{0,191,0,255}, ty,by,lx,rx
-		{TPCA_IMA_PY,TPCA_IMA_PY+TPCA_IMA_SY*4,TPCA_IMA_PX,TPCA_IMA_PX+TPCA_IMA_SX*15},
-		{GFL_UI_TP_HIT_END,0,0,0}
-	};
+  // 50音タッチ
 	
-	ret = GFL_UI_TP_HitTrg(Btn_TpRect);
-	if(	ret == GFL_UI_TP_HIT_NONE){
-		return -1;
-	}
-	GFL_UI_TP_GetPointTrg( &tpx,&tpy );
-	x = (tpx - TPCA_IMA_PX) / TPCA_IMA_SX;
-	y = (tpy - TPCA_IMA_PY) / TPCA_IMA_SY;
-	if(x == 5 || x == 11){
-		return -1;
-	}
-	if(x < 5){
-		HOSAKA_Printf(" Initial Hit0 = %d\n",y*5+x);
-		return y*5+x;
-	}
-	if(x < 11){
-		HOSAKA_Printf(" Initial Hit1 = %d\n",y*5+(x-6)+20);
-		return y*5+(x-6)+20;
-	}
-	if(y == 0){
-		HOSAKA_Printf(" Initial Hit2 = %d\n",(x-12)+40);
-		return (x-12)+40;
-	}
-	if(y == 1 && x < 14){
-		HOSAKA_Printf(" Initial Hit3 = %d\n",(x-12)+43);
-		return (x-12)+43;
-	}
+  initial_max = PMSI_INITIAL_DAT_GetInitialMax();
+  
+  for( i=0; i<initial_max; i++ )
+  {
+    GFL_UI_TP_HITTBL rect[2] = {
+      {0,0,0,0},
+      {GFL_UI_TP_HIT_END,0,0,0}
+    };
+
+    u32 ini_x, ini_y;
+    
+    PMSI_INITIAL_DAT_GetPrintPos(i, &ini_x, &ini_y);
+
+    rect[0].rect.top    = ini_y + TPCA_IMA_PY;
+    rect[0].rect.bottom = ini_y + TPCA_IMA_PY + TPCA_IMA_SY;
+    rect[0].rect.left   = ini_x + TPCA_IMA_PX;
+    rect[0].rect.right  = ini_x + TPCA_IMA_PX + TPCA_IMA_SX;
+	
+    if( GFL_UI_TP_HitTrg(rect) != GFL_UI_TP_HIT_NONE )
+    {
+      HOSAKA_Printf("touch=%d\n",i);
+      return i;
+    }
+  }
+  
+  // @TODO 「けす」タッチ
+  // 「せんたく」タッチ
+
 	return -1;
 }
 
@@ -2211,18 +2208,7 @@ static int category_touch_initial(PMS_INPUT_WORK* wk)
 static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
 {
 	int ret;
-	static const u8	ini_idx[] = {
-	 INI_A,INI_I,INI_U,INI_E,INI_O,
-	 INI_KA,INI_KI,INI_KU,INI_KE,INI_KO,
-	 INI_SA,INI_SI,INI_SU,INI_SE,INI_SO,
-	 INI_TA,INI_TI,INI_TU,INI_TE,INI_TO,
-	 INI_NA,INI_NI,INI_NU,INI_NE,INI_NO,
-	 INI_HA,INI_HI,INI_HU,INI_HE,INI_HO,
-	 INI_MA,INI_MI,INI_MU,INI_ME,INI_MO,
-	 INI_RA,INI_RI,INI_RU,INI_RE,INI_RO,
-	 INI_YA,INI_YU,INI_YO,
-	 INI_WA,INI_OTHER,
-	};	
+
 	ret = input_category_word_btn(wk);
 	switch(ret){
 	case 1:
@@ -2275,7 +2261,8 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
 		if(ret < 0){ return; }
 
     // 文字入力
-		wk->category_pos = ini_idx[ret];
+
+    wk->category_pos = ret;
     PMSI_SEARCH_AddWord( wk->swk, wk->category_pos );
 
     PMSI_SEARCH_Start( wk->swk );
@@ -2432,7 +2419,6 @@ static BOOL keycheck_category_initial_mode( PMS_INPUT_WORK* wk )
 	{
 		int  next_pos = CATEGORY_POS_DISABLE;
 
-    // @TODO これは何のための while?
 		do
 		{
 			if( wk->key_repeat & PAD_KEY_UP )
