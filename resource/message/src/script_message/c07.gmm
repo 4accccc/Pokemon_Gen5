@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T16:11:33"/>
+	<create user="matsumiya" host="W00207" date="2009-11-17T21:09:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -336,20 +336,250 @@
 	</lock>
 
 
-	<row id="msg_c07_leader7_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c07_hakase2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・c07ジムバッジ取得後に
-　ポケモンジム前のposを踏むと
-　ジムから登場、主人公を押しのけ
-　メッセージ表示！
-・主人公がposを踏むと
-　メッセージ表示後、倍速移動で竜の塔に</comment>
+・pos（GRIDX=175、GRIDZ=13~15）で発動、座標は暫定
+・0＝先頭のポケモン名
+・先頭のポケモン（タマゴ、ひん死除く）のなつき度が
+　70以上→msg_c07_hakase2_02
+　69以下→msg_c07_hakase2_03</comment>
+		<attribute name="キャラクター">博士２（父）</attribute>
+		<language name="JPN" width="256">アララギ『おう！　[1:00:トレーナー名:0]くん
+[1:01:ポケモン種族名:0]の　ようすは　どうかね？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『おう！　[1:00:トレーナー名:0]くん
+[1:01:ポケモン種族名:0]の　様子は　どうかね？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c07_hakase2_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・先頭のポケモン（タマゴ、ひん死除く）のなつき度が
+　70以上
+・続けてmsg_c07_hakase2_04</comment>
+		<attribute name="キャラクター">博士２（父）</attribute>
+		<language name="JPN" width="256">おお！　この　[1:01:ポケモン種族名:0]
+おまえさんに　なついているんだな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">おお！　この　[1:01:ポケモン種族名:0]
+おまえさんに　なついているんだな[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c07_hakase2_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・先頭のポケモン（タマゴ、ひん死除く）のなつき度が
+　69以下
+・続けてmsg_c07_hakase2_04</comment>
+		<attribute name="キャラクター">博士２（父）</attribute>
+		<language name="JPN" width="256">なるほど　おまえさん
+[1:01:ポケモン種族名:0]を　きびしく　そだてるのか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">なるほど　おまえさん
+[1:01:ポケモン種族名:0]を　厳しく　育てるのか[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c07_hakase2_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・はい/いいえの選択肢表示
+・はい→msg_c07_hakase2_05
+　いいえ→msg_c07_hakase2_06</comment>
+		<attribute name="キャラクター">博士２（父）</attribute>
+		<language name="JPN" width="256">ポケモンずかんも　だいじだが
+こうして　いっしょに　すごす[BE:00:ページ切り替え（行送り）]
+じかんが　なにより　だもんな[BE:01:ページ切り替え（クリア）]
+ところで　おまえさん
+リュウラセンのとうを[BE:00:ページ切り替え（行送り）]
+しっておるかね？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ポケモン図鑑も　大事だが
+こうして　一緒に　過ごす[BE:00:ページ切り替え（行送り）]
+じかんが　なにより　だもんな[BE:01:ページ切り替え（クリア）]
+ところで　おまえさん
+リュウラセンの塔を　知っておるかね？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c07_hakase2_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・はい選択
+・続けてmsg_c07_hakase2_07</comment>
+		<attribute name="キャラクター">博士２（父）</attribute>
+		<language name="JPN" width="256">おお！
+かんしん　かんしん[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">おお！
+感心　感心[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c07_hakase2_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・いいえ選択
+・続けてmsg_c07_hakase2_07</comment>
+		<attribute name="キャラクター">博士２（父）</attribute>
+		<language name="JPN" width="256">まあな
+しらなくても　むりはない[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">まあな
+知らなくても　無理はない[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c07_hakase2_07w" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・WHITEver用
+・続けてmsg_c07_hakase2_08</comment>
+		<attribute name="キャラクター">博士２（父）</attribute>
+		<language name="JPN" width="256">よし！　おまえさん　ちょいと
+ジジイの　はなしを　きいていけ[BE:01:ページ切り替え（クリア）]
+リュウラセンのとう　とは
+この　イッシュちほうで　もっとも[BE:00:ページ切り替え（行送り）]
+ふるい　たてものと　いわれている[BE:01:ページ切り替え（クリア）]
+なにより　パッケージポケモンが
+うまれた　ばしょ　とも[BE:01:ページ切り替え（クリア）]
+ねむる　ばしょ　とつたわっているな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">よし！　おまえさん　ちょいと
+ジジイの　話を　聞いていけ[BE:01:ページ切り替え（クリア）]
+リュウラセンの塔　とは
+この　イッシュ地方で　もっとも[BE:00:ページ切り替え（行送り）]
+古い　建造物と　いわれている[BE:01:ページ切り替え（クリア）]
+なにより　パッケージポケモンが
+生まれた　場所とも[BE:01:ページ切り替え（クリア）]
+眠る　場所とも　伝わっているな[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c07_hakase2_07b" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・BLACKver用
+・続けてmsg_c07_hakase2_08</comment>
+		<language name="JPN" width="256">よし！　おまえさん　ちょいと
+ジジイの　はなしを　きいていけ[BE:01:ページ切り替え（クリア）]
+リュウラセンのとう　とは
+この　イッシュちほうで　もっとも[BE:00:ページ切り替え（行送り）]
+ふるい　たてものと　いわれている[BE:01:ページ切り替え（クリア）]
+なにより　パッケージポケモンが
+うまれた　ばしょ　とも[BE:01:ページ切り替え（クリア）]
+ねむる　ばしょ　とつたわっているな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">よし！　おまえさん　ちょいと
+ジジイの　話を　聞いていけ[BE:01:ページ切り替え（クリア）]
+リュウラセンの塔　とは
+この　イッシュ地方で　もっとも[BE:00:ページ切り替え（行送り）]
+古い　建造物と　いわれている[BE:01:ページ切り替え（クリア）]
+なにより　パッケージポケモンが
+生まれた　場所とも[BE:01:ページ切り替え（クリア）]
+眠る　場所とも　伝わっているな[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c07_hakase2_08" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・画面上を向いてメッセージ表示
+・続けてmsg_c07_hakase2_09</comment>
+		<attribute name="キャラクター">博士２（父）</attribute>
+		<language name="JPN" width="256">この　セッカシティを
+ぬけた　さきに　あるのだが[BE:01:ページ切り替え（クリア）]
+くわしいことは
+なにひとつ　わかっておらん[BE:01:ページ切り替え（クリア）]
+なにしろ　とうの　なかに
+はいった　にんげんが　いないのでな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">この　セッカシティを
+抜けた　先に　あるのだが[BE:01:ページ切り替え（クリア）]
+詳しいことは
+なにひとつ　わかっておらん[BE:01:ページ切り替え（クリア）]
+なにしろ　塔の　中に
+入った　人間が　いないのでな[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c07_hakase2_09" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・再度、主人公と向き合ってメッセージ表示
+・メッセージ表示後、画面上に移動
+　画面外に消えると、主人公操作可能に</comment>
+		<attribute name="キャラクター">博士２（父）</attribute>
+		<language name="JPN" width="256">わしの　むすめも
+なかを　しらべたがっているが[BE:01:ページ切り替え（クリア）]
+なあに　わからないことがある
+そういうのも　ロマンという　ものだ[BE:01:ページ切り替え（クリア）]
+というわけで　ジジイは
+リュウラセンのとうを[BE:00:ページ切り替え（行送り）]
+けんぶつに　いくのであった！　じゃあな！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">わしの　娘も
+中を　調べたがっているが[BE:01:ページ切り替え（クリア）]
+なあに　わからないことがある
+そういうのも　ロマンという　ものだ[BE:01:ページ切り替え（クリア）]
+というわけで　ジジイは
+リュウラセンの塔を[BE:00:ページ切り替え（行送り）]
+見物に　いくのであった！　じゃあな！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c07_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・ポケモンジムをクリアして
+　ジムの外に出るとイベント発動
+・主人公に隣接してメッセージ表示
+・続けてmsg_c07_white_01</comment>
+		<attribute name="キャラクター">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『よう　[1:00:トレーナー名:0]
+ジムバッジを　てにいれたってところ？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『よう　[1:00:トレーナー名:0]
+ジムバッジを　手に入れたってところ？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c07_white_01">
+		<comment>♀
+・続けてmsg_c07_leader7_01</comment>
+		<attribute name="キャラクター">友達♀</attribute>
+		<language name="JPN" width="256">ホワイティ『ひさしぶり！
+あたしはね　だいすきクラブで……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『ひさしぶり！
+あたしはね　大好きクラブで……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c07_leader7_01">
+		<comment>♂
+・ジムから登場、主人公たちを押しのけメッセージ表示
+・表示後、塔の方に移動する
+　画面外に消えると
+　続けてmsg_c07_black_02</comment>
 		<attribute name="キャラクター">LEADER7
 ハチク</attribute>
-		<language name="JPN" width="256">ハチク『……！[BE:01:ページ切り替え（クリア）]
-とうが　こわされた！？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ハチク『……！[BE:01:ページ切り替え（クリア）]
-塔が　壊された！？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ハチク『……ないている？
+リュウラセンのとう　が[BE:01:ページ切り替え（クリア）]
+なかの　くうきが　ながれだしたのか！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ハチク『……ないている？
+リュウラセンの塔　が[BE:01:ページ切り替え（クリア）]
+中の空気が　流れだしたのか！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c07_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてmsg_c07_white_03</comment>
+		<attribute name="キャラクター">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『いまの　ジムリーダー？[BE:01:ページ切り替え（クリア）]
+なんだよ
+オレ　ちょうせん　できないじゃん[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『今の　ジムリーダー？[BE:01:ページ切り替え（クリア）]
+なんだよ
+オレ　挑戦できないじゃん[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c07_white_03">
+		<comment>♀
+・msg_c07_white_03表示後
+　d08でのイベント開始まで繰り返し
+・d08イベントが開始されるとここから削除</comment>
+		<attribute name="キャラクター">友達♀</attribute>
+		<language name="JPN" width="256">ホワイティ『そんなことよりも
+なんだか　たいへん　そうだよ！[BE:01:ページ切り替え（クリア）]
+あたしたちも　いったほうが　よくない？
+その　リュウラセンのとう　に</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『そんなことよりも
+なんだか　大変そうだよ！[BE:01:ページ切り替え（クリア）]
+あたしたちも　行ったほうが　よくない？
+その　リュウラセンの塔に</language>
+	</row>
+
+	<row id="msg_c07_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・msg_c07_white_03表示後
+　d08でのイベント開始まで繰り返し
+・d08イベントが開始されるとここから削除</comment>
+		<attribute name="キャラクター">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『ぜんぜんッ
+じじょうが　わからないけど[BE:01:ページ切り替え（クリア）]
+なにか　ヤバイって　ふんいき　だよな</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『ぜんぜんッ
+事情が　わからないけど[BE:01:ページ切り替え（クリア）]
+なにか　ヤバイって　雰囲気だよな</language>
 	</row>
 
 	<row id="msg_c07_hakaim1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -467,8 +697,10 @@
 	<row id="msg_c07_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラクター">看板：街</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">セッカシティ
+そらに　きらめく　ゆきのはな</language>
+		<language name="JPN_KANJI" width="256">セッカシティ
+空に　きらめく　雪の花</language>
 	</row>
 
 	<row id="msg_c07_sign2_01" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
