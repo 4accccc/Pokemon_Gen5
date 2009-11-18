@@ -15,6 +15,7 @@ USERS	=	sogabe taya
 #------------------------------------------------------------------------------
 targetname		= waza_tbl
 NARCNAME			= $(targetname).narc
+NAIXNAME			= $(targetname).naix
 WAZANAME_GMM	= wazaname.gmm
 WAZANAME_HASH = wazano_hash.rb
 WAZANO_DEF		= wazano_def.h
@@ -52,7 +53,7 @@ wazano_def.h: waza.tab
 $(NARCNAME): waza.tab
 	perl wazaconv.pl waza.tab
 	nnsarc -c -l -n -i $(NARCNAME) bin/*.bin > error
-
+	$(NAIXCUT) $(NAIXNAME)
 
 endif
 
