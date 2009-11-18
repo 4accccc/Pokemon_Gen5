@@ -61,7 +61,8 @@ extern const CONNECT_DATA * EVENTDATA_GetConnectByID(const EVENTDATA_SYSTEM * ev
  * @return	BOOL		FALSEÇÃÇ∆Ç´ÅAèoì¸å˚èÓïÒÇ™ë∂ç›ÇµÇ»Ç¢
  */
 //------------------------------------------------------------------
-extern BOOL EVENTDATA_SetLocationByExitID(const EVENTDATA_SYSTEM * evdata, LOCATION * loc, u16 exit_id);
+extern BOOL EVENTDATA_SetLocationByExitID(const EVENTDATA_SYSTEM * evdata, LOCATION * loc, u16 exit_id,
+    u16 exit_ofs );
 
 
 //------------------------------------------------------------------
@@ -81,7 +82,7 @@ extern int EVENTDATA_SearchConnectIDBySphere(const EVENTDATA_SYSTEM * evdata, co
  * @brief
  */
 //------------------------------------------------------------------
-extern void CONNECTDATA_SetNextLocation(const CONNECT_DATA * connect, LOCATION * loc);
+extern void CONNECTDATA_SetNextLocation(const CONNECT_DATA * connect, LOCATION * loc, u16 exit_ofs);
 
 //------------------------------------------------------------------
 /**
@@ -91,6 +92,10 @@ extern void CONNECTDATA_SetNextLocation(const CONNECT_DATA * connect, LOCATION *
  */
 //------------------------------------------------------------------
 extern BOOL CONNECTDATA_IsSpecialExit(const CONNECT_DATA * connect);
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern LOC_EXIT_OFS CONNECTDATA_GetExitOfs(const CONNECT_DATA * connect, const VecFx32 * pos);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

@@ -65,7 +65,7 @@ void LOCATION_Init(LOCATION * loc)
  * @brief	LOCATIONのセット
  */
 //--------------------------------------------------------------
-void LOCATION_Set(LOCATION * loc, int zone, s16 door, s16 dir, u16 ofs, fx32 x, fx32 y, fx32 z)
+void LOCATION_Set(LOCATION * loc, int zone, s16 door, s16 dir, LOC_EXIT_OFS ofs, fx32 x, fx32 y, fx32 z)
 {
 	loc->type = LOCATION_TYPE_INIT;
 	loc->zone_id = zone;
@@ -83,7 +83,7 @@ void LOCATION_Set(LOCATION * loc, int zone, s16 door, s16 dir, u16 ofs, fx32 x, 
  *	@brief  ロケーションセット　レールロケーション
  */
 //-----------------------------------------------------------------------------
-void LOCATION_SetRail(LOCATION * loc, int zone, s16 door, s16 dir, u16 ofs, u16 rail_index, u16 line_grid, s16 width_grid)
+void LOCATION_SetRail(LOCATION * loc, int zone, s16 door, s16 dir, LOC_EXIT_OFS ofs, u16 rail_index, u16 line_grid, s16 width_grid)
 {
 	loc->type = LOCATION_TYPE_INIT;
 	loc->zone_id = zone;
@@ -100,7 +100,7 @@ void LOCATION_SetRail(LOCATION * loc, int zone, s16 door, s16 dir, u16 ofs, u16 
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-void LOCATION_SetID(LOCATION * loc, u16 zone_id, u16 exit_id, u16 ofs)
+void LOCATION_SetID(LOCATION * loc, u16 zone_id, u16 exit_id, LOC_EXIT_OFS ofs)
 {
 	LOCATION_Init(loc);
 	loc->zone_id = zone_id;

@@ -118,10 +118,12 @@ static void loadEncountDataTable(EVENTDATA_SYSTEM* evdata, u16 zone_id, u8 seaso
 //============================================================================================
 // CONNECT_DATA ポジション
 //============================================================================================
-static void ConnectData_GPOS_GetPos( const CONNECT_DATA* cp_data, VecFx32* p_pos );
+static void ConnectData_GPOS_GetPos( const CONNECT_DATA* cp_data, LOC_EXIT_OFS exit_ofs, VecFx32* p_pos );
 static BOOL ConnectData_GPOS_IsHit( const CONNECT_DATA* cp_data, const VecFx32* cp_pos );
 static void ConnectData_RPOS_GetLocation( const CONNECT_DATA* cp_data, RAIL_LOCATION* p_location );
 static BOOL ConnectData_RPOS_IsHit( const CONNECT_DATA* cp_data, const RAIL_LOCATION* cp_location );
+static LOC_EXIT_OFS ConnectData_GPOS_GetExitOfs( const CONNECT_DATA * cp_data, const VecFx32 * p_pos );
+static LOC_EXIT_OFS ConnectData_RPOS_GetExitOfs( const CONNECT_DATA * cp_data, const VecFx32 * p_pos );
 
 
 //============================================================================================
@@ -397,7 +399,8 @@ BOOL CONNECTDATA_IsSpecialExit(const CONNECT_DATA * connect)
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-BOOL EVENTDATA_SetLocationByExitID(const EVENTDATA_SYSTEM * evdata, LOCATION * loc, u16 exit_id)
+BOOL EVENTDATA_SetLocationByExitID(const EVENTDATA_SYSTEM * evdata, LOCATION * loc, u16 exit_id,
+    LOC_EXIT_OFS exit_ofs )
 {
   /** TODO:　見た目含めてオフセットを再計算すること */
   enum{ GRIDSIZE = 8, MV = GRIDSIZE * FX32_ONE};
@@ -421,23 +424,23 @@ BOOL EVENTDATA_SetLocationByExitID(const EVENTDATA_SYSTEM * evdata, LOCATION * l
   if( connect->pos_type == EVENTDATA_POSTYPE_GRID )
   {
     VecFx32 pos;
-  	ConnectData_GPOS_GetPos( connect, &pos );
-    LOCATION_Set( loc, evdata->now_zone_id, exit_id, connect->exit_dir, pos.x, pos.y, pos.z );
+  	ConnectData_GPOS_GetPos( connect, exit_ofs, &pos );
+    LOCATION_Set( loc, evdata->now_zone_id, exit_id, connect->exit_dir, exit_ofs, pos.x, pos.y, pos.z );
   }
   else
   {
     RAIL_LOCATION pos;
   	ConnectData_RPOS_GetLocation( connect, &pos );
-    LOCATION_SetRail( loc, evdata->now_zone_id, exit_id, connect->exit_dir, pos.rail_index, pos.line_grid, pos.width_grid );
+    LOCATION_SetRail( loc, evdata->now_zone_id, exit_id, connect->exit_dir, LOCATION_DEFAULT_EXIT_OFS, pos.rail_index, pos.line_grid, pos.width_grid );
   }
 
 	return TRUE;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void CONNECTDATA_SetNextLocation(const CONNECT_DATA * connect, LOCATION * loc)
+void CONNECTDATA_SetNextLocation(const CONNECT_DATA * connect, LOCATION * loc, LOC_EXIT_OFS exit_ofs)
 {
-	LOCATION_SetID(loc, connect->link_zone_id, connect->link_exit_id);
+	LOCATION_SetID(loc, connect->link_zone_id, connect->link_exit_id, exit_ofs);
 }
 
 //------------------------------------------------------------------
@@ -461,7 +464,7 @@ int EVENTDATA_SearchConnectIDBySphere(const EVENTDATA_SYSTEM * evdata, const Vec
 	for (i = 0; i < evdata->connect_count; i++, cnct++ ) {
     if( cnct->pos_type == EVENTDATA_POSTYPE_GRID )
     {
-      ConnectData_GPOS_GetPos(cnct, &check );
+      ConnectData_GPOS_GetPos(cnct, LOCATION_DEFAULT_EXIT_OFS, &check );
       len = VEC_Distance(&check, sphere); 
       
       if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_R)
@@ -482,6 +485,17 @@ int EVENTDATA_SearchConnectIDBySphere(const EVENTDATA_SYSTEM * evdata, const Vec
 	return EXIT_ID_NONE;
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+LOC_EXIT_OFS CONNECTDATA_GetExitOfs(const CONNECT_DATA * connect, const VecFx32 * pos)
+{
+  if (connect->pos_type == EVENTDATA_POSTYPE_GRID)
+  {
+    return ConnectData_GPOS_GetExitOfs( connect, pos );
+  }else{
+    return ConnectData_RPOS_GetExitOfs( connect, pos );
+  }
+}
 //------------------------------------------------------------------
 /**
  * @brief
@@ -906,6 +920,7 @@ u16 EVENTDATA_CheckTalkBoardEventRailLocation(
 
 
 
+#if 0
 //----------------------------------------------------------------------------
 /**
  *	@brief  出入り口イベント　中心３D座標を取得
@@ -918,7 +933,7 @@ void EVENTDATA_GetConnectCenterPos( const CONNECT_DATA * data, VecFx32* pos )
 {
   GF_ASSERT( data );
   GF_ASSERT( pos );
-  ConnectData_GPOS_GetPos( data, pos );
+  ConnectData_GPOS_GetPos( data, LOCATION_DEFAULT_EXIT_OFS, pos );
 }
 void EVENTDATA_GetConnectCenterRailLocation( const CONNECT_DATA * data, RAIL_LOCATION* location )
 {
@@ -926,6 +941,7 @@ void EVENTDATA_GetConnectCenterRailLocation( const CONNECT_DATA * data, RAIL_LOC
   GF_ASSERT( location );
   ConnectData_RPOS_GetLocation( data, location );
 }
+#endif
 
 //----------------------------------------------------------------------------
 /**
@@ -973,56 +989,6 @@ void EVENTDATA_GetPosEventCenterRailLocation( const POS_EVENT_DATA * data, RAIL_
 
 
 
-//============================================================================================
-//
-//		サンプルデータ
-//		※実際には外部でコンバートされたものをファイルから読み込む
-//
-//============================================================================================
-
-#if 0
-const MMDL_HEADER SampleFldMMdlHeader_R01[] = {
-	{
-		0,		///<識別ID
-		BOY1,	///<表示するOBJコード
-		MV_RND,	///<動作コード
-		0,	///<イベントタイプ
-		0,	///<イベントフラグ
-		0,	///<イベントID
-		DIR_DOWN,	///<指定方向
-		0,	///<指定パラメタ 0
-		0,	///<指定パラメタ 1
-		0,	///<指定パラメタ 2
-		2,	///<X方向移動制限
-		2,	///<Z方向移動制限
-		757,	///<グリッドX
-		788,	///<グリッドZ
-		0,	///<Y値 fx32型
-	},
-	{
-		1,		///<識別ID
-		WOMAN1,	///<表示するOBJコード
-		MV_RND,	///<動作コード
-		0,	///<イベントタイプ
-		0,	///<イベントフラグ
-		0,	///<イベントID
-		DIR_DOWN,	///<指定方向
-		0,	///<指定パラメタ 0
-		0,	///<指定パラメタ 1
-		0,	///<指定パラメタ 2
-		2,	///<X方向移動制限
-		2,	///<Z方向移動制限
-		756,	///<グリッドX
-		796,	///<グリッドZ
-		0,	///<Y値 fx32型
-	},
-};
-
-const int SampleFldMMdlHeaderCount_R01 = NELEMS(SampleFldMMdlHeader_R01);
-#endif
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
 
 
 
@@ -1032,14 +998,69 @@ const int SampleFldMMdlHeaderCount_R01 = NELEMS(SampleFldMMdlHeader_R01);
 // CONNECT_DATA ポジション
 //============================================================================================
 //----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+static u16 convertOfs(const LOC_EXIT_OFS exit_ofs, u16 size)
+{
+  if (exit_ofs == LOCATION_DEFAULT_EXIT_OFS) return 0;
+  {
+    u32 enter_size = ( exit_ofs & 0xf0 ) >> 4;
+    u32 enter_ofs = exit_ofs & 0xf;
+    u16 ret_ofs;
+    if (enter_size == 1) {
+      ret_ofs = size / 2;
+    } else {
+      ret_ofs = ((enter_ofs + 1) * size) / enter_size;
+      if ( ret_ofs >= size ) ret_ofs -= 1;
+    }
+    return ret_ofs;
+  }
+}
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+static LOC_EXIT_OFS ConnectData_GPOS_GetExitOfs( const CONNECT_DATA * cp_data, const VecFx32 * p_pos )
+{
+  const CONNECT_DATA_GPOS * cp_gpos;
+  
+  GF_ASSERT( cp_data );
+  GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_GRID );
+
+  cp_gpos = (const CONNECT_DATA_GPOS *)cp_data->pos_buf;
+  if (cp_gpos->sizex > 1 )
+  {
+    s32 ofs = (FX_Whole(p_pos->x) - cp_gpos->x) / FIELD_CONST_GRID_SIZE;
+    OS_Printf("p_pos->x:%d cp_gpos->x:%d ofs:%d\n", FX_Whole(p_pos->x), cp_gpos->x, ofs);
+    GF_ASSERT( ofs >= 0 );
+    GF_ASSERT( ofs < cp_gpos->sizex );
+    return (cp_gpos->sizex << 4) | ofs;
+  }
+  else if (cp_gpos->sizez > 1 )
+  {
+    s32 ofs = (FX_Whole(p_pos->z) - cp_gpos->z) / FIELD_CONST_GRID_SIZE;
+    OS_Printf("p_pos->z:%d cp_gpos->z:%d ofs:%d\n", FX_Whole(p_pos->z), cp_gpos->z, ofs);
+    GF_ASSERT( ofs >= 0 );
+    GF_ASSERT( ofs < cp_gpos->sizez );
+    return (cp_gpos->sizez << 4) | ofs;
+  }
+  else {
+    return ( 1 << 4) | 0 ;
+  }
+}
+
+static u16 ConnectData_RPOS_GetExitOfs( const CONNECT_DATA * cp_data, const VecFx32 * p_pos )
+{
+  return LOCATION_DEFAULT_EXIT_OFS;
+}
+
+//----------------------------------------------------------------------------
 /**
  *	@brief  中心　３D座標の取得
  *
  *	@param	cp_data   データ
+ *	@param  exit_ofs  出入口オフセット
  *	@param	p_pos     座標格納先
  */
 //-----------------------------------------------------------------------------
-static void ConnectData_GPOS_GetPos( const CONNECT_DATA* cp_data, VecFx32* p_pos )
+static void ConnectData_GPOS_GetPos( const CONNECT_DATA* cp_data, LOC_EXIT_OFS exit_ofs, VecFx32* p_pos )
 {
   const CONNECT_DATA_GPOS * cp_pos;
   
@@ -1048,11 +1069,28 @@ static void ConnectData_GPOS_GetPos( const CONNECT_DATA* cp_data, VecFx32* p_pos
 
   cp_pos = (const CONNECT_DATA_GPOS *)cp_data->pos_buf;
 
-  p_pos->x = (cp_pos->x + (cp_pos->sizex/2) + CONNECT_POS_OFS_X)<<FX32_SHIFT;
+  p_pos->x = (cp_pos->x +  CONNECT_POS_OFS_X)<<FX32_SHIFT;
+  //p_pos->x = (cp_pos->x + (cp_pos->sizex/2) + CONNECT_POS_OFS_X)<<FX32_SHIFT;
   p_pos->y = (cp_pos->y + CONNECT_POS_OFS_Y)<<FX32_SHIFT;
-  p_pos->z = (cp_pos->z + (cp_pos->sizez/2) + CONNECT_POS_OFS_Z)<<FX32_SHIFT;
-}
+  //p_pos->z = (cp_pos->z + (cp_pos->sizez/2) + CONNECT_POS_OFS_Z)<<FX32_SHIFT;
+  p_pos->z = (cp_pos->z + CONNECT_POS_OFS_Z)<<FX32_SHIFT;
 
+  //exit_ofsを加えた座標を返す
+  if (cp_pos->sizex > 1 )
+  {
+    u16 ret_ofs = convertOfs( exit_ofs, cp_pos->sizex );
+    OS_Printf("p_pos->x:%d cp_gpos->x:%d ofs:%d\n", FX_Whole(p_pos->x), cp_pos->x, ret_ofs);
+    OS_Printf("add x ofs %d\n", ret_ofs );
+    p_pos->x += ret_ofs * FIELD_CONST_GRID_FX32_SIZE;
+  }
+  else if (cp_pos->sizez > 1 )
+  {
+    u16 ret_ofs = convertOfs( exit_ofs, cp_pos->sizez );
+    OS_Printf("p_pos->z:%d cp_gpos->z:%d ofs:%d\n", FX_Whole(p_pos->z), cp_pos->z, ret_ofs);
+    OS_Printf("add z ofs %d\n", ret_ofs );
+    p_pos->z += ret_ofs * FIELD_CONST_GRID_FX32_SIZE;
+  }
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  グリッド座標と３D座標の判定
@@ -1085,11 +1123,13 @@ static BOOL ConnectData_GPOS_IsHit( const CONNECT_DATA* cp_data, const VecFx32* 
 	y = FX_Whole(cp_pos->y) - CONNECT_POS_OFS_Y;
 	z = FX_Whole(cp_pos->z) - CONNECT_POS_OFS_Z;
 
-  if( (cp_gpos->x <= x) && ((cp_gpos->x+cp_gpos->sizex) > x) )
+  GF_ASSERT (cp_gpos->sizex > 0 );
+  GF_ASSERT (cp_gpos->sizez > 0 );
+  if( (cp_gpos->x <= x) && ((cp_gpos->x+(cp_gpos->sizex-1)*FIELD_CONST_GRID_SIZE) >= x) )
   {
-    if( ((cp_gpos->y-CONNECT_DATA_RANGE) <= y) && ((cp_gpos->y+CONNECT_DATA_RANGE) > y) )
+    if( ((cp_gpos->y-CONNECT_DATA_RANGE) <= y) && ((cp_gpos->y+CONNECT_DATA_RANGE) >= y) )
     {
-      if( (cp_gpos->z <= z) && ((cp_gpos->z+cp_gpos->sizez) > z) )
+      if( (cp_gpos->z <= z) && ((cp_gpos->z+(cp_gpos->sizez-1)*FIELD_CONST_GRID_SIZE) >= z) )
       {
         return TRUE;
       }

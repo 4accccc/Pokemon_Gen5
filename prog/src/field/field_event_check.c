@@ -156,7 +156,8 @@ static BOOL checkConnectExitDir(const CONNECT_DATA* cnct, u16 player_dir);
 static BOOL checkDirection(u16 player_dir, u16 exit_dir);
 static int getConnectID(const EV_REQUEST * req, const VecFx32 * now_pos);
 static void rememberExitInfo(EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx, const VecFx32 * pos);
-static GMEVENT * getChangeMapEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx);
+static GMEVENT * getChangeMapEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx,
+    const VecFx32 * pos);
 static GMEVENT * DEBUG_checkKeyEvent(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldWork);
 
 static GMEVENT * checkEvent_ConvenienceButton( const EV_REQUEST *req,
@@ -1381,17 +1382,24 @@ static GMEVENT * checkExit(EV_REQUEST * req,
 
 	//マップ遷移発生の場合、出入口を記憶しておく
   rememberExitInfo(req, fieldWork, idx, now_pos);
-  return getChangeMapEvent(req, fieldWork, idx);
+  return getChangeMapEvent(req, fieldWork, idx, now_pos);
 }
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static GMEVENT * getChangeMapEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx)
+static GMEVENT * getChangeMapEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx,
+    const VecFx32 * pos)
 {
+  LOC_EXIT_OFS exit_ofs;
 	const CONNECT_DATA * cnct;
   cnct = EVENTDATA_GetConnectByID(req->evdata, idx);
+  if (pos != NULL) {
+    exit_ofs = CONNECTDATA_GetExitOfs(cnct, pos);
+  } else {
+    exit_ofs = LOCATION_DEFAULT_EXIT_OFS;
+  }
 
-  return EVENT_ChangeMapByConnect(req->gsys, fieldWork, cnct);
+  return EVENT_ChangeMapByConnect(req->gsys, fieldWork, cnct, exit_ofs);
 }
 
 //--------------------------------------------------------------
@@ -1504,7 +1512,7 @@ static GMEVENT * checkPushExit(EV_REQUEST * req,
     if (CONNECTDATA_GetExitType(cnct) == EXIT_TYPE_MAT)
     {
       rememberExitInfo(req, fieldWork, idx, req->now_pos);
-      return getChangeMapEvent(req, fieldWork, idx);
+      return getChangeMapEvent(req, fieldWork, idx, req->now_pos);
     }
   }
 	
@@ -1516,7 +1524,7 @@ static GMEVENT * checkPushExit(EV_REQUEST * req,
 
 	//マップ遷移発生の場合、出入口を記憶しておく
   rememberExitInfo(req, fieldWork, idx, &front_pos);
-  return getChangeMapEvent(req, fieldWork, idx);
+  return getChangeMapEvent(req, fieldWork, idx, &front_pos);
 }
 
 //--------------------------------------------------------------
@@ -1616,7 +1624,7 @@ static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELD
   }
   
   rememberExitRailInfo( req, fieldWork, idx, &pos );
-  return getChangeMapEvent(req, fieldWork, idx);
+  return getChangeMapEvent(req, fieldWork, idx, NULL);
 }
 
 //----------------------------------------------------------------------------
@@ -1654,7 +1662,7 @@ static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, F
       {
         // GO
         rememberExitRailInfo( req, fieldWork, idx, &pos );
-        return getChangeMapEvent(req, fieldWork, idx);
+        return getChangeMapEvent(req, fieldWork, idx, NULL);
       }
     }
   }
@@ -1672,7 +1680,7 @@ static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, F
   if( checkConnectExitDir( cnct, req->player_dir ) )
   {
     rememberExitRailInfo( req, fieldWork, idx, &pos );  // front_posは移動不可なので、posにする
-    return getChangeMapEvent(req, fieldWork, idx);
+    return getChangeMapEvent(req, fieldWork, idx, NULL);
   }
 
   return NULL;

@@ -41,7 +41,7 @@ extern GMEVENT * DEBUG_EVENT_GameEnd( GAMESYS_WORK * gsys, FIELDMAP_WORK * field
  */
 //------------------------------------------------------------------
 extern GMEVENT * EVENT_ChangeMapByConnect(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-    const CONNECT_DATA * cnct);
+    const CONNECT_DATA * cnct, LOC_EXIT_OFS exit_ofs);
 
 //------------------------------------------------------------------
 /**

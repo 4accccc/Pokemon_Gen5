@@ -20,6 +20,7 @@
 enum {
   LOCATION_DEFAULT_EXIT_OFS = 0,
 };
+typedef u16 LOC_EXIT_OFS;
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 typedef enum {
@@ -62,7 +63,7 @@ typedef struct {
 	s16 zone_id;
 	s16 exit_id;
 	s16 dir_id;
-  u16 exit_ofs;
+  LOC_EXIT_OFS exit_ofs;
 	LOCATION_POS location_pos;
 }LOCATION;
 
@@ -93,8 +94,8 @@ extern void LOCATION_Init(LOCATION * loc);
  * @brief	LOCATION‚ÌƒZƒbƒg
  */
 //--------------------------------------------------------------
-extern void LOCATION_Set(LOCATION * loc, int zone, s16 door, s16 dir, u16 ofs, fx32 x, fx32 y, fx32 z);
-extern void LOCATION_SetRail(LOCATION * loc, int zone, s16 door, s16 dir, u16 ofs, u16 rail_index, u16 line_grid, s16 width_grid);
+extern void LOCATION_Set(LOCATION * loc, int zone, s16 door, s16 dir, LOC_EXIT_OFS ofs, fx32 x, fx32 y, fx32 z);
+extern void LOCATION_SetRail(LOCATION * loc, int zone, s16 door, s16 dir, LOC_EXIT_OFS ofs, u16 rail_index, u16 line_grid, s16 width_grid);
 
 //--------------------------------------------------------------
 /**

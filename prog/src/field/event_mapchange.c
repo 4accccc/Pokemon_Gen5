@@ -645,7 +645,7 @@ GMEVENT * EVENT_ChangeMapToUnion( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 GMEVENT * EVENT_ChangeMapByConnect(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-    const CONNECT_DATA * cnct)
+    const CONNECT_DATA * cnct, LOC_EXIT_OFS exit_ofs)
 {
 	GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
 	MAPCHANGE_WORK * mcw;
@@ -663,7 +663,7 @@ GMEVENT * EVENT_ChangeMapByConnect(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap
 	}
   else
   {
-		CONNECTDATA_SetNextLocation(cnct, &mcw->loc_req);
+		CONNECTDATA_SetNextLocation(cnct, &mcw->loc_req, exit_ofs);
 	}
   mcw->exit_type = CONNECTDATA_GetExitType(cnct);
 
@@ -756,21 +756,6 @@ void MAPCHG_GameOver( GAMESYS_WORK * gsys )
   //FldFlgInit_GameOver(fsys);
 }
 
-#if 0
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void AddOffsetByDirection(EXIT_DIR dir_id, VecFx32 * pos)
-{
-	switch (dir_id) {
-	case EXIT_DIR_UP:	pos->z -= FX32_ONE * 16; break;
-	case EXIT_DIR_DOWN:	pos->z += FX32_ONE * 16; break;
-	case EXIT_DIR_LEFT:	pos->x -= FX32_ONE * 16; break;
-	case EXIT_DIR_RIGHT:pos->x += FX32_ONE * 16; break;
-	default:
-		break;
-	}
-}
-#endif
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static u16 GetDirValueByDirID(EXIT_DIR dir_id)
@@ -797,16 +782,8 @@ static void MakeNewLocation(const EVENTDATA_SYSTEM * evdata, const LOCATION * lo
 		return;
 	}
 	//開始位置セット
-	result = EVENTDATA_SetLocationByExitID(evdata, loc_tmp, loc_req->exit_id);
-#if 0
-  {
-    const CONNECT_DATA * cnct = EVENTDATA_GetConnectByID(evdata, loc_req->exit_id);
-    if (CONNECTDATA_GetExitType(cnct) != EXIT_TYPE_MAT)
-    {
-	    AddOffsetByDirection(loc_tmp->dir_id, &loc_tmp->pos);
-    }
-  }
-#endif
+	result = EVENTDATA_SetLocationByExitID(evdata, loc_tmp, loc_req->exit_id, loc_req->exit_ofs );
+
 	if (!result) {
 		//デバッグ用処理：本来は不要なはず
 		OS_Printf("connect: debug default position\n");
