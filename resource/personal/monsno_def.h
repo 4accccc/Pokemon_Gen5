@@ -3,7 +3,7 @@
  * @file	monsno_def.h
  * @bfief	ポケモンNoのDefine定義ファイル
  * @author	PersonalConverter
- * @date	2009-11-16
+ * @date	2009-11-18
  * パーソナルコンバータから生成されました
 */
 //============================================================================================
@@ -512,12 +512,12 @@
 #define		MONSNO_KURUMIRU			( 500 )
 #define		MONSNO_HAHAKOMORI		( 501 )
 #define		MONSNO_ONOKKUSU			( 502 )
-#define		MONSNO_KAAMENTO			( 503 )
+#define		MONSNO_DESUMASU			( 503 )
 #define		MONSNO_BANBIINA			( 504 )
 #define		MONSNO_GIAADO				( 505 )
 #define		MONSNO_PURUNSU			( 506 )
 #define		MONSNO_MAMEPATO			( 507 )
-#define		MONSNO_RAIBURASU		( 508 )
+#define		MONSNO_SIMAMA				( 508 )
 #define		MONSNO_MUSYAANA			( 509 )
 #define		MONSNO_TYURINE			( 510 )
 #define		MONSNO_GIAN					( 511 )
@@ -547,11 +547,11 @@
 #define		MONSNO_DORYUUZU			( 535 )
 #define		MONSNO_ONODON				( 536 )
 #define		MONSNO_HATOOBOO			( 537 )
-#define		MONSNO_KAAOKEN			( 538 )
+#define		MONSNO_DESUKAAN			( 538 )
 #define		MONSNO_KENHOROU			( 539 )
 #define		MONSNO_SIKIZIKA			( 540 )
 #define		MONSNO_PURUKINGU		( 541 )
-#define		MONSNO_RAIBURA			( 542 )
+#define		MONSNO_ZEBURAIKA		( 542 )
 #define		MONSNO_GIANTOSU			( 543 )
 #define		MONSNO_NORANYAA			( 544 )
 #define		MONSNO_WANRAN				( 545 )
