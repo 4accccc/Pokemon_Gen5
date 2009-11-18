@@ -8,7 +8,8 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	yoshida tsuruta_saya kitakaze_tomohiro mizutani_megumi
+#USERS	=	yoshida tsuruta_saya kitakaze_tomohiro mizutani_megumi sogabe
+include user.def
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く

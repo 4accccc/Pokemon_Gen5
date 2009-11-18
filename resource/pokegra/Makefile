@@ -8,7 +8,8 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	yoshida tsuruta_saya kitakaze_tomohiro mizutani_megumi
+#USERS	=	yoshida tsuruta_saya kitakaze_tomohiro mizutani_megumi sogabe
+include user.def
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -25,11 +26,7 @@ TARGETDIR	=
 #------------------------------------------------------------------------------
 SUBDIRS	=
 
-#共通ルールファイルのインクルード
-include $(PROJECT_RSCDIR)/macro_define
-include	$(COMMONDEFS_CCTYPE_CW)
-
-.PHONY:	do-build clean subdir
+.PHONY:	do-build clean
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
