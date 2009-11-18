@@ -3452,6 +3452,28 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _GET_PARTY_FRONT_POKEMON
+ * @brief
+ * @param ret_wk チェック結果を受け取るワーク
+ * @param count_mode 数え方指定(POKECOUNT_MODE_XXXX)
+ 		POKECOUNT_MODE_NOT_EGG       (1)  // タマゴを除く手持ちの数
+ 		POKECOUNT_MODE_BATTLE_ENABLE (2)  // 戦える(タマゴと瀕死を除いた)ポケモン数
+ 	* @retval u16 位置
+  *
+  * _GET_PARTY_POKE_COUNTと同じ引数をとるが、使えないものもあるので注意！
+ */
+//--------------------------------------------------------------
+#define _GET_PARTY_FRONT_POKEMON( ret_wk, count_mode ) \
+    _ASM_GET_PARTY_FRONT_POKEMON ret_wk, count_mode
+
+    .macro  _ASM_GET_PARTY_FRONT_POKEMON ret_wk, count_mode
+    .short  EV_SEQ_GET_PARTY_FRONT_POKEMON
+    .short  \ret_wk
+    .short  \count_mode
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @def _GET_PARTY_POKE_MONSNO
  * @brief 指定した手持ちポケモンのモンスターナンバーを取得する
  * @param ret_wk 結果を受け取るワーク

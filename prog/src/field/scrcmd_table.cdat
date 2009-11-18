@@ -480,7 +480,7 @@
   DEF_CMD( EvCmdSetPokemonWaza, EV_SEQ_SET_TEMOTI_WAZA )
 
   DEF_CMD( EvCmdAddPokemonToParty, EV_SEQ_ADD_POKEMON_TO_PARTY )
-  NO_CMD()
+  DEF_CMD( EvCmdGetPartyFrontPoke, EV_SEQ_GET_PARTY_FRONT_POKEMON )
   NO_CMD()
   NO_CMD()
 
