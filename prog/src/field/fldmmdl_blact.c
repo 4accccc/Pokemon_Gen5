@@ -306,7 +306,7 @@ void MMDL_BLACTCONT_Release( MMDLSYS *mmdlsys )
 
 
   // 全開放チェック
-  DEBUG_MMDL_RESOURCE_MEMORY_SIZE_IsAllDelete;
+//  DEBUG_MMDL_RESOURCE_MEMORY_SIZE_IsAllDelete;
 }
 
 //--------------------------------------------------------------
