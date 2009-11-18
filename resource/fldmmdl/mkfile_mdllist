@@ -31,11 +31,14 @@ RUBY_MDLLIST = fmmdl_mdllist.rb
 #---------------------------------------------------------------
 #	build
 #---------------------------------------------------------------
-do-build: $(DIR_TARGET_COPY)/$(TARGET_MDLPRM_ARC) $(DIR_TARGET_COPY_SRC)/$(SYMBOL_H)
+do-build: $(DIR_TARGET_COPY)/$(TARGET_MDLPRM_ARC) $(DIR_TARGET_COPY_SRC)/$(SYMBOL_H) $(DIR_TARGET_COPY)/$(TARGET_OBJCODE_H)
 
 $(DIR_TARGET_COPY)/$(TARGET_MDLPRM_ARC): $(TARGET_MDLPRM_ARC)
 	$(COPY) $(TARGET_MDLPRM_ARC) $(DIR_TARGET_COPY)
 	$(COPY) $(TARGET_MDLPRM_ARCIDX) $(DIR_TARGET_COPY)
+	$(COPY) $(TARGET_OBJCODE_H) $(DIR_TARGET_COPY)
+ 
+$(DIR_TARGET_COPY)/$(TARGET_OBJCODE_H): $(TARGET_OBJCODE_H)
 	$(COPY) $(TARGET_OBJCODE_H) $(DIR_TARGET_COPY)
 
 ifeq	($(CONVERTUSER),true) #CONVERTUSER

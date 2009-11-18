@@ -57,15 +57,15 @@ STR_END = "#END" #終端文字列
 
 STR_CODESTART_BBD = "OBJCODESTART_BBD" #コード開始 ビルボード
 STR_CODEEND_BBD = "OBJCODEEND_BBD" #コード終了 ビルボード
-STR_CODETOTAL_BBD = "OBJCODETOTAL_BBD" #コード総数　ビルボード
+STR_CODECOUNT_BBD = "OBJCODECOUNT_BBD" #コード数　ビルボード
 
 STR_CODESTART_POKE = "OBJCODESTART_TPOKE" #コード開始 ポケモン
 STR_CODEEND_POKE = "OBJCODEEND_TPOKE" #コード終了 ポケモン
-STR_CODETOTAL_POKE = "OBJCODETOTAL_TPOKE" #コード総数　ポケモン
+STR_CODECOUNT_POKE = "OBJCODECOUNT_TPOKE" #コード数　ポケモン
 
 STR_CODESTART_MDL = "OBJCODESTART_MDL" #コード開始 モデル
 STR_CODEEND_MDL = "OBJCODEEND_MDL" #コード開始 モデル
-STR_CODETOTAL_MDL = "OBJCODETOTAL_MDL" #コード総数 モデル
+STR_CODECOUNT_MDL = "OBJCODECOUNT_MDL" #コード数 モデル
 
 STR_CODETOTAL = "OBJCODETOTAL" #コード総数
 STR_CODEMAX = "OBJCODEMAX" #コード最大
@@ -329,9 +329,9 @@ def file_code_write( file_code, file_codestr,
     STR_CODEEND_BBD, code_no, code_no, count, "ビルボードコード終端" );
 
   file_code.printf(
-    "#define %s (0x%x) //%d %s\n\n", STR_CODETOTAL_BBD,
+    "#define %s (0x%x) //%d %s\n\n", STR_CODECOUNT_BBD,
     code_no-CODE_STARTNUM_BBD, code_no-CODE_STARTNUM_BBD,
-    "ビルボードコード総数" );
+    "ビルボードコード数" );
 
   #ポケモンコード記述
   code_no = CODE_STARTNUM_POKE
@@ -355,9 +355,9 @@ def file_code_write( file_code, file_codestr,
     STR_CODEEND_POKE, code_no, code_no, count, "ポケモンコード終端" );
   
   file_code.printf(
-    "#define %s (0x%x) //%d %s\n\n", STR_CODETOTAL_POKE,
+    "#define %s (0x%x) //%d %s\n\n", STR_CODECOUNT_POKE,
     code_no-CODE_STARTNUM_POKE, code_no-CODE_STARTNUM_POKE,
-    "ポケモンコード総数" );
+    "ポケモンコード数" );
 
   #モデルコード記述
   code_no = CODE_STARTNUM_MDL
@@ -381,13 +381,13 @@ def file_code_write( file_code, file_codestr,
     STR_CODEEND_MDL, code_no, code_no, count, "モデルコード終端" );
   
   file_code.printf(
-    "#define %s (0x%x) //%d %s\n\n", STR_CODETOTAL_MDL,
+    "#define %s (0x%x) //%d %s\n\n", STR_CODECOUNT_MDL,
     code_no-CODE_STARTNUM_MDL, code_no-CODE_STARTNUM_MDL,
-    "モデルコード総数" );
+    "モデルコード数" );
   
   #終端記述
   file_code.printf(
-    "#define %s (0x%x) //%d %s\n", STR_CODETOTAL, count, count, "総数" )
+    "#define %s (0x%x) //%d %s\n", STR_CODETOTAL, count, count, "コード総数" )
   file_code.printf(
     "#define %s (0x%x) //%d %s\n\n", STR_CODEMAX, CODE_MAX, CODE_MAX, "無効コード" )
   
