@@ -53,6 +53,7 @@ extern int PokeParty_GetPokeCountBattleEnable(const POKEPARTY* party);
 extern int PokeParty_GetPokeCountOnlyEgg(const POKEPARTY* party);
 extern int PokeParty_GetPokeCountOnlyDameEgg(const POKEPARTY* party);
 extern int PokeParty_GetMemberTopIdxBattleEnable( const POKEPARTY * party );
+extern int PokeParty_GetMemberTopIdxNotEgg( const POKEPARTY * party );
 extern void PokeParty_SetMemberData( POKEPARTY* party, int pos, POKEMON_PARAM* pp );
 extern int PokeParty_GetBattlePokeNum(const POKEPARTY * ppt);
 

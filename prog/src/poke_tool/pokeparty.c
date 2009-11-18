@@ -30,6 +30,8 @@
 	GF_ASSERT((pos) < (party)->PokeCountMax) \
 }
 static BOOL poke_CheckBattleEnable( const POKEMON_PARAM* pp );
+static BOOL poke_CheckNotEgg( const POKEMON_PARAM* pp );
+static int pokeParty_getTopIndex( const POKEPARTY* party, BOOL(*check_func)(const POKEMON_PARAM*) );
 
 //============================================================================================
 //============================================================================================
@@ -284,15 +286,19 @@ int PokeParty_GetPokeCountOnlyDameEgg( const POKEPARTY* party )
 //----------------------------------------------------------
 int PokeParty_GetMemberTopIdxBattleEnable( const POKEPARTY * party )
 {
-  int i;
-  int max = PokeParty_GetPokeCount( party );  // 全ポケモン数
+  return pokeParty_getTopIndex( party, poke_CheckBattleEnable );
+}
 
-  // 戦える先頭のメンバーindexをサーチ
-  for( i=0; i<max; i++ )
-  {
-    if( poke_CheckBattleEnable( PokeParty_GetMemberPointer( party, i ) ) ) return i; 
-  }
-  return max;
+//----------------------------------------------------------
+/**
+ * @brief	POKEPARTYからタマゴでないメンバのTopIndexを取得
+ * @param	party	POKEPARTY構造体へのポインタ
+ * @retval	タマゴでないメンバのTopIndex
+ */
+//----------------------------------------------------------
+int PokeParty_GetMemberTopIdxNotEgg( const POKEPARTY * party )
+{
+  return pokeParty_getTopIndex( party, poke_CheckNotEgg );
 }
 
 //----------------------------------------------------------
@@ -517,6 +523,31 @@ static BOOL poke_CheckBattleEnable( const POKEMON_PARAM* pp )
   
   if( ( tamago_flag != TRUE ) && ( 0 < hp ) ) return TRUE;
   return FALSE;
+}
+
+/**
+ * @brief 指定のポケモンがタマゴでない場合TRUEを返す
+ */
+static BOOL poke_CheckNotEgg( const POKEMON_PARAM* pp )
+{
+  u32 tamago_flag = PP_Get( pp, ID_PARA_tamago_flag, NULL );
+  return (tamago_flag != TRUE);
+}
+
+/**
+ * @brief 引数に取ったチェックに当てはまる先頭のポケモン位置を返す
+ */
+static int pokeParty_getTopIndex( const POKEPARTY* party, BOOL(*check_func)(const POKEMON_PARAM*) )
+{
+  int i;
+  int max = PokeParty_GetPokeCount( party );  // 全ポケモン数
+
+  // 条件に当てはまる先頭のメンバーindexをサーチ
+  for( i=0; i<max; i++ )
+  {
+    if( check_func( PokeParty_GetMemberPointer( party, i ) ) ) return i; 
+  }
+  return max;
 }
 
 // 外部参照インデックスを作る時のみ有効(ゲーム中は無効)

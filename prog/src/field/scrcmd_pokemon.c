@@ -6,7 +6,6 @@
  * @author	tamada GAMEFREAK inc.
  *
  * @todo  ポケルスチェックの確認が行われていない
- * @todo  status_rcv.cの命名規則修正ができたら回復処理を呼び出す
  */
 //======================================================================
 
@@ -327,6 +326,42 @@ VMCMD_RESULT EvCmdGetPartyPokeFormNo( VMHANDLE * core, void *wk )
   OBATA_Printf( "EvCmdGetPartyPokeFormNo : %d\n", *ret_wk );
   return VMCMD_RESULT_CONTINUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetPartyFrontPoke( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK* work = (SCRCMD_WORK*)wk;
+  u16*       ret_wk = SCRCMD_GetVMWork( core, work );     // コマンド第1引数
+  u16          mode = SCRCMD_GetVMWorkValue( core, wk );  // コマンド第2引数
+  GAMEDATA*   gdata = SCRCMD_WORK_GetGameData( work );
+  POKEPARTY*  party = GAMEDATA_GetMyPokemon( gdata );
+  u16 num;
+
+  switch( mode )
+  {
+  case POKECOUNT_MODE_BATTLE_ENABLE:  // 戦える = タマゴ以外
+    num = PokeParty_GetMemberTopIdxBattleEnable( party );
+    break;
+  case POKECOUNT_MODE_NOT_EGG:  // タマゴを除く
+    num = PokeParty_GetMemberTopIdxNotEgg( party );
+    break;
+  default:
+    num = 0;
+    GF_ASSERT_MSG(0, "Get Poke Index MODE:%d is not enable!!\n", mode );
+    break;
+  }
+
+  *ret_wk = (u16)num;
+  return VMCMD_RESULT_CONTINUE;
+}
+
 
 //--------------------------------------------------------------
 /**
