@@ -709,7 +709,7 @@ static void updateG3Dcamera(FIELD_CAMERA * camera)
 
     updateGlobalAngleYaw( camera, &cameraTarget, &camera->campos_write );
 
-		if( camera->debug_trace_off )
+		if( !camera->debug_trace_off )
 		{
 			traceUpdate( camera );
 		}
