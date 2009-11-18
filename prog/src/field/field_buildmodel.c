@@ -331,7 +331,7 @@ static void OBJHND_initialize(const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl, co
 static void OBJHND_finalize( OBJ_HND * objHdl );
 static void OBJHND_animate(const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl );
 static void OBJHND_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUEST req);
-static BOOL OBJHND_getAnimeStatus(OBJ_HND * objHdl, u32 anmNo);
+static BOOL OBJHND_getAnimeStatus( const OBJ_HND * objHdl, u32 anmNo);
 
 static void TIMEANIME_CTRL_init( TIMEANIME_CTRL * tmanm_ctrl );
 static void TIMEANIME_CTRL_update( TIMEANIME_CTRL * tmanm_ctrl );
@@ -1584,7 +1584,7 @@ static void OBJHND_TYPEOTHER_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUES
  * @return  BOOL  TRUE=’âŽ~ó‘Ô@FALSE=“®ì’†
  */
 //------------------------------------------------------------------
-static BOOL OBJHND_getAnimeStatus(OBJ_HND * objHdl, u32 anmNo)
+static BOOL OBJHND_getAnimeStatus( const OBJ_HND * objHdl, u32 anmNo)
 {
   ANIMENO_ASSERT(anmNo);
 
@@ -1826,7 +1826,7 @@ void FIELD_BMODEL_SetAnime(FIELD_BMODEL * bmodel, u32 idx, BMANM_REQUEST req)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-BOOL FIELD_BMODEL_GetAnimeStatus(FIELD_BMODEL * bmodel, u32 idx)
+BOOL FIELD_BMODEL_GetAnimeStatus( const FIELD_BMODEL * bmodel, u32 idx)
 {
   return OBJHND_getAnimeStatus( &bmodel->objHdl, idx );
 }
