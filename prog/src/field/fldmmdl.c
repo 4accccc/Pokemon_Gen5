@@ -4636,12 +4636,12 @@ static u16 OBJCode_GetDataNumber( u16 code )
   }
   
   if( code >= OBJCODESTART_TPOKE && code < OBJCODEEND_TPOKE ){
-    code = (code - OBJCODESTART_TPOKE) + OBJCODETOTAL_BBD;
+    code = (code - OBJCODESTART_TPOKE) + OBJCODECOUNT_BBD;
     return( code );
   }
   
   if( code >= OBJCODESTART_MDL && code < OBJCODEEND_MDL ){
-    code = (code - OBJCODESTART_MDL) + OBJCODETOTAL_BBD + OBJCODETOTAL_TPOKE;
+    code = (code - OBJCODESTART_MDL) + OBJCODECOUNT_BBD + OBJCODECOUNT_TPOKE;
     return( code );
   }
   
