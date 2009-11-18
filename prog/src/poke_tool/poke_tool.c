@@ -1129,7 +1129,7 @@ void PP_RecoverWazaPPAll( POKEMON_PARAM* pp )
       if( waza != WAZANO_NULL )
       {
         u32 upsPP = PP_Get( pp, ID_PARA_pp_count1+i, NULL );
-        u32 maxPP = WT_PPMaxGet( waza, upsPP );
+        u32 maxPP = WAZADATA_GetMaxPP( waza, upsPP );
         PP_Put( pp, ID_PARA_pp1+i, maxPP );
       }
     }
@@ -1165,7 +1165,7 @@ void  PPP_SetWazaPos( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos )
   GF_ASSERT(pos<PTL_WAZA_MAX);
 
   {
-    u8  pp = WT_PPMaxGet( wazano, 0 );
+    u8  pp = WAZADATA_GetMaxPP( wazano, 0 );
 
     PPP_Put( ppp, ID_PARA_waza1 + pos, wazano );
     PPP_Put( ppp, ID_PARA_pp_count1 + pos, 0 );
@@ -1917,7 +1917,7 @@ static  u32 ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
     case ID_PARA_pp_max2:
     case ID_PARA_pp_max3:
     case ID_PARA_pp_max4:
-      ret = WT_PPMaxGet( ppp2->waza[ id-ID_PARA_pp_max1 ], ppp2->pp_count[ id-ID_PARA_pp_max1 ] );
+      ret = WAZADATA_GetMaxPP( ppp2->waza[ id-ID_PARA_pp_max1 ], ppp2->pp_count[ id-ID_PARA_pp_max1 ] );
       break;
     case ID_PARA_hp_rnd:
       ret = ppp2->hp_rnd;
@@ -2734,7 +2734,7 @@ static  void  ppp_addAct( POKEMON_PASO_PARAM *ppp, int id, int value )
     case ID_PARA_pp4:
       round_calc( &ppp2->pp[ id - ID_PARA_pp1 ],
              value,
-             WT_PPMaxGet( ppp2->waza[ id - ID_PARA_pp1 ], ppp2->pp_count[ id - ID_PARA_pp1 ] ) );
+             WAZADATA_GetMaxPP( ppp2->waza[ id - ID_PARA_pp1 ], ppp2->pp_count[ id - ID_PARA_pp1 ] ) );
       break;
     case ID_PARA_pp_count1:
     case ID_PARA_pp_count2:

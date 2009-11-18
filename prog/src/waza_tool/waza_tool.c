@@ -58,7 +58,8 @@ struct _WAZA_DATA {
 /*  consts                                                                            */
 /*------------------------------------------------------------------------------------*/
 enum {
-  HITRATIO_MUST = 101,
+  HITRATIO_MUST = 101,    ///< hitPer（命中率）がこの値なら、必中ワザ
+  CRITICAL_MUST = 6,      ///< criticalRank がこの値なら、必ずクリティカル
 };
 
 /*------------------------------------------------------------------------------------*/
@@ -94,7 +95,11 @@ int WAZADATA_GetParam( WazaID wazaID, WazaDataParam param )
 
   {
     WAZA_DATA* wp = loadWazaDataTmp( wazaID );
-    return WAZADATA_PTR_GetParam( wp, param );
+    int result = WAZADATA_PTR_GetParam( wp, param );
+    if( param == WAZAPARAM_TARGET ){
+      TAYA_Printf("[WAZADATA] ID=%d, target=%d\n", wazaID, result);
+    }
+    return result;
   }
 }
 //=============================================================================================
@@ -189,6 +194,7 @@ int WAZADATA_PTR_GetParam( const WAZA_DATA* wazaData, WazaDataParam param )
       return 0;
     }
   case WAZAPARAM_TARGET:             ///< ワザ効果範囲( enum WazaTarget )
+
     return wazaData->target;
 
   default:
@@ -411,21 +417,6 @@ BOOL WAZADATA_IsDamage( WazaID id )
 
 
 
-
-//============================================================================================
-/**
- *  PPMaxを取得（@todo 旧番。後で消す）
- *
- * @param[in] id        取得する技ナンバー
- * @param[in] maxupcnt  マックスアップを使用した回数
- *
- * @retval  u8    PPMax
- */
-//============================================================================================
-u8  WT_PPMaxGet( WazaID id, u8 maxupcnt )
-{
-  return WAZADATA_GetMaxPP( id, maxupcnt );
-}
 //============================================================================================
 /**
  *  技データテーブルから値を取得（@todo 旧番。後で消す）

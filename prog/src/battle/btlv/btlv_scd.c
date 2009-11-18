@@ -112,6 +112,7 @@ struct _BTLV_SCD {
 
   SEL_TARGET_WORK   selTargetWork;
   u8                selTargetDone;
+  u8                selTargetType;
   u8                fActionPrevButton;
   s8                fadeValue;
   s8                fadeValueEnd;
@@ -894,6 +895,7 @@ static BOOL selectTarget_init( int* seq, void* wk_adrs )
 
   stw_draw( &wk->selTargetWork, wk );
   wk->selTargetDone = FALSE;
+  wk->selTargetType = WAZADATA_GetParam( wk->destActionParam->fight.waza, WAZAPARAM_TARGET );
   return TRUE;
 }
 static BOOL selectTarget_loop( int* seq, void* wk_adrs )
@@ -909,7 +911,7 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
       u8  touch_max;
       u8  pos = BTL_MAIN_BtlPosToViewPos( wk->mainModule,
                                           BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(wk->bpp) ) );
-      u8  target = WAZADATA_GetParam( wk->destActionParam->fight.waza, WAZAPARAM_TARGET );
+      u8  target = wk->selTargetType;
 
       GF_ASSERT( target < 14 );
 

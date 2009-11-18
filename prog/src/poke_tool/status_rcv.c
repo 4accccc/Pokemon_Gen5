@@ -151,7 +151,7 @@ u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
     ITEM_GetBufParam( dat, ITEM_PRM_PP_3UP ) != 0 ){
 
     if( PP_Get( pp, ID_PARA_pp_count1+pos, NULL ) < 3 &&
-      WT_PPMaxGet( PP_Get(pp,ID_PARA_waza1+pos,NULL), 0 ) >= 5 ){
+      WAZADATA_GetMaxPP( PP_Get(pp,ID_PARA_waza1+pos,NULL), 0 ) >= 5 ){
       GFL_HEAP_FreeMemory( dat );
       return TRUE;
     }
@@ -650,7 +650,7 @@ static u8 PP_RcvCheck( POKEMON_PARAM * pp, u32 pos )
   npp = (u8)PP_Get( pp, ID_PARA_pp1+pos, NULL );
   ppc = (u8)PP_Get( pp, ID_PARA_pp_count1+pos, NULL );
 
-  if( npp < WT_PPMaxGet( waza, ppc ) ){
+  if( npp < WAZADATA_GetMaxPP( waza, ppc ) ){
     return TRUE;
   }
   return FALSE;
@@ -679,7 +679,7 @@ static u8 PP_Recover( POKEMON_PARAM * pp, u32 pos, u32 rcv )
     return FALSE;
   }
   npp  = (u8)PP_Get( pp, ID_PARA_pp1+pos, NULL );
-  mpp  = (u8)WT_PPMaxGet( waza, PP_Get(pp,ID_PARA_pp_count1+pos,NULL) );
+  mpp  = (u8)WAZADATA_GetMaxPP( waza, PP_Get(pp,ID_PARA_pp_count1+pos,NULL) );
 
   if( npp < mpp ){
     if( rcv == PP_RCV_ALL ){
@@ -722,19 +722,19 @@ static u8 PP_Up( POKEMON_PARAM * pp, u32 pos, u32 cnt )
 
   waza = (u16)PP_Get( pp, ID_PARA_waza1+pos, NULL );
 
-  if( WT_PPMaxGet( waza, 0 ) < 5 ){
+  if( WAZADATA_GetMaxPP( waza, 0 ) < 5 ){
     return FALSE;
   }
 
   npp  = (u8)PP_Get( pp, ID_PARA_pp1+pos, NULL );
-  mpp  = (u8)WT_PPMaxGet( waza, ppc );
+  mpp  = (u8)WAZADATA_GetMaxPP( waza, ppc );
 
   if( ppc+cnt > 3 ){
     ppc = 3;
   }else{
     ppc = ppc + cnt;
   }
-  npp = npp + WT_PPMaxGet( waza, ppc ) - mpp;
+  npp = npp + WAZADATA_GetMaxPP( waza, ppc ) - mpp;
 
   PP_Put( pp, ID_PARA_pp_count1+pos, ppc );
   PP_Put( pp, ID_PARA_pp1+pos, npp );

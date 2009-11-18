@@ -43,9 +43,9 @@
 
 
 extern  u32     WT_WazaDataParaGet( int waza_no, int id );
-extern  u8      WT_PPMaxGet( u16 wazano, u8 maxupcnt );
 
 /*
+extern  u8      WT_PPMaxGet( u16 wazano, u8 maxupcnt );
 extern  void    WT_WazaTableDataGet( void *buffer );
 extern  ARCHANDLE *WT_WazaDataParaHandleOpen( HEAPID heapID );
 extern  void    WT_WazaDataParaHandleClose( ARCHANDLE *handle );

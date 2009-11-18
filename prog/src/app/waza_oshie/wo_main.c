@@ -42,6 +42,7 @@
 #include "savedata/config.h"
 #include "app/app_menu_common.h"
 #include "waza_tool/waza_tool.h"
+#include "waza_tool/wazadata.h"
 #include "app/p_status.h"
 
 #include "app/waza_oshie.h"
@@ -1437,7 +1438,7 @@ static int WO_SeqWazaSet( WO_WORK * wk )
   // セットした技のPP＋分を0に初期化
   PP_Put( wk->dat->pp, ID_PARA_pp_count1+wk->dat->del_pos, 0 );
   // セットした技のPPMAXをセット
-  PP_Put( wk->dat->pp, ID_PARA_pp1+wk->dat->del_pos, WT_PPMaxGet( WO_SelWazaGet(wk), 0 ) );
+  PP_Put( wk->dat->pp, ID_PARA_pp1+wk->dat->del_pos, WAZADATA_GetMaxPP( WO_SelWazaGet(wk), 0 ) );
 
   wk->dat->ret = WAZAOSHIE_RET_SET;
 
@@ -1778,7 +1779,7 @@ static void WO_WazaListLineDraw( WO_WORK * wk ,u8 scr,u8 pos)
   GFL_BMPWIN_MakeTransWindow_VBlank( wk->win[WIN_LIST] );
 
   // PP/MPP
-  tmp = WT_PPMaxGet( wk->ld[scr+pos].param, 0 );
+  tmp = WAZADATA_GetMaxPP( wk->ld[scr+pos].param, 0 );
   WORDSET_RegisterNumber( wk->wset, 0, tmp,2, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
 
   WORDSET_RegisterNumber( wk->wset, 1, tmp,2, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
