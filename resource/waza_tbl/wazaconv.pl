@@ -159,33 +159,31 @@ use constant IDX_FLG_Start			=> 35;	# 最初
 	"シンプルエフェクト",
 	"シンプルリカバー",
 	"ダメージシック",
-	"ダメージシックユーザー",
+	"エフェクトシック",
 	"ダメージエフェクト",
 	"ダメージエフェクトユーザー",
-	"エフェクトシック",
+	"ダメージドレイン",
 	"一撃",
-	"バインド",
-	"ガード",
 	"フィールドエフェクト",
 	"サイドエフェクト",
-	"ダメージドレイン",
+	"プッシュアウト",
 	"その他",
 );
+
 use constant CATEGORY_SIMPLE_DAMAGE			=> 0;	# 
 use constant CATEGORY_SIMPLE_SICK			=> 1;	# 攻撃メッセージ
 use constant CATEGORY_SIMPLE_EFFECT			=> 2;	# 説明文１
 use constant CATEGORY_SIMPLE_RECOVER		=> 3;	# 説明文２
 use constant CATEGORY_DAMAGE_SICK			=> 4;	# 説明文３
-use constant CATEGORY_DAMAGE_SICK_USER		=> 5;	# 説明文４
+use constant CATEGORY_EFFECT_SICK			=> 5;	# カテゴリ
 use constant CATEGORY_DAMAGE_EFFECT			=> 6;	# 説明文５
 use constant CATEGORY_DAMAGE_EFFECT_USER	=> 7;	# タイプ
-use constant CATEGORY_EFFECT_SICK			=> 8;	# カテゴリ
+use constant CATEGORY_DAMAGE_DRAIN			=> 8;	# カテゴリ
 use constant CATEGORY_ICHIGEKI				=> 9;	# カテゴリ
-use constant CATEGORY_BIND					=> 10;	# カテゴリ
-use constant CATEGORY_GUARD					=> 11;	# カテゴリ
-use constant CATEGORY_FIELD_EFFECT			=> 12;	# カテゴリ
-use constant CATEGORY_SIDE_EFFECT			=> 13;	# カテゴリ
-use constant CATEGORY_DAMAGE_DRAIN			=> 14;	# カテゴリ
+use constant CATEGORY_FIELD_EFFECT			=> 10;	# カテゴリ
+use constant CATEGORY_SIDE_EFFECT			=> 11;	# カテゴリ
+use constant CATEGORY_PUSHOUT				=> 12;	# カテゴリ
+use constant CATEGORY_OTHER					=> 13;	# カテゴリ
 
 
 #----------------------------------------------------------------------------------
@@ -211,7 +209,7 @@ use constant CATEGORY_DAMAGE_DRAIN			=> 14;	# カテゴリ
 	"こんらん",
 	"どくどく",
 	"メロメロ",
-	"やどりぎ",
+	"バインド",
 	"あくむ",
 	"のろい",
 	"ちょうはつ",
@@ -221,6 +219,7 @@ use constant CATEGORY_DAMAGE_DRAIN			=> 14;	# カテゴリ
 	"かいふくふうじ",
 	"いえき",
 	"みやぶる",
+	"やどりぎ",
 	"さしおさえ",
 	"ほろびのうた",
 	"ねをはる",
@@ -477,10 +476,9 @@ sub storeRecord {
 	{
 		if( ($Record[ IDX_Category ] == CATEGORY_SIMPLE_SICK)
 		||	($Record[ IDX_Category ] == CATEGORY_DAMAGE_SICK)
-		||	($Record[ IDX_Category ] == CATEGORY_DAMAGE_SICK_USER)
 		||	($Record[ IDX_Category ] == CATEGORY_EFFECT_SICK)
 		){
-			$result .= ($errorHeader . "このカテゴリには状態異常効果の指定が必要です\n");
+			$result .= ($errorHeader . "このカテゴリ ($Record[ IDX_Category ]) には状態異常効果の指定が必要です\n");
 		}
 	}
 
@@ -489,9 +487,8 @@ sub storeRecord {
 	if( $Record[ IDX_SickPer ] == 0 )
 	{
 		if( ($Record[ IDX_Category ] == CATEGORY_DAMAGE_SICK)
-		||	($Record[ IDX_Category ] == CATEGORY_DAMAGE_SICK_USER)
 		){
-			$result .= ($errorHeader . "このカテゴリには状態異常の発生率の指定が必要です\n");
+			$result .= ($errorHeader . "このカテゴリ ($Record[ IDX_Category ]) には状態異常の発生率の指定が必要です\n");
 		}
 	}
 	if( $Record[ IDX_SickPer ] < 0 ){
@@ -525,7 +522,7 @@ sub storeRecord {
 		||	($Record[ IDX_Category ] == CATEGORY_DAMAGE_EFFECT_USER)
 		||	($Record[ IDX_Category ] == CATEGORY_EFFECT_SICK)
 		){
-			$result .= ($errorHeader . "このカテゴリにはステータス効果１の指定が必要です\n");
+			$result .= ($errorHeader . "このカテゴリ($Record[ IDX_Category ])にはステータス効果１の指定が必要です\n");
 		}
 
 	}
@@ -543,7 +540,7 @@ sub storeRecord {
 		if( ($Record[ IDX_Category ] == CATEGORY_DAMAGE_EFFECT)
 		||	($Record[ IDX_Category ] == CATEGORY_DAMAGE_EFFECT_USER)
 		){
-			$result .= ($errorHeader . "このカテゴリにはステータス効果１の変動率の指定が必要です\n");
+			$result .= ($errorHeader . "このカテゴリ($Record[ IDX_Category ])にはステータス効果１の変動率の指定が必要です\n");
 		}
 	}
 
@@ -687,7 +684,7 @@ sub outputBin {
 			$buf = pack('I', $flag);
 			syswrite( OUT_FILE, $buf, 4 );
 		}
-		_print ("->$fileName\n");
+		_print ("->$fileName  category=$Record[ IDX_Category ]\n");
 		close( OUT_FILE );
 		return 1;
 	}
