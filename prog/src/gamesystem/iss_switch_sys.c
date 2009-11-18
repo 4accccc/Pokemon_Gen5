@@ -15,8 +15,9 @@
 //==========================================================================================
 // ■定数
 //==========================================================================================
-#define TRACK_NUM  (16)   // トラック数
-#define MAX_VOLUME (127)  // ボリューム最大値
+#define TRACK_NUM    (16)      // トラック数
+#define TRACKBIT_ALL (0xffff)  // 全トラック指定
+#define MAX_VOLUME   (127)     // ボリューム最大値
 #define INVALID_DATA_INDEX (0xff)  // 参照データの無効インデックス
 
 // スイッチの状態
@@ -149,8 +150,9 @@ void ISS_SWITCH_SYS_Update( ISS_SWITCH_SYS* sys )
 //------------------------------------------------------------------------------------------
 void ISS_SWITCH_SYS_On( ISS_SWITCH_SYS* sys )
 {
-  BootSystem( sys ); // 起動
+  BootSystem( sys );           // 起動
   UpdateSwitchDataIdx( sys );  // 現在のBGMで動作する様に設定
+  SwitchOn( sys, SWITCH_00 );  // スイッチ0を押す
 }
 
 //------------------------------------------------------------------------------------------
@@ -431,6 +433,15 @@ static void SwitchUpdate_FADE_IN( ISS_SWITCH_SYS* sys, SWITCH_INDEX idx )
 
   // 参照データを取得
   data = &sys->switchData[sys->switchDataIdx];  
+
+  // スイッチ0は特殊処理
+  if( idx == SWITCH_00 ) 
+  { // フェード無しでスイッチ0のみが再生される状態にする
+    PMSND_ChangeBGMVolume( TRACKBIT_ALL, 0 );
+    PMSND_ChangeBGMVolume( data->trackBit[idx], MAX_VOLUME );
+    sys->switchState[idx] = SWITCH_STATE_ON;
+    return;
+  }
 
   // 更新
   sys->fadeCount[idx]++;

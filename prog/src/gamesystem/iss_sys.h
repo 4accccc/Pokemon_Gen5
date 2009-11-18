@@ -65,4 +65,4 @@ extern void ISS_SYS_ZoneChange( ISS_SYS* sys, u16 next_zone_id );
  * @return スイッチISSシステム
  */
 //----------------------------------------------------------------------------
-extern ISS_SWITCH_SYS* ISS_SYS_GetISSSwitchSystem( const ISS_SYS* sys );
+extern ISS_SWITCH_SYS* ISS_SYS_GetIssSwitchSystem( const ISS_SYS* sys );

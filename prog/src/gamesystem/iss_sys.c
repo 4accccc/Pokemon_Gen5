@@ -365,7 +365,7 @@ void BGMChangeCheck( ISS_SYS* sys )
  * @return スイッチISSシステム
  */
 //----------------------------------------------------------------------------
-ISS_SWITCH_SYS* ISS_SYS_GetISSSwitchSystem( const ISS_SYS* sys )
+ISS_SWITCH_SYS* ISS_SYS_GetIssSwitchSystem( const ISS_SYS* sys )
 {
   return sys->issS;
 }
