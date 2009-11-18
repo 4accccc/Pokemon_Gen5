@@ -8,6 +8,8 @@
 //======================================================================
 #include <gflib.h>
 #include "system/gfl_use.h"
+#include "field/areadata.h"
+#include "field/zonedata.h"
 
 #include "fieldmap.h"
 #include "field_effect.h"
@@ -35,7 +37,10 @@ struct _TAG_FLDEFF_CTRL
 
   FLDEFF_PROCEFF *proceff_tbl;
    
-  u32 task_max;
+  u16 task_max;
+  u8  season_id;
+  u8  area_inout_switch:7;
+  u8  has_season_diff:1;
   void *tcbsys_work;
   GFL_TCBSYS *tcbsys;
   FLDEFF_TASKSYS *tasksys;
@@ -115,6 +120,14 @@ FLDEFF_CTRL * FLDEFF_CTRL_Create(
   fectrl->heapID = heapID;
   fectrl->fieldMapWork = fieldMapWork;
   fectrl->arcHandle = GFL_ARC_OpenDataHandle( ARCID_FLDEFF, heapID );
+
+  { //季節変化用データ取得
+    u16 area_id = ZONEDATA_GetAreaID( FIELDMAP_GetZoneID( fieldMapWork ));
+    GAMEDATA* gdata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldMapWork ) );
+    fectrl->season_id = GAMEDATA_GetSeasonID( gdata );
+    fectrl->area_inout_switch= AREADATA_GetInnerOuterSwitch( FIELDMAP_GetAreaData( fieldMapWork ) );
+    fectrl->has_season_diff = AREADATA_HasSeasonDiff( area_id );
+  }
   fectrl_InitProcEffect( fectrl );
   return( fectrl );
 }
@@ -183,6 +196,44 @@ FIELDMAP_WORK * FLDEFF_CTRL_GetFieldMapWork( FLDEFF_CTRL *fectrl )
 ARCHANDLE * FLDEFF_CTRL_GetArcHandleEffect( FLDEFF_CTRL *fectrl )
 {
   return( fectrl->arcHandle );
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドエフェクト コントロール 季節ID取得
+ * @param fectrl
+ * @retval 季節ID
+ */
+//--------------------------------------------------------------
+u8 FLDEFF_CTRL_GetSeasonID( FLDEFF_CTRL *fectrl )
+{
+  return( fectrl->season_id );
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドエフェクト コントロール エリアIn/Outタイプ取得
+ * @param fectrl
+ * @retval 0  Inner 
+ * @retval 1  Outer 
+ */
+//--------------------------------------------------------------
+BOOL FLDEFF_CTRL_GetAreaInOutSwitch( FLDEFF_CTRL *fectrl )
+{
+  return( fectrl->area_inout_switch );
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドエフェクト コントロール 季節変化タイプ取得
+ * @param fectrl
+ * @retval  0 変化がない 
+ * @retval  1 変化がある 
+ */
+//--------------------------------------------------------------
+BOOL FLDEFF_CTRL_GetHasSeasonDiff( FLDEFF_CTRL *fectrl )
+{
+  return( fectrl->has_season_diff );
 }
 
 //======================================================================
@@ -746,6 +797,7 @@ HEAPID FLDEFF_TASK_GetHeapID( const FLDEFF_TASK *task )
 #include "fldeff_reflect.h"
 #include "fldeff_ripple.h"
 #include "fldeff_splash.h"
+#include "fldeff_encount.h"
 
 FLDEFF_PROCEFF_DATA DATA_FLDEFF_ProcEffectDataTbl[FLDEFF_PROCID_MAX+1] =
 {
@@ -759,6 +811,13 @@ FLDEFF_PROCEFF_DATA DATA_FLDEFF_ProcEffectDataTbl[FLDEFF_PROCID_MAX+1] =
   {FLDEFF_PROCID_RIPPLE,FLDEFF_RIPPLE_Init,FLDEFF_RIPPLE_Delete},
   {FLDEFF_PROCID_SPLASH,FLDEFF_SPLASH_Init,FLDEFF_SPLASH_Delete},
   {FLDEFF_PROCID_NAMIPOKE_EFFECT,FLDEFF_NAMIPOKE_EFFECT_Init,FLDEFF_NAMIPOKE_EFFECT_Delete},
+  //ここからエフェクトエンカウント用
+  {FLDEFF_PROCID_ENC_SGRASS,FLDEFF_ENCOUNT_SGrassInit,FLDEFF_ENCOUNT_Delete},
+  {FLDEFF_PROCID_ENC_LGRASS,FLDEFF_ENCOUNT_LGrassInit,FLDEFF_ENCOUNT_Delete},
+  {FLDEFF_PROCID_ENC_CAVE,FLDEFF_ENCOUNT_CaveInit,FLDEFF_ENCOUNT_Delete},
+  {FLDEFF_PROCID_ENC_WATER,FLDEFF_ENCOUNT_WaterInit,FLDEFF_ENCOUNT_Delete},
+  {FLDEFF_PROCID_ENC_SEA,FLDEFF_ENCOUNT_SeaInit,FLDEFF_ENCOUNT_Delete},
+  {FLDEFF_PROCID_ENC_BRIDGE,FLDEFF_ENCOUNT_BridgeInit,FLDEFF_ENCOUNT_Delete},
   {FLDEFF_PROCID_MAX,NULL,NULL}, ///<終端
 };
 
@@ -776,6 +835,14 @@ const FLDEFF_PROCID DATA_FLDEFF_RegistEffectGroundTbl[] =
   FLDEFF_PROCID_REFLECT,
   FLDEFF_PROCID_RIPPLE,
   FLDEFF_PROCID_SPLASH,
+  
+  //ここからエフェクトエンカウント用
+  FLDEFF_PROCID_ENC_SGRASS, ///<エフェクトエンカウント用　短い草
+  FLDEFF_PROCID_ENC_LGRASS, ///<エフェクトエンカウント用　長い草
+  FLDEFF_PROCID_ENC_CAVE,   ///<エフェクトエンカウント用　洞窟
+  FLDEFF_PROCID_ENC_WATER,  ///<エフェクトエンカウント用　淡水
+  FLDEFF_PROCID_ENC_SEA,    ///<エフェクトエンカウント用　海
+  FLDEFF_PROCID_ENC_BRIDGE, ///<エフェクトエンカウント用　橋
 };
 
 const u32 DATA_FLDEFF_RegistEffectGroundTblNum = 

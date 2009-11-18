@@ -35,6 +35,15 @@ typedef enum
   FLDEFF_PROCID_RIPPLE, ///<水波紋
   FLDEFF_PROCID_SPLASH, ///<水飛沫
   FLDEFF_PROCID_NAMIPOKE_EFFECT, ///<波乗りポケモンエフェクト
+
+  //ここからエフェクトエンカウント用
+  FLDEFF_PROCID_ENC_SGRASS, ///<エフェクトエンカウント用　短い草
+  FLDEFF_PROCID_ENC_LGRASS, ///<エフェクトエンカウント用　長い草
+  FLDEFF_PROCID_ENC_CAVE,   ///<エフェクトエンカウント用　洞窟
+  FLDEFF_PROCID_ENC_WATER,  ///<エフェクトエンカウント用　淡水
+  FLDEFF_PROCID_ENC_SEA,    ///<エフェクトエンカウント用　海
+  FLDEFF_PROCID_ENC_BRIDGE, ///<エフェクトエンカウント用　橋
+  
   FLDEFF_PROCID_MAX, ///<最大
 }FLDEFF_PROCID;
 
@@ -104,6 +113,9 @@ extern void FLDEFF_CTRL_Draw( FLDEFF_CTRL *fectrl );
 //FLDEFF_CTRL 参照
 extern FIELDMAP_WORK * FLDEFF_CTRL_GetFieldMapWork( FLDEFF_CTRL *fectrl );
 extern ARCHANDLE * FLDEFF_CTRL_GetArcHandleEffect( FLDEFF_CTRL *fectrl );
+extern u8 FLDEFF_CTRL_GetSeasonID( FLDEFF_CTRL *fectrl );
+extern BOOL FLDEFF_CTRL_GetAreaInOutSwitch( FLDEFF_CTRL *fectrl );
+extern BOOL FLDEFF_CTRL_GetHasSeasonDiff( FLDEFF_CTRL *fectrl );
 
 //FLDEFF_CTRL effect process
 extern void FLDEFF_CTRL_RegistEffect(
