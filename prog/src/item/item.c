@@ -492,7 +492,7 @@ BOOL ITEM_CheckWazaMachine( u16 item )
 const u16 ITEM_GetWazaNo( u16 item )
 {
 	if( ITEM_CheckWazaMachine( item ) == FALSE ){
-    return 0;
+    return WAZANO_NULL;
   }
   item -= ITEM_WAZAMASIN01;
   return MachineNo[ item ];
