@@ -111,16 +111,16 @@ FLD_G3DOBJ_CTRL * FLD_G3DOBJ_CTRL_Create(
   FLD_G3DOBJ_CTRL *ctrl;
   
   ctrl = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLD_G3DOBJ_CTRL) );
-  ctrl->heapID = heapID;
   
-  ctrl->res_max = res_max;
   ctrl->pResTbl = GFL_HEAP_AllocClearMemory(
       heapID, sizeof(FLD_G3DOBJ_RES)*res_max );
   
-  ctrl->obj_max = obj_max;
   ctrl->pObjTbl = GFL_HEAP_AllocClearMemory(
       heapID, sizeof(FLD_G3DOBJ)*obj_max );
   
+  ctrl->heapID = heapID;
+  ctrl->res_max = res_max;
+  ctrl->obj_max = obj_max;
   ctrl->trans_flag = TRUE;
   return( ctrl );
 }
@@ -135,21 +135,30 @@ FLD_G3DOBJ_CTRL * FLD_G3DOBJ_CTRL_Create(
 void FLD_G3DOBJ_CTRL_Delete( FLD_G3DOBJ_CTRL *ctrl )
 {
   u32 i;
-  
   ctrl->trans_flag = FALSE;
   
-  for( i = 0; i < ctrl->obj_max; i++ ){
-    if( ctrl->pObjTbl[i].pObj != NULL ){
-      u32 idx = ctrl->pObjTbl[i].resIdx;
-      delObject( &ctrl->pObjTbl[i], &ctrl->pResTbl[idx] );
+  {
+    FLD_G3DOBJ *obj = ctrl->pObjTbl;
+    
+    for( i = 0; i < ctrl->obj_max; i++, obj++ ){
+      if( obj->useFlag == OBJ_USE_TRUE && obj->pObj != NULL ){
+        u32 idx = obj->resIdx;
+        delObject( obj, &ctrl->pResTbl[idx] );
+      }
     }
+    
+    GFL_HEAP_FreeMemory( ctrl->pObjTbl );
   }
-  GFL_HEAP_FreeMemory( ctrl->pObjTbl );
   
-  for( i = 0; i < ctrl->res_max; i++ ){
-    delResource( &ctrl->pResTbl[i] );
+  {
+    FLD_G3DOBJ_RES *res = ctrl->pResTbl;
+    
+    for( i = 0; i < ctrl->res_max; i++, res++ ){
+      delResource( res );
+    }
+
+    GFL_HEAP_FreeMemory( ctrl->pResTbl );
   }
-  GFL_HEAP_FreeMemory( ctrl->pResTbl );
   
   GFL_HEAP_FreeMemory( ctrl );
 }
@@ -183,6 +192,7 @@ void FLD_G3DOBJ_CTRL_Trans( FLD_G3DOBJ_CTRL *ctrl )
     
     while( i < ctrl->obj_max ){
       if( obj->useFlag == OBJ_USE_RES_WAIT ){
+        KAGAYA_Printf( "FLD G3DOBJ TransObject Index %xH\n", obj->resIdx );
         setObject( obj, &res[obj->resIdx],
             obj->resIdx, obj->mdlIdx, ctrl->heapID, FALSE );
       }
@@ -204,8 +214,8 @@ void FLD_G3DOBJ_CTRL_Draw( FLD_G3DOBJ_CTRL *ctrl )
 {
   u32 i = 0;
   FLD_G3DOBJ *obj = ctrl->pObjTbl;
-#if 0  
-  while( ctrl->obj_max ){
+  
+  while( i < ctrl->obj_max ){
     if( obj->useFlag == OBJ_USE_TRUE ){
       if( obj->vanishFlag == FALSE ){
         if( obj->cullingFlag == TRUE ){
@@ -218,7 +228,6 @@ void FLD_G3DOBJ_CTRL_Draw( FLD_G3DOBJ_CTRL *ctrl )
     obj++;
     i++;
   }
-#endif
 }
 
 //--------------------------------------------------------------
@@ -286,11 +295,17 @@ u16 FLD_G3DOBJ_CTRL_AddObject(
   for( i = 0; i < ctrl->obj_max; i++, obj++ ){
     if( obj->pObj == NULL ){
       FLD_G3DOBJ_RES *res = &ctrl->pResTbl[resIdx];
+      GF_ASSERT( res->tex_trans_flag != TEX_TRANS_NON );
       
       if( res->tex_trans_flag == TEX_TRANS_WAIT ){ //€”õ’†
         obj->resIdx = resIdx;
         obj->mdlIdx = mdlIdx;
         obj->useFlag = OBJ_USE_RES_WAIT;
+
+        obj->status.scale.x = FX32_ONE;
+        obj->status.scale.y = FX32_ONE;
+        obj->status.scale.z = FX32_ONE;
+        MTX_Identity33( &obj->status.rotate );
       }else{
         setObject( obj, res, resIdx, mdlIdx, ctrl->heapID, TRUE );
       }
@@ -566,6 +581,8 @@ static void setObject( FLD_G3DOBJ *obj,
   obj->resIdx = resIdx;
   obj->mdlIdx = mdlIdx;
   
+  GF_ASSERT( res->tex_trans_flag == TEX_TRANS_SET );
+
   if( res->tex_trans_flag == TEX_TRANS_SET ){
     pResTex = res->pResMdl;
     
@@ -593,6 +610,9 @@ static void setObject( FLD_G3DOBJ *obj,
   }
   
   if( init_status ){
+    obj->status.scale.x = FX32_ONE;
+    obj->status.scale.y = FX32_ONE;
+    obj->status.scale.z = FX32_ONE;
     MTX_Identity33( &obj->status.rotate );
   }
 }

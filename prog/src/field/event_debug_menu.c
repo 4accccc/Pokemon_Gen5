@@ -2120,6 +2120,14 @@ static void DEBUG_SetMenuWorkMMdlList(
     FLDMENUFUNC_AddStringListData( list, strBuf, id, heapID );
   }
   
+  for( id = OBJCODESTART_MDL; id < OBJCODEEND_MDL; id++ ){
+    GFL_STR_ClearBuffer( strBuf );
+    str = DEBUG_GetOBJCodeStrBuf( heapID, id );
+    GFL_STR_SetStringCode( strBuf, str );
+    GFL_HEAP_FreeMemory( str );
+    FLDMENUFUNC_AddStringListData( list, strBuf, id, heapID );
+  }
+  
   GFL_HEAP_FreeMemory( strBuf );
 }
 

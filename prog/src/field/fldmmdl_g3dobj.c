@@ -43,10 +43,11 @@ struct _TAG_MMDL_G3DOBJCONT
 //======================================================================
 static void rescode_Init( MMDL_G3DOBJCONT *objcont, HEAPID heapID );
 static void rescode_Delete( MMDL_G3DOBJCONT *objcont );
+static u16 rescode_RegCodeIdx( MMDL_G3DOBJCONT *objcont, u16 code, u16 idx );
 static u16 rescode_GetResIdx( MMDL_G3DOBJCONT *objcont, u16 code );
 static u16 rescode_GetOBJCode( MMDL_G3DOBJCONT *objcont, u16 idx );
 static u16 rescode_AddResource(
-    MMDLSYS *mmdlsys, MMDL_G3DOBJCONT *objcont, u16 code );
+    MMDLSYS *mmdlsys, MMDL_G3DOBJCONT *objcont, const u16 code );
 static void rescode_DeleteResource( MMDL_G3DOBJCONT *objcont, u16 code );
 
 //======================================================================
@@ -153,6 +154,31 @@ static void rescode_Delete( MMDL_G3DOBJCONT *objcont )
 
 //--------------------------------------------------------------
 /**
+ * リソース管理　登録
+ * @param objcont MMDL_G3DOBJCONT
+ * @param code
+ * @param idx
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static u16 rescode_RegCodeIdx( MMDL_G3DOBJCONT *objcont, u16 code, u16 idx )
+{
+  int i;
+  RESCODE *tbl = objcont->restbl;
+  
+  for( i = 0; i < objcont->max; i++, tbl++ ){
+    if( tbl->code == OBJCODEMAX ){
+      tbl->code = code;
+      tbl->residx = idx;
+      return;
+    }
+  }
+  
+  GF_ASSERT( 0 );
+}
+
+//--------------------------------------------------------------
+/**
  * リソース管理　指定コードのリソースインデックスを返す
  * @param objcont MMDL_G3DOBJCONT
  * @retval u16 リソースインデックス FLD_G3DOBJ_IDX_ERROR=未登録
@@ -202,7 +228,7 @@ static u16 rescode_GetOBJCode( MMDL_G3DOBJCONT *objcont, u16 idx )
  */
 //--------------------------------------------------------------
 static u16 rescode_AddResource(
-    MMDLSYS *mmdlsys, MMDL_G3DOBJCONT *objcont, u16 code )
+    MMDLSYS *mmdlsys, MMDL_G3DOBJCONT *objcont, const u16 code )
 {
   u32 anmtbl[3];
   ARCHANDLE *handle = MMDLSYS_GetResArcHandle( mmdlsys );
@@ -231,7 +257,7 @@ static u16 rescode_AddResource(
     anm.arcIdxTbl = anmtbl;
     anm.handle = handle;
     
-    anm.count++;
+    anm.count = 1;
     anmtbl[0] = prm_mdl->res_idx_anm0;
 
     if( prm_mdl->res_idx_anm1 != 0xffff ){
@@ -246,8 +272,20 @@ static u16 rescode_AddResource(
   }
   
   {
+    int count = 0;
+    if( p_anm != NULL ){
+      count = anm.count;
+    }
+    
+    KAGAYA_Printf(
+        "動作モデル G3DObject追加 code=%dH, mdl idx = %d, anm count =%xH\n",
+        code, mdl.arcIdx, count );
+  }
+
+  {
     u16 idx = FLD_G3DOBJ_CTRL_CreateResource(
       objcont->g3dobj_ctrl, &mdl, p_tex, p_anm, FALSE );
+    rescode_RegCodeIdx( objcont, code, idx );
     return( idx );
   }
 }
