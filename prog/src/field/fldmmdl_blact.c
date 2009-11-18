@@ -278,8 +278,8 @@ void MMDL_BLACTCONT_Setup( MMDLSYS *mmdlsys,
       GFL_BBD_SetPolID( bbdSys, &id );
     }
 
-    { // Normal
-      VecFx16 normal = { 0,FX16_ONE,FX16_ONE };
+    { // Normal 現状50度
+      VecFx16 normal = { 0,FX16_CONST(1.19175f),FX16_CONST(1.0f) };
       
       VEC_Fx16Normalize( &normal, &normal );
       
@@ -306,7 +306,7 @@ void MMDL_BLACTCONT_Release( MMDLSYS *mmdlsys )
 
 
   // 全開放チェック
-  DEBUG_MMDL_RESOURCE_MEMORY_SIZE_IsAllDelete;
+//  DEBUG_MMDL_RESOURCE_MEMORY_SIZE_IsAllDelete;
 }
 
 //--------------------------------------------------------------
