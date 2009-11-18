@@ -2029,7 +2029,6 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
   {
 		if( wk->category_pos == CATEGORY_POS_SELECT )
     {
-      HOSAKA_Printf("push select!\n");
       if( PMSI_SEARCH_Start( wk->swk ) )
       {
         // 単語リストへ
@@ -2040,13 +2039,13 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
       {
         GFL_SOUND_PlaySE( SOUND_SEARCH_DISABLE );
       }
-      
     }
     else if( wk->category_pos == CATEGORY_POS_ERASE )
     {
 		  GFL_SOUND_PlaySE(SOUND_WORD_DELETE);
 
       PMSI_SEARCH_DelWord( wk->swk );
+      PMSI_SEARCH_Start( wk->swk );
       PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
     }
     else if( wk->category_pos == CATEGORY_POS_BACK )
@@ -2159,14 +2158,23 @@ static int category_touch_group(PMS_INPUT_WORK* wk)
 	}
 	return -1;
 }
+      
+static int category_touch_initial_button( PMS_INPUT_WORK* wk )
+{
+  GFL_UI_TP_HITTBL rect[] = {
+    { 8*21,     8*(21+3),   8*(6),      8*(6+9)   },
+    { 8*21,     8*(21+3),   8*(6+9),    8*(6+9*2) },
+    { 8*21,     8*(21+3),   8*(6+9*2),  8*(6+9*3) },
+    {GFL_UI_TP_HIT_END,0,0,0}
+  };
+
+  return GFL_UI_TP_HitTrg(rect);
+}
 
 static int category_touch_initial(PMS_INPUT_WORK* wk)
 {
   int i;
-	int ret;
   int initial_max;
-	u32 tpx,tpy;
-	s16 x,y;
     
   // 50音タッチ
 	
@@ -2194,9 +2202,6 @@ static int category_touch_initial(PMS_INPUT_WORK* wk)
       return i;
     }
   }
-  
-  // @TODO 「けす」タッチ
-  // 「せんたく」タッチ
 
 	return -1;
 }
@@ -2209,6 +2214,7 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
 	int ret;
 
 	ret = input_category_word_btn(wk);
+
 	switch(ret){
 	case 1:
 #if PMS_USE_SND
@@ -2229,7 +2235,6 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
 		(*seq) = SEQ_CA_WAIT_MODE_CHANGE;
 		return;
 	}
-
 
   // グループ
 	if( wk->category_mode == CATEGORY_MODE_GROUP )
@@ -2270,7 +2275,55 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
     }
     else
     {
+      int btn_ret;
       // ボタン当たり判定
+      btn_ret = category_touch_initial_button( wk );
+
+      if(btn_ret!=-1){HOSAKA_Printf("btn_ret=%d\n",btn_ret);}
+      
+      switch( btn_ret )
+      {
+      case -1:
+        // 処理なし
+        break;
+      case 0 :
+        if( PMSI_SEARCH_Start( wk->swk ) )
+        {
+          // 単語リストへ
+          set_nextproc_category_to_wordwin( wk );
+          *seq = SEQ_CA_NEXTPROC;
+        }
+        else
+        {
+          GFL_SOUND_PlaySE( SOUND_SEARCH_DISABLE );
+        }
+        break;
+      case 1 :
+        // けす
+        if( PMSI_SEARCH_DelWord( wk->swk ) )
+        {
+          GFL_SOUND_PlaySE(SOUND_WORD_DELETE);
+
+          PMSI_SEARCH_Start( wk->swk );
+          PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
+        }
+        else
+        {
+          GFL_SOUND_PlaySE( SOUND_DISABLE_BUTTON );
+        }
+        break;
+      case 2 :
+        {
+          GFL_SOUND_PlaySE(SOUND_CANCEL);
+
+          PMSIView_SetCommand( wk->vwk, VCMD_CATEGORY_TO_EDITAREA );
+          wk->next_proc = MainProc_EditArea;
+          *seq = SEQ_CA_NEXTPROC;
+        }
+        break;
+      default : GF_ASSERT(0);
+      }
+
     }
 	}
 }

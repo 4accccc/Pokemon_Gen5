@@ -381,16 +381,21 @@
 	</row>
 
 	<row id="search_abc_08">
+		<language name="JPN" width="216">せふらいか</language>
+		<language name="JPN_KANJI" width="216">せふらいか</language>
+	</row>
+
+	<row id="search_abc_09">
 		<language name="JPN" width="216">せれひい</language>
 		<language name="JPN_KANJI" width="216">せれひい</language>
 	</row>
 
-	<row id="search_abc_09">
+	<row id="search_abc_10">
 		<language name="JPN" width="216">せんす</language>
 		<language name="JPN_KANJI" width="216">せんす</language>
 	</row>
 
-	<row id="search_abc_10">
+	<row id="search_abc_11">
 		<language name="JPN" width="216">せんせい</language>
 		<language name="JPN_KANJI" width="216">せんせい</language>
 	</row>
