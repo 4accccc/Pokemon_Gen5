@@ -324,6 +324,7 @@ static u32 WFBC_CORE_GetNotUseNpcID( const FIELD_WFBC_CORE* cp_wk, int idx )
   {
   }
 #endif
+  return 0;
 }
 
 //----------------------------------------------------------------------------
@@ -346,6 +347,7 @@ static BOOL WFBC_CORE_IsUseNpc( const FIELD_WFBC_CORE* cp_wk, int npc_id )
   {
   }
 #endif
+  return FALSE;
 }
 
 
