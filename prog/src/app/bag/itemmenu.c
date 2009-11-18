@@ -2819,6 +2819,9 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   pWork->mode       = pParam->mode;
   pWork->cycle_flg  = pParam->cycle_flg;
 
+  // アイテム破損データを修復
+  MYITEM_CheckSafety( pWork->pMyItem );
+
 // @TODO 保坂のみデバッグ押しながら起動でショップから起動したことにする
 #ifdef DEBUG_ONLY_FOR_genya_hosaka
   if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG) )

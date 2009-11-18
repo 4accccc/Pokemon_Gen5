@@ -1556,23 +1556,29 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
   GFL_BMPWIN* pwin = pWork->winWaza;
   ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
   int wazano = ITEM_GetWazaNo( item->id );
-  int ppnum = WAZADATA_GetMaxPP(wazano, 0);
-  int pow = WT_WazaDataParaGet( wazano, ID_WTD_damage );
-  int hit = WT_WazaDataParaGet( wazano, ID_WTD_hitprobability );
+  int ppnum;
+  int pow;
+  int hit;
 
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
 
-  if(wazano==0){
+  if(wazano==0)
+  {
     GFL_BMPWIN_ClearScreen(pwin);
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind, FALSE );
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType, FALSE );
 
     return;
   }
-  else{
+  else
+  {
     GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 0 );
     GFL_BMPWIN_MakeScreen(pwin);
   }
+  
+  ppnum = WAZADATA_GetMaxPP(wazano, 0);
+  pow = WT_WazaDataParaGet( wazano, ID_WTD_damage );
+  hit = WT_WazaDataParaGet( wazano, ID_WTD_hitprobability );
 
   _wazaKindDisp(pWork,wazano);
   _wazaTypeDisp(pWork,wazano);
