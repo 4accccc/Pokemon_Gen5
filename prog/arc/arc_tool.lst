@@ -58,7 +58,6 @@
 	ARCID_FLDMAP_WINFRAME "winframe.narc"   # ウィンドウフレーム
 	ARCID_PTC			"particle/wazaeffect/spa.narc" #技エフェクトパーティクル
 	ARCID_POKEICON		"poke_icon.narc"				#ポケモンアイコン
-	ARCID_MB_TEST		"test_graphic/mb_test.narc"		#マルチブートテスト用(親
 	ARCID_FLDMAP_LANDDATA "fieldmap/map_land_data.narc" #フィールドマップ地形データ
 	ARCID_FLDMAP_MAPMATRIX "fieldmap/map_matrix.narc" #フィールドマップマトリクス
 	ARCID_BATTGRA		"battle/battgra_wb.narc"	#
