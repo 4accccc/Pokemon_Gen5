@@ -23,6 +23,8 @@
 #include "net_app/union/union_beacon_tool.h"
 
 #include "arc_def.h"  //ARCID_MESSAGE
+
+#include "../../resource/fldmapdata/zonetable/zone_id.h"  // for ZONE_ID_T01
 //==============================================================================
 //	
 //==============================================================================
@@ -414,7 +416,7 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
     CGEAR_SV_SetCGearONOFF(CGEAR_SV_GetCGearSaveData(SaveControl_GetPointer()),TRUE);
 	}
 	
-	init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, 0, &pos, 0 );
+	init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, ZONE_ID_T01, &pos, 0 );
 	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
 #endif
 
