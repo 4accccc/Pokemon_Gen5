@@ -16,7 +16,7 @@
 
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
 
-#include "../../../resource/fldmapdata/gimmick/gym_normal/gym_normal_exit_def.cdat"
+#include "../../../resource/fldmapdata/gimmick/gym_normal/gym_normal_exit_def.h"
 
 //--------------------------------------------------------------
 /**

@@ -21,7 +21,7 @@
 #include "script.h"     //for SCRIPT_CallScript
 #include "../../../resource/fldmapdata/script/c03gym0101_def.h"  //for SCRID_Å`
 
-#include "../../../resource/fldmapdata/gimmick/gym_insect/gym_insect_local_def.cdat"
+#include "../../../resource/fldmapdata/gimmick/gym_insect/gym_insect_local_def.h"
 
 //#include "sound/pm_sndsys.h"
 

@@ -1,6 +1,6 @@
 //======================================================================
 /**
- * @file	gym_ground_local_def.cdat
+ * @file	gym_ground_local_def.h
  * @brief	数値定義ファイル
  * @note	このファイルはコンバーターから出力されます
  *
@@ -27,6 +27,10 @@
 //振動回数
 #define LIFT_SHAKE_COUNT (4)
 #define SP_LIFT_SHAKE_COUNT (4)
+//起動時振幅幅
+#define LIFT_START_SHAKE_VAL (2)
+//起動時振動回数
+#define LIFT_START_SHAKE_COUNT (1)
 //振動間隔
 #define SHAKE_MARGIN (2)
 //隔壁位置

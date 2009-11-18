@@ -16,7 +16,7 @@
 
 #include "arc/fieldmap/gym_anti.naix"
 
-#include "../../../resource/fldmapdata/gimmick/gym_anti/gym_anti_local_def.cdat"
+#include "../../../resource/fldmapdata/gimmick/gym_anti/gym_anti_local_def.h"
 
 
 #define GYM_ANTI_UNIT_IDX (0)

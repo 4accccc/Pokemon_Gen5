@@ -20,8 +20,8 @@ TARGETDIR = $(PROJECT_ARCDIR)$(FLDMAP)
 #------------------------------------------------------------------------------
 SUBDIRS	=
 
-CDAT = gym_normal_local_def.cdat
-EXIT_CDAT = gym_normal_exit_def.cdat
+DEF_HEADER = gym_normal_local_def.h
+EXIT_DEF_HEADER = gym_normal_exit_def.h
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
@@ -54,7 +54,7 @@ XLS_CNV = ../../../../tools/exceltool/xls2xml/tab_out.rb
 
 
 
-do-build: $(TARGETDIR)/$(targetname).narc $(CDAT) $(EXIT_CDAT)
+do-build: $(TARGETDIR)/$(targetname).narc $(DEF_HEADER) $(EXIT_DEF_HEADER)
 
 clean:
 	@rm -f $(TARGETDIR)/$(targetname).narc
@@ -65,12 +65,12 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 	@rm -f *.nsb*
 
 ifeq	($(USERNAME),saitou)
-	@rm -f $(CDAT)
-	@rm -f $(EXIT_CDAT)
+	@rm -f $(DEF_HEADER)
+	@rm -f $(EXIT_DEF_HEADER)
 endif
 ifeq	($(USERNAME),murakami_naoto)
-	@rm -f $(CDAT)
-	@rm -f $(EXIT_CDAT)
+	@rm -f $(DEF_HEADER)
+	@rm -f $(EXIT_DEF_HEADER)
 endif
 
 endif
@@ -99,23 +99,23 @@ $(targetname).narc: $(DATA_LIST)
 #	@-rm -f *.nsb*
 
 ifeq	($(USERNAME),saitou)
-$(CDAT): wall_def_make.xls
+$(DEF_HEADER): wall_def_make.xls
 	ruby $(XLS_CNV) -c wall_def_make.xls > wall_def_make.csv
-	ruby $(DEF_MAKE) wall_def_make.csv $(CDAT)
+	ruby $(DEF_MAKE) wall_def_make.csv $(DEF_HEADER)
 
-$(EXIT_CDAT): exit_def_make.xls
+$(EXIT_DEF_HEADER): exit_def_make.xls
 	ruby $(XLS_CNV) -c exit_def_make.xls > exit_def_make.csv
-	ruby $(DEF_MAKE) exit_def_make.csv $(EXIT_CDAT)
+	ruby $(DEF_MAKE) exit_def_make.csv $(EXIT_DEF_HEADER)
 endif
 
 ifeq	($(USERNAME),murakami_naoto)
-$(CDAT): wall_def_make.xls
+$(DEF_HEADER): wall_def_make.xls
 	ruby $(XLS_CNV) -c wall_def_make.xls > wall_def_make.csv
-	ruby $(DEF_MAKE) wall_def_make.csv $(CDAT)
+	ruby $(DEF_MAKE) wall_def_make.csv $(DEF_HEADER)
 
-$(EXIT_CDAT): exit_def_make.xls
+$(EXIT_DEF_HEADER): exit_def_make.xls
 	ruby $(XLS_CNV) -c exit_def_make.xls > exit_def_make.csv
-	ruby $(DEF_MAKE) exit_def_make.csv $(EXIT_CDAT)
+	ruby $(DEF_MAKE) exit_def_make.csv $(EXIT_DEF_HEADER)
 endif
 
 endif

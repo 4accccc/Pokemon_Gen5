@@ -21,7 +21,7 @@ TARGETDIR = $(PROJECT_ARCDIR)$(FLDMAP)
 SUBDIRS	=
 
 
-CDAT = gym_anti_local_def.cdat
+DEF_HEADER = gym_anti_local_def.h
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
@@ -52,7 +52,7 @@ XLS_CNV = ../../../../tools/exceltool/xls2xml/tab_out.rb
 
 .PHONY:	do-build clean
 
-do-build: $(TARGETDIR)/$(targetname).narc $(CDAT)
+do-build: $(TARGETDIR)/$(targetname).narc $(DEF_HEADER)
 
 clean:
 	@rm -f $(TARGETDIR)/$(targetname).narc
@@ -63,10 +63,10 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 	@rm -f *.nsb*
 
 ifeq	($(USERNAME),saitou)
-	@rm -f $(CDAT)
+	@rm -f $(DEF_HEADER)
 endif
 ifeq	($(USERNAME),suginaka_katsunori)
-	@rm -f $(CDAT)
+	@rm -f $(DEF_HEADER)
 endif
 
 endif
@@ -101,14 +101,14 @@ $(targetname).narc: $(DATA_LIST)
 
 
 ifeq	($(USERNAME),saitou)
-$(CDAT): def_make.xls
+$(DEF_HEADER): def_make.xls
 	ruby $(XLS_CNV) -c def_make.xls > def_make.csv
-	ruby $(DEF_MAKE) def_make.csv $(CDAT)
+	ruby $(DEF_MAKE) def_make.csv $(DEF_HEADER)
 endif
 ifeq	($(USERNAME),suginaka_katsunori)
-$(CDAT): def_make.xls
+$(DEF_HEADER): def_make.xls
 	ruby $(XLS_CNV) -c def_make.xls > def_make.csv
-	ruby $(DEF_MAKE) def_make.csv $(CDAT)
+	ruby $(DEF_MAKE) def_make.csv $(DEF_HEADER)
 endif
 
 endif

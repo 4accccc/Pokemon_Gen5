@@ -19,7 +19,7 @@
 #include "arc/fieldmap/gym_ground.naix"
 #include "system/main.h"    //for HEAPID_FIELDMAP
 
-#include "../../../resource/fldmapdata/gimmick/gym_ground/gym_ground_local_def.cdat"
+#include "../../../resource/fldmapdata/gimmick/gym_ground/gym_ground_local_def.h"
 
 //#include "sound/pm_sndsys.h"
 
@@ -35,6 +35,8 @@
 #define FLOOR_RECT_NUM  (8)
 #define LIFT_ANM_NUM    (2)
 
+#define EXIT_LIFT_MOVE_SPD (2*FX32_ONE)
+
 #define LIFT_MOVE_SPD (LIFT_MOVE_SPEED*FX32_ONE)
 #define SP_LIFT_MOVE_SPD1 (SP_LIFT_MOVE_SPEED1*FX32_ONE)
 #define SP_LIFT_MOVE_SPD2 (SP_LIFT_MOVE_SPEED2*FX32_ONE)
@@ -44,11 +46,9 @@
 typedef struct SHAKE_WORK_tag
 {
   u8 Seq;
-  u8 LiftIdx;
   u8 AddCount;
   u8 ShakeCount;
-  u16 Dir;
-  u16 ShakeMargin;
+  u8 ShakeMargin;
   fx32 AddVal;
   FIELD_CAMERA *Camera;
   const VecFx32 *Watch;
@@ -65,7 +65,8 @@ typedef struct GYM_GROUND_TMP_tag
   const VecFx32 *Watch;
   BOOL Exit;
   BOOL LiftMvStop;
-  int StopTime;
+  u16 StopTime;
+  u16 MainLiftSeq;
   SHAKE_WORK ShakeWork;
 }GYM_GROUND_TMP;
 
@@ -362,7 +363,11 @@ static int GetWatchLiftAnmIdx(GYM_GROUND_SV_WORK *gmk_sv_work, const int inLiftI
 static void FuncMainLiftOnly(GAMESYS_WORK *gsys);
 static void SetExitLiftDefaultSt(FLD_EXP_OBJ_CNT_PTR ptr);
 
-static void InitLiftShake(const u8 inLiftIdx, const u16 inDir, FIELD_CAMERA *camera, SHAKE_WORK *outWork);
+static void InitLiftShake(  const u8 inLiftIdx,
+                            const fx32 inAddVal,
+                            const BOOL inStart,
+                            FIELD_CAMERA *camera,
+                            SHAKE_WORK *outWork );
 static BOOL ShakeLift(SHAKE_WORK *work);
 
 //--------------------------------------------------------------
@@ -674,13 +679,13 @@ GMEVENT *GYM_GROUND_CreateExitLiftMoveEvt(GAMESYS_WORK *gsys, const BOOL inExit)
   //対象リフトの状態を取得
   if ( inExit )
   {
-    //移動後位置→基準位置
+    //基準位置→移動後位置
     tmp->NowHeight = F1_HEIGHT;
     tmp->DstHeight = F0_HEIGHT;
   }
   else
   {
-    //基準位置→移動後位置
+    //移動後位置→基準位置
     tmp->NowHeight = F0_HEIGHT;
     tmp->DstHeight = F1_HEIGHT;
     {
@@ -690,8 +695,8 @@ GMEVENT *GYM_GROUND_CreateExitLiftMoveEvt(GAMESYS_WORK *gsys, const BOOL inExit)
       FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_GROUND_UNIT_IDX, obj_idx, 0, FALSE);
     }
   }
-  if ( tmp->DstHeight - tmp->NowHeight < 0 ) tmp->AddVal = -LIFT_MOVE_SPD;
-  else tmp->AddVal = LIFT_MOVE_SPD;
+  if ( tmp->DstHeight - tmp->NowHeight < 0 ) tmp->AddVal = -EXIT_LIFT_MOVE_SPD;
+  else tmp->AddVal = EXIT_LIFT_MOVE_SPD;
   //イベント作成
   event = GMEVENT_Create( gsys, NULL, ExitLiftEvt, 0 );
   return event;
@@ -722,11 +727,21 @@ static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work )
 
   switch(*seq){
   case 0:
+    InitLiftShake(tmp->TargetLiftIdx, tmp->AddVal, TRUE, camera, &tmp->ShakeWork);
+    (*seq)++;
+    break;
+  case 1:
+    {
+      SHAKE_WORK *shake = &tmp->ShakeWork;
+      if ( ShakeLift(shake) ) (*seq)++;
+    }
+    break;
+  case 2:
     //カメラトレースを切る
     FIELD_CAMERA_StopTraceRequest(camera);
     (*seq)++;
     break;
-  case 1:
+  case 3:
     {
       //カメラトレースが生きている間は処理を進めない
       if ( FIELD_CAMERA_CheckTrace(camera) ) break;
@@ -735,7 +750,7 @@ static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work )
       (*seq)++;
     }
     //NO BREAK
-  case 2:
+  case 4:
     //変動後の高さに書き換え
     if (!tmp->LiftMvStop){
       tmp->NowHeight += tmp->AddVal;
@@ -746,20 +761,7 @@ static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work )
       //目的高さで上書き
       tmp->NowHeight = tmp->DstHeight;
       //リフト振動セットアップ
-      {
-        u16 dir;
-        if ( tmp->AddVal > 0 ){
-          dir = DIR_UP;
-        }
-        else if ( tmp->AddVal < 0 ){
-          dir = DIR_DOWN;
-        }
-        else {
-          GF_ASSERT(0);
-          dir = DIR_DOWN;
-        }
-        InitLiftShake(tmp->TargetLiftIdx, dir, camera, &tmp->ShakeWork);
-      }
+      InitLiftShake(tmp->TargetLiftIdx, tmp->AddVal, FALSE, camera, &tmp->ShakeWork);
       //次のシーケンスへ
       (*seq)++;
     }
@@ -797,13 +799,13 @@ static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work )
       }
     }
     break;
-  case 3:
+  case 5:
     {
       SHAKE_WORK *shake = &tmp->ShakeWork;
       if ( ShakeLift(shake) ) (*seq)++;
     }
     break;
-  case 4:
+  case 6:
     //カメラトレース再開
     FIELD_CAMERA_RestartTrace(camera);
     //アニメ開始
@@ -819,7 +821,7 @@ static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work )
     }
     (*seq)++;
     break;
-  case 5:
+  case 7:
     {
       EXP_OBJ_ANM_CNT_PTR anm;
       int obj_idx;
@@ -947,7 +949,7 @@ static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work )
         int obj_idx;
         int anm_idx;
         obj_idx = OBJ_LIFT_0;
-        anm_idx = 0;
+        anm_idx = 1;
         anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, anm_idx );
         //アニメ停止解除
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
@@ -962,7 +964,7 @@ static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work )
       int obj_idx;
       int anm_idx;
       obj_idx = OBJ_LIFT_0;
-      anm_idx = 0;
+      anm_idx = 1;
       anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, anm_idx );
       //アニメ待ち
       if( FLD_EXP_OBJ_ChkAnmEnd(anm) ){
@@ -1128,15 +1130,16 @@ static void FuncMainLiftOnly(GAMESYS_WORK *gsys)
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   GYM_GROUND_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_GROUND_TMP_ASSIGN_ID);
+  FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( fieldWork );
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
     GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_GROUND );
   }
-
+  
+  //メインリフトのみの処理
   if (tmp->TargetLiftIdx != SP_LIFT_IDX) return;
   
-  ;
   //リフトの高さが隔壁オープン開始する高さに達したか？
   if (!gmk_sv_work->WallOpen && tmp->NowHeight<=WALL_OPEN_HEIGHT){
     EXP_OBJ_ANM_CNT_PTR anm;
@@ -1151,16 +1154,30 @@ static void FuncMainLiftOnly(GAMESYS_WORK *gsys)
     tmp->NowHeight = WALL_OPEN_HEIGHT;
     tmp->LiftMvStop = TRUE;
     tmp->StopTime = 0;
+    tmp->MainLiftSeq = 0;
   }
 
   if ( tmp->LiftMvStop ){
-    //停止タイマーカウント
-    tmp->StopTime++;
-    if (tmp->StopTime >= WALL_ANM_WAIT)
-    {
-      tmp->AddVal = -SP_LIFT_MOVE_SPD2;   //スピード変更
-      tmp->LiftMvStop = FALSE;            //ストップ解除
-    }
+    switch(tmp->MainLiftSeq){
+    case 0:
+      InitLiftShake(tmp->TargetLiftIdx, tmp->AddVal, FALSE, camera, &tmp->ShakeWork);
+      tmp->MainLiftSeq++;
+      break;
+    case 1:
+      {
+        SHAKE_WORK *shake = &tmp->ShakeWork;
+        if ( ShakeLift(shake) )
+        {
+          //停止タイマーカウント
+          tmp->StopTime++;
+          if (tmp->StopTime >= WALL_ANM_WAIT)
+          {
+            tmp->AddVal = -SP_LIFT_MOVE_SPD2;   //スピード変更
+            tmp->LiftMvStop = FALSE;            //ストップ解除
+          }
+        }
+      }
+    }   //end switch
   }
 }
 
@@ -1192,26 +1209,51 @@ static void SetExitLiftDefaultSt(FLD_EXP_OBJ_CNT_PTR ptr)
 /**
  * リフト振動初期化
  * @param	  inLiftIdx   リフトインデックス
- * @param   inDir       昇降方向　DIR_UP or DIR_DOWM
+ * @param   inAddVal       昇降速度
+ * @param   inStart     起動時 OR 到着時 TRUEで起動時
  * @param   camera      フィールドカメラポインタ
  * @param   outWork     格納バッファ
  * @return  none
  */
 //--------------------------------------------------------------
-static void InitLiftShake(const u8 inLiftIdx, const u16 inDir, FIELD_CAMERA *camera, SHAKE_WORK *outWork)
+static void InitLiftShake(  const u8 inLiftIdx,
+                            const fx32 inAddVal,
+                            const BOOL inStart,
+                            FIELD_CAMERA *camera,
+                            SHAKE_WORK *outWork )
 {
   SHAKE_WORK *work;
 
   work = outWork;
   work->Seq = 0;
-  work->LiftIdx = inLiftIdx;
   work->AddCount = 0;
-  work->Dir = inDir;
   work->Camera = camera;
   //現在ウォッチターゲットを保存
   work->Watch = FIELD_CAMERA_GetWatchTarget(camera);
   //復帰オフセット値保存
   FIELD_CAMERA_GetTargetOffset( camera, &work->OrgOffset );
+
+  if (inStart)
+  {
+    work->AddVal = LIFT_START_SHAKE_VAL*FX32_ONE;
+    work->ShakeCount = LIFT_START_SHAKE_COUNT;
+  }
+  else
+  {
+    //リフト別に振動幅分岐
+    if (inLiftIdx == SP_LIFT_IDX)
+    {
+      work->AddVal = SP_LIFT_SHAKE_VAL*FX32_ONE;
+      work->ShakeCount = SP_LIFT_SHAKE_COUNT;
+    }
+    else
+    {
+      work->AddVal = LIFT_SHAKE_VAL*FX32_ONE;
+      work->ShakeCount = LIFT_SHAKE_COUNT;
+    }
+  }
+  //進行方向で加算値変更
+  if (inAddVal < 0) work->AddVal *= -1;
 }
 
 //--------------------------------------------------------------
@@ -1225,20 +1267,6 @@ static BOOL ShakeLift(SHAKE_WORK *work)
 {
   switch(work->Seq){
   case 0:
-    //リフト別に振動幅分岐
-    if (work->LiftIdx == SP_LIFT_IDX)
-    {
-      work->AddVal = SP_LIFT_SHAKE_VAL*FX32_ONE;
-      work->ShakeCount = SP_LIFT_SHAKE_COUNT;
-    }
-    else
-    {
-      work->AddVal = LIFT_SHAKE_VAL*FX32_ONE;
-      work->ShakeCount = LIFT_SHAKE_COUNT;
-    }
-    //進行方向で加算値変更
-    if (work->Dir == DIR_DOWN) work->AddVal *= -1;
-
     //カメラのバインドを切る
     FIELD_CAMERA_FreeTarget(work->Camera);
     
@@ -1259,7 +1287,7 @@ static BOOL ShakeLift(SHAKE_WORK *work)
       //加算回数インクリメント
       work->AddCount++;
       //終了判定
-      if ( (work->AddCount+1)/2 >= work->ShakeCount ){
+      if ( work->AddCount >= work->ShakeCount*2 ){
         //カメラを再バインド
         if ( (work->Watch != NULL) ) FIELD_CAMERA_BindTarget(work->Camera, work->Watch);
 

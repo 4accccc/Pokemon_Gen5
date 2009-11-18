@@ -20,7 +20,7 @@ TARGETDIR = $(PROJECT_ARCDIR)$(FLDMAP)
 #------------------------------------------------------------------------------
 SUBDIRS	=
 
-CDAT = gym_ground_local_def.cdat
+DEF_HEADER = gym_ground_local_def.h
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
@@ -54,7 +54,7 @@ XLS_CNV = ../../../../tools/exceltool/xls2xml/tab_out.rb
 
 
 
-do-build: $(TARGETDIR)/$(targetname).narc $(CDAT)
+do-build: $(TARGETDIR)/$(targetname).narc $(DEF_HEADER)
 
 clean:
 	@rm -f $(TARGETDIR)/$(targetname).narc
@@ -103,7 +103,7 @@ $(targetname).narc: $(DATA_LIST)
 #	@-rm -f *.nsb*
 #	@-rm -f *.bin
 
-$(CDAT): def_make.xls
+$(DEF_HEADER): def_make.xls
 	ruby $(XLS_CNV) -c def_make.xls > def_make.csv
-	ruby $(DEF_MAKE) def_make.csv $(CDAT)
+	ruby $(DEF_MAKE) def_make.csv $(DEF_HEADER)
 endif

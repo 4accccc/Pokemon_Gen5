@@ -21,7 +21,7 @@
 #include "system/main.h"    //for HEAPID_FIELDMAP
 #include "script.h"     //for SCRIPT_CallScript
 
-#include "../../../resource/fldmapdata/gimmick/gym_normal/gym_normal_local_def.cdat"
+#include "../../../resource/fldmapdata/gimmick/gym_normal/gym_normal_local_def.h"
 
 #define GRID_HALF_SIZE ((FIELD_CONST_GRID_SIZE/2)*FX32_ONE)
 

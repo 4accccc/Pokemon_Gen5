@@ -22,7 +22,7 @@
 #include "script.h"     //for SCRIPT_CallScript
 #include "../../../resource/fldmapdata/script/c04gym0101_def.h"  //for SCRID_Å`
 
-#include "../../../resource/fldmapdata/gimmick/gym_denki/gym_elec_local_def.cdat"
+#include "../../../resource/fldmapdata/gimmick/gym_denki/gym_elec_local_def.h"
 
 #include "sound/pm_sndsys.h"
 
