@@ -1,0 +1,5 @@
+#../data/c03r0701.mev
+../tmp/c03r0701.bin:../data/c03r0701.mev $(UNIQ_SCRIPTHEADER) ../tmp/c03r0701.h ../../script/c03r0701_def.h 
+	@echo ../data/c03r0701.mev
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c03r0701.h ../../script/c03r0701_def.h 
+
