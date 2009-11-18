@@ -11,7 +11,8 @@
 #include "system/main.h"
 #include "print/printsys.h"
 #include "print/str_tool.h"
-#include "poke_tool\monsno_def.h"
+#include "poke_tool/monsno_def.h"
+#include "waza_tool/wazano_def.h"
 
 #include "font/font.naix"
 #include "arc_def.h"
@@ -1026,6 +1027,34 @@ static void box_setup( DMP_MAINWORK* wk, u32 boxID, const POKEMON_PARAM* pp )
   switch( p->paraID ){
   case ID_PARA_SEIKAKU:
     value = PP_GetSeikaku( pp );
+    break;
+  case ID_PARA_pp_count1:
+  case ID_PARA_pp_count2:
+  case ID_PARA_pp_count3:
+  case ID_PARA_pp_count4:
+    {
+      u16 idx = p->paraID - ID_PARA_pp_count1;
+      u16 waza = PP_Get( pp, ID_PARA_waza1 + idx, NULL );
+      if( waza != WAZANO_NULL ){
+        value = PP_Get( pp, p->paraID, NULL );
+      }else{
+        value = 0;
+      }
+    }
+    break;
+  case ID_PARA_pp_max1:
+  case ID_PARA_pp_max2:
+  case ID_PARA_pp_max3:
+  case ID_PARA_pp_max4:
+    {
+      u16 idx = p->paraID - ID_PARA_pp_max1;
+      u16 waza = PP_Get( pp, ID_PARA_waza1 + idx, NULL );
+      if( waza != WAZANO_NULL ){
+        value = PP_Get( pp, p->paraID, NULL );
+      }else{
+        value = 0;
+      }
+    }
     break;
   default:
     value = PP_Get( pp, p->paraID, NULL );
