@@ -496,6 +496,9 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
     { BTL_STRID_SET_RankupMax_ATK,        ms_set_rank_limit       },
     { BTL_STRID_SET_RankdownMin_ATK,      ms_set_rank_limit       },
     { BTL_STRID_STD_UseItem_Self,         ms_set_useitem          },
+    { BTL_STRID_SET_YokodoriExe,          ms_set_poke2poke        },
+    { BTL_STRID_SET_MirrorType,           ms_set_poke2poke        },
+
     #if 0
     { BTL_STRID_SET_Trace,                ms_set_trace            },
     { BTL_STRID_SET_YotimuExe,            ms_set_yotimu           },
@@ -531,7 +534,6 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
     { BTL_STRID_SET_Takuwaeru,            ms_set_poke_num         },
     { BTL_STRID_SET_LockOn,               ms_set_poke             },
     { BTL_STRID_SET_Tedasuke,             ms_set_poke             },
-    { BTL_STRID_SET_YokodoriExe,          ms_set_poke2poke        },
     { BTL_STRID_SET_MagicCoatExe,         ms_set_waza_sp          },
     { BTL_STRID_SET_Tonbogaeri,           ms_set_poke_trainer     },
     #endif

@@ -7606,8 +7606,10 @@ static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
       {
         if( criticalFlag ){
           guard = BPP_GetValue_Critical( defender, vid );
+          BTL_Printf("クリティカルなので対象のガード=%d\n", guard);
         }else{
           guard = BPP_GetValue( defender, vid );
+          BTL_Printf("通常ヒットなので対象のガード=%d\n", guard);
         }
       }
 
