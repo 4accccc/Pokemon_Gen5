@@ -167,10 +167,23 @@ u8 AREADATA_GetEdgeMarkingType(const AREADATA * areadata)
   return areadata->edgemark_type;
 }
 //------------------------------------------------------------------
+//Žl‹G‚Ì‚ ‚é/‚È‚µ
 //------------------------------------------------------------------
 BOOL AREADATA_HasSeason(u16 area_id)
 {
 	if (AREA_ID_OUT01 <= area_id && area_id < AREA_ID_OUT_MAX) return TRUE;
+	return FALSE;
+}
+
+//------------------------------------------------------------------
+//Žl‹G‚Ì‚ ‚éêŠ‚ÅA•Ï‰»‚ªŒ°’˜‚ÈêŠ‚©‚»‚¤‚Å‚È‚¢‚©H
+//------------------------------------------------------------------
+BOOL AREADATA_HasSeasonDiff(u16 area_id)
+{
+  if( !AREADATA_HasSeason(area_id)){
+    return FALSE;
+  }
+	if (AREA_ID_OUT09 >= area_id && area_id <= AREA_ID_OUT11) return TRUE;
 	return FALSE;
 }
 
