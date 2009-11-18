@@ -1165,11 +1165,16 @@ void  PPP_SetWazaPos( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos )
   GF_ASSERT(pos<PTL_WAZA_MAX);
 
   {
-    u8  pp = WAZADATA_GetMaxPP( wazano, 0 );
+    u8 maxPP = 0;
 
     PPP_Put( ppp, ID_PARA_waza1 + pos, wazano );
     PPP_Put( ppp, ID_PARA_pp_count1 + pos, 0 );
-    PPP_Put( ppp, ID_PARA_pp1 + pos, pp );
+
+    if( wazano != WAZANO_NULL ){
+      maxPP = WAZADATA_GetMaxPP( wazano, 0 );
+    }
+
+    PPP_Put( ppp, ID_PARA_pp1 + pos, maxPP );
   }
 }
 //============================================================================================
