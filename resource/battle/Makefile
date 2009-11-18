@@ -93,11 +93,11 @@ nsbta: $(notdir $(ITAFILE:.ita=.nsbta))
 
 ncgr: $(notdir $(OBJNCGFILE:.ncg=.NCGR))
 %.NCGR: $(RES_OBJDIR)%.ncg
-	g2dcvtr $< -bg -o/./
+	g2dcvtr $< -bg -pcm -o/./
 
 ncer: $(notdir $(OBJNCEFILE:.nce=.NCER))
 %.NCER: $(RES_OBJDIR)%.nce
-	g2dcvtr $< -o/./
+	g2dcvtr $< -pcm -o/./
 
 obj_nclr: $(notdir $(OBJNCLFILE:.ncl=.NCLR))
 %.NCLR: $(RES_OBJDIR)%.ncl
@@ -105,11 +105,11 @@ obj_nclr: $(notdir $(OBJNCLFILE:.ncl=.NCLR))
 
 nscr: $(notdir $(BGNSCFILE:.nsc=.NSCR))
 %.NSCR: $(RES_BGDIR)%.nsc
-	g2dcvtr $< -bg -o/./
+	g2dcvtr $< -bg -pcm -o/./
 
 ncgr: $(notdir $(BGNCGFILE:.ncg=.NCGR))
 %.NCGR: $(RES_BGDIR)%.ncg
-	g2dcvtr $< -bg -o/./
+	g2dcvtr $< -bg -pcm -o/./
 
 bg_nclr: $(notdir $(BGNCLFILE:.ncl=.NCLR))
 %.NCLR: $(RES_BGDIR)%.ncl
