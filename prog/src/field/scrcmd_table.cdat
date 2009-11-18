@@ -540,7 +540,7 @@
   NO_CMD()
   
   //ÉJÉÅÉâëÄçÏ
-  DEF_CMD( EvCmdCamera_Start,   EV_SEQ_CAMERA_SATRT )
+  DEF_CMD( EvCmdCamera_Start,   EV_SEQ_CAMERA_START )
   DEF_CMD( EvCmdCamera_End,   EV_SEQ_CAMERA_END )
   DEF_CMD( EvCmdCamera_Purge,   EV_SEQ_CAMERA_PURGE )
   DEF_CMD( EvCmdCamera_Bind,   EV_SEQ_CAMERA_BIND )
