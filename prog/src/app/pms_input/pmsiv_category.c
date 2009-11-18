@@ -994,7 +994,9 @@ static void start_move_sublist_down( PMSIV_CATEGORY* wk )
   u32 vector;
 
   // 出ている分だけ下げる
-  vector = GFL_BG_GetScrollY( FRM_SUB_SEARCH_LIST );
+  vector = -GX_LCD_SIZE_Y - GFL_BG_GetScrollY( FRM_SUB_SEARCH_LIST );
+    
+  HOSAKA_Printf("set down vector=%d \n",vector );
 
   PMSIV_TOOL_SetupScrollWork( &wk->scroll_work,
       FRM_SUB_SEARCH_LIST, PMSIV_TOOL_SCROLL_DIRECTION_Y,
@@ -1091,20 +1093,6 @@ static void start_move_sublist_up( PMSIV_CATEGORY* wk, u32 count )
   GFL_BG_SetVisible( FRM_SUB_SEARCH_LIST, TRUE );
 }
 
-//@TODO 何故か本元のinline関数を使うと0しか帰ってこなくなる
-static BOOL _PRINT_UTIL_Trans( PRINT_UTIL* wk, PRINT_QUE* que )
-{
-	if( wk->transReq )
-	{
-		if( !PRINTSYS_QUE_IsExistTarget(que, GFL_BMPWIN_GetBmp(wk->win)) )
-		{
-			GFL_BMPWIN_TransVramCharacter( wk->win );
-			wk->transReq = FALSE;
-		}
-	}
-	return wk->transReq;
-}
-
 //-----------------------------------------------------------------------------
 /**
  *	@brief  単語候補リスト出現処理
@@ -1123,15 +1111,17 @@ BOOL PMSIV_CATEGORY_WaitMoveSubWinList( PMSIV_CATEGORY* wk, BOOL is_enable )
   // プリントを行なうのはUPのみ
   if( is_enable )
   {
-    flag1 = _PRINT_UTIL_Trans( &wk->printSubList, print_que ) == FALSE;
+    flag1 = PRINT_UTIL_Trans( &wk->printSubList, print_que );
   }
 
   flag2 = PMSIV_TOOL_WaitScroll( &(wk->scroll_work) );
 
-  HOSAKA_Printf("f1=%d f2=%d \n",flag1, flag2);
+//  HOSAKA_Printf("f1=%d f2=%d \n",flag1, flag2);
   
   if( flag1 && flag2 )
   {
+    HOSAKA_Printf("list move end pos=%d \n", GFL_BG_GetScrollY( FRM_SUB_SEARCH_LIST ) );
+    
     // DOWN終了処理
     if( is_enable == FALSE )
     {

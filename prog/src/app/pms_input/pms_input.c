@@ -1965,12 +1965,6 @@ static GFL_PROC_RESULT MainProc_Category( PMS_INPUT_WORK* wk, int* seq )
 	*/
 static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
 {
-  // 演出中は受け付けない
-  if( PMSIView_WaitCommand( wk->vwk, VCMD_INPUTWORD_UPDATE ) == FALSE )
-  {
-    return;
-  }
-
   if( wk->key_trg & PAD_BUTTON_START )
   {
     if( wk->category_mode == CATEGORY_MODE_INITIAL )
@@ -2336,6 +2330,14 @@ static void category_input(PMS_INPUT_WORK* wk,int* seq)
 	if(KeyStatusChange(wk,seq)){
 		return;
 	}
+
+  // 演出中は受け付けない
+  // @TODO どうにか後勝ちにできないか？
+  if( PMSIView_WaitCommand( wk->vwk, VCMD_INPUTWORD_UPDATE ) == FALSE )
+  {
+    return;
+  }
+
 	if(wk->key_mode == GFL_APP_KTST_KEY){
 		category_input_key(wk,seq);
 	}else{
