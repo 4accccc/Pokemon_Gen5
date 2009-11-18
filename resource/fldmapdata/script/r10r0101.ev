@@ -9,8 +9,8 @@
   .text
 
   .include  "scr_seq_def.h"
-  .include  "../../message/dst/script/msg_r10r0101.h"
-  //.include  "r10r0101.h"
+  .include  "msg_r10r0101.h"
+  .include  "r10r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,26 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r10r0101
+_EVENT_DATA     ev_r10r0101_veteranm_01
+_EVENT_DATA     ev_pos_r10r0101_limitter_01
+_EVENT_DATA     ev_zone_r10r0101
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/*            ZONE_CHANGE_LABEL                               */
 /**************************************************************/
 //ev_r10r0101_flag_change:
 //  _END
 
+INIT_EVENT_START ev_zone_r10r0101
+INIT_EVENT_END
+
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
-ev_r10r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START     ev_r10r0101_veteranm_01
+EVENT_END
 
+EVENT_START     ev_pos_r10r0101_limitter_01
+EVENT_END
