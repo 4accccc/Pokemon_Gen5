@@ -178,6 +178,7 @@
 #define BABYGIRL2 (0xaa) //170(170,total 170) 女の子２
 #define WORKMAN2 (0xab) //171(171,total 171) 女の子２
 #define OBJCODEEND_BBD (0xac) //172(total 172) ビルボードコード終端
+#define OBJCODETOTAL_BBD (0xac) //172 ビルボードコード総数
 
 //連れ歩きポケモン
 #define OBJCODESTART_TPOKE (0x1000)
@@ -748,11 +749,13 @@
 #define TPOKE_0554 (0x1234) //4660(564,total 736) アルセウス・ドラゴン
 #define TPOKE_0555 (0x1235) //4661(565,total 737) アルセウス・あく
 #define OBJCODEEND_TPOKE (0x1236) //4662(total 738) ポケモンコード終端
+#define OBJCODETOTAL_TPOKE (0x236) //566 ポケモンコード総数
 
 //モデル
 #define OBJCODESTART_MDL (0x2000)
 #define TESTMODEL (0x2000) //8192(0,total 738) テスト
 #define OBJCODEEND_MDL (0x2001) //8193(total 739) モデルコード終端
+#define OBJCODETOTAL_MDL (0x1) //1 モデルコード総数
 
 #define OBJCODETOTAL (0x2e3) //739 総数
 #define OBJCODEMAX (0xffff) //65535 無効コード

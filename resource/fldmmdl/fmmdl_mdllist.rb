@@ -57,12 +57,15 @@ STR_END = "#END" #終端文字列
 
 STR_CODESTART_BBD = "OBJCODESTART_BBD" #コード開始 ビルボード
 STR_CODEEND_BBD = "OBJCODEEND_BBD" #コード終了 ビルボード
+STR_CODETOTAL_BBD = "OBJCODETOTAL_BBD" #コード総数　ビルボード
 
 STR_CODESTART_POKE = "OBJCODESTART_TPOKE" #コード開始 ポケモン
 STR_CODEEND_POKE = "OBJCODEEND_TPOKE" #コード終了 ポケモン
+STR_CODETOTAL_POKE = "OBJCODETOTAL_TPOKE" #コード総数　ポケモン
 
 STR_CODESTART_MDL = "OBJCODESTART_MDL" #コード開始 モデル
 STR_CODEEND_MDL = "OBJCODEEND_MDL" #コード開始 モデル
+STR_CODETOTAL_MDL = "OBJCODETOTAL_MDL" #コード総数 モデル
 
 STR_CODETOTAL = "OBJCODETOTAL" #コード総数
 STR_CODEMAX = "OBJCODEMAX" #コード最大
@@ -322,8 +325,13 @@ def file_code_write( file_code, file_codestr,
   count = ret['str_count']
   
   file_code.printf(
-    "#define %s (0x%x) //%d(total %d) %s\n\n",
+    "#define %s (0x%x) //%d(total %d) %s\n",
     STR_CODEEND_BBD, code_no, code_no, count, "ビルボードコード終端" );
+
+  file_code.printf(
+    "#define %s (0x%x) //%d %s\n\n", STR_CODETOTAL_BBD,
+    code_no-CODE_STARTNUM_BBD, code_no-CODE_STARTNUM_BBD,
+    "ビルボードコード総数" );
 
   #ポケモンコード記述
   code_no = CODE_STARTNUM_POKE
@@ -343,8 +351,13 @@ def file_code_write( file_code, file_codestr,
   count = ret['str_count']
   
   file_code.printf(
-    "#define %s (0x%x) //%d(total %d) %s\n\n",
+    "#define %s (0x%x) //%d(total %d) %s\n",
     STR_CODEEND_POKE, code_no, code_no, count, "ポケモンコード終端" );
+  
+  file_code.printf(
+    "#define %s (0x%x) //%d %s\n\n", STR_CODETOTAL_POKE,
+    code_no-CODE_STARTNUM_POKE, code_no-CODE_STARTNUM_POKE,
+    "ポケモンコード総数" );
 
   #モデルコード記述
   code_no = CODE_STARTNUM_MDL
@@ -364,8 +377,13 @@ def file_code_write( file_code, file_codestr,
   count = ret['str_count']
   
   file_code.printf(
-    "#define %s (0x%x) //%d(total %d) %s\n\n",
+    "#define %s (0x%x) //%d(total %d) %s\n",
     STR_CODEEND_MDL, code_no, code_no, count, "モデルコード終端" );
+  
+  file_code.printf(
+    "#define %s (0x%x) //%d %s\n\n", STR_CODETOTAL_MDL,
+    code_no-CODE_STARTNUM_MDL, code_no-CODE_STARTNUM_MDL,
+    "モデルコード総数" );
   
   #終端記述
   file_code.printf(

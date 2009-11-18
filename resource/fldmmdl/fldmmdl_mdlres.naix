@@ -11,7 +11,7 @@
 #define NARC_FLDMMDL_MDLRES_NAIX_
 
 enum {
-	NARC_fldmmdl_mdlres_accordion_nsbmd = 0,
+	NARC_fldmmdl_mdlres_testmodel_nsbmd = 0,
 	NARC_fldmmdl_mdlres_hero_nsbtx = 1,
 	NARC_fldmmdl_mdlres_cyclehero_nsbtx = 2,
 	NARC_fldmmdl_mdlres_swimhero_nsbtx = 3,
