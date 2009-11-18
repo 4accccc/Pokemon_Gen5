@@ -351,8 +351,8 @@ const SCENE_DATA resistMapTbl[] = {
 		{
 			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
-      3,3,
-      FLDMAPPER_MODE_SCROLL_XZ, 
+      2,2,
+      FLDMAPPER_MODE_SCROLL_NONE, 
 			ARCID_FLDMAP_LANDDATA,
 
 			1,  1, 1,		//dummy map matrix data
@@ -361,7 +361,7 @@ const SCENE_DATA resistMapTbl[] = {
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
 			{0,2},	// 地面アニメーション
 
-			FLD_MAPPER_BLOCK_MEMSIZE/4,	// 
+			FLD_MAPPER_BLOCK_MEMSIZE,	// 
 		},
 		&FieldMapCtrl_NoGridFunctions,
 		TRUE,

@@ -19,6 +19,10 @@ extern "C"{
 #include "gamesystem/gamedata_def.h"  //GAMEDATA
 #include "field/intrude_common.h"
 
+#include "savedata/mystatus.h"
+
+#include "buflen.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -50,7 +54,8 @@ typedef enum
 //-------------------------------------
 ///	記憶する人物の数　最大数
 //=====================================
-#define FIELD_WFBC_PEOPLE_MAX ( 10 )
+#define FIELD_WFBC_PEOPLE_MAX ( 20 )
+#define FIELD_WFBC_INIT_PEOPLE_NUM ( 10 ) // 初期化での人の数を変更
 
 //-----------------------------------------------------------------------------
 /**
@@ -64,11 +69,17 @@ typedef enum
 // 人のCOREデータ
 typedef struct 
 {
-  u16 data_in;  // 人の有無 TRUE FALSE
-  u16 npc_id;   // 人物を特定するためのNPCID
+  u8 data_in;   // 人の有無 TRUE FALSE
+  u8 npc_id;    // 人物を特定するためのNPCID
+  u8 mood;      // 機嫌
+  u8 battle;    // バトルフラグ
+  
 
-  // 拡張データ
   // 個々に、通信などで引き継ぐ情報を入れていく
+  // １つ前の親情報
+	STRCODE parent[PERSON_NAME_SIZE + EOM_SIZE];		// 16
+  u32     parent_id;  // 4
+
 
 } FIELD_WFBC_CORE_PEOPLE;
 
@@ -78,6 +89,7 @@ typedef struct
   u16 data_in;  // TRUE FALSE
   u16 type;     // FIELD_WFBC_CORE_TYPE
   FIELD_WFBC_CORE_PEOPLE people[FIELD_WFBC_PEOPLE_MAX];
+  FIELD_WFBC_CORE_PEOPLE back_people[FIELD_WFBC_PEOPLE_MAX];
 } FIELD_WFBC_CORE;
 
 //-----------------------------------------------------------------------------

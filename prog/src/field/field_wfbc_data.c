@@ -35,6 +35,13 @@
 */
 //-----------------------------------------------------------------------------
 
+static u32 WFBC_CORE_GetNotUseNpcID( const FIELD_WFBC_CORE* cp_wk, int idx );
+static BOOL WFBC_CORE_IsUseNpc( const FIELD_WFBC_CORE* cp_wk, int npc_id );
+
+
+
+
+
 //-------------------------------------
 ///	FIELD_WFBC_CORE用関数
 //=====================================
@@ -62,12 +69,14 @@ void FIELD_WFBC_CORE_Crear( FIELD_WFBC_CORE* p_wk )
 /**
  *	@brief  街の情報を設定する
  *
- *	@param	p_wk  ワーク
+ *	@param	p_wk          ワーク
+ *	@param  cp_mystatus   まいステータス
  */
 //-----------------------------------------------------------------------------
 void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk )
 {
   int i;
+  int npc_idx;
   GF_ASSERT( p_wk );
   
   p_wk->data_in = TRUE;
@@ -78,10 +87,10 @@ void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk )
 #endif  // PM_VERSION == VERSION_BLACK
 
   // 人を設定する
-  // @TODO 仮です
-  for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+  for( i=0; i<FIELD_WFBC_INIT_PEOPLE_NUM; i++ )
   {
-    if( GFUser_GetPublicRand(10) < 3 )
+    npc_idx = GFUser_GetPublicRand(FIELD_WFBC_PEOPLE_MAX - i);
+    if( 0 )
     {
       p_wk->people[i].data_in   = TRUE;
       p_wk->people[i].npc_id    = i;
@@ -286,6 +295,57 @@ BOOL FIELD_WFBC_CORE_PEOPLE_IsInData( const FIELD_WFBC_CORE_PEOPLE* cp_wk )
   }
 
   return TRUE;
+}
+
+
+
+
+
+
+//-----------------------------------------------------------------------------
+/**
+ *        private関数
+ */
+//-----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+/**
+ *	@brief  まだ、人物データとして保持していない人物のIDX番目を取得する
+ *
+ *	@param	cp_wk     ワーク
+ *	@param	idx       インデックス
+ */ 
+//-----------------------------------------------------------------------------
+static u32 WFBC_CORE_GetNotUseNpcID( const FIELD_WFBC_CORE* cp_wk, int idx )
+{
+#if 0
+  int i;
+
+  for(  )
+  {
+  }
+#endif
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brieif NPC_IDがワーク内の人物にいるのかチェック
+ *
+ *	@param	cp_wk     ワーク
+ *	@param	npc_id    NPCID
+ *
+ *	@retval TRUE  いる
+ *	@retval FALSE いない
+ */
+//-----------------------------------------------------------------------------
+static BOOL WFBC_CORE_IsUseNpc( const FIELD_WFBC_CORE* cp_wk, int npc_id )
+{
+#if 0
+  int i;
+
+  for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+  {
+  }
+#endif
 }
 
 
