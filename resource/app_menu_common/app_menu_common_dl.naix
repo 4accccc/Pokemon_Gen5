@@ -1,0 +1,22 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: app_menu_common_dl.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_APP_MENU_COMMON_DL_NAIX_
+#define NARC_APP_MENU_COMMON_DL_NAIX_
+
+enum {
+	NARC_app_menu_common_dl_menu_bar_NCLR = 0,
+	NARC_app_menu_common_dl_menu_bar_NCGR = 1,
+	NARC_app_menu_common_dl_menu_bar_NSCR = 2,
+	NARC_app_menu_common_dl_task_menu_NCLR = 3,
+	NARC_app_menu_common_dl_task_menu_NCGR = 4
+};
+
+/* NARC_APP_MENU_COMMON_DL_NAIX_ */
+#endif
