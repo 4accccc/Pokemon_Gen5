@@ -303,10 +303,6 @@ void MMDL_BLACTCONT_Release( MMDLSYS *mmdlsys )
   
 	GFL_HEAP_FreeMemory( pBlActCont );
 	MMDLSYS_SetBlActCont( mmdlsys, NULL );
-
-
-  // 全開放チェック
-//  DEBUG_MMDL_RESOURCE_MEMORY_SIZE_IsAllDelete;
 }
 
 //--------------------------------------------------------------
