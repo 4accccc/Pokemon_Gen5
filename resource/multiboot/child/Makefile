@@ -1,5 +1,4 @@
 #------------------------------------------------------------------------------
-#  通信アイコンnarcを作るmakefile  
 #  コピーしてtargetnameを書き換えれば汎用的に使えます
 #  2008.08.19
 #------------------------------------------------------------------------------
@@ -12,18 +11,17 @@ USERS	= ariizumi_nobuhiko
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
-targetname = mb_test
+targetname = mb_child_gra
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
-TARGETDIR = $(PROJECT_ARCDIR)/test_graphic/
-TARGETDIR_MB = $(PROJECT_ROOT)/multiboot/arc/
+TARGETDIR = $(PROJECT_ROOT)/multiboot/arc
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-SUBDIRS	=
+SUBDIRS	= 
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
@@ -32,30 +30,24 @@ include	$(PROJECT_RSCDIR)\macro_define
 lsources:=$(wildcard *.ncl)
 gsources:=$(wildcard *.ncg)
 ssources:=$(wildcard *.nsc)
-esources:=$(wildcard *.nce)
 
 # リソースが吐き出すファイルを自動でつくる
 lobjects = $(subst .ncl,.NCLR,$(lsources))
 gobjects = $(subst .ncg,.NCGR,$(gsources))
 sobjects = $(subst .nsc,.NSCR,$(ssources))
-eobjects = $(subst .nce,.NCER,$(esources))
-aobjects = $(subst .nce,.NANR,$(esources))
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce
+.SUFFIXES: .NCLR .ncl .NCGR .ncg  .NSCR .nsc 
 
 .ncl.NCLR:
-	g2dcvtr $<
+	g2dcvtr $< -pcm
 
 .ncg.NCGR:
 	g2dcvtr $< -bg
 
 .nsc.NSCR:
-	g2dcvtr $<
-
-.nce.NCER:
 	g2dcvtr $<
 
 endif
@@ -74,15 +66,10 @@ subdir:
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR)
-#↓動かない・・・
-#$(TARGETDIR_MB)/$(targetname).narc: $(targetname).narc
-	$(COPY) $(targetname).narc $(TARGETDIR_MB)
-	$(COPY) $(targetname).naix $(TARGETDIR_MB)
-
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects)
+$(targetname).narc: $(lobjects) $(gobjects) $(sobjects)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 endif
@@ -94,6 +81,7 @@ endif
 clean:
 	@$(MAKE_SUBDIR)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
+	rm -f *.NSCR
 	rm -f *.NCGR
 	rm -f *.NCLR
 	rm -f *.narc
@@ -103,7 +91,5 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 endif
 	rm -f $(TARGETDIR)/$(targetname).narc
 	rm -f $(TARGETDIR)/$(targetname).naix
-	rm -f $(TARGETDIR_MB)/$(targetname).narc
-	rm -f $(TARGETDIR_MB)/$(targetname).naix
 
 

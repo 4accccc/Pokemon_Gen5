@@ -1,14 +1,15 @@
 //======================================================================
 /**
- * @file	mb_comm_sys.c
- * @brief	マルチブート 通信システム
+ * @file	mb_child_sys.h
+ * @brief	マルチブート・子機メイン
  * @author	ariizumi
- * @data	09/11/13
+ * @data	09/11/16
  *
- * モジュール名：MB_COMM
+ * モジュール名：MB_CHILD
  */
 //======================================================================
 #pragma once
+
 
 //======================================================================
 //	define
@@ -20,23 +21,15 @@
 //======================================================================
 #pragma mark [> enum
 
-
 //======================================================================
 //	typedef struct
 //======================================================================
 #pragma mark [> struct
-typedef struct _MB_COMM_WORK MB_COMM_WORK;
-
 
 //======================================================================
 //	proto
 //======================================================================
 #pragma mark [> proto
+extern GFL_PROC_DATA MultiBootChild_ProcData;
 
-extern MB_COMM_WORK* MB_COMM_CreateSystem( const HEAPID heapId );
-extern void MB_COMM_DeleteSystem( MB_COMM_WORK* commWork );
-extern void MB_COMM_InitComm( MB_COMM_WORK* commWork );
-extern void MB_COMM_ExitComm( MB_COMM_WORK* work );
-extern const BOOL MB_COMM_IsInitComm( MB_COMM_WORK* work );
-extern const BOOL MB_COMM_IsFinishComm( MB_COMM_WORK* work );
 

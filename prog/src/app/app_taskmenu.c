@@ -20,7 +20,15 @@
 #include "sound/pm_sndsys.h"
 
 #include "arc_def.h"
+
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE
+//通常時処理
 #include "app_menu_common.naix"
+#else
+//DL子機時処理
+#include "app_menu_common_dl.naix"
+#endif //MULTI_BOOT_MAKE
 
 #include "app/app_taskmenu.h"
 
@@ -541,10 +549,20 @@ APP_TASKMENU_RES* APP_TASKMENU_RES_Create( u8 frame, u8 plt, GFL_FONT *fontHandl
   }
 
 	//読み込み
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE
+//通常時処理
 	wk->ncg_buf = GFL_ARC_UTIL_LoadBGCharacter( APP_COMMON_GetArcId() ,
 			NARC_app_menu_common_task_menu_NCGR, FALSE, &wk->ncg_data, heapID );	
   GFL_ARC_UTIL_TransVramPalette( APP_COMMON_GetArcId() , 
 			NARC_app_menu_common_task_menu_NCLR , palType , plt*32 , 32*2 , heapID );	
+#else
+//DL子機時処理
+	wk->ncg_buf = GFL_ARC_UTIL_LoadBGCharacter( APP_COMMON_GetArcId() ,
+			NARC_app_menu_common_dl_task_menu_NCGR, FALSE, &wk->ncg_data, heapID );	
+  GFL_ARC_UTIL_TransVramPalette( APP_COMMON_GetArcId() , 
+			NARC_app_menu_common_dl_task_menu_NCLR , palType , plt*32 , 32*2 , heapID );	
+#endif //MULTI_BOOT_MAKE
 
 	return wk;
 }

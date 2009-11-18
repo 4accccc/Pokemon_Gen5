@@ -42,7 +42,9 @@
 	ARCID_WMI				"wmi.narc"	# 通信アイコン
 	ARCID_GRAWTBL			"pl_growtbl.narc"	#成長テーブル
 	ARCID_POKE_PERSONAL		"personal.narc"		#パーソナルデータ
-	ARCID_MB_TEST			"mb_test.narc"		#テストグラフィック
-	ARCID_MESSAGE_DL		"message_dl.narc"	#メッセージデータ
-	ARCID_FONT_DL			"font/font_dl.narc"	#フォントデータ
+	ARCID_MESSAGE			"message_dl.narc"	#メッセージデータ
+	ARCID_FONT				"font/font_dl.narc"	#フォントデータ
+	ARCID_APP_MENU_COMMON	"app_menu_common_dl.narc"	#フォントデータ
 	ARCID_NET_ERR			"../../prog/arc/net_err.narc"
+	ARCID_FLDMAP_WINFRAME 	"../../prog/arc/winframe.narc"   # ウィンドウフレーム
+	ARCID_MB_CHILD			"mb_child_gra.narc"		#子機システム画面

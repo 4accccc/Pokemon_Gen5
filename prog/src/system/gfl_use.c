@@ -128,7 +128,9 @@ void GFLUser_Init(void)
   
   GFL_HEAP_DTCM_Init( 0x2000 );       //ＤＴＣＭアリーナ
 
+#ifndef MULTI_BOOT_MAKE
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_SAVE, HEAPSIZE_SAVE );
+#endif //MULTI_BOOT_MAKE
 
   //STD 標準ライブラリ初期化（乱数やCRC）
   GFL_STD_Init(GFL_HEAPID_SYSTEM);
@@ -174,7 +176,9 @@ void GFLUser_Init(void)
   //GFL_SOUND_Init(&sndHeap[0],SOUND_HEAP_SIZE);
 
   //バックアップシステム初期化
+#ifndef MULTI_BOOT_MAKE
   GFL_BACKUP_Init(HEAPID_SAVE);
+#endif //MULTI_BOOT_MAKE
 
   //システムフォント初期化
   GFL_TEXT_CreateSystem( NULL );
@@ -266,7 +270,9 @@ void GFLUser_Exit(void)
 #endif //MULTI_BOOT_MAKE
 #endif
   GFL_TEXT_DeleteSystem();
+#ifndef MULTI_BOOT_MAKE
   GFL_BACKUP_Exit();
+#endif //MULTI_BOOT_MAKE
   //GFL_SOUND_Exit();
   GFL_FADE_Exit();
   GFL_PROC_Exit();

@@ -783,7 +783,8 @@ SRCS_OVERLAY_MULTIBOOT = test/dlplay/dlplay_parent_sample.c \
         test/dlplay/dlplay_disp_sys.c \
 		multiboot/parent/mb_parent_sys.c \
         multiboot/comm/mbp.c \
-        multiboot/comm/mb_comm_sys.c 
+        multiboot/comm/mb_comm_sys.c \
+        multiboot/util/mb_util_msg.c 
 
 # 大野デバッグ
 #===> SRCS_OVERLAY_DEV_IRC

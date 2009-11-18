@@ -31,7 +31,9 @@ NNSGfdVramTransferTask    VRAMtransManTaskArray[ VRAMTRANS_MAN_TASKNUM ];
 void MachineSystem_Init(void)
 {
 #ifdef PM_DEBUG
+#ifndef MULTI_BOOT_MAKE
   OS_EnableMainExArena();
+#endif //MULTI_BOOT_MAKE
 #endif PM_DEBUG
 	// ƒVƒXƒeƒ€‰Šú‰»
 	OS_Init();

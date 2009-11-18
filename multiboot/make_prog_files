@@ -1,10 +1,9 @@
 #こんな感じで各自のソースを追加してください
 SRCS	+= \
-		dl_child/dlplay_child_main.c \
-		dl_child/dlplay_data_main.c \
-		dl_child/dlplay_child_pt.c \
 		net_err_dl.c \
 		fatal_error_dl.c \
+		$(PARENT_SRC)/app/app_menu_common.c \
+		$(PARENT_SRC)/app/app_taskmenu.c \
 		$(PARENT_SRC)/net/net_dev.c \
 		$(PARENT_SRC)/net/net_icondata.c \
 		$(PARENT_SRC)/net/net_devwireless.c \
@@ -14,11 +13,16 @@ SRCS	+= \
 		$(PARENT_SRC)/test/dlplay/dlplay_func.c \
 		$(PARENT_SRC)/print/gf_font.c \
 		$(PARENT_SRC)/print/printsys.c \
+		$(PARENT_SRC)/print/wordset.c \
+		$(PARENT_SRC)/system/bmp_winframe.c \
 		$(PARENT_SRC)/system/net_define.c \
 		$(PARENT_SRC)/system/wipe.c \
 		$(PARENT_SRC)/system/wipe_sub.c \
 		$(PARENT_SRC)/system/wipe_wnd.c \
-		$(PARENT_SRC)/system/brightness.c 
+		$(PARENT_SRC)/system/brightness.c \
+		$(PARENT_SRC)/multiboot/child/mb_child_sys.c \
+		$(PARENT_SRC)/multiboot/comm/mb_comm_sys.c \
+		$(PARENT_SRC)/multiboot/util/mb_util_msg.c
 				
 #================================================
 # ここから下はオーバーレイプログラム定義

@@ -5,29 +5,24 @@
  * @author  ariizumi
  * @data  09/11/13
  *
- * モジュール名：MP_PARENT
+ * モジュール名：MB_PARENT
  */
 //======================================================================
 #include <gflib.h>
 #include "system/main.h"
 #include "system/gfl_use.h"
-#include "app/app_taskmenu.h"
-#include "gamesystem/msgspeed.h"
 #include "net/wih.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
-#include "system/bmp_winframe.h"
 #include "system/wipe.h"
 
 #include "arc_def.h"
-#include "font/font.naix"
 #include "mb_parent.naix"
-#include "message.naix"
-#include "msg/msg_multiboot_parent.h"
 
 #include "multiboot/mb_parent_sys.h"
-#include "multiboot/comm/mb_comm_sys.h"
+#include "multiboot/mb_comm_sys.h"
 #include "multiboot/comm/mbp.h"
+#include "multiboot/mb_util_msg.h"
 #include "multiboot/mb_local_def.h"
 //======================================================================
 //  define
@@ -37,20 +32,6 @@
 #define MB_PARENT_FRAME_BG  (GFL_BG_FRAME3_M)
 
 #define MB_PARENT_FRAME_SUB_BG  (GFL_BG_FRAME3_S)
-
-#define MB_PARENT_PLT_MAIN_TASKMENU (12)  //2本
-#define MB_PARENT_PLT_MAIN_MSGWIN (14)
-#define MB_PARENT_PLT_MAIN_FONT   (15)
-
-#define MB_PARENT_MSGWIN_CGX    (1)
-#define MB_PARENT_MSGWIN_TOP    (8)
-#define MB_PARENT_MSGWIN_LEFT   (3)
-#define MB_PARENT_MSGWIN_HEIGHT (8)
-#define MB_PARENT_MSGWIN_WIDTH  (26)
-
-#define MB_PARENT_YESNO_X ( 32-APP_TASKMENU_PLATE_WIDTH_YN_WIN )
-#define MB_PARENT_YESNO_Y ( 24-APP_TASKMENU_PLATE_HEIGHT*2 )
-#define MB_PARENT_YESNO_COLOR (APP_TASKMENU_ITEM_MSGCOLOR)
 
 //======================================================================
 //  enum
@@ -75,6 +56,7 @@ typedef enum
   MPSS_SEND_IMAGE_WAIT_SEARCH_CH,
   MPSS_SEND_IMAGE_MBSYS_MAIN,
   
+  MPSS_SEND_IMAGE_WAIT_BOOT_INIT,
   MPSS_SEND_IMAGE_WAIT_BOOT,
 //-------------------------------
 
@@ -102,17 +84,8 @@ typedef struct
   u16    *romInfoStr;
   
   //メッセージ用
-  GFL_TCBLSYS     *tcblSys;
-  GFL_BMPWIN      *msgWin;
-  GFL_FONT        *fontHandle;
-  PRINT_STREAM    *printHandle;
-  GFL_MSGDATA     *msgHandle;
-  STRBUF          *msgStr;
-  WORDSET         *wordSet;
+  MB_MSG_WORK *msgWork;
   
-  PRINT_QUE *printQue;
-  APP_TASKMENU_WORK *yesNoWork;
-  APP_TASKMENU_RES  *takmenures;
 }MB_PARENT_WORK;
 
 
@@ -150,15 +123,6 @@ static void MP_PARENT_SendImage_Init( MB_PARENT_WORK *work );
 static void MP_PARENT_SendImage_Term( MB_PARENT_WORK *work );
 static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work );
 
-static void MB_PARENT_MessageInit( MB_PARENT_WORK *work );
-static void MB_PARENT_MessageTerm( MB_PARENT_WORK *work );
-static void MB_PARENT_MessageMain( MB_PARENT_WORK *work );
-static void MB_PARENT_MessageDisp( MB_PARENT_WORK *work , const u16 msgId );
-static void MB_PARENT_MessageHide( MB_PARENT_WORK *work );
-static void MB_PARENT_MessageCreateWordset( MB_PARENT_WORK *work );
-static void MB_PARENT_MessageDeleteWordset( MB_PARENT_WORK *work );
-static void MB_PARENT_MessageWordsetName( MB_PARENT_WORK *work , const u32 bufId );
-static void MB_PARENT_DispYesNo( MB_PARENT_WORK *work );
 
 //--------------------------------------------------------------
 //  初期化
@@ -169,7 +133,7 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
   
   MB_PARENT_InitGraphic( work );
   MB_PARENT_LoadResource( work );
-  MB_PARENT_MessageInit( work );
+  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_PARENT_FRAME_MSG );
   
   work->commWork = MB_COMM_CreateSystem( work->heapId );
 }
@@ -181,7 +145,7 @@ static void MB_PARENT_Term( MB_PARENT_WORK *work )
 {
   MB_COMM_DeleteSystem( work->commWork );
 
-  MB_PARENT_MessageTerm( work );
+  MB_MSG_MessageTerm( work->msgWork );
   MB_PARENT_TermGraphic( work );
 }
 
@@ -190,6 +154,7 @@ static void MB_PARENT_Term( MB_PARENT_WORK *work )
 //--------------------------------------------------------------
 static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
 {
+  MB_COMM_UpdateSystem( work->commWork );
 
   switch( work->state )
   {
@@ -210,7 +175,7 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
   case MPS_FADEOUT:
     WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                 WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
-    work->state = MPS_WAIT_FADEIN;
+    work->state = MPS_WAIT_FADEOUT;
     break;
   case MPS_WAIT_FADEOUT:
     if( WIPE_SYS_EndCheck() == TRUE )
@@ -242,7 +207,7 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     
   }
 
-  MB_PARENT_MessageMain( work );
+  MB_MSG_MessageMain( work->msgWork );
   
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START &&
       GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
@@ -385,17 +350,17 @@ static void MP_PARENT_SendImage_Init( MB_PARENT_WORK *work )
   work->subState = MPSS_SEND_IMAGE_INIT_COMM;
   work->romTitleStr = GFL_HEAP_AllocClearMemory( work->heapId , MB_GAME_NAME_LENGTH*2 );
   work->romInfoStr = GFL_HEAP_AllocClearMemory( work->heapId , MB_GAME_INTRO_LENGTH*2 );
-  MB_PARENT_MessageCreateWordset( work );
-  MB_PARENT_MessageWordsetName( work , 0 );
+  MB_MSG_MessageCreateWordset( work->msgWork );
+  MB_MSG_MessageWordsetName( work->msgWork , 0 , GAMEDATA_GetMyStatus(work->initWork->gameData) );
   {
-    STRBUF *workStr = GFL_MSG_CreateString( work->msgHandle , MSG_MB_PAERNT_ROM_TITLE );
+    STRBUF *workStr = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_TITLE );
     titleStr = GFL_STR_CreateBuffer( 128 , work->heapId );
-    WORDSET_ExpandStr( work->wordSet , titleStr , workStr );
+    WORDSET_ExpandStr( MB_MSG_GetWordSet(work->msgWork) , titleStr , workStr );
     GFL_STR_DeleteBuffer( workStr );
   }
-  MB_PARENT_MessageDeleteWordset( work );
+  MB_MSG_MessageDeleteWordset( work->msgWork );
 
-  infoStr  = GFL_MSG_CreateString( work->msgHandle , MSG_MB_PAERNT_ROM_INFO );
+  infoStr  = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_INFO );
   titleLen = GFL_STR_GetBufferLength( titleStr );
   infoLen = GFL_STR_GetBufferLength( infoStr );
   
@@ -456,10 +421,10 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
     {
       MP_PARENT_SendImage_MBPInit( work );
 
-      MB_PARENT_MessageCreateWordset( work );
-      MB_PARENT_MessageWordsetName( work , 0 );
-      MB_PARENT_MessageDisp( work , MSG_MB_PAERNT_01 );
-      MB_PARENT_MessageDeleteWordset( work );
+      MB_MSG_MessageCreateWordset( work->msgWork );
+      MB_MSG_MessageWordsetName( work->msgWork , 0 , GAMEDATA_GetMyStatus(work->initWork->gameData) );
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_01 );
+      MB_MSG_MessageDeleteWordset( work->msgWork );
 
       work->subState = MPSS_SEND_IMAGE_MBSYS_MAIN;
     }
@@ -468,8 +433,13 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
     MP_PARENT_SendImage_MBPMain( work );
     break;
 
+  case MPSS_SEND_IMAGE_WAIT_BOOT_INIT:
+    MB_COMM_InitParent( work->commWork );
+    MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_02 );
+    work->subState = MPSS_SEND_IMAGE_WAIT_BOOT;
+    break;
+    
   case MPSS_SEND_IMAGE_WAIT_BOOT:
-    OS_TPrintf("!");
     break;
   }
   
@@ -562,7 +532,7 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
     {
       // 全員無事に接続完了したらマルチブート処理は終了し
       // 通常の親機として無線を再起動する。
-      work->subState = MPSS_SEND_IMAGE_WAIT_BOOT;
+      work->subState = MPSS_SEND_IMAGE_WAIT_BOOT_INIT;
     }
     break;
 
@@ -601,200 +571,6 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
     break;
   }
   
-}
-
-#pragma mark [>Message func
-//--------------------------------------------------------------
-//  メッセージ系 初期化
-//--------------------------------------------------------------
-static void MB_PARENT_MessageInit( MB_PARENT_WORK *work )
-{
-  //メッセージ用処理
-  work->msgWin = GFL_BMPWIN_Create( MB_PARENT_FRAME_MSG , 
-                                    MB_PARENT_MSGWIN_LEFT , 
-                                    MB_PARENT_MSGWIN_TOP ,
-                                    MB_PARENT_MSGWIN_WIDTH , 
-                                    MB_PARENT_MSGWIN_HEIGHT , 
-                                    MB_PARENT_PLT_MAIN_FONT ,
-                                    GFL_BMP_CHRAREA_GET_B );
-  GFL_BMPWIN_TransVramCharacter( work->msgWin );
-  GFL_BMPWIN_MakeScreen( work->msgWin );
-  GFL_BG_LoadScreenReq(MB_PARENT_FRAME_MSG);
-  
-  //フォント読み込み
-  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
-  
-  //メッセージ
-  work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_multiboot_parent_dat , work->heapId );
-
-  BmpWinFrame_GraphicSet( MB_PARENT_FRAME_MSG , MB_PARENT_MSGWIN_CGX , MB_PARENT_PLT_MAIN_MSGWIN , 0 , work->heapId );
-
-  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , MB_PARENT_PLT_MAIN_FONT*0x20, 16*2, work->heapId );
-  GFL_FONTSYS_SetDefaultColor();
-  
-  work->tcblSys = GFL_TCBL_Init( work->heapId , work->heapId , 3 , 0x100 );
-  work->printHandle = NULL;
-  work->msgStr = NULL;
-  work->wordSet = NULL;
-  
-  //YesNo用
-  work->printQue = PRINTSYS_QUE_Create( work->heapId );
-  work->takmenures  = APP_TASKMENU_RES_Create( MB_PARENT_FRAME_MSG, MB_PARENT_PLT_MAIN_TASKMENU, work->fontHandle, work->printQue, work->heapId );
-}
-
-//--------------------------------------------------------------
-//  メッセージ系 開放
-//--------------------------------------------------------------
-static void MB_PARENT_MessageTerm( MB_PARENT_WORK *work )
-{
-  APP_TASKMENU_RES_Delete( work->takmenures );
-  PRINTSYS_QUE_Delete( work->printQue );
-  if( work->printHandle != NULL )
-  {
-    PRINTSYS_PrintStreamDelete( work->printHandle );
-  }
-  if( work->msgStr != NULL )
-  {
-    GFL_STR_DeleteBuffer( work->msgStr );
-  }
-  if( work->wordSet != NULL )
-  {
-    MB_PARENT_MessageDeleteWordset( work );
-  }
-  GFL_MSG_Delete( work->msgHandle );
-  GFL_BMPWIN_Delete( work->msgWin );
-  GFL_FONT_Delete( work->fontHandle );
-  GFL_TCBL_Exit( work->tcblSys );
-}
-
-//--------------------------------------------------------------
-//  メッセージ系 更新
-//--------------------------------------------------------------
-static void MB_PARENT_MessageMain( MB_PARENT_WORK *work )
-{
-  GFL_TCBL_Main( work->tcblSys );
-  if( work->printHandle != NULL  )
-  {
-    if( PRINTSYS_PrintStreamGetState( work->printHandle ) == PRINTSTREAM_STATE_DONE )
-    {
-      PRINTSYS_PrintStreamDelete( work->printHandle );
-      work->printHandle = NULL;
-    }
-  }
-  PRINTSYS_QUE_Main( work->printQue );
-}
-
-//--------------------------------------------------------------------------
-//  メッセージ表示
-//--------------------------------------------------------------------------
-static void MB_PARENT_MessageDisp( MB_PARENT_WORK *work , const u16 msgId )
-{
-  if( work->printHandle != NULL )
-  {
-    OS_TPrintf( NULL , "Message is not finish!!\n" );
-    PRINTSYS_PrintStreamDelete( work->printHandle );
-    work->printHandle = NULL;
-  }
-
-  {
-    if( work->msgStr != NULL )
-    {
-      GFL_STR_DeleteBuffer( work->msgStr );
-      work->msgStr = NULL;
-    }
-    
-    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgWin ) , 0xf );
-    work->msgStr = GFL_MSG_CreateString( work->msgHandle , msgId );
-    
-    if( work->wordSet != NULL )
-    {
-      STRBUF *workStr = GFL_STR_CreateBuffer( 128 , work->heapId );
-      WORDSET_ExpandStr( work->wordSet , workStr , work->msgStr );
-      GFL_STR_DeleteBuffer( work->msgStr );
-      work->msgStr = workStr;
-    }
-    
-    work->printHandle = PRINTSYS_PrintStream( work->msgWin , 0,0, work->msgStr ,work->fontHandle ,
-                        MSGSPEED_GetWait() , work->tcblSys , 2 , work->heapId , 0 );
-  }
-  BmpWinFrame_Write( work->msgWin , WINDOW_TRANS_ON_V , MB_PARENT_MSGWIN_CGX , MB_PARENT_PLT_MAIN_MSGWIN );
-}
-
-//--------------------------------------------------------------------------
-//  メッセージ消去
-//--------------------------------------------------------------------------
-static void MB_PARENT_MessageHide( MB_PARENT_WORK *work )
-{
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgWin ) , 0 );
-  BmpWinFrame_Clear( work->msgWin , WINDOW_TRANS_ON_V );
-}
-
-//--------------------------------------------------------------------------
-//  メッセージ WORDSET 作成
-//--------------------------------------------------------------------------
-static void MB_PARENT_MessageCreateWordset( MB_PARENT_WORK *work )
-{
-  if( work->wordSet == NULL )
-  {
-    work->wordSet = WORDSET_Create( work->heapId );
-  }
-}
-
-//--------------------------------------------------------------------------
-//  メッセージ WORDSET 削除
-//--------------------------------------------------------------------------
-static void MB_PARENT_MessageDeleteWordset( MB_PARENT_WORK *work )
-{
-  if( work->wordSet != NULL )
-  {
-    WORDSET_Delete( work->wordSet );
-    work->wordSet = NULL;
-  }
-}
-
-//--------------------------------------------------------------------------
-//  メッセージ WORDSET 名前設定
-//--------------------------------------------------------------------------
-static void MB_PARENT_MessageWordsetName( MB_PARENT_WORK *work , const u32 bufId )
-{
-  MYSTATUS *myStatus = GAMEDATA_GetMyStatus(work->initWork->gameData);
-
-  WORDSET_RegisterPlayerName( work->wordSet , bufId , myStatus );
-}
-
-//--------------------------------------------------------------------------
-//  選択肢表示
-//--------------------------------------------------------------------------
-static void MB_PARENT_DispYesNo( MB_PARENT_WORK *work )
-{
-  APP_TASKMENU_ITEMWORK itemWork[2];
-  APP_TASKMENU_INITWORK initWork;
-  
-  itemWork[0].str = GFL_MSG_CreateString( work->msgHandle , MSG_MB_PAERNT_SYS_01 );
-  itemWork[1].str = GFL_MSG_CreateString( work->msgHandle , MSG_MB_PAERNT_SYS_02 );
-  itemWork[0].msgColor = MB_PARENT_YESNO_COLOR;
-  itemWork[1].msgColor = MB_PARENT_YESNO_COLOR;
-  itemWork[0].type = APP_TASKMENU_WIN_TYPE_NORMAL;
-  itemWork[1].type = APP_TASKMENU_WIN_TYPE_NORMAL;
-
-  initWork.heapId = work->heapId;
-  initWork.itemNum = 2;
-  initWork.itemWork = itemWork;
-//  initWork.bgFrame = MB_PARENT_FRAME_MSG;
- // initWork.palNo = MUS_INFO_PAL_YESNO;
-  initWork.posType = ATPT_LEFT_UP;
-  initWork.charPosX = MB_PARENT_YESNO_X;
-  initWork.charPosY = MB_PARENT_YESNO_Y;
-  //initWork.msgHandle = work->msgHandle;
- // initWork.fontHandle = work->fontHandle;
-//  initWork.printQue = work->printQue;
-  initWork.w = APP_TASKMENU_PLATE_WIDTH_YN_WIN;
-  initWork.h = APP_TASKMENU_PLATE_HEIGHT_YN_WIN;
-
-  work->yesNoWork = APP_TASKMENU_OpenMenu( &initWork, work->takmenures );
-  
-  GFL_STR_DeleteBuffer( itemWork[0].str );
-  GFL_STR_DeleteBuffer( itemWork[1].str );
 }
 
 #pragma mark [>proc func

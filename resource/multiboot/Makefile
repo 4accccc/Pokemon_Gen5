@@ -1,7 +1,7 @@
 
 include $(PROJECT_RSCDIR)\macro_define
 
-SUBDIRS	=	parent
+SUBDIRS	=	parent child
 
 .PHONY:	do-build clean
 

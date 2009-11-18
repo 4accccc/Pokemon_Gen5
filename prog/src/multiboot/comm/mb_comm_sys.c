@@ -14,7 +14,7 @@
 
 #include "net/network_define.h"
 
-#include "multiboot/comm/mb_comm_sys.h"
+#include "multiboot/mb_comm_sys.h"
 #include "multiboot/mb_local_def.h"
 
 //======================================================================
@@ -26,7 +26,16 @@
 //  enum
 //======================================================================
 #pragma mark [> enum
-
+typedef enum
+{
+  MCS_NONE,
+  MCS_REQ_NEGOTIATION,
+  MCS_WAIT_NEGOTIATION,
+  MCS_WAIT_CAN_SEND,
+  MCS_CONNECT,
+  
+  MCS_MAX,
+}MB_COMM_STATE;
 
 //======================================================================
 //  typedef struct
@@ -35,6 +44,8 @@
 struct _MB_COMM_WORK
 {
   HEAPID heapId;
+  
+  MB_COMM_STATE state;
 };
 
 
@@ -43,8 +54,8 @@ struct _MB_COMM_WORK
 //======================================================================
 #pragma mark [> proto
 
-static void*	MB_COMM_GetBeaconDataDummy(void* pWork);
-static int		MB_COMM_GetBeaconSizeDummy(void* pWork);
+static void*  MB_COMM_GetBeaconDataDummy(void* pWork);
+static int    MB_COMM_GetBeaconSizeDummy(void* pWork);
 
 static const NetRecvFuncTable MultiBootCommPostTable[] = {
   NULL , NULL
@@ -59,6 +70,7 @@ MB_COMM_WORK* MB_COMM_CreateSystem( const HEAPID heapId )
   MB_COMM_WORK* commWork = GFL_HEAP_AllocMemory( heapId , sizeof( MB_COMM_WORK ) );
   
   commWork->heapId = heapId;
+  commWork->state = MCS_NONE;
   
   return commWork;
 }
@@ -69,6 +81,42 @@ MB_COMM_WORK* MB_COMM_CreateSystem( const HEAPID heapId )
 void MB_COMM_DeleteSystem( MB_COMM_WORK* commWork )
 {
   GFL_HEAP_FreeMemory( commWork );
+}
+
+//--------------------------------------------------------------
+//  更新
+//--------------------------------------------------------------
+void MB_COMM_UpdateSystem( MB_COMM_WORK* commWork )
+{
+  switch( commWork->state )
+  {
+  case MCS_NONE:
+    break;
+  case MCS_REQ_NEGOTIATION:
+    if( GFL_NET_HANDLE_RequestNegotiation() == TRUE )
+    {
+      commWork->state = MCS_WAIT_NEGOTIATION;
+    }
+    break;
+  case MCS_WAIT_NEGOTIATION:
+    {
+      GFL_NETHANDLE *handle = GFL_NET_HANDLE_GetCurrentHandle();
+      if( GFL_NET_HANDLE_IsNegotiation( handle ) == TRUE )
+      {
+        commWork->state = MCS_WAIT_CAN_SEND;
+      }
+    }
+    break;
+  case MCS_WAIT_CAN_SEND:
+    {
+      GFL_NETHANDLE *handle = GFL_NET_HANDLE_GetCurrentHandle();
+      if( GFL_NET_IsSendEnable( handle ) == TRUE )
+      {
+        commWork->state = MCS_CONNECT;
+      }
+    }
+    break;
+  }
 }
 
 //--------------------------------------------------------------
@@ -127,7 +175,7 @@ void MB_COMM_InitComm( MB_COMM_WORK* commWork )
 //--------------------------------------------------------------
 // 通信終了
 //--------------------------------------------------------------
-void MB_COMM_ExitComm( MB_COMM_WORK* work )
+void MB_COMM_ExitComm( MB_COMM_WORK* commWork )
 {
   GFL_NET_Exit(NULL);
 }
@@ -135,7 +183,7 @@ void MB_COMM_ExitComm( MB_COMM_WORK* work )
 //--------------------------------------------------------------
 // 初期化完了チェック
 //--------------------------------------------------------------
-const BOOL MB_COMM_IsInitComm( MB_COMM_WORK* work )
+const BOOL MB_COMM_IsInitComm( MB_COMM_WORK* commWork )
 {
   return GFL_NET_IsInit();
 }
@@ -143,26 +191,41 @@ const BOOL MB_COMM_IsInitComm( MB_COMM_WORK* work )
 //--------------------------------------------------------------
 // 終了処理完了チェック
 //--------------------------------------------------------------
-const BOOL MB_COMM_IsFinishComm( MB_COMM_WORK* work )
+const BOOL MB_COMM_IsFinishComm( MB_COMM_WORK* commWork )
 {
   return GFL_NET_IsExit();
 }
 
+//--------------------------------------------------------------
+// 親機通信開始
+//--------------------------------------------------------------
+void MB_COMM_InitParent( MB_COMM_WORK* commWork )
+{
+  GFL_NET_InitServer();
+  commWork->state = MCS_REQ_NEGOTIATION;
+}
 
-
+//--------------------------------------------------------------
+// 子機通信開始
+//--------------------------------------------------------------
+void MB_COMM_InitChild( MB_COMM_WORK* commWork , u8 *macAddress )
+{
+  GFL_NET_InitClientAndConnectToParent( macAddress );
+  commWork->state = MCS_REQ_NEGOTIATION;
+}
 
 
 //--------------------------------------------------------------
 /**
- *	各種ビーコン用コールバック関数(ダミー
+ *  各種ビーコン用コールバック関数(ダミー
  */
 //--------------------------------------------------------------
-void*	MB_COMM_GetBeaconDataDummy(void* pWork)
+void* MB_COMM_GetBeaconDataDummy(void* pWork)
 {
-	static u8 dummy[2];
-	return (void*)&dummy;
+  static u8 dummy[2];
+  return (void*)&dummy;
 }
-int	MB_COMM_GetBeaconSizeDummy(void* pWork)
+int MB_COMM_GetBeaconSizeDummy(void* pWork)
 {
-	return sizeof(u8)*2;
+  return sizeof(u8)*2;
 }

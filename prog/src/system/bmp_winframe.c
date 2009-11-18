@@ -9,11 +9,11 @@
 //======================================================================
 #include <gflib.h>
 
-#include "include/system/gfl_use.h"
-#include "arc/arc_def.h"
+#include "system/gfl_use.h"
+#include "arc_def.h"
 #include "system/bmp_winframe.h"
 
-#include "arc/winframe.naix"	//test
+#include "winframe.naix"	//test
 
 //======================================================================
 //	’è”’è‹`
