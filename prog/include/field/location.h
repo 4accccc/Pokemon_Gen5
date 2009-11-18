@@ -16,11 +16,26 @@
 //=============================================================================
 //=============================================================================
 //--------------------------------------------------------------
+//  ロケーションオフセット
 //--------------------------------------------------------------
 enum {
   LOCATION_DEFAULT_EXIT_OFS = 0,
 };
+// 4bit                  4bit
+// 出口総グリッドサイズ　オフセット
 typedef u16 LOC_EXIT_OFS;
+
+#define LOC_EXIT_OFS_SIZE_SHIFT   (4)
+#define LOC_EXIT_OFS_OFS_SHIFT    (0)
+#define LOC_EXIT_OFS_SIZE_MSK   (0xf0)
+#define LOC_EXIT_OFS_OFS_MSK    (0x0f)
+
+#define LOC_EXIT_OFS_GET_SIZE( loc_exit_ofs )   ( (loc_exit_ofs & LOC_EXIT_OFS_SIZE_MSK) >> LOC_EXIT_OFS_SIZE_SHIFT )
+#define LOC_EXIT_OFS_GET_OFS( loc_exit_ofs )   ( (loc_exit_ofs & LOC_EXIT_OFS_OFS_MSK) >> LOC_EXIT_OFS_OFS_SHIFT )
+#define LOC_EXIT_OFS_DEF( size, ofs )   ( (size << LOC_EXIT_OFS_SIZE_SHIFT) | (ofs << LOC_EXIT_OFS_OFS_SHIFT) )
+
+
+
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 typedef enum {

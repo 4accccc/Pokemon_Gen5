@@ -96,6 +96,7 @@ extern BOOL CONNECTDATA_IsSpecialExit(const CONNECT_DATA * connect);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern LOC_EXIT_OFS CONNECTDATA_GetExitOfs(const CONNECT_DATA * connect, const VecFx32 * pos);
+extern LOC_EXIT_OFS CONNECTDATA_GetRailExitOfs(const CONNECT_DATA * connect, const RAIL_LOCATION* loc);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

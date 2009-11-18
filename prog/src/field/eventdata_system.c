@@ -120,10 +120,10 @@ static void loadEncountDataTable(EVENTDATA_SYSTEM* evdata, u16 zone_id, u8 seaso
 //============================================================================================
 static void ConnectData_GPOS_GetPos( const CONNECT_DATA* cp_data, LOC_EXIT_OFS exit_ofs, VecFx32* p_pos );
 static BOOL ConnectData_GPOS_IsHit( const CONNECT_DATA* cp_data, const VecFx32* cp_pos );
-static void ConnectData_RPOS_GetLocation( const CONNECT_DATA* cp_data, RAIL_LOCATION* p_location );
+static void ConnectData_RPOS_GetLocation( const CONNECT_DATA* cp_data, LOC_EXIT_OFS exit_ofs, RAIL_LOCATION* p_location );
 static BOOL ConnectData_RPOS_IsHit( const CONNECT_DATA* cp_data, const RAIL_LOCATION* cp_location );
 static LOC_EXIT_OFS ConnectData_GPOS_GetExitOfs( const CONNECT_DATA * cp_data, const VecFx32 * p_pos );
-static LOC_EXIT_OFS ConnectData_RPOS_GetExitOfs( const CONNECT_DATA * cp_data, const VecFx32 * p_pos );
+static LOC_EXIT_OFS ConnectData_RPOS_GetExitOfs( const CONNECT_DATA * cp_data, const RAIL_LOCATION * cp_location );
 
 
 //============================================================================================
@@ -430,8 +430,8 @@ BOOL EVENTDATA_SetLocationByExitID(const EVENTDATA_SYSTEM * evdata, LOCATION * l
   else
   {
     RAIL_LOCATION pos;
-  	ConnectData_RPOS_GetLocation( connect, &pos );
-    LOCATION_SetRail( loc, evdata->now_zone_id, exit_id, connect->exit_dir, LOCATION_DEFAULT_EXIT_OFS, pos.rail_index, pos.line_grid, pos.width_grid );
+  	ConnectData_RPOS_GetLocation( connect, exit_ofs, &pos );
+    LOCATION_SetRail( loc, evdata->now_zone_id, exit_id, connect->exit_dir, exit_ofs, pos.rail_index, pos.line_grid, pos.width_grid );
   }
 
 	return TRUE;
@@ -489,12 +489,22 @@ int EVENTDATA_SearchConnectIDBySphere(const EVENTDATA_SYSTEM * evdata, const Vec
 //------------------------------------------------------------------
 LOC_EXIT_OFS CONNECTDATA_GetExitOfs(const CONNECT_DATA * connect, const VecFx32 * pos)
 {
-  if (connect->pos_type == EVENTDATA_POSTYPE_GRID)
-  {
-    return ConnectData_GPOS_GetExitOfs( connect, pos );
-  }else{
-    return ConnectData_RPOS_GetExitOfs( connect, pos );
-  }
+  return ConnectData_GPOS_GetExitOfs( connect, pos );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レールマップの出口オフセットを取得
+ *
+ *	@param	connect
+ *	@param	loc
+ *
+ *	@return 出口オフセット
+ */
+//-----------------------------------------------------------------------------
+LOC_EXIT_OFS CONNECTDATA_GetRailExitOfs(const CONNECT_DATA * connect, const RAIL_LOCATION* loc)
+{
+  return ConnectData_RPOS_GetExitOfs( connect, loc );
 }
 //------------------------------------------------------------------
 /**
@@ -998,19 +1008,86 @@ void EVENTDATA_GetPosEventCenterRailLocation( const POS_EVENT_DATA * data, RAIL_
 // CONNECT_DATA ポジション
 //============================================================================================
 //----------------------------------------------------------------------------
-//----------------------------------------------------------------------------
+/**
+ *	@brief  飛び先と飛び元のサイズから、飛び先での、オフセットを求める
+ *
+ *	@param	exit_ofs    飛び元出口オフセット
+ *	@param	size        飛び先サイズ
+ *
+ *	@return オフセット
+ */
+//-----------------------------------------------------------------------------
 static u16 convertOfs(const LOC_EXIT_OFS exit_ofs, u16 size)
 {
   if (exit_ofs == LOCATION_DEFAULT_EXIT_OFS) return 0;
   {
-    u32 enter_size = ( exit_ofs & 0xf0 ) >> 4;
-    u32 enter_ofs = exit_ofs & 0xf;
-    u16 ret_ofs;
-    if (enter_size == 1) {
-      ret_ofs = size / 2;
-    } else {
-      ret_ofs = ((enter_ofs + 1) * size) / enter_size;
-      if ( ret_ofs >= size ) ret_ofs -= 1;
+    u32 enter_size = LOC_EXIT_OFS_GET_SIZE(exit_ofs);
+    u32 enter_ofs = LOC_EXIT_OFS_GET_OFS(exit_ofs);
+    s32 ret_ofs;
+    s32 size_diff;
+    u32 enter_size_half;
+    u32 size_half;
+
+    // 差、中心を求める
+    size_diff = size - enter_size;
+    enter_size_half = enter_size / 2;
+    size_half = size / 2;
+    
+    // 偶数ー＞奇数
+    //    中心の２グリッドを奇数の中心１グリッドにまとめ
+    //    その他は、そのまま移す。
+    //     a,bc,d
+    //       ↑
+    //    a,b,c,d
+    //
+    //  奇数ー＞偶数
+    //    中心は、2グリッドのインデックスの小さいほうに格納し、
+    //    その他は、そのまま移す
+    //    a,b,0,c
+    //       ↑
+    //     a,b,c
+
+    // 同じ
+    if( size_diff == 0 )
+    {
+      ret_ofs = enter_ofs;
+    }
+    // 奇数
+    else if( (size_diff % 2) )
+    {
+      // 飛び元オフセットを中心からの距離にして、飛び先の中心を足してあげる。　飛び先では、インデックスの小さいほうを選択
+      if( enter_ofs <= enter_size_half )
+      {
+        ret_ofs = enter_ofs - enter_size_half + (size_half-1);
+      }
+      else
+      {
+        // はんぶんから大きい場合は、インデックスの大きいほうを選択
+        ret_ofs = enter_ofs - enter_size_half + (size_half);
+      }
+    }
+    // 偶数
+    else
+    {
+      // 中心の2つを飛び先の中心に合わせる
+      if( enter_ofs < enter_size_half )
+      {
+        ret_ofs = enter_ofs - (enter_size_half-1) + (size_half);
+      }
+      else
+      {
+        ret_ofs = enter_ofs - enter_size_half + (size_half);
+      }
+    }
+
+    // 範囲オーバーチェック
+    if( ret_ofs < 0 )
+    {
+      ret_ofs = 0;
+    }
+    else if( ret_ofs >= size )
+    {
+      ret_ofs = size -1;
     }
     return ret_ofs;
   }
@@ -1031,7 +1108,7 @@ static LOC_EXIT_OFS ConnectData_GPOS_GetExitOfs( const CONNECT_DATA * cp_data, c
     OS_Printf("p_pos->x:%d cp_gpos->x:%d ofs:%d\n", FX_Whole(p_pos->x), cp_gpos->x, ofs);
     GF_ASSERT( ofs >= 0 );
     GF_ASSERT( ofs < cp_gpos->sizex );
-    return (cp_gpos->sizex << 4) | ofs;
+    return LOC_EXIT_OFS_DEF(cp_gpos->sizex, ofs);
   }
   else if (cp_gpos->sizez > 1 )
   {
@@ -1039,16 +1116,42 @@ static LOC_EXIT_OFS ConnectData_GPOS_GetExitOfs( const CONNECT_DATA * cp_data, c
     OS_Printf("p_pos->z:%d cp_gpos->z:%d ofs:%d\n", FX_Whole(p_pos->z), cp_gpos->z, ofs);
     GF_ASSERT( ofs >= 0 );
     GF_ASSERT( ofs < cp_gpos->sizez );
-    return (cp_gpos->sizez << 4) | ofs;
+    return LOC_EXIT_OFS_DEF(cp_gpos->sizez, ofs);
   }
   else {
-    return ( 1 << 4) | 0 ;
+    return LOC_EXIT_OFS_DEF(1, 0);
   }
 }
 
-static u16 ConnectData_RPOS_GetExitOfs( const CONNECT_DATA * cp_data, const VecFx32 * p_pos )
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+static LOC_EXIT_OFS ConnectData_RPOS_GetExitOfs( const CONNECT_DATA * cp_data, const RAIL_LOCATION * cp_location )
 {
-  return LOCATION_DEFAULT_EXIT_OFS;
+  const CONNECT_DATA_RPOS * cp_rpos;
+  
+  GF_ASSERT( cp_data );
+  GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_RAIL );
+
+  cp_rpos = (const CONNECT_DATA_RPOS *)cp_data->pos_buf;
+  if (cp_rpos->side_grid_size > 1 )
+  {
+    s32 ofs = cp_location->width_grid - cp_rpos->side_grid;
+    GF_ASSERT( ofs >= 0 );
+    GF_ASSERT( ofs < cp_rpos->side_grid_size );
+    TOMOYA_Printf( "side grid size %d   ofs %d\n", cp_rpos->side_grid_size, ofs );
+    return LOC_EXIT_OFS_DEF( cp_rpos->side_grid_size, ofs );
+  }
+  else if (cp_rpos->front_grid_size > 1 )
+  {
+    s32 ofs = cp_location->line_grid - cp_rpos->front_grid;
+    GF_ASSERT( ofs >= 0 );
+    GF_ASSERT( ofs < cp_rpos->front_grid_size );
+    TOMOYA_Printf( "front grid size %d   ofs %d\n", cp_rpos->front_grid_size, ofs );
+    return LOC_EXIT_OFS_DEF( cp_rpos->front_grid_size, ofs );
+  }
+  else {
+    return LOC_EXIT_OFS_DEF( 1, 0 );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -1074,6 +1177,9 @@ static void ConnectData_GPOS_GetPos( const CONNECT_DATA* cp_data, LOC_EXIT_OFS e
   p_pos->y = (cp_pos->y + CONNECT_POS_OFS_Y)<<FX32_SHIFT;
   //p_pos->z = (cp_pos->z + (cp_pos->sizez/2) + CONNECT_POS_OFS_Z)<<FX32_SHIFT;
   p_pos->z = (cp_pos->z + CONNECT_POS_OFS_Z)<<FX32_SHIFT;
+
+  // 両方のサイズが1以上ならアサート
+  GF_ASSERT( !((cp_pos->sizex > 1) && (cp_pos->sizez > 1)) );
 
   //exit_ofsを加えた座標を返す
   if (cp_pos->sizex > 1 )
@@ -1138,6 +1244,7 @@ static BOOL ConnectData_GPOS_IsHit( const CONNECT_DATA* cp_data, const VecFx32* 
   return FALSE;
 }
 
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  中心　レールロケーションの取得
@@ -1146,7 +1253,7 @@ static BOOL ConnectData_GPOS_IsHit( const CONNECT_DATA* cp_data, const VecFx32* 
  *	@param	p_location  レールロケーションの格納先
  */
 //-----------------------------------------------------------------------------
-static void ConnectData_RPOS_GetLocation( const CONNECT_DATA* cp_data, RAIL_LOCATION* p_location )
+static void ConnectData_RPOS_GetLocation( const CONNECT_DATA* cp_data, LOC_EXIT_OFS exit_ofs, RAIL_LOCATION* p_location )
 {
   const CONNECT_DATA_RPOS * cp_pos;
   
@@ -1158,8 +1265,25 @@ static void ConnectData_RPOS_GetLocation( const CONNECT_DATA* cp_data, RAIL_LOCA
   p_location->rail_index  = cp_pos->rail_index;
   p_location->type        = FIELD_RAIL_TYPE_LINE;
   p_location->key         = FIELD_RAIL_TOOL_ConvertDirToRailKey( cp_data->exit_dir );
-  p_location->width_grid  = cp_pos->side_grid + (cp_pos->side_grid_size/2);
-  p_location->line_grid   = cp_pos->front_grid + (cp_pos->front_grid_size/2);
+
+  // 両方のサイズが1以上ならアサート
+  GF_ASSERT( !((cp_pos->side_grid_size > 1) && (cp_pos->front_grid_size > 1)) );
+
+  // 
+  p_location->width_grid  = cp_pos->side_grid;
+  p_location->line_grid   = cp_pos->front_grid;
+
+  //exit_ofsを加えた座標を返す
+  if (cp_pos->side_grid_size > 1 )
+  {
+    u16 ret_ofs = convertOfs( exit_ofs, cp_pos->side_grid_size );
+    p_location->width_grid += ret_ofs;
+  }
+  else if (cp_pos->front_grid_size > 1 )
+  {
+    u16 ret_ofs = convertOfs( exit_ofs, cp_pos->front_grid_size );
+    p_location->line_grid += ret_ofs;
+  }
 }
 
 //----------------------------------------------------------------------------

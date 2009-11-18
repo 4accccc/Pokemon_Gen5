@@ -187,6 +187,8 @@ static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELD
 static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork);
 static GMEVENT * checkRailSlipDown(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork);
 static void rememberExitRailInfo(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx, const RAIL_LOCATION* loc);
+static GMEVENT * getRailChangeMapEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx,
+    const RAIL_LOCATION* loc);
 static BOOL checkRailFrontMove( const FIELD_PLAYER* cp_player );
 
 
@@ -1624,7 +1626,7 @@ static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELD
   }
   
   rememberExitRailInfo( req, fieldWork, idx, &pos );
-  return getChangeMapEvent(req, fieldWork, idx, NULL);
+  return getRailChangeMapEvent(req, fieldWork, idx, &pos);
 }
 
 //----------------------------------------------------------------------------
@@ -1662,7 +1664,7 @@ static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, F
       {
         // GO
         rememberExitRailInfo( req, fieldWork, idx, &pos );
-        return getChangeMapEvent(req, fieldWork, idx, NULL);
+        return getRailChangeMapEvent(req, fieldWork, idx, &pos);
       }
     }
   }
@@ -1680,7 +1682,7 @@ static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, F
   if( checkConnectExitDir( cnct, req->player_dir ) )
   {
     rememberExitRailInfo( req, fieldWork, idx, &pos );  // front_posは移動不可なので、posにする
-    return getChangeMapEvent(req, fieldWork, idx, NULL);
+    return getRailChangeMapEvent(req, fieldWork, idx, &pos);
   }
 
   return NULL;
@@ -1836,6 +1838,21 @@ static void rememberExitRailInfo(const EV_REQUEST * req, FIELDMAP_WORK * fieldWo
   LOCATION_SetRail( &ent_loc, FIELDMAP_GetZoneID(fieldWork), idx, 0, LOCATION_DEFAULT_EXIT_OFS,
       loc->rail_index, loc->line_grid, loc->width_grid);
   GAMEDATA_SetEntranceLocation(req->gamedata, &ent_loc);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レールのマップ変更イベントを取得する
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT * getRailChangeMapEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx,
+    const RAIL_LOCATION* loc)
+{
+  LOC_EXIT_OFS exit_ofs;
+	const CONNECT_DATA * cnct;
+  cnct = EVENTDATA_GetConnectByID(req->evdata, idx);
+  exit_ofs = CONNECTDATA_GetRailExitOfs( cnct, loc );
+  return EVENT_ChangeMapByConnect(req->gsys, fieldWork, cnct, exit_ofs);
 }
 
 //----------------------------------------------------------------------------
