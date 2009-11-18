@@ -198,7 +198,7 @@ static void updateTraceData(CAMERA_TRACE * trace,
 static void traceUpdate(FIELD_CAMERA * camera);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void loadCameraParameters(FIELD_CAMERA * camera);
+static void loadCameraParameters(FIELD_CAMERA * camera, const VecFx32* watch_target);
 static void loadInitialParameter( const FIELD_CAMERA* camera, FLD_CAMERA_PARAM * result );
 
 static void ControlParameter( FIELD_CAMERA * camera, u16 key_cont );
@@ -289,8 +289,6 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
 	camera->type = type;
 	camera->mode = mode;
 	camera->g3Dcamera = cam;
-  camera->default_target = target;
-	camera->watch_target = target;
   camera->watch_camera = NULL;
 	camera->heapID = heapID;
 
@@ -317,7 +315,7 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
   }
 
 
-  loadCameraParameters(camera);
+  loadCameraParameters(camera, target);
 
 	createTraceData(	FIELD_CAMERA_TRACE_BUFF, FIELD_CAMERA_DELAY,
 							CAM_TRACE_MASK_Y, heapID, camera);
@@ -460,7 +458,7 @@ void FIELD_CAMERA_ChangeMode( FIELD_CAMERA * camera, FIELD_CAMERA_MODE mode )
 //-----------------------------------------------------------------------------
 void FIELD_CAMERA_SetDefaultParameter( FIELD_CAMERA * camera )
 {
-  loadCameraParameters( camera );
+  loadCameraParameters( camera, camera->default_target );
 }
 
 
@@ -473,7 +471,7 @@ void FIELD_CAMERA_SetDefaultParameter( FIELD_CAMERA * camera )
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void loadCameraParameters(FIELD_CAMERA * camera)
+static void loadCameraParameters(FIELD_CAMERA * camera, const VecFx32* watch_target)
 {
   FLD_CAMERA_PARAM param;
 
@@ -487,6 +485,7 @@ static void loadCameraParameters(FIELD_CAMERA * camera)
   TOMOYA_Printf("angle = %08x,%08x,%08x\n", param.Angle.x, param.Angle.y, param.Angle.z );
   TOMOYA_Printf("viewtype = %d, persp = %08x\n", param.View, param.PerspWay);
   TOMOYA_Printf("near=%8x, far =%08x\n", param.Near, param.Far);
+  TOMOYA_Printf("playerLink%d\n", param.PlayerLink  );
   TOMOYA_Printf("shift = %08x,%08x,%08x\n", param.Shift.x, param.Shift.y, param.Shift.z );
   TOMOYA_Printf("now near = %d\n", FX_Whole( FIELD_CAMERA_GetNear(camera) ) );
   TOMOYA_Printf("now far = %d\n", FX_Whole( FIELD_CAMERA_GetFar(camera) ) );
@@ -508,7 +507,6 @@ static void loadCameraParameters(FIELD_CAMERA * camera)
   camera->angle_yaw = param.Angle.y;
   //camera->viewtype = param.ViewType;
   camera->fovy = param.PerspWay;
-  camera->target_offset = param.Shift;
   FIELD_CAMERA_SetFar( camera, param.Far );
   FIELD_CAMERA_SetNear(camera, param.Near );
   switch (param.depthType)
@@ -523,6 +521,30 @@ static void loadCameraParameters(FIELD_CAMERA * camera)
   if( GFL_G3D_CAMERA_GetProjectionType(camera->g3Dcamera) == GFL_G3D_PRJPERS ){
     GFL_G3D_CAMERA_SetfovySin( camera->g3Dcamera, FX_SinIdx( camera->fovy ) );
     GFL_G3D_CAMERA_SetfovyCos( camera->g3Dcamera, FX_CosIdx( camera->fovy ) );
+  }
+
+  // プレイヤーとのバインドチェック
+  if( param.PlayerLink )
+  {
+    // バインドする場合
+    // watch_targetをセット
+    // Shiftはtarget_offsetに格納
+    camera->default_target  = watch_target;
+    camera->watch_target    = watch_target;
+
+    camera->target        = *watch_target;
+    camera->target_offset = param.Shift;
+  }
+  else
+  {
+    // バインドしない場合
+    // watch_targetをクリア
+    // Shiftはtargetに格納
+    camera->default_target  = FALSE;
+    camera->watch_target    = FALSE;
+
+    camera->target = param.Shift;
+    VEC_Set( &camera->target_offset, 0,0,0 );
   }
 
 }

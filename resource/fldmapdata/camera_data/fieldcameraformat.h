@@ -11,6 +11,7 @@ typedef	struct	{
 	u16				PerspWay;
 	fx32			Near;
 	fx32			Far;
+  u32       PlayerLink;
 	VecFx32			Shift;
 }FLD_CAMERA_PARAM;
 

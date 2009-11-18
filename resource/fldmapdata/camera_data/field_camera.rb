@@ -12,10 +12,11 @@ COL_DEPTH   = 6
 COL_FOVY    = 7
 COL_NEAR    = 8
 COL_FAR     = 9
-COL_OFSX    = 10
-COL_OFSY    = 11
-COL_OFSZ    = 12
-COL_COMMENT = 13
+COL_PLLINK  = 10
+COL_OFSX    = 11
+COL_OFSY    = 12
+COL_OFSZ    = 13
+COL_COMMENT = 14
 
 class VEC_DATA
 	#外部参照できるようにする
@@ -38,7 +39,7 @@ end
 
 class CAMERA_DATA
 	#外部参照できるようにする
-	attr_accessor :Distance, :Angle, :ViewType, :DepthType, :PerspWay, :Clip, :Shift, :Comment
+	attr_accessor :Distance, :Angle, :ViewType, :DepthType, :PerspWay, :Clip, :Shift, :Comment, :PlayerLink
 	def initialize()
 		@Distance = ""
 		@Angle = VEC_DATA.new
@@ -48,6 +49,7 @@ class CAMERA_DATA
 		@Clip = CLIP_DATA.new
 		@Shift = VEC_DATA.new
 		@Comment = ""
+    @PlayerLink = ""
 	end
 end
 
@@ -145,6 +147,12 @@ while line = csv_file.gets
 	data.Clip.Far = "FX32_ONE * 0x" + column[COL_FAR]
 	#data.Clip.Near = "FX32_ONE * " + column[7]
 	#data.Clip.Far = "FX32_ONE * " + column[8]
+  #プレイヤーのリンク
+  if column[COL_PLLINK] == "○" then
+    data.PlayerLink = "1"
+  else
+    data.PlayerLink = "0"
+  end
 	#シフト
 	data.Shift.X = MakeShiftStr(column[COL_OFSX])
 	data.Shift.Y = MakeShiftStr(column[COL_OFSY])
@@ -168,6 +176,7 @@ data_array.each_with_index{|data, i|
 	dat_file_content += sprintf("\t\t#{data.PerspWay},\n")
 	dat_file_content += sprintf("\t\t#{data.Clip.Near},\n")
 	dat_file_content += sprintf("\t\t#{data.Clip.Far},\n")
+	dat_file_content += sprintf("\t\t#{data.PlayerLink},\n")
 	dat_file_content += sprintf("\t\t{#{data.Shift.X},#{data.Shift.Y},#{data.Shift.Z}}\n")
 	dat_file_content += sprintf("\t},\n")
 }
