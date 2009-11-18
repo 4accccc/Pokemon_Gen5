@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-17T21:38:30"/>
+	<create user="matsumiya" host="W00207" date="2009-11-18T11:42:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -623,13 +623,32 @@
 プラズマ団が　手に入れる！</language>
 	</row>
 
-	<row id="msg_c07_girl2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c07_girl2_01ｗ" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・仮メッセージ
-※WHITEverとBALCKveで
-　内容を変える</comment>
+・WHITEver</comment>
 		<attribute name="キャラクター">GIRL2
 少女（活発）</attribute>
+		<language name="JPN" width="256">ふたごの　えいゆう……
+あには　しんじつを　もとめ[BE:01:ページ切り替え（クリア）]
+おとうとは　りそうを　もとめて
+それぞれ　２ひきの　ポケモンと　ともに[BE:00:ページ切り替え（行送り）]
+ずっとずっと　たたかいつづけた……[BE:01:ページ切り替え（クリア）]
+でんせつが　ほんとうだとすると
+かなしい　きょうだいゲンカ　よね……</language>
+		<language name="JPN_KANJI" width="256">双子の　英雄……
+兄は　真実を　求め[BE:01:ページ切り替え（クリア）]
+弟は　理想を　求めて　それぞれ[BE:00:ページ切り替え（行送り）]
+２匹の　ポケモンと　ともに[BE:00:ページ切り替え（行送り）]
+ずっとずっと　闘いつづけた……[BE:01:ページ切り替え（クリア）]
+伝説が　本当だとすると
+悲しい　兄弟ゲンカ　よね……</language>
+	</row>
+
+	<row id="msg_c07_girl2_01b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・仮メッセージ
+・BALCKver</comment>
 		<language name="JPN" width="256">ふたごの　えいゆう……
 あには　しんじつを　もとめ[BE:01:ページ切り替え（クリア）]
 おとうとは　りそうを　もとめて
@@ -661,12 +680,27 @@
 人に　何を伝えるのでしょう</language>
 	</row>
 
-	<row id="msg_c07_man3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c07_man3_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・仮メッセージ
-※WHITEverとBALCKveで
-　内容を変える</comment>
+・WHITEver</comment>
 		<attribute name="キャラクター">MAN3</attribute>
+		<language name="JPN" width="256">パッケージポケモンは
+えいゆうをたすけ　くにをつくった[BE:01:ページ切り替え（クリア）]
+だが　そのはんめん
+もうひとりの　えいゆうを[BE:00:ページ切り替え（行送り）]
+ほろぼそうとも　したんだぞ……！</language>
+		<language name="JPN_KANJI" width="256">パッケージポケモンは
+英雄を助け　国をつくった[BE:01:ページ切り替え（クリア）]
+だが　その反面
+もう一人の　英雄を[BE:00:ページ切り替え（行送り）]
+滅ぼそうとも　したんだぞ……！</language>
+	</row>
+
+	<row id="msg_c07_man3_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・仮メッセージ
+・BALCKver</comment>
 		<language name="JPN" width="256">パッケージポケモンは
 えいゆうをたすけ　くにをつくった[BE:01:ページ切り替え（クリア）]
 だが　そのはんめん
