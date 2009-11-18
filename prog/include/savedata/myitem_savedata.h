@@ -67,6 +67,7 @@ extern u16 MYITEM_GetItemNum( MYITEM_PTR myitem, u16 item_no, HEAPID heap );
 extern u16 MYITEM_GetItemNumDirect( ITEM_ST * myitem, u32 max, u16 item_no, HEAPID heap );
 extern void MYITEM_SortSpace( ITEM_ST * item, const u32 max );
 extern void MYITEM_SortNumber( ITEM_ST * item, const u32 max );
+extern void MYITEM_CheckSafety( MYITEM_PTR myitem );
 extern BOOL MYITEM_CheckItemPocket( MYITEM_PTR myitem, u32 pocket );
 extern u32 MYITEM_GetItemPocketNumber( MYITEM_PTR myitem, u32 pocket );
 extern ITEM_ST * MYITEM_PosItemGet( MYITEM_PTR myitem, u16 pocket, u16 pos );

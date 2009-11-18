@@ -642,6 +642,25 @@ static void bottomInsert( ITEM_ST * item, const u32 num )
 
 //------------------------------------------------------------------
 /**
+ * @brief		アイテム番号０に個数が入ってたら消す
+ * @param		item	アイテムデータ
+ * @param		max		最大値
+ * @return	none
+ */
+//------------------------------------------------------------------
+static void DeleteNullItem( ITEM_ST * item, const u32 max )
+{
+	u32	i;
+
+	for( i=0; i<max; i++ ){
+		if( item[i].id == 0 ){
+			item[i].no = 0;
+		}
+	}
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	アイテムソート（スペースをつめる）
  * @param	item	アイテムデータ
  * @param	max		最大値
@@ -651,6 +670,8 @@ static void bottomInsert( ITEM_ST * item, const u32 num )
 void MYITEM_SortSpace( ITEM_ST * item, const u32 max )
 {
 	u32	i, j;
+
+	DeleteNullItem( item, max );
 
 	for( i=0; i<max-1; i++ ){
 		for( j=i+1; j<max; j++ ){
@@ -673,6 +694,8 @@ void MYITEM_SortNumber( ITEM_ST * item, const u32 max )
 {
 	u32	i, j;
 
+	DeleteNullItem( item, max );
+
 	for( i=0; i<max-1; i++ ){
 		for( j=i+1; j<max; j++ ){
 			if( item[i].no == 0 || ( item[j].no != 0 && item[i].id > item[j].id ) ){
@@ -681,6 +704,36 @@ void MYITEM_SortNumber( ITEM_ST * item, const u32 max )
 		}
 	}
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief		手持ちアイテム全体のNULLアイテムを消して詰める
+ * @param		myitem	手持ちアイテムデータ
+ * @return	none
+ */
+//------------------------------------------------------------------
+void MYITEM_CheckSafety( MYITEM_PTR myitem )
+{
+	ITEM_ST * item;
+	u32	max;
+
+	// 大切な物
+	MyPocketDataGet( myitem, BAG_POKE_EVENT, &item, &max );
+	MYITEM_SortSpace( item, max );
+	// 道具
+	MyPocketDataGet( myitem, BAG_POKE_NORMAL, &item, &max );
+	MYITEM_SortSpace( item, max );
+	// 木の実
+	MyPocketDataGet( myitem, BAG_POKE_NUTS, &item, &max );
+	MYITEM_SortSpace( item, max );
+	// 薬
+	MyPocketDataGet( myitem, BAG_POKE_DRUG, &item, &max );
+	MYITEM_SortSpace( item, max );
+	// 技マシン
+	MyPocketDataGet( myitem, BAG_POKE_WAZA, &item, &max );
+	MYITEM_SortSpace( item, max );
+}
+
 
 //------------------------------------------------------------------
 /**
