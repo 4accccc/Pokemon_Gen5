@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-11-13T20:59:05" source="c03_wall1_3.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2009-11-17T20:38:37" source="c03_wall1_3.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -14,7 +14,7 @@
 	frame_size="121"
 	tool_start_frame="0"
 	tool_end_frame="120"
-	compress_material="on" material_size="2 2"
+	compress_material="on" material_size="5 5"
 />
 
 <tex_pattern_list_data image_size="1" palette_size="1">
@@ -35,7 +35,7 @@
 </tex_pattern_data>
 
 <tex_pattern_anm_array size="1">
-	<tex_pattern_anm index="0" material_name="bira" data_size="1" data_head="0"/>
+	<tex_pattern_anm index="0" material_name="c03_wall_1" data_size="1" data_head="0"/>
 </tex_pattern_anm_array>
 
 </body>

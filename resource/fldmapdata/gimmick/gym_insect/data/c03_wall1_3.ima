@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-11-13T20:59:05" source="c03_wall1_3.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2009-11-17T20:38:37" source="c03_wall1_3.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -15,29 +15,17 @@
 	tool_start_frame="0"
 	tool_end_frame="120"
 	interpolation="frame"
-	compress_material="on" material_size="2 2"
+	compress_material="on" material_size="5 5"
 	frame_step_mode="1"
 	tolerance_color="2"
 />
 
-<mat_color_data size="124">
-	25 31 0 31 30 28 26 25 23 21
-	19 17 15 13 12 10 8 7 5 4
-	3 2 1 0 0 0 0 0 1 2
-	3 4 5 7 8 10 12 13 15 17
-	19 21 23 25 26 28 30 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31
+<mat_color_data size="3">
+	25 31 0
 </mat_color_data>
 
 <mat_color_anm_array size="1">
-	<mat_color_anm index="0" material_name="bira">
+	<mat_color_anm index="0" material_name="c03_wall_1">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
@@ -50,7 +38,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="2"/>
 		<emission_g frame_step="1" data_size="1" data_head="2"/>
 		<emission_b frame_step="1" data_size="1" data_head="2"/>
-		<polygon_alpha frame_step="1" data_size="121" data_head="3"/>
+		<polygon_alpha frame_step="1" data_size="1" data_head="1"/>
 	</mat_color_anm>
 </mat_color_anm_array>
 
