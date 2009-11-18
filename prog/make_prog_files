@@ -774,17 +774,19 @@ SRCS_OVERLAY_IRC_RESULT	= net_app/irc_result/irc_result.c
 SRCS_OVERLAY_IRC_RANKING	= net_app/irc_ranking/irc_ranking.c
 
 #マルチブート  DP/PL/GS吸い上げ
+#dlplay_funcは不思議な贈り物で文字コード変換に使っている。移植後削除を。
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
-SRCS_OVERLAY_MULTIBOOT = test/dlplay/dlplay_parent_sample.c \
-        test/dlplay/dlplay_parent_main.c \
-        test/dlplay/dlplay_func.c \
-        test/dlplay/dlplay_comm_func.c \
-        test/dlplay/dlplay_disp_sys.c \
-		multiboot/parent/mb_parent_sys.c \
+SRCS_OVERLAY_MULTIBOOT = multiboot/parent/mb_parent_sys.c \
         multiboot/comm/mbp.c \
         multiboot/comm/mb_comm_sys.c \
-        multiboot/util/mb_util_msg.c 
+        multiboot/util/mb_util_msg.c \
+        test/dlplay/dlplay_func.c 
+
+#		test/dlplay/dlplay_parent_sample.c \
+#        test/dlplay/dlplay_parent_main.c \
+#        test/dlplay/dlplay_comm_func.c \
+#        test/dlplay/dlplay_disp_sys.c \
 
 # 大野デバッグ
 #===> SRCS_OVERLAY_DEV_IRC

@@ -975,11 +975,11 @@ static BOOL TESTMODE_ITEM_SelectFuncAri( TESTMODE_WORK *work , const int idx )
   return TRUE;
 }
 
-FS_EXTERN_OVERLAY(multiboot);
-extern const GFL_PROC_DATA DebugDLPlayMainProcData;
+//FS_EXTERN_OVERLAY(multiboot);
+//extern const GFL_PROC_DATA DebugDLPlayMainProcData;
 static BOOL TESTMODE_ITEM_SelectFuncDlPlay( TESTMODE_WORK *work , const int idx )
 {
-  TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(multiboot), &DebugDLPlayMainProcData, NULL);
+//  TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(multiboot), &DebugDLPlayMainProcData, NULL);
   return TRUE;
 }
 

@@ -160,7 +160,7 @@ void MB_COMM_InitComm( MB_COMM_WORK* commWork )
     FALSE,    // MP通信＝親子型通信モードかどうか
     GFL_NET_TYPE_WIRELESS,    //  NET通信タイプ ← wifi通信を行うかどうか
     FALSE,    // 親が再度初期化した場合、つながらないようにする場合TRUE
-    WB_NET_BOX_DOWNLOAD_SERVICEID,//GameServiceID
+    WB_NET_MULTIBOOT_SERVICEID,//GameServiceID
 #if GFL_NET_IRC
   IRC_TIMEOUT_STANDARD, // 赤外線タイムアウト時間
 #endif
