@@ -68,7 +68,14 @@ enum {
 	NARC_fldeff_taki_start_s_nsbca = 54,
 	NARC_fldeff_taki_land_nsbma = 55,
 	NARC_fldeff_shibuki01_nsbta = 56,
-	NARC_fldeff_short_grass_nsbta = 57
+	NARC_fldeff_short_grass_sp_nsbta = 57,
+	NARC_fldeff_short_grass_su_nsbta = 58,
+	NARC_fldeff_short_grass_au_nsbta = 59,
+	NARC_fldeff_short_grass_wi_nsbta = 60,
+	NARC_fldeff_short_grass_sp2_nsbta = 61,
+	NARC_fldeff_short_grass_su2_nsbta = 62,
+	NARC_fldeff_short_grass_au2_nsbta = 63,
+	NARC_fldeff_short_grass_wi2_nsbta = 64
 };
 
 /* NARC_FLDEFF_NAIX_ */

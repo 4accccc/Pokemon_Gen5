@@ -35,7 +35,14 @@ G3D_FE_ANMIMA = taki_land.ima
 #	フィールドエフェクト　itaアニメ定義
 #---------------------------------------------------------------
 G3D_FE_ANMITA = shibuki01.ita \
-  $(EFFENC_SGRASS)short_grass.ita
+  $(EFFENC_SGRASS)short_grass_sp.ita \
+  $(EFFENC_SGRASS)short_grass_su.ita \
+  $(EFFENC_SGRASS)short_grass_au.ita \
+  $(EFFENC_SGRASS)short_grass_wi.ita \
+  $(EFFENC_SGRASS)short_grass_sp2.ita \
+  $(EFFENC_SGRASS)short_grass_su2.ita \
+  $(EFFENC_SGRASS)short_grass_au2.ita \
+  $(EFFENC_SGRASS)short_grass_wi2.ita
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　ivaアニメ定義
