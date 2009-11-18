@@ -55,7 +55,7 @@ use constant IDX_RankEffValue3		=> 30;	# ステータス効果３の変動値
 use constant IDX_RankEffPer3		=> 31;	# ステータス効果３の発生率
 use constant IDX_DmgRecoverRatio	=> 32;	# ダメージ回復率
 use constant IDX_HPRecoverRatio		=> 33;	# ＨＰ回復率
-use constant IDX_HitArea			=> 34;	# 効果範囲
+use constant IDX_Target				=> 34;	# 効果範囲
 use constant IDX_FLG_Touch			=> 35;	# 【接触ワザ】
 use constant IDX_FLG_Tame			=> 36;	# 【１ターン溜め】
 use constant IDX_FLG_Tire			=> 37;	# 【１ターン反動】
@@ -111,7 +111,7 @@ use constant IDX_FLG_Start			=> 35;	# 最初
 	"ステータス効果３の発生率",		IDX_RankEffPer3,
 	"ダメージ回復率",				IDX_DmgRecoverRatio,
 	"ＨＰ回復率",					IDX_HPRecoverRatio,
-	"効果範囲",						IDX_HitArea,
+	"効果範囲",						IDX_Target,
 	"【接触ワザ】",					IDX_FLG_Touch,
 	"【１ターン溜め】",				IDX_FLG_Tame,
 	"【１ターン反動】",				IDX_FLG_Tire,
@@ -258,11 +258,11 @@ use constant CATEGORY_DAMAGE_DRAIN			=> 14;	# カテゴリ
 # ワザ効果範囲名（順番はポケモンプログラム内の定数と一致している必要があります）
 # 参照：waza_tool/wazadata.h
 #----------------------------------------------------------------------------------
-@CoverAreaName = (
-	"[選択] 通常ポケ",
-	"[選択] 味方ポケ",
-	"[選択] 自分以外の味方ポケ",
-	"[選択] 相手ポケ",
+@TargetName = (
+	"[選択]　通常ポケ",
+	"[選択]　味方ポケ",
+	"[選択]　自分以外の味方ポケ",
+	"[選択]　相手ポケ",
 	"自分以外の全ポケ",
 	"相手全ポケ",
 	"味方全ポケ",
@@ -270,8 +270,8 @@ use constant CATEGORY_DAMAGE_DRAIN			=> 14;	# カテゴリ
 	"全ポケ",
 	"相手ポケランダム",
 	"全体場",
-	"相手の場",
-	"味方の場",
+	"相手場",
+	"味方場",
 	"特殊",
 );
 
@@ -587,10 +587,10 @@ sub storeRecord {
 
 
 	# 効果範囲
-	$Record[ IDX_HitArea ] = $$refElems[IDX_HitArea];
-	if( $Record[ IDX_HitArea ] < 0 )
+	$Record[ IDX_Target ] = checkMatch( \@TargetName, $$refElems[IDX_Target] );
+	if( $Record[ IDX_Target ] < 0 )
 	{
-		$result .= ($errorHeader . "効果範囲が指定されていません\n");
+		$result .= ($errorHeader . "正しい効果範囲が指定されていません\n");
 	}
 
 	# 各種フラグ
@@ -642,14 +642,14 @@ sub outputBin {
 			||	($i == IDX_HPRecoverRatio)
 			){
 				if( $Record[$i] < -128 || $Record[$i] > 127){
-					_print("エラー：レコード[$recID]  不正な値　$i　($RecName[$i] = $Record[$i]）\n");
+					_print("エラー：レコード[$recID]  不正な値 ($RecName[$i] = $Record[$i]）\n");
 					return 0;
 				}
 				$buf = pack('c', $Record[$i]);
 				syswrite( OUT_FILE, $buf, 1);
 			}else{
 				if( $Record[$i] < 0 || $Record[$i] > 255){
-					_print("エラー：レコード[$recID]  不正な値　$i  ($RecName[$i] = $Record[$i]）\n");
+					_print("エラー：レコード[$recID]  不正な値 ($RecName[$i] = $Record[$i]）\n");
 					return 0;
 				}
 				$buf = pack('C', $Record[$i]);
