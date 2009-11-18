@@ -9,14 +9,21 @@ class PARA
   enum_const_set %w[
     WAZANAME
     ATKMSG
-    TYPE
-    KIND
-    POW
-    HIT
-    PP
-    MAX
+    INFO1
+    INFO2
+    INFO3
+    INFO4
+    INFO5
   ]
 end
+
+  atkmsg_table = {
+    "こうげき！"=>"　こうげき！",
+    "！"=>"！",
+    "をつかった！"=>"を　つかった！",
+    "した！"=>"した！",
+    "をした！"=>"を　した！",
+  }
 
 	if ARGV.size < 2
 		print "error: ruby waza_tbl_conv.rb read_file gmm_file\n"
@@ -67,9 +74,17 @@ end
   fp_hash.printf("\t$wazano_hash = {\n" )
 
   #GMM
-  gmm = GMM::new
-  gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "wazaname.gmm" )
-  gmm.make_row_index( "WAZANO_", 0, "ーーーーー" )
+  wazaname_gmm = GMM::new
+  wazaname_gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "wazaname.gmm" )
+  wazaname_gmm.make_row_index( "WAZANAME_", 0, "ーーーーー" )
+  wazainfo_gmm = GMM::new
+  wazainfo_gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "wazainfo.gmm" )
+  wazainfo_gmm.make_row_index( "WAZAINFO_", 0, "ー\rー\rー\rー" )
+  atkmsg_gmm = GMM::new
+  atkmsg_gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "btl_attack.gmm" )
+  atkmsg_gmm.make_row_index( "ATKMSG_M_", 0, "！" )
+  atkmsg_gmm.make_row_index( "ATKMSG_Y_", 0, "！" )
+  atkmsg_gmm.make_row_index( "ATKMSG_E_", 0, "！" )
 
   cnt = 1
 
@@ -84,7 +99,19 @@ end
     end
     fp_wazano.printf( "( %d )\t\t//%s\n", cnt, split_data[ PARA::WAZANAME ] )
     fp_hash.printf("\t\t\"%s\"=>%d,\n", split_data[ PARA::WAZANAME ], cnt )
-    gmm.make_row_index( "WAZANAME_", cnt, split_data[ PARA::WAZANAME ] )
+    wazaname_gmm.make_row_index( "WAZANAME_", cnt, split_data[ PARA::WAZANAME ] )
+    info = split_data[ PARA::INFO1 ] + "\r\n" + split_data[ PARA::INFO2 ] + "\r\n" + split_data[ PARA::INFO3 ] + "\r\n" + split_data[ PARA::INFO4 ] + "\r\n" + split_data[ PARA::INFO5 ]
+    #@todo 漢字説明文ありなんですが、現状データがないので、同じ文字列で生成
+    wazainfo_gmm.make_row_index_kanji( "WAZAINFO_", cnt, info, info )
+    if atkmsg_table[ split_data[ PARA::ATKMSG ] ] == nil
+      p split_data[ PARA::ATKMSG ]
+    end
+    atkmsg = "[1:01:ニックネーム:0]の\r\n" + split_data[ PARA::WAZANAME ] + atkmsg_table[ split_data[ PARA::ATKMSG ] ]
+    atkmsg_gmm.make_row_index( "ATKMSG_M_", cnt, atkmsg )
+    atkmsg = "やせいの　[1:01:ニックネーム:0]の\r\n" + split_data[ PARA::WAZANAME ] + atkmsg_table[ split_data[ PARA::ATKMSG ] ]
+    atkmsg_gmm.make_row_index( "ATKMSG_Y_", cnt, atkmsg )
+    atkmsg = "あいての　[1:01:ニックネーム:0]の\r\n" + split_data[ PARA::WAZANAME ] + atkmsg_table[ split_data[ PARA::ATKMSG ] ]
+    atkmsg_gmm.make_row_index( "ATKMSG_E_", cnt, atkmsg )
     cnt += 1
   }
 
@@ -94,7 +121,9 @@ end
   fp_hash.printf("\t}\n" )
   fp_hash.close
 
-  gmm.close_gmm
+  wazaname_gmm.close_gmm
+  wazainfo_gmm.close_gmm
+  atkmsg_gmm.close_gmm
 
   print "技ラベル＆gmmファイル　生成終了\n"
 
