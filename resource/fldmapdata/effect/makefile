@@ -1,7 +1,7 @@
 #---------------------------------------------------------------
 #	フィールドエフェクト アーカイブ用Makefile
 #---------------------------------------------------------------
-USERS = kagaya fuchino
+USERS = kagaya fuchino iwasawa
 include $(PROJECT_RSCDIR)/macro_define
 
 TARGET_FE 	=	fldeff.narc
@@ -64,39 +64,48 @@ FEDATA_NONCV := $(addprefix $(RESDIR)/,$(FEDATA_NONCV))
 #	拡張子 生成ルール
 #--------------------------------------------------
 #.SUFFIXES:
+RESDIR_EFFENC = $(RESDIR)/$(EFFENC_SGRASS)
+RESDIR_ALL = $(RESDIR) $(RESDIR_EFFENC)
+
+vpath %imd $(RESDIR_ALL)
+vpath %itp $(RESDIR_ALL)
+vpath %ica $(RESDIR_ALL)
+vpath %ima $(RESDIR_ALL)
+vpath %ita $(RESDIR_ALL)
+vpath %iva $(RESDIR_ALL)
 
 #imd --> nsbmd
-$(TMPDIR)/%.nsbmd: $(RESDIR)/%.imd
+$(TMPDIR)/%.nsbmd: %.imd
 	@echo Model Data Convert: $^ $@
 	@$(G3DCVTR) $^ -o $@
 
 #imd --> nsbtx
-$(TMPDIR)/%.nsbtx: $(RESDIR)/%.imd
+$(TMPDIR)/%.nsbtx: %.imd
 	@echo Texture Data Convert: $^ $@
 	@$(G3DCVTR) $^ -o $@ -etex
 
 #itp --> nsbtp
-$(TMPDIR)/%.nsbtp: $(RESDIR)/%.itp
+$(TMPDIR)/%.nsbtp: %.itp
 	@echo Anime itp File Convert: $^ $@
 	@$(G3DCVTR) $^ -o $@ 
 
 #ica --> nsbca
-$(TMPDIR)/%.nsbca: $(RESDIR)/%.ica
+$(TMPDIR)/%.nsbca: %.ica
 	@echo Anime ica File Convert: $^ $@
 	@$(G3DCVTR) $^ -o $@ 
 
 #ima --> nsbma
-$(TMPDIR)/%.nsbma: $(RESDIR)/%.ima
+$(TMPDIR)/%.nsbma: %.ima
 	@echo Anime ima File Convert: $^ $@
 	@$(G3DCVTR) $^ -o $@ 
 
 #ita --> nsbta
-$(TMPDIR)/%.nsbta: $(RESDIR)/%.ita
+$(TMPDIR)/%.nsbta: %.ita
 	@echo Anime ita File Convert: $^ $@
 	@$(G3DCVTR) $^ -o $@ 
 
 #iva --> nsbva
-$(TMPDIR)/%.nsbva: $(RESDIR)/%.iva
+$(TMPDIR)/%.nsbva: %.iva
 	@echo Anime iva File Convert: $^ $@
 	@$(G3DCVTR) $^ -o $@ 
 
