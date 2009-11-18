@@ -28,9 +28,9 @@
 #define LIFT_SHAKE_COUNT (4)
 #define SP_LIFT_SHAKE_COUNT (4)
 //‹N“®U••
-#define LIFT_START_SHAKE_VAL (2)
+#define LIFT_START_SHAKE_VAL (1)
 //‹N“®U“®‰ñ”
-#define LIFT_START_SHAKE_COUNT (1)
+#define LIFT_START_SHAKE_COUNT (2)
 //U“®ŠÔŠu
 #define SHAKE_MARGIN (2)
 //Šu•ÇˆÊ’u
