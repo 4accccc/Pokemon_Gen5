@@ -149,7 +149,7 @@ void STRTOOL_SetHexNumber( STRBUF* dst, u32 number, u32 keta, StrNumberDispType 
 
 	u32  num_f, num_i, i;
 
-  GF_ASSERT( keta < 8 );
+  GF_ASSERT( keta < 9 );
 
   
 
