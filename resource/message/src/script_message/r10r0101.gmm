@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00207" date="2009-11-18T14:11:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,11 +292,52 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_r10r0101_badge_01">
+		<comment>♂
+・おそらく未使用
+・トライバッジを
+　所有→_badge_02
+　未所有→badge_04</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
+		<language name="JPN" width="256">この　かたく　とざされた
+ゲートを　ひらく　カギは！[BE:01:ページ切り替え（クリア）]
+トライバッジ！[BE:01:ページ切り替え（クリア）]
+ゆうきある　トレーナーよ
+トライバッジを　もっているのか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">この　堅く　閉ざされた
+ゲートを　開く　カギは！[BE:01:ページ切り替え（クリア）]
+トライバッジ！[BE:01:ページ切り替え（クリア）]
+勇気ある　トレーナーよ
+トライバッジを　もっているのか？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r10r0101_badge_02">
+		<comment>♂
+・メッセージ表示後、ゲートが開く処理</comment>
+		<language name="JPN" width="256">うむ！　よろしい！
+では　ゲートを　あけよう！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">うむ！　よろしい！
+では　ゲートを　開けよう！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r10r0101_badge_03">
+		<comment>♂
+・ゲートオープン後</comment>
+		<language name="JPN" width="256">トライバッジを　もつ　ものよ！
+さきに　すすみ　ゆうきを　しめせ！</language>
+		<language name="JPN_KANJI" width="256">トライバッジを　もつ　者よ！
+先に進み　勇気を　示せ！</language>
+	</row>
+
+	<row id="msg_r10r0101_badge_04">
+		<comment>♂
+・バッジ未所有時</comment>
+		<language name="JPN" width="256">トレーナーよ！[BE:01:ページ切り替え（クリア）]
+まずは　サンヨウ　ポケモンジムにて
+トライバッジを　てにいれるのだ！</language>
+		<language name="JPN_KANJI" width="256">トレーナーよ！[BE:01:ページ切り替え（クリア）]
+まずは　サンヨウ　ポケモンジムにて
+トライバッジを　手に入れるのだ！</language>
 	</row>
 
 	<flowchart-group-list>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-13T17:54:44"/>
+	<create user="matsumiya" host="W00207" date="2009-11-18T14:12:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -295,20 +295,20 @@
 	<row id="msg_r10r0801_badge_01">
 		<comment>♂
 ・おそらく未使用
-・アイシクルバッジを
+・レジェンドバッジを
 　所有→_badge_02
 　未所有→badge_04</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">この　かたく　とざされた
 ゲートを　ひらく　カギは！[BE:01:ページ切り替え（クリア）]
-アイシクルバッジ！[BE:01:ページ切り替え（クリア）]
+レジェンドバッジ！[BE:01:ページ切り替え（クリア）]
 ゆうきある　トレーナーよ
-アイシクルバッジを　もっているのか？[BE:01:ページ切り替え（クリア）]</language>
+レジェンドバッジを　もっているのか？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">この　堅く　閉ざされた
 ゲートを　開く　カギは！[BE:01:ページ切り替え（クリア）]
-アイシクルバッジ！[BE:01:ページ切り替え（クリア）]
+レジェンドバッジ！[BE:01:ページ切り替え（クリア）]
 勇気ある　トレーナーよ
-アイシクルバッジを　もっているのか？[BE:01:ページ切り替え（クリア）]</language>
+レジェンドバッジを　もっているのか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r10r0801_badge_02">
@@ -323,9 +323,9 @@
 	<row id="msg_r10r0801_badge_03">
 		<comment>♂
 ・ゲートオープン後</comment>
-		<language name="JPN" width="256">アイシクルバッジを　もつ　ものよ！
+		<language name="JPN" width="256">レジェンドバッジを　もつ　ものよ！
 さきに　すすみ　ゆうきを　しめせ！</language>
-		<language name="JPN_KANJI" width="256">アイシクルバッジを　もつ　者よ！
+		<language name="JPN_KANJI" width="256">レジェンドバッジを　もつ　者よ！
 先に進み　勇気を　示せ！</language>
 	</row>
 
@@ -333,11 +333,11 @@
 		<comment>♂
 ・バッジ未所有時</comment>
 		<language name="JPN" width="256">トレーナーよ！[BE:01:ページ切り替え（クリア）]
-まずは　セッカ　ポケモンジムにて
-アイシクルバッジを　てにいれるのだ！</language>
+まずは　ソウリュウ　ポケモンジムにて
+レジェンドバッジを　てにいれるのだ！</language>
 		<language name="JPN_KANJI" width="256">トレーナーよ！[BE:01:ページ切り替え（クリア）]
-まずは　セッカ　ポケモンジムにて
-アイシクルバッジを　手に入れるのだ！</language>
+まずは　ソウリュウ　ポケモンジムにて
+レジェンドバッジを　手に入れるのだ！</language>
 	</row>
 
 	<flowchart-group-list>
