@@ -133,7 +133,8 @@ void NitroMain(void)
     }
   }
 
-  GameExit();}
+  GameExit();
+}
 
 //------------------------------------------------------------------
 /**
@@ -247,8 +248,8 @@ static  void  GameExit(void)
   //デバッグシステム
   //DEBUGWIN_ExitSystem();
 #endif PM_DEBUG
-  PMVOICE_Exit();
-  PMSND_Exit();
+  //PMVOICE_Exit();
+  //PMSND_Exit();
 }
 
 //--------------------------------------------------------------

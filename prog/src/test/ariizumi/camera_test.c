@@ -384,9 +384,9 @@ static GFL_PROC_RESULT CAM_TEST_ExitProc(GFL_PROC * proc, int * seq, void * pwk,
   CAM_TEST_ExitDebugMenu( work );
 
   COMM_TVT_MIC_Term( work->micWork );
-  GFL_HEAP_FreeMemory( work->postWaveBufferTop );
-  GFL_HEAP_FreeMemory( work->sendWaveBufferTop );
-  GFL_HEAP_FreeMemory( work->wavePlayBuffer );
+  GFL_NET_Align32Free( work->postWaveBufferTop );
+  GFL_NET_Align32Free( work->sendWaveBufferTop );
+  GFL_NET_Align32Free( work->wavePlayBuffer );
   CAMERA_SYS_ExitSystem( work->camSys );
 
   GFL_BG_FreeBGControl( GFL_BG_FRAME1_M );
@@ -1286,7 +1286,7 @@ void COMM_TVT_MIC_Term( COMM_TVT_MIC_WORK *micWork )
 {
   COMM_TVT_MIC_PlayWaveTerm( micWork );
 
-  GFL_HEAP_FreeMemory( micWork->recBuffer );
+  GFL_NET_Align32Free( micWork->recBuffer );
   GFL_HEAP_FreeMemory( micWork );
 }
 

@@ -10,7 +10,13 @@
 #define __PMSNDSYS_H__
 
 #include "sound/sound_data.h"
+
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE //通常時処理
 #include "sound/wb_sound_data.sadl"		//サウンドラベルファイル
+#else
+#include "wb_sound_palpark.sadl"
+#endif //MULTI_BOOT_MAKE
 //------------------------------------------------------------------
 /**
  * @brief	データＩＮＤＥＸ有効範囲
@@ -50,6 +56,7 @@ typedef enum {
  */
 //============================================================================================
 extern void	PMSND_Init( void );
+extern void	PMSND_InitMultiBoot( void* sndData );
 extern void	PMSND_Main( void );
 extern void	PMSND_Exit( void );
 

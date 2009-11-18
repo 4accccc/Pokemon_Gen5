@@ -159,7 +159,6 @@ static BOOL TESTMODE_ITEM_SelectFuncSave( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncSound( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncKagaya( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncAri( TESTMODE_WORK *work , const int idx );
-static BOOL TESTMODE_ITEM_SelectFuncDlPlay( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncNagi( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncObata( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncIwasawa( TESTMODE_WORK *work , const int idx );
@@ -235,7 +234,6 @@ static TESTMODE_MENU_LIST topMenu[] =
   {L"まつだ　よしのり"    ,TESTMODE_ITEM_SelectFuncMatsuda },
   {L"かがや　けいた"      ,TESTMODE_ITEM_SelectFuncKagaya  },
   {L"ありいずみ　のぶひこ",TESTMODE_ITEM_SelectFuncAri },
-  {L"DlPlay Sample"       ,TESTMODE_ITEM_SelectFuncDlPlay },
   {L"なぎはし　とおる"    ,TESTMODE_ITEM_SelectFuncNagi },
   {L"おばた　としひろ"    ,TESTMODE_ITEM_SelectFuncObata},
   {L"いわさわ　みゆき"    ,TESTMODE_ITEM_SelectFuncIwasawa},
@@ -972,14 +970,6 @@ static BOOL TESTMODE_ITEM_SelectFuncKagaya( TESTMODE_WORK *work , const int idx 
 static BOOL TESTMODE_ITEM_SelectFuncAri( TESTMODE_WORK *work , const int idx )
 {
   TESTMODE_COMMAND_ChangeMenu( work , menuAriizumi , NELEMS(menuAriizumi) );
-  return TRUE;
-}
-
-//FS_EXTERN_OVERLAY(multiboot);
-//extern const GFL_PROC_DATA DebugDLPlayMainProcData;
-static BOOL TESTMODE_ITEM_SelectFuncDlPlay( TESTMODE_WORK *work , const int idx )
-{
-//  TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(multiboot), &DebugDLPlayMainProcData, NULL);
   return TRUE;
 }
 

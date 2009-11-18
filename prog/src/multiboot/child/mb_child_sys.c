@@ -13,6 +13,7 @@
 #include "system/gfl_use.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
+#include "sound/pm_sndsys.h"
 #include "system/wipe.h"
 
 #include "arc_def.h"
@@ -46,6 +47,7 @@ typedef enum
   
   MCS_WAIT_COMM_INIT,
   MCS_WAIT_CONNECT,
+  MCS_CHECK_ROM,
 }MB_CHILD_STATE;
 
 //======================================================================
@@ -59,6 +61,9 @@ typedef struct
   
   MB_CHILD_STATE  state;
   
+  MB_COMM_INIT_DATA *initData;
+  
+  void  *sndData;
   //メッセージ用
   MB_MSG_WORK *msgWork;
   
@@ -107,6 +112,13 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
   work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG );
   
   work->commWork = MB_COMM_CreateSystem( work->heapId );
+  
+  work->sndData = GFL_ARC_UTIL_Load( ARCID_MB_CHILD ,
+                                     NARC_mb_child_gra_wb_sound_palpark_sdat ,
+                                     FALSE ,
+                                     work->heapId );
+                                     
+  PMSND_InitMultiBoot( work->sndData );
 }
 
 //--------------------------------------------------------------
@@ -114,6 +126,8 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
 //--------------------------------------------------------------
 static void MB_CHILD_Term( MB_CHILD_WORK *work )
 {
+  PMSND_Exit();
+  GFL_HEAP_FreeMemory( work->sndData );
   MB_COMM_DeleteSystem( work->commWork );
 
   MB_MSG_MessageTerm( work->msgWork );
@@ -158,6 +172,16 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       work->state = MCS_WAIT_CONNECT;
     }
     break;
+  
+  case MCS_WAIT_CONNECT:
+    if( MB_COMM_IsPostInitData( work->commWork ) == TRUE )
+    {
+      work->initData = MB_COMM_GetInitData( work->commWork );
+      work->state = MCS_CHECK_ROM;
+      PMSND_PlayBGM( SEQ_BGM_PALPARK_BOX );
+      PMSND_PlaySE( SEQ_SE_DECIDE1 );
+    }
+    break;
     
   case MCS_FADEOUT:
     WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
@@ -172,6 +196,8 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     break;
   }
   MB_MSG_MessageMain( work->msgWork );
+  PMSND_Main();
+  
   
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START &&
       GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
@@ -318,7 +344,8 @@ static GFL_PROC_RESULT MB_CHILD_ProcInit( GFL_PROC * proc, int * seq , void *pwk
 {
   MB_CHILD_WORK *work;
   
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MULTIBOOT, 0x180000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MULTIBOOT, 0xC0000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MULTIBOOT_DATA, 0xC0000 );
   work = GFL_PROC_AllocWork( proc, sizeof(MB_CHILD_WORK), HEAPID_MULTIBOOT );
 
   work->heapId = HEAPID_MULTIBOOT;

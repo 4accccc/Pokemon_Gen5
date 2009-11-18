@@ -35,6 +35,7 @@ ssources:=$(wildcard *.nsc)
 lobjects = $(subst .ncl,.NCLR,$(lsources))
 gobjects = $(subst .ncg,.NCGR,$(gsources))
 sobjects = $(subst .nsc,.NSCR,$(ssources))
+sndobjects = $(wildcard *.sdat)
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
@@ -69,7 +70,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(sobjects)
+$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(sndobjects)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 endif

@@ -51,7 +51,7 @@ typedef struct _MB_MSG_WORK MB_MSG_WORK;
 extern MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame );
 extern void MB_MSG_MessageTerm( MB_MSG_WORK *work );
 extern void MB_MSG_MessageMain( MB_MSG_WORK *work );
-extern void MB_MSG_MessageDisp( MB_MSG_WORK *work , const u16 msgId );
+extern void MB_MSG_MessageDisp( MB_MSG_WORK *work , const u16 msgId , const int msgSpeed );
 extern void MB_MSG_MessageDispNoWait( MB_MSG_WORK *msgWork , const u16 msgId );
 extern void MB_MSG_MessageHide( MB_MSG_WORK *work );
 extern void MB_MSG_MessageCreateWordset( MB_MSG_WORK *work );

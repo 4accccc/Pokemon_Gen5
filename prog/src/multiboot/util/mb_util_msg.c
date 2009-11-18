@@ -11,7 +11,6 @@
 #include <gflib.h>
 
 #include "arc_def.h"
-#include "gamesystem/msgspeed.h"
 #include "print/printsys.h"
 #include "system/bmp_winframe.h"
 
@@ -153,8 +152,9 @@ void MB_MSG_MessageMain( MB_MSG_WORK *msgWork )
 
 //--------------------------------------------------------------------------
 //  メッセージ表示
+//  子機はMsgSpeedはセーブから取れないので、親からもらった物を変数で渡す
 //--------------------------------------------------------------------------
-void MB_MSG_MessageDisp( MB_MSG_WORK *msgWork , const u16 msgId )
+void MB_MSG_MessageDisp( MB_MSG_WORK *msgWork , const u16 msgId , const int msgSpeed )
 {
   if( msgWork->printHandle != NULL )
   {
@@ -182,7 +182,7 @@ void MB_MSG_MessageDisp( MB_MSG_WORK *msgWork , const u16 msgId )
     }
     
     msgWork->printHandle = PRINTSYS_PrintStream( msgWork->msgWin , 0,0, msgWork->msgStr ,msgWork->fontHandle ,
-                        MSGSPEED_GetWait() , msgWork->tcblSys , 2 , msgWork->heapId , 0 );
+                        msgSpeed , msgWork->tcblSys , 2 , msgWork->heapId , 0 );
   }
   BmpWinFrame_Write( msgWork->msgWin , WINDOW_TRANS_ON_V , MB_MSG_MSGWIN_CGX , MB_MSG_PLT_MAIN_MSGWIN );
 }

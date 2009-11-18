@@ -11,6 +11,7 @@
 #include <gflib.h>
 #include "system/main.h"
 #include "system/gfl_use.h"
+#include "gamesystem/msgspeed.h"
 #include "net/wih.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
@@ -47,6 +48,14 @@ typedef enum
   MPS_SEND_IMAGE_INIT,
   MPS_SEND_IMAGE_MAIN,
   MPS_SEND_IMAGE_TERM,
+
+  MPS_SEND_INIT_DATA,
+  MPS_WAIT_SELBOX,
+
+  MPS_SEND_GAMEDATA_INIT,
+  MPS_SEND_GAMEDATA_SEND,
+  MPS_SEND_GAMEDATA_WAIT,
+
 }MB_PARENT_STATE;
 
 typedef enum
@@ -58,6 +67,7 @@ typedef enum
   
   MPSS_SEND_IMAGE_WAIT_BOOT_INIT,
   MPSS_SEND_IMAGE_WAIT_BOOT,
+  MPSS_SEND_IMAGE_FINISH_BOOT,
 //-------------------------------
 
   
@@ -78,11 +88,12 @@ typedef struct
   u8              subState;
   
   //SendImage
-  STRBUF *romTitle; //DLROMタイトル
-  STRBUF *romInfo;  //DLROM説明
-  u16    *romTitleStr;
-  u16    *romInfoStr;
+  u16    *romTitleStr;  //DLROMタイトル
+  u16    *romInfoStr;   //DLROM説明
   
+  MB_COMM_INIT_DATA initData;
+  void* gameData;
+  u32   gameDataSize;
   //メッセージ用
   MB_MSG_WORK *msgWork;
   
@@ -203,6 +214,57 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     
   case MPS_SEND_IMAGE_TERM:
     MP_PARENT_SendImage_Term( work );
+    if( work->subState == MPSS_SEND_IMAGE_FINISH_BOOT )
+    {
+      //起動成功
+      work->state = MPS_SEND_INIT_DATA;
+    }
+    else
+    {
+      //起動失敗
+      work->state = MPS_FADEOUT;
+    }
+    break;
+    
+  //起動後
+  case MPS_SEND_INIT_DATA:
+    work->initData.msgSpeed = MSGSPEED_GetWait();
+    if( MB_COMM_Send_InitData( work->commWork , &work->initData ) == TRUE )
+    {
+      //work->state = MPS_WAIT_SELBOX;
+      work->state = MPS_SEND_GAMEDATA_INIT;
+    }
+    break;
+    
+  case MPS_WAIT_SELBOX:
+    break;
+    
+  case MPS_SEND_GAMEDATA_INIT:
+    {
+      FSFile file;
+      BOOL result;
+      const char* arcPath = GFUser_GetFileNameByArcID( ARCID_MUSICAL_PROGRAM );
+      //読み出す
+      FS_InitFile( &file );
+      result = FS_OpenFile(&file,arcPath);
+      GF_ASSERT( result );
+      FS_SeekFileToBegin( &file );
+      work->gameDataSize = FS_GetLength( &file );
+      work->gameData = GFL_HEAP_AllocClearMemory( work->heapId , work->gameDataSize );
+      FS_ReadFile( &file,work->gameData,work->gameDataSize );
+      result = FS_CloseFile( &file );
+      GF_ASSERT( result );
+      OS_TPrintf( "[%d]\n",work->gameDataSize );
+    }
+    work->state = MPS_SEND_GAMEDATA_SEND;
+    break;
+
+  case MPS_SEND_GAMEDATA_SEND:
+    MB_COMM_InitSendGameData( work->commWork , work->gameData , work->gameDataSize );
+    work->state = MPS_SEND_GAMEDATA_WAIT;
+    break;
+
+  case MPS_SEND_GAMEDATA_WAIT:
     break;
     
   }
@@ -392,8 +454,8 @@ static void MP_PARENT_SendImage_Init( MB_PARENT_WORK *work )
 //--------------------------------------------------------------
 static void MP_PARENT_SendImage_Term( MB_PARENT_WORK *work )
 {
-  GFL_HEAP_FreeMemory( work->romTitle );
-  GFL_HEAP_FreeMemory( work->romInfo );
+  GFL_HEAP_FreeMemory( work->romTitleStr );
+  GFL_HEAP_FreeMemory( work->romInfoStr );
 }
 
 //--------------------------------------------------------------
@@ -423,7 +485,7 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
 
       MB_MSG_MessageCreateWordset( work->msgWork );
       MB_MSG_MessageWordsetName( work->msgWork , 0 , GAMEDATA_GetMyStatus(work->initWork->gameData) );
-      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_01 );
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_01 , MSGSPEED_GetWait() );
       MB_MSG_MessageDeleteWordset( work->msgWork );
 
       work->subState = MPSS_SEND_IMAGE_MBSYS_MAIN;
@@ -435,11 +497,16 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
 
   case MPSS_SEND_IMAGE_WAIT_BOOT_INIT:
     MB_COMM_InitParent( work->commWork );
-    MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_02 );
+    MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_02 , MSGSPEED_GetWait() );
     work->subState = MPSS_SEND_IMAGE_WAIT_BOOT;
     break;
     
   case MPSS_SEND_IMAGE_WAIT_BOOT:
+    if( MB_COMM_IsSendEnable( work->commWork ) == TRUE )
+    {
+      work->subState = MPSS_SEND_IMAGE_FINISH_BOOT;
+      return TRUE;
+    }
     break;
   }
   

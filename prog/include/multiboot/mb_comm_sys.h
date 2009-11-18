@@ -21,7 +21,8 @@
 #pragma mark [> enum
 typedef enum
 {
-  MCFT_CONNECT,
+  MCFT_GAMEDATA_SIZE,
+  MCFT_GAMEDATA_POST,
 }MB_COMM_FLG_TYPE;
 
 //======================================================================
@@ -30,12 +31,18 @@ typedef enum
 #pragma mark [> struct
 typedef struct _MB_COMM_WORK MB_COMM_WORK;
 
+typedef struct
+{
+  int  msgSpeed;
+  
+}MB_COMM_INIT_DATA;
 
 //======================================================================
 //	proto
 //======================================================================
 #pragma mark [> proto
 
+//通信確立前
 extern MB_COMM_WORK* MB_COMM_CreateSystem( const HEAPID heapId );
 extern void MB_COMM_DeleteSystem( MB_COMM_WORK* commWork );
 extern void MB_COMM_UpdateSystem( MB_COMM_WORK* commWork );
@@ -46,4 +53,18 @@ extern const BOOL MB_COMM_IsFinishComm( MB_COMM_WORK* commWork );
 
 extern void MB_COMM_InitParent( MB_COMM_WORK* commWork );
 extern void MB_COMM_InitChild( MB_COMM_WORK* commWork , u8 *macAddress );
+
+//通信確立後
+extern MB_COMM_INIT_DATA* MB_COMM_GetInitData( MB_COMM_WORK* commWork );
+
+//チェック系
+extern const BOOL MB_COMM_IsSendEnable( const MB_COMM_WORK* commWork );
+extern const BOOL MB_COMM_IsPostInitData( const MB_COMM_WORK* commWork );
+
+//送信系
+extern void MB_COMM_InitSendGameData( MB_COMM_WORK* commWork , void* gameData , u32 size );
+extern const BOOL MB_COMM_Send_Flag( MB_COMM_WORK *commWork , const MB_COMM_FLG_TYPE type , const u32 value );
+//送信終わるまでデータの保持を
+extern const BOOL MB_COMM_Send_InitData( MB_COMM_WORK *commWork , MB_COMM_INIT_DATA *initData );
+extern const BOOL MB_COMM_Send_GameData( MB_COMM_WORK *commWork , void *gameData , const u32 size );
 

@@ -16,7 +16,8 @@ enum {
 	NARC_mb_child_gra_bg_main_NCGR = 2,
 	NARC_mb_child_gra_bg_sub_NCGR = 3,
 	NARC_mb_child_gra_bg_main_NSCR = 4,
-	NARC_mb_child_gra_bg_sub_NSCR = 5
+	NARC_mb_child_gra_bg_sub_NSCR = 5,
+	NARC_mb_child_gra_wb_sound_palpark_sdat = 6
 };
 
 /* NARC_MB_CHILD_GRA_NAIX_ */

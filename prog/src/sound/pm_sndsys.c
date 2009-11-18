@@ -97,7 +97,12 @@ typedef struct {
  *
  */
 //============================================================================================
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE //通常時処理
 #define	SOUND_HEAP_SIZE	(0x0a0000 - 30000 - 12288)   //640K - 30000 - 0x3000
+#else                   //DL子機時処理
+#define	SOUND_HEAP_SIZE	(0x030000)   //非常に適当
+#endif //MULTI_BOOT_MAKE
 #define CAPTURE_BUFSIZE (0x2000)
 #define TRACK_NUM	(16)
 
@@ -126,6 +131,8 @@ OSThread		soundLoadThread;
 static u64	threadStack[ THREAD_STACKSIZ / sizeof(u64) ];
 THREAD_ARG	threadArg;
 
+static void PMSND_InitCore( void );
+
 static void	PMSND_InitSEplayer( void );
 static void PMSND_InitSystemFadeBGM( void );
 static void PMSND_SetSystemFadeBGM( u32 nextSoundIdx, u16 trackBit, u8 outFrame, u8 inFrame );
@@ -153,6 +160,38 @@ void	PMSND_Init( void )
 
 	// サウンドの設定
 	NNS_SndArcInitWithResult( &PmSoundArc, "wb_sound_data.sdat", PmSndHeapHandle, FALSE );
+
+  PMSND_InitCore();
+  
+	// 常駐サウンドデータ読み込み
+	systemPresetHandle = SOUNDMAN_PresetGroup(GROUP_GLOBAL);
+	usrPresetHandle1 = NULL;
+#ifdef PM_DEBUG
+	heapRemainsAfterPresetSE = NNS_SndHeapGetFreeSize(PmSndHeapHandle);
+#endif
+	debugBGMsetFlag = FALSE;
+  
+}
+void	PMSND_InitMultiBoot( void* sndData )
+{
+	// サウンドシステム初期化(マルチブート子機
+	// 初期化データは32バイトアライメント
+	NNS_SndInit();
+	PmSndHeapHandle = NNS_SndHeapCreate(PmSoundHeap, SOUND_HEAP_SIZE);
+
+	// サウンドの設定
+	NNS_SndArcInitOnMemory( &PmSoundArc, sndData );
+
+  PMSND_InitCore();
+
+	debugBGMsetFlag = FALSE;
+}
+
+//---------------------------------------------------
+//  初期化コア部分
+//---------------------------------------------------
+static void PMSND_InitCore( void )
+{
 #ifdef PM_DEBUG
 	heapRemainsAfterSys = NNS_SndHeapGetFreeSize(PmSndHeapHandle);
 #endif
@@ -180,15 +219,8 @@ void	PMSND_Init( void )
 
 	trackActiveBit = 0;	
 	bgmFadeCounter = 0;
-
-	// 常駐サウンドデータ読み込み
-	systemPresetHandle = SOUNDMAN_PresetGroup(GROUP_GLOBAL);
-	usrPresetHandle1 = NULL;
-#ifdef PM_DEBUG
-	heapRemainsAfterPresetSE = NNS_SndHeapGetFreeSize(PmSndHeapHandle);
-#endif
-	debugBGMsetFlag = FALSE;
 }
+
 
 //============================================================================================
 /**
