@@ -427,3 +427,7 @@ extern u32 BOX2UI_HitCheckTrgPartyPokeRight(void);
 
 
 extern u32 BOX2UI_HitCheckContTrayArrow(void);
+
+
+extern BOOL BOX2UI_HitCheckTrayScroll( u32 * x, u32 * y );
+

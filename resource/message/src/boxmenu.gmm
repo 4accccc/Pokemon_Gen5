@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2009-11-09T16:45:52"/>
+	<create user="hiro_nakamura" host="W00144" date="2009-11-17T14:08:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -513,10 +513,10 @@
 		<language name="JPN_KANJI" font=" 1:small" width="96">ボックス２４</language>
 	</row>
 
-	<row id="mes_boxmenu_02_20" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
+	<row id="mes_boxmenu_02_20" text-color="#000000,,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>ボックス内のポケモン数</comment>
-		<language name="JPN" font=" 1:small" width="96">[2:01:２桁:0]／[2:01:２桁:1]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="96">[2:01:２桁:0]／[2:01:２桁:1]</language>
+		<language name="JPN" font=" 1:small" width="96">[2:01:２桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">[2:01:２桁:0]</language>
 	</row>
 
 	<row id="mes_boxmenu_03_01">

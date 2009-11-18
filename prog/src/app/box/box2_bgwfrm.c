@@ -1552,10 +1552,10 @@ void BOX2BGWFRM_BoxMoveFrmPut( BOX2_SYS_WORK * syswk )
 
 	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_MOVE, 0, 0 );
 
-	BOX2BMP_BoxMoveNameNumWrite( syswk );
+//	BOX2BMP_BoxMoveNameWrite( syswk );
 	BOX2OBJ_BoxMoveObjInit( syswk );
 	BOX2OBJ_BoxMoveCursorSet( syswk );
-	BOX2OBJ_BoxMoveNameSet( syswk );
+//	BOX2OBJ_BoxMoveNameSet( syswk );
 	BOX2OBJ_BoxMoveFrmScroll( syswk, 8 * BOXMOVE_FRM_SY );
 }
 

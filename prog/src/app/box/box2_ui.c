@@ -1617,7 +1617,7 @@ static void PartyOutBoxSelCallBack_Move( void * work, int now_pos, int old_pos )
 		BOX2OBJ_TrayIconChange( syswk );
 		BOX2OBJ_BoxMoveNameSet( syswk );
 		BOX2OBJ_BoxMoveCursorSet( syswk );
-		BOX2BMP_BoxMoveNameNumWrite( syswk );
+		BOX2BMP_BoxMoveNameWrite( syswk, 0 );
 //		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_RA, BOX2OBJ_ANM_R_ARROW_ON );
 		BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 		BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
@@ -1634,7 +1634,7 @@ static void PartyOutBoxSelCallBack_Move( void * work, int now_pos, int old_pos )
 		BOX2OBJ_TrayIconChange( syswk );
 		BOX2OBJ_BoxMoveNameSet( syswk );
 		BOX2OBJ_BoxMoveCursorSet( syswk );
-		BOX2BMP_BoxMoveNameNumWrite( syswk );
+		BOX2BMP_BoxMoveNameWrite( syswk, 0 );
 //		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_LA, BOX2OBJ_ANM_L_ARROW_ON );
 		BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 		BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
@@ -1645,7 +1645,7 @@ static void PartyOutBoxSelCallBack_Move( void * work, int now_pos, int old_pos )
 		if( old_pos != BOX2UI_PTOUT_BOXSEL_ENTER ){
 			syswk->box_mv_pos = BOX2MAIN_MV_TRAY_DEF(syswk->box_mv_pos) + now_pos;
 			BOX2OBJ_BoxMoveNameSet( syswk );
-			BOX2BMP_BoxMoveNameNumWrite( syswk );
+			BOX2BMP_BoxMoveNameWrite( syswk, 0 );
 		}
 	}
 
@@ -2058,7 +2058,7 @@ static void BoxArrangePokeMoveCallBack_Move( void * work, int now_pos, int old_p
 		BOX2OBJ_TrayIconChange( syswk );
 		BOX2OBJ_BoxMoveNameSet( syswk );
 		BOX2OBJ_BoxMoveCursorSet( syswk );
-		BOX2BMP_BoxMoveNameNumWrite( syswk );
+		BOX2BMP_BoxMoveNameWrite( syswk, 0 );
 //		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_RA, BOX2OBJ_ANM_R_ARROW_ON );
 		BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 		BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
@@ -2075,7 +2075,7 @@ static void BoxArrangePokeMoveCallBack_Move( void * work, int now_pos, int old_p
 		BOX2OBJ_TrayIconChange( syswk );
 		BOX2OBJ_BoxMoveNameSet( syswk );
 		BOX2OBJ_BoxMoveCursorSet( syswk );
-		BOX2BMP_BoxMoveNameNumWrite( syswk );
+		BOX2BMP_BoxMoveNameWrite( syswk, 0 );
 //		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_LA, BOX2OBJ_ANM_L_ARROW_ON );
 		BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 		BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
@@ -2086,10 +2086,15 @@ static void BoxArrangePokeMoveCallBack_Move( void * work, int now_pos, int old_p
 		if( old_pos >= BOX2UI_ARRANGE_MOVE_TRAY1 && old_pos <= BOX2UI_ARRANGE_MOVE_TRAY6 ){
 			syswk->box_mv_pos = BOX2MAIN_MV_TRAY_DEF(syswk->box_mv_pos) + now_pos - BOX2UI_ARRANGE_MOVE_TRAY1;
 			BOX2OBJ_BoxMoveNameSet( syswk );
-			BOX2BMP_BoxMoveNameNumWrite( syswk );
+			BOX2BMP_BoxMoveNameWrite( syswk, 0 );
 		}
 	}
 */
+	if( now_pos >= BOX2UI_ARRANGE_PGT_TRAY2 && now_pos <= BOX2UI_ARRANGE_PGT_TRAY5 ){
+		BOX2OBJ_ChangeTrayName( syswk, now_pos-BOX2UI_ARRANGE_PGT_TRAY2, TRUE );
+	}else{
+		BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
+	}
 
 	BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 	BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
@@ -2599,7 +2604,7 @@ static void BoxThemaChgCallBack_Move( void * work, int now_pos, int old_pos )
 		BOX2OBJ_TrayIconChange( syswk );
 		BOX2OBJ_BoxMoveNameSet( syswk );
 		BOX2OBJ_BoxMoveCursorSet( syswk );
-		BOX2BMP_BoxMoveNameNumWrite( syswk );
+		BOX2BMP_BoxMoveNameWrite( syswk, 0 );
 //		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_RA, BOX2OBJ_ANM_R_ARROW_ON );
 
 		BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
@@ -2617,7 +2622,7 @@ static void BoxThemaChgCallBack_Move( void * work, int now_pos, int old_pos )
 		BOX2OBJ_TrayIconChange( syswk );
 		BOX2OBJ_BoxMoveNameSet( syswk );
 		BOX2OBJ_BoxMoveCursorSet( syswk );
-		BOX2BMP_BoxMoveNameNumWrite( syswk );
+		BOX2BMP_BoxMoveNameWrite( syswk, 0 );
 //		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_LA, BOX2OBJ_ANM_L_ARROW_ON );
 
 		BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
@@ -2629,7 +2634,7 @@ static void BoxThemaChgCallBack_Move( void * work, int now_pos, int old_pos )
 		if( old_pos != BOX2UI_BOXTHEMA_CHG_MOVE ){
 			syswk->box_mv_pos = BOX2MAIN_MV_TRAY_DEF(syswk->box_mv_pos) + now_pos;
 			BOX2OBJ_BoxMoveNameSet( syswk );
-			BOX2BMP_BoxMoveNameNumWrite( syswk );
+			BOX2BMP_BoxMoveNameWrite( syswk, 0 );
 		}
 	}
 
@@ -2996,6 +3001,22 @@ u32 BOX2UI_HitCheckContTrayArrow(void)
 	return HitCheckCont( &BoxArrangeMainCursorMoveData[BOX2UI_ARRANGE_MAIN_LEFT], 2 );
 }
 
+
+static const GFL_UI_TP_HITTBL TrayScrollHitTbl[] =
+{
+	{ 0, 167, 240, 255 },
+	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
+};
+
+
+BOOL BOX2UI_HitCheckTrayScroll( u32 * x, u32 * y )
+{
+	if( GFL_UI_TP_HitCont( TrayScrollHitTbl ) != GFL_UI_TP_HIT_NONE ){
+		GFL_UI_TP_GetPointCont( x, y );
+		return TRUE;
+	}
+	return FALSE;
+}
 
 
 

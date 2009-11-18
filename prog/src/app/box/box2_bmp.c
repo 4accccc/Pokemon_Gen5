@@ -278,6 +278,8 @@
 #define	FCOL_FRMBUTTN_OFF	( PRINTSYS_LSB_Make(10,15,FRMBUTTON_BG_COL) )	// フォントカラー：フレーム内ボタン
 #define	FCOL_SUB_WIN			( PRINTSYS_LSB_Make(1,2,0) )				// フォントカラー：上画面ウィンドウ用
 
+#define	FCOL_FNTOAM				( PRINTSYS_LSB_Make(1,2,0) )		// フォントカラー：黒抜
+
 
 /*
 // メッセージ表示モード
@@ -1697,61 +1699,49 @@ void BOX2BMP_TrayNamePut( BOX2_SYS_WORK * syswk, u8 * cgx, u32 chr, u32 sx, u32 
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void BOX2BMP_BoxMoveNameNumWrite( BOX2_SYS_WORK * syswk )
+void BOX2BMP_BoxMoveNameWrite( BOX2_SYS_WORK * syswk, u32 pos )
 {
-/*
-	GF_BGL_BMPWIN	win;
+	STRBUF * str;
+	u32	x;
+
+	pos = syswk->box_mv_pos + pos;
+	if( pos >= syswk->trayMax ){
+		pos -= syswk->trayMax;
+	}
+
+	str = GFL_STR_CreateBuffer( BOX_TRAYNAME_BUFSIZE, HEAPID_BOX_APP );
+
+	BOXDAT_GetBoxName( syswk->dat->sv_box, pos, str );
+	GFL_BMP_Clear( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NAME].bmp, 0 );
+	x = ( BOX2OBJ_FNTOAM_BOXNAME_SX * 8 - PRINTSYS_GetStrWidth( str, syswk->app->font, 0 ) ) / 2;
+	PRINTSYS_PrintColor( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NAME].bmp, x, 0, str, syswk->app->font, FCOL_FNTOAM );
+
+	GFL_STR_DeleteBuffer( str );
+
+	BmpOam_ActorBmpTrans( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NAME].oam );
+}
+
+// 格納数書き込み
+void BOX2BMP_WriteTrayNum( BOX2_SYS_WORK * syswk, u32 tray, u32 idx )
+{
 	STRBUF * str;
 
-	// 名前
-	GF_BGL_BmpWinInit( &win );
-	GF_BGL_BmpWinObjAdd(
-		syswk->app->bgl, &win,
-		BOX2OBJ_FNTOAM_BOXNAME_SX, BOX2OBJ_FNTOAM_BOXNAME_SY, 0, 0 );
-
-	str = STRBUF_Create( BOX_TRAYNAME_BUFSIZE, HEAPID_BOX_APP );
-	BOXDAT_GetBoxName( syswk->dat->sv_box, syswk->box_mv_pos, str );
-	StrPrintCore(
-		&win, str, BOX2OBJ_FNTOAM_BOXNAME_SX*8/2, 0,
-		FONT_SYSTEM, FNTCOL_FNTOAM, STRPRINT_MODE_CENTER );
-	STRBUF_Delete( str );
-
-	BOX2OBJ_FontOamResetBmp( syswk->app, &win, BOX2MAIN_FNTOAM_TRAY_NAME );
-
-	GFL_BMPWIN_Delete( &win );
-//↑[GS_CONVERT_TAG]
-
-	// 数字
-	GF_BGL_BmpWinInit( &win );
-	GF_BGL_BmpWinObjAdd(
-		syswk->app->bgl, &win,
-		BOX2OBJ_FNTOAM_BOXNUM_SX, BOX2OBJ_FNTOAM_BOXNUM_SY, 0, 0 );
-
-	str = MSGMAN_AllocString( syswk->app->mman, mes_boxmenu_02_20 );
+	str = GFL_MSG_CreateString( syswk->app->mman, mes_boxmenu_02_20 );
 
 	WORDSET_RegisterNumber(
 		syswk->app->wset, 0,
-		BOXDAT_GetPokeExistCount(syswk->dat->sv_box,syswk->box_mv_pos),
-		2, NUM_MODE_LEFT, StrNumberCodeType_DEFAULT );
-//↑[GS_CONVERT_TAG]
-	WORDSET_RegisterNumber(
-		syswk->app->wset, 1,
-		BOX_MAX_POS,
-		2, NUM_MODE_LEFT, StrNumberCodeType_DEFAULT );
-//↑[GS_CONVERT_TAG]
+		BOXDAT_GetPokeExistCount( syswk->dat->sv_box, tray ),
+		2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	WORDSET_ExpandStr( syswk->app->wset, syswk->app->exp, str );
 
-	WORDSET_ExpandStr( syswk->app->wset, syswk->app->expbuf, str );
+	GFL_BMP_Clear( syswk->app->fobj[idx].bmp, 0 );
+	PRINTSYS_PrintColor( syswk->app->fobj[idx].bmp, 0, 0, syswk->app->exp, syswk->app->nfnt, FCOL_FNTOAM );
 
-	StrPrintCore(
-		&win, syswk->app->expbuf, BOX2OBJ_FNTOAM_BOXNUM_SX*8/2, 0,
-		FONT_SYSTEM, FNTCOL_FNTOAM, STRPRINT_MODE_CENTER );
-	STRBUF_Delete( str );
+	GFL_STR_DeleteBuffer( str );
 
-	BOX2OBJ_FontOamResetBmp( syswk->app, &win, BOX2MAIN_FNTOAM_TRAY_NUM );
-
-	GFL_BMPWIN_Delete( &win );
-*/
+	BmpOam_ActorBmpTrans( syswk->app->fobj[idx].oam );
 }
+
 
 //--------------------------------------------------------------------------------------------
 /**

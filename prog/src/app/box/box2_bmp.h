@@ -404,7 +404,9 @@ extern void BOX2BMP_TrayNamePut( BOX2_SYS_WORK * syswk, u8 * cgx, u32 chr, u32 s
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2BMP_BoxMoveNameNumWrite( BOX2_SYS_WORK * syswk );
+extern void BOX2BMP_BoxMoveNameWrite( BOX2_SYS_WORK * syswk, u32 pos );
+
+extern void BOX2BMP_WriteTrayNum( BOX2_SYS_WORK * syswk, u32 tray, u32 idx );
 
 //--------------------------------------------------------------------------------------------
 /**

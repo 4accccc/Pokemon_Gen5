@@ -26,6 +26,11 @@
 //	定数定義
 //============================================================================================
 
+// [ HEAPID_BOX_SYS ] 後方確保用定義
+#define	HEAPID_BOX_SYS_L		( GFL_HEAP_LOWID(HEAPID_BOX_SYS) )
+// [ HEAPID_BOX_APP ] 後方確保用定義
+#define	HEAPID_BOX_APP_L		( GFL_HEAP_LOWID(HEAPID_BOX_APP) )
+
 // BGパレット
 #define	BOX2MAIN_BG_PAL_TOUCH_BAR	( 7 )			// タッチバー
 #define	BOX2MAIN_BG_PAL_YNWIN			( 8 )			// はい・いいえウィンド
@@ -135,7 +140,7 @@ enum {
 //	BOX2OBJ_ID_BOXMV_RA,	// ボックス移動矢印（右）
 	BOX2OBJ_ID_TRAY_CUR,	// トレイカーソル
 	BOX2OBJ_ID_TRAY_NAME,	// トレイ名背景
-	BOX2OBJ_ID_TRAY_ARROW,	// トレイ矢印
+//	BOX2OBJ_ID_TRAY_ARROW,	// トレイ矢印
 
 	BOX2OBJ_ID_HAND_CURSOR,	// 手カーソル
 	BOX2OBJ_ID_HAND_SHADOW,	// 手カーソル影
@@ -267,7 +272,12 @@ enum {
 // ＯＡＭフォント
 enum {
 	BOX2MAIN_FNTOAM_TRAY_NAME = 0,
-	BOX2MAIN_FNTOAM_TRAY_NUM,
+	BOX2MAIN_FNTOAM_TRAY_NUM1,
+	BOX2MAIN_FNTOAM_TRAY_NUM2,
+	BOX2MAIN_FNTOAM_TRAY_NUM3,
+	BOX2MAIN_FNTOAM_TRAY_NUM4,
+	BOX2MAIN_FNTOAM_TRAY_NUM5,
+	BOX2MAIN_FNTOAM_TRAY_NUM6,
 	BOX2MAIN_FNTOAM_MAX
 };
 
@@ -284,6 +294,7 @@ typedef struct {
 // ＯＡＭフォントワーク
 typedef struct {
 	BMPOAM_ACT_PTR oam;
+	GFL_BMP_DATA * bmp;
 //	CHAR_MANAGER_ALLOCDATA	cma;
 }BOX2_FONTOAM;
 

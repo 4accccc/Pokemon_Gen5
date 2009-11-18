@@ -6382,6 +6382,12 @@ int BOX2MAIN_VFuncTrayIconScrollUp( BOX2_SYS_WORK * syswk )
 	vf = &syswk->app->vfunk;
 
 	if( vf->cnt == BOX2MAIN_TRAY_SCROLL_CNT ){
+		u8 pos = CURSORMOVE_PosGet( syswk->app->cmwk );
+		if( pos >= BOX2UI_ARRANGE_PGT_TRAY2 && pos <= BOX2UI_ARRANGE_PGT_TRAY5 ){
+			BOX2OBJ_ChangeTrayName( syswk, pos-BOX2UI_ARRANGE_PGT_TRAY2, TRUE );
+		}else{
+			BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
+		}
 		BOX2OBJ_EndTrayCursorScroll( syswk );
 		vf->cnt = 0;
 		return 0;
@@ -6399,6 +6405,12 @@ int BOX2MAIN_VFuncTrayIconScrollDown( BOX2_SYS_WORK * syswk )
 	vf = &syswk->app->vfunk;
 
 	if( vf->cnt == BOX2MAIN_TRAY_SCROLL_CNT ){
+		u8 pos = CURSORMOVE_PosGet( syswk->app->cmwk );
+		if( pos >= BOX2UI_ARRANGE_PGT_TRAY2 && pos <= BOX2UI_ARRANGE_PGT_TRAY5 ){
+			BOX2OBJ_ChangeTrayName( syswk, pos-BOX2UI_ARRANGE_PGT_TRAY2, TRUE );
+		}else{
+			BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
+		}
 		BOX2OBJ_EndTrayCursorScroll( syswk );
 		vf->cnt = 0;
 		return 0;

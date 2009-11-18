@@ -23,6 +23,7 @@
 
 #include "box2_main.h"
 #include "box2_obj.h"
+#include "box2_bmp.h"
 #include "box_gra.naix"
 
 
@@ -73,11 +74,11 @@ enum {
 // ポケモン一枚絵データ
 #define	POKEGRA_TEX_SIZE	( 0x20 * 100 )	// テクスチャサイズ
 #define	POKEGRA_PAL_SIZE	( 0x20 )		// パレットサイズ
-
+*/
 // フォントOAMで使用するOBJ管理数
 // トレイ名と収納数で使用するBMPWINのキャラサイズ分が最大なので、それだけあれば足りる。
-#define	FNTOAM_CHR_MAX		( BOX2OBJ_FNTOAM_BOXNAME_SX * BOX2OBJ_FNTOAM_BOXNAME_SY + BOX2OBJ_FNTOAM_BOXNUM_SX * BOX2OBJ_FNTOAM_BOXNUM_SY )
-*/
+#define	FNTOAM_CHR_MAX		( BOX2OBJ_FNTOAM_BOXNAME_SX*BOX2OBJ_FNTOAM_BOXNAME_SY + BOX2OBJ_FNTOAM_BOXNUM_SX*BOX2OBJ_FNTOAM_BOXNUM_SY*6 )
+
 // ポケモンアイコンのプライオリティ（80は適当）
 #define	POKEICON_OBJ_PRI(a)			( 80 + BOX2OBJ_POKEICON_MAX - a*2 )	// 通常のOBJプライオリティ
 #define	POKEICON_OBJ_PRI_PUT(a)	( 80 + BOX2OBJ_POKEICON_MAX - a*2 )	// 配置時のOBJプライオリティ
@@ -94,11 +95,16 @@ enum {
 #define	BOX2OBJ_TRAYICON_PX		( 300 )	// トレイアイコンのデフォルトＸ座標
 #define	BOX2OBJ_TRAYICON_PY		( 0 )		// トレイアイコンのデフォルトＹ座標
 
+#define	BOX2OBJ_TRAYNUM_PX		( 316 )	// トレイの格納数のデフォルトＸ座標
+#define	BOX2OBJ_TRAYNUM_PY		( 2 )		// トレイの格納数のデフォルトＹ座標
+#define	BOX2OBJ_TRAYNUM_SY		( 34 )	// トレイの格納数のＹ座標配置間隔
+
+
 #define	BOX2OBJ_WPICON_SX		( 46 )	// 壁紙アイコンのＸ座標配置間隔
 #define	BOX2OBJ_WPICON_PX		( 59 )	// 壁紙アイコンのデフォルトＸ座標
 
-#define	BOXNAME_OBJ_PX	( 128 )			// トレイ名のOAMフォントのデフォルト表示Ｘ座標
-#define	BOXNAME_OBJ_PY	( 20-48 )		// トレイ名のOAMフォントのデフォルト表示Ｙ座標
+#define	BOXNAME_OBJ_PX	( 212-6 )		// トレイ名のOAMフォントのデフォルト表示Ｘ座標
+#define	BOXNAME_OBJ_PY	( 18 )		// トレイ名のOAMフォントのデフォルト表示Ｙ座標
 
 #define	PARTYPOKE_FRM_PX	( 16 )		// 手持ちポケモンのアイコンデフォルト表示Ｘ座標
 #define	PARTYPOKE_FRM_PY	( 192 )		// 手持ちポケモンのアイコンデフォルト表示Ｙ座標
@@ -255,7 +261,7 @@ static const BOX_CLWK_DATA ClactParamTbl[] =
 	},
 */
 	{	// トレイカーソル
-		{ /*BOX2OBJ_TRAYICON_PX*/0, -21, BOX2OBJ_ANM_TRAY_CURSOR, 5, 1 },
+		{ /*BOX2OBJ_TRAYICON_PX*/0, -21, BOX2OBJ_ANM_TRAY_CURSOR, 6, 1 },
 		BOX2MAIN_CHRRES_BOXOBJ, BOX2MAIN_PALRES_BOXOBJ, BOX2MAIN_CELRES_BOXOBJ,
 		0, CLSYS_DRAW_MAIN,
 	},
@@ -264,11 +270,13 @@ static const BOX_CLWK_DATA ClactParamTbl[] =
 		BOX2MAIN_CHRRES_BOXOBJ, BOX2MAIN_PALRES_BOXOBJ, BOX2MAIN_CELRES_BOXOBJ,
 		0, CLSYS_DRAW_MAIN,
 	},
+/*
 	{	// トレイ矢印
 		{ BOXNAME_OBJ_PX, BOXNAME_OBJ_PY, BOX2OBJ_ANM_TRAY_ARROW, 5, 1 },
 		BOX2MAIN_CHRRES_BOXOBJ, BOX2MAIN_PALRES_BOXOBJ, BOX2MAIN_CELRES_BOXOBJ,
 		0, CLSYS_DRAW_MAIN,
 	},
+*/
 
 	{	// 手カーソル
 		{ 128, 128, BOX2OBJ_ANM_HAND_NORMAL, 0, 0 },
@@ -370,7 +378,7 @@ static const s16 PartyPokeInitPos[6][2] =
 	{ PARTYPOKE_FRM_PX+24, PARTYPOKE_FRM_PY+80 }, { PARTYPOKE_FRM_PX+64, PARTYPOKE_FRM_PY+88 },
 };
 
-static const u8 BoxNamePosTbl[] = { 80, 96, 112, 144, 160, 176 };	// ボックス移動時の名前表示Ｘ座標テーブル
+//static const u8 BoxNamePosTbl[] = { 80, 96, 112, 144, 160, 176 };	// ボックス移動時の名前表示Ｘ座標テーブル
 
 // 手持ちポケモン表示座標
 static const u8 PartyPokeFramePos[6][2] =
@@ -419,10 +427,10 @@ void BOX2OBJ_Init( BOX2_SYS_WORK * syswk )
 void BOX2OBJ_Exit( BOX2_APP_WORK * appwk )
 {
 /*
-	BOX2OBJ_FontOamExit( appwk );
-
 	ClactResManExit( appwk );
 */
+	BOX2OBJ_FontOamExit( appwk );
+
 	ClactDelAll( appwk );
 	ClactResFree( appwk );
 	GFL_CLACT_SYS_Delete();
@@ -440,10 +448,10 @@ static void ClactInit( BOX2_APP_WORK * appwk )
 			124,									// サブ画面OAM管理数					4の倍数
 			0,										// セルVram転送管理数
 
-			BOX2MAIN_CHRRES_MAX,	// 登録できるキャラデータ数
-			BOX2MAIN_PALRES_MAX,	// 登録できるパレットデータ数
-			BOX2MAIN_CELRES_MAX,	// 登録できるセルアニメパターン数
-			0,										// 登録できるマルチセルアニメパターン数（※現状未対応）
+			BOX2MAIN_CHRRES_MAX+FNTOAM_CHR_MAX,	// 登録できるキャラデータ数
+			BOX2MAIN_PALRES_MAX,								// 登録できるパレットデータ数
+			BOX2MAIN_CELRES_MAX,								// 登録できるセルアニメパターン数
+			0,																	// 登録できるマルチセルアニメパターン数（※現状未対応）
 
 		  16,										// メイン CGR　VRAM管理領域　開始オフセット（キャラクタ単位）
 		  16										//< サブ CGR　VRAM管理領域　開始オフセット（キャラクタ単位）
@@ -524,7 +532,7 @@ static void ClactResFree( BOX2_APP_WORK * appwk )
 //--------------------------------------------------------------------------------------------
 static void ClactAdd( BOX2_SYS_WORK * syswk )
 {
-	syswk->app->clunit = GFL_CLACT_UNIT_Create( BOX2OBJ_ID_MAX, 0, HEAPID_BOX_APP );
+	syswk->app->clunit = GFL_CLACT_UNIT_Create( BOX2OBJ_ID_MAX+FNTOAM_CHR_MAX, 0, HEAPID_BOX_APP );
 
 	TrayObjAdd( syswk->app );
 	WallPaperObjAdd( syswk->app );
@@ -2689,7 +2697,7 @@ static void BoxObjAdd( BOX2_APP_WORK * appwk )
 //	appwk->clwk[BOX2OBJ_ID_BOXMV_RA] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_BOXMV_RA] );
 	appwk->clwk[BOX2OBJ_ID_TRAY_CUR] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_TRAY_CUR] );
 	appwk->clwk[BOX2OBJ_ID_TRAY_NAME] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_TRAY_NAME] );
-	appwk->clwk[BOX2OBJ_ID_TRAY_ARROW] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_TRAY_ARROW] );
+//	appwk->clwk[BOX2OBJ_ID_TRAY_ARROW] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_TRAY_ARROW] );
 	appwk->clwk[BOX2OBJ_ID_HAND_CURSOR] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_HAND_CURSOR] );
 	appwk->clwk[BOX2OBJ_ID_HAND_SHADOW] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_HAND_SHADOW] );
 	appwk->clwk[BOX2OBJ_ID_ITEMICON] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_ITEMICON] );
@@ -2981,13 +2989,13 @@ void BOX2OBJ_TrayMoveArrowVanish( BOX2_APP_WORK * appwk, BOOL flg )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void BoxMoveFntOamPos( BOX2_APP_WORK * appwk )
 {
-/*
 	FONTOAM_SetMat( appwk->fobj[BOX2MAIN_FNTOAM_TRAY_NAME].oam, -72, -8 );
 	FONTOAM_SetMat( appwk->fobj[BOX2MAIN_FNTOAM_TRAY_NUM].oam, 32, -8 );
-*/
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -3018,7 +3026,7 @@ void BOX2OBJ_BoxMoveObjInit( BOX2_SYS_WORK * syswk )
 
 //	BOX2OBJ_AnmSet( appwk, BOX2OBJ_ID_TRAY_NAME, BOX2OBJ_ANM_TRAY_NAME );
 
-	BoxMoveFntOamPos( appwk );
+//	BoxMoveFntOamPos( appwk );
 /*
 	FONTOAM_SetDrawFlag( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NAME].oam, TRUE );
 	FONTOAM_SetDrawFlag( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NUM].oam, TRUE );
@@ -3049,11 +3057,14 @@ void BOX2OBJ_BoxMoveFrmScroll( BOX2_SYS_WORK * syswk, s16 mv )
 	BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_TRAY_CUR, &x, &y, CLSYS_DEFREND_MAIN );
 	BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_TRAY_CUR, x-mv, y, CLSYS_DEFREND_MAIN );
 
-	BoxMoveFntOamPos( syswk->app );
+//	BoxMoveFntOamPos( syswk->app );
 
 	for( i=0; i<BOX2OBJ_TRAYICON_MAX; i++ ){
 		BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_TRAYICON+i, &x, &y, CLSYS_DEFREND_MAIN );
 		BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_TRAYICON+i, x-mv, y, CLSYS_DEFREND_MAIN );
+
+		BmpOam_ActorGetPos( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NUM1+i].oam, &x, &y );
+		BmpOam_ActorSetPos( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NUM1+i].oam, x-mv, y );
 	}
 }
 
@@ -3105,6 +3116,7 @@ void BOX2OBJ_BoxMoveCursorSet( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 void BOX2OBJ_BoxMoveNameSet( BOX2_SYS_WORK * syswk )
 {
+/*
 	s16	x, y, px;
 	u16	pos;
 
@@ -3115,23 +3127,31 @@ void BOX2OBJ_BoxMoveNameSet( BOX2_SYS_WORK * syswk )
 		syswk->app, BOX2OBJ_ID_TRAY_NAME, BoxNamePosTbl[pos], y, CLSYS_DEFREND_MAIN );
 
 	BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_TRAYICON+pos, &px, &y, CLSYS_DEFREND_MAIN );
-	BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_TRAY_ARROW, &x, &y, CLSYS_DEFREND_MAIN );
-	BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_TRAY_ARROW, px, y, CLSYS_DEFREND_MAIN );
+//	BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_TRAY_ARROW, &x, &y, CLSYS_DEFREND_MAIN );
+//	BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_TRAY_ARROW, px, y, CLSYS_DEFREND_MAIN );
 
-	BoxMoveFntOamPos( syswk->app );
+//	BoxMoveFntOamPos( syswk->app );
+*/
 }
 
 // トレイアイコンを初期座標へ移動
 void BOX2OBJ_InitTrayIconScroll( BOX2_SYS_WORK * syswk )
 {
 	BOX_CLWK_DATA	prm;
-	s32	i;
+	s16	i;
+	u16	tray;
 
 	for( i=0; i<BOX2OBJ_TRAYICON_MAX; i++ ){
+		tray = BOX2MAIN_GetBoxMoveTrayNum( syswk, i-1 );
+
 		prm = ClaTrayIconParam;
 		prm.dat.pos_y += BOX2OBJ_TRAYICON_SY * i;
 		BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_TRAYICON+i, prm.dat.pos_x, prm.dat.pos_y, CLSYS_DEFREND_MAIN );
-		BOX2OBJ_TrayIconCgxTransIdx( syswk, BOX2MAIN_GetBoxMoveTrayNum(syswk,i-1), BOX2OBJ_ID_TRAYICON+i );
+		BOX2OBJ_TrayIconCgxTransIdx( syswk, tray, BOX2OBJ_ID_TRAYICON+i );
+
+		BmpOam_ActorSetPos( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NUM1+i].oam, BOX2OBJ_TRAYNUM_PX, BOX2OBJ_TRAYNUM_PY+BOX2OBJ_TRAYNUM_SY*i );
+		BOX2BMP_WriteTrayNum( syswk, tray, BOX2MAIN_FNTOAM_TRAY_NUM1+i );
+//		BmpOam_ActorSetDrawEnable( syswk->app->fobj[i].oam, TRUE );
 	}
 }
 
@@ -3308,6 +3328,7 @@ void BOX2OBJ_TrayIconCgxTransPos( BOX2_SYS_WORK * syswk, u32 tray, u32 pos )
 		BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_TRAYICON+i, &x, &y, CLSYS_DEFREND_MAIN );
 		if( pos == y ){
 			BOX2OBJ_TrayIconCgxTransIdx( syswk, tray, BOX2OBJ_ID_TRAYICON+i );
+			BOX2BMP_WriteTrayNum( syswk, tray, BOX2MAIN_FNTOAM_TRAY_NUM1+i );
 			break;
 		}
 	}
@@ -3376,7 +3397,9 @@ void BOX2OBJ_TrayIconScroll( BOX2_SYS_WORK * syswk, s16 mv )
 {
 	u32	i;
 	s16	x, y, mvy;
+	s16	nx, ny, nmvy;
 	s16	prm;
+	u16	tray;
 
 	if( GFL_STD_Abs(mv) == BOX2MAIN_TRAY_SCROLL_CNT ){
 		prm = 2;
@@ -3388,15 +3411,27 @@ void BOX2OBJ_TrayIconScroll( BOX2_SYS_WORK * syswk, s16 mv )
 	}
 
 	for( i=0; i<BOX2OBJ_TRAYICON_MAX; i++ ){
+		// トレイアイコン
 		BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_TRAYICON+i, &x, &y, CLSYS_DEFREND_MAIN );
 		mvy = y + prm;
 		BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_TRAYICON+i, x, mvy, CLSYS_DEFREND_MAIN );
+		// 格納数
+		BmpOam_ActorGetPos( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NUM1+i].oam, &nx, &ny );
+		nmvy = ny + prm;
+		BmpOam_ActorSetPos( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NUM1+i].oam, nx, nmvy );
+
 		if( mvy < -16 ){
-			BOX2OBJ_TrayIconCgxTransIdx( syswk, BOX2MAIN_GetBoxMoveTrayNum(syswk,4), BOX2OBJ_ID_TRAYICON+i );
+			tray = BOX2MAIN_GetBoxMoveTrayNum( syswk, 4 );
+			BOX2OBJ_TrayIconCgxTransIdx( syswk, tray, BOX2OBJ_ID_TRAYICON+i );
 			BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_TRAYICON+i, x, mvy+BOX2OBJ_TRAYICON_SY*BOX2OBJ_TRAYICON_MAX, CLSYS_DEFREND_MAIN );
+			BOX2BMP_WriteTrayNum( syswk, tray, BOX2MAIN_FNTOAM_TRAY_NUM1+i );
+			BmpOam_ActorSetPos( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NUM1+i].oam, nx, nmvy+BOX2OBJ_TRAYICON_SY*BOX2OBJ_TRAYICON_MAX );
 		}else if( mvy >= (BOX2OBJ_TRAYICON_PY+BOX2OBJ_TRAYICON_SY*(BOX2OBJ_TRAYICON_MAX-1)+16) ){
-			BOX2OBJ_TrayIconCgxTransIdx( syswk, BOX2MAIN_GetBoxMoveTrayNum(syswk,-1), BOX2OBJ_ID_TRAYICON+i );
+			tray = BOX2MAIN_GetBoxMoveTrayNum( syswk, -1 );
+			BOX2OBJ_TrayIconCgxTransIdx( syswk, tray, BOX2OBJ_ID_TRAYICON+i );
 			BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_TRAYICON+i, x, mvy-BOX2OBJ_TRAYICON_SY*BOX2OBJ_TRAYICON_MAX, CLSYS_DEFREND_MAIN );
+			BOX2BMP_WriteTrayNum( syswk, tray, BOX2MAIN_FNTOAM_TRAY_NUM1+i );
+			BmpOam_ActorSetPos( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NUM1+i].oam, nx, nmvy-BOX2OBJ_TRAYICON_SY*BOX2OBJ_TRAYICON_MAX );
 		}
 	}
 
@@ -3440,6 +3475,37 @@ void BOX2OBJ_EndTrayCursorScroll( BOX2_SYS_WORK * syswk )
 	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_TRAY_CUR, FALSE );
 }
 
+static const s16 TrayNamePosYTbl[] = {
+	BOXNAME_OBJ_PY + BOX2OBJ_TRAYICON_SY,
+	BOXNAME_OBJ_PY + BOX2OBJ_TRAYICON_SY*2,
+	BOXNAME_OBJ_PY + BOX2OBJ_TRAYICON_SY*3,
+	BOXNAME_OBJ_PY + BOX2OBJ_TRAYICON_SY*4,
+};
+
+void BOX2OBJ_SetTrayNamePos( BOX2_SYS_WORK * syswk, u32 pos )
+{
+	BOX2OBJ_SetPos(
+		syswk->app, BOX2OBJ_ID_TRAY_NAME, BOXNAME_OBJ_PX, TrayNamePosYTbl[pos], CLSYS_DEFREND_MAIN );
+	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_TRAY_NAME, TRUE );
+
+	BmpOam_ActorSetPos(
+		syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NAME].oam,
+		BOXNAME_OBJ_PX - BOX2OBJ_FNTOAM_BOXNAME_SX*8/2,
+		TrayNamePosYTbl[pos] - 8 );
+	BmpOam_ActorSetDrawEnable( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NAME].oam, TRUE );
+}
+
+void BOX2OBJ_ChangeTrayName( BOX2_SYS_WORK * syswk, u32 pos, BOOL flg )
+{
+	if( flg == TRUE ){
+		BOX2BMP_BoxMoveNameWrite( syswk, pos );
+		BOX2OBJ_SetTrayNamePos( syswk, pos );
+	}else{
+		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_TRAY_NAME, FALSE );
+		BmpOam_ActorSetDrawEnable( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NAME].oam, FALSE );
+	}
+}
+
 
 
 //============================================================================================
@@ -3477,7 +3543,7 @@ void BOX2OBJ_WallPaperChgObjInit( BOX2_SYS_WORK * syswk )
 //	BOX2OBJ_SetPos( appwk, BOX2OBJ_ID_BOXMV_RA, BOXMV_RA_PX, BOXMV_RA_PY, CLSYS_DEFREND_MAIN );
 	BOX2OBJ_SetPos( appwk, BOX2OBJ_ID_TRAY_CUR, BOXMV_TRAY_CUR_PX, BOXMV_TRAY_CUR_PY, CLSYS_DEFREND_MAIN );
 	BOX2OBJ_SetPos( appwk, BOX2OBJ_ID_TRAY_NAME, BOXMV_TRAY_NAME_PX, BOXMV_TRAY_NAME_PY, CLSYS_DEFREND_MAIN );
-	BOX2OBJ_SetPos( appwk, BOX2OBJ_ID_TRAY_ARROW, BOXMV_TRAY_ARROW_PX, BOXMV_TRAY_ARROW_PY, CLSYS_DEFREND_MAIN );
+//	BOX2OBJ_SetPos( appwk, BOX2OBJ_ID_TRAY_ARROW, BOXMV_TRAY_ARROW_PX, BOXMV_TRAY_ARROW_PY, CLSYS_DEFREND_MAIN );
 
 /*
 	GFL_CLACT_WK_SetWldPosCap( appwk->cap[BOX2OBJ_ID_BOXMV_LA], BOXMV_LA_PX, BOXMV_LA_PY );
@@ -3518,10 +3584,12 @@ void BOX2OBJ_WallPaperChgFrmScroll( BOX2_APP_WORK * appwk, s16 mv )
 	u32	i;
 	s16	x, y;
 
+/*
 	for( i=BOX2OBJ_ID_TRAY_CUR; i<=BOX2OBJ_ID_TRAY_ARROW; i++ ){
 		BOX2OBJ_GetPos( appwk, i, &x, &y, CLSYS_DEFREND_MAIN );
 		BOX2OBJ_SetPos( appwk, i, x, y+mv, CLSYS_DEFREND_MAIN );
 	}
+*/
 	WallPaperChgFntOamPos( appwk );
 
 	for( i=0; i<BOX2OBJ_WPICON_MAX; i++ ){
@@ -3582,8 +3650,8 @@ void BOX2OBJ_WallPaperNameSet( BOX2_SYS_WORK * syswk )
 	BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_TRAY_NAME, &x, &y, CLSYS_DEFREND_MAIN );
 	BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_TRAY_NAME, px, y, CLSYS_DEFREND_MAIN );
 
-	BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_TRAY_ARROW, &x, &y, CLSYS_DEFREND_MAIN );
-	BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_TRAY_ARROW, px, y, CLSYS_DEFREND_MAIN );
+//	BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_TRAY_ARROW, &x, &y, CLSYS_DEFREND_MAIN );
+//	BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_TRAY_ARROW, px, y, CLSYS_DEFREND_MAIN );
 
 	WallPaperChgFntOamPos( syswk->app );
 }
@@ -3703,7 +3771,7 @@ void BOX2OBJ_PokeOutBoxObjInit( BOX2_SYS_WORK * syswk )
 //	PokeOutBoxObjSet( syswk->app, BOX2OBJ_ID_BOXMV_RA, PTOUT_RA_PX, PTOUT_RA_PY, TRUE );
 	PokeOutBoxObjSet( syswk->app, BOX2OBJ_ID_TRAY_CUR, PTOUT_TRAY_CUR_PX, PTOUT_TRAY_CUR_PY, TRUE );
 	PokeOutBoxObjSet( syswk->app, BOX2OBJ_ID_TRAY_NAME, PTOUT_TRAY_NAME_PX, PTOUT_TRAY_NAME_PY, TRUE );
-	PokeOutBoxObjSet( syswk->app, BOX2OBJ_ID_TRAY_ARROW, PTOUT_TRAY_ARROW_PX, PTOUT_TRAY_ARROW_PY, TRUE );
+//	PokeOutBoxObjSet( syswk->app, BOX2OBJ_ID_TRAY_ARROW, PTOUT_TRAY_ARROW_PX, PTOUT_TRAY_ARROW_PY, TRUE );
 
 	for( i=0; i<BOX2OBJ_TRAYICON_MAX; i++ ){
 		BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_TRAYICON+i, &x, &y, CLSYS_DEFREND_MAIN );
@@ -3714,7 +3782,7 @@ void BOX2OBJ_PokeOutBoxObjInit( BOX2_SYS_WORK * syswk )
 
 	BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_TRAY_NAME, BOX2OBJ_ANM_TRAY_NAME );
 
-	BoxMoveFntOamPos( syswk->app );
+//	BoxMoveFntOamPos( syswk->app );
 /*
 	FONTOAM_SetDrawFlag( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NAME].oam, TRUE );
 	FONTOAM_SetDrawFlag( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NUM].oam, TRUE );
@@ -3740,7 +3808,7 @@ void BOX2OBJ_PokeOutBoxObjVanish( BOX2_SYS_WORK * syswk )
 //	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_BOXMV_RA, FALSE );
 	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_TRAY_CUR, FALSE );
 	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_TRAY_NAME, FALSE );
-	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_TRAY_ARROW, FALSE );
+//	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_TRAY_ARROW, FALSE );
 
 	for( i=0; i<BOX2OBJ_TRAYICON_MAX; i++ ){
 		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_TRAYICON+i, FALSE );
@@ -3787,75 +3855,40 @@ void BOX2OBJ_VanishTouchBarButton( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 void BOX2OBJ_FontOamInit( BOX2_APP_WORK * appwk )
 {
+	BMPOAM_ACT_DATA	finit;
+	BOX2_FONTOAM * fobj;
+	u32	i;
+
 	appwk->fntoam = BmpOam_Init( HEAPID_BOX_APP, appwk->clunit );
 
-
-/*
-	BOX2_FONTOAM * fobj;
-	GF_BGL_BMPWIN	win;
-	FONTOAM_INIT	finit;
-	u32	siz;
-
-	appwk->fntoam = FONTOAM_SysInit( BOX2MAIN_FNTOAM_MAX, HEAPID_BOX_APP );
-
-	// 名前
+	// ボックス名
 	fobj = &appwk->fobj[BOX2MAIN_FNTOAM_TRAY_NAME];
 
-	GF_BGL_BmpWinInit( &win );
-	GF_BGL_BmpWinObjAdd( appwk->bgl, &win, BOX2OBJ_FNTOAM_BOXNAME_SX, BOX2OBJ_FNTOAM_BOXNAME_SY, 0, 2 );
+	fobj->bmp = GFL_BMP_Create( BOX2OBJ_FNTOAM_BOXNAME_SX, BOX2OBJ_FNTOAM_BOXNAME_SY, GFL_BMP_16_COLOR, HEAPID_BOX_APP );
 
-	siz = FONTOAM_NeedCharSize( &win, NNS_G2D_VRAM_TYPE_2DMAIN,  HEAPID_BOX_APP );
-	CharVramAreaAlloc( siz, CHARM_CONT_AREACONT, NNS_G2D_VRAM_TYPE_2DMAIN, &fobj->cma );
+	finit.bmp = fobj->bmp;
+	finit.x = 0;
+	finit.y = 0;
+	finit.pltt_index = appwk->palRes[BOX2MAIN_PALRES_BOXOBJ];
+	finit.pal_offset = 1;		// pltt_indexのパレット内でのオフセット
+	finit.soft_pri = 4;			// ソフトプライオリティ
+	finit.bg_pri = 1;				// BGプライオリティ
+//	finit.setSerface = CLSYS_DEFREND_MAIN;
+	finit.setSerface = CLWK_SETSF_NONE;
+	finit.draw_type  = CLSYS_DRAW_MAIN;
 
-	finit.fontoam_sys = appwk->fntoam;
-	finit.bmp = &win;
-	finit.clact_set = CATS_GetClactSetPtr( appwk->crp );
-	finit.pltt = CATS_PlttProxy( appwk->crp, PAL_ID_BOXOBJ );
-	finit.parent = appwk->cap[BOX2OBJ_ID_TRAY_NAME]->act;
-	finit.char_ofs = fobj->cma.alloc_ofs;
-	finit.x = BOXNAME_OBJ_PX;
-	finit.y = BOXNAME_OBJ_PY;
-	finit.bg_pri = 1;
-	finit.soft_pri = 4;
-	finit.draw_area = NNS_G2D_VRAM_TYPE_2DMAIN;
-	finit.heap = HEAPID_BOX_APP;
+	fobj->oam = BmpOam_ActorAdd( appwk->fntoam, &finit );
+	BmpOam_ActorSetDrawEnable( fobj->oam, FALSE );
 
-	fobj->oam = FONTOAM_Init( &finit );
-	FONTOAM_SetPaletteOffset( fobj->oam, 1 );
-	FONTOAM_SetPaletteOffsetAddTransPlttNo( fobj->oam, 1 );
-
-	GFL_BMPWIN_Delete( &win );
-//↑[GS_CONVERT_TAG]
-
-	// 数字
-	fobj = &appwk->fobj[BOX2MAIN_FNTOAM_TRAY_NUM];
-
-	GF_BGL_BmpWinInit( &win );
-	GF_BGL_BmpWinObjAdd( appwk->bgl, &win, BOX2OBJ_FNTOAM_BOXNUM_SX, BOX2OBJ_FNTOAM_BOXNUM_SY, 0, 2 );
-
-	siz = FONTOAM_NeedCharSize( &win, NNS_G2D_VRAM_TYPE_2DMAIN,  HEAPID_BOX_APP );
-	CharVramAreaAlloc( siz, CHARM_CONT_AREACONT, NNS_G2D_VRAM_TYPE_2DMAIN, &fobj->cma );
-
-	finit.fontoam_sys = appwk->fntoam;
-	finit.bmp = &win;
-	finit.clact_set = CATS_GetClactSetPtr( appwk->crp );
-	finit.pltt = CATS_PlttProxy( appwk->crp, PAL_ID_BOXOBJ );
-	finit.parent = appwk->cap[BOX2OBJ_ID_TRAY_NAME]->act;
-	finit.char_ofs = fobj->cma.alloc_ofs;
-	finit.x = BOXNAME_OBJ_PX;
-	finit.y = BOXNAME_OBJ_PY;
-	finit.bg_pri = 1;
-	finit.soft_pri = 4;
-	finit.draw_area = NNS_G2D_VRAM_TYPE_2DMAIN;
-	finit.heap = HEAPID_BOX_APP;
-
-	fobj->oam = FONTOAM_Init( &finit );
-	FONTOAM_SetPaletteOffset( fobj->oam, 1 );
-	FONTOAM_SetPaletteOffsetAddTransPlttNo( fobj->oam, 1 );
-
-	GFL_BMPWIN_Delete( &win );
-//↑[GS_CONVERT_TAG]
-*/
+	// 格納数
+	for( i=0; i<BOX2OBJ_TRAYICON_MAX; i++ ){
+		fobj = &appwk->fobj[BOX2MAIN_FNTOAM_TRAY_NUM1+i];
+		fobj->bmp = GFL_BMP_Create( BOX2OBJ_FNTOAM_BOXNUM_SX, BOX2OBJ_FNTOAM_BOXNUM_SY, GFL_BMP_16_COLOR, HEAPID_BOX_APP );
+		finit.bmp = fobj->bmp;
+		finit.x = BOX2OBJ_TRAYNUM_PX;
+		finit.y = BOX2OBJ_TRAYNUM_PY+BOX2OBJ_TRAYNUM_SY*i;
+		fobj->oam = BmpOam_ActorAdd( appwk->fntoam, &finit );
+	}
 }
 
 //--------------------------------------------------------------------------------------------
@@ -3869,17 +3902,12 @@ void BOX2OBJ_FontOamInit( BOX2_APP_WORK * appwk )
 //--------------------------------------------------------------------------------------------
 void BOX2OBJ_FontOamExit( BOX2_APP_WORK * appwk )
 {
-/*
 	u32	i;
 
 	for( i=0; i<BOX2MAIN_FNTOAM_MAX; i++ ){
-		CharVramAreaFree( &appwk->fobj[i].cma );
-		FONTOAM_Delete( appwk->fobj[i].oam );
+		BmpOam_ActorDel( appwk->fobj[i].oam );
+		GFL_BMP_Delete( appwk->fobj[i].bmp );
 	}
-
-	FONTOAM_SysDelete( appwk->fntoam );
-*/
-
 	BmpOam_Exit( appwk->fntoam );
 }
 
@@ -3894,13 +3922,13 @@ void BOX2OBJ_FontOamExit( BOX2_APP_WORK * appwk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BOX2OBJ_FontOamResetBmp( BOX2_APP_WORK * appwk, GFL_BMPWIN * win, u32 id )
 {
-/*
 	FONTOAM_OAM_DATA_PTR dat = FONTOAM_OAMDATA_Make( win, HEAPID_BOX_APP );
 
 	FONTOAM_OAMDATA_ResetBmp( appwk->fobj[id].oam, dat, win, HEAPID_BOX_APP );
 
 	FONTOAM_OAMDATA_Free( dat );
-*/
 }
+*/

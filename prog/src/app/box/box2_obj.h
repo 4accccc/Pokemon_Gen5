@@ -55,12 +55,11 @@ enum {
 // 手持ちの持ち物を持っていないポケモンアイコンに半透明設定
 #define	BOX2OBJ_BLENDTYPE_PARTYITEM	( BOX2OBJ_BLENDTYPE_ITEM | BOX2OBJ_BLENDTYPE_PARTYPOKE )
 
-/*
 #define	BOX2OBJ_FNTOAM_BOXNAME_SX	( 12 )	// OAMフォント：ボックス名Ｘサイズ
 #define	BOX2OBJ_FNTOAM_BOXNAME_SY	( 2 )	// OAMフォント：ボックス名Ｙサイズ
-#define	BOX2OBJ_FNTOAM_BOXNUM_SX	( 5 )	// OAMフォント：格納数Ｘサイズ
-#define	BOX2OBJ_FNTOAM_BOXNUM_SY	( 2 )	// OAMフォント：格納数Ｙサイズ
-*/
+#define	BOX2OBJ_FNTOAM_BOXNUM_SX	( 2 )	// OAMフォント：格納数Ｘサイズ
+#define	BOX2OBJ_FNTOAM_BOXNUM_SY	( 1 )	// OAMフォント：格納数Ｙサイズ
+
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -1027,6 +1026,8 @@ extern void BOX2OBJ_TrayIconScroll( BOX2_SYS_WORK * syswk, s16 mv );
 
 extern void BOX2OBJ_InitTrayCursorScroll( BOX2_SYS_WORK * syswk, s32 mv );
 extern void BOX2OBJ_EndTrayCursorScroll( BOX2_SYS_WORK * syswk );
+extern void BOX2OBJ_SetTrayNamePos( BOX2_SYS_WORK * syswk, u32 pos );
+extern void BOX2OBJ_ChangeTrayName( BOX2_SYS_WORK * syswk, u32 pos, BOOL flg );
 
 
 //============================================================================================
