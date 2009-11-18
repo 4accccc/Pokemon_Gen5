@@ -8,6 +8,40 @@
 //======================================================================
 #include "fldmmdl.h"
 
+
+//--------------------------------------------------------------
+//	debug
+//--------------------------------------------------------------
+
+//DEBUG リソースメモリ使用量の検査
+//フィールドマップメモリ使用量調査のため作成
+//テクスチャリソースの確保、破棄時に、メモリ確保サイズを計算する。
+//091117 tomoya takahashi
+//
+//kagayaさんへ　ソースを編集しにくいなどあったら、いってください。
+#ifdef DEBUG_MMDL_RESOURCE_MEMORY_SIZE
+
+static u32 DEBUG_MMDL_RESOURCE_MemorySize = 0;  // リソース
+// リソースメモリーサイズ追加
+#define DEBUG_MMDL_RESOURCE_MEMORY_SIZE_Plus( x )    DEBUG_MMDL_RESOURCE_MemorySize += GFL_HEAP_DEBUG_GetMemoryBlockSize((x))
+// リソースメモリーサイズ削除
+#define DEBUG_MMDL_RESOURCE_MEMORY_SIZE_Minus( x )    DEBUG_MMDL_RESOURCE_MemorySize -= GFL_HEAP_DEBUG_GetMemoryBlockSize((x))
+// リソースメモリーサイズ クリーンチェック
+#define DEBUG_MMDL_RESOURCE_MEMORY_SIZE_IsAllDelete    GF_ASSERT( DEBUG_MMDL_RESOURCE_MemorySize == 0 )
+
+#else   // DEBUG_MMDL_RESOURCE_MEMORY_SIZE
+
+// リソースメモリーサイズ追加
+#define DEBUG_MMDL_RESOURCE_MEMORY_SIZE_Plus( x )   /**/ 
+// リソースメモリーサイズ削除
+#define DEBUG_MMDL_RESOURCE_MEMORY_SIZE_Minus( x )    /**/
+// リソースメモリーサイズ クリーンチェック
+#define DEBUG_MMDL_RESOURCE_MEMORY_SIZE_IsAllDelete   /**/ 
+
+#endif  // DEBUG_MMDL_RESOURCE_MEMORY_SIZE
+
+
+
 //======================================================================
 //	define
 //======================================================================
@@ -243,6 +277,14 @@ void MMDL_BLACTCONT_Setup( MMDLSYS *mmdlsys,
       u8 id = 0;
       GFL_BBD_SetPolID( bbdSys, &id );
     }
+
+    { // Normal
+      VecFx16 normal = { 0,FX16_ONE,FX16_ONE };
+      
+      VEC_Fx16Normalize( &normal, &normal );
+      
+      GFL_BBD_SetUseCustomVecN( bbdSys, &normal );
+    }
   }
 }
 
@@ -261,6 +303,10 @@ void MMDL_BLACTCONT_Release( MMDLSYS *mmdlsys )
   
 	GFL_HEAP_FreeMemory( pBlActCont );
 	MMDLSYS_SetBlActCont( mmdlsys, NULL );
+
+
+  // 全開放チェック
+  DEBUG_MMDL_RESOURCE_MEMORY_SIZE_IsAllDelete;
 }
 
 //--------------------------------------------------------------
@@ -1151,6 +1197,7 @@ static void BlActAddReserve_Init( MMDL_BLACTCONT *pBlActCont )
   
   pReserve->pReserveResParam = GFL_HEAP_AllocClearMemory(
       heapID, sizeof(ADDRES_RESERVE_PARAM)*pReserve->resMax );
+  DEBUG_MMDL_RESOURCE_MEMORY_SIZE_Plus( pReserve->pReserveResParam );
   {
     int i = 0;
     ADDRES_RESERVE_PARAM *pResParam = pReserve->pReserveResParam;
@@ -1184,6 +1231,7 @@ static void BlActAddReserve_Delete( MMDL_BLACTCONT *pBlActCont )
     pReserve->funcFlag = FALSE;
     
     { //リソース予約パラメタ
+      DEBUG_MMDL_RESOURCE_MEMORY_SIZE_Minus( pReserve->pReserveResParam );
       GFL_HEAP_FreeMemory( pReserve->pReserveResParam );
     }
 
@@ -1191,6 +1239,8 @@ static void BlActAddReserve_Delete( MMDL_BLACTCONT *pBlActCont )
       ADDRES_RESERVE *pRes = pReserve->pReserveRes;
       for( i = 0; i < pReserve->resDigestFrameMax; i++, pRes++ ){
         if( pRes->pG3dRes != NULL ){
+          DEBUG_MMDL_RESOURCE_MEMORY_SIZE_Minus( GFL_G3D_GetResourceFileHeader( pRes->pG3dRes ) );
+          DEBUG_MMDL_RESOURCE_MEMORY_SIZE_Minus( pRes->pG3dRes );
           GFL_G3D_DeleteResource( pRes->pG3dRes );
         }
       }
@@ -1201,6 +1251,8 @@ static void BlActAddReserve_Delete( MMDL_BLACTCONT *pBlActCont )
       ADDACT_RESERVE *pRes = pReserve->pReserveAct;
       for( i = 0; i < pReserve->actMax; i++, pRes++ ){
         if( pRes->outID != NULL && pRes->pTransActRes != NULL ){
+          DEBUG_MMDL_RESOURCE_MEMORY_SIZE_Minus( GFL_G3D_GetResourceFileHeader( pRes->pTransActRes ) );
+          DEBUG_MMDL_RESOURCE_MEMORY_SIZE_Minus( pRes->pTransActRes );
           GFL_G3D_DeleteResource( pRes->pTransActRes );
         }
       }
@@ -1318,6 +1370,9 @@ static BOOL BlActAddReserve_RegistResource(
       pRes->pG3dRes = GFL_G3D_CreateResourceHandle(
           MMDLSYS_GetResArcHandle(pBlActCont->mmdlsys), prm_bbd->res_idx );
       pRes->compFlag = TRUE;
+
+      DEBUG_MMDL_RESOURCE_MEMORY_SIZE_Plus( GFL_G3D_GetResourceFileHeader( pRes->pG3dRes ) );
+      DEBUG_MMDL_RESOURCE_MEMORY_SIZE_Plus( pRes->pG3dRes );
       
       KAGAYA_Printf(
         "MMDL BLACT RESERVE ADD RESOURCE CODE=%d,ARCIDX=%d\n",
@@ -1480,6 +1535,8 @@ static BOOL BlActAddReserve_CancelResource(
     for( ; i < pReserve->resDigestFrameMax; i++, pRes++ ){
       if( pRes->pG3dRes != NULL && pRes->code == code ){
         pRes->compFlag = FALSE;
+        DEBUG_MMDL_RESOURCE_MEMORY_SIZE_Minus( GFL_G3D_GetResourceFileHeader( pRes->pG3dRes ) );
+        DEBUG_MMDL_RESOURCE_MEMORY_SIZE_Minus( pRes->pG3dRes );
         GFL_G3D_DeleteResource( pRes->pG3dRes );
         pRes->pG3dRes = NULL;
         KAGAYA_Printf( "MMDL BLACT RESERVE CANCEL CODE=%d\n", code );
@@ -1749,6 +1806,8 @@ static void BlActAddReserve_CancelActorOutID(
       
       if( pRes->pTransActRes != NULL ) //転送用リソース有り
       {
+        DEBUG_MMDL_RESOURCE_MEMORY_SIZE_Minus( GFL_G3D_GetResourceFileHeader( pRes->pTransActRes ) );
+        DEBUG_MMDL_RESOURCE_MEMORY_SIZE_Minus( pRes->pTransActRes );
         GFL_G3D_DeleteResource( pRes->pTransActRes );
         pRes->pTransActRes = NULL;
       }
@@ -1799,6 +1858,8 @@ static void BlActAddReserve_CancelActor(
       
       if( pRes->pTransActRes != NULL ) //転送用リソース有り
       {
+        DEBUG_MMDL_RESOURCE_MEMORY_SIZE_Minus( GFL_G3D_GetResourceFileHeader( pRes->pTransActRes ) );
+        DEBUG_MMDL_RESOURCE_MEMORY_SIZE_Minus( pRes->pTransActRes );
         GFL_G3D_DeleteResource( pRes->pTransActRes );
         pRes->pTransActRes = NULL;
       }
@@ -1913,6 +1974,21 @@ static GFL_BBDACT_RESUNIT_ID BlActRes_AddRes(
   KAGAYA_Printf( "MMDL ADD RESOURCE CODE=%d,RESID=%d\n", code, id );
   return( id );
 }
+
+//======================================================================
+//	debug
+//======================================================================
+#ifdef DEBUG_MMDL_RESOURCE_MEMORY_SIZE
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リソースメモリサイズを返す
+ */
+//-----------------------------------------------------------------------------
+u32 DEBUG_MMDL_GetUseResourceMemorySize( void )
+{
+  return DEBUG_MMDL_RESOURCE_MemorySize;
+}
+#endif
 
 //======================================================================
 //	test data

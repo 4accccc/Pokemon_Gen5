@@ -56,6 +56,8 @@
 #include "event_debug_beacon.h"
 #include "app/waza_oshie.h"
 
+#include "field_buildmodel.h"
+
 #include "field_sound.h"
 
 #include "eventwork.h"
@@ -222,6 +224,9 @@ static GMEVENT_RESULT debugMenuWazaOshie( GMEVENT *p_event, int *p_seq, void *p_
 static BOOL debugMenuCallProc_WazaOshie( DEBUG_MENU_EVENT_WORK *p_wk );
 
 
+static BOOL debugMenuCallProc_UseMemoryDump( DEBUG_MENU_EVENT_WORK *p_wk );
+
+
 //======================================================================
 //  デバッグメニューリスト
 //======================================================================
@@ -242,6 +247,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR06, debugMenuCallProc_MapSeasonSelect},
   { DEBUG_FIELD_STR07, debugMenuCallProc_CameraList },
   { DEBUG_FIELD_STR13, debugMenuCallProc_MMdlList },
+	{	DEBUG_FIELD_STR53, debugMenuCallProc_UseMemoryDump },
   { DEBUG_FIELD_C_CHOICE00, debugMenuCallProc_OpenCommDebugMenu },
   { DEBUG_FIELD_STR19, debugMenuCallProc_OpenClubMenu },
   { DEBUG_FIELD_STR51  , debugMenuCallProc_OpenGTSNegoMenu },
@@ -266,6 +272,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR49, debugMenuCallProc_BeaconFriendCode },
   { DEBUG_FIELD_STR50, debugMenuCallProc_WazaOshie },
 	{	DEBUG_FIELD_STR52, debugMenuCallProc_ControlDelicateCamera },
+
 };
 
 
@@ -3930,4 +3937,199 @@ static GMEVENT_RESULT debugMenuWazaOshie( GMEVENT *p_event, int *p_seq, void *p_
 
   return GMEVENT_RES_CONTINUE ;
 }
+
+
+//======================================================================
+//  使用メモリの表示（主要な）
+//======================================================================
+//-------------------------------------
+/// 使用メモリの表示（主要な）
+//=====================================
+typedef struct 
+{
+  FIELDMAP_WORK       *p_field;
+	GFL_BMPWIN* p_win;
+  HEAPID heapID;
+
+  // MESSAGEデータ
+  WORDSET*    p_debug_wordset;
+  GFL_FONT*   p_debug_font;
+  GFL_MSGDATA*  p_debug_msgdata;
+  STRBUF*     p_debug_strbuff;
+  STRBUF*     p_debug_strbuff_tmp;
+} DEBUG_USEMEMORY_EVENT_WORK;
+static GMEVENT_RESULT debugMenuUseMemoryDump( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+static void debugMenuWriteUseMemoryDump( DEBUG_USEMEMORY_EVENT_WORK* p_wk );
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メモリ使用情報表示
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_UseMemoryDump( DEBUG_MENU_EVENT_WORK *p_wk )
+{
+	DEBUG_USEMEMORY_EVENT_WORK* p_work;
+	GMEVENT* p_event = p_wk->gmEvent;
+  FIELDMAP_WORK* p_fieldWork = p_wk->fieldWork;
+  HEAPID heapID = p_wk->heapID;
+	
+	GMEVENT_Change( p_event, debugMenuUseMemoryDump, sizeof(DEBUG_USEMEMORY_EVENT_WORK) );
+	p_work = GMEVENT_GetEventWork( p_event );
+	GFL_STD_MemClear( p_work, sizeof(DEBUG_USEMEMORY_EVENT_WORK) );
+	
+	p_work->p_field   = p_fieldWork;
+  p_work->heapID    = heapID;
+
+  // MESSAGE情報読み込み
+  {
+    // ワードセット作成
+    p_work->p_debug_wordset = WORDSET_Create( heapID );
+    p_work->p_debug_msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_field_dat, heapID );
+
+    p_work->p_debug_strbuff    = GFL_STR_CreateBuffer( 256, heapID );
+    p_work->p_debug_strbuff_tmp  = GFL_STR_CreateBuffer( 256, heapID );
+
+    // フォントデータ
+    p_work->p_debug_font = GFL_FONT_Create(
+      ARCID_FONT, NARC_font_large_gftr,
+      GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+  }
+  
+
+  // 表示面の作成
+  {
+		// インフォーバーの非表示
+		FIELD_SUBSCREEN_Exit(FIELDMAP_GetFieldSubscreenWork(p_fieldWork));
+		GFL_BG_SetVisible( FIELD_SUBSCREEN_BGPLANE, VISIBLE_OFF );
+
+		// ビットマップウィンドウ初期化
+		{
+			static const GFL_BG_BGCNT_HEADER header_sub3 = {
+				0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
+				GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000,0x7000,
+				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
+			};
+
+			GFL_BG_SetBGControl( FIELD_SUBSCREEN_BGPLANE, &header_sub3, GFL_BG_MODE_TEXT );
+			GFL_BG_ClearFrame( FIELD_SUBSCREEN_BGPLANE );
+			GFL_BG_SetVisible( FIELD_SUBSCREEN_BGPLANE, VISIBLE_ON );
+
+			// パレット情報を転送
+			GFL_ARC_UTIL_TransVramPalette(
+				ARCID_FONT, NARC_font_default_nclr,
+				PALTYPE_SUB_BG, FIELD_SUBSCREEN_PALLET*32, 32, heapID );
+			
+			// ビットマップウィンドウを作成
+			p_work->p_win = GFL_BMPWIN_Create( FIELD_SUBSCREEN_BGPLANE,
+				1, 1, 30, 22,
+				FIELD_SUBSCREEN_PALLET, GFL_BMP_CHRAREA_GET_B );
+			GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_work->p_win ), 0xf );
+			GFL_BMPWIN_MakeScreen( p_work->p_win );
+			GFL_BMPWIN_TransVramCharacter( p_work->p_win );
+			GFL_BG_LoadScreenReq( FIELD_SUBSCREEN_BGPLANE );
+
+      // ウィンドウ
+      BmpWinFrame_GraphicSet( FIELD_SUBSCREEN_BGPLANE, 1, 15, 0, heapID );
+      BmpWinFrame_Write( p_work->p_win, TRUE, 1, 15 );
+		}
+
+    // 描画処理
+    {
+      debugMenuWriteUseMemoryDump( p_work );
+    }
+  }
+
+	return( TRUE );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メモリーダンプメイン
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT debugMenuUseMemoryDump( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
+{
+	DEBUG_USEMEMORY_EVENT_WORK* p_work = p_wk_adrs;
+
+  // 表示OFF
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
+  {
+    // 全破棄
+		{
+      BmpWinFrame_Clear( p_work->p_win, TRUE );
+			GFL_BMPWIN_Delete( p_work->p_win );
+			GFL_BG_FreeBGControl(FIELD_SUBSCREEN_BGPLANE);
+		}
+
+    // MESSAGE情報破棄
+    {
+      // フォントデータ
+      GFL_FONT_Delete( p_work->p_debug_font );
+      p_work->p_debug_font = NULL;
+
+      GFL_MSG_Delete( p_work->p_debug_msgdata );
+      p_work->p_debug_msgdata = NULL;
+
+      WORDSET_Delete( p_work->p_debug_wordset );
+      p_work->p_debug_wordset = NULL;
+
+      GFL_STR_DeleteBuffer( p_work->p_debug_strbuff );
+      p_work->p_debug_strbuff = NULL;
+      GFL_STR_DeleteBuffer( p_work->p_debug_strbuff_tmp );
+      p_work->p_debug_strbuff_tmp = NULL;
+    }
+		// インフォーバーの表示
+    FIELDMAP_SetFieldSubscreenWork(p_work->p_field,
+        FIELD_SUBSCREEN_Init( p_work->heapID, p_work->p_field, FIELD_SUBSCREEN_NORMAL ));
+
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メモリーダンプ表示
+ *
+ *	@param	p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static void debugMenuWriteUseMemoryDump( DEBUG_USEMEMORY_EVENT_WORK* p_wk )
+{
+  // 配置オブジェクト
+#ifdef BMODEL_DEBUG_RESOURCE_MEMORY_SIZE
+
+  WORDSET_RegisterHexNumber( p_wk->p_debug_wordset, 1, FIELD_BMODEL_MAN_GetUseResourceMemorySize(), 8, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU ); 
+
+#else // BMODEL_DEBUG_RESOURCE_MEMORY_SIZE
+
+  WORDSET_RegisterHexNumber( p_wk->p_debug_wordset, 1, 0, 8, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU ); 
+  
+#endif // BMODEL_DEBUG_RESOURCE_MEMORY_SIZE
+
+  // 動作オブジェ
+#ifdef DEBUG_MMDL_RESOURCE_MEMORY_SIZE
+  
+  WORDSET_RegisterHexNumber( p_wk->p_debug_wordset, 3, DEBUG_MMDL_GetUseResourceMemorySize(), 8, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU ); 
+  
+#else // DEBUG_MMDL_RESOURCE_MEMORY_SIZE
+  
+  WORDSET_RegisterHexNumber( p_wk->p_debug_wordset, 3, 0, 8, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU ); 
+
+#endif  // DEBUG_MMDL_RESOURCE_MEMORY_SIZE
+
+  // 表示
+  GFL_MSG_GetString( p_wk->p_debug_msgdata, DEBUG_FIELD_STR54, p_wk->p_debug_strbuff_tmp );
+
+  WORDSET_ExpandStr( p_wk->p_debug_wordset, p_wk->p_debug_strbuff, p_wk->p_debug_strbuff_tmp );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_wk->p_win ), 0, 0, p_wk->p_debug_strbuff, p_wk->p_debug_font );
+
+  GFL_BMPWIN_TransVramCharacter( p_wk->p_win );
+}
+
+
 

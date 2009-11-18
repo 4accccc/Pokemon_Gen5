@@ -38,6 +38,42 @@ typedef EL_SCOREBOARD_TEX ELBOARD_TEX;
 
 #include "map/dp3format.h"
 
+
+//============================================================================================
+//  DEBUG リソースメモリ使用量の検査
+//============================================================================================
+#ifdef BMODEL_DEBUG_RESOURCE_MEMORY_SIZE
+
+static u32 BMODEL_DEBUG_RESOURCE_MemorySize = 0;  // リソース
+
+// リソースメモリーサイズ追加
+#define BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( x )    BMODEL_DEBUG_RESOURCE_MemorySize += GFL_HEAP_DEBUG_GetMemoryBlockSize((x))
+// リソースメモリーサイズ削除
+#define BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( x )    BMODEL_DEBUG_RESOURCE_MemorySize -= GFL_HEAP_DEBUG_GetMemoryBlockSize((x))
+// リソースメモリーサイズ アロケータ用 追加
+#define BMODEL_DEBUG_RESOURCE_MEMORY_ALLOCATOR_SIZE_Plus( x )    BMODEL_DEBUG_RESOURCE_MemorySize += NNS_FndGetSizeForMBlockExpHeap((x))
+// リソースメモリーサイズ  削除
+#define BMODEL_DEBUG_RESOURCE_MEMORY_ALLOCATOR_SIZE_Minus( x )    BMODEL_DEBUG_RESOURCE_MemorySize -= NNS_FndGetSizeForMBlockExpHeap((x))
+// リソースメモリーサイズ クリーンチェック
+#define BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_IsAllDelete    GF_ASSERT( BMODEL_DEBUG_RESOURCE_MemorySize == 0 )
+
+
+#else   // BMODEL_DEBUG_RESOURCE_MEMORY_SIZE
+
+
+// リソースメモリーサイズ追加
+#define BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( x )   /**/ 
+// リソースメモリーサイズ削除
+#define BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( x )    /**/
+// リソースメモリーサイズ アロケータ用 追加
+#define BMODEL_DEBUG_RESOURCE_MEMORY_ALLOCATOR_SIZE_Plus( x )   /**/ 
+// リソースメモリーサイズ  削除
+#define BMODEL_DEBUG_RESOURCE_MEMORY_ALLOCATOR_SIZE_Minus( x )   /**/ 
+// リソースメモリーサイズ クリーンチェック
+#define BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_IsAllDelete   /**/ 
+
+#endif  // BMODEL_DEBUG_RESOURCE_MEMORY_SIZE
+
 //============================================================================================
 //============================================================================================
 
@@ -385,6 +421,7 @@ void FIELD_BMODEL_MAN_Delete(FIELD_BMODEL_MAN * man)
     GFL_STR_DeleteBuffer(man->elb_str[i]);
     if (man->elb_tex[i]) 
     { 
+      BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( man->elb_tex[i] );
       ELBOARD_TEX_Delete(man->elb_tex[i]);
     }
   }
@@ -392,6 +429,8 @@ void FIELD_BMODEL_MAN_Delete(FIELD_BMODEL_MAN * man)
   deleteAllResource( man );
 
 	GFL_HEAP_FreeMemory(man);
+
+  BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_IsAllDelete;
 }
 
 //------------------------------------------------------------------
@@ -992,10 +1031,13 @@ void entryELBoardTex(FIELD_BMODEL_MAN* man, const FIELD_BMANIME_DATA * data,
   case BMANIME_PROG_TYPE_ELBOARD1:
     man->elb_tex[FIELD_BMODEL_ELBOARD_ID1] = ELBOARD_TEX_Add(
         g3DresTex, man->elb_str[FIELD_BMODEL_ELBOARD_ID1], man->heapID);
+
+    BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( man->elb_tex[FIELD_BMODEL_ELBOARD_ID1] );
     break;
   case BMANIME_PROG_TYPE_ELBOARD2:
     man->elb_tex[FIELD_BMODEL_ELBOARD_ID2] = ELBOARD_TEX_Add(
         g3DresTex, man->elb_str[FIELD_BMODEL_ELBOARD_ID1], man->heapID);
+    BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( man->elb_tex[FIELD_BMODEL_ELBOARD_ID2] );
     break;
   case BMANIME_PROG_TYPE_NONE:
   default:
@@ -1025,6 +1067,7 @@ static void createAllResource(FIELD_BMODEL_MAN * man)
 
   man->objRes_Count = entryCount;
   man->objRes = GFL_HEAP_AllocClearMemory ( man->heapID, sizeof(OBJ_RES) * entryCount );
+  BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( man->objRes );
 
   /** 配置モデルリソース登録 */
   {
@@ -1051,6 +1094,7 @@ static void deleteAllResource(FIELD_BMODEL_MAN * man)
   for( i=0; i<man->objRes_Count; i++ ){
     OBJRES_finalize( &man->objRes[i] );
   }
+  BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( man->objRes );
   GFL_HEAP_FreeMemory( man->objRes );
   man->objRes_Count = 0;
   man->objRes = NULL;
@@ -1071,9 +1115,11 @@ static void createFullTimeObjHandle(FIELD_BMODEL_MAN * man, GFL_G3D_MAP_GLOBALOB
 
   g3dMapObj->gobjCount = entryCount;
   g3dMapObj->gobj = GFL_HEAP_AllocClearMemory( man->heapID, sizeof(GFL_G3D_MAP_OBJ) * entryCount );
+  BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( g3dMapObj->gobj );
 
   man->objHdl_Count = entryCount;
   man->objHdl = GFL_HEAP_AllocClearMemory( man->heapID, sizeof(OBJ_HND) * entryCount );
+  BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( man->objHdl );
 
   for ( i = 0; i < man->objHdl_Count; i++ )
   {
@@ -1093,10 +1139,12 @@ static void createFullTimeObjHandle(FIELD_BMODEL_MAN * man, GFL_G3D_MAP_GLOBALOB
 static void deleteFullTimeObjHandle(FIELD_BMODEL_MAN * man, GFL_G3D_MAP_GLOBALOBJ * g3dMapObj)
 {
 	if( g3dMapObj->gobj != NULL ){
+    BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( g3dMapObj->gobj );
 		GFL_HEAP_FreeMemory( g3dMapObj->gobj );
 		g3dMapObj->gobj = NULL;
 	}
 	if( g3dMapObj->gobjIDexchange != NULL ){
+    BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( g3dMapObj->gobjIDexchange );
 		GFL_HEAP_FreeMemory( g3dMapObj->gobjIDexchange );
 		g3dMapObj->gobjIDexchange = NULL;
 	}
@@ -1106,6 +1154,7 @@ static void deleteFullTimeObjHandle(FIELD_BMODEL_MAN * man, GFL_G3D_MAP_GLOBALOB
     for( i=0; i<man->objHdl_Count; i++ ){
 			OBJHND_finalize( &man->objHdl[i] );
     }
+    BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( man->objHdl );
     GFL_HEAP_FreeMemory( man->objHdl );
     man->objHdl_Count = 0;
     man->objHdl = NULL;
@@ -1140,6 +1189,8 @@ static void OBJRES_initialize( FIELD_BMODEL_MAN * man, OBJ_RES * objRes, BMODEL_
 
   //モデルデータ生成
 	objRes->g3DresMdl = GFL_G3D_CreateResourceArc( man->mdl_arc_id, bm_id );
+  BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( objRes->g3DresMdl );
+  BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( GFL_G3D_GetResourceFileHeader( objRes->g3DresMdl ) );
 
   //テクスチャ登録
   //現状、テクスチャはモデリングimdに含まれるものを使用している
@@ -1161,6 +1212,9 @@ static void OBJRES_initialize( FIELD_BMODEL_MAN * man, OBJ_RES * objRes, BMODEL_
     for( anmNo=0; anmNo<GLOBAL_OBJ_ANMCOUNT; anmNo++ ){
       if ( anmNo < count ) {
         objRes->g3DresAnm[anmNo] = GFL_G3D_CreateResourceArc( ARCID_BMODEL_ANIME, anmData->IDs[anmNo] );
+
+        BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( objRes->g3DresAnm[anmNo] );
+        BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( GFL_G3D_GetResourceFileHeader( objRes->g3DresAnm[anmNo] ) );
       } else {
         objRes->g3DresAnm[anmNo] = NULL;
       }
@@ -1180,6 +1234,8 @@ static void OBJRES_finalize( OBJ_RES * objRes )
 
   for( anmNo=0; anmNo<GLOBAL_OBJ_ANMCOUNT; anmNo++ ){
     if( objRes->g3DresAnm[anmNo] != NULL ){
+      BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( GFL_G3D_GetResourceFileHeader( objRes->g3DresAnm[anmNo] ) );
+      BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( objRes->g3DresAnm[anmNo] );
       GFL_G3D_DeleteResource( objRes->g3DresAnm[anmNo] );
       objRes->g3DresAnm[anmNo] = NULL;
     }
@@ -1188,12 +1244,15 @@ static void OBJRES_finalize( OBJ_RES * objRes )
     resTex = objRes->g3DresMdl;
   } else {
     resTex = objRes->g3DresTex;
+    BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( GFL_G3D_GetResourceFileHeader( objRes->g3DresTex ) );
     GFL_G3D_DeleteResource( objRes->g3DresTex );
     objRes->g3DresTex = NULL;
   }
   GFL_G3D_FreeVramTexture( resTex );
 
   if( objRes->g3DresMdl != NULL ){
+    BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( GFL_G3D_GetResourceFileHeader( objRes->g3DresMdl ) );
+    BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( objRes->g3DresMdl );
     GFL_G3D_DeleteResource( objRes->g3DresMdl );
     objRes->g3DresMdl = NULL;
   }
@@ -1272,11 +1331,15 @@ static void OBJHND_initialize(const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl, co
 
   //レンダー生成
   g3Drnd = GFL_G3D_RENDER_Create( objRes->g3DresMdl, 0, resTex );
+  BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( g3Drnd );
+  BMODEL_DEBUG_RESOURCE_MEMORY_ALLOCATOR_SIZE_Plus( GFL_G3D_RENDER_GetRenderObj( g3Drnd ) );
 
   //アニメオブジェクト生成
   for( anmNo=0; anmNo<GLOBAL_OBJ_ANMCOUNT; anmNo++ ){
     if( objRes->g3DresAnm[anmNo] != NULL ){
       anmTbl[anmNo] = GFL_G3D_ANIME_Create( g3Drnd, objRes->g3DresAnm[anmNo], 0 );  
+      BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( anmTbl[anmNo] );
+      BMODEL_DEBUG_RESOURCE_MEMORY_ALLOCATOR_SIZE_Plus( GFL_G3D_ANIME_GetAnmObj( anmTbl[anmNo] ) );
     } else {
       anmTbl[anmNo] = NULL;
     }
@@ -1284,6 +1347,7 @@ static void OBJHND_initialize(const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl, co
   //GFL_G3D_OBJECT生成
   objHdl->g3Dobj = GFL_G3D_OBJECT_Create( g3Drnd, anmTbl, GLOBAL_OBJ_ANMCOUNT );
   objHdl->res = objRes;
+  BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( objHdl->g3Dobj );
 
   //アニメ状態初期化
   {
@@ -1349,16 +1413,21 @@ static void OBJHND_finalize( OBJ_HND * objHdl )
     for( anmNo=0; anmNo<g3DanmCount; anmNo++ ){
       GFL_G3D_ANM*  g3Danm = GFL_G3D_OBJECT_GetG3Danm( objHdl->g3Dobj, anmNo ); 
       if (g3Danm != NULL) {
+        BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( g3Danm );
+        BMODEL_DEBUG_RESOURCE_MEMORY_ALLOCATOR_SIZE_Minus( GFL_G3D_ANIME_GetAnmObj( g3Danm ) );
         GFL_G3D_ANIME_Delete( g3Danm ); 
       }
     }
     g3Drnd = GFL_G3D_OBJECT_GetG3Drnd( objHdl->g3Dobj );
   
     //各種ハンドル＆リソース削除
+    BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( objHdl->g3Dobj );
     GFL_G3D_OBJECT_Delete( objHdl->g3Dobj );
     objHdl->g3Dobj = NULL;
     objHdl->res = NULL;
 
+    BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( g3Drnd );
+    BMODEL_DEBUG_RESOURCE_MEMORY_ALLOCATOR_SIZE_Minus( GFL_G3D_RENDER_GetRenderObj( g3Drnd ) );
     GFL_G3D_RENDER_Delete( g3Drnd );
   }
 }
@@ -1690,6 +1759,7 @@ FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man, const G3DMAPOBJST * o
   VecFx32 drawOffset;
 
   FIELD_BMODEL * bmodel = GFL_HEAP_AllocMemory( man->heapID, sizeof(FIELD_BMODEL) );
+
   //ローテーション設定
   {
     fx32 sin = FX_SinIdx(status->rotate);
@@ -1743,6 +1813,7 @@ FIELD_BMODEL * FIELD_BMODEL_Create_Direct(
 void FIELD_BMODEL_Delete(FIELD_BMODEL * bmodel)
 {
   OBJHND_finalize( &bmodel->objHdl );
+
   GFL_HEAP_FreeMemory(bmodel);
 }
 
@@ -1773,3 +1844,23 @@ static void FIELD_BMODEL_Draw( const FIELD_BMODEL * bmodel )
   GFL_G3D_DRAW_DrawObject( bmodel->objHdl.g3Dobj, &bmodel->g3dObjStatus );
 }
 
+
+
+
+
+//============================================================================================
+//  DEBUG リソースメモリ使用量の検査
+//============================================================================================
+#ifdef BMODEL_DEBUG_RESOURCE_MEMORY_SIZE
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リソースで使用しているメモリーサイズの取得
+ */
+//-----------------------------------------------------------------------------
+u32 FIELD_BMODEL_MAN_GetUseResourceMemorySize(void)
+{
+  return BMODEL_DEBUG_RESOURCE_MemorySize;
+}
+
+#endif

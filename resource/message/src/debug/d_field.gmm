@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-11-15T17:53:11"/>
+	<create user="tomoya_takahashi" host="W00148" date="2009-11-18T18:43:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="35" top="235" right="740" bottom="863" maximized="no" rayout="Vertical2">
+	<dialog left="-1049" top="154" right="-344" bottom="774" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="647" top="229" right="1175" bottom="751" visible="no"/>
+		<tag-palette left="412" top="136" right="940" bottom="658" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -779,6 +779,24 @@
 	<row id="DEBUG_FIELD_STR52">
 		<language name="JPN" width="160">カメラぜんそうさ</language>
 		<language name="JPN_KANJI" width="160">カメラ全操作</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR53">
+		<language name="JPN" width="160">メモリじょうきょう</language>
+		<language name="JPN_KANJI" width="160">メモリ状況</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR54">
+		<language name="JPN" width="160">bmodel
+res(0x[2:07:８桁:1])
+
+fldmmdl
+res(0x[2:07:８桁:3])</language>
+		<language name="JPN_KANJI" width="160">bmodel
+res(0x[2:07:８桁:1])
+
+fldmmdl
+res(0x[2:07:８桁:3])</language>
 	</row>
 
 	<flowchart-group-list>

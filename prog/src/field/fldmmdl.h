@@ -43,6 +43,9 @@
 #define DEBUG_MMDL_DEVELOP ///<作業者のみ有効なデバッグ処理
 #endif
 
+
+#define DEBUG_MMDL_RESOURCE_MEMORY_SIZE // ONでメモリサイズを計算
+
 #endif
 
 #define DEBUG_OBJCODE_STR_LENGTH (16) //動作モデルOBJコード文字列長さ
@@ -1121,6 +1124,10 @@ extern BOOL MMDL_BLACTCONT_AddOBJCodeRes(
     MMDLSYS *mmdlsys, u16 code, BOOL trans, BOOL guest );
 extern void MMDL_BLACTCONT_DeleteOBJCodeRes( MMDLSYS *mmdlsys, u16 code );
 
+
+#ifdef DEBUG_MMDL_RESOURCE_MEMORY_SIZE
+extern u32 DEBUG_MMDL_GetUseResourceMemorySize( void );
+#endif
 
 //--------------------------------------------------------------
 //	fldmmdl_railmove.c

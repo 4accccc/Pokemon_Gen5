@@ -181,3 +181,20 @@ extern void G3DMAPOBJST_changeViewFlag(G3DMAPOBJST * obj, BOOL flag);
 //------------------------------------------------------------------
 extern FIELD_BMODEL_MAN * FLDMAPPER_GetBuildModelManager( FLDMAPPER* g3Dmapper);
 
+
+#ifdef PM_DEBUG
+
+#define BMODEL_DEBUG_RESOURCE_MEMORY_SIZE // ONでメモリサイズを計算
+
+#endif
+
+
+//============================================================================================
+//  DEBUG リソースメモリ使用量の検査
+//============================================================================================
+#ifdef BMODEL_DEBUG_RESOURCE_MEMORY_SIZE
+
+extern u32 FIELD_BMODEL_MAN_GetUseResourceMemorySize(void);
+
+#endif
+
