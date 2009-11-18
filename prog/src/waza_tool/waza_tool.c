@@ -118,6 +118,7 @@ int WAZADATA_PTR_GetParam( const WAZA_DATA* wazaData, WazaDataParam param )
   case WAZAPARAM_TYPE:                ///< タイプ（みず、くさ、ほのお…）
     return wazaData->type;
   case WAZAPARAM_CATEGORY:            ///< カテゴリ（ enum WazaCategory )
+    TAYA_Printf("カテゴリかえす=%d\n", wazaData->category);
     return wazaData->category;
   case WAZAPARAM_DAMAGE_TYPE:         ///< ダメージタイプ（ enum WazaDamageType )
     return wazaData->damageType;
@@ -406,7 +407,8 @@ WazaDamageType WAZADATA_GetDamageType( WazaID id )
 //------------------------------------------------
 BOOL WAZADATA_IsAlwaysHit( WazaID id )
 {
-  return WAZADATA_GetParam(id, WAZAPARAM_HITPER) == HITRATIO_MUST;
+  WAZA_DATA* wp = loadWazaDataTmp( id );
+  return (wp->hitPer == HITRATIO_MUST);
 }
 //------------------------------------------------
 /**
@@ -415,7 +417,8 @@ BOOL WAZADATA_IsAlwaysHit( WazaID id )
 //------------------------------------------------
 BOOL WAZADATA_IsMustCritical( WazaID id )
 {
-  return WAZADATA_GetParam(id, WAZAPARAM_CRITICAL_RANK) == CRITICAL_MUST;
+  WAZA_DATA* wp = loadWazaDataTmp( id );
+  return (wp->criticalRank == CRITICAL_MUST);
 }
 //------------------------------------------------
 /**
