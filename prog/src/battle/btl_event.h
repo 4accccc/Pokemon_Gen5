@@ -128,6 +128,7 @@ typedef enum {
   BTL_EVENT_CHECK_POKE_HIDE,        ///< ポケモンが消えている状態のワザ命中チェック
   BTL_EVENT_SET_ITEM_BEFORE,        ///< アイテム書き換え前の成否チェック
   BTL_EVENT_SET_ITEM,
+  BTL_EVENT_FIELD_EFFECT,           ///< フィールドエフェクト追加
   BTL_EVENT_UNCATEGORIZE_WAZA,            ///< 未分類ワザ処理
   BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,  ///< 未分類ワザ処理（ターゲットいないワザ）
 

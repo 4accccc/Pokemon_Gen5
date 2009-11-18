@@ -981,7 +981,7 @@ static void handler_Hogosyoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static BTL_EVENT_FACTOR*  ADD_TrickRoom( u16 pri, WazaID waza, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET, handler_TrickRoom },    // 未分類ワザハンドラ
+    { BTL_EVENT_FIELD_EFFECT, handler_TrickRoom },    // 未分類ワザハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
@@ -1023,7 +1023,7 @@ static void handler_TrickRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static BTL_EVENT_FACTOR*  ADD_Juryoku( u16 pri, WazaID waza, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,     handler_Juryoku },          // 未分類ワザハンドラ
+    { BTL_EVENT_FIELD_EFFECT,     handler_Juryoku },          // 未分類ワザハンドラ
     { BTL_EVENT_NULL, NULL },
   };
 
@@ -1052,7 +1052,7 @@ static void handler_Juryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static BTL_EVENT_FACTOR*  ADD_MizuAsobi( u16 pri, WazaID waza, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET, handler_MizuAsobi },    // 未分類ワザハンドラ
+    { BTL_EVENT_FIELD_EFFECT, handler_MizuAsobi },    // 未分類ワザハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
@@ -1077,7 +1077,7 @@ static void handler_MizuAsobi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static BTL_EVENT_FACTOR*  ADD_DoroAsobi( u16 pri, WazaID waza, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET, handler_DoroAsobi },    // 未分類ワザハンドラ
+    { BTL_EVENT_FIELD_EFFECT, handler_DoroAsobi },    // 未分類ワザハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
@@ -1437,7 +1437,7 @@ static void handler_KumoNoSu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static BTL_EVENT_FACTOR*  ADD_KuroiKiri( u16 pri, WazaID waza, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA, handler_KuroiKiri },    // 未分類ワザハンドラ
+    { BTL_EVENT_FIELD_EFFECT, handler_KuroiKiri },    // 未分類ワザハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );

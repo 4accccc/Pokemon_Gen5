@@ -390,8 +390,9 @@ static void scproc_Fight_PushOut( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARA
 static PushOutEffect check_pushout_effect( BTL_SVFLOW_WORK* wk );
 static u8 get_pushout_nextpoke_idx( BTL_SVFLOW_WORK* wk, const SVCL_WORK* clwk );
 static BOOL scEvent_CheckPushOutFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target );
-static void scproc_Fight_Weather( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker );
+static void scput_Fight_FieldEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker );
 static BOOL scproc_WeatherCore( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn );
+static void scEvent_FieldEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scput_Fight_Uncategory( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
 static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
 static void scput_Fight_Uncategory_Hensin( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
@@ -2579,6 +2580,7 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   flowsub_checkNotEffect( wk, &wk->wazaParam, attacker, targetRec );
   flowsub_checkWazaAvoid( wk, waza, attacker, targetRec );
 
+  BTL_Printf("ワザ=%d, カテゴリ=%d\n", wk->wazaParam.wazaID, category );
   switch( category ){
   case WAZADATA_CATEGORY_SIMPLE_DAMAGE:
   case WAZADATA_CATEGORY_DAMAGE_EFFECT_USER:
@@ -2602,9 +2604,6 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   case WAZADATA_CATEGORY_ICHIGEKI:
     scproc_Fight_Ichigeki( wk, waza, attacker, targetRec );
     break;
-  case WAZADATA_CATEGORY_WEATHER:
-    scproc_Fight_Weather( wk, waza, attacker );
-    break;
   case WAZADATA_CATEGORY_PUSHOUT:
     scproc_Fight_PushOut( wk, waza, attacker, targetRec );
     break;
@@ -2612,8 +2611,10 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
     scproc_Fight_SimpleRecover( wk, waza, attacker );
     break;
 //  case WAZADATA_CATEGORY_GUARD:
-//  case WAZADATA_CATEGORY_FIELD_EFFECT:
-//  case WAZADATA_CATEGORY_SIDE_EFFECT:
+  case WAZADATA_CATEGORY_FIELD_EFFECT:
+    scput_Fight_FieldEffect( wk, &wk->wazaParam, attacker );
+    break;
+  case WAZADATA_CATEGORY_SIDE_EFFECT:
   case WAZADATA_CATEGORY_OTHERS:
     scput_Fight_Uncategory( wk, &wk->wazaParam, attacker, targetRec );
     break;
@@ -4702,14 +4703,23 @@ static BOOL scEvent_CheckPushOutFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
 }
 
 //---------------------------------------------------------------------------------------------
-// サーバーフロー：ワザによる天候の変化
+// サーバーフロー：フィールドエフェクト効果
 //---------------------------------------------------------------------------------------------
-static void scproc_Fight_Weather( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker )
+static void scput_Fight_FieldEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker )
 {
-  BtlWeather  weather = WAZADATA_GetWeather( waza );
-
-  if( scproc_WeatherCore( wk, weather, BTL_WEATHER_TURN_DEFAULT ) ){
-    wazaEffSet_ImplicitTarget( wk );
+  BtlWeather  weather = WAZADATA_GetWeather( wazaParam->wazaID );
+  if( weather != BTL_WEATHER_NONE )
+  {
+    if( scproc_WeatherCore( wk, weather, BTL_WEATHER_TURN_DEFAULT ) ){
+      wazaEffSet_ImplicitTarget( wk );
+    }
+  }
+  else
+  {
+    u32 hem_state = Hem_PushState( &wk->HEManager );
+    scEvent_FieldEffect( wk, attacker, wazaParam->wazaID );
+    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+    Hem_PopState( &wk->HEManager, hem_state );
   }
 }
 static BOOL scproc_WeatherCore( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn )
@@ -4729,6 +4739,26 @@ static BOOL scproc_WeatherCore( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn
   }
   return FALSE;
 }
+//----------------------------------------------------------------------------------
+/**
+ * [Event] フィールドエフェクト追加
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   target
+ *
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_FieldEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza )
+{
+  BOOL failFlag = FALSE;
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_FIELD_EFFECT );
+  BTL_EVENTVAR_Pop();
+}
+
 //---------------------------------------------------------------------------------------------
 // サーバーフロー：分類しきれないワザ
 //---------------------------------------------------------------------------------------------
@@ -7130,6 +7160,8 @@ static BOOL scEvent_CheckCritical( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
   u16  rank = WAZADATA_GetParam( waza, WAZAPARAM_CRITICAL_RANK );
   rank += BPP_GetCriticalRank( attacker );
 
+  BTL_Printf("poke[%d]のワザ[%d]をチェックする\n",BPP_GetID(attacker), waza );
+
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetValue( BTL_EVAR_FAIL_FLAG, FALSE );
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
@@ -7138,8 +7170,16 @@ static BOOL scEvent_CheckCritical( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_CRITICAL_CHECK );
     if( !BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG ) )
     {
-      rank = roundMax( BTL_EVENTVAR_GetValue(BTL_EVAR_CRITICAL_RANK), BTL_CALC_CRITICAL_MAX );
-      flag = BTL_CALC_CheckCritical( rank );
+      if( WAZADATA_IsMustCritical(waza) ){
+        BTL_Printf("必ずクリティカルです\n");
+        flag = TRUE;
+      }else{
+        rank = roundMax( BTL_EVENTVAR_GetValue(BTL_EVAR_CRITICAL_RANK), BTL_CALC_CRITICAL_MAX );
+        flag = BTL_CALC_CheckCritical( rank );
+      }
+    }
+    else{
+      flag = FALSE;
     }
   BTL_EVENTVAR_Pop();
   return flag;
