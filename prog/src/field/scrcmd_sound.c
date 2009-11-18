@@ -30,6 +30,9 @@
 
 #include "scrcmd_sound.h"
 
+#include "gamesystem/iss_sys.h"
+#include "gamesystem/iss_switch_sys.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -449,6 +452,48 @@ VMCMD_RESULT EvCmdVoiceWait( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+
+//======================================================================
+// ISS
+//======================================================================
+
+//--------------------------------------------------------------
+/**
+ * @brief ISS-S の指定スイッチを ON にする
+ * @param core 仮想マシン制御構造体へのポインタ
+ * @return VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+extern VMCMD_RESULT EvCmdIssSwitchOn( VMHANDLE* core, void* wk )
+{
+  SCRCMD_WORK*    work  = (SCRCMD_WORK*)wk;
+  GAMESYS_WORK*   gsys  = SCRCMD_WORK_GetGameSysWork( work );
+  ISS_SYS*        iss   = GAMESYSTEM_GetIssSystem( gsys );
+  ISS_SWITCH_SYS* iss_s = ISS_SYS_GetIssSwitchSystem( iss );
+  u16             idx   = SCRCMD_GetVMWorkValue( core, work );  // コマンド第一引数
+
+  ISS_SWITCH_SYS_SwitchOn( iss_s, idx );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief ISS-S の指定スイッチを OFF にする
+ * @param core 仮想マシン制御構造体へのポインタ
+ * @return VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+extern VMCMD_RESULT EvCmdIssSwitchOff( VMHANDLE* core, void* wk )
+{
+  SCRCMD_WORK*    work  = (SCRCMD_WORK*)wk;
+  GAMESYS_WORK*   gsys  = SCRCMD_WORK_GetGameSysWork( work );
+  ISS_SYS*        iss   = GAMESYSTEM_GetIssSystem( gsys );
+  ISS_SWITCH_SYS* iss_s = ISS_SYS_GetIssSwitchSystem( iss );
+  u16             idx   = SCRCMD_GetVMWorkValue( core, work );  // コマンド第一引数
+
+  ISS_SWITCH_SYS_SwitchOff( iss_s, idx );
+  return VMCMD_RESULT_CONTINUE;
+}
 
 //======================================================================
 //  ぺラップ
