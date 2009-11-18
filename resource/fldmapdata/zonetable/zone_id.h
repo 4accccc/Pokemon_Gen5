@@ -392,9 +392,9 @@
 #define ZONE_ID_BC10R0402        (388)
 #define ZONE_ID_BC10R0403        (389)
 #define ZONE_ID_BC10PCR0101      (390)
-#define ZONE_ID_WF10             (391)
-#define ZONE_ID_WF10R0101        (392)
-#define ZONE_ID_WF10PCR0101      (393)
+#define ZONE_ID_WC10             (391)
+#define ZONE_ID_WC10R0101        (392)
+#define ZONE_ID_WC10PCR0101      (393)
 #define ZONE_ID_C11R0101         (394)
 #define ZONE_ID_MAX	(395)
 #endif // __ZONE_ID_H__

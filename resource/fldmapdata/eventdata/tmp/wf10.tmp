@@ -1,5 +1,0 @@
-#../data/wf10.mev
-../tmp/wf10.bin:../data/wf10.mev $(UNIQ_SCRIPTHEADER) ../tmp/wf10.h ../../script/wf10_def.h 
-	@echo ../data/wf10.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/wf10.h ../../script/wf10_def.h 
-

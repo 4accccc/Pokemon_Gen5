@@ -1,0 +1,5 @@
+#../data/wc10r0101.mev
+../tmp/wc10r0101.bin:../data/wc10r0101.mev $(UNIQ_SCRIPTHEADER) ../tmp/wc10r0101.h ../../script/wc10r0101_def.h 
+	@echo ../data/wc10r0101.mev
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/wc10r0101.h ../../script/wc10r0101_def.h 
+
