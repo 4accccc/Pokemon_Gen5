@@ -334,52 +334,34 @@ extern BOOL WAZADATA_GetFlag( WazaID id, WazaFlag flag );
 extern BOOL WAZADATA_PTR_GetFlag( const WAZA_DATA* wazaData, WazaFlag flag );
 
 
-extern u8  WT_PPMaxGet( WazaID id, u8 maxupcnt );
 
 // MaxPP値
 extern u8 WAZADATA_GetMaxPP( WazaID id, u8 upCnt );
 
-
+// 威力値
 extern u16  WAZADATA_GetPower( WazaID id );
-extern s8   WAZADATA_GetPriority( WazaID id );
 
+// タイプ
+extern PokeType WAZADATA_GetType( WazaID id );
+
+// ダメージタイプ
+extern WazaDamageType  WAZADATA_GetDamageType( WazaID id );
 
 
 // カテゴリ
 extern WazaCategory  WAZADATA_GetCategory( WazaID id );
 
-// タイプ
-extern PokeType WAZADATA_GetType( WazaID id );
-
-// 命中率
-extern u8  WAZADATA_GetHitRatio( WazaID id );
-
-// 複数回連続攻撃ワザの最大回数。
-extern u16  WAZADATA_GetContiniusCount( WazaID id );
-
 // 必中フラグ。つばめがえしなどがTRUEを返す。
 extern BOOL WAZADATA_IsAlwaysHit( WazaID id );
+
+// 必ずクリティカルフラグ
+extern BOOL WAZADATA_IsMustCritical( WazaID id );
 
 // ダメージワザかどうか
 extern BOOL WAZADATA_IsDamage( WazaID id );
 
-// 接触ワザかどうか
-extern BOOL WAZADATA_IsTouch( WazaID id );
-
-// ダメージタイプ
-extern WazaDamageType  WAZADATA_GetDamageType( WazaID id );
-
 // クリティカルランク
 extern u8 WAZADATA_GetCriticalRank( WazaID id );
-
-// 最大ヒット回数
-extern u8 WAZADATA_GetMaxHitCount( WazaID id );
-
-// 効果範囲
-extern WazaTarget WAZADATA_GetTarget( WazaID id );
-
-// 追加効果でひるむ確率
-extern u32 WAZADATA_GetShrinkPer( WazaID id );
 
 // 天候効果
 extern WazaWeather WAZADATA_GetWeather( WazaID id );
@@ -387,14 +369,18 @@ extern WazaWeather WAZADATA_GetWeather( WazaID id );
 // 状態異常効果
 extern WazaSick WAZADATA_GetSick( WazaID id );
 
-// 状態異常継続パラメータ
+
+
+//=============================================================================================
+/**
+ * 状態異常継続パラメータ取得
+ *
+ * @param   id
+ *
+ * @retval  extern WAZA_SICKCONT_PARAM
+ */
+//=============================================================================================
 extern WAZA_SICKCONT_PARAM WAZADATA_GetSickCont( WazaID id );
-
-// 追加効果で状態異常になる確率
-extern u32 WAZADATA_GetSickPer( WazaID id );
-
-// 疲れて行動不可になるワザか？
-extern BOOL WAZADATA_IsTire( WazaID id );
 
 
 //=============================================================================================

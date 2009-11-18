@@ -134,7 +134,11 @@ int WAZADATA_PTR_GetParam( const WAZA_DATA* wazaData, WazaDataParam param )
   case WAZAPARAM_PRIORITY:            ///< ワザ優先度
     return wazaData->priority;
   case WAZAPARAM_CRITICAL_RANK:       ///< クリティカルランク
-    return wazaData->criticalRank;
+    if( wazaData->criticalRank != CRITICAL_MUST ){
+      return wazaData->criticalRank;
+    }else{
+      return 0;
+    }
   case WAZAPARAM_HITCOUNT_MAX:        ///< 最大ヒット回数
     return wazaData->hitCountMax;
   case WAZAPARAM_HITCOUNT_MIN:        ///< 最小ヒット回数
@@ -403,6 +407,15 @@ WazaDamageType WAZADATA_GetDamageType( WazaID id )
 BOOL WAZADATA_IsAlwaysHit( WazaID id )
 {
   return WAZADATA_GetParam(id, WAZAPARAM_HITPER) == HITRATIO_MUST;
+}
+//------------------------------------------------
+/**
+ *  必クリティカルフラグ取得
+ */
+//------------------------------------------------
+BOOL WAZADATA_IsMustCritical( WazaID id )
+{
+  return WAZADATA_GetParam(id, WAZAPARAM_CRITICAL_RANK) == CRITICAL_MUST;
 }
 //------------------------------------------------
 /**
