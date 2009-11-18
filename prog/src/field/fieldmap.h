@@ -37,6 +37,7 @@
 
 #include "savedata/sodateya_work.h"
 #include "sodateya.h"
+#include "field/areadata.h"
 
 #include "fld3d_ci.h"
 
@@ -115,6 +116,7 @@ extern void FIELDMAP_SetNowPosTarget( FIELDMAP_WORK *fieldWork, const VecFx32 *p
 extern FLDMSGWIN * FIELDMAP_GetGoldMsgWin( FIELDMAP_WORK *fieldWork );
 extern void FIELDMAP_SetGoldMsgWin( FIELDMAP_WORK *fieldWork, FLDMSGWIN *msgWin );
 extern SODATEYA* FIELDMAP_GetSodateya( FIELDMAP_WORK* fieldWork );
+extern AREADATA* FIELDMAP_GetAreaData( FIELDMAP_WORK* fieldWork );
 extern FIELDCOMM_EXIT FIELDCOMM_ExitWait(GAME_COMM_SYS_PTR game_comm);
 extern GAME_COMM_NO FIELDCOMM_CheckCommNo(GAME_COMM_SYS_PTR game_comm);
 

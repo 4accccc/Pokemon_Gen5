@@ -1734,6 +1734,18 @@ SODATEYA* FIELDMAP_GetSodateya( FIELDMAP_WORK* fieldWork )
   return fieldWork->sodateya;
 }
 
+//--------------------------------------------------------------
+/**
+ * FIELDMAP_WORK AREADATA*取得
+ * @param fieldWork FIELDMAP_WORK
+ * @retval AREADATA*
+ */
+//--------------------------------------------------------------
+AREADATA* FIELDMAP_GetAreaData( FIELDMAP_WORK *fieldWork )
+{
+	return fieldWork->areadata;
+}
+
 //======================================================================
 //	フィールドマップ　サブ　BG関連
 //======================================================================
