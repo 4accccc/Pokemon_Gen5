@@ -264,7 +264,7 @@ void BTLV_EFFECT_AddWazaEffect( const BTLV_WAZAEFFECT_PARAM* param )
 {
   BTLV_EFFVM_PARAM  effvm_param;
 
-  effvm_param.waza_range = WAZADATA_GetTarget( param->waza );
+  effvm_param.waza_range = WAZADATA_GetParam( param->waza, WAZAPARAM_TARGET );
   effvm_param.turn_count = param->turn_count;
   effvm_param.continue_count = param->continue_count;
 

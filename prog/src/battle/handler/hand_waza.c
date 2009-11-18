@@ -1716,7 +1716,7 @@ static void handler_HimituNoTikara_Sick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICKID, sick );
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICKID, cont.raw );
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_ADD_PER, WAZADATA_GetSickPer(waza) );
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_ADD_PER, WAZADATA_GetParam(waza, WAZAPARAM_SICK_PER) );
   }
 }
 //----------------------------------------------------------------------------------
@@ -4012,26 +4012,14 @@ static void handler_Yokodori_Rob( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
   if( atkPokeID != pokeID )
   {
     WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-    WazaCategory category = WAZADATA_GetCategory( waza );
-    BOOL fEffective = FALSE;
 
-    if( category == WAZADATA_CATEGORY_SIMPLE_EFFECT ){
-      int volume;
-      WAZADATA_GetRankEffect( waza, 0, &volume );
-      if( volume > 0 ){
-        fEffective = TRUE;
-      }
-    }else if( category == WAZADATA_CATEGORY_SIMPLE_RECOVER ){
-      fEffective = TRUE;
-    }
-
-    if( fEffective )
+    if( WAZADATA_GetFlag(waza, WAZAFLAG_Yokodori) )
     {
       BTL_HANDEX_STR_PARAMS* str = (BTL_HANDEX_STR_PARAMS*)BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
 
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID, pokeID );
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, atkPokeID );
-      HANDEX_STR_Setup( str, BTL_STRTYPE_SET, BTL_STRID_SET_MagicCoatExe );
+      HANDEX_STR_Setup( str, BTL_STRTYPE_SET, BTL_STRID_SET_YokodoriExe );
       HANDEX_STR_AddArg( str, atkPokeID );
       HANDEX_STR_AddArg( str, waza );
     }

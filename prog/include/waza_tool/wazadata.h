@@ -11,13 +11,12 @@
 #define __WAZADATA_H__
 
 #include "poke_tool/poketype.h"
-#include "battle/battle.h"
 
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
 typedef  u16  WazaID;
-
+typedef  struct _WAZA_DATA  WAZA_DATA;
 
 //------------------------------------------------------------------------------
 /**
@@ -78,6 +77,7 @@ typedef enum {
   WAZASICK_YAKEDO = POKESICK_YAKEDO,
 
   WAZASICK_KONRAN = POKESICK_MAX,
+  WAZASICK_DOKUDOKU,
   WAZASICK_MEROMERO,
   WAZASICK_BIND,
   WAZASICK_AKUMU,
@@ -161,7 +161,8 @@ typedef enum {
   WAZA_RANKEFF_MAX,
   WAZA_RANKEFF_NUMS = WAZA_RANKEFF_MAX - WAZA_RANKEFF_ORIGIN,
 
-  WAZA_RANKEFF_CRITICAL_RATIO = WAZA_RANKEFF_AVOID+1,
+  WAZA_RANKEFF_SP = WAZA_RANKEFF_MAX,
+  WAZA_RANKEFF_CRITICAL_RATIO,
 
 }WazaRankEffect;
 
@@ -210,6 +211,26 @@ typedef enum {
 
 //------------------------------------------------------------------------------
 /**
+ *  ワザで発生する天候効果
+ */
+//------------------------------------------------------------------------------
+typedef enum {
+
+  WAZA_WEATHER_NONE = 0,   ///< 天候なし
+
+  WAZA_WEATHER_SHINE,    ///< はれ
+  WAZA_WEATHER_RAIN,     ///< あめ
+  WAZA_WEATHER_SNOW,     ///< あられ
+  WAZA_WEATHER_SAND,     ///< すなあらし
+  WAZA_WEATHER_MIST,     ///< きり
+
+  WAZA_WEATHER_MAX,
+
+
+}WazaWeather;
+
+//------------------------------------------------------------------------------
+/**
  *  ワザイメージ分類
  */
 //------------------------------------------------------------------------------
@@ -231,8 +252,18 @@ typedef enum {
 //------------------------------------------------------------------------------
 typedef enum {
 
-  WAZAFLAG_MAMORU = 0,    ///< 「まもる」でガード対象となるワザ
-  WAZAFLAG_TAME,          ///< １ターン溜めワザ
+  WAZAFLAG_Touch = 0,     ///< 接触ワザ
+  WAZAFLAG_Tame,          ///< １ターン溜めワザ
+  WAZAFLAG_Tire,          ///< １ターン反動ワザ
+  WAZAFLAG_Mamoru,        ///< 「まもる」でガード対象となるワザ
+  WAZAFLAG_MagicCoat,     ///< 「マジックコート」対象
+  WAZAFLAG_Yokodori,      ///< 「よこどり」対象
+  WAZAFLAG_Oumu,          ///< 「おうむがえし」対象
+  WAZAFLAG_Punch,         ///< 「てつのこぶし」対象（パンチのイメージ）
+  WAZAFLAG_Sound,         ///< 「ぼうおん」対象（音による攻撃・効果のイメージ）
+  WAZAFLAG_Flying,        ///< 重力時に失敗する（飛んだり浮いたりイメージ）
+  WAZAFLAG_KooriMelt,     ///< 自分が凍りでも解除してワザを出す（高温イメージ）
+  WAZAFLAG_TripleFar,     ///< トリプルバトルで、離れた相手も選択出来る
 
   WAZAFLAG_MAX,
 
@@ -244,15 +275,75 @@ typedef enum {
  */
 //------------------------------------------------------------------------------
 enum {
-  WAZA_RANKEFF_NUM_MAX = 2,   ///< １つのワザに割り当てられるランク効果の種類数最大値
+  WAZA_RANKEFF_NUM_MAX = 3,   ///< １つのワザに割り当てられるランク効果の種類数最大値
 };
+
+
+//------------------------------------------------------------------------------
+/**
+ *  ワザパラメータ種類
+ */
+//------------------------------------------------------------------------------
+typedef enum {
+
+  WAZAPARAM_TYPE,                ///< タイプ（みず、くさ、ほのお…）
+  WAZAPARAM_CATEGORY,            ///< カテゴリ（ enum WazaCategory )
+  WAZAPARAM_DAMAGE_TYPE,         ///< ダメージタイプ（ enum WazaDamageType )
+  WAZAPARAM_POWER,               ///< 威力
+  WAZAPARAM_HITPER,              ///< 命中率
+  WAZAPARAM_BASE_PP,             ///< 基本PPMax
+  WAZAPARAM_PRIORITY,            ///< ワザ優先度
+  WAZAPARAM_CRITICAL_RANK,       ///< クリティカルランク
+  WAZAPARAM_HITCOUNT_MAX,        ///< 最大ヒット回数
+  WAZAPARAM_HITCOUNT_MIN,        ///< 最小ヒット回数
+  WAZAPARAM_SHRINK_PER,          ///< ひるみ確率
+  WAZAPARAM_SICK,                ///< 状態異常コード（enum WazaSick）
+  WAZAPARAM_SICK_PER,            ///< 状態異常の発生率
+  WAZAPARAM_SICK_CONT,           ///< 状態異常継続パターン（enum WazaSickCont）
+  WAZAPARAM_SICK_TURN_MIN,       ///< 状態異常の継続ターン最小
+  WAZAPARAM_SICK_TURN_MAX,       ///< 状態異常の継続ターン最大
+  WAZAPARAM_RANKTYPE_1,          ///< ステータスランク効果１
+  WAZAPARAM_RANKVALUE_1,         ///< ステータスランク効果１増減値
+  WAZAPARAM_RANKPER_1,           ///< ステータスランク効果１の発生率
+  WAZAPARAM_RANKTYPE_2,          ///< ステータスランク効果２
+  WAZAPARAM_RANKVALUE_2,         ///< ステータスランク効果２増減値
+  WAZAPARAM_RANKPER_2,           ///< ステータスランク効果２の発生率
+  WAZAPARAM_RANKTYPE_3,          ///< ステータスランク効果３
+  WAZAPARAM_RANKVALUE_3,         ///< ステータスランク効果３増減値
+  WAZAPARAM_RANKPER_3,           ///< ステータスランク効果３の発生率
+  WAZAPARAM_DAMAGE_RECOVER_RATIO,///< ダメージ回復率
+  WAZAPARAM_HP_RECOVER_RATIO,    ///< HP回復率
+  WAZAPARAM_TARGET,              ///< ワザ効果範囲( enum WazaTarget )
+
+  WAZAPARAM_WEATHER,             ///< 天候
+  WAZAPARAM_DAMAGE_REACTION_RATIO,  ///< ダメージ反動率
+  WAZAPARAM_HP_REACTION_RATIO,      ///< HP反動率
+
+  WAZAPARAM_MAX,
+
+}WazaDataParam;
+
+
+
+extern int WAZADATA_GetParam( WazaID id, WazaDataParam param );
+
+extern const WAZA_DATA*  WAZADATA_Alloc( WazaID id, HEAPID heapID );
+extern int WAZADATA_PTR_GetParam( const WAZA_DATA* wazaData, WazaDataParam param );
+
+extern BOOL WAZADATA_GetFlag( WazaID id, WazaFlag flag );
+extern BOOL WAZADATA_PTR_GetFlag( const WAZA_DATA* wazaData, WazaFlag flag );
+
+
+extern u8  WT_PPMaxGet( WazaID id, u8 maxupcnt );
+
+// MaxPP値
+extern u8 WAZADATA_GetMaxPP( WazaID id, u8 upCnt );
+
 
 extern u16  WAZADATA_GetPower( WazaID id );
 extern s8   WAZADATA_GetPriority( WazaID id );
 
 
-// MaxPP値
-extern u8 WAZADATA_GetMaxPP( WazaID id, u8 upCnt );
 
 // カテゴリ
 extern WazaCategory  WAZADATA_GetCategory( WazaID id );
@@ -291,7 +382,7 @@ extern WazaTarget WAZADATA_GetTarget( WazaID id );
 extern u32 WAZADATA_GetShrinkPer( WazaID id );
 
 // 天候効果
-extern BtlWeather WAZADATA_GetWeather( WazaID id );
+extern WazaWeather WAZADATA_GetWeather( WazaID id );
 
 // 状態異常効果
 extern WazaSick WAZADATA_GetSick( WazaID id );
@@ -305,8 +396,6 @@ extern u32 WAZADATA_GetSickPer( WazaID id );
 // 疲れて行動不可になるワザか？
 extern BOOL WAZADATA_IsTire( WazaID id );
 
-// ワザフラグ取得
-extern BOOL WAZADATA_GetFlag( WazaID id, WazaFlag flag );
 
 //=============================================================================================
 /**

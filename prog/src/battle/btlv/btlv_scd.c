@@ -775,7 +775,7 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
   bisp.pos         = BTL_MAIN_BtlPosToViewPos( wk->mainModule,
                                                BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(wk->bpp) )
                                              );
-  bisp.waza_target = WAZADATA_GetTarget( waza );
+  bisp.waza_target = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
 
   BTL_Printf(" **** triple select **** \n");
   while( count-- )
@@ -909,7 +909,7 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
       u8  touch_max;
       u8  pos = BTL_MAIN_BtlPosToViewPos( wk->mainModule,
                                           BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(wk->bpp) ) );
-      u8  target = WAZADATA_GetTarget( wk->destActionParam->fight.waza );
+      u8  target = WAZADATA_GetParam( wk->destActionParam->fight.waza, WAZAPARAM_TARGET );
 
       GF_ASSERT( target < 14 );
 
@@ -960,7 +960,7 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
 static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk )
 {
   WazaID waza = wk->destActionParam->fight.waza;
-  WazaTarget target = WAZADATA_GetTarget( waza );
+  WazaTarget target = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
   BtlPokePos  basePos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(wk->bpp) );
 
   stw_init( stw );

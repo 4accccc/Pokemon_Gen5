@@ -1427,7 +1427,7 @@ static void handler_TetunoKobusi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
   {
     // パンチ系イメージのワザなら威力増加
     WazaID  waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-    if( WAZADATA_IsImage(waza, WAZA_IMG_PUNCH) )
+    if( WAZADATA_GetFlag(waza, WAZAFLAG_Punch) )
     {
       u32 pow = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_POWER );
       BTL_CALC_MulRatio( pow, BTL_CALC_TOK_TETUNOKOBUSI_POWRATIO );
@@ -1456,7 +1456,7 @@ static void handler_Sutemi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
   {
     // 反動のある攻撃なら威力増加
     WazaID  waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-    if( WAZADATA_GetReactionRatio(waza) )
+    if( WAZADATA_GetParam(waza, WAZAPARAM_DAMAGE_REACTION_RATIO) )
     {
       u32 pow = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_POWER );
       BTL_CALC_MulRatio( pow, BTL_CALC_TOK_SUTEMI_POWRATIO );
@@ -2571,7 +2571,7 @@ static void common_touchAddSick( BTL_SVFLOW_WORK* flowWk, u8 pokeID, WazaSick si
   if( pokeID == BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) )
   {
     WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-    if( WAZADATA_IsTouch(waza) )
+    if( WAZADATA_GetFlag(waza, WAZAFLAG_Touch) )
     {
       if( BTL_CALC_IsOccurPer(per) )
       {
@@ -2597,7 +2597,7 @@ static void handler_Samehada( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF)==pokeID )
   {
     WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-    if( WAZADATA_IsTouch(waza) )
+    if( WAZADATA_GetFlag(waza, WAZAFLAG_Touch) )
     {
       u8 attackerPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
       const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, attackerPokeID );
@@ -2635,7 +2635,7 @@ static void handler_Yuubaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
     if( BPP_IsDead(bpp) )
     {
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-      if( WAZADATA_IsTouch(waza) )
+      if( WAZADATA_GetFlag(waza, WAZAFLAG_Touch) )
       {
         u8 attackerPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
         const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, attackerPokeID );
@@ -3415,7 +3415,7 @@ static void handler_Bouon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
   {
     // サウンドワザ無効
     WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
-    if( WAZADATA_IsImage( waza, WAZA_IMG_SOUND ) )
+    if( WAZADATA_GetFlag( waza, WAZAFLAG_Sound ) )
     {
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, TRUE );
     }

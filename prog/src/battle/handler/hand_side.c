@@ -469,7 +469,7 @@ static void handler_side_WideGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
   {
     // ワザが「敵全体」「自分以外全部」の効果範囲でダメージワザなら無効化
     WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-    WazaTarget  targetType = WAZADATA_GetTarget( waza );
+    WazaTarget  targetType = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
     if( (WAZADATA_IsDamage(waza) )
     &&  ((targetType == WAZA_TARGET_ENEMY_ALL) || (targetType == WAZA_TARGET_OTHER_ALL))
     ){
