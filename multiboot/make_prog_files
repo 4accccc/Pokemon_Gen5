@@ -9,8 +9,6 @@ SRCS	+= \
 		$(PARENT_SRC)/net/net_devwireless.c \
 		$(PARENT_SRC)/net/wih.c \
 		$(PARENT_SRC)/net/net_whpipe.c \
-		$(PARENT_SRC)/test/dlplay/dlplay_comm_func.c \
-		$(PARENT_SRC)/test/dlplay/dlplay_func.c \
 		$(PARENT_SRC)/print/gf_font.c \
 		$(PARENT_SRC)/print/printsys.c \
 		$(PARENT_SRC)/print/wordset.c \
