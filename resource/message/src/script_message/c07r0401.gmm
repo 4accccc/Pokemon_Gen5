@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T16:17:15"/>
+	<create user="matsumiya" host="W00207" date="2009-11-18T12:01:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="245"/>
+		<comment position="4" width="316"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -310,6 +310,79 @@
 会長なので　あります！</language>
 	</row>
 
+	<row id="msg_c07r0401_woman1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀：がんばり屋
+・先頭のポケモンをチェック
+　努力値がマックス→woman1_02
+　努力値がマックスでない→woman1_05
+　「がんばリボン」を所有→_woman1_06
+・0＝ポケモン名（先頭のポケモン）</comment>
+		<attribute name="キャラ指定">WOMAN1
+普通女性</attribute>
+		<language name="JPN" width="256">あら？
+きみの　[1:01:ポケモン種族名:0]……▼</language>
+		<language name="JPN_KANJI" width="256">あら？
+きみの　[1:01:ポケモン種族名:0]……▼</language>
+	</row>
+
+	<row id="msg_c07r0401_woman1_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀：努力値がマックス
+・続けてwoman1_03</comment>
+		<attribute name="キャラ指定">WOMAN1
+普通女性</attribute>
+		<language name="JPN" width="256">ものすごく　がんばったんだ！▼
+じゃあ　ごほうびと　して
+この　がんばリボンを　つけてあげて！▼</language>
+		<language name="JPN_KANJI" width="256">ものすごく　がんばったんだ！▼
+じゃあ　ごほうびと　して
+この　がんばリボンを　つけてあげて！▼</language>
+	</row>
+
+	<row id="msg_c07r0401_woman1_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・続けてwoman1_04
+・1＝主人公名</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+がんばリボンを　もらった！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+がんばリボンを　もらった！▼</language>
+	</row>
+
+	<row id="msg_c07r0401_woman1_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・0＝ポケモン名（先頭のポケモン）
+・1＝主人公名</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は　がんばリボンを
+[1:01:ポケモン種族名:1]に　つけてあげた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　がんばリボンを
+[1:01:ポケモン種族名:1]に　つけてあげた！</language>
+	</row>
+
+	<row id="msg_c07r0401_woman1_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀：努力値がマックスでない</comment>
+		<attribute name="キャラ指定">WOMAN1
+普通女性</attribute>
+		<language name="JPN" width="256">まだ　がんばれそうね！▼
+ものすごく　がんばったら
+すてきなリボンを　あげるから！</language>
+		<language name="JPN_KANJI" width="256">まだ　がんばれそうね！▼
+ものすごく　がんばったら
+すてきなリボンを　あげるから！</language>
+	</row>
+
+	<row id="msg_c07r0401_woman1_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀：「がんばリボン」を所有
+・0＝ポケモン名（先頭のポケモン）</comment>
+		<attribute name="キャラ指定">WOMAN1
+普通女性</attribute>
+		<language name="JPN" width="256">その　がんばリボン
+きみの　[1:01:ポケモン種族名:0]に　ぴったり！</language>
+		<language name="JPN_KANJI" width="256">その　がんばリボン
+きみの　[1:01:ポケモン種族名:0]に　ぴったり！</language>
+	</row>
+
 	<row id="msg_c07r0401_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：なつき度チェック
 ・はい/いいえの選択肢
@@ -325,25 +398,29 @@
 どれだけ　なかよしか　みましょうか？</language>
 		<language name="JPN_KANJI" width="256">だいすきクラブへ　ようこそ！▼
 ポケモンと　あなたが
-どれだけ　なかよしか　みましょうか？</language>
+どれだけ　仲良しか　みましょうか？</language>
 	</row>
 
 	<row id="msg_c07r0401_woman2_02" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>・はい/いいえの選択肢
 ・はい→ポケモンリスト画面へ
 　いいえ→終了</comment>
+		<attribute name="キャラ指定">WOMAN2
+お洒落姉さん</attribute>
 		<language name="JPN" width="256">ほかの　ポケモンとも
 なかよしか　どうか　みましょうか？</language>
 		<language name="JPN_KANJI" width="256">ほかの　ポケモンとも
-なかよしか　どうか　みましょうか？</language>
+仲良しか　どうか　みましょうか？</language>
 	</row>
 
 	<row id="msg_c07r0401_woman2_03" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀：なつき度チェック
 ・タマゴ選択時</comment>
+		<attribute name="キャラ指定">WOMAN2
+お洒落姉さん</attribute>
 		<language name="JPN" width="256">タマゴと　なかよしか　どうかは
 あたしにも　ちょっと　わからないわ</language>
-		<language name="JPN_KANJI" width="256">タマゴと　なかよしか　どうかは
+		<language name="JPN_KANJI" width="256">タマゴと　仲良しか　どうかは
 あたしにも　ちょっと　わからないわ</language>
 	</row>
 
@@ -351,6 +428,8 @@
 		<comment>・はい選択時
 ・なつき度をチェックして対応したメッセージに続く
 0＝選んだポケモン</comment>
+		<attribute name="キャラ指定">WOMAN2
+お洒落姉さん</attribute>
 		<language name="JPN" width="256">あら　あなたの　[1:01:ポケモン種族名:0]……▼</language>
 		<language name="JPN_KANJI" width="256">あら　あなたの　[1:01:ポケモン種族名:0]……▼</language>
 	</row>
@@ -360,6 +439,8 @@
 ・続けてmsg_c07r0401_woman2_02
 
 ・仮メッセージ</comment>
+		<attribute name="キャラ指定">WOMAN2
+お洒落姉さん</attribute>
 		<language name="JPN" width="256">ものすごく　なついてるわね！
 みてて　こっちが　てれちゃう！！</language>
 		<language name="JPN_KANJI" width="256">ものすごく　なついてるわね！
@@ -371,6 +452,8 @@
 ・続けてmsg_c07r0401_woman2_02
 
 ・仮メッセージ</comment>
+		<attribute name="キャラ指定">WOMAN2
+お洒落姉さん</attribute>
 		<language name="JPN" width="256">すごく　なついてるわね！
 あなたが　やさしいのが　わかるわ</language>
 		<language name="JPN_KANJI" width="256">すごく　なついてるわね！
@@ -382,6 +465,8 @@
 ・続けてmsg_c07r0401_woman2_02
 
 ・仮メッセージ</comment>
+		<attribute name="キャラ指定">WOMAN2
+お洒落姉さん</attribute>
 		<language name="JPN" width="256">なついてるわね
 あなたと　いると　しあわせ　なのね</language>
 		<language name="JPN_KANJI" width="256">なついてるわね
@@ -393,6 +478,8 @@
 ・続けてmsg_c07r0401_woman2_02
 
 ・仮メッセージ</comment>
+		<attribute name="キャラ指定">WOMAN2
+お洒落姉さん</attribute>
 		<language name="JPN" width="256">うん　すこし　なついてる
 そんな　かんじかしら</language>
 		<language name="JPN_KANJI" width="256">うん　すこし　なついてる
@@ -404,6 +491,8 @@
 ・続けてmsg_c07r0401_woman2_02
 
 ・仮メッセージ</comment>
+		<attribute name="キャラ指定">WOMAN2
+お洒落姉さん</attribute>
 		<language name="JPN" width="256">ふつうの　かんけい　って　かんじね
 これから　どうなるかは　あなたしだい</language>
 		<language name="JPN_KANJI" width="256">ふつうの　かんけい　って　かんじね
@@ -415,6 +504,8 @@
 ・続けてmsg_c07r0401_woman2_02
 
 ・仮メッセージ</comment>
+		<attribute name="キャラ指定">WOMAN2
+お洒落姉さん</attribute>
 		<language name="JPN" width="256">うーん……
 ちょっと　きらわれているかも</language>
 		<language name="JPN_KANJI" width="256">うーん……
@@ -426,6 +517,8 @@
 ・続けてmsg_c07r0401_woman2_02
 
 ・仮メッセージ</comment>
+		<attribute name="キャラ指定">WOMAN2
+お洒落姉さん</attribute>
 		<language name="JPN" width="256">あらら……　ひょっとして
 すごく　きらわれているかも？</language>
 		<language name="JPN_KANJI" width="256">あらら……　ひょっとして
