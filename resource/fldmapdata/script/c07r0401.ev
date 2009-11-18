@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c07r0401.h"
-  //.include  "c07r0401.h"
+  .include  "c07r0401.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,112 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c07r0401
+_EVENT_DATA    ev_c07r0401_gentleman_01
+_EVENT_DATA    ev_c07r0401_woman2_01
+_EVENT_DATA    ev_c07r0401_woman1_01
 _EVENT_DATA_END
 
+/**************************************************************/
+/* だいすきクラブ会長                                */
+/**************************************************************/
+EVENT_START   ev_c07r0401_gentleman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c07r0401_gentleman_01)
+EVENT_END
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/* 【仮】がんばリボンお姉さん                                  */
 /**************************************************************/
-//ev_c07r0401_flag_change:
-//  _END
+EVENT_START   ev_c07r0401_woman1_01
+
+	_TEMOTI_MONS_NAME  (  0 , 0  )
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_OPEN( msg_c07r0401_woman1_01 ,C07R0401_WOMAN1_01)
+	_BALLOONWIN_CLOSE()
+EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/* なつき度チェックお洒落さん                                */
 /**************************************************************/
-ev_c07r0401:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_c07r0401_woman2_01
 
+	//チェック必要か質問
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_OPEN( msg_c07r0401_woman2_01 ,C07R0401_WOMAN2_01)
+	_YES_NO_WIN( SCWK_ANSWER )
+	_BALLOONWIN_CLOSE()
+	
+	//回答により分岐
+	IF $SCWK_ANSWER == 0 THEN
+
+		//選択ポケモン格納変数定義
+		DEFINE_LOCAL LWK_CHOICE
+		//キャンセルしたか結果格納変数定義
+		DEFINE_LOCAL LWK_SELECT_RESULT
+		
+		//ポケモン選択画面開く
+		_SELECT_TEMOTI_POKE  ( LWK_SELECT_RESULT , LWK_CHOICE , 0 )
+		
+		//ポケモンを選択した
+		IF $LWK_SELECT_RESULT == TRUE THEN
+		
+			//タマゴチェック戻り値定義
+			DEFINE_LOCAL LWK_EGG_RESULT
+		
+			//選択したポケモンがタマゴでないかチェック
+			_CHECK_TEMOTI_EGG  ( LWK_EGG_RESULT , LWK_CHOICE )
+		
+			//タマゴの場合測定不能
+			IF $LWK_EGG_RESULT == TRUE THEN
+				_BALLOONWIN_OBJMSG_OPEN( msg_c07r0401_woman2_03 ,C07R0401_WOMAN2_01)
+				_BALLOONWIN_CLOSE()
+	
+			//タマゴ以外の場合
+			ELSE
+			
+				//指定ポケモン名前取得
+				_TEMOTI_MONS_NAME  (  0 , LWK_CHOICE  )
+				
+				_BALLOONWIN_OBJMSG_OPEN( msg_c07r0401_woman2_04 ,C07R0401_WOMAN2_01)
+				_BALLOONWIN_CLOSE()
+			
+				//なつき度格納変数
+				DEFINE_LOCAL LWK_CHECK_NT
+				//なつき度チェック
+				_GET_TEMOTI_NATSUKI  ( LWK_CHECK_NT , LWK_CHOICE   ) 
+			
+				//なつき度によって分岐
+				IF $LWK_CHECK_NT == 0 THEN
+					_BALLOONWIN_OBJMSG_OPEN( msg_c07r0401_woman2_11 ,C07R0401_WOMAN2_01)
+					_BALLOONWIN_CLOSE()
+				ELSIF $LWK_CHECK_NT >= 49 THEN
+					_BALLOONWIN_OBJMSG_OPEN( msg_c07r0401_woman2_10 ,C07R0401_WOMAN2_01)
+					_BALLOONWIN_CLOSE()
+				ELSIF $LWK_CHECK_NT >= 99 THEN
+					_BALLOONWIN_OBJMSG_OPEN( msg_c07r0401_woman2_09 ,C07R0401_WOMAN2_01)
+					_BALLOONWIN_CLOSE()
+				ELSIF $LWK_CHECK_NT >= 149 THEN
+					_BALLOONWIN_OBJMSG_OPEN( msg_c07r0401_woman2_08 ,C07R0401_WOMAN2_01)
+					_BALLOONWIN_CLOSE()
+				ELSIF $LWK_CHECK_NT >= 199 THEN
+					_BALLOONWIN_OBJMSG_OPEN( msg_c07r0401_woman2_07 ,C07R0401_WOMAN2_01)
+					_BALLOONWIN_CLOSE()
+				ELSIF $LWK_CHECK_NT >= 254 THEN
+					_BALLOONWIN_OBJMSG_OPEN( msg_c07r0401_woman2_06 ,C07R0401_WOMAN2_01)
+					_BALLOONWIN_CLOSE()
+				ELSIF $LWK_CHECK_NT == 255 THEN
+					_BALLOONWIN_OBJMSG_OPEN( msg_c07r0401_woman2_05 ,C07R0401_WOMAN2_01)
+					_BALLOONWIN_CLOSE()
+				ENDIF
+			ENDIF
+		
+		//選択キャンセル
+		ELSE
+		
+		ENDIF
+	
+	//いいえ
+	ELSE
+	
+	ENDIF
+	
+EVENT_END
