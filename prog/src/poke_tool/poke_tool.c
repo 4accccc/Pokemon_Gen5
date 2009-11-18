@@ -1917,7 +1917,15 @@ static  u32 ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
     case ID_PARA_pp_max2:
     case ID_PARA_pp_max3:
     case ID_PARA_pp_max4:
-      ret = WAZADATA_GetMaxPP( ppp2->waza[ id-ID_PARA_pp_max1 ], ppp2->pp_count[ id-ID_PARA_pp_max1 ] );
+      {
+        WazaID waza = ppp2->waza[ id-ID_PARA_pp_max1 ];
+        if( waza != WAZANO_NULL ){
+          u8 maxup_cnt = ppp2->pp_count[ id-ID_PARA_pp_max1 ];
+          ret = WAZADATA_GetMaxPP( waza, maxup_cnt );
+        }else{
+          ret = 0;
+        }
+      }
       break;
     case ID_PARA_hp_rnd:
       ret = ppp2->hp_rnd;
