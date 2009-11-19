@@ -11,7 +11,6 @@
 #include "arc_def.h"
 
 #include "message.naix"
-#include "msg/msg_intrude_comm.h"	//仮
 
 #include "script.h"
 #include "event_fieldtalk.h"
@@ -24,6 +23,9 @@
 #include "field/field_comm/intrude_mission.h"
 #include "field/field_comm/intrude_message.h"
 #include "msg/msg_invasion.h"
+#include "field/field_comm/intrude_battle.h"
+#include "field/event_fieldmap_control.h" //EVENT_FieldSubProc
+#include "item/itemsym.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
@@ -49,12 +51,13 @@ typedef struct
 	FIELDMAP_WORK *fieldWork;
   INTRUDE_COMM_SYS_PTR intcomm;
   
-	FLDMSGBG *msgBG;
-	GFL_MSGDATA *msgData;
-	FLDMSGWIN *msgWin;
-	
 	INTRUDE_EVENT_MSGWORK iem;
 	BOOL error;
+	
+	INTRUDE_TALK_STATUS answer_status;
+	
+	INTRUDE_BATTLE_PARENT ibp;
+	u32 talk_netid;
 }COMMTALK_EVENT_WORK;
 
 
@@ -114,12 +117,14 @@ GMEVENT * EVENT_CommTalk(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
 	GFL_STD_MemClear( ftalk_wk, sizeof(COMMTALK_EVENT_WORK) );
 	
 	ftalk_wk->heapID = heap_id;
-	ftalk_wk->msgBG = FIELDMAP_GetFldMsgBG( fieldWork );
 	ftalk_wk->fmmdl_player = fmmdl_player;
 	ftalk_wk->fmmdl_talk = CommPlayer_GetMmdl(intcomm->cps, talk_net_id);
 	ftalk_wk->fieldWork = fieldWork;
 	ftalk_wk->intcomm = intcomm;
+	ftalk_wk->talk_netid = talk_net_id;
 	
+  IntrudeEventPrint_SetupFieldMsg(&ftalk_wk->iem, gsys);
+
 	return( event );
 }
 
@@ -134,79 +139,214 @@ GMEVENT * EVENT_CommTalk(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
 static GMEVENT_RESULT CommTalkEvent( GMEVENT *event, int *seq, void *wk )
 {
 	COMMTALK_EVENT_WORK *talk = wk;
+	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+	INTRUDE_COMM_SYS_PTR intcomm;
+  enum{
+    SEQ_FIRST_TALK,
+    SEQ_TALK_SEND,
+    SEQ_TALK_WAIT,
+    SEQ_TALK_RECV_WAIT,
+    SEQ_TALK_OK,
+    SEQ_TALK_OK_MSGWAIT,
+    SEQ_MENU_INIT,
+    SEQ_MENU_WAIT,
+    SEQ_MENU_SELECT_SEND,
+    SEQ_MENU_SELECT_ANSWER_WAIT,
+    SEQ_TALK_NG,
+    SEQ_TALK_NG_MSGWAIT,
+    SEQ_TALK_NG_LAST,
+    SEQ_BATTLE_START,
+    SEQ_ITEM_INIT,
+    SEQ_ITEM_MSG_WAIT,
+    SEQ_ITEM_LAST_WAIT,
+    SEQ_TALK_CANCEL,
+    SEQ_FINISH,
+  };
 	
+  intcomm = Intrude_Check_CommConnect(game_comm);
+  if(intcomm == NULL){
+  #if 0 //※check　後で作成
+    if((*seq) < SEQ_MSG_WAIT){
+      IntrudeEventPrint_StartStream(&talk->iem, msg_talk_cancel);
+      *seq = SEQ_MSG_WAIT;
+      talk->error = TRUE;
+    }
+  #endif
+  }
+
 	switch( *seq ){
-	case 0:
-		talk->msgData = FLDMSGBG_CreateMSGDATA(
-			talk->msgBG, NARC_message_intrude_comm_dat );
-		talk->msgWin = FLDMSGWIN_AddTalkWin( talk->msgBG, talk->msgData );
-		FLDMSGWIN_Print( talk->msgWin, 0, 0, msg_intrude_000 );
+	case SEQ_FIRST_TALK:
+    IntrudeEventPrint_StartStream(&talk->iem, msg_intrude_000);
 		(*seq)++;
 		break;
-	case 1:
+	case SEQ_TALK_SEND:
 	  if(IntrudeSend_Talk(talk->intcomm->talk.talk_netid) == TRUE){
       (*seq)++;
     }
-	case 2:
-		if( FLDMSGWIN_CheckPrintTrans(talk->msgWin) == TRUE ){
+    break;
+	case SEQ_TALK_WAIT:
+    if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
 			(*seq)++;
 		}
 		break;
-	case 3:
+	case SEQ_TALK_RECV_WAIT:
 	  {
       INTRUDE_TALK_STATUS talk_status = Intrude_GetTalkAnswer(talk->intcomm);
       switch(talk_status){
       case INTRUDE_TALK_STATUS_OK:
-        *seq = 100;
+        *seq = SEQ_TALK_OK;
         break;
       case INTRUDE_TALK_STATUS_NG:
-        *seq = 200;
+      case INTRUDE_TALK_STATUS_CANCEL:
+        *seq = SEQ_TALK_NG;
+        break;
+      default:  //まだ返事が来ていない
+        if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
+          if(IntrudeSend_TalkCancel(talk->intcomm->talk.talk_netid) == TRUE){
+            *seq = SEQ_TALK_CANCEL;
+          }
+        }
         break;
       }
     }
 		break;
 	
-  case 100:   //返事OK
-    FLDMSGWIN_ClearWindow(talk->msgWin);
-		FLDMSGWIN_Print( talk->msgWin, 0, 0, msg_intrude_003 );
+  case SEQ_TALK_OK:   //返事OK
+    IntrudeEventPrint_StartStream(&talk->iem, msg_intrude_003);
 		(*seq)++;
     break;
-  case 101:
-		if( FLDMSGWIN_CheckPrintTrans(talk->msgWin) == TRUE ){
+  case SEQ_TALK_OK_MSGWAIT:
+    if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
 			(*seq)++;
 		}
 		break;
-	case 102:
-		{
-			int trg = GFL_UI_KEY_GetTrg();
-			if( trg & (PAD_BUTTON_A|PAD_BUTTON_B) ){
-				(*seq) = 300;
-			}
-		}
+	case SEQ_MENU_INIT:
+	  IntrudeEventPrint_SetupMainMenu(&talk->iem, gsys);
+	  (*seq)++;
 	  break;
+	case SEQ_MENU_WAIT:
+	  {
+      u32 menu_ret = IntrudeEventPrint_SelectMenu(&talk->iem);
+      switch(menu_ret){
+      case FLDMENUFUNC_NULL:
+        break;
+      case FLDMENUFUNC_CANCEL:
+      case INTRUDE_TALK_STATUS_CANCEL:
+        talk->answer_status = INTRUDE_TALK_STATUS_CANCEL;
+        IntrudeEventPrint_ExitMenu(&talk->iem);
+        (*seq)++;
+        break;
+      default:
+        talk->answer_status = menu_ret;
+        IntrudeEventPrint_ExitMenu(&talk->iem);
+        IntrudeEventPrint_StartStream(&talk->iem, msg_talk_battle_002);
+        (*seq)++;
+        break;
+      }
+    }
+    break;
+  case SEQ_MENU_SELECT_SEND:  //メニュー選択結果を送信
+    if(IntrudeSend_TalkAnswer(
+        talk->intcomm, talk->intcomm->talk.talk_netid, talk->answer_status) == TRUE){
+      if(talk->answer_status == INTRUDE_TALK_STATUS_CANCEL){
+        *seq = SEQ_TALK_CANCEL;
+      }
+      else{
+        (*seq)++;
+      }
+    }
+	  break;
+	case SEQ_MENU_SELECT_ANSWER_WAIT: //メニュー選択結果の返事待ち
+    if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
+      INTRUDE_TALK_STATUS talk_status = Intrude_GetTalkAnswer(talk->intcomm);
+      OS_TPrintf("menu_answer status = %d\n", talk_status);
+      switch(talk_status){
+      case INTRUDE_TALK_STATUS_OK:
+        switch(talk->answer_status){
+        case INTRUDE_TALK_STATUS_BATTLE:
+          *seq = SEQ_BATTLE_START;
+          break;
+        case INTRUDE_TALK_STATUS_ITEM:
+          *seq = SEQ_ITEM_INIT;
+          break;
+        default:
+          GF_ASSERT(0);
+          break;
+        }
+        break;
+      case INTRUDE_TALK_STATUS_NG:
+      case INTRUDE_TALK_STATUS_CANCEL:
+        *seq = SEQ_TALK_NG;
+        break;
+      default:  //まだ返事が来ていない
+        if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
+          if(IntrudeSend_TalkCancel(talk->intcomm->talk.talk_netid) == TRUE){
+            *seq = SEQ_TALK_CANCEL;
+          }
+        }
+        break;
+      }
+    }
+		break;
 	  
-  case 200:   //断られた
-    FLDMSGWIN_ClearWindow(talk->msgWin);
-		FLDMSGWIN_Print( talk->msgWin, 0, 0, msg_intrude_002 );
+  case SEQ_TALK_NG:   //断られた
+    IntrudeEventPrint_StartStream(&talk->iem, msg_intrude_002);
 		(*seq)++;
     break;
-  case 201:
-		if( FLDMSGWIN_CheckPrintTrans(talk->msgWin) == TRUE ){
+  case SEQ_TALK_NG_MSGWAIT:
+    if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
 			(*seq)++;
 		}
 		break;
-	case 202:
-		{
-			int trg = GFL_UI_KEY_GetTrg();
-			if( trg & (PAD_BUTTON_A|PAD_BUTTON_B) ){
-				(*seq) = 300;
-			}
+	case SEQ_TALK_NG_LAST:
+    if(IntrudeEventPrint_LastKeyWait() == TRUE){
+			(*seq) = SEQ_FINISH;
 		}
 	  break;
 	
-	case 300:   //終了処理
-		FLDMSGWIN_Delete( talk->msgWin );
-		GFL_MSG_Delete( talk->msgData );
+	case SEQ_BATTLE_START:
+    IntrudeEventPrint_ExitFieldMsg(&talk->iem);
+    {
+      GMEVENT *child_event;
+      
+      talk->ibp.gsys = gsys;
+      talk->ibp.target_netid = talk->talk_netid;
+      child_event = EVENT_FieldSubProc(
+        gsys, talk->fieldWork, NO_OVERLAY_ID, &IntrudeBattleProcData, &talk->ibp);
+      GMEVENT_CallEvent(event, child_event);
+    }
+	  *seq = SEQ_FINISH;
+	  break;
+	
+	case SEQ_ITEM_INIT:
+    {
+      GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
+      MYSTATUS *target_myst = GAMEDATA_GetMyStatusPlayer(gamedata, talk->talk_netid);
+
+      WORDSET_RegisterPlayerName( talk->iem.wordset, 0, target_myst );
+      WORDSET_RegisterItemName( talk->iem.wordset, 1, ITEM_KIZUGUSURI );
+      IntrudeEventPrint_StartStream(&talk->iem, msg_talk_item_002);
+    }
+    *seq = SEQ_ITEM_MSG_WAIT;
+    break;
+  case SEQ_ITEM_MSG_WAIT:
+    if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case SEQ_ITEM_LAST_WAIT:
+    if(IntrudeEventPrint_LastKeyWait() == TRUE){
+      *seq = SEQ_FINISH;
+    }
+    break;
+	  
+	case SEQ_TALK_CANCEL:   //会話キャンセル
+	  *seq = SEQ_FINISH;
+	  break;
+	  
+	case SEQ_FINISH:   //終了処理
+    IntrudeEventPrint_ExitFieldMsg(&talk->iem);
 
   	//侵入システムのアクションステータスを更新
   	Intrude_SetActionStatus(talk->intcomm, INTRUDE_ACTION_FIELD);
@@ -231,10 +371,7 @@ static GMEVENT_RESULT CommBingoEvent( GMEVENT *event, int *seq, void *wk )
 	
 	switch( *seq ){
 	case 0:
-		talk->msgData = FLDMSGBG_CreateMSGDATA(
-			talk->msgBG, NARC_message_intrude_comm_dat );
-		talk->msgWin = FLDMSGWIN_AddTalkWin( talk->msgBG, talk->msgData );
-		FLDMSGWIN_Print( talk->msgWin, 0, 0, msg_intrude_bingo000 );
+    IntrudeEventPrint_StartStream(&talk->iem, msg_intrude_bingo000);
 		(*seq)++;
 		break;
 	case 1:
@@ -242,7 +379,7 @@ static GMEVENT_RESULT CommBingoEvent( GMEVENT *event, int *seq, void *wk )
       (*seq)++;
     }
 	case 2:
-		if( FLDMSGWIN_CheckPrintTrans(talk->msgWin) == TRUE ){
+    if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
 			(*seq)++;
 		}
 		break;
@@ -261,8 +398,7 @@ static GMEVENT_RESULT CommBingoEvent( GMEVENT *event, int *seq, void *wk )
 		break;
 	
   case 100:   //返事OK
-    FLDMSGWIN_ClearWindow(talk->msgWin);
-   	FLDMSGWIN_Print( talk->msgWin, 0, 0, msg_intrude_bingo001 );
+    IntrudeEventPrint_StartStream(&talk->iem, msg_intrude_bingo001);
 	  (*seq)++;
     break;
   case 101:   //乱入用パラメータ要求
@@ -276,41 +412,33 @@ static GMEVENT_RESULT CommBingoEvent( GMEVENT *event, int *seq, void *wk )
     }
     break;
   case 103:
-		if( FLDMSGWIN_CheckPrintTrans(talk->msgWin) == TRUE ){
+    if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
 			(*seq)++;
 		}
 		break;
 	case 104:
-		{
-			int trg = GFL_UI_KEY_GetTrg();
-			if( trg & (PAD_BUTTON_A|PAD_BUTTON_B) ){
-				(*seq) = 300;
-			}
+    if(IntrudeEventPrint_LastKeyWait() == TRUE){
+			(*seq) = 300;
 		}
 	  break;
 	  
   case 200:   //断られた
-    FLDMSGWIN_ClearWindow(talk->msgWin);
-		FLDMSGWIN_Print( talk->msgWin, 0, 0, msg_intrude_bingo002 );
+    IntrudeEventPrint_StartStream(&talk->iem, msg_intrude_bingo002);
 		(*seq)++;
     break;
   case 201:
-		if( FLDMSGWIN_CheckPrintTrans(talk->msgWin) == TRUE ){
+    if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
 			(*seq)++;
 		}
 		break;
 	case 202:
-		{
-			int trg = GFL_UI_KEY_GetTrg();
-			if( trg & (PAD_BUTTON_A|PAD_BUTTON_B) ){
-				(*seq) = 300;
-			}
+    if(IntrudeEventPrint_LastKeyWait() == TRUE){
+			(*seq) = 300;
 		}
 	  break;
 	
 	case 300:   //終了処理
-		FLDMSGWIN_Delete( talk->msgWin );
-		GFL_MSG_Delete( talk->msgData );
+    IntrudeEventPrint_ExitFieldMsg(&talk->iem);
 
   	//侵入システムのアクションステータスを更新
   	Intrude_SetActionStatus(talk->intcomm, INTRUDE_ACTION_FIELD);
@@ -347,7 +475,7 @@ static GMEVENT_RESULT CommMissionAchieveEvent( GMEVENT *event, int *seq, void *w
 	
   intcomm = Intrude_Check_CommConnect(game_comm);
   if(intcomm == NULL){
-    if((*seq) > SEQ_INIT && (*seq) < SEQ_MSG_WAIT){
+    if((*seq) < SEQ_MSG_WAIT){
       IntrudeEventPrint_StartStream(&talk->iem, msg_invasion_mission_sys002);
       *seq = SEQ_MSG_WAIT;
       talk->error = TRUE;
@@ -356,7 +484,6 @@ static GMEVENT_RESULT CommMissionAchieveEvent( GMEVENT *event, int *seq, void *w
 
 	switch( *seq ){
   case SEQ_INIT:
-    IntrudeEventPrint_SetupFieldMsg(&talk->iem, gsys);
     (*seq)++;
     break;
 	case SEQ_SEND_ACHIEVE:
@@ -436,11 +563,12 @@ GMEVENT * EVENT_CommMissionResult(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
 	GFL_STD_MemClear( ftalk_wk, sizeof(COMMTALK_EVENT_WORK) );
 	
 	ftalk_wk->heapID = heap_id;
-	ftalk_wk->msgBG = FIELDMAP_GetFldMsgBG( fieldWork );
 	ftalk_wk->fmmdl_player = fmmdl_player;
 	ftalk_wk->fieldWork = fieldWork;
 	ftalk_wk->intcomm = intcomm;
 	
+  IntrudeEventPrint_SetupFieldMsg(&ftalk_wk->iem, gsys);
+
 	return( event );
 }
 
@@ -469,7 +597,7 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
 	
   intcomm = Intrude_Check_CommConnect(game_comm);
   if(intcomm == NULL){
-    if((*seq) > SEQ_INIT && (*seq) < SEQ_MSG_WAIT){
+    if((*seq) < SEQ_MSG_WAIT){
       IntrudeEventPrint_StartStream(&talk->iem, msg_invasion_mission_sys002);
       *seq = SEQ_MSG_WAIT;
       talk->error = TRUE;
@@ -478,7 +606,6 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
 
 	switch( *seq ){
   case SEQ_INIT:
-    IntrudeEventPrint_SetupFieldMsg(&talk->iem, gsys);
     (*seq)++;
     break;
   case SEQ_MSG_INIT:
@@ -523,3 +650,4 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
   }
 	return GMEVENT_RES_CONTINUE;
 }
+

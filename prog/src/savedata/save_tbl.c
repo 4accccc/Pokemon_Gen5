@@ -51,15 +51,10 @@
 //  定数定義
 //==============================================================================
 #define MAGIC_NUMBER  (0x31053527)
-#define SECTOR_SIZE   (SAVE_SECTOR_SIZE)
 #define SECTOR_MAX    (SAVE_PAGE_MAX)
 
 ///ノーマル領域で使用するセーブサイズ
-#define SAVESIZE_NORMAL   (SECTOR_SIZE * SECTOR_MAX)
-///EXTRA領域で戦闘録画が使用するセーブサイズ
-#define SAVESIZE_EXTRA_BATTLE_REC   (SECTOR_SIZE * 2)
-///EXTRA領域でストリーミングが使用するセーブサイズ
-#define SAVESIZE_EXTRA_STREAMING    (SECTOR_SIZE * 32)  //128Kbyte
+#define SAVESIZE_NORMAL   (SAVE_SECTOR_SIZE * SECTOR_MAX)
 
 ///ミラーリング領域で使用するセーブ開始アドレス
 #define MIRROR_SAVE_ADDRESS   (0x24000)

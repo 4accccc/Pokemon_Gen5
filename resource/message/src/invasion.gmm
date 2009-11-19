@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-10-27T22:47:52"/>
+	<create user="matsuda" host="W00142" date="2009-11-13T21:46:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -485,6 +485,102 @@
 		<comment>通信接続時</comment>
 		<language name="JPN" width="256">つうしん　せつぞく　しました</language>
 		<language name="JPN_KANJI" width="256">CONNECTION</language>
+	</row>
+
+	<row id="msg_intrude_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>話しかけた</comment>
+		<language name="JPN" width="256">はなしかけています</language>
+		<language name="JPN_KANJI" width="256">話しかけています</language>
+	</row>
+
+	<row id="msg_intrude_001" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>話しかけられた</comment>
+		<language name="JPN" width="256">はなしかけられました
+あいての　せんたくを　まっています</language>
+		<language name="JPN_KANJI" width="256">話しかけられました
+相手の　選択を　待っています</language>
+	</row>
+
+	<row id="msg_intrude_002" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>会話を断る</comment>
+		<language name="JPN" width="256">ごめん！いま　いそがしいんだ！
+また　あとでね！</language>
+		<language name="JPN_KANJI" width="256">ごめん！　今　忙しいんだ！
+また　後でね！</language>
+	</row>
+
+	<row id="msg_intrude_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">こんにちは！　なにする？</language>
+		<language name="JPN_KANJI" width="256">こんにちは！　なにする？</language>
+	</row>
+
+	<row id="msg_talk_menu_001" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>話しかけメニュー</comment>
+		<language name="JPN" width="256">フラット５０たいせん</language>
+		<language name="JPN_KANJI" width="256">フラット５０対戦</language>
+	</row>
+
+	<row id="msg_talk_menu_002" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>話しかけメニュー</comment>
+		<language name="JPN" width="256">アイテムを　わたす</language>
+		<language name="JPN_KANJI" width="256">アイテムを　渡す</language>
+	</row>
+
+	<row id="msg_talk_menu_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>話しかけメニュー</comment>
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
+	</row>
+
+	<row id="msg_talk_battle_001" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">フラット５０　で　たいせん　しよう！</language>
+		<language name="JPN_KANJI" width="256">フラット５０　で　対戦　しよう！</language>
+	</row>
+
+	<row id="msg_talk_battle_002" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">あいての　へんじを　まっています</language>
+		<language name="JPN_KANJI" width="256">相手の　返事を　待っています</language>
+	</row>
+
+	<row id="msg_talk_battle_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">ことわられました</language>
+		<language name="JPN_KANJI" width="256">断られました</language>
+	</row>
+
+	<row id="msg_talk_item_001" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]から
+[1:09:どうぐ名:1]を　もらった！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]から
+[1:09:どうぐ名:1]を　もらった！</language>
+	</row>
+
+	<row id="msg_talk_item_002" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に
+[1:09:どうぐ名:1]を　わたした！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に
+[1:09:どうぐ名:1]を　渡した！</language>
+	</row>
+
+	<row id="msg_talk_cancel" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">なんでもない！　バイバイ！</language>
+		<language name="JPN_KANJI" width="256">なんでもない！　バイバイ！</language>
+	</row>
+
+	<row id="msg_intrude_bingo000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">ビンゴバトルに　らんにゅうを
+しんせい　しています</language>
+		<language name="JPN_KANJI" width="256">ビンゴバトルに　乱入を
+申請しています</language>
+	</row>
+
+	<row id="msg_intrude_bingo001" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">らんにゅう　OK!</language>
+		<language name="JPN_KANJI" width="256">乱入OK!</language>
+	</row>
+
+	<row id="msg_intrude_bingo002" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">らんにゅう　できません</language>
+		<language name="JPN_KANJI" width="256">乱入できません</language>
 	</row>
 
 	<row id="msg_invasion_mission_sys000" back-color="#ffff80,,,,,,,,,,,,,,,,,">

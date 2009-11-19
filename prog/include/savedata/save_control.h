@@ -82,6 +82,10 @@ extern void SaveControl_GetActualSize(SAVE_CONTROL_WORK *ctrl, u32 *actual_size,
 extern LOAD_RESULT SaveControl_Extra_Load(
   SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, int heap_id);
 extern void SaveControl_Extra_Unload(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id);
+extern BOOL SaveControl_Extra_CheckLoad(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id);
+extern LOAD_RESULT SaveControl_Extra_LoadWork(
+  SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, int heap_id, void *work, u32 work_size);
+extern void SaveControl_Extra_UnloadWork(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id);
 extern void SaveControl_Extra_SaveAsyncInit(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id);
 extern SAVE_RESULT SaveControl_Extra_SaveAsyncMain(
   SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id);

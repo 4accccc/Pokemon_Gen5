@@ -11,14 +11,20 @@
 #include "arc_def.h"
 
 #include "message.naix"
-#include "msg/msg_intrude_comm.h"	//仮
+#include "msg/msg_invasion.h"
 
 #include "script.h"
 #include "event_fieldtalk.h"
+#include "print/wordset.h"
 
 #include "event_comm_talked.h"
 #include "field/field_comm/intrude_main.h"
 #include "field/field_comm/intrude_comm_command.h"
+#include "field/field_comm/intrude_message.h"
+#include "field/field_comm/intrude_battle.h"
+#include "field/event_fieldmap_control.h" //EVENT_FieldSubProc
+#include "system/main.h"
+#include "item/itemsym.h"
 
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
@@ -47,6 +53,11 @@ typedef struct
 	FLDMSGBG *msgBG;
 	GFL_MSGDATA *msgData;
 	FLDMSGWIN *msgWin;
+
+	INTRUDE_EVENT_MSGWORK iem;
+
+	INTRUDE_BATTLE_PARENT ibp;
+	u32 talk_netid;
 }COMMTALK_EVENT_WORK;
 
 
@@ -91,9 +102,12 @@ GMEVENT * EVENT_CommWasTalkedTo(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
 	ftalk_wk->fmmdl_talk = CommPlayer_GetMmdl(intcomm->cps, talk_net_id);
 	ftalk_wk->fieldWork = fieldWork;
 	ftalk_wk->intcomm = intcomm;
+	ftalk_wk->talk_netid = talk_net_id;
 	
 	//侵入システムのアクションステータスを更新
 	Intrude_SetActionStatus(intcomm, INTRUDE_ACTION_TALK);
+
+  IntrudeEventPrint_SetupFieldMsg(&ftalk_wk->iem, gsys);
 
 	return( event );
 }
@@ -109,58 +123,160 @@ GMEVENT * EVENT_CommWasTalkedTo(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
 static GMEVENT_RESULT CommWasTalkedTo( GMEVENT *event, int *seq, void *wk )
 {
 	COMMTALK_EVENT_WORK *talk = wk;
+	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+	INTRUDE_COMM_SYS_PTR intcomm;
+  enum{
+    SEQ_MSG_INIT,
+    SEQ_MSG_ANSWER,
+    SEQ_MSG_WAIT,
+    SEQ_SELECT_WAIT,
+    SEQ_BATTLE_YESNO_INIT,
+    SEQ_BATTLE_YESNO_MSGWAIT,
+    SEQ_BATTLE_YESNO_SELECT,
+    SEQ_BATTLE_YES,
+    SEQ_BATTLE_START,
+    SEQ_ITEM_YESNO_INIT,
+    SEQ_ITEM_MSG_WAIT,
+    SEQ_ITEM_LAST_WAIT,
+    SEQ_NG,
+    SEQ_TALK_CANCEL,
+    SEQ_FINISH,
+  };
+
+  intcomm = Intrude_Check_CommConnect(game_comm);
+  if(intcomm == NULL){
+  #if 0 //※check　後で作成
+    if((*seq) < SEQ_MSG_WAIT){
+      IntrudeEventPrint_StartStream(&talk->iem, msg_talk_cancel);
+      *seq = SEQ_MSG_WAIT;
+      talk->error = TRUE;
+    }
+  #endif
+  }
 	
 	switch( *seq ){
-	case 0:	//対象MDLの移動終了待ち
-		if( talk->fmmdl_talk != NULL ){
-			if( MMDL_CheckStatusBitMove(talk->fmmdl_talk) == TRUE ){
-				MMDL_UpdateMove( talk->fmmdl_talk );
-				
-				if( MMDL_CheckStatusBitMove(talk->fmmdl_talk) == TRUE ){
-					break;
-				}
-			}
-		}
-		
-		{
-			MMDLSYS *fmmdlsys = FIELDMAP_GetMMdlSys( talk->fieldWork );
-			MMDLSYS_PauseMoveProc( fmmdlsys );
-		}
-		(*seq)++;
-	case 1:
-		talk->msgData = FLDMSGBG_CreateMSGDATA(
-			talk->msgBG, NARC_message_intrude_comm_dat );
-		talk->msgWin = FLDMSGWIN_AddTalkWin( talk->msgBG, talk->msgData );
-		FLDMSGWIN_Print( talk->msgWin, 0, 0, msg_intrude_001 );
+	case SEQ_MSG_INIT:
+    IntrudeEventPrint_StartStream(&talk->iem, msg_intrude_001);
 		(*seq)++;
 		break;
-	case 2:
+	case SEQ_MSG_ANSWER:
 	  if(IntrudeSend_TalkAnswer(
 	      talk->intcomm, talk->intcomm->talk.talk_netid, talk->intcomm->talk.talk_status) == TRUE){
       (*seq)++;
     }
     break;
-  case 3:
-		if( FLDMSGWIN_CheckPrintTrans(talk->msgWin) == TRUE ){
+  case SEQ_MSG_WAIT:
+    if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
 			(*seq)++;
 		}
 		break;
-	case 4:
-		{
-			int trg = GFL_UI_KEY_GetTrg();
-			if( trg & (PAD_BUTTON_A|PAD_BUTTON_B) ){
-				(*seq)++;
-			}
-		}
-		break;
-	case 5:
-		FLDMSGWIN_Delete( talk->msgWin );
-		GFL_MSG_Delete( talk->msgData );
+	case SEQ_SELECT_WAIT:   //相手の選択待ち
+    {
+      INTRUDE_TALK_STATUS talk_status = Intrude_GetTalkAnswer(intcomm);
+      switch(talk_status){
+      case INTRUDE_TALK_STATUS_BATTLE:
+        *seq = SEQ_BATTLE_YESNO_INIT;
+        break;
+      case INTRUDE_TALK_STATUS_ITEM:
+        *seq = SEQ_ITEM_YESNO_INIT;
+        break;
+      case INTRUDE_TALK_STATUS_CANCEL:
+        *seq = SEQ_TALK_CANCEL;
+        break;
+      default:  //まだ返事が来ていない
+        if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
+          if(IntrudeSend_TalkCancel(talk->intcomm->talk.talk_netid) == TRUE){
+            *seq = SEQ_TALK_CANCEL;
+          }
+        }
+        break;
+      }
+    }
+	  break;
+	case SEQ_BATTLE_YESNO_INIT:
+    IntrudeEventPrint_StartStream(&talk->iem, msg_talk_battle_001);
+	  (*seq)++;
+	  break;
+	case SEQ_BATTLE_YESNO_MSGWAIT:
+    if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
+      IntrudeEventPrint_SetupYesNo(&talk->iem, gsys);
+      (*seq)++;
+    }
+    break;
+  case SEQ_BATTLE_YESNO_SELECT:
+    {
+      FLDMENUFUNC_YESNO yesno = IntrudeEventPrint_SelectYesNo(&talk->iem);
+      switch(yesno){
+      case FLDMENUFUNC_YESNO_YES:
+        IntrudeEventPrint_ExitMenu(&talk->iem);
+        *seq = SEQ_BATTLE_YES;
+        break;
+      case FLDMENUFUNC_YESNO_NO:
+        IntrudeEventPrint_ExitMenu(&talk->iem);
+        *seq = SEQ_NG;
+        break;
+      }
+    }
+    break;
+  case SEQ_BATTLE_YES:
+    if(IntrudeSend_TalkAnswer(
+        talk->intcomm, talk->intcomm->talk.talk_netid, INTRUDE_TALK_STATUS_OK) == TRUE){
+      *seq = SEQ_BATTLE_START;
+    }
+    break;
+  case SEQ_BATTLE_START:
+    IntrudeEventPrint_ExitFieldMsg(&talk->iem);
+    {
+      GMEVENT *child_event;
+      
+      talk->ibp.gsys = gsys;
+      talk->ibp.target_netid = talk->talk_netid;
+      child_event = EVENT_FieldSubProc(
+        gsys, talk->fieldWork, NO_OVERLAY_ID, &IntrudeBattleProcData, &talk->ibp);
+      GMEVENT_CallEvent(event, child_event);
+    }
+	  *seq = SEQ_FINISH;
+    break;
+    
+  case SEQ_ITEM_YESNO_INIT:
+    {
+      GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
+      MYSTATUS *target_myst = GAMEDATA_GetMyStatusPlayer(gamedata, talk->talk_netid);
+      MYITEM_PTR myitem = GAMEDATA_GetMyItem( gamedata );
 
-		{
-			MMDLSYS *fmmdlsys = FIELDMAP_GetMMdlSys( talk->fieldWork );
-			MMDLSYS_ClearPauseMoveProc( fmmdlsys );
-		}
+      MYITEM_AddItem( myitem, ITEM_KIZUGUSURI, 1, HEAPID_PROC );
+
+      WORDSET_RegisterPlayerName( talk->iem.wordset, 0, target_myst );
+      WORDSET_RegisterItemName( talk->iem.wordset, 1, ITEM_KIZUGUSURI );
+      IntrudeEventPrint_StartStream(&talk->iem, msg_talk_item_001);
+    }
+    *seq = SEQ_ITEM_MSG_WAIT;
+    break;
+  case SEQ_ITEM_MSG_WAIT:
+    if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case SEQ_ITEM_LAST_WAIT:
+    if(IntrudeEventPrint_LastKeyWait() == TRUE){
+      *seq = SEQ_FINISH;
+    }
+    break;
+  
+  case SEQ_NG:
+    if(IntrudeSend_TalkAnswer(
+        talk->intcomm, talk->intcomm->talk.talk_netid, INTRUDE_TALK_STATUS_NG) == TRUE){
+      *seq = SEQ_FINISH;
+    }
+    break;
+	
+	case SEQ_TALK_CANCEL:
+	  *seq = SEQ_FINISH;
+	  break;
+	  
+	case SEQ_FINISH:
+    IntrudeEventPrint_ExitFieldMsg(&talk->iem);
 
   	//侵入システムのアクションステータスを更新
   	Intrude_SetActionStatus(talk->intcomm, INTRUDE_ACTION_FIELD);

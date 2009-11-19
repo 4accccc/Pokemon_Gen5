@@ -108,6 +108,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/field_comm/intrude_main.c \
         field/field_comm/intrude_work.c \
         field/field_comm/intrude_mission.c \
+        field/field_comm/intrude_battle.c \
         field/field_comm/bingo_system.c \
         field/field_wfbc_data.c \
         net_app/union/comm_player.c \
@@ -704,7 +705,8 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/app/b_plist_bmp.c \
 			battle/app/b_plist_obj.c \
 			battle/app/b_plist_main.c \
-			battle/app/b_plist_ui.c
+			battle/app/b_plist_ui.c \
+			poke_tool/pp_to_rpp.c
 #			battle/btlv/finger_cursor.c \
 
 # WIFICLUB
@@ -1095,7 +1097,8 @@ SRCS_OVERLAY_BATTLE_RECORDER	= net_app/battle_recorder/br_main.c \
 																net_app/battle_recorder/br_btn.c \
 																net_app/battle_recorder/br_btn_data.c \
 																net_app/battle_recorder/br_res.c \
-																net_app/battle_recorder/br_graphic.c
+																net_app/battle_recorder/br_graphic.c \
+																poke_tool/rpp_to_pp.c
 
 # デバッグデータ作成
 #===> SRCS_OVERLAY_FIELDMAP

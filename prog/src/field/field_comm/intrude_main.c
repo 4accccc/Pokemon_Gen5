@@ -622,7 +622,9 @@ BOOL Intrude_SetSendStatus(INTRUDE_COMM_SYS_PTR intcomm)
  * 会話構造体初期化
  *
  * @param   intcomm		
- * @param   talk_netid		
+ * @param   talk_netid		クリアデータとして初期化ならばINTRUDE_NETID_NULL
+ * @param   talk_netid		話しかけた時の初期化ならば話しかけた相手のNetID
+ * @param   talk_netid		話しかけられた時の初期化ならば話しかけてきた相手のNetID
  */
 //==================================================================
 void Intrude_InitTalkWork(INTRUDE_COMM_SYS_PTR intcomm, int talk_netid)
@@ -675,10 +677,24 @@ void Intrude_SetTalkReq(INTRUDE_COMM_SYS_PTR intcomm, int net_id)
 //==================================================================
 void Intrude_SetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int net_id, INTRUDE_TALK_STATUS talk_status)
 {
-  if(intcomm->talk.answer_talk_netid == INTRUDE_NETID_NULL && intcomm->talk.talk_netid == net_id){
+  GF_ASSERT(intcomm->talk.answer_talk_status == INTRUDE_TALK_STATUS_NULL);
+  if(intcomm->talk.talk_netid == net_id){
     intcomm->talk.answer_talk_netid = net_id;
     intcomm->talk.answer_talk_status = talk_status;
   }
+}
+
+//==================================================================
+/**
+ * 会話の返事受信データセット(キャンセル専用)
+ *
+ * @param   intcomm		
+ * @param   net_id		
+ */
+//==================================================================
+void Intrude_SetTalkCancel(INTRUDE_COMM_SYS_PTR intcomm, int net_id)
+{
+  Intrude_SetTalkAnswer(intcomm, net_id, INTRUDE_TALK_STATUS_CANCEL);
 }
 
 //==================================================================
@@ -688,12 +704,21 @@ void Intrude_SetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int net_id, INTRUDE_TAL
  * @param   intcomm		
  * @param   net_id		    返事をしてきた人のNetID
  * @param   talk_status		会話ステータス
+ *
+ * INTRUDE_TALK_STATUS_NULL以外のデータが入っていた場合は
+ * バッファをNULLでクリアしてから戻り値を返します
  */
 //==================================================================
 INTRUDE_TALK_STATUS Intrude_GetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm)
 {
+  INTRUDE_TALK_STATUS ret;
+  
   if(intcomm->talk.answer_talk_netid != INTRUDE_NETID_NULL){
-    return intcomm->talk.answer_talk_status;
+    ret = intcomm->talk.answer_talk_status;
+    if(ret != INTRUDE_TALK_STATUS_NULL){
+      intcomm->talk.answer_talk_status = INTRUDE_TALK_STATUS_NULL;
+      return ret;
+    }
   }
   return INTRUDE_TALK_STATUS_NULL;
 }

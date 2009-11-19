@@ -46,9 +46,9 @@ extern u32 * brs;
  * @param   heap_id		テンポラリで使用するヒープID
  */
 //--------------------------------------------------------------
-#if 0 //※check　録画データの内容が未確定の為、保留　2009.11.09(月)
 void BattleRecTool_ErrorStrCheck(BATTLE_REC_SAVEDATA *src, BATTLE_PARAM *bp, int heap_id)
 {
+#if 0 //※check　録画データの内容が未確定の為、保留　2009.11.09(月)
 	BATTLE_REC_WORK *rec = &src->rec;
 	BATTLE_REC_HEADER *head = &src->head;
 	int client_max, temoti_max, client, temoti;
@@ -116,8 +116,10 @@ void BattleRecTool_ErrorStrCheck(BATTLE_REC_SAVEDATA *src, BATTLE_PARAM *bp, int
 	STRBUF_Delete(check_str);
 	STRBUF_Delete(temp_str);
 	sys_FreeMemoryEz(check_strcode);
+#endif
 }
 
+#if 0 //※check　録画データの内容が未確定の為、保留　2009.11.09(月)
 //--------------------------------------------------------------
 /**
  * @brief   エラー文字だった場合に表示する代理名をバッファにセット

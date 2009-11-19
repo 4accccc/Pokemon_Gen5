@@ -47,12 +47,17 @@ typedef enum{
   INTRUDE_TALK_STATUS_NULL,         ///<初期値(何もしていない状態)
   INTRUDE_TALK_STATUS_OK,           ///<会話OK
   INTRUDE_TALK_STATUS_NG,           ///<会話NG
+  INTRUDE_TALK_STATUS_CANCEL,       ///<会話キャンセル
+  INTRUDE_TALK_STATUS_BATTLE,       ///<対戦
+  INTRUDE_TALK_STATUS_ITEM,         ///<アイテム渡す
   INTRUDE_TALK_STATUS_CARD,         ///<トレーナーカード見せて
 }INTRUDE_TALK_STATUS;
 
 ///同期取り番号
 enum{
     INTRUDE_TIMING_EXIT = 20,
+    INTRUDE_TIMING_BATTLE_COMMAND_ADD_BEFORE,   ///<通信対戦のコマンドADD前
+    INTRUDE_TIMING_BATTLE_COMMAND_ADD_AFTER,    ///<通信対戦のコマンドADD後
 };
 
 ///石版タイプ
@@ -140,6 +145,9 @@ typedef struct _INTRUDE_COMM_SYS{
   u8 warp_town_tblno;         ///<ワープ先のテーブル番号
   u8 area_occupy_update;      ///<TRUE:侵入しているエリアの占拠情報を受信した(下画面やり取り)
   u8 send_occupy;             ///<TRUE:自分の占拠情報を送信リクエスト
-  u8 padding;
+  u8 recv_target_timing_no;   ///<相手指定タイミングコマンドの同期番号の受信バッファ
+  
+  u8 recv_target_timing_netid;  ///<相手指定タイミングコマンドの送信者のNetID
+  u8 padding[3];
 }INTRUDE_COMM_SYS;
 

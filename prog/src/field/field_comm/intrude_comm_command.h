@@ -28,6 +28,7 @@ enum INTRUDE_CMD{
   INTRUDE_CMD_PLAYER_STATUS,                  ///<侵入ステータス(現在情報)
   INTRUDE_CMD_TALK,                           ///<話しかける
   INTRUDE_CMD_TALK_ANSWER,                    ///<話しかけられたので自分の状況を返す
+  INTRUDE_CMD_TALK_CANCEL,                    ///<話しかけをキャンセル
   INTRUDE_CMD_BINGO_INTRUSION,                ///<ビンゴバトル乱入許可要求
   INTRUDE_CMD_BINGO_INTRUSION_ANSWER,         ///<ビンゴバトル乱入許可要求の返事
   INTRUDE_CMD_REQ_BINGO_INTRUSION_PARAM,      ///<ビンゴバトル乱入用のパラメータ要求
@@ -37,6 +38,7 @@ enum INTRUDE_CMD{
   INTRUDE_CMD_MISSION_ACHIEVE,                ///<ミッション達成報告
   INTRUDE_CMD_MISSION_RESULT,                 ///<ミッション結果
   INTRUDE_CMD_OCCUPY_INFO,                    ///<占拠情報
+  INTRUDE_CMD_TARGET_TIMING,                  ///<相手指定のタイミングコマンド
   
   INTRUDE_CMD_MAX,
   INTRUDE_CMD_NUM = INTRUDE_CMD_MAX - INTRUDE_CMD_START,
@@ -59,6 +61,7 @@ extern BOOL IntrudeSend_Profile(INTRUDE_COMM_SYS_PTR intcomm);
 extern BOOL IntrudeSend_PlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_STATUS *send_status);
 extern BOOL IntrudeSend_Talk(int send_net_id);
 extern BOOL IntrudeSend_TalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, INTRUDE_TALK_STATUS answer);
+extern BOOL IntrudeSend_TalkCancel(int send_net_id);
 extern BOOL IntrudeSend_BingoIntrusion(int send_net_id);
 extern BOOL IntrudeSend_BingoIntrusionAnswer(int send_net_id, BINGO_INTRUSION_ANSWER answer);
 extern BOOL IntrudeSend_ReqBingoBattleIntrusionParam(int send_net_id);
@@ -69,4 +72,5 @@ extern BOOL IntrudeSend_MissionAchieve(
   INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission);
 extern BOOL IntrudeSend_MissionResult(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission);
 extern BOOL IntrudeSend_OccupyInfo(INTRUDE_COMM_SYS_PTR intcomm);
+extern BOOL IntrudeSend_TargetTiming(INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid, u8 timing_no);
 

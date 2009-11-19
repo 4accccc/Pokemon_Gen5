@@ -347,7 +347,7 @@ void SaveControl_GetActualSize(SAVE_CONTROL_WORK *ctrl, u32 *actual_size, u32 *t
  *
  * @retval  LOAD_RESULT		ロード結果
  * 
- * 使用が終わったら必ずSaveControl_Extra_Unloadで解放してください
+ * 使用が終わったら必ずSaveControl_Extra_Unloadで解放してください(ロード出来なかったとしても)
  */
 //==================================================================
 LOAD_RESULT SaveControl_Extra_Load(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, int heap_id)
@@ -371,6 +371,66 @@ LOAD_RESULT SaveControl_Extra_Load(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_
  */
 //==================================================================
 void SaveControl_Extra_Unload(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id)
+{
+  GF_ASSERT(ctrl->sv_extra[extra_id] != NULL);
+  GFL_SAVEDATA_Delete(ctrl->sv_extra[extra_id]);
+  ctrl->sv_extra[extra_id] = NULL;
+}
+
+//==================================================================
+/**
+ * 外部セーブが既にロード済みか調べる
+ *
+ * @param   ctrl		
+ * @param   extra_id		外部セーブデータ番号
+ *
+ * @retval  BOOL		TRUE:ロード済み。　FALSE:ロードされていない
+ */
+//==================================================================
+BOOL SaveControl_Extra_CheckLoad(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id)
+{
+  if(ctrl->sv_extra[extra_id] != NULL){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//==================================================================
+/**
+ * 外部セーブデータのロード(セーブワークは外側から渡す)
+ *
+ * @param   ctrl		    セーブデータ管理ワークへのポインタ
+ * @param   extra_id		外部セーブデータ番号
+ * @param   heap_id		  セーブシステムで使用するヒープID
+ * @param   work        ロードしたデータをこのワークに展開
+ * @param   work_size   workのサイズ
+ *
+ * @retval  LOAD_RESULT		ロード結果
+ * 
+ * 使用が終わったら必ずSaveControl_Extra_UnloadWorkで解放してください(ロード出来なかったとしても)
+ */
+//==================================================================
+LOAD_RESULT SaveControl_Extra_LoadWork(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, int heap_id, void *work, u32 work_size)
+{
+	LOAD_RESULT load_ret;
+
+  GF_ASSERT(ctrl->sv_extra[extra_id] == NULL);
+	ctrl->sv_extra[extra_id] = GFL_SAVEDATA_Create(&SaveParam_ExtraTbl[extra_id], heap_id);
+	load_ret = GFL_BACKUP_Load(ctrl->sv_extra[extra_id], heap_id);
+	
+	OS_TPrintf("外部セーブロード結果 extra_id = %d, load_ret = %d\n", extra_id, load_ret);
+	return load_ret;
+}
+
+//==================================================================
+/**
+ * 外部セーブデータの解放
+ *
+ * @param   ctrl		
+ * @param   extra_id		外部セーブデータ番号
+ */
+//==================================================================
+void SaveControl_Extra_UnloadWork(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id)
 {
   GF_ASSERT(ctrl->sv_extra[extra_id] != NULL);
   GFL_SAVEDATA_Delete(ctrl->sv_extra[extra_id]);

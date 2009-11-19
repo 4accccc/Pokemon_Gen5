@@ -128,7 +128,7 @@ static UNION_SYSTEM_PTR Union_InitSystem(UNION_PARENT_WORK *uniparent)
 {
   UNION_SYSTEM_PTR unisys;
   
-  GFL_HEAP_CreateHeap( HEAPID_WORLD, HEAPID_UNION, HEAP_SIZE_UNION );
+  GFL_HEAP_CreateHeap( HEAPID_PROC, HEAPID_UNION, HEAP_SIZE_UNION );
   unisys = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(UNION_SYSTEM));
   unisys->uniparent = uniparent;
   UnionMySituation_Clear(unisys);

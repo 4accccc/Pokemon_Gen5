@@ -85,6 +85,7 @@ extern void Intrude_SetPlayerStatus(
 extern void Intrude_InitTalkWork(INTRUDE_COMM_SYS_PTR intcomm, int talk_netid);
 extern void Intrude_SetTalkReq(INTRUDE_COMM_SYS_PTR intcomm, int net_id);
 extern void Intrude_SetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int net_id, INTRUDE_TALK_STATUS talk_status);
+extern void Intrude_SetTalkCancel(INTRUDE_COMM_SYS_PTR intcomm, int net_id);
 extern INTRUDE_TALK_STATUS Intrude_GetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm);
 extern int Intrude_GetPalaceTownZoneID(int town_tblno);
 extern void Intrude_GetPalaceTownRandPos(int town_tblno, VecFx32 *vec);
