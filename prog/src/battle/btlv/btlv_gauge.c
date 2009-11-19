@@ -265,7 +265,7 @@ BTLV_GAUGE_WORK*  BTLV_GAUGE_Init( GFL_FONT* fontHandle, HEAPID heapID )
   bgw->clunit = GFL_CLACT_UNIT_Create( BTLV_GAUGE_CLUNIT_CLWK_MAX, 0, bgw->heapID );
 
   //‹¤’ÊƒpƒŒƒbƒg“Ç‚Ýž‚Ý
-  bgw->plttID = GFL_CLGRP_PLTT_Register( bgw->handle, NARC_battgra_wb_gauge_NCLR,
+  bgw->plttID = GFL_CLGRP_PLTT_RegisterComp( bgw->handle, NARC_battgra_wb_gauge_NCLR,
                                          CLSYS_DRAW_MAIN, BTLV_OBJ_PLTT_HP_GAUGE, bgw->heapID );
   PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_MAIN_OBJ,
                            GFL_CLGRP_PLTT_GetAddr( bgw->plttID, CLSYS_DRAW_MAIN ) / 2, 0x20 * 1 );
