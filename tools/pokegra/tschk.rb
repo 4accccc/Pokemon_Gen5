@@ -37,18 +37,21 @@
   fp_list.close
 
   read_data.size.times {|i|
+    frame_adj = 0
     if File.exist?( read_data[ i ] ) == TRUE
       com = "ruby " +  File::dirname(__FILE__) + "/nclinkrw.rb " + read_data[ i ] + " " + ARGV[ ARGV_COPY_DIR ]
       read_file = ARGV[ ARGV_COPY_DIR ] + File::basename( read_data[ i ] )
       if File.exist?( read_file ) == FALSE
         printf("copy %s\n", File::basename( read_data[ i ] ) )
         system( com )
+        frame_adj = 1
       elsif File::stat( read_file ).mtime < File::stat( read_data[ i ] ).mtime
         printf("copy %s\n", File::basename( read_data[ i ] ) )
         system( com )
+        frame_adj = 1
       end
     end
-    if File::extname( read_data[ i ] ) == ".nmc"
+    if File::extname( read_data[ i ] ) == ".nmc" && frame_adj == 1
       com = "ruby " +  File::dirname(__FILE__) + "/frame_adj.rb " + read_data[ i ] + " " + ARGV[ ARGV_COPY_DIR ]
       system( com )
     end
