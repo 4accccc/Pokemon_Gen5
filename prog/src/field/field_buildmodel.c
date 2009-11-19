@@ -926,6 +926,7 @@ static BOOL BMINFO_isDoor(const BMINFO * bmInfo)
   {
   case BM_PROG_ID_DOOR_AUTO:
   case BM_PROG_ID_DOOR_NORMAL:
+  case BM_PROG_ID_BADGEGATE:
     return TRUE;
   default:
     return FALSE;
