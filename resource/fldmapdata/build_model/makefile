@@ -180,7 +180,7 @@ $(INDEXDIR)/$(INDEX_INDOOR):		$(TXT_DATA_INDOOR)
 	@echo $@をアーカイブしています
 	@nnsarc -c -l -n -i $(INDEXDIR)/$(INDEX_INDOOR) -S $(INDEXDIR)/in.list > $(WKDIR)/arc_result.txt
 
-$(BIN_DATA_ANIME):	$(XLS_DATA_ANIME)
+$(BIN_DATA_ANIME):	$(XLS_DATA_ANIME) anime_files/buildmodel_anime.naix
 	@echo 配置モデルアニメ情報（$(BIN_DATA_ANIME)）生成中
 	@$(XLS2TAB) -c $(XLS_DATA_ANIME) > $(TXT_DATA_ANIME)
 	@ruby bmanime_info.rb $(TXT_DATA_ANIME) $(BIN_DATA_ANIME)

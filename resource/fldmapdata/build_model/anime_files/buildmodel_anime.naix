@@ -44,12 +44,21 @@ enum {
 	NARC_buildmodel_anime_fountain_01_nsbta = 30,
 	NARC_buildmodel_anime_m_gym02_light_nsbca = 31,
 	NARC_buildmodel_anime_machine_l02_nsbta = 32,
-	NARC_buildmodel_anime_t1_labo_01_nsbca = 33,
-	NARC_buildmodel_anime_time_anime1_nsbtp = 34,
-	NARC_buildmodel_anime_time_anime2_nsbtp = 35,
-	NARC_buildmodel_anime_time_anime3_nsbtp = 36,
-	NARC_buildmodel_anime_time_anime4_nsbtp = 37,
-	NARC_buildmodel_anime_trailer_01test_nsbca = 38
+	NARC_buildmodel_anime_pc01_end_nsbta = 33,
+	NARC_buildmodel_anime_pc01_play_nsbta = 34,
+	NARC_buildmodel_anime_pc01_start_nsbta = 35,
+	NARC_buildmodel_anime_pcev01_clo_nsbta = 36,
+	NARC_buildmodel_anime_pcev01_dn_nsbca = 37,
+	NARC_buildmodel_anime_pcev01_op_nsbta = 38,
+	NARC_buildmodel_anime_pcev01_up_nsbca = 39,
+	NARC_buildmodel_anime_pcmachine01_nsbta = 40,
+	NARC_buildmodel_anime_pcmachine01_nsbtp = 41,
+	NARC_buildmodel_anime_t1_labo_01_nsbca = 42,
+	NARC_buildmodel_anime_time_anime1_nsbtp = 43,
+	NARC_buildmodel_anime_time_anime2_nsbtp = 44,
+	NARC_buildmodel_anime_time_anime3_nsbtp = 45,
+	NARC_buildmodel_anime_time_anime4_nsbtp = 46,
+	NARC_buildmodel_anime_trailer_01test_nsbca = 47
 };
 
 /* NARC_BUILDMODEL_ANIME_NAIX_ */
