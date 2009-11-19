@@ -175,7 +175,7 @@ VMCMD_RESULT EvCmdCamera_Move( VMHANDLE *core, void *wk )
     u16 frame;
     param.Core.AnglePitch = VMGetU16( core );
     param.Core.AngleYaw = VMGetU16( core );
-    param.Core.Distance = VMGetU16( core );
+    param.Core.Distance = VMGetU32( core );
     param.Core.TrgtPos.x = VMGetU32( core );
     param.Core.TrgtPos.y = VMGetU32( core );
     param.Core.TrgtPos.z = VMGetU32( core );
