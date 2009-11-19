@@ -18,12 +18,21 @@ class PARA
 end
 
   atkmsg_table = {
-    "こうげき！"=>"　こうげき！",
-    "！"=>"！",
     "をつかった！"=>"を　つかった！",
     "した！"=>"した！",
     "をした！"=>"を　した！",
+    "こうげき！"=>"　こうげき！",
+    "！"=>"！",
   }
+
+  minemsg_table = {
+    "をつかった！"  =>"[1:01:ニックネーム:0]は\r\n",
+    "した！"        =>"[1:01:ニックネーム:0]は\r\n",
+    "をした！"      =>"[1:01:ニックネーム:0]は\r\n",
+    "こうげき！"    =>"[1:01:ニックネーム:0]の\r\n",
+    "！"            =>"[1:01:ニックネーム:0]の\r\n",
+  }
+
 
 	if ARGV.size < 2
 		print "error: ruby waza_tbl_conv.rb read_file gmm_file\n"
@@ -106,11 +115,11 @@ end
     if atkmsg_table[ split_data[ PARA::ATKMSG ] ] == nil
       p split_data[ PARA::ATKMSG ]
     end
-    atkmsg = "[1:01:ニックネーム:0]の\r\n" + split_data[ PARA::WAZANAME ] + atkmsg_table[ split_data[ PARA::ATKMSG ] ]
+    atkmsg = minemsg_table[ split_data[ PARA::ATKMSG ] ] + split_data[ PARA::WAZANAME ] + atkmsg_table[ split_data[ PARA::ATKMSG ] ]
     atkmsg_gmm.make_row_index( "ATKMSG_M_", cnt, atkmsg )
-    atkmsg = "やせいの　[1:01:ニックネーム:0]の\r\n" + split_data[ PARA::WAZANAME ] + atkmsg_table[ split_data[ PARA::ATKMSG ] ]
+    atkmsg = "やせいの　" + minemsg_table[ split_data[ PARA::ATKMSG ] ] + split_data[ PARA::WAZANAME ] + atkmsg_table[ split_data[ PARA::ATKMSG ] ]
     atkmsg_gmm.make_row_index( "ATKMSG_Y_", cnt, atkmsg )
-    atkmsg = "あいての　[1:01:ニックネーム:0]の\r\n" + split_data[ PARA::WAZANAME ] + atkmsg_table[ split_data[ PARA::ATKMSG ] ]
+    atkmsg = "あいての　" + minemsg_table[ split_data[ PARA::ATKMSG ] ] + split_data[ PARA::WAZANAME ] + atkmsg_table[ split_data[ PARA::ATKMSG ] ]
     atkmsg_gmm.make_row_index( "ATKMSG_E_", cnt, atkmsg )
     cnt += 1
   }
