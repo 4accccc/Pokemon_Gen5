@@ -86,6 +86,9 @@ enum {
   // 素早さ補正関連
   BTL_CALC_AGILITY_MAX = 10000,
 
+  // 体重処理関連
+  BTL_POKE_WEIGHT_MIN = 1,
+
   // フィールド・進化画面等への連絡関連
   BTL_STANDALONE_PLAYER_CLIENT_ID = 0,
   BTL_BONUS_MONEY_MAX = 99999,

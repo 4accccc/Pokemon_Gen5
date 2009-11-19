@@ -40,8 +40,9 @@ typedef enum {
   SC_OP_SICK_SET,           ///< 状態異常 [PokeID, Sick, contParam]
   SC_OP_CURE_POKESICK,      ///< ポケモン系状態異常を回復 [PokeID ]
   SC_OP_CURE_WAZASICK,      ///< ワザ系状態異常を回復 [PokeID, SickID ]
-  SC_OP_SET_STATUS,         ///< 能力値（攻撃、防御等）を書き換え
   SC_OP_MEMBER_IN,          ///< メンバー入場
+  SC_OP_SET_STATUS,         ///< 能力値（攻撃、防御等）を書き換え
+  SC_OP_SET_WEIGHT,         ///< 体重設定
   SC_OP_WAZASICK_TURNCHECK, ///<
   SC_OP_CANTESCAPE_ADD,     ///< にげ・交換禁止コードの追加を全クライアントに通知 [ClientID, CantCode]
   SC_OP_CANTESCAPE_SUB,     ///< にげ・交換禁止コードの削除を全クライアントに通知 [ClientID, CantCode]
@@ -270,6 +271,10 @@ static inline void SCQUE_PUT_OP_MemberIn( BTL_SERVER_CMD_QUE* que, u8 clientID, 
 static inline void SCQUE_PUT_OP_SetStatus( BTL_SERVER_CMD_QUE* que, u8 pokeID, BppValueID vid, u8 value )
 {
   SCQUE_PUT_Common( que, SC_OP_SET_STATUS, pokeID, vid, value );
+}
+static inline void SCQUE_PUT_OP_SetWeight( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 weight )
+{
+  SCQUE_PUT_Common( que, SC_OP_SET_WEIGHT, pokeID, weight );
 }
 
 

@@ -54,7 +54,6 @@ typedef enum {
   BPP_SP_DEFENCE_RANK,
   BPP_AGILITY_RANK,
   BPP_EXP,
-  BPP_HEAVY,
 
   BPP_RANKVALUE_START = BPP_ATTACK_RANK,
   BPP_RANKVALUE_END = BPP_AGILITY_RANK,
@@ -374,6 +373,8 @@ extern void BPP_SetSrcPP( BTL_POKEPARAM* bpp, POKEMON_PARAM* pp );
 extern u8 BPP_GetCriticalRank( const BTL_POKEPARAM* bpp );
 extern BOOL BPP_AddCriticalRank( BTL_POKEPARAM* bpp, int value );
 extern void BPP_SetBaseStatus( BTL_POKEPARAM* bpp, BppValueID vid, u8 value );
+extern void BPP_SetWeight( BTL_POKEPARAM* bpp, u16 weight );
+extern u16 BPP_GetWeight( const BTL_POKEPARAM* bpp );
 
 
 extern BOOL BPP_HENSIN_Set( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* target );

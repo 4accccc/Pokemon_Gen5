@@ -64,7 +64,6 @@ typedef struct {
 
   u16 monsno;       ///< ポケモンナンバー
   u16 hpMax;        ///< 最大HP
-  u16 heavy;        ///< 重さ
 
   u8  attack;       ///< こうげき
   u8  defence;      ///< ぼうぎょ
@@ -151,6 +150,7 @@ struct _BTL_POKEPARAM {
   u8  confrontRec[ BTL_POKEID_MAX ];
 
   u16 migawariHP;
+  u16 weight;
 
 //  u32 dmy;
 };
@@ -289,6 +289,7 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP )
   bpp->tokusei = PP_Get( srcPP, ID_PARA_speabino, 0 );
   bpp->formNo = PP_Get( srcPP, ID_PARA_form_no, 0 );
   bpp->exp = PP_Get( srcPP, ID_PARA_exp, NULL );
+  bpp->weight = POKETOOL_GetPersonalParam( bpp->baseParam.monsno, bpp->formNo, POKEPER_ID_weight ) / 10;
 }
 //----------------------------------------------------------------------------------
 /**
@@ -581,8 +582,6 @@ int BPP_GetValue( const BTL_POKEPARAM* bpp, BppValueID vid )
   case BPP_TOKUSEI:         return bpp->tokusei;
   case BPP_FORM:            return bpp->formNo;
   case BPP_EXP:             return bpp->exp;
-
-  case BPP_HEAVY:           return 50;  // @@@ 今はてきとう
 
   default:
     GF_ASSERT(0);
@@ -1977,8 +1976,31 @@ u32 BPP_GetWazaContCounter( const BTL_POKEPARAM* pp )
 {
   return pp->sameWazaCounter;
 }
-
-
+//=============================================================================================
+/**
+ * 体重を設定
+ *
+ * @param   bpp
+ * @param   weight
+ */
+//=============================================================================================
+void BPP_SetWeight( BTL_POKEPARAM* bpp, u16 weight )
+{
+  bpp->weight = weight;
+}
+//=============================================================================================
+/**
+ * 体重を取得
+ *
+ * @param   bpp
+ *
+ * @retval  u16
+ */
+//=============================================================================================
+u16 BPP_GetWeight( const BTL_POKEPARAM* bpp )
+{
+  return bpp->weight;
+}
 //----------------------------------------------------------------------------------
 /**
  * ワザダメージレコード：ワーク初期化

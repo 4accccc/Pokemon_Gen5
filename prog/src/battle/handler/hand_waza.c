@@ -547,6 +547,8 @@ static BTL_EVENT_FACTOR*  ADD_KarawoYaburu( u16 pri, WazaID waza, u8 pokeID );
 static void handler_KarawoYaburu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_MirrorType( u16 pri, WazaID waza, u8 pokeID );
 static void handler_MirrorType( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_BodyPurge( u16 pri, WazaID waza, u8 pokeID );
+static void handler_BodyPurge( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 //=============================================================================================
@@ -769,6 +771,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_KARI_MIRAATAIPU,      ADD_MirrorType    },
     { WAZANO_KARI_PAWAASHEA,       ADD_PowerShare    },
     { WAZANO_KARI_GAADOSHEA,       ADD_GuardShare    },
+    { WAZANO_KARI_BODYPAAZI,       ADD_BodyPurge     },
   };
 
   int i;
@@ -3557,7 +3560,7 @@ static void handler_Ketaguri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
-    u32 heavy = BPP_GetValue( bpp, BPP_HEAVY );
+    u32 heavy = BPP_GetWeight( bpp );
     u32 pow;
 
     if( heavy >= 200 ){
@@ -3573,6 +3576,8 @@ static void handler_Ketaguri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     }else{
       pow = 20;
     }
+
+    BTL_Printf("heavy=%d, pow=%d\n", heavy, pow);
 
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
   }
@@ -7768,3 +7773,45 @@ static void handler_MirrorType( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     }
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * ボディパージ
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_BodyPurge( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_RANKEFF_FIXED,  handler_BodyPurge },   // ワザによるランク増減効果確定後
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_BodyPurge( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+    u16 weight;
+
+    weight = BPP_GetWeight( bpp );
+    BTL_Printf("ボディパージするポケの体重=%d\n", weight);
+
+    if( weight > BTL_POKE_WEIGHT_MIN )
+    {
+      BTL_HANDEX_PARAM_SET_WEIGHT* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_SET_WEIGHT, pokeID );
+
+      if( weight > (BTL_POKE_WEIGHT_MIN + 100) ){
+        weight -= 100;
+      }else{
+        weight = BTL_POKE_WEIGHT_MIN;
+      }
+
+      param->pokeID = pokeID;
+      param->weight = weight;
+
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_BodyPurge );
+      HANDEX_STR_AddArg( &param->exStr, pokeID );
+    }
+  }
+}
+

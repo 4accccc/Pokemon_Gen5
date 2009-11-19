@@ -190,7 +190,6 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Rotation( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_ACT_TraceTokusei( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args );
@@ -233,6 +232,8 @@ static BOOL scProc_OP_BatonTouch( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_MigawariCreate( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_MigawariDelete( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ShooterCharge( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_SetStatus( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_SetWeight( BTL_CLIENT* wk, int* seq, const int* args );
 static void cec_addCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static void cec_subCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static u8 cec_isEnable( CANT_ESC_CONTROL* ctrl, BtlCantEscapeCode code, BTL_CLIENT* wk );
@@ -1579,6 +1580,8 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_CURE_POKESICK,      scProc_OP_CurePokeSick    },
     { SC_OP_CURE_WAZASICK,      scProc_OP_CureWazaSick    },
     { SC_OP_MEMBER_IN,          scProc_OP_MemberIn        },
+    { SC_OP_SET_STATUS,         scProc_OP_SetStatus       },
+    { SC_OP_SET_WEIGHT,         scProc_OP_SetWeight       },
     { SC_OP_CANTESCAPE_ADD,     scProc_OP_EscapeCodeAdd   },
     { SC_OP_CANTESCAPE_SUB,     scProc_OP_EscapeCodeSub   },
     { SC_OP_CHANGE_POKETYPE,    scProc_OP_ChangePokeType  },
@@ -2865,6 +2868,26 @@ static BOOL scProc_OP_ShooterCharge( BTL_CLIENT* wk, int* seq, const int* args )
       wk->shooterEnergy = BTL_SHOOTER_ENERGY_MAX;
     }
   }
+  return TRUE;
+}
+/*
+ *  能力基本値書き換え  [0]:pokeID, [1]:statusID [2]:value
+ */
+static BOOL scProc_OP_SetStatus( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BppValueID statusID = args[1];
+
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BPP_SetBaseStatus( bpp, statusID, args[2] );
+  return TRUE;
+}
+/*
+ *  体重値書き換え  [0]:pokeID, [2]:weight
+ */
+static BOOL scProc_OP_SetWeight( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BPP_SetWeight( bpp, args[1] );
   return TRUE;
 }
 

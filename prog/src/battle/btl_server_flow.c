@@ -520,7 +520,7 @@ static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam );
 static BOOL scEvent_CheckEnableSimpleDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u32 damage );
 static u16 scEvent_getAttackPower( BTL_SVFLOW_WORK* wk,
-  const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* waza, BOOL criticalFlag );
+  const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam, BOOL criticalFlag );
 static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender,
   const SVFL_WAZAPARAM* wazaParam, BOOL criticalFlag );
@@ -543,6 +543,8 @@ static BOOL scEvent_CheckRankEffectSuccess( BTL_SVFLOW_WORK* wk, const BTL_POKEP
   WazaRankEffect effect, int volume );
 static void scEvent_RankEffect_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scEvent_RankEffect_Fix( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, WazaRankEffect rankType, int volume );
+static void scEvent_WazaRankEffectFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
+  WazaID wazaID, WazaRankEffect effectID, int volume );
 static int scEvent_RecalcDrainVolume( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, u32 volume );
 static void scEvent_CheckSpecialDrain( BTL_SVFLOW_WORK* wk, WazaID waza,
   const BTL_POKEPARAM* attacker, u32 total_damage );
@@ -605,6 +607,7 @@ static u8 scproc_HandEx_changeMember( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
 static u8 scproc_HandEx_batonTouch( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_addShrink( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_relive( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_setWeight( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 
 
 BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
@@ -4432,6 +4435,10 @@ static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPA
     scEvent_GetWazaRankEffectValue( wk, wazaParam->wazaID, i, attacker, target, &effect, &volume );
     if( scproc_RankEffectCore(wk, target, effect, volume, ITEM_DUMMY_DATA, fAlmost, TRUE) )
     {
+      u32 hem_state = Hem_PushState( &wk->HEManager );
+      scEvent_WazaRankEffectFixed( wk, target, wazaParam->wazaID, effect, volume );
+      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+      Hem_PopState( &wk->HEManager, hem_state );
       ret = TRUE;
     }
   }
@@ -7959,6 +7966,28 @@ static void scEvent_RankEffect_Fix( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bp
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_RANKEFF_FIXED );
   BTL_EVENTVAR_Pop();
 }
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ワザによるランク増減効果の成功確定
+ *
+ * @param   wk
+ * @param   target
+ * @param   wazaID
+ * @param   effectID
+ * @param   volume
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_WazaRankEffectFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
+  WazaID wazaID, WazaRankEffect effectID, int volume )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(target) );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, wazaID );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_STATUS_TYPE, effectID );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, volume );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_RANKEFF_FIXED );
+  BTL_EVENTVAR_Pop();
+}
 
 //--------------------------------------------------------------------------
 /**
@@ -8906,6 +8935,7 @@ static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, Bt
     { BTL_HANDEX_BATONTOUCH,      sizeof(BTL_HANDEX_PARAM_BATONTOUCH)      },
     { BTL_HANDEX_ADD_SHRINK,      sizeof(BTL_HANDEX_PARAM_ADD_SHRINK)      },
     { BTL_HANDEX_RELIVE,          sizeof(BTL_HANDEX_PARAM_RELIVE)          },
+    { BTL_HANDEX_SET_WEIGHT,      sizeof(BTL_HANDEX_PARAM_SET_WEIGHT)      },
   };
   u32 size, i;
 
@@ -9061,6 +9091,7 @@ static BOOL scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
     case BTL_HANDEX_BATONTOUCH:     fPrevSucceed = scproc_HandEx_batonTouch( wk, handEx_header ); break;
     case BTL_HANDEX_ADD_SHRINK:     fPrevSucceed = scproc_HandEx_addShrink( wk, handEx_header ); break;
     case BTL_HANDEX_RELIVE:         fPrevSucceed = scproc_HandEx_relive( wk, handEx_header ); break;
+    case BTL_HANDEX_SET_WEIGHT:     fPrevSucceed = scproc_HandEx_setWeight( wk, handEx_header ); break;
     default:
       GF_ASSERT_MSG(0, "illegal handEx type = %d, userPokeID=%d", handEx_header->equip, handEx_header->userPokeID);
     }
@@ -9925,6 +9956,21 @@ static u8 scproc_HandEx_relive( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
   handexSub_putString( wk, &param->exStr );
   return 1;
 }
+/**
+ * 体重をセット
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_setWeight( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  BTL_HANDEX_PARAM_SET_WEIGHT* param = (BTL_HANDEX_PARAM_SET_WEIGHT*)param_header;
+  BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+
+  BPP_SetWeight( target, param->weight );
+  SCQUE_PUT_OP_SetWeight( wk->que, param->pokeID, param->weight );
+  handexSub_putString( wk, &param->exStr );
+  return 1;
+}
+
 
 /*
 
