@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-26T21:55:03"/>
+	<create user="matsumiya" host="W00207" date="2009-11-19T14:22:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="294"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="184" top="176" right="889" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,21 +292,48 @@
 	</lock>
 
 
-	<row id="msg_d08r0101_leader_01">
+	<row id="msg_d08r0101_hakase1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・仮メッセージ</comment>
-		<attribute name="キャラ指定">LEADER7</attribute>
-		<language name="JPN" width="256">ハチク『……こやつら！</language>
-		<language name="JPN_KANJI" width="256">ハチク『……こやつら！</language>
+・d08でmsg_d08_white_07表示後</comment>
+		<attribute name="キャラ指定">博士父</attribute>
+		<language name="JPN" width="256">アララギ『この　とうが
+いつごろ　できたのか[BE:00:ページ切り替え（行送り）]
+むすめに　しらべさせるか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『この　塔が
+いつごろ　できたのか[BE:00:ページ切り替え（行送り）]
+娘に　調べさせるか[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d08r0101_leader_02">
+	<row id="msg_d08r0101_leader7_01w">
 		<comment>♂
-・仮メッセージ</comment>
-		<language name="JPN" width="256">……すまぬ！
-さきに　いってくれ！</language>
-		<language name="JPN_KANJI" width="256">……すまぬ！
-さきに　いってくれ！</language>
+・d08でmsg_d08_white_07表示後
+・WHITEver</comment>
+		<attribute name="キャラ指定">LEADER7
+ハチク</attribute>
+		<language name="JPN" width="256">ハチク『……シンは
+イッシュちほうの　まもりがみ[BE:01:ページ切り替え（クリア）]
+それを　エゴのため
+ねむりから　さますとは……</language>
+		<language name="JPN_KANJI" width="256">ハチク『……シンは
+イッシュ地方の　守り神[BE:01:ページ切り替え（クリア）]
+それを　エゴのため
+眠りから　さますとは……</language>
+	</row>
+
+	<row id="msg_d08r0101_leader7_01b">
+		<comment>♂
+・d08でmsg_d08_white_07表示後
+・BLACKver</comment>
+		<attribute name="キャラ指定">LEADER7
+ハチク</attribute>
+		<language name="JPN" width="256">ハチク『……ムは
+イッシュちほうの　まもりがみ[BE:01:ページ切り替え（クリア）]
+それを　エゴのため
+ねむりから　さますとは……</language>
+		<language name="JPN_KANJI" width="256">ハチク『……ムは
+イッシュ地方の　守り神[BE:01:ページ切り替え（クリア）]
+それを　エゴのため
+眠りから　さますとは……</language>
 	</row>
 
 	<flowchart-group-list>

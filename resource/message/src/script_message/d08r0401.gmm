@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00207" date="2009-11-19T18:04:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,13 +229,13 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="168"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="262"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,16 +263,16 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="24" top="279" right="725" bottom="899" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<band id="0" index="1" style="0000" width="526"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="539"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="693"/>
+		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -292,11 +292,72 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_d08r0401_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：最上階イベント前
+・pos（詳細未定：中央の階段あたり）
+・プラズマ団多数
+　→
+・続けてmsg_d08r0401_leader7_01</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">ブラッカー『……まってたぜ[BE:01:ページ切り替え（クリア）]
+オレも　ハチクさんも
+ざこの　あいてで　ヘトヘトなんだよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『……待ってたぜ[BE:01:ページ切り替え（クリア）]
+オレも　ハチクさんも
+雑魚の　相手で　ヘトヘトなんだよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08r0401_leader7_01">
+		<comment>♂：最上階イベント前
+・続けてmsg_d08r0401_black_02</comment>
+		<attribute name="キャラ指定">LEADER7
+ハチク</attribute>
+		<language name="JPN" width="256">ハチク『……わたしは　へいきだ[BE:01:ページ切り替え（クリア）]
+だが　このままでは
+じかんだけが　すぎていく[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ハチク『……わたしは　平気だ[BE:01:ページ切り替え（クリア）]
+だが　このままでは
+時間だけが　過ぎていく[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08r0401_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：最上階イベント前
+・メッセージ表示後
+　ジムリーダーとライバル、移動
+・応じてプラズマ団も移動して
+　先のフロアに進めるように</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">ブラッカー『でだ！　いまから
+ハチクさんと　みちを　ひらくからさ[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]！
+おまえが　さきに　すすめ！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『でだ！　今から
+ハチクさんと　道を　開くからさ[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]！
+おまえが　先に　進め！！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08r0401_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：最上階イベント前
+・msg_d08r0401_black_02表示後
+　？？終了まで</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">ブラッカー『どいつも　こいつも
+おんなじ　ポケモンばかり　じゃん！</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『どいつも　こいつも
+おんなじ　ポケモンばかり　じゃん！</language>
+	</row>
+
+	<row id="msg_d08r0401_leader7_02">
+		<comment>♂：最上階イベント前
+・msg_d08r0401_black_02表示後
+　？？終了まで</comment>
+		<attribute name="キャラ指定">LEADER7
+ハチク</attribute>
+		<language name="JPN" width="256">ハチク『……かずが　おおい
+……これも　ひとつの　つよさか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ハチク『……数が　多い
+……これも　ひとつの　強さか[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>
