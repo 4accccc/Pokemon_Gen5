@@ -237,6 +237,11 @@ const BOOL MUS_ITEM_DRAW_IsFrontItem( MUS_ITEM_DRAW_WORK *itemWork )
   return MUS_ITEM_DATA_IsFrontItem( itemWork->itemData );
 }
 
+const BOOL MUS_ITEM_DRAW_CanReverseItem( MUS_ITEM_DRAW_WORK *itemWork )
+{
+  return MUS_ITEM_DATA_CanReverseItem( itemWork->itemData );
+}
+
 
 //アイテム番号からリソースの読み込み
 GFL_G3D_RES* MUS_ITEM_DRAW_LoadResource( u16 itemIdx )

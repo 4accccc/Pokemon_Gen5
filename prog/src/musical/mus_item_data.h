@@ -33,6 +33,8 @@ typedef enum
 	MUS_POKE_EQU_IS_BACK,			//背面装備判定
 	MUS_POKE_EQU_IS_FRONT,		//前面装備判定
 
+	MUS_POKE_EQU_CAN_REVERSE,		//反転可
+
 	MUS_POKE_EQUIP_TYPE_MAX,
 	
 	MUS_POKE_EQU_TYPE_INVALID,	//無効値
@@ -79,6 +81,8 @@ const BOOL	MUS_ITEM_DATA_CheckMainPosUserData( MUS_ITEM_DATA_WORK*  dataWork , c
 const BOOL	MUS_ITEM_DATA_IsBackItem( MUS_ITEM_DATA_WORK*  dataWork );
 //装備が前面面に来るアイテムか？
 const BOOL	MUS_ITEM_DATA_IsFrontItem( MUS_ITEM_DATA_WORK*  dataWork );
+//反転を許可するか？
+const BOOL  MUS_ITEM_DATA_CanReverseItem( MUS_ITEM_DATA_WORK*  dataWork );
 
 //装備箇所からユーザータイプ装備箇所へ変換
 const MUS_POKE_EQUIP_USER MUS_ITEM_DATA_EquipPosToUserType( const MUS_POKE_EQUIP_USER pos );

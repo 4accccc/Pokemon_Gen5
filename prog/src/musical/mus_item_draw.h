@@ -67,6 +67,7 @@ const BOOL MUS_ITEM_DRAW_CanEquipPosUserDataItemNo( MUS_ITEM_DRAW_SYSTEM* work ,
 const BOOL MUS_ITEM_DRAW_CheckMainPosUserDataItemNo( MUS_ITEM_DRAW_SYSTEM* work , const u16 itemNo , const MUS_POKE_EQUIP_USER pos );
 const BOOL MUS_ITEM_DRAW_IsBackItem( MUS_ITEM_DRAW_WORK *itemWork );
 const BOOL MUS_ITEM_DRAW_IsFrontItem( MUS_ITEM_DRAW_WORK *itemWork );
+const BOOL MUS_ITEM_DRAW_CanReverseItem( MUS_ITEM_DRAW_WORK *itemWork );
 
 //äGÇÃïœçX
 void MUS_ITEM_DRAW_ChengeGraphic( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , u16 newId , GFL_G3D_RES *newRes );

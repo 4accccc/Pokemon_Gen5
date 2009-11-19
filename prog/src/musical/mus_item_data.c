@@ -35,6 +35,7 @@ typedef enum
   EPB_HAND    = 1<<MUS_POKE_EQU_TYPE_HAND,
   EPB_IS_BACK = 1<<MUS_POKE_EQU_IS_BACK,
   EPB_IS_FRONT= 1<<MUS_POKE_EQU_IS_FRONT,
+  EPB_CAN_REV = 1<<MUS_POKE_EQU_CAN_REVERSE
 }EQIUP_POS_BIT;
 
 //======================================================================
@@ -292,6 +293,15 @@ const BOOL  MUS_ITEM_DATA_IsBackItem( MUS_ITEM_DATA_WORK*  dataWork )
 const BOOL  MUS_ITEM_DATA_IsFrontItem( MUS_ITEM_DATA_WORK*  dataWork )
 {
   if( dataWork->equipPosBit & EPB_IS_FRONT )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+const BOOL  MUS_ITEM_DATA_CanReverseItem( MUS_ITEM_DATA_WORK*  dataWork )
+{
+  if( dataWork->equipPosBit & EPB_CAN_REV )
   {
     return TRUE;
   }

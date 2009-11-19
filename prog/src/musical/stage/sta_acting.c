@@ -374,7 +374,7 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
 ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
 {
   static BOOL stopScript = FALSE;
-#if 0 //DEB_ARI|1
+#if DEB_ARI
   if( STA_SCRIPT_GetRunningScriptNum( work->scriptSys ) == 0 )
   {
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )

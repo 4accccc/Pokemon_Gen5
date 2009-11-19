@@ -33,6 +33,7 @@ DATA_IDX_IS_BACK	= 12
 DATA_IDX_IS_FRONT	= 13
 DATA_IDX_CONDITION	= 14
 DATA_IDX_USETYPE	= 15
+DATA_IDX_CAN_REVERSE	= 16
 
 MUS_POKE_EQU_TYPE_EAR	= 0
 MUS_POKE_EQU_TYPE_HEAD	= 1
@@ -176,6 +177,10 @@ while line = dataFile.gets
 	if( str[DATA_IDX_IS_FRONT].to_i != 0 )
 		equipBit += 256
 	end
+	if( str[DATA_IDX_CAN_REVERSE].to_i != 0 )
+		equipBit += 512
+	end
+
 	ary = Array( equipBit )
 	outFile.write( ary.pack("S") )
 

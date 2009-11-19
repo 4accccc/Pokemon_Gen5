@@ -281,6 +281,7 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
             MtxFx33 rotWork;
             VecFx32 rotOfs;
             VecFx32 ofs;
+            fx32 tempScaleX = equipData->scale.x;
             MTX_RotZ33( &rotWork , -FX_SinIdx( rotZ ) , FX_CosIdx( rotZ ) );
             MTX_MultVec33( &equipData->ofs , &rotWork , &ofs );
             
@@ -288,6 +289,13 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
             {
               itemRot = 0x10000-itemRot;
             }
+            
+            if( MUS_ITEM_DRAW_CanReverseItem( pokeWork->itemWork[ePos] ) == FALSE &&
+                flipS == TRUE )
+            {
+              tempScaleX = -tempScaleX;
+            }
+            
             {
               MTX_MultVec33( &equipData->rotOfs , &rotWork , &rotOfs );
               VEC_Subtract( &equipData->rotOfs , &rotOfs , &rotOfs );
@@ -321,13 +329,15 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
                           itemRot-rotZ );
             MUS_ITEM_DRAW_SetSize(    work->itemDrawSys , 
                           pokeWork->itemWork[ePos] ,
-                          equipData->scale.x /16 /4,
+                          tempScaleX /16 /4,
                           equipData->scale.y /16 /4);
             MUS_ITEM_DRAW_SetDrawEnable( work->itemDrawSys , 
                             pokeWork->itemWork[ePos] , TRUE );
+            /*
             MUS_ITEM_DRAW_SetFlipS( work->itemDrawSys , 
                         pokeWork->itemWork[ePos] ,
                         flipS );
+            */
           }
         }
       }
