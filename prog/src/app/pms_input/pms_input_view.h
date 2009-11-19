@@ -209,6 +209,8 @@ extern u32 PMSIView_GetScrollBarPos( PMS_INPUT_VIEW* vwk, u32 px, u32 py );
 extern void PMSIView_SetScrollBarPos( PMS_INPUT_VIEW* vwk, u32 py );
 extern u32 PMSIView_GetScrollBarPosCount( PMS_INPUT_VIEW* vwk, u32 max );
 
+extern void PMSIView_SetBackScreen( PMS_INPUT_VIEW* vwk, BOOL is_wordwin );
+
 //================================================================================
 //  ì¸óÕóìèàóù
 //================================================================================

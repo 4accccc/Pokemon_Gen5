@@ -858,8 +858,8 @@ void PMSIV_CATEGORY_StartModeChange( PMSIV_CATEGORY* wk )
   ARCHANDLE* p_handle;
 
 	p_handle = GFL_ARC_OpenDataHandle( ARCID_PMSI_GRAPHIC, HEAPID_PMS_INPUT_VIEW );
-
-	if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_GROUP )
+	
+  if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_GROUP )
 	{
     int i;
 

@@ -117,11 +117,10 @@ enum{
 	TPCA_RET_SX = 3*8,
 	TPCA_RET_SY = 3*8,
 
-	TPCA_CHANGE_PX = 0*8,  ///< カテゴリ切替ボタン
 //	TPCA_IMODE_PX = 22*8,
-
+	TPCA_MODE_PX = 0*8,  ///< カテゴリ切替ボタン
 	TPCA_MODE_PY = 8*21,
-	TPCA_MODE_SX = 8*6,
+	TPCA_MODE_SX = 8*5,
 	TPCA_MODE_SY = 8*3,
 
 	TPCA_GMA_SX = 9*8,
@@ -2094,8 +2093,8 @@ static int input_category_word_btn(PMS_INPUT_WORK* wk)
 
 	static const GFL_UI_TP_HITTBL Btn_TpRect[] = {
 //		{0,191,0,255}, ty,by,lx,rx
-		{TPCA_RET_PY,TPCA_RET_PY+TPCA_RET_SY,TPCA_RET_PX,TPCA_RET_PX+TPCA_RET_SX},
-		{TPCA_MODE_PY,TPCA_MODE_PY+TPCA_MODE_SY,TPCA_CHANGE_PX,TPCA_CHANGE_PX+TPCA_MODE_SX},
+		{TPCA_RET_PY,TPCA_RET_PY+TPCA_RET_SY,TPCA_RET_PX,TPCA_RET_PX+TPCA_RET_SX},  ///< もどるボタン
+		{TPCA_MODE_PY,TPCA_MODE_PY+TPCA_MODE_SY,TPCA_MODE_PX,TPCA_MODE_PX+TPCA_MODE_SX},  ///< チェンジボタン
 		{GFL_UI_TP_HIT_END,0,0,0}
 	};
 	ret = GFL_UI_TP_HitTrg(Btn_TpRect);
@@ -2153,18 +2152,36 @@ static int category_touch_group(PMS_INPUT_WORK* wk)
 	return -1;
 }
       
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  カテゴリ 検索画面のボタン当たり判定
+ *
+ *	@param	PMS_INPUT_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static int category_touch_initial_button( PMS_INPUT_WORK* wk )
 {
   GFL_UI_TP_HITTBL rect[] = {
-    { 8*21,     8*(21+3),   8*(6),      8*(6+9)   },
-    { 8*21,     8*(21+3),   8*(6+9),    8*(6+9*2) },
-    { 8*21,     8*(21+3),   8*(6+9*2),  8*(6+9*3) },
+    { 8*21,     8*(21+3),   8*(5),      8*(5+9)   },  ///< えらぶ
+    { 8*21,     8*(21+3),   8*(5+9),    8*(5+9*2) },  ///< けす
+    { 8*21,     8*(21+3),   8*(5+9*2),  8*(5+9*3) },  ///< やめる
     {GFL_UI_TP_HIT_END,0,0,0}
   };
 
   return GFL_UI_TP_HitTrg(rect);
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static int category_touch_initial(PMS_INPUT_WORK* wk)
 {
   int i;
@@ -2270,10 +2287,12 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
     else
     {
       int btn_ret;
-      // ボタン当たり判定
+      // 「えらぶ」「けす」「やめる」の当たり判定
       btn_ret = category_touch_initial_button( wk );
 
+#ifdef PM_DEBUG
       if(btn_ret!=-1){HOSAKA_Printf("btn_ret=%d\n",btn_ret);}
+#endif
       
       switch( btn_ret )
       {
@@ -2838,31 +2857,6 @@ static BOOL word_input_scroll_bar_touch(PMS_INPUT_WORK* wk)
 static void word_input_touch(PMS_INPUT_WORK* wk,int* seq)
 {
 	int ret;
-
-/*
-	ret = input_category_word_btn(wk);
-	switch(ret){
-	case 1:
-#if PMS_USE_SND
-		GFL_SOUND_PlaySE(SOUND_CANCEL);
-#endif //PMS_USE_SND
-
-		PMSIView_SetCommand( wk->vwk, VCMD_WORDWIN_TO_CATEGORY );
-		wk->next_proc = MainProc_Category;
-		*seq = SEQ_WORD_CHANGE_NEXTPROC;
-		return;
-	case 2:
-#if PMS_USE_SND
-		GFL_SOUND_PlaySE(SOUND_CHANGE_CATEGORY);
-#endif //PMS_USE_SND
-		wk->category_pos = 0;
-		wk->category_mode ^= 1;
-		PMSIView_SetCommand( wk->vwk, VCMD_WORDWIN_TO_CATEGORY );
-		wk->next_proc = MainProc_Category;
-		*seq = SEQ_WORD_CHANGE_NEXTPROC;
-		return;
-	}
-*/
 
 	// 戻るボタンチェック
 	if( input_word_btn(wk) == 0 ){

@@ -392,9 +392,11 @@ void PMSIV_WORDWIN_StartFadeIn( PMSIV_WORDWIN* wk )
 											GX_WND_PLANEMASK_BG3|
 											GX_WND_PLANEMASK_OBJ);
 
+
+  // このタイミングで背景面を転送
+  PMSIView_SetBackScreen( wk->vwk, TRUE );
 	
 	G2_SetBlendAlpha( FRM_MAIN_WORDWIN_BLENDMASK, PMSVI_BLEND_ALL, 0, 16 );
-//G2_SetBlendAlpha( GX_BLEND_PLANEMASK_NONE, GX_BLEND_ALL, 6, 10 );
 	GFL_BG_SetVisible( FRM_MAIN_WORDWIN, TRUE );
 
 	// 上下際のスクロール文字列を見られないようにウィンドウで隠す
@@ -403,7 +405,6 @@ void PMSIV_WORDWIN_StartFadeIn( PMSIV_WORDWIN* wk )
 	wk->winout_backup = G2_GetWndOutsidePlane();
 	wk->win_visible_backup = GX_GetVisibleWnd();
 	G2_SetWndOutsidePlane(PMSVI_PLANEMASK_ALL^FRM_MAIN_WORDWIN_WNDMASK, TRUE);
-//	G2_SetWnd1Position(0,46,255,160);
 	G2_SetWnd1Position(0,0,255,168);
 	GX_SetVisibleWnd( GX_WNDMASK_W1 );
 

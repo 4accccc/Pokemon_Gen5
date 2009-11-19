@@ -501,19 +501,14 @@ static void Cmd_Init( GFL_TCB *tcb, void* wk_adrs )
   // 背景面
 	GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_pmsi_pms_bg_sub_NSCR, FRM_SUB_BG, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_pmsi_pms_bg_sub_NCGR, FRM_SUB_BG, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
+
   // 入力予測リスト面
   GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_pmsi_pms_bg_sub2_NSCR, FRM_SUB_SEARCH_LIST, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_pmsi_pms_bg_sub_NCGR, FRM_SUB_SEARCH_LIST, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 	GFL_BG_SetVisible( FRM_SUB_SEARCH_LIST, FALSE );
 	
   // 背景面転送
-	GFL_ARCHDL_UTIL_TransVramScreen(p_handle, NARC_pmsi_pms_bg_main3_NSCR,
-		FRM_MAIN_BACK, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
-
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(p_handle, NARC_pmsi_pms_bg_main3_NCGR,
-		FRM_MAIN_BACK, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
-
-	GFL_BG_LoadScreenReq( FRM_MAIN_BACK );
+  PMSIView_SetBackScreen( cwk->vwk, FALSE );
 
 //	cwk->vwk->sub_wk = PMSIV_SUB_Create( cwk->vwk, cwk->mwk, cwk->dwk );
 //	PMSIV_SUB_SetupGraphicDatas( cwk->vwk->sub_wk, p_handle );
@@ -525,9 +520,6 @@ static void Cmd_Init( GFL_TCB *tcb, void* wk_adrs )
   PMSIV_MENU_SetupEdit( cwk->vwk->menu_wk );
   GFL_BG_SetVisible( FRM_MAIN_TASKMENU, TRUE );
 
-  // @TODO
-  // デフォルトはエディットエリアなのでエディットエリアの初期化
-	
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	GX_DispOn();
@@ -629,7 +621,6 @@ static void Cmd_Quit( GFL_TCB *tcb, void* wk_adrs )
 		break;
 	}
 }
-
 
 //--------------------------------------------------------------
 /**
@@ -1104,6 +1095,7 @@ static void Cmd_CategoryToEditArea( GFL_TCB *tcb, void* wk_adrs )
 		break;
 	}
 }
+
 //----------------------------------------------------------------------------------------------
 /**
 	* 描画コマンド：カテゴリ選択から単語選択へ
@@ -1207,6 +1199,8 @@ static void Cmd_WordWinToCategory( GFL_TCB *tcb, void* wk_adrs )
 		break;
 
 	case 3:
+    // このタイミングでBG背景面を読み込んでしまう
+    PMSIView_SetBackScreen( wk->vwk, FALSE );
 		PMSIV_CATEGORY_StartFadeIn( vwk->category_wk );
     PMSIV_CATEGORY_StartMoveSubWinList( vwk->category_wk, (count>0) );
 		wk->seq++;
@@ -1258,6 +1252,8 @@ static void Cmd_WordWinToEditArea( GFL_TCB *tcb, void* wk_adrs )
 		flag2 = PMSIV_EDIT_ScrollWait( vwk->edit_wk);
 		if(flag1 && flag2){
 			PMSIV_CATEGORY_SetDisableBG( vwk->category_wk );
+      // このタイミングでBG背景面を読み込んでしまう
+      PMSIView_SetBackScreen( wk->vwk, FALSE );
 			PMSIV_CATEGORY_StartFadeIn( vwk->category_wk );
 			wk->seq++;
 		}
@@ -1310,6 +1306,8 @@ static void Cmd_WordWinToButton( GFL_TCB *tcb, void* wk_adrs )
 		if( PMSIV_WORDWIN_WaitFadeOut( vwk->wordwin_wk ) )
 		{
 			PMSIV_CATEGORY_SetDisableBG( vwk->category_wk );
+      // このタイミングでBG背景面を読み込んでしまう
+      PMSIView_SetBackScreen( wk->vwk, FALSE );
 			PMSIV_CATEGORY_StartFadeIn( vwk->category_wk );
 			wk->seq++;
 		}
@@ -1906,3 +1904,45 @@ u32 PMSIView_GetScrollBarPosCount( PMS_INPUT_VIEW* vwk, u32 max )
 {
 	return PMSIV_WORDWIN_GetScrollBarPosCount( vwk->wordwin_wk, max );
 }
+
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  背景面のBGを転送
+ *
+ *	@param	PMS_INPUT_VIEW* vwk
+ *	@param	is_wordwin TRUE:単語リストウィンドウ FALSE:通常の背景
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void PMSIView_SetBackScreen( PMS_INPUT_VIEW* vwk, BOOL is_wordwin )
+{
+  ARCHANDLE* p_handle;
+  u32 nscr, ncgr;
+
+	p_handle = GFL_ARC_OpenDataHandle( ARCID_PMSI_GRAPHIC, HEAPID_PMS_INPUT_VIEW );
+
+  if( is_wordwin )
+  {
+    nscr = NARC_pmsi_pms_bg_main3_NSCR;
+    ncgr = NARC_pmsi_pms_bg_main3_NCGR;
+  }
+  else
+  {
+    nscr = NARC_pmsi_pms_bg_main2_NSCR;
+    ncgr = NARC_pmsi_pms_bg_main2_NCGR;
+  }
+
+  // 背景面転送
+	GFL_ARCHDL_UTIL_TransVramScreen(p_handle, nscr,
+		FRM_MAIN_BACK, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
+
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(p_handle, ncgr,
+		FRM_MAIN_BACK, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
+  
+  GFL_ARC_CloseDataHandle( p_handle );
+	
+  GFL_BG_LoadScreenReq( FRM_MAIN_BACK );
+}
+
