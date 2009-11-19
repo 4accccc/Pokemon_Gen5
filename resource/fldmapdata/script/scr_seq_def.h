@@ -4846,7 +4846,7 @@
   .short EV_SEQ_CAMERA_MOVE
   .short \pitch
   .short \yaw
-  .short \dist
+  .long \dist
   .long \x
   .long \y
   .long \z
