@@ -151,7 +151,6 @@
 	ARCID_ZONELIGHT_TABLE		"fieldmap/field_zone_light.narc"   #ライト情報
 	ARCID_APP_MENU_COMMON		"app_menu_common.narc"   #共通素材ARC 
 	ARCID_PLACE_NAME "place_name.narc"   #地名表示ウィンドウ
-	ARCID_ISS_UNIT "iss.narc"   #ISSユニットデータ
 	ARCID_TOWNMAP_GRAPHIC "townmap_gra.narc"	#タウンマップアプリケーション用グラフィック
 	ARCID_TOWNMAP_DATA	"townmap_data.narc"		#タウンマップ用データ
 	ARCID_BGM_INFO "bgm_info.narc"   #BGMの情報
@@ -215,3 +214,4 @@
 	ARCID_WIFI_LOGIN		"wifi_login.narc" # WIFIログインデータ
   ARCID_ISS_DUNGEON "iss_dungeon.narc"  # ダンジョンISSデータ
   ARCID_ISS_SWITCH "iss_switch.narc"  # スイッチISSデータ
+  ARCID_H01_GIMMICK "h01.narc"  # H01ギミックデータ

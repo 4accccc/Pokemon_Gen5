@@ -156,9 +156,10 @@ void ISS_3DS_UNIT_Load(
   unit->maxVolume = volume;
 
   // DEBUG:
-  OBATA_Printf( "track = %d\n", track );
-  OBATA_Printf( "range = %d\n", (int)range );
-  OBATA_Printf( "volume = %d\n", volume );
+  OBATA_Printf( "ISS-3DS-UNIT: load data\n" );
+  OBATA_Printf( "- track = %d\n", track );
+  OBATA_Printf( "- range = %d\n", (int)range );
+  OBATA_Printf( "- volume = %d\n", volume );
 }
 
 //-------------------------------------------------------------------------------

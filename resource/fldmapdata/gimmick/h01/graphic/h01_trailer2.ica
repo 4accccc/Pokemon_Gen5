@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ica version="1.6.0">
+
+<head>
+	<create user="fujiwara_maiko" host="W00194" date="2009-10-21T19:05:46" source="h03_train.mb"/>
+	<title>Character Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<node_anm_info
+	frame_size="120"
+	scaling_rule="standard"
+	magnify="1.000000"
+	tool_start_frame="1"
+	tool_end_frame="120"
+	interpolation="frame"
+	compress_node="none" node_size="1 1"
+	frame_step_mode="1"
+	tolerance_scale="0.100000"
+	tolerance_rotate="0.100000"
+	tolerance_translate="0.100000"
+/>
+
+<node_scale_data size="1">
+	1.000000
+</node_scale_data>
+
+<node_rotate_data size="1">
+	0.000000
+</node_rotate_data>
+
+<node_translate_data size="122">
+	128.000000 -40.000000 -1216.000000 -1172.067383 -1128.134521 -1084.201660 -1040.269043 -996.336182 -952.403320 -908.470703
+	-864.537842 -820.604980 -776.672363 -732.739502 -688.806885 -644.874023 -600.941162 -557.008545 -513.075684 -469.142822
+	-425.210205 -381.277344 -337.344482 -293.411865 -249.479004 -205.546387 -161.613525 -117.680664 -73.748047 -29.815186
+	14.117676 58.050293 101.983154 145.916016 189.848633 233.781494 277.714355 321.646973 365.579834 409.512695
+	453.445313 497.378174 541.311035 585.243652 629.176514 673.109131 717.041992 760.974854 804.907471 848.840332
+	892.773193 936.705811 980.638672 1024.571533 1068.504150 1112.437012 1156.369873 1200.302490 1244.235352 1288.168213
+	1332.100830 1376.033691 1419.966553 1463.899170 1507.832031 1551.764893 1595.697510 1639.630371 1683.562988 1727.495850
+	1771.428711 1815.361328 1859.294189 1903.227051 1947.159668 1991.092529 2035.025391 2078.958008 2122.890869 2166.823486
+	2210.756348 2254.689209 2298.621826 2342.554688 2386.487549 2430.420166 2474.353027 2518.285645 2562.218506 2606.151367
+	2650.083984 2694.016846 2737.949707 2781.882324 2825.815186 2869.748047 2913.680664 2957.613525 3001.546387 3045.479004
+	3089.411865 3133.344482 3177.277344 3221.210205 3265.142822 3309.075684 3353.008545 3396.941162 3440.874023 3484.806641
+	3528.739502 3572.672363 3616.604980 3660.537842 3704.470703 3748.403320 3792.336182 3836.269043 3880.201660 3924.134521
+	3968.067139 4012.000000
+</node_translate_data>
+
+<node_anm_array size="1">
+	<node_anm index="0">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="0"/>
+		<translate_y frame_step="1" data_size="1" data_head="1"/>
+		<translate_z frame_step="1" data_size="120" data_head="2"/>
+	</node_anm>
+</node_anm_array>
+
+</body>
+
+</ica>

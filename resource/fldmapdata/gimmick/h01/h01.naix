@@ -1,0 +1,29 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: h01.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_H01_NAIX_
+#define NARC_H01_NAIX_
+
+enum {
+	NARC_h01_wind_data_bin = 0,
+	NARC_h01_trailer1_3dsu_data_bin = 1,
+	NARC_h01_trailer1_wait_data_bin = 2,
+	NARC_h01_trailer1_ica_data_bin = 3,
+	NARC_h01_trailer2_3dsu_data_bin = 4,
+	NARC_h01_trailer2_wait_data_bin = 5,
+	NARC_h01_trailer2_ica_data_bin = 6,
+	NARC_h01_ship_ica_data_bin = 7,
+	NARC_h01_ship_3dsu_data_bin = 8,
+	NARC_h01_ship_wait_data_bin = 9,
+	NARC_h01_h01_trailer_nsbmd = 10,
+	NARC_h01_h01_ship_nsbmd = 11
+};
+
+/* NARC_H01_NAIX_ */
+#endif

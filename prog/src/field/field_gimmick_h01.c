@@ -1,409 +1,444 @@
 #include <gflib.h>
 #include "fieldmap.h"
 #include "field_gimmick_h01.h"
-#include "arc/fieldmap/buildmodel_outdoor.naix"
-#include "savedata/gimmickwork.h"
-#include "field_gimmick_def.h"
+
 #include "gamesystem/iss_3ds_unit.h"
 #include "gamesystem/iss_3ds_sys.h"
+#include "arc/arc_def.h"
+#include "arc/h01.naix"
+#include "sound_obj.h" 
+#include "savedata/gimmickwork.h"
+#include "field_gimmick_def.h"
+#include "system/gfl_use.h"
 #include "sound/pm_sndsys.h"
-#include "arc/iss.naix"
-#include "system/ica_anime.h"   // TEST:
-#include "arc/debug_obata.naix"// TEST:
-
-#define ICA_NUM (4)//TEST:
-
-//======================================================================
-/**
- * @breif 定数
- */
-//======================================================================
-
-//------------
-// トレーラー
-//------------ 
-// 移動範囲
-#define TR_Z_MIN (1200 << FX32_SHIFT)
-#define TR_Z_MAX (4230 << FX32_SHIFT) 
-#define TR_X_01 (1756 << FX32_SHIFT)
-#define TR_X_02 (1895 << FX32_SHIFT)
-#define TR_Y    (490 << FX32_SHIFT) 
-// 移動時間
-#define TR_FRAME (300)
-
-//-----
-// 船
-//-----
-// 移動範囲
-#define SHIP_X_MIN (0 << FX32_SHIFT) 
-#define SHIP_X_MAX (4000 << FX32_SHIFT) 
-#define SHIP_Y     (-35 << FX32_SHIFT)
-#define SHIP_Z     (2386 << FX32_SHIFT)  
-// 移動時間
-#define SHIP_FRAME (1000)
-
-//-------------
-// FLD_EXP_OBJ
-//-------------
-#define EXPOBJ_UNIT_IDX (0)  // 拡張オブジェクトのユニット番号
-
-// 3Dリソース
-static const GFL_G3D_UTIL_RES res_table[] = 
-{
-  { ARCID_BMODEL_OUTDOOR, NARC_output_buildmodel_outdoor_trailer_01_nsbmd, GFL_G3D_UTIL_RESARC },
-  { ARCID_BMODEL_OUTDOOR, NARC_output_buildmodel_outdoor_trailer_01_nsbmd, GFL_G3D_UTIL_RESARC },
-  { ARCID_BMODEL_OUTDOOR, NARC_output_buildmodel_outdoor_h01_ship_nsbmd, GFL_G3D_UTIL_RESARC },
-};
-
-// 3Dオブジェクト設定テーブル
-static const GFL_G3D_UTIL_OBJ obj_table[] = 
-{
-  { 0, 0, 0, NULL, 0 },
-  { 1, 0, 1, NULL, 0 },
-  { 2, 0, 2, NULL, 0 },
-};
-
-// UTILセットアップ情報
-static GFL_G3D_UTIL_SETUP setup = { res_table, NELEMS(res_table), obj_table, NELEMS(obj_table) };
 
 
-//----------------------
-// 音源オブジェクト番号
-//----------------------
+//==========================================================================================
+// ■定数
+//==========================================================================================
+
+#define ARCID (ARCID_H01_GIMMICK) // ギミックデータのアーカイブID
+#define ANIME_BUF_INTVL  (10) // アニメーションデータの読み込み間隔[frame]
+#define EXPOBJ_UNIT_IDX  (0)  // フィールド拡張オブジェクトのユニット登録インデックス
+#define ISS_3DS_UNIT_NUM (10) // 3Dユニット数
+
+// 音源オブジェクトのインデックス
 typedef enum
 {
-  SOUNDOBJ_TR_L,
-  SOUNDOBJ_TR_R,
-  SOUNDOBJ_SHIP,
-  SOUNDOBJ_NUM
-} SOUNDOBJ_INDEX;
+  SOBJ_TRAILER_1, // トレーラー1
+  SOBJ_TRAILER_2, // トレーラー2
+  SOBJ_SHIP,      // 船
+  SOBJ_NUM 
+} SOBJ_INDEX;
 
 
-//============================================================================================
-/**
- * @breif 音源オブジェクト(トレーラ・船など)
- */
-//============================================================================================
+//==========================================================================================
+// ■3Dリソース
+//==========================================================================================
+// リソース
+typedef enum
+{
+  RES_TRAILER_NSBMD,  // トレーラーのモデル
+  RES_SHIP_NSBMD,     // 船のモデル
+  RES_NUM
+} RES_INDEX;
+static const GFL_G3D_UTIL_RES res_table[RES_NUM] = 
+{
+  { ARCID, NARC_h01_h01_trailer_nsbmd, GFL_G3D_UTIL_RESARC },  // トレーラーのモデル
+  { ARCID, NARC_h01_h01_ship_nsbmd,    GFL_G3D_UTIL_RESARC },  // 船のモデル
+};
+
+// オブジェクト
+typedef enum
+{
+  OBJ_TRAILER_1,  // トレーラー1
+  OBJ_TRAILER_2,  // トレーラー2
+  OBJ_SHIP,       // 船
+  OBJ_NUM
+} OBJ_INDEX;
+static const GFL_G3D_UTIL_OBJ obj_table[OBJ_NUM] = 
+{
+  { RES_TRAILER_NSBMD, 0, 0, NULL, 0 }, // トレーラー1
+  { RES_TRAILER_NSBMD, 0, 0, NULL, 0 }, // トレーラー2
+  { RES_SHIP_NSBMD,    0, 0, NULL, 0 }, // 船
+};
+
+// セットアップ情報
+static GFL_G3D_UTIL_SETUP setup = { res_table, RES_NUM, obj_table, OBJ_NUM };
+
+
+//==========================================================================================
+// ■風
+//==========================================================================================
 typedef struct
 {
-  SOUNDOBJ_INDEX     index; // 自身のID
-  u8         iss3dsUnitIdx; // 3Dサウンドユニットの管理インデックス
-  ISS_3DS_UNIT* iss3dsUnit; // 3Dサウンドユニット
-  u16                frame; // 現在フレーム
-  u16             endFrame; // 最終フレーム
-  VecFx32         startPos; // 開始位置
-  VecFx32           endPos; // 最終位置 
-}
-SOUNDOBJ;
+  u16 trackBit;  // 操作対象トラックビット
+  u16 padding;
+  float minHeight;  // 音が鳴り出す高さ
+  float maxHeight;  // 音が最大になる高さ
+
+} WIND_DATA;
 
 
-//============================================================================================
-/**
- * @breif ギミック管理ワーク
- */
-//============================================================================================
+//==========================================================================================
+// ■ギミックワーク
+//==========================================================================================
 typedef struct
-{
-  ISS_3DS_SYS*          iss3DSSys;  // 3Dサウンドシステム
-  SOUNDOBJ soundObj[SOUNDOBJ_NUM];  // 音源オブジェクト
-  int                windTrackBit;  // 風音のトラックマスク
-  fx32               windRangeMin;  // 風音が最小になる高さ
-  fx32               windRangeMax;  // 風音が最大になる高さ
-  ICA_ANIME* icaAnime[ICA_NUM]; // TEST:
-}
-H01WORK;
+{ 
+  HEAPID            heapID; // 使用するヒープID
+  ISS_3DS_SYS*   iss3dsSys; // 3Dサウンドシステム
+  SOUNDOBJ* sobj[SOBJ_NUM]; // 音源オブジェクト
+  int       wait[SOBJ_NUM]; // 音源オブジェクトの動作待機カウンタ
+  int    minWait[SOBJ_NUM]; // 最短待ち時間
+  int    maxWait[SOBJ_NUM]; // 最長待ち時間
+  WIND_DATA      wind_data; // 風データ
+} H01WORK;
 
 
-//============================================================================================
-/**
- * @brief プロトタイプ宣言
- */
-//============================================================================================
-static void Load3DSoundInfo( H01WORK* work, HEAPID heap_id );
-static void MoveSoundObj( FIELDMAP_WORK* fieldmap, SOUNDOBJ* sobj );
+//==========================================================================================
+// ■非公開関数のプロトタイプ宣言
+//==========================================================================================
+static void InitWork( H01WORK* work, FIELDMAP_WORK* fieldmap );
+static void LoadWaitTime( H01WORK* work );
+static void LoadWindData( H01WORK* work );
+static void SaveGimmick( H01WORK* work, FIELDMAP_WORK* fieldmap );
+static void LoadGimmick( H01WORK* work, FIELDMAP_WORK* fieldmap );
+static void SetStandBy( H01WORK* work, SOBJ_INDEX index );
+static void MoveStart( H01WORK* work, SOBJ_INDEX index );
 static void UpdateWindVolume( FIELDMAP_WORK* fieldmap, H01WORK* work );
 
 
+//==========================================================================================
+// ■ギミック登録関数
+//==========================================================================================
 
-//======================================================================
+//------------------------------------------------------------------------------------------
 /**
- * @brief ギミック登録関数
+ * @brief 初期化関数
+ *
+ * @param fieldmap ギミック動作フィールドマップ
  */
-//======================================================================
-
-//--------------------------------------------------------------------
-/**
- * @brief セットアップ関数
- */
-//--------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
 void H01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
 {
-  HEAPID          heap_id = FIELDMAP_GetHeapID( fieldmap );
-  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldmap ); 
-  GAMESYS_WORK*      gsys = FIELDMAP_GetGameSysWork( fieldmap );
-  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
-  GIMMICKWORK*    gmkwork = GAMEDATA_GetGimmickWork(gdata);
-  u16 frame[SOUNDOBJ_NUM] = {0, 0, 0};
-  SOUNDOBJ* sobj;
-  GFL_G3D_OBJSTATUS* status;
-  H01WORK* h01work;
-  int work_adrs;
+  u32* gmk_save;  // ギミックの実セーブデータ
+  H01WORK* work;  // H01ギミック管理ワーク
+  HEAPID                heap_id = FIELDMAP_GetHeapID( fieldmap );
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
+  GAMESYS_WORK*            gsys = FIELDMAP_GetGameSysWork( fieldmap );
+  GAMEDATA*               gdata = GAMESYSTEM_GetGameData( gsys );
+  GIMMICKWORK*          gmkwork = GAMEDATA_GetGimmickWork(gdata);
+
+  // 拡張オブジェクトのユニットを追加
+  FLD_EXP_OBJ_AddUnit( exobj_cnt, &setup, EXPOBJ_UNIT_IDX );
 
   // ギミック管理ワークを作成
-  h01work = GFL_HEAP_AllocMemory( heap_id, sizeof( H01WORK ) );
+  work = (H01WORK*)GFL_HEAP_AllocMemory( heap_id, sizeof(H01WORK) );
 
-  // ロード処理
+  // ギミック管理ワークを初期化 
+  InitWork( work, fieldmap );
+
+  // ロード
+  LoadGimmick( work, fieldmap );
+
+  // ギミック管理ワークのアドレスを保存
+  gmk_save    = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H01 );
+  gmk_save[0] = (int)work;
+
+  // DEBUG:
+  OBATA_Printf( "GIMMICK-H01: set up\n" );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 終了関数
+ *
+ * @param fieldmap ギミック動作フィールドマップ
+ */
+//------------------------------------------------------------------------------------------
+void H01_GIMMICK_End( FIELDMAP_WORK* fieldmap )
+{
+  int i;
+  GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
+  GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
+  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
+  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H01 );
+  H01WORK*         work = (H01WORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
+
+  // 操作していたトラックを止める
+  for( i=0; i<SOBJ_NUM; i++ )
   {
-    work_adrs = (int)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H01 );
-    frame[0] = *( (u16*)( work_adrs + 4 ) );
-    frame[1] = *( (u16*)( work_adrs + 6 ) );
-    frame[2] = *( (u16*)( work_adrs + 8 ) );
+    u16 track = SOUNDOBJ_GetTrackBit( work->sobj[i] );
+    PMSND_ChangeBGMVolume( track, 0 );
   }
 
-  // ギミックワークに管理ワークのアドレスを保存
-  *( (H01WORK**)work_adrs ) = h01work;
+  // セーブ
+  SaveGimmick( work, fieldmap );
 
-  // 拡張オブジェクトのユニットを作成
-  FLD_EXP_OBJ_AddUnit( ptr, &setup, EXPOBJ_UNIT_IDX );
-
-  // ギミック管理ワーク初期化
+  // 音源オブジェクトを破棄
+  for( i=0; i<SOBJ_NUM; i++ )
   {
-    // 3Dサウンドシステム作成
-    FIELD_CAMERA* fc = FIELDMAP_GetFieldCamera( fieldmap );
-    const GFL_G3D_CAMERA* camera = FIELD_CAMERA_GetCameraPtr( fc );
-    h01work->iss3DSSys = ISS_3DS_SYS_Create( heap_id, SOUNDOBJ_NUM, camera );
+    SOUNDOBJ_Delete( work->sobj[i] );
+  }
 
-    // TEST:
+  // 3Dサウンドシステムを破棄
+  ISS_3DS_SYS_Delete( work->iss3dsSys );
+
+  // ギミック管理ワークを破棄
+  GFL_HEAP_FreeMemory( work );
+
+  // DEBUG:
+  OBATA_Printf( "GIMMICK-H01: end\n" );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 動作関数
+ *
+ * @param fieldmap ギミック動作フィールドマップ
+ */
+//------------------------------------------------------------------------------------------
+void H01_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
+{
+  int i;
+  GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
+  GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
+  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
+  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H01 );
+  H01WORK*         work = (H01WORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
+
+  // すべての音源オブジェクトを動かす
+  for( i=0; i<SOBJ_NUM; i++ )
+  { 
+    // 待機状態 ==> 発車カウントダウン
+    if( 0 < work->wait[i] )
     {
-      int i;
-      for( i=0; i<ICA_NUM; i++ )
+      // カウントダウン終了 ==> 発車
+      if( --work->wait[i] <= 0 )
       {
-        h01work->icaAnime[i] = ICA_ANIME_CreateStreamingAlloc( 
-            heap_id, ARCID_OBATA_DEBUG, NARC_debug_obata_ica_test_data2_bin, 10 );
+        MoveStart( work, i );
+      }
+    }
+    // 動作中 ==> アニメーションを更新
+    else
+    {
+      // アニメーション再生が終了 ==> 待機状態へ
+      if( SOUNDOBJ_IncAnimeFrame( work->sobj[i], FX32_ONE ) )
+      {
+        SetStandBy( work, i );
       }
     }
   }
 
-  // 各オブジェクトの初期ステータスを設定
-  sobj = &h01work->soundObj[SOUNDOBJ_TR_L];
-  sobj->index = SOUNDOBJ_TR_L;
-  sobj->frame = frame[SOUNDOBJ_TR_L];
-  sobj->endFrame = TR_FRAME;
-  VEC_Set( &sobj->startPos, TR_X_01, TR_Y, TR_Z_MIN );
-  VEC_Set( &sobj->endPos,   TR_X_01, TR_Y, TR_Z_MAX );
-  status = FLD_EXP_OBJ_GetUnitObjStatus( ptr, EXPOBJ_UNIT_IDX, SOUNDOBJ_TR_L );
-  VEC_Set( &status->trans, 0, 0, 0 );
-  VEC_Set( &status->scale, FX32_ONE, FX32_ONE, FX32_ONE );
-  MTX_RotY33( &status->rotate, FX_SinIdx( 32768 ), FX_CosIdx( 32768 ) );	  // y軸180度回転
-  sobj->iss3dsUnitIdx = ISS_3DS_SYS_AddUnit( h01work->iss3DSSys );
-  sobj->iss3dsUnit = ISS_3DS_SYS_GetUnit( h01work->iss3DSSys, sobj->iss3dsUnitIdx );
+  // 3Dサウンドシステム動作
+  ISS_3DS_SYS_Main( work->iss3dsSys );
 
-  sobj = &h01work->soundObj[SOUNDOBJ_TR_R];
-  sobj->index = SOUNDOBJ_TR_R;
-  sobj->frame = frame[SOUNDOBJ_TR_R];
-  sobj->endFrame = TR_FRAME;
-  VEC_Set( &sobj->startPos, TR_X_02, TR_Y, TR_Z_MAX );
-  VEC_Set( &sobj->endPos,   TR_X_02, TR_Y, TR_Z_MIN );
-  status = FLD_EXP_OBJ_GetUnitObjStatus( ptr, EXPOBJ_UNIT_IDX, SOUNDOBJ_TR_R );
-  VEC_Set( &status->trans, 0, 0, 0 );
-  VEC_Set( &status->scale, FX32_ONE, FX32_ONE, FX32_ONE );
-  MTX_Identity33( &status->rotate );
-  sobj->iss3dsUnitIdx = ISS_3DS_SYS_AddUnit( h01work->iss3DSSys );
-  sobj->iss3dsUnit = ISS_3DS_SYS_GetUnit( h01work->iss3DSSys, sobj->iss3dsUnitIdx );
-
-  sobj = &h01work->soundObj[SOUNDOBJ_SHIP];
-  sobj->index = SOUNDOBJ_SHIP;
-  sobj->frame = frame[SOUNDOBJ_SHIP];
-  sobj->endFrame = SHIP_FRAME;
-  VEC_Set( &sobj->startPos, SHIP_X_MIN, SHIP_Y, SHIP_Z );
-  VEC_Set( &sobj->endPos,   SHIP_X_MAX, SHIP_Y, SHIP_Z );
-  status = FLD_EXP_OBJ_GetUnitObjStatus( ptr, EXPOBJ_UNIT_IDX, SOUNDOBJ_SHIP );
-  VEC_Set( &status->trans, 0, 0, 0 );
-  VEC_Set( &status->scale, FX32_ONE, FX32_ONE, FX32_ONE );
-  MTX_Identity33( &status->rotate );
-  sobj->iss3dsUnitIdx = ISS_3DS_SYS_AddUnit( h01work->iss3DSSys );
-  sobj->iss3dsUnit = ISS_3DS_SYS_GetUnit( h01work->iss3DSSys, sobj->iss3dsUnitIdx );
-
-  // 3Dサウンド情報を取得
-  Load3DSoundInfo( h01work, heap_id );
-
+  // 風を更新
+  UpdateWindVolume( fieldmap, work );
 }
 
-//--------------------------------------------------------------------
+
+//==========================================================================================
+// ■ 非公開関数
+//==========================================================================================
+
+//------------------------------------------------------------------------------------------
 /**
- * @brief 終了関数
+ * @brief ギミック管理ワークを初期化する
+ *
+ * @param work     初期化対象ワーク
+ * @param fieldmap 依存するフィールドマップ
  */
-//--------------------------------------------------------------------
-void H01_GIMMICK_End( FIELDMAP_WORK* fieldmap )
-{
-
-  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldmap ); 
-  GAMESYS_WORK*      gsys = FIELDMAP_GetGameSysWork( fieldmap );
-  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
-  GIMMICKWORK*    gmkwork = GAMEDATA_GetGimmickWork(gdata);
-  int                 ofs = 0;
-  int           work_adrs = (int)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H01 );
-  H01WORK*        h01work = (H01WORK*)( *( (H01WORK**)work_adrs ) );
-
-  // 仕掛け用ワークを初期化
-  work_adrs = (int)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H01 );
-
-  // データを保存
-  ofs = 4;
-  *( (u16*)(work_adrs + ofs) ) = h01work->soundObj[SOUNDOBJ_TR_L].frame;
-  ofs += sizeof( u16 );
-  *( (u16*)(work_adrs + ofs) ) = h01work->soundObj[SOUNDOBJ_TR_R].frame;
-  ofs += sizeof( u16 );
-  *( (u16*)(work_adrs + ofs) ) = h01work->soundObj[SOUNDOBJ_SHIP].frame;
-  ofs += sizeof( u16 );
-
-  // 3Dサウンドシステム破棄
-  ISS_3DS_SYS_Delete( h01work->iss3DSSys );
-
-  // 車・船・風のトラックを止める
-
-  // TEST:
-  {
-    int i;
-
-    for( i=0; i<ICA_NUM; i++ )
-    {
-      ICA_ANIME_Delete( h01work->icaAnime[i] );
-    }
-  }
-
-  // ギミック管理ワーク破棄
-  GFL_HEAP_FreeMemory( h01work );
-} 
-
-//--------------------------------------------------------------------
-/**
- * @brief 動作関数
- */
-//--------------------------------------------------------------------
-void H01_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
+//------------------------------------------------------------------------------------------
+static void InitWork( H01WORK* work, FIELDMAP_WORK* fieldmap )
 {
   int i;
-  GAMESYS_WORK*      gsys = FIELDMAP_GetGameSysWork( fieldmap );
-  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
-  GIMMICKWORK*    gmkwork = GAMEDATA_GetGimmickWork(gdata);
-  int           work_adrs = (int)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H01 );
-  H01WORK*        h01work = (H01WORK*)( *( (H01WORK**)work_adrs ) );
+  HEAPID                heap_id = FIELDMAP_GetHeapID( fieldmap );
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
 
-  // すべての音源オブジェクトを動かす
-  for( i=0; i<SOUNDOBJ_NUM; i++ )
+  // ヒープIDを記憶
+  work->heapID = heap_id;
+
+  // 3Dサウンドシステムを作成
   {
-    MoveSoundObj( fieldmap, &h01work->soundObj[i] );
+    FIELD_CAMERA*   field_camera = FIELDMAP_GetFieldCamera( fieldmap );
+    const GFL_G3D_CAMERA* camera = FIELD_CAMERA_GetCameraPtr( field_camera );
+    work->iss3dsSys = ISS_3DS_SYS_Create( heap_id, ISS_3DS_UNIT_NUM, camera );
   }
 
-  // 3Dサウンドシステム動作
-  ISS_3DS_SYS_Main( h01work->iss3DSSys );
+  // 音源オブジェクトを作成
+  { // トレーラー1
+    GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, 0, OBJ_TRAILER_1 );
+    SOUNDOBJ* sobj = SOUNDOBJ_Create( fieldmap, work->iss3dsSys, status );
+    SOUNDOBJ_SetAnime( sobj, ARCID, NARC_h01_trailer1_ica_data_bin, ANIME_BUF_INTVL );
+    SOUNDOBJ_Set3DSUnitStatus( sobj, ARCID, NARC_h01_trailer1_3dsu_data_bin );
+    work->sobj[SOBJ_TRAILER_1] = sobj;
+  }
+  { // トレーラー2
+    GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, 0, OBJ_TRAILER_2 );
+    SOUNDOBJ* sobj = SOUNDOBJ_Create( fieldmap, work->iss3dsSys, status );
+    SOUNDOBJ_SetAnime( sobj, ARCID, NARC_h01_trailer2_ica_data_bin, ANIME_BUF_INTVL );
+    SOUNDOBJ_Set3DSUnitStatus( sobj, ARCID, NARC_h01_trailer2_3dsu_data_bin );
+    work->sobj[SOBJ_TRAILER_2] = sobj;
+  } 
+  { // 船
+    GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, 0, OBJ_SHIP );
+    SOUNDOBJ* sobj = SOUNDOBJ_Create( fieldmap, work->iss3dsSys, status );
+    SOUNDOBJ_SetAnime( sobj, ARCID, NARC_h01_ship_ica_data_bin, ANIME_BUF_INTVL );
+    SOUNDOBJ_Set3DSUnitStatus( sobj, ARCID, NARC_h01_ship_3dsu_data_bin );
+    work->sobj[SOBJ_SHIP] = sobj;
+  }
 
-  // 風の音量を調整
-  UpdateWindVolume( fieldmap, h01work );
+  // 動作待機カウンタ
+  for( i=0; i<SOBJ_NUM; i++ ) work->wait[i] = 0;
 
-  // TEST:
+  // 待機時間
+  LoadWaitTime( work );
+  // 風データ
+  LoadWindData( work );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 各音源オブジェクトの待ち時間を読み込む
+ *
+ * @param work 設定対象ワーク
+ */
+//------------------------------------------------------------------------------------------
+static void LoadWaitTime( H01WORK* work )
+{
+  int i;
+  ARCDATID dat_id[SOBJ_NUM] = 
+  {
+    NARC_h01_trailer1_wait_data_bin,
+    NARC_h01_trailer2_wait_data_bin,
+    NARC_h01_ship_wait_data_bin,
+  };
+
+  for( i=0; i<SOBJ_NUM; i++ )
+  {
+    u32* data = GFL_ARC_LoadDataAlloc( ARCID, dat_id[i], work->heapID );
+    work->minWait[i] = data[0];
+    work->maxWait[i] = data[1];
+    GFL_HEAP_FreeMemory( data );
+  }
+
+  // DEBUG:
+  OBATA_Printf( "GIMMICK-H01: load wait data\n" );
+  for( i=0; i<SOBJ_NUM; i++ )
+  {
+    OBATA_Printf( "- minWait[%d] = %d\n", i, work->minWait[i] );
+    OBATA_Printf( "- maxWait[%d] = %d\n", i, work->maxWait[i] );
+  }
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 風データを読み込む
+ *
+ * @param work 設定対象ワーク
+ */
+//------------------------------------------------------------------------------------------
+static void LoadWindData( H01WORK* work )
+{
+  GFL_ARC_LoadDataOfs( &work->wind_data,  
+                       ARCID, NARC_h01_wind_data_bin, 0, sizeof(WIND_DATA) );
+  // DEBUG:
   {
     int i;
-    for( i=0; i<ICA_NUM; i++ )
+    OBATA_Printf( "GIMMICK-H01: load wind data\n" );
+    OBATA_Printf( "- trackBit = " );
+    for( i=0; i<16; i++ )
     {
-      ICA_ANIME_IncAnimeFrame( h01work->icaAnime[i], FX32_ONE );
+      if( work->wind_data.trackBit & (1<<(16-i-1)) ) OBATA_Printf( "■" );
+      else                                           OBATA_Printf( "□" );
+    }
+    OBATA_Printf( "\n" );
+    OBATA_Printf( "- minHeight = %d\n", work->wind_data.minHeight );
+    OBATA_Printf( "- maxHeight = %d\n", work->wind_data.maxHeight );
+  } 
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief ギミックの状態を保存する
+ *
+ * @param work     保存対象ギミックの管理ワーク
+ * @param fieldmap 依存するフィールドマップ
+ */
+//------------------------------------------------------------------------------------------
+static void SaveGimmick( H01WORK* work, FIELDMAP_WORK* fieldmap )
+{
+  int i;
+  GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
+  GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
+  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
+  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H01 );
+
+  // セーブ(各音源オブジェクトのアニメーションフレーム数)
+  for( i=0; i<SOBJ_NUM; i++ )
+  {
+    fx32 frame  = SOUNDOBJ_GetAnimeFrame( work->sobj[i] );
+    gmk_save[i] = (frame >> FX32_SHIFT);
+    OBATA_Printf( "GIMMICK-H01: gimmick save[%d] = %d\n", i, gmk_save[i] );
+  }
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief ギミックの状態を復帰する
+ *
+ * @param work     復帰対象ギミックの管理ワーク
+ * @param fieldmap 依存するフィールドマップ
+ */
+//------------------------------------------------------------------------------------------
+static void LoadGimmick( H01WORK* work, FIELDMAP_WORK* fieldmap )
+{
+  int i;
+  GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
+  GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
+  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
+  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H01 );
+
+  // セーブ処理
+  {
+    // 各音源オブジェクトのアニメーションフレーム数を復帰
+    for( i=0; i<SOBJ_NUM; i++ )
+    {
+      fx32 frame = gmk_save[i] << FX32_SHIFT;
+      SOUNDOBJ_SetAnimeFrame( work->sobj[i], frame );
+      OBATA_Printf( "GIMMICK-H01: gmk load[%d] = %d\n", i, gmk_save[i] );
     }
   }
 }
 
-//--------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
 /**
- * @brief 3Dサウンド情報を取得する
+ * @brief 音源オブジェクトを待機状態にする
  *
- * @param work    取得したデータを反映させるギミック管理ワーク
- * @param heap_id 使用するヒープID
+ * @param work  操作対象ワーク
+ * @param index 待機状態にするオブジェクトを指定
  */
-//--------------------------------------------------------------------------------------------
-static void Load3DSoundInfo( H01WORK* work, HEAPID heap_id )
+//------------------------------------------------------------------------------------------
+static void SetStandBy( H01WORK* work, SOBJ_INDEX index )
 {
-  void* data;
-  int ofs = 0;
-  int track, volume;
-  float height0, height1, range;
-  ISS_3DS_UNIT* unit;
-  HEAPID heap_low_id = GFL_HEAP_LOWID( heap_id );
-
-  // アーカイブファイルデータを読み込む
-  data = GFL_ARC_LoadDataAlloc( ARCID_ISS_UNIT, NARC_iss_3d_sound_h01_bin, heap_low_id );
-
-  // 風
-  track   = *( (int*)((int)data + ofs) );   ofs += sizeof(int);
-  height0 = *( (float*)((int)data + ofs) ); ofs += sizeof(float);
-  height1 = *( (float*)((int)data + ofs) ); ofs += sizeof(float);
-  work->windTrackBit = 1 << (track - 1);
-  work->windRangeMin = FX_F32_TO_FX32( height0 );
-  work->windRangeMax = FX_F32_TO_FX32( height1 );
-  OBATA_Printf( "WIND : %d, %d, %d\n", track, (int)height0, (int)height1 );
-
-  // 船
-  track = *( (int*)((int)data + ofs) );   ofs += sizeof(int);
-  range = *( (float*)((int)data + ofs) ); ofs += sizeof(float);
-  volume = *( (int*)((int)data + ofs) );   ofs += sizeof(int);
-  unit = work->soundObj[SOUNDOBJ_SHIP].iss3dsUnit;
-  ISS_3DS_UNIT_SetTrackBit( unit, 1<<(track-1) );
-  ISS_3DS_UNIT_SetRange( unit, FX_F32_TO_FX32(range) );
-  ISS_3DS_UNIT_SetMaxVolume( unit, volume );
-  OBATA_Printf( "SOUNDOBJ_SHIP : %d, %d, %d\n", track, (int)range, volume );
-
-  // トレーラL
-  track = *( (int*)((int)data + ofs) );   ofs += sizeof(int);
-  range = *( (float*)((int)data + ofs) ); ofs += sizeof(float);
-  volume = *( (int*)((int)data + ofs) );   ofs += sizeof(int);
-  unit = work->soundObj[SOUNDOBJ_TR_L].iss3dsUnit;
-  ISS_3DS_UNIT_SetTrackBit( unit, 1<<(track-1) );
-  ISS_3DS_UNIT_SetRange( unit, FX_F32_TO_FX32(range) );
-  ISS_3DS_UNIT_SetMaxVolume( unit, volume );
-  OBATA_Printf( "SOUNDOBJ_TR_L : %d, %d, %d\n", track, (int)range, volume );
-
-  // トレーラR
-  track = *( (int*)((int)data + ofs) );   ofs += sizeof(int);
-  range = *( (float*)((int)data + ofs) ); ofs += sizeof(float);
-  volume = *( (int*)((int)data + ofs) );   ofs += sizeof(int);
-  unit = work->soundObj[SOUNDOBJ_TR_R].iss3dsUnit;
-  ISS_3DS_UNIT_SetTrackBit( unit, 1<<(track-1) );
-  ISS_3DS_UNIT_SetRange( unit, FX_F32_TO_FX32(range) );
-  ISS_3DS_UNIT_SetMaxVolume( unit, volume );
-  OBATA_Printf( "SOUNDOBJ_TR_R : %d, %d, %d\n", track, (int)range, volume );
-
-  // 後始末
-  GFL_HEAP_FreeMemory( data );
+  u32 range = work->maxWait[index] - work->minWait[index] + 1;      // 幅 = 最長 - 最短
+  u32 time  = work->minWait[index] + GFUser_GetPublicRand0(range);  // 待ち時間 = 最短 + 幅
+  work->wait[index] = time;
 }
 
-//--------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
 /**
- * @brief 音源オブジェを動かす
+ * @brief 音源オブジェクトを動作状態にする
  *
- * @param fieldmap フィールドマップ
- * @param sobj     動かすオブジェクト
+ * @param work  操作対象ワーク
+ * @param index 待機状態にするオブジェクトを指定
  */
-//--------------------------------------------------------------------------------------------
-static void MoveSoundObj( FIELDMAP_WORK* fieldmap, SOUNDOBJ* sobj )
-{
-  fx32 w0, w1;
-  VecFx32 v0, v1;
-  FLD_EXP_OBJ_CNT_PTR   ptr = FIELDMAP_GetExpObjCntPtr( fieldmap ); 
-  GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( ptr, EXPOBJ_UNIT_IDX, sobj->index );
-
-  // フレーム進める
-  sobj->frame = (sobj->frame + 1) % sobj->endFrame;
-
-  // 位置ベクトルを線形補間
-  w1 = FX_Div( sobj->frame, sobj->endFrame );
-  w0 = FX32_ONE - w1;
-  GFL_CALC3D_VEC_MulScalar( &sobj->startPos, w0, &v0 );
-  GFL_CALC3D_VEC_MulScalar( &sobj->endPos,   w1, &v1 );
-  VEC_Add( &v0, &v1, &status->trans );
-
-  // 音源位置を合わせる
-  ISS_3DS_UNIT_SetPos( sobj->iss3dsUnit, &status->trans );
+//------------------------------------------------------------------------------------------
+static void MoveStart( H01WORK* work, SOBJ_INDEX index )
+{ 
+  SOUNDOBJ_SetAnimeFrame( work->sobj[index], 0 );
 }
-
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -423,22 +458,22 @@ static void UpdateWindVolume( FIELDMAP_WORK* fieldmap, H01WORK* work )
   FIELD_CAMERA_GetCameraPos( camera, &pos );
 
   // 風の音量を算出
-  if( pos.y <= work->windRangeMin ) 
+  if( pos.y <= work->wind_data.minHeight )
   {
     volume = 0;
   }
-  else if( work->windRangeMax <= pos.y )
+  else if( work->wind_data.maxHeight <= pos.y )
   {
     volume = 127;
   }
   else
   {
-    fx32    max = work->windRangeMax - work->windRangeMin;
-    fx32 height = pos.y - work->windRangeMin;
+    fx32    max = work->wind_data.maxHeight - work->wind_data.minHeight;
+    fx32 height = pos.y - work->wind_data.minHeight;
     fx32 rate   = FX_Div( height, max );
     volume = 127 * FX_FX32_TO_F32( rate );
   }
 
   // 音量を調整
-  PMSND_ChangeBGMVolume( work->windTrackBit, volume );
+  PMSND_ChangeBGMVolume( work->wind_data.trackBit, volume );
 }
