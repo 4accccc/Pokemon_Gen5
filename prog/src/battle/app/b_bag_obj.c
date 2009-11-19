@@ -436,9 +436,12 @@ static void CursorResLoad( BBAG_WORK * wk )
 																		ah, NARC_battgra_wb_battle_w_cursor_NCGR,
 																		FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
 	// パレット
-  wk->palRes[BBAG_PALRES_CURSOR] = GFL_CLGRP_PLTT_RegisterEx(
+//  wk->palRes[BBAG_PALRES_CURSOR] = GFL_CLGRP_PLTT_RegisterEx(
+//																		ah, NARC_battgra_wb_battle_w_obj_NCLR,
+//																		CLSYS_DRAW_SUB, BBAG_PALRES_CURSOR*0x20, 1, 1, wk->dat->heap );
+  wk->palRes[BBAG_PALRES_CURSOR] = GFL_CLGRP_PLTT_RegisterComp(
 																		ah, NARC_battgra_wb_battle_w_obj_NCLR,
-																		CLSYS_DRAW_SUB, BBAG_PALRES_CURSOR*0x20, 1, 1, wk->dat->heap );
+																		CLSYS_DRAW_SUB, BBAG_PALRES_CURSOR*0x20, wk->dat->heap );
 	// セル・アニメ
   wk->celRes[BBAG_CELRES_CURSOR] = GFL_CLGRP_CELLANIM_Register(
 																		ah,
