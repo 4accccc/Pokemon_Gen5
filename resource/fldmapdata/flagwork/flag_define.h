@@ -149,14 +149,14 @@
 #define FE_R07_FIGHTREW_01                 133 /* 0x0085 R07：FIGHTREWわざマシン入手フラグ */
 #define FE_C07R0301_IKARI                  134 /* 0x0086 セッカシティ：R0301民家でイカリまんじゅう入手フラグ */
 #define FE_C07PC0101_ITEM_01               135 /* 0x0087 セッカシティ：ポケモンセンターでアイテム入手フラグ */
-		/* not used   136(0x0088) */
-		/* not used   137(0x0089) */
-		/* not used   138(0x008a) */
-		/* not used   139(0x008b) */
-		/* not used   140(0x008c) */
-		/* not used   141(0x008d) */
-		/* not used   142(0x008e) */
-		/* not used   143(0x008f) */
+#define FE_BADGEGATE01_OPEN                136 /* 0x0088 バッジチェック炎草水ゲートが開いた */
+#define FE_BADGEGATE02_OPEN                137 /* 0x0089 バッジチェックノーマルゲートが開いた */
+#define FE_BADGEGATE03_OPEN                138 /* 0x008a バッジチェック虫ゲートが開いた */
+#define FE_BADGEGATE04_OPEN                139 /* 0x008b バッジチェック電気ゲートが開いた */
+#define FE_BADGEGATE05_OPEN                140 /* 0x008c バッジチェック地面ゲートが開いた */
+#define FE_BADGEGATE06_OPEN                141 /* 0x008d バッジチェック飛行ゲートが開いた */
+#define FE_BADGEGATE07_OPEN                142 /* 0x008e バッジチェック氷ゲートが開いた */
+#define FE_BADGEGATE08_OPEN                143 /* 0x008f バッジチェックドラゴンゲートが開いた */
 		/* not used   144(0x0090) */
 		/* not used   145(0x0091) */
 		/* not used   146(0x0092) */
