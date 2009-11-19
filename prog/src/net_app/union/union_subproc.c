@@ -26,6 +26,7 @@
 #include "colosseum.h"
 #include "colosseum_tool.h"
 #include "app\pms_input.h"
+#include "app\pms_select.h"
 #include "net_app/pokemontrade.h"
 
 
@@ -683,7 +684,7 @@ static BOOL SubEvent_Chat(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP_
   switch(*seq){
   case 0:
     *child_event = EVENT_FieldSubProc(
-  	    gsys, fieldWork, FS_OVERLAY_ID(pmsinput), &ProcData_PMSInput, pwk);
+  	    gsys, fieldWork, FS_OVERLAY_ID(pmsinput), &ProcData_PMSSelect, pwk);
     break;
   default:
     return TRUE;

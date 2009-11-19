@@ -78,7 +78,31 @@ FS_EXTERN_OVERLAY(ui_common);
 
 enum
 { 
-  PMS_SELECT_HEAP_SIZE = 0x20000,  ///< ヒープサイズ
+  PMS_SELECT_HEAP_SIZE = 0x1c000,  ///< ヒープサイズ
+
+  SELECT_ID_NULL = 255,
+};
+
+//--------------------------------------------------------------
+///	OBJ
+//==============================================================
+enum
+{ 
+  LIST_BAR_STD_PX = 8 * 30,
+  LIST_BAR_STD_PY = 8 * 2,
+  LIST_BAR_ANM_IDX = 16, // バーアイコンのアニメIDX
+
+  LIST_BAR_SY = 26,
+  LIST_BAR_SY_CENTER = LIST_BAR_SY / 2,
+
+  LIST_BAR_TOUCH_MIN = LIST_BAR_STD_PY,
+  LIST_BAR_TOUCH_MAX = GX_LCD_SIZE_Y - 8*4,
+
+  LIST_BAR_AREA_MIN  = LIST_BAR_TOUCH_MIN,
+  LIST_BAR_AREA_MAX  = LIST_BAR_TOUCH_MAX - LIST_BAR_SY_CENTER,
+  LIST_BAR_AREA_SIZE = LIST_BAR_AREA_MAX - LIST_BAR_AREA_MIN,
+
+  LIST_BAR_ENABLE_LISTNUM = 3,
 };
 
 //--------------------------------------------------------------
@@ -193,10 +217,9 @@ enum
 	PLTID_BG_BACK_S				=	0,
 
 	//メインOBJ
-	PLTID_OBJ_TOUCHBAR_M	= 0, // 3本使用
-  PLTID_OBJ_PMS_DRAW    = 3, // 5本使用 
-  PLTID_OBJ_BALLICON_M  = 13, // 1本使用
-	PLTID_OBJ_TOWNMAP_M	  = 14,		
+	PLTID_OBJ_COMMON_M    = 0, // 3本使用
+  PLTID_OBJ_TOUCHBAR_M	= 3, // 3本使用
+  PLTID_OBJ_PMS_DRAW    = 6, // 5本使用 
 	//サブOBJ
 };
 
@@ -229,6 +252,9 @@ typedef struct
 
   //[PRIVATE]
   HEAPID heapID;
+
+  GFL_CLWK*               clwk_bar;
+  UI_EASY_CLWK_RES        clwkres;
 
   SAVE_CONTROL_WORK*      save_ctrl;
   PMSW_SAVEDATA*          pmsw_save;
@@ -264,10 +290,11 @@ typedef struct
 
   UI_SCENE_CNT_PTR          cntScene;
   void*                     subproc_work;   ///< サブPROC用ワーク保存領域
-  u8    select_id;      ///< 選択したID
-  u8    list_head_id;   ///< リストの先頭ID
-  u8    list_max;       ///< リストの項目数
-  u8    padding[1];
+  u8    select_id;        ///< 選択したID
+  u8    list_head_id;     ///< リストの先頭ID
+  u8    list_max;         ///< リストの項目数
+  u8    b_listbar : 1;    ///< リストバーをタッチしているかフラグ
+  u8    padding_bit : 7;
 
   BOOL bProcChange; ///< PROC切替フラグ
 
@@ -378,6 +405,9 @@ static GFL_PROC_RESULT PMSSelectProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 
 	//オーバーレイ読み込み
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
+  
+  // 速度設定
+  GFL_UI_KEY_SetRepeatSpeed( 4, 8 );
 	
 	//引数取得
 	param	= pwk;
@@ -391,6 +421,7 @@ static GFL_PROC_RESULT PMSSelectProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
   wk->heapID    = HEAPID_UI_DEBUG;
   wk->save_ctrl = param->save_ctrl;
   wk->pmsw_save = SaveData_GetPMSW( param->save_ctrl );
+  wk->out_param = param;
 	
 	//フォント作成
 	wk->font			= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
@@ -468,12 +499,15 @@ static GFL_PROC_RESULT PMSSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
 
   // SCENE
   UI_SCENE_CNT_Delete( wk->cntScene );
+  
+  // 元にもどす
+  GFL_UI_KEY_SetRepeatSpeed( 8, 15 );
 
 	//PROC用メモリ解放
   GFL_PROC_FreeWork( proc );
   GFL_HEAP_DeleteHeap( wk->heapID );
-
-	//オーバーレイ破棄
+	
+  //オーバーレイ破棄
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
 
   return GFL_PROC_RES_FINISH;
@@ -549,6 +583,27 @@ static void PMSSelect_GRAPHIC_Load( PMS_SELECT_MAIN_WORK* wk )
 { 
 	//描画設定初期化
 	wk->graphic	= PMS_SELECT_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heapID );
+  
+  // OBJリストバー アイコン読み込み
+  {
+    UI_EASY_CLWK_RES_PARAM prm;
+		GFL_CLUNIT	*clunit	= PMS_SELECT_GRAPHIC_GetClunit( wk->graphic );
+
+    prm.draw_type = CLSYS_DRAW_MAIN;
+    prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
+    prm.arc_id    = ARCID_PMSI_GRAPHIC;
+    prm.pltt_id   = NARC_pmsi_pms2_obj_main_NCLR;
+    prm.ncg_id    = NARC_pmsi_pms2_obj_main_NCGR;
+    prm.cell_id   = NARC_pmsi_pms2_obj_main_NCER;
+    prm.anm_id    = NARC_pmsi_pms2_obj_main_NANR;
+    prm.pltt_line = PLTID_OBJ_COMMON_M;
+    prm.pltt_src_ofs  = 0;
+    prm.pltt_src_num  = 3;
+
+    UI_EASY_CLWK_LoadResource( &wk->clwkres, &prm, clunit, wk->heapID );
+
+    wk->clwk_bar = UI_EASY_CLWK_CreateCLWK( &wk->clwkres, clunit, LIST_BAR_STD_PX, LIST_BAR_STD_PY, LIST_BAR_ANM_IDX ,wk->heapID );
+  }
 
 	//BGリソース読み込み
 	PMSSelect_BG_LoadResource( &wk->wk_bg, wk->heapID );
@@ -569,6 +624,7 @@ static void PMSSelect_GRAPHIC_Load( PMS_SELECT_MAIN_WORK* wk )
 #ifdef PMS_SELECT_PMSDRAW  
   PMSSelect_PMSDRAW_Init( wk );
 #endif //PMS_SELECT_PMSDRAW
+
 }
 
 //-----------------------------------------------------------------------------
@@ -582,6 +638,7 @@ static void PMSSelect_GRAPHIC_Load( PMS_SELECT_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void PMSSelect_GRAPHIC_UnLoad( PMS_SELECT_MAIN_WORK* wk )
 {
+  UI_EASY_CLWK_UnLoadResource( &wk->clwkres );
 
 #ifdef PMS_SELECT_TOUCHBAR
 	//タッチバー
@@ -940,6 +997,8 @@ static void PMSSelect_PMSDRAW_Init( PMS_SELECT_MAIN_WORK* wk )
       break;
     }
   }
+  // バーが出現設定
+  GFL_CLACT_WK_SetDrawEnable( wk->clwk_bar, ( wk->list_max > LIST_BAR_ENABLE_LISTNUM ) );
 
   // PMS表示用BMPWIN生成
   for( i=0; i<PMS_SELECT_PMSDRAW_NUM; i++ )
@@ -1057,6 +1116,7 @@ static void PLATE_CNT_UpdateCore( PMS_SELECT_MAIN_WORK* wk, BOOL is_check_print_
     PMSSelect_BG_PlateFutterTrans( &wk->wk_bg, sentence_type );
   }
 
+  // 簡易会話を全て描画
   for( i=0; (wk->list_head_id+i) < wk->list_max && i < PMS_SELECT_PMSDRAW_NUM; i++ )
   {
     u8 data_id = wk->list_head_id + i;
@@ -1077,6 +1137,155 @@ static void PLATE_CNT_UpdateCore( PMS_SELECT_MAIN_WORK* wk, BOOL is_check_print_
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  キー移動よるバーアイコンの位置変更
+ *
+ *	@param	PMS_SELECT_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void LIST_BAR_SetPosFromKey( PMS_SELECT_MAIN_WORK* wk )
+{
+  int pos_id;
+  s16 clpos;
+  int elem_size;
+  
+  // バーが出現していない場合は処理なし
+  if( GFL_CLACT_WK_GetDrawEnable( wk->clwk_bar ) == FALSE )
+  {
+    return;
+  }
+
+  pos_id = wk->select_id;
+  
+  // MIN
+  if( pos_id == 0 )
+  {
+    clpos = LIST_BAR_AREA_MIN;
+  }
+  // MAX
+  else if( pos_id == wk->list_max-1 )
+  {
+    clpos = LIST_BAR_AREA_MAX;
+  }
+  // OTHER
+  else
+  {
+    elem_size = LIST_BAR_AREA_SIZE / (wk->list_max-1);
+    clpos = LIST_BAR_AREA_MIN + elem_size * pos_id;
+   
+    GF_ASSERT( clpos < LIST_BAR_AREA_MAX );
+  }
+
+  GFL_CLACT_WK_SetWldTypePos( wk->clwk_bar, clpos, CLSYS_MAT_Y );
+
+  HOSAKA_Printf("pos_id=%d, list_max=%d, area_size=%d, elem_size=%d, clpos=%d \n",
+                 pos_id, wk->list_max, LIST_BAR_AREA_SIZE, elem_size, clpos );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  タッチ移動によるバーアイコンの位置変更
+ *
+ *	@param	PMS_SELECT_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL LIST_BAR_SetPosFromTouch( PMS_SELECT_MAIN_WORK* wk )
+{
+  u32 tx, ty;
+
+  // バーが出現していない場合は処理なし
+  if( GFL_CLACT_WK_GetDrawEnable( wk->clwk_bar ) == FALSE )
+  {
+    return FALSE;
+  }
+
+  // トリガで範囲を取得し、それ以降は範囲を見ない
+  if( GFL_UI_TP_GetPointTrg( &tx, &ty ) == FALSE )
+  {
+    return FALSE;
+  }
+
+  if( tx > LIST_BAR_STD_PX && tx < GX_LCD_SIZE_X )
+  { 
+    if( ty < LIST_BAR_TOUCH_MAX && ty > LIST_BAR_TOUCH_MIN ) 
+    {
+      wk->b_listbar = TRUE;
+      wk->select_id = SELECT_ID_NULL; ///< 選択を無効化
+      return TRUE;
+    }
+  }
+  
+  return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	PMS_SELECT_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL  LIST_BAR_CheckTouching( PMS_SELECT_MAIN_WORK* wk )
+{
+  u32 tx, ty;
+  int select_id_pre;
+  int pos_id;
+  
+  fx32 fx_elem_size;
+
+  GF_ASSERT( wk->b_listbar );
+
+  // 継続タッチチェック＆タッチ座標取得
+  if( GFL_UI_TP_GetPointCont( &tx, &ty ) == FALSE )
+  {
+    wk->b_listbar = FALSE;
+    return FALSE;
+  }
+
+  // 範囲制限
+  ty = MATH_CLAMP( ty, LIST_BAR_TOUCH_MIN, LIST_BAR_TOUCH_MAX );
+
+  // タッチ座標から選択IDを算出
+  fx_elem_size     = FX32_CONST(LIST_BAR_AREA_SIZE) / (wk->list_max-1);
+
+  GF_ASSERT( fx_elem_size ); // ZERO DIV
+  
+  pos_id = FX_Div( FX32_CONST(ty - LIST_BAR_AREA_MIN), fx_elem_size) >> FX32_SHIFT;
+
+  select_id_pre = wk->list_head_id;
+
+  // 選択IDに変更があった場合はOBJを移動
+  if( pos_id != select_id_pre )
+  {
+    int diff;
+    s16 clpos;
+
+    diff = pos_id - select_id_pre;
+
+    clpos = LIST_BAR_AREA_MIN + ( (fx_elem_size * pos_id) >> FX32_SHIFT );
+
+    GFL_CLACT_WK_SetWldTypePos( wk->clwk_bar, clpos, CLSYS_MAT_Y );
+    
+    wk->list_head_id = pos_id;
+    wk->list_head_id = MATH_CLAMP( wk->list_head_id, 0, (PMS_DATA_ENTRY_MAX-(PMS_SELECT_PMSDRAW_NUM-1)) ); // 実質3個表示なので
+    
+    OS_Printf("list_head_id=%d diff=%d pos_id=%d ty=%d fx_elem_size=%f \n",
+              wk->list_head_id, diff, pos_id, ty,
+              FX_FX32_TO_F32(fx_elem_size) );
+
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  プレート操作 主処理
  *
  *	@param	PMS_SELECT_MAIN_WORK* wk 
@@ -1086,6 +1295,14 @@ static void PLATE_CNT_UpdateCore( PMS_SELECT_MAIN_WORK* wk, BOOL is_check_print_
 //-----------------------------------------------------------------------------
 static void PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
 {
+  // セレクト無効状態でタッチされたら
+  if( GFL_UI_KEY_GetTrg() && wk->select_id == SELECT_ID_NULL )
+  {
+    wk->select_id = wk->list_head_id; //先頭を選択
+    PLATE_CNT_UpdateAll( wk );
+    return;
+  }
+
   // キー入力
   if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
   {
@@ -1100,6 +1317,8 @@ static void PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
 
         GF_ASSERT( wk->list_head_id >= 0 );
       }
+
+      LIST_BAR_SetPosFromKey( wk );
 
       //@TODO 重いようなら、
       //1:ページ全体が更新されない時はUpdateALlをスクリーンのカラーを置換する処理にする
@@ -1124,6 +1343,8 @@ static void PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
 
         GF_ASSERT( wk->list_head_id >= 0 );
       }
+
+      LIST_BAR_SetPosFromKey( wk );
         
       PLATE_CNT_UpdateAll( wk );
 
@@ -1137,6 +1358,7 @@ static void PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
   {
     int list_pos = TOUCH_GetListPos();
 
+    // タッチしたプレートを選択
     if( list_pos != -1 )
     {
       wk->select_id =  wk->list_head_id + list_pos;
@@ -1144,6 +1366,25 @@ static void PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
       HOSAKA_Printf("list_pos = %d, select_id = %d \n", list_pos, wk->select_id );
       
       PLATE_CNT_UpdateAll( wk );
+    }
+    // バーをタッチでプレート移動
+    else
+    {
+      // リストバーが動作していなければ開始判定
+      if( wk->b_listbar == FALSE )
+      {
+        LIST_BAR_SetPosFromTouch( wk );
+      }
+      
+      // 継続チェック
+      if( wk->b_listbar == TRUE )
+      {
+        if( LIST_BAR_CheckTouching( wk ) )
+        {
+          // 移動があった場合は更新
+          PLATE_CNT_UpdateAll( wk );
+        }
+      }
     }
   }
 
@@ -1379,6 +1620,9 @@ static BOOL ScenePlateSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
   switch( result )
   {
   case TOUCHBAR_ICON_RETURN :
+    // キャンセルフラグON
+    wk->out_param->out_cancel_flag  = TRUE;
+    wk->out_param->out_pms_data     = NULL;
     UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
     return TRUE;
 
@@ -1484,6 +1728,9 @@ static BOOL SceneCmdSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
     case TASKMENU_ID_DECIDE :
       // けってい → 終了
       UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
+      // 選択されたPMS_DATAを保存
+      wk->out_param->out_pms_data     = PMSW_GetDataEntry( wk->pmsw_save, wk->select_id );
+      wk->out_param->out_cancel_flag  = FALSE;
       break;
     case TASKMENU_ID_CALL_EDIT :
       // へんしゅう → 入力画面呼び出し
@@ -1558,7 +1805,12 @@ static BOOL SceneCallEdit_Main( UI_SCENE_CNT_PTR cnt, void* work )
       else
 #endif
       {
+        PMS_DATA* data;
+
         pmsi = PMSI_PARAM_Create(PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT, NULL, TRUE, wk->save_ctrl, wk->heapID );
+        data = PMSW_GetDataEntry( wk->pmsw_save, wk->select_id );
+
+        PMSI_PARAM_SetInitializeDataSentence( pmsi, data );
       }
 
       if( pmsi )

@@ -30,6 +30,7 @@
 #include "field\event_colosseum_battle.h"
 #include "union_tool.h"
 #include "app\pms_input.h"
+#include "app\pms_select.h"
 #include "poke_tool/regulation_def.h"
 #include "poke_tool/poke_regulation.h"
 
@@ -720,14 +721,11 @@ static BOOL OneselfSeq_ChatCallUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
   switch(*seq){
   case 0:
     {
-    	PMSI_PARAM	*initParam;
+    	PMS_SELECT_PARAM	*initParam;
     	PMS_DATA  pmsDat;
 
-    	initParam = PMSI_PARAM_Create(PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT, 
-          NULL, TRUE,
-    	  GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data), HEAPID_UNION);
-    	PMSDAT_Init(&pmsDat, PMS_TYPE_UNION);
-    	PMSI_PARAM_SetInitializeDataSentence( initParam, &pmsDat );
+    	initParam             = GFL_HEAP_AllocClearMemory( GFL_HEAPID_APP, sizeof( PMS_SELECT_PARAM ) );
+      initParam->save_ctrl  = GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data);
 
       unisys->parent_work = initParam;
       UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_CHAT, initParam);
@@ -742,15 +740,13 @@ static BOOL OneselfSeq_ChatCallUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
     break;
   case 2:
     {
-     	PMSI_PARAM	*initParam = unisys->parent_work;
-    	PMS_DATA pmsdata;
+     	PMS_SELECT_PARAM	*initParam = unisys->parent_work;
+    	PMS_DATA* pmsdata = initParam->out_pms_data;
      	
     	// 簡易会話を更新したか？
-    	if( PMSI_PARAM_CheckCanceled( initParam ) == FALSE ){
-    		// 簡易会話取得
-    		PMSI_PARAM_GetInputDataSentence( initParam,  &pmsdata);
+    	if( initParam->out_cancel_flag == FALSE ){
       	// ビーコンデータの簡易会話を書き換える & 通信データに反映
-        UnionChat_SetMyPmsData(unisys, &pmsdata);
+        UnionChat_SetMyPmsData(unisys, pmsdata);
   	  }
     }
     GFL_HEAP_FreeMemory(unisys->parent_work);
