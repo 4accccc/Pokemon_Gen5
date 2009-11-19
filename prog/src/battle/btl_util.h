@@ -245,10 +245,6 @@ static inline BPP_SICK_CONT BPP_SICKCONT_MakeMoudokuCont( void )
   cont.permanent.count_max = BTL_MOUDOKU_COUNT_MAX;
   return cont;
 }
-static inline BOOL BPP_SICKCONT_IsMoudokuCont( BPP_SICK_CONT cont )
-{
-  return ((cont.type == WAZASICK_CONT_PERMANENT) && (cont.permanent.count_max > 0));
-}
 
 /*
  *  依存ポケIDを取得（ポケ依存でなければ BTL_POKEID_NULL）

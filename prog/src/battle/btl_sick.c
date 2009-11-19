@@ -294,13 +294,13 @@ static int getDefaultSickStrID( WazaSick sickID, BPP_SICK_CONT cont )
   case WAZASICK_MIYABURU:   strID = BTL_STRID_SET_Miyaburu; break;
   case WAZASICK_NEWOHARU:   strID = BTL_STRID_SET_NeWoHaru; break;
   case WAZASICK_SASIOSAE:   strID = BTL_STRID_SET_Sasiosae; break;
-  case WAZASICK_POWERTRICK: strID = BTL_STRID_SET_PowerTrick; break;
+  case WAZASICK_DOKU:       strID = BTL_STRID_SET_DokuGet; break;
+  case WAZASICK_DOKUDOKU:   strID = BTL_STRID_SET_MoudokuGet; break;
 
-  case WAZASICK_DOKU:
-    strID = BPP_SICKCONT_IsMoudokuCont(cont)? BTL_STRID_SET_MoudokuGet : BTL_STRID_SET_DokuGet;
-    break;
+// パワートリックはワザハンドラの方で設定
+//  case WAZASICK_POWERTRICK: strID = BTL_STRID_SET_PowerTrick; break;
 
-  /*  @@@ まきつきは使用されたワザに応じてメッセージを変えるのだ…
+  /*  @@@ まきつき系は使用されたワザに応じてメッセージを変えるのだ…
   case WAZASICK_BIND:
     {
       WazaID  waza = BPP_SICKCONT_GetParam( cont );
@@ -485,9 +485,9 @@ BOOL BTL_SICK_CheckBatonTouch( WazaSick sick )
     WAZASICK_HOROBINOUTA,
     WAZASICK_NEWOHARU,
     WAZASICK_TOOSENBOU,
+
     WAZASICK_MUSTHIT_TARGET,
     WAZASICK_FLYING,
-    WAZASICK_POWERTRICK,
     WAZASICK_TOOSENBOU,
     WAZASICK_NOROI,
   };

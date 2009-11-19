@@ -14,6 +14,7 @@
 #include "poke_tool/poke_personal.h"
 #include "waza_tool/wazadata.h"
 
+
 #include "btl_util.h"
 
 //--------------------------------------------------------------
@@ -100,7 +101,6 @@ typedef enum {
 //--------------------------------------------------------------
 typedef enum {
 
-  BPP_CONTFLG_MEMBERIN_EFFECT,  ///< 入場直後
   BPP_CONTFLG_KODAWARI_LOCK,    ///< 最初に使ったワザしか出せなくなる
   BPP_CONTFLG_CANT_CHANGE,      ///< にげる・入れ替えが出来なくなる
   BPP_CONTFLG_TAME,
@@ -110,6 +110,7 @@ typedef enum {
   BPP_CONTFLG_MARUKUNARU,
   BPP_CONTFLG_TIISAKUNARU,
   BPP_CONTFLG_KIAIDAME,
+  BPP_CONTFLG_POWERTRICK,
 
   BPP_CONTFLG_MAX,
 
@@ -372,6 +373,7 @@ extern void BPP_ReflectPP( BTL_POKEPARAM* bpp );
 extern void BPP_SetSrcPP( BTL_POKEPARAM* bpp, POKEMON_PARAM* pp );
 extern u8 BPP_GetCriticalRank( const BTL_POKEPARAM* bpp );
 extern BOOL BPP_AddCriticalRank( BTL_POKEPARAM* bpp, int value );
+extern void BPP_SetBaseStatus( BTL_POKEPARAM* bpp, BppValueID vid, u8 value );
 
 
 extern BOOL BPP_HENSIN_Set( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* target );

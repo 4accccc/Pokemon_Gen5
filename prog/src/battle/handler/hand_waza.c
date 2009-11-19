@@ -388,6 +388,8 @@ static BTL_EVENT_FACTOR*  ADD_PowerSwap( u16 pri, WazaID waza, u8 pokeID );
 static void handler_PowerSwap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_GuardSwap( u16 pri, WazaID waza, u8 pokeID );
 static void handler_GuardSwap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_PowerTrick( u16 pri, WazaID waza, u8 pokeID );
+static void handler_PowerTrick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_LockON( u16 pri, WazaID waza, u8 pokeID );
 static void handler_LockON( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Refrector( u16 pri, WazaID waza, u8 pokeID );
@@ -745,6 +747,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_MAGUMASUTOOMU,   ADD_Makituku      },
     { WAZANO_UZUSIO,          ADD_Uzusio        },
     { WAZANO_HUKITOBASI,      ADD_KousokuSpin   },
+    { WAZANO_PAWAATORIKKU,    ADD_PowerTrick    },
 
     // 以下、新ワザ
     { WAZANO_KARI_BENOMUSHOKKU,    ADD_BenomShock    },
@@ -3966,8 +3969,7 @@ static void handler_MagicCoat_Rob( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
   if( atkPokeID != pokeID )
   {
     WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-    WazaCategory category = WAZADATA_GetCategory( waza );
-    if( category == WAZADATA_CATEGORY_SIMPLE_SICK )
+    if( WAZADATA_GetFlag(waza, WAZAFLAG_MagicCoat) )
     {
       BTL_HANDEX_STR_PARAMS* str = (BTL_HANDEX_STR_PARAMS*)BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
 
@@ -5413,7 +5415,44 @@ static void handler_GuardSwap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     HANDEX_STR_AddArg( &msg_param->str, pokeID );
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * パワートリック
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_PowerTrick( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORIZE_WAZA,  handler_PowerTrick   },  // 未分類ワザ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_PowerTrick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BTL_HANDEX_PARAM_SET_STATUS* param;
+    BTL_HANDEX_PARAM_SET_CONTFLAG*  flag_param;
+    const BTL_POKEPARAM* bpp;
 
+    bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+    param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_SET_STATUS, pokeID );
+
+    param->pokeID  = pokeID;
+    param->attack  = BPP_GetValue_Base( bpp, BPP_DEFENCE );
+    param->defence = BPP_GetValue_Base( bpp, BPP_ATTACK );
+    param->fAttackEnable  = TRUE;
+    param->fDefenceEnable = TRUE;
+
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_PowerTrick );
+    HANDEX_STR_AddArg( &param->exStr, pokeID );
+
+    flag_param = (BTL_HANDEX_PARAM_SET_CONTFLAG*)BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_SET_CONTFLAG, pokeID );
+    flag_param->pokeID = pokeID;
+    flag_param->flag = BPP_CONTFLG_POWERTRICK;
+  }
+}
 //----------------------------------------------------------------------------------
 /**
  * ロックオン

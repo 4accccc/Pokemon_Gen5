@@ -205,6 +205,7 @@ typedef enum {
   BTL_HANDEX_RANK_EFFECT,   ///< ランク増減効果
   BTL_HANDEX_SET_RANK,      ///< ランクを指定地に強制書き換え
   BTL_HANDEX_RESET_RANK,    ///< ランク効果を全てフラットに
+  BTL_HANDEX_SET_STATUS,    ///< 能力値（攻撃、防御等）を強制書き換え
   BTL_HANDEX_RECOVER_RANK,  ///< マイナスランク効果のみをフラットに
   BTL_HANDEX_KILL,          ///< 瀕死にする
   BTL_HANDEX_CHANGE_TYPE,   ///< ポケモンのタイプを変える
@@ -289,11 +290,13 @@ typedef struct {
 }BTL_HANDEX_PARAM_USE_ITEM;
 
 
+/**
+ * メッセージ表示
+ */
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  BTL_HANDEX_STR_PARAMS  str;
 }BTL_HANDEX_PARAM_MESSAGE;
-
 
 /**
  * HP回復処理
@@ -419,6 +422,26 @@ typedef struct {
 }BTL_HANDEX_PARAM_RESET_RANK;
 
 /**
+ * 対象の能力値を直接書き換え
+ */
+typedef struct {
+ BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
+ u8  pokeID;        ///< 対象ポケモンID
+ u8  attack;
+ u8  defence;
+ u8  sp_attack;
+ u8  sp_defence;
+ u8  agility;
+ u8  fAttackEnable    : 1;
+ u8  fDefenceEnable   : 1;
+ u8  fSpAttackEnable  : 1;
+ u8  fSpDefenceEnable : 1;
+ u8  fAgilityEnable   : 1;
+ u8  dmy : 3;
+ BTL_HANDEX_STR_PARAMS     exStr;    ///< 成功時メッセージ
+}BTL_HANDEX_PARAM_SET_STATUS;
+
+/**
  * 対象をひん死にする
  */
 typedef struct {
@@ -427,7 +450,7 @@ typedef struct {
 }BTL_HANDEX_PARAM_KILL;
 
 /**
- * タイプ変更処理ワーク
+ * タイプ変更処理
  */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
@@ -436,7 +459,7 @@ typedef struct {
 }BTL_HANDEX_PARAM_CHANGE_TYPE;
 
 /**
- * ターンフラグセット処理ワーク
+ * ターンフラグセット処理
  */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
@@ -445,7 +468,7 @@ typedef struct {
 }BTL_HANDEX_PARAM_TURNFLAG;
 
 /**
- * 永続フラグセット処理ワーク
+ * 永続フラグセット処理
  */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
@@ -454,7 +477,7 @@ typedef struct {
 }BTL_HANDEX_PARAM_SET_CONTFLAG;
 
 /**
- * サイドエフェクト追加処理ワーク
+ * サイドエフェクト追加処理
  */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
@@ -464,7 +487,7 @@ typedef struct {
 }BTL_HANDEX_PARAM_SIDE_EFFECT;
 
 /**
- * サイドエフェクト除去処理ワーク
+ * サイドエフェクト除去処理
  */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
@@ -475,7 +498,7 @@ typedef struct {
 }BTL_HANDEX_PARAM_SIDEEFF_REMOVE;
 
 /**
- * フィールドエフェクト追加処理ワーク
+ * フィールドエフェクト追加処理
  */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
@@ -488,7 +511,7 @@ typedef struct {
 }BTL_HANDEX_PARAM_ADD_FLDEFF;
 
 /**
- * フィールドエフェクト除去処理ワーク
+ * フィールドエフェクト除去処理
  */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
@@ -507,7 +530,7 @@ typedef struct {
 }BTL_HANDEX_PARAM_POSEFF_ADD;
 
 /**
- *  とくせい書き換え処理ワーク
+ *  とくせい書き換え処理
  */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
@@ -545,7 +568,7 @@ typedef struct {
 }BTL_HANDEX_PARAM_EQUIP_ITEM;
 
 /**
- * ワザ書き換え処理ワーク
+ * ワザ書き換え処理
  */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
@@ -557,7 +580,7 @@ typedef struct {
 }BTL_HANDEX_PARAM_UPDATE_WAZA;
 
 /**
- * カウンタ書き換え処理ワーク
+ * カウンタ書き換え処理
  */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
@@ -567,7 +590,7 @@ typedef struct {
 }BTL_HANDEX_PARAM_COUNTER;
 
 /**
- * 時間差ワザダメージ処理用ワーク
+ * 時間差ワザダメージ処理用
  */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
@@ -577,7 +600,7 @@ typedef struct {
 }BTL_HANDEX_PARAM_DELAY_WAZADMG;
 
 /**
- * メンバー入れ替え処理ワーク
+ * メンバー入れ替え処理
  */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
@@ -586,7 +609,7 @@ typedef struct {
 }BTL_HANDEX_PARAM_CHANGE_MEMBER;
 
 /**
- * バトンタッチ処理ワーク
+ * バトンタッチ処理
  */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
@@ -595,7 +618,7 @@ typedef struct {
 }BTL_HANDEX_PARAM_BATONTOUCH;
 
 /**
- * ひるませる処理ワーク
+ * ひるませる処理
  */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
@@ -604,7 +627,7 @@ typedef struct {
 }BTL_HANDEX_PARAM_ADD_SHRINK;
 
 /**
- * 生き返らせる処理ワーク
+ * 生き返らせる処理
  */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;

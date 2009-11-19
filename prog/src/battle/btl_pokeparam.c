@@ -64,6 +64,7 @@ typedef struct {
 
   u16 monsno;       ///< ポケモンナンバー
   u16 hpMax;        ///< 最大HP
+  u16 heavy;        ///< 重さ
 
   u8  attack;       ///< こうげき
   u8  defence;      ///< ぼうぎょ
@@ -490,7 +491,7 @@ static BppValueID ConvertValueID( const BTL_POKEPARAM* bpp, BppValueID vid )
 }
 //=============================================================================================
 /**
- * ランク補正フラットな状態のパラメータ取得
+ * ランク補正フラットな状態のステータス取得
  *
  * @param   bpp
  * @param   vid   必要なパラメータID
@@ -515,6 +516,29 @@ int BPP_GetValue_Base( const BTL_POKEPARAM* bpp, BppValueID vid )
   default:
     return BPP_GetValue( bpp, vid );
   };
+}
+//=============================================================================================
+/**
+ * 能力値を書き換え
+ *
+ * @param   bpp
+ * @param   vid
+ * @param   value
+ */
+//=============================================================================================
+void BPP_SetBaseStatus( BTL_POKEPARAM* bpp, BppValueID vid, u8 value )
+{
+  switch( vid ){
+  case BPP_ATTACK:      bpp->baseParam.attack = value; break;
+  case BPP_DEFENCE:     bpp->baseParam.defence = value; break;
+  case BPP_SP_ATTACK:   bpp->baseParam.sp_attack = value; break;
+  case BPP_SP_DEFENCE:  bpp->baseParam.sp_defence = value; break;
+  case BPP_AGILITY:     bpp->baseParam.agility = value; break;
+
+  default:
+    GF_ASSERT(0);
+    break;
+  }
 }
 
 //=============================================================================================
@@ -1278,6 +1302,9 @@ void BPP_ACTFLAG_Set( BTL_POKEPARAM* pp, BppActFlag flagID )
 //=============================================================================================
 void BPP_CONTFLAG_Set( BTL_POKEPARAM* pp, BppContFlag flagID )
 {
+  if( flagID == BPP_CONTFLG_POWERTRICK ){
+    BTL_Printf("ポケ[%d]にパワートリックフラグ\n", pp->coreParam.myID);
+  }
   flgbuf_set( pp->contFlag, flagID );
 }
 //=============================================================================================
@@ -1311,7 +1338,7 @@ void BPP_CONTFLAG_Clear( BTL_POKEPARAM* pp, BppContFlag flagID )
 //=============================================================================================
 void BPP_SetWazaSick( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT contParam )
 {
-  if( sick < POKESICK_MAX )
+  if( (sick < POKESICK_MAX) || (sick == WAZASICK_DOKUDOKU) )
   {
     PokeSick pokeSick = BPP_GetPokeSick( bpp );
     GF_ASSERT(pokeSick == POKESICK_NULL);
@@ -1319,6 +1346,13 @@ void BPP_SetWazaSick( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT contParam
 
   bpp->sickCont[ sick ] = contParam;
   bpp->wazaSickCounter[sick] = 0;
+
+  // 「どくどく」になる時は同時に「どく」にもかける
+  if( sick == WAZASICK_DOKUDOKU )
+  {
+    bpp->sickCont[ WAZASICK_DOKU ] = contParam;
+    bpp->wazaSickCounter[ WAZASICK_DOKU ] = 0;
+  }
 }
 
 
@@ -1372,7 +1406,7 @@ void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFu
         }
       }
       // 永続型で最大ターン数が指定されているものはカウンタをインクリメント
-      // （現状、この機構を利用しているのは「もうどく」のみ）
+      // （現状、この機構を利用しているのは「どくどく」のみ）
       else if( bpp->sickCont[sick].type == WAZASICK_CONT_PERMANENT )
       {
         if( (bpp->sickCont[sick].permanent.count_max != 0 )
@@ -1402,7 +1436,8 @@ void BPP_CurePokeSick( BTL_POKEPARAM* pp )
   {
     pp->sickCont[ i ] = BPP_SICKCONT_MakeNull();
   }
-  pp->sickCont[WAZASICK_AKUMU] = BPP_SICKCONT_MakeNull();  // 眠りが治れば“あくむ”も治る
+  pp->sickCont[WAZASICK_AKUMU] = BPP_SICKCONT_MakeNull();    // 眠りが治れば“あくむ”も治る
+  pp->sickCont[WAZASICK_DOKUDOKU] = BPP_SICKCONT_MakeNull(); // 毒が治れば“どくどく”も治る
 }
 //=============================================================================================
 /**
@@ -1594,13 +1629,11 @@ int BPP_CalcSickDamage( const BTL_POKEPARAM* bpp, WazaSick sick )
   {
     switch( sick ){
     case WAZASICK_DOKU:
-      // カウンタが0なら通常の「どく」
-      if( bpp->wazaSickCounter[sick] == 0 ){
-        return BTL_CALC_QuotMaxHP( bpp, 8 );
-      }
-      // カウンタが1～なら「どくどく」
-      else{
+      // 「どくどく」状態ならターン数でダメージ増加
+      if( BPP_CheckSick(bpp, WAZASICK_DOKUDOKU) ){
         return (bpp->baseParam.hpMax / 16) * bpp->wazaSickCounter[sick];
+      }else{
+        return BTL_CALC_QuotMaxHP( bpp, 8 );
       }
       break;
 
@@ -1720,12 +1753,11 @@ void BPP_Clear_ForDead( BTL_POKEPARAM* bpp )
 
   clearUsedWazaFlag( bpp );
   clearCounter( bpp );
-
   BPP_MIGAWARI_Delete( bpp );
 
   clearWazaSickWork( bpp, TRUE );
-  Effrank_Init( &bpp->varyParam );
   ConfrontRec_Clear( bpp );
+  Effrank_Init( &bpp->varyParam );
 }
 //=============================================================================================
 /**
@@ -1738,7 +1770,10 @@ void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
 {
   flgbuf_clear( bpp->actFlag, sizeof(bpp->actFlag) );
   flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
-  flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
+  /*
+   * ※バトンタッチで引き継ぐ情報を記録しているため、
+   * 退場時に継続フラグクリアはさせてはいけない
+   */
 
   clearUsedWazaFlag( bpp );
   clearCounter( bpp );
@@ -1746,16 +1781,66 @@ void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
 }
 //=============================================================================================
 /**
- * 入場による各種状態クリア
+ * 再入場による各種状態初期化
  *
  * @param   bpp
  */
 //=============================================================================================
 void BPP_Clear_ForIn( BTL_POKEPARAM* bpp )
 {
-  clearWazaSickWork( bpp, FALSE );
+  setupBySrcData( bpp, bpp->coreParam.ppSrc );
+  flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
+
+  // どくどくだけ退場時の状態引き継ぎ（カウンタはリセットさせる）
+  {
+    BPP_SICK_CONT dokudokuCont = bpp->sickCont[ WAZASICK_DOKUDOKU ];
+    clearWazaSickWork( bpp, FALSE );
+    bpp->sickCont[ WAZASICK_DOKUDOKU ] = dokudokuCont;
+  }
+
   Effrank_Init( &bpp->varyParam );
 }
+//=============================================================================================
+/**
+ * バトンタッチによるパラメータ受け継ぎ
+ *
+ * @param   target    受け継ぐ側
+ * @param   user      受け継がせる側
+ */
+//=============================================================================================
+void BPP_BatonTouchParam( BTL_POKEPARAM* target, const BTL_POKEPARAM* user )
+{
+  u32 i;
+
+  target->varyParam = user->varyParam;
+
+  BTL_Printf("[%d]->[%d]へバトンタッチで引き継がれた:防御ランク=%d, 特防ランク=%d\n",
+    user->coreParam.myID, target->coreParam.myID,
+    target->varyParam.defence, target->varyParam.sp_defence);
+
+  // 特定の状態異常をそのまま引き継ぎ
+  for(i=0; i<WAZASICK_MAX; ++i)
+  {
+    if( (user->sickCont[i].type != WAZASICK_CONT_NONE)
+    &&  (BTL_SICK_CheckBatonTouch(i))
+    ){
+      target->sickCont[i] = user->sickCont[i];
+      target->wazaSickCounter[i] = user->wazaSickCounter[i];
+    }
+  }
+
+  // 特定の継続フラグを引き継ぎ（今のところパワートリックだけ）
+  if( BPP_CONTFLAG_Get(user, BPP_CONTFLG_POWERTRICK) ){
+    u8 atk, def;
+    BPP_CONTFLAG_Set(target, BPP_CONTFLG_POWERTRICK);
+    atk = BPP_GetValue_Base( target, BPP_ATTACK );
+    def = BPP_GetValue_Base( target, BPP_DEFENCE );
+    BPP_SetBaseStatus( target, BPP_ATTACK, def );
+    BPP_SetBaseStatus( target, BPP_DEFENCE, atk );
+    BTL_Printf("パワートリック引き継ぎ: Atk(%d) <-> Def(%d)\n", atk, def);
+  }
+}
+
 //=============================================================================================
 /**
  * タイプかきかえ
@@ -2060,30 +2145,6 @@ u8 BPP_COUNTER_Get( const BTL_POKEPARAM* bpp, BppCounter cnt )
 {
   GF_ASSERT(cnt < BPP_COUNTER_MAX);
   return bpp->counter[ cnt ];
-}
-//=============================================================================================
-/**
- * バトンタッチによるパラメータ受け継ぎ
- *
- * @param   target    受け継ぐ側
- * @param   user      受け継がせる側
- */
-//=============================================================================================
-void BPP_BatonTouchParam( BTL_POKEPARAM* target, const BTL_POKEPARAM* user )
-{
-  u32 i;
-  target->varyParam = user->varyParam;
-  BTL_Printf("バトンタッチで引き継がれた:防御=%d, 特防=%d\n",
-    target->varyParam.defence, target->varyParam.sp_defence);
-  for(i=0; i<WAZASICK_MAX; ++i)
-  {
-    if( (user->sickCont[i].type != WAZASICK_CONT_NONE)
-    &&  (BTL_SICK_CheckBatonTouch(i))
-    ){
-      target->sickCont[i] = user->sickCont[i];
-      target->wazaSickCounter[i] = user->wazaSickCounter[i];
-    }
-  }
 }
 
 //=============================================================================================

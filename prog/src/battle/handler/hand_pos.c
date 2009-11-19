@@ -323,7 +323,7 @@ static void handler_pos_BatonTouch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
   };
 
   u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
-  BTL_Printf("targetPokeID=%d, NowPow=%d, NowPosPokeID=%d\n",
+  BTL_Printf("[バトンタッチ] targetPokeID=%d, NowPow=%d, NowPosPokeID=%d\n",
     targetPokeID, pokePos, BTL_SVFLOW_PokePosToPokeID(flowWk, pokePos));
   if( targetPokeID == BTL_SVFLOW_PokePosToPokeID(flowWk, pokePos) )
   {

@@ -28,18 +28,19 @@ enum {
 typedef enum {
   SC_NULL = 0,
 
-  SC_OP_HP_MINUS,           ///< 【計算】HPマイナス  [ClientID, マイナス量]
-  SC_OP_HP_PLUS,            ///< 【計算】HPプラス    [ClientID, プラス量]
-  SC_OP_HP_ZERO,            ///< 【計算】HP0 にする [ pokeID ]
-  SC_OP_PP_MINUS,           ///< 【計算】PPマイナス  [ClientID, マイナス量]
-  SC_OP_PP_PLUS,            ///< 【計算】PPプラス    [ClientID, プラス量]
-  SC_OP_RANK_UP,            ///< 【計算】ステータスランクアップ  [ClientID, StatusType, プラス量]
-  SC_OP_RANK_DOWN,          ///< 【計算】ステータスランクダウン  [ClientID, StatusType, マイナス量]
-  SC_OP_RANK_SET5,          ///< 【計算】ステータスランク主要５種セット[ pokeID, atk, def, sp_atk, sp_def, agi ]
-  SC_OP_ADD_CRITICAL,       ///< 【計算】クリティカルランク加算[ pokeID, (int)value ]
-  SC_OP_SICK_SET,           ///< 【計算】状態異常 [PokeID, Sick, contParam]
-  SC_OP_CURE_POKESICK,      ///< 【計算】ポケモン系状態異常を回復 [PokeID ]
-  SC_OP_CURE_WAZASICK,      ///< 【計算】ワザ系状態異常を回復 [PokeID, SickID ]
+  SC_OP_HP_MINUS,           ///< HPマイナス  [ClientID, マイナス量]
+  SC_OP_HP_PLUS,            ///< HPプラス    [ClientID, プラス量]
+  SC_OP_HP_ZERO,            ///< HP0 にする [ pokeID ]
+  SC_OP_PP_MINUS,           ///< PPマイナス  [ClientID, マイナス量]
+  SC_OP_PP_PLUS,            ///< PPプラス    [ClientID, プラス量]
+  SC_OP_RANK_UP,            ///< ステータスランクアップ  [ClientID, StatusType, プラス量]
+  SC_OP_RANK_DOWN,          ///< ステータスランクダウン  [ClientID, StatusType, マイナス量]
+  SC_OP_RANK_SET5,          ///< ステータスランク主要５種セット[ pokeID, atk, def, sp_atk, sp_def, agi ]
+  SC_OP_ADD_CRITICAL,       ///< クリティカルランク加算[ pokeID, (int)value ]
+  SC_OP_SICK_SET,           ///< 状態異常 [PokeID, Sick, contParam]
+  SC_OP_CURE_POKESICK,      ///< ポケモン系状態異常を回復 [PokeID ]
+  SC_OP_CURE_WAZASICK,      ///< ワザ系状態異常を回復 [PokeID, SickID ]
+  SC_OP_SET_STATUS,         ///< 能力値（攻撃、防御等）を書き換え
   SC_OP_MEMBER_IN,          ///< メンバー入場
   SC_OP_WAZASICK_TURNCHECK, ///<
   SC_OP_CANTESCAPE_ADD,     ///< にげ・交換禁止コードの追加を全クライアントに通知 [ClientID, CantCode]
@@ -266,6 +267,11 @@ static inline void SCQUE_PUT_OP_MemberIn( BTL_SERVER_CMD_QUE* que, u8 clientID, 
 {
   SCQUE_PUT_Common( que, SC_OP_MEMBER_IN, clientID, posIdx, memberIdx, turnCount );
 }
+static inline void SCQUE_PUT_OP_SetStatus( BTL_SERVER_CMD_QUE* que, u8 pokeID, BppValueID vid, u8 value )
+{
+  SCQUE_PUT_Common( que, SC_OP_SET_STATUS, pokeID, vid, value );
+}
+
 
 
 static inline void SCQUE_PUT_OP_WazaSickTurnCheck( BTL_SERVER_CMD_QUE* que, u8 pokeID )
