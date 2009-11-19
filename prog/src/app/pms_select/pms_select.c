@@ -1232,18 +1232,46 @@ static BOOL LIST_BAR_SetPosFromTouch( PMS_SELECT_MAIN_WORK* wk )
 /**
  *	@brief
  *
+ *	@param	u32 py
+ *	@param	list_max
+ *	@param	out_pos_id
+ *	@param	out_pos_dot 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void LIST_BAR_GetPosDataByTouch( u32 py, int list_max, u16* out_pos_id, s16* out_pos_dot )
+{ 
+  fx32 fx_elem_size;
+  
+  // 範囲制限
+  py = MATH_CLAMP( py, LIST_BAR_TOUCH_MIN, LIST_BAR_TOUCH_MAX );
+  
+  // タッチ座標から選択IDを算出
+  fx_elem_size     = FX32_CONST(LIST_BAR_AREA_SIZE) / (list_max-1);
+
+  GF_ASSERT( fx_elem_size ); // ZERO DIV
+  
+  // 出力
+  *out_pos_id = FX_Div( FX32_CONST(py - LIST_BAR_AREA_MIN), fx_elem_size) >> FX32_SHIFT;
+  *out_pos_dot = LIST_BAR_AREA_MIN + ( (fx_elem_size * (*out_pos_id) ) >> FX32_SHIFT );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
  *	@param	PMS_SELECT_MAIN_WORK* wk 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static BOOL  LIST_BAR_CheckTouching( PMS_SELECT_MAIN_WORK* wk )
+static BOOL LIST_BAR_CheckTouching( PMS_SELECT_MAIN_WORK* wk )
 {
   u32 tx, ty;
+  u16 pos_id;
+  s16 clpos;
   int select_id_pre;
-  int pos_id;
-  
-  fx32 fx_elem_size;
 
   GF_ASSERT( wk->b_listbar );
 
@@ -1254,36 +1282,18 @@ static BOOL  LIST_BAR_CheckTouching( PMS_SELECT_MAIN_WORK* wk )
     return FALSE;
   }
 
-  // 範囲制限
-  ty = MATH_CLAMP( ty, LIST_BAR_TOUCH_MIN, LIST_BAR_TOUCH_MAX );
-
-  // タッチ座標から選択IDを算出
-  fx_elem_size     = FX32_CONST(LIST_BAR_AREA_SIZE) / (wk->list_max-1);
-
-  GF_ASSERT( fx_elem_size ); // ZERO DIV
-  
-  pos_id = FX_Div( FX32_CONST(ty - LIST_BAR_AREA_MIN), fx_elem_size) >> FX32_SHIFT;
-
+  LIST_BAR_GetPosDataByTouch( ty, wk->list_max, &pos_id, &clpos );
   select_id_pre = wk->list_head_id;
 
   // 選択IDに変更があった場合はOBJを移動
   if( pos_id != select_id_pre )
   {
-    int diff;
-    s16 clpos;
-
-    diff = pos_id - select_id_pre;
-
-    clpos = LIST_BAR_AREA_MIN + ( (fx_elem_size * pos_id) >> FX32_SHIFT );
-
+    // 出力
     GFL_CLACT_WK_SetWldTypePos( wk->clwk_bar, clpos, CLSYS_MAT_Y );
-    
     wk->list_head_id = pos_id;
     wk->list_head_id = MATH_CLAMP( wk->list_head_id, 0, (PMS_DATA_ENTRY_MAX-(PMS_SELECT_PMSDRAW_NUM-1)) ); // 実質3個表示なので
     
-    OS_Printf("list_head_id=%d diff=%d pos_id=%d ty=%d fx_elem_size=%f \n",
-              wk->list_head_id, diff, pos_id, ty,
-              FX_FX32_TO_F32(fx_elem_size) );
+    OS_Printf("list_head_id=%d pos_id=%d \n", wk->list_head_id, pos_id );
 
     return TRUE;
   }
@@ -1305,6 +1315,7 @@ static void PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
   // セレクト無効状態でキー入力されたら
   if( GFL_UI_KEY_GetTrg() && wk->select_id == SELECT_ID_NULL )
   {
+    //@TODO このままだと、初回移動時に若干ずれてしまう。座標からselect_idを求めれば良いが。
     if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
     {
       wk->select_id = wk->list_head_id + (PMS_SELECT_PMSDRAW_NUM-2); //末尾を選択
@@ -1315,7 +1326,6 @@ static void PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
     }
 
     PLATE_CNT_UpdateAll( wk );
-    return;
   }
 
   // キー入力
@@ -1336,7 +1346,7 @@ static void PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
       LIST_BAR_SetPosFromKey( wk );
 
       //@TODO 重いようなら、
-      //1:ページ全体が更新されない時はUpdateALlをスクリーンのカラーを置換する処理にする
+      //1:ページ全体が更新されない時はUpdateAllをスクリーンのカラーを置換する処理にする
       //2:移動の時はコピーを使う。
       PLATE_CNT_UpdateAll( wk );
 
