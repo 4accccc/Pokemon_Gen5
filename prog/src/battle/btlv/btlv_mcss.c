@@ -31,9 +31,15 @@
 #define BTLV_MCSS_ORTHO_SCALE_MINE  ( FX32_ONE * 16 * 2 )
 #define BTLV_MCSS_ORTHO_SCALE_ENEMY ( FX32_ONE * 16 * 1 )
 
+#define BTLV_MCSS_STOP_ANIME_TIME ( 64 )
+
 enum{
   REVERSE_FLAG_OFF = 0,
   REVERSE_FLAG_ON,
+  ANIME_STOP_FLAG = 0x80000000,
+  ANIME_START_FLAG = 0x00000000,
+  SEQ_ANIME_STANDBY = 0,
+  SEQ_ANIME_STOP,
 };
 
 //============================================================================================
@@ -47,7 +53,6 @@ struct _BTLV_MCSS_WORK
   GFL_TCBSYS*     tcb_sys;
   MCSS_SYS_WORK*  mcss_sys;
   MCSS_WORK*      mcss[ BTLV_MCSS_MAX ];
-  int             callback_count[ BTLV_MCSS_MAX ];    //コールバックが呼ばれた回数をカウント
 
   u32             mcss_pos_3vs3   :1;
   u32             mcss_proj_mode  :1;
@@ -79,6 +84,13 @@ typedef struct
   BTLV_MCSS_WORK*       bmw;
 }TCB_LOADRESOURCE_WORK;
 
+typedef struct
+{ 
+  int seq_no;
+  int position;
+  int wait;
+}BTLV_MCSS_STOP_ANIME;
+
 //============================================================================================
 /**
  *  プロトタイプ宣言
@@ -97,8 +109,11 @@ static  void  TCB_BTLV_MCSS_Rotate( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_MCSS_Blink( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_MCSS_Alpha( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_MCSS_MoveCircle( GFL_TCB *tcb, void *work );
+static  void  TCB_BTLV_MCSS_StopAnime( GFL_TCB *tcb, void *work );
 
 static  void  BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame );
+static  BOOL  BTLV_MCSS_CallBackNodes( u32 data, const NNSG2dMultiCellHierarchyData* pNodeData,
+                                       NNSG2dCellAnimation* pCellAnim, u16 nodeIdx );
 
 static  void  BTLV_MCSS_GetDefaultPos( BTLV_MCSS_WORK *bmw, VecFx32 *pos, BtlvMcssPos position );
 static  fx32  BTLV_MCSS_GetDefaultScale( BTLV_MCSS_WORK* bmw, BtlvMcssPos position, BTLV_MCSS_PROJECTION proj );
@@ -258,6 +273,7 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
   BTLV_MCSS_SetDefaultScale( bmw, position );
 
   MCSS_SetAnimCtrlCallBack( bmw->mcss[ position ], position, BTLV_MCSS_CallBackFunctorFrame, 1 );
+  //MCSS_SetTraverseMCNodesCallBack( bmw->mcss[ position ], position, BTLV_MCSS_CallBackNodes );
 }
 
 //============================================================================================
@@ -283,7 +299,7 @@ void  BTLV_MCSS_AddTrainer( BTLV_MCSS_WORK *bmw, int tr_type, int position )
 
   BTLV_MCSS_SetDefaultScale( bmw, position );
 
-  MCSS_SetAnimCtrlCallBack( bmw->mcss[ position ], position, BTLV_MCSS_CallBackFunctorFrame, 1 );
+  //MCSS_SetAnimCtrlCallBack( bmw->mcss[ position ], position, BTLV_MCSS_CallBackFunctorFrame, 1 );
 }
 
 //============================================================================================
@@ -869,7 +885,8 @@ static  void  BTLV_MCSS_SetDefaultScale( BTLV_MCSS_WORK *bmw, int position )
 
   def_scale = BTLV_MCSS_GetDefaultScale( bmw, position, BTLV_MCSS_PROJ_PERSPECTIVE );
 
-  VEC_Set( &scale, def_scale, def_scale / 2, FX32_ONE );
+  //VEC_Set( &scale, def_scale, def_scale / 2, FX32_ONE );
+  VEC_Set( &scale, def_scale, def_scale, FX32_ONE );
 
   MCSS_SetShadowScale( bmw->mcss[ position ], &scale );
 }
@@ -1040,15 +1057,12 @@ static  void  TCB_BTLV_MCSS_Alpha( GFL_TCB *tcb, void *work )
  * @brief ポケモン円運動タスク
  */
 //============================================================================================
-static  BTLV_MCSS_MOVE_CIRCLE_PARAM*  bmmcp_pp = NULL;
 static  void  TCB_BTLV_MCSS_MoveCircle( GFL_TCB *tcb, void *work )
 {
   BTLV_MCSS_MOVE_CIRCLE_PARAM*  bmmcp = ( BTLV_MCSS_MOVE_CIRCLE_PARAM * )work;
   BTLV_MCSS_WORK *bmw = bmmcp->bmw;
   VecFx32 ofs = { 0, 0, 0 };
   fx32  sin, cos;
-
-  bmmcp_pp = bmmcp;
 
   if( bmmcp->rotate_after_wait_count ==0 )
   {
@@ -1130,11 +1144,106 @@ static  void  TCB_BTLV_MCSS_MoveCircle( GFL_TCB *tcb, void *work )
  * @brief 指定したフレームで呼ばれるコールバック関数
  */
 //============================================================================================
+static  void  TCB_BTLV_MCSS_StopAnime( GFL_TCB *tcb, void *work )
+{ 
+  BTLV_MCSS_WORK *bmw = BTLV_EFFECT_GetMcssWork();
+  BTLV_MCSS_STOP_ANIME* bmsa = ( BTLV_MCSS_STOP_ANIME* )work;
+
+  switch( bmsa->seq_no ){ 
+  case 0:
+    NNS_G2dStopAnimCtrl( NNS_G2dGetMCAnimAnimCtrl( MCSS_GetAnimCtrl( bmw->mcss[ bmsa->position ] ) ) );
+    MCSS_SetTraverseMCNodesCallBack( bmw->mcss[ bmsa->position ], ANIME_STOP_FLAG | bmsa->position, BTLV_MCSS_CallBackNodes );
+    bmsa->seq_no++;
+    bmsa->wait = BTLV_MCSS_STOP_ANIME_TIME;
+    break;
+  case 1:
+    if( --bmsa->wait == 0 )
+    { 
+      MCSS_SetAnimeIndex( bmw->mcss[ bmsa->position ], SEQ_ANIME_STANDBY );
+      NNS_G2dStartAnimCtrl( NNS_G2dGetMCAnimAnimCtrl( MCSS_GetAnimCtrl( bmw->mcss[ bmsa->position ] ) ) );
+      MCSS_SetTraverseMCNodesCallBack( bmw->mcss[ bmsa->position ], ANIME_START_FLAG | bmsa->position, BTLV_MCSS_CallBackNodes );
+      bmsa->seq_no++;
+    }
+    break;
+  case 2:
+    MCSS_SetAnimCtrlCallBack( bmw->mcss[ bmsa->position ], bmsa->position, BTLV_MCSS_CallBackFunctorFrame, 1 );
+    GFL_HEAP_FreeMemory( work );
+    GFL_TCB_DeleteTask( tcb );
+    break;
+  }
+}
+
+//============================================================================================
+/**
+ * @brief 指定したフレームで呼ばれるコールバック関数
+ */
+//============================================================================================
 static  void  BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame )
 {
+#if 0
   BTLV_MCSS_WORK *bmw = BTLV_EFFECT_GetMcssWork();
 
-  bmw->callback_count[ data ]++;    //コールバックが呼ばれた回数をカウント
+  MCSS_SetTraverseMCNodesCallBack( bmw->mcss[ data ], data, BTLV_MCSS_CallBackNodes );
+
+  NNS_G2dStopAnimCtrl( NNS_G2dGetMCAnimAnimCtrl( MCSS_GetAnimCtrl( bmw->mcss[ data ] ) ) );
+#endif
+  BTLV_MCSS_WORK *bmw = BTLV_EFFECT_GetMcssWork();
+  BTLV_MCSS_STOP_ANIME* bmsa;
+
+#if 0
+  bmsa = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( bmw->heapID ), sizeof( BTLV_MCSS_STOP_ANIME ) );
+  bmsa->position = data;
+
+  if( MCSS_GetMCellAnmNum( bmw->mcss[ data ] ) > 1 )
+  { 
+    MCSS_SetAnimeIndex( bmw->mcss[ data ], SEQ_ANIME_STOP );
+  }
+
+  GFL_TCB_AddTask( bmw->tcb_sys, TCB_BTLV_MCSS_StopAnime, bmsa, 0 );
+#endif
+}
+
+//============================================================================================
+/**
+ * @brief ノード巡回して呼ばれるコールバック関数
+ */
+//============================================================================================
+static  BOOL  BTLV_MCSS_CallBackNodes( u32 data, const NNSG2dMultiCellHierarchyData* pNodeData,
+                                       NNSG2dCellAnimation* pCellAnim, u16 nodeIdx )
+{ 
+  BTLV_MCSS_WORK *bmw = BTLV_EFFECT_GetMcssWork();
+  int position = data & 0x0000ffff;
+
+  if( data & ANIME_STOP_FLAG )
+  { 
+#if 0
+    BOOL  flag = FALSE;
+    u8    cnt = MCSS_GetStopCellAnms( bmw->mcss[ data ] );
+    int   i;
+
+    for( i = 0 ; i < cnt ; i++ )
+    { 
+      if( nodeIdx == MCSS_GetStopNode( bmw->mcss[ data ], i ) )
+      { 
+        flag = TRUE;
+      }
+    }
+    if( flag == FALSE )
+#endif
+    if( nodeIdx != 12 )
+    { 
+      NNS_G2dStopAnimCtrl( NNS_G2dGetCellAnimAnimCtrl( pCellAnim ) );
+    }
+    else
+    { 
+      NNS_G2dStartAnimCtrl( NNS_G2dGetCellAnimAnimCtrl( pCellAnim ) );
+    }
+  }
+  else
+  { 
+    NNS_G2dStartAnimCtrl( NNS_G2dGetCellAnimAnimCtrl( pCellAnim ) );
+  }
+  return TRUE;
 }
 
 //============================================================================================
