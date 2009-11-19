@@ -179,7 +179,7 @@ BOOL BMANIME_CTRL_WaitAnime(BMANIME_CONTROL_WORK * ctrl)
 //------------------------------------------------------------------
 BOOL BMANIME_CTRL_GetSENo(const BMANIME_CONTROL_WORK * ctrl, u32 anm_idx, u16 * se_no)
 {
-#if 0
+#if 1
   static const struct {
     u16 prog_id;
     u16 seID[BMANM_INDEX_MAX];

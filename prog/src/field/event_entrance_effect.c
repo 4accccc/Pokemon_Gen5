@@ -59,6 +59,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
 {
   enum {
     SEQ_DOOROUT_INIT = 0,
+    SEQ_DOOROUT_WAIT_SOUND_LOAD,
     SEQ_DOOROUT_OPENANIME_START,
     SEQ_DOOROUT_CAMERA_ACT,
     SEQ_DOOROUT_OPENANIME_WAIT,
@@ -83,7 +84,14 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     //©‹@‚ğÁ‚·
     MAPCHANGE_setPlayerVanish( fieldmap, TRUE );
 		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
-    *seq = SEQ_DOOROUT_OPENANIME_START;
+    *seq = SEQ_DOOROUT_WAIT_SOUND_LOAD;
+    break;
+
+  case SEQ_DOOROUT_WAIT_SOUND_LOAD:
+    if( PMSND_IsLoading() != TRUE )
+    {
+      *seq = SEQ_DOOROUT_OPENANIME_START;
+    }
     break;
 
   case SEQ_DOOROUT_OPENANIME_START:
@@ -203,7 +211,7 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
   FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager(fldmapper);
 
   switch (*seq)
-  {
+  { 
   case SEQ_DOORIN_OPENANIME_START:
     fdaw->ctrl = BMANIME_CTRL_Create( bmodel_man, &fdaw->pos );
     if (fdaw->ctrl)
