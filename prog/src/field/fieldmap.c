@@ -60,7 +60,7 @@
 
 #include "field_player_grid.h"
 
-#include "field_flash.h"
+#include "fieldskill_mapeff.h"
 
 #include "fieldmap_func.h"
 #include "field/fieldmap_call.h"
@@ -269,7 +269,7 @@ struct _FIELDMAP_WORK
 	FIELD_ENCOUNT *encount;
 	FLDEFF_CTRL *fldeff_ctrl;
 
-	FIELD_FLASH * field_flash;
+	FIELDSKILL_MAPEFF * fieldskill_mapeff;
   
 
   GFL_G3D_CAMERA *g3Dcamera; //g3Dcamera Lib ハンドル
@@ -548,14 +548,10 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   {
     FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( fieldWork->gamedata );
     // @TODO  現状　フラッシュ完全ON
-    //FIELD_STATUS_SetFlash( fldstatus, TRUE );
-    FIELD_STATUS_SetFlash( fldstatus, FALSE );
-    if(FIELD_STATUS_IsFlash(fldstatus))
-    {
-    	fieldWork->field_flash = FIELD_FLASH_Create( fieldWork->heapID ); 
-
-      FIELD_FLASH_Control( fieldWork->field_flash, FIELD_FLASH_REQ_ON );
-    }
+    //FIELD_STATUS_SetFieldSkillMapEffectMsk( fldstatus, FIELDSKILL_MAPEFF_MSK_FLASH_FAR );
+    FIELD_STATUS_SetFieldSkillMapEffectMsk( fldstatus, 0 );
+    fieldWork->fieldskill_mapeff = FIELDSKILL_MAPEFF_Create( 
+        FIELD_STATUS_GetFieldSkillMapEffectMsk(fldstatus), fieldWork->heapID ); 
   }
 
   fieldWork->camera_control = FIELD_CAMERA_Create(
@@ -817,7 +813,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   FIELD_PLACE_NAME_Process( fieldWork->placeNameSys );
 
   // フラッシュ処理
-  FIELD_FLASH_Update( fieldWork->field_flash );
+  FIELDSKILL_MAPEFF_Main( fieldWork->fieldskill_mapeff );
 
   //自機更新
   FIELD_PLAYER_Update( fieldWork->field_player );
@@ -1054,8 +1050,7 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   // 育て屋
   SODATEYA_Delete( fieldWork->sodateya );
 
-	FIELD_FLASH_Delete( fieldWork->field_flash );
-  fieldWork->field_flash = NULL;
+	FIELDSKILL_MAPEFF_Delete( fieldWork->fieldskill_mapeff );
 
 #if USE_DEBUGWIN_SYSTEM
   FIELD_FUNC_RANDOM_GENERATE_TermDebug();
@@ -2795,7 +2790,15 @@ static void Draw3DNormalMode( FIELDMAP_WORK * fieldWork )
   
 
 	FLDMAPPER_Draw( fieldWork->g3Dmapper, fieldWork->g3Dcamera );
-	FIELD_FLASH_Draw( fieldWork->field_flash );
+	FIELDSKILL_MAPEFF_Draw( fieldWork->fieldskill_mapeff );
+
+
+#ifdef PM_DEBUG
+  // デバックカメラ表示
+  // (WIPE用)
+  FIELD_CAMERA_DEBUG_Draw( fieldWork->camera_control );
+#endif
+
   {
 	  MtxFx44 org_pm,pm;
 		const MtxFx44 *m;
@@ -2857,6 +2860,8 @@ static void Draw3DNormalMode( FIELDMAP_WORK * fieldWork )
 
   FLD_PRTCL_Main();
   FLD3D_CI_Draw( fieldWork->Fld3dCiPtr );
+
+
 }
 
 //==================================================================

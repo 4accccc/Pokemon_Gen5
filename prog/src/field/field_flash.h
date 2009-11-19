@@ -39,8 +39,9 @@ typedef enum
 //=====================================
 typedef enum 
 {
-  FIELD_FLASH_REQ_ON,         // 視覚狭いを設定
+  FIELD_FLASH_REQ_ON_NEAR,    // 視覚狭いを設定
   FIELD_FLASH_REQ_FADEOUT,    // フェードアウト
+  FIELD_FLASH_REQ_ON_FAR,     // 広い状態で設定
   FIELD_FLASH_REQ_OFF,        // 完全に消す
 
 

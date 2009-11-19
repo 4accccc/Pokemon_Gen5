@@ -42,6 +42,8 @@ typedef struct
   u16 zonefoglist_max;
   u16 zonelightlist_max;
 
+  // フィールド技 効果リスト
+
 
 } ZONE_DATA_HANDLE;
 

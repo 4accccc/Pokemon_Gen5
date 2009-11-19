@@ -27,7 +27,7 @@
 #define FLASH_NEAR_SCALE  ( FX32_CONST(4) )
 
 // FAR scale
-#define FLASH_FAR_SCALE  ( FX32_CONST(8) )
+#define FLASH_FAR_SCALE  ( 0xD080 )
 
 // OFF scale
 #define FLASH_OFF_SCALE  ( 0 )
@@ -77,8 +77,9 @@ struct _FIELD_FLASH
 //-------------------------------------
 ///	リクエストの反映
 //=====================================
-static void FLASH_REQ_On( FIELD_FLASH* p_wk );
+static void FLASH_REQ_OnNear( FIELD_FLASH* p_wk );
 static void FLASH_REQ_FadeOut( FIELD_FLASH* p_wk );
+static void FLASH_REQ_OnFar( FIELD_FLASH* p_wk );
 static void FLASH_REQ_Off( FIELD_FLASH* p_wk );
  
 //-------------------------------------
@@ -153,8 +154,9 @@ void FIELD_FLASH_Update( FIELD_FLASH* p_wk )
   {
     static void (*const cpFunc[])( FIELD_FLASH* ) =
     {
-      FLASH_REQ_On,
+      FLASH_REQ_OnNear,
       FLASH_REQ_FadeOut,
+      FLASH_REQ_OnFar,
       FLASH_REQ_Off,
     };
     cpFunc[ p_wk->req ]( p_wk );
@@ -346,7 +348,7 @@ static void FLASH_SCALE_SetScale( FLASH_SCALE* p_wk, fx32 scale )
  *	@param	p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
-static void FLASH_REQ_On( FIELD_FLASH* p_wk )
+static void FLASH_REQ_OnNear( FIELD_FLASH* p_wk )
 {
   // ON
   p_wk->status = FIELD_FLASH_STATUS_NEAR;
@@ -365,6 +367,20 @@ static void FLASH_REQ_FadeOut( FIELD_FLASH* p_wk )
   // 
   p_wk->status = FIELD_FLASH_STATUS_FADEOUT;
   FLASH_SCALE_StartFade( &p_wk->scale, FLASH_NEAR_SCALE, FLASH_FAR_SCALE, FLASH_FADE_TIME );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ファーのフラッシュワイプを設定
+ *
+ *	@param	p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void FLASH_REQ_OnFar( FIELD_FLASH* p_wk )
+{
+  // ON
+  p_wk->status = FIELD_FLASH_STATUS_FAR;
+  FLASH_SCALE_SetScale( &p_wk->scale, FLASH_FAR_SCALE );
 }
 
 //----------------------------------------------------------------------------

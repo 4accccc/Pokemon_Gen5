@@ -2121,7 +2121,7 @@ static void RE_InitInputCamera_Pos( DEBUG_RAIL_EDITOR* p_wk )
 		void * inner_work;
 		FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(p_wk->p_fieldmap);
 		inner_work = FIELD_SUBSCREEN_DEBUG_GetControl(subscreen);
-		FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_CAMERA_POS);
+		FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_CAMERA_POS, FIELDMAP_GetHeapID( p_wk->p_fieldmap ));
 
 		// 動作モード設定
 		FIELD_CAMERA_ChangeMode( cam, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
@@ -2150,7 +2150,7 @@ static void RE_InitInputCamera_Target( DEBUG_RAIL_EDITOR* p_wk )
 		void * inner_work;
 		FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(p_wk->p_fieldmap);
 		inner_work = FIELD_SUBSCREEN_DEBUG_GetControl(subscreen);
-		FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_TARGET_POS);
+		FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_TARGET_POS, FIELDMAP_GetHeapID( p_wk->p_fieldmap ));
 
 		// 動作モード設定
 		FIELD_CAMERA_ChangeMode( cam, FIELD_CAMERA_MODE_CALC_TARGET_POS );

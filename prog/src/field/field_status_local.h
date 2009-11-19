@@ -53,7 +53,9 @@ extern BOOL FIELD_STATUS_GetFieldInitFlag( const FIELD_STATUS * fldstatus );
 
 
 //------------------------------------------------------------------
-// フラッシュ状態管理
+// フィールド技　マップ効果状態
+// field/fieldskill_mapeff.h
+//  FIELDSKILL_MAPEFF_MSK
 //------------------------------------------------------------------
-extern void FIELD_STATUS_SetFlash( FIELD_STATUS * fldstatus, BOOL flag );
-extern BOOL FIELD_STATUS_IsFlash( const FIELD_STATUS * fldstatus );
+extern void FIELD_STATUS_SetFieldSkillMapEffectMsk( FIELD_STATUS * fldstatus, u32 msk );
+extern u32 FIELD_STATUS_GetFieldSkillMapEffectMsk( const FIELD_STATUS * fldstatus );

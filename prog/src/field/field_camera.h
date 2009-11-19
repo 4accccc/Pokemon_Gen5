@@ -367,7 +367,7 @@ typedef enum{
 //------------------------------------------------------------------
 //  デバッグ用：下画面操作とのバインド
 //------------------------------------------------------------------
-extern void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param, FIELD_CAMERA_DEBUG_BIND_TYPE type);
+extern void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param, FIELD_CAMERA_DEBUG_BIND_TYPE type, HEAPID heapID );
 extern void FIELD_CAMERA_DEBUG_ReleaseSubScreen(FIELD_CAMERA * camera);
 extern void FIELD_CAMERA_DEBUG_GetBindSubScreenTarget( const FIELD_CAMERA * camera, VecFx32* p_target );
 
@@ -379,6 +379,12 @@ extern void FIELD_CAMERA_DEBUG_SetDefaultTarget( FIELD_CAMERA* camera, const Vec
 extern const VecFx32* FIELD_CAMERA_DEBUG_GetDefaultTarget( const FIELD_CAMERA* camera );
 
 extern void FIELD_CAMERA_GetInitialParameter( const FIELD_CAMERA* camera, FLD_CAMERA_PARAM * result);
+
+
+//------------------------------------------------------------------
+//  カメラ　デバック表示関数
+//------------------------------------------------------------------
+extern void FIELD_CAMERA_DEBUG_Draw( const FIELD_CAMERA* camera);
 
 
 

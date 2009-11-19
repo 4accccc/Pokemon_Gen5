@@ -24,6 +24,8 @@
 #include "print/gf_font.h"
 #include "print/printsys.h"
 
+#include "system/fld_wipe_3dobj.h"
+
 #include "msg/msg_d_tomoya.h"
 
 #include "font/font.naix"
@@ -174,6 +176,8 @@ struct _FIELD_CAMERA {
   VecFx32 debug_camera;
   u32 debug_control_on;
 
+  // ワイプ表示
+  FLD_WIPEOBJ* p_debug_wipe;
   
 #endif
 
@@ -1338,13 +1342,16 @@ void FIELD_CAMERA_SetFovy(FIELD_CAMERA * camera, u16 fovy )
 
 #ifdef  PM_DEBUG
 #include "test/camera_adjust_view.h"
-static fx32	fldWipeScale;
+static fx32	fldWipeScale = 0;
 //------------------------------------------------------------------
 //  デバッグ用：下画面操作とのバインド
 //------------------------------------------------------------------
-void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param, FIELD_CAMERA_DEBUG_BIND_TYPE type)
+void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param, FIELD_CAMERA_DEBUG_BIND_TYPE type, HEAPID heapID)
 { 
   GFL_CAMADJUST * gflCamAdjust = param;
+
+  // ワイプ表示初期化
+  camera->p_debug_wipe = FLD_WIPEOBJ_Create( heapID );
 
   // ファー座標を取得
   GFL_G3D_CAMERA_GetFar( camera->g3Dcamera, &camera->debug_far );
@@ -1396,6 +1403,10 @@ void FIELD_CAMERA_DEBUG_ReleaseSubScreen(FIELD_CAMERA * camera)
   camera->debug_trace_off = FALSE;
 
   FIELD_CAMERA_ChangeMode( camera, camera->debug_save_camera_mode );
+
+  // ワイプ表示破棄
+  FLD_WIPEOBJ_Delete( camera->p_debug_wipe );
+  camera->p_debug_wipe = NULL;
 }
 
 //----------------------------------------------------------------------------
@@ -1440,6 +1451,21 @@ void FIELD_CAMERA_GetInitialParameter( const FIELD_CAMERA* camera, FLD_CAMERA_PA
   loadInitialParameter( camera, result );
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラデバック３D描画
+ *
+ *	@param	camera
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_DEBUG_Draw( const FIELD_CAMERA* camera)
+{ 
+  if(camera->p_debug_wipe)
+  {
+    FLD_WIPEOBJ_Main( camera->p_debug_wipe, fldWipeScale );
+  }
+}
 
 
 //----------------------------------------------------------------------------

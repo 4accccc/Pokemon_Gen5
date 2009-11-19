@@ -1114,7 +1114,7 @@ static void setupTouchCameraSubscreen(DMESSWORK * dmess)
     void * inner_work;
     FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(dmess->fieldWork);
     inner_work = FIELD_SUBSCREEN_DEBUG_GetControl(dmess->subscreen);
-    FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_CAMERA_POS);
+    FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_CAMERA_POS, dmess->heapID);
   }
 }
 
@@ -1597,7 +1597,7 @@ static BOOL debugMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk )
       void * inner_work;
       FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(work->fieldWork);
       inner_work = FIELD_SUBSCREEN_DEBUG_GetControl(subscreen);
-      FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_CAMERA_POS);
+      FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_CAMERA_POS, heapID);
     }
   }
   // レールカメラ反映の停止
@@ -1647,7 +1647,7 @@ static BOOL debugMenuCallProc_ControlTarget( DEBUG_MENU_EVENT_WORK *wk )
       void * inner_work;
       FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(work->fieldWork);
       inner_work = FIELD_SUBSCREEN_DEBUG_GetControl(subscreen);
-      FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_TARGET_POS);
+      FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_TARGET_POS, heapID);
     }
   }
 
@@ -3491,7 +3491,7 @@ static BOOL debugMenuCallProc_ControlLinerCamera( DEBUG_MENU_EVENT_WORK *wk )
       void * inner_work;
       FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(work->fieldWork);
       inner_work = FIELD_SUBSCREEN_DEBUG_GetControl(subscreen);
-      FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_CAMERA_POS);
+      FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_CAMERA_POS, heapID);
 
       //カメラのバインドを切る
       FIELD_CAMERA_FreeTarget(cam);

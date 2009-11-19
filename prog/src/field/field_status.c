@@ -22,7 +22,7 @@
 struct _FIELD_STATUS{
   MAPMODE map_mode;
   u8 isFieldInitFlag;
-  u8 isFlash;
+  u8 fieldSkillMapEffect;
 };
 
 //======================================================================
@@ -92,37 +92,37 @@ BOOL FIELD_STATUS_GetFieldInitFlag( const FIELD_STATUS * fldstatus )
 
 
 //------------------------------------------------------------------
-// フラッシュ状態管理
+// フィールド技　マップ効果状態
 //------------------------------------------------------------------
 //----------------------------------------------------------------------------
 /**
- *	@brief  フラッシュ状態を設定
+ *	@brief  フィールド技　マップ効果状態マスク　を設定
  *
- *	@param	fldstatus   
- *	@param	flag        TRUE：FLASH状態　　FALSE：なし
+ *	@param	fldstatus   ワーク
+ *	@param	msk         状態マスク
  */
 //-----------------------------------------------------------------------------
-void FIELD_STATUS_SetFlash( FIELD_STATUS * fldstatus, BOOL flag )
+void FIELD_STATUS_SetFieldSkillMapEffectMsk( FIELD_STATUS * fldstatus, u32 msk )  
 {
   GF_ASSERT( fldstatus );
-  fldstatus->isFlash = flag;
+  fldstatus->fieldSkillMapEffect = msk;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  フラッシュ状態チェック
+ *	@brief  フィールド技　マップ効果状態マスクを　取得
  *
- *	@param	fldstatus   
+ *	@param	fldstatus   ワーク
  *
- *	@retval TRUE  フラッシュ状態
- *	@retval FALSE なし
+ *	@return マスク
  */
 //-----------------------------------------------------------------------------
-BOOL FIELD_STATUS_IsFlash( const FIELD_STATUS * fldstatus )
+u32 FIELD_STATUS_GetFieldSkillMapEffectMsk( const FIELD_STATUS * fldstatus )
 {
   GF_ASSERT( fldstatus );
-  return fldstatus->isFlash;
+  return fldstatus->fieldSkillMapEffect;
 }
+
 
 
 
