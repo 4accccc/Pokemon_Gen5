@@ -15,7 +15,6 @@ typedef enum
 {
   WALL_ST_NORMAL,
   WALL_ST_WEAKNESS,
-  WALL_ST_BREAK
 }GYM_INSECT_WALL_ST;
 
 //虫ジムセーブワーク
