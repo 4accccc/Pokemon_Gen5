@@ -217,6 +217,7 @@ SRCS  +=    $(SOUNDSRC) \
 				system/shortcut_data.c \
         app/bag/bag_param.c\
         field/event_poke_status.c \
+        field/field_flagcontrol.c \
         system/screentex.c \
         debug/debug_flg.c
 

@@ -15,6 +15,13 @@
 
 #include "fieldskill_mapeff.h"
 
+#ifdef PM_DEBUG
+
+#define DEBUG_FLASH_START_FAR
+
+#endif
+
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -97,6 +104,33 @@ void FIELDSKILL_MAPEFF_Main( FIELDSKILL_MAPEFF* p_wk )
 {
   // フラッシュメイン
   SKILL_MAPEFF_MainFlash( p_wk );
+
+
+#ifdef DEBUG_FLASH_START_FAR
+  // フラッシュ実験
+  // tomoya takahashi
+  if( FIELDSKILL_MAPEFF_IsFlash( p_wk ) )
+  {
+    FIELD_FLASH* p_flash;
+    u32 status;
+
+    p_flash = FIELDSKILL_MAPEFF_GetFlash( p_wk );
+    status  = FIELD_FLASH_GetStatus( p_flash );
+    
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
+    {
+      if( status == FIELD_FLASH_STATUS_NEAR )
+      {
+        FIELD_FLASH_Control( p_flash, FIELD_FLASH_REQ_FADEOUT );
+      }
+      else if( status == FIELD_FLASH_STATUS_FAR )
+      {
+        FIELD_FLASH_Control( p_flash, FIELD_FLASH_REQ_ON_NEAR );
+      }
+    }
+  }
+#endif
+
 }
 
 //----------------------------------------------------------------------------
@@ -174,6 +208,11 @@ static void SKILL_MAPEFF_CreateFlash( FIELDSKILL_MAPEFF* p_wk, FIELDSKILL_MAPEFF
     // 両方設定されている
     GF_ASSERT( (msk & (FIELDSKILL_MAPEFF_MSK_FLASH_NEAR|FIELDSKILL_MAPEFF_MSK_FLASH_FAR)) != (FIELDSKILL_MAPEFF_MSK_FLASH_NEAR|FIELDSKILL_MAPEFF_MSK_FLASH_FAR) );
     
+
+#ifdef DEBUG_FLASH_START_FAR
+    // @TODO　絶対FARで始まる
+    FIELD_FLASH_Control( p_wk->field_flash, FIELD_FLASH_REQ_ON_FAR );
+#else
     // FARを優先
     if( msk & FIELDSKILL_MAPEFF_MSK_FLASH_FAR )
     {
@@ -183,6 +222,7 @@ static void SKILL_MAPEFF_CreateFlash( FIELDSKILL_MAPEFF* p_wk, FIELDSKILL_MAPEFF
     {
       FIELD_FLASH_Control( p_wk->field_flash, FIELD_FLASH_REQ_ON_NEAR );
     }
+#endif
   }
   else
   {

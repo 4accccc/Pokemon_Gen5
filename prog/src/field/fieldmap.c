@@ -21,6 +21,7 @@
 #include "field/field_const.h"
 #include "fieldmap.h"
 #include "field_common.h"
+#include "field_flagcontrol.h" //FIELD_FLAGCONT_INIT～
 
 #include "field_player.h"
 #include "field_camera.h"
@@ -799,31 +800,6 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 	GFL_UI_ResetFrameRate();
 	//ゾーン更新処理
   fldmapMain_UpdateMoveZone( fieldWork );
-
-#ifdef PM_DEBUG
-  // フラッシュ実験
-  // tomoya takahashi
-  if( FIELDSKILL_MAPEFF_IsFlash( fieldWork->fieldskill_mapeff ) )
-  {
-    FIELD_FLASH* p_flash;
-    u32 status;
-
-    p_flash = FIELDSKILL_MAPEFF_GetFlash( fieldWork->fieldskill_mapeff );
-    status  = FIELD_FLASH_GetStatus( p_flash );
-    
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
-    {
-      if( status == FIELD_FLASH_STATUS_NEAR )
-      {
-        FIELD_FLASH_Control( p_flash, FIELD_FLASH_REQ_FADEOUT );
-      }
-      else if( status == FIELD_FLASH_STATUS_FAR )
-      {
-        FIELD_FLASH_Control( p_flash, FIELD_FLASH_REQ_ON_NEAR );
-      }
-    }
-  }
-#endif
 
   //マップ別 登録処理
 
@@ -2321,6 +2297,9 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	
 	//次のイベントデータをロード
 	EVENTDATA_SYS_Load( evdata, new_zone_id, GAMEDATA_GetSeasonID(gdata) );
+
+  //歩いてゾーンが変更した場合のフラグ初期化
+  FIELD_FLAGCONT_INIT_WalkStepOver( gdata, fieldWork );
 	
   SET_CHECK();
 	//新規ゾーンに配置する動作モデルセット

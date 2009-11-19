@@ -46,6 +46,8 @@
 #include "event_appear.h"
 #include "event_disappear.h"
 
+#include "field/field_flagcontrol.h" //FIELD_FLAGCONT_INIT～
+
 #include "savedata/gimmickwork.h"   //for GIMMICKWORK
 
 #include "net_app/union/union_main.h" // for UNION_CommBoot
@@ -126,6 +128,8 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
     case GAMEINIT_MODE_CONTINUE:
       //新しいマップモードなど機能指定を行う
       MAPCHG_setupMapTools( gsys, &fmw->loc_req );
+      //コンティニューによるフラグ落とし処理
+      FIELD_FLAGCONT_INIT_Continue( gamedata );
       break;
 
     default:
@@ -753,7 +757,7 @@ void MAPCHG_GameOver( GAMESYS_WORK * gsys )
   MAPCHG_updateGameData( gsys, &loc_req );
 
   //ゲームオーバー時のフラグのクリア
-  //FldFlgInit_GameOver(fsys);
+  FIELD_FLAGCONT_INIT_GameOver( gamedata );
 }
 
 //------------------------------------------------------------------
@@ -860,6 +864,9 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
 
   //特殊スクリプト呼び出し：ゾーン切り替え
   SCRIPT_CallZoneChangeScript( gsys, HEAPID_PROC );
+
+  //マップ遷移時のフラグ初期化
+  FIELD_FLAGCONT_INIT_MapJump( gamedata );
 
   //マップ到着フラグセット
   ARRIVEDATA_SetArriveFlag( gamedata, loc.zone_id );
