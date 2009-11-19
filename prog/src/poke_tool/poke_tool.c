@@ -61,21 +61,16 @@ static  void  pp_addAct( POKEMON_PARAM *pp, int id, int value);
 static  void  ppp_addAct( POKEMON_PASO_PARAM *ppp, int id, int value);
 
 static  void  round_calc( u8 *data, int value, int max );
-static  void  encode_data( void *data, u32 size, u32 code );
 static  u16   rand_next( u32 *code );
-static  u16   make_checksum( const void *data, u32 size );
 static  u16   calc_abi_seikaku( u8 chr, u16 para, u8 cond );
 static  void  load_grow_table( int para, u32 *GrowTable );
 static  u32   get_growtbl_param( int para, int level );
-static  void  *ppp_get_param_block( POKEMON_PASO_PARAM *ppp, u32 rnd, u8 id );
 static  BOOL  pppAct_check_nickname( POKEMON_PASO_PARAM* ppp );
 static POKEMON_PERSONAL_DATA* Personal_Load( u16 monsno, u16 formno );
 static u8 Personal_GetTokuseiCount( POKEMON_PERSONAL_DATA* ppd );
 static void change_monsno_sub_tokusei( POKEMON_PASO_PARAM* ppp, u16 new_monsno, u16 old_monsno );
 static void change_monsno_sub_sex( POKEMON_PASO_PARAM* ppp, u16 new_monsno, u16 old_monsno );
 
-
-#define decord_data( data, size, code )   encode_data( data, size, code );
 
 //============================================================================================
 /**
@@ -219,8 +214,8 @@ void  PP_Clear( POKEMON_PARAM *pp )
   MI_CpuClearFast( pp, sizeof( POKEMON_PARAM ) );
 
 // パラメータを暗号化
-  encode_data( &pp->ppp.paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX, pp->ppp.checksum );
-  encode_data( &pp->pcp, sizeof( POKEMON_CALC_PARAM ), pp->ppp.personal_rnd );
+  POKETOOL_encode_data( &pp->ppp.paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX, pp->ppp.checksum );
+  POKETOOL_encode_data( &pp->pcp, sizeof( POKEMON_CALC_PARAM ), pp->ppp.personal_rnd );
 }
 //============================================================================================
 /**
@@ -234,7 +229,7 @@ void  PPP_Clear( POKEMON_PASO_PARAM *ppp )
   MI_CpuClearFast( ppp, sizeof( POKEMON_PASO_PARAM ) );
 
 // 個性乱数セットしたところで暗号化
-  encode_data( ppp->paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX, ppp->checksum );
+  POKETOOL_encode_data( ppp->paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX, ppp->checksum );
 }
 
 //=============================================================================================
@@ -279,8 +274,8 @@ void  PP_SetupEx( POKEMON_PARAM *pp, u16 mons_no, u16 level, u64 ID, PtlSetupPow
   PPP_SetupEx( ( POKEMON_PASO_PARAM * )&pp->ppp, mons_no, level, ID, pow, rnd );
 
 //個性乱数がきまったら、PCPを再暗号化
-  encode_data( &pp->pcp, sizeof( POKEMON_CALC_PARAM ), 0 );
-  encode_data( &pp->pcp, sizeof( POKEMON_CALC_PARAM ), pp->ppp.personal_rnd );
+  POKETOOL_encode_data( &pp->pcp, sizeof( POKEMON_CALC_PARAM ), 0 );
+  POKETOOL_encode_data( &pp->pcp, sizeof( POKEMON_CALC_PARAM ), pp->ppp.personal_rnd );
 
 //レベルセット
   PP_Put( pp, ID_PARA_level, level );
@@ -572,8 +567,8 @@ BOOL  PP_FastModeOn( POKEMON_PARAM *pp )
     GF_ASSERT_MSG( pp->ppp.ppp_fast_mode == 0, "pppが高速化モードになっています\n" );
     pp->ppp.pp_fast_mode = 1;
     pp->ppp.ppp_fast_mode = 1;
-    decord_data( &pp->pcp, sizeof( POKEMON_CALC_PARAM ), pp->ppp.personal_rnd );
-    decord_data( &pp->ppp.paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX, pp->ppp.checksum );
+    POKETOOL_decord_data( &pp->pcp, sizeof( POKEMON_CALC_PARAM ), pp->ppp.personal_rnd );
+    POKETOOL_decord_data( &pp->ppp.paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX, pp->ppp.checksum );
   }
 
   return ret;
@@ -599,9 +594,9 @@ BOOL  PP_FastModeOff( POKEMON_PARAM *pp, BOOL flag )
     pp->ppp.pp_fast_mode = 0;
     pp->ppp.ppp_fast_mode = 0;
 
-    encode_data( &pp->pcp, sizeof( POKEMON_CALC_PARAM ), pp->ppp.personal_rnd );
-    pp->ppp.checksum = make_checksum( &pp->ppp.paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX );
-    encode_data( &pp->ppp.paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX, pp->ppp.checksum );
+    POKETOOL_encode_data( &pp->pcp, sizeof( POKEMON_CALC_PARAM ), pp->ppp.personal_rnd );
+    pp->ppp.checksum = POKETOOL_make_checksum( &pp->ppp.paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX );
+    POKETOOL_encode_data( &pp->ppp.paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX, pp->ppp.checksum );
   }
 
   return ret;
@@ -626,7 +621,7 @@ BOOL  PPP_FastModeOn( POKEMON_PASO_PARAM *ppp )
   if( ppp->ppp_fast_mode == 0 ){
     ret = TRUE;
     ppp->ppp_fast_mode = 1;
-    decord_data( ppp->paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX, ppp->checksum );
+    POKETOOL_decord_data( ppp->paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX, ppp->checksum );
   }
 
   return ret;
@@ -653,8 +648,8 @@ BOOL  PPP_FastModeOff( POKEMON_PASO_PARAM *ppp, BOOL flag )
     ppp->ppp_fast_mode = 0;
 
 
-    ppp->checksum = make_checksum( ppp->paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX );
-    encode_data( ppp->paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX, ppp->checksum );
+    ppp->checksum = POKETOOL_make_checksum( ppp->paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX );
+    POKETOOL_encode_data( ppp->paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX, ppp->checksum );
   }
 
   return ret;
@@ -1606,7 +1601,7 @@ static  BOOL  pp_decordAct( POKEMON_PARAM *pp )
 {
   BOOL  ret = TRUE;
   if( pp->ppp.pp_fast_mode == 0 ){
-    decord_data( &pp->pcp, sizeof( POKEMON_CALC_PARAM ), pp->ppp.personal_rnd );
+    POKETOOL_decord_data( &pp->pcp, sizeof( POKEMON_CALC_PARAM ), pp->ppp.personal_rnd );
     ret = ppp_decordAct( &pp->ppp );
   }
   return ret;
@@ -1626,8 +1621,8 @@ static  BOOL  ppp_decordAct( POKEMON_PASO_PARAM *ppp )
   u16   sum;
 
   if( ppp->ppp_fast_mode == 0 ){
-    decord_data( ppp->paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX, ppp->checksum );
-    sum = make_checksum( ppp->paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX );
+    POKETOOL_decord_data( ppp->paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX, ppp->checksum );
+    sum = POKETOOL_make_checksum( ppp->paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX );
     if( sum != ppp->checksum ){
       GF_ASSERT_MSG( ( sum == ppp->checksum ), "checksum Crash!\n" );
       ppp->fusei_tamago_flag = 1;
@@ -1646,7 +1641,7 @@ static  BOOL  ppp_decordAct( POKEMON_PASO_PARAM *ppp )
 static  void  pp_encode_act( POKEMON_PARAM *pp )
 {
   if( pp->ppp.pp_fast_mode == 0 ){
-    encode_data( &pp->pcp, sizeof( POKEMON_CALC_PARAM ), pp->ppp.personal_rnd );
+    POKETOOL_encode_data( &pp->pcp, sizeof( POKEMON_CALC_PARAM ), pp->ppp.personal_rnd );
     ppp_encode_act( &pp->ppp );
   }
 }
@@ -1661,8 +1656,8 @@ static  void  pp_encode_act( POKEMON_PARAM *pp )
 static  void  ppp_encode_act( POKEMON_PASO_PARAM *ppp )
 {
   if( ppp->ppp_fast_mode == 0 ){
-    ppp->checksum = make_checksum( ppp->paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX );
-    encode_data( ppp->paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX, ppp->checksum );
+    ppp->checksum = POKETOOL_make_checksum( ppp->paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX );
+    POKETOOL_encode_data( ppp->paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX, ppp->checksum );
   }
 }
 
@@ -1751,10 +1746,10 @@ static  u32 ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
   POKEMON_PASO_PARAM3 *ppp3;
   POKEMON_PASO_PARAM4 *ppp4;
 
-  ppp1 = ( POKEMON_PASO_PARAM1 * )ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA1 );
-  ppp2 = ( POKEMON_PASO_PARAM2 * )ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA2 );
-  ppp3 = ( POKEMON_PASO_PARAM3 * )ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA3 );
-  ppp4 = ( POKEMON_PASO_PARAM4 * )ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA4 );
+  ppp1 = ( POKEMON_PASO_PARAM1 * )POKETOOL_ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA1 );
+  ppp2 = ( POKEMON_PASO_PARAM2 * )POKETOOL_ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA2 );
+  ppp3 = ( POKEMON_PASO_PARAM3 * )POKETOOL_ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA3 );
+  ppp4 = ( POKEMON_PASO_PARAM4 * )POKETOOL_ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA4 );
 
   switch( id ){
     default:
@@ -2007,7 +2002,7 @@ static  u32 ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
       //再計算したものを代入しておく
       ppp2->sex = ret;
       //チェックサムを再計算
-      ppp->checksum = make_checksum( &ppp->paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX );
+      ppp->checksum = POKETOOL_make_checksum( &ppp->paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX );
       break;
     case ID_PARA_form_no:
       ret = ppp2->form_no;
@@ -2248,10 +2243,10 @@ static  void  ppp_putAct( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg )
   POKEMON_PASO_PARAM3 *ppp3;
   POKEMON_PASO_PARAM4 *ppp4;
 
-  ppp1 = ( POKEMON_PASO_PARAM1 * )ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA1 );
-  ppp2 = ( POKEMON_PASO_PARAM2 * )ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA2 );
-  ppp3 = ( POKEMON_PASO_PARAM3 * )ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA3 );
-  ppp4 = ( POKEMON_PASO_PARAM4 * )ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA4 );
+  ppp1 = ( POKEMON_PASO_PARAM1 * )POKETOOL_ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA1 );
+  ppp2 = ( POKEMON_PASO_PARAM2 * )POKETOOL_ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA2 );
+  ppp3 = ( POKEMON_PASO_PARAM3 * )POKETOOL_ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA3 );
+  ppp4 = ( POKEMON_PASO_PARAM4 * )POKETOOL_ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA4 );
 
   switch( paramID ){
 //PARAM
@@ -2693,10 +2688,10 @@ static  void  ppp_addAct( POKEMON_PASO_PARAM *ppp, int id, int value )
   POKEMON_PASO_PARAM3 *ppp3;
   POKEMON_PASO_PARAM4 *ppp4;
 
-  ppp1 = ( POKEMON_PASO_PARAM1 * )ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA1 );
-  ppp2 = ( POKEMON_PASO_PARAM2 * )ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA2 );
-  ppp3 = ( POKEMON_PASO_PARAM3 * )ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA3 );
-  ppp4 = ( POKEMON_PASO_PARAM4 * )ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA4 );
+  ppp1 = ( POKEMON_PASO_PARAM1 * )POKETOOL_ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA1 );
+  ppp2 = ( POKEMON_PASO_PARAM2 * )POKETOOL_ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA2 );
+  ppp3 = ( POKEMON_PASO_PARAM3 * )POKETOOL_ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA3 );
+  ppp4 = ( POKEMON_PASO_PARAM4 * )POKETOOL_ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA4 );
 
   switch( id ){
     case ID_PARA_exp:
@@ -2797,7 +2792,7 @@ static  void  round_calc( u8 *data, int value, int max )
  * @param[in] code  暗号化キーの初期値
  */
 //--------------------------------------------------------------------------
-static  void  encode_data( void *data, u32 size, u32 code )
+void  POKETOOL_encode_data( void *data, u32 size, u32 code )
 {
   int i;
   u16 *data_p = ( u16 * )data;
@@ -2816,9 +2811,9 @@ static  void  encode_data( void *data, u32 size, u32 code )
  * @param[in] code  暗号化キーの初期値
  */
 //--------------------------------------------------------------------------
-//static  void  decord_data( void *data, u32 size, u32 code )
+//static  void  POKETOOL_decord_data( void *data, u32 size, u32 code )
 //{
-//  encode_data( data, size, code );
+//  POKETOOL_encode_data( data, size, code );
 //}
 
 //--------------------------------------------------------------------------
@@ -2846,7 +2841,7 @@ static  u16 rand_next( u32 *code )
  * @return  生成したチェックサム
  */
 //--------------------------------------------------------------------------
-static  u16 make_checksum( const void *data, u32 size )
+u16 POKETOOL_make_checksum( const void *data, u32 size )
 {
   const u16 *data_p = ( u16 * )data;
   u16 sum = 0;
@@ -2873,8 +2868,8 @@ static BOOL pppAct_check_nickname( POKEMON_PASO_PARAM* ppp )
   POKEMON_PASO_PARAM1 *ppp1;
   POKEMON_PASO_PARAM3 *ppp3;
 
-  ppp1 = (POKEMON_PASO_PARAM1*)ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA1 );
-  ppp3 = (POKEMON_PASO_PARAM3*)ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA3 );
+  ppp1 = (POKEMON_PASO_PARAM1*)POKETOOL_ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA1 );
+  ppp3 = (POKEMON_PASO_PARAM3*)POKETOOL_ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA3 );
 
   GFL_MSG_GetStringRaw( GlobalMsg_PokeName, ppp1->monsno, StrBuffer, NELEMS(StrBuffer) );
   return STRTOOL_Comp( StrBuffer, ppp3->nickname );
@@ -3002,7 +2997,7 @@ static  u32 get_growtbl_param( int para, int level )
  * @return  取得したアドレス
  */
 //============================================================================================
-static  void  *ppp_get_param_block( POKEMON_PASO_PARAM *ppp, u32 rnd, u8 id )
+void  *POKETOOL_ppp_get_param_block( POKEMON_PASO_PARAM *ppp, u32 rnd, u8 id )
 {
   enum {
     POS1 = ( sizeof( POKEMON_PASO_PARAM1 ) * 0 ),
@@ -3051,8 +3046,8 @@ static  void  *ppp_get_param_block( POKEMON_PASO_PARAM *ppp, u32 rnd, u8 id )
 
   rnd = ( rnd & 0x0003e000 ) >> 13;
 
-  GF_ASSERT_MSG( rnd <= ID_POKEPARADATA62, "ppp_get_param_block:RND Index Over!" );
-  GF_ASSERT_MSG( id <= ID_POKEPARA4, "ppp_get_param_block:ID Index Over!" );
+  GF_ASSERT_MSG( rnd <= ID_POKEPARADATA62, "POKETOOL_ppp_get_param_block:RND Index Over!" );
+  GF_ASSERT_MSG( id <= ID_POKEPARA4, "POKETOOL_ppp_get_param_block:ID Index Over!" );
 
   ret = &ppp->paradata[ PokeParaAdrsTbl[ rnd ][ id ] ];
 
@@ -3120,3 +3115,4 @@ u32 POKETOOL_GetPersonalParam( u16 mons_no, u16 form_no, PokePersonalParamID par
   POKEMON_PERSONAL_DATA* ppd = Personal_Load( mons_no, form_no );
   return POKE_PERSONAL_GetParam( ppd, param );
 }
+

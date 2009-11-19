@@ -472,6 +472,9 @@ enum{
   ID_EVO_Mons
 };
 
+///<戦闘録画用ポケモンパラメータの構造体
+typedef struct rec_pokepara REC_POKEPARA;
+
 //ポケモンパラメータ取得系の定義
 enum{
   ID_POKEPARADATA11=0,  //0
@@ -689,6 +692,15 @@ extern  BOOL  POKETOOL_CheckRare( u32 id, u32 personal_rnd );
 extern  u32   POKETOOL_GetPersonalParam( u16 mons_no, u16 form_no, PokePersonalParamID param );
 extern  u32   POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 chr, u8 sex );
 
+// 戦闘録画用に外部公開
+extern void  POKETOOL_encode_data( void *data, u32 size, u32 code );
+#define POKETOOL_decord_data( data, size, code )   POKETOOL_encode_data( data, size, code );
+extern void  *POKETOOL_ppp_get_param_block( POKEMON_PASO_PARAM *ppp, u32 rnd, u8 id );
+extern u16 POKETOOL_make_checksum( const void *data, u32 size );
+
+// 戦闘録画用
+extern void POKETOOL_PokePara_to_RecPokePara(POKEMON_PARAM *pp, REC_POKEPARA *rec);
+extern void POKETOOL_RecPokePara_to_PokePara(REC_POKEPARA *rec, POKEMON_PARAM *pp);
 
 
 #endif
