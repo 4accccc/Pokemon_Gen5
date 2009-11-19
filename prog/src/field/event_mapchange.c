@@ -804,6 +804,7 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
 	GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
 	PLAYER_WORK * mywork = GAMEDATA_GetMyPlayerWork(gamedata);
 	EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
+  FIELD_STATUS* fldstatus = GAMEDATA_GetFieldStatus(gamedata);
 
   { 
     char buf[ZONEDATA_NAME_LENGTH*2];
@@ -865,6 +866,11 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
 
   //新規ゾーンに配置する動作モデルを追加
   MAPCHG_loadMMdl( gamedata, loc_req );
+
+  //フィールド技 マップ効果
+  //@TODO フラッシュ　システムフラグを見て、マスクを書き換える
+  FIELD_STATUS_SetFieldSkillMapEffectMsk( fldstatus, ZONEDATA_GetFieldSkillMapEffMsk( loc.zone_id ) );
+  
 }
 
 //--------------------------------------------------------------

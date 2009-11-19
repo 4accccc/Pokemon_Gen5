@@ -25,8 +25,11 @@
 
 #include "fieldmap/field_fog_table.naix"
 #include "fieldmap/field_zone_light.naix"
+#include "fieldmap/fieldskill_mapeff.naix"
 
 #include "field/field_zonefog.h"
+#include "field/fieldskill_mapeff.h"
+
 
 //-------------------------------------
 // 内部ワーク
@@ -40,9 +43,11 @@ typedef struct
   ZONE_FOG_DATA* zonefoglist;
   ZONE_LIGHT_DATA* zonelightlist;
   u16 zonefoglist_max;
-  u16 zonelightlist_max;
+  u8 zonelightlist_max;
 
   // フィールド技 効果リスト
+  u8 fieldskill_mapeff_list_max;
+  FIELDSKILL_MAPEFF_DATA* fieldskill_mapeff_list;
 
 
 } ZONE_DATA_HANDLE;
@@ -76,6 +81,14 @@ void ZONEDATA_Open( HEAPID heap_id )
       data_handle->zonelightlist_max = size / sizeof(ZONE_LIGHT_DATA);
 
     }
+
+    // フィールド技　効果
+    {
+      u32 size;
+      
+      data_handle->fieldskill_mapeff_list = GFL_ARC_UTIL_LoadEx( ARCID_FLDSKILL_MAPEFF, NARC_fieldskill_mapeff_fieldskill_mapeffect_bin, FALSE, heap_id, &size );
+      data_handle->fieldskill_mapeff_list_max = size / sizeof(FIELDSKILL_MAPEFF_DATA);
+    }
   }
 }
 
@@ -88,6 +101,11 @@ void ZONEDATA_Close()
 {
   if( data_handle != NULL )
   {
+    // フィールド技　効果リスト
+    {
+      GFL_HEAP_FreeMemory( data_handle->fieldskill_mapeff_list );
+    }
+    
     // フォグ　ライト
     {
       GFL_HEAP_FreeMemory( data_handle->zonelightlist );
@@ -678,6 +696,34 @@ u32 ZONEDATA_GetLight(u16 zone_id)
   return ret;
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールド技　マップエフェクトマスク取得
+ *
+ *	@param	zone_id ゾーンID
+ *
+ *	@return FIELDSKILL_MAPEFF_MSK
+ */
+//-----------------------------------------------------------------------------
+u32 ZONEDATA_GetFieldSkillMapEffMsk(u16 zone_id)
+{
+  int i;
+  u32 ret = 0;
+  
+  GF_ASSERT( data_handle );
+  
+  for( i=0; i<data_handle->fieldskill_mapeff_list_max; i++ )
+  {
+    if( data_handle->fieldskill_mapeff_list[i].zone_id == zone_id )
+    {
+      ret = data_handle->fieldskill_mapeff_list[i].msk;
+      break;
+    }
+  }
+
+  return ret;
+}
 
 
 //============================================================================================

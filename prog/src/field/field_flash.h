@@ -76,6 +76,7 @@ extern void FIELD_FLASH_Draw( FIELD_FLASH* p_wk );
 extern void FIELD_FLASH_Control( FIELD_FLASH* p_wk, FIELD_FLASH_REQ req );
 
 // èÛë‘éÊìæ
+extern FIELD_FLASH_STATUS FIELD_FLASH_GetStatus( const FIELD_FLASH* cp_wk );
 
 
 #ifdef _cplusplus

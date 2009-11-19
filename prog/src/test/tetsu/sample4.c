@@ -13,7 +13,7 @@
 
 #include "debug_common.h"
 
-#include "system/fld_wipe_3dobj.h"
+#include "field/fld_wipe_3dobj.h"
 //============================================================================================
 /**
  *
@@ -194,7 +194,7 @@ static BOOL	sample4(SAMPLE4_WORK* sw)
 										(ARCID_SHADOW_TEST, NARC_shadow_test_shadow4_test_nsbmd);
 		sw->g3Dobj1 = GFL_G3D_OBJECT_Create(GFL_G3D_RENDER_Create(sw->g3DresMdl1, 0, NULL), NULL, 0); 
 
-		sw->fldWipeObj = FLD_WIPEOBJ_Create(sw->heapID); 
+		//sw->fldWipeObj = FLD_WIPEOBJ_Create(sw->heapID); 
 
 		GFL_G3D_SetSystemSwapBufferMode(GX_SORTMODE_MANUAL, GX_BUFFERMODE_W);
 
@@ -216,7 +216,7 @@ static BOOL	sample4(SAMPLE4_WORK* sw)
 		DWS_DrawLocalOriginBumpPlane(sw->dws, 64*FX32_ONE, GX_RGB(0,31,0), GX_RGB(0,24,0), 32);
 
 		if(sw->target == 0){
-			FLD_WIPEOBJ_Main(sw->fldWipeObj, sw->scale);
+			//FLD_WIPEOBJ_Main(sw->fldWipeObj, sw->scale, 20);
 		} else {
 			GFL_G3D_OBJSTATUS status;
 
@@ -232,7 +232,7 @@ static BOOL	sample4(SAMPLE4_WORK* sw)
 		break;
 
 	case 2:
-		FLD_WIPEOBJ_Delete(sw->fldWipeObj);
+		//FLD_WIPEOBJ_Delete(sw->fldWipeObj);
 
 		GFL_G3D_RENDER_Delete(GFL_G3D_OBJECT_GetG3Drnd(sw->g3Dobj1)); 
 		GFL_G3D_OBJECT_Delete(sw->g3Dobj1); 

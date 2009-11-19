@@ -13,7 +13,7 @@
 
 #include <gflib.h>
 
-#include "system/fld_wipe_3dobj.h"
+#include "fld_wipe_3dobj.h"
 
 #include "field_flash.h"
 
@@ -23,11 +23,13 @@
 */
 //-----------------------------------------------------------------------------
 
-// NEAR scale
-#define FLASH_NEAR_SCALE  ( FX32_CONST(4) )
+// NEAR scale alpha
+#define FLASH_NEAR_SCALE  ( 0x4000 )
+#define FLASH_NEAR_ALPHA  ( 30 )  // 不透明にするとエッジマーキングがつく＋ポリゴンとのかさなりが汚い　ギリギリ半透明が良い
 
-// FAR scale
+// FAR scale alpha
 #define FLASH_FAR_SCALE  ( 0xD080 )
+#define FLASH_FAR_ALPHA  ( 20 )
 
 // OFF scale
 #define FLASH_OFF_SCALE  ( 0 )
@@ -47,12 +49,16 @@ typedef struct
 {
   
   fx32 scale;
+  u8   alpha;
 
   // フェード
   u16 count;
   u16 count_max;
   fx32 start_scale;
   fx32 move_scale;
+
+  s16 start_alpha;
+  s16 move_alpha;
   
 } FLASH_SCALE;
 
@@ -87,11 +93,14 @@ static void FLASH_REQ_Off( FIELD_FLASH* p_wk );
 //=====================================
 static void FLASH_SCALE_Init( FLASH_SCALE* p_wk );
 static void FLASH_SCALE_Exit( FLASH_SCALE* p_wk );
-static void FLASH_SCALE_StartFade( FLASH_SCALE* p_wk, fx32 start, fx32 end, u32 time );
+static void FLASH_SCALE_StartFade( FLASH_SCALE* p_wk, fx32 start, fx32 end, u8 start_alpha, u8 end_alpha, u32 time );
 static BOOL FLASH_SCALE_MainFade( FLASH_SCALE* p_wk );
 static BOOL FLASH_SCALE_IsFade( const FLASH_SCALE* cp_wk );
 static fx32 FLASH_SCALE_GetScale( const FLASH_SCALE* cp_wk );
 static void FLASH_SCALE_SetScale( FLASH_SCALE* p_wk, fx32 scale );
+static u8 FLASH_SCALE_GetAlpha( const FLASH_SCALE* cp_wk );
+static void FLASH_SCALE_SetAlpha( FLASH_SCALE* p_wk, u8 alpha );
+
 
 
 //----------------------------------------------------------------------------
@@ -190,7 +199,7 @@ void FIELD_FLASH_Draw( FIELD_FLASH* p_wk )
   if(p_wk==NULL){ return; };
   
   // 描画
-  FLD_WIPEOBJ_Main( p_wk->p_wipe, FLASH_SCALE_GetScale( &p_wk->scale ) );
+  FLD_WIPEOBJ_Main( p_wk->p_wipe, FLASH_SCALE_GetScale( &p_wk->scale ), FLASH_SCALE_GetAlpha( &p_wk->scale ) );
 }
 
 
@@ -207,6 +216,22 @@ void FIELD_FLASH_Control( FIELD_FLASH* p_wk, FIELD_FLASH_REQ req )
   GF_ASSERT( p_wk );
 
   p_wk->req = req;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フラッシュ状態の取得
+ *
+ *	@param	cp_wk   ワーク
+ *
+ *	@return 状態
+ */
+//-----------------------------------------------------------------------------
+FIELD_FLASH_STATUS FIELD_FLASH_GetStatus( const FIELD_FLASH* cp_wk )
+{
+  GF_ASSERT( cp_wk );
+
+  return cp_wk->status;
 }
 
 
@@ -252,7 +277,7 @@ static void FLASH_SCALE_Exit( FLASH_SCALE* p_wk )
  *	@param	time      フェードシンク
  */
 //-----------------------------------------------------------------------------
-static void FLASH_SCALE_StartFade( FLASH_SCALE* p_wk, fx32 start, fx32 end, u32 time )
+static void FLASH_SCALE_StartFade( FLASH_SCALE* p_wk, fx32 start, fx32 end, u8 start_alpha, u8 end_alpha, u32 time )
 {
   GF_ASSERT( p_wk );
   GF_ASSERT( time > 0 );
@@ -260,6 +285,9 @@ static void FLASH_SCALE_StartFade( FLASH_SCALE* p_wk, fx32 start, fx32 end, u32 
   p_wk->scale       = start;
   p_wk->start_scale = start;
   p_wk->move_scale  = end - start;
+  p_wk->alpha       = start_alpha;
+  p_wk->start_alpha = start_alpha;
+  p_wk->move_alpha  = end_alpha - start_alpha;
   p_wk->count       = 0;
   p_wk->count_max   = time;
 }
@@ -282,6 +310,9 @@ static BOOL FLASH_SCALE_MainFade( FLASH_SCALE* p_wk )
 
     // スケール値を求める
     p_wk->scale = p_wk->start_scale + FX_Div( FX_Mul(p_wk->move_scale, p_wk->count<<FX32_SHIFT), p_wk->count_max << FX32_SHIFT );
+
+    // α値を求める
+    p_wk->alpha = p_wk->start_alpha + ((p_wk->move_alpha * p_wk->count) / p_wk->count_max);
     return FALSE; 
   }
 
@@ -337,6 +368,36 @@ static void FLASH_SCALE_SetScale( FLASH_SCALE* p_wk, fx32 scale )
   p_wk->scale = scale;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アルファ値の取得
+ *
+ *	@param	cp_wk   ワーク
+ */
+//-----------------------------------------------------------------------------
+static u8 FLASH_SCALE_GetAlpha( const FLASH_SCALE* cp_wk )
+{
+  GF_ASSERT( cp_wk );
+
+  return cp_wk->alpha;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  α値の設定
+ *
+ *	@param	p_wk      ワーク
+ *	@param	alpha     α
+ */
+//-----------------------------------------------------------------------------
+static void FLASH_SCALE_SetAlpha( FLASH_SCALE* p_wk, u8 alpha )
+{
+  GF_ASSERT( p_wk );
+  GF_ASSERT( FLASH_SCALE_IsFade(p_wk) == FALSE );
+
+  p_wk->alpha = alpha;
+}
+
 
 
 
@@ -353,6 +414,7 @@ static void FLASH_REQ_OnNear( FIELD_FLASH* p_wk )
   // ON
   p_wk->status = FIELD_FLASH_STATUS_NEAR;
   FLASH_SCALE_SetScale( &p_wk->scale, FLASH_NEAR_SCALE );
+  FLASH_SCALE_SetAlpha( &p_wk->scale, FLASH_NEAR_ALPHA );
 }
 
 //----------------------------------------------------------------------------
@@ -366,7 +428,7 @@ static void FLASH_REQ_FadeOut( FIELD_FLASH* p_wk )
 {
   // 
   p_wk->status = FIELD_FLASH_STATUS_FADEOUT;
-  FLASH_SCALE_StartFade( &p_wk->scale, FLASH_NEAR_SCALE, FLASH_FAR_SCALE, FLASH_FADE_TIME );
+  FLASH_SCALE_StartFade( &p_wk->scale, FLASH_NEAR_SCALE, FLASH_FAR_SCALE, FLASH_NEAR_ALPHA, FLASH_FAR_ALPHA, FLASH_FADE_TIME );
 }
 
 //----------------------------------------------------------------------------
@@ -381,6 +443,7 @@ static void FLASH_REQ_OnFar( FIELD_FLASH* p_wk )
   // ON
   p_wk->status = FIELD_FLASH_STATUS_FAR;
   FLASH_SCALE_SetScale( &p_wk->scale, FLASH_FAR_SCALE );
+  FLASH_SCALE_SetAlpha( &p_wk->scale, FLASH_FAR_ALPHA );
 }
 
 //----------------------------------------------------------------------------

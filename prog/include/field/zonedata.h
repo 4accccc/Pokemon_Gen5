@@ -208,3 +208,13 @@ extern u32 ZONEDATA_GetFog(u16 zone_id);
 //------------------------------------------------------------------
 extern u32 ZONEDATA_GetLight(u16 zone_id);
 
+
+
+//------------------------------------------------------------------
+// フィールド技　マップエフェクト
+// fieldskill_mapeff.h
+//return FIELDSKILL_MAPEFF_MSK
+//------------------------------------------------------------------
+extern u32 ZONEDATA_GetFieldSkillMapEffMsk(u16 zone_id);
+
+

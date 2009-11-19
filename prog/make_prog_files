@@ -184,7 +184,6 @@ SRCS  +=    $(SOUNDSRC) \
         field/field_comm/game_beacon_search.c \
         debug/debugwin_sys.c \
         test/tetsu/debug_common.c \
-        system/fld_wipe_3dobj.c \
         debug/debug_system_group.c \
         app/app_menu_common.c \
         app/app_taskmenu.c \
@@ -502,6 +501,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/field_g3dobj.c \
         field/field_flash.c \
         field/fieldskill_mapeff.c \
+        field/fld_wipe_3dobj.c \
         field/scrcmd_fldci.c
 
 # フィールド天気

@@ -13,7 +13,7 @@
 
 #include "arc/shadow_test.naix"
 
-#include "system/fld_wipe_3dobj.h"
+#include "fld_wipe_3dobj.h"
 //============================================================================================
 /**
  *
@@ -39,6 +39,7 @@ FLD_WIPEOBJ* FLD_WIPEOBJ_Create( HEAPID heapID )
 	fw->g3Dres = GFL_G3D_CreateResourceArc(ARCID_SHADOW_TEST, NARC_shadow_test_shadow4_test_nsbmd);
 	fw->g3Dobj = GFL_G3D_OBJECT_Create(GFL_G3D_RENDER_Create(fw->g3Dres, 0, NULL), NULL, 0); 
 
+
 	return fw;
 }
 
@@ -53,7 +54,7 @@ void FLD_WIPEOBJ_Delete( FLD_WIPEOBJ* fw )
 }
 
 //-------------------------------------------------------------------------------------
-void FLD_WIPEOBJ_Main( FLD_WIPEOBJ* fw, fx32 scale )
+void FLD_WIPEOBJ_Main( FLD_WIPEOBJ* fw, fx32 scale, u8 alpha )
 {
 	GFL_G3D_OBJSTATUS status;
 	fx32	length = FX32_ONE*4;
@@ -84,11 +85,12 @@ void FLD_WIPEOBJ_Main( FLD_WIPEOBJ* fw, fx32 scale )
 		NNS_G3dMdlSetMdlLightEnableFlag(pMdl, 0, 0);
 		NNS_G3dMdlSetMdlPolygonID(pMdl, 0, 63);
 		NNS_G3dMdlSetMdlCullMode(pMdl, 0, GX_CULL_BACK); 
-		NNS_G3dMdlSetMdlAlpha(pMdl, 0, 20);
+		NNS_G3dMdlSetMdlAlpha(pMdl, 0, alpha);
 		NNS_G3dMdlSetMdlPolygonMode(pMdl, 0, GX_POLYGONMODE_MODULATE);
 	}
 	GFL_G3D_DRAW_DrawObject(fw->g3Dobj, &status);
 }
+
 
 #if 0
 //--------------------------------------------------------------

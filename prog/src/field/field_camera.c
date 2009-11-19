@@ -24,7 +24,7 @@
 #include "print/gf_font.h"
 #include "print/printsys.h"
 
-#include "system/fld_wipe_3dobj.h"
+#include "fld_wipe_3dobj.h"
 
 #include "msg/msg_d_tomoya.h"
 
@@ -1463,7 +1463,7 @@ void FIELD_CAMERA_DEBUG_Draw( const FIELD_CAMERA* camera)
 { 
   if(camera->p_debug_wipe)
   {
-    FLD_WIPEOBJ_Main( camera->p_debug_wipe, fldWipeScale );
+    FLD_WIPEOBJ_Main( camera->p_debug_wipe, fldWipeScale, 20 );
   }
 }
 

@@ -548,9 +548,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   // フラッシュチェック
   {
     FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( fieldWork->gamedata );
-    // @TODO  現状　フラッシュ完全ON
-    //FIELD_STATUS_SetFieldSkillMapEffectMsk( fldstatus, FIELDSKILL_MAPEFF_MSK_FLASH_FAR );
-    FIELD_STATUS_SetFieldSkillMapEffectMsk( fldstatus, 0 );
     fieldWork->fieldskill_mapeff = FIELDSKILL_MAPEFF_Create( 
         FIELD_STATUS_GetFieldSkillMapEffectMsk(fldstatus), fieldWork->heapID ); 
   }
@@ -802,6 +799,31 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 	GFL_UI_ResetFrameRate();
 	//ゾーン更新処理
   fldmapMain_UpdateMoveZone( fieldWork );
+
+#ifdef PM_DEBUG
+  // フラッシュ実験
+  // tomoya takahashi
+  if( FIELDSKILL_MAPEFF_IsFlash( fieldWork->fieldskill_mapeff ) )
+  {
+    FIELD_FLASH* p_flash;
+    u32 status;
+
+    p_flash = FIELDSKILL_MAPEFF_GetFlash( fieldWork->fieldskill_mapeff );
+    status  = FIELD_FLASH_GetStatus( p_flash );
+    
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
+    {
+      if( status == FIELD_FLASH_STATUS_NEAR )
+      {
+        FIELD_FLASH_Control( p_flash, FIELD_FLASH_REQ_FADEOUT );
+      }
+      else if( status == FIELD_FLASH_STATUS_FAR )
+      {
+        FIELD_FLASH_Control( p_flash, FIELD_FLASH_REQ_ON_NEAR );
+      }
+    }
+  }
+#endif
 
   //マップ別 登録処理
 

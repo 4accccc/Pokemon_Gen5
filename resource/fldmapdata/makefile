@@ -25,6 +25,7 @@ SUBDIRS	=	zonetable/zoneindex \
 					camera_scroll \
 					pushrock \
 					eventdata/binary \
+					zonetable/fieldskill_mapeffect \
 					zonetable
 					
 
