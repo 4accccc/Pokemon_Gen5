@@ -30,21 +30,6 @@
  *					構造体宣言
 */
 //-----------------------------------------------------------------------------
-//-------------------------------------
-///	参照FOGデータ
-//=====================================
-typedef struct {
-  u16 zone_id;
-  u16 data_id;
-} ZONE_FOG_DATA;
-
-//-------------------------------------
-///	参照LIGHTデータ
-//=====================================
-typedef struct {
-  u16 zone_id;
-  u16 data_id;
-} ZONE_LIGHT_DATA;
 
 
 
@@ -64,12 +49,6 @@ struct _FIELD_ZONEFOGLIGHT
 	FOG_DATA* p_data;
 
 	u32 light;
-
-  ZONE_FOG_DATA* p_fog_list;
-  ZONE_LIGHT_DATA* p_light_list;
-
-  u16 fog_list_max;
-  u16 light_list_max;
 
   ARCHANDLE* p_handle;
 };
@@ -101,13 +80,6 @@ FIELD_ZONEFOGLIGHT* FIELD_ZONEFOGLIGHT_Create( u32 heapID )
 
   p_sys->p_handle = GFL_ARC_OpenDataHandle( ARCID_ZONEFOG_TABLE, heapID );
 
-  p_sys->p_fog_list = GFL_ARCHDL_UTIL_LoadEx( p_sys->p_handle, NARC_field_fog_table_zonefog_table_bin, FALSE, heapID, &size );
-  p_sys->fog_list_max = size / sizeof(ZONE_FOG_DATA);
-  
-  p_sys->p_light_list = GFL_ARCHDL_UTIL_LoadEx( p_sys->p_handle, NARC_field_zone_light_light_list_bin, FALSE, heapID, &size );
-  p_sys->light_list_max = size / sizeof(ZONE_LIGHT_DATA);
-  
-
 	return  p_sys;
 }
 
@@ -122,52 +94,10 @@ void FIELD_ZONEFOGLIGHT_Delete( FIELD_ZONEFOGLIGHT* p_sys )
 {
   GFL_ARC_CloseDataHandle( p_sys->p_handle );
   
-  GFL_HEAP_FreeMemory( p_sys->p_fog_list );
-  GFL_HEAP_FreeMemory( p_sys->p_light_list );
-  
 	FIELD_ZONEFOGLIGHT_Clear( p_sys );
 	GFL_HEAP_FreeMemory( p_sys );
 }
 
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  ゾーンIDから、そのゾーンのフォグやライト設定があるのかチェック
- *
- *	@param	p_sys     システム
- *	@param	zone_id   ゾーンID
- *	@param	heapID    ヒープ
- */
-//-----------------------------------------------------------------------------
-void FIELD_ZONEFOGLIGHT_LoadZoneID( FIELD_ZONEFOGLIGHT* p_sys, u32 zone_id, u32 heapID )
-{
-  int i;
-  u32 fog_id = FIELD_ZONEFOGLIGHT_DATA_NONE;
-  u32 light_id = FIELD_ZONEFOGLIGHT_DATA_NONE;
-  
-  GF_ASSERT( p_sys );
-
-  
-  // FOGリスト
-  for( i=0; i<p_sys->fog_list_max; i++ )
-  {
-    if( p_sys->p_fog_list[i].zone_id == zone_id )
-    {
-      fog_id = p_sys->p_fog_list[i].data_id;
-    }
-  }
-
-  // LIGHTリスト
-  for( i=0; i<p_sys->light_list_max; i++ )
-  {
-    if( p_sys->p_light_list[i].zone_id == zone_id )
-    {
-      light_id = p_sys->p_light_list[i].data_id;
-    }
-  }
-
-  FIELD_ZONEFOGLIGHT_Load( p_sys, fog_id, light_id, heapID );
-}
 
 //----------------------------------------------------------------------------
 /**

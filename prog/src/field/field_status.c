@@ -22,6 +22,7 @@
 struct _FIELD_STATUS{
   MAPMODE map_mode;
   u8 isFieldInitFlag;
+  u8 isFlash;
 };
 
 //======================================================================
@@ -87,3 +88,41 @@ BOOL FIELD_STATUS_GetFieldInitFlag( const FIELD_STATUS * fldstatus )
 {
   return fldstatus->isFieldInitFlag;
 }
+
+
+
+//------------------------------------------------------------------
+// フラッシュ状態管理
+//------------------------------------------------------------------
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フラッシュ状態を設定
+ *
+ *	@param	fldstatus   
+ *	@param	flag        TRUE：FLASH状態　　FALSE：なし
+ */
+//-----------------------------------------------------------------------------
+void FIELD_STATUS_SetFlash( FIELD_STATUS * fldstatus, BOOL flag )
+{
+  GF_ASSERT( fldstatus );
+  fldstatus->isFlash = flag;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フラッシュ状態チェック
+ *
+ *	@param	fldstatus   
+ *
+ *	@retval TRUE  フラッシュ状態
+ *	@retval FALSE なし
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_STATUS_IsFlash( const FIELD_STATUS * fldstatus )
+{
+  GF_ASSERT( fldstatus );
+  return fldstatus->isFlash;
+}
+
+
+

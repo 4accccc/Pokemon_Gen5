@@ -1338,7 +1338,7 @@ void FIELD_CAMERA_SetFovy(FIELD_CAMERA * camera, u16 fovy )
 
 #ifdef  PM_DEBUG
 #include "test/camera_adjust_view.h"
-extern fx32	fldWipeScale;
+static fx32	fldWipeScale;
 //------------------------------------------------------------------
 //  デバッグ用：下画面操作とのバインド
 //------------------------------------------------------------------

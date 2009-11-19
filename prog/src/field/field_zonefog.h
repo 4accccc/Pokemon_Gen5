@@ -41,6 +41,23 @@ extern "C"{
 //=====================================
 typedef struct _FIELD_ZONEFOGLIGHT	FIELD_ZONEFOGLIGHT;
 
+
+//-------------------------------------
+///	参照FOGデータ
+//=====================================
+typedef struct {
+  u16 zone_id;
+  u16 data_id;
+} ZONE_FOG_DATA;
+
+//-------------------------------------
+///	参照LIGHTデータ
+//=====================================
+typedef struct {
+  u16 zone_id;
+  u16 data_id;
+} ZONE_LIGHT_DATA;
+
 //-----------------------------------------------------------------------------
 /**
  *					プロトタイプ宣言
@@ -50,7 +67,6 @@ typedef struct _FIELD_ZONEFOGLIGHT	FIELD_ZONEFOGLIGHT;
 extern FIELD_ZONEFOGLIGHT* FIELD_ZONEFOGLIGHT_Create( u32 heapID );
 extern void FIELD_ZONEFOGLIGHT_Delete( FIELD_ZONEFOGLIGHT* p_sys );
 
-extern void FIELD_ZONEFOGLIGHT_LoadZoneID( FIELD_ZONEFOGLIGHT* p_sys, u32 zone_id, u32 heapID );
 extern void FIELD_ZONEFOGLIGHT_Load( FIELD_ZONEFOGLIGHT* p_sys, u32 fogno, u32 lightno, u32 heapID );
 extern void FIELD_ZONEFOGLIGHT_Clear( FIELD_ZONEFOGLIGHT* p_sys );
 

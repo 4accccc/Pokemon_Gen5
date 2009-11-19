@@ -60,7 +60,7 @@
 
 #include "field_player_grid.h"
 
-#include "system/fld_wipe_3dobj.h"
+#include "field_flash.h"
 
 #include "fieldmap_func.h"
 #include "field/fieldmap_call.h"
@@ -263,12 +263,14 @@ struct _FIELDMAP_WORK
   FLDNOGRID_MAPPER* nogridMapper;
 	
 	FLDMAPPER *g3Dmapper;
-	FLD_WIPEOBJ *fldWipeObj;
 	MAP_MATRIX *pMapMatrix;
 	FLDMAPPER_RESISTDATA map_res;
 	FIELD_PLAYER *field_player;
 	FIELD_ENCOUNT *encount;
 	FLDEFF_CTRL *fldeff_ctrl;
+
+	FIELD_FLASH * field_flash;
+  
 
   GFL_G3D_CAMERA *g3Dcamera; //g3Dcamera Lib ハンドル
 	GFL_G3D_LIGHTSET *g3Dlightset; //g3Dlight Lib ハンドル
@@ -307,9 +309,9 @@ struct _FIELDMAP_WORK
   DRAW3DMODE Draw3DMode;
   
   FLD_G3DOBJ_CTRL *fieldG3dObjCtrl;
+
 };
 
-fx32	fldWipeScale;
 //--------------------------------------------------------------
 ///	MMDL_LIST
 //--------------------------------------------------------------
@@ -502,8 +504,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup_system(GAMESYS_WORK *gsys, FIELDMAP_WORK
 	
 	//配置物設定
 	fieldWork->g3Dmapper = FLDMAPPER_Create( fieldWork->heapID );
-	fieldWork->fldWipeObj = FLD_WIPEOBJ_Create( fieldWork->heapID );
-	fldWipeScale = 0;
 
 	TAMADA_Printf("TEX:%06x PLT:%04x\n",
 			DEBUG_GFL_G3D_GetBlankTextureSize(),
@@ -542,6 +542,21 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 
   // 地名表示システム作成
   fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( fieldWork->heapID, fieldWork->fldMsgBG );
+
+
+  // フラッシュチェック
+  {
+    FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( fieldWork->gamedata );
+    // @TODO  現状　フラッシュ完全ON
+    //FIELD_STATUS_SetFlash( fldstatus, TRUE );
+    FIELD_STATUS_SetFlash( fldstatus, FALSE );
+    if(FIELD_STATUS_IsFlash(fldstatus))
+    {
+    	fieldWork->field_flash = FIELD_FLASH_Create( fieldWork->heapID ); 
+
+      FIELD_FLASH_Control( fieldWork->field_flash, FIELD_FLASH_REQ_ON );
+    }
+  }
 
   fieldWork->camera_control = FIELD_CAMERA_Create(
       ZONEDATA_GetCameraID(fieldWork->map_id),
@@ -651,7 +666,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 	
   // ゾーンフォグシステム生成
 	fieldWork->zonefog = FIELD_ZONEFOGLIGHT_Create( fieldWork->heapID );
-	FIELD_ZONEFOGLIGHT_LoadZoneID( fieldWork->zonefog, fieldWork->map_id, fieldWork->heapID );
+	FIELD_ZONEFOGLIGHT_Load( fieldWork->zonefog, ZONEDATA_GetFog(fieldWork->map_id), ZONEDATA_GetLight(fieldWork->map_id), fieldWork->heapID );
 
   // ライトシステム生成
   {
@@ -800,6 +815,9 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 
   // 地名表示システム動作処理
   FIELD_PLACE_NAME_Process( fieldWork->placeNameSys );
+
+  // フラッシュ処理
+  FIELD_FLASH_Update( fieldWork->field_flash );
 
   //自機更新
   FIELD_PLAYER_Update( fieldWork->field_player );
@@ -1036,6 +1054,9 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   // 育て屋
   SODATEYA_Delete( fieldWork->sodateya );
 
+	FIELD_FLASH_Delete( fieldWork->field_flash );
+  fieldWork->field_flash = NULL;
+
 #if USE_DEBUGWIN_SYSTEM
   FIELD_FUNC_RANDOM_GENERATE_TermDebug();
   DEBUGWIN_ExitProc();
@@ -1057,7 +1078,6 @@ static MAINSEQ_RESULT mainSeqFunc_end(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWo
 
 	GFL_TCB_DeleteTask( fieldWork->g3dVintr );
 
-	FLD_WIPEOBJ_Delete( fieldWork->fldWipeObj );
 	FLDMAPPER_Delete( fieldWork->g3Dmapper );
 
 	fldmap_G3D_Unload( fieldWork );	//３Ｄデータ破棄
@@ -1923,99 +1943,6 @@ static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
     func[ fieldWork->Draw3DMode ](fieldWork);
   }
 
-
-#if 0  
-  if (test_mode){
-    G3X_SetClearColor(GX_RGB(0,0,0),0,0x7fff,0,FALSE);
-
-    FLD_PRTCL_Main();
-    FLD3D_CI_Draw( fieldWork->Fld3dCiPtr );
-  
-    GFL_G3D_DRAW_End(); //描画終了（バッファスワップ）
-    return;
-  }
-
-	FIELD_FOG_Reflect( fieldWork->fog );
-	FIELD_LIGHT_Reflect( fieldWork->light );
-
-	GFL_G3D_CAMERA_Switching( fieldWork->g3Dcamera );
-	GFL_G3D_LIGHT_Switching( fieldWork->g3Dlightset );
-  
-  FLDMSGBG_PrintG3D( fieldWork->fldMsgBG );
-  
-
-	FLDMAPPER_Draw( fieldWork->g3Dmapper, fieldWork->g3Dcamera );
-	FLD_WIPEOBJ_Main( fieldWork->fldWipeObj, fldWipeScale ); 
-  {
-	  MtxFx44 org_pm,pm;
-		const MtxFx44 *m;
-		m = NNS_G3dGlbGetProjectionMtx();
-/**		
-		OS_Printf("%x,%x,%x,%x\n%x,%x,%x,%x\n%x,%x,%x,%x\n%x,%x,%x,%x\n",
-				m->_00,m->_01,m->_02,m->_03,
-				m->_10,m->_11,m->_12,m->_13,
-				m->_20,m->_21,m->_22,m->_23,
-				m->_30,m->_31,m->_32,m->_33);
-//*/				
-    
-		org_pm = *m;
-		pm = org_pm;
-		pm._32 += FX_Mul( pm._22, PRO_MAT_Z_OFS );
-		NNS_G3dGlbSetProjectionMtx(&pm);
-		NNS_G3dGlbFlush();		  //　ジオメトリコマンドを転送
-    NNS_G3dGeFlushBuffer(); // 転送まち
-
-    FLDEFF_CTRL_Draw( fieldWork->fldeff_ctrl );
-  
-    GFL_BBDACT_Draw(
-        fieldWork->bbdActSys, fieldWork->g3Dcamera, fieldWork->g3Dlightset );
-
-		NNS_G3dGlbSetProjectionMtx(&org_pm);
-		NNS_G3dGlbFlush();		//　ジオメトリコマンドを転送
-  }
-
-	// フィールドマップ用制御タスクシステム
-	FLDMAPFUNC_Sys_Draw3D( fieldWork->fldmapFuncSys );
-
-	
-  FIELD_WEATHER_3DWrite( fieldWork->weather_sys );	// 天気描画処理
-
-  //フィールド拡張3ＤＯＢＪ描画
-  FLD_EXP_OBJ_Draw( fieldWork->ExpObjCntPtr );
-
-  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG){
-    if (/*GFL_UI_KEY_GetTrg() & PAD_BUTTON_L*/0){
-      FLD3D_CI_CallCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr, 0);
-    }else if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){
-      FLD3D_CI_CallCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr, 1);
-    }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_R){
-      FLD3D_CI_FlySkyCameraDebug(
-          fieldWork->gsys, fieldWork->Fld3dCiPtr, fieldWork->camera_control,
-          FIELDMAP_GetFieldPlayer(fieldWork),
-          FIELDMAP_GetFldNoGridMapper( fieldWork ) );
-    }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_A){
-      CapFunc();
-    }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_B){
-      static const GFL_BG_SYS_HEADER sc_bg_sys_header = 
-      {
-				GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
-      };
-      GFL_BG_SetBGMode( &sc_bg_sys_header );
-      GX_SetBankForBG(GX_VRAM_BG_128_D);
-    }
-    else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){
-      static const GFL_BG_SYS_HEADER sc_bg_sys_header = 
-      {
-				GX_DISPMODE_VRAM_D,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
-      };
-      GFL_BG_SetBGMode( &sc_bg_sys_header );
-      GX_SetBankForLCDC(GX_VRAM_LCDC_D);
-    }
-  }
-
-  FLD_PRTCL_Main();
-  FLD3D_CI_Draw( fieldWork->Fld3dCiPtr );
-#endif  
   GFL_G3D_DRAW_End(); //描画終了（バッファスワップ）
 
 }
@@ -2529,7 +2456,7 @@ static void zoneChange_SetZoneFogLight( FIELDMAP_WORK *fieldWork, u32 zone_id )
 
 	FIELD_ZONEFOGLIGHT_Clear( p_zonefog );
 	
-	FIELD_ZONEFOGLIGHT_LoadZoneID( p_zonefog, zone_id, fieldWork->heapID );
+	FIELD_ZONEFOGLIGHT_Load( fieldWork->zonefog, ZONEDATA_GetFog(zone_id), ZONEDATA_GetLight(zone_id), fieldWork->heapID );
 }
 
 //--------------------------------------------------------------
@@ -2868,7 +2795,7 @@ static void Draw3DNormalMode( FIELDMAP_WORK * fieldWork )
   
 
 	FLDMAPPER_Draw( fieldWork->g3Dmapper, fieldWork->g3Dcamera );
-	FLD_WIPEOBJ_Main( fieldWork->fldWipeObj, fldWipeScale ); 
+	FIELD_FLASH_Draw( fieldWork->field_flash );
   {
 	  MtxFx44 org_pm,pm;
 		const MtxFx44 *m;

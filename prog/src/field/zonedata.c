@@ -23,9 +23,29 @@
 #include "arc/fieldmap/field_rail_setup.naix"  //NARC_field_rail_data_～
 #include "../../resource/fldmapdata/zonetable/header/maptype.h"
 
+#include "fieldmap/field_fog_table.naix"
+#include "fieldmap/field_zone_light.naix"
 
-// アーカイブハンドル
-static ARCHANDLE* handle = NULL;
+#include "field/field_zonefog.h"
+
+//-------------------------------------
+// 内部ワーク
+//-------------------------------------
+typedef struct 
+{
+  // アーカイブハンドル
+  ARCHANDLE* handle;
+
+  // ゾーンフォグ　ライト　リスト
+  ZONE_FOG_DATA* zonefoglist;
+  ZONE_LIGHT_DATA* zonelightlist;
+  u16 zonefoglist_max;
+  u16 zonelightlist_max;
+
+
+} ZONE_DATA_HANDLE;
+
+static ZONE_DATA_HANDLE* data_handle = NULL;
 
 //============================================================================================
 //============================================================================================
@@ -36,9 +56,24 @@ static ARCHANDLE* handle = NULL;
 //------------------------------------------------------------------
 void ZONEDATA_Open( HEAPID heap_id )
 {
-  if( handle == NULL )
+  if( data_handle == NULL )
   {
-    handle = GFL_ARC_OpenDataHandle( ARCID_ZONEDATA, heap_id );
+    data_handle = GFL_HEAP_AllocClearMemory( heap_id, sizeof(ZONE_DATA_HANDLE) );
+
+    // アーカイブハンドル
+    data_handle->handle = GFL_ARC_OpenDataHandle( ARCID_ZONEDATA, heap_id );
+    
+    // フォグ　ライト
+    {
+      u32 size; 
+      
+      data_handle->zonefoglist = GFL_ARC_UTIL_LoadEx( ARCID_ZONEFOG_TABLE, NARC_field_fog_table_zonefog_table_bin, FALSE, heap_id, &size );
+      data_handle->zonefoglist_max = size / sizeof(ZONE_FOG_DATA);
+
+      data_handle->zonelightlist = GFL_ARC_UTIL_LoadEx( ARCID_ZONELIGHT_TABLE, NARC_field_zone_light_light_list_bin, FALSE, heap_id, &size );
+      data_handle->zonelightlist_max = size / sizeof(ZONE_LIGHT_DATA);
+
+    }
   }
 }
 
@@ -49,10 +84,19 @@ void ZONEDATA_Open( HEAPID heap_id )
 //------------------------------------------------------------------
 void ZONEDATA_Close()
 {
-  if( handle != NULL )
+  if( data_handle != NULL )
   {
-    GFL_ARC_CloseDataHandle( handle );
-    handle = NULL;
+    // フォグ　ライト
+    {
+      GFL_HEAP_FreeMemory( data_handle->zonelightlist );
+      GFL_HEAP_FreeMemory( data_handle->zonefoglist );
+    }
+
+    // アーカイブハンドル
+    GFL_ARC_CloseDataHandle( data_handle->handle );
+
+    GFL_HEAP_FreeMemory( data_handle );
+    data_handle = NULL;
   }
 }
 
@@ -90,9 +134,9 @@ u16 ZONEDATA_GetZoneIDMax(void)
 static ZONEDATA * loadZoneData(HEAPID heapID)
 {
 	ZONEDATA * buffer;
-  if( handle != NULL )
+  if( data_handle != NULL )
   {
-    buffer = GFL_ARC_LoadDataAllocByHandle(handle, NARC_zonedata_zonetable_bin, heapID);
+    buffer = GFL_ARC_LoadDataAllocByHandle(data_handle->handle, NARC_zonedata_zonetable_bin, heapID);
   }
   else
   {
@@ -105,7 +149,7 @@ static ZONEDATA * loadZoneData(HEAPID heapID)
 //------------------------------------------------------------------
 static ZONEDATA * getZoneData(ZONEDATA * zdbuf, u16 zone_id)
 {
-  if( handle == NULL )
+  if( data_handle == NULL )
   {
     OS_Printf( "アーカイブハンドルがオープンさせていません。\n" );
     return zdbuf;
@@ -113,9 +157,9 @@ static ZONEDATA * getZoneData(ZONEDATA * zdbuf, u16 zone_id)
 
 	CHECK_RANGE(zone_id);	//範囲外チェック
 
-  if( handle != NULL )
+  if( data_handle != NULL )
   {
-    GFL_ARC_LoadDataOfsByHandle(handle,
+    GFL_ARC_LoadDataOfsByHandle(data_handle->handle,
         NARC_zonedata_zonetable_bin,
         sizeof(ZONEDATA) * zone_id, sizeof(ZONEDATA), zdbuf);
   }
@@ -574,6 +618,66 @@ u8 ZONEDATA_GetBattleBGType(u16 zone_id)
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ぞーんごとのFOGデータインデックス取得 field_zonefog.h参照
+ *
+ *	@param	zone_id ゾーンID
+ *
+ *	@retval データインデックス
+ *	@retval FIELD_ZONEFOGLIGHT_DATA_NONE  なし
+ */
+//-----------------------------------------------------------------------------
+u32 ZONEDATA_GetFog(u16 zone_id)
+{
+  int i;
+  u32 ret = FIELD_ZONEFOGLIGHT_DATA_NONE;
+  
+  GF_ASSERT( data_handle );
+  
+  for( i=0; i<data_handle->zonefoglist_max; i++ )
+  {
+    if( data_handle->zonefoglist[i].zone_id == zone_id )
+    {
+      ret = data_handle->zonefoglist[i].data_id;
+      break;
+    }
+  }
+
+  return ret;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ぞーんごとのLIGHTデータインデックス取得 field_zonefog.h参照
+ *
+ *	@param	zone_id ゾーンID
+ *
+ *	@retval データインデックス
+ *	@retval FIELD_ZONEFOGLIGHT_DATA_NONE  なし
+ */
+//-----------------------------------------------------------------------------
+u32 ZONEDATA_GetLight(u16 zone_id)
+{
+  int i;
+  u32 ret = FIELD_ZONEFOGLIGHT_DATA_NONE;
+  
+  GF_ASSERT( data_handle );
+  
+  for( i=0; i<data_handle->zonelightlist_max; i++ )
+  {
+    if( data_handle->zonelightlist[i].zone_id == zone_id )
+    {
+      ret = data_handle->zonelightlist[i].data_id;
+      break;
+    }
+  }
+
+  return ret;
+}
+
+
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -586,9 +690,9 @@ u8 ZONEDATA_GetBattleBGType(u16 zone_id)
 void ZONEDATA_DEBUG_GetZoneName(char * buffer, u16 zone_id)
 {
 	CHECK_RANGE(zone_id);	//範囲外チェック
-  if( handle != NULL )
+  if( data_handle != NULL )
   {
-    GFL_ARC_LoadDataOfsByHandle(handle,
+    GFL_ARC_LoadDataOfsByHandle(data_handle->handle,
         NARC_zonedata_zonename_bin,
         ZONEDATA_NAME_LENGTH * zone_id, ZONEDATA_NAME_LENGTH, buffer);
   }
@@ -605,10 +709,10 @@ void ZONEDATA_DEBUG_GetZoneName(char * buffer, u16 zone_id)
 const char * ZONEDATA_GetAllZoneName(HEAPID heapID)
 {
 	char * namedata;
-  if( handle != NULL )
+  if( data_handle != NULL )
   {
     namedata = GFL_ARC_LoadDataAllocByHandle(
-        handle, NARC_zonedata_zonename_bin, heapID);
+        data_handle->handle, NARC_zonedata_zonename_bin, heapID);
   }
   else
   {

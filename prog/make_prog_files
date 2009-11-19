@@ -499,6 +499,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/gym_ground_ent.c \
 				field/event_debug_beacon.c \
         field/field_g3dobj.c \
+        field/field_flash.c \
         field/scrcmd_fldci.c
 
 # フィールド天気

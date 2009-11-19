@@ -51,3 +51,9 @@ extern void FIELD_STATUS_SetFieldInitFlag( FIELD_STATUS * fldstatus, BOOL flag )
 //------------------------------------------------------------------
 extern BOOL FIELD_STATUS_GetFieldInitFlag( const FIELD_STATUS * fldstatus );
 
+
+//------------------------------------------------------------------
+// ÉtÉâÉbÉVÉÖèÛë‘ä«óù
+//------------------------------------------------------------------
+extern void FIELD_STATUS_SetFlash( FIELD_STATUS * fldstatus, BOOL flag );
+extern BOOL FIELD_STATUS_IsFlash( const FIELD_STATUS * fldstatus );
