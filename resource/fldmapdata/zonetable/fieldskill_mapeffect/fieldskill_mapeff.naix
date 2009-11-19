@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: fieldskill_mapeff.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_FIELDSKILL_MAPEFF_NAIX_
+#define NARC_FIELDSKILL_MAPEFF_NAIX_
+
+enum {
+	NARC_fieldskill_mapeff_fieldskill_mapeffect_bin = 0
+};
+
+/* NARC_FIELDSKILL_MAPEFF_NAIX_ */
+#endif
