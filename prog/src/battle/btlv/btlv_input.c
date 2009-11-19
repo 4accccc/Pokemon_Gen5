@@ -2699,6 +2699,7 @@ static  void  BTLV_INPUT_CreateRotatePokeIcon( BTLV_INPUT_WORK* biw )
       GFL_CLACT_WK_SetDrawEnable( biw->pokeicon_wk[ i ].clwk, FALSE );
     }
   }
+  GFL_ARC_CloseDataHandle( hdl );
 }
 
 //--------------------------------------------------------------
