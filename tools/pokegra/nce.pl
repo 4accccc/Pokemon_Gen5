@@ -264,6 +264,139 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
 #=cut
 	}
 
+  #静止アニメ用データ生成
+
+  #読み飛ばすデータの処理
+  @skip_block = ( "CNUM", "CHAR", "GRP ", "ANIM", "ACTL", "MODE", "LABL", "CMNT", "CCMT" );
+  $skip_cnt = @skip_block;
+
+	for( $skip = 0 ; $skip < $skip_cnt ; $skip++ ){
+	  #ヘッダーを読み込み
+  	read READ_NCE, $header, BLOCK_TYPE + BLOCK_SIZE; 
+  	($block_type, $block_size) = unpack "a4 L", $header;
+
+  	if( $block_type ne @skip_block[ $skip ] ){
+  	  if( @skip_block[ $skip ] eq "CHAR" ){
+        $skip++;
+      }
+  	  if( $block_type ne @skip_block[ $skip ] ){
+        print @skip_block[ $skip ] . "\n";
+  	  	print "NitroCharacterのnceファイルではありません\n";
+  	  	die;
+      }
+  	}
+    #ブロックサイズ分読み飛ばし
+  	read READ_NCE, $header, $block_size - 8;
+  }
+
+  #ヘッダーを読み込み
+	read READ_NCE, $header, 12; 
+ 	($block_type, $block_size, $cell_anim_max) = unpack "a4 L L", $header;
+
+ 	if( $block_type ne "ECMT" ){
+    print "ECMT\n";
+    print "NitroCharacterのnceファイルではありません\n";
+ 	  die;
+ 	} 
+
+  for( $cell_anim = 0 ; $cell_anim < $cell_anim_max ; $cell_anim++ ){
+	  read READ_NCE, $header, 4; 
+ 	  ($comment_size) = unpack "L", $header;
+	  read READ_NCE, $data, $comment_size; 
+ 	  ($comment) = unpack "a4", $data;
+    if( $comment eq "stop" ){
+      push( @stop_cell, 1 ); 
+    }
+    else{
+      push( @stop_cell, 0 ); 
+    }
+  }
 	close READ_NCE;
+
+  #nmcファイル読み込み
+  $read_file = dirname( @ARGV[0] ) . "/" . basename( @ARGV[0], ".nce" ) . ".nmc";
+
+	open( READ_NMC, $read_file ) or die "[$read_file]", $!;
+	binmode READ_NMC;
+
+	#ヘッダーデータを読み込み
+	read READ_NMC, $header, NCE_HEADER_SIZE; 
+
+	#読み込んだデータをセパレート
+	($format_id, $byte_order, $format_version, $file_size, $header_size, $data_blocks) = unpack "a4 S S L S S", $header;
+
+	if( $format_id ne "NCMC" ){
+    print "NitroCharacterのnmcファイルではありません\n";
+ 	  die;
+  }
+
+  #ヘッダーを読み込み
+	read READ_NMC, $header, 12; 
+ 	($block_type, $block_size, $multi_cells) = unpack "a4 L L", $header;
+
+	if( $block_type ne "MCEL" ){
+    print "NitroCharacterのnmcファイルではありません\n";
+ 	  die;
+  }
+
+  for( $mc = 0 ; $mc < $multi_cells ; $mc++ ){
+	  read READ_NMC, $header, 4; 
+ 	  ($cell_anms) = unpack "L", $header;
+    push( @cell_anm_max, $cell_anms ); 
+    for( $ca = 0 ; $ca < $cell_anms ; $ca++ ){
+	    read READ_NMC, $header, 12; 
+ 	    ($cell_anm_pos_x, $cell_anm_pos_y, $cell_anm_index) = unpack "L L L", $header;
+      $mcell_anms[$mc][$ca] = $cell_anm_index;
+    }
+  }
+
+  #ヘッダーを読み込み
+	read READ_NMC, $header, 12; 
+ 	($block_type, $block_size, $multi_cell_anms) = unpack "a4 L L", $header;
+
+  @node = ();
+
+  if( $multi_cell_anms > 1 ){
+    for( $mca = 0 ; $mca < $multi_cell_anms ; $mca++ ){
+	    read READ_NMC, $header, 12; 
+ 	    ($label_index, $cmnt_index, $multi_cells) = unpack "L L L", $header;
+      for( $mc = 0 ; $mc < $multi_cells ; $mc++ ){
+	      read READ_NMC, $header, 24; 
+ 	      ($cell_index, $frame, $rot, $scale_x, $scale_y, $trans_x, $trans_y) = unpack "S S L L L L L", $header;
+        if( $label_index == 1 ){
+          for( $i = 0; $i < $cell_anm_max[$label_index] ; $i++ ){
+            $sc = $mcell_anms[$label_index][$i];
+            if( $stop_cell[$sc] == 1 ){
+              print $i;
+              push( @node, $i );
+            }
+          }
+        }
+      }
+    }
+  }
+
+  $node_cnt = @node;
+
+  if( $node_cnt == 0 ){
+		$write = pack "L", 0xffffffff;
+	  print WRITE_NCE $write;
+  }
+  else{
+    $padding = 3 - $node_cnt;
+		$write = pack "C", $node_cnt;
+	  print WRITE_NCE $write;
+    for( $i = 0 ; $i < $node_cnt ; $i++ ){
+		  $write = pack "C", $node[$i];
+	    print WRITE_NCE $write;
+    }
+    for( $i = 0 ; $i < $padding ; $i++ ){
+		  $write = pack "C", 0;
+	    print WRITE_NCE $write;
+    }
+  }
+
+	close READ_NMC;
 	close WRITE_NCE;
+
 
