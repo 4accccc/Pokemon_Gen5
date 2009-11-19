@@ -603,6 +603,9 @@ static void PMSSelect_GRAPHIC_Load( PMS_SELECT_MAIN_WORK* wk )
     UI_EASY_CLWK_LoadResource( &wk->clwkres, &prm, clunit, wk->heapID );
 
     wk->clwk_bar = UI_EASY_CLWK_CreateCLWK( &wk->clwkres, clunit, LIST_BAR_STD_PX, LIST_BAR_STD_PY, LIST_BAR_ANM_IDX ,wk->heapID );
+
+    // タスクメニューの下
+    GFL_CLACT_WK_SetBgPri( wk->clwk_bar, 1 );
   }
 
 	//BGリソース読み込み
@@ -1148,7 +1151,7 @@ static void LIST_BAR_SetPosFromKey( PMS_SELECT_MAIN_WORK* wk )
 {
   int pos_id;
   s16 clpos;
-  int elem_size;
+  int fx_elem_size;
   
   // バーが出現していない場合は処理なし
   if( GFL_CLACT_WK_GetDrawEnable( wk->clwk_bar ) == FALSE )
@@ -1171,21 +1174,25 @@ static void LIST_BAR_SetPosFromKey( PMS_SELECT_MAIN_WORK* wk )
   // OTHER
   else
   {
-    elem_size = LIST_BAR_AREA_SIZE / (wk->list_max-1);
-    clpos = LIST_BAR_AREA_MIN + elem_size * pos_id;
+    // タッチ座標からCLWKの座標を算出
+    fx_elem_size     = FX32_CONST(LIST_BAR_AREA_SIZE) / (wk->list_max-1);
+
+    GF_ASSERT( fx_elem_size ); // ZERO DIV
+
+    clpos = LIST_BAR_AREA_MIN + ( (fx_elem_size * pos_id) >> FX32_SHIFT );
    
     GF_ASSERT( clpos < LIST_BAR_AREA_MAX );
   }
 
   GFL_CLACT_WK_SetWldTypePos( wk->clwk_bar, clpos, CLSYS_MAT_Y );
 
-  HOSAKA_Printf("pos_id=%d, list_max=%d, area_size=%d, elem_size=%d, clpos=%d \n",
-                 pos_id, wk->list_max, LIST_BAR_AREA_SIZE, elem_size, clpos );
+  OS_Printf("pos_id=%d, list_max=%d, area_size=%d, fx_elem_size=%f, clpos=%d \n",
+                 pos_id, wk->list_max, LIST_BAR_AREA_SIZE, FX_FX32_TO_F32(fx_elem_size), clpos );
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  タッチ移動によるバーアイコンの位置変更
+ *	@brief  タッチ移動によるリストの位置変更
  *
  *	@param	PMS_SELECT_MAIN_WORK* wk 
  *
@@ -1295,10 +1302,18 @@ static BOOL  LIST_BAR_CheckTouching( PMS_SELECT_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
 {
-  // セレクト無効状態でタッチされたら
+  // セレクト無効状態でキー入力されたら
   if( GFL_UI_KEY_GetTrg() && wk->select_id == SELECT_ID_NULL )
   {
-    wk->select_id = wk->list_head_id; //先頭を選択
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+    {
+      wk->select_id = wk->list_head_id + (PMS_SELECT_PMSDRAW_NUM-2); //末尾を選択
+    }
+    else
+    {
+      wk->select_id = wk->list_head_id; //先頭を選択
+    }
+
     PLATE_CNT_UpdateAll( wk );
     return;
   }
