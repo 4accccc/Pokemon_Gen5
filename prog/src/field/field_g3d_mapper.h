@@ -89,6 +89,13 @@ extern BOOL FLDMAPPER_CheckTrans( const FLDMAPPER* g3Dmapper );
 //------------------------------------------------------------------
 extern void FLDMAPPER_SetPos( FLDMAPPER* g3Dmapper, const VecFx32* pos );
 
+//------------------------------------------------------------------
+/**
+ * @brief	マップ位置からカレントブロックアクセスindexを取得
+ */
+//------------------------------------------------------------------
+extern int FLDMAPPER_GetCurrentBlockAccessIdx( const FLDMAPPER* g3Dmapper );
+
 
 //------------------------------------------------------------------
 /**
@@ -112,6 +119,20 @@ extern BOOL FLDMAPPER_GetGridInfo
 //------------------------------------------------------------------
 extern BOOL FLDMAPPER_GetGridData
 	( const FLDMAPPER* g3Dmapper, const VecFx32* pos, FLDMAPPER_GRIDINFODATA* pGridData );
+
+//------------------------------------------------------------------
+/**
+ * @brief	グリッドアトリビュート情報取得(エフェクトエンカウント専用！　他では使わないで！)
+ *
+ * @param g3Dmapper 
+ * @param pos       x,zにデータを取得したいposの座標を格納
+ * @param gridInfo  グリッドデータを取得するFLDMAPPER_GRIDINFO構造体型変数へのポインタ
+ *
+ * @li  複層データ及び拡張高さデータを無視しベース階層データのみ＆カレントブロックのみからデータを取得します
+ */
+//------------------------------------------------------------------
+extern BOOL FLDMAPPER_GetGridDataForEffectEncount
+	( const FLDMAPPER* g3Dmapper, int blockIdx, const VecFx32* pos, FLDMAPPER_GRIDINFODATA* pGridData );
 
 //------------------------------------------------------------------
 /**

@@ -848,6 +848,38 @@ void FLDMAPPER_SetPos( FLDMAPPER* g3Dmapper, const VecFx32* pos )
 
 	VEC_Set( &g3Dmapper->posCont, pos->x, pos->y, pos->z );
 }
+//------------------------------------------------------------------
+/**
+ * @brief	マップ位置からカレントブロックアクセスindexを取得
+ */
+//------------------------------------------------------------------
+int FLDMAPPER_GetCurrentBlockAccessIdx( const FLDMAPPER* g3Dmapper )
+{
+  u32 i;
+	GF_ASSERT( g3Dmapper );
+
+  for( i=0; i<g3Dmapper->blockNum; i++ ){
+	  VecFx32 trans;
+		fx32 min_x, min_z, max_x, max_z;
+
+		if( GFL_G3D_MAP_GetDrawSw( g3Dmapper->blockWk[i].g3Dmap ) == FALSE ){
+      continue;
+    }
+		GFL_G3D_MAP_GetTrans( g3Dmapper->blockWk[i].g3Dmap, &trans );
+		min_x = trans.x - g3Dmapper->blockWidth/2;
+		min_z = trans.z - g3Dmapper->blockWidth/2;
+		max_x = trans.x + g3Dmapper->blockWidth/2;
+		max_z = trans.z + g3Dmapper->blockWidth/2;
+
+		//ブロック範囲内チェック（マップブロックのＸＺ平面上地点）
+		if(	(g3Dmapper->posCont.x >= min_x)&&(g3Dmapper->posCont.x < max_x) &&
+        (g3Dmapper->posCont.z >= min_z)&&(g3Dmapper->posCont.z < max_z) ){
+      return i;
+    }
+  }
+	GF_ASSERT( 0 );
+  return 0;
+}
 
 //------------------------------------------------------------------
 /**
@@ -1415,6 +1447,45 @@ BOOL FLDMAPPER_GetGridData
 	}
 //  IWASAWA_Printf("TargetIs %d Y = %08x, attr = %08x\n",target,gridInfo.gridData[target].height,gridInfo.gridData[target].attr);
   *pGridData = gridInfo.gridData[target];
+	return TRUE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	グリッドアトリビュート情報取得(エフェクトエンカウント専用！　他では使わないで！)
+ *
+ * @param g3Dmapper 
+ * @param pos       x,zにデータを取得したいposの座標を格納
+ * @param gridInfo  グリッドデータを取得するFLDMAPPER_GRIDINFO構造体型変数へのポインタ
+ *
+ * @li  複層データ及び拡張高さデータを無視しベース階層データのみ＆カレントブロックのみからデータを取得します
+ */
+//------------------------------------------------------------------
+BOOL FLDMAPPER_GetGridDataForEffectEncount
+	( const FLDMAPPER* g3Dmapper, int blockIdx, const VecFx32* pos, FLDMAPPER_GRIDINFODATA* pGridData )
+{
+	GFL_G3D_MAP_ATTRINFO attrInfo;
+  GFL_G3D_MAP* map;
+
+	GF_ASSERT( g3Dmapper );
+	if( g3Dmapper->blocks == NULL ){
+		OS_Printf("データが読み込まれていない\n");
+		return FALSE;
+	}
+
+  FLDMAPPER_GRIDINFODATA_Init(pGridData);
+	
+  map = g3Dmapper->blockWk[blockIdx].g3Dmap;
+  if( GFL_G3D_MAP_GetDrawSw( map ) == FALSE ){
+    return FALSE;
+  }
+	GFL_G3D_MAP_GetAttr( &attrInfo, map, pos, g3Dmapper->blockWidth );
+	if( attrInfo.mapAttrCount == 0 ){
+    return FALSE;
+  }
+	pGridData->vecN = attrInfo.mapAttr[0].vecN;
+	pGridData->attr = attrInfo.mapAttr[0].attr;
+	pGridData->height = attrInfo.mapAttr[0].height;
 	return TRUE;
 }
 
