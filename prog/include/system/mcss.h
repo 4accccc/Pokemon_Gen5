@@ -68,6 +68,7 @@ typedef struct
 
 typedef struct _MCSS_NCEC				MCSS_NCEC;
 typedef struct _MCSS_NCEC_WORK	MCSS_NCEC_WORK;
+typedef struct _MCSS_NCEN_WORK	MCSS_NCEN_WORK;
 typedef struct _MCSS_WORK				MCSS_WORK;
 typedef struct _MCSS_SYS_WORK		MCSS_SYS_WORK;
 
@@ -102,7 +103,12 @@ extern	int							MCSS_GetVanishFlag( MCSS_WORK *mcss );
 extern	void						MCSS_SetVanishFlag( MCSS_WORK *mcss );
 extern	void						MCSS_ResetVanishFlag( MCSS_WORK *mcss );
 extern	void						MCSS_FlipVanishFlag( MCSS_WORK *mcss );
+extern  NNSG2dMultiCellAnimation* MCSS_GetAnimCtrl( MCSS_WORK *mcss );
+extern  u16             MCSS_GetMCellAnmNum( MCSS_WORK *mcss );
+extern  u8              MCSS_GetStopCellAnms( MCSS_WORK *mcss );
+extern  u8              MCSS_GetStopNode( MCSS_WORK *mcss, u8 index );
 extern	void						MCSS_SetAnimCtrlCallBack( MCSS_WORK *mcss, u32 param, NNSG2dAnmCallBackPtr pFunc, u16 frameIdx );
+extern  void	          MCSS_SetTraverseMCNodesCallBack( MCSS_WORK *mcss, u32 param, NNSG2dMCTraverseNodeCallBack pFunc );
 extern	void						MCSS_SetPaletteFade( MCSS_WORK *mcss, u8 start_evy, u8 end_evy, u8 wait, u32 rgb );
 extern  u8              MCSS_GetAlpha( MCSS_WORK *mcss );
 extern  void	          MCSS_SetAlpha( MCSS_WORK *mcss, u8 alpha );
@@ -113,6 +119,7 @@ extern  void	          MCSS_SetShadowVanishFlag( MCSS_WORK *mcss, u8 flag );
 extern  BOOL            MCSS_CheckExecutePaletteFade( MCSS_WORK*  mcss );
 extern  void            MCSS_SetTextureTransAdrs( MCSS_SYS_WORK* mcss_sys, u32 adrs );
 extern  void            MCSS_SetTexPaletteTransAdrs( MCSS_SYS_WORK* mcss_sys, u32 adrs );
+extern  void	          MCSS_SetAnimeIndex( MCSS_WORK* mcss, int index );
 
 #ifdef PM_DEBUG
 extern	MCSS_WORK*			MCSS_AddDebug( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, const MCSS_ADD_DEBUG_WORK *madw );
