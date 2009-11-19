@@ -93,8 +93,10 @@ struct _EVENT_PROCLINK_PARAM
 	void *wk_adrs;															//[in ]コールバックに渡す引数
 
 	EVENT_PROCLINK_RESULT			result;			//[out]終了結果
-	u32 select_param;		//[out]選択された技、アイテム	FLDSKILL_IDX or EVENT_ITEMUSE_CALL_TYPEが返る
+	u32 select_param;	  //[out]選択された技、アイテム	FLDSKILL_IDX or EVENT_ITEMUSE_CALL_TYPEが返る
 	u32 select_poke;		//[out]選択されたポケモン
+  u32 zoneID;         //[out]空を飛ぶ用ゾーンID
+  GFL_POINT pos;      //[out]空を飛ぶ用飛び先指定
 };
 
 //=============================================================================
