@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-18T14:11:53"/>
+	<create user="matsumiya" host="W00207" date="2009-11-19T17:58:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,6 +338,16 @@
 		<language name="JPN_KANJI" width="256">トレーナーよ！[BE:01:ページ切り替え（クリア）]
 まずは　ライモン　ポケモンジムにて
 ボルトバッジを　手に入れるのだ！</language>
+	</row>
+
+	<row id="msg_r10r0401_badge_05">
+		<comment>♂
+・ストッパー用</comment>
+		<attribute name="キャラ指定">ストッパー用</attribute>
+		<language name="JPN" width="256">まてい！　わしに　あいさつもせず
+ゲートを　とおるのは　ゆるさん！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">待てい！　わしに　あいさつもせず
+ゲートを　通るのは　許さん！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>
