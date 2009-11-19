@@ -336,6 +336,11 @@ u8 PMSND_GetBGMTrackVolume( int trackNo )
 	return 0;
 }
 
+BOOL PMSND_IsLoading( void )
+{
+	return OS_IsThreadTerminated(&soundLoadThread) == FALSE;
+}
+
 //============================================================================================
 /**
  *
@@ -457,6 +462,9 @@ void	PMSND_StopBGM( void )
 static BOOL PMSND_PlayBGM_CORE( u32 soundIdx, u16 trackBit )
 {
 	BOOL result;
+
+  // ロードスレッド動作中は再生しない
+  if( PMSND_IsLoading() ) { return FALSE; }
 
 	PMSND_StopBGM_CORE();
 	result = SOUNDMAN_LoadHierarchyPlayer(soundIdx);
@@ -854,8 +862,12 @@ void	PMSND_PlaySE_byPlayerID( u32 soundIdx, SEPLAYER_ID sePlayerID )
 void	PMSND_PlaySE( u32 soundIdx )
 {
 	BOOL result;
-	SEPLAYER_ID	sePlayerID = PMSND_GetSE_DefaultPlayerID(soundIdx);
+	SEPLAYER_ID	sePlayerID;
 
+  // ロードスレッド動作中は再生しない
+  if( PMSND_IsLoading() ) { return; }
+
+	sePlayerID = PMSND_GetSE_DefaultPlayerID(soundIdx);
 	sePlayerData[sePlayerID].soundIdx = 0;
 	result = NNS_SndArcPlayerStartSeq(&sePlayerData[sePlayerID].sndHandle, soundIdx);
 	if(result == TRUE){ sePlayerData[sePlayerID].soundIdx = soundIdx; }

@@ -77,6 +77,7 @@ extern u32						PMSND_GetNextBGMsoundNo( void );	//再生予定or再生中のIDX取得
 extern u32						PMSND_GetBGMplayerNoIdx( void );
 extern BOOL						PMSND_CheckOnReverb( void );
 extern u8							PMSND_GetBGMTrackVolume( int trackNo );
+extern BOOL           PMSND_IsLoading( void );  // ロード中かどうか
 
 //	リバーブ設定
 extern void PMSND_EnableCaptureReverb( u32 depth, u32 samplingRate, int volume, int stopFrames );
