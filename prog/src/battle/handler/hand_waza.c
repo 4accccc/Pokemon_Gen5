@@ -390,6 +390,10 @@ static BTL_EVENT_FACTOR*  ADD_GuardSwap( u16 pri, WazaID waza, u8 pokeID );
 static void handler_GuardSwap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_PowerTrick( u16 pri, WazaID waza, u8 pokeID );
 static void handler_PowerTrick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_PowerShare( u16 pri, WazaID waza, u8 pokeID );
+static void handler_PowerShare( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_GuardShare( u16 pri, WazaID waza, u8 pokeID );
+static void handler_GuardShare( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_LockON( u16 pri, WazaID waza, u8 pokeID );
 static void handler_LockON( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Refrector( u16 pri, WazaID waza, u8 pokeID );
@@ -763,6 +767,8 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_KARI_BORUTOCHENZI,    ADD_TonboGaeri    },  // ボルトチェンジ=とんぼがえり
     { WAZANO_KARI_WAIDOGAADO,      ADD_WideGuard     },
     { WAZANO_KARI_MIRAATAIPU,      ADD_MirrorType    },
+    { WAZANO_KARI_PAWAASHEA,       ADD_PowerShare    },
+    { WAZANO_KARI_GAADOSHEA,       ADD_GuardShare    },
   };
 
   int i;
@@ -5451,6 +5457,100 @@ static void handler_PowerTrick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     flag_param = (BTL_HANDEX_PARAM_SET_CONTFLAG*)BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_SET_CONTFLAG, pokeID );
     flag_param->pokeID = pokeID;
     flag_param->flag = BPP_CONTFLG_POWERTRICK;
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * パワーシェア
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_PowerShare( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORIZE_WAZA,  handler_PowerShare   },  // 未分類ワザ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_PowerShare( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BTL_HANDEX_PARAM_SET_STATUS* param;
+    const BTL_POKEPARAM *user, *target;
+    u8 target_pokeID;
+    u8 avrg, sp_avrg;
+
+    target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+    user = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+    target = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, target_pokeID );
+
+    avrg = (BPP_GetValue_Base(user, BPP_ATTACK) + BPP_GetValue_Base(target, BPP_ATTACK)) / 2;
+    sp_avrg = (BPP_GetValue_Base(user, BPP_SP_ATTACK) + BPP_GetValue_Base(target, BPP_SP_ATTACK)) / 2;
+
+    param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_SET_STATUS, pokeID );
+    param->pokeID = target_pokeID;
+    param->attack = avrg;
+    param->sp_attack = sp_avrg;
+    param->fAttackEnable = TRUE;
+    param->fSpAttackEnable = TRUE;
+
+    param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_SET_STATUS, pokeID );
+    param->pokeID = pokeID;
+    param->attack = avrg;
+    param->sp_attack = sp_avrg;
+    param->fAttackEnable = TRUE;
+    param->fSpAttackEnable = TRUE;
+
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_PowerShare );
+    HANDEX_STR_AddArg( &param->exStr, pokeID );
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * ガードシェア
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_GuardShare( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORIZE_WAZA,  handler_GuardShare   },  // 未分類ワザ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_GuardShare( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BTL_HANDEX_PARAM_SET_STATUS* param;
+    const BTL_POKEPARAM *user, *target;
+    u8 target_pokeID;
+    u8 avrg, sp_avrg;
+
+    target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+    user = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+    target = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, target_pokeID );
+
+    avrg = (BPP_GetValue_Base(user, BPP_DEFENCE) + BPP_GetValue_Base(target, BPP_DEFENCE)) / 2;
+    sp_avrg = (BPP_GetValue_Base(user, BPP_SP_DEFENCE) + BPP_GetValue_Base(target, BPP_SP_DEFENCE)) / 2;
+
+    param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_SET_STATUS, pokeID );
+    param->pokeID = target_pokeID;
+    param->defence = avrg;
+    param->sp_defence = sp_avrg;
+    param->fDefenceEnable = TRUE;
+    param->fSpDefenceEnable = TRUE;
+
+    param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_SET_STATUS, pokeID );
+    param->pokeID = pokeID;
+    param->defence = avrg;
+    param->sp_defence = sp_avrg;
+    param->fDefenceEnable = TRUE;
+    param->fSpDefenceEnable = TRUE;
+
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_GuardShare );
+    HANDEX_STR_AddArg( &param->exStr, pokeID );
   }
 }
 //----------------------------------------------------------------------------------

@@ -1757,7 +1757,6 @@ static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
     pokeID = BPP_GetID( bpp );
     if( wk->pokeInFlag[ pokeID ] )
     {
-      BTL_Printf(" After MemberIn pokeID=%d\n", pokeID );
       scEvent_MemberIn( wk, bpp );
       scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       wk->pokeInFlag[ pokeID ] = FALSE;

@@ -539,6 +539,8 @@ void BPP_SetBaseStatus( BTL_POKEPARAM* bpp, BppValueID vid, u8 value )
     GF_ASSERT(0);
     break;
   }
+
+  BTL_Printf("ƒ|ƒP[%d]‚Ì”\—Í(%d)‚ð%d‚É‘‚«Š·‚¦‚½\n", bpp->coreParam.myID, vid, value);
 }
 
 //=============================================================================================
