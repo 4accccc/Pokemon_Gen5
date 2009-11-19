@@ -151,8 +151,6 @@ void ISS_SWITCH_SYS_Update( ISS_SWITCH_SYS* sys )
 void ISS_SWITCH_SYS_On( ISS_SWITCH_SYS* sys )
 {
   BootSystem( sys );           // 起動
-  UpdateSwitchDataIdx( sys );  // 現在のBGMで動作する様に設定
-  SwitchOn( sys, SWITCH_00 );  // スイッチ0を押す
 }
 
 //------------------------------------------------------------------------------------------
@@ -273,7 +271,7 @@ static void InitSwitch( ISS_SWITCH_SYS* sys )
     sys->fadeCount[i]   = 0;
   }
   // DEBUG:
-  OBATA_Printf( "ISS-S: init switc\n" );
+  OBATA_Printf( "ISS-S: init switch\n" );
 }
 
 //------------------------------------------------------------------------------------------
@@ -321,7 +319,13 @@ static void BootSystem( ISS_SWITCH_SYS* sys )
 
   // 起動
   sys->boot = TRUE;
+
+  // スイッチ0のみが押されている状態に初期化
   InitSwitch( sys );
+  UpdateSwitchDataIdx( sys );
+  PMSND_ChangeBGMVolume( TRACKBIT_ALL, 0 );
+  PMSND_ChangeBGMVolume( sys->switchData[sys->switchDataIdx].trackBit[0], MAX_VOLUME );
+  sys->switchState[0] = SWITCH_STATE_ON;
 
   // DEBUG:
   OBATA_Printf( "ISS-S: boot\n" );
@@ -433,15 +437,6 @@ static void SwitchUpdate_FADE_IN( ISS_SWITCH_SYS* sys, SWITCH_INDEX idx )
 
   // 参照データを取得
   data = &sys->switchData[sys->switchDataIdx];  
-
-  // スイッチ0は特殊処理
-  if( idx == SWITCH_00 ) 
-  { // フェード無しでスイッチ0のみが再生される状態にする
-    PMSND_ChangeBGMVolume( TRACKBIT_ALL, 0 );
-    PMSND_ChangeBGMVolume( data->trackBit[idx], MAX_VOLUME );
-    sys->switchState[idx] = SWITCH_STATE_ON;
-    return;
-  }
 
   // 更新
   sys->fadeCount[idx]++;

@@ -34,15 +34,15 @@ typedef struct _ISS_SWITCH_SYS ISS_SWITCH_SYS;
 //==========================================================================================
 // スイッチ番号
 typedef enum{
-  SWITCH_00,  // 特殊スイッチ ==> 押すとリセットさせる
-  SWITCH_01,  // 通常スイッチ1
-  SWITCH_02,  // 通常スイッチ2
-  SWITCH_03,  // 通常スイッチ3
-  SWITCH_04,  // 通常スイッチ4
-  SWITCH_05,  // 通常スイッチ5
-  SWITCH_06,  // 通常スイッチ6
-  SWITCH_07,  // 通常スイッチ7
-  SWITCH_08,  // 通常スイッチ8
+  SWITCH_00,  // スイッチ0 ==> システム起動時に押される
+  SWITCH_01,  // スイッチ1
+  SWITCH_02,  // スイッチ2
+  SWITCH_03,  // スイッチ3
+  SWITCH_04,  // スイッチ4
+  SWITCH_05,  // スイッチ5
+  SWITCH_06,  // スイッチ6
+  SWITCH_07,  // スイッチ7
+  SWITCH_08,  // スイッチ8
   SWITCH_NUM,
   SWITCH_MAX = SWITCH_NUM - 1
 } SWITCH_INDEX;
