@@ -12,11 +12,15 @@
 #include "fieldmap.h"
 #include "map_attr.h"
 
+#include "field_encount.h"
+#include "fldeff_encount.h"
+
 #include "encount_data.h"
 #include "field_encount.h"
-
 #include "field_encount_local.h"
 #include "effect_encount.h"
+#include "map_attr.h"
+#include "map_attr_def.h"
 
 #define EFFENC_SEARCH_OX (10)
 #define EFFENC_SEARCH_OZ (10)
@@ -32,15 +36,29 @@ typedef struct _EFFENC_POS{
   u16 zone_id;
   u8 map_x;
   u8 map_z;
-  u8  gx;
-  u8  gz;
+  u16 player_x;
+  u16 player_z;
+  u16 gx;
+  u16 gz;
+  EFFENC_TYPE_ID type;
+
+  FLDEFF_TASK* eff_task;
 }EFFENC_POS;
 
 typedef struct _EFFENC_ATTR_POS{
-  u8  gx,gz;
-  u8  attr;
+  u8  type;
+  u16  gx,gz;
+  fx32  height;
 }EFFENC_ATTR_POS;
 
+typedef struct _EFFENC_SEARCH{
+  s16 player_x;
+  s16 player_z;
+  s16 player_lx;
+  s16 player_lz;
+  s16 block_x,block_z;
+  s16 sx,sz,ex,ez;
+}EFFENC_SEARCH;
 
 ///エンカウントエフェクトアトリビュート探索マップ
 typedef struct _EFFENC_ATTR_MAP{
@@ -53,7 +71,7 @@ typedef struct _EFFENC_ATTR_MAP{
 struct _TAG_EFFECT_ENCOUNT{
   EFFENC_POS pos;
   EFFENC_ATTR_MAP attr_map;
-
+  FLDEFF_CTRL* fectrl;
   u32 walk_ct_interval;
 };
 
@@ -62,6 +80,9 @@ struct _TAG_EFFECT_ENCOUNT{
 ///////////////////////////////////////////////////////////////////////////////////////////
 static BOOL effenc_IsEffectExist( EFFECT_ENCOUNT* eff_wk );
 static BOOL effenc_CheckWalkCt( ENCOUNT_WORK* ewk, EFFECT_ENCOUNT* eff_wk );
+static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
+static void effect_AddEffect( EFFECT_ENCOUNT* eff_wk );
+static void effect_DelEffect( EFFECT_ENCOUNT* eff_wk );
 
 
 
@@ -71,10 +92,11 @@ static BOOL effenc_CheckWalkCt( ENCOUNT_WORK* ewk, EFFECT_ENCOUNT* eff_wk );
 /**
  *  @brief  エンカウントエフェクトワーク生成
  */
-EFFECT_ENCOUNT* EFFECT_ENC_CreateWork( HEAPID heapID )
+EFFECT_ENCOUNT* EFFECT_ENC_CreateWork( FIELDMAP_WORK* fwork, HEAPID heapID )
 {
   EFFECT_ENCOUNT* eff_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(EFFECT_ENCOUNT));
-
+ 
+  eff_wk->fectrl = FIELDMAP_GetFldEffCtrl( fwork );
   eff_wk->walk_ct_interval = 10;
   return eff_wk;
 }
@@ -84,6 +106,9 @@ EFFECT_ENCOUNT* EFFECT_ENC_CreateWork( HEAPID heapID )
  */
 void EFFECT_ENC_DeleteWork( EFFECT_ENCOUNT* eff_wk )
 {
+  //起動中なら破棄
+  effect_DelEffect( eff_wk );
+
   MI_CpuClear8( eff_wk, sizeof(EFFECT_ENCOUNT) );
   GFL_HEAP_FreeMemory( eff_wk );
 }
@@ -104,11 +129,6 @@ void EFFECT_ENC_CheckEffectEncountStart( FIELD_ENCOUNT* enc )
   if( FIELDMAP_GetBaseSystemType( enc->fwork ) != FLDMAP_BASESYS_GRID ){
     return;
   }
- 
-  //エフェクト起動中チェック
-  if(effenc_IsEffectExist( eff_wk )){
-    return; //既に起動している
-  }
 
   //エンカウントデータチェック
   if( !enc->encdata->enable_f ){
@@ -116,14 +136,23 @@ void EFFECT_ENC_CheckEffectEncountStart( FIELD_ENCOUNT* enc )
   }
 
   //アトリビュートサーチ
+  effect_AttributeSearch( enc, eff_wk );
+
+  //抽選
+  if( eff_wk->attr_map.count == 0){
+    return;
+  }
+ 
+  effect_DelEffect( eff_wk );
+  effect_AddEffect( eff_wk );
 }
 
 /*
- *  @brief  エフェクトエンカウント　マップステータス更新
+ *  @brief  エフェクトエンカウント  強制破棄　
  */
-void EFFECT_ENC_MapStateUpdate( FIELD_ENCOUNT* enc )
+void EFFECT_ENC_EffectDelete( FIELD_ENCOUNT* enc )
 {
-
+  effect_DelEffect( enc->eff_enc );
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -156,44 +185,149 @@ static BOOL effenc_IsEffectExist( EFFECT_ENCOUNT* eff_wk )
 }
 
 /*
- *  @brief  エフェクトアトリビュートサーチ
+ *  @brief  エフェクトアトリビュート サーチ領域取得
  */
-static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
+static void effect_SearchAreaGet( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk, EFFENC_SEARCH* esw )
 {
-  s16 i,j;
-  s16 sx,sz,ex,ez;
-  s16 player_x,player_z;
-  FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( enc->fwork );
-
+  s16 sx,ex,sz,ez;
   {
+    FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( enc->fwork );
     MMDL* mmdl = FIELD_PLAYER_GetMMdl( fplayer );
 
-    player_x = MMDL_GetGridPosX( mmdl ) % GRID_MAP_W;
-    player_z = MMDL_GetGridPosZ( mmdl ) % GRID_MAP_W;
+    esw->player_x = MMDL_GetGridPosX( mmdl );
+    esw->player_z = MMDL_GetGridPosZ( mmdl );
+    esw->player_lx = esw->player_x % GRID_MAP_W;
+    esw->player_lz = esw->player_z % GRID_MAP_W;
+    esw->block_x = esw->player_x / GRID_MAP_W;
+    esw->block_z = esw->player_z / GRID_MAP_W;
   }
-  sx = player_x - EFFENC_SEARCH_OX;
+  sx = esw->player_lx - EFFENC_SEARCH_OX;
   if( sx < 0 ){
     sx = 0;
   }
-  ex = player_x + EFFENC_SEARCH_OX;
+  ex = esw->player_lx + EFFENC_SEARCH_OX;
   if( ex >= GRID_MAP_W){
     ex = GRID_MAP_W-1;
   }
-  sz = player_z - EFFENC_SEARCH_OZ;
+  sz = esw->player_lz - EFFENC_SEARCH_OZ;
   if( sz < 0 ){
     sz = 0;
   }
-  ez = player_z + EFFENC_SEARCH_OZ;
+  ez = esw->player_lz + EFFENC_SEARCH_OZ;
   if( ez >= GRID_MAP_W){
     ez = GRID_MAP_W-1;
   }
 
-  for(i = sz; i <= ez;i++){
-    for(j = sx; j <= ex;j++){
-        
-    }
+  {
+    s16 block;
+    block = esw->block_x*32;
+    esw->sx = sx + block;
+    esw->ex = ex + block;
+    block = esw->block_z*32;
+    esw->sz = sz + block;
+    esw->ez = ez + block;
   }
-
 }
 
+/*
+ *  @breif  アトリビュートタイプチェック
+ */
+static inline EFFENC_TYPE_ID effect_GetAttributeType( MAPATTR attr )
+{
+  MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( attr );
+  MAPATTR_VALUE value = MAPATTR_GetAttrValue( attr );
+
+  if( value == MATTR_BRIDGE_01 ){
+    return EFFENC_TYPE_BRIDGE;
+  }
+  if( !(flag & MAPATTR_FLAGBIT_ENCOUNT)){
+    return EFFENC_TYPE_MAX;
+  }
+  switch(value){
+  case MATTR_E_GRASS_LOW:
+    return EFFENC_TYPE_SGRASS;
+
+  case MATTR_E_LGRASS_LOW:
+    return EFFENC_TYPE_LGRASS;
+
+  case MATTR_E_ZIMEN_01:
+    return EFFENC_TYPE_CAVE;
+
+  case MATTR_WATER_01:
+  case MATTR_DEEP_MARSH_01:
+    return EFFENC_TYPE_WATER;
+
+  case MATTR_SEA_01:
+    return EFFENC_TYPE_SEA;
+  }
+  return EFFENC_TYPE_MAX;
+}
+
+/*
+ *  @brief  エフェクトアトリビュートサーチ
+ */
+static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
+{
+  int blockIdx;
+  s16 i,j;
+  VecFx32 vec;
+  EFFENC_TYPE_ID id;
+  EFFENC_SEARCH esw;
+  FLDMAPPER_GRIDINFODATA gridData;
+  const FLDMAPPER* g3dMapper = (const FLDMAPPER*)FIELDMAP_GetFieldG3Dmapper( enc->fwork ); 
+
+  //検索領域取得
+  effect_SearchAreaGet( enc, eff_wk, &esw );
+
+  IWASAWA_Printf("EffSearch\n");
+  IWASAWA_Printf(" Player(%d,%d), x(%d～%d), z(%d～%d)\n",
+      esw.player_x,esw.player_z,esw.sx,esw.ex,esw.sz,esw.ez);
+
+  vec.y = 0;
+  blockIdx = FLDMAPPER_GetCurrentBlockAccessIdx( g3dMapper );
+  for(i = esw.sz; i <= esw.ez;i++){
+    vec.z = FX32_CONST(i*16); 
+    for(j = esw.sx; j <= esw.ex;j++){
+      vec.x = FX32_CONST(j*16); 
+      FLDMAPPER_GetGridDataForEffectEncount( g3dMapper, blockIdx, &vec, &gridData );
+      IWASAWA_Printf("0x%02x,",gridData.attr&0xFFFF);
+      id = effect_GetAttributeType( gridData.attr );
+      if(id != EFFENC_TYPE_MAX ){
+        eff_wk->attr_map.attr[eff_wk->attr_map.count].type = id;
+        eff_wk->attr_map.attr[eff_wk->attr_map.count].gx = j;
+        eff_wk->attr_map.attr[eff_wk->attr_map.count].gz = i;
+        eff_wk->attr_map.attr[eff_wk->attr_map.count++].height = gridData.height;
+      }
+    }
+    IWASAWA_Printf("\n");
+  }
+}
+
+/*
+ *  @brief  抽選＆登録
+ */
+static void effect_AddEffect( EFFECT_ENCOUNT* eff_wk )
+{
+  u16 idx = GFUser_GetPublicRand0( eff_wk->attr_map.count);
+  EFFENC_ATTR_POS* attr = &eff_wk->attr_map.attr[idx];
+ 
+  eff_wk->pos.gx = attr->gx;
+  eff_wk->pos.gz = attr->gz;
+  eff_wk->pos.valid_f = TRUE;
+  eff_wk->pos.eff_task = FLDEFF_ENCOUNT_SetEffect( eff_wk->fectrl, attr->gx, attr->gz, attr->height, attr->type );
+//  eff_wk->pos.eff_task = FLDEFF_ENCOUNT_SetEffect( eff_wk->fectrl, 788, 715, attr->height, attr->type );  
+  IWASAWA_Printf(" EffectAdd( %d, %d, h = 0x%08x) type=%d\n",eff_wk->pos.gx,eff_wk->pos.gz,attr->height, attr->type );
+}
+
+/**
+ *  @brief  エフェクト削除
+ */
+static void effect_DelEffect( EFFECT_ENCOUNT* eff_wk )
+{
+  if( !eff_wk->pos.valid_f ){
+    return; //なにもしない
+  }
+  FLDEFF_TASK_CallDelete( eff_wk->pos.eff_task );
+  MI_CpuClear8( &eff_wk->pos, sizeof(EFFENC_POS));
+}
 

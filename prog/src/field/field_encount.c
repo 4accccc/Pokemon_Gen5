@@ -56,18 +56,6 @@
 #endif
 
 //======================================================================
-//  struct
-//======================================================================
-struct _TAG_FIELD_ENCOUNT
-{
-  FIELDMAP_WORK *fwork;
-  GAMESYS_WORK *gsys;
-  GAMEDATA *gdata;
-  ENCOUNT_DATA* encdata;
-};
-
-
-//======================================================================
 //  proto
 //======================================================================
 static ENCOUNT_LOCATION enc_GetLocation( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type );
@@ -98,6 +86,8 @@ static u32 encwork_GetPlayerWalkCount( ENCOUNT_WORK* ewk );
  * フィールドエンカウント　ワーク作成
  * @param fwork FIELDMAP_WORK
  * @retval FIELD_ENCOUNT*
+ *
+ * フィールドエフェクトに依存するので、フィールドエフェクトコントローラ生成後に呼び出すこと
  */
 //--------------------------------------------------------------
 FIELD_ENCOUNT * FIELD_ENCOUNT_Create( FIELDMAP_WORK *fwork )
@@ -112,6 +102,7 @@ FIELD_ENCOUNT * FIELD_ENCOUNT_Create( FIELDMAP_WORK *fwork )
   enc->gsys = FIELDMAP_GetGameSysWork( enc->fwork );
   enc->gdata = GAMESYSTEM_GetGameData( enc->gsys );
   enc->encdata = EVENTDATA_GetEncountDataTable( GAMEDATA_GetEventData(enc->gdata) );
+  enc->eff_enc = EFFECT_ENC_CreateWork( enc->fwork, heapID );
   return( enc );
 }
 
@@ -124,6 +115,7 @@ FIELD_ENCOUNT * FIELD_ENCOUNT_Create( FIELDMAP_WORK *fwork )
 //--------------------------------------------------------------
 void FIELD_ENCOUNT_Delete( FIELD_ENCOUNT *enc )
 {
+  EFFECT_ENC_DeleteWork(enc->eff_enc);
   GFL_HEAP_FreeMemory( enc );
 }
 
@@ -156,6 +148,7 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
   encwork_AddPlayerWalkCount( ewk, fplayer);
 
 #ifdef PM_DEBUG
+  //デバッグ強制エンカウントOffルーチン
   if( enc_type != ENC_TYPE_FORCE && DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEncount) ){
     return NULL;
   }

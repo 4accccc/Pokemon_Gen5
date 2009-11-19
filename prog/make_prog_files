@@ -411,6 +411,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/field_menu.c \
         field/enc_pokeset.c \
         field/field_encount.c \
+        field/effect_encount.c \
         field/map_attr.c \
         field/fld_scenearea.c \
         field/fld_scenearea_loader.c \

@@ -39,6 +39,9 @@ typedef struct _TAG_ENCOUNT_WORK ENCOUNT_WORK;
 //--------------------------------------------------------------
 extern ENCOUNT_WORK* GAMEDATA_GetEncountWork( GAMEDATA *gamedata );
 
+/////////////////////////////////////////////////////////////
+//通常エンカウント系 field_encount.c
+
 //生成、削除
 extern FIELD_ENCOUNT * FIELD_ENCOUNT_Create( FIELDMAP_WORK *fwork );
 extern void FIELD_ENCOUNT_Delete( FIELD_ENCOUNT *enc );
@@ -52,3 +55,10 @@ extern void* FIELD_ENCOUNT_CheckFishingEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE
 
 extern void FIELD_ENCOUNT_SetTrainerBattleParam(
     FIELD_ENCOUNT *enc, BATTLE_SETUP_PARAM *setup, int tr_id0, int tr_id1, HEAPID heapID );
+
+
+/////////////////////////////////////////////////////////////
+//エフェクトエンカウント系 effect_encount.c
+extern void EFFECT_ENC_CheckEffectEncountStart( FIELD_ENCOUNT* enc);
+
+

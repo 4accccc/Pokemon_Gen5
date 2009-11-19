@@ -134,6 +134,7 @@ typedef struct {
 static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork);
 static GMEVENT* CheckSodateya( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
 static GMEVENT* CheckSpray( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
+static void CheckEncountEffect( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
 static void updatePartyEgg( POKEPARTY* party );
 static BOOL checkPartyEgg( POKEPARTY* party );
 
@@ -1185,6 +1186,9 @@ static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWor
   GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
   GMEVENT*     event = NULL;
 
+  //エンカウントエフェクト起動監視(イベント起動はしません)
+  CheckEncountEffect( fieldWork, gsys, gdata );
+
   //育て屋チェック
   event  = CheckSodateya( fieldWork, gsys, gdata );
   if( event != NULL) return event;
@@ -1289,6 +1293,20 @@ static GMEVENT* CheckSpray( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMED
      return SCRIPT_SetEventScript( gsys, SCRID_FLD_EV_SPRAY_EFFECT_END, NULL, FIELDMAP_GetHeapID( fieldWork ));
 	}
 	return NULL;
+}
+
+//==============================================================================
+/**
+ * 1歩ごとのエンカウントエフェクト起動チェック
+ */
+//==============================================================================
+static void CheckEncountEffect( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata )
+{
+  SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork(gdata);
+  FIELD_ENCOUNT * encount = FIELDMAP_GetEncount(fieldWork);
+
+  EFFECT_ENC_CheckEffectEncountStart( encount );
+	return;
 }
 
 //======================================================================

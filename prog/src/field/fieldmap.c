@@ -27,6 +27,7 @@
 #include "field_data.h"
 #include "field/field_msgbg.h"
 #include "field_encount.h"
+#include "effect_encount.h"
 
 #include "weather.h"
 #include "field_fog.h"
@@ -2280,6 +2281,9 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
   init_checks();
   SET_CHECK();
 #endif
+
+  //エフェクトエンカウント破棄
+  EFFECT_ENC_EffectDelete( fieldWork->encount );
 
   LOCATION_Get3DPos( lc, &lc_pos );
 
