@@ -151,7 +151,15 @@ void ISS_3DS_UNIT_Load(
   GFL_HEAP_FreeMemory( data );
 
   // 読み込んだデータをセット
-  unit->trackBit  = ( 1 << (track-1) );
+  if( track == 0 )
+  {
+    unit->trackBit = 0;
+  }
+  else
+  {
+    unit->trackBit  = ( 1 << (track-1) );
+  }
+
   unit->range     = FX_F32_TO_FX32( range );
   unit->maxVolume = volume;
 

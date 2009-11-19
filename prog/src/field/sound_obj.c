@@ -12,6 +12,7 @@
 // ■非公開関数のプロトタイプ宣言
 //=========================================================================================
 static void AdjustPosition( SOUNDOBJ* sobj );
+static void AdjustDirection( SOUNDOBJ* sobj );
 
 
 //========================================================================================
@@ -155,6 +156,7 @@ BOOL SOUNDOBJ_IncAnimeFrame( SOUNDOBJ* sobj, fx32 frame )
 
   // 位置を更新
   AdjustPosition( sobj );
+  AdjustDirection( sobj );
 
   // ループしたかどうかを返す
   return loop;
@@ -249,7 +251,7 @@ static void AdjustPosition( SOUNDOBJ* sobj )
   ISS_3DS_UNIT* unit;
 
   // 位置を取得
-  ICA_ANIME_GetTranslate( sobj->icaAnime, &pos );
+  if( ICA_ANIME_GetTranslate( sobj->icaAnime, &pos ) != TRUE ) { return; }
 
   // 3Dステータスを設定
   VEC_Set( &sobj->status->trans, pos.x, pos.y, pos.z );
@@ -257,4 +259,25 @@ static void AdjustPosition( SOUNDOBJ* sobj )
   // 音源位置を合わせる
   unit = ISS_3DS_SYS_GetUnit( sobj->iss3dsSys, sobj->iss3dsUnitIdx );
   ISS_3DS_UNIT_SetPos( unit, &pos );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 拡張オブジェの向きをアニメーションに合わせる
+ *
+ * @param sobj 更新するオブジェクト
+ */
+//-----------------------------------------------------------------------------------------
+static void AdjustDirection( SOUNDOBJ* sobj )
+{
+  VecFx32 vec;
+
+  // 回転角度を取得
+  if( ICA_ANIME_GetRotate( sobj->icaAnime, &vec ) != TRUE ) { return; }
+
+  // 3Dステータスを設定
+  GFL_CALC3D_MTX_CreateRot( vec.x >> FX32_SHIFT,
+                            vec.y >> FX32_SHIFT,
+                            vec.z >> FX32_SHIFT,
+                            &sobj->status->rotate );
 }

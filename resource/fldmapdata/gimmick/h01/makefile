@@ -34,16 +34,23 @@ ICACONV = ..\..\..\..\tools\ica\ica_converter.rb
 XLSCONV = ../../../../tools/exceltool/xls2xml/tab_out.rb
 
 CONVERTDATA = $(BIN)/wind_data.bin \
-							$(BIN)/trailer1_3dsu_data.bin \
-							$(BIN)/trailer1_wait_data.bin \
-							$(BIN)/trailer1_ica_data.bin \
-							$(BIN)/trailer2_3dsu_data.bin \
-							$(BIN)/trailer2_wait_data.bin \
-							$(BIN)/trailer2_ica_data.bin \
+							$(BIN)/trailer1_head_3dsu_data.bin \
+							$(BIN)/trailer1_head_wait_data.bin \
+							$(BIN)/trailer1_head_ica_data.bin \
+							$(BIN)/trailer1_tail_3dsu_data.bin \
+							$(BIN)/trailer1_tail_wait_data.bin \
+							$(BIN)/trailer1_tail_ica_data.bin \
+							$(BIN)/trailer2_head_3dsu_data.bin \
+							$(BIN)/trailer2_head_wait_data.bin \
+							$(BIN)/trailer2_head_ica_data.bin \
+							$(BIN)/trailer2_tail_3dsu_data.bin \
+							$(BIN)/trailer2_tail_wait_data.bin \
+							$(BIN)/trailer2_tail_ica_data.bin \
 							$(BIN)/ship_ica_data.bin \
 							$(BIN)/ship_3dsu_data.bin \
 							$(BIN)/ship_wait_data.bin \
-							$(BIN)/h01_trailer.nsbmd \
+							$(BIN)/trailer_01a.nsbmd \
+							$(BIN)/trailer_01b.nsbmd \
 							$(BIN)/h01_ship.nsbmd
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
@@ -63,7 +70,8 @@ subdir:
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # コンバート
-	g3dcvtr $(GRAPHIC)/h01_trailer.imd -o $(BIN)/h01_trailer.nsbmd
+	g3dcvtr $(GRAPHIC)/trailer_01a.imd -o $(BIN)/trailer_01a.nsbmd
+	g3dcvtr $(GRAPHIC)/trailer_01b.imd -o $(BIN)/trailer_01b.nsbmd
 	g3dcvtr $(GRAPHIC)/h01_ship.imd -o $(BIN)/h01_ship.nsbmd
 endif
 
@@ -80,13 +88,19 @@ $(targetname).narc: $(CONVERTDATA)
 	$(NAIXCUT) $(targetname).naix
 
 $(BIN)/ship_ica_data.bin: $(GRAPHIC)/h01_ship.ica
-	ruby $(ICACONV) -tr $(GRAPHIC)/h01_ship.ica $(BIN)/ship_ica_data.bin
+	ruby $(ICACONV) -rt $(GRAPHIC)/h01_ship.ica $(BIN)/ship_ica_data.bin
 
-$(BIN)/trailer1_ica_data.bin: $(GRAPHIC)/h01_trailer1.ica
-	ruby $(ICACONV) -tr $(GRAPHIC)/h01_trailer1.ica $(BIN)/trailer1_ica_data.bin
+$(BIN)/trailer1_head_ica_data.bin: $(GRAPHIC)/trailer_01a_up.ica
+	ruby $(ICACONV) -rt $(GRAPHIC)/trailer_01a_up.ica $(BIN)/trailer1_head_ica_data.bin
 
-$(BIN)/trailer2_ica_data.bin: $(GRAPHIC)/h01_trailer2.ica
-	ruby $(ICACONV) -tr $(GRAPHIC)/h01_trailer2.ica $(BIN)/trailer2_ica_data.bin
+$(BIN)/trailer1_tail_ica_data.bin: $(GRAPHIC)/trailer_01b_up.ica
+	ruby $(ICACONV) -rt $(GRAPHIC)/trailer_01b_up.ica $(BIN)/trailer1_tail_ica_data.bin
+
+$(BIN)/trailer2_head_ica_data.bin: $(GRAPHIC)/trailer_01a_down.ica
+	ruby $(ICACONV) -rt $(GRAPHIC)/trailer_01a_down.ica $(BIN)/trailer2_head_ica_data.bin
+
+$(BIN)/trailer2_tail_ica_data.bin: $(GRAPHIC)/trailer_01b_down.ica
+	ruby $(ICACONV) -rt $(GRAPHIC)/trailer_01b_down.ica $(BIN)/trailer2_tail_ica_data.bin
 
 $(BIN)/trailer1_3dsu_data.bin: h01.txt
 	ruby h01.rb h01.txt ./bin
@@ -117,8 +131,9 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
 	rm -f h01.txt
-endif
+else
 	rm -f $(TARGETDIR)/$(targetname).narc
 	rm -f $(TARGETDIR)/$(targetname).naix
+endif
 
 

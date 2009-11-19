@@ -25,8 +25,10 @@
 // 音源オブジェクトのインデックス
 typedef enum
 {
-  SOBJ_TRAILER_1, // トレーラー1
-  SOBJ_TRAILER_2, // トレーラー2
+  SOBJ_TRAILER_1_HEAD, // トレーラー1(前)
+  SOBJ_TRAILER_1_TAIL, // トレーラー1(後)
+  SOBJ_TRAILER_2_HEAD, // トレーラー2(前)
+  SOBJ_TRAILER_2_TAIL, // トレーラー2(後)
   SOBJ_SHIP,      // 船
   SOBJ_NUM 
 } SOBJ_INDEX;
@@ -38,28 +40,34 @@ typedef enum
 // リソース
 typedef enum
 {
-  RES_TRAILER_NSBMD,  // トレーラーのモデル
+  RES_TRAILER_HEAD_NSBMD,  // トレーラー(前)のモデル
+  RES_TRAILER_TAIL_NSBMD,  // トレーラー(後)のモデル
   RES_SHIP_NSBMD,     // 船のモデル
   RES_NUM
 } RES_INDEX;
 static const GFL_G3D_UTIL_RES res_table[RES_NUM] = 
 {
-  { ARCID, NARC_h01_h01_trailer_nsbmd, GFL_G3D_UTIL_RESARC },  // トレーラーのモデル
+  { ARCID, NARC_h01_trailer_01a_nsbmd, GFL_G3D_UTIL_RESARC },  // トレーラー(前)のモデル
+  { ARCID, NARC_h01_trailer_01b_nsbmd, GFL_G3D_UTIL_RESARC },  // トレーラー(後)のモデル
   { ARCID, NARC_h01_h01_ship_nsbmd,    GFL_G3D_UTIL_RESARC },  // 船のモデル
 };
 
 // オブジェクト
 typedef enum
 {
-  OBJ_TRAILER_1,  // トレーラー1
-  OBJ_TRAILER_2,  // トレーラー2
+  OBJ_TRAILER_1_HEAD,  // トレーラー1(前)
+  OBJ_TRAILER_1_TAIL,  // トレーラー1(後)
+  OBJ_TRAILER_2_HEAD,  // トレーラー2(前)
+  OBJ_TRAILER_2_TAIL,  // トレーラー2(後)
   OBJ_SHIP,       // 船
   OBJ_NUM
 } OBJ_INDEX;
 static const GFL_G3D_UTIL_OBJ obj_table[OBJ_NUM] = 
 {
-  { RES_TRAILER_NSBMD, 0, 0, NULL, 0 }, // トレーラー1
-  { RES_TRAILER_NSBMD, 0, 0, NULL, 0 }, // トレーラー2
+  { RES_TRAILER_HEAD_NSBMD, 0, 0, NULL, 0 },  // トレーラー1(前)
+  { RES_TRAILER_TAIL_NSBMD, 0, 0, NULL, 0 },  // トレーラー1(後)
+  { RES_TRAILER_HEAD_NSBMD, 0, 0, NULL, 0 },  // トレーラー2(前)
+  { RES_TRAILER_TAIL_NSBMD, 0, 0, NULL, 0 },  // トレーラー2(後)
   { RES_SHIP_NSBMD,    0, 0, NULL, 0 }, // 船
 };
 
@@ -267,19 +275,33 @@ static void InitWork( H01WORK* work, FIELDMAP_WORK* fieldmap )
   }
 
   // 音源オブジェクトを作成
-  { // トレーラー1
-    GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, 0, OBJ_TRAILER_1 );
+  { // トレーラー1(前)
+    GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, 0, OBJ_TRAILER_1_HEAD );
     SOUNDOBJ* sobj = SOUNDOBJ_Create( fieldmap, work->iss3dsSys, status );
-    SOUNDOBJ_SetAnime( sobj, ARCID, NARC_h01_trailer1_ica_data_bin, ANIME_BUF_INTVL );
-    SOUNDOBJ_Set3DSUnitStatus( sobj, ARCID, NARC_h01_trailer1_3dsu_data_bin );
-    work->sobj[SOBJ_TRAILER_1] = sobj;
+    SOUNDOBJ_SetAnime( sobj, ARCID, NARC_h01_trailer1_head_ica_data_bin, ANIME_BUF_INTVL );
+    SOUNDOBJ_Set3DSUnitStatus( sobj, ARCID, NARC_h01_trailer1_head_3dsu_data_bin );
+    work->sobj[SOBJ_TRAILER_1_HEAD] = sobj;
   }
-  { // トレーラー2
-    GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, 0, OBJ_TRAILER_2 );
+  { // トレーラー1(後)
+    GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, 0, OBJ_TRAILER_1_TAIL );
     SOUNDOBJ* sobj = SOUNDOBJ_Create( fieldmap, work->iss3dsSys, status );
-    SOUNDOBJ_SetAnime( sobj, ARCID, NARC_h01_trailer2_ica_data_bin, ANIME_BUF_INTVL );
-    SOUNDOBJ_Set3DSUnitStatus( sobj, ARCID, NARC_h01_trailer2_3dsu_data_bin );
-    work->sobj[SOBJ_TRAILER_2] = sobj;
+    SOUNDOBJ_SetAnime( sobj, ARCID, NARC_h01_trailer1_tail_ica_data_bin, ANIME_BUF_INTVL );
+    SOUNDOBJ_Set3DSUnitStatus( sobj, ARCID, NARC_h01_trailer1_tail_3dsu_data_bin );
+    work->sobj[SOBJ_TRAILER_1_TAIL] = sobj;
+  }
+  { // トレーラー2(前)
+    GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, 0, OBJ_TRAILER_2_HEAD );
+    SOUNDOBJ* sobj = SOUNDOBJ_Create( fieldmap, work->iss3dsSys, status );
+    SOUNDOBJ_SetAnime( sobj, ARCID, NARC_h01_trailer2_head_ica_data_bin, ANIME_BUF_INTVL );
+    SOUNDOBJ_Set3DSUnitStatus( sobj, ARCID, NARC_h01_trailer2_head_3dsu_data_bin );
+    work->sobj[SOBJ_TRAILER_2_HEAD] = sobj;
+  } 
+  { // トレーラー2(後)
+    GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, 0, OBJ_TRAILER_2_TAIL );
+    SOUNDOBJ* sobj = SOUNDOBJ_Create( fieldmap, work->iss3dsSys, status );
+    SOUNDOBJ_SetAnime( sobj, ARCID, NARC_h01_trailer2_tail_ica_data_bin, ANIME_BUF_INTVL );
+    SOUNDOBJ_Set3DSUnitStatus( sobj, ARCID, NARC_h01_trailer2_tail_3dsu_data_bin );
+    work->sobj[SOBJ_TRAILER_2_TAIL] = sobj;
   } 
   { // 船
     GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, 0, OBJ_SHIP );
@@ -310,8 +332,10 @@ static void LoadWaitTime( H01WORK* work )
   int i;
   ARCDATID dat_id[SOBJ_NUM] = 
   {
-    NARC_h01_trailer1_wait_data_bin,
-    NARC_h01_trailer2_wait_data_bin,
+    NARC_h01_trailer1_head_wait_data_bin,
+    NARC_h01_trailer1_tail_wait_data_bin,
+    NARC_h01_trailer2_head_wait_data_bin,
+    NARC_h01_trailer2_tail_wait_data_bin,
     NARC_h01_ship_wait_data_bin,
   };
 
