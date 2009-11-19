@@ -38,7 +38,100 @@ INIT_EVENT_END
 /*                                                            */
 /**************************************************************/
 EVENT_START     ev_r10r0101_veteranm_01
+  _TALK_OBJ_START()
+
+  //「～バッジをもっているのか？」
+  _BALLOONWIN_OBJMSG_OPEN( msg_r10r0101_badge_01, R10R0101_VETERANM )
+  _BALLOONWIN_CLOSE()
+
+  _GET_BADGE_FLAG( SCWK_ANSWER, BADGE_ID_01 )
+  IF $SCWK_ANSWER == FALSE THEN
+
+    //バッジもってない→「まずはてにいれるのだ」
+    _BALLOONWIN_OBJMSG_OPEN( msg_r10r0101_badge_04, R10R0101_VETERANM )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+
+  ELSE
+    //ローカル定義
+    DEFINE_LOCAL	DOOR_ANIME_ID
+    DEFINE_LOCAL  HEROX
+    DEFINE_LOCAL  HEROY
+
+    //バッジもってる→「うむ！よろしい！」
+    _BALLOONWIN_OBJMSG_OPEN( msg_r10r0101_badge_02, R10R0101_VETERANM )
+    _BALLOONWIN_CLOSE()
+
+    _CAMERA_START()
+
+    _CAMERA_PURGE() //対象物とカメラのバインドを解く（この場面で対象物＝自機）
+    _CAMERA_MOVE( 1240,0,970752,1015808,0,667648, 60 )
+    _CAMERA_WAIT_MOVE()
+
+  //ゲートアニメ制御
+    _DOOR_ANIME_CREATE( DOOR_ANIME_ID, 15, 7 )
+    _DOOR_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+    _DOOR_ANIME_WAIT( DOOR_ANIME_ID )
+
+    _CAMERA_RECV_MOVE( 60 )
+    _CAMERA_WAIT_MOVE()
+
+    _CAMERA_BIND() //対象物とカメラをバインドする（この場面で対象物＝自機）
+
+    _CAMERA_END()
+
+    //「～バッジをもつものよ！さきにすすみゆうきをしめせ！」
+    _BALLOONWIN_OBJMSG_OPEN( msg_r10r0101_badge_03, R10R0101_VETERANM )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+
+    _PLAYER_POS_GET( HEROX, HEROY )
+    IF $HEROX == 21 THEN
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_walkout_hero_01 )
+      _OBJ_ANIME_WAIT()
+    ELSE
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_walkout_hero_02 )
+      _OBJ_ANIME_WAIT()
+    ENDIF
+
+    _BLACK_OUT()
+    _DISP_FADE_END_CHECK()
+
+    _DOOR_ANIME_DELETE( DOOR_ANIME_ID )
+
+	  _MAP_CHANGE_NO_FADE( ZONE_ID_R10R0201, 15, 0, 22, DIR_UP )
+
+    _BLACK_IN()
+    _DISP_FADE_END_CHECK()
+  ENDIF
 EVENT_END
 
 EVENT_START     ev_pos_r10r0101_limitter_01
+  _SET_BADGE_FLAG( BADGE_ID_01 )
+
+    //バッジもってない→「まずはてにいれるのだ」
+  _BALLOONWIN_OBJMSG_OPEN( msg_r10r0101_badge_05, R10R0101_VETERANM )
+  _BALLOONWIN_CLOSE()
+
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_limitter_hero_go_down )
+  _OBJ_ANIME_WAIT()
 EVENT_END
+
+
+//--------------------------------------------------------------------
+//主人公：一歩下がる
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_limitter_hero_go_down
+	_ANIME_DATA	AC_WALK_D_4F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL  anm_walkout_hero_01
+	_ANIME_DATA	AC_WALK_L_8F,6
+  _ANIME_DATA AC_WALK_U_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL  anm_walkout_hero_02
+	_ANIME_DATA	AC_WALK_L_8F,7
+  _ANIME_DATA AC_WALK_U_8F,8
+	_ANIME_DATA	ACMD_END,0
+
