@@ -301,6 +301,7 @@ struct _DEBUG_BTL_WORK {
   POKEPARTY*      partyFriend;
   POKEPARTY*      partyEnemy1;
   POKEPARTY*      partyEnemy2;
+  const POKEMON_PARAM*  clipPoke;
   u8              fNetConnect;
   pMainProc       mainProc;
   int             mainSeq;
@@ -383,7 +384,7 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
     GF_ASSERT_MSG( pp_size <= POKEPARA_SIZE, "PPSize=%d bytes", pp_size );
   }
 
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_SYS,     0x9000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_SYS,     0xb000 );
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_VIEW,   0xb0000 );
 
   wk = GFL_PROC_AllocWork( proc, sizeof(DEBUG_BTL_WORK), HEAPID_BTL_DEBUG_SYS );
@@ -394,6 +395,7 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
   wk->partyEnemy1 = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
   wk->partyFriend = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
   wk->partyEnemy2 = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
+  wk->clipPoke = NULL;
 
   initGraphicSystems( HEAPID_BTL_DEBUG_VIEW );
   createTemporaryModules( wk, HEAPID_BTL_DEBUG_VIEW );
@@ -987,6 +989,15 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
     }
     return FALSE;
   }
+
+  // ポケ選択中にＹボタンで簡易コピペ機能
+  #if 0
+  if( key & PAD_BUTTON_Y && (wk->selectItem <= SELITEM_POKE_ENEMY2_6) ){
+    if( wk->clipPoke == NULL ){
+      wk->clipPoke = get_
+    }
+  }
+  #endif
 
   if( key & PAD_BUTTON_A )
   {
