@@ -81,9 +81,7 @@ typedef struct{
   VMHANDLE* vmh;
   int       src;
   int       dst;
-  fx32      ofs_x;
-  fx32      ofs_y;
-  fx32      ofs_z;
+  VecFx32   ofs;
   fx32      angle;
   fx32      top;
   int       move_type;
@@ -122,6 +120,7 @@ typedef struct{
   int       count;        //カウント
   int       after_wait;   //1回転ごとのウエイト
   int       after_wait_tmp;
+  BOOL      ortho_mode;   //正射影モードかどうか
 }BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK;
 
 //SE再生用パラメータ構造体
@@ -182,6 +181,7 @@ static VMCMD_RESULT VMEC_PARTICLE_DELETE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_EMITTER_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_EMITTER_MOVE_COORDINATE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_EMITTER_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_EMITTER_CIRCLE_MOVE_ORTHO( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_SCALE( VMHANDLE *vmh, void *context_work );
@@ -227,18 +227,21 @@ static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work );
 static  BOOL  VWF_WAIT_CHECK( VMHANDLE *vmh, void *context_work );
 
 //非公開関数群
-static  int   EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag );
-static  int   EFFVM_ConvPosition( VMHANDLE *vmh, BtlvMcssPos position );
-static  int   EFFVM_RegistPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID );
-static  int   EFFVM_GetPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID );
-static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit );
-static  void  EFFVM_MoveEmitter( GFL_EMIT_PTR emit, unsigned int flag );
-static  void  EFFVM_InitEmitterCircleMove( GFL_EMIT_PTR emit );
-static  void  EFFVM_CircleMoveEmitter( GFL_EMIT_PTR emit, unsigned int flag );
-static  void  EFFVM_DeleteEmitter( GFL_PTC_PTR ptc );
-static  void  EFFVM_ChangeCameraProjection( BTLV_EFFVM_WORK *bevw );
-static  void  EFFVM_SePlay( int se_no, int player, int pitch, int vol, int mod_depth, int mod_speed );
-static  int   EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param );
+static  int           EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag );
+static  int           EFFVM_ConvPosition( VMHANDLE *vmh, BtlvMcssPos position );
+static  int           EFFVM_RegistPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID );
+static  int           EFFVM_GetPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID );
+static  void          EFFVM_InitEmitterPos( GFL_EMIT_PTR emit );
+static  void          EFFVM_MoveEmitter( GFL_EMIT_PTR emit, unsigned int flag );
+static  void          EFFVM_InitEmitterCircleMove( GFL_EMIT_PTR emit );
+static  void          EFFVM_CircleMoveEmitter( GFL_EMIT_PTR emit, unsigned int flag );
+static  void          EFFVM_DeleteEmitter( GFL_PTC_PTR ptc );
+static  void          EFFVM_ChangeCameraProjection( BTLV_EFFVM_WORK *bevw );
+static  void          EFFVM_SePlay( int se_no, int player, int pitch, int vol, int mod_depth, int mod_speed );
+static  int           EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param );
+static  VMCMD_RESULT  EFFVM_INIT_EMITTER_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work, BOOL ortho_mode );
+static  void          EFFVM_CalcPosOrtho( VecFx32 *pos, VecFx32 *ofs );
+static	void          MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 *p_dst, fx32 *p_w );
 
 //TCB関数
 static  void  TCB_EFFVM_SEPLAY( GFL_TCB* tcb, void* work );
@@ -305,6 +308,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_EMITTER_MOVE,
   VMEC_EMITTER_MOVE_COORDINATE,
   VMEC_EMITTER_CIRCLE_MOVE,
+  VMEC_EMITTER_CIRCLE_MOVE_ORTHO,
   VMEC_POKEMON_MOVE,
   VMEC_POKEMON_CIRCLE_MOVE,
   VMEC_POKEMON_SCALE,
@@ -836,7 +840,9 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work )
   beeiw->vmh = vmh;
   beeiw->src = ( int )VMGetU32( vmh );
   beeiw->dst = ( int )VMGetU32( vmh );
-  beeiw->ofs_y = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.x = 0;
+  beeiw->ofs.y = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.z = 0;
   beeiw->angle = ( fx32 )VMGetU32( vmh );
 
   if( beeiw->dst == BTLEFF_PARTICLE_PLAY_SIDE_NONE )
@@ -878,7 +884,9 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_COORDINATE( VMHANDLE *vmh, void *context_
   beeiw->dst_pos.x = ( fx32 )VMGetU32( vmh );
   beeiw->dst_pos.y = ( fx32 )VMGetU32( vmh );
   beeiw->dst_pos.z = ( fx32 )VMGetU32( vmh );
-  beeiw->ofs_y = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.x = 0;
+  beeiw->ofs.y = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.z = 0;
   beeiw->angle = ( fx32 )VMGetU32( vmh );
 
   GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw );
@@ -926,9 +934,9 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_ORTHO( VMHANDLE *vmh, void *context_work 
 
   beeiw->vmh = vmh;
   beeiw->src = ( int )VMGetU32( vmh );
-  beeiw->ofs_x = ( fx32 )VMGetU32( vmh );
-  beeiw->ofs_y = ( fx32 )VMGetU32( vmh );
-  beeiw->ofs_z = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.x = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.y = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.z = ( fx32 )VMGetU32( vmh );
   beeiw->ortho_mode = 1;
 
   GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw );
@@ -984,7 +992,9 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE( VMHANDLE *vmh, void *context_work )
   beeiw->move_type = ( int )VMGetU32( vmh );
   beeiw->src = ( int )VMGetU32( vmh );
   beeiw->dst = ( int )VMGetU32( vmh );
-  beeiw->ofs_y = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.x = 0;
+  beeiw->ofs.y = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.z = 0;
   beeiw->move_frame = ( int )VMGetU32( vmh );
   beeiw->top = ( fx32 )VMGetU32( vmh );
 
@@ -1023,7 +1033,9 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE_COORDINATE( VMHANDLE *vmh, void *context_w
   beeiw->src_pos.y = ( fx32 )VMGetU32( vmh );
   beeiw->src_pos.z = ( fx32 )VMGetU32( vmh );
   beeiw->dst = ( int )VMGetU32( vmh );
-  beeiw->ofs_y = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.x = 0;
+  beeiw->ofs.y = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.z = 0;
   beeiw->move_frame = ( int )VMGetU32( vmh );
   beeiw->top = ( fx32 )VMGetU32( vmh );
 
@@ -1045,69 +1057,20 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE_COORDINATE( VMHANDLE *vmh, void *context_w
 //============================================================================================
 static VMCMD_RESULT VMEC_EMITTER_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work )
 { 
-  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK *beecmw;
-  ARCDATID  datID   = ( ARCDATID )VMGetU32( vmh );
-  int       ptc_no  = EFFVM_GetPtcNo( bevw, datID );
-  int       index   = ( int )VMGetU32( vmh );
-  int       position = 0;
-  fx32      offset_y;
+  return EFFVM_INIT_EMITTER_CIRCLE_MOVE( vmh, context_work, FALSE );
+}
 
-#ifdef DEBUG_OS_PRINT
-  OS_TPrintf("VMEC_EMITTER_CIRCLE_MOVE\n");
-#endif DEBUG_OS_PRINT
-
-  bevw->temp_work[ bevw->temp_work_count ] = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK ) );
-  beecmw = ( BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK *)bevw->temp_work[ bevw->temp_work_count ];
-  bevw->temp_work_count++;
-
-  //サイズオーバーのアサート
-  GF_ASSERT( bevw->temp_work_count < TEMP_WORK_SIZE );
-
-  beecmw->center          = ( int )VMGetU32( vmh );
-  beecmw->radius_h        = ( fx32 )VMGetU32( vmh );
-  beecmw->radius_v        = ( fx32 )VMGetU32( vmh );
-  offset_y                = ( fx32 )VMGetU32( vmh );
-  beecmw->angle           = 0;
-  beecmw->frame           = ( int )VMGetU32( vmh );
-  beecmw->frame_tmp       = beecmw->frame;
-  beecmw->wait            = 0;
-  beecmw->wait_tmp        = ( int )VMGetU32( vmh );
-  beecmw->count           = ( int )VMGetU32( vmh );
-  beecmw->after_wait      = 0;
-  beecmw->after_wait_tmp  = ( int )VMGetU32( vmh );
-
-  beecmw->speed = 0x10000 / beecmw->frame;
-
-  switch( beecmw->center ){ 
-  case BTLEFF_EMITTER_CIRCLE_MOVE_ATTACK_L:
-  case BTLEFF_EMITTER_CIRCLE_MOVE_ATTACK_R:
-    position = EFFVM_GetPosition( vmh, BTLEFF_POKEMON_SIDE_ATTACK );
-    BTLV_MCSS_GetPokeDefaultPos( BTLV_EFFECT_GetMcssWork(), &beecmw->center_pos, position );
-    break;
-  case BTLEFF_EMITTER_CIRCLE_MOVE_DEFENCE_L:
-  case BTLEFF_EMITTER_CIRCLE_MOVE_DEFENCE_R:
-    position = EFFVM_GetPosition( vmh, BTLEFF_POKEMON_SIDE_DEFENCE );
-    BTLV_MCSS_GetPokeDefaultPos( BTLV_EFFECT_GetMcssWork(), &beecmw->center_pos, position );
-    break;
-  case BTLEFF_EMITTER_CIRCLE_MOVE_CENTER_L:
-  case BTLEFF_EMITTER_CIRCLE_MOVE_CENTER_R:
-    beecmw->center_pos.x = 0;
-    beecmw->center_pos.y = 0;
-    beecmw->center_pos.z = 0;
-    break;
-  }
-
-  if( position & 1 )
-  { 
-    beecmw->angle = 0x8000;
-  }
-
-  beecmw->center_pos.y += offset_y;
-
-  GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterCircleMove, beecmw );
-
-  return bevw->control_mode;
+//============================================================================================
+/**
+ * @brief エミッタ円移動（正射影）
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_EMITTER_CIRCLE_MOVE_ORTHO( VMHANDLE *vmh, void *context_work )
+{ 
+  return EFFVM_INIT_EMITTER_CIRCLE_MOVE( vmh, context_work, TRUE );
 }
 
 //============================================================================================
@@ -2820,46 +2783,6 @@ static  int EFFVM_GetPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID )
   return i;
 }
 
-//神王蟲からいただき
-//----------------------------------------------------------------------------
-/**
- *	@brief	4x4行列に座標を掛け合わせる
- *			Vecをx,y,z,1として計算し、計算後のVecとwを返します。
- *
- *	@param	*cp_src	Vector座標
- *	@param	*cp_m	4*4行列
- *	@param	*p_dst	Vecror計算結果
- *	@param	*p_w	4つ目の要素の値
- *
- *	@return
- */
-//-----------------------------------------------------------------------------
-static	void MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 *p_dst, fx32 *p_w )
-{
-
-	fx32 x = cp_src->x;
-    fx32 y = cp_src->y;
-    fx32 z = cp_src->z;
-	fx32 w = FX32_ONE;
-
-	GF_ASSERT( cp_src );
-	GF_ASSERT( cp_m );
-	GF_ASSERT( p_dst );
-	GF_ASSERT( p_w );
-
-    p_dst->x = (fx32)(((fx64)x * cp_m->_00 + (fx64)y * cp_m->_10 + (fx64)z * cp_m->_20) >> FX32_SHIFT);
-    p_dst->x += cp_m->_30;	//	W=1なので足すだけ
-
-    p_dst->y = (fx32)(((fx64)x * cp_m->_01 + (fx64)y * cp_m->_11 + (fx64)z * cp_m->_21) >> FX32_SHIFT);
-    p_dst->y += cp_m->_31;//	W=1なので足すだけ
-
-    p_dst->z = (fx32)(((fx64)x * cp_m->_02 + (fx64)y * cp_m->_12 + (fx64)z * cp_m->_22) >> FX32_SHIFT);
-    p_dst->z += cp_m->_32;//	W=1なので足すだけ
-
-	*p_w	= (fx32)(((fx64)x * cp_m->_03 + (fx64)y * cp_m->_13 + (fx64)z * cp_m->_23) >> FX32_SHIFT);
-    *p_w	+= cp_m->_33;//	W=1なので足すだけ
-}
-
 //============================================================================================
 /**
  * @brief エミッタ生成時に呼ばれるエミッタ初期化用コールバック関数（立ち位置から計算）
@@ -2937,28 +2860,14 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
 
   if( beeiw->ortho_mode )
   {
-    MtxFx44	mtx;
-	  fx32	w;
-
-	  MTX_Copy43To44( NNS_G3dGlbGetCameraMtx(), &mtx );
-	  MTX_Concat44( &mtx, NNS_G3dGlbGetProjectionMtx(), &mtx );
-
-    src.x += beeiw->ofs_x;
-    src.y += beeiw->ofs_y;
-    src.z += beeiw->ofs_z;
-
-	  MTX_MultVec44( &src, &mtx, &src, &w );
-
-	  src.x = FX_Mul( FX_Div( src.x, w ), ORTHO_WIDTH * FX32_ONE );
-	  src.y = FX_Mul( FX_Div( src.y, w ), ORTHO_HEIGHT * FX32_ONE );
-    src.z = -src.z;
+    EFFVM_CalcPosOrtho( &src, &beeiw->ofs );
   }
   else
   { 
-    src.y += beeiw->ofs_y;
+    src.y += beeiw->ofs.y;
   }
 
-  dst.y += beeiw->ofs_y;
+  dst.y += beeiw->ofs.y;
 
   if( beeiw->move_type )
   {
@@ -3206,6 +3115,11 @@ static  void  EFFVM_CircleMoveEmitter( GFL_EMIT_PTR emit, unsigned int flag )
       emit_pos.z = FX_Mul( emit_pos.z, beecmw->radius_v );
       emit_pos.z += beecmw->center_pos.z;
 
+      if( beecmw->ortho_mode )
+      { 
+        EFFVM_CalcPosOrtho( &emit_pos, NULL );
+      }
+
       GFL_PTC_SetEmitterPosition( emit, &emit_pos );
   
       if( beecmw->frame )
@@ -3326,6 +3240,173 @@ static  int  EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param )
     break;
   }
   return ret;
+}
+
+//============================================================================================
+/**
+ * @brief エミッタ円運動初期化
+ *
+ * @param[in] vmh           仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ * @param[in] ortho_mode    正射影モードかどうか(FALSE:透視射影 TRUE:正射影）
+ */
+//============================================================================================
+static VMCMD_RESULT EFFVM_INIT_EMITTER_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work, BOOL ortho_mode )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK *beecmw;
+  ARCDATID  datID   = ( ARCDATID )VMGetU32( vmh );
+  int       ptc_no  = EFFVM_GetPtcNo( bevw, datID );
+  int       index   = ( int )VMGetU32( vmh );
+  int       position = 0;
+  fx32      offset_y;
+
+  if( ortho_mode == TRUE )
+  { 
+    GFL_G3D_PROJECTION  proj;
+	  VecFx32 Eye    = { 0, 0, 0 };          // Eye position
+	  VecFx32 vUp    = { 0, FX32_ONE, 0 };  // Up
+	  VecFx32 at     = { 0, 0, -FX32_ONE }; // Viewpoint
+
+    proj.type = GFL_G3D_PRJORTH;
+    proj.param1 = FX32_CONST( ORTHO_HEIGHT );
+    proj.param2 = -FX32_CONST( ORTHO_HEIGHT );
+    proj.param3 = -FX32_CONST( ORTHO_WIDTH );
+    proj.param4 = FX32_CONST( ORTHO_WIDTH );
+	  proj.near		= FX32_ONE * 1;
+    proj.far    = FX32_ONE * 1024;
+	  proj.scaleW	= FX32_ONE;
+
+    GFL_PTC_PersonalCameraCreate( bevw->ptc[ ptc_no ], &proj, DEFAULT_PERSP_WAY, &Eye, &vUp, &at, bevw->heapID );
+  }
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_EMITTER_CIRCLE_MOVE\n");
+#endif DEBUG_OS_PRINT
+
+  bevw->temp_work[ bevw->temp_work_count ] = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK ) );
+  beecmw = ( BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK *)bevw->temp_work[ bevw->temp_work_count ];
+  bevw->temp_work_count++;
+
+  //サイズオーバーのアサート
+  GF_ASSERT( bevw->temp_work_count < TEMP_WORK_SIZE );
+
+  beecmw->center          = ( int )VMGetU32( vmh );
+  beecmw->radius_h        = ( fx32 )VMGetU32( vmh );
+  beecmw->radius_v        = ( fx32 )VMGetU32( vmh );
+  offset_y                = ( fx32 )VMGetU32( vmh );
+  beecmw->angle           = 0;
+  beecmw->frame           = ( int )VMGetU32( vmh );
+  beecmw->frame_tmp       = beecmw->frame;
+  beecmw->wait            = 0;
+  beecmw->wait_tmp        = ( int )VMGetU32( vmh );
+  beecmw->count           = ( int )VMGetU32( vmh );
+  beecmw->after_wait      = 0;
+  beecmw->after_wait_tmp  = ( int )VMGetU32( vmh );
+
+  beecmw->speed = 0x10000 / beecmw->frame;
+
+  beecmw->ortho_mode = ortho_mode;
+
+  switch( beecmw->center ){ 
+  case BTLEFF_EMITTER_CIRCLE_MOVE_ATTACK_L:
+  case BTLEFF_EMITTER_CIRCLE_MOVE_ATTACK_R:
+    position = EFFVM_GetPosition( vmh, BTLEFF_POKEMON_SIDE_ATTACK );
+    BTLV_MCSS_GetPokeDefaultPos( BTLV_EFFECT_GetMcssWork(), &beecmw->center_pos, position );
+    break;
+  case BTLEFF_EMITTER_CIRCLE_MOVE_DEFENCE_L:
+  case BTLEFF_EMITTER_CIRCLE_MOVE_DEFENCE_R:
+    position = EFFVM_GetPosition( vmh, BTLEFF_POKEMON_SIDE_DEFENCE );
+    BTLV_MCSS_GetPokeDefaultPos( BTLV_EFFECT_GetMcssWork(), &beecmw->center_pos, position );
+    break;
+  case BTLEFF_EMITTER_CIRCLE_MOVE_CENTER_L:
+  case BTLEFF_EMITTER_CIRCLE_MOVE_CENTER_R:
+    beecmw->center_pos.x = 0;
+    beecmw->center_pos.y = 0;
+    beecmw->center_pos.z = 0;
+    break;
+  }
+
+  if( position & 1 )
+  { 
+    beecmw->angle = 0x8000;
+  }
+
+  beecmw->center_pos.y += offset_y;
+
+  GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterCircleMove, beecmw );
+
+  return bevw->control_mode;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	透視射影での座標から正射影での座標に変換する
+ *
+ *	@param[in/out]  pos 座標変換を行う座標
+ *	@param[in]      ofs オフセット座標（NULLの場合はオフセット計算をしない）
+ */
+//-----------------------------------------------------------------------------
+static  void  EFFVM_CalcPosOrtho( VecFx32 *pos, VecFx32 *ofs )
+{ 
+  MtxFx44	mtx;
+	fx32	w;
+
+	MTX_Copy43To44( NNS_G3dGlbGetCameraMtx(), &mtx );
+	MTX_Concat44( &mtx, NNS_G3dGlbGetProjectionMtx(), &mtx );
+
+  if( ofs )
+  { 
+    pos->x += ofs->x;
+    pos->y += ofs->y;
+    pos->z += ofs->z;
+  }
+
+	MTX_MultVec44( pos, &mtx, pos, &w );
+
+	pos->x = FX_Mul( FX_Div( pos->x, w ), ORTHO_WIDTH * FX32_ONE );
+	pos->y = FX_Mul( FX_Div( pos->y, w ), ORTHO_HEIGHT * FX32_ONE );
+  pos->z = -pos->z;
+}
+
+//神王蟲からいただき
+//----------------------------------------------------------------------------
+/**
+ *	@brief	4x4行列に座標を掛け合わせる
+ *			Vecをx,y,z,1として計算し、計算後のVecとwを返します。
+ *
+ *	@param	*cp_src	Vector座標
+ *	@param	*cp_m	4*4行列
+ *	@param	*p_dst	Vecror計算結果
+ *	@param	*p_w	4つ目の要素の値
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static	void MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 *p_dst, fx32 *p_w )
+{
+
+	fx32 x = cp_src->x;
+    fx32 y = cp_src->y;
+    fx32 z = cp_src->z;
+	fx32 w = FX32_ONE;
+
+	GF_ASSERT( cp_src );
+	GF_ASSERT( cp_m );
+	GF_ASSERT( p_dst );
+	GF_ASSERT( p_w );
+
+    p_dst->x = (fx32)(((fx64)x * cp_m->_00 + (fx64)y * cp_m->_10 + (fx64)z * cp_m->_20) >> FX32_SHIFT);
+    p_dst->x += cp_m->_30;	//	W=1なので足すだけ
+
+    p_dst->y = (fx32)(((fx64)x * cp_m->_01 + (fx64)y * cp_m->_11 + (fx64)z * cp_m->_21) >> FX32_SHIFT);
+    p_dst->y += cp_m->_31;//	W=1なので足すだけ
+
+    p_dst->z = (fx32)(((fx64)x * cp_m->_02 + (fx64)y * cp_m->_12 + (fx64)z * cp_m->_22) >> FX32_SHIFT);
+    p_dst->z += cp_m->_32;//	W=1なので足すだけ
+
+	*p_w	= (fx32)(((fx64)x * cp_m->_03 + (fx64)y * cp_m->_13 + (fx64)z * cp_m->_23) >> FX32_SHIFT);
+    *p_w	+= cp_m->_33;//	W=1なので足すだけ
 }
 
 //TCB関数
@@ -3513,7 +3594,9 @@ void  BTLV_EFFVM_DebugParticlePlay( VMHANDLE *vmh, GFL_PTC_PTR ptc, int index, i
   beeiw->vmh = vmh;
   beeiw->src = src;
   beeiw->dst = dst;
-  beeiw->ofs_y = ofs_y;
+  beeiw->ofs.x = 0;
+  beeiw->ofs.y = ofs_y;
+  beeiw->ofs.z = 0;
   beeiw->angle = angle;
 
   GFL_PTC_CreateEmitterCallback( ptc, index, &EFFVM_InitEmitterPos, beeiw );

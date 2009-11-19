@@ -344,59 +344,60 @@ ex)
 
 //命令シンボル宣言
 //COMMAND_START
-#define	EC_CAMERA_MOVE							( 0 )
-#define	EC_CAMERA_MOVE_COORDINATE		( 1 )
-#define	EC_CAMERA_MOVE_ANGLE				( 2 )
-#define	EC_CAMERA_SHAKE				      ( 3 )
-#define	EC_CAMERA_PROJECTION				( 4 )
-#define	EC_PARTICLE_LOAD						( 5 )
-#define	EC_PARTICLE_PLAY						( 6 )
-#define	EC_PARTICLE_PLAY_COORDINATE	( 7 )
-#define	EC_PARTICLE_PLAY_ORTHO			( 8 )
-#define	EC_PARTICLE_DELETE					( 9 )
-#define	EC_EMITTER_MOVE							( 10 )
-#define	EC_EMITTER_MOVE_COORDINATE	( 11 )
-#define	EC_EMITTER_CIRCLE_MOVE      ( 12 )
-#define	EC_POKEMON_MOVE							( 13 )
-#define	EC_POKEMON_CIRCLE_MOVE			( 14 )
-#define	EC_POKEMON_SCALE						( 15 )
-#define	EC_POKEMON_ROTATE						( 16 )
-#define	EC_POKEMON_ALPHA						( 17 )
-#define	EC_POKEMON_SET_MEPACHI_FLAG	( 18 )
-#define	EC_POKEMON_SET_ANM_FLAG			( 19 )
-#define	EC_POKEMON_PAL_FADE					( 20 )
-#define	EC_POKEMON_VANISH					  ( 21 )
-#define	EC_POKEMON_SHADOW_VANISH	  ( 22 )
-#define	EC_POKEMON_DEL	            ( 23 )
-#define	EC_TRAINER_SET							( 24 )
-#define	EC_TRAINER_MOVE							( 25 )
-#define	EC_TRAINER_ANIME_SET				( 26 )
-#define	EC_TRAINER_DEL							( 27 )
-#define	EC_BG_LOAD	   				      ( 28 )
-#define	EC_BG_SCROLL		   				  ( 29 )
-#define	EC_BG_RASTER_SCROLL		   	  ( 30 )
-#define	EC_BG_PAL_ANM		   				  ( 31 )
-#define	EC_BG_PRIORITY		   				( 32 )
-#define	EC_BG_ALPHA		   				    ( 33 )
-#define	EC_BG_PAL_FADE		   				( 34 )
-#define	EC_BG_VANISH								( 35 )
-#define	EC_OBJ_SET	   				      ( 36 )
-#define	EC_OBJ_MOVE	   				      ( 37 )
-#define	EC_OBJ_SCALE	   				    ( 38 )
-#define	EC_OBJ_ANIME_SET	   				( 39 )
-#define	EC_OBJ_DEL	   				      ( 40 )
-#define	EC_SE_PLAY									( 41 )
-#define	EC_SE_STOP									( 42 )
-#define	EC_SE_PAN								    ( 43 )
-#define	EC_SE_EFFECT								( 44 )
-#define	EC_EFFECT_END_WAIT					( 45 )
-#define	EC_WAIT											( 46 )
-#define	EC_CONTROL_MODE							( 47 )
-#define	EC_IF						            ( 48 )
-#define	EC_MCSS_POS_CHECK						( 49 )
+#define	EC_CAMERA_MOVE							  ( 0 )
+#define	EC_CAMERA_MOVE_COORDINATE		  ( 1 )
+#define	EC_CAMERA_MOVE_ANGLE				  ( 2 )
+#define	EC_CAMERA_SHAKE				        ( 3 )
+#define	EC_CAMERA_PROJECTION				  ( 4 )
+#define	EC_PARTICLE_LOAD						  ( 5 )
+#define	EC_PARTICLE_PLAY						  ( 6 )
+#define	EC_PARTICLE_PLAY_COORDINATE	  ( 7 )
+#define	EC_PARTICLE_PLAY_ORTHO			  ( 8 )
+#define	EC_PARTICLE_DELETE					  ( 9 )
+#define	EC_EMITTER_MOVE							  ( 10 )
+#define	EC_EMITTER_MOVE_COORDINATE	  ( 11 )
+#define	EC_EMITTER_CIRCLE_MOVE        ( 12 )
+#define	EC_EMITTER_CIRCLE_MOVE_ORTHO  ( 13 )
+#define	EC_POKEMON_MOVE							  ( 14 )
+#define	EC_POKEMON_CIRCLE_MOVE			  ( 15 )
+#define	EC_POKEMON_SCALE						  ( 16 )
+#define	EC_POKEMON_ROTATE						  ( 17 )
+#define	EC_POKEMON_ALPHA						  ( 18 )
+#define	EC_POKEMON_SET_MEPACHI_FLAG	  ( 19 )
+#define	EC_POKEMON_SET_ANM_FLAG			  ( 20 )
+#define	EC_POKEMON_PAL_FADE					  ( 21 )
+#define	EC_POKEMON_VANISH					    ( 22 )
+#define	EC_POKEMON_SHADOW_VANISH	    ( 23 )
+#define	EC_POKEMON_DEL	              ( 24 )
+#define	EC_TRAINER_SET							  ( 25 )
+#define	EC_TRAINER_MOVE							  ( 26 )
+#define	EC_TRAINER_ANIME_SET				  ( 27 )
+#define	EC_TRAINER_DEL							  ( 28 )
+#define	EC_BG_LOAD	   				        ( 29 )
+#define	EC_BG_SCROLL		   				    ( 30 )
+#define	EC_BG_RASTER_SCROLL		   	    ( 31 )
+#define	EC_BG_PAL_ANM		   				    ( 32 )
+#define	EC_BG_PRIORITY		   				  ( 33 )
+#define	EC_BG_ALPHA		   				      ( 34 )
+#define	EC_BG_PAL_FADE		   				  ( 35 )
+#define	EC_BG_VANISH								  ( 36 )
+#define	EC_OBJ_SET	   				        ( 37 )
+#define	EC_OBJ_MOVE	   				        ( 38 )
+#define	EC_OBJ_SCALE	   				      ( 39 )
+#define	EC_OBJ_ANIME_SET	   				  ( 40 )
+#define	EC_OBJ_DEL	   				        ( 41 )
+#define	EC_SE_PLAY									  ( 42 )
+#define	EC_SE_STOP									  ( 43 )
+#define	EC_SE_PAN								      ( 44 )
+#define	EC_SE_EFFECT								  ( 45 )
+#define	EC_EFFECT_END_WAIT					  ( 46 )
+#define	EC_WAIT											  ( 47 )
+#define	EC_CONTROL_MODE							  ( 48 )
+#define	EC_IF						              ( 49 )
+#define	EC_MCSS_POS_CHECK						  ( 50 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END									( 50 )
+#define	EC_SEQ_END									  ( 51 )
 
 #ifndef __C_NO_DEF_
 
@@ -763,6 +764,41 @@ ex)
 //======================================================================
   .macro  EMITTER_CIRCLE_MOVE num, index, center_pos, radius_h, radius_v, offset_y, frame, wait, count, rotate_after_wait
   .short  EC_EMITTER_CIRCLE_MOVE
+  .long   \num
+  .long   \index
+  .long   \center_pos
+  .long   \radius_h
+  .long   \radius_v
+  .long   \offset_y
+  .long   \frame
+  .long   \wait
+  .long   \count
+  .long   \rotate_after_wait
+  .endm
+
+//======================================================================
+/**
+ * @brief	エミッタ円移動（正射影）
+ *
+ * #param_num	6
+ * @param	num					      再生パーティクルナンバー
+ * @param	index				      spa内インデックスナンバー
+ * @param center_pos        円運動の中心
+ * @param param             横方向半径:縦方向半径:Y方向オフセット
+ * @param	rotate_param			回転フレーム数（1回転何フレームでするか）:移動ウエイト:回転カウント
+ * @param	rotate_after_wait 1回転したあとのウエイト（2回転以上で意味のある値です）
+ *
+ * #param	FILE_DIALOG_COMBOBOX .spa
+ * #param	COMBOBOX_HEADER
+ * #param COMBOBOX_TEXT 攻撃側左  攻撃側右  防御側左  防御側右  画面中央左  画面中央右
+ * #param COMBOBOX_VALUE  BTLEFF_EMITTER_CIRCLE_MOVE_ATTACK_L BTLEFF_EMITTER_CIRCLE_MOVE_ATTACK_R BTLEFF_EMITTER_CIRCLE_MOVE_DEFENCE_L BTLEFF_EMITTER_CIRCLE_MOVE_DEFENCE_R BTLEFF_EMITTER_CIRCLE_MOVE_CENTER_L BTLEFF_EMITTER_CIRCLE_MOVE_CENTER_R
+ * #param VALUE_VECFX32  横方向半径 縦方向半径 Y方向オフセット
+ * #param	VALUE_VECINT		回転フレーム数  移動ウエイト  回転カウント
+ * #param	VALUE_INT 1回転したあとのウエイト（2回転以上で意味のある値です）
+ */
+//======================================================================
+  .macro  EMITTER_CIRCLE_MOVE_ORTHO num, index, center_pos, radius_h, radius_v, offset_y, frame, wait, count, rotate_after_wait
+  .short  EC_EMITTER_CIRCLE_MOVE_ORTHO
   .long   \num
   .long   \index
   .long   \center_pos
