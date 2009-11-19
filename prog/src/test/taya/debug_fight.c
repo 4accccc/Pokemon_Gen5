@@ -173,6 +173,11 @@ enum {
   LAYOUT_LABEL_BTLTYPE_X  = 8,
   LAYOUT_LABEL_MSGSPEED_X = 144,
 
+  LAYOUT_CRIPMARK_OX = 240,
+  LAYOUT_CRIPMARK_OY = 4,
+  LAYOUT_CRIPMARK_WIDTH = 12,
+  LAYOUT_CRIPMARK_HEIGHT = 12,
+
 };
 /*
  *  ラベルレイアウト
@@ -885,7 +890,19 @@ static void printItem_DirectStr( DEBUG_BTL_WORK* wk, u16 strID, STRBUF* buf )
 {
   GFL_MSG_GetString( wk->mm, strID, buf );
 }
-
+static void printClipMark( DEBUG_BTL_WORK* wk )
+{
+  GFL_STR_ClearBuffer( wk->strbuf );
+  GFL_STR_AddCode( wk->strbuf, 0xff23 ); // 'Ｃ'
+  PRINTSYS_Print( wk->bmp, LAYOUT_CRIPMARK_OX, LAYOUT_CRIPMARK_OY, wk->strbuf, wk->fontHandle );
+  GFL_BMPWIN_TransVramCharacter( wk->win );
+}
+static void clearClipMark( DEBUG_BTL_WORK* wk )
+{
+  GFL_BMP_Fill( wk->bmp, LAYOUT_CRIPMARK_OX, LAYOUT_CRIPMARK_OY,
+              LAYOUT_CRIPMARK_WIDTH, LAYOUT_CRIPMARK_HEIGHT, 0xff );
+  GFL_BMPWIN_TransVramCharacter( wk->win );
+}
 
 
 
@@ -938,7 +955,7 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       u8  itemR;
       u8  itemL;
     }nextItemTbl[] = {
-      { SELITEM_POKE_SELF_1,   SELITEM_LOAD,        SELITEM_POKE_SELF_2, SELITEM_POKE_ENEMY1_1, SELITEM_POKE_ENEMY2_1 },
+      { SELITEM_POKE_SELF_1,   SELITEM_SAVE,        SELITEM_POKE_SELF_2, SELITEM_POKE_ENEMY1_1, SELITEM_POKE_ENEMY2_1 },
       { SELITEM_POKE_SELF_2,   SELITEM_POKE_SELF_1, SELITEM_POKE_SELF_3, SELITEM_POKE_ENEMY1_2, SELITEM_POKE_ENEMY2_2 },
       { SELITEM_POKE_SELF_3,   SELITEM_POKE_SELF_2, SELITEM_POKE_SELF_4, SELITEM_POKE_ENEMY1_3, SELITEM_POKE_ENEMY2_3 },
       { SELITEM_POKE_SELF_4,   SELITEM_POKE_SELF_3, SELITEM_POKE_SELF_5, SELITEM_POKE_ENEMY1_4, SELITEM_POKE_ENEMY2_4 },
@@ -962,7 +979,7 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_POKE_ENEMY2_4, SELITEM_POKE_ENEMY2_3, SELITEM_POKE_ENEMY2_5, SELITEM_POKE_SELF_4, SELITEM_POKE_FRIEND_4 },
       { SELITEM_POKE_ENEMY2_5, SELITEM_POKE_ENEMY2_4, SELITEM_POKE_ENEMY2_6, SELITEM_POKE_SELF_5, SELITEM_POKE_FRIEND_5 },
       { SELITEM_POKE_ENEMY2_6, SELITEM_POKE_ENEMY2_5, SELITEM_MSGSPEED,      SELITEM_POKE_SELF_6, SELITEM_POKE_FRIEND_6 },
-      { SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_6,   SELITEM_LOAD,          SELITEM_MSGSPEED,    SELITEM_MSGSPEED, },
+      { SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_6,   SELITEM_SAVE,          SELITEM_MSGSPEED,    SELITEM_MSGSPEED, },
       { SELITEM_MSGSPEED,      SELITEM_POKE_ENEMY2_6, SELITEM_SAVE,          SELITEM_BTL_TYPE,    SELITEM_BTL_TYPE },
       { SELITEM_SAVE,          SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_1,   SELITEM_LOAD,        SELITEM_LOAD },
       { SELITEM_LOAD,          SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_1,   SELITEM_SAVE,        SELITEM_SAVE },
@@ -991,13 +1008,28 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
   }
 
   // ポケ選択中にＹボタンで簡易コピペ機能
-  #if 0
   if( key & PAD_BUTTON_Y && (wk->selectItem <= SELITEM_POKE_ENEMY2_6) ){
+    // コピー
     if( wk->clipPoke == NULL ){
-      wk->clipPoke = get_
+      wk->clipPoke = savework_GetPokeParaArea( &wk->saveData, wk->selectItem );
+      if( wk->clipPoke != NULL )
+      {
+        printClipMark( wk );
+      }
+    }
+    // ペースト
+    else
+    {
+      POKEMON_PARAM* dst = savework_GetPokeParaArea( &wk->saveData, wk->selectItem );
+      if( dst != wk->clipPoke )
+      {
+        GFL_STD_MemCopy32( wk->clipPoke, dst, POKETOOL_GetWorkSize() );
+        PrintItem( wk, wk->selectItem, TRUE );
+        clearClipMark( wk );
+        wk->clipPoke = NULL;
+      }
     }
   }
-  #endif
 
   if( key & PAD_BUTTON_A )
   {
@@ -1034,6 +1066,7 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
 
   return FALSE;
 }
+
 
 //----------------------------------------------------------------------------------
 /**
