@@ -597,10 +597,10 @@
 #define FV_R03_RIVAL_02                    573 /* 0x023d R03：ライバル02 */
 #define FV_R03R0301_RIVAL_01               574 /* 0x023e R030101：プラズマ団・ライバル */
 #define FV_D07R0101_GYMLEADER05_01         575 /* 0x023f ネジ山：ヤーコン */
-		/* not used   576(0x0240) */
-		/* not used   577(0x0241) */
-		/* not used   578(0x0242) */
-		/* not used   579(0x0243) */
+#define FV_C07_RiIVAL_01                   576 /* 0x0240 C07セッカシティ：ライバル・サポート */
+#define FV_C07_HAKAIM_01                   577 /* 0x0241 C07セッカシティ：プラズマ団たち */
+#define FV_C07_READER7                     578 /* 0x0242 C07セッカシティ：ハチク */
+#define FV_C07GYM0101_READER7              579 /* 0x0243 C07GYM0101セッカシティジム：ハチク */
 		/* not used   580(0x0244) */
 		/* not used   581(0x0245) */
 		/* not used   582(0x0246) */
