@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-29T21:52:28"/>
+	<create user="matsumiya" host="W00207" date="2009-11-19T11:47:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,165 +292,445 @@
 	</lock>
 
 
-	<row id="msg_d08_leader7_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d08_hakase1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・c07ジムバッジ取得後に
-　c07フィールドでのイベントが終了すると
-　ここに登場
-・主人公がposを踏むと
-　メッセージ表示後、倍速移動で竜の塔に</comment>
-		<attribute name="キャラ指定">LEADER
-ハチク</attribute>
-		<language name="JPN" width="256">ハチク『……ゆるせぬ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ハチク『……許せぬ！[BE:01:ページ切り替え（クリア）]</language>
+・c07ジムバッジ取得まで
+・繰り返し表示</comment>
+		<attribute name="キャラ指定">博士（父）</attribute>
+		<language name="JPN" width="256">アララギ『みえるか
+リュウラセンのとう……[BE:01:ページ切り替え（クリア）]
+どの　じだいにも　ぞくさない
+デザインが　こうごうしさを　ます[BE:01:ページ切り替え（クリア）]
+あの　とうに　かんけいする
+ドラゴンポケモンとは[BE:00:ページ切り替え（行送り）]
+どのような　そんざい　だったのか</language>
+		<language name="JPN_KANJI" width="256">アララギ『みえるか
+リュウラセンの塔……[BE:01:ページ切り替え（クリア）]
+どの　時代にも　属さない
+デザインが　神々しさを　増す[BE:01:ページ切り替え（クリア）]
+あの　塔に　関係する
+ドラゴンポケモンとは[BE:00:ページ切り替え（行送り）]
+どのような　存在だったのか</language>
 	</row>
 
-	<row id="msg_d08_hakaim2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d08_hakase1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・仮メッセージ</comment>
-		<attribute name="キャラ指定">HAKAIM
-プラズマ団♂</attribute>
-		<language name="JPN" width="256">ゲーチスさまが
-つくりあげた　プラズマほう！[BE:01:ページ切り替え（クリア）]
-リュウラセンのとうを　ぶちあけたぞ！</language>
-		<language name="JPN_KANJI" width="256">ゲーチスさまが
-つくりあげた　プラズマ砲！[BE:01:ページ切り替え（クリア）]
-リュウラセンの塔を　ぶちあけたぞ！</language>
+・c07ジムバッジ取得後からd08r0701イベント終了まで
+・posで発動
+・続けてmsg_d08_black_01</comment>
+		<attribute name="キャラ指定">博士（父）</attribute>
+		<language name="JPN" width="256">アララギ『おお　[1:00:トレーナー名:0]か！
+じたいを　せつめい　するぞ[BE:01:ページ切り替え（クリア）]
+おおぜいの　プラズマだんが
+あやしげな　へいきを　つかい[BE:00:ページ切り替え（行送り）]
+とうの　かべを　こじあけたんだ[BE:01:ページ切り替え（クリア）]
+それを　みた　ハチクが
+ひとりで　おいかけていった……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『おお　[1:00:トレーナー名:0]か！
+事態を　説明するぞ[BE:01:ページ切り替え（クリア）]
+大挙した　プラズマ団が
+怪しげな　兵器を　用いて[BE:00:ページ切り替え（行送り）]
+塔の　壁を　こじあけたんだ[BE:01:ページ切り替え（クリア）]
+それを　みた　ハチクが
+単身　追いかけていった……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d08_hakaiw1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d08_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・msg_d08_hakase1_02表示後
+　ライバルとサポート、同時に歩いてくる
+・所定posに到達すると
+　このメッセージ表示
+・続けてmsg_d08_white_01</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">ブラッカー『なあ　[1:00:トレーナー名:0]
+ジムリーダーは　どこ？[BE:01:ページ切り替え（クリア）]
+……　……　……
+……　……　……[BE:01:ページ切り替え（クリア）]
+プラズマだんを　おいかけ
+とうのなか　って　わけね[BE:01:ページ切り替え（クリア）]
+プラズマだんか……
+ほうって　おけないよな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『なあ　[1:00:トレーナー名:0]
+ジムリーダーは　どこ？[BE:01:ページ切り替え（クリア）]
+……　……　……
+……　……　……[BE:01:ページ切り替え（クリア）]
+プラズマ団を　追いかけ
+塔の中　って　わけね[BE:01:ページ切り替え（クリア）]
+プラズマ団か……
+放って　おけないよな[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08_white_01">
 		<comment>♀
-・仮メッセージ</comment>
-		<attribute name="キャラ指定">HAKAIW
-プラズマ団♀</attribute>
-		<language name="JPN" width="256">とうの　なかに　とじこめられていた
-すうせんねんの　れきしが[BE:00:ページ切り替え（行送り）]
-いま　われわれの　ものに！</language>
-		<language name="JPN_KANJI" width="256">塔の中に　閉じ込められていた
-数千年の　歴史が[BE:00:ページ切り替え（行送り）]
-今　われわれの　ものに！</language>
+・続けてmsg_d08_black_02</comment>
+		<attribute name="キャラ指定">サポート</attribute>
+		<language name="JPN" width="256">ホワイティ『……ブラッカー
+だいじょうぶ　なの？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『……ブラッカー
+だいじょうぶ　なの？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d08_champion_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d08_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・d08r0901（最上階）で
-　パッケージポケモンのデモ終了後に登場
-・画面切り替えで
-　塔の前に出現させる主人公に隣接して
+・メッセージ表示後、塔に入るように移動
+　画面外に消えると、msg_d08_hakase1_03表示</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">ブラッカー『ダイジョーブだろ
+コイツも　いっしょ　だし[BE:01:ページ切り替え（クリア）]
+な　[1:00:トレーナー名:0]！
+じゃ　オレ　いくわ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『ダイジョーブだろ
+コイツも　一緒だし[BE:01:ページ切り替え（クリア）]
+な　[1:00:トレーナー名:0]！
+じゃ　オレ　行くわ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08_hakase1_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・このときサポートに近づいてからメッセージ表示？
+・続けてmsg_d08_white_02</comment>
+		<attribute name="キャラ指定">博士（父）</attribute>
+		<language name="JPN" width="256">アララギ『きみたちは……？</language>
+		<language name="JPN_KANJI" width="256">アララギ『きみたちは……？</language>
+	</row>
+
+	<row id="msg_d08_white_02">
+		<comment>♀
+・続けてmsg_d08_hakase1_04</comment>
+		<attribute name="キャラ指定">サポート</attribute>
+		<language name="JPN" width="256">ホワイティ『あたしは　ホワイティで
+さっきのは　ブラッカー　です！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]と　いっしょに
+ポケモンずかん　かんせいのため[BE:00:ページ切り替え（行送り）]
+イッシュちほうを　たび　してるの！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『あたしは　ホワイティで
+さっきのは　ブラッカー　です！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]と　一緒に
+ポケモン図鑑　完成のため[BE:00:ページ切り替え（行送り）]
+イッシュ地方を　旅してるの！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08_hakase1_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・続けてmsg_d08_white_03</comment>
+		<attribute name="キャラ指定">博士（父）</attribute>
+		<language name="JPN" width="256">アララギ『おお　そうか
+きみたちが……[BE:01:ページ切り替え（クリア）]
+だが　プラズマだん　あいてに
+ことを　かまえるのは[BE:00:ページ切り替え（行送り）]
+あまり　感心　できんが……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『おお　そうか
+きみたちが……[BE:01:ページ切り替え（クリア）]
+だが　プラズマ団　相手に
+事を　構えるのは[BE:00:ページ切り替え（行送り）]
+あまり　感心　できんが……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08_white_03">
+		<comment>♀
+・博士に近づいてからメッセージ表示
+・続けてmsg_d08_hakase1_05</comment>
+		<attribute name="キャラ指定">サポート</attribute>
+		<language name="JPN" width="256">ホワイティ『おじいちゃん
+しんぱい　しないで！[BE:01:ページ切り替え（クリア）]
+ブラッカーは　たよりないけど
+[1:00:トレーナー名:0]は　つよいし[BE:00:ページ切り替え（行送り）]
+プラズマだんを　たおしたこと　あるし！[BE:01:ページ切り替え（クリア）]
+なにより　わるいことは
+みのがせないでしょ！[BE:01:ページ切り替え（クリア）]
+じゃあ　[1:00:トレーナー名:0]
+ブラッカーのこと　ヨロシク！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『おじいちゃん
+心配しないで！[BE:01:ページ切り替え（クリア）]
+ブラッカーは　頼りないけど
+[1:00:トレーナー名:0]は　強いし[BE:00:ページ切り替え（行送り）]
+プラズマだんを　倒したこと　あるし！[BE:01:ページ切り替え（クリア）]
+なにより　悪いことは
+見逃せないでしょ！[BE:01:ページ切り替え（クリア）]
+じゃあ　[1:00:トレーナー名:0]
+ブラッカーのこと　ヨロシク！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08_hakase1_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・d08r0701イベント終了まで繰り返し</comment>
+		<attribute name="キャラ指定">博士（父）</attribute>
+		<language name="JPN" width="256">アララギ『それにしても……[BE:01:ページ切り替え（クリア）]
+ポケモンかいほうを　うたう
+プラズマだんが　なにを　ねらう……？</language>
+		<language name="JPN_KANJI" width="256">アララギ『それにしても……[BE:01:ページ切り替え（クリア）]
+ポケモン解放を　うたう
+プラズマ団が　なにを　目論む……？</language>
+	</row>
+
+	<row id="msg_d08_white_04">
+		<comment>♀
+・d08r0701イベント終了まで繰り返し</comment>
+		<attribute name="キャラ指定">サポート</attribute>
+		<language name="JPN" width="256">ホワイティ『じゃあ　[1:00:トレーナー名:0]
+ブラッカーのこと　ヨロシク！</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『じゃあ　[1:00:トレーナー名:0]
+ブラッカーのこと　ヨロシク！</language>
+	</row>
+
+	<row id="msg_d08_hakase1_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂：d08r0701イベント後
+・d08r0701イベント後、画面暗転でここに切り替えすると
+　このメッセージ表示
+・このとき画面にいるのは
+　博士父、ライバル、サポート、ジムリーダー、主人公（多い！）
+・続けてmsg_d08_black_03</comment>
+		<attribute name="キャラ指定">博士（父）</attribute>
+		<language name="JPN" width="256">アララギ『まさか……[BE:01:ページ切り替え（クリア）]
+でんせつの　ドラゴンポケモンが
+げんだいに　よみがえる　とはな……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『まさか……[BE:01:ページ切り替え（クリア）]
+伝説の　ドラゴンポケモンが
+現代に　よみがえる　とはな……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：d08r0701イベント後
+・続けてmsg_d08_white_05</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">ブラッカー『あの　Ｎってヤツ！[BE:01:ページ切り替え（クリア）]
+ドラゴンポケモンの　ちからで
+すべての　ポケモンを　すくうんだと！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『あの　Ｎってヤツ！[BE:01:ページ切り替え（クリア）]
+ドラゴンポケモンの　力で
+すべての　ポケモンを　救うんだと！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08_white_05">
+		<comment>♀：d08r0701イベント後
+・続けてmsg_d08_champion_01</comment>
+		<attribute name="キャラ指定">サポート</attribute>
+		<language name="JPN" width="256">ホワイティ『……そんなに
+ドラゴンポケモンって　すごいの？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『……そんなに
+ドラゴンポケモンって　すごいの？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08_champion_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：d08r0701イベント後
+・メッセージ表示後、全員、
+　！マーク表示し、画面下を向く
+・すると動作モデルが現れる</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">？？？『ああ　すごいぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">？？？『ああ　すごいぞ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08_hakase1_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂：d08r0701イベント後
+・チャンピオンが所定のposに到達すると
 　メッセージ表示
-※このときc07ジムリーダーも登場させる</comment>
-		<attribute name="キャラ指定">チャンピオン</attribute>
-		<language name="JPN" width="256">アデク『……[1:00:トレーナー名:0]
-カラクサタウンからでも　みえたぞ[BE:01:ページ切り替え（クリア）]
-あの　こうごうしく
-そして　まがまがしい　ひかり……[BE:01:ページ切り替え（クリア）]
-でんせつの　パッケージポケモンが
-あらわれたと　いうのか！？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アデク『……[1:00:トレーナー名:0]
-カラクサタウンからでも　みえたぞ[BE:01:ページ切り替え（クリア）]
-あの　神々しく
-そして　禍々しい　光……[BE:01:ページ切り替え（クリア）]
-伝説の　パッケージポケモンが
-あらわれたと　いうのか！？[BE:01:ページ切り替え（クリア）]</language>
+・続けてmsg_d08_champion_02</comment>
+		<attribute name="キャラ指定">博士（父）</attribute>
+		<language name="JPN" width="256">アララギ『……アデクではないか
+ひさしいな！　げんきであったか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『……アデクではないか
+久しいな！　健勝であったか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d08_leader7_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<attribute name="キャラ指定">LEADER
+	<row id="msg_d08_champion_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：d08r0701イベント後
+・msg_d08_hakase1_08
+　バージョンで台詞異なる</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">アデク『あいさつは　ぬきにしよう[BE:01:ページ切り替え（クリア）]
+とうから　はなたれた　あの　ひかり
+すなおに　よろこべぬ　とは……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アデク『あいさつは　抜きにしよう[BE:01:ページ切り替え（クリア）]
+塔から　放たれた　あの光……
+すなおに　喜べぬ　とは……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08_hakase1_08w" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂：d08r0701イベント後
+・続けてmsg_d08_champion_03w</comment>
+		<attribute name="キャラ指定">博士（父）</attribute>
+		<language name="JPN" width="256">アララギ『……うむ[BE:01:ページ切り替え（クリア）]
+かれらに　きいたところ
+Ｎという　おとこが　かかげた[BE:00:ページ切り替え（行送り）]
+ライトストーンが　かがやき[BE:00:ページ切り替え（行送り）]
+ポケモンに　へんげした　という[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『……うむ[BE:01:ページ切り替え（クリア）]
+かれらに　聞いたところ
+Ｎという　男が　掲げた[BE:00:ページ切り替え（行送り）]
+ライトストーンが　輝き[BE:00:ページ切り替え（行送り）]
+ポケモンに　変化した　という[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08_hakase1_08b" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂：d08r0701イベント後
+・続けてmsg_d08_champion_03b</comment>
+		<attribute name="キャラ指定">博士（父）</attribute>
+		<language name="JPN" width="256">アララギ『……うむ[BE:01:ページ切り替え（クリア）]
+かれらに　きいたところ
+Ｎという　おとこが　かかげた[BE:00:ページ切り替え（行送り）]
+ダークストーンが　かがやき[BE:00:ページ切り替え（行送り）]
+ポケモンに　へんげした　という[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『……うむ[BE:01:ページ切り替え（クリア）]
+かれらに　聞いたところ
+Ｎという　男が　掲げた[BE:00:ページ切り替え（行送り）]
+ダークストーンが　輝き[BE:00:ページ切り替え（行送り）]
+ポケモンに　変化した　という[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08_champion_03w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：d08r0701イベント後
+・続けてmsg_d08_white_06</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">アデク『……ふむう[BE:01:ページ切り替え（クリア）]
+われわれも　もうひとつの　いし
+ダークストーンを　さがしだし[BE:01:ページ切り替え（クリア）]
+もういっぴきの　ドラゴンポケモン
+ムの　ちからを　えるしか[BE:00:ページ切り替え（行送り）]
+Ｎには　たいこう　できないだろうな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アデク『……ふむう[BE:01:ページ切り替え（クリア）]
+われわれも　もうひとつの　石
+ダークストーンを　探しだし[BE:01:ページ切り替え（クリア）]
+もう一匹の　ドラゴンポケモン
+ムの　力を　得るしか[BE:00:ページ切り替え（行送り）]
+Ｎには　対抗できないだろうな[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08_champion_03b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：d08r0701イベント後
+・続けてmsg_d08_white_06</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">アデク『……ふむう[BE:01:ページ切り替え（クリア）]
+われわれも　もうひとつの　いし
+ライトストーンを　さがしだし[BE:01:ページ切り替え（クリア）]
+もういっぴきの　ドラゴンポケモン
+シンの　ちからを　えるしか[BE:00:ページ切り替え（行送り）]
+Ｎには　たいこう　できないだろうな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アデク『……ふむう[BE:01:ページ切り替え（クリア）]
+われわれも　もうひとつの　石
+ライトストーンを　探しだし[BE:01:ページ切り替え（クリア）]
+もう一匹の　ドラゴンポケモン
+シンの　力を　得るしか[BE:00:ページ切り替え（行送り）]
+Ｎには　対抗できないだろうな[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08_white_06">
+		<comment>♀：d08r0701イベント後
+・続けてmsg_d08_champion_04</comment>
+		<attribute name="キャラ指定">サポート</attribute>
+		<language name="JPN" width="256">ホワイティ『……でも　それだと
+シンと　ムの　あらそいが[BE:00:ページ切り替え（行送り）]
+さいげん　しちゃうんじゃ……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『……でも　それだと
+シンと　ムの　争いが[BE:00:ページ切り替え（行送り）]
+再現しちゃうんじゃ……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08_champion_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：d08r0701イベント後
+・続けてmsg_d08_hakase1_09
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">アデク『……たしかに　つたわる
+はなしでは　シンと　ムが[BE:00:ページ切り替え（行送り）]
+なのか　ななばん　あらそったという[BE:01:ページ切り替え（クリア）]
+だが　わたしにも　かんがえが　ある[BE:01:ページ切り替え（クリア）]
+とにかく　こだいのしろにて　あおう
+[1:00:トレーナー名:0]たち　ついてきてくれ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アデク『……確かに　シンと　ムが[BE:00:ページ切り替え（行送り）]
+七日七晩　争いつづけ[BE:00:ページ切り替え（行送り）]
+イッシュ地方は　荒廃したと　伝わっている[BE:01:ページ切り替え（クリア）]
+だが　わたしにも　考えが　ある[BE:01:ページ切り替え（クリア）]
+とにかく　古代の城にて　あおう
+[1:00:トレーナー名:0]たち　ついてきてくれ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08_hakase1_09" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂：d08r0701イベント後
+・msg_d08_leader7_01</comment>
+		<attribute name="キャラ指定">博士（父）</attribute>
+		<language name="JPN" width="256">アララギ『そうか
+では　そちらは　まかせた[BE:01:ページ切り替え（クリア）]
+こちらは　とうのなかを　しらべる
+なにか　わかるやも　しれん[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『そうか
+では　そちらは　まかせた[BE:01:ページ切り替え（クリア）]
+こちらは　塔の中を　調べる
+なにか　わかるやも　しれん[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08_leader7_01">
+		<comment>♂：d08r0701イベント後
+・メッセージ後
+　博士とジムリーダー、塔内へ
+　（このときジムリーダーが先導するアニメ）
+・動作モデルが画面外に消えると
+　続けてmsg_d08_black_04</comment>
+		<attribute name="キャラ指定">LEADER7
 ハチク</attribute>
-		<language name="JPN" width="256">ハチク『……はい
-きいたところ……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ハチク『……はい
-きいたところ……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ハチク『……では
+わたしが　あんない　いたします[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ハチク『……では
+わたしが　案内いたします[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d08_champion_02" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♂
-・上記メッセージ表示後
-　数歩はなれ、大きな独り言</comment>
-		<attribute name="キャラ指定">チャンピオン</attribute>
-		<language name="JPN" width="256">アデク『……　……　……
-……　……　そうか[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アデク『……　……　……
-……　……　そうか[BE:01:ページ切り替え（クリア）]</language>
+	<row id="msg_d08_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：d08r0701イベント後
+・メッセージ後チャンピオンとライバル、画面下へ
+　（このときライバルが先導するアニメ）
+・動作モデルが画面外に消えると
+　続けてmsg_d08_white_07</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">ブラッカー『そうだよな
+オレも　こだいのしろに　いく[BE:01:ページ切り替え（クリア）]
+だって　イヤだもん
+プラズマだんの　いいなり　なんて[BE:01:ページ切り替え（クリア）]
+じいさん　ほら　いそぐぜ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『そうだよな
+オレも　古代の城に　行く[BE:01:ページ切り替え（クリア）]
+だって　イヤだもん
+プラズマだんの　いいなり　なんて[BE:01:ページ切り替え（クリア）]
+じいさん　ほら　急ぐぜ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d08_champion_03" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♂
-・</comment>
-		<language name="JPN" width="256">Ｎという　おとこが　かがげた
-？？？ストーンが[BE:00:ページ切り替え（行送り）]
-ポケモンに　へんげしたと……[BE:01:ページ切り替え（クリア）]
-やつらめ……　でんせつどおり
-あたらしい　くにを　つくるというのか[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎという　男が　掲げた
-？？？ストーンが[BE:00:ページ切り替え（行送り）]
-ポケモンに　変質したと……[BE:01:ページ切り替え（クリア）]
-やつらめ……　伝説通り
-新しい国を　造るというのか[BE:01:ページ切り替え（クリア）]</language>
+	<row id="msg_d08_white_07">
+		<comment>♂：d08r0701イベント後
+・主人公に近づいてからメッセージ表示</comment>
+		<attribute name="キャラ指定">サポート</attribute>
+		<language name="JPN" width="256">ホワイティ『[1:00:トレーナー名:0]
+たいへんな　ことに　なっちゃったね[BE:01:ページ切り替え（クリア）]
+あたし　なんだか
+こんらん　しちゃって……[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]は
+こだいのしろに　いくんでしょ？[BE:01:ページ切り替え（クリア）]
+ライモンシティから　つながる
+リゾートデザートの　おく……[BE:00:ページ切り替え（行送り）]
+そこが　こだいのしろ　だよ</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『[1:00:トレーナー名:0]
+大変な　ことに　なっちゃったね[BE:01:ページ切り替え（クリア）]
+あたし　なんだか
+混乱しちゃって……[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]は
+古代の城に　向かうんでしょ？[BE:01:ページ切り替え（クリア）]
+ライモンシティから　つながる
+リゾートデザートの　奥……[BE:00:ページ切り替え（行送り）]
+そこが　古代の城　だよ</language>
 	</row>
 
-	<row id="msg_d08_hakase1_01" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・</comment>
-		<attribute name="キャラ指定">大博士</attribute>
-		<language name="JPN" width="256">？？？『そのようじゃな[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">？？？『そのようじゃな[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_d08_champion_04" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♂
-・</comment>
-		<attribute name="キャラ指定">チャンピオン</attribute>
-		<language name="JPN" width="256">アデク『おお　ひさしいな
-アララギの　じいさん[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アデク『おお　ひさしいな
-アララギの　じいさん[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_d08_hakase1_02" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・</comment>
-		<attribute name="キャラ指定">大博士</attribute>
-		<language name="JPN" width="256">アララギ『（あいさつ）[BE:01:ページ切り替え（クリア）]
-わしの　情報網によると
-プラズマ団は　古代の城から[BE:01:ページ切り替え（クリア）]
-？？？ストーンを　みつけだし
-今日に　備えていたという[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アララギ『（あいさつ）[BE:01:ページ切り替え（クリア）]
-わしの　情報網によると
-プラズマ団は　古代の城から[BE:01:ページ切り替え（クリア）]
-？？？ストーンを　みつけだし
-今日に　備えていたという[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_d08_champion_05" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♂
-・</comment>
-		<attribute name="キャラ指定">チャンピオン</attribute>
-		<language name="JPN" width="256">アデク『では　われわれも
-こだいのしろを　さがせば[BE:01:ページ切り替え（クリア）]
-もうひとつの　？？？ストーンを
-みつけられるかも　しれない……[BE:00:ページ切り替え（行送り）]
-そういうことか！　アララギ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アデク『では　われわれも
-こだいのしろを　さがせば[BE:01:ページ切り替え（クリア）]
-もうひとつの　？？？ストーンを
-みつけられるかも　しれない……[BE:00:ページ切り替え（行送り）]
-そういうことか！　アララギ[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_d08_hakase1_03" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・</comment>
-		<attribute name="キャラ指定">大博士</attribute>
-		<language name="JPN" width="256">アララギ『だが　もう一匹の
-ポケモンを　めざめさせたならば……[BE:01:ページ切り替え（クリア）]
-伝説の　災厄が
-再現するかも　知れぬのだぞ！！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アララギ『だが　もう一匹の
-ポケモンを　めざめさせたならば……[BE:01:ページ切り替え（クリア）]
-伝説の　災厄が
-再現するかも　知れぬのだぞ！！[BE:01:ページ切り替え（クリア）]</language>
+	<row id="msg_d08_white_08">
+		<comment>♀：
+・msg_d08_white_08表示後から繰り返し
+・d04r0601イベント終了で動作モデルを削除</comment>
+		<attribute name="キャラ指定">サポート</attribute>
+		<language name="JPN" width="256">ホワイティ『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+ライモンシティから　つながる
+リゾートデザートの　おく……[BE:00:ページ切り替え（行送り）]
+そこが　こだいのしろ　だよ</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+ライモンシティから　つながる
+リゾートデザートの　奥……[BE:00:ページ切り替え（行送り）]
+そこが　古代の城　だよ</language>
 	</row>
 
 	<flowchart-group-list>
