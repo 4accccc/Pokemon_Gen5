@@ -55,7 +55,7 @@
 	data = []
 	sig = []
   cell_anm_frame = []
-  cell_anm_index = [[]]
+  cell_anm_index = []
 
 	nmc_file = ARGV[ ARGV_OUT_DIR ] + File::basename( ARGV[ ARGV_READ_FILE ] )
 	nce_file = ARGV[ ARGV_OUT_DIR ] + File::basename( ARGV[ ARGV_READ_FILE ], ".nmc" ) + ".nce"
@@ -139,6 +139,7 @@
         read_data = fp_nmc.read( 4 )
         cell_anims = read_data.unpack( "L" )
         fp_w.write( read_data )
+        cell_anm_index << []
         cell_anims[ 0 ].times{|j|
           read_data = fp_nmc.read( 12 )
           pos_x, pos_y, label_index = read_data.unpack( "llL" )
