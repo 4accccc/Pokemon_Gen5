@@ -54,8 +54,9 @@ struct _TAG_SCRCMD_WORK
 	SCRCMD_WORK_HEADER head;
 	
 	GFL_MSGDATA *msgData;
-	FLDMSGWIN_STREAM *msgWinStream;
 	VecFx32 talkMsgWinTailPos;
+  
+  void *msgWin;
   
   GFL_TCB *tcb_callproc;
 	GFL_TCB *tcb_anm_tbl[SCRCMD_ACMD_MAX];
@@ -233,27 +234,27 @@ GFL_MSGDATA * SCRCMD_WORK_GetMsgData( SCRCMD_WORK *work )
 
 //--------------------------------------------------------------
 /**
- * SCRCMD_WORK FLDMSGWIN_STREAMセット
+ * SCRCMD_WORK メッセージウィンドウポインタセット
  * @param	work SCRCMD_WORK
- * @param	msgWin FLDMSGWIN*
+ * @param	msgWin メッセージウィンドウポインタ
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void SCRCMD_WORK_SetFldMsgWinStream( SCRCMD_WORK *work, FLDMSGWIN_STREAM *msgWin )
+void SCRCMD_WORK_SetMsgWinPtr( SCRCMD_WORK *work, void *msgWin )
 {
-	work->msgWinStream = msgWin;
+	work->msgWin = msgWin;
 }
 
 //--------------------------------------------------------------
 /**
  * SCRCMD_WORK FLDMSGWIN_STREAM取得
  * @param	work SCRCMD_WORK
- * @retval	FLDMSGWIN*
+ * @retval void* メッセージウィンドウポインタ
  */
 //--------------------------------------------------------------
-FLDMSGWIN_STREAM * SCRCMD_WORK_GetFldMsgWinStream( SCRCMD_WORK *work )
+void * SCRCMD_WORK_GetMsgWinPtr( SCRCMD_WORK *work )
 {
-	return( work->msgWinStream );
+	return( work->msgWin );
 }
 
 //--------------------------------------------------------------

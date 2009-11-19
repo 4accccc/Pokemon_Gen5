@@ -73,6 +73,15 @@ typedef enum {
 #define TWIN_FIX_POSY_D (24 - (TWIN_FIX_SIZY+2))
 #define TWIN_FIX_TAIL_X	(7)
 
+enum {
+	WINSEQ_EMPTY = 0,
+	WINSEQ_IDLING,
+	WINSEQ_OPEN_START,
+	WINSEQ_OPEN,
+	WINSEQ_HOLD,
+	WINSEQ_CLOSE,
+};
+
 typedef enum {
 	TAIL_SETPAT_NONE = 0,
 	TAIL_SETPAT_U,
@@ -126,7 +135,9 @@ typedef struct {
 }TAIL_DATA;
 
 typedef struct {
-	int							seq;
+	u16 seq;
+  u16 windowAlone;
+  
 	TALKWIN_SETPAT  winPat;
 
 	PRINT_STREAM*		printStream;
@@ -141,7 +152,6 @@ typedef struct {
 
 	u8							writex;
 	u8							writey;
-
 	u16							timer;
 }TMSGWIN;
 
@@ -187,11 +197,14 @@ static void deleteWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
 static void openWindow( TMSGWIN* tmsgwin );
 static void closeWindow( TMSGWIN* tmsgwin );
 static void mainfuncWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
+static void mainfuncWindowAlone(
+    TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
 static void draw3Dwindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
 
 static BOOL calcTail( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
 static void	drawTail( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin, BOOL tailOnly );
 
+static void writeWindowAlone( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
 static void writeWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
 static void clearWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
 
@@ -250,7 +263,11 @@ void TALKMSGWIN_SystemMain( TALKMSGWIN_SYS* tmsgwinSys )
 	settingCamera(tmsgwinSys, 0);
 
 	for( i=0; i<TALKMSGWIN_NUM; i++ ){ 
-		mainfuncWindow(tmsgwinSys, &tmsgwinSys->tmsgwin[i]); 
+    if( tmsgwinSys->tmsgwin[i].windowAlone == FALSE ){
+		  mainfuncWindow(tmsgwinSys, &tmsgwinSys->tmsgwin[i]); 
+    }else{
+		  mainfuncWindowAlone(tmsgwinSys, &tmsgwinSys->tmsgwin[i]); 
+    }
 	}
 	recoverCamera(tmsgwinSys);
 }
@@ -271,7 +288,9 @@ void TALKMSGWIN_SystemDraw3D( TALKMSGWIN_SYS* tmsgwinSys )
 	settingCamera(tmsgwinSys, 1);
 
 	for( i=0; i<TALKMSGWIN_NUM; i++ ){ 
-		draw3Dwindow(tmsgwinSys, &tmsgwinSys->tmsgwin[i]);
+    if( tmsgwinSys->tmsgwin[i].windowAlone == FALSE ){
+		  draw3Dwindow(tmsgwinSys, &tmsgwinSys->tmsgwin[i]);
+    }
 	}
 }
 
@@ -317,6 +336,31 @@ void TALKMSGWIN_SystemDebugOn( TALKMSGWIN_SYS* tmsgwinSys )
  *
  */
 //============================================================================================
+void TALKMSGWIN_CreateWindowAlone(	TALKMSGWIN_SYS*		tmsgwinSys, 
+																			int								tmsgwinIdx,
+																			STRBUF*						msg,
+																			u8								winpx,			
+																			u8								winpy,			
+																			u8								winsx,			
+																			u8								winsy,			
+																			u8								colIdx )
+{
+	TALKMSGWIN_SETUP setup;
+
+	GF_ASSERT( (tmsgwinIdx>=0)&&(tmsgwinIdx<TALKMSGWIN_NUM) );
+
+	setup.winPat = TALKWIN_SETPAT_FLOAT;
+	setup.winpx = winpx;
+	setup.winpy = winpy;
+	setup.winsx = winsx;
+	setup.winsy = winsy;
+	setup.color = BACKGROUND_COLOR;
+  
+	setupWindow( tmsgwinSys,
+      &tmsgwinSys->tmsgwin[tmsgwinIdx], NULL, msg, &setup );
+  tmsgwinSys->tmsgwin[tmsgwinIdx].windowAlone = TRUE;
+}
+
 void TALKMSGWIN_CreateFloatWindowIdx(	TALKMSGWIN_SYS*		tmsgwinSys, 
 																			int								tmsgwinIdx,
 																			VecFx32*					pTarget,
@@ -485,14 +529,7 @@ GFL_BMPWIN * TALKMSGWIN_GetBmpWin( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx )
  * @brief	ÉEÉCÉìÉhÉEêßå‰ä÷êî
  */
 //============================================================================================
-enum {
-	WINSEQ_EMPTY = 0,
-	WINSEQ_IDLING,
-	WINSEQ_OPEN_START,
-	WINSEQ_OPEN,
-	WINSEQ_HOLD,
-	WINSEQ_CLOSE,
-};
+
 
 //------------------------------------------------------------------
 static void initWindow( TMSGWIN* tmsgwin )
@@ -575,7 +612,7 @@ static void setupWindow(	TALKMSGWIN_SYS*		tmsgwinSys,
 #endif
 		}
 	}
-
+  
 	tmsgwin->seq = WINSEQ_IDLING;
 }
 
@@ -590,7 +627,8 @@ static void deleteWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 		clearWindow(tmsgwinSys, tmsgwin);
 
 		GFL_BMPWIN_Delete(tmsgwin->bmpwin);
-	
+	  
+    tmsgwin->windowAlone = FALSE;
 		tmsgwin->seq = WINSEQ_EMPTY;
 	}
 }
@@ -652,7 +690,52 @@ static void mainfuncWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 		}
 		break;
 	case WINSEQ_HOLD:
-		if(calcTail(tmsgwinSys, tmsgwin) == TRUE){ writeWindow(tmsgwinSys, tmsgwin); }
+		if(calcTail(tmsgwinSys, tmsgwin) == TRUE){
+      writeWindow(tmsgwinSys, tmsgwin);
+    }
+		break;
+	case WINSEQ_CLOSE:
+		deleteWindow(tmsgwinSys, tmsgwin);
+		break;
+	}
+}
+
+static void mainfuncWindowAlone(
+    TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
+{
+	switch(tmsgwin->seq){
+	case WINSEQ_EMPTY:
+	case WINSEQ_IDLING:
+		break;
+	case WINSEQ_OPEN_START:
+		tmsgwin->timer = 0;
+		tmsgwin->seq = WINSEQ_OPEN;
+	case WINSEQ_OPEN:
+		{
+			int wait;
+			
+			if(debugOn == TRUE){
+				wait = 2;
+			} else {
+				wait = MSGSPEED_GetWait();
+			}
+      
+			tmsgwin->seq = WINSEQ_HOLD;
+			writeWindowAlone(tmsgwinSys, tmsgwin);
+      
+			tmsgwin->printStream = PRINTSYS_PrintStream(	tmsgwin->bmpwin,							// GFL_BMPWIN
+																										tmsgwin->writex,							// u16
+																										tmsgwin->writey,							// u16
+																										tmsgwin->msg,									// STRBUF*
+																										tmsgwinSys->setup.fontHandle,	// GFL_FONT*
+																										wait,													// int
+																										tmsgwinSys->tcbl,							// GFL_TCBLSYS*
+																										0,														// u32 tcbpri
+																										tmsgwinSys->setup.heapID,			// HEAPID
+																										BACKGROUND_COLIDX );					// u16 clrCol
+		}
+		break;
+	case WINSEQ_HOLD:
 		break;
 	case WINSEQ_CLOSE:
 		deleteWindow(tmsgwinSys, tmsgwin);
@@ -1345,6 +1428,64 @@ static void setBGAlpha( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setup 
 #define R_CHR (4 + FLIP_H)
 #define SPC_CHR (5)
 
+static void writeWindowAlone( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
+{
+	u16	px = GFL_BMPWIN_GetPosX(tmsgwin->bmpwin);
+	u16	py = GFL_BMPWIN_GetPosY(tmsgwin->bmpwin);
+	u16	sx = GFL_BMPWIN_GetScreenSizeX(tmsgwin->bmpwin);
+	u16	sy = GFL_BMPWIN_GetScreenSizeY(tmsgwin->bmpwin);
+	BOOL overU = FALSE;
+	BOOL overD = FALSE;
+	BOOL overL = FALSE;
+	BOOL overR = FALSE;
+	u8	frameID = tmsgwinSys->setup.ini.frameID;
+	u16	wplt = (tmsgwinSys->setup.ini.winPltID) << 12;
+	u16	chrOffs = tmsgwinSys->setup.chrNumOffs;
+
+	if(px == 0){ overL = TRUE; }
+	if((px + sx) == 32){ overR = TRUE; }
+	if(py == 0){ overU = TRUE; }
+	if((py + sy) == 24){ overD = TRUE; }
+
+	//ï∂éöï`âÊóÃàÊ
+	GFL_BMPWIN_MakeScreen(tmsgwin->bmpwin);
+
+	//ògóÃàÊ
+	if(overU == FALSE){
+		if(overL == FALSE){
+			GFL_BG_FillScreen
+				(frameID, (wplt | (UL_CHR+chrOffs)), px - 1, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
+		}
+		GFL_BG_FillScreen
+			(frameID, (wplt | (U_CHR+chrOffs)), px, py - 1, sx, 1, GFL_BG_SCRWRT_PALIN);
+		if(overR == FALSE){
+			GFL_BG_FillScreen
+				(frameID, (wplt | (UR_CHR+chrOffs)), px + sx, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
+		}
+	}
+	if(overL == FALSE){
+		GFL_BG_FillScreen
+			(frameID, (wplt | (L_CHR+chrOffs)), px - 1, py, 1, sy, GFL_BG_SCRWRT_PALIN);
+	}
+	if(overR == FALSE){
+		GFL_BG_FillScreen
+			(frameID, (wplt | (R_CHR+chrOffs)), px + sx, py, 1, sy, GFL_BG_SCRWRT_PALIN);
+	}
+	if(overD == FALSE){
+		if(overL == FALSE){
+			GFL_BG_FillScreen
+				(frameID, (wplt | (DL_CHR+chrOffs)), px - 1, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN);
+		}
+		GFL_BG_FillScreen
+			(frameID, (wplt | (D_CHR+chrOffs)), px, py + sy, sx, 1, GFL_BG_SCRWRT_PALIN);
+		if(overR == FALSE){
+			GFL_BG_FillScreen
+				(frameID, (wplt | (DR_CHR+chrOffs)), px + sx, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN);
+		}
+	}
+	GFL_BG_LoadScreenReq(frameID);
+}
+
 static void writeWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 {
 	u16	px = GFL_BMPWIN_GetPosX(tmsgwin->bmpwin);
@@ -1400,7 +1541,6 @@ static void writeWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 				(frameID, (wplt | (DR_CHR+chrOffs)), px + sx, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN);
 		}
 	}
-	//tailê⁄ë±óÃàÊ
 #if TALKWIN_MODE
 #else
 	{

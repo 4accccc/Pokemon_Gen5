@@ -52,7 +52,22 @@ typedef enum
   FLDTALKMSGWIN_IDX_UPPER = 0, ///<画面上部に
   FLDTALKMSGWIN_IDX_LOWER, ///<画面下部に
   FLDTALKMSGWIN_IDX_AUTO, ///<吹き出し元の座標を考慮し自動で配置
+  FLDTALKMSGWIN_IDX_PLAIN, ///<プレーンウィンドウ
+  FLDTALKMSGWIN_IDX_SUBWIN0, ///<サブウィンドウ
+  FLDTALKMSGWIN_IDX_SUBWIN1, ///<サブウィンドウ
+  FLDTALKMSGWIN_IDX_SUBWIN2, ///<サブウィンドウ
+  FLDTALKMSGWIN_IDX_SUBWIN3, ///<サブウィンドウ
+  FLDTALKMSGWIN_IDX_SUBWIN4, ///<サブウィンドウ
+  FLDTALKMSGWIN_IDX_SUBWIN5, ///<サブウィンドウ
+  FLDTALKMSGWIN_IDX_SUBWIN6, ///<サブウィンドウ
+  FLDTALKMSGWIN_IDX_SUBWIN7, ///<サブウィンドウ
 }FLDTALKMSGWIN_IDX;
+
+//--------------------------------------------------------------
+/// サブウィンドウ
+//--------------------------------------------------------------
+#define FLDSUBMSGWIN_MAX (8) ///<サブウィンドウ最大数
+#define FLDMSGBG_STRLEN_SUBWIN (64) ///<サブウィンドウ用文字列長さ
 
 //======================================================================
 //	struct
@@ -64,6 +79,8 @@ typedef struct _TAG_FLDMSGPRINT_STREAM FLDMSGPRINT_STREAM; ///<FLDMSGPRINT_STREA
 typedef struct _TAG_FLDMSGWIN_STREAM FLDMSGWIN_STREAM; ///<FLDMSGWIN_STREAM
 typedef struct _TAG_FLDMENUFUNC FLDMENUFUNC;	///<FLDMENUFUNC
 typedef struct _TAG_FLDTALKMSGWIN FLDTALKMSGWIN; ///FLDTALKMSGWIN
+typedef struct _TAG_FLDPLAINMSGWIN FLDPLAINMSGWIN; ///<FLDPLAINMSGWIN
+typedef struct _TAG_FLDSUBMSGWIN FLDSUBMSGWIN; ///<FLDSUBMSGWIN
 
 //--------------------------------------------------------------
 ///	FLDMENUFUNC_LISTDATA
@@ -234,6 +251,24 @@ extern FLDTALKMSGWIN * FLDTALKMSGWIN_AddStrBuf( FLDMSGBG *fmb,
     FLDTALKMSGWIN_IDX idx, const VecFx32 *pos, STRBUF *strBuf );
 extern void FLDTALKMSGWIN_Delete( FLDTALKMSGWIN *tmsg );
 extern BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg );
+
+//プレーンウィンドウ
+extern FLDPLAINMSGWIN * FLDPLAINMSGWIN_Add( FLDMSGBG *fmb,
+    BOOL up_down, const GFL_MSGDATA *msgData, u32 msgID );
+extern FLDPLAINMSGWIN * FLDPLAINMSGWIN_AddStrBuf( FLDMSGBG *fmb,
+    BOOL up_down, STRBUF *strBuf );
+extern void FLDPLAINMSGWIN_Delete( FLDPLAINMSGWIN *plnwin );
+extern BOOL FLDPLAINMSGWIN_Print( FLDPLAINMSGWIN *plnwin );
+
+//サブウィンドウ
+extern void FLDSUBMSGWIN_Add( FLDMSGBG *fmb,
+    const GFL_MSGDATA *msgData, u32 msgID,
+    int id, u8 x, u8 y, u8 sx, u8 sy );
+extern void FLDSUBMSGWIN_AddStrBuf( FLDMSGBG *fmb,
+    const STRBUF *strBuf, int id, u8 x, u8 y, u8 sx, u8 sy );
+extern void FLDSUBMSGWIN_Delete( FLDMSGBG *fmb, int id );
+extern void FLDSUBMSGWIN_DeleteAll( FLDMSGBG *fmb );
+extern BOOL FLDSUBMSGWIN_CheckExistWindow( FLDMSGBG *fmb );
 
 //その他
 extern void FLDMSGBG_SetBlendAlpha( BOOL set );

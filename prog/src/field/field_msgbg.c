@@ -94,6 +94,8 @@ struct _TAG_FLDMSGBG
 	PRINT_QUE *printQue;
 	FLDMSGPRINT msgPrintTbl[FLDMSGBG_PRINT_MAX];
   
+  FLDSUBMSGWIN *subMsgWinTbl[FLDSUBMSGWIN_MAX];
+  
   TALKMSGWIN_SYS *talkMsgWinSys;
   
   GFL_TCBLSYS *printTCBLSys;
@@ -145,7 +147,7 @@ struct _TAG_FLDMSGWIN_STREAM
   const GFL_MSGDATA *msgData; //ユーザーから
   STRBUF *strBuf;
 	FLDMSGBG *fmb;
-  
+   
   u8 flag_cursor;
   u8 flag_key_pause_clear;
   KEYCURSOR_WORK cursor_work;
@@ -160,6 +162,8 @@ static void FldMenuFuncH_BmpMenuListH(
 static PRINTSTREAM_STATE fldMsgPrintStream_ProcPrint(
     FLDMSGPRINT_STREAM *stm );
 
+static BOOL fldSubMsgWin_Print( FLDSUBMSGWIN *subwin );
+
 static void keyCursor_Init( KEYCURSOR_WORK *work, HEAPID heapID );
 static void keyCursor_Delete( KEYCURSOR_WORK *work );
 static void keyCursor_Clear(
@@ -172,6 +176,9 @@ static void setBlendAlpha( BOOL on );
 static GFL_BMPWIN * FldBmpWinFrame_Init( u32 bgFrame, HEAPID heapID,
 	u16 pos_x, u16 pos_y, u16 size_x, u16 size_y, u16 pltt_no );
 static void FldBmpWinFrame_Delete( GFL_BMPWIN *bmpwin );
+
+static int FldMsgBG_SetFldSubMsgWin( FLDMSGBG *fmb, FLDSUBMSGWIN *subwin );
+static FLDSUBMSGWIN * FldMsgBG_DeleteFldSubMsgWin( FLDMSGBG *fmb, int id );
 
 static const FLDMENUFUNC_HEADER DATA_MenuHeader_YesNo;
 static const u8 ALIGN4 skip_cursor_Character[128];
@@ -428,15 +435,25 @@ void FLDMSGBG_ResetBGResource( FLDMSGBG *fmb )
 void FLDMSGBG_PrintMain( FLDMSGBG *fmb )
 {
 	int i;
-	FLDMSGPRINT *msgPrint = fmb->msgPrintTbl;
-	
 	PRINTSYS_QUE_Main( fmb->printQue );
-	
-	for( i = 0; i < FLDMSGBG_PRINT_MAX; i++, msgPrint++ ){
-		if( msgPrint->printQue != NULL ){
-			msgPrint->printTransFlag = PRINT_UTIL_Trans(
-				&msgPrint->printUtil, msgPrint->printQue );
-		}
+  
+  {
+    FLDSUBMSGWIN **subWin = fmb->subMsgWinTbl;
+    for( i = 0; i < FLDSUBMSGWIN_MAX; i++, subWin++ ){
+      if( (*subWin) != NULL ){
+        fldSubMsgWin_Print( *subWin );
+      }
+    }
+  }
+
+  {
+	  FLDMSGPRINT *msgPrint = fmb->msgPrintTbl;
+	  for( i = 0; i < FLDMSGBG_PRINT_MAX; i++, msgPrint++ ){
+		  if( msgPrint->printQue != NULL ){
+			  msgPrint->printTransFlag = PRINT_UTIL_Trans(
+				  &msgPrint->printUtil, msgPrint->printQue );
+		  }
+    }
 	}
   
   GFL_TCBL_Main( fmb->printTCBLSys );
@@ -1967,6 +1984,402 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
 }
 
 //======================================================================
+//  プレーンウィンドウ
+//======================================================================
+//--------------------------------------------------------------
+/// FLDPLAINMSGWIN
+//--------------------------------------------------------------
+struct _TAG_FLDPLAINMSGWIN
+{
+  u8 flag_key_trg;
+  u8 flag_key_cont;
+  u8 flag_key_pause_clear;
+  u8 flag_cursor;
+  STRBUF *strBuf;
+  int talkMsgWinIdx;
+  TALKMSGWIN_SYS *talkMsgWinSys; //FLDMSGBGより
+  KEYCURSOR_WORK cursor_work;
+};
+
+//--------------------------------------------------------------
+/**
+ * FLDPLAINMSGWIN プレーンウィンドウセット
+ * @param fmb FLDMSGBG
+ * @param up_down 0=up,1=down
+ * @param strBuf 表示するSTRBUF
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void fldPlainMsgWin_Add(
+    FLDMSGBG *fmb, FLDPLAINMSGWIN *plnwin,
+    BOOL up_down, STRBUF *strBuf )
+{
+  GF_ASSERT( fmb->talkMsgWinSys != NULL );
+  
+  fmb->deriveWin_plttNo = FLDMSGBG_PANO_FONT_TALKMSGWIN;
+
+  plnwin->talkMsgWinSys = fmb->talkMsgWinSys;
+  plnwin->talkMsgWinIdx = FLDTALKMSGWIN_IDX_PLAIN;
+  
+  debug_ROM091030_WindowColorON( fmb->heapID );
+  setBlendAlpha( FALSE );
+  
+  if( up_down == 0 ){
+    TALKMSGWIN_CreateWindowAlone(
+        plnwin->talkMsgWinSys, plnwin->talkMsgWinIdx,
+        strBuf, 1, 2, 30, 5, GX_RGB(31,31,31) );
+  }else{
+    TALKMSGWIN_CreateWindowAlone(
+        plnwin->talkMsgWinSys, plnwin->talkMsgWinIdx,
+        strBuf, 1, 17, 30, 5, GX_RGB(31,31,31) );
+  }
+  
+  TALKMSGWIN_OpenWindow( plnwin->talkMsgWinSys, plnwin->talkMsgWinIdx );
+  keyCursor_Init( &plnwin->cursor_work, fmb->heapID );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDPLAINMSGWIN プレーンウィンドウセット
+ * @param fmb FLDMSGBG
+ * @param up_down 0=up,1=down
+ * @param msgData 使用するGFL_MSGDATA
+ * @param msgID メッセージ アーカイブデータID
+ * @retval FLDPLAINMSGWIN*
+ */
+//--------------------------------------------------------------
+FLDPLAINMSGWIN * FLDPLAINMSGWIN_Add( FLDMSGBG *fmb,
+    BOOL up_down, const GFL_MSGDATA *msgData, u32 msgID )
+{
+  FLDPLAINMSGWIN *plnwin = GFL_HEAP_AllocClearMemory(
+      fmb->heapID, sizeof(FLDPLAINMSGWIN) );
+  plnwin->strBuf = GFL_STR_CreateBuffer(
+					FLDMSGBG_STRLEN, fmb->heapID );
+  GFL_MSG_GetString( msgData, msgID, plnwin->strBuf );
+  fldPlainMsgWin_Add( fmb, plnwin, up_down, plnwin->strBuf );
+  return( plnwin );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDPLAINMSGWIN プレーンウィンドウセット
+ * @param fmb FLDMSGBG
+ * @param up_down 0=up,1=down
+ * @param	strBuf	表示するSTRBUF
+ * @param msgID メッセージ アーカイブデータID
+ * @retval FLDPLAINMSGWIN*
+ */
+//--------------------------------------------------------------
+FLDPLAINMSGWIN * FLDPLAINMSGWIN_AddStrBuf( FLDMSGBG *fmb,
+    BOOL up_down, STRBUF *strBuf )
+{
+  FLDPLAINMSGWIN *plnwin = GFL_HEAP_AllocClearMemory(
+      fmb->heapID, sizeof(FLDPLAINMSGWIN) );
+  fldPlainMsgWin_Add( fmb, plnwin, up_down, strBuf );
+  return( plnwin );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDPLAINMSGWIN プレーンウィンドウ削除
+ * @param tmsg FLDTALKMSGWIN
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDPLAINMSGWIN_Delete( FLDPLAINMSGWIN *plnwin )
+{
+  if( plnwin->strBuf != NULL ){
+		GFL_STR_DeleteBuffer( plnwin->strBuf );
+  }
+  
+  TALKMSGWIN_DeleteWindow( plnwin->talkMsgWinSys, plnwin->talkMsgWinIdx );
+  keyCursor_Delete( &plnwin->cursor_work );
+  GFL_HEAP_FreeMemory( plnwin );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDPLAINMSGWIN プレーンウィンドウ 表示
+ * @param plnwin FLDTALKMSGWIN
+ * @retval BOOL TRUE=表示終了,FALSE=表示中
+ */
+//--------------------------------------------------------------
+BOOL FLDPLAINMSGWIN_Print( FLDPLAINMSGWIN *plnwin )
+{
+  int trg,cont;
+  PRINTSTREAM_STATE state;
+  PRINT_STREAM *stream;
+  PRINTSTREAM_PAUSE_TYPE pause_type;
+
+  if( TALKMSGWIN_CheckPrintOn(
+        plnwin->talkMsgWinSys,plnwin->talkMsgWinIdx) == FALSE ){
+    return( FALSE );
+  }
+
+  trg = GFL_UI_KEY_GetTrg();
+  cont = GFL_UI_KEY_GetCont();
+  stream = TALKMSGWIN_GetPrintStream(
+      plnwin->talkMsgWinSys, plnwin->talkMsgWinIdx );
+  state = PRINTSYS_PrintStreamGetState( stream );
+  
+  switch( state ){
+  case PRINTSTREAM_STATE_RUNNING: //実行中
+    plnwin->flag_cursor = CURSOR_FLAG_NONE;
+    plnwin->flag_key_pause_clear = FALSE;
+    
+    if( (trg & PAD_BUTTON_A) ){
+      plnwin->flag_key_trg = TRUE;
+    }
+    
+    if( plnwin->flag_key_trg == TRUE && (cont & PAD_BUTTON_A) ){
+      PRINTSYS_PrintStreamShortWait( stream, 0 );
+    }
+    break;
+  case PRINTSTREAM_STATE_PAUSE: //一時停止中
+    if( plnwin->flag_key_pause_clear == FALSE ){ //既にポーズクリア済みか？
+      GFL_BMPWIN *twin_bmp = TALKMSGWIN_GetBmpWin(
+          plnwin->talkMsgWinSys, plnwin->talkMsgWinIdx );
+		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
+      
+      if( (trg & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
+        PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
+        PRINTSYS_PrintStreamReleasePause( stream );
+        
+        if( plnwin->flag_cursor == CURSOR_FLAG_WRITE ){
+          keyCursor_Clear( &plnwin->cursor_work, bmp, 0x0f );
+        }
+        
+        plnwin->flag_key_trg = FALSE;
+        plnwin->flag_key_pause_clear = TRUE;
+        plnwin->flag_cursor = CURSOR_FLAG_END;
+      }
+      
+      if( plnwin->flag_cursor != CURSOR_FLAG_END ){
+        keyCursor_Write( &plnwin->cursor_work, bmp, 0x0f );
+        plnwin->flag_cursor = CURSOR_FLAG_WRITE;
+      }
+      
+		  GFL_BMPWIN_TransVramCharacter( twin_bmp );
+    }
+    break;
+  case PRINTSTREAM_STATE_DONE: //終了
+    return( TRUE );
+  }
+  
+  return( FALSE );
+}
+
+//======================================================================
+//  サブウィンドウ
+//======================================================================
+//--------------------------------------------------------------
+/// FLDSUBMSGWIN
+//--------------------------------------------------------------
+struct _TAG_FLDSUBMSGWIN
+{
+  STRBUF *strBuf;
+  int id; //ウィンドウID
+  int talkMsgWinIdx;
+  TALKMSGWIN_SYS *talkMsgWinSys; //FLDMSGBGより
+  KEYCURSOR_WORK cursor_work;
+};
+
+//--------------------------------------------------------------
+/**
+ * FLDSUBMSGWIN サブウィンドウセット
+ * @param fmb FLDMSGBG
+ * @param strBuf 表示するSTRBUF
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void fldSubMsgWin_Add(
+    FLDMSGBG *fmb, FLDSUBMSGWIN *subwin,
+    STRBUF *strBuf, u16 idx, u8 x, u8 y, u8 sx, u8 sy, int id )
+{
+  GF_ASSERT( fmb->talkMsgWinSys != NULL );
+  
+  fmb->deriveWin_plttNo = FLDMSGBG_PANO_FONT_TALKMSGWIN;
+  
+  subwin->talkMsgWinSys = fmb->talkMsgWinSys;
+  subwin->talkMsgWinIdx = idx;
+  subwin->id = id;
+
+  debug_ROM091030_WindowColorON( fmb->heapID );
+  setBlendAlpha( FALSE );
+  
+  TALKMSGWIN_CreateWindowAlone(
+    subwin->talkMsgWinSys, subwin->talkMsgWinIdx,
+    strBuf, x, y, sx, sy, GX_RGB(31,31,31) );
+  
+  TALKMSGWIN_OpenWindow( subwin->talkMsgWinSys, subwin->talkMsgWinIdx );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDPLAINMSGWIN サブウィンドウセット
+ * @param fmb FLDMSGBG
+ * @param msgData 使用するGFL_MSGDATA
+ * @param msgID メッセージ アーカイブデータID
+ * @retval FLDPLAINMSGWIN*
+ */
+//--------------------------------------------------------------
+void FLDSUBMSGWIN_Add( FLDMSGBG *fmb,
+    const GFL_MSGDATA *msgData, u32 msgID,
+    int id, u8 x, u8 y, u8 sx, u8 sy )
+{
+  int idx;
+  
+  FLDSUBMSGWIN *subwin = GFL_HEAP_AllocClearMemory(
+      fmb->heapID, sizeof(FLDSUBMSGWIN) );
+  
+  idx = FldMsgBG_SetFldSubMsgWin( fmb, subwin );
+  idx += FLDTALKMSGWIN_IDX_SUBWIN0;
+  
+  subwin->strBuf = GFL_STR_CreateBuffer(
+					FLDMSGBG_STRLEN_SUBWIN, fmb->heapID );
+  
+  GFL_MSG_GetString( msgData, msgID, subwin->strBuf );
+  fldSubMsgWin_Add( fmb, subwin, subwin->strBuf,
+      idx, x, y, sx, sy, id );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDPLAINMSGWIN サブウィンドウセット
+ * @param fmb FLDMSGBG
+ * @param up_down 0=up,1=down
+ * @param strBuf 表示するSTRBUF 
+ * @retval nothing
+ * @note strBufはコピーして格納しますので、
+ * セット後、開放しても問題ありません。
+ */
+//--------------------------------------------------------------
+void FLDSUBMSGWIN_AddStrBuf( FLDMSGBG *fmb,
+    const STRBUF *strBuf, int id, u8 x, u8 y, u8 sx, u8 sy )
+{
+  int idx;
+  
+  FLDSUBMSGWIN *subwin = GFL_HEAP_AllocClearMemory(
+      fmb->heapID, sizeof(FLDSUBMSGWIN) );
+  idx = FldMsgBG_SetFldSubMsgWin( fmb, subwin );
+  idx += FLDTALKMSGWIN_IDX_SUBWIN0;
+  
+  {
+    u32 len = GFL_STR_GetBufferLength( strBuf ) + 1;
+    subwin->strBuf = GFL_STR_CreateBuffer( len, fmb->heapID );
+	  GFL_STR_CopyBuffer( subwin->strBuf, strBuf );
+  }
+  
+  fldSubMsgWin_Add(
+      fmb, subwin, subwin->strBuf, idx, x, y, sx, sy, id );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDSUBMSGWIN サブウィンドウ削除　メイン
+ * @param tmsg FLDTALKMSGWIN
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void fldSubMsgWin_Delete( FLDSUBMSGWIN *subwin )
+{
+  if( subwin->strBuf != NULL ){
+		GFL_STR_DeleteBuffer( subwin->strBuf );
+  }
+  
+  TALKMSGWIN_DeleteWindow( subwin->talkMsgWinSys, subwin->talkMsgWinIdx );
+  GFL_HEAP_FreeMemory( subwin );
+}
+
+
+//--------------------------------------------------------------
+/**
+ * FLDSUBMSGWIN サブウィンドウ削除
+ * @param tmsg FLDTALKMSGWIN
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDSUBMSGWIN_Delete( FLDMSGBG *fmb, int id )
+{
+  FLDSUBMSGWIN *subwin = FldMsgBG_DeleteFldSubMsgWin( fmb, id );
+  fldSubMsgWin_Delete( subwin );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDSUBMSGWIN サブウィンドウ全削除
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+void FLDSUBMSGWIN_DeleteAll( FLDMSGBG *fmb )
+{
+  int i;
+  for( i = 0; i < FLDSUBMSGWIN_MAX; i++ ){
+    if( fmb->subMsgWinTbl[i] != NULL ){
+      FLDSUBMSGWIN *subwin = fmb->subMsgWinTbl[i] = NULL;
+      fmb->subMsgWinTbl[i] = NULL;
+      fldSubMsgWin_Delete( subwin );
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDSUBMSGWIN サブウィンドウが存在するかチェック
+ * @param
+ * @retval BOOL TRUE=存在する
+ */
+//--------------------------------------------------------------
+BOOL FLDSUBMSGWIN_CheckExistWindow( FLDMSGBG *fmb )
+{
+  int i;
+  for( i = 0; i < FLDSUBMSGWIN_MAX; i++ ){
+    if( fmb->subMsgWinTbl[i] != NULL ){
+      return( TRUE );
+    }
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDSUBMSGWIN サブウィンドウ 表示
+ * @param subwin FLDTALKMSGWIN
+ * @retval BOOL TRUE=表示終了,FALSE=表示中
+ */
+//--------------------------------------------------------------
+static BOOL fldSubMsgWin_Print( FLDSUBMSGWIN *subwin )
+{
+  int trg,cont;
+  PRINTSTREAM_STATE state;
+  PRINT_STREAM *stream;
+  PRINTSTREAM_PAUSE_TYPE pause_type;
+  
+  if( TALKMSGWIN_CheckPrintOn(
+        subwin->talkMsgWinSys,subwin->talkMsgWinIdx) == FALSE ){
+    return( FALSE );
+  }
+
+  trg = GFL_UI_KEY_GetTrg();
+  cont = GFL_UI_KEY_GetCont();
+  stream = TALKMSGWIN_GetPrintStream(
+      subwin->talkMsgWinSys, subwin->talkMsgWinIdx );
+  state = PRINTSYS_PrintStreamGetState( stream );
+  
+  switch( state ){
+  case PRINTSTREAM_STATE_RUNNING: //実行中
+    break;
+  case PRINTSTREAM_STATE_PAUSE: //一時停止中
+    break;
+  case PRINTSTREAM_STATE_DONE: //終了
+    return( TRUE );
+  }
+  
+  return( FALSE );
+}
+
+//======================================================================
 //  キー送りカーソル
 //======================================================================
 //--------------------------------------------------------------
@@ -2192,6 +2605,49 @@ static void FldBmpWinFrame_Delete( GFL_BMPWIN *bmpwin )
 {
 	BmpWinFrame_Clear( bmpwin, 0 );
 	GFL_BMPWIN_Delete( bmpwin );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMSGBG FLDSUBMSGWIN登録
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static int FldMsgBG_SetFldSubMsgWin( FLDMSGBG *fmb, FLDSUBMSGWIN *subwin )
+{
+  int i;
+  for( i = 0; i < FLDSUBMSGWIN_MAX; i++ ){
+    if( fmb->subMsgWinTbl[i] == NULL ){
+      fmb->subMsgWinTbl[i] = subwin;
+      return( i );
+    }
+  }
+  
+  GF_ASSERT( 0 );
+  return( i );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMSGBG FLDSUBMSGWIN削除
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static FLDSUBMSGWIN * FldMsgBG_DeleteFldSubMsgWin( FLDMSGBG *fmb, int id )
+{
+  int i;
+  for( i = 0; i < FLDSUBMSGWIN_MAX; i++ ){
+    if( fmb->subMsgWinTbl[i] != NULL && fmb->subMsgWinTbl[i]->id == id ){
+      FLDSUBMSGWIN *subwin = fmb->subMsgWinTbl[i];
+      fmb->subMsgWinTbl[i] = NULL;
+      return( subwin );
+    }
+  }
+  
+  GF_ASSERT( 0 );
+  return( NULL );
 }
 
 //======================================================================

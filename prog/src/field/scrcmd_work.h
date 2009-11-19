@@ -66,10 +66,10 @@ extern GAMEDATA *SCRCMD_WORK_GetGameData( SCRCMD_WORK *work );
 extern MMDLSYS * SCRCMD_WORK_GetMMdlSys( SCRCMD_WORK *work );
 extern SCRIPT_WORK * SCRCMD_WORK_GetScriptWork( SCRCMD_WORK *work );
 extern FLDMSGBG * SCRCMD_WORK_GetFldMsgBG( SCRCMD_WORK *work );
-extern void SCRCMD_WORK_SetMsgData( SCRCMD_WORK *work, GFL_MSGDATA *msgData );
+extern void SCRCMD_WORK_SetMsgData(SCRCMD_WORK *work, GFL_MSGDATA *msgData);
 extern GFL_MSGDATA * SCRCMD_WORK_GetMsgData( SCRCMD_WORK *work );
-extern void SCRCMD_WORK_SetFldMsgWinStream( SCRCMD_WORK *work, FLDMSGWIN_STREAM *msgWin );
-extern FLDMSGWIN_STREAM * SCRCMD_WORK_GetFldMsgWinStream( SCRCMD_WORK *work );
+extern void SCRCMD_WORK_SetMsgWinPtr( SCRCMD_WORK *work, void *msgWin );
+extern void * SCRCMD_WORK_GetMsgWinPtr( SCRCMD_WORK *work );
 
 extern void SCRCMD_WORK_SetTalkMsgWinTailPos(
     SCRCMD_WORK *work, const VecFx32 *pos );

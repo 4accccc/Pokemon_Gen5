@@ -1,7 +1,7 @@
 //======================================================================
 /**
  * @file	scrcmd_menuwin.c
- * @brief	スクリプトコマンド：メニュー、会話ウィンドウ関連
+ * @brief	スクリプトコマンド：メニュー、システムウィンドウ関連
  * @date  2009.09.13
  * @author	tamada GAMEFREAK inc.
  *
@@ -15,6 +15,7 @@
 #include "system/vm_cmd.h"
 
 #include "scrcmd.h"
+#include "script_def.h"
 #include "script_local.h"
 #include "scrcmd_work.h"
 #include "scrcmd_menuwin.h"
@@ -24,13 +25,19 @@
 #include "arc/script_message.naix"
 #include "msg/script/msg_common_scr.h"
 
+//======================================================================
+//  define
+//======================================================================
 // 所持金表示ウィンドウ
 #define GOLD_WIN_WIDTH (14) // 幅(キャラクタ単位)
 #define GOLD_WIN_HEIGHT (2) // 高さ(キャラクタ単位)
 #define GOLD_WIN_KETA   (6) // 所持金数値の桁数
 
+//======================================================================
+//  proto
+//======================================================================
 static void CloseWin(SCRCMD_WORK *work);
-static void CloseBallonWin(SCRCMD_WORK *work);
+static void CloseBalloonWin(SCRCMD_WORK *work);
 
 static void SetFldMsgWinStream(
               SCRCMD_WORK *work,
@@ -39,56 +46,12 @@ static void SetFldMsgWinStream(
               const VecFx32 *pos,
               STRBUF *strBuf );
 
+//======================================================================
+//  スクリプトチェック
+//======================================================================
 //--------------------------------------------------------------
 /**
- *  ウィンドウ終了
- * @param   work    スクリプトコマンドワークポインタ
- * @retval  none
- */
-//--------------------------------------------------------------
-static void CloseWin(SCRCMD_WORK *work)
-{
-  FLDMSGWIN_STREAM *msgWin;
-  if ( SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) ){
-    msgWin = SCRCMD_WORK_GetFldMsgWinStream( work );
-    FLDMSGWIN_STREAM_Delete( msgWin );
-    SCREND_CHK_SetBitOff(SCREND_CHK_WIN_OPEN);
-  }else{
-#ifdef SCR_ASSERT_ON    
-    GF_ASSERT_MSG(0,"TALK_CLOSE_ERROR::存在しないトークウィンドウを閉じようとしている");
-#else
-    OS_Printf("=================TALK_CLOSE_ERROR::存在しないトークウィンドウを閉じようとしている===================\n");
-#endif
-  }
-}
-
-//--------------------------------------------------------------
-/**
- *  バルーンウィンドウ終了
- * @param   work    スクリプトコマンドワークポインタ
- * @retval  none
- */
-//--------------------------------------------------------------
-static void CloseBallonWin(SCRCMD_WORK *work)
-{
-  if ( SCREND_CHK_CheckBit(SCREND_CHK_BALLON_WIN_OPEN) ){
-    FLDTALKMSGWIN *tmsg;
-    tmsg = (FLDTALKMSGWIN*) SCRCMD_WORK_GetFldMsgWinStream( work );
-    FLDTALKMSGWIN_Delete( tmsg );
-    //ウィンドウ作成フラグオフ
-    SCREND_CHK_SetBitOff(SCREND_CHK_BALLON_WIN_OPEN);
-  }else{
-#ifdef SCR_ASSERT_ON    
-    GF_ASSERT_MSG(0,"バルーンウィンドウはありません");
-#else
-    OS_Printf("==========バルーンウィンドウはありません============\n");
-#endif
-  }
-}
-
-//--------------------------------------------------------------
-/**
- *スクリプト終了時ウィンドウ終了チェック
+ * スクリプト終了時ウィンドウ終了チェック
  * @param   end_chk     チェック構造体
  * @param   seq     サブシーケンサ
  * @retval  BOOL    TRUEでチェック終了
@@ -102,7 +65,7 @@ BOOL SCREND_CheckEndWin(SCREND_CHECK *end_check , int *seq)
 
 //--------------------------------------------------------------
 /**
- *スクリプト終了時吹きだしウィンドウ終了チェック
+ * スクリプト終了時吹きだしウィンドウ終了チェック
  * @param   end_chk     チェック構造体
  * @param   seq     サブシーケンサ
  * @retval  BOOL    TRUEでチェック終了
@@ -110,7 +73,7 @@ BOOL SCREND_CheckEndWin(SCREND_CHECK *end_check , int *seq)
 //--------------------------------------------------------------
 BOOL SCREND_CheckEndBallonWin(SCREND_CHECK *end_check , int *seq)
 {
-  CloseBallonWin(end_check->ScrCmdWk);
+  CloseBalloonWin(end_check->ScrCmdWk);
   return  TRUE;
 }
 
@@ -191,7 +154,7 @@ VMCMD_RESULT EvCmdBmpMenuInit( VMHANDLE *core, void *wk )
   u16 wk_id = VMGetU16( core );
   u16 *ret = SCRIPT_GetEventWork( sc, gdata, wk_id );
   WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
-
+  
   SCRCMD_WORK_InitMenuWork( work,
       x, y, cursor, cancel, ret,
       *wordset, NULL );
@@ -276,27 +239,26 @@ VMCMD_RESULT EvCmdBmpMenuStart( VMHANDLE *core, void *wk )
 	return VMCMD_RESULT_SUSPEND;
 }
 
-
 //======================================================================
-//  フィールド　会話ウィンドウ
+//  フィールド　システムウィンドウ
 //======================================================================
 //--------------------------------------------------------------
 /**
- * 会話ウィンドウ表示追加
+ * システムウィンドウ表示追加
  * @param
  * @retval
  */
 //--------------------------------------------------------------
-static void talkMsgWin_AddWindow( SCRCMD_WORK *work )
+static void sysWin_AddWindow( SCRCMD_WORK *work, u8 updown )
 {
   SCRIPT_WORK *sc;
   SCRIPT_FLDPARAM *fparam;
   GFL_MSGDATA *msgData;
   FLDMSGWIN_STREAM *msgWin;
-
+  
 ///  u8 *win_open_flag;
-
-  if ( SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) )
+  
+  if( SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) )
   {
 #ifdef  SCR_ASSERT_ON
     GF_ASSERT_MSG(0,"TALK_OPEN_ERROR::既にトークウィンドウをオープンしている");
@@ -309,8 +271,18 @@ static void talkMsgWin_AddWindow( SCRCMD_WORK *work )
   sc = SCRCMD_WORK_GetScriptWork( work );
   fparam = SCRIPT_GetFieldParam( sc );
   msgData = SCRCMD_WORK_GetMsgData( work );
+  
+#if 0
   msgWin = FLDMSGWIN_STREAM_AddTalkWin( fparam->msgBG, msgData );
-  SCRCMD_WORK_SetFldMsgWinStream( work, msgWin );
+#else
+  if( updown == SCRCMD_MSGWIN_UP ){ //UP
+	  msgWin = FLDMSGWIN_STREAM_Add( fparam->msgBG, msgData, 1, 1, 30, 4 );
+  }else{ //DOWN
+	  msgWin = FLDMSGWIN_STREAM_Add( fparam->msgBG, msgData, 1, 19, 30, 4 );
+  }
+#endif
+  
+  SCRCMD_WORK_SetMsgWinPtr( work, msgWin );
   
 ///  win_open_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_OPEN_FLAG );
 ///  *win_open_flag = TRUE;  //ON;
@@ -319,7 +291,7 @@ static void talkMsgWin_AddWindow( SCRCMD_WORK *work )
 
 //--------------------------------------------------------------
 /**
- * 会話ウィンドウメッセージ表示　ウェイト部分
+ * システムウィンドウメッセージ表示　ウェイト部分
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval BOOL TRUE=終了
  */
@@ -328,7 +300,7 @@ static BOOL TalkMsgWait( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   FLDMSGWIN_STREAM *msgWin;
-  msgWin = SCRCMD_WORK_GetFldMsgWinStream( work );
+  msgWin = (FLDMSGWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
   
   if( FLDMSGWIN_STREAM_Print(msgWin) == TRUE ){
     return( 1 );
@@ -339,7 +311,7 @@ static BOOL TalkMsgWait( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * 登録された単語を使って文字列展開　会話ウィンドウメッセージ表示
+ * 登録された単語を使って文字列展開　システムウィンドウメッセージ表示
  * @param  core    仮想マシン制御構造体へのポインタ
  * @return  VMCMD_RESULT
  */
@@ -349,20 +321,21 @@ VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
   FLDMSGWIN_STREAM *msgWin;
   SCRCMD_WORK *work = wk;
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
+  
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
-
+  
   {
     if( !SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) ){
-#ifdef  SCR_ASSERT_ON
-      GF_ASSERT_MSG(0,"TALK_MSG_ERROR::トークウィンドウをオープンしていないのにメッセージを出そうとしている");
+#ifdef SCR_ASSERT_ON
+      GF_ASSERT_MSG( 0, "TALK_MSG_ERROR::トークウィンドウをオープンしていないのにメッセージを出そうとしている");
 #else
       OS_Printf("==============TALK_MSG_ERROR::トークウィンドウをオープンしていないのにメッセージを出そうとしている=================\n");
-#endif      
-      talkMsgWin_AddWindow( work );
+#endif
+      sysWin_AddWindow( work, SCRCMD_MSGWIN_DOWN );
     }
   }
-
+  
   {
     GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
     WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
@@ -371,7 +344,7 @@ VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
     WORDSET_ExpandStr( *wordset, *msgbuf, *tmpbuf );
   }
   
-  msgWin = SCRCMD_WORK_GetFldMsgWinStream( work );
+  msgWin = (FLDMSGWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
   FLDMSGWIN_STREAM_ClearMessage( msgWin );
   FLDMSGWIN_STREAM_PrintStrBufStart( msgWin, 0, 0, *msgbuf );
   VMCMD_SetWait( core, TalkMsgWait );
@@ -535,7 +508,7 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * 登録された単語を使って文字列展開　会話ウィンドウメッセージ全表示
+ * 登録された単語を使って文字列展開　システムウィンドウメッセージ全表示
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval  VMCMD_RESULT
  */
@@ -555,7 +528,7 @@ VMCMD_RESULT EvCmdTalkMsgAllPut( VMHANDLE *core, void *wk )
 #else
       OS_Printf("==============ALL_PUT_ERROR::トークウィンドウをオープンしていないのにメッセージを出そうとしている=================\n");
 #endif
-      talkMsgWin_AddWindow( work );
+      sysWin_AddWindow( work, SCRCMD_MSGWIN_DOWN );
     }
   }
 
@@ -567,7 +540,7 @@ VMCMD_RESULT EvCmdTalkMsgAllPut( VMHANDLE *core, void *wk )
     WORDSET_ExpandStr( *wordset, *msgbuf, *tmpbuf );
   }
   
-  msgWin = SCRCMD_WORK_GetFldMsgWinStream( work );
+  msgWin = (FLDMSGWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
   FLDMSGWIN_STREAM_ClearMessage( msgWin );
   FLDMSGWIN_STREAM_AllPrintStrBuf( msgWin, 0, 0, *msgbuf );
   return VMCMD_RESULT_CONTINUE;
@@ -575,7 +548,7 @@ VMCMD_RESULT EvCmdTalkMsgAllPut( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * 会話ウィンドウ表示
+ * システムウィンドウ表示
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval  VMCMD_RESULT
  */
@@ -583,13 +556,15 @@ VMCMD_RESULT EvCmdTalkMsgAllPut( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdTalkWinOpen( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-  talkMsgWin_AddWindow( work ); //<<内部で既開チェックをしています
+  u8 up_down = VMGetU8( core );
+  
+  sysWin_AddWindow( work, up_down ); //<<内部で既開チェックをしています
   return VMCMD_RESULT_CONTINUE;
 }
 
 //--------------------------------------------------------------
 /**
- * 会話ウィンドウを閉じる
+ * システムウィンドウを閉じる
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval  VMCMD_RESULT
  */
@@ -611,12 +586,13 @@ VMCMD_RESULT EvCmdTalkWinClose( VMHANDLE *core, void *wk )
  * @param objID 吹き出しを出すOBJID
  * @param arcID 表示するメッセージのアーカイブ指定ID
  * @param msgID 表示するメッセージID
+ * @param idx  FLDTALKMSGWIN_IDX 
  * @retval BOOL TRUE=表示 FALSE=エラー
- *
- * arcID=0x400の場合、デフォルトのメッセージアーカイブを使用する
+ * @note arcID=0x400の場合、デフォルトのメッセージアーカイブを使用する
  */
 //--------------------------------------------------------------
-static BOOL balloonWin_Write( SCRCMD_WORK *work, u16 objID, u16 arcID, u16 msgID )
+static BOOL balloonWin_Write( SCRCMD_WORK *work,
+    u16 objID, u16 arcID, u16 msgID, FLDTALKMSGWIN_IDX idx )
 {
   VecFx32 pos,jiki_pos;
   const VecFx32 *p_pos;
@@ -632,7 +608,7 @@ static BOOL balloonWin_Write( SCRCMD_WORK *work, u16 objID, u16 arcID, u16 msgID
     OS_Printf("スクリプトエラー 吹き出し対象のOBJが存在しません\n");
     return( FALSE );
   }
-
+  
   //既にビットが立っていたら新しく作らない
   if ( SCREND_CHK_CheckBit(SCREND_CHK_BALLON_WIN_OPEN) ){
 #ifdef SCR_ASSERT_ON     
@@ -666,8 +642,8 @@ static BOOL balloonWin_Write( SCRCMD_WORK *work, u16 objID, u16 arcID, u16 msgID
     WORDSET_ExpandStr( *wordset, *msgbuf, *tmpbuf );
   }
   
-  {
-    FLDTALKMSGWIN_IDX idx = FLDTALKMSGWIN_IDX_LOWER;
+  if( idx == FLDTALKMSGWIN_IDX_AUTO ){
+    idx = FLDTALKMSGWIN_IDX_LOWER;
     
     if( pos.z < jiki_pos.z ){
       idx = FLDTALKMSGWIN_IDX_UPPER;
@@ -690,7 +666,7 @@ static BOOL BallonWinMsgWait( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   FLDTALKMSGWIN *tmsg;
-  tmsg = (FLDTALKMSGWIN*)SCRCMD_WORK_GetFldMsgWinStream( work );
+  tmsg = (FLDTALKMSGWIN*)SCRCMD_WORK_GetMsgWinPtr( work );
   
   if( FLDTALKMSGWIN_Print(tmsg) == TRUE ){
     return TRUE;
@@ -712,10 +688,11 @@ VMCMD_RESULT EvCmdBalloonWinWrite( VMHANDLE *core, void *wk )
   u16 arc_id = SCRCMD_GetVMWorkValue( core, work );
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   u8 obj_id = VMGetU8( core );
+  u8 win_idx = VMGetU8( core );
   
   KAGAYA_Printf( "吹き出しウィンドウ OBJID =%d\n", obj_id );
-
-  if( balloonWin_Write(work,obj_id,arc_id,msg_id) == TRUE ){
+  
+  if( balloonWin_Write(work,obj_id,arc_id,msg_id,win_idx) == TRUE ){
     VMCMD_SetWait( core, BallonWinMsgWait );
     return VMCMD_RESULT_SUSPEND;
   }
@@ -737,6 +714,7 @@ VMCMD_RESULT EvCmdBalloonWinTalkWrite( VMHANDLE *core, void *wk )
   MMDL **mmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
   u16 arc_id = SCRCMD_GetVMWorkValue( core, work );
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
+  u8 win_idx = VMGetU8( core );
   
   if( *mmdl == NULL ){
     OS_Printf( "スクリプトエラー 話し掛け対象のOBJが居ません\n" );
@@ -746,10 +724,44 @@ VMCMD_RESULT EvCmdBalloonWinTalkWrite( VMHANDLE *core, void *wk )
   {
     u8 obj_id = MMDL_GetOBJID( *mmdl );
     
-    if( balloonWin_Write(work,obj_id,arc_id,msg_id) == TRUE ){
+    if( balloonWin_Write(work,obj_id,arc_id,msg_id,win_idx) == TRUE ){
       VMCMD_SetWait( core, BallonWinMsgWait );
       return VMCMD_RESULT_SUSPEND;
     }
+  }
+  
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 吹き出しウィンドウ 描画 男女別メッセージ表示
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBalloonWinWriteMF( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  u16 arc_id = SCRCMD_GetVMWorkValue( core, work );
+  u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
+  u16 msg_id_f = SCRCMD_GetVMWorkValue( core, work );
+  u8 obj_id = VMGetU8( core );
+  u8 win_idx = VMGetU8( core );
+  
+  {
+    GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+    PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+    u32 sex = MyStatus_GetMySex( &player->mystatus );
+    
+    if( sex != PM_MALE ){
+      msg_id = msg_id_f;
+    }
+  }
+  
+  if( balloonWin_Write(work,obj_id,arc_id,msg_id,win_idx) == TRUE ){
+    VMCMD_SetWait( core, BallonWinMsgWait );
+    return VMCMD_RESULT_SUSPEND;
   }
   
   return VMCMD_RESULT_CONTINUE;
@@ -765,7 +777,7 @@ VMCMD_RESULT EvCmdBalloonWinTalkWrite( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdBalloonWinClose( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-  CloseBallonWin(work);       //<<内部で既閉チェックをしています
+  CloseBalloonWin(work);       //<<内部で既閉チェックをしています
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -800,11 +812,11 @@ VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
   //吹きだしウィンドウ既開チェック開いていたら処理を行わない
   if ( SCREND_CHK_CheckBit(SCREND_CHK_BALLON_WIN_OPEN) )
   {
-#ifdef SCR_ASSERT_ON     
+    #ifdef SCR_ASSERT_ON     
     GF_ASSERT_MSG(0,"TR_MSG_ERROR::既にバルーンウィンドウがある\n");
-#else
-    OS_Printf("===============TR_MSG_ERROR::既にバルーンウィンドウがある===================\n");
-#endif
+    #else
+    OS_Printf("======TR_MSG_ERROR::既にバルーンウィンドウがある=======\n");
+    #endif
     return VMCMD_RESULT_SUSPEND;
   }
   
@@ -846,12 +858,407 @@ VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
       if( dir == DIR_UP ){
         idx = FLDTALKMSGWIN_IDX_UPPER;
       }
-
+      
       SetFldMsgWinStream(work, fparam->msgBG, idx, pos_p, *msgbuf);
 
       VMCMD_SetWait( core, BallonWinMsgWait );
       return VMCMD_RESULT_SUSPEND;
     }
+  }
+}
+
+//======================================================================
+//  プレーンウィンドウ
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void ClosePlainWin( SCRCMD_WORK *work )
+{
+  if( SCREND_CHK_CheckBit(SCREND_CHK_PLAINWIN_OPEN) ){
+    FLDPLAINMSGWIN *win = (FLDPLAINMSGWIN*)SCRCMD_WORK_GetMsgWinPtr( work );
+    FLDPLAINMSGWIN_Delete( win );
+    SCREND_CHK_SetBitOff(SCREND_CHK_PLAINWIN_OPEN);
+  }else{
+    GF_ASSERT( 0 );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * プレーンウィンドウメッセージ表示　ウェイト部分
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+static BOOL PlainWinMsgWait( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  FLDPLAINMSGWIN *msgWin;
+  msgWin = (FLDPLAINMSGWIN*)SCRCMD_WORK_GetMsgWinPtr( work );
+  
+  if( FLDPLAINMSGWIN_Print(msgWin) == TRUE ){
+    return( 1 );
+  }
+  
+  return( 0 );
+}
+//--------------------------------------------------------------
+/**
+ * プレーンウィンドウ　作成
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPlainWinMsg( VMHANDLE *core, void *wk )
+{
+  FLDPLAINMSGWIN *win;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+  u16 msg_id = VMGetU16( core );
+  u8 up_down = VMGetU8( core );
+  
+  {
+    GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
+    STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
+    WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+    STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
+    
+    GFL_MSG_GetString( msgData, msg_id, *tmpbuf );
+    WORDSET_ExpandStr( *wordset, *msgbuf, *tmpbuf );
+    
+    win = FLDPLAINMSGWIN_AddStrBuf( fparam->msgBG, up_down, *msgbuf );
+    SCRCMD_WORK_SetMsgWinPtr( work, win );
+  }
+  
+  SCREND_CHK_SetBitOn(SCREND_CHK_PLAINWIN_OPEN);
+  VMCMD_SetWait( core, PlainWinMsgWait );
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * プレーンウィンドウ　閉じる
+ * @param core  仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPlainWinClose( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  ClosePlainWin( work );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * プレーンウィンドウ　終了チェック
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+BOOL SCREND_CheckEndPlainWin( SCREND_CHECK *end_check, int *seq )
+{
+  ClosePlainWin( end_check->ScrCmdWk );
+  return( TRUE );
+}
+
+//======================================================================
+//  サブウィンドウ
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * サブウィンドウ　作成
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSubWinMsg( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+  u16 msg_id = VMGetU16( core );
+  u8 x = VMGetU8( core );
+  u8 y = VMGetU8( core );
+  u16 win_id = VMGetU16( core );
+  u16 sx,cx;
+  u8 sy = 2;
+  
+  {
+    HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
+    STRBUF *msgBuf = GFL_STR_CreateBuffer( FLDMSGBG_STRLEN_SUBWIN, heapID );
+
+    GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
+    WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+    STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
+    
+    GFL_MSG_GetString( msgData, msg_id, *tmpbuf );
+    WORDSET_ExpandStr( *wordset, msgBuf, *tmpbuf );
+    
+    sx = GFL_STR_GetBufferLength( msgBuf );
+    sx = sx * 12;
+    cx = sx / 8;
+    if( (sx&0x07) ){ cx++; }
+    
+    FLDSUBMSGWIN_AddStrBuf( fparam->msgBG, msgBuf, win_id, x, y, cx, sy );
+    GFL_STR_DeleteBuffer( msgBuf );
+  }
+  
+  SCREND_CHK_SetBitOn( SCREND_CHK_WIN_OPEN );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * サブウィンドウ　閉じる
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSubWinClose( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+  u16 win_id = VMGetU16( core );
+  FLDSUBMSGWIN_Delete( fparam->msgBG, win_id );
+  
+  if( FLDSUBMSGWIN_CheckExistWindow(fparam->msgBG) == FALSE ){
+    SCREND_CHK_SetBitOff( SCREND_CHK_WIN_OPEN );
+  }
+  
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * サブウィンドウ　全て閉じる
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void CloseSubWin( SCRCMD_WORK *work )
+{
+  if( SCREND_CHK_CheckBit(SCREND_CHK_SUBWIN_OPEN) ){
+    SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+    SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+    FLDSUBMSGWIN_DeleteAll( fparam->msgBG );
+    SCREND_CHK_SetBitOff(SCREND_CHK_SUBWIN_OPEN);
+  }else{
+    GF_ASSERT( 0 );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * プレーンウィンドウ　終了チェック
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+BOOL SCREND_CheckEndSubWin( SCREND_CHECK *end_check, int *seq )
+{
+  CloseSubWin( end_check->ScrCmdWk );
+  return( TRUE );
+}
+
+
+//======================================================================
+//  BGウィンドウ
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * BGウィンドウメッセージ表示　ウェイト部分
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+static BOOL BGWinMsgWait( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  FLDMSGWIN_STREAM *msgWin;
+  msgWin = (FLDMSGWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
+  
+  if( FLDMSGWIN_STREAM_Print(msgWin) == TRUE ){
+    return( 1 );
+  }
+  
+  return( 0 );
+}
+
+//--------------------------------------------------------------
+/**
+ * BGウィンドウ閉じる
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void CloseBGWin( SCRCMD_WORK *work )
+{
+  if( SCREND_CHK_CheckBit(SCREND_CHK_BGWIN_OPEN) ){
+    FLDMSGWIN_STREAM *msgWin;
+    msgWin = (FLDMSGWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
+    FLDMSGWIN_STREAM_Delete( msgWin );
+    SCREND_CHK_SetBitOff(SCREND_CHK_BGWIN_OPEN);
+  }else{
+    GF_ASSERT( 0 );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * BGウィンドウ　作成
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBGWinMsg( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  u16 msg_id = VMGetU16( core );
+  u16 type = VMGetU16( core );
+  
+  { //仮
+    SCRIPT_FLDPARAM *fparam;
+    GFL_MSGDATA *msgData;
+    FLDMSGWIN_STREAM *msgWin;
+    
+    fparam = SCRIPT_GetFieldParam( sc );
+    msgData = SCRCMD_WORK_GetMsgData( work );
+    
+	  msgWin = FLDMSGWIN_STREAM_Add( fparam->msgBG, msgData, 1, 19, 30, 4 );
+    SCRCMD_WORK_SetMsgWinPtr( work, msgWin );
+    
+    {
+      STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
+      WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+      STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
+      GFL_MSG_GetString( msgData, msg_id, *tmpbuf );
+      
+      FLDMSGWIN_STREAM_ClearMessage( msgWin );
+      FLDMSGWIN_STREAM_PrintStrBufStart( msgWin, 0, 0, *msgbuf );
+      VMCMD_SetWait( core, BGWinMsgWait );
+    }
+  }
+  
+  SCREND_CHK_SetBitOn( SCREND_CHK_BGWIN_OPEN);
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * BGウィンドウ　閉じる
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBGWinClose( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  CloseBGWin( work );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * BGウィンドウ　終了チェック
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+BOOL SCREND_CheckEndBGWin( SCREND_CHECK *end_check, int *seq )
+{
+  CloseBGWin( end_check->ScrCmdWk);
+  return( TRUE );
+}
+
+//======================================================================
+//  その他メッセージウィンドウ系コマンド
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * メッセージウィンドウ閉じる
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdMsgWinClose( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  
+  if( SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) ){
+    CloseWin( work );
+  }
+  
+  if( SCREND_CHK_CheckBit(SCREND_CHK_BALLON_WIN_OPEN) ){
+   CloseBalloonWin( work );
+  }
+  
+  if( SCREND_CHK_CheckBit(SCREND_CHK_PLAINWIN_OPEN) ){
+    ClosePlainWin( work );
+  }
+  
+  if( SCREND_CHK_CheckBit(SCREND_CHK_BGWIN_OPEN) ){
+    CloseBGWin( work );
+  }
+  
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//======================================================================
+//  parts
+//======================================================================
+//--------------------------------------------------------------
+/**
+ *  ウィンドウ終了
+ * @param   work    スクリプトコマンドワークポインタ
+ * @retval  none
+ */
+//--------------------------------------------------------------
+static void CloseWin(SCRCMD_WORK *work)
+{
+  FLDMSGWIN_STREAM *msgWin;
+  if ( SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) ){
+    msgWin = (FLDMSGWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
+    FLDMSGWIN_STREAM_Delete( msgWin );
+    SCREND_CHK_SetBitOff(SCREND_CHK_WIN_OPEN);
+  }else{
+#ifdef SCR_ASSERT_ON
+    GF_ASSERT_MSG(0,"TALK_CLOSE_ERROR::存在しないトークウィンドウを閉じようとしている");
+#else
+    OS_Printf("=================TALK_CLOSE_ERROR::存在しないトークウィンドウを閉じようとしている===================\n");
+#endif
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ *  バルーンウィンドウ終了
+ * @param   work    スクリプトコマンドワークポインタ
+ * @retval  none
+ */
+//--------------------------------------------------------------
+static void CloseBalloonWin(SCRCMD_WORK *work)
+{
+  if( SCREND_CHK_CheckBit(SCREND_CHK_BALLON_WIN_OPEN) ){
+    FLDTALKMSGWIN *tmsg;
+    tmsg = (FLDTALKMSGWIN*)SCRCMD_WORK_GetMsgWinPtr( work );
+    FLDTALKMSGWIN_Delete( tmsg );
+    //ウィンドウ作成フラグオフ
+    SCREND_CHK_SetBitOff(SCREND_CHK_BALLON_WIN_OPEN);
+  }else{
+#ifdef SCR_ASSERT_ON    
+    GF_ASSERT_MSG(0,"バルーンウィンドウはありません");
+#else
+    OS_Printf("==========バルーンウィンドウはありません============\n");
+#endif
   }
 }
 
@@ -863,7 +1270,6 @@ VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
  * @param   idx
  * @param   pos
  * @param   strBuf
- *
  * @return  none
  */
 //--------------------------------------------------------------
@@ -875,9 +1281,9 @@ static void SetFldMsgWinStream(
               STRBUF *strBuf )
 {
   FLDTALKMSGWIN *tmsg;
-
+  
   tmsg = FLDTALKMSGWIN_AddStrBuf( fmb, idx, pos, strBuf );
-  SCRCMD_WORK_SetFldMsgWinStream( work, (FLDMSGWIN_STREAM*)tmsg );
+  SCRCMD_WORK_SetMsgWinPtr( work, tmsg );
   //ウィンドウ作成フラグオン
   SCREND_CHK_SetBitOn(SCREND_CHK_BALLON_WIN_OPEN);
 }

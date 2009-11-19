@@ -146,24 +146,24 @@
   DEF_CMD( EvCmdTalkWinOpen, EV_SEQ_TALKWIN_OPEN )
   DEF_CMD( EvCmdTalkWinClose, EV_SEQ_TALKWIN_CLOSE )
 
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdPlainWinMsg, EV_SEQ_PLAINWIN_MSG )
+  DEF_CMD( EvCmdPlainWinClose, EV_SEQ_PLAINWIN_MSG_CLOSE )
+  DEF_CMD( EvCmdSubWinMsg, EV_SEQ_SUBWIN_MSG )
+  DEF_CMD( EvCmdSubWinClose, EV_SEQ_SUBWIN_CLOSE )
   
   //(フィールド )　吹き出しウィンドウ
   DEF_CMD( EvCmdBalloonWinWrite, EV_SEQ_BALLOONWIN_OBJMSG_OPEN )
   DEF_CMD( EvCmdBalloonWinTalkWrite, EV_SEQ_BALLOONWIN_TALKOBJ_OPEN )
   DEF_CMD( EvCmdBalloonWinClose, EV_SEQ_BALLOONWIN_CLOSE )
-  NO_CMD()
+  DEF_CMD( EvCmdMsgWinClose, EV_SEQ_MSGWIN_CLOSE )
 
   DEF_CMD( EvCmdGoldWinOpen, EV_SEQ_GOLD_WIN_OPEN )
   DEF_CMD( EvCmdGoldWinClose, EV_SEQ_GOLD_WIN_CLOSE )
   DEF_CMD( EvCmdGoldWinUpdate, EV_SEQ_GOLD_WIN_UPDATE )
   NO_CMD()
   
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdBGWinMsg, EV_SEQ_BGWIN_MSG )
+  DEF_CMD( EvCmdBGWinClose, EV_SEQ_BGWIN_CLOSE )
   NO_CMD()
   NO_CMD()
   

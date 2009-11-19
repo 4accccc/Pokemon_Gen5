@@ -55,6 +55,15 @@ extern void							TALKMSGWIN_SystemDebugOn( TALKMSGWIN_SYS* tmsgwinSys );
  *
  */
 //============================================================================================
+extern void TALKMSGWIN_CreateWindowAlone(	TALKMSGWIN_SYS*		tmsgwinSys, 
+																			int								tmsgwinIdx,
+																			STRBUF*						msg,
+																			u8								winpx,			
+																			u8								winpy,			
+																			u8								winsx,			
+																			u8								winsy,			
+																			u8								colIdx );
+
 extern void TALKMSGWIN_CreateFloatWindowIdx(	TALKMSGWIN_SYS*		tmsgwinSys, 
 																							int								tmsgwinIdx,
 																							VecFx32*					pTarget,

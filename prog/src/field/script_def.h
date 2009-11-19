@@ -151,8 +151,23 @@
 #define  SCR_BMANM_DOOR_OPEN    (0)       ///<ドアアニメ：開く
 #define  SCR_BMANM_DOOR_CLOSE   (1)       ///<ドアアニメ：閉じる
 
+//--------------------------------------------------------------
+/// メッセージウィンドウ上下指定
+//--------------------------------------------------------------
+#define SCRCMD_MSGWIN_UP (0)
+#define SCRCMD_MSGWIN_DOWN (1)
+#define SCRCMD_MSGWIN_NON (2)
 
+//--------------------------------------------------------------
+/// BGウィンドウタイプ
+//--------------------------------------------------------------
+#define SCRCMD_BGWIN_TYPE_INFO (0)
+#define SCRCMD_BGWIN_TYPE_TOWN (1)
+#define SCRCMD_BGWIN_TYPE_POST (2)
+#define SCRCMD_BGWIN_TYPE_ROAD (3)
 
+//--------------------------------------------------------------
+//--------------------------------------------------------------
 /*
 //フラグ操作関数のモード指定用
 #define	FLAG_MODE_RESET				(0)
@@ -177,4 +192,3 @@
 #define WAZA_COMMON_WAIT2			(32)
 #define WAZA_COMMON_WAIT3			(16)
 */
-
