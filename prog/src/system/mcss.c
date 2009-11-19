@@ -530,7 +530,7 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 				   -FX32_CONST( 96 ),
 				   -FX32_CONST( 128 ),
 				   FX32_CONST( 128 ),
-				   FX32_ONE * -1024,
+				   FX32_ONE * 1,
 				   FX32_ONE * 1024,
 				   FX32_ONE,
 				   NULL );
@@ -1026,9 +1026,61 @@ void	MCSS_FlipVanishFlag( MCSS_WORK *mcss )
 
 //--------------------------------------------------------------------------
 /**
+ * @brief マルチセルアニメコントロールゲット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
+ */
+//--------------------------------------------------------------------------
+NNSG2dMultiCellAnimation* MCSS_GetAnimCtrl( MCSS_WORK *mcss )
+{
+	return &mcss->mcss_mcanim;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief マルチセルアニメのシーケンス数を取得
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
+ */
+//--------------------------------------------------------------------------
+u16  MCSS_GetMCellAnmNum( MCSS_WORK *mcss )
+{ 
+  return mcss->mcss_nmar->numSequences;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief 静止アニメ中でもパターンアニメするセルの数を取得
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
+ */
+//--------------------------------------------------------------------------
+u8  MCSS_GetStopCellAnms( MCSS_WORK *mcss )
+{
+	return mcss->mcss_ncen->stop_cellanms;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief 静止アニメ中でもパターンアニメするセルのノードを取得
+ *
+ * @param[in]  mcss   MCSSワーク構造体のポインタ
+ * @param[in]  index  ノードを取得するインデックス
+ */
+//--------------------------------------------------------------------------
+u8  MCSS_GetStopNode( MCSS_WORK *mcss, u8 index )
+{
+  GF_ASSERT( index < mcss->mcss_ncen->stop_cellanms );
+  
+	return mcss->mcss_ncen->stop_node[ index ];
+}
+
+//--------------------------------------------------------------------------
+/**
  * @brief 指定したフレームになったらコールバック関数を呼ぶようにAnmCtrlに登録
  *
  * @param[in]  mcss     MCSSワーク構造体のポインタ
+ * @param[in]  param  ユーザが自由に使用できるコールバック引数
  * @param[in]  pFunc    呼ばれるコールバック関数のポインタ
  * @param[in]  frameIdx コールバックを呼ぶフレーム
  */
@@ -1036,8 +1088,26 @@ void	MCSS_FlipVanishFlag( MCSS_WORK *mcss )
 void	MCSS_SetAnimCtrlCallBack( MCSS_WORK *mcss, u32 param, NNSG2dAnmCallBackPtr pFunc, u16 frameIdx )
 {	
 
+#if 1
 	NNS_G2dSetAnimCtrlCallBackFunctor( NNS_G2dGetMCAnimAnimCtrl(&mcss->mcss_mcanim),
 																		 NNS_G2D_ANMCALLBACKTYPE_LAST_FRM, param, pFunc );
+#else
+  NNS_G2dSetCallBackFunctorAtAnimFrame( NNS_G2dGetMCAnimAnimCtrl(&mcss->mcss_mcanim), param, pFunc, frameIdx );
+#endif
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief ノード巡回してコールバック関数を呼ぶように登録
+ *
+ * @param[in]  mcss   MCSSワーク構造体のポインタ
+ * @param[in]  param  ユーザが自由に使用できるコールバック引数
+ * @param[in]  pFunc  呼ばれるコールバック関数のポインタ
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetTraverseMCNodesCallBack( MCSS_WORK *mcss, u32 param, NNSG2dMCTraverseNodeCallBack pFunc )
+{	
+	NNS_G2dTraverseMCNodes( &mcss->mcss_mcanim.multiCellInstance, pFunc, param );
 }
 
 //--------------------------------------------------------------------------
@@ -1180,6 +1250,33 @@ void  MCSS_SetTexPaletteTransAdrs( MCSS_SYS_WORK* mcss_sys, u32 adrs )
 }
 
 //--------------------------------------------------------------------------
+/**
+ * @brief マルチセルアニメーションセット
+ *
+ * @param[in] mcss  MCSSワーク構造体のポインタ
+ * @param[in] index セットするアニメーションインデックス
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetAnimeIndex( MCSS_WORK* mcss, int index )
+{
+	const NNSG2dMultiCellAnimSequence* pSequence;
+
+	// 再生するシーケンスを取得
+	pSequence = NNS_G2dGetAnimSequenceByIdx( mcss->mcss_nmar, index );
+	GF_ASSERT( pSequence != NULL );
+
+	// マルチセルアニメーションを構築
+	if( mcss->mcss_mcanim_buf )
+  { 
+	  GFL_HEAP_FreeMemory( mcss->mcss_mcanim_buf );
+  }
+	MCSS_GetNewMultiCellAnimation( mcss, NNS_G2D_MCTYPE_SHARE_CELLANIM );
+
+	// マルチセルアニメーションに再生するシーケンスをセット
+	NNS_G2dSetAnimSequenceToMCAnimation( &mcss->mcss_mcanim, pSequence );
+}
+
+//--------------------------------------------------------------------------
 //--------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -1215,22 +1312,16 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
 	//
 	// マルチセルアニメーションの実体を初期化します
 	//
-	{
-		const NNSG2dMultiCellAnimSequence* pSequence;
-
-		// 再生するシーケンスを取得
-		pSequence = NNS_G2dGetAnimSequenceByIdx( mcss->mcss_nmar, 0 );
-		GF_ASSERT( pSequence != NULL );
-
-		// マルチセルアニメーションを構築
-		MCSS_GetNewMultiCellAnimation( mcss, NNS_G2D_MCTYPE_SHARE_CELLANIM );
-
-		// マルチセルアニメーションに再生するシーケンスをセット
-		NNS_G2dSetAnimSequenceToMCAnimation( &mcss->mcss_mcanim, pSequence );
-	}
+  MCSS_SetAnimeIndex( mcss, 0 );
 
 	//1枚の板ポリで表示するための情報の読み込み（独自フォーマット）
 	mcss->mcss_ncec = GFL_ARC_LoadDataAlloc( maw->arcID, maw->ncec, mcss->heapID );
+  { 
+	  //静止アニメーション時にパターンアニメするノードデータ（独自フォーマット）
+    u32 size = 4 + sizeof( MCSS_NCEC ) * mcss->mcss_ncec->cells;
+    mcss->mcss_ncen = ( MCSS_NCEN_WORK *)(mcss->mcss_ncec);
+    mcss->mcss_ncen += ( size / sizeof( MCSS_NCEN_WORK ) );
+  }
 
 	//
 	// VRAM 関連の初期化
@@ -1584,22 +1675,16 @@ static	void	MCSS_LoadResourceDebug( MCSS_SYS_WORK *mcss_sys, int count, const MC
 	//
 	// マルチセルアニメーションの実体を初期化します
 	//
-	{
-		const NNSG2dMultiCellAnimSequence* pSequence;
-
-		// 再生するシーケンスを取得
-		pSequence = NNS_G2dGetAnimSequenceByIdx( mcss->mcss_nmar, 0 );
-		GF_ASSERT( pSequence != NULL );
-
-		// マルチセルアニメーションを構築
-		MCSS_GetNewMultiCellAnimation( mcss, NNS_G2D_MCTYPE_SHARE_CELLANIM );
-
-		// マルチセルアニメーションに再生するシーケンスをセット
-		NNS_G2dSetAnimSequenceToMCAnimation( &mcss->mcss_mcanim, pSequence );
-	}
+  MCSS_SetAnimeIndex( mcss, 0 );
 
 	//1枚の板ポリで表示するための情報の読み込み（独自フォーマット）
 	mcss->mcss_ncec = madw->ncec;
+  { 
+	  //静止アニメーション時にパターンアニメするノードデータ（独自フォーマット）
+    u32 size = 4 + sizeof( MCSS_NCEC ) * mcss->mcss_ncec->cells;
+    mcss->mcss_ncen = ( MCSS_NCEN_WORK *)(mcss->mcss_ncec);
+    mcss->mcss_ncen += ( size / sizeof( MCSS_NCEN_WORK ) );
+  }
 
   //
   // VRAM 関連の初期化

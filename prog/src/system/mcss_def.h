@@ -44,12 +44,19 @@ struct _MCSS_NCEC
 	fx32	mepachi_size_y;		//セルサイズY
 	fx32	mepachi_tex_s;		//テクスチャs値
 	fx32	mepachi_tex_t;		//テクスチャt値
+
 };
 
 struct _MCSS_NCEC_WORK
 {
 	u32       cells;		//セル枚数
 	MCSS_NCEC	ncec[1];	//セル情報（可変なので、1個分だけ確保）
+};
+
+struct _MCSS_NCEN_WORK
+{
+  u8    stop_cellanms;    //静止アニメでも動き続けるセルアニメの枚数
+  u8    stop_node[1];     //セルアニメノード情報（可変なので1個分だけ確保）
 };
 
 struct _MCSS_WORK
@@ -63,6 +70,7 @@ struct _MCSS_WORK
 	void*													mcss_nmar_buf;				//ファイルデータ読み込みバッファ
 	NNSG2dMultiCellAnimBankData*	mcss_nmar;						//ファイルデータ読み込みバッファからnmarデータを抽出したデータ
 	MCSS_NCEC_WORK*								mcss_ncec;						//1枚の板ポリで表示するための情報が格納された独自フォーマットデータ
+  MCSS_NCEN_WORK*               mcss_ncen;            //静止アニメ用ノード情報
 	NNSG2dMultiCellAnimation			mcss_mcanim;					//マルチセルアニメーションの実体
 	void*													mcss_mcanim_buf;			//マルチセルアニメーションの実体の内部で使用するワーク領域
 	NNSG2dImageProxy							mcss_image_proxy;			//テクスチャプロキシ
