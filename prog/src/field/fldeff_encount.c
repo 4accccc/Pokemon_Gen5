@@ -238,7 +238,7 @@ static void enc_DeleteResource( FLDEFF_ENCOUNT* enc )
  * @retval nothing
  */
 //--------------------------------------------------------------
-FLDEFF_TASK* FLDEFF_ENCOUNT_SetEffect( FLDEFF_CTRL *fectrl, u16 gx, u16 gz, EFFENC_TYPE_ID type )
+FLDEFF_TASK* FLDEFF_ENCOUNT_SetEffect( FLDEFF_CTRL *fectrl, u16 gx, u16 gz, fx32 height, EFFENC_TYPE_ID type )
 {
   FLDEFF_ENCOUNT* enc;
   TASKHEADER_ENCOUNT head;
@@ -255,53 +255,10 @@ FLDEFF_TASK* FLDEFF_ENCOUNT_SetEffect( FLDEFF_CTRL *fectrl, u16 gx, u16 gz, EFFE
   head.gz = gz;
   head.type = type;
 
-  pos.x = GRID_SIZE_FX32(gx);
-  pos.z = GRID_SIZE_FX32(gz);
+  head.pos.x = GRID_SIZE_FX32(gx)+GRID_HALF_FX32;
+  head.pos.z = GRID_SIZE_FX32(gz)+GRID_HALF_FX32;
+  head.pos.y = height;
 
-  {
-	  FLDMAPPER_GRIDINFO gridInfo;
-    const FLDMAPPER* g3dMapper = (const FLDMAPPER*)FIELDMAP_GetFieldG3Dmapper( fieldMapWork ); 
-    if(FLDMAPPER_GetGridInfo( g3dMapper, &pos, &gridInfo) == FALSE){
-      return NULL; //高さを取れなかったら生成しない
-    }
-    pos.y = gridInfo.gridData[0].height;  //強制的にベースの高さを取得(例外処理なので、添え字アクセスを他でマネしないでください by iwasawa)
-  }
-
-
-#if 0
-  fx32 h;
-  VecFx32 pos;
-  FLDEFF_ENCOUNT *grass;
-  TASKHEADER_ENCOUNT head;
-  
-  grass = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_GRASS );
-  head.eff_grass = grass;
-  head.fmmdl = fmmdl;
-  head.obj_id = MMDL_GetOBJID( fmmdl );
-  head.zone_id = MMDL_GetZoneID( fmmdl );
-  head.init_gx = MMDL_GetGridPosX( fmmdl );
-  head.init_gz = MMDL_GetGridPosZ( fmmdl );
-//  KAGAYA_Printf( "エフェクトエンカウント　エフェクト GX=%d,GZ=%d\n", head.init_gx, head.init_gz );
-  MMDL_TOOL_GetCenterGridPos( head.init_gx, head.init_gz, &pos );
-  pos.y = MMDL_GetVectorPosY( fmmdl );
-  
-  // レール動作の設定
-  if( MMDL_CheckStatusBit( fmmdl, MMDL_STABIT_RAIL_MOVE ) )
-  {
-    pos.y += FX32_CONST(4);  
-  }
-  // グリッド動作の設定
-  else
-  {
-    MMDL_GetMapPosHeight( fmmdl, &pos, &h );
-    pos.y = h;
-    
-    pos.y += NUM_FX32(4);
-    pos.z += NUM_FX32(12);
-  }
-  
-  head.pos = pos;
-#endif
   return FLDEFF_CTRL_AddTask(
       fectrl, &DATA_encountTaskHeader, NULL, TRUE, &head, 0 );
 }

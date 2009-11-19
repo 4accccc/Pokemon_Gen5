@@ -42,4 +42,5 @@ extern void * FLDEFF_ENCOUNT_SeaInit( FLDEFF_CTRL *fectrl, HEAPID heapID );
 extern void * FLDEFF_ENCOUNT_BridgeInit( FLDEFF_CTRL *fectrl, HEAPID heapID );
 extern void FLDEFF_ENCOUNT_Delete( FLDEFF_CTRL *fectrl, void *work );
 
-extern FLDEFF_TASK* FLDEFF_ENCOUNT_SetEffect( FLDEFF_CTRL *fectrl, u16 gx, u16 gz, EFFENC_TYPE_ID type );
+extern FLDEFF_TASK* FLDEFF_ENCOUNT_SetEffect( FLDEFF_CTRL *fectrl, u16 gx, u16 gz, fx32 height, EFFENC_TYPE_ID type );
+
