@@ -98,3 +98,5 @@
 "nsbmdfiles/m_gym02_light.nsbmd"
 "nsbmdfiles/mball01.nsbmd"
 "nsbmdfiles/pcev01.nsbmd"
+"nsbmdfiles/m_gym05_jyuuki.nsbmd"
+"nsbmdfiles/m_gym05_belt.nsbmd"
