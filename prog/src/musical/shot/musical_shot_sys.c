@@ -96,7 +96,7 @@ GFL_PROC_DATA MusicalShot_ProcData =
 static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   SHOT_LOCAL_WORK *work;
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_SHOT, 0x50000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_SHOT, 0x60000 );
 
   work = GFL_PROC_AllocWork( proc, sizeof(SHOT_LOCAL_WORK), HEAPID_MUSICAL_SHOT );
   work->heapId = HEAPID_MUSICAL_SHOT;
@@ -150,9 +150,29 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
           shotData->shotPoke[i].equip[j].angle = 0;
           shotData->shotPoke[i].equip[j].equipPos = MUS_POKE_EQU_INVALID;
         }
-        shotData->shotPoke[i].equip[0].itemNo = 0;
+        shotData->shotPoke[i].equip[0].itemNo = 11;
         shotData->shotPoke[i].equip[0].angle = 0;
         shotData->shotPoke[i].equip[0].equipPos = MUS_POKE_EQU_HAND_R;
+        /*
+        shotData->shotPoke[i].equip[1].itemNo = 11;
+        shotData->shotPoke[i].equip[1].angle = 0;
+        shotData->shotPoke[i].equip[1].equipPos = MUS_POKE_EQU_HAND_L;
+        shotData->shotPoke[i].equip[2].itemNo = 11;
+        shotData->shotPoke[i].equip[2].angle = 0;
+        shotData->shotPoke[i].equip[2].equipPos = MUS_POKE_EQU_WAIST;
+        shotData->shotPoke[i].equip[3].itemNo = 11;
+        shotData->shotPoke[i].equip[3].angle = 0;
+        shotData->shotPoke[i].equip[3].equipPos = MUS_POKE_EQU_FACE;
+        shotData->shotPoke[i].equip[4].itemNo = 11;
+        shotData->shotPoke[i].equip[4].angle = 0;
+        shotData->shotPoke[i].equip[4].equipPos = MUS_POKE_EQU_HEAD;
+        shotData->shotPoke[i].equip[5].itemNo = 11;
+        shotData->shotPoke[i].equip[5].angle = 0;
+        shotData->shotPoke[i].equip[5].equipPos = MUS_POKE_EQU_EAR_L;
+        shotData->shotPoke[i].equip[6].itemNo = 11;
+        shotData->shotPoke[i].equip[6].angle = 0;
+        shotData->shotPoke[i].equip[6].equipPos = MUS_POKE_EQU_EAR_R;
+        */
       }
     }
     if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
