@@ -11,7 +11,6 @@
 #include "gamesystem/playerwork.h"
 #include "../../include/field/field_const.h"		// FIELD_CONST_GRID_FX32_SIZE
 #include "arc/arc_def.h"
-#include "arc/iss.naix"
 #include "field/field_const.h"
 #include "iss_city_unit.h"
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"

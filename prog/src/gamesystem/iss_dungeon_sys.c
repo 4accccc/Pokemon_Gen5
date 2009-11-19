@@ -11,7 +11,6 @@
 #include "../field/field_sound.h"
 #include "gamesystem/playerwork.h"
 #include "arc/arc_def.h"
-#include "arc/iss.naix"
 #include "gamesystem/pm_season.h"
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"
 #include "../../../resource/iss/dungeon/entry_table.cdat"
