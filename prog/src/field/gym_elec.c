@@ -885,12 +885,12 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
     VEC_Subtract( &now, &player_pos ,&dst );
     len = VEC_Mag( &dst );
 
-    OS_Printf("len=%x\n",len);
+///    OS_Printf("len=%x\n",len);
     {
       int volume;
       fx32 max = 6*16*FX32_ONE;
       volume = 127* (max - (len - (2*16*FX32_ONE))) / max;
-      OS_Printf("vol=%d\n",volume);
+///      OS_Printf("vol=%d\n",volume);
       if (volume < 0) volume = 0;
       NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE1 ), volume );
     }
