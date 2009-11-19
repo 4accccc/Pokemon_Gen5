@@ -16,6 +16,8 @@
 #include "system\gfl_use.h"
 #include "system\main.h"
 #include "print/printsys.h"
+#include "print/global_msg.h"
+#include "poke_tool/poke_tool.h"
 #include "system/net_err.h"
 #include "system/wipe.h"
 #include "system/brightness.h"
@@ -197,10 +199,10 @@ static  void  GameInit(void)
   NetErr_SystemCreate(HEAPID_NET_ERR);//※check　とりあえずゲーム中、ずっとシステムが存在するようにしている
 
   /* グローバルメッセージデータ＆フォント初期化 */
-  //GLOBALMSG_Init( GFL_HEAPID_SYSTEM );
+  GLOBALMSG_Init( GFL_HEAPID_SYSTEM );
 
   /* poketoolシステム初期化 */
-  //POKETOOL_InitSystem( GFL_HEAPID_SYSTEM );
+  POKETOOL_InitSystem( GFL_HEAPID_SYSTEM );
 
   //サウンドの設定
   //PMSND_Init();

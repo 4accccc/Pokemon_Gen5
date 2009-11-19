@@ -9,8 +9,12 @@ SRCS	+= \
 		$(PARENT_SRC)/net/net_devwireless.c \
 		$(PARENT_SRC)/net/wih.c \
 		$(PARENT_SRC)/net/net_whpipe.c \
+		$(PARENT_SRC)/poke_tool/poke_tool.c \
+		$(PARENT_SRC)/poke_tool/poke_personal.c \
 		$(PARENT_SRC)/print/gf_font.c \
+		$(PARENT_SRC)/print/global_msg.c \
 		$(PARENT_SRC)/print/printsys.c \
+		$(PARENT_SRC)/print/str_tool.c \
 		$(PARENT_SRC)/print/wordset.c \
 		$(PARENT_SRC)/sound/pm_sndsys.c \
 		$(PARENT_SRC)/sound/sound_manager.c \
@@ -20,8 +24,11 @@ SRCS	+= \
 		$(PARENT_SRC)/system/wipe_sub.c \
 		$(PARENT_SRC)/system/wipe_wnd.c \
 		$(PARENT_SRC)/system/brightness.c \
+		$(PARENT_SRC)/system/debug_print.c \
+		$(PARENT_SRC)/waza_tool/waza_tool.c \
 		$(PARENT_SRC)/multiboot/child/mb_child_sys.c \
 		$(PARENT_SRC)/multiboot/comm/mb_comm_sys.c \
+		$(PARENT_SRC)/multiboot/select/mb_select_sys.c \
 		$(PARENT_SRC)/multiboot/util/mb_util_msg.c
 				
 #================================================

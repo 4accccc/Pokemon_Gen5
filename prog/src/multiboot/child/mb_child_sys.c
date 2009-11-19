@@ -20,6 +20,7 @@
 #include "mb_child_gra.naix"
 
 #include "multiboot/mb_child_sys.h"
+#include "multiboot/mb_select_sys.h"
 #include "multiboot/mb_comm_sys.h"
 #include "multiboot/mb_util_msg.h"
 #include "multiboot/mb_local_def.h"
@@ -48,6 +49,14 @@ typedef enum
   MCS_WAIT_COMM_INIT,
   MCS_WAIT_CONNECT,
   MCS_CHECK_ROM,
+  
+  MCS_SELECT_FADEOUT,
+  MCS_SELECT_FADEOUT_WAIT,
+  MCS_SELECT_MAIN,
+  MCS_SELECT_TERM,
+  MCS_SELECT_FADEIN,
+  MCS_SELECT_FADEIN_WAIT,
+  
 }MB_CHILD_STATE;
 
 //======================================================================
@@ -57,15 +66,16 @@ typedef enum
 typedef struct
 {
   HEAPID heapId;
-  MB_COMM_WORK *commWork;
-  
-  MB_CHILD_STATE  state;
   
   MB_COMM_INIT_DATA *initData;
-  
   void  *sndData;
-  //メッセージ用
+  
+  MB_CHILD_STATE  state;
+  GFL_PROCSYS   *procSys;
+  
+
   MB_MSG_WORK *msgWork;
+  MB_COMM_WORK *commWork;
   
 }MB_CHILD_WORK;
 
@@ -106,7 +116,8 @@ static const GFL_DISP_VRAM vramBank = {
 static void MB_CHILD_Init( MB_CHILD_WORK *work )
 {
   work->state = MCS_FADEIN;
-  
+  work->msgWork = NULL;
+
   MB_CHILD_InitGraphic( work );
   MB_CHILD_LoadResource( work );
   work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG );
@@ -119,6 +130,8 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
                                      work->heapId );
                                      
   PMSND_InitMultiBoot( work->sndData );
+  
+  work->procSys = GFL_PROC_LOCAL_boot( work->heapId );
 }
 
 //--------------------------------------------------------------
@@ -126,6 +139,8 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
 //--------------------------------------------------------------
 static void MB_CHILD_Term( MB_CHILD_WORK *work )
 {
+  GFL_PROC_LOCAL_Exit( work->procSys );
+  
   PMSND_Exit();
   GFL_HEAP_FreeMemory( work->sndData );
   MB_COMM_DeleteSystem( work->commWork );
@@ -148,6 +163,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
                 WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
 
+    PMSND_PlayBGM( SEQ_BGM_PALPARK_BOX );
     work->state = MCS_WAIT_FADEIN;
     break;
     
@@ -159,7 +175,20 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       work->state = MCS_WAIT_COMM_INIT;
     }
     break;
+  case MCS_FADEOUT:
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+    work->state = MCS_WAIT_FADEOUT;
+    break;
+  case MCS_WAIT_FADEOUT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      return TRUE;
+    }
+    break;
     
+  //--------------------------------------------------------
+  //起動～チェック
   case MCS_WAIT_COMM_INIT:
     if( MB_COMM_IsInitComm(work->commWork) == TRUE )
     {
@@ -178,24 +207,78 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     {
       work->initData = MB_COMM_GetInitData( work->commWork );
       work->state = MCS_CHECK_ROM;
-      PMSND_PlayBGM( SEQ_BGM_PALPARK_BOX );
-      PMSND_PlaySE( SEQ_SE_DECIDE1 );
+    }
+    break;
+  case MCS_CHECK_ROM:
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    {
+      work->state = MCS_SELECT_FADEOUT;
+    }
+    break;
+  
+  //--------------------------------------------------------
+  //ボックスセレクト画面
+  case MCS_SELECT_FADEOUT:
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+    work->state = MCS_SELECT_FADEOUT_WAIT;
+    break;
+    
+  case MCS_SELECT_FADEOUT_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      MB_MSG_MessageTerm( work->msgWork );
+      MB_CHILD_TermGraphic( work );
+      work->msgWork = NULL;
+      
+      GFL_PROC_LOCAL_CallProc( work->procSys , 
+                               NO_OVERLAY_ID ,
+                               &MultiBootSelect_ProcData ,
+                               NULL );
+      
+      work->state = MCS_SELECT_MAIN;
     }
     break;
     
-  case MCS_FADEOUT:
-    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-                WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
-    work->state = MCS_WAIT_FADEOUT;
-    break;
-  case MCS_WAIT_FADEOUT:
-    if( WIPE_SYS_EndCheck() == TRUE )
+  case MCS_SELECT_MAIN:
     {
-      return TRUE;
+      const GFL_PROC_MAIN_STATUS ret = GFL_PROC_LOCAL_Main( work->procSys );
+      if( ret == GFL_PROC_MAIN_NULL )
+      {
+        work->state = MCS_SELECT_TERM;
+      }
     }
     break;
+    
+  case MCS_SELECT_TERM:
+    work->state = MCS_SELECT_FADEIN;
+
+    MB_CHILD_InitGraphic( work );
+    MB_CHILD_LoadResource( work );
+    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG );
+
+    break;
+    
+  case MCS_SELECT_FADEIN:
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+                WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+    work->state = MCS_SELECT_FADEIN_WAIT;
+    break;
+
+  case MCS_SELECT_FADEIN_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      work->state = MCS_CHECK_ROM;
+    }
+    break;
+    
+
   }
-  MB_MSG_MessageMain( work->msgWork );
+  
+  if( work->msgWork != NULL )
+  {
+    MB_MSG_MessageMain( work->msgWork );
+  }
   PMSND_Main();
   
   

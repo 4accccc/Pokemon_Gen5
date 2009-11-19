@@ -40,11 +40,14 @@
 
 	ARCID_FATAL_ERROR		"fatal_error.narc"	#fatalエラー画面表示
 	ARCID_WMI				"wmi.narc"	# 通信アイコン
-	ARCID_GRAWTBL			"pl_growtbl.narc"	#成長テーブル
-	ARCID_POKE_PERSONAL		"personal.narc"		#パーソナルデータ
 	ARCID_MESSAGE			"message_dl.narc"	#メッセージデータ
 	ARCID_FONT				"font/font_dl.narc"	#フォントデータ
 	ARCID_APP_MENU_COMMON	"app_menu_common_dl.narc"	#フォントデータ
 	ARCID_NET_ERR			"../../prog/arc/net_err.narc"
 	ARCID_FLDMAP_WINFRAME 	"../../prog/arc/winframe.narc"   # ウィンドウフレーム
-	ARCID_MB_CHILD			"mb_child_gra.narc"		#子機システム画面
+	ARCID_PERSONAL			"../../prog/arc/personal/personal.narc"		#パーソナルデータ
+	ARCID_GROW_TBL			"../../prog/arc/personal/growtbl.narc"			#成長曲線テーブル
+	ARCID_WOTBL				"../../prog/arc/personal/wotbl.narc"			#技覚えテーブル
+	ARCID_EVOTBL			"../../prog/arc/personal/evo.narc"			#進化テーブル
+	ARCID_WAZA_TBL			"../../prog/arc/waza_tbl/waza_tbl.narc"			#技テーブル
+	ARCID_MB_CHILD			"../../prog/arc/mb_child_gra.narc"		#子機システム画面

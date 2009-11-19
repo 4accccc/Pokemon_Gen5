@@ -283,6 +283,7 @@ static BOOL MBP_RegistFile(const MBGameRegistry *gameInfo)
          * この領域が使用されます。
          * このメモリはサイズさえ充分であれば 静的に用意されていても構いません.
          */
+        OS_TPrintf("LeastMbHeap[%x]\n",GFI_HEAP_GetHeapFreeSize(MB_HEAP_ID));
         sFilebuf = GFL_HEAP_AllocClearMemory( MB_HEAP_ID , bufferSize);
         if (sFilebuf == NULL)
         {

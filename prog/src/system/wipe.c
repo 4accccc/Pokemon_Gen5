@@ -167,6 +167,8 @@ static void resetMstBrightnessVblank( GFL_TCB * tcb, void* work );
 const static pWIPEFunc WipeFunc[] = {
 	WipeFunc00,
 	WipeFunc01,
+//マルチブート用きり分け(重いのでMBでは必要なものだけ入れる
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 	WipeFunc02,
 	WipeFunc03,
 	WipeFunc04,
@@ -208,6 +210,7 @@ const static pWIPEFunc WipeFunc[] = {
 	WipeFunc40,
 	WipeFunc41,
 	WipeFunc42,
+#endif //MULTI_BOOT_MAKE
 };
 
 //-------------------------------------

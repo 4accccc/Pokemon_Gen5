@@ -12,7 +12,7 @@
 
 #define MB_DEF_GGID (0x444)
 
-
+//親子別定義
 #ifndef MULTI_BOOT_MAKE
 
 #include "font/font.naix"
@@ -40,3 +40,7 @@
 #define MSGID_NO_MB (MSG_MB_CHILD_SYS_02)
 
 #endif //MULTI_BOOT_MAKE
+
+//共通定義
+//捕獲ポケ数
+#define MB_CAP_POKE_NUM (6)

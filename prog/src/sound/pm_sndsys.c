@@ -260,7 +260,10 @@ void	PMSND_Main( void )
 //============================================================================================
 void	PMSND_Exit( void )
 {
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 	SOUNDMAN_ReleasePresetData(systemPresetHandle);
+#endif //MULTI_BOOT_MAKE
 
 	NNS_SndHeapDestroy(PmSndHeapHandle);
 }

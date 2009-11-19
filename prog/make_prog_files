@@ -788,6 +788,7 @@ SRCS_OVERLAY_MULTIBOOT = multiboot/parent/mb_parent_sys.c \
         multiboot/comm/mbp.c \
         multiboot/comm/mb_comm_sys.c \
         multiboot/util/mb_util_msg.c \
+        multiboot/select/mb_select_sys.c \
         test/dlplay/dlplay_func.c 
 
 #		test/dlplay/dlplay_parent_sample.c \

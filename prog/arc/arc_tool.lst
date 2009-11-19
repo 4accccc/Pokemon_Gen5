@@ -209,6 +209,7 @@
 	ARCID_BATTLE_RECORDER_GRA	"battle_recorder_gra.narc" #バトルレコーダーグラフィック
   ARCID_GYM_GROUND	"fieldmap/gym_ground.narc"	#地面ジム
   ARCID_MB_PARENT	"mb_parent.narc"	#マルチブート親
+  ARCID_MB_CHILD	"mb_child_gra.narc"	#マルチブート親
 	ARCID_GSYNC "gsync.narc"   #GAMESYNC
 	ARCID_GTSNEGO "gtsnego.narc"   #GTSネゴシエーション
 	ARCID_WIFI_LOGIN		"wifi_login.narc" # WIFIログインデータ
