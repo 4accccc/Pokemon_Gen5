@@ -979,11 +979,11 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       ttw->biw = biw;
 
       BTLV_INPUT_DeleteBallGauge( biw );
+      BTLV_INPUT_DeletePokeIcon( biw );
+      BTLV_INPUT_DeleteWeatherIcon( biw );
 
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_COMMAND )
       {
-        BTLV_INPUT_DeletePokeIcon( biw );
-        BTLV_INPUT_DeleteWeatherIcon( biw );
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformCommand2Standby, ttw, 1 );
       }
       else
@@ -1008,11 +1008,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
         biw->button_exist[ i ] = TRUE;  //押せるボタンかどうかチェック
       }
 
-      if( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE )
-      { 
-        BTLV_INPUT_DeletePokeIcon( biw );
-      }
-
+      BTLV_INPUT_DeletePokeIcon( biw );
       BTLV_INPUT_CreatePokeIcon( biw, bicp );
       BTLV_INPUT_CreateWeatherIcon( biw );
 
