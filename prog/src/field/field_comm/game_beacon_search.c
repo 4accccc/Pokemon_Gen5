@@ -334,7 +334,7 @@ static GBS_TARGET_INFO * GameBeacon_UpdateBeacon(GAME_BEACON_SYS_PTR gbs)
   }
   
   if(target->gsid != 0){
-    OS_TPrintf("beacon target 発見 gsid = %d\n", target->gsid);
+    //OS_TPrintf("beacon target 発見 gsid = %d\n", target->gsid);
     return target;
   }
   return NULL;
@@ -362,7 +362,7 @@ static GBS_BEACON * GameBeacon_BeaconSearch(GAME_BEACON_SYS_PTR gbs, int *hit_in
   	{
       FIELD_BEACON_MSG_CheckBeacon( gbs->fbmSys , bcon_buff , GFL_NET_GetBeaconMacAddress(i) );
     	if(bcon_buff->member_num <= bcon_buff->member_max){
-    		OS_TPrintf("ビーコン受信　%d番 gsid = %d\n", i, bcon_buff->gsid);
+    		//OS_TPrintf("ビーコン受信　%d番 gsid = %d\n", i, bcon_buff->gsid);
     		if(target_index == -1){
           target_index = i;
         }
