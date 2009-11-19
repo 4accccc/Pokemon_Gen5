@@ -14,12 +14,24 @@ typedef struct _TAG_EFFECT_ENCOUNT EFFECT_ENCOUNT;
 /**
  *  @brief  エンカウントエフェクトワーク生成
  */
-extern EFFECT_ENCOUNT* EFFECT_ENC_CreateWork( FIELDMAP_WORK* fwork, HEAPID heapID );
+extern EFFECT_ENCOUNT* EFFECT_ENC_CreateWork( HEAPID heapID );
 
 /*
  *  @brief  エンカウントエフェクトワーク破棄
  */
 extern void EFFECT_ENC_DeleteWork( EFFECT_ENCOUNT* eff_wk );
+
+/*
+ *  @brief  エフェクトエンカウント　システム終了処理
+ */
+extern void EFFECT_ENC_End( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
+
+/*
+ *  @brief  エフェクトエンカウント システム初期化
+ */
+extern void EFFECT_ENC_Init( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
+
+
 
 /*
  *  @brief  エンカウントエフェクト起動チェック

@@ -102,7 +102,10 @@ FIELD_ENCOUNT * FIELD_ENCOUNT_Create( FIELDMAP_WORK *fwork )
   enc->gsys = FIELDMAP_GetGameSysWork( enc->fwork );
   enc->gdata = GAMESYSTEM_GetGameData( enc->gsys );
   enc->encdata = EVENTDATA_GetEncountDataTable( GAMEDATA_GetEventData(enc->gdata) );
-  enc->eff_enc = EFFECT_ENC_CreateWork( enc->fwork, heapID );
+
+  enc->eff_enc = EFFECT_ENC_CreateWork( heapID );
+  EFFECT_ENC_Init( enc, enc->eff_enc );
+
   return( enc );
 }
 
@@ -115,7 +118,9 @@ FIELD_ENCOUNT * FIELD_ENCOUNT_Create( FIELDMAP_WORK *fwork )
 //--------------------------------------------------------------
 void FIELD_ENCOUNT_Delete( FIELD_ENCOUNT *enc )
 {
+  EFFECT_ENC_End( enc, enc->eff_enc );
   EFFECT_ENC_DeleteWork(enc->eff_enc);
+
   GFL_HEAP_FreeMemory( enc );
 }
 

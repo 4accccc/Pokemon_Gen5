@@ -30,21 +30,6 @@
 
 #define GRID_MAP_W  (32)
 
-///エンカウントエフェクト制御
-typedef struct _EFFENC_POS{
-  u8  valid_f;
-  u16 zone_id;
-  u8 map_x;
-  u8 map_z;
-  u16 player_x;
-  u16 player_z;
-  u16 gx;
-  u16 gz;
-  EFFENC_TYPE_ID type;
-
-  FLDEFF_TASK* eff_task;
-}EFFENC_POS;
-
 typedef struct _EFFENC_ATTR_POS{
   u8  type;
   u16  gx,gz;
@@ -69,20 +54,29 @@ typedef struct _EFFENC_ATTR_MAP{
 /////////////////////////////////////////////////////
 ///エフェクトエンカウント制御ワーク fieldWork常駐
 struct _TAG_EFFECT_ENCOUNT{
-  EFFENC_POS pos;
-  EFFENC_ATTR_MAP attr_map;
   FLDEFF_CTRL* fectrl;
-  u32 walk_ct_interval;
+
+  EFFENC_ATTR_MAP attr_map;
+  FLDEFF_TASK* eff_task;
+  
+  u16 walk_ct_interval;
+  u16 prob;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 //プロトタイプ
 ///////////////////////////////////////////////////////////////////////////////////////////
-static BOOL effenc_IsEffectExist( EFFECT_ENCOUNT* eff_wk );
+static void effect_EffectPush( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
+static void effect_EffectPop( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
+
 static BOOL effenc_CheckWalkCt( ENCOUNT_WORK* ewk, EFFECT_ENCOUNT* eff_wk );
 static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
-static void effect_AddEffect( EFFECT_ENCOUNT* eff_wk );
-static void effect_DelEffect( EFFECT_ENCOUNT* eff_wk );
+
+static void effect_EffectSetUp( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
+static void effect_EffectDelete( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
+
+static void effect_AddFieldEffect( EFFECT_ENCOUNT* eff_wk, EFFENC_PARAM* ep );
+static void effect_DelFieldEffect( EFFECT_ENCOUNT* eff_wk );
 
 
 
@@ -92,12 +86,10 @@ static void effect_DelEffect( EFFECT_ENCOUNT* eff_wk );
 /**
  *  @brief  エンカウントエフェクトワーク生成
  */
-EFFECT_ENCOUNT* EFFECT_ENC_CreateWork( FIELDMAP_WORK* fwork, HEAPID heapID )
+EFFECT_ENCOUNT* EFFECT_ENC_CreateWork( HEAPID heapID )
 {
   EFFECT_ENCOUNT* eff_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(EFFECT_ENCOUNT));
- 
-  eff_wk->fectrl = FIELDMAP_GetFldEffCtrl( fwork );
-  eff_wk->walk_ct_interval = 10;
+  
   return eff_wk;
 }
 
@@ -106,11 +98,32 @@ EFFECT_ENCOUNT* EFFECT_ENC_CreateWork( FIELDMAP_WORK* fwork, HEAPID heapID )
  */
 void EFFECT_ENC_DeleteWork( EFFECT_ENCOUNT* eff_wk )
 {
-  //起動中なら破棄
-  effect_DelEffect( eff_wk );
-
   MI_CpuClear8( eff_wk, sizeof(EFFECT_ENCOUNT) );
   GFL_HEAP_FreeMemory( eff_wk );
+}
+
+/*
+ *  @brief  エフェクトエンカウント システム初期化
+ */
+void EFFECT_ENC_Init( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
+{
+  eff_wk->fectrl = FIELDMAP_GetFldEffCtrl( enc->fwork );
+  eff_wk->walk_ct_interval = 10;
+ 
+  //パラメータをPop
+  effect_EffectPop( enc, eff_wk );
+}
+
+/*
+ *  @brief  エフェクトエンカウント　システム終了処理
+ */
+void EFFECT_ENC_End( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
+{
+  //パラメータをPush 
+  effect_EffectPush( enc, eff_wk );
+  
+  //フィールドエフェクト破棄
+  effect_DelFieldEffect( eff_wk );
 }
 
 /*
@@ -143,8 +156,8 @@ void EFFECT_ENC_CheckEffectEncountStart( FIELD_ENCOUNT* enc )
     return;
   }
  
-  effect_DelEffect( eff_wk );
-  effect_AddEffect( eff_wk );
+  effect_EffectDelete( enc, eff_wk );
+  effect_EffectSetUp( enc, eff_wk );
 }
 
 /*
@@ -152,7 +165,45 @@ void EFFECT_ENC_CheckEffectEncountStart( FIELD_ENCOUNT* enc )
  */
 void EFFECT_ENC_EffectDelete( FIELD_ENCOUNT* enc )
 {
-  effect_DelEffect( enc->eff_enc );
+  effect_EffectDelete( enc, enc->eff_enc );
+}
+
+/*
+ *  @brief  エフェクトエンカウントプッシュ
+ */
+static void effect_EffectPush( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
+{
+  ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
+  EFFENC_PARAM* ep = &ewk->effect_encount.param; 
+
+  if( !ep->valid_f ){
+    return;
+  }
+  ep->push_f = TRUE;
+}
+
+/*
+ *  @brief  エフェクトエンカウントポップ 
+ */
+static void effect_EffectPop( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
+{
+  ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
+  EFFENC_PARAM* ep = &ewk->effect_encount.param; 
+
+  if( !ep->valid_f || !ep->push_f){
+    return;
+  }
+
+  ep->push_f = FALSE; //フラグ落とす
+  {
+    u16 zone_id = FIELDMAP_GetZoneID( enc->fwork );
+
+    if(zone_id != ep->zone_id || ep->push_cancel_f ){
+      MI_CpuClear8( ep, sizeof(EFFENC_PARAM));
+      return;
+    }
+  }
+  effect_AddFieldEffect( eff_wk, ep );  //保存されたパラメータで復帰
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -174,14 +225,6 @@ static BOOL effenc_CheckWalkCt( ENCOUNT_WORK* ewk, EFFECT_ENCOUNT* eff_wk )
     return TRUE;
   }
   return FALSE;
-}
-
-/*
- *  @brief  エフェクト起動中かどうかチェック
- */
-static BOOL effenc_IsEffectExist( EFFECT_ENCOUNT* eff_wk )
-{
-  return eff_wk->pos.valid_f;
 }
 
 /*
@@ -283,6 +326,7 @@ static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
   IWASAWA_Printf(" Player(%d,%d), x(%d～%d), z(%d～%d)\n",
       esw.player_x,esw.player_z,esw.sx,esw.ex,esw.sz,esw.ez);
 
+  MI_CpuClear8(&eff_wk->attr_map,sizeof(EFFENC_ATTR_MAP));
   vec.y = 0;
   blockIdx = FLDMAPPER_GetCurrentBlockAccessIdx( g3dMapper );
   for(i = esw.sz; i <= esw.ez;i++){
@@ -290,7 +334,7 @@ static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
     for(j = esw.sx; j <= esw.ex;j++){
       vec.x = FX32_CONST(j*16); 
       FLDMAPPER_GetGridDataForEffectEncount( g3dMapper, blockIdx, &vec, &gridData );
-      IWASAWA_Printf("0x%02x,",gridData.attr&0xFFFF);
+//    IWASAWA_Printf("0x%02x,",gridData.attr&0xFFFF);
       id = effect_GetAttributeType( gridData.attr );
       if(id != EFFENC_TYPE_MAX ){
         eff_wk->attr_map.attr[eff_wk->attr_map.count].type = id;
@@ -299,35 +343,64 @@ static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
         eff_wk->attr_map.attr[eff_wk->attr_map.count++].height = gridData.height;
       }
     }
-    IWASAWA_Printf("\n");
+//    IWASAWA_Printf("\n");
   }
 }
 
 /*
- *  @brief  抽選＆登録
+ *  @brief  エフェクト抽選＆登録
  */
-static void effect_AddEffect( EFFECT_ENCOUNT* eff_wk )
+static void effect_EffectSetUp( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
 {
   u16 idx = GFUser_GetPublicRand0( eff_wk->attr_map.count);
   EFFENC_ATTR_POS* attr = &eff_wk->attr_map.attr[idx];
- 
-  eff_wk->pos.gx = attr->gx;
-  eff_wk->pos.gz = attr->gz;
-  eff_wk->pos.valid_f = TRUE;
-  eff_wk->pos.eff_task = FLDEFF_ENCOUNT_SetEffect( eff_wk->fectrl, attr->gx, attr->gz, attr->height, attr->type );
-//  eff_wk->pos.eff_task = FLDEFF_ENCOUNT_SetEffect( eff_wk->fectrl, 788, 715, attr->height, attr->type );  
-  IWASAWA_Printf(" EffectAdd( %d, %d, h = 0x%08x) type=%d\n",eff_wk->pos.gx,eff_wk->pos.gz,attr->height, attr->type );
+  ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
+  EFFENC_PARAM* ep = &ewk->effect_encount.param; 
+
+  //パラメータセット
+  ep->gx = attr->gx;
+  ep->gz = attr->gz;
+  ep->height = attr->height;
+  ep->type = attr->type;
+  ep->zone_id = FIELDMAP_GetZoneID( enc->fwork );
+  ep->valid_f = TRUE;
+
+  effect_AddFieldEffect( eff_wk, ep );
+}
+
+/*
+ *  @brief  エフェクト破棄
+ */
+static void effect_EffectDelete( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
+{
+  ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
+  EFFENC_PARAM* ep = &ewk->effect_encount.param; 
+
+  effect_DelFieldEffect( eff_wk );
+
+  MI_CpuClear8( ep, sizeof(EFFENC_PARAM));
+}
+
+/*
+ *  @brief  フィールドエフェクト登録
+ */
+static void effect_AddFieldEffect( EFFECT_ENCOUNT* eff_wk, EFFENC_PARAM* ep )
+{
+  eff_wk->eff_task = FLDEFF_ENCOUNT_SetEffect( eff_wk->fectrl, ep->gx, ep->gz, ep->height, ep->type );
+//  eff_wk->pos.eff_task = FLDEFF_ENCOUNT_SetEffect( eff_wk->fectrl, 788, 715, ep->height, ep->type );  
+  IWASAWA_Printf(" EffectAdd( %d, %d, h = 0x%08x) type=%d <0x%08x\n",ep->gx, ep->gz, ep->height, ep->type,eff_wk->eff_task );
 }
 
 /**
- *  @brief  エフェクト削除
+ *  @brief  フィールドエフェクト削除
  */
-static void effect_DelEffect( EFFECT_ENCOUNT* eff_wk )
+static void effect_DelFieldEffect( EFFECT_ENCOUNT* eff_wk )
 {
-  if( !eff_wk->pos.valid_f ){
+  if( eff_wk->eff_task == NULL){
     return; //なにもしない
   }
-  FLDEFF_TASK_CallDelete( eff_wk->pos.eff_task );
-  MI_CpuClear8( &eff_wk->pos, sizeof(EFFENC_POS));
+  IWASAWA_Printf(" EffectDel <0x%08x\n",eff_wk->eff_task );
+  FLDEFF_TASK_CallDelete( eff_wk->eff_task );
+  eff_wk->eff_task = NULL;
 }
 

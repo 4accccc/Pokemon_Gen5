@@ -346,9 +346,11 @@ static void encountTask_Update( FLDEFF_TASK *task, void *wk )
   for( i = 0;i < enc->data.anm_num; i++){
     GFL_G3D_OBJECT_LoopAnimeFrame( work->obj, i, FX32_ONE );
   }
+  /*
   if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
     FLDEFF_TASK_CallDelete( task );
   }
+  */
 }
 
 //--------------------------------------------------------------

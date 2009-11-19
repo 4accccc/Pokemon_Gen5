@@ -34,11 +34,22 @@ struct _TAG_FIELD_ENCOUNT
   EFFECT_ENCOUNT* eff_enc;
 };
 
+//エフェクトエンカウント　パラメータ
+typedef struct _EFFENC_PARAM{
+  u16   gx,gz;
+  fx32  height;
+  u16   zone_id;
+  u8    type;
+  u8    valid_f:4;
+  u8    push_f:2;
+  u8    push_cancel_f:2;
+}EFFENC_PARAM;
 
 ///エンカウントエフェクト制御ワーク
 typedef struct _EWK_EFFECT_ENCOUNT
 {
   u32 walk_ct;
+  EFFENC_PARAM  param;
 }EWK_EFFECT_ENCOUNT;
 
 ///エンカウント制御ワーク
