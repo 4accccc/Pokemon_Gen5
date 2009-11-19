@@ -345,6 +345,7 @@ static GFL_PROC_RESULT GameStart_ContinueProcEnd( GFL_PROC * proc, int * seq, vo
 //	デバッグスタート
 //
 //==============================================================================
+extern BOOL DebugScanOnly;
 //--------------------------------------------------------------
 /**
  * @brief   
@@ -411,6 +412,7 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
 
 		config	= SaveData_GetConfig( SaveControl_GetPointer() );
 		mode	= always_net? NETWORK_SEARCH_ON: NETWORK_SEARCH_OFF;
+		DebugScanOnly = (mode == NETWORK_SEARCH_ON) ? FALSE : TRUE;
 		CONFIG_SetNetworkSearchMode( config, mode );
     //CGEARON
     CGEAR_SV_SetCGearONOFF(CGEAR_SV_GetCGearSaveData(SaveControl_GetPointer()),TRUE);
@@ -489,6 +491,7 @@ static GFL_PROC_RESULT GameStart_DebugSelectNameProcEnd( GFL_PROC * proc, int * 
 
 			config	= SaveData_GetConfig( SaveControl_GetPointer() );
 			CONFIG_SetNetworkSearchMode( config, NETWORK_SEARCH_OFF );
+  		DebugScanOnly = TRUE;
 		}
     //CGEARON
     CGEAR_SV_SetCGearONOFF(CGEAR_SV_GetCGearSaveData(SaveControl_GetPointer()),TRUE);

@@ -256,7 +256,11 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
   GBS_TARGET_INFO *target;
   
   target = GameBeacon_UpdateBeacon(gbs);
+#ifdef PM_DEBUG
+  if(target != NULL && GameCommSys_GetCommGameNo(gcsp) != GAME_COMM_NO_DEBUG_SCANONLY){
+#else
   if(target != NULL){ //対象が見つかった
+#endif
     switch(target->gsid){
     case WB_NET_FIELDMOVE_SERVICEID:  //侵入(パレス)
       {
@@ -330,6 +334,7 @@ static GBS_TARGET_INFO * GameBeacon_UpdateBeacon(GAME_BEACON_SYS_PTR gbs)
   }
   
   if(target->gsid != 0){
+    OS_TPrintf("beacon target 発見 gsid = %d\n", target->gsid);
     return target;
   }
   return NULL;
@@ -357,7 +362,7 @@ static GBS_BEACON * GameBeacon_BeaconSearch(GAME_BEACON_SYS_PTR gbs, int *hit_in
   	{
       FIELD_BEACON_MSG_CheckBeacon( gbs->fbmSys , bcon_buff , GFL_NET_GetBeaconMacAddress(i) );
     	if(bcon_buff->member_num <= bcon_buff->member_max){
-    		//OS_TPrintf("ビーコン受信　%d番 gsid = %d\n", i, bcon_buff->gsid);
+    		OS_TPrintf("ビーコン受信　%d番 gsid = %d\n", i, bcon_buff->gsid);
     		if(target_index == -1){
           target_index = i;
         }

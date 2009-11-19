@@ -33,6 +33,14 @@ typedef struct {
 const GFL_PROC_DATA FieldProcData;
 
 //======================================================================
+//	
+//======================================================================
+#ifdef PM_DEBUG
+extern BOOL DebugScanOnly;
+#endif
+
+
+//======================================================================
 //	フィールドプロセス
 //======================================================================
 //------------------------------------------------------------------
@@ -88,6 +96,12 @@ static GFL_PROC_RESULT FieldMapProcInit
           GameCommSys_Boot(gcsp, GAME_COMM_NO_FIELD_BEACON_SEARCH, gsys);
         }
       }
+    #ifdef PM_DEBUG
+      else if(DebugScanOnly == TRUE && GameCommSys_BootCheck(gcsp) == GAME_COMM_NO_NULL){
+        OS_TPrintf("非通信モードでDebugScanがONの為、ビーコンScanOnly起動\n");
+        GameCommSys_Boot(gcsp, GAME_COMM_NO_DEBUG_SCANONLY, gsys);
+      }
+    #endif
       else{
         if(GameCommSys_BootCheck(gcsp) == GAME_COMM_NO_FIELD_BEACON_SEARCH){
           OS_TPrintf("非通信モードの為、サーチ終了\n");
@@ -135,7 +149,8 @@ static GFL_PROC_RESULT FieldMapProcEnd
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   
   //※check　フィールドが無い間はビーコンサーチしない
-  if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_FIELD_BEACON_SEARCH){
+  if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_FIELD_BEACON_SEARCH
+      || GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_DEBUG_SCANONLY){
     GameCommSys_ExitReq(game_comm);
   }
 

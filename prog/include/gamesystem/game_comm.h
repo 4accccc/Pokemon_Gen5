@@ -16,7 +16,8 @@
 #define GAME_COMM_NO_FIELD_BEACON_SEARCH  (1)   ///<フィールド上でビーコンサーチ
 #define GAME_COMM_NO_INVASION             (2)   ///<侵入
 #define GAME_COMM_NO_UNION                (3)   ///<ユニオンルーム
-#define GAME_COMM_NO_MAX                  (4)
+#define GAME_COMM_NO_DEBUG_SCANONLY       (4)   ///<デバッグ負荷用の常時スキャン
+#define GAME_COMM_NO_MAX                  (5)
 
 //=========================================================================
 //アセンブラでincludeされている場合は、下の宣言を無視できるようにifndefで囲んである

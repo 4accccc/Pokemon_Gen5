@@ -160,6 +160,16 @@ static const GAME_FUNC_TBL GameFuncTbl[] = {
     UnionMain_Callback_FieldCreate,       //field_create
     UnionMain_Callback_FieldDelete,       //field_delete
   },
+  //GAME_COMM_NO_DEBUG_SCANONLY
+  {
+    GameBeacon_Init,       //init
+    GameBeacon_InitWait,   //init_wait
+    GameBeacon_Update,     //update
+    GameBeacon_Exit,       //exit
+    GameBeacon_ExitWait,   //exit_wait
+    NULL,       //field_create
+    NULL,       //field_delete
+  },
 };
 
 //==============================================================================
