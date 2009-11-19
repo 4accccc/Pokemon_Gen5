@@ -913,7 +913,7 @@
   .endm
 
 //======================================================================
-//  フィールド　会話ウィンドウ
+//  フィールド　システムウィンドウ
 //======================================================================
 //--------------------------------------------------------------
 /**
@@ -921,6 +921,7 @@
  *  @param  msg_id  表示するメッセージID
  */
 //--------------------------------------------------------------
+#define _SYSWINMSG( msg_id ) __ASM_TALK_MSG msg_id
 #define _TALKMSG( msg_id ) _ASM_TALK_MSG msg_id
 
   .macro  _ASM_TALK_MSG msg_id
@@ -934,6 +935,7 @@
  *  @param  msg_id  表示するメッセージID
  */
 //--------------------------------------------------------------
+#define _SYSWINMSG_ALLPUT( msg_id ) _ASM_TALKMSG_ALLPUT msg_id
 #define _TALKMSG_ALLPUT( msg_id ) _ASM_TALKMSG_ALLPUT msg_id
 
   .macro  _ASM_TALKMSG_ALLPUT msg_id
@@ -943,22 +945,27 @@
 
 //--------------------------------------------------------------
 /**
- *  _TALKWIN_OPEN 会話ウィンドウ開く
- *  @param none
+ *  _TALKWIN_OPEN システムウィンドウ開く
+ *  @param
  */
 //--------------------------------------------------------------
-#define _TALKWIN_OPEN() _ASM_TALKWIN_OPEN
+#define _SYSWIN_OPEN() _ASM_SYSWIN_OPEN WIN_DOWN
+#define _SYSWIN_OPEN_UP() _ASM_SYSWIN_OPEN WIN_UP
+#define _SYSWIN_OPEN_DOWN() _ASM_SYSWIN_OPEN WIN_DOWN
+#define _TALKWIN_OPEN() _ASM_SYSWIN_OPEN WIN_DOWN
 
-  .macro  _ASM_TALKWIN_OPEN
+  .macro  _ASM_SYSWIN_OPEN up_down
   .short  EV_SEQ_TALKWIN_OPEN
+  .short  \up_down
   .endm
-
+  
 //--------------------------------------------------------------
 /**
- *  _TALKWIN_CLOSE 会話ウィンドウ閉じる
+ *  _TALKWIN_CLOSE システムウィンドウ閉じる
  *  @param none
  */
 //--------------------------------------------------------------
+#define _SYSWIN_CLOSE() _ASM_TALKWIN_CLOSE
 #define _TALKWIN_CLOSE()  _ASM_TALKWIN_CLOSE
 
   .macro  _ASM_TALKWIN_CLOSE
@@ -976,13 +983,15 @@
  *  @param obj_id 吹き出しを出す対象OBJ ID
  */
 //--------------------------------------------------------------
-#define _BALLOONWIN_OBJMSG_OPEN( msg_id , obj_id ) _ASM_BALLOONWIN_OBJMSG_OPEN msg_id, obj_id
+#define _BALLOONWIN_OBJMSG_OPEN( msg_id , obj_id ) \
+    _ASM_BALLOONWIN_OBJMSG_OPEN msg_id, obj_id
 
   .macro _ASM_BALLOONWIN_OBJMSG_OPEN msg_id, obj_id
   .short  EV_SEQ_BALLOONWIN_OBJMSG_OPEN
   .short 0x0400
   .short \msg_id
   .byte \obj_id
+  .byte WIN_NONE
   .endm
 
 //--------------------------------------------------------------
@@ -992,20 +1001,20 @@
  *  @param msg_id 表示するメッセージID
  */
 //--------------------------------------------------------------
-#define _BALLOONWIN_TALKOBJ_OPEN( msg_id ) _ASM_BALLOONWIN_TALKOBJ_OPEN msg_id
-
+#define _BALLOONWIN_TALKOBJ_OPEN( msg_id ) \
+    _ASM_BALLOONWIN_TALKOBJ_OPEN msg_id
+  
   .macro _ASM_BALLOONWIN_TALKOBJ_OPEN msg_id
   .short  EV_SEQ_BALLOONWIN_TALKOBJ_OPEN
   .short 0x0400
   .short \msg_id
+  .byte WIN_NONE
   .endm
 
 //--------------------------------------------------------------
 /**
  * @def _BALLOONWIN_TALKOBJ_OPEN_ARC
- *
  * @brief 吹き出しウィンドウ描画 話しかけOBJ専用、メッセージアーカイブ指定付き
- * 
  *  @param  arc_id  メッセージアーカイブ指定ID
  *  @param msg_id 表示するメッセージID
  */
@@ -1017,7 +1026,54 @@
   .short  EV_SEQ_BALLOONWIN_TALKOBJ_OPEN
   .short \arc_id
   .short \msg_id
+  .byte WIN_NONE
   .endm
+
+//--------------------------------------------------------------
+/**
+ *  @def  _BALLOONWIN_OBJMSG_OPEN_POS
+ *  @brief  吹き出しウィンドウ描画　位置指定あり
+ *  @param msg_id 表示するメッセージID
+ *  @param obj_id 吹き出しを出す対象OBJ ID
+ *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DONW,WIN_NONE
+ */
+//--------------------------------------------------------------
+#define _BALLOONWIN_OBJMSG_OPEN_POS( msg_id , obj_id, pos ) \
+    _ASM_BALLOONWIN_OBJMSG_OPEN_POS msg_id, obj_id, pos
+  
+  .macro _ASM_BALLOONWIN_OBJMSG_OPEN_POS msg_id, obj_id, pos
+  .short  EV_SEQ_BALLOONWIN_OBJMSG_OPEN
+  .short 0x0400
+  .short \msg_id
+  .byte \obj_id
+  .byte \pos
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @def  _BALLOONWIN_OBJMSG_WB_OPEN_MF
+ *  @brief  吹き出しウィンドウ描画　プレイヤー性別メッセージ指定
+ *  @param msg_id_m 表示するメッセージID　男性
+ *  @param msg_id_f 表示するメッセージID　女性
+ *  @param obj_id 吹き出しを出す対象OBJ ID
+ *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DONW,WIN_NONE
+ */
+//--------------------------------------------------------------
+#define _BALLOONWIN_OBJMSG_OPEN_MF( msg_id_w, msg_id_b, obj_id, pos ) \
+    _ASM_BALLOONWIN_OBJMSG_OPEN_MF msg_id_w, msg_id_b, obj_id, pos
+
+//--------------------------------------------------------------
+/**
+ *  @def  _BALLOONWIN_OBJMSG_WB_OPEN_WB
+ *  @brief  吹き出しウィンドウ描画　バージョン別
+ *  @param msg_id_w 表示するメッセージID、ホワイト版
+ *  @param msg_id_b 表示するメッセージID、ブラック版
+ *  @param obj_id 吹き出しを出す対象OBJ ID
+ *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DONW,WIN_NONE
+ */
+//--------------------------------------------------------------
+#define _BALLOONWIN_OBJMSG_OPEN_WB( msg_id_w, msg_id_b, obj_id, pos ) \
+    _ASM_BALLOONWIN_OBJMSG_OPEN_WB msg_id_w, msg_id_b, obj_id, pos
 
 //--------------------------------------------------------------
 /**
@@ -1080,6 +1136,123 @@
   .short \x
   .short \y
   .endm
+
+//--------------------------------------------------------------
+/**
+ *  @def _MSGWIN_CLOSE
+ *  @brief 種類を問わず表示しているメッセージウィンドウを閉じる。
+ *  @param none
+ *  @note 該当ウィンドウは、
+ *  システムウィンドウ、吹き出しウィンドウ、プレーンウィンドウ、BGウィンドウ
+ */
+//--------------------------------------------------------------
+#define _MSGWIN_CLOSE() _ASM_MSGWIN_CLOSE
+
+  .macro _ASM_MSGWIN_CLOSE
+  .short EV_SEQ_MSGWIN_CLOSE
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @def _PLAINWIN_MSG_UP
+ *  @brief プレーンウィンドウを上に表示
+ *  @param msg_id 表示するメッセージID
+ */
+//--------------------------------------------------------------
+#define _PLAINWIN_MSG_UP( msg_id ) _ASM_PLAINWIN_MSG msg_id, WIN_UP
+
+//--------------------------------------------------------------
+/**
+ *  @def _PLAINWIN_MSG_DOWN
+ *  @brief プレーンウィンドウを下に表示
+ *  @param msg_id 表示するメッセージID
+ */
+//--------------------------------------------------------------
+#define _PLAINWIN_MSG_DOWN( msg_id ) _ASM_PLAINWIN_MSG msg_id, WIN_DOWN
+  
+  .macro _ASM_PLAINWIN_MSG msg_id, up_down
+  .short EV_SEQ_PLAINWIN_MSG
+  .short \msg_id
+  .byte \up_down
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @def _PLAINWIN_MSG_CLOSE
+ *  @brief プレーンウィンドウを閉じる
+ *  @param msg_id 表示するメッセージID
+ */
+//--------------------------------------------------------------
+#define _PLAINWIN_CLOSE() _ASM_PLAINWIN_CLOSE
+  
+  .macro _ASM_PLAINWIN_CLOSE
+  .short EV_SEQ_PLAINWIN_CLOSE
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @def _SUBWIN_MSG
+ *  @brief サブウィンドウを表示
+ *  @param msg_id 表示するメッセージID
+ *  @param pos_x 表示するX座標（キャラ単位
+ *  @param pos_y 表示するY座標（キャラ単位
+ *  @param win_id 識別の為に登録する任意のID
+ */
+//--------------------------------------------------------------
+#define _SUBWIN_MSG( msg_id, pos_x, pos_y, win_id ) \
+    _ASM_SUBWIN_MSG msg_id, pos_x, pos_y, win_id
+  
+  .macro _ASM_SUBWIN_MSG  msg_id, pos_x, pos_y, win_id
+  .short EV_SEQ_SUBWIN_MSG
+  .short \msg_id
+  .byte \pos_x
+  .byte \pos_y
+  .short \win_id
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @def _SUBWIN_CLOSE
+ *  @brief サブウィンドウを閉じる
+ *  @param win_id _SUBWIN_MSG()で指定したwin_id
+ */
+//--------------------------------------------------------------
+#define _SUBWIN_CLOSE( win_id ) _ASM_SUBWIN_CLOSE win_id
+  
+  .macro _ASM_SUBWIN_CLOSE win_id
+  .short EV_SEQ_SUBWIN_CLOSE
+  .short \win_id
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @def _BGWIN_MSG
+ *  @brief BGウィンドウを表示する
+ *  @param msg_id 表示するメッセージID
+ *  @param bg_type 表示するタイプ TYPE_INFO,TYPE_TOWN,TYPE_POST,TYPE_ROAD
+ */
+//--------------------------------------------------------------
+#define _BGWIN_MSG( msg_id, bg_type ) _ASM_BGWIN_MSG msg_id, bg_type
+  
+  .macro _ASM_BGWIN_MSG msg_id, bg_type
+  .short EV_SEQ_BGWIN_MSG
+  .short \msg_id
+  .short \bg_type
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @def _BGWIN_CLOSE
+ *  @brief BGウィンドウを閉じる
+ *  @param none 
+ */
+//--------------------------------------------------------------
+#define _BGWIN_CLOSE()  _ASM_BGWIN_CLOSE
+  
+  .macro _ASM_BGWIN_CLOSE
+  .short EV_SEQ_BGWIN_CLOSE
+  .endm
+
 
 //======================================================================
 //  動作モデル

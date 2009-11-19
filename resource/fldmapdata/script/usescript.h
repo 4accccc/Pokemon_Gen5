@@ -10,108 +10,19 @@
 #define __USESCRIPT_H__
 
 #define	__ASM_NO_DEF_
-
 #define ASM_CPP							//pm_version.h
 
 //======================================================================
-//	define
-//======================================================================
-//#ifdef PM_DEBUG
-#define SCRIPT_PM_DEBUG					//*.ev内でPM_DEBUGが無効なので
-#define SCRIPT_PL_NULL					//機能無効化
-//#endif
-
-//--------------------------------------------------------------
-//(エメラルドではvmstat.hに定義してあった)
-//--------------------------------------------------------------
-#define	LT				0				/* <	*/
-#define	EQ				1				/* ==	*/
-#define	GT				2				/* >	*/
-#define	LE				3				/* <=	*/
-#define	GE				4				/* >=	*/
-#define	NE				5				/* !=	*/
-#define	EQUAL			EQ
-#define	LITTLER			LT
-#define	GREATER			GT
-#define	LT_EQ			LE
-#define	GT_EQ			GE
-
-#define	FLGON			1
-#define	FLGOFF			0
-
-#define CMPID_LT    0
-#define CMPID_EQ    1
-#define CMPID_GT    2
-#define CMPID_LT_EQ 3
-#define CMPID_GT_EQ 4
-#define CMPID_NE    5
-#define CMPID_OR    6
-#define CMPID_AND   7
-#define CMPID_TRUE  8
-#define CMPID_FALSE 9
-#define CMPID_GET   0xff
-
-//nitro/type.hで定義されているがインクルードできないので自力で定義
-#define	TRUE			1
-#define	FALSE			0
-
-//スクリプト通信受付の判別定義
-#define SCR_COMM_ID_NOTHING	(0)	//何もなし
-#define SCR_COMM_ID_BATTLE	(1)	//バトル
-#define SCR_COMM_ID_UNION	(2)	//ユニオン
-#define SCR_COMM_ID_WIFI	(3)	//WiFi
-#define SCR_COMM_ID_RECORD	(4)	//レコード(sp_***.evに埋め込んでしまったので残している)
-#define SCR_COMM_ID_CONTEST	(5)			//コンテスト
-#define SCR_COMM_ID_GTC		(6)			//GTC
-
-//--------------------------------------------------------------
-//*.evの中で使用する定義
-//--------------------------------------------------------------
-
-/*
-	// 話かけた方向を保持するワーク
-	u16 TalkSiteWork = 0;
-
-	// 手持ちがいっぱいでＰＣに転送された時
-	u16 BoxNoWork = 0;			//何番のBOXか
-	u16 PasoNoWork = 0;			//そのBOXの何番目か
-
-	//ユニオンルームでのイベント状態制御用ワーク
-	u16 UnionRoomWork = 0;
-*/
-
-/*アンノーンいせき*/
-#define ANOON_SEE_NUM_1	(10)
-#define ANOON_SEE_NUM_2	(26)
-
-//メニュー用戻り値
-#define EV_WIN_B_CANCEL (0xfffe)
-
-//フェード共通速度
-#define DISP_FADE_SPEED (2)
-
-
-#define BAG_POCKET_NORMAL   0
-#define BAG_POCKET_DRUG     1
-#define BAG_POCKET_WAZA     2
-#define BAG_POCKET_NUTS     3
-#define BAG_POCKET_EVENT    4
-
-//======================================================================
-//	
+// include
 //======================================================================
 //共通スクリプトデータID
 #include "common_scr_def.h"
 #include "shop_scr_def.h"
 
-
 //スクリプト内共通定義ヘッダファイル
 //最初の3体タイプわけなど
 #include "user_define.h"
 
-//======================================================================
-//	
-//======================================================================
 //動作モデル表示コード
 #include "../../../prog/src/field/fldmmdl_code.h"
 #include "../../../prog/arc/fieldmap/fldmmdl_objcode.h"
@@ -148,15 +59,22 @@
 //フィールド通信の種類定義
 #include "../../../prog/include/gamesystem/game_comm.h"
 
-
 //性別、ロムバージョンなどの定義
 #include "../../../prog/include/pm_version.h"
 
 //季節指定IDの定義
 #include "../../../prog/include/gamesystem/pm_season.h"
 
-#if 0 //wb null
+//ワザNo
+#include "../../../prog/include/waza_tool/wazano_def.h"
 
+//フィールドカットインナンバー定義
+#include "../../fld3d_ci/fldci_id_def.h"
+
+//--------------------------------------------------------------
+//  wb_null
+//--------------------------------------------------------------
+#if 0
 //include/field
 #include "../../../include/field/evwkdef.h"
 #include "../../../include/field/poketch_app_no.h"	//ポケッチアプリナンバー
@@ -222,27 +140,115 @@
 #include "../../frontier/frontier_def.h"			//フロンティア定義
 #endif //wb null
 
-#include "../../../prog/include/waza_tool/wazano_def.h" //ワザNo
-
-#include "../../fld3d_ci/fldci_id_def.h"    //フィールドカットインナンバー定義
-
-//ワイプフェードの基本の値
-#define SCR_WIPE_DIV				(WIPE_DEF_DIV)
-#define SCR_WIPE_SYNC				(WIPE_DEF_SYNC)
-
 //======================================================================
-//
 //	共通メッセージ関連
-//
 //======================================================================
 #include "../../message/dst/script/msg_common_scr.h"
 #include "../../message/dst/script/msg_common_scr.h"
 //#include "../../../prog/include/msg/script/msg_common_scr.h"
+
 #if 0 //wb null
 #include "../../../include/msgdata/msg_common_scr.h"
 #include "../../../include/msgdata/msg_ev_win.h"
 #include "../../../include/msgdata/msg_gameover.h"
 //#include "msglist.h"
 #endif //wb null
+
+//======================================================================
+//	define
+//======================================================================
+//#ifdef PM_DEBUG
+#define SCRIPT_PM_DEBUG					//*.ev内でPM_DEBUGが無効なので
+#define SCRIPT_PL_NULL					//機能無効化
+//#endif
+
+//--------------------------------------------------------------
+//(エメラルドではvmstat.hに定義してあった)
+//--------------------------------------------------------------
+#define	LT				0				/* <	*/
+#define	EQ				1				/* ==	*/
+#define	GT				2				/* >	*/
+#define	LE				3				/* <=	*/
+#define	GE				4				/* >=	*/
+#define	NE				5				/* !=	*/
+#define	EQUAL			EQ
+#define	LITTLER			LT
+#define	GREATER			GT
+#define	LT_EQ			LE
+#define	GT_EQ			GE
+
+#define	FLGON			1
+#define	FLGOFF			0
+
+#define CMPID_LT    0
+#define CMPID_EQ    1
+#define CMPID_GT    2
+#define CMPID_LT_EQ 3
+#define CMPID_GT_EQ 4
+#define CMPID_NE    5
+#define CMPID_OR    6
+#define CMPID_AND   7
+#define CMPID_TRUE  8
+#define CMPID_FALSE 9
+#define CMPID_GET   0xff
+
+//nitro/type.hで定義されているがインクルードできないので自力で定義
+#define	TRUE			1
+#define	FALSE			0
+
+//スクリプト通信受付の判別定義
+#define SCR_COMM_ID_NOTHING	(0)	//何もなし
+#define SCR_COMM_ID_BATTLE	(1)	//バトル
+#define SCR_COMM_ID_UNION	(2)	//ユニオン
+#define SCR_COMM_ID_WIFI	(3)	//WiFi
+#define SCR_COMM_ID_RECORD	(4)	//レコード(sp_***.evに埋め込んでしまったので残している)
+#define SCR_COMM_ID_CONTEST	(5)			//コンテスト
+#define SCR_COMM_ID_GTC		(6)			//GTC
+
+//--------------------------------------------------------------
+//*.evの中で使用する定義
+//--------------------------------------------------------------
+/*
+	// 話かけた方向を保持するワーク
+	u16 TalkSiteWork = 0;
+
+	// 手持ちがいっぱいでＰＣに転送された時
+	u16 BoxNoWork = 0;			//何番のBOXか
+	u16 PasoNoWork = 0;			//そのBOXの何番目か
+
+	//ユニオンルームでのイベント状態制御用ワーク
+	u16 UnionRoomWork = 0;
+*/
+
+/*アンノーンいせき*/
+#define ANOON_SEE_NUM_1	(10)
+#define ANOON_SEE_NUM_2	(26)
+
+//メニュー用戻り値
+#define EV_WIN_B_CANCEL (0xfffe)
+
+//フェード共通速度
+#define DISP_FADE_SPEED (2)
+
+#define BAG_POCKET_NORMAL   0
+#define BAG_POCKET_DRUG     1
+#define BAG_POCKET_WAZA     2
+#define BAG_POCKET_NUTS     3
+#define BAG_POCKET_EVENT    4
+
+//ウィンドウ位置
+#define WIN_UP (SCRCMD_MSGWIN_UP)
+#define WIN_DOWN (SCRCMD_MSGWIN_DOWN)
+#define WIN_NONE (SCRCMD_MSGWIN_NON)
+
+//ワイプフェードの基本の値
+#define SCR_WIPE_DIV				(WIPE_DEF_DIV)
+#define SCR_WIPE_SYNC				(WIPE_DEF_SYNC)
+
+//BGウィンドウタイプ
+#define TYPE_INFO (SCRCMD_BGWIN_TYPE_INFO) //掲示板
+#define TYPE_TOWN (SCRCMD_BGWIN_TYPE_TOWN) //街
+#define TYPE_POST (SCRCMD_BGWIN_TYPE_POST) //施設
+#define TYPE_ROAD (SCRCMD_BGWIN_TYPE_ROAD) //道
 
 #endif //__USESCRIPT_H__

@@ -150,7 +150,7 @@
 //--------------------------------------------------------------
   .macro  _ASM_EASY_MSG msg_id
   _ASM_TALK_START_SE_PLAY
-  _ASM_TALKWIN_OPEN
+  _ASM_SYSWIN_OPEN WIN_DOWN
   _ASM_TALKMSG_ALLPUT \msg_id
   _ASM_LAST_KEYWAIT
   _ASM_TALKWIN_CLOSE
@@ -177,6 +177,51 @@
 
 //--------------------------------------------------------------
 /**
+ *  @def  _BALLOONWIN_OBJMSG_OPEN_MF
+ *  @brief  吹き出しウィンドウ描画　バージョン別
+ *  @param msg_id_m 表示するメッセージID、ホワイト版
+ *  @param msg_id_f 表示するメッセージID、ブラック版
+ *  @param obj_id 吹き出しを出す対象OBJ ID
+ *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DONW,WIN_NONE
+ */
+//--------------------------------------------------------------
+  .macro _ASM_BALLOONWIN_OBJMSG_OPEN_MF msg_id_m, msg_id_f, obj_id, pos
+  _PUSH_WORK SCWK_ANSWER
+  _ASM_GET_MY_SEX SCWK_ANSWER
+	IF $SCWK_ANSWER == PM_MALE THEN
+    _ASM_BALLOONWIN_OBJMSG_OPEN_POS msg_id_m, obj_id, pos
+  ELSE
+    _ASM_BALLOONWIN_OBJMSG_OPEN_POS msg_id_f, obj_id, pos
+  ENDIF
+  _POP_WORK SCWK_ANSWER
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @def  _BALLOONWIN_OBJMSG_OPEN_WB
+ *  @brief  吹き出しウィンドウ描画　バージョン別
+ *  @param msg_id_w 表示するメッセージID、ホワイト版
+ *  @param msg_id_b 表示するメッセージID、ブラック版
+ *  @param obj_id 吹き出しを出す対象OBJ ID
+ *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DONW,WIN_NONE
+ */
+//--------------------------------------------------------------
+  .macro _ASM_BALLOONWIN_OBJMSG_OPEN_WB msg_id_w, msg_id_b, obj_id, pos
+  _PUSH_WORK SCWK_ANSWER
+  _ASM_GET_ROM_VERSION SCWK_ANSWER
+	IF $SCWK_ANSWER == VERSION_WHITE THEN
+    _ASM_BALLOONWIN_OBJMSG_OPEN_POS msg_id_w, obj_id, pos
+  ELSE
+    _ASM_BALLOONWIN_OBJMSG_OPEN_POS msg_id_b, obj_id, pos
+  ENDIF
+  _POP_WORK SCWK_ANSWER
+  .endm
+
+//======================================================================
+//  ショップ
+//======================================================================
+//--------------------------------------------------------------
+/**
  * @brief ショップ呼び出し
  *
  * @param shop_id      ショップID
@@ -193,6 +238,7 @@
   _POP_WORK   SCWK_PARAM1
   _POP_WORK   SCWK_PARAM0
   .endm
+
 
 //======================================================================
 //    簡易アプリ操作
