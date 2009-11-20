@@ -478,18 +478,7 @@ enum {
 	NARC_waza_eff_we_464_bin = 464,
 	NARC_waza_eff_we_465_bin = 465,
 	NARC_waza_eff_we_466_bin = 466,
-	NARC_waza_eff_we_467_bin = 467,
-	NARC_waza_eff_be_001_bin = 468,
-	NARC_waza_eff_be_002_bin = 469,
-	NARC_waza_eff_be_003_bin = 470,
-	NARC_waza_eff_be_004_bin = 471,
-	NARC_waza_eff_be_005_bin = 472,
-	NARC_waza_eff_be_006_bin = 473,
-	NARC_waza_eff_be_007_bin = 474,
-	NARC_waza_eff_be_008_bin = 475,
-	NARC_waza_eff_be_009_bin = 476,
-	NARC_waza_eff_be_010_bin = 477,
-	NARC_waza_eff_be_011_bin = 478
+	NARC_waza_eff_we_467_bin = 467
 };
 
 /* NARC_WAZA_EFF_NAIX_ */

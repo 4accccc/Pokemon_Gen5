@@ -13,9 +13,12 @@ USERS	=	sogabe fujiwara toyama kageyama_shota ichinose adachi_minako sounduser
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
-targetname	= waza_eff
-NARCNAME	= $(targetname).narc
-NAIXNAME	= $(targetname).naix
+targetname1	= waza_eff
+NARCNAME1	= $(targetname1).narc
+NAIXNAME1	= $(targetname1).naix
+targetname2	= battle_eff
+NARCNAME2	= $(targetname2).narc
+NAIXNAME2	= $(targetname2).naix
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -52,17 +55,21 @@ WAZAEFFSRCS	:= $(wildcard $(RES_DIR)?e_???.esf)
 #	make do-build ルール
 #------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-do-build:	graphic esf $(NARCNAME) $(TARGETDIR)/$(NARCNAME)
+do-build:	graphic esf $(NARCNAME1) $(TARGETDIR)/$(NARCNAME1) $(NARCNAME2) $(TARGETDIR)/$(NARCNAME2)
 else
-do-build:	graphic $(TARGETDIR)/$(NARCNAME)
+do-build:	graphic $(TARGETDIR)/$(NARCNAME1) $(TARGETDIR)/$(NARCNAME2)
 endif
 
 graphic:
 	@$(MAKE_SUBDIR)
 
-$(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
-	$(COPY)	$(NARCNAME) $(TARGETDIR)
-	$(COPY) $(NAIXNAME) $(TARGETDIR)
+$(TARGETDIR)/$(NARCNAME1):	$(NARCNAME1)
+	$(COPY)	$(NARCNAME1) $(TARGETDIR)
+	$(COPY) $(NAIXNAME1) $(TARGETDIR)
+
+$(TARGETDIR)/$(NARCNAME2):	$(NARCNAME2)
+	$(COPY)	$(NARCNAME2) $(TARGETDIR)
+	$(COPY) $(NAIXNAME2) $(TARGETDIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
@@ -77,9 +84,13 @@ esf: $(notdir $(WAZAEFFSRCS:.esf=.s)) $(notdir $(WAZAEFFSRCS:.esf=.bin))
 	/cygdrive/c/Program\ Files/Freescale/CW\ for\ NINTENDO\ DSi\ V1.1/ARM_Tools/Command_Line_Tools/mwldarm.exe -dis -o $*.elf $*.o
 	../../tools/elf2bin $*.elf
 
-$(NARCNAME): $(notdir $(WAZAEFFSRCS:.esf=.bin))
-	nnsarc -c -l -n -i $(NARCNAME) we_*.bin be_*.bin
-	$(NAIXCUT) $(NAIXNAME)
+$(NARCNAME1): $(notdir $(WAZAEFFSRCS:.esf=.bin))
+	nnsarc -c -l -n -i $(NARCNAME1) we_*.bin
+	$(NAIXCUT) $(NAIXNAME1)
+
+$(NARCNAME2): $(notdir $(WAZAEFFSRCS:.esf=.bin))
+	nnsarc -c -l -n -i $(NARCNAME2) be_*.bin
+	$(NAIXCUT) $(NAIXNAME2)
 
 endif
 
@@ -93,11 +104,15 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	-rm -f *.o
 	-rm -f *.elf
 	-rm -f *.bin
-	-rm -f $(NARCNAME)
-	-rm -f $(NAIXNAME)
+	-rm -f $(NARCNAME1)
+	-rm -f $(NAIXNAME1)
+	-rm -f $(NARCNAME2)
+	-rm -f $(NAIXNAME2)
 endif
 	@$(MAKE_SUBDIR) clean
-	-rm -f $(TARGETDIR)/$(NARCNAME)
-	-rm -f $(TARGETDIR)/$(NAIXNAME)
+	-rm -f $(TARGETDIR)/$(NARCNAME1)
+	-rm -f $(TARGETDIR)/$(NAIXNAME1)
+	-rm -f $(TARGETDIR)/$(NARCNAME2)
+	-rm -f $(TARGETDIR)/$(NAIXNAME2)
 
 
