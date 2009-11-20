@@ -153,6 +153,13 @@ void MB_COMM_DeleteSystem( MB_COMM_WORK* commWork )
 //--------------------------------------------------------------
 void MB_COMM_UpdateSystem( MB_COMM_WORK* commWork )
 {
+  static int befState = 0xFFFF;
+  if( befState != commWork->state )
+  {
+    MB_COMM_TPrintf("MBCommState[%d]->[%d]\n",befState,commWork->state);
+    befState = commWork->state;
+  }
+  
   switch( commWork->state )
   {
   case MCS_NONE:

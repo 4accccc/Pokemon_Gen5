@@ -319,7 +319,7 @@ static GFL_PROC_RESULT MB_SELECT_ProcInit( GFL_PROC * proc, int * seq , void *pw
     const HEAPID parentHeap = HEAPID_MULTIBOOT;
 #endif //MULTI_BOOT_MAKE
     u8 i;
-    GFL_HEAP_CreateHeap( parentHeap , HEAPID_MB_BOX, 0x80000 );
+    GFL_HEAP_CreateHeap( parentHeap , HEAPID_MB_BOX, 0x40000 );
     
     work = GFL_PROC_AllocWork( proc, sizeof(MB_SELECT_WORK), parentHeap );
     initWork = GFL_HEAP_AllocClearMemory( HEAPID_MB_BOX , sizeof(MB_SELECT_INIT_WORK) );

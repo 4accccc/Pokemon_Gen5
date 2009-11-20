@@ -23,7 +23,10 @@
 #include "multiboot/mb_select_sys.h"
 #include "multiboot/mb_comm_sys.h"
 #include "multiboot/mb_util_msg.h"
+#include "multiboot/mb_data_main.h"
 #include "multiboot/mb_local_def.h"
+
+#include "../../test/ariizumi/ari_debug.h"
 
 
 //======================================================================
@@ -49,6 +52,8 @@ typedef enum
   MCS_WAIT_COMM_INIT,
   MCS_WAIT_CONNECT,
   MCS_CHECK_ROM,
+  MCS_SELECT_ROM, //デバッグ用
+  MCS_LOAD_DATA, //デバッグ用
   
   MCS_SELECT_FADEOUT,
   MCS_SELECT_FADEOUT_WAIT,
@@ -56,6 +61,8 @@ typedef enum
   MCS_SELECT_TERM,
   MCS_SELECT_FADEIN,
   MCS_SELECT_FADEIN_WAIT,
+  
+  MCS_ERROR,
   
 }MB_CHILD_STATE;
 
@@ -76,6 +83,7 @@ typedef struct
 
   MB_MSG_WORK *msgWork;
   MB_COMM_WORK *commWork;
+  MB_DATA_WORK *dataWork;
   
 }MB_CHILD_WORK;
 
@@ -193,9 +201,22 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     if( MB_COMM_IsInitComm(work->commWork) == TRUE )
     {
       //親機情報
-      //u8 addTemp[6] = {0x00,0x09,0xbf,0xf4,0x33,0x15};
-      const MBParentBssDesc *desc = MB_GetMultiBootParentBssDesc();
-      MB_COMM_InitChild( work->commWork , (u8*)desc->bssid );
+      if( MB_IsMultiBootChild() == FALSE )
+      {
+#if DEB_ARI
+        //青箱の05053056のMacAddress(手打ち)
+        u8 addTemp[6] = {0x00,0x09,0xbf,0xf4,0x33,0x15};
+        MB_COMM_InitChild( work->commWork , addTemp );
+        OS_TPrintf("Quick boot!!\n");
+#else
+        GF_ASSERT_MSG(0,"This DS is not multiboot child!!\n");
+#endif
+      }
+      else
+      {
+        const MBParentBssDesc *desc = MB_GetMultiBootParentBssDesc();
+        MB_COMM_InitChild( work->commWork , (u8*)desc->bssid );
+      }
       
       MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_01 );
       work->state = MCS_WAIT_CONNECT;
@@ -211,6 +232,50 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     break;
   case MCS_CHECK_ROM:
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    {
+      work->dataWork = MB_DATA_InitSystem( work->heapId );
+      if( MB_DATA_GetCardType( work->dataWork ) == CARD_TYPE_DUMMY )
+      {
+        MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_DEB_01 );
+        work->state = MCS_SELECT_ROM;
+      }
+      else
+      if( MB_DATA_GetCardType( work->dataWork ) == CARD_TYPE_INVALID )
+      {
+        //ROM違う！
+        MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_02 );
+        work->state = MCS_ERROR;
+      }
+      else
+      {
+        work->state = MCS_LOAD_DATA;
+      }
+    }
+    break;
+  
+  //デバッグ用ROM種類選択
+  case MCS_SELECT_ROM:
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
+    {
+      MB_DATA_SetCardType( work->dataWork , CARD_TYPE_DP );
+      work->state = MCS_LOAD_DATA;
+    }
+    else
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+    {
+      MB_DATA_SetCardType( work->dataWork , CARD_TYPE_PT );
+      work->state = MCS_LOAD_DATA;
+    }
+    else
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    {
+      MB_DATA_SetCardType( work->dataWork , CARD_TYPE_GS );
+      work->state = MCS_LOAD_DATA;
+    }
+    break;
+  
+  case MCS_LOAD_DATA:
+    if( MB_DATA_LoadDataFirst( work->dataWork ) == TRUE )
     {
       work->state = MCS_SELECT_FADEOUT;
     }
@@ -434,7 +499,6 @@ static GFL_PROC_RESULT MB_CHILD_ProcInit( GFL_PROC * proc, int * seq , void *pwk
   work->heapId = HEAPID_MULTIBOOT;
   
   MB_CHILD_Init( work );
-  
   return GFL_PROC_RES_FINISH;
 }
 

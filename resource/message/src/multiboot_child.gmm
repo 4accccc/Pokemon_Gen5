@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-11-17T17:43:24"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-11-20T15:17:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,13 +312,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1659" top="170" right="2348" bottom="790" maximized="no" rayout="Vertical2">
+	<dialog left="1548" top="186" right="2253" bottom="814" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="514"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="681"/>
-		<band id="3" index="3" style="0000" width="681"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -345,6 +345,14 @@
 		<language name="JPN_KANJI" width="208">ロードしています</language>
 	</row>
 
+	<row id="MSG_MB_CHILD_02">
+		<language name="JPN" width="208">きゅうソフトが　ささっていません。
+WBがわの　DSの　せつめいに　
+したがって　ください。</language>
+		<language name="JPN_KANJI" width="208">旧ソフトがささっていません。
+WB側のDSの説明に従って下さい。</language>
+	</row>
+
 	<row id="MSG_MB_CHILD_SYS_01">
 		<language name="JPN" width="208">はい</language>
 		<language name="JPN_KANJI" width="208">はい</language>
@@ -353,6 +361,17 @@
 	<row id="MSG_MB_CHILD_SYS_02">
 		<language name="JPN" width="208">いいえ</language>
 		<language name="JPN_KANJI" width="208">いいえ</language>
+	</row>
+
+	<row id="MSG_MB_CHILD_DEB_01">
+		<language name="JPN" width="208">デバッグROM
+DP　Y
+PT　X
+GS　A</language>
+		<language name="JPN_KANJI" width="208">デバッグROM
+DP　Y
+PT　X
+GS　A</language>
 	</row>
 
 	<flowchart-group-list>

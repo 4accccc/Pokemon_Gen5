@@ -29,6 +29,8 @@ SRCS	+= \
 		$(PARENT_SRC)/multiboot/child/mb_child_sys.c \
 		$(PARENT_SRC)/multiboot/comm/mb_comm_sys.c \
 		$(PARENT_SRC)/multiboot/select/mb_select_sys.c \
+		$(PARENT_SRC)/multiboot/util/mb_data_main.c \
+		$(PARENT_SRC)/multiboot/util/mb_data_pt.c \
 		$(PARENT_SRC)/multiboot/util/mb_util_msg.c
 				
 #================================================

@@ -33,6 +33,7 @@ rom:
 
 force:
 	rm -rf prog/src/depend/*
+	rm -rf multiboot/depend/*
 	$(MAKE)
 
 

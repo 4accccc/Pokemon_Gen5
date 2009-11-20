@@ -25,6 +25,7 @@
 #include "multiboot/comm/mbp.h"
 #include "multiboot/mb_util_msg.h"
 #include "multiboot/mb_local_def.h"
+#include "test/ariizumi/ari_debug.h"
 //======================================================================
 //  define
 //======================================================================
@@ -481,14 +482,25 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
   case MPSS_SEND_IMAGE_WAIT_SEARCH_CH:
     if( WH_GetSystemState() == WH_SYSSTATE_MEASURECHANNEL )
     {
-      MP_PARENT_SendImage_MBPInit( work );
+#if DEB_ARI
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+      {
+        const u16 channel = WH_GetMeasureChannel();
+        work->subState = MPSS_SEND_IMAGE_WAIT_BOOT_INIT;
+        OS_TPrintf("Quick boot!!\n");
+      }
+      else
+#endif
+      {
+        MP_PARENT_SendImage_MBPInit( work );
 
-      MB_MSG_MessageCreateWordset( work->msgWork );
-      MB_MSG_MessageWordsetName( work->msgWork , 0 , GAMEDATA_GetMyStatus(work->initWork->gameData) );
-      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_01 , MSGSPEED_GetWait() );
-      MB_MSG_MessageDeleteWordset( work->msgWork );
+        MB_MSG_MessageCreateWordset( work->msgWork );
+        MB_MSG_MessageWordsetName( work->msgWork , 0 , GAMEDATA_GetMyStatus(work->initWork->gameData) );
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_01 , MSGSPEED_GetWait() );
+        MB_MSG_MessageDeleteWordset( work->msgWork );
 
-      work->subState = MPSS_SEND_IMAGE_MBSYS_MAIN;
+        work->subState = MPSS_SEND_IMAGE_MBSYS_MAIN;
+      }
     }
     break;
   case MPSS_SEND_IMAGE_MBSYS_MAIN:
