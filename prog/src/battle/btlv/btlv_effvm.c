@@ -52,7 +52,8 @@ typedef struct{
   u32               se_effect_enable_flag :1;     //SEEFFECTフラグ
   u32               set_priority_flag     :1;     //PRIORITY操作されたか？
   u32               set_alpha_flag        :1;     //ALPHA操作されたか？
-  u32                                 :26;
+  u32               execute_effect_type   :1;     //起動しているエフェクトタイプ（0:技エフェクト　1:戦闘エフェクト）
+  u32                                     :25;
   GFL_TCBSYS*       tcbsys;
   GFL_PTC_PTR       ptc[ PARTICLE_GLOBAL_MAX ];
   int               ptc_no[ PARTICLE_GLOBAL_MAX ];
@@ -416,7 +417,7 @@ BOOL    BTLV_EFFVM_Main( VMHANDLE *vmh )
   if( ( ret == FALSE ) && ( bevw->sequence ) )
   {
     //HPゲージ表示
-//    BTLV_EFFECT_SetGaugeDrawEnable( TRUE );
+    BTLV_EFFECT_SetGaugeDrawEnable( TRUE );
 
     GFL_HEAP_FreeMemory( bevw->sequence );
     bevw->sequence = NULL;
@@ -463,7 +464,18 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   bevw->attack_pos = from;
   bevw->defence_pos = to;
   bevw->camera_projection = BTLEFF_CAMERA_PROJECTION_PERSPECTIVE;
-  bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_WAZAEFF_SEQ, waza, bevw->heapID );
+  if( waza < BTLEFF_SINGLE_ENCOUNT_1 )
+  { 
+    bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_WAZAEFF_SEQ, waza, bevw->heapID );
+    //HPゲージ非表示
+    BTLV_EFFECT_SetGaugeDrawEnable( FALSE );
+    bevw->execute_effect_type = EXECUTE_EFF_TYPE_WAZA;
+  }
+  else
+  { 
+    bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_BATTLEEFF_SEQ, waza - BTLEFF_SINGLE_ENCOUNT_1, bevw->heapID );
+    bevw->execute_effect_type = EXECUTE_EFF_TYPE_BATTLE;
+  }
   if( ( from != BTLV_MCSS_POS_ERROR ) && ( to != BTLV_MCSS_POS_ERROR ) )
   {
     table_ofs = script_table[ from ][ to ];
@@ -479,9 +491,6 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   }
 
   start_ofs = (int *)&bevw->sequence[ table_ofs ];
-
-  //HPゲージ非表示
-//  BTLV_EFFECT_SetGaugeDrawEnable( FALSE );
 
   VM_Start( vmh, &bevw->sequence[ start_ofs[ 0 ] ] );
 }
@@ -503,6 +512,26 @@ void      BTLV_EFFVM_Stop( VMHANDLE *vmh )
     GFL_HEAP_FreeMemory( bevw->sequence );
     bevw->sequence = NULL;
   }
+}
+
+//============================================================================================
+/**
+ * @brief 起動しているエフェクトのタイプを取得
+ *
+ * @param[in] vmh 仮想マシン制御構造体へのポインタ
+ */
+//============================================================================================
+BTLV_EFFVM_EXECUTE_EFF_TYPE BTLV_EFFVM_GetExecuteEffectType( VMHANDLE *vmh )
+{
+  BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
+  BTLV_EFFVM_EXECUTE_EFF_TYPE type = EXECUTE_EFF_TYPE_NONE;
+
+  if( bevw->sequence )
+  { 
+    type = bevw->execute_effect_type;
+  }
+
+  return type;
 }
 
 //============================================================================================
@@ -3203,8 +3232,11 @@ static  void  EFFVM_SePlay( int se_no, int player, int pitch, int vol, int mod_d
   }
 	NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player ), vol );
   PMSND_SetStatusSE_byPlayerID( player, PMSND_NOEFFECT, pitch, PMSND_NOEFFECT );
-  NNS_SndPlayerSetTrackModDepth( PMSND_GetSE_SndHandle( player ), 0xffff, mod_depth );
-  NNS_SndPlayerSetTrackModSpeed( PMSND_GetSE_SndHandle( player ), 0xffff, mod_speed );
+  if( mod_depth != 0 )
+  { 
+    NNS_SndPlayerSetTrackModDepth( PMSND_GetSE_SndHandle( player ), 0xffff, mod_depth );
+    NNS_SndPlayerSetTrackModSpeed( PMSND_GetSE_SndHandle( player ), 0xffff, mod_speed );
+  }
 }
 
 //============================================================================================
