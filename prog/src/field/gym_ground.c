@@ -42,6 +42,7 @@
 #define SP_LIFT_MOVE_SPD2 (SP_LIFT_MOVE_SPEED2*FX32_ONE)
 
 #define SP_LIFT_IDX (5)     //メインリフトインデックス
+#define EXIT_LIFT_IDX (0xff)     //出口リフトインデックス（特別扱い）
 
 typedef struct SHAKE_WORK_tag
 {
@@ -915,6 +916,8 @@ static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work )
       {
         //目的高さで上書き
         tmp->NowHeight = tmp->DstHeight;
+        //リフト振動セットアップ
+        InitLiftShake(EXIT_LIFT_IDX, tmp->AddVal, FALSE, camera, &tmp->ShakeWork);
         //次のシーケンスへ
         (*seq)++;
       }
@@ -939,6 +942,12 @@ static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work )
     if (tmp->Exit) return GMEVENT_RES_FINISH;
     else
     {
+      //振動終わるまで処理をフック
+      {
+        SHAKE_WORK *shake = &tmp->ShakeWork;
+        if ( !ShakeLift(shake) ) break;
+      }
+
       //カメラを再バインド
       if ( (tmp->Watch != NULL) ){
         FIELD_CAMERA_BindTarget(camera, tmp->Watch);
@@ -1245,6 +1254,11 @@ static void InitLiftShake(  const u8 inLiftIdx,
     {
       work->AddVal = SP_LIFT_SHAKE_VAL*FX32_ONE;
       work->ShakeCount = SP_LIFT_SHAKE_COUNT;
+    }
+    else if ( inLiftIdx == EXIT_LIFT_IDX )
+    {
+      work->AddVal = LIFT_SHAKE_VAL*FX32_ONE;
+      work->ShakeCount = LIFT_SHAKE_COUNT;
     }
     else
     {
