@@ -15,8 +15,8 @@ ROW_WIND      = 1  # 風
 ROW_SHIP      = 2  # 船
 ROW_TRAILER_L_HEAD = 3  # トレーラー(左/前)
 ROW_TRAILER_R_HEAD = 4  # トレーラー(右/前)
-ROW_TRAILER_L_TAIL = 3  # トレーラー(左/後)
-ROW_TRAILER_R_TAIL = 4  # トレーラー(右/後)
+ROW_TRAILER_L_TAIL = 5  # トレーラー(左/後)
+ROW_TRAILER_R_TAIL = 6  # トレーラー(右/後)
 # データインデックス(列)
 COLUMN_TRACK_NO        = 1  # トラックNo.
 COLUMN_3DS_RANGE       = 2  # 音が届く距離

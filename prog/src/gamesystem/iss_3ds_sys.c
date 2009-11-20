@@ -147,6 +147,8 @@ u8 ISS_3DS_SYS_AddUnit( ISS_3DS_SYS* system )
   // ユニットを作成
   system->unit[index] = ISS_3DS_UNIT_Create( system->heapID );
   system->unitNum++;
+  // DEBUG:
+  OBATA_Printf( "ISS-3DS-SYS: add unit (unit index = %d)\n", index );
 
   // 作成したユニットのインデックスを返す
   return index;
@@ -272,6 +274,11 @@ static void UpdateVolume( ISS_3DS_SYS* system, u8 index )
 
     // 音量設定
     PMSND_ChangeBGMVolume( track, volume );
+    // DEBUG:
+#ifdef ISS_3DS_SYS_DEBUG
+    OBATA_Printf( "ISS-3DS-SYS: update volume => %d (unit index = %d)\n", 
+        volume, index );
+#endif
   } 
 }
 

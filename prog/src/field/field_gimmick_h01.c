@@ -189,6 +189,8 @@ void H01_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 
   // 3Dサウンドシステムを破棄
   ISS_3DS_SYS_Delete( work->iss3dsSys ); // ギミック管理ワークを破棄GFL_HEAP_FreeMemory( work ); 
+  // ギミック管理ワークを破棄
+  GFL_HEAP_FreeMemory( work );
   // DEBUG:
   OBATA_Printf( "GIMMICK-H01: end\n" );
 }
@@ -382,8 +384,8 @@ static void LoadWindData( H01WORK* work )
       else                                           OBATA_Printf( "□" );
     }
     OBATA_Printf( "\n" );
-    OBATA_Printf( "- minHeight = %d\n", work->wind_data.minHeight );
-    OBATA_Printf( "- maxHeight = %d\n", work->wind_data.maxHeight );
+    OBATA_Printf( "- minHeight = %d\n", (int)work->wind_data.minHeight );
+    OBATA_Printf( "- maxHeight = %d\n", (int)work->wind_data.maxHeight );
   } 
 }
 
@@ -480,26 +482,29 @@ static void UpdateWindVolume( FIELDMAP_WORK* fieldmap, H01WORK* work )
 {
   int volume;
   VecFx32 pos;
+  float cam_y;
   FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( fieldmap );
 
   // カメラ座標を取得
   FIELD_CAMERA_GetCameraPos( camera, &pos );
+  cam_y = FX_FX32_TO_F32( pos.y );
 
   // 風の音量を算出
-  if( pos.y <= work->wind_data.minHeight )
+  if( cam_y <= work->wind_data.minHeight )
   {
     volume = 0;
   }
-  else if( work->wind_data.maxHeight <= pos.y )
+  else if( work->wind_data.maxHeight < cam_y )
   {
     volume = 127;
   }
   else
   {
-    fx32    max = work->wind_data.maxHeight - work->wind_data.minHeight;
-    fx32 height = pos.y - work->wind_data.minHeight;
-    fx32 rate   = FX_Div( height, max );
-    volume = 127 * FX_FX32_TO_F32( rate );
+    float    max = work->wind_data.maxHeight - work->wind_data.minHeight;
+    float height = cam_y - work->wind_data.minHeight;
+    volume = 127 * height / max;
+    // DEBUG:
+    OBATA_Printf( "GIMMICK-H01: update wind volume => %d\n", volume );
   }
 
   // 音量を調整
