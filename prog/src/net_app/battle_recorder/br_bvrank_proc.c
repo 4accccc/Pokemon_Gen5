@@ -148,7 +148,7 @@ static GFL_PROC_RESULT BR_BVRANK_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
 ;
   }
   //メッセージ
-  { 
+/*  { 
     //バトルビデオを見る
     p_wk->p_msgwin  = BR_MSGWIN_Init( BG_FRAME_S_FONT, 11, 6, 10, 4, PLT_BG_S_FONT, p_wk->p_que, p_wk->heapID );
     BR_MSGWIN_PrintColor( p_wk->p_msgwin, p_msg, msg_603, p_font, BR_PRINT_COL_NORMAL );
@@ -162,7 +162,7 @@ static GFL_PROC_RESULT BR_BVRANK_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
     p_wk->p_list_data = BmpMenuWork_ListCreate( p_wk->monsno_len, p_wk->heapID );
     
   }
-
+*/
 	return GFL_PROC_RES_FINISH;
 }
 //----------------------------------------------------------------------------
