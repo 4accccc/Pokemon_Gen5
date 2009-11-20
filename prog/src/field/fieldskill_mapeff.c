@@ -17,7 +17,7 @@
 
 #ifdef PM_DEBUG
 
-#define DEBUG_FLASH_INPUT
+//#define DEBUG_FLASH_INPUT
 
 #endif
 
