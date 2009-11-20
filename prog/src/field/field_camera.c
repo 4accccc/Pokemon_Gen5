@@ -446,7 +446,7 @@ void FIELD_CAMERA_ChangeMode( FIELD_CAMERA * camera, FIELD_CAMERA_MODE mode )
   
   if( camera->mode != mode )
   {
-    pFunc[ camera->mode ]( camera );
+    pFunc[ mode ]( camera );
 
     FIELD_CAMERA_SetMode( camera, mode );
   }
