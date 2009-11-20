@@ -120,7 +120,7 @@ BTLV_TIMER_WORK*  BTLV_TIMER_Init( HEAPID heapID )
   btw->charID = GFL_CLGRP_CGR_Register( handle, NARC_battgra_wb_battle_time_num_NCGR, FALSE, CLSYS_DRAW_MAIN, btw->heapID );
   btw->cellID = GFL_CLGRP_CELLANIM_Register( handle, NARC_battgra_wb_battle_time_num_NCER,
                                              NARC_battgra_wb_battle_time_num_NANR, btw->heapID );
-  btw->plttID = GFL_CLGRP_PLTT_RegisterComp( handle, NARC_battgra_wb_gauge_NCLR, CLSYS_DRAW_MAIN,
+  btw->plttID = GFL_CLGRP_PLTT_Register( handle, NARC_battgra_wb_gauge_NCLR, CLSYS_DRAW_MAIN,
                                          BTLV_OBJ_PLTT_TIMER, btw->heapID );
   PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_MAIN_OBJ,
                            GFL_CLGRP_PLTT_GetAddr( btw->plttID, CLSYS_DRAW_MAIN ) / 2, 0x20 * 1 );
