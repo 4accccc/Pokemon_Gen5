@@ -17,12 +17,13 @@
 
 #include "sctest.h"
 #include "atlas_ninTest1_v1.h"
+#include <dwc_gdb.h>
 
 //----------------------------------
 // define
 //----------------------------------
 
-#define GAME_ID      2502       // ゲームID
+#define GAME_ID      2911       // ゲームID
 #define TIMEOUT_MS   100  // HTTP通信のタイムアウト時間
 #define WAIT_MS      50         // コールバックが帰ってきたかポーリングするウェイト時間
 #define RESEND_MS    1000       // データ交換の再送信するまでの無通信時間
@@ -153,6 +154,10 @@ BOOL ScInitialize()
     return TRUE;
 }
 
+
+extern DWCUserData stUserData;
+
+
 /**
  * メイン処理
  *
@@ -171,7 +176,16 @@ BOOL ScMain( BOOL host )
         } while( !work.ackReceived );
         work.ackReceived = FALSE;
     }
+  {
+    int res = DWC_GdbInitialize(2911,&stUserData, DWC_GDB_SSL_TYPE_NONE);
+    OS_TPrintf("DWC_GdbInitialize%d\n",res);
+    if (res != DWC_GDB_ERROR_NONE){
+        ScFinalize();
+      return FALSE;
+    }
+  }
 
+  
     // ライブラリを初期化
     work.waitCount = 0;
     if( DWC_ScInitialize( GAME_ID ) != DWC_SC_RESULT_NO_ERROR )
@@ -283,7 +297,7 @@ BOOL ScMain( BOOL host )
 
         if( DWC_ScReportSetPlayerData(
                 work.myPlayerData.mReport,
-                (u32)(host ? 0 : 1),
+                0,//(u32)(host ? 0 : 1),
                 work.myPlayerData.mConnectionId,
                 0,
                 host ? DWC_SC_GAME_RESULT_WIN : DWC_SC_GAME_RESULT_LOSS,
@@ -296,7 +310,7 @@ BOOL ScMain( BOOL host )
 
 
         if(DWC_ScReportAddIntValue(
-          work.myPlayerData.mReport, ARENA_ELO_RATING_1V1, 1)){
+          work.myPlayerData.mReport, ARENA_ELO_RATING_1V1,  host ? 1 : 0)){
             ScFinalize();
             return FALSE;
         }
@@ -324,7 +338,7 @@ BOOL ScMain( BOOL host )
 
         if( DWC_ScReportSetPlayerData(
                 work.myPlayerData.mReport,
-                (u32)(host ? 0 : 1),
+                1,//(u32)(host ? 0 : 1),
                 work.otherPlayerData.mConnectionId,
                 0,
                 host ? DWC_SC_GAME_RESULT_LOSS : DWC_SC_GAME_RESULT_WIN,
@@ -336,7 +350,7 @@ BOOL ScMain( BOOL host )
         }
 
         if(DWC_ScReportAddIntValue(
-          work.myPlayerData.mReport, ARENA_ELO_RATING_1V1, 1)){
+          work.myPlayerData.mReport, ARENA_ELO_RATING_1V1,  host ? 1 : 0)){
             ScFinalize();
             return FALSE;
         }

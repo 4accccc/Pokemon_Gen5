@@ -1,5 +1,6 @@
 #include <nitro.h>
 #include <dwc.h>
+#include <dwc_gdb.h>
 #include  <cstring>
 
 #include "main.h"
@@ -87,7 +88,7 @@ static BOOL stCloseFlag = FALSE;    // 自分でクローズした場合はTRUE
 static GameMatchExtKeys stMatchKeys[GAME_NUM_MATCH_KEYS] = { 0, };
 
 // ユーザデータを格納する構造体。
-static DWCUserData stUserData;
+DWCUserData stUserData;
 static DWCInetControl stConnCtrl;
 
 // デバッグ出力のオーバーライド
@@ -232,7 +233,7 @@ static GameSequence gameSeqList[GAME_MODE_NUM] =
         "GAME LOGON MODE",
         GameLogonMain,
         LogonModeDispCallback,
-        7,
+        9,
         {
             "Connect to anybody", GAME_MODE_CONNECTED, TRUE,
             "Connect to friends", GAME_MODE_CONNECTED, TRUE,
@@ -240,7 +241,9 @@ static GameSequence gameSeqList[GAME_MODE_NUM] =
             "Connect to game server", GAME_MODE_CONNECTED, TRUE,
             "GroupID reconnect", GAME_MODE_CONNECTED, TRUE,
             "Set Topology type", GAME_MODE_TOPOLOGY, FALSE,
-            "Logout", GAME_MODE_MAIN, FALSE
+            "Logout", GAME_MODE_MAIN, FALSE,
+            "DBCreate", GAME_MODE_TOPOLOGY, TRUE,
+            "DBView", GAME_MODE_TOPOLOGY, TRUE
         },
     },
     {
@@ -492,11 +495,7 @@ void NitroMain ()
     DWC_SetReportLevel((unsigned long)(DWC_REPORTFLAG_ALL));
 
     // DWCライブラリ初期化
-#if defined( USE_AUTHSERVER_PRODUCTION )
-    ret = DWC_InitForProduction( GAME_NAME, INITIAL_CODE, AllocFunc, FreeFunc );
-#else
     ret = DWC_InitForDevelopment( GAME_NAME, INITIAL_CODE, AllocFunc, FreeFunc );
-#endif
     
     OS_TPrintf( "DWC_InitFor*() result = %d\n", ret );
 
@@ -944,6 +943,27 @@ static GameMode GameRegisterFriendMain(void)
 }
 
 
+//typedef void(*) DWCGdbGetRecordsCallback(int record_num,
+  //           DWCGdbField **records,
+    //         void *user_param);
+//typedef struct DWCGdbField {
+//    char * name;
+ //   DWCGdbFieldType type;
+//    DWCGdbValue value;
+//} DWCGdbField;
+
+static void get_records_callback(int record_num, DWCGdbField **records, void *user_param)
+{
+  int i;
+  for(i=0;i<record_num;i++){
+    OS_TPrintf("name %s\n",records[i]->name);
+    OS_TPrintf("type %d\n",records[i]->type);
+    OS_TPrintf("value %d\n",records[i]->value.int_s32);
+    
+  }
+}
+
+
 /*---------------------------------------------------------------------------*
   ログイン後メイン関数
  *---------------------------------------------------------------------------*/
@@ -1107,6 +1127,51 @@ static GameMode GameLogonMain(void)
             case 6:  // ログアウト
                 DWC_ShutdownFriendsMatch();   // DWC FriendsMatchライブラリ終了
                 break;
+
+            case 7://データベース作成
+              //データベースライブラリ初期化
+              {
+                int res = DWC_GdbInitialize(2911,&stUserData, DWC_GDB_SSL_TYPE_NONE);
+                OS_TPrintf("DWC_GdbInitialize%d\n",res);
+                if (res != DWC_GDB_ERROR_NONE){
+                  return returnSeq;
+                }
+              }
+              break;
+            case 8:
+              {
+                int state,res;
+                const char* field_names[4] = {"GameStats_v1","PlayerStats_v1","StaticStats_v1","TeamStats_v1"};  // 検索で取得するフィールド名
+                int field_num = sizeof(field_names)/sizeof(field_names[0]);  // 上記で設定したフィールド名の総数
+                
+                res = DWC_GdbGetMyRecordsAsync(GAME_NAME, field_names, field_num, &get_records_callback, &field_num);
+
+                if (res != DWC_GDB_ERROR_NONE)
+                {
+                  OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbError[%d] in DWC_GdbGetMyRecordsAsync().  %s line[%d]\n",res,__FILE__,__LINE__);
+                  return returnSeq;
+                }
+                while(1){
+                  int modori=DWC_GdbGetAsyncResult();
+                  if(DWC_GDB_ASYNC_RESULT_SUCCESS == modori){
+                    break;
+                  }
+                  else if( DWC_GDB_ASYNC_RESULT_NONE !=modori){
+                    OS_TPrintf(" DWC_GdbGetAsyncResult[%d]  %s line[%d]\n",modori,__FILE__,__LINE__);
+                    break;
+                  }
+                  OS_Sleep( 13 );
+                  DWC_GdbProcess();
+                }
+                if ((state = DWC_GdbGetState()) != DWC_GDB_STATE_IDLE)
+                {
+                  OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbState[%d] is improper state here.  %s line[%d]\n",state,__FILE__,__LINE__);
+                  return returnSeq;
+                }
+                
+              }
+              break;
+              
             default:
                 break;
             }

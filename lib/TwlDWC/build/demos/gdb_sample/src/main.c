@@ -39,11 +39,11 @@
 #define TABLE_NAME "demotable"
 
 // 簡易データベースライブラリテスト用アカウント（本番では変える必要があります）
-#define GAME_NAME        "dwctest"
-#define SECRET_KEY       "d4q9GZ"	// このサンプルが使用するシークレットキー
-#define GAME_PRODUCTID   10824		// このサンプルが使用するプロダクトID
-#define GAME_ID           1408       // このサンプルが使用するゲームID
-#define INITIAL_CODE     'NTRJ'     // イニシャルコード
+#define GAME_NAME        "syachi2ds"
+#define SECRET_KEY       "tXH2sN"	// このサンプルが使用するシークレットキー
+#define GAME_PRODUCTID   12230		// このサンプルが使用するプロダクトID
+#define GAME_ID           2911       // このサンプルが使用するゲームID
+#define INITIAL_CODE     'IRBJ'     // イニシャルコード
 
 //#define USE_AUTHSERVER_PRODUCTION // 製品向け認証サーバを使用する場合有効にする
 
@@ -413,10 +413,52 @@ void NitroMain()
     // もそもその場合はGameSpyのサーバー資源を使用できません。
     //
 
+#if 1
+  {
+    u16 card_lock_id;
+    int end;
+    int last_result;
+    ret = OS_GetLockID();
+    if (ret == OS_LOCK_ID_ERROR)
+    {
+        OS_Panic("demo fatal error! OS_GetLockID() failed");
+    }
+    card_lock_id = (u16)ret;
 
+    CARD_LockBackup((u16)card_lock_id);
+    end = CARD_IdentifyBackup(CARD_BACKUP_TYPE_FLASH_2MBITS);
+    if(!end)
+    {
+      last_result = CARD_GetResultCode();
+    }
+    CARD_UnlockBackup(card_lock_id);
+
+    CARD_LockBackup((u16)card_lock_id);
+    if (CARD_IsBackupFlash())
+    {
+      CARD_ReadFlash(0, &userdata, sizeof(userdata) );
+      CARD_ReadFlash(sizeof(userdata), &friendlist, sizeof(friendlist));
+    }
+    CARD_UnlockBackup(card_lock_id);
+    last_result = CARD_GetResultCode();
+    
+    if (last_result != CARD_RESULT_SUCCESS)
+    {
+      OS_TPrintf("Error occur with %d\n", last_result);
+    }
+    else
+    {
+      OS_TPrintf("Load OK!\n");
+    }
+  }
+
+#else
+  
     // ユーザデータを作成する
     OS_TPrintf("gdb_sample_DEBUG: Creating new UserData\n");
     DWC_CreateUserData( &userdata );
+
+#endif
 
     // 友達リスト初期化
     memset( &friendlist, 0, sizeof( friendlist ) );
@@ -466,7 +508,7 @@ void NitroMain()
     }
 
 
-
+#if 0
     // レコードを新規に作成する非同期処理
     //-----------------------------------------------------------------------
     OS_Printf("*********  DEMO_1  *********  create record\n");
@@ -591,16 +633,18 @@ void NitroMain()
         return;
     }
 
-
+#endif
 
     // 自分のレコードを全て取得する非同期処理
     //-----------------------------------------------------------------------
     OS_Printf("*********  DEMO_4  *********  get my all records\n");
     {
-        const char* field_names[4] = {"recordid","ownerid","demostage","demoscore"};  // 検索で取得するフィールド名
+      const char* field_names[7] = {"TOTAL_MATCHES_COUNTER","CAREER_WINS","CAREER_LOSSES","ARENA_ELO_RATING_1V1",
+      "DISCONNECTS_COUNTER","COMPLETE_MATCHES_COUNTER","DISCONNECT_RATE"};  // 検索で取得するフィールド名
+      //  const char* field_names[4] = {"recordid","ownerid","demostage","demoscore"};  // 検索で取得するフィールド名
         int field_num = sizeof(field_names)/sizeof(field_names[0]);  // 上記で設定したフィールド名の総数
 
-        res = DWC_GdbGetMyRecordsAsync(TABLE_NAME, field_names, field_num, get_records_callback, &field_num);
+        res = DWC_GdbGetMyRecordsAsync("PlayerStats_v1", field_names, field_num, get_records_callback, &field_num);
 
         if (res != DWC_GDB_ERROR_NONE)
         {
