@@ -2033,7 +2033,14 @@ static FLDEFF_CTRL * mmdl_GetFldEffCtrl( MMDL *mmdl )
   return( FIELDMAP_GetFldEffCtrl(fieldMapWork) );
 }
 
-static const u8 data_angle8_4[8] = { 0, 1, 1, 2, 2, 3, 3, 0 };
+static const u8 data_angle8_4[16] =
+{
+  0, 0,
+  1, 1, 1, 1, 1,
+  2, 2, 2,
+  3, 3, 3, 3, 3,
+  0,
+};
 
 static const u8 data_angleChange360_4[4][4] =
 {
@@ -2053,10 +2060,10 @@ static const u8 data_angleChange360_4[4][4] =
 //--------------------------------------------------------------
 u16 MMDL_TOOL_GetAngleYawToDirFour( u16 dir, u16 angleYaw )
 {
-  angleYaw /= 0x2000; // /8
+//angleYaw = angleYaw / (0x10000/360) //256->360
+  angleYaw >>= 12; // angle/0x1000(16)
   angleYaw = data_angle8_4[angleYaw];
   angleYaw = data_angleChange360_4[angleYaw][dir];
   GF_ASSERT( angleYaw < DIR_MAX4 );
   return( angleYaw );
 }
-
