@@ -1094,6 +1094,12 @@ static void GAMEDATA_SaveDataLoad(GAMEDATA *gamedata)
   { //GIMMICK_WORK
     SaveData_LoadGimmickWork(gamedata->sv_control_ptr, &gamedata->GimmickWork);
   }
+
+  { //FIELD_STATUS
+    SITUATION * situation = SaveData_GetSituation( gamedata->sv_control_ptr );
+    SaveData_SituationDataLoadStatus( situation, gamedata->fldstatus );
+  }
+  
 }
 
 //--------------------------------------------------------------
@@ -1132,6 +1138,11 @@ static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata)
 
   { //GIMMICK_WORK
     SaveData_SaveGimmickWork(&gamedata->GimmickWork, gamedata->sv_control_ptr);
+  }
+
+  { //FIELD_STATUS
+    SITUATION * situation = SaveData_GetSituation( gamedata->sv_control_ptr );
+    SaveData_SituationDataUpdateStatus( situation, gamedata->fldstatus );
   }
 }
 

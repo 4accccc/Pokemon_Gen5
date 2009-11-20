@@ -367,7 +367,7 @@
   //ひでんわざ関連
   DEF_CMD( EvCmdNaminori, EV_SEQ_NAMINORI )
   DEF_CMD( EvCmdTakinobori, EV_SEQ_TAKINOBORI )
-  NO_CMD()
+  DEF_CMD( EvCmdFlash, EV_SEQ_FLASH )
   NO_CMD()
 
   //ジムギミック関連

@@ -122,3 +122,53 @@ VMCMD_RESULT EvCmdTakinobori( VMHANDLE *core, void *wk )
   return( VMCMD_RESULT_SUSPEND );
 }
 
+
+//======================================================================
+//  秘伝技  フラッシュ
+//======================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フラッシュ完了待ち
+ *  @param  core    仮想マシン制御構造体へのポインタ
+ *  @retval  BOOL TRUE=終了
+ */
+//-----------------------------------------------------------------------------
+static BOOL EvWaitFlash( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FIELDSKILL_MAPEFF* p_fsmapeff = FIELDMAP_GetFieldSkillMapEffect( fieldmap );
+  FIELD_FLASH* p_flash = FIELDSKILL_MAPEFF_GetFlash( p_fsmapeff );
+
+  if( FIELD_FLASH_GetStatus( p_flash ) == FIELD_FLASH_STATUS_FAR )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フラッシュ起動
+ *
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdFlash( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FIELDSKILL_MAPEFF* p_fsmapeff = FIELDMAP_GetFieldSkillMapEffect( fieldmap );
+  FIELD_FLASH* p_flash = FIELDSKILL_MAPEFF_GetFlash( p_fsmapeff );
+
+  if( FIELD_FLASH_GetStatus( p_flash ) == FIELD_FLASH_REQ_ON_NEAR )
+  {
+    FIELD_FLASH_Control( p_flash, FIELD_FLASH_REQ_FADEOUT );
+  }
+  VMCMD_SetWait( core, EvWaitFlash );
+  return( VMCMD_RESULT_SUSPEND );
+}

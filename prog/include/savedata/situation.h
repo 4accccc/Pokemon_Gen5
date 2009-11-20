@@ -12,6 +12,7 @@
 #include "savedata/save_control.h"	//SAVE_CONTROL_WORKéQè∆ÇÃÇΩÇﬂ
 #include "gamesystem/playerwork.h"
 #include "field/location.h"
+#include "field/field_status.h"
 
 
 //==============================================================================
@@ -45,9 +46,12 @@ extern LOCATION * Situation_GetSpecialLocation(SITUATION * st);
 extern LOCATION * Situation_GetEscapeLocation(SITUATION * st);
 extern u16 * Situation_GetWarpID( SITUATION * st );
 extern SITUATION * SaveData_GetSituation(SAVE_CONTROL_WORK * sv);
-extern void SaveData_SituationDataUpdate(SAVE_CONTROL_WORK *sv, const PLAYER_WORK *pw);
+extern void SaveData_SituationDataUpdate(SAVE_CONTROL_WORK *sv, const PLAYER_WORK *pw );
 extern void SaveData_SituationDataLoad(SAVE_CONTROL_WORK *sv, PLAYER_WORK *pw);
 extern void SaveData_SituationLoad_PlayerWorkSave(SAVE_CONTROL_WORK *sv, PLAYERWORK_SAVE *plsv);
 
+
+extern void SaveData_SituationDataUpdateStatus(SITUATION * st, const FIELD_STATUS * status );
+extern void SaveData_SituationDataLoadStatus(const SITUATION * st, FIELD_STATUS* status);
 
 #endif	//__SITUATION_H__

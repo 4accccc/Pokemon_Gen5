@@ -736,20 +736,39 @@ static GMEVENT_RESULT GMEVENT_Flash(GMEVENT *event, int *seq, void *wk )
   return GMEVENT_RES_CONTINUE;
 //*/
 
-  // ON
+
   {
     FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( gdata );
     FIELDSKILL_MAPEFF* mapeff = FIELDMAP_GetFieldSkillMapEffect( GAMESYSTEM_GetFieldMapWork( hsw->gsys ) );
     FIELD_FLASH* flash = FIELDSKILL_MAPEFF_GetFlash( mapeff );
-    
-    if( !FIELD_STATUS_IsFieldSkillFlash(fldstatus) )
+
+    switch( *seq )
     {
-      FIELD_STATUS_SetFieldSkillFlash( fldstatus, TRUE );
-      FIELD_FLASH_Control( flash, FIELD_FLASH_REQ_FADEOUT );
+    case 0:
+      // ON
+      if( !FIELD_STATUS_IsFieldSkillFlash(fldstatus) )
+      {
+        FIELD_STATUS_SetFieldSkillFlash( fldstatus, TRUE );
+        FIELD_FLASH_Control( flash, FIELD_FLASH_REQ_FADEOUT );
+      }
+      else
+      {
+        // Ç‡Ç§çLÇ™Ç¡ÇƒÇ¢ÇÈÅB
+        return GMEVENT_RES_FINISH;
+      }
+      (*seq) ++;
+      break;
+
+    case 1:
+      if( FIELD_FLASH_GetStatus( flash ) == FIELD_FLASH_STATUS_FAR )
+      {
+        return GMEVENT_RES_FINISH;  // äÆóπ
+      }
+      break;
     }
   }
 
-  return GMEVENT_RES_FINISH;
+  return GMEVENT_RES_CONTINUE;
 }
 
 //--------------------------------------------------------------

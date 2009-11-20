@@ -10,6 +10,7 @@
 #include "savedata/save_tbl.h"
 #include "savedata/situation.h"
 #include "gamesystem/playerwork.h"
+#include "field/field_status_local.h"
 
 
 //============================================================================================
@@ -25,6 +26,8 @@ struct _SITUATION {
 	LOCATION special_loc;   ///<特殊接続先LOCATION
   LOCATION escape_loc;    ///<脱出先LOCATION
   u16 warp_id;            ///<ワープ飛び先指定ID
+  u8  fs_flash;           ///<フラッシュフラグ          
+  u8  pad;
 
 	//PLAYER_WORKからセーブに必要なものだけを抜粋
 	PLAYERWORK_SAVE plsv;
@@ -195,4 +198,30 @@ void SaveData_SituationLoad_PlayerWorkSave(SAVE_CONTROL_WORK *sv, PLAYERWORK_SAV
 	SITUATION *st = SaveData_GetSituation(sv);
 	
 	*plsv = st->plsv;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールドステータス  のセーブ情報を更新
+ *
+ *	@param	sv
+ *	@param	status 
+ */
+//-----------------------------------------------------------------------------
+void SaveData_SituationDataUpdateStatus(SITUATION * st, const FIELD_STATUS * status )
+{
+  // フラッシュフラグ
+  st->fs_flash = FIELD_STATUS_IsFieldSkillFlash( status );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールドステータス　のセーブ情報を取得
+ */
+//-----------------------------------------------------------------------------
+void SaveData_SituationDataLoadStatus(const SITUATION * st, FIELD_STATUS* status)
+{
+  // フラッシュフラグ
+  FIELD_STATUS_SetFieldSkillFlash( status, st->fs_flash );
 }
