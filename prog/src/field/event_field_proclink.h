@@ -96,7 +96,9 @@ struct _EVENT_PROCLINK_PARAM
 	u32 select_param;	  //[out]選択された技、アイテム	FLDSKILL_IDX or EVENT_ITEMUSE_CALL_TYPEが返る
 	u32 select_poke;		//[out]選択されたポケモン
   u32 zoneID;         //[out]空を飛ぶ用ゾーンID
-  GFL_POINT pos;      //[out]空を飛ぶ用飛び先指定
+  int grid_x;         //[out]空を飛ぶ用飛び先指定X
+  int grid_y;         //[out]空を飛ぶ用飛び先指定Y
+  int grid_z;         //[out]空を飛ぶ用飛び先指定Z
 };
 
 //=============================================================================

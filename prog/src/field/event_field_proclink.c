@@ -1268,7 +1268,9 @@ static RETURNFUNC_RESULT FMenuReturnProc_TownMap(PROCLINK_WORK* wk,void* param_a
 			case TOWNMAP_SELECT_SKY:	//‹ó‚ð”ò‚Ô
 				wk->param->select_param	= PL_RET_SORAWOTOBU-PL_RET_IAIGIRI;
         wk->param->zoneID       = param->zoneID;
-        wk->param->pos          = param->grid;
+        wk->param->grid_x       = param->grid.x;
+        wk->param->grid_y       = param->grid.y;
+        wk->param->grid_z       = 0;
 				return RETURNFUNC_RESULT_USE_SKILL;
 	
 			default:
