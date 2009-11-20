@@ -308,7 +308,7 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
       FADE_MAIN_BG, 0x20, PALIDX_MSGWIN*16, 0 );
 
   PaletteWorkSetEx_Arc( BTLV_EFFECT_GetPfd(), ARCID_BATTGRA, NARC_battgra_wb_tokusei_w_NCLR, wk->heapID,
-        FADE_MAIN_BG, 0x40, PALIDX_TOKWIN1*16, 0 );
+        FADE_MAIN_BG, 0x40, PALIDX_TOKWIN1*16, PALIDX_TOKWIN1*16 );
 
   //BDñ ÉJÉâÅ[ÇçïÇ…Ç∑ÇÈ
   {
