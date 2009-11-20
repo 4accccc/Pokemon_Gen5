@@ -1,10 +1,10 @@
 #event data
-#save date:2009/11/13 22:25:24
+#save date:2009/11/19 11:50:48
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c05gym0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/11/13 22:25:24
+#save date:
 2
 #hold event type:
 1
@@ -37,8 +37,10 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--8 16 104
+-8 16 168
 #event number: 1
 #type
 1
@@ -66,6 +68,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 104 800 -136
 #event number: 2
@@ -95,6 +99,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 40 800 -136
 #event number: 3
@@ -124,6 +130,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 8 800 -72
 #event number: 4
@@ -153,6 +161,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -24 800 -72
 #event number: 5
@@ -182,6 +192,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -56 480 -72
 #event number: 6
@@ -211,6 +223,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -120 480 -72
 #event number: 7
@@ -240,6 +254,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 104 640 -72
 #event number: 8
@@ -269,6 +285,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 40 640 -72
 #event number: 9
@@ -298,6 +316,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -56 640 -136
 #event number: 10
@@ -327,6 +347,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -120 640 -136
 #event number: 11
@@ -356,6 +378,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 24 480 -136
 #event number: 12
@@ -385,6 +409,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -40 480 -136
 #event number: 13
@@ -414,6 +440,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 72 800 -56
 #event number: 14
@@ -443,6 +471,8 @@ DIR_LEFT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 24 800 -56
 #event number: 15
@@ -472,6 +502,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -8 640 -120
 #event number: 16
@@ -501,6 +533,8 @@ DIR_LEFT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -8 800 -120
 #event number: 17
@@ -530,6 +564,8 @@ DIR_LEFT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -72 640 -120
 #event number: 18
@@ -559,6 +595,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 24 800 -136
 #event number: 19
@@ -588,6 +626,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -40 800 -136
 #event number: 20
@@ -617,6 +657,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -24 800 -104
 #event number: 21
@@ -646,13 +688,15 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 8 800 -104
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/11/13 22:25:24
+#save date:
 2
 #hold event type:
 1
@@ -662,7 +706,7 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/11/13 22:25:24
+#save date:
 2
 #hold event type:
 1
@@ -672,7 +716,7 @@ DIR_DOWN
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/11/13 22:25:24
+#save date:
 2
 #hold event type:
 1

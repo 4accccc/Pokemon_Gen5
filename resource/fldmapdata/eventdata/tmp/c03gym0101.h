@@ -34,5 +34,7 @@
 #define C03GYM0101_WALL07_C               20
 #define C03GYM0101_TRAINER_01             21
 #define C03GYM0101_TRAINER_02             22
+#define C03GYM0101_LEADER3_01             23
+#define C05GYM0101_SUNGLASSES_01          24
 
 #endif //ZONE_C03GYM0101_EVC_H
