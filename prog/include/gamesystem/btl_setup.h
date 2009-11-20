@@ -47,13 +47,13 @@ extern void BP_SETUP_Wild( BATTLE_SETUP_PARAM* bp, GAMEDATA* gameData, HEAPID he
   const POKEPARTY* partyEnemy, const BtlLandForm landForm, const BtlWeather weather );
 
 extern void BTL_SETUP_Single_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID );
+  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID, HEAPID heapID );
 
 extern void BTL_SETUP_Single_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   GFL_NETHANDLE* netHandle, BtlCommMode commMode );
 
 extern void BTL_SETUP_Double_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID );
+  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID, HEAPID heapID );
 
 extern void BTL_SETUP_Double_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   GFL_NETHANDLE* netHandle, BtlCommMode commMode );
@@ -62,13 +62,13 @@ extern void BTL_SETUP_Multi_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   GFL_NETHANDLE* netHandle, BtlCommMode commMode, u8 commPos );
 
 extern void BTL_SETUP_Triple_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID );
+  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID, HEAPID heapID );
 
 extern void BTL_SETUP_Triple_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   GFL_NETHANDLE* netHandle, BtlCommMode commMode );
 
 extern void BTL_SETUP_Rotation_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID );
+  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID, HEAPID heapID );
 
 extern void BTL_SETUP_Rotation_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   GFL_NETHANDLE* netHandle, BtlCommMode commMode );
