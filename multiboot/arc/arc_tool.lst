@@ -38,11 +38,10 @@
 #
 #==================================================================================================
 
-	ARCID_FATAL_ERROR		"fatal_error.narc"	#fatalエラー画面表示
-	ARCID_WMI				"wmi.narc"	# 通信アイコン
 	ARCID_MESSAGE			"message_dl.narc"	#メッセージデータ
 	ARCID_FONT				"font/font_dl.narc"	#フォントデータ
 	ARCID_APP_MENU_COMMON	"app_menu_common_dl.narc"	#フォントデータ
+	ARCID_WMI				"../../prog/arc/wmi.narc"	# 通信アイコン
 	ARCID_NET_ERR			"../../prog/arc/net_err.narc"
 	ARCID_FLDMAP_WINFRAME 	"../../prog/arc/winframe.narc"   # ウィンドウフレーム
 	ARCID_PERSONAL			"../../prog/arc/personal/personal.narc"		#パーソナルデータ
