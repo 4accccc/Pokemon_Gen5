@@ -98,7 +98,6 @@ typedef enum {
   WAZASICK_MUSTHIT,         ///< ワザ必中状態
   WAZASICK_MUSTHIT_TARGET,  ///< 特定相手に対してのみ必中状態
   WAZASICK_FLYING,          ///< でんじふゆう
-  WAZASICK_POWERTRICK,      ///< パワートリック
 
   WAZASICK_MAX,
   WAZASICK_NULL = POKESICK_NULL,
