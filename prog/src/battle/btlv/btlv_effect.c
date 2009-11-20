@@ -26,7 +26,7 @@
  */
 //============================================================================================
 
-#define BTLV_EFFECT_TCB_MAX ( 16 )    //使用するTCBのMAX
+#define BTLV_EFFECT_TCB_MAX ( 32 )    //使用するTCBのMAX
 
 #define BTLV_EFFECT_BLINK_TIME    ( 3 )
 #define BTLV_EFFECT_BLINK_WAIT    ( 3 )
