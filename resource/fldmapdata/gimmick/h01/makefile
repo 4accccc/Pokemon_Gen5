@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= obata_toshihiro
+USERS	= obata_toshihiro fuchino
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -91,16 +91,20 @@ $(BIN)/ship_ica_data.bin: $(GRAPHIC)/h01_ship.ica
 	ruby $(ICACONV) -rt $(GRAPHIC)/h01_ship.ica $(BIN)/ship_ica_data.bin
 
 $(BIN)/trailer1_head_ica_data.bin: $(GRAPHIC)/trailer_01a_up.ica
-	ruby $(ICACONV) -rt $(GRAPHIC)/trailer_01a_up.ica $(BIN)/trailer1_head_ica_data.bin
+	ruby $(GRAPHIC)/ica_trans_data_converter.rb $(GRAPHIC)/trailer_01a_up.ica $(GRAPHIC)/ica_conv/trailer_01a_up_conv.ica 2048 0 3072
+	ruby $(ICACONV) -rt $(GRAPHIC)/ica_conv/trailer_01a_up_conv.ica $(BIN)/trailer1_head_ica_data.bin
 
 $(BIN)/trailer1_tail_ica_data.bin: $(GRAPHIC)/trailer_01b_up.ica
-	ruby $(ICACONV) -rt $(GRAPHIC)/trailer_01b_up.ica $(BIN)/trailer1_tail_ica_data.bin
+	ruby $(GRAPHIC)/ica_trans_data_converter.rb $(GRAPHIC)/trailer_01b_up.ica $(GRAPHIC)/ica_conv/trailer_01b_up_conv.ica 2048 0 3072
+	ruby $(ICACONV) -rt $(GRAPHIC)/ica_conv/trailer_01b_up_conv.ica $(BIN)/trailer1_tail_ica_data.bin
 
 $(BIN)/trailer2_head_ica_data.bin: $(GRAPHIC)/trailer_01a_down.ica
-	ruby $(ICACONV) -rt $(GRAPHIC)/trailer_01a_down.ica $(BIN)/trailer2_head_ica_data.bin
+	ruby $(GRAPHIC)/ica_trans_data_converter.rb $(GRAPHIC)/trailer_01a_down.ica $(GRAPHIC)/ica_conv/trailer_01a_down_conv.ica 2048 0 3072
+	ruby $(ICACONV) -rt $(GRAPHIC)/ica_conv/trailer_01a_down_conv.ica $(BIN)/trailer2_head_ica_data.bin
 
 $(BIN)/trailer2_tail_ica_data.bin: $(GRAPHIC)/trailer_01b_down.ica
-	ruby $(ICACONV) -rt $(GRAPHIC)/trailer_01b_down.ica $(BIN)/trailer2_tail_ica_data.bin
+	ruby $(GRAPHIC)/ica_trans_data_converter.rb $(GRAPHIC)/trailer_01b_down.ica $(GRAPHIC)/ica_conv/trailer_01b_down_conv.ica 2048 0 3072
+	ruby $(ICACONV) -rt $(GRAPHIC)/ica_conv/trailer_01b_down_conv.ica $(BIN)/trailer2_tail_ica_data.bin
 
 $(BIN)/trailer1_3dsu_data.bin: h01.txt
 	ruby h01.rb h01.txt ./bin
