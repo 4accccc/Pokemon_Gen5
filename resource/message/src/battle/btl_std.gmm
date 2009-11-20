@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-11-20T18:40:16"/>
+	<create user="taya" host="W00146" date="2009-11-20T20:23:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -867,6 +867,12 @@
 		<comment>じゅうりょく</comment>
 		<language name="JPN" width="216">じゅうりょくが　つよくなった！</language>
 		<language name="JPN_KANJI" width="216">重力が　強くなった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_JyuryokuOff">
+		<comment>じゅうりょく　解除</comment>
+		<language name="JPN" width="216">じゅうりょくが　もとにもどった！</language>
+		<language name="JPN_KANJI" width="216">重力が　元に戻った！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_HorobiNoUta">
