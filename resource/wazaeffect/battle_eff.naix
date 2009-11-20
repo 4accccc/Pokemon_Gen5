@@ -1,0 +1,28 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: battle_eff.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_BATTLE_EFF_NAIX_
+#define NARC_BATTLE_EFF_NAIX_
+
+enum {
+	NARC_battle_eff_be_001_bin = 0,
+	NARC_battle_eff_be_002_bin = 1,
+	NARC_battle_eff_be_003_bin = 2,
+	NARC_battle_eff_be_004_bin = 3,
+	NARC_battle_eff_be_005_bin = 4,
+	NARC_battle_eff_be_006_bin = 5,
+	NARC_battle_eff_be_007_bin = 6,
+	NARC_battle_eff_be_008_bin = 7,
+	NARC_battle_eff_be_009_bin = 8,
+	NARC_battle_eff_be_010_bin = 9,
+	NARC_battle_eff_be_011_bin = 10
+};
+
+/* NARC_BATTLE_EFF_NAIX_ */
+#endif
