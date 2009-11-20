@@ -556,7 +556,7 @@ VMCMD_RESULT EvCmdTalkMsgAllPut( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdTalkWinOpen( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-  u8 up_down = VMGetU8( core );
+  u16 up_down = VMGetU16( core );
   
   sysWin_AddWindow( work, up_down ); //<<内部で既開チェックをしています
   return VMCMD_RESULT_CONTINUE;
