@@ -626,6 +626,29 @@ void BTL_EVENTVAR_SetValue( BtlEvVarLabel label, int value )
 }
 //=============================================================================================
 /**
+ * 上書き禁止ラベルの値を新規セット（サーバフロー用）
+ *
+ * @param   label
+ * @param   value
+ */
+//=============================================================================================
+void BTL_EVENTVAR_SetConstValue( BtlEvVarLabel label, int value )
+{
+  GF_ASSERT(label!=BTL_EVAR_NULL);
+  GF_ASSERT(label!=BTL_EVAR_SYS_SEPARATE);
+
+  {
+    VAR_STACK* stack = &VarStack;
+    int p = evar_getNewPoint( stack, label );
+    stack->label[p] = label;
+    stack->value[p] = value;
+    stack->mulMin[p] = 0;
+    stack->mulMax[p] = 0;
+    stack->rewriteState[p] = REWRITE_LOCK;
+  }
+}
+//=============================================================================================
+/**
  * 上書き１回のみ有効なラベルの値を新規セット（サーバフロー用）
  *
  * @param   label
@@ -700,6 +723,9 @@ BOOL BTL_EVENTVAR_RewriteValue( BtlEvVarLabel label, int value )
           stack->rewriteState[p] = REWRITE_LOCK;
         }
         return TRUE;
+      }
+      else{
+        GF_ASSERT_MSG(0, "this label(%d) can't rewrite\n", label);
       }
     }
     return FALSE;

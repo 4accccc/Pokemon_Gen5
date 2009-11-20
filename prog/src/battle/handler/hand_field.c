@@ -42,6 +42,8 @@ static BTL_EVENT_FACTOR* ADD_Fld_MizuAsobi( u16 pri, BtlFieldEffect effect, u8 s
 static void handler_fld_MizuAsobi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
 static BTL_EVENT_FACTOR* ADD_Fld_DoroAsobi( u16 pri, BtlFieldEffect effect, u8 subParam );
 static void handler_fld_DoroAsobi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
+static BTL_EVENT_FACTOR* ADD_Fld_WonderRoom( u16 pri, BtlFieldEffect effect, u8 subParam );
+static void handler_fld_WonderRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
 
 
 
@@ -70,6 +72,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_FLD_Add( BtlFieldEffect effect, u8 sub_param )
     { BTL_FLDEFF_FUIN ,      ADD_Fld_Fuin        }, ///< ふういん
     { BTL_FLDEFF_MIZUASOBI,  ADD_Fld_MizuAsobi   }, ///< みずあそび
     { BTL_FLDEFF_DOROASOBI,  ADD_Fld_DoroAsobi   }, ///< どろあそび
+    { BTL_FLDEFF_WONDERROOM, ADD_Fld_WonderRoom  }, ///< ワンダールーム
   };
 
   {
@@ -215,4 +218,23 @@ static void handler_fld_DoroAsobi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(0.5) );
   }
 }
+//--------------------------------------------------------------------------------------
+/**
+ *  どろあそび
+ */
+//--------------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR* ADD_Fld_WonderRoom( u16 pri, BtlFieldEffect effect, u8 subParam )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_DEFENDER_GUARD_PREV,  handler_fld_WonderRoom   },  // 防御側能力値計算の前
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_FIELD, effect, pri, subParam, HandlerTable );
+}
+static void handler_fld_WonderRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work )
+{
+  int swap_cnt = BTL_EVENTVAR_GetValue( BTL_EVAR_VID_SWAP_CNT);
+  BTL_EVENTVAR_RewriteValue( BTL_EVAR_VID_SWAP_CNT, (swap_cnt+1) );
+}
+
 

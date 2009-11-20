@@ -469,7 +469,7 @@ const POKEMON_PARAM* BPP_GetSrcData( const BTL_POKEPARAM* bpp )
 //----------------------------------------------------------------------------------
 /**
  * 状態異常等の条件により、パラメータ取得用のIDを変更する
- * ※現状、パワートリック（こうげき・ぼうぎょを入れ替える）にのみ利用している。
+ * ※現状、ワンダールーム（全ポケモンの防御・特防を入れ替える）にのみ利用している。
  *
  * @param   bpp
  * @param   BppValueID    パラメータ取得用にリクエストされたパラメータID
@@ -480,13 +480,18 @@ const POKEMON_PARAM* BPP_GetSrcData( const BTL_POKEPARAM* bpp )
 static BppValueID ConvertValueID( const BTL_POKEPARAM* bpp, BppValueID vid )
 {
   switch( vid ){
-  case BPP_ATTACK:
-    if( BPP_CheckSick(bpp, WAZASICK_POWERTRICK) ){ vid = BPP_DEFENCE; }
+  case BPP_DEFENCE:
+    if( BTL_FIELD_CheckEffect(BTL_FLDEFF_WONDERROOM) ){
+      vid = BPP_SP_DEFENCE;
+    }
     break;
 
-  case BPP_DEFENCE:
-    if( BPP_CheckSick(bpp, WAZASICK_POWERTRICK) ){ vid = BPP_ATTACK; }
+  case BPP_SP_DEFENCE:
+    if( BTL_FIELD_CheckEffect(BTL_FLDEFF_WONDERROOM) ){
+      vid = BPP_DEFENCE;
+    }
     break;
+
   }
   return vid;
 }
@@ -529,6 +534,8 @@ int BPP_GetValue_Base( const BTL_POKEPARAM* bpp, BppValueID vid )
 //=============================================================================================
 void BPP_SetBaseStatus( BTL_POKEPARAM* bpp, BppValueID vid, u8 value )
 {
+  vid = ConvertValueID( bpp, vid );
+
   switch( vid ){
   case BPP_ATTACK:      bpp->baseParam.attack = value; break;
   case BPP_DEFENCE:     bpp->baseParam.defence = value; break;
@@ -598,23 +605,27 @@ int BPP_GetValue( const BTL_POKEPARAM* bpp, BppValueID vid )
  * @retval  int
  */
 //=============================================================================================
-int BPP_GetValue_Critical( const BTL_POKEPARAM* pp, BppValueID vid )
+int BPP_GetValue_Critical( const BTL_POKEPARAM* bpp, BppValueID vid )
 {
   BOOL fFlatParam = FALSE;
+
+  // @todo これだと BPP_GetValue_Base を呼び出しているので再変換が起こりまずい
+  vid = ConvertValueID( bpp, vid );
+
   switch( vid ){
-  case BPP_ATTACK:     fFlatParam = (pp->varyParam.attack < 0); break;
-  case BPP_SP_ATTACK:  fFlatParam = (pp->varyParam.sp_attack < 0); break;
-  case BPP_DEFENCE:    fFlatParam = (pp->varyParam.defence > 0); break;
-  case BPP_SP_DEFENCE: fFlatParam = (pp->varyParam.sp_defence > 0); break;
+  case BPP_ATTACK:     fFlatParam = (bpp->varyParam.attack < 0); break;
+  case BPP_SP_ATTACK:  fFlatParam = (bpp->varyParam.sp_attack < 0); break;
+  case BPP_DEFENCE:    fFlatParam = (bpp->varyParam.defence > 0); break;
+  case BPP_SP_DEFENCE: fFlatParam = (bpp->varyParam.sp_defence > 0); break;
 
   default:
-    return BPP_GetValue( pp, vid );
+    return BPP_GetValue( bpp, vid );
   }
 
   if( fFlatParam ){
-    return BPP_GetValue_Base( pp, vid );
+    return BPP_GetValue_Base( bpp, vid );
   }else{
-    return BPP_GetValue( pp, vid );
+    return BPP_GetValue( bpp, vid );
   }
 }
 //=============================================================================================

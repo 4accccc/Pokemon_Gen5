@@ -25,6 +25,8 @@ typedef enum {
   BTL_FLDEFF_FUIN,        ///< ふういん
   BTL_FLDEFF_MIZUASOBI,   ///< みずあそび
   BTL_FLDEFF_DOROASOBI,   ///< どろあそび
+  BTL_FLDEFF_WONDERROOM,  ///< ワンダールーム
+  BTL_FLDEFF_MAGICROOM,   ///< マジックルーム
 
   BTL_FLDEFF_MAX,
   BTL_FLDEFF_NULL = BTL_FLDEFF_MAX,
@@ -42,7 +44,7 @@ extern void BTL_FIELD_SetWeather( BtlWeather weather, u16 turn );
 extern void BTL_FIELD_ClearWeather( void );
 
 extern BOOL BTL_FIELD_AddEffect( BtlFieldEffect effect, BPP_SICK_CONT cont );
-extern void BTL_FIELD_RemoveEffect( BtlFieldEffect state );
+extern BOOL BTL_FIELD_RemoveEffect( BtlFieldEffect state );
 extern void BTL_FIELD_RemoveDependPokeEffect( u8 pokeID );
 extern BOOL BTL_FIELD_CheckEffect( BtlFieldEffect state );
 extern u8 BTL_FIELD_GetDependPokeID( BtlFieldEffect effect );

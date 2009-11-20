@@ -989,6 +989,7 @@ static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk )
     break;
 
   case WAZA_TARGET_SIDE_FRIEND:     ///< 自分側陣地
+  case WAZA_TARGET_FRIEND_ALL:      ///< 味方側全ポケ
     stw_setConfirmField( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_MYSIDE_ALL, basePos) );
     break;
 

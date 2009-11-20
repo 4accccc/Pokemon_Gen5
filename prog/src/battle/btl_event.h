@@ -129,7 +129,7 @@ typedef enum {
   BTL_EVENT_CHECK_POKE_HIDE,        ///< ポケモンが消えている状態のワザ命中チェック
   BTL_EVENT_SET_ITEM_BEFORE,        ///< アイテム書き換え前の成否チェック
   BTL_EVENT_SET_ITEM,
-  BTL_EVENT_FIELD_EFFECT,           ///< フィールドエフェクト追加
+  BTL_EVENT_FIELD_EFFECT_CALL,      ///< フィールドエフェクト追加
   BTL_EVENT_UNCATEGORIZE_WAZA,            ///< 未分類ワザ処理
   BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,  ///< 未分類ワザ処理（ターゲットいないワザ）
 
@@ -211,6 +211,9 @@ typedef enum {
   BTL_EVAR_TYPEAFF,
   BTL_EVAR_WEATHER,
   BTL_EVAR_KORAERU_CAUSE,
+  BTL_EVAR_SWAP_POKEID,
+  BTL_EVAR_VID,
+  BTL_EVAR_VID_SWAP_CNT,
   BTL_EVAR_WORK_ADRS,
 
   BTL_EVAR_MAX,
@@ -226,6 +229,7 @@ typedef enum {
 extern void BTL_EVENTVAR_Push( void );
 extern void BTL_EVENTVAR_Pop( void );
 extern void BTL_EVENTVAR_SetValue( BtlEvVarLabel label, int value );
+extern void BTL_EVENTVAR_SetConstValue( BtlEvVarLabel label, int value );
 extern void BTL_EVENTVAR_SetRewriteOnceValue( BtlEvVarLabel label, int value );
 extern void BTL_EVENTVAR_SetMulValue( BtlEvVarLabel label, int value, fx32 mulMin, fx32 mulMax );
 extern BOOL BTL_EVENTVAR_RewriteValue( BtlEvVarLabel label, int value );

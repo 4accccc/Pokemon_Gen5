@@ -187,39 +187,21 @@ BOOL BTL_FIELD_AddEffect( BtlFieldEffect effect, BPP_SICK_CONT cont )
  * @param   effect
  */
 //=============================================================================================
-void BTL_FIELD_RemoveEffect( BtlFieldEffect effect )
+BOOL BTL_FIELD_RemoveEffect( BtlFieldEffect effect )
 {
+  GF_ASSERT(effect < BTL_FLDEFF_MAX);
 
-}
-//=============================================================================================
-/**
- * ターンチェック
- */
-//=============================================================================================
-void BTL_FIELD_TurnCheck( pFieldTurnCheckCallback callbackFunc, void* callbackArg )
-{
-  u32 i;
-  for(i=0; i<BTL_FLDEFF_MAX; ++i)
+  if( Work.factor[effect] != NULL )
   {
-    if( Work.factor[i] )
-    {
-      u8 turnMax = BPP_SICCONT_GetTurnMax( Work.cont[i] );
-      if( turnMax )
-      {
-        if( ++(Work.turnCount[i]) >= turnMax )
-        {
-          BTL_HANDLER_FLD_Remove( Work.factor[i] );
-          clearFactorWork( i );
-          callbackFunc( i, callbackArg );
-        }
-      }
-    }
+    BTL_HANDLER_FLD_Remove( Work.factor[effect] );
+    clearFactorWork( effect );
+    return TRUE;
   }
+  return FALSE;
 }
-
 //=============================================================================================
 /**
- * 特定ポケモン依存のエフェクトを除去
+ * 特定ポケモン依存のエフェクトを全て除去
  *
  * @param   pokeID
  */
@@ -240,6 +222,31 @@ void BTL_FIELD_RemoveDependPokeEffect( u8 pokeID )
   }
 }
 
+//=============================================================================================
+/**
+ * ターンチェック
+ */
+//=============================================================================================
+void BTL_FIELD_TurnCheck( pFieldTurnCheckCallback callbackFunc, void* callbackArg )
+{
+  u32 i;
+  for(i=1; i<BTL_FLDEFF_MAX; ++i)
+  {
+    if( Work.factor[i] )
+    {
+      u8 turnMax = BPP_SICCONT_GetTurnMax( Work.cont[i] );
+      if( turnMax )
+      {
+        if( ++(Work.turnCount[i]) >= turnMax )
+        {
+          BTL_HANDLER_FLD_Remove( Work.factor[i] );
+          clearFactorWork( i );
+          callbackFunc( i, callbackArg );
+        }
+      }
+    }
+  }
+}
 //=============================================================================================
 /**
  * 特定のフィールドエフェクトが働いているかチェック
