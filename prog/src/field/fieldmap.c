@@ -105,8 +105,9 @@
 #include "sodateya.h"
 #include "system/net_err.h"
 
-#include "../../../resource/fldmapdata/script/eggevent_scr_def.h"   // TEST:
-#include "../../../resource/fldmapdata/script/sodateya_scr_def.h"   // TEST:
+#include "field_task.h"
+#include "field_task_manager.h"
+
 
 //======================================================================
 //	DEBUG定義
@@ -312,6 +313,7 @@ struct _FIELDMAP_WORK
   
   FLD_G3DOBJ_CTRL *fieldG3dObjCtrl;
 
+  FIELD_TASK_MAN* taskManager;  // タスクマネージャ
 };
 
 //--------------------------------------------------------------
@@ -522,6 +524,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup_system(GAMESYS_WORK *gsys, FIELDMAP_WORK
     fieldWork->fieldmapTCBSysWork = GFL_HEAP_AllocMemory( heapID, size );
     fieldWork->fieldmapTCB = GFL_TCB_Init( task_max, fieldWork->fieldmapTCBSysWork );
   }
+
+  // タスクマネージャ
+  fieldWork->taskManager = FIELD_TASK_MAN_Create( 10, fieldWork->heapID );
 
 	GFL_UI_StartFrameRateMode( GFL_UI_FRAMERATE_30 );
 	
@@ -841,6 +846,8 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 
   // TCB
   GFL_TCB_Main( fieldWork->fieldmapTCB );
+  // タスクマネージャ
+  FIELD_TASK_MAN_Main( fieldWork->taskManager );
 
   //now_pos更新
   if( fieldWork->target_now_pos_p != NULL ){
@@ -906,35 +913,6 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
         );
   }
 #endif
-
-
-  // TEST: 3Dマッパーデバッグ表示
-  {
-    int trg = GFL_UI_KEY_GetTrg();
-    if( trg & PAD_BUTTON_START )
-    {
-      FLDMAPPER_DebugPrint( fieldWork->g3Dmapper );
-    }
-  } 
-  // TEST: タマゴ孵化スクリプト呼び出し
-  /*
-  {
-    int trg = GFL_UI_KEY_GetTrg();
-    if( trg & PAD_BUTTON_START )
-    {
-      GMEVENT* event = SCRIPT_SetEventScript( gsys, SCRID_EGG_BIRTH, NULL, fieldWork->heapID );
-      GAMESYSTEM_SetEvent( gsys, event );
-    }
-  }
-  */
-  // TEST: 育て屋動作
-  {
-    int key = GFL_UI_KEY_GetCont();
-    if( key & PAD_BUTTON_SELECT )
-    {
-      SODATEYA_BreedPokemon( fieldWork->sodateya );
-    }
-  }
 
   return MAINSEQ_RESULT_CONTINUE;
 }
@@ -1069,6 +1047,8 @@ static MAINSEQ_RESULT mainSeqFunc_end(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWo
   // TCB
   GFL_TCB_Exit( fieldWork->fieldmapTCB );
   GFL_HEAP_FreeMemory( fieldWork->fieldmapTCBSysWork );
+  // タスクマネージャ
+  FIELD_TASK_MAN_Delete( fieldWork->taskManager );
 
 	GFL_TCB_DeleteTask( fieldWork->g3dVintr );
 
@@ -1697,6 +1677,16 @@ FLD_EXP_OBJ_CNT_PTR FIELDMAP_GetExpObjCntPtr( FIELDMAP_WORK *fieldWork )
 extern GFL_TCBSYS* FIELDMAP_GetFieldmapTCBSys( FIELDMAP_WORK * fieldWork )
 {
   return fieldWork->fieldmapTCB;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief フィールドタスクマネージャ 取得
+ */
+//--------------------------------------------------------------
+FIELD_TASK_MAN* FIELDMAP_GetTaskManager( FIELDMAP_WORK* fieldWork )
+{
+  return fieldWork->taskManager;
 }
 
 //--------------------------------------------------------------

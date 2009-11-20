@@ -465,10 +465,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/test_gimmick.c \
         field/field_gimmick_h01.c \
         field/fieldmap_tcb_camera_zoom.c \
-        field/fieldmap_tcb_camera_rot.c \
         field/fieldmap_tcb_rot_player.c \
         field/fieldmap_tcb_move_player.c \
-        field/fieldmap_tcb_warp_player.c \
         field/event_appear.c \
         field/event_disappear.c \
         field/height_ex.c \
@@ -500,6 +498,16 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/gym_ground_ent.c \
 				field/event_debug_beacon.c \
         field/field_g3dobj.c \
+        field/scrcmd_fldci.c \
+        field/field_task.c \
+        field/field_task_manager.c \
+        field/field_task_camera_zoom.c \
+        field/field_task_camera_rot.c \
+        field/field_task_player_rot.c \
+        field/field_task_player_trans.c \
+        field/field_task_player_fall.c \
+        field/field_task_wait.c \
+        field/field_task_player_drawoffset.c \
         field/field_flash.c \
         field/fieldskill_mapeff.c \
         field/fld_wipe_3dobj.c \

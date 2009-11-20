@@ -11,6 +11,11 @@
 #include "field/field_camera.h"
 #include "field/fieldmap.h"
 #include "fieldmap_tcb.h"
+#include "field_task.h"
+#include "field_task_manager.h"
+#include "field_task_camera_zoom.h"
+#include "field_task_camera_rot.h"
+#include "field_task_wait.h"
 
 
 //=============================================================================================
@@ -48,7 +53,7 @@
 //=============================================================================================
 typedef struct
 {
-  FIELDMAP_WORK* pFieldmap;   // 操作対象のフィールドマップ
+  FIELDMAP_WORK* fieldmap;   // 操作対象のフィールドマップ
   u16            frame;       // 経過フレーム数
 }
 EVENT_WORK;
@@ -59,27 +64,23 @@ EVENT_WORK;
  * @brief 非公開関数のプロトタイプ宣言
  */
 //=============================================================================================
-static void SetFarNear( FIELDMAP_WORK* p_fieldmap );
+static void SetFarNear( FIELDMAP_WORK* fieldmap );
 
 // イベント生成関数
-static GMEVENT* EVENT_UpDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap );
-static GMEVENT* EVENT_LeftDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap );
-static GMEVENT* EVENT_RightDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap );
-static GMEVENT* EVENT_UpDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap );
-static GMEVENT* EVENT_LeftDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap );
-static GMEVENT* EVENT_RightDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap );
+static GMEVENT* EVENT_UpDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* fieldmap );
+static GMEVENT* EVENT_LeftDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* fieldmap );
+static GMEVENT* EVENT_RightDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* fieldmap );
+static GMEVENT* EVENT_UpDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* fieldmap );
+static GMEVENT* EVENT_LeftDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* fieldmap );
+static GMEVENT* EVENT_RightDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* fieldmap );
 
 // イベント処理関数
-static GMEVENT_RESULT EVENT_FUNC_UpDoorIn( GMEVENT* p_event, int* p_seq, void* p_work );
-static GMEVENT_RESULT EVENT_FUNC_LeftDoorIn( GMEVENT* p_event, int* p_seq, void* p_work );
-static GMEVENT_RESULT EVENT_FUNC_RightDoorIn( GMEVENT* p_event, int* p_seq, void* p_work );
-static GMEVENT_RESULT EVENT_FUNC_RightDoorIn_2Step( GMEVENT* p_event, int* p_seq, void* p_work );
-static GMEVENT_RESULT EVENT_FUNC_RightDoorIn_1Frame( GMEVENT* p_event, int* p_seq, void* p_work );
-static GMEVENT_RESULT EVENT_FUNC_UpDoorOut( GMEVENT* p_event, int* p_seq, void* p_work );
-static GMEVENT_RESULT EVENT_FUNC_LeftDoorOut( GMEVENT* p_event, int* p_seq, void* p_work );
-static GMEVENT_RESULT EVENT_FUNC_RightDoorOut( GMEVENT* p_event, int* p_seq, void* p_work );
-static GMEVENT_RESULT EVENT_FUNC_RightDoorOut_2Step( GMEVENT* p_event, int* p_seq, void* p_work );
-static GMEVENT_RESULT EVENT_FUNC_RightDoorOut_1Frame( GMEVENT* p_event, int* p_seq, void* p_work );
+static GMEVENT_RESULT EVENT_FUNC_UpDoorIn( GMEVENT* event, int* seq, void* wk );
+static GMEVENT_RESULT EVENT_FUNC_LeftDoorIn( GMEVENT* event, int* seq, void* wk );
+static GMEVENT_RESULT EVENT_FUNC_RightDoorIn( GMEVENT* event, int* seq, void* wk );
+static GMEVENT_RESULT EVENT_FUNC_UpDoorOut( GMEVENT* event, int* seq, void* wk );
+static GMEVENT_RESULT EVENT_FUNC_LeftDoorOut( GMEVENT* event, int* seq, void* wk );
+static GMEVENT_RESULT EVENT_FUNC_RightDoorOut( GMEVENT* event, int* seq, void* wk );
 
 
 //=============================================================================================
@@ -94,14 +95,14 @@ static GMEVENT_RESULT EVENT_FUNC_RightDoorOut_1Frame( GMEVENT* p_event, int* p_s
  *
  * @param p_parent   親イベント
  * @param p_gsys     ゲームシステム
- * @param p_fieldmap フィールドマップ
+ * @param fieldmap フィールドマップ
  *
  * @return 作成したイベント
  */
 //-----------------------------------------------------------------------------------------------
-void EVENT_CAMERA_ACT_CallDoorInEvent( GMEVENT* p_parent, GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap )
+void EVENT_CAMERA_ACT_CallDoorInEvent( GMEVENT* p_parent, GAMESYS_WORK* p_gsys, FIELDMAP_WORK* fieldmap )
 {
-  FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+  FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer( fieldmap );
   MMDL *         fmmdl  = FIELD_PLAYER_GetMMdl( player );
   u16            dir    = MMDL_GetDirDisp( fmmdl );
 
@@ -109,13 +110,13 @@ void EVENT_CAMERA_ACT_CallDoorInEvent( GMEVENT* p_parent, GAMESYS_WORK* p_gsys, 
   switch( dir )
   {
   case DIR_UP:
-    GMEVENT_CallEvent( p_parent, EVENT_UpDoorIn(p_gsys, p_fieldmap) );
+    GMEVENT_CallEvent( p_parent, EVENT_UpDoorIn(p_gsys, fieldmap) );
     break;
   case DIR_LEFT:
-    GMEVENT_CallEvent( p_parent, EVENT_LeftDoorIn(p_gsys, p_fieldmap) );
+    GMEVENT_CallEvent( p_parent, EVENT_LeftDoorIn(p_gsys, fieldmap) );
     break;
   case DIR_RIGHT:
-    GMEVENT_CallEvent( p_parent, EVENT_RightDoorIn(p_gsys, p_fieldmap) );
+    GMEVENT_CallEvent( p_parent, EVENT_RightDoorIn(p_gsys, fieldmap) );
     break;
   default:
     break;
@@ -126,15 +127,15 @@ void EVENT_CAMERA_ACT_CallDoorInEvent( GMEVENT* p_parent, GAMESYS_WORK* p_gsys, 
 /**
  * @brief ドアから出てきた際の, カメラの初期設定を行う
  *
- * @param p_fieldmap フィールドマップ
+ * @param fieldmap フィールドマップ
  */
 //-----------------------------------------------------------------------------------------------
-void EVENT_CAMERA_ACT_PrepareForDoorOut( FIELDMAP_WORK* p_fieldmap )
+void EVENT_CAMERA_ACT_PrepareForDoorOut( FIELDMAP_WORK* fieldmap )
 {
-  FIELD_PLAYER*    player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+  FIELD_PLAYER*    player = FIELDMAP_GetFieldPlayer( fieldmap );
   MMDL*            fmmdl  = FIELD_PLAYER_GetMMdl( player );
   u16              dir    = MMDL_GetDirDisp( fmmdl );
-  FIELD_CAMERA*    cam    = FIELDMAP_GetFieldCamera( p_fieldmap );
+  FIELD_CAMERA*    cam    = FIELDMAP_GetFieldCamera( fieldmap );
 
   // 主人公の向きに応じたカメラ設定
   switch( dir )
@@ -146,13 +147,13 @@ void EVENT_CAMERA_ACT_PrepareForDoorOut( FIELDMAP_WORK* p_fieldmap )
     FIELD_CAMERA_SetAnglePitch( cam, R_DOOR_PITCH );
     FIELD_CAMERA_SetAngleYaw( cam, R_DOOR_YAW );
     FIELD_CAMERA_SetAngleLen( cam, FIELD_CAMERA_GetAngleLen( cam ) - R_DOOR_ZOOM_DIST );
-    SetFarNear( p_fieldmap );
+    SetFarNear( fieldmap );
     break;
   case DIR_RIGHT:
     FIELD_CAMERA_SetAnglePitch( cam, L_DOOR_PITCH );
     FIELD_CAMERA_SetAngleYaw( cam, L_DOOR_YAW );
     FIELD_CAMERA_SetAngleLen( cam, FIELD_CAMERA_GetAngleLen( cam ) - L_DOOR_ZOOM_DIST );
-    SetFarNear( p_fieldmap );
+    SetFarNear( fieldmap );
     break;
   default:
     break;
@@ -165,14 +166,14 @@ void EVENT_CAMERA_ACT_PrepareForDoorOut( FIELDMAP_WORK* p_fieldmap )
  *
  * @param p_parent   親イベント
  * @param p_gsys     ゲームシステム
- * @param p_fieldmap フィールドマップ
+ * @param fieldmap フィールドマップ
  *
  * @return 作成したイベント
  */
 //-----------------------------------------------------------------------------------------------
-void EVENT_CAMERA_ACT_CallDoorOutEvent( GMEVENT* p_parent, GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap )
+void EVENT_CAMERA_ACT_CallDoorOutEvent( GMEVENT* p_parent, GAMESYS_WORK* p_gsys, FIELDMAP_WORK* fieldmap )
 {
-  FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+  FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer( fieldmap );
   MMDL *         fmmdl  = FIELD_PLAYER_GetMMdl( player );
   u16            dir    = MMDL_GetDirDisp( fmmdl );
 
@@ -180,13 +181,13 @@ void EVENT_CAMERA_ACT_CallDoorOutEvent( GMEVENT* p_parent, GAMESYS_WORK* p_gsys,
   switch( dir )
   {
   case DIR_DOWN:
-    GMEVENT_CallEvent( p_parent, EVENT_UpDoorOut(p_gsys, p_fieldmap) );
+    GMEVENT_CallEvent( p_parent, EVENT_UpDoorOut(p_gsys, fieldmap) );
     break;
   case DIR_LEFT:
-    GMEVENT_CallEvent( p_parent, EVENT_RightDoorOut(p_gsys, p_fieldmap) );
+    GMEVENT_CallEvent( p_parent, EVENT_RightDoorOut(p_gsys, fieldmap) );
     break;
   case DIR_RIGHT:
-    GMEVENT_CallEvent( p_parent, EVENT_LeftDoorOut(p_gsys, p_fieldmap) );
+    GMEVENT_CallEvent( p_parent, EVENT_LeftDoorOut(p_gsys, fieldmap) );
     break;
   default:
     break;
@@ -197,12 +198,12 @@ void EVENT_CAMERA_ACT_CallDoorOutEvent( GMEVENT* p_parent, GAMESYS_WORK* p_gsys,
 /**
  * @breif カメラのNearプレーンとFarプレーンをデフォルト設定に戻す
  *
- * @param p_fieldmap フィールドマップ
+ * @param fieldmap フィールドマップ
  */
 //--------------------------------------------------------------------
-void EVENT_CAMERA_ACT_ResetCameraParameter( FIELDMAP_WORK* p_fieldmap )
+void EVENT_CAMERA_ACT_ResetCameraParameter( FIELDMAP_WORK* fieldmap )
 {
-  FIELD_CAMERA*    p_camera = FIELDMAP_GetFieldCamera( p_fieldmap );
+  FIELD_CAMERA*    p_camera = FIELDMAP_GetFieldCamera( fieldmap );
   FLD_CAMERA_PARAM def_param;
 
   // デフォルト・パラメータを取得
@@ -231,26 +232,26 @@ void EVENT_CAMERA_ACT_ResetCameraParameter( FIELDMAP_WORK* p_fieldmap )
  * @brief カメラ動作イベント( 上にあるドアに入った時 )
  *
  * @param p_gsys     ゲームシステム
- * @param p_fieldmap フィールドマップ
+ * @param fieldmap フィールドマップ
  *
  * @return 作成したイベント
  */
 //-----------------------------------------------------------------------------------------------
-static GMEVENT* EVENT_UpDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap )
+static GMEVENT* EVENT_UpDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* fieldmap )
 {
-  GMEVENT*      p_event;
-  EVENT_WORK*   p_work;
+  GMEVENT*      event;
+  EVENT_WORK*   work;
 
   // イベント生成
-  p_event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_UpDoorIn, sizeof( EVENT_WORK ) );
+  event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_UpDoorIn, sizeof( EVENT_WORK ) );
 
   // イベントワークを初期化
-  p_work            = GMEVENT_GetEventWork( p_event );
-  p_work->pFieldmap = p_fieldmap;
-  p_work->frame     = 0;
+  work            = GMEVENT_GetEventWork( event );
+  work->fieldmap = fieldmap;
+  work->frame     = 0;
 
   // 生成したイベントを返す
-  return p_event;
+  return event;
 }
 
 //-----------------------------------------------------------------------------------------------
@@ -258,26 +259,26 @@ static GMEVENT* EVENT_UpDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap 
  * @brief カメラ回転イベント( 左にあるドアに入った時 )
  *
  * @param p_gsys     ゲームシステム
- * @param p_fieldmap フィールドマップ
+ * @param fieldmap フィールドマップ
  *
  * @return 作成したイベント
  */
 //-----------------------------------------------------------------------------------------------
-static GMEVENT* EVENT_LeftDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap )
+static GMEVENT* EVENT_LeftDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* fieldmap )
 {
-  GMEVENT*      p_event;
-  EVENT_WORK*   p_work;
+  GMEVENT*      event;
+  EVENT_WORK*   work;
 
   // イベント生成
-  p_event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_LeftDoorIn, sizeof( EVENT_WORK ) );
+  event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_LeftDoorIn, sizeof( EVENT_WORK ) );
 
   // イベントワークを初期化
-  p_work            = GMEVENT_GetEventWork( p_event );
-  p_work->pFieldmap = p_fieldmap;
-  p_work->frame     = 0;
+  work            = GMEVENT_GetEventWork( event );
+  work->fieldmap = fieldmap;
+  work->frame     = 0;
 
   // 生成したイベントを返す
-  return p_event;
+  return event;
 }
 
 //-----------------------------------------------------------------------------------------------
@@ -285,28 +286,26 @@ static GMEVENT* EVENT_LeftDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldma
  * @brief カメラ回転イベント( 右にあるドアに入った時 )
  *
  * @param p_gsys     ゲームシステム
- * @param p_fieldmap フィールドマップ
+ * @param fieldmap フィールドマップ
  *
  * @return 作成したイベント
  */
 //-----------------------------------------------------------------------------------------------
-static GMEVENT* EVENT_RightDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap )
+static GMEVENT* EVENT_RightDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* fieldmap )
 {
-  GMEVENT*      p_event;
-  EVENT_WORK*   p_work;
+  GMEVENT*      event;
+  EVENT_WORK*   work;
 
   // イベント生成
-  //p_event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_RightDoorIn, sizeof( EVENT_WORK ) );
-  p_event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_RightDoorIn_2Step, sizeof( EVENT_WORK ) );
-  //p_event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_RightDoorIn_1Frame, sizeof( EVENT_WORK ) );
+  event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_RightDoorIn, sizeof( EVENT_WORK ) );
 
   // イベントワークを初期化
-  p_work            = GMEVENT_GetEventWork( p_event );
-  p_work->pFieldmap = p_fieldmap;
-  p_work->frame     = 0;
+  work           = GMEVENT_GetEventWork( event );
+  work->fieldmap = fieldmap;
+  work->frame    = 0;
 
   // 生成したイベントを返す
-  return p_event;
+  return event;
 }
 
 //-----------------------------------------------------------------------------------------------
@@ -314,26 +313,26 @@ static GMEVENT* EVENT_RightDoorIn( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldm
  * @brief カメラ動作イベント( 上にあるドアから出てきたとき )
  *
  * @param p_gsys     ゲームシステム
- * @param p_fieldmap フィールドマップ
+ * @param fieldmap フィールドマップ
  *
  * @return 作成したイベント
  */
 //-----------------------------------------------------------------------------------------------
-static GMEVENT* EVENT_UpDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap )
+static GMEVENT* EVENT_UpDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* fieldmap )
 {
-  GMEVENT*      p_event;
-  EVENT_WORK*   p_work;
+  GMEVENT*      event;
+  EVENT_WORK*   work;
 
   // イベント生成
-  p_event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_UpDoorOut, sizeof( EVENT_WORK ) );
+  event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_UpDoorOut, sizeof( EVENT_WORK ) );
 
   // イベントワークを初期化
-  p_work            = GMEVENT_GetEventWork( p_event );
-  p_work->pFieldmap = p_fieldmap;
-  p_work->frame     = 0;
+  work            = GMEVENT_GetEventWork( event );
+  work->fieldmap = fieldmap;
+  work->frame     = 0;
 
   // 生成したイベントを返す
-  return p_event;
+  return event;
 }
 
 //-----------------------------------------------------------------------------------------------
@@ -341,26 +340,26 @@ static GMEVENT* EVENT_UpDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap
  * @brief カメラ回転イベント( 左にあるドアから出てきた時 )
  *
  * @param p_gsys     ゲームシステム
- * @param p_fieldmap フィールドマップ
+ * @param fieldmap フィールドマップ
  *
  * @return 作成したイベント
  */
 //-----------------------------------------------------------------------------------------------
-static GMEVENT* EVENT_LeftDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap )
+static GMEVENT* EVENT_LeftDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* fieldmap )
 {
-  GMEVENT*         p_event;
-  EVENT_WORK*      p_work;
+  GMEVENT*         event;
+  EVENT_WORK*      work;
 
   // イベント生成
-  p_event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_LeftDoorOut, sizeof( EVENT_WORK ) );
+  event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_LeftDoorOut, sizeof( EVENT_WORK ) );
 
   // イベントワークを初期化
-  p_work            = GMEVENT_GetEventWork( p_event );
-  p_work->pFieldmap = p_fieldmap;
-  p_work->frame     = 0;
+  work            = GMEVENT_GetEventWork( event );
+  work->fieldmap = fieldmap;
+  work->frame     = 0;
 
   // 生成したイベントを返す
-  return p_event;
+  return event;
 }
 
 
@@ -369,40 +368,39 @@ static GMEVENT* EVENT_LeftDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldm
  * @brief カメラ回転イベント( 右にあるドアから出てきた時 )
  *
  * @param p_gsys     ゲームシステム
- * @param p_fieldmap フィールドマップ
+ * @param fieldmap フィールドマップ
  *
  * @return 作成したイベント
  */
 //-----------------------------------------------------------------------------------------------
-static GMEVENT* EVENT_RightDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap )
+static GMEVENT* EVENT_RightDoorOut( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* fieldmap )
 {
-  GMEVENT*      p_event;
-  EVENT_WORK*   p_work;
+  GMEVENT*      event;
+  EVENT_WORK*   work;
 
   // イベント生成
-  //p_event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_RightDoorOut, sizeof( EVENT_WORK ) );
-  p_event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_RightDoorOut_2Step, sizeof( EVENT_WORK ) );
+  event = GMEVENT_Create( p_gsys, NULL, EVENT_FUNC_RightDoorOut, sizeof( EVENT_WORK ) );
 
   // イベントワークを初期化
-  p_work            = GMEVENT_GetEventWork( p_event );
-  p_work->pFieldmap = p_fieldmap;
-  p_work->frame     = 0;
-  p_work = GMEVENT_GetEventWork( p_event );
+  work            = GMEVENT_GetEventWork( event );
+  work->fieldmap = fieldmap;
+  work->frame     = 0;
+  work = GMEVENT_GetEventWork( event );
 
   // 生成したイベントを返す
-  return p_event;
+  return event;
 }
 
 //-----------------------------------------------------------------------------------------------
 /**
  * @brief カメラのfarプレーン・nearプレーンを設定する
  *
- * @param p_fieldmap フィールドマップ
+ * @param fieldmap フィールドマップ
  */
 //-----------------------------------------------------------------------------------------------
-static void SetFarNear( FIELDMAP_WORK* p_fieldmap )
+static void SetFarNear( FIELDMAP_WORK* fieldmap )
 {
-  FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_fieldmap );
+  FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( fieldmap );
   fx32          far      = FIELD_CAMERA_GetFar( p_camera ); 
   fx32          near     = FIELD_CAMERA_GetNear( p_camera ); 
 
@@ -432,22 +430,28 @@ static void SetFarNear( FIELDMAP_WORK* p_fieldmap )
 /**
  * @brief イベント処理関数( 上出入口への進入 )
  *
- * @param p_event イベント
- * @param p_seq   シーケンス番号
- * @param p_work  イベントワーク
+ * @param event イベント
+ * @param seq   シーケンス番号
+ * @param wk  イベントワーク
  *
  * @return GMEVENT_RES_CONTINUE or GMEVENT_RES_FINISH
  */
 //-----------------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_UpDoorIn( GMEVENT* p_event, int* p_seq, void* p_work )
+static GMEVENT_RESULT EVENT_FUNC_UpDoorIn( GMEVENT* event, int* seq, void* wk )
 {
-  EVENT_WORK* p_event_work = (EVENT_WORK*)p_work;
+  EVENT_WORK* work = (EVENT_WORK*)wk;
 
-  switch( *p_seq )
+  switch( *seq )
   {
   case 0:
-    FIELDMAP_TCB_AddTask_CameraZoom( p_event_work->pFieldmap, U_DOOR_FRAME, -U_DOOR_ZOOM_DIST );
-    ++( *p_seq );
+    { // タスク登録
+      FIELD_TASK* zoom;
+      FIELD_TASK_MAN* man;
+      zoom = FIELD_TASK_CameraLinearZoom( work->fieldmap, U_DOOR_FRAME, -U_DOOR_ZOOM_DIST );
+      man = FIELDMAP_GetTaskManager( work->fieldmap );
+      FIELD_TASK_MAN_AddTask( man, zoom, NULL );
+    }
+    ++( *seq );
     break;
   case 1:
     return GMEVENT_RES_FINISH;
@@ -459,25 +463,35 @@ static GMEVENT_RESULT EVENT_FUNC_UpDoorIn( GMEVENT* p_event, int* p_seq, void* p
 /**
  * @brief イベント処理関数( 左出入口への進入 )
  *
- * @param p_event イベント
- * @param p_seq   シーケンス番号
- * @param p_work  イベントワーク
+ * @param event イベント
+ * @param seq   シーケンス番号
+ * @param wk  イベントワーク
  *
  * @return GMEVENT_RES_CONTINUE or GMEVENT_RES_FINISH
  */
 //-----------------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_LeftDoorIn( GMEVENT* p_event, int* p_seq, void* p_work )
+static GMEVENT_RESULT EVENT_FUNC_LeftDoorIn( GMEVENT* event, int* seq, void* wk )
 {
-  EVENT_WORK* p_event_work = (EVENT_WORK*)p_work;
+  EVENT_WORK* work = (EVENT_WORK*)wk;
 
-  switch( *p_seq )
+  switch( *seq )
   {
   case 0:
-    SetFarNear( p_event_work->pFieldmap );
-    FIELDMAP_TCB_AddTask_CameraZoom( p_event_work->pFieldmap, L_DOOR_FRAME, -L_DOOR_ZOOM_DIST );
-    FIELDMAP_TCB_AddTask_CameraRotate_Yaw( p_event_work->pFieldmap, L_DOOR_FRAME, L_DOOR_YAW );
-    FIELDMAP_TCB_AddTask_CameraRotate_Pitch( p_event_work->pFieldmap, L_DOOR_FRAME, L_DOOR_PITCH );
-    ++( *p_seq );
+    SetFarNear( work->fieldmap );
+    { // タスク登録
+      FIELD_TASK* zoom;
+      FIELD_TASK* pitch;
+      FIELD_TASK* yaw;
+      FIELD_TASK_MAN* man;
+      zoom  = FIELD_TASK_CameraLinearZoom( work->fieldmap, L_DOOR_FRAME, -L_DOOR_ZOOM_DIST );
+      pitch = FIELD_TASK_CameraRot_Pitch( work->fieldmap, L_DOOR_FRAME, L_DOOR_PITCH );
+      yaw   = FIELD_TASK_CameraRot_Yaw( work->fieldmap, L_DOOR_FRAME, L_DOOR_YAW );
+      man = FIELDMAP_GetTaskManager( work->fieldmap );
+      FIELD_TASK_MAN_AddTask( man, zoom, NULL );
+      FIELD_TASK_MAN_AddTask( man, pitch, NULL );
+      FIELD_TASK_MAN_AddTask( man, yaw, NULL );
+    }
+    ++( *seq );
     break;
   case 1:
     return GMEVENT_RES_FINISH;
@@ -489,123 +503,84 @@ static GMEVENT_RESULT EVENT_FUNC_LeftDoorIn( GMEVENT* p_event, int* p_seq, void*
 /**
  * @brief イベント処理関数( 右出入口への進入 )
  *
- * @param p_event イベント
- * @param p_seq   シーケンス番号
- * @param p_work  イベントワーク
+ * @param event イベント
+ * @param seq   シーケンス番号
+ * @param wk  イベントワーク
  *
  * @return GMEVENT_RES_CONTINUE or GMEVENT_RES_FINISH
  */
 //-----------------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_RightDoorIn( GMEVENT* p_event, int* p_seq, void* p_work )
+static GMEVENT_RESULT EVENT_FUNC_RightDoorIn( GMEVENT* event, int* seq, void* wk )
 {
-  EVENT_WORK* p_event_work = (EVENT_WORK*)p_work;
+  EVENT_WORK* work = (EVENT_WORK*)wk;
 
-  switch( *p_seq )
+  switch( *seq )
   {
   case 0:
-    SetFarNear( p_event_work->pFieldmap );
-    FIELDMAP_TCB_AddTask_CameraZoom( p_event_work->pFieldmap, R_DOOR_FRAME, -R_DOOR_ZOOM_DIST );
-    FIELDMAP_TCB_AddTask_CameraRotate_Yaw( p_event_work->pFieldmap, R_DOOR_FRAME, R_DOOR_YAW );
-    FIELDMAP_TCB_AddTask_CameraRotate_Pitch( p_event_work->pFieldmap, R_DOOR_FRAME, R_DOOR_PITCH );
-    ++( *p_seq );
+    SetFarNear( work->fieldmap );
+    { // タスク登録
+      FIELD_TASK* pitch;
+      FIELD_TASK* yaw;
+      FIELD_TASK* wait1;
+      FIELD_TASK* zoom;
+      FIELD_TASK* wait2;
+      FIELD_TASK_MAN* man;
+      pitch = FIELD_TASK_CameraRot_Pitch( work->fieldmap, R_DOOR_FRAME, -R_DOOR_PITCH );
+      yaw   = FIELD_TASK_CameraRot_Yaw( work->fieldmap, R_DOOR_FRAME, R_DOOR_YAW );
+      wait1 = FIELD_TASK_Wait( work->fieldmap, 10 );
+      zoom  = FIELD_TASK_CameraLinearZoom( work->fieldmap, R_DOOR_FRAME, -R_DOOR_ZOOM_DIST );
+      wait2 = FIELD_TASK_Wait( work->fieldmap, 20 );
+      man = FIELDMAP_GetTaskManager( work->fieldmap );
+      FIELD_TASK_MAN_AddTask( man, pitch, NULL );
+      FIELD_TASK_MAN_AddTask( man, yaw, NULL );
+      FIELD_TASK_MAN_AddTask( man, wait1, NULL );
+      FIELD_TASK_MAN_AddTask( man, zoom, wait1 ); 
+      FIELD_TASK_MAN_AddTask( man, wait2, wait1 ); 
+    }
+    ++( *seq );
     break;
   case 1:
-    return GMEVENT_RES_FINISH;
-  }
-  return GMEVENT_RES_CONTINUE;
-}
-
-//-----------------------------------------------------------------------------------------------
-/**
- * @brief イベント処理関数( 右出入口への進入 )
- *
- * @param p_event イベント
- * @param p_seq   シーケンス番号
- * @param p_work  イベントワーク
- *
- * @return GMEVENT_RES_CONTINUE or GMEVENT_RES_FINISH
- */
-//-----------------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_RightDoorIn_2Step( GMEVENT* p_event, int* p_seq, void* p_work )
-{
-  EVENT_WORK* p_event_work = (EVENT_WORK*)p_work;
-
-  switch( *p_seq )
-  {
-  case 0:
-    SetFarNear( p_event_work->pFieldmap );
-    FIELDMAP_TCB_AddTask_CameraRotate_Yaw( p_event_work->pFieldmap, 20, R_DOOR_YAW );
-    FIELDMAP_TCB_AddTask_CameraRotate_Pitch( p_event_work->pFieldmap, 20, R_DOOR_PITCH );
-    p_event_work->frame = 0;
-    ++( *p_seq );
-    break;
-  case 1:
-    if( 10 < p_event_work->frame++ )
-    {
-      ++( *p_seq );
+    { // タスク終了待ち
+      FIELD_TASK_MAN* man;
+      man = FIELDMAP_GetTaskManager( work->fieldmap );
+      if( FIELD_TASK_MAN_IsAllTaskEnd(man) )
+      {
+        ++( *seq );
+      }
     }
     break;
   case 2:
-    FIELDMAP_TCB_AddTask_CameraZoom( p_event_work->pFieldmap, R_DOOR_FRAME, -R_DOOR_ZOOM_DIST );
-    ++( *p_seq );
-    p_event_work->frame = 0;
-    break;
-  case 3:
-    if( 20 < p_event_work->frame++ )
-    {
-      ++( *p_seq );
-    }
-    break;
-  case 4:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
-}
-
-//-----------------------------------------------------------------------------------------------
-/**
- * @brief イベント処理関数( 右出入口への進入 )
- *
- * @param p_event イベント
- * @param p_seq   シーケンス番号
- * @param p_work  イベントワーク
- *
- * @return GMEVENT_RES_CONTINUE or GMEVENT_RES_FINISH
- */
-//-----------------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_RightDoorIn_1Frame( GMEVENT* p_event, int* p_seq, void* p_work )
-{
-  EVENT_WORK*   p_event_work = (EVENT_WORK*)p_work;
-  FIELD_CAMERA* cam          = FIELDMAP_GetFieldCamera( p_event_work->pFieldmap );
-
-  SetFarNear( p_event_work->pFieldmap );
-  FIELD_CAMERA_SetAnglePitch( cam, R_DOOR_PITCH );
-  FIELD_CAMERA_SetAngleYaw( cam, R_DOOR_YAW );
-  FIELD_CAMERA_SetAngleLen( cam, FIELD_CAMERA_GetAngleLen( cam ) - R_DOOR_ZOOM_DIST );
-
-  return GMEVENT_RES_FINISH;
 }
 
 //-----------------------------------------------------------------------------------------------
 /**
  * @brief イベント処理関数( 上出入口からの進入 )
  *
- * @param p_event イベント
- * @param p_seq   シーケンス番号
- * @param p_work  イベントワーク
+ * @param event イベント
+ * @param seq   シーケンス番号
+ * @param wk  イベントワーク
  *
  * @return GMEVENT_RES_CONTINUE or GMEVENT_RES_FINISH
  */
 //-----------------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_UpDoorOut( GMEVENT* p_event, int* p_seq, void* p_work )
+static GMEVENT_RESULT EVENT_FUNC_UpDoorOut( GMEVENT* event, int* seq, void* wk )
 {
-  EVENT_WORK* p_event_work = (EVENT_WORK*)p_work;
+  EVENT_WORK* work = (EVENT_WORK*)wk;
 
-  switch( *p_seq )
+  switch( *seq )
   {
   case 0:
-    FIELDMAP_TCB_AddTask_CameraZoom( p_event_work->pFieldmap, U_DOOR_FRAME, U_DOOR_ZOOM_DIST );
-    ++( *p_seq );
+    { // タスク登録
+      FIELD_TASK* zoom;
+      FIELD_TASK_MAN* man;
+      zoom  = FIELD_TASK_CameraLinearZoom( work->fieldmap, U_DOOR_FRAME, U_DOOR_ZOOM_DIST );
+      man = FIELDMAP_GetTaskManager( work->fieldmap );
+      FIELD_TASK_MAN_AddTask( man, zoom, NULL ); 
+    }
+    ++( *seq );
     break;
   case 1:
     return GMEVENT_RES_FINISH;
@@ -617,30 +592,40 @@ static GMEVENT_RESULT EVENT_FUNC_UpDoorOut( GMEVENT* p_event, int* p_seq, void* 
 /**
  * @brief イベント処理関数( 左出入口からの進入 )
  *
- * @param p_event イベント
- * @param p_seq   シーケンス番号
- * @param p_work  イベントワーク
+ * @param event イベント
+ * @param seq   シーケンス番号
+ * @param wk  イベントワーク
  *
  * @return GMEVENT_RES_CONTINUE or GMEVENT_RES_FINISH
  */
 //-----------------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_LeftDoorOut( GMEVENT* p_event, int* p_seq, void* p_work )
+static GMEVENT_RESULT EVENT_FUNC_LeftDoorOut( GMEVENT* event, int* seq, void* wk )
 {
-  EVENT_WORK* p_event_work = (EVENT_WORK*)p_work;
-  FIELD_CAMERA*   p_camera = FIELDMAP_GetFieldCamera( p_event_work->pFieldmap );
+  EVENT_WORK* work = (EVENT_WORK*)wk;
+  FIELD_CAMERA*   p_camera = FIELDMAP_GetFieldCamera( work->fieldmap );
 
-  switch( *p_seq )
+  switch( *seq )
   {
   case 0:
-    {
+    { // 初期化
       FLD_CAMERA_PARAM def_param; 
       FIELD_CAMERA_GetInitialParameter( p_camera, &def_param );
-      SetFarNear( p_event_work->pFieldmap );
-      FIELDMAP_TCB_AddTask_CameraZoom( p_event_work->pFieldmap, L_DOOR_FRAME, L_DOOR_ZOOM_DIST );
-      FIELDMAP_TCB_AddTask_CameraRotate_Yaw( p_event_work->pFieldmap, L_DOOR_FRAME, def_param.Angle.y );
-      FIELDMAP_TCB_AddTask_CameraRotate_Pitch( p_event_work->pFieldmap, L_DOOR_FRAME, def_param.Angle.x );
+      SetFarNear( work->fieldmap );
     }
-    ++( *p_seq );
+    { // タスク登録
+      FIELD_TASK* pitch;
+      FIELD_TASK* yaw;
+      FIELD_TASK* zoom;
+      FIELD_TASK_MAN* man;
+      pitch = FIELD_TASK_CameraRot_Pitch( work->fieldmap, L_DOOR_FRAME, L_DOOR_PITCH );
+      yaw   = FIELD_TASK_CameraRot_Yaw( work->fieldmap, L_DOOR_FRAME, L_DOOR_YAW );
+      zoom  = FIELD_TASK_CameraLinearZoom( work->fieldmap, L_DOOR_FRAME, L_DOOR_ZOOM_DIST );
+      man = FIELDMAP_GetTaskManager( work->fieldmap );
+      FIELD_TASK_MAN_AddTask( man, pitch, NULL );
+      FIELD_TASK_MAN_AddTask( man, yaw, NULL );
+      FIELD_TASK_MAN_AddTask( man, zoom, NULL ); 
+    }
+    ++( *seq );
     break;
   case 1:
     return GMEVENT_RES_FINISH;
@@ -648,117 +633,64 @@ static GMEVENT_RESULT EVENT_FUNC_LeftDoorOut( GMEVENT* p_event, int* p_seq, void
   return GMEVENT_RES_CONTINUE;
 }
 
-//-----------------------------------------------------------------------------------------------
-/**
- * @brief イベント処理関数( 右出入口からの進入 )
- *
- * @param p_event イベント
- * @param p_seq   シーケンス番号
- * @param p_work  イベントワーク
- *
- * @return GMEVENT_RES_CONTINUE or GMEVENT_RES_FINISH
- */
-//-----------------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_RightDoorOut( GMEVENT* p_event, int* p_seq, void* p_work )
-{
-  EVENT_WORK* p_event_work = (EVENT_WORK*)p_work;
-  FIELD_CAMERA*   p_camera = FIELDMAP_GetFieldCamera( p_event_work->pFieldmap );
-
-  switch( *p_seq )
-  {
-  case 0:
-    {
-      FLD_CAMERA_PARAM def_param; 
-      FIELD_CAMERA_GetInitialParameter( p_camera, &def_param );
-      SetFarNear( p_event_work->pFieldmap );
-      FIELDMAP_TCB_AddTask_CameraZoom( p_event_work->pFieldmap, R_DOOR_FRAME, R_DOOR_ZOOM_DIST );
-      FIELDMAP_TCB_AddTask_CameraRotate_Yaw( p_event_work->pFieldmap, R_DOOR_FRAME, def_param.Angle.y );
-      FIELDMAP_TCB_AddTask_CameraRotate_Pitch( p_event_work->pFieldmap, R_DOOR_FRAME, def_param.Angle.x );
-    }
-    ++( *p_seq );
-    break;
-  case 1:
-    return GMEVENT_RES_FINISH;
-  }
-  return GMEVENT_RES_CONTINUE;
-}
 
 //-----------------------------------------------------------------------------------------------
 /**
  * @brief イベント処理関数( 右出入口からの進入 )
  *
- * @param p_event イベント
- * @param p_seq   シーケンス番号
- * @param p_work  イベントワーク
+ * @param event イベント
+ * @param seq   シーケンス番号
+ * @param wk  イベントワーク
  *
  * @return GMEVENT_RES_CONTINUE or GMEVENT_RES_FINISH
  */
 //-----------------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_RightDoorOut_2Step( GMEVENT* p_event, int* p_seq, void* p_work )
+static GMEVENT_RESULT EVENT_FUNC_RightDoorOut( GMEVENT* event, int* seq, void* wk )
 {
-  EVENT_WORK* p_event_work = (EVENT_WORK*)p_work;
-  FIELD_CAMERA*        cam = FIELDMAP_GetFieldCamera( p_event_work->pFieldmap ); 
+  EVENT_WORK* work = (EVENT_WORK*)wk;
+  FIELD_CAMERA*        cam = FIELDMAP_GetFieldCamera( work->fieldmap ); 
   FLD_CAMERA_PARAM def_param; 
 
   // デフォルトパラメータを取得
   FIELD_CAMERA_GetInitialParameter( cam, &def_param );
 
-  switch( *p_seq )
+  switch( *seq )
   {
   case 0:
-    SetFarNear( p_event_work->pFieldmap );
-    FIELDMAP_TCB_AddTask_CameraZoom( p_event_work->pFieldmap, 20, R_DOOR_ZOOM_DIST );
-    p_event_work->frame = 0;
-    ++( *p_seq );
+    SetFarNear( work->fieldmap );
+    { // タスク登録
+      FIELD_TASK* zoom;
+      FIELD_TASK* wait1;
+      FIELD_TASK* pitch;
+      FIELD_TASK* yaw;
+      FIELD_TASK* wait2;
+      FIELD_TASK_MAN* man;
+      zoom  = FIELD_TASK_CameraLinearZoom( work->fieldmap, R_DOOR_FRAME, R_DOOR_ZOOM_DIST );
+      wait1 = FIELD_TASK_Wait( work->fieldmap, 10 );
+      pitch = FIELD_TASK_CameraRot_Pitch( work->fieldmap, R_DOOR_FRAME, R_DOOR_PITCH );
+      yaw   = FIELD_TASK_CameraRot_Yaw( work->fieldmap, R_DOOR_FRAME, -R_DOOR_YAW );
+      wait2 = FIELD_TASK_Wait( work->fieldmap, 20 );
+      man = FIELDMAP_GetTaskManager( work->fieldmap );
+      FIELD_TASK_MAN_AddTask( man, zoom, NULL ); 
+      FIELD_TASK_MAN_AddTask( man, wait1, NULL );
+      FIELD_TASK_MAN_AddTask( man, pitch, wait1 );
+      FIELD_TASK_MAN_AddTask( man, yaw, wait1 );
+      FIELD_TASK_MAN_AddTask( man, wait2, NULL ); 
+    }
+    ++( *seq );
     break;
   case 1:
-    if( 10 < p_event_work->frame++ )
-    {
-      ++( *p_seq );
+    { // タスク終了待ち
+      FIELD_TASK_MAN* man;
+      man = FIELDMAP_GetTaskManager( work->fieldmap );
+      if( FIELD_TASK_MAN_IsAllTaskEnd(man) )
+      {
+        ++( *seq );
+      }
     }
     break;
   case 2:
-    FIELDMAP_TCB_AddTask_CameraRotate_Yaw( p_event_work->pFieldmap, 15, def_param.Angle.y );
-    FIELDMAP_TCB_AddTask_CameraRotate_Pitch( p_event_work->pFieldmap, 15, def_param.Angle.x );
-    ++( *p_seq );
-    p_event_work->frame = 0;
-    break;
-  case 3:
-    if( 20 < p_event_work->frame++ )
-    {
-      ++( *p_seq );
-    }
-    break;
-  case 4:
     return GMEVENT_RES_FINISH;
   }
-  return GMEVENT_RES_CONTINUE;
-}
-
-//-----------------------------------------------------------------------------------------------
-/**
- * @brief イベント処理関数( 右出入口からの進入 )
- *
- * @param p_event イベント
- * @param p_seq   シーケンス番号
- * @param p_work  イベントワーク
- *
- * @return GMEVENT_RES_CONTINUE or GMEVENT_RES_FINISH
- */
-//-----------------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_RightDoorOut_1Frame( GMEVENT* p_event, int* p_seq, void* p_work )
-{
-  EVENT_WORK* p_event_work = (EVENT_WORK*)p_work;
-  FIELD_CAMERA*   cam = FIELDMAP_GetFieldCamera( p_event_work->pFieldmap ); 
-  FLD_CAMERA_PARAM def_param; 
-
-  // デフォルトパラメータを取得
-  FIELD_CAMERA_GetInitialParameter( cam, &def_param );
-
-  SetFarNear( p_event_work->pFieldmap );
-  FIELD_CAMERA_SetAnglePitch( cam, def_param.Angle.x );
-  FIELD_CAMERA_SetAngleYaw( cam, def_param.Angle.y );
-  FIELD_CAMERA_SetAngleLen( cam, def_param.Distance );
-
   return GMEVENT_RES_CONTINUE;
 }

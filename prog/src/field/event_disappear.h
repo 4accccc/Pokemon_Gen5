@@ -10,12 +10,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////// 
 #pragma once
 
-//------
-// ëﬁèÍ
-//------
-// ÉèÅ[Év
-GMEVENT* EVENT_DISAPPEAR_Warp( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap ); 
-
 // ó¨çª
 GMEVENT* EVENT_DISAPPEAR_FallInSand( 
     GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, const VecFx32* stream_pos ); 

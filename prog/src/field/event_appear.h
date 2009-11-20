@@ -10,8 +10,5 @@
 //////////////////////////////////////////////////////////////////////////////////////////// 
 #pragma once
 
-// ÉèÅ[Év
-GMEVENT* EVENT_APPEAR_Warp( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap );  
-
 // óéâ∫
 GMEVENT* EVENT_APPEAR_Fall( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap );  
