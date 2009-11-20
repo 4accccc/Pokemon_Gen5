@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T16:54:09"/>
+	<create user="matsumiya" host="W00207" date="2009-11-20T16:54:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="75" top="237" right="780" bottom="857" maximized="no" rayout="Vertical2">
+	<dialog left="13" top="268" right="718" bottom="888" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="131" right="1280" bottom="529" visible="yes"/>
+		<tag-palette left="719" top="164" right="1192" bottom="562" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,16 +292,70 @@
 	</lock>
 
 
-	<row id="msg_t02r0401_girl4_01">
-		<comment>♀
-ピアノ演奏</comment>
+	<row id="msg_t02r0401_girl4_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀：ピアノ演奏
+・弾いていないとき
+・はい/いいえ選択肢表示</comment>
 		<attribute name="キャラ指定">GIRL4
 お嬢様</attribute>
-		<language name="JPN" width="256">ピアノは　ひくものであって
-たたくものでは　ございません</language>
-		<language name="JPN_KANJI" width="256">ピアノも　弾きたいよう弾く[BE:01:ページ切り替え（クリア）]
-音楽に　こうでなくちゃ　という
-決まりごとなんて　ありませんわ</language>
+		<language name="JPN" width="256">あたくしの　すきな　きょく
+ひいて　あげましょうか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">あたくしの　すきな　きょく
+弾いて　あげましょうか？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t02r0401_girl4_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀：ピアノ演奏
+・msg_t02r0401_girl4_01表示後に
+・はい選択
+・ISS起動</comment>
+		<language name="JPN" width="256">ウフフ……
+では　きいてくださいね</language>
+		<language name="JPN_KANJI" width="256">ウフフ……
+では　聴いてくださいね</language>
+	</row>
+
+	<row id="msg_t02r0401_girl4_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀：ピアノ演奏
+・msg_t02r0401_girl4_01表示後に
+・いいえ選択</comment>
+		<language name="JPN" width="256">あら　ざんねん　ですわ……
+ききたくなったら　おっしゃってね</language>
+		<language name="JPN_KANJI" width="256">あら　残念ですわ……
+聴きたくなったら　おっしゃってね</language>
+	</row>
+
+	<row id="msg_t02r0401_girl4_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀：ピアノ演奏
+・弾いているとき
+・はい/いいえ選択肢表示</comment>
+		<language name="JPN" width="256">どうなさいました？
+もう　ピアノは　いいですか？</language>
+		<language name="JPN_KANJI" width="256">どうなさいました？
+もう　ピアノは　いいですか？</language>
+	</row>
+
+	<row id="msg_t02r0401_girl4_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀：ピアノ演奏
+・msg_t02r0401_girl4_04
+・はい選択
+・ISS終了</comment>
+		<language name="JPN" width="256">ああ　たのしかった！[BE:01:ページ切り替え（クリア）]
+ピアノを　ひいているとき
+すごく　みたされるんです</language>
+		<language name="JPN_KANJI" width="256">ああ　たのしかった！[BE:01:ページ切り替え（クリア）]
+ピアノを　弾いているとき
+すごく　満たされるんです</language>
+	</row>
+
+	<row id="msg_t02r0401_girl4_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀：ピアノ演奏
+・msg_t02r0401_girl4_04
+・いいえ選択</comment>
+		<language name="JPN" width="256">……この　きょくは
+ちちの　おもいで　なんです</language>
+		<language name="JPN_KANJI" width="256">……この　曲は
+父の　思い出なんです</language>
 	</row>
 
 	<row id="msg_t02r0401_man2_01">
