@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-26T22:12:22"/>
+	<create user="matsumiya" host="W00207" date="2009-11-20T19:32:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,13 +229,13 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="167"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="259"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="17" top="232" right="722" bottom="852" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,22 +292,253 @@
 	</lock>
 
 
-	<row id="msg_d04r0601_sage1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d04r0601_rival_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・仮メッセージ</comment>
+・d08イベント後、ココに配置
+・0＝主人公名前
+・pos（詳細未定）を踏むとイベント発動
+　ライバルのメッセージ表示後
+　主人公がライバルの隣まで移動</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">ブラッカー『……[1:00:トレーナー名:0]　こっちだ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『……[1:00:トレーナー名:0]　こっちだ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d04r0601_sage1_01w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・WHITEver
+・続けてmsg_d04r0601_sage1_02</comment>
 		<attribute name="キャラ指定">七賢者ゲーチス</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">ゲーチス『おやおや……</language>
+		<language name="JPN" width="256">ゲーチス『おそろいの　ようですね[BE:01:ページ切り替え（クリア）]
+わざわざ　こんなところまで
+いらっしゃったのです[BE:01:ページ切り替え（クリア）]
+ちゅうこく　いたしましょう[BE:01:ページ切り替え（クリア）]
+もうひとつの　ダークストーンを
+もういっぴきの　ドラゴンポケモンを[BE:00:ページ切り替え（行送り）]
+もとめるのは　およしなさい[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『おそろいの　ようですね[BE:01:ページ切り替え（クリア）]
+わざわざ　こんなところまで
+いらっしゃったのです[BE:01:ページ切り替え（クリア）]
+忠告いたしましょう[BE:01:ページ切り替え（クリア）]
+もう一つの　ダークストーンを
+もう一匹の　ドラゴンポケモン[BE:00:ページ切り替え（行送り）]
+ムを　求めるのは　およしなさい[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d04r0601_00_02">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+	<row id="msg_d04r0601_sage1_01b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・BLACKver
+・続けてmsg_d04r0601_sage1_02</comment>
+		<attribute name="キャラ指定">七賢者ゲーチス</attribute>
+		<language name="JPN" width="256">ゲーチス『おそろいの　ようですね[BE:01:ページ切り替え（クリア）]
+わざわざ　こんなところまで
+いらっしゃったのです[BE:01:ページ切り替え（クリア）]
+ちゅうこく　いたしましょう[BE:01:ページ切り替え（クリア）]
+もうひとつの　ダークストーンを
+もういっぴきの　ドラゴンポケモンを[BE:00:ページ切り替え（行送り）]
+もとめるのは　およしなさい[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『おそろいの　ようですね[BE:01:ページ切り替え（クリア）]
+わざわざ　こんなところまで
+いらっしゃったのです[BE:01:ページ切り替え（クリア）]
+忠告いたしましょう[BE:01:ページ切り替え（クリア）]
+もう一つの　ライトストーンを
+もう一匹の　ドラゴンポケモン[BE:00:ページ切り替え（行送り）]
+シンを　求めるのは　およしなさい[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d04r0601_00_03">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+	<row id="msg_d04r0601_sage1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・このときゲーチス、一歩前に出る
+・続けてmsg_d04r0601_champion_01</comment>
+		<attribute name="キャラ指定">七賢者ゲーチス</attribute>
+		<language name="JPN" width="256">イッシュの　でんせつは
+ごぞんじ　なの　でしょう[BE:01:ページ切り替え（クリア）]
+２ひきの　ドラゴンが
+らいめいを　とどろかせ[BE:00:ページ切り替え（行送り）]
+ひばしらを　ふきあげつつ[BE:00:ページ切り替え（行送り）]
+この　だいちを　あれさせた……[BE:01:ページ切り替え（クリア）]
+あなたたちが　しようとしているのは
+イッシュを　ほろぼすこと　です[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">イッシュの　伝説は
+ご存知　なの　でしょう[BE:01:ページ切り替え（クリア）]
+２匹の　ドラゴンが
+雷鳴を　とどろかせ[BE:00:ページ切り替え（行送り）]
+火柱を　噴き上げつつ[BE:00:ページ切り替え（行送り）]
+この　大地を　荒廃させた……[BE:01:ページ切り替え（クリア）]
+あなたたちが　しようとしているのは
+イッシュを　滅ぼすこと　です[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d04r0601_champion_01">
+		<comment>♂
+・続けてmsg_d04r0601_sage1_03w</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">アデク『そのご　あらそいを　おさめた
+２ひきの　ドラゴンポケモンは　わかれ[BE:01:ページ切り替え（クリア）]
+それぞれ　しんじつと
+りそうを　もとめる[BE:00:ページ切り替え（行送り）]
+ふたりの　えいゆうと　ともに[BE:00:ページ切り替え（行送り）]
+あたらしい　くにを　つくった……[BE:01:ページ切り替え（クリア）]
+それこそが　イッシュちほう
+はってんの　いしずえ　である[BE:01:ページ切り替え（クリア）]
+ならば　２ひきの　ドラゴンポケモンが
+そろうのが　わるいはずがない[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アデク『その後　争いを　収めた
+２匹の　ドラゴンポケモンは　わかれ[BE:01:ページ切り替え（クリア）]
+それぞれ　真実と　理想を　求める[BE:00:ページ切り替え（行送り）]
+２人の　英雄と　ともに[BE:00:ページ切り替え（行送り）]
+新しい　国を　建てた……[BE:01:ページ切り替え（クリア）]
+それこそが　イッシュ地方
+隆盛の　礎で　ある[BE:01:ページ切り替え（クリア）]
+ならば　２匹の　ドラゴンポケモンが
+そろうのが　悪いはずがない[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d04r0601_sage1_03w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・WHITEver
+・続けてmsg_d04r0601_champion_02</comment>
+		<attribute name="キャラ指定">七賢者ゲーチス</attribute>
+		<language name="JPN" width="256">ゲーチス『つごうの　いいことを[BE:01:ページ切り替え（クリア）]
+そもそも　ここに　あったのは
+ライトストーンだけ[BE:01:ページ切り替え（クリア）]
+なにも　もたざる
+あなたが　なにを　いおうと[BE:00:ページ切り替え（行送り）]
+むなしいだけ　ですよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『都合の　いいことを[BE:01:ページ切り替え（クリア）]
+そもそも　ここに　あったのは
+ライトストーンだけ[BE:01:ページ切り替え（クリア）]
+なにも　持たざる
+あなたが　なにを　いおうと[BE:00:ページ切り替え（行送り）]
+虚しいだけ　ですよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d04r0601_sage1_03b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・BLACKver
+・続けてmsg_d04r0601_champion_02</comment>
+		<attribute name="キャラ指定">七賢者ゲーチス</attribute>
+		<language name="JPN" width="256">ゲーチス『つごうの　いいことを[BE:01:ページ切り替え（クリア）]
+そもそも　ここに　あったのは
+ダークストーンだけ[BE:01:ページ切り替え（クリア）]
+なにも　もたざる
+あなたが　なにを　いおうと[BE:00:ページ切り替え（行送り）]
+むなしいだけ　ですよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『都合の　いいことを[BE:01:ページ切り替え（クリア）]
+そもそも　ここに　あったのは
+ダークストーンだけ[BE:01:ページ切り替え（クリア）]
+なにも　持たざる
+あなたが　なにを　いおうと[BE:00:ページ切り替え（行送り）]
+虚しいだけ　ですよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d04r0601_champion_02">
+		<comment>♂
+・続けてmsg_d04r0601_sage1_04</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">アデク『では　われわれを　あざける……[BE:01:ページ切り替え（クリア）]
+ただ　そのためだけに
+ここに　のこっていたのか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アデク『では　われわれを　あざける……[BE:01:ページ切り替え（クリア）]
+ただ　そのためだけに
+ここに　残っていたのか[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d04r0601_sage1_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・メッセージ表示後、画面下（仮）に移動
+・主人公とチャンピオンの間を割って立ち去る
+　画面外に消えると、msg_d04r0601_rival_02</comment>
+		<attribute name="キャラ指定">七賢者ゲーチス</attribute>
+		<language name="JPN" width="256">ゲーチス『まさか[BE:01:ページ切り替え（クリア）]
+しんせつですよ　しんせつ
+たしかに　わたしは[BE:00:ページ切り替え（行送り）]
+ひとびとが　ぜつぼう　する……[BE:01:ページ切り替え（クリア）]
+その　しゅんかんを　みるのが
+だいすき　ですがね[BE:01:ページ切り替え（クリア）]
+では　ごきげんよう[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『まさか[BE:01:ページ切り替え（クリア）]
+親切ですよ　親切
+たしかに　わたしは[BE:00:ページ切り替え（行送り）]
+人々が　絶望する……[BE:01:ページ切り替え（クリア）]
+その　瞬間を　みるのが
+至福の時　ですがね[BE:01:ページ切り替え（クリア）]
+では　ごきげんよう[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d04r0601_rival_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・このとき残った動作モデル、下向き
+　（ゲーチスの移動に追従する）
+・続けてmsg_d04r0601_champion_03</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">ブラッカー『３ｖｓ１だぜ
+なんとか　ならないのかよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『３ｖｓ１だぜ
+なんとか　ならないのかよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d04r0601_champion_03w">
+		<comment>♂
+・WHITEver
+・続けてmsg_d04r0601_rival_03</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">アデク『きゃつは　つよい……[BE:01:ページ切り替え（クリア）]
+ストーンを　さがしていた
+プラズマだんが　さったということは[BE:00:ページ切り替え（行送り）]
+ここに　ダークストーンは　ない[BE:01:ページ切り替え（クリア）]
+そういうことか
+このまま　プラズマだんの　こうどうを[BE:00:ページ切り替え（行送り）]
+てをこまねいて　みるしかないのか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アデク『きゃつは　強い……[BE:01:ページ切り替え（クリア）]
+ストーンを　探していた
+プラズマ団が　去ったということは[BE:00:ページ切り替え（行送り）]
+ここに　ダークストーンは　ない[BE:01:ページ切り替え（クリア）]
+そういうことか
+このまま　プラズマ団の　行動を[BE:00:ページ切り替え（行送り）]
+手をこまねいて　みるしかないのか[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d04r0601_champion_03b">
+		<comment>♂
+・BLACKver
+・続けてmsg_d04r0601_rival_03</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">アデク『きゃつは　つよい……[BE:01:ページ切り替え（クリア）]
+ストーンを　さがしていた
+プラズマだんが　さったということは[BE:00:ページ切り替え（行送り）]
+ここに　ダークストーンは　ない[BE:01:ページ切り替え（クリア）]
+そういうことか
+このまま　プラズマだんの　こうどうを[BE:00:ページ切り替え（行送り）]
+てをこまねいて　みるしかないのか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アデク『きゃつは　強い……[BE:01:ページ切り替え（クリア）]
+ストーンを　探していた
+プラズマ団が　去ったということは[BE:00:ページ切り替え（行送り）]
+ここに　ライトストーンは　ない[BE:01:ページ切り替え（クリア）]
+そういうことか
+このまま　プラズマ団の　行動を[BE:00:ページ切り替え（行送り）]
+手をこまねいて　みるしかないのか[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d04r0601_rival_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてmsg_d04r0601_champion_04</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">ブラッカー『……じいさん[BE:01:ページ切り替え（クリア）]
+ここに　いても　なにもないんだろ
+とにかく　うごこうぜ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『……じいさん[BE:01:ページ切り替え（クリア）]
+ここに　いても　なにもないんだろ
+とにかく　動こうぜ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d04r0601_champion_04">
+		<comment>♂
+・メッセージ表示後、画面暗転
+・d03r0301に続く</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">アデク『……ああ　そうだな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アデク『……ああ　そうだな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>

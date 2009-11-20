@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-05T16:29:40"/>
+	<create user="matsumiya" host="W00207" date="2009-11-20T16:42:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -301,13 +301,13 @@
 おいしいみずを　くれた　ひと[BE:01:ページ切り替え（クリア）]
 なんでも　この　こだいのしろは
 おおむかしの　えいゆうが[BE:00:ページ切り替え（行送り）]
-パッケージポケモンを　したがえて
+ドラゴンポケモンを　したがえて
 つくった　くにの　あとち　らしいね</language>
 		<language name="JPN_KANJI" width="256">おう！
 おいしいみずを　くれた　人[BE:01:ページ切り替え（クリア）]
 なんでも　この　古代の城は
 大昔の　英雄が[BE:00:ページ切り替え（行送り）]
-パッケージポケモンを　従えて
+ドラゴンポケモンを　従えて
 つくった　国の　跡地　らしいね</language>
 	</row>
 
@@ -326,13 +326,13 @@
 こだいのしろを　おおう　すな　だが
 すこしずつ　したに　おちているので[BE:01:ページ切り替え（クリア）]
 いままで　いけなかった
-ばしょにも　すすめるらしいな！</language>
+ばしょにも　すすめるらしいね！</language>
 		<language name="JPN_KANJI" width="256">おう！
 おいしいみずを　くれた　人[BE:01:ページ切り替え（クリア）]
 古代の城を　おおう　砂だが
 少しずつ　下に　落ちているので[BE:01:ページ切り替え（クリア）]
 今まで　行けなかった
-場所にも　進めるらしいな！</language>
+場所にも　進めるらしいね！</language>
 	</row>
 
 	<flowchart-group-list>

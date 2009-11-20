@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-05T16:18:36"/>
+	<create user="matsumiya" host="W00207" date="2009-11-20T19:36:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="245"/>
+		<comment position="4" width="264"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -271,8 +271,8 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -292,26 +292,122 @@
 	</lock>
 
 
+	<row id="msg_d03r0101_rival_01" text-color=",,,#0000ff,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：d08イベント後
+・ゲート付近に出現
+・pos（座標未定）を踏むとイベント発動
+　主人公に隣接してメッセージ表示</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">ブラッカー『こだいのしろは
+ここから　きたのほう　だってよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『古代の城は
+ここから　北のほう　だってよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d03r0101_rival_02" text-color=",,,#0000ff,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：d08イベント後
+・画面上向きでメッセージ表示
+・表示後、画面上方向に移動
+　画面外に消えると、主人公操作可能に</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">……じいさん　さきに　いったからさ
+いそぐぜ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">……じいさん　先に行ったからさ
+いそぐぜ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d03r0101_rival_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,,">
+		<comment>♂：d04r0601のイベント後
+・画面暗転から復帰後メッセージ自動で表示</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">ブラッカー『……はああ！
+なんていうか　やるせねーな[BE:01:ページ切り替え（クリア）]
+なにが　ぜつぼうする
+その　しゅんかんを　みるのが[BE:00:ページ切り替え（行送り）]
+だいすき　だよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『……はああ！
+なんていうか　やるせねーな[BE:01:ページ切り替え（クリア）]
+なにが　絶望する
+その　瞬間を　みるのが[BE:00:ページ切り替え（行送り）]
+至福の時……　だよ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d03r0101_champion_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
+		<comment>♂：d04r0601のイベント後
+・メッセージ表示後
+　TVトランシーバー受信音（仮）</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">アデク『……こうなれば
+もういっぴきの　ドラゴンポケモンに[BE:00:ページ切り替え（行送り）]
+たよることなく　プラズマだんに[BE:00:ページ切り替え（行送り）]
+Ｎに　いどむしか　あるまい……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アデク『……こうなれば
+もう一匹の　ドラゴンポケモンに[BE:00:ページ切り替え（行送り）]
+頼ることなく　プラズマ団に[BE:00:ページ切り替え（行送り）]
+Ｎに　挑むしか　あるまい……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d03r0101_rival_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,,">
+		<comment>♂：d04r0601のイベント後
+・メッセージ後、ＴＶトランシーバー画面に切り替え（仮）</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">ブラッカー『[1:00:トレーナー名:0]！　おまえの
+ＴＶトランシーバー　なってるぜ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『[1:00:トレーナー名:0]！　おまえの
+ＴＶトランシーバー　鳴ってるぜ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d03r0101_champion_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
+		<comment>♂：d04r0601のイベント後
+・ＴＶトランシーバー画面から復帰後
+　このメッセージ表示
+・表示後、チャンピオンに「そらをとぶ」演出で
+　動作モデル削除
+・続けてmsg_d03r0101_rival_05</comment>
+		<language name="JPN" width="256">アデク『……シッポウはくぶつかん
+そこに　いけば　いいのだな！[BE:01:ページ切り替え（クリア）]
+では　さきに　まいるぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アデク『……シッポウ博物館
+そこに　行けば　いいのだな！[BE:01:ページ切り替え（クリア）]
+では　さきに　まいるぞ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d03r0101_rival_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,,">
+		<comment>♂：d04r0601のイベント後
+・
+・c02gym0101でダークストーン（ライトストーン）入手で
+　ここから削除</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">ブラッカー『……オレ
+もういちど　このなかを　さがす[BE:00:ページ切り替え（行送り）]
+おまえは　シッポウシティの
+はくぶつかんに　むかいな！</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『……オレ
+もう一度　この中を　探す[BE:00:ページ切り替え（行送り）]
+おまえは　シッポウシティの
+博物館に　向かいな！</language>
+	</row>
+
 	<row id="msg_d03r0101_fighterm_01">
 		<comment>♂
 ・遺跡入り口近くに配置</comment>
 		<attribute name="キャラ指定">FIGHTERM
 格闘家♂</attribute>
-		<language name="JPN" width="256">こだいのしろで　とっくん　しようと
+		<language name="JPN" width="256">こだいのしろで　とっくん　するため
 はるばる　きたのだが……[BE:01:ページ切り替え（クリア）]
 ゴーストタイプの　ポケモンが
 おおくて　もう　ボロボロだよ</language>
-		<language name="JPN_KANJI" width="256">古代の城で　特訓　しようと
+		<language name="JPN_KANJI" width="256">古代の城で　特訓するため
 はるばる　来たのだが……[BE:01:ページ切り替え（クリア）]
 ゴーストタイプの　ポケモンが
 多くて　もう　ボロボロだよ</language>
 	</row>
 
-	<row id="msg_d03r0101_sunglasses_01">
+	<row id="msg_d03r0101_sunglasses_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・はい/いいえの選択肢
-・はい→
-　いいえ→</comment>
+・はい→sunglasses_03
+　いいえ→sunglasses_02</comment>
 		<attribute name="キャラ指定">SUNGLASSES
 サングラス</attribute>
 		<language name="JPN" width="256">……　……おっ　おいしいみず
@@ -320,16 +416,16 @@
 ……　……くっ　くれない　か？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d03r0101_sunglasses_02">
+	<row id="msg_d03r0101_sunglasses_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・いいえ選択時</comment>
 		<language name="JPN" width="256">……　……　……
-……　……　のど　がっ！</language>
+……　……のど　がっ！</language>
 		<language name="JPN_KANJI" width="256">……　……　……
-……　……　のど　がっ！</language>
+……　……のど　がっ！</language>
 	</row>
 
-	<row id="msg_d03r0101_sunglasses_03">
+	<row id="msg_d03r0101_sunglasses_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・はい選択時</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
@@ -338,7 +434,7 @@
 おいしいみずを　あげた！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d03r0101_sunglasses_04">
+	<row id="msg_d03r0101_sunglasses_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・sunglasses_03表示後に続けて</comment>
 		<language name="JPN" width="256">サングラスの　ひとは
@@ -349,16 +445,17 @@
 ぐびぐび……　ぐぼばあッ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d03r0101_sunglasses_05">
+	<row id="msg_d03r0101_sunglasses_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・sunglasses_04表示後に続けて</comment>
+・sunglasses_04表示後に続けて
+・「じてんしゃ」入手処理</comment>
 		<language name="JPN" width="256">はあ　たすかったよ！[BE:01:ページ切り替え（クリア）]
 じてんしゃで　さばくを　おうだんして
 いせきを　みにいこうと　したけれど[BE:01:ページ切り替え（クリア）]
 タイヤに　すなが　からまって
 スピードが　ちっとも　でないんだよね[BE:01:ページ切り替え（クリア）]
 せっかく　かったのに
-いちども　のっていない　じてんしゃ[BE:00:ページ切り替え（行送り）]
+まったく　のっていない　じてんしゃ[BE:00:ページ切り替え（行送り）]
 もったいないから　きみに　あげよう！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">はあ　助かったよ！[BE:01:ページ切り替え（クリア）]
 じてんしゃで　砂漠を　横断し
@@ -366,11 +463,11 @@
 タイヤに　砂が　絡まって
 スピードが　ちっとも　でないんだよね[BE:01:ページ切り替え（クリア）]
 せっかく　買ったのに
-いちども　乗っていない　じてんしゃ[BE:00:ページ切り替え（行送り）]
+まったく　乗っていない　じてんしゃ[BE:00:ページ切り替え（行送り）]
 もったいないから　君に　あげよう！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d03r0101_sunglasses_06">
+	<row id="msg_d03r0101_sunglasses_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・メッセージ表示後、遺跡方面にダッシュ</comment>
 		<language name="JPN" width="256">では　わたしは
