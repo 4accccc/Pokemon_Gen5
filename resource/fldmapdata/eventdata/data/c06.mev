@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/27 13:03:06
+#save date:2009/11/20 15:39:52
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\C06.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/27 13:03:06
+#save date:
 2
 #hold event type:
 1
@@ -37,6 +37,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 152 0 -584
 #event number: 1
@@ -66,6 +68,8 @@ DIR_LEFT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 216 0 -680
 #event number: 2
@@ -95,6 +99,8 @@ DIR_DOWN
 2
 #Move Limit Z Number
 2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 584 0 -408
 #event number: 3
@@ -124,6 +130,8 @@ DIR_DOWN
 1
 #Move Limit Z Number
 2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -8 0 -664
 #event number: 4
@@ -153,6 +161,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 408 0 -392
 #event number: 5
@@ -182,13 +192,15 @@ DIR_DOWN
 3
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 104 0 -56
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/27 13:03:06
+#save date:
 2
 #hold event type:
 1
@@ -198,7 +210,7 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/27 13:03:06
+#save date:
 2
 #hold event type:
 1
@@ -208,7 +220,7 @@ DIR_DOWN
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/27 13:03:06
+#save date:
 2
 #hold event type:
 1
@@ -225,8 +237,12 @@ DOOR_ID_C06PC0101_C06_EXIT02
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
-376 0 -376
+456 0 -520
+#size
+1 1
 #event number: 1
 #Door Event Label
 DOOR_ID_C06_C06R0301_EXIT01
@@ -238,8 +254,12 @@ DOOR_ID_C06R0301_C06_EXIT02
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
-456 0 -504
+616 0 -568
+#size
+1 1
 #event number: 2
 #Door Event Label
 DOOR_ID_C06_C06R0401_EXIT01
@@ -251,8 +271,12 @@ DOOR_ID_C06R0401_C06_EXIT02
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
-232 0 -376
+328 0 24
+#size
+1 1
 #event number: 3
 #Door Event Label
 DOOR_ID_C06_C06GYM0101_EXIT01
@@ -264,8 +288,12 @@ DOOR_ID_C06GYM0101_C06_EXIT02
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--104 0 56
+-24 0 40
+#size
+1 1
 #event number: 4
 #Door Event Label
 DOOR_ID_C06_C06R0201_EXIT01
@@ -277,8 +305,12 @@ DOOR_ID_C06R0201_C06_EXIT02
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
-56 0 -248
+200 0 -376
+#size
+1 1
 #event number: 5
 #Door Event Label
 DOOR_ID_C06_C06R0101_EXIT01
@@ -290,8 +322,12 @@ DOOR_ID_C06R0101_C06_EXIT02
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
-56 0 -24
+392 0 -376
+#size
+1 1
 #event number: 6
 #Door Event Label
 DOOR_ID_C06_C06R0501_EXIT01
@@ -303,8 +339,12 @@ DOOR_ID_C06R0501_C06_EXIT02
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
-104 0 -1048
+312 0 24
+#size
+1 1
 #event number: 7
 #Door Event Label
 DOOR_ID_C06_D06R0101_EXIT01
@@ -316,7 +356,11 @@ DOOR_ID_D06R0101_C06_EXIT01
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 376 0 -616
+#size
+1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

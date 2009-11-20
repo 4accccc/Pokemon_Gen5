@@ -1,10 +1,10 @@
 #event data
-#save date:2009/07/30 13:01:02
+#save date:2009/11/20 15:04:42
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c07.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/07/30 13:01:02
+#save date:
 2
 #hold event type:
 1
@@ -14,7 +14,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c07.wms
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/07/30 13:01:02
+#save date:
 2
 #hold event type:
 1
@@ -24,7 +24,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c07.wms
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/07/30 13:01:02
+#save date:
 2
 #hold event type:
 1
@@ -34,7 +34,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c07.wms
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/07/30 13:01:02
+#save date:
 2
 #hold event type:
 1
@@ -51,8 +51,12 @@ DOOR_ID_C07R0201_C07_EXIT02
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--88 0 88
+120 48 136
+#size
+1 1
 #event number: 1
 #Door Event Label
 DOOR_ID_C07_C07R0101_EXIT01
@@ -64,8 +68,12 @@ DOOR_ID_C07R0101_C07_EXIT02
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
-312 0 -360
+552 0 -664
+#size
+1 1
 #event number: 2
 #Door Event Label
 DOOR_ID_C07_C07PC0101_EXIT01
@@ -77,8 +85,12 @@ DOOR_ID_C07PC0101_C07_EXIT02
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
-424 32 -392
+152 48 -88
+#size
+1 1
 #event number: 3
 #Door Event Label
 DOOR_ID_C07_C07R0301_EXIT01
@@ -87,11 +99,15 @@ ZONE_ID_C07R0301
 #Next Door ID Name
 DOOR_ID_C07R0301_C07_EXIT02
 #Door Direction
-EXIT_DIR_RIGHT
+EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--72 32 -344
+296 -24 -424
+#size
+1 1
 #event number: 4
 #Door Event Label
 DOOR_ID_C07_C07R0401_EXIT01
@@ -100,11 +116,15 @@ ZONE_ID_C07R0401
 #Next Door ID Name
 DOOR_ID_C07R0401_C07_EXIT02
 #Door Direction
-EXIT_DIR_RIGHT
+EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--88 32 -120
+88 48 -312
+#size
+1 1
 #event number: 5
 #Door Event Label
 DOOR_ID_C07_C07GYM0101_EXIT01
@@ -116,8 +136,12 @@ DOOR_ID_C07GYM0101_C07_EXIT02
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
-152 0 24
+-104 48 -88
+#size
+1 1
 #event number: 6
 #Door Event Label
 DOOR_ID_C07_D07R0401_EXIT01
@@ -129,8 +153,12 @@ DOOR_ID_D07R0401_C07_EXIT01
 EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--152 32 -488
+-72 0 -520
+#size
+1 1
 #event number: 7
 #Door Event Label
 DOOR_ID_C07_D07R0401_EXIT02
@@ -142,7 +170,11 @@ DOOR_ID_D07R0401_C07_EXIT01
 EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--152 32 -504
+-72 0 -536
+#size
+1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
