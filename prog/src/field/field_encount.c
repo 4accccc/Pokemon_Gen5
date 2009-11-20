@@ -529,18 +529,18 @@ static void enc_CreateTrainerBattleParam(
   GAMEDATA *gdata = enc->gdata;
 
   BATTLE_PARAM_Init(param);
-  
+
   if( (tr_id1 != 0) && tr_id0 != tr_id1 ){ //シングル
     BTL_SETUP_Single_Trainer(
-        param, gdata, NULL, BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, tr_id0 );
+        param, gdata, NULL, BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, tr_id0, HEAPID_PROC );
   }else if( tr_id0 == tr_id1 ){ //ダブル
     BTL_SETUP_Double_Trainer(
-        param, gdata, NULL, BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, tr_id0 );
+        param, gdata, NULL, BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, tr_id0, HEAPID_PROC );
   }else{
     BTL_SETUP_Single_Trainer(
-        param, gdata, NULL, BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, tr_id0 );
+        param, gdata, NULL, BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, tr_id0, HEAPID_PROC );
   }
-  
+
   { //対戦相手の手持ちポケモン生成
     param->partyEnemy1 = PokeParty_AllocPartyWork( heapID );
     GF_ASSERT( param->partyEnemy1 != NULL );
@@ -647,7 +647,7 @@ static void BATTLE_PARAM_SetUpBattleSituation( BATTLE_SETUP_PARAM* bp, FIELDMAP_
 
   //天候
   bp->weather = btlparam_GetBattleWeather( fieldWork );
- 
+
   //BGM(本当はイベント進行/現在マップなどを見て決める)
   bp->musicDefault = SEQ_BGM_VS_NORAPOKE;   ///< デフォルト時のBGMナンバー
   bp->musicPinch = SEQ_BGM_BATTLEPINCH;     ///< ピンチ時のBGMナンバー

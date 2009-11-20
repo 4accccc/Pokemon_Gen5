@@ -141,11 +141,11 @@ void BP_SETUP_Wild( BATTLE_SETUP_PARAM* bp, GAMEDATA* gdata, HEAPID heapID, cons
  */
 //=============================================================================================
 void BTL_SETUP_Single_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID )
+  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID, HEAPID heapID )
 {
   setup_common( dst, gameData, landForm, weather );
 
-  dst->partyPlayer = PokeParty_AllocPartyWork( HEAPID_PROC );
+  dst->partyPlayer = PokeParty_AllocPartyWork( heapID );
   PokeParty_Copy( GAMEDATA_GetMyPokemon(gameData), dst->partyPlayer );
 
   dst->competitor = BTL_COMPETITOR_TRAINER;
@@ -194,7 +194,7 @@ void BTL_SETUP_Single_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
  */
 //=============================================================================================
 void BTL_SETUP_Double_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID )
+  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID, HEAPID heapID )
 {
   setup_common( dst, gameData, landForm, weather );
 
@@ -271,7 +271,7 @@ void BTL_SETUP_Multi_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
  */
 //=============================================================================================
 void BTL_SETUP_Triple_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID )
+  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID, HEAPID heapID )
 {
   setup_common( dst, gameData, landForm, weather );
 
@@ -321,7 +321,7 @@ void BTL_SETUP_Triple_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
  */
 //=============================================================================================
 void BTL_SETUP_Rotation_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID )
+  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID, HEAPID heapID )
 {
   setup_common( dst, gameData, landForm, weather );
 

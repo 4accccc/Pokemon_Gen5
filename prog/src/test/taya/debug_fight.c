@@ -1236,19 +1236,19 @@ FS_EXTERN_OVERLAY(battle);
       switch( rule ){
       case BTL_RULE_SINGLE:
         BTL_SETUP_Single_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
-          BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, trID );
+          BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
         break;
       case BTL_RULE_DOUBLE:
         BTL_SETUP_Double_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
-          BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, trID );
+          BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
         break;
       case BTL_RULE_TRIPLE:
         BTL_SETUP_Triple_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
-          BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, trID );
+          BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
         break;
       case BTL_RULE_ROTATION:
         BTL_SETUP_Rotation_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
-          BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, trID );
+          BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
         break;
       }
       if( wk->setupParam.partyPlayer == NULL ){

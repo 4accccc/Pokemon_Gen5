@@ -928,9 +928,9 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
       {
         u16 key = GFL_UI_KEY_GetCont();
         if( key & PAD_BUTTON_L ){
-          BTL_SETUP_Single_Trainer( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE, 2 );
+          BTL_SETUP_Single_Trainer( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE, 2, HEAPID_CORE );
         }else if( key & PAD_BUTTON_R ){
-          BTL_SETUP_Double_Trainer( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE, 2 );
+          BTL_SETUP_Double_Trainer( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE, 2, HEAPID_CORE );
         }else{
 //          BTL_SETUP_Triple_Trainer( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE, 2 );
 //          setup_party( HEAPID_CORE, wk->partyEnemy, MONSNO_MANYUURA, 0 );
