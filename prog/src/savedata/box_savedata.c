@@ -286,14 +286,17 @@ BOOL BOXDAT_PutPokemonPos( BOX_MANAGER* box, u32 trayNum, u32 pos, const POKEMON
  *
  */
 //------------------------------------------------------------------
-void BOXDAT_ChangePokeData( BOX_MANAGER * box, u32 trayNum, u32 pos1, u32 pos2 )
+void BOXDAT_ChangePokeData( BOX_MANAGER * box, u32 tray1, u32 pos1, u32 tray2, u32 pos2 )
 {
-  BOX_TRAY_DATA *trayData = BOXTRAYDAT_GetTrayData(box,trayNum);
-	POKEMON_PASO_PARAM	tmp = trayData->ppp[pos1];
-	trayData->ppp[pos1] = trayData->ppp[pos2];
-	trayData->ppp[pos2] = tmp;
+  BOX_TRAY_DATA * tray1Data = BOXTRAYDAT_GetTrayData( box, tray1 );
+  BOX_TRAY_DATA * tray2Data = BOXTRAYDAT_GetTrayData( box, tray2 );
+
+	POKEMON_PASO_PARAM	tmp = tray1Data->ppp[pos1];
+	tray1Data->ppp[pos1] = tray2Data->ppp[pos2];
+	tray2Data->ppp[pos2] = tmp;
 	//SaveData_RequestTotalSave();	ã‡ã‚Ç≈ïœçX
-	BOXDAT_SetTrayUseBit( box, trayNum);
+	BOXDAT_SetTrayUseBit( box, tray1 );
+	BOXDAT_SetTrayUseBit( box, tray2 );
 }
 
 //------------------------------------------------------------------

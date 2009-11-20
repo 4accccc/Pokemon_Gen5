@@ -1998,6 +1998,25 @@ static void BoxArrangePokeMoveCallBack_On( void * work, int now_pos, int old_pos
 		}
 	}
 */
+	BOX2_SYS_WORK * syswk;
+
+	syswk = work;
+
+//	CursorObjMove( syswk, now_pos );
+
+	if( now_pos == BOX2UI_ARRANGE_PGT_LEFT ||			// 31: ボックス切り替え矢印（左）
+			now_pos == BOX2UI_ARRANGE_PGT_RIGHT ||		// 32: ボックス切り替え矢印（右）
+			now_pos == BOX2UI_ARRANGE_PGT_TRAY1 ||		// 33: トレイアイコン
+			now_pos == BOX2UI_ARRANGE_PGT_TRAY6 ||		// 38: トレイアイコン
+			now_pos == BOX2UI_ARRANGE_PGT_STTUS ||		// 40: ステータス
+			now_pos == BOX2UI_ARRANGE_PGT_RET ){			// 41: 戻る
+		CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
+		now_pos = syswk->app->old_cur_pos;
+	}else{
+		CursorObjMove( syswk, now_pos );
+	}
+
+	syswk->app->old_cur_pos = now_pos;
 }
 
 // カーソルループのための位置
@@ -2948,6 +2967,23 @@ static u32 HitCheckCont( const CURSORMOVE_DATA * dat, u32 max )
 	return GFL_UI_TP_HIT_NONE;
 }
 
+static u32 HitCheckPos( const CURSORMOVE_DATA * dat, u32 max, u32 x, u32 y )
+{
+	GFL_UI_TP_HITTBL	rect[2];
+	u32	i;
+
+	rect[1] = TpCheckEnd;
+
+	for( i=0; i<max; i++ ){
+		rect[0] = dat[i].rect;
+		if( GFL_UI_TP_HitSelf( rect, x, y ) != GFL_UI_TP_HIT_NONE ){
+			return i;
+		}
+	}
+
+	return GFL_UI_TP_HIT_NONE;
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2962,6 +2998,12 @@ u32 BOX2UI_HitTrayPokeTrg(void)
 {
 	return HitCheckTrg( BoxArrangeMainCursorMoveData, BOX2OBJ_POKEICON_TRAY_MAX );
 }
+
+u32 BOX2UI_HitCheckTrayPoke( u32 x, u32 y )
+{
+	return HitCheckPos( BoxArrangeMainCursorMoveData, BOX2OBJ_POKEICON_TRAY_MAX, x, y );
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -3001,6 +3043,22 @@ u32 BOX2UI_HitCheckContTrayArrow(void)
 	return HitCheckCont( &BoxArrangeMainCursorMoveData[BOX2UI_ARRANGE_MAIN_LEFT], 2 );
 }
 
+u32 BOX2UI_HitCheckContTrayIconScroll(void)
+{
+	u32	ret = HitCheckCont( &BoxArrangePokeMoveCursorMoveData[BOX2UI_ARRANGE_PGT_TRAY1], 6 );
+
+	if( ret != GFL_UI_TP_HIT_NONE ){
+		ret += BOX2UI_ARRANGE_PGT_TRAY1;
+		if( ret == BOX2UI_ARRANGE_PGT_TRAY1 ){
+			return 0;
+		}
+		if( ret == BOX2UI_ARRANGE_PGT_TRAY6 ){
+			return 1;
+		}
+	}
+	return GFL_UI_TP_HIT_NONE;
+}
+
 
 static const GFL_UI_TP_HITTBL TrayScrollHitTbl[] =
 {
@@ -3016,6 +3074,16 @@ BOOL BOX2UI_HitCheckTrayScroll( u32 * x, u32 * y )
 		return TRUE;
 	}
 	return FALSE;
+}
+
+u32 BOX2UI_HitCheckTrayIcon( u32 x, u32 y )
+{
+	u32	ret = HitCheckPos( &BoxArrangePokeMoveCursorMoveData[BOX2UI_ARRANGE_PGT_TRAY2], 4, x, y );
+
+	if( ret != GFL_UI_TP_HIT_NONE ){
+		return ( BOX2OBJ_POKEICON_PUT_MAX + ret );
+	}
+	return BOX2MAIN_GETPOS_NONE;
 }
 
 

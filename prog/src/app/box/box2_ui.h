@@ -403,6 +403,8 @@ extern BOOL BOX2UI_YStatusButtonCheck( BOX2_SYS_WORK * syswk );
 //--------------------------------------------------------------------------------------------
 extern u32 BOX2UI_HitTrayPokeTrg(void);
 
+extern u32 BOX2UI_HitCheckTrayPoke( u32 x, u32 y );
+
 //--------------------------------------------------------------------------------------------
 /**
  * タッチチェック：手持ちポケモン（左）
@@ -428,6 +430,11 @@ extern u32 BOX2UI_HitCheckTrgPartyPokeRight(void);
 
 extern u32 BOX2UI_HitCheckContTrayArrow(void);
 
+extern u32 BOX2UI_HitCheckContTrayIconScroll(void);
+
 
 extern BOOL BOX2UI_HitCheckTrayScroll( u32 * x, u32 * y );
+
+
+extern u32 BOX2UI_HitCheckTrayIcon( u32 x, u32 y );
 

@@ -538,10 +538,10 @@ enum {
 
 // 取得ポケモン移動
 typedef struct {
-//	POKEMON_PARAM * pp;
-	u32	df_pos;
-	u32	mv_pos;
-	u32	flg;
+	u16	df_pos;		// 移動させるアイコンのデータ位置
+	u16	mv_pos;		// 移動先の画面位置
+	u16	gt_pos;		// 移動元の画面位置
+	u16	flg;
 	u32	mx;
 	u32	my;
 	s16	vx;
@@ -1057,6 +1057,12 @@ extern void BOX2MAIN_KeyTouchStatusSet( BOX2_SYS_WORK * syswk );
 extern void BOX2MAIN_ResetTouchBar( BOX2_SYS_WORK * syswk );
 
 extern void BOX2MAIN_InitTrayScroll( BOX2_SYS_WORK * syswk, u32 mvID );
+
+extern void BOX2MAIN_InitTrayIconScroll( BOX2_SYS_WORK * syswk, s32 mv );
+
+extern void BOX2MAIN_InitBoxMoveFrameScroll( BOX2_SYS_WORK * syswk );
+
+extern u32 BOX2MAIN_GetTrayScrollDir( BOX2_SYS_WORK * syswk, u32 now, u32 chg );
 
 
 //============================================================================================
@@ -2107,6 +2113,8 @@ extern int BOX2MAIN_NameInExit( BOX2_SYS_WORK * syswk );
  */
 //--------------------------------------------------------------------------------------------
 extern int BOX2MAIN_VFuncGetPokeMove( BOX2_SYS_WORK * syswk );
+
+extern int BOX2MAIN_VFuncGetPokeMove2( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**

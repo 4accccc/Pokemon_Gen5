@@ -150,7 +150,7 @@ extern u32 BOXDAT_GetEmptyTrayNumber( const BOX_MANAGER* box );
  *
  */
 //------------------------------------------------------------------
-extern void BOXDAT_ChangePokeData( BOX_MANAGER * box, u32 trayNum, u32 pos1, u32 pos2 );
+extern void BOXDAT_ChangePokeData( BOX_MANAGER * box, u32 tray1, u32 pos1, u32 tray2, u32 pos2 );
 
 //------------------------------------------------------------------
 /**

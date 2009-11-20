@@ -589,6 +589,7 @@ extern void BOX2OBJ_PokeIconBlendSet( BOX2_APP_WORK * appwk, u32 pos, BOOL flg )
 extern void BOX2OBJ_PokeIconBlendSetItem( BOX2_SYS_WORK * syswk, u32 pos );
 
 extern void BOX2OBJ_GetPokeIcon( BOX2_APP_WORK * appwk, u32 pos );
+extern void BOX2OBJ_PutPokeIcon( BOX2_APP_WORK * appwk, u32 pos );
 
 extern void BOX2OBJ_MovePokeIconHand( BOX2_SYS_WORK * syswk );
 
@@ -805,6 +806,7 @@ extern void BOX2OBJ_HandCursorSet( BOX2_APP_WORK * appwk, s16 px, s16 py, BOOL s
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PokeCursorAdd( BOX2_SYS_WORK * syswk );
+extern void BOX2OBJ_PokeCursorAdd2( BOX2_SYS_WORK * syswk, u32 pos );
 
 //--------------------------------------------------------------------------------------------
 /**

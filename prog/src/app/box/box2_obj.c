@@ -1531,6 +1531,17 @@ void BOX2OBJ_TrayPokeIconScroll( BOX2_SYS_WORK * syswk, s8 mv )
 			}
 		}
 		BOX2OBJ_SetPos( syswk->app, id, x, y, CLSYS_DEFREND_MAIN );
+
+/*
+		{
+			if( i % 6 == 0 ){
+				OS_Printf( "\n" );
+			}
+			BOX2OBJ_GetPos( syswk->app, id, &x, &y, CLSYS_DEFREND_MAIN );
+			OS_Printf( "[%d], %d, %d, %d", i, x, y, syswk->app->pokeicon_exist[i] );
+		}
+*/
+
 	}
 }
 
@@ -1821,9 +1832,36 @@ void BOX2OBJ_GetPokeIcon( BOX2_APP_WORK * appwk, u32 pos )
 	appwk->pokeicon_id[BOX2OBJ_POKEICON_GET_POS] = appwk->pokeicon_id[pos];
 	appwk->pokeicon_id[pos] = tmp;
 
+//	OS_Printf( "get = %d, put = %d\n", appwk->pokeicon_id[BOX2OBJ_POKEICON_GET_POS],appwk->pokeicon_id[pos] );
+
 	BOX2OBJ_SetPos( appwk, appwk->pokeicon_id[pos], x, y, CLSYS_DEFREND_MAIN );
 	BOX2OBJ_PokeIconPriChg( appwk, pos, BOX2OBJ_POKEICON_PRI_CHG_PUT );
 }
+
+// É|ÉPÉAÉCÉRÉìÇîzíuÇµÇΩÇ∆Ç´ÇÃÇnÇaÇiÇ¢ÇÍÇ©Ç¶
+void BOX2OBJ_PutPokeIcon( BOX2_APP_WORK * appwk, u32 pos )
+{
+	s16	x, y;
+	u8	tmp;
+
+	BOX2OBJ_GetPos( appwk, appwk->pokeicon_id[BOX2OBJ_POKEICON_GET_POS], &x, &y, CLSYS_DEFREND_MAIN );
+
+	tmp = appwk->pokeicon_id[pos];
+	appwk->pokeicon_id[pos] = appwk->pokeicon_id[BOX2OBJ_POKEICON_GET_POS];
+	appwk->pokeicon_id[BOX2OBJ_POKEICON_GET_POS] = tmp;
+
+	BOX2OBJ_SetPos( appwk, appwk->pokeicon_id[BOX2OBJ_POKEICON_GET_POS], x, y, CLSYS_DEFREND_MAIN );
+	BOX2OBJ_PokeIconPriChg( appwk, pos, BOX2OBJ_POKEICON_PRI_CHG_PUT );
+/*
+	if( pos < BOX2OBJ_POKEICON_TRAY_MAX || pos == BOX2OBJ_POKEICON_GET_POS ){
+		BOX2OBJ_BgPriChange( appwk, appwk->pokeicon_id[pos], POKEICON_TBG_PRI_PUT );
+	}else{
+		BOX2OBJ_BgPriChange( appwk, appwk->pokeicon_id[BOX2OBJ_POKEICON_GET_POS], POKEICON_PBG_PRI_PUT );
+	}
+	BOX2OBJ_ObjPriChange( appwk, appwk->pokeicon_id[BOX2OBJ_POKEICON_GET_POS], POKEICON_OBJ_PRI_PUT(pos) );
+*/
+}
+
 
 // éÊìæèÛë‘ÇÃà⁄ìÆ
 void BOX2OBJ_MovePokeIconHand( BOX2_SYS_WORK * syswk )
@@ -2760,17 +2798,22 @@ void BOX2OBJ_HandCursorSet( BOX2_APP_WORK * appwk, s16 px, s16 py, BOOL shadow )
 //--------------------------------------------------------------------------------------------
 void BOX2OBJ_PokeCursorAdd( BOX2_SYS_WORK * syswk )
 {
+	BOX2OBJ_PokeCursorAdd2( syswk, syswk->get_pos );
+}
+
+void BOX2OBJ_PokeCursorAdd2( BOX2_SYS_WORK * syswk, u32 pos )
+{
 	BOX2_APP_WORK * appwk;
 	s16	x, y;
 	u16	posID;
 	u16	i;
 
-	if( syswk->get_pos == BOX2MAIN_GETPOS_NONE ){
+	if( pos == BOX2MAIN_GETPOS_NONE ){
 		return;
 	}
 
 	appwk = syswk->app;
-	posID = appwk->pokeicon_id[ syswk->get_pos ];
+	posID = appwk->pokeicon_id[ pos ];
 	BOX2OBJ_GetPos( appwk, posID, &x, &y, CLSYS_DEFREND_MAIN );
 
 	// êVãKí«â¡
@@ -2810,6 +2853,7 @@ void BOX2OBJ_PokeCursorAdd( BOX2_SYS_WORK * syswk )
 		}
 	}
 }
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -3169,7 +3213,19 @@ void BOX2OBJ_InitTrayIconScroll( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 void BOX2OBJ_TrayIconPosGet( BOX2_APP_WORK * appwk, u32 pos, s16 * x, s16 * y )
 {
-	BOX2OBJ_GetPos( appwk, BOX2OBJ_ID_TRAYICON+pos, x, y, CLSYS_DEFREND_MAIN );
+	u32	i;
+
+	pos = ( pos + 1 ) * BOX2OBJ_TRAYICON_SY;
+
+	for( i=0; i<BOX2OBJ_TRAYICON_MAX; i++ ){
+		BOX2OBJ_GetPos( appwk, BOX2OBJ_ID_TRAYICON+i, x, y, CLSYS_DEFREND_MAIN );
+		if( pos == *y ){
+			return;
+		}
+	}
+
+	*x = 0;
+	*y = 0;
 }
 
 //--------------------------------------------------------------------------------------------
