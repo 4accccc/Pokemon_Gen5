@@ -22,10 +22,13 @@ TARGETDIR = $(PROJECT_ARCDIR)
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-SUBDIRS	=
+SUBDIRS	= mission
+
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
+
+
 
 # 自動でリソースを集める
 lsources:=$(wildcard *.ncl)
@@ -51,7 +54,8 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+#do-build:	$(ZONETABLE_DIR)$(ZONEID_H) $(MESSAGE_INC_DIR)$(MSG_MISSION_H) $(MESSAGE_INC_DIR)$(MSG_MISSION_MONO_H) $(FLDMMDL_DIR)$(FLDMMDL_CODE_H) $(ITEM_DIR)$(ITEM_H) $(FIELDCOMM_DIR)$(MISSION_TYPES_H) subdir $(TARGETDIR)/$(targetname).narc
+do-build:	subdir $(TARGETDIR)/$(targetname).narc $(ZONEID_H) $(MSG_MISSION_H) $(MSG_MISSION_MONO_H) $(FLDMMDL_CODE_H) $(ITEM_H) $(MISSION_TYPES_H) subdir $(TARGETDIR)/$(targetname).narc
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -67,6 +71,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするル
 $(targetname).narc: $(lsources) $(gsources) $(ssources) $(imdsources) $(bmpsources) cnv.bat makefile
 	cnv.bat
 	$(NAIXCUT) $(targetname).naix
+
 endif
 
 #------------------------------------------------------------------------------
@@ -88,5 +93,4 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 endif
 	rm -f $(TARGETDIR)/$(targetname).narc
 	rm -f $(TARGETDIR)/$(targetname).naix
-
 

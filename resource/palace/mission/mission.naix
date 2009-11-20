@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: mission.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_MISSION_NAIX_
+#define NARC_MISSION_NAIX_
+
+enum {
+	NARC_mission_mission_data_bin = 0
+};
+
+/* NARC_MISSION_NAIX_ */
+#endif
