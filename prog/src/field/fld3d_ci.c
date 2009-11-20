@@ -312,8 +312,11 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
 
   switch(*seq){
   case 0:
-    //@todo ＯＢＪのポーズ
-    ;
+    //ＯＢＪのポーズ
+    {
+      MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+      MMDLSYS_PauseMoveProc(mmdlsys);
+    }
     //プライオリティの保存
     PushPriority(ptr);
     //表示状態の保存
@@ -431,8 +434,11 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     //表示状態の復帰
     PopDisp(ptr);
 
-    //@todo ＯＢＪのポーズ解除
-    ;
+    //ＯＢＪのポーズ解除
+    {
+      MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+      MMDLSYS_ClearPauseMoveProc(mmdlsys);
+    }
 #if 0
     //マップ遷移を入れて、ＢＧのセットアップをする
     {
