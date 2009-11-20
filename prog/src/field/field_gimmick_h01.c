@@ -21,15 +21,15 @@
 #define ANIME_BUF_INTVL  (10) // アニメーションデータの読み込み間隔[frame]
 #define EXPOBJ_UNIT_IDX  (0)  // フィールド拡張オブジェクトのユニット登録インデックス
 #define ISS_3DS_UNIT_NUM (10) // 3Dユニット数
+#define TAIL_INTERVAL    (1)  // 前部分が発射してから後部分が発射するまでの間隔
 
 // 音源オブジェクトのインデックス
-typedef enum
-{
+typedef enum {
   SOBJ_TRAILER_1_HEAD, // トレーラー1(前)
   SOBJ_TRAILER_1_TAIL, // トレーラー1(後)
   SOBJ_TRAILER_2_HEAD, // トレーラー2(前)
   SOBJ_TRAILER_2_TAIL, // トレーラー2(後)
-  SOBJ_SHIP,      // 船
+  SOBJ_SHIP,           // 船
   SOBJ_NUM 
 } SOBJ_INDEX;
 
@@ -38,8 +38,7 @@ typedef enum
 // ■3Dリソース
 //==========================================================================================
 // リソース
-typedef enum
-{
+typedef enum {
   RES_TRAILER_HEAD_NSBMD,  // トレーラー(前)のモデル
   RES_TRAILER_TAIL_NSBMD,  // トレーラー(後)のモデル
   RES_SHIP_NSBMD,     // 船のモデル
@@ -53,8 +52,7 @@ static const GFL_G3D_UTIL_RES res_table[RES_NUM] =
 };
 
 // オブジェクト
-typedef enum
-{
+typedef enum {
   OBJ_TRAILER_1_HEAD,  // トレーラー1(前)
   OBJ_TRAILER_1_TAIL,  // トレーラー1(後)
   OBJ_TRAILER_2_HEAD,  // トレーラー2(前)
@@ -64,11 +62,11 @@ typedef enum
 } OBJ_INDEX;
 static const GFL_G3D_UTIL_OBJ obj_table[OBJ_NUM] = 
 {
-  { RES_TRAILER_HEAD_NSBMD, 0, 0, NULL, 0 },  // トレーラー1(前)
-  { RES_TRAILER_TAIL_NSBMD, 0, 0, NULL, 0 },  // トレーラー1(後)
-  { RES_TRAILER_HEAD_NSBMD, 0, 0, NULL, 0 },  // トレーラー2(前)
-  { RES_TRAILER_TAIL_NSBMD, 0, 0, NULL, 0 },  // トレーラー2(後)
-  { RES_SHIP_NSBMD,    0, 0, NULL, 0 }, // 船
+  { RES_TRAILER_HEAD_NSBMD, 0, RES_TRAILER_HEAD_NSBMD, NULL, 0 },  // トレーラー1(前)
+  { RES_TRAILER_TAIL_NSBMD, 0, RES_TRAILER_TAIL_NSBMD, NULL, 0 },  // トレーラー1(後)
+  { RES_TRAILER_HEAD_NSBMD, 0, RES_TRAILER_HEAD_NSBMD, NULL, 0 },  // トレーラー2(前)
+  { RES_TRAILER_TAIL_NSBMD, 0, RES_TRAILER_TAIL_NSBMD, NULL, 0 },  // トレーラー2(後)
+  { RES_SHIP_NSBMD,         0, RES_SHIP_NSBMD,         NULL, 0 },  // 船
 };
 
 // セットアップ情報
@@ -190,11 +188,7 @@ void H01_GIMMICK_End( FIELDMAP_WORK* fieldmap )
   }
 
   // 3Dサウンドシステムを破棄
-  ISS_3DS_SYS_Delete( work->iss3dsSys );
-
-  // ギミック管理ワークを破棄
-  GFL_HEAP_FreeMemory( work );
-
+  ISS_3DS_SYS_Delete( work->iss3dsSys ); // ギミック管理ワークを破棄GFL_HEAP_FreeMemory( work ); 
   // DEBUG:
   OBATA_Printf( "GIMMICK-H01: end\n" );
 }
@@ -225,6 +219,16 @@ void H01_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
       if( --work->wait[i] <= 0 )
       {
         MoveStart( work, i );
+        // 後部分を前部分に追従させる
+        switch(i)
+        {
+        case SOBJ_TRAILER_1_HEAD:
+          work->wait[SOBJ_TRAILER_1_TAIL] = TAIL_INTERVAL;
+          break;
+        case SOBJ_TRAILER_2_HEAD:
+          work->wait[SOBJ_TRAILER_2_TAIL] = TAIL_INTERVAL;
+          break;
+        }
       }
     }
     // 動作中 ==> アニメーションを更新

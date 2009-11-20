@@ -276,8 +276,19 @@ static void AdjustDirection( SOUNDOBJ* sobj )
   if( ICA_ANIME_GetRotate( sobj->icaAnime, &vec ) != TRUE ) { return; }
 
   // 3Dステータスを設定
-  GFL_CALC3D_MTX_CreateRot( vec.x >> FX32_SHIFT,
-                            vec.y >> FX32_SHIFT,
-                            vec.z >> FX32_SHIFT,
-                            &sobj->status->rotate );
+  {
+    float x, y, z;
+    u16 rx, ry, rz;
+    x = FX_FX32_TO_F32( vec.x );
+    y = FX_FX32_TO_F32( vec.y );
+    z = FX_FX32_TO_F32( vec.z );
+    while( x < 0 ) x += 360.0f;
+    while( y < 0 ) y += 360.0f;
+    while( z < 0 ) z += 360.0f;
+    rx = x / 360.0f * 0xffff;
+    ry = y / 360.0f * 0xffff;
+    rz = z / 360.0f * 0xffff; 
+    MTX_Identity33( &sobj->status->rotate );
+    GFL_CALC3D_MTX_CreateRot( rx, ry, rz, &sobj->status->rotate );
+  }
 }
