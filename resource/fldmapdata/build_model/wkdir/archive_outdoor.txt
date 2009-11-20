@@ -178,3 +178,4 @@
 "nsbmdfiles/d19_shirne01.nsbmd"
 "nsbmdfiles/d19_house01.nsbmd"
 "nsbmdfiles/panhouse01.nsbmd"
+"nsbmdfiles/c6_bhouse_01.nsbmd"
