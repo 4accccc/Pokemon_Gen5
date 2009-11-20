@@ -44,13 +44,13 @@ EVENT_START   ev_r02_boy1_01
 	
 	IF FLAG_OFF( FH_16) THEN
 	
-		_BALLOONWIN_OBJMSG_OPEN(msg_r02_boy2a_01,R02_BOY1_01)
+		_BALLOONWIN_OBJMSG(msg_r02_boy2a_01,R02_BOY1_01)
 		_YES_NO_WIN( SCWK_ANSWER )
 		_BALLOONWIN_CLOSE() //会話ウィンドウを閉じます
 	
 		IF $SCWK_ANSWER == 0 THEN
 			_FLAG_SET(FH_16)
-			_BALLOONWIN_OBJMSG_OPEN(msg_r02_boy2a_02,R02_BOY1_01)
+			_BALLOONWIN_OBJMSG(msg_r02_boy2a_02,R02_BOY1_01)
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 			//段差を降りるアニメ+段差を降りるSE
@@ -102,7 +102,7 @@ EVENT_START   ev_pos_r02_mama_01
 	_PLAYER_NAME(0)
 	
 	//ママが主人公を呼ぶ
-	_BALLOONWIN_OBJMSG_OPEN( msg_r02_mama_01, R02_MAMA_01)
+	_BALLOONWIN_OBJMSG( msg_r02_mama_01, R02_MAMA_01)
 	_BALLOONWIN_CLOSE()
 
 	//主人公、ママの声に気づく
@@ -121,21 +121,21 @@ EVENT_START   ev_pos_r02_mama_01
 	_PLAYER_NAME(0)
 	
 	//ママ「やっと　おいついた」
-	_BALLOONWIN_OBJMSG_OPEN( msg_r02_mama_02, R02_MAMA_01)
+	_BALLOONWIN_OBJMSG( msg_r02_mama_02, R02_MAMA_01)
 	_BALLOONWIN_CLOSE()
 
 //【仮】ランニングシューズ入手イベントは、現在メッセージのみ。
-	_BALLOONWIN_OBJMSG_OPEN( msg_r02_mama_03, R02_MAMA_01)
+	_BALLOONWIN_OBJMSG( msg_r02_mama_03, R02_MAMA_01)
 	_BALLOONWIN_CLOSE()
 	
 	//ママがランニングシューズの説明
-	_BALLOONWIN_OBJMSG_OPEN( msg_r02_mama_04, R02_MAMA_01)
+	_BALLOONWIN_OBJMSG( msg_r02_mama_04, R02_MAMA_01)
 	_BALLOONWIN_CLOSE()
 	
 	_TIME_WAIT( 16 )
 	
 	//ママ「あなたは　ひとりじゃ～」
-	_BALLOONWIN_OBJMSG_OPEN( msg_r02_mama_05, R02_MAMA_01)
+	_BALLOONWIN_OBJMSG( msg_r02_mama_05, R02_MAMA_01)
 	_BALLOONWIN_CLOSE()
 	
 	//ママが帰っていく

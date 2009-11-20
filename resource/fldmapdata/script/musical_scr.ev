@@ -39,20 +39,20 @@ EVENT_START	ev_musical_recept_single
 
   _TALK_OBJ_START()
 
-	_BALLOONWIN_TALKOBJ_OPEN( msg_musical_test_01 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_musical_test_01 )
 	_YES_NO_WIN( SCWK_ANSWER )
 	_BALLOONWIN_CLOSE()
 
   IF $SCWK_ANSWER == 0 THEN
 
-    _BALLOONWIN_TALKOBJ_OPEN( msg_musical_test_02 )
+    _BALLOONWIN_TALKOBJ_MSG( msg_musical_test_02 )
     _BALLOONWIN_CLOSE()
 
     _MUSICAL_CALL(0,0) //ミュージカル呼び出し
 
   ELSE
 
-    _BALLOONWIN_TALKOBJ_OPEN( msg_musical_test_03 )
+    _BALLOONWIN_TALKOBJ_MSG( msg_musical_test_03 )
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
 
@@ -73,7 +73,7 @@ fan_main_routine:
 	//本来見た目の処理はココでやるべきではないと思うが、仮処理
 	_GET_MUSICAL_FAN_VALUE_TYPE( fan_number , fan_type )
 	IF $fan_type == MUSICAL_FAL_TYPE_NONE THEN
-		_BALLOONWIN_TALKOBJ_OPEN( msg_msucail_fan_none )
+		_BALLOONWIN_TALKOBJ_MSG( msg_msucail_fan_none )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	ELSE
@@ -81,7 +81,7 @@ fan_main_routine:
 		//応援メッセージ
 		_GET_MUSICAL_FAN_VALUE_CHEER_MSG( fan_number , msg_id )
 		_PLAYER_NAME( 0 )
-		_BALLOONWIN_TALKOBJ_OPEN( msg_id )
+		_BALLOONWIN_TALKOBJ_MSG( msg_id )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		
@@ -98,15 +98,14 @@ fan_main_routine:
 			//グッズ名のセット
 			_MUSICAL_WORD_GOODS_NAME( 0 , gift_number )
 			//贈るメッセージ
-			_BALLOONWIN_TALKOBJ_OPEN( msg_id )
+			_BALLOONWIN_TALKOBJ_MSG( msg_id )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 			
 			//仮メッセージ
-			_TALKWIN_OPEN()
-				_TALKMSG( msg_msucail_fan_get_goods )
+						_SYSWIN_MSG_DOWN( msg_msucail_fan_get_goods )
 				_LAST_KEYWAIT()
-			_TALKWIN_CLOSE()
+			_SYSWIN_CLOSE()
 			
 			//追加処理
 			_ADD_MUSICAL_GOODS( gift_number)

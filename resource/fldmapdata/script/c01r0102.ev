@@ -35,11 +35,11 @@ EVENT_START   ev_scene_c01r0102_pdwguide_01
 	_OBJ_ANIME_WAIT()
 	
 	//あらためて　じこしょうかい　するね　アタシは　マコモ
-	_BALLOONWIN_OBJMSG_OPEN( msg_c01r0102_inventor_01 , C01R0102_INVENTOR_01 )
+	_BALLOONWIN_OBJMSG( msg_c01r0102_inventor_01 , C01R0102_INVENTOR_01 )
 	_BALLOONWIN_CLOSE()
 	
 	//あっ！　そのCギア　つかえるように　とうろくしてあげる
-	_BALLOONWIN_OBJMSG_OPEN( msg_c01r0102_inventor_02 , C01R0102_INVENTOR_01 )
+	_BALLOONWIN_OBJMSG( msg_c01r0102_inventor_02 , C01R0102_INVENTOR_01 )
 	_BALLOONWIN_CLOSE()
 	
 	//マコモ：パソコンの前に移動、何かゴソゴソして、自機の前に戻ってくる
@@ -50,18 +50,18 @@ EVENT_START   ev_scene_c01r0102_pdwguide_01
 	_CGEAR_ON_DEMO()
 	
 	//で　アタシからの　バックアップです　この　わざマシンを　どうぞ！
-	_BALLOONWIN_OBJMSG_OPEN( msg_c01r0102_inventor_03 , C01R0102_INVENTOR_01 )
+	_BALLOONWIN_OBJMSG( msg_c01r0102_inventor_03 , C01R0102_INVENTOR_01 )
 	_BALLOONWIN_CLOSE()
 	
 	//わざマシン入手
 	_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
 	
 	//ポケモンが　おぼえる　わざには　たたかっていない　ときでも
-	_BALLOONWIN_OBJMSG_OPEN( msg_c01r0102_inventor_04 , C01R0102_INVENTOR_01 )
+	_BALLOONWIN_OBJMSG( msg_c01r0102_inventor_04 , C01R0102_INVENTOR_01 )
 	_BALLOONWIN_CLOSE()
 	
 	//……で　てだすけ　じゃなくて　おねがいしても　いいかな？
-	_BALLOONWIN_OBJMSG_OPEN( msg_c01r0102_inventor_05 , C01R0102_INVENTOR_01 )
+	_BALLOONWIN_OBJMSG( msg_c01r0102_inventor_05 , C01R0102_INVENTOR_01 )
 	_BALLOONWIN_CLOSE()
 	
 	//マコモ：踊る
@@ -69,7 +69,7 @@ EVENT_START   ev_scene_c01r0102_pdwguide_01
 	_OBJ_ANIME_WAIT()
 	
 	//……ごめんなさい　つい　おどっちゃうのよね
-	_BALLOONWIN_OBJMSG_OPEN( msg_c01r0102_inventor_06 , C01R0102_INVENTOR_01 )
+	_BALLOONWIN_OBJMSG( msg_c01r0102_inventor_06 , C01R0102_INVENTOR_01 )
 	_BALLOONWIN_CLOSE()
 
 	//===========フラグワーク操作===========//
@@ -166,14 +166,14 @@ EVENT_START   ev_c01r0102_inventor_01
 		IF $WK_SCENE_D01R0101 <= 5 THEN
 		
 			//マコモ『ゆめのあとちに　いる　ふしぎなポケモン』
-			_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0102_inventor_07 )
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_07 )
 			_BALLOONWIN_CLOSE()
 		
 		//重要アイテム「？？？」を持っている場合
 		ELSE
 		
 			//マコモ『それって！　ムシャーナの「？？？？？」！？』
-			_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0102_inventor_08 )
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_08 )
 			_BALLOONWIN_CLOSE()
 			
 		ENDIF
@@ -190,15 +190,15 @@ EVENT_START   ev_c01r0102_girl3_01
 	IF FLAG_OFF( FE_CGEAR_GET ) THEN
 		
 		//あなた　トレーナー？　じゃあ　ポケモンセンターの
-		_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0102_girl3_01 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_girl3_01 )
 		_BALLOONWIN_CLOSE()
 		
-		_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0102_girl3_02 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_girl3_02 )
 		_BALLOONWIN_CLOSE()
 	
 	//PDWイベントが終わっている場合
 	ELSE
-		_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0102_girl3_02 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_girl3_02 )
 		_BALLOONWIN_CLOSE()
 	
 	ENDIF

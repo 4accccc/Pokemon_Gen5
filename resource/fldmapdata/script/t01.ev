@@ -48,21 +48,21 @@ EVENT_START   ev_t01_woman2_01
 	_TALK_OBJ_START()
 
 	//漢字よりも平仮名が好き？
-	_BALLOONWIN_TALKOBJ_OPEN( msg_t01_woman2_01 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_t01_woman2_01 )
 	_YES_NO_WIN( SCWK_ANSWER )
 	_BALLOONWIN_CLOSE()
 
 	IF $SCWK_ANSWER == 0 THEN
 		//はいの処理
 
-		_BALLOONWIN_TALKOBJ_OPEN( msg_t01_woman2_02 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01_woman2_02 )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		_CHG_LANGID()		//漢字ひらがな切り替え
 	ELSE
 		//いいえの処理
 
-		_BALLOONWIN_TALKOBJ_OPEN( msg_t01_woman2_03 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01_woman2_03 )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	ENDIF
@@ -80,7 +80,7 @@ EVENT_START	ev_t01_rival_01
 		//イベント後なら研究所案内イベント
 
 		//ん…何かあった？
-		_BALLOONWIN_TALKOBJ_OPEN( msg_t01_black_03 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01_black_03 )
 		_BALLOONWIN_CLOSE()
 
 		//友達ズ：研究所内へ入る
@@ -112,7 +112,7 @@ EVENT_START	ev_t01_rival_01
 
 	ELSE
 		//悪いけど　ホワイティの家まで…
-		_BALLOONWIN_TALKOBJ_OPEN( msg_t01_black_02 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01_black_02 )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	ENDIF
@@ -167,7 +167,7 @@ EVENT_START ev_pos_t01_stopper_01
 
 	//先を急ぎたいのは分かるけど…
 	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01_black_01, T01_RIVAL_01 )
+	_BALLOONWIN_OBJMSG( msg_t01_black_01, T01_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
 	//ライバル：走って去る

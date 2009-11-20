@@ -56,7 +56,7 @@ struct _TAG_SCRCMD_WORK
 	GFL_MSGDATA *msgData;
 	VecFx32 talkMsgWinTailPos;
   
-  void *msgWin;
+  void *msgWin; //ÉÅÉjÉÖÅ[ånó¨óp
   
   GFL_TCB *tcb_callproc;
 	GFL_TCB *tcb_anm_tbl[SCRCMD_ACMD_MAX];

@@ -43,7 +43,7 @@ EVENT_START  ev_pos_r06_mountain_01
 		_OBJ_ANIME( R06_MOUNTAIN_01, anm_mountain_01_kiduku )
 		_OBJ_ANIME_WAIT()
 		
-		_BALLOONWIN_OBJMSG_OPEN( msg_r06_mountain_01 , R06_MOUNTAIN_01 )
+		_BALLOONWIN_OBJMSG( msg_r06_mountain_01 , R06_MOUNTAIN_01 )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		
@@ -52,7 +52,7 @@ EVENT_START  ev_pos_r06_mountain_01
 		
 	ELSE
 		
-		_BALLOONWIN_OBJMSG_OPEN( msg_r06_mountain_02 , R06_MOUNTAIN_01 )
+		_BALLOONWIN_OBJMSG( msg_r06_mountain_02 , R06_MOUNTAIN_01 )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		
@@ -122,14 +122,12 @@ EVENT_START   ev_bg_r06_sign4_01
 	
 //ÅyâºÅzãGêﬂå§ãÜèäÇÃëOÇ™ÅAÇ®ìæÇ»åfé¶î¬Ç≈Ç¢Ç¢ÇÃÇ©ïsñæ
 /*
-	_TALKWIN_OPEN()
-	_TALKMSG   ( msg_r06_sign3_01)
-    _TALKWIN_CLOSE()
+	_SYSWIN_MSG_DOWN   ( msg_r06_sign3_01)
+    _SYSWIN_CLOSE()
 */  
-    _TALKWIN_OPEN()
-	_TALKMSG   ( msg_r06_sign3_02)
+  	_SYSWIN_MSG_DOWN   ( msg_r06_sign3_02)
     _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
+    _SYSWIN_CLOSE()
     
     	
 EVENT_END

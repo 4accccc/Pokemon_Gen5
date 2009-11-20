@@ -30,7 +30,7 @@ _EVENT_DATA_END //èIóπ
 //--------------------------------------------------------------------
 EVENT_START   ev_c99_talkobj_sample_01
   _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c99_01 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c99_01 )
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 EVENT_END
@@ -40,7 +40,7 @@ EVENT_END
 //--------------------------------------------------------------------
 EVENT_START   ev_c99_talkobj_sample_02
   _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c99_02 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c99_02 )
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 EVENT_END
@@ -50,7 +50,7 @@ EVENT_END
 //--------------------------------------------------------------------
 EVENT_START   ev_c99_talkobj_sample_03
   _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c99_03 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c99_03 )
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 EVENT_END
@@ -60,7 +60,7 @@ EVENT_END
 //--------------------------------------------------------------------
 EVENT_START   ev_c99_talkobj_sample_04
   _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c99_04 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c99_04 )
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 EVENT_END
@@ -70,7 +70,7 @@ EVENT_END
 //--------------------------------------------------------------------
 EVENT_START   ev_c99_talkobj_sample_05
   _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c99_05 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c99_05 )
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 EVENT_END
@@ -80,7 +80,7 @@ EVENT_END
 //--------------------------------------------------------------------
 EVENT_START   ev_c99_talkobj_sample_06
   _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c99_06 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c99_06 )
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 EVENT_END
@@ -91,7 +91,7 @@ EVENT_END
 EVENT_START   ev_c99_talkobj_kabi32_00
   _TALK_OBJ_START()
 	
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c99_07 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c99_07 )
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
@@ -106,7 +106,7 @@ EVENT_END
 EVENT_START   ev_c99_talkobj_kabi32_01
   _TALK_OBJ_START()
 	
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c99_07 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c99_07 )
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
@@ -120,7 +120,7 @@ EVENT_END
 EVENT_START   ev_c99_talkobj_kabi32_02
   _TALK_OBJ_START()
 	
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c99_07 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c99_07 )
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
@@ -134,7 +134,7 @@ EVENT_END
 EVENT_START   ev_c99_talkobj_kabi32_03
   _TALK_OBJ_START()
 	
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c99_07 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c99_07 )
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
@@ -148,7 +148,7 @@ EVENT_END
 EVENT_START   ev_c99_talkobj_kabi32_04
   _TALK_OBJ_START()
 	
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c99_07 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c99_07 )
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	

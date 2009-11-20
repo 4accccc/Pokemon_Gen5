@@ -69,7 +69,7 @@ EVENT_START   ev_c02r0301_girl1_01
 	_GET_TEMOTI_NATSUKI( nathuki_check, 0 )
 	
 	_TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c02r0301_girl1_01 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_girl1_01 )
 	_BALLOONWIN_CLOSE() 
 	
 	//手持ちポケモン先頭（0番）のなつき度で分岐
@@ -79,20 +79,20 @@ EVENT_START   ev_c02r0301_girl1_01
   		//まだまだ　これからって　かんじね
   		
   		_TALK_OBJ_START()
-		_BALLOONWIN_TALKOBJ_OPEN( msg_c02r0301_girl1_04 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_girl1_04 )
 		
   	ELSIF $nathuki_check < 120 THEN
   		//なつき度が70～119の処理
   		//うん　すこし　なついている
   			
   		_TALK_OBJ_START()
-		_BALLOONWIN_TALKOBJ_OPEN( msg_c02r0301_girl1_03 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_girl1_03 )
   	
   	ELSE
   		//なつき度が120～255の処理
   		//あなたに　なついているのね
   				
-		_BALLOONWIN_TALKOBJ_OPEN( msg_c02r0301_girl1_02 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_girl1_02 )
 		
 	ENDIF
 

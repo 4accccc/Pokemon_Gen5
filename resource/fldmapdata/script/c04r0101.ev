@@ -50,10 +50,10 @@ EVENT_START	ev_c04r0101_fighterm_01
 	//ゲームクリア前後で分岐
 	IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 		//殿堂入り後
-		_BALLOONWIN_TALKOBJ_OPEN( msg_c04r0101_fighterm_02 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c04r0101_fighterm_02 )
 	ELSE
 		//殿堂入り前
-		_BALLOONWIN_TALKOBJ_OPEN( msg_c04r0101_fighterm_01 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c04r0101_fighterm_01 )
 	ENDIF
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()

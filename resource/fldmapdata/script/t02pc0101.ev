@@ -57,7 +57,7 @@ EVENT_START   ev_t02pc0101_scene_change_01
 	_OBJ_ANIME_WAIT()
 	
 	//ここがポケモンセンター！
-	_BALLOONWIN_OBJMSG_OPEN( msg_t02pc0101_hakase2_01, T02PC0101_DOCTOR )
+	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_01, T02PC0101_DOCTOR )
 	_BALLOONWIN_CLOSE()
 	
 	//博士：カウンターの真横に動く、自機：カウンター前に移動、サポート：自機真横に移動
@@ -70,7 +70,7 @@ EVENT_START   ev_t02pc0101_scene_change_01
 	_OBJ_ANIME_WAIT()
 	
 	//ポケモンセンターの凄いところ！
-	_BALLOONWIN_OBJMSG_OPEN( msg_t02pc0101_hakase2_02,T02PC0101_DOCTOR )
+	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_02,T02PC0101_DOCTOR )
 	_BALLOONWIN_CLOSE()
 
 	//【仮】自機がカウンターで会話を起こさず移動した場合引き戻される
@@ -88,7 +88,7 @@ EVENT_START   ev_t02pc0101_scene_change_01
 	_OBJ_ANIME_WAIT()
 	
 	//こいつはパソコン！
-	_BALLOONWIN_OBJMSG_OPEN( msg_t02pc0101_hakase2_04,T02PC0101_DOCTOR )
+	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_04,T02PC0101_DOCTOR )
 	_BALLOONWIN_CLOSE()
 	
 	//サポート：博士の方に向く
@@ -96,11 +96,11 @@ EVENT_START   ev_t02pc0101_scene_change_01
 	_OBJ_ANIME_WAIT()
 	
 	//はかせ……　がめんの「だれかのパソコン」って
-	_BALLOONWIN_OBJMSG_OPEN( msg_t02pc0101_white_01,T02PC0101_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG( msg_t02pc0101_white_01,T02PC0101_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
 	
 	//なるほど……　いい　しつもんだ
-	_BALLOONWIN_OBJMSG_OPEN( msg_t02pc0101_hakase2_05,T02PC0101_DOCTOR )
+	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_05,T02PC0101_DOCTOR )
 	_BALLOONWIN_CLOSE()
 	
 	//博士：フレンドリィショップの前（１マス隣）に移動、自機：フレンドリィショップの前に移動
@@ -110,11 +110,11 @@ EVENT_START   ev_t02pc0101_scene_change_01
 	_OBJ_ANIME_WAIT()
 	
 	//こちらは　フレンドリィショップ！
-	_BALLOONWIN_OBJMSG_OPEN( msg_t02pc0101_hakase2_06,T02PC0101_DOCTOR )
+	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_06,T02PC0101_DOCTOR )
 	_BALLOONWIN_CLOSE()
 	
 	//よーしよしよし！
-	_BALLOONWIN_OBJMSG_OPEN( msg_t02pc0101_hakase2_07,T02PC0101_DOCTOR )
+	_BALLOONWIN_OBJMSG( msg_t02pc0101_hakase2_07,T02PC0101_DOCTOR )
 	_BALLOONWIN_CLOSE()
 	
 	//博士、立ち去る
@@ -134,7 +134,7 @@ EVENT_START   ev_t02pc0101_scene_change_01
 	_OBJ_ANIME_WAIT()
 	
 	//あたし　ちょっと　のんびり　していくね
-	_BALLOONWIN_OBJMSG_OPEN( msg_t02pc0101_white_02,T02PC0101_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG( msg_t02pc0101_white_02,T02PC0101_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
 	
 	//サポート：ショップに向く

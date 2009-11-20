@@ -38,20 +38,18 @@ ev_egg_birth:
   DEFINE_LOCAL ret
 
   //「おや？……」
-  _TALKWIN_OPEN()
-  _TALKMSG( egg_evemt_01 )
+  _SYSWIN_MSG_DOWN( egg_evemt_01 )
   _AB_KEYWAIT()
-  _TALKWIN_CLOSE()
+  _SYSWIN_CLOSE()
 
   // @todo 孵化デモ画面呼び出し
   _PARTY_POKE_EGG_BIRTH( ret )
 
   //「～が生まれた！」
   _TEMOTI_MONS_NAME( 0, ret )
-  _TALKWIN_OPEN()
-  _TALKMSG( egg_evemt_02 )
+  _SYSWIN_MSG_DOWN( egg_evemt_02 )
   _AB_KEYWAIT()
-  _TALKWIN_CLOSE()
+  _SYSWIN_CLOSE()
 } 
 _END
 

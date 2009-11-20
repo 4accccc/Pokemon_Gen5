@@ -46,7 +46,7 @@ EVENT_START	ev_pos_c04_support_01
 
 	//サポート：おーい　～～！
 	_PLAYER_NAME( 0 )	//主人公名を取得
-	_BALLOONWIN_OBJMSG_OPEN( msg_c04_white_01 , MMDL_ID_EVENTOBJ_00 )
+	_BALLOONWIN_OBJMSG( msg_c04_white_01 , MMDL_ID_EVENTOBJ_00 )
 	_BALLOONWIN_CLOSE()
 
 	//サポート：主人公横へ
@@ -62,7 +62,7 @@ EVENT_START	ev_pos_c04_support_01
 		//初回
 
 		//サポート：あたしさ　野球が見たいの
-		_BALLOONWIN_OBJMSG_OPEN( msg_c04_white_02 , MMDL_ID_EVENTOBJ_00 )
+		_BALLOONWIN_OBJMSG( msg_c04_white_02 , MMDL_ID_EVENTOBJ_00 )
 		_BALLOONWIN_CLOSE()
 
 	ELSE
@@ -70,7 +70,7 @@ EVENT_START	ev_pos_c04_support_01
 		//２回目以降
 
 		//ねえねえ　～～！さっき　一緒に野球を…
-		_BALLOONWIN_OBJMSG_OPEN( msg_c04_white_04 , MMDL_ID_EVENTOBJ_00 )
+		_BALLOONWIN_OBJMSG( msg_c04_white_04 , MMDL_ID_EVENTOBJ_00 )
 		_BALLOONWIN_CLOSE()
 
 	ENDIF
@@ -82,7 +82,7 @@ EVENT_START	ev_pos_c04_support_01
 	_OBJ_ANIME_WAIT()
 
 	//サポート：ここだよ！
-	_BALLOONWIN_OBJMSG_OPEN( msg_c04_white_03 , MMDL_ID_EVENTOBJ_00 )
+	_BALLOONWIN_OBJMSG( msg_c04_white_03 , MMDL_ID_EVENTOBJ_00 )
 	_BALLOONWIN_CLOSE()
 
 	//サポート：野球場に入る
@@ -173,7 +173,7 @@ EVENT_START	ev_pos_c04_leader4_01
 	_OBJ_ANIME_WAIT()
 
 	//リーダー：遅くなってゴメン！
-	_BALLOONWIN_OBJMSG_OPEN( msg_c04_leader_01 , MMDL_ID_EVENTOBJ_00 )
+	_BALLOONWIN_OBJMSG( msg_c04_leader_01 , MMDL_ID_EVENTOBJ_00 )
 	_BALLOONWIN_CLOSE()
 
 	//リーダー：少し前へ
@@ -184,7 +184,7 @@ EVENT_START	ev_pos_c04_leader4_01
 	_OBJ_ANIME_WAIT()
 
 	//リーダー：先に行って待ってるね
-	_BALLOONWIN_OBJMSG_OPEN( msg_c04_leader_02 , MMDL_ID_EVENTOBJ_00 )
+	_BALLOONWIN_OBJMSG( msg_c04_leader_02 , MMDL_ID_EVENTOBJ_00 )
 	_BALLOONWIN_CLOSE()
 
 	//リーダー：去る

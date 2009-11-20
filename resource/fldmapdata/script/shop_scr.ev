@@ -44,7 +44,7 @@ ev_shop_counter:
   
   IF $SCWK_PARAM1 == TRUE THEN
     //à•éAÅuÇ¢ÇÁÇ¡ÇµÇ·Ç¢Ç‹ÇπÅv
-    _BALLOONWIN_TALKOBJ_OPEN( msg_shop_greeting )
+    _BALLOONWIN_TALKOBJ_MSG( msg_shop_greeting )
     _AB_KEYWAIT()
     _BALLOONWIN_CLOSE()
   ENDIF
@@ -63,15 +63,14 @@ sub_shop_main:
   DEFINE_LOCAL  i_loop
 
   //ÇÊÇ§Ç±Çª
-  _TALKWIN_OPEN()
-  _TALKMSG( msg_shop_01 )
+  _SYSWIN_MSG_DOWN( msg_shop_01 )
 
   $i_seq = SEQ_MENU
   $i_loop = TRUE
   WHILE $i_loop == TRUE
     SWITCH $i_seq
     CASE SEQ_MENU_CONTINUE THEN
-      _TALKMSG( msg_shop_02 ) //ÇªÇÃÇŸÇ©Ç…Ç®éËì`Ç¢Ç≈Ç´ÇÈÇ±Ç∆ÇÕÅH
+      _SYSWIN_MSG_DOWN( msg_shop_02 ) //ÇªÇÃÇŸÇ©Ç…Ç®éËì`Ç¢Ç≈Ç´ÇÈÇ±Ç∆ÇÕÅH
       $i_seq = SEQ_MENU
 
     CASE SEQ_MENU THEN
@@ -91,9 +90,9 @@ sub_shop_main:
     ENDSWITCH
   ENDWHILE
   
-  _TALKMSG( msg_shop_03 ) //Ç‹ÇΩÇ«Ç§Çº
+  _SYSWIN_MSG_DOWN( msg_shop_03 ) //Ç‹ÇΩÇ«Ç§Çº
   _LAST_KEYWAIT()
-  _TALKWIN_CLOSE()
+  _SYSWIN_CLOSE()
 }
 _RET
 
@@ -129,12 +128,11 @@ sub_shop_buy:
 {
   DEFINE_LOCAL  ret_mode
   
-  _TALKWIN_CLOSE()
+  _SYSWIN_CLOSE()
 
   $ret_mode = SCR_PROC_RETMODE_NORMAL
   _CALL_SHOP_PROC_BUY( lwk_shop_id, ret_mode )
   
-  _TALKWIN_OPEN()
   IF $ret_mode == SCR_PROC_RETMODE_EXIT THEN
     $reg_return = SEQ_EXIT
   ELSE
@@ -153,7 +151,7 @@ sub_shop_sell:
 
   _BLACK_OUT()
   _DISP_FADE_END_CHECK()
-  _TALKWIN_CLOSE()
+  _SYSWIN_CLOSE()
   _FIELD_CLOSE()
   
   _CALL_BAG_PROC( SCR_BAG_MODE_SELL,ret_mode, ret_item )
@@ -162,7 +160,6 @@ sub_shop_sell:
   _BLACK_IN()
   _DISP_FADE_END_CHECK()
 
-  _TALKWIN_OPEN()
   IF $ret_mode == SCR_PROC_RETMODE_EXIT THEN
     $reg_return = SEQ_EXIT
   ELSE

@@ -51,7 +51,7 @@ EVENT_START   ev_heal_p01
   ELSE
   //上位のトレーナーカードランクで、来店済みの場合
     _PLAYER_NAME( 0 )
-    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_heal_09 ) //～さん　おつかれさまです！
+    _BALLOONWIN_TALKOBJ_MSG( msg_pc_heal_09 ) //～さん　おつかれさまです！
 
   ENDIF
 
@@ -65,7 +65,7 @@ EVENT_START   ev_heal_p01
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_azuke )
     _OBJ_ANIME_WAIT()
 
-    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_heal_04 ) //それでは　おあずかりします
+    _BALLOONWIN_TALKOBJ_MSG( msg_pc_heal_04 ) //それでは　おあずかりします
     
     _CALL sub_heal_kaifuku_anime    //回復アニメ呼び出し
     _TEMOTI_POKEMON_KAIFUKU()       //手持ちポケモン回復処理
@@ -81,7 +81,7 @@ EVENT_START   ev_heal_p01
     IF $LWK_POKERUS_STATUS == TRUE && FLAG_OFF( FE_PC_POKERUS )  THEN
     //ポケルス状態ポケモンがいて、その状態で初めての来店だったら
       _FLAG_SET( FE_PC_POKERUS )
-      _BALLOONWIN_TALKOBJ_OPEN( msg_pc_heal_10 )
+      _BALLOONWIN_TALKOBJ_MSG( msg_pc_heal_10 )
       _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
     ELSE
@@ -107,11 +107,11 @@ sub_heal_greeting:
   _GET_TIMEZONE( LWK_TIMEZONE )
   SWITCH $LWK_TIMEZONE
   CASE  TIMEZONE_MORNING THEN
-    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_heal_02 ) //おはようございます
+    _BALLOONWIN_TALKOBJ_MSG( msg_pc_heal_02 ) //おはようございます
   CASE  TIMEZONE_NOON THEN
-    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_heal_03 ) //こんにちは
+    _BALLOONWIN_TALKOBJ_MSG( msg_pc_heal_03 ) //こんにちは
   CASE  TIMEZONE_EVENING, TIMEZONE_NIGHT, TIMEZONE_MIDNIGHT THEN
-    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_heal_01 ) //おつかれさまです
+    _BALLOONWIN_TALKOBJ_MSG( msg_pc_heal_01 ) //おつかれさまです
   ENDSWITCH
 }
 _RET
@@ -122,7 +122,7 @@ _RET
 sub_heal_goodbye:
   _OBJ_ANIME( SCWK_TARGET_OBJID, anm_heal_p01_bow ) //お辞儀アニメ
   _OBJ_ANIME_WAIT()
-  _BALLOONWIN_TALKOBJ_OPEN( msg_pc_heal_06 ) //またのご利用を
+  _BALLOONWIN_TALKOBJ_MSG( msg_pc_heal_06 ) //またのご利用を
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
 _RET
@@ -157,13 +157,13 @@ _ANIME_LABEL  anm_hero_uketori
 //サブルーチン：トレーナーカードランク高い！
 /**************************************************************/
 sub_heal_gyoe:
-  _BALLOONWIN_TALKOBJ_OPEN( msg_pc_heal_07 ) //おつかれさまです
+  _BALLOONWIN_TALKOBJ_MSG( msg_pc_heal_07 ) //おつかれさまです
   _OBJ_ANIME( SCWK_TARGET_OBJID, anm_heal_p01_gyoe )  //！マーク表示
   _OBJ_ANIME_WAIT()
   _BALLOONWIN_CLOSE()
 
   _PLAYER_NAME( 0 )
-  _BALLOONWIN_TALKOBJ_OPEN( msg_pc_heal_08 ) //そ　そのカードは！？
+  _BALLOONWIN_TALKOBJ_MSG( msg_pc_heal_08 ) //そ　そのカードは！？
 _RET
 
 //--------------------------------------------------------------------
@@ -235,7 +235,7 @@ EVENT_START ev_union
   // C-gear持ってない場合
   IF $have_cgear != TRUE THEN 
     //「ただいま じゅんびちゅう です！」
-    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_06 ) 
+    _BALLOONWIN_TALKOBJ_MSG( msg_pc_union_06 ) 
     _AB_KEYWAIT()
     _BALLOONWIN_CLOSE()
   ENDIF 
@@ -243,7 +243,7 @@ EVENT_START ev_union
   // 駄目タマゴを持っている場合
   IF $dame_egg_count > 0 THEN
     //「つれていけない ポケモンがいます」
-    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_07 ) 
+    _BALLOONWIN_TALKOBJ_MSG( msg_pc_union_07 ) 
     _AB_KEYWAIT()
     _BALLOONWIN_CLOSE()
   ENDIF
@@ -252,7 +252,7 @@ EVENT_START ev_union
   IF ($have_cgear == TRUE) && ($dame_egg_count == 0) THEN 
     //「ユニオンルームにようこそ」
     _TALK_OBJ_START()
-    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_01 ) 
+    _BALLOONWIN_TALKOBJ_MSG( msg_pc_union_01 ) 
     // メニュー表示
     _BMPMENU_INIT_EX( 1, 8, 0, 1, ret )
     _BMPMENU_MAKE_LIST( msg_pc_union_menu_yes, msg_pc_union_menu_yes )
@@ -275,7 +275,7 @@ EVENT_START ev_union
   // 説明を聞く場合
   IF $explain == TRUE THEN
     //「へやにはいりますか？」
-    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_02 )
+    _BALLOONWIN_TALKOBJ_MSG( msg_pc_union_02 )
     _YES_NO_WIN( ret )
     _BALLOONWIN_CLOSE()
     //『はい』
@@ -287,7 +287,7 @@ EVENT_START ev_union
   // ユニオンルームに入る場合
   IF $room_in == TRUE THEN
     //「ワイヤレスつうしんをかいしします」
-    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_03 )
+    _BALLOONWIN_TALKOBJ_MSG( msg_pc_union_03 )
     _YES_NO_WIN( ret )
     _BALLOONWIN_CLOSE()
     //『いいえ』
@@ -320,7 +320,7 @@ EVENT_START ev_union
   // 入場
   IF $room_in == TRUE THEN
     //「おたのしみ ください」
-    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_04 )
+    _BALLOONWIN_TALKOBJ_MSG( msg_pc_union_04 )
     _AB_KEYWAIT()
     _BALLOONWIN_CLOSE()
     // @todo 移動アニメ
@@ -331,7 +331,7 @@ EVENT_START ev_union
   // キャンセルした場合
   IF $room_in != TRUE THEN
     //「また おこしください」
-    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_05 )
+    _BALLOONWIN_TALKOBJ_MSG( msg_pc_union_05 )
     _AB_KEYWAIT()
     _BALLOONWIN_CLOSE()
   ENDIF

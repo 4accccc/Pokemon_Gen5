@@ -82,7 +82,7 @@ EVENT_START	ev_c02gym0202_leader2_01
 	
 	//【仮】盗難イベントの解決後
 	//わざマシンを　もらったあと
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c02gym0202_leader_06 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0202_leader_06 )
 	_BALLOONWIN_CLOSE()
 
 	ENDIF
@@ -94,7 +94,7 @@ EVENT_END
 ev_leader2_btl:
 	//リーダー：戦闘前メッセージ
 	//いらっしゃい！
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c02gym0202_leader_01 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0202_leader_01 )
 	_BALLOONWIN_CLOSE()
 
 	//トレーナー戦呼び出し
@@ -112,28 +112,27 @@ ev_leader2_btl:
 
 	//リーダー：戦闘後メッセージ→続けてバッジ入手へ
 	//ほれぼれ　するような
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c02gym0202_leader_02 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0202_leader_02 )
 	_BALLOONWIN_CLOSE()
 
 	//バッジ入手処理
 	_SET_BADGE_FLAG( BADGE_ID_02 )		//バッジフラグon
-	_TALKWIN_OPEN()
 	_PLAYER_NAME( 0 )
 	//～～はベーシックバッジを入手した！
-	_TALKMSG_ALLPUT( msg_c02gym0202_leader_03 )
+	_SYSWIN_MSG_ALLPUT_DOWN( msg_c02gym0202_leader_03 )
 	_ME_PLAY( SEQ_ME_BADGE )
 	_ME_WAIT()
-	_TALKWIN_CLOSE()
+	_SYSWIN_CLOSE()
 
 	//そのバッジがあれば！
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c02gym0202_leader_04 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0202_leader_04 )
 	_BALLOONWIN_CLOSE()
 
 	//【仮】わざマシン入手処理　入手わざマシンが未定
 	_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
 
 	//リーダー：わざマシンの解説
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c02gym0202_leader_05 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0202_leader_05 )
 	_BALLOONWIN_CLOSE()
 	
 _RET
@@ -146,7 +145,7 @@ ev_c02gym_tounan:
 	_OBJ_ADD_EX( 5, 19, DIR_DOWN, MMDL_ID_EVENTOBJ_00, ASSISTANTM, MV_DMY )
 	
 	//ジムリーダー夫：たいへんだよ！
-	_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0202_ad_01 , MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_OBJMSG( msg_c02gym0202_ad_01 , MMDL_ID_EVENTOBJ_00)
 	_BALLOONWIN_CLOSE()
 	
 	//主人公：びっくりして、振り向く
@@ -169,7 +168,7 @@ ev_c02gym_tounan:
 	_OBJ_ANIME_WAIT()
 	
 	//アロエ：なんだって！
-	_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0202_leader_07 , C02GYM0202_LEADER2_01 )
+	_BALLOONWIN_OBJMSG( msg_c02gym0202_leader_07 , C02GYM0202_LEADER2_01 )
 	
 	//間を作る為のウェイト
 	_TIME_WAIT  ( 16 )

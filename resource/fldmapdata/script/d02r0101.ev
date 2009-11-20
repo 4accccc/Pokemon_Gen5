@@ -80,7 +80,7 @@ EVENT_START		ev_scene_d02r0101_stop_01
 	_OBJ_ANIME_WAIT()
 	
 	//ああ　もりの　におい……
-	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_leader3_01 , D02R0101_LEADER3_01 )
+	_BALLOONWIN_OBJMSG( msg_d02r0101_leader3_01 , D02R0101_LEADER3_01 )
 	_BALLOONWIN_CLOSE()
 	
 	//アーティ：H01側出入り口へ
@@ -151,7 +151,7 @@ EVENT_START		ev_pos_d02r0101_stop
     ENDSWITCH
 
 	//……んうん？　こっちには……
-	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_leader3_03 , D02R0101_LEADER3_01 )
+	_BALLOONWIN_OBJMSG( msg_d02r0101_leader3_03 , D02R0101_LEADER3_01 )
 	_BALLOONWIN_CLOSE()
 
 	//自機：押し戻される
@@ -265,7 +265,7 @@ _TALK_OBJ_START()
 	_OBJ_ANIME_WAIT()
 	
 	//ちっ！　にげみちは　ないか！？
-	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_hakaim1_01 , D02R0101_HAKAIM_01 )
+	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaim1_01 , D02R0101_HAKAIM_01 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
@@ -288,7 +288,7 @@ _TALK_OBJ_START()
 	_OBJ_ANIME_WAIT()
 	
 	//まけた　わかった！　これはかえす！
-	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_hakaim1_02 , D02R0101_HAKAIM_01 )
+	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaim1_02 , D02R0101_HAKAIM_01 )
 	_BALLOONWIN_CLOSE()
 	
 	//【仮】アーティ：画面左から現れる　演出仮
@@ -297,14 +297,14 @@ _TALK_OBJ_START()
 	_OBJ_ANIME_WAIT()
 	
 	//ああ　よかった！　なんだか　むしポケモンが　さわぐから
-	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_leader3_04 , D02R0101_LEADER3_01 )
+	_BALLOONWIN_OBJMSG( msg_d02r0101_leader3_04 , D02R0101_LEADER3_01 )
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME( D02R0101_LEADER3_01, anm_all_uemiru )
 	_OBJ_ANIME_WAIT()
 	
 	//自機名！アーティ！　おつかれさん！！
 	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_leader2_01 , D02R0101_LEADER2_01 )
+	_BALLOONWIN_OBJMSG( msg_d02r0101_leader2_01 , D02R0101_LEADER2_01 )
 	_BALLOONWIN_CLOSE()
 
 	//アロエ：画面下から現れる
@@ -312,7 +312,7 @@ _TALK_OBJ_START()
 	_OBJ_ANIME_WAIT()
 
 	//こいつが　さいごの　ひとり　ものを　とりかえせば　おわりだよ
-	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_leader2_02 , D02R0101_LEADER2_01 )
+	_BALLOONWIN_OBJMSG( msg_d02r0101_leader2_02 , D02R0101_LEADER2_01 )
 	_BALLOONWIN_CLOSE()	
 	
 	//団員：その場歩き
@@ -320,7 +320,7 @@ _TALK_OBJ_START()
 	_OBJ_ANIME_WAIT()	
 	
 	//おまえら　シッポウジムに　ヒウンジムの　リーダーだな！？
-	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_hakaim1_03 , D02R0101_HAKAIM_01 )
+	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaim1_03 , D02R0101_HAKAIM_01 )
 	_BALLOONWIN_CLOSE()
 	
 	//アーティ：その場歩き
@@ -328,11 +328,11 @@ _TALK_OBJ_START()
 	_OBJ_ANIME_WAIT()
 	
 	//ジャマも　なにも……　ひとの　ものを
-	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_leader3_05 , D02R0101_LEADER3_01 )
+	_BALLOONWIN_OBJMSG( msg_d02r0101_leader3_05 , D02R0101_LEADER3_01 )
 	_BALLOONWIN_CLOSE()
 
 	//……おまえらは　ポケモンを　くるしめているくせに！！
-	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_hakaim1_04 , D02R0101_HAKAIM_01 )
+	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaim1_04 , D02R0101_HAKAIM_01 )
 	_BALLOONWIN_CLOSE()
 
 	//【仮】団員：画面下に逃げさる　演出仮、適当に下に移動するだけです
@@ -342,7 +342,7 @@ _TALK_OBJ_START()
 	_OBJ_ANIME_WAIT()
 	
 	//あっ！！
-	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_leader2_03 , D02R0101_LEADER2_01 )
+	_BALLOONWIN_OBJMSG( msg_d02r0101_leader2_03 , D02R0101_LEADER2_01 )
 	_BALLOONWIN_CLOSE()
 	
 	//アーティ：その場歩き、アロエの方を見て
@@ -354,7 +354,7 @@ _TALK_OBJ_START()
 	_OBJ_ANIME_WAIT()
 	
 	//おいかけなくても　いいでしょ　ぬすまれた　ものは　とりかえしたし
-	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_leader3_06 , D02R0101_LEADER3_01 )
+	_BALLOONWIN_OBJMSG( msg_d02r0101_leader3_06 , D02R0101_LEADER3_01 )
 	_BALLOONWIN_CLOSE()
 
 	//アーティ：自機を見る
@@ -363,7 +363,7 @@ _TALK_OBJ_START()
 
 	//自機名だっけ　ポケモンジムで　キミの　ちょうせんを
 	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_leader3_07 , D02R0101_LEADER3_01 )
+	_BALLOONWIN_OBJMSG( msg_d02r0101_leader3_07 , D02R0101_LEADER3_01 )
 	_BALLOONWIN_CLOSE()
 
 	//【仮】アーティ：画面外へ　演出仮、適当に下に移動するだけです
@@ -372,7 +372,7 @@ _TALK_OBJ_START()
 	
 	//自機名　ありがとうよ　あんたのように　やさしい　トレーナーなら
 	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_leader2_04 , D02R0101_LEADER2_01 )
+	_BALLOONWIN_OBJMSG( msg_d02r0101_leader2_04 , D02R0101_LEADER2_01 )
 	_BALLOONWIN_CLOSE()
 
 	//【仮】アロエ：画面外へ　演出仮、適当に下に移動するだけです

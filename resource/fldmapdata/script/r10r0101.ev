@@ -44,7 +44,7 @@ EVENT_START     ev_r10r0101_veteranm_01
   _TALK_OBJ_START()
 
   IF FLAG_ON( FE_BADGEGATE01_OPEN ) THEN
-    _BALLOONWIN_OBJMSG_OPEN( msg_r10r0101_badge_03, R10R0101_VETERANM )
+    _BALLOONWIN_OBJMSG( msg_r10r0101_badge_03, R10R0101_VETERANM )
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
   ELSE
@@ -61,7 +61,7 @@ EVENT_START     ev_pos_r10r0101_limitter_01
   _SET_BADGE_FLAG( BADGE_ID_01 )
 
     //待てい！
-  _BALLOONWIN_OBJMSG_OPEN( msg_r10r0101_badge_05, R10R0101_VETERANM )
+  _BALLOONWIN_OBJMSG( msg_r10r0101_badge_05, R10R0101_VETERANM )
   _BALLOONWIN_CLOSE()
 
   _CALL ev_sub_gate_event
@@ -80,14 +80,14 @@ EVENT_END
 /**************************************************************/
 ev_sub_gate_event:
   //「～バッジをもっているのか？」
-  _BALLOONWIN_OBJMSG_OPEN( msg_r10r0101_badge_01, R10R0101_VETERANM )
+  _BALLOONWIN_OBJMSG( msg_r10r0101_badge_01, R10R0101_VETERANM )
   _BALLOONWIN_CLOSE()
 
   _GET_BADGE_FLAG( SCWK_ANSWER, BADGE_ID_01 )
   IF $SCWK_ANSWER == TRUE THEN
 
     //バッジもってる→「うむ！よろしい！」
-    _BALLOONWIN_OBJMSG_OPEN( msg_r10r0101_badge_02, R10R0101_VETERANM )
+    _BALLOONWIN_OBJMSG( msg_r10r0101_badge_02, R10R0101_VETERANM )
     _BALLOONWIN_CLOSE()
 
     _CALL ev_sub_gate_open_demo
@@ -95,7 +95,7 @@ ev_sub_gate_event:
   ELSE
 
     //バッジもってない→「まずはてにいれるのだ」
-    _BALLOONWIN_OBJMSG_OPEN( msg_r10r0101_badge_04, R10R0101_VETERANM )
+    _BALLOONWIN_OBJMSG( msg_r10r0101_badge_04, R10R0101_VETERANM )
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
 
@@ -125,7 +125,7 @@ ev_sub_gate_open_demo:
     _DOOR_ANIME_WAIT( DOOR_ANIME_ID )
 
     //「～バッジをもつものよ！さきにすすみゆうきをしめせ！」
-    _BALLOONWIN_OBJMSG_OPEN( msg_r10r0101_badge_03, R10R0101_VETERANM )
+    _BALLOONWIN_OBJMSG( msg_r10r0101_badge_03, R10R0101_VETERANM )
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
 

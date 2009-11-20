@@ -36,10 +36,9 @@ EVENT_START   ev_bg_t01r0302_pc_01
 	_TALK_START_SE_PLAY()
 
 	_PLAYER_NAME( 0 ) //ÉvÉåÉCÉÑÅ[ñºÇîΩâf
-	_TALKWIN_OPEN()
-	_TALKMSG( msg_t01r0302_pc_01 )
+	_SYSWIN_MSG_DOWN( msg_t01r0302_pc_01 )
 	_LAST_KEYWAIT()
-	_TALKWIN_CLOSE()
+	_SYSWIN_CLOSE()
 
 EVENT_END
 

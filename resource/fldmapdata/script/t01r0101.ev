@@ -34,7 +34,7 @@ EVENT_START ev_scene_t01r0101_first_01
 	_OBJ_ANIME_WAIT()
 
 	//ライバルＭＳＧ：おばさん　それでは失礼します
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0101_black_01 , T01R0101_RIVAL_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0101_black_01 , T01R0101_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
 	//ライバル：去る
@@ -43,7 +43,7 @@ EVENT_START ev_scene_t01r0101_first_01
 	_OBJ_ANIME( T01R0101_SUPPORT_01, anm_home_support_move_01 )
 
 	//サポート：おじゃましました！
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0101_white_01 , T01R0101_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0101_white_01 , T01R0101_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
 
 	_OBJ_ANIME_WAIT()
@@ -68,18 +68,18 @@ EVENT_START ev_scene_t01r0101_first_01
 	_OBJ_ANIME_WAIT()
 
 	//ママ：何があったの？
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0101_mama_01, T01R0101_MAMA_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0101_mama_01, T01R0101_MAMA_01 )
 	_BALLOONWIN_CLOSE()
 
 	//ちょっとウェイト
 	_TIME_WAIT( 15 )
 
 	//ママ：ポケモンをもらって勝負してたのね
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0101_mama_02, T01R0101_MAMA_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0101_mama_02, T01R0101_MAMA_01 )
 	_BALLOONWIN_CLOSE()
 
 	//ママ：ポケモンを休ませないと
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0101_mama_03, T01R0101_MAMA_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0101_mama_03, T01R0101_MAMA_01 )
 	_BALLOONWIN_CLOSE()
 
 	//暗転して手持ちポケモンを回復
@@ -94,7 +94,7 @@ EVENT_START ev_scene_t01r0101_first_01
 	//【仮】ママ再会話時に回復処理にならないように回復済みチェックワークに値を代入
 	$LOCALWORK15 = 999
 
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0101_mama_04, T01R0101_MAMA_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0101_mama_04, T01R0101_MAMA_01 )
 	_BALLOONWIN_CLOSE()
 
 //===============フラグワーク操作====================//
@@ -169,7 +169,7 @@ EVENT_START ev_t01r0101_mother_01
 	//回復済みチェック　ローカルワーク15を使用
 	IF $LOCALWORK15 == 999 THEN
 		//回復終了後なのでメッセージ表示のみ
-		_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0101_mama_07 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_07 )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 
@@ -180,7 +180,7 @@ EVENT_START ev_t01r0101_mother_01
 
 		//～～のポケモンは元気？
 		_PLAYER_NAME( 0 )
-		_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0101_mama_05 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_05 )
 		_BALLOONWIN_CLOSE()
 
 		//暗転して手持ちポケモンを回復
@@ -195,7 +195,7 @@ EVENT_START ev_t01r0101_mother_01
 		//回復済みチェック用にローカルワークに値を代入
 		$LOCALWORK15 = 999
 
-		_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0101_mama_06 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_06 )
 		_BALLOONWIN_CLOSE()
 
 	ENDIF

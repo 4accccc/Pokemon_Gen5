@@ -72,7 +72,7 @@ EVENT_START	ev_pos_r05_rival_01
 
 	//ライバル：主人公に勝負を挑む
 	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG_OPEN( msg_r05_black_01 , R05_RIVAL_01 )
+	_BALLOONWIN_OBJMSG( msg_r05_black_01 , R05_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
 	//トレーナー戦呼び出し　【仮】トレーナーIDが仮ID
@@ -96,7 +96,7 @@ EVENT_START	ev_pos_r05_rival_01
 	ENDIF
 
 	//ライバル：戦闘後メッセージ
-	_BALLOONWIN_OBJMSG_OPEN( msg_r05_black_02 , R05_RIVAL_01 )
+	_BALLOONWIN_OBJMSG( msg_r05_black_02 , R05_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
 	//ジムリーダー(カミツレ)表示
@@ -108,11 +108,11 @@ EVENT_START	ev_pos_r05_rival_01
 	_OBJ_ANIME_WAIT()
 
 	//カミツレ：遅いから見にくれば…
-	_BALLOONWIN_OBJMSG_OPEN( msg_r05_leader_01 , R05_LEADER4_01 )
+	_BALLOONWIN_OBJMSG( msg_r05_leader_01 , R05_LEADER4_01 )
 	_BALLOONWIN_CLOSE()
 
 	//ライバル：そうです！
-	_BALLOONWIN_OBJMSG_OPEN( msg_r05_black_03 , R05_RIVAL_01 )
+	_BALLOONWIN_OBJMSG( msg_r05_black_03 , R05_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
 	//ライバル：主人公を見る
@@ -120,7 +120,7 @@ EVENT_START	ev_pos_r05_rival_01
 	_OBJ_ANIME_WAIT()
 
 	//ライバル：待たせちゃダメだろ
-	_BALLOONWIN_OBJMSG_OPEN( msg_r05_black_04 , R05_RIVAL_01 )
+	_BALLOONWIN_OBJMSG( msg_r05_black_04 , R05_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
 	//ライバル：リーダーを見る
@@ -128,7 +128,7 @@ EVENT_START	ev_pos_r05_rival_01
 	_OBJ_ANIME_WAIT()
 
 	//ライバル：さあ行きましょう
-	_BALLOONWIN_OBJMSG_OPEN( msg_r05_black_05 , R05_RIVAL_01 )
+	_BALLOONWIN_OBJMSG( msg_r05_black_05 , R05_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
 	//３人：広場の方へ　ライバルが途中でチャンプに気づく
@@ -138,7 +138,7 @@ EVENT_START	ev_pos_r05_rival_01
 	_OBJ_ANIME_WAIT()
 
 	//ライバル：じいさんが…
-	_BALLOONWIN_OBJMSG_OPEN( msg_r05_black_06 , R05_RIVAL_01 )
+	_BALLOONWIN_OBJMSG( msg_r05_black_06 , R05_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
 	//カミツレ：振り向く
@@ -146,11 +146,11 @@ EVENT_START	ev_pos_r05_rival_01
 	_OBJ_ANIME_WAIT()
 
 	//カミツレ：そうね　強いんじゃない？
-	_BALLOONWIN_OBJMSG_OPEN( msg_r05_leader_02 , R05_LEADER4_01 )
+	_BALLOONWIN_OBJMSG( msg_r05_leader_02 , R05_LEADER4_01 )
 	_BALLOONWIN_CLOSE()
 
 	//ライバル：もと？
-	_BALLOONWIN_OBJMSG_OPEN( msg_r05_black_07 , R05_RIVAL_01 )
+	_BALLOONWIN_OBJMSG( msg_r05_black_07 , R05_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
 	//チャンプ：近づく
@@ -158,7 +158,7 @@ EVENT_START	ev_pos_r05_rival_01
 	_OBJ_ANIME_WAIT()
 
 	//チャンプ：どうした少年
-	_BALLOONWIN_OBJMSG_OPEN( msg_r05_champion_01 , R05_CHAMPION_01 )
+	_BALLOONWIN_OBJMSG( msg_r05_champion_01 , R05_CHAMPION_01 )
 	_BALLOONWIN_CLOSE()
 
 	//３人：チャンプを見る
@@ -168,33 +168,33 @@ EVENT_START	ev_pos_r05_rival_01
 	_OBJ_ANIME_WAIT()
 
 	//ライバル：なぜやめた？
-	_BALLOONWIN_OBJMSG_OPEN( msg_r05_black_08 , R05_RIVAL_01 )
+	_BALLOONWIN_OBJMSG( msg_r05_black_08 , R05_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
 	//チャンプ：人気がでない
-	_BALLOONWIN_OBJMSG_OPEN( msg_r05_champion_02 , R05_CHAMPION_01 )
+	_BALLOONWIN_OBJMSG( msg_r05_champion_02 , R05_CHAMPION_01 )
 	_BALLOONWIN_CLOSE()
 
 	//ライバル：ふざけるなよ
-	_BALLOONWIN_OBJMSG_OPEN( msg_r05_black_09 , R05_RIVAL_01 )
+	_BALLOONWIN_OBJMSG( msg_r05_black_09 , R05_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
 	//チャンプ：すまないが
-	_BALLOONWIN_OBJMSG_OPEN( msg_r05_champion_03 , R05_CHAMPION_01 )
+	_BALLOONWIN_OBJMSG( msg_r05_champion_03 , R05_CHAMPION_01 )
 	_BALLOONWIN_CLOSE()
 
 	//ライバル：いや……
-	_BALLOONWIN_OBJMSG_OPEN( msg_r05_black_10 , R05_RIVAL_01 )
+	_BALLOONWIN_OBJMSG( msg_r05_black_10 , R05_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
 	//カミツレ：アタシ　先行くね
-	_BALLOONWIN_OBJMSG_OPEN( msg_r05_leader_03 , R05_LEADER4_01 )
+	_BALLOONWIN_OBJMSG( msg_r05_leader_03 , R05_LEADER4_01 )
 	_BALLOONWIN_CLOSE()
-	_BALLOONWIN_OBJMSG_OPEN( msg_r05_leader_04 , R05_LEADER4_01 )
+	_BALLOONWIN_OBJMSG( msg_r05_leader_04 , R05_LEADER4_01 )
 	_BALLOONWIN_CLOSE()
 
 	//チャンプ：
-	_BALLOONWIN_OBJMSG_OPEN( msg_r05_champion_04 , R05_CHAMPION_01 )
+	_BALLOONWIN_OBJMSG( msg_r05_champion_04 , R05_CHAMPION_01 )
 	_BALLOONWIN_CLOSE()
 
 	//カミツレ＆ライバル：先に行く
@@ -326,7 +326,7 @@ EVENT_START	ev_pos_r05_h02demo_01
 	_OBJ_ANIME_WAIT()
 
 	//カミツレ：さてと…
-	_BALLOONWIN_OBJMSG_OPEN( msg_r05_leader_05 , R05_LEADER4_01 )
+	_BALLOONWIN_OBJMSG( msg_r05_leader_05 , R05_LEADER4_01 )
 	_BALLOONWIN_CLOSE()
 
 	//【仮】H02デモ
@@ -340,7 +340,7 @@ EVENT_START	ev_pos_r05_h02demo_01
 	_DISP_FADE_END_CHECK()
 
 	//カミツレ：ここで帰るけど　頑張ってね
-	_BALLOONWIN_OBJMSG_OPEN( msg_r05_leader_06 , R05_LEADER4_01 )
+	_BALLOONWIN_OBJMSG( msg_r05_leader_06 , R05_LEADER4_01 )
 	_BALLOONWIN_CLOSE()
 
 	//カミツレ：去る
@@ -351,7 +351,7 @@ EVENT_START	ev_pos_r05_h02demo_01
 	_OBJ_DEL( R05_LEADER4_01 )
 
 	//ライバル：いいや決めた！
-	_BALLOONWIN_OBJMSG_OPEN( msg_r05_black_11 , R05_RIVAL_01 )
+	_BALLOONWIN_OBJMSG( msg_r05_black_11 , R05_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
 	//ライバル：先に行く
@@ -406,7 +406,7 @@ EVENT_START	ev_pos_r05_h02stop_01
 	_OBJ_ANIME_WAIT()
 
 	//カメラマン：橋を渡りたいなら
-	_BALLOONWIN_OBJMSG_OPEN( msg_r05_cameraman_01 , R05_CAMERAMAN_01 )
+	_BALLOONWIN_OBJMSG( msg_r05_cameraman_01 , R05_CAMERAMAN_01 )
 	_BALLOONWIN_CLOSE()
 
 	//主人公：一歩下がる

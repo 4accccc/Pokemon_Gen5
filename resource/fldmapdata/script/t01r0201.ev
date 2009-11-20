@@ -36,7 +36,7 @@ EVENT_START	ev_scene_t01r0201_support_01
 	_OBJ_ANIME_WAIT()
 
 	//あたしだって…
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0201_white_01 , T01R0201_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0201_white_01 , T01R0201_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
 
 	//サポート：外に出ようとする
@@ -44,7 +44,7 @@ EVENT_START	ev_scene_t01r0201_support_01
 	_OBJ_ANIME_WAIT()
 
 	//あっ　～～くん！
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0201_white_02 , T01R0201_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0201_white_02 , T01R0201_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
 
 	//サポート：退出
@@ -124,7 +124,7 @@ EVENT_START   ev_t01r0201_middleman1_01
 	_TALK_OBJ_START()
 
 	//【仮】図鑑入手までこのメッセージ
-	_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0201_middleman1_02 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_t01r0201_middleman1_02 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 EVENT_END
@@ -136,7 +136,7 @@ EVENT_START   ev_t01r0201_middlewoman1_01
 	_TALK_OBJ_START()
 
 	//【仮】図鑑入手までこのメッセージ
-	_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0201_middlewoman1_02 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_t01r0201_middlewoman1_02 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 EVENT_END

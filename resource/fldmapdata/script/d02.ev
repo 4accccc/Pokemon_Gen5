@@ -71,7 +71,7 @@ EVENT_START    ev_pos_d02_stop
 	_OBJ_ANIME_WAIT()
 
 	//このさきが　ヤグルマのもり　だよ
-	_BALLOONWIN_OBJMSG_OPEN( msg_d02_leader3_01 , D02_LEADER3_01 )
+	_BALLOONWIN_OBJMSG( msg_d02_leader3_01 , D02_LEADER3_01 )
 	_BALLOONWIN_CLOSE()
 	
 	//アーティ：森のほうへ行く

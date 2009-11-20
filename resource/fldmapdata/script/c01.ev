@@ -112,13 +112,13 @@ EVENT_START   ev_c01_babygirl1_01
 	_GET_RND( SCWK_ANSWER, 3 )
 
 	IF $SCWK_ANSWER == 0 THEN
-		_BALLOONWIN_TALKOBJ_OPEN( msg_c01_babygirl1_01 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c01_babygirl1_01 )
 		
 	ELSIF $SCWK_ANSWER == 1 THEN
-		_BALLOONWIN_TALKOBJ_OPEN( msg_c01_babygirl1_02 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c01_babygirl1_02 )
 		
 	ELSE
-		_BALLOONWIN_TALKOBJ_OPEN( msg_c01_babygirl1_03 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c01_babygirl1_03 )
 		
 	ENDIF
 
@@ -161,7 +161,7 @@ _TALK_OBJ_START()
 	IF $SCWK_TEMP0 == 0 THEN
 		
 		//おぬし　ジムバッジの　１つも　もっておらぬ　ようじゃが
-		_BALLOONWIN_TALKOBJ_OPEN( msg_c01_stop_01 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c01_stop_01 )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 
@@ -169,7 +169,7 @@ _TALK_OBJ_START()
 	ELSE
 	
 		//おおう！　ひかりかがやく　ジムバッジ！
-		_BALLOONWIN_TALKOBJ_OPEN( msg_c01_stop_03 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c01_stop_03 )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	
@@ -199,7 +199,7 @@ EVENT_START   ev_pos_c01_stop
 		_OBJ_ANIME_WAIT()
 		
 		//おぬし　ジムバッジの　１つも　もっておらぬ　ようじゃが
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01_stop_01 , C01_OLDMAN1_01 )
+		_BALLOONWIN_OBJMSG( msg_c01_stop_01 , C01_OLDMAN1_01 )
 		_BALLOONWIN_CLOSE()
 		
 		//自機：１歩下がる
@@ -216,7 +216,7 @@ EVENT_START   ev_pos_c01_stop
 		_OBJ_ANIME_WAIT()
 		
 		//おぬし　ジムバッジの　１つも　もっておらぬ　ようじゃが
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01_stop_01 , C01_OLDMAN1_01 )
+		_BALLOONWIN_OBJMSG( msg_c01_stop_01 , C01_OLDMAN1_01 )
 		_BALLOONWIN_CLOSE()
 		
 		//自機：１歩下がる
@@ -280,19 +280,19 @@ EVENT_START   ev_c01_glasses_01
 			
 			//夢の跡地に行っている
 			IF $WK_SCENE_D01R0101 >= 1 THEN
-				_BALLOONWIN_TALKOBJ_OPEN( msg_c01_glasses_02 )
+				_BALLOONWIN_TALKOBJ_MSG( msg_c01_glasses_02 )
 				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 			
 			ELSE
-				_BALLOONWIN_TALKOBJ_OPEN( msg_c01_glasses_01 )
+				_BALLOONWIN_TALKOBJ_MSG( msg_c01_glasses_01 )
 				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 				
 			ENDIF
 		//ライバルと話している
 		ELSE
-			_BALLOONWIN_TALKOBJ_OPEN( msg_c01_glasses_02 )
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01_glasses_02 )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 			
@@ -306,7 +306,7 @@ EVENT_END
 EVENT_START   ev_c01_leader_01
 _TALK_OBJ_START()
 
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01_leader1_01 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c01_leader1_01 )
 	_BALLOONWIN_CLOSE()
 		
 	_OBJ_ANIME( C01_LEADER_01, anm_leader_saru )
@@ -353,7 +353,7 @@ EVENT_START   ev_scene_c01_pdwguide_01
 	_OBJ_ANIME_WAIT()
 	
 	//ヤッホー！　アタシは　マコモ　アララギはかせに　たのまれて
-	_BALLOONWIN_OBJMSG_OPEN( msg_c01_inventor_01 , C01_INVENTOR_01 )
+	_BALLOONWIN_OBJMSG( msg_c01_inventor_01 , C01_INVENTOR_01 )
 	_BALLOONWIN_CLOSE()
 	
 	//発明家マコモ：自宅へ向かう

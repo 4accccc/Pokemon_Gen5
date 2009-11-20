@@ -33,9 +33,9 @@ DEFINE_LOCAL  reg_return
 //==============================================================
 EVENT_START ev_fld_ev_spray_effect_end
 {
-  _TALKMSG( msg_fld_ev_spray_01 )
+  _SYSWIN_MSG_DOWN( msg_fld_ev_spray_01 )
   _AB_KEYWAIT()
-  _TALKWIN_CLOSE()
+  _SYSWIN_CLOSE()
 }
 EVENT_END
 
@@ -48,17 +48,17 @@ EVENT_END
 //==============================================================
 EVENT_START ev_fld_ev_amaikaori_enc_failed
 {
-  _TALKMSG( msg_fld_ev_amaikaori_01 )
+  _SYSWIN_MSG_DOWN( msg_fld_ev_amaikaori_01 )
   _AB_KEYWAIT()
-  _TALKWIN_CLOSE()
+  _SYSWIN_CLOSE()
 }
 EVENT_END
 
 EVENT_START ev_fld_ev_amaikaori_weather_error
 {
-  _TALKMSG( msg_fld_ev_amaikaori_02 )
+  _SYSWIN_MSG_DOWN( msg_fld_ev_amaikaori_02 )
   _AB_KEYWAIT()
-  _TALKWIN_CLOSE()
+  _SYSWIN_CLOSE()
 }
 EVENT_END
 

@@ -47,10 +47,9 @@ EVENT_START	ev_scene_t01r0102_gamestart
 
 	//【仮】手紙を読む。特殊なウィンドウを表示するか検討中091002
 	_PLAYER_NAME( 0 )		//主人公名取得
-	_TALKWIN_OPEN()
-	_TALKMSG( msg_t01r0102_letter_01 )
+	_SYSWIN_MSG_DOWN( msg_t01r0102_letter_01 )
 	_AB_KEYWAIT()
-	_TALKWIN_CLOSE()
+	_SYSWIN_CLOSE()
 
 	//ライバル：一歩前へ
 	_OBJ_ANIME( T01R0102_RIVAL_01, anm_gamestart_rival_move_01 )
@@ -58,7 +57,7 @@ EVENT_START	ev_scene_t01r0102_gamestart
 
 	//ライバル会話：博士がポケモンくれるって？
 	_PLAYER_NAME( 0 )		//主人公名取得
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_black_01 , T01R0102_RIVAL_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0102_black_01 , T01R0102_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
 	//サポート：表示
@@ -74,7 +73,7 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	_OBJ_ANIME_WAIT()
 
 	//サポート会話：ごめんね　遅くなっちゃった
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_white_01 , T01R0102_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0102_white_01 , T01R0102_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
 
 	//主人公・ライバル：サポートを見る
@@ -86,7 +85,7 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	_OBJ_ANIME( T01R0102_SUPPORT_01, anm_gamestart_support_move_02 )
 
 	//ライバル会話：時間まもれよー
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_black_02 , T01R0102_RIVAL_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0102_black_02 , T01R0102_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
 	//【仮】演出実験
@@ -94,7 +93,7 @@ EVENT_START	ev_scene_t01r0102_gamestart
 
 	//サポート会話：はーい　ごめんなさい
 	_PLAYER_NAME( 0 )		//主人公名取得
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_white_02, T01R0102_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0102_white_02, T01R0102_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
 
 	//ライバル：ボールを見る
@@ -103,7 +102,7 @@ EVENT_START	ev_scene_t01r0102_gamestart
 
 	//ライバル会話：ボールを調べなよ
 	_PLAYER_NAME( 0 )		//主人公名取得
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_black_03, T01R0102_RIVAL_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0102_black_03, T01R0102_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
 //================フラグ操作==================//
@@ -170,7 +169,7 @@ EVENT_START	ev_pos_t01r0102_stopper
 
 	//ライバル会話：まず選んでくれないと！
 	_PLAYER_NAME( 0 )		//主人公名取得
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_black_04 , T01R0102_RIVAL_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0102_black_04 , T01R0102_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
 	//主人公：一歩戻る
@@ -182,7 +181,7 @@ EVENT_START	ev_pos_t01r0102_stopper
 	_OBJ_ANIME_WAIT()
 
 	//サポート会話：迷っちゃうよねー
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_white_03 , T01R0102_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0102_white_03 , T01R0102_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
 
 	//ライバル：左を向く
@@ -223,7 +222,7 @@ EVENT_START	ev_t01r0102_rival_01
 
 		//まず選んでくれないと…
 		_PLAYER_NAME( 0 )		//主人公名取得
-		_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0102_black_04 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0102_black_04 )
 		_BALLOONWIN_CLOSE()
 
 		//ライバル：ボールを見る
@@ -252,7 +251,7 @@ EVENT_START	ev_t01r0102_support_01
 		//ポケモン３匹選択中の会話
 
 		//どのポケモンにするか迷っちゃうね
-		_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0102_white_03 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0102_white_03 )
 		_BALLOONWIN_CLOSE()
 
 		//サポート：ボールを見る
@@ -274,11 +273,10 @@ EVENT_END
 /************************************************************/
 //【仮】最初の３匹選択　炎タイプ
 EVENT_START   ev_t01r0102_poke_get0
-	_TALKWIN_OPEN()
 
-	_TALKMSG(msg_t01r0102_ball1_fire_01)
+	_SYSWIN_MSG_DOWN(msg_t01r0102_ball1_fire_01)
 	_YES_NO_WIN( SCWK_ANSWER )
-	_TALKWIN_CLOSE()
+	_SYSWIN_CLOSE()
 
 	IF $SCWK_ANSWER == 0 THEN
 		//炎タイプを選んだ
@@ -292,10 +290,9 @@ EVENT_END
 //【仮】最初の３匹選択　草タイプ
 EVENT_START   ev_t01r0102_poke_get1
 
-	_TALKWIN_OPEN()
-	_TALKMSG(msg_t01r0102_ball1_grass_01)
+	_SYSWIN_MSG_DOWN(msg_t01r0102_ball1_grass_01)
 	_YES_NO_WIN( SCWK_ANSWER )
-	_TALKWIN_CLOSE()
+	_SYSWIN_CLOSE()
 
 	IF $SCWK_ANSWER == 0 THEN
 		//草タイプを選んだ
@@ -309,10 +306,9 @@ EVENT_END
 //【仮】最初の３匹選択　水タイプ
 EVENT_START   ev_t01r0102_poke_get2
   
-	_TALKWIN_OPEN()
-	_TALKMSG(msg_t01r0102_ball1_water_01)
+	_SYSWIN_MSG_DOWN(msg_t01r0102_ball1_water_01)
 	_YES_NO_WIN( SCWK_ANSWER )
-	_TALKWIN_CLOSE()
+	_SYSWIN_CLOSE()
 
 	IF $SCWK_ANSWER == 0 THEN
 		//水タイプを選んだ
@@ -329,9 +325,8 @@ t01r0102_poke_get_yes:
 
 	//==========ポケモン入手処理==============//
 
-	_TALKWIN_OPEN()
 	_PLAYER_NAME( 0 ) //プレイヤー名を反映
-	_TALKMSG(msg_t01r0102_ball_get_01)
+	_SYSWIN_MSG_DOWN(msg_t01r0102_ball_get_01)
 
 	//ME鳴らす
 	_ME_PLAY( SEQ_ME_POKEGET )
@@ -340,7 +335,7 @@ t01r0102_poke_get_yes:
 	//ポケモン追加　【仮】追加ポケモンのラベルが仮。アプリ完成後このラベル自体が削除予定。
 	_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, SCWK_TEMP0, 0, 0, 5, 0 )
 
-	_TALKWIN_CLOSE()
+	_SYSWIN_CLOSE()
 
 	//初期３体入手フラグ
 	_FLAG_SET( SYS_FLAG_FIRST_POKE_GET )
@@ -351,7 +346,7 @@ t01r0102_poke_get_yes:
 	//専用アプリになるか分からないため
 
 	//サポート会話：あたし　このポケモン！
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_white_04,T01R0102_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0102_white_04,T01R0102_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
 
 	//サポート：上を向く
@@ -363,7 +358,7 @@ t01r0102_poke_get_yes:
 	_OBJ_ANIME_WAIT()
 
 	//ライバル会話：まあ　いいけどさ
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_black_05, T01R0102_RIVAL_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0102_black_05, T01R0102_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
 	//ブラックアウト
@@ -396,7 +391,7 @@ t01r0102_poke_get_yes:
 	//_BGM_PLAY( SEQ_BGM_E_SUPPORT_M )
 
 	//サポート会話：勝負しましょ！
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_white_05, T01R0102_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0102_white_05, T01R0102_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
 
 	//ライバル：その場歩き
@@ -404,11 +399,11 @@ t01r0102_poke_get_yes:
 	_OBJ_ANIME_WAIT()
 
 	//ライバル会話：家の中だぞ？
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_black_06, T01R0102_RIVAL_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0102_black_06, T01R0102_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
 	//サポート会話：だいじょーぶだって
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_white_06 , T01R0102_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0102_white_06 , T01R0102_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
 
 	//【保留】はい・いいえ選択：処理が複雑になるため保留091002
@@ -429,7 +424,7 @@ t01r0102_poke_get_yes:
 
 	//【仮】勝敗によるメッセージ分岐
 	//サポート会話：つよいねー
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_white_11, T01R0102_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0102_white_11, T01R0102_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
 
 	//手持ちの残りHPで分岐
@@ -438,14 +433,14 @@ t01r0102_poke_get_yes:
 		//ＨＰが満タンのとき
 
 		//ライバル会話：ポケモンのＨＰを減らすことなく…
-		_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_black_08 , T01R0102_RIVAL_01 )
+		_BALLOONWIN_OBJMSG( msg_t01r0102_black_08 , T01R0102_RIVAL_01 )
 		_BALLOONWIN_CLOSE()
 
 	ELSE
 		//ＨＰが減っているとき
 
 		//ライバル会話：これを　つかってやるよ
-		_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_black_09 , T01R0102_RIVAL_01 )
+		_BALLOONWIN_OBJMSG( msg_t01r0102_black_09 , T01R0102_RIVAL_01 )
 		_BALLOONWIN_CLOSE()
 
 		//回復処理
@@ -454,7 +449,7 @@ t01r0102_poke_get_yes:
 	ENDIF
 
 	//ライバル会話：で……　オレも相手してよ！
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_black_10 , T01R0102_RIVAL_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0102_black_10 , T01R0102_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
 	//ライバル戦呼び出し　最初の３匹によって分岐　負けてもシナリオ進行
@@ -473,7 +468,7 @@ t01r0102_poke_get_yes:
 	_TEMOTI_POKEMON_KAIFUKU()		//回復処理
 
 	//ライバル会話：フゥ　これがポケモン勝負か！
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_black_11 , T01R0102_RIVAL_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0102_black_11 , T01R0102_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
 	//ライバル：去る
@@ -486,7 +481,7 @@ t01r0102_poke_get_yes:
 	_SE_WAIT()
 
 	//サポート会話：あたし　家に戻るね
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_white_12 , T01R0102_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG( msg_t01r0102_white_12 , T01R0102_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
 
 	//サポート：去る

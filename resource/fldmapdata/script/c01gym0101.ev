@@ -159,7 +159,6 @@ EVENT_END
 EVENT_START		ev_bg_c01gym0101_pokezou
 	_TALK_OBJ_START()
 	
-	_TALKWIN_OPEN()
 	
 	//分岐：ジムバッジ取得しているか、いないか
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
@@ -167,7 +166,7 @@ EVENT_START		ev_bg_c01gym0101_pokezou
 	//ジムバッジを取得していない場合
 	IF $SCWK_TEMP0 == 0 THEN
 		_PLAYER_NAME( 0 )
-		_TALKMSG( msg_c01gym0101_statue_01 )
+		_SYSWIN_MSG_DOWN( msg_c01gym0101_statue_01 )
 		
 	//ジムバッジを取得している場合
 	ELSE
@@ -175,19 +174,19 @@ EVENT_START		ev_bg_c01gym0101_pokezou
 		//分岐処理・C02到着していないなら
 		IF FLAG_OFF( SYS_FLAG_ARRIVE_C02 ) THEN
 			_PLAYER_NAME( 0 )
-			_TALKMSG( msg_c01gym0101_statue_02 )
+			_SYSWIN_MSG_DOWN( msg_c01gym0101_statue_02 )
 		
 		//C02到着している場合
 		ELSE
 			_PLAYER_NAME( 0 )
-			_TALKMSG( msg_c01gym0101_statue_03 )
+			_SYSWIN_MSG_DOWN( msg_c01gym0101_statue_03 )
 			
 		ENDIF
 	
 	ENDIF
 	
 	_LAST_KEYWAIT()	
-	_TALKWIN_CLOSE()
+	_SYSWIN_CLOSE()
 
 EVENT_END
 
@@ -225,7 +224,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	_OBJ_ANIME_WAIT()
 	
 	//ようこそ！！　サンヨウシティ　ポケモンジムへ！
-	_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_01 , C01GYM0101_LEADER1_01 )
+	_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_01 , C01GYM0101_LEADER1_01 )
 	_BALLOONWIN_CLOSE()
 	
 	//ポッドとデントのバニッシュフラグをreset、オブジェクトを出現させる。
@@ -243,7 +242,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	_OBJ_ANIME_WAIT()
 	
 	//オレたちは　それぞれ		
-	_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_02 , C01GYM0101_LEADER1_01 )
+	_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_02 , C01GYM0101_LEADER1_01 )
 	_BALLOONWIN_CLOSE()
 	
 	//ポッド：くるっとその場で回る
@@ -251,7 +250,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	_OBJ_ANIME_WAIT()
 
 	//オレは　ほのおタイプの　ポケモンで
-	_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_03a , C01GYM0101_LEADER1_02 )
+	_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_03a , C01GYM0101_LEADER1_02 )
 	_BALLOONWIN_CLOSE()
 	
 	//コーン：くるっとその場で回る
@@ -259,7 +258,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	_OBJ_ANIME_WAIT()	
 	
 	//みずタイプの　ポケモンが　すきな
-	_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_03b , C01GYM0101_LEADER1_01 )
+	_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_03b , C01GYM0101_LEADER1_01 )
 	_BALLOONWIN_CLOSE()	
 	
 	//デント：くるっとその場で回る
@@ -267,7 +266,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	_OBJ_ANIME_WAIT()		
 	
 	//そして　オレが　くさタイプの
-	_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_03c , C01GYM0101_LEADER1_03 )
+	_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_03c , C01GYM0101_LEADER1_03 )
 	_BALLOONWIN_CLOSE()	
 
 	//三人一斉に１マス下がる
@@ -287,7 +286,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	_OBJ_ANIME_WAIT()	
 	
 	//オレたち　３人は！
-	_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_04 , C01GYM0101_LEADER1_01 )
+	_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_04 , C01GYM0101_LEADER1_01 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()	
 
@@ -304,7 +303,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 		_OBJ_ANIME_WAIT()		
 	
 		//ということで　ほのおタイプの
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_05a , C01GYM0101_LEADER1_02 )
+		_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_05a , C01GYM0101_LEADER1_02 )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()			
 		
@@ -316,7 +315,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 		_OBJ_ANIME_WAIT()
 		
 		//ということで　みずタイプの
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_05b , C01GYM0101_LEADER1_01 )
+		_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_05b , C01GYM0101_LEADER1_01 )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		
@@ -331,7 +330,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 		_OBJ_ANIME_WAIT()	
 	
 		//ということで　くさタイプを
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_05c , C01GYM0101_LEADER1_03 )
+		_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_05c , C01GYM0101_LEADER1_03 )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		
@@ -486,7 +485,7 @@ EVENT_START		ev_c01gym0101_leader1_01
 		IF $WK_SYS_FIRST_POKE_NO == MONSNO_HOTTON THEN
 
 			//さんにんの　なかで　いちばん　つよい　オレが
-			_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20b )
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1_20b )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 		
@@ -501,22 +500,21 @@ EVENT_START		ev_c01gym0101_leader1_01
 			ENDIF
 		
 			//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_06b , C01GYM0101_LEADER1_01 )
+			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_06b , C01GYM0101_LEADER1_01 )
 			_BALLOONWIN_CLOSE()
 			
 			//トライバッジ入手処理
 			_SET_BADGE_FLAG( BADGE_ID_01 )
-			_TALKWIN_OPEN()
-			_PLAYER_NAME( 0 )
+					_PLAYER_NAME( 0 )
 			
 			//～～は　コーンから　トライバッジを　もらった
-			_TALKMSG_ALLPUT( msg_c01gym0101_leader1_07b )
+			_SYSWIN_MSG_ALLPUT_DOWN( msg_c01gym0101_leader1_07b )
 			_ME_PLAY( SEQ_ME_BADGE )
 			_ME_WAIT()
-			_TALKWIN_CLOSE()
+			_SYSWIN_CLOSE()
 		
 			//ジムバッジは　トレーナーの　つよさの　あかし！
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_08 , C01GYM0101_LEADER1_01 )
+			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_08 , C01GYM0101_LEADER1_01 )
 			_BALLOONWIN_CLOSE()
 
 			//わざマシン入手
@@ -525,7 +523,7 @@ EVENT_START		ev_c01gym0101_leader1_01
 			//その　わざマシンの　なかみは　～～！！
 			_ITEM_NAME( 0, ITEM_WAZAMASIN01 )
 			_ITEM_WAZA_NAME( 1, ITEM_WAZAMASIN01 )
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
+			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 			
@@ -548,7 +546,7 @@ EVENT_START		ev_c01gym0101_leader1_01
 		//炎タイプ選択じゃない場合
 		ELSE
 			//ざんねん　ですね　ぼくが　おあいて　したかったです
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_21b , C01GYM0101_LEADER1_01 )
+			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_21b , C01GYM0101_LEADER1_01 )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 			
@@ -556,7 +554,7 @@ EVENT_START		ev_c01gym0101_leader1_01
 	//ジムバッジ入手後の場合
 	ELSE	
 		//ぼくたち　イッシュちほう　では　まだ　かけだしの　ジムリーダーです
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_10 , C01GYM0101_LEADER1_01 )
+		_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_10 , C01GYM0101_LEADER1_01 )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	
@@ -580,7 +578,7 @@ EVENT_START		ev_c01gym0101_leader1_02
 		IF $WK_SYS_FIRST_POKE_NO == MONSNO_KUSAHEBI THEN
 
 			//さんにんの　なかで　いちばん　つよい　オレが
-			_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20a )
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1_20a )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 
@@ -595,18 +593,17 @@ EVENT_START		ev_c01gym0101_leader1_02
 			ENDIF
 
 			//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_06a , C01GYM0101_LEADER1_02 )
+			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_06a , C01GYM0101_LEADER1_02 )
 			_BALLOONWIN_CLOSE()
 			
 			//トライバッジ入手処理
 			_SET_BADGE_FLAG( BADGE_ID_01 )
-			_TALKWIN_OPEN()
-			_PLAYER_NAME( 0 )
+					_PLAYER_NAME( 0 )
 			//～～は　ポッドから　トライバッジを　もらった
-			_TALKMSG_ALLPUT( msg_c01gym0101_leader1_07a )
+			_SYSWIN_MSG_ALLPUT_DOWN( msg_c01gym0101_leader1_07a )
 			_ME_PLAY( SEQ_ME_BADGE )
 			_ME_WAIT()
-			_TALKWIN_CLOSE()
+			_SYSWIN_CLOSE()
 		
 			//ポッド：コーンの場所へ移動
 			_OBJ_ANIME( C01GYM0101_LEADER1_02, anm_pod_return )
@@ -616,7 +613,7 @@ EVENT_START		ev_c01gym0101_leader1_02
 			_OBJ_ANIME_WAIT()
 			
 			//ジムバッジは　トレーナーの　つよさの　あかし！
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_08 , C01GYM0101_LEADER1_01 )
+			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_08 , C01GYM0101_LEADER1_01 )
 			_BALLOONWIN_CLOSE()
 
 			//わざマシン入手
@@ -625,7 +622,7 @@ EVENT_START		ev_c01gym0101_leader1_02
 			//その　わざマシンの　なかみは　～～！！
 			_ITEM_NAME( 0, ITEM_WAZAMASIN01 )
 			_ITEM_WAZA_NAME( 1, ITEM_WAZAMASIN01 )
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
+			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 			
@@ -650,7 +647,7 @@ EVENT_START		ev_c01gym0101_leader1_02
 		ELSE
 			
 			//なんだよーッ！　オレが　たたかいたかったのになー！！
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_21a , C01GYM0101_LEADER1_02 )
+			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_21a , C01GYM0101_LEADER1_02 )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 		
@@ -660,7 +657,7 @@ EVENT_START		ev_c01gym0101_leader1_02
 	ELSE
 		
 		//わざマシンは　なんどだって　つかえると　いうことは
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_11 , C01GYM0101_LEADER1_02 )
+			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_11 , C01GYM0101_LEADER1_02 )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 	
@@ -704,7 +701,7 @@ EVENT_START		ev_c01gym0101_leader1_03
 		IF $WK_SYS_FIRST_POKE_NO == MONSNO_SUIKKO THEN
 		
 			//さんにんの　なかで　いちばん　つよい　オレが
-			_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20c )
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1_20c )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 
@@ -719,18 +716,17 @@ EVENT_START		ev_c01gym0101_leader1_03
 			ENDIF
 
 			//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_06c , C01GYM0101_LEADER1_03 )
+			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_06c , C01GYM0101_LEADER1_03 )
 			_BALLOONWIN_CLOSE()
 				
 			//トライバッジ入手処理
 			_SET_BADGE_FLAG( BADGE_ID_01 )
-			_TALKWIN_OPEN()
-			_PLAYER_NAME( 0 )
+					_PLAYER_NAME( 0 )
 			//～～は　デントから　トライバッジを　もらった
-			_TALKMSG_ALLPUT( msg_c01gym0101_leader1_07c )
+			_SYSWIN_MSG_ALLPUT_DOWN( msg_c01gym0101_leader1_07c )
 			_ME_PLAY( SEQ_ME_BADGE )
 			_ME_WAIT()
-			_TALKWIN_CLOSE()
+			_SYSWIN_CLOSE()
 		
 			//デント：コーンの場所へ移動
 			_OBJ_ANIME( C01GYM0101_LEADER1_03, anm_dento_return )
@@ -740,7 +736,7 @@ EVENT_START		ev_c01gym0101_leader1_03
 			_OBJ_ANIME_WAIT()
 			
 			//ジムバッジは　トレーナーの　つよさの　あかし！
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_08 , C01GYM0101_LEADER1_01 )
+			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_08 , C01GYM0101_LEADER1_01 )
 			_BALLOONWIN_CLOSE()
 
 			//【仮】わざマシン入手
@@ -749,7 +745,7 @@ EVENT_START		ev_c01gym0101_leader1_03
 			//その　わざマシンの　なかみは　～～！！
 			_ITEM_NAME( 0, ITEM_WAZAMASIN01 )
 			_ITEM_WAZA_NAME( 1, ITEM_WAZAMASIN01 )
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
+			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 			
@@ -772,7 +768,7 @@ EVENT_START		ev_c01gym0101_leader1_03
 		//水タイプ選択じゃない場合
 		ELSE
 			//オレが　いちばん　つよいのに！　どうして　みずタイプ　なんだよ！
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_21c , C01GYM0101_LEADER1_03 )
+			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_21c , C01GYM0101_LEADER1_03 )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 
@@ -781,7 +777,7 @@ EVENT_START		ev_c01gym0101_leader1_03
 	//ジムバッジ入手後の場合
 	ELSE	
 		//オレたちが　もし　１７人　きょうだい　だったら
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_12 , C01GYM0101_LEADER1_03 )
+			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_12 , C01GYM0101_LEADER1_03 )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 	

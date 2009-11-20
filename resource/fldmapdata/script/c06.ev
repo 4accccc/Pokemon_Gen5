@@ -37,7 +37,7 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START   ev_c06_talkobj_boy3
   _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c06_boy3_01 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c06_boy3_01 )
 	_AB_KEYWAIT()
   _BALLOONWIN_CLOSE()
 EVENT_END
@@ -47,7 +47,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c06_talkobj_pilot
   _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c06_pilot_01 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c06_pilot_01 )
 	_AB_KEYWAIT()
   _BALLOONWIN_CLOSE()
 EVENT_END
@@ -57,7 +57,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c06_talkobj_girl2
   _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c06_girl2_01 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c06_girl2_01 )
 	_AB_KEYWAIT()
   _BALLOONWIN_CLOSE()
 EVENT_END
@@ -67,7 +67,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c06_talkobj_rangerw
   _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c06_rangerw_01 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c06_rangerw_01 )
 	_AB_KEYWAIT()
   _BALLOONWIN_CLOSE()
 EVENT_END
@@ -77,7 +77,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c06_talkobj_workman
   _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c06_workman_01 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c06_workman_01 )
 	_AB_KEYWAIT()
   _BALLOONWIN_CLOSE()
 EVENT_END
@@ -87,7 +87,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c06_talkobj_woman1
   _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c06_woman1_01 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c06_woman1_01 )
 	_AB_KEYWAIT()
   _BALLOONWIN_CLOSE()
 EVENT_END

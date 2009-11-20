@@ -47,7 +47,6 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START ev_hiden_kairiki
   _TALK_OBJ_START()
-  _TALKWIN_OPEN()
   _FLAG_CHECK( SYS_FLAG_KAIRIKI, SCWK_ANSWER )
   
   IF $SCWK_ANSWER == 1 THEN
@@ -61,9 +60,9 @@ EVENT_START ev_hiden_kairiki
 //    バッジチェック
 //    _SYS_FLAG_BADGE_GET    BADGE_ID_C02, SCWK_ANSWER
 //    _IFVAL_JUMP    SCWK_ANSWER,EQ,0, ev_hiden_kairiki_ng
-      _TALKMSG( msg_kairiki_01 )
+      _SYSWIN_MSG_DOWN( msg_kairiki_01 )
       _YES_NO_WIN( SCWK_ANSWER )
-      _TALKWIN_CLOSE()
+      _SYSWIN_CLOSE()
       
       IF $SCWK_ANSWER == 0 THEN
         _CALL ev_hiden_kairiki_02
@@ -74,16 +73,16 @@ EVENT_END
 
 //すでにかいりきをつかっている場合
 ev_hiden_kairiki_already:
-  _TALKMSG( msg_kairiki_04 )
+  _SYSWIN_MSG_DOWN( msg_kairiki_04 )
   _LAST_KEYWAIT()
-  _TALKWIN_CLOSE()
+  _SYSWIN_CLOSE()
   _END
 
 //秘伝わざもっていない場合
 ev_hiden_kairiki_ng:
-  _TALKMSG( msg_kairiki_03 )
+  _SYSWIN_MSG_DOWN( msg_kairiki_03 )
   _LAST_KEYWAIT()
-  _TALKWIN_CLOSE()
+  _SYSWIN_CLOSE()
   _END
 
 //かいりき発動
@@ -93,18 +92,16 @@ ev_hiden_kairiki_02:
   _LDWK( SCWK_TEMP0, SCWK_ANSWER )
   
   _TEMOTI_NICK_NAME( 0, SCWK_ANSWER )
-  _TALKWIN_OPEN()
-  _TALKMSG( msg_kairiki_05 )
+  _SYSWIN_MSG_DOWN( msg_kairiki_05 )
   _AB_KEYWAIT()
-  _TALKWIN_CLOSE()
+  _SYSWIN_CLOSE()
   
 //  _CUTIN      SCWK_TEMP0 //カットイン
 //  _TALK_CLOSE    //カットインでMSG用BGがクリアされている対処
   
-  _TALKWIN_OPEN()
-  _TALKMSG( msg_kairiki_06 )
+  _SYSWIN_MSG_DOWN( msg_kairiki_06 )
   _LAST_KEYWAIT()
-  _TALKWIN_CLOSE()
+  _SYSWIN_CLOSE()
 
 //冒険ノート
 //  _GET_NOW_ZONE_ID  SCWK_TEMP0
@@ -113,7 +110,6 @@ ev_hiden_kairiki_02:
 
 //かいりき　メニューから発動
 EVENT_START ev_hiden_kairiki_menu
-  _TALKWIN_OPEN()
   _FLAG_CHECK( SYS_FLAG_KAIRIKI, SCWK_ANSWER ) //かいりきフラグチェック
 
   IF $SCWK_ANSWER == 1 THEN
@@ -121,15 +117,14 @@ EVENT_START ev_hiden_kairiki_menu
   ELSE
     _FLAG_SET( SYS_FLAG_KAIRIKI )      //かいりきフラグセット
     _TEMOTI_NICK_NAME( 0, SCWK_PARAM0 )
-    _TALKMSG( msg_kairiki_05 )
-    _TALKWIN_CLOSE()
+    _SYSWIN_MSG_DOWN( msg_kairiki_05 )
+    _SYSWIN_CLOSE()
 
 //    _CUTIN SCWK_PARAM0 //カットイン
     
-    _TALKWIN_OPEN()
-    _TALKMSG( msg_kairiki_06 )
+      _SYSWIN_MSG_DOWN( msg_kairiki_06 )
     _LAST_KEYWAIT()
-    _TALKWIN_CLOSE()
+    _SYSWIN_CLOSE()
 //    _GET_NOW_ZONE_ID  SCWK_TEMP0
 //    _FNOTE_DATA_MAKE  FNOTE_ID_KAIRIKI,SCWK_TEMP0,0,0,0
   ENDIF
@@ -154,10 +149,9 @@ EVENT_START ev_hiden_naminori
 //  _SYS_FLAG_PAIR_GET    SCWK_ANSWER
 //  _IFVAL_JUMP    SCWK_ANSWER,EQ,1, ev_hiden_naminori_pair_ng
     
-    _TALKWIN_OPEN()
-    _TALKMSG( msg_naminori_01 )
+      _SYSWIN_MSG_DOWN( msg_naminori_01 )
     _YES_NO_WIN( SCWK_ANSWER )
-    _TALKWIN_CLOSE()
+    _SYSWIN_CLOSE()
     
     IF $SCWK_ANSWER == 0 THEN
       _CALL ev_hiden_naminori_02
@@ -167,15 +161,14 @@ EVENT_END
 
 //秘伝わざもっていない場合
 ev_hiden_naminori_ng:
-  _TALKWIN_OPEN()
-  _TALKMSG( msg_naminori_03 )
+  _SYSWIN_MSG_DOWN( msg_naminori_03 )
   _LAST_KEYWAIT()
-  _TALKWIN_CLOSE()
+  _SYSWIN_CLOSE()
   _RET
 
 /*
 ev_hiden_naminori_pair_ng:
-  _TALKMSG    msg_naminori_03
+  _SYSWIN_MSG_DOWN    msg_naminori_03
   _LAST_KEYWAIT
   _TALK_CLOSE
   _JUMP      ev_hiden_end_bg
@@ -187,10 +180,9 @@ ev_hiden_naminori_02:
   _LDWK( SCWK_TEMP0, SCWK_ANSWER )
   _TEMOTI_NICK_NAME( 0, SCWK_ANSWER )
   
-  _TALKWIN_OPEN()
-  _TALKMSG( msg_naminori_02 )
+  _SYSWIN_MSG_DOWN( msg_naminori_02 )
   _AB_KEYWAIT()
-  _TALKWIN_CLOSE()
+  _SYSWIN_CLOSE()
   
   //_CUTIN      SCWK_TEMP0
   _NAMINORI()
@@ -204,9 +196,8 @@ ev_hiden_naminori_02:
 //SCWK_PARAM0に使用したポケモンの位置番号
 EVENT_START ev_hiden_naminori_menu
   _TEMOTI_NICK_NAME( 0, SCWK_PARAM0 )
-  _TALKWIN_OPEN()
-  _TALKMSG( msg_naminori_02 )
-  _TALKWIN_CLOSE()
+  _SYSWIN_MSG_DOWN( msg_naminori_02 )
+  _SYSWIN_CLOSE()
   
 //_OBJ_PAUSE_CLEAR  FLDOBJ_ID_PLAYER
   _NAMINORI()
@@ -231,24 +222,22 @@ EVENT_START ev_hiden_iaigiri
     //バッジチェック
 //  _SYS_FLAG_BADGE_GET BADGE_ID_C04, SCWK_ANSWER
 //  _IFVAL_JUMP    SCWK_ANSWER,EQ,0, ev_hiden_iaigiri_ng
-    _TALKWIN_OPEN()
-    _TALKMSG( msg_iai_01 )
+      _SYSWIN_MSG_DOWN( msg_iai_01 )
     _YES_NO_WIN( SCWK_ANSWER )
     
     IF $SCWK_ANSWER == 0 THEN
       _CALL ev_hiden_iaigiri_02
     ELSE
-      _TALKWIN_CLOSE()
+      _SYSWIN_CLOSE()
     ENDIF
   ENDIF
 EVENT_END
 
 //居合い切り　秘伝わざもっていない場合
 ev_hiden_iaigiri_ng:
-  _TALKWIN_OPEN()
-	_TALKMSG( msg_iai_03 )
+	_SYSWIN_MSG_DOWN( msg_iai_03 )
 	_LAST_KEYWAIT()
-	_TALKWIN_CLOSE()
+	_SYSWIN_CLOSE()
 	_RET
   //
 
@@ -258,9 +247,9 @@ ev_hiden_iaigiri_02:
   _LDWK( SCWK_TEMP0,SCWK_ANSWER )
   
   _TEMOTI_NICK_NAME( 0, SCWK_ANSWER )
-  _TALKMSG( msg_iai_02 )
+  _SYSWIN_MSG_DOWN( msg_iai_02 )
   _AB_KEYWAIT()
-  _TALKWIN_CLOSE()
+  _SYSWIN_CLOSE()
   
   //カットイン
 //  _CUTIN      SCWK_TEMP0 //カットイン
@@ -288,9 +277,8 @@ EVENT_START ev_hiden_iaigiri_menu
   _TALK_OBJ_START()
   
 	_TEMOTI_NICK_NAME( 0, SCWK_PARAM0 )
-  _TALKWIN_OPEN()
-	_TALKMSG( msg_iai_02 )
-	_TALKWIN_CLOSE()
+	_SYSWIN_MSG_DOWN( msg_iai_02 )
+	_SYSWIN_CLOSE()
   
   //カットイン
 //	_CUTIN			SCWK_PARAM0
@@ -324,10 +312,9 @@ EVENT_START ev_hiden_takinobori
 //  _SYS_FLAG_BADGE_GET		BADGE_ID_C08, SCWK_ANSWER
 //  _IFVAL_JUMP		SCWK_ANSWER,EQ,0, ev_hiden_takinobori_ng
     
-    _TALKWIN_OPEN()
-    _TALKMSG( msg_taki_01 )
+      _SYSWIN_MSG_DOWN( msg_taki_01 )
 	  _YES_NO_WIN( SCWK_ANSWER )
-    _TALKWIN_CLOSE()
+    _SYSWIN_CLOSE()
     
     IF $SCWK_ANSWER == 0 THEN
 	    _CALL ev_hiden_takinobori_02
@@ -337,10 +324,9 @@ EVENT_END
 
 //秘伝わざもっていない場合
 ev_hiden_takinobori_ng:
-  _TALKWIN_OPEN()
-	_TALKMSG( msg_taki_03 )
+	_SYSWIN_MSG_DOWN( msg_taki_03 )
 	_LAST_KEYWAIT()
-	_TALKWIN_CLOSE()
+	_SYSWIN_CLOSE()
 	_RET
 
 //滝登り発動
@@ -349,9 +335,8 @@ ev_hiden_takinobori_02:
 	_LDWK( SCWK_TEMP0,SCWK_ANSWER )
 	_TEMOTI_NICK_NAME( 0,SCWK_ANSWER )
   
-  _TALKWIN_OPEN()
-	_TALKMSG( msg_taki_02 )
-	_TALKWIN_CLOSE()
+	_SYSWIN_MSG_DOWN( msg_taki_02 )
+	_SYSWIN_CLOSE()
 
 	//_CUTIN			SCWK_TEMP0
 	_TAKINOBORI( SCWK_TEMP0 )
@@ -364,9 +349,8 @@ ev_hiden_takinobori_02:
 //メニューから「たきのぼり」発動
 EVENT_START ev_hiden_takinobori_menu
 	_TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
-  _TALKWIN_OPEN()
-	_TALKMSG( msg_taki_02 )
-	_TALKWIN_CLOSE()
+	_SYSWIN_MSG_DOWN( msg_taki_02 )
+	_SYSWIN_CLOSE()
   
 //	_OBJ_PAUSE_CLEAR	FLDOBJ_ID_PLAYER
 	//_CUTIN			SCWK_PARAM0

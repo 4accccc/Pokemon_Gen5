@@ -73,13 +73,11 @@ EVENT_END
 /*  C01R0501 BOARDの会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_bg_c01r0501_board_01
-_TALKWIN_OPEN()
-	
 	//こくばんに　ポケモンが　たたかっているときに　おこる
-	_TALKMSG( msg_c01r0501_board_01 )
+	_SYSWIN_MSG_DOWN( msg_c01r0501_board_01 )
 		
 	//どれについて　みますか？
-	_TALKMSG( msg_c01r0501_board_02 )
+	_SYSWIN_MSG_DOWN( msg_c01r0501_board_02 )
 		
 	//ローカル変数を定義
 	DEFINE_LOCAL	LWK_STATE_SELECT
@@ -103,40 +101,40 @@ _TALKWIN_OPEN()
 		IF $LWK_STATE_SELECT == 0 THEN
 			
 			//どくを　うけると　たいりょくが　へっていきます
-			_TALKMSG( msg_c01r0501_board_03 )
-			_TALKWIN_CLOSE()
+			_SYSWIN_MSG_DOWN( msg_c01r0501_board_03 )
+			_SYSWIN_CLOSE()
 				
 		//まひ選択
 		ELSIF $LWK_STATE_SELECT == 1 THEN
 			
 			//まひすると　すばやさが　さがり
-			_TALKMSG( msg_c01r0501_board_04 )
-			_TALKWIN_CLOSE()
+			_SYSWIN_MSG_DOWN( msg_c01r0501_board_04 )
+			_SYSWIN_CLOSE()
 				
 		//ねむり選択
 		ELSIF $LWK_STATE_SELECT == 2 THEN
 		
 			//ねむって　しまうと　その　あいだ　こうげき　できません
-			_TALKMSG( msg_c01r0501_board_05 )
-			_TALKWIN_CLOSE()
+			_SYSWIN_MSG_DOWN( msg_c01r0501_board_05 )
+			_SYSWIN_CLOSE()
 			
 		//やけど選択
 		ELSIF $LWK_STATE_SELECT == 3 THEN
 			
 			//やけどに　なると　こうげきりょくが　さがるだけでなく
-			_TALKMSG( msg_c01r0501_board_06 )
-			_TALKWIN_CLOSE()
+			_SYSWIN_MSG_DOWN( msg_c01r0501_board_06 )
+			_SYSWIN_CLOSE()
 			
 		//こおり選択
 		ELSIF $LWK_STATE_SELECT == 4 THEN
 			
 			//こおって　しまうと　なにも　できなくなります
-			_TALKMSG( msg_c01r0501_board_07 )
-			_TALKWIN_CLOSE()
+			_SYSWIN_MSG_DOWN( msg_c01r0501_board_07 )
+			_SYSWIN_CLOSE()
 			
 		//やめる
 		ELSE
-			_TALKWIN_CLOSE()
+			_SYSWIN_CLOSE()
 		
 		ENDIF
 	
@@ -149,11 +147,11 @@ EVENT_START   ev_c01r0501_rival_01
 _TALK_OBJ_START()
 
 	_PLAYER_NAME( 0 )
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0501_black_01 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_black_01 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 		
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0501_black_02 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_black_02 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	

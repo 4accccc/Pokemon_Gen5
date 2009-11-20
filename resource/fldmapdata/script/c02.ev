@@ -80,7 +80,7 @@ EVENT_START   ev_pos_c02_rival_01
 	
 	//クロックが喋る
 	//クロック『あたらしい　まちについたら
-	_BALLOONWIN_OBJMSG_OPEN( msg_c02_black_01, C02_RIVAL_02 )
+	_BALLOONWIN_OBJMSG( msg_c02_black_01, C02_RIVAL_02 )
     _BALLOONWIN_CLOSE()
 	
 	//クロックが歩いていく
@@ -96,7 +96,7 @@ EVENT_START   ev_pos_c02_rival_01
 	
 	//ライバルポケセンについて喋る
 	//このまま　まっすぐ　すすめば
-	_BALLOONWIN_OBJMSG_OPEN( msg_c02_black_02, C02_RIVAL_02 )
+	_BALLOONWIN_OBJMSG( msg_c02_black_02, C02_RIVAL_02 )
 	_LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
 	
@@ -187,7 +187,7 @@ EVENT_START   ev_pos_c02_boss_01
 	
 	//Nがしゃべる
 	//まよえる　トレーナーよ
-	_BALLOONWIN_OBJMSG_OPEN( msg_c02_boss_01, MMDL_ID_EVENTOBJ_00 )
+	_BALLOONWIN_OBJMSG( msg_c02_boss_01, MMDL_ID_EVENTOBJ_00 )
     _BALLOONWIN_CLOSE()
 	
 	//はい/いいえの選択
@@ -197,13 +197,13 @@ EVENT_START   ev_pos_c02_boss_01
 	
 		//Nが喋る・いいえの場合
 		//Ｎ『ボクを　からかっているね
-		_BALLOONWIN_OBJMSG_OPEN( msg_c02_boss_02, MMDL_ID_EVENTOBJ_00 )
+		_BALLOONWIN_OBJMSG( msg_c02_boss_02, MMDL_ID_EVENTOBJ_00 )
     	_BALLOONWIN_CLOSE()
 		
 	ELSE
 		//Nが喋る・はいの場合
 		//Ｎ『ボクに　さからうんだね
-    	_BALLOONWIN_OBJMSG_OPEN( msg_c02_boss_03, MMDL_ID_EVENTOBJ_00 )
+    	_BALLOONWIN_OBJMSG( msg_c02_boss_03, MMDL_ID_EVENTOBJ_00 )
     	_BALLOONWIN_CLOSE()
     	
 	ENDIF
@@ -217,7 +217,7 @@ EVENT_START   ev_pos_c02_boss_01
 	
 	//Nが喋る
 	//Ｎ『いまの　ボクの　ともだちとでは
-	_BALLOONWIN_OBJMSG_OPEN( msg_c02_boss_04, MMDL_ID_EVENTOBJ_00 )
+	_BALLOONWIN_OBJMSG( msg_c02_boss_04, MMDL_ID_EVENTOBJ_00 )
     _BALLOONWIN_CLOSE()
     
 	//Nが5歩移動
@@ -226,7 +226,7 @@ EVENT_START   ev_pos_c02_boss_01
 	
 	//Nが喋る
 	//Ｎ『せかいには
-	_BALLOONWIN_OBJMSG_OPEN( msg_c02_boss_05, MMDL_ID_EVENTOBJ_00 )
+	_BALLOONWIN_OBJMSG( msg_c02_boss_05, MMDL_ID_EVENTOBJ_00 )
     _BALLOONWIN_CLOSE()
 	
 	//Nが画面外に移動する
@@ -324,7 +324,7 @@ EVENT_START   ev_pos_c02_leader02_01
 	
 	//アーティがしゃべる
 	//やあ　アロエさん
-	_BALLOONWIN_OBJMSG_OPEN( msg_c02_leader3_01 , C02_LEADER3_01 )
+	_BALLOONWIN_OBJMSG( msg_c02_leader3_01 , C02_LEADER3_01 )
     _BALLOONWIN_CLOSE()
     
 	//アロエがアーティに気づく
@@ -337,7 +337,7 @@ EVENT_START   ev_pos_c02_leader02_01
 	
 	//アロエが喋る
 	//アロエ『あんた
-	_BALLOONWIN_OBJMSG_OPEN( msg_c02_leader2_01 , C02_LEADER02_01 )
+	_BALLOONWIN_OBJMSG( msg_c02_leader2_01 , C02_LEADER02_01 )
     _BALLOONWIN_CLOSE()
     
 	//アロエが主人公を向く
@@ -349,7 +349,7 @@ EVENT_START   ev_pos_c02_leader02_01
 	
 	//アロエが主人公に喋る
 	//こいつさ　こうみえても
-	_BALLOONWIN_OBJMSG_OPEN( msg_c02_leader2_02, C02_LEADER02_01 )
+	_BALLOONWIN_OBJMSG( msg_c02_leader2_02, C02_LEADER02_01 )
     _BALLOONWIN_CLOSE()
 	
 	//アロエがアーティのほうを向く
@@ -358,7 +358,7 @@ EVENT_START   ev_pos_c02_leader02_01
 	
 	//アーティが喋る
 	//アーティ『……んうん？
-	_BALLOONWIN_OBJMSG_OPEN( msg_c02_leader3_02, C02_LEADER3_01 )
+	_BALLOONWIN_OBJMSG( msg_c02_leader3_02, C02_LEADER3_01 )
     _BALLOONWIN_CLOSE()
 	
 	//アロエがジャンプ
@@ -367,7 +367,7 @@ EVENT_START   ev_pos_c02_leader02_01
 	
 	//アロエが喋る
 	//アロエ『そうなんだよ！！
-	_BALLOONWIN_OBJMSG_OPEN( msg_c02_leader2_03 , C02_LEADER02_01)
+	_BALLOONWIN_OBJMSG( msg_c02_leader2_03 , C02_LEADER02_01)
     _BALLOONWIN_CLOSE()
 	
 	//アロエが怒る
@@ -380,7 +380,7 @@ EVENT_START   ev_pos_c02_leader02_01
 	
 	//サポートが喋る
 	//ホワイティ『ねえねえ
-	_BALLOONWIN_OBJMSG_OPEN( msg_c02_white_01, C02_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG( msg_c02_white_01, C02_SUPPORT_01 )
     _BALLOONWIN_CLOSE()
 	
 	//ライバルが出てくる
@@ -389,7 +389,7 @@ EVENT_START   ev_pos_c02_leader02_01
 	
 	//ライバルが喋る
 	//ジムバッジ　てにいれたかよ？
-	_BALLOONWIN_OBJMSG_OPEN( msg_c02_black_03, C02_RIVAL_02 )
+	_BALLOONWIN_OBJMSG( msg_c02_black_03, C02_RIVAL_02 )
     _BALLOONWIN_CLOSE()
 	
 	//アロエがサポート・ライバルを向く
@@ -402,7 +402,7 @@ EVENT_START   ev_pos_c02_leader02_01
 	
 	//アロエが喋る
 	//なんなんだい　このこたちは…
-	_BALLOONWIN_OBJMSG_OPEN( msg_c02_leader2_04, C02_LEADER02_01 )
+	_BALLOONWIN_OBJMSG( msg_c02_leader2_04, C02_LEADER02_01 )
     _BALLOONWIN_CLOSE()
 	
 	//アロエがR2に行こうとする
@@ -415,7 +415,7 @@ EVENT_START   ev_pos_c02_leader02_01
 	
 	//アロエが喋る
 	//そして　あんたたちは
-	_BALLOONWIN_OBJMSG_OPEN( msg_c02_leader2_06, C02_LEADER02_01 )
+	_BALLOONWIN_OBJMSG( msg_c02_leader2_06, C02_LEADER02_01 )
     _BALLOONWIN_CLOSE()
 	
 	//アロエが3番道路に向かって走る
@@ -428,7 +428,7 @@ EVENT_START   ev_pos_c02_leader02_01
 	
 	//アーティが喋る
 	//で　アーティと
-	_BALLOONWIN_OBJMSG_OPEN( msg_c02_leader3_03, C02_LEADER3_01 )
+	_BALLOONWIN_OBJMSG( msg_c02_leader3_03, C02_LEADER3_01 )
     _BALLOONWIN_CLOSE()
 	
 	//アーティがD02に向かう
@@ -450,7 +450,7 @@ EVENT_START   ev_pos_c02_leader02_01
 	
 	//サポートが喋る
 	//これを　もっていってよ！
-	_BALLOONWIN_OBJMSG_OPEN( msg_c02_white_02, C02_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG( msg_c02_white_02, C02_SUPPORT_01 )
     _BALLOONWIN_CLOSE()
     
     //【仮】ダウンジングマシンをくれる（MEなし）
@@ -458,11 +458,11 @@ EVENT_START   ev_pos_c02_leader02_01
 	
 	//サポートが喋る
 	//ダウジングマシンを　つかうと
-	_BALLOONWIN_OBJMSG_OPEN( msg_c02_white_03, C02_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG( msg_c02_white_03, C02_SUPPORT_01 )
     _BALLOONWIN_CLOSE()
     
     //ライバルが喋る
-    _BALLOONWIN_OBJMSG_OPEN( msg_c02_black_04, C02_RIVAL_02 )
+    _BALLOONWIN_OBJMSG( msg_c02_black_04, C02_RIVAL_02 )
 	_BALLOONWIN_CLOSE()
 	
 	//ライバルが博物館の中へ

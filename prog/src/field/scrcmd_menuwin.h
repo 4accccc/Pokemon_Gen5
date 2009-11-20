@@ -23,10 +23,9 @@ extern VMCMD_RESULT EvCmdGoldWinOpen( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGoldWinUpdate( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGoldWinClose( VMHANDLE *core, void *wk );
 
-extern VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk );
-extern VMCMD_RESULT EvCmdTalkMsgAllPut( VMHANDLE *core, void *wk );
-extern VMCMD_RESULT EvCmdTalkWinOpen( VMHANDLE *core, void *wk );
-extern VMCMD_RESULT EvCmdTalkWinClose( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdSysWinMsg( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdSysWinMsgAllPut( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdSysWinClose( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBalloonWinWrite( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBalloonWinTalkWrite( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBalloonWinWriteMF( VMHANDLE *core, void *wk );

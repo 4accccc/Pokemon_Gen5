@@ -40,7 +40,7 @@ EVENT_END
 //====================================================================
 EVENT_START   ev_heal_p01_dummy
   _TALK_START_SE_PLAY()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_common_pc_heal_01 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_common_pc_heal_01 )
 	_LAST_KEYWAIT()
  	_BALLOONWIN_CLOSE()
 EVENT_END
@@ -63,14 +63,14 @@ ev_easy_item_event:
 
     IF FLAG_ON($SCWK_PARAM2) THEN
       //再会話メッセージ
-      _BALLOONWIN_TALKOBJ_OPEN_ARC( SCWK_PARAM6, SCWK_PARAM5 )
+      _BALLOONWIN_TALKOBJ_MSG_ARC( SCWK_PARAM6, SCWK_PARAM5 )
       _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
 
     ELSE
       
       //入手前メッセージ
-      _BALLOONWIN_TALKOBJ_OPEN_ARC( SCWK_PARAM6, SCWK_PARAM3 )
+      _BALLOONWIN_TALKOBJ_MSG_ARC( SCWK_PARAM6, SCWK_PARAM3 )
       _AB_KEYWAIT()
       _BALLOONWIN_CLOSE()
 
@@ -87,7 +87,7 @@ ev_easy_item_event:
           _CALL   ev_item_event_sub_keywait
 
           //入手後メッセージ
-          _BALLOONWIN_TALKOBJ_OPEN_ARC( SCWK_PARAM6, SCWK_PARAM4)
+          _BALLOONWIN_TALKOBJ_MSG_ARC( SCWK_PARAM6, SCWK_PARAM4)
           _LAST_KEYWAIT()
           _BALLOONWIN_CLOSE()
       ENDIF
@@ -143,10 +143,9 @@ ev_item_event_fail:
 
 ev_item_event_fail_sub:
 	//「ざんねん！バッグがいっぱいだ！」
-  _TALKWIN_OPEN()
-	_TALKMSG(		msg_event_item_get_03 )
+	_SYSWIN_MSG_DOWN(		msg_event_item_get_03 )
 	_LAST_KEYWAIT() //_LAST_KEYWAIT
-  _TALKWIN_CLOSE()
+  _SYSWIN_CLOSE()
 	_RET
 
 //====================================================================
@@ -168,16 +167,15 @@ ev_item_event_sub_nowait:
 	//アイテム追加
 	_ADD_ITEM( SCWK_TEMP0,SCWK_TEMP1,SCWK_ANSWER )
 
-  _TALKWIN_OPEN()
 
 	_CALL			pocket_me_set									//MEセット
 
   _CALL   ev_item_event_get_msg
 
-	_TALKMSG(	msg_event_item_get_06 )
+	_SYSWIN_MSG_DOWN(	msg_event_item_get_06 )
 	_AB_KEYWAIT() //【仮】_LAST_KEYWAITにおきかえること
 
-  _TALKWIN_CLOSE()
+  _SYSWIN_CLOSE()
 	_RET
 
 //====================================================================
@@ -196,7 +194,6 @@ ev_item_event_success:
 //	msg_event_item_get_07
 //--------------------------------------------------------------------
 ev_item_event_sub_keywait:
-  _TALKWIN_OPEN()
 	//アイテム追加
 	_ADD_ITEM( SCWK_TEMP0,SCWK_TEMP1,SCWK_ANSWER )
 
@@ -205,9 +202,8 @@ ev_item_event_sub_keywait:
   _CALL   ev_item_event_get_msg
 	_ME_WAIT()
 
-  _TALKWIN_CLOSE()
+  _SYSWIN_CLOSE()
 
-  _TALKWIN_OPEN()
 
 	_PLAYER_NAME(	0 )
 
@@ -217,8 +213,8 @@ ev_item_event_sub_keywait:
 	_GET_POCKET_ID(	SCWK_TEMP0,SCWK_ANSWER )
 	_POCKET_NAME(	2,SCWK_ANSWER )
 
-	_TALKMSG(	msg_event_item_get_07 )
-  _TALKWIN_CLOSE()
+	_SYSWIN_MSG_DOWN(	msg_event_item_get_07 )
+  _SYSWIN_CLOSE()
 	_RET
 
 //--------------------------------------------------------------------
@@ -230,10 +226,10 @@ ev_item_event_get_msg:
   IF  $SCWK_ANSWER  == BAG_POCKET_EVENT THEN
       _PLAYER_NAME(	0 )
       _ITEM_NAME(	1,SCWK_TEMP0 )
-      _TALKMSG(	msg_event_item_get_04 )		//たいせつなもの
+      _SYSWIN_MSG_DOWN(	msg_event_item_get_04 )		//たいせつなもの
   ELSE
       _ITEM_NAME(	0,SCWK_TEMP0 )
-      _TALKMSG(	msg_event_item_get_01 )
+      _SYSWIN_MSG_DOWN(	msg_event_item_get_01 )
   ENDIF
 
   _RET
@@ -320,29 +316,26 @@ ev_report_event_call:
 	$SCWK_PARAM4 = 1	
 
   //「かいても いいですか？」
-  _TALKWIN_OPEN()
-  _TALKMSG( msg_common_report_01 )
+  _SYSWIN_MSG_DOWN( msg_common_report_01 )
   _YES_NO_WIN( SCWK_PARAM5 )
-  _TALKWIN_CLOSE()
+  _SYSWIN_CLOSE()
   IF $SCWK_PARAM5 == 0 THEN //『はい』
     $SCWK_PARAM1 = TRUE
   ENDIF
 
 	//「すでに べつの レポートが…」
 	IF ($SCWK_PARAM1 == TRUE) && ($SCWK_PARAM2 == TRUE) && ($SCWK_PARAM3 == TRUE) THEN
-    _TALKWIN_OPEN()
-    _TALKMSG( msg_common_report_08 )
+      _SYSWIN_MSG_DOWN( msg_common_report_08 )
     _AB_KEYWAIT()
-    _TALKWIN_CLOSE()
+    _SYSWIN_CLOSE()
 		$SCWK_PARAM1 = FALSE
 	ENDIF
 
   //「うえから かいても いいですか？」
   IF ($SCWK_PARAM1 == TRUE) && ($SCWK_PARAM2 == TRUE) && ($SCWK_PARAM3 != TRUE) THEN
-    _TALKWIN_OPEN()
-    _TALKMSG( msg_common_report_02 )
+      _SYSWIN_MSG_DOWN( msg_common_report_02 )
     _YES_NO_WIN( SCWK_PARAM5 )
-    _TALKWIN_CLOSE()
+    _SYSWIN_CLOSE()
     IF $SCWK_PARAM5 == 1 THEN //『いいえ』
      $SCWK_PARAM1 = FALSE
     ENDIF
@@ -351,33 +344,30 @@ ev_report_event_call:
   // セーブ
   IF $SCWK_PARAM1 == TRUE THEN
     //「かきこんでいます」
-    _TALKWIN_OPEN()
-		SWITCH $SCWK_PARAM4	
+  		SWITCH $SCWK_PARAM4	
     CASE 0 THEN 
-			_TALKMSG( msg_common_report_10 )
+			_SYSWIN_MSG_DOWN( msg_common_report_10 )
 		CASE 1 THEN
-			_TALKMSG( msg_common_report_11 )
+			_SYSWIN_MSG_DOWN( msg_common_report_11 )
 		CASE 2 THEN
-			_TALKMSG( msg_common_report_12 )
+			_SYSWIN_MSG_DOWN( msg_common_report_12 )
 		ENDSWITCH
     _REPORT_CALL( SCWK_PARAM5 )	// 実セーブ処理
-    _TALKWIN_CLOSE()
+    _SYSWIN_CLOSE()
     // 書き込みに成功
     IF $SCWK_PARAM5 == TRUE THEN
       //「しっかり かきのこした！」
 			_PLAYER_NAME(0)
-      _TALKWIN_OPEN()
-      _TALKMSG( msg_common_report_04 )
+          _SYSWIN_MSG_DOWN( msg_common_report_04 )
       _AB_KEYWAIT()
-      _TALKWIN_CLOSE()
+      _SYSWIN_CLOSE()
 			$SCWK_PARAM0 = SCR_REPORT_OK
     // 書き込みに失敗
     ELSE
       //「かけませんでした」
-      _TALKWIN_OPEN()
-      _TALKMSG( msg_common_report_06 )
+          _SYSWIN_MSG_DOWN( msg_common_report_06 )
       _AB_KEYWAIT()
-      _TALKWIN_CLOSE() 
+      _SYSWIN_CLOSE() 
       $SCWK_PARAM0 = SCR_REPORT_CANCEL  // 結果を返す
     ENDIF
   ENDIF
@@ -419,16 +409,16 @@ sub_field_comm_exit_main:
 
   IF $i_comm_no == GAME_COMM_NO_INVASION THEN
     //パレス時は同意を得るまで切断しない
-    _TALKMSG( msg_common_fldcomm_exit_01)
+    _SYSWIN_MSG_DOWN( msg_common_fldcomm_exit_01)
     _YES_NO_WIN( i_ret )
 
     IF $i_ret == SCR_NO THEN
       $SCWK_PARAM0 = SCR_FIELD_COMM_EXIT_CANCEL
       _RET
     ENDIF
-    _TALKMSG( msg_common_fldcomm_exit_02)
+    _SYSWIN_MSG_DOWN( msg_common_fldcomm_exit_02)
     _FIELD_COMM_EXIT( i_ret )
-    _TALKWIN_CLOSE()
+    _SYSWIN_CLOSE()
   ELSE
     _FIELD_COMM_EXIT( i_ret )
   ENDIF

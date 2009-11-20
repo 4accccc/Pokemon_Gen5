@@ -917,38 +917,56 @@
 //======================================================================
 //--------------------------------------------------------------
 /**
- *  _TALKMSG 展開メッセージを表示(1byte)
+ *  _SYSWIN_MSG_UP 展開メッセージを表示(1byte)　ウィンドウ上
  *  @param  msg_id  表示するメッセージID
  */
 //--------------------------------------------------------------
-#define _SYSWINMSG( msg_id ) __ASM_TALK_MSG msg_id
-#define _TALKMSG( msg_id ) _ASM_TALK_MSG msg_id
+#define _SYSWIN_MSG_UP( msg_id ) _ASM_SYSWIN_MSG msg_id,WIN_UP
 
-  .macro  _ASM_TALK_MSG msg_id
-  .short  EV_SEQ_TALKMSG
+//--------------------------------------------------------------
+/**
+ *  _SYSWIN_MSG_DOWN 展開メッセージを表示(1byte)　ウィンドウ上
+ *  @param  msg_id  表示するメッセージID
+ */
+//--------------------------------------------------------------
+#define _SYSWIN_MSG_DOWN( msg_id ) _ASM_SYSWIN_MSG msg_id,WIN_DOWN
+
+  .macro  _ASM_SYSWIN_MSG msg_id,up_down
+  .short  EV_SEQ_SYSWIN_MSG
   .short  \msg_id
+  .short  \up_down
   .endm
 
 //--------------------------------------------------------------
 /**
- *  _TALKMSG_ALLPUT 展開メッセージを表示(1byte)
- *  @param  msg_id  表示するメッセージID
+ *  _SYSWIN_MSG_ALLPUT_UP 展開メッセージを一括表示(1byte) ウィンドウ上
+ *  @param  msg_id  表示するメッセージid
  */
 //--------------------------------------------------------------
-#define _SYSWINMSG_ALLPUT( msg_id ) _ASM_TALKMSG_ALLPUT msg_id
-#define _TALKMSG_ALLPUT( msg_id ) _ASM_TALKMSG_ALLPUT msg_id
+#define _SYSWIN_MSG_ALLPUT_UP( msg_id ) \
+    _ASM_SYSWIN_MSG_ALLPUT msg_id, WIN_UP
 
-  .macro  _ASM_TALKMSG_ALLPUT msg_id
-  .short  EV_SEQ_TALKMSG_ALLPUT
+//--------------------------------------------------------------
+/**
+ *  _SYSWIN_MSG_ALLPUT_DOWN 展開メッセージを一括表示(1byte) ウィンドウ下
+ *  @param  msg_id  表示するメッセージid
+ */
+//--------------------------------------------------------------
+#define _SYSWIN_MSG_ALLPUT_DOWN( msg_id ) \
+    _ASM_SYSWIN_MSG_ALLPUT msg_id, WIN_DOWN
+  
+  .macro  _ASM_SYSWIN_MSG_ALLPUT msg_id, up_down
+  .short  EV_SEQ_SYSWIN_MSG_ALLPUT
   .short  \msg_id
+  .short  \up_down
   .endm
 
 //--------------------------------------------------------------
 /**
- *  _TALKWIN_OPEN システムウィンドウ開く
- *  @param
+ *  _TALKWIN_OPEN システムウィンドウ開く　なくなりました。
  */
 //--------------------------------------------------------------
+#if 0
 #define _SYSWIN_OPEN() _ASM_SYSWIN_OPEN WIN_DOWN
 #define _SYSWIN_OPEN_UP() _ASM_SYSWIN_OPEN WIN_UP
 #define _SYSWIN_OPEN_DOWN() _ASM_SYSWIN_OPEN WIN_DOWN
@@ -958,18 +976,18 @@
   .short  EV_SEQ_TALKWIN_OPEN
   .short  \up_down
   .endm
-  
+#endif
+
 //--------------------------------------------------------------
 /**
- *  _TALKWIN_CLOSE システムウィンドウ閉じる
+ *  _SYSWIN_CLOSE システムウィンドウ閉じる
  *  @param none
  */
 //--------------------------------------------------------------
-#define _SYSWIN_CLOSE() _ASM_TALKWIN_CLOSE
-#define _TALKWIN_CLOSE()  _ASM_TALKWIN_CLOSE
+#define _SYSWIN_CLOSE() _ASM_SYSWIN_CLOSE
 
-  .macro  _ASM_TALKWIN_CLOSE
-  .short  EV_SEQ_TALKWIN_CLOSE
+  .macro  _ASM_SYSWIN_CLOSE
+  .short  EV_SEQ_SYSWIN_CLOSE
   .endm
 
 //======================================================================
@@ -977,17 +995,17 @@
 //======================================================================
 //--------------------------------------------------------------
 /**
- *  @def  _BALLOONWIN_OBJMSG_OPEN
+ *  @def  _BALLOONWIN_OBJMSG
  *  @brief  吹き出しウィンドウ描画
  *  @param msg_id 表示するメッセージID
  *  @param obj_id 吹き出しを出す対象OBJ ID
  */
 //--------------------------------------------------------------
-#define _BALLOONWIN_OBJMSG_OPEN( msg_id , obj_id ) \
-    _ASM_BALLOONWIN_OBJMSG_OPEN msg_id, obj_id
+#define _BALLOONWIN_OBJMSG( msg_id , obj_id ) \
+    _ASM_BALLOONWIN_OBJMSG msg_id, obj_id
 
-  .macro _ASM_BALLOONWIN_OBJMSG_OPEN msg_id, obj_id
-  .short  EV_SEQ_BALLOONWIN_OBJMSG_OPEN
+  .macro _ASM_BALLOONWIN_OBJMSG msg_id, obj_id
+  .short  EV_SEQ_BALLOONWIN_OBJMSG
   .short 0x0400
   .short \msg_id
   .byte \obj_id
@@ -996,16 +1014,16 @@
 
 //--------------------------------------------------------------
 /**
- *  @def  _BALLOONWIN_TALKOBJ_OPEN
+ *  @def  _BALLOONWIN_TALKOBJ_MSG
  *  @brief  吹き出しウィンドウ描画　話し掛けOBJ専用
  *  @param msg_id 表示するメッセージID
  */
 //--------------------------------------------------------------
-#define _BALLOONWIN_TALKOBJ_OPEN( msg_id ) \
-    _ASM_BALLOONWIN_TALKOBJ_OPEN msg_id
+#define _BALLOONWIN_TALKOBJ_MSG( msg_id ) \
+    _ASM_BALLOONWIN_TALKOBJ_MSG msg_id
   
-  .macro _ASM_BALLOONWIN_TALKOBJ_OPEN msg_id
-  .short  EV_SEQ_BALLOONWIN_TALKOBJ_OPEN
+  .macro _ASM_BALLOONWIN_TALKOBJ_MSG msg_id
+  .short  EV_SEQ_BALLOONWIN_TALKOBJ_MSG
   .short 0x0400
   .short \msg_id
   .byte WIN_NONE
@@ -1013,17 +1031,17 @@
 
 //--------------------------------------------------------------
 /**
- * @def _BALLOONWIN_TALKOBJ_OPEN_ARC
+ * @def _BALLOONWIN_TALKOBJ_MSG_ARC
  * @brief 吹き出しウィンドウ描画 話しかけOBJ専用、メッセージアーカイブ指定付き
  *  @param  arc_id  メッセージアーカイブ指定ID
  *  @param msg_id 表示するメッセージID
  */
 //--------------------------------------------------------------
-#define _BALLOONWIN_TALKOBJ_OPEN_ARC( arc_id, msg_id ) \
-    _ASM_BALLOONWIN_TALKOBJ_OPEN_ARC arc_id, msg_id
+#define _BALLOONWIN_TALKOBJ_MSG_ARC( arc_id, msg_id ) \
+    _ASM_BALLOONWIN_TALKOBJ_MSG_ARC arc_id, msg_id
 
-  .macro  _ASM_BALLOONWIN_TALKOBJ_OPEN_ARC arc_id, msg_id
-  .short  EV_SEQ_BALLOONWIN_TALKOBJ_OPEN
+  .macro  _ASM_BALLOONWIN_TALKOBJ_MSG_ARC arc_id, msg_id
+  .short  EV_SEQ_BALLOONWIN_TALKOBJ_MSG
   .short \arc_id
   .short \msg_id
   .byte WIN_NONE
@@ -1031,18 +1049,18 @@
 
 //--------------------------------------------------------------
 /**
- *  @def  _BALLOONWIN_OBJMSG_OPEN_POS
+ *  @def  _BALLOONWIN_OBJMSG_POS
  *  @brief  吹き出しウィンドウ描画　位置指定あり
  *  @param msg_id 表示するメッセージID
  *  @param obj_id 吹き出しを出す対象OBJ ID
  *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DONW,WIN_NONE
  */
 //--------------------------------------------------------------
-#define _BALLOONWIN_OBJMSG_OPEN_POS( msg_id , obj_id, pos ) \
-    _ASM_BALLOONWIN_OBJMSG_OPEN_POS msg_id, obj_id, pos
+#define _BALLOONWIN_OBJMSG_POS( msg_id , obj_id, pos ) \
+    _ASM_BALLOONWIN_OBJMSG_POS msg_id, obj_id, pos
   
-  .macro _ASM_BALLOONWIN_OBJMSG_OPEN_POS msg_id, obj_id, pos
-  .short  EV_SEQ_BALLOONWIN_OBJMSG_OPEN
+  .macro _ASM_BALLOONWIN_OBJMSG_POS msg_id, obj_id, pos
+  .short  EV_SEQ_BALLOONWIN_OBJMSG
   .short 0x0400
   .short \msg_id
   .byte \obj_id
@@ -1059,8 +1077,8 @@
  *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DONW,WIN_NONE
  */
 //--------------------------------------------------------------
-#define _BALLOONWIN_OBJMSG_OPEN_MF( msg_id_w, msg_id_b, obj_id, pos ) \
-    _ASM_BALLOONWIN_OBJMSG_OPEN_MF msg_id_w, msg_id_b, obj_id, pos
+#define _BALLOONWIN_OBJMSG_MF( msg_id_w, msg_id_b, obj_id, pos ) \
+    _ASM_BALLOONWIN_OBJMSG_MF msg_id_w, msg_id_b, obj_id, pos
 
 //--------------------------------------------------------------
 /**
@@ -1072,8 +1090,8 @@
  *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DONW,WIN_NONE
  */
 //--------------------------------------------------------------
-#define _BALLOONWIN_OBJMSG_OPEN_WB( msg_id_w, msg_id_b, obj_id, pos ) \
-    _ASM_BALLOONWIN_OBJMSG_OPEN_WB msg_id_w, msg_id_b, obj_id, pos
+#define _BALLOONWIN_OBJMSG_WB( msg_id_w, msg_id_b, obj_id, pos ) \
+    _ASM_BALLOONWIN_OBJMSG_WB msg_id_w, msg_id_b, obj_id, pos
 
 //--------------------------------------------------------------
 /**
@@ -1087,6 +1105,9 @@
   .short  EV_SEQ_BALLOONWIN_CLOSE
   .endm
 
+//======================================================================
+//  所持金ウィンドウ
+//======================================================================
 //--------------------------------------------------------------
 /**
  *  @def _GOLD_WIN_OPEN
@@ -1137,6 +1158,9 @@
   .short \y
   .endm
 
+//======================================================================
+//  メッセージウィンドウ共通
+//======================================================================
 //--------------------------------------------------------------
 /**
  *  @def _MSGWIN_CLOSE
@@ -1152,6 +1176,9 @@
   .short EV_SEQ_MSGWIN_CLOSE
   .endm
 
+//======================================================================
+//  プレーンウィンドウ
+//======================================================================
 //--------------------------------------------------------------
 /**
  *  @def _PLAINWIN_MSG_UP
@@ -1189,6 +1216,10 @@
   .short EV_SEQ_PLAINWIN_CLOSE
   .endm
 
+//======================================================================
+//  サブウィンドウ
+//======================================================================
+
 //--------------------------------------------------------------
 /**
  *  @def _SUBWIN_MSG
@@ -1224,6 +1255,9 @@
   .short \win_id
   .endm
 
+//======================================================================
+//  BGウィンドウ
+//======================================================================
 //--------------------------------------------------------------
 /**
  *  @def _BGWIN_MSG
@@ -4884,7 +4918,7 @@
 //  ※スクリプトコマンドを組み合わせたもの
 //
 //======================================================================
-  .include  "easy_event_def.h"
+.include  "easy_event_def.h"
 
 //--------------------------------------------------------------
 /**
@@ -4892,8 +4926,8 @@
  * @param msg_id 表示するメッセージID
  */
 //--------------------------------------------------------------
-#define _EASY_MSG( msg_id )   _ASM_EASY_MSG msg_id
-
+#define _EASY_MSG( msg_id ) \
+  _ASM_EASY_MSG msg_id
 
 //--------------------------------------------------------------
 /**
@@ -4901,8 +4935,8 @@
  * @param msg_id 表示するメッセージID
  */
 //--------------------------------------------------------------
-#define _EASY_BALLOONWIN_TALKOBJ_MSG( msg_id )  _ASM_EASY_BALLOONWIN_TALKOBJ_MSG msg_id
-
+#define _EASY_BALLOONWIN_TALKOBJ_MSG( msg_id ) \
+  _ASM_EASY_BALLOONWIN_TALKOBJ_MSG msg_id
 
 //--------------------------------------------------------------
 /**

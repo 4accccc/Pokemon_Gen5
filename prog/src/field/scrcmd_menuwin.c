@@ -245,48 +245,35 @@ VMCMD_RESULT EvCmdBmpMenuStart( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * システムウィンドウ表示追加
- * @param
- * @retval
+ * @param work SCRCMD_WORK
+ * @param u8 updown SCRCMD_MSGWIN_UP等
+ * @retval nothing
  */
 //--------------------------------------------------------------
 static void sysWin_AddWindow( SCRCMD_WORK *work, u8 updown )
 {
-  SCRIPT_WORK *sc;
-  SCRIPT_FLDPARAM *fparam;
-  GFL_MSGDATA *msgData;
   FLDMSGWIN_STREAM *msgWin;
   
-///  u8 *win_open_flag;
-  
-  if( SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) )
+  if( SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) ) //メニューオープン済み
   {
-#ifdef  SCR_ASSERT_ON
-    GF_ASSERT_MSG(0,"TALK_OPEN_ERROR::既にトークウィンドウをオープンしている");
-#else
-    OS_Printf("==============TALK_OPEN_ERROR::既にトークウィンドウをオープンしている=================\n");
-#endif
-    return ;
+    msgWin = SCRCMD_WORK_GetMsgWinPtr( work );
+    FLDMSGWIN_STREAM_ClearMessage( msgWin );
   }
-  
-  sc = SCRCMD_WORK_GetScriptWork( work );
-  fparam = SCRIPT_GetFieldParam( sc );
-  msgData = SCRCMD_WORK_GetMsgData( work );
-  
-#if 0
-  msgWin = FLDMSGWIN_STREAM_AddTalkWin( fparam->msgBG, msgData );
-#else
-  if( updown == SCRCMD_MSGWIN_UP ){ //UP
-	  msgWin = FLDMSGWIN_STREAM_Add( fparam->msgBG, msgData, 1, 1, 30, 4 );
-  }else{ //DOWN
-	  msgWin = FLDMSGWIN_STREAM_Add( fparam->msgBG, msgData, 1, 19, 30, 4 );
+  else
+  {
+    SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+    SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+    GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
+
+    if( updown == SCRCMD_MSGWIN_UP ){
+	    msgWin = FLDMSGWIN_STREAM_Add( fparam->msgBG, msgData, 1, 1, 30, 4 );
+    }else{ //DOWN
+	    msgWin = FLDMSGWIN_STREAM_Add( fparam->msgBG, msgData, 1, 19, 30, 4 );
+    }
+
+    SCRCMD_WORK_SetMsgWinPtr( work, msgWin );
+    SCREND_CHK_SetBitOn(SCREND_CHK_WIN_OPEN);
   }
-#endif
-  
-  SCRCMD_WORK_SetMsgWinPtr( work, msgWin );
-  
-///  win_open_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_OPEN_FLAG );
-///  *win_open_flag = TRUE;  //ON;
-  SCREND_CHK_SetBitOn(SCREND_CHK_WIN_OPEN);
 }
 
 //--------------------------------------------------------------
@@ -296,7 +283,7 @@ static void sysWin_AddWindow( SCRCMD_WORK *work, u8 updown )
  * @retval BOOL TRUE=終了
  */
 //--------------------------------------------------------------
-static BOOL TalkMsgWait( VMHANDLE *core, void *wk )
+static BOOL sysWinMsgWait( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   FLDMSGWIN_STREAM *msgWin;
@@ -305,7 +292,7 @@ static BOOL TalkMsgWait( VMHANDLE *core, void *wk )
   if( FLDMSGWIN_STREAM_Print(msgWin) == TRUE ){
     return( 1 );
   }
-   
+  
   return( 0 );
 }
 
@@ -316,25 +303,16 @@ static BOOL TalkMsgWait( VMHANDLE *core, void *wk )
  * @return  VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdSysWinMsg( VMHANDLE *core, void *wk )
 {
   FLDMSGWIN_STREAM *msgWin;
   SCRCMD_WORK *work = wk;
-  u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
-  
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
-  
-  {
-    if( !SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) ){
-#ifdef SCR_ASSERT_ON
-      GF_ASSERT_MSG( 0, "TALK_MSG_ERROR::トークウィンドウをオープンしていないのにメッセージを出そうとしている");
-#else
-      OS_Printf("==============TALK_MSG_ERROR::トークウィンドウをオープンしていないのにメッセージを出そうとしている=================\n");
-#endif
-      sysWin_AddWindow( work, SCRCMD_MSGWIN_DOWN );
-    }
-  }
+  u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
+  u16 up_down = VMGetU16( core );
+
+  sysWin_AddWindow( work, up_down );
   
   {
     GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
@@ -345,9 +323,8 @@ VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
   }
   
   msgWin = (FLDMSGWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
-  FLDMSGWIN_STREAM_ClearMessage( msgWin );
   FLDMSGWIN_STREAM_PrintStrBufStart( msgWin, 0, 0, *msgbuf );
-  VMCMD_SetWait( core, TalkMsgWait );
+  VMCMD_SetWait( core, sysWinMsgWait );
   return VMCMD_RESULT_SUSPEND;
 }
 
@@ -438,8 +415,6 @@ VMCMD_RESULT EvCmdGoldWinClose( VMHANDLE *core, void *wk )
 }
 
 
-//--------------------------------------------------------------
-//--------------------------------------------------------------
 #if 0
 static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
 {
@@ -513,25 +488,17 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
  * @retval  VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdTalkMsgAllPut( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdSysWinMsgAllPut( VMHANDLE *core, void *wk )
 {
   FLDMSGWIN_STREAM *msgWin;
   SCRCMD_WORK *work = wk;
-  u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
-
-  {
-    if ( !SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) ){
-#ifdef  SCR_ASSERT_ON
-      GF_ASSERT_MSG(0,"ALL_PUT_ERROR::トークウィンドウをオープンしていないのにメッセージを出そうとしている");
-#else
-      OS_Printf("==============ALL_PUT_ERROR::トークウィンドウをオープンしていないのにメッセージを出そうとしている=================\n");
-#endif
-      sysWin_AddWindow( work, SCRCMD_MSGWIN_DOWN );
-    }
-  }
-
+  u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
+  u16 up_down = VMGetU16( core );
+  
+  sysWin_AddWindow( work, up_down );
+  
   {
     GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
     WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
@@ -553,6 +520,7 @@ VMCMD_RESULT EvCmdTalkMsgAllPut( VMHANDLE *core, void *wk )
  * @retval  VMCMD_RESULT
  */
 //--------------------------------------------------------------
+#if 0
 VMCMD_RESULT EvCmdTalkWinOpen( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
@@ -561,6 +529,7 @@ VMCMD_RESULT EvCmdTalkWinOpen( VMHANDLE *core, void *wk )
   sysWin_AddWindow( work, up_down ); //<<内部で既開チェックをしています
   return VMCMD_RESULT_CONTINUE;
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -569,7 +538,7 @@ VMCMD_RESULT EvCmdTalkWinOpen( VMHANDLE *core, void *wk )
  * @retval  VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdTalkWinClose( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdSysWinClose( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   CloseWin(work);   //<<内部で既閉チェックをしています
@@ -1222,19 +1191,25 @@ VMCMD_RESULT EvCmdMsgWinClose( VMHANDLE *core, void *wk )
  * @retval  none
  */
 //--------------------------------------------------------------
-static void CloseWin(SCRCMD_WORK *work)
+static void CloseWin( SCRCMD_WORK *work )
 {
   FLDMSGWIN_STREAM *msgWin;
-  if ( SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) ){
+  
+  if( SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) )
+  {
     msgWin = (FLDMSGWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
     FLDMSGWIN_STREAM_Delete( msgWin );
     SCREND_CHK_SetBitOff(SCREND_CHK_WIN_OPEN);
-  }else{
-#ifdef SCR_ASSERT_ON
-    GF_ASSERT_MSG(0,"TALK_CLOSE_ERROR::存在しないトークウィンドウを閉じようとしている");
-#else
-    OS_Printf("=================TALK_CLOSE_ERROR::存在しないトークウィンドウを閉じようとしている===================\n");
-#endif
+  }
+  else
+  {
+    #ifdef SCR_ASSERT_ON
+    GF_ASSERT_MSG( 0,
+      "TALK_CLOSE_ERROR::存在しないトークウィンドウを閉じようとしている");
+    #else
+    OS_Printf(
+      "TALK_CLOSE_ERROR::存在しないトークウィンドウを閉じようとしている\n");
+    #endif
   }
 }
 
@@ -1251,14 +1226,13 @@ static void CloseBalloonWin(SCRCMD_WORK *work)
     FLDTALKMSGWIN *tmsg;
     tmsg = (FLDTALKMSGWIN*)SCRCMD_WORK_GetMsgWinPtr( work );
     FLDTALKMSGWIN_Delete( tmsg );
-    //ウィンドウ作成フラグオフ
     SCREND_CHK_SetBitOff(SCREND_CHK_BALLON_WIN_OPEN);
   }else{
-#ifdef SCR_ASSERT_ON    
+    #ifdef SCR_ASSERT_ON    
     GF_ASSERT_MSG(0,"バルーンウィンドウはありません");
-#else
+    #else
     OS_Printf("==========バルーンウィンドウはありません============\n");
-#endif
+    #endif
   }
 }
 

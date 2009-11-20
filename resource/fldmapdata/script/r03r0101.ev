@@ -45,7 +45,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_r03r0101_talkobj_woman3
 	//ÉJÉEÉìÉgèüïâéøñ‚
-	_BALLOONWIN_OBJMSG_OPEN(msg_r03r0101_woman3_01,R03R0101_WOMAN3_01)
+	_BALLOONWIN_OBJMSG(msg_r03r0101_woman3_01,R03R0101_WOMAN3_01)
 	_YES_NO_WIN( SCWK_ANSWER )
 	_BALLOONWIN_CLOSE()
 

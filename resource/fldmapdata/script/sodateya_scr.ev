@@ -94,14 +94,14 @@ _RET
 //======================================================================
 say:
   _TALK_OBJ_START()
-  _BALLOONWIN_TALKOBJ_OPEN( message_id )
+  _BALLOONWIN_TALKOBJ_MSG( message_id )
   _AB_KEYWAIT()
   _BALLOONWIN_CLOSE() 
 _RET
 
 say_no_wait: // ÉLÅ[ë“ÇøÇ»Çµ
   _TALK_OBJ_START()
-  _BALLOONWIN_TALKOBJ_OPEN( message_id )
+  _BALLOONWIN_TALKOBJ_MSG( message_id )
   _BALLOONWIN_CLOSE() 
 _RET
 
@@ -114,7 +114,7 @@ _RET
 //======================================================================
 ask:
   _TALK_OBJ_START()
-  _BALLOONWIN_TALKOBJ_OPEN( message_id )
+  _BALLOONWIN_TALKOBJ_MSG( message_id )
   _YES_NO_WIN( ask_retval )
   _BALLOONWIN_CLOSE()
 _RET

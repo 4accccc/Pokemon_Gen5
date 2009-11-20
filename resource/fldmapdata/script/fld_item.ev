@@ -187,7 +187,7 @@ ev_fld_item2:
 //  終了処理
 //--------------------------------------------------------------------
 ev_fld_item_end:
-  //_TALKWIN_CLOSE()
+  //_SYSWIN_CLOSE()
   //_CHG_LOCAL_SCR  //ローカルスクリプトに切り替え
   _RET
 
@@ -213,9 +213,6 @@ ev_itemget_flditem_true:
   //そうこのカギのチェック
   //_IFVAL_CALL SCWK_TEMP0,EQ,ITEM_SOUKONOKAGI,ev_itemget_fld_item_soukonokagi
   
-  //ウィンドウオープン
-  _TALKWIN_OPEN()
-
   //入手したアイテムが技マシンかチェック
   _WAZA_ITEM_CHK( SCWK_TEMP0, SCWK_ANSWER )
   
@@ -229,7 +226,7 @@ ev_itemget_flditem_true:
   _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM )
   
   //ウィンドウクローズ
-  _TALKWIN_CLOSE()
+  _SYSWIN_CLOSE()
   _RET
 
 ev_itemget_flditem_true_2:  //成功終了処理その２
@@ -339,7 +336,7 @@ ev_itemget_flditem_common_10:
   /*冒険ノートデータ作成*/
 //  _FNOTE_DATA_MAKE  FNOTE_ID_ITEMGET,SCWK_TEMP0,0,0,0
   
-  _TALKMSG( msg_fld_item_get_10 )
+  _SYSWIN_MSG_DOWN( msg_fld_item_get_10 )
   _LAST_KEYWAIT()
   
   //最後に成功したことをSCWK_ANSWERに代入しておく！
@@ -356,7 +353,7 @@ ev_itemget_flditem_yes_wazam:
   _PLAYER_NAME( 0 )
   _ITEM_NAME( 1,SCWK_TEMP0 )
   _ITEM_WAZA_NAME( 2,SCWK_TEMP0)
-  _TALKMSG( msg_fld_item_get_07 )
+  _SYSWIN_MSG_DOWN( msg_fld_item_get_07 )
   _CALL ev_itemget_flditem_true_2
   _RET
 
@@ -364,7 +361,7 @@ ev_itemget_flditem_yes_wazam:
 ev_itemget_flditem_no_wazam:
   _PLAYER_NAME(  0 )
   _ITEM_NAME( 1,SCWK_TEMP0 )
-  _TALKMSG( msg_fld_item_get_04 )
+  _SYSWIN_MSG_DOWN( msg_fld_item_get_04 )
   _CALL ev_itemget_flditem_true_2
   _RET
 
@@ -373,10 +370,9 @@ ev_itemget_flditem_no_wazam:
 //--------------------------------------------------------------------
 ev_itemget_flditem_false:
   _ITEM_NAME( 0,SCWK_TEMP0 )
-  _TALKWIN_OPEN()
-  _TALKMSG( msg_fld_item_get_05 )
+  _SYSWIN_MSG_DOWN( msg_fld_item_get_05 )
   _LAST_KEYWAIT()
-  _TALKWIN_CLOSE()
+  _SYSWIN_CLOSE()
 
   //最後に失敗したことをSCWK_ANSWERに代入しておく！
   _LDVAL( SCWK_ANSWER,0 )

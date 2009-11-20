@@ -50,12 +50,9 @@ def get_itemsym( file, str_item )
 	file.pos = 0
 	
 	while line = file.gets
-    
-		if( line =~ /\A#define/ )
+		if( line =~ /\A#define/ && line.include?(str_item) )
 			len = line.length
 			str = line.split() #‹ó”’•¶ŽšˆÈŠO—…—ñ
-      
-      if( str[2]
 			return str[1] #1 ƒVƒ“ƒ{ƒ‹–¼
     end
   end

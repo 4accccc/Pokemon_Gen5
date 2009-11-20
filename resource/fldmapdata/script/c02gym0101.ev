@@ -155,7 +155,7 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 	//博物館案内イベント
 		
 		//うーむ！　この　骨格標本は　いつみても……　ホレボレしますな
-		_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_ad_01, C02GYM0101_AD_01 )
+		_BALLOONWIN_OBJMSG( msg_c02gym0101_ad_01, C02GYM0101_AD_01 )
 		
 		//副館長：発言を終えるまで、溜める（ホレボレしている）
 		_TIME_WAIT  ( 8 ) 
@@ -176,7 +176,7 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		_OBJ_ANIME_WAIT()
 		
 		//どうも　わたくし　副館長の　？？？　です　せっかく　いたしたのです～
-		_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_ad_02, C02GYM0101_AD_01 )
+		_BALLOONWIN_OBJMSG( msg_c02gym0101_ad_02, C02GYM0101_AD_01 )
 		_BALLOONWIN_CLOSE()
 		
 		//副館長：主人公の前まで来る
@@ -200,7 +200,7 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		
 		//副館長：骨（大）の説明
 		//骨格……　大昔の　ポケモン……
-		_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_ad_03, C02GYM0101_AD_01 )
+		_BALLOONWIN_OBJMSG( msg_c02gym0101_ad_03, C02GYM0101_AD_01 )
 		_BALLOONWIN_CLOSE()
 		
 		//副館長：展示物（隕石）まで移動
@@ -212,7 +212,7 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		
 		//副館長：隕石の説明
 		//この　石は　すごいですよ
-		_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_ad_04, C02GYM0101_AD_01 )
+		_BALLOONWIN_OBJMSG( msg_c02gym0101_ad_04, C02GYM0101_AD_01 )
 		_BALLOONWIN_CLOSE()
 		
 		//副館長：展示物（石）まで移動
@@ -224,7 +224,7 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		
 		//副館長：石の説明
 		//ああ　こちらは　ただの　ふるいいし　です
-		_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_ad_05, C02GYM0101_AD_01 )
+		_BALLOONWIN_OBJMSG( msg_c02gym0101_ad_05, C02GYM0101_AD_01 )
 		_BALLOONWIN_CLOSE()
 		
 		//副館長：ジムまで移動
@@ -236,7 +236,7 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		
 		//副館長：ジムの説明
 		//あの扉の　先が　ポケモンジムと　なっております
-		_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_ad_06, C02GYM0101_AD_01 )
+		_BALLOONWIN_OBJMSG( msg_c02gym0101_ad_06, C02GYM0101_AD_01 )
 		_BALLOONWIN_CLOSE()
 		
 		//==============フラグワーク操作==============//
@@ -369,7 +369,7 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 	
 	//アロエが喋る
 	//なんてこったい……
-	_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_leader_01, MMDL_ID_EVENTOBJ_00 )
+	_BALLOONWIN_OBJMSG( msg_c02gym0101_leader_01, MMDL_ID_EVENTOBJ_00 )
 	_BALLOONWIN_CLOSE()
 
 	//アロエが退場

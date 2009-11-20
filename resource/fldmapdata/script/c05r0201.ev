@@ -34,7 +34,7 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START   ev_c05r0201_talkobj_oldman1
   _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c05r0201_oldman1_01 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c05r0201_oldman1_01 )
 	_AB_KEYWAIT()
   _BALLOONWIN_CLOSE()
 EVENT_END
