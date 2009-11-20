@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-11-20T20:23:04"/>
+	<create user="taya" host="W00146" date="2009-11-20T20:53:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1159,18 +1159,18 @@
 
 	<row id="BTL_STRID_STD_MagicRoom_Start">
 		<comment>マジックルーム発動</comment>
-		<language name="JPN" width="216">おたがいの　どうぐの　こうかが
-なくなった！</language>
-		<language name="JPN_KANJI" width="216">おたがいの　道具の効果が
-無くなった！</language>
+		<language name="JPN" width="216">おたがいの　もたせた　どうぐの
+こうかが　なくなった！</language>
+		<language name="JPN_KANJI" width="216">おたがいの　持たせた道具の
+効果が　無くなった！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_MagicRoom_End">
 		<comment>マジックルーム解除</comment>
-		<language name="JPN" width="216">おたがいの　どうぐの　こうかが
-もとに　もどった！</language>
-		<language name="JPN_KANJI" width="216">おたがいの　道具の効果が
-元に戻った！</language>
+		<language name="JPN" width="216">おたがいの　もたせた　どうぐの
+こうかが　もとに　もどった！</language>
+		<language name="JPN_KANJI" width="216">おたがいの　持たせた道具の
+効果が　元に戻った！</language>
 	</row>
 
 	<flowchart-group-list>
