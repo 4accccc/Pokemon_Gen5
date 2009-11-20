@@ -175,6 +175,7 @@ static u16 rescode_RegCodeIdx( MMDL_G3DOBJCONT *objcont, u16 code, u16 idx )
   }
   
   GF_ASSERT( 0 );
+  return( 0 );
 }
 
 //--------------------------------------------------------------

@@ -556,6 +556,7 @@ static void delResource( FLD_G3DOBJ_RES *res )
   }
   
   MI_CpuClear( res, sizeof(FLD_G3DOBJ_RES) );
+  res->tex_trans_flag = TEX_TRANS_SET;
 }
 
 //--------------------------------------------------------------
