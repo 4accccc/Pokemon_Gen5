@@ -128,8 +128,6 @@
 	ARCID_OTHERS		"others.narc"
 	ARCID_WAZAEFF_SEQ	"wazaeffect/waza_eff.narc"	#技エフェクトシーケンス
 	ARCID_BATTLEEFF_SEQ	"wazaeffect/battle_eff.narc"	#戦闘エフェクトシーケンス
-	ARCID_BATT_OBJ		"battle/pl_batt_obj.narc"	#戦闘画面OBJ
-	ARCID_BATT_BG		"battle/pl_batt_bg.narc"	#戦闘画面BG
 	ARCID_CAMERACONT	"camera_adjust_view.narc"	#カメラ調整用画像（デバッグ）
 	ARCID_MUSICAL_DEBUG	"mus_debug.narc"	#ミュージカルデバッグ用（デバッグ）
 	ARCID_ELBOARD_TEST	"elboard_test.narc"	#電光掲示板（テスト）
