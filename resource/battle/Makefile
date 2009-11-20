@@ -59,21 +59,12 @@ OBJNCLFILE := $(wildcard $(RES_OBJDIR)*.ncl)
 #	make do-build ルール
 #------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-#do-build: pl_batt_obj.narc $(TARGETDIR)/$(NARCNAME)
 do-build: nsbmd nsbca nsbma nsbta ncgr ncer bg_nclr obj_nclr $(NARCNAME) $(TARGETDIR)/$(NARCNAME)
 else
 do-build: $(TARGETDIR)/$(NARCNAME)
 endif
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-#pl_batt_obj.narc:
-#	$(NITRO_COMP) $(NITROSDK_ROOT) batt_obj.lst pl_batt_obj.narc pl_batt_obj.naix
-#	$(COPY) pl_batt_obj.narc platinum_data/
-#	$(COPY) pl_batt_obj_*.h platinum_data/
-
-#nsbmd: $(notdir $(IMDFILE:.imd=.nsbmd))
-#%.nsbmd: $(RES_3DDIR)%.imd
-#	g3dcvtr $<
 
 nsbmd: $(notdir $(IMDFILE:.imd=.nsbmd))
 %.nsbmd: $(RES_3DDIR)%.imd
@@ -121,10 +112,9 @@ $(NARCNAME): $(notdir $(IMDFILE:.imd=.nsbmd)) $(notdir $(ICAFILE:.ica=.nsbca)) $
 
 endif
 
-$(TARGETDIR)/$(NARCNAME):	$(NARCNAME) platinum_data/*
+$(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY)	$(NARCNAME) $(TARGETDIR)
 	$(COPY) $(NAIXNAME) $(TARGETDIR)
-	$(COPY) platinum_data/* $(TARGETDIR)	#プラチナデータはそのままコピーしておく
 
 #------------------------------------------------------------------------------
 #	make cleanルール
