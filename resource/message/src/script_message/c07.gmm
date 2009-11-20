@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-18T11:42:53"/>
+	<create user="matsumiya" host="W00207" date="2009-11-20T17:52:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -623,7 +623,7 @@
 プラズマ団が　手に入れる！</language>
 	</row>
 
-	<row id="msg_c07_girl2_01ｗ" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c07_girl2_01w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・仮メッセージ
 ・WHITEver</comment>
