@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<imd version="1.6.0">
+
+<head>
+	<create user="ibe_mana" host="W00191" date="2009-11-20T13:00:09" source="d6_yuka_biri01.ma"/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<original_create user="ibe_mana" host="W00191" date="2009-11-20T13:00:09" source="d6_yuka_biri01.ma"/>
+<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+
+<model_info
+	pos_scale="2"
+	scaling_rule="standard"
+	vertex_style="direct"
+	magnify="1.000000"
+	tool_start_frame="1"
+	tex_matrix_mode="maya"
+	compress_node="merge" node_size="1 1"
+	compress_material="on" material_size="1 1"
+	output_texture="used"
+	force_full_weight="off"
+	use_primitive_strip="on"
+/>
+
+<box_test pos_scale="2" xyz="-3.000000 1.000000 -3.000000" whd="6.000000 0.000000 6.000000"/>
+
+<tex_image_array size="5">
+	<tex_image index="0" name="biri01.1"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="biri01.1_pl"
+		path="C:/home/wb_data3d/build_model/indoor/d6_fuyuuishi_01/tex/biri01.1.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 000c 0000 0000 0000
+			0000 0000 0000 0000 000e 0000 0000 0000
+			0000 0000 0000 e000 000f 0000 0000 0000
+			0000 0000 0000 f000 000d 0000 0000 0000
+			0000 0000 0000 e000 0000 0000 0000 0000
+			0000 0000 0000 eb00 fedc 000b 0000 0000
+			0000 0000 0000 0000 ff00 0000 0000 0000
+			0000 0000 0000 0000 0c00 0000 0000 0000
+			0000 0000 0000 0000 00a0 0000 0000 0000
+			0000 0000 0000 0000 000d 0000 0000 0000
+			0000 0000 0000 0000 000d 0000 0000 0000
+			0000 0000 0000 0000 00a0 0000 0000 0000
+			0000 0000 0000 0000 0a00 0000 0000 0000
+			0000 0000 0000 0000 0000 beb0 0000 0000
+			0000 0000 0000 0000 0000 0000 00a0 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="biri01.2"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="biri01.2_pl"
+		path="C:/home/wb_data3d/build_model/indoor/d6_fuyuuishi_01/tex/biri01.2.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0004 0000 0000
+			0000 0000 0000 0000 0000 000d 0000 0000
+			0000 0000 0000 0000 0000 0007 0900 0000
+			0000 0000 0000 0000 0000 0000 0ab0 0000
+			0000 0000 0000 0000 9000 5000 007b 0000
+			0000 0000 0000 0000 c000 b000 0000 0000
+			0000 0000 0000 0000 7000 7a00 0000 0000
+			0000 0000 0000 0000 0a00 0aa0 0000 0000
+			0000 0000 0000 0000 0800 00b7 0000 0000
+			0000 0000 0000 0000 cc00 0008 0000 0000
+			0000 0000 0000 0000 6fd0 0000 0000 0000
+			0000 0000 0000 0000 05d0 0000 0000 0000
+			0000 0000 0000 0000 0080 0000 0000 0000
+			0000 0000 0000 0000 00df b000 0007 0000
+			0000 0000 0000 a000 78a8 fddc 0000 0000
+			0000 0000 0000 0000 0000 00fb 0000 0000
+			0000 0000 0000 0000 b500 000a 0000 0000
+			0000 0000 0000 0000 0cb6 0000 0000 0000
+			0000 0000 0000 8000 00be 0000 0000 0000
+			0000 0000 0000 bc70 008b 0000 0000 0000
+			0000 0000 6000 000c 07c0 0000 0000 0000
+			0000 0000 0c70 0000 0c70 0000 0000 0000
+			0000 0000 00c8 0000 bb00 cbb8 0007 0087
+			0000 d700 0000 0000 0000 b000 9000 008f
+			0000 0d80 0000 0000 0000 0000 0000 0000
+			0000 0085 0000 0000 0000 0000 0000 0004
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="2" name="biri01.3"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="biri01.3_pl"
+		path="C:/home/wb_data3d/build_model/indoor/d6_fuyuuishi_01/tex/biri01.3.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			9000 0009 0000 0000 0000 0000 0000 0000
+			0000 0bb0 0000 0000 0000 0000 0000 0000
+			0000 aeb0 0000 0000 0000 0000 0000 0000
+			0000 eb00 000a 0000 0000 0000 0000 0000
+			0000 b000 000d 0000 0000 0000 0009 0000
+			0000 0000 00cd 0000 0000 0000 000c 0000
+			0000 0000 0afa 0000 0000 b000 00bf 0000
+			0000 0000 0b00 0000 0000 d900 00bf 0000
+			0000 0000 0a00 0000 0000 0000 0009 0000
+			0000 0000 bc00 0000 0000 0000 0000 0000
+			0000 0000 ec00 000a 0000 0000 0000 0000
+			0000 0000 fa00 00be 0080 0000 0000 0000
+			0000 0000 0000 ddcc 000b 0000 0000 0000
+			0000 0000 0000 db00 009e 0000 0000 0000
+			0000 0000 0000 0000 ccf9 000a 0000 0000
+			0000 0000 0000 0000 0000 09cf 0000 0000
+			0000 0000 0000 0000 cb00 000a 0000 0000
+			0000 0000 0000 b000 00ce 0000 0000 0000
+			0000 0000 0000 cdb0 09fc 0000 0000 0000
+			0000 0000 a000 00dd 0da0 0000 0000 0000
+			0000 0000 eca0 000b 0d00 0000 0000 0000
+			0000 0000 00ea 0000 0f80 0000 0000 0000
+			0000 da00 0000 0000 0d00 0000 0000 0000
+			0000 0eb0 0000 0000 ea00 0000 0800 0009
+			0000 00eb 0000 0000 a000 0dac 0000 000a
+			0000 000b 0000 0000 0000 ea00 000e 0000
+			9900 0000 0000 0000 0000 a000 00dc 0000
+			0000 0000 0000 0000 0000 0000 0a00 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="3" name="biri01.4"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="biri01.4_pl"
+		path="C:/home/wb_data3d/build_model/indoor/d6_fuyuuishi_01/tex/biri01.4.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0900 0000 0000 0000 0000 0000 00ab
+			0000 0000 0000 0000 0000 0000 0000 000a
+			0000 9000 0000 0000 0000 0000 9000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0009 0000 0000 0000 0000 0000 0000
+			0000 000d 0000 0000 0000 0000 0000 0000
+			0000 00cb 0000 0000 0000 0000 0000 0000
+			0000 0cc0 0000 0000 0000 0000 0000 0000
+			0000 bc00 0000 0000 0000 0000 0000 0000
+			0000 e000 000c 0000 0000 0000 0000 0000
+			0000 a000 00bf 0000 0000 0000 0000 0000
+			0000 0000 abea 00bd 0000 0000 0000 0000
+			0000 0000 0000 0ac0 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0090 0000 0000 0000 0000 0000
+			0000 0000 0009 0000 a000 0000 0000 0000
+			0000 ac00 0000 0000 a000 0000 0000 0000
+			0000 0cc0 0000 0000 0000 000a 0000 0000
+			0000 00cc 0000 0000 0000 00bc 0000 0000
+			0000 000a 0000 0000 0000 0ce0 0000 0000
+			aa00 0000 0000 0000 0000 bea0 0000 0000
+			0000 0000 0000 0000 0000 b000 0bbb 0000
+			0000 0000 0000 0000 0000 0000 ac00 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="4" name="biri01.5"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="biri01.5_pl"
+		path="C:/home/wb_data3d/build_model/indoor/d6_fuyuuishi_01/tex/biri01.5.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 00a0 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			c000 0000 0000 0000 0000 0000 0000 0000
+			f000 000b 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="5">
+	<tex_palette index="0" name="biri01.1_pl" color_size="16">
+		7c1f 7fed 7bf0 77f1 73f1 73f1 6ff2 6bf2
+		6bf3 63f4 43db 3fdc 3fdc 3bdd 37de 2fde
+	</tex_palette>
+	<tex_palette index="1" name="biri01.2_pl" color_size="16">
+		7c1f 7fee 73f1 6bf3 43db 3bdc 3bdc 37dd
+		37dd 3bdd 33de 33de 2fde 2bdf 1fdf 27df
+	</tex_palette>
+	<tex_palette index="2" name="biri01.3_pl" color_size="16">
+		7c1f 7bef 7bf0 73f1 73f2 6ff2 6bf3 5bf6
+		47db 3fdc 3bdc 37dd 33de 2fde 23df 27df
+	</tex_palette>
+	<tex_palette index="3" name="biri01.4_pl" color_size="16">
+		7c1f 7bf0 73b3 77f0 73f1 73f2 6ff2 6bf3
+		67f3 43db 3bdc 37dd 33dd 37de 2bdf 1fdf
+	</tex_palette>
+	<tex_palette index="4" name="biri01.5_pl" color_size="16">
+		7c1f 77b2 77d2 77f1 73b3 77f1 77f1 73f1
+		73f1 67f3 47db 3bdc 3bdd 33dd 33dd 33dd
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size="1">
+	<material index="0" name="fuyuuishi_big_1"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="26"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="14 14 14"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+</material_array>
+
+<matrix_array size="1">
+	<matrix index="0" mtx_weight="1" node_idx="0"/>
+</matrix_array>
+
+<polygon_array size="1">
+	<polygon index="0" name="polygon0"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-3.000000 4.000000 -3.000000"
+		volume_max="3.000000 4.000000 3.000000"
+		volume_r="5.831055"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.312500 31.687500"/>
+					<clr rgb="31 31 31"/>
+					<pos_s xyz="-3.000000 4.000000 3.000000"/>
+					<tex st="31.687500 31.687500"/>
+					<pos_xy xy="3.000000 4.000000"/>
+					<tex st="31.687500 0.312500"/>
+					<clr rgb="29 31 17"/>
+					<pos_xz xz="3.000000 -3.000000"/>
+					<tex st="0.312500 0.312500"/>
+					<pos_xy xy="-3.000000 4.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size="1">
+	<node index="0" name="pCube1" kind="mesh"
+		parent="-1"
+		child="-1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 -12.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-3.000000 4.000000 -3.000000"
+		volume_max="3.000000 4.000000 3.000000"
+		volume_r="5.831055"
+	>
+		<display index="0" material="0" polygon="0" priority="0"/>
+	</node>
+</node_array>
+
+<output_info vertex_size="4" polygon_size="1"
+	triangle_size="0" quad_size="1"/>
+
+</body>
+
+</imd>
