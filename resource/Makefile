@@ -34,7 +34,6 @@ SUBDIRS	=	wmi \
 			snd_strm\
 			mystery\
 			startmenu \
-			palace \
 			ircbattle \
 			wificlub \
 			wifi_login \
@@ -98,6 +97,7 @@ SUBDIRS	=	wmi \
 			wifi_match \
 			trtype_bgm \
 			local_tvt \
+			palace \
             op_demo \
 			battle_recorder \
 			multiboot
