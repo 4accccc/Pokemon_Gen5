@@ -1341,6 +1341,9 @@ static void OBJHND_initialize(const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl, co
       anmTbl[anmNo] = GFL_G3D_ANIME_Create( g3Drnd, objRes->g3DresAnm[anmNo], 0 );  
       BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( anmTbl[anmNo] );
       BMODEL_DEBUG_RESOURCE_MEMORY_ALLOCATOR_SIZE_Plus( GFL_G3D_ANIME_GetAnmObj( anmTbl[anmNo] ) );
+      //モデルとアニメがずれているとメモリ破壊が発生するので、ここで検出
+      GF_ASSERT_MSG( GFL_HEAP_CheckHeapSafe( man->heapID ) == TRUE,
+          "BuildModel Create Error! id=%d\n", objRes->bmInfo->bm_id );
     } else {
       anmTbl[anmNo] = NULL;
     }
