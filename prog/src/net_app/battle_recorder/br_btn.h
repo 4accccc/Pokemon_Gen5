@@ -10,7 +10,15 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 #include "system/main.h"  //HEAPID
-#include "net_app/battle_recorder.h"	//BR_MODE
+#include "br_menu_proc.h"	//MENUID
+#include "br_res.h"
+#include "br_inner.h"
+#include "system/bmp_oam.h"
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *					ボタン管理システム（MENU_PROCでしか使わないはず）
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //=============================================================================
 /**
  *					定数宣言
@@ -33,8 +41,8 @@ typedef enum
 //=====================================
 typedef enum
 {
-	BR_BTN_SYS_INPUT_NONE,			//押していない（or押した後の動作中）
-	BR_BTN_SYS_INPUT_CHANGESEQ,	//別シーケンスに飛ぶ
+	BR_BTN_SYS_INPUT_NONE,						//押していない（or押した後の動作中）
+	BR_BTN_SYS_INPUT_CHANGESEQ,				//別シーケンスに飛ぶ
 	BR_BTN_SYS_INPUT_EXIT,			//終了
 } BR_BTN_SYS_INPUT;
 
@@ -47,13 +55,31 @@ typedef enum
 ///	バトルレコーダー　ボタン管理
 //=====================================
 typedef struct _BR_BTN_SYS_WORK BR_BTN_SYS_WORK;
+
 //=============================================================================
 /**
  *					PUBILIC関数
 */
 //=============================================================================
-extern BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MODE mode, GFL_CLUNIT *p_unit, HEAPID heapID );
+extern BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MENUID menuID, GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, const BR_BTLREC_SET *cp_rec, HEAPID heapID );
 extern void BR_BTN_SYS_Exit( BR_BTN_SYS_WORK *p_wk );
 extern void BR_BTN_SYS_Main( BR_BTN_SYS_WORK *p_wk );
-extern BR_BTN_SYS_INPUT BR_BTN_SYS_GetInput( const BR_BTN_SYS_WORK *cp_wk, u32 *p_seq );
+extern BR_BTN_SYS_INPUT BR_BTN_SYS_GetInput( const BR_BTN_SYS_WORK *cp_wk, u32 *p_seq, u32 *p_param );
 extern BR_BTN_SYS_STATE BR_BTN_SYS_GetState( const BR_BTN_SYS_WORK *cp_wk );
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *					ボタン単体作成関数(各プロックで使用する)
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//-------------------------------------
+///	バトルレコーダー　ボタン管理
+//=====================================
+typedef struct _BR_BTN_WORK BR_BTN_WORK;
+
+extern BR_BTN_WORK * BR_BTN_Init( const GFL_CLWK_DATA *cp_cldata, u16 msgID, CLSYS_DRAW_TYPE display, GFL_CLUNIT *p_unit, BMPOAM_SYS_PTR p_bmpoam, GFL_FONT *p_font, GFL_MSGDATA *p_msg, const BR_RES_OBJ_DATA *cp_res, HEAPID heapID );
+extern void BR_BTN_Exit( BR_BTN_WORK *p_wk );
+extern BOOL BR_BTN_GetTrg( const BR_BTN_WORK *cp_wk, u32 x, u32 y );
+extern void BR_BTN_SetPos( BR_BTN_WORK *p_wk, u32 x, u32 y );
+ 
+

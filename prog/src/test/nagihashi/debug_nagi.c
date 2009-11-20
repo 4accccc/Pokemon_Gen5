@@ -1181,7 +1181,18 @@ static void LISTDATA_CallWifiBattleMatch( DEBUG_NAGI_MAIN_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void LISTDATA_CallBtlRecorder( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
-	p_wk->battle_recorder_param.mode		= BR_MODE_BROWSE;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+  { 
+    p_wk->battle_recorder_param.mode		= BR_MODE_GLOBAL_BV;
+  }
+  else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  { 
+    p_wk->battle_recorder_param.mode		= BR_MODE_GLOBAL_MUSICAL;
+  }
+  else
+  { 
+    p_wk->battle_recorder_param.mode		= BR_MODE_BROWSE;
+  }
 	p_wk->battle_recorder_param.p_gsys	= NULL;
 	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(battle_recorder), &BattleRecorder_ProcData, &p_wk->battle_recorder_param );
 }

@@ -986,12 +986,6 @@ SRCS_OVERLAY_WORLDTRADE	= net_app/wifi_worldtrade/worldtrade.c \
 													net_app/wifi_worldtrade/worldtrade_upload.c \
 													net_app/wifi_worldtrade/worldtrade_adapter.c
 
-#	名木橋デバッグ
-#===> SRCS_OVERLAY_WORLDTRADE
-SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
-																test/nagihashi/debug_irc_name.c \
-																test/nagihashi/debug_template.c \
-																test/nagihashi/debug_poke2dcheck.c
 
 #ポケモンステータス
 #===> SRCS_OVERLAY_DEV_WIFI
@@ -1101,13 +1095,27 @@ SRCS_OVERLAY_COMMAND_DEMO = demo/command_demo/command_demo.c \
 							demo/command_demo/cdemo_comm.c
 
 #バトルレコーダー
-#===> SRCS_OVERLAY_UI_COMMON
+#===> SRCS_OVERLAY_MUSICAL
 SRCS_OVERLAY_BATTLE_RECORDER	= net_app/battle_recorder/br_main.c \
 																net_app/battle_recorder/br_core.c \
 																net_app/battle_recorder/br_btn.c \
 																net_app/battle_recorder/br_btn_data.c \
 																net_app/battle_recorder/br_res.c \
 																net_app/battle_recorder/br_graphic.c \
+																net_app/battle_recorder/br_proc_sys.c \
+																net_app/battle_recorder/br_start_proc.c \
+																net_app/battle_recorder/br_menu_proc.c \
+																net_app/battle_recorder/br_record_proc.c \
+																net_app/battle_recorder/br_btlsubway_proc.c \
+																net_app/battle_recorder/br_rndmatch_proc.c \
+																net_app/battle_recorder/br_bvrank_proc.c \
+																net_app/battle_recorder/br_bvsearch_proc.c \
+																net_app/battle_recorder/br_codein_proc.c \
+																net_app/battle_recorder/br_bvsend_proc.c \
+																net_app/battle_recorder/br_musicallook_proc.c \
+																net_app/battle_recorder/br_musicalsend_proc.c \
+                                net_app/battle_recorder/br_util.c \
+                                net_app/battle_recorder/br_pokesearch.c \
 																poke_tool/rpp_to_pp.c
 
 # デバッグデータ作成
@@ -1123,3 +1131,11 @@ SRCS_OVERLAY_DEBUG_DATA = gamesystem/debug_data.c
 SRCS_OVERLAY_NAMEIN	= app/name_input/namein.c \
 											app/name_input/namein_graphic.c \
 											app/name_input/namein_data.c
+
+
+#	名木橋デバッグ
+#===> SRCS_OVERLAY_BATTLE_RECORDER
+SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
+																test/nagihashi/debug_irc_name.c \
+																test/nagihashi/debug_template.c \
+																test/nagihashi/debug_poke2dcheck.c

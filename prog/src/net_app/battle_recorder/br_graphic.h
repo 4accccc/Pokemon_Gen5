@@ -61,3 +61,9 @@ extern GFL_CLUNIT * BR_GRAPHIC_GetClunit( const BR_GRAPHIC_WORK *cp_wk );
 ///情報取得	内部で設定したカメラを返します	3D使わない場合NULL
 //=====================================
 extern GFL_G3D_CAMERA * BR_GRAPHIC_GetCamera( const BR_GRAPHIC_WORK *cp_wk );
+
+//-------------------------------------
+///バトルレーコーダー個別設定
+//=====================================
+extern void BR_GRAPHIC_SetMusicalMode( BR_GRAPHIC_WORK *p_wk, HEAPID heapID );
+extern void BR_GRAPHIC_ReSetMusicalMode( BR_GRAPHIC_WORK *p_wk, HEAPID heapID );

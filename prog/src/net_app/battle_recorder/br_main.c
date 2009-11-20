@@ -116,14 +116,14 @@ static const SUBPROC_DATA sc_subproc_data[SUBPROCID_MAX]	=
 {	
 	//SUBPROCID_CORE
 	{	
-		GFL_OVERLAY_BLANK_ID,
+		NO_OVERLAY_ID,
 		&BR_CORE_ProcData,
 		BR_CORE_AllocParam,
 		BR_CORE_FreeParam,
 	},
 	//SUBPROCID_BTLREC
 	{	
-		GFL_OVERLAY_BLANK_ID,
+		NO_OVERLAY_ID,
 		NULL,
 		NULL,
 		NULL,
@@ -223,7 +223,11 @@ static GFL_PROC_RESULT BR_SYS_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_p
 	enum
 	{	
 		BR_SYS_SEQ_INIT,
+		BR_SYS_SEQ_FADEIN,
+		BR_SYS_SEQ_FADEIN_WAIT,
 		BR_SYS_SEQ_MAIN,
+		BR_SYS_SEQ_FADEOUT,
+		BR_SYS_SEQ_FADEOUT_WAIT,
 		BR_SYS_SEQ_EXIT,
 	};
 
@@ -232,7 +236,19 @@ static GFL_PROC_RESULT BR_SYS_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_p
 	switch( *p_seq )
 	{	
 	case BR_SYS_SEQ_INIT:
-		*p_seq	= BR_SYS_SEQ_MAIN;
+		*p_seq	= BR_SYS_SEQ_FADEIN;
+		break;
+
+	case BR_SYS_SEQ_FADEIN:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
+		*p_seq	= BR_SYS_SEQ_FADEIN_WAIT;
+		break;
+
+	case BR_SYS_SEQ_FADEIN_WAIT:
+		if( !GFL_FADE_CheckFade() )
+		{	
+			*p_seq	= BR_SYS_SEQ_MAIN;
+		}
 		break;
 
 	case BR_SYS_SEQ_MAIN:
@@ -242,8 +258,20 @@ static GFL_PROC_RESULT BR_SYS_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_p
 
 			if( is_end )
 			{	
-				*p_seq	= BR_SYS_SEQ_EXIT;
+				*p_seq	= BR_SYS_SEQ_FADEOUT;
 			}
+		}
+		break;
+
+	case BR_SYS_SEQ_FADEOUT:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+		*p_seq	= BR_SYS_SEQ_FADEOUT_WAIT;
+		break;
+
+	case BR_SYS_SEQ_FADEOUT_WAIT:
+		if( !GFL_FADE_CheckFade() )
+		{	
+			*p_seq	= BR_SYS_SEQ_EXIT;
 		}
 		break;
 

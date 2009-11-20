@@ -20,8 +20,13 @@
 //=====================================
 enum 
 {
-	BG_FRAME_M_BACK	= 0,
-	BG_FRAME_S_BACK	= 0,
+  BG_FRAME_M_TEXT = GFL_BG_FRAME0_M,
+	BG_FRAME_M_FONT	= GFL_BG_FRAME1_M,
+	BG_FRAME_M_WIN	= GFL_BG_FRAME2_M,
+	BG_FRAME_M_BACK	= GFL_BG_FRAME3_M,
+	BG_FRAME_S_FONT	= GFL_BG_FRAME0_S,
+	BG_FRAME_S_WIN	= GFL_BG_FRAME1_S,
+	BG_FRAME_S_BACK	= GFL_BG_FRAME2_S,
 };
 
 //-------------------------------------
@@ -29,57 +34,42 @@ enum
 //=====================================
 enum 
 {
-	PLT_BG_M_BACK	= 0,
-	PLT_BG_S_BACK	= 0,
+	//BG
+	PLT_BG_M_COMMON	= 0,
+	PLT_BG_S_COMMON	= 0,
+  PLT_BG_M_FONT	= 14,
+  PLT_BG_S_FONT	= 14,
+
+	//PLT
+	PLT_OBJ_M_COMMON	= 0,
+	PLT_OBJ_S_COMMON	= 0,
 };
 
 //-------------------------------------
-///	プロセスID
+///	文字色（BMPWINフォント）
 //=====================================
-typedef enum 
-{
-	BR_PROCID_START,		//起動画面
-	BR_PROCID_MENU,			//メニュー画面
-	BR_PROCID_RECORD,		//録画記録画面
-	BR_PROCID_BTLSUBWAY,//バトルサブウェイ成績画面
-	BR_PROCID_RNDMATCH,	//ランダムマッチ成績画面
-	BR_PROCID_BV_RANK,	//バトルビデオ30件画面（最新、通信対戦、サブウェイ）
-	BR_PROCID_BV_SEARCH,//詳しく探す画面
-	BR_PROCID_BV_CODEIN,//バトルビデオナンバー入力画面
-	BR_PROCID_BV_SEND,	//バトルビデオ送信画面
-	BR_PROCID_MUSICAL_LOOK,	//ミュージカルショット	写真を見る画面
-	BR_PROCID_MUSICAL_SEND,	//ミュージカルショット	写真を送る画面
-
-} BR_PROCID;
+#define BR_PRINT_COL_BOOT	  	( PRINTSYS_LSB_Make(  1, 14,  0 ) )	// 起動時の文字色
+#define BR_PRINT_COL_NORMAL 	( PRINTSYS_LSB_Make( 15, 13,  0 ) )	// よく使う文字色
+#define	BR_PRINT_COL_BLACK		( PRINTSYS_LSB_Make( 14, 13,  0 ) )	// フォントカラー
+#define	BR_PRINT_COL_INFO		  ( PRINTSYS_LSB_Make( 15, 13, 12 ) )	// フォントカラー
+#define	BR_PRINT_COL_PHOTO		( BR_PRINT_COL_NORMAL )
+#define	BR_PRINT_COL_BOX_SHOT	( BR_PRINT_COL_NORMAL )
+#define	BR_PRINT_COL_BOX_NAME	( PRINTSYS_LSB_Make( 15,  1,  0 ) )
+#define	BR_PRINT_COL_FREC		  ( BR_PRINT_COL_NORMAL )
+#define	BR_PRINT_COL_PROF		  ( BR_PRINT_COL_NORMAL )
 
 
-//@todoあとでMENUプロックに移動
 //-------------------------------------
-///	メニューインデックス
-//		ここでのメニューとは上画面が切り替らず、
-//		メニューを押していくことで進んでいく箇所です。
-//		（消すは入ります）
+///戦闘録画データ
 //=====================================
-typedef enum
+typedef struct 
 {
-	BR_BROWSE_MENUID_TOP,					//ブラウザモード　初期メニュー
+	BOOL						is_valid;
+	void						*p_btlrec;
+} BR_BTLREC_DATA;
+typedef struct 
+{
+	BR_BTLREC_DATA	my;
+	BR_BTLREC_DATA	other[3];
+} BR_BTLREC_SET;
 
-	BR_BROWSE_MENUID_BTLVIDEO,		//ブラウザモード　バトルビデオメニュー,
-
-	BR_BROWSE_MENUID_OTHER_RECORD,//ブラウザモード　だれかの記録メニュー
-	BR_BROWSE_MENUID_DELETE_RECORD,//ブラウザモード　記録を消すメニュー
-	BR_BROWSE_MENUID_DELETE_OTHER,//ブラウザモード　誰かの記録を消すメニュー
-
-	//BR_BROWSE_MENUID_BTLSUBWAY,		//ブラウザモード　バトルサブウェイメニュー	
-	//BR_BROWSE_MENUID_RNDMATCH,		//ブラウザモード　ランダムマッチメニュー
-	
-	BR_BTLVIDEO_MENUID_TOP,					//グローバルバトルビデオモード　初期メニュー
-
-	BR_BTLVIDEO_MENUID_LOOK,				//グローバルバトルビデオモード　見るメニュー
-	BR_BTLVIDEO_MENUID_RANK,				//グローバルバトルビデオモード　ランキングで探すメニュー
-
-	BR_MUSICAL_MENUID_TOP,					//グローバルミュージカルショットモード　初期メニュー
-
-	BR_MENUID_YESNO,								//汎用	はい、いいえ
-	BR_MENUID_MAX
-} BR_MENUID;
