@@ -93,27 +93,27 @@ nsbta: $(notdir $(ITAFILE:.ita=.nsbta))
 
 ncgr: $(notdir $(OBJNCGFILE:.ncg=.NCGR))
 %.NCGR: $(RES_OBJDIR)%.ncg
-	g2dcvtr $< -bg -pcm -o/./
+	g2dcvtr $< -bg -o/./
 
 ncer: $(notdir $(OBJNCEFILE:.nce=.NCER))
 %.NCER: $(RES_OBJDIR)%.nce
-	g2dcvtr $< -pcm -o/./
+	g2dcvtr $< -o/./
 
 obj_nclr: $(notdir $(OBJNCLFILE:.ncl=.NCLR))
 %.NCLR: $(RES_OBJDIR)%.ncl
-	g2dcvtr $< -pcm -o/./
+	g2dcvtr $< -o/./
 
 nscr: $(notdir $(BGNSCFILE:.nsc=.NSCR))
 %.NSCR: $(RES_BGDIR)%.nsc
-	g2dcvtr $< -bg -pcm -o/./
+	g2dcvtr $< -bg -o/./
 
 ncgr: $(notdir $(BGNCGFILE:.ncg=.NCGR))
 %.NCGR: $(RES_BGDIR)%.ncg
-	g2dcvtr $< -bg -pcm -o/./
+	g2dcvtr $< -bg -o/./
 
 bg_nclr: $(notdir $(BGNCLFILE:.ncl=.NCLR))
 %.NCLR: $(RES_BGDIR)%.ncl
-	g2dcvtr $< -pcm -o/./
+	g2dcvtr $< -o/./
 
 $(NARCNAME): $(notdir $(IMDFILE:.imd=.nsbmd)) $(notdir $(ICAFILE:.ica=.nsbca)) $(notdir $(IMAFILE:.ima=.nsbma)) $(notdir $(ITAFILE:.ita=.nsbta)) $(notdir $(BGNSCFILE:.nsc=.NSCR)) $(notdir $(BGNCGFILE:.ncg=.NCGR)) $(notdir $(BGNCLFILE:.ncl=.NCLR)) $(notdir $(OBJNCEFILE:.nce=.NCER)) $(notdir $(OBJNCLFILE:.ncl=.NCLR)) battgra_wb.scr
 	nnsarc -c -l -n -i $(NARCNAME) -S battgra_wb.scr > error
