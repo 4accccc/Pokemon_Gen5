@@ -93,6 +93,14 @@ init_flags:
 
 	//C01R0101：発明家、誘導イベントまで非表示
 	_FLAG_SET( FV_C01R0101_INVENTOR_01 )
+	
+	//C07：ライバル・サポート・ジムクリア後に表示
+	_FLAG_SET( FV_C07_RIVAL_01 )
+	//C07：プラズマ団・ジムクリア後に表示
+	_FLAG_SET( FV_C07_HAKAIM_01 )
+	//C07：ハチク・ジムクリア後に表示
+	_FLAG_SET( FV_C07_READER7 )
+
 
 	_RET
 
