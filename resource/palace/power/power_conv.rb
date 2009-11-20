@@ -137,8 +137,8 @@ def DataFileOutput()
       file.printf("\t\t%s,\t\t//no\n", PowerData[i].no);
       file.printf("\t\t%s,\t\t//level_w\n", PowerData[i].level_w);
       file.printf("\t\t%s,\t\t//level_b\n", PowerData[i].level_b);
-      file.printf("\t\t%s,\t\t//point\n", PowerData[i].point);
       file.printf("\t\t%s,\t\t//time\n", PowerData[i].time);
+      file.printf("\t\t%s,\t\t//point\n", PowerData[i].point);
       file.printf("\t\t%s,\t\t//msg_id_title\n", PowerData[i].msg_id_title);
       file.printf("\t\t%s,\t\t//msg_id_explain\n", PowerData[i].msg_id_explain);
       file.printf("\t\t%s,\t\t//type\n", PowerData[i].type);
