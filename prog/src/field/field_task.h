@@ -18,7 +18,7 @@ FIELD_TASK* FIELD_TASK_Create( HEAPID heap_id, int work_size,
 void FIELD_TASK_Delete( FIELD_TASK* task );
 void FIELD_TASK_Main( FIELD_TASK* task );
 void FIELD_TASK_Boot( FIELD_TASK* task );
-TASK_STATE FIELD_TASK_GetTaskState( const FIELD_TASK* task );
+FIELD_TASK_STATE FIELD_TASK_GetTaskState( const FIELD_TASK* task );
 */
 
 
@@ -33,12 +33,12 @@ typedef struct _FIELD_TASK FIELD_TASK;
 //========================================================================================
 // タスク処理関数の戻り値
 typedef enum{
-  CONTINUE,   // 続行
-  FINISH,     // 終了
-} RETVAL_MAIN;
+  FIELD_TASK_RETVAL_CONTINUE,  // 続行
+  FIELD_TASK_RETVAL_FINISH,    // 終了
+} FIELD_TASK_RETVAL;
 
 // タスク処理関数
-typedef RETVAL_MAIN (FIELD_TASK_MAIN_FUNC)( void* work );
+typedef FIELD_TASK_RETVAL (FIELD_TASK_MAIN_FUNC)( void* work );
 
 
 //========================================================================================
@@ -46,12 +46,12 @@ typedef RETVAL_MAIN (FIELD_TASK_MAIN_FUNC)( void* work );
 //========================================================================================
 // タスクの状態
 typedef enum{
-  TASK_STATE_WAIT,     // 起動待ち
-  TASK_STATE_EXECUTE,  // 実行中
-  TASK_STATE_END,      // 終了
-  TASK_STATE_NUM,
-  TASK_STATE_MAX = TASK_STATE_NUM - 1
-} TASK_STATE;
+  FIELD_TASK_STATE_WAIT,     // 起動待ち
+  FIELD_TASK_STATE_EXECUTE,  // 実行中
+  FIELD_TASK_STATE_END,      // 終了
+  FIELD_TASK_STATE_NUM,
+  FIELD_TASK_STATE_MAX = FIELD_TASK_STATE_NUM - 1
+} FIELD_TASK_STATE;
 
 
 
@@ -147,4 +147,4 @@ extern BOOL FIELD_TASK_IsEnd( const FIELD_TASK* task );
  * @return 指定タスクの状態
  */ 
 //----------------------------------------------------------------------------------------
-extern TASK_STATE FIELD_TASK_GetState( const FIELD_TASK* task );
+extern FIELD_TASK_STATE FIELD_TASK_GetState( const FIELD_TASK* task );

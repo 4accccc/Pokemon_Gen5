@@ -31,7 +31,7 @@ typedef struct
 // ■非公開関数のプロトタイプ宣言
 //========================================================================================== 
 static void CalcDrawOffset( VecFx32* now, u16 nowFrame, VecFx32* max, u16 maxFrame );
-static RETVAL_MAIN UpdateDrawOffset( void* wk );
+static FIELD_TASK_RETVAL UpdateDrawOffset( void* wk );
 
 
 //------------------------------------------------------------------------------------------
@@ -98,7 +98,7 @@ static void CalcDrawOffset( VecFx32* now, u16 nowFrame, VecFx32* max, u16 maxFra
  * @brief 描画オフセット更新処理
  */
 //------------------------------------------------------------------------------------------
-static RETVAL_MAIN UpdateDrawOffset( void* wk )
+static FIELD_TASK_RETVAL UpdateDrawOffset( void* wk )
 {
   TASK_WORK*      work = (TASK_WORK*)wk;
   FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( work->fieldmap );
@@ -115,9 +115,9 @@ static RETVAL_MAIN UpdateDrawOffset( void* wk )
     // 終了チェック
     if( work->endFrame <= work->nowFrame )
     { 
-      return FINISH;
+      return FIELD_TASK_RETVAL_FINISH;
     }
     break;
   }
-  return CONTINUE; 
+  return FIELD_TASK_RETVAL_CONTINUE; 
 } 

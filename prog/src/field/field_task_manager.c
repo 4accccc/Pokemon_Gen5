@@ -271,13 +271,13 @@ static void TrigBoot( FIELD_TASK_MAN* man, u8 idx )
   if( man->trig[idx] == NULL ) return;
   // ‹N“®‘Ò‚¿‚Å‚È‚¢
   {
-    TASK_STATE state = FIELD_TASK_GetState( man->task[idx] );
-    if( state != TASK_STATE_WAIT ) return;
+    FIELD_TASK_STATE state = FIELD_TASK_GetState( man->task[idx] );
+    if( state != FIELD_TASK_STATE_WAIT ) return;
   } 
   // ƒgƒŠƒK‚ªˆø‚©‚ê‚Ä‚¢‚È‚¢
   {
-    TASK_STATE state = FIELD_TASK_GetState( man->trig[idx] );
-    if( state != TASK_STATE_END ) return;
+    FIELD_TASK_STATE state = FIELD_TASK_GetState( man->trig[idx] );
+    if( state != FIELD_TASK_STATE_END ) return;
   }
 
   // ‹N“®

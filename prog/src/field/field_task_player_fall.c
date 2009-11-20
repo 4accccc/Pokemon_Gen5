@@ -33,7 +33,7 @@ typedef struct
 // ■非公開関数のプロトタイプ宣言
 //========================================================================================== 
 static void CalcDrawOffset( VecFx32* vec, float frame, float max_frame, float max_y );
-static RETVAL_MAIN FallPlayer( void* wk );
+static FIELD_TASK_RETVAL FallPlayer( void* wk );
 
 
 //------------------------------------------------------------------------------------------
@@ -103,7 +103,7 @@ static void CalcDrawOffset( VecFx32* vec, float frame, float max_frame, float ma
  * @brief 自機の落下処理
  */
 //------------------------------------------------------------------------------------------
-static RETVAL_MAIN FallPlayer( void* wk )
+static FIELD_TASK_RETVAL FallPlayer( void* wk )
 {
   TASK_WORK*      work = (TASK_WORK*)wk;
   FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( work->fieldmap );
@@ -134,9 +134,9 @@ static RETVAL_MAIN FallPlayer( void* wk )
       FLDEFF_KEMURI_SetMMdl( mmdl, fectrl );
       // SE再生(着地音)
       PMSND_PlaySE( SEQ_SE_FLD_17 );
-      return FINISH;
+      return FIELD_TASK_RETVAL_FINISH;
     }
     break;
   }
-  return CONTINUE; 
+  return FIELD_TASK_RETVAL_CONTINUE; 
 } 

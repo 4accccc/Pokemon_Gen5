@@ -504,6 +504,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/field_task_player_trans.c \
         field/field_task_player_fall.c \
         field/field_task_wait.c \
+        field/field_task_fade.c \
         field/field_task_player_drawoffset.c \
         field/field_flash.c \
         field/fieldskill_mapeff.c \

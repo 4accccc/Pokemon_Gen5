@@ -15,7 +15,7 @@
 //========================================================================================
 struct _FIELD_TASK
 {
-  TASK_STATE state;  // 状態
+  FIELD_TASK_STATE state;  // 状態
   void*      work;   // ワーク
 
   FIELD_TASK_MAIN_FUNC* mainFunc;  // 処理関数
@@ -52,7 +52,7 @@ FIELD_TASK* FIELD_TASK_Create( HEAPID heap_id, int work_size,
 
   // タスクを生成
   task           = GFL_HEAP_AllocMemory( heap_id, sizeof(FIELD_TASK) );
-  task->state    = TASK_STATE_WAIT;
+  task->state    = FIELD_TASK_STATE_WAIT;
   task->work     = GFL_HEAP_AllocClearMemory( heap_id, work_size ); 
   task->mainFunc = main_func;
   return task;
@@ -135,7 +135,7 @@ extern void* FIELD_TASK_GetWork( const FIELD_TASK* task )
 //----------------------------------------------------------------------------------------
 BOOL FIELD_TASK_IsEnd( const FIELD_TASK* task )
 {
-  return (task->state == TASK_STATE_END);
+  return (task->state == FIELD_TASK_STATE_END);
 }
 
 //----------------------------------------------------------------------------------------
@@ -147,7 +147,7 @@ BOOL FIELD_TASK_IsEnd( const FIELD_TASK* task )
  * @return 指定タスクの状態
  */ 
 //----------------------------------------------------------------------------------------
-TASK_STATE FIELD_TASK_GetState( const FIELD_TASK* task )
+FIELD_TASK_STATE FIELD_TASK_GetState( const FIELD_TASK* task )
 {
   return task->state;
 }
@@ -166,7 +166,7 @@ TASK_STATE FIELD_TASK_GetState( const FIELD_TASK* task )
 //----------------------------------------------------------------------------------------
 static void BootTask( FIELD_TASK* task )
 {
-  task->state = TASK_STATE_EXECUTE;
+  task->state = FIELD_TASK_STATE_EXECUTE;
 
   // DEBUG:
   OBATA_Printf( "FIELD_TASK: boot\n" );
@@ -181,7 +181,7 @@ static void BootTask( FIELD_TASK* task )
 //----------------------------------------------------------------------------------------
 static void StopTask( FIELD_TASK* task )
 {
-  task->state = TASK_STATE_END;
+  task->state = FIELD_TASK_STATE_END;
 
   // DEBUG:
   OBATA_Printf( "FIELD_TASK: stop\n" );
@@ -199,13 +199,13 @@ static void RunTask_EXECUTE( FIELD_TASK* task )
   BOOL retval;
 
   // 実行中じゃない
-  if( task->state != TASK_STATE_EXECUTE ) return;
+  if( task->state != FIELD_TASK_STATE_EXECUTE ) return;
 
   // 実行
   retval = task->mainFunc( task->work );
 
   // 停止
-  if( retval == FINISH )
+  if( retval == FIELD_TASK_RETVAL_FINISH )
   {
     StopTask( task );
   }

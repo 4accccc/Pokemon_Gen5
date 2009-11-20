@@ -33,8 +33,8 @@ typedef struct
 //==========================================================================================
 // ■非公開関数のプロトタイプ宣言
 //==========================================================================================
-static RETVAL_MAIN CameraLinearZoom( void* wk );
-static RETVAL_MAIN CameraSharpZoom( void* wk );
+static FIELD_TASK_RETVAL CameraLinearZoom( void* wk );
+static FIELD_TASK_RETVAL CameraSharpZoom( void* wk );
 
 
 //------------------------------------------------------------------------------------------
@@ -103,7 +103,7 @@ FIELD_TASK* FIELD_TASK_CameraSharpZoom( FIELDMAP_WORK* fieldmap, u16 frame, fx32
  * @brief カメラの等速ズーム
  */
 //------------------------------------------------------------------------------------------
-static RETVAL_MAIN CameraLinearZoom( void* wk )
+static FIELD_TASK_RETVAL CameraLinearZoom( void* wk )
 {
   ZOOM_WORK*      work = (ZOOM_WORK*)wk;
   FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( work->fieldmap );
@@ -130,11 +130,11 @@ static RETVAL_MAIN CameraLinearZoom( void* wk )
     FIELD_CAMERA_ChangeMode( camera, cam_mode );
     if( work->endFrame <= work->frame )
     {
-      return FINISH;
+      return FIELD_TASK_RETVAL_FINISH;
     }
     break;
   }
-  return CONTINUE;
+  return FIELD_TASK_RETVAL_CONTINUE;
 }
 
 //------------------------------------------------------------------------------------------
@@ -142,7 +142,7 @@ static RETVAL_MAIN CameraLinearZoom( void* wk )
  * @brief カメラの急加速ズーム
  */
 //------------------------------------------------------------------------------------------
-static RETVAL_MAIN CameraSharpZoom( void* wk )
+static FIELD_TASK_RETVAL CameraSharpZoom( void* wk )
 {
   ZOOM_WORK*      work = (ZOOM_WORK*)wk;
   FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( work->fieldmap );
@@ -173,9 +173,9 @@ static RETVAL_MAIN CameraSharpZoom( void* wk )
     FIELD_CAMERA_ChangeMode( camera, cam_mode );
     if( work->endFrame <= work->frame )
     {
-      return FINISH;
+      return FIELD_TASK_RETVAL_FINISH;
     }
     break;
   }
-  return CONTINUE;
+  return FIELD_TASK_RETVAL_CONTINUE;
 }

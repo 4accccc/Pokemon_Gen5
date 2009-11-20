@@ -32,9 +32,9 @@ typedef struct
 static u16 CalcPlayerDir( float frame, float max_frame, float rotate_num );
 static u16 CalcPlayerDir_SpeedUp( float frame, float max_frame, float rotate_num );
 static u16 CalcPlayerDir_SpeedDown( float frame, float max_frame, float rotate_num );
-static RETVAL_MAIN RotatePlayer( void *wk );
-static RETVAL_MAIN RotatePlayer_SpeedUp( void *wk );
-static RETVAL_MAIN RotatePlayer_SpeedDown( void *wk );
+static FIELD_TASK_RETVAL RotatePlayer( void *wk );
+static FIELD_TASK_RETVAL RotatePlayer_SpeedUp( void *wk );
+static FIELD_TASK_RETVAL RotatePlayer_SpeedDown( void *wk );
 
 
 //------------------------------------------------------------------------------------------
@@ -226,7 +226,7 @@ static u16 CalcPlayerDir_SpeedDown( float frame, float max_frame, float rotate_n
  * @breif Ž©‹@‚Ì“™‘¬‰ñ“]ˆ—
  */
 //------------------------------------------------------------------------------------------
-static RETVAL_MAIN RotatePlayer( void *wk )
+static FIELD_TASK_RETVAL RotatePlayer( void *wk )
 {
   TASK_WORK*      work = wk;
   FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( work->fieldmap );
@@ -240,9 +240,9 @@ static RETVAL_MAIN RotatePlayer( void *wk )
   work->frame++;
   if( work->endFrame < work->frame )
   {
-    return FINISH;
+    return FIELD_TASK_RETVAL_FINISH;
   }
-  return CONTINUE;
+  return FIELD_TASK_RETVAL_CONTINUE;
 }
 
 //------------------------------------------------------------------------------------------
@@ -250,7 +250,7 @@ static RETVAL_MAIN RotatePlayer( void *wk )
  * @breif Ž©‹@‚Ì‰Á‘¬‰ñ“]ˆ—
  */
 //------------------------------------------------------------------------------------------
-static RETVAL_MAIN RotatePlayer_SpeedUp( void *wk )
+static FIELD_TASK_RETVAL RotatePlayer_SpeedUp( void *wk )
 {
   TASK_WORK*      work = wk;
   FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( work->fieldmap );
@@ -264,9 +264,9 @@ static RETVAL_MAIN RotatePlayer_SpeedUp( void *wk )
   work->frame++;
   if( work->endFrame < work->frame )
   {
-    return FINISH;
+    return FIELD_TASK_RETVAL_FINISH;
   }
-  return CONTINUE;
+  return FIELD_TASK_RETVAL_CONTINUE;
 }
 
 //------------------------------------------------------------------------------------------
@@ -274,7 +274,7 @@ static RETVAL_MAIN RotatePlayer_SpeedUp( void *wk )
  * @breif Ž©‹@‚ÌŒ¸‘¬‰ñ“]ˆ—
  */
 //------------------------------------------------------------------------------------------
-static RETVAL_MAIN RotatePlayer_SpeedDown( void *wk )
+static FIELD_TASK_RETVAL RotatePlayer_SpeedDown( void *wk )
 {
   TASK_WORK*      work = wk;
   FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( work->fieldmap );
@@ -288,7 +288,7 @@ static RETVAL_MAIN RotatePlayer_SpeedDown( void *wk )
   work->frame++;
   if( work->endFrame < work->frame )
   {
-    return FINISH;
+    return FIELD_TASK_RETVAL_FINISH;
   }
-  return CONTINUE;
+  return FIELD_TASK_RETVAL_CONTINUE;
 } 

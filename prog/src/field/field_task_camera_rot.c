@@ -47,7 +47,7 @@ typedef struct
 //==========================================================================================
 static void SetupAngle( ROT_WORK* work );
 static void UpdateAngle( ROT_WORK* work );
-static RETVAL_MAIN RotateCamera( void* wk );
+static FIELD_TASK_RETVAL RotateCamera( void* wk );
 
 
 //------------------------------------------------------------------------------------------
@@ -201,7 +201,7 @@ static void UpdateAngle( ROT_WORK* work )
  * @brief カメラアングルを更新する
  */
 //------------------------------------------------------------------------------------------
-static RETVAL_MAIN RotateCamera( void* wk )
+static FIELD_TASK_RETVAL RotateCamera( void* wk )
 {
   ROT_WORK* work = (ROT_WORK*)wk;
 
@@ -215,9 +215,9 @@ static RETVAL_MAIN RotateCamera( void* wk )
     UpdateAngle( work );
     if( work->endFrame <= work->frame )
     {
-      return FINISH;
+      return FIELD_TASK_RETVAL_FINISH;
     }
     break;
   }
-  return CONTINUE;
+  return FIELD_TASK_RETVAL_CONTINUE;
 }

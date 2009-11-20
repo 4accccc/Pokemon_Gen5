@@ -30,7 +30,7 @@ typedef struct
 //===============================================================================================
 // ■非公開関数のプロトタイプ宣言
 //===============================================================================================
-static RETVAL_MAIN TransPlayer( void* wk );
+static FIELD_TASK_RETVAL TransPlayer( void* wk );
 
 
 //-----------------------------------------------------------------------------------------------
@@ -71,7 +71,7 @@ FIELD_TASK* FIELD_TASK_TransPlayer( FIELDMAP_WORK* fieldmap, int frame, VecFx32*
  * @brief 自機の平行移動処理
  */
 //-----------------------------------------------------------------------------------------------
-static RETVAL_MAIN TransPlayer( void* wk )
+static FIELD_TASK_RETVAL TransPlayer( void* wk )
 {
   TASK_WORK*      work = (TASK_WORK*)wk;
   FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( work->fieldmap );
@@ -98,9 +98,9 @@ static RETVAL_MAIN TransPlayer( void* wk )
     }
     if( work->endFrame <= work->frame )
     {
-      return FINISH;
+      return FIELD_TASK_RETVAL_FINISH;
     }
     break;
   }
-  return CONTINUE;
+  return FIELD_TASK_RETVAL_CONTINUE;
 }

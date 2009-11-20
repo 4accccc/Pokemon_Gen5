@@ -26,7 +26,7 @@ typedef struct
 //==========================================================================================
 // ■非公開関数のプロトタイプ宣言
 //==========================================================================================
-static RETVAL_MAIN Wait( void* wk );
+static FIELD_TASK_RETVAL Wait( void* wk );
 
 
 //----------------------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ FIELD_TASK* FIELD_TASK_Wait( FIELDMAP_WORK* fieldmap,  u16 frame )
  * @brief カメラの等速ズーム
  */
 //------------------------------------------------------------------------------------------ 
-static RETVAL_MAIN Wait( void* wk )
+static FIELD_TASK_RETVAL Wait( void* wk )
 {
   TASK_WORK* work = (TASK_WORK*)wk;
 
@@ -73,7 +73,7 @@ static RETVAL_MAIN Wait( void* wk )
   // 終了チェック
   if( work->endFrame <= work->nowFrame )
   {
-    return FINISH;
+    return FIELD_TASK_RETVAL_FINISH;
   }
-  return CONTINUE;
+  return FIELD_TASK_RETVAL_CONTINUE;
 }
