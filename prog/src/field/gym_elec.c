@@ -81,8 +81,9 @@
 #define SPD_LV3 (FX32_ONE * 8 * 2)
 #define SPD_LV2 (FX32_ONE * 8 * 1)
 
-#define PITCH_MAX (32768)
-#define PITCH_WIDTH (16)
+#define SE_VOL  (127)
+#define SE_RECT_MAX (2)
+#define SE_LEN  (6 * 16 * FX32_ONE)
 
 static const VecFx32 CapPos[CAPSULE_NUM_MAX] = {
   {CAP1_X,OBJ3D_Y,CAP1_Z},
@@ -129,7 +130,6 @@ typedef struct GYM_ELEC_TMP_tag
   u8 NowRaleIdx[CAPSULE_NUM_MAX];     //現在走行しているレールのインデックス(スイッチ非依存)
   s8 StopPlatformIdx[CAPSULE_NUM_MAX];  //PLATFORM_NO_STOP (-1)　を使用するのでマイナス値を使用できるように。
 
-  int Pitch;
 }GYM_ELEC_TMP;
 
 typedef struct STOP_DAT_tag
@@ -138,6 +138,20 @@ typedef struct STOP_DAT_tag
   int StopStart;        //停車開始フレーム
   int StopEnd;          //停車終了フレーム
 }STOP_DAT;
+
+typedef struct SE_RECT_tag
+{
+  int CapIdx;
+  u16 X;
+  u16 Z;
+  u16 SizeW;
+  u16 SizeH;
+}SE_RECT;
+
+SE_RECT SeRect[SE_RECT_MAX] = {
+  {1, 21,10,15,2},
+  {3, 10,15,1,16},
+};
 
 //レールごとの停車プラットホーム
 static const s8 RaleStopPlatform[RALE_NUM_MAX][STOP_NUM_MAX] = {
@@ -525,6 +539,8 @@ getTransData_(fx32* pVal,
               const u32* pData,
               const NNSG3dResJntAnm* pJntAnm);
 
+static u8 CheckGetSeRect(FIELDMAP_WORK *fieldWork);
+
 //--------------------------------------------------------------
 /**
  * 現在座標からプラットホームインデックスを取得する
@@ -858,42 +874,49 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
       FIELD_PLAYER_SetPos( FIELDMAP_GetFieldPlayer( fieldWork ), &dst_vec );
     }
   }
-
-  //ボリューム変更
+  else    //カプセルに乗っていないときボリューム変更
   {
-    //アニメデータ取得
-    fx32 now_frm;
-    VecFx32 now, player_pos, dst;
-    fx32 len;
-    NNSG3dAnmObj* anm_obj_ptr;
-    GFL_G3D_ANM*  gfl_anm;
-    u8 obj_idx = OBJ_CAP_1 + 1;
-    GFL_G3D_OBJ* g3Dobj = FLD_EXP_OBJ_GetUnitObj(obj_cnt_ptr, GYM_ELEC_UNIT_IDX, obj_idx);
-    u8 anm_idx = ANM_CAP_MOV1 + tmp->NowRaleIdx[1];
-    EXP_OBJ_ANM_CNT_PTR anm_ptr = FLD_EXP_OBJ_GetAnmCnt(obj_cnt_ptr, GYM_ELEC_UNIT_IDX, obj_idx, anm_idx);
+    int volume;
+    u8 rect_idx;
+    rect_idx = CheckGetSeRect(fieldWork);
+    if ( rect_idx != SE_RECT_MAX ){
+      //アニメデータ取得
+      fx32 now_frm;
+      VecFx32 now, player_pos, dst;
+      fx32 len;
+      NNSG3dAnmObj* anm_obj_ptr;
+      GFL_G3D_ANM*  gfl_anm;
+      u8 cap_idx = SeRect[rect_idx].CapIdx;
+      u8 obj_idx = OBJ_CAP_1 + cap_idx;
+      GFL_G3D_OBJ* g3Dobj = FLD_EXP_OBJ_GetUnitObj(obj_cnt_ptr, GYM_ELEC_UNIT_IDX, obj_idx);
+      u8 anm_idx = ANM_CAP_MOV1 + tmp->NowRaleIdx[cap_idx];
+      EXP_OBJ_ANM_CNT_PTR anm_ptr = FLD_EXP_OBJ_GetAnmCnt(obj_cnt_ptr, GYM_ELEC_UNIT_IDX, obj_idx, anm_idx);
 
-    now_frm = GetAnimeFrame(obj_cnt_ptr, obj_idx, anm_idx);
+      now_frm = GetAnimeFrame(obj_cnt_ptr, obj_idx, anm_idx);
 
-    gfl_anm = GFL_G3D_OBJECT_GetG3Danm( g3Dobj, anm_idx );
-    anm_obj_ptr = GFL_G3D_ANIME_GetAnmObj( gfl_anm );
-    getJntSRTAnmResult_(anm_obj_ptr->resAnm,
-                        0,
-                        now_frm,
-                        &now);
-    VEC_Add( &now, &CapPos[1] ,&now );
-    FIELD_PLAYER_GetPos( FIELDMAP_GetFieldPlayer( fieldWork ), &player_pos );
-    VEC_Subtract( &now, &player_pos ,&dst );
-    len = VEC_Mag( &dst );
+      gfl_anm = GFL_G3D_OBJECT_GetG3Danm( g3Dobj, anm_idx );
+      anm_obj_ptr = GFL_G3D_ANIME_GetAnmObj( gfl_anm );
+      getJntSRTAnmResult_(anm_obj_ptr->resAnm,
+                          0,
+                          now_frm,
+                          &now);
+      VEC_Add( &now, &CapPos[cap_idx] ,&now );
+      FIELD_PLAYER_GetPos( FIELDMAP_GetFieldPlayer( fieldWork ), &player_pos );
+      VEC_Subtract( &now, &player_pos ,&dst );
+      len = VEC_Mag( &dst );
 
-///    OS_Printf("len=%x\n",len);
-    {
-      int volume;
-      fx32 max = 6*16*FX32_ONE;
-      volume = 127* (max - (len - (2*16*FX32_ONE))) / max;
-///      OS_Printf("vol=%d\n",volume);
-      if (volume < 0) volume = 0;
-      NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE1 ), volume );
+      {
+        fx32 max = SE_LEN;
+        if ( max <= len ) volume = 0;
+        else volume = (SE_VOL * (max - len)) / max;
+      }
     }
+    else
+    {
+      volume = 0;
+    }
+
+    NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE1 ), volume );
   }
 }
 
@@ -1502,7 +1525,8 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       //ループＳＥスタート
       //PMSND_PlaySE(GYM_ELEC_SE_DRIVE);
       PMSND_PlaySE_byPlayerID( GYM_ELEC_SE_DRIVE, SEPLAYER_SE1 );
-
+      //ボリュームセット
+      NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( SEPLAYER_SE1 ), SE_VOL );
       //自機自動移動開始
       tmp->AltoMove = TRUE;
 
@@ -1648,67 +1672,6 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
     };
   }
 
-  //アニメデータ取得
-  {
-    fx32 now_frm,next_frm;
-    VecFx32 now,next, dst;
-    fx32 len;
-    NNSG3dAnmObj* anm_obj_ptr;
-    GFL_G3D_ANM*  gfl_anm;
-    GFL_G3D_OBJ* g3Dobj = FLD_EXP_OBJ_GetUnitObj(ptr, GYM_ELEC_UNIT_IDX, obj_idx);
-    u8 anm_idx = ANM_CAP_MOV1 + tmp->RadeRaleIdx;
-    EXP_OBJ_ANM_CNT_PTR anm_ptr = FLD_EXP_OBJ_GetAnmCnt(ptr, GYM_ELEC_UNIT_IDX, obj_idx, anm_idx);
-    fx32 last_frm = FLD_EXP_OBJ_GetAnimeLastFrame(anm_ptr );
-
-    now_frm = GetAnimeFrame(ptr, obj_idx, anm_idx);
-    next_frm = now_frm+FX32_ONE;
-    if ( next_frm >= last_frm) next_frm = 0;
-
-//    OS_Printf("%x, %x, %x\n",now_frm, next_frm, last_frm);
-
-    gfl_anm = GFL_G3D_OBJECT_GetG3Danm( g3Dobj, anm_idx );
-    anm_obj_ptr = GFL_G3D_ANIME_GetAnmObj( gfl_anm );
-    getJntSRTAnmResult_(anm_obj_ptr->resAnm,
-                        0,
-                        now_frm,
-                        &now);
-    getJntSRTAnmResult_(anm_obj_ptr->resAnm,
-                        0,
-                        next_frm,
-                        &next);
-
-    VEC_Subtract( &now, &next ,&dst );
-    len = VEC_Mag( &dst );
-    OS_Printf("len = %x\n",len);
-    if ( len >=SPD_LV5 ){
-//      OS_Printf("11111\n");
-      tmp->Pitch = PITCH_WIDTH*4;
-    }else if ( len >=SPD_LV4 ){
-//      OS_Printf("1111\n");
-      tmp->Pitch = PITCH_WIDTH*3;
-    }else if ( len >=SPD_LV3 ){
-//      OS_Printf("111\n");
-      tmp->Pitch = PITCH_WIDTH*2;
-    }else if( len >= SPD_LV2 ){
-//      OS_Printf("11\n");
-      tmp->Pitch = PITCH_WIDTH*1;
-    }else{
-//      OS_Printf("1\n");
-      tmp->Pitch = 0;
-    }
-  }
-
-  //ピッチ変更
-  {
-    NNSSndHandle* snd_handle;
-    if ( GFL_UI_KEY_GetCont() & PAD_BUTTON_START ){
-      tmp->Pitch++;
-      if (tmp->Pitch >= PITCH_MAX) tmp->Pitch = 0;
-      OS_Printf("pitch = %d\n",tmp->Pitch);
-    }
-    snd_handle = PMSND_GetSE_SndHandle( SEPLAYER_SE1 );
-    NNS_SndPlayerSetTrackPitch(snd_handle, 0xffff, tmp->Pitch);
-  }
   return GMEVENT_RES_CONTINUE;
 }
 
@@ -2272,4 +2235,32 @@ TRANS_NONINTERP:
         *pVal = *((const fx32*)pArray + idx);
     }
     return;
+}
+
+//--------------------------------------------------------------
+/**
+ * ＳＥ音量変更する矩形内チェック
+ * @param	    fieldWork       フィールドワークポインタ
+ * @return    u8    矩形インデックス  SE_RECT_MAXで未発見
+ */
+//--------------------------------------------------------------
+static u8 CheckGetSeRect(FIELDMAP_WORK *fieldWork)
+{
+  u8 i;
+  u16 x,z;
+  //自機の座標取得
+  const MMDL *fmmdl = FIELD_PLAYER_GetMMdl( FIELDMAP_GetFieldPlayer( fieldWork ) );
+	
+  x = MMDL_GetGridPosX( fmmdl );
+  z = MMDL_GetGridPosZ( fmmdl );
+
+  for (i=0;i<SE_RECT_MAX;i++)
+  {
+    //矩形チェック
+    if ( (SeRect[i].X<=x)&&(x<=SeRect[i].X+SeRect[i].SizeW-1)&&
+         (SeRect[i].Z<=z)&&(z<=SeRect[i].Z+SeRect[i].SizeH-1) ){
+      break;
+    }
+  }
+  return i;
 }
