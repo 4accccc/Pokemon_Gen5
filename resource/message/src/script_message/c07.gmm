@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-20T17:52:58"/>
+	<create user="matsumiya" host="W00207" date="2009-11-20T19:00:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,9 +307,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="11" top="204" right="716" bottom="824" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="540"/>
@@ -345,9 +345,9 @@
 　69以下→msg_c07_hakase1_03</comment>
 		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">アララギ『おう！　[1:00:トレーナー名:0]くん
-[1:01:ポケモン種族名:0]の　ようすは　どうかね？[BE:01:ページ切り替え（クリア）]</language>
+[1:01:ポケモン種族名:1]の　ようすは　どうかね？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">アララギ『おう！　[1:00:トレーナー名:0]くん
-[1:01:ポケモン種族名:0]の　様子は　どうかね？[BE:01:ページ切り替え（クリア）]</language>
+[1:01:ポケモン種族名:1]の　様子は　どうかね？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c07_hakase1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
