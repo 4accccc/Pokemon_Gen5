@@ -705,7 +705,6 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btlv/btlv_b_gauge.c \
 			battle/btlv/btlv_timer.c \
 			battle/btlv/btlv_bg.c \
-			battle/btlv/wazatype_panel.c \
 			battle/app/b_app_tool.c \
 			battle/app/b_bag_bmp.c \
 			battle/app/b_bag_item.c \
@@ -719,7 +718,6 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/app/b_plist_main.c \
 			battle/app/b_plist_ui.c \
 			poke_tool/pp_to_rpp.c
-#			battle/btlv/finger_cursor.c \
 
 # WIFICLUB
 #===> SRCS_OVERLAY_DEV_WIFI
