@@ -3,7 +3,7 @@
  * @file	wazano_def.h
  * @bfief	技NoのDefine定義ファイル
  * @author	WazaTableConverter
- * @date	2009-11-19
+ * @date	2009-11-20
  * 技テーブルコンバータから生成されました
 */
 //============================================================================================
@@ -485,7 +485,7 @@
 #define		WAZANO_WANDAARUUMU		( 472 )		//ワンダールーム
 #define		WAZANO_SAIKOSYOKKU		( 473 )		//サイコショック
 #define		WAZANO_BENOMUSYOKKU		( 474 )		//ベノムショック
-#define		WAZANO_KEIRYOUKA			( 475 )		//けいりょうか
+#define		WAZANO_BODHIPAAZI			( 475 )		//ボディパージ
 #define		WAZANO_KIKAZARU				( 476 )		//きかざる
 #define		WAZANO_WASIDUKAMI			( 477 )		//わしづかみ
 #define		WAZANO_MAZIKKURUUMU		( 478 )		//マジックルーム
