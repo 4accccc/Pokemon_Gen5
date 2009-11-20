@@ -79,7 +79,7 @@
 	format_id = read_data.unpack( "a4" )
   if format_id[ 0 ] != head[ TYPE_NCE ]
     p "NitroCharacterのnceファイルではありません"
-		exit( 0 )
+		exit( 1 )
   end
 
   #ANIMシグネチャまで読み飛ばす
@@ -118,7 +118,7 @@
 	format_id = read_data.unpack( "a4" )
   if format_id[ 0 ] != head[ TYPE_NMC ]
     p "NitroCharacterのnmcファイルではありません"
-		exit( 0 )
+		exit( 1 )
   end
   fp_w.write( read_data )
 
@@ -166,6 +166,10 @@
       cell_index, wait_frame, rot, scale_x, scale_y, trans_x, trans_y = read_data.unpack( "SSlllll" )
       if wait_frame == 4
         cell_anm_index[ cell_index ].size.times{|k|
+          if cell_anm_frame[ cell_anm_index[ cell_index ][ k ] ] == nil
+            print "存在しないセルをマルチセルに使用しています\n"
+            exit( 1 )
+          end
           if wait_frame < cell_anm_frame[ cell_anm_index[ cell_index ][ k ] ]
             wait_frame = cell_anm_frame[ cell_anm_index[ cell_index ][ k ] ]
           end

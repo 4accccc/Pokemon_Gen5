@@ -54,6 +54,9 @@
     if File::extname( read_data[ i ] ) == ".nmc" && frame_adj == 1
       com = "ruby " +  File::dirname(__FILE__) + "/frame_adj.rb " + read_data[ i ] + " " + ARGV[ ARGV_COPY_DIR ]
       system( com )
+      if $?.exitstatus == 1
+        exit( 1 )
+      end
     end
   }
 

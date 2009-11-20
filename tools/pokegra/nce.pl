@@ -379,7 +379,7 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
   $node_cnt = @node;
 
   if( $node_cnt == 0 ){
-		$write = pack "L", 0xffffffff;
+		$write = pack "L", 0;
 	  print WRITE_NCE $write;
   }
   else{
