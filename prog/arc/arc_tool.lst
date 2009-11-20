@@ -92,6 +92,7 @@
 	ARCID_MYSTERY		"mystery.narc"			#不思議な贈り物
 	ARCID_STARTMENU		"startmenu.narc"		#スタートメニュー
 	ARCID_PALACE		"palace.narc"			#パレス
+	ARCID_MISSION		"mission.narc"			#パレスのミッションデータ
 	ARCID_FLDMMLD		"debug/mmodel.narc"
 	ARCID_YN_TOUCH		"yn_touch.narc"			#YesNoボタン
 	ARCID_MYSIGN		"mysign.narc"			#サイン(トレーナーカード)
