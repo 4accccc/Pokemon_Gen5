@@ -310,7 +310,7 @@ WazaRankEffect WAZADATA_GetRankEffect( WazaID id, u32 idx, int* volume )
     u8* ptr;
 
     ptr = &wp->rankEffType1;
-    ptr += idx;
+    ptr += (idx * 3);
     if( *ptr != WAZA_RANKEFF_NULL )
     {
       *volume = *((s8*)(ptr+1));
