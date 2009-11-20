@@ -41,7 +41,7 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
 ELF2BIN		= $(PROJECT_ROOT)/tools/celf2bin.exe
 XLS2TAB		= ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out_sheet.rb
-DATAFILE	= WB_パレス仕様書091116_2.xls
+DATAFILE	= パレス_ミッションデータ.xls
 DATATXT = $(DATAFILE:.xls=.csv)
 
 ZONETABLE_DIR		= ../../fldmapdata/zonetable/
