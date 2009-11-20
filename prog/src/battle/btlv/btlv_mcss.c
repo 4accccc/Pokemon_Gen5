@@ -53,6 +53,7 @@ struct _BTLV_MCSS_WORK
   GFL_TCBSYS*     tcb_sys;
   MCSS_SYS_WORK*  mcss_sys;
   MCSS_WORK*      mcss[ BTLV_MCSS_MAX ];
+  GFL_TCB*        tcb[ BTLV_MCSS_MAX ];
 
   u32             mcss_pos_3vs3   :1;
   u32             mcss_proj_mode  :1;
@@ -314,6 +315,12 @@ void  BTLV_MCSS_Del( BTLV_MCSS_WORK *bmw, int position )
 {
   MCSS_Del( bmw->mcss_sys, bmw->mcss[ position ] );
   bmw->mcss[ position ] = NULL;
+  if( bmw->tcb[ position ] )
+  { 
+    GFL_HEAP_FreeMemory( GFL_TCB_GetWork( bmw->tcb[ position ] ) );
+    GFL_TCB_DeleteTask( bmw->tcb[ position ] );
+    bmw->tcb[ position ] = NULL;
+  }
 }
 
 //============================================================================================
@@ -1157,7 +1164,8 @@ static  void  TCB_BTLV_MCSS_StopAnime( GFL_TCB *tcb, void *work )
     bmsa->wait = BTLV_MCSS_STOP_ANIME_TIME;
     break;
   case 1:
-    if( --bmsa->wait == 0 )
+    if( ( --bmsa->wait == 0 ) || 
+        ( BTLV_EFFVM_GetExecuteEffectType( BTLV_EFFECT_GetVMHandle() ) == EXECUTE_EFF_TYPE_WAZA ) )
     { 
       MCSS_SetAnimeIndex( bmw->mcss[ bmsa->position ], SEQ_ANIME_STANDBY );
       NNS_G2dStartAnimCtrl( NNS_G2dGetMCAnimAnimCtrl( MCSS_GetAnimCtrl( bmw->mcss[ bmsa->position ] ) ) );
@@ -1169,6 +1177,7 @@ static  void  TCB_BTLV_MCSS_StopAnime( GFL_TCB *tcb, void *work )
     MCSS_SetAnimCtrlCallBack( bmw->mcss[ bmsa->position ], bmsa->position, BTLV_MCSS_CallBackFunctorFrame, 1 );
     GFL_HEAP_FreeMemory( work );
     GFL_TCB_DeleteTask( tcb );
+    bmw->tcb[ bmsa->position ] = NULL;
     break;
   }
 }
@@ -1180,17 +1189,14 @@ static  void  TCB_BTLV_MCSS_StopAnime( GFL_TCB *tcb, void *work )
 //============================================================================================
 static  void  BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame )
 {
-#if 0
-  BTLV_MCSS_WORK *bmw = BTLV_EFFECT_GetMcssWork();
-
-  MCSS_SetTraverseMCNodesCallBack( bmw->mcss[ data ], data, BTLV_MCSS_CallBackNodes );
-
-  NNS_G2dStopAnimCtrl( NNS_G2dGetMCAnimAnimCtrl( MCSS_GetAnimCtrl( bmw->mcss[ data ] ) ) );
-#endif
   BTLV_MCSS_WORK *bmw = BTLV_EFFECT_GetMcssWork();
   BTLV_MCSS_STOP_ANIME* bmsa;
 
-#if 0
+  if( BTLV_EFFVM_GetExecuteEffectType( BTLV_EFFECT_GetVMHandle() ) == EXECUTE_EFF_TYPE_WAZA )
+  { 
+    return;
+  }
+
   bmsa = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( bmw->heapID ), sizeof( BTLV_MCSS_STOP_ANIME ) );
   bmsa->position = data;
 
@@ -1199,8 +1205,8 @@ static  void  BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame )
     MCSS_SetAnimeIndex( bmw->mcss[ data ], SEQ_ANIME_STOP );
   }
 
-  GFL_TCB_AddTask( bmw->tcb_sys, TCB_BTLV_MCSS_StopAnime, bmsa, 0 );
-#endif
+  GF_ASSERT( bmw->tcb[ data ] == NULL );
+  bmw->tcb[ data ] = GFL_TCB_AddTask( bmw->tcb_sys, TCB_BTLV_MCSS_StopAnime, bmsa, 0 );
 }
 
 //============================================================================================
@@ -1216,7 +1222,6 @@ static  BOOL  BTLV_MCSS_CallBackNodes( u32 data, const NNSG2dMultiCellHierarchyD
 
   if( data & ANIME_STOP_FLAG )
   { 
-#if 0
     BOOL  flag = FALSE;
     u8    cnt = MCSS_GetStopCellAnms( bmw->mcss[ data ] );
     int   i;
@@ -1229,8 +1234,6 @@ static  BOOL  BTLV_MCSS_CallBackNodes( u32 data, const NNSG2dMultiCellHierarchyD
       }
     }
     if( flag == FALSE )
-#endif
-    if( nodeIdx != 12 )
     { 
       NNS_G2dStopAnimCtrl( NNS_G2dGetCellAnimAnimCtrl( pCellAnim ) );
     }
