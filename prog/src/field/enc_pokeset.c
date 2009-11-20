@@ -142,6 +142,12 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
   outEfp->companion_f = FALSE;
   outEfp->enc_double_f = FALSE;
 
+  //ダブルエンカウントチェック
+  if( outEfp->location == ENC_LOCATION_GROUND_H ){
+    if(eps_GetPercentRand() < 10) {
+      outEfp->enc_double_f = TRUE;
+    }
+  }
   //スプレー及び低レベルエンカウント回避チェックに用いるレベルを取得
   if( outEfp->spa_low_lv_rm || outEfp->spray_f){
     //手持ちの戦える一匹目のレベルを取得

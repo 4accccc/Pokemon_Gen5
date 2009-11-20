@@ -58,8 +58,8 @@
 //======================================================================
 //  proto
 //======================================================================
-static ENCOUNT_LOCATION enc_GetLocation( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type );
-static u32 enc_GetLocationPercent( FIELD_ENCOUNT *enc,ENCOUNT_LOCATION location );
+static ENCOUNT_LOCATION enc_GetLocation( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type, u8* prob_rev );
+static u32 enc_GetLocationPercent( FIELD_ENCOUNT *enc,ENCOUNT_LOCATION location, u8 prob_rev );
 static BOOL enc_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_WORK* ewk, const u32 per );
 static BOOL enc_CheckEncountWalk( FIELD_ENCOUNT *enc, u32 per );
 
@@ -163,8 +163,11 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
 #endif
 
   //ロケーションチェック
-  enc_loc = enc_GetLocation( enc, enc_type );
-  per = enc_GetLocationPercent( enc, enc_loc );
+  {
+    u8 prob_rev = 0;
+    enc_loc = enc_GetLocation( enc, enc_type, &prob_rev );
+    per = enc_GetLocationPercent( enc, enc_loc, prob_rev );
+  }
   if( per <= 0 ){
     return( NULL ); //確率0
   }
@@ -271,7 +274,7 @@ void* FIELD_ENCOUNT_CheckFishingEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_ty
   }else{
     enc_loc = ENC_LOCATION_FISHING;
   }
-  per = enc_GetLocationPercent( enc, enc_loc );
+  per = enc_GetLocationPercent( enc, enc_loc, 0 );
   if( per <= 0 ){
     return( NULL ); //確率0
   }
@@ -317,7 +320,7 @@ void* FIELD_ENCOUNT_CheckFishingEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_ty
  * @retval
  */
 //--------------------------------------------------------------
-static ENCOUNT_LOCATION enc_GetLocation( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
+static ENCOUNT_LOCATION enc_GetLocation( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type ,u8* prob_rev)
 {
   MAPATTR attr;
   VecFx32 pos;
@@ -325,6 +328,7 @@ static ENCOUNT_LOCATION enc_GetLocation( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_ty
   FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( enc->fwork );
   MAPATTR_FLAG attr_flag;
 
+  *prob_rev = 0;
   attr = FIELD_PLAYER_GetMapAttr( fplayer );
   if(MAPATTR_IsEnable(attr) == FALSE){
     return ENC_LOCATION_NONE;
@@ -340,6 +344,11 @@ static ENCOUNT_LOCATION enc_GetLocation( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_ty
   //エンカウントアトリビュートチェック
   {
     MAPATTR_VALUE attr_value = MAPATTR_GetAttrValue(attr);
+
+    //アトリビュートによるエンカウント率補正取得
+    if( MAPATTR_VALUE_CheckLongGrass( attr_value )){
+      *prob_rev += 10;
+    }
     //水チェック
     if(attr_flag & MAPATTR_FLAGBIT_WATER){
       if( enc_type == ENC_TYPE_EFFECT ) return ENC_LOCATION_WATER_SP;
@@ -360,19 +369,27 @@ static ENCOUNT_LOCATION enc_GetLocation( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_ty
 /**
  * エンカウント率をロケーションから取得
  * @param enc FIELD_ENCOUNT*
- * @param attr チェックするMAPATTR
- * @param outEncLocation にエンカウント場所を格納するENCOUNT_LOCATION
+ * @param location ENCOUNT_LOCATION
+ * @param prov_rev アトリビュートによるエンカウント率補正値
  * @retval u32 エンカウント率 0=エンカウント無し
  */
 //--------------------------------------------------------------
-static u32 enc_GetLocationPercent( FIELD_ENCOUNT *enc,ENCOUNT_LOCATION location )
+static u32 enc_GetLocationPercent( FIELD_ENCOUNT *enc,ENCOUNT_LOCATION location, u8 prob_rev )
 {
-  u32 per = 0;
+  s32 per = 0;
 
   if(location >= ENC_LOCATION_MAX){
     return 0;
   }
-  return enc->encdata->prob[location];
+  per = enc->encdata->prob[location];
+
+  if( per > 0){ //元の確率0は0のまま
+    per += prob_rev;
+  }
+  if( per < 0){
+    return 0;
+  }
+  return per;
 }
 
 //======================================================================
