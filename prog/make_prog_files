@@ -508,7 +508,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/field_flash.c \
         field/fieldskill_mapeff.c \
         field/fld_wipe_3dobj.c \
-        field/scrcmd_fldci.c
+        field/scrcmd_fldci.c \
+        field/fskill_sorawotobu.c
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP

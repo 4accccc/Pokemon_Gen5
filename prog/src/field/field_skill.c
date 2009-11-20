@@ -15,6 +15,7 @@
 #include "field_status_local.h"
 #include "field_skill.h"
 #include "fskill_amaikaori.h"
+#include "fskill_sorawotobu.h"
 #include "fieldskill_mapeff.h"
 #include "eventwork.h"
 
@@ -79,6 +80,7 @@ static BOOL CheckMapModeUse( const FLDSKILL_CHECK_WORK * scwk );
 
 static FLDSKILL_RET SkillCheck_Amaikaori( const FLDSKILL_CHECK_WORK * scwk );
 static GMEVENT* SkillUse_Amaikaori( const FLDSKILL_USE_HEADER *head, const FLDSKILL_CHECK_WORK *scwk );
+static GMEVENT* SkillUse_Sorawotobu( const FLDSKILL_USE_HEADER *head, const FLDSKILL_CHECK_WORK *scwk );
 
 static const FLDSKILL_FUNC_DATA SkillFuncTable[FLDSKILL_IDX_MAX];
 
@@ -209,10 +211,15 @@ FLDSKILL_RET FLDSKILL_CheckUseSkill(
  */
 //--------------------------------------------------------------
 void FLDSKILL_InitUseHeader( FLDSKILL_USE_HEADER *head,
-    u16 poke_pos, u16 use_wazano )
+    u16 poke_pos, u16 use_wazano,
+    u32 zoneID, u32 inGridX, u32 inGridY, u32 inGridZ)
 {
   head->poke_pos = poke_pos;
   head->use_wazano = use_wazano;
+  head->zoneID = zoneID;
+  head->GridX = inGridX;
+  head->GridY = inGridY;
+  head->GridZ = inGridZ;
 }
 
 //--------------------------------------------------------------
@@ -596,10 +603,70 @@ static GMEVENT * SkillUse_Amaikaori(
   return event;
 }
 
+//======================================================================
+//  そらをとぶ
+//======================================================================
+
+//--------------------------------------------------------------
+/**
+ * そらをとぶ使用
+ * @param head FLDSKILL_USE_HEADER
+ * @parama  scwk FLDSKILL_CHECK_WORK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static GMEVENT * SkillUse_Sorawotobu(
+    const FLDSKILL_USE_HEADER *head, const FLDSKILL_CHECK_WORK *scwk )
+{
+  GMEVENT *event;
+  HIDEN_SCR_WORK *hsw;
+  
+  event = EVENT_FieldSkillSorawotobu( scwk->gsys, scwk->fieldmap,
+      head->zoneID, head->GridX, head->GridY, head->GridZ);
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * そらをとぶ使用チェック
+ * @param scwk  FLDSKILL_CHECK_WORK
+ * @retval FLDSLILL_RET
+ */
+//--------------------------------------------------------------
+static FLDSKILL_RET SkillCheck_Sorawotobu( const FLDSKILL_CHECK_WORK * scwk)
+{
+  //コロシアム・ユニオンルームチェック
+#if 0 //wb 現状無視
+  if( CheckMapModeUse(scwk) == TRUE ){
+    return FLDSKILL_RET_USE_NG;
+  }
+#endif
+
+  // バッジチェック
+#if 0 //wb 現状無視
+  if( CheckBadge(scwk,0) == FALSE ){
+    return FLDSKILL_RET_NO_BADGE;
+  }
+#endif
+  
+	// 連れ歩き
+#if 0 //wb 現状無視
+	if( CompanionCheck( scwk ) == TRUE ){
+		return FIELDSKILL_COMPANION;
+	}
+#endif
+  
+  if( /*IsEnableSkill(scwk,FLDSKILL_IDX_SORAWOTOBU)*/1){
+    return FLDSKILL_RET_USE_OK;
+  }
+  
+  return FLDSKILL_RET_USE_NG;
+}
 
 //======================================================================
 //  フラッシュ
 //======================================================================
+
 //--------------------------------------------------------------
 /**
  * フラッシュ使用チェック
@@ -741,7 +808,7 @@ static FLDSKILL_CHECK_FUNC GetCheckFunc( FLDSKILL_IDX idx )
 //--------------------------------------------------------------
 static FLDSKILL_USE_FUNC GetUseFunc( FLDSKILL_IDX idx )
 {
-  GF_ASSERT( idx < FLDSKILL_IDX_MAX );
+  GF_ASSERT_MSG( idx < FLDSKILL_IDX_MAX,"%d\n",idx );
   return SkillFuncTable[idx].use_func;
 }
 
@@ -906,7 +973,7 @@ static const FLDSKILL_FUNC_DATA SkillFuncTable[FLDSKILL_IDX_MAX] =
   {SkillUse_Takinobori,SkillCheck_Takinobori},    // 02 :たきのぼり
   {SkillUse_Kairiki,SkillCheck_Kairiki},    // 03 :かいりき
   
-  {SkillUse_Dummy,SkillCheck_Dummy},    // 04 :そらをとぶ
+  {SkillUse_Sorawotobu,SkillCheck_Sorawotobu},    // 04 :そらをとぶ
   {SkillUse_Dummy,SkillCheck_Dummy},    // 05 :きりばらい
   {SkillUse_Dummy,SkillCheck_Dummy},    // 06 :いわくだき
   {SkillUse_Dummy,SkillCheck_Dummy},    // 07 :ロッククライム

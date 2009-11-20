@@ -822,6 +822,7 @@ static RETURNFUNC_RESULT FMenuReturnProc_PokeList(PROCLINK_WORK* wk,void* param_
 
 	case PL_RET_SORAWOTOBU:  // メニュー 技：そらをとぶ
     wk->next_type	= EVENT_PROCLINK_CALL_TOWNMAP;
+//    wk->param->select_param	= plData->ret_mode-PL_RET_IAIGIRI;
     return RETURNFUNC_RESULT_NEXT;
 
   default:
@@ -1265,7 +1266,7 @@ static RETURNFUNC_RESULT FMenuReturnProc_TownMap(PROCLINK_WORK* wk,void* param_a
 			case TOWNMAP_SELECT_CLOSE:		//何もせず終了する
 				return RETURNFUNC_RESULT_EXIT;
 			case TOWNMAP_SELECT_SKY:	//空を飛ぶ
-				wk->param->select_param	= PL_RET_SORAWOTOBU;
+				wk->param->select_param	= PL_RET_SORAWOTOBU-PL_RET_IAIGIRI;
         wk->param->zoneID       = param->zoneID;
         wk->param->pos          = param->grid;
 				return RETURNFUNC_RESULT_USE_SKILL;

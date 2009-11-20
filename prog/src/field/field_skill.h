@@ -86,6 +86,10 @@ struct _TAG_FLDSKILL_USE_HEADER
 {
   u16 poke_pos; //技を使用する手持ちポケモン位置番号
   u16 use_wazano; //使用する技番号
+  u32 zoneID;
+  u32 GridX;
+  u32 GridY;
+  u32 GridZ;
 };
 
 //--------------------------------------------------------------
@@ -111,6 +115,7 @@ extern void FLDSKILL_InitCheckWork(
 extern FLDSKILL_RET FLDSKILL_CheckUseSkill(
     FLDSKILL_IDX idx, FLDSKILL_CHECK_WORK *scwk );
 extern void FLDSKILL_InitUseHeader( FLDSKILL_USE_HEADER *head,
-    u16 poke_pos, u16 use_wazano );
+    u16 poke_pos, u16 use_wazano,
+    u32 zoneID, u32 inGridX, u32 inGridY, u32 inGridZ);
 extern GMEVENT * FLDSKILL_UseSkill( FLDSKILL_IDX idx,
     const FLDSKILL_USE_HEADER *head, const FLDSKILL_CHECK_WORK *scwk );
