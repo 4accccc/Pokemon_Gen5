@@ -17,7 +17,7 @@
 
 #ifdef PM_DEBUG
 
-#define DEBUG_FLASH_START_FAR
+#define DEBUG_FLASH_INPUT
 
 #endif
 
@@ -106,7 +106,7 @@ void FIELDSKILL_MAPEFF_Main( FIELDSKILL_MAPEFF* p_wk )
   SKILL_MAPEFF_MainFlash( p_wk );
 
 
-#ifdef DEBUG_FLASH_START_FAR
+#ifdef DEBUG_FLASH_INPUT
   // フラッシュ実験
   // tomoya takahashi
   if( FIELDSKILL_MAPEFF_IsFlash( p_wk ) )
@@ -208,11 +208,6 @@ static void SKILL_MAPEFF_CreateFlash( FIELDSKILL_MAPEFF* p_wk, FIELDSKILL_MAPEFF
     // 両方設定されている
     GF_ASSERT( (msk & (FIELDSKILL_MAPEFF_MSK_FLASH_NEAR|FIELDSKILL_MAPEFF_MSK_FLASH_FAR)) != (FIELDSKILL_MAPEFF_MSK_FLASH_NEAR|FIELDSKILL_MAPEFF_MSK_FLASH_FAR) );
     
-
-#ifdef DEBUG_FLASH_START_FAR
-    // @TODO　絶対FARで始まる
-    FIELD_FLASH_Control( p_wk->field_flash, FIELD_FLASH_REQ_ON_FAR );
-#else
     // FARを優先
     if( msk & FIELDSKILL_MAPEFF_MSK_FLASH_FAR )
     {
@@ -222,7 +217,6 @@ static void SKILL_MAPEFF_CreateFlash( FIELDSKILL_MAPEFF* p_wk, FIELDSKILL_MAPEFF
     {
       FIELD_FLASH_Control( p_wk->field_flash, FIELD_FLASH_REQ_ON_NEAR );
     }
-#endif
   }
   else
   {

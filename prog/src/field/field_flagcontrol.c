@@ -13,6 +13,11 @@
 
 #include "gflib.h"
 
+
+#include "field/zonedata.h"
+#include "field_status_local.h"
+
+
 #include "field_flagcontrol.h"
 
 //-----------------------------------------------------------------------------
@@ -79,8 +84,17 @@ void FIELD_FLAGCONT_INIT_WalkStepOver(GAMEDATA * gdata, FIELDMAP_WORK* fieldWork
  *	@param	fsys  フィールドマップワーク
  */
 //-----------------------------------------------------------------------------
-void FIELD_FLAGCONT_INIT_MapJump(GAMEDATA * gdata)
+void FIELD_FLAGCONT_INIT_MapJump(GAMEDATA * gdata, u16 zone_id)
 {
+  FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( gdata );
+
+	//ダンジョンでない場合、フラッシュ状態フラグと霧払い状態フラグをクリア
+	if (!ZONEDATA_IsDungeon(zone_id)) 
+  {
+    // フラッシュOFF
+		FIELD_STATUS_SetFieldSkillFlash(fldstatus, FALSE);
+	}
+
 /* PLATINUM
 	if (fsys->scope_mode_flag == TRUE) {
 		//望遠鏡モードの場合は更新処理を行わない
@@ -147,7 +161,7 @@ void FIELD_FLAGCONT_INIT_MapJump(GAMEDATA * gdata)
  */
 //-----------------------------------------------------------------------------
 
-void FIELD_FLAGCONT_INIT_FlySky(GAMEDATA * gdata)
+void FIELD_FLAGCONT_INIT_FlySky(GAMEDATA * gdata, u16 zone_id)
 {
 /*  PLATINUM
 	//サファリフラグクリア
@@ -164,7 +178,7 @@ void FIELD_FLAGCONT_INIT_FlySky(GAMEDATA * gdata)
  * @param	fsys		フィールドシステムポインタ
  */
 //-----------------------------------------------------------------------------
-void FIELD_FLAGCONT_INIT_Teleport(GAMEDATA * gdata)
+void FIELD_FLAGCONT_INIT_Teleport(GAMEDATA * gdata, u16 zone_id)
 {
 /*  PLATINUM
 	//サファリフラグクリア
@@ -182,7 +196,7 @@ void FIELD_FLAGCONT_INIT_Teleport(GAMEDATA * gdata)
  */
 //-----------------------------------------------------------------------------
 
-void FIELD_FLAGCONT_INIT_Escape(GAMEDATA * gdata)
+void FIELD_FLAGCONT_INIT_Escape(GAMEDATA * gdata, u16 zone_id)
 {
 /*  PLATINUM
 	//サファリフラグクリア
@@ -198,7 +212,7 @@ void FIELD_FLAGCONT_INIT_Escape(GAMEDATA * gdata)
  * @param	fsys		フィールドシステムポインタ
  */
 //-----------------------------------------------------------------------------
-void FIELD_FLAGCONT_INIT_GameOver(GAMEDATA * gdata)
+void FIELD_FLAGCONT_INIT_GameOver(GAMEDATA * gdata, u16 zone_id)
 {
 /*  PLATINUM
 	EVENTWORK* ev = SaveData_GetEventWork( fsys->savedata );
@@ -217,7 +231,7 @@ void FIELD_FLAGCONT_INIT_GameOver(GAMEDATA * gdata)
  * @param	fsys		フィールドシステムポインタ
  */
 //-----------------------------------------------------------------------------
-void FIELD_FLAGCONT_INIT_Continue(GAMEDATA * gdata)
+void FIELD_FLAGCONT_INIT_Continue(GAMEDATA * gdata, u16 zone_id)
 {
 /*
 	//移動ポケモン全部ジャンプ

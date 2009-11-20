@@ -40,6 +40,9 @@ typedef enum
   
 } FIELDSKILL_MAPEFF_MSK;
 
+#define FIELDSKILL_MAPEFF_MSK_IS_ON(val, msk)    ((val) & (msk))
+#define FIELDSKILL_MAPEFF_MSK_ON(val, msk)    ((val) |= (msk))
+#define FIELDSKILL_MAPEFF_MSK_OFF(val, msk)    ((val) &= ~(msk))
 
 //-----------------------------------------------------------------------------
 /**

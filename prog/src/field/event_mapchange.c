@@ -24,6 +24,7 @@
 #include "field/rail_location.h"  //RAIL_LOCATION
 #include "field/eventdata_sxy.h"
 #include "field/fldmmdl.h"
+#include "field/fieldskill_mapeff.h"
 #include "field/field_status_local.h" //FIELD_STATUS
 
 #include "event_fieldmap_control.h"
@@ -63,6 +64,8 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
 
 static void MAPCHG_loadMMdl( GAMEDATA * gamedata, const LOCATION *loc_req );
 static void MAPCHG_releaseMMdl( GAMEDATA * gamedata );
+
+static void MAPCHG_setupFieldSkillMapEff( GAMEDATA * gamedata, const LOCATION *loc_req );
 
 static void setFirstBGM(GAMEDATA * gamedata, u16 zone_id);
 static void AssignGimmickID(GAMEDATA * gamedata, int inZoneID);
@@ -129,7 +132,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
       //新しいマップモードなど機能指定を行う
       MAPCHG_setupMapTools( gsys, &fmw->loc_req );
       //コンティニューによるフラグ落とし処理
-      FIELD_FLAGCONT_INIT_Continue( gamedata );
+      FIELD_FLAGCONT_INIT_Continue( gamedata, fmw->loc_req.zone_id );
       break;
 
     default:
@@ -706,7 +709,7 @@ void MAPCHG_GameOver( GAMESYS_WORK * gsys )
   MAPCHG_updateGameData( gsys, &loc_req );
 
   //ゲームオーバー時のフラグのクリア
-  FIELD_FLAGCONT_INIT_GameOver( gamedata );
+  FIELD_FLAGCONT_INIT_GameOver( gamedata, loc_req.zone_id );
 }
 
 //------------------------------------------------------------------
@@ -815,17 +818,13 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
   SCRIPT_CallZoneChangeScript( gsys, HEAPID_PROC );
 
   //マップ遷移時のフラグ初期化
-  FIELD_FLAGCONT_INIT_MapJump( gamedata );
+  FIELD_FLAGCONT_INIT_MapJump( gamedata, loc.zone_id );
 
   //マップ到着フラグセット
   ARRIVEDATA_SetArriveFlag( gamedata, loc.zone_id );
 
   //新規ゾーンに配置する動作モデルを追加
   MAPCHG_loadMMdl( gamedata, loc_req );
-
-  //フィールド技 マップ効果
-  //@TODO フラッシュ　システムフラグを見て、マスクを書き換える
-  FIELD_STATUS_SetFieldSkillMapEffectMsk( fldstatus, ZONEDATA_GetFieldSkillMapEffMsk( loc.zone_id ) );
   
 }
 
@@ -849,6 +848,31 @@ static void MAPCHG_loadMMdl( GAMEDATA * gamedata, const LOCATION *loc_req )
 static void MAPCHG_releaseMMdl( GAMEDATA * gamedata )
 {
 		MMDLSYS_DeleteMMdl( GAMEDATA_GetMMdlSys(gamedata) );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールド技　画面効果マスクの設定
+ */
+//-----------------------------------------------------------------------------
+static void MAPCHG_setupFieldSkillMapEff( GAMEDATA * gamedata, const LOCATION *loc_req )
+{
+  FIELD_STATUS * fldstatus =  GAMEDATA_GetFieldStatus( gamedata ); 
+  u32 fs_effmsk = ZONEDATA_GetFieldSkillMapEffMsk( loc_req->zone_id );
+
+  //フラッシュ　システムフラグを見て、マスクを書き換える
+  if( FIELDSKILL_MAPEFF_MSK_IS_ON(fs_effmsk, FIELDSKILL_MAPEFF_MSK_FLASH_NEAR) )
+  {
+    if( FIELD_STATUS_IsFieldSkillFlash(fldstatus) )
+    {
+      // フラッシュ技使用後に変換
+      FIELDSKILL_MAPEFF_MSK_OFF(fs_effmsk, FIELDSKILL_MAPEFF_MSK_FLASH_NEAR);
+      FIELDSKILL_MAPEFF_MSK_ON(fs_effmsk, FIELDSKILL_MAPEFF_MSK_FLASH_FAR);
+      
+    }
+  }
+  FIELD_STATUS_SetFieldSkillMapEffectMsk( fldstatus, fs_effmsk );
 }
 
 //--------------------------------------------------------------
@@ -896,6 +920,8 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req 
 		MAP_MATRIX_Init( matrix, matID, loc_req->zone_id );
   }
 
+  //フィールド技 マップ効果
+  MAPCHG_setupFieldSkillMapEff( gamedata, loc_req );
 }
 
 //--------------------------------------------------------------

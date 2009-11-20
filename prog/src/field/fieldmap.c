@@ -2936,4 +2936,16 @@ FLD3D_CI_PTR FIELDMAP_GetFld3dCiPtr(FIELDMAP_WORK *fieldWork)
   return fieldWork->Fld3dCiPtr;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールド技　マップ効果ワーク取得
+ *
+ *	@param	fieldWork   ワーク
+ */
+//-----------------------------------------------------------------------------
+FIELDSKILL_MAPEFF * FIELDMAP_GetFieldSkillMapEffect( FIELDMAP_WORK * fieldWork )
+{
+  return fieldWork->fieldskill_mapeff;
+}
+
 

@@ -34,12 +34,14 @@
 #include "fieldmap_func_def.h"
 #include "fld_exp_obj.h"
 #include "field_g3dobj.h"
+#include "fieldskill_mapeff.h"
 
 #include "savedata/sodateya_work.h"
 #include "sodateya.h"
 #include "field/areadata.h"
 
 #include "fld3d_ci.h"
+
 
 #include "field_task.h"
 #include "field_task_manager.h"
@@ -128,4 +130,5 @@ extern DRAW3DMODE FIELDMAP_GetDraw3DMode(FIELDMAP_WORK *fieldWork);
 extern void FIELDMAP_SetDraw3DMode(FIELDMAP_WORK *fieldWork, DRAW3DMODE mode);
 
 extern FLD3D_CI_PTR FIELDMAP_GetFld3dCiPtr(FIELDMAP_WORK *fieldWork);
+extern FIELDSKILL_MAPEFF * FIELDMAP_GetFieldSkillMapEffect( FIELDMAP_WORK * fieldWork );
 

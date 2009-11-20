@@ -22,7 +22,10 @@
 struct _FIELD_STATUS{
   MAPMODE map_mode;
   u8 isFieldInitFlag;
-  u8 fieldSkillMapEffect;
+
+  // フィールド技関連
+  u8  fs_flash;      // フラッシュON
+  u16 fs_mapeffect;  // 見た目の状態
 };
 
 //======================================================================
@@ -90,6 +93,39 @@ BOOL FIELD_STATUS_GetFieldInitFlag( const FIELD_STATUS * fldstatus )
 }
 
 
+//------------------------------------------------------------------
+// フィールド技　フラッシュのON・OFF
+//------------------------------------------------------------------
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールド技　フラッシュ　ON・OFF
+ *
+ *	@param	fldstatus   ワーク
+ *	@param	flag        TRUE:ON   FALSE：OFF
+ */
+//-----------------------------------------------------------------------------
+void FIELD_STATUS_SetFieldSkillFlash( FIELD_STATUS * fldstatus, BOOL flag )
+{
+  GF_ASSERT( fldstatus );
+  fldstatus->fs_flash = flag;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールド技　フラッシュ　チェック
+ *
+ *	@param	fldstatus   ワーク
+ *
+ *	@retval TRUE    フラッシュ状態
+ *	@retval FALSE   フラッシュしてない
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_STATUS_IsFieldSkillFlash( const FIELD_STATUS * fldstatus )
+{
+  GF_ASSERT( fldstatus );
+  return fldstatus->fs_flash;
+}
 
 //------------------------------------------------------------------
 // フィールド技　マップ効果状態
@@ -105,7 +141,7 @@ BOOL FIELD_STATUS_GetFieldInitFlag( const FIELD_STATUS * fldstatus )
 void FIELD_STATUS_SetFieldSkillMapEffectMsk( FIELD_STATUS * fldstatus, u32 msk )  
 {
   GF_ASSERT( fldstatus );
-  fldstatus->fieldSkillMapEffect = msk;
+  fldstatus->fs_mapeffect = msk;
 }
 
 //----------------------------------------------------------------------------
@@ -120,7 +156,7 @@ void FIELD_STATUS_SetFieldSkillMapEffectMsk( FIELD_STATUS * fldstatus, u32 msk )
 u32 FIELD_STATUS_GetFieldSkillMapEffectMsk( const FIELD_STATUS * fldstatus )
 {
   GF_ASSERT( fldstatus );
-  return fldstatus->fieldSkillMapEffect;
+  return fldstatus->fs_mapeffect;
 }
 
 

@@ -12,8 +12,10 @@
 #include "system/main.h"  //HEAPID_PROC
 #include "fieldmap.h"
 
+#include "field_status_local.h"
 #include "field_skill.h"
 #include "fskill_amaikaori.h"
+#include "fieldskill_mapeff.h"
 #include "eventwork.h"
 
 #include "script.h"
@@ -55,6 +57,7 @@ static GMEVENT_RESULT GMEVENT_Iaigiri(GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT GMEVENT_Naminori(GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT GMEVENT_Takinobori(GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT GMEVENT_Kairiki(GMEVENT *event, int *seq, void *wk );
+static GMEVENT_RESULT GMEVENT_Flash(GMEVENT *event, int *seq, void *wk );
 
 static FLDSKILL_CHECK_FUNC GetCheckFunc( FLDSKILL_IDX idx );
 static FLDSKILL_USE_FUNC GetUseFunc( FLDSKILL_IDX idx );
@@ -166,14 +169,17 @@ void FLDSKILL_InitCheckWork(
     }
   }
 
-#if 0 //wb null
-  switch (Situation_GetWeatherID(SaveData_GetSituation(fsys->savedata))) {
-  case WEATHER_SYS_MIST1:
-    scwk->enable_skill |= (1 << FLD_SKILL_KIRIBARAI);
-    break;
-  case WEATHER_SYS_FLASH:
-    scwk->enable_skill |= (1 << FLD_SKILL_FLASH);
-    break;
+#if 1 
+  {
+    GAMEDATA *gdata = GAMESYSTEM_GetGameData( scwk->gsys );
+    FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( gdata );
+    u32 mapeffmsk = FIELD_STATUS_GetFieldSkillMapEffectMsk( fldstatus );
+
+    // フラッシュチェック
+    if( FIELDSKILL_MAPEFF_MSK_IS_ON(mapeffmsk, FIELDSKILL_MAPEFF_MSK_FLASH_NEAR) )
+    {
+      scwk->enable_skill |= (1 << FLDSKILL_IDX_FLASH);
+    }
   }
 #endif
 }
@@ -590,6 +596,95 @@ static GMEVENT * SkillUse_Amaikaori(
   return event;
 }
 
+
+//======================================================================
+//  フラッシュ
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * フラッシュ使用チェック
+ * @param scwk  FLDSKILL_CHECK_WORK
+ * @retval FLDSLILL_RET
+ */
+//--------------------------------------------------------------
+static FLDSKILL_RET SkillCheck_Flash( const FLDSKILL_CHECK_WORK * scwk)
+{
+#if 0
+	// コロシアム・ユニオンルームチェック
+	if( MapModeUseChack( scwk ) == FALSE ){
+		return FIELDSKILL_USE_FALSE;
+	}
+#endif
+
+	if (IsEnableSkill(scwk, FLDSKILL_IDX_FLASH)) {
+		return FLDSKILL_RET_USE_OK;
+	} else {
+		return FLDSKILL_RET_USE_NG;
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * フラッシュ使用
+ * @param head FLDSKILL_USE_HEADER
+ * @parama  scwk FLDSKILL_CHECK_WORK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static GMEVENT * SkillUse_Flash(
+    const FLDSKILL_USE_HEADER *head, const FLDSKILL_CHECK_WORK *scwk )
+{
+  GMEVENT *event;
+  HIDEN_SCR_WORK *hsw;
+  
+  event = GMEVENT_Create( scwk->gsys, NULL,
+      GMEVENT_Flash, sizeof(HIDEN_SCR_WORK) );
+  hsw = GMEVENT_GetEventWork( event );
+  InitHSW( hsw, head, scwk );
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * フラッシュ呼び出しイベント
+ * @param event GMEVENT*
+ * @parama seq シーケンス
+ * @param wk event work
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT GMEVENT_Flash(GMEVENT *event, int *seq, void *wk )
+{
+  u16 *scwk;
+  u16 prm0;
+  SCRIPT_WORK *sc;
+  HIDEN_SCR_WORK *hsw = wk;
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( hsw->gsys );
+  EVENTWORK *ev = GAMEDATA_GetEventWork( gdata );
+  
+/*
+  prm0 = hsw->head.poke_pos;
+  sc = SCRIPT_ChangeScript( event, SCRID_HIDEN_FLASH, NULL, 0 );
+  SCRIPT_SetScriptWorkParam( sc, prm0, 0, 0, 0 );
+  return GMEVENT_RES_CONTINUE;
+//*/
+
+  // ON
+  {
+    FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( gdata );
+    FIELDSKILL_MAPEFF* mapeff = FIELDMAP_GetFieldSkillMapEffect( GAMESYSTEM_GetFieldMapWork( hsw->gsys ) );
+    FIELD_FLASH* flash = FIELDSKILL_MAPEFF_GetFlash( mapeff );
+    
+    if( !FIELD_STATUS_IsFieldSkillFlash(fldstatus) )
+    {
+      FIELD_STATUS_SetFieldSkillFlash( fldstatus, TRUE );
+      FIELD_FLASH_Control( flash, FIELD_FLASH_REQ_FADEOUT );
+    }
+  }
+
+  return GMEVENT_RES_FINISH;
+}
+
 //--------------------------------------------------------------
 /**
  * ダミー使用チェック
@@ -815,7 +910,7 @@ static const FLDSKILL_FUNC_DATA SkillFuncTable[FLDSKILL_IDX_MAX] =
   {SkillUse_Dummy,SkillCheck_Dummy},    // 05 :きりばらい
   {SkillUse_Dummy,SkillCheck_Dummy},    // 06 :いわくだき
   {SkillUse_Dummy,SkillCheck_Dummy},    // 07 :ロッククライム
-  {SkillUse_Dummy,SkillCheck_Dummy},    // 08 :フラッシュ
+  {SkillUse_Flash,SkillCheck_Flash},    // 08 :フラッシュ
   {SkillUse_Dummy,SkillCheck_Dummy},    // 09 :テレポート
   {SkillUse_Dummy,SkillCheck_Dummy},    // 10 :あなをほる
   {SkillUse_Amaikaori,SkillCheck_Amaikaori},   // 11 :あまいかおり
