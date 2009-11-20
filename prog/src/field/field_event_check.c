@@ -47,6 +47,7 @@
 #include "isdbglib.h"
 
 #include "field_encount.h"      //FIELD_ENCOUNT_CheckEncount
+#include "effect_encount.h"
 
 #include "fieldmap_ctrl.h"
 #include "fieldmap_ctrl_grid.h"
@@ -134,7 +135,7 @@ typedef struct {
 static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork);
 static GMEVENT* CheckSodateya( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
 static GMEVENT* CheckSpray( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
-static void CheckEncountEffect( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
+static GMEVENT* CheckEncountEffect( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
 static void updatePartyEgg( POKEPARTY* party );
 static BOOL checkPartyEgg( POKEPARTY* party );
 
@@ -1186,8 +1187,9 @@ static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWor
   GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
   GMEVENT*     event = NULL;
 
-  //エンカウントエフェクト起動監視(イベント起動はしません)
-  CheckEncountEffect( fieldWork, gsys, gdata );
+  //エンカウントエフェクト起動監視
+  event = CheckEncountEffect( fieldWork, gsys, gdata );
+  if( event != NULL) return event;
 
   //育て屋チェック
   event  = CheckSodateya( fieldWork, gsys, gdata );
@@ -1300,13 +1302,20 @@ static GMEVENT* CheckSpray( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMED
  * 1歩ごとのエンカウントエフェクト起動チェック
  */
 //==============================================================================
-static void CheckEncountEffect( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata )
+static GMEVENT* CheckEncountEffect( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata )
 {
   SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork(gdata);
   FIELD_ENCOUNT * encount = FIELDMAP_GetEncount(fieldWork);
-
+  GMEVENT* event = NULL;
+  
+  //エフェクトエンカウント接触チェック
+  event = EFFECT_ENC_CheckEventApproch( encount );
+  if( event != NULL){
+    return event;
+  }
+  //エフェクトエンカウント起動チェック
   EFFECT_ENC_CheckEffectEncountStart( encount );
-	return;
+	return NULL;
 }
 
 //======================================================================

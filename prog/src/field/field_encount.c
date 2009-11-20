@@ -139,22 +139,25 @@ void FIELD_ENCOUNT_Delete( FIELD_ENCOUNT *enc )
 void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
 {
   u32 per,enc_num;
-  BOOL ret = FALSE;
+  BOOL ret = FALSE,force_f = FALSE;
   BATTLE_SETUP_PARAM* bp;
   ENCOUNT_WORK* ewk;
   ENCOUNT_LOCATION enc_loc;
   ENC_POKE_PARAM poke_tbl[FLD_ENCPOKE_NUM_MAX];
-
-  FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( enc->fwork );
   ENCPOKE_FLD_PARAM fld_spa;
+  FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( enc->fwork );
 
-  //最後のエンカウントからのプレイヤーの歩数を加算
   ewk = GAMEDATA_GetEncountWork(enc->gdata);
-  encwork_AddPlayerWalkCount( ewk, fplayer);
+  if( enc_type == ENC_TYPE_FORCE || enc_type == ENC_TYPE_EFFECT ){
+    force_f = TRUE;
+  }else{
+    //最後のエンカウントからのプレイヤーの歩数を加算
+    encwork_AddPlayerWalkCount( ewk, fplayer);
+  }
 
 #ifdef PM_DEBUG
   //デバッグ強制エンカウントOffルーチン
-  if( enc_type != ENC_TYPE_FORCE && DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEncount) ){
+  if( !force_f && DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEncount) ){
     return NULL;
   }
 #endif
@@ -170,7 +173,7 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
   ENCPOKE_SetEFPStruct( &fld_spa, enc->gdata, enc_loc, enc_type,
       FIELD_WEATHER_GetWeatherNo(FIELDMAP_GetFieldWeather( enc->fwork )) );
 
-  if( enc_type != ENC_TYPE_FORCE )
+  if( !force_f )
   {
     //道具＆特性によるエンカウント率変動
     per = ENCPOKE_EncProbManipulation( &fld_spa, enc->gdata, per);

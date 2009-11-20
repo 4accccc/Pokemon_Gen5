@@ -70,8 +70,10 @@ static void effect_EffectPush( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
 static void effect_EffectPop( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
 
 static BOOL effenc_CheckWalkCt( ENCOUNT_WORK* ewk, EFFECT_ENCOUNT* eff_wk );
-static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
+static void effenc_WalkCtClear( ENCOUNT_WORK* ewk );
 
+
+static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
 static void effect_EffectSetUp( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
 static void effect_EffectDelete( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
 
@@ -169,6 +171,58 @@ void EFFECT_ENC_EffectDelete( FIELD_ENCOUNT* enc )
 }
 
 /*
+ *  @brief  エフェクトエンカウント　イベント侵入起動チェック
+ */
+GMEVENT* EFFECT_ENC_CheckEventApproch( FIELD_ENCOUNT* enc )
+{
+  EFFECT_ENCOUNT* eff_wk = enc->eff_enc;
+  ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
+  EFFENC_PARAM* ep = &ewk->effect_encount.param; 
+  GMEVENT* event = NULL;
+  u16 rnd;
+
+  if( !ep->valid_f ){
+    return NULL;
+  }
+  { //座標チェック
+    u16 player_x,player_z;
+    FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( enc->fwork );
+    MMDL* mmdl = FIELD_PLAYER_GetMMdl( fplayer );
+
+    if( ep->gx != MMDL_GetGridPosX( mmdl ) ||
+        ep->gz != MMDL_GetGridPosZ( mmdl ) ||
+        ep->height != MMDL_GetVectorPosY( mmdl )){
+      return NULL;
+    }
+  }
+  //イベント分岐
+  rnd = GFUser_GetPublicRand0( 1000 );
+  if( ep->type == EFFENC_TYPE_BRIDGE ){
+    if( rnd < 200 ){
+      event = FIELD_ENCOUNT_CheckEncount( enc, ENC_TYPE_EFFECT );
+    }else{
+      event = FIELD_ENCOUNT_CheckEncount( enc, ENC_TYPE_FORCE );
+    } 
+  }else if( ep->type == EFFENC_TYPE_CAVE ){
+    if( rnd < 400){
+      event = FIELD_ENCOUNT_CheckEncount( enc, ENC_TYPE_EFFECT );
+    }else{
+      event = FIELD_ENCOUNT_CheckEncount( enc, ENC_TYPE_FORCE );
+    }
+  }else{
+    if( rnd < 800 ){
+      event = FIELD_ENCOUNT_CheckEncount( enc, ENC_TYPE_EFFECT );
+    }else{
+      event = FIELD_ENCOUNT_CheckEncount( enc, ENC_TYPE_FORCE );
+    }
+  }
+  GF_ASSERT( event );
+
+  ep->push_cancel_f = TRUE;
+  return event;
+}
+
+/*
  *  @brief  エフェクトエンカウントプッシュ
  */
 static void effect_EffectPush( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
@@ -221,10 +275,13 @@ static BOOL effenc_CheckWalkCt( ENCOUNT_WORK* ewk, EFFECT_ENCOUNT* eff_wk )
   }
 
   if( ewk_eff->walk_ct >= eff_wk->walk_ct_interval){
-    ewk_eff->walk_ct = 0;
     return TRUE;
   }
   return FALSE;
+}
+static void effenc_WalkCtClear( ENCOUNT_WORK* ewk )
+{
+  ewk->effect_encount.walk_ct = 0;
 }
 
 /*
@@ -364,6 +421,9 @@ static void effect_EffectSetUp( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
   ep->type = attr->type;
   ep->zone_id = FIELDMAP_GetZoneID( enc->fwork );
   ep->valid_f = TRUE;
+
+  //カウンタークリア
+  effenc_WalkCtClear( ewk );
 
   effect_AddFieldEffect( eff_wk, ep );
 }

@@ -43,3 +43,8 @@ extern void EFFECT_ENC_CheckEffectEncountStart( FIELD_ENCOUNT* enc );
  */
 extern void EFFECT_ENC_EffectDelete( FIELD_ENCOUNT* enc );
 
+/*
+ *  @brief  エフェクトエンカウント　イベント侵入起動チェック
+ */
+extern GMEVENT* EFFECT_ENC_CheckEventApproch( FIELD_ENCOUNT* enc );
+

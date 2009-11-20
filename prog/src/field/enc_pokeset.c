@@ -135,6 +135,9 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
     outEfp->enc_force_f = TRUE;
     outEfp->enc_type = ENC_TYPE_NORMAL;  //強制フラグを立てたら、後はNormalタイプでエミュレート
   }
+  if( outEfp->enc_type == ENC_TYPE_EFFECT ){
+    outEfp->enc_force_f = TRUE;
+  }
 
   outEfp->companion_f = FALSE;
   outEfp->enc_double_f = FALSE;
