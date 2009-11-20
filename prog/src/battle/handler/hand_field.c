@@ -220,7 +220,7 @@ static void handler_fld_DoroAsobi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 }
 //--------------------------------------------------------------------------------------
 /**
- *  Ç«ÇÎÇ†ÇªÇ—
+ *  ÉèÉìÉ_Å[ÉãÅ[ÉÄ
  */
 //--------------------------------------------------------------------------------------
 static BTL_EVENT_FACTOR* ADD_Fld_WonderRoom( u16 pri, BtlFieldEffect effect, u8 subParam )

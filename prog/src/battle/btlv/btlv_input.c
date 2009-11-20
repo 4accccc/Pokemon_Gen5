@@ -280,25 +280,25 @@ enum
   BTLV_INPUT_BALLGAUGE_MINE_Y_CLOSE   = ( 8 * 17 ),                 //コマンド選択時
   BTLV_INPUT_BALLGAUGE_MINE_Y_OPEN    = ( 8 * 17 ),                 //コマンド選択時以外
 
-  BALL_GAUGE_MOVE_VALUE               = 4,  //ボールゲージ移動量 
+  BALL_GAUGE_MOVE_VALUE               = 4,  //ボールゲージ移動量
 };
 
 typedef enum
-{ 
+{
   BALL_GAUGE_TYPE_MINE = 0,
   BALL_GAUGE_TYPE_ENEMY,
   BALL_GAUGE_TYPE_MAX,
 }BALL_GAUGE_TYPE;
 
 typedef enum
-{ 
+{
   BALL_GAUGE_MOVE_OPEN = 0,
   BALL_GAUGE_MOVE_CLOSE,
 }BALL_GAUGE_MOVE_DIR;
 
 //カーソルOBJ定義
 enum
-{ 
+{
   BTLV_INPUT_CURSOR_LU = 0,
   BTLV_INPUT_CURSOR_RU,
   BTLV_INPUT_CURSOR_LD,
@@ -315,7 +315,7 @@ enum
 
 //ポケモンアイコン定義
 enum
-{ 
+{
   BTLV_INPUT_POKE_ICON_SINGLE_X = 128,
   BTLV_INPUT_POKE_ICON_SINGLE_Y = 112,  //128 + 12,
   BTLV_INPUT_POKE_ICON_DOUBLE_X1 = 128 - 24,
@@ -324,15 +324,15 @@ enum
   BTLV_INPUT_POKE_ICON_DOUBLE_Y2 = BTLV_INPUT_POKE_ICON_SINGLE_Y,
   BTLV_INPUT_POKE_ICON_TRIPLE_X1 = 128 - 40,
   BTLV_INPUT_POKE_ICON_TRIPLE_Y1 = BTLV_INPUT_POKE_ICON_SINGLE_Y,
-  BTLV_INPUT_POKE_ICON_TRIPLE_X2 = BTLV_INPUT_POKE_ICON_SINGLE_X, 
-  BTLV_INPUT_POKE_ICON_TRIPLE_Y2 = BTLV_INPUT_POKE_ICON_SINGLE_Y, 
+  BTLV_INPUT_POKE_ICON_TRIPLE_X2 = BTLV_INPUT_POKE_ICON_SINGLE_X,
+  BTLV_INPUT_POKE_ICON_TRIPLE_Y2 = BTLV_INPUT_POKE_ICON_SINGLE_Y,
   BTLV_INPUT_POKE_ICON_TRIPLE_X3 = 128 + 40,
   BTLV_INPUT_POKE_ICON_TRIPLE_Y3 = BTLV_INPUT_POKE_ICON_SINGLE_Y,
 };
 
 //天候アイコン定義
 enum
-{ 
+{
   BTLV_INPUT_WEATHER_ICON_MAX = 2,
 
   BTLV_INPUT_WEATHER_BASE = 14,   ///< 天候アイコン土台
@@ -351,20 +351,20 @@ enum
 };
 
 enum
-{ 
+{
   BTLV_INPUT_FADE_OUT = 1,
   BTLV_INPUT_FADE_IN,
 };
 
 enum
-{ 
+{
   BTLV_INPUT_YESNO_MSG_X  = 128,
   BTLV_INPUT_YES_MSG_Y    = 16,
   BTLV_INPUT_NO_MSG_Y     = 64,
 };
 
 enum
-{ 
+{
   ROTATE_MONSNAME_X0 = 64,
   ROTATE_MONSNAME_X1 = 192,
   ROTATE_MONSNAME_X2 = 128,
@@ -392,7 +392,7 @@ static  const GFL_CLACTPOS pokeicon_pos[ BTLV_INPUT_POKEICON_MAX ] =
   { ROTATE_POKEICON_X2, ROTATE_POKEICON_Y2 },
 };
 
-static  const int rotate_pos_table[][ BTLV_INPUT_POKEICON_MAX ] = { 
+static  const int rotate_pos_table[][ BTLV_INPUT_POKEICON_MAX ] = {
   { 0, 1, 2 },
   { 2, 0, 1 },
   { 1, 2, 0 },
@@ -422,6 +422,7 @@ typedef struct
 
 struct _BTLV_INPUT_WORK
 {
+  const BTL_CLIENT*     clientWork;
   GFL_TCBSYS*           tcbsys;
   void*                 tcbwork;
   ARCHANDLE*            handle;
@@ -633,24 +634,24 @@ static  inline  void  SePlaySelect( void );
  *  @retval システム管理構造体のポインタ
  */
 //============================================================================================
-BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
+BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, const BTL_CLIENT* clientWork, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
 {
   BTLV_INPUT_WORK *biw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_INPUT_WORK ) );
 
   biw->heapID = heapID;
+  biw->clientWork = clientWork;
 
   biw->tcbwork  = GFL_HEAP_AllocClearMemory( biw->heapID, GFL_TCB_CalcSystemWorkSize( BTLV_INPUT_TCB_MAX ) );
   biw->tcbsys   = GFL_TCB_Init( BTLV_INPUT_TCB_MAX, biw->tcbwork );
 
   biw->font = font;
-
   biw->type = type;
 
   biw->cursor_mode = cursor_flag;
 
   biw->old_cursor_pos = CURSOR_NOMOVE;
 
-  { 
+  {
     int i;
 
     biw->objcharID        = GFL_CLGRP_REGISTER_FAILED;
@@ -663,11 +664,11 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, GFL_FONT* font, u8* cur
     biw->wazatype_plttID  = GFL_CLGRP_REGISTER_FAILED;
     biw->wazatype_cellID  = GFL_CLGRP_REGISTER_FAILED;
     for( i = 0 ; i < BTLV_INPUT_POKEICON_MAX ; i++ )
-    { 
+    {
       biw->pokeicon_charID[ i ] = GFL_CLGRP_REGISTER_FAILED;
     }
     for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
-    { 
+    {
       biw->wazatype_charID[ i ] = GFL_CLGRP_REGISTER_FAILED;
     }
   }
@@ -791,27 +792,27 @@ void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
   BTLV_INPUT_DeleteWeatherIcon( biw );
 
   if( biw->objcharID != GFL_CLGRP_REGISTER_FAILED )
-  { 
+  {
     GFL_CLGRP_CGR_Release( biw->objcharID );
     biw->objcharID = GFL_CLGRP_REGISTER_FAILED;
   }
   if( biw->objplttID != GFL_CLGRP_REGISTER_FAILED )
-  { 
+  {
     GFL_CLGRP_PLTT_Release( biw->objplttID );
     biw->objplttID = GFL_CLGRP_REGISTER_FAILED;
   }
   if( biw->objcellID != GFL_CLGRP_REGISTER_FAILED )
-  { 
+  {
     GFL_CLGRP_CELLANIM_Release( biw->objcellID );
     biw->objcellID = GFL_CLGRP_REGISTER_FAILED;
   }
   if( biw->cur_charID != GFL_CLGRP_REGISTER_FAILED )
-  { 
+  {
     GFL_CLGRP_CGR_Release( biw->cur_charID );
     biw->cur_charID = GFL_CLGRP_REGISTER_FAILED;
   }
   if( biw->cur_cellID != GFL_CLGRP_REGISTER_FAILED )
-  { 
+  {
     GFL_CLGRP_CELLANIM_Release( biw->cur_cellID );
     biw->cur_cellID = GFL_CLGRP_REGISTER_FAILED;
   }
@@ -822,7 +823,7 @@ void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
     for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
     {
       if( biw->wazatype_charID[ i ] != GFL_CLGRP_REGISTER_FAILED )
-      { 
+      {
         GFL_CLGRP_CGR_Release( biw->wazatype_charID[ i ] );
         biw->wazatype_charID[ i ] = GFL_CLGRP_REGISTER_FAILED;
       }
@@ -830,12 +831,12 @@ void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
   }
 
   if( biw->wazatype_cellID != GFL_CLGRP_REGISTER_FAILED )
-  { 
+  {
     GFL_CLGRP_CELLANIM_Release( biw->wazatype_cellID );
     biw->wazatype_cellID = GFL_CLGRP_REGISTER_FAILED;
   }
   if( biw->wazatype_plttID  != GFL_CLGRP_REGISTER_FAILED )
-  { 
+  {
     GFL_CLGRP_PLTT_Release( biw->wazatype_plttID );
     biw->wazatype_plttID = GFL_CLGRP_REGISTER_FAILED;
   }
@@ -902,7 +903,7 @@ void BTLV_INPUT_FreeFrame( void )
  */
 //============================================================================================
 void BTLV_INPUT_SetFadeOut( BTLV_INPUT_WORK* biw )
-{ 
+{
   TCB_FADE_ACT* tfa = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_FADE_ACT ) );
 
   PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_ALL, 0xffff, 1, 0, 16, 0, biw->tcbsys );
@@ -918,7 +919,7 @@ void BTLV_INPUT_SetFadeOut( BTLV_INPUT_WORK* biw )
  */
 //============================================================================================
 void BTLV_INPUT_SetFadeIn( BTLV_INPUT_WORK* biw )
-{ 
+{
   TCB_FADE_ACT* tfa = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_FADE_ACT ) );
 
   BTLV_INPUT_InitBG( biw );
@@ -940,7 +941,7 @@ void BTLV_INPUT_SetFadeIn( BTLV_INPUT_WORK* biw )
  */
 //============================================================================================
 BOOL BTLV_INPUT_CheckFadeExecute( BTLV_INPUT_WORK* biw )
-{ 
+{
   return ( biw->fade_flag != 0 );
 }
 
@@ -1020,16 +1021,16 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       {
         BTLV_INPUT_CreateBallGauge( biw, bicp, BALL_GAUGE_TYPE_MINE );
         if( bicp->trainer_flag )
-        { 
+        {
           BTLV_INPUT_CreateBallGauge( biw, bicp, BALL_GAUGE_TYPE_ENEMY );
         }
         biw->trainer_flag = bicp->trainer_flag;
         if( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE )
-        { 
+        {
           GFL_TCB_AddTask( biw->tcbsys, TCB_TransformRotate2Command, ttw, 1 );
         }
         else
-        { 
+        {
           GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2Command, ttw, 1 );
         }
       }
@@ -1081,7 +1082,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
     }
     break;
   case BTLV_INPUT_SCRTYPE_ROTATE:
-    { 
+    {
       TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
       BTLV_INPUT_ROTATE_PARAM* birp = ( BTLV_INPUT_ROTATE_PARAM * )param;
       int i;
@@ -1091,7 +1092,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       biw->rotate_scr = bird[ biw->before_select_dir ].init_scr;
 
       for( i = 0 ; i < BTLV_INPUT_POKEICON_MAX ; i++ )
-      { 
+      {
         biw->rotate_pp[ i ] = birp->pp[ i ];
         biw->button_exist[ i ] = button_exist_table[ biw->rotate_scr ][ i ];
       }
@@ -1131,24 +1132,24 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl,
 
   //ローテーション選択は、別判定をする
   if( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE )
-  { 
+  {
     hit = GFL_UI_TP_HitTrg( RotateTouchData );
     hit = BTLV_INPUT_CheckKey( biw, RotateTouchData, RotateKeyData[ biw->rotate_scr ], hit );
     if( hit != GFL_UI_TP_HIT_NONE )
-    { 
+    {
       if( biw->button_exist[ hit ] == FALSE )
-      { 
+      {
         hit = GFL_UI_TP_HIT_NONE;
       }
       else
-      { 
+      {
         //けっていを選択
         if( hit == 2 )
-        { 
+        {
           hit = biw->rotate_flag + 1;
         }
         else
-        { 
+        {
           SetupRotateAction( biw, hit );
           hit = GFL_UI_TP_HIT_NONE;
         }
@@ -1241,19 +1242,19 @@ static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
   switch( ttw->seq_no ){
   case 0:
     if( ttw->biw->center_button_type == BTLV_INPUT_CENTER_BUTTON_ESCAPE )
-    { 
+    {
       GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
                                        GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
     }
     else
-    { 
+    {
       if( ( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE ) && ( ttw->pos != BTLV_MCSS_POS_C ) )
-      { 
+      {
         GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0e_NSCR,
                                          GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
       }
       else
-      { 
+      {
         GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0d_NSCR,
                                          GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
       }
@@ -1303,7 +1304,7 @@ static  void  TCB_TransformCommand2Waza( GFL_TCB* tcb, void* work )
                                       GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
     }
     else
-    { 
+    {
      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
                                       GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
     }
@@ -1346,19 +1347,19 @@ static  void  TCB_TransformWaza2Command( GFL_TCB* tcb, void* work )
   switch( ttw->seq_no ){
   case 0:
     if( ttw->biw->center_button_type == BTLV_INPUT_CENTER_BUTTON_ESCAPE )
-    { 
+    {
       GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
                                        GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
     }
     else
-    { 
+    {
       if( ( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE ) && ( ttw->pos != BTLV_MCSS_POS_C ) )
-      { 
+      {
         GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0e_NSCR,
                                          GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
       }
       else
-      { 
+      {
         GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0d_NSCR,
                                          GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
       }
@@ -1396,19 +1397,19 @@ static  void  TCB_TransformRotate2Command( GFL_TCB* tcb, void* work )
   switch( ttw->seq_no ){
   case 0:
     if( ttw->biw->center_button_type == BTLV_INPUT_CENTER_BUTTON_ESCAPE )
-    { 
+    {
       GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
                                        GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
     }
     else
-    { 
+    {
       if( ( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE ) && ( ttw->pos != BTLV_MCSS_POS_C ) )
-      { 
+      {
         GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0e_NSCR,
                                          GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
       }
       else
-      { 
+      {
         GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0d_NSCR,
                                          GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
       }
@@ -1527,7 +1528,7 @@ static  void  TCB_TransformDir2Waza( GFL_TCB* tcb, void* work )
                                      GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
   }
   else
-  { 
+  {
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
                                      GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
   }
@@ -1617,7 +1618,7 @@ static  void  TCB_TransformWaza2Standby( GFL_TCB* tcb, void* work )
  */
 //============================================================================================
 static  void  TCB_TransformStandby2YesNo( GFL_TCB* tcb, void* work )
-{ 
+{
   TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
 
   switch( ttw->seq_no ){
@@ -1643,7 +1644,7 @@ static  void  TCB_TransformStandby2YesNo( GFL_TCB* tcb, void* work )
     break;
   case 2:
     if( ttw->biw->tcb_execute_count == 0 )
-    { 
+    {
       GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
       GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
@@ -1665,7 +1666,7 @@ static  void  TCB_TransformStandby2YesNo( GFL_TCB* tcb, void* work )
  */
 //============================================================================================
 static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
-{ 
+{
   TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
 
   switch( ttw->seq_no ){
@@ -1694,13 +1695,13 @@ static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
     break;
   case 2:
     if( ttw->biw->tcb_execute_count == 0 )
-    { 
+    {
       int i;
 
       for( i = 0 ; i < BTLV_INPUT_POKEICON_MAX ; i++ )
-      { 
+      {
         if( ttw->biw->pokeicon_wk[ i ].clwk )
-        { 
+        {
           GFL_CLACT_WK_SetDrawEnable( ttw->biw->pokeicon_wk[ i ].clwk, TRUE );
         }
       }
@@ -1996,7 +1997,7 @@ static  void  TCB_ButtonAnime( GFL_TCB* tcb, void* work )
  */
 //============================================================================================
 static  void  SetupBallGaugeMove( BTLV_INPUT_WORK* biw, BALL_GAUGE_MOVE_DIR dir )
-{ 
+{
   TCB_BALL_GAUGE_MOVE* tbgm = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_BALL_GAUGE_MOVE ) );
 
   tbgm->biw           = biw;
@@ -2011,14 +2012,14 @@ static  void  SetupBallGaugeMove( BTLV_INPUT_WORK* biw, BALL_GAUGE_MOVE_DIR dir 
  */
 //============================================================================================
 static  void  TCB_BallGaugeMove( GFL_TCB* tcb, void* work )
-{ 
+{
   TCB_BALL_GAUGE_MOVE*  tbgm = ( TCB_BALL_GAUGE_MOVE * )work;
   BTLV_INPUT_CLWK*      bib;
   GFL_CLACTPOS          pos;
   int                   i, type;
   BOOL                  flag = FALSE;
 
-  static  const int ball_gauge_move_param[ 2 ][ 2 ] = { 
+  static  const int ball_gauge_move_param[ 2 ][ 2 ] = {
     //MINE
     { BTLV_INPUT_BALLGAUGE_MINE_Y_OPEN, BTLV_INPUT_BALLGAUGE_MINE_Y_CLOSE },
     //ENEMY
@@ -2026,32 +2027,32 @@ static  void  TCB_BallGaugeMove( GFL_TCB* tcb, void* work )
   };
 
   for( type = BALL_GAUGE_TYPE_MINE ; type < BALL_GAUGE_TYPE_MAX ; type++ )
-  { 
+  {
     int move_pos = ball_gauge_move_param[ type ][ tbgm->move_dir ];
 
     if( type == BALL_GAUGE_TYPE_MINE )
-    { 
+    {
       bib = tbgm->biw->ballgauge_mine;
     }
     else
-    { 
+    {
       if( tbgm->biw->trainer_flag == 0 )
-      { 
+      {
         break;
       }
       bib = tbgm->biw->ballgauge_enemy;
     }
     for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
-    { 
+    {
       GF_ASSERT( bib[ i ].clwk != NULL );
       GFL_CLACT_WK_GetPos( bib[ i ].clwk, &pos, CLSYS_DEFREND_SUB );
       if( pos.y > move_pos )
-      { 
+      {
         pos.y -= BALL_GAUGE_MOVE_VALUE;
         flag = TRUE;
       }
       else if( pos.y < move_pos )
-      { 
+      {
         pos.y += BALL_GAUGE_MOVE_VALUE;
         flag = TRUE;
       }
@@ -2059,7 +2060,7 @@ static  void  TCB_BallGaugeMove( GFL_TCB* tcb, void* work )
     }
   }
   if( flag == FALSE )
-  { 
+  {
     GFL_HEAP_FreeMemory( tbgm );
     GFL_TCB_DeleteTask( tcb );
   }
@@ -2071,13 +2072,13 @@ static  void  TCB_BallGaugeMove( GFL_TCB* tcb, void* work )
  */
 //============================================================================================
 static  void  TCB_Fade( GFL_TCB* tcb, void* work )
-{ 
+{
   TCB_FADE_ACT* tfa = ( TCB_FADE_ACT* )work;
 
   if( ( PaletteFadeCheck( BTLV_EFFECT_GetPfd() ) == FALSE ) && ( GFL_FADE_CheckFade() == FALSE ) )
-  { 
+  {
     if( tfa->biw->fade_flag == BTLV_INPUT_FADE_OUT )
-    { 
+    {
       BTLV_INPUT_ExitBG( tfa->biw );
     }
     tfa->biw->fade_flag = 0;
@@ -2092,7 +2093,7 @@ static  void  TCB_Fade( GFL_TCB* tcb, void* work )
  */
 //============================================================================================
 static  void  TCB_WeatherIconMove( GFL_TCB* tcb, void* work )
-{ 
+{
   TCB_WEATHER_ICON_MOVE*  twim = ( TCB_WEATHER_ICON_MOVE* )work;
   GFL_CLACTPOS  pos;
 
@@ -2104,7 +2105,7 @@ static  void  TCB_WeatherIconMove( GFL_TCB* tcb, void* work )
   GFL_CLACT_WK_SetPos( twim->biw->weather_wk[ 1 ], &pos, CLSYS_DEFREND_SUB );
 
   if( pos.x == BTLV_INPUT_WEATHER_X2 )
-  { 
+  {
     GFL_HEAP_FreeMemory( twim );
     GFL_TCB_DeleteTask( tcb );
   }
@@ -2119,7 +2120,7 @@ static  void  TCB_WeatherIconMove( GFL_TCB* tcb, void* work )
  */
 //============================================================================================
 static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int hit )
-{ 
+{
   int i, j;
   int old_rotate_pos = biw->rotate_flag;
   TCB_ROTATE_ACTION*  tra = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_ROTATE_ACTION ) );
@@ -2127,23 +2128,23 @@ static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int hit )
   BTLV_INPUT_ClearScreen( biw );
 
   if( biw->rotate_flag )
-  { 
+  {
     biw->rotate_flag = 0;
     biw->rotate_scr = bird[ biw->before_select_dir ].init_scr;
     if( ( hit == 0 ) && ( ( biw->rotate_scr == ROTATE_SCR_C ) || ( biw->rotate_scr == ROTATE_SCR_C_ALL ) ) )
-    { 
+    {
       biw->cursor_pos = 1;
     }
   }
   else
-  { 
+  {
     if( hit )
-    { 
+    {
       biw->rotate_flag = 1;
       biw->rotate_scr = bird[ biw->before_select_dir ].right_scr;
     }
     else
-    { 
+    {
       biw->rotate_flag = 2;
       biw->rotate_scr = bird[ biw->before_select_dir ].left_scr;
     }
@@ -2153,7 +2154,7 @@ static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int hit )
                  ROTATE_SCROLL_SPEED, ROTATE_SCROLL_COUNT );
 
   for( i = 0 ; i < BTLV_INPUT_POKEICON_MAX ; i++ )
-  { 
+  {
     int now_pos = rotate_pos_table[ old_rotate_pos ][ i ];
     int end_pos = rotate_pos_table[ biw->rotate_flag ][ i ];
 
@@ -2165,7 +2166,7 @@ static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int hit )
     tra->end_pos[ end_pos ].z = 0;
   }
   for( i = 0 ; i < BTLV_INPUT_POKEICON_MAX ; i++ )
-  { 
+  {
     BTLV_EFFTOOL_CalcMoveVector( &tra->now_pos[ i ], &tra->end_pos[ i ], &tra->vector[ i ], ROTATE_FRAME << FX32_SHIFT );
   }
 
@@ -2182,19 +2183,19 @@ static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int hit )
  */
 //============================================================================================
 static  void  TCB_RotateAction( GFL_TCB* tcb, void* work )
-{ 
+{
   TCB_ROTATE_ACTION*  tra = ( TCB_ROTATE_ACTION* )work;
 
-  switch( tra->seq_no ){ 
+  switch( tra->seq_no ){
   case 0:
-    { 
+    {
       int           i;
       GFL_CLACTPOS  pos;
 
       for( i = 0 ; i < BTLV_INPUT_POKEICON_MAX ; i++ )
-      { 
+      {
         if( tra->biw->pokeicon_wk[ i ].clwk )
-        { 
+        {
           BTLV_EFFTOOL_CheckVecMove( &tra->now_pos[ i ], &tra->vector[ i ], &tra->end_pos[ i ], NULL );
           pos.x = tra->now_pos[ i ].x >> FX32_SHIFT;
           pos.y = tra->now_pos[ i ].y >> FX32_SHIFT;
@@ -2203,18 +2204,18 @@ static  void  TCB_RotateAction( GFL_TCB* tcb, void* work )
       }
       tra->frame--;
       if( tra->frame == 0 )
-      { 
+      {
         tra->seq_no++;
       }
     }
     break;
   case 1:
     if( tra->biw->tcb_execute_flag == 1 )
-    { 
+    {
       int i;
 
       for( i = 0 ; i < BTLV_INPUT_POKEICON_MAX ; i++ )
-      { 
+      {
         tra->biw->button_exist[ i ] = button_exist_table[ tra->biw->rotate_scr ][ i ];
       }
       BTLV_INPUT_CreateRotateScreen( tra->biw );
@@ -2314,7 +2315,7 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
         NNSG2dCharacterData *char_data;
         int waza_type;
         static  const ARCDATID  waza_type_pltt[]=
-        { 
+        {
           NARC_battgra_wb_waza_w_01_NCLR,
           NARC_battgra_wb_waza_w_07_NCLR,
           NARC_battgra_wb_waza_w_10_NCLR,
@@ -2381,10 +2382,10 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
       biw->button_exist[ i ] = ( biwp->pp[ i ] != 0 );  //押せるボタンかどうかチェック
     }
     else
-    { 
+    {
       datID = NARC_battgra_wb_waza_w_00_NCLR;
     }
-    { 
+    {
       NNSG2dPaletteData* palData;
       void* dat = GFL_ARC_UTIL_LoadPalette( ARCID_BATTGRA, datID, &palData, biw->heapID );
 
@@ -2397,7 +2398,7 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
   biw->button_exist[ i ] = TRUE;  //押せるボタンかどうかチェック
   //3vs3のときは移動ボタンも存在するので、2個分押せるボタンにする
   if( biw->type == BTLV_INPUT_TYPE_TRIPLE )
-  { 
+  {
     biw->button_exist[ i + 1 ] = TRUE;  //押せるボタンかどうかチェック
   }
 
@@ -2466,13 +2467,13 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
   GFL_STR_DeleteBuffer( monsname_p );
 
   //選択枠表示
-  { 
+  {
     int       pos = ( bisp->pos - BTLV_MCSS_POS_A ) / 2;
-    static  const ARCDATID  datID[ 2 ][ 3 ][ 14 ] = {  
+    static  const ARCDATID  datID[ 2 ][ 3 ][ 14 ] = {
       //BUTTON_TYPE_DIR_4
-      { 
+      {
         //BTLV_MCSS_POS_A
-        { 
+        {
           NARC_battgra_wb_btl_sel_normal_l_NSCR,  ///< 自分以外１体（選択）
           NARC_battgra_wb_btl_sel_nomine_l_NSCR,  ///< 自分以外全て
           NARC_battgra_wb_btl_sel_enemy_sel_NSCR, ///< 相手側１体（選択）
@@ -2489,7 +2490,7 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
           NARC_battgra_wb_btl_sel_normal_l_NSCR,  ///< 自分以外１体（遠距離）
         },
         //BTLV_MCSS_POS_C
-        { 
+        {
           NARC_battgra_wb_btl_sel_normal_r_NSCR,  ///< 自分以外１体（選択）
           NARC_battgra_wb_btl_sel_nomine_r_NSCR,  ///< 自分以外全て
           NARC_battgra_wb_btl_sel_enemy_sel_NSCR, ///< 相手側１体（選択）
@@ -2506,7 +2507,7 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
           NARC_battgra_wb_btl_sel_normal_r_NSCR,  ///< 自分以外１体（遠距離）
         },
         //BTLV_MCSS_POS_E
-        { 
+        {
           0xffffffff,                             ///< 自分以外１体（選択）
           0xffffffff,                             ///< 自分以外全て
           0xffffffff,                             ///< 相手側１体（選択）
@@ -2524,9 +2525,9 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
         },
       },
       //BUTTON_TYPE_DIR_6
-      { 
+      {
         //BTLV_MCSS_POS_A
-        { 
+        {
           NARC_battgra_wb_btl_sel3_normal_l_NSCR,     ///< 自分以外１体（選択）
           NARC_battgra_wb_btl_sel3_nomine_l_NSCR,     ///< 自分以外全て
           NARC_battgra_wb_btl_sel3_enemy_sel_l_NSCR,  ///< 相手側１体（選択）
@@ -2543,7 +2544,7 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
           NARC_battgra_wb_btl_sel3_long_l_NSCR,       ///< 自分以外１体（遠距離）
         },
         //BTLV_MCSS_POS_C
-        { 
+        {
           NARC_battgra_wb_btl_sel3_normal_c_NSCR,     ///< 自分以外１体（選択）
           NARC_battgra_wb_btl_sel3_nomine_c_NSCR,     ///< 自分以外全て
           NARC_battgra_wb_btl_sel3_enemy_sel_c_NSCR,  ///< 相手側１体（選択）
@@ -2560,7 +2561,7 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
           NARC_battgra_wb_btl_sel3_normal_c_NSCR,     ///< 自分以外１体（遠距離）
         },
         //BTLV_MCSS_POS_E
-        { 
+        {
           NARC_battgra_wb_btl_sel3_normal_r_NSCR,     ///< 自分以外１体（選択）
           NARC_battgra_wb_btl_sel3_nomine_r_NSCR,     ///< 自分以外全て
           NARC_battgra_wb_btl_sel3_enemy_sel_r_NSCR,  ///< 相手側１体（選択）
@@ -2588,7 +2589,7 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
  */
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_CreateYesNoScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT_YESNO_PARAM *biyp )
-{ 
+{
   GFL_MSGDATA*  msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, biyp->msg_datID, GFL_HEAP_LOWID(biw->heapID) );
   STRBUF*       src;
   int           dot_len, char_len;
@@ -2619,7 +2620,7 @@ static  void  BTLV_INPUT_CreateYesNoScreen( BTLV_INPUT_WORK* biw, const BTLV_INP
  */
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_CreateRotateScreen( BTLV_INPUT_WORK* biw )
-{ 
+{
   STRBUF *monsname_p;
   STRBUF *monsname_src;
   WORDSET *wordset;
@@ -2636,10 +2637,10 @@ static  void  BTLV_INPUT_CreateRotateScreen( BTLV_INPUT_WORK* biw )
   wordset = WORDSET_Create( GFL_HEAP_LOWID( biw->heapID ) );
 
   for( i = 0 ; i < BTLV_INPUT_POKEICON_MAX ; i++ )
-  { 
+  {
     int pos = rotate_pos_table[ biw->rotate_flag ][ i ];
     if( biw->rotate_pp[ pos ] )
-    { 
+    {
       int sex = PP_Get( biw->rotate_pp[ pos ], ID_PARA_sex, NULL );
       //BMPWIN：ポケモン名
       monsname_src = GFL_MSG_CreateString( biw->msg, BI_TargetPokemonMaleMsg + sex );
@@ -2666,7 +2667,7 @@ static  void  BTLV_INPUT_CreateRotateScreen( BTLV_INPUT_WORK* biw )
  */
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_CreateRotatePokeIcon( BTLV_INPUT_WORK* biw )
-{ 
+{
   int i;
   ARCHANDLE*  hdl = GFL_ARC_OpenDataHandle( ARCID_POKEICON, biw->heapID );
 
@@ -2678,12 +2679,12 @@ static  void  BTLV_INPUT_CreateRotatePokeIcon( BTLV_INPUT_WORK* biw )
                            GFL_CLGRP_PLTT_GetAddr( biw->pokeicon_plttID, CLSYS_DRAW_SUB ) / 2, 0x20 * 3 );
 
   for( i = 0 ; i < BTLV_INPUT_POKEICON_MAX ; i++ )
-  { 
+  {
     if( biw->rotate_pp[ i ] )
-    { 
+    {
       int mons_no = PP_Get( biw->rotate_pp[ i ], ID_PARA_monsno, NULL );
       int form_no = PP_Get( biw->rotate_pp[ i ], ID_PARA_form_no, NULL );
-      biw->pokeicon_charID[ i ] = GFL_CLGRP_CGR_Register( hdl, 
+      biw->pokeicon_charID[ i ] = GFL_CLGRP_CGR_Register( hdl,
                                                           POKEICON_GetCgxArcIndexByMonsNumber( mons_no,
                                                                                                form_no,
                                                                                                FALSE ),
@@ -2725,7 +2726,7 @@ static  void  BTLV_INPUT_ClearScreen( BTLV_INPUT_WORK* biw )
   }
 
   //攻撃対象選択
-	GFL_BG_FillScreen( GFL_BG_FRAME0_S, 0, 32, 2, 32, 32, 0 );
+  GFL_BG_FillScreen( GFL_BG_FRAME0_S, 0, 32, 2, 32, 32, 0 );
 }
 
 //--------------------------------------------------------------
@@ -2779,7 +2780,7 @@ static PRINTSYS_LSB PP_FontColorGet(int pp, int pp_max)
  */
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAND_PARAM* bicp )
-{ 
+{
     ARCHANDLE*  hdl;
     int         i;
     int         max = ( biw->type == BTLV_INPUT_TYPE_ROTATION ) ? 2 : biw->type + 1;
@@ -2796,7 +2797,7 @@ static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAN
 
     //ウインドウマスクでアイコンを暗くする実験
     if( max > 1 )
-    { 
+    {
       GXS_SetVisibleWnd( GX_WNDMASK_W0 | GX_WNDMASK_W1 );
       G2S_SetWnd0InsidePlane( GX_WND_PLANEMASK_ALL, TRUE );
       G2S_SetWnd1InsidePlane( GX_WND_PLANEMASK_ALL, TRUE );
@@ -2806,35 +2807,35 @@ static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAN
 
     for( i = 0; i < max ; i++ ){
       if( bicp->mons_no[ i ] )
-      { 
-        static  const GFL_CLACTPOS pos[ 4 ][ 3 ] = {  
+      {
+        static  const GFL_CLACTPOS pos[ 4 ][ 3 ] = {
           //SINGLE
-          { 
+          {
             { BTLV_INPUT_POKE_ICON_SINGLE_X, BTLV_INPUT_POKE_ICON_SINGLE_Y },
             { -1, -1 },
             { -1, -1 },
           },
           //DOUBLE
-          { 
+          {
             { BTLV_INPUT_POKE_ICON_DOUBLE_X1, BTLV_INPUT_POKE_ICON_DOUBLE_Y1 },
             { BTLV_INPUT_POKE_ICON_DOUBLE_X2, BTLV_INPUT_POKE_ICON_DOUBLE_Y2 },
             { -1, -1 },
           },
           //TRIPLE
-          { 
+          {
             { BTLV_INPUT_POKE_ICON_TRIPLE_X1, BTLV_INPUT_POKE_ICON_TRIPLE_Y1 },
             { BTLV_INPUT_POKE_ICON_TRIPLE_X2, BTLV_INPUT_POKE_ICON_TRIPLE_Y2 },
             { BTLV_INPUT_POKE_ICON_TRIPLE_X3, BTLV_INPUT_POKE_ICON_TRIPLE_Y3 },
           },
           //ROTATION
-          { 
+          {
             { BTLV_INPUT_POKE_ICON_DOUBLE_X1, BTLV_INPUT_POKE_ICON_DOUBLE_Y1 },
             { BTLV_INPUT_POKE_ICON_DOUBLE_X2, BTLV_INPUT_POKE_ICON_DOUBLE_Y2 },
             { -1, -1 },
           },
         };
 
-        biw->pokeicon_charID[ i ] = GFL_CLGRP_CGR_Register( hdl, 
+        biw->pokeicon_charID[ i ] = GFL_CLGRP_CGR_Register( hdl,
                                                             POKEICON_GetCgxArcIndexByMonsNumber( bicp->mons_no[ i ],
                                                                                                  bicp->form_no[ i ],
                                                                                                  FALSE ),
@@ -2845,21 +2846,21 @@ static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAN
         GFL_CLACT_WK_SetPos( biw->pokeicon_wk[ i ].clwk, &pos[ biw->type ][ i ], CLSYS_DEFREND_SUB );
         GFL_CLACT_WK_SetAutoAnmFlag( biw->pokeicon_wk[ i ].clwk, TRUE );
         if( bicp->pos == i )
-        {  
+        {
           GFL_CLACT_WK_SetAnmSeq( biw->pokeicon_wk[ i ].clwk, 1 );
         }
         else
-        { 
+        {
           if( mask == 0 )
-          { 
-            G2S_SetWnd0Position( pos[ biw->type ][ i ].x - 16, pos[ biw->type ][ i ].y - 16, 
-                                 pos[ biw->type ][ i ].x + 16, pos[ biw->type ][ i ].y + 16 ); 
+          {
+            G2S_SetWnd0Position( pos[ biw->type ][ i ].x - 16, pos[ biw->type ][ i ].y - 16,
+                                 pos[ biw->type ][ i ].x + 16, pos[ biw->type ][ i ].y + 16 );
             mask++;
           }
           else
-          { 
-            G2S_SetWnd1Position( pos[ biw->type ][ i ].x - 16, pos[ biw->type ][ i ].y - 16, 
-                                 pos[ biw->type ][ i ].x + 16, pos[ biw->type ][ i ].y + 16 ); 
+          {
+            G2S_SetWnd1Position( pos[ biw->type ][ i ].x - 16, pos[ biw->type ][ i ].y - 16,
+                                 pos[ biw->type ][ i ].x + 16, pos[ biw->type ][ i ].y + 16 );
           }
         }
         GFL_CLACT_WK_SetPlttOffs( biw->pokeicon_wk[ i ].clwk,
@@ -2878,13 +2879,13 @@ static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAN
  */
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_DeletePokeIcon( BTLV_INPUT_WORK* biw )
-{ 
+{
   int i;
 
   for( i = 0 ; i < 3 ; i++ )
   {
     if( biw->pokeicon_wk[ i ].clwk )
-    { 
+    {
       GFL_CLACT_WK_Remove( biw->pokeicon_wk[ i ].clwk );
       GFL_CLGRP_CGR_Release( biw->pokeicon_charID[ i ] );
       biw->pokeicon_wk[ i ].clwk = NULL;
@@ -2893,12 +2894,12 @@ static  void  BTLV_INPUT_DeletePokeIcon( BTLV_INPUT_WORK* biw )
   }
 
   if( biw->pokeicon_cellID != GFL_CLGRP_REGISTER_FAILED )
-  { 
+  {
     GFL_CLGRP_CELLANIM_Release( biw->pokeicon_cellID );
     biw->pokeicon_cellID = GFL_CLGRP_REGISTER_FAILED;
   }
   if( biw->pokeicon_plttID != GFL_CLGRP_REGISTER_FAILED )
-  { 
+  {
     GFL_CLGRP_PLTT_Release( biw->pokeicon_plttID );
     biw->pokeicon_plttID = GFL_CLGRP_REGISTER_FAILED;
   }
@@ -2919,15 +2920,15 @@ static  void  BTLV_INPUT_DeletePokeIcon( BTLV_INPUT_WORK* biw )
  */
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_CreateWeatherIcon( BTLV_INPUT_WORK* biw )
-{ 
-  BtlWeather  btl_weather = BTL_FIELD_GetWeather();
+{
+  BtlWeather  btl_weather = BTL_CLIENT_GetWeather(biw->clientWork);
   int pal[] = { 0, 1, 3, 2, 1 };
   int ofs_x[] = {   5, 0,  1,  1,   1 };
   int ofs_y[] = { -12, 0, -8, -8, -12 };
   GFL_CLACTPOS  weather;
 
   if( btl_weather == BTL_WEATHER_NONE )
-  { 
+  {
     return;
   }
 
@@ -2948,7 +2949,7 @@ static  void  BTLV_INPUT_CreateWeatherIcon( BTLV_INPUT_WORK* biw )
   GFL_CLACT_WK_SetAnmSeq( biw->weather_wk[ 1 ], BTLV_INPUT_WEATHER_BASE );
   GFL_CLACT_WK_SetPlttOffs( biw->weather_wk[ 1 ], pal[ btl_weather - 1 ], CLWK_PLTTOFFS_MODE_OAM_COLOR );
 
-  { 
+  {
     TCB_WEATHER_ICON_MOVE*  twim = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_WEATHER_ICON_MOVE ) );
     twim->biw = biw;
 
@@ -2964,13 +2965,13 @@ static  void  BTLV_INPUT_CreateWeatherIcon( BTLV_INPUT_WORK* biw )
  */
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_DeleteWeatherIcon( BTLV_INPUT_WORK* biw )
-{ 
+{
   int i;
 
   for( i = 0 ; i < BTLV_INPUT_WEATHER_ICON_MAX ; i++ )
-  { 
+  {
     if( biw->weather_wk[ i ] )
-    { 
+    {
       GFL_CLACT_WK_Remove( biw->weather_wk[ i ] );
       biw->weather_wk[ i ] = NULL;
     }
@@ -3066,9 +3067,9 @@ static  void  BTLV_INPUT_DeleteBallGauge( BTLV_INPUT_WORK* biw )
  */
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_CreateCursorOBJ( BTLV_INPUT_WORK* biw )
-{ 
+{
   int           i;
-  int           anm_no[] = {  
+  int           anm_no[] = {
     BTLV_INPUT_CURSOR_LU_ANIME,
     BTLV_INPUT_CURSOR_RU_ANIME,
     BTLV_INPUT_CURSOR_LD_ANIME,
@@ -3120,19 +3121,19 @@ static  void  BTLV_INPUT_DeleteCursorOBJ( BTLV_INPUT_WORK* biw )
  */
 //--------------------------------------------------------------
 static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl, int hit )
-{ 
-  int trg = GFL_UI_KEY_GetTrg(); 
+{
+  int trg = GFL_UI_KEY_GetTrg();
   BOOL decide_flag = FALSE;
 
   if( biw->cursor_decide )
-  { 
+  {
     biw->cursor_decide = 0;
     BTLV_INPUT_PutCursorOBJ( biw, tp_tbl, key_tbl );
     GFL_CLACT_UNIT_SetDrawEnable( biw->cursor_clunit, TRUE );
   }
 
   if( hit != GFL_UI_TP_HIT_NONE )
-  { 
+  {
     *(biw->cursor_mode) = 0;
     biw->cursor_pos = 0;
     biw->old_cursor_pos = CURSOR_NOMOVE;
@@ -3141,13 +3142,13 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL*
   }
 
   if( trg )
-  { 
+  {
     if( *(biw->cursor_mode) )
-    { 
+    {
       s8 move_pos = BTLV_INPUT_NOMOVE;
       const BTLV_INPUT_KEYTBL* tbl = &key_tbl[ biw->cursor_pos ];
 
-      switch( trg ){ 
+      switch( trg ){
       case PAD_KEY_UP:
         move_pos = tbl->up;
         break;
@@ -3165,30 +3166,30 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL*
         break;
       }
       if( trg == PAD_BUTTON_A )
-      { 
+      {
         hit = tbl->a_button;
         decide_flag = TRUE;
       }
       else
-      { 
+      {
         if( move_pos != BTLV_INPUT_NOMOVE )
-        { 
+        {
           SePlaySelect();
           if( move_pos < 0 )
-          { 
+          {
             if( ( -move_pos != biw->old_cursor_pos ) && ( biw->old_cursor_pos != CURSOR_NOMOVE ) )
-            { 
+            {
               move_pos = biw->old_cursor_pos;
             }
             else
-            { 
+            {
               move_pos *= -1;
             }
           }
           biw->old_cursor_pos = biw->cursor_pos;
           biw->cursor_pos = move_pos;
           if( trg == PAD_BUTTON_B )
-          { 
+          {
             hit = move_pos;
             decide_flag = TRUE;
           }
@@ -3196,14 +3197,14 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL*
       }
     }
     else
-    { 
+    {
       *(biw->cursor_mode) = 1;
     }
     BTLV_INPUT_PutCursorOBJ( biw, tp_tbl, key_tbl );
   }
 
   if( decide_flag == TRUE )
-  { 
+  {
     biw->cursor_pos = 0;
     biw->old_cursor_pos = CURSOR_NOMOVE;
     biw->cursor_decide = 1;
@@ -3222,19 +3223,19 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL*
  */
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_PutCursorOBJ( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl )
-{ 
+{
   int i;
 
   for( i = BTLV_INPUT_CURSOR_LU ; i < BTLV_INPUT_CURSOR_MAX ; i++ )
-  { 
+  {
     const BTLV_INPUT_KEYTBL*  key = &key_tbl[ biw->cursor_pos ];
 
     if( key->cur_pos[ i ] >= 0 )
-    { 
+    {
       const GFL_UI_TP_HITTBL*  hit = &tp_tbl[ key->cur_pos[ i ] ];
       GFL_CLACTPOS pos;
-  
-      switch( i ){ 
+
+      switch( i ){
       case BTLV_INPUT_CURSOR_LU:
         pos.x = hit->rect.left;
         pos.y = hit->rect.top;
@@ -3264,7 +3265,7 @@ static  void  BTLV_INPUT_PutCursorOBJ( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HIT
       GFL_CLACT_WK_SetPos( biw->cursor[ i ].clwk, &pos, CLSYS_DEFREND_SUB );
     }
     else
-    { 
+    {
       GFL_CLACT_WK_SetDrawEnable( biw->cursor[ i ].clwk, FALSE );
     }
   }

@@ -1,16 +1,17 @@
 
 //============================================================================================
 /**
- * @file	btlv_input.h
- * @brief	戦闘下画面
- * @author	soga
- * @date	2009.06.30
+ * @file  btlv_input.h
+ * @brief 戦闘下画面
+ * @author  soga
+ * @date  2009.06.30
  */
 //============================================================================================
 
 #pragma once
 
 #include "battle/btl_common.h"
+#include "..\btl_client.h"
 
 #define BTLV_INPUT_DIR_MAX  ( TEMOTI_POKEMAX )  //対象選択MAX
 #define BTLV_INPUT_POKEICON_MAX ( 3 )           //ポケモンアイコンMAX
@@ -32,7 +33,7 @@ typedef struct{
   u8                          :5;
   u8                    status;
   u16                   dummy;
-  
+
   s16                   hp;             //現在のHP
   u16                   hpmax;          //現在のHPMAX
   const POKEMON_PARAM*  pp;
@@ -53,7 +54,7 @@ typedef struct{
 }BTLV_INPUT_YESNO_PARAM;
 
 typedef enum
-{ 
+{
   BTLV_INPUT_CENTER_BUTTON_ESCAPE = FALSE,
   BTLV_INPUT_CENTER_BUTTON_MODORU = TRUE,
 }BTLV_INPUT_CENTER_BUTTON_TYPE;
@@ -75,7 +76,7 @@ typedef struct{
 }BTLV_INPUT_ROTATE_PARAM;
 
 typedef enum
-{ 
+{
   BTLV_INPUT_TYPE_SINGLE = 0,
   BTLV_INPUT_TYPE_DOUBLE,
   BTLV_INPUT_TYPE_TRIPLE,
@@ -83,7 +84,7 @@ typedef enum
 }BTLV_INPUT_TYPE;
 
 typedef enum
-{ 
+{
   BTLV_INPUT_SCRTYPE_STANDBY = 0,
   BTLV_INPUT_SCRTYPE_COMMAND,
   BTLV_INPUT_SCRTYPE_WAZA,
@@ -94,7 +95,7 @@ typedef enum
 
 //SCRTYPE_COMMANDのstatusパラメータの意味
 enum
-{ 
+{
   BTLV_INPUT_STATUS_NONE = 0, ///<ポケモンがいない
   BTLV_INPUT_STATUS_ALIVE,    ///<ポケモンがいる（いきてる）
   BTLV_INPUT_STATUS_DEAD,     ///<ポケモンがいる（気絶）
@@ -102,7 +103,7 @@ enum
 };
 
 typedef struct
-{ 
+{
   s8 cur_pos[ 6 ];  //カーソルポジション
   s8 up;            //上キーを押したときの移動先
   s8 down;          //下キーを押したときの移動先
@@ -114,11 +115,11 @@ typedef struct
 
 #define BTLV_INPUT_NOMOVE ( -128 )
 
-extern  BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, GFL_FONT* font, u8* cursor_flag, HEAPID heapID );
-extern	void			        BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw );
-extern	void			        BTLV_INPUT_Main( BTLV_INPUT_WORK* biw );
+extern  BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, const BTL_CLIENT* client, GFL_FONT* font, u8* cursor_flag, HEAPID heapID );
+extern  void              BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw );
+extern  void              BTLV_INPUT_Main( BTLV_INPUT_WORK* biw );
 extern  void              BTLV_INPUT_InitBG( BTLV_INPUT_WORK* biw );
-extern	void			        BTLV_INPUT_ExitBG( BTLV_INPUT_WORK* biw );
+extern  void              BTLV_INPUT_ExitBG( BTLV_INPUT_WORK* biw );
 extern  void              BTLV_INPUT_SetFrame( void );
 extern  void              BTLV_INPUT_FreeFrame( void );
 extern  void              BTLV_INPUT_SetFadeOut( BTLV_INPUT_WORK* biw );

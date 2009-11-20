@@ -458,6 +458,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_ITEM_TMP_Add( const BTL_POKEPARAM* bpp, u16 itemI
         BTL_EVENT_FACTOR* factor = EventAddFuncTbl[i].func( priority, itemID, pokeID );
         if( factor ){
           BTL_EVENT_FACTOR_SetWorkValue( factor, WORKIDX_TMP_FLAG, TRUE );
+          BTL_EVENT_FACTOR_SetForceCallFlag( factor );
           return factor;
         }
       }

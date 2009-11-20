@@ -53,7 +53,9 @@ typedef enum {
 
 
 extern BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore,
-    const BTL_MAIN_MODULE* mainModule, const BTL_POKE_CONTAINER* pokeCon, GFL_TCBLSYS* tcbl, GFL_FONT* font, u8 playerClientID, HEAPID heapID );
+    const BTL_MAIN_MODULE* mainModule, const BTL_POKE_CONTAINER* pokeCon, GFL_TCBLSYS* tcbl, GFL_FONT* font,
+    const BTL_CLIENT* client, HEAPID heapID );
+
 extern void BTLV_SCD_Delete( BTLV_SCD* wk );
 
 extern void BTLV_SCD_Init( BTLV_SCD* wk );

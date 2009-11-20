@@ -148,6 +148,8 @@ typedef enum {
 
 
 
+
+
 //--------------------------------------------------------------
 /**
 * イベント変数ラベル
@@ -378,7 +380,7 @@ typedef enum {
   BTL_EVENT_FACTOR_TOKUSEI,
   BTL_EVENT_FACTOR_ITEM,
 
-}BtlEventFactor;
+}BtlEventFactorType;
 
 
 extern void BTL_EVENT_InitSystem( void );

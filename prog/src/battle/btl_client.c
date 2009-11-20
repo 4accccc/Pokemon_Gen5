@@ -33,6 +33,8 @@ enum {
   CANTESC_COUNT_MAX = 8,    ///< とりあえず少なめギリギリなとこでASSERTかけてみる
 
   EMPTY_POS_NONE = -1,
+
+  CLIENT_FLDEFF_BITFLAG_SIZE = BTL_CALC_BITFLAG_BUFSIZE( BTL_FLDEFF_MAX ) + 1,
 };
 
 /*--------------------------------------------------------------------------*/
@@ -76,6 +78,7 @@ struct _BTL_CLIENT {
   BTLV_CORE*    viewCore;
   STR_PARAM     strParam;
   BtlRotateDir    prevRotateDir;
+  BtlWeather      weather;
 
   ClientSubProc  subProc;
   int            subSeq;
@@ -117,6 +120,8 @@ struct _BTL_CLIENT {
 
   u8          myChangePokeCnt;
   BtlPokePos  myChangePokePos[ BTL_POSIDX_MAX ];
+
+  u8          fieldEffectFlag[ CLIENT_FLDEFF_BITFLAG_SIZE ];
 
 };
 
@@ -263,6 +268,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->procPokeIdx = 0;
   wk->basePos = clientID;
   wk->prevRotateDir = BTL_ROTATEDIR_NONE;
+  wk->weather = BTL_WEATHER_NONE;
 
   for(i=0; i<NELEMS(wk->frontPokeEmpty); ++i){
     wk->frontPokeEmpty[i] = FALSE;
@@ -274,6 +280,8 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->shooterEnergy = 0;
   wk->bagMode = bagMode;
   wk->escapeClientID = BTL_CLIENTID_NULL;
+
+  BTL_CALC_BITFLG_Construction( wk->fieldEffectFlag, sizeof(wk->fieldEffectFlag) );
 
   return wk;
 }
@@ -1062,19 +1070,22 @@ static void setWaruagakiAction( BTL_ACTION_PARAM* dst, BTL_CLIENT* wk, const BTL
 //----------------------------------------------------------------------------------
 static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, WazaID waza, STR_PARAM* strParam )
 {
-  // こだわりアイテム効果（最初に使ったワザしか選べない）
-  if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_KODAWARI_LOCK) )
+  // こだわりアイテム効果（最初に使ったワザしか選べない／ただしマジックルーム非発動時のみ）
+  if( BTL_CALC_BITFLG_Check(wk->fieldEffectFlag, BTL_FLDEFF_MAGICROOM) )
   {
-    if( waza != BPP_GetPrevWazaID(bpp) ){
-      if( strParam != NULL )
-      {
-        strParam->strID = BTL_STRID_STD_KodawariLock;
-        strParam->stdFlag = FALSE;
-        strParam->args[0] = BPP_GetID( bpp );
-        strParam->args[1] = BPP_GetItem( bpp );
-        strParam->args[2] = waza;
+    if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_KODAWARI_LOCK) )
+    {
+      if( waza != BPP_GetPrevWazaID(bpp) ){
+        if( strParam != NULL )
+        {
+          strParam->strID = BTL_STRID_STD_KodawariLock;
+          strParam->stdFlag = TRUE;
+          strParam->args[0] = BPP_GetID( bpp );
+          strParam->args[1] = BPP_GetItem( bpp );
+          strParam->args[2] = waza;
+        }
+        return TRUE;
       }
-      return TRUE;
     }
   }
 
@@ -1085,7 +1096,7 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
       if( strParam != NULL )
       {
         strParam->strID = BTL_STRID_STD_WazaLock;
-        strParam->stdFlag = FALSE;
+        strParam->stdFlag = TRUE;
         strParam->args[0] = BPP_GetID( bpp );
         strParam->args[1] = waza;
       }
@@ -2128,6 +2139,7 @@ static BOOL scProc_ACT_WeatherStart( BTL_CLIENT* wk, int* seq, const int* args )
         return TRUE;
       }
       BTLV_StartMsgStd( wk->viewCore, msgID, NULL );
+      wk->weather = weather;
       (*seq)++;
     }
     break;
@@ -2163,6 +2175,7 @@ static BOOL scProc_ACT_WeatherEnd( BTL_CLIENT* wk, int* seq, const int* args )
         return TRUE;
       }
       BTLV_StartMsgStd( wk->viewCore, msgID, NULL );
+      wk->weather = BTL_WEATHER_NONE;
       (*seq)++;
     }
     break;
@@ -2811,24 +2824,12 @@ static BOOL scProc_OP_OutClear( BTL_CLIENT* wk, int* seq, const int* args )
 }
 static BOOL scProc_OP_AddFldEff( BTL_CLIENT* wk, int* seq, const int* args )
 {
-  // @@@ サーバマシンなら既に天候を操作しているハズなので行わない
-  //     ただしこの措置は全マシンにサーバ計算機能が乗るようになったらハズすと思う
-  //     （というかこのコマンド自体、要らなくなるハズ）-> でもサーババージョン違ったら問題あるか
-  if( !BTL_MAIN_IsServerMachine(wk->mainModule) ){
-    BPP_SICK_CONT  cont;
-    cont.raw = args[1];
-    BTL_FIELD_AddEffect( args[0], cont );
-  }
+  BTL_CALC_BITFLG_Set( wk->fieldEffectFlag, args[0] );
   return TRUE;
 }
 static BOOL scProc_OP_RemoveFldEff( BTL_CLIENT* wk, int* seq, const int* args )
 {
-  // @@@ サーバマシンなら既に天候を操作しているハズなので行わない
-  //     ただしこの措置は全マシンにサーバ計算機能が乗るようになったらハズすと思う
-  //     （というかこのコマンド自体、要らなくなるハズ）-> でもサーババージョン違ったら問題あるか
-  if( !BTL_MAIN_IsServerMachine(wk->mainModule) ){
-    BTL_FIELD_RemoveEffect( args[0] );
-  }
+  BTL_CALC_BITFLG_Off( wk->fieldEffectFlag, args[0] );
   return TRUE;
 }
 static BOOL scProc_OP_SetPokeCounter( BTL_CLIENT* wk, int* seq, const int* args )
@@ -3014,6 +3015,11 @@ u8 BTL_CLIENT_GetClientID( const BTL_CLIENT* client )
 const BTL_PARTY* BTL_CLIENT_GetParty( const BTL_CLIENT* client )
 {
   return client->myParty;
+}
+
+BtlWeather BTL_CLIENT_GetWeather( const BTL_CLIENT* client )
+{
+  return client->weather;
 }
 
 //=============================================================================================

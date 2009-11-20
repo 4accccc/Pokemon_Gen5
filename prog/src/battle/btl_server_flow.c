@@ -5159,6 +5159,7 @@ static void scproc_FieldEff_End( BTL_SVFLOW_WORK* wk, BtlFieldEffect effect )
   {
     SCQUE_PUT_MSG_STD( wk->que, strID );
   }
+  SCQUE_PUT_OP_RemoveFieldEffect( wk->que, effect );
 }
 
 //------------------------------------------------------------------
@@ -7644,6 +7645,7 @@ static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
   BppValueID vid = (WAZADATA_GetDamageType(wazaParam->wazaID) == WAZADATA_DMG_SPECIAL)? BPP_SP_DEFENCE : BPP_DEFENCE;
   fx32 ratio = FX32_CONST(1);
   u16 guard;
+  u8 forceFlatFlag;
 
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
@@ -7652,13 +7654,14 @@ static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
     BTL_EVENTVAR_SetValue( BTL_EVAR_VID_SWAP_CNT, 0 );
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, FALSE );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_DEFENDER_GUARD_PREV );
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_VID_SWAP_CNT) & 1 ){
+      vid = (vid == BPP_DEFENCE)? BPP_SP_DEFENCE : BPP_DEFENCE;
+    }
+    forceFlatFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
   BTL_EVENTVAR_Pop();
 
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_VID_SWAP_CNT) & 1 ){
-    vid = (vid == BPP_DEFENCE)? BPP_SP_DEFENCE : BPP_DEFENCE;
-  }
 
-  if( BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG) ){
+  if( forceFlatFlag ){
     guard = BPP_GetValue_Base( defender, vid );
   }else{
     if( criticalFlag ){
@@ -7678,6 +7681,8 @@ static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
   }
 
   BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_GUARD, guard );
     BTL_EVENTVAR_SetMulValue( BTL_EVAR_RATIO, ratio, FX32_CONST(0.1), FX32_CONST(32) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
@@ -9607,7 +9612,6 @@ static u8 scproc_HandEx_removeFieldEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX
   const BTL_HANDEX_PARAM_REMOVE_FLDEFF* param = (const BTL_HANDEX_PARAM_REMOVE_FLDEFF*)(param_header);
 
   if( BTL_FIELD_RemoveEffect(param->effect) ){
-    SCQUE_PUT_OP_RemoveFieldEffect( wk->que, param->effect );
     scproc_FieldEff_End( wk, param->effect );
     return 1;
   }

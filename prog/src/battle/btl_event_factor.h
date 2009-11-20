@@ -61,7 +61,7 @@ typedef void (*BtlEventHandler)( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 * return  スキップする場合TRUE
 */
 //--------------------------------------------------------------
-typedef BOOL (*BtlEventSkipCheckHandler)( BTL_EVENT_FACTOR* myHandle, BtlEventFactor factorType, BtlEventType eventType, u16 subID, u8 pokeID );
+typedef BOOL (*BtlEventSkipCheckHandler)( BTL_EVENT_FACTOR* myHandle, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID );
 
 //--------------------------------------------------------------
 /**
@@ -75,9 +75,9 @@ typedef struct {
 
 
 
-extern BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactor factorType, u16 subID, u16 priority, u8 pokeID, const BtlEventHandlerTable* handlerTable );
-extern BTL_EVENT_FACTOR* BTL_EVENT_SeekFactorCore( BtlEventFactor factorType );
-extern BTL_EVENT_FACTOR* BTL_EVENT_SeekFactor( BtlEventFactor factorType, u8 pokeID );
+extern BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID, u16 priority, u8 pokeID, const BtlEventHandlerTable* handlerTable );
+extern BTL_EVENT_FACTOR* BTL_EVENT_SeekFactorCore( BtlEventFactorType factorType );
+extern BTL_EVENT_FACTOR* BTL_EVENT_SeekFactor( BtlEventFactorType factorType, u8 pokeID );
 extern BTL_EVENT_FACTOR* BTL_EVENT_GetNextFactor( BTL_EVENT_FACTOR* factor );
 extern void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor );
 extern void BTL_EVENT_FACTOR_ChangePokeParam( BTL_EVENT_FACTOR* factor, u8 pokeID, u16 pri );
@@ -86,6 +86,7 @@ extern int BTL_EVENT_FACTOR_GetWorkValue( const BTL_EVENT_FACTOR* factor, u8 wor
 extern void BTL_EVENT_FACTOR_SetWorkValue( BTL_EVENT_FACTOR* factor, u8 workIdx, int value );
 extern u8 BTL_EVENT_FACTOR_GetPokeID( const BTL_EVENT_FACTOR* factor );
 extern void BTL_EVENT_FACTOR_AttachSkipCheckHandler( BTL_EVENT_FACTOR* factor, BtlEventSkipCheckHandler handler );
+extern void BTL_EVENT_FACTOR_SetForceCallFlag( BTL_EVENT_FACTOR* factor );
 
 //=============================================================================================
 /**
@@ -96,6 +97,6 @@ extern void BTL_EVENT_FACTOR_AttachSkipCheckHandler( BTL_EVENT_FACTOR* factor, B
  *
  */
 //=============================================================================================
-extern void BTL_EVENT_SleepFactor( BtlEventFactor type, u16 subID );
+extern void BTL_EVENT_SleepFactor( BtlEventFactorType type, u16 subID );
 
 #endif

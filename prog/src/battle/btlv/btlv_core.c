@@ -133,7 +133,7 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
           core->largeFontHandle, core->smallFontHandle, core->myClientID, heapID );
 
   core->scrnD = BTLV_SCD_Create( core, core->mainModule, pokeCon, core->tcbl,
-          core->largeFontHandle, core->myClientID, heapID );
+          core->largeFontHandle, core->myClient, heapID );
 
   core->mainProc = NULL;
   core->mainSeq = 0;

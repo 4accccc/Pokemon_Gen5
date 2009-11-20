@@ -553,10 +553,12 @@ static BTL_EVENT_FACTOR*  ADD_MirrorType( u16 pri, WazaID waza, u8 pokeID );
 static void handler_MirrorType( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_BodyPurge( u16 pri, WazaID waza, u8 pokeID );
 static void handler_BodyPurge( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static BTL_EVENT_FACTOR*  ADD_WonderRoom( u16 pri, WazaID waza, u8 pokeID );
-static void handler_WonderRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_PsycoShock( u16 pri, WazaID waza, u8 pokeID );
 static void handler_PsycoShock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_WonderRoom( u16 pri, WazaID waza, u8 pokeID );
+static void handler_WonderRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_MagicRoom( u16 pri, WazaID waza, u8 pokeID );
+static void handler_MagicRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 //=============================================================================================
@@ -782,6 +784,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_KARI_BODYPAAZI,       ADD_BodyPurge     },
     { WAZANO_KARI_HEBIIBONBAA,     ADD_HeavyBomber   },
     { WAZANO_KARI_WANDAARUUMU,     ADD_WonderRoom    },
+    { WAZANO_KARI_MAZIKKURUUMU,    ADD_MagicRoom     },
     { WAZANO_KARI_SAIKOSYOKKU,     ADD_PsycoShock    },
   };
 
@@ -7947,3 +7950,43 @@ static void handler_WonderRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     }
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * ワンダールーム
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_MagicRoom( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_FIELD_EFFECT_CALL, handler_MagicRoom },    // 未分類ワザハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_MagicRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    if( !BTL_FIELD_CheckEffect(BTL_FLDEFF_WONDERROOM) )
+    {
+      BTL_HANDEX_PARAM_ADD_FLDEFF* param;
+
+      param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_ADD_FLDEFF, pokeID );
+      param->effect = BTL_FLDEFF_MAGICROOM;
+      param->cont = BPP_SICKCONT_MakeTurn( 5 );
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_STD, BTL_STRID_STD_MagicRoom_Start );
+    }
+    else
+    {
+      BTL_HANDEX_PARAM_REMOVE_FLDEFF* param;
+      BTL_HANDEX_PARAM_MESSAGE*  msg_param;
+
+      param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_REMOVE_FLDEFF, pokeID );
+      param->effect = BTL_FLDEFF_MAGICROOM;
+
+      msg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_STD, BTL_STRID_STD_MagicRoom_End );
+    }
+  }
+}
+

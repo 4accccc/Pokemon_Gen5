@@ -12,6 +12,12 @@
 #include "btl_const.h"
 
 
+/**
+ *  要素数->bitフラグフィールドに必要なバッファサイズ（バイト）計算
+ */
+#define BTL_CALC_BITFLAG_BUFSIZE(max)   (((max)/8)+(((max)%8)!=0))
+
+
 static inline u32 BTL_CALC_MulRatio( u32 value, fx32 ratio )
 {
   return (value * ratio) >> FX32_SHIFT;
@@ -80,6 +86,14 @@ static inline BOOL BTL_CALC_BITFLG_Check( const u8* flags, u32 index )
     return (flags[ byte ] & (1 << bit)) != 0;
   }
   return 0;
+}
+static inline void BTL_CALC_BITFLG_Off( u8* flags, u32 index )
+{
+  u8 byte = 1 + index / 8;
+  u8 bit = index & 8;
+  if( byte < flags[0] ){
+    flags[ byte ] &= (~((u8)(1 << bit)));
+  }
 }
 
 static inline u32 BTL_CALC_ABS( int value )

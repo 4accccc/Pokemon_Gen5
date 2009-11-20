@@ -95,6 +95,7 @@ struct _BTLV_SCD {
   GFL_BMP_DATA*   bmp;
   GFL_FONT*       font;
   STRBUF*         strbuf;
+  const BTL_CLIENT* clientWork;
 
   PRINT_QUE*      printQue;
   PRINT_UTIL      printUtil;
@@ -141,7 +142,6 @@ static BOOL selectAction_init( int* seq, void* wk_adrs );
 static BOOL selectActionRoot_loop( int* seq, void* wk_adrs );
 static BOOL selectWaza_init( int* seq, void* wk_adrs );
 static BOOL selectWaza_loop( int* seq, void* wk_adrs );
-static BtlvScd_SelAction_Result  check_unselectable_waza( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, u8 waza_idx );
 static void stw_init( SEL_TARGET_WORK* stw );
 static void stw_convert_pos_to_index( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainModule, u8 num );
 static void stw_setSelectablePoke( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainModule, BtlExPos exPos );
@@ -162,7 +162,7 @@ static  inline  void  SePlayDecide( void );
 static  inline  void  SePlayCancel( void );
 
 BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainModule,
-        const BTL_POKE_CONTAINER* pokeCon, GFL_TCBLSYS* tcbl, GFL_FONT* font, u8 playerClientID, HEAPID heapID )
+        const BTL_POKE_CONTAINER* pokeCon, GFL_TCBLSYS* tcbl, GFL_FONT* font, const BTL_CLIENT* client, HEAPID heapID )
 {
   BTLV_SCD* wk = GFL_HEAP_AllocMemory( heapID, sizeof(BTLV_SCD) );
 
@@ -171,7 +171,8 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
   wk->pokeCon = pokeCon;
   wk->heapID = heapID;
   wk->font = font;
-  wk->playerParty = BTL_POKECON_GetPartyDataConst( pokeCon, playerClientID );
+  wk->clientWork = client;
+  wk->playerParty = BTL_POKECON_GetPartyDataConst( pokeCon, BTL_CLIENT_GetClientID(client) );
   wk->strbuf = GFL_STR_CreateBuffer( 128, heapID );
   wk->pokesel_param = NULL;
 
@@ -186,14 +187,7 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
 
 void BTLV_SCD_Init( BTLV_SCD* wk )
 {
-#if 0
-  if( BTL_MAIN_GetRule( wk->mainModule ) == BTL_RULE_TRIPLE ){
-    wk->biw = BTLV_INPUT_Init( BTLV_INPUT_TYPE_TRIPLE, wk->font, wk->heapID );
-  }else{
-    wk->biw = BTLV_INPUT_Init( BTLV_INPUT_TYPE_SINGLE, wk->font, wk->heapID );
-  }
-#endif
-    wk->biw = BTLV_INPUT_Init( BTL_MAIN_GetRule( wk->mainModule ), wk->font, &wk->cursor_flag, wk->heapID );
+  wk->biw = BTLV_INPUT_Init( BTL_MAIN_GetRule(wk->mainModule), wk->clientWork, wk->font, &wk->cursor_flag, wk->heapID );
 
   ///<obj
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
@@ -605,37 +599,6 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
   }
 
   return FALSE;
-}
-//----------------------------------------------------------------------------------
-/**
- * こだわり状態など、選択できないワザを選んだら対応する警告IDを返す
- *
- * @param   wk
- * @param   bpp
- * @param   waza_idx
- *
- * @retval  BtlvScd_SelAction_Result
- */
-//----------------------------------------------------------------------------------
-static BtlvScd_SelAction_Result  check_unselectable_waza( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, u8 waza_idx )
-{
-  if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_KODAWARI_LOCK) )
-  {
-    WazaID  select_waza = BPP_WAZA_GetID( bpp, waza_idx );
-    if( select_waza != BPP_GetPrevWazaID(bpp) ){
-      return BTLV_SCD_SelAction_Warn_Kodawari;
-    }
-  }
-
-  if( BPP_CheckSick(bpp, WAZASICK_ENCORE) )
-  {
-    WazaID  select_waza = BPP_WAZA_GetID( bpp, waza_idx );
-    if( select_waza != BPP_GetPrevWazaID(bpp) ){
-      return BTLV_SCD_SelAction_Warn_WazaLock;
-    }
-  }
-
-  return BTLV_SCD_SelAction_Still;
 }
 
 //--------------------------------------------------------------------------------------
