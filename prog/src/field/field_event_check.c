@@ -835,7 +835,10 @@ GMEVENT * FIELD_EVENT_CheckHybrid( GAMESYS_WORK *gsys, void *work )
   {
     event = FIELD_EVENT_CheckNormal_Wrap( gsys, work );
   }
-  event = FIELD_EVENT_CheckNoGrid( gsys, work );
+  else
+  {
+    event = FIELD_EVENT_CheckNoGrid( gsys, work );
+  }
 
   return event;
 }
