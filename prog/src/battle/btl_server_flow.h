@@ -99,9 +99,9 @@ extern const BTL_ACTION_PARAM* BTL_SVCL_GetPokeAction( SVCL_WORK* clwk, u8 posId
 //------------------------------------------------
 extern BtlRule BTL_SVFLOW_GetRule( BTL_SVFLOW_WORK* wk );
 extern BtlCompetitor BTL_SVFLOW_GetCompetitor( BTL_SVFLOW_WORK* wk );
-extern BtlPokePos BTL_SVFLOW_CheckExistFrontPokeID( BTL_SVFLOW_WORK* server, u8 pokeID );
+extern BtlPokePos BTL_SVFTOOL_GetExistFrontPokeID( BTL_SVFLOW_WORK* server, u8 pokeID );
 extern BOOL BTL_SVFLOW_RECEPT_CheckExistTokuseiPokemon( BTL_SVFLOW_WORK* wk, PokeTokusei tokusei );
-extern const BTL_POKEPARAM* BTL_SVFLOW_RECEPT_GetPokeParam( BTL_SVFLOW_WORK* wk, u8 pokeID );
+extern const BTL_POKEPARAM* BTL_SVFTOOL_GetPokeParam( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern u8 BTL_SVFLOW_RECEPT_GetAllFrontPokeID( BTL_SVFLOW_WORK* wk, u8* dst );
 extern u8 BTL_SVFLOW_RECEPT_GetAllOpponentFrontPokeID( BTL_SVFLOW_WORK* wk, u8 basePokeID, u8* dst );
 extern u16 BTL_SVFLOW_GetTurnCount( BTL_SVFLOW_WORK* wk );
@@ -321,9 +321,8 @@ typedef struct {
  */
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
- u8   poke_cnt;                      ///< 対象ポケモン数
- u8   pokeID[ BTL_POS_MAX ];         ///< 対象ポケモンID
- u16  damage[ BTL_POS_MAX ];         ///< ダメージ量
+ u8   pokeID;                        ///< 対象ポケモンID
+ u16  damage;                        ///< ダメージ量
  BTL_HANDEX_STR_PARAMS     exStr;    ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_DAMAGE;
 
@@ -657,8 +656,8 @@ typedef struct {
   BTL_HANDEX_STR_PARAMS  exStr; ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_SET_WEIGHT;
 
-extern void* BTL_SVFLOW_HANDLERWORK_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );
-extern u8 BTL_SERVERFLOW_RECEPT_GetTargetPokeID( BTL_SVFLOW_WORK* wk, BtlExPos exPos, u8* dst_pokeID );
+extern void* BTL_SVF_HANEX_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );
+extern u8 BTL_SVFTOOL_ExpandPokeID( BTL_SVFLOW_WORK* wk, BtlExPos exPos, u8* dst_pokeID );
 
 
 

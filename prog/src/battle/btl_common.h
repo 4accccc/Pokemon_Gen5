@@ -94,8 +94,8 @@ typedef enum {
 //--------------------------------------------------------------
 typedef enum {
 
-  BTL_ESCAPE_MODE_OK,   ///< すぐに「にげる」確定（野生戦など）
-  BTL_ESCAPE_MODE_NG,   ///< しょうぶのさいちゅうに背中を見せられない
+  BTL_ESCAPE_MODE_OK,       ///< すぐに「にげる」確定（野生戦など）
+  BTL_ESCAPE_MODE_NG,       ///< しょうぶのさいちゅうに背中を見せられない
   BTL_ESCAPE_MODE_CONFIRM,  ///< にげると負けになるけどホントにいいの？と確認する
 
   BTL_ESCAPE_MODE_MAX,
@@ -111,7 +111,7 @@ typedef enum {
   BTL_DBLTEAM_ALONE_ALONE,  ///< 個人vs個人
   BTL_DBLTEAM_ALONE_TAG,    ///< 個人vsタッグ
   BTL_DBLTEAM_TAG_ALONE,    ///< タッグvs個人
-  BTL_DBLTEAM_TAG_TAG,    ///< タッグvsタッグ
+  BTL_DBLTEAM_TAG_TAG,      ///< タッグvsタッグ
 }BtlDblTeamFormation;
 
 //--------------------------------------------------------------

@@ -404,7 +404,7 @@ static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* fac
   }
 
   // 「いえき」状態のポケモンは、とくせいハンドラを呼び出さない
-  bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWork, factor->pokeID );
+  bpp = BTL_SVFTOOL_GetPokeParam( flowWork, factor->pokeID );
   if( BPP_CheckSick(bpp, WAZASICK_IEKI) && (factor->factorType == BTL_EVENT_FACTOR_TOKUSEI) ){
     return TRUE;
   }

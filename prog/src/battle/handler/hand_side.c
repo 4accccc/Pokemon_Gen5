@@ -321,7 +321,7 @@ static void handler_side_SinpiNoMamori_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_
   if( work[0] )
   {
     u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
-    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
     HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_SinpiNoMamori_Exe );
     HANDEX_STR_AddArg( &param->str, pokeID );
     work[0] = 0;
@@ -358,7 +358,7 @@ static void handler_side_SiroiKiri_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
   if( work[0] )
   {
     u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
-    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
     HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_SiroiKiri_Exe );
     HANDEX_STR_AddArg( &param->str, pokeID );
   }
@@ -423,7 +423,7 @@ static void handler_side_StealthRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
   u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
   if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
   ){
-    const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     BtlTypeAff  affinity = BTL_CALC_TypeAff( POKETYPE_IWA, BPP_GetPokeType(bpp) );
     u8 denom = 8;
     switch( affinity ){
@@ -438,11 +438,10 @@ static void handler_side_StealthRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
     }
 
     {
-      BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_DAMAGE, BTL_POKEID_NULL );
+      BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_DAMAGE, BTL_POKEID_NULL );
 
-      param->poke_cnt = 1;
-      param->pokeID[0] = pokeID;
-      param->damage[0] = BTL_CALC_QuotMaxHP( bpp, denom );
+      param->pokeID = pokeID;
+      param->damage = BTL_CALC_QuotMaxHP( bpp, denom );
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_StealthRockDamage );
       HANDEX_STR_AddArg( &param->exStr, pokeID );
     }
@@ -500,7 +499,7 @@ static void handler_side_Makibisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
   u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
   if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
   ){
-    const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
 
     if( !BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_FLYING) )
     {
@@ -516,11 +515,10 @@ static void handler_side_Makibisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
         denom = 4; break;
       }
       {
-        BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_DAMAGE, BTL_POKEID_NULL );
+        BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_DAMAGE, BTL_POKEID_NULL );
 
-        param->poke_cnt = 1;
-        param->pokeID[0] = pokeID;
-        param->damage[0] = BTL_CALC_QuotMaxHP( bpp, denom );
+        param->pokeID = pokeID;
+        param->damage = BTL_CALC_QuotMaxHP( bpp, denom );
         HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_MakibisiDamage );
         HANDEX_STR_AddArg( &param->exStr, pokeID );
       }
@@ -545,11 +543,11 @@ static void handler_side_Dokubisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
   u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
   if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
   ){
-    const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
 
     if( !BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_FLYING) )
     {
-      BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_ADD_SICK, BTL_POKEID_NULL );
+      BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_ADD_SICK, BTL_POKEID_NULL );
 
       param->sickID = WAZASICK_DOKU;
       if( getMyAddCounter(myHandle, mySide) > 1 ){

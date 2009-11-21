@@ -2001,7 +2001,7 @@ static u8 ItemEff_EffectGuard( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
   BPP_SICK_CONT cont = BPP_SICKCONT_MakeTurn( 5 );
   if( BTL_HANDLER_SIDE_Add(side, BTL_SIDEEFF_SIROIKIRI, cont) )
   {
-    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVFLOW_HANDLERWORK_Push( wk, BTL_HANDEX_MESSAGE, BTL_POKEID_NULL );
+    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANEX_Push( wk, BTL_HANDEX_MESSAGE, BTL_POKEID_NULL );
     HANDEX_STR_Setup( &param->str, BTL_STRTYPE_STD, BTL_STRID_STD_SiroiKiri );
     HANDEX_STR_AddArg( &param->str, side );
     return TRUE;
@@ -2013,7 +2013,7 @@ static u8 ItemEff_Relive( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, i
   if( BPP_IsDead(bpp))
   {
     u8 pokeID = BPP_GetID( bpp );
-    BTL_HANDEX_PARAM_RELIVE* param = BTL_SVFLOW_HANDLERWORK_Push( wk, BTL_HANDEX_RELIVE, pokeID );
+    BTL_HANDEX_PARAM_RELIVE* param = BTL_SVF_HANEX_Push( wk, BTL_HANDEX_RELIVE, pokeID );
     param->pokeID = pokeID;
 
     itemParam = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_HP_RCV_POINT );
@@ -2094,7 +2094,7 @@ static u8 ItemEff_PP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, i
     }
     if( volume )
     {
-      BTL_HANDEX_PARAM_PP* param = BTL_SVFLOW_HANDLERWORK_Push( wk, BTL_HANDEX_RECOVER_PP, pokeID );
+      BTL_HANDEX_PARAM_PP* param = BTL_SVF_HANEX_Push( wk, BTL_HANDEX_RECOVER_PP, pokeID );
       param->volume = volume;
       param->pokeID = pokeID;
       param->wazaIdx = actParam;
@@ -2118,13 +2118,13 @@ static u8 ItemEff_AllPP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID
     volume = BPP_WAZA_GetPPShort( bpp, i );
     if( volume )
     {
-      BTL_HANDEX_PARAM_PP* param = BTL_SVFLOW_HANDLERWORK_Push( wk, BTL_HANDEX_RECOVER_PP, pokeID );
+      BTL_HANDEX_PARAM_PP* param = BTL_SVF_HANEX_Push( wk, BTL_HANDEX_RECOVER_PP, pokeID );
       param->pokeID = pokeID;
       param->volume = volume;
     }
   }
 
-  msg_param = BTL_SVFLOW_HANDLERWORK_Push( wk, BTL_HANDEX_MESSAGE, pokeID );
+  msg_param = BTL_SVF_HANEX_Push( wk, BTL_HANDEX_MESSAGE, pokeID );
   HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_PP_AllRecover );
   HANDEX_STR_AddArg( &msg_param->str, pokeID );
   return 1;
@@ -2139,7 +2139,7 @@ static u8 ItemEff_HP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, i
   &&  !BPP_IsDead(bpp)
   ){
     u8 pokeID = BPP_GetID( bpp );
-    BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVFLOW_HANDLERWORK_Push( wk, BTL_HANDEX_RECOVER_HP, pokeID );
+    BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANEX_Push( wk, BTL_HANDEX_RECOVER_HP, pokeID );
     param->pokeID = pokeID;
     itemParam = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_HP_RCV_POINT );
     switch( itemParam ){
@@ -2170,7 +2170,7 @@ static u8 ItemEff_Common_Cure( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
     {
       BTL_HANDEX_PARAM_CURE_SICK* param;
       u8 pokeID = BPP_GetID( bpp );
-      param = BTL_SVFLOW_HANDLERWORK_Push( wk, BTL_HANDEX_CURE_SICK, pokeID );
+      param = BTL_SVF_HANEX_Push( wk, BTL_HANDEX_CURE_SICK, pokeID );
       param->poke_cnt = 1;
       param->pokeID[0] = pokeID;
       param->sickCode = sickID;
@@ -2186,12 +2186,12 @@ static u8 ItemEff_Common_Rank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
 {
   u8 pokeID = BPP_GetID( bpp );
 
-  if( (BTL_SVFLOW_CheckExistFrontPokeID(wk, pokeID) != BTL_POS_MAX)
+  if( (BTL_SVFTOOL_GetExistFrontPokeID(wk, pokeID) != BTL_POS_MAX)
   &&  !BPP_IsDead(bpp)
   ){
     if( BPP_IsRankEffectValid(bpp, rankType, itemParam) )
     {
-      BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVFLOW_HANDLERWORK_Push( wk, BTL_HANDEX_RANK_EFFECT, pokeID );
+      BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANEX_Push( wk, BTL_HANDEX_RANK_EFFECT, pokeID );
       param->poke_cnt = 1;
       param->pokeID[0] = pokeID;
       param->rankType = rankType;
@@ -2240,7 +2240,7 @@ static u8 ShooterEff_ItemDrop( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
       BTL_HANDEX_PARAM_SET_ITEM* param;
       u8 pokeID = BPP_GetID( bpp );
 
-      param = BTL_SVFLOW_HANDLERWORK_Push( wk, BTL_HANDEX_SET_ITEM, pokeID );
+      param = BTL_SVF_HANEX_Push( wk, BTL_HANDEX_SET_ITEM, pokeID );
       param->pokeID = pokeID;
       param->itemID = ITEM_DUMMY_DATA;
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Shooter_ItemDrop );
@@ -2265,8 +2265,8 @@ static u8 ShooterEff_FlatCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
     BTL_HANDEX_PARAM_MESSAGE* msg_param;
     u8 pokeID = BPP_GetID( bpp );
 
-    reset_param = BTL_SVFLOW_HANDLERWORK_Push( wk, BTL_HANDEX_RESET_RANK, pokeID );
-    msg_param = BTL_SVFLOW_HANDLERWORK_Push( wk, BTL_HANDEX_MESSAGE, pokeID );
+    reset_param = BTL_SVF_HANEX_Push( wk, BTL_HANDEX_RESET_RANK, pokeID );
+    msg_param = BTL_SVF_HANEX_Push( wk, BTL_HANDEX_MESSAGE, pokeID );
 
     reset_param->poke_cnt = 1;
     reset_param->pokeID[0] = pokeID;
@@ -7904,14 +7904,14 @@ static void scEvent_WazaSickCont( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* atta
 static void scEvent_AfterDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets, WazaID waza )
 {
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
     {
       u32 i, cnt = TargetPokeRec_GetCount( targets );
       const BTL_POKEPARAM* bpp;
-      BTL_EVENTVAR_SetValue( BTL_EVAR_TARGET_POKECNT, cnt );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_TARGET_POKECNT, cnt );
       for(i=0; i<cnt; ++i){
         bpp = TargetPokeRec_Get( targets, i );
-        BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_TARGET1+i, BPP_GetID(bpp) );
+        BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_TARGET1+i, BPP_GetID(bpp) );
       }
     }
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_DAMAGEPROC_END );
@@ -8247,7 +8247,7 @@ static void scEvent_ChangeTokusei( BTL_SVFLOW_WORK* wk, u8 pokeID )
  * @retval  BtlPokePos    出ている場合は戦闘位置ID／出ていない場合はBTL_POS_MAX
  */
 //--------------------------------------------------------------------------------------
-BtlPokePos BTL_SVFLOW_CheckExistFrontPokeID( BTL_SVFLOW_WORK* wk, u8 pokeID )
+BtlPokePos BTL_SVFTOOL_GetExistFrontPokeID( BTL_SVFLOW_WORK* wk, u8 pokeID )
 {
   return BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, pokeID );
 }
@@ -8335,7 +8335,7 @@ BOOL BTL_SVFLOW_RECEPT_CheckExistTokuseiPokemon( BTL_SVFLOW_WORK* wk, PokeTokuse
  * @retval  const BTL_POKEPARAM*
  */
 //--------------------------------------------------------------------------------------
-const BTL_POKEPARAM* BTL_SVFLOW_RECEPT_GetPokeParam( BTL_SVFLOW_WORK* wk, u8 pokeID )
+const BTL_POKEPARAM* BTL_SVFTOOL_GetPokeParam( BTL_SVFLOW_WORK* wk, u8 pokeID )
 {
   return BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
 }
@@ -8399,7 +8399,7 @@ void BTL_SERVER_RECTPT_SetMessageEx( BTL_SVFLOW_WORK* wk, u16 msgID, u8 pokeID, 
  * @retval  u8    格納した数
  */
 //=============================================================================================
-u8 BTL_SERVERFLOW_RECEPT_GetTargetPokeID( BTL_SVFLOW_WORK* wk, BtlExPos exPos, u8* dst_pokeID )
+u8 BTL_SVFTOOL_ExpandPokeID( BTL_SVFLOW_WORK* wk, BtlExPos exPos, u8* dst_pokeID )
 {
   u8 pos[ BTL_POSIDX_MAX ];
   BTL_POKEPARAM* bpp;
@@ -8952,10 +8952,22 @@ static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, Bt
 }
 
 
-void* BTL_SVFLOW_HANDLERWORK_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID )
+//=============================================================================================
+/**
+ * HandEx ワーク１件取得
+ *
+ * @param   wk
+ * @param   eq_type
+ * @param   userPokeID
+ *
+ * @retval  void*
+ */
+//=============================================================================================
+void* BTL_SVF_HANEX_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID )
 {
   return Hem_PushWork( &wk->HEManager, eq_type, userPokeID );
 }
+
 //---------------------------------------------------------------------------------------------
 // 当ターン生き返りポケレコード
 //---------------------------------------------------------------------------------------------
@@ -9173,20 +9185,16 @@ static u8 scproc_HandEx_damage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
 {
   BTL_HANDEX_PARAM_DAMAGE* param = (BTL_HANDEX_PARAM_DAMAGE*)param_header;
   BTL_POKEPARAM* pp_target;
-  u32 i;
-  u8 result = 0;
 
-  for(i=0; i<param->poke_cnt; ++i){
-    pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
-    if( !BPP_IsDead(pp_target) )
-    {
-      if( scproc_SimpleDamage(wk, pp_target, param->damage[i], &param->exStr) ){
-        result = 1;
-      }
+  pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+  if( !BPP_IsDead(pp_target) )
+  {
+    if( scproc_SimpleDamage(wk, pp_target, param->damage, &param->exStr) ){
+      return 1;
     }
   }
 
-  return result;
+  return 0;
 }
 /**
  * ポケモンHP増減（回復／ダメージと見なさない）

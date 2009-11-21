@@ -1362,7 +1362,7 @@ static BOOL btlinEff_OpponentPokeInTriple( BTLV_SCU* wk, int* seq )
       BTLV_EFFECT_SetPokemon( BPP_GetSrcData(subwk->bpp[1]), subwk->vpos[1] );
     }
     if( subwk->aliveCnt > 2){
-      BTLV_EFFECT_SetPokemon( BPP_GetSrcData(subwk->bpp[1]), subwk->vpos[2] );
+      BTLV_EFFECT_SetPokemon( BPP_GetSrcData(subwk->bpp[2]), subwk->vpos[2] );
     }
     BTLV_EFFECT_AddByPos( subwk->vpos[0], BTLEFF_SINGLE_TRAINER_ENCOUNT_3 );
     BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE_ENEMY );
