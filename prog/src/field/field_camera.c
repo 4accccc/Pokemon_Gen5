@@ -305,6 +305,8 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
   camera->angle_pitch = 0;
   camera->angle_len = 0x0078;
 
+  camera->camera_area_active = TRUE;
+
 
   // パースをカメラの情報から取得
   if( GFL_G3D_CAMERA_GetProjectionType( cam ) == GFL_G3D_PRJPERS ){

@@ -539,4 +539,23 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
 		
 		DebugFont_Print( work, 8, 8, str );
 	}
+
+  { // ÉåÅ[Éãç¿ïWÇÃï\é¶
+    RAIL_LOCATION location = {0};
+
+    
+    if( PLAYERWORK_getPosType(player) == LOCATION_POS_TYPE_RAIL )
+    {
+      location = *PLAYERWORK_getRailPosition( player );
+      sprintf( str, "RAIL INDEX %d FRONT %d SIDE %d",
+        location.rail_index, location.line_grid, location.width_grid );
+    }
+    else
+    {
+      sprintf( str, "RAIL INDEX NONE FRONT NONE SIDE NONE",
+        location.rail_index, location.line_grid, location.width_grid );
+    }
+		DebugFont_ClearLine( work, 9 );
+		DebugFont_Print( work, 0, 9, str );
+  }
 }
