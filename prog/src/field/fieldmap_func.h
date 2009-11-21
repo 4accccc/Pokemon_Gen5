@@ -45,7 +45,7 @@ typedef struct {
 //------------------------------------------------------------------
 //		ÉVÉXÉeÉÄä÷êî
 //------------------------------------------------------------------
-extern FLDMAPFUNC_SYS * FLDMAPFUNC_Sys_Create(FIELDMAP_WORK * fsys, int heapID, int max);
+extern FLDMAPFUNC_SYS * FLDMAPFUNC_Sys_Create(FIELDMAP_WORK * fsys, HEAPID heapID, int max);
 extern void FLDMAPFUNC_Sys_Delete(FLDMAPFUNC_SYS * sys);
 extern void FLDMAPFUNC_Sys_Main(FLDMAPFUNC_SYS * sys);
 extern void FLDMAPFUNC_Sys_Draw3D(FLDMAPFUNC_SYS * sys);

@@ -62,7 +62,7 @@ struct FLDMAPFUNC_WORK{
  * @return	FLDMAPFUNC_SYS	フィールドマップ制御タスクシステムのシステムワークへのポインタ
  */
 //------------------------------------------------------------------
-FLDMAPFUNC_SYS * FLDMAPFUNC_Sys_Create(FIELDMAP_WORK * fsys, int heapID, int max)
+FLDMAPFUNC_SYS * FLDMAPFUNC_Sys_Create(FIELDMAP_WORK * fsys, HEAPID heapID, int max)
 {
 	FLDMAPFUNC_SYS * sys;
 	u32 tcb_work_size;
