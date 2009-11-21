@@ -42,10 +42,11 @@ _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
 //																	//
-//	ジムギミックに LOCALWORK0～9 まで使用ししています。				//
+//	ジムギミックに LOCALWORK0～10 まで使用ししています。			//
 //	同マップ内の使用を禁止します。									//
 //	LOCALWORK0～7 ⇒ ポール解除スイッチ								//
 //	LOCALWORK8～9 ⇒ トラップ(騙し絵)トレーナー						//
+//	LOCALWORK10   ⇒ 踏んだスイッチのIDを格納						//
 //																	//
 //------------------------------------------------------------------//
 
@@ -78,11 +79,11 @@ EVENT_END
 EVENT_START	ev_pos_c03gym0101_switch_00
 
 	//スイッチアニメをコール
-	$SCWK_TEMP0 = 0		//スイッチidを格納
+	$LOCALWORK10 = 0		//スイッチidを格納
 	_CALL	ev_switch_on
 
 	//ポール解除処理をコール
-	$SCWK_TEMP0 = 0		//スイッチidを格納
+	$LOCALWORK10 = 0		//スイッチidを格納
 	_CALL	ev_pole_unlock
 
 	//========================================//
@@ -101,11 +102,11 @@ EVENT_END
 EVENT_START	ev_pos_c03gym0101_switch_01
 
 	//スイッチアニメをコール
-	$SCWK_TEMP0 = 1		//スイッチidを格納
+	$LOCALWORK10 = 1		//スイッチidを格納
 	_CALL	ev_switch_on
 
 	//ポール解除処理をコール
-	$SCWK_TEMP0 = 1		//スイッチidを格納
+	$LOCALWORK10 = 1		//スイッチidを格納
 	_CALL	ev_pole_unlock
 
 	//========================================//
@@ -124,11 +125,11 @@ EVENT_END
 EVENT_START	ev_pos_c03gym0101_switch_02
 
 	//スイッチアニメをコール
-	$SCWK_TEMP0 = 2		//スイッチidを格納
+	$LOCALWORK10 = 2		//スイッチidを格納
 	_CALL	ev_switch_on
 
 	//ポール解除処理をコール
-	$SCWK_TEMP0 = 2		//スイッチidを格納
+	$LOCALWORK10 = 2		//スイッチidを格納
 	_CALL	ev_pole_unlock
 
 	//========================================//
@@ -147,15 +148,15 @@ EVENT_END
 EVENT_START	ev_pos_c03gym0101_switch_03
 
 	//スイッチアニメをコール
-	$SCWK_TEMP0 = 3		//スイッチidを格納
+	$LOCALWORK10 = 3		//スイッチidを格納
 	_CALL	ev_switch_on
 
 	//ポール解除処理をコール
-	$SCWK_TEMP0 = 3		//スイッチidを格納
+	$LOCALWORK10 = 3		//スイッチidを格納
 	_CALL	ev_pole_unlock
 
 	//ポール解除処理をコール
-	$SCWK_TEMP0 = 4		//スイッチidを格納
+	$LOCALWORK10 = 4		//スイッチidを格納
 	_CALL	ev_pole_unlock
 
 	//========================================//
@@ -174,11 +175,11 @@ EVENT_END
 EVENT_START	ev_pos_c03gym0101_switch_04
 
 	//スイッチアニメをコール
-	$SCWK_TEMP0 = 4		//スイッチidを格納
+	$LOCALWORK10 = 4		//スイッチidを格納
 	_CALL	ev_switch_on
 
 	//ポール解除処理をコール
-	$SCWK_TEMP0 = 5		//スイッチidを格納
+	$LOCALWORK10 = 5		//スイッチidを格納
 	_CALL	ev_pole_unlock
 
 	//========================================//
@@ -197,11 +198,11 @@ EVENT_END
 EVENT_START	ev_pos_c03gym0101_switch_05
 
 	//スイッチアニメをコール
-	$SCWK_TEMP0 = 5		//スイッチidを格納
+	$LOCALWORK10 = 5		//スイッチidを格納
 	_CALL	ev_switch_on
 
 	//ポール解除処理をコール
-	$SCWK_TEMP0 = 6		//スイッチidを格納
+	$LOCALWORK10 = 6		//スイッチidを格納
 	_CALL	ev_pole_unlock
 
 	//========================================//
@@ -220,15 +221,15 @@ EVENT_END
 EVENT_START	ev_pos_c03gym0101_switch_06
 
 	//スイッチアニメをコール
-	$SCWK_TEMP0 = 6		//スイッチidを格納
+	$LOCALWORK10 = 6		//スイッチidを格納
 	_CALL	ev_switch_on
 
 	//ポール解除処理をコール
-	$SCWK_TEMP0 = 7		//スイッチidを格納
+	$LOCALWORK10 = 7		//スイッチidを格納
 	_CALL	ev_pole_unlock
 
 	//ポール解除処理をコール
-	$SCWK_TEMP0 = 8		//スイッチidを格納
+	$LOCALWORK10 = 8		//スイッチidを格納
 	_CALL	ev_pole_unlock
 
 	//========================================//
@@ -247,11 +248,11 @@ EVENT_END
 EVENT_START	ev_pos_c03gym0101_switch_07
 
 	//スイッチアニメをコール
-	$SCWK_TEMP0 = 7		//スイッチidを格納
+	$LOCALWORK10 = 7		//スイッチidを格納
 	_CALL	ev_switch_on
 
 	//ポール解除処理をコール
-	$SCWK_TEMP0 = 9		//スイッチidを格納
+	$LOCALWORK10 = 9		//スイッチidを格納
 	_CALL	ev_pole_unlock
 
 	//========================================//
@@ -362,7 +363,7 @@ ev_switch_on:
 	//【仮】ＳＥ再生
 	_SE_PLAY( SEQ_SE_KAIDAN )
 	//足元のスイッチアニメを起動
-	_GYM_INSECT_SW_ON( SCWK_TEMP0 ) 
+	_GYM_INSECT_SW_ON( LOCALWORK10 ) 
 	_SE_WAIT()
 _RET
 
@@ -371,11 +372,71 @@ _RET
 //					呼び出し処理：ポール解除				//
 //////////////////////////////////////////////////////////////
 ev_pole_unlock:
+	//カメラ操作（ポール前へ） [091121追加]
+	_CALL	ev_camera_move_pole
+
+	//カメラ移動終了後、少し間を持たせる？【保留】
+//	_TIME_WAIT( 10 )
+
 	//【仮】ＳＥ再生
 	_SE_PLAY( SEQ_SE_KAIDAN )
 	//ポール解除処理
-	_GYM_INSECT_PL_ON( SCWK_TEMP0 )
+	_GYM_INSECT_PL_ON( LOCALWORK10 )
 	_SE_WAIT()
+
+	//自機にカメラを戻す 操作スタート処理は↓のコール処理の中ですでにやっています
+   	_CAMERA_RECV_MOVE( 15 )
+    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+
+_RET
+
+
+//////////////////////////////////////////////////////////////
+//			呼び出し処理：カメラ操作（ポール前へ）			//
+//////////////////////////////////////////////////////////////
+ev_camera_move_pole:
+	_CAMERA_START()		//カメラ操作開始
+    _CAMERA_PURGE()		//対象物とカメラのバインドを解く
+
+	//ポールの前へカメラを移動させる
+	IF $LOCALWORK10 == 0 THEN
+		_CAMERA_MOVE( 8920,0,970752,794624,81920,1880064,15 )	//一番最後の引数は移動にかかるフレーム数
+
+	ELSIF $LOCALWORK10 == 1 THEN
+		_CAMERA_MOVE( 8920,0,970752,794624,81920,1880064,15 )
+
+	ELSIF $LOCALWORK10 == 2 THEN
+		_CAMERA_MOVE( 8920,0,970752,794624,81920,1880064,15 )
+
+	ELSIF $LOCALWORK10 == 3 THEN
+		_CAMERA_MOVE( 8920,0,970752,794624,81920,1880064,15 )
+
+	ELSIF $LOCALWORK10 == 4 THEN
+		_CAMERA_MOVE( 8920,0,970752,794624,81920,1880064,15 )
+
+	ELSIF $LOCALWORK10 == 5 THEN
+		_CAMERA_MOVE( 8920,0,970752,794624,81920,1880064,15 )
+
+	ELSIF $LOCALWORK10 == 6 THEN
+		_CAMERA_MOVE( 8920,0,970752,794624,81920,1880064,15 )
+
+	ELSIF $LOCALWORK10 == 7 THEN
+		_CAMERA_MOVE( 8920,0,970752,794624,81920,1880064,15 )
+
+	ELSIF $LOCALWORK10 == 8 THEN
+		_CAMERA_MOVE( 8920,0,970752,1540096,81920,1880064,15 )
+
+	ELSE
+		_CAMERA_MOVE( 8920,0,970752,1540096,81920,1880064,15 )	//ポールID(9)の場合（一番右下のポール）
+
+	ENDIF
+
+    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
+	//カメラのバインドと操作終了処理はポール解除処理が終わった後にやってます
+
 _RET
 
 
