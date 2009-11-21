@@ -552,7 +552,7 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
     }
     else
     {
-      sprintf( str, "RAIL INDEX NONE FRONT NONE SIDE NONE",
+      sprintf( str, "RAIL DATA NONE",
         location.rail_index, location.line_grid, location.width_grid );
     }
 		DebugFont_ClearLine( work, 9 );
