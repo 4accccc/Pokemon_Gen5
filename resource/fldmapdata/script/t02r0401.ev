@@ -19,14 +19,78 @@ _EVENT_DATA    ev_t02r0401_man2_01
 _EVENT_DATA    ev_t02r0401_poke2_01
 _EVENT_DATA_END
 
-//ev_t02r0401_flag_change:
-//  _END
 
 /**************************************************************/
 /*  T02R0401 GIRL4の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_t02r0401_girl4_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_01 )
+	_TALK_OBJ_START()
+	
+	//【仮】フラグ制御が仮。イベントフラグ、ローカルフラグでは対応不可。トラックの再生フラグを取得するコマンドが必要
+	//ピアノ弾いてる/弾いていないで分岐
+	IF FLAG_OFF( FH_01 ) THEN
+
+		//ピアノ弾いていない
+		
+		//私の好きな曲 弾いてあげましょうか？
+		_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_01 )
+		_YES_NO_WIN( SCWK_ANSWER )
+		_MSGWIN_CLOSE()
+		
+		IF $SCWK_ANSWER == SCR_YES THEN
+			//では聞いてください
+			_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_02 )
+			
+			//ISSスイッチON：ピアノ音源のトラックを再生
+			_ISS_SWITCH_ON( 9 )
+			_ISS_SWITCH_ON( 10 )
+			
+			//弾いたフラグをセット【仮】
+			_FLAG_SET( FH_01 )
+			
+		ELSE
+			//あら残念…
+			_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_03 )
+			
+		ENDIF
+		
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	
+	ELSE
+
+		//ピアノ弾いてる
+		
+		//もうピアノはいいですか？
+		_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_04 )
+		_YES_NO_WIN( SCWK_ANSWER )
+		_MSGWIN_CLOSE()
+		
+		IF $SCWK_ANSWER == SCR_YES THEN
+			//ああ楽しかった！
+			_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_05 )
+			
+			//ISSスイッチOFF：ピアノ音源のトラックを停止
+			_ISS_SWITCH_OFF( 9 )
+			_ISS_SWITCH_OFF( 10 )
+			
+			//演奏フラグをリセット【仮】
+			_FLAG_RESET( FH_01 )
+			
+		ELSE
+			//…この曲は 父の思い出なんです
+			_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_06 )
+			
+		ENDIF
+		
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	
+	ENDIF
+
+
 EVENT_END
 
 /**************************************************************/
