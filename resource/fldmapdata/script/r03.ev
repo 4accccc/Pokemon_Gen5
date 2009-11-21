@@ -73,7 +73,7 @@ EVENT_START   ev_pos_r03_rival_01
 	
 	//ライバルと戦闘（持ちタイプで分岐）
 	
-	IF $WK_SYS_FIRST_POKE_NO == MONSNO_KUSAHEBI THEN
+	IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
 		//最初の３匹で草タイプを選択した時の処理
 		_TRAINER_BTL_SET( TRID_RIVAL_01, 0 )
 		//結果チェック
@@ -84,7 +84,7 @@ EVENT_START   ev_pos_r03_rival_01
 			_TRAINER_LOSE()
 		ENDIF
 
-	ELSIF $WK_SYS_FIRST_POKE_NO == MONSNO_HOTTON THEN	
+	ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN	
 		//最初の３匹で炎タイプを選択した時の処理
 		_TRAINER_BTL_SET( TRID_RIVAL_02, 0 )
 		//結果チェック

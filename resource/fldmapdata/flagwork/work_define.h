@@ -57,7 +57,7 @@
 
 #define WK_SYS_AREA_START                16432 /* 0x4030  */
 
-#define WK_SYS_FIRST_POKE_NO             16432 /* 0x4030 最初の３体から選んだポケモンナンバー */
+#define WK_SYS_FIRST_POKETYPE            16432 /* 0x4030 最初の３体選択で選んだポケモンのタイプ。識別用定義名はuser_define.hで確認 */
 		/* not used 16433(0x4031) */
 		/* not used 16434(0x4032) */
 		/* not used 16435(0x4033) */
