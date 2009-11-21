@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-11-19T21:28:03"/>
+	<create user="taya" host="W00146" date="2009-11-21T15:52:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -5540,6 +5540,26 @@
 みがるになった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 身軽になった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_HajikeruHonoo_Side">
+		<comment>はじけるほのお（横のポケモンがとばっちりを受ける）</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]にも
+ひばなが　ふりかかった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]にも
+火花が　降りかかった！</language>
+	</row>
+	<row id="BTL_STRID_SET_HajikeruHonoo_Side_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]にも
+ひばなが　ふりかかった！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]にも
+火花が　降りかかった！</language>
+	</row>
+	<row id="BTL_STRID_SET_HajikeruHonoo_Side_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]にも
+ひばなが　ふりかかった！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]にも
+火花が　降りかかった！</language>
 	</row>
 
 	<flowchart-group-list>
