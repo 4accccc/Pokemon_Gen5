@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-11-20T23:34:55"/>
+	<create user="taya" host="W00146" date="2009-11-21T14:01:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -780,7 +780,8 @@
 
 	<row id="BTL_STRID_STD_TokWin">
 		<comment>とくせいウィンドウ（２行までです）</comment>
-		<language name="JPN" width="136">[1:02:ポケモンニックネーム:0]の　[1:06:とくせい名:1]</language>
+		<language name="JPN" width="136">[1:02:ポケモンニックネーム:0]の
+[1:06:とくせい名:1]</language>
 		<language name="JPN_KANJI" width="136">[1:02:ポケモンニックネーム:0]の
 [1:06:とくせい名:1]</language>
 	</row>
