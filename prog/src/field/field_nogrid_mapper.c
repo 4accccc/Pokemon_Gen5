@@ -62,7 +62,7 @@ struct _FLDNOGRID_MAPPER
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-FLDNOGRID_MAPPER* FLDNOGRID_MAPPER_Create( u32 heapID, FIELD_CAMERA* p_camera )
+FLDNOGRID_MAPPER* FLDNOGRID_MAPPER_Create( u32 heapID, FIELD_CAMERA* p_camera, FLD_SCENEAREA* p_sceneArea, FLD_SCENEAREA_LOADER* p_sceneAreaLoader )
 {
   FLDNOGRID_MAPPER* p_mapper;
 
@@ -71,8 +71,8 @@ FLDNOGRID_MAPPER* FLDNOGRID_MAPPER_Create( u32 heapID, FIELD_CAMERA* p_camera )
   // 各モジュールワーク生成
   p_mapper->p_railMan       = FIELD_RAIL_MAN_Create( heapID, FIELD_RAIL_WORK_MAX, p_camera ); 
   p_mapper->p_railLoader    = FIELD_RAIL_LOADER_Create( heapID );
-  p_mapper->p_areaMan       = FLD_SCENEAREA_Create( heapID, p_camera );
-  p_mapper->p_areaLoader    = FLD_SCENEAREA_LOADER_Create( heapID );
+  p_mapper->p_areaMan       = p_sceneArea;
+  p_mapper->p_areaLoader    = p_sceneAreaLoader;
   p_mapper->p_attr          = RAIL_ATTR_Create( heapID );
 
   return p_mapper;
@@ -90,8 +90,6 @@ void FLDNOGRID_MAPPER_Delete( FLDNOGRID_MAPPER* p_mapper )
   GF_ASSERT( p_mapper );
 
   RAIL_ATTR_Delete( p_mapper->p_attr );
-  FLD_SCENEAREA_Delete( p_mapper->p_areaMan );
-  FLD_SCENEAREA_LOADER_Delete( p_mapper->p_areaLoader );
   FIELD_RAIL_MAN_Delete( p_mapper->p_railMan );
   FIELD_RAIL_LOADER_Delete( p_mapper->p_railLoader );
 
@@ -131,18 +129,10 @@ void FLDNOGRID_MAPPER_SetActive( FLDNOGRID_MAPPER* p_mapper, BOOL flag )
 BOOL FLDNOGRID_MAPPER_IsActive( const FLDNOGRID_MAPPER* cp_mapper )
 {
   BOOL result;
-  BOOL result2;
   
   GF_ASSERT( cp_mapper );
 
   result = FIELD_RAIL_MAN_GetActiveFlag( cp_mapper->p_railMan );
-
-  if( FLD_SCENEAREA_IsLoad( cp_mapper->p_areaMan ) )
-  {
-    result2 = FLD_SCENEAREA_GetActiveFlag( cp_mapper->p_areaMan );
-
-    GF_ASSERT( result2 == result );
-  }
 
   return result;
 }
@@ -166,6 +156,7 @@ void FLDNOGRID_MAPPER_SetRailCameraActive( FLDNOGRID_MAPPER* p_mapper, BOOL flag
   {
     p_mapper->rail_camera_stop = TRUE;
   }
+	FLD_SCENEAREA_SetActiveFlag(p_mapper->p_areaMan, flag);
 }
 
 
@@ -292,14 +283,7 @@ void FLDNOGRID_MAPPER_Main( FLDNOGRID_MAPPER* p_mapper )
   FIELD_RAIL_MAN_Update( p_mapper->p_railMan );
   if( p_mapper->rail_camera_stop == FALSE )
   {
-    camera_move = FIELD_RAIL_MAN_UpdateCamera( p_mapper->p_railMan );
-
-    // カメラが動いたとき＋バインドされているレールワークが動いたとき更新
-    if( camera_move || FIELD_RAIL_MAN_IsBindWorkMove( p_mapper->p_railMan ) )
-    {
-      FIELD_RAIL_MAN_GetBindWorkPos( p_mapper->p_railMan, &rail_pos );
-      FLD_SCENEAREA_Update( p_mapper->p_areaMan, &rail_pos );
-    }
+    FIELD_RAIL_MAN_UpdateCamera( p_mapper->p_railMan );
   }
 }
 

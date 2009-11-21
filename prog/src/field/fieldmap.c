@@ -35,6 +35,8 @@
 #include "field_light.h"
 #include "field_buildmodel.h"
 #include "field/field_nogrid_mapper.h"
+#include "field/fld_scenearea.h"
+#include "field/fld_scenearea_loader.h"
 
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/playerwork.h"
@@ -264,6 +266,8 @@ struct _FIELDMAP_WORK
 	MMDLSYS *fldMMdlSys;
 
   FLDNOGRID_MAPPER* nogridMapper;
+  FLD_SCENEAREA* sceneArea;
+  FLD_SCENEAREA_LOADER* sceneAreaLoader;
 	
 	FLDMAPPER *g3Dmapper;
 	MAP_MATRIX *pMapMatrix;
@@ -564,9 +568,13 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       fieldWork->g3Dcamera,
       &fieldWork->now_pos,
       fieldWork->heapID );
+  
+  // シーンエリア
+  fieldWork->sceneArea        = FLD_SCENEAREA_Create( fieldWork->heapID, fieldWork->camera_control );
+  fieldWork->sceneAreaLoader  = FLD_SCENEAREA_LOADER_Create( fieldWork->heapID );
 
   // NOGRIDマッパー生成
-  fieldWork->nogridMapper = FLDNOGRID_MAPPER_Create( fieldWork->heapID, fieldWork->camera_control );
+  fieldWork->nogridMapper = FLDNOGRID_MAPPER_Create( fieldWork->heapID, fieldWork->camera_control, fieldWork->sceneArea, fieldWork->sceneAreaLoader );
 
   {
     FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager( fieldWork->g3Dmapper );
@@ -996,6 +1004,10 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
 
   // NOGRIDマッパー破棄
   FLDNOGRID_MAPPER_Delete( fieldWork->nogridMapper );
+
+  // シーンエリア破棄
+  FLD_SCENEAREA_LOADER_Delete( fieldWork->sceneAreaLoader );
+  FLD_SCENEAREA_Delete( fieldWork->sceneArea );
 
 
   FIELD_CAMERA_Delete( fieldWork->camera_control );
@@ -1883,6 +1895,9 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
   
   // NOGRID動作制御
   FLDNOGRID_MAPPER_Main( fieldWork->nogridMapper );
+
+  // scenearea
+  FLD_SCENEAREA_Update( fieldWork->sceneArea, &fieldWork->now_pos );
 	
 	FIELD_WEATHER_Main( fieldWork->weather_sys, fieldWork->heapID );
 	FIELD_FOG_Main( fieldWork->fog );

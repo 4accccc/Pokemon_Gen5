@@ -66,7 +66,7 @@ typedef struct
 
 
 // マッパー生成・破棄
-extern FLDNOGRID_MAPPER* FLDNOGRID_MAPPER_Create( u32 heapID, FIELD_CAMERA* p_camera );
+extern FLDNOGRID_MAPPER* FLDNOGRID_MAPPER_Create( u32 heapID, FIELD_CAMERA* p_camera, FLD_SCENEAREA* p_sceneArea, FLD_SCENEAREA_LOADER* p_sceneAreaLoader );
 extern void FLDNOGRID_MAPPER_Delete( FLDNOGRID_MAPPER* p_mapper );
 
 
