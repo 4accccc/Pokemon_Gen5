@@ -1407,6 +1407,39 @@ static void MusicalSetting_UpdateTouch( MUS_EDIT_LOCAL_WORK *work )
     MusicalSetting_DrawPoke( work );
   }
   
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+    int ePos;
+    int cnt = 0;
+    OS_TPrintf("-----------------------------------\n");
+    for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
+    {
+      const u16 itemNo = musPoke->equip[ ePos ].itemNo;
+      if( itemNo != MUSICAL_ITEM_INVALID )
+      {
+        int i;
+        static const char *posName[] = {"‰EŽ¨","¶Ž¨","“ª","–Ú•@","Šç","“·","˜","‰EŽè","¶Žè"};
+        int jisSize = 128 , uniSize = 32;
+        char jisStr[128];
+        STRBUF *str = GFL_STR_CreateBuffer( 32 , work->heapId );
+        STRCODE *code = (STRCODE*)GFL_STR_GetStringCodePointer(str);
+        code[GFL_STR_GetBufferLength(str)] = 0;
+        GFL_STD_MemClear( jisStr , 128 );
+        GFL_MSG_GetString( work->itemMsgHandle , MUS_ITEM_DRAW_GetArcIdx( itemNo )+ITEM_NAME_000 , str );
+        STD_ConvertStringUnicodeToSjis( jisStr , &jisSize , code , &uniSize , NULL );
+        
+        OS_TPrintf("%s %s 5 ",jisStr,posName[ePos]);
+        cnt++;
+      }
+    }
+    for( ePos=cnt;ePos<MUS_POKE_EQUIP_MAX-1;ePos++ )
+    {
+      OS_TPrintf("‘•”õ–³‚µ –Ú•@ 5 ");
+    }
+    
+    OS_TPrintf("\n-----------------------------------\n");
+  }
+  
 }
 
 static void MusicalSetting_DrawEquipPos( MUS_EDIT_LOCAL_WORK *work )
