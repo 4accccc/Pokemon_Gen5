@@ -188,6 +188,8 @@ extern void FIELD_CAMERA_ChangeMode( FIELD_CAMERA * camera, FIELD_CAMERA_MODE mo
 
 //------------------------------------------------------------------
 // カメラにZONEのデフォルト情報を設定する。
+//  どんな操作をしていても、これを呼べば、
+//  そのZONEに入ってきたときのカメラ状態に戻ります。
 //------------------------------------------------------------------
 extern void FIELD_CAMERA_SetDefaultParameter( FIELD_CAMERA * camera );
 
@@ -329,6 +331,15 @@ extern FIELD_CAMERA_AREA_TYPE FIELD_CAMERA_GetCameraAreaType( const FIELD_CAMERA
 extern FIELD_CAMERA_AREA_CONT FIELD_CAMERA_GetCameraAreaCont( const FIELD_CAMERA * camera, u32 idx );
 
 extern void FIELD_CAMERA_LoadCameraArea( FIELD_CAMERA * camera, u32 area_id, HEAPID heapID );
+
+//-------------------------------------
+///	カメラエリアの動作をフック
+//
+//  TRUE:カメラエリア動作
+//  FALSE:カメラエリア停止
+//=====================================
+extern void FIELD_CAMERA_SetCameraAreaActive( FIELD_CAMERA * camera, BOOL flag );
+extern BOOL FIELD_CAMERA_GetCameraAreaActive( const FIELD_CAMERA * camera );
 
 //-----------------------------------------------------------------------------
 /**

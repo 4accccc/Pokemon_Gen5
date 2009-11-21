@@ -147,7 +147,8 @@ struct _FIELD_CAMERA {
 
   // カメラ可動範囲
   FIELD_CAMERA_AREA camera_area[FIELD_CAMERA_AREA_DATA_MAX];  
-  u32               camera_area_num;
+  u16               camera_area_num;
+  u16               camera_area_active;
   
 #ifdef PM_DEBUG
   u16 debug_subscreen_type;
@@ -462,7 +463,14 @@ void FIELD_CAMERA_ChangeMode( FIELD_CAMERA * camera, FIELD_CAMERA_MODE mode )
 //-----------------------------------------------------------------------------
 void FIELD_CAMERA_SetDefaultParameter( FIELD_CAMERA * camera )
 {
+  // カメラモードを変更
+  FIELD_CAMERA_SetMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+  
+  // ゾーンのカメラを読み込み
   loadCameraParameters( camera, camera->default_target );
+
+  // その他パラメータも初期化
+  camera->camera_area_active = TRUE;
 }
 
 
@@ -641,9 +649,12 @@ static void updateAngleCameraPos(FIELD_CAMERA * camera)
   // 
   camera->target_write = camera->target;
 
-  for( i=0; i<camera->camera_area_num; i++ )
+  if( camera->camera_area_active )
   {
-    cameraArea_UpdateTarget( &camera->camera_area[i], &camera->target_write );
+    for( i=0; i<camera->camera_area_num; i++ )
+    {
+      cameraArea_UpdateTarget( &camera->camera_area[i], &camera->target_write );
+    }
   }
   
   // カメラポジション計算
@@ -653,9 +664,12 @@ static void updateAngleCameraPos(FIELD_CAMERA * camera)
   // 
   camera->campos_write = camera->camPos;
 
-  for( i=0; i<camera->camera_area_num; i++ )
+  if( camera->camera_area_active )
   {
-    cameraArea_UpdateCamPos( &camera->camera_area[i], &camera->campos_write );
+    for( i=0; i<camera->camera_area_num; i++ )
+    {
+      cameraArea_UpdateCamPos( &camera->camera_area[i], &camera->campos_write );
+    }
   }
 }
 static void updateAngleTargetPos(FIELD_CAMERA * camera)
@@ -663,9 +677,13 @@ static void updateAngleTargetPos(FIELD_CAMERA * camera)
   int i;
   // 
   camera->campos_write = camera->camPos;
-  for( i=0; i<camera->camera_area_num; i++ )
+
+  if( camera->camera_area_active )
   {
-    cameraArea_UpdateCamPos( &camera->camera_area[i], &camera->campos_write );
+    for( i=0; i<camera->camera_area_num; i++ )
+    {
+      cameraArea_UpdateCamPos( &camera->camera_area[i], &camera->campos_write );
+    }
   }
     
 
@@ -676,9 +694,12 @@ static void updateAngleTargetPos(FIELD_CAMERA * camera)
   // 
   camera->target_write = camera->target;
 
-  for( i=0; i<camera->camera_area_num; i++ )
+  if( camera->camera_area_active )
   {
-    cameraArea_UpdateTarget( &camera->camera_area[i], &camera->target_write );
+    for( i=0; i<camera->camera_area_num; i++ )
+    {
+      cameraArea_UpdateTarget( &camera->camera_area[i], &camera->target_write );
+    }
   }
 }
 
@@ -692,16 +713,22 @@ static void updateCameraArea(FIELD_CAMERA * camera)
   // 
   camera->campos_write = camera->camPos;
 
-  for( i=0; i<camera->camera_area_num; i++ )
+  if( camera->camera_area_active )
   {
-    cameraArea_UpdateCamPos( &camera->camera_area[i], &camera->campos_write );
+    for( i=0; i<camera->camera_area_num; i++ )
+    {
+      cameraArea_UpdateCamPos( &camera->camera_area[i], &camera->campos_write );
+    }
   }
 
   // 
-  camera->target_write = camera->target;
-  for( i=0; i<camera->camera_area_num; i++ )
+  if( camera->camera_area_active )
   {
-    cameraArea_UpdateTarget( &camera->camera_area[i], &camera->target_write );
+    camera->target_write = camera->target;
+    for( i=0; i<camera->camera_area_num; i++ )
+    {
+      cameraArea_UpdateTarget( &camera->camera_area[i], &camera->target_write );
+    }
   }
 }
 	
@@ -2402,6 +2429,35 @@ void FIELD_CAMERA_LoadCameraArea( FIELD_CAMERA * camera, u32 area_id, HEAPID hea
   FIELD_CAMERA_SetCameraArea( camera, p_rect );
   GFL_HEAP_FreeMemory( p_rect );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラエリア　動作フラグを設定
+ *
+ *	@param	camera    カメラ
+ *	@param	flag      フラグ
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_SetCameraAreaActive( FIELD_CAMERA * camera, BOOL flag )
+{
+  camera->camera_area_active = flag;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラエリア　動作フラグを取得
+ *
+ *	@param	camera    カメラ
+ *
+ *	@retval TRUE    動作
+ *	@retval FALSE   停止
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_CAMERA_GetCameraAreaActive( const FIELD_CAMERA * camera )
+{
+  return camera->camera_area_active;
+}
+
 
 //----------------------------------------------------------------------------
 /**
