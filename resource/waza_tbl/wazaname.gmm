@@ -2265,7 +2265,7 @@
 	</row>
 
 	<row id="WAZANAME_481">
-		<language name="JPN" width="216">ひばな</language>
+		<language name="JPN" width="216">はじけるほのお</language>
 	</row>
 
 	<row id="WAZANAME_482">
@@ -2345,7 +2345,7 @@
 	</row>
 
 	<row id="WAZANAME_501">
-		<language name="JPN" width="216">ブロック</language>
+		<language name="JPN" width="216">ファストガード</language>
 	</row>
 
 	<row id="WAZANAME_502">
@@ -2389,74 +2389,70 @@
 	</row>
 
 	<row id="WAZANAME_512">
-		<language name="JPN" width="216">とかす</language>
-	</row>
-
-	<row id="WAZANAME_513">
 		<language name="JPN" width="216">アクロバット</language>
 	</row>
 
-	<row id="WAZANAME_514">
-		<language name="JPN" width="216">カラーコピー</language>
+	<row id="WAZANAME_513">
+		<language name="JPN" width="216">ミラータイプ</language>
 	</row>
 
-	<row id="WAZANAME_515">
+	<row id="WAZANAME_514">
 		<language name="JPN" width="216">かたきうち</language>
 	</row>
 
-	<row id="WAZANAME_516">
+	<row id="WAZANAME_515">
 		<language name="JPN" width="216">いのちがけ</language>
 	</row>
 
-	<row id="WAZANAME_517">
-		<language name="JPN" width="216">ほきゅう</language>
+	<row id="WAZANAME_516">
+		<language name="JPN" width="216">ギフトパス</language>
 	</row>
 
-	<row id="WAZANAME_518">
+	<row id="WAZANAME_517">
 		<language name="JPN" width="216">れんごく</language>
 	</row>
 
-	<row id="WAZANAME_519">
+	<row id="WAZANAME_518">
 		<language name="JPN" width="216">みずのちかい</language>
 	</row>
 
-	<row id="WAZANAME_520">
+	<row id="WAZANAME_519">
 		<language name="JPN" width="216">ほのおのちかい</language>
 	</row>
 
-	<row id="WAZANAME_521">
+	<row id="WAZANAME_520">
 		<language name="JPN" width="216">くさのちかい</language>
 	</row>
 
-	<row id="WAZANAME_522">
+	<row id="WAZANAME_521">
 		<language name="JPN" width="216">ボルトチェンジ</language>
 	</row>
 
-	<row id="WAZANAME_523">
+	<row id="WAZANAME_522">
 		<language name="JPN" width="216">むしのていこう</language>
 	</row>
 
-	<row id="WAZANAME_524">
+	<row id="WAZANAME_523">
 		<language name="JPN" width="216">じならし</language>
 	</row>
 
-	<row id="WAZANAME_525">
+	<row id="WAZANAME_524">
 		<language name="JPN" width="216">こおりのいぶき</language>
 	</row>
 
-	<row id="WAZANAME_526">
+	<row id="WAZANAME_525">
 		<language name="JPN" width="216">ドラゴンテール</language>
 	</row>
 
-	<row id="WAZANAME_527">
+	<row id="WAZANAME_526">
 		<language name="JPN" width="216">ふるいたてる</language>
 	</row>
 
-	<row id="WAZANAME_528">
+	<row id="WAZANAME_527">
 		<language name="JPN" width="216">エレキネット</language>
 	</row>
 
-	<row id="WAZANAME_529">
+	<row id="WAZANAME_528">
 		<language name="JPN" width="216">ワイルドボルト</language>
 	</row>
 

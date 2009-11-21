@@ -3,7 +3,7 @@
  * @file	wazano_def.h
  * @bfief	技NoのDefine定義ファイル
  * @author	WazaTableConverter
- * @date	2009-11-20
+ * @date	2009-11-21
  * 技テーブルコンバータから生成されました
 */
 //============================================================================================
@@ -491,7 +491,7 @@
 #define		WAZANO_MAZIKKURUUMU		( 478 )		//マジックルーム
 #define		WAZANO_UTIOTOSU				( 479 )		//うちおとす
 #define		WAZANO_GORINKUDAKI		( 480 )		//ごりんくだき
-#define		WAZANO_HIBANA					( 481 )		//ひばな
+#define		WAZANO_HAZIKERUHONOO	( 481 )		//はじけるほのお
 #define		WAZANO_HEDOROWHEEBU		( 482 )		//ヘドロウェーブ
 #define		WAZANO_TYOUNOMAI			( 483 )		//ちょうのまい
 #define		WAZANO_HEBIIBONBAA		( 484 )		//ヘビーボンバー
@@ -511,7 +511,7 @@
 #define		WAZANO_NASIKUZUSI			( 498 )		//なしくずし
 #define		WAZANO_MADDOBOORU			( 499 )		//マッドボール
 #define		WAZANO_ASISUTOPAWAA		( 500 )		//アシストパワー
-#define		WAZANO_BUROKKU				( 501 )		//ブロック
+#define		WAZANO_FASUTOGAADO		( 501 )		//ファストガード
 #define		WAZANO_SAIDOTHENZI		( 502 )		//サイドチェンジ
 #define		WAZANO_NETTOU					( 503 )		//ねっとう
 #define		WAZANO_KARAWOYABURU		( 504 )		//からをやぶる
@@ -522,22 +522,21 @@
 #define		WAZANO_TOMOENAGE			( 509 )		//ともえなげ
 #define		WAZANO_YAKITUKUSU			( 510 )		//やきつくす
 #define		WAZANO_SAKIOKURI			( 511 )		//さきおくり
-#define		WAZANO_TOKASU					( 512 )		//とかす
-#define		WAZANO_AKUROBATTO			( 513 )		//アクロバット
-#define		WAZANO_KARAAKOPII			( 514 )		//カラーコピー
-#define		WAZANO_KATAKIUTI			( 515 )		//かたきうち
-#define		WAZANO_INOTIGAKE			( 516 )		//いのちがけ
-#define		WAZANO_HOKYUU					( 517 )		//ほきゅう
-#define		WAZANO_RENGOKU				( 518 )		//れんごく
-#define		WAZANO_MIZUNOTIKAI		( 519 )		//みずのちかい
-#define		WAZANO_HONOONOTIKAI		( 520 )		//ほのおのちかい
-#define		WAZANO_KUSANOTIKAI		( 521 )		//くさのちかい
-#define		WAZANO_BORUTOTHENZI		( 522 )		//ボルトチェンジ
-#define		WAZANO_MUSINOTEIKOU		( 523 )		//むしのていこう
-#define		WAZANO_ZINARASI				( 524 )		//じならし
-#define		WAZANO_KOORINOIBUKI		( 525 )		//こおりのいぶき
-#define		WAZANO_DORAGONTEERU		( 526 )		//ドラゴンテール
-#define		WAZANO_HURUITATERU		( 527 )		//ふるいたてる
-#define		WAZANO_EREKINETTO			( 528 )		//エレキネット
-#define		WAZANO_WAIRUDOBORUTO	( 529 )		//ワイルドボルト
-#define		WAZANO_MAX						( 529 )
+#define		WAZANO_AKUROBATTO			( 512 )		//アクロバット
+#define		WAZANO_MIRAATAIPU			( 513 )		//ミラータイプ
+#define		WAZANO_KATAKIUTI			( 514 )		//かたきうち
+#define		WAZANO_INOTIGAKE			( 515 )		//いのちがけ
+#define		WAZANO_GIHUTOPASU			( 516 )		//ギフトパス
+#define		WAZANO_RENGOKU				( 517 )		//れんごく
+#define		WAZANO_MIZUNOTIKAI		( 518 )		//みずのちかい
+#define		WAZANO_HONOONOTIKAI		( 519 )		//ほのおのちかい
+#define		WAZANO_KUSANOTIKAI		( 520 )		//くさのちかい
+#define		WAZANO_BORUTOTHENZI		( 521 )		//ボルトチェンジ
+#define		WAZANO_MUSINOTEIKOU		( 522 )		//むしのていこう
+#define		WAZANO_ZINARASI				( 523 )		//じならし
+#define		WAZANO_KOORINOIBUKI		( 524 )		//こおりのいぶき
+#define		WAZANO_DORAGONTEERU		( 525 )		//ドラゴンテール
+#define		WAZANO_HURUITATERU		( 526 )		//ふるいたてる
+#define		WAZANO_EREKINETTO			( 527 )		//エレキネット
+#define		WAZANO_WAIRUDOBORUTO	( 528 )		//ワイルドボルト
+#define		WAZANO_MAX						( 528 )

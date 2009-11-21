@@ -7079,19 +7079,6 @@
 	</row>
 
 	<row id="WAZAINFO_519">
-		<language name="JPN" width="216">
-
-
-
-</language>
-		<language name="JPN_KANJI" width="216">
-
-
-
-</language>
-	</row>
-
-	<row id="WAZAINFO_520">
 		<language name="JPN" width="216">ななな
 ほのお
 ちかい
@@ -7104,7 +7091,7 @@
 やーやー</language>
 	</row>
 
-	<row id="WAZAINFO_521">
+	<row id="WAZAINFO_520">
 		<language name="JPN" width="216">
 
 
@@ -7117,7 +7104,7 @@
 </language>
 	</row>
 
-	<row id="WAZAINFO_522">
+	<row id="WAZAINFO_521">
 		<language name="JPN" width="216">
 
 
@@ -7127,6 +7114,19 @@
 
 
 1
+1</language>
+	</row>
+
+	<row id="WAZAINFO_522">
+		<language name="JPN" width="216">
+
+
+0
+1</language>
+		<language name="JPN_KANJI" width="216">
+
+
+0
 1</language>
 	</row>
 
@@ -7160,12 +7160,12 @@
 		<language name="JPN" width="216">
 
 
-0
+1
 1</language>
 		<language name="JPN_KANJI" width="216">
 
 
-0
+1
 1</language>
 	</row>
 
@@ -7173,13 +7173,13 @@
 		<language name="JPN" width="216">
 
 
-1
-1</language>
+0
+0</language>
 		<language name="JPN_KANJI" width="216">
 
 
-1
-1</language>
+0
+0</language>
 	</row>
 
 	<row id="WAZAINFO_527">
@@ -7187,28 +7187,15 @@
 
 
 0
-0</language>
+1</language>
 		<language name="JPN_KANJI" width="216">
 
 
 0
-0</language>
+1</language>
 	</row>
 
 	<row id="WAZAINFO_528">
-		<language name="JPN" width="216">
-
-
-0
-1</language>
-		<language name="JPN_KANJI" width="216">
-
-
-0
-1</language>
-	</row>
-
-	<row id="WAZAINFO_529">
 		<language name="JPN" width="216">
 
 
