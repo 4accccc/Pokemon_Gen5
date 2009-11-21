@@ -1173,6 +1173,12 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
       PP_ChangeMonsNo( wk->dst, monsno );
       box_setup( wk, INPUTBOX_ID_TOKUSEI, wk->dst );
       box_setup( wk, INPUTBOX_ID_SEX, wk->dst );
+      box_setup( wk, INPUTBOX_ID_HPVAL, wk->dst );
+      box_setup( wk, INPUTBOX_ID_POWVAL, wk->dst );
+      box_setup( wk, INPUTBOX_ID_DEFVAL, wk->dst );
+      box_setup( wk, INPUTBOX_ID_AGIVAL, wk->dst );
+      box_setup( wk, INPUTBOX_ID_SPWVAL, wk->dst );
+      box_setup( wk, INPUTBOX_ID_SDFVAL, wk->dst );
     }
     break;
   case INPUTBOX_ID_PPCNT1:
