@@ -79,11 +79,15 @@ typedef struct
   
   MB_CHILD_STATE  state;
   GFL_PROCSYS   *procSys;
+  void          *ppp[MB_CAP_POKE_NUM];
   
+  DLPLAY_CARD_TYPE cardType;
 
   MB_MSG_WORK *msgWork;
   MB_COMM_WORK *commWork;
   MB_DATA_WORK *dataWork;
+  
+  MB_SELECT_INIT_WORK selInitWork;
   
 }MB_CHILD_WORK;
 
@@ -123,6 +127,7 @@ static const GFL_DISP_VRAM vramBank = {
 //--------------------------------------------------------------
 static void MB_CHILD_Init( MB_CHILD_WORK *work )
 {
+  u8 i;
   work->state = MCS_FADEIN;
   work->msgWork = NULL;
 
@@ -140,6 +145,12 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
   PMSND_InitMultiBoot( work->sndData );
   
   work->procSys = GFL_PROC_LOCAL_boot( work->heapId );
+  
+  for( i=0;i<MB_CAP_POKE_NUM;i++ )
+  {
+    work->ppp[i] = GFL_HEAP_AllocClearMemory( work->heapId , POKETOOL_GetPPPWorkSize() );
+    work->selInitWork.ppp[i] = work->ppp[i];
+  }
 }
 
 //--------------------------------------------------------------
@@ -147,6 +158,12 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
 //--------------------------------------------------------------
 static void MB_CHILD_Term( MB_CHILD_WORK *work )
 {
+  u8 i;
+  for( i=0;i<MB_CAP_POKE_NUM;i++ )
+  {
+    GFL_HEAP_FreeMemory( work->ppp[i] );
+  }
+
   GFL_PROC_LOCAL_Exit( work->procSys );
   
   PMSND_Exit();
@@ -234,13 +251,14 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
     {
       work->dataWork = MB_DATA_InitSystem( work->heapId );
-      if( MB_DATA_GetCardType( work->dataWork ) == CARD_TYPE_DUMMY )
+      work->cardType = MB_DATA_GetCardType( work->dataWork );
+      if( work->cardType == CARD_TYPE_DUMMY )
       {
         MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_DEB_01 );
         work->state = MCS_SELECT_ROM;
       }
       else
-      if( MB_DATA_GetCardType( work->dataWork ) == CARD_TYPE_INVALID )
+      if( work->cardType == CARD_TYPE_INVALID )
       {
         //ROMˆá‚¤I
         MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_02 );
@@ -265,6 +283,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     {
       MB_DATA_SetCardType( work->dataWork , CARD_TYPE_PT );
       work->state = MCS_LOAD_DATA;
+      work->cardType = CARD_TYPE_PT;
     }
     else
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
@@ -296,10 +315,14 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       MB_CHILD_TermGraphic( work );
       work->msgWork = NULL;
       
+      //InitWork‚Ìppp‚ÍÅ‰‚É“ü‚ê‚Ä‚¢‚é
+      work->selInitWork.parentHeap = work->heapId;
+      work->selInitWork.cardType = work->cardType;
+      
       GFL_PROC_LOCAL_CallProc( work->procSys , 
                                NO_OVERLAY_ID ,
                                &MultiBootSelect_ProcData ,
-                               NULL );
+                               &work->selInitWork );
       
       work->state = MCS_SELECT_MAIN;
     }

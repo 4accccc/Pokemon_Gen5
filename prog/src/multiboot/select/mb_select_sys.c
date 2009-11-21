@@ -21,6 +21,7 @@
 
 #include "multiboot/mb_select_sys.h"
 #include "multiboot/mb_util_msg.h"
+#include "multiboot/mb_poke_icon.h"
 #include "multiboot/mb_local_def.h"
 
 
@@ -53,6 +54,7 @@ typedef enum
 typedef struct
 {
   HEAPID heapId;
+  GFL_TCB *vBlankTcb;
   MB_SELECT_INIT_WORK *initWork;
   
   MB_SELECT_STATE  state;
@@ -60,6 +62,13 @@ typedef struct
   void  *sndData;
   //メッセージ用
   MB_MSG_WORK *msgWork;
+
+  //仮出し
+  GFL_CLUNIT  *cellUnit;
+  GFL_CLWK    *pokeIcon[MB_CAP_POKE_NUM];
+  u32         iconPalRes;
+  u32         iconAnmRes;
+  u32         iconCharRes[MB_CAP_POKE_NUM];
   
 }MB_SELECT_WORK;
 
@@ -72,6 +81,7 @@ typedef struct
 static void MB_SELECT_Init( MB_SELECT_WORK *work );
 static void MB_SELECT_Term( MB_SELECT_WORK *work );
 static const BOOL MB_SELECT_Main( MB_SELECT_WORK *work );
+static void MB_SELECT_VBlankFunc(GFL_TCB *tcb, void *wk );
 
 static void MB_SELECT_InitGraphic( MB_SELECT_WORK *work );
 static void MB_SELECT_TermGraphic( MB_SELECT_WORK *work );
@@ -89,8 +99,8 @@ static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
   GX_VRAM_TEX_NONE,             // テクスチャイメージスロット
   GX_VRAM_TEXPLTT_NONE,         // テクスチャパレットスロット
-  GX_OBJVRAMMODE_CHAR_1D_32K,
-  GX_OBJVRAMMODE_CHAR_1D_32K
+  GX_OBJVRAMMODE_CHAR_1D_128K,
+  GX_OBJVRAMMODE_CHAR_1D_128K
 };
 
 
@@ -104,7 +114,59 @@ static void MB_SELECT_Init( MB_SELECT_WORK *work )
   MB_SELECT_InitGraphic( work );
   MB_SELECT_LoadResource( work );
   work->msgWork = MB_MSG_MessageInit( work->heapId , MB_SELECT_FRAME_MSG );
+  work->vBlankTcb = GFUser_VIntr_CreateTCB( MB_SELECT_VBlankFunc , work , 8 );
+
+
   
+  {
+    //仮
+    u8 i;
+    const DLPLAY_CARD_TYPE type = work->initWork->cardType;
+    ARCHANDLE *arcHandle = MB_ICON_GetArcHandle( work->heapId , type );
+    
+    work->cellUnit = GFL_CLACT_UNIT_Create( 12 , 0, work->heapId );
+    GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit );
+    
+    work->iconPalRes = GFL_CLGRP_PLTT_RegisterComp( arcHandle , 
+                              MB_ICON_GetPltResId( type ) , 
+                              CLSYS_DRAW_MAIN , 
+                              3*32 , work->heapId  );
+    work->iconAnmRes = GFL_CLGRP_CELLANIM_Register( arcHandle , 
+                              MB_ICON_GetCellResId( type ) , 
+                              MB_ICON_GetAnmResId( type ), 
+                              work->heapId  );
+    
+    for( i=0;i<MB_CAP_POKE_NUM;i++ )
+    {
+      GFL_CLWK_DATA cellInitData;
+      cellInitData.pos_x = 32+i*32;
+      cellInitData.pos_y = 84;
+      cellInitData.anmseq = 0;
+      cellInitData.softpri = 0;
+      cellInitData.bgpri = 0;
+
+      PPP_Setup( work->initWork->ppp[i] ,
+                 GFUser_GetPublicRand0(493)+1 ,
+                 GFUser_GetPublicRand0(100)+1 ,
+                 PTL_SETUP_ID_AUTO );
+               
+      work->iconCharRes[i] = GFL_CLGRP_CGR_Register( arcHandle , 
+                                    MB_ICON_GetCharResId(work->initWork->ppp[i],type) , 
+                                    FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+      
+      work->pokeIcon[i] = GFL_CLACT_WK_Create( work->cellUnit ,
+                work->iconCharRes[i],
+                work->iconPalRes,
+                work->iconAnmRes,
+                &cellInitData ,CLSYS_DRAW_MAIN , work->heapId );
+
+      GFL_CLACT_WK_SetPlttOffs( work->pokeIcon[i] , 
+                                MB_ICON_GetPalNumber(work->initWork->ppp[i],type) ,
+                                CLWK_PLTTOFFS_MODE_PLTT_TOP );
+
+    }
+    GFL_ARC_CloseDataHandle( arcHandle );
+  }
 }
 
 //--------------------------------------------------------------
@@ -112,6 +174,20 @@ static void MB_SELECT_Init( MB_SELECT_WORK *work )
 //--------------------------------------------------------------
 static void MB_SELECT_Term( MB_SELECT_WORK *work )
 {
+  {
+    //仮
+    u8 i;
+    for( i=0;i<MB_CAP_POKE_NUM;i++ )
+    {
+      GFL_CLACT_WK_Remove( work->pokeIcon[i] );
+      GFL_CLGRP_CGR_Release( work->iconCharRes[i] );
+    }
+    GFL_CLGRP_PLTT_Release( work->iconPalRes );
+    GFL_CLGRP_CELLANIM_Release( work->iconAnmRes );
+    GFL_CLACT_UNIT_Delete( work->cellUnit );
+  }
+
+  GFL_TCB_DeleteTask( work->vBlankTcb );
 
   MB_MSG_MessageTerm( work->msgWork );
   MB_SELECT_TermGraphic( work );
@@ -136,14 +212,6 @@ static const BOOL MB_SELECT_Main( MB_SELECT_WORK *work )
     {
       if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
       {
-        u8 i;
-        for( i=0;i<MB_CAP_POKE_NUM;i++ )
-        {
-          PPP_Setup( work->initWork->ppp[i] ,
-                     GFUser_GetPublicRand0(493)+1 ,
-                     GFUser_GetPublicRand0(100)+1 ,
-                     PTL_SETUP_ID_AUTO );
-        }
         
         work->state = MSS_FADEOUT;
       }
@@ -163,6 +231,10 @@ static const BOOL MB_SELECT_Main( MB_SELECT_WORK *work )
     }
     break;
   }
+
+  //OBJの更新
+  GFL_CLACT_SYS_Main();
+
   
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START &&
       GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
@@ -172,6 +244,15 @@ static const BOOL MB_SELECT_Main( MB_SELECT_WORK *work )
   return FALSE;
 }
 
+
+//--------------------------------------------------------------
+//	VBlankTcb
+//--------------------------------------------------------------
+static void MB_SELECT_VBlankFunc(GFL_TCB *tcb, void *wk )
+{
+  //OBJの更新
+  GFL_CLACT_SYS_VBlankFunc();
+}
 
 //--------------------------------------------------------------
 //  グラフィック系初期化
@@ -188,7 +269,7 @@ static void MB_SELECT_InitGraphic( MB_SELECT_WORK *work )
   WIPE_ResetWndMask(WIPE_DISP_MAIN);
   WIPE_ResetWndMask(WIPE_DISP_SUB);
   
-  GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
+  GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
   GFL_DISP_SetBank( &vramBank );
 
   //BG系の初期化
@@ -237,11 +318,20 @@ static void MB_SELECT_InitGraphic( MB_SELECT_WORK *work )
     MB_SELECT_SetupBgFunc( &header_sub3  , MB_SELECT_FRAME_SUB_BG , GFL_BG_MODE_TEXT );
     
   }
+
+  //OBJ系の初期化
+  {
+    GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
+    GFL_CLACT_SYS_Create( &cellSysInitData , &vramBank ,work->heapId );
+    
+    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
+  }
   
 }
 
 static void MB_SELECT_TermGraphic( MB_SELECT_WORK *work )
 {
+  GFL_CLACT_SYS_Delete();
   GFL_BG_FreeBGControl( MB_SELECT_FRAME_MSG );
   GFL_BG_FreeBGControl( MB_SELECT_FRAME_BG );
   GFL_BG_FreeBGControl( MB_SELECT_FRAME_SUB_BG );
@@ -325,6 +415,7 @@ static GFL_PROC_RESULT MB_SELECT_ProcInit( GFL_PROC * proc, int * seq , void *pw
     initWork = GFL_HEAP_AllocClearMemory( HEAPID_MB_BOX , sizeof(MB_SELECT_INIT_WORK) );
 
     initWork->parentHeap = parentHeap;
+    initWork->cardType = CARD_TYPE_DUMMY;
     for( i=0;i<MB_CAP_POKE_NUM;i++ )
     {
       initWork->ppp[i] = GFL_HEAP_AllocClearMemory( parentHeap , POKETOOL_GetPPPWorkSize() );
@@ -335,7 +426,7 @@ static GFL_PROC_RESULT MB_SELECT_ProcInit( GFL_PROC * proc, int * seq , void *pw
   else
   {
     initWork = pwk;
-    GFL_HEAP_CreateHeap( initWork->parentHeap , HEAPID_MB_BOX, 0x80000 );
+    GFL_HEAP_CreateHeap( initWork->parentHeap , HEAPID_MB_BOX, 0x40000 );
     work = GFL_PROC_AllocWork( proc, sizeof(MB_SELECT_WORK), HEAPID_MULTIBOOT );
     work->initWork = pwk;
   }

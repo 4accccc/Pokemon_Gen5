@@ -71,7 +71,6 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
     CARDRomHeader *headerData;
     s32 lockID = OS_GetLockID();
 
-    CARD_Enable( TRUE );
     GF_ASSERT( lockID != OS_LOCK_ID_ERROR );
     CARD_LockRom( (u16)lockID );
     headerData = (CARDRomHeader*)CARD_GetRomHeader();
@@ -95,8 +94,10 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
     {
       dataWork->cardType = CARD_TYPE_GS;
     }
-    else if( STD_CompareString( headerData->game_name , "NINTENDO    NTRJ01" ) == 0 )
+    else if( STD_CompareString( headerData->game_name , "NINTENDO    NTRJ01" ) == 0 ||
+             STD_CompareString( headerData->game_name , "SKEL" ) == 0 )
     {
+      //MB‚ÅƒoƒOROM‚©srl’¼‹N“®
       dataWork->cardType = CARD_TYPE_DUMMY;
     }
   }
@@ -127,6 +128,7 @@ BOOL  MB_DATA_LoadDataFirst( MB_DATA_WORK *dataWork )
     break;
 
   case CARD_TYPE_GS:
+    return TRUE;
     break;
   }
   return FALSE;
@@ -146,6 +148,7 @@ BOOL  MB_DATA_SaveData( MB_DATA_WORK *dataWork )
     break;
 
   case CARD_TYPE_GS:
+    return TRUE;
     break;
   }
   return FALSE;
