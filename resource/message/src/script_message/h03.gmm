@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-28T18:17:59"/>
+	<create user="matsumiya" host="W00207" date="2009-11-21T17:13:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="234"/>
+		<comment position="4" width="281"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -299,9 +299,7 @@
 ・表示後、カメラを倒し橋の先が見えるようにする
 ・カメラ角度復帰すると
 　この動作モデル、r09方面に移動し
-　画面外に消えると主人公操作可能
-
-・仮イベント＆仮メッセージ</comment>
+　画面外に消えると主人公操作可能</comment>
 		<attribute name="キャラ指定">七賢人</attribute>
 		<language name="JPN" width="256">？？？『ゲーチスさまは　いわれた[BE:01:ページ切り替え（クリア）]
 おまえの　ちからが
@@ -318,7 +316,7 @@
 	<row id="msg_h03_sage2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・したっぱ7人抜きを終えると
-　主人公の隣接してメッセージ表示
+　主人公に隣接してメッセージ表示
 ・表示後、画面暗転し
 　プラズマ団の動作モデルをすべて削除</comment>
 		<attribute name="キャラ指定">七賢人</attribute>
