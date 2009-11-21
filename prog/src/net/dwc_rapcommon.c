@@ -39,7 +39,7 @@ static void* mydwc_alloc( DWCAllocType name, u32 size, int align )
   OSIntrMode old;
 
 #ifdef DEBUGPRINT_ON
-  NET_PRINT("HEAPæ“¾(%d, %d) \n", size, align);
+  //NET_PRINT("HEAPæ“¾(%d, %d) \n", size, align);
 #endif
 
 	GF_ASSERT_MSG( sc_heapID != 0, "DWCQAllocŠÖ”‚ªƒq[ƒvIDİ’è‚³‚ê‚¸‚ÉŒÄ‚Î‚ê‚Ü‚µ‚½" );

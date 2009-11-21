@@ -979,7 +979,6 @@ static GFL_PROC_RESULT IrcBattleMatchProcMain( GFL_PROC * proc, int * seq, void 
 static GFL_PROC_RESULT IrcBattleMatchProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   IRC_BATTLE_MATCH* pWork = mywk;
-  EVENT_IRCBATTLE_WORK* pParentWork = pwk;
 
   _workEnd(pWork);
 
@@ -987,7 +986,6 @@ static GFL_PROC_RESULT IrcBattleMatchProcEnd( GFL_PROC * proc, int * seq, void *
   GFL_PROC_FreeWork(proc);
   GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
 
-  EVENT_IrcBattle_SetEnd(pParentWork);
 
 
   return GFL_PROC_RES_FINISH;

@@ -76,7 +76,7 @@ enum{
   EXTRA_MM_REC_DL_2_MIRROR = EXTRA_MM_REC_DL_2 + SAVESIZE_EXTRA_BATTLE_REC,
   
   EXTRA_MM_CGEAR = EXTRA_MM_REC_DL_2_MIRROR + SAVESIZE_EXTRA_BATTLE_REC,
-  EXTRA_MM_STREAMING = EXTRA_MM_CGEAR + sizeof(CGEAR_PICTURE_SAVEDATA),
+  EXTRA_MM_STREAMING = EXTRA_MM_CGEAR + SAVESIZE_EXTRA_CGEAR_PICTURE,
 };
 
 
@@ -492,8 +492,8 @@ const GFL_SVLD_PARAM SaveParam_ExtraTbl[] = {
   {//外部セーブパラメータテーブル：ストリーミング(ミラーリング無)
     SaveDataTbl_Extra_CGEARPicture,
     NELEMS(SaveDataTbl_Extra_CGEARPicture),
-    EXTRA_MM_STREAMING,             //バックアップ領域先頭アドレス
-    EXTRA_MM_STREAMING,             //ミラーリング領域先頭アドレス ※ミラー無し指定
+    EXTRA_MM_CGEAR,             //バックアップ領域先頭アドレス
+    EXTRA_MM_CGEAR,             //ミラーリング領域先頭アドレス ※ミラー無し指定
     sizeof(CGEAR_PICTURE_SAVEDATA),       //使用するバックアップ領域の大きさ
     MAGIC_NUMBER,
   },

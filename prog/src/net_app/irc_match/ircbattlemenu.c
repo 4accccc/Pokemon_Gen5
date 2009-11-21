@@ -1135,7 +1135,7 @@ static GFL_PROC_RESULT IrcBattleMenuProcEnd( GFL_PROC * proc, int * seq, void * 
 
 
 	GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
-  EVENT_IrcBattle_SetEnd(pParentWork);
+//  EVENT_IrcBattle_SetEnd(pParentWork);
 
 
 	

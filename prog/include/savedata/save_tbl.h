@@ -24,6 +24,8 @@
 
 ///EXTRA領域で戦闘録画が使用するセーブサイズ
 #define SAVESIZE_EXTRA_BATTLE_REC   (SAVE_SECTOR_SIZE * 2)
+///EXTRA領域でCGEAR画像が使用するセーブサイズ
+#define SAVESIZE_EXTRA_CGEAR_PICTURE   (SAVE_SECTOR_SIZE * 2)
 ///EXTRA領域でストリーミングが使用するセーブサイズ
 #define SAVESIZE_EXTRA_STREAMING    (SAVE_SECTOR_SIZE * 32)  //128Kbyte
 

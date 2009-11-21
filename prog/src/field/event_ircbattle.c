@@ -88,15 +88,13 @@ struct _EVENT_IRCBATTLE_WORK{
   GAMESYS_WORK * gsys;
   FIELDMAP_WORK * fieldmap;
   SAVE_CONTROL_WORK *ctrl;
-  BATTLE_SETUP_PARAM para;
-  BOOL isEndProc;
   int selectType;
   IRC_COMPATIBLE_PARAM  compatible_param; //赤外線メニューに渡す情報
   BOOL push;
 #if PM_DEBUG
   int debugseq;
 #endif
-
+  BATTLE_SETUP_PARAM para;
 };
 
 static void _battleParaFree(EVENT_IRCBATTLE_WORK *dbw);
@@ -129,7 +127,6 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq) = _CALL_IRCBATTLE_MENU;
     break;
   case _CALL_IRCBATTLE_MENU:
-    dbw->isEndProc = FALSE;
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(fieldmap), &IrcBattleMenuProcData, dbw);
     (*seq)++;
     break;
@@ -149,8 +146,6 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     }
     break;
   case _FIELD_FADEOUT:
-    dbw->isEndProc = FALSE;
-//    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
     (*seq)++;
     break;
   case _CALL_IRCBATTLE_MATCH:
@@ -247,7 +242,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     break;
 
   case _CALL_TRADE:  //  ポケモン交換
-    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokemon_trade), &PokemonTradeIrcProcData, dbw);
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokemon_trade), &PokemonTradeIrcProcData, dbw->gsys);
     (*seq)++;
     break;
   case _WAIT_TRADE:
@@ -368,12 +363,6 @@ static void _battleParaFree(EVENT_IRCBATTLE_WORK *dbw)
 
   para = &dbw->para;
   GFL_HEAP_FreeMemory(para->partyPlayer);
-}
-
-
-void EVENT_IrcBattle_SetEnd(EVENT_IRCBATTLE_WORK* pWork)
-{
-  pWork->isEndProc = TRUE;
 }
 
 

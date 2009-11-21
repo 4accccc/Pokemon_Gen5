@@ -264,7 +264,7 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
     break;
   case P2P_TRADE:
-    GFL_PROC_SysCallProc(FS_OVERLAY_ID(pokemon_trade), &PokemonTradeProcData, NULL);
+    GFL_PROC_SysCallProc(FS_OVERLAY_ID(pokemon_trade), &PokemonTradeProcData, ep2p->gsys);
     ep2p->seq++;
     break;
   case P2P_TRADE_END:

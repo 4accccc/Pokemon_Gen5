@@ -20,12 +20,11 @@ typedef enum{
   POKEMONTRADE_TYPE_MAX,
 } POKEMONTRADE_TYPE;
 
-
-
 typedef struct _POKEMON_TRADE_WORK POKEMON_TRADE_WORK;
 typedef struct _POKEMONTRADE_DEMO_WORK POKEMONTRADE_DEMO_WORK;
 
 extern const GFL_PROC_DATA PokemonTradeProcData;
 extern const GFL_PROC_DATA PokemonTradeIrcProcData;
+extern const GFL_PROC_DATA PokemonTradeWiFiProcData;
 
 

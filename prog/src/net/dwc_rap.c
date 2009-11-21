@@ -15,30 +15,26 @@
 #if GFL_NET_WIFI
 
 // デバッグ出力を大量に吐き出す場合定義
-#if defined(DEBUG_ONLY_FOR_toru_nagihashi)
+#if defined(DEBUG_ONLY_FOR_ohno)
+#define DEBUGPRINT_ON (1)
+#else
 #define DEBUGPRINT_ON (0)
 #endif
 
-//#include "../net_def.h"
-//#include "../net_local.h"
 #include "net/dwc_rap.h"
 #include "vchat.h"
-//#include "system/pm_debug_wifi.h"
 #include <vct.h>
 
 
 // 何秒間通信が届かないとタイムアウトと判断するか
 #define MYDWC_TIMEOUTSEC (10)
 
-// ランダムマッチにおいて、指定人数に届かない場合に進行を進める為の時間
-//#define _RANDOMMATCH_TIMEOUT (90)	// 外からしていできるようにした
 
 // 何フレーム送信がないと、KEEP_ALIVEトークンを送るか。
 #define KEEPALIVE_TOKEN_TIME 240
 
 // ボイスチャットを利用する場合は定義する。
 #define MYDWC_USEVCHA
-
 
 #define MYDWC_DEBUGPRINT NET_PRINT
 
@@ -47,34 +43,14 @@
 #define FRIENDLIST_MAXSIZE 32
 
 // １フレームに何人分のデータを更新するか。
-//#define FRIENDINFO_UPDATA_PERFRAME (4)
-#define FRIENDINFO_UPDATA_PERFRAME (1)	// 080708 処理不可軽減のため
-
-// WiFiで使うHeapのサイズ(128Kバイト、仮）+7000
-//-----#if TESTOHNO
-//#define MYDWC_HEAPSIZE (0x2B000)
-//#define MYDWC_HEAPSIZE (0x2C000)
-//#define MYDWC_HEAPSIZE (0x2B000)
-
-//#define MYDWC_HEAPID HEAPID_WIFIMENU
-//-----#endif //TESTOHNO
-
-// この辺はテスト用。正式に割り当てられたら、指定する。
-#define GAME_NAME					GF_DWC_GAMENAME		// 使用するゲーム名
-#define GAME_SECRET_KEY		"tXH2sN"					// 使用するシークレットキー
-#define GAME_PRODUCTID		12230							// 使用するプロダクトID
-//#define GAME_SECRET_KEY "1vTlwb"					// 使用するシークレットキー
-//#define GAME_PRODUCTID  10727							// 使用するプロダクトID
+#define FRIENDINFO_UPDATA_PERFRAME (1)
 
 #define SIZE_RECV_BUFFER (4 * 1024)
 #define SIZE_SEND_BUFFER 256
 
 #define _MATCHSTRINGNUM (128)
 
-// ４人用WIFI通信時に臨時で確保するHEAP
-#define _EXTRA_HEAPSIZE		(0xf000)
-#define _EXTRA_HEAP_GROUPID	(16)
-#define _WIFI_NUM_MAX (4)  // 接続MAX数
+#define _WIFI_NUM_MAX (2)  // 接続MAX数
 
 
 typedef struct
@@ -684,6 +660,68 @@ int GFL_NET_DWC_StartMatch( u8* keyStr,int numEntry, BOOL bParent, u32 timelimit
   return 1;
 }
 //----#endif //TESTOHNO
+
+
+//==============================================================================
+/**
+ * ランダム対戦を行う関数。ランダムマッチ中は数十フレーム処理が返ってこないことがある。
+ * @retval  正…成功。０…失敗。
+ */
+//==============================================================================
+
+int GFL_NET_DWC_StartMatchFilter( char* filterStr,int numEntry,DWCEvalPlayerCallback evalcallback,void* pWork)
+{
+  GF_ASSERT( _dWork != NULL );
+  if( _dWork->state != MDSTATE_LOGIN )
+  {
+    return 0;
+  }
+  mydwc_releaseRecvBuffAll();
+  {
+    int i;
+    for(i=0;i<numEntry; i++){
+      mydwc_allocRecvBuff(i);
+    }
+  }
+
+  _CHANGE_STATE(MDSTATE_MATCHING);
+  _dWork->maxConnectNum = numEntry;
+  if(FALSE==DWC_ConnectToAnybodyAsync
+    (
+      DWC_TOPOLOGY_TYPE_STAR,
+      numEntry,
+      (const char*)filterStr,
+      ConnectToAnybodyCallback,
+      NULL,
+      RandomNewClientCallback,
+      NULL,
+      evalcallback,
+      pWork,
+      NULL,
+      NULL,
+      NULL
+      )){
+    return 0;
+  }
+  _dWork->matching_type = MDTYPE_RANDOM;
+  // 送信コールバックの設定
+  DWC_SetUserSendCallback( SendDoneCallback,NULL );
+
+  // 受信コールバックの設定
+  DWC_SetUserRecvCallback( UserRecvCallback,NULL );
+
+  // コネクションクローズコールバックを設定
+  DWC_SetConnectionClosedCallback(ConnectionClosedCallback, NULL);
+
+  // タイムアウトコールバックの設定
+  DWC_SetUserRecvTimeoutCallback( recvTimeoutCallback,NULL );
+
+  _dWork->sendbufflag = 0;
+
+  _dWork->closedflag = TRUE;	// 080602 tomoya
+  return 1;
+}
+
 
 // 2006.7.4 yoshihara 追加
 static void finishcancel()
@@ -1317,9 +1355,25 @@ static void UserRecvCallback( u8 aid, u8* buffer, int size,void* param )
     return;
   }
   //	MYDWC_DEBUGPRINT( "受信(%d)\n",*((s32*)buffer) );
-  //	NET_PRINT( "受信(%d)\n",aid );
+  //NET_PRINT( "受信(%d)\n",aid );
 
-  // アライメントを確実にするために、コピー
+#if 0
+  {
+    u16 *temp = buffer + 4;
+    
+    if( DWC_GetMyAID() == 0 )
+    {
+      // 自分が親の場合…クライントからサーバに対して送られてきたものと判断。
+      // サーバ用受信関数を呼び出す。
+      if( _dWork->serverCallback != NULL ) _dWork->serverCallback(aid, temp, size-4);
+    } else {
+      // サーバからクライアントに対して送られてきたものと判断。
+      if( _dWork->clientCallback != NULL ){
+        _dWork->clientCallback(aid, temp, size-4);
+      }
+    }
+  }
+#else
   {
     u16 *temp = (u16*)mydwc_AllocFunc( NULL, size - 4, 4);
     if(temp==NULL){
@@ -1341,6 +1395,7 @@ static void UserRecvCallback( u8 aid, u8* buffer, int size,void* param )
     }
 
     mydwc_FreeFunc(NULL, temp, size - 4);
+#endif
   }
 }
 

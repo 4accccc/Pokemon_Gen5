@@ -2574,10 +2574,10 @@ void POKETRADE_MessageHeapInit(POKEMON_TRADE_WORK* pWork)
 void POKETRADE_MessageHeapEnd(POKEMON_TRADE_WORK* pWork)
 {
   int i;
-  if(pWork->MessageWin){
-    GFL_BMPWIN_Delete(pWork->MessageWin);
-    pWork->MessageWin=NULL;
-  }
+//  if(pWork->MessageWin){
+  //  GFL_BMPWIN_Delete(pWork->MessageWin);
+    //pWork->MessageWin=NULL;
+//  }
   if(pWork->MyInfoWin){
     GFL_BMPWIN_Delete(pWork->MyInfoWin);
     pWork->MyInfoWin=NULL;
@@ -2784,10 +2784,10 @@ static void DEBUG_MyPokeAdd(POKEPARTY *party,MYSTATUS *myStatus,HEAPID heapID)
  */
 //------------------------------------------------------------------------------
 
-static void _savedataHeapInit(POKEMON_TRADE_WORK* pWork,EVENT_IRCBATTLE_WORK* pParentWork)
+static void _savedataHeapInit(POKEMON_TRADE_WORK* pWork,GAMESYS_WORK* pParentWork)
 {
   if(pParentWork){
-    GAMEDATA* pGameData = GAMESYSTEM_GetGameData(IrcBattle_GetGAMESYS_WORK(pParentWork));
+    GAMEDATA* pGameData = GAMESYSTEM_GetGameData(pParentWork);
     pWork->pGameData=pGameData;
     pWork->pBox = GAMEDATA_GetBoxManager(pGameData);
     pWork->pMy = GAMEDATA_GetMyStatus( pGameData );
@@ -2835,10 +2835,9 @@ static void _savedataHeapInit(POKEMON_TRADE_WORK* pWork,EVENT_IRCBATTLE_WORK* pP
 }
 
 
-static void _savedataHeapEnd(POKEMON_TRADE_WORK* pWork,EVENT_IRCBATTLE_WORK* pParentWork)
+static void _savedataHeapEnd(POKEMON_TRADE_WORK* pWork,BOOL bParentWork)
 {
-  if(pParentWork){
-    EVENT_IrcBattle_SetEnd(pParentWork);
+  if(bParentWork){
   }
 #if PM_DEBUG
   else{
@@ -2887,7 +2886,7 @@ FS_EXTERN_OVERLAY(app_mail);
 static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk,int type )
 {
   int i;
-  EVENT_IRCBATTLE_WORK* pParentWork = pwk;
+  GAMESYS_WORK* pParentWork = pwk;
 
   //オーバーレイ読み込み
   GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
@@ -3024,7 +3023,6 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
 {
   int i;
   POKEMON_TRADE_WORK* pWork = mywk;
-  EVENT_IRCBATTLE_WORK* pParentWork = pwk;
 
   IRC_POKETRADE_ResetBoxNameWindow(pWork);
   DEBUGWIN_ExitProc();
@@ -3057,10 +3055,10 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
 
   GFL_CLACT_UNIT_Delete(pWork->cellUnit);
 
-  _savedataHeapEnd(pWork,pParentWork);
-  _dispSystemHeapEnd(pWork);
-  _mcssSystemHeapEnd(pWork);
+  _savedataHeapEnd(pWork,(pwk!=NULL));
   POKETRADE_MessageHeapEnd(pWork);
+  _mcssSystemHeapEnd(pWork);
+  _dispSystemHeapEnd(pWork);
 
   GFL_PROC_FreeWork(proc);
   GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);

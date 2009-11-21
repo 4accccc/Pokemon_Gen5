@@ -88,7 +88,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
   _PacketTbl,  // 受信関数テーブル
   NELEMS(_PacketTbl), // 受信テーブル要素数
   NULL,    ///< ハードで接続した時に呼ばれる
-  _connectCallBack,    ///< ネゴシエーション完了時にコール
+  NULL,//_connectCallBack,    ///< ネゴシエーション完了時にコール
   NULL,   // ユーザー同士が交換するデータのポインタ取得関数
   NULL,   // ユーザー同士が交換するデータのサイズ取得関数
   _BeaconGetFunc,  // ビーコンデータ取得関数
@@ -232,6 +232,7 @@ static void _changeStateDebug(WIFILOGIN_WORK* pWork,StateFunc state, int line)
  * @retval  none
  */
 //--------------------------------------------------------------
+#if 0
 static void _connectCallBack(void* pWk, int netID)
 {
   WIFILOGIN_WORK* pWork = pWk;
@@ -245,7 +246,7 @@ static void _connectCallBack(void* pWk, int netID)
     pWork->connect_ok = TRUE;
   }
 }
-
+#endif
 //--------------------------------------------------------------
 /**
  * @brief   移動コマンド受信関数
@@ -608,6 +609,12 @@ static void _connectingWait(WIFILOGIN_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _connectionStart(WIFILOGIN_WORK* pWork)
 {
+  if( OS_IsRunOnTwl() ){//DSIならマッチングのメモリが大きくとられる為、領域を多くしないといけない
+    aGFLNetInit.heapSize = GFL_NET_DWCLOBBY_HEAPSIZE;
+  }
+  else{
+    aGFLNetInit.heapSize = GFL_NET_DWC_HEAPSIZE;
+  }
   GFL_NET_Init(&aGFLNetInit, NULL, pWork);	//通信初期化
   GFL_NET_StateWifiEnterLogin();
 
@@ -641,6 +648,25 @@ static void _modeProfileWait2(WIFILOGIN_WORK* pWork)
   }
 }
 
+static void _modeLoginWait2(WIFILOGIN_WORK* pWork)
+{
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+
+    if(selectno==0){
+      _CHANGE_STATE(pWork,_connectionStart);
+    }
+    else{
+      GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+      _CHANGE_STATE(pWork,NULL);
+    }
+    WIFILOGIN_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , 0 );
+  }
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   接続確認のメッセージ出力待ち
@@ -657,6 +683,18 @@ static void _modeProfileWait(WIFILOGIN_WORK* pWork)
 }
 
 
+
+static void _modeLoginWait(WIFILOGIN_WORK* pWork)
+{
+  if(!WIFILOGIN_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
+    return;
+  }
+  pWork->pAppTask = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_INFO);
+  _CHANGE_STATE(pWork,_modeLoginWait2);
+}
+
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   最初の接続のプロファイル分岐
@@ -670,16 +708,18 @@ static void _profileIDCheck(WIFILOGIN_WORK* pWork)
   {
     pWork->bInitMessage=TRUE;
     WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0003);
+    _CHANGE_STATE(pWork,_modeProfileWait);
   }
   else if( !DWC_CheckValidConsole(WifiList_GetMyUserInfo(pWork->pList)) )
   {  //別DSの場合
     WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0005);
+    _CHANGE_STATE(pWork,_modeProfileWait);
   }
   else  //普通の接続
   {
     WIFILOGIN_MESSAGE_InfoMessageDisp(pWork->pMessageWork, dwc_message_0002);
+    _CHANGE_STATE(pWork,_modeLoginWait);
   }
-  _CHANGE_STATE(pWork,_modeProfileWait);
 
 }
 

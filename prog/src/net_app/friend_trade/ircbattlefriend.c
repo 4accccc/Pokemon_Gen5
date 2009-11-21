@@ -271,16 +271,9 @@ static GFL_PROC_RESULT IrcBattleFriendProcMain( GFL_PROC * proc, int * seq, void
 static GFL_PROC_RESULT IrcBattleFriendProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   IRC_BATTLE_FRIEND* pWork = mywk;
-  EVENT_IRCBATTLE_WORK* pParentWork = pwk;
 
-  // _workEnd(pWork);
-
-  //	ConnectBGPalAnm_End(&pWork->cbp);
   GFL_PROC_FreeWork(proc);
   GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
-
-  EVENT_IrcBattle_SetEnd(pParentWork);
-
 
   return GFL_PROC_RES_FINISH;
 }

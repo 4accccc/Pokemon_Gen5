@@ -38,7 +38,7 @@ enum EVENTIRCBTL_IBMODE_ENTRY {
 //------------------------------------------------------------------
 //extern GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap);
 //extern void EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * event);
-extern void EVENT_IrcBattle_SetEnd(EVENT_IRCBATTLE_WORK* pWk);
+//extern void EVENT_IrcBattle_SetEnd(EVENT_IRCBATTLE_WORK* pWk);
 
 
 //--------------------------------------------------------------

@@ -15,13 +15,12 @@
 #include "field/fieldmap.h"
 
 typedef struct {
-  GMEVENT * event;
   GAMESYS_WORK * gsys;
   FIELDMAP_WORK * fieldmap;
   SAVE_CONTROL_WORK *ctrl;
-  void* pWork;
-  BOOL isEndProc;
   int selectType;
+  GMEVENT * event;
+  void* pWork;
 } EVENT_GTSNEGO_WORK;
 
 

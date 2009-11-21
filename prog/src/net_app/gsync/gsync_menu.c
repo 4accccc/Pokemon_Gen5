@@ -922,7 +922,6 @@ static GFL_PROC_RESULT GameSyncMenuProcEnd( GFL_PROC * proc, int * seq, void * p
 
 
 	GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
-  EVENT_IrcBattle_SetEnd(pParentWork);
 
 
 	

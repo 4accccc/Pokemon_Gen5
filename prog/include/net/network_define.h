@@ -13,6 +13,9 @@
 #define NET_WORK_ON (1)   // サンプルプログラム上で通信を動かす場合定義　動かさない場合未定義にする
 
 
+#define GAME_NAME					"syachi2ds"		// 使用するゲーム名
+#define GAME_SECRET_KEY		"tXH2sN"					// 使用するシークレットキー
+#define GAME_PRODUCTID		12230							// 使用するプロダクトID
 
 
 #if 0
@@ -93,6 +96,8 @@ IRAJ
 //#define GF_DWC_LOBBY_CHANNEL_PREFIX   (PPW_LOBBY_CHANNEL_PREFIX_DEBUG)
 #define GF_DWC_LOBBY_CHANNEL_PREFIX   (PPW_LOBBY_CHANNEL_PREFIX_DEBUG5) //金銀デバッグ中の為、WBは9
 
+#define MATCHINGKEY (0)
+
 #else //---------- DEBUG_SERVER
 
 //製品版用サーバー
@@ -103,6 +108,8 @@ IRAJ
 //DPW_SERVER_PUBLIC
 //Wi-Fiロビーサーバ
 #define GF_DWC_LOBBY_CHANNEL_PREFIX   (DWC_LOBBY_CHANNEL_PREFIX_RELEASE)
+
+#define MATCHINGKEY (1)
 
 #endif  //---------- DEBUG_SERVER
 

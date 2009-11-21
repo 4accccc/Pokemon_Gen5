@@ -35,18 +35,20 @@
 
 #include "savedata/wifilist.h"
 
-//#include "msg/msg_gtsnego.h"
-#include "msg/msg_wifi_system.h"
+#include "msg/msg_gtsnego.h"
 #include "../../field/event_gtsnego.h"
 #include "gtsnego.naix"
 #include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
 #include "gtsnego_local.h"
+
 
 #if PM_DEBUG
 #define _NET_DEBUG (1)  //デバッグ時は１
 #else
 #define _NET_DEBUG (0)  //デバッグ時は１
 #endif
+
+#define _NO2   (2)
 
 #define _WORK_HEAPSIZE (0x1000)  // 調整が必要
 
@@ -60,19 +62,13 @@
 #define _SUBSCREEN_PALLET	(0xE)
 
 #define STOP_TIME_ (60)
+#define _FRIEND_LOOKAT_DOWN_TIME  (60*3)
+#define _FRIEND_GREE_DOWN_TIME  (60*3)
 
 //--------------------------------------------
 // 通信初期化構造体
 //--------------------------------------------
 
-static void _connectCallBack(void* pWk, int netID);
-static void _RecvFirstData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
-static void* _BeaconGetFunc(void* pWork);
-static int _BeaconGetSizeFunc(void* pWork);
-static BOOL _BeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo);
-static void* _getMyUserData(void* pWork);  //DWCUserData
-static void* _getFriendData(void* pWork);  //DWCFriendData
-static void _deleteFriendList(int deletedIndex,int srcIndex, void* pWork);
 
 
 
@@ -87,11 +83,59 @@ enum _IBMODE_SELECT {
   _SELECTMODE_EXIT
 };
 
+enum _CHANGEMODE_SELECT {
+  _CHANGEMODE_SELECT_ANYONE=0,
+  _CHANGEMODE_SELECT_FRIEND,
+};
 
+enum _CHANGEMODE_LEVEL {
+  _CHANGEMODE_LEVEL_ALL,
+  _CHANGEMODE_LEVEL_1_49,
+  _CHANGEMODE_LEVEL_50,
+  _CHANGEMODE_LEVEL_51_100,
+  _CHANGEMODE_LEVEL_MAX,
+};
+
+enum _CHANGEMODE_IMAGE {
+  _CHANGEMODE_IMAGE_ALL,
+  _CHANGEMODE_IMAGE_COOL,  //かっこいい
+  _CHANGEMODE_IMAGE_PRETTY,       //		かわいい
+  _CHANGEMODE_IMAGE_SCARY,   //  		こわい
+  _CHANGEMODE_IMAGE_GEEK,   //  		へんな
+  _CHANGEMODE_IMAGE_MAX,        		
+};
+
+
+
+enum _GTSNEGO_MATCHKEY {
+  _MATCHKEY_PROFILE1,   //Profile1
+  _MATCHKEY_PROFILE2,   //Profile2
+  _MATCHKEY_PROFILE3,   //Profile3
+  _MATCHKEY_TYPE,     //交換タイプ 知り合いかどうか
+  _MATCHKEY_LEVEL,    //交換LV
+  _MATCHKEY_IMAGE_MY,  //自分の希望
+  _MATCHKEY_IMAGE_FRIEND,  //相手に対しての希望
+  _MATCHKEY_ROMCODE,    //ROMバージョン
+  _MATCHKEY_DEBUG,    //デバッグか製品か
+  _MATCHKEY_MAX,
+};
+
+
+
+static char matchkeystr[_MATCHKEY_MAX][2]={"p1","p2","p3","ty","lv","my","fr","rm","db"};
 
 
 typedef void (StateFunc)(GTSNEGO_WORK* pState);
 typedef BOOL (TouchFunc)(int no, GTSNEGO_WORK* pState);
+
+// 友達無指定ピアマッチメイク用追加キーデータ構造体
+typedef struct tagGameMatchExtKeys
+{
+    int ivalue;       // キーに対応する値（int型）
+    u8  keyID;        // マッチメイク用キーID
+    u8 pad;          // パディング
+    char keyStr[3];  // マッチメイク用キー文字列
+} GameMatchExtKeys;
 
 
 struct _GTSNEGO_WORK {
@@ -114,6 +158,13 @@ struct _GTSNEGO_WORK {
   GAMESYS_WORK *gameSys_;
   FIELDMAP_WORK *fieldWork_;
   GMEVENT* event_;
+  GameMatchExtKeys aMatchKey[_MATCHKEY_MAX];
+  char filter[128];
+  int changeMode;    //キーにする値 だれでもかともだちか
+  int myChageType;   //自分が交換したいタイプ
+  int friendChageType;  //相手に交換してもらいたいタイプ
+  int chageLevel;    // ポケモンレベル範囲
+
 };
 
 
@@ -134,6 +185,7 @@ static void _modeReportWait2(GTSNEGO_WORK* pWork);
 static BOOL _modeSelectMenuButtonCallback(int bttnid,GTSNEGO_WORK* pWork);
 static void _modeSelectBattleTypeInit(GTSNEGO_WORK* pWork);
 
+static void _levelSelect( GTSNEGO_WORK *pWork );
 
 
 
@@ -175,112 +227,308 @@ static void _changeStateDebug(GTSNEGO_WORK* pWork,StateFunc state, int line)
 #endif
 
 
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
- * @brief   接続完了コールバック
- * @param   pCtl    デバッグワーク
+ * @brief   モードセレクト画面タッチ処理
  * @retval  none
  */
-//--------------------------------------------------------------
-static void _connectCallBack(void* pWk, int netID)
+//------------------------------------------------------------------------------
+static BOOL _AnyoneOrFriendButtonCallback(int bttnid,GTSNEGO_WORK* pWork)
 {
-  GTSNEGO_WORK* pWork = pWk;
-  u32 temp;
 
-  OS_TPrintf("ネゴシエーション完了 netID = %d\n", netID);
-  pWork->connect_bit |= 1 << netID;
-  temp = pWork->connect_bit;
-  if(MATH_CountPopulation(temp) >= 2){
-    OS_TPrintf("全員のネゴシエーション完了 人数bit=%x\n", pWork->connect_bit);
-    pWork->connect_ok = TRUE;
+  pWork->changeMode = bttnid;
+  _CHANGE_STATE(pWork, _levelSelect);
+  return TRUE;
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ほしい姿選択をインクリメントする
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _IncMyChageType(int num,GTSNEGO_WORK* pWork)
+{
+  pWork->myChageType+=num;
+  if(_CHANGEMODE_IMAGE_MAX <= pWork->myChageType){
+    pWork->myChageType = 0;
+  }
+  else if(0 > pWork->myChageType){
+    pWork->myChageType = _CHANGEMODE_IMAGE_MAX - 1;
   }
 }
 
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
- * @brief   移動コマンド受信関数
- * @param   netID      送ってきたID
- * @param   size       パケットサイズ
- * @param   pData      データ
- * @param   pWork      ワークエリア
- * @param   pHandle    受け取る側の通信ハンドル
+ * @brief   ほしい姿選択をインクリメントする
  * @retval  none
  */
-//--------------------------------------------------------------
-static void _RecvFirstData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+//------------------------------------------------------------------------------
+static void _IncFriendChageType(int num,GTSNEGO_WORK* pWork)
 {
-  GTSNEGO_WORK *pWork = pWk;
-
-  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
-    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  pWork->friendChageType+=num;
+  if(_CHANGEMODE_IMAGE_MAX <= pWork->friendChageType){
+    pWork->friendChageType = 0;
   }
-  if(netID == GFL_NET_SystemGetCurrentID()){
-    return;	//自分のデータは無視
+  else if(0 > pWork->friendChageType){
+    pWork->friendChageType = _CHANGEMODE_IMAGE_MAX - 1;
   }
-  pWork->receive_ok = TRUE;
-  OS_TPrintf("最初のデータ受信コールバック netID = %d\n", netID);
 }
 
-
-
-typedef struct{
-  int gameNo;   ///< ゲーム種類
-} _testBeaconStruct;
-
-static _testBeaconStruct _testBeacon = { WB_NET_COMPATI_CHECK };
-
-
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
- * @brief   ビーコンデータ取得関数
- * @param   netID      送ってきたID
- * @param   size       パケットサイズ
- * @param   pData      データ
- * @param   pWork      ワークエリア
- * @param   pHandle    受け取る側の通信ハンドル
+ * @brief   ほしいLV選択をインクリメントする
  * @retval  none
  */
-//--------------------------------------------------------------
-
-static void* _BeaconGetFunc(void* pWork)
+//------------------------------------------------------------------------------
+static void _IncLevelChageType(int num,GTSNEGO_WORK* pWork)
 {
-  return &_testBeacon;
+  pWork->chageLevel += num;
+  if(_CHANGEMODE_LEVEL_MAX <= pWork->chageLevel){
+    pWork->chageLevel = 0;
+  }
+  else if(0 > pWork->chageLevel){
+    pWork->chageLevel = _CHANGEMODE_LEVEL_MAX - 1;
+  }
 }
 
-///< ビーコンデータサイズ取得関数
-static int _BeaconGetSizeFunc(void* pWork)
+//------------------------------------------------------------------------------
+/**
+ * @brief   モードセレクト画面タッチ処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static BOOL _LevelButtonCallback(int bttnid,GTSNEGO_WORK* pWork)
 {
-  return sizeof(_testBeacon);
-}
-
-///< ビーコンデータ取得関数
-static BOOL _BeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)
-{
-  if(myNo != beaconNo){
-    return FALSE;
+  switch(bttnid){
+  case _ARROW_LEVEL_U:
+    _IncLevelChageType(-1,pWork);
+    GTSNEGO_MESSAGE_DispLevelChange(pWork->pMessageWork,pWork->chageLevel);
+    break;
+  case _ARROW_LEVEL_D:
+    _IncLevelChageType(1,pWork);
+    GTSNEGO_MESSAGE_DispLevelChange(pWork->pMessageWork,pWork->chageLevel);
+    break;
+  case _ARROW_MY_U:
+    _IncMyChageType(-1,pWork);
+    GTSNEGO_MESSAGE_DispMyChange(pWork->pMessageWork,pWork->myChageType);
+    break;
+  case _ARROW_MY_D:
+    _IncMyChageType(1,pWork);
+    GTSNEGO_MESSAGE_DispMyChange(pWork->pMessageWork,pWork->myChageType);
+    break;
+  case _ARROW_FRIEND_U:
+    _IncFriendChageType(-1,pWork);
+    GTSNEGO_MESSAGE_DispFriendChange(pWork->pMessageWork,pWork->friendChageType);
+    break;
+  case _ARROW_FRIEND_D:
+    _IncFriendChageType(1,pWork);
+    GTSNEGO_MESSAGE_DispFriendChange(pWork->pMessageWork,pWork->friendChageType);
+    break;
   }
   return TRUE;
 }
 
 
-static void* _getMyUserData(void* pWork)  //DWCUserData
+static void _timingCheck( GTSNEGO_WORK *pWork )
 {
-  GTSNEGO_WORK *wk = pWork;
-  return WifiList_GetMyUserInfo(SaveData_GetWifiListData(wk->pSave));
+  if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO2)){
+    _CHANGE_STATE(pWork,NULL);
+  }
 }
 
-static void* _getFriendData(void* pWork)  //DWCFriendData
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	見つかった表示
+ *	@param	bttnid		ボタンID
+ *	@param	event		イベント種類
+ *	@param	p_work		ワーク
+ */
+//-----------------------------------------------------------------------------
+
+static void _friendGreeState( GTSNEGO_WORK *pWork )
 {
-  GTSNEGO_WORK *wk = pWork;
-  return WifiList_GetDwcDataPtr(SaveData_GetWifiListData(wk->pSave),0);
+  if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
+    return;
+  }
+
+  if(pWork->timer>0){
+    pWork->timer--;
+  }
+  else{
+    GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_NO2);
+    _CHANGE_STATE(pWork,_timingCheck);
+  }
 }
 
-static void _deleteFriendList(int deletedIndex,int srcIndex, void* pWork)
+
+
+static void _friendGreeStateParent( GTSNEGO_WORK *pWork )
 {
-  GTSNEGO_WORK *wk = pWork;
-  WifiList_DataMarge(SaveData_GetWifiListData(wk->pSave), deletedIndex, srcIndex);
+  if(GFL_NET_HANDLE_GetNumNegotiation() != 0){
+    if(GFL_NET_HANDLE_RequestNegotiation()){
+      _CHANGE_STATE(pWork,_friendGreeState);
+    }
+  }
 }
 
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	見つかった表示
+ *	@param	bttnid		ボタンID
+ *	@param	event		イベント種類
+ *	@param	p_work		ワーク
+ */
+//-----------------------------------------------------------------------------
+
+static void _lookatDownState( GTSNEGO_WORK *pWork )
+{
+  if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
+    return;
+  }
+  if(pWork->timer>0){
+    pWork->timer--;
+  }
+  else{
+    pWork->timer = _FRIEND_GREE_DOWN_TIME;
+    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_022);
+    if(GFL_NET_SystemGetCurrentID() != GFL_NET_NO_PARENTMACHINE){  // 子機として接続が完了した
+      if(GFL_NET_HANDLE_RequestNegotiation()){
+        _CHANGE_STATE(pWork,_friendGreeState);
+      }
+    }
+    else{
+      _CHANGE_STATE(pWork,_friendGreeStateParent);
+    }
+  }
+
+
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	接続中
+ *	@param	bttnid		ボタンID
+ *	@param	event		イベント種類
+ *	@param	p_work		ワーク
+ */
+//-----------------------------------------------------------------------------
+
+static void _matchingState( GTSNEGO_WORK *pWork )
+{
+ //接続したら表示して交換に
+  if(STEPMATCH_SUCCESS == GFL_NET_DWC_GetStepMatchResult()){
+    
+    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_021);
+
+    pWork->timer = _FRIEND_LOOKAT_DOWN_TIME;
+
+    
+    _CHANGE_STATE(pWork, _lookatDownState);
+    
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	接続の為の検査
+ *	@param	bttnid		ボタンID
+ *	@param	event		イベント種類
+ *	@param	p_work		ワーク
+ */
+//-----------------------------------------------------------------------------
+
+static int _evalcallback(int index, void* param)
+{
+  GTSNEGO_WORK *pWork=param;
+  int value=0;
+  int targetlv,targetfriend,targetmy;
+
+  targetlv = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_LEVEL].keyStr,-1);
+  targetfriend = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_IMAGE_FRIEND].keyStr,-1);
+  targetmy = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_IMAGE_MY].keyStr,-1);
+  
+  if(pWork->changeMode==1){//ともだち
+  }
+  else{
+    
+    
+    if(pWork->chageLevel==targetlv){
+      if(pWork->myChageType==targetfriend){
+        value+=10;
+      }
+      if(pWork->friendChageType==targetmy){
+        value+=10;
+      }
+      //@todoすでに交換したかをチェック
+      
+    }
+  }
+  OS_TPrintf("評価コールバック %d %d %d %d %d\n",value,pWork->changeMode,targetlv,targetmy,targetfriend);
+  return value;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	キーを作って接続開始
+ *	@param	bttnid		ボタンID
+ *	@param	event		イベント種類
+ *	@param	p_work		ワーク
+ */
+//-----------------------------------------------------------------------------
+static void _matchKeyMake( GTSNEGO_WORK *pWork )
+{
+  int buff[_MATCHKEY_MAX];
+  int i;
+
+  if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
+    return;
+  }
+  GFL_NET_SetWifiBothNet(FALSE);
+  //GFL_NET_StateWifiEnterLogin();
+
+  
+  GFL_NET_DWC_GetMySendedFriendCode(pWork->pList, (DWCFriendData*)&buff[0]);
+  buff[3] = pWork->changeMode;
+  buff[4] = pWork->chageLevel;
+  buff[5] = pWork->myChageType;
+  buff[6] = pWork->friendChageType;
+  buff[7] = PM_VERSION + (PM_LANG<<16); 
+  buff[8] = MATCHINGKEY;
+
+  for(i = 0; i < _MATCHKEY_MAX; i++)
+  {
+    GameMatchExtKeys* pMatchKey = &pWork->aMatchKey[i];
+    GFL_STD_MemCopy(&matchkeystr[i], pMatchKey->keyStr,2);
+    pMatchKey->ivalue = buff[i];
+    pMatchKey->keyID  = DWC_AddMatchKeyInt(pMatchKey->keyID, pMatchKey->keyStr, &pMatchKey->ivalue);
+#if PM_DEBUG
+    if (pMatchKey->keyID == 0){
+      NET_PRINT("AddMatchKey failed %d.\n",i);
+    }
+#endif
+  }
+
+  //この条件は確定 matchkeystrもあわせて変更する事 
+  STD_TSPrintf( pWork->filter, "ty=%d And db=%d", pWork->changeMode,MATCHINGKEY);
+
+  if( GFL_NET_DWC_StartMatchFilter( pWork->filter, 2 ,&_evalcallback, pWork) != 0){
+    _CHANGE_STATE(pWork,_matchingState);
+  }
+  else{
+    
+  }
+
+
+
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -309,244 +557,72 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
   }
 }
 
-
-static void _exitEnd( GTSNEGO_WORK* pWork)
-{
-  if( !GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork) ){
-    return;
-  }
-  pWork->timer--;
-  if(pWork->timer==0){
-    _CHANGE_STATE(pWork, NULL);
-  }
-}
-
 //------------------------------------------------------------------
 /**
- * $brief   終了確認メッセージ  WIFIP2PMATCH_MODE_EXIT_WAIT
+ * $brief   レベル確認待ち
  * @param   wk
  * @retval  none
  */
 //------------------------------------------------------------------
 
-static void _exitExiting( GTSNEGO_WORK *pWork )
+static void _levelSelectWait( GTSNEGO_WORK *pWork )
 {
-  if( !GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)  ){
+  if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-  if(pWork->timer == 1){
-    pWork->timer = 0;
-    GFL_NET_Exit(NULL);
-  }
-  if(!GFL_NET_IsInit()){
-    WifiList_FormUpData(pWork->pList);  // 切断した時にフレンドコードを詰める
-    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork, dwc_message_0012);
-    _CHANGE_STATE(pWork, _exitEnd);
-    pWork->timer = STOP_TIME_;
-  }
-}
+
+  GTSNEGO_MESSAGE_ButtonWindowMain(pWork->pMessageWork);
 
 
-//------------------------------------------------------------------
-/**
- * $brief   ボタンを押すと終了  WIFIP2PMATCH_MODE_CHECK_AND_END
- * @param   wk
- * @retval  none
- */
-//------------------------------------------------------------------
 
-static void _CheckAndEnd( GTSNEGO_WORK *pWork )
-{
-  if(pWork->timer > 0){
-    pWork->timer--;
-    return;
-  }
-  if( GFL_UI_KEY_GetTrg() ){
-    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork, dwc_message_0011);
-    _CHANGE_STATE(pWork, _exitExiting);
-
-  }
-}
-
-//------------------------------------------------------------------
-/**
- * $brief   エラー表示
- * @param   wk
- * @param   seq
- * @retval  int
- */
-//------------------------------------------------------------------
-
-static void _retryInit(GTSNEGO_WORK* pWork)
-{
-}
-
-
-//------------------------------------------------------------------
-/**
- * $brief   エラー表示
- * @param   wk
- * @param   seq
- * @retval  int
- */
-//------------------------------------------------------------------
-
-static void _errorDisp(GTSNEGO_WORK* pWork)
-{
-  GFL_NETSTATE_DWCERROR* pErr = GFL_NET_StateGetWifiError();
-  int msgno,no = pErr->errorCode;
-  int type =  GFL_NET_DWC_ErrorType(pErr->errorCode, pErr->errorType);
-
-  if(type == 11){
-    msgno = dwc_error_0015;
-    type = 11;
-  }
-  else if(no == ERRORCODE_HEAP){
-    msgno = dwc_error_0014;
-    type = 12;
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    if(selectno==0){
+      GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_019);
+      
+      _CHANGE_STATE(pWork,_matchKeyMake);
+    }
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
   }
   else{
-    if( type >= 0 ){
-      msgno = dwc_error_0001 + type;
-    }else{
-      msgno = dwc_error_0012;
+    TOUCHBAR_Main(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork));
+    switch( TOUCHBAR_GetTrg(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork))){
+    case TOUCHBAR_ICON_RETURN:
+      _CHANGE_STATE(pWork,NULL);
+      break;
+    default:
+      break;
     }
   }
-  NET_PRINT("エラーメッセージ %d \n",msgno);
-  //EndMessageWindowOff(pWork);
+}
 
-  // エラーメッセージを表示しておくシンク数
-  pWork->timer = STOP_TIME_;
+//------------------------------------------------------------------
+/**
+ * $brief   レベル確認
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
 
-  GTSNEGO_MESSAGE_ErrorMessageDisp(pWork->pMessageWork, msgno, no);
-//  GTSNEGO_MESSAGE_SystemMessageDisp(pWork->pMessageWork, msgno);
+static void _levelSelect( GTSNEGO_WORK *pWork )
+{
+  GTSNEGO_MESSAGE_DispClear(pWork->pMessageWork);
+  GTSNEGO_DISP_LevelInputInit(pWork->pDispWork);
+  pWork->touch = &_LevelButtonCallback;
+
+  GTSNEGO_MESSAGE_DispLevel(pWork->pMessageWork, &_BttnCallBack, pWork);
+
+  GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_025);
   
-  switch(type){
-  case 1:
-  case 4:
-  case 5:
-  case 11:
-    _CHANGE_STATE(pWork,_retryInit);
-    break;
-  case 6:
-  case 7:
-  case 8:
-  case 9:
-    _CHANGE_STATE(pWork,_retryInit);
-    break;
-  case 10:
-    _CHANGE_STATE(pWork,_retryInit);
-    break;
-  case 0:
-  case 2:
-  case 3:
-  default:
-    _CHANGE_STATE(pWork, _CheckAndEnd);
-    break;
-  }
+  pWork->pAppTask = GTSNEGO_MESSAGE_SearchButtonStart(pWork->pMessageWork);
+
+  _CHANGE_STATE(pWork,_levelSelectWait);
 }
 
 
-//------------------------------------------------------------------------------
-/**
- * @brief   キー押したら終了
- * @retval  none
- */
-//------------------------------------------------------------------------------
 
 
-static void _saveEndWait(GTSNEGO_WORK* pWork)
-{
-  if(GFL_UI_KEY_GetTrg()  || GFL_UI_TP_GetTrg()){
-    GTSNEGO_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
-    _CHANGE_STATE(pWork, NULL);  //接続完了
-  }
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   接続汎用関数
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _connectingCommonWait(GTSNEGO_WORK* pWork)
-{
-  if(GFL_NET_StateIsWifiLoginState()){
-    if( pWork->bInitMessage ){     // 初回接続時にはセーブが完了した事を通知
-      GTSNEGO_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
-      GTSNEGO_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0004);
-      _CHANGE_STATE(pWork, _saveEndWait);
-    }
-    else{
-      _CHANGE_STATE(pWork, NULL);  //接続完了
-    }
-  }
-  else if(GFL_NET_StateIsWifiError() || (GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_TIMEOUT)){
-    _errorDisp(pWork);
-  }
-}
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   セーブ中
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _saveingWait(GTSNEGO_WORK* pWork)
-{
-  if(GFL_NET_DWC_GetSaving()){
-    SAVE_RESULT result = GFL_NET_DWC_SaveAsyncMain(pWork->pSave);
-    if (result != SAVE_RESULT_CONTINUE && result != SAVE_RESULT_LAST) {
-      GFL_NET_DWC_ResetSaving();
-    }
-    else{
-      return;  //セーブ中に他の遷移を禁じる
-    }
-  }
-  _connectingCommonWait(pWork);
-}
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   セーブのメッセージがで終わるまで待ち
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _saveingStart(GTSNEGO_WORK* pWork)
-{
-  if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
-    _connectingCommonWait(pWork);
-  }
-  else{
-    GFL_NET_DWC_SaveAsyncInit(pWork->pSave);
-    pWork->bSaving=TRUE;
-    _CHANGE_STATE(pWork, _saveingWait);
-    return;
-  }
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   接続中
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _connectingWait(GTSNEGO_WORK* pWork)
-{
-  if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
-    return;
-  }
-  if( GFL_NET_DWC_GetSaving() && pWork->bSaving==FALSE) {  //セーブの必要が生じた
-    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork, dwc_message_0015);
-    _CHANGE_STATE(pWork, _saveingStart);
-  }
-  else{
-    _connectingCommonWait(pWork);
-  }
-}
 
 
 
@@ -559,134 +635,27 @@ static void _connectingWait(GTSNEGO_WORK* pWork)
 static void _connectionStart(GTSNEGO_WORK* pWork)
 {
 
-  GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork, dwc_message_0008);
-  _CHANGE_STATE(pWork,_connectingWait);
-  
+//  _CHANGE_STATE(pWork,_connectingWait);
+
 }
 
-//------------------------------------------------------------------------------
-/**
- * @brief   接続確認のはいいいえまち
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeProfileWait2(GTSNEGO_WORK* pWork)
-{
-  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
-    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
-
-    if(selectno==0){
-      _CHANGE_STATE(pWork,_connectionStart);
-    }
-    else{
-      GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
-      _CHANGE_STATE(pWork,NULL);
-    }
-    GTSNEGO_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
-    APP_TASKMENU_CloseMenu(pWork->pAppTask);
-    pWork->pAppTask=NULL;
-    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , 0 );
-  }
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   接続確認のメッセージ出力待ち
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeProfileWait(GTSNEGO_WORK* pWork)
-{
-  if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
-    return;
-  }
-  pWork->pAppTask = GTSNEGO_MESSAGE_YesNoStart(pWork->pMessageWork,GTSNEGO_YESNOTYPE_SYS);
-  _CHANGE_STATE(pWork,_modeProfileWait2);
-}
 
 
 //------------------------------------------------------------------------------
 /**
- * @brief   最初の接続のプロファイル分岐
+ * @brief   だれでもかしりあいか選択
  * @retval  none
  */
 //------------------------------------------------------------------------------
-static void _profileIDCheck(GTSNEGO_WORK* pWork)
-{
-  // 初めての場合
-  if( !DWC_CheckHasProfile( WifiList_GetMyUserInfo(pWork->pList) ) )
-  {
-    pWork->bInitMessage=TRUE;
-    GTSNEGO_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0003);
-  }
-  else if( !DWC_CheckValidConsole(WifiList_GetMyUserInfo(pWork->pList)) )
-  {  //別DSの場合
-    GTSNEGO_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0005);
-  }
-  else  //普通の接続
-  {
-    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork, dwc_message_0002);
-  }
-  _CHANGE_STATE(pWork,_modeProfileWait);
 
-}
 
 
 static void _modeSelectMenuInit(GTSNEGO_WORK* pWork)
-{ 
-  //GTSNEGO_MESSAGE_Disp(GTSNEGO_005);
-  //GTSNEGO_MESSAGE_Disp(GTSNEGO_006);
-
-  pWork->touch = &_modeSelectMenuButtonCallback;
-
-	_CHANGE_STATE(pWork,_modeSelectMenuWait);
-
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   フェードアウト処理
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _modeFadeout(GTSNEGO_WORK* pWork)
 {
-	if(WIPE_SYS_EndCheck()){
-		_CHANGE_STATE(pWork, NULL);        // 終わり
-	}
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   モードセレクト画面タッチ処理
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static BOOL _modeSelectMenuButtonCallback(int bttnid,GTSNEGO_WORK* pWork)
-{
-  switch( bttnid ){
-  case _SELECTMODE_GSYNC:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    _CHANGE_STATE(pWork,_modeReportInit);
-//    pWork->selectType = GAMESYNC_RETURNMODE_SYNC;
-    return TRUE;
-  case _SELECTMODE_UTIL:
-    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-  //  pWork->selectType = GAMESYNC_RETURNMODE_UTIL;
-    _CHANGE_STATE(pWork,_modeReportInit);
-    return TRUE;
-  case _SELECTMODE_EXIT:
-		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-   // pWork->selectType = GAMESYNC_RETURNMODE_NONE;
-		WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-										WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
-    _CHANGE_STATE(pWork,_modeFadeout);        // 終わり
-    return TRUE;
-  default:
-    break;
-  }
-  return FALSE;
+  GTSNEGO_MESSAGE_DispAnyoneOrFriend(pWork->pMessageWork, &_BttnCallBack, pWork);
+  pWork->touch = &_AnyoneOrFriendButtonCallback;
+  GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_024);
+  _CHANGE_STATE(pWork,_modeSelectMenuWait);
 }
 
 //------------------------------------------------------------------------------
@@ -697,112 +666,26 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,GTSNEGO_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectMenuWait(GTSNEGO_WORK* pWork)
 {
-	if(WIPE_SYS_EndCheck()){
-		GTSNEGO_MESSAGE_ButtonWindowMain( pWork->pMessageWork );
-	}
-}
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   セーブ確認画面初期化
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeReportInit(GTSNEGO_WORK* pWork)
-{
-
-
-  GFL_BG_ClearScreenCodeVReq(GFL_BG_FRAME1_S,0);
-  
-
-  
-  _CHANGE_STATE(pWork,_modeReportWait);
-}
-
-
-static void _FadeWait(GTSNEGO_WORK* pWork)
-{
-  if(GFL_FADE_CheckFade()){
-    return;
-  }
-  _CHANGE_STATE(pWork,NULL);
-}
-
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   セーブ中
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeReporting(GTSNEGO_WORK* pWork)
-{
 
   if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
 
-
-  {
-    SAVE_RESULT svr = SaveControl_SaveAsyncMain(pWork->dbw->ctrl);
-
-    if(svr == SAVE_RESULT_OK){
-      GTSNEGO_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
-
-      GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 1);
-
-      _CHANGE_STATE(pWork,_FadeWait);
-    }
+  
+  GTSNEGO_MESSAGE_ButtonWindowMain(pWork->pMessageWork);
+  
+  TOUCHBAR_Main(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork));
+  switch( TOUCHBAR_GetTrg(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork))){
+  case TOUCHBAR_ICON_RETURN:
+    _CHANGE_STATE(pWork,NULL);
+    break;
+  default:
+    break;
   }
+
+
 }
 
-//------------------------------------------------------------------------------
-/**
- * @brief   セーブ確認画面待機
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeReportWait2(GTSNEGO_WORK* pWork)
-{
-
-  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
-    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
-
-    if(selectno==0){
-
-
-
-      SaveControl_SaveAsyncInit(pWork->dbw->ctrl );
-      _CHANGE_STATE(pWork,_modeReporting);
-    }
-    else{
-      GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
-      _CHANGE_STATE(pWork,NULL);
-    }
-    APP_TASKMENU_CloseMenu(pWork->pAppTask);
-    pWork->pAppTask=NULL;
-    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , 0 );
-  }
-}
-
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   セーブ確認画面待機
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeReportWait(GTSNEGO_WORK* pWork)
-{
-  if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
-    return;
-  }
-  pWork->pAppTask = GTSNEGO_MESSAGE_YesNoStart(pWork->pMessageWork,GTSNEGO_YESNOTYPE_INFO);
-  _CHANGE_STATE(pWork,_modeReportWait2);
-}
 
 
 //------------------------------------------------------------------------------
@@ -814,8 +697,8 @@ static void _modeReportWait(GTSNEGO_WORK* pWork)
 static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   EVENT_GTSNEGO_WORK* pEv=pwk;
-	
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x18000 );
+
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x38000 );
 
   {
     GTSNEGO_WORK *pWork = GFL_PROC_AllocWork( proc, sizeof( GTSNEGO_WORK ), HEAPID_IRCBATTLE );
@@ -823,7 +706,7 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
     pWork->heapID = HEAPID_IRCBATTLE;
 
     pWork->pDispWork = GTSNEGO_DISP_Init(pWork->heapID);
-    pWork->pMessageWork = GTSNEGO_MESSAGE_Init(pWork->heapID, NARC_message_wifi_system_dat);
+    pWork->pMessageWork = GTSNEGO_MESSAGE_Init(pWork->heapID, NARC_message_gtsnego_dat);
     pWork->pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(pEv->gsys));
     pWork->pList = SaveData_GetWifiListData(
       GAMEDATA_GetSaveControlWork(
@@ -831,22 +714,22 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
           ((pEv->gsys))) ));
 
 
-		{
-//			GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(pEv->gsys);
-	//		INFOWIN_Init( _SUBSCREEN_BGPLANE , _SUBSCREEN_PALLET , pGC , pWork->heapID);
-		}
+    {
+      //			GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(pEv->gsys);
+      //		INFOWIN_Init( _SUBSCREEN_BGPLANE , _SUBSCREEN_PALLET , pGC , pWork->heapID);
+    }
 
 
 
-    WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
-									WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+    WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 
     pWork->dbw = pwk;
-    
+
     _CHANGE_STATE(pWork,_modeSelectMenuInit);
 
   }
-  
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -874,8 +757,8 @@ static GFL_PROC_RESULT GameSyncMenuProcMain( GFL_PROC * proc, int * seq, void * 
   GTSNEGO_DISP_Main(pWork->pDispWork);
   GTSNEGO_MESSAGE_Main(pWork->pMessageWork);
 
-  
-	//INFOWIN_Update();
+
+  //INFOWIN_Update();
 
   return retCode;
 }
@@ -891,22 +774,20 @@ static GFL_PROC_RESULT GameSyncMenuProcEnd( GFL_PROC * proc, int * seq, void * p
   EVENT_GTSNEGO_WORK* pEv=pwk;
   GTSNEGO_WORK* pWork = mywk;
 
-//  EVENT_IrcBattleSetType(pParentWork, pWork->selectType);
-
-  GFL_PROC_FreeWork(proc);
-
-	//INFOWIN_Exit();
-	GFL_BG_FreeBGControl(_SUBSCREEN_BGPLANE);
-
+  TOUCHBAR_Exit(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork));
 
   GTSNEGO_MESSAGE_End(pWork->pMessageWork);
   GTSNEGO_DISP_End(pWork->pDispWork);
 
-	GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
-  //EVENT_IrcBattle_SetEnd(pParentWork);
+  GFL_PROC_FreeWork(proc);
 
 
-	
+
+//  GFL_BG_FreeBGControl(_SUBSCREEN_BGPLANE);
+  GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
+
+
+
   return GFL_PROC_RES_FINISH;
 }
 

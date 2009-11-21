@@ -16,6 +16,7 @@
 #include "gamesystem/game_event.h"
 #include "gamesystem/game_data.h"
 
+#include "net_app/pokemontrade.h"
 #include "field/fieldmap.h"
 #include "sound/pm_sndsys.h"
 
@@ -46,6 +47,8 @@ enum _EVENT_GTSNEGO {
   _WAIT_WIFILOGIN,
   _CALL_WIFINEGO,
   _WAIT_WIFINEGO,
+  _CALL_TRADE,
+  _WAIT_TRADE,
   _WAIT_NET_END,
   _FIELD_OPEN,
   _FIELD_END
@@ -67,7 +70,6 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
   case _FIELD_CLOSE:
     if(GAME_COMM_NO_NULL == GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gsys)))
     {
-      dbw->isEndProc = FALSE;
       GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
       (*seq)++;
     }
@@ -90,6 +92,16 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
       (*seq) ++;
     }
     break;
+  case _CALL_TRADE:
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokemon_trade), &PokemonTradeWiFiProcData, gsys);
+    (*seq)++;
+    break;
+  case _WAIT_TRADE:
+    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
+      (*seq) ++;
+    }
+    break;
+
   case _WAIT_NET_END:
     if(GFL_NET_IsExit()){
       (*seq) ++;
