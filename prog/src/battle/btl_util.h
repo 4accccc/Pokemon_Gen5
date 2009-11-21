@@ -355,6 +355,22 @@ static inline BOOL PokeTypePair_IsMatch( PokeTypePair pair, PokeType type )
   }
   return FALSE;
 }
+static inline BOOL PokeTypePair_IsMatchEither( PokeTypePair pair1, PokeTypePair pair2 )
+{
+  if( PokeTypePair_GetType1(pair1) == PokeTypePair_GetType1(pair2) ){
+    return TRUE;
+  }
+  if( PokeTypePair_GetType1(pair1) == PokeTypePair_GetType2(pair2) ){
+    return TRUE;
+  }
+  if( PokeTypePair_GetType2(pair1) == PokeTypePair_GetType1(pair2) ){
+    return TRUE;
+  }
+  if( PokeTypePair_GetType2(pair1) == PokeTypePair_GetType2(pair2) ){
+    return TRUE;
+  }
+  return FALSE;
+}
 static inline BOOL PokeTypePair_IsPure( PokeTypePair pair )
 {
   return PokeTypePair_GetType1(pair) == PokeTypePair_GetType2(pair);

@@ -561,6 +561,10 @@ static BTL_EVENT_FACTOR*  ADD_MagicRoom( u16 pri, WazaID waza, u8 pokeID );
 static void handler_MagicRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_HajikeruHonoo( u16 pri, WazaID waza, u8 pokeID );
 static void handler_HajikeruHonoo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_ElectBall( u16 pri, WazaID waza, u8 pokeID );
+static void handler_ElectBall( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_SyncroNoise( u16 pri, WazaID waza, u8 pokeID );
+static void handler_SyncroNoise( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 //=============================================================================================
@@ -768,27 +772,29 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_PAWAATORIKKU,    ADD_PowerTrick    },
 
     // 以下、新ワザ
-    { WAZANO_KARI_BENOMUSHOKKU,    ADD_BenomShock    },
-    { WAZANO_KARI_IKARINOKONA,     ADD_KonoyubiTomare},  // いかりのこな=このゆびとまれ
-    { WAZANO_KARI_MIZUBITASI,      ADD_Mizubitasi    },
-    { WAZANO_KARI_SINPURUBIIMU,    ADD_SimpleBeem    },
-    { WAZANO_KARI_NAKAMADUKURI,    ADD_NakamaDukuri  },
-    { WAZANO_KARI_KURIASUMOGGU,    ADD_ClearSmog     },
-    { WAZANO_KARI_ASISUTOPAWAA,    ADD_AsistPower    },
-    { WAZANO_KARI_KARAWOYABURU,    ADD_KarawoYaburu  },
-    { WAZANO_KARI_TATARIME,        ADD_Tatarime      },
-    { WAZANO_KARI_AKUROBATTO,      ADD_Acrobat       },
-    { WAZANO_KARI_BORUTOCHENZI,    ADD_TonboGaeri    },  // ボルトチェンジ=とんぼがえり
-    { WAZANO_KARI_WAIDOGAADO,      ADD_WideGuard     },
-    { WAZANO_KARI_MIRAATAIPU,      ADD_MirrorType    },
-    { WAZANO_KARI_PAWAASHEA,       ADD_PowerShare    },
-    { WAZANO_KARI_GAADOSHEA,       ADD_GuardShare    },
-    { WAZANO_KARI_BODYPAAZI,       ADD_BodyPurge     },
-    { WAZANO_KARI_HEBIIBONBAA,     ADD_HeavyBomber   },
-    { WAZANO_KARI_WANDAARUUMU,     ADD_WonderRoom    },
-    { WAZANO_KARI_MAZIKKURUUMU,    ADD_MagicRoom     },
-    { WAZANO_KARI_SAIKOSYOKKU,     ADD_PsycoShock    },
-    { WAZANO_KARI_HAZIKERUHONOO,   ADD_HajikeruHonoo },
+    { WAZANO_KARI_BENOMUSHOKKU,     ADD_BenomShock      },
+    { WAZANO_KARI_IKARINOKONA,      ADD_KonoyubiTomare  },  // いかりのこな=このゆびとまれ
+    { WAZANO_KARI_MIZUBITASI,       ADD_Mizubitasi      },
+    { WAZANO_KARI_SINPURUBIIMU,     ADD_SimpleBeem      },
+    { WAZANO_KARI_NAKAMADUKURI,     ADD_NakamaDukuri    },
+    { WAZANO_KARI_KURIASUMOGGU,     ADD_ClearSmog       },
+    { WAZANO_KARI_ASISUTOPAWAA,     ADD_AsistPower      },
+    { WAZANO_KARI_KARAWOYABURU,     ADD_KarawoYaburu    },
+    { WAZANO_KARI_TATARIME,         ADD_Tatarime        },
+    { WAZANO_KARI_AKUROBATTO,       ADD_Acrobat         },
+    { WAZANO_KARI_BORUTOCHENZI,     ADD_TonboGaeri      },  // ボルトチェンジ=とんぼがえり
+    { WAZANO_KARI_WAIDOGAADO,       ADD_WideGuard       },
+    { WAZANO_KARI_MIRAATAIPU,       ADD_MirrorType      },
+    { WAZANO_KARI_PAWAASHEA,        ADD_PowerShare      },
+    { WAZANO_KARI_GAADOSHEA,        ADD_GuardShare      },
+    { WAZANO_KARI_BODYPAAZI,        ADD_BodyPurge       },
+    { WAZANO_KARI_HEBIIBONBAA,      ADD_HeavyBomber     },
+    { WAZANO_KARI_WANDAARUUMU,      ADD_WonderRoom      },
+    { WAZANO_KARI_MAZIKKURUUMU,     ADD_MagicRoom       },
+    { WAZANO_KARI_SAIKOSYOKKU,      ADD_PsycoShock      },
+    { WAZANO_KARI_HAZIKERUHONOO,    ADD_HajikeruHonoo   },
+    { WAZANO_KARI_EREKUTOBOORU,     ADD_ElectBall       },
+    { WAZANO_KARI_SINKURONOIZU,     ADD_SyncroNoise     },
   };
 
   int i;
@@ -7617,6 +7623,44 @@ static void handler_HeavyBomber( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 }
 //----------------------------------------------------------------------------------
 /**
+ * エレクトボール
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_ElectBall( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_POWER,   handler_ElectBall },    // ワザ威力チェックハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_ElectBall( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
+
+    int quot = BPP_GetValue(bpp, BPP_AGILITY) / BPP_GetValue(target, BPP_AGILITY);
+    u32 pow;
+
+    if( quot >= 4 ){
+      pow = 150;
+    }else if( quot >= 3 ){
+      pow = 120;
+    }else if( quot >= 2 ){
+      pow = 80;
+    }else if( quot >= 1 ){
+      pow = 60;
+    }else{
+      pow = 40;
+    }
+
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
+  }
+}
+//----------------------------------------------------------------------------------
+/**
  * いかさま
  */
 //----------------------------------------------------------------------------------
@@ -8025,6 +8069,38 @@ static void handler_HajikeruHonoo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
         HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_HajikeruHonoo_Side );
         HANDEX_STR_AddArg( &param->exStr, param->pokeID );
       }
+    }
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * シンクロノイズ
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_SyncroNoise( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_NOEFFECT_CHECK_L2, handler_SyncroNoise },    // ワザ無効チェックハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_SyncroNoise( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+    const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
+    const BTL_POKEPARAM* user = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+
+    PokeTypePair myType, targetType;
+
+    myType = BPP_GetPokeType( user );
+    targetType = BPP_GetPokeType( target );
+
+    if( !PokeTypePair_IsMatchEither(myType, targetType) )
+    {
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, TRUE );
     }
   }
 }
