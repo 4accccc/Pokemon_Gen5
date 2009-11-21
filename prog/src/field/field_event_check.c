@@ -85,6 +85,8 @@
 
 #include "field/field_const.h"  // for FX32_TO_GRID
 
+#include "event_fourkings.h"  // 
+
 //======================================================================
 //======================================================================
 
@@ -1096,6 +1098,8 @@ static GMEVENT * DEBUG_checkKeyEvent(EV_REQUEST * req, GAMESYS_WORK * gsys, FIEL
 		chgCont = PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_SELECT,
 
 		railCont = PAD_BUTTON_R | PAD_BUTTON_B | PAD_BUTTON_A,
+
+		fourkingsCont = PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_A,
 	};
 
 	//ソフトリセットチェック
@@ -1121,6 +1125,14 @@ static GMEVENT * DEBUG_checkKeyEvent(EV_REQUEST * req, GAMESYS_WORK * gsys, FIEL
 		return DEBUG_EVENT_DebugMenu(gsys, fieldWork, 
 				req->heapID, ZONEDATA_GetMapRscID(req->map_id));
 	}
+
+#if defined(DEBUG_ONLY_FOR_tomoya_takahashi) | defined(DEBUG_ONLY_FOR_fujiwara_maiko)
+	//今だけ実験
+	if( (req->key_cont & fourkingsCont) == fourkingsCont )
+  { 
+    return EVENT_FourKings_CircleWalk( gsys, fieldWork, 0 );
+  }
+#endif
 
 #if defined(DEBUG_ONLY_FOR_tomoya_takahashi) | defined(DEBUG_ONLY_FOR_nakatsui) | defined(DEBUG_ONLY_FOR_takahashi) | defined(DEBUG_ONLY_FOR_hozumi_yukiko) | defined(DEBUG_ONLY_FOR_iwao_kazumasa) | defined(DEBUG_ONLY_FOR_murakami_naoto)
 	// レールエディタ起動

@@ -287,6 +287,13 @@ extern void FIELD_CAMERA_GetCameraPos( const FIELD_CAMERA * camera, VecFx32 * ca
 //	FIELD_CAMERA_MODE_DIRECT_POS,					// カメラ座標、ターゲット座標　直接指定
 extern void FIELD_CAMERA_SetCameraPos( FIELD_CAMERA * camera, const VecFx32 * camPos);
 
+
+//------------------------------------------------------------------
+//  カメラ上方向
+//------------------------------------------------------------------
+extern void FIELD_CAMERA_SetCameraUp( FIELD_CAMERA * camera, const VecFx32 * camUp);
+extern void FIELD_CAMERA_GetCameraUp( const FIELD_CAMERA * camera, VecFx32 * camUp);
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern const GFL_G3D_CAMERA * FIELD_CAMERA_GetCameraPtr(const FIELD_CAMERA * camera);

@@ -1285,6 +1285,33 @@ void FIELD_CAMERA_SetCameraPos( FIELD_CAMERA * camera, const VecFx32 * camPos)
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  カメラ上方向を設定
+ *
+ *	@param	camera    カメラ
+ *	@param	camUp     カメラ上方向
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_SetCameraUp( FIELD_CAMERA * camera, const VecFx32 * camUp)
+{
+  GFL_G3D_CAMERA_SetCamUp( camera->g3Dcamera, camUp );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ上方向の取得
+ *
+ *	@param	camera  カメラ
+ *	@param	camUp   上方向
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_GetCameraUp( const FIELD_CAMERA * camera, VecFx32 * camUp)
+{
+  GFL_G3D_CAMERA_GetCamUp( camera->g3Dcamera, camUp );
+}
+
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	カメラangle　垂直方向回転
  */
 //-----------------------------------------------------------------------------

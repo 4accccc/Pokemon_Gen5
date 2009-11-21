@@ -100,6 +100,7 @@ SUBDIRS	=	wmi \
 			palace \
             op_demo \
 			battle_recorder \
+			fourkings_scene \
 			multiboot
 
 include $(RESOURCE_MACRO)
