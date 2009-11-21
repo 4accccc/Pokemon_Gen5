@@ -171,6 +171,7 @@ BOOL BTL_FIELD_AddEffect( BtlFieldEffect effect, BPP_SICK_CONT cont )
 
   if( Work.factor[effect] == NULL )
   {
+    BTL_Printf("FldEff %d í«â¡\n");
     Work.factor[ effect ] = BTL_HANDLER_FLD_Add( effect, 0 );
     if( Work.factor[ effect ] ){
       Work.cont[ effect ] = cont;
@@ -193,6 +194,8 @@ BOOL BTL_FIELD_RemoveEffect( BtlFieldEffect effect )
 
   if( Work.factor[effect] != NULL )
   {
+    BTL_Printf("FldEff %d èúãé\n");
+
     BTL_HANDLER_FLD_Remove( Work.factor[effect] );
     clearFactorWork( effect );
     return TRUE;

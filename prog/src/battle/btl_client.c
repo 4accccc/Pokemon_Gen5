@@ -1071,18 +1071,18 @@ static void setWaruagakiAction( BTL_ACTION_PARAM* dst, BTL_CLIENT* wk, const BTL
 static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, WazaID waza, STR_PARAM* strParam )
 {
   // こだわりアイテム効果（最初に使ったワザしか選べない／ただしマジックルーム非発動時のみ）
-  if( BTL_CALC_BITFLG_Check(wk->fieldEffectFlag, BTL_FLDEFF_MAGICROOM) )
+  if( !BTL_CALC_BITFLG_Check(wk->fieldEffectFlag, BTL_FLDEFF_MAGICROOM) )
   {
     if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_KODAWARI_LOCK) )
     {
-      if( waza != BPP_GetPrevWazaID(bpp) ){
+      WazaID prevWazaID = BPP_GetPrevWazaID( bpp );
+      if( waza != prevWazaID ){
         if( strParam != NULL )
         {
           strParam->strID = BTL_STRID_STD_KodawariLock;
           strParam->stdFlag = TRUE;
-          strParam->args[0] = BPP_GetID( bpp );
-          strParam->args[1] = BPP_GetItem( bpp );
-          strParam->args[2] = waza;
+          strParam->args[0] = BPP_GetItem( bpp );
+          strParam->args[1] = prevWazaID;
         }
         return TRUE;
       }

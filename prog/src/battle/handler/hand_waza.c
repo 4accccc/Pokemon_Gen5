@@ -7952,7 +7952,7 @@ static void handler_WonderRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 }
 //----------------------------------------------------------------------------------
 /**
- * ワンダールーム
+ * マジックルーム
  */
 //----------------------------------------------------------------------------------
 static BTL_EVENT_FACTOR*  ADD_MagicRoom( u16 pri, WazaID waza, u8 pokeID )
@@ -7967,7 +7967,7 @@ static void handler_MagicRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    if( !BTL_FIELD_CheckEffect(BTL_FLDEFF_WONDERROOM) )
+    if( !BTL_FIELD_CheckEffect(BTL_FLDEFF_MAGICROOM) )
     {
       BTL_HANDEX_PARAM_ADD_FLDEFF* param;
 
@@ -7979,13 +7979,9 @@ static void handler_MagicRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     else
     {
       BTL_HANDEX_PARAM_REMOVE_FLDEFF* param;
-      BTL_HANDEX_PARAM_MESSAGE*  msg_param;
 
       param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_REMOVE_FLDEFF, pokeID );
       param->effect = BTL_FLDEFF_MAGICROOM;
-
-      msg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_STD, BTL_STRID_STD_MagicRoom_End );
     }
   }
 }

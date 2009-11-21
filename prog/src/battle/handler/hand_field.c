@@ -44,6 +44,7 @@ static BTL_EVENT_FACTOR* ADD_Fld_DoroAsobi( u16 pri, BtlFieldEffect effect, u8 s
 static void handler_fld_DoroAsobi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
 static BTL_EVENT_FACTOR* ADD_Fld_WonderRoom( u16 pri, BtlFieldEffect effect, u8 subParam );
 static void handler_fld_WonderRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
+static BTL_EVENT_FACTOR* ADD_Fld_MagicRoom( u16 pri, BtlFieldEffect effect, u8 subParam );
 
 
 
@@ -73,6 +74,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_FLD_Add( BtlFieldEffect effect, u8 sub_param )
     { BTL_FLDEFF_MIZUASOBI,  ADD_Fld_MizuAsobi   }, ///< みずあそび
     { BTL_FLDEFF_DOROASOBI,  ADD_Fld_DoroAsobi   }, ///< どろあそび
     { BTL_FLDEFF_WONDERROOM, ADD_Fld_WonderRoom  }, ///< ワンダールーム
+    { BTL_FLDEFF_MAGICROOM,  ADD_Fld_MagicRoom   }, ///< マジックルーム
   };
 
   {
@@ -235,6 +237,21 @@ static void handler_fld_WonderRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 {
   int swap_cnt = BTL_EVENTVAR_GetValue( BTL_EVAR_VID_SWAP_CNT);
   BTL_EVENTVAR_RewriteValue( BTL_EVAR_VID_SWAP_CNT, (swap_cnt+1) );
+}
+
+//--------------------------------------------------------------------------------------
+/**
+ *  マジックルーム
+ */
+//--------------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR* ADD_Fld_MagicRoom( u16 pri, BtlFieldEffect effect, u8 subParam )
+{
+  // 現状、マジックルームは登録しておくことで効果は各所で判断するため、
+  // こいつのハンドラ自体は何もしない。
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_FIELD, effect, pri, subParam, HandlerTable );
 }
 
 

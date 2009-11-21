@@ -4760,7 +4760,8 @@ static void scput_Fight_FieldEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* 
 }
 static BOOL scproc_FieldEffectCore( BTL_SVFLOW_WORK* wk, BtlFieldEffect effect, BPP_SICK_CONT contParam )
 {
-  if( BTL_FIELD_AddEffect( effect, contParam) ){
+  if( BTL_FIELD_AddEffect(effect, contParam) ){
+    SCQUE_PUT_OP_AddFieldEffect( wk->que, effect, contParam.raw );
     return TRUE;
   }
   return FALSE;
