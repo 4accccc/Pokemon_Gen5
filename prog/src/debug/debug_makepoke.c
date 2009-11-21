@@ -135,42 +135,42 @@ enum {
 
   LX_PPCNT1_CAP = 104,
   LY_PPCNT1_CAP = LY_LV4,
-  LX_PPCNT1_BOX = LX_PPCNT1_CAP + CALC_CAP_BOX_MARGIN(3),
+  LX_PPCNT1_BOX = LX_PPCNT1_CAP + CALC_CAP_BOX_MARGIN(4),
   LY_PPCNT1_BOX = LY_PPCNT1_CAP,
 
   LX_PPCNT2_CAP = 104,
   LY_PPCNT2_CAP = LY_LV5,
-  LX_PPCNT2_BOX = LX_PPCNT2_CAP + CALC_CAP_BOX_MARGIN(3),
+  LX_PPCNT2_BOX = LX_PPCNT2_CAP + CALC_CAP_BOX_MARGIN(4),
   LY_PPCNT2_BOX = LY_PPCNT2_CAP,
 
   LX_PPCNT3_CAP = 104,
   LY_PPCNT3_CAP = LY_LV6,
-  LX_PPCNT3_BOX = LX_PPCNT3_CAP + CALC_CAP_BOX_MARGIN(3),
+  LX_PPCNT3_BOX = LX_PPCNT3_CAP + CALC_CAP_BOX_MARGIN(4),
   LY_PPCNT3_BOX = LY_PPCNT3_CAP,
 
   LX_PPCNT4_CAP = 104,
   LY_PPCNT4_CAP = LY_LV7,
-  LX_PPCNT4_BOX = LX_PPCNT4_CAP + CALC_CAP_BOX_MARGIN(3),
+  LX_PPCNT4_BOX = LX_PPCNT4_CAP + CALC_CAP_BOX_MARGIN(4),
   LY_PPCNT4_BOX = LY_PPCNT4_CAP,
 
-  LX_PPMAX1_CAP = 160,
+  LX_PPMAX1_CAP = 156,
   LY_PPMAX1_CAP = LY_LV4,
-  LX_PPMAX1_BOX = LX_PPMAX1_CAP + CALC_CAP_BOX_MARGIN(3),
+  LX_PPMAX1_BOX = LX_PPMAX1_CAP + CALC_CAP_BOX_MARGIN(4),
   LY_PPMAX1_BOX = LY_PPMAX1_CAP,
 
   LX_PPMAX2_CAP = LX_PPMAX1_CAP,
   LY_PPMAX2_CAP = LY_LV5,
-  LX_PPMAX2_BOX = LX_PPMAX2_CAP + CALC_CAP_BOX_MARGIN(3),
+  LX_PPMAX2_BOX = LX_PPMAX2_CAP + CALC_CAP_BOX_MARGIN(4),
   LY_PPMAX2_BOX = LY_PPMAX2_CAP,
 
   LX_PPMAX3_CAP = LX_PPMAX1_CAP,
   LY_PPMAX3_CAP = LY_LV6,
-  LX_PPMAX3_BOX = LX_PPMAX3_CAP + CALC_CAP_BOX_MARGIN(3),
+  LX_PPMAX3_BOX = LX_PPMAX3_CAP + CALC_CAP_BOX_MARGIN(4),
   LY_PPMAX3_BOX = LY_PPMAX3_CAP,
 
   LX_PPMAX4_CAP = LX_PPMAX1_CAP,
   LY_PPMAX4_CAP = LY_LV7,
-  LX_PPMAX4_BOX = LX_PPMAX4_CAP + CALC_CAP_BOX_MARGIN(3),
+  LX_PPMAX4_BOX = LX_PPMAX4_CAP + CALC_CAP_BOX_MARGIN(4),
   LY_PPMAX4_BOX = LY_PPMAX4_CAP,
 
   LX_HPVAL_CAP = 4,
@@ -263,14 +263,21 @@ enum {
   LX_SDFEXP_BOX = LX_SDFEXP_CAP + CALC_CAP_BOX_MARGIN_HALF(3),
   LY_SDFEXP_BOX = LY_SDFEXP_CAP,
 
+  LX_TYPE_CAP = 120,
+  LY_TYPE_CAP = LY_LV3,
+  LX_TYPE_BOX = LX_TYPE_CAP + CALC_CAP_BOX_MARGIN(3),
+  LY_TYPE_BOX = LY_TYPE_CAP,
+
   ID_PARA_SEIKAKU = ID_PARA_end,
 };
 
 typedef enum {
-  INPUTBOX_TYPE_STR,
-  INPUTBOX_TYPE_NUM,
-  INPUTBOX_TYPE_SWITCH,
-  INPUTBOX_TYPE_FIXVAL,
+  INPUTBOX_TYPE_STR,      ///< 入力対応文字列
+  INPUTBOX_TYPE_NUM,      ///< 入力対応数値
+  INPUTBOX_TYPE_SWITCH,   ///< タッチ対応トグルスイッチ
+  INPUTBOX_TYPE_FIXVAL,   ///< 表示するだけの数値
+  INPUTBOX_TYPE_FIXSTR,   ///< 表示するだけの文字列
+  INPUTBOX_TYPE_BTN,      ///< タッチ反応で特殊処理するためのボタン
 }InputBoxType;
 
 typedef enum {
@@ -320,6 +327,9 @@ typedef enum {
   INPUTBOX_ID_SDFEXP,
   INPUTBOX_ID_SDFVAL,
 
+  INPUTBOX_ID_TYPE1,
+  INPUTBOX_ID_TYPE2,
+
   INPUTBOX_ID_MAX,
 
 }InputBoxID;
@@ -352,7 +362,7 @@ typedef struct {
 //--------------------------------------------------------------
 typedef struct {
   u16  type;
-  u16  cap_strID;
+  s16  cap_strID;
   u8   cap_xpos;
   u8   cap_ypos;
 
@@ -427,19 +437,19 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
     ID_PARA_pp_count4, 3,    0 },
 
   { INPUTBOX_TYPE_FIXVAL,  DMPSTR_PPMAX1,   LX_PPMAX1_CAP,  LY_PPMAX1_CAP,
-    LX_PPMAX1_BOX,   LY_PPMAX1_BOX,   CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
+    LX_PPMAX1_BOX,   LY_PPMAX1_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
     ID_PARA_pp_max1, 100,  0 },
 
   { INPUTBOX_TYPE_FIXVAL,  DMPSTR_PPMAX2,   LX_PPMAX2_CAP,  LY_PPMAX2_CAP,
-    LX_PPMAX2_BOX,   LY_PPMAX2_BOX,   CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
+    LX_PPMAX2_BOX,   LY_PPMAX2_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
     ID_PARA_pp_max2, 100,    0 },
 
   { INPUTBOX_TYPE_FIXVAL,  DMPSTR_PPMAX3,   LX_PPMAX3_CAP,  LY_PPMAX3_CAP,
-    LX_PPMAX3_BOX,   LY_PPMAX3_BOX,   CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
+    LX_PPMAX3_BOX,   LY_PPMAX3_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
     ID_PARA_pp_max3, 100,    0 },
 
   { INPUTBOX_TYPE_FIXVAL,  DMPSTR_PPMAX4,   LX_PPMAX4_CAP,  LY_PPMAX4_CAP,
-    LX_PPMAX4_BOX,   LY_PPMAX4_BOX,   CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
+    LX_PPMAX4_BOX,   LY_PPMAX4_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
     ID_PARA_pp_max4,  100,  0 },
 
   { INPUTBOX_TYPE_NUM,  DMPSTR_HP_RND,   LX_HPRND_CAP,   LY_HPRND_CAP,
@@ -513,6 +523,18 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
   { INPUTBOX_TYPE_FIXVAL,  DMPSTR_SDF,   LX_SDFVAL_CAP,   LY_SDFVAL_CAP,
     LX_SDFVAL_BOX,    LY_SDFVAL_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
     ID_PARA_spedef,   255,  0 },
+
+  { INPUTBOX_TYPE_FIXSTR,  DMPSTR_TYPE,   LX_TYPE_CAP,   LY_TYPE_CAP,
+    LX_TYPE_BOX,    LY_TYPE_BOX,    CALC_STRBOX_WIDTH(4), LINE_HEIGHT,
+    ID_PARA_type1,  NARC_message_typename_dat,  0 },
+
+  { INPUTBOX_TYPE_FIXSTR,  -1,      LX_TYPE_CAP,   LY_TYPE_CAP,
+    LX_TYPE_BOX+CALC_STRBOX_WIDTH(4),    LY_TYPE_BOX,    CALC_STRBOX_WIDTH(4), LINE_HEIGHT,
+    ID_PARA_type2,  NARC_message_typename_dat,  0 },
+
+  { INPUTBOX_TYPE_BTN,  -1,      LX_TYPE_CAP,   LY_TYPE_CAP,
+    LX_PPMAX1_BOX+CALC_NUMBOX_WIDTH(2)+4, LY_PPMAX2_BOX+6,    CALC_STRBOX_WIDTH(3), LINE_HEIGHT,
+    ID_PARA_type2,  NARC_message_debug_makepoke_dat,  DMPSTR_DEFWAZA },
 
 };
 
@@ -848,6 +870,18 @@ static BOOL root_ctrl( DMP_MAINWORK* wk )
             box_update( wk, wk->boxIdx, val );
           }
           break;
+        case INPUTBOX_TYPE_BTN: // 今のところデフォルトワザセットボタンだけ
+          {
+            u32 i;
+            update_dst( wk );
+            PP_SetWazaDefault( wk->dst );
+            for(i=0; i<PTL_WAZA_MAX; ++i)
+            {
+              box_setup( wk, INPUTBOX_ID_WAZA1+i, wk->dst );
+              box_setup( wk, INPUTBOX_ID_PPMAX1+i, wk->dst );
+            }
+          }
+          break;
         }
         break;
       }
@@ -896,7 +930,7 @@ static int check_box_touch( DMP_MAINWORK* wk )
       if( wk->boxEnable[i] )
       {
         const INPUT_BOX_PARAM* p = &InputBoxParams[i];
-        if( p->type == INPUTBOX_TYPE_FIXVAL ){
+        if( (p->type == INPUTBOX_TYPE_FIXVAL) ||  (p->type == INPUTBOX_TYPE_FIXSTR)){
           continue;
         }
         if( (x >= p->xpos) && (x <= (p->xpos + p->width))
@@ -988,9 +1022,11 @@ static void update_dst( DMP_MAINWORK* wk )
 //----------------------------------------------------------------------------------
 static void print_caption( DMP_MAINWORK* wk, const INPUT_BOX_PARAM* p )
 {
-  u32 ypos = p->cap_ypos + ((LINE_HEIGHT - GFL_FONT_GetLineHeight(wk->font)) / 2);
-  GFL_MSG_GetString( wk->msgData, p->cap_strID, wk->strbuf );
-  PRINT_UTIL_Print( &wk->printUtil, wk->printQue, p->cap_xpos, ypos, wk->strbuf, wk->font );
+  if( p->cap_strID >= 0 ){
+    u32 ypos = p->cap_ypos + ((LINE_HEIGHT - GFL_FONT_GetLineHeight(wk->font)) / 2);
+    GFL_MSG_GetString( wk->msgData, p->cap_strID, wk->strbuf );
+    PRINT_UTIL_Print( &wk->printUtil, wk->printQue, p->cap_xpos, ypos, wk->strbuf, wk->font );
+  }
 }
 
 static PRINTSYS_LSB box_sub_get_bgcol( u8 input_type )
@@ -1000,6 +1036,8 @@ static PRINTSYS_LSB box_sub_get_bgcol( u8 input_type )
   case INPUTBOX_TYPE_NUM:     return PRINTSYS_LSB_Make( COLIDX_BLACK, 0, COLIDX_BLUE_L );
   case INPUTBOX_TYPE_SWITCH:  return PRINTSYS_LSB_Make( COLIDX_BLACK, 0, COLIDX_GREEN_L );
   case INPUTBOX_TYPE_FIXVAL:  return PRINTSYS_LSB_Make( COLIDX_WHITE, 0, COLIDX_GRAY );
+  case INPUTBOX_TYPE_FIXSTR:  return PRINTSYS_LSB_Make( COLIDX_WHITE, 0, COLIDX_GRAY );
+  case INPUTBOX_TYPE_BTN:     return PRINTSYS_LSB_Make( COLIDX_BLACK, 0, COLIDX_RED_L );
   }
   return PRINTSYS_LSB_Make( COLIDX_BLACK, 0, COLIDX_WHITE );
 }
@@ -1139,9 +1177,18 @@ static void  box_getstr( DMP_MAINWORK* wk, u32 boxID, STRBUF* buf )
 
   switch( p->type ){
   case INPUTBOX_TYPE_STR:
+  case INPUTBOX_TYPE_FIXSTR:
     {
       GFL_MSGDATA* msgdat = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, p->arg, GFL_HEAP_LOWID(wk->heapID) );
       GFL_MSG_GetString( msgdat, value, wk->strbuf );
+      GFL_MSG_Delete( msgdat );
+    }
+    break;
+
+  case INPUTBOX_TYPE_BTN:
+    {
+      GFL_MSGDATA* msgdat = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, p->arg, GFL_HEAP_LOWID(wk->heapID) );
+      GFL_MSG_GetString( msgdat, p->arg2, wk->strbuf );
       GFL_MSG_Delete( msgdat );
     }
     break;
@@ -1171,6 +1218,8 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
     {
       u16 monsno = box_getvalue( wk, INPUTBOX_ID_POKETYPE );
       PP_ChangeMonsNo( wk->dst, monsno );
+      box_setup( wk, INPUTBOX_ID_TYPE1, wk->dst );
+      box_setup( wk, INPUTBOX_ID_TYPE2, wk->dst );
       box_setup( wk, INPUTBOX_ID_TOKUSEI, wk->dst );
       box_setup( wk, INPUTBOX_ID_SEX, wk->dst );
       box_setup( wk, INPUTBOX_ID_HPVAL, wk->dst );
@@ -1181,6 +1230,17 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
       box_setup( wk, INPUTBOX_ID_SDFVAL, wk->dst );
     }
     break;
+  case INPUTBOX_ID_SEIKAKU:
+    {
+      box_setup( wk, INPUTBOX_ID_HPVAL, wk->dst );
+      box_setup( wk, INPUTBOX_ID_POWVAL, wk->dst );
+      box_setup( wk, INPUTBOX_ID_DEFVAL, wk->dst );
+      box_setup( wk, INPUTBOX_ID_AGIVAL, wk->dst );
+      box_setup( wk, INPUTBOX_ID_SPWVAL, wk->dst );
+      box_setup( wk, INPUTBOX_ID_SDFVAL, wk->dst );
+    }
+    break;
+
   case INPUTBOX_ID_PPCNT1:
   case INPUTBOX_ID_PPCNT2:
   case INPUTBOX_ID_PPCNT3:
