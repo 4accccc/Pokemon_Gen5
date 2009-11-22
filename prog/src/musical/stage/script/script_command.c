@@ -371,6 +371,7 @@ SCRIPT_FUNC_DEF( CurtainUp )
   {
     scriptWork->waitCnt = moveWork->frame;
     SCRIPT_TPrintf("   AutoWait[%d]\n",scriptWork->waitCnt );
+    return SFT_SUSPEND;
   }
   
   return SFT_CONTINUE;
@@ -395,14 +396,16 @@ SCRIPT_FUNC_DEF( CurtainDown )
   
   moveWork->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_MoveCurtainTCB , (void*)moveWork , SCRIPT_TCB_PRI_NORMAL );
   
+  PMSND_PlaySE( STA_SE_CLOSE_CURTAIN );
+//  PMSND_PlaySE( SEQ_SE_MSCL_09 );
+
   if( autoWait == 1 )
   {
     scriptWork->waitCnt = moveWork->frame;
     SCRIPT_TPrintf("   AutoWait[%d]\n",scriptWork->waitCnt );
+    return SFT_SUSPEND;
   }
   
-  PMSND_PlaySE( STA_SE_CLOSE_CURTAIN );
-//  PMSND_PlaySE( SEQ_SE_MSCL_09 );
   
   return SFT_CONTINUE;
 }
@@ -438,6 +441,7 @@ SCRIPT_FUNC_DEF( CurtainMove )
     {
       scriptWork->waitCnt = moveWork->frame;
       SCRIPT_TPrintf("   AutoWait[%d]\n",scriptWork->waitCnt );
+      return SFT_SUSPEND;
     }
     
   }
@@ -497,6 +501,7 @@ SCRIPT_FUNC_DEF( StageMove )
     {
       scriptWork->waitCnt = moveWork->frame;
       SCRIPT_TPrintf("   AutoWait[%d]\n",scriptWork->waitCnt );
+      return SFT_SUSPEND;
     }
     
   }
@@ -682,6 +687,7 @@ SCRIPT_FUNC_DEF( PokeMove )
   {
     scriptWork->waitCnt = frame;
     SCRIPT_TPrintf("   AutoWait[%d]\n",scriptWork->waitCnt );
+    return SFT_SUSPEND;
   }
   
   
@@ -747,6 +753,7 @@ SCRIPT_FUNC_DEF( PokeMoveOffset )
   {
     scriptWork->waitCnt = frame;
     SCRIPT_TPrintf("   AutoWait[%d]\n",scriptWork->waitCnt );
+    return SFT_SUSPEND;
   }
   
   
@@ -994,9 +1001,9 @@ SCRIPT_FUNC_DEF( PokeActionJump )
   {
     scriptWork->waitCnt = num*interval;
     SCRIPT_TPrintf("   AutoWait[%d]\n",scriptWork->waitCnt );
+    return SFT_SUSPEND;
   }
   
-
   return SFT_CONTINUE;
 
 }
@@ -1072,6 +1079,7 @@ SCRIPT_FUNC_DEF( PokeActionRotate )
   {
     scriptWork->waitCnt = frame;
     SCRIPT_TPrintf("   AutoWait[%d]\n",scriptWork->waitCnt );
+    return SFT_SUSPEND;
   }
 
   return SFT_CONTINUE;
@@ -1278,6 +1286,7 @@ SCRIPT_FUNC_DEF( PokeActionComeNearToTop )
   {
     scriptWork->waitCnt = frame;
     SCRIPT_TPrintf("   AutoWait[%d]\n",scriptWork->waitCnt );
+    return SFT_SUSPEND;
   }
   
   return SFT_CONTINUE;
