@@ -13,5 +13,7 @@
 
 #define C06PC0101_PCWOMAN                  0
 #define C06PC0101_SHOPM_01                 1
+#define C06PC0101_MAN1_01                  2
+#define C06PC0101_PILOT_01                 3
 
 #endif //ZONE_C06PC0101_EVC_H

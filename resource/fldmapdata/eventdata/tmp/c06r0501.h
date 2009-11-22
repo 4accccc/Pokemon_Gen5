@@ -11,5 +11,8 @@
 #ifndef ZONE_C06R0501_EVC_H
 #define ZONE_C06R0501_EVC_H
 
+#define C06R0501_CLEANINGM_01              0
+#define C06R0501_WORKMAN_01                1
+#define C06R0501_POKE4_01                  2
 
 #endif //ZONE_C06R0501_EVC_H

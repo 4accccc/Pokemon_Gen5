@@ -16,11 +16,13 @@
 #ifndef ZONE_C06_EVC_H
 #define ZONE_C06_EVC_H
 
-#define C06_GIRL2                          0
-#define C06_BOY3                           1
-#define C06_PILOT                          2
-#define C06_WORKMAN                        3
-#define C06_WOMAN1                         4
-#define C06_RANGERW                        5
+#define C06_GIRL2_01                       0
+#define C06_BOY3_01                        1
+#define C06_PILOT_01                       2
+#define C06_WORKMAN_01                     3
+#define C06_WOMAN1_01                      4
+#define C06_RANGERW_01                     5
+#define C06_LEADER6_01                     6
+#define C06_HAKASE1_01                     7
 
 #endif //ZONE_C06_EVC_H

@@ -12,5 +12,6 @@
 #define ZONE_C06R0401_EVC_H
 
 #define C06R0401_BABYGIRL1_01              0
+#define C06R0401_OLDWOMAN1_01              1
 
 #endif //ZONE_C06R0401_EVC_H

@@ -11,5 +11,7 @@
 #ifndef ZONE_C06R0301_EVC_H
 #define ZONE_C06R0301_EVC_H
 
+#define C06R0301_WOMAN3_01                 0
+#define C06R0301_BOY1_01                   1
 
 #endif //ZONE_C06R0301_EVC_H

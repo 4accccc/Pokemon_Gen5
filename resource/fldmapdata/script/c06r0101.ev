@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c06r0101.h"
-  //.include  "c06r0101.h"
+  .include  "c06r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,11 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c06r0101
+_EVENT_DATA    ev_c06r0101_veteranw_01
+_EVENT_DATA    ev_c06r0101_poke2_01
+_EVENT_DATA    ev_c06r0101_informationw_01
+_EVENT_DATA    ev_c06r0101_middleman2_01
+_EVENT_DATA    ev_c06r0101_pilot_01
 _EVENT_DATA_END
 
 
@@ -30,9 +34,49 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  c06r0101_veteranw_01　アイテム入手イベント*/
 /**************************************************************/
-ev_c06r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_c06r0101_veteranw_01
+	
+	//フラグが仮＋入手わざマシンについても仮
+	_EASY_TALK_ITEM_EVENT( ITEM_WAZAMASIN01, 1, FH_01, msg_c06r0101_veteranw_01, msg_c06r0101_veteranw_02, msg_c06r0101_veteranw_02)
+	
+EVENT_END
+
+/**************************************************************/
+/*  c06r0101_poke2_01　一言メッセージ*/
+/**************************************************************/
+EVENT_START   ev_c06r0101_poke2_01
+	
+	//【仮】ポケモンの種類については仮
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0101_poke_01) 
+	
+EVENT_END
+
+/**************************************************************/
+/*  c06r0101_informationw_01　一言メッセージ*/
+/**************************************************************/
+EVENT_START   ev_c06r0101_informationw_01
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0101_infomationw_01) 
+	
+EVENT_END
+
+/**************************************************************/
+/*  c06r0101_middleman2_01　一言メッセージ*/
+/**************************************************************/
+EVENT_START   ev_c06r0101_middleman2_01
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0101_middleman2_01) 
+	
+EVENT_END
+
+/**************************************************************/
+/*  c06r0101_pilot_01　一言メッセージ*/
+/**************************************************************/
+EVENT_START   ev_c06r0101_pilot_01
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0101_pilot_01) 
+	
+EVENT_END
 

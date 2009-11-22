@@ -212,7 +212,7 @@ _ANIME_LABEL	anm_player_migi_muku
 /*  R02 BOY2の会話イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_r02_boy2_01
-//test
+
 	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r02_boy2_01) 
 	
 EVENT_END

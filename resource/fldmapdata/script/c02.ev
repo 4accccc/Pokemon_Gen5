@@ -193,7 +193,7 @@ EVENT_START   ev_pos_c02_boss_01
 	//はい/いいえの選択
 	_YES_NO_WIN( SCWK_ANSWER )
 	
-	IF $SCWK_ANSWER ==  0  THEN
+	IF $SCWK_ANSWER ==  SCR_NO THEN
 	
 		//Nが喋る・いいえの場合
 		//Ｎ『ボクを　からかっているね

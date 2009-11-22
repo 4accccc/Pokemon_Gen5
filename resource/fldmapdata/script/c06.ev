@@ -10,8 +10,8 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c06.h"
-  //.include  "c06.h"
-
+  .include  "c06.h"
+		
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,12 +19,14 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c06_talkobj_boy3
-_EVENT_DATA    ev_c06_talkobj_pilot
-_EVENT_DATA    ev_c06_talkobj_girl2
-_EVENT_DATA    ev_c06_talkobj_rangerw
-_EVENT_DATA    ev_c06_talkobj_workman
-_EVENT_DATA    ev_c06_talkobj_woman1
+_EVENT_DATA    ev_c06_boy3_01
+_EVENT_DATA    ev_c06_pilot_01
+_EVENT_DATA    ev_c06_girl2_01
+_EVENT_DATA    ev_c06_rangerw_01
+_EVENT_DATA    ev_c06_workman_01
+_EVENT_DATA    ev_c06_woman1_01
+_EVENT_DATA    ev_bg_c06_sign1_01
+_EVENT_DATA    ev_pos_c06_hakase1_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -35,59 +37,374 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C06 BOY3の会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c06_talkobj_boy3
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_MSG( msg_c06_boy3_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START    ev_pos_c06_hakase1_01
+	
+	DEFINE_LOCAL	LWK_GIAN_CHECK
+	DEFINE_LOCAL	LWK_HOKAKU_COUNT
+	
+	//【仮】ギアンを1匹捕まえている
+	$LWK_GIAN_CHECK = 1
+
+	//【仮】GREPに無かった為、予想で作成
+	//捕まえたポケモンの数をカウント
+	_GET_ZUKAN_COUNT( ZUKANCTRL_MODE_GET, LWK_HOKAKU_COUNT )
+	
+	
+	
+	//博士とジムリーダーが歩いてくる
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_kuru_01)
+	_OBJ_ANIME( C06_LEADER6_01,anm_leader06_kuru_01)
+	_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_kuru_01)
+	_OBJ_ANIME_WAIT()
+	
+	//博士とジムリーダーが主人公に気づく
+	_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_gyoe)
+	_OBJ_ANIME_WAIT()
+	
+	//博士が主人公に隣接
+	_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_kuru_02)
+	_OBJ_ANIME_WAIT()
+	
+	//プレイヤーの名前の格納
+	_PLAYER_NAME(0)
+	
+	//博士が主人公に話しかける
+	//博士:おお！　おまえさん！　[1:00:トレーナー名:0]だろ！！
+		
+	_BALLOONWIN_OBJMSG( msg_c06_hakase1_01, C06_HAKASE1_01)
+	_BALLOONWIN_CLOSE()
+	
+	//【仮】GREPに無かった為、予想で作成
+	//捕獲数を格納
+	_NUMBER( 0, LWK_HOKAKU_COUNT, 3 )
+	
+	//博士が主人公に話しかける
+	//博士:ちょいと　ずかんを　みせてもらうよ
+	
+	_BALLOONWIN_OBJMSG( msg_c06_hakase1_02, C06_HAKASE1_01)
+	_BALLOONWIN_CLOSE()
+
+	//ギアンがいるかどうかで、分岐	
+	//ギアンを捕まえている？
+	IF $LWK_GIAN_CHECK >  0	THEN
+	
+		//捕まえている
+		_BALLOONWIN_OBJMSG( msg_c06_hakase1_03, C06_HAKASE1_01)
+		_BALLOONWIN_CLOSE()
+	
+	ELSE
+		
+		//捕まえていない
+		_BALLOONWIN_OBJMSG( msg_c06_hakase1_04, C06_HAKASE1_01)
+		_BALLOONWIN_CLOSE()
+	
+	ENDIF
+	
+	//博士が主人公に話しかける
+	//博士:おぉ　すまない！　ちと　こうふん　してな
+	_BALLOONWIN_OBJMSG( msg_c06_hakase1_05, C06_HAKASE1_01)
+	_BALLOONWIN_CLOSE()
+	
+	//【仮】ポケモン図鑑がパワーアップする処理
+	//博士が主人公に話しかける
+	//博士:では　であいを　きねんして　おまえさんの　ポケモンずかんを
+	_BALLOONWIN_OBJMSG( msg_c06_hakase1_06, C06_HAKASE1_01)
+	_BALLOONWIN_CLOSE()
+	
+	//博士が主人公に話しかける
+	//博士:アララギ『よし！　これで　ポケモンの　みた　すがたなら
+	_BALLOONWIN_OBJMSG( msg_c06_hakase1_07, C06_HAKASE1_01)
+	_BALLOONWIN_CLOSE()
+	
+	//ジムリーダーが主人公に隣接
+	_OBJ_ANIME( C06_LEADER6_01,anm_leader06_kuru_02)
+	_OBJ_ANIME_WAIT()
+	
+	//ジムリーダーが博士を向く
+	_OBJ_ANIME( C06_LEADER6_01,anm_leader06_muku_01)
+	_OBJ_ANIME_WAIT()
+	
+	//ジムリーダーフウロが喋る
+	//フウロ:？？？『アララギはかせ　そちらの　トレーナーは？
+	_BALLOONWIN_OBJMSG( msg_c06_leader6_01, C06_LEADER6_01)
+	_BALLOONWIN_CLOSE()
+	
+	//博士がフウロを向く
+	_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_muku_01)
+	_OBJ_ANIME_WAIT()
+	
+	//プレイヤーの名前の格納
+	_PLAYER_NAME(0)
+	
+	//博士がフウロに喋る
+	//博士:『おお！　おう！　すまんすまん
+	_BALLOONWIN_OBJMSG( msg_c06_hakase1_08, C06_HAKASE1_01)
+	_BALLOONWIN_CLOSE()
+	
+	//ジムリーダーが主人公を向く
+	_OBJ_ANIME( C06_LEADER6_01,anm_leader06_muku_02)
+	_OBJ_ANIME_WAIT()
+	
+	//ジムリーダーフウロが喋る
+	//フウロ:フウロ『わあ！　だったら　ジムに　ちょうせん　するよね！
+	_BALLOONWIN_OBJMSG( msg_c06_leader6_02, C06_LEADER6_01)
+	_BALLOONWIN_CLOSE()	
+	
+	//博士が主人公を向く
+	_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_muku_02)
+	_OBJ_ANIME_WAIT()
+	
+	//博士がフウロに喋る
+	//博士:『そうだな　[1:00:トレーナー名:0]くん
+	_BALLOONWIN_OBJMSG( msg_c06_hakase1_09, C06_HAKASE1_01)
+	_BALLOONWIN_CLOSE()
+	
+	//博士がフウロに喋る
+	//博士:『ではな　フウロくん　また　なにかあったら　たのむぞ
+	_BALLOONWIN_OBJMSG( msg_c06_hakase1_10, C06_HAKASE1_01)
+	_BALLOONWIN_CLOSE()
+
+	//ジムリーダーが博士を向く
+	_OBJ_ANIME( C06_LEADER6_01,anm_leader06_muku_01)
+	_OBJ_ANIME_WAIT()
+	
+	//ジムリーダーフウロが喋る
+	//フウロ:『……はかせ　アタシの　ひこうきは　かもつき！
+	_BALLOONWIN_OBJMSG( msg_c06_leader6_03, C06_LEADER6_01)
+	_BALLOONWIN_CLOSE()	
+
+	//博士がフウロを向く
+	_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_muku_01)
+	_OBJ_ANIME_WAIT()
+	
+	//博士がフウロに喋る
+	//博士:『おいおい　かわいい　かおして
+	_BALLOONWIN_OBJMSG( msg_c06_hakase1_11, C06_HAKASE1_01)
+	_BALLOONWIN_CLOSE()
+	
+	//博士が画面外に移動
+	//ジムリーダーが博士を向く
+	//主人公が博士を向く
+	_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_saru_01)
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_01)
+	_OBJ_ANIME( C06_LEADER6_01,anm_leader06_muku_03)
+	_OBJ_ANIME_WAIT()
+	
+	//主人公がジムリーダーを向く
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_02)
+	_OBJ_ANIME_WAIT()
+	
+	//ジムリーダーフウロが喋る
+	//フウロ:フウロ『……ったく！　あんな　いいかげんな　かんじで
+	_BALLOONWIN_OBJMSG( msg_c06_leader6_04, C06_LEADER6_01)
+	_BALLOONWIN_CLOSE()	
+	
+	//ジムリーダーが主人公を向く
+	_OBJ_ANIME( C06_LEADER6_01,anm_leader06_muku_02)
+	_OBJ_ANIME_WAIT()
+	
+	//ジムリーダーフウロが喋る
+	//フウロ:さてと……　[1:00:トレーナー名:0]くん　だっけ！
+	_BALLOONWIN_OBJMSG( msg_c06_leader6_05, C06_LEADER6_01)
+	_BALLOONWIN_CLOSE()		
+	
+	//ジムリーダーが画面外に移動
+	_OBJ_ANIME( C06_LEADER6_01,anm_leader06_saru_01)
+	_OBJ_ANIME_WAIT()
+	
+	//博士とジムリーダーの姿を消す
+	_OBJ_DEL( C06_LEADER6_01 )
+	_OBJ_DEL( C06_HAKASE1_01 )
+
+	//===============フラグ操作===============//
+	//POSイベントを無効に
+	$LOCALWORK15 = 1
+
+	//博士とジムリーダーを消す
+//	_FLAG_SET( FV_C06_LEADER06 )
+//	_FLAG_SET( FV_C06_HAKASE1 )
+
+	//========================================//
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公:びっくりマークを出す                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公:近づく                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_kuru_01
+	_ANIME_DATA AC_WALK_L_16F,5
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公:振り向く１（右）                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_muku_01
+	_ANIME_DATA AC_DIR_D,8
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公:振り向く２（左）                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_muku_02
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//フウロ:主人公に近づく１                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader06_kuru_01
+	_ANIME_DATA AC_WALK_D_8F,10
+	_ANIME_DATA AC_WALK_R_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士:主人公に近づく１                        
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakase1_kuru_01
+	_ANIME_DATA AC_WALK_D_8F,10
+	_ANIME_DATA AC_WALK_R_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//フウロ:主人公に近づく２                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader06_kuru_02
+	_ANIME_DATA AC_WALK_R_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士:主人公に近づく２                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakase1_kuru_02
+	_ANIME_DATA AC_WALK_R_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 博士:びっくりマークを出す                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakase1_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// フウロ:振り向く１（下）                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader06_muku_01
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// フウロ:振り向く２（右）                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader06_muku_02
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// フウロ：:振り向く３（下）（右）                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader06_muku_03
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 博士:振り向く１（上）                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakase1_muku_01
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 博士:振り向く２（右）                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakase1_muku_02
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// フウロ:立ち去る                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader06_saru_01
+	_ANIME_DATA AC_WALK_L_8F,5
+	_ANIME_DATA AC_WALK_U_8F,12
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//博士:立ち去る                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakase1_saru_01
+	_ANIME_DATA AC_WALK_R_8F,12
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*  C06 BOY3の会話用イベントスクリプト                      */
+/**************************************************************/
+EVENT_START   ev_c06_boy3_01
+  
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c06_boy3_01 )
+	
 EVENT_END
 
 /**************************************************************/
 /*  C06 PILOTの会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c06_talkobj_pilot
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_MSG( msg_c06_pilot_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c06_pilot_01
+  
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c06_pilot_01 )
+	
 EVENT_END
 
 /**************************************************************/
 /*  C06 GIRL2の会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c06_talkobj_girl2
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_MSG( msg_c06_girl2_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c06_girl2_01
+  
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c06_girl2_01 )
+	
 EVENT_END
 
 /**************************************************************/
 /*  C06 RANGERWの会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c06_talkobj_rangerw
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_MSG( msg_c06_rangerw_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c06_rangerw_01
+  
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c06_rangerw_01 )
+	
 EVENT_END
 
 /**************************************************************/
 /*  C06 WORKMANの会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c06_talkobj_workman
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_MSG( msg_c06_workman_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c06_workman_01
+  
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c06_workman_01 )
+	
 EVENT_END
 
 /**************************************************************/
 /*  C06 WOMAN1の会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c06_talkobj_woman1
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_MSG( msg_c06_woman1_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c06_woman1_01
+  
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c06_woman1_01 )
+	
 EVENT_END
+
+/**************************************************************/
+/*  C06 看板のイベントスクリプト                      */
+/**************************************************************/
+EVENT_START   ev_bg_c06_sign1_01
+
+  _EASY_MSG(msg_c06_sign1_01) 
+
+EVENT_END
+

@@ -1,15 +1,15 @@
 #event data
-#save date:2009/10/28 23:38:55
+#save date:2009/11/22 19:50:06
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c06r0401.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/28 23:38:55
+#save date:
 2
 #hold event type:
 1
 #hold event number:
-1
+2
 #event number: 0
 #type
 1
@@ -37,13 +37,46 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--152 0 168
+-152 0 184
+#event number: 1
+#type
+1
+#ID name
+C06R0401_OLDWOMAN1_01
+#OBJ CODE Number
+OLDWOMAN1
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C06R0401_OLDWOMAN1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-216 0 168
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/28 23:38:55
+#save date:
 2
 #hold event type:
 1
@@ -53,7 +86,7 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/28 23:38:55
+#save date:
 2
 #hold event type:
 1
@@ -63,7 +96,7 @@ DIR_DOWN
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/28 23:38:55
+#save date:
 2
 #hold event type:
 1
@@ -80,8 +113,12 @@ DOOR_ID_C06_C06R0401_EXIT01
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -184 0 104
+#size
+1 1
 #event number: 1
 #Door Event Label
 DOOR_ID_C06R0401_C06_EXIT02
@@ -93,8 +130,12 @@ DOOR_ID_C06_C06R0401_EXIT01
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -168 0 104
+#size
+1 1
 #event number: 2
 #Door Event Label
 DOOR_ID_C06R0401_C06_EXIT03
@@ -106,7 +147,11 @@ DOOR_ID_C06_C06R0401_EXIT01
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -152 0 104
+#size
+1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
