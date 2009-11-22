@@ -121,17 +121,26 @@ void IRC_POKETRADE_CLACT_Create(POKEMON_TRADE_WORK* pWork)
 void IRC_POKETRADE_GraphicInitMainDisp(POKEMON_TRADE_WORK* pWork)
 {
 	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
+  int ncgr,nscr;
 
+  if(pWork->type==POKEMONTRADE_GTSNEGO){
+    nscr = NARC_trade_wb_gts_bg01_back_NSCR;
+  }
+  else{
+    nscr = NARC_trade_wb_trade_bg01_back_NSCR;
+  }
+  
 
 	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_trade_wb_trade_bg_NCLR,
 																		PALTYPE_MAIN_BG, 0, 0,  pWork->heapID);
 
 
-	// サブ画面BGキャラ転送
-  if(pWork->subchar == 0){
-    pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_trade_wb_trade_bg01_NCGR,
-                                                                  GFL_BG_FRAME2_M, 0, 0, pWork->heapID);
-  }
+  // サブ画面BGキャラ転送
+//  if(pWork->subchar == 0){
+    pWork->subchar =
+      GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_trade_wb_trade_bg01_NCGR,
+                                                   GFL_BG_FRAME2_M, 0, 0, pWork->heapID);
+  //}
 
 	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
 																				 NARC_trade_wb_trade_bg01_NSCR,
@@ -139,7 +148,7 @@ void IRC_POKETRADE_GraphicInitMainDisp(POKEMON_TRADE_WORK* pWork)
 																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
 																				 pWork->heapID);
 	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
-																				 NARC_trade_wb_trade_bg01_back_NSCR,
+																				 nscr,
 																				 GFL_BG_FRAME2_M, 0,
                                          GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
                                          pWork->heapID);
@@ -369,8 +378,14 @@ void IRC_POKETRADE_AppMenuOpen(POKEMON_TRADE_WORK* pWork, int *menustr,int num)
   appinit.itemWork =  &pWork->appitem[0];
 
   appinit.posType = ATPT_RIGHT_DOWN;
-  appinit.charPosX = 32;
-  appinit.charPosY = 24;
+  if(num==1){
+    appinit.charPosX = 32;
+    appinit.charPosY = 22;
+  }
+  else{
+    appinit.charPosX = 32;
+    appinit.charPosY = 24;
+  }
 	appinit.w				 = APP_TASKMENU_PLATE_WIDTH;
 	appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
 
@@ -618,6 +633,7 @@ void IRC_POKETRADE_ResetBoxNameWindow(POKEMON_TRADE_WORK* pWork)
 
   for(i=0;i<BOX_MAX_TRAY+1;i++){
     if(pWork->BoxNameWin[i]){
+//      GFL_BMPWIN_ClearScreen(pWork->BoxNameWin[i] );
       GFL_BMPWIN_Delete(pWork->BoxNameWin[i] );
       pWork->BoxNameWin[i]=NULL;
     }

@@ -173,6 +173,8 @@ static BOOL debugMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_OpenClubMenu( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_OpenGTSNegoMenu( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk );
+
 
 static debugMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk );
 static debugMenuCallProc_SubscreenSelect( DEBUG_MENU_EVENT_WORK *wk );
@@ -251,6 +253,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_C_CHOICE00, debugMenuCallProc_OpenCommDebugMenu },
   { DEBUG_FIELD_STR19, debugMenuCallProc_OpenClubMenu },
   { DEBUG_FIELD_STR51  , debugMenuCallProc_OpenGTSNegoMenu },
+  { DEBUG_FIELD_STR55,   debugMenuCallProc_CGEARPictureSave },
   { DEBUG_FIELD_STR22, debugMenuCallProc_ControlRtcList },
   { DEBUG_FIELD_STR15, debugMenuCallProc_ControlLight },
   { DEBUG_FIELD_STR16, debugMenuCallProc_WeatherList },
@@ -563,6 +566,51 @@ static BOOL debugMenuCallProc_OpenGTSNegoMenu( DEBUG_MENU_EVENT_WORK *wk )
 
   EVENT_GTSNegoChange(gameSys, fieldWork, event);
   return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * GTSNegoメニュー呼びだし
+ * @param wk  DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+#include "c_gear.naix"
+#include "./c_gear/c_gear.h"
+
+static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GMEVENT *event = wk->gmEvent;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  GAMESYS_WORK  *gameSys  = wk->gmSys;
+  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gameSys));
+  
+  NNSG2dCharacterData* charData;
+  void* pArc;
+  u8* pCGearWork = GFL_HEAP_AllocMemory(HEAPID_FIELDMAP,0x2000);
+
+  if(LOAD_RESULT_OK== SaveControl_Extra_LoadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE, HEAPID_FIELDMAP,
+                                                 pCGearWork,0x2000)){
+
+    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, HEAPID_FIELDMAP );
+    pArc = GFL_ARCHDL_UTIL_Load( p_handle, NARC_c_gear_decal_NCGR, FALSE, HEAPID_FIELDMAP);
+    if( NNS_G2dGetUnpackedBGCharacterData( pArc, &charData ) ){
+      GFL_STD_MemCopy(charData->pRawData, pCGearWork, CGEAR_DECAL_SIZE_MAX);
+    }
+    GFL_ARC_CloseDataHandle( p_handle );
+  }
+  SaveControl_Extra_SaveAsyncInit(pSave,SAVE_EXTRA_ID_CGEAR_PICUTRE);
+  while(1){
+    if(LOAD_RESULT_OK==SaveControl_Extra_SaveAsyncMain(pSave,SAVE_EXTRA_ID_CGEAR_PICUTRE)){
+      break;
+    }
+    OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+  }
+  SaveControl_Extra_UnloadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE);
+  GFL_HEAP_FreeMemory(pCGearWork);
+  OS_TPrintf("完了\n");
+
+  return( FALSE );
 }
 
 //======================================================================

@@ -14,6 +14,7 @@
 #include "net_app/gtsnego.h"
 #include "net/network_define.h"
 #include "net/dwc_rap.h"
+#include "../../field/event_gtsnego.h"
 
 #include "infowin/infowin.h"
 #include "system/main.h"
@@ -49,6 +50,7 @@
 #endif
 
 #define _NO2   (2)
+#define _NO3   (3)
 
 #define _WORK_HEAPSIZE (0x1000)  // 調整が必要
 
@@ -168,6 +170,12 @@ struct _GTSNEGO_WORK {
 };
 
 
+///通信コマンド
+typedef enum {
+  _NETCMD_INFOSEND = GFL_NET_CMD_GTSNEGO,
+  _NETCMD_MYSTATUSSEND,
+} _BATTLEIRC_SENDCMD;
+
 
 //-----------------------------------------------
 //static 定義
@@ -186,6 +194,15 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,GTSNEGO_WORK* pWork);
 static void _modeSelectBattleTypeInit(GTSNEGO_WORK* pWork);
 
 static void _levelSelect( GTSNEGO_WORK *pWork );
+
+static void _recvInfomationData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _recvMystatusData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+
+///通信コマンドテーブル
+static const NetRecvFuncTable _PacketTbl[] = {
+  {_recvInfomationData,   NULL},    ///_NETCMD_INFOSEND
+  {_recvMystatusData, NULL},    ///_NETCMD_MYSTATUSSEND
+};
 
 
 
@@ -225,6 +242,47 @@ static void _changeStateDebug(GTSNEGO_WORK* pWork,StateFunc state, int line)
   _changeState(pWork, state);
 }
 #endif
+
+//_NETCMD_INFOSEND
+//------------------------------------------------------------------------------
+/**
+ * @brief   通信コールバック _NETCMD_INFOSEND
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _recvInfomationData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  GTSNEGO_WORK *pWork = pWk;
+  EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
+
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return;//自分のは今は受け取らない
+  }
+  GFL_STD_MemCopy(pData,&pEv->aUser[1],sizeof(EVENT_GTSNEGO_USER_DATA));
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   通信コールバック _NETCMD_MYSTATUSSEND
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _recvMystatusData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  GTSNEGO_WORK *pWork = pWk;
+  EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
+
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return;//自分のは今は受け取らない
+  }
+  GFL_STD_MemCopy(pData,pEv->pStatus[1], MyStatus_GetWorkSize());
+}
 
 
 //------------------------------------------------------------------------------
@@ -330,11 +388,73 @@ static BOOL _LevelButtonCallback(int bttnid,GTSNEGO_WORK* pWork)
   return TRUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	同期検査+INFO送信
+ *	@param	bttnid		ボタンID
+ *	@param	event		イベント種類
+ *	@param	p_work		ワーク
+ */
+//-----------------------------------------------------------------------------
+
+static void _timingCheck2( GTSNEGO_WORK *pWork )
+{
+  if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO3)){
+    _CHANGE_STATE(pWork,NULL);
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	MYSTATUS送信
+ *	@param	bttnid		ボタンID
+ *	@param	event		イベント種類
+ *	@param	p_work		ワーク
+ */
+//-----------------------------------------------------------------------------
+
+static void _statussendCheck( GTSNEGO_WORK *pWork )
+{
+  GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_NO3);
+  _CHANGE_STATE(pWork,_timingCheck2);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	MYSTATUS送信
+ *	@param	bttnid		ボタンID
+ *	@param	event		イベント種類
+ *	@param	p_work		ワーク
+ */
+//-----------------------------------------------------------------------------
+
+static void _infosendCheck( GTSNEGO_WORK *pWork )
+{
+  EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
+  if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_MYSTATUSSEND, MyStatus_GetWorkSize(),pEv->pStatus[0])){
+    _CHANGE_STATE(pWork,_statussendCheck);
+  }
+}
+
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	同期検査+INFO送信
+ *	@param	bttnid		ボタンID
+ *	@param	event		イベント種類
+ *	@param	p_work		ワーク
+ */
+//-----------------------------------------------------------------------------
 
 static void _timingCheck( GTSNEGO_WORK *pWork )
 {
   if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO2)){
-    _CHANGE_STATE(pWork,NULL);
+      EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
+    if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_INFOSEND, sizeof(EVENT_GTSNEGO_USER_DATA),&pEv->aUser[0])){
+      _CHANGE_STATE(pWork,_infosendCheck);
+    }
   }
 }
 
@@ -359,7 +479,14 @@ static void _friendGreeState( GTSNEGO_WORK *pWork )
     pWork->timer--;
   }
   else{
+    EVENT_GTSNEGO_WORK *pParent = pWork->dbw;
+
+    pParent->aUser[0].selectLV = pWork->myChageType;
+    pParent->aUser[0].selectType = pWork->changeMode;
+    {
+    }
     GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_NO2);
+    
     _CHANGE_STATE(pWork,_timingCheck);
   }
 }
@@ -697,38 +824,37 @@ static void _modeSelectMenuWait(GTSNEGO_WORK* pWork)
 static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   EVENT_GTSNEGO_WORK* pEv=pwk;
+  GTSNEGO_WORK *pWork;
 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x38000 );
 
-  {
-    GTSNEGO_WORK *pWork = GFL_PROC_AllocWork( proc, sizeof( GTSNEGO_WORK ), HEAPID_IRCBATTLE );
-    GFL_STD_MemClear(pWork, sizeof(GTSNEGO_WORK));
-    pWork->heapID = HEAPID_IRCBATTLE;
-
-    pWork->pDispWork = GTSNEGO_DISP_Init(pWork->heapID);
-    pWork->pMessageWork = GTSNEGO_MESSAGE_Init(pWork->heapID, NARC_message_gtsnego_dat);
-    pWork->pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(pEv->gsys));
-    pWork->pList = SaveData_GetWifiListData(
-      GAMEDATA_GetSaveControlWork(
-        GAMESYSTEM_GetGameData(
-          ((pEv->gsys))) ));
-
-
-    {
-      //			GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(pEv->gsys);
-      //		INFOWIN_Init( _SUBSCREEN_BGPLANE , _SUBSCREEN_PALLET , pGC , pWork->heapID);
-    }
+  
+  pWork = GFL_PROC_AllocWork( proc, sizeof( GTSNEGO_WORK ), HEAPID_IRCBATTLE );
+  GFL_STD_MemClear(pWork, sizeof(GTSNEGO_WORK));
+  pWork->heapID = HEAPID_IRCBATTLE;
+  pWork->dbw = pEv;
+  pWork->pDispWork = GTSNEGO_DISP_Init(pWork->heapID);
+  pWork->pMessageWork = GTSNEGO_MESSAGE_Init(pWork->heapID, NARC_message_gtsnego_dat);
+  pWork->pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(pEv->gsys));
+  pWork->pList = SaveData_GetWifiListData(
+    GAMEDATA_GetSaveControlWork(
+      GAMESYSTEM_GetGameData(
+        ((pEv->gsys))) ));
 
 
-
-    WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
-                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
-
-    pWork->dbw = pwk;
-
-    _CHANGE_STATE(pWork,_modeSelectMenuInit);
-
+  if(GFL_NET_IsInit()){
+    GFL_NET_AddCommandTable(GFL_NET_CMD_GTSNEGO,_PacketTbl,NELEMS(_PacketTbl), pWork);
   }
+
+
+
+  WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
+                  WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+  
+  
+  _CHANGE_STATE(pWork,_modeSelectMenuInit);
+  
+  
 
   return GFL_PROC_RES_FINISH;
 }

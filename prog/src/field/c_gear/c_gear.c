@@ -1559,9 +1559,21 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 
 }
 
+static void _loadExData(C_GEAR_WORK* pWork,GAMESYS_WORK* pGameSys)
+{
+  int i;
+  u8* pCGearWork = GFL_HEAP_AllocMemory(HEAPID_FIELDMAP,0x2000);
+  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(pGameSys));
 
-
-
+  if(LOAD_RESULT_OK== SaveControl_Extra_LoadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE, HEAPID_FIELDMAP,
+                                                 pCGearWork,0x2000)){
+    for(i=0;i<CGEAR_DECAL_SIZEY;i++){
+      GFL_BG_LoadCharacter(GEAR_MAIN_FRAME,&pCGearWork[CGEAR_DECAL_SIZEX * 32 * i],CGEAR_DECAL_SIZEX * 32, (5 + i)*32);
+    }
+  }
+  SaveControl_Extra_UnloadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE);
+  GFL_HEAP_FreeMemory(pCGearWork);
+}
 
 //------------------------------------------------------------------------------
 /**
@@ -1585,6 +1597,9 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
 	//	GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, _BRIGHTNESS_SYNC);
 	_modeInit(pWork);
 
+
+  _loadExData(pWork,pGameSys);
+  
 
 #if 0
   {  //@todo ¼“c‚³‚ñ‚ª“ü‚ê‚Ä‚­‚ê‚é‚Ü‚Å‰¼

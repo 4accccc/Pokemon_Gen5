@@ -12,16 +12,7 @@
 
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
-#include "field/fieldmap.h"
-
-typedef struct {
-  GAMESYS_WORK * gsys;
-  FIELDMAP_WORK * fieldmap;
-  SAVE_CONTROL_WORK *ctrl;
-  int selectType;
-  GMEVENT * event;
-  void* pWork;
-} EVENT_GTSNEGO_WORK;
+#include "net_app/gtsnego.h"
 
 
 extern GMEVENT* EVENT_GTSNego( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap );

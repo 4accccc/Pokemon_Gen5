@@ -93,7 +93,7 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
     }
     break;
   case _CALL_TRADE:
-    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokemon_trade), &PokemonTradeWiFiProcData, gsys);
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokemon_trade), &PokemonTradeWiFiProcData, dbw);
     (*seq)++;
     break;
   case _WAIT_TRADE:
@@ -112,6 +112,8 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
     (*seq) ++;
     break;
   case _FIELD_END:
+    GFL_HEAP_FreeMemory(dbw->pStatus[0]);
+    GFL_HEAP_FreeMemory(dbw->pStatus[1]);
     return GMEVENT_RES_FINISH;
   default:
     GF_ASSERT(0);
@@ -133,12 +135,15 @@ static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WOR
   }
 
   dbw = GMEVENT_GetEventWork(event);
-  dbw->ctrl = SaveControl_GetPointer();
-  NET_PRINT("%x\n",(int)dbw->ctrl);
   dbw->gsys = gsys;
   dbw->fieldmap = fieldmap;
-  dbw->event = event;
-
+  dbw->ctrl = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gsys));
+  dbw->pStatus[0] = GFL_HEAP_AllocClearMemory(HEAPID_PROC,MyStatus_GetWorkSize());
+  dbw->pStatus[1] = GFL_HEAP_AllocClearMemory(HEAPID_PROC,MyStatus_GetWorkSize());
+  {
+    MYSTATUS * pMy =GAMEDATA_GetMyStatusPlayer(GAMESYSTEM_GetGameData(gsys), 0);
+    GFL_STD_MemCopy(pMy,dbw->pStatus[0], MyStatus_GetWorkSize());
+  }
 }
 
 //------------------------------------------------------------------

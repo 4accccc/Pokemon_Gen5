@@ -494,7 +494,7 @@ const GFL_SVLD_PARAM SaveParam_ExtraTbl[] = {
     NELEMS(SaveDataTbl_Extra_CGEARPicture),
     EXTRA_MM_CGEAR,             //バックアップ領域先頭アドレス
     EXTRA_MM_CGEAR,             //ミラーリング領域先頭アドレス ※ミラー無し指定
-    sizeof(CGEAR_PICTURE_SAVEDATA),       //使用するバックアップ領域の大きさ
+    SAVESIZE_EXTRA_CGEAR_PICTURE,       //使用するバックアップ領域の大きさ
     MAGIC_NUMBER,
   },
   {//外部セーブパラメータテーブル：ストリーミング(ミラーリング無)

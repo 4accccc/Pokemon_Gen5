@@ -13,6 +13,7 @@
 #include "savedata/save_control.h"
 
 #include "net\network_define.h"
+#include "../../field/event_gtsnego.h"
 
 #include "print\printsys.h"
 #include "print\gf_font.h"
@@ -91,6 +92,7 @@ typedef struct{
 //	プロトタイプ宣言
 //==============================================================================
 static BOOL DebugOhno_ItemDebug(D_OHNO_WORK *wk);
+static void * _PokeTradeWorkCreate(D_OHNO_WORK *wk);
 
 
 //==============================================================================
@@ -105,6 +107,7 @@ extern const GFL_PROC_DATA DebugOhnoMainProcData;
 extern const GFL_PROC_DATA DebugLayoutMainProcData;
 extern const GFL_PROC_DATA G_SYNC_ProcData;
 extern const GFL_PROC_DATA VTRProcData;
+extern const GFL_PROC_DATA PokemonTradeWiFiProcData;
 extern const GFL_PROC_DATA PokemonTradeProcData;
 extern const GFL_PROC_DATA PokemonTradeIrcProcData;
 extern const GFL_PROC_DATA DebugSaveAddrProcData;
@@ -115,6 +118,12 @@ extern const GFL_PROC_DATA DebugSaveAddrProcData;
 //==============================================================================
 //メニューデータ
 static const D_MENULIST DebugMenuList[] = {
+	{//
+		DEBUG_OHNO_MSG0017, 
+		&PokemonTradeWiFiProcData,	
+		_PokeTradeWorkCreate,
+		FS_OVERLAY_ID(pokemon_trade)
+	},
 	{//
 		DEBUG_OHNO_MSG0015, 
 		&PokemonTradeIrcProcData,	
@@ -268,7 +277,7 @@ static GFL_PROC_RESULT DebugOhnoMainProcInit( GFL_PROC * proc, int * seq, void *
 	{//メッセージ描画の為の準備
 		int i;
 
-		wk->drawwin.win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M, 4, 0, 24, 16, 0, GFL_BMP_CHRAREA_GET_F );
+		wk->drawwin.win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M, 4, 0, 24, 23, 0, GFL_BMP_CHRAREA_GET_F );
 		wk->drawwin.bmp = GFL_BMPWIN_GetBmp(wk->drawwin.win);
 		GFL_BMP_Clear( wk->drawwin.bmp, 0xff );
 		GFL_BMPWIN_MakeScreen( wk->drawwin.win );
@@ -468,6 +477,29 @@ static BOOL DebugOhno_ItemDebug(D_OHNO_WORK *wk)
 	
 	return FALSE;
 }
+
+
+static void * _PokeTradeWorkCreate(D_OHNO_WORK *wk)
+{
+	EVENT_GTSNEGO_WORK *pWork;
+
+  
+	pWork = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(EVENT_GTSNEGO_WORK));
+  
+  pWork->aUser[0].selectLV = 0;
+  pWork->aUser[1].selectLV = 1;
+  pWork->aUser[0].selectType = 0;
+  pWork->aUser[1].selectType = 1;
+
+  pWork->pStatus[0] = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP,MyStatus_GetWorkSize());
+  pWork->pStatus[1] = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP,MyStatus_GetWorkSize());
+
+  MyStatus_Init( pWork->pStatus[0]);
+  MyStatus_Init( pWork->pStatus[1]);
+  
+  return pWork;
+}
+
 
 //==============================================================================
 //	

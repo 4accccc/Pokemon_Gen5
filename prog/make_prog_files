@@ -889,6 +889,7 @@ SRCS_OVERLAY_POKEMON_TRADE = net_app/poke_trade/ircpokemontrade.c \
 								net_app/poke_trade/ircpokemontrade_step.c \
 								net_app/poke_trade/pokemontrade_ircdemo.c \
 								net_app/poke_trade/pokemontrade_save.c \
+								net_app/poke_trade/ircpoketrade_message.c \
 								net_app/poke_trade/ircpoketrade_3d.c \
 								net_app/poke_trade/ircpoketrade_gra.c \
 								net_app/gts_nego/gtsnego_proc.c \

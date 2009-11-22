@@ -94,6 +94,7 @@ typedef enum
 #define PLTID_OBJ_POKESTATE_M (13) //
 #define PLTID_OBJ_POKERUS_M (15) //
 #define PLTID_OBJ_DEMO_M (7)
+#define _OBJPLT_GTS_POKEICON_OFFSET_M (0)
 
 
 #define _OBJPLT_POKEICON_GRAY_OFFSET (0) ///< グレー用ポケモンアイコンパレット
@@ -188,6 +189,7 @@ typedef enum
   PLT_COMMON,
   PLT_POKECREATE,
   PLT_POKEICON_GRAY,
+  PLT_GTS_POKEICON,
   PLT_RESOURCE_MAX,
 
   CHAR_SCROLLBAR = PLT_RESOURCE_MAX,    //ARCID_POKETRADE
@@ -201,6 +203,7 @@ typedef enum
   ANM_SCROLLBAR, //ARCID_POKETRADE
   ANM_COMMON,
   ANM_POKECREATE,
+  ANM_GTS_POKEICON,
   ANM_RESOURCE_MAX,
 
   CEL_RESOURCE_MAX=ANM_RESOURCE_MAX,
@@ -240,6 +243,10 @@ enum
 // 日本語検索文字MAX
 #define JAPANESE_SEARCH_INDEX_MAX (44)
 
+//GTSで交換するポケモンMAX
+#define GTS_NEGO_POKESLT_MAX  (3)
+#define GTS_NEGO_UPSTATUSMSG_MAX (6)
+#define GTS_PLAYER_WORK_NUM  (2)
 
 /// @brief 3Dモデルカラーフェード
 typedef struct
@@ -339,6 +346,7 @@ struct _POKEMON_TRADE_WORK{
 
   GFL_ARCUTIL_TRANSINFO bgchar;
 
+  
 
   APP_TASKMENU_WORK* pAppTask;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
@@ -415,6 +423,7 @@ struct _POKEMON_TRADE_WORK{
   u32 pokeIconForm[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
   u8 pokeIconLine[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
 
+  
   GFL_CLWK* curIcon[CELL_DISP_NUM];
 
   int windowNum;
@@ -453,7 +462,19 @@ struct _POKEMON_TRADE_WORK{
   int pokemonsetCall;
   int userNetCommand[2];
 
+  //GTS用
+  int GTSSelectIndex[GTS_PLAYER_WORK_NUM][GTS_NEGO_POKESLT_MAX];  //候補のポケモンIndex
+  int GTSSelectBoxno[GTS_PLAYER_WORK_NUM][GTS_NEGO_POKESLT_MAX];  //候補のポケモンBox
+  POKEMON_PARAM* GTSSelectPP[GTS_PLAYER_WORK_NUM][GTS_NEGO_POKESLT_MAX];
+  GFL_CLWK* pokeIconGTS[GTS_PLAYER_WORK_NUM][GTS_NEGO_POKESLT_MAX];
+  u32 pokeIconNcgResGTS[GTS_PLAYER_WORK_NUM][GTS_NEGO_POKESLT_MAX];
+  GFL_BMPWIN* TriStatusWin[ GTS_PLAYER_WORK_NUM*2 ];            // ボックス名表示
+  int GTStype[GTS_PLAYER_WORK_NUM];  //
+  int GTSlv[GTS_PLAYER_WORK_NUM];  //
+  BOOL bGTSSelect[GTS_PLAYER_WORK_NUM];  //決定したかどうか
+  
 
+  
   BOOL bParent;
   BOOL bTouchReset;
 
@@ -532,6 +553,8 @@ extern GFL_CLWK* IRC_POKETRADE_GetCLACT( POKEMON_TRADE_WORK* pWork , int x, int 
 
 extern void IRC_POKETRADEDEMO_SetModel( POKEMON_TRADE_WORK* pWork, int modelno);
 extern void IRC_POKETRADEDEMO_RemoveModel( POKEMON_TRADE_WORK* pWork);
+extern void POKE_MAIN_Pokemonset(POKEMON_TRADE_WORK *pWork, int side, POKEMON_PARAM* pp );
+extern void POKETRE_MAIN_ChangePokemonSendDataNetwork(POKEMON_TRADE_WORK* pWork);
 
 extern void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(POKEMON_TRADE_WORK* pWork);
 extern void POKMEONTRADE_IRCDEMO_ChangeDemo(POKEMON_TRADE_WORK* pWork);
@@ -627,4 +650,16 @@ extern int IRC_TRADE_LINE2POKEINDEX(int lineno,int verticalindex);
 #define _CLACT_SOFTPRI_SELECT (15)
 #define _CLACT_SOFTPRI_POKELIST  (16)
 
+extern BOOL POKE_GTS_PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork,int index,int boxno);
+extern void POKE_GTS_CreatePokeIconResource(POKEMON_TRADE_WORK* pWork,int mainsub);
+extern void POKE_GTS_StatusMessageDisp(POKEMON_TRADE_WORK* pWork);
+extern void POKE_GTS_EndWork(POKEMON_TRADE_WORK* pWork);
+extern void POKE_GTS_InitWork(POKEMON_TRADE_WORK* pWork);
+extern void POKE_GTS_PokemonReset(POKEMON_TRADE_WORK* pWork,int side, int no);
+extern void POKE_GTS_Select6Init(POKEMON_TRADE_WORK* pWork);
+
+
+extern void _pokeNickNameMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,BOOL bEgg,POKEMON_TRADE_WORK* pWork);
+extern void _pokeLvMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,POKEMON_TRADE_WORK* pWork);
+extern void _pokeSexMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,POKEMON_TRADE_WORK* pWork);
 
