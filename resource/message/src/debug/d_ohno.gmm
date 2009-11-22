@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-11-10T21:58:27"/>
+	<create user="ohno" host="W00141" date="2009-11-21T18:30:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -411,6 +411,11 @@
 	<row id="DEBUG_OHNO_MSG0016">
 		<language name="JPN" width="256">セーブのアドレス</language>
 		<language name="JPN_KANJI" width="256">セーブのアドレス</language>
+	</row>
+
+	<row id="DEBUG_OHNO_MSG0017">
+		<language name="JPN" width="256">GTSネゴシエーション</language>
+		<language name="JPN_KANJI" width="256">GTSネゴシエーション</language>
 	</row>
 
 	<flowchart-group-list>

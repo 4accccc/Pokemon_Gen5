@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-10-25T11:32:26"/>
+	<create user="ohno" host="W00141" date="2009-11-22T17:48:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 
 	<dialog left="14" top="166" right="712" bottom="789" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="523"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="690"/>
@@ -927,6 +927,85 @@
 てんそう　しました</language>
 		<language name="JPN_KANJI" width="256">とった　メールを　パソコンに
 てんそう　しました</language>
+	</row>
+
+	<row id="POKETRADE_STR2_13">
+		<language name="JPN" width="256">あいてと　こうかんしたい　ポケモンを
+３ひき　えらんでください</language>
+		<language name="JPN_KANJI" width="256">あいてと　こうかんしたい　ポケモンを
+３ひき　えらんでください</language>
+	</row>
+
+	<row id="POKETRADE_STR2_14">
+		<language name="JPN" width="256">えらびちゅう</language>
+		<language name="JPN_KANJI" width="256">えらびちゅう</language>
+	</row>
+
+	<row id="POKETRADE_STR2_15">
+		<language name="JPN" width="256">けっていずみ</language>
+		<language name="JPN_KANJI" width="256">けっていずみ</language>
+	</row>
+
+	<row id="POKETRADE_STR2_16">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]の
+ほしいポケモン</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の
+ほしいポケモン</language>
+	</row>
+
+	<row id="POKETRADE_STR2_17">
+		<language name="JPN" width="256">すべてのポケモン</language>
+		<language name="JPN_KANJI" width="256">すべてのポケモン</language>
+	</row>
+
+	<row id="POKETRADE_STR2_18">
+		<language name="JPN" width="256">かっこいいポケモン</language>
+		<language name="JPN_KANJI" width="256">かっこいいポケモン</language>
+	</row>
+
+	<row id="POKETRADE_STR2_19">
+		<language name="JPN" width="256">かわいいポケモン</language>
+		<language name="JPN_KANJI" width="256">かわいいポケモン</language>
+	</row>
+
+	<row id="POKETRADE_STR2_20">
+		<language name="JPN" width="256">こわいポケモン</language>
+		<language name="JPN_KANJI" width="256">こわいポケモン</language>
+	</row>
+
+	<row id="POKETRADE_STR2_21">
+		<language name="JPN" width="256">へんなポケモン</language>
+		<language name="JPN_KANJI" width="256">へんなポケモン</language>
+	</row>
+
+	<row id="POKETRADE_STR2_22">
+		<language name="JPN" width="256">なんでも</language>
+		<language name="JPN_KANJI" width="256">なんでも</language>
+	</row>
+
+	<row id="POKETRADE_STR2_23">
+		<language name="JPN" width="256">LV1からLV４９</language>
+		<language name="JPN_KANJI" width="256">LV1からLV４９</language>
+	</row>
+
+	<row id="POKETRADE_STR2_24">
+		<language name="JPN" width="256">LV５０</language>
+		<language name="JPN_KANJI" width="256">LV５０</language>
+	</row>
+
+	<row id="POKETRADE_STR2_25">
+		<language name="JPN" width="256">LV５１から１００</language>
+		<language name="JPN_KANJI" width="256">LV５１から１００</language>
+	</row>
+
+	<row id="POKETRADE_STR2_26">
+		<language name="JPN" width="256">けってい</language>
+		<language name="JPN_KANJI" width="256">けってい</language>
+	</row>
+
+	<row id="POKETRADE_STR2_27">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]</language>
 	</row>
 
 	<flowchart-group-list>
