@@ -71,7 +71,7 @@ typedef struct
 	u16		isFlag;
 	
 	u8		trgPokeFlg;
-	
+	u8    lineNo;
 }STA_SCRIPT_WORK;
 
 //スクリプト管理

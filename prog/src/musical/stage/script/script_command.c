@@ -33,8 +33,6 @@
 #define SCRIPT_Printf ARI_Printf
 #endif
 
-#define SCRIPT_PRINT_LABEL(str) SCRIPT_TPrintf("SCRIPT Frame[%4d] No[%2d]%s\n",scriptWork->frame, SCRIPT_ENUM_ ## str ,#str);
-//#define SCRIPT_PRINT_LABEL(str) 
 
 #define ScriptFunc_GetValueS32() (VMGetU32(scriptWork->vmHandle))
 #define ScriptFunc_GetValuefx32() (VMGetU32(scriptWork->vmHandle))
@@ -43,6 +41,62 @@
 //追従系などは低く設定することで、本体の移動を優先させる
 #define SCRIPT_TCB_PRI_NORMAL (10)
 #define SCRIPT_TCB_PRI_LOW (7)
+
+#if DEB_ARI
+#define SCRIPT_PRINT_LABEL(str) SCRIPT_TPrintf("SCRIPT[%d] Frame[%4d] No[%2d]%s\n",scriptWork->lineNo,scriptWork->frame, SCRIPT_ENUM_ ## str ,CommandStr[SCRIPT_ENUM_ ## str]);
+static const char* const CommandStr[] = {
+                  "スクリプトの終了",
+                  "指定フレーム待つ",
+                  "指定フレームまで待つ",
+                  "スクリプトの同期をとる",
+                  "幕を上げる",
+                  "幕を下げる",
+                  "幕を動かす",
+                  "ステージスクロール",
+                  "BG読み変え",
+                  "ポケ表示切替",
+                  "ポケ方向",
+                  "ポケ移動",
+                  "ポケ相対移動",
+                  "ポケアニメ停止",
+                  "ポケアニメ開始",
+                  "ポケアニメ変更",
+                  "ポケアクション跳ねる",
+                  "ポケモン動作番号予約",
+                  "オブジェ作成",
+                  "オブジェ破棄",
+                  "オブジェ表示",
+                  "オブジェ非表示",
+                  "オブジェ移動",
+                  "エフェクト作成",
+                  "エフェクト破棄",
+                  "エフェクト再生",
+                  "エフェクト停止",
+                  "エフェクト連続再生",
+                  "ライトON(円形)",
+                  "ライトON(半径)",
+                  "ライトOFF",
+                  "ライト移動",
+                  "ライト追従移動",
+                  "ライト色設定",
+                  "メッセージ表示",
+                  "メッセージ消去",
+                  "メッセージ色変え",
+                  "BGM再生",
+                  "BGM停止",
+                  "ポケアクション回転",
+                  "ポケ正面・背面切り替え",
+                  "ポケアイテム表示切替",
+                  "注目ポケモン設定",
+                  "注目ポケモン解除",
+                  "メインパートの開始",
+                  "メインパートの終了",
+                  "トップのポケモンに寄る",
+                  "ラベル",
+                  };
+#else
+#define SCRIPT_PRINT_LABEL(str) 
+#endif
 
 //======================================================================
 //  enum

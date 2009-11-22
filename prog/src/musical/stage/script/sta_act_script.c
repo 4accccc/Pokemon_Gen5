@@ -192,6 +192,7 @@ void STA_SCRIPT_SetScript( STA_SCRIPT_SYS *work , void *scriptData , const BOOL 
   work->scriptWork[i]->frame = 0;
   work->scriptWork[i]->isFlag = 0;
   work->scriptWork[i]->trgPokeFlg = 0;
+  work->scriptWork[i]->lineNo = i;
   if( isTrgSync == TRUE )
   {
     work->scriptWork[i]->isFlag |= SFB_IS_TARGET_SYNC;
