@@ -209,20 +209,6 @@ u16 ZONEDATA_GetAreaID(u16 zone_id)
 }
 //------------------------------------------------------------------
 /**
- * @brief	マップアーカイブ指定の取得
- * @param	zone_id	ゾーン指定ID
- * @return	u8		map archive指定
- *
- */
-//------------------------------------------------------------------
-u8 ZONEDATA_GetMapArc(u16 zone_id)
-{
-	ZONEDATA zdbuf;
-	getZoneData(&zdbuf, zone_id);
-	return zdbuf.matrix_arc;
-}
-//------------------------------------------------------------------
-/**
  * @brief	マトリックス指定の取得
  * @param	zone_id	ゾーン指定ID
  * @return	u16	マトリックス指定値
