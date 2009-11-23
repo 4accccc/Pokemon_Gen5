@@ -2708,8 +2708,8 @@ static void handler_Tabenokosi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_DokudokuDama( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_TURNCHECK_END,  handler_DokudokuDama },
-    { BTL_EVENT_USE_ITEM_TMP,   handler_DokudokuDama_UseTmp },
+    { BTL_EVENT_TURNCHECK_BEGIN,  handler_DokudokuDama },
+    { BTL_EVENT_USE_ITEM_TMP,     handler_DokudokuDama_UseTmp },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
@@ -2718,7 +2718,7 @@ static void handler_DokudokuDama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 {
   BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
 
-  param->sickID = WAZASICK_DOKU;
+  param->sickID = WAZASICK_DOKUDOKU;
   param->sickCont = BPP_SICKCONT_MakeMoudokuCont();
   param->fAlmost = FALSE;
   param->poke_cnt = 1;
@@ -2752,7 +2752,7 @@ static void handler_DokudokuDama_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KaenDama( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_TURNCHECK_END,  handler_KaenDama },
+    { BTL_EVENT_TURNCHECK_BEGIN,  handler_KaenDama },
     { BTL_EVENT_USE_ITEM_TMP,   handler_KaenDama_UseTmp },
     { BTL_EVENT_NULL, NULL },
   };

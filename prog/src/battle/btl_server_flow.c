@@ -3954,6 +3954,15 @@ static BtlAddSickFailCode addsick_check_fail( BTL_SVFLOW_WORK* wk, const BTL_POK
     }
   }
 
+  // タイプ「はがね」は、どくにならない
+  if( (sick==WAZASICK_DOKU) || (sick==WAZASICK_DOKUDOKU) )
+  {
+    PokeTypePair type = BPP_GetPokeType( target );
+    if( PokeTypePair_IsMatch(type, POKETYPE_HAGANE) ){
+      return BTL_ADDSICK_FAIL_OTHER;
+    }
+  }
+
   // @@@ すでに混乱なら混乱にならないとか… 失敗コードを返す必要があるかも
   if( BPP_CheckSick(target, sick) ){
     return BTL_ADDSICK_FAIL_ALREADY;
@@ -4663,7 +4672,11 @@ static PushOutEffect check_pushout_effect( BTL_SVFLOW_WORK* wk )
 
   switch( rule ){
   case BTL_RULE_SINGLE:
-    return (competitor == BTL_COMPETITOR_WILD)? PUSHOUT_EFFECT_ESCAPE : PUSHOUT_EFFECT_MUSTFAIL;
+    if( competitor == BTL_COMPETITOR_WILD ){
+      return PUSHOUT_EFFECT_ESCAPE;
+    }else{
+      return PUSHOUT_EFFECT_CHANGE;
+    }
 
   default:
     return PUSHOUT_EFFECT_CHANGE;
@@ -4821,6 +4834,8 @@ static void scput_Fight_Uncategory( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
         if( scproc_HandEx_Root( wk, ITEM_DUMMY_DATA ) ){
           wazaEffSet_ImplicitTarget( wk );
         }
+      }else{
+        SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
       }
       Hem_PopState( &wk->HEManager, hem_state );
     }
@@ -4969,6 +4984,7 @@ static void scproc_Migawari_CheckNoEffect( BTL_SVFLOW_WORK* wk, SVFL_WAZAPARAM* 
 static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   const BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets )
 {
+  // @TODO 本来はスタックポインタの値ではなく、明確にハンドラ側から成否フラグを受け取るべき
   u16 sp = Hem_GetStackPtr( &wk->HEManager );
 
   BTL_EVENTVAR_Push();

@@ -572,6 +572,8 @@ static BTL_EVENT_FACTOR*  ADD_SyncroNoise( u16 pri, WazaID waza, u8 pokeID );
 static void handler_SyncroNoise( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Yakitukusu( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Yakitukusu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_GiftPass( u16 pri, WazaID waza, u8 pokeID );
+static void handler_GiftPass( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 //=============================================================================================
@@ -805,6 +807,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_KARI_NASIKUZUSI,       ADD_NasiKuzusi      },
     { WAZANO_KARI_EKOOBOISU,        ADD_EchoVoice       },
     { WAZANO_KARI_YAKITUKUSU,       ADD_Yakitukusu      },
+    { WAZANO_KARI_GIHUTOPASU,       ADD_GiftPass        },
   };
 
   int i;
@@ -8208,6 +8211,46 @@ static void handler_SyncroNoise( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     if( !PokeTypePair_IsMatchEither(myType, targetType) )
     {
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, TRUE );
+    }
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * ギフトパス
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_GiftPass( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORIZE_WAZA,  handler_GiftPass },   // 未分類ワザ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_GiftPass( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+    const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
+    const BTL_POKEPARAM* user = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    u16 myItemID = BPP_GetItem( user );
+    if( (myItemID != ITEM_DUMMY_DATA)
+    &&  (BPP_GetItem(target) == ITEM_DUMMY_DATA)
+    ){
+      BTL_HANDEX_PARAM_SET_ITEM* param;
+
+      param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
+      param->pokeID = pokeID;
+      param->itemID = ITEM_DUMMY_DATA;
+
+      param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
+      param->pokeID = targetPokeID;
+      param->itemID = myItemID;
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_GiftPass );
+      HANDEX_STR_AddArg( &param->exStr, targetPokeID );
+      HANDEX_STR_AddArg( &param->exStr, pokeID );
+      HANDEX_STR_AddArg( &param->exStr, myItemID );
     }
   }
 }
