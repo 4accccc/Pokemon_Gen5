@@ -122,6 +122,34 @@ VMCMD_RESULT EvCmdPokecenRecoverAnime( VMHANDLE * core, void *wk )
 }
 
 //======================================================================
+//======================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdDoorAnimeSetOpened( VMHANDLE * core, void *wk )
+{
+  u16 gx = SCRCMD_GetVMWorkValue( core, wk );
+  u16 gz = SCRCMD_GetVMWorkValue( core, wk );
+  VecFx32 pos;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FLDMAPPER * mapper = FIELDMAP_GetFieldG3Dmapper( fieldmap );
+  FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager( mapper );
+
+  G3DMAPOBJST * entry = NULL;
+
+  pos.x = GRID_TO_FX32( gx );
+  pos.y = 0;
+  pos.z = GRID_TO_FX32( gz );
+
+  entry = BMANIME_DIRECT_SearchDoor( bmodel_man, &pos );
+  G3DMAPOBJST_setAnime( bmodel_man, entry, ANM_INDEX_DOOR_OPEN, BMANM_REQ_REVERSE_START );
+  G3DMAPOBJST_setAnime( bmodel_man, entry, ANM_INDEX_DOOR_OPEN, BMANM_REQ_STOP );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//======================================================================
 //
 //
 //    ドアアニメ

@@ -512,7 +512,7 @@
   DEF_CMD( EvCmdDoorAnimeSet, EV_SEQ_DOOR_ANIME_SET )
   DEF_CMD( EvCmdDoorAnimeWait, EV_SEQ_DOOR_ANIME_WAIT )
 
-  NO_CMD()
+  DEF_CMD( EvCmdDoorAnimeSetOpened, EV_SEQ_DOOR_ANIME_SET_OPENED )
   NO_CMD()
   NO_CMD()
   NO_CMD()

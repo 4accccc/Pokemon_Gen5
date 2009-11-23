@@ -17,6 +17,8 @@ extern VMCMD_RESULT EvCmdDispFadeCheck( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdPokecenRecoverAnime( VMHANDLE * core, void *wk );
 
+extern VMCMD_RESULT EvCmdDoorAnimeSetOpened( VMHANDLE * core, void *wk );
+
 extern VMCMD_RESULT EvCmdDoorAnimeCreate( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdDoorAnimeDelete( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdDoorAnimeSet( VMHANDLE * core, void *wk );
