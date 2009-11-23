@@ -21,7 +21,6 @@
 #include "btl_sick.h"
 #include "btl_pospoke_state.h"
 #include "btl_shooter.h"
-#include "btl_deadrec.h"
 #include "btlv\btlv_effect.h"
 
 #include "handler\hand_tokusei.h"
@@ -189,6 +188,7 @@ struct _BTL_SVFLOW_WORK {
   SvflowResult            flowResult;
   BtlBagMode              bagMode;
   BTL_WAZAREC             wazaRec;
+  BTL_DEADREC             deadRec;
   HEAPID  heapID;
 
   u8      numClient;
@@ -199,7 +199,6 @@ struct _BTL_SVFLOW_WORK {
   u8      wazaEff_TargetPokePos;
   u8      escapeClientID;
   u8      getPokePos;
-  u8      numDeadPoke;
   u8      numRelivePoke;
   u8      relivedPokeID[ BTL_POKEID_MAX ];
   u8      pokeDeadFlag[ BTL_POKEID_MAX ];
@@ -643,6 +642,7 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   wk->escapeClientID = BTL_CLIENTID_NULL;
   wk->getPokePos = BTL_POS_NULL;
   BTL_WAZAREC_Init( &wk->wazaRec );
+  BTL_DEADREC_Init( &wk->deadRec );
   {
     BtlRule rule = BTL_MAIN_GetRule( mainModule );
     BTL_POSPOKE_InitWork( &wk->pospokeWork, wk->mainModule, wk->pokeCon, rule );
@@ -711,8 +711,8 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
 
   SCQUE_Init( wk->que );
   relivePokeRec_Init( wk );
+  BTL_DEADREC_StartTurn( &wk->deadRec );
   wk->numActOrder = 0;
-  wk->numDeadPoke = 0;
 
 
   FlowFlg_ClearAll( wk );
@@ -739,6 +739,7 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
   // 全アクション処理し終えた
   if( i == wk->numActOrder )
   {
+    u8 numDeadPoke = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
     wk->numEndActOrder = wk->numActOrder;
 
     // ターンチェック処理
@@ -746,7 +747,7 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
 
     // 死亡・生き返りなどでポケ交換の必要があるかチェック
     if( relivePokeRec_CheckNecessaryPokeIn(wk)
-    ||  (wk->numDeadPoke != 0)
+    ||  (numDeadPoke != 0)
     ){
       BTL_Printf("新ポケ入場の必要あります\n");
       reqChangePokeForServer( wk );
@@ -784,7 +785,7 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk )
   scproc_SetFlyingFlag( wk );
   BTL_SERVER_InitChangePokemonReq( wk->server );
 
-  wk->numDeadPoke = 0;
+  BTL_DEADREC_StartTurn( &wk->deadRec );
   wk->flowResult =  SVFLOW_RESULT_DEFAULT;
 
   wk->numActOrder = sortClientAction( wk, wk->actOrder, NELEMS(wk->actOrder) );
@@ -802,7 +803,10 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk )
 
   scproc_AfterMemberIn( wk );
 
-  return ( wk->numDeadPoke == 0)?  SVFLOW_RESULT_DEFAULT : SVFLOW_RESULT_POKE_IN_REQ;
+  {
+    u8 numDeadPoke = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
+    return ( numDeadPoke == 0)?  SVFLOW_RESULT_DEFAULT : SVFLOW_RESULT_POKE_IN_REQ;
+  }
 }
 //--------------------------------------------------------------------------
 /**
@@ -5312,7 +5316,7 @@ static void scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke )
     {
       BTL_Printf("ポケ[ID=%d]しにます\n", pokeID);
       wk->pokeDeadFlag[pokeID] = 1;
-      wk->numDeadPoke++;
+      BTL_DEADREC_Add( &wk->deadRec, pokeID );
 
       // @@@ みがわり出てたら画面から消すコマンド生成？
 
@@ -8835,7 +8839,7 @@ void* BTL_SVFLOW_GetHandlerTmpWork( BTL_SVFLOW_WORK* wk )
 }
 //=============================================================================================
 /**
- * 出たワザ記録構造体を取得
+ * 出たワザレコードのポインタを取得
  *
  * @param   wk
  *
@@ -8845,6 +8849,19 @@ void* BTL_SVFLOW_GetHandlerTmpWork( BTL_SVFLOW_WORK* wk )
 const BTL_WAZAREC* BTL_SVF_GetWazaRecord( BTL_SVFLOW_WORK* wk )
 {
   return &wk->wazaRec;
+}
+//=============================================================================================
+/**
+ * 死亡ポケレコードのポインタを取得
+ *
+ * @param   wk
+ *
+ * @retval  const BTL_DEADREC*
+ */
+//=============================================================================================
+const BTL_DEADREC* BTL_SVF_GetDeadRecord( BTL_SVFLOW_WORK* wk )
+{
+  return &wk->deadRec;
 }
 
 

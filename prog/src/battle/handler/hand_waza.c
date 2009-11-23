@@ -576,6 +576,8 @@ static BTL_EVENT_FACTOR*  ADD_GiftPass( u16 pri, WazaID waza, u8 pokeID );
 static void handler_GiftPass( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_TomoeNage( u16 pri, WazaID waza, u8 pokeID );
 static void handler_TomoeNage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_Katakiuti( u16 pri, WazaID waza, u8 pokeID );
+static void handler_Katakiuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 //=============================================================================================
@@ -812,6 +814,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_KARI_GIHUTOPASU,       ADD_GiftPass        },
     { WAZANO_KARI_TOMOENAGE,        ADD_TomoeNage       },
     { WAZANO_KARI_DORAGONTEERU,     ADD_TomoeNage       },  // ドラゴンテール=ともえなげ
+    { WAZANO_KARI_KATAKIUTI,        ADD_Katakiuti       },
   };
 
   int i;
@@ -7718,6 +7721,39 @@ static void handler_EchoVoice( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       }
       BTL_Printf("エコボ %d 回目につき pow=%d\n", cont_cnt, pow);
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
+    }
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * かたきうち
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_Katakiuti( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_POWER,   handler_Katakiuti },    // ワザ威力チェックハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_Katakiuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    const BTL_DEADREC* rec = BTL_SVF_GetDeadRecord( flowWk );
+    u8 deadPokeCnt, deadPokeID, i;
+
+    // 前のターンに味方が死んでいたら威力を倍
+    deadPokeCnt = BTL_DEADREC_GetCount( rec, 1 );
+    for(i=0; i<deadPokeCnt; ++i)
+    {
+      deadPokeID = BTL_DEADREC_GetPokeID( rec, 1, i );
+      if( BTL_MAINUTIL_IsFriendPokeID( pokeID, deadPokeID ) )
+      {
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
+        break;
+      }
     }
   }
 }

@@ -26,8 +26,9 @@ typedef struct {
 }BTL_DEADREC;
 
 
-extern void BTL_DEADREC_Clear( BTL_DEADREC* wk );
-extern void BTL_DEADREC_Start( BTL_DEADREC* wk );
+extern void BTL_DEADREC_Init( BTL_DEADREC* wk );
+extern void BTL_DEADREC_StartTurn( BTL_DEADREC* wk );
+extern void BTL_DEADREC_Add( BTL_DEADREC* wk, u8 pokeID );
 
-extern void BTL_DEADREC_GetCount( const BTL_DEADREC* wk, u8 turn );
-extern void BTL_DEADREC_GetPokeID( const BTL_DEADREC* wk, u8 turn, u8 idx );
+extern u8 BTL_DEADREC_GetCount( const BTL_DEADREC* wk, u8 turn );
+extern u8 BTL_DEADREC_GetPokeID( const BTL_DEADREC* wk, u8 turn, u8 idx );

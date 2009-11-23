@@ -110,6 +110,7 @@ extern u8 BTL_SVFLOW_RECEPT_GetAllOpponentFrontPokeID( BTL_SVFLOW_WORK* wk, u8 b
 extern u16 BTL_SVFLOW_GetTurnCount( BTL_SVFLOW_WORK* wk );
 extern u8 BTL_SVFLOW_GetClientCoverPosCount( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern const BTL_WAZAREC* BTL_SVF_GetWazaRecord( BTL_SVFLOW_WORK* wk );
+extern const BTL_DEADREC* BTL_SVF_GetDeadRecord( BTL_SVFLOW_WORK* wk );
 
 extern void BTL_SERVER_RECEPT_TokuseiWinIn( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern void BTL_SERVER_RECEPT_TokuseiWinOut( BTL_SVFLOW_WORK* wk, u8 pokeID );
