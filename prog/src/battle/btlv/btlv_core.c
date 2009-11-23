@@ -1029,32 +1029,10 @@ static BOOL subprocMemberIn( int* seq, void* wk_adrs )
 
   switch( *seq ){
   case 0:
-    {
-      if( !BTL_MAIN_IsOpponentClientID(wk->mainModule, wk->myClientID, subwk->clientID) ){
-        // 自分が入れ替え
-        BTL_Printf("入れ替えメッセージ：pokeID=%d\n", subwk->pokeID);
-        BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle, 1, subwk->pokeID );
-      }else{
-        // 相手が入れ替え
-        if( BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_TRAINER ){
-          BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle_NPC, 2, subwk->clientID, subwk->pokeID );
-        }else{
-          BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle_Player, 1, subwk->clientID, subwk->pokeID );
-        }
-      }
-      BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
-      (*seq)++;
-    }
+    BTLV_SCU_StartPokeIn( wk->scrnU, subwk->pokePos, subwk->clientID, subwk->memberIdx );
+    (*seq)++;
     break;
-
   case 1:
-    if( BTLV_SCU_WaitMsg(wk->scrnU) )
-    {
-      BTLV_SCU_StartPokeIn( wk->scrnU, subwk->pokePos, subwk->clientID, subwk->memberIdx );
-      (*seq)++;
-    }
-    break;
-  case 2:
     if( BTLV_SCU_WaitPokeIn(wk->scrnU) )
     {
       return TRUE;
