@@ -54,7 +54,6 @@ enum {
 //============================================================================================
 //============================================================================================
 static void makeRect(FLDHIT_RECT * rect, const VecFx32 * pos);
-static G3DMAPOBJST * searchDoorObject(FIELD_BMODEL_MAN * bmodel_man, const VecFx32 * pos);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void makeRect(FLDHIT_RECT * rect, const VecFx32 * pos)
@@ -75,7 +74,7 @@ static void makeRect(FLDHIT_RECT * rect, const VecFx32 * pos)
  * @return G3DMAPOBJST *  見つけたドア配置モデルへの参照
  */
 //------------------------------------------------------------------
-static G3DMAPOBJST * searchDoorObject(FIELD_BMODEL_MAN * bmodel_man, const VecFx32 * pos)
+G3DMAPOBJST * BMANIME_DIRECT_SearchDoor(FIELD_BMODEL_MAN * bmodel_man, const VecFx32 * pos)
 {
   G3DMAPOBJST * entry = NULL;
   G3DMAPOBJST ** array;
@@ -86,8 +85,10 @@ static G3DMAPOBJST * searchDoorObject(FIELD_BMODEL_MAN * bmodel_man, const VecFx
     FLDHIT_RECT rect;
     makeRect(&rect, pos);
     //矩形範囲内の配置モデルリストを生成する
-    array = FIELD_BMODEL_MAN_CreateObjStatusList(bmodel_man, &rect, &result_num);
+    array = FIELD_BMODEL_MAN_CreateObjStatusList(bmodel_man, &rect, BM_SEARCH_ID_DOOR, &result_num);
   }
+  entry = array[0];
+#if 0
   {
     int i;
     for (i = 0; i < result_num; i++)
@@ -100,6 +101,7 @@ static G3DMAPOBJST * searchDoorObject(FIELD_BMODEL_MAN * bmodel_man, const VecFx
       }
     }
   }
+#endif
   //矩形範囲内の配置モデルリストを解放する
   GFL_HEAP_FreeMemory(array);
   return entry;
@@ -113,7 +115,7 @@ BMANIME_CONTROL_WORK * BMANIME_CTRL_Create(FIELD_BMODEL_MAN * bmodel_man, const 
   G3DMAPOBJST * obj;
   FIELD_BMODEL * entry;
 
-  obj = searchDoorObject(bmodel_man, pos);
+  obj = BMANIME_DIRECT_SearchDoor(bmodel_man, pos);
   if (obj == NULL) return NULL;
   entry = FIELD_BMODEL_Create( bmodel_man, obj );
   if (entry == NULL) return NULL;

@@ -1596,10 +1596,13 @@ static void G3DMAPOBJST_deleteByObject(FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj
 //    G3DMAPOBJSTŒo—R‚Å‚Ì‘€ìŠÖ”ŒQ
 //
 //============================================================================================
+static BOOL FIELD_BMODEL_MAN_G3DMAPOBJSTisDoor
+(const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj);
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 G3DMAPOBJST ** FIELD_BMODEL_MAN_CreateObjStatusList
-( FIELD_BMODEL_MAN* man, const FLDHIT_RECT * rect, u32 * num )
+( FIELD_BMODEL_MAN* man, const FLDHIT_RECT * rect, BM_SEARCH_ID search, u32 * num )
 {
   G3DMAPOBJST ** result;
   int objNo, count = 0;
@@ -1610,6 +1613,13 @@ G3DMAPOBJST ** FIELD_BMODEL_MAN_CreateObjStatusList
     VecFx32 pos;
     G3DMAPOBJST * obj = &man->g3DmapObjSt[objNo];
     if ( G3DMAPOBJST_exists(obj) == FALSE ) continue;
+    switch (search)
+    {
+    case BM_SEARCH_ID_DOOR:
+      if ( FIELD_BMODEL_MAN_G3DMAPOBJSTisDoor(man, obj) == FALSE) continue;
+    default:
+      break;
+    }
     GFL_G3D_MAP_GetTrans( obj->g3Dmap, &pos );
     VEC_Add( &obj->objSt->trans, &pos, &pos );
     if ( FLDHIT_RECT_IsIncludePos( rect, pos.x, pos.z ) == TRUE )
@@ -1627,7 +1637,7 @@ G3DMAPOBJST ** FIELD_BMODEL_MAN_CreateObjStatusList
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-BOOL FIELD_BMODEL_MAN_G3DMAPOBJSTisDoor(const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj)
+static BOOL FIELD_BMODEL_MAN_G3DMAPOBJSTisDoor(const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj)
 {
   u8 entryNo;
   GF_ASSERT( G3DMAPOBJST_exists(obj) );
@@ -1654,6 +1664,17 @@ void G3DMAPOBJST_changeViewFlag(G3DMAPOBJST * obj, BOOL flag)
     obj->viewFlag = FALSE;
   }
 }
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void G3DMAPOBJST_setAnime( FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj, u32 anm_idx, BMANM_REQUEST req )
+{
+  u8 entryNo;
+  entryNo = obj->objSt->id;
+  ENTRYNO_ASSERT( man, entryNo );
+  OBJHND_setAnime( &man->objHdl[entryNo], anm_idx, req );
+}
+
 
 //============================================================================================
 //

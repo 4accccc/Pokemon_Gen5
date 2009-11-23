@@ -110,6 +110,14 @@ typedef enum {
 }BM_PROG_ID;
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+typedef enum {
+  BM_SEARCH_ID_DOOR = 0,
+
+  BM_SEARCH_ID_MAX,
+}BM_SEARCH_ID;
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 typedef struct _G3DMAPOBJST G3DMAPOBJST;
 typedef struct _FIELD_BMODEL FIELD_BMODEL;
 
@@ -133,12 +141,10 @@ extern BM_PROG_ID FIELD_BMODEL_GetProgID(const FIELD_BMODEL * bmodel);
 //------------------------------------------------------------------
 
 extern G3DMAPOBJST ** FIELD_BMODEL_MAN_CreateObjStatusList
-( FIELD_BMODEL_MAN* man, const FLDHIT_RECT * rect, u32 * num );
-
-extern BOOL FIELD_BMODEL_MAN_G3DMAPOBJSTisDoor
-(const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj);
+( FIELD_BMODEL_MAN* man, const FLDHIT_RECT * rect, BM_SEARCH_ID search, u32 * num );
 
 extern void G3DMAPOBJST_changeViewFlag(G3DMAPOBJST * obj, BOOL flag);
+extern void G3DMAPOBJST_setAnime( FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj, u32 anm_idx, BMANM_REQUEST req );
 
 //============================================================================================
 //============================================================================================
