@@ -121,6 +121,7 @@ typedef enum {
   BM_ANMMODE_LOOP,        ///<アニメ状態：ループ制御
   BM_ANMMODE_STOP,        ///<アニメ状態：停止中
   BM_ANMMODE_TEMPORARY,   ///<アニメ状態：一時的に適用中
+  BM_ANMMODE_REVERSE,     ///<アニメ状態：逆再生で適用中
   BM_ANMMODE_TIMEZONE,    ///<アニメ状態：時間帯で制御
 }BM_ANMMODE;
 
@@ -507,13 +508,17 @@ void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * 
 //    外部公開関数：
 //
 //============================================================================================
+static u8 FIELD_BMODEL_MAN_GetEntryIndex(const FIELD_BMODEL_MAN* man, BMODEL_ID id);
+static BOOL FIELD_BMODEL_MAN_GetSubModel(const FIELD_BMODEL_MAN * man, 
+    u16 bm_id, VecFx32 * ofs, u32 * entryNo);
+
 //------------------------------------------------------------------
 /**
  * @brief 配置モデルIDを登録済み配置モデルのインデックスに変換する
  * @param man 配置モデルマネジャーへのポインタ
  */
 //------------------------------------------------------------------
-u8 FIELD_BMODEL_MAN_GetEntryIndex(const FIELD_BMODEL_MAN * man, BMODEL_ID id)
+static u8 FIELD_BMODEL_MAN_GetEntryIndex(const FIELD_BMODEL_MAN * man, BMODEL_ID id)
 {	
   return BMIDtoEntryNo( man, id );
 }
@@ -528,7 +533,7 @@ static const BMINFO * FIELD_BMODEL_MAN_GetBMInfo(const FIELD_BMODEL_MAN * man, B
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-BOOL FIELD_BMODEL_MAN_GetSubModel(const FIELD_BMODEL_MAN * man, 
+static BOOL FIELD_BMODEL_MAN_GetSubModel(const FIELD_BMODEL_MAN * man, 
     u16 bm_id, VecFx32 * ofs, u32 * entryNo)
 {
   u16 submodel_id;
@@ -1165,17 +1170,17 @@ typedef struct {
   void (* set_anime_func)( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUEST req);
 }OBJHND_FUNCS;
 
-static void OBJHND_TYPEOTHER_initAnime( const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl );
+static void OBJHND_TYPENONE_initAnime( const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl );
 static void OBJHND_TYPEETERNAL_initAnime( const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl );
 static void OBJHND_TYPETIMEZONE_initAnime( const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl );
 
-static void OBJHND_TYPEOTHER_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUEST req );
+static void OBJHND_TYPENONE_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUEST req );
 static void OBJHND_TYPEEVENT_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUEST req );
 
 static void OBJHND_TYPETIMEZONE_animate( const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl );
 static void OBJHND_TYPEEVENT_animate( const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl );
 static void OBJHND_TYPEETERNAL_animate( const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl );
-static void OBJHND_TYPEOTHER_animate( const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl );
+static void OBJHND_TYPENONE_animate( const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl );
 
 static void disableAllAnime(OBJ_HND * objHdl);
 //------------------------------------------------------------------
@@ -1183,24 +1188,24 @@ static void disableAllAnime(OBJ_HND * objHdl);
 //------------------------------------------------------------------
 static const OBJHND_FUNCS objHndFuncTable[BMANIME_TYPE_MAX] = {
   { //BMANIME_TYPE_NONE アニメしない
-    OBJHND_TYPEOTHER_initAnime,
-    OBJHND_TYPEOTHER_animate,
-    OBJHND_TYPEOTHER_setAnime,
+    OBJHND_TYPENONE_initAnime,
+    OBJHND_TYPENONE_animate,
+    OBJHND_TYPENONE_setAnime,
   },
   { //BMANIME_TYPE_ETERNAL  ずっとおなじアニメ
     OBJHND_TYPEETERNAL_initAnime,
     OBJHND_TYPEETERNAL_animate,
-    OBJHND_TYPEOTHER_setAnime,
+    OBJHND_TYPENONE_setAnime,
   },
   { //BMANIME_TYPE_EVENT  イベントからアニメリクエスト（通常停止）
-    OBJHND_TYPEOTHER_initAnime,
+    OBJHND_TYPENONE_initAnime,
     OBJHND_TYPEEVENT_animate,
     OBJHND_TYPEEVENT_setAnime,
   },
   { //BMANIME_TYPE_TIMEZONE 時間帯によるアニメ変更
     OBJHND_TYPETIMEZONE_initAnime,
     OBJHND_TYPETIMEZONE_animate,
-    OBJHND_TYPEOTHER_setAnime,
+    OBJHND_TYPENONE_setAnime,
   },
 };
 //------------------------------------------------------------------
@@ -1249,7 +1254,7 @@ static void OBJHND_initialize(const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl, co
 //------------------------------------------------------------------
 ///OBJHND初期化：アニメタイプその他
 //------------------------------------------------------------------
-static void OBJHND_TYPEOTHER_initAnime( const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl )
+static void OBJHND_TYPENONE_initAnime( const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl )
 {
   int anmNo;
   for( anmNo=0; anmNo<GLOBAL_OBJ_ANMCOUNT; anmNo++ ){
@@ -1342,7 +1347,7 @@ static void OBJHND_animate(const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl )
 //------------------------------------------------------------------
 /// OBJHNDアニメ更新処理：その他
 //------------------------------------------------------------------
-static void OBJHND_TYPEOTHER_animate( const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl )
+static void OBJHND_TYPENONE_animate( const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl )
 {
   /* DO NOTHING !! */
 }
@@ -1398,6 +1403,13 @@ static void OBJHND_TYPEEVENT_animate( const FIELD_BMODEL_MAN * man, OBJ_HND * ob
         objHdl->anmMode[anmNo] = BM_ANMMODE_STOP;
       }
       break;
+    case BM_ANMMODE_REVERSE:
+      result = GFL_G3D_OBJECT_IncAnimeFrame( objHdl->g3Dobj, anmNo, -FX32_ONE );
+      if (!result) {
+        GFL_G3D_OBJECT_SetAnimeFrame( objHdl->g3Dobj, anmNo, 0 );
+        objHdl->anmMode[anmNo] = BM_ANMMODE_STOP;
+      }
+      break;
     case BM_ANMMODE_LOOP:
       GFL_G3D_OBJECT_LoopAnimeFrame( objHdl->g3Dobj, anmNo, FX32_ONE ); 
       break;
@@ -1447,6 +1459,17 @@ static void OBJHND_TYPEEVENT_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUES
     GFL_G3D_OBJECT_ResetAnimeFrame(objHdl->g3Dobj, anmNo );
     objHdl->anmMode[anmNo] = BM_ANMMODE_TEMPORARY;
     break;
+  case BMANM_REQ_REVERSE_START:
+    disableAllAnime( objHdl );
+    GFL_G3D_OBJECT_EnableAnime(objHdl->g3Dobj, anmNo );
+    {
+      GFL_G3D_ANM * g3Danm = GFL_G3D_OBJECT_GetG3Danm( objHdl->g3Dobj, anmNo );
+      NNSG3dAnmObj * anmObj = GFL_G3D_ANIME_GetAnmObj( g3Danm );
+      fx32 num = NNS_G3dAnmObjGetNumFrame( anmObj );
+      GFL_G3D_OBJECT_SetAnimeFrame(objHdl->g3Dobj, anmNo, (const int*)&num );
+    }
+    objHdl->anmMode[anmNo] = BM_ANMMODE_REVERSE;
+    break;
   case BMANM_REQ_STOP:
     if (objHdl->anmMode[anmNo] != BM_ANMMODE_NOTHING) {
       objHdl->anmMode[anmNo] = BM_ANMMODE_STOP;
@@ -1463,7 +1486,7 @@ static void OBJHND_TYPEEVENT_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUES
 //------------------------------------------------------------------
 /// OBJHNDアニメ変更処理：その他
 //------------------------------------------------------------------
-static void OBJHND_TYPEOTHER_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUEST req )
+static void OBJHND_TYPENONE_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUEST req )
 {
   /* DO NOTHING !! */
 }
@@ -1486,6 +1509,7 @@ static BOOL OBJHND_getAnimeStatus( const OBJ_HND * objHdl, u32 anmNo)
   case BM_ANMMODE_STOP:
     return TRUE;
   case BM_ANMMODE_TEMPORARY:
+  case BM_ANMMODE_REVERSE:
     return FALSE;
   }
   return FALSE;
