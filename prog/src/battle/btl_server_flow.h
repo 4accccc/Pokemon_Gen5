@@ -20,6 +20,7 @@
 #include "btl_sideeff.h"
 #include "btl_poseff.h"
 #include "btl_field.h"
+#include "btl_wazarec.h"
 #include "app/b_bag.h"
 
 /*--------------------------------------------------------------------------*/
@@ -102,10 +103,10 @@ extern BtlCompetitor BTL_SVFLOW_GetCompetitor( BTL_SVFLOW_WORK* wk );
 extern BtlPokePos BTL_SVFTOOL_GetExistFrontPokeID( BTL_SVFLOW_WORK* server, u8 pokeID );
 extern BOOL BTL_SVFLOW_RECEPT_CheckExistTokuseiPokemon( BTL_SVFLOW_WORK* wk, PokeTokusei tokusei );
 extern const BTL_POKEPARAM* BTL_SVFTOOL_GetPokeParam( BTL_SVFLOW_WORK* wk, u8 pokeID );
-extern u8 BTL_SVFLOW_RECEPT_GetAllFrontPokeID( BTL_SVFLOW_WORK* wk, u8* dst );
 extern u8 BTL_SVFLOW_RECEPT_GetAllOpponentFrontPokeID( BTL_SVFLOW_WORK* wk, u8 basePokeID, u8* dst );
 extern u16 BTL_SVFLOW_GetTurnCount( BTL_SVFLOW_WORK* wk );
 extern u8 BTL_SVFLOW_GetClientCoverPosCount( BTL_SVFLOW_WORK* wk, u8 pokeID );
+extern const BTL_WAZAREC* BTL_SVF_GetWazaRecord( BTL_SVFLOW_WORK* wk );
 
 extern void BTL_SERVER_RECEPT_TokuseiWinIn( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern void BTL_SERVER_RECEPT_TokuseiWinOut( BTL_SVFLOW_WORK* wk, u8 pokeID );

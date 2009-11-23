@@ -185,6 +185,7 @@ struct _BTL_SVFLOW_WORK {
   u32                     turnCount;
   SvflowResult            flowResult;
   BtlBagMode              bagMode;
+  BTL_WAZAREC             wazaRec;
   HEAPID  heapID;
 
   u8      numClient;
@@ -634,6 +635,7 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   wk->bagMode = bagMode;
   wk->escapeClientID = BTL_CLIENTID_NULL;
   wk->getPokePos = BTL_POS_NULL;
+  BTL_WAZAREC_Init( &wk->wazaRec );
   {
     BtlRule rule = BTL_MAIN_GetRule( mainModule );
     BTL_POSPOKE_InitWork( &wk->pospokeWork, wk->mainModule, wk->pokeCon, rule );
@@ -2186,7 +2188,7 @@ static u8 ItemEff_Common_Rank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
 {
   u8 pokeID = BPP_GetID( bpp );
 
-  if( (BTL_SVFTOOL_GetExistFrontPokeID(wk, pokeID) != BTL_POS_MAX)
+  if( (BTL_POSPOKE_GetPokeExistPos(&wk->pospokeWork, pokeID) != BTL_POS_MAX)
   &&  !BPP_IsDead(bpp)
   ){
     if( BPP_IsRankEffectValid(bpp, rankType, itemParam) )
@@ -2563,6 +2565,8 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   wk->wazaEff_EnableFlag = FALSE;
   wk->wazaEff_TargetPokeID = BTL_POKEID_NULL;
 
+  // 出たワザレコード記録
+  BTL_WAZAREC_Add( &wk->wazaRec, waza, wk->turnCount, pokeID );
 
   // ワザ出し確定イベント
   {
@@ -2617,7 +2621,6 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   case WAZADATA_CATEGORY_SIMPLE_RECOVER:
     scproc_Fight_SimpleRecover( wk, waza, attacker );
     break;
-//  case WAZADATA_CATEGORY_GUARD:
   case WAZADATA_CATEGORY_FIELD_EFFECT:
     scput_Fight_FieldEffect( wk, &wk->wazaParam, attacker );
     break;
@@ -2633,6 +2636,7 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   // ワザ効果あり→エフェクトコマンド生成などへ
   if( wk->wazaEff_EnableFlag ){
     scproc_Fight_WazaEffective( wk, waza, pokeID, wk->wazaEff_TargetPokeID, que_reserve_pos );
+    BTL_WAZAREC_SetEffectiveLast( &wk->wazaRec );
   }else{
     u32 hem_state = Hem_PushState( &wk->HEManager );
     scEvent_WazaExe_NoEffect( wk, pokeID, waza );
@@ -5289,8 +5293,6 @@ static void scproc_GetExp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* deadPoke )
     {
       BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, BTL_MAIN_GetPlayerClientID(wk->mainModule) );
 
-      BTL_Printf("経験値処理へ来ました\n");
-
       getexp_calc( wk, party, deadPoke, wk->calcExpWork );
       getexp_make_cmd( wk, party, wk->calcExpWork );
     }
@@ -7533,7 +7535,7 @@ static BOOL scEvent_CheckPluralHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* at
  * [Event] ワザ威力取得
  *
  * @param   wk
- * @param   attackerBTL_HANDEX_PARAM_SET_ITEM
+ * @param   attacker
  * @param   defender
  * @param   waza
  * @param   wazaParam
@@ -8253,29 +8255,6 @@ BtlPokePos BTL_SVFTOOL_GetExistFrontPokeID( BTL_SVFLOW_WORK* wk, u8 pokeID )
 }
 //--------------------------------------------------------------------------------------
 /**
- * 場に出ている全ポケモンのIDを配列に格納する
- *
- * @param   wk
- * @param   dst
- *
- * @retval  u8    場に出ているポケモン数
- */
-//--------------------------------------------------------------------------------------
-u8 BTL_SVFLOW_RECEPT_GetAllFrontPokeID( BTL_SVFLOW_WORK* wk, u8* dst )
-{
-  FRONT_POKE_SEEK_WORK fps;
-  BTL_POKEPARAM* bpp;
-  u8 cnt = 0;
-
-  FRONT_POKE_SEEK_InitWork( &fps, wk );
-  while( FRONT_POKE_SEEK_GetNext( &fps, wk, &bpp ) )
-  {
-    dst[ cnt++ ] = BPP_GetID( bpp );
-  }
-  return cnt;
-}
-//--------------------------------------------------------------------------------------
-/**
  * 場に出ている全ての相手側ポケモンIDを配列に格納する
  *
  * @param   wk
@@ -8799,7 +8778,21 @@ WazaID BTL_SVFLOW_GetPrevExeWaza( BTL_SVFLOW_WORK* wk )
 //=============================================================================================
 void* BTL_SVFLOW_GetHandlerTmpWork( BTL_SVFLOW_WORK* wk )
 {
+  // @todo これサイズ指定させるか…
   return wk->handlerTmpWork;
+}
+//=============================================================================================
+/**
+ * 出たワザ記録構造体を取得
+ *
+ * @param   wk
+ *
+ * @retval  const BTL_WAZAREC*
+ */
+//=============================================================================================
+const BTL_WAZAREC* BTL_SVF_GetWazaRecord( BTL_SVFLOW_WORK* wk )
+{
+  return &wk->wazaRec;
 }
 
 
@@ -9743,6 +9736,7 @@ static u8 scproc_HandEx_setItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
 
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
 
+  // 自分自身へのリクエストでなければアイテムセットの失敗チェック
   if( param_header->userPokeID != param->pokeID )
   {
     u32 hem_state = Hem_PushState( &wk->HEManager );
@@ -9757,7 +9751,6 @@ static u8 scproc_HandEx_setItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
 
   handexSub_itemSet( wk, bpp, param->itemID );
   if( param->exStr.type != BTL_STRTYPE_NULL ){
-    BTL_Printf("アイテム書き換え成功メッセージ\n");
     handexSub_putString( wk, &param->exStr );
   }
   scproc_CheckItemReaction( wk, bpp );

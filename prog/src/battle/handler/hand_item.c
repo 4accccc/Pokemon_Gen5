@@ -884,10 +884,11 @@ static void handler_ObonNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
   {
     BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    u32 maxHP = BPP_GetValue( bpp, BPP_MAX_HP );
     u8 ratio = common_GetItemParam( myHandle, flowWk, ITEM_PRM_ATTACK );
 
     param->pokeID = pokeID;
-    param->recoverHP = BPP_GetValue(bpp, BPP_MAX_HP) * 100 / ratio;
+    param->recoverHP = (maxHP * ratio) / 100;
     HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_RecoverHP );
     HANDEX_STR_AddArg( &param->exStr, pokeID );
     HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );

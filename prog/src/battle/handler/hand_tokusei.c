@@ -3973,6 +3973,7 @@ static void handler_Nenchaku_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
     if( (waza == WAZANO_TORIKKU)
     ||  (waza == WAZANO_SURIKAE)
+    ||  (waza == WAZANO_DOROBOU)
     ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, TRUE );
     }
