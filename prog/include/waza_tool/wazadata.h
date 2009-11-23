@@ -10,6 +10,8 @@
 #ifndef __WAZADATA_H__
 #define __WAZADATA_H__
 
+#include <heapsys.h>
+
 #include "poke_tool/poketype.h"
 
 //------------------------------------------------------------------------------
