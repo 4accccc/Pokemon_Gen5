@@ -100,6 +100,7 @@ typedef enum {
   WAZASICK_MUSTHIT,         ///< ƒƒU•K’†ó‘Ô
   WAZASICK_MUSTHIT_TARGET,  ///< “Á’è‘ŠŽè‚É‘Î‚µ‚Ä‚Ì‚Ý•K’†ó‘Ô
   WAZASICK_FLYING,          ///< ‚Å‚ñ‚¶‚Ó‚ä‚¤
+  WAZASICK_FLYING_CANCEL,   ///< ‚Ó‚ä‚¤ó‘Ô‚É‚È‚ê‚È‚¢
 
   WAZASICK_MAX,
   WAZASICK_NULL = POKESICK_NULL,
