@@ -583,13 +583,8 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
         fieldWork->areadata,
         &fieldWork->map_res,
         GAMEDATA_GetMapMatrix(fieldWork->gamedata) );
-    { //とりあえず、電光掲示板用文字列を登録
-      FIELD_BMODEL_MAN_EntryELStringID(bmodel_man,
-          FIELD_BMODEL_ELBOARD_ID1, NARC_message_d_field_dat, DEBUG_FIELD_C_STR10);
-      FIELD_BMODEL_MAN_EntryELStringID(bmodel_man,
-          FIELD_BMODEL_ELBOARD_ID2, NARC_message_d_field_dat, DEBUG_FIELD_STR00);
-    }
-    //とりあえずここで配置モデルリストをセットする
+
+    //ここで配置モデルリストをセットする
     FIELD_BMODEL_MAN_Load(bmodel_man, fieldWork->map_id, fieldWork->areadata);
     // WFBC街情報を設定
     // @TODO　後々は、パレス接続先の人の街情報を設定する

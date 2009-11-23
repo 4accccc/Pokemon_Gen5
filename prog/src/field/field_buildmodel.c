@@ -224,9 +224,6 @@ struct _FIELD_BMODEL_MAN
   ///適用する配置モデルアーカイブ指定
 	ARCID mdl_arc_id;
   
-  STRBUF * elb_str[FIELD_BMODEL_ELBOARD_ID_MAX];
-  ELBOARD_TEX * elb_tex[FIELD_BMODEL_ELBOARD_ID_MAX];
-
 	GFL_G3D_MAP_GLOBALOBJ	g3dMapObj;						///<共通オブジェクト
 
 	u32	objRes_Count;		  		///<共通オブジェクトリソース数
@@ -337,11 +334,6 @@ static void TIMEANIME_CTRL_init( TIMEANIME_CTRL * tmanm_ctrl );
 static void TIMEANIME_CTRL_update( TIMEANIME_CTRL * tmanm_ctrl );
 static BOOL TIMEANIME_CTRL_needUpdate( const TIMEANIME_CTRL * tmanm_ctrl );
 static u8   TIMEANIME_CTRL_getIndex( const TIMEANIME_CTRL * tmanm_ctrl );
-//------------------------------------------------------------------
-//  テクスチャ情報の登録処理
-//------------------------------------------------------------------
-static void entryELBoardTex(FIELD_BMODEL_MAN* man, const FIELD_BMANIME_DATA * data,
-    const GFL_G3D_RES * g3DresTex);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -374,12 +366,6 @@ FIELD_BMODEL_MAN * FIELD_BMODEL_MAN_Create(HEAPID heapID, FLDMAPPER * fldmapper)
 	man->heapID = heapID;
   man->fldmapper = fldmapper;
   TIMEANIME_CTRL_init( &man->tmanm_ctrl );
-
-  for (i = 0; i < FIELD_BMODEL_ELBOARD_ID_MAX; i ++) 
-  { 
-    man->elb_str[i] = GFL_STR_CreateBuffer(BMODEL_ELBOARD_STR_LEN, heapID);
-    man->elb_tex[i] = NULL;
-  }
 
   for (i = 0; i < BMODEL_USE_MAX; i++)
   {
@@ -415,16 +401,6 @@ FIELD_BMODEL_MAN * FIELD_BMODEL_MAN_Create(HEAPID heapID, FLDMAPPER * fldmapper)
 //------------------------------------------------------------------
 void FIELD_BMODEL_MAN_Delete(FIELD_BMODEL_MAN * man)
 {	
-  int i;
-  for (i = 0; i < FIELD_BMODEL_ELBOARD_ID_MAX; i ++) 
-  { 
-    GFL_STR_DeleteBuffer(man->elb_str[i]);
-    if (man->elb_tex[i]) 
-    { 
-      BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( man->elb_tex[i] );
-      ELBOARD_TEX_Delete(man->elb_tex[i]);
-    }
-  }
   deleteFullTimeObjHandle( man, &man->g3dMapObj );
   deleteAllResource( man );
 
@@ -443,14 +419,6 @@ void FIELD_BMODEL_MAN_Main(FIELD_BMODEL_MAN * man)
   int i;
 
   TIMEANIME_CTRL_update( &man->tmanm_ctrl );
-
-  for (i = 0; i < FIELD_BMODEL_ELBOARD_ID_MAX; i++)
-  { 
-    if (man->elb_tex[i])
-    { 
-      ELBOARD_TEX_Main(man->elb_tex[i]);
-    }
-  }
 
   for (i = 0; i < BMODEL_USE_MAX; i++)
   {
@@ -971,86 +939,6 @@ static u8   TIMEANIME_CTRL_getIndex( const TIMEANIME_CTRL * tmanm_ctrl )
 //============================================================================================
 //
 //
-//    配置モデルへの電光掲示板反映
-//
-//
-//============================================================================================
-//------------------------------------------------------------------
-/**
- * @brief 電光掲示板用文字列の登録処理（直接文字列オブジェクトを渡す）
- * @param man 配置モデルマネジャーへのポインタ
- * @param id  電光掲示板指定ID
- */
-//------------------------------------------------------------------
-void FIELD_BMODEL_MAN_EntryELString(const FIELD_BMODEL_MAN* man,
-    FIELD_BMODEL_ELBOARD_ID id,
-    const STRBUF* str)
-{ 
-  GF_ASSERT(id < FIELD_BMODEL_ELBOARD_ID_MAX);
-
-  GFL_STR_CopyBuffer(man->elb_str[id], str);
-}
-
-//------------------------------------------------------------------
-/**
- * @brief 電光掲示板用文字列の登録処理（メッセージアーカイブ指定型）
- * @param man 配置モデルマネジャーへのポインタ
- * @param id  電光掲示板指定ID
- * @param msg_arc_id  メッセージアーカイブ指定ID
- * @param str_id  アーカイブ内メッセージ指定ID
- */
-//------------------------------------------------------------------
-void FIELD_BMODEL_MAN_EntryELStringID(const FIELD_BMODEL_MAN * man,
-    FIELD_BMODEL_ELBOARD_ID id,
-    ARCID msg_arc_id, u16 str_id)
-{ 
-  GFL_MSGDATA * msgData;
-
-  GF_ASSERT(id < FIELD_BMODEL_ELBOARD_ID_MAX);
-
-  msgData = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, msg_arc_id, man->heapID);
-  GFL_MSG_GetString(msgData, str_id, man->elb_str[id]);
-
-  GFL_MSG_Delete(msgData);
-}
-//------------------------------------------------------------------
-/**
- * @brief   テクスチャの登録処理
- * @param man 配置モデルマネジャーへのポインタ
- * @param data  アニメデータへのポインタ
- * @param g3DresTex   登録するテクスチャリソース
- *
- * 現在、電光掲示板のためだけに呼び出している。
- * 電光掲示板以外の配置モデルではなにもせずに帰る
- */
-//------------------------------------------------------------------
-void entryELBoardTex(FIELD_BMODEL_MAN* man, const FIELD_BMANIME_DATA * data,
-    const GFL_G3D_RES * g3DresTex)
-{ 
-  switch ((BMANIME_PROG_TYPE)data->prg_type)
-  { 
-  case BMANIME_PROG_TYPE_ELBOARD1:
-    man->elb_tex[FIELD_BMODEL_ELBOARD_ID1] = ELBOARD_TEX_Add(
-        g3DresTex, man->elb_str[FIELD_BMODEL_ELBOARD_ID1], man->heapID);
-
-    BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( man->elb_tex[FIELD_BMODEL_ELBOARD_ID1] );
-    break;
-  case BMANIME_PROG_TYPE_ELBOARD2:
-    man->elb_tex[FIELD_BMODEL_ELBOARD_ID2] = ELBOARD_TEX_Add(
-        g3DresTex, man->elb_str[FIELD_BMODEL_ELBOARD_ID1], man->heapID);
-    BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( man->elb_tex[FIELD_BMODEL_ELBOARD_ID2] );
-    break;
-  case BMANIME_PROG_TYPE_NONE:
-  default:
-    //何もしない
-    break;
-  }
-}
-
-
-//============================================================================================
-//
-//
 //  リソース生成
 //
 //
@@ -1221,8 +1109,6 @@ static void OBJRES_initialize( FIELD_BMODEL_MAN * man, OBJ_RES * objRes, BMODEL_
       }
     }
   }
-
-  entryELBoardTex( man, BMINFO_getAnimeData(objRes->bmInfo), resTex );
 
 }
 
