@@ -22,28 +22,6 @@ enum {
 	MMLID_NOENTRY	=	0,
 	MMLID_SAMPLEOBJ	=	1,
 
-	//MAPTYPE_NOWHERE	=	0xff,
-	//MAPNAME_NOTHING	=	0x33,
-	WEATHER_SYS_SUNNY	=	0x11,
-	PLACE_WIN_SEE	=	0x80,
-	PLACE_WIN_CITY	=	0x81,
-
-	MATRIX_ARC_MAPMATRIX = 0,
-	MATRIX_ARC_NGMATRIX = 1,
-
-	MATRIX_ID_SINOU	=	1,
-	MATRIX_ID_TEST0 =	0,
-	MATRIX_ID_TEST1 =	1,
-	MATRIX_ID_TEST2 =	2,
-	MATRIX_ID_TEST3 =	3,
-	MATRIX_ID_TEST4 =	4,
-	MATRIX_ID_TEST5 =	5,
-	MATRIX_ID_TEST6 =	6,
-	MATRIX_ID_TEST7 =	7,
-	MATRIX_ID_TEST8 =	8,
-	MATRIX_ID_TEST9 =	9,
-	MATRIX_ID_TEST10 =	10,
-
 	DUMMY_DEFINE_END
 };
 
@@ -83,10 +61,6 @@ enum {
 #include "../camera_scroll/camera_scroll.naix"//カメラエリアデータ
 
 enum {
-	//event_dummy = NARC_zone_event_zone_dummy_total_bin,
-	//event_dummy = 0xd000,
-	event_dummy = NARC_eventdata_dummy_data,
-
 	enc_dummy = 0xffff,
 
 	camera_area_dummy = 0xffff,

@@ -22,12 +22,10 @@ class ColumnID
 	attr :cMAPRSC_ID, true
 	attr :cAREA_ID, true
 	attr :cMOVEMODEL, true
-	attr :cMATRIXARC, true
 	attr :cMATRIXID, true
 	attr :cSX, true
 	attr :cSY, true
 	attr :cSZ, true
-	attr :cEVENT, true
 	#attr :cSCRIPT, true
 	#attr :cMSG, true
 	attr :cENCOUNT, true
@@ -60,8 +58,6 @@ class ColumnID
 				@cAREA_ID = c_count
 			when "MOVE_MODEL"
 				@cMOVEMODEL = c_count
-			when "MATRIXARC"
-				@cMATRIXARC = c_count
 			when "MATRIXID"
 				@cMATRIXID = c_count
 			when "SX"
@@ -70,8 +66,6 @@ class ColumnID
 				@cSY = c_count
 			when "SZ"
 				@cSZ = c_count
-			when "event"
-				@cEVENT = c_count
 			when "encount"
 				@cENCOUNT = c_count
 			when "maptype"
@@ -240,22 +234,14 @@ class ZoneDataFile < OutputFile
 			exit 1
 		end
 		movemodel = column[@cl.cMOVEMODEL]
-		matrixArc = "MATRIX_ARC_#{column[@cl.cMATRIXARC]}".upcase
-		if matrixArc == "MATRIX_ARC_NGMATRIX" then
-			matrixId = "MATRIX_ID_#{column[@cl.cMATRIXID]}".upcase
-		else
-			matrixId = "MATRIX_ID_#{column[@cl.cMATRIXID]}".upcase
-			#matrixId = "NARC_map_matrix_#{column[@cl.cMATRIXID].downcase}_mat_bin"
-		end
+		matrixArc = 0
+    matrixId = "MATRIX_ID_#{column[@cl.cMATRIXID]}".upcase
 
-    #event_id = column[@cl.cEVENT] == "○" ? "NARC_eventdata_#{id.downcase}_bin" : "event_dummy"
-		#script = column[@cl.cSCRIPT] == "○" ? "NARC_script_seq_#{id.downcase}_bin" : "scr_dummy"
-		#sp_script = column[@cl.cSCRIPT] == "○" ? "NARC_script_seq_sp_#{id.downcase}_bin" : "sp_scr_dummy"
-		#msg = column[@cl.cMSG] == "○" ? "NARC_script_message_#{id.downcase}_dat" : "msg_dummy"
     event_id = "NARC_eventdata_#{id.downcase}_bin"
 		script =  "NARC_script_seq_#{id.downcase}_bin"
 		sp_script =  "NARC_script_seq_sp_#{id.downcase}_bin"
 		msg = "NARC_script_message_#{id.downcase}_dat"
+
 		bgm_spring = column[@cl.cBGM_SPRING]
 		bgm_summer = column[@cl.cBGM_SUMMER]
 		bgm_autumn = column[@cl.cBGM_AUTUMN]
@@ -384,66 +370,6 @@ class ZoneIDFile < OutputFile
 
 end
 
-###############################################################
-#
-#	ゾーン毎イベント定義生成
-#
-###############################################################
-class ZoneEventFile < OutputFile
-	def putHeader
-		@fp.puts "# zone event list start\n"
-		@fp.puts "CONVSRCS	=	\\\n"
-		@fp.puts "	zone_dummy_total.c \\\n"
-	end
-	def put	id
-		@fp.puts "	zone_#{id.downcase}_total.c \\\n"
-	end
-	def putLine linecount, column
-		#イベントファイルがあるときだけ生成する
-		if column[cl.cEVENT] == "○" then
-			put getID(column)
-		end
-	end
-	def putFooter
-		@fp.puts "\n"
-		@fp.puts "# zone event list end\n"
-	end
-end
-
-class ZoneEventArcFile < OutputFile
-	def putHeader
-		@fp.puts "\"zone_dummy_total.bin\"\n"
-	end
-	def put id
-		@fp.puts "\"zone_#{id.downcase}_total.bin\"\n"
-	end
-	def putLine linecount, column
-		#イベントファイルがあるときだけ生成する
-		if column[cl.cEVENT] == "○" then
-			put getID(column)
-		end
-	end
-	def putFooter
-	end
-end
-
-###############################################################
-#	マップ接続定義ヘッダのインクルード生成
-###############################################################
-class ZoneEventDoorHeader < OutputFile
-	def putHeader
-		@fp.puts "//#{@name}"
-	end
-	def put id
-		@fp.puts "#include \"zone_#{id.downcase}evd.h\"\n"
-	end
-	def putLine linecount, column
-		#イベントファイルがあるときだけ生成する
-		if column[cl.cEVENT] == "○" then
-			put getID(column)
-		end
-	end
-end
 
 ###############################################################
 #
