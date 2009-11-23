@@ -42,10 +42,10 @@ typedef enum {
 // éQè∆ÉwÉbÉ_ include
 //----------------------------------------------------------------------
 #include "battle/battle.h"
-#include "btl_main.h"
+#include "btl_main_def.h"
 #include "btl_adapter.h"
 #include "btl_pokeparam.h"
-#include "btlv/btlv_core.h"
+#include "btlv/btlv_core_def.h"
 #include "app/b_bag.h"
 
 extern BTL_CLIENT* BTL_CLIENT_Create(

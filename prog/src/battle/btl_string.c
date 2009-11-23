@@ -14,6 +14,7 @@
 
 #include "btl_common.h"
 #include "btl_string.h"
+#include "btl_main.h"
 
 #include "arc_def.h"
 #include "message.naix"

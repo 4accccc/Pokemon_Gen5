@@ -1,15 +1,14 @@
 #ifndef __BTL_MAIN_H__
 #define __BTL_MAIN_H__
 
+#include "btl_main_def.h"
+
 #include "battle/battle.h"
 
 #include "btl_common.h"
 #include "btl_pokeparam.h"
 
-typedef struct _BTL_MAIN_MODULE   BTL_MAIN_MODULE;
 
-typedef struct _BTL_PARTY           BTL_PARTY;
-typedef struct _BTL_POKE_CONTAINER  BTL_POKE_CONTAINER;
 
 extern BtlRule BTL_MAIN_GetRule( const BTL_MAIN_MODULE* wk );
 extern BtlCompetitor BTL_MAIN_GetCompetitor( const BTL_MAIN_MODULE* wk );

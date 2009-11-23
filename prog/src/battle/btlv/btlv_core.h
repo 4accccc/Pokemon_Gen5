@@ -11,13 +11,7 @@
 #define __BTLV_CORE_H__
 
 
-//----------------------------------------------------------------------
-/**
- *  描画メインモジュールハンドラ型定義
- */
-//----------------------------------------------------------------------
-typedef  struct _BTLV_CORE    BTLV_CORE;
-
+#include "btlv_core_def.h"
 
 //----------------------------------------------------------------------
 // 参照ヘッダ include
@@ -25,12 +19,14 @@ typedef  struct _BTLV_CORE    BTLV_CORE;
 #include "../app/b_bag.h"
 #include "../app/b_plist.h"
 
-#include "battle/btl_main.h"
-#include "battle/btl_client.h"
-#include "battle/btl_action.h"
-#include "battle/btl_calc.h"
-#include "battle/btl_string.h"
-#include "battle/btl_pokeselect.h"
+#include "../btl_string.h"
+#include "../btl_main_def.h"
+#include "../btl_client.h"
+#include "../btl_action.h"
+#include "../btl_calc.h"
+#include "../btl_pokeselect.h"
+
+
 #include "btlv_effect.h"
 #include "btlv_common.h"
 
@@ -62,6 +58,37 @@ typedef enum {
   BTLV_RESULT_CANCEL,
 
 }BtlvResult;
+
+
+//----------------------------------------------------------------------
+/**
+ *  文字出力パラメータ
+ */
+//----------------------------------------------------------------------
+typedef struct {
+  u16   strID;      ///< 文字列ID
+  u8    strType;    ///< BtlStrType
+  u8    argCnt;     ///< 引数の数
+  int   args[BTL_STR_ARG_MAX];  ///< 引数
+}BTLV_STRPARAM;
+
+static inline void BTLV_STRPARAM_Setup( BTLV_STRPARAM* sp, BtlStrType strType, u16 strID )
+{
+  int i;
+  for(i=0; i<NELEMS(sp->args); ++i){
+    sp->args[i] = 0;
+  }
+  sp->argCnt = 0;
+  sp->strID = strID;
+  sp->strType = strType;
+}
+static inline void BTLV_STRPARAM_AddArg( BTLV_STRPARAM* sp, int arg )
+{
+  if( sp->argCnt < NELEMS(sp->args) ){
+    sp->args[ sp->argCnt++ ] = arg;
+  }
+}
+
 
 
 //=============================================================================================
@@ -169,9 +196,13 @@ extern BOOL BTLV_WaitPokeSelect( BTLV_CORE* core );
  * @retval  extern void
  */
 //=============================================================================================
+extern void BTLV_StartMsg( BTLV_CORE* wk, const BTLV_STRPARAM* param );
+extern void BTLV_StartMsgWaza( BTLV_CORE* wk, u8 pokeID, u16 waza );
+
 extern void BTLV_StartMsgStd( BTLV_CORE* wk, u16 strID, const int* args );
 extern void BTLV_StartMsgSet( BTLV_CORE* wk, u16 strID, const int* args );
-extern void BTLV_StartMsgWaza( BTLV_CORE* wk, u8 pokeID, u16 waza );
+
+
 extern BOOL BTLV_WaitMsg( BTLV_CORE* wk );
 extern BOOL BTLV_IsJustDoneMsg( BTLV_CORE* wk );
 

@@ -7,10 +7,9 @@
  * @date  2008.10.06  çÏê¨
  */
 //=============================================================================================
-#ifndef __BTL_STRING_H__
-#define __BTL_STRING_H__
+#pragma once
 
-#include "btl_main.h"
+#include "btl_main_def.h"
 #include "btl_client.h"
 #include "btl_pokeparam.h"
 
@@ -95,5 +94,4 @@ extern void BTL_STR_MakeStatusWinStr( STRBUF* dst, const BTL_POKEPARAM* bpp, u16
 
 
 
-#endif
 

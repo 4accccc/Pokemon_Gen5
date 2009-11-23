@@ -446,9 +446,9 @@ static inline void SCQUE_PUT_ACT_MemberOut( BTL_SERVER_CMD_QUE* que, BtlPokePos 
   SCQUE_PUT_Common( que, SC_ACT_MEMBER_OUT, pos );
 }
 // 【アクション】ポケモン入場
-static inline void SCQUE_PUT_ACT_MemberIn( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 posIdx, u8 memberIdx )
+static inline void SCQUE_PUT_ACT_MemberIn( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 posIdx, u8 memberIdx, u8 fPutMsg )
 {
-  SCQUE_PUT_Common( que, SC_ACT_MEMBER_IN, clientID, posIdx, memberIdx );
+  SCQUE_PUT_Common( que, SC_ACT_MEMBER_IN, clientID, posIdx, memberIdx, fPutMsg );
 }
 // 【アクション】天候による一斉ダメージ   weather:天候ID, pokeCnt:ダメージを受けるポケモン数
 static inline void SCQUE_PUT_ACT_WeatherDamage( BTL_SERVER_CMD_QUE* que, u8 weather, u8 pokeCnt )

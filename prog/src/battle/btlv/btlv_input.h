@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "battle/btl_common.h"
+#include "..\btl_common.h"
 #include "..\btl_client.h"
 
 #define BTLV_INPUT_DIR_MAX  ( TEMOTI_POKEMAX )  //‘ÎÛ‘I‘ğMAX

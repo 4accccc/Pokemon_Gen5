@@ -11,7 +11,8 @@
 #define __BTL_SERVER_H__
 
 #include "btl_common.h"
-#include "btl_main.h"
+#include "btl_main_def.h"
+#include "btl_pokeparam.h"
 #include "btl_adapter.h"
 #include "app/b_bag.h"
 

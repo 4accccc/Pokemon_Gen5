@@ -21,6 +21,8 @@
 #include "btl_poseff.h"
 #include "btl_field.h"
 #include "btl_wazarec.h"
+#include "btl_action.h"
+
 #include "app/b_bag.h"
 
 /*--------------------------------------------------------------------------*/
@@ -228,6 +230,7 @@ typedef enum {
   BTL_HANDEX_ADD_SHRINK,    ///< ひるませる
   BTL_HANDEX_RELIVE,        ///< 生き返らせる
   BTL_HANDEX_SET_WEIGHT,    ///< 体重を設定
+  BTL_HANDEX_PUSHOUT,       ///< 場から吹き飛ばす
 
   BTL_HANDEX_MAX,
 
@@ -656,6 +659,15 @@ typedef struct {
   u16  weight;        ///< 体重
   BTL_HANDEX_STR_PARAMS  exStr; ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_SET_WEIGHT;
+
+/**
+ * ポケモンを場から吹き飛ばし
+ */
+typedef struct {
+  BTL_HANDEX_PARAM_HEADER  header;
+  u8   pokeID;                  ///< 対象ポケID
+  BTL_HANDEX_STR_PARAMS  exStr; ///< 成功時メッセージ
+}BTL_HANDEX_PARAM_PUSHOUT;
 
 extern void* BTL_SVF_HANEX_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );
 extern u8 BTL_SVFTOOL_ExpandPokeID( BTL_SVFLOW_WORK* wk, BtlExPos exPos, u8* dst_pokeID );

@@ -574,6 +574,8 @@ static BTL_EVENT_FACTOR*  ADD_Yakitukusu( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Yakitukusu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_GiftPass( u16 pri, WazaID waza, u8 pokeID );
 static void handler_GiftPass( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_TomoeNage( u16 pri, WazaID waza, u8 pokeID );
+static void handler_TomoeNage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 //=============================================================================================
@@ -808,6 +810,8 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_KARI_EKOOBOISU,        ADD_EchoVoice       },
     { WAZANO_KARI_YAKITUKUSU,       ADD_Yakitukusu      },
     { WAZANO_KARI_GIHUTOPASU,       ADD_GiftPass        },
+    { WAZANO_KARI_TOMOENAGE,        ADD_TomoeNage       },
+    { WAZANO_KARI_DORAGONTEERU,     ADD_TomoeNage       },  // ドラゴンテール=ともえなげ
   };
 
   int i;
@@ -7883,7 +7887,6 @@ static void handler_Yakitukusu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     u8 defPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
     const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, defPokeID );
     u16 itemID = BPP_GetItem( target );
-    BTL_Printf("やきつくすハンドラ：防御ポケID=%d, itemID=%d\n", defPokeID, itemID);
     if( ITEM_CheckNuts(itemID) )
     {
       BTL_HANDEX_PARAM_SET_ITEM* param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
@@ -7894,6 +7897,28 @@ static void handler_Yakitukusu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
       HANDEX_STR_AddArg( &param->exStr, defPokeID );
       HANDEX_STR_AddArg( &param->exStr, itemID );
     }
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * ともえなげ・ドラゴンテール
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_TomoeNage( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_DMG_AFTER,  handler_TomoeNage   },         // ダメージ直後
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_TomoeNage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BTL_HANDEX_PARAM_PUSHOUT* param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_PUSHOUT, pokeID );
+
+    param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
   }
 }
 //----------------------------------------------------------------------------------

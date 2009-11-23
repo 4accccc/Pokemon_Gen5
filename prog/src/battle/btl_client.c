@@ -14,6 +14,7 @@
 
 #include "battle\battle.h"
 #include "btl_common.h"
+#include "btl_main.h"
 #include "btl_adapter.h"
 #include "btl_action.h"
 #include "btl_field.h"
@@ -53,15 +54,6 @@ typedef struct {
   u8  counter[ BTL_CANTESC_MAX ][ BTL_POKEID_MAX ];
 }CANT_ESC_CONTROL;
 
-/**
- *  文字表示用パラメータ
- */
-typedef struct {
-  u16  strID;
-  u16  stdFlag;
-  int  args[ BTL_STR_ARG_MAX ];
-}STR_PARAM;
-
 //--------------------------------------------------------------
 /**
  *  クライアントモジュール構造定義
@@ -74,9 +66,9 @@ struct _BTL_CLIENT {
   const BTL_POKEPARAM*  procPoke;
   BTL_ACTION_PARAM*     procAction;
 
-  BTL_ADAPTER*  adapter;
-  BTLV_CORE*    viewCore;
-  STR_PARAM     strParam;
+  BTL_ADAPTER*    adapter;
+  BTLV_CORE*      viewCore;
+  BTLV_STRPARAM   strParam;
   BtlRotateDir    prevRotateDir;
   BtlWeather      weather;
 
@@ -155,7 +147,7 @@ static u8 shooterCost_GetSum( BTL_CLIENT* wk );
 static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action );
 static BOOL is_waza_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action );
 static void setWaruagakiAction( BTL_ACTION_PARAM* dst, BTL_CLIENT* wk, const BTL_POKEPARAM* bpp );
-static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, WazaID waza, STR_PARAM* strParam );
+static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, WazaID waza, BTLV_STRPARAM* strParam );
 static BtlCantEscapeCode is_prohibit_escape( BTL_CLIENT* wk, u8* pokeID );
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq );
 static void abandon_cover_pos( BTL_CLIENT* wk, u8 numPos );
@@ -680,11 +672,7 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
       {
         if( is_unselectable_waza(wk, wk->procPoke, wk->actionParam[wk->procPokeIdx].fight.waza, &wk->strParam) )
         {
-          if( wk->strParam.stdFlag ){
-            BTLV_StartMsgStd( wk->viewCore, wk->strParam.strID, wk->strParam.args );
-          }else{
-            BTLV_StartMsgSet( wk->viewCore, wk->strParam.strID, wk->strParam.args );
-          }
+          BTLV_StartMsg( wk->viewCore, &wk->strParam );
           (*seq) = SEQ_WAIT_MSG;
         }
         else{
@@ -1068,7 +1056,7 @@ static void setWaruagakiAction( BTL_ACTION_PARAM* dst, BTL_CLIENT* wk, const BTL
  * @retval  BOOL    使用できないワザの場合TRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, WazaID waza, STR_PARAM* strParam )
+static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, WazaID waza, BTLV_STRPARAM* strParam )
 {
   // こだわりアイテム効果（最初に使ったワザしか選べない／ただしマジックルーム非発動時のみ）
   if( !BTL_CALC_BITFLG_Check(wk->fieldEffectFlag, BTL_FLDEFF_MAGICROOM) )
@@ -1079,10 +1067,9 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
       if( waza != prevWazaID ){
         if( strParam != NULL )
         {
-          strParam->strID = BTL_STRID_STD_KodawariLock;
-          strParam->stdFlag = TRUE;
-          strParam->args[0] = BPP_GetItem( bpp );
-          strParam->args[1] = prevWazaID;
+          BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_STD, BTL_STRID_STD_KodawariLock );
+          BTLV_STRPARAM_AddArg( strParam, BPP_GetItem(bpp) );
+          BTLV_STRPARAM_AddArg( strParam, prevWazaID );
         }
         return TRUE;
       }
@@ -1095,10 +1082,9 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
     if( waza != BPP_GetPrevWazaID(bpp) ){
       if( strParam != NULL )
       {
-        strParam->strID = BTL_STRID_STD_WazaLock;
-        strParam->stdFlag = TRUE;
-        strParam->args[0] = BPP_GetID( bpp );
-        strParam->args[1] = waza;
+        BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_STD, BTL_STRID_STD_WazaLock );
+        BTLV_STRPARAM_AddArg( strParam, BPP_GetID(bpp) );
+        BTLV_STRPARAM_AddArg( strParam, waza );
       }
       return TRUE;
     }
@@ -1111,10 +1097,9 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
     {
       if( strParam != NULL )
       {
-        strParam->strID = BTL_STRID_SET_ChouhatuWarn;
-        strParam->stdFlag = FALSE;
-        strParam->args[0] = BPP_GetID( bpp );
-        strParam->args[1] = waza;
+        BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_SET, BTL_STRID_SET_ChouhatuWarn );
+        BTLV_STRPARAM_AddArg( strParam, BPP_GetID(bpp) );
+        BTLV_STRPARAM_AddArg( strParam, waza );
       }
       return TRUE;
     }
@@ -1127,10 +1112,9 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
     {
       if( strParam != NULL )
       {
-        strParam->strID = BTL_STRID_SET_IchamonWarn;
-        strParam->stdFlag = FALSE;
-        strParam->args[0] = BPP_GetID( bpp );
-        strParam->args[1] = waza;
+        BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_SET, BTL_STRID_SET_IchamonWarn );
+        BTLV_STRPARAM_AddArg( strParam, BPP_GetID(bpp) );
+        BTLV_STRPARAM_AddArg( strParam, waza );
       }
       return TRUE;
     }
@@ -1144,10 +1128,9 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
     {
       if( strParam != NULL )
       {
-        strParam->strID = BTL_STRID_SET_KanasibariWarn;
-        strParam->stdFlag = FALSE;
-        strParam->args[0] = BPP_GetID( bpp );
-        strParam->args[1] = waza;
+        BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_SET, BTL_STRID_SET_KanasibariWarn );
+        BTLV_STRPARAM_AddArg( strParam, BPP_GetID(bpp) );
+        BTLV_STRPARAM_AddArg( strParam, waza );
       }
       return TRUE;
     }
@@ -1168,10 +1151,9 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
         BTL_Printf("そのワザ(%d)はふういんポケが持ってますので使えません\n", waza);
         if( strParam != NULL )
         {
-          strParam->strID = BTL_STRID_SET_FuuinWarn;
-          strParam->stdFlag = FALSE;
-          strParam->args[0] = myPokeID;
-          strParam->args[1] = waza;
+          BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_SET, BTL_STRID_SET_FuuinWarn );
+          BTLV_STRPARAM_AddArg( strParam, myPokeID );
+          BTLV_STRPARAM_AddArg( strParam, waza );
         }
         return TRUE;
       }
@@ -1714,12 +1696,47 @@ static BOOL scProc_ACT_MemberOut( BTL_CLIENT* wk, int* seq, const int* args )
 }
 static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
 {
+  u8 clientID  = args[0];
+  u8 posIdx    = args[1];
+  u8 memberIdx = args[2];
+  u8 fPutMsg   = args[3];
+
   switch( *seq ){
   case 0:
+    if( fPutMsg )
     {
-      u8 clientID = wk->cmdArgs[0];
-      u8 posIdx = wk->cmdArgs[1];
-      u8 memberIdx = wk->cmdArgs[2];
+      const BTL_POKEPARAM* bpp = BTL_POKECON_GetClientPokeDataConst( wk->pokeCon, clientID, posIdx );
+      u8 pokeID = BPP_GetID( bpp );
+
+      if( !BTL_MAIN_IsOpponentClientID(wk->mainModule, wk->myID, clientID) )
+      {
+        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_PutSingle );
+        BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
+      }
+      else
+      {
+        // 相手が入れ替え
+        if( BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_TRAINER )
+        {
+          BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_PutSingle_NPC );
+          BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
+          BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
+        }
+        else
+        {
+          BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_PutSingle_Player );
+          BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
+          BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
+        }
+      }
+      BTLV_StartMsg( wk->viewCore, &wk->strParam );
+    }
+    (*seq)++;
+    break;
+
+  case 1:
+    if( BTLV_WaitMsg(wk->viewCore) )
+    {
       BtlPokePos  pokePos = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx );
 
       BTL_Printf("メンバーIN ACT client=%d, posIdx=%d, pos=%d, memberIdx=%d\n",
@@ -1729,7 +1746,7 @@ static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
       (*seq)++;
     }
     break;
-  case 1:
+  case 2:
     if( BTLV_WaitMemberChangeAct(wk->viewCore) )
     {
       return TRUE;
@@ -2384,10 +2401,10 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
       {
         BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
 
-        wk->strParam.args[0] = BPP_GetID( bpp );
-        wk->strParam.args[1] = args[1];
-
-        BTLV_StartMsgStd( wk->viewCore, BTL_STRID_STD_LevelUp, wk->strParam.args );
+        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_LevelUp );
+        BTLV_STRPARAM_AddArg( &wk->strParam, args[0] );
+        BTLV_STRPARAM_AddArg( &wk->strParam, args[1] );
+        BTLV_StartMsg( wk->viewCore, &wk->strParam );
         (*seq)++;
       }
       break;
@@ -2427,8 +2444,8 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
       if( args[2] )
       {
         const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, args[0] );
-        wk->strParam.args[0] = BPP_GetID( bpp );
-        strID = BTL_STRID_STD_BallThrowS;
+        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_BallThrowS );
+        BTLV_STRPARAM_AddArg( &wk->strParam, BPP_GetID( bpp ) );
       }
       // 捕獲失敗メッセージ
       else
@@ -2442,8 +2459,11 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
         }else{
           strID = strTbl[ 0 ];
         }
+
+        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, strID );
+
       }
-      BTLV_StartMsgStd( wk->viewCore, strID, wk->strParam.args );
+      BTLV_StartMsg( wk->viewCore, &wk->strParam );
       (*seq)++;
     }
     break;

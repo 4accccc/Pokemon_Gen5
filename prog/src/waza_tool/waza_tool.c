@@ -118,7 +118,6 @@ int WAZADATA_PTR_GetParam( const WAZA_DATA* wazaData, WazaDataParam param )
   case WAZAPARAM_TYPE:                ///< タイプ（みず、くさ、ほのお…）
     return wazaData->type;
   case WAZAPARAM_CATEGORY:            ///< カテゴリ（ enum WazaCategory )
-    TAYA_Printf("カテゴリかえす=%d\n", wazaData->category);
     return wazaData->category;
   case WAZAPARAM_DAMAGE_TYPE:         ///< ダメージタイプ（ enum WazaDamageType )
     return wazaData->damageType;

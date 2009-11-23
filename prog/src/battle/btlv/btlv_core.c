@@ -1063,9 +1063,36 @@ static BOOL subprocMemberIn( int* seq, void* wk_adrs )
   return FALSE;
 }
 
+
 //=============================================================================================
 /**
  * メッセージ表示開始
+ *
+ * @param   wk
+ * @param   param
+ */
+//=============================================================================================
+void BTLV_StartMsg( BTLV_CORE* wk, const BTLV_STRPARAM* param )
+{
+  switch( param->strType ){
+  case BTL_STRTYPE_STD:
+    BTL_STR_MakeStringStdWithArgArray( wk->strBuf, param->strID, param->args );
+    break;
+  case BTL_STRTYPE_SET:
+    BTL_STR_MakeStringSet( wk->strBuf, param->strID, param->args );
+    break;
+  case BTL_STRTYPE_WAZA:
+    BTL_STR_MakeStringWaza( wk->strBuf, param->args[0], param->args[1] );
+  default:
+    GF_ASSERT(0);
+    return;
+  }
+
+  BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
+}
+//=============================================================================================
+/**
+
  *
  * @param   wk
  * @param   strID

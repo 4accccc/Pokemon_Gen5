@@ -12,8 +12,9 @@
 #include "btl_common.h"
 
 #include "btl_net.h"
-#include "btl_adapter.h"
 #include "btl_server_cmd.h"
+#include "btl_action.h"
+#include "btl_adapter.h"
 
 
 enum {
