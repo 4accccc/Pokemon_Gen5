@@ -578,6 +578,8 @@ static BTL_EVENT_FACTOR*  ADD_TomoeNage( u16 pri, WazaID waza, u8 pokeID );
 static void handler_TomoeNage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Katakiuti( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Katakiuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_Utiotosu( u16 pri, WazaID waza, u8 pokeID );
+static void handler_Utiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 //=============================================================================================
@@ -815,6 +817,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_KARI_TOMOENAGE,        ADD_TomoeNage       },
     { WAZANO_KARI_DORAGONTEERU,     ADD_TomoeNage       },  // ドラゴンテール=ともえなげ
     { WAZANO_KARI_KATAKIUTI,        ADD_Katakiuti       },
+    { WAZANO_KARI_UTIOTOSU,         ADD_Utiotosu        },
   };
 
   int i;
@@ -7957,6 +7960,35 @@ static void handler_TomoeNage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * うちおとす
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_Utiotosu( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_DMG_AFTER,  handler_Utiotosu   },         // ダメージ直後
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_Utiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+    BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
+
+    param->poke_cnt = 1;
+    param->pokeID[0] = targetPokeID;
+    param->sickID = WAZASICK_FLYING_CANCEL;
+    param->sickCont = BPP_SICKCONT_MakePermanent();
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Utiotosu );
+    HANDEX_STR_AddArg( &param->exStr, targetPokeID );
+  }
+}
+
 //----------------------------------------------------------------------------------
 /**
  * からをやぶる

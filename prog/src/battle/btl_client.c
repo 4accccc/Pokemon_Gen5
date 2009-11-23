@@ -1708,8 +1708,6 @@ static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
       const BTL_POKEPARAM* bpp = BTL_POKECON_GetClientPokeDataConst( wk->pokeCon, clientID, posIdx );
       u8 pokeID = BPP_GetID( bpp );
 
-      BTL_Printf("メッセージ出せとな\n");
-
       if( !BTL_MAIN_IsOpponentClientID(wk->mainModule, wk->myID, clientID) )
       {
         BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_PutSingle );

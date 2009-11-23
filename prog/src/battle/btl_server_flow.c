@@ -564,6 +564,7 @@ static int scEvent_CalcWeatherDamage( BTL_SVFLOW_WORK* wk, BtlWeather weather, B
 static u32 scEvent_CalcRecoverHP( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* bpp );
 static BOOL scEventSetItem( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scEvent_ChangeTokusei( BTL_SVFLOW_WORK* wk, u8 pokeID );
+static BtlTypeAff CalcTypeAffForDamage( PokeType wazaType, PokeTypePair pokeType );
 static void Hem_Init( HANDLER_EXHIBISION_MANAGER* wk );
 static u32 Hem_PushState( HANDLER_EXHIBISION_MANAGER* wk );
 static void Hem_PopState( HANDLER_EXHIBISION_MANAGER* wk, u32 state );
@@ -1112,7 +1113,9 @@ static void scproc_SetFlyingFlag( BTL_SVFLOW_WORK* wk )
       ||  (BPP_GetValue(bpp, BPP_TOKUSEI) == POKETOKUSEI_FUYUU)
       ||  (BPP_CheckSick(bpp, WAZASICK_FLYING))
       ){
-        scPut_SetTurnFlag( wk, bpp, BPP_TURNFLG_FLYING );
+        if( !BPP_CheckSick(bpp, WAZASICK_FLYING_CANCEL) ){
+          scPut_SetTurnFlag( wk, bpp, BPP_TURNFLG_FLYING );
+        }
       }
     }
   }
@@ -7167,10 +7170,20 @@ static BOOL scEvent_CheckNotEffect_byType( BTL_SVFLOW_WORK* wk, const SVFL_WAZAP
   PokeTypePair def_type = BPP_GetPokeType( defender );
   BOOL fNoEffect = FALSE;
 
-  if( (BTL_CALC_TypeAff( wazaParam->wazaType, def_type ) == BTL_TYPEAFF_0)
-  &&  (WAZADATA_IsDamage(wazaParam->wazaID) || (WAZADATA_GetCategory(wazaParam->wazaID) == WAZADATA_CATEGORY_ICHIGEKI))
+  // ダメージワザか一撃ワザのみチェック
+  if( WAZADATA_IsDamage(wazaParam->wazaID)
+  || (WAZADATA_GetCategory(wazaParam->wazaID) == WAZADATA_CATEGORY_ICHIGEKI)
   ){
-    fNoEffect = TRUE;
+    if( wazaParam->wazaType == POKETYPE_JIMEN )
+    {
+      if( BPP_TURNFLAG_Get(defender, BPP_TURNFLG_FLYING) ){
+        fNoEffect = TRUE;
+      }
+    }
+    else if( BTL_CALC_TypeAff(wazaParam->wazaType, def_type) == BTL_TYPEAFF_0 )
+    {
+      fNoEffect = TRUE;
+    }
   }
 
   BTL_EVENTVAR_Push();
@@ -7482,7 +7495,7 @@ static BtlTypeAff scEvent_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* defender, PokeType waza_type )
 {
   PokeTypePair defPokeType = scEvent_getDefenderPokeType( wk, defender );
-  BtlTypeAff affinity = BTL_CALC_TypeAff( waza_type, defPokeType );
+  BtlTypeAff affinity = CalcTypeAffForDamage( waza_type, defPokeType );
 
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
@@ -8591,6 +8604,26 @@ void BTL_SVFLOW_RECEPT_CantEscapeSub( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlCantEsc
   SCQUE_PUT_OP_CantEscape_Sub( wk->que, pokeID, code );
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * ダメージ計算用の相性取得
+ *
+ * @param   wazaType
+ * @param   pokeType
+ *
+ * @retval  BtlTypeAff
+ */
+//----------------------------------------------------------------------------------
+static BtlTypeAff CalcTypeAffForDamage( PokeType wazaType, PokeTypePair pokeType )
+{
+  // ダメージ計算まで来ているなら0ということは無く、１倍で当たる状態のはず
+  BtlTypeAff aff = BTL_CALC_TypeAff( wazaType, pokeType );
+  if( aff == BTL_TYPEAFF_0 ){
+    aff = BTL_TYPEAFF_100;
+  }
+  return aff;
+}
+
 //=============================================================================================
 /**
  * ダメージ計算シミュレート結果を返す
@@ -8616,7 +8649,7 @@ u32 BTL_SVFLOW_SimulationDamage( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8 defPokeID
 
   //
   if( fAffinity ){
-    aff = BTL_CALC_TypeAff( WAZADATA_GetType(waza), BPP_GetPokeType(defender) );
+    aff = CalcTypeAffForDamage( WAZADATA_GetType(waza), BPP_GetPokeType(defender) );
   }else{
     aff = BTL_TYPEAFF_100;
   }
