@@ -18,5 +18,6 @@
 #ifndef ZONE_D06R0201_EVC_H
 #define ZONE_D06R0201_EVC_H
 
+#define D06R0201_BOSS_01                   0
 
 #endif //ZONE_D06R0201_EVC_H

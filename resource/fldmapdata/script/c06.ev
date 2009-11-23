@@ -35,7 +35,7 @@ _EVENT_DATA_END
 //ev_c06_flag_change:
 
 /**************************************************************/
-/*  C06 BOY3の会話用イベントスクリプト                      */
+/*  C06 博士とフウロのPOSイベントスクリプト                   */
 /**************************************************************/
 EVENT_START    ev_pos_c06_hakase1_01
 	
@@ -48,8 +48,6 @@ EVENT_START    ev_pos_c06_hakase1_01
 	//【仮】GREPに無かった為、予想で作成
 	//捕まえたポケモンの数をカウント
 	_GET_ZUKAN_COUNT( ZUKANCTRL_MODE_GET, LWK_HOKAKU_COUNT )
-	
-	
 	
 	//博士とジムリーダーが歩いてくる
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_kuru_01)
@@ -217,6 +215,7 @@ EVENT_START    ev_pos_c06_hakase1_01
 	_OBJ_DEL( C06_HAKASE1_01 )
 
 	//===============フラグ操作===============//
+	//【仮】フラグが無い為、仮
 	//POSイベントを無効に
 	$LOCALWORK15 = 1
 
@@ -309,7 +308,7 @@ _ANIME_LABEL	anm_leader06_muku_02
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-// フウロ：:振り向く３（下）（右）                     
+// フウロ:振り向く３（下）（右）                     
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader06_muku_03
 	_ANIME_DATA AC_DIR_D,1

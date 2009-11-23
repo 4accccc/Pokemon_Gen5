@@ -35,7 +35,7 @@
 #define C03GYM0101_TRAINER_01             21
 #define C03GYM0101_TRAINER_02             22
 #define C03GYM0101_LEADER3_01             23
-#define C05GYM0101_SUNGLASSES_01          24
+#define C03GYM0101_SUNGLASSES_01          24
 #define TR_DUMMY02                        25
 #define TR_DUMMY01                        26
 #define TR_DUMMY03                        27
