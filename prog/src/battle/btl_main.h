@@ -23,7 +23,6 @@ extern u8 BTL_MAIN_BtlPosToViewPos( const BTL_MAIN_MODULE* wk, BtlPokePos pos );
 extern BtlSide BTL_MAIN_GetClientSide( const BTL_MAIN_MODULE* wk, u8 clientID );
 extern BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk );
 extern BtlLandForm BTL_MAIN_GetLandForm( const BTL_MAIN_MODULE* wk );
-extern BOOL BTL_MAIN_IsFriendPokeID( const BTL_MAIN_MODULE* wk, u8 pokeID1, u8 pokeID2 );
 extern u8 BTL_MAINUTIL_PokeIDtoClientID( u8 pokeID );
 extern const MYSTATUS* BTL_MAIN_GetPlayerStatus( const BTL_MAIN_MODULE* wk );
 extern BOOL BTL_MAIN_IsServerMachine( BTL_MAIN_MODULE * wk );

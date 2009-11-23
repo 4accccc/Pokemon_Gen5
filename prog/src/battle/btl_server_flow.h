@@ -21,6 +21,7 @@
 #include "btl_poseff.h"
 #include "btl_field.h"
 #include "btl_wazarec.h"
+#include "btl_deadrec.h"
 #include "btl_action.h"
 
 #include "app/b_bag.h"

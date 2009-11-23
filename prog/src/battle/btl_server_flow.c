@@ -21,6 +21,7 @@
 #include "btl_sick.h"
 #include "btl_pospoke_state.h"
 #include "btl_shooter.h"
+#include "btl_deadrec.h"
 #include "btlv\btlv_effect.h"
 
 #include "handler\hand_tokusei.h"
@@ -148,6 +149,7 @@ typedef struct {
   u8   workBuffer[ HANDLER_EXHIBISION_WORK_TOTALSIZE ];
 
 }HANDLER_EXHIBISION_MANAGER;
+
 
 /**
  *  メッセージ表示処理コールバック関数型
