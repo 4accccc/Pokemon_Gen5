@@ -728,17 +728,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     fieldWork->sodateya = SODATEYA_Create( fieldWork->heapID, fieldWork, work );
   }
 
-  { //フィールド初期化スクリプトの呼び出し
-    FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( fieldWork->gamedata );
-    if ( FIELD_STATUS_GetFieldInitFlag( fldstatus ) ) 
-    {
-      SCRIPT_CallFieldInitScript( fieldWork->gsys, fieldWork->heapID );
-      FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus( fieldWork->gamedata ), FALSE );
-    } else {
-      SCRIPT_CallFieldRecoverScript( fieldWork->gsys, fieldWork->heapID );
-    }
-  }
-
   //3Ｄ描画モードは通常でセットアップ
   fieldWork->Draw3DMode = DRAW3DMODE_NORMAL;
 
@@ -766,6 +755,17 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     return MAINSEQ_RESULT_CONTINUE;
   }
   
+  { //フィールド初期化スクリプトの呼び出し
+    FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( fieldWork->gamedata );
+    if ( FIELD_STATUS_GetFieldInitFlag( fldstatus ) ) 
+    {
+      SCRIPT_CallFieldInitScript( fieldWork->gsys, fieldWork->heapID );
+      FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus( fieldWork->gamedata ), FALSE );
+    } else {
+      SCRIPT_CallFieldRecoverScript( fieldWork->gsys, fieldWork->heapID );
+    }
+  }
+
   FLDEFF_CTRL_Update( fieldWork->fldeff_ctrl );
 
 	// フィールドマップ用制御タスクシステム
