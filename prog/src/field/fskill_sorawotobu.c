@@ -85,6 +85,8 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
 
   switch(*seq){
   case 0:
+    //カメラエリア動作をフック
+    FIELD_CAMERA_SetCameraAreaActive( camera, FALSE );
     //現在ウォッチターゲットを保存
     wk->Watch = FIELD_CAMERA_GetWatchTarget(camera);
     FIELD_CAMERA_StopTraceRequest(camera);
@@ -168,6 +170,8 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
        FIELD_PLACE_NAME * p_sys = FIELDMAP_GetPlaceNameSys( fieldWork );
        FIELD_PLACE_NAME_Hide( p_sys );
     }
+    //カメラエリア動作をフック
+    FIELD_CAMERA_SetCameraAreaActive( camera, FALSE );
     //現在ウォッチターゲットを保存
     wk->Watch = FIELD_CAMERA_GetWatchTarget(camera);
     FIELD_CAMERA_StopTraceRequest(camera);
@@ -275,7 +279,8 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
       FLDNOGRID_MAPPER_SetRailCameraActive( mapper, TRUE );
       //復帰データのクリア
       FIELD_CAMERA_ClearRecvCamParam(camera);
-
+      //カメラエリア動作をフック解除
+      FIELD_CAMERA_SetCameraAreaActive( camera, TRUE );
       //ＯＢＪ停止解除
       ;
       return GMEVENT_RES_FINISH;
