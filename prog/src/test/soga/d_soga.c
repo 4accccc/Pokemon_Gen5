@@ -59,14 +59,16 @@ typedef struct
 
 extern const GFL_PROC_DATA EffectViewerProcData;
 extern const GFL_PROC_DATA PokemonViewerProcData;
+extern const GFL_PROC_DATA TrainerViewerProcData;
 extern const GFL_PROC_DATA DebugBattleTestProcData;
 extern const GFL_PROC_DATA CaptureTestProcData;
 
-static  const SOGA_PROC_TABLE spt[]={
-  { DSMSG_EFFECT_VIEWER,  &EffectViewerProcData },
-  { DSMSG_POKEMON_VIEWER, &PokemonViewerProcData },
-  { DSMSG_BATTLE_TEST,  &DebugBattleTestProcData },
-  { DSMSG_CAPTURE,    &CaptureTestProcData },
+static	const	SOGA_PROC_TABLE	spt[]={
+	{ DSMSG_EFFECT_VIEWER,	&EffectViewerProcData },
+	{ DSMSG_POKEMON_VIEWER,	&PokemonViewerProcData },
+	{ DSMSG_TRAINER_VIEWER,	&TrainerViewerProcData },
+	{ DSMSG_BATTLE_TEST,	&DebugBattleTestProcData },
+	{ DSMSG_CAPTURE,		&CaptureTestProcData },
 };
 
 //--------------------------------------------------------------------------
