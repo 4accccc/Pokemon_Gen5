@@ -329,6 +329,7 @@ typedef enum {
 
   INPUTBOX_ID_TYPE1,
   INPUTBOX_ID_TYPE2,
+  INPUTBOX_ID_DEF_BUTTON,
 
   INPUTBOX_ID_MAX,
 
@@ -935,6 +936,7 @@ static int check_box_touch( DMP_MAINWORK* wk )
       if( wk->boxEnable[i] )
       {
         const INPUT_BOX_PARAM* p = &InputBoxParams[i];
+
         if( (p->type == INPUTBOX_TYPE_FIXVAL) ||  (p->type == INPUTBOX_TYPE_FIXSTR)){
           continue;
         }
@@ -1118,6 +1120,7 @@ static void box_setup( DMP_MAINWORK* wk, u32 boxID, const POKEMON_PARAM* pp )
     break;
   }
   wk->boxEnable[boxID] = TRUE;
+
   box_update( wk, boxID, value );
 }
 
