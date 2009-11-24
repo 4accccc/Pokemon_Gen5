@@ -34,6 +34,7 @@
 */
 //=============================================================================
 
+
 //=============================================================================
 /**
  *					ç\ë¢ëÃêÈåæ
@@ -95,7 +96,7 @@ void BR_RES_Exit( BR_RES_WORK *p_wk )
 		int i;
 		for( i = 0; i < BR_RES_OBJ_MAX; i++ )
 		{	
-			GF_ASSERT( p_wk->obj_flag[i] == FALSE );
+			GF_ASSERT_MSG( p_wk->obj_flag[i] == FALSE, "âï˙ñYÇÍ %d\n", i );
 		}
 	}
 
@@ -311,6 +312,38 @@ void BR_RES_LoadBG( BR_RES_WORK *p_wk, BR_RES_BGID bgID, HEAPID heapID )
     GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_battle_recorder_gra_batt_rec_video_d1_NSCR,
 				BG_FRAME_S_WIN, 0, 0, FALSE, heapID );
     break;
+
+  case BR_RES_BG_BVSEARCH_M:
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_battle_recorder_gra_batt_rec_data_NCGR,
+        BG_FRAME_M_WIN, 0, 0, FALSE, heapID );
+
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_battle_recorder_gra_batt_rec_find_u_NSCR,
+				BG_FRAME_M_WIN, 0, 0, FALSE, heapID );
+    break;
+
+  case BR_RES_BG_BVSEARCH_MENU_S:
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_battle_recorder_gra_batt_rec_data_NCGR,
+        BG_FRAME_S_WIN, 0, 0, FALSE, heapID );
+
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_battle_recorder_gra_batt_rec_find_d3_NSCR,
+				BG_FRAME_S_WIN, 0, 0, FALSE, heapID );
+    break;
+
+  case BR_RES_BG_BVSEARCH_PLACE_S:
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_battle_recorder_gra_batt_rec_data_NCGR,
+        BG_FRAME_S_WIN, 0, 0, FALSE, heapID );
+
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_battle_recorder_gra_batt_rec_find_d1_NSCR,
+				BG_FRAME_S_WIN, 0, 0, FALSE, heapID );
+    break;
+
+  case BR_RES_BG_CODEIN_NUMBER_S:
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_battle_recorder_gra_batt_rec_browse_bg_NCGR,
+        BG_FRAME_S_WIN, 0, 0, FALSE, heapID );
+
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_battle_recorder_gra_batt_rec_nam_NSCR,
+				BG_FRAME_S_WIN, 0, 0, FALSE, heapID );
+    break;
 	}
 
 	GFL_ARC_CloseDataHandle( p_handle );
@@ -349,6 +382,16 @@ void BR_RES_UnLoadBG( BR_RES_WORK *p_wk, BR_RES_BGID bgID )
 		GFL_BG_LoadScreenReq( BG_FRAME_M_TEXT );
     break;
 
+  case BR_RES_BG_CODEIN_NUMBER_S:
+    /* fallthrough */
+  case BR_RES_BG_PHOTO_S:
+    /* fallthrough */
+  case BR_RES_BG_PHOTO_SEND_S:
+    /* fallthrough */
+  case BR_RES_BG_BVSEARCH_MENU_S:
+    /* fallthrough */
+  case BR_RES_BG_BVSEARCH_PLACE_S:
+    /* fallthrough */
   case BR_RES_BG_POKESEARCH_S_HEAD:
 		/* fallthrough */
   case BR_RES_BG_POKESEARCH_S_LIST:
@@ -362,9 +405,7 @@ void BR_RES_UnLoadBG( BR_RES_WORK *p_wk, BR_RES_BGID bgID )
 		GFL_BG_LoadScreenReq( BG_FRAME_S_WIN );
 		break;
 
-  case BR_RES_BG_PHOTO_S:
-    /* fallthrough */
-  case BR_RES_BG_PHOTO_SEND_S:
+  case BR_RES_BG_BVSEARCH_M:
     /* fallthrough */
   case BR_RES_BG_RNDMATCH_M_RND:
 		/* fallthrough */
@@ -484,6 +525,40 @@ void BR_RES_LoadOBJ( BR_RES_WORK *p_wk, BR_RES_OBJID objID, HEAPID heapID )
 			GFL_ARC_CloseDataHandle( p_handle );
 		}
     break;
+
+  case BR_RES_OBJ_NUM_S:
+		{	
+			ARCHANDLE *p_handle;
+
+			p_handle  = GFL_ARC_OpenDataHandle( ARCID_BATTLE_RECORDER_GRA, heapID );
+			p_data->ncl	= GFL_CLGRP_PLTT_RegisterEx( p_handle, 
+          NARC_battle_recorder_gra_batt_rec_nam_NCLR,
+          CLSYS_DRAW_SUB, PLT_OBJ_S_SPECIAL*0x20, 0,1,heapID );
+			p_data->ncg	= GFL_CLGRP_CGR_Register( p_handle,
+					NARC_battle_recorder_gra_batt_rec_nam_obj_NCGR, FALSE, CLSYS_DRAW_SUB, heapID );
+			p_data->nce	= GFL_CLGRP_CELLANIM_Register( p_handle,
+					NARC_battle_recorder_gra_batt_rec_nam_obj_NCER, NARC_battle_recorder_gra_batt_rec_nam_obj_NANR, heapID );
+
+			GFL_ARC_CloseDataHandle( p_handle );
+		}
+    break;
+
+  case BR_RES_OBJ_NUM_CURSOR_S:
+		{	
+			ARCHANDLE *p_handle;
+
+			p_handle  = GFL_ARC_OpenDataHandle( ARCID_BATTLE_RECORDER_GRA, heapID );
+			p_data->ncl	= GFL_CLGRP_PLTT_RegisterEx( p_handle, 
+          NARC_battle_recorder_gra_battle_rec_code_cur_NCLR,
+          CLSYS_DRAW_SUB, (PLT_OBJ_S_SPECIAL+1)*0x20, 0, 1, heapID );
+			p_data->ncg	= GFL_CLGRP_CGR_Register( p_handle,
+					NARC_battle_recorder_gra_battle_rec_code_cur_NCGR, FALSE, CLSYS_DRAW_SUB, heapID );
+			p_data->nce	= GFL_CLGRP_CELLANIM_Register( p_handle,
+					NARC_battle_recorder_gra_battle_rec_code_cur_NCER, NARC_battle_recorder_gra_battle_rec_code_cur_NANR, heapID );
+
+			GFL_ARC_CloseDataHandle( p_handle );
+		}
+    break;
 	}
 
 
@@ -504,6 +579,13 @@ void BR_RES_UnLoadOBJ( BR_RES_WORK *p_wk, BR_RES_OBJID objID )
 
 	switch( objID )
 	{	
+  case BR_RES_OBJ_NUM_CURSOR_S:
+    /* fallthrough */
+  case BR_RES_OBJ_NUM_S:
+    GFL_CLGRP_PLTT_Release( p_data->ncl );
+    GFL_CLGRP_CGR_Release( p_data->ncg );
+    GFL_CLGRP_CELLANIM_Release( p_data->nce );
+    break;
   case BR_RES_OBJ_ALLOW_M:
     /* fallthrough */
   case BR_RES_OBJ_ALLOW_S:

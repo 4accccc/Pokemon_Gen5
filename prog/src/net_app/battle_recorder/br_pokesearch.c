@@ -62,15 +62,6 @@ typedef enum
   BR_POKESEARCH_ORDER_NONE  = BR_POKESEARCH_ORDER_MAX,
 } BR_POKESEARCH_ORDER;
 
-//-------------------------------------
-///	CLWKの数
-//=====================================
-typedef enum
-{
-  BR_POKESEARCH_CLWK_BAR_L,
-  BR_POKESEARCH_CLWK_BAR_R,
-  BR_POKESEARCH_CLWK_MAX
-} BR_POKESEARCH_CLWK;
 
 //-------------------------------------
 ///	現在のモード
@@ -103,7 +94,6 @@ struct _BR_POKESEARCH_WORK
   HEAPID                heapID;
   BR_RES_WORK           *p_res;
   BR_BTN_WORK	          *p_btn;
-  GFL_CLWK              *p_clwk[ BR_POKESEARCH_CLWK_MAX ];
   GFL_CLUNIT            *p_unit;
   BMPOAM_SYS_PTR        p_bmpoam;
   PRINT_QUE             *p_que;
@@ -480,7 +470,7 @@ static void BR_POKESEARCH_DISPLAY_CreateCommon( BR_POKESEARCH_WORK *p_wk )
     ret = BR_RES_GetOBJRes( p_wk->p_res, BR_RES_OBJ_SHORT_BTN_S, &res );
     GF_ASSERT( ret );
 
-    p_wk->p_btn = BR_BTN_Init( &cldata, msg_05, CLSYS_DRAW_SUB, p_wk->p_unit, p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
+    p_wk->p_btn = BR_BTN_Init( &cldata, msg_05, BR_BTN_DATA_SHORT_WIDTH,CLSYS_DRAW_SUB, p_wk->p_unit, p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
 ;
   }
 
@@ -576,31 +566,6 @@ static void BR_POKESEARCH_DISPLAY_CreateList( BR_POKESEARCH_WORK *p_wk )
   //リソース読み込み
   BR_RES_LoadBG( p_wk->p_res, BR_RES_BG_POKESEARCH_S_LIST, p_wk->heapID );
 
-  //バー作成
-  { 
-    int i;
-    GFL_CLWK_DATA cldata;
-    BR_RES_OBJ_DATA res;
-    BOOL ret;
-
-    GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-
-    cldata.pos_y    = 72;
-    cldata.anmseq   = 5;
-    cldata.softpri  = 0;
-
-    ret = BR_RES_GetOBJRes( p_wk->p_res, BR_RES_OBJ_SHORT_BTN_S, &res );
-    GF_ASSERT( ret );
-
-    for( i = 0; i <= BR_POKESEARCH_CLWK_BAR_R; i++ )
-    { 
-      cldata.pos_x    = i == 0? 24: 232;
-      p_wk->p_clwk[i]  = GFL_CLACT_WK_Create( p_wk->p_unit, 
-				res.ncg, res.ncl, res.nce, 
-				&cldata, CLSYS_DRAW_SUB, p_wk->heapID );
-    }
-  }
-
   //リスト作成
   { 
 
@@ -642,17 +607,7 @@ static void BR_POKESEARCH_DISPLAY_CreateList( BR_POKESEARCH_WORK *p_wk )
     }
   }
 
-  //リストが動作するならば、バーをアニメON
-  { 
-    if( BR_LIST_IsMoveEnable( p_wk->p_list ) )
-    { 
-      int i;
-      for( i = 0; i <= BR_POKESEARCH_CLWK_BAR_R; i++ )
-      { 
-        GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
-      }
-    }
-  }
+
 }
 
 //----------------------------------------------------------------------------
@@ -666,23 +621,10 @@ static void BR_POKESEARCH_DISPLAY_DeleteList( BR_POKESEARCH_WORK *p_wk )
 { 
   //リスト破棄
   { 
-    BmpMenuWork_ListDelete( p_wk->p_list_data );
-    p_wk->p_list_data = NULL;
     BR_LIST_Exit( p_wk->p_list );
     p_wk->p_list  = NULL;
-  }
-
-  //バー解放
-  { 
-    int i;
-    for( i = 0; i < BR_POKESEARCH_CLWK_MAX; i++ )
-    { 
-      if( p_wk->p_clwk[i] )
-      { 
-        GFL_CLACT_WK_Remove( p_wk->p_clwk[i] );
-        p_wk->p_clwk[i] = NULL;
-      }
-    }
+    BmpMenuWork_ListDelete( p_wk->p_list_data );
+    p_wk->p_list_data = NULL;
   }
 
   //リソース破棄

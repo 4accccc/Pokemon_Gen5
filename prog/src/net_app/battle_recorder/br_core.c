@@ -41,7 +41,6 @@
  *					定数宣言
 */
 //=============================================================================
-#define BR_PROC_STACK_MAX	(3)
 
 //=============================================================================
 /**
@@ -242,7 +241,7 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 	BR_CORE_WORK	*p_wk;
 
 	//ヒープ作成
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BATTLE_RECORDER_CORE, 0x50000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BATTLE_RECORDER_CORE, 0x60000 );
 //	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BATTLE_RECORDER_CORE, 0x30000 );
 
 	//プロセスワーク作成
@@ -380,20 +379,35 @@ static void BR_MENU_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, const 
 	BR_MENU_PROC_PARAM	*p_param	= p_param_adrs;
 	BR_CORE_WORK				*p_wk			= p_wk_adrs;
 
-	if( preID == BR_PROCID_RECORD )
-	{	
-		const BR_RECORD_PROC_PARAM	*cp_record_param	= cp_pre_param;
-		if( cp_record_param->mode == BR_RECODE_PROC_MY )
-		{	
-			p_param->menuID			= BR_BROWSE_MENUID_BTLVIDEO;
-		}
-		else
-		{
-			p_param->menuID			= BR_BROWSE_MENUID_OTHER_RECORD;
-		}
-	}
-	else
-	{
+  //戻ってくるとき
+	switch( preID )
+  {	
+  case BR_PROCID_RECORD:
+    { 
+      const BR_RECORD_PROC_PARAM	*cp_record_param	= cp_pre_param;
+      if( cp_record_param->mode == BR_RECODE_PROC_MY )
+      {	
+        p_param->menuID			= BR_BROWSE_MENUID_BTLVIDEO;
+      }
+      else
+      {
+        p_param->menuID			= BR_BROWSE_MENUID_OTHER_RECORD;
+      }
+    }
+    break;
+
+  case BR_PROCID_BV_RANK:
+    p_param->menuID = BR_BTLVIDEO_MENUID_RANK;
+    break;
+
+  case BR_PROCID_BV_SEARCH:
+    /* fallthrough */
+  case BR_PROCID_CODEIN:
+    p_param->menuID = BR_BTLVIDEO_MENUID_LOOK;
+    break;
+
+  default:
+    //初期
     switch( p_wk->p_param->p_param->mode )
     { 
     case BR_MODE_BROWSE:
@@ -439,15 +453,40 @@ static void BR_RECORD_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
 {	
 	BR_RECORD_PROC_PARAM			*p_param	= p_param_adrs;
 	BR_CORE_WORK							*p_wk			= p_wk_adrs;
-	const BR_MENU_PROC_PARAM	*cp_menu_param	= cp_pre_param;
 
 	//メニュー以外から来ない
-	GF_ASSERT_MSG( preID == BR_PROCID_MENU, "メニュー以外からは来ない %d", preID );
 
-	p_param->mode				= cp_menu_param->next_mode;
-	p_param->p_res			= p_wk->p_res;
-	p_param->p_procsys	= p_wk->p_procsys;
-	p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
+  p_param->p_res			= p_wk->p_res;
+  p_param->p_procsys	= p_wk->p_procsys;
+  p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
+  switch( preID )
+  { 
+  case BR_PROCID_MENU:
+    { 
+      const BR_MENU_PROC_PARAM	*cp_menu_param	= cp_pre_param;
+      p_param->mode				= cp_menu_param->next_mode;
+    }
+    break;
+
+  case BR_PROCID_BV_RANK:
+    { 
+      //@todoとりあえず今は自分
+      p_param->mode       = BR_RECODE_PROC_MY;
+    }
+    break;
+
+  case BR_PROCID_CODEIN:
+    { 
+      //@todoとりあえず今は自分
+      p_param->mode       = BR_RECODE_PROC_MY;
+    }
+    break;
+
+  default:
+    GF_ASSERT_MSG( 0, "メニューとランキング、コード入力以外からは来ない %d", preID );
+    break;
+  }
+  
 }
 //----------------------------------------------------------------------------
 /**

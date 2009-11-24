@@ -56,6 +56,12 @@ typedef enum
 
   BR_RES_BG_BVRANK,
 
+  BR_RES_BG_BVSEARCH_M,
+  BR_RES_BG_BVSEARCH_MENU_S,
+  BR_RES_BG_BVSEARCH_PLACE_S,
+
+  BR_RES_BG_CODEIN_NUMBER_S,
+
 } BR_RES_BGID;
 
 
@@ -71,6 +77,9 @@ typedef enum
 	BR_RES_OBJ_SHORT_BTN_S,			//短いボタン	＋	スクロールバー
   BR_RES_OBJ_ALLOW_S,         //矢印下
   BR_RES_OBJ_ALLOW_M,         //矢印下
+
+  BR_RES_OBJ_NUM_S,           //ナンバー
+  BR_RES_OBJ_NUM_CURSOR_S,    //ナンバーカーソル
 
 	BR_RES_OBJ_MAX
 } BR_RES_OBJID;

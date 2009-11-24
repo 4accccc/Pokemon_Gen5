@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-11-18T11:54:04"/>
+	<create user="toru_nagihashi" host="W00160" date="2009-11-21T15:54:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -286,7 +286,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="171"/>
+		<comment position="1" width="156"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -949,6 +949,11 @@
 	<row id="msg_726">
 		<language name="JPN" font=" 1:small" width="216">おくる　バトルビデオが　ありません</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">おくる　バトルビデオが　ありません</language>
+	</row>
+
+	<row id="msg_727">
+		<language name="JPN" font=" 1:small" width="216">[2:01:２桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[2:01:２桁:0]</language>
 	</row>
 
 	<row id="msg_800">

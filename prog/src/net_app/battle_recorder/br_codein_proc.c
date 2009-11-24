@@ -15,6 +15,16 @@
 #include "system/gfl_use.h"
 #include "system/main.h"  //HEAPID
 
+//アーカイブ
+#include "msg/msg_battle_rec.h"
+
+//自分のモジュール
+#include "br_pokesearch.h"
+#include "br_inner.h"
+#include "br_util.h"
+#include "br_btn.h"
+#include "br_codein.h"
+
 //外部参照
 #include "br_codein_proc.h"
 
@@ -34,7 +44,11 @@
 //=====================================
 typedef struct 
 {
-	HEAPID heapID;
+  CODEIN_PARAM  *p_codein_param;
+  CODEIN_WORK   *p_codein_wk;
+  BR_TEXT_WORK  *p_text;
+  PRINT_QUE     *p_que;
+	HEAPID        heapID;
 } BR_CODEIN_WORK;
 
 
@@ -44,7 +58,7 @@ typedef struct
 */
 //=============================================================================
 //-------------------------------------
-///	BRコアプロセス
+///	数値入力プロセス
 //=====================================
 static GFL_PROC_RESULT BR_CODEIN_PROC_Init
 	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs );
@@ -96,12 +110,35 @@ static GFL_PROC_RESULT BR_CODEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
 	BR_CODEIN_WORK				*p_wk;
 	BR_CODEIN_PROC_PARAM	*p_param	= p_param_adrs;
 
+  GFL_FONT *p_font;
+  GFL_MSGDATA *p_msg; 
+
+  p_font  = BR_RES_GetFont( p_param->p_res );
+  p_msg   = BR_RES_GetMsgData( p_param->p_res );
+
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(BR_CODEIN_WORK), BR_PROC_SYS_GetHeapID( p_param->p_procsys ) );
 	GFL_STD_MemClear( p_wk, sizeof(BR_CODEIN_WORK) );	
 	p_wk->heapID	= BR_PROC_SYS_GetHeapID( p_param->p_procsys );
 
-	//グラフィック初期化
+  //グラフィック
+  BR_RES_LoadBG( p_param->p_res, BR_RES_BG_CODEIN_NUMBER_S, p_wk->heapID );
+  BR_RES_LoadOBJ( p_param->p_res, BR_RES_OBJ_NUM_S, p_wk->heapID );
+  BR_RES_LoadOBJ( p_param->p_res, BR_RES_OBJ_NUM_CURSOR_S, p_wk->heapID );
+  BR_RES_LoadOBJ( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S, p_wk->heapID );
+
+  //モジュール
+  {
+    int block[CODE_BLOCK_MAX];
+    CodeIn_BlockDataMake_2_5_5( block );
+    p_wk->p_codein_param  = CodeInput_ParamCreate( p_wk->heapID, 12, p_param->p_unit, p_param->p_res, block );
+    p_wk->p_codein_wk     = CODEIN_Init( p_wk->p_codein_param, p_wk->heapID );
+  }
+  { 
+    p_wk->p_que   = PRINTSYS_QUE_Create( p_wk->heapID );
+    p_wk->p_text  = BR_TEXT_Init( p_param->p_res, p_wk->p_que, p_wk->heapID );
+    BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_709 );
+  }
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -123,6 +160,18 @@ static GFL_PROC_RESULT BR_CODEIN_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
 	BR_CODEIN_PROC_PARAM	*p_param	= p_param_adrs;
 
 	//モジュール破棄
+  { 
+    BR_TEXT_Exit( p_wk->p_text, p_param->p_res );
+    CODEIN_Exit( p_wk->p_codein_wk );
+    CodeInput_ParamDelete( p_wk->p_codein_param );
+    PRINTSYS_QUE_Delete( p_wk->p_que );
+  }
+
+  //グラフィック破棄
+  BR_RES_UnLoadBG( p_param->p_res, BR_RES_BG_CODEIN_NUMBER_S );
+  BR_RES_UnLoadOBJ( p_param->p_res, BR_RES_OBJ_NUM_S );
+  BR_RES_UnLoadOBJ( p_param->p_res, BR_RES_OBJ_NUM_CURSOR_S );
+  BR_RES_UnLoadOBJ( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S );
 
 
 	//プロセスワーク破棄
@@ -147,8 +196,33 @@ static GFL_PROC_RESULT BR_CODEIN_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
 	BR_CODEIN_WORK	*p_wk	= p_wk_adrs;
 	BR_CODEIN_PROC_PARAM	*p_param	= p_param_adrs;
 
-	//プロセス処理
+  //コードイン
+  CODEIN_Main( p_wk->p_codein_wk );
 
+  //文字
+  if( p_wk->p_text )
+  {  
+    BR_TEXT_PrintMain( p_wk->p_text );
+  }
+  PRINTSYS_QUE_Main( p_wk->p_que );
+
+	//
+  { 
+    CODEIN_SELECT select;
+    select  = CODEIN_GetSelect( p_wk->p_codein_wk );
+    switch( select )
+    { 
+    case CODEIN_SELECT_CANCEL:
+      NAGI_Printf( "CODEIN: Exit!\n" );
+      BR_PROC_SYS_Pop( p_param->p_procsys );
+      return GFL_PROC_RES_FINISH;
+
+    case CODEIN_SELECT_DECIDE:
+      NAGI_Printf( "CODEIN: Exit!\n" );
+      BR_PROC_SYS_Push( p_param->p_procsys, BR_PROCID_RECORD );
+      return GFL_PROC_RES_FINISH;
+    }
+  }
 
 	return GFL_PROC_RES_CONTINUE;
 }

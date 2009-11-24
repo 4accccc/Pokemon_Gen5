@@ -90,6 +90,25 @@ extern void BR_LIST_Main( BR_LIST_WORK* p_wk );
 extern BOOL BR_LIST_IsMoveEnable( const BR_LIST_WORK* cp_wk );
 extern u32 BR_LIST_GetSelect( const BR_LIST_WORK* cp_wk );
 
+//-------------------------------------
+///	リスト拡張
+//=====================================
+//  通常は上記関数のみで動作するが、外部から特殊な文字を書き込みたいときは、
+//  BMPに文字列を書き込んで、下記関数に渡すことで、スクロールに対応できる
+//  その際、BMP_MENULIST_DATAのstrはNULLにすること。
+extern void BR_LIST_SetBmp( BR_LIST_WORK* p_wk, u16 idx, GFL_BMP_DATA *p_src );
+extern GFL_BMP_DATA *BR_LIST_GetBmp( const BR_LIST_WORK* cp_wk, u16 idx );
+
+typedef enum
+{
+  BR_LIST_PARAM_IDX_CURSOR_POS,
+  BR_LIST_PARAM_IDX_LIST_POS,
+  BR_LIST_PARAM_IDX_MOVE_TIMING,
+  BR_LIST_PARAM_IDX_LIST_MAX,
+
+} BR_LIST_PARAM_IDX;
+extern u32 BR_LIST_GetParam( const BR_LIST_WORK* cp_wk, BR_LIST_PARAM_IDX param );
+extern void BR_LIST_Write( BR_LIST_WORK *p_wk );
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *					  上画面テキスト
@@ -134,7 +153,7 @@ extern BOOL BR_PROFILE_PrintMain( BR_PROFILE_WORK *p_wk );
 /**
  *					  デバッグ用
  */
-//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_
 #ifdef PM_DEBUG
 #include "musical/mus_shot_photo.h"
 #include "poke_tool/monsno_def.h" //debug用

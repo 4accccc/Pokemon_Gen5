@@ -77,6 +77,17 @@ typedef enum
 	PROC_TYPE_NEXT,
 } PROC_TYPE;
 
+//-------------------------------------
+///	
+//=====================================
+typedef enum
+{
+  LIST_SELECT_NONE,
+  LIST_SELECT_DECIDE,
+  LIST_SELECT_CANCEL,
+} LIST_SELECT;
+
+
 
 //=============================================================================
 /**
@@ -221,7 +232,7 @@ static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK *p_wk );
 static void LIST_Init( LIST_WORK *p_wk, const LIST_SETUP_TBL *cp_tbl, u32 tbl_max, MSG_WORK *p_msg, GFL_BMPWIN*	p_bmpwin, HEAPID heapID );
 static void LIST_Exit( LIST_WORK *p_wk );
 static void LIST_Main( LIST_WORK *p_wk );
-static BOOL LIST_IsDecide( const LIST_WORK *cp_wk, u32 *p_select );
+static LIST_SELECT LIST_IsDecide( const LIST_WORK *cp_wk, u32 *p_select );
 
 //MSG_WORK
 static void MSG_Init( MSG_WORK *p_wk, HEAPID heapID );
@@ -433,10 +444,10 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 	{	
 		L"‚»‚ç‚ð‚Æ‚Ô", LISTDATA_SEQ_PROC_SKYJUMP,
 	},
+#endif
 	{	
 		L"‚à‚Ç‚é", LISTDATA_SEQ_RETURN
 	},
-#endif
 };
 
 static const LIST_SETUP_TBL sc_list_data_page1[]	=
@@ -567,12 +578,18 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Main( GFL_PROC *p_proc, int *p_seq, void 
 
 	case SEQ_MAIN:
 		{
-			u32 select;
+			u32 idx;
+      LIST_SELECT select;
 			LIST_Main( &p_wk->list );
-			if( LIST_IsDecide( &p_wk->list, &select ) )
+      select  = LIST_IsDecide( &p_wk->list, &idx );
+			if( select == LIST_SELECT_DECIDE )
 			{	
-				sc_list_funciton[ select ]( p_wk );
+				sc_list_funciton[ idx ]( p_wk );
 			}
+      if( select == LIST_SELECT_CANCEL )
+      { 
+        p_wk->is_end  = TRUE;
+      }
 
 			//I—¹”»’è
 			if( p_wk->is_end )
@@ -1663,19 +1680,25 @@ static void LIST_Main( LIST_WORK *p_wk )
  *	@retval	FALSE‚È‚ç‚Î‘I‘ð’†
  */
 //-----------------------------------------------------------------------------
-static BOOL LIST_IsDecide( const LIST_WORK *cp_wk, u32 *p_select )
+static LIST_SELECT LIST_IsDecide( const LIST_WORK *cp_wk, u32 *p_select )
 {	
-	if( cp_wk->select != BMPMENULIST_NULL
-		&& cp_wk->select != BMPMENULIST_CANCEL )
-	{	
+	switch( cp_wk->select)
+  { 
+  case BMPMENULIST_NULL:
+    return LIST_SELECT_NONE;
+
+	case BMPMENULIST_CANCEL:
+    return LIST_SELECT_CANCEL;
+
+  default:
 		if( p_select )
 		{	
 			*p_select	= cp_wk->select;
 		}
-		return TRUE;
-	}
+		return LIST_SELECT_DECIDE;
+  }
 
-	return FALSE;
+	return LIST_SELECT_NONE;
 }
 
 //=============================================================================

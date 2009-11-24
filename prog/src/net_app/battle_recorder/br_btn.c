@@ -77,6 +77,7 @@ struct _BR_BTN_WORK
 	GFL_BMP_DATA			*p_bmp;			//フォント
 	const BR_BTN_DATA *cp_data;		//ボタンのデータ
 	CLSYS_DRAW_TYPE		display;		//どちらに描画するか
+  u32               w;          //幅
 };
 
 //-------------------------------------
@@ -689,7 +690,7 @@ static void BR_BTNEX_Init( BR_BTNEX_WORK *p_wk, const BR_BTN_DATA *cp_data, GFL_
 		msgID		= BR_BTN_DATA_GetParam( cp_data, BR_BTN_DATA_PARAM_MSGID );
 
 		//作成
-		p_wk->p_btn		= BR_BTN_Init( &cldata, msgID, p_wk->display, p_unit, 
+		p_wk->p_btn		= BR_BTN_Init( &cldata, msgID, BR_BTN_DATA_WIDTH, p_wk->display, p_unit, 
 				p_bmpoam, p_font, p_msg, &res, GetHeapLowID( heapID ) );
 	}
 
@@ -822,7 +823,7 @@ static void BR_BTNEX_Copy( const BR_BTN_SYS_WORK *cp_wk, BR_BTNEX_WORK *p_dst, c
       msgID		= BR_BTN_DATA_GetParam( p_dst->cp_data, BR_BTN_DATA_PARAM_MSGID );
 
       //作成
-      p_dst->p_btn		= BR_BTN_Init( &cldata, msgID, display, cp_wk->p_unit, 
+      p_dst->p_btn		= BR_BTN_Init( &cldata, msgID, BR_BTN_DATA_WIDTH, display, cp_wk->p_unit, 
           cp_wk->p_bmpoam, p_font, p_msg, &res, cp_wk->heapID );
     }
   }
@@ -898,6 +899,7 @@ static u32 BR_BTNEX_GetParam( const BR_BTNEX_WORK *cp_wk, BR_BTN_PARAM param )
  *
  *	@param	const GFL_CLWK_DATA *cp_cldata	設定情報
  *	@param	msgID														ボタンに載せる文字列
+ *	@param  w                               幅
  *	@param	display													表示面
  *	@param	*p_unit													アクター登録ユニット
  *	@param	p_bmpoam												BMPOAM登録システム
@@ -909,12 +911,13 @@ static u32 BR_BTNEX_GetParam( const BR_BTNEX_WORK *cp_wk, BR_BTN_PARAM param )
  *	@return	ワーク
  */
 //-----------------------------------------------------------------------------
-BR_BTN_WORK * BR_BTN_Init( const GFL_CLWK_DATA *cp_cldata, u16 msgID, CLSYS_DRAW_TYPE display, GFL_CLUNIT *p_unit, BMPOAM_SYS_PTR p_bmpoam, GFL_FONT *p_font, GFL_MSGDATA *p_msg, const BR_RES_OBJ_DATA *cp_res, HEAPID heapID )
+BR_BTN_WORK * BR_BTN_Init( const GFL_CLWK_DATA *cp_cldata, u16 msgID, u16 w, CLSYS_DRAW_TYPE display, GFL_CLUNIT *p_unit, BMPOAM_SYS_PTR p_bmpoam, GFL_FONT *p_font, GFL_MSGDATA *p_msg, const BR_RES_OBJ_DATA *cp_res, HEAPID heapID )
 {	
 	BR_BTN_WORK *p_wk;
 
 	p_wk	= GFL_HEAP_AllocMemory( heapID, sizeof(BR_BTN_WORK) );
 	GFL_STD_MemClear( p_wk, sizeof(BR_BTN_WORK) );
+  p_wk->w       = w;
   p_wk->display = display;
 
 	//CLWK作成
@@ -928,7 +931,7 @@ BR_BTN_WORK * BR_BTN_Init( const GFL_CLWK_DATA *cp_cldata, u16 msgID, CLSYS_DRAW
 	{	
 		STRBUF			*p_str;
 
-		p_wk->p_bmp	= GFL_BMP_Create( 15, 2, GFL_BMP_16_COLOR, heapID );
+		p_wk->p_bmp	= GFL_BMP_Create( p_wk->w/8, 2, GFL_BMP_16_COLOR, heapID );
 		p_str	= GFL_MSG_CreateString( p_msg, msgID );
 		PRINTSYS_Print( p_wk->p_bmp, 0, 0, p_str, p_font );
 
@@ -989,7 +992,7 @@ BOOL BR_BTN_GetTrg( const BR_BTN_WORK *cp_wk, u32 x, u32 y )
 	GFL_CLACT_WK_GetPos( cp_wk->p_clwk, &pos, cp_wk->display );
 
 	rect.left		= pos.x;
-	rect.right	= pos.x + BR_BTN_DATA_WIDTH;
+	rect.right	= pos.x + cp_wk->w;
 	rect.top		= pos.y - BR_BTN_DATA_HEIGHT/2;
 	rect.bottom	= pos.y + BR_BTN_DATA_HEIGHT/2;
 

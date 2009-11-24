@@ -41,8 +41,11 @@ enum
   PLT_BG_S_FONT	= 14,
 
 	//PLT
-	PLT_OBJ_M_COMMON	= 0,
-	PLT_OBJ_S_COMMON	= 0,
+	PLT_OBJ_M_COMMON	= 0,  //3本
+  PLT_OBJ_M_POKEICON  = 4,
+	PLT_OBJ_S_COMMON	= 0,  //3本
+  PLT_OBJ_S_SPECIAL   = 4,
+
 };
 
 //-------------------------------------
@@ -73,3 +76,58 @@ typedef struct
 	BR_BTLREC_DATA	other[3];
 } BR_BTLREC_SET;
 
+
+#include "../gds/gds_battle_rec.h"
+
+//-------------------------------------
+///	ランキングで必要な情報
+//=====================================
+#define BR_OUTLINE_RECV_MAX (30)
+typedef struct 
+{
+	GT_BATTLE_REC_OUTLINE_RECV	data[ BR_OUTLINE_RECV_MAX ];			  ///< DL した概要一覧
+	u8							            secure_flag[ BR_OUTLINE_RECV_MAX ];	///< DL した概要のフラグ
+	int							            data_num;			      ///< DL した概要一覧の件数
+} BR_OUTLINE_DATA;
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *					  デバッグ用
+ */
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_
+#ifdef PM_DEBUG
+static inline void DEBUG_BR_OUTLINE_SetData( BR_OUTLINE_DATA *p_data )
+{ 
+  static const u16 * sc_debug_name[] =
+  { 
+    L"ホワイ",
+    L"ブラク",
+    L"ダイヤ",
+    L"パール",
+    L"ハート",
+    L"ソウル",
+  };
+
+  int i;
+  int j;
+
+
+  for( i = 0; i < BR_OUTLINE_RECV_MAX; i++ )
+  { 
+    //名前
+    for( j = 0 ; j < 3; j++ )
+    { 
+      p_data->data[i].profile.name[j]  = sc_debug_name[ i % NELEMS(sc_debug_name) ][j];
+    }
+    p_data->data[i].profile.name[j] = GFL_STR_GetEOMCode();
+
+    //モンスター番号
+    for( j = 0 ; j < GT_HEADER_MONSNO_MAX; j++ )
+    {
+      p_data->data[i].head.monsno[j]  = i+1;
+      p_data->data[i].head.form_no[j] = 0;
+    }
+  }
+  p_data->data_num  = i;
+}
+#endif //PM_DEBUG

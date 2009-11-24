@@ -402,7 +402,7 @@ static BOOL Br_MusicalSend_Seq_Photo_Init( BR_MUSICALSEND_WORK	*p_wk, BR_MUSICAL
         cldata.pos_x    = 128;
         cldata.anmseq   = 0;
       }
-      p_wk->p_btn[i] = BR_BTN_Init( &cldata, msgID, CLSYS_DRAW_SUB, p_unit, p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
+      p_wk->p_btn[i] = BR_BTN_Init( &cldata, msgID, BR_BTN_DATA_SHORT_WIDTH, CLSYS_DRAW_SUB, p_unit, p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
     }
   }
 

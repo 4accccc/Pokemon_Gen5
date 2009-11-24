@@ -1113,6 +1113,9 @@ SRCS_OVERLAY_BATTLE_RECORDER	= net_app/battle_recorder/br_main.c \
 																net_app/battle_recorder/br_musicalsend_proc.c \
                                 net_app/battle_recorder/br_util.c \
                                 net_app/battle_recorder/br_pokesearch.c \
+                                net_app/battle_recorder/br_codein.c \
+                                net_app/battle_recorder/br_codein_disp.c \
+                                net_app/battle_recorder/br_codein_pv.c \
 																poke_tool/rpp_to_pp.c
 
 # デバッグデータ作成
@@ -1132,6 +1135,7 @@ SRCS_OVERLAY_NAMEIN	= app/name_input/namein.c \
 
 #	名木橋デバッグ
 #===> SRCS_OVERLAY_BATTLE_RECORDER
+#===> SRCS_OVERLAY_NAMEIN
 SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
 																test/nagihashi/debug_irc_name.c \
 																test/nagihashi/debug_template.c \

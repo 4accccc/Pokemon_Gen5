@@ -185,7 +185,11 @@ enum
 {
   BR_LIST_CLWK_ALLOW_U,
   BR_LIST_CLWK_ALLOW_D,
-  BR_LIST_CLWK_MAX,
+  BR_LIST_CLWK_ALLOW_MAX,
+  BR_LIST_CLWK_BAR_L  = BR_LIST_CLWK_ALLOW_MAX,
+  BR_LIST_CLWK_BAR_R,
+  BR_LIST_CLWK_BAR_MAX,
+  BR_LIST_CLWK_MAX  = BR_LIST_CLWK_BAR_MAX,
 };
 
 //-------------------------------------
@@ -211,6 +215,8 @@ struct _BR_LIST_WORK
   u16   list;     //何項目目にいるか 
   u16   line_max; //1ページ何ラインか
   u32   select_param; //選択したもの
+  s8    value;
+  s8    dumy[3];
   
   BR_LIST_MOVE_FUNC move_callback;
   GFL_UI_TP_HITTBL    hittbl[BR_LIST_HITTBL_MAX];
@@ -314,9 +320,16 @@ BR_LIST_WORK * BR_LIST_Init( const BR_LIST_PARAM *cp_param, HEAPID heapID )
 
     cldata.pos_x    = 128;
     cldata.softpri  = 0;
-    for( i = 0; i < BR_LIST_CLWK_MAX; i++ )
+    for( i = 0; i < BR_LIST_CLWK_ALLOW_MAX; i++ )
     { 
-      cldata.pos_y    = i == 0 ? 16: 128;
+      if( cp_param->type == BR_LIST_TYPE_TOUCH )
+      { 
+        cldata.pos_y    = i == 0 ? 16: 128;
+      }
+      else
+      { 
+        cldata.pos_y    = i == 0 ? 64: 184;
+      }
       cldata.anmseq   = i;
 
       p_wk->p_clwk[i] = GFL_CLACT_WK_Create( cp_param->p_unit, 
@@ -325,6 +338,31 @@ BR_LIST_WORK * BR_LIST_Init( const BR_LIST_PARAM *cp_param, HEAPID heapID )
       GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
     }
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[BR_LIST_CLWK_ALLOW_U], FALSE );
+  }
+
+  //バー作成
+  { 
+    int i;
+    GFL_CLWK_DATA cldata;
+    BR_RES_OBJ_DATA res;
+    BOOL ret;
+
+    GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+
+    cldata.pos_y    = 72;
+    cldata.anmseq   = 5;
+    cldata.softpri  = 0;
+
+    ret = BR_RES_GetOBJRes( p_wk->param.p_res, BR_RES_OBJ_SHORT_BTN_S, &res );
+    GF_ASSERT( ret );
+
+    for( i = BR_LIST_CLWK_BAR_L; i < BR_LIST_CLWK_BAR_MAX; i++ )
+    { 
+      cldata.pos_x    = i == BR_LIST_CLWK_BAR_L? 24: 232;
+      p_wk->p_clwk[i]  = GFL_CLACT_WK_Create( p_wk->param.p_unit, 
+				res.ncg, res.ncl, res.nce, 
+				&cldata, CLSYS_DRAW_SUB, heapID );
+    }
   }
 
   //文字をBMP化しておく
@@ -339,9 +377,12 @@ BR_LIST_WORK * BR_LIST_Init( const BR_LIST_PARAM *cp_param, HEAPID heapID )
     { 
       cp_strbuf = p_wk->param.cp_list[i].str;
 
-      p_wk->p_bmp[i]  = GFL_BMP_Create( p_wk->param.w, p_wk->param.str_line, GFL_BMP_16_COLOR, heapID );
-      GFL_BMP_Clear( p_wk->p_bmp[i], 0 );
-      PRINTSYS_PrintColor( p_wk->p_bmp[i], 0, 0, cp_strbuf, p_font, BR_PRINT_COL_NORMAL );
+      if( cp_strbuf != NULL )
+      { 
+        p_wk->p_bmp[i]  = GFL_BMP_Create( p_wk->param.w, p_wk->param.str_line, GFL_BMP_16_COLOR, heapID );
+        GFL_BMP_Clear( p_wk->p_bmp[i], 0 );
+        PRINTSYS_PrintColor( p_wk->p_bmp[i], 0, 0, cp_strbuf, p_font, BR_PRINT_COL_NORMAL );
+      }
     }
   }
 
@@ -355,6 +396,18 @@ BR_LIST_WORK * BR_LIST_Init( const BR_LIST_PARAM *cp_param, HEAPID heapID )
     if( !BR_LIST_IsMoveEnable( p_wk ) )
     { 
       GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[BR_LIST_CLWK_ALLOW_D], FALSE );
+    }
+  }
+
+  //リストが動作するならば、バーをアニメON
+  { 
+    if( BR_LIST_IsMoveEnable( p_wk ) )
+    { 
+      int i;
+      for( i = BR_LIST_CLWK_BAR_L; i < BR_LIST_CLWK_BAR_MAX; i++ )
+      { 
+        GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
+      }
     }
   }
 
@@ -379,7 +432,7 @@ void BR_LIST_Exit( BR_LIST_WORK* p_wk )
 
   for( i = 0; i < p_wk->param.list_max; i++ )
   { 
-    if( p_wk->p_bmp[i] )
+    if( p_wk->p_bmp[i] && p_wk->param.cp_list[i].str )
     { 
       GFL_BMP_Delete( p_wk->p_bmp[i] );
     }
@@ -411,15 +464,13 @@ void BR_LIST_Main( BR_LIST_WORK* p_wk )
   //スクロール
   if( BR_LIST_IsMoveEnable( p_wk ) )
   { 
-    s8 value;
-
     //スライダー操作
-    value = Br_List_Slide( p_wk );
-    if( value != 0 )
+    p_wk->value = Br_List_Slide( p_wk );
+    if( p_wk->value != 0 )
     {   
       //矢印モードならば、矢印の場所にって変動
       //タッチモードならばリストが直接動く
-      if( p_wk->move_callback( p_wk, value ) )
+      if( p_wk->move_callback( p_wk, p_wk->value ) )
       { 
         Br_List_Write( p_wk, p_wk->list );
       }
@@ -492,6 +543,81 @@ u32 BR_LIST_GetSelect( const BR_LIST_WORK* cp_wk )
 { 
   return cp_wk->select_param;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BMPを設定
+ *
+ *	@param	BR_LIST_WORK* p_wk  ワーク
+ *	@param	idx                 インデックス
+ *	@param	*p_src              p_src
+ */
+//-----------------------------------------------------------------------------
+void BR_LIST_SetBmp( BR_LIST_WORK* p_wk, u16 idx, GFL_BMP_DATA *p_src )
+{ 
+  GF_ASSERT( idx < p_wk->param.list_max );
+  GF_ASSERT( p_wk->param.cp_list[idx].str == NULL );
+  p_wk->p_bmp[ idx ]  = p_src; 
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BMP取得
+ *
+ *	@param	BR_LIST_WORK* p_wk  ワーク
+ *	@param	idx                 インデックス
+ *
+ *	@retval   BMP
+ */
+//-----------------------------------------------------------------------------
+GFL_BMP_DATA *BR_LIST_GetBmp( const BR_LIST_WORK* cp_wk, u16 idx )
+{ 
+  GF_ASSERT( idx < cp_wk->param.list_max );
+  return cp_wk->p_bmp[ idx ];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データ取得
+ *
+ *	@param	BR_LIST_WORK* p_wk    ワーク
+ *	@param	param                 取得インデックス
+ *
+ *	@return 取得したもの
+ */
+//-----------------------------------------------------------------------------
+u32 BR_LIST_GetParam( const BR_LIST_WORK* cp_wk, BR_LIST_PARAM_IDX param )
+{ 
+  switch( param )
+  { 
+  case BR_LIST_PARAM_IDX_CURSOR_POS:
+    return cp_wk->cursor;
+
+  case BR_LIST_PARAM_IDX_LIST_POS:
+    return cp_wk->list;
+
+  case BR_LIST_PARAM_IDX_MOVE_TIMING:
+    return cp_wk->value;
+
+  case BR_LIST_PARAM_IDX_LIST_MAX:
+    return cp_wk->param.list_max;
+
+  default:
+    GF_ASSERT(0);
+    return 0;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  表示
+ *
+ *	@param	BR_LIST_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+extern void BR_LIST_Write( BR_LIST_WORK *p_wk )
+{ 
+  Br_List_Write( p_wk, p_wk->list );
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  表示
@@ -515,8 +641,11 @@ static void Br_List_Write( BR_LIST_WORK *p_wk, u16 now )
     //自前のキャラ単位コピー関数をつかい高速化を図る
     if( i < p_wk->param.list_max )
     { 
-      BMP_Copy( p_wk->p_bmp[i], GFL_BMPWIN_GetBmp(p_wk->p_bmpwin),
+      if( p_wk->p_bmp[i] )
+      { 
+        BMP_Copy( p_wk->p_bmp[i], GFL_BMPWIN_GetBmp(p_wk->p_bmpwin),
           0, 0, 0, (i - now) * p_wk->param.str_line, p_wk->param.w, p_wk->param.str_line );
+      }
     }
   }
   GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin );
@@ -653,24 +782,38 @@ static BOOL Br_TouchList_MoveCallback( BR_LIST_WORK *p_wk, s8 value )
 //-----------------------------------------------------------------------------
 static BOOL Br_CursorList_MoveCallback( BR_LIST_WORK *p_wk, s8 value )
 { 
-  u16 now = p_wk->list + p_wk->cursor;
-
-  if( 0 <= now && now < p_wk->line_max/2 )
+  if( p_wk->list == 0  )
   {
-    //リスト上部の場合カーソルが動く
-    if( !(p_wk->cursor == 0 && value == -1) )
-    { 
-      p_wk->cursor  += value;
+    //リスト上部の場合カーソルが中央に動くまでリストは動かない
+    if(p_wk->cursor == p_wk->line_max/2 && value == 1 )
+    {
+      p_wk->list  += 1;
       return TRUE;
     }
-  }
-  else if( p_wk->param.list_max - p_wk->line_max/2 <= now && now <  p_wk->param.list_max )
-  { 
-    //リスト下部の場合カーソルが動く
-    if( !(p_wk->cursor == p_wk->param.list_max-1 && value == 1) )
+    else
     { 
-      p_wk->cursor  += value;
+      if( 0 <= p_wk->cursor + value && p_wk->cursor + value <= p_wk->line_max/2 )
+      { 
+        p_wk->cursor  += value;
+        return TRUE;
+      }
+    }
+  }
+  else if( p_wk->list + p_wk->line_max ==  p_wk->param.list_max )
+  { 
+    //リスト下部の場合
+    if( p_wk->cursor == p_wk->line_max/2 && value == -1 )
+    { 
+      p_wk->list  += -1;
       return TRUE;
+    }
+    else
+    {
+      if( p_wk->line_max/2 <= p_wk->cursor + value && p_wk->cursor + value < p_wk->line_max )
+      { 
+        p_wk->cursor  += value;
+        return TRUE;
+      }
     }
   }
   else

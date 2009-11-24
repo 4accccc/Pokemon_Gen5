@@ -22,8 +22,9 @@
 //=====================================
 #define BR_BTN_DATA_NONE	(0xFFFF)
 
-#define BR_BTN_DATA_WIDTH		(20*8)
-#define BR_BTN_DATA_HEIGHT	(4*8)
+#define BR_BTN_DATA_WIDTH	      	(20*8)
+#define BR_BTN_DATA_SHORT_WIDTH		(12*8)
+#define BR_BTN_DATA_HEIGHT	      (4*8)
 
 //-------------------------------------
 ///	ƒ{ƒ^ƒ“‚ÌŽí—Þ

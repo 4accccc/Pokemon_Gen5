@@ -14,6 +14,7 @@
 #include "br_res.h"
 #include "br_inner.h"
 #include "system/bmp_oam.h"
+#include "br_btn_data.h"
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *					ボタン管理システム（MENU_PROCでしか使わないはず）
@@ -46,6 +47,7 @@ typedef enum
 	BR_BTN_SYS_INPUT_EXIT,			//終了
 } BR_BTN_SYS_INPUT;
 
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -77,7 +79,7 @@ extern BR_BTN_SYS_STATE BR_BTN_SYS_GetState( const BR_BTN_SYS_WORK *cp_wk );
 //=====================================
 typedef struct _BR_BTN_WORK BR_BTN_WORK;
 
-extern BR_BTN_WORK * BR_BTN_Init( const GFL_CLWK_DATA *cp_cldata, u16 msgID, CLSYS_DRAW_TYPE display, GFL_CLUNIT *p_unit, BMPOAM_SYS_PTR p_bmpoam, GFL_FONT *p_font, GFL_MSGDATA *p_msg, const BR_RES_OBJ_DATA *cp_res, HEAPID heapID );
+extern BR_BTN_WORK * BR_BTN_Init( const GFL_CLWK_DATA *cp_cldata, u16 msgID, u16 w, CLSYS_DRAW_TYPE display, GFL_CLUNIT *p_unit, BMPOAM_SYS_PTR p_bmpoam, GFL_FONT *p_font, GFL_MSGDATA *p_msg, const BR_RES_OBJ_DATA *cp_res, HEAPID heapID );
 extern void BR_BTN_Exit( BR_BTN_WORK *p_wk );
 extern BOOL BR_BTN_GetTrg( const BR_BTN_WORK *cp_wk, u32 x, u32 y );
 extern void BR_BTN_SetPos( BR_BTN_WORK *p_wk, u32 x, u32 y );
