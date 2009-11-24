@@ -11,11 +11,15 @@
 #define NARC_WINFRAME_NAIX_
 
 enum {
-	NARC_winframe_system_NCLR = 0,
-	NARC_winframe_talk_win00_NCLR = 1,
-	NARC_winframe_fmenu_NCGR = 2,
-	NARC_winframe_system_NCGR = 3,
-	NARC_winframe_talk_win00_NCGR = 4
+	NARC_winframe_bgwin_NCLR = 0,
+	NARC_winframe_spwin_NCLR = 1,
+	NARC_winframe_system_NCLR = 2,
+	NARC_winframe_talk_win00_NCLR = 3,
+	NARC_winframe_bgwin_NCGR = 4,
+	NARC_winframe_fmenu_NCGR = 5,
+	NARC_winframe_spwin_NCGR = 6,
+	NARC_winframe_system_NCGR = 7,
+	NARC_winframe_talk_win00_NCGR = 8
 };
 
 /* NARC_WINFRAME_NAIX_ */
