@@ -25,11 +25,15 @@
 
 #include "gamesystem\msgspeed.h"
 
+#include "winframe.naix"
+
 //======================================================================
 //	define
 //======================================================================
 #define FLDMSGBG_BGFRAME (GFL_BG_FRAME1_M)	///<使用BGフレーム
 
+#define FLDMSGBG_PANO_BGWIN (10)
+#define FLDMSGBG_PANO_SPWIN (10)
 #define FLDMSGBG_PANO_FONT_TALKMSGWIN (11) ///<吹き出しフォントパレットNo
 #define FLDMSGBG_PANO_TALKMSGWIN (12) ///<吹き出しウィンドウパレットNo
 #define FLDMSGBG_PANO_MENU (13) ///<メニューパレットNo
@@ -153,6 +157,28 @@ struct _TAG_FLDMSGWIN_STREAM
   KEYCURSOR_WORK cursor_work;
 };
  
+//--------------------------------------------------------------
+/// FLDBGWIN
+//--------------------------------------------------------------
+struct _TAG_FLDBGWIN
+{
+  FLDMSGBG *fmb;
+  
+  GFL_BMPWIN *bmpwin;
+  GFL_BMP_DATA *bmp_new;
+  GFL_BMP_DATA *bmp_old;
+  
+  const STRBUF *strBuf; //ユーザーから
+  STRBUF *strTemp;
+  
+  int seq_no;
+  int y;
+  int scroll_y;
+  u32 line;
+  
+  KEYCURSOR_WORK cursor_work;
+};
+
 //======================================================================
 //	proto
 //======================================================================
@@ -163,6 +189,21 @@ static PRINTSTREAM_STATE fldMsgPrintStream_ProcPrint(
     FLDMSGPRINT_STREAM *stm );
 
 static BOOL fldSubMsgWin_Print( FLDSUBMSGWIN *subwin );
+
+static void bgwin_InitGraphic(
+    u32 bgframe, u32 plttno, u32 type, HEAPID heapID );
+static void bgwin_WriteWindow(
+    u8 frm, u8 px, u8 py, u8 sx, u8 sy, u16 cgx, u8 pal );
+static void bgwin_CleanWindow(
+    u8 frm, u8 px, u8 py, u8 sx, u8 sy, u16 cgx, u8 pal );
+static BOOL bgwin_CheckStrLineEOM(
+    const STRBUF *str_src, STRBUF *str_temp, u32 line );
+static BOOL bgwin_PrintStr(
+    GFL_BMP_DATA *bmp, GFL_FONT *font,
+    const STRBUF *str_src, STRBUF *str_temp, u32 *line, u8 col );
+static BOOL bgwin_ScrollBmp(
+    GFL_BMP_DATA *bmp, GFL_BMP_DATA *old, GFL_BMP_DATA *new,
+    int y, u16 n_col );
 
 static void keyCursor_Init( KEYCURSOR_WORK *work, HEAPID heapID );
 static void keyCursor_Delete( KEYCURSOR_WORK *work );
@@ -301,6 +342,9 @@ FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
   
   fmb->deriveWin_plttNo = FLDMSGBG_PANO_FONT;
 //  FLDMSGBG_SetBlendAlpha();
+
+//  test( fmb );
+
 	return( fmb );
 }
 
@@ -1416,6 +1460,37 @@ FLDMENUFUNC_YESNO FLDMENUFUNC_ProcYesNoMenu( FLDMENUFUNC *menuFunc )
 //======================================================================
 //--------------------------------------------------------------
 /**
+ * FLDMSGPRINT_STREAM プリント設定　カラー指定あり
+ * @param fmb FLDMSGBG
+ * @param strbuf 表示するSTRBUF
+ * @param bmpwin 表示する初期化済みのGFL_BMPWIN
+ * @param x 描画開始X座標(ドット)
+ * @param y 描画開始Y座標(ドット)
+ * @param   wait		１文字描画ごとのウェイトフレーム数
+ * @retval FLDMSGPRINT_STREAM
+ */
+//--------------------------------------------------------------
+FLDMSGPRINT_STREAM * FLDMSGPRINT_STREAM_SetupPrintColor(
+	FLDMSGBG *fmb, const STRBUF *strbuf,
+  GFL_BMPWIN *bmpwin, u16 x, u16 y, int wait, u16 n_color )
+{
+  FLDMSGPRINT_STREAM *stm = GFL_HEAP_AllocClearMemory(
+      fmb->heapID, sizeof(FLDMSGPRINT_STREAM) );
+  
+  stm->msg_wait = wait;
+  
+  stm->printStream = PRINTSYS_PrintStream(
+      bmpwin, x, y,
+      strbuf, fmb->fontHandle,
+      wait,
+      fmb->printTCBLSys, 0,
+      fmb->heapID, n_color );
+
+  return( stm );
+}
+
+//--------------------------------------------------------------
+/**
  * FLDMSGPRINT_STREAM プリント設定
  * @param fmb FLDMSGBG
  * @param strbuf 表示するSTRBUF
@@ -1430,19 +1505,8 @@ FLDMSGPRINT_STREAM * FLDMSGPRINT_STREAM_SetupPrint(
 	FLDMSGBG *fmb, const STRBUF *strbuf,
   GFL_BMPWIN *bmpwin, u16 x, u16 y, int wait )
 {
-  FLDMSGPRINT_STREAM *stm = GFL_HEAP_AllocClearMemory(
-      fmb->heapID, sizeof(FLDMSGPRINT_STREAM) );
-  
-  stm->msg_wait = wait;
-  
-  stm->printStream = PRINTSYS_PrintStream(
-      bmpwin, x, y,
-      strbuf, fmb->fontHandle,
-      wait,
-      fmb->printTCBLSys, 0,
-      fmb->heapID, 0x0f );
-
-  return( stm );
+  return( FLDMSGPRINT_STREAM_SetupPrintColor(
+        fmb,strbuf,bmpwin,x,y,wait,0x0f) );
 }
 
 //--------------------------------------------------------------
@@ -1580,7 +1644,7 @@ void FLDMSGWIN_STREAM_Delete( FLDMSGWIN_STREAM *msgWin )
   if( msgWin->msgPrint != NULL ){
     FLDMSGPRINT_Delete( msgWin->msgPrint );
   }
-
+  
   GFL_STR_DeleteBuffer( msgWin->strBuf );
   keyCursor_Delete( &msgWin->cursor_work );
 	GFL_HEAP_FreeMemory( msgWin );
@@ -1683,7 +1747,7 @@ BOOL FLDMSGWIN_STREAM_Print( FLDMSGWIN_STREAM *msgWin )
   case PRINTSTREAM_STATE_DONE: //終了
     return( TRUE );
   }
-  
+
   return( FALSE );
 #endif
 }
@@ -2380,6 +2444,619 @@ static BOOL fldSubMsgWin_Print( FLDSUBMSGWIN *subwin )
 }
 
 //======================================================================
+//  BGウィンドウ
+//======================================================================
+#define BGWIN_NCOL (0x0f)
+
+//--------------------------------------------------------------
+/**
+ * フィールドBGウィンドウ　追加
+ * @param fmb FLDMSGBG*
+ * @param type FLDBGWIN_TYPE
+ * @retval FLDBGWIN*
+ */
+//--------------------------------------------------------------
+FLDBGWIN * FLDBGWIN_Add( FLDMSGBG *fmb, FLDBGWIN_TYPE type )
+{
+  FLDBGWIN *bgWin;
+  
+  bgWin = GFL_HEAP_AllocClearMemory( fmb->heapID, sizeof(FLDBGWIN) );
+  bgWin->fmb = fmb;
+  
+  {
+    bgWin->y = -48;
+	  GFL_BG_SetScroll( bgWin->fmb->bgFrame, GFL_BG_SCROLL_X_SET, 0 );
+	  GFL_BG_SetScroll( bgWin->fmb->bgFrame, GFL_BG_SCROLL_Y_SET, bgWin->y );
+  }
+  
+  {
+    GFL_BMP_DATA *bmp;
+
+    bgWin->bmpwin = GFL_BMPWIN_Create( fmb->bgFrame,
+        2, 19, 27, 4, FLDMSGBG_PANO_FONT_TALKMSGWIN, GFL_BMP_CHRAREA_GET_B );
+    bgWin->bmp_new = GFL_BMP_Create(
+        27, 4, GFL_BMP_16_COLOR, fmb->heapID );
+    bgWin->bmp_old = GFL_BMP_Create(
+        27, 4, GFL_BMP_16_COLOR, fmb->heapID );
+    
+	  bmp = GFL_BMPWIN_GetBmp( bgWin->bmpwin );
+	  GFL_BMP_Clear( bmp, BGWIN_NCOL );
+	  GFL_BMPWIN_MakeScreen( bgWin->bmpwin );
+	  GFL_BMPWIN_TransVramCharacter( bgWin->bmpwin );
+    
+    bgwin_InitGraphic(
+      fmb->bgFrame, FLDMSGBG_PANO_BGWIN, type, fmb->heapID );
+    
+    bgwin_WriteWindow( fmb->bgFrame, 
+		  GFL_BMPWIN_GetPosX( bgWin->bmpwin ),
+		  GFL_BMPWIN_GetPosY( bgWin->bmpwin ),
+		  GFL_BMPWIN_GetSizeX( bgWin->bmpwin ),
+		  GFL_BMPWIN_GetSizeY( bgWin->bmpwin ), 64, FLDMSGBG_PANO_BGWIN );
+    
+		GFL_BG_LoadScreenReq( fmb->bgFrame );
+  }
+  
+  keyCursor_Init( &bgWin->cursor_work, bgWin->fmb->heapID );
+  
+  fmb->deriveWin_plttNo = FLDMSGBG_PANO_FONT_TALKMSGWIN;
+  setBlendAlpha( FALSE );
+  return( bgWin );
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドBGウィンドウ　削除
+ * @param FLDBGWIN *bgWin
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDBGWIN_Delete( FLDBGWIN *bgWin )
+{
+	GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( bgWin->bmpwin );
+  
+  bgwin_CleanWindow( bgWin->fmb->bgFrame, 
+		  GFL_BMPWIN_GetPosX( bgWin->bmpwin ),
+		  GFL_BMPWIN_GetPosY( bgWin->bmpwin ),
+		  GFL_BMPWIN_GetSizeX( bgWin->bmpwin ),
+		  GFL_BMPWIN_GetSizeY( bgWin->bmpwin ), 0, BGWIN_NCOL );
+  
+	GFL_BMPWIN_ClearScreen( bgWin->bmpwin );
+  
+  GFL_BG_FillScreen( bgWin->fmb->bgFrame, 0,
+		  GFL_BMPWIN_GetPosX( bgWin->bmpwin ),
+      GFL_BMPWIN_GetPosY( bgWin->bmpwin ),
+		  GFL_BMPWIN_GetSizeX( bgWin->bmpwin ), 
+		  GFL_BMPWIN_GetSizeY( bgWin->bmpwin ), GFL_BG_SCRWRT_PALIN );
+  
+	GFL_BMPWIN_TransVramCharacter( bgWin->bmpwin );
+	GFL_BMPWIN_Delete( bgWin->bmpwin );
+  
+	GFL_BG_LoadScreenReq( bgWin->fmb->bgFrame );
+  GFL_BG_SetScroll( bgWin->fmb->bgFrame, GFL_BG_SCROLL_Y_SET, 0 );
+  
+  GFL_BMP_Delete( bgWin->bmp_old );
+  GFL_BMP_Delete( bgWin->bmp_new );
+  
+  if( bgWin->strTemp != NULL ){
+    GFL_STR_DeleteBuffer( bgWin->strTemp );
+  }
+  
+  keyCursor_Delete( &bgWin->cursor_work );
+  GFL_HEAP_FreeMemory( bgWin ); 
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドBGウィンドウ　プリント
+ * @param FLDBGWIN *bgWin
+ * @param	strID	メッセージデータ 文字列ID
+ * @retval BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+BOOL FLDBGWIN_PrintStrBuf( FLDBGWIN *bgWin, const STRBUF *strBuf )
+{
+  switch( bgWin->seq_no ){
+  case 0: //初期化
+    bgWin->strBuf = strBuf;
+    bgWin->strTemp = GFL_STR_CreateCopyBuffer( strBuf, bgWin->fmb->heapID );
+    
+    bgwin_PrintStr(
+        GFL_BMPWIN_GetBmp(bgWin->bmpwin), bgWin->fmb->fontHandle,
+        bgWin->strBuf, bgWin->strTemp, &bgWin->line,
+        BGWIN_NCOL );
+    
+    GFL_BMPWIN_TransVramCharacter( bgWin->bmpwin );
+		GFL_BG_LoadScreenReq( bgWin->fmb->bgFrame );
+    bgWin->seq_no++;
+    break;
+  case 1: //スクロール
+    bgWin->y += 4;
+    
+    if( bgWin->y >= 0 ){
+      bgWin->y = 0;
+      bgWin->seq_no++;
+    }
+	  
+    GFL_BG_SetScroll( bgWin->fmb->bgFrame, GFL_BG_SCROLL_Y_SET, bgWin->y );
+    break;
+  case 2: //終端チェック
+    if( bgwin_CheckStrLineEOM(
+          bgWin->strBuf,bgWin->strTemp,bgWin->line) == TRUE ){
+      bgWin->seq_no = 5;
+      break;
+    }
+    
+    bgWin->seq_no++;
+  case 3: //ページ送り待ち
+    if( !(GFL_UI_KEY_GetTrg()&PAD_BUTTON_A) ){
+      keyCursor_Write( &bgWin->cursor_work,
+          GFL_BMPWIN_GetBmp(bgWin->bmpwin), BGWIN_NCOL );
+		  GFL_BMPWIN_TransVramCharacter( bgWin->bmpwin );
+      break;
+    }
+    
+    keyCursor_Clear( &bgWin->cursor_work,
+          GFL_BMPWIN_GetBmp(bgWin->bmpwin), BGWIN_NCOL );
+    
+    GFL_BMP_Copy( GFL_BMPWIN_GetBmp(bgWin->bmpwin), bgWin->bmp_old );
+    
+    bgwin_PrintStr(
+        bgWin->bmp_new, bgWin->fmb->fontHandle,
+        bgWin->strBuf, bgWin->strTemp, &bgWin->line,
+        BGWIN_NCOL );
+    bgWin->scroll_y = 0;
+    
+    bgWin->seq_no++;
+  case 4: //スクロール
+    if( bgwin_ScrollBmp(GFL_BMPWIN_GetBmp(bgWin->bmpwin),
+          bgWin->bmp_old,bgWin->bmp_new,
+          bgWin->scroll_y,BGWIN_NCOL) == TRUE ){
+      bgWin->seq_no = 2;
+    }else{
+      bgWin->scroll_y += 2;
+    }
+    
+	  GFL_BMPWIN_TransVramCharacter( bgWin->bmpwin );
+	  GFL_BG_LoadScreenReq( bgWin->fmb->bgFrame );
+    break;
+  case 5: //終了へ　キー待ち
+    if( !(GFL_UI_KEY_GetTrg()&PAD_BUTTON_A) ){
+      break;
+    }
+    bgWin->seq_no++;
+  case 6: //スクロール
+    bgWin->y -= 4;
+    
+    if( bgWin->y <= -48 ){
+      bgWin->y = -48;
+    }
+    
+	  GFL_BG_SetScroll( bgWin->fmb->bgFrame, GFL_BG_SCROLL_Y_SET, bgWin->y );
+    
+    if( bgWin->y == -48 ){
+      bgWin->seq_no++;
+      return( TRUE );
+    }  
+    break;
+  case 7:
+    return( TRUE );
+  }
+  
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * BGウィンドウ　グラフィック初期化
+ * @param bgframe BGフレーム
+ * @param plttno パレットナンバー
+ * @param type wind
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void bgwin_InitGraphic(
+    u32 bgframe, u32 plttno, u32 type, HEAPID heapID )
+{
+  if( type >= FLDBGWIN_TYPE_MAX ){
+    GF_ASSERT( 0 );
+    type = FLDBGWIN_TYPE_INFO;
+  }
+  
+  GFL_ARC_UTIL_TransVramBgCharacter(
+      ARCID_FLDMAP_WINFRAME, NARC_winframe_bgwin_NCGR,
+      bgframe, 64, 0, FALSE, heapID );
+  
+  GFL_ARC_UTIL_TransVramPaletteEx(
+      ARCID_FLDMAP_WINFRAME, NARC_winframe_bgwin_NCLR,
+      PALTYPE_MAIN_BG, type*0x20, plttno*0x20, 0x20, heapID );
+}
+
+//--------------------------------------------------------------
+/**
+ * BGウィンドウ　描画
+ * @param frm BGフレーム
+ * @param px 左上X座標　キャラ単位
+ * @param py 左上Y座標　キャラ単位
+ * @param sx 横幅　キャラ単位
+ * @param sy 縦幅　キャラ単位
+ * @param cgx 書き込む先頭キャラナンバー
+ * @param pal パレット
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void bgwin_WriteWindow(
+    u8 frm, u8 px, u8 py, u8 sx, u8 sy, u16 cgx, u8 pal )
+{
+	GFL_BG_FillScreen( frm, cgx, px-2, py-1, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx+1, px-1, py-1, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx+2, px, py-1, sx, 1, pal );
+	GFL_BG_FillScreen( frm, cgx+3, px+sx,	py-1, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx+4, px+sx+1, py-1, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx+5, px+sx+2, py-1, 1, 1, pal );
+  
+	GFL_BG_FillScreen( frm, cgx+6, px-2, py, 1, sy, pal );
+	GFL_BG_FillScreen( frm, cgx+7, px-1, py, 1, sy, pal );
+	GFL_BG_FillScreen( frm, cgx+9, px+sx, py, 1, sy, pal );
+	GFL_BG_FillScreen( frm, cgx+10, px+sx+1, py, 1, sy, pal );
+	GFL_BG_FillScreen( frm, cgx+11, px+sx+2, py, 1, sy, pal );
+  
+	GFL_BG_FillScreen( frm, cgx+12, px-2, py+sy, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx+13, px-1, py+sy, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx+14, px, py+sy, sx, 1, pal );
+	GFL_BG_FillScreen( frm, cgx+15, px+sx, py+sy, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx+16, px+sx+1, py+sy, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx+17, px+sx+2, py+sy, 1, 1, pal );
+}
+
+//--------------------------------------------------------------
+/**
+ * BGウィンドウ　消去
+ * @param frm BGフレーム
+ * @param px 左上X座標　キャラ単位
+ * @param py 左上Y座標　キャラ単位
+ * @param sx 横幅　キャラ単位
+ * @param sy 縦幅　キャラ単位
+ * @param cgx 書き込むキャラナンバー
+ * @param pal パレット
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void bgwin_CleanWindow(
+    u8 frm, u8 px, u8 py, u8 sx, u8 sy, u16 cgx, u8 pal )
+{
+	GFL_BG_FillScreen( frm, cgx, px-2, py-1, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx, px-1, py-1, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx, px, py-1, sx, 1, pal );
+	GFL_BG_FillScreen( frm, cgx, px+sx,	py-1, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx, px+sx+1, py-1, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx, px+sx+2, py-1, 1, 1, pal );
+  
+	GFL_BG_FillScreen( frm, cgx, px-2, py, 1, sy, pal );
+	GFL_BG_FillScreen( frm, cgx, px-1, py, 1, sy, pal );
+	GFL_BG_FillScreen( frm, cgx, px+sx, py, 1, sy, pal );
+	GFL_BG_FillScreen( frm, cgx, px+sx+1, py, 1, sy, pal );
+	GFL_BG_FillScreen( frm, cgx, px+sx+2, py, 1, sy, pal );
+  
+	GFL_BG_FillScreen( frm, cgx, px-2, py+sy, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx, px-1, py+sy, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx, px, py+sy, sx, 1, pal );
+	GFL_BG_FillScreen( frm, cgx, px+sx, py+sy, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx, px+sx+1, py+sy, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx, px+sx+2, py+sy, 1, 1, pal );
+}
+
+//--------------------------------------------------------------
+/**
+ * BGウィンドウ　終端行チェック
+ * @param str_src 文字列ソース
+ * @param str_temp チェック用テンポラリ
+ * @param line チェック行
+ * @retval BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+static BOOL bgwin_CheckStrLineEOM(
+    const STRBUF *str_src, STRBUF *str_temp, u32 line )
+{
+  if( PRINTSYS_CopyLineStr(str_src,str_temp,line) == FALSE ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * BGウィンドウ　BMPに一面分のフォント書き込み
+ * @param bmp 書き込み先ビットマップ
+ * @param font GFL_FONT
+ * @param str_src ソース文字列
+ * @param str_temp 書き込み用テンポラリ
+ * @param line 書き込み行
+ * @param col カラーナンバー
+ * @retval  BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+static BOOL bgwin_PrintStr(
+    GFL_BMP_DATA *bmp, GFL_FONT *font,
+    const STRBUF *str_src, STRBUF *str_temp, u32 *line, u8 col )
+{
+  int x = 1, y = 1;
+  GFL_BMP_Clear( bmp, col );
+  
+  if( PRINTSYS_CopyLineStr(str_src,str_temp,*line) == FALSE ){
+    return( TRUE );
+  }
+  
+  PRINTSYS_Print( bmp, x, y, str_temp, font );
+  
+  y += PRINTSYS_GetStrHeight(str_temp, font ) + 1;
+  (*line)++;
+  
+  if( PRINTSYS_CopyLineStr(str_src,str_temp,*line) == FALSE ){
+    return( TRUE );
+  }
+  
+  PRINTSYS_Print( bmp, x, y, str_temp, font );
+  (*line)++;
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * BGウィンドウ　BMPスクロール
+ * @param bmp 反映先ビットマップ
+ * @param old スクロールして消すビットマップ
+ * @param new スクロールして新規に出すビットマップ
+ * @param y　スクロール値
+ * @param n_col カラーナンバー
+ * @retval  BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+static BOOL bgwin_ScrollBmp(
+    GFL_BMP_DATA *bmp, GFL_BMP_DATA *old, GFL_BMP_DATA *new,
+    int y, u16 n_col )
+{
+  int sizeX = GFL_BMP_GetSizeX( bmp );
+  int sizeY = GFL_BMP_GetSizeY( bmp );
+  
+	GFL_BMP_Clear( bmp, n_col );
+  
+  if( y > sizeY ){
+    y = sizeY;
+  }
+
+  GFL_BMP_Print( old, bmp,
+        0, y,
+        0, 0,
+        sizeX, sizeY-y,
+        n_col );
+  
+  GFL_BMP_Print( new, bmp,
+        0, 0,
+        0, sizeY-y,
+        sizeX, y,
+        n_col );
+  
+  
+  if( y >= sizeY ){
+    return( TRUE );
+  }
+  
+  return( FALSE );
+}
+
+//======================================================================
+//  特殊ウィンドウ 
+//======================================================================
+//--------------------------------------------------------------
+/// FLDSPWIN
+//--------------------------------------------------------------
+struct _TAG_FLDSPWIN
+{
+	GFL_BMPWIN *bmpwin;
+	FLDMSGPRINT_STREAM *msgPrintStream;
+  STRBUF *strBuf;
+	FLDMSGBG *fmb;
+  
+  u8 flag_cursor;
+  u8 flag_key_pause_clear;
+  KEYCURSOR_WORK cursor_work;
+  
+  GFL_BMP_DATA *bmp_bg;
+};
+
+//--------------------------------------------------------------
+/**
+ * 特殊ウィンドウ　グラフィック初期化
+ * @param bgframe BGフレーム
+ * @param plttno パレットナンバー
+ * @param type wind
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void spwin_InitPalette(
+    u32 bgframe, u32 plttno, HEAPID heapID )
+{
+  GFL_ARC_UTIL_TransVramPaletteEx(
+      ARCID_FLDMAP_WINFRAME, NARC_winframe_spwin_NCLR,
+      PALTYPE_MAIN_BG, 0x20, plttno*0x20, 0x20, heapID );
+}
+
+//--------------------------------------------------------------
+/**
+ * 特殊ウィンドウ 背景キャラビットマップ作成
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static GFL_BMP_DATA * spwin_CreateBmpBG( FLDSPWIN_TYPE type, HEAPID heapID )
+{
+  u8 *buf;
+  GFL_BMP_DATA *bmp_bg;
+
+  if( type >= FLDSPWIN_TYPE_MAX ){
+    GF_ASSERT( 0 );
+    type = FLDSPWIN_TYPE_LETTER;
+  }
+  
+  bmp_bg = GFL_BMP_Create( 8, 8, GFL_BMP_16_COLOR, heapID );
+  buf = GFL_BMP_GetCharacterAdrs( bmp_bg );
+  GFL_ARC_LoadDataOfs( buf, ARCID_FLDMAP_WINFRAME, 
+      NARC_winframe_spwin_NCGR, type*0x20, 0x20 );
+  
+  return( bmp_bg );
+}
+
+//--------------------------------------------------------------
+/**
+ * 特殊ウィンドウ　BMP背景書き込み
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void spwin_WriteBmpBG(
+    GFL_BMP_DATA *bmp, const GFL_BMP_DATA *bmp_bg )
+{
+  u16 x,y;
+  u16 size_x = GFL_BMP_GetSizeX( bmp ) >> 3;
+  u16 size_y = GFL_BMP_GetSizeY( bmp ) >> 3;
+  
+  for( y = 0; y < size_y; y++ ){
+    for( x = 0; x < size_x; x++ ){
+      GFL_BMP_Print( bmp_bg, bmp,
+          0, 0, x<<3, y<<3, 8, 8, GF_BMPPRT_NOTNUKI );
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * FDLSPWIN 特殊ウィンドウ　初期化
+ * @param fmb FLDMSGBG*
+ * @param	bmppos_x		//表示座標X キャラ単位
+ * @param	bmppos_y		//表示座標Y キャラ単位
+ * @param	bmpsize_x		//表示サイズX キャラ単位
+ * @param	bmpsize_y		//表示サイズY キャラ単位
+ * @retval FLDSPWIN*
+ */
+//--------------------------------------------------------------
+FLDSPWIN * FLDSPWIN_Add( FLDMSGBG *fmb, FLDSPWIN_TYPE type,
+	u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y )
+{
+  FLDSPWIN *spWin;
+  fmb->deriveWin_plttNo = FLDMSGBG_PANO_FONT;
+	
+  spwin_InitPalette( fmb->bgFrame, FLDMSGBG_PANO_SPWIN, fmb->heapID );
+  
+  spWin = GFL_HEAP_AllocClearMemory( fmb->heapID, sizeof(FLDSPWIN) );
+  spWin->fmb = fmb;
+  
+  spWin->bmpwin = GFL_BMPWIN_Create( fmb->bgFrame,
+      bmppos_x, bmppos_y, bmpsize_x, bmpsize_y,
+      FLDMSGBG_PANO_SPWIN, GFL_BMP_CHRAREA_GET_B );
+  
+  spWin->bmp_bg = spwin_CreateBmpBG( type, fmb->heapID );
+
+  spwin_WriteBmpBG( GFL_BMPWIN_GetBmp(spWin->bmpwin), spWin->bmp_bg );
+  
+  GFL_BMPWIN_MakeScreen( spWin->bmpwin );
+	GFL_BMPWIN_TransVramCharacter( spWin->bmpwin );
+	GFL_BG_LoadScreenReq( fmb->bgFrame );
+  
+  keyCursor_Init( &spWin->cursor_work, fmb->heapID );
+
+  setBlendAlpha( TRUE );
+  return( spWin );
+}
+
+//--------------------------------------------------------------
+/**
+ * FDLSPWIN 特殊ウィンドウ　削除
+ * @param fmb FLDMSGBG*
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDSPWIN_Delete( FLDSPWIN *spWin )
+{
+  if( spWin->msgPrintStream != NULL ){
+	  FLDMSGPRINT_STREAM_Delete( spWin->msgPrintStream );
+  }
+  
+  GFL_BMP_Delete( spWin->bmp_bg );
+  GFL_BMPWIN_Delete( spWin->bmpwin );
+  keyCursor_Delete( &spWin->cursor_work );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDSPWIN 特殊ウィンドウ メッセージ表示開始 STRBUF指定
+ * @param msgWin FLDMSGWIN_STREAM*
+ * @param	x		X表示座標
+ * @param	y		Y表示座標
+ * @param strBuf 表示するSTRBUF
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDSPWIN_PrintStrBufStart(
+    FLDSPWIN *spWin, u16 x, u16 y, const STRBUF *strBuf )
+{
+  if( spWin->msgPrintStream != NULL ){
+    FLDMSGPRINT_STREAM_Delete( spWin->msgPrintStream );
+  }
+  
+  spWin->msgPrintStream = FLDMSGPRINT_STREAM_SetupPrintColor(
+  	spWin->fmb, strBuf, spWin->bmpwin, x, y, MSGSPEED_GetWait(), 0);
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDSPWIN 特殊ウィンドウ メッセージ表示
+ * @param msgWin FLDMSGWIN_STREAM*
+ * @retval BOOL TRUE=表示終了,FALSE=表示中
+ */
+//--------------------------------------------------------------
+BOOL FLDSPWIN_Print( FLDSPWIN *spWin )
+{
+  int trg,cont;
+  PRINTSTREAM_STATE state;
+  state = fldMsgPrintStream_ProcPrint( spWin->msgPrintStream );
+  
+  trg = GFL_UI_KEY_GetTrg();
+  cont = GFL_UI_KEY_GetCont();
+  
+  switch( state ){
+  case PRINTSTREAM_STATE_RUNNING: //実行中
+    spWin->flag_cursor = CURSOR_FLAG_NONE;
+    spWin->flag_key_pause_clear = FALSE;
+    break;
+  case PRINTSTREAM_STATE_PAUSE: //一時停止中
+    if( spWin->flag_key_pause_clear == FALSE ){ //既にポーズクリア済みか？
+		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( spWin->bmpwin );
+      
+      if( (trg & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
+        if( spWin->flag_cursor == CURSOR_FLAG_WRITE ){
+          keyCursor_Clear( &spWin->cursor_work, bmp, 0x0f );
+          
+          spWin->flag_key_pause_clear = TRUE;
+          spWin->flag_cursor = CURSOR_FLAG_END;
+        }
+      }
+      
+      if( spWin->flag_cursor != CURSOR_FLAG_END ){
+        keyCursor_Write( &spWin->cursor_work, bmp, 0x0f );
+        spWin->flag_cursor = CURSOR_FLAG_WRITE;
+      }
+      
+		  GFL_BMPWIN_TransVramCharacter( spWin->bmpwin );
+    }
+    break;
+  case PRINTSTREAM_STATE_DONE: //終了
+    return( TRUE );
+  }
+  
+  return( FALSE );
+}
+
+//======================================================================
 //  キー送りカーソル
 //======================================================================
 //--------------------------------------------------------------
@@ -2555,7 +3232,6 @@ void FLDMSGBG_RecoveryBG( FLDMSGBG *fmb )
   }
 }
 
-
 //======================================================================
 //	パーツ
 //======================================================================
@@ -2583,7 +3259,7 @@ static GFL_BMPWIN * FldBmpWinFrame_Init( u32 bgFrame, HEAPID heapID,
 		pltt_no, GFL_BMP_CHRAREA_GET_B );
 
 	bmp = GFL_BMPWIN_GetBmp( bmpwin );
-		
+	
 	GFL_BMP_Clear( bmp, 0xff );
 	GFL_BMPWIN_MakeScreen( bmpwin );
 	GFL_BMPWIN_TransVramCharacter( bmpwin );

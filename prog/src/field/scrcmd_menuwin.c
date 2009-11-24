@@ -1051,10 +1051,14 @@ BOOL SCREND_CheckEndSubWin( SCREND_CHECK *end_check, int *seq )
 static BOOL BGWinMsgWait( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-  FLDMSGWIN_STREAM *msgWin;
-  msgWin = (FLDMSGWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  FLDBGWIN *bgWin;
+  STRBUF **msgBuf;
   
-  if( FLDMSGWIN_STREAM_Print(msgWin) == TRUE ){
+  msgBuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
+  bgWin = (FLDBGWIN*)SCRCMD_WORK_GetMsgWinPtr( work );
+  
+  if( FLDBGWIN_PrintStrBuf(bgWin,*msgBuf) == TRUE ){
     return( 1 );
   }
   
@@ -1071,9 +1075,9 @@ static BOOL BGWinMsgWait( VMHANDLE *core, void *wk )
 static void CloseBGWin( SCRCMD_WORK *work )
 {
   if( SCREND_CHK_CheckBit(SCREND_CHK_BGWIN_OPEN) ){
-    FLDMSGWIN_STREAM *msgWin;
-    msgWin = (FLDMSGWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
-    FLDMSGWIN_STREAM_Delete( msgWin );
+    FLDBGWIN *bgWin;
+    bgWin = (FLDBGWIN*)SCRCMD_WORK_GetMsgWinPtr( work );
+    FLDBGWIN_Delete( bgWin );
     SCREND_CHK_SetBitOff(SCREND_CHK_BGWIN_OPEN);
   }else{
     GF_ASSERT( 0 );
@@ -1097,22 +1101,21 @@ VMCMD_RESULT EvCmdBGWinMsg( VMHANDLE *core, void *wk )
   { //‰¼
     SCRIPT_FLDPARAM *fparam;
     GFL_MSGDATA *msgData;
-    FLDMSGWIN_STREAM *msgWin;
+    FLDBGWIN *bgWin;
     
     fparam = SCRIPT_GetFieldParam( sc );
     msgData = SCRCMD_WORK_GetMsgData( work );
     
-	  msgWin = FLDMSGWIN_STREAM_Add( fparam->msgBG, msgData, 1, 19, 30, 4 );
-    SCRCMD_WORK_SetMsgWinPtr( work, msgWin );
+	  bgWin = FLDBGWIN_Add( fparam->msgBG, type );
+    SCRCMD_WORK_SetMsgWinPtr( work, bgWin );
     
     {
       STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
       WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
       STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
       GFL_MSG_GetString( msgData, msg_id, *tmpbuf );
+      WORDSET_ExpandStr( *wordset, *msgbuf, *tmpbuf );
       
-      FLDMSGWIN_STREAM_ClearMessage( msgWin );
-      FLDMSGWIN_STREAM_PrintStrBufStart( msgWin, 0, 0, *msgbuf );
       VMCMD_SetWait( core, BGWinMsgWait );
     }
   }

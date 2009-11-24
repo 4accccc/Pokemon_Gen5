@@ -69,6 +69,28 @@ typedef enum
 #define FLDSUBMSGWIN_MAX (8) ///<サブウィンドウ最大数
 #define FLDMSGBG_STRLEN_SUBWIN (64) ///<サブウィンドウ用文字列長さ
 
+//--------------------------------------------------------------
+/// FLDBGWIN BGタイプ
+//--------------------------------------------------------------
+typedef enum
+{
+  FLDBGWIN_TYPE_INFO = 0,
+  FLDBGWIN_TYPE_TOWN,
+  FLDBGWIN_TYPE_POST,
+  FLDBGWIN_TYPE_ROAD,
+  FLDBGWIN_TYPE_MAX,
+}FLDBGWIN_TYPE;
+
+//--------------------------------------------------------------
+/// FLDSPWIN ウィンドウタイプ
+//--------------------------------------------------------------
+typedef enum
+{
+  FLDSPWIN_TYPE_LETTER,
+  FLDSPWIN_TYPE_BOOK,
+  FLDSPWIN_TYPE_MAX,
+}FLDSPWIN_TYPE;
+
 //======================================================================
 //	struct
 //======================================================================
@@ -81,6 +103,8 @@ typedef struct _TAG_FLDMENUFUNC FLDMENUFUNC;	///<FLDMENUFUNC
 typedef struct _TAG_FLDTALKMSGWIN FLDTALKMSGWIN; ///FLDTALKMSGWIN
 typedef struct _TAG_FLDPLAINMSGWIN FLDPLAINMSGWIN; ///<FLDPLAINMSGWIN
 typedef struct _TAG_FLDSUBMSGWIN FLDSUBMSGWIN; ///<FLDSUBMSGWIN
+typedef struct _TAG_FLDBGWIN FLDBGWIN; ///<FLDBGWIN
+typedef struct _TAG_FLDSPWIN FLDSPWIN; ///<FLDSPWIN
 
 //--------------------------------------------------------------
 ///	FLDMENUFUNC_LISTDATA
@@ -269,6 +293,19 @@ extern void FLDSUBMSGWIN_AddStrBuf( FLDMSGBG *fmb,
 extern void FLDSUBMSGWIN_Delete( FLDMSGBG *fmb, int id );
 extern void FLDSUBMSGWIN_DeleteAll( FLDMSGBG *fmb );
 extern BOOL FLDSUBMSGWIN_CheckExistWindow( FLDMSGBG *fmb );
+
+//BGウィンドウ
+extern FLDBGWIN * FLDBGWIN_Add( FLDMSGBG *fmb, FLDBGWIN_TYPE type );
+extern void FLDBGWIN_Delete( FLDBGWIN *bgWin );
+extern BOOL FLDBGWIN_PrintStrBuf( FLDBGWIN *bgWin, const STRBUF *strBuf );
+
+//特殊ウィンドウ
+extern FLDSPWIN * FLDSPWIN_Add( FLDMSGBG *fmb, FLDSPWIN_TYPE type,
+	u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y );
+extern void FLDSPWIN_Delete( FLDSPWIN *spWin );
+extern void FLDSPWIN_PrintStrBufStart(
+    FLDSPWIN *spWin, u16 x, u16 y, const STRBUF *strBuf );
+extern BOOL FLDSPWIN_Print( FLDSPWIN *spWin );
 
 //その他
 extern void FLDMSGBG_SetBlendAlpha( BOOL set );
