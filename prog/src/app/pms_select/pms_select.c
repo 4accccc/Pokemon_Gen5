@@ -236,6 +236,8 @@ typedef struct
   GFL_ARCUTIL_TRANSINFO m_back_chr_pos;
   void*             plateScrnWork;
   NNSG2dScreenData* platescrnData;
+  u16   transAnmCnt;
+  GXRgb transCol;
 } PMS_SELECT_BG_WORK;
 
 #ifdef PMS_SELECT_PMSDRAW
@@ -327,6 +329,8 @@ static void PMSSelect_GRAPHIC_UnLoad( PMS_SELECT_MAIN_WORK* wk );
 static void PMSSelect_BG_LoadResource( PMS_SELECT_BG_WORK* wk, HEAPID heapID );
 static void PMSSelect_BG_UnLoadResource( PMS_SELECT_BG_WORK* wk );
 static void PMSSelect_BG_PlateTrans( PMS_SELECT_BG_WORK* wk, u8 view_pos_id, u32 sentence_type, BOOL is_select );
+static void PMSSelect_BG_PlateMain( PMS_SELECT_BG_WORK* wk );
+static void PMSSelect_BG_PlateAnimeReset( PMS_SELECT_BG_WORK* wk );
 static void PMSSelect_BG_PlateFutterTrans( PMS_SELECT_BG_WORK* wk, u32 sentence_type );
 
 #ifdef PMS_SELECT_TOUCHBAR
@@ -756,6 +760,12 @@ static void PMSSelect_BG_PlateTrans( PMS_SELECT_BG_WORK* wk, u8 view_pos_id, u32
 
   u16* buff = (u16*)&wk->platescrnData->rawData;
 
+  // 選択色
+  if( is_select )
+  {
+    sentence_type = PMS_TYPE_MAX;
+  }
+
   // パレット指定
   for( i=0; i<(sx*sy); i++ )
   {
@@ -764,15 +774,86 @@ static void PMSSelect_BG_PlateTrans( PMS_SELECT_BG_WORK* wk, u8 view_pos_id, u32
   }
 
   //@TODO 枠だけ転送すれば良い。
-  
   GFL_BG_WriteScreenExpand( BG_FRAME_TEXT_M, 
     0, view_pos_id * PLATE_BG_SY + 1,
     sx, PLATE_BG_SY,
     &wk->platescrnData->rawData,
-    0,  is_select * PLATE_BG_SY,
+    0,  0 * PLATE_BG_SY,
     sx, sy );
 
   GFL_BG_LoadScreenV_Req( BG_FRAME_TEXT_M );
+}
+
+//プレートのアニメ。sin使うので0～0xFFFFのループ
+#define PLATE_PLTT_ANIME_VALUE (0x400)
+#define PLATE_PLTT_ANIME_S_R (5)
+#define PLATE_PLTT_ANIME_S_G (10)
+#define PLATE_PLTT_ANIME_S_B (13)
+#define PLATE_PLTT_ANIME_E_R (12)
+#define PLATE_PLTT_ANIME_E_G (25)
+#define PLATE_PLTT_ANIME_E_B (30)
+//プレートのアニメする色
+#define PLATE_PLTT_ANIME_COL (0x5)
+// パレット列
+#define PLATE_PLTT_ANIME_NO   (0x7)
+
+// BGアニメ
+static void _UpdatePalletAnime( u16 *anmCnt , u16 *transBuf , u8 pltNo )
+{
+  //プレートアニメ
+  if( *anmCnt + PLATE_PLTT_ANIME_VALUE >= 0x10000 )
+  {
+    *anmCnt = *anmCnt+PLATE_PLTT_ANIME_VALUE-0x10000;
+  }
+  else
+  {
+    *anmCnt += PLATE_PLTT_ANIME_VALUE;
+  }
+  {
+    //1～0に変換
+    const fx16 cos = (FX_CosIdx(*anmCnt)+FX16_ONE)/2;
+    const u8 r = PLATE_PLTT_ANIME_S_R + (((PLATE_PLTT_ANIME_E_R-PLATE_PLTT_ANIME_S_R)*cos)>>FX16_SHIFT);
+    const u8 g = PLATE_PLTT_ANIME_S_G + (((PLATE_PLTT_ANIME_E_G-PLATE_PLTT_ANIME_S_G)*cos)>>FX16_SHIFT);
+    const u8 b = PLATE_PLTT_ANIME_S_B + (((PLATE_PLTT_ANIME_E_B-PLATE_PLTT_ANIME_S_B)*cos)>>FX16_SHIFT);
+    BOOL result;
+    
+    *transBuf = GX_RGB(r, g, b);
+    
+    result = NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN ,
+                                        pltNo * 32 + PLATE_PLTT_ANIME_COL*2 ,
+                                        transBuf , 2 );
+
+    GF_ASSERT( result == TRUE );
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  BGプレート 主処理
+ *
+ *	@param	PMS_SELECT_BG_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void PMSSelect_BG_PlateMain( PMS_SELECT_BG_WORK* wk )
+{
+  _UpdatePalletAnime( &wk->transAnmCnt, &wk->transCol, 7 );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  BGアニメーションカウンタをリセット
+ *
+ *	@param	PMS_SELECT_BG_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void PMSSelect_BG_PlateAnimeReset( PMS_SELECT_BG_WORK* wk )
+{
+  wk->transAnmCnt = 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -1081,6 +1162,7 @@ static void PLATE_CNT_Setup( PMS_SELECT_MAIN_WORK* wk )
 static void PLATE_CNT_UpdateAll( PMS_SELECT_MAIN_WORK* wk )
 {
   PLATE_CNT_UpdateCore( wk, TRUE );
+  PMSSelect_BG_PlateAnimeReset( &wk->wk_bg );
 }
 
 //-----------------------------------------------------------------------------
@@ -1490,6 +1572,7 @@ static void PLATE_UNIT_DrawLastMessage( PMS_SELECT_MAIN_WORK* wk, u8 view_pos_id
   // プレート描画
   PMSSelect_BG_PlateTrans( &wk->wk_bg, view_pos_id, 0, is_select );
   
+#if 0
   // 選択状態によって文字描画エリアのカラーを指定
   if( is_select )
   {
@@ -1497,6 +1580,7 @@ static void PLATE_UNIT_DrawLastMessage( PMS_SELECT_MAIN_WORK* wk, u8 view_pos_id
     color = PRINTSYS_LSB_Make( 0xe, 0xf, 0x2 );
   }
   else
+#endif
   {
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->pms_win[ view_pos_id ] ), 0x1 );
     color = PRINTSYS_LSB_Make( 0xe, 0xf, 0x1 );
@@ -1540,6 +1624,7 @@ static void PLATE_UNIT_DrawNormal( PMS_SELECT_MAIN_WORK* wk, u8 view_pos_id, u8 
     PMSSelect_BG_PlateTrans( &wk->wk_bg, view_pos_id, sentence_type, is_select );
   }
 
+#if 0
   // 選択状態によって文字描画エリアの色指定
   if( is_select )
   {
@@ -1547,6 +1632,7 @@ static void PLATE_UNIT_DrawNormal( PMS_SELECT_MAIN_WORK* wk, u8 view_pos_id, u8 
     PMS_DRAW_SetPrintColor( wk->pms_draw, PRINTSYS_LSB_Make( 0xe, 0xf, 0x2 ) );
   }
   else
+#endif
   {
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->pms_win[ view_pos_id ] ), 0x1 );
     PMS_DRAW_SetPrintColor( wk->pms_draw, PRINTSYS_LSB_Make( 0xe, 0xf, 0x1 ) );
@@ -1634,6 +1720,8 @@ static BOOL ScenePlateSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
 { 
   PMS_SELECT_MAIN_WORK* wk = work;
   TOUCHBAR_ICON result;
+
+  PMSSelect_BG_PlateMain( &wk->wk_bg );
 
 	//タッチバーメイン処理
 	PMSSelect_TOUCHBAR_Main( wk->touchbar );
