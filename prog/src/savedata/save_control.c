@@ -415,7 +415,8 @@ LOAD_RESULT SaveControl_Extra_LoadWork(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID ex
 	LOAD_RESULT load_ret;
 
   GF_ASSERT(ctrl->sv_extra[extra_id] == NULL);
-	ctrl->sv_extra[extra_id] = GFL_SAVEDATA_Create(&SaveParam_ExtraTbl[extra_id], heap_id);
+  ctrl->sv_extra[extra_id] 
+    = GFL_SAVEDATA_CreateEx(&SaveParam_ExtraTbl[extra_id], heap_id, work, work_size );
 	load_ret = GFL_BACKUP_Load(ctrl->sv_extra[extra_id], heap_id);
 	
 	OS_TPrintf("外部セーブロード結果 extra_id = %d, load_ret = %d\n", extra_id, load_ret);
