@@ -1197,6 +1197,11 @@ static  void  BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame )
     return;
   }
 
+  if( MCSS_GetStopCellAnms( bmw->mcss[ data ] ) == MCSS_CELL_ANIM_NONSTOP ) 
+  { 
+    return;
+  }
+
   bmsa = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( bmw->heapID ), sizeof( BTLV_MCSS_STOP_ANIME ) );
   bmsa->position = data;
 
