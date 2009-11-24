@@ -97,8 +97,8 @@ typedef struct {
   u8  clientID;   ///< クライアントID
   u8  pokeIdx;    ///< そのクライアントの、何体目？ 0～
 
-  u8                 fDone;
-  u8                 fIntr;
+  u8                 fDone;   ///< 処理終了フラグ
+  u8                 fIntr;   ///< 割り込み許可フラグ
 
 }ACTION_ORDER_WORK;
 
@@ -206,6 +206,7 @@ struct _BTL_SVFLOW_WORK {
 
 
   ACTION_ORDER_WORK   actOrder[ BTL_POS_MAX ];
+  ACTION_ORDER_WORK   actOrderTmp;
   TARGET_POKE_REC     targetPokemon;
   TARGET_POKE_REC     targetSubPokemon;
   TARGET_POKE_REC     damagedPokemon;
@@ -227,7 +228,6 @@ struct _BTL_SVFLOW_WORK {
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk );
-static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder );
 static void scproc_BeforeFirstFight( BTL_SVFLOW_WORK* wk );
 static void clear_poke_actflags( BTL_SVFLOW_WORK* wk );
 static void scproc_SetFlyingFlag( BTL_SVFLOW_WORK* wk );
@@ -235,6 +235,12 @@ static void reqWazaUseForCalcActOrder( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* o
 static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 orderMax );
 static inline WazaID ActOrder_GetWazaID( const ACTION_ORDER_WORK* wk );
 static ACTION_ORDER_WORK* SearchActOrderByPokeID( BTL_SVFLOW_WORK* wk, u8 pokeID );
+static ACTION_ORDER_WORK* SearchActOrderByWaza( BTL_SVFLOW_WORK* wk, WazaID waza, u8 startIndex );
+static int IntrActOrder( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder );
+static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder );
+static BOOL ActOrder_IntrProc( BTL_SVFLOW_WORK* wk, u8 intrPokeID );
+static BOOL ActOrder_IntrReserve( BTL_SVFLOW_WORK* wk, u8 intrPokeID );
+static BOOL ActOrder_IntrReserveByWaza( BTL_SVFLOW_WORK* wk, WazaID waza );
 static inline void FlowFlg_Set( BTL_SVFLOW_WORK* wk, FlowFlag flg );
 static inline void FlowFlg_Clear( BTL_SVFLOW_WORK* wk, FlowFlag flg );
 static inline BOOL FlowFlg_Get( BTL_SVFLOW_WORK* wk, FlowFlag flg );
@@ -625,6 +631,8 @@ static u8 scproc_HandEx_addShrink( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
 static u8 scproc_HandEx_relive( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_setWeight( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_pushOut( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_intrPoke( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_intrWaza( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 
 
 BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
@@ -858,41 +866,9 @@ SvflowResult BTL_SVFLOW_StartAfterPokeChange( BTL_SVFLOW_WORK* wk )
     }
   }
 
-  {
-    scproc_AfterMemberIn( wk );
-    #if 0
-    if( fNewPokeIn )
-    {
-      // @@@ この辺は BTL_SVFLOW_Start と一緒なのでひとまとめにする
-      for(i=wk->numEndActOrder; i<wk->numActOrder; i++)
-      {
-        ActOrder_Proc( wk, &wk->actOrder[i] );
-        if( wk->flowResult !=  SVFLOW_RESULT_DEFAULT ){
-          wk->numEndActOrder = i+1;
-          break;
-        }
-      }
-      if( i==wk->numActOrder )
-      {
-        BTL_Printf("全クライアントの処理を最後まで行った\n");
-        // 死んだポケモンがいる場合の処理
-        if( reqChangePokeForServer(wk) ){
-          BTL_Printf("…しんだポケがいる\n");
-          return SVFLOW_RESULT_POKE_CHANGE;
-        }
-      }
-      else{
-        reqChangePokeForServer( wk );
-        BTL_Printf("全クライアントの処理を最後まで行えない ... result=%d\n", wk->flowResult);
-        return wk->flowResult;
-      }
-    }
-    #endif
-  }
-
+  scproc_AfterMemberIn( wk );
   return SVFLOW_RESULT_DEFAULT;
 }
-
 
 //----------------------------------------------------------------------------------
 /**
@@ -985,77 +961,6 @@ u8 BTL_SVFLOW_GetEscapeClientID( const BTL_SVFLOW_WORK* wk )
 BtlPokePos BTL_SVFLOW_GetCapturedPokePos( const BTL_SVFLOW_WORK* wk )
 {
   return wk->getPokePos;
-}
-
-
-//----------------------------------------------------------------------------------
-/**
- *
- *
- * @param   wk
- * @param   actOrder
- */
-//----------------------------------------------------------------------------------
-static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
-{
-  if( actOrder->fDone == FALSE )
-  {
-    BTL_POKEPARAM* bpp = actOrder->bpp;
-
-    if( !BPP_IsDead(bpp)
-    &&  (BTL_POSPOKE_GetPokeExistPos(&wk->pospokeWork, BPP_GetID(bpp)) != BTL_POS_NULL)
-    ){
-      BTL_ACTION_PARAM action = actOrder->action;
-
-      switch( action.gen.cmd ){
-      case BTL_ACTION_FIGHT:
-        if( !FlowFlg_Get(wk, FLOWFLG_FIRST_FIGHT) ){
-          scproc_BeforeFirstFight( wk );
-          FlowFlg_Set( wk, FLOWFLG_FIRST_FIGHT );
-        }
-        BTL_Printf("【たたかう】を処理。ワザ[%d]を、位置[%d]の相手に。\n", action.fight.waza, action.fight.targetPos);
-        scproc_Fight( wk, bpp, &actOrder->reqWaza, &action );
-        if( wk->flowResult == SVFLOW_RESULT_BTL_QUIT ){
-          PMSND_PlaySE( SEQ_SE_NIGERU );
-        }
-        break;
-      case BTL_ACTION_ITEM:
-        BTL_Printf("【どうぐ】を処理。アイテム%dを、%d番の相手に。\n", action.item.number, action.item.targetIdx);
-        scproc_TrainerItem_Root( wk, bpp, action.item.number, action.item.param, action.item.targetIdx );
-        break;
-      case BTL_ACTION_CHANGE:
-        BTL_Printf("【ポケモン】を処理。位置%d <- ポケ%d \n", action.change.posIdx, action.change.memberIdx);
-        scproc_MemberChange( wk, bpp, action.change.memberIdx );
-        break;
-      case BTL_ACTION_ESCAPE:
-        BTL_Printf("【にげる】を処理。\n");
-        if( scproc_NigeruCmd( wk, bpp ) )
-        {
-          PMSND_PlaySE( SEQ_SE_NIGERU );
-          wk->flowResult = SVFLOW_RESULT_BTL_QUIT;
-          wk->escapeClientID = actOrder->clientID;
-          BTL_Printf("クライアント[%d]が逃げて終了\n");
-        } else {
-          SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeFail );
-        }
-        break;
-      case BTL_ACTION_MOVE:
-        scproc_Move( wk, bpp );
-        break;
-      case BTL_ACTION_SKIP:
-        BTL_Printf("処理をスキップ\n");
-        scPut_CantAction( wk, bpp );
-        break;
-      case BTL_ACTION_NULL:
-        BTL_Printf("不明な処理\n");
-        scPut_CantAction( wk, bpp );
-        break;
-      }
-
-      BPP_TURNFLAG_Set( bpp, BPP_TURNFLG_ACTION_DONE );
-      actOrder->fDone = TRUE;
-    }
-  }
 }
 //----------------------------------------------------------------------------------
 /**
@@ -1268,6 +1173,7 @@ static inline WazaID ActOrder_GetWazaID( const ACTION_ORDER_WORK* wk )
   }
   return WAZANO_NULL;
 }
+// 指定ポケモンのアクション内容データポインタを取得
 static ACTION_ORDER_WORK* SearchActOrderByPokeID( BTL_SVFLOW_WORK* wk, u8 pokeID )
 {
   u32 i;
@@ -1278,6 +1184,193 @@ static ACTION_ORDER_WORK* SearchActOrderByPokeID( BTL_SVFLOW_WORK* wk, u8 pokeID
   }
   return NULL;
 }
+// 未実行の指定ワザ使用アクション内容データポインタを取得
+static ACTION_ORDER_WORK* SearchActOrderByWaza( BTL_SVFLOW_WORK* wk, WazaID waza, u8 startIndex )
+{
+  u32 i;
+  for(i=startIndex; i<wk->numActOrder; ++i)
+  {
+    if( wk->actOrder[i].fDone == FALSE )
+    {
+      if( (BTL_ACTION_GetAction(&wk->actOrder[i].action) == BTL_ACTION_FIGHT)
+      &&  (BTL_ACTION_GetWazaID(&wk->actOrder[i].action) == waza)
+      ){
+        return &wk->actOrder[i];
+      }
+    }
+  }
+  return NULL;
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * 指定アクションを、未実行列の先頭に割り込ませる
+ *
+ * @param   wk
+ * @param   actOrder
+ *
+ * @retval  int   割り込んだIndex （割り込めなければ-1)
+ */
+//----------------------------------------------------------------------------------
+static int IntrActOrder( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder )
+{
+  int prevOrder, topOrder, i;
+
+  // 自分自身の元々のIndexと、未実行列の先頭Indexをサーチ
+  prevOrder = topOrder = -1;
+  for(i=0; i<wk->numActOrder; ++i)
+  {
+    if( (wk->actOrder[i].fDone == FALSE) && (topOrder == -1) )
+    {
+      topOrder = i;
+    }
+    BTL_Printf("オーダーアドレス一致チェック:%p : %p\n", actOrder, &(wk->actOrder[i]) );
+    if( &(wk->actOrder[i]) == actOrder ){
+      prevOrder = i;
+    }
+  }
+  BTL_Printf("割り込み情報 : 元々=%d, 先頭=%d\n", prevOrder, topOrder );
+
+  // どちらも有効値＆自分自身が未実行の先頭より後の順番なら並べ替え
+  if( (prevOrder>=0) && (topOrder>=0)
+  &&  (prevOrder > topOrder)
+  ){
+    wk->actOrderTmp = *actOrder;
+    while( prevOrder > topOrder ){
+      wk->actOrder[prevOrder] = wk->actOrder[prevOrder-1];
+      --prevOrder;
+    }
+    BTL_Printf("！[%d]番目に割り込み\n", topOrder );
+    wk->actOrder[topOrder] = wk->actOrderTmp;
+    return topOrder;
+  }
+
+  return -1;
+
+}
+
+//----------------------------------------------------------------------------------
+/**
+ *  アクション内容の実行
+ *
+ * @param   wk
+ * @param   actOrder
+ */
+//----------------------------------------------------------------------------------
+static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
+{
+  if( actOrder->fDone == FALSE )
+  {
+    BTL_POKEPARAM* bpp = actOrder->bpp;
+    actOrder->fDone = TRUE;
+
+    if( !BPP_IsDead(bpp)
+    &&  (BTL_POSPOKE_GetPokeExistPos(&wk->pospokeWork, BPP_GetID(bpp)) != BTL_POS_NULL)
+    ){
+      BTL_ACTION_PARAM action = actOrder->action;
+
+      switch( action.gen.cmd ){
+      case BTL_ACTION_FIGHT:
+        if( !FlowFlg_Get(wk, FLOWFLG_FIRST_FIGHT) ){
+          scproc_BeforeFirstFight( wk );
+          FlowFlg_Set( wk, FLOWFLG_FIRST_FIGHT );
+        }
+        BTL_Printf("【たたかう】を処理。ワザ[%d]を、位置[%d]の相手に。\n", action.fight.waza, action.fight.targetPos);
+        scproc_Fight( wk, bpp, &actOrder->reqWaza, &action );
+        if( wk->flowResult == SVFLOW_RESULT_BTL_QUIT ){
+          PMSND_PlaySE( SEQ_SE_NIGERU );
+        }
+        break;
+      case BTL_ACTION_ITEM:
+        BTL_Printf("【どうぐ】を処理。アイテム%dを、%d番の相手に。\n", action.item.number, action.item.targetIdx);
+        scproc_TrainerItem_Root( wk, bpp, action.item.number, action.item.param, action.item.targetIdx );
+        break;
+      case BTL_ACTION_CHANGE:
+        BTL_Printf("【ポケモン】を処理。位置%d <- ポケ%d \n", action.change.posIdx, action.change.memberIdx);
+        scproc_MemberChange( wk, bpp, action.change.memberIdx );
+        break;
+      case BTL_ACTION_ESCAPE:
+        BTL_Printf("【にげる】を処理。\n");
+        if( scproc_NigeruCmd( wk, bpp ) )
+        {
+          PMSND_PlaySE( SEQ_SE_NIGERU );
+          wk->flowResult = SVFLOW_RESULT_BTL_QUIT;
+          wk->escapeClientID = actOrder->clientID;
+          BTL_Printf("クライアント[%d]が逃げて終了\n");
+        } else {
+          SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeFail );
+        }
+        break;
+      case BTL_ACTION_MOVE:
+        scproc_Move( wk, bpp );
+        break;
+      case BTL_ACTION_SKIP:
+        BTL_Printf("処理をスキップ\n");
+        scPut_CantAction( wk, bpp );
+        break;
+      case BTL_ACTION_NULL:
+        BTL_Printf("不明な処理\n");
+        scPut_CantAction( wk, bpp );
+        break;
+      }
+
+      BPP_TURNFLAG_Set( bpp, BPP_TURNFLG_ACTION_DONE );
+    }
+  }
+}
+//--------------------------------------------------------------
+/**
+ *  アクションの割り込み実行（ポケモンID指定）
+ */
+//--------------------------------------------------------------
+static BOOL ActOrder_IntrProc( BTL_SVFLOW_WORK* wk, u8 intrPokeID )
+{
+  ACTION_ORDER_WORK* actOrder = SearchActOrderByPokeID( wk, intrPokeID );
+  if( actOrder && (actOrder->fDone == FALSE) ){
+    ActOrder_Proc( wk, actOrder );
+    return TRUE;
+  }
+  return FALSE;
+}
+//--------------------------------------------------------------
+/**
+ *  アクションの割り込み予約（ポケモンID指定）
+ */
+//--------------------------------------------------------------
+static BOOL ActOrder_IntrReserve( BTL_SVFLOW_WORK* wk, u8 intrPokeID )
+{
+  ACTION_ORDER_WORK* actOrder = SearchActOrderByPokeID( wk, intrPokeID );
+  if( actOrder && (actOrder->fDone == FALSE) ){
+    if( IntrActOrder(wk, actOrder) >= 0 ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+//--------------------------------------------------------------
+/**
+ *  アクションの割り込み実行（使用ワザ指定）
+ */
+//--------------------------------------------------------------
+static BOOL ActOrder_IntrReserveByWaza( BTL_SVFLOW_WORK* wk, WazaID waza )
+{
+  ACTION_ORDER_WORK* actOrder = SearchActOrderByWaza( wk, waza, 0 );
+  int intrIdx;
+  BOOL result = FALSE;
+  while( actOrder )
+  {
+    intrIdx = IntrActOrder( wk, actOrder );
+    if( intrIdx >= 0 ){
+      actOrder = SearchActOrderByWaza( wk, waza, ++intrIdx );
+      result = TRUE;
+    }else{
+      break;
+    }
+  }
+  return result;
+}
+
 
 
 //----------------------------------------------------------------------------------------------
@@ -2351,10 +2444,7 @@ static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPo
     u8 intrPokeID = scEvent_MemberChangeIntr( wk, outPoke );
     if( intrPokeID != BTL_POKEID_NULL )
     {
-      ACTION_ORDER_WORK* actOrder = SearchActOrderByPokeID( wk, intrPokeID );
-      if( actOrder ){
-        ActOrder_Proc( wk, actOrder );
-      }
+      ActOrder_IntrProc( wk, intrPokeID );
     }
   }
 
@@ -2946,9 +3036,6 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   wk->wazaEff_EnableFlag = FALSE;
   wk->wazaEff_TargetPokeID = BTL_POKEID_NULL;
 
-  // 出たワザレコード記録
-  BTL_WAZAREC_Add( &wk->wazaRec, waza, wk->turnCount, pokeID );
-
   // ワザ出し確定イベント
   {
     u32 hem_state = Hem_PushState( &wk->HEManager );
@@ -2960,6 +3047,9 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
       return;
     }
   }
+  // 出たワザレコード記録
+  BTL_WAZAREC_Add( &wk->wazaRec, waza, wk->turnCount, pokeID );
+
 
   // 死んでるポケモンは除外
   TargetPokeRec_RemoveDeadPokemon( targetRec );
@@ -4124,20 +4214,13 @@ static void scproc_Fight_Damage_Shrink( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_PO
 {
   u32 waza_per = scEvent_GetWazaShrinkPer( wk, waza, attacker );
   BTL_POKEPARAM* bpp;
-  u32 cnt, per, i=0;
+  u32 i=0;
 
   while( (bpp = TargetPokeRec_Get(targets, i++)) != NULL )
   {
     if( !BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_ACTION_DONE) )
     {
-      if( BPP_TURNFLAG_Get( bpp, BPP_TURNFLG_MUST_SHRINK ) ){
-        per = 100;
-      }else{
-        per = waza_per;
-      }
-      if( per ){
-        scproc_AddShrinkCore( wk, bpp, waza, per );
-      }
+      scproc_AddShrinkCore( wk, bpp, waza, waza_per );
     }
   }
 }
@@ -4155,7 +4238,15 @@ static void scproc_Fight_Damage_Shrink( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_PO
 //----------------------------------------------------------------------------------
 static BOOL scproc_AddShrinkCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaID waza, u32 per )
 {
-  if( scEvent_CheckShrink(wk, target, waza, per) )
+  BOOL fShrink;
+
+  if( BPP_TURNFLAG_Get(target, BPP_TURNFLG_MUST_SHRINK) ){
+    fShrink = TRUE;
+  }else{
+    fShrink = scEvent_CheckShrink(wk, target, waza, per);
+  }
+
+  if( fShrink )
   {
     BPP_TURNFLAG_Set( target, BPP_TURNFLG_SHRINK );
     return TRUE;
@@ -5202,6 +5293,8 @@ static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
 static void scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
 {
   scproc_turncheck_sub( wk, BTL_EVENT_TURNCHECK_BEGIN );
+
+  // @todo ターンチェックの処理順は素早さ順にする。
   scproc_turncheck_sick( wk );
   scproc_turncheck_side( wk );
   scproc_turncheck_field( wk );
@@ -5209,6 +5302,8 @@ static void scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
 
   scproc_turncheck_sub( wk, BTL_EVENT_TURNCHECK_END );
 
+  // ワザ記録を１ターン分進める
+  BTL_WAZAREC_EndTurn( &wk->wazaRec );
 
   // 全ポケモンのターンフラグをクリア
   {
@@ -8081,7 +8176,7 @@ static u32 scEvent_GetWazaShrinkPer( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEP
 {
   u32 per = WAZADATA_GetParam( waza, WAZAPARAM_SHRINK_PER );
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_ADD_PER, per );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_SHRINK_PER );
     per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
@@ -9050,6 +9145,8 @@ static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, Bt
     { BTL_HANDEX_RELIVE,          sizeof(BTL_HANDEX_PARAM_RELIVE)          },
     { BTL_HANDEX_SET_WEIGHT,      sizeof(BTL_HANDEX_PARAM_SET_WEIGHT)      },
     { BTL_HANDEX_PUSHOUT,         sizeof(BTL_HANDEX_PARAM_PUSHOUT)         },
+    { BTL_HANDEX_INTR_POKE,       sizeof(BTL_HANDEX_PARAM_INTR_POKE)       },
+    { BTL_HANDEX_INTR_WAZA,       sizeof(BTL_HANDEX_PARAM_INTR_WAZA)       },
   };
   u32 size, i;
 
@@ -9220,6 +9317,8 @@ static BOOL scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
     case BTL_HANDEX_RELIVE:         fPrevSucceed = scproc_HandEx_relive( wk, handEx_header ); break;
     case BTL_HANDEX_SET_WEIGHT:     fPrevSucceed = scproc_HandEx_setWeight( wk, handEx_header ); break;
     case BTL_HANDEX_PUSHOUT:        fPrevSucceed = scproc_HandEx_pushOut( wk, handEx_header ); break;
+    case BTL_HANDEX_INTR_POKE:      fPrevSucceed = scproc_HandEx_intrPoke( wk, handEx_header ); break;
+    case BTL_HANDEX_INTR_WAZA:      fPrevSucceed = scproc_HandEx_intrWaza( wk, handEx_header ); break;
     default:
       GF_ASSERT_MSG(0, "illegal handEx type = %d, userPokeID=%d", handEx_header->equip, handEx_header->userPokeID);
     }
@@ -10161,6 +10260,32 @@ static u8 scproc_HandEx_pushOut( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
 
   if( scproc_PushOutCore(wk, attacker, target) ){
  //   handexSub_putString( wk, &param->exStr );
+    return 1;
+  }
+  return 0;
+}
+/**
+ * 指定ポケモンの行動を割り込みさせる
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_intrPoke( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  BTL_HANDEX_PARAM_INTR_POKE* param = (BTL_HANDEX_PARAM_INTR_POKE*)param_header;
+
+  if( ActOrder_IntrReserve(wk, param->pokeID) ){
+    return 1;
+  }
+  return 0;
+}
+/**
+ * 指定ワザ使用ポケモンの行動を割り込みさせる
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_intrWaza( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  BTL_HANDEX_PARAM_INTR_WAZA* param = (BTL_HANDEX_PARAM_INTR_WAZA*)param_header;
+
+  if( ActOrder_IntrReserveByWaza(wk, param->waza) ){
     return 1;
   }
   return 0;

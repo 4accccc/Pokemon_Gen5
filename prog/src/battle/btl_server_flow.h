@@ -226,6 +226,8 @@ typedef enum {
   BTL_HANDEX_RELIVE,        ///< 生き返らせる
   BTL_HANDEX_SET_WEIGHT,    ///< 体重を設定
   BTL_HANDEX_PUSHOUT,       ///< 場から吹き飛ばす
+  BTL_HANDEX_INTR_POKE,     ///< 指定ポケモンの割り込み行動を発生させる
+  BTL_HANDEX_INTR_WAZA,     ///< 指定ワザを使おうとしているポケモンの割り込み行動を発生させる
 
   BTL_HANDEX_MAX,
 
@@ -665,6 +667,22 @@ typedef struct {
   u8   pokeID;                  ///< 対象ポケID
   BTL_HANDEX_STR_PARAMS  exStr; ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_PUSHOUT;
+
+/**
+ * 指定ポケモン割り込み行動
+ */
+typedef struct {
+  BTL_HANDEX_PARAM_HEADER  header;
+  u8   pokeID;                  ///< 対象ポケID
+}BTL_HANDEX_PARAM_INTR_POKE;
+
+/**
+ * 指定ワザ使用ポケ割り込み行動
+ */
+typedef struct {
+  BTL_HANDEX_PARAM_HEADER  header;
+  WazaID   waza;                ///< 対象ワザID
+}BTL_HANDEX_PARAM_INTR_WAZA;
 
 extern void* BTL_SVF_HANDEX_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );
 extern u8 BTL_SVFTOOL_ExpandPokeID( BTL_SVFLOW_WORK* wk, BtlExPos exPos, u8* dst_pokeID );

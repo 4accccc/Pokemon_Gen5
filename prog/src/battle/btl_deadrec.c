@@ -47,6 +47,7 @@ void BTL_DEADREC_Add( BTL_DEADREC* wk, u8 pokeID )
 
 
 
+
 u8 BTL_DEADREC_GetCount( const BTL_DEADREC* wk, u8 turn )
 {
   if( turn < BTL_DEADREC_TURN_MAX ){

@@ -584,6 +584,11 @@ static void handler_GiftPass( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static BTL_EVENT_FACTOR*  ADD_Inotigake( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Inotigake_CalcDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Inotigake_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_OsakiniDouzo( u16 pri, WazaID waza, u8 pokeID );
+static void handler_OsakiniDouzo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_Rinsyou( u16 pri, WazaID waza, u8 pokeID );
+static void handler_Rinsyou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Rinsyou_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 
@@ -824,6 +829,8 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_KARI_KATAKIUTI,        ADD_Katakiuti       },
     { WAZANO_KARI_UTIOTOSU,         ADD_Utiotosu        },
     { WAZANO_KARI_INOTIGAKE,        ADD_Inotigake       },
+    { WAZANO_KARI_OSAKINIDOUZO,     ADD_OsakiniDouzo    },
+    { WAZANO_KARI_RINSYOU,          ADD_Rinsyou         },
   };
 
   int i;
@@ -8406,5 +8413,73 @@ static void handler_Inotigake_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
     BTL_HANDEX_PARAM_KILL* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_KILL, pokeID );
     param->pokeID = pokeID;
   }
+}
+//----------------------------------------------------------------------------------
+/**
+ * おさきにどうぞ
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_OsakiniDouzo( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORIZE_WAZA, handler_OsakiniDouzo  },     // 未分類ワザ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_OsakiniDouzo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BTL_HANDEX_PARAM_INTR_POKE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_INTR_POKE, pokeID );
+    param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * りんしょう
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_Rinsyou( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_EXECUTE_FIX, handler_Rinsyou  },     // ワザだし確定
+    { BTL_EVENT_WAZA_POWER,       handler_Rinsyou_Pow },  // 威力計算
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_Rinsyou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  // このターンにまだ誰も同じワザを使っていなければ、同じワザを使う予定のポケを繰り上げる
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    const BTL_WAZAREC* rec = BTL_SVF_GetWazaRecord( flowWk );
+    WazaID  wazaID = BTL_EVENT_FACTOR_GetSubID( myHandle );
+    u32 thisTurn = BTL_SVFTOOL_GetTurnCount( flowWk );
+    if( !BTL_WAZAREC_IsUsedWaza(rec, wazaID, thisTurn) )
+    {
+      BTL_HANDEX_PARAM_INTR_WAZA* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_INTR_WAZA, pokeID );
+      param->waza = wazaID;
+      BTL_Printf("ポケ[%d]のりんしょうはターン最初なので順番くりあげる\n", pokeID);
+    }
+  }
+}
+static void handler_Rinsyou_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  // このターンに同じワザを使っていれば威力が倍
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    const BTL_WAZAREC* rec = BTL_SVF_GetWazaRecord( flowWk );
+    WazaID  wazaID = BTL_EVENT_FACTOR_GetSubID( myHandle );
+    u32 thisTurn = BTL_SVFTOOL_GetTurnCount( flowWk );
+    // 既に自分のワザがレコードされているので１件を越えてたら２番目以降と判定
+    if( BTL_WAZAREC_GetUsedWazaCount(rec, wazaID, thisTurn) > 1)
+    {
+      BTL_Printf("ポケ[%d]のりんしょうは最初じゃないので威力が倍\n", pokeID);
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
+    }
+  }
+
 }
 

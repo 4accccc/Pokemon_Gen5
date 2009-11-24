@@ -67,8 +67,27 @@ void BTL_WAZAREC_SetEffectiveLast( BTL_WAZAREC* rec )
   }
   rec->record[ ptr ].fEffective = TRUE;
 }
+//=============================================================================================
+/**
+ * ターン終了で記録を更新
+ *
+ * @param   rec
+ */
+//=============================================================================================
+void BTL_WAZAREC_EndTurn( BTL_WAZAREC* rec )
+{
+  int i;
+  for(i=NELEMS(rec->record)-1; i>0; --i)
+  {
+    rec->record[i] = rec->record[i-1];
+  }
 
-
+  GFL_STD_MemClear( &rec->record[0], sizeof(rec->record[0]) );
+  for(i=0; i<NELEMS(rec->record); ++i){
+    rec->record[i].wazaID = WAZANO_NULL;
+  }
+  rec->ptr = 0;
+}
 
 
 //=============================================================================================
@@ -100,4 +119,33 @@ BOOL BTL_WAZAREC_IsUsedWaza( const BTL_WAZAREC* rec, WazaID waza, u32 turn )
   }
   return FALSE;
 }
+//=============================================================================================
+/**
+ * 指定ターンにワザが使われた回数チェック
+ *
+ * @param   rec
+ * @param   waza
+ * @param   turn
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+u32 BTL_WAZAREC_GetUsedWazaCount( const BTL_WAZAREC* rec, WazaID waza, u32 turn )
+{
+  int p = rec->ptr;
+  u32 count = 0;
 
+  while( 1 )
+  {
+    if( --p < 0 ){
+      p = NELEMS(rec->record) - 1;
+    }
+    if( (p == rec->ptr) || (rec->record[p].wazaID == WAZANO_NULL) ){
+      break;
+    }
+    if( (rec->record[p].wazaID == waza) && (rec->record[p].turn == turn) ){
+      ++count;
+    }
+  }
+  return count;
+}
