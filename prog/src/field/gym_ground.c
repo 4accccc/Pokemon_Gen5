@@ -69,6 +69,9 @@ typedef struct GYM_GROUND_TMP_tag
   u16 StopTime;
   u16 MainLiftSeq;
   SHAKE_WORK ShakeWork;
+  BOOL FogFadeFlg;
+  s32 FogBaseOffset;
+  s32 FogBaseSlope;
 }GYM_GROUND_TMP;
 
 typedef struct FLOOR_RECT_tag
@@ -385,6 +388,7 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *fieldWork)
   GYM_GROUND_SV_WORK *gmk_sv_work;
   GYM_GROUND_TMP *tmp;
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  FIELD_FOG_WORK* fog = FIELDMAP_GetFieldFog( fieldWork );
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
     GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
@@ -392,7 +396,7 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *fieldWork)
   }
 
   //汎用ワーク確保
-  GMK_TMP_WK_AllocWork
+  tmp = GMK_TMP_WK_AllocWork
       (fieldWork, GYM_GROUND_TMP_ASSIGN_ID, FIELDMAP_GetHeapID(fieldWork), sizeof(GYM_GROUND_TMP));
 
   {
@@ -503,6 +507,22 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *fieldWork)
       fx32 last = FLD_EXP_OBJ_GetAnimeLastFrame(anm);
       //ラストフレーム
       FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_GROUND_UNIT_IDX, obj_idx, 0, last );
+    }
+  }
+
+  //デフォルトフォグ設置を保存
+  tmp->FogBaseOffset = FIELD_FOG_GetOffset( fog );
+  tmp->FogBaseSlope = FIELD_FOG_GetSlope( fog );
+  //自機が隔壁より下にいる場合はフォグフェード後の設定に書き換え
+  {
+    VecFx32 pos;
+    FIELD_PLAYER *fld_player;
+    fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+    FIELD_PLAYER_GetPos( fld_player, &pos );
+    if (pos.y <= WALL_HEIGHT)
+    {
+      FIELD_FOG_SetOffset( fog, FOG_OFFSET );
+      FIELD_FOG_SetSlope( fog, FOG_SLOPE );
     }
   }
   
@@ -642,8 +662,12 @@ GMEVENT *GYM_GROUND_CreateLiftMoveEvt(GAMESYS_WORK *gsys, const int inLiftIdx)
 
   if (inLiftIdx == SP_LIFT_IDX){
     speed = SP_LIFT_MOVE_SPD1;
+    //フォグフェードリクエストする
+    tmp->FogFadeFlg = TRUE;
   }else{
     speed = LIFT_MOVE_SPD;
+    //フォグフェードリクエストしない
+    tmp->FogFadeFlg = FALSE;
   }
   if ( tmp->DstHeight - tmp->NowHeight < 0 ) tmp->AddVal = -speed;
   else tmp->AddVal = speed;
@@ -863,8 +887,19 @@ static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work )
         SetupLiftAnm(gmk_sv_work, ptr, tmp->TargetLiftIdx);
         //OBJのポーズを解除
         ;
-        return GMEVENT_RES_FINISH;
+        //メインリフトのときのみフォグフェード待ちシーケンスへ移行
+        if (tmp->TargetLiftIdx != SP_LIFT_IDX) return GMEVENT_RES_FINISH;
+        else (*seq)++;
       }
+    }
+    //NO BREAK
+  case 8:
+    {
+      FIELD_FOG_WORK* fog = FIELDMAP_GetFieldFog( fieldWork );
+      //メインリフトのときのみフォグフェード待ち
+      if ( FIELD_FOG_FADE_IsFade( fog ) ) break;    //フォグフェード中
+
+      return GMEVENT_RES_FINISH;
     }
   }
 
@@ -1187,6 +1222,34 @@ static void FuncMainLiftOnly(GAMESYS_WORK *gsys)
         }
       }
     }   //end switch
+  }
+
+  //フォグ操作
+  if (tmp->FogFadeFlg){
+    //フォグフェード開始位置に到達したか？
+    BOOL fog_start = FALSE;
+
+    //進行方向で分岐
+    if ( tmp->AddVal>=0 )
+    {
+      if (tmp->NowHeight <= FOG_FADE_OUT_START*FX32_ONE) fog_start = TRUE;
+    }
+    else
+    {
+      if (tmp->NowHeight > FOG_FADE_IN_START*FX32_ONE) fog_start = TRUE;
+    }
+
+    if (fog_start)
+    {
+      u16 fog_sync;
+      FIELD_FOG_WORK* fog = FIELDMAP_GetFieldFog( fieldWork );
+      //リフトの移動速度で分岐
+      if (tmp->AddVal == -SP_LIFT_MOVE_SPD2) fog_sync = FOG_FADE_SPEED_SLOW;
+      else fog_sync = FOG_FADE_SPEED_FAST;
+
+      FIELD_FOG_FADE_Init( fog, FOG_OFFSET, FOG_SLOPE, fog_sync );
+      tmp->FogFadeFlg = FALSE;
+    }
   }
 }
 
