@@ -1133,8 +1133,6 @@ SRCS_OVERLAY_DEBUG_DATA = gamesystem/debug_data.c
 SRCS_OVERLAY_NAMEIN	= app/name_input/namein.c \
 											app/name_input/namein_graphic.c \
 											app/name_input/namein_data.c
-
-
 #	名木橋デバッグ
 #===> SRCS_OVERLAY_BATTLE_RECORDER
 #===> SRCS_OVERLAY_NAMEIN
@@ -1142,3 +1140,9 @@ SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
 																test/nagihashi/debug_irc_name.c \
 																test/nagihashi/debug_template.c \
 																test/nagihashi/debug_poke2dcheck.c
+
+# 保坂デバッグ
+#===>main
+SRCS_OVERLAY_DEBUG_HOSAKA = test/hosaka/debug_3d_demo.c
+
+
