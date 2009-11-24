@@ -36,7 +36,6 @@ typedef struct
   u16             frame;       // 経過フレーム数
   u16             endFrame;    // 終了フレーム
   u32             startAngle;  // 回転角初期値(2πラジアンを65536分割した値を単位とする数)
-  u32             moveAngle;   // 回転角度(2πラジアンを65536分割した値を単位とする数)
   u32             endAngle;    // 回転角最終値(2πラジアンを65536分割した値を単位とする数)
 
 } ROT_WORK;
@@ -56,7 +55,7 @@ static FIELD_TASK_RETVAL RotateCamera( void* wk );
  *
  * @param fieldmap タスク動作対象のフィールドマップ
  * @param frame    タスク動作フレーム数
- * @param angle    最終的な角度( 2πラジアンを65536分割した値を単位とする数 )
+ * @param angle    変化角( 2πラジアンを65536分割した値を単位とする数 )
  */
 //------------------------------------------------------------------------------------------
 FIELD_TASK* FIELD_TASK_CameraRot_Yaw( FIELDMAP_WORK* fieldmap, int frame, u16 angle )
@@ -75,7 +74,7 @@ FIELD_TASK* FIELD_TASK_CameraRot_Yaw( FIELDMAP_WORK* fieldmap, int frame, u16 an
   work->type       = CAMERA_ROT_TYPE_YAW;
   work->frame      = 0;
   work->endFrame   = frame;
-  work->moveAngle  = angle;
+  work->endAngle   = angle;
   
   return task;
 }
@@ -86,7 +85,7 @@ FIELD_TASK* FIELD_TASK_CameraRot_Yaw( FIELDMAP_WORK* fieldmap, int frame, u16 an
  *
  * @param fieldmap タスク動作対象のフィールドマップ
  * @param frame    タスク動作フレーム数
- * @param angle    最終的な角度( 2πラジアンを65536分割した値を単位とする数 )
+ * @param angle    変化角( 2πラジアンを65536分割した値を単位とする数 )
  */
 //------------------------------------------------------------------------------------------
 FIELD_TASK* FIELD_TASK_CameraRot_Pitch( FIELDMAP_WORK* fieldmap, int frame, u16 angle )
@@ -105,7 +104,7 @@ FIELD_TASK* FIELD_TASK_CameraRot_Pitch( FIELDMAP_WORK* fieldmap, int frame, u16 
   work->type       = CAMERA_ROT_TYPE_PITCH;
   work->frame      = 0;
   work->endFrame   = frame;
-  work->moveAngle  = angle;
+  work->endAngle   = angle;
   
   return task;
 }
@@ -136,7 +135,6 @@ static void SetupAngle( ROT_WORK* work )
     work->startAngle = FIELD_CAMERA_GetAnglePitch( camera );
     break;
   }
-  work->endAngle = work->startAngle + work->moveAngle;
 
   // 正の方向に回したとき, 180度以上の回転が必要になる場合, 負の方向に回転させる必要がある.
   // 回転の方向を逆にするために, 小さい方の角度を360度分の下駄を履かせる.

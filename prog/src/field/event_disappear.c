@@ -30,7 +30,7 @@
 //==========================================================================================
 // ■定数
 //========================================================================================== 
-#define ZOOM_IN_DIST   (70 << FX32_SHIFT)   // カメラのズームイン距離
+#define ZOOM_IN_DIST   (180 << FX32_SHIFT)   // カメラズーム時の距離
 #define ZOOM_IN_FRAME  (30)   // ズームインに掛かるフレーム数
 #define ZOOM_OUT_FRAME (60)   // ズームアウトに掛かるフレーム数
 #define ANAHORI_EFF_INTVL (6)  //「あなをほる」のエフェクト表示間隔
@@ -250,7 +250,7 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
           VEC_Set( &vec, 0, -50<<FX32_SHIFT, 0 );
           move     = FIELD_TASK_TransDrawOffset( work->fieldmap, 80, &vec );
           rot      = FIELD_TASK_PlayerRotate( work->fieldmap, 80, 10 );
-          zoom     = FIELD_TASK_CameraLinearZoom( work->fieldmap, 30, -50<<FX32_SHIFT );
+          zoom     = FIELD_TASK_CameraLinearZoom( work->fieldmap, 30, ZOOM_IN_DIST );
           fade_out = FIELD_TASK_Fade( work->fieldmap, GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
           man = FIELDMAP_GetTaskManager( work->fieldmap );
           FIELD_TASK_MAN_AddTask( man, move, NULL );
@@ -310,7 +310,7 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Ananukenohimo( GMEVENT* event, int* s
       FIELD_TASK_MAN* man;
       rot_up   = FIELD_TASK_PlayerRotate_SpeedUp( work->fieldmap, 60, 10 );
       rot      = FIELD_TASK_PlayerRotate( work->fieldmap, 60, 20 );
-      zoom     = FIELD_TASK_CameraLinearZoom( work->fieldmap, ZOOM_IN_FRAME, -ZOOM_IN_DIST );
+      zoom     = FIELD_TASK_CameraLinearZoom( work->fieldmap, ZOOM_IN_FRAME, ZOOM_IN_DIST );
       fade_out = FIELD_TASK_Fade( work->fieldmap, GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 1 );
       man      = FIELDMAP_GetTaskManager( work->fieldmap );
       FIELD_TASK_MAN_AddTask( man, rot_up, NULL );
@@ -366,7 +366,7 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Anawohoru( GMEVENT* event, int* seq, 
       FIELD_TASK_MAN* man;
       rot_up   = FIELD_TASK_PlayerRotate_SpeedUp( work->fieldmap, 30, 10 );
       rot      = FIELD_TASK_PlayerRotate( work->fieldmap, 60, 20 );
-      zoom     = FIELD_TASK_CameraLinearZoom( work->fieldmap, ZOOM_IN_FRAME, -ZOOM_IN_DIST );
+      zoom     = FIELD_TASK_CameraLinearZoom( work->fieldmap, ZOOM_IN_FRAME, ZOOM_IN_DIST );
       fade_out = FIELD_TASK_Fade( work->fieldmap, GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 1 );
       man      = FIELDMAP_GetTaskManager( work->fieldmap );
       FIELD_TASK_MAN_AddTask( man, rot_up, NULL );
@@ -429,7 +429,7 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Teleport( GMEVENT* event, int* seq, v
       FIELD_TASK_MAN* man;
       rot_up   = FIELD_TASK_PlayerRotate_SpeedUp( work->fieldmap, 30, 10 );
       rot      = FIELD_TASK_PlayerRotate( work->fieldmap, 60, 20 );
-      zoom     = FIELD_TASK_CameraLinearZoom( work->fieldmap, ZOOM_IN_FRAME, -ZOOM_IN_DIST );
+      zoom     = FIELD_TASK_CameraLinearZoom( work->fieldmap, ZOOM_IN_FRAME, ZOOM_IN_DIST );
       fade_out = FIELD_TASK_Fade( work->fieldmap, GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 1 );
       man      = FIELDMAP_GetTaskManager( work->fieldmap );
       FIELD_TASK_MAN_AddTask( man, rot_up, NULL );

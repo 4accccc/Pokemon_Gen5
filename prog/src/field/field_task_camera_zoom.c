@@ -24,7 +24,6 @@ typedef struct
   u16            frame;     // 経過フレーム数
   u16            endFrame;  // 終了フレーム
   fx32           startDist; // カメラ距離初期値
-  fx32           moveDist;  // 移動距離
   fx32           endDist;   // カメラ距離最終値
 
 } ZOOM_WORK;
@@ -43,7 +42,7 @@ static FIELD_TASK_RETVAL CameraSharpZoom( void* wk );
  *
  * @param fieldmap 処理対象のフィールドマップ
  * @param frame    ズーム完了までのフレーム数
- * @param dist     ズーム距離
+ * @param dist     最終的な距離
  */
 //------------------------------------------------------------------------------------------
 FIELD_TASK* FIELD_TASK_CameraLinearZoom( FIELDMAP_WORK* fieldmap, u16 frame, fx32 dist )
@@ -60,7 +59,7 @@ FIELD_TASK* FIELD_TASK_CameraLinearZoom( FIELDMAP_WORK* fieldmap, u16 frame, fx3
   work->fieldmap  = fieldmap;
   work->frame     = 0;
   work->endFrame  = frame;
-  work->moveDist  = dist;
+  work->endDist   = dist;
 
   return task;
 }
@@ -71,7 +70,7 @@ FIELD_TASK* FIELD_TASK_CameraLinearZoom( FIELDMAP_WORK* fieldmap, u16 frame, fx3
  *
  * @param fieldmap 処理対象のフィールドマップ
  * @param frame    ズーム完了までのフレーム数
- * @param dist     ズーム距離
+ * @param dist     最終的な距離
  */
 //------------------------------------------------------------------------------------------
 FIELD_TASK* FIELD_TASK_CameraSharpZoom( FIELDMAP_WORK* fieldmap, u16 frame, fx32 dist )
@@ -88,11 +87,10 @@ FIELD_TASK* FIELD_TASK_CameraSharpZoom( FIELDMAP_WORK* fieldmap, u16 frame, fx32
   work->fieldmap  = fieldmap;
   work->frame     = 0;
   work->endFrame  = frame;
-  work->moveDist  = dist;
+  work->endDist   = dist;
 
   return task;
 }
-
 
 //==========================================================================================
 // ■タスク処理関数
@@ -113,7 +111,6 @@ static FIELD_TASK_RETVAL CameraLinearZoom( void* wk )
   {
   case 0:
     work->startDist = FIELD_CAMERA_GetAngleLen( camera );
-    work->endDist   = FIELD_CAMERA_GetAngleLen( camera ) + work->moveDist;
     work->seq++;
     break;
   case 1:
@@ -152,7 +149,6 @@ static FIELD_TASK_RETVAL CameraSharpZoom( void* wk )
   {
   case 0:
     work->startDist = FIELD_CAMERA_GetAngleLen( camera );
-    work->endDist   = FIELD_CAMERA_GetAngleLen( camera ) + work->moveDist;
     work->seq++;
     break;
   case 1:

@@ -17,7 +17,7 @@
  * @param angle    最終的な角度( 2πラジアンを65536分割した値を単位とする数 )
  */
 //------------------------------------------------------------------------------------------
-FIELD_TASK* FIELD_TASK_CameraRot_Yaw( FIELDMAP_WORK* fieldmap, int frame, u16 angle );
+extern FIELD_TASK* FIELD_TASK_CameraRot_Yaw( FIELDMAP_WORK* fieldmap, int frame, u16 angle );
 
 //------------------------------------------------------------------------------------------
 /**
@@ -28,4 +28,4 @@ FIELD_TASK* FIELD_TASK_CameraRot_Yaw( FIELDMAP_WORK* fieldmap, int frame, u16 an
  * @param angle    最終的な角度( 2πラジアンを65536分割した値を単位とする数 )
  */
 //------------------------------------------------------------------------------------------
-FIELD_TASK* FIELD_TASK_CameraRot_Pitch( FIELDMAP_WORK* fieldmap, int frame, u16 angle );
+extern FIELD_TASK* FIELD_TASK_CameraRot_Pitch( FIELDMAP_WORK* fieldmap, int frame, u16 angle );

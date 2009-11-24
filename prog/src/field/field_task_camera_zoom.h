@@ -14,10 +14,10 @@
  *
  * @param fieldmap 処理対象のフィールドマップ
  * @param frame    ズーム完了までのフレーム数
- * @param dist     ズーム距離
+ * @param dist     移動する距離/最終的な距離
  */
 //------------------------------------------------------------------------------------------
-FIELD_TASK* FIELD_TASK_CameraLinearZoom( FIELDMAP_WORK* fieldmap, u16 frame, fx32 dist );
+extern FIELD_TASK* FIELD_TASK_CameraLinearZoom( FIELDMAP_WORK* fieldmap, u16 frame, fx32 dist );
 
 //------------------------------------------------------------------------------------------
 /**
@@ -25,7 +25,7 @@ FIELD_TASK* FIELD_TASK_CameraLinearZoom( FIELDMAP_WORK* fieldmap, u16 frame, fx3
  *
  * @param fieldmap 処理対象のフィールドマップ
  * @param frame    ズーム完了までのフレーム数
- * @param dist     ズーム距離
+ * @param dist     移動する距離/最終的な距離
  */
 //------------------------------------------------------------------------------------------
-FIELD_TASK* FIELD_TASK_CameraSharpZoom( FIELDMAP_WORK* fieldmap, u16 frame, fx32 dist );
+extern FIELD_TASK* FIELD_TASK_CameraSharpZoom( FIELDMAP_WORK* fieldmap, u16 frame, fx32 dist );

@@ -29,7 +29,7 @@
 //==========================================================================================
 // ■定数
 //========================================================================================== 
-#define ZOOM_IN_DIST   (70 << FX32_SHIFT)   // カメラのズームイン距離
+#define ZOOM_IN_DIST   (180 << FX32_SHIFT)   // カメラのズームイン距離
 #define ZOOM_IN_FRAME  (60)   // ズームインに掛かるフレーム数
 #define ZOOM_OUT_FRAME (60)   // ズームアウトに掛かるフレーム数
 
@@ -240,18 +240,22 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Ananukenohimo( GMEVENT* event, int* seq,
     work->cameraMode = FIELD_CAMERA_GetMode( camera );
     FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
     // カメラ初期設定
-    FIELD_CAMERA_SetAngleLen( camera, FIELD_CAMERA_GetAngleLen( camera ) - ZOOM_IN_DIST );
+    FIELD_CAMERA_SetAngleLen( camera, ZOOM_IN_DIST );
     ++( *seq );
     break;
   case 1:
     { // タスクの追加
+      FLD_CAMERA_PARAM def_param; 
+      fx32 val_dist;
       FIELD_TASK* rot;
       FIELD_TASK* zoom;
       FIELD_TASK* wait;
       FIELD_TASK* fade_in;
       FIELD_TASK_MAN* man;
+      FIELD_CAMERA_GetInitialParameter( camera, &def_param );
+      val_dist = def_param.Distance << FX32_SHIFT;
       rot     = FIELD_TASK_PlayerRotate_SpeedDown( work->fieldmap, 60, 8 );
-      zoom    = FIELD_TASK_CameraLinearZoom( work->fieldmap, ZOOM_OUT_FRAME, ZOOM_IN_DIST );
+      zoom    = FIELD_TASK_CameraLinearZoom( work->fieldmap, ZOOM_OUT_FRAME, val_dist );
       wait    = FIELD_TASK_Wait( work->fieldmap, 4 );
       fade_in = FIELD_TASK_Fade( work->fieldmap, GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, 1 );
       man  = FIELDMAP_GetTaskManager( work->fieldmap ); 
@@ -300,18 +304,22 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Anawohoru( GMEVENT* event, int* seq, voi
     work->cameraMode = FIELD_CAMERA_GetMode( camera );
     FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
     // カメラ初期設定
-    FIELD_CAMERA_SetAngleLen( camera, FIELD_CAMERA_GetAngleLen( camera ) - ZOOM_IN_DIST );
+    FIELD_CAMERA_SetAngleLen( camera, ZOOM_IN_DIST );
     ++( *seq );
     break;
   case 1:
     { // タスクの追加
+      FLD_CAMERA_PARAM def_param; 
+      fx32 val_dist;
       FIELD_TASK* rot;
       FIELD_TASK* zoom;
       FIELD_TASK* wait;
       FIELD_TASK* fade_in;
       FIELD_TASK_MAN* man;
+      FIELD_CAMERA_GetInitialParameter( camera, &def_param );
+      val_dist = def_param.Distance << FX32_SHIFT;
       rot     = FIELD_TASK_PlayerRotate_SpeedDown( work->fieldmap, 60, 8 );
-      zoom    = FIELD_TASK_CameraLinearZoom( work->fieldmap, ZOOM_OUT_FRAME, ZOOM_IN_DIST );
+      zoom    = FIELD_TASK_CameraLinearZoom( work->fieldmap, ZOOM_OUT_FRAME, val_dist );
       wait    = FIELD_TASK_Wait( work->fieldmap, 4 );
       fade_in = FIELD_TASK_Fade( work->fieldmap, GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, 1 );
       man     = FIELDMAP_GetTaskManager( work->fieldmap ); 
@@ -319,6 +327,7 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Anawohoru( GMEVENT* event, int* seq, voi
       FIELD_TASK_MAN_AddTask( man, zoom, NULL );
       FIELD_TASK_MAN_AddTask( man, wait, NULL );
       FIELD_TASK_MAN_AddTask( man, fade_in, wait ); // フェードインを遅らせてカメラのブレを隠す
+      // @todo SE
     }
     ++( *seq );
     break;
@@ -360,18 +369,22 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Teleport( GMEVENT* event, int* seq, void
     work->cameraMode = FIELD_CAMERA_GetMode( camera );
     FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
     // カメラ初期設定
-    FIELD_CAMERA_SetAngleLen( camera, FIELD_CAMERA_GetAngleLen( camera ) - ZOOM_IN_DIST );
+    FIELD_CAMERA_SetAngleLen( camera, ZOOM_IN_DIST );
     ++( *seq );
     break;
   case 1:
     { // タスクの追加
+      FLD_CAMERA_PARAM def_param; 
+      fx32 val_dist;
       FIELD_TASK* rot;
       FIELD_TASK* zoom;
       FIELD_TASK* wait;
       FIELD_TASK* fade_in;
       FIELD_TASK_MAN* man;
+      FIELD_CAMERA_GetInitialParameter( camera, &def_param );
+      val_dist = def_param.Distance << FX32_SHIFT;
       rot     = FIELD_TASK_PlayerRotate_SpeedDown( work->fieldmap, 60, 8 );
-      zoom    = FIELD_TASK_CameraLinearZoom( work->fieldmap, ZOOM_OUT_FRAME, ZOOM_IN_DIST );
+      zoom    = FIELD_TASK_CameraLinearZoom( work->fieldmap, ZOOM_OUT_FRAME, val_dist );
       wait    = FIELD_TASK_Wait( work->fieldmap, 4 );
       fade_in = FIELD_TASK_Fade( work->fieldmap, GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1 );
       man     = FIELDMAP_GetTaskManager( work->fieldmap ); 
