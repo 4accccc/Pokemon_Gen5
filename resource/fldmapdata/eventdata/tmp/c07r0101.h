@@ -11,5 +11,6 @@
 #ifndef ZONE_C07R0101_EVC_H
 #define ZONE_C07R0101_EVC_H
 
+#define C07R0101_OLDMAN_01                 0
 
 #endif //ZONE_C07R0101_EVC_H

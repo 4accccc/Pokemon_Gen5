@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c07.h"
-  //.include  "c07.h"
+  .include  "c07.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,18 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c07
+_EVENT_DATA    ev_pos_c07_hakase1_01
+_EVENT_DATA    ev_pos_c07_leader7_01
+_EVENT_DATA    ev_c07_rival_01
+_EVENT_DATA    ev_c07_support_01
+_EVENT_DATA    ev_c07_hakaim_01
+_EVENT_DATA    ev_c07_hakaim_02
+_EVENT_DATA    ev_c07_hakaiw_01
+_EVENT_DATA    ev_c07_girl2_01
+_EVENT_DATA    ev_c07_ambrella_01
+_EVENT_DATA    ev_c07_man3_01
+_EVENT_DATA    ev_c07_fighterm_01
+_EVENT_DATA    ev_bg_c07_board_01
 _EVENT_DATA_END
 
 
@@ -30,9 +41,301 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*   C07：到着イベント                                        */
 /**************************************************************/
-ev_c07:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_pos_c07_hakase1_01
 
+	//プレイヤーネームを格納
+	_PLAYER_NAME(1)
+
+	//瀕死・タマゴを除くポケモンの先頭を選択
+	DEFINE_LOCAL LWK_FRONT
+	_GET_PARTY_FRONT_POKEMON  ( LWK_FRONT , POKECOUNT_MODE_BATTLE_ENABLE )
+	//先頭ポケモンの名前を取得
+	_TEMOTI_MONS_NAME  (  0 , LWK_FRONT  )
+	//なつき度格納変数
+	DEFINE_LOCAL LWK_CHECK_NT
+	//なつき度チェック
+	_GET_TEMOTI_NATSUKI  ( LWK_CHECK_NT , LWK_FRONT ) 
+	
+	//アララギ博士歩み寄って話しかける
+	_OBJ_ANIME( C07_HAKASE1_01 , anm_c07_hakase1_01 )
+	_OBJ_ANIME_WAIT()
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG( msg_c07_hakase1_01 , C07_HAKASE1_01)
+	_BALLOONWIN_CLOSE()
+	
+	//なつき度によって会話を分岐
+	//70以上
+	IF $LWK_CHECK_NT >= 70 THEN
+		_BALLOONWIN_OBJMSG( msg_c07_hakase1_02 , C07_HAKASE1_01 )
+		_BALLOONWIN_CLOSE()
+		
+	//70以下
+	ELSE
+		_BALLOONWIN_OBJMSG( msg_c07_hakase1_03 , C07_HAKASE1_01 )
+		_BALLOONWIN_CLOSE()
+		
+	ENDIF
+	
+	//リュウラセンの塔を知っているか？
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG( msg_c07_hakase1_04 , C07_HAKASE1_01)
+	_YES_NO_WIN( SCWK_ANSWER )
+	_BALLOONWIN_CLOSE()
+	
+	//はい
+	IF $SCWK_ANSWER == 0 THEN
+		_BALLOONWIN_OBJMSG( msg_c07_hakase1_05 , C07_HAKASE1_01 )
+		_BALLOONWIN_CLOSE()
+	
+	//いいえ
+	ELSE
+		_BALLOONWIN_OBJMSG( msg_c07_hakase1_06 , C07_HAKASE1_01 )
+		_BALLOONWIN_CLOSE()
+	ENDIF
+	
+	//【仮】分岐メッセージ
+	_BALLOONWIN_OBJMSG( msg_c07_hakase1_07w , C07_HAKASE1_01 )
+	_BALLOONWIN_CLOSE()
+	
+	/*WB分岐メッセージ
+	//WとBで台詞を変える
+	_BALLOONWIN_OBJMSG_WB( msg_c07_hakase1_07w , msg_c07_hakase1_07b , C07_HAKASE1_01 , WIN_NONE)
+	*/
+	
+	//上を向いて喋る
+	_OBJ_ANIME( C07_HAKASE1_01 , anm_c07_hakase1_02 )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG( msg_c07_hakase1_08 , C07_HAKASE1_01)
+	_BALLOONWIN_CLOSE()
+		
+	//主人公に向き合って喋る
+	_OBJ_ANIME( C07_HAKASE1_01 , anm_c07_hakase1_03 )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG( msg_c07_hakase1_09 , C07_HAKASE1_01)
+	_BALLOONWIN_CLOSE()
+	
+	//退場
+	_OBJ_ANIME( C07_HAKASE1_01 , anm_c07_hakase1_goodbye )
+	_OBJ_ANIME_WAIT()
+	_OBJ_DEL( C07_HAKASE1_01 )
+	
+	//======================================//
+	
+	//アララギ父非表示
+	_FLAG_SET( FV_C07_HAKASE1 )
+	
+	//C07到着イベントPOSを無効に
+	$WK_SCENE_C07 = 1
+	
+	//======================================//
+	
+EVENT_END
+
+/**************************************************************/
+/*   C07：リュウラセンイベント開始                             */
+/**************************************************************/
+EVENT_START   ev_pos_c07_leader7_01
+
+	//======================================//
+	
+	//ハチク表示準備
+	_FLAG_RESET( FV_C07_READER7 )
+	
+	//======================================//
+
+	//ライバルとサポート会話
+	_BALLOONWIN_OBJMSG( msg_c07_black_01 , C07_RIVAL_01)
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG( msg_c07_white_01 , C07_SUPPORT_01)
+	_BALLOONWIN_CLOSE()
+	
+	//ハチクOBJ表示
+	_OBJ_ADD( C07_LEADER7_01 )
+	
+	//ハチクジムから出てくる・主人公たち押しのけられる
+	_OBJ_ANIME( C07_LEADER7_01 , anm_c07_leader_exit )
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_c07_player_koutai )
+	_OBJ_ANIME( C07_SUPPORT_01 , anm_c07_rival_koutai )
+	_OBJ_ANIME( C07_RIVAL_01 , anm_c07_rival_koutai )
+	_OBJ_ANIME_WAIT()
+	
+	//リュウラセンの塔が鳴いている、ハチク退場
+	_BALLOONWIN_OBJMSG( msg_c07_leader7_01 , C07_LEADER7_01)
+	_BALLOONWIN_CLOSE()
+	_OBJ_ANIME( C07_LEADER7_01 , anm_c07_leader_goodbye )
+	_OBJ_ANIME_WAIT()
+	
+	//ライバルとサポート会話
+	_BALLOONWIN_OBJMSG( msg_c07_black_02 , C07_RIVAL_01)
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG( msg_c07_white_03 , C07_SUPPORT_01)
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG( msg_c07_black_03 , C07_RIVAL_01)
+	_BALLOONWIN_CLOSE()
+
+	//ハチクOBJ削除
+	_OBJ_DEL( C07_LEADER7_01 )
+	
+	//======================================//
+	
+	//D08イベント開始・ジム前POS起動
+	$WK_SCENE_D08 = 2
+	
+	//C07ハチク非表示
+	_FLAG_SET( FV_C07_READER7 )
+	//C07GYM0101ハチク非表示
+	_FLAG_SET( FV_C07GYM0101_READER7_01 )
+	
+	//======================================//
+	
+EVENT_END
+
+/**************************************************************/
+/* ライバル                                             */
+/**************************************************************/
+EVENT_START   ev_c07_rival_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_hakaim1_01 )
+EVENT_END
+
+
+/**************************************************************/
+/* サポート                                             */
+/**************************************************************/
+EVENT_START   ev_c07_support_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_hakaim1_01 )
+EVENT_END
+
+
+/**************************************************************/
+/* プラズマ団員M1                                             */
+/**************************************************************/
+EVENT_START   ev_c07_hakaim_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_hakaim1_01 )
+EVENT_END
+
+/**************************************************************/
+/* プラズマ団員M2                                             */
+/**************************************************************/
+EVENT_START   ev_c07_hakaim_02
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_hakaim2_01 )
+EVENT_END
+
+/**************************************************************/
+/* プラズマ団員W1                                             */
+/**************************************************************/
+EVENT_START   ev_c07_hakaiw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_hakaiw1_01 )
+EVENT_END
+
+/**************************************************************/
+/* 【仮】GIRL2_01                                             */
+/**************************************************************/
+EVENT_START   ev_c07_girl2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_girl2_01w )
+	/*WB分岐メッセージ
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_WB( msg_c07_girl2_01w , msg_c07_girl2_01b , C07_GIRL2_01 , WIN_NONE)
+	_BALLOONWIN_CLOSE()
+	*/
+EVENT_END
+
+/**************************************************************/
+/* AMBRELLA_01                                             */
+/**************************************************************/
+EVENT_START   ev_c07_ambrella_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_ambrella_01 )
+EVENT_END
+
+/**************************************************************/
+/* 【仮】MAN3_01                                               */
+/**************************************************************/
+EVENT_START   ev_c07_man3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_man3_01w )
+	/*WB分岐メッセージ
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_WB( msg_c07_man3_01w , msg_c07_man3_01b , C07_MAN3_01 , WIN_NONE)
+	_BALLOONWIN_CLOSE()
+	*/
+EVENT_END
+
+/**************************************************************/
+/* FIGHTERM_01                                                */
+/**************************************************************/
+EVENT_START   ev_c07_fighterm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_fighterm_01 )
+EVENT_END
+
+
+/**************************************************************/
+/* 看板                                                       */
+/**************************************************************/
+EVENT_START   ev_bg_c07_board_01
+	_EASY_MSG( msg_c07_sign1_01 )
+EVENT_END
+
+
+//--------------------------------------------------------------
+//	C07　到着イベント用：アララギ父主人公に接近
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_hakase1_01
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C07　到着イベント用：アララギ父塔のほうを見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_hakase1_02
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C07　到着イベント用：アララギ父主人公に向き合う
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_hakase1_03
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C07　到着イベント用：アララギ父退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_hakase1_goodbye
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C07　リュウラセンイベント開始：ハチク外に出てくる
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_leader_exit
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C07　リュウラセンイベント開始：主人公押しのけられる
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_player_koutai
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C07　リュウラセンイベント開始：ライバルとサポート押しのけられる
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_rival_koutai
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C07　リュウラセンイベント開始：ハチク退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_leader_goodbye
+	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	AC_WALK_U_8F,10
+	_ANIME_DATA	ACMD_END,0

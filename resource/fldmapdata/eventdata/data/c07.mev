@@ -1,5 +1,5 @@
 #event data
-#save date:2009/11/20 15:04:42
+#save date:2009/11/20 19:04:36
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c07.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,224 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c07.wms
 #hold event type:
 1
 #hold event number:
+7
+#event number: 0
+#type
+1
+#ID name
+C07_RIVAL_01
+#OBJ CODE Number
+RIVEL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C07_RIVAL_01
+#Event Script Name
+SCRID_C07_RIVAL_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
 0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 48 72
+#event number: 1
+#type
+1
+#ID name
+C07_SUPPORT_01
+#OBJ CODE Number
+SUPPORT
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C07_RIVAL_01
+#Event Script Name
+SCRID_C07_SUPPORT_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 48 72
+#event number: 2
+#type
+1
+#ID name
+C07_HAKAIM_01
+#OBJ CODE Number
+HAKAIM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C07_HAKAIM_01
+#Event Script Name
+SCRID_C07_HAKAIM_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+24 48 184
+#event number: 3
+#type
+1
+#ID name
+C07_HAKAIM_02
+#OBJ CODE Number
+HAKAIM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C07_HAKAIM_01
+#Event Script Name
+SCRID_C07_HAKAIM_02
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+24 48 248
+#event number: 4
+#type
+1
+#ID name
+C07_HAKAIW_01
+#OBJ CODE Number
+HAKAIM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C07_HAKAIM_01
+#Event Script Name
+SCRID_C07_HAKAIW_01
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+72 48 216
+#event number: 5
+#type
+1
+#ID name
+C07_HAKASE1_01
+#OBJ CODE Number
+HAKASE1
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C07_HAKASE1
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 -4 -504
+#event number: 6
+#type
+1
+#ID name
+C07_LEADER7_01
+#OBJ CODE Number
+LEADER7
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C07_READER7
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 48 120
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -19,7 +236,20 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c07.wms
 #hold event type:
 1
 #hold event number:
-0
+1
+#event number: 0
+#Bg Event Label
+C07_BOARD_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C07_BOARD_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 0 -472
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
@@ -29,7 +259,37 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c07.wms
 #hold event type:
 1
 #hold event number:
+2
+#event number: 0
+#Pos Event Label
+C07_HAKASE1_01
+#Pos Script Name
+SCRID_POS_C07_HAKASE1_01
+#Event Trigger Work Name
+WK_SCENE_C07
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 0 -488
+#size
+1 8
+#event number: 1
+#Pos Event Label
+C07_LEADER7_01
+#Pos Script Name
+SCRID_POS_C07_LEADER7_01
+#Event Trigger Work Name
+WK_SCENE_D08
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 48 104
+#size
+1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

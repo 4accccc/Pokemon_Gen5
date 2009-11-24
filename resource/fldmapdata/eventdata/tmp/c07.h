@@ -16,5 +16,12 @@
 #ifndef ZONE_C07_EVC_H
 #define ZONE_C07_EVC_H
 
+#define C07_RIVAL_01                       0
+#define C07_SUPPORT_01                     1
+#define C07_HAKAIM_01                      2
+#define C07_HAKAIM_02                      3
+#define C07_HAKAIW_01                      4
+#define C07_HAKASE1_01                     5
+#define C07_LEADER7_01                     6
 
 #endif //ZONE_C07_EVC_H

@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c07gym0101.h"
-  //.include  "c07gym0101.h"
+  .include  "c07gym0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c07gym0101
+_EVENT_DATA    ev_c07gym0101_leader7_01
 _EVENT_DATA_END
 
 
@@ -30,9 +30,78 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*    【仮】ジムリーダー会話                                  */
 /**************************************************************/
-ev_c07gym0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_c07gym0101_leader7_01
 
+	_TALK_OBJ_START()
+
+	//ジムバッジ取得チェック
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_07 )
+	
+	//ジムバッジを取得していない場合
+	IF $SCWK_TEMP0 == 0 THEN
+	
+		//会話
+		_BALLOONWIN_OBJMSG( msg_c07gym0101_leader_01,C07GYM0101_LEADER7_01 )
+		_BALLOONWIN_CLOSE()
+		
+		//【仮】戦闘処理スキップ
+		//戦闘処理
+		_TRAINER_BTL_SET( TRID_LEADER6_01, 0 )
+		//結果チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()
+		ELSE
+			_TRAINER_LOSE()
+		ENDIF
+		
+	
+		//勝利後会話
+		_BALLOONWIN_OBJMSG( msg_c07gym0101_leader_02 , C07GYM0101_LEADER7_01 )
+		_BALLOONWIN_CLOSE()
+	
+		//アイシクルバッジ入手処理
+		_SET_BADGE_FLAG( BADGE_ID_07 )
+		_PLAYER_NAME( 0 )
+		//ハチクからアイシクルバッジをもらった
+		_SYSWIN_MSG_DOWN( msg_c07gym0101_leader_03 )
+		_ME_PLAY( SEQ_ME_BADGE )
+		_ME_WAIT()
+		_SYSWIN_CLOSE()
+
+		//ハチクメッセージ
+		_BALLOONWIN_OBJMSG( msg_c07gym0101_leader_04 , C07GYM0101_LEADER7_01 )
+		_BALLOONWIN_CLOSE()
+
+		//わざマシン入手
+		_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
+
+		//わざマシン中身解説
+		_ITEM_NAME( 0, ITEM_WAZAMASIN01 )
+		_ITEM_WAZA_NAME( 1, ITEM_WAZAMASIN01 )
+		_BALLOONWIN_OBJMSG( msg_c07gym0101_leader_05 , C07GYM0101_LEADER7_01 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+		
+		//============フラグワーク操作=============//
+	
+		//D08イベント開始
+		$WK_SCENE_D08 = 1
+		
+		//C07のライバル・サポートを表示
+		_FLAG_RESET( FV_C07_RIVAL_01 )
+		//C07のプラズマ団を表示
+		_FLAG_RESET( FV_C07_HAKAIM_01 )
+
+		//========================================//
+		
+	//ジムバッジ入手後
+	ELSE
+		_BALLOONWIN_OBJMSG( msg_c07gym0101_leader_07 , C07GYM0101_LEADER7_01 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+	ENDIF
+
+EVENT_END

@@ -11,5 +11,6 @@
 #ifndef ZONE_C07GYM0101_EVC_H
 #define ZONE_C07GYM0101_EVC_H
 
+#define C07GYM0101_LEADER7_01              0
 
 #endif //ZONE_C07GYM0101_EVC_H

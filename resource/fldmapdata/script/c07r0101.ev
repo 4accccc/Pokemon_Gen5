@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c07r0101.h"
-  //.include  "c07r0101.h"
+  .include  "c07r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c07r0101
+_EVENT_DATA    ev_c07r0101_oldman_01
 _EVENT_DATA_END
 
 
@@ -30,9 +30,26 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/* D08イベント進行状況で台詞を変えるおじいさん                 */
 /**************************************************************/
-ev_c07r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_c07r0101_oldman_01
 
+	//ジムクリア前
+	IF $WK_SCENE_C07 == 0 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07r0101_oldman_01 )
+		
+	//ジムクリア後、リュウラセンの塔イベントクリア前
+	ELSIF $WK_SCENE_C07 == 0 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07r0101_oldman_02 )
+	
+	//リュウラセンの塔イベントクリア後
+	ELSIF $WK_SCENE_C07 == 0 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07r0101_oldman_03 )
+	
+	//その他
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07r0101_oldman_01 )
+	ENDIF
+
+
+EVENT_END
