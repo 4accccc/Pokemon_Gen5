@@ -2399,7 +2399,7 @@ static void handler_IkarinoTubo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_IkarinoTubo( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_AFTER,     handler_IkarinoTubo },  // ダメージ直後ハンドラ
+    { BTL_EVENT_WAZA_DMG_REACTION,     handler_IkarinoTubo },  // ダメージ直後ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -2419,7 +2419,7 @@ static void handler_DokunoToge( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_DokunoToge( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_AFTER,     handler_DokunoToge }, // ダメージ直後ハンドラ
+    { BTL_EVENT_WAZA_DMG_REACTION,     handler_DokunoToge }, // ダメージ直後ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -2439,7 +2439,7 @@ static void handler_Seidenki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Seidenki( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_AFTER,     handler_Seidenki }, // ダメージ直後ハンドラ
+    { BTL_EVENT_WAZA_DMG_REACTION,     handler_Seidenki }, // ダメージ直後ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -2459,7 +2459,7 @@ static void handler_HonoNoKarada( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_HonoNoKarada( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_AFTER,     handler_HonoNoKarada }, // ダメージ直後ハンドラ
+    { BTL_EVENT_WAZA_DMG_REACTION,     handler_HonoNoKarada }, // ダメージ直後ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -2493,7 +2493,7 @@ static void handler_MeromeroBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_MeromeroBody( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_AFTER,     handler_MeromeroBody }, // ダメージ直後ハンドラ
+    { BTL_EVENT_WAZA_DMG_REACTION,     handler_MeromeroBody }, // ダメージ直後ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -2525,7 +2525,7 @@ static void handler_Housi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Housi( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_AFTER,     handler_Housi },  // ダメージ直後ハンドラ
+    { BTL_EVENT_WAZA_DMG_REACTION,     handler_Housi },  // ダメージ直後ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -2590,7 +2590,7 @@ static void handler_Samehada( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Samehada( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_AFTER,     handler_Samehada }, // ダメージ直後ハンドラ
+    { BTL_EVENT_WAZA_DMG_REACTION,     handler_Samehada }, // ダメージ直後ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -2628,7 +2628,7 @@ static void handler_Yuubaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Yuubaku( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_AFTER,     handler_Yuubaku },  // ダメージ直後ハンドラ
+    { BTL_EVENT_WAZA_DMG_REACTION,     handler_Yuubaku },  // ダメージ直後ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -2663,7 +2663,7 @@ static void handler_Hensyoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Hensyoku( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_AFTER,     handler_Hensyoku }, // ダメージ直後ハンドラ
+    { BTL_EVENT_WAZA_DMG_REACTION,     handler_Hensyoku }, // ダメージ直後ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );

@@ -442,7 +442,8 @@ typedef struct {
  */
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< ‹¤—Lƒwƒbƒ_
- u32   pokeID;
+ u8   pokeID;
+ BTL_HANDEX_STR_PARAMS      exStr;
 }BTL_HANDEX_PARAM_KILL;
 
 /**

@@ -306,7 +306,6 @@ static BOOL scEvent_CheckWazaRob( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* atta
   TARGET_POKE_REC* targetRec, u8* robberPokeID, u8* robTargetPokeID, BTL_HANDEX_STR_PARAMS* strParam );
 static BOOL scproc_Fight_CheckReqWazaFail( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID orgWazaID );
 static void scPut_ReqWazaEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaID waza, BtlPokePos targetPos );
-static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, TARGET_POKE_REC* targetRec );
 static u8 registerWazaTargets( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
   const SVFL_WAZAPARAM* wazaParam, TARGET_POKE_REC* rec );
 static u8 registerTarget_single( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
@@ -317,6 +316,7 @@ static u8 registerTarget_triple( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
   const SVFL_WAZAPARAM* wazaParam, u8 intrPokeID, TARGET_POKE_REC* rec );
 static void correctTargetDead( BTL_SVFLOW_WORK* wk, BtlRule rule, const BTL_POKEPARAM* attacker,
   const SVFL_WAZAPARAM* wazaParam, TARGET_POKE_REC* rec );
+static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, TARGET_POKE_REC* targetRec );
 static BOOL IsMustHit( const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target );
 static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
 static void flowsub_checkWazaAvoid( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
@@ -347,7 +347,7 @@ static void scproc_Fight_Damage_side_single( BTL_SVFLOW_WORK* wk,
       fx32 targetDmgRatio, BtlTypeAff affinity );
 static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
     BTL_POKEPARAM* attacker,  BTL_POKEPARAM* defender,
-    const SVFL_WAZAPARAM* wazaParam,   BtlTypeAff affinity,   fx32 targetDmgRatio );
+    const SVFL_WAZAPARAM* wazaParam, BtlTypeAff affinity, fx32 targetDmgRatio );
 static void scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
     BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets, BtlTypeAff* affAry, const SVFL_WAZAPARAM* wazaParam, fx32 dmg_ratio );
 static void wazaDmgRec_Add( const BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam, u16 damage );
@@ -355,6 +355,8 @@ static void scproc_WazaAdditionalEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPAR
   BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, u32 damage );
 static void scproc_WazaDamageReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender,
   const SVFL_WAZAPARAM* wazaParam, BtlTypeAff affinity, u32 damage, BOOL critical_flag );
+static void scproc_WazaDamageAfter( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
+  const SVFL_WAZAPARAM* wazaParam, u32 damage, BOOL critical_flag );
 static void scproc_CheckItemReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static BOOL scproc_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPARAM* attacker,
   WazaSick sick, BPP_SICK_CONT sickCont, BOOL fAlmost, MSG_CALLBACK_PARAM* msgCallbackParam );
@@ -520,6 +522,9 @@ static BppKoraeruCause scEvent_CheckKoraeru( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, u16* damage );
 static void scEvent_WazaDamageReaction( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam, BtlTypeAff aff,
+  u32 damage, BOOL criticalFlag );
+static void scEvent_WazaDamageAfter( BTL_SVFLOW_WORK* wk,
+  const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam,
   u32 damage, BOOL criticalFlag );
 static void scEvent_CheckItemReaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scEvent_ItemEquip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
@@ -2957,11 +2962,14 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   }
 
   // 死んでるポケモンは除外
-  // @todo この時点でターゲット数0でも、天候ワザなどは発動するがダメージワザは終了。どうすべき？
-  //       -> おそらくレコードに「登録された最大数」を記録しておき、それが１以上かつ現状が０なら
-  //          ハズレ、終了とすべきか。
   TargetPokeRec_RemoveDeadPokemon( targetRec );
-
+  // ターゲットは居たはずだがモロモロの理由で残っていない場合はハズレたことにして終了
+  if( (TargetPokeRec_GetCountMax(targetRec) > 0)
+  &&  (TargetPokeRec_GetCount(targetRec) == 0)
+  ){
+    scPut_WazaAvoid( wk, attacker, wk->wazaParam.wazaID );
+    return;
+  }
 
   // 対象ごとの無効チェック＆回避チェック
   flowsub_checkNotEffect( wk, &wk->wazaParam, attacker, targetRec );
@@ -3734,6 +3742,7 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
 
   TargetPokeRec_AddWithDamage( &wk->damagedPokemon, defender, damage_sum );
   if( damage_sum ){
+    scproc_WazaDamageAfter( wk, attacker, wazaParam, damage_sum, fCritical );
     wazaDmgRec_Add( attacker, defender, wazaParam, damage_sum );
     BPP_TURNFLAG_Set( defender, BPP_TURNFLG_DAMAGED );
   }
@@ -3791,6 +3800,9 @@ static void scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
     scproc_WazaAdditionalEffect( wk, wazaParam, attacker, bpp[i], dmg[i] );
     scproc_WazaDamageReaction( wk, attacker, bpp[i], wazaParam, affAry[i], dmg[i], critical_flg[i] );
     scproc_CheckItemReaction( wk, bpp[i] );
+  }
+  if( dmg_sum ){
+    scproc_WazaDamageAfter( wk, attacker, wazaParam, dmg[i], critical_flg[i] );
   }
 
   scproc_Fight_Damage_Kickback( wk, attacker, wazaParam->wazaID, dmg_sum );
@@ -3869,6 +3881,28 @@ static void scproc_WazaDamageReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attac
   u32 hem_state = Hem_PushState( &wk->HEManager );
 
   scEvent_WazaDamageReaction( wk, attacker, defender, wazaParam, affinity, damage, critical_flag );
+  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+  Hem_PopState( &wk->HEManager, hem_state );
+}
+//----------------------------------------------------------------------------------
+/**
+ * ワザダメージを与え終わった後の追加処理
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   defender
+ * @param   wazaParam
+ * @param   affinity
+ * @param   damage
+ * @param   critical_flag
+ */
+//----------------------------------------------------------------------------------
+static void scproc_WazaDamageAfter( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
+  const SVFL_WAZAPARAM* wazaParam, u32 damage, BOOL critical_flag )
+{
+  u32 hem_state = Hem_PushState( &wk->HEManager );
+
+  scEvent_WazaDamageAfter( wk, attacker, wazaParam, damage, critical_flag );
   scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
   Hem_PopState( &wk->HEManager, hem_state );
 }
@@ -4221,6 +4255,7 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
 {
   WazaDamageType dmgType = WAZADATA_GetDamageType( wazaParam->wazaID );
   u32 rawDamage = 0;
+  BOOL fFixDamage = FALSE;
 
   BTL_EVENTVAR_Push();
 
@@ -4235,7 +4270,11 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
   BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_PROC1 );
   rawDamage = BTL_EVENTVAR_GetValue( BTL_EVAR_FIX_DAMAGE );
 
-  if( rawDamage == 0 )
+  if( rawDamage )
+  {
+    fFixDamage = TRUE;
+  }
+  else
   {
     u16 atkPower, defGuard, wazaPower;
 
@@ -4312,7 +4351,8 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
 
   BTL_EVENTVAR_Pop();
 
-  return rawDamage;
+  *dstDamage = rawDamage;
+  return fFixDamage;
 }
 //---------------------------------------------------------------------------------------------
 // ワザダメージ処理後の反動処理
@@ -4439,6 +4479,9 @@ static WazaSick scEvent_CheckAddSick( BTL_SVFLOW_WORK* wk, WazaID waza,
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_ADD_SICK );
     per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
     sick = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
+    if( sick == WAZASICK_SPECIAL_CODE ){
+      sick = WAZASICK_NULL;
+    }
     sickCont.raw = BTL_EVENTVAR_GetValue( BTL_EVAR_SICK_CONT );
   BTL_EVENTVAR_Pop();
 
@@ -6125,6 +6168,9 @@ static void scPut_WazaDamageSingle( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
     aff = BTL_TYPEAFF_100;
   }
 
+  BTL_Printf("ポケ[%d]に対するワザダメージ値:%d -> 残りHP %d\n", BPP_GetID(defender), damage,
+    BPP_GetValue(defender, BPP_HP));
+
   BPP_HpMinus( defender, damage );
   SCQUE_PUT_OP_HpMinus( wk->que, pokeID, damage );
   SCQUE_PUT_ACT_WazaDamage( wk->que, pokeID, aff, damage, wazaParam->wazaID );
@@ -6293,7 +6339,7 @@ static void scPut_SimpleHp( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, int value )
 }
 //--------------------------------------------------------------------------
 /**
- * [Put] シンプルHP増減エフェクト
+ * [Put] ポケモン強制ひん死
  */
 //--------------------------------------------------------------------------
 static void scPut_KillPokemon( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 effType )
@@ -7576,6 +7622,32 @@ static void scEvent_WazaDamageReaction( BTL_SVFLOW_WORK* wk,
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, defPokeID );
     BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
     BTL_EVENTVAR_SetValue( BTL_EVAR_TYPEAFF, aff );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_CRITICAL_FLAG, criticalFlag );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_REACTION );
+  BTL_EVENTVAR_Pop();
+}
+//--------------------------------------------------------------------------
+/**
+ * [Event] ワザダメージを与え終わった後の追加処理
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   defender
+ * @param   waza
+ * @param   aff
+ * @param   damage
+ * @param   criticalFlag
+ *
+ */
+//--------------------------------------------------------------------------
+static void scEvent_WazaDamageAfter( BTL_SVFLOW_WORK* wk,
+  const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam,
+  u32 damage, BOOL criticalFlag )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
     BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
     BTL_EVENTVAR_SetValue( BTL_EVAR_CRITICAL_FLAG, criticalFlag );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_AFTER );
@@ -9548,6 +9620,7 @@ static u8 scproc_HandEx_kill( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER
   BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
   if( !BPP_IsDead(pp_target) ){
     scproc_KillPokemon( wk, pp_target );
+    handexSub_putString( wk, &param->exStr );
     return 1;
   }
   return 0;
