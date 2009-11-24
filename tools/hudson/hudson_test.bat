@@ -6,11 +6,11 @@ REM 制作者  : hosaka_genya
 REM 日付    : 2009/11/24
 REM =================================================================
 
-REM 実行タイムアウト(秒)
-SET TIMEOUT_EXEC=10
-REM 表示タイムアウト(秒)
-REM SET TIMEOUT_DISP=5
-REM 3600
+REM main.srl
+SET PATH_MAIN_SRL=%PROJECT_PROGDIR%/bin/ARM9-TS/Release/main.srl
+
+REM 実行タイムアウト(秒) >> hudsonで指定
+REM SET TIMEOUT_EXEC=60 
 
 REM ================================
 REM ユーザーネーム設定
@@ -21,18 +21,34 @@ SET USERNAME=hudson
 REM ================================
 REM ブート
 REM ================================
-loadrun -T 3 %PROJECT_PROGDIR%/bin/ARM9-TS/Release/main.srl
+loadrun -T %TIMEOUT_EXEC% -a "HUDSON_ABORT" %PATH_MAIN_SRL%
+echo ErrorLevel = %ERRORLEVEL%
+pause
 
-REM 終了判定
-if %ERRORLEVEL% == 0 goto END:
+REM タイムアウト判定
+if %ERRORLEVEL% == 205 goto TIMEOUT:
 
-REM エラーコードを丸々返す
-exit %ERRORLEVEL%
+REM 指定文字列検知で終了
+if %ERRORLEVEL% == 200 goto ABORT_STRING:
+
+REM ================================
+REM タイムアウト
+REM ================================
+:TIMEOUT
+  @echo timeout
+  goto END:
+  
+REM ================================
+REM 指定文字列検知終了
+REM ================================
+:ABORT_STRING
+  REM エラーコードを丸々返す
+  exit %ERRORLEVEL%
 
 REM ================================
 REM 正常終了
 REM ================================
 :END
-  @echo hudson make end
-
+  @echo hudson test is SUCCESS .
+  exit 0
 
