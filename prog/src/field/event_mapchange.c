@@ -455,6 +455,108 @@ static GMEVENT_RESULT EVENT_MapChangeBySandStream(GMEVENT * event, int *seq, voi
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_MapChangeByAnanukenohimo(GMEVENT * event, int *seq, void*work)
+{
+	MAPCHANGE_WORK*     mcw = work;
+	GAMESYS_WORK*      gsys = mcw->gsys;
+	GAMEDATA*      gamedata = mcw->gamedata;
+	FIELDMAP_WORK* fieldmap = mcw->fieldmap;
+
+	switch (*seq)
+  {
+  case 0:
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, fieldmap) );
+    (*seq) ++;
+    break;
+	case 1: // 退場イベント
+    GMEVENT_CallEvent( 
+        event, EVENT_DISAPPEAR_Ananukenohimo( event, gsys, fieldmap ) );
+		(*seq)++;
+		break;
+  case 2: // マップチェンジ・コア・イベント
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw ) );
+		(*seq)++;
+    break;
+	case 3: // 登場イベント
+    GMEVENT_CallEvent( event, EVENT_APPEAR_Ananukenohimo( event, gsys, fieldmap ) );
+		(*seq) ++;
+		break;
+  case 4:
+		return GMEVENT_RES_FINISH; 
+	}
+	return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_MapChangeByAnawohoru(GMEVENT * event, int *seq, void*work)
+{
+	MAPCHANGE_WORK*     mcw = work;
+	GAMESYS_WORK*      gsys = mcw->gsys;
+	GAMEDATA*      gamedata = mcw->gamedata;
+	FIELDMAP_WORK* fieldmap = mcw->fieldmap;
+
+	switch (*seq)
+  {
+  case 0:
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, fieldmap) );
+    (*seq) ++;
+    break;
+	case 1: // 退場イベント
+    GMEVENT_CallEvent( 
+        event, EVENT_DISAPPEAR_Anawohoru( event, gsys, fieldmap ) );
+		(*seq)++;
+		break;
+  case 2: // マップチェンジ・コア・イベント
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw ) );
+		(*seq)++;
+    break;
+	case 3: // 登場イベント
+    GMEVENT_CallEvent( event, EVENT_APPEAR_Anawohoru( event, gsys, fieldmap ) );
+		(*seq) ++;
+		break;
+  case 4:
+		return GMEVENT_RES_FINISH; 
+	}
+	return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_MapChangeByTeleport(GMEVENT * event, int *seq, void*work)
+{
+	MAPCHANGE_WORK*     mcw = work;
+	GAMESYS_WORK*      gsys = mcw->gsys;
+	GAMEDATA*      gamedata = mcw->gamedata;
+	FIELDMAP_WORK* fieldmap = mcw->fieldmap;
+
+	switch (*seq)
+  {
+  case 0:
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, fieldmap) );
+    (*seq) ++;
+    break;
+	case 1: // 退場イベント
+    GMEVENT_CallEvent( 
+        event, EVENT_DISAPPEAR_Teleport( event, gsys, fieldmap ) );
+		(*seq)++;
+		break;
+  case 2: // マップチェンジ・コア・イベント
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw ) );
+		(*seq)++;
+    break;
+	case 3: // 登場イベント
+    GMEVENT_CallEvent( event, EVENT_APPEAR_Teleport( event, gsys, fieldmap ) );
+		(*seq) ++;
+		break;
+  case 4:
+		return GMEVENT_RES_FINISH; 
+	}
+	return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_MapChangeToUnion(GMEVENT * event, int *seq, void*work)
 {
 	MAPCHANGE_WORK*     mcw = work;
@@ -565,6 +667,15 @@ GMEVENT * DEBUG_EVENT_ChangeMapDefaultPos(GAMESYS_WORK * gsys,
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief	マップ遷移イベント生成（ 流砂 ）
+ * @param	gsys		      ゲームシステムへのポインタ
+ * @param	fieldmap	    フィールドシステムへのポインタ
+ * @param disappear_pos 流砂中心点の座標
+ * @param	zone_id		    遷移するマップのZONE指定
+ * @param appear        遷移先での座標
+ * @return GMEVENT 生成したマップ遷移イベント
+ */
 //------------------------------------------------------------------
 GMEVENT * EVENT_ChangeMapBySandStream(
     GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, 
@@ -580,6 +691,72 @@ GMEVENT * EVENT_ChangeMapBySandStream(
       &mcw->loc_req, zone_id, DIR_DOWN, appear_pos->x, appear_pos->y, appear_pos->z);
   mcw->exit_type = EXIT_TYPE_NONE;
   VEC_Set( &mcw->stream_pos, disappear_pos->x, disappear_pos->y, disappear_pos->z );
+	return event;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	マップ遷移イベント生成（ あなぬけのヒモ ）
+ * @param	gsys ゲームシステムへのポインタ
+ * @return GMEVENT 生成したマップ遷移イベント
+ */
+//------------------------------------------------------------------
+extern GMEVENT* EVENT_ChangeMapByAnanukenohimo( GAMESYS_WORK * gsys )
+{
+	GMEVENT* event;
+	MAPCHANGE_WORK* work;
+
+	event = GMEVENT_Create(gsys, NULL, EVENT_MapChangeByAnanukenohimo, sizeof(MAPCHANGE_WORK));
+	work = GMEVENT_GetEventWork(event);
+  MAPCHANGE_WORK_init( work, gsys ); 
+  work->loc_req = *(GAMEDATA_GetEscapeLocation( work->gamedata ));
+  work->loc_req.type = LOCATION_TYPE_DIRECT;
+  work->exit_type = EXIT_TYPE_NONE;
+	return event;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	マップ遷移イベント生成（ あなをほる )
+ * @param	gsys ゲームシステムへのポインタ
+ * @return GMEVENT 生成したマップ遷移イベント
+ */
+//------------------------------------------------------------------
+extern GMEVENT* EVENT_ChangeMapByAnawohoru( GAMESYS_WORK * gsys )
+{
+	GMEVENT* event;
+	MAPCHANGE_WORK* work;
+
+	event = GMEVENT_Create(gsys, NULL, EVENT_MapChangeByAnawohoru, sizeof(MAPCHANGE_WORK));
+	work = GMEVENT_GetEventWork(event);
+  MAPCHANGE_WORK_init( work, gsys ); 
+  work->loc_req = *(GAMEDATA_GetEscapeLocation( work->gamedata ));
+  work->loc_req.type = LOCATION_TYPE_DIRECT;
+  work->exit_type = EXIT_TYPE_NONE;
+	return event;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	マップ遷移イベント生成（ テレポート )
+ * @param	gsys ゲームシステムへのポインタ
+ * @return GMEVENT 生成したマップ遷移イベント
+ */
+//------------------------------------------------------------------
+extern GMEVENT* EVENT_ChangeMapByTeleport( GAMESYS_WORK * gsys )
+{
+  u16 warp_id;
+	GMEVENT* event;
+	MAPCHANGE_WORK* work;
+
+	event = GMEVENT_Create(gsys, NULL, EVENT_MapChangeByTeleport, sizeof(MAPCHANGE_WORK));
+	work = GMEVENT_GetEventWork(event);
+  MAPCHANGE_WORK_init( work, gsys ); 
+  warp_id = GAMEDATA_GetWarpID( work->gamedata );
+  WARPDATA_GetWarpLocation( warp_id, &work->loc_req );
+	LOCATION_DEBUG_SetDefaultPos( &work->loc_req, work->loc_req.zone_id );
+  work->loc_req.type = LOCATION_TYPE_DIRECT;
+  work->exit_type = EXIT_TYPE_NONE;
 	return event;
 }
 

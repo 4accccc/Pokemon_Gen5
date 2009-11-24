@@ -85,18 +85,45 @@ extern GMEVENT * DEBUG_EVENT_ChangeMapDefaultPos(GAMESYS_WORK * gsys,
 
 //------------------------------------------------------------------
 /**
- * @brief	流砂によるマップ遷移イベント生成（座標指定）
- * @param	gsys		ゲームシステムへのポインタ
- * @param	fieldmap	フィールドシステムへのポインタ
+ * @brief	マップ遷移イベント生成（ 流砂 ）
+ * @param	gsys		      ゲームシステムへのポインタ
+ * @param	fieldmap	    フィールドシステムへのポインタ
  * @param disappear_pos 流砂中心点の座標
- * @param	zone_id		遷移するマップのZONE指定
- * @param appear 遷移先での座標
- * @return	GMEVENT		生成したマップ遷移イベント
+ * @param	zone_id		    遷移するマップのZONE指定
+ * @param appear        遷移先での座標
+ * @return GMEVENT 生成したマップ遷移イベント
  */
 //------------------------------------------------------------------
 extern GMEVENT * EVENT_ChangeMapBySandStream(
     GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, 
     const VecFx32* disappear_pos, u16 zone_id, const VecFx32* appear_pos );
+
+//------------------------------------------------------------------
+/**
+ * @brief	マップ遷移イベント生成（ あなぬけのヒモ ）
+ * @param	gsys ゲームシステムへのポインタ
+ * @return GMEVENT 生成したマップ遷移イベント
+ */
+//------------------------------------------------------------------
+extern GMEVENT* EVENT_ChangeMapByAnanukenohimo( GAMESYS_WORK * gsys );
+
+//------------------------------------------------------------------
+/**
+ * @brief	マップ遷移イベント生成（ あなをほる )
+ * @param	gsys ゲームシステムへのポインタ
+ * @return GMEVENT 生成したマップ遷移イベント
+ */
+//------------------------------------------------------------------
+extern GMEVENT* EVENT_ChangeMapByAnawohoru( GAMESYS_WORK * gsys );
+
+//------------------------------------------------------------------
+/**
+ * @brief	マップ遷移イベント生成（ テレポート )
+ * @param	gsys ゲームシステムへのポインタ
+ * @return GMEVENT 生成したマップ遷移イベント
+ */
+//------------------------------------------------------------------
+extern GMEVENT* EVENT_ChangeMapByTeleport( GAMESYS_WORK * gsys );
 
 //------------------------------------------------------------------
 /**
