@@ -998,6 +998,10 @@ static  void  PokemonViewerPositionLoad( POKEMON_VIEWER_WORK *pvw )
   u32 head;
   int res;
 
+  if( pvw->mcs_enable == 0 ){
+    return;
+  }
+
   size = MCS_CheckRead();
 
   if( size ){
@@ -1022,6 +1026,10 @@ static  void  PokemonViewerResourceLoad( POKEMON_VIEWER_WORK *pvw )
 {
   u32 size;
   u32 head;
+
+  if( pvw->mcs_enable == 0 ){
+    return;
+  }
 
   size = MCS_CheckRead();
 

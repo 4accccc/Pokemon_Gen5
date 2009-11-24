@@ -602,6 +602,11 @@ static  void  EffectViewerRead( EFFECT_VIEWER_WORK *evw )
   u32 size;
   u32 head;
 
+  if( evw->mcs_enable == 0 )
+  { 
+    return;
+  }
+
   if( MCS_CheckEnable() == FALSE ){
     return;
   }
