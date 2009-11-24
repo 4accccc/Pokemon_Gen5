@@ -29,13 +29,6 @@
 
 #ifdef PM_DEBUG
 
-#ifdef DEBUG_ONLY_FOR_lee_hyunjung
-#define C3P02_DEBUG_CAMERA_NOT_MOVE // カメラを動かさない
-#endif //DEBUG_ONLY_FOR_lee_hyunjung
-
-//@TODO 人物が回転してしまうため、アングルポインタを渡さない
-#define DEBUG_PEOPLE_ANGLE_CUT 
-
 #endif  // 
 
 //======================================================================
@@ -116,11 +109,6 @@ static void mapCtrlNoGrid_Create(
   }
 //
 	
-#ifdef DEBUG_PEOPLE_ANGLE_CUT
-    MMDLSYS_SetJoinShadow( FIELDMAP_GetMMdlSys( fieldWork ), FALSE );
-	  MMDLSYS_SetupDrawProc( FIELDMAP_GetMMdlSys( fieldWork ), NULL );
-#endif
-
 	FIELD_PLAYER_SetPos( fld_player, pos );
 	FIELD_PLAYER_SetDir( fld_player, dir );
 }
@@ -136,10 +124,6 @@ static void mapCtrlNoGrid_Delete( FIELDMAP_WORK *fieldWork )
 {
   FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
 	FIELDMAP_CTRL_NOGRID_WORK* work = FIELDMAP_GetMapCtrlWork( fieldWork );
-
-#ifdef DEBUG_PEOPLE_ANGLE_CUT
-    MMDLSYS_SetJoinShadow( FIELDMAP_GetMMdlSys( fieldWork ), TRUE );
-#endif
 
   FIELDMAP_CTRL_NOGRID_WORK_Delete( work );
   
@@ -159,77 +143,9 @@ static void mapCtrlNoGrid_Delete( FIELDMAP_WORK *fieldWork )
 //--------------------------------------------------------------
 static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 {
-  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
-	FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
 	FIELDMAP_CTRL_NOGRID_WORK *work = FIELDMAP_GetMapCtrlWork( fieldWork );
-  FIELD_PLAYER_NOGRID* p_ngrid_player = FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( work );
-
-  PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork(
-      GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(fieldWork)) );
-  MMDL* mmdl = FIELD_PLAYER_GetMMdl( fld_player );
-
-  if( FIELDMAP_GetZoneID( fieldWork ) != ZONE_ID_C03P02 )
-  {
-    // 通常マップはこれだけでよい
-    FIELDMAP_CTRL_NOGRID_WORK_Main( work );
-  }
-  else
-  {
-    // C03P02は、特殊処理
-    // 屋内アトリビュートは、自動移動
-    BOOL auto_move = FALSE;
-    FIELD_RAIL_WORK* p_railwork = FIELD_PLAYER_NOGRID_GetRailWork( p_ngrid_player );
-    MAPATTR attr = FIELD_PLAYER_GetMapAttr( fld_player );
-    MAPATTR_VALUE value = MAPATTR_GetAttrValue( attr );
-
-    if( value == 0xd )
-    {
-      // 左右おした？
-      if( (FIELD_RAIL_WORK_GetActionKey( p_railwork ) == RAIL_KEY_RIGHT) ||
-          (FIELD_RAIL_WORK_GetActionKey( p_railwork ) == RAIL_KEY_LEFT) )
-      {
-        auto_move = TRUE;
-      }
-    }
-    
-    // 移動方向の設定
-    // 通常動作部分
-    if( auto_move == FALSE )
-    {
-      FIELDMAP_CTRL_NOGRID_WORK_Main( work );
-    }
-    else
-    {
-      static const u32 sc_key[] = 
-      {
-        0,
-        PAD_KEY_UP,
-        PAD_KEY_RIGHT,
-        PAD_KEY_DOWN,
-        PAD_KEY_LEFT,
-      };
-      u32 last_action;
-      
-      last_action = FIELD_RAIL_WORK_GetActionKey( p_railwork );
-      
-      // 自動動作部分
-      FIELD_PLAYER_NOGRID_Move( p_ngrid_player, sc_key[last_action], sc_key[last_action] );
-    }
-
-
-#ifdef C3P02_DEBUG_CAMERA_NOT_MOVE
-    {
-      FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( fieldWork );
-      
-      // カメラを動かさないで、主人公に向ける
-      FLDNOGRID_MAPPER_SetRailCameraActive( p_mapper, FALSE );
-
-      // アングルモードで、主人公を追うようにする。
-      FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
-    }
-#endif
-
-  }
+  // 通常マップはこれだけでよい
+  FIELDMAP_CTRL_NOGRID_WORK_Main( work );
 }
 
 //--------------------------------------------------------------

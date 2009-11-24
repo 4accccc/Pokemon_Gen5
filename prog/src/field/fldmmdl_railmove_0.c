@@ -184,8 +184,8 @@ static const u8 sc_RAILLINE_DIR_CHANGE_TBL[ RAIL_KEY_MAX ][ DIR_MAX4 ] =
   },
   // RAIL_KEY_UP
   {
-    DIR_UP,
     DIR_DOWN,
+    DIR_UP,
     DIR_LEFT,
     DIR_RIGHT,
   },
@@ -198,8 +198,8 @@ static const u8 sc_RAILLINE_DIR_CHANGE_TBL[ RAIL_KEY_MAX ][ DIR_MAX4 ] =
   },
   // RAIL_KEY_DOWN
   {
-    DIR_DOWN,
     DIR_UP,
+    DIR_DOWN,
     DIR_RIGHT,
     DIR_LEFT,
   },
@@ -645,11 +645,7 @@ BOOL MMDL_HitCheckRailMoveFellow( const MMDL * mmdl, const RAIL_LOCATION* next_l
     {
 			if( MMDL_CheckStatusBit( cmdl,MMDL_STABIT_FELLOW_HIT_NON) == 0 )
       {
-        if( MMDL_CheckStatusBit( cmdl,MMDL_STABIT_RAIL_MOVE) == 0 )
-        {
-          OS_TPrintf( "!!!!!!!!!!rail上にグリッド移動のモデルがいます。!!!!!!!!!!!!\n" );
-        }
-        else
+        if( !MMDL_CheckStatusBit( cmdl,MMDL_STABIT_RAIL_MOVE) == 0 )
         {
           // NOW
           MMDL_GetRailLocation( cmdl, &mdl_location );

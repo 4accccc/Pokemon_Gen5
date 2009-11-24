@@ -1134,7 +1134,17 @@ static u16 blact_GetDrawDir( MMDL *mmdl )
   const MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
   u16 angle = MMDLSYS_GetTargetCameraAngleYaw( mmdlsys );
   u16 dir = MMDL_GetDirDisp( mmdl );
-  dir = MMDL_TOOL_GetAngleYawToDirFour( dir, angle );
+  
+  if( !MMDL_CheckStatusBit( mmdl, MMDL_STABIT_RAIL_MOVE ) )
+  {
+    dir = MMDL_TOOL_GetAngleYawToDirFour( dir, angle );
+  }
+  else
+  {
+    // レールマップでは、進行方向が関係してくるため。
+    dir = MMDL_RAIL_GetAngleYawToDirFour( mmdl, angle );
+  }
+  
   return( dir );
 }
 

@@ -1241,12 +1241,9 @@ void FIELD_RAIL_WORK_GetFrontWay( const FIELD_RAIL_WORK * work, VecFx16* way )
   {
     VecFx32 pos;
     s32 line_ofs_tmp = local_work->line_ofs;
-    if( local_work->line_ofs == 0 )
-    {
+    if( local_work->line_ofs == 0 ){
       local_work->line_ofs += RAIL_WALK_OFS;
-    }
-    else
-    {
+    }else{
       local_work->line_ofs -= RAIL_WALK_OFS;
     }
 
@@ -1256,7 +1253,11 @@ void FIELD_RAIL_WORK_GetFrontWay( const FIELD_RAIL_WORK * work, VecFx16* way )
     // Œ³‚É–ß‚·
     local_work->line_ofs = line_ofs_tmp;
 
-    VEC_Subtract( &pos, &local_work->pos, &pos );
+    if( local_work->line_ofs == 0 ){
+      VEC_Subtract( &local_work->pos, &pos, &pos );
+    }else{
+      VEC_Subtract( &pos, &local_work->pos, &pos );
+    }
     VEC_Normalize( &pos, &pos );
     VEC_Fx16Set( way, pos.x, pos.y, pos.z );
   }

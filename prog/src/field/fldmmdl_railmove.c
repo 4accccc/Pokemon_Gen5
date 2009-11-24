@@ -179,6 +179,54 @@ void MMDL_UpdateRailMove( MMDL * mmdl )
 
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アングルＹａｗから、レールオブジェの表示方向を返す
+ *
+ *	@param	mmdl        モデル
+ *	@param	angleYaw    アングル
+ *
+ *	@return 方向
+ */
+//-----------------------------------------------------------------------------
+u16 MMDL_RAIL_GetAngleYawToDirFour( MMDL * mmdl, u16 angleYaw )
+{
+  VecFx16 mmdl_way;
+  u16 mmdl_yaw;
+  s32 diff_yaw;
+  u16 dir;
+  static const u8 data_angle16_4[16] =
+  {
+    DIR_DOWN, DIR_DOWN,
+    DIR_LEFT, DIR_LEFT, DIR_LEFT, DIR_LEFT, DIR_LEFT,
+    DIR_UP, DIR_UP,DIR_UP,
+    DIR_RIGHT, DIR_RIGHT, DIR_RIGHT, DIR_RIGHT, DIR_RIGHT,
+    DIR_DOWN,
+  };
+
+  dir = MMDL_GetDirDisp( mmdl );
+
+  // カメラ方向と進行方向から、人物の表示方向を求める
+  MMDL_Rail_GetDirLineWay( mmdl, dir, &mmdl_way );
+  mmdl_way.y = 0;
+  VEC_Fx16Normalize( &mmdl_way, &mmdl_way );
+  
+  // 平面方向
+  // -Zが角度０方向
+  mmdl_yaw = FX_Atan2Idx( mmdl_way.x, mmdl_way.z );
+
+  // 角度の差から、角度を求める
+  diff_yaw = mmdl_yaw - angleYaw;
+  if( diff_yaw < 0 )
+  {
+    diff_yaw += 0x10000;  // プラスにして計算
+  }
+  diff_yaw >>= 12;
+
+  GF_ASSERT( diff_yaw < 16 );
+  return data_angle16_4[ diff_yaw ];
+}
+
 
 
 

@@ -1135,6 +1135,8 @@ extern u32 DEBUG_MMDL_GetUseResourceMemorySize( void );
 extern void MMDL_InitRailMoveProc( MMDL * mmdl );
 extern void MMDL_UpdateRailMove( MMDL * mmdl );
 
+extern u16 MMDL_RAIL_GetAngleYawToDirFour( MMDL * mmdl, u16 angleYaw );
+
 
 //--------------------------------------------------------------
 //	fldmmdl_railmove_0.c
