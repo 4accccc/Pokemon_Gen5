@@ -35,3 +35,15 @@
 #define SHAKE_MARGIN (2)
 //隔壁位置
 #define WALL_Y_POS (-40)
+//降下時フォグフェードアウト位置
+#define FOG_FADE_OUT_START (-45)
+//上昇時フォグフェードイン位置
+#define FOG_FADE_IN_START (-45)
+//移動速度が速いときのフォグフェードシンク
+#define FOG_FADE_SPEED_FAST (40)
+//移動速度が遅いときのフォグフェードシンク
+#define FOG_FADE_SPEED_SLOW (8)
+//フォグオフセット
+#define FOG_OFFSET (32671)
+//フォグスロープ
+#define FOG_SLOPE (8)
