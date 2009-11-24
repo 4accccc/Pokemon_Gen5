@@ -3,7 +3,7 @@
  * @file	trtype_def.h
  * @bfief	トレーナータイプ定義
  * @author	TrainerDataConverter
- * @date	2009-11-18
+ * @date	2009-11-24
  * @author	このファイルは、コンバータが吐き出したファイルです
 */
 //============================================================================================
@@ -43,7 +43,7 @@
 #define	TRTYPE_FISHING    ( 29 )    //つりびと
 #define	TRTYPE_MUSICIAN    ( 30 )    //ミュージシャン
 #define	TRTYPE_DANCER    ( 31 )    //ダンサー
-#define	TRTYPE_JUGGLING    ( 32 )    //ジャグラー
+#define	TRTYPE_JUGGLING    ( 32 )    //クラウン
 #define	TRTYPE_ARTIST    ( 33 )    //げいじゅつか
 #define	TRTYPE_BAKER    ( 34 )    //ベーカリー
 #define	TRTYPE_ESPM    ( 35 )    //サイキッカー

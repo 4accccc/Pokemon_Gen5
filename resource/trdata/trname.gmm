@@ -1124,6 +1124,38 @@
 		<language name="JPN" width="216">？？？</language>
 	</row>
 
+	<row id="juggling_02">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="juggling_03">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="juggling_04">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="juggling_05">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="juggling_06">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="worker2_12">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="worker2_13">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
+	<row id="worker2_14">
+		<language name="JPN" width="216">？？？</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
