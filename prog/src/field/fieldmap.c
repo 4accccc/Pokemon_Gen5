@@ -658,9 +658,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   //拡張3Ｄオブジェクトモジュール作成
   fieldWork->ExpObjCntPtr = FLD_EXP_OBJ_Create ( EXP_OBJ_RES_MAX, EXP_OBJ_MAX, fieldWork->heapID );
   
-  //フィールドギミックセットアップ
-  FLDGMK_SetUpFieldGimmick(fieldWork);
- 
   //エッジマーキング設定セットアップ
   FIELD_EDGEMARK_Setup( fieldWork->areadata );
 
@@ -689,6 +686,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   // 天気晴れ
   FIELD_WEATHER_Set(
 			fieldWork->weather_sys, ZONEDATA_GetWeatherID(fieldWork->map_id), fieldWork->heapID );
+
+  //フィールドギミックセットアップ
+  FLDGMK_SetUpFieldGimmick(fieldWork);
   
   //情報バーの初期化
 	{
@@ -2691,15 +2691,17 @@ static void InitGmkTmpWork(GMK_TMP_WORK *tmpWork)
 /**
  * ギミックテンポラリワークメモリアロック関数
  *
- * @todo  使用の際はgmk_tmp_wk.hを参照のこと
+ * @note  使用の際はgmk_tmp_wk.hを参照のこと
  *
  * @param   fieldWork   フィールドワークポインタ
  * @param   inAssinID   アサインＩＤ
  * @param   inHeapID    ヒープＩＤ
  * @param   inSize      確保メモリ
+ *
+ * @return アロケーションしたワークポインタ
  */
 //==================================================================
-void GMK_TMP_WK_AllocWork
+void *GMK_TMP_WK_AllocWork
       (FIELDMAP_WORK *fieldWork, const u32 inAssignID, const HEAPID inHeapID, const u32 inSize)
 {
   GMK_TMP_WORK *tmpWork;
@@ -2715,6 +2717,7 @@ void GMK_TMP_WK_AllocWork
   
   tmpWork->AssignID = inAssignID;
   tmpWork->Work = GFL_HEAP_AllocClearMemory( inHeapID, inSize );
+  return tmpWork->Work;
 }
 
 //==================================================================

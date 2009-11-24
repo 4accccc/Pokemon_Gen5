@@ -13,7 +13,7 @@
 
 #include "field/fieldmap_proc.h"    //for FIELDMAP_WORK
 
-extern void GMK_TMP_WK_AllocWork
+extern void *GMK_TMP_WK_AllocWork
       (FIELDMAP_WORK *fieldWork, const u32 inAssignID, const HEAPID inHeapID, const u32 inSize);
 extern void GMK_TMP_WK_FreeWork
       (FIELDMAP_WORK *fieldWork, const u32 inAssignID);
