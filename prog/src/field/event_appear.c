@@ -20,13 +20,16 @@
 #include "field_task_camera_zoom.h"
 #include "field_task_player_rot.h"
 #include "field_task_player_fall.h"
+#include "field_task_wait.h"
 #include "field_task_fade.h"
+
+#include "fldeff_kemuri.h"
 
 
 //==========================================================================================
 // ■定数
 //========================================================================================== 
-#define ZOOM_IN_DIST   (50 << FX32_SHIFT)   // カメラのズームイン距離
+#define ZOOM_IN_DIST   (70 << FX32_SHIFT)   // カメラのズームイン距離
 #define ZOOM_IN_FRAME  (60)   // ズームインに掛かるフレーム数
 #define ZOOM_OUT_FRAME (60)   // ズームアウトに掛かるフレーム数
 
@@ -244,15 +247,18 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Ananukenohimo( GMEVENT* event, int* seq,
     { // タスクの追加
       FIELD_TASK* rot;
       FIELD_TASK* zoom;
+      FIELD_TASK* wait;
       FIELD_TASK* fade_in;
       FIELD_TASK_MAN* man;
       rot     = FIELD_TASK_PlayerRotate_SpeedDown( work->fieldmap, 60, 8 );
       zoom    = FIELD_TASK_CameraLinearZoom( work->fieldmap, ZOOM_OUT_FRAME, ZOOM_IN_DIST );
+      wait    = FIELD_TASK_Wait( work->fieldmap, 4 );
       fade_in = FIELD_TASK_Fade( work->fieldmap, GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, 1 );
       man  = FIELDMAP_GetTaskManager( work->fieldmap ); 
       FIELD_TASK_MAN_AddTask( man, rot, NULL );
       FIELD_TASK_MAN_AddTask( man, zoom, NULL );
-      FIELD_TASK_MAN_AddTask( man, fade_in, NULL );
+      FIELD_TASK_MAN_AddTask( man, wait, NULL );
+      FIELD_TASK_MAN_AddTask( man, fade_in, wait ); // フェードインを遅らせてカメラのブレを隠す
     }
     ++( *seq );
     break;
@@ -301,15 +307,18 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Anawohoru( GMEVENT* event, int* seq, voi
     { // タスクの追加
       FIELD_TASK* rot;
       FIELD_TASK* zoom;
+      FIELD_TASK* wait;
       FIELD_TASK* fade_in;
       FIELD_TASK_MAN* man;
       rot     = FIELD_TASK_PlayerRotate_SpeedDown( work->fieldmap, 60, 8 );
       zoom    = FIELD_TASK_CameraLinearZoom( work->fieldmap, ZOOM_OUT_FRAME, ZOOM_IN_DIST );
+      wait    = FIELD_TASK_Wait( work->fieldmap, 4 );
       fade_in = FIELD_TASK_Fade( work->fieldmap, GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, 1 );
       man     = FIELDMAP_GetTaskManager( work->fieldmap ); 
       FIELD_TASK_MAN_AddTask( man, rot, NULL );
       FIELD_TASK_MAN_AddTask( man, zoom, NULL );
-      FIELD_TASK_MAN_AddTask( man, fade_in, NULL );
+      FIELD_TASK_MAN_AddTask( man, wait, NULL );
+      FIELD_TASK_MAN_AddTask( man, fade_in, wait ); // フェードインを遅らせてカメラのブレを隠す
     }
     ++( *seq );
     break;
@@ -350,25 +359,26 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Teleport( GMEVENT* event, int* seq, void
     // カメラモードの設定
     work->cameraMode = FIELD_CAMERA_GetMode( camera );
     FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
-    { // カメラ初期設定
-      FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( work->fieldmap );
-      FIELD_CAMERA_SetAngleLen( camera, FIELD_CAMERA_GetAngleLen( camera ) - ZOOM_IN_DIST );
-    }
+    // カメラ初期設定
+    FIELD_CAMERA_SetAngleLen( camera, FIELD_CAMERA_GetAngleLen( camera ) - ZOOM_IN_DIST );
     ++( *seq );
     break;
   case 1:
     { // タスクの追加
       FIELD_TASK* rot;
       FIELD_TASK* zoom;
+      FIELD_TASK* wait;
       FIELD_TASK* fade_in;
       FIELD_TASK_MAN* man;
       rot     = FIELD_TASK_PlayerRotate_SpeedDown( work->fieldmap, 60, 8 );
       zoom    = FIELD_TASK_CameraLinearZoom( work->fieldmap, ZOOM_OUT_FRAME, ZOOM_IN_DIST );
+      wait    = FIELD_TASK_Wait( work->fieldmap, 4 );
       fade_in = FIELD_TASK_Fade( work->fieldmap, GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1 );
       man     = FIELDMAP_GetTaskManager( work->fieldmap ); 
       FIELD_TASK_MAN_AddTask( man, rot, NULL );
       FIELD_TASK_MAN_AddTask( man, zoom, NULL );
-      FIELD_TASK_MAN_AddTask( man, fade_in, NULL );
+      FIELD_TASK_MAN_AddTask( man, wait, NULL );
+      FIELD_TASK_MAN_AddTask( man, fade_in, wait ); // フェードインを遅らせてカメラのブレを隠す
     }
     ++( *seq );
     break;
@@ -378,6 +388,12 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Teleport( GMEVENT* event, int* seq, void
       man  = FIELDMAP_GetTaskManager( work->fieldmap ); 
       if( FIELD_TASK_MAN_IsAllTaskEnd(man) )
       {
+        { // 煙エフェクト表示
+          FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( work->fieldmap );
+          MMDL*           mmdl = FIELD_PLAYER_GetMMdl( player );
+          FLDEFF_CTRL*  fectrl = FIELDMAP_GetFldEffCtrl( work->fieldmap );
+          FLDEFF_KEMURI_SetMMdl( mmdl, fectrl );
+        }
         ++( *seq );
       }
     }

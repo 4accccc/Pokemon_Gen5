@@ -30,8 +30,8 @@
 //==========================================================================================
 // ■定数
 //========================================================================================== 
-#define ZOOM_IN_DIST   (50 << FX32_SHIFT)   // カメラのズームイン距離
-#define ZOOM_IN_FRAME  (60)   // ズームインに掛かるフレーム数
+#define ZOOM_IN_DIST   (70 << FX32_SHIFT)   // カメラのズームイン距離
+#define ZOOM_IN_FRAME  (30)   // ズームインに掛かるフレーム数
 #define ZOOM_OUT_FRAME (60)   // ズームアウトに掛かるフレーム数
 #define ANAHORI_EFF_INTVL (6)  //「あなをほる」のエフェクト表示間隔
 
@@ -431,12 +431,14 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Teleport( GMEVENT* event, int* seq, v
       rot      = FIELD_TASK_PlayerRotate( work->fieldmap, 60, 20 );
       zoom     = FIELD_TASK_CameraLinearZoom( work->fieldmap, ZOOM_IN_FRAME, -ZOOM_IN_DIST );
       fade_out = FIELD_TASK_Fade( work->fieldmap, GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 1 );
-      man     = FIELDMAP_GetTaskManager( work->fieldmap );
+      man      = FIELDMAP_GetTaskManager( work->fieldmap );
       FIELD_TASK_MAN_AddTask( man, rot_up, NULL );
       FIELD_TASK_MAN_AddTask( man, rot, rot_up );
       FIELD_TASK_MAN_AddTask( man, zoom, NULL );
       FIELD_TASK_MAN_AddTask( man, fade_out, rot_up );
     }
+    // SE
+    PMSND_PlaySE( SEQ_SE_FLD_05 );
     ++( *seq );
     break;
   case 1:
