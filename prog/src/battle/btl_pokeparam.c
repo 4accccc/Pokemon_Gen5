@@ -1365,6 +1365,12 @@ void BPP_SetWazaSick( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT contParam
     bpp->sickCont[ WAZASICK_DOKU ] = contParam;
     bpp->wazaSickCounter[ WAZASICK_DOKU ] = 0;
   }
+
+  if( (sick == WAZASICK_ENCORE)
+  ||  (sick == WAZASICK_WAZALOCK)
+  ){
+    BTL_Printf("該当異常になった pokeID=%d, sickID=%d\n", bpp->coreParam.myID, sick );
+  }
 }
 
 
@@ -1428,7 +1434,10 @@ void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFu
         }
       }
       if( callbackFunc != NULL ){
-        callbackFunc( bpp, sick, oldCont, fCure, callbackWork );
+        // 「どくどく」は普通のどくと処理が重なってしまうのでコールバックしない
+        if( sick != WAZASICK_DOKUDOKU ){
+          callbackFunc( bpp, sick, oldCont, fCure, callbackWork );
+        }
       }
     }
   }
@@ -1561,11 +1570,18 @@ PokeSick BPP_GetPokeSick( const BTL_POKEPARAM* pp )
  * @retval  BOOL
  */
 //=============================================================================================
-BOOL BPP_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType )
+BOOL BPP_CheckSick( const BTL_POKEPARAM* bpp, WazaSick sickType )
 {
-  GF_ASSERT(sickType < NELEMS(pp->sickCont));
+  GF_ASSERT(sickType < NELEMS(bpp->sickCont));
 
-  return pp->sickCont[ sickType ].type != WAZASICK_CONT_NONE;
+  if( bpp->sickCont[ sickType ].type != WAZASICK_CONT_NONE )
+  {
+    if( (sickType == WAZASICK_WAZALOCK) || (sickType == WAZASICK_ENCORE) ){
+      BTL_Printf("該当異常になってます pokeID=%d, sick=%d\n", bpp->coreParam.myID, sickType);
+    }
+    return TRUE;
+  }
+  return FALSE;
 }
 //=============================================================================================
 /**

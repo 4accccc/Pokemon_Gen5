@@ -321,7 +321,7 @@ static void handler_side_SinpiNoMamori_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_
   if( work[0] )
   {
     u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
-    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
     HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_SinpiNoMamori_Exe );
     HANDEX_STR_AddArg( &param->str, pokeID );
     work[0] = 0;
@@ -358,7 +358,7 @@ static void handler_side_SiroiKiri_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
   if( work[0] )
   {
     u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
-    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
     HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_SiroiKiri_Exe );
     HANDEX_STR_AddArg( &param->str, pokeID );
   }
@@ -438,7 +438,7 @@ static void handler_side_StealthRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
     }
 
     {
-      BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_DAMAGE, BTL_POKEID_NULL );
+      BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, BTL_POKEID_NULL );
 
       param->pokeID = pokeID;
       param->damage = BTL_CALC_QuotMaxHP( bpp, denom );
@@ -515,7 +515,7 @@ static void handler_side_Makibisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
         denom = 4; break;
       }
       {
-        BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_DAMAGE, BTL_POKEID_NULL );
+        BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, BTL_POKEID_NULL );
 
         param->pokeID = pokeID;
         param->damage = BTL_CALC_QuotMaxHP( bpp, denom );
@@ -547,7 +547,7 @@ static void handler_side_Dokubisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 
     if( !BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_FLYING) )
     {
-      BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_ADD_SICK, BTL_POKEID_NULL );
+      BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, BTL_POKEID_NULL );
 
       param->sickID = WAZASICK_DOKU;
       if( getMyAddCounter(myHandle, mySide) > 1 ){

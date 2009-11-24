@@ -96,29 +96,23 @@ extern u8 BTL_SVFLOW_GetEscapeClientID( const BTL_SVFLOW_WORK* wk );
 
 extern u8 BTL_SVCL_GetNumActPoke( SVCL_WORK* clwk );
 extern const BTL_ACTION_PARAM* BTL_SVCL_GetPokeAction( SVCL_WORK* clwk, u8 posIdx );
+extern void BTL_SVF_SickDamageRecall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick sickID, u32 damage );
 
 
 //------------------------------------------------
 // イベントハンドラとの連絡関数
 //------------------------------------------------
-extern BtlRule BTL_SVFLOW_GetRule( BTL_SVFLOW_WORK* wk );
-extern BtlCompetitor BTL_SVFLOW_GetCompetitor( BTL_SVFLOW_WORK* wk );
+extern BtlRule BTL_SVFTOOL_GetRule( BTL_SVFLOW_WORK* wk );
+extern BtlCompetitor BTL_SVFTOOL_GetCompetitor( BTL_SVFLOW_WORK* wk );
 extern BtlPokePos BTL_SVFTOOL_GetExistFrontPokeID( BTL_SVFLOW_WORK* server, u8 pokeID );
-extern BOOL BTL_SVFLOW_RECEPT_CheckExistTokuseiPokemon( BTL_SVFLOW_WORK* wk, PokeTokusei tokusei );
+extern BOOL BTL_SVFTOOL_CheckExistTokuseiPokemon( BTL_SVFLOW_WORK* wk, PokeTokusei tokusei );
 extern const BTL_POKEPARAM* BTL_SVFTOOL_GetPokeParam( BTL_SVFLOW_WORK* wk, u8 pokeID );
-extern u8 BTL_SVFLOW_RECEPT_GetAllOpponentFrontPokeID( BTL_SVFLOW_WORK* wk, u8 basePokeID, u8* dst );
-extern u16 BTL_SVFLOW_GetTurnCount( BTL_SVFLOW_WORK* wk );
+extern u8 BTL_SVFTOOL_GetAllOpponentFrontPokeID( BTL_SVFLOW_WORK* wk, u8 basePokeID, u8* dst );
+extern u16 BTL_SVFTOOL_GetTurnCount( BTL_SVFLOW_WORK* wk );
 extern u8 BTL_SVFLOW_GetClientCoverPosCount( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern const BTL_WAZAREC* BTL_SVF_GetWazaRecord( BTL_SVFLOW_WORK* wk );
 extern const BTL_DEADREC* BTL_SVF_GetDeadRecord( BTL_SVFLOW_WORK* wk );
 
-extern void BTL_SERVER_RECEPT_TokuseiWinIn( BTL_SVFLOW_WORK* wk, u8 pokeID );
-extern void BTL_SERVER_RECEPT_TokuseiWinOut( BTL_SVFLOW_WORK* wk, u8 pokeID );
-extern void BTL_SERVER_RECTPT_SetMessage( BTL_SVFLOW_WORK* wk, u16 msgID, u8 pokeID );
-extern void BTL_SERVER_RECTPT_SetMessageEx( BTL_SVFLOW_WORK* wk, u16 msgID, u8 pokeID, int arg );
-extern void BTL_SERVER_RECEPT_HP_Add( BTL_SVFLOW_WORK* wk, u8 PokeID, int value );
-extern void BTL_SVFLOW_RECEPT_CurePokeSick( BTL_SVFLOW_WORK* wk, u8 pokeID );
-extern void BTL_SVFLOW_RECEPT_CureWazaSick( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaSick sick );
 extern void BTL_SVFLOW_RECEPT_CantEscapeAdd( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlCantEscapeCode code );
 extern void BTL_SVFLOW_RECEPT_CantEscapeSub( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlCantEscapeCode code );
 extern u32 BTL_SVFLOW_SimulationDamage( BTL_SVFLOW_WORK* flowWk, u8 atkPokeID, u8 defPokeID, WazaID waza, BOOL fAffinity, BOOL fCritical );
@@ -132,8 +126,7 @@ extern void* BTL_SVFLOW_GetHandlerTmpWork( BTL_SVFLOW_WORK* wk );
 extern WazaID BTL_SVFLOW_GetPrevExeWaza( BTL_SVFLOW_WORK* wk );
 
 //----------------------------
-extern void BTL_SVFLOW_AddBonusMoney( BTL_SVFLOW_WORK* wk, u32 volume );
-extern BOOL BTL_SVFLOW_IsStandAlonePlayerSide( BTL_SVFLOW_WORK* wk, u8 pokeID );
+extern BOOL BTL_SVFLOW_AddBonusMoney( BTL_SVFLOW_WORK* wk, u32 volume, u8 pokeID );
 extern BtlPokePos BTL_SVFLOW_GetCapturedPokePos( const BTL_SVFLOW_WORK* wk );
 
 
@@ -364,6 +357,7 @@ typedef struct {
  u8   fStdMsgDisable;                ///< 成功時、標準メッセージを出力しない
  u8   fExMsg;                        ///< 成功時、指定メッセージを出力する
  u16  exStrID;
+ BTL_HANDEX_STR_PARAMS     exStr;    ///< 成功時特殊メッセージ
 }BTL_HANDEX_PARAM_CURE_SICK;
 
 /**
@@ -671,7 +665,7 @@ typedef struct {
   BTL_HANDEX_STR_PARAMS  exStr; ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_PUSHOUT;
 
-extern void* BTL_SVF_HANEX_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );
+extern void* BTL_SVF_HANDEX_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );
 extern u8 BTL_SVFTOOL_ExpandPokeID( BTL_SVFLOW_WORK* wk, BtlExPos exPos, u8* dst_pokeID );
 
 

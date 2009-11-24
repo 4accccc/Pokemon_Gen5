@@ -1271,6 +1271,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
     }
     else
     {
+      BTL_Printf("ワシAIデス. シンデルカラ　ナニモシナイヨ\n");
       BTL_ACTION_SetNULL( &wk->actionParam[i] );
     }
   }

@@ -321,7 +321,7 @@ static void setMainProc_Root( BTL_SERVER* server )
 {
   // ローテーションバトル＆初回ターン以外なら、アクションの前にローテーション選択する
   if( (BTL_MAIN_GetRule(server->mainModule) == BTL_RULE_ROTATION)
-  &&  (BTL_SVFLOW_GetTurnCount(server->flowWork) != 0 )
+  &&  (BTL_SVFTOOL_GetTurnCount(server->flowWork) != 0 )
   ){
     setMainProc( server, ServerMain_SelectRotation );
   }else{

@@ -66,10 +66,11 @@ static void contProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, Wa
   {
     u32 damage =  BPP_CalcSickDamage( bpp, sick );
     if( damage ){
-      contDamageCommon( flowWk, bpp, pokeID, sick, damage );
+      BTL_SVF_SickDamageRecall( flowWk, bpp, sick, damage );
     }
   }
   BTL_Printf("ポケ[%d], 状態異常[%d] が継続中...\n", pokeID, sick);
+
   switch( sick ){
   case WAZASICK_HOROBINOUTA:    cont_HorobiNoUta( flowWk, bpp, pokeID ); break;
   case WAZASICK_YADORIGI:       cont_Yadorigi( flowWk, bpp, pokeID ); break;
@@ -77,23 +78,26 @@ static void contProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, Wa
   case WAZASICK_BIND:           cont_Bind( flowWk, bpp, pokeID ); break;
   }
 }
-
+//=============================================================================================
 /**
- *  ダメージを受ける状態異常の共通処理
+ * 状態異常継続ダメージを受ける際のデフォルトメッセージパラメータを生成
+ *
+ * @param   strParam
+ * @param   bpp
+ * @param   sickID
+ *
+ * @retval  BOOL
  */
-static void contDamageCommon( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp, u8 pokeID, WazaSick sick, u16 damage )
+//=============================================================================================
+BOOL BTL_SICK_MakeSickDamageMsg( BTL_HANDEX_STR_PARAMS* strParam, const BTL_POKEPARAM* bpp, WazaSick sickID )
 {
-  BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
-  int strID;
-
-  param->pokeID = pokeID;
-  param->damage = damage;
-
-  strID = getWazaSickDamageStrID( sick );
-  if( strID >= 0 ){
-    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, strID );
-    HANDEX_STR_AddArg( &param->exStr, pokeID );
+  int strID = getWazaSickDamageStrID( sickID );
+  if( strID > 0 )
+  {
+    HANDEX_STR_Setup( strParam, BTL_STRTYPE_SET, strID );
+    HANDEX_STR_AddArg( strParam, BPP_GetID(bpp) );
   }
+  return FALSE;
 }
 /**
  *  状態異常によるダメージ時の標準メッセージID取得
@@ -130,7 +134,7 @@ static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeI
   BTL_HANDEX_PARAM_DAMAGE* dmg_param;
   u16 damage = BTL_CALC_QuotMaxHP( bpp, 16 );
 
-  dmg_param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
+  dmg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
   dmg_param->pokeID = pokeID;
   dmg_param->damage = damage;
   HANDEX_STR_Setup( &dmg_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_YadorigiTurn );
@@ -143,7 +147,7 @@ static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeI
     if( BTL_SVFTOOL_ExpandPokeID(flowWk, pos, userPokeID) )
     {
       BTL_HANDEX_PARAM_DRAIN* drain_param;
-      drain_param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_DRAIN, pokeID );
+      drain_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DRAIN, pokeID );
       drain_param->header.failSkipFlag = TRUE;
       drain_param->recoverPokeID = userPokeID[0];
       drain_param->damagedPokeID = pokeID;
@@ -159,7 +163,7 @@ static void cont_NeWoHaru( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeI
 {
   if( !BPP_IsHPFull(bpp) )
   {
-    BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
+    BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
     param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 16 );
     param->pokeID = pokeID;
     HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_NeWoHaruRecover );
@@ -173,7 +177,7 @@ static void cont_Bind( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID )
 {
   if( !BPP_IsDead(bpp) )
   {
-    BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
+    BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
     BPP_SICK_CONT cont = BPP_GetSickCont( bpp, WAZASICK_BIND );
     WazaID waza = BPP_SICKCONT_GetParam( cont );
 
@@ -196,7 +200,7 @@ static void cureProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, Wa
   BTL_HANDEX_STR_PARAMS  str;
   if( BTL_SICK_MakeDefaultCureMsg(sick, oldCont, bpp, ITEM_DUMMY_DATA, &str) )
   {
-    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
     param->str = str;
   }
 
@@ -214,7 +218,7 @@ static void cure_Akubi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp )
   if( turns > 0 )
   {
     u8 pokeID = BPP_GetID( bpp );
-    BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
+    BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
     param->fAlmost = TRUE;
     param->sickID = WAZASICK_NEMURI;
     param->sickCont = BPP_SICKCONT_MakeTurn( turns );
@@ -228,7 +232,7 @@ static void cure_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp )
   putHorobiCounter( flowWk, bpp, 0 );
   {
     u8 pokeID = BPP_GetID( bpp );
-    BTL_HANDEX_PARAM_KILL* param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_KILL, pokeID );
+    BTL_HANDEX_PARAM_KILL* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_KILL, pokeID );
     param->pokeID = pokeID;
   }
 }
@@ -237,7 +241,7 @@ static void cure_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp )
 static void putHorobiCounter( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp, u8 count )
 {
   u8 pokeID = BPP_GetID( bpp );
-  BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+  BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
   HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_HorobiCountDown );
   HANDEX_STR_AddArg( &param->str, pokeID );
   HANDEX_STR_AddArg( &param->str, count );
@@ -252,7 +256,7 @@ static void cure_Bind( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp, BPP_SI
 {
   u8 pokeID = BPP_GetID( bpp );
   WazaID waza = BPP_SICKCONT_GetParam( oldCont );
-  BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+  BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
   HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_BindCure );
   HANDEX_STR_AddArg( &param->str, pokeID );
   HANDEX_STR_AddArg( &param->str, waza );
