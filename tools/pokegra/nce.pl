@@ -351,15 +351,44 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
   }
 
   #ヘッダーを読み込み
+	read READ_NMC, $header, 8; 
+ 	($block_type, $block_size) = unpack "a4 L", $header;
+
+	if( $block_type ne "CCTL" ){
+    print "NitroCharacterのnmcファイルではありません\n";
+ 	  die;
+  }
+
+  #ブロックサイズ分読み飛ばし
+	read READ_NMC, $header, $block_size - 8;
+
+  #ヘッダーを読み込み
+	read READ_NMC, $header, 8; 
+ 	($block_type, $block_size) = unpack "a4 L", $header;
+
+	if( $block_type ne "GRP " ){
+    print "NitroCharacterのnmcファイルではありません\n";
+ 	  die;
+  }
+
+  #ブロックサイズ分読み飛ばし
+	read READ_NMC, $header, $block_size - 8;
+
+  #ヘッダーを読み込み
 	read READ_NMC, $header, 12; 
  	($block_type, $block_size, $multi_cell_anms) = unpack "a4 L L", $header;
+
+	if( $block_type ne "ANIM" ){
+    print "NitroCharacterのnmcファイルではありません\n";
+ 	  die;
+  }
 
   @node = ();
 
   if( $multi_cell_anms > 1 ){
     for( $mca = 0 ; $mca < $multi_cell_anms ; $mca++ ){
 	    read READ_NMC, $header, 12; 
- 	    ($label_index, $cmnt_index, $multi_cells) = unpack "L L L", $header;
+      ($label_index, $cmnt_index, $multi_cells) = unpack "L L L", $header;
       for( $mc = 0 ; $mc < $multi_cells ; $mc++ ){
 	      read READ_NMC, $header, 24; 
  	      ($cell_index, $frame, $rot, $scale_x, $scale_y, $trans_x, $trans_y) = unpack "S S L L L L L", $header;
@@ -367,7 +396,6 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
           for( $i = 0; $i < $cell_anm_max[$label_index] ; $i++ ){
             $sc = $mcell_anms[$label_index][$i];
             if( $stop_cell[$sc] == 1 ){
-              print $i;
               push( @node, $i );
             }
           }
@@ -375,10 +403,45 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
       }
     }
   }
+  else{
+	  read READ_NMC, $header, $block_size - 12;
+  }
+
+ 	read READ_NMC, $header, BLOCK_TYPE + BLOCK_SIZE; 
+ 	($block_type, $block_size) = unpack "a4 L", $header;
+
+	if( $block_type ne "ACTL" ){
+    print "NitroCharacterのnmcファイルではありません\n";
+ 	  die;
+  }
+
+  #ブロックサイズ分読み飛ばし
+	read READ_NMC, $header, $block_size - 8;
+
+ 	read READ_NMC, $header, 12; 
+ 	($block_type, $block_size, $multi_cell_anms) = unpack "a4 L L", $header;
+
+	if( $block_type ne "LABL" ){
+    print "NitroCharacterのnmcファイルではありません\n";
+ 	  die;
+  }
+
+ 	read READ_NMC, $data, 64; 
+  ($label) = unpack "a7", $data;
+
+  $non_stop = 0;
+
+  if( $label eq "nonstop" ){
+    $non_stop = 1;
+  }
 
   $node_cnt = @node;
-
-  if( $node_cnt == 0 ){
+  
+  if( $non_stop == 1 ){
+		$write = pack "L", 0x000000ff;
+	  print WRITE_NCE $write;
+  }
+  elsif( $node_cnt == 0 ){
 		$write = pack "L", 0;
 	  print WRITE_NCE $write;
   }
