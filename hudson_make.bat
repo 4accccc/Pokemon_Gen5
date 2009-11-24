@@ -25,18 +25,6 @@ if %ERRORLEVEL% == 0 goto END:
 REM ================================
 REM エラー処理
 REM ================================
-REM 一度progをcleanして再度make
-@echo ***** make source *****
-cd prog
-make clean
-cd ..
-make
-REM 終了判定
-if %ERRORLEVEL% == 0 goto END:
-
-REM ================================
-REM エラー処理
-REM ================================
 REM make cleanして再度make
 @echo ***** make clean *****
 make clean
