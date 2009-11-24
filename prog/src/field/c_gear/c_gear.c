@@ -1598,7 +1598,7 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
 	_modeInit(pWork);
 
 
-  _loadExData(pWork,pGameSys);
+  //_loadExData(pWork,pGameSys);
   
 
 #if 0
