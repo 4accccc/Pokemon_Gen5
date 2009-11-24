@@ -14,7 +14,8 @@ G3D_FE_ANMITP = hero_kemu.itp \
   taki_loop_s.itp \
   taki_roop_f.itp \
   taki_start_f.itp \
-  taki_start_s.itp
+  taki_start_s.itp \
+  iwakudaki.itp
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　icaアニメ定義
@@ -24,12 +25,14 @@ G3D_FE_ANMICA = shibuki01.ica \
   taki_loop_s.ica \
   taki_roop_f.ica \
   taki_start_f.ica \
-  taki_start_s.ica
+  taki_start_s.ica \
+  iwakudaki.ica
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　imaアニメ定義
 #---------------------------------------------------------------
-G3D_FE_ANMIMA = taki_land.ima
+G3D_FE_ANMIMA = taki_land.ima \
+  iwakudaki.ima
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　itaアニメ定義
@@ -42,7 +45,8 @@ G3D_FE_ANMITA = shibuki01.ita \
   $(EFFENC_SGRASS)short_grass_sp2.ita \
   $(EFFENC_SGRASS)short_grass_su2.ita \
   $(EFFENC_SGRASS)short_grass_au2.ita \
-  $(EFFENC_SGRASS)short_grass_wi2.ita
+  $(EFFENC_SGRASS)short_grass_wi2.ita \
+  iwakudaki.ita
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　ivaアニメ定義
@@ -92,7 +96,8 @@ G3D_FE_MDL = kage.imd \
   $(EFFENC_SGRASS)short_grass_sp2.imd \
   $(EFFENC_SGRASS)short_grass_su2.imd \
   $(EFFENC_SGRASS)short_grass_au2.imd \
-  $(EFFENC_SGRASS)short_grass_wi2.imd
+  $(EFFENC_SGRASS)short_grass_wi2.imd \
+  iwakudaki.imd
 
 
 #---------------------------------------------------------------
