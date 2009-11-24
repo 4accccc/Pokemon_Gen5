@@ -35,23 +35,23 @@ use constant IDX_Power				=> 10;	# 威力
 use constant IDX_HitPer				=> 11;	# 命中率
 use constant IDX_BasePP				=> 12;	# 基本PPMax
 use constant IDX_Priority			=> 13;	# 優先度
-use constant IDX_CriticalRank		=> 14;	# クリティカルランク
-use constant IDX_HitCntMax			=> 15;	# 最大ヒット回数
-use constant IDX_HitCntMin			=> 16;	# 最小ヒット回数
-use constant IDX_ShrinkPer			=> 17;	# ひるみ確率
-use constant IDX_SickID				=> 18;	# 状態異常効果
-use constant IDX_SickPer			=> 19;	# 状態異常の発生率
-use constant IDX_SickCont			=> 20;	# 状態異常の継続パターン
-use constant IDX_SickTurnMin		=> 21;	# 状態異常の継続ターン数　最小
-use constant IDX_SickTurnMax		=> 22;	# 状態異常の継続ターン数　最大
+use constant IDX_HitCntMax			=> 14;	# 最大ヒット回数
+use constant IDX_HitCntMin			=> 15;	# 最小ヒット回数
+use constant IDX_SickID				=> 16;	# 状態異常効果
+use constant IDX_SickPer			=> 17;	# 状態異常の発生率
+use constant IDX_SickCont			=> 18;	# 状態異常の継続パターン
+use constant IDX_SickTurnMin		=> 19;	# 状態異常の継続ターン数　最小
+use constant IDX_SickTurnMax		=> 20;	# 状態異常の継続ターン数　最大
+use constant IDX_CriticalRank		=> 21;	# クリティカルランク
+use constant IDX_ShrinkPer			=> 22;	# ひるみ確率
 use constant IDX_RankEffType1		=> 23;	# ステータス効果１
-use constant IDX_RankEffValue1		=> 24;	# ステータス効果１の変動値
-use constant IDX_RankEffPer1		=> 25;	# ステータス効果１の発生率
-use constant IDX_RankEffType2		=> 26;	# ステータス効果２
+use constant IDX_RankEffType2		=> 24;	# ステータス効果２
+use constant IDX_RankEffType3		=> 25;	# ステータス効果３
+use constant IDX_RankEffValue1		=> 26;	# ステータス効果１の変動値
 use constant IDX_RankEffValue2		=> 27;	# ステータス効果２の変動値
-use constant IDX_RankEffPer2		=> 28;	# ステータス効果２の発生率
-use constant IDX_RankEffType3		=> 29;	# ステータス効果３
-use constant IDX_RankEffValue3		=> 30;	# ステータス効果３の変動値
+use constant IDX_RankEffValue3		=> 28;	# ステータス効果３の変動値
+use constant IDX_RankEffPer1		=> 29;	# ステータス効果１の発生率
+use constant IDX_RankEffPer2		=> 30;	# ステータス効果２の発生率
 use constant IDX_RankEffPer3		=> 31;	# ステータス効果３の発生率
 use constant IDX_DmgRecoverRatio	=> 32;	# ダメージ回復率
 use constant IDX_HPRecoverRatio		=> 33;	# ＨＰ回復率
@@ -101,13 +101,13 @@ use constant IDX_FLG_Start			=> 35;	# 最初
 	"状態異常の継続ターン数　最小",	IDX_SickTurnMin,
 	"状態異常の継続ターン数　最大",	IDX_SickTurnMax,
 	"ステータス効果１",				IDX_RankEffType1,
-	"ステータス効果１の変動値",		IDX_RankEffValue1,
-	"ステータス効果１の発生率",		IDX_RankEffPer1,
 	"ステータス効果２",				IDX_RankEffType2,
-	"ステータス効果２の変動値",		IDX_RankEffValue2,
-	"ステータス効果２の発生率",		IDX_RankEffPer2,
 	"ステータス効果３",				IDX_RankEffType3,
+	"ステータス効果１の変動値",		IDX_RankEffValue1,
+	"ステータス効果２の変動値",		IDX_RankEffValue2,
 	"ステータス効果３の変動値",		IDX_RankEffValue3,
+	"ステータス効果１の発生率",		IDX_RankEffPer1,
+	"ステータス効果２の発生率",		IDX_RankEffPer2,
 	"ステータス効果３の発生率",		IDX_RankEffPer3,
 	"ダメージ回復率",				IDX_DmgRecoverRatio,
 	"ＨＰ回復率",					IDX_HPRecoverRatio,
@@ -227,6 +227,8 @@ use constant CATEGORY_OTHER					=> 13;	# カテゴリ
 	"アンコール",
 	"特殊処理",
 );
+use constant SICKID_SPECIAL			=> 0xffff;	# 特殊処理コード
+
 #----------------------------------------------------------------------------------
 # 状態異常の継続パターン名（順番はポケモンプログラム内の定数と一致している必要があります）
 # 参照：waza_tool/wazadata.h
@@ -472,6 +474,10 @@ sub storeRecord {
 	if( $Record[ IDX_SickID ] < 0 ){
 		$Record[ IDX_SickID ] = 0;
 	}
+	if( $Record[ IDX_SickID ] == (@SickName - 1) ){
+		_print( "rec_$recID: 特殊処理の状態異常です\n");
+		$Record[ IDX_SickID ] = SICKID_SPECIAL;
+	}
 	if( $Record[ IDX_SickID ] == 0 )
 	{
 		if( ($Record[ IDX_Category ] == CATEGORY_SIMPLE_SICK)
@@ -631,7 +637,31 @@ sub outputBin {
 		my $idx_start = IDX_Type;
 		for($i = $idx_start; $i<IDX_FLG_Touch; $i++)
 		{
-			if( ($i == IDX_Priority )
+			# 最大ヒット・最小ヒットはまとめて1byte
+			if( ($i == IDX_HitCntMax) ){
+				if( $Record[$i] >= 16 ){
+					_print("エラー：レコード[$recID]  不正な値 ($RecName[$i] = $Record[$i]）\n");
+					return 0;
+				}
+				$buf = $Record[$i];
+			}
+			elsif( ($i == IDX_HitCntMin) ){
+				if( $Record[$i] >= 16 ){
+					_print("エラー：レコード[$recID]  不正な値 ($RecName[$i] = $Record[$i]）\n");
+					return 0;
+				}
+				$buf = ($buf << 4) | $Record[$i];
+				$buf = pack('c', $buf );
+				syswrite(OUT_FILE, $buf, 1);
+			}
+			elsif( ($i == IDX_SickID) ){
+				if( $Record[$i] > 0xffff ){
+					_print("エラー：レコード[$recID]  不正な値 ($RecName[$i] = $Record[$i]）\n");
+					return 0;
+				}
+				$buf = pack('S', $Record[$i] );
+				syswrite(OUT_FILE, $buf, 2);
+			}elsif( ($i == IDX_Priority )
 			||	($i == IDX_RankEffValue1)
 			||	($i == IDX_RankEffValue2)
 			||	($i == IDX_RankEffValue3)
@@ -644,7 +674,8 @@ sub outputBin {
 				}
 				$buf = pack('c', $Record[$i]);
 				syswrite( OUT_FILE, $buf, 1);
-			}else{
+			}
+			else{
 				if( $Record[$i] < 0 || $Record[$i] > 255){
 					_print("エラー：レコード[$recID]  不正な値 ($RecName[$i] = $Record[$i]）\n");
 					return 0;

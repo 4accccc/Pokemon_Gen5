@@ -95,7 +95,6 @@ typedef enum {
   WAZASICK_TOOSENBOU,       ///< にげる・いれかえが出来ない
   WAZASICK_ENCORE,          ///< 直前に使ったワザしか出せない
 
-
   WAZASICK_WAZALOCK,        ///< 直前に使ったワザしか出せない上、行動も選択できない
   WAZASICK_MUSTHIT,         ///< ワザ必中状態
   WAZASICK_MUSTHIT_TARGET,  ///< 特定相手に対してのみ必中状態
@@ -104,6 +103,7 @@ typedef enum {
 
   WAZASICK_MAX,
   WAZASICK_NULL = POKESICK_NULL,
+  WAZASICK_SPECIAL_CODE = 0xffff, ///< 特殊処理コード
 
 }WazaSick;
 

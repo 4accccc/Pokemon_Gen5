@@ -29,15 +29,15 @@ struct _WAZA_DATA {
   u8  hitPer;       ///< 命中率
   u8  basePP;       ///< 基本PPMax
   s8  priority;     ///< ワザ優先度
-  u8  criticalRank; ///< クリティカルランク
-  u8  hitCountMax;  ///< 最大ヒット回数
-  u8  hitCountMin;  ///< 最小ヒット回数
-  u8  shrinkPer;    ///< ひるみ確率
-  u8  sickID;       ///< 状態異常コード（enum WazaSick）
+  u8  hitCountMax : 4;  ///< 最大ヒット回数
+  u8  hitCountMin : 4;  ///< 最小ヒット回数
+  u16 sickID;       ///< 状態異常コード（enum WazaSick）
   u8  sickPer;      ///< 状態異常の発生率
   u8  sickCont;     ///< 状態異常継続パターン（enum WazaSickCont）
   u8  sickTurnMin;  ///< 状態異常の継続ターン最小
   u8  sickTurnMax;  ///< 状態異常の継続ターン最大
+  u8  criticalRank; ///< クリティカルランク
+  u8  shrinkPer;    ///< ひるみ確率
   u8  rankEffType1; ///< ステータスランク効果１
   s8  rankEffValue1;///< ステータスランク効果１増減値
   u8  rankEffPer1;  ///< ステータスランク効果１の発生率
