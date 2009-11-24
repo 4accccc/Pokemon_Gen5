@@ -513,6 +513,7 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *fieldWork)
   //デフォルトフォグ設置を保存
   tmp->FogBaseOffset = FIELD_FOG_GetOffset( fog );
   tmp->FogBaseSlope = FIELD_FOG_GetSlope( fog );
+  NOZOMU_Printf("fog::%d,%d\n",tmp->FogBaseOffset, tmp->FogBaseSlope);
   //自機が隔壁より下にいる場合はフォグフェード後の設定に書き換え
   {
     VecFx32 pos;
@@ -892,7 +893,7 @@ static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work )
         else (*seq)++;
       }
     }
-    //NO BREAK
+    break;
   case 8:
     {
       FIELD_FOG_WORK* fog = FIELDMAP_GetFieldFog( fieldWork );
@@ -1228,15 +1229,26 @@ static void FuncMainLiftOnly(GAMESYS_WORK *gsys)
   if (tmp->FogFadeFlg){
     //フォグフェード開始位置に到達したか？
     BOOL fog_start = FALSE;
+    s32 fog_offset, fog_slope;
 
     //進行方向で分岐
-    if ( tmp->AddVal>=0 )
+    if ( tmp->AddVal>=0 )   //上昇
     {
-      if (tmp->NowHeight <= FOG_FADE_OUT_START*FX32_ONE) fog_start = TRUE;
+      if (tmp->NowHeight >= UP_FOG_FADE_START*FIELD_CONST_GRID_FX32_SIZE)
+      {
+        fog_start = TRUE;
+        fog_offset = tmp->FogBaseOffset;
+        fog_slope = tmp->FogBaseSlope;
+      }
     }
-    else
+    else                    //下降
     {
-      if (tmp->NowHeight > FOG_FADE_IN_START*FX32_ONE) fog_start = TRUE;
+      if (tmp->NowHeight <= DOWN_FOG_FADE_START*FIELD_CONST_GRID_FX32_SIZE)
+      {
+        fog_start = TRUE;
+        fog_offset = FOG_OFFSET;
+        fog_slope = FOG_SLOPE;
+      }
     }
 
     if (fog_start)
@@ -1247,7 +1259,7 @@ static void FuncMainLiftOnly(GAMESYS_WORK *gsys)
       if (tmp->AddVal == -SP_LIFT_MOVE_SPD2) fog_sync = FOG_FADE_SPEED_SLOW;
       else fog_sync = FOG_FADE_SPEED_FAST;
 
-      FIELD_FOG_FADE_Init( fog, FOG_OFFSET, FOG_SLOPE, fog_sync );
+      FIELD_FOG_FADE_Init( fog, fog_offset, fog_slope, fog_sync );
       tmp->FogFadeFlg = FALSE;
     }
   }
