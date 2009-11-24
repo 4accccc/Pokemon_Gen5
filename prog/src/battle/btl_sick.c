@@ -447,6 +447,7 @@ void BTL_SICK_CheckNotEffectByType( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM
 
 void BTL_SICK_CheckDamageAffinity(  BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* defender )
 {
+  // 「みやぶる」状態の時、効果無しのワザを等倍ヒットに変換
   if( BPP_CheckSick(defender, WAZASICK_MIYABURU) )
   {
     BPP_SICK_CONT cont = BPP_GetSickCont( defender, WAZASICK_MIYABURU );

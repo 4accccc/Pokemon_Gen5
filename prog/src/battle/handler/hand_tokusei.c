@@ -946,10 +946,7 @@ static void handler_Iromegane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     if( aff == BTL_TYPEAFF_ABOUT_DISADVANTAGE )
     {
       // ダメージ２倍
-      u32 dmg = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
-      dmg *= 2;
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_DAMAGE, dmg );
-      BTL_Printf("ポケ[%d]の いろめがね でダメージ２倍\n", pokeID);
+      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
     }
   }
 }
@@ -977,9 +974,7 @@ static void handler_HardRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     if( aff == BTL_TYPEAFF_ABOUT_ADVANTAGE )
     {
       // ダメージ75％
-      u32 dmg = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
-      dmg = BTL_CALC_MulRatio_OverZero( dmg, FX32_CONST(75) );
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_DAMAGE, dmg );
+      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.75) );
     }
   }
 }
@@ -1006,9 +1001,7 @@ static void handler_Sniper( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_CRITICAL_FLAG) )
     {
       // ダメージ２倍
-      u32 dmg = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE ) * 2;
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_DAMAGE, dmg );
-      BTL_Printf("ポケ[%d]の スナイパ でダメージ２倍\n", pokeID);
+      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
     }
   }
 }

@@ -1233,24 +1233,6 @@ static void handler_OkkaNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     work[0] = 1;
   }
 }
-
-static void handler_common_WeakAff_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( work[0] )
-  {
-    if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
-    {
-      BTL_HANDEX_PARAM_MESSAGE* msg_param;
-
-      msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Item_DamageShrink );
-      HANDEX_STR_AddArg( &msg_param->str, pokeID );
-      HANDEX_STR_AddArg( &msg_param->str, BTL_EVENT_FACTOR_GetSubID(myHandle) );
-
-      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CONSUME_ITEM, pokeID );
-    }
-  }
-}
 //------------------------------------------------------------------------------
 /**
  *  イトケのみ
@@ -1587,6 +1569,23 @@ static BOOL common_WeakAff_Relieve( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     return TRUE;
   }
   return FALSE;
+}
+static void handler_common_WeakAff_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( work[0] )
+  {
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+    {
+      BTL_HANDEX_PARAM_MESSAGE* msg_param;
+
+      msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Item_DamageShrink );
+      HANDEX_STR_AddArg( &msg_param->str, pokeID );
+      HANDEX_STR_AddArg( &msg_param->str, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+
+      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CONSUME_ITEM, pokeID );
+    }
+  }
 }
 
 //----------------------------------------------------------------------------------
@@ -2532,11 +2531,11 @@ static void handler_TatsujinNoObi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    u16 damage = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
-    u8  ratio = common_GetItemParam( myHandle, flowWk, ITEM_PRM_ATTACK );
+    u8  itemAtk = common_GetItemParam( myHandle, flowWk, ITEM_PRM_ATTACK );
 
-    damage = damage * (100+ratio) / 100;
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_DAMAGE, damage );
+    fx32 ratio = FX32_CONST(100 + itemAtk) / 100;
+    BTL_Printf("たつじんのおび：itemAtk=%d, ratio=%08x\n", itemAtk, ratio);
+    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, ratio );
   }
 }
 //------------------------------------------------------------------------------
@@ -2566,11 +2565,11 @@ static void handler_InochiNoTama_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    u16 damage = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
-    u8  ratio = common_GetItemParam( myHandle, flowWk, ITEM_PRM_ATTACK );
+    u8  itemAtk = common_GetItemParam( myHandle, flowWk, ITEM_PRM_ATTACK );
 
-    damage = damage * (100+ratio) / 100;
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_DAMAGE, damage );
+    fx32 ratio = FX32_CONST(100 + itemAtk) / 100;
+    BTL_Printf("いのちのたま：itemAtk=%d, ratio=%08x\n", itemAtk, ratio);
+    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, ratio );
   }
 }
 //------------------------------------------------------------------------------
@@ -2594,12 +2593,12 @@ static void handler_MetroNome( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     u16 counter = BPP_GetWazaContCounter( bpp );
     if( counter )
     {
-      u16 ratio, damage;
-      ratio = 100 + (common_GetItemParam(myHandle, flowWk, ITEM_PRM_ATTACK) * (counter));
-      if( ratio > 200 ){ ratio = 200; }
-      damage = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
-      damage = (damage * ratio) / 100;
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_DAMAGE, damage );
+      fx32 ratio;
+      u16  pow, damage;
+      pow = 100 + (common_GetItemParam(myHandle, flowWk, ITEM_PRM_ATTACK) * (counter));
+      if( pow > 200 ){ pow = 200; }
+      ratio = (FX32_CONST(ratio) / 100);
+      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, ratio );
     }
   }
 }
