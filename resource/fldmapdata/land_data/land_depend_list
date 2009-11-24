@@ -567,10 +567,10 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_gym0202_00_00.3dppack \
 	$(DIR_OUTPUT)/m_gym0203_00_00.3dppack \
 	$(DIR_OUTPUT)/m_leag01_00_00.3dppack \
-	$(DIR_OUTPUT)/m_siten01_00_00.ngpack \
-	$(DIR_OUTPUT)/m_siten02_00_00.ngpack \
-	$(DIR_OUTPUT)/m_siten03_00_00.ngpack \
-	$(DIR_OUTPUT)/m_siten04_00_00.ngpack \
+	$(DIR_OUTPUT)/m_siten01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_siten02_00_00.3dppack \
+	$(DIR_OUTPUT)/m_siten03_00_00.3dppack \
+	$(DIR_OUTPUT)/m_siten04_00_00.3dppack \
 	$(DIR_OUTPUT)/m_champ01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dendo01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_ncastle01_00_00.3dppack \

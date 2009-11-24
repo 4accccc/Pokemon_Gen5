@@ -5111,72 +5111,40 @@ $(DIR_TEMP)/m_leag01_00_00.nsbmd: $(DIR_RES)/m_leag01_00_00.imd
 	@$(G3DCVTR) $(DIR_RES)/m_leag01_00_00.imd -o $(DIR_TEMP)/m_leag01_00_00.nsbmd
 
 #m_siten01_00_00
-$(DIR_OUTPUT)/m_siten01_00_00.ngpack: $(DIR_TEMP)/m_siten01_00_00.nsbmd $(DIR_TEMP)/m_siten01_00_00.bhc $(DIR_RES)/m_siten01_00_00.3dmd
-	@echo create ngpack m_siten01_00_00
-	@$(BINLINKER) $(DIR_TEMP)/m_siten01_00_00.nsbmd $(DIR_TEMP)/m_siten01_00_00.bhc $(DIR_RES)/m_siten01_00_00.3dmd $(DIR_OUTPUT)/m_siten01_00_00.ngpack BR
+$(DIR_OUTPUT)/m_siten01_00_00.3dppack: $(DIR_TEMP)/m_siten01_00_00.nsbmd $(DIR_RES)/m_siten01_00_00.bin $(DIR_RES)/m_siten01_00_00.3dmd
+	@echo create 3dppack m_siten01_00_00
+	@$(BINLINKER) $(DIR_TEMP)/m_siten01_00_00.nsbmd $(DIR_RES)/m_siten01_00_00.bin $(DIR_RES)/m_siten01_00_00.3dmd $(DIR_OUTPUT)/m_siten01_00_00.3dppack WB
 
 $(DIR_TEMP)/m_siten01_00_00.nsbmd: $(DIR_RES)/m_siten01_00_00.imd
 	@echo create_nsbmd m_siten01_00_00
-	@$(G3DCVTR) $(DIR_RES)/m_siten01_00_00.imd -emdl -o $(DIR_TEMP)/m_siten01_00_00.nsbmd
-
-$(DIR_TEMP)/m_siten01_00_00.bhc: $(DIR_RES)/m_siten01_00_00h.imd
-	@echo create_bhc m_siten01_00_00
-	@echo ./$(DIR_RES)/m_siten01_00_00h > heightlist.lst
-	@echo \#END >> heightlist.lst
-	@$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE) > convresult
-	@ruby pad4byte.rb $(DIR_RES)/m_siten01_00_00h.bhc $(DIR_TEMP)/m_siten01_00_00.bhc
-	@rm $(DIR_RES)/m_siten01_00_00h.bhc
+	@$(G3DCVTR) $(DIR_RES)/m_siten01_00_00.imd -o $(DIR_TEMP)/m_siten01_00_00.nsbmd
 
 #m_siten02_00_00
-$(DIR_OUTPUT)/m_siten02_00_00.ngpack: $(DIR_TEMP)/m_siten02_00_00.nsbmd $(DIR_TEMP)/m_siten02_00_00.bhc $(DIR_RES)/m_siten02_00_00.3dmd
-	@echo create ngpack m_siten02_00_00
-	@$(BINLINKER) $(DIR_TEMP)/m_siten02_00_00.nsbmd $(DIR_TEMP)/m_siten02_00_00.bhc $(DIR_RES)/m_siten02_00_00.3dmd $(DIR_OUTPUT)/m_siten02_00_00.ngpack BR
+$(DIR_OUTPUT)/m_siten02_00_00.3dppack: $(DIR_TEMP)/m_siten02_00_00.nsbmd $(DIR_RES)/m_siten02_00_00.bin $(DIR_RES)/m_siten02_00_00.3dmd
+	@echo create 3dppack m_siten02_00_00
+	@$(BINLINKER) $(DIR_TEMP)/m_siten02_00_00.nsbmd $(DIR_RES)/m_siten02_00_00.bin $(DIR_RES)/m_siten02_00_00.3dmd $(DIR_OUTPUT)/m_siten02_00_00.3dppack WB
 
 $(DIR_TEMP)/m_siten02_00_00.nsbmd: $(DIR_RES)/m_siten02_00_00.imd
 	@echo create_nsbmd m_siten02_00_00
-	@$(G3DCVTR) $(DIR_RES)/m_siten02_00_00.imd -emdl -o $(DIR_TEMP)/m_siten02_00_00.nsbmd
-
-$(DIR_TEMP)/m_siten02_00_00.bhc: $(DIR_RES)/m_siten02_00_00h.imd
-	@echo create_bhc m_siten02_00_00
-	@echo ./$(DIR_RES)/m_siten02_00_00h > heightlist.lst
-	@echo \#END >> heightlist.lst
-	@$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE) > convresult
-	@ruby pad4byte.rb $(DIR_RES)/m_siten02_00_00h.bhc $(DIR_TEMP)/m_siten02_00_00.bhc
-	@rm $(DIR_RES)/m_siten02_00_00h.bhc
+	@$(G3DCVTR) $(DIR_RES)/m_siten02_00_00.imd -o $(DIR_TEMP)/m_siten02_00_00.nsbmd
 
 #m_siten03_00_00
-$(DIR_OUTPUT)/m_siten03_00_00.ngpack: $(DIR_TEMP)/m_siten03_00_00.nsbmd $(DIR_TEMP)/m_siten03_00_00.bhc $(DIR_RES)/m_siten03_00_00.3dmd
-	@echo create ngpack m_siten03_00_00
-	@$(BINLINKER) $(DIR_TEMP)/m_siten03_00_00.nsbmd $(DIR_TEMP)/m_siten03_00_00.bhc $(DIR_RES)/m_siten03_00_00.3dmd $(DIR_OUTPUT)/m_siten03_00_00.ngpack BR
+$(DIR_OUTPUT)/m_siten03_00_00.3dppack: $(DIR_TEMP)/m_siten03_00_00.nsbmd $(DIR_RES)/m_siten03_00_00.bin $(DIR_RES)/m_siten03_00_00.3dmd
+	@echo create 3dppack m_siten03_00_00
+	@$(BINLINKER) $(DIR_TEMP)/m_siten03_00_00.nsbmd $(DIR_RES)/m_siten03_00_00.bin $(DIR_RES)/m_siten03_00_00.3dmd $(DIR_OUTPUT)/m_siten03_00_00.3dppack WB
 
 $(DIR_TEMP)/m_siten03_00_00.nsbmd: $(DIR_RES)/m_siten03_00_00.imd
 	@echo create_nsbmd m_siten03_00_00
-	@$(G3DCVTR) $(DIR_RES)/m_siten03_00_00.imd -emdl -o $(DIR_TEMP)/m_siten03_00_00.nsbmd
-
-$(DIR_TEMP)/m_siten03_00_00.bhc: $(DIR_RES)/m_siten03_00_00h.imd
-	@echo create_bhc m_siten03_00_00
-	@echo ./$(DIR_RES)/m_siten03_00_00h > heightlist.lst
-	@echo \#END >> heightlist.lst
-	@$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE) > convresult
-	@ruby pad4byte.rb $(DIR_RES)/m_siten03_00_00h.bhc $(DIR_TEMP)/m_siten03_00_00.bhc
-	@rm $(DIR_RES)/m_siten03_00_00h.bhc
+	@$(G3DCVTR) $(DIR_RES)/m_siten03_00_00.imd -o $(DIR_TEMP)/m_siten03_00_00.nsbmd
 
 #m_siten04_00_00
-$(DIR_OUTPUT)/m_siten04_00_00.ngpack: $(DIR_TEMP)/m_siten04_00_00.nsbmd $(DIR_TEMP)/m_siten04_00_00.bhc $(DIR_RES)/m_siten04_00_00.3dmd
-	@echo create ngpack m_siten04_00_00
-	@$(BINLINKER) $(DIR_TEMP)/m_siten04_00_00.nsbmd $(DIR_TEMP)/m_siten04_00_00.bhc $(DIR_RES)/m_siten04_00_00.3dmd $(DIR_OUTPUT)/m_siten04_00_00.ngpack BR
+$(DIR_OUTPUT)/m_siten04_00_00.3dppack: $(DIR_TEMP)/m_siten04_00_00.nsbmd $(DIR_RES)/m_siten04_00_00.bin $(DIR_RES)/m_siten04_00_00.3dmd
+	@echo create 3dppack m_siten04_00_00
+	@$(BINLINKER) $(DIR_TEMP)/m_siten04_00_00.nsbmd $(DIR_RES)/m_siten04_00_00.bin $(DIR_RES)/m_siten04_00_00.3dmd $(DIR_OUTPUT)/m_siten04_00_00.3dppack WB
 
 $(DIR_TEMP)/m_siten04_00_00.nsbmd: $(DIR_RES)/m_siten04_00_00.imd
 	@echo create_nsbmd m_siten04_00_00
-	@$(G3DCVTR) $(DIR_RES)/m_siten04_00_00.imd -emdl -o $(DIR_TEMP)/m_siten04_00_00.nsbmd
-
-$(DIR_TEMP)/m_siten04_00_00.bhc: $(DIR_RES)/m_siten04_00_00h.imd
-	@echo create_bhc m_siten04_00_00
-	@echo ./$(DIR_RES)/m_siten04_00_00h > heightlist.lst
-	@echo \#END >> heightlist.lst
-	@$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE) > convresult
-	@ruby pad4byte.rb $(DIR_RES)/m_siten04_00_00h.bhc $(DIR_TEMP)/m_siten04_00_00.bhc
-	@rm $(DIR_RES)/m_siten04_00_00h.bhc
+	@$(G3DCVTR) $(DIR_RES)/m_siten04_00_00.imd -o $(DIR_TEMP)/m_siten04_00_00.nsbmd
 
 #m_champ01_00_00
 $(DIR_OUTPUT)/m_champ01_00_00.3dppack: $(DIR_TEMP)/m_champ01_00_00.nsbmd $(DIR_RES)/m_champ01_00_00.bin $(DIR_RES)/m_champ01_00_00.3dmd

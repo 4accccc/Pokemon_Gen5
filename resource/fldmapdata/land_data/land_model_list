@@ -567,10 +567,10 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_gym0202_00_00.nsbmd \
 	$(DIR_TEMP)/m_gym0203_00_00.nsbmd \
 	$(DIR_TEMP)/m_leag01_00_00.nsbmd \
-	$(DIR_TEMP)/m_siten01_00_00.nsbmd	$(DIR_TEMP)/m_siten01_00_00.bhc \
-	$(DIR_TEMP)/m_siten02_00_00.nsbmd	$(DIR_TEMP)/m_siten02_00_00.bhc \
-	$(DIR_TEMP)/m_siten03_00_00.nsbmd	$(DIR_TEMP)/m_siten03_00_00.bhc \
-	$(DIR_TEMP)/m_siten04_00_00.nsbmd	$(DIR_TEMP)/m_siten04_00_00.bhc \
+	$(DIR_TEMP)/m_siten01_00_00.nsbmd \
+	$(DIR_TEMP)/m_siten02_00_00.nsbmd \
+	$(DIR_TEMP)/m_siten03_00_00.nsbmd \
+	$(DIR_TEMP)/m_siten04_00_00.nsbmd \
 	$(DIR_TEMP)/m_champ01_00_00.nsbmd \
 	$(DIR_TEMP)/m_dendo01_00_00.nsbmd \
 	$(DIR_TEMP)/m_ncastle01_00_00.nsbmd \
