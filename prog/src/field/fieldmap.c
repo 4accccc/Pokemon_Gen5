@@ -2708,11 +2708,11 @@ void *GMK_TMP_WK_AllocWork
   tmpWork = &fieldWork->GmkTmpWork;
   if (inAssignID == GMK_TMP_NO_ASSIGN_ID){
     GF_ASSERT(0);
-    return;
+    return NULL;
   }
   if (tmpWork->AssignID != GMK_TMP_NO_ASSIGN_ID){
     GF_ASSERT_MSG(0,"Alrady Assigned %d\n",tmpWork->AssignID);
-    return;
+    return NULL;
   }
   
   tmpWork->AssignID = inAssignID;
