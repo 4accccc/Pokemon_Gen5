@@ -133,3 +133,15 @@ extern void ISS_SWITCH_SYS_SwitchOn( ISS_SWITCH_SYS* sys, SWITCH_INDEX idx );
  */
 //------------------------------------------------------------------------------------------
 extern void ISS_SWITCH_SYS_SwitchOff( ISS_SWITCH_SYS* sys, SWITCH_INDEX idx );
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief スイッチの ON/OFF を取得する
+ *
+ * @param sys 取得対象システム
+ * @param idx 判定するスイッチ番号
+ *
+ * @return スイッチidxが押されている場合 TRUE, そうでなければ FALSE
+ */
+//------------------------------------------------------------------------------------------
+extern BOOL ISS_SWITCH_SYS_IsSwitchOn( const ISS_SWITCH_SYS* sys, SWITCH_INDEX idx );

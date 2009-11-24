@@ -292,7 +292,7 @@
   //ISS
   DEF_CMD( EvCmdIssSwitchOn, EV_SEQ_ISS_SWITCH_ON )
   DEF_CMD( EvCmdIssSwitchOff, EV_SEQ_ISS_SWITCH_OFF )
-  NO_CMD()
+  DEF_CMD( EvCmdIssSwitchCheck, EV_SEQ_ISS_SWITCH_CHECK )
   NO_CMD()
   
   //SE

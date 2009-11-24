@@ -495,6 +495,26 @@ extern VMCMD_RESULT EvCmdIssSwitchOff( VMHANDLE* core, void* wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief ISS-S の指定スイッチの状態をチェックする
+ * @param core 仮想マシン制御構造体へのポインタ
+ * @return VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+extern VMCMD_RESULT EvCmdIssSwitchCheck( VMHANDLE* core, void* wk )
+{
+  SCRCMD_WORK*     work = (SCRCMD_WORK*)wk;
+  GAMESYS_WORK*    gsys = SCRCMD_WORK_GetGameSysWork( work );
+  ISS_SYS*          iss = GAMESYSTEM_GetIssSystem( gsys );
+  ISS_SWITCH_SYS* iss_s = ISS_SYS_GetIssSwitchSystem( iss );
+  u16*           ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第一引数
+  u16               idx = SCRCMD_GetVMWorkValue( core, work );  // コマンド第二引数
+
+  *ret_wk = ISS_SWITCH_SYS_IsSwitchOn( iss_s, idx );
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //======================================================================
 //  ぺラップ
 //======================================================================

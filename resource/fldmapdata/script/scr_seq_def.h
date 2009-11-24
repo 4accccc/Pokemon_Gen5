@@ -2445,7 +2445,7 @@
  */
 //--------------------------------------------------------------
 #define _ISS_SWITCH_ON( idx ) \
-   _ASM_ISS_SWITCH_ON idx
+    _ASM_ISS_SWITCH_ON idx
 
   .macro  _ASM_ISS_SWITCH_ON idx
   .short  EV_SEQ_ISS_SWITCH_ON
@@ -2460,10 +2460,28 @@
  */
 //--------------------------------------------------------------
 #define _ISS_SWITCH_OFF( idx ) \
-   _ASM_ISS_SWITCH_OFF idx
+    _ASM_ISS_SWITCH_OFF idx
 
   .macro  _ASM_ISS_SWITCH_OFF idx
   .short  EV_SEQ_ISS_SWITCH_OFF
+  .short  \idx
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief スイッチISS　指定スイッチの ON/OFF を調べる
+ * @def _ISS_SWITCH_OFF
+ * @param ret_wk 判定結果の格納先
+ * @param idx    OFF にするスイッチ番号(0～8)
+ * @return 指定スイッチが ON なら TRUE, そうでなければ FALSE
+ */
+//--------------------------------------------------------------
+#define _ISS_SWITCH_CHECK( ret_wk, idx ) \
+    _ASM_ISS_SWITCH_CHECK ret_wk, idx
+
+  .macro  _ASM_ISS_SWITCH_CHECK ret_wk, idx
+  .short  EV_SEQ_ISS_SWITCH_CHECK
+  .short  \
   .short  \idx
   .endm
 

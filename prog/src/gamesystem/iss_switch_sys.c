@@ -196,6 +196,28 @@ void ISS_SWITCH_SYS_SwitchOff( ISS_SWITCH_SYS* sys, SWITCH_INDEX idx )
   SwitchOff( sys, idx );
 }
 
+//------------------------------------------------------------------------------------------
+/**
+ * @brief スイッチの ON/OFF を取得する
+ *
+ * @param sys 取得対象システム
+ * @param idx 判定するスイッチ番号
+ *
+ * @return スイッチidxが押されている場合 TRUE, そうでなければ FALSE
+ */
+//------------------------------------------------------------------------------------------
+BOOL ISS_SWITCH_SYS_IsSwitchOn( const ISS_SWITCH_SYS* sys, SWITCH_INDEX idx )
+{
+  if( SWITCH_MAX < idx )
+  {
+    OBATA_Printf( "==============================\n" );
+    OBATA_Printf( "ISS-S: switch index range over\n" );
+    OBATA_Printf( "==============================\n" );
+    return FALSE;
+  }
+  return (sys->switchState[idx] == SWITCH_STATE_ON);
+}
+
 
 //========================================================================================== 
 // ■非公開関数
