@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2009-11-20T17:44:22"/>
+	<create user="iwasawa" host="W00157" date="2009-11-24T13:36:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -380,6 +380,17 @@
 [FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を　みつけた！</language>
 	</row>
 
+	<row id="msg_item_get_field_03">
+		<comment>アイテムゲット時……フィールドアイテム技マシン
+0＝主人公名
+1＝道具名
+2＝わざ名</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は　[1:09:どうぐ名:1]
+「[1:07:わざ名:2]」を　みつけた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　[1:09:どうぐ名:1]
+「[1:07:わざ名:2]」を　みつけた！</language>
+	</row>
+
 	<row id="msg_item_get_fail_keywait">
 		<comment>アイテム入手失敗（送りカーソル有り）</comment>
 		<language name="JPN" width="256">ざんねん！
@@ -394,6 +405,17 @@
 バッグが　いっぱい　だ！</language>
 		<language name="JPN_KANJI" width="256">残念！
 バッグが　一杯だ！</language>
+	</row>
+
+	<row id="msg_item_get_fail_field">
+		<comment>アイテムゲット時……フィールドアイテム取得失敗
+0＝主人公名</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　てにいれた！[BE:01:ページ切り替え（クリア）]
+ざんねん！
+バッグが　いっぱいだ……</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　てにいれた！[BE:01:ページ切り替え（クリア）]
+残念！
+バッグが　いっぱいだ……</language>
 	</row>
 
 	<row id="msg_item_get_pocket_keywait">

@@ -5,6 +5,7 @@
 //  SCWK_TEMP2  成功か失敗か
 //--------------------------------------------------------------------
 ev_fld_item2:
+{
   _TALK_OBJ_START()
   _SE_WAIT() //話しかけ開始音の終了待ち
   
@@ -21,15 +22,8 @@ ev_fld_item2:
   ELSE
     _CALL ev_itemget_flditem_false //失敗
   ENDIF
-  _RET
-
-//--------------------------------------------------------------------
-//  終了処理
-//--------------------------------------------------------------------
-ev_fld_item_end:
-  //_SYSWIN_CLOSE()
-  //_CHG_LOCAL_SCR  //ローカルスクリプトに切り替え
-  _RET
+}
+_RET
 
 //--------------------------------------------------------------------
 //  成功終了
@@ -40,18 +34,13 @@ ev_itemget_flditem_true:
   //話しかけ対象のモンスターボールを消す
   _OBJ_DEL( SCWK_TARGET_OBJID )
   
-  _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_ITEMGET )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_itemget )
-  _OBJ_ANIME_WAIT()
+  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_SET
 
   //アイテム追加
   _ADD_ITEM( SCWK_TEMP0, SCWK_TEMP1, SCWK_ANSWER )
   
   //こんごうだま、しらたまのチェック
   //_UG_BALLITEM_CHECK  SCWK_TEMP0
-  
-  //そうこのカギのチェック
-  //_IFVAL_CALL SCWK_TEMP0,EQ,ITEM_SOUKONOKAGI,ev_itemget_fld_item_soukonokagi
   
   //入手したアイテムが技マシンかチェック
   _WAZA_ITEM_CHK( SCWK_TEMP0, SCWK_ANSWER )
@@ -63,126 +52,25 @@ ev_itemget_flditem_true:
     _CALL ev_itemget_flditem_no_wazam
   ENDIF
   
-  _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM )
-  
-  //ウィンドウクローズ
-  _SYSWIN_CLOSE()
-  _RET
-
-ev_itemget_flditem_true_2:  //成功終了処理その２
   _ME_WAIT()
-  //_TALK_WAIT
-
-  //アウスのプレートのチェックをして専用メッセージを出す
-// _AUSU_ITEM_CHECK  SCWK_TEMP0,SCWK_ANSWER
-//  _IFVAL_CALL    SCWK_ANSWER,EQ,1,ev_itemget_fld_item_item_ausunopureeto
 
   _PLAYER_NAME( 0 )
   _ITEM_NAME( 1, SCWK_TEMP0 )
 
   //ポケットナンバーをSCWK_ANSWERに代入
   _GET_POCKET_ID( SCWK_TEMP0, SCWK_ANSWER )
-  
-  SWITCH $SCWK_ANSWER
-  CASE ITEMPOCKET_EVENT THEN
-    _CALL flditem_bag_poke_11
-  CASE ITEMPOCKET_NORMAL THEN //BALLもNORMALに
-    _CALL flditem_bag_poke_10
-  CASE ITEMPOCKET_NUTS THEN
-    _CALL flditem_bag_poke_15
-  CASE ITEMPOCKET_DRUG THEN
-    _CALL flditem_bag_poke_14
-  CASE ITEMPOCKET_WAZA THEN
-    _CALL flditem_bag_poke_12
-/* wb
-  CASE BAG_POKE_EVENT THEN
-    _CALL flditem_bag_poke_11
-  CASE BAG_POKE_NORMAL THEN
-    _CALL flditem_bag_poke_10
-  CASE BAG_POKE_NUTS THEN
-    _CALL flditem_bag_poke_15
-  CASE BAG_POKE_DRUG THEN
-    _CALL flditem_bag_poke_14
-  CASE BAG_POKE_BALL THEN
-    _CALL flditem_bag_poke_16
-  CASE BAG_POKE_BATTLE THEN
-    _CALL flditem_bag_poke_17
-  CASE BAG_POKE_SEAL THEN
-    _CALL flditem_bag_poke_13
-  CASE BAG_POKE_WAZA THEN
-    _CALL flditem_bag_poke_12
-*/
-  ENDSWITCH
-  _RET
-
-flditem_bag_poke_10:
-  //ポケットナンバーをSCWK_ANSWERに代入
-  _GET_POCKET_ID( SCWK_TEMP0, SCWK_ANSWER )
   _POCKET_NAME( 2, SCWK_ANSWER )
-  _CALL ev_itemget_flditem_common_10
-  _RET
 
-flditem_bag_poke_11:
-  //ポケットナンバーをSCWK_ANSWERに代入
-  _GET_POCKET_ID( SCWK_TEMP0, SCWK_ANSWER )
-  _POCKET_NAME( 2, SCWK_ANSWER )
-  _CALL ev_itemget_flditem_common_10
-  _RET
-
-flditem_bag_poke_12:
-  //ポケットナンバーをSCWK_ANSWERに代入
-  _GET_POCKET_ID(  SCWK_TEMP0,SCWK_ANSWER )
-  _POCKET_NAME(  2,SCWK_ANSWER )
-  _CALL ev_itemget_flditem_common_10
-  _RET
-
-flditem_bag_poke_13:
-  //ポケットナンバーをSCWK_ANSWERに代入
-  _GET_POCKET_ID(  SCWK_TEMP0,SCWK_ANSWER )
-  _POCKET_NAME( 2,SCWK_ANSWER )
-  _CALL ev_itemget_flditem_common_10
-  _RET
-
-flditem_bag_poke_14:
-  //ポケットナンバーをSCWK_ANSWERに代入
-  _GET_POCKET_ID( SCWK_TEMP0,SCWK_ANSWER )
-  _POCKET_NAME(  2,SCWK_ANSWER )
-  _CALL ev_itemget_flditem_common_10
-  _RET
-
-flditem_bag_poke_15:
-  //ポケットナンバーをSCWK_ANSWERに代入
-  _GET_POCKET_ID(  SCWK_TEMP0,SCWK_ANSWER )
-  _POCKET_NAME(  2,SCWK_ANSWER )
-  _CALL ev_itemget_flditem_common_10
-  _RET
-
-flditem_bag_poke_16:
-  //ポケットナンバーをSCWK_ANSWERに代入
-  _GET_POCKET_ID(  SCWK_TEMP0,SCWK_ANSWER )
-  _POCKET_NAME(  2,SCWK_ANSWER )
-  _CALL ev_itemget_flditem_common_10
-  _RET
-
-flditem_bag_poke_17:
-  //ポケットナンバーをSCWK_ANSWERに代入
-  _GET_POCKET_ID(  SCWK_TEMP0,SCWK_ANSWER )
-  _POCKET_NAME( 2,SCWK_ANSWER )
-  _CALL ev_itemget_flditem_common_10
-  _RET
-
-//
-ev_itemget_flditem_common_10:
-  /*冒険ノートデータ作成*/
-//  _FNOTE_DATA_MAKE  FNOTE_ID_ITEMGET,SCWK_TEMP0,0,0,0
-  
-  _SYSWIN_MSG_DOWN( msg_fld_item_get_10 )
+  _SYSWIN_MSG_DOWN( msg_item_get_pocket_nowait )
   _LAST_KEYWAIT()
   
   //最後に成功したことをSCWK_ANSWERに代入しておく！
   _LDVAL( SCWK_ANSWER,1 )
 
-  _CALL ev_fld_item_end
+  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_RETURN
+  
+  //ウィンドウクローズ
+  _SYSWIN_CLOSE()
   _RET
 
 //--------------------------------------------------------------------
@@ -190,61 +78,35 @@ ev_itemget_flditem_common_10:
 //--------------------------------------------------------------------
 //「技マシン」
 ev_itemget_flditem_yes_wazam:
+{
   _PLAYER_NAME( 0 )
   _ITEM_NAME( 1,SCWK_TEMP0 )
   _ITEM_WAZA_NAME( 2,SCWK_TEMP0)
-  _SYSWIN_MSG_DOWN( msg_fld_item_get_07 )
-  _CALL ev_itemget_flditem_true_2
-  _RET
+  _SYSWIN_MSG_DOWN( msg_item_get_field_03 )
+}
+_RET
 
 //「技マシン」以外
 ev_itemget_flditem_no_wazam:
+{
   _PLAYER_NAME(  0 )
   _ITEM_NAME( 1,SCWK_TEMP0 )
-  _SYSWIN_MSG_DOWN( msg_fld_item_get_04 )
-  _CALL ev_itemget_flditem_true_2
-  _RET
+  _SYSWIN_MSG_DOWN( msg_item_get_field_02 )
+}
+_RET
 
 //--------------------------------------------------------------------
 //  失敗終了
 //--------------------------------------------------------------------
 ev_itemget_flditem_false:
+{
   _ITEM_NAME( 0,SCWK_TEMP0 )
-  _SYSWIN_MSG_DOWN( msg_fld_item_get_05 )
+  _SYSWIN_MSG_DOWN( msg_item_get_fail_field )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
 
   //最後に失敗したことをSCWK_ANSWERに代入しておく！
   _LDVAL( SCWK_ANSWER,0 )
-
-  _CALL ev_fld_item_end
-  _RET
-
-//--------------------------------------------------------------------
-//そうこのカギのチェック
-//--------------------------------------------------------------------
-//wb null
-/*
-ev_itemget_fld_item_soukonokagi:
-  _FLAG_SET    SYS_FLAG_BGM_D26  //BGMイベントフラグON
-  _RET
-*/
-
-//--------------------------------------------------------------------
-//アウスのプレートのチェックをして専用メッセージを出す
-//--------------------------------------------------------------------
-//wb null
-/*
-ev_itemget_fld_item_item_ausunopureeto:
-  _CHG_COMMON_SCR SCRID_PLATE_MSG
-  _RET
-*/
-
-//--------------------------------------------------------------------
-//  アニメーションデータ
-//--------------------------------------------------------------------
-//自機ゲットポーズ
-_ANIME_LABEL  anm_hero_itemget
-  _ANIME_DATA AC_HERO_ITEMGET,1
-  _ANIME_DATA ACMD_END,0
+}
+_RET
 

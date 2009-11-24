@@ -3,7 +3,7 @@
  * @file  scr_offset.cdat
  * @bfief  スクリプトIDのオフセットとそれに対応するアーカイブの定義テーブル
  * @author  tamada GAMEFREAK inc.
- * @date  2009 11/20 (Fri) 17:31
+ * @date  2009 11/24 (Tue) 15:36
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -52,7 +52,7 @@ static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
       ID_FLD_ITEM_OFFSET,             //( 7000),
       ID_FLD_ITEM_OFFSET_END,         //( 7799),
       NARC_script_seq_fld_item_bin,
-      NARC_script_message_fld_item_dat
+      NARC_script_message_item_get_scr_dat
     },
     {//2vs2トレーナースクリプト
       ID_TRAINER_2VS2_OFFSET,         //( 5000),
