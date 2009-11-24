@@ -23,3 +23,7 @@ extern u32 PLIST_ITEM_GetWazaListMessage( PLIST_WORK *work , u16 itemNo );
 
 extern void PLIST_ITEM_MSG_CanNotUseItem( PLIST_WORK *work );
 extern void PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work );
+
+extern void PLIST_HPANMCB_ReturnRecoverHp( PLIST_WORK *work );
+extern void PLIST_HPANMCB_ReturnRecoverAllDeath( PLIST_WORK *work );
+extern void PLIST_MSGCB_RecoverAllDeath_NextPoke( PLIST_WORK *work );

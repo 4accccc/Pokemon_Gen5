@@ -724,7 +724,8 @@ void PLIST_PLATE_SetActivePlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
 {
   if( isActive == TRUE )
   {
-    if( work->mainSeq == PSMS_CHANGE_POKE )
+    if( work->mainSeq == PSMS_CHANGE_POKE ||
+        work->mainSeq == PSMS_USE_POKE )
     {
       PLIST_PLATE_ChangeColor( work , plateWork , PPC_CHANGE );
     }
@@ -745,8 +746,8 @@ void PLIST_PLATE_SetActivePlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
   else
   {
     //入れ替え中で、入れ替えターゲットのときは色を戻さない
-    if( !(work->mainSeq == PSMS_CHANGE_POKE &&
-          work->changeTarget == plateWork->idx) )
+    if( ( !(work->mainSeq == PSMS_CHANGE_POKE && work->changeTarget == plateWork->idx)) &&
+        ( !(work->mainSeq == PSMS_USE_POKE && work->useTarget == plateWork->idx) ) )
     {
       PLIST_PLATE_ChangeColor( work , plateWork , PPC_NORMAL );
     }
@@ -999,6 +1000,14 @@ const BOOL PLIST_PALTE_UpdateHpAnime( PLIST_WORK *work , PLIST_PLATE_WORK *plate
       //ライフが増えるので色の変更
       PLIST_PLATE_ChangeColor( work , plateWork , PPC_NORMAL_SELECT );
     }
+    PLIST_PLATE_ReDrawParam( work , plateWork );
+    return FALSE;
+  }
+  else
+  if( plateWork->dispHp > plateWork->nowHp )
+  {
+    plateWork->dispHp--;
+    //瀕死は考慮しない
     PLIST_PLATE_ReDrawParam( work , plateWork );
     return FALSE;
   }

@@ -168,6 +168,7 @@ typedef enum
   PSMS_FADEIN_WAIT,
   PSMS_SELECT_POKE, //ポケモン選択中
   PSMS_CHANGE_POKE,
+  PSMS_USE_POKE,    //使用対象選択
   PSMS_CHANGE_ANM,
   PSMS_MENU,        //メニュー処理中
   PSMS_MSG_WAIT,    //メッセージ諸々
@@ -199,8 +200,8 @@ typedef struct _PLIST_MENU_WORK  PLIST_MENU_WORK;
 typedef struct _PLIST_BATTLE_PARAM_WORK PLIST_BATTLE_PARAM_WORK;
 typedef struct _PLIST_DEBUG_WORK PLIST_DEBUG_WORK;
 
-typedef void (*PSTATUS_CallbackFunc)(PLIST_WORK *work);
-typedef void (*PSTATUS_CallbackFuncYesNo)(PLIST_WORK *work,const int retVal);
+typedef void (*PLIST_CallbackFunc)(PLIST_WORK *work);
+typedef void (*PLIST_CallbackFuncYesNo)(PLIST_WORK *work,const int retVal);
 
 struct _PLIST_WORK
 {
@@ -217,6 +218,7 @@ struct _PLIST_WORK
   
   PL_SELECT_POS pokeCursor;
   PL_SELECT_POS changeTarget;
+  PL_SELECT_POS useTarget;
   POKEMON_PARAM *selectPokePara;
   int  menuRet; //PLIST_MENU_ITEM_TYPE
   
@@ -237,7 +239,7 @@ struct _PLIST_WORK
 
   //HPアニメ処理
   u16 befHp;  //回復前のHP
-  PSTATUS_CallbackFunc hpAnimeCallBack;
+  PLIST_CallbackFunc hpAnimeCallBack;
   
   //MSG系
   GFL_MSGDATA *msgHandle;
@@ -245,8 +247,8 @@ struct _PLIST_WORK
   GFL_FONT *sysFontHandle;
   PRINT_QUE *printQue;
   BOOL isMsgWaitKey;    //メッセージの完了のキー待ちをするか？
-  PSTATUS_CallbackFunc msgCallBack;  //メッセージ終了時のコールバック
-  PSTATUS_CallbackFuncYesNo yesNoCallBack;  //はい・いいえコールバック
+  PLIST_CallbackFunc msgCallBack;  //メッセージ終了時のコールバック
+  PLIST_CallbackFuncYesNo yesNoCallBack;  //はい・いいえコールバック
   
   //画面下ウィンドウ管理
   PLIST_MSG_WORK  *msgWork;

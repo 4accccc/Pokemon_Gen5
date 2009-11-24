@@ -46,8 +46,8 @@ extern void PLIST_UTIL_DrawValueStrFuncSys( PLIST_WORK *work , GFL_BMPWIN *bmpWi
                                       WORDSET *wordSet, const u16 strId , const u16 posX , const u16 posY , const u16 col );
 
 //アイテムに渡す用
-extern void PLIST_MessageWaitInit( PLIST_WORK *work , u32 msgId , const BOOL isWaitKey , PSTATUS_CallbackFunc msgCallBack );
-extern void PSTATUS_MSGCB_ExitCommon( PLIST_WORK *work );
+extern void PLIST_MessageWaitInit( PLIST_WORK *work , u32 msgId , const BOOL isWaitKey , PLIST_CallbackFunc msgCallBack );
+extern void PLIST_MSGCB_ExitCommon( PLIST_WORK *work );
 
 //時間切れ強制終了
 extern void PLIST_ForceExit_Timeup( PLIST_WORK *work );

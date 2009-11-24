@@ -90,10 +90,6 @@ typedef enum
 #pragma mark [> proto
 static u8 PLIST_ITEM_RecoverCheck( u16 item );
 
-static void PSTATUS_HPANMCB_ReturnRecoverHp( PLIST_WORK *work );
-static void PSTATUS_HPANMCB_ReturnRecoverAllDeath( PLIST_WORK *work );
-static void PSTATUS_MSGCB_RecoverAllDeath_NextPoke( PLIST_WORK *work );
-
 static const u16 PLIST_ITEM_UTIL_GetParamExpSum( POKEMON_PARAM *pp );
 static const BOOL PLIST_ITEM_UTIL_CanAddParamExp( POKEMON_PARAM *pp , const int id , u16 item );
 static const BOOL PLIST_ITEM_UTIL_CanSubParamExp( POKEMON_PARAM *pp , const int id , u16 item );
@@ -413,7 +409,7 @@ void PLIST_ITEM_MSG_CanNotUseItem( PLIST_WORK *work )
   work->plData->ret_mode = PL_RET_BAG;
   PLIST_MSG_CreateWordSet( work , work->msgWork );
   PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 0 , work->plData->item );
-  PLIST_MessageWaitInit( work , mes_pokelist_04_45 , TRUE , PSTATUS_MSGCB_ExitCommon );
+  PLIST_MessageWaitInit( work , mes_pokelist_04_45 , TRUE , PLIST_MSGCB_ExitCommon );
   PLIST_MSG_DeleteWordSet( work , work->msgWork );
 }
 
@@ -433,7 +429,7 @@ void PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work )
   case ITEM_TYPE_ALLDETH_RCV:    // ‘Sˆõ•mŽ€‰ñ•œ
     work->mainSeq = PSMS_INIT_HPANIME;
     work->befHp = PLIST_PLATE_GetDispHp( work , work->plateWork[work->pokeCursor] );
-    work->hpAnimeCallBack = PSTATUS_HPANMCB_ReturnRecoverAllDeath;
+    work->hpAnimeCallBack = PLIST_HPANMCB_ReturnRecoverAllDeath;
 
     break;
 
@@ -476,7 +472,7 @@ void PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work )
   case ITEM_TYPE_DEATH_RCV:  // •mŽ€‰ñ•œ (WB’Ç‰Á
     work->mainSeq = PSMS_INIT_HPANIME;
     work->befHp = PLIST_PLATE_GetDispHp( work , work->plateWork[work->pokeCursor] );
-    work->hpAnimeCallBack = PSTATUS_HPANMCB_ReturnRecoverHp;
+    work->hpAnimeCallBack = PLIST_HPANMCB_ReturnRecoverHp;
 
     break;
     
@@ -536,7 +532,7 @@ void PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work )
 }
 
 #pragma mark [> HPAnime CallBack
-static void PSTATUS_HPANMCB_ReturnRecoverHp( PLIST_WORK *work )
+void PLIST_HPANMCB_ReturnRecoverHp( PLIST_WORK *work )
 {
   u16 nowHp = PLIST_PLATE_GetDispHp( work , work->plateWork[work->pokeCursor] );
   
@@ -546,17 +542,17 @@ static void PSTATUS_HPANMCB_ReturnRecoverHp( PLIST_WORK *work )
   if( work->befHp != 0 )
   {
     PLIST_MSG_AddWordSet_Value( work , work->msgWork , 1 , nowHp-work->befHp , 3 );
-    PLIST_MessageWaitInit( work , mes_pokelist_04_14 , TRUE , PSTATUS_MSGCB_ExitCommon );
+    PLIST_MessageWaitInit( work , mes_pokelist_04_14 , TRUE , PLIST_MSGCB_ExitCommon );
   }
   else
   {
     //•mŽ€‚©‚ç•œŠˆ
-    PLIST_MessageWaitInit( work , mes_pokelist_04_20 , TRUE , PSTATUS_MSGCB_ExitCommon );
+    PLIST_MessageWaitInit( work , mes_pokelist_04_20 , TRUE , PLIST_MSGCB_ExitCommon );
   }
   PLIST_MSG_DeleteWordSet( work , work->msgWork );
 }
 
-static void PSTATUS_HPANMCB_ReturnRecoverAllDeath( PLIST_WORK *work )
+void PLIST_HPANMCB_ReturnRecoverAllDeath( PLIST_WORK *work )
 {
   
   work->plData->ret_mode = PL_RET_BAG;
@@ -565,17 +561,17 @@ static void PSTATUS_HPANMCB_ReturnRecoverAllDeath( PLIST_WORK *work )
   if( PLIST_ITEM_CanUseDeathRecoverAllItem( work ) != -1 )
   {
     //‘¼‚É‘ÎÛ‚ª‚¢‚é‚Ì‚Å‘±‚­
-    PLIST_MessageWaitInit( work , mes_pokelist_04_20 , TRUE , PSTATUS_MSGCB_RecoverAllDeath_NextPoke );
+    PLIST_MessageWaitInit( work , mes_pokelist_04_20 , TRUE , PLIST_MSGCB_RecoverAllDeath_NextPoke );
   }
   else
   {
     //‘¼‚É‘ÎÛ‚ª‚¢‚È‚¢‚Ì‚ÅI—¹
-    PLIST_MessageWaitInit( work , mes_pokelist_04_20 , TRUE , PSTATUS_MSGCB_ExitCommon );
+    PLIST_MessageWaitInit( work , mes_pokelist_04_20 , TRUE , PLIST_MSGCB_ExitCommon );
   }
   PLIST_MSG_DeleteWordSet( work , work->msgWork );
 }
 
-static void PSTATUS_MSGCB_RecoverAllDeath_NextPoke( PLIST_WORK *work )
+void PLIST_MSGCB_RecoverAllDeath_NextPoke( PLIST_WORK *work )
 {
   const int target = PLIST_ITEM_CanUseDeathRecoverAllItem( work );
 
@@ -668,7 +664,7 @@ static void PLIST_ITEM_UTIL_ItemUseMessageCommon( PLIST_WORK *work , u16 msgId )
   work->plData->ret_mode = PL_RET_BAG;
   PLIST_MSG_CreateWordSet( work , work->msgWork );
   PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
-  PLIST_MessageWaitInit( work , msgId , TRUE , PSTATUS_MSGCB_ExitCommon );
+  PLIST_MessageWaitInit( work , msgId , TRUE , PLIST_MSGCB_ExitCommon );
   PLIST_MSG_DeleteWordSet( work , work->msgWork );
 }
 
@@ -681,7 +677,7 @@ static void PLIST_ITEM_UTIL_ItemUseMessageParamExp( PLIST_WORK *work , u16 msgId
   PLIST_MSG_CreateWordSet( work , work->msgWork );
   PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
   PLIST_MSG_AddWordSet_StatusName( work , work->msgWork , 1 , statusID );
-  PLIST_MessageWaitInit( work , msgId , TRUE , PSTATUS_MSGCB_ExitCommon );
+  PLIST_MessageWaitInit( work , msgId , TRUE , PLIST_MSGCB_ExitCommon );
   PLIST_MSG_DeleteWordSet( work , work->msgWork );
   
 }

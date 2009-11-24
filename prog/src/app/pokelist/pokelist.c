@@ -19,6 +19,7 @@
 #include  "poke_tool/pokeparty.h"
 #include  "poke_tool/poke_tool.h"
 #include  "poke_tool/poke_regulation.h"
+#include  "waza_tool/wazano_def.h"  //デバッグポケ生成用
 
 //デバッグメータ消し
 #include "test/performance.h"
@@ -91,12 +92,13 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
         switch( i )
         {
         case 1:
-          PP_Put( pPara , ID_PARA_hp , 20 );
+          //PP_Put( pPara , ID_PARA_hp , 20 );
           PP_Put( pPara , ID_PARA_pp1 , 3 );
           PP_Put( pPara , ID_PARA_pp2 , 3 );
+          PP_Put( pPara , ID_PARA_waza1 , WAZANO_TAMAGOUMI );
           break;
         case 2:
-          PP_Put( pPara , ID_PARA_hp , 10 );
+          PP_Put( pPara , ID_PARA_hp , 30 );
           PP_SetSick( pPara , POKESICK_DOKU );
           break;
         case 3:
@@ -106,7 +108,6 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
         case 4:
           PP_Put( pPara , ID_PARA_hp , 1 );
           PP_Put( pPara , ID_PARA_item , 1 );
-          PP_Put( pPara , ID_PARA_tamago_flag , 1 );
           break;
         }
   #endif
