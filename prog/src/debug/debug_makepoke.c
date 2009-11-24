@@ -628,7 +628,7 @@ static u16 calc_keta( u32 value );
 static void COMPSKB_Setup( COMP_SKB_WORK* wk, GFL_SKB* skb, STRBUF* buf, u32 msgDataID, HEAPID heapID );
 static void COMPSKB_Cleanup( COMP_SKB_WORK* wk );
 static BOOL COMPSKB_Main( COMP_SKB_WORK* wk );
-static u32 COMPSKB_GetWordIndex( const COMP_SKB_WORK* wk );
+static int COMPSKB_GetWordIndex( const COMP_SKB_WORK* wk );
 static BOOL compskb_strncmp( const STRBUF* str1, const STRBUF* str2, u32 len );
 static u32 compskb_search( COMP_SKB_WORK* wk, const STRBUF* word, int org_idx, int* first_idx );
 static u32 personal_getparam( const POKEMON_PARAM* pp, PokePersonalParamID paramID );
@@ -897,6 +897,11 @@ static BOOL root_ctrl( DMP_MAINWORK* wk )
       if( COMPSKB_Main(&wk->comp) )
       {
         int idx = COMPSKB_GetWordIndex( &wk->comp );
+        if( idx < 0 ){
+          if( GFL_STR_GetBufferLength(wk->strbuf) == 0 ){
+            idx = 0;
+          }
+        }
         if( idx >= 0 ){
           box_update( wk, wk->boxIdx, idx );
           box_relation( wk, wk->boxIdx );
@@ -1497,6 +1502,7 @@ static BOOL COMPSKB_Main( COMP_SKB_WORK* wk )
 
   switch( reaction ){
   case GFL_SKB_REACTION_QUIT:
+    GFL_SKB_PickStr( wk->skb );
     return TRUE;
   case GFL_SKB_REACTION_INPUT:
     {
@@ -1509,6 +1515,17 @@ static BOOL COMPSKB_Main( COMP_SKB_WORK* wk )
         wk->index = idx;
       }
       else{
+        wk->index = -1;
+      }
+    }
+    break;
+  case GFL_SKB_REACTION_BACKSPACE:
+    {
+      int idx;
+      GFL_SKB_PickStr( wk->skb );
+      if( compskb_search(wk, wk->buf, -1, &idx) == 1 ){
+        wk->index = idx;
+      }else{
         wk->index = -1;
       }
     }
@@ -1557,7 +1574,7 @@ static BOOL COMPSKB_Main( COMP_SKB_WORK* wk )
 
   return FALSE;
 }
-static u32 COMPSKB_GetWordIndex( const COMP_SKB_WORK* wk )
+static int COMPSKB_GetWordIndex( const COMP_SKB_WORK* wk )
 {
   return wk->index;
 }
@@ -1581,6 +1598,18 @@ static BOOL compskb_strncmp( const STRBUF* str1, const STRBUF* str2, u32 len )
   }
   return FALSE;
 }
+//----------------------------------------------------------------------------------
+/**
+ * 前方一致する文字列数をサーチ
+ *
+ * @param   wk
+ * @param   word
+ * @param   org_idx
+ * @param   first_idx   [out] 最初に一致した文字列index
+ *
+ * @retval  u32   前方一致する文字列数
+ */
+//----------------------------------------------------------------------------------
 static u32 compskb_search( COMP_SKB_WORK* wk, const STRBUF* word, int org_idx, int* first_idx )
 {
   u32 word_len = GFL_STR_GetBufferLength( word );
