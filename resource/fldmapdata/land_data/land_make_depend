@@ -1186,6 +1186,33 @@ $(DIR_TEMP)/map_outtree.nsbmd: $(DIR_RES)/map_outtree.imd
 	@echo create_nsbmd map_outtree
 	@$(G3DCVTR) $(DIR_RES)/map_outtree.imd -o $(DIR_TEMP)/map_outtree.nsbmd
 
+#map_outrock
+$(DIR_OUTPUT)/map_outrock.3dppack: $(DIR_TEMP)/map_outrock.nsbmd $(DIR_RES)/map_outrock.bin $(DIR_RES)/map_outrock.3dmd
+	@echo create 3dppack map_outrock
+	@$(BINLINKER) $(DIR_TEMP)/map_outrock.nsbmd $(DIR_RES)/map_outrock.bin $(DIR_RES)/map_outrock.3dmd $(DIR_OUTPUT)/map_outrock.3dppack WB
+
+$(DIR_TEMP)/map_outrock.nsbmd: $(DIR_RES)/map_outrock.imd
+	@echo create_nsbmd map_outrock
+	@$(G3DCVTR) $(DIR_RES)/map_outrock.imd -o $(DIR_TEMP)/map_outrock.nsbmd
+
+#map_outsea
+$(DIR_OUTPUT)/map_outsea.3dppack: $(DIR_TEMP)/map_outsea.nsbmd $(DIR_RES)/map_outsea.bin $(DIR_RES)/map_outsea.3dmd
+	@echo create 3dppack map_outsea
+	@$(BINLINKER) $(DIR_TEMP)/map_outsea.nsbmd $(DIR_RES)/map_outsea.bin $(DIR_RES)/map_outsea.3dmd $(DIR_OUTPUT)/map_outsea.3dppack WB
+
+$(DIR_TEMP)/map_outsea.nsbmd: $(DIR_RES)/map_outsea.imd
+	@echo create_nsbmd map_outsea
+	@$(G3DCVTR) $(DIR_RES)/map_outsea.imd -o $(DIR_TEMP)/map_outsea.nsbmd
+
+#map_outdesert
+$(DIR_OUTPUT)/map_outdesert.3dppack: $(DIR_TEMP)/map_outdesert.nsbmd $(DIR_RES)/map_outdesert.bin $(DIR_RES)/map_outdesert.3dmd
+	@echo create 3dppack map_outdesert
+	@$(BINLINKER) $(DIR_TEMP)/map_outdesert.nsbmd $(DIR_RES)/map_outdesert.bin $(DIR_RES)/map_outdesert.3dmd $(DIR_OUTPUT)/map_outdesert.3dppack WB
+
+$(DIR_TEMP)/map_outdesert.nsbmd: $(DIR_RES)/map_outdesert.imd
+	@echo create_nsbmd map_outdesert
+	@$(G3DCVTR) $(DIR_RES)/map_outdesert.imd -o $(DIR_TEMP)/map_outdesert.nsbmd
+
 #testroom00_00
 $(DIR_OUTPUT)/testroom00_00.3dppack: $(DIR_TEMP)/testroom00_00.nsbmd $(DIR_RES)/testroom00_00.bin $(DIR_RES)/testroom00_00.3dmd
 	@echo create 3dppack testroom00_00
@@ -1194,42 +1221,6 @@ $(DIR_OUTPUT)/testroom00_00.3dppack: $(DIR_TEMP)/testroom00_00.nsbmd $(DIR_RES)/
 $(DIR_TEMP)/testroom00_00.nsbmd: $(DIR_RES)/testroom00_00.imd
 	@echo create_nsbmd testroom00_00
 	@$(G3DCVTR) $(DIR_RES)/testroom00_00.imd -o $(DIR_TEMP)/testroom00_00.nsbmd
-
-#map_outtree_sp
-$(DIR_OUTPUT)/map_outtree_sp.3dppack: $(DIR_TEMP)/map_outtree_sp.nsbmd $(DIR_RES)/map_outtree_sp.bin $(DIR_RES)/map_outtree_sp.3dmd
-	@echo create 3dppack map_outtree_sp
-	@$(BINLINKER) $(DIR_TEMP)/map_outtree_sp.nsbmd $(DIR_RES)/map_outtree_sp.bin $(DIR_RES)/map_outtree_sp.3dmd $(DIR_OUTPUT)/map_outtree_sp.3dppack WB
-
-$(DIR_TEMP)/map_outtree_sp.nsbmd: $(DIR_RES)/map_outtree_sp.imd
-	@echo create_nsbmd map_outtree_sp
-	@$(G3DCVTR) $(DIR_RES)/map_outtree_sp.imd -o $(DIR_TEMP)/map_outtree_sp.nsbmd
-
-#map_outtree_sm
-$(DIR_OUTPUT)/map_outtree_sm.3dppack: $(DIR_TEMP)/map_outtree_sm.nsbmd $(DIR_RES)/map_outtree_sm.bin $(DIR_RES)/map_outtree_sm.3dmd
-	@echo create 3dppack map_outtree_sm
-	@$(BINLINKER) $(DIR_TEMP)/map_outtree_sm.nsbmd $(DIR_RES)/map_outtree_sm.bin $(DIR_RES)/map_outtree_sm.3dmd $(DIR_OUTPUT)/map_outtree_sm.3dppack WB
-
-$(DIR_TEMP)/map_outtree_sm.nsbmd: $(DIR_RES)/map_outtree_sm.imd
-	@echo create_nsbmd map_outtree_sm
-	@$(G3DCVTR) $(DIR_RES)/map_outtree_sm.imd -o $(DIR_TEMP)/map_outtree_sm.nsbmd
-
-#map_outtree_au
-$(DIR_OUTPUT)/map_outtree_au.3dppack: $(DIR_TEMP)/map_outtree_au.nsbmd $(DIR_RES)/map_outtree_au.bin $(DIR_RES)/map_outtree_au.3dmd
-	@echo create 3dppack map_outtree_au
-	@$(BINLINKER) $(DIR_TEMP)/map_outtree_au.nsbmd $(DIR_RES)/map_outtree_au.bin $(DIR_RES)/map_outtree_au.3dmd $(DIR_OUTPUT)/map_outtree_au.3dppack WB
-
-$(DIR_TEMP)/map_outtree_au.nsbmd: $(DIR_RES)/map_outtree_au.imd
-	@echo create_nsbmd map_outtree_au
-	@$(G3DCVTR) $(DIR_RES)/map_outtree_au.imd -o $(DIR_TEMP)/map_outtree_au.nsbmd
-
-#map_outtree_wi
-$(DIR_OUTPUT)/map_outtree_wi.3dppack: $(DIR_TEMP)/map_outtree_wi.nsbmd $(DIR_RES)/map_outtree_wi.bin $(DIR_RES)/map_outtree_wi.3dmd
-	@echo create 3dppack map_outtree_wi
-	@$(BINLINKER) $(DIR_TEMP)/map_outtree_wi.nsbmd $(DIR_RES)/map_outtree_wi.bin $(DIR_RES)/map_outtree_wi.3dmd $(DIR_OUTPUT)/map_outtree_wi.3dppack WB
-
-$(DIR_TEMP)/map_outtree_wi.nsbmd: $(DIR_RES)/map_outtree_wi.imd
-	@echo create_nsbmd map_outtree_wi
-	@$(G3DCVTR) $(DIR_RES)/map_outtree_wi.imd -o $(DIR_TEMP)/map_outtree_wi.nsbmd
 
 #c03_a00_00
 $(DIR_OUTPUT)/c03_a00_00.3dppack: $(DIR_TEMP)/c03_a00_00.nsbmd $(DIR_RES)/c03_a00_00.bin $(DIR_RES)/c03_a00_00.3dmd

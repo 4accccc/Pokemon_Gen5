@@ -19,7 +19,8 @@ DUNCSV = dungeon_list.csv
 ROOMCSV = room_list.csv
 NONGRIDCSV = nongrid_list.csv
 
-CSVCVTR	= $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
+#CSVCVTR	= $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
+CSV_RUBY	= ruby $(PROJECT_ROOT)tools/exceltool/xls2xml/tab_out_sheet.rb
 
 #clean対象
 TARGET_CLEAN = $(LAND_LIST) $(FLDCSV) $(DUNCSV) $(ROOMCSV) $(NONGRIDCSV)
@@ -38,10 +39,10 @@ do-build: $(LAND_LIST)
 #リスト作成
 $(LAND_LIST): $(XLS_DATA)
 	@echo create land list
-	$(CSVCVTR) -o $(FLDCSV) -p 1 -s csv $(XLS_DATA)	#フィールド
-	$(CSVCVTR) -o $(DUNCSV) -p 2 -s csv $(XLS_DATA) #ダンジョン
-	$(CSVCVTR) -o $(ROOMCSV) -p 3 -s csv $(XLS_DATA) #ルーム
-	$(CSVCVTR) -o $(NONGRIDCSV) -p 4 -s csv $(XLS_DATA) #ノングリッド
+	@$(CSV_RUBY) -comma -n 0 $(XLS_DATA) > $(FLDCSV)	#フィールド
+	@$(CSV_RUBY) -comma -n 1 $(XLS_DATA) > $(DUNCSV) #ダンジョン
+	@$(CSV_RUBY) -comma -n 2 $(XLS_DATA) > $(ROOMCSV) #ルーム
+	@$(CSV_RUBY) -comma -n 3 $(XLS_DATA) > $(NONGRIDCSV) #ノングリッド
 	ruby land_list.rb $(FLDCSV) $(DUNCSV) $(ROOMCSV) $(NONGRIDCSV)
 else #非USERS
 do-build:

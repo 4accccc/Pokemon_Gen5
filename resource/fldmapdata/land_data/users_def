@@ -2,6 +2,7 @@
 #	コンバート対象ユーザー定義
 #---------------------------------------------------------------
 USERS = kagaya \
+  tamada \
   lee_hyunjung fuchino ibe_mana tanoue_reiko \
   fujiwara_maiko unno \
   nakatsui \

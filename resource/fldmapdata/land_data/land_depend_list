@@ -131,11 +131,10 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/map01_05.3dppack \
 	$(DIR_OUTPUT)/map_outgrass.3dppack \
 	$(DIR_OUTPUT)/map_outtree.3dppack \
+	$(DIR_OUTPUT)/map_outrock.3dppack \
+	$(DIR_OUTPUT)/map_outsea.3dppack \
+	$(DIR_OUTPUT)/map_outdesert.3dppack \
 	$(DIR_OUTPUT)/testroom00_00.3dppack \
-	$(DIR_OUTPUT)/map_outtree_sp.3dppack \
-	$(DIR_OUTPUT)/map_outtree_sm.3dppack \
-	$(DIR_OUTPUT)/map_outtree_au.3dppack \
-	$(DIR_OUTPUT)/map_outtree_wi.3dppack \
 	$(DIR_OUTPUT)/c03_a00_00.3dppack \
 	$(DIR_OUTPUT)/c03_b00_00.3dppack \
 	$(DIR_OUTPUT)/c03_c00_00.3dppack \

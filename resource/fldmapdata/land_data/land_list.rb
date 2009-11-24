@@ -349,7 +349,8 @@ while file_name = ARGV.shift
         file_output_list, file_temp_list,
         file_depend_list, file_make_depend )
     else
-      printf( "land_list.rb ERROR UNKNOW MAPTYPE\n" )
+      printf( "%s:land_list.rb ERROR UNKNOWN MAPTYPE(%s)\n", file_name, type )
+      printf( "%s\n", line )
       error_end( file_output_list, FNAME_OUTPUT_LIST,
           file_temp_list, FNAME_TEMP_LIST,
           file_depend_list, FNAME_DEPEND_LIST,

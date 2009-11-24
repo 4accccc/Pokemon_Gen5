@@ -131,11 +131,10 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/map01_05.nsbmd \
 	$(DIR_TEMP)/map_outgrass.nsbmd \
 	$(DIR_TEMP)/map_outtree.nsbmd \
+	$(DIR_TEMP)/map_outrock.nsbmd \
+	$(DIR_TEMP)/map_outsea.nsbmd \
+	$(DIR_TEMP)/map_outdesert.nsbmd \
 	$(DIR_TEMP)/testroom00_00.nsbmd \
-	$(DIR_TEMP)/map_outtree_sp.nsbmd \
-	$(DIR_TEMP)/map_outtree_sm.nsbmd \
-	$(DIR_TEMP)/map_outtree_au.nsbmd \
-	$(DIR_TEMP)/map_outtree_wi.nsbmd \
 	$(DIR_TEMP)/c03_a00_00.nsbmd \
 	$(DIR_TEMP)/c03_b00_00.nsbmd \
 	$(DIR_TEMP)/c03_c00_00.nsbmd \
