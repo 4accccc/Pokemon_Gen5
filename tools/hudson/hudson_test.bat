@@ -23,7 +23,6 @@ REM ブート
 REM ================================
 loadrun -T %TIMEOUT_EXEC% -a "HUDSON_ABORT" %PATH_MAIN_SRL%
 echo ErrorLevel = %ERRORLEVEL%
-pause
 
 REM タイムアウト判定
 if %ERRORLEVEL% == 205 goto TIMEOUT:
