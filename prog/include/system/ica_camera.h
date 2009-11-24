@@ -19,7 +19,7 @@
  * @param anime   設定アニメーション
  */
 //-----------------------------------------------------------------------------------
-void ICA_CAMERA_SetCameraStatus( GFL_G3D_CAMERA* camera, const ICA_ANIME* anime );
+extern void ICA_CAMERA_SetCameraStatus( GFL_G3D_CAMERA* camera, const ICA_ANIME* anime );
 
 //-----------------------------------------------------------------------------------
 /**
@@ -29,7 +29,7 @@ void ICA_CAMERA_SetCameraStatus( GFL_G3D_CAMERA* camera, const ICA_ANIME* anime 
  * @param anime   設定アニメーション
  */
 //-----------------------------------------------------------------------------------
-void ICA_CAMERA_SetCameraPos( GFL_G3D_CAMERA* camera, const ICA_ANIME* anime );
+extern void ICA_CAMERA_SetCameraPos( GFL_G3D_CAMERA* camera, const ICA_ANIME* anime );
 
 //-----------------------------------------------------------------------------------
 /**
@@ -39,4 +39,4 @@ void ICA_CAMERA_SetCameraPos( GFL_G3D_CAMERA* camera, const ICA_ANIME* anime );
  * @param anime   設定アニメーション
  */
 //-----------------------------------------------------------------------------------
-void ICA_CAMERA_SetTargetPos( GFL_G3D_CAMERA* camera, const ICA_ANIME* anime );
+extern void ICA_CAMERA_SetTargetPos( GFL_G3D_CAMERA* camera, const ICA_ANIME* anime );

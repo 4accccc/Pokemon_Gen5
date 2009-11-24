@@ -44,11 +44,11 @@ struct _ICA_ANIME
  * @brief プロトタイプ宣言
  */
 //===================================================================================
-void InitAnime( ICA_ANIME* anime );
-void LoadAnimeInfo( ICA_ANIME* anime, ARCID arc_id, ARCDATID dat_id, HEAPID heap_id );
-void AllocBuffer( ICA_ANIME* anime, int buf_size );
-BOOL AssignBuffer( ICA_ANIME* anime, int bufsize, void* work, int worksize );
-void UpdateBuf( ICA_ANIME* anime, fx32 start_frame );
+static void InitAnime( ICA_ANIME* anime );
+static void LoadAnimeInfo( ICA_ANIME* anime, ARCID arc_id, ARCDATID dat_id, HEAPID heap_id );
+static void AllocBuffer( ICA_ANIME* anime, int buf_size );
+static BOOL AssignBuffer( ICA_ANIME* anime, int bufsize, void* work, int worksize );
+static void UpdateBuf( ICA_ANIME* anime, fx32 start_frame );
 
 
 //===================================================================================
@@ -497,7 +497,7 @@ BOOL ICA_ANIME_GetScaleAt( const ICA_ANIME* anime, VecFx32* vec_dst, int frame )
  * @param anime 初期化するアニメーション
  */
 //---------------------------------------------------------------------------
-void InitAnime( ICA_ANIME* anime )
+static void InitAnime( ICA_ANIME* anime )
 {
   anime->heapID        = 0;
   anime->arcHandle     = NULL;
@@ -525,7 +525,7 @@ void InitAnime( ICA_ANIME* anime )
  * @param heap_id 使用するヒープID
  */
 //---------------------------------------------------------------------------
-void LoadAnimeInfo( ICA_ANIME* anime, ARCID arc_id, ARCDATID dat_id, HEAPID heap_id )
+static void LoadAnimeInfo( ICA_ANIME* anime, ARCID arc_id, ARCDATID dat_id, HEAPID heap_id )
 {
   u8 scale, rotate, trans;
 
@@ -560,7 +560,7 @@ void LoadAnimeInfo( ICA_ANIME* anime, ARCID arc_id, ARCDATID dat_id, HEAPID heap
  * @param buf_size バッファサイズ
  */
 //---------------------------------------------------------------------------
-void AllocBuffer( ICA_ANIME* anime, int buf_size )
+static void AllocBuffer( ICA_ANIME* anime, int buf_size )
 {
   // バッファサイズを記憶
   anime->bufSize = buf_size;
@@ -595,7 +595,7 @@ void AllocBuffer( ICA_ANIME* anime, int buf_size )
  * @return 正しく割り当てられたら, TRUE
  */
 //---------------------------------------------------------------------------
-BOOL AssignBuffer( ICA_ANIME* anime, int bufsize, void* work, int worksize )
+static BOOL AssignBuffer( ICA_ANIME* anime, int bufsize, void* work, int worksize )
 {
   int minsize = 0;
   int    size = sizeof(VecFx32) * bufsize; // バッファ1本あたりのサイズ
@@ -646,7 +646,7 @@ BOOL AssignBuffer( ICA_ANIME* anime, int bufsize, void* work, int worksize )
  * @param start_frame 新しいデータの開始フレーム
  */
 //---------------------------------------------------------------------------
-void UpdateBuf( ICA_ANIME* anime, fx32 start_frame )
+static void UpdateBuf( ICA_ANIME* anime, fx32 start_frame )
 {
   int   i, j;
   int   frame     = (start_frame >> FX32_SHIFT) % anime->frameSize;

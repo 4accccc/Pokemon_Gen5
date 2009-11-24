@@ -60,7 +60,7 @@ BOOL ICA_ANIME_GetScaleAt( const ICA_ANIME* anime, VecFx32* vec_dst, int frame )
  *         作成に失敗したら NULL
  */
 //-----------------------------------------------------------------------------------
-ICA_ANIME* ICA_ANIME_Create( 
+extern ICA_ANIME* ICA_ANIME_Create( 
     HEAPID heap_id, ARCID arc_id, ARCDATID dat_id, void* work, int worksize );
 
 //-----------------------------------------------------------------------------------
@@ -78,7 +78,7 @@ ICA_ANIME* ICA_ANIME_Create(
  *         作成に失敗したら NULL
  */
 //-----------------------------------------------------------------------------------
-ICA_ANIME* ICA_ANIME_CreateStreaming( 
+extern ICA_ANIME* ICA_ANIME_CreateStreaming( 
     HEAPID heap_id, ARCID arc_id, ARCDATID dat_id, int buf_interval, 
     void* work, int worksize );
 
@@ -94,7 +94,7 @@ ICA_ANIME* ICA_ANIME_CreateStreaming(
  * @return 作成したアニメーション管理オブジェクト
  */
 //-----------------------------------------------------------------------------------
-ICA_ANIME* ICA_ANIME_CreateAlloc( HEAPID heap_id, ARCID arc_id, ARCDATID dat_id );
+extern ICA_ANIME* ICA_ANIME_CreateAlloc( HEAPID heap_id, ARCID arc_id, ARCDATID dat_id );
 
 //-----------------------------------------------------------------------------------
 /**
@@ -109,7 +109,7 @@ ICA_ANIME* ICA_ANIME_CreateAlloc( HEAPID heap_id, ARCID arc_id, ARCDATID dat_id 
  * @return 作成したアニメーション管理オブジェクト
  */
 //-----------------------------------------------------------------------------------
-ICA_ANIME* ICA_ANIME_CreateStreamingAlloc( 
+extern ICA_ANIME* ICA_ANIME_CreateStreamingAlloc( 
     HEAPID heap_id, ARCID arc_id, ARCDATID dat_id, int buf_interval );
 
 //-----------------------------------------------------------------------------------
@@ -119,7 +119,7 @@ ICA_ANIME* ICA_ANIME_CreateStreamingAlloc(
  * @param anime 破棄するアニメーション
  */
 //-----------------------------------------------------------------------------------
-void ICA_ANIME_Delete( ICA_ANIME* anime );
+extern void ICA_ANIME_Delete( ICA_ANIME* anime );
 
 
 //===================================================================================
@@ -136,7 +136,7 @@ void ICA_ANIME_Delete( ICA_ANIME* anime );
  * @return ループしたら TRUE
  */
 //-----------------------------------------------------------------------------------
-BOOL ICA_ANIME_IncAnimeFrame( ICA_ANIME* anime, fx32 frame );
+extern BOOL ICA_ANIME_IncAnimeFrame( ICA_ANIME* anime, fx32 frame );
 
 //-----------------------------------------------------------------------------------
 /**
@@ -146,7 +146,7 @@ BOOL ICA_ANIME_IncAnimeFrame( ICA_ANIME* anime, fx32 frame );
  * @param frame フレーム数指定
  */
 //-----------------------------------------------------------------------------------
-void ICA_ANIME_SetAnimeFrame( ICA_ANIME* anime, fx32 frame );
+extern void ICA_ANIME_SetAnimeFrame( ICA_ANIME* anime, fx32 frame );
 
 
 //===================================================================================
@@ -161,7 +161,7 @@ void ICA_ANIME_SetAnimeFrame( ICA_ANIME* anime, fx32 frame );
  * @return 指定したアニメーション全体のフレーム数
  */
 //-----------------------------------------------------------------------------------
-u32 ICA_ANIME_GetMaxFrame( ICA_ANIME* anime );
+extern u32 ICA_ANIME_GetMaxFrame( ICA_ANIME* anime );
 
 //-----------------------------------------------------------------------------------
 /**
@@ -171,7 +171,7 @@ u32 ICA_ANIME_GetMaxFrame( ICA_ANIME* anime );
  * @return 指定したアニメーション全体のフレーム数
  */
 //-----------------------------------------------------------------------------------
-u32 ICA_ANIME_GetNowFrame( ICA_ANIME* anime );
+extern u32 ICA_ANIME_GetNowFrame( ICA_ANIME* anime );
 
 
 //===================================================================================
@@ -188,7 +188,7 @@ u32 ICA_ANIME_GetNowFrame( ICA_ANIME* anime );
  * @return データを取得できた場合 TRUE
  */
 //-----------------------------------------------------------------------------------
-BOOL ICA_ANIME_GetTranslate( const ICA_ANIME* anime, VecFx32* vec_dst );
+extern BOOL ICA_ANIME_GetTranslate( const ICA_ANIME* anime, VecFx32* vec_dst );
 
 //-----------------------------------------------------------------------------------
 /**
@@ -200,7 +200,7 @@ BOOL ICA_ANIME_GetTranslate( const ICA_ANIME* anime, VecFx32* vec_dst );
  * @return データを取得できた場合 TRUE
  */
 //-----------------------------------------------------------------------------------
-BOOL ICA_ANIME_GetRotate( const ICA_ANIME* anime, VecFx32* vec_dst );
+extern BOOL ICA_ANIME_GetRotate( const ICA_ANIME* anime, VecFx32* vec_dst );
 
 //-----------------------------------------------------------------------------------
 /**
@@ -212,7 +212,7 @@ BOOL ICA_ANIME_GetRotate( const ICA_ANIME* anime, VecFx32* vec_dst );
  * @return データを取得できた場合 TRUE
  */
 //-----------------------------------------------------------------------------------
-BOOL ICA_ANIME_GetScale( const ICA_ANIME* anime, VecFx32* vec_dst );
+extern BOOL ICA_ANIME_GetScale( const ICA_ANIME* anime, VecFx32* vec_dst );
 
 
 //===================================================================================
@@ -231,7 +231,7 @@ BOOL ICA_ANIME_GetScale( const ICA_ANIME* anime, VecFx32* vec_dst );
  * @return データを取得できた場合 TRUE
  */
 //-----------------------------------------------------------------------------------
-BOOL ICA_ANIME_GetTranslateAt( const ICA_ANIME* anime, VecFx32* vec_dst, int frame );
+extern BOOL ICA_ANIME_GetTranslateAt( const ICA_ANIME* anime, VecFx32* vec_dst, int frame );
 
 //-----------------------------------------------------------------------------------
 /**
@@ -244,7 +244,7 @@ BOOL ICA_ANIME_GetTranslateAt( const ICA_ANIME* anime, VecFx32* vec_dst, int fra
  * @return データを取得できた場合 TRUE
  */
 //-----------------------------------------------------------------------------------
-BOOL ICA_ANIME_GetRotateAt( const ICA_ANIME* anime, VecFx32* vec_dst, int frame );
+extern BOOL ICA_ANIME_GetRotateAt( const ICA_ANIME* anime, VecFx32* vec_dst, int frame );
 
 //-----------------------------------------------------------------------------------
 /**
@@ -257,4 +257,4 @@ BOOL ICA_ANIME_GetRotateAt( const ICA_ANIME* anime, VecFx32* vec_dst, int frame 
  * @return データを取得できた場合 TRUE
  */
 //-----------------------------------------------------------------------------------
-BOOL ICA_ANIME_GetScaleAt( const ICA_ANIME* anime, VecFx32* vec_dst, int frame );
+extern BOOL ICA_ANIME_GetScaleAt( const ICA_ANIME* anime, VecFx32* vec_dst, int frame );
