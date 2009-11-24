@@ -34,17 +34,17 @@ enum {
 
 static const u16 PMS_SrcElems[] = {
 	 583,	//ポケモン名	0 ... 582
-	 530,	//わざ名	583 ... 1112
-	  18,	//ポケモンタイプ名	1113 ... 1130
-	 124,	//とくせい名	1131 ... 1254
-	  38,	//トレーナー	1255 ... 1292
-	  38,	//ひと	1293 ... 1330
-	 107,	//あいさつ	1331 ... 1437
-	 104,	//せいかつ	1438 ... 1541
-	  10,	//きもち	1542 ... 1551
-	  32,	//なんかいことば	1552 ... 1583
-	  23,	//ユニオン	1584 ... 1606
-	  10,	//ピクチャ	1607 ... 1616
+	 529,	//わざ名	583 ... 1111
+	  18,	//ポケモンタイプ名	1112 ... 1129
+	 124,	//とくせい名	1130 ... 1253
+	  38,	//トレーナー	1254 ... 1291
+	  38,	//ひと	1292 ... 1329
+	 107,	//あいさつ	1330 ... 1436
+	 104,	//せいかつ	1437 ... 1540
+	  10,	//きもち	1541 ... 1550
+	  32,	//なんかいことば	1551 ... 1582
+	  23,	//ユニオン	1583 ... 1605
+	  10,	//ピクチャ	1606 ... 1615
 };
 
 //----------------------------------------------------------------
@@ -75,59 +75,59 @@ static const u16 PMS_SrcFileID[] = {
 //----------------------------------------------------------------
 
 static const PMS_WORD DupWord_00[] = {
-	1341,1548,1613,
+	1340,1547,1612,
 };
 
 static const PMS_WORD DupWord_01[] = {
-	1547,1612,
-};
-
-static const PMS_WORD DupWord_02[] = {
-	1031,1449,
-};
-
-static const PMS_WORD DupWord_03[] = {
-	1545,1610,
-};
-
-static const PMS_WORD DupWord_04[] = {
-	959,1261,
-};
-
-static const PMS_WORD DupWord_05[] = {
-	 93,1120,
-};
-
-static const PMS_WORD DupWord_06[] = {
-	1381,1550,1615,
-};
-
-static const PMS_WORD DupWord_07[] = {
-	1193,1265,
-};
-
-static const PMS_WORD DupWord_08[] = {
-	1331,1543,1608,
-};
-
-static const PMS_WORD DupWord_09[] = {
-	1549,1614,
-};
-
-static const PMS_WORD DupWord_10[] = {
-	1544,1609,
-};
-
-static const PMS_WORD DupWord_11[] = {
 	1546,1611,
 };
 
+static const PMS_WORD DupWord_02[] = {
+	1031,1448,
+};
+
+static const PMS_WORD DupWord_03[] = {
+	1544,1609,
+};
+
+static const PMS_WORD DupWord_04[] = {
+	959,1260,
+};
+
+static const PMS_WORD DupWord_05[] = {
+	 93,1119,
+};
+
+static const PMS_WORD DupWord_06[] = {
+	1380,1549,1614,
+};
+
+static const PMS_WORD DupWord_07[] = {
+	1192,1264,
+};
+
+static const PMS_WORD DupWord_08[] = {
+	1330,1542,1607,
+};
+
+static const PMS_WORD DupWord_09[] = {
+	1548,1613,
+};
+
+static const PMS_WORD DupWord_10[] = {
+	1543,1608,
+};
+
+static const PMS_WORD DupWord_11[] = {
+	1545,1610,
+};
+
 static const PMS_WORD DupWord_12[] = {
-	1404,1551,1616,
+	1403,1550,1615,
 };
 
 static const PMS_WORD DupWord_13[] = {
-	1405,1542,1607,
+	1404,1541,1606,
 };
 
 static const struct {

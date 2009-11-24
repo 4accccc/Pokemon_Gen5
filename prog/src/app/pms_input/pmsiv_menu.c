@@ -41,7 +41,7 @@ enum
   // エディットモードの配置
   TASKMENU_WIN_EDIT_H = APP_TASKMENU_PLATE_HEIGHT,
   TASKMENU_WIN_EDIT_W = 9,
-  TASKMENU_WIN_EDIT_X = 24,
+  TASKMENU_WIN_EDIT_X = 23,
   TASKMENU_WIN_EDIT_Y = 18,
 
   // カテゴリ・イニシャルモードの配置

@@ -3460,7 +3460,7 @@ static void SubProc_CommandCancel( PMS_INPUT_WORK* wk, int* seq )
 		switch(ret){
 		case 0:
 #if PMS_USE_SND
-			GFL_SOUND_PlaySE(SOUND_CANCEL);
+//			GFL_SOUND_PlaySE(SOUND_CANCEL);
 #endif //PMS_USE_SND
 
 			PMSIView_SetCommand( wk->vwk, VCMD_ERASE_MENU );
@@ -3468,7 +3468,7 @@ static void SubProc_CommandCancel( PMS_INPUT_WORK* wk, int* seq )
 			break;
 		case 1:
 #if PMS_USE_SND
-			GFL_SOUND_PlaySE(SOUND_DECIDE);
+//			GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
 			ChangeMainProc( wk, MainProc_Quit );
 			(*seq) = SEQ_RETURN;
