@@ -6,8 +6,10 @@ REM 制作者  : hosaka_genya
 REM 日付    : 2009/11/24
 REM =================================================================
 
-REM タイムアウト(秒)
-SET TIMEOUT=10
+REM 実行タイムアウト(秒)
+SET TIMEOUT_EXEC=10
+REM 表示タイムアウト(秒)
+REM SET TIMEOUT_DISP=5
 REM 3600
 
 REM ================================
@@ -19,7 +21,7 @@ SET USERNAME=hudson
 REM ================================
 REM ブート
 REM ================================
-loadrun %PROJECT_PROGDIR%/bin/ARM9-TS/Release/main.srl -t %TIMEOUT% -a "ABORT"
+loadrun -T 3 %PROJECT_PROGDIR%/bin/ARM9-TS/Release/main.srl
 
 REM 終了判定
 if %ERRORLEVEL% == 0 goto END:
