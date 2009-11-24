@@ -724,9 +724,9 @@ static void updateCameraArea(FIELD_CAMERA * camera)
   }
 
   // 
+  camera->target_write = camera->target;
   if( camera->camera_area_active )
   {
-    camera->target_write = camera->target;
     for( i=0; i<camera->camera_area_num; i++ )
     {
       cameraArea_UpdateTarget( &camera->camera_area[i], &camera->target_write );
@@ -1153,6 +1153,26 @@ void FIELD_CAMERA_FreeCamera(FIELD_CAMERA * camera)
 {
 	GF_ASSERT( camera );
 	camera->watch_camera = NULL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ座標のバインドがあるかチェック
+ *
+ *	@param	camera
+ *
+ *	@retval TRUE  ある
+ *	@retval FALSE  ない
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_CAMERA_IsBindCamera(const FIELD_CAMERA * camera)
+{
+	GF_ASSERT( camera );
+	if( camera->watch_camera )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
 
 

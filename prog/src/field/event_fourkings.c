@@ -395,6 +395,12 @@ static void EV_CAMERA_Init( EV_CIRCLEWALK_CAMERA* p_wk, FIELD_CAMERA* p_camera, 
   p_wk->camera_area_save = FIELD_CAMERA_GetCameraAreaActive( p_wk->p_camera );
   FIELD_CAMERA_SetCameraAreaActive( p_wk->p_camera, FALSE );
 
+  // ターゲットのバインドをOFF
+  FIELD_CAMERA_FreeTarget( p_wk->p_camera );
+
+  // カメラ座標のバインドがないかチェック
+  GF_ASSERT( FIELD_CAMERA_IsBindCamera(p_wk->p_camera) == FALSE );
+
   // ターゲットオフセットをセーブ
   {
     VecFx32 clear = {0,0,0};
@@ -417,10 +423,13 @@ static void EV_CAMERA_Init( EV_CIRCLEWALK_CAMERA* p_wk, FIELD_CAMERA* p_camera, 
 static void EV_CAMERA_Exit( EV_CIRCLEWALK_CAMERA* p_wk )
 {
   // カメラを元に戻す
+  FIELD_CAMERA_SetTargetOffset( p_wk->p_camera, &p_wk->camera_target_offset_save );
   FIELD_CAMERA_ChangeMode( p_wk->p_camera, p_wk->camera_mode_save );
   FIELD_CAMERA_SetCameraAreaActive( p_wk->p_camera, p_wk->camera_area_save );
-  FIELD_CAMERA_SetTargetOffset( p_wk->p_camera, &p_wk->camera_target_offset_save );
   FIELD_CAMERA_SetCameraUp( p_wk->p_camera, &p_wk->camera_up_save );
+
+  // ターゲットのバインドをON
+  FIELD_CAMERA_BindDefaultTarget( p_wk->p_camera );
   
   // ダミーカメラ破棄
   GFL_G3D_CAMERA_Delete( p_wk->p_dummy_camera );

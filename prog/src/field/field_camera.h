@@ -323,6 +323,7 @@ extern BOOL FIELD_CAMERA_IsBindDefaultTarget( const FIELD_CAMERA * camera );
 //------------------------------------------------------------------
 extern void FIELD_CAMERA_BindCamera(FIELD_CAMERA * camera, const VecFx32 * watch_camera);
 extern void FIELD_CAMERA_FreeCamera(FIELD_CAMERA * camera);
+extern BOOL FIELD_CAMERA_IsBindCamera(const FIELD_CAMERA * camera);
 
 
 
