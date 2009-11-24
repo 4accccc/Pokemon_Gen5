@@ -6,6 +6,10 @@ REM 制作者  : hosaka_genya
 REM 日付    : 2009/11/24
 REM =================================================================
 
+REM タイムアウト(秒)
+SET TIMEOUT=10
+REM 3600
+
 REM ================================
 REM ユーザーネーム設定
 REM ================================
@@ -15,7 +19,7 @@ SET USERNAME=hudson
 REM ================================
 REM ブート
 REM ================================
-nitrorun %PROJECT_PROGDIR%/bin/ARM9-TS/Release/main.srl
+loadrun %PROJECT_PROGDIR%/bin/ARM9-TS/Release/main.srl -t %TIMEOUT% -a "ABORT"
 
 REM 終了判定
 if %ERRORLEVEL% == 0 goto END:
