@@ -24,8 +24,7 @@
 #include "fld3d_ci.h"
 #include "event_mapchange.h"
 #include "event_fieldmap_control.h"
-#include "field/field_const.h"    //for FIELD_CONST_GRID_SIZE
-#include "field/zonedata.h"    //for ZONEDATA_DEBUG_～
+#include "field/zonedata.h"    //for ZONEDATA_～
 
 #define FLYSKY_CAM_MOVE_FRAME (10)
 
@@ -45,8 +44,8 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
  *  @brief  そらをとぶイベント起動
  */
 //------------------------------------------------------------------
-GMEVENT * EVENT_FieldSkillSorawotobu( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap,
-    const int inZoneID, const int inGridX, const int inGridY, const int inGridZ)
+GMEVENT * EVENT_FieldSkillSorawotobu(
+    GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, const int inZoneID)
 {
 	GMEVENT * event = GMEVENT_Create( gsys, NULL, FSkillSorawotobuEvent, sizeof(SORAWOTOBU_WORK));
 	SORAWOTOBU_WORK * wk = GMEVENT_GetEventWork(event);
@@ -57,22 +56,16 @@ GMEVENT * EVENT_FieldSkillSorawotobu( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldma
 
   wk->ZoneID = inZoneID;
 
-  wk->Pos.x = inGridX * FX32_ONE * FIELD_CONST_GRID_SIZE;
-  wk->Pos.y = inGridY * FX32_ONE * FIELD_CONST_GRID_SIZE;
-  wk->Pos.z = inGridZ * FX32_ONE * FIELD_CONST_GRID_SIZE;
-#ifdef PM_DEBUG  
-  //@todo
   if( ZONEDATA_IsRailMap(inZoneID) )
   {
     // レール用初期化
-    ZONEDATA_DEBUG_GetStartRailPos(inZoneID, &wk->Pos);
+    ZONEDATA_GetStartRailPos(inZoneID, &wk->Pos);
   }
   else
   {
     // グリッド用初期化
-    ZONEDATA_DEBUG_GetStartPos(inZoneID, &wk->Pos);
+    ZONEDATA_GetStartPos(inZoneID, &wk->Pos);
   }
-#endif  //PM_DEBUG
 
 	return event;
 }

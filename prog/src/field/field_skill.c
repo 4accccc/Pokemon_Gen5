@@ -217,9 +217,9 @@ void FLDSKILL_InitUseHeader( FLDSKILL_USE_HEADER *head,
   head->poke_pos = poke_pos;
   head->use_wazano = use_wazano;
   head->zoneID = zoneID;
-  head->GridX = inGridX;
-  head->GridY = inGridY;
-  head->GridZ = inGridZ;
+  head->GridX = inGridX;    //@todo 20091120現在未使用
+  head->GridY = inGridY;    //@todo 20091120現在未使用
+  head->GridZ = inGridZ;    //@todo 20091120現在未使用
 }
 
 //--------------------------------------------------------------
@@ -621,8 +621,7 @@ static GMEVENT * SkillUse_Sorawotobu(
   GMEVENT *event;
   HIDEN_SCR_WORK *hsw;
   
-  event = EVENT_FieldSkillSorawotobu( scwk->gsys, scwk->fieldmap,
-      head->zoneID, head->GridX, head->GridY, head->GridZ);
+  event = EVENT_FieldSkillSorawotobu( scwk->gsys, scwk->fieldmap, head->zoneID);
   return event;
 }
 

@@ -14,7 +14,7 @@
  *  @brief  そらをとぶイベント起動
  */
 //------------------------------------------------------------------
-extern GMEVENT * EVENT_FieldSkillSorawotobu( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap,
-    const int inZoneID, const int inGridX, const int inGridY, const int inGridZ);
+extern GMEVENT * EVENT_FieldSkillSorawotobu(
+    GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, const int inZoneID);
 
 
