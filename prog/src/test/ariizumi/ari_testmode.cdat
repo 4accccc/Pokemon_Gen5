@@ -80,6 +80,7 @@ static BOOL TESTMODE_ITEM_SelectFuncShot( TESTMODE_WORK *work , const int idx )
 #include "test/ariizumi/musical_editor.h"
 #include "multiboot/mb_parent_sys.h"
 #include "multiboot/mb_select_sys.h"
+#include "multiboot/mb_capture_sys.h"
 FS_EXTERN_OVERLAY(pmsinput);
 FS_EXTERN_OVERLAY(pokelist);
 FS_EXTERN_OVERLAY(poke_status);
@@ -101,6 +102,7 @@ static BOOL TESTMODE_ITEM_SelectDebCameraTest( TESTMODE_WORK *work , const int i
 static BOOL TESTMODE_ITEM_SelectDebLocalTvt( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectDebMultiBoot( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectDebMultiBootBox( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectDebMultiBootCapture( TESTMODE_WORK *work , const int idx );
 
 static TESTMODE_MENU_LIST menuAriizumi[] = 
 {
@@ -118,6 +120,7 @@ static TESTMODE_MENU_LIST menuAriizumi[] =
 #endif
 	{L"LocalTVT"			,TESTMODE_ITEM_SelectDebLocalTvt },
 	{L"MB_BOX"	      ,TESTMODE_ITEM_SelectDebMultiBootBox },
+	{L"MB_CAP"	      ,TESTMODE_ITEM_SelectDebMultiBootCapture },
 	{L"マルチブート"	,TESTMODE_ITEM_SelectDebMultiBoot },
 	
 	{L"もどる"				,TESTMODE_ITEM_BackTopMenu },
@@ -191,5 +194,11 @@ static BOOL TESTMODE_ITEM_SelectDebMultiBoot( TESTMODE_WORK *work , const int id
 static BOOL TESTMODE_ITEM_SelectDebMultiBootBox( TESTMODE_WORK *work , const int idx )
 {
   TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(multiboot), &MultiBootSelect_ProcData, NULL);
+  return TRUE;
+}
+
+static BOOL TESTMODE_ITEM_SelectDebMultiBootCapture( TESTMODE_WORK *work , const int idx )
+{
+  TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(multiboot), &MultiBootCapture_ProcData, NULL);
   return TRUE;
 }

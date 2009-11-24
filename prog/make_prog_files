@@ -796,6 +796,7 @@ SRCS_OVERLAY_MULTIBOOT = multiboot/parent/mb_parent_sys.c \
         multiboot/util/mb_util_msg.c \
         multiboot/util/mb_poke_icon.c \
         multiboot/select/mb_select_sys.c \
+        multiboot/capture/mb_capture_sys.c \
         test/dlplay/dlplay_func.c 
 
 # 大野デバッグ
