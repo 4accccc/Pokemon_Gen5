@@ -170,22 +170,22 @@ static const FLDMAPFUNC_DATA sc_DRAWTASK_DATA =
 //-------------------------------------
 ///	カメラ動作
 //=====================================
-static void CAMERA_Init( EV_CIRCLEWALK_CAMERA* p_wk, FIELD_CAMERA* p_camera, HEAPID heapID, u32 fourkings_no );
-static void CAMERA_Exit( EV_CIRCLEWALK_CAMERA* p_wk );
-static BOOL CAMERA_Update( EV_CIRCLEWALK_CAMERA* p_wk );
-static void CAMERA_SetUpParam( EV_CIRCLEWALK_CAMERA* p_wk );
+static void EV_CAMERA_Init( EV_CIRCLEWALK_CAMERA* p_wk, FIELD_CAMERA* p_camera, HEAPID heapID, u32 fourkings_no );
+static void EV_CAMERA_Exit( EV_CIRCLEWALK_CAMERA* p_wk );
+static BOOL EV_CAMERA_Update( EV_CIRCLEWALK_CAMERA* p_wk );
+static void EV_CAMERA_SetUpParam( EV_CIRCLEWALK_CAMERA* p_wk );
 
 
 //-------------------------------------
 /// 人物動作動作
 //=====================================
-static void HERO_Init0( EV_CIRCLEWALK_HERO* p_wk, FIELD_PLAYER * p_fld_player, const MYSTATUS* cp_mystatus, HEAPID heapID, u32 fourkings_no );
-static void HERO_Init1( EV_CIRCLEWALK_HERO* p_wk );
-static void HERO_Exit( EV_CIRCLEWALK_HERO* p_wk );
-static BOOL HERO_Update( EV_CIRCLEWALK_HERO* p_wk );
-static void HERO_Switch( EV_CIRCLEWALK_HERO* p_wk, BOOL sw );
-static void HERO_VBlank( EV_CIRCLEWALK_HERO* p_wk );
-static void HERO_Draw( EV_CIRCLEWALK_HERO* p_wk );
+static void EV_HERO_Init0( EV_CIRCLEWALK_HERO* p_wk, FIELD_PLAYER * p_fld_player, const MYSTATUS* cp_mystatus, HEAPID heapID, u32 fourkings_no );
+static void EV_HERO_Init1( EV_CIRCLEWALK_HERO* p_wk );
+static void EV_HERO_Exit( EV_CIRCLEWALK_HERO* p_wk );
+static BOOL EV_HERO_Update( EV_CIRCLEWALK_HERO* p_wk );
+static void EV_HERO_Switch( EV_CIRCLEWALK_HERO* p_wk, BOOL sw );
+static void EV_HERO_VBlank( EV_CIRCLEWALK_HERO* p_wk );
+static void EV_HERO_Draw( EV_CIRCLEWALK_HERO* p_wk );
 
 
 //-------------------------------------
@@ -229,7 +229,7 @@ static void VBLANK_Update( GFL_TCB * p_tcb, void* p_work )
   EV_CIRCLEWALK_WORK * p_wk = p_work;
   
   // テクスチャ転送
-  HERO_VBlank( &p_wk->hero );
+  EV_HERO_VBlank( &p_wk->hero );
 }
 
 
@@ -293,7 +293,7 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
       MYSTATUS* p_mystatus = GAMEDATA_GetMyStatus( p_gdata );
       FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_work->p_fieldmap );
 
-      HERO_Init0( &p_work->hero, p_player, p_mystatus, heapID, p_work->fourkings_no );
+      EV_HERO_Init0( &p_work->hero, p_player, p_mystatus, heapID, p_work->fourkings_no );
     }
     (*p_seq)++;
     break;
@@ -301,9 +301,9 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
   case SEQ_INIT01:
     {
       FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_work->p_fieldmap ); 
-      CAMERA_Init( &p_work->camera, p_camera, heapID, p_work->fourkings_no );
+      EV_CAMERA_Init( &p_work->camera, p_camera, heapID, p_work->fourkings_no );
     }
-    HERO_Init1( &p_work->hero );
+    EV_HERO_Init1( &p_work->hero );
 
     // 描画開始
     {
@@ -314,7 +314,7 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
     }
 
     // 描画スイッチ
-    HERO_Switch( &p_work->hero, TRUE );
+    EV_HERO_Switch( &p_work->hero, TRUE );
     
     (*p_seq)++;
     break;
@@ -324,8 +324,8 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
       BOOL result1;
       BOOL result2;
 
-      result1 = CAMERA_Update( &p_work->camera );
-      result2 = HERO_Update( &p_work->hero );
+      result1 = EV_CAMERA_Update( &p_work->camera );
+      result2 = EV_HERO_Update( &p_work->hero );
       GF_ASSERT( result1 == result2 );
 
       if( result1 )
@@ -337,7 +337,7 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
 
   case SEQ_EXIT:
     // 描画スイッチ
-    HERO_Switch( &p_work->hero, FALSE );
+    EV_HERO_Switch( &p_work->hero, FALSE );
 
     // 描画終了
     FLDMAPFUNC_Delete( p_work->p_drawtask );
@@ -346,8 +346,8 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
     GFL_TCB_DeleteTask( p_work->p_vintr );
     
     // 各デモ破棄
-    HERO_Exit( &p_work->hero );
-    CAMERA_Exit( &p_work->camera );
+    EV_HERO_Exit( &p_work->hero );
+    EV_CAMERA_Exit( &p_work->camera );
     return GMEVENT_RES_FINISH;
 
   default:
@@ -369,7 +369,7 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
  *	@param  fourkins_no 四天王ナンバー
  */
 //-----------------------------------------------------------------------------
-static void CAMERA_Init( EV_CIRCLEWALK_CAMERA* p_wk, FIELD_CAMERA* p_camera, HEAPID heapID, u32 fourkings_no )
+static void EV_CAMERA_Init( EV_CIRCLEWALK_CAMERA* p_wk, FIELD_CAMERA* p_camera, HEAPID heapID, u32 fourkings_no )
 {
   p_wk->frame = 0;
   
@@ -404,7 +404,7 @@ static void CAMERA_Init( EV_CIRCLEWALK_CAMERA* p_wk, FIELD_CAMERA* p_camera, HEA
   FIELD_CAMERA_GetCameraUp( p_wk->p_camera, &p_wk->camera_up_save );
 
   // 初期パラメータ設定
-  CAMERA_SetUpParam( p_wk );
+  EV_CAMERA_SetUpParam( p_wk );
 }
 
 //----------------------------------------------------------------------------
@@ -414,7 +414,7 @@ static void CAMERA_Init( EV_CIRCLEWALK_CAMERA* p_wk, FIELD_CAMERA* p_camera, HEA
  *	@param	p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
-static void CAMERA_Exit( EV_CIRCLEWALK_CAMERA* p_wk )
+static void EV_CAMERA_Exit( EV_CIRCLEWALK_CAMERA* p_wk )
 {
   // カメラを元に戻す
   FIELD_CAMERA_ChangeMode( p_wk->p_camera, p_wk->camera_mode_save );
@@ -442,7 +442,7 @@ static void CAMERA_Exit( EV_CIRCLEWALK_CAMERA* p_wk )
  *	@retval FALSE   カメラアニメーション途中
  */
 //-----------------------------------------------------------------------------
-static BOOL CAMERA_Update( EV_CIRCLEWALK_CAMERA* p_wk )
+static BOOL EV_CAMERA_Update( EV_CIRCLEWALK_CAMERA* p_wk )
 {
   BOOL result;
 
@@ -461,7 +461,7 @@ static BOOL CAMERA_Update( EV_CIRCLEWALK_CAMERA* p_wk )
   // アニメーションを進め、カメラ座標を設定
   ICA_ANIME_SetAnimeFrame( p_wk->p_anime, p_wk->frame );
 
-  CAMERA_SetUpParam( p_wk );
+  EV_CAMERA_SetUpParam( p_wk );
   
   return result;
 }
@@ -473,7 +473,7 @@ static BOOL CAMERA_Update( EV_CIRCLEWALK_CAMERA* p_wk )
  *	@param	p_wk 
  */
 //-----------------------------------------------------------------------------
-static void CAMERA_SetUpParam( EV_CIRCLEWALK_CAMERA* p_wk )
+static void EV_CAMERA_SetUpParam( EV_CIRCLEWALK_CAMERA* p_wk )
 {
   VecFx32 target, pos, up;
   
@@ -504,7 +504,7 @@ static void CAMERA_SetUpParam( EV_CIRCLEWALK_CAMERA* p_wk )
  *	@param	fourkings_no  四天王ナンバー
  */
 //-----------------------------------------------------------------------------
-static void HERO_Init0( EV_CIRCLEWALK_HERO* p_wk, FIELD_PLAYER * p_fld_player, const MYSTATUS* cp_mystatus, HEAPID heapID, u32 fourkings_no )
+static void EV_HERO_Init0( EV_CIRCLEWALK_HERO* p_wk, FIELD_PLAYER * p_fld_player, const MYSTATUS* cp_mystatus, HEAPID heapID, u32 fourkings_no )
 {
   u32 sex;
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_FOURKINGS_SCENE, GFL_HEAP_LOWID(heapID) );
@@ -553,7 +553,7 @@ static void HERO_Init0( EV_CIRCLEWALK_HERO* p_wk, FIELD_PLAYER * p_fld_player, c
  *	@param	p_wk          ワーク
  */
 //-----------------------------------------------------------------------------
-static void HERO_Init1( EV_CIRCLEWALK_HERO* p_wk )
+static void EV_HERO_Init1( EV_CIRCLEWALK_HERO* p_wk )
 {
   // レンダーオブジェ生成
   p_wk->p_rend = GFL_G3D_RENDER_Create( p_wk->p_mdlres, 0, p_wk->p_mdlres );
@@ -578,7 +578,7 @@ static void HERO_Init1( EV_CIRCLEWALK_HERO* p_wk )
  *	@param	p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
-static void HERO_Exit( EV_CIRCLEWALK_HERO* p_wk )
+static void EV_HERO_Exit( EV_CIRCLEWALK_HERO* p_wk )
 {
   // 全部破棄
   GFL_G3D_OBJECT_Delete( p_wk->p_obj );
@@ -601,7 +601,7 @@ static void HERO_Exit( EV_CIRCLEWALK_HERO* p_wk )
  *	@retval FALSE   デモ途中
  */
 //-----------------------------------------------------------------------------
-static BOOL HERO_Update( EV_CIRCLEWALK_HERO* p_wk )
+static BOOL EV_HERO_Update( EV_CIRCLEWALK_HERO* p_wk )
 {
   BOOL result;
 
@@ -623,7 +623,7 @@ static BOOL HERO_Update( EV_CIRCLEWALK_HERO* p_wk )
  *	@param	sw    スイッチ    TRUE:ダミーを表示
  */
 //-----------------------------------------------------------------------------
-static void HERO_Switch( EV_CIRCLEWALK_HERO* p_wk, BOOL sw )
+static void EV_HERO_Switch( EV_CIRCLEWALK_HERO* p_wk, BOOL sw )
 {
   if(sw)
   {
@@ -654,7 +654,7 @@ static void HERO_Switch( EV_CIRCLEWALK_HERO* p_wk, BOOL sw )
  *	@param	p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
-static void HERO_VBlank( EV_CIRCLEWALK_HERO* p_wk )
+static void EV_HERO_VBlank( EV_CIRCLEWALK_HERO* p_wk )
 {
   if( p_wk->trans )
   {
@@ -671,7 +671,7 @@ static void HERO_VBlank( EV_CIRCLEWALK_HERO* p_wk )
  *	@param	p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
-static void HERO_Draw( EV_CIRCLEWALK_HERO* p_wk )
+static void EV_HERO_Draw( EV_CIRCLEWALK_HERO* p_wk )
 {
   GFL_G3D_DRAW_DrawObject(  p_wk->p_obj, &p_wk->status );
 }
@@ -692,7 +692,7 @@ static void DRAW_Update( FLDMAPFUNC_WORK* p_taskwork, FIELDMAP_WORK* p_fieldmap 
 {
   EV_CIRCLEWALK_DRAWWK* p_wk = p_work; 
 
-  HERO_Draw( p_wk->p_hero );
+  EV_HERO_Draw( p_wk->p_hero );
 }
 
 
