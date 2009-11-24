@@ -46,6 +46,7 @@ enum
 enum
 {	
 	//上画面BG
+	PLT_BG_FRAME_M	= 10,
 	PLT_BG_SCROLL_M	= 11,
 	PLT_BG_SELECT_M	= 12,
 
@@ -85,6 +86,14 @@ enum
 	RESID_CHR,
 	RESID_CEL,
 	RESID_MAX,
+};
+
+enum
+{ 
+  CLWKID_BAR,
+  CLWKID_CUR_L,
+  CLWKID_CUR_R,
+  CLWKID_MAX,
 };
 
 //-------------------------------------
@@ -144,7 +153,7 @@ typedef struct
 	u16								insert_cursor;		//挿入するカーソルの位置
 	SHORTCUT					*p_sv;
 	SCROLL_MOVE_MODE	mode;	
-	GFL_CLWK					*p_clwk;
+	GFL_CLWK					*p_clwk[ CLWKID_MAX ];
 	HEAPID						heapID;
 	GFL_MSGDATA				*p_msg;		//メッセージデータ
 	GFL_FONT					*p_font;	//フォント
@@ -159,7 +168,7 @@ struct _SHORTCUTMENU_WORK
 																						//44
 	GFL_CLUNIT	*p_unit;	//OBJユニット			4
 	u16					res[RESID_MAX];		//リソース 8
-	GFL_CLWK		*p_clwk;	//挿入用カーソル 4
+	GFL_CLWK		*p_clwk[ CLWKID_MAX ];	//挿入用カーソル 4
 
 	GFL_MSGDATA *p_msg;		//メッセージデータ 4
 	GFL_FONT		*p_font;	//フォント       4
@@ -179,7 +188,7 @@ struct _SHORTCUTMENU_WORK
 //-------------------------------------
 ///	SCROLL
 //=====================================
-static void SCROLL_Init( SCROLL_WORK *p_wk, const SHORTCUT_CURSOR	*cp_cursor, GFL_MSGDATA *p_msg, GFL_FONT *p_font, PRINT_QUE *p_que, SHORTCUT *p_sv, GFL_CLWK *p_cursor, HEAPID heapID );
+static void SCROLL_Init( SCROLL_WORK *p_wk, const SHORTCUT_CURSOR	*cp_cursor, GFL_MSGDATA *p_msg, GFL_FONT *p_font, PRINT_QUE *p_que, SHORTCUT *p_sv, GFL_CLWK *pp_cursor[], HEAPID heapID );
 static void SCROLL_Exit( SCROLL_WORK *p_wk, SHORTCUT_CURSOR	*p_cursor );
 static void SCROLL_Main( SCROLL_WORK *p_wk );
 static BOOL SCROLL_PrintMain( SCROLL_WORK *p_wk );
@@ -257,17 +266,43 @@ SHORTCUTMENU_WORK *SHORTCUTMENU_Init( SHORTCUTMENU_MODE mode, SHORTCUT_CURSOR *p
 				NARC_fld_shortcut_menu_gra_obj_NCER, NARC_fld_shortcut_menu_gra_obj_NANR, res_heapID );
 
 
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_fld_shortcut_menu_gra_shortcut_NCLR,
+				PALTYPE_MAIN_BG, PLT_BG_FRAME_M*0x20, 0x20*1, res_heapID );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_fld_shortcut_menu_gra_shortcut_NCGR, BG_FRAME_SCROLL_M, 0, 0, FALSE, res_heapID );
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_fld_shortcut_menu_gra_shortcut_NSCR, BG_FRAME_SCROLL_M, 0, 0, FALSE, res_heapID );
+		GFL_BG_ChangeScreenPalette( 
+				BG_FRAME_SCROLL_M, 
+				SCROLL_BMPWIN_X-1, 
+				SCROLL_BMPWIN_Y-1, 
+				SCROLL_BMPWIN_W+2, 
+				1, 
+				PLT_BG_FRAME_M
+				);
+
+
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
 
 	//ワーク作成
 	{	
+    static const int sc_clwk_x[ CLWKID_MAX ]  = 
+    { 
+      128,
+      10,
+      256-10,
+    };
+    int i;
 		GFL_CLWK_DATA	cldata;
 		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-		cldata.pos_x	= 128;
 		cldata.pos_y	= 96;
-		p_wk->p_clwk	= GFL_CLACT_WK_Create( p_wk->p_unit, p_wk->res[RESID_CHR], p_wk->res[RESID_PLT], p_wk->res[RESID_CEL], &cldata, CLSYS_DRAW_MAIN, res_heapID );
-		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, FALSE );
+    for( i = 0; i < CLWKID_MAX; i++ )
+    { 
+      cldata.anmseq = i;
+      cldata.pos_x	= sc_clwk_x[ i ];
+      p_wk->p_clwk[ i ]	= GFL_CLACT_WK_Create( p_wk->p_unit, p_wk->res[RESID_CHR], p_wk->res[RESID_PLT], p_wk->res[RESID_CEL], &cldata, CLSYS_DRAW_MAIN, res_heapID );
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+      GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
+    }
 	}
 
 	//共通モジュール初期化
@@ -331,7 +366,11 @@ void SHORTCUTMENU_Exit( SHORTCUTMENU_WORK *p_wk )
 
 	//ワーク破棄
 	{	
-		GFL_CLACT_WK_Remove( p_wk->p_clwk );
+    int i;
+    for( i = 0; i < CLWKID_MAX; i++ )
+    { 
+      GFL_CLACT_WK_Remove( p_wk->p_clwk[i] );
+    }
 	}
 
 	//共通モジュール破棄
@@ -417,7 +456,13 @@ void SHORTCUTMENU_Main( SHORTCUTMENU_WORK *p_wk )
 		break;
 
 	case MAINSEQ_CLOSE_START:	//閉じる開始
-		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, FALSE );
+    { 
+      int i;
+      for( i = 0; i < CLWKID_MAX; i++ )
+      { 
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+      }
+    }
 		p_wk->cnt	=	LISTMOVE_SYNC;
 		p_wk->seq	= MAINSEQ_CLOSE_WAIT;
 		break;
@@ -527,16 +572,23 @@ SHORTCUTMENU_INPUT SHORTCUTMENU_GetInput( const SHORTCUTMENU_WORK *cp_wk, SHORTC
  *	@param	heapID						ヒープID
  */
 //-----------------------------------------------------------------------------
-static void SCROLL_Init( SCROLL_WORK *p_wk, const SHORTCUT_CURSOR	*cp_cursor, GFL_MSGDATA *p_msg, GFL_FONT *p_font, PRINT_QUE *p_que, SHORTCUT *p_sv, GFL_CLWK *p_cursor, HEAPID heapID )
+static void SCROLL_Init( SCROLL_WORK *p_wk, const SHORTCUT_CURSOR	*cp_cursor, GFL_MSGDATA *p_msg, GFL_FONT *p_font, PRINT_QUE *p_que, SHORTCUT *p_sv, GFL_CLWK *pp_cursor[], HEAPID heapID )
 {	
 	//ワーククリア
 	GFL_STD_MemClear( p_wk, sizeof(SCROLL_WORK) );
 	p_wk->p_que		= p_que;
 	p_wk->p_sv		= p_sv;
-	p_wk->p_clwk	= p_cursor;
 	p_wk->heapID	= heapID;
 	p_wk->p_msg		= p_msg;
 	p_wk->p_font	= p_font;
+
+  { 
+    int i;
+    for( i = 0; i < CLWKID_MAX; i++ )
+    { 
+      p_wk->p_clwk[i] =pp_cursor[i];
+    }
+  }
 
 	//BMPWIN作成
 	p_wk->p_bmpwin	= GFL_BMPWIN_Create( BG_FRAME_SCROLL_M, 
@@ -697,16 +749,23 @@ static void SCROLL_Main( SCROLL_WORK *p_wk )
 	//モード切替
 	if( is_move_change )
 	{	
+    int i;
 		p_wk->mode ^= 1;
 		if( p_wk->mode == SCROLL_MOVE_NORMAL )
 		{	
-			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, FALSE );
+      for( i = 0; i < CLWKID_MAX; i++ )
+      { 
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+      }
 		}
 		else if( p_wk->mode == SCROLL_MOVE_INSERT )
 		{	
 			BmpMenuList_PosGet( p_wk->p_list, &p_wk->insert_list, &p_wk->insert_cursor );
 
-			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, TRUE );
+      for( i = 0; i < CLWKID_MAX; i++ )
+      { 
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
+      }
 		}
 		Scroll_MoveCursorCallBack( p_wk->p_list, 0, 1 );
 	}
@@ -781,15 +840,27 @@ static void Scroll_MoveCursorCallBack( BMPMENULIST_WORK * p_list, u32 param, u8 
 				SCROLL_BMPWIN_W, 
 				yblk,
 				PLT_BG_SELECT_M );
+    GFL_BG_ChangeScreenPalette( 
+        BG_FRAME_SCROLL_M, 
+        SCROLL_BMPWIN_X-1, 
+        SCROLL_BMPWIN_Y-1, 
+        SCROLL_BMPWIN_W+2, 
+        1, 
+        PLT_BG_FRAME_M
+        );
 
 		GFL_BG_LoadScreenV_Req( BG_FRAME_SCROLL_M );
 	}
 	else if( p_wk->mode == SCROLL_MOVE_INSERT )
 	{	
+    int i;
 		GFL_CLACTPOS	clpos;
-		clpos.x	= 128;
-		clpos.y	= (SCROLL_BMPWIN_Y + cursor)*8;
-		GFL_CLACT_WK_SetPos( p_wk->p_clwk, &clpos, CLSYS_DRAW_MAIN );
+    for( i = 0; i < CLWKID_MAX; i++ )
+    { 
+      GFL_CLACT_WK_GetPos( p_wk->p_clwk[i], &clpos, CLSYS_DRAW_MAIN );
+      clpos.y = (SCROLL_BMPWIN_Y + cursor)*8;
+      GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &clpos, CLSYS_DRAW_MAIN );
+    }
 
 		GFL_BG_ChangeScreenPalette( 
 				BG_FRAME_SCROLL_M, 
@@ -822,10 +893,20 @@ static void Scroll_MoveCursorCallBack( BMPMENULIST_WORK * p_list, u32 param, u8 
 					SCROLL_BMPWIN_W, 
 					yblk,
 					PLT_BG_SELECT_M );
+      GFL_BG_ChangeScreenPalette( 
+          BG_FRAME_SCROLL_M, 
+          SCROLL_BMPWIN_X-1, 
+          SCROLL_BMPWIN_Y-1, 
+          SCROLL_BMPWIN_W+2, 
+          1, 
+          PLT_BG_FRAME_M
+          );
 		}
 
 		GFL_BG_LoadScreenV_Req( BG_FRAME_SCROLL_M );
 	}
+
+
 }
 //----------------------------------------------------------------------------
 /**

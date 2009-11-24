@@ -15,7 +15,10 @@ enum {
 	NARC_fld_shortcut_menu_gra_obj_NANR = 1,
 	NARC_fld_shortcut_menu_gra_obj_NCER = 2,
 	NARC_fld_shortcut_menu_gra_obj_NCGR = 3,
-	NARC_fld_shortcut_menu_gra_obj_NCLR = 4
+	NARC_fld_shortcut_menu_gra_obj_NCLR = 4,
+	NARC_fld_shortcut_menu_gra_shortcut_NCGR = 5,
+	NARC_fld_shortcut_menu_gra_shortcut_NCLR = 6,
+	NARC_fld_shortcut_menu_gra_shortcut_NSCR = 7
 };
 
 /* NARC_FLD_SHORTCUT_MENU_GRA_NAIX_ */
