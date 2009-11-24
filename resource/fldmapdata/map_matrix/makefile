@@ -74,7 +74,8 @@ MAPMATCV	= ruby mapmatcv.rb
 
 #エクセルコンバータ
 #
-CSV_CVTR	= $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
+#CSV_CVTR	= $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
+CSV_RUBY	= ruby $(PROJECT_ROOT)tools/exceltool/xls2xml/tab_out_sheet.rb
 
 #PHONY
 #
@@ -101,17 +102,23 @@ $(TARGET_ARC): $(MAPMATRIX_XLS) $(ZONEID_H) $(LAND_DATA_XLS)
 #ランドリスト作成
 #
 mklandlst:
-	$(CSV_CVTR) -o $(LAND_DATA_LIST_CSV) -p 1 -s csv $(LAND_DATA_XLS)
+	$(CSV_RUBY) --comma -n 0 $(LAND_DATA_XLS) > $(LAND_DATA_LIST_CSV)
+	#$(CSV_CVTR) -o $(LAND_DATA_LIST_CSV) -p 1 -s csv $(LAND_DATA_XLS)
 	ruby make_land_list.rb $(LAND_DATA_LIST_CSV)
 
 #エクセルコンバート
 #
 convxls:
-	$(CSV_CVTR) -p 1 map_matrix.xls
-	$(CSV_CVTR) -o blocknum.txt -p 2 map_matrix.xls
-	$(CSV_CVTR) -o field_land.txt -p 3 map_matrix.xls
-	$(CSV_CVTR) -o field_zone.txt -p 4 map_matrix.xls
-	$(CSV_CVTR) -o palace_zone.txt -p 5 map_matrix.xls
+	$(CSV_RUBY) -n 0 -tab map_matrix.xls > map_matrix.txt
+	$(CSV_RUBY) -n 1 -tab map_matrix.xls > blocknum.txt
+	$(CSV_RUBY) -n 2 -tab map_matrix.xls > field_land.txt
+	$(CSV_RUBY) -n 3 -tab map_matrix.xls > field_zone.txt
+	$(CSV_RUBY) -n 4 -tab map_matrix.xls > palace_zone.txt
+	#$(CSV_CVTR) -p 1 map_matrix.xls
+	#$(CSV_CVTR) -o blocknum.txt -p 2 map_matrix.xls
+	#$(CSV_CVTR) -o field_land.txt -p 3 map_matrix.xls
+	#$(CSV_CVTR) -o field_zone.txt -p 4 map_matrix.xls
+	#$(CSV_CVTR) -o palace_zone.txt -p 5 map_matrix.xls
 
 #対象ソース一覧作成
 #
