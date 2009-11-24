@@ -107,7 +107,7 @@ VMCMD_RESULT EvCmdGetEffectEncountItem( VMHANDLE* core, void* wk )
  
   u16*  ret_work = SCRCMD_GetVMWork( core, work );
   *ret_work = EFFECT_ENC_GetEffectEncountItem( FIELDMAP_GetEncount(fwork) );
-
+  IWASAWA_Printf("GetEffectEncountItem %d\n",*ret_work);
 	return VMCMD_RESULT_CONTINUE;
 }
 

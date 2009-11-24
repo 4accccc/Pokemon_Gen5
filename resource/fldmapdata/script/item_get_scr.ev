@@ -148,23 +148,35 @@ _END
 //====================================================================
 ev_item_event_field:
 {
+  DEFINE_LOCAL  i_get
+
   _CALL sub_pocket_me_set
   _CALL sub_item_get_player_form_set
 
-  _ADD_ITEM_CHK( SCWK_PARAM0, SCWK_PARAM1, SCWK_ANSWER)
+  _DEBUG_PRINT_WK( SCWK_PARAM0 )
+  _DEBUG_PRINT_WK( SCWK_PARAM1 )
+  $SCWK_TEMP0 = $SCWK_PARAM0
+  $SCWK_TEMP1 = $SCWK_PARAM1
+
+  _ADD_ITEM_CHK( SCWK_PARAM0, SCWK_PARAM1, i_get)
   _CALL sub_item_event_get_field_msg
   _ME_WAIT()
   _CALL sub_item_get_player_form_return
 
-  IF $SCWK_ANSWER == FALSE THEN
+  _DEBUG_PRINT_WK( i_get )
+  IF $i_get == FALSE THEN
     //入手失敗システムメッセージ
-    $SCWK_TEMP0 = $SCWK_PARAM0
-    $SCWK_TEMP1 = $SCWK_PARAM1
     _CALL   sub_item_event_fail_nowait
   ELSE
+    //アイテム追加
+    _ADD_ITEM( SCWK_PARAM0,SCWK_PARAM1,SCWK_ANSWER )
+
     //入手成功システムメッセージ
-    $SCWK_TEMP0 = $SCWK_PARAM0
-    $SCWK_TEMP1 = $SCWK_PARAM1
+    _PLAYER_NAME( 0 )
+    _ITEM_NAME( 1, SCWK_PARAM0 )
+    _GET_POCKET_ID( SCWK_TEMP0, SCWK_ANSWER )
+    _POCKET_NAME( 2, SCWK_ANSWER )
+
     _SYSWIN_MSG_DOWN(	msg_item_get_pocket_nowait )
     _LAST_KEYWAIT()
   ENDIF

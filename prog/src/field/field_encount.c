@@ -337,7 +337,8 @@ static ENCOUNT_LOCATION enc_GetLocation( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_ty
   //エンカウントフラグチェック
   attr_flag = MAPATTR_GetAttrFlag(attr);
 
-  if((attr_flag & MAPATTR_FLAGBIT_ENCOUNT) == FALSE ){
+  //エンカウントチェック
+  if( enc_type != ENC_TYPE_EFFECT && (attr_flag & MAPATTR_FLAGBIT_ENCOUNT) == FALSE ){
     return ENC_LOCATION_NONE;
   }
 

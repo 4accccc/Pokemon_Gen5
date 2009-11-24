@@ -119,7 +119,7 @@ void EFFECT_ENC_DeleteWork( EFFECT_ENCOUNT* eff_wk )
 void EFFECT_ENC_Init( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
 {
   eff_wk->fectrl = FIELDMAP_GetFldEffCtrl( enc->fwork );
-  eff_wk->walk_ct_interval = 10;
+  eff_wk->walk_ct_interval = 20;
  
   //ƒpƒ‰ƒ[ƒ^‚ðPop
   effect_EffectPop( enc, eff_wk );
@@ -188,6 +188,7 @@ GMEVENT* EFFECT_ENC_CheckEventApproch( FIELD_ENCOUNT* enc )
   ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
   EFFENC_PARAM* ep = &ewk->effect_encount.param; 
   GMEVENT* event = NULL;
+  u8  ev_no = 0;
   u16 rnd;
 
   if( !ep->valid_f ){
@@ -211,12 +212,14 @@ GMEVENT* EFFECT_ENC_CheckEventApproch( FIELD_ENCOUNT* enc )
       event = FIELD_ENCOUNT_CheckEncount( enc, ENC_TYPE_EFFECT );
     }else{
       event = effitem_ItemGetEventSet( enc, effitem_GetItemBridge() );
+      ev_no = 1;
     } 
   }else if( ep->type == EFFENC_TYPE_CAVE ){
     if( rnd < 400){
       event = FIELD_ENCOUNT_CheckEncount( enc, ENC_TYPE_EFFECT );
     }else{
       event = effitem_ItemGetEventSet( enc, effitem_GetItemCave() );
+      ev_no = 1;
     }
   }else{
     if( rnd < 800 ){
@@ -227,7 +230,11 @@ GMEVENT* EFFECT_ENC_CheckEventApproch( FIELD_ENCOUNT* enc )
   }
   GF_ASSERT( event );
 
-  ep->push_cancel_f = TRUE;
+  if(ev_no){
+    effect_EffectDelete( enc, eff_wk );
+  }else{
+    ep->push_cancel_f = TRUE;
+  }
   return event;
 }
 
@@ -505,7 +512,7 @@ static const u16 DATA_ItemTableStone[ITEM_TBL_STONE_NUM] = {
  ITEM_MANMARUISI,
 };
 
-static u16 effitem_GetItemBridge(void)
+static u16 effitem_GetItemCave(void)
 {
   u16 rnd = GFUser_GetPublicRand0( 1000 );
 
@@ -519,7 +526,7 @@ static u16 effitem_GetItemBridge(void)
   return ITEM_KAWARAZUNOISI;
 }
 
-static u16 effitem_GetItemCave(void)
+static u16 effitem_GetItemBridge(void)
 {
   u16 rnd = GFUser_GetPublicRand0( 1000 );
 
