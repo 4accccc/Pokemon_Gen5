@@ -1,3 +1,4 @@
+adachi_minako
 ando
 ariizumi_nobuhiko
 fuchino
@@ -42,6 +43,7 @@ ohno
 ohta_tetsuji
 saito_masafumi
 saito_nozomu
+sakurai
 sato_hitomi
 shimoyamada
 sogabe
@@ -58,8 +60,9 @@ tsuruta_saya
 unno
 watanabe
 wbrom
-yasumoto_shingo
 yoshida
-kunishita_rika
 nagata_daisuke
 nishihata_natsumi
+takahashi_chihiro
+kawada_koji
+hudson
