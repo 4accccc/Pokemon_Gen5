@@ -1,5 +1,5 @@
 #event data
-#save date:2009/11/23 23:59:41
+#save date:2009/11/24 21:23:07
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,70 +9,8 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03gym0101.wms
 #hold event type:
 1
 #hold event number:
-29
+15
 #event number: 0
-#type
-1
-#ID name
-C03GYM0101_WALL01_L
-#OBJ CODE Number
-NONE
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-8 0 -280
-#event number: 1
-#type
-1
-#ID name
-C03GYM0101_WALL01_R
-#OBJ CODE Number
-NONE
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-40 0 -280
-#event number: 2
 #type
 1
 #ID name
@@ -103,69 +41,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 24 0 -280
-#event number: 3
-#type
-1
-#ID name
-C03GYM0101_WALL02_L
-#OBJ CODE Number
-NONE
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-104 0 -216
-#event number: 4
-#type
-1
-#ID name
-C03GYM0101_WALL02_R
-#OBJ CODE Number
-NONE
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-136 0 -216
-#event number: 5
+#event number: 1
 #type
 1
 #ID name
@@ -196,69 +72,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 120 0 -216
-#event number: 6
-#type
-1
-#ID name
-C03GYM0101_WALL03_L
-#OBJ CODE Number
-NONE
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--88 0 -216
-#event number: 7
-#type
-1
-#ID name
-C03GYM0101_WALL03_R
-#OBJ CODE Number
-NONE
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--56 0 -216
-#event number: 8
+#event number: 2
 #type
 1
 #ID name
@@ -289,69 +103,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -72 0 -216
-#event number: 9
-#type
-1
-#ID name
-C03GYM0101_WALL04_L
-#OBJ CODE Number
-NONE
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--184 0 -152
-#event number: 10
-#type
-1
-#ID name
-C03GYM0101_WALL04_R
-#OBJ CODE Number
-NONE
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--152 0 -152
-#event number: 11
+#event number: 3
 #type
 1
 #ID name
@@ -382,69 +134,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -168 0 -152
-#event number: 12
-#type
-1
-#ID name
-C03GYM0101_WALL05_L
-#OBJ CODE Number
-NONE
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--88 0 -88
-#event number: 13
-#type
-1
-#ID name
-C03GYM0101_WALL05_R
-#OBJ CODE Number
-NONE
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--56 0 -88
-#event number: 14
+#event number: 4
 #type
 1
 #ID name
@@ -475,69 +165,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -72 0 -88
-#event number: 15
-#type
-1
-#ID name
-C03GYM0101_WALL06_L
-#OBJ CODE Number
-NONE
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-104 0 -88
-#event number: 16
-#type
-1
-#ID name
-C03GYM0101_WALL06_R
-#OBJ CODE Number
-NONE
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-136 0 -88
-#event number: 17
+#event number: 5
 #type
 1
 #ID name
@@ -568,69 +196,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 120 0 -88
-#event number: 18
-#type
-1
-#ID name
-C03GYM0101_WALL07_L
-#OBJ CODE Number
-NONE
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-8 0 -24
-#event number: 19
-#type
-1
-#ID name
-C03GYM0101_WALL07_R
-#OBJ CODE Number
-NONE
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-40 0 -24
-#event number: 20
+#event number: 6
 #type
 1
 #ID name
@@ -661,7 +227,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 24 0 -24
-#event number: 21
+#event number: 7
 #type
 1
 #ID name
@@ -692,7 +258,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 120 0 -136
-#event number: 22
+#event number: 8
 #type
 1
 #ID name
@@ -723,7 +289,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -168 0 -200
-#event number: 23
+#event number: 9
 #type
 1
 #ID name
@@ -754,7 +320,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 24 64 184
-#event number: 24
+#event number: 10
 #type
 1
 #ID name
@@ -785,7 +351,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 56 0 -456
-#event number: 25
+#event number: 11
 #type
 1
 #ID name
@@ -816,7 +382,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 120 0 -8
-#event number: 26
+#event number: 12
 #type
 1
 #ID name
@@ -847,7 +413,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -72 0 -8
-#event number: 27
+#event number: 13
 #type
 1
 #ID name
@@ -878,7 +444,7 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 -72 0 -280
-#event number: 28
+#event number: 14
 #type
 1
 #ID name
