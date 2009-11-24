@@ -376,19 +376,29 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
   int tp = GFL_UI_TP_GetTrg();
   EFFECT_VIEWER_WORK *evw = mywk;
 
-  MCS_Main();
+  if( evw->mcs_enable )
+  {
+    MCS_Main();
+  }
 
   if( trg & PAD_BUTTON_START )
   {
     if( MCS_CheckEnable() == FALSE )
     {
-      MCS_Init( evw->heapID );
+      if( MCS_Init( evw->heapID ) == FALSE )
+      { 
+        evw->mcs_enable = 1;
+      }
     }
     else
     {
       MCS_Exit();
+      evw->mcs_enable = 0;
     }
   }
+
+  EffectViewerSequence( evw );
+  BTLV_EFFECT_Main();
 
   if( trg & PAD_BUTTON_SELECT )
   {
@@ -401,10 +411,6 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
     del_pokemon( evw );
     set_pokemon( evw );
   }
-
-  EffectViewerSequence( evw );
-
-  BTLV_EFFECT_Main();
 
   if( pad == PAD_BUTTON_EXIT ){
     GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, 2 );
