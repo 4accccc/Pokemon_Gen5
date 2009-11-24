@@ -511,9 +511,12 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *fieldWork)
   }
 
   //デフォルトフォグ設置を保存
-  tmp->FogBaseOffset = FIELD_FOG_GetOffset( fog );
-  tmp->FogBaseSlope = FIELD_FOG_GetSlope( fog );
-  NOZOMU_Printf("fog::%d,%d\n",tmp->FogBaseOffset, tmp->FogBaseSlope);
+  {
+    FIELD_ZONEFOGLIGHT * zone_fog = FIELDMAP_GetFieldZoneFog( fieldWork );
+    tmp->FogBaseOffset = FIELD_ZONEFOGLIGHT_GetOffset( zone_fog );
+    tmp->FogBaseSlope = FIELD_ZONEFOGLIGHT_GetSlope( zone_fog );
+    NOZOMU_Printf("fog::%d,%d\n",tmp->FogBaseOffset, tmp->FogBaseSlope);
+  }
   //自機が隔壁より下にいる場合はフォグフェード後の設定に書き換え
   {
     VecFx32 pos;
