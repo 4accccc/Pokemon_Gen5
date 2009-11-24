@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-26T20:44:13"/>
+	<create user="iwasawa" host="W00157" date="2009-11-24T17:44:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -520,64 +520,6 @@
 小さな　生命体　だそうです[BE:01:ページ切り替え（クリア）]
 これが　ついている　あいだ
 ポケモンが　よく　育つみたいです</language>
-	</row>
-
-	<row id="msg_event_item_get_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>イベントでのアイテム入手時
-
-0＝アイテム名</comment>
-		<language name="JPN" width="256">[1:09:どうぐ名:0]を　てにいれた！</language>
-		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　てにいれた！</language>
-	</row>
-
-	<row id="msg_event_item_get_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>イベントでのアイテム入手時</comment>
-		<language name="JPN" width="256">ざんねん！
-バッグが　いっぱい　だ！</language>
-		<language name="JPN_KANJI" width="256">ざんねん！
-バッグが　いっぱい　だ！</language>
-	</row>
-
-	<row id="msg_event_item_get_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>アイテムゲット時……たいせつなもの
-
-0＝主人公名
-1＝道具名</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-[1:09:どうぐ名:1]を　てにいれた！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を　てにいれた！</language>
-	</row>
-
-	<row id="msg_event_item_get_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>アイテムゲット時……フィールドメニューに関係する物
-
-0＝主人公名
-1＝道具名</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-[1:09:どうぐ名:1]を　てにいれた！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-[1:09:どうぐ名:1]を　てにいれた！</language>
-	</row>
-
-	<row id="msg_event_item_get_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>0＝主人公名</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は　[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を[FF:00:色:2]
-[1:12:バッグのポケット名:2][FF:00:色:0]ポケットに　しまった</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を[FF:00:色:2]
-[1:12:バッグのポケット名:2][FF:00:色:0]ポケットに　しまった</language>
-	</row>
-
-	<row id="msg_event_item_get_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>入手した道具をしまう
-
-0＝主人公名
-1＝道具名
-2＝バッグのポケット名（アイコン）</comment>
-		<language name="JPN">[1:00:トレーナー名:0]は　[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を[FF:00:色:2]
-[1:12:バッグのポケット名:2][FF:00:色:0]ポケットに　しまった▼</language>
-		<language name="JPN_KANJI">[1:00:トレーナー名:0]は　[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を[FF:00:色:2]
-[1:12:バッグのポケット名:2][FF:00:色:0]ポケットに　しまった▼</language>
 	</row>
 
 	<row id="msg_yen_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
