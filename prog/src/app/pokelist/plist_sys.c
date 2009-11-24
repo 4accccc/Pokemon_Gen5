@@ -1747,17 +1747,25 @@ static void PLIST_SelectPokeTerm_Use( PLIST_WORK *work )
         //HP操作
         POKEMON_PARAM *usePP = PokeParty_GetMemberPointer(work->plData->pp, work->useTarget );
         const u32 hpMaxUse = PP_Get( usePP , ID_PARA_hpmax , NULL );
+        const u32 hpNowUse = PP_Get( usePP , ID_PARA_hp , NULL );
         const u32 recvHp = hpMaxUse / 5;
         
         if( hpNowTrg + recvHp > hpMaxTrg )
         {
-          PP_Put( work->selectPokePara , ID_PARA_hp , hpMaxTrg );
+          OS_TPrintf("Max[%d]->[%d]\n",hpNowUse, hpNowUse - (hpMaxTrg-hpNowTrg));
+          PP_Put( usePP , ID_PARA_hp , hpNowUse - (hpMaxTrg-hpNowTrg) );
         }
         else
         {
-          PP_Put( work->selectPokePara , ID_PARA_hp , hpNowTrg + recvHp );
+          OS_TPrintf("   [%d]->[%d]\n",hpNowUse, hpNowUse - (recvHp));
+          PP_Put( usePP , ID_PARA_hp , hpNowUse - (recvHp) );
         }
       }
+      
+      //アニメ対象のため一回pokeCursolを入れ替えておく
+      //ついでにwork->plData->ret_selにカーソルをセットしておく
+      work->plData->ret_sel = work->pokeCursor;
+      work->pokeCursor = work->useTarget;
       
       PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
       PMSND_PlaySystemSE( PLIST_SND_RECOVER );
@@ -3048,18 +3056,31 @@ static void PLIST_MSGCB_ItemSet_CheckChangeItemCB( PLIST_WORK *work , const int 
 //ミルク飲み・タマゴ産み第１段階
 static void PLIST_HPANMCB_SkillRecoverHpFirst( PLIST_WORK *work )
 {
-  u16 nowHp = PLIST_PLATE_GetDispHp( work , work->plateWork[work->pokeCursor] );
   POKEMON_PARAM *usePP = PokeParty_GetMemberPointer(work->plData->pp, work->useTarget );
   const u32 hpNowUse = PP_Get( usePP , ID_PARA_hp , NULL );
+  const u32 hpMaxUse = PP_Get( usePP , ID_PARA_hpmax , NULL );
 
-  //アニメ対象のため一回pokeCursolを入れ替えておく
-  //ついでにwork->plData->ret_selにカーソルをセットしておく
-  work->plData->ret_sel = work->pokeCursor;
-  work->pokeCursor = work->useTarget;
+  POKEMON_PARAM *trgPP = PokeParty_GetMemberPointer(work->plData->pp, work->plData->ret_sel );
+  const u32 hpNowTrg = PP_Get( work->selectPokePara , ID_PARA_hp , NULL );
+  const u32 hpMaxTrg = PP_Get( work->selectPokePara , ID_PARA_hpmax , NULL );
 
+  const u32 recvHp = hpMaxUse/5;
+
+  //入れ替えたのを戻す
+  work->pokeCursor = work->plData->ret_sel;
   
+  if( hpNowTrg + recvHp > hpMaxTrg )
+  {
+    OS_TPrintf("Max[%d]->[%d]\n",hpNowTrg, hpMaxTrg);
+    PP_Put( trgPP , ID_PARA_hp , hpMaxTrg );
+  }
+  else
+  {
+    OS_TPrintf("   [%d]->[%d]\n",hpNowTrg, hpNowTrg + recvHp);
+    PP_Put( trgPP , ID_PARA_hp , hpNowTrg + recvHp );
+  }
+
   work->hpAnimeCallBack = PLIST_HPANMCB_SkillRecoverHpSecond;
-  PP_Put( usePP , ID_PARA_hp , hpNowUse - (nowHp-work->befHp) );
 
 }
 //ミルク飲み・タマゴ産み第２段階
