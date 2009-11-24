@@ -35,6 +35,7 @@ typedef enum
   FLDEFF_PROCID_RIPPLE, ///<水波紋
   FLDEFF_PROCID_SPLASH, ///<水飛沫
   FLDEFF_PROCID_NAMIPOKE_EFFECT, ///<波乗りポケモンエフェクト
+  FLDEFF_PROCID_IWAKUDAKI, ///<岩砕き
 
   //ここからエフェクトエンカウント用
   FLDEFF_PROCID_ENC_SGRASS, ///<エフェクトエンカウント用　短い草
