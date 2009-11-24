@@ -239,7 +239,7 @@ void LOCATION_DEBUG_SetDefaultPos(LOCATION * loc, u16 zone_id)
   if( IsRailMap(zone_id) )
   {
     // レール用初期化
-    ZONEDATA_DEBUG_GetStartRailPos(zone_id, &pos);
+    ZONEDATA_GetStartRailPos(zone_id, &pos);
     loc->location_pos.type = LOCATION_POS_TYPE_RAIL;
     loc->location_pos.railpos.type        = FIELD_RAIL_TYPE_LINE;
     loc->location_pos.railpos.rail_index  = pos.x;
@@ -249,7 +249,7 @@ void LOCATION_DEBUG_SetDefaultPos(LOCATION * loc, u16 zone_id)
   else
   {
     // グリッド用初期化
-    ZONEDATA_DEBUG_GetStartPos(zone_id, &pos);
+    ZONEDATA_GetStartPos(zone_id, &pos);
     loc->location_pos.type = LOCATION_POS_TYPE_3D;
     loc->location_pos.pos = pos;
   }

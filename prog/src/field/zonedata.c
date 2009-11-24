@@ -278,12 +278,12 @@ u16 ZONEDATA_GetMessageArcID(u16 zone_id)
 
 //------------------------------------------------------------------
 /**
- * @brief	マップ開始位置の取得（デバッグ用）
+ * @brief	マップ開始位置の取得
  * @param	zone_id	ゾーン指定ID
  * @param	pos		開始位置を受け取るためのfx32型ポインタ
  */
 //------------------------------------------------------------------
-void ZONEDATA_DEBUG_GetStartPos(u16 zone_id, VecFx32 * pos)
+void ZONEDATA_GetStartPos(u16 zone_id, VecFx32 * pos)
 {
 	ZONEDATA zdbuf;
 	getZoneData(&zdbuf, zone_id);
@@ -295,13 +295,13 @@ void ZONEDATA_DEBUG_GetStartPos(u16 zone_id, VecFx32 * pos)
 
 //----------------------------------------------------------------------------
 /**
- * @brief	マップ開始レール位置の取得（デバッグ用）
+ * @brief	マップ開始レール位置の取得
  *
  *	@param	zone_id
  *	@param	pos
  */
 //-----------------------------------------------------------------------------
-void ZONEDATA_DEBUG_GetStartRailPos(u16 zone_id, VecFx32 * pos)
+void ZONEDATA_GetStartRailPos(u16 zone_id, VecFx32 * pos)
 {
 	ZONEDATA zdbuf;
 	getZoneData(&zdbuf, zone_id);

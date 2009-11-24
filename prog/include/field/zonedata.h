@@ -81,15 +81,15 @@ extern u16 ZONEDATA_GetSpScriptArcID(u16 zone_id);
 extern u16 ZONEDATA_GetMessageArcID(u16 zone_id);
 
 //------------------------------------------------------------------
-//	マップ開始位置の取得（デバッグ用）
+//	マップ開始位置の取得
 //------------------------------------------------------------------
-extern void ZONEDATA_DEBUG_GetStartPos(u16 zone_id, VecFx32 * pos);
+extern void ZONEDATA_GetStartPos(u16 zone_id, VecFx32 * pos);
 
 
 //------------------------------------------------------------------
-//	マップ開始レール位置の取得（デバッグ用）
+//	マップ開始レール位置の取得
 //------------------------------------------------------------------
-extern void ZONEDATA_DEBUG_GetStartRailPos(u16 zone_id, VecFx32 * pos);
+extern void ZONEDATA_GetStartRailPos(u16 zone_id, VecFx32 * pos);
 
 //------------------------------------------------------------------
 //	カメラ指定IDの取得
