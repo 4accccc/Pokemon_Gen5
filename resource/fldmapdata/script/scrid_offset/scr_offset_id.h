@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2009 10/28 (Wed) 16:40
+ * @date  2009 11/20 (Fri) 17:31
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -33,6 +33,9 @@
 
 #define ID_BG_ATTR_OFFSET                (2500) //BGアトリビュート話かけスクリプト
 #define ID_BG_ATTR_OFFSET_END            (2799)
+
+#define ID_ITEM_GET_SCR_OFFSET           (2800) //アイテム入手イベントコモン
+#define ID_ITEM_GET_SCR_OFFSET_END       (2819)
 
 #define ID_TRAINER_OFFSET                (3000) //トレーナースクリプト
 #define ID_TRAINER_OFFSET_END            (4999)

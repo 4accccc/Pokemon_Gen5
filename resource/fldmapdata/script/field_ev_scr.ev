@@ -20,6 +20,7 @@
 _EVENT_DATA     ev_fld_ev_spray_effect_end
 _EVENT_DATA     ev_fld_ev_amaikaori_enc_failed
 _EVENT_DATA     ev_fld_ev_amaikaori_weather_error
+_EVENT_DATA     ev_fld_ev_effect_enc_item_get
 _EVENT_DATA_END
 
 DEFINE_LOCAL  reg_return
@@ -34,7 +35,7 @@ DEFINE_LOCAL  reg_return
 EVENT_START ev_fld_ev_spray_effect_end
 {
   _SYSWIN_MSG_DOWN( msg_fld_ev_spray_01 )
-  _AB_KEYWAIT()
+  _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
 }
 EVENT_END
@@ -49,7 +50,7 @@ EVENT_END
 EVENT_START ev_fld_ev_amaikaori_enc_failed
 {
   _SYSWIN_MSG_DOWN( msg_fld_ev_amaikaori_01 )
-  _AB_KEYWAIT()
+  _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
 }
 EVENT_END
@@ -57,8 +58,22 @@ EVENT_END
 EVENT_START ev_fld_ev_amaikaori_weather_error
 {
   _SYSWIN_MSG_DOWN( msg_fld_ev_amaikaori_02 )
-  _AB_KEYWAIT()
+  _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
 }
 EVENT_END
 
+//==============================================================
+/// 
+///
+///       エフェクトエンカウト　アイテム取得
+///
+///
+//==============================================================
+EVENT_START ev_fld_ev_effect_enc_item_get
+{
+  DEFINE_LOCAL  i_itemno
+  _GET_EFFECT_ENCOUNT_ITEM( i_itemno )
+  _ITEM_EVENT_FIELD( i_itemno, 1)
+}
+EVENT_END

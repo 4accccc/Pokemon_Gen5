@@ -48,3 +48,9 @@ extern void EFFECT_ENC_EffectDelete( FIELD_ENCOUNT* enc );
  */
 extern GMEVENT* EFFECT_ENC_CheckEventApproch( FIELD_ENCOUNT* enc );
 
+/**
+ * @brief   エフェクトエンカウトアイテム取得イベントで手に入れるItemNoを取得する
+ * @retval itemno
+ */
+extern u16 EFFECT_ENC_GetEffectEncountItem( FIELD_ENCOUNT* enc );
+

@@ -1,6 +1,8 @@
 #マップに依存しないスクリプトはここに追加してください
 UNIQ_SCRIPTFILES	= \
 	common_scr.ev	\
+  shop_scr.ev \
+  item_get_scr.ev \
 	c99.ev	\
   bg_attr.ev \
 	trainer.ev \
@@ -10,7 +12,6 @@ UNIQ_SCRIPTFILES	= \
   hiden.ev \
   fld_item.ev \
   wifi_club_scr.ev \
-  shop_scr.ev \
   eggevent_scr.ev \
   poke_waza.ev \
   musical_scr.ev \

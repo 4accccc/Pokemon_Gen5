@@ -23,6 +23,7 @@
 #include "event_battle.h"
 
 #include "scrcmd_encount.h"
+#include "effect_encount.h"
 
 //--------------------------------------------------------------
 /**
@@ -83,6 +84,30 @@ VMCMD_RESULT EvCmdWildBattleRetryCheck( VMHANDLE *core, void *wk )
 	
 	u16* ret_wk = SCRCMD_GetVMWork( core, work );
   *ret_wk = FIELD_BATTLE_GetWildBattleRevengeCode( res );
+	return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------------
+/**
+ * @brief   エフェクトエンカウトアイテム取得イベントで手に入れるItemNoを取得する
+ *
+ * @param	core 仮想マシン制御構造体へのポインタ
+ * @param wk   SCRCMD_WORKへのポインタ
+ *
+ * @retval VMCMD_RESULT
+ *
+ * コマンドの戻り値 game_comm.h GAME_COMM_NO_NULL 他
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdGetEffectEncountItem( VMHANDLE* core, void* wk )
+{
+  SCRCMD_WORK*      work = (SCRCMD_WORK*)wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fwork = GAMESYSTEM_GetFieldMapWork( gsys );
+ 
+  u16*  ret_work = SCRCMD_GetVMWork( core, work );
+  *ret_work = EFFECT_ENC_GetEffectEncountItem( FIELDMAP_GetEncount(fwork) );
+
 	return VMCMD_RESULT_CONTINUE;
 }
 

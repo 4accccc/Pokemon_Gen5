@@ -2856,6 +2856,22 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _GET_EFFECT_ENCOUNT_ITEM
+ * @brief エフェクトエンカウントアイテムイベント　アイテムNoを取得
+ * @param ret_wk    結果を受け取るワーク
+ */
+//--------------------------------------------------------------
+#define _GET_EFFECT_ENCOUNT_ITEM( ret_wk )   \
+    _ASM_GET_EFFECT_ENCOUNT_ITEM ret_wk
+
+
+    .macro  _ASM_GET_EFFECT_ENCOUNT_ITEM ret_wk
+    .short  EV_SEQ_GET_EFFECT_ENCOUNT_ITEM
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
  * フィールドのアイテムイベント呼び出し
  * @param no   アイテムナンバー
  * @param num 加える値
@@ -4990,7 +5006,15 @@
  */
 //--------------------------------------------------------------
 #define _ITEM_EVENT_NOWAIT(itemno, num)   \
-    _ASM_ITEM_EVENT_KEYWAIT itemno, num
+    _ASM_ITEM_EVENT_NOWAIT itemno, num
+
+//--------------------------------------------------------------
+/**
+ * イベント入手フィールドイベント「▼」待ちなし
+ */
+//--------------------------------------------------------------
+#define _ITEM_EVENT_FIELD(itemno, num)   \
+    _ASM_ITEM_EVENT_FIELD itemno, num
 
 //--------------------------------------------------------------
 /**

@@ -345,7 +345,7 @@
   DEF_CMD( EvCmdGetItemNum, EV_SEQ_GET_ITEM_NUM )
 	DEF_CMD( EvCmdWazaMachineItemNoCheck, EV_SEQ_WAZA_ITEM_CHK )
   DEF_CMD( EvCmdGetPocketID, EV_SEQ_GET_POCKET_ID )
-  NO_CMD()
+  DEF_CMD( EvCmdGetEffectEncountItem, EV_SEQ_GET_EFFECT_ENCOUNT_ITEM )
 
   NO_CMD()
   NO_CMD()

@@ -18,6 +18,7 @@
 //共通スクリプトデータID
 #include "common_scr_def.h"
 #include "shop_scr_def.h"
+#include "item_get_scr_def.h"
 
 //スクリプト内共通定義ヘッダファイル
 //最初の3体タイプわけなど

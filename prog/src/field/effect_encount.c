@@ -9,11 +9,13 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 
+#include "item/itemsym.h"
 #include "fieldmap.h"
 #include "map_attr.h"
 
 #include "field_encount.h"
 #include "fldeff_encount.h"
+#include "script.h"
 
 #include "encount_data.h"
 #include "field_encount.h"
@@ -22,6 +24,10 @@
 #include "map_attr.h"
 #include "map_attr_def.h"
 
+#include "../../../resource/fldmapdata/script/field_ev_scr_def.h" // for SCRID_FLD_EV_EFFECT_ENC_ITEM_GET
+
+///////////////////////////////////////////////////////////////
+//
 #define EFFENC_SEARCH_OX (10)
 #define EFFENC_SEARCH_OZ (10)
 #define EFFENC_SEARCH_WX  (EFFENC_SEARCH_OX*2+1)
@@ -61,6 +67,7 @@ struct _TAG_EFFECT_ENCOUNT{
   
   u16 walk_ct_interval;
   u16 prob;
+  u16 get_item; //スクリプトに取得アイテムNoを受け渡すワーク
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -80,7 +87,9 @@ static void effect_EffectDelete( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
 static void effect_AddFieldEffect( EFFECT_ENCOUNT* eff_wk, EFFENC_PARAM* ep );
 static void effect_DelFieldEffect( EFFECT_ENCOUNT* eff_wk );
 
-
+static u16 effitem_GetItemBridge(void);
+static u16 effitem_GetItemCave(void);
+static GMEVENT* effitem_ItemGetEventSet( FIELD_ENCOUNT* enc, u16 itemno );
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 //グローバル関数群
@@ -201,13 +210,13 @@ GMEVENT* EFFECT_ENC_CheckEventApproch( FIELD_ENCOUNT* enc )
     if( rnd < 200 ){
       event = FIELD_ENCOUNT_CheckEncount( enc, ENC_TYPE_EFFECT );
     }else{
-      event = FIELD_ENCOUNT_CheckEncount( enc, ENC_TYPE_FORCE );
+      event = effitem_ItemGetEventSet( enc, effitem_GetItemBridge() );
     } 
   }else if( ep->type == EFFENC_TYPE_CAVE ){
     if( rnd < 400){
       event = FIELD_ENCOUNT_CheckEncount( enc, ENC_TYPE_EFFECT );
     }else{
-      event = FIELD_ENCOUNT_CheckEncount( enc, ENC_TYPE_FORCE );
+      event = effitem_ItemGetEventSet( enc, effitem_GetItemCave() );
     }
   }else{
     if( rnd < 800 ){
@@ -220,6 +229,18 @@ GMEVENT* EFFECT_ENC_CheckEventApproch( FIELD_ENCOUNT* enc )
 
   ep->push_cancel_f = TRUE;
   return event;
+}
+
+//--------------------------------------------------------------------
+/**
+ * @brief   エフェクトエンカウトアイテム取得イベントで手に入れるItemNoを取得する
+ *
+ * @retval itemno
+ */
+//--------------------------------------------------------------------
+u16 EFFECT_ENC_GetEffectEncountItem( FIELD_ENCOUNT* enc )
+{
+  return enc->eff_enc->get_item;
 }
 
 /*
@@ -463,4 +484,58 @@ static void effect_DelFieldEffect( EFFECT_ENCOUNT* eff_wk )
   FLDEFF_TASK_CallDelete( eff_wk->eff_task );
   eff_wk->eff_task = NULL;
 }
+
+
+///////////////////////////////////////////////////////////////
+//アイテムリストデータ
+
+#define ITEM_TBL_STONE_NUM (10)
+#define ITEM_TBL_JUWEL_NUM (17)
+#define ITEM_TBL_FEATHER_NUM (6)
+static const u16 DATA_ItemTableStone[ITEM_TBL_STONE_NUM] = {
+ ITEM_TAIYOUNOISI,
+ ITEM_TUKINOISI,
+ ITEM_HONOONOISI,
+ ITEM_KAMINARINOISI,
+ ITEM_MIZUNOISI,
+ ITEM_RIIHUNOISI,
+ ITEM_HIKARINOISI,
+ ITEM_YAMINOISI,
+ ITEM_MEZAMEISI,
+ ITEM_MANMARUISI,
+};
+
+static u16 effitem_GetItemBridge(void)
+{
+  u16 rnd = GFUser_GetPublicRand0( 1000 );
+
+  if(rnd < 100){ //石
+    rnd = GFUser_GetPublicRand0(ITEM_TBL_STONE_NUM*100) / 100;
+    return DATA_ItemTableStone[rnd];
+  }else if( rnd < 950 ){
+    rnd = GFUser_GetPublicRand0(ITEM_TBL_JUWEL_NUM*100) / 100;
+    return ITEM_HONOONOZYUERU+rnd;
+  }
+  return ITEM_KAWARAZUNOISI;
+}
+
+static u16 effitem_GetItemCave(void)
+{
+  u16 rnd = GFUser_GetPublicRand0( 1000 );
+
+  if( rnd < 900){
+    rnd = GFUser_GetPublicRand0(ITEM_TBL_FEATHER_NUM*100) / 100;
+    return ITEM_TAIRYOKUNOHANE+rnd;
+  }
+  return ITEM_HAATONOHANE;
+}
+
+static GMEVENT* effitem_ItemGetEventSet( FIELD_ENCOUNT* enc, u16 itemno )
+{
+  EFFECT_ENCOUNT* eff_wk = enc->eff_enc;
+ 
+  eff_wk->get_item = itemno;
+  return SCRIPT_SetEventScript( enc->gsys, SCRID_FLD_EV_EFFECT_ENC_ITEM_GET, NULL, FIELDMAP_GetHeapID( enc->fwork ) );
+}
+
 
