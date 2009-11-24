@@ -32,6 +32,7 @@ typedef struct _GTSNEGO_WORK  GTSNEGO_WORK;
 
 extern const GFL_PROC_DATA GtsNego_ProcData;
 
+FS_EXTERN_OVERLAY(gts_negotiate);
 
 
 

@@ -36,6 +36,7 @@ extern CGEAR_PICTURE_SAVEDATA* CGEAR_PICTURE_SAVE_AllocWork(HEAPID heapID);
 extern void CGEAR_PICTURE_SAVE_Init(CGEAR_PICTURE_SAVEDATA* pSV);
 extern void* CGEAR_PICTURE_SAVE_GetPicture(CGEAR_PICTURE_SAVEDATA* pSV);
 extern void* CGEAR_PICTURE_SAVE_GetPalette(CGEAR_PICTURE_SAVEDATA* pSV);
+extern BOOL CGEAR_PICTURE_SAVE_IsPalette(CGEAR_PICTURE_SAVEDATA* pSV);
 extern void CGEAR_PICTURE_SAVE_SetData(CGEAR_PICTURE_SAVEDATA* pSV, void* picture, void* palette);
 
 //----------------------------------------------------------
@@ -53,7 +54,8 @@ extern CGEAR_PICTURE_SAVEDATA* CGEAR_PICTURE_SAVE_GetCGearSaveData(SAVE_CONTROL_
 //----------------------------------------------------------
 
 struct _CGEAR_PICTURE_SAVEDATA {
-	u8 picture[CGEAR_PICTURTE_PAL_SIZE]; //キャラクター
+	u8 picture[CGEAR_PICTURTE_CHAR_SIZE]; //キャラクター
   u8 palette[CGEAR_PICTURTE_PAL_SIZE];     //パレット
+  u8 dummy[64];
 };
 

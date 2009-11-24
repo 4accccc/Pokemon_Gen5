@@ -15,7 +15,7 @@
 //---------------------------------------------------------------------------
 ///	セーブに使用しているセクタ数
 //---------------------------------------------------------------------------
-#define	SAVE_PAGE_MAX		(36)
+#define	SAVE_PAGE_MAX		(37)
 
 #define	SAVE_SECTOR_SIZE	(0x1000)
 
@@ -25,7 +25,7 @@
 ///EXTRA領域で戦闘録画が使用するセーブサイズ
 #define SAVESIZE_EXTRA_BATTLE_REC   (SAVE_SECTOR_SIZE * 2)
 ///EXTRA領域でCGEAR画像が使用するセーブサイズ
-#define SAVESIZE_EXTRA_CGEAR_PICTURE   (SAVE_SECTOR_SIZE * 2)
+#define SAVESIZE_EXTRA_CGEAR_PICTURE   (SAVE_SECTOR_SIZE * 3)
 ///EXTRA領域でストリーミングが使用するセーブサイズ
 #define SAVESIZE_EXTRA_STREAMING    (SAVE_SECTOR_SIZE * 32)  //128Kbyte
 

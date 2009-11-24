@@ -73,6 +73,25 @@ void* CGEAR_PICTURE_SAVE_GetPalette(CGEAR_PICTURE_SAVEDATA* pSV)
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief   パレットデータが入っているかどうか
+ * @param   pSV     CGEARセーブ構造体
+ * @return   TRUEならはいっている
+ */
+//--------------------------------------------------------------------------------------------
+BOOL CGEAR_PICTURE_SAVE_IsPalette(CGEAR_PICTURE_SAVEDATA* pSV)
+{
+  u8 compbuff[CGEAR_PICTURTE_PAL_SIZE];
+
+  GFL_STD_MemClear(compbuff,CGEAR_PICTURTE_PAL_SIZE);
+
+  if(0==GFL_STD_MemComp(compbuff,pSV->palette,CGEAR_PICTURTE_PAL_SIZE)){
+    return FALSE;
+  }
+  return TRUE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief   CGEARパネルタイプ設定する
  * @param   picture     キャラクターデータ
  * @param   palette     パレットデータ

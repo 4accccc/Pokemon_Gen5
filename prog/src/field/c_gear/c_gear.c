@@ -11,6 +11,8 @@
 #include "gflib.h"
 #include "arc_def.h"
 #include "c_gear.h"
+#include "savedata/save_tbl.h"
+#include "savedata/c_gear_picture.h"
 #include "system/main.h"  //HEAPID
 #include "message.naix"
 #include "print/printsys.h"
@@ -1562,13 +1564,18 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 static void _loadExData(C_GEAR_WORK* pWork,GAMESYS_WORK* pGameSys)
 {
   int i;
-  u8* pCGearWork = GFL_HEAP_AllocMemory(HEAPID_FIELDMAP,0x2000);
+  u8* pCGearWork = GFL_HEAP_AllocMemory(HEAPID_FIELDMAP,SAVESIZE_EXTRA_CGEAR_PICTURE);
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(pGameSys));
 
   if(LOAD_RESULT_OK== SaveControl_Extra_LoadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE, HEAPID_FIELDMAP,
-                                                 pCGearWork,0x2000)){
-    for(i=0;i<CGEAR_DECAL_SIZEY;i++){
-      GFL_BG_LoadCharacter(GEAR_MAIN_FRAME,&pCGearWork[CGEAR_DECAL_SIZEX * 32 * i],CGEAR_DECAL_SIZEX * 32, (5 + i)*32);
+                                                 pCGearWork,SAVESIZE_EXTRA_CGEAR_PICTURE)){
+    CGEAR_PICTURE_SAVEDATA* pPic = (CGEAR_PICTURE_SAVEDATA*)pCGearWork;
+
+    if(CGEAR_PICTURE_SAVE_IsPalette(pPic)){
+      for(i=0;i<CGEAR_DECAL_SIZEY;i++){
+        GFL_BG_LoadCharacter(GEAR_MAIN_FRAME,&pCGearWork[CGEAR_DECAL_SIZEX * 32 * i],CGEAR_DECAL_SIZEX * 32, (5 + i)*32);
+      }
+      GFL_BG_LoadPalette(GEAR_MAIN_FRAME,pPic->palette,CGEAR_PICTURTE_PAL_SIZE, 32*0x0a );
     }
   }
   SaveControl_Extra_UnloadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE);
@@ -1597,8 +1604,9 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
 	//	GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, _BRIGHTNESS_SYNC);
 	_modeInit(pWork);
 
-
-  //_loadExData(pWork,pGameSys);
+#if 0//DEBUG_ONLY_FOR_ohno
+  _loadExData(pWork,pGameSys);
+#endif
   
 
 #if 0
