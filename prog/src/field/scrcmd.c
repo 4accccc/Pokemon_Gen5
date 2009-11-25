@@ -112,6 +112,7 @@ static const SCR_END_CHECK_FUNC CheckEndFuncTbl[] = {
   SCREND_CheckEndPlainWin,
   SCREND_CheckEndBGWin,
   SCREND_CheckEndSubWin,
+  SCREND_CheckEndSpWin,
   NULL,   //テーブル終了検出用
 };
 

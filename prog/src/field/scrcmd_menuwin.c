@@ -46,6 +46,9 @@ static void SetFldMsgWinStream(
               const VecFx32 *pos,
               STRBUF *strBuf );
 
+static STRBUF * SetExpandWord(
+    SCRCMD_WORK *work, SCRIPT_WORK *sc, u32 msg_id );
+
 //======================================================================
 //  スクリプトチェック
 //======================================================================
@@ -305,115 +308,21 @@ static BOOL sysWinMsgWait( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdSysWinMsg( VMHANDLE *core, void *wk )
 {
+  STRBUF *msgbuf;
   FLDMSGWIN_STREAM *msgWin;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   u16 up_down = VMGetU16( core );
-
+  
   sysWin_AddWindow( work, up_down );
-  
-  {
-    GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
-    WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
-    STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
-    GFL_MSG_GetString( msgData, msg_id, *tmpbuf );
-    WORDSET_ExpandStr( *wordset, *msgbuf, *tmpbuf );
-  }
-  
+  msgbuf = SetExpandWord( work, sc, msg_id );
   msgWin = (FLDMSGWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
-  FLDMSGWIN_STREAM_PrintStrBufStart( msgWin, 0, 0, *msgbuf );
+  FLDMSGWIN_STREAM_PrintStrBufStart( msgWin, 0, 0, msgbuf );
+  
   VMCMD_SetWait( core, sysWinMsgWait );
   return VMCMD_RESULT_SUSPEND;
 }
-
-//--------------------------------------------------------------
-/**
- * 所持金ウィンドウを表示する
- * @param  core    仮想マシン制御構造体へのポインタ
- * @return  VMCMD_RESULT
- */
-//-------------------------------------------------------------- 
-VMCMD_RESULT EvCmdGoldWinOpen( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK*       work = wk;
-  u16                   x = SCRCMD_GetVMWorkValue( core, work );  // スクリプト第1引数
-  u16                   y = SCRCMD_GetVMWorkValue( core, work );  // スクリプト第2引数
-  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
-  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
-  PLAYER_WORK*     player = GAMEDATA_GetMyPlayerWork( gdata ); 
-  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  FLDMSGBG*        msg_bg = FIELDMAP_GetFldMsgBG( fieldmap );
-  FLDMSGWIN*      msg_win = FIELDMAP_GetGoldMsgWin( fieldmap );
-  SCRIPT_WORK*         sc = SCRCMD_WORK_GetScriptWork( work );
-  WORDSET**       wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
-  STRBUF**        tempbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
-  HEAPID          heap_id = FIELDMAP_GetHeapID( fieldmap );
-  GFL_MSGDATA*   msg_data = GFL_MSG_Create( 
-      GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_common_scr_dat, heap_id );
-  STRBUF*          strbuf = GFL_STR_CreateBuffer( 128, heap_id );
-  u32                gold = MyStatus_GetGold( &player->mystatus );
-
-  // 表示中のウィンドウを削除
-  if( msg_win != NULL )
-  {
-    FLDMSGWIN_Delete( msg_win );
-  }
-
-  // ウィンドウを表示
-  msg_win = FLDMSGWIN_Add( msg_bg, msg_data, x, y, GOLD_WIN_WIDTH, GOLD_WIN_HEIGHT );
-  FIELDMAP_SetGoldMsgWin( fieldmap, msg_win );
-
-  // 文字列を作成
-  WORDSET_RegisterNumber( 
-      *wordset, 2, gold, GOLD_WIN_KETA, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-  GFL_MSG_GetString( msg_data, msg_yen_01, *tempbuf );
-  WORDSET_ExpandStr( *wordset, strbuf, *tempbuf );
-  FLDMSGWIN_PrintStrBuf( msg_win, 0, 0, strbuf );
-  GFL_STR_DeleteBuffer( strbuf );
-  GFL_MSG_Delete( msg_data );
-
-  OBATA_Printf( "EvCmdGoldWinOpen\n" );
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * 所持金ウィンドウを更新する
- * @param  core    仮想マシン制御構造体へのポインタ
- * @return  VMCMD_RESULT
- */
-//-------------------------------------------------------------- 
-VMCMD_RESULT EvCmdGoldWinUpdate( VMHANDLE *core, void *wk )
-{
-  // 再表示する
-  return EvCmdGoldWinOpen( core, wk );
-}
-
-//--------------------------------------------------------------
-/**
- * 所持金ウィンドウを消去する
- * @param  core    仮想マシン制御構造体へのポインタ
- * @return  VMCMD_RESULT
- */
-//-------------------------------------------------------------- 
-VMCMD_RESULT EvCmdGoldWinClose( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK*       work = wk;
-  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
-  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  FLDMSGWIN*      msg_win = FIELDMAP_GetGoldMsgWin( fieldmap );
-
-  if( msg_win )
-  {
-    FLDMSGWIN_Delete( msg_win );
-    FIELDMAP_SetGoldMsgWin( fieldmap, NULL );
-  }
-  OBATA_Printf( "EvCmdGoldWinClose\n" );
-  return VMCMD_RESULT_CONTINUE;
-}
-
 
 #if 0
 static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
@@ -542,6 +451,95 @@ VMCMD_RESULT EvCmdSysWinClose( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   CloseWin(work);   //<<内部で既閉チェックをしています
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//======================================================================
+//  所持金ウィンドウ
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 所持金ウィンドウを表示する
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//-------------------------------------------------------------- 
+VMCMD_RESULT EvCmdGoldWinOpen( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*       work = wk;
+  u16                   x = SCRCMD_GetVMWorkValue( core, work );  // スクリプト第1引数
+  u16                   y = SCRCMD_GetVMWorkValue( core, work );  // スクリプト第2引数
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
+  PLAYER_WORK*     player = GAMEDATA_GetMyPlayerWork( gdata ); 
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FLDMSGBG*        msg_bg = FIELDMAP_GetFldMsgBG( fieldmap );
+  FLDMSGWIN*      msg_win = FIELDMAP_GetGoldMsgWin( fieldmap );
+  SCRIPT_WORK*         sc = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET**       wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  STRBUF**        tempbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
+  HEAPID          heap_id = FIELDMAP_GetHeapID( fieldmap );
+  GFL_MSGDATA*   msg_data = GFL_MSG_Create( 
+      GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_common_scr_dat, heap_id );
+  STRBUF*          strbuf = GFL_STR_CreateBuffer( 128, heap_id );
+  u32                gold = MyStatus_GetGold( &player->mystatus );
+
+  // 表示中のウィンドウを削除
+  if( msg_win != NULL )
+  {
+    FLDMSGWIN_Delete( msg_win );
+  }
+
+  // ウィンドウを表示
+  msg_win = FLDMSGWIN_Add( msg_bg, msg_data, x, y, GOLD_WIN_WIDTH, GOLD_WIN_HEIGHT );
+  FIELDMAP_SetGoldMsgWin( fieldmap, msg_win );
+
+  // 文字列を作成
+  WORDSET_RegisterNumber( 
+      *wordset, 2, gold, GOLD_WIN_KETA, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+  GFL_MSG_GetString( msg_data, msg_yen_01, *tempbuf );
+  WORDSET_ExpandStr( *wordset, strbuf, *tempbuf );
+  FLDMSGWIN_PrintStrBuf( msg_win, 0, 0, strbuf );
+  GFL_STR_DeleteBuffer( strbuf );
+  GFL_MSG_Delete( msg_data );
+
+  OBATA_Printf( "EvCmdGoldWinOpen\n" );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 所持金ウィンドウを更新する
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//-------------------------------------------------------------- 
+VMCMD_RESULT EvCmdGoldWinUpdate( VMHANDLE *core, void *wk )
+{
+  // 再表示する
+  return EvCmdGoldWinOpen( core, wk );
+}
+
+//--------------------------------------------------------------
+/**
+ * 所持金ウィンドウを消去する
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//-------------------------------------------------------------- 
+VMCMD_RESULT EvCmdGoldWinClose( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*       work = wk;
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FLDMSGWIN*      msg_win = FIELDMAP_GetGoldMsgWin( fieldmap );
+
+  if( msg_win )
+  {
+    FLDMSGWIN_Delete( msg_win );
+    FIELDMAP_SetGoldMsgWin( fieldmap, NULL );
+  }
+  OBATA_Printf( "EvCmdGoldWinClose\n" );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -876,6 +874,7 @@ static BOOL PlainWinMsgWait( VMHANDLE *core, void *wk )
   
   return( 0 );
 }
+
 //--------------------------------------------------------------
 /**
  * プレーンウィンドウ　作成
@@ -885,6 +884,7 @@ static BOOL PlainWinMsgWait( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdPlainWinMsg( VMHANDLE *core, void *wk )
 {
+  STRBUF *msgbuf;
   FLDPLAINMSGWIN *win;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
@@ -892,18 +892,9 @@ VMCMD_RESULT EvCmdPlainWinMsg( VMHANDLE *core, void *wk )
   u16 msg_id = VMGetU16( core );
   u8 up_down = VMGetU8( core );
   
-  {
-    GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
-    STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
-    WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
-    STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
-    
-    GFL_MSG_GetString( msgData, msg_id, *tmpbuf );
-    WORDSET_ExpandStr( *wordset, *msgbuf, *tmpbuf );
-    
-    win = FLDPLAINMSGWIN_AddStrBuf( fparam->msgBG, up_down, *msgbuf );
-    SCRCMD_WORK_SetMsgWinPtr( work, win );
-  }
+  msgbuf = SetExpandWord( work, sc, msg_id );
+  win = FLDPLAINMSGWIN_AddStrBuf( fparam->msgBG, up_down, msgbuf );
+  SCRCMD_WORK_SetMsgWinPtr( work, win );
   
   SCREND_CHK_SetBitOn(SCREND_CHK_PLAINWIN_OPEN);
   VMCMD_SetWait( core, PlainWinMsgWait );
@@ -962,7 +953,7 @@ VMCMD_RESULT EvCmdSubWinMsg( VMHANDLE *core, void *wk )
   {
     HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
     STRBUF *msgBuf = GFL_STR_CreateBuffer( FLDMSGBG_STRLEN_SUBWIN, heapID );
-
+    
     GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
     WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
     STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
@@ -1026,7 +1017,7 @@ static void CloseSubWin( SCRCMD_WORK *work )
 
 //--------------------------------------------------------------
 /**
- * プレーンウィンドウ　終了チェック
+ * サブウィンドウ　終了チェック
  * @param
  * @retval
  */
@@ -1036,7 +1027,6 @@ BOOL SCREND_CheckEndSubWin( SCREND_CHECK *end_check, int *seq )
   CloseSubWin( end_check->ScrCmdWk );
   return( TRUE );
 }
-
 
 //======================================================================
 //  BGウィンドウ
@@ -1147,7 +1137,119 @@ VMCMD_RESULT EvCmdBGWinClose( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 BOOL SCREND_CheckEndBGWin( SCREND_CHECK *end_check, int *seq )
 {
-  CloseBGWin( end_check->ScrCmdWk);
+  CloseBGWin( end_check->ScrCmdWk );
+  return( TRUE );
+}
+
+//======================================================================
+//  特殊ウィンドウ
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 特殊ウィンドウ　閉じる
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void CloseSpWin( SCRCMD_WORK *work )
+{
+  if( SCREND_CHK_CheckBit(SCREND_CHK_SPWIN_OPEN) ){
+    FLDSPWIN *spWin = SCRCMD_WORK_GetMsgWinPtr( work );
+    FLDSPWIN_Delete( spWin );
+    SCREND_CHK_SetBitOff( SCREND_CHK_SPWIN_OPEN );
+  }else{
+    GF_ASSERT( 0 );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 特殊ウィンドウ　ウェイト部分
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static BOOL SpWinMsgWait( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  FLDSPWIN *spWin = SCRCMD_WORK_GetMsgWinPtr( work );
+  
+  if( FLDSPWIN_Print(spWin) == TRUE ){
+    return TRUE;
+  }
+  
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 特殊ウィンドウ　作成
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSpWinMsg( VMHANDLE *core, void *wk )
+{
+  FLDSPWIN *spWin;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  u16 msg_id = VMGetU16( core );
+  u8 x = VMGetU8( core );
+  u8 y = VMGetU8( core );
+  u16 type = VMGetU16( core );
+  STRBUF *msgbuf = SetExpandWord( work, sc, msg_id );
+  
+  {
+    SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+    GFL_FONT *font = FLDMSGBG_GetFontHandle( fparam->msgBG );
+    u32 w = PRINTSYS_GetStrWidth( msgbuf, font, 0 );
+    u32 h = PRINTSYS_GetStrHeight( msgbuf, font );
+    u32 c = w;
+    w >>= 3;
+    if( (c&0x07) ){
+      w++;
+    }
+    c = h;
+    h >>= 3;
+    if( (c&0x07) ){
+      h++;
+    }
+    
+    spWin = FLDSPWIN_Add( fparam->msgBG, type, x, y, w, h );
+    SCRCMD_WORK_SetMsgWinPtr( work, spWin );
+  }
+  
+  FLDSPWIN_PrintStrBufStart( spWin, 1, 1, msgbuf );
+  VMCMD_SetWait( core, SpWinMsgWait );
+  
+  SCREND_CHK_SetBitOn( SCREND_CHK_SPWIN_OPEN );
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * 特殊ウィンドウ閉じる
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSpWinClose( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  CloseSpWin( work );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 特殊ウィンドウ　終了チェック
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+BOOL SCREND_CheckEndSpWin( SCREND_CHECK *end_check, int *seq )
+{
+  CloseSpWin( end_check->ScrCmdWk );
   return( TRUE );
 }
 
@@ -1156,8 +1258,8 @@ BOOL SCREND_CheckEndBGWin( SCREND_CHECK *end_check, int *seq )
 //======================================================================
 //--------------------------------------------------------------
 /**
- * メッセージウィンドウ閉じる
- * @param
+ * メッセージウィンドウ共通　メッセージウィンドウ閉じる
+ * @param 
  * @retval
  */
 //--------------------------------------------------------------
@@ -1179,6 +1281,10 @@ VMCMD_RESULT EvCmdMsgWinClose( VMHANDLE *core, void *wk )
   
   if( SCREND_CHK_CheckBit(SCREND_CHK_BGWIN_OPEN) ){
     CloseBGWin( work );
+  }
+  
+  if( SCREND_CHK_CheckBit(SCREND_CHK_SPWIN_OPEN) ){
+    CloseSpWin( work );
   }
   
   return VMCMD_RESULT_CONTINUE;
@@ -1263,4 +1369,23 @@ static void SetFldMsgWinStream(
   SCRCMD_WORK_SetMsgWinPtr( work, tmsg );
   //ウィンドウ作成フラグオン
   SCREND_CHK_SetBitOn(SCREND_CHK_BALLON_WIN_OPEN);
+}
+
+//--------------------------------------------------------------
+/**
+ * スクリプトワーク　WORDSETによるSTRBUF作成
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static STRBUF * SetExpandWord( SCRCMD_WORK *work, SCRIPT_WORK *sc, u32 msg_id )
+{
+  GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
+  STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
+  WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
+  
+  GFL_MSG_GetString( msgData, msg_id, *tmpbuf );
+  WORDSET_ExpandStr( *wordset, *msgbuf, *tmpbuf );
+  return( *msgbuf );
 }

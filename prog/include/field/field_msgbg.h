@@ -242,6 +242,9 @@ extern FLDMENUFUNC * FLDMENUFUNC_AddYesNoMenu(
 extern FLDMENUFUNC_YESNO FLDMENUFUNC_ProcYesNoMenu( FLDMENUFUNC *menuFunc );
 
 //プリントストリーム
+extern FLDMSGPRINT_STREAM * FLDMSGPRINT_STREAM_SetupPrintColor(
+	FLDMSGBG *fmb, const STRBUF *strbuf,
+  GFL_BMPWIN *bmpwin, u16 x, u16 y, int wait, u16 n_color );
 extern FLDMSGPRINT_STREAM * FLDMSGPRINT_STREAM_SetupPrint(
 	FLDMSGBG *fmb, const STRBUF *strbuf,
   GFL_BMPWIN *bmpwin, u16 x, u16 y, int wait );

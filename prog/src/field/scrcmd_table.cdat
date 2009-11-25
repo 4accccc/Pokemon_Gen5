@@ -163,8 +163,8 @@
   
   DEF_CMD( EvCmdBGWinMsg, EV_SEQ_BGWIN_MSG )
   DEF_CMD( EvCmdBGWinClose, EV_SEQ_BGWIN_CLOSE )
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdSpWinMsg, EV_SEQ_SPWIN_MSG )
+  DEF_CMD( EvCmdSpWinClose, EV_SEQ_SPWIN_CLOSE )
   
   //(ÇÕÇ¢ )ÅAÇ¢Ç¢Ç¶Å@èàóù
   DEF_CMD( EvCmdYesNoWin, EV_SEQ_YES_NO_WIN )

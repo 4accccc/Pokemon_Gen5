@@ -2836,7 +2836,6 @@ static BOOL bgwin_ScrollBmp(
         sizeX, y,
         n_col );
   
-  
   if( y >= sizeY ){
     return( TRUE );
   }
@@ -2853,13 +2852,8 @@ static BOOL bgwin_ScrollBmp(
 struct _TAG_FLDSPWIN
 {
 	GFL_BMPWIN *bmpwin;
-	FLDMSGPRINT_STREAM *msgPrintStream;
   STRBUF *strBuf;
 	FLDMSGBG *fmb;
-  
-  u8 flag_cursor;
-  u8 flag_key_pause_clear;
-  KEYCURSOR_WORK cursor_work;
   
   GFL_BMP_DATA *bmp_bg;
 };
@@ -2878,7 +2872,7 @@ static void spwin_InitPalette(
 {
   GFL_ARC_UTIL_TransVramPaletteEx(
       ARCID_FLDMAP_WINFRAME, NARC_winframe_spwin_NCLR,
-      PALTYPE_MAIN_BG, 0x20, plttno*0x20, 0x20, heapID );
+      PALTYPE_MAIN_BG, 0, plttno*0x20, 0x20, heapID );
 }
 
 //--------------------------------------------------------------
@@ -2892,17 +2886,24 @@ static GFL_BMP_DATA * spwin_CreateBmpBG( FLDSPWIN_TYPE type, HEAPID heapID )
 {
   u8 *buf;
   GFL_BMP_DATA *bmp_bg;
-
+  void *pData;
+	NNSG2dCharacterData *pCharData;
+  
   if( type >= FLDSPWIN_TYPE_MAX ){
     GF_ASSERT( 0 );
     type = FLDSPWIN_TYPE_LETTER;
   }
   
-  bmp_bg = GFL_BMP_Create( 8, 8, GFL_BMP_16_COLOR, heapID );
+  bmp_bg = GFL_BMP_Create( 1, 1, GFL_BMP_16_COLOR, heapID );
   buf = GFL_BMP_GetCharacterAdrs( bmp_bg );
-  GFL_ARC_LoadDataOfs( buf, ARCID_FLDMAP_WINFRAME, 
-      NARC_winframe_spwin_NCGR, type*0x20, 0x20 );
   
+  pData = GFL_ARC_UTIL_Load(
+      ARCID_FLDMAP_WINFRAME, 
+      NARC_winframe_spwin_NCGR, 0, heapID );
+  
+	NNS_G2dGetUnpackedBGCharacterData( pData, &pCharData );
+  MI_CpuCopy( (u8*)(pCharData->pRawData)+(0x20*type), buf, 0x20 );
+  GFL_HEAP_FreeMemory( pData );
   return( bmp_bg );
 }
 
@@ -2920,12 +2921,45 @@ static void spwin_WriteBmpBG(
   u16 size_x = GFL_BMP_GetSizeX( bmp ) >> 3;
   u16 size_y = GFL_BMP_GetSizeY( bmp ) >> 3;
   
+  KAGAYA_Printf( "size x = %d, y = %d\n", size_x, size_y );
+  
   for( y = 0; y < size_y; y++ ){
     for( x = 0; x < size_x; x++ ){
+      KAGAYA_Printf( "write x = %d, y = %d\n", x, y );
       GFL_BMP_Print( bmp_bg, bmp,
           0, 0, x<<3, y<<3, 8, 8, GF_BMPPRT_NOTNUKI );
     }
   }
+}
+
+//--------------------------------------------------------------
+/**
+ * 特殊ウィンドウ　文字列書き込み
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void spwin_Print(
+    GFL_BMP_DATA *bmp, GFL_FONT *font, const STRBUF *strbuf, HEAPID heapID )
+{
+  STRBUF *buf;
+  int line = 0;
+  int x = 1, y = 1;
+  int height = GFL_FONT_GetLineHeight( font ) + 1;
+  
+  line = GFL_STR_GetBufferLength( strbuf ) + 1;
+  buf = GFL_STR_CreateBuffer( line, heapID );
+  
+  line = 0;
+  
+  while( PRINTSYS_CopyLineStr(strbuf,buf,line) == TRUE ){
+    KAGAYA_Printf( "Print x = %d, y = %d, line = %d\n", x, y, line );
+    PRINTSYS_Print( bmp, x, y, buf, font );
+    y += height;
+    line++;
+  }
+  
+  GFL_STR_DeleteBuffer( buf );
 }
 
 //--------------------------------------------------------------
@@ -2943,9 +2977,9 @@ FLDSPWIN * FLDSPWIN_Add( FLDMSGBG *fmb, FLDSPWIN_TYPE type,
 	u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y )
 {
   FLDSPWIN *spWin;
-  fmb->deriveWin_plttNo = FLDMSGBG_PANO_FONT;
-	
-  spwin_InitPalette( fmb->bgFrame, FLDMSGBG_PANO_SPWIN, fmb->heapID );
+  
+  KAGAYA_Printf( "SPWIN x = %d, y = %d, w = %d, h = %d, type = %d\n",
+    bmppos_x, bmppos_y, bmpsize_x, bmpsize_y, type );
   
   spWin = GFL_HEAP_AllocClearMemory( fmb->heapID, sizeof(FLDSPWIN) );
   spWin->fmb = fmb;
@@ -2955,15 +2989,14 @@ FLDSPWIN * FLDSPWIN_Add( FLDMSGBG *fmb, FLDSPWIN_TYPE type,
       FLDMSGBG_PANO_SPWIN, GFL_BMP_CHRAREA_GET_B );
   
   spWin->bmp_bg = spwin_CreateBmpBG( type, fmb->heapID );
-
   spwin_WriteBmpBG( GFL_BMPWIN_GetBmp(spWin->bmpwin), spWin->bmp_bg );
+  spwin_InitPalette( fmb->bgFrame, FLDMSGBG_PANO_SPWIN, fmb->heapID );
   
   GFL_BMPWIN_MakeScreen( spWin->bmpwin );
 	GFL_BMPWIN_TransVramCharacter( spWin->bmpwin );
 	GFL_BG_LoadScreenReq( fmb->bgFrame );
   
-  keyCursor_Init( &spWin->cursor_work, fmb->heapID );
-
+  fmb->deriveWin_plttNo = FLDMSGBG_PANO_FONT;
   setBlendAlpha( TRUE );
   return( spWin );
 }
@@ -2977,13 +3010,18 @@ FLDSPWIN * FLDSPWIN_Add( FLDMSGBG *fmb, FLDSPWIN_TYPE type,
 //--------------------------------------------------------------
 void FLDSPWIN_Delete( FLDSPWIN *spWin )
 {
-  if( spWin->msgPrintStream != NULL ){
-	  FLDMSGPRINT_STREAM_Delete( spWin->msgPrintStream );
-  }
-  
+	GFL_BMPWIN_ClearScreen( spWin->bmpwin );
+  GFL_BG_FillScreen( spWin->fmb->bgFrame, 0,
+		  GFL_BMPWIN_GetPosX( spWin->bmpwin ),
+      GFL_BMPWIN_GetPosY( spWin->bmpwin ),
+		  GFL_BMPWIN_GetSizeX( spWin->bmpwin ), 
+		  GFL_BMPWIN_GetSizeY( spWin->bmpwin ), GFL_BG_SCRWRT_PALIN );
+	GFL_BMPWIN_TransVramCharacter( spWin->bmpwin );
+	GFL_BG_LoadScreenReq( spWin->fmb->bgFrame );
+
   GFL_BMP_Delete( spWin->bmp_bg );
   GFL_BMPWIN_Delete( spWin->bmpwin );
-  keyCursor_Delete( &spWin->cursor_work );
+  GFL_HEAP_FreeMemory( spWin );
 }
 
 //--------------------------------------------------------------
@@ -2999,12 +3037,14 @@ void FLDSPWIN_Delete( FLDSPWIN *spWin )
 void FLDSPWIN_PrintStrBufStart(
     FLDSPWIN *spWin, u16 x, u16 y, const STRBUF *strBuf )
 {
-  if( spWin->msgPrintStream != NULL ){
-    FLDMSGPRINT_STREAM_Delete( spWin->msgPrintStream );
-  }
+  spwin_Print(
+      GFL_BMPWIN_GetBmp(spWin->bmpwin),
+      spWin->fmb->fontHandle,
+      strBuf,
+      spWin->fmb->heapID );
   
-  spWin->msgPrintStream = FLDMSGPRINT_STREAM_SetupPrintColor(
-  	spWin->fmb, strBuf, spWin->bmpwin, x, y, MSGSPEED_GetWait(), 0);
+  GFL_BMPWIN_TransVramCharacter( spWin->bmpwin );
+  GFL_BG_LoadScreenReq( spWin->fmb->bgFrame );
 }
 
 //--------------------------------------------------------------
@@ -3018,38 +3058,11 @@ BOOL FLDSPWIN_Print( FLDSPWIN *spWin )
 {
   int trg,cont;
   PRINTSTREAM_STATE state;
-  state = fldMsgPrintStream_ProcPrint( spWin->msgPrintStream );
   
   trg = GFL_UI_KEY_GetTrg();
   cont = GFL_UI_KEY_GetCont();
   
-  switch( state ){
-  case PRINTSTREAM_STATE_RUNNING: //実行中
-    spWin->flag_cursor = CURSOR_FLAG_NONE;
-    spWin->flag_key_pause_clear = FALSE;
-    break;
-  case PRINTSTREAM_STATE_PAUSE: //一時停止中
-    if( spWin->flag_key_pause_clear == FALSE ){ //既にポーズクリア済みか？
-		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( spWin->bmpwin );
-      
-      if( (trg & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
-        if( spWin->flag_cursor == CURSOR_FLAG_WRITE ){
-          keyCursor_Clear( &spWin->cursor_work, bmp, 0x0f );
-          
-          spWin->flag_key_pause_clear = TRUE;
-          spWin->flag_cursor = CURSOR_FLAG_END;
-        }
-      }
-      
-      if( spWin->flag_cursor != CURSOR_FLAG_END ){
-        keyCursor_Write( &spWin->cursor_work, bmp, 0x0f );
-        spWin->flag_cursor = CURSOR_FLAG_WRITE;
-      }
-      
-		  GFL_BMPWIN_TransVramCharacter( spWin->bmpwin );
-    }
-    break;
-  case PRINTSTREAM_STATE_DONE: //終了
+  if( (trg & PAD_BUTTON_A) ){
     return( TRUE );
   }
   
