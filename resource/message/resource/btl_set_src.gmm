@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-11-25T17:54:16"/>
+	<create user="taya" host="W00146" date="2009-11-25T21:19:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2602,6 +2602,21 @@
 [1:02:ポケモンニックネーム:1]は　ばしょを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]と
 [1:02:ポケモンニックネーム:1]は　場所を入れ替えた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Telekinesis">
+		<comment>テレキネシス</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]を
+ちゅうに　うかせた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]を
+宙に　浮かせた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Telekinesis_End">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+テレキネシスから　かいほうされた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+テレキネシスから　解放された！</language>
 	</row>
 
 	<flowchart-group-list>
