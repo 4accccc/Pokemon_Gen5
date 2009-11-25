@@ -571,7 +571,7 @@ static BOOL SubEvent_Pokelist(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
   
 	switch(*seq) {
 	case SEQ_FADEOUT:
-		GMEVENT_CallEvent(parent_event, EVENT_FieldFadeOut(gsys, fieldWork, 0));
+		GMEVENT_CallEvent(parent_event, EVENT_FieldFadeOut(gsys, fieldWork, 0, FIELD_FADE_WAIT));
 		(*seq) ++;
 		break;
 	case SEQ_FIELD_CLOSE:
@@ -626,7 +626,7 @@ static BOOL SubEvent_Pokelist(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
 		(*seq) ++;
 		break;
 	case SEQ_FADEIN:
-		GMEVENT_CallEvent(parent_event, EVENT_FieldFadeIn(gsys, fieldWork, 0));
+		GMEVENT_CallEvent(parent_event, EVENT_FieldFadeIn(gsys, fieldWork, 0, FIELD_FADE_WAIT));
 		(*seq) ++;
 		break;
 	case SEQ_FINISH:

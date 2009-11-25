@@ -83,7 +83,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     EVENT_CAMERA_ACT_PrepareForDoorOut( fieldmap );
     //Ž©‹@‚ðÁ‚·
     MAPCHANGE_setPlayerVanish( fieldmap, TRUE );
-		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
+		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0, FIELD_FADE_WAIT));
     *seq = SEQ_DOOROUT_WAIT_SOUND_LOAD;
     break;
 
@@ -257,7 +257,7 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
       PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
       FIELD_SOUND_ChangePlayZoneBGM( fsnd, gamedata, form, fdaw->loc_req.zone_id );
     }
-    GMEVENT_CallEvent( event, EVENT_FieldFadeOut(gsys, fieldmap, 0) );
+    GMEVENT_CallEvent( event, EVENT_FieldFadeOut(gsys, fieldmap, 0, FIELD_FADE_WAIT) );
     *seq = SEQ_DOORIN_END;
     break;
 

@@ -279,7 +279,7 @@ static GMEVENT_RESULT fieldBattleEvent(
     (*seq) ++;
     break;
   case 7:
-    GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
+    GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0, FIELD_FADE_WAIT));
     (*seq) ++;
     break;
   case 8:

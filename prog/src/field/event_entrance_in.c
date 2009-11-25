@@ -134,7 +134,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeNone(GMEVENT * event, int *s
       PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
       FIELD_SOUND_ChangePlayZoneBGM( fsnd, gamedata, form, event_work->location.zone_id );
     }
-		GMEVENT_CallEvent( event, EVENT_FieldFadeOut(gsys, fieldmap, 0) );
+		GMEVENT_CallEvent( event, EVENT_FieldFadeOut(gsys, fieldmap, 0, FIELD_FADE_WAIT) );
     ++ *seq;
     break;
   case 1:
@@ -206,7 +206,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep(GMEVENT * event, int *s
     if( PMSND_CheckFadeOnBGM() != TRUE )
     { 
       PMSND_PlaySE( SEQ_SE_KAIDAN );    // SE
-      GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, fieldmap, 0));  // 画面フェードアウト
+      GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, fieldmap, 0, FIELD_FADE_WAIT));  // 画面フェードアウト
       ++ *seq;
     }
     break;

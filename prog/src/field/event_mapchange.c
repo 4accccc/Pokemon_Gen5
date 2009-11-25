@@ -149,7 +149,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 		break;
 	case 2:
 		fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-		GMEVENT_CallEvent(event,EVENT_FieldFadeIn(gsys, fieldmap, 0));
+		GMEVENT_CallEvent(event,EVENT_FieldFadeIn(gsys, fieldmap, 0, FIELD_FADE_WAIT));
 		(*seq) ++;
 		break;
 	case 3:
@@ -212,7 +212,7 @@ static GMEVENT_RESULT GameEndEvent(GMEVENT * event, int *seq, void *work)
 	switch (*seq) {
 	case 0:
 		//フィールドマップをフェードアウト
-		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gew->gsys, gew->fieldmap, 0));
+		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gew->gsys, gew->fieldmap, 0, FIELD_FADE_WAIT));
 		//通信が動いている場合は終了させる
 		if(GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gew->gsys)) != GAME_COMM_NO_NULL){
       GameCommSys_ExitReq(GAMESYSTEM_GetGameCommSysPtr(gew->gsys));

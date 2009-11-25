@@ -33,6 +33,7 @@ FS_EXTERN_OVERLAY(poke_status);
 //============================================================================================
 typedef struct {
 	FIELD_FADE_TYPE fade_type;
+  FIELD_FADE_WAIT_TYPE wait_type;
 }FADE_EVENT_WORK;
 
 //------------------------------------------------------------------
@@ -50,20 +51,30 @@ static GMEVENT_RESULT FieldFadeOutEvent(GMEVENT * event, int *seq, void * work)
 		(*seq) ++;
 		break;
 	case 1:
-		if (GFL_FADE_CheckFade() == FALSE) {
-			return GMEVENT_RES_FINISH;
-		}
+    if( few->wait_type == FIELD_FADE_NO_WAIT ){ return GMEVENT_RES_FINISH; }
+		if( GFL_FADE_CheckFade() == FALSE ){ return GMEVENT_RES_FINISH; }
 		break;
 	}
 	return GMEVENT_RES_CONTINUE;
 }
+
 //------------------------------------------------------------------
+/**
+ * @brief	フェードアウトイベント生成
+ * @param	gsys		  GAMESYS_WORKへのポインタ
+ * @param	fieldmap	フィールドマップワークへのポインタ
+ * @param	type		  フェードの種類指定
+ * @param wait      フェード完了を待つかどうか
+ * @return	GMEVENT	生成したイベントへのポインタ
+ */
 //------------------------------------------------------------------
-GMEVENT * EVENT_FieldFadeOut(GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, FIELD_FADE_TYPE type)
+GMEVENT * EVENT_FieldFadeOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
+                              FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait )
 {
 	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldFadeOutEvent, sizeof(FADE_EVENT_WORK));
 	FADE_EVENT_WORK * few = GMEVENT_GetEventWork(event);
 	few->fade_type = type;
+  few->wait_type = wait;
 
 	return event;
 }
@@ -83,9 +94,8 @@ static GMEVENT_RESULT FieldFadeInEvent(GMEVENT * event, int *seq, void * work)
 		(*seq) ++;
 		break;
 	case 1:
-		if (GFL_FADE_CheckFade() == FALSE) {
-			return GMEVENT_RES_FINISH;
-		}
+    if( few->wait_type == FIELD_FADE_NO_WAIT ){ return GMEVENT_RES_FINISH; }
+		if( GFL_FADE_CheckFade() == FALSE ){ return GMEVENT_RES_FINISH; }
 		break;
 	}
 
@@ -93,12 +103,22 @@ static GMEVENT_RESULT FieldFadeInEvent(GMEVENT * event, int *seq, void * work)
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief	フェードインイベント生成
+ * @param	gsys		  GAMESYS_WORKへのポインタ
+ * @param	fieldmap  フィールドマップワークへのポインタ
+ * @param	type		  フェードの種類指定
+ * @param wait      フェード完了を待つかどうか
+ * @return	GMEVENT	生成したイベントへのポインタ
+ */
 //------------------------------------------------------------------
-GMEVENT * EVENT_FieldFadeIn(GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, FIELD_FADE_TYPE type)
+GMEVENT * EVENT_FieldFadeIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
+                             FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait )
 {
 	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldFadeInEvent, sizeof(FADE_EVENT_WORK));
 	FADE_EVENT_WORK * few = GMEVENT_GetEventWork(event);
 	few->fade_type = type;
+  few->wait_type = wait;
 
 	return event;
 }
@@ -205,7 +225,7 @@ static GMEVENT_RESULT GameChangeEvent(GMEVENT * event, int * seq, void * work)
 
 	switch(*seq) {
 	case 0:
-		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, csw->fieldmap, 0));
+		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, csw->fieldmap, 0, FIELD_FADE_WAIT));
 		(*seq) ++;
 		break;
 	case 1:
@@ -225,7 +245,7 @@ static GMEVENT_RESULT GameChangeEvent(GMEVENT * event, int * seq, void * work)
 		(*seq) ++;
 		break;
 	case 5:
-		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, csw->fieldmap, 0));
+		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, csw->fieldmap, 0, FIELD_FADE_WAIT));
 		(*seq) ++;
 		break;
 	case 6:
@@ -280,7 +300,7 @@ static GMEVENT_RESULT GameChangeEvent_Callback(GMEVENT * event, int * seq, void 
 	switch(*seq) 
   {
 	case 0: // フェードアウト
-		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, spw->fieldmap, 0));
+		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, spw->fieldmap, 0, FIELD_FADE_WAIT));
 		(*seq) ++;
 		break;
 	case 1: // フィールドマップ終了
@@ -300,7 +320,7 @@ static GMEVENT_RESULT GameChangeEvent_Callback(GMEVENT * event, int * seq, void 
 		(*seq) ++;
 		break;
 	case 5: // フェードイン
-		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, spw->fieldmap, 0));
+		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, spw->fieldmap, 0, FIELD_FADE_WAIT));
 		(*seq) ++;
 		break;
 	case 6: // コールバック関数呼び出し

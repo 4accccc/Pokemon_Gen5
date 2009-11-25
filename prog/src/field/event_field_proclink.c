@@ -461,7 +461,7 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
 	///	サブプロック呼び出しのためのフィールド抜け
 	//=====================================
   case SEQ_FLD_FADEOUT:
-		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(wk->param->gsys, wk->param->field_wk, 0));
+		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(wk->param->gsys, wk->param->field_wk, 0, FIELD_FADE_WAIT));
     *seq = SEQ_FLD_CLOSE;
     break;
     
@@ -480,7 +480,7 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
 		//フィールドを作り直したため、再度取得
 		wk->param->field_wk = GAMESYSTEM_GetFieldMapWork(wk->param->gsys);
 		PROCLINK_CALLBACK_Open( &wk->callback );
-		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(wk->param->gsys, wk->param->field_wk, 0));
+		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(wk->param->gsys, wk->param->field_wk, 0, FIELD_FADE_WAIT));
 	 	*seq = SEQ_JUNCTION;
     break;
 

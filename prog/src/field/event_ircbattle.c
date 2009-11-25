@@ -118,7 +118,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
 
   switch (*seq) {
   case _IRCBATTLE_START:
-    GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, dbw->fieldmap, FIELD_FADE_BLACK));
+    GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, dbw->fieldmap, FIELD_FADE_BLACK, FIELD_FADE_WAIT));
     (*seq) ++;
     break;
   case _IRCBATTLE_START_FIELD_CLOSE:
@@ -270,7 +270,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq) ++;
     break;
   case _FIELD_FADEIN:
-    GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, dbw->fieldmap, 0));
+    GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, dbw->fieldmap, 0, FIELD_FADE_WAIT));
     (*seq) ++;
     break;
   case _FIELD_END:
@@ -285,7 +285,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
 
   //相性チェックはプロセス移動
   case _FIELD_FADEOUT_IRCBATTLE:
-    GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, dbw->fieldmap, FIELD_FADE_BLACK));
+    GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, dbw->fieldmap, FIELD_FADE_BLACK, FIELD_FADE_WAIT));
     (*seq)++;
     break;
   case _FIELD_END_IRCBATTLE:

@@ -141,7 +141,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeNone(GMEVENT * event, int *
   switch (*seq)
   {
   case 0:
-		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
+		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0, FIELD_FADE_WAIT));
     ++ *seq;
     break;
   case 1:
@@ -209,7 +209,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep(GMEVENT * event, int *
     ++ *seq;
     break;
   case 1: // 画面・BGMフェードイン
-		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
+		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0, FIELD_FADE_WAIT));
     { // 現在のBGMがダンジョンISS ==> BGMフェードイン
       FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
       BGM_INFO_SYS* bgm_info = GAMEDATA_GetBGMInfoSys( gamedata );
