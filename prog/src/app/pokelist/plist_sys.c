@@ -1752,12 +1752,10 @@ static void PLIST_SelectPokeTerm_Use( PLIST_WORK *work )
         
         if( hpNowTrg + recvHp > hpMaxTrg )
         {
-          OS_TPrintf("Max[%d]->[%d]\n",hpNowUse, hpNowUse - (hpMaxTrg-hpNowTrg));
           PP_Put( usePP , ID_PARA_hp , hpNowUse - (hpMaxTrg-hpNowTrg) );
         }
         else
         {
-          OS_TPrintf("   [%d]->[%d]\n",hpNowUse, hpNowUse - (recvHp));
           PP_Put( usePP , ID_PARA_hp , hpNowUse - (recvHp) );
         }
       }
@@ -3071,12 +3069,10 @@ static void PLIST_HPANMCB_SkillRecoverHpFirst( PLIST_WORK *work )
   
   if( hpNowTrg + recvHp > hpMaxTrg )
   {
-    OS_TPrintf("Max[%d]->[%d]\n",hpNowTrg, hpMaxTrg);
     PP_Put( trgPP , ID_PARA_hp , hpMaxTrg );
   }
   else
   {
-    OS_TPrintf("   [%d]->[%d]\n",hpNowTrg, hpNowTrg + recvHp);
     PP_Put( trgPP , ID_PARA_hp , hpNowTrg + recvHp );
   }
 
