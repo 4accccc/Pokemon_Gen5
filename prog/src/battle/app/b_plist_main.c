@@ -2716,46 +2716,6 @@ static void BPL_ContestWazaHeartInit( BPLIST_WORK * wk )
   }
 }
 
-//--------------------------------------------------------------------------------------------
-/**
- * コンテスト技のハート表示
- *
- * @param wk    ワーク
- * @param page  ページID
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-/*  コンテスト技のハート表示をしないようにした
-static void BPL_ContestWazaHeartPut( BPLIST_WORK * wk, u8 page )
-{
-  u32 ap_no;
-  u16 i;
-  u16 waza;
-  s8  point;
-
-  if( page != BPLIST_PAGE_WAZASET_CI ){
-    return;
-  }
-
-  BPL_ContestWazaHeartInit( wk );
-
-  if( wk->dat->sel_wp < 4 ){
-    BPL_POKEWAZA * wd = &wk->poke[wk->dat->sel_poke].waza[wk->dat->sel_wp];
-    waza = wd->id;
-  }else{
-    waza = wk->dat->chg_waza;
-  }
-
-  ap_no = WT_WazaDataParaGet( waza, ID_WTD_ap_no );
-  point = ConTool_GetAPWaza_App( ap_no ) / APP_APPEAL_ICON_ONE_POINT;
-  for( i=0; i<point; i++ ){
-    BPL_ContestWazaHeartPutMain( wk, HEART1_CHR_NUM, i );
-  }
-  GFL_BG_LoadScreenV_Req( wk->bgl, GFL_BG_FRAME3_S );
-}
-*/
-
 
 
 
