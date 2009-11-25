@@ -29,7 +29,6 @@ ALIGN4 static const ARCDATID WazaTypeCgrNo[] = {
 	NARC_wazatype_icon_p_st_type_insect_NCGR,              //POKETYPE_MUSHI
 	NARC_wazatype_icon_p_st_type_ghost_NCGR,               //POKETYPE_GHOST
 	NARC_wazatype_icon_p_st_type_steel_NCGR,               //POKETYPE_METAL
-	NARC_wazatype_icon_p_st_type_ques_NCGR,                //POKETYPE_HATE
 	NARC_wazatype_icon_p_st_type_fire_NCGR,                //POKETYPE_FIRE
 	NARC_wazatype_icon_p_st_type_water_NCGR,               //POKETYPE_WATER
 	NARC_wazatype_icon_p_st_type_grass_NCGR,               //POKETYPE_KUSA
@@ -56,7 +55,6 @@ ALIGN4 static const u8 WazaTypePlttOffset[] = {
 	2,	//POKETYPE_MUSHI
 	1,	//POKETYPE_GHOST
 	0,	//POKETYPE_METAL
-	2,	//POKETYPE_HATE
 	0,	//POKETYPE_FIRE
 	1,	//POKETYPE_WATER
 	2,	//POKETYPE_KUSA
