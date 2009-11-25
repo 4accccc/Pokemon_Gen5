@@ -2269,6 +2269,2309 @@
 ……　……とくに　さむいよ</language>
 	</row>
 
+	<row id="TRID_BACKPACKERM_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_BACKPACKERM_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_BACKPACKERM_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_BACKPACKERM_04_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_BACKPACKERM_04_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_BACKPACKERM_04_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_BACKPACKERW_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_BACKPACKERW_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_BACKPACKERW_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_BACKPACKERW_04_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_BACKPACKERW_04_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_BACKPACKERW_04_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_BADRIDER_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_BADRIDER_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_BADRIDER_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_BADRIDER_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_BADRIDER_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_BADRIDER_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_BADTEAM_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_BADTEAM_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_BADTEAM_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_BASEBALL_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_BASEBALL_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_BASEBALL_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_BASEBALL_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_BASEBALL_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_BASEBALL_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_BATTLEG_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_BATTLEG_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_BATTLEG_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_BATTLEG_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_BATTLEG_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_BATTLEG_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_BATTLEG_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_BATTLEG_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_BATTLEG_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_BUSINESS1_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_BUSINESS1_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_BUSINESS1_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_BUSINESS1_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_BUSINESS1_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_BUSINESS1_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_BUSINESS1_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_BUSINESS1_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_BUSINESS1_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_BUSINESS1_04_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_BUSINESS1_04_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_BUSINESS1_04_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_BUSINESS2_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_BUSINESS2_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_BUSINESS2_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_BUSINESS1_05_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_BUSINESS1_05_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_BUSINESS1_05_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_BUSINESS2_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_BUSINESS2_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_BUSINESS2_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_CLEANING_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_CLEANING_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_CLEANING_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_DAISUKIM_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_DAISUKIM_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_DAISUKIM_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_DAISUKIW_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_DAISUKIW_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_DAISUKIW_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_DOCTOR_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_DOCTOR_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_DOCTOR_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_DOCTOR_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_DOCTOR_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_DOCTOR_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_ELITEM_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_ELITEM_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_ELITEM_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_ELITEM_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_ELITEM_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_ELITEM_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_ELITEM_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_ELITEM_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_ELITEM_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_ELITEM_04_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_ELITEM_04_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_ELITEM_04_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_ELITEW_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_ELITEW_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_ELITEW_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_ELITEW_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_ELITEW_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_ELITEW_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_ELITEW_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_ELITEW_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_ELITEW_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_ELITEW_04_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_ELITEW_04_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_ELITEW_04_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_ESPM_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_ESPM_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_ESPM_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_ESPM_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_ESPM_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_ESPM_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_ESPW_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_ESPW_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_ESPW_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_ESPW_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_ESPW_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_ESPW_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_FANM_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_FANM_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_FANM_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_FANM_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_FANM_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_FANM_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_FANM_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_FANM_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_FANM_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_FANW_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_FANW_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_FANW_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_FANW_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_FANW_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_FANW_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_FISHING_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_FISHING_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_FISHING_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_FISHING_04_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_FISHING_04_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_FISHING_04_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_FOOTBALL_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_FOOTBALL_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_FOOTBALL_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_HEADS_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_HEADS_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_HEADS_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_HEADS_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_HEADS_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_HEADS_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_HEADS_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_HEADS_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_HEADS_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_KARATE_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_KARATE_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_KARATE_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_KARATE_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_KARATE_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_KARATE_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_KARATE_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_KARATE_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_KARATE_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_LEADER7_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_LEADER7_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_LEADER7_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_LEADER8A_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_LEADER8A_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_LEADER8A_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_LEADER8B_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_LEADER8B_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_LEADER8B_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_MINI_04_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_MINI_04_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_MINI_04_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_MOUNT_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_MOUNT_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_MOUNT_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_MOUNT_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_MOUNT_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_MOUNT_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_MOUNT_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_MOUNT_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_MOUNT_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_NURSE_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_NURSE_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_NURSE_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_OL_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_OL_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_OL_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_OL_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_OL_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_OL_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_OL_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_OL_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_OL_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_OL_04_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_OL_04_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_OL_04_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_PARASOL_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_PARASOL_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_PARASOL_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_PARASOL_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_PARASOL_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_PARASOL_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_PARASOL_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_PARASOL_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_PARASOL_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_PARASOL_04_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_PARASOL_04_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_PARASOL_04_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_PRINCE_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_PRINCE_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_PRINCE_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_PRINCESS_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_PRINCESS_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_PRINCESS_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_RANGERM_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_RANGERM_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_RANGERM_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_RANGERM_04_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_RANGERM_04_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_RANGERM_04_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_RANGERM_05_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_RANGERM_05_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_RANGERM_05_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_RANGERM_06_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_RANGERM_06_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_RANGERM_06_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_RANGERW_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_RANGERW_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_RANGERW_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_RANGERW_04_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_RANGERW_04_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_RANGERW_04_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_RANGERW_05_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_RANGERW_05_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_RANGERW_05_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_RANGERW_06_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_RANGERW_06_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_RANGERW_06_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_SCIENTISTM_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_SCIENTISTM_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_SCIENTISTM_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_SCIENTISTM_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_SCIENTISTM_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_SCIENTISTM_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_SCIENTISTM_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_SCIENTISTM_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_SCIENTISTM_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_SCIENTISTM_04_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_SCIENTISTM_04_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_SCIENTISTM_04_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_SCIENTISTW_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_SCIENTISTW_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_SCIENTISTW_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_SCIENTISTW_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_SCIENTISTW_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_SCIENTISTW_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_SOCCER_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_SOCCER_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_SOCCER_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_SOCCER_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_SOCCER_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_SOCCER_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_TANPAN_05_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_TANPAN_05_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_TANPAN_05_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_TANPAN_06_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_TANPAN_06_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_TANPAN_06_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_TANPAN_07_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_TANPAN_07_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_TANPAN_07_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_TANPAN_08_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_TANPAN_08_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_TANPAN_08_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_TANPAN_09_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_TANPAN_09_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_TANPAN_09_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_TANPAN_10_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_TANPAN_10_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_TANPAN_10_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_TANPAN_11_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_TANPAN_11_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_TANPAN_11_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_TANPAN_12_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_TANPAN_12_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_TANPAN_12_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_VETERANM_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_VETERANM_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_VETERANM_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_VETERANW_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_VETERANW_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_VETERANW_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_WAITER_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_WAITER_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_WAITER_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_WAITRESS_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_WAITRESS_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_WAITRESS_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_WORKER2_05_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_WORKER2_05_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_WORKER2_05_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_WORKER2_06_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_WORKER2_06_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_WORKER2_06_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_WORKER2_07_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_WORKER2_07_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_WORKER2_07_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_WORKER2_08_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_WORKER2_08_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_WORKER2_08_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_WORKER2_09_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_WORKER2_09_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_WORKER2_09_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_WORKER2_10_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_WORKER2_10_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_WORKER2_10_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_WORKER2_11_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_WORKER2_11_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_WORKER2_11_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_JUGGLING_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_JUGGLING_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_JUGGLING_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_JUGGLING_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_JUGGLING_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_JUGGLING_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_JUGGLING_04_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_JUGGLING_04_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_JUGGLING_04_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_JUGGLING_05_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ゆかに　かくれていたのは
+まけるためじゃ　ないのに！</language>
+		<language name="JPN_KANJI" width="216">床に　隠れていたのは
+負けるためじゃ　ないのに！</language>
+	</row>
+
+	<row id="TRID_JUGGLING_06_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">なにごとにも　どうじない　おまえの
+タフな　せいしんりょくに　やぶれた！</language>
+		<language name="JPN_KANJI" width="216">何事にも　動じない　おまえの
+タフな　精神力に　敗れた！</language>
+	</row>
+
+	<row id="TRID_WORKER2_12_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_WORKER2_12_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_WORKER2_12_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_WORKER2_13_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_WORKER2_13_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_WORKER2_13_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
+	<row id="TRID_WORKER2_14_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりメッセージ
+しょうぶ　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+勝負しよう！▼</language>
+	</row>
+
+	<row id="TRID_WORKER2_14_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ
+まけたのか！？</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けたのか！？</language>
+	</row>
+
+	<row id="TRID_WORKER2_14_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりメッセージ
+まけちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ
+負けちゃった！</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
