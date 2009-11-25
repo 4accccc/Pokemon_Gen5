@@ -84,7 +84,7 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
     }
     break;
   case _CALL_WIFINEGO:
-    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokemon_trade), &GtsNego_ProcData, dbw);
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(gts_negotiate), &GtsNego_ProcData, dbw);
     (*seq)++;
     break;
   case _WAIT_WIFINEGO:

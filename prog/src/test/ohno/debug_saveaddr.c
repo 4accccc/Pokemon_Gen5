@@ -26,7 +26,12 @@
 #include "net/network_define.h"
 #include "savedata/wifilist.h"
 #include "msg/msg_d_ohno.h"
+
 #include "savedata/dreamworld_data.h"
+#include "savedata/mystatus.h"
+#include "../../savedata/mystatus_local.h"
+#include "savedata/record.h"
+
 
 typedef struct _SAVEADDR_WORK SAVEADDR_WORK;
 
@@ -140,36 +145,39 @@ static void _changeStateDebug(SAVEADDR_WORK* pWork,StateFunc state, int line)
 
 static void _keyWait(SAVEADDR_WORK* pWork)
 {
-	switch(GFL_UI_KEY_GetTrg())
-	{
-	case PAD_BUTTON_X:
-    {
-      u32 size;
-      u8* pAddr;
-      u8* topAddr = (u8*)SaveControl_GetSaveWorkAdrs(pWork->pSaveData, &size);
+  {
+    u32 size;
+    u8* pAddr;
+    u8* topAddr = (u8*)SaveControl_GetSaveWorkAdrs(pWork->pSaveData, &size);
 
-      OS_TPrintf("SAVESIZE ,%x\n", size);
+    OS_TPrintf("SAVESIZE ,%x\n", size);
       
-      {//DreamWorld関連
-        DREAMWORLD_SAVEDATA* pDW = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
-        pAddr = (u8*)DREAMWORLD_SV_GetSleepPokemon(pDW);
-
-        OS_TPrintf("SLEEP POKEMON ,0x%x\n", (u32)pAddr-(u32)topAddr);
-        
-
-      }
-
-      
+    {//DreamWorld関連
+      DREAMWORLD_SAVEDATA* pDW = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
+      pAddr = (u8*)DREAMWORLD_SV_GetSleepPokemon(pDW);
+      OS_TPrintf("SLEEP POKEMON ,0x%x, %d\n", (u32)pAddr-(u32)topAddr, POKETOOL_GetPPPWorkSize());
     }
-		break;
-	case PAD_BUTTON_Y:
-		break;
-	case PAD_BUTTON_L:
-		break;
-	case PAD_BUTTON_B:
-		_CHANGE_STATE(NULL);
-		break;
-	}
+    {//Myステータス
+      MYSTATUS* pMy = SaveData_GetMyStatus(pWork->pSaveData);
+      pAddr = (u8*)&pMy->gold;
+      OS_TPrintf("GOLD ,0x%x, %d\n", (u32)pAddr-(u32)topAddr, sizeof(pMy->gold));
+      pAddr = (u8*)&pMy->name;
+      OS_TPrintf("PLAYER NAME ,0x%x, %d\n", (u32)pAddr-(u32)topAddr, sizeof(pMy->name));
+      pAddr = (u8*)&pMy->id;
+      OS_TPrintf("PLAYER ID ,0x%x ,%d\n", (u32)pAddr-(u32)topAddr,sizeof(pMy->id));
+      pAddr = (u8*)&pMy->sex;
+      OS_TPrintf("PLAYER SEX ,0x%x ,%d\n", (u32)pAddr-(u32)topAddr,sizeof(pMy->sex));
+
+    }
+
+    {//レコード
+      long* rec = (long*)SaveData_GetRecord(pWork->pSaveData);
+      
+      OS_TPrintf("CAPTURE_POKE ,0x%x ,%d\n", (u32)&rec[RECID_CAPTURE_POKE]-(u32)topAddr, 4);
+      OS_TPrintf("FISHING_SUCCESS ,0x%x ,%d\n", (u32)&rec[RECID_FISHING_SUCCESS]-(u32)topAddr, 4);
+    }
+  }
+  
 }
 
 

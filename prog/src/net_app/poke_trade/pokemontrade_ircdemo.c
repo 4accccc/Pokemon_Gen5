@@ -47,7 +47,7 @@
 #include "tradedemo.naix"
 #include "tradeirdemo.naix"
 
-#include "ircpokemontrade_local.h"
+#include "pokemontrade_local.h"
 #include "app/mailtool.h"
 
 #include "spaheadir.h"
@@ -319,7 +319,7 @@ static void _changeDemo_ModelTrade0(POKEMON_TRADE_WORK* pWork)
   MCSS_SetAnimCtrlCallBack(pWork->pokeMcss[0], (u32)pWork, _McssAnmStop, NNS_G2D_ANMCALLBACKTYPE_LAST_FRM);
 
   MCSS_SetPaletteFade( pWork->pokeMcss[1], 0, 16, ANMCNTC(_POKEMON_CENTER_TIME/3)/16, 0 );
-  IRC_POKETRADE_MessageWindowClose(pWork);
+  POKETRADE_MESSAGE_WindowClose(pWork);
 
   GFL_BG_SetBackGroundColor(GFL_BG_FRAME1_M ,0);
   GFL_BG_SetBackGroundColor(GFL_BG_FRAME1_S ,0);

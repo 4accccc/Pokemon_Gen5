@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- * @file	  ircpokemontrade_local.h
+ * @file	  pokemontrade_local.h
  * @brief	  ポケモン交換 ローカル共有定義
  * @author	ohno_katsumi@gamefreak.co.jp
  * @date	  09/08/28
@@ -29,7 +29,7 @@
 #include "system/mcss.h"
 #include "system/mcss_tool.h"
 #include "app/app_taskmenu.h"
-#include "ircpokemontrade_anim.h"
+#include "pokemontrade_anim.h"
 #include "system/ica_anime.h"
 #include "ui/ui_easy_clwk.h"
 //タッチバー
@@ -517,14 +517,8 @@ extern void IRC_POKETRADE_GraphicExit(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_SubStatusInit(POKEMON_TRADE_WORK* pWork,int pokeposx, int type);
 extern void IRC_POKETRADE_SubStatusEnd(POKEMON_TRADE_WORK* pWork);
 
-extern void IRC_POKETRADE_AppMenuOpen(POKEMON_TRADE_WORK* pWork, int *menustr,int num);
-extern void IRC_POKETRADE_AppMenuClose(POKEMON_TRADE_WORK* pWork);
 
-extern void IRC_POKETRADE_MessageOpen(POKEMON_TRADE_WORK* pWork, int msgno);
-extern void IRC_POKETRADE_MessageWindowOpen(POKEMON_TRADE_WORK* pWork);
-extern void IRC_POKETRADE_MessageWindowClose(POKEMON_TRADE_WORK* pWork);
-extern void IRC_POKETRADE_MessageWindowClear(POKEMON_TRADE_WORK* pWork);
-extern BOOL IRC_POKETRADE_MessageEndCheck(POKEMON_TRADE_WORK* pWork);
+
 extern void IRC_POKETRADE_TrayDisp(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork );
 extern void IRC_POKETRADE_AllDeletePokeIconResource(POKEMON_TRADE_WORK* pWork);
@@ -582,8 +576,6 @@ extern void IRC_POKETRADE_SetCursorXY(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKETRADE_IsMainCursorDispIn(POKEMON_TRADE_WORK* pWork,int* line);
 extern int POKETRADE_Line2RingLineIconGet(int line);
 extern void POKETRADE_TOUCHBAR_Init(POKEMON_TRADE_WORK* pWork);
-extern void POKETRADE_MessageHeapInit(POKEMON_TRADE_WORK* pWork);
-extern void POKETRADE_MessageHeapEnd(POKEMON_TRADE_WORK* pWork);
 
 extern BOOL POKEMONTRADE_IsPokeLanguageMark(int monsno,int moji);
 extern void IRC_POKETRADE_StatusWindowMessagePaletteTrans(POKEMON_TRADE_WORK* pWork, int palno, int palType);
@@ -659,7 +651,24 @@ extern void POKE_GTS_PokemonReset(POKEMON_TRADE_WORK* pWork,int side, int no);
 extern void POKE_GTS_Select6Init(POKEMON_TRADE_WORK* pWork);
 
 
-extern void _pokeNickNameMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,BOOL bEgg,POKEMON_TRADE_WORK* pWork);
-extern void _pokeLvMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,POKEMON_TRADE_WORK* pWork);
-extern void _pokeSexMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,POKEMON_TRADE_WORK* pWork);
 
+
+//メッセージ関連
+extern void POKETRADE_MESSAGE_WindowOpen(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_MESSAGE_WindowClose(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_MESSAGE_WindowClear(POKEMON_TRADE_WORK* pWork);
+extern BOOL POKETRADE_MESSAGE_EndCheck(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_MESSAGE_HeapInit(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_MESSAGE_HeapEnd(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_MESSAGE_AppMenuOpen(POKEMON_TRADE_WORK* pWork, int *menustr,int num);
+extern void POKETRADE_MESSAGE_AppMenuClose(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_MESSAGE_ChangePokemonMyStDisp(POKEMON_TRADE_WORK* pWork,int pageno,int leftright,POKEMON_PARAM* pp);
+extern void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_MESSAGE_SetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork, int side,POKEMON_PARAM* pp);
+extern void POKETRADE_MESSAGE_ResetPokemonMyStDisp(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_MESSAGE_ResetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork);
+extern void POKETRADE_MESSAGE_CreatePokemonParamDisp(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork);
+
+//ポケモン２Ｄ
+extern void POKETRADE_2D_PokemonIconSet(POKEMON_TRADE_WORK* pWork, int side,int no, POKEMON_PARAM* pp, int hilow);

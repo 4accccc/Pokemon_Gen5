@@ -22,6 +22,7 @@
 #define MAX_CHANNELS 1
 #define VCHAT_WAVE_SAMPLE ((int) (VCHAT_SAMPLING_RATE * MAX_SAMPLING_TIME * SAMPLING_BYTE) / 1000)  //1088
 //-----------------
+#define _SOUND_CHANNEL (0) //HGSS仕様
 
 #define VCFINFO_SHOW
 //#define VCT_ERROR_NONE (VCT_SUCCESS)
@@ -506,7 +507,8 @@ BOOL myvct_checkData( int aid, void *data, int size )
 
 void myvct_init( int heapID, int codec,int maxEntry )
 {
-	u8 cArray[3] = {13, 13, 13};
+//	u8 cArray[3] = {13, 13, 13};
+	u8 cArray[3] = {_SOUND_CHANNEL, _SOUND_CHANNEL, _SOUND_CHANNEL};  //サウンドのSOUND_CHANNEL
 	u32 length;
 	BOOL ret;
 	int size;

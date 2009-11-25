@@ -890,16 +890,22 @@ SRCS_OVERLAY_WIFI_LOGIN =  net_app/wifi_login/wifilogin_proc.c \
 
 # ポケモン交換
 #===> SRCS_OVERLAY_DPW_COMMON
-SRCS_OVERLAY_POKEMON_TRADE = net_app/poke_trade/ircpokemontrade.c \
-								net_app/poke_trade/ircpokemontrade_step.c \
+SRCS_OVERLAY_POKEMON_TRADE = net_app/poke_trade/pokemontrade_proc.c \
+								net_app/poke_trade/pokemontrade_nego.c \
+								net_app/poke_trade/pokemontrade_demo.c \
 								net_app/poke_trade/pokemontrade_ircdemo.c \
 								net_app/poke_trade/pokemontrade_save.c \
-								net_app/poke_trade/ircpoketrade_message.c \
-								net_app/poke_trade/ircpoketrade_3d.c \
-								net_app/poke_trade/ircpoketrade_gra.c \
-								net_app/gts_nego/gtsnego_proc.c \
+								net_app/poke_trade/pokemontrade_message.c \
+								net_app/poke_trade/pokemontrade_3d.c \
+								net_app/poke_trade/pokemontrade_2d.c
+
+# GTSネゴシエーション交換
+#===> SRCS_OVERLAY_DPW_COMMON
+SRCS_OVERLAY_GTS_NEGOTIATE = net_app/gts_nego/gtsnego_proc.c \
 								net_app/gts_nego/gtsnego_disp.c \
 								net_app/gts_nego/gtsnego_message.c
+
+
 
 # メールアプリケーション
 #===> SRCS_OVERLAY_POKEMON_TRADE

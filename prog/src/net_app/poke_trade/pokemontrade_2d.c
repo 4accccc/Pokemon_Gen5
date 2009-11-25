@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- * @file	  ircpoketrade_gra.c
+ * @file	  pokemontrade_gra.c
  * @bfief	  ポケモン交換グラフィック部分
  * @author  ohno_katsumi@gamefreak.co.jp
  * @date	  09/08/28
@@ -16,7 +16,7 @@
 #include "poke_icon.naix"
 
 #include "net_app/pokemontrade.h"
-#include "ircpokemontrade_local.h"
+#include "pokemontrade_local.h"
 #include "msg/msg_poke_trade.h"
 #include "gamesystem/msgspeed.h"  //MSGSPEED_GetWait
 #include "font/font.naix"    // NARC_font_default_nclr
@@ -362,137 +362,6 @@ void IRC_POKETRADE_SubStatusEnd(POKEMON_TRADE_WORK* pWork)
 
 }
 
-void IRC_POKETRADE_AppMenuClose(POKEMON_TRADE_WORK* pWork)
-{
-  G2_BlendNone();
-  APP_TASKMENU_CloseMenu(pWork->pAppTask);
-}
-
-void IRC_POKETRADE_AppMenuOpen(POKEMON_TRADE_WORK* pWork, int *menustr,int num)
-{
-  int i;
-  APP_TASKMENU_INITWORK appinit;
-
-  appinit.heapId = pWork->heapID;
-  appinit.itemNum =  num;
-  appinit.itemWork =  &pWork->appitem[0];
-
-  appinit.posType = ATPT_RIGHT_DOWN;
-  if(num==1){
-    appinit.charPosX = 32;
-    appinit.charPosY = 22;
-  }
-  else{
-    appinit.charPosX = 32;
-    appinit.charPosY = 24;
-  }
-	appinit.w				 = APP_TASKMENU_PLATE_WIDTH;
-	appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
-
-  for(i=0;i<num;i++){
-    pWork->appitem[i].str = GFL_STR_CreateBuffer(100, pWork->heapID);
-    GFL_MSG_GetString(pWork->pMsgData, menustr[i], pWork->appitem[i].str);
-    pWork->appitem[i].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
-  }
-  pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
-  for(i=0;i<num;i++){
-    GFL_STR_DeleteBuffer(pWork->appitem[i].str);
-  }
-
-}
-
-void IRC_POKETRADE_MessageOpen(POKEMON_TRADE_WORK* pWork, int msgno)
-{
-
-
-  GFL_MSG_GetString( pWork->pMsgData, msgno, pWork->pMessageStrBufEx );
-
-	WORDSET_ExpandStr( pWork->pWordSet, pWork->pMessageStrBufEx, pWork->pMessageStrBuf  );
-
-}
-
-void IRC_POKETRADE_MessageWindowOpen(POKEMON_TRADE_WORK* pWork)
-{
-  GFL_BMPWIN* pwin;
-
-  IRC_POKETRADE_MessageWindowClose(pWork);
-
-
-  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
-                                0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
-  pWork->mesWin = GFL_BMPWIN_Create(GFL_BG_FRAME2_S , 1 , 1, 30 ,4 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
-  
-  pwin = pWork->mesWin;
-
-  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
-
-  GFL_FONTSYS_SetColor(FBMP_COL_BLACK, FBMP_COL_BLK_SDW, 15);
-  pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pMessageStrBuf, pWork->pFontHandle,
-                                        MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15 );
-
-//  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 0, 0, pWork->pMessageStrBuf, pWork->pFontHandle);
-
-  BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
-
-  GFL_BMPWIN_TransVramCharacter(pwin);
-  GFL_BMPWIN_MakeScreen(pwin);
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
-
-}
-
-
-void IRC_POKETRADE_MessageWindowClear(POKEMON_TRADE_WORK* pWork)
-{
-
-	if(pWork->mesWin){
-		GFL_BMPWIN_ClearScreen(pWork->mesWin);
-		GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
-		BmpWinFrame_Clear(pWork->mesWin, WINDOW_TRANS_OFF);
-		GFL_BMPWIN_Delete(pWork->mesWin);
-		pWork->mesWin=NULL;
-	}
-}
-
-
-
-void IRC_POKETRADE_MessageWindowClose(POKEMON_TRADE_WORK* pWork)
-{
-  if(pWork->mesWin){
-		GFL_BMPWIN_Delete(pWork->mesWin);
-    pWork->mesWin=NULL;
-  }
-}
-
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   メッセージの終了待ち
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-BOOL IRC_POKETRADE_MessageEndCheck(POKEMON_TRADE_WORK* pWork)
-{
-  if(pWork->pStream){
-    int state = PRINTSYS_PrintStreamGetState( pWork->pStream );
-    switch(state){
-    case PRINTSTREAM_STATE_DONE:
-      PRINTSYS_PrintStreamDelete( pWork->pStream );
-      pWork->pStream = NULL;
-      break;
-    case PRINTSTREAM_STATE_PAUSE:
-      if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
-        PRINTSYS_PrintStreamReleasePause( pWork->pStream );
-      }
-      break;
-    default:
-      break;
-    }
-    return FALSE;  //まだ終わってない
-  }
-  return TRUE;// 終わっている
-}
 
 
 //------------------------------------------------------------------------------
@@ -2257,4 +2126,44 @@ void IRC_POKETRADE_StatusWindowMessagePaletteTrans(POKEMON_TRADE_WORK* pWork, in
   
 }
 
+
+void POKETRADE_2D_PokemonIconSet(POKEMON_TRADE_WORK* pWork, int side,int no, POKEMON_PARAM* pp, int hilow)
+{
+  POKEMON_PASO_PARAM* ppp = PP_GetPPPPointer(pp);
+  ARCHANDLE *arcHandlePoke = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
+  GFL_CLWK_DATA cellInitData;
+  int drawn;
+  GFL_POINT pokemonpos[]={{40,92},{72,92},{104,92} , {40+128,92},{72+128,92},{104+128,92}};
+  GFL_POINT pokemonposl[]={{20,36},{20,84},{20,132}, {20+128,36},{20+128,84},{20+128,132} };
+
+  if(hilow){
+    cellInitData.pos_x = pokemonpos[no+side*GTS_NEGO_POKESLT_MAX].x;
+    cellInitData.pos_y = pokemonpos[no+side*GTS_NEGO_POKESLT_MAX].y;
+    drawn = CLSYS_DRAW_MAIN;
+  }
+  else{
+    cellInitData.pos_x = pokemonposl[no+side*GTS_NEGO_POKESLT_MAX].x;
+    cellInitData.pos_y = pokemonposl[no+side*GTS_NEGO_POKESLT_MAX].y;
+    drawn = CLSYS_DRAW_SUB;
+  }
+  cellInitData.anmseq = POKEICON_ANM_HPMAX;
+  cellInitData.softpri = _CLACT_SOFTPRI_POKELIST;
+  cellInitData.bgpri = 1;
+
+  pWork->pokeIconNcgResGTS[side][no] =
+    GFL_CLGRP_CGR_Register( arcHandlePoke ,
+                            POKEICON_GetCgxArcIndex(ppp) , FALSE , drawn , pWork->heapID );
+  pWork->pokeIconGTS[side][no] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                                  pWork->pokeIconNcgResGTS[side][no],
+                                                  pWork->cellRes[PLT_GTS_POKEICON],
+                                                  pWork->cellRes[ANM_GTS_POKEICON],
+                                                  &cellInitData ,drawn , pWork->heapID );
+
+  GFL_CLACT_WK_SetPlttOffs( pWork->pokeIconGTS[side][no] , POKEICON_GetPalNumGetByPPP( ppp ) , CLWK_PLTTOFFS_MODE_PLTT_TOP );
+  GFL_CLACT_WK_SetAutoAnmFlag( pWork->pokeIconGTS[side][no] , FALSE );
+  GFL_CLACT_WK_SetDrawEnable( pWork->pokeIconGTS[side][no], TRUE );
+
+  GFL_ARC_CloseDataHandle(arcHandlePoke);
+
+}
 

@@ -1604,7 +1604,7 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
 	//	GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, _BRIGHTNESS_SYNC);
 	_modeInit(pWork);
 
-#if 0//DEBUG_ONLY_FOR_ohno
+#if DEBUG_ONLY_FOR_ohno
   _loadExData(pWork,pGameSys);
 #endif
   

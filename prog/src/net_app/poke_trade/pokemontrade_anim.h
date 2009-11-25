@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- * @file	  ircpokemontrade_anim.h
+ * @file	  pokemontrade_anim.h
  * @bfief	  ポケモン交換 アニメーション間隔定義
  * @author	ohno_katsumi@gamefreak.co.jp
  * @date	  09/08/28
@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "ircpokemontrade_local.h"
+#include "pokemontrade_local.h"
 
 
 //時間に関する事

@@ -46,7 +46,7 @@
 #include "poke_tool/status_rcv.h"
 #include "tradedemo.naix"
 
-#include "ircpokemontrade_local.h"
+#include "pokemontrade_local.h"
 #include "app/mailtool.h"
 
 #include "spahead.h"
@@ -96,7 +96,7 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
   GFL_CLACT_SYS_Delete();
   IRC_POKETRADE_CLACT_Create(pWork);
   pWork->cellUnit = GFL_CLACT_UNIT_Create( 340 , 0 , pWork->heapID );
-  POKETRADE_MessageHeapInit(pWork);
+  POKETRADE_MESSAGE_HeapInit(pWork);
 
   GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_49, pWork->pMessageStrBufEx );
   {
@@ -106,7 +106,7 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
   WORDSET_ExpandStr( pWork->pWordSet, pWork->pMessageStrBuf, pWork->pMessageStrBufEx);
 
   pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME2_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
-  IRC_POKETRADE_MessageWindowOpen(pWork);
+  POKETRADE_MESSAGE_WindowOpen(pWork);
   _setNextAnim(pWork, 0);
 
   GFL_BG_SetVisible( GFL_BG_FRAME2_S , TRUE );
@@ -117,7 +117,7 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
 
 static void _changeDemo_ModelTrade21(POKEMON_TRADE_WORK* pWork)
 {
-  if(!IRC_POKETRADE_MessageEndCheck(pWork)){
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
   if(pWork->anmCount < 100){
@@ -130,7 +130,7 @@ static void _changeDemo_ModelTrade21(POKEMON_TRADE_WORK* pWork)
     WORDSET_RegisterPokeNickName( pWork->pWordSet, 1,  pp );
   }
   WORDSET_ExpandStr( pWork->pWordSet, pWork->pMessageStrBuf, pWork->pMessageStrBufEx);
-  IRC_POKETRADE_MessageWindowOpen(pWork);
+  POKETRADE_MESSAGE_WindowOpen(pWork);
   _setNextAnim(pWork, 0);
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade22);
 
@@ -138,7 +138,7 @@ static void _changeDemo_ModelTrade21(POKEMON_TRADE_WORK* pWork)
 
 static void _changeDemo_ModelTrade22(POKEMON_TRADE_WORK* pWork)
 {
-  if(!IRC_POKETRADE_MessageEndCheck(pWork)){
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
   if(pWork->anmCount < 100){
@@ -183,7 +183,7 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
       int item = PP_Get( pWork->recvPoke[id] , ID_PARA_item ,NULL);
       if(ITEM_CheckMail(item)){
         GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_08, pWork->pMessageStrBuf );
-        IRC_POKETRADE_MessageWindowOpen(pWork);
+        POKETRADE_MESSAGE_WindowOpen(pWork);
         _CHANGE_STATE(pWork,_mailBoxStart);
         return;
       }
@@ -206,7 +206,7 @@ static void _saveStart(POKEMON_TRADE_WORK* pWork)
   }
   else{
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_51, pWork->pMessageStrBuf );
-    IRC_POKETRADE_MessageWindowOpen(pWork);
+    POKETRADE_MESSAGE_WindowOpen(pWork);
     _CHANGE_STATE(pWork, _changeTimingSaveStart);
   }
 }
@@ -214,7 +214,7 @@ static void _saveStart(POKEMON_TRADE_WORK* pWork)
 
 static void _changeTimingSaveStart(POKEMON_TRADE_WORK* pWork)
 {
-  if(!IRC_POKETRADE_MessageEndCheck(pWork)){
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
   if(GFL_NET_IsInit()){
@@ -290,7 +290,7 @@ static void _changeDemo_ModelTrade30(POKEMON_TRADE_WORK* pWork)
   GFL_CLACT_UNIT_Delete(pWork->cellUnit);
   pWork->cellUnit = GFL_CLACT_UNIT_Create( 340 , 0 , pWork->heapID );
 
-  IRC_POKETRADE_MessageWindowClose(pWork);
+  POKETRADE_MESSAGE_WindowClose(pWork);
 
 //  IRC_POKETRADE_GraphicFreeVram(pWork);
 
@@ -330,7 +330,7 @@ static void _changeDemo_ModelTrade30(POKEMON_TRADE_WORK* pWork)
 
 static void _mailSeqEnd(POKEMON_TRADE_WORK* pWork)
 {
-  if(!IRC_POKETRADE_MessageEndCheck(pWork)){
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
   if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
@@ -354,8 +354,8 @@ static void _mailTrashYesOrNo(POKEMON_TRADE_WORK* pWork)
 {
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
-    IRC_POKETRADE_AppMenuClose(pWork);
-    IRC_POKETRADE_MessageWindowClear(pWork);
+    POKETRADE_MESSAGE_AppMenuClose(pWork);
+    POKETRADE_MESSAGE_WindowClear(pWork);
     pWork->pAppTask=NULL;
 
     switch(selectno){
@@ -365,12 +365,12 @@ static void _mailTrashYesOrNo(POKEMON_TRADE_WORK* pWork)
         PP_Put(pWork->recvPoke[id], ID_PARA_item, ITEM_DUMMY_ID);
       }
       GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_11, pWork->pMessageStrBuf );
-      IRC_POKETRADE_MessageWindowOpen(pWork);
+      POKETRADE_MESSAGE_WindowOpen(pWork);
       _CHANGE_STATE(pWork,_mailSeqEnd);
       break;
     default: //‚¢‚¢‚¦
       GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_08, pWork->pMessageStrBuf );
-      IRC_POKETRADE_MessageWindowOpen(pWork);
+      POKETRADE_MESSAGE_WindowOpen(pWork);
       _CHANGE_STATE(pWork,_mailBoxStart);
       break;
     }
@@ -387,12 +387,12 @@ static void _mailTrashYesOrNo(POKEMON_TRADE_WORK* pWork)
 
 static void _mailTrash(POKEMON_TRADE_WORK* pWork)
 {
-  if(!IRC_POKETRADE_MessageEndCheck(pWork)){
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
   {
     int msg[]={POKETRADE_STR_27, POKETRADE_STR_28};
-    IRC_POKETRADE_AppMenuOpen(pWork,msg,elementof(msg));
+    POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
   }
   _CHANGE_STATE(pWork,_mailTrashYesOrNo);
 }
@@ -409,8 +409,8 @@ static void _mailPCArrangementYesOrNo(POKEMON_TRADE_WORK* pWork)
 {
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
-    IRC_POKETRADE_AppMenuClose(pWork);
-    IRC_POKETRADE_MessageWindowClear(pWork);
+    POKETRADE_MESSAGE_AppMenuClose(pWork);
+    POKETRADE_MESSAGE_WindowClear(pWork);
     pWork->pAppTask=NULL;
 
     switch(selectno){
@@ -419,7 +419,7 @@ static void _mailPCArrangementYesOrNo(POKEMON_TRADE_WORK* pWork)
       break;
     default: //‚¢‚¢‚¦
       GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_09, pWork->pMessageStrBuf );
-      IRC_POKETRADE_MessageWindowOpen(pWork);
+      POKETRADE_MESSAGE_WindowOpen(pWork);
       _CHANGE_STATE(pWork,_mailTrash);
       break;
     }
@@ -437,12 +437,12 @@ static void _mailPCArrangementYesOrNo(POKEMON_TRADE_WORK* pWork)
 
 static void _mailPCArrangement(POKEMON_TRADE_WORK* pWork)
 {
-  if(!IRC_POKETRADE_MessageEndCheck(pWork)){
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
   {
     int msg[]={POKETRADE_STR_27, POKETRADE_STR_28};
-    IRC_POKETRADE_AppMenuOpen(pWork,msg,elementof(msg));
+    POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
   }
   _CHANGE_STATE(pWork,_mailPCArrangementYesOrNo);
 }
@@ -458,8 +458,8 @@ static void _mailPCSendYesOrNo(POKEMON_TRADE_WORK* pWork)
 {
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
-    IRC_POKETRADE_AppMenuClose(pWork);
-    IRC_POKETRADE_MessageWindowClear(pWork);
+    POKETRADE_MESSAGE_AppMenuClose(pWork);
+    POKETRADE_MESSAGE_WindowClear(pWork);
     pWork->pAppTask=NULL;
 
     switch(selectno){
@@ -473,12 +473,12 @@ static void _mailPCSendYesOrNo(POKEMON_TRADE_WORK* pWork)
         if(MAILDATA_NULLID==ret){ //“ü‚ç‚È‚©‚Á‚½
 #endif
           GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_10, pWork->pMessageStrBuf );
-          IRC_POKETRADE_MessageWindowOpen(pWork);
+          POKETRADE_MESSAGE_WindowOpen(pWork);
           _CHANGE_STATE(pWork,_mailPCArrangement);
         }
         else{
           GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_12, pWork->pMessageStrBuf );
-          IRC_POKETRADE_MessageWindowOpen(pWork);
+          POKETRADE_MESSAGE_WindowOpen(pWork);
           _CHANGE_STATE(pWork,_mailSeqEnd);
         }
       }
@@ -499,12 +499,12 @@ static void _mailPCSendYesOrNo(POKEMON_TRADE_WORK* pWork)
 
 static void _mailBoxStart(POKEMON_TRADE_WORK* pWork)
 {
-  if(!IRC_POKETRADE_MessageEndCheck(pWork)){
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
   {
     int msg[]={POKETRADE_STR_27, POKETRADE_STR_28};
-    IRC_POKETRADE_AppMenuOpen(pWork,msg,elementof(msg));
+    POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
   }
   _CHANGE_STATE(pWork,_mailPCSendYesOrNo);
 

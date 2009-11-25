@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- * @file	  ircpoketrade_message.c
+ * @file	  pokemontrade_message.c
  * @brief	  ポケモン交換して通信を終了する メッセージ関係
  * @author  ohno_katsumi@gamefreak.co.jp
  * @date	  09/11/21
@@ -33,6 +33,7 @@
 #include "system/bmp_winframe.h"
 #include "system/bmp_menulist.h"
 #include "system/bmp_menu.h"
+#include "gamesystem\msgspeed.h"
 
 #include "msg/msg_poke_trade.h"
 #include "msg/msg_chr.h"
@@ -50,9 +51,12 @@
 #include "box_m_obj_NANR_LBLDEFS.h"
 #include "p_st_obj_d_NANR_LBLDEFS.h"
 
-#include "ircpokemontrade_local.h"
+#include "pokemontrade_local.h"
 
 static void _select6keywait(POKEMON_TRADE_WORK* pWork);
+static void _pokeNickNameMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,BOOL bEgg,POKEMON_TRADE_WORK* pWork);
+static void _pokeLvMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,POKEMON_TRADE_WORK* pWork);
+static void _pokeSexMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,POKEMON_TRADE_WORK* pWork);
 
 
 void POKE_GTS_EndWork(POKEMON_TRADE_WORK* pWork)
@@ -159,49 +163,6 @@ static void POKE_GTS_ReleasePokeIconResource(POKEMON_TRADE_WORK* pWork)
 
 
 
-
-
-static void _Pokemonset(POKEMON_TRADE_WORK* pWork, int side,int no, POKEMON_PARAM* pp, int hilow)
-{
-  POKEMON_PASO_PARAM* ppp = PP_GetPPPPointer(pp);
-  ARCHANDLE *arcHandlePoke = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
-  GFL_CLWK_DATA cellInitData;
-  int drawn;
-  GFL_POINT pokemonpos[]={{40,92},{72,92},{104,92} , {40+128,92},{72+128,92},{104+128,92}};
-  GFL_POINT pokemonposl[]={{20,36},{20,84},{20,132}, {20+128,36},{20+128,84},{20+128,132} };
-
-  if(hilow){
-    cellInitData.pos_x = pokemonpos[no+side*GTS_NEGO_POKESLT_MAX].x;
-    cellInitData.pos_y = pokemonpos[no+side*GTS_NEGO_POKESLT_MAX].y;
-    drawn = CLSYS_DRAW_MAIN;
-  }
-  else{
-    cellInitData.pos_x = pokemonposl[no+side*GTS_NEGO_POKESLT_MAX].x;
-    cellInitData.pos_y = pokemonposl[no+side*GTS_NEGO_POKESLT_MAX].y;
-    drawn = CLSYS_DRAW_SUB;
-  }
-  cellInitData.anmseq = POKEICON_ANM_HPMAX;
-  cellInitData.softpri = _CLACT_SOFTPRI_POKELIST;
-  cellInitData.bgpri = 1;
-
-  pWork->pokeIconNcgResGTS[side][no] =
-    GFL_CLGRP_CGR_Register( arcHandlePoke ,
-                            POKEICON_GetCgxArcIndex(ppp) , FALSE , drawn , pWork->heapID );
-  pWork->pokeIconGTS[side][no] = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                                                  pWork->pokeIconNcgResGTS[side][no],
-                                                  pWork->cellRes[PLT_GTS_POKEICON],
-                                                  pWork->cellRes[ANM_GTS_POKEICON],
-                                                  &cellInitData ,drawn , pWork->heapID );
-
-  GFL_CLACT_WK_SetPlttOffs( pWork->pokeIconGTS[side][no] , POKEICON_GetPalNumGetByPPP( ppp ) , CLWK_PLTTOFFS_MODE_PLTT_TOP );
-  GFL_CLACT_WK_SetAutoAnmFlag( pWork->pokeIconGTS[side][no] , FALSE );
-  GFL_CLACT_WK_SetDrawEnable( pWork->pokeIconGTS[side][no], TRUE );
-
-  GFL_ARC_CloseDataHandle(arcHandlePoke);
-
-}
-
-
 void POKE_GTS_PokemonReset(POKEMON_TRADE_WORK* pWork,int side, int no)
 {
   if(pWork->pokeIconGTS[side][no]){
@@ -225,7 +186,7 @@ BOOL POKE_GTS_PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork,int index,int boxn
   {
     no = _addPokemon(pWork,0,index,boxno, pp);
     if(-1 != no){
-      _Pokemonset(pWork,0,no,pp,TRUE);
+      POKETRADE_2D_PokemonIconSet(pWork,0,no,pp,TRUE);
       bRet= TRUE;
     }
   }
@@ -233,7 +194,7 @@ BOOL POKE_GTS_PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork,int index,int boxn
   if(!GFL_NET_IsInit()){
     no = _addPokemon(pWork, 1, index,boxno, pp);
     if(-1 != no){
-      _Pokemonset(pWork,1,no,pp,TRUE);
+      POKETRADE_2D_PokemonIconSet(pWork,1,no,pp,TRUE);
       bRet= TRUE;
     }
   }
@@ -245,7 +206,7 @@ BOOL POKE_GTS_PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork,int index,int boxn
 
   if(pWork->pAppTask==NULL){
     int msg[]={POKETRADE_STR2_26};
-    IRC_POKETRADE_AppMenuOpen(pWork,msg,elementof(msg));
+    POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
   }
 
   return bRet;
@@ -322,8 +283,8 @@ static void _menuMyPokemon(POKEMON_TRADE_WORK* pWork)
 
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
-    IRC_POKETRADE_AppMenuClose(pWork);
-    IRC_POKETRADE_MessageWindowClear(pWork);  //下のメッセージを消す
+    POKETRADE_MESSAGE_AppMenuClose(pWork);
+    POKETRADE_MESSAGE_WindowClear(pWork);  //下のメッセージを消す
     pWork->pAppTask=NULL;
     switch(selectno){
     case 0:  //こうかん
@@ -369,12 +330,12 @@ static void _select6keywait(POKEMON_TRADE_WORK* pWork)
     if(pp){
       if(trgno/GTS_NEGO_POKESLT_MAX){
         int msg[]={ POKETRADE_STR_04, POKETRADE_STR_06};
-        IRC_POKETRADE_AppMenuOpen(pWork,msg,elementof(msg));
+        POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
         _CHANGE_STATE(pWork,_menuFriendPokemon);
       }
       else{
         int msg[]={POKETRADE_STR_05, POKETRADE_STR_04, POKETRADE_STR_06};
-        IRC_POKETRADE_AppMenuOpen(pWork,msg,elementof(msg));
+        POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
 #if PM_DEBUG
         if(!GFL_NET_IsInit()){
           target = 5 - trgno;
@@ -426,22 +387,6 @@ void POKE_GTS_Select6Init(POKEMON_TRADE_WORK* pWork)
   //GFL_BG_SetVisible( GFL_BG_FRAME1_S , FALSE );
 
   IRC_POKETRADE_ResetBoxNameWindow(pWork);
-  if(0){
-    int frame = GFL_BG_FRAME1_S;
-    GFL_BG_BGCNT_HEADER TextBgCntDat = {
-      0, 0, 0x1000, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xc000, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
-      2, 0, 0, FALSE
-      };
-    GFL_BG_FreeBGControl(frame);
-    GFL_BG_SetBGControl(
-      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
-
-    //		GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
-    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-    GFL_BG_LoadScreenReq( frame );
-    //        GFL_BG_ClearFrame(frame);
-  }
 
 
   IRC_POKETRADE_AllDeletePokeIconResource(pWork);
@@ -454,51 +399,9 @@ void POKE_GTS_Select6Init(POKEMON_TRADE_WORK* pWork)
     pWork->StatusWin[0]=NULL;
   }
 
-  aStBuf[0] = pWork->pMy;
-  aStBuf[1] = pWork->pFriend;
 
-#if 1
-  GFL_FONTSYS_SetColor( FBMP_COL_WHITE, FBMP_COL_WHITE_SDW, 0x0 );
-  for(side=0;side<GTS_PLAYER_WORK_NUM;side++){
-    pWork->TriStatusWin[side] =
-      GFL_BMPWIN_Create(GFL_BG_FRAME1_S,
-                        side*16+ 1 , 0, 14, 2, _BUTTON_MSG_PAL,GFL_BMP_CHRAREA_GET_F);
-
-    pWin = pWork->TriStatusWin[side];
-    GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_27, pWork->pExStrBuf );
-    WORDSET_RegisterPlayerName( pWork->pWordSet, 0,  aStBuf[side]  );
-    WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExStrBuf  );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), 0, 0, pWork->pStrBuf, pWork->pFontHandle);
-    GFL_BMPWIN_TransVramCharacter(pWin);
-    GFL_BMPWIN_MakeScreen(pWin);
-  }
-#endif
-
-  GFL_FONTSYS_SetColor( FBMP_COL_WHITE, FBMP_COL_WHITE_SDW, 0x0 );
-  for(side=0;side<GTS_PLAYER_WORK_NUM;side++){
-    pWork->TriStatusWin[side+2] =
-      GFL_BMPWIN_Create(GFL_BG_FRAME1_S,
-                        side*16 + 5 , 3, 9, 16, _BUTTON_MSG_PAL,GFL_BMP_CHRAREA_GET_F);
-    pWin = pWork->TriStatusWin[side+2];
-    GFL_FONTSYS_SetColor( FBMP_COL_BLACK, FBMP_COL_BLK_SDW, 0x0 );
-    for(poke = 0;poke < GTS_NEGO_POKESLT_MAX;poke++){
-      POKEMON_PARAM* pp = pWork->GTSSelectPP[side][poke];
-      if(pWork->GTSSelectIndex[side][poke]!=-1){
-        BOOL bEgg = PP_Get(pp,ID_PARA_tamago_flag,NULL);
-
-        POKE_GTS_PokemonReset(pWork, side, poke);
-        _Pokemonset(pWork, side, poke, pp,FALSE);
-        
-        _pokeNickNameMsgDisp(pp, pWin, 0, 6*8*poke , bEgg, pWork);
-        if(!bEgg){
-          _pokeSexMsgDisp(pp, pWin, 7*8, 6*8*poke + 2*8, pWork);
-          _pokeLvMsgDisp(pp, pWin, 0, 6*8*poke + 2*8, pWork);
-        }
-      }
-    }
-    GFL_BMPWIN_TransVramCharacter(pWin);
-    GFL_BMPWIN_MakeScreen(pWin);
-  }
+  POKETRADE_MESSAGE_SixStateDisp(pWork); 
+  
   pWork->bgscroll=0;
   pWork->bgscrollRenew = TRUE;
   //GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
@@ -508,3 +411,5 @@ void POKE_GTS_Select6Init(POKEMON_TRADE_WORK* pWork)
 
 
 }
+
+

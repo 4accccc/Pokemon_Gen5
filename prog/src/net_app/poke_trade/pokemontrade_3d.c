@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- * @file	  ircpoketrade_3d.c
+ * @file	  pokemontrade_3d.c
  * @bfief	  ポケモン交換３Ｄ部分
  * @author  ohno_katsumi@gamefreak.co.jp
  * @date	  09/09/18
@@ -15,7 +15,7 @@
 #include "trade.naix"
 
 #include "net_app/pokemontrade.h"
-#include "ircpokemontrade_local.h"
+#include "pokemontrade_local.h"
 #include "msg/msg_poke_trade.h"
 #include "gamesystem/msgspeed.h"  //MSGSPEED_GetWait
 #include "font/font.naix"    // NARC_font_default_nclr
@@ -831,4 +831,43 @@ static void Draw( POKEMON_TRADE_WORK* pWork )
 }
 
 
+
+//--------------------------------------------------------------
+//	ポケモンMCSS作成
+//--------------------------------------------------------------
+void IRCPOKETRADE_PokeCreateMcss( POKEMON_TRADE_WORK *pWork ,int no, int bFront, const POKEMON_PARAM *pp )
+{
+  MCSS_ADD_WORK addWork;
+  VecFx32 scale = {FX32_ONE*16,FX32_ONE*16,FX32_ONE};
+  int xpos[] = { PSTATUS_MCSS_POS_X1 , PSTATUS_MCSS_POS_X2 , PSTATUS_MCSS_POS_X1 , PSTATUS_MCSS_POS_X2};
+  int z;
+
+  GF_ASSERT( pWork->pokeMcss[no] == NULL );
+
+  if(bFront){
+    MCSS_TOOL_MakeMAWPP( pp , &addWork , MCSS_DIR_FRONT );
+    z=PSTATUS_MCSS_POS_MYZ;
+  }
+  else{
+    MCSS_TOOL_MakeMAWPP( pp , &addWork , MCSS_DIR_BACK );
+    z=PSTATUS_MCSS_POS_YOUZ;
+  }
+  pWork->pokeMcss[no] = MCSS_Add( pWork->mcssSys , xpos[no] , PSTATUS_MCSS_POS_Y , z , &addWork );
+  MCSS_SetScale( pWork->pokeMcss[no] , &scale );
+
+}
+
+//--------------------------------------------------------------
+//	ポケモンMCSS削除
+//--------------------------------------------------------------
+void IRCPOKETRADE_PokeDeleteMcss( POKEMON_TRADE_WORK *pWork,int no  )
+{
+  if( pWork->pokeMcss[no] == NULL ){
+    return;
+  }
+
+  MCSS_SetVanishFlag( pWork->pokeMcss[no] );
+  MCSS_Del(pWork->mcssSys,pWork->pokeMcss[no]);
+  pWork->pokeMcss[no] = NULL;
+}
 

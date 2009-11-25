@@ -56,6 +56,5 @@ extern CGEAR_PICTURE_SAVEDATA* CGEAR_PICTURE_SAVE_GetCGearSaveData(SAVE_CONTROL_
 struct _CGEAR_PICTURE_SAVEDATA {
 	u8 picture[CGEAR_PICTURTE_CHAR_SIZE]; //キャラクター
   u8 palette[CGEAR_PICTURTE_PAL_SIZE];     //パレット
-  u8 dummy[64];
 };
 

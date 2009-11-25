@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- * @file	  ircpokemontrade_step.c
+ * @file	  pokemontrade_demo.c
  * @bfief	  ポケモン交換アニメーション
  * @author  ohno_katsumi@gamefreak.co.jp
  * @date	  09/09/27
@@ -46,7 +46,7 @@
 #include "poke_tool/status_rcv.h"
 #include "tradedemo.naix"
 
-#include "ircpokemontrade_local.h"
+#include "pokemontrade_local.h"
 #include "app/mailtool.h"
 
 #include "spahead.h"
@@ -313,7 +313,7 @@ static void _changeDemo_ModelTrade0(POKEMON_TRADE_WORK* pWork)
   MCSS_SetAnimCtrlCallBack(pWork->pokeMcss[0], (u32)pWork, _McssAnmStop, NNS_G2D_ANMCALLBACKTYPE_LAST_FRM);
 
   MCSS_SetPaletteFade( pWork->pokeMcss[1], 0, 16, ANMCNTC(_POKEMON_CENTER_TIME/3)/16, 0 );
-  IRC_POKETRADE_MessageWindowClose(pWork);
+  POKETRADE_MESSAGE_WindowClose(pWork);
 
   GFL_BG_SetBackGroundColor(GFL_BG_FRAME1_M ,0);
   GFL_BG_SetBackGroundColor(GFL_BG_FRAME1_S ,0);
@@ -357,7 +357,7 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
     pWork->pTouchWork=NULL;
     IRC_POKETRADE_EndIconResource(pWork);
     GFL_CLACT_UNIT_Delete(pWork->cellUnit);
-    POKETRADE_MessageHeapEnd(pWork);
+    POKETRADE_MESSAGE_HeapEnd(pWork);
     
     pWork->cellUnit = GFL_CLACT_UNIT_Create( 3 , 0 , pWork->heapID );
 
