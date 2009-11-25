@@ -19,7 +19,7 @@ REM ================================
 make
 @echo errorlevel = %ERRORLEVEL%
 
-REM 終了判定
+REM 正常終了判定
 if %ERRORLEVEL% == 0 goto END:
 
 REM ================================
@@ -29,6 +29,12 @@ REM make cleanして再度make
 @echo ***** make clean *****
 make clean
 make
+
+REM 正常終了判定
+if %ERRORLEVEL% == 0 goto END:
+
+c:\tools\softalk\SofTalk.exe メイクが通りません！
+
 REM エラーコードを丸々返す（cleanでもmakeが通らなかったらhudsonに通知)
 exit %ERRORLEVEL%
 
@@ -36,6 +42,7 @@ REM ================================
 REM 正常終了
 REM ================================
 :END
+  c:\tools\softalk\SofTalk.exe メイクが通りました！
   @echo hudson make end
 
 
