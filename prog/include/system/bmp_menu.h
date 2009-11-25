@@ -82,7 +82,7 @@ enum {
  */
 //--------------------------------------------------------------
 extern BMPMENU_WORK * BmpMenu_AddNoTrans( const BMPMENU_HEADER * dat,
-		u8 px, u8 py, u8 pos, u8 heap_id, u32 cancel );
+		u8 px, u8 py, u8 pos, HEAPID heap_id, u32 cancel );
 
 //--------------------------------------------------------------
 /**
@@ -101,7 +101,7 @@ extern BMPMENU_WORK * BmpMenu_AddNoTrans( const BMPMENU_HEADER * dat,
  */
 //--------------------------------------------------------------
 extern BMPMENU_WORK * BmpMenu_AddEx( const BMPMENU_HEADER * dat,
-		u8 px, u8 py, u8 pos, u8 heap_id, u32 cancel );
+		u8 px, u8 py, u8 pos, HEAPID heap_id, u32 cancel );
 
 //--------------------------------------------------------------
 /**
@@ -118,7 +118,7 @@ extern BMPMENU_WORK * BmpMenu_AddEx( const BMPMENU_HEADER * dat,
  */
 //--------------------------------------------------------------
 extern BMPMENU_WORK * BmpMenu_Add(
-	const BMPMENU_HEADER * dat, u8 pos, u8 heap_id );
+	const BMPMENU_HEADER * dat, u8 pos, HEAPID heap_id );
 
 //--------------------------------------------------------------
 /**

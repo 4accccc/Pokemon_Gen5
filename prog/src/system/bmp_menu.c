@@ -50,8 +50,8 @@ struct _BMPMENU_WORK {
   u8  sy;
   u8  mv;
 
-  u8  heap_id;  // メモリ取得モード
-  u8  dmy[3];   // ビット余り
+  HEAPID  heap_id;  // メモリ取得モード
+  u8  dmy[2];   // ビット余り
 };
 
 //======================================================================
@@ -92,7 +92,7 @@ static void BmpWinOn( GFL_BMPWIN *bmpwin );
  */
 //--------------------------------------------------------------
 BMPMENU_WORK * BmpMenu_AddNoTrans( const BMPMENU_HEADER *dat,
-                                   u8 px, u8 py, u8 pos, u8 heap_id, u32 cancel )
+                                   u8 px, u8 py, u8 pos, HEAPID heap_id, u32 cancel )
 {
   BMPMENU_WORK *mw;
 
@@ -144,7 +144,7 @@ BMPMENU_WORK * BmpMenu_AddNoTrans( const BMPMENU_HEADER *dat,
  */
 //--------------------------------------------------------------
 BMPMENU_WORK * BmpMenu_AddEx( const BMPMENU_HEADER * dat,
-                              u8 px, u8 py, u8 pos, u8 heap_id, u32 cancel )
+                              u8 px, u8 py, u8 pos, HEAPID heap_id, u32 cancel )
 {
   BMPMENU_WORK *mw;
   mw = BmpMenu_AddNoTrans( dat, px, py, pos, heap_id, cancel );
@@ -166,7 +166,7 @@ BMPMENU_WORK * BmpMenu_AddEx( const BMPMENU_HEADER * dat,
  * @li  Bボタンキャンセル
  */
 //--------------------------------------------------------------
-BMPMENU_WORK * BmpMenu_Add( const BMPMENU_HEADER * dat, u8 pos, u8 heap_id )
+BMPMENU_WORK * BmpMenu_Add( const BMPMENU_HEADER * dat, u8 pos, HEAPID heap_id )
 {
 #if 0
   return BmpMenu_AddEx(
@@ -710,7 +710,7 @@ u32 BmpMenu_YesNoSelectMain( BMPMENU_WORK * mw )
  */
 //--------------------------------------------------------------------------------------------
 #if 0
-u32 BmpYesNoSelectMainOutControl( BMPMENU_WORK * mw, u8 prm, u32 heap )
+u32 BmpYesNoSelectMainOutControl( BMPMENU_WORK * mw, u8 prm, HEAPID heap )
 {
   u32 ret = BmpMenuMainOutControl( mw, prm );
 
