@@ -2334,7 +2334,7 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
           NARC_battgra_wb_waza_w_11_NCLR,
           NARC_battgra_wb_waza_w_17_NCLR,
         };
-        waza_type = WT_WazaDataParaGet( biwp->wazano[ i ], ID_WTD_wazatype );
+        waza_type = WAZADATA_GetParam( biwp->wazano[ i ], WAZAPARAM_TYPE );
         datID = waza_type_pltt[ waza_type ];
 
         biw->wazatype_wk[ i ] = GFL_CLACT_WK_Create( biw->wazatype_clunit, biw->wazatype_charID[ i ],

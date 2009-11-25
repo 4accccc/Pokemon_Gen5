@@ -2250,7 +2250,7 @@ static void BPL_P5_PPNumPut( BPLIST_WORK * wk, u32 waza )
   u32 pp;
 
   win = wk->add_win[WIN_P5_SKILL5].win;
-  pp  = WT_WazaDataParaGet( waza, ID_WTD_pp );
+  pp  = WAZADATA_GetParam( waza, WAZAPARAM_BASE_PP );
 
   NUMFONT_WriteNumber( wk->nfnt, pp, 2, NUMFONT_MODE_SPACE, win, P5_PPNUM5_PX, P5_PPNUM5_PY );
   NUMFONT_WriteNumber(
@@ -2891,7 +2891,7 @@ static void BPL_WazaDelSelPageBmpWrite( BPLIST_WORK * wk )
   {
     BPL_POKEWAZA  tmp;
 
-    tmp.pp  = WT_WazaDataParaGet( wk->dat->chg_waza, ID_WTD_pp );
+    tmp.pp  = WAZADATA_GetParam( wk->dat->chg_waza, WAZAPARAM_BASE_PP );
     tmp.mpp = tmp.pp;
     BPL_WazaButtonPPPut( wk, &tmp, WIN_P5_SKILL5 );
   }
@@ -2958,18 +2958,18 @@ static void BPL_Page6BmpWrite( BPLIST_WORK * wk )
     BPL_WazaKindPut( wk, WIN_P6_BRNAME, waza->kind );
     BPL_WazaPPPut( wk, WIN_P6_PPNUM, waza->pp, waza->mpp );
   }else{
-    u32 pp = WT_WazaDataParaGet( wk->dat->chg_waza, ID_WTD_pp );
+    u32 pp = WAZADATA_GetParam( wk->dat->chg_waza, WAZAPARAM_BASE_PP );
 
     BPL_WazaNamePut(
       wk, wk->dat->chg_waza, WIN_P6_SKILL,
       WazaMsgID_Tbl[4], P6_WAZANAME_PY, FCOL_P13WN );
     BPL_WazaInfoPut( wk, WIN_P6_INFO, wk->dat->chg_waza );
     BPL_WazaHitNumPut(
-      wk, WIN_P6_HITNUM, WT_WazaDataParaGet(wk->dat->chg_waza,ID_WTD_hitprobability) );
+      wk, WIN_P6_HITNUM, WAZADATA_GetParam(wk->dat->chg_waza,WAZAPARAM_HITPER) );
     BPL_WazaPowNumPut(
-      wk, WIN_P6_POWNUM, WT_WazaDataParaGet(wk->dat->chg_waza,ID_WTD_damage) );
+      wk, WIN_P6_POWNUM, WAZADATA_GetParam(wk->dat->chg_waza,WAZAPARAM_POWER) );
     BPL_WazaKindPut(
-      wk, WIN_P6_BRNAME, WT_WazaDataParaGet(wk->dat->chg_waza,ID_WTD_kind) );
+      wk, WIN_P6_BRNAME, WAZADATA_GetParam(wk->dat->chg_waza,WAZAPARAM_DAMAGE_TYPE) );
     BPL_WazaPPPut( wk, WIN_P6_PPNUM, pp, pp );
   }
 
@@ -3117,7 +3117,7 @@ static void BPL_Page8BmpWrite( BPLIST_WORK * wk )
     BPL_WazaPPPut( wk, WIN_P8_PPNUM, waza->pp, waza->mpp );
 
   }else{
-    u32 pp = WT_WazaDataParaGet( wk->dat->chg_waza, ID_WTD_pp );
+    u32 pp = WAZADATA_GetParam( wk->dat->chg_waza, WAZAPARAM_BASE_PP );
 
     BPL_WazaNamePut(
       wk, wk->dat->chg_waza, WIN_P8_SKILL,
@@ -3126,11 +3126,11 @@ static void BPL_Page8BmpWrite( BPLIST_WORK * wk )
 
 /*
     BPL_WazaHitNumPut(
-      wk, WIN_P6_HITNUM, WT_WazaDataParaGet(wk->dat->chg_waza,ID_WTD_hitprobability) );
+      wk, WIN_P6_HITNUM, WAZADATA_GetParam(wk->dat->chg_waza,WAZAPARAM_HITPER) );
     BPL_WazaPowNumPut(
-      wk, WIN_P6_POWNUM, WT_WazaDataParaGet(wk->dat->chg_waza,ID_WTD_damage) );
+      wk, WIN_P6_POWNUM, WAZADATA_GetParam(wk->dat->chg_waza,WAZAPARAM_POWER) );
     BPL_WazaKindPut(
-      wk, WIN_P6_BRNAME, WT_WazaDataParaGet(wk->dat->chg_waza,ID_WTD_kind) );
+      wk, WIN_P6_BRNAME, WAZADATA_GetParam(wk->dat->chg_waza,WAZAPARAM_DAMAGE_TYPE) );
 */
     BPL_WazaPPPut( wk, WIN_P8_PPNUM, pp, pp );
   }

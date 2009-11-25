@@ -1094,7 +1094,7 @@ void  PPP_SetWazaPush( POKEMON_PASO_PARAM *ppp, u16 wazano )
   }
 
   waza[LAST_IDX] = wazano;
-  pp[LAST_IDX] = WT_WazaDataParaGet( wazano, ID_WTD_pp );
+  pp[LAST_IDX] = WAZADATA_GetParam( wazano, WAZAPARAM_BASE_PP );
   ppcnt[LAST_IDX] = 0;
 
   for( i=0 ; i < PTL_WAZA_MAX ; i++ ){

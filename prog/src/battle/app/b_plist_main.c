@@ -2144,10 +2144,10 @@ static void BPL_PokeDataMake( BPLIST_WORK * wk )
       waza->pp   = PP_Get( wk->poke[i].pp, ID_PARA_pp1+j, NULL );
       waza->mpp  = PP_Get( wk->poke[i].pp, ID_PARA_pp_count1+j, NULL );
       waza->mpp  = WAZADATA_GetMaxPP( waza->id, waza->mpp );
-      waza->type = WT_WazaDataParaGet( waza->id, ID_WTD_wazatype );
-      waza->kind = WT_WazaDataParaGet( waza->id, ID_WTD_kind );
-      waza->hit  = WT_WazaDataParaGet( waza->id, ID_WTD_hitprobability );
-      waza->pow  = WT_WazaDataParaGet( waza->id, ID_WTD_damage );
+      waza->type = WAZADATA_GetParam( waza->id, WAZAPARAM_TYPE );
+      waza->kind = WAZADATA_GetParam( waza->id, WAZAPARAM_DAMAGE_TYPE );
+      waza->hit  = WAZADATA_GetParam( waza->id, WAZAPARAM_HITPER );
+      waza->pow  = WAZADATA_GetParam( waza->id, WAZAPARAM_POWER );
     }
   }
 }
