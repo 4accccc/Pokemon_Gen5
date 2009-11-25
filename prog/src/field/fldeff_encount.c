@@ -83,12 +83,49 @@ typedef struct
 }TASKWORK_ENCOUNT;
 
 
-static EFFRES_DATA DATA_EffEncountRes[] = {
- {
+static EFFRES_DATA DATA_EffEncountRes[EFFENC_TYPE_MAX] = {
+ {  //íZÇ¢ëê EFFENC_TYPE_SGRASS
    1,TRUE,TRUE,NARC_fldeff_short_grass_sp_nsbmd,
    {
      NARC_fldeff_short_grass_sp_nsbta,
      0,0,0
+   },
+ },
+ {  //EFFENC_TYPE_LGRASS,  ///<í∑Ç¢ëê
+   1,TRUE,TRUE,NARC_fldeff_short_grass_sp_nsbmd,
+   {
+     NARC_fldeff_short_grass_sp_nsbta,
+     0,0,0
+   },
+ },
+ {  //EFFENC_TYPE_CAVE,    ///<ì¥åA
+   1,TRUE,TRUE,NARC_fldeff_short_grass_sp_nsbmd,
+   {
+     NARC_fldeff_short_grass_sp_nsbta,
+     0,0,0
+   },
+ },
+ {  //EFFENC_TYPE_WATER,   ///<íWêÖ
+   1,TRUE,TRUE,NARC_fldeff_short_grass_sp_nsbmd,
+   {
+     NARC_fldeff_short_grass_sp_nsbta,
+     0,0,0
+   },
+ },
+ {  //EFFENC_TYPE_SEA,     ///<äC
+   1,TRUE,TRUE,NARC_fldeff_short_grass_sp_nsbmd,
+   {
+     NARC_fldeff_short_grass_sp_nsbta,
+     0,0,0
+   },
+ },
+ {  //EFFENC_TYPE_BRIDGE,  ///<ã¥
+   3,FALSE,FALSE,NARC_fldeff_bird_shadow_nsbmd,
+   {
+     NARC_fldeff_bird_shadow_nsbta,
+     NARC_fldeff_bird_shadow_nsbma,
+     NARC_fldeff_bird_shadow_nsbca,
+     0
    },
  },
 };
@@ -119,23 +156,23 @@ void * FLDEFF_ENCOUNT_SGrassInit( FLDEFF_CTRL *fectrl, HEAPID heapID )
 }
 void * FLDEFF_ENCOUNT_LGrassInit( FLDEFF_CTRL *fectrl, HEAPID heapID )
 {
-  return enc_CreateWork( fectrl, heapID, EFFENC_TYPE_SGRASS );
+  return enc_CreateWork( fectrl, heapID, EFFENC_TYPE_LGRASS );
 }
 void * FLDEFF_ENCOUNT_CaveInit( FLDEFF_CTRL *fectrl, HEAPID heapID )
 {
-  return enc_CreateWork( fectrl, heapID, EFFENC_TYPE_SGRASS );
+  return enc_CreateWork( fectrl, heapID, EFFENC_TYPE_CAVE );
 }
 void * FLDEFF_ENCOUNT_WaterInit( FLDEFF_CTRL *fectrl, HEAPID heapID )
 {
-  return enc_CreateWork( fectrl, heapID, EFFENC_TYPE_SGRASS );
+  return enc_CreateWork( fectrl, heapID, EFFENC_TYPE_WATER );
 }
 void * FLDEFF_ENCOUNT_SeaInit( FLDEFF_CTRL *fectrl, HEAPID heapID )
 {
-  return enc_CreateWork( fectrl, heapID, EFFENC_TYPE_SGRASS );
+  return enc_CreateWork( fectrl, heapID, EFFENC_TYPE_SEA );
 }
 void * FLDEFF_ENCOUNT_BridgeInit( FLDEFF_CTRL *fectrl, HEAPID heapID )
 {
-  return enc_CreateWork( fectrl, heapID, EFFENC_TYPE_SGRASS );
+  return enc_CreateWork( fectrl, heapID, EFFENC_TYPE_BRIDGE );
 }
 
 //--------------------------------------------------------------
@@ -249,7 +286,7 @@ FLDEFF_TASK* FLDEFF_ENCOUNT_SetEffect( FLDEFF_CTRL *fectrl, u16 gx, u16 gz, fx32
      return NULL; //ÉåÅ[ÉãÉ}ÉbÉvÇ≈ÇÕê∂ê¨ÇµÇ»Ç¢
   }
 
-  enc = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_ENC_SGRASS );
+  enc = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_ENC_SGRASS+type );
   head.eff_enc = enc;
   head.gx = gx;
   head.gz = gz;

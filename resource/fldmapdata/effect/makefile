@@ -64,7 +64,13 @@ FEDATA_NONCV := $(addprefix $(RESDIR)/,$(FEDATA_NONCV))
 #	ägí£éq ê∂ê¨ÉãÅ[Éã
 #--------------------------------------------------
 #.SUFFIXES:
-RESDIR_EFFENC = $(RESDIR)/$(EFFENC_SGRASS)
+RESDIR_EFFENC = $(RESDIR)/$(EFFENC_SGRASS) \
+								$(RESDIR)/$(EFFENC_LGRASS) \
+								$(RESDIR)/$(EFFENC_WATER) \
+								$(RESDIR)/$(EFFENC_SEA) \
+								$(RESDIR)/$(EFFENC_BIRD) \
+								$(RESDIR)/$(EFFENC_CAVE)
+
 RESDIR_ALL = $(RESDIR) $(RESDIR_EFFENC)
 
 vpath %imd $(RESDIR_ALL)

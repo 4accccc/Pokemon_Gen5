@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ita version="1.6.0">
+
+<head>
+	<create user="fuchino" host="W00152" date="2009-11-18T12:51:36" source="bird_shadow.mb"/>
+	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<tex_srt_info
+	frame_size="60"
+	tool_start_frame="1"
+	tool_end_frame="60"
+	interpolation="frame"
+	tex_matrix_mode="maya"
+	compress_material="on" material_size="1 1"
+	frame_step_mode="1"
+	tolerance_tex_scale="0.100000"
+	tolerance_tex_rotate="0.100000"
+	tolerance_tex_translate="0.010000"
+/>
+
+<tex_scale_data size="1">
+	1.000000
+</tex_scale_data>
+
+<tex_rotate_data size="1">
+	0.000000
+</tex_rotate_data>
+
+<tex_translate_data size="120">
+	-0.100098 -0.108643 -0.117188 -0.125488 -0.133301 -0.140625 -0.146973 -0.152344 -0.156738 -0.159668
+	-0.161377 -0.161377 -0.159424 -0.155762 -0.149902 -0.141357 -0.129395 -0.114746 -0.097900 -0.079102
+	-0.059082 -0.038330 -0.017090 0.003906 0.024414 0.043701 0.061279 0.076904 0.090088 0.100098
+	0.107666 0.114014 0.119141 0.123047 0.125977 0.127686 0.128174 0.127686 0.126465 0.124023
+	0.120850 0.116699 0.112061 0.106445 0.100098 0.092529 0.083252 0.072754 0.061035 0.048096
+	0.034424 0.020020 0.004883 -0.010498 -0.025879 -0.041504 -0.056885 -0.071777 -0.086182 -0.100098
+	0.100098 0.085205 0.069580 0.053467 0.036865 0.020020 0.003418 -0.012939 -0.028809 -0.043945
+	-0.057861 -0.070801 -0.082275 -0.092041 -0.100098 -0.106445 -0.111816 -0.116455 -0.120117 -0.122803
+	-0.124512 -0.125244 -0.125244 -0.124268 -0.122559 -0.119629 -0.116211 -0.111572 -0.106201 -0.100098
+	-0.092041 -0.081787 -0.069580 -0.055908 -0.040771 -0.024902 -0.008301 0.008301 0.024902 0.040771
+	0.055908 0.069580 0.081787 0.092041 0.100098 0.105957 0.110840 0.114502 0.117188 0.118896
+	0.119629 0.119629 0.118896 0.117432 0.115479 0.113037 0.110107 0.106934 0.103516 0.100098
+</tex_translate_data>
+
+<tex_srt_anm_array size="1">
+	<tex_srt_anm index="0" material_name="tori_kage01_lm1">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="60" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="60" data_head="60"/>
+	</tex_srt_anm>
+</tex_srt_anm_array>
+
+</body>
+
+</ita>

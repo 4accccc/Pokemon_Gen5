@@ -3,6 +3,11 @@
 #=======================================================================
 
 EFFENC_SGRASS = eff_enc/s_grass/
+EFFENC_LGRASS = eff_enc/l_grass/
+EFFENC_BIRD = eff_enc/bird/
+EFFENC_WATER = eff_enc/water/
+EFFENC_SEA = eff_enc/sea/
+EFFENC_CAVE = eff_enc/cave/
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　itpアニメ定義
@@ -26,13 +31,15 @@ G3D_FE_ANMICA = shibuki01.ica \
   taki_roop_f.ica \
   taki_start_f.ica \
   taki_start_s.ica \
-  iwakudaki.ica
+  iwakudaki.ica \
+  $(EFFENC_BIRD)bird_shadow.ica
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　imaアニメ定義
 #---------------------------------------------------------------
 G3D_FE_ANMIMA = taki_land.ima \
-  iwakudaki.ima
+  iwakudaki.ima \
+  $(EFFENC_BIRD)bird_shadow.ima
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　itaアニメ定義
@@ -46,6 +53,7 @@ G3D_FE_ANMITA = shibuki01.ita \
   $(EFFENC_SGRASS)short_grass_su2.ita \
   $(EFFENC_SGRASS)short_grass_au2.ita \
   $(EFFENC_SGRASS)short_grass_wi2.ita \
+  $(EFFENC_BIRD)bird_shadow.ita \
   iwakudaki.ita
 
 #---------------------------------------------------------------
@@ -97,6 +105,7 @@ G3D_FE_MDL = kage.imd \
   $(EFFENC_SGRASS)short_grass_su2.imd \
   $(EFFENC_SGRASS)short_grass_au2.imd \
   $(EFFENC_SGRASS)short_grass_wi2.imd \
+  $(EFFENC_BIRD)bird_shadow.imd \
   iwakudaki.imd
 
 
