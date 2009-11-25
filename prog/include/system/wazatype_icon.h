@@ -15,7 +15,7 @@
 //==============================================================================
 ///アイコンタイプ(技タイプ以外のタイプ)
 enum{
-	ICONTYPE_STYLE = 18,	///<格好よさ
+	ICONTYPE_STYLE = 17,	///<格好よさ
 	ICONTYPE_BEAUTIFUL,		///<美しさ
 	ICONTYPE_CUTE,			///<可愛さ
 	ICONTYPE_INTELLI,		///<賢さ
