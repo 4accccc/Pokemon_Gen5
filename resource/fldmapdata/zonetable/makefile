@@ -37,8 +37,8 @@ include $(PROJECT_RSCDIR)macro_define
 #	ツールへのパス指定
 #----------------------------------------------------------------------------
 
-XLS2TAB		= ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out.rb
-EXCEL2TAB	= $(PROJECT_ROOT)/tools/exceltool/exceltabconv.exe
+#XLS2TAB		= ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out.rb
+XLS2TAB		= ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out_sheet.rb -t
 ELF2BIN		= $(PROJECT_ROOT)/tools/celf2bin.exe
 
 CONVERTER	= ruby scripts/zonetable.rb

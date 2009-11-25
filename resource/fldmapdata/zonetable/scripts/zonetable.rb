@@ -13,6 +13,9 @@
 
 $KCODE="SJIS"
 
+# $zone_spec‚Ì’è‹`
+require "../../batt_bg_tbl/zone_spec.rb"
+
 class ZoneIDError < Exception; end
 #------------------------------------------------
 #------------------------------------------------
@@ -256,11 +259,18 @@ class ZoneDataFile < OutputFile
     else
       camera_area = "NARC_camera_scroll_original_#{column[@cl.cCAMERA_AREA]}_bin"
     end
-		battle_bg = "#{column[@cl.cBATTLEBG]}"
-		if !(battle_bg =~ /^BTL_BG_/) then
-			STDERR.puts "í“¬”wŒi‚ÌŽw’è‚ª‚¨‚©‚µ‚¢I:#{battle_bg}:#{id.upcase}\n"
+		battle_bg_str = "#{column[@cl.cBATTLEBG]}"
+    if $zone_spec.has_key?( battle_bg_str ) then
+      battle_bg = $zone_spec[battle_bg_str]
+    else
+			STDERR.puts "í“¬”wŒi‚ÌŽw’è‚ª‚¨‚©‚µ‚¢I:#{battle_bg_str}:#{id.upcase}\n"
 			exit 1
-		end
+    end
+		#battle_bg = "#{column[@cl.cBATTLEBG]}"
+		#if !(battle_bg =~ /^BTL_BG_/) then
+		#	STDERR.puts "í“¬”wŒi‚ÌŽw’è‚ª‚¨‚©‚µ‚¢I:#{battle_bg}:#{id.upcase}\n"
+		#	exit 1
+		#end
 		name = column[@cl.cNAME].upcase
 		encount_id = case column[@cl.cENCOUNT]
 			when "›"
