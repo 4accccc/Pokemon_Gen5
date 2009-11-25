@@ -255,12 +255,12 @@ VMCMD_RESULT EvCmdBmpMenuStart( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 static void sysWin_AddWindow( SCRCMD_WORK *work, u8 updown )
 {
-  FLDMSGWIN_STREAM *msgWin;
+  FLDSYSWIN_STREAM *sysWin;
   
   if( SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) ) //メニューオープン済み
   {
-    msgWin = SCRCMD_WORK_GetMsgWinPtr( work );
-    FLDMSGWIN_STREAM_ClearMessage( msgWin );
+    sysWin = SCRCMD_WORK_GetMsgWinPtr( work );
+    FLDSYSWIN_STREAM_ClearMessage( sysWin );
   }
   else
   {
@@ -269,12 +269,12 @@ static void sysWin_AddWindow( SCRCMD_WORK *work, u8 updown )
     GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
 
     if( updown == SCRCMD_MSGWIN_UP ){
-	    msgWin = FLDMSGWIN_STREAM_Add( fparam->msgBG, msgData, 1, 1, 30, 4 );
+	    sysWin = FLDSYSWIN_STREAM_Add( fparam->msgBG, msgData, 1 );
     }else{ //DOWN
-	    msgWin = FLDMSGWIN_STREAM_Add( fparam->msgBG, msgData, 1, 19, 30, 4 );
+	    sysWin = FLDSYSWIN_STREAM_Add( fparam->msgBG, msgData, 19 );
     }
-
-    SCRCMD_WORK_SetMsgWinPtr( work, msgWin );
+    
+    SCRCMD_WORK_SetMsgWinPtr( work, sysWin );
     SCREND_CHK_SetBitOn(SCREND_CHK_WIN_OPEN);
   }
 }
@@ -289,10 +289,10 @@ static void sysWin_AddWindow( SCRCMD_WORK *work, u8 updown )
 static BOOL sysWinMsgWait( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-  FLDMSGWIN_STREAM *msgWin;
-  msgWin = (FLDMSGWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
+  FLDSYSWIN_STREAM *sysWin;
+  sysWin = (FLDSYSWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
   
-  if( FLDMSGWIN_STREAM_Print(msgWin) == TRUE ){
+  if( FLDSYSWIN_STREAM_Print(sysWin) == TRUE ){
     return( 1 );
   }
   
@@ -309,7 +309,7 @@ static BOOL sysWinMsgWait( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdSysWinMsg( VMHANDLE *core, void *wk )
 {
   STRBUF *msgbuf;
-  FLDMSGWIN_STREAM *msgWin;
+  FLDSYSWIN_STREAM *sysWin;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
@@ -317,8 +317,8 @@ VMCMD_RESULT EvCmdSysWinMsg( VMHANDLE *core, void *wk )
   
   sysWin_AddWindow( work, up_down );
   msgbuf = SetExpandWord( work, sc, msg_id );
-  msgWin = (FLDMSGWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
-  FLDMSGWIN_STREAM_PrintStrBufStart( msgWin, 0, 0, msgbuf );
+  sysWin = (FLDSYSWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
+  FLDSYSWIN_STREAM_PrintStrBufStart( sysWin, 0, 0, msgbuf );
   
   VMCMD_SetWait( core, sysWinMsgWait );
   return VMCMD_RESULT_SUSPEND;
@@ -382,7 +382,7 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
     tmsg = FLDTALKMSGWIN_AddStrBuf( fparam->msgBG, idx, pos_p, *msgbuf );
   }
   
-  SCRCMD_WORK_SetFldMsgWinStream( work, (FLDMSGWIN_STREAM*)tmsg );
+  SCRCMD_WORK_SetFldMsgWinStream( work, (FLDSYSWIN_STREAM*)tmsg );
   PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
 
   VMCMD_SetWait( core, TalkMsgWait );
@@ -399,7 +399,7 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdSysWinMsgAllPut( VMHANDLE *core, void *wk )
 {
-  FLDMSGWIN_STREAM *msgWin;
+  FLDSYSWIN_STREAM *sysWin;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
@@ -416,9 +416,9 @@ VMCMD_RESULT EvCmdSysWinMsgAllPut( VMHANDLE *core, void *wk )
     WORDSET_ExpandStr( *wordset, *msgbuf, *tmpbuf );
   }
   
-  msgWin = (FLDMSGWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
-  FLDMSGWIN_STREAM_ClearMessage( msgWin );
-  FLDMSGWIN_STREAM_AllPrintStrBuf( msgWin, 0, 0, *msgbuf );
+  sysWin = (FLDSYSWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
+  FLDSYSWIN_STREAM_ClearMessage( sysWin );
+  FLDSYSWIN_STREAM_AllPrintStrBuf( sysWin, 0, 0, *msgbuf );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -865,10 +865,10 @@ static void ClosePlainWin( SCRCMD_WORK *work )
 static BOOL PlainWinMsgWait( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-  FLDPLAINMSGWIN *msgWin;
-  msgWin = (FLDPLAINMSGWIN*)SCRCMD_WORK_GetMsgWinPtr( work );
+  FLDPLAINMSGWIN *plnWin;
+  plnWin = (FLDPLAINMSGWIN*)SCRCMD_WORK_GetMsgWinPtr( work );
   
-  if( FLDPLAINMSGWIN_Print(msgWin) == TRUE ){
+  if( FLDPLAINMSGWIN_Print(plnWin) == TRUE ){
     return( 1 );
   }
   
@@ -1302,12 +1302,12 @@ VMCMD_RESULT EvCmdMsgWinClose( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 static void CloseWin( SCRCMD_WORK *work )
 {
-  FLDMSGWIN_STREAM *msgWin;
+  FLDSYSWIN_STREAM *sysWin;
   
   if( SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) )
   {
-    msgWin = (FLDMSGWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
-    FLDMSGWIN_STREAM_Delete( msgWin );
+    sysWin = (FLDSYSWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
+    FLDSYSWIN_STREAM_Delete( sysWin );
     SCREND_CHK_SetBitOff(SCREND_CHK_WIN_OPEN);
   }
   else

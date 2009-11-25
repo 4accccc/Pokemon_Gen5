@@ -32,28 +32,45 @@
 //======================================================================
 #define FLDMSGBG_BGFRAME (GFL_BG_FRAME1_M)	///<使用BGフレーム
 
-#define FLDMSGBG_PANO_BGWIN (10)
-#define FLDMSGBG_PANO_SPWIN (10)
-#define FLDMSGBG_PANO_FONT_TALKMSGWIN (11) ///<吹き出しフォントパレットNo
-#define FLDMSGBG_PANO_TALKMSGWIN (12) ///<吹き出しウィンドウパレットNo
-#define FLDMSGBG_PANO_MENU (13) ///<メニューパレットNo
-#define FLDMSGBG_PANO_FONT (14) ///<フォントパレットNo
-
 #define FLDMSGBG_PRINT_MAX (4)				///<PRINT関連要素数最大
 #define FLDMSGBG_PRINT_STREAM_MAX (1) ///<PRINT_STREAM稼働数
 
 #define FLDMSGBG_STRLEN (128)				///<文字列長さ標準
 
-#define FLDMSGBG_CHAROFFS_TALKMSGWIN (32) ///<TALKWINMSGキャラオフセット
+//--------------------------------------------------------------
+//  メッセージウィンドウ、キャラオフセット
+//--------------------------------------------------------------
+enum
+{
+  CHAROFFS_CLEAR = 0, ///<クリアキャラ 0
+  CHAROFFS_WINFRAME = 1, ///<ウィンドウフレーム 1-10 (chara 9
+  CHAROFFS_BALLOONWIN = 11, ///<吹き出しウィンドウ 11-30 (chara 18
+  CHAROFFS_SYSWIN = 31, ///<システムウィンドウ 31-50 (chara 18
+  CHAROFFS_OTHERSWIN = 51, ///<その他ウィンドウ 46- (使用時に初期化
+};
 
+//--------------------------------------------------------------
+//  メッセージウィンドウ　使用パレット
+//--------------------------------------------------------------
+enum
+{
+  PANO_BGWIN = 10, //BGウィンドウ
+  PANO_SPWIN = 10, //特殊ウィンドウ
+  PANO_FONT_TALKMSGWIN = 11, ///<吹き出しフォントパレットNo
+  PANO_TALKMSGWIN = 12, ///<吹き出しウィンドウパレットNo
+  PANO_MENU = 13, ///<メニューパレットNo
+  PANO_FONT = 14, ///<フォントパレットNo
+};
+
+//--------------------------------------------------------------
+/// カーソルフラグ
+//--------------------------------------------------------------
 enum
 {
   CURSOR_FLAG_NONE = 0,
   CURSOR_FLAG_WRITE,
   CURSOR_FLAG_END,
 };
-
-#define MSGWAIT_FAST (-2)
 
 //======================================================================
 //	typedef struct
@@ -117,6 +134,16 @@ struct _TAG_FLDMSGWIN
 };
 
 //--------------------------------------------------------------
+///	FLDSYSWIN
+//--------------------------------------------------------------
+struct _TAG_FLDSYSWIN
+{
+	GFL_BMPWIN *bmpwin;		//ユーザーから
+	FLDMSGPRINT *msgPrint;
+	FLDMSGBG *fmb;
+};
+
+//--------------------------------------------------------------
 ///	FLDMENUFUNC
 //--------------------------------------------------------------
 struct _TAG_FLDMENUFUNC
@@ -156,7 +183,24 @@ struct _TAG_FLDMSGWIN_STREAM
   u8 flag_key_pause_clear;
   KEYCURSOR_WORK cursor_work;
 };
- 
+
+//--------------------------------------------------------------
+///	FLDSYSWIN_STREAM
+//--------------------------------------------------------------
+struct _TAG_FLDSYSWIN_STREAM
+{
+	GFL_BMPWIN *bmpwin;
+	FLDMSGPRINT_STREAM *msgPrintStream;
+  FLDMSGPRINT *msgPrint;
+  const GFL_MSGDATA *msgData; //ユーザーから
+  STRBUF *strBuf;
+	FLDMSGBG *fmb;
+   
+  u8 flag_cursor;
+  u8 flag_key_pause_clear;
+  KEYCURSOR_WORK cursor_work;
+};
+
 //--------------------------------------------------------------
 /// FLDBGWIN
 //--------------------------------------------------------------
@@ -212,11 +256,17 @@ static void keyCursor_Clear(
 static void keyCursor_Write(
     KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col );
 
+static void syswin_InitGraphic( HEAPID heapID );
+static void syswin_WriteWindow( const GFL_BMPWIN *bmpwin );
+static GFL_BMPWIN * syswin_InitBmp( u8 pos_y, HEAPID heapID );
+static void syswin_ClearBmp( GFL_BMPWIN *bmpwin );
+static void syswin_DeleteBmp( GFL_BMPWIN *bmpwin );
+
 static void setBlendAlpha( BOOL on );
 
-static GFL_BMPWIN * FldBmpWinFrame_Init( u32 bgFrame, HEAPID heapID,
+static GFL_BMPWIN * winframe_InitBmp( u32 bgFrame, HEAPID heapID,
 	u16 pos_x, u16 pos_y, u16 size_x, u16 size_y, u16 pltt_no );
-static void FldBmpWinFrame_Delete( GFL_BMPWIN *bmpwin );
+static void winframe_DeleteBmp( GFL_BMPWIN *bmpwin );
 
 static int FldMsgBG_SetFldSubMsgWin( FLDMSGBG *fmb, FLDSUBMSGWIN *subwin );
 static FLDSUBMSGWIN * FldMsgBG_DeleteFldSubMsgWin( FLDMSGBG *fmb, int id );
@@ -232,26 +282,30 @@ static const u8 ALIGN4 skip_cursor_Character[128];
 //--------------------------------------------------------------
 static void debug_ROM091030_WindowColorOFF( HEAPID heapID )
 {
+#if 0
   u16 *buf = GFL_HEAP_AllocMemoryLo( heapID, 32 );
-  u32 offs = HW_BG_PLTT + (32*FLDMSGBG_PANO_MENU);
+  u32 offs = HW_BG_PLTT + (32*PANO_MENU);
   DC_FlushRange( (void*)offs, 32 );
   MI_CpuCopy( (void*)offs, buf, 32 );
   buf[1] = 0;
   DC_FlushRange( (void*)buf, 32 );
   GX_LoadBGPltt( (void*)buf, offs-HW_BG_PLTT, 32 );
   GFL_HEAP_FreeMemory( buf );
+#endif
 }
 
 static void debug_ROM091030_WindowColorON( HEAPID heapID )
 {
+#if 0
   u16 *buf = GFL_HEAP_AllocMemoryLo( heapID, 32 );
-  u32 offs = HW_BG_PLTT + (32*FLDMSGBG_PANO_MENU);
+  u32 offs = HW_BG_PLTT + (32*PANO_MENU);
   DC_FlushRange( (void*)offs, 32 );
   MI_CpuCopy( (void*)offs, buf, 32 );
   buf[1] = 0x7fff;
   DC_FlushRange( (void*)buf, 32 );
   GX_LoadBGPltt( (void*)buf, offs-HW_BG_PLTT, 32 );
   GFL_HEAP_FreeMemory( buf );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -287,7 +341,7 @@ FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
 		GFL_BG_SetPriority( fmb->bgFrame, 0 );
 		GFL_BG_SetPriority( GFL_BG_FRAME0_M, 3 );
 		
-		GFL_BG_FillCharacter( fmb->bgFrame, 0x00, 1, 0 );
+		GFL_BG_FillCharacter( fmb->bgFrame, CHAROFFS_CLEAR, 1, 0 );
 		GFL_BG_FillScreen( fmb->bgFrame,
 			0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 		
@@ -297,18 +351,18 @@ FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
 	{	//フォントパレット
 		GFL_ARC_UTIL_TransVramPalette(
 			ARCID_FONT, NARC_font_default_nclr, //黒
-			PALTYPE_MAIN_BG, FLDMSGBG_PANO_FONT_TALKMSGWIN*32, 32, fmb->heapID );
+			PALTYPE_MAIN_BG, PANO_FONT_TALKMSGWIN*32, 32, fmb->heapID );
 		GFL_ARC_UTIL_TransVramPalette(
 			ARCID_FONT, NARC_font_systemwin_nclr, //白
-			PALTYPE_MAIN_BG, FLDMSGBG_PANO_FONT*32, 32, fmb->heapID );
+			PALTYPE_MAIN_BG, PANO_FONT*32, 32, fmb->heapID );
 	}
 	
 	{	//window frame
-		BmpWinFrame_GraphicSet( fmb->bgFrame, 1,
-			FLDMSGBG_PANO_MENU, MENU_TYPE_SYSTEM, heapID );
+		BmpWinFrame_GraphicSet( fmb->bgFrame, CHAROFFS_WINFRAME,
+			PANO_MENU, MENU_TYPE_SYSTEM, heapID );
     debug_ROM091030_WindowColorOFF( heapID );
 	}
-	
+
 	{	//font
 		fmb->fontHandle = GFL_FONT_Create(
 			ARCID_FONT,
@@ -332,15 +386,19 @@ FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
       setup.heapID = fmb->heapID;
       setup.g3Dcamera = g3Dcamera;
       setup.fontHandle = fmb->fontHandle;
-      setup.chrNumOffs = FLDMSGBG_CHAROFFS_TALKMSGWIN;
+      setup.chrNumOffs = CHAROFFS_BALLOONWIN;
       setup.ini.frameID = FLDMSGBG_BGFRAME;
-      setup.ini.winPltID = FLDMSGBG_PANO_TALKMSGWIN;
-      setup.ini.fontPltID = FLDMSGBG_PANO_FONT_TALKMSGWIN;
+      setup.ini.winPltID = PANO_TALKMSGWIN;
+      setup.ini.fontPltID = PANO_FONT_TALKMSGWIN;
       fmb->talkMsgWinSys = TALKMSGWIN_SystemCreate( &setup );
     }
   }
-  
-  fmb->deriveWin_plttNo = FLDMSGBG_PANO_FONT;
+	
+  { //SYSWIN
+    syswin_InitGraphic( heapID );
+  }
+
+  fmb->deriveWin_plttNo = PANO_FONT;
 //  FLDMSGBG_SetBlendAlpha();
 
 //  test( fmb );
@@ -440,15 +498,15 @@ void FLDMSGBG_ResetBGResource( FLDMSGBG *fmb )
   {	//フォントパレット
 		GFL_ARC_UTIL_TransVramPalette(
 			ARCID_FONT, NARC_font_default_nclr, //黒
-			PALTYPE_MAIN_BG, FLDMSGBG_PANO_FONT_TALKMSGWIN*32, 32, fmb->heapID );
+			PALTYPE_MAIN_BG, PANO_FONT_TALKMSGWIN*32, 32, fmb->heapID );
 		GFL_ARC_UTIL_TransVramPalette(
 			ARCID_FONT, NARC_font_systemwin_nclr, //白
-			PALTYPE_MAIN_BG, FLDMSGBG_PANO_FONT*32, 32, fmb->heapID );
+			PALTYPE_MAIN_BG, PANO_FONT*32, 32, fmb->heapID );
 	}
 	
   {	//window frame
-		BmpWinFrame_GraphicSet( fmb->bgFrame, 1,
-			FLDMSGBG_PANO_MENU, MENU_TYPE_SYSTEM, fmb->heapID );
+		BmpWinFrame_GraphicSet( fmb->bgFrame, CHAROFFS_WINFRAME,
+			PANO_MENU, MENU_TYPE_SYSTEM, fmb->heapID );
     debug_ROM091030_WindowColorOFF( fmb->heapID );
 	}
   
@@ -458,10 +516,10 @@ void FLDMSGBG_ResetBGResource( FLDMSGBG *fmb )
       setup.heapID = fmb->heapID;
       setup.g3Dcamera = fmb->g3Dcamera;
       setup.fontHandle = fmb->fontHandle;
-      setup.chrNumOffs = FLDMSGBG_CHAROFFS_TALKMSGWIN;
+      setup.chrNumOffs = CHAROFFS_BALLOONWIN;
       setup.ini.frameID = FLDMSGBG_BGFRAME;
-      setup.ini.winPltID = FLDMSGBG_PANO_TALKMSGWIN;
-      setup.ini.fontPltID = FLDMSGBG_PANO_FONT_TALKMSGWIN;
+      setup.ini.winPltID = PANO_TALKMSGWIN;
+      setup.ini.fontPltID = PANO_FONT_TALKMSGWIN;
       fmb->talkMsgWinSys = TALKMSGWIN_SystemCreate( &setup );
     }
   }
@@ -877,11 +935,11 @@ static FLDMSGWIN * fldmsgwin_Add( FLDMSGBG *fmb, GFL_MSGDATA *msgData,
   
 	msgWin = GFL_HEAP_AllocClearMemory( fmb->heapID, sizeof(FLDMSGWIN) );
 	msgWin->fmb = fmb;
-	msgWin->bmpwin = FldBmpWinFrame_Init( fmb->bgFrame, fmb->heapID,
+	msgWin->bmpwin = winframe_InitBmp( fmb->bgFrame, fmb->heapID,
     bmppos_x, bmppos_y, bmpsize_x, bmpsize_y, pltt_no );
 	msgWin->msgPrint = FLDMSGPRINT_SetupPrint( fmb, msgData, msgWin->bmpwin );
 	
-  if( pltt_no == FLDMSGBG_PANO_FONT ){
+  if( pltt_no == PANO_FONT ){
     debug_ROM091030_WindowColorOFF( fmb->heapID );
     setBlendAlpha( TRUE );
   }
@@ -905,7 +963,7 @@ FLDMSGWIN * FLDMSGWIN_Add( FLDMSGBG *fmb, GFL_MSGDATA *msgData,
 	u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y )
 {
   FLDMSGWIN *msgWin;
-  fmb->deriveWin_plttNo = FLDMSGBG_PANO_FONT;
+  fmb->deriveWin_plttNo = PANO_FONT;
   msgWin = fldmsgwin_Add( fmb, msgData,
       bmppos_x, bmppos_y, bmpsize_x, bmpsize_y, fmb->deriveWin_plttNo );
   return( msgWin );
@@ -921,7 +979,7 @@ FLDMSGWIN * FLDMSGWIN_Add( FLDMSGBG *fmb, GFL_MSGDATA *msgData,
 //--------------------------------------------------------------
 void FLDMSGWIN_Delete( FLDMSGWIN *msgWin )
 {
-	FldBmpWinFrame_Delete( msgWin->bmpwin );
+	winframe_DeleteBmp( msgWin->bmpwin );
 	FLDMSGPRINT_Delete( msgWin->msgPrint );
 	GFL_HEAP_FreeMemory( msgWin );
 }
@@ -1012,6 +1070,152 @@ FLDMSGWIN * FLDMSGWIN_AddTalkWin( FLDMSGBG *fmb, GFL_MSGDATA *msgData )
 }
 
 //======================================================================
+//	FLDSYSWIN	システムウィンドウ関連
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * システムウィンドウ　追加　メイン
+ * @param	fmb	FLDMSGBG*
+ * @param	msgData	表示する初期化済みのGFL_MSGDATA NULL=使用しない
+ * @retval	FLDSYSWIN*
+ */
+//--------------------------------------------------------------
+static FLDSYSWIN * syswin_Add(
+  FLDMSGBG *fmb, GFL_MSGDATA *msgData, u16 bmppos_y )
+{
+	FLDSYSWIN *sysWin;
+  
+	sysWin = GFL_HEAP_AllocClearMemory( fmb->heapID, sizeof(FLDSYSWIN) );
+	sysWin->fmb = fmb;
+	sysWin->bmpwin = syswin_InitBmp( bmppos_y, fmb->heapID );
+	sysWin->msgPrint = FLDMSGPRINT_SetupPrint( fmb, msgData, sysWin->bmpwin );
+	
+  setBlendAlpha( TRUE );
+	return( sysWin );
+}
+
+//--------------------------------------------------------------
+/**
+ * システムウィンドウ　追加
+ * @param	fmb	FLDMSGBG*
+ * @param	msgData	表示する初期化済みのGFL_MSGDATA NULL=使用しない
+ * @param	bmppos_x		//表示座標X キャラ単位
+ * @param	bmppos_y		//表示座標Y キャラ単位
+ * @param	bmpsize_x		//表示サイズX キャラ単位
+ * @param	bmpsize_y		//表示サイズY キャラ単位
+ * @retval	FLDSYSWIN*
+ */
+//--------------------------------------------------------------
+FLDSYSWIN * FLDSYSWIN_Add(
+    FLDMSGBG *fmb, GFL_MSGDATA *msgData, u16 bmppos_y )
+{
+  FLDSYSWIN *sysWin;
+  fmb->deriveWin_plttNo = PANO_FONT;
+  sysWin = syswin_Add( fmb, msgData, bmppos_y );
+  return( sysWin );
+}
+
+//--------------------------------------------------------------
+/**
+ * システムウィンドウ 削除。
+ * FLDSYSWIN_Add()引数msgDataは各自で行う事。
+ * @param	sysWin	FLDSYSWIN*
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDSYSWIN_Delete( FLDSYSWIN *sysWin )
+{
+	syswin_DeleteBmp( sysWin->bmpwin );
+	FLDMSGPRINT_Delete( sysWin->msgPrint );
+	GFL_HEAP_FreeMemory( sysWin );
+}
+
+//--------------------------------------------------------------
+/**
+ * システムウィンドウ　メッセージ表示
+ * @param	sysWin	FLDSYSWIN
+ * @param	x		X表示座標
+ * @param	y		Y表示座標
+ * @param	strID	メッセージデータ 文字列ID
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDSYSWIN_Print( FLDSYSWIN *sysWin, u16 x, u16 y, u32 strID )
+{
+	FLDMSGPRINT_Print( sysWin->msgPrint, x, y, strID );
+	GFL_BG_LoadScreenReq( FLDMSGBG_BGFRAME );
+}
+
+//--------------------------------------------------------------
+/**
+ * システムウィンドウ　メッセージ表示 STRBUF指定
+ * @param	sysWin	FLDSYSWIN
+ * @param	x		X表示座標
+ * @param	y		Y表示座標
+ * @param	strBuf	STRBUF
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDSYSWIN_PrintStrBuf( FLDSYSWIN *sysWin, u16 x, u16 y, STRBUF *strBuf )
+{
+	FLDMSGPRINT_PrintStrBuf( sysWin->msgPrint, x, y, strBuf );
+}
+
+//--------------------------------------------------------------
+/**
+ * システムウィンドウ　転送終了チェック
+ * @param	sysWin	FLDSYSWIN
+ * @retval	BOOL	TRUE=転送終了
+ */
+//--------------------------------------------------------------
+BOOL FLDSYSWIN_CheckPrintTrans( FLDSYSWIN *sysWin )
+{
+	return( FLDMSGPRINT_CheckPrintTrans(sysWin->msgPrint) );
+}
+
+//--------------------------------------------------------------
+/**
+ * システムウィンドウ　メッセージ表示クリア
+ * @param	sysWin	FLDSYSWIN
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDSYSWIN_ClearWindow( FLDSYSWIN *sysWin )
+{
+	FLDMSGPRINT_ClearBmp( sysWin->msgPrint );
+}
+
+//--------------------------------------------------------------
+/**
+ * システムウィンドウ　メッセージ指定領域クリア
+ * @param sysWin FLDSYSWIN
+ * @param x 書き込み先書き込み開始X座標（ドット）
+ * @param y 書き込み先書き込み開始Y座標（ドット）
+ * @param size_x  描画範囲Xサイズ（ドット）
+ * @param size_y  描画範囲Yサイズ（ドット）
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDSYSWIN_FillClearWindow(
+    FLDSYSWIN *sysWin, u32 x, u32 y, u32 size_x, u32 size_y )
+{
+  FLDMSGPRINT_FillClearBmp( sysWin->msgPrint, x, y, size_x, size_y );
+}
+
+//--------------------------------------------------------------
+/**
+ * システムウィンドウ　追加　会話ウィンドウタイプ
+ * @param	fmb	FLDMSGBG*
+ * @param	msgData	表示する初期化済みのGFL_MSGDATA NULL=使用しない
+ * @retval	FLDSYSWIN*
+ */
+//--------------------------------------------------------------
+FLDSYSWIN * FLDSYSWIN_AddTalkWin( FLDMSGBG *fmb, GFL_MSGDATA *msgData )
+{
+	return( FLDSYSWIN_Add(fmb,msgData,19) );
+}
+
+//======================================================================
 //	FLDMENUFUNC　フィールドメニュー関連
 //======================================================================
 //--------------------------------------------------------------
@@ -1040,7 +1244,7 @@ static FLDMENUFUNC * fldmenufunc_AddMenuList( FLDMSGBG *fmb,
 	menuFunc->fmb = fmb;
 	menuFunc->pMenuListData = (BMP_MENULIST_DATA *)pMenuListData;
 	
-	menuFunc->bmpwin = FldBmpWinFrame_Init(
+	menuFunc->bmpwin = winframe_InitBmp(
 		fmb->bgFrame, fmb->heapID,
 		pMenuHead->bmppos_x, pMenuHead->bmppos_y,
 		pMenuHead->bmpsize_x, pMenuHead->bmpsize_y, pltt_no );
@@ -1060,7 +1264,7 @@ static FLDMENUFUNC * fldmenufunc_AddMenuList( FLDMSGBG *fmb,
 //	BmpMenuList_SetCursorString( menuFunc->pMenuListWork, 0 );
 	BmpMenuList_SetCursorBmp( menuFunc->pMenuListWork, fmb->heapID );
   
-  if( pltt_no == FLDMSGBG_PANO_FONT ){
+  if( pltt_no == PANO_FONT ){
     debug_ROM091030_WindowColorOFF( fmb->heapID );
     setBlendAlpha( TRUE );
   }
@@ -1084,7 +1288,7 @@ FLDMENUFUNC * FLDMENUFUNC_AddMenuList( FLDMSGBG *fmb,
   u16 list_pos, u16 cursor_pos )
 {
 	FLDMENUFUNC *menuFunc;
-  fmb->deriveWin_plttNo = FLDMSGBG_PANO_FONT;
+  fmb->deriveWin_plttNo = PANO_FONT;
   menuFunc = fldmenufunc_AddMenuList( fmb, pMenuHead, pMenuListData,
     list_pos, cursor_pos, fmb->deriveWin_plttNo );
   return( menuFunc );
@@ -1147,7 +1351,7 @@ void FLDMENUFUNC_DeleteMenu( FLDMENUFUNC *menuFunc )
 {
 	BmpMenuList_Exit( menuFunc->pMenuListWork, NULL, NULL );
 	BmpMenuWork_ListDelete( menuFunc->pMenuListData );
-	FldBmpWinFrame_Delete( menuFunc->bmpwin );
+	winframe_DeleteBmp( menuFunc->bmpwin );
 	FLDMSGPRINT_Delete( menuFunc->msgPrint );
 	GFL_HEAP_FreeMemory( menuFunc );
 }
@@ -1608,13 +1812,13 @@ FLDMSGWIN_STREAM * FLDMSGWIN_STREAM_Add(
 {
   FLDMSGWIN_STREAM *msgWin;
 	
-  fmb->deriveWin_plttNo = FLDMSGBG_PANO_FONT;
+  fmb->deriveWin_plttNo = PANO_FONT;
   
 	msgWin = GFL_HEAP_AllocClearMemory(
       fmb->heapID, sizeof(FLDMSGWIN_STREAM) );
 	msgWin->fmb = fmb;
   msgWin->msgData = msgData;
-	msgWin->bmpwin = FldBmpWinFrame_Init( fmb->bgFrame, fmb->heapID,
+	msgWin->bmpwin = winframe_InitBmp( fmb->bgFrame, fmb->heapID,
       bmppos_x, bmppos_y, bmpsize_x, bmpsize_y, fmb->deriveWin_plttNo );
   msgWin->strBuf = GFL_STR_CreateBuffer( FLDMSGBG_STRLEN, fmb->heapID );
   
@@ -1635,7 +1839,7 @@ FLDMSGWIN_STREAM * FLDMSGWIN_STREAM_Add(
 //--------------------------------------------------------------
 void FLDMSGWIN_STREAM_Delete( FLDMSGWIN_STREAM *msgWin )
 {
-	FldBmpWinFrame_Delete( msgWin->bmpwin );
+	winframe_DeleteBmp( msgWin->bmpwin );
   
   if( msgWin->msgPrintStream != NULL ){
 	  FLDMSGPRINT_STREAM_Delete( msgWin->msgPrintStream );
@@ -1802,7 +2006,7 @@ void FLDMSGWIN_STREAM_ClearWindow( FLDMSGWIN_STREAM *msgWin )
 void FLDMSGWIN_STREAM_WriteWindow( FLDMSGWIN_STREAM *msgWin )
 {
 	BmpWinFrame_Write( msgWin->bmpwin,
-      WINDOW_TRANS_ON, 1, FLDMSGBG_PANO_MENU );
+      WINDOW_TRANS_ON, 1, PANO_MENU );
   FLDMSGWIN_STREAM_ClearMessage( msgWin );
 }
 
@@ -1842,6 +2046,246 @@ BOOL FLDMSGWIN_STREAM_CheckAllPrintTrans( FLDMSGWIN_STREAM *msgWin )
 }
 
 //======================================================================
+//  FLDSYSWIN_STREAM
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * FLDSYSWIN_STREAM システムウィンドウ追加
+ * @param	fmb	FLDMSGBG*
+ * @param	msgData	表示する初期化済みのGFL_MSGDATA NULL=使用しない
+ * @param	bmppos_y		//表示座標Y キャラ単位
+ * @retval FLDSYSWIN_STREAM*
+ */
+//--------------------------------------------------------------
+FLDSYSWIN_STREAM * FLDSYSWIN_STREAM_Add(
+    FLDMSGBG *fmb, const GFL_MSGDATA *msgData, u16 bmppos_y )
+{
+  FLDSYSWIN_STREAM *sysWin;
+	
+  fmb->deriveWin_plttNo = PANO_FONT;
+  
+	sysWin = GFL_HEAP_AllocClearMemory(
+      fmb->heapID, sizeof(FLDSYSWIN_STREAM) );
+	sysWin->fmb = fmb;
+  sysWin->msgData = msgData;
+	sysWin->bmpwin = syswin_InitBmp( bmppos_y, fmb->heapID );
+  sysWin->strBuf = GFL_STR_CreateBuffer( FLDMSGBG_STRLEN, fmb->heapID );
+  
+  keyCursor_Init( &sysWin->cursor_work, fmb->heapID );
+  
+  debug_ROM091030_WindowColorOFF( fmb->heapID );
+  setBlendAlpha( TRUE );
+  return( sysWin );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDSYSWIN_STREAM システムウィンドウ 削除
+ * FLDSYSWIN_STREAM_Add()引数msgDataは各自で行う事。
+ * @param sysWin FLDSYSWIN_STREAM
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDSYSWIN_STREAM_Delete( FLDSYSWIN_STREAM *sysWin )
+{
+	syswin_DeleteBmp( sysWin->bmpwin );
+  
+  if( sysWin->msgPrintStream != NULL ){
+	  FLDMSGPRINT_STREAM_Delete( sysWin->msgPrintStream );
+  }
+  
+  if( sysWin->msgPrint != NULL ){
+    FLDMSGPRINT_Delete( sysWin->msgPrint );
+  }
+  
+  GFL_STR_DeleteBuffer( sysWin->strBuf );
+  keyCursor_Delete( &sysWin->cursor_work );
+	GFL_HEAP_FreeMemory( sysWin );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDSYSWIN_STREAM システムウィンドウ メッセージ表示開始
+ * @param sysWin FLDSYSWIN_STREAM*
+ * @param	x		X表示座標
+ * @param	y		Y表示座標
+ * @param strID メッセージデータ　文字列ID
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDSYSWIN_STREAM_PrintStart(
+    FLDSYSWIN_STREAM *sysWin, u16 x, u16 y, u32 strID )
+{
+  if( sysWin->msgPrintStream != NULL ){
+    FLDMSGPRINT_STREAM_Delete( sysWin->msgPrintStream );
+  }
+  
+  GF_ASSERT( sysWin->msgData );
+  GFL_MSG_GetString( sysWin->msgData, strID, sysWin->strBuf );
+  
+  sysWin->msgPrintStream = FLDMSGPRINT_STREAM_SetupPrint(
+  	sysWin->fmb, sysWin->strBuf, sysWin->bmpwin, x, y, MSGSPEED_GetWait() );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDSYSWIN_STREAM システムウィンドウ メッセージ表示開始 STRBUF指定
+ * @param sysWin FLDSYSWIN_STREAM*
+ * @param	x		X表示座標
+ * @param	y		Y表示座標
+ * @param strBuf 表示するSTRBUF
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDSYSWIN_STREAM_PrintStrBufStart(
+    FLDSYSWIN_STREAM *sysWin, u16 x, u16 y, const STRBUF *strBuf )
+{
+  if( sysWin->msgPrintStream != NULL ){
+    FLDMSGPRINT_STREAM_Delete( sysWin->msgPrintStream );
+  }
+  
+  sysWin->msgPrintStream = FLDMSGPRINT_STREAM_SetupPrint(
+  	sysWin->fmb, strBuf, sysWin->bmpwin, x, y, MSGSPEED_GetWait() );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDSYSWIN_STREAM システムウィンドウ メッセージ表示
+ * @param sysWin FLDSYSWIN_STREAM*
+ * @retval BOOL TRUE=表示終了,FALSE=表示中
+ */
+//--------------------------------------------------------------
+BOOL FLDSYSWIN_STREAM_Print( FLDSYSWIN_STREAM *sysWin )
+{
+  int trg,cont;
+  PRINTSTREAM_STATE state;
+  state = fldMsgPrintStream_ProcPrint( sysWin->msgPrintStream );
+  
+  trg = GFL_UI_KEY_GetTrg();
+  cont = GFL_UI_KEY_GetCont();
+
+  switch( state ){
+  case PRINTSTREAM_STATE_RUNNING: //実行中
+    sysWin->flag_cursor = CURSOR_FLAG_NONE;
+    sysWin->flag_key_pause_clear = FALSE;
+    break;
+  case PRINTSTREAM_STATE_PAUSE: //一時停止中
+    if( sysWin->flag_key_pause_clear == FALSE ){ //既にポーズクリア済みか？
+		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( sysWin->bmpwin );
+      
+      if( (trg & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
+        if( sysWin->flag_cursor == CURSOR_FLAG_WRITE ){
+          keyCursor_Clear( &sysWin->cursor_work, bmp, 0x0f );
+          
+          sysWin->flag_key_pause_clear = TRUE;
+          sysWin->flag_cursor = CURSOR_FLAG_END;
+        }
+      }
+      
+      if( sysWin->flag_cursor != CURSOR_FLAG_END ){
+        keyCursor_Write( &sysWin->cursor_work, bmp, 0x0f );
+        sysWin->flag_cursor = CURSOR_FLAG_WRITE;
+      }
+      
+		  GFL_BMPWIN_TransVramCharacter( sysWin->bmpwin );
+    }
+    break;
+  case PRINTSTREAM_STATE_DONE: //終了
+    return( TRUE );
+  }
+
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDSYSWIN_STREAM システムウィンドウ追加 会話ウィンドウタイプ
+ * @param fmb FLDMSGBG*
+ * @param	msgData	表示する初期化済みのGFL_MSGDATA NULL=使用しない
+ * @retval FLDSYSWIN_STREAM
+ */
+//--------------------------------------------------------------
+FLDSYSWIN_STREAM * FLDSYSWIN_STREAM_AddTalkWin(
+    FLDMSGBG *fmb, GFL_MSGDATA *msgData )
+{
+  return( FLDSYSWIN_STREAM_Add(fmb,msgData,19) );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDSYSWIN_STREAM システムウィンドウ メッセージクリア
+ * @param sysWin FLDSYSWIN_STREAM
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDSYSWIN_STREAM_ClearMessage( FLDSYSWIN_STREAM *sysWin )
+{
+  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( sysWin->bmpwin );
+  GFL_BMP_Clear( bmp, 0xff);
+	GFL_BG_LoadScreenReq( sysWin->fmb->bgFrame );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDSYSWIN_STREAM システムウィンドウ ウィンドウクリア
+ * @param sysWin FLDSYSWIN_STREAM
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDSYSWIN_STREAM_ClearWindow( FLDSYSWIN_STREAM *sysWin )
+{
+  syswin_ClearBmp( sysWin->bmpwin );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDSYSWIN_STREAM システムウィンドウ ウィンドウ描画
+ * @param sysWin FLDSYSWIN_STREAM
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDSYSWIN_STREAM_WriteWindow( FLDSYSWIN_STREAM *sysWin )
+{
+	syswin_WriteWindow( sysWin->bmpwin );
+  FLDSYSWIN_STREAM_ClearMessage( sysWin );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDSYSWIN_STREAM システムウィンドウ　メッセージ一括表示
+ * @param sysWin FLDSYSWIN_STREAM
+ * @param x X表示座標
+ * @param y Y表示座標
+ * @param strBuf 表示するSTRBUF
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDSYSWIN_STREAM_AllPrintStrBuf(
+    FLDSYSWIN_STREAM *sysWin, u16 x, u16 y, STRBUF *strBuf )
+{
+  if( sysWin->msgPrint != NULL ){
+    FLDMSGPRINT_Delete( sysWin->msgPrint );
+  }
+  
+  sysWin->msgPrint = FLDMSGPRINT_SetupPrint(
+      sysWin->fmb, NULL, sysWin->bmpwin );
+  
+  FLDMSGPRINT_PrintStrBuf( sysWin->msgPrint, x, y, strBuf );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDSYSWIN_STREAM システムウィンドウ　メッセージ一括表示　転送チェック
+ * @param sysWin FLDSYSWIN_STREAM
+ * @retval BOOL TRUE=転送終了
+ */
+//--------------------------------------------------------------
+BOOL FLDSYSWIN_STREAM_CheckAllPrintTrans( FLDSYSWIN_STREAM *sysWin )
+{
+  return( FLDMSGPRINT_CheckPrintTrans(sysWin->msgPrint) );
+}
+
+//======================================================================
 //  FLDTALKMSGWIN
 //======================================================================
 //--------------------------------------------------------------
@@ -1877,7 +2321,7 @@ static void fldTalkMsgWin_Add(
 {
   GF_ASSERT( fmb->talkMsgWinSys != NULL );
   
-  fmb->deriveWin_plttNo = FLDMSGBG_PANO_FONT_TALKMSGWIN;
+  fmb->deriveWin_plttNo = PANO_FONT_TALKMSGWIN;
 
   tmsg->talkMsgWinSys = fmb->talkMsgWinSys;
   tmsg->talkMsgWinIdx = idx;
@@ -2080,7 +2524,7 @@ static void fldPlainMsgWin_Add(
 {
   GF_ASSERT( fmb->talkMsgWinSys != NULL );
   
-  fmb->deriveWin_plttNo = FLDMSGBG_PANO_FONT_TALKMSGWIN;
+  fmb->deriveWin_plttNo = PANO_FONT_TALKMSGWIN;
 
   plnwin->talkMsgWinSys = fmb->talkMsgWinSys;
   plnwin->talkMsgWinIdx = FLDTALKMSGWIN_IDX_PLAIN;
@@ -2262,7 +2706,7 @@ static void fldSubMsgWin_Add(
 {
   GF_ASSERT( fmb->talkMsgWinSys != NULL );
   
-  fmb->deriveWin_plttNo = FLDMSGBG_PANO_FONT_TALKMSGWIN;
+  fmb->deriveWin_plttNo = PANO_FONT_TALKMSGWIN;
   
   subwin->talkMsgWinSys = fmb->talkMsgWinSys;
   subwin->talkMsgWinIdx = idx;
@@ -2473,7 +2917,7 @@ FLDBGWIN * FLDBGWIN_Add( FLDMSGBG *fmb, FLDBGWIN_TYPE type )
     GFL_BMP_DATA *bmp;
 
     bgWin->bmpwin = GFL_BMPWIN_Create( fmb->bgFrame,
-        2, 19, 27, 4, FLDMSGBG_PANO_FONT_TALKMSGWIN, GFL_BMP_CHRAREA_GET_B );
+        2, 19, 27, 4, PANO_FONT_TALKMSGWIN, GFL_BMP_CHRAREA_GET_B );
     bgWin->bmp_new = GFL_BMP_Create(
         27, 4, GFL_BMP_16_COLOR, fmb->heapID );
     bgWin->bmp_old = GFL_BMP_Create(
@@ -2485,20 +2929,20 @@ FLDBGWIN * FLDBGWIN_Add( FLDMSGBG *fmb, FLDBGWIN_TYPE type )
 	  GFL_BMPWIN_TransVramCharacter( bgWin->bmpwin );
     
     bgwin_InitGraphic(
-      fmb->bgFrame, FLDMSGBG_PANO_BGWIN, type, fmb->heapID );
+      fmb->bgFrame, PANO_BGWIN, type, fmb->heapID );
     
     bgwin_WriteWindow( fmb->bgFrame, 
 		  GFL_BMPWIN_GetPosX( bgWin->bmpwin ),
 		  GFL_BMPWIN_GetPosY( bgWin->bmpwin ),
 		  GFL_BMPWIN_GetSizeX( bgWin->bmpwin ),
-		  GFL_BMPWIN_GetSizeY( bgWin->bmpwin ), 64, FLDMSGBG_PANO_BGWIN );
+		  GFL_BMPWIN_GetSizeY( bgWin->bmpwin ), 64, PANO_BGWIN );
     
 		GFL_BG_LoadScreenReq( fmb->bgFrame );
   }
   
   keyCursor_Init( &bgWin->cursor_work, bgWin->fmb->heapID );
   
-  fmb->deriveWin_plttNo = FLDMSGBG_PANO_FONT_TALKMSGWIN;
+  fmb->deriveWin_plttNo = PANO_FONT_TALKMSGWIN;
   setBlendAlpha( FALSE );
   return( bgWin );
 }
@@ -2664,7 +3108,7 @@ static void bgwin_InitGraphic(
   
   GFL_ARC_UTIL_TransVramBgCharacter(
       ARCID_FLDMAP_WINFRAME, NARC_winframe_bgwin_NCGR,
-      bgframe, 64, 0, FALSE, heapID );
+      bgframe, CHAROFFS_OTHERSWIN, 0, FALSE, heapID );
   
   GFL_ARC_UTIL_TransVramPaletteEx(
       ARCID_FLDMAP_WINFRAME, NARC_winframe_bgwin_NCLR,
@@ -2986,17 +3430,17 @@ FLDSPWIN * FLDSPWIN_Add( FLDMSGBG *fmb, FLDSPWIN_TYPE type,
   
   spWin->bmpwin = GFL_BMPWIN_Create( fmb->bgFrame,
       bmppos_x, bmppos_y, bmpsize_x, bmpsize_y,
-      FLDMSGBG_PANO_SPWIN, GFL_BMP_CHRAREA_GET_B );
+      PANO_SPWIN, GFL_BMP_CHRAREA_GET_B );
   
   spWin->bmp_bg = spwin_CreateBmpBG( type, fmb->heapID );
   spwin_WriteBmpBG( GFL_BMPWIN_GetBmp(spWin->bmpwin), spWin->bmp_bg );
-  spwin_InitPalette( fmb->bgFrame, FLDMSGBG_PANO_SPWIN, fmb->heapID );
+  spwin_InitPalette( fmb->bgFrame, PANO_SPWIN, fmb->heapID );
   
   GFL_BMPWIN_MakeScreen( spWin->bmpwin );
 	GFL_BMPWIN_TransVramCharacter( spWin->bmpwin );
 	GFL_BG_LoadScreenReq( fmb->bgFrame );
   
-  fmb->deriveWin_plttNo = FLDMSGBG_PANO_FONT;
+  fmb->deriveWin_plttNo = PANO_FONT;
   setBlendAlpha( TRUE );
   return( spWin );
 }
@@ -3154,6 +3598,126 @@ static void keyCursor_Write(
 }
 
 //======================================================================
+//  システムウィンドウ
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * システムウィンドウ　グラフィック初期化
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void syswin_InitGraphic( HEAPID heapID )
+{
+  GFL_ARC_UTIL_TransVramBgCharacter(
+    ARCID_FLDMAP_WINFRAME, NARC_winframe_syswin_NCGR,
+    FLDMSGBG_BGFRAME, CHAROFFS_SYSWIN, 0, FALSE, heapID );
+}
+
+//--------------------------------------------------------------
+/**
+ * システムウィンドウ　描画
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void syswin_WriteWindow( const GFL_BMPWIN *bmpwin )
+{
+  u16 cgx = CHAROFFS_SYSWIN;
+  u8 px = GFL_BMPWIN_GetPosX( bmpwin );
+  u8 py = GFL_BMPWIN_GetPosY( bmpwin );
+	u8 sx = GFL_BMPWIN_GetSizeX( bmpwin );
+	u8 sy = GFL_BMPWIN_GetSizeY( bmpwin );
+  u8 pal = PANO_MENU;
+  u8 frm = FLDMSGBG_BGFRAME;
+  
+	GFL_BG_FillScreen( frm, cgx, px-2, py-1, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx+1, px-1, py-1, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx+2, px, py-1, sx, 1, pal );
+	GFL_BG_FillScreen( frm, cgx+3, px+sx,	py-1, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx+4, px+sx+1, py-1, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx+5, px+sx+2, py-1, 1, 1, pal );
+  
+	GFL_BG_FillScreen( frm, cgx+6, px-2, py, 1, sy, pal );
+	GFL_BG_FillScreen( frm, cgx+7, px-1, py, 1, sy, pal );
+	GFL_BG_FillScreen( frm, cgx+9, px+sx, py, 1, sy, pal );
+	GFL_BG_FillScreen( frm, cgx+10, px+sx+1, py, 1, sy, pal );
+	GFL_BG_FillScreen( frm, cgx+11, px+sx+2, py, 1, sy, pal );
+  
+	GFL_BG_FillScreen( frm, cgx+12, px-2, py+sy, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx+13, px-1, py+sy, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx+14, px, py+sy, sx, 1, pal );
+	GFL_BG_FillScreen( frm, cgx+15, px+sx, py+sy, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx+16, px+sx+1, py+sy, 1, 1, pal );
+	GFL_BG_FillScreen( frm, cgx+17, px+sx+2, py+sy, 1, 1, pal );
+  
+  GFL_BG_LoadScreenReq( frm );
+}
+
+//--------------------------------------------------------------
+/**
+ * システムウィンドウ　ビットマップウィンドウフレーム　初期化
+ * @param	bgframe	BGフレーム
+ * @param	heapID	HEAPID
+ * @param	pos_y	ビットマップ左上Y キャラ単位
+ * @retval	GFL_BMPWIN	作成されたGFL_BMPWIN
+ */
+//--------------------------------------------------------------
+static GFL_BMPWIN * syswin_InitBmp( u8 pos_y, HEAPID heapID )
+{
+	GFL_BMP_DATA *bmp;
+	GFL_BMPWIN *bmpwin;
+  
+	bmpwin = GFL_BMPWIN_Create( FLDMSGBG_BGFRAME,
+		2, pos_y, 27, 4,
+		PANO_FONT, GFL_BMP_CHRAREA_GET_B );
+  
+	bmp = GFL_BMPWIN_GetBmp( bmpwin );
+	
+	GFL_BMP_Clear( bmp, 0xff );
+	GFL_BMPWIN_MakeScreen( bmpwin );
+	GFL_BMPWIN_TransVramCharacter( bmpwin );
+  syswin_WriteWindow( bmpwin );
+
+	return( bmpwin );
+}
+
+//--------------------------------------------------------------
+/**
+ * ビットマップウィンドウフレーム　クリア
+ * @param	bmpwin	syswin_InitBmp()の戻り値
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void syswin_ClearBmp( GFL_BMPWIN *bmpwin )
+{
+	u8 frm = GFL_BMPWIN_GetFrame( bmpwin );
+  
+	GFL_BG_FillScreen(
+		frm, CHAROFFS_CLEAR,
+		GFL_BMPWIN_GetPosX( bmpwin ) - 2,
+		GFL_BMPWIN_GetPosY( bmpwin ) - 1,
+		GFL_BMPWIN_GetSizeX( bmpwin ) + 3 + 2,
+		GFL_BMPWIN_GetSizeY( bmpwin ) + 2,
+		0 );
+  
+  GFL_BG_LoadScreenReq( frm );
+}
+
+//--------------------------------------------------------------
+/**
+ * ビットマップウィンドウフレーム　削除
+ * @param	bmpwin	syswin_InitBmp()の戻り値
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void syswin_DeleteBmp( GFL_BMPWIN *bmpwin )
+{
+  syswin_ClearBmp( bmpwin );
+  GFL_BMPWIN_Delete( bmpwin );
+}
+
+//======================================================================
 //  その他
 //======================================================================
 //--------------------------------------------------------------
@@ -3228,15 +3792,15 @@ void FLDMSGBG_RecoveryBG( FLDMSGBG *fmb )
 	{	//フォントパレット
 		GFL_ARC_UTIL_TransVramPalette(
 			ARCID_FONT, NARC_font_default_nclr, //黒
-			PALTYPE_MAIN_BG, FLDMSGBG_PANO_FONT_TALKMSGWIN*32, 32, fmb->heapID );
+			PALTYPE_MAIN_BG, PANO_FONT_TALKMSGWIN*32, 32, fmb->heapID );
 		GFL_ARC_UTIL_TransVramPalette(
 			ARCID_FONT, NARC_font_systemwin_nclr, //白
-			PALTYPE_MAIN_BG, FLDMSGBG_PANO_FONT*32, 32, fmb->heapID );
+			PALTYPE_MAIN_BG, PANO_FONT*32, 32, fmb->heapID );
 	}
 	
 	{	//window frame
-		BmpWinFrame_GraphicSet( fmb->bgFrame, 1,
-			FLDMSGBG_PANO_MENU, MENU_TYPE_SYSTEM, heapID );
+		BmpWinFrame_GraphicSet( fmb->bgFrame, CHAROFFS_WINFRAME,
+			PANO_MENU, MENU_TYPE_SYSTEM, heapID );
     debug_ROM091030_WindowColorOFF( heapID );
 	}
 
@@ -3260,7 +3824,7 @@ void FLDMSGBG_RecoveryBG( FLDMSGBG *fmb )
  * @retval	GFL_BMPWIN	作成されたGFL_BMPWIN
  */
 //--------------------------------------------------------------
-static GFL_BMPWIN * FldBmpWinFrame_Init( u32 bgFrame, HEAPID heapID,
+static GFL_BMPWIN * winframe_InitBmp( u32 bgFrame, HEAPID heapID,
 	u16 pos_x, u16 pos_y, u16 size_x, u16 size_y, u16 pltt_no )
 {
 	GFL_BMP_DATA *bmp;
@@ -3268,7 +3832,7 @@ static GFL_BMPWIN * FldBmpWinFrame_Init( u32 bgFrame, HEAPID heapID,
 
 	bmpwin = GFL_BMPWIN_Create( bgFrame,
 		pos_x, pos_y, size_x, size_y,
-//		FLDMSGBG_PANO_FONT, GFL_BMP_CHRAREA_GET_B );
+//		PANO_FONT, GFL_BMP_CHRAREA_GET_B );
 		pltt_no, GFL_BMP_CHRAREA_GET_B );
 
 	bmp = GFL_BMPWIN_GetBmp( bmpwin );
@@ -3278,7 +3842,7 @@ static GFL_BMPWIN * FldBmpWinFrame_Init( u32 bgFrame, HEAPID heapID,
 	GFL_BMPWIN_TransVramCharacter( bmpwin );
 	GFL_BG_LoadScreenReq( bgFrame );
 	
-	BmpWinFrame_Write( bmpwin, WINDOW_TRANS_ON, 1, FLDMSGBG_PANO_MENU );
+	BmpWinFrame_Write( bmpwin, WINDOW_TRANS_ON, 1, PANO_MENU );
 	
 	return( bmpwin );
 }
@@ -3286,11 +3850,11 @@ static GFL_BMPWIN * FldBmpWinFrame_Init( u32 bgFrame, HEAPID heapID,
 //--------------------------------------------------------------
 /**
  * ビットマップウィンドウフレーム　削除
- * @param	bmpwin	FldBmpWinFrame_Init()の戻り値
+ * @param	bmpwin	winframe_InitBmp()の戻り値
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void FldBmpWinFrame_Delete( GFL_BMPWIN *bmpwin )
+static void winframe_DeleteBmp( GFL_BMPWIN *bmpwin )
 {
 	BmpWinFrame_Clear( bmpwin, 0 );
 	GFL_BMPWIN_Delete( bmpwin );

@@ -97,8 +97,10 @@ typedef enum
 typedef struct _TAG_FLDMSGBG FLDMSGBG;			///<FLDMSGBG
 typedef struct _TAG_FLDMSGPRINT FLDMSGPRINT;	///<FLDMSGPRINT
 typedef struct _TAG_FLDMSGWIN FLDMSGWIN;		///<FLDMSGWIN
+typedef struct _TAG_FLDSYSWIN FLDSYSWIN;		///<FLDSYSWIN
 typedef struct _TAG_FLDMSGPRINT_STREAM FLDMSGPRINT_STREAM; ///<FLDMSGPRINT_STREAM
 typedef struct _TAG_FLDMSGWIN_STREAM FLDMSGWIN_STREAM; ///<FLDMSGWIN_STREAM
+typedef struct _TAG_FLDSYSWIN_STREAM FLDSYSWIN_STREAM; ///<FLDSYSWIN_STREAM
 typedef struct _TAG_FLDMENUFUNC FLDMENUFUNC;	///<FLDMENUFUNC
 typedef struct _TAG_FLDTALKMSGWIN FLDTALKMSGWIN; ///FLDTALKMSGWIN
 typedef struct _TAG_FLDPLAINMSGWIN FLDPLAINMSGWIN; ///<FLDPLAINMSGWIN
@@ -202,6 +204,18 @@ extern void FLDMSGWIN_FillClearWindow(
     FLDMSGWIN *msgWin, u32 x, u32 y, u32 size_x, u32 size_y );
 extern FLDMSGWIN * FLDMSGWIN_AddTalkWin( FLDMSGBG *fmb, GFL_MSGDATA *msgData );
 
+//システムウィンドウ
+extern FLDSYSWIN * FLDSYSWIN_Add(
+    FLDMSGBG *fmb, GFL_MSGDATA *msgData, u16 bmppos_y );
+extern void FLDSYSWIN_Delete( FLDSYSWIN *msgWin );
+extern void FLDSYSWIN_Print( FLDSYSWIN *msgWin, u16 x, u16 y, u32 strID );
+extern void FLDSYSWIN_PrintStrBuf( FLDSYSWIN *msgWin, u16 x, u16 y, STRBUF *strBuf );
+extern BOOL FLDSYSWIN_CheckPrintTrans( FLDSYSWIN *msgWin );
+extern void FLDSYSWIN_ClearWindow( FLDSYSWIN *msgWin );
+extern void FLDSYSWIN_FillClearWindow(
+    FLDSYSWIN *msgWin, u32 x, u32 y, u32 size_x, u32 size_y );
+extern FLDSYSWIN * FLDSYSWIN_AddTalkWin( FLDMSGBG *fmb, GFL_MSGDATA *msgData );
+
 //メニュー
 extern FLDMENUFUNC * FLDMENUFUNC_AddMenuList( FLDMSGBG *fmb,
 	const FLDMENUFUNC_HEADER *pMenuHead,
@@ -269,6 +283,24 @@ extern void FLDMSGWIN_STREAM_WriteWindow( FLDMSGWIN_STREAM *msgWin );
 extern void FLDMSGWIN_STREAM_AllPrintStrBuf(
     FLDMSGWIN_STREAM *msgWin, u16 x, u16 y, STRBUF *strBuf );
 extern BOOL FLDMSGWIN_STREAM_CheckAllPrintTrans( FLDMSGWIN_STREAM *msgWin );
+
+//システムウィンドウ　プリントストリーム
+extern FLDSYSWIN_STREAM * FLDSYSWIN_STREAM_Add(
+    FLDMSGBG *fmb, const GFL_MSGDATA *msgData, u16 bmppos_y );
+extern void FLDSYSWIN_STREAM_Delete( FLDSYSWIN_STREAM *sysWin );
+extern void FLDSYSWIN_STREAM_PrintStart(
+    FLDSYSWIN_STREAM *sysWin, u16 x, u16 y, u32 strID );
+extern void FLDSYSWIN_STREAM_PrintStrBufStart(
+    FLDSYSWIN_STREAM *sysWin, u16 x, u16 y, const STRBUF *strBuf );
+extern BOOL FLDSYSWIN_STREAM_Print( FLDSYSWIN_STREAM *sysWin );
+extern FLDSYSWIN_STREAM * FLDSYSWIN_STREAM_AddTalkWin(
+    FLDMSGBG *fmb, GFL_MSGDATA *msgData );
+extern void FLDSYSWIN_STREAM_ClearMessage( FLDSYSWIN_STREAM *sysWin );
+extern void FLDSYSWIN_STREAM_ClearWindow( FLDSYSWIN_STREAM *sysWin );
+extern void FLDSYSWIN_STREAM_WriteWindow( FLDSYSWIN_STREAM *sysWin );
+extern void FLDSYSWIN_STREAM_AllPrintStrBuf(
+    FLDSYSWIN_STREAM *sysWin, u16 x, u16 y, STRBUF *strBuf );
+extern BOOL FLDSYSWIN_STREAM_CheckAllPrintTrans( FLDSYSWIN_STREAM *sysWin );
 
 //吹き出しメッセージウィンドウ
 extern FLDTALKMSGWIN * FLDTALKMSGWIN_Add( FLDMSGBG *fmb,
