@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-11-25T15:01:16"/>
+	<create user="taya" host="W00146" date="2009-11-25T17:54:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -421,7 +421,7 @@
 
 	<dialog left="130" top="0" right="811" bottom="508" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="618" right="1024" bottom="768" visible="no"/>
-		<tag-palette left="701" top="473" right="1132" bottom="871" visible="yes"/>
+		<tag-palette left="783" top="534" right="1214" bottom="932" visible="yes"/>
 		<band id="0" index="1" style="0001" width="506"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="496"/>
@@ -5722,6 +5722,26 @@
 おことばに　あまえることにした！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 お言葉に　甘えることにした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_SideChange">
+		<comment>サイドチェンジ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]と
+[1:02:ポケモンニックネーム:1]は　ばしょを　いれかえた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]と
+[1:02:ポケモンニックネーム:1]は　場所を入れ替えた！</language>
+	</row>
+	<row id="BTL_STRID_SET_SideChange_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]と
+[1:02:ポケモンニックネーム:1]は　ばしょを　いれかえた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]と
+[1:02:ポケモンニックネーム:1]は　場所を入れ替えた！</language>
+	</row>
+	<row id="BTL_STRID_SET_SideChange_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]と
+[1:02:ポケモンニックネーム:1]は　ばしょを　いれかえた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]と
+[1:02:ポケモンニックネーム:1]は　場所を入れ替えた！</language>
 	</row>
 
 	<flowchart-group-list>
