@@ -33,7 +33,6 @@
 #include "battle/wazatype_icon.h"
 #include "poketool/pokeparty.h"
 #include "poketool/pokeicon.h"
-#include "poketool/waza_tool.h"
 #include "application/p_status.h"
 #include "application/pokelist.h"
 #include "application/app_tool.h"

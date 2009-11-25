@@ -13,7 +13,6 @@
 #include    "poke_tool/poke_tool.h"
 #include    "poke_tool/monsno_def.h"
 #include    "poke_tool/tokusyu_def.h"
-#include    "waza_tool/waza_tool.h"
 #include    "waza_tool/wazadata.h"
 #include    "print/global_msg.h"
 #include    "print/str_tool.h"

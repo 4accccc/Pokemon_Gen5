@@ -39,7 +39,6 @@
 #include "battle/fight_tool.h"
 #include "battle/wazano_def.h"
 #include "poketool/pokeparty.h"
-#include "poketool/waza_tool.h"
 #include "contest/contest.h"
 #include "contest/con_tool.h"
 #include "itemtool/item.h"

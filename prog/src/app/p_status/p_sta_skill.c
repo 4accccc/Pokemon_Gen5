@@ -15,7 +15,6 @@
 #include "print/str_tool.h"
 #include "app/app_menu_common.h"
 #include "waza_tool/wazadata.h"
-#include "waza_tool/waza_tool.h"
 
 #include "arc_def.h"
 #include "message.naix"
@@ -1979,7 +1978,7 @@ static void PSTATUS_SKILL_DispPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
   else
   {
     wazaNo = work->psData->waza;
-    nowpp = WT_WazaDataParaGet( wazaNo , ID_WTD_pp );
+    nowpp = WAZADATA_GetParam( wazaNo , WAZAPARAM_BASE_PP );
     maxpp = nowpp;
   }
 /*

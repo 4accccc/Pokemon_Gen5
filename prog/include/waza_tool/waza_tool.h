@@ -39,12 +39,11 @@
 //アセンブラでincludeされている場合は、下の宣言を無視できるようにifndefで囲んである
 #ifndef __ASM_NO_DEF_
 
-#include "arc_tool.h"
-
-
-extern  u32     WT_WazaDataParaGet( int waza_no, int id );
 
 /*
+#include "arc_tool.h"
+
+extern  u32     WT_WazaDataParaGet( int waza_no, int id );
 extern  u8      WT_PPMaxGet( u16 wazano, u8 maxupcnt );
 extern  void    WT_WazaTableDataGet( void *buffer );
 extern  ARCHANDLE *WT_WazaDataParaHandleOpen( HEAPID heapID );

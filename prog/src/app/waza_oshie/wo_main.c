@@ -41,7 +41,6 @@
 
 #include "savedata/config.h"
 #include "app/app_menu_common.h"
-#include "waza_tool/waza_tool.h"
 #include "waza_tool/wazadata.h"
 #include "app/p_status.h"
 
@@ -1929,7 +1928,7 @@ static void BattleWazaParamPut( WO_WORK * wk, u32 prm )
     u32 tmp;
 
     // ˆÐ—Í
-    tmp = WT_WazaDataParaGet( prm, ID_WTD_damage );
+    tmp = WAZADATA_GetParam( prm, WAZAPARAM_POWER );
     if( tmp <= 1 ){
       GFL_MSG_GetString( wk->mman, msg_waza_oboe_01_12, wk->mbuf );
     }else{
@@ -1938,7 +1937,7 @@ static void BattleWazaParamPut( WO_WORK * wk, u32 prm )
     StrPut( wk, WIN_PRM_ATTACK, wk->fontHandle, WOFCOL_N_BLACK, STR_MODE_RIGHT ,0);
 
     // –½’†
-    tmp = WT_WazaDataParaGet( prm, ID_WTD_hitprobability );
+    tmp = WAZADATA_GetParam( prm, WAZAPARAM_HITPER );
     if( tmp == 0 ){
       GFL_MSG_GetString( wk->mman, msg_waza_oboe_01_12, wk->mbuf );
     }else{
@@ -2570,9 +2569,9 @@ static void WO_TypeIconChange( WO_WORK * wk, u16 waza, u16 num )
   ARCHANDLE *handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), HEAPID_WAZAOSHIE );
 
   if( wk->dat->page == WO_PAGE_BATTLE ){
-    type = WT_WazaDataParaGet( waza, ID_WTD_wazatype );
+    type = WAZADATA_GetParam( waza, WAZAPARAM_TYPE );
   }else{
-    type = WT_WazaDataParaGet( waza, ID_WTD_contype ) + ICONTYPE_STYLE;
+    type = WAZADATA_GetParam( waza, WAZAPARAM_TYPE ) + ICONTYPE_STYLE;
   }
 
 //  GFL_CLGRP_CGR_ReplaceSrc_VramTransfer( wk->clres[0][num],
@@ -2693,7 +2692,7 @@ static void WO_TypeIconScroll( WO_WORK * wk, u16 old_scr, u16 new_scr )
 //--------------------------------------------------------------------------------------------
 static void WO_KindIconChange( WO_WORK * wk, u16 waza )
 {
-  u32 kind = WT_WazaDataParaGet( waza, ID_WTD_kind );
+  u32 kind = WAZADATA_GetParam( waza, WAZAPARAM_DAMAGE_TYPE );
   ARCHANDLE *handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), HEAPID_WAZAOSHIE );
 
 //  CATS_ChangeResourceCharArc(

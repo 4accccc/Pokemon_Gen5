@@ -11,7 +11,7 @@
 #include "btlv_effect.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
-#include "waza_tool/waza_tool.h"
+#include "waza_tool/wazadata.h"
 #include "system/palanm.h"
 #include "system/bmp_oam.h"
 #include "infowin/infowin.h"

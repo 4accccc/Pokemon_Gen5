@@ -10,7 +10,6 @@
 
 #include  "arc_def.h"
 
-#include  "waza_tool/waza_tool.h"
 #include  "waza_tool/wazano_def.h"
 #include  "waza_tool/wazadata.h"
 
@@ -426,49 +425,4 @@ BOOL WAZADATA_IsDamage( WazaID id )
   return WAZADATA_GetParam(id, WAZAPARAM_POWER) != 0;
 }
 
-
-
-
-//============================================================================================
-/**
- *  技データテーブルから値を取得（@todo 旧番。後で消す）
- *
- * @param[in] waza_no   取得したい技ナンバー
- * @param[in] id      取得したい値の種類
- */
-//============================================================================================
-u32 WT_WazaDataParaGet( int waza_no, int id )
-{
-  switch( id ){
-  case ID_WTD_kind:
-    id = WAZAPARAM_DAMAGE_TYPE;
-    break;
-  case ID_WTD_damage:
-    id = WAZAPARAM_POWER;
-    break;
-  case ID_WTD_wazatype:
-    id = WAZAPARAM_TYPE;
-    break;
-  case ID_WTD_hitprobability:
-    id = WAZAPARAM_HITPER;
-    break;
-  case ID_WTD_pp:
-    id = WAZAPARAM_BASE_PP;
-    break;
-  case ID_WTD_attackrange:
-    id = WAZAPARAM_TARGET;
-    break;
-  case ID_WTD_attackpri:
-    id = WAZAPARAM_PRIORITY;
-    break;
-
-  case ID_WTD_flag:
-  case ID_WTD_addeffect:
-  case ID_WTD_battleeffect:
-  case ID_WTD_ap_no:
-  case ID_WTD_contype:
-    return 0;
-  }
-  return WAZADATA_GetParam( waza_no, id );;
-}
 

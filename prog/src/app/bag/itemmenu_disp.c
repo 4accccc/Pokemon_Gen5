@@ -39,7 +39,6 @@
 #include "field/fieldmap.h"
 #include "font/font.naix" //NARC_font_large_gftr
 
-#include "waza_tool/waza_tool.h"
 #include "waza_tool/wazadata.h"
 
 #include "itemmenu.h"
@@ -1575,10 +1574,10 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
     GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 0 );
     GFL_BMPWIN_MakeScreen(pwin);
   }
-  
+
   ppnum = WAZADATA_GetMaxPP(wazano, 0);
-  pow = WT_WazaDataParaGet( wazano, ID_WTD_damage );
-  hit = WT_WazaDataParaGet( wazano, ID_WTD_hitprobability );
+  pow = WAZADATA_GetParam( wazano, WAZAPARAM_POWER );
+  hit = WAZADATA_GetParam( wazano, WAZAPARAM_HITPER );
 
   _wazaKindDisp(pWork,wazano);
   _wazaTypeDisp(pWork,wazano);
