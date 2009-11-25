@@ -16,10 +16,10 @@
 
 typedef struct
 {
-	BOOL time_zone;
-	BOOL season;
-	u8   bg_file[ ZONE_SPEC_ATTR_MAX ];
-	u8   stage_file[ ZONE_SPEC_ATTR_MAX ];
+	u8 time_zone;
+	u8 season;
+	u8 bg_file[ ZONE_SPEC_ATTR_MAX ];
+	u8 stage_file[ ZONE_SPEC_ATTR_MAX ];
 }BATT_BG_TBL_ZONE_SPEC_TABLE;
 
 typedef struct
