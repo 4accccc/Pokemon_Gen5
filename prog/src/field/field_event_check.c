@@ -1130,7 +1130,15 @@ static GMEVENT * DEBUG_checkKeyEvent(EV_REQUEST * req, GAMESYS_WORK * gsys, FIEL
 	//¡‚¾‚¯ŽÀŒ±
 	if( (req->key_cont & fourkingsCont) == fourkingsCont )
   { 
-    return EVENT_FourKings_CircleWalk( gsys, fieldWork, 0 );
+    u32 zoneid = FIELDMAP_GetZoneID( fieldWork );
+    if( (zoneid >= ZONE_ID_C09R0101) && (zoneid <= ZONE_ID_C09R0401) )
+    {
+      return EVENT_FourKings_CircleWalk( gsys, fieldWork, zoneid - ZONE_ID_C09R0101 );
+    }
+    else
+    {
+      return EVENT_FourKings_CircleWalk( gsys, fieldWork, 0 );
+    }
   }
 #endif
 
