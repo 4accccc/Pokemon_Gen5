@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T20:36:20"/>
+	<create user="matsumiya" host="W00207" date="2009-11-25T16:39:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="536"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="690"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -388,100 +388,52 @@
 限界を決めるのは　自分ってことだ</language>
 	</row>
 
+	<row id="msg_c05gym0101_swicth_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
+		<attribute name="キャラ指定">リフトのスイッチ</attribute>
+		<language name="JPN" width="256">この　リフトは
+これいじょう　のぼることは　できない！</language>
+		<language name="JPN_KANJI" width="256">この　リフトは
+これ以上　昇ることは　できない！</language>
+	</row>
+
+	<row id="msg_c05gym0101_swicth_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
+		<attribute name="キャラ指定">リフトのスイッチ</attribute>
+		<language name="JPN" width="256">この　リフトは
+これいじょう　おりることは　できない！</language>
+		<language name="JPN_KANJI" width="256">この　リフトは
+これ以上　降りることは　できない！</language>
+	</row>
+
 	<row id="msg_c05gym0101_glasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♂
-・ジムバッジ取得前＋アイテム入手前
-・ジムに入ると
-　主人公に隣接してメッセージ表示
-・No???「おいしいみず」入手</comment>
-		<attribute name="キャラ指定">GLASSES
-サングラス</attribute>
-		<language name="JPN" width="256">まちにきて　そうそう
-アレコレあって　たいへんだったっすね[BE:01:ページ切り替え（クリア）]
-まあ　とりあえずは
-これを　さしあげるッす！</language>
-		<language name="JPN_KANJI" width="256">街に来て　早々
-アレコレあって　大変だったっすね[BE:01:ページ切り替え（クリア）]
-まあ　とりあえずは
-これを　さしあげるッす！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c05gym0101_glasses_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♂
-・ジムバッジ取得前＋アイテム入手後
-・ジムバッジ取得まで繰り返し</comment>
-		<attribute name="キャラ指定">GLASSES
-サングラス</attribute>
-		<language name="JPN" width="256">ジムリーダーの　ヤーコンさんは
-じめんタイプ　ポケモンの　つかいて！[BE:01:ページ切り替え（クリア）]
-まあ　ここだけの　はなし
-じめんタイプの　ポケモンは[BE:00:ページ切り替え（行送り）]
-みずが　にがて　なんすよね[BE:01:ページ切り替え（クリア）]
-……じゃあ　なんで　ヤーコンさんは
-みずのそばで　くらしているんですかね</language>
-		<language name="JPN_KANJI" width="256">ジムリーダーの　ヤーコンさんは
-じめんタイプ　ポケモンの　使い手！[BE:01:ページ切り替え（クリア）]
-まあ　ここだけの話
-じめんタイプの　ポケモンは[BE:00:ページ切り替え（行送り）]
-みずが　苦手なんすよね[BE:01:ページ切り替え（クリア）]
-……じゃあ　なんで　ヤーコンさんは
-水のそばで　暮らしているんですかね</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c05gym0101_glasses_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♂
-・ジムバッジ取得後</comment>
-		<attribute name="キャラ指定">GLASSES
-サングラス</attribute>
-		<language name="JPN" width="256">ときどきは　いま　てにいれた
-ジムバッジを　みて[BE:01:ページ切り替え（クリア）]
-この　しょうぶのことを
-おもいだして　ほしいっすね</language>
-		<language name="JPN_KANJI" width="256">ときどきは　今　手に入れた
-ジムバッジを　みて[BE:01:ページ切り替え（クリア）]
-この　勝負のことを
-思い出して　ほしいっすね</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c05gym0101_statue_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>ジムバッジ取得前</comment>
-		<attribute name="キャラ指定">ポケモン像</attribute>
-		<language name="JPN" width="256">ホドモエ　ポケモンジム[BE:01:ページ切り替え（クリア）]
-ジムリーダー　ヤーコン
-にんてい　トレーナー！</language>
-		<language name="JPN_KANJI" width="256">ホドモエ　ポケモンジム[BE:01:ページ切り替え（クリア）]
-ジムリーダー　ヤーコン
-認定　トレーナー！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c05gym0101_statue_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>ジムバッジ取得後</comment>
-		<attribute name="キャラ指定">ポケモン像</attribute>
-		<language name="JPN" width="256">ホドモエ　ポケモンジム[BE:01:ページ切り替え（クリア）]
-ジムリーダー　ヤーコン
-にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
-[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">ホドモエ　ポケモンジム[BE:01:ページ切り替え（クリア）]
-ジムリーダー　ヤーコン
-認定　トレーナー！[BE:00:ページ切り替え（行送り）]
-[1:00:トレーナー名:0]</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c05gym0101_statue_03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>？？後</comment>
-		<attribute name="キャラ指定">ポケモン像</attribute>
-		<language name="JPN" width="256">ホドモエ　ポケモンジム[BE:01:ページ切り替え（クリア）]
-ジムリーダー　ヤーコン
-にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
-[1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
-ブラッカー[BE:00:ページ切り替え（行送り）]
-ホワイティ</language>
-		<language name="JPN_KANJI" width="256">ホドモエ　ポケモンジム[BE:01:ページ切り替え（クリア）]
-ジムリーダー　ヤーコン
-認定　トレーナー！[BE:00:ページ切り替え（行送り）]
-[1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
-ブラッカー[BE:00:ページ切り替え（行送り）]
-ホワイティ</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>

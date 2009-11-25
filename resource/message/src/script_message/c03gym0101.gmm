@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T15:27:01"/>
+	<create user="matsumiya" host="W00207" date="2009-11-25T16:30:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="178" top="113" right="884" bottom="733" maximized="no" rayout="Vertical2">
+	<dialog left="330" top="242" right="1036" bottom="862" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="531"/>
@@ -402,6 +402,82 @@
 あれが　あると　便利かもしれないし</language>
 	</row>
 
+	<row id="msg_c03gym0101_jugglimg_05_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・戦闘前メッセージ（登場時）</comment>
+		<attribute name="キャラ指定">トレーナー
+jugglimg_05</attribute>
+		<language name="JPN" width="256">スイッチを　ふんだら
+とびだすのは　ボクでした！▼
+さあ　というわけで
+ボクと　しょうぶ　してくれよ！▼</language>
+		<language name="JPN_KANJI" width="256">スイッチを　踏んだら
+飛びだすのは　ボクでした！▼
+さあ　というわけで
+ボクと　勝負してくれよ！▼</language>
+	</row>
+
+	<row id="msg_c03gym0101_jugglimg_05_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・戦闘後メッセージ</comment>
+		<language name="JPN" width="256">かくれていると
+しょうぶの　カンが　にぶるんだよ</language>
+		<language name="JPN_KANJI" width="256">隠れていると
+勝負の　カンが　鈍るんだよ</language>
+	</row>
+
+	<row id="msg_c03gym0101_jugglimg_05_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・2回目以降</comment>
+		<language name="JPN" width="256">だーかーら！▼
+この　スイッチを　ふんでも
+ボクが　とびだすだけだぞ！？</language>
+		<language name="JPN_KANJI" width="256">だーかーら！▼
+この　スイッチを　踏んでも
+ボクが　飛びだすだけだぞ！？</language>
+	</row>
+
+	<row id="msg_c03gym0101_jugglimg_06_01">
+		<comment>♂
+・戦闘前メッセージ（登場時）</comment>
+		<attribute name="キャラ指定">トレーナー
+jugglimg_06</attribute>
+		<language name="JPN" width="256">イヤッホウー！　わざわざ
+よびだしてくれて　ありがとう！▼
+かんしゃの　きもちを
+ポケモンの　わざに　こめて▽
+きみに　とどけさせて　もらうよ！▼</language>
+		<language name="JPN_KANJI" width="256">イヤッホウー！　わざわざ
+呼びだしてくれて　ありがとう！▼
+感謝の　気持ちを
+ポケモンの　技に　こめて▽
+きみに　届けさせて　もらうよ！▼</language>
+	</row>
+
+	<row id="msg_c03gym0101_jugglimg_06_02">
+		<comment>♂
+・戦闘後メッセージ</comment>
+		<language name="JPN" width="256">きみが　スイッチを　ふんでくれないと
+ずっと　かくれたままだったのさ▼
+そう　むしジムの
+トレーナーを　むしするってこと……</language>
+		<language name="JPN_KANJI" width="256">きみが　スイッチを　ふんでくれないと
+ずっと　隠れたままだったのさ▼
+そう　むしジムの
+トレーナーを　むしするってこと……</language>
+	</row>
+
+	<row id="msg_c03gym0101_jugglimg_06_03">
+		<comment>♂
+・2回目以降</comment>
+		<language name="JPN" width="256">こうやって　ゆかに　かくれて
+みを　ひそめていると▽
+むしポケモンの　きもちが　わかるんだ</language>
+		<language name="JPN_KANJI" width="256">こうやって　床に　隠れて
+身を　潜めていると▽
+むしポケモンの　気持ちが　わかるんだ</language>
+	</row>
+
 	<row id="msg_c03gym0101_glasses_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手前
@@ -424,23 +500,26 @@
 これを　さしあげるッす！</language>
 	</row>
 
-	<row id="msg_c03gym0101_glasses_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03gym0101_glasses_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手後
 ・ジムバッジ取得まで繰り返し</comment>
 		<attribute name="キャラ指定">GLASSES
 サングラス</attribute>
-		<language name="JPN" width="256">むしタイプの　ポケモンは
-ほのおや　ひこうタイプ……　それに[BE:00:ページ切り替え（行送り）]
-いわタイプの　わざが　にがてっすよ[BE:01:ページ切り替え（クリア）]
-ぎゃくに　くさ　かくとう
-じめんタイプの　わざ　では[BE:00:ページ切り替え（行送り）]
-いまいち　きかないっすよ！</language>
-		<language name="JPN_KANJI" width="256">むしタイプの　ポケモンは
-ほのおや　ひこうタイプ……　それに[BE:00:ページ切り替え（行送り）]
-いわタイプの　わざが　苦手っすよ[BE:01:ページ切り替え（クリア）]
-逆に　くさ　かくとう　じめんタイプの
-わざでは　いまいち　効かないっすよ！</language>
+		<language name="JPN" width="256">この　ジムはですね
+かべを　つきぬけるのが　テーマっす！▼
+いっけん　とおれそうに　ない
+ハチミツの　かべ　ですけど▽
+がんばれば　なんとか　なるっす！▼
+なんとか　ならないときは
+ゆかの　スイッチを　ふんでください！</language>
+		<language name="JPN_KANJI" width="256">この　ジムはですね
+壁を　突き抜けるのが　テーマっす！▼
+一見　通れそうにない　ない
+ハチミツの　壁　ですけど▽
+がんばれば　なんとか　なるっす！▼
+なんとか　ならないときは
+床の　スイッチを　踏んでください！</language>
 	</row>
 
 	<row id="msg_c03gym0101_glasses_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
