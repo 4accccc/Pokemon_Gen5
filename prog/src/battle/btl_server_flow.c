@@ -3174,6 +3174,7 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
 
   // ワザ効果あり→エフェクトコマンド生成などへ
   if( wk->wazaEff_EnableFlag ){
+    BTL_Printf("効果あった\n");
     scproc_Fight_WazaEffective( wk, waza, pokeID, wk->wazaEff_TargetPokePos, que_reserve_pos );
     BTL_WAZAREC_SetEffectiveLast( &wk->wazaRec );
   }else{
@@ -4099,6 +4100,7 @@ static BOOL scproc_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKE
   fSucceed = addsick_core( wk, target, attacker, sick, sickCont, fAlmost );
   if( fSucceed )
   {
+    BTL_Printf("状態以上になるよ\n");
     BTL_SICK_AddProc( wk, target, sick );
 
     if( strParam == NULL ){
@@ -4637,26 +4639,37 @@ static void scproc_Fight_SimpleSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEP
   WazaSick sick;
   WAZA_SICKCONT_PARAM contParam;
   BOOL fSucceed;
+  u32  targetCnt;
+  BTL_POKEPARAM* hitTarget = NULL;
 
   sick = WAZADATA_GetParam( waza, WAZAPARAM_SICK );
   contParam = WAZADATA_GetSickCont( waza );
   fSucceed = FALSE;
 
-  if( TargetPokeRec_GetCount(targetRec) )
+  targetCnt = TargetPokeRec_GetCount( targetRec );
+
+  if( targetCnt )
   {
-    BOOL fSucceed = FALSE;
     TargetPokeRec_GetStart( targetRec );
     while( (target = TargetPokeRec_GetNext(targetRec)) != NULL )
     {
       BPP_SICK_CONT sickCont;
       BTL_CALC_WazaSickContToBppSickCont( contParam, attacker, &sickCont );
       if( scproc_Fight_WazaSickCore( wk, attacker, target, waza, sick, sickCont, TRUE ) ){
+        hitTarget = target;
         fSucceed = TRUE;  // ターゲットが居て、１体でも状態異常にかかれば成功
       }
     }
   }
 
-  if( !fSucceed ){
+  if( fSucceed ){
+    if( targetCnt == 1 ){
+      wazaEffSet_ExplicitTarget( wk, hitTarget );
+    }else{
+      wazaEffSet_ImplicitTarget( wk );
+    }
+  }else{
+    BTL_Printf("失敗メッセージ１\n");
     scPut_WazaFail( wk, attacker, waza );
   }
 }
@@ -4793,6 +4806,7 @@ static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPA
   u32 eff_cnt, i;
 
   eff_cnt = WAZADATA_GetRankEffectCount( wazaParam->wazaID );
+  BTL_Printf("ワザ:%dのエフェクト数=%d\n", wazaParam->wazaID, eff_cnt);
   for(i=0; i<eff_cnt; ++i)
   {
     WazaRankEffect  effect;
@@ -7372,6 +7386,7 @@ static BOOL scEvent_checkHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
   }
 
   if( BPP_CheckSick(defender, WAZASICK_TELEKINESIS) ){
+    BTL_Printf("相手がテレキネシス状態だからあたります\n");
     return TRUE;
   }
 
@@ -8375,7 +8390,7 @@ static void scEvent_AfterDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
 //--------------------------------------------------------------------------
 static BOOL scEvent_CheckAddRankEffectOccur( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target )
 {
-  u8 per = WAZADATA_GetParam( wazaParam->wazaID, WAZAPARAM_RANKPER_1 ); // @todo 本来は３つみる
+  u8 per = WAZADATA_GetParam( wazaParam->wazaID, WAZAPARAM_RANKPER_1 );
 
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
