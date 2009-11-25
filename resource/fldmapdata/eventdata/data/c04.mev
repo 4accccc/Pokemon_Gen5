@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/29 17:40:32
+#save date:2009/11/25 10:58:39
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/29 17:40:32
+#save date:
 2
 #hold event type:
 1
@@ -37,6 +37,8 @@ DIR_DOWN
 2
 #Move Limit Z Number
 3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 536 16 -88
 #event number: 1
@@ -66,6 +68,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 424 16 -504
 #event number: 2
@@ -95,6 +99,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 216 16 -536
 #event number: 3
@@ -124,6 +130,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 280 16 -72
 #event number: 4
@@ -153,6 +161,8 @@ DIR_DOWN
 1
 #Move Limit Z Number
 1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -8 16 -40
 #event number: 5
@@ -182,6 +192,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 568 16 -344
 #event number: 6
@@ -211,6 +223,8 @@ DIR_RIGHT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 600 16 -328
 #event number: 7
@@ -240,6 +254,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 600 16 -360
 #event number: 8
@@ -269,13 +285,15 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 360 16 -408
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/29 17:40:32
+#save date:
 2
 #hold event type:
 1
@@ -290,6 +308,8 @@ BG_TALK_TYPE_BOARD
 BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_BG_C04_BOARD_03
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -72 16 -56
 #event number: 1
@@ -301,6 +321,8 @@ BG_TALK_TYPE_BOARD
 BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_BG_C04_BOARD_02
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 168 16 -56
 #event number: 2
@@ -312,6 +334,8 @@ BG_TALK_TYPE_BOARD
 BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_BG_C04_BOARD_05
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 312 16 -56
 #event number: 3
@@ -323,6 +347,8 @@ BG_TALK_TYPE_BOARD
 BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_BG_C04_BOARD_04
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 584 16 -56
 #event number: 4
@@ -334,13 +360,15 @@ BG_TALK_TYPE_BOARD
 BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_BG_C04_BOARD_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 408 16 -472
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/29 17:40:32
+#save date:
 2
 #hold event type:
 1
@@ -355,12 +383,12 @@ SCRID_POS_C04_SUPPORT_01
 WK_SCENE_C04
 #Event Trigger Work Value
 1
-#Pos Event Size X
-1
-#Pos Event Size Z
-5
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -152 16 -72
+#size
+1 5
 #event number: 1
 #Pos Event Label
 POSID_C04_LEADER4_01
@@ -370,22 +398,22 @@ SCRID_POS_C04_LEADER4_01
 WK_SCENE_C04
 #Event Trigger Work Value
 2
-#Pos Event Size X
-1
-#Pos Event Size Z
-5
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -184 0 -72
+#size
+1 5
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/29 17:40:32
+#save date:
 2
 #hold event type:
 1
 #hold event number:
-26
+19
 #event number: 0
 #Door Event Label
 DOOR_ID_C04_C04R0601_EXIT01
@@ -397,8 +425,12 @@ DOOR_ID_C04R0601_C04_EXIT01
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 472 0 -760
+#size
+1 1
 #event number: 1
 #Door Event Label
 DOOR_ID_C04_C04R0601_EXIT04
@@ -410,8 +442,12 @@ DOOR_ID_C04R0601_C04_EXIT03
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 520 0 -760
+#size
+1 1
 #event number: 2
 #Door Event Label
 DOOR_ID_C04_C04R0601_EXIT03
@@ -423,8 +459,12 @@ DOOR_ID_C04R0601_C04_EXIT03
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 504 0 -760
+#size
+1 1
 #event number: 3
 #Door Event Label
 DOOR_ID_C04_C04R0601_EXIT02
@@ -436,8 +476,12 @@ DOOR_ID_C04R0601_C04_EXIT02
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 488 0 -760
+#size
+1 1
 #event number: 4
 #Door Event Label
 DOOR_ID_C04_C04R0701_EXIT01
@@ -449,8 +493,12 @@ DOOR_ID_C04R0701_C04_EXIT01
 EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -248 0 -88
+#size
+1 1
 #event number: 5
 #Door Event Label
 DOOR_ID_C04_C04R0701_EXIT03
@@ -462,8 +510,12 @@ DOOR_ID_C04R0701_C04_EXIT03
 EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -248 0 -120
+#size
+1 1
 #event number: 6
 #Door Event Label
 DOOR_ID_C04_C04R0701_EXIT02
@@ -475,8 +527,12 @@ DOOR_ID_C04R0701_C04_EXIT02
 EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -248 0 -104
+#size
+1 1
 #event number: 7
 #Door Event Label
 DOOR_ID_C04_C04R0801_EXIT01
@@ -488,8 +544,12 @@ DOOR_ID_C04R0801_C04_EXIT01
 EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 760 0 -72
+#size
+1 1
 #event number: 8
 #Door Event Label
 DOOR_ID_C04_C04R0801_EXIT05
@@ -501,8 +561,12 @@ DOOR_ID_C04R0801_C04_EXIT03
 EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 760 0 -136
+#size
+1 1
 #event number: 9
 #Door Event Label
 DOOR_ID_C04_C04R0801_EXIT04
@@ -514,8 +578,12 @@ DOOR_ID_C04R0801_C04_EXIT03
 EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 760 0 -120
+#size
+1 1
 #event number: 10
 #Door Event Label
 DOOR_ID_C04_C04R0801_EXIT03
@@ -527,8 +595,12 @@ DOOR_ID_C04R0801_C04_EXIT03
 EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 760 0 -104
+#size
+1 1
 #event number: 11
 #Door Event Label
 DOOR_ID_C04_C04R0801_EXIT02
@@ -540,8 +612,12 @@ DOOR_ID_C04R0801_C04_EXIT02
 EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 760 0 -88
+#size
+1 1
 #event number: 12
 #Door Event Label
 DOOR_ID_C04_C04R0301_EXIT01
@@ -553,8 +629,12 @@ DOOR_ID_C04R0301_C04_EXIT02
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 136 16 -24
+#size
+1 1
 #event number: 13
 #Door Event Label
 DOOR_ID_C04_C04P01_EXIT01
@@ -566,61 +646,13 @@ DOOR_ID_C04P01_C04_EXIT01
 EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_MAT
-#position
-616 16 -424
-#event number: 14
-#Door Event Label
-DOOR_ID_C04_C04P01_EXIT05
-#Next Zone ID Name
-ZONE_ID_C04P01
-#Next Door ID Name
-DOOR_ID_C04P01_C04_EXIT05
-#Door Direction
-EXIT_DIR_LEFT
-#Door Type
-EXIT_TYPE_MAT
-#position
-616 16 -488
-#event number: 15
-#Door Event Label
-DOOR_ID_C04_C04P01_EXIT04
-#Next Zone ID Name
-ZONE_ID_C04P01
-#Next Door ID Name
-DOOR_ID_C04P01_C04_EXIT04
-#Door Direction
-EXIT_DIR_LEFT
-#Door Type
-EXIT_TYPE_MAT
-#position
-616 16 -472
-#event number: 16
-#Door Event Label
-DOOR_ID_C04_C04P01_EXIT03
-#Next Zone ID Name
-ZONE_ID_C04P01
-#Next Door ID Name
-DOOR_ID_C04P01_C04_EXIT03
-#Door Direction
-EXIT_DIR_LEFT
-#Door Type
-EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 616 16 -456
-#event number: 17
-#Door Event Label
-DOOR_ID_C04_C04P01_EXIT02
-#Next Zone ID Name
-ZONE_ID_C04P01
-#Next Door ID Name
-DOOR_ID_C04P01_C04_EXIT02
-#Door Direction
-EXIT_DIR_LEFT
-#Door Type
-EXIT_TYPE_MAT
-#position
-616 16 -440
-#event number: 18
+#size
+1 5
+#event number: 14
 #Door Event Label
 DOOR_ID_C04_C04PC0101_EXIT01
 #Next Zone ID Name
@@ -631,22 +663,30 @@ DOOR_ID_C04PC0101_C04_EXIT02
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 40 16 -408
-#event number: 19
+#size
+1 1
+#event number: 15
 #Door Event Label
 DOOR_ID_C04_C04R0201_EXIT01
 #Next Zone ID Name
 ZONE_ID_C04R0201
 #Next Door ID Name
-DOOR_ID_C04R0201_C04_EXIT02
+DOOR_ID_C04R0201_C04_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
-376 16 -24
-#event number: 20
+552 16 -24
+#size
+1 1
+#event number: 16
 #Door Event Label
 DOOR_ID_C04_C04R0101_EXIT01
 #Next Zone ID Name
@@ -657,9 +697,13 @@ DOOR_ID_C04R0101_C04_EXIT03
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 360 16 -392
-#event number: 21
+#size
+1 1
+#event number: 17
 #Door Event Label
 DOOR_ID_C04_C04R0501_EXIT01
 #Next Zone ID Name
@@ -670,9 +714,13 @@ DOOR_ID_C04R0501_C04_EXIT02
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -40 16 -408
-#event number: 22
+#size
+1 1
+#event number: 18
 #Door Event Label
 DOOR_ID_C04_C04R0401_EXIT01
 #Next Zone ID Name
@@ -683,46 +731,11 @@ DOOR_ID_C04R0401_C04_EXIT02
 EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -104 16 -24
-#event number: 23
-#Door Event Label
-DOOR_ID_C04_C04R0901_EXIT01
-#Next Zone ID Name
-ZONE_ID_C04R0901
-#Next Door ID Name
-DOOR_ID_C04R0901_C04_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#position
-600 16 -24
-#event number: 24
-#Door Event Label
-DOOR_ID_C04_C04R0901_EXIT03
-#Next Zone ID Name
-ZONE_ID_C04R0901
-#Next Door ID Name
-DOOR_ID_C04R0901_C04_EXIT03
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#position
-632 16 -24
-#event number: 25
-#Door Event Label
-DOOR_ID_C04_C04R0901_EXIT02
-#Next Zone ID Name
-ZONE_ID_C04R0901
-#Next Door ID Name
-DOOR_ID_C04R0901_C04_EXIT02
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_MAT
-#position
-616 16 -24
+#size
+1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
