@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tomoya_takahashi" host="W00148" date="2009-11-16T23:41:00"/>
+	<create user="tomoya_takahashi" host="W00148" date="2009-11-25T15:40:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="-1049" top="189" right="-344" bottom="809" maximized="no" rayout="Vertical2">
+	<dialog left="123" top="140" right="828" bottom="760" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="799" top="128" right="1272" bottom="526" visible="no"/>
+		<tag-palette left="799" top="128" right="1272" bottom="526" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -436,23 +436,23 @@ SLOPE　[2:01:２桁:1]</language>
 
 	<row id="CAMERA_DELICATE_ANGLE">
 		<language name="JPN" width="256">アングル　Pitch：[2:03:４桁:0] 
-Yaw：[2:03:４桁:1] Length：[2:03:４桁:2]</language>
+Yaw：[2:03:４桁:1] Length：[2:04:５桁:2]</language>
 		<language name="JPN_KANJI" width="256">アングル　Pitch：[2:03:４桁:0] 
-Yaw：[2:03:４桁:1] Length：[2:03:４桁:2]</language>
+Yaw：[2:03:４桁:1] Length：[2:04:５桁:2]</language>
 	</row>
 
 	<row id="CAMERA_DELICATE_">
-		<language name="JPN" width="256">カメラ座標　ｘ：[2:03:４桁:0] ｙ：[2:03:４桁:1] ｚ：[2:03:４桁:2]
-ターゲット　ｘ：[2:03:４桁:3] ｙ：[2:03:４桁:4] ｚ：[2:03:４桁:5]</language>
-		<language name="JPN_KANJI" width="256">カメラ座標　ｘ：[2:03:４桁:0] ｙ：[2:03:４桁:1] ｚ：[2:03:４桁:2]
-ターゲット　ｘ：[2:03:４桁:3] ｙ：[2:03:４桁:4] ｚ：[2:03:４桁:5]</language>
+		<language name="JPN" width="256">カメラ　ｘ：[2:04:５桁:0] ｙ：[2:04:５桁:1] ｚ：[2:04:５桁:2]
+ターゲット　ｘ：[2:04:５桁:3] ｙ：[2:04:５桁:4] ｚ：[2:04:５桁:5]</language>
+		<language name="JPN_KANJI" width="256">カメラ　ｘ：[2:04:５桁:0] ｙ：[2:04:５桁:1] ｚ：[2:04:５桁:2]
+ターゲット　ｘ：[2:04:５桁:3] ｙ：[2:04:５桁:4] ｚ：[2:04:５桁:5]</language>
 	</row>
 
 	<row id="CAMERA_DELICATE_OFFSET">
-		<language name="JPN" width="256">ターゲットオフセット OffsetX：[2:03:４桁:0]
-OffsetY：[2:03:４桁:1] OffsetZ：[2:03:４桁:2]</language>
-		<language name="JPN_KANJI" width="256">ターゲットオフセット OffsetX：[2:03:４桁:0]
-OffsetY：[2:03:４桁:1] OffsetZ：[2:03:４桁:2]</language>
+		<language name="JPN" width="256">ターゲットオフセット OffsetX：[2:04:５桁:0]
+OffsetY：[2:04:５桁:1] OffsetZ：[2:04:５桁:2]</language>
+		<language name="JPN_KANJI" width="256">ターゲットオフセット OffsetX：[2:04:５桁:0]
+OffsetY：[2:04:５桁:1] OffsetZ：[2:04:５桁:2]</language>
 	</row>
 
 	<row id="CAMERA_DELICATE_PARS">

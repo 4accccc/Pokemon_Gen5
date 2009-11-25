@@ -2020,12 +2020,12 @@ void FIELD_CAMERA_DEBUG_DrawInfo( FIELD_CAMERA* camera, GFL_BMPWIN* p_win )
     GFL_G3D_CAMERA_GetPos( camera->g3Dcamera, &camerapos );
     
     // カメラ
-    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 0, FX_Whole(camerapos.x), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 1, FX_Whole(camerapos.y), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 2, FX_Whole(camerapos.z), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 3, FX_Whole(target.x), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 4, FX_Whole(target.y), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 5, FX_Whole(target.z), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 0, FX_Whole(camerapos.x), 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 1, FX_Whole(camerapos.y), 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 2, FX_Whole(camerapos.z), 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 3, FX_Whole(target.x), 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 4, FX_Whole(target.y), 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 5, FX_Whole(target.z), 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 
     GFL_MSG_GetString( camera->p_debug_msgdata, CAMERA_DELICATE_, camera->p_debug_strbuff_tmp );
 
@@ -2035,9 +2035,9 @@ void FIELD_CAMERA_DEBUG_DrawInfo( FIELD_CAMERA* camera, GFL_BMPWIN* p_win )
 
   // ターゲットオフセット
   {
-    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 0, FX_Whole(camera->target_offset.x), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 1, FX_Whole(camera->target_offset.y), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 2, FX_Whole(camera->target_offset.z), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 0, FX_Whole(camera->target_offset.x), 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 1, FX_Whole(camera->target_offset.y), 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterHexNumber( camera->p_debug_wordset, 2, FX_Whole(camera->target_offset.z), 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 
     GFL_MSG_GetString( camera->p_debug_msgdata, CAMERA_DELICATE_OFFSET, camera->p_debug_strbuff_tmp );
 
