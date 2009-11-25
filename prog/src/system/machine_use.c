@@ -190,5 +190,4 @@ static void MachineSystem_MbInitFile(void)
   OS_TPrintf("remains of MainRAM = 0x%08x bytes.\n", 
               (u32)(OS_GetMainArenaHi())-(u32)(OS_GetMainArenaLo()));
 */
-#endif
 }
