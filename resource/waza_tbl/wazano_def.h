@@ -487,7 +487,7 @@
 #define		WAZANO_BENOMUSYOKKU		( 474 )		//ベノムショック
 #define		WAZANO_BODHIPAAZI			( 475 )		//ボディパージ
 #define		WAZANO_KIKAZARU				( 476 )		//きかざる
-#define		WAZANO_WASIDUKAMI			( 477 )		//わしづかみ
+#define		WAZANO_TEREKINESISU		( 477 )		//テレキネシス
 #define		WAZANO_MAZIKKURUUMU		( 478 )		//マジックルーム
 #define		WAZANO_UTIOTOSU				( 479 )		//うちおとす
 #define		WAZANO_GORINKUDAKI		( 480 )		//ごりんくだき
