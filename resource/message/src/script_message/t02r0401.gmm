@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-20T16:54:45"/>
+	<create user="matsumiya" host="W00207" date="2009-11-25T17:15:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -300,7 +300,7 @@
 お嬢様</attribute>
 		<language name="JPN" width="256">あたくしの　すきな　きょく
 ひいて　あげましょうか？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">あたくしの　すきな　きょく
+		<language name="JPN_KANJI" width="256">あたくしの　好きな曲
 弾いて　あげましょうか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -327,48 +327,57 @@
 
 	<row id="msg_t02r0401_girl4_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀：ピアノ演奏
-・弾いているとき
-・はい/いいえ選択肢表示</comment>
-		<language name="JPN" width="256">どうなさいました？
-もう　ピアノは　いいですか？</language>
-		<language name="JPN_KANJI" width="256">どうなさいました？
-もう　ピアノは　いいですか？</language>
+・弾いているとき</comment>
+		<language name="JPN" width="256">えんそうに　むちゅうだ！</language>
+		<language name="JPN_KANJI" width="256">えんそうに　むちゅうだ！</language>
 	</row>
 
 	<row id="msg_t02r0401_girl4_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♀：ピアノ演奏
-・msg_t02r0401_girl4_04
-・はい選択
-・ISS終了</comment>
-		<language name="JPN" width="256">ああ　たのしかった！[BE:01:ページ切り替え（クリア）]
-ピアノを　ひいているとき
-すごく　みたされるんです</language>
-		<language name="JPN_KANJI" width="256">ああ　たのしかった！[BE:01:ページ切り替え（クリア）]
-ピアノを　弾いているとき
-すごく　満たされるんです</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t02r0401_girl4_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♀：ピアノ演奏
-・msg_t02r0401_girl4_04
-・いいえ選択</comment>
-		<language name="JPN" width="256">……この　きょくは
-ちちの　おもいで　なんです</language>
-		<language name="JPN_KANJI" width="256">……この　曲は
-父の　思い出なんです</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_t02r0401_man2_01">
-		<comment>♂
-ドラム演奏</comment>
+	<row id="msg_t02r0401_man2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：ドラム演奏
+・弾いていないとき
+・はい/いいえ選択肢表示</comment>
 		<attribute name="キャラ指定">MAN2
 青年２（金髪）</attribute>
-		<language name="JPN" width="256">おれのッ！　しんぞうがッ！
-ビートを　きざむかぎり[BE:00:ページ切り替え（行送り）]
-ドラムを　たたきつづけるぞい！！</language>
+		<language name="JPN" width="256">ドラム　きいてみる？</language>
+		<language name="JPN_KANJI" width="256">ドラム　聴いてみる？</language>
+	</row>
+
+	<row id="msg_t02r0401_man2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：ドラム演奏
+・msg_t02r0401_man2_01表示後に
+・はい選択
+・ISS起動</comment>
+		<language name="JPN" width="256">オレのッ！　しんぞうがッ！
+ビートを　きざむかぎり！[BE:00:ページ切り替え（行送り）]
+ドラムを　たたき！　つづけるッ！！</language>
 		<language name="JPN_KANJI" width="256">オレのッ！　心臓がッ！
-ビートを　刻むかぎり[BE:00:ページ切り替え（行送り）]
-オレはッ！　ドラムを　たたきつづける！！</language>
+ビートを　刻むかぎり！[BE:00:ページ切り替え（行送り）]
+ドラムを！　たたき！　つづけるッ！！</language>
+	</row>
+
+	<row id="msg_t02r0401_man2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：ドラム演奏
+・msg_t02r0401_man2_01表示後に
+・いいえ選択</comment>
+		<language name="JPN" width="256">……ですよね</language>
+		<language name="JPN_KANJI" width="256">……ですよね</language>
+	</row>
+
+	<row id="msg_t02r0401_man2_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：ドラム演奏
+・弾いているとき</comment>
+		<language name="JPN" width="256">えんそうに　むちゅうだ！</language>
+		<language name="JPN_KANJI" width="256">えんそうに　むちゅうだ！</language>
 	</row>
 
 	<row id="msg_t02r0401_poke_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
