@@ -1287,6 +1287,42 @@
   .short EV_SEQ_BGWIN_CLOSE
   .endm
 
+//======================================================================
+//  特殊ウィンドウ
+//======================================================================
+//--------------------------------------------------------------
+/**
+ *  @def _SPWIN_MSG
+ *  @brief 特殊ウィンドウを表示する
+ *  @param msg_id 表示するメッセージID
+ *  @param x ウィンドウ左上X座標 キャラ単位
+ *  @param y ウィンドウ左上Y座標 キャラ単位
+ *  @param type 表示するタイプ SPWIN_LETTER SPWIN_BOOK等
+ */
+//--------------------------------------------------------------
+#define _SPWIN_MSG( msg_id, x, y, type ) _ASM_SPWIN_MSG msg_id, x, y, type
+  
+  .macro _ASM_SPWIN_MSG msg_id, x, y, type
+  .short EV_SEQ_SPWIN_MSG
+  .short \msg_id
+  .byte \x
+  .byte \y
+  .short \type
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @def _SPWIN_CLOSE
+ *  @brief 特殊ウィンドウを閉じる
+ *  @param none 
+ */
+//--------------------------------------------------------------
+#define _SPWIN_CLOSE()  _ASM_SPWIN_CLOSE
+  
+  .macro _ASM_SPWIN_CLOSE
+  .short EV_SEQ_SPWIN_CLOSE
+  .endm
+
 
 //======================================================================
 //  動作モデル
