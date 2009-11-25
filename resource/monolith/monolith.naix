@@ -1,0 +1,35 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: monolith.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_MONOLITH_NAIX_
+#define NARC_MONOLITH_NAIX_
+
+enum {
+	NARC_monolith_mono_obj_lz_NCGR = 0,
+	NARC_monolith_mono_obj_NCER = 1,
+	NARC_monolith_mono_obj_NANR = 2,
+	NARC_monolith_mono_obj_NCLR = 3,
+	NARC_monolith_mono_bgd_base_lz_NSCR = 4,
+	NARC_monolith_mono_bgd_joutai_lz_NSCR = 5,
+	NARC_monolith_mono_bgd_map_lz_NSCR = 6,
+	NARC_monolith_mono_bgd_power_lz_NSCR = 7,
+	NARC_monolith_mono_bgd_rireki_lz_NSCR = 8,
+	NARC_monolith_mono_bgd_title_lz_NSCR = 9,
+	NARC_monolith_mono_bgu_base_lz_NSCR = 10,
+	NARC_monolith_mono_bgu_map_lz_NSCR = 11,
+	NARC_monolith_mono_bgu_mission_lz_NSCR = 12,
+	NARC_monolith_mono_bgu_power_lz_NSCR = 13,
+	NARC_monolith_mono_bgd_lz_NCGR = 14,
+	NARC_monolith_mono_bgu_lz_NCGR = 15,
+	NARC_monolith_mono_bgu_NCLR = 16,
+	NARC_monolith_mono_bgd_NCLR = 17
+};
+
+/* NARC_MONOLITH_NAIX_ */
+#endif

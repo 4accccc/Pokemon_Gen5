@@ -58,6 +58,7 @@ static GMEVENT_RESULT _event_IntrudeMissionStart( GMEVENT * event, int * seq, vo
 
 
 
+
 //==================================================================
 /**
  * ミニモノリスセッティング
@@ -256,3 +257,4 @@ VMCMD_RESULT EvCmdIntrudeConnectMapSetting( VMHANDLE *core, void *wk )
 
   return VMCMD_RESULT_CONTINUE;
 }
+

@@ -97,3 +97,11 @@ extern VMCMD_RESULT EvCmdFreeSubProcWork( VMHANDLE *core, void *wk );
 //--------------------------------------------------------------
 extern VMCMD_RESULT EvCmdCallBagProc( VMHANDLE *core, void *wk );
 
+//--------------------------------------------------------------
+/**
+ * @brief   モノリス画面プロセスを呼び出します
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+extern VMCMD_RESULT EvCmdCallMonolithProc( VMHANDLE *core, void *wk );

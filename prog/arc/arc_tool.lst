@@ -94,6 +94,7 @@
 	ARCID_PALACE		"palace.narc"			#パレス
 	ARCID_MISSION		"mission.narc"			#パレスのミッションデータ
 	ARCID_POWER 		"power.narc"			#パレスのパワーデータ
+	ARCID_MONOLITH	"monolith.narc"			#モノリスグラフィック
 	ARCID_FLDMMLD		"debug/mmodel.narc"
 	ARCID_YN_TOUCH		"yn_touch.narc"			#YesNoボタン
 	ARCID_MYSIGN		"mysign.narc"			#サイン(トレーナーカード)

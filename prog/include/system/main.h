@@ -116,6 +116,7 @@ enum{
   HEAPID_MULTIBOOT_DATA,      
   HEAPID_MB_BOX,      
   HEAPID_MB_CAPTURE,      
+  HEAPID_MONOLITH,
 
   //デバッグ用ヒープ
   HEAPID_WATANABE_DEBUG,

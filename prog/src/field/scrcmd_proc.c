@@ -40,6 +40,7 @@
 #include "../../../resource/fldmapdata/script/usescript.h"
 
 #include "app/bag.h"
+#include "field/monolith_main.h"
 
 ////////////////////////////////////////////////////////////////
 //プロトタイプ
@@ -258,6 +259,28 @@ VMCMD_RESULT EvCmdCallBagProc( VMHANDLE *core, void *wk )
 
   EVFUNC_CallSubProc( core, work,
     FS_OVERLAY_ID(bag), &ItemMenuProcData, bp, callback_BagProcFunc, bcw);
+  
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   モノリス画面プロセスを呼び出します
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCallMonolithProc( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  MONOLITH_PARENT_WORK *parent;
+
+  parent = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(MONOLITH_PARENT_WORK));
+  parent->gsys = gsys;
+  
+  EVFUNC_CallSubProc(core, work, FS_OVERLAY_ID(monolith), &MonolithProcData, parent, NULL, NULL);
   
   return VMCMD_RESULT_SUSPEND;
 }

@@ -100,6 +100,7 @@ SUBDIRS	=	wmi \
 			palace \
             op_demo \
 			battle_recorder \
+			monolith \
 			fourkings_scene \
 			multiboot
 

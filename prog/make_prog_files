@@ -586,6 +586,14 @@ SRCS_OVERLAY_BAG = app/bag/itemmenu.c \
 												app/bag/itemmenu_disp.c \
 												app/bag/itemuse.c
 
+# モノリス画面
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_IRC
+SRCS_OVERLAY_MONOLITH = field/field_comm/monolith_main.c \
+									 field/field_comm/monolith_tool.c \
+									 field/field_comm/monolith_mission_select.c
+
+
 # タウンマップ画面
 #===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_TOWNMAP = app/townmap/townmap.c \

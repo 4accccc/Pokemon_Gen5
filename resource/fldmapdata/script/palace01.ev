@@ -59,5 +59,13 @@ ev_palace01:
 /*  ƒ‚ƒmƒŠƒX                                              */
 /**************************************************************/
 EVENT_START ev_palace01_monolith
-  _EASY_MSG( msg_palace01_monlith )
+  _BLACK_OUT()
+  _DISP_FADE_END_CHECK()
+  _FIELD_CLOSE()
+
+  _CALL_MONOLITH_PROC()
+
+  _FIELD_OPEN()
+  _BLACK_IN()
+  _DISP_FADE_END_CHECK()
 EVENT_END
