@@ -10336,6 +10336,7 @@ static u8 scproc_HandEx_intrPoke( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
   BTL_HANDEX_PARAM_INTR_POKE* param = (BTL_HANDEX_PARAM_INTR_POKE*)param_header;
 
   if( ActOrder_IntrReserve(wk, param->pokeID) ){
+    handexSub_putString( wk, &param->exStr );
     return 1;
   }
   return 0;

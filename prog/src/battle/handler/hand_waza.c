@@ -591,6 +591,8 @@ static void handler_Rinsyou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static void handler_Rinsyou_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Sakiokuri( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Sakiokuri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_FastGuard( u16 pri, WazaID waza, u8 pokeID );
+static void handler_FastGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 
@@ -834,6 +836,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_KARI_OSAKINIDOUZO,     ADD_OsakiniDouzo    },
     { WAZANO_KARI_SAKIOKURI,        ADD_Sakiokuri       },
     { WAZANO_KARI_RINSYOU,          ADD_Rinsyou         },
+    { WAZANO_KARI_FASTOGAADO,       ADD_FastGuard       },
   };
 
   int i;
@@ -8436,6 +8439,8 @@ static void handler_OsakiniDouzo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
   {
     BTL_HANDEX_PARAM_INTR_POKE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_INTR_POKE, pokeID );
     param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_OsakiniDouzo );
+    HANDEX_STR_AddArg( &param->exStr, param->pokeID );
   }
 }
 //----------------------------------------------------------------------------------
@@ -8457,7 +8462,6 @@ static void handler_Sakiokuri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   {
     BTL_HANDEX_PARAM_SEND_LAST* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SEND_LAST, pokeID );
     param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
-    BTL_Printf("さきおくりするポケ=%d\n", param->pokeID);
     HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Sakiokuri );
     HANDEX_STR_AddArg( &param->exStr, param->pokeID );
   }
@@ -8508,5 +8512,24 @@ static void handler_Rinsyou_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     }
   }
 
+}
+//----------------------------------------------------------------------------------
+/**
+ * ファストガード
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_FastGuard( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,  handler_FastGuard   },  // 未分類ワザ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_FastGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  BPP_SICK_CONT  cont = BPP_SICKCONT_MakeTurn( 1 );
+  BtlSide side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
+  common_SideEffect( myHandle, flowWk, pokeID, work, side, BTL_SIDEEFF_FASTGUARD, cont, BTL_STRID_STD_FastGuard );
 }
 
