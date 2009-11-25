@@ -14,7 +14,7 @@
 NITRO_NO_STD_PCHDR = True
 
 #マルチブートにDSIバージョンはない
-TWLSDK_PLATFORM = NITRO
+#TWLSDK_PLATFORM = NITRO
 
 PARENT_SRC		=	../prog/src
 PARENT_INC		=	../prog/include
@@ -82,7 +82,7 @@ endif
 #----------------------------------------------------------------------------
 #	NitroのデフォルトLCFファイルでなく、作成したものを読み込む	
 #----------------------------------------------------------------------------
-LCFILE_SPEC	=	overlay/main.lsf
+LCFILE_SPEC	=	main$(TWL_LIBSUFFIX).lsf
 MAKELCF_FLAGS	+=	-DADDRESS_MAIN=0x02000000
 
 
@@ -135,7 +135,7 @@ EDEPENDS_BIN += $(patsubst %, arc/%, $(GAME_FILE_TREE:.narc=.o))
 #----------------------------------------------------------------------------
 #	ロムスペックファイル読み込みのため追加
 #----------------------------------------------------------------------------
-ROM_SPEC= default.rsf
+ROM_SPEC= default$(TWL_LIBSUFFIX).rsf
 
 #----------------------------------------------------------------------------
 #	ターゲットファイル設定
@@ -209,10 +209,13 @@ source:
 #----------------------------------------------------------------------------
 
 installsrl:..\prog\filetree\dl_rom\child.srl
-
+ifeq	($(TWLSDK_PLATFORM),NITRO)
 ..\prog\filetree\dl_rom\child.srl:.\bin\ARM9-TS\Release\main.srl
 	$(CP) .\bin\ARM9-TS\Release\main.srl ..\prog\filetree\dl_rom\child.srl
-
+else
+..\prog\filetree\dl_rom\child.srl:.\bin\ARM9-TS.HYB\Release\main.srl
+	$(CP) .\bin\ARM9-TS.HYB\Release\main.srl ..\prog\filetree\dl_rom\child.srl
+endif
 
 do-build: precompile $(TARGETS)
 

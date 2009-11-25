@@ -1,19 +1,19 @@
 /*****************************************************************************
 	Archive file index definition.
-	File: mb_capter_gra.naix
+	File: mb_capture_gra.naix
 
 	This file was created by NINTENDO TWL-System Archiver.
 
 
  *****************************************************************************/
 
-#ifndef NARC_MB_CAPTER_GRA_NAIX_
-#define NARC_MB_CAPTER_GRA_NAIX_
+#ifndef NARC_MB_CAPTURE_GRA_NAIX_
+#define NARC_MB_CAPTURE_GRA_NAIX_
 
 enum {
-	NARC_mb_capter_gra_wb_sound_palpark_game_sdat = 0,
-	NARC_mb_capter_gra_cap_obj_kusamura1_nsbtx = 1
+	NARC_mb_capture_gra_wb_sound_palpark_game_sdat = 0,
+	NARC_mb_capture_gra_cap_obj_kusamura1_nsbtx = 1
 };
 
-/* NARC_MB_CAPTER_GRA_NAIX_ */
+/* NARC_MB_CAPTURE_GRA_NAIX_ */
 #endif

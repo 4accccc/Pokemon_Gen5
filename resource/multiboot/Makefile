@@ -1,7 +1,7 @@
 
 include $(PROJECT_RSCDIR)\macro_define
 
-SUBDIRS	=	parent child select
+SUBDIRS	=	parent child select capture
 
 .PHONY:	do-build clean
 

@@ -24,6 +24,7 @@
 #include "multiboot/mb_local_def.h"
 #include "multiboot/mb_capture_sys.h"
 #include "./mb_cap_obj.h"
+#include "./mb_cap_local_def.h"
 
 
 //======================================================================
@@ -62,16 +63,8 @@ typedef struct
   
   GFL_G3D_CAMERA    *camera;
   GFL_BBD_SYS     *bbdSys;
-
-  //メッセージ用
-  MB_MSG_WORK *msgWork;
-
-  //仮出し
-  GFL_CLUNIT  *cellUnit;
-  GFL_CLWK    *pokeIcon[MB_CAP_POKE_NUM];
-  u32         iconPalRes;
-  u32         iconAnmRes;
-  u32         iconCharRes[MB_CAP_POKE_NUM];
+  
+  MB_CAP_OBJ  *fieldObj[MB_CAP_OBJ_NUM];
   
 }MB_CAPTURE_WORK;
 
@@ -90,6 +83,9 @@ static void MB_CAPTURE_InitGraphic( MB_CAPTURE_WORK *work );
 static void MB_CAPTURE_TermGraphic( MB_CAPTURE_WORK *work );
 static void MB_CAPTURE_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane , u8 mode );
 static void MB_CAPTURE_LoadResource( MB_CAPTURE_WORK *work );
+
+static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work );
+static void MB_CAPTURE_TermObject( MB_CAPTURE_WORK *work );
 
 static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_BG_128_A,             // メイン2DエンジンのBG
@@ -116,9 +112,9 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
   
   MB_CAPTURE_InitGraphic( work );
   MB_CAPTURE_LoadResource( work );
-  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CAPTURE_FRAME_MSG );
   work->vBlankTcb = GFUser_VIntr_CreateTCB( MB_CAPTURE_VBlankFunc , work , 8 );
 
+  MB_CAPTURE_InitObject( work );
 }
 
 //--------------------------------------------------------------
@@ -126,22 +122,10 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
 //--------------------------------------------------------------
 static void MB_CAPTURE_Term( MB_CAPTURE_WORK *work )
 {
-  {
-    //仮
-    u8 i;
-    for( i=0;i<MB_CAP_POKE_NUM;i++ )
-    {
-      GFL_CLACT_WK_Remove( work->pokeIcon[i] );
-      GFL_CLGRP_CGR_Release( work->iconCharRes[i] );
-    }
-    GFL_CLGRP_PLTT_Release( work->iconPalRes );
-    GFL_CLGRP_CELLANIM_Release( work->iconAnmRes );
-    GFL_CLACT_UNIT_Delete( work->cellUnit );
-  }
+  MB_CAPTURE_TermObject( work );
 
   GFL_TCB_DeleteTask( work->vBlankTcb );
 
-  MB_MSG_MessageTerm( work->msgWork );
   MB_CAPTURE_TermGraphic( work );
 }
 
@@ -183,6 +167,14 @@ static const BOOL MB_CAPTURE_Main( MB_CAPTURE_WORK *work )
     }
     break;
   }
+
+  //3D描画  
+  GFL_G3D_DRAW_Start();
+  GFL_G3D_DRAW_SetLookAt();
+  {
+    GFL_BBD_Draw( work->bbdSys , work->camera , NULL );
+  }
+  GFL_G3D_DRAW_End();
 
   //OBJの更新
   GFL_CLACT_SYS_Main();
@@ -316,6 +308,7 @@ static void MB_CAPTURE_InitGraphic( MB_CAPTURE_WORK *work )
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO , GX_BUFFERMODE_Z );
   }
   {
+    VecFx32 bbdScale = {FX32_CONST(32.0f),FX32_CONST(32.0f),FX32_CONST(32.0f)};
     GFL_BBD_SETUP bbdSetup = {
       128,128,
       {FX32_ONE,FX32_ONE,FX32_ONE},
@@ -328,6 +321,7 @@ static void MB_CAPTURE_InitGraphic( MB_CAPTURE_WORK *work )
     };
     //ビルボードシステム構築
     work->bbdSys = GFL_BBD_CreateSys( &bbdSetup , work->heapId );
+    GFL_BBD_SetScale( work->bbdSys , &bbdScale );
   }
 }
 
@@ -384,6 +378,49 @@ static void MB_CAPTURE_LoadResource( MB_CAPTURE_WORK *work )
   GFL_ARC_CloseDataHandle( arcHandle );
 }
 
+//--------------------------------------------------------------
+//  オブジェクト作成
+//--------------------------------------------------------------
+static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
+{
+  int i;
+  MB_CAP_OBJ_INIT_WORK initWork;
+  initWork.heapId = work->heapId;
+  initWork.bbdSys = work->bbdSys;
+  initWork.arcHandle = work->initWork->arcHandle;
+  
+  for( i=0;i<MB_CAP_OBJ_MAIN_NUM;i++ )
+  {
+    initWork.pos.x = FX32_CONST( (i%MB_CAP_OBJ_X_NUM) * 40 + 48 );
+    initWork.pos.y = FX32_CONST( (i/MB_CAP_OBJ_X_NUM) * 40 + 64 );
+    initWork.pos.z = 0;
+    work->fieldObj[i] = MB_CAP_OBJ_CreateObject( &initWork );
+  }
+  for( i=MB_CAP_OBJ_SUB_U_START;i<MB_CAP_OBJ_SUB_D_START;i++ )
+  {
+    initWork.pos.x = 0;
+    initWork.pos.y = 0;
+    initWork.pos.y = 0;
+    work->fieldObj[i] = MB_CAP_OBJ_CreateObject( &initWork );
+  }
+  for( i=MB_CAP_OBJ_SUB_D_START;i<MB_CAP_OBJ_SUB_R_START;i++ )
+  {
+  }
+  for( i=MB_CAP_OBJ_SUB_R_START;i<MB_CAP_OBJ_SUB_L_START;i++ )
+  {
+  }
+  for( i=MB_CAP_OBJ_SUB_L_START;i<MB_CAP_OBJ_NUM;i++ )
+  {
+  }
+}
+
+//--------------------------------------------------------------
+//  オブジェクト開放
+//--------------------------------------------------------------
+static void MB_CAPTURE_TermObject( MB_CAPTURE_WORK *work )
+{
+}
+
 
 
 #pragma mark [>proc func
@@ -430,6 +467,10 @@ static GFL_PROC_RESULT MB_CAPTURE_ProcInit( GFL_PROC * proc, int * seq , void *p
                  GFUser_GetPublicRand0(100)+1 ,
                  PTL_SETUP_ID_AUTO );
     }
+#ifndef MULTI_BOOT_MAKE  //通常時処理
+    initWork->arcHandle = GFL_ARC_OpenDataHandle( ARCID_MB_CAPTER , parentHeap );
+#endif //MULTI_BOOT_MAKE
+    
     work->initWork = initWork;
   }
   else
@@ -460,6 +501,7 @@ static GFL_PROC_RESULT MB_CAPTURE_ProcTerm( GFL_PROC * proc, int * seq , void *p
   if( pwk == NULL )
   {
     u8 i;
+    GFL_ARC_CloseDataHandle( work->initWork->arcHandle );
     for( i=0;i<MB_CAP_POKE_NUM;i++ )
     {
       GFL_HEAP_FreeMemory( work->initWork->ppp[i] );

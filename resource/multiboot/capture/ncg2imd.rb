@@ -265,6 +265,8 @@ elsif (ncg_width == 8 && ncg_height == 4) then
 	template = "dummy_64x32.imd"
 elsif (ncg_width == 16 && ncg_height == 4) then
 	template = "dummy_128x32.imd"
+elsif (ncg_width == 32 && ncg_height == 4) then
+	template = "dummy_256x32.imd"
 elsif (ncg_width == 4 && ncg_height == 8) then
 	template = "dummy_32x64.imd"
 elsif (ncg_width == 4 && ncg_height == 16) then

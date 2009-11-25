@@ -213,6 +213,7 @@
   ARCID_MB_PARENT	"mb_parent.narc"	#マルチブート親
   ARCID_MB_CHILD	"mb_child_gra.narc"	#マルチブート子
   ARCID_MB_SELECT	"mb_select_gra.narc"	#マルチブート選択画面
+  ARCID_MB_CAPTER	"mb_capture_gra.narc"	#マルチブートゲーム画面
 	ARCID_GSYNC "gsync.narc"   #GAMESYNC
 	ARCID_GTSNEGO "gtsnego.narc"   #GTSネゴシエーション
 	ARCID_WIFI_LOGIN		"wifi_login.narc" # WIFIログインデータ
