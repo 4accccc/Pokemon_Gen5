@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: batt_bg_tbl.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2009-11-25T17:36:21
+ *****************************************************************************/
+
+#ifndef NARC_BATT_BG_TBL_NAIX_
+#define NARC_BATT_BG_TBL_NAIX_
+
+enum {
+	NARC_batt_bg_tbl_zone_spec_table_bin = 0,
+	NARC_batt_bg_tbl_batt_bg_bin = 1,
+	NARC_batt_bg_tbl_batt_stage_bin = 2
+};
+
+/* NARC_BATT_BG_TBL_NAIX_ */
+#endif
