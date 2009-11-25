@@ -137,7 +137,7 @@ typedef struct {
 static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork);
 static GMEVENT* CheckSodateya( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
 static GMEVENT* CheckSpray( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
-static GMEVENT* CheckEncountEffect( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
+static GMEVENT* CheckEffectEncount( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
 static void updatePartyEgg( POKEPARTY* party );
 static BOOL checkPartyEgg( POKEPARTY* party );
 
@@ -220,10 +220,14 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
   EV_REQUEST req;
 	GMEVENT *event;
 	FIELDMAP_WORK *fieldWork = work;
-  
+  FIELD_ENCOUNT* encount = FIELDMAP_GetEncount(fieldWork); 
+
+  //リクエスト更新
   setupRequest( &req, gsys, fieldWork );
 
-  
+  //エフェクトエンカウントの　OBJとの接触によるエフェクト破棄チェック
+  EFFECT_ENC_CheckObjHit( encount );
+
   //デバッグ用チェック
 #ifdef  PM_DEBUG
   event = DEBUG_checkKeyEvent( &req, gsys, fieldWork );
@@ -235,7 +239,10 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 //☆☆☆特殊スクリプト起動チェックがここに入る
   if (DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEvents) == FALSE) {
     event = SCRIPT_SearchSceneScript( gsys, req.heapID );
-    if (event) return event;
+    if (event){
+      EFFECT_ENC_EffectDelete( encount );
+      return event;
+    }
   }
 
 
@@ -244,6 +251,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
     BOOL flag = FIELD_EVENT_Check2vs2Battle( gsys );
     event = EVENT_CheckTrainerEye( fieldWork, flag );
     if( event != NULL ){
+      EFFECT_ENC_EffectDelete( encount );
       return event;
     }
   }
@@ -254,8 +262,8 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
   {
     // POSイベントチェック
     event = checkPosEvent( &req );
-    if( event != NULL )
-    {
+    if( event != NULL ){
+      EFFECT_ENC_EffectDelete( encount );
       return event;
     }
 
@@ -390,6 +398,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
           scr_id = 10000;
         }
 #endif
+        EFFECT_ENC_EffectDelete( encount );
         return EVENT_FieldTalk( gsys, fieldWork,
           scr_id, fmmdl_player, fmmdl_talk, req.heapID );
       }
@@ -898,12 +907,17 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
   
   req->moveRequest = 0;
 
-  if( FIELD_PLAYER_GetMoveValue(req->field_player) == PLAYER_MOVE_VALUE_WALK ){
+  if( req->player_value == PLAYER_MOVE_VALUE_WALK ){
     req->moveRequest = ((req->player_state == PLAYER_MOVE_STATE_END));
   }
 
   req->stepRequest = ((req->player_state == PLAYER_MOVE_STATE_END));
 
+  if( req->moveRequest ){
+    IWASAWA_Printf( "Req->MoveRequst\n");
+  }else if( req->stepRequest ) {
+    IWASAWA_Printf( "Req->StepRequst\n");
+  }
   if ( ( (req->player_dir == DIR_UP) && (req->key_cont & PAD_KEY_UP) )
       || ( (req->player_dir == DIR_DOWN) && (req->key_cont & PAD_KEY_DOWN) )
       || ( (req->player_dir == DIR_LEFT) && (req->key_cont & PAD_KEY_LEFT) )
@@ -948,7 +962,7 @@ static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWor
   GMEVENT*     event = NULL;
 
   //エンカウントエフェクト起動監視
-  event = CheckEncountEffect( fieldWork, gsys, gdata );
+  event = CheckEffectEncount( fieldWork, gsys, gdata );
   if( event != NULL) return event;
 
   //育て屋チェック
@@ -1062,7 +1076,7 @@ static GMEVENT* CheckSpray( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMED
  * 1歩ごとのエンカウントエフェクト起動チェック
  */
 //==============================================================================
-static GMEVENT* CheckEncountEffect( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata )
+static GMEVENT* CheckEffectEncount( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata )
 {
   SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork(gdata);
   FIELD_ENCOUNT * encount = FIELDMAP_GetEncount(fieldWork);

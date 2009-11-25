@@ -460,6 +460,14 @@ typedef struct
 typedef MMDL_HEADER FLDMMDL_HEADER; //旧名
 
 
+//--------------------------------------------------------------
+///	MMDL_GRIDPOS構造体
+//--------------------------------------------------------------
+typedef struct {
+  s16 gx;			///<グリッドX
+  s16 gy;			///<グリッドY
+  s16 gz;			///<グリッドZ
+} MMDL_GRIDPOS;
 
 //--------------------------------------------------------------
 ///	MMDL_HEADER_GRIDPOS構造体
@@ -814,6 +822,7 @@ extern s16 MMDL_GetOldGridPosY( const MMDL * mmdl );
 extern void MMDL_SetOldGridPosY( MMDL * mmdl, s16 y );
 extern s16 MMDL_GetOldGridPosZ( const MMDL * mmdl );
 extern void MMDL_SetOldGridPosZ( MMDL * mmdl, s16 z );
+extern void MMDL_GetGridPos( const MMDL * mmdl, MMDL_GRIDPOS* pos );
 extern s16 MMDL_GetGridPosX( const MMDL * mmdl );
 extern void MMDL_SetGridPosX( MMDL * mmdl, s16 x );
 extern void MMDL_AddGridPosX( MMDL * mmdl, s16 x );

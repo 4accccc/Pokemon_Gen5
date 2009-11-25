@@ -38,7 +38,7 @@
 
 typedef struct _EFFENC_ATTR_POS{
   u8  type;
-  u16  gx,gz;
+  u16  gx,gy,gz;
   fx32  height;
 }EFFENC_ATTR_POS;
 
@@ -82,6 +82,8 @@ static void effenc_WalkCtClear( ENCOUNT_WORK* ewk );
 
 static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
 static void effect_EffectSetUp( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
+static BOOL effect_CheckMMdlHit( FIELD_ENCOUNT* enc, s16 x,s16 y, s16 z );
+static BOOL effect_DeleteCheck( FIELD_ENCOUNT* enc );
 static void effect_EffectDelete( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
 
 static void effect_AddFieldEffect( EFFECT_ENCOUNT* eff_wk, EFFENC_PARAM* ep );
@@ -119,8 +121,14 @@ void EFFECT_ENC_DeleteWork( EFFECT_ENCOUNT* eff_wk )
 void EFFECT_ENC_Init( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
 {
   eff_wk->fectrl = FIELDMAP_GetFldEffCtrl( enc->fwork );
-  eff_wk->walk_ct_interval = 20;
- 
+#ifdef DEBUG_ONLY_FOR_iwasawa
+  eff_wk->walk_ct_interval = 10;
+  eff_wk->prob = 100;
+#else
+  eff_wk->walk_ct_interval = 200;
+  eff_wk->prob = 10;
+#endif
+
   //パラメータをPop
   effect_EffectPop( enc, eff_wk );
 }
@@ -145,15 +153,23 @@ void EFFECT_ENC_CheckEffectEncountStart( FIELD_ENCOUNT* enc )
   EFFECT_ENCOUNT* eff_wk = enc->eff_enc;
   ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
 
-  //歩数チェック
-  if( !effenc_CheckWalkCt( ewk, eff_wk ) ){
-    return;
-  }
   //グリッドベースマップかチェック
   if( FIELDMAP_GetBaseSystemType( enc->fwork ) != FLDMAP_BASESYS_GRID ){
     return;
   }
-
+  //起動中チェック
+  if( ewk->effect_encount.param.valid_f ){
+    return;
+  }
+  //歩数チェック
+  if( !effenc_CheckWalkCt( ewk, eff_wk ) ){
+    return;
+  }
+  //確率チェック
+  if( GFUser_GetPublicRand0( 1000 ) >= (eff_wk->prob*10) ){
+    effenc_WalkCtClear( ewk );
+    return;
+  }
   //エンカウントデータチェック
   if( !enc->encdata->enable_f ){
     return;
@@ -167,7 +183,6 @@ void EFFECT_ENC_CheckEffectEncountStart( FIELD_ENCOUNT* enc )
     return;
   }
  
-  effect_EffectDelete( enc, eff_wk );
   effect_EffectSetUp( enc, eff_wk );
 }
 
@@ -177,6 +192,50 @@ void EFFECT_ENC_CheckEffectEncountStart( FIELD_ENCOUNT* enc )
 void EFFECT_ENC_EffectDelete( FIELD_ENCOUNT* enc )
 {
   effect_EffectDelete( enc, enc->eff_enc );
+}
+
+/*
+ *  @brief  エフェクトエンカウント　OBJとの接触によるエフェクト破棄チェック
+ */
+void EFFECT_ENC_CheckObjHit( FIELD_ENCOUNT* enc )
+{
+  effect_DeleteCheck( enc );
+}
+
+/**
+ *  @brief  エフェクトエンカウント　マップチェンジ時の状態クリア
+ */
+void EFFECT_ENC_MapChangeUpdate( FIELD_ENCOUNT* enc )
+{
+  ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
+
+  effenc_WalkCtClear( ewk ); 
+}
+
+/*
+ *  @brief  エフェクトエンカウント　座標チェック
+ */
+static inline BOOL effect_CheckEffectPos( const EFFENC_PARAM* ep, MMDL_GRIDPOS* pos )
+{
+  if( ep->gx != pos->gx ||
+      ep->gz != pos->gz ||
+      ep->gy != pos->gy){
+    return FALSE;
+  }
+  return TRUE;
+}
+
+/*
+ *  @brief  エフェクトエンカウント　座標チェック
+ */
+BOOL EFFECT_ENC_CheckEffectPos( const FIELD_ENCOUNT* enc, MMDL_GRIDPOS* pos )
+{
+  ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
+
+  if( ewk->effect_encount.param.valid_f ){
+    return FALSE;
+  }
+  return effect_CheckEffectPos( &ewk->effect_encount.param, pos );
 }
 
 /*
@@ -195,13 +254,12 @@ GMEVENT* EFFECT_ENC_CheckEventApproch( FIELD_ENCOUNT* enc )
     return NULL;
   }
   { //座標チェック
-    u16 player_x,player_z;
+    MMDL_GRIDPOS pos;
     FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( enc->fwork );
     MMDL* mmdl = FIELD_PLAYER_GetMMdl( fplayer );
+    MMDL_GetGridPos( mmdl, &pos );
 
-    if( ep->gx != MMDL_GetGridPosX( mmdl ) ||
-        ep->gz != MMDL_GetGridPosZ( mmdl ) ||
-        ep->height != MMDL_GetVectorPosY( mmdl )){
+    if( !effect_CheckEffectPos( ep, &pos )){
       return NULL;
     }
   }
@@ -425,6 +483,7 @@ static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
         eff_wk->attr_map.attr[eff_wk->attr_map.count].type = id;
         eff_wk->attr_map.attr[eff_wk->attr_map.count].gx = j;
         eff_wk->attr_map.attr[eff_wk->attr_map.count].gz = i;
+        eff_wk->attr_map.attr[eff_wk->attr_map.count].gy = SIZE_GRID_FX32( gridData.height );
         eff_wk->attr_map.attr[eff_wk->attr_map.count++].height = gridData.height;
       }
     }
@@ -442,8 +501,17 @@ static void effect_EffectSetUp( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
   ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
   EFFENC_PARAM* ep = &ewk->effect_encount.param; 
 
+  //フィールドモデルの位置をチェック
+  if( effect_CheckMMdlHit( enc, attr->gx, attr->gy, attr->gz )){
+    IWASAWA_Printf("HitCancel FieldModelHit\n");
+    return;
+  }
+
+//  effect_EffectDelete( enc, eff_wk );
+
   //パラメータセット
   ep->gx = attr->gx;
+  ep->gy = attr->gy;
   ep->gz = attr->gz;
   ep->height = attr->height;
   ep->type = attr->type;
@@ -454,6 +522,54 @@ static void effect_EffectSetUp( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
   effenc_WalkCtClear( ewk );
 
   effect_AddFieldEffect( eff_wk, ep );
+}
+
+/*
+ *  @brief  エフェクト座標チェック
+ */
+static BOOL effect_CheckMMdlHit( FIELD_ENCOUNT* enc, s16 x,s16 y, s16 z )
+{
+  const MMDLSYS* fos;
+  MMDL* fplayer = FIELD_PLAYER_GetMMdl( FIELDMAP_GetFieldPlayer( enc->fwork ) );
+  MMDL_GRIDPOS pos;
+  MMDL* mmdl;
+  u32 i = 0;
+
+  fos = FIELDMAP_GetMMdlSys( enc->fwork );
+ 
+  while(TRUE){
+    if(!MMDLSYS_SearchUseMMdl( fos, &mmdl, &i)){
+      break;
+    }
+    if( (mmdl == fplayer) || (MMDL_CheckEndAcmd(mmdl) == FALSE) ){
+      continue;
+    }
+    MMDL_GetGridPos(mmdl,&pos);
+    if( pos.gx != x ||
+        pos.gy != y ||
+        pos.gz != z){
+      continue;
+    }
+    return TRUE;
+  }
+  return FALSE;
+}
+
+/*
+ *  @brief  フィールドモデルとの接触によるエフェクト破棄
+ */
+static BOOL effect_DeleteCheck( FIELD_ENCOUNT* enc )
+{
+  ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
+  EFFENC_PARAM* ep = &ewk->effect_encount.param; 
+  
+  if( !ep->valid_f ){
+    return FALSE;
+  }
+  if( effect_CheckMMdlHit( enc, ep->gx, ep->gy, ep->gz )){
+    return TRUE;
+  }
+  return FALSE;
 }
 
 /*

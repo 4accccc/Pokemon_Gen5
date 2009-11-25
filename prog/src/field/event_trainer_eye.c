@@ -14,6 +14,7 @@
 #include "script.h"
 #include "fldeff_gyoe.h"
 #include "event_trainer_eye.h"
+#include "effect_encount.h"
 
 //SCRID_TRAINER_MOVE_BATTLE 
 #include "../../../resource/fldmapdata/script/trainer_def.h"
@@ -95,7 +96,7 @@ typedef struct
 static BOOL treye_CheckEyeMeet(
     FIELDMAP_WORK *fieldMap, MMDL *non_mmdl, EYEMEET_HITDATA *hit );
 static int treye_CheckEyeRange(
-    const MMDL *mmdl, const MMDL *jiki, u16 *hitDir );
+    const FIELD_ENCOUNT* enc, const MMDL *mmdl, const MMDL *jiki, u16 *hitDir );
 
 static int treye_CheckEyeLine(
     u16 dir, s16 range, s16 tx, s16 ty, s16 tz, s16 gx, s16 gy, s16 gz );
@@ -104,7 +105,7 @@ static GMEVENT_RESULT treyeEvent_EyeMeetMove(
     GMEVENT *ev, int *seq, void *wk );
 
 static u16 tr_GetTrainerEventType( const MMDL *mmdl );
-static BOOL tr_HitCheckEyeLine( const MMDL *mmdl, u16 dir, int range );
+static BOOL tr_HitCheckEyeLine( const MMDL *mmdl, u16 dir, int range, const FIELD_ENCOUNT* enc );
 static u16 tr_GetTrainerID( const MMDL *mmdl );
 static BOOL tr_CheckEventFlag( FIELDMAP_WORK *fieldMap, const MMDL *mmdl );
 static void tr_InitEyeMeetHitData(
@@ -205,12 +206,13 @@ static BOOL treye_CheckEyeMeet(
   MMDL *mmdl = NULL;
   MMDL *jiki = FIELD_PLAYER_GetMMdl( FIELDMAP_GetFieldPlayer(fieldMap) );
   MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldMap );
-  
+  const FIELD_ENCOUNT * enc = FIELDMAP_GetEncount( fieldMap );
+
   while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE )
   {
     if( non_mmdl == NULL || (non_mmdl != mmdl) )
     {
-      range = treye_CheckEyeRange( mmdl, jiki, &dir );
+      range = treye_CheckEyeRange( enc, mmdl, jiki, &dir );
       
       if( range != EYE_CHECK_NOHIT )
       {
@@ -240,7 +242,7 @@ static BOOL treye_CheckEyeMeet(
  */
 //--------------------------------------------------------------
 static int treye_CheckEyeRange(
-    const MMDL *mmdl, const MMDL *jiki, u16 *hitDir )
+    const FIELD_ENCOUNT* enc, const MMDL *mmdl, const MMDL *jiki, u16 *hitDir )
 {
   u16 type;
   
@@ -250,22 +252,20 @@ static int treye_CheckEyeRange(
   {
     int ret;
     u16 dir;
-    s16 tx = MMDL_GetGridPosX( mmdl );
-    s16 ty = MMDL_GetGridPosY( mmdl );
-    s16 tz = MMDL_GetGridPosZ( mmdl );
-    s16 jx = MMDL_GetGridPosX( jiki );
-    s16 jy = MMDL_GetGridPosY( jiki );
-    s16 jz = MMDL_GetGridPosZ( jiki );
+    MMDL_GRIDPOS pt,pj;
     s16 range = MMDL_GetParam( mmdl, MMDL_PARAM_0 );
+
+    MMDL_GetGridPos( mmdl, &pt);
+    MMDL_GetGridPos( jiki, &pj);
     
     if( type == EV_TYPE_TRAINER )
     {
       dir = MMDL_GetDirDisp( mmdl );
-      ret = treye_CheckEyeLine( dir, range, tx, ty, tz, jx, jy, jz );
+      ret = treye_CheckEyeLine( dir, range, pt.gx, pt.gy, pt.gz, pj.gx, pj.gy, pj.gz );
       
       if( ret != EYE_CHECK_NOHIT )
       {
-        if( tr_HitCheckEyeLine(mmdl,dir,ret) == FALSE ){
+        if( tr_HitCheckEyeLine(mmdl,dir,ret,enc) == FALSE ){
           *hitDir = dir;
           return( ret );
         }
@@ -276,11 +276,11 @@ static int treye_CheckEyeRange(
       dir = DIR_UP;
       
       do{
-        ret = treye_CheckEyeLine( dir, range, tx, ty, tz, jx, jy, jz );
+        ret = treye_CheckEyeLine( dir, range, pt.gx, pt.gy, pt.gz, pj.gx, pj.gy, pj.gz );
         
         if( ret != EYE_CHECK_NOHIT )
         {
-          if( tr_HitCheckEyeLine(mmdl,dir,ret) == FALSE ){
+          if( tr_HitCheckEyeLine(mmdl,dir,ret,enc) == FALSE ){
             *hitDir = dir;
             return( ret );
           }
@@ -895,38 +895,45 @@ static u16 tr_GetTrainerEventType( const MMDL *mmdl )
  * @retval  int     TRUE=移動不可
  */
 //--------------------------------------------------------------
-static BOOL tr_HitCheckEyeLine( const MMDL *mmdl, u16 dir, int range )
+static BOOL tr_HitCheckEyeLine( const MMDL *mmdl, u16 dir, int range, const FIELD_ENCOUNT* enc )
 {
   s16 gx,gy,gz;
+  s16 dx,dz;
   u32 ret;
   
   if( range ) //レンジ0=目の前
   {
     int i = 0;
     u32 hit;
-    s16 gx = MMDL_GetGridPosX( mmdl );
-    s16 gy = MMDL_GetGridPosY( mmdl );
-    s16 gz = MMDL_GetGridPosZ( mmdl );
+    MMDL_GRIDPOS pos;
+    MMDL_GetGridPos( mmdl, &pos );
     
-    gx += MMDL_TOOL_GetDirAddValueGridX( dir );
-    gz += MMDL_TOOL_GetDirAddValueGridZ( dir );
+    dx = MMDL_TOOL_GetDirAddValueGridX(dir);
+    dz = MMDL_TOOL_GetDirAddValueGridZ(dir);
+    pos.gx += dx;
+    pos.gz += dz;
     
     for( ; i < (range-1); i++ ){
-      hit = MMDL_HitCheckMoveCurrent( mmdl, gx, gy, gz, dir );
+      hit = MMDL_HitCheckMoveCurrent( mmdl, pos.gx, pos.gy, pos.gz, dir );
       hit &= ~MMDL_MOVEHITBIT_LIM; //移動制限を無視する
       
       if( hit ){ //移動制限以外でヒット
         return( TRUE );
       }
-
-      gx += MMDL_TOOL_GetDirAddValueGridX( dir );
-      gz += MMDL_TOOL_GetDirAddValueGridZ( dir );
+      if( EFFECT_ENC_CheckEffectPos( enc, &pos )){  //エフェクトエンカウント座標チェック
+        return( TRUE );
+      }
+      pos.gx += dx;
+      pos.gz += dz;
     }
     
-    hit = MMDL_HitCheckMoveCurrent( mmdl, gx, gy, gz, dir ); //最後
+    hit = MMDL_HitCheckMoveCurrent( mmdl, pos.gx, pos.gy, pos.gz, dir ); //最後
     hit &= ~MMDL_MOVEHITBIT_LIM; //移動制限を無視する
     
     if( hit != MMDL_MOVEHITBIT_OBJ ){ //OBJ衝突(自機)のみ
+      return( TRUE );
+    }
+    if( EFFECT_ENC_CheckEffectPos( enc, &pos )){  //エフェクトエンカウント座標チェック
       return( TRUE );
     }
   }

@@ -44,6 +44,21 @@ extern void EFFECT_ENC_CheckEffectEncountStart( FIELD_ENCOUNT* enc );
 extern void EFFECT_ENC_EffectDelete( FIELD_ENCOUNT* enc );
 
 /*
+ *  @brief  エフェクトエンカウント　OBJとの接触によるエフェクト破棄チェック
+ */
+extern void EFFECT_ENC_CheckObjHit( FIELD_ENCOUNT* enc );
+
+/**
+ *  @brief  エフェクトエンカウント　マップチェンジ時の状態クリア
+ */
+extern void EFFECT_ENC_MapChangeUpdate( FIELD_ENCOUNT* enc );
+
+/*
+ *  @brief  エフェクトエンカウント　座標チェック
+ */
+extern BOOL EFFECT_ENC_CheckEffectPos( const FIELD_ENCOUNT* enc, MMDL_GRIDPOS* pos );
+
+/*
  *  @brief  エフェクトエンカウント　イベント侵入起動チェック
  */
 extern GMEVENT* EFFECT_ENC_CheckEventApproch( FIELD_ENCOUNT* enc );
