@@ -45,14 +45,25 @@ enum
 };
 
 
+// アニメ
+enum
+{
+  HERO_ANIME_ICA,
+  HERO_ANIME_ITP,
+
+  HERO_ANIME_MAX,
+};
+
 // ストリーミング再生
 #define EV_CAMERA_ANIME_STREAMING_INTERVAL  ( 10 )
 
 // 各リソースＩＤ取得マクロ
 #define EV_CAMERA_ANIME_GETDATA_ID( x )   ( NARC_fourkings_scene_c09_01_camera_bin + ((x)) )
-#define EV_HERO_M_GETDATA_ID( x )   ( NARC_fourkings_scene_c09_01_m_nsbmd + ((x) * 4) )
-#define EV_HERO_F_GETDATA_ID( x )   ( NARC_fourkings_scene_c09_01_f_nsbmd + ((x) * 4) )
-#define EV_HERO_ANIME_GETDATA_ID( x )   ( NARC_fourkings_scene_c09_01_mf_nsbca + ((x) * 4) )
+#define EV_HERO_M_GETDATA_ID( x )   ( NARC_fourkings_scene_c09_01_m_nsbmd + ((x) * 6) )
+#define EV_HERO_F_GETDATA_ID( x )   ( NARC_fourkings_scene_c09_01_f_nsbmd + ((x) * 6) )
+#define EV_HERO_ANIME_GETDATA_ID( x )   ( NARC_fourkings_scene_c09_01_mf_nsbca + ((x) * 6) )
+#define EV_HERO_M_ITPANIME_GETDATA_ID( x )   ( NARC_fourkings_scene_c09_01_m_nsbtp + ((x) * 6) )
+#define EV_HERO_F_ITPANIME_GETDATA_ID( x )   ( NARC_fourkings_scene_c09_01_f_nsbtp + ((x) * 6) )
 
 // アニメーションスピード
 #define EV_CAMERA_ANIME_SPEED (FX32_ONE)
@@ -94,12 +105,12 @@ typedef struct {
 typedef struct {
   // リソース
   GFL_G3D_RES* p_mdlres;
-  GFL_G3D_RES* p_anmres;
+  GFL_G3D_RES* p_anmres[HERO_ANIME_MAX];
   BOOL trans;
 
   // 管理オブジェ
   GFL_G3D_RND* p_rend;
-  GFL_G3D_ANM* p_anm[1];
+  GFL_G3D_ANM* p_anm[HERO_ANIME_MAX];
   GFL_G3D_OBJ* p_obj;
   GFL_G3D_OBJSTATUS status;
   BOOL draw;
@@ -547,12 +558,15 @@ static void EV_HERO_Init0( EV_CIRCLEWALK_HERO* p_wk, FIELD_PLAYER * p_fld_player
   if( sex == PM_MALE )
   {
     p_wk->p_mdlres = GFL_G3D_CreateResourceHandle( p_handle, EV_HERO_M_GETDATA_ID(fourkings_no) );
+    p_wk->p_anmres[HERO_ANIME_ITP] = GFL_G3D_CreateResourceHandle( p_handle, EV_HERO_M_ITPANIME_GETDATA_ID(fourkings_no) );
   }
   else
   {
     p_wk->p_mdlres = GFL_G3D_CreateResourceHandle( p_handle, EV_HERO_F_GETDATA_ID(fourkings_no) );
+    p_wk->p_anmres[HERO_ANIME_ITP] = GFL_G3D_CreateResourceHandle( p_handle, EV_HERO_F_ITPANIME_GETDATA_ID(fourkings_no) );
   }
-  p_wk->p_anmres = GFL_G3D_CreateResourceHandle( p_handle, EV_HERO_ANIME_GETDATA_ID(fourkings_no) );
+  p_wk->p_anmres[HERO_ANIME_ICA] = GFL_G3D_CreateResourceHandle( p_handle, EV_HERO_ANIME_GETDATA_ID(fourkings_no) );
+
 
   // VRAMKEYの取得
   result = GFL_G3D_AllocVramTexture( p_wk->p_mdlres );
@@ -575,15 +589,20 @@ static void EV_HERO_Init1( EV_CIRCLEWALK_HERO* p_wk )
   p_wk->p_rend = GFL_G3D_RENDER_Create( p_wk->p_mdlres, 0, p_wk->p_mdlres );
 
   // アニメーションオブジェ生成
-  p_wk->p_anm[0] = GFL_G3D_ANIME_Create( p_wk->p_rend, p_wk->p_anmres, 0 );
+  p_wk->p_anm[HERO_ANIME_ICA] = GFL_G3D_ANIME_Create( p_wk->p_rend, p_wk->p_anmres[HERO_ANIME_ICA], 0 );
+  p_wk->p_anm[HERO_ANIME_ITP] = GFL_G3D_ANIME_Create( p_wk->p_rend, p_wk->p_anmres[HERO_ANIME_ITP], 0 );
 
   // 表示オブジェ生成
-  p_wk->p_obj = GFL_G3D_OBJECT_Create( p_wk->p_rend, p_wk->p_anm, 1 );
+  p_wk->p_obj = GFL_G3D_OBJECT_Create( p_wk->p_rend, p_wk->p_anm, HERO_ANIME_MAX );
 
   {
     int frame = 0;
-    GFL_G3D_OBJECT_SetAnimeFrame( p_wk->p_obj, 0, &frame );
-    GFL_G3D_OBJECT_EnableAnime( p_wk->p_obj, 0 );
+    int i;
+    for( i=0; i<HERO_ANIME_MAX; i++ )
+    {
+      GFL_G3D_OBJECT_SetAnimeFrame( p_wk->p_obj, i, &frame );
+      GFL_G3D_OBJECT_EnableAnime( p_wk->p_obj, i );
+    }
   }
 }
 
@@ -598,13 +617,15 @@ static void EV_HERO_Exit( EV_CIRCLEWALK_HERO* p_wk )
 {
   // 全部破棄
   GFL_G3D_OBJECT_Delete( p_wk->p_obj );
-  GFL_G3D_ANIME_Delete( p_wk->p_anm[0] );
+  GFL_G3D_ANIME_Delete( p_wk->p_anm[HERO_ANIME_ICA] );
+  GFL_G3D_ANIME_Delete( p_wk->p_anm[HERO_ANIME_ITP] );
   GFL_G3D_RENDER_Delete( p_wk->p_rend );
 
   //リソース
   GFL_G3D_FreeVramTexture( p_wk->p_mdlres );
   GFL_G3D_DeleteResource( p_wk->p_mdlres );
-  GFL_G3D_DeleteResource( p_wk->p_anmres );
+  GFL_G3D_DeleteResource( p_wk->p_anmres[HERO_ANIME_ICA] );
+  GFL_G3D_DeleteResource( p_wk->p_anmres[HERO_ANIME_ITP] );
 }
 
 //----------------------------------------------------------------------------
@@ -622,7 +643,8 @@ static BOOL EV_HERO_Update( EV_CIRCLEWALK_HERO* p_wk )
   BOOL result;
 
   //　アニメーションをすすめる
-  result = GFL_G3D_OBJECT_IncAnimeFrame( p_wk->p_obj, 0, EV_CAMERA_ANIME_SPEED );
+  result = GFL_G3D_OBJECT_IncAnimeFrame( p_wk->p_obj, HERO_ANIME_ICA, EV_CAMERA_ANIME_SPEED );
+  result = GFL_G3D_OBJECT_IncAnimeFrame( p_wk->p_obj, HERO_ANIME_ITP, EV_CAMERA_ANIME_SPEED );
 
   if( result == FALSE )
   {
