@@ -26,6 +26,7 @@ typedef enum {
   BTL_SIDEEFF_DOKUBISI,       ///< 入れ替えて出てきたポケモンに毒（２段階）
   BTL_SIDEEFF_STEALTHROCK,    ///< 入れ替えて出てきたポケモンにダメージ（相性計算あり）
   BTL_SIDEEFF_WIDEGUARD,      ///< ヒット範囲「敵全体」「自分以外」の攻撃ワザを防ぐ
+  BTL_SIDEEFF_FASTGUARD,      ///< 先制プライオリティ1以上のポケモン対象ワザを防ぐ
 
   BTL_SIDEEFF_MAX,
   BTL_SIDEEFF_NULL = BTL_SIDEEFF_MAX,

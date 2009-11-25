@@ -236,11 +236,13 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 o
 static inline WazaID ActOrder_GetWazaID( const ACTION_ORDER_WORK* wk );
 static ACTION_ORDER_WORK* SearchActOrderByPokeID( BTL_SVFLOW_WORK* wk, u8 pokeID );
 static ACTION_ORDER_WORK* SearchActOrderByWaza( BTL_SVFLOW_WORK* wk, WazaID waza, u8 startIndex );
-static int IntrActOrder( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder );
+static int IntrActOrder( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder, u32 intrIndex );
+static void SendLastActOrder( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder );
 static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder );
 static BOOL ActOrder_IntrProc( BTL_SVFLOW_WORK* wk, u8 intrPokeID );
 static BOOL ActOrder_IntrReserve( BTL_SVFLOW_WORK* wk, u8 intrPokeID );
 static BOOL ActOrder_IntrReserveByWaza( BTL_SVFLOW_WORK* wk, WazaID waza );
+static BOOL ActOrder_SendLast( BTL_SVFLOW_WORK* wk, u8 intrPokeID );
 static inline void FlowFlg_Set( BTL_SVFLOW_WORK* wk, FlowFlag flg );
 static inline void FlowFlg_Clear( BTL_SVFLOW_WORK* wk, FlowFlag flg );
 static inline BOOL FlowFlg_Get( BTL_SVFLOW_WORK* wk, FlowFlag flg );
@@ -633,6 +635,7 @@ static u8 scproc_HandEx_setWeight( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
 static u8 scproc_HandEx_pushOut( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_intrPoke( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_intrWaza( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_sendLast( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 
 
 BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
@@ -1205,31 +1208,36 @@ static ACTION_ORDER_WORK* SearchActOrderByWaza( BTL_SVFLOW_WORK* wk, WazaID waza
 
 //----------------------------------------------------------------------------------
 /**
- * 指定アクションを、未実行列の先頭に割り込ませる
+ * 指定アクションを、指定index以降の未実行列の先頭に割り込ませる
  *
  * @param   wk
  * @param   actOrder
+ * @param   intrIndex   割り込み許可する最小のindex（これ以降に割り込み許可）
  *
  * @retval  int   割り込んだIndex （割り込めなければ-1)
  */
 //----------------------------------------------------------------------------------
-static int IntrActOrder( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder )
+static int IntrActOrder( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder, u32 intrIndex )
 {
   int prevOrder, topOrder, i;
 
   // 自分自身の元々のIndexと、未実行列の先頭Indexをサーチ
   prevOrder = topOrder = -1;
-  for(i=0; i<wk->numActOrder; ++i)
+  for(i=intrIndex; i<wk->numActOrder; ++i)
   {
-    if( (wk->actOrder[i].fDone == FALSE) && (topOrder == -1) )
-    {
-      topOrder = i;
-    }
-    BTL_Printf("オーダーアドレス一致チェック:%p : %p\n", actOrder, &(wk->actOrder[i]) );
     if( &(wk->actOrder[i]) == actOrder ){
       prevOrder = i;
+      break;
     }
   }
+  for(i=intrIndex; i<wk->numActOrder; ++i)
+  {
+    if( wk->actOrder[i].fDone == FALSE){
+      topOrder = i;
+      break;
+    }
+  }
+
   BTL_Printf("割り込み情報 : 元々=%d, 先頭=%d\n", prevOrder, topOrder );
 
   // どちらも有効値＆自分自身が未実行の先頭より後の順番なら並べ替え
@@ -1247,7 +1255,38 @@ static int IntrActOrder( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder 
   }
 
   return -1;
+}
+//----------------------------------------------------------------------------------
+/**
+ * 指定アクションを、最後に回す
+ *
+ * @param   wk
+ * @param   actOrder
+ */
+//----------------------------------------------------------------------------------
+static void SendLastActOrder( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder )
+{
+  // 自分自身の元々のIndex
+  int prevOrder = -1;
+  int i;
 
+  for(i=0; i<wk->numActOrder; ++i)
+  {
+    if( &(wk->actOrder[i]) == actOrder ){
+      prevOrder = i;
+      break;
+    }
+  }
+
+  if( prevOrder >= 0 )
+  {
+    wk->actOrderTmp = *actOrder;
+    for(i=prevOrder; i<(wk->numActOrder-1); ++i)
+    {
+      wk->actOrder[i] = wk->actOrder[i+1];
+    }
+    wk->actOrder[i] = wk->actOrderTmp;
+  }
 }
 
 //----------------------------------------------------------------------------------
@@ -1322,6 +1361,7 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
 //--------------------------------------------------------------
 /**
  *  アクションの割り込み実行（ポケモンID指定）
+ *  ※割り込んで即座に実行（現状は“おいうち”にのみ使用）
  */
 //--------------------------------------------------------------
 static BOOL ActOrder_IntrProc( BTL_SVFLOW_WORK* wk, u8 intrPokeID )
@@ -1336,13 +1376,14 @@ static BOOL ActOrder_IntrProc( BTL_SVFLOW_WORK* wk, u8 intrPokeID )
 //--------------------------------------------------------------
 /**
  *  アクションの割り込み予約（ポケモンID指定）
+ *  ※割り込んで、現在処理しているアクションの直後に実行（現状は“おさきにどうぞ”にのみ使用）
  */
 //--------------------------------------------------------------
 static BOOL ActOrder_IntrReserve( BTL_SVFLOW_WORK* wk, u8 intrPokeID )
 {
   ACTION_ORDER_WORK* actOrder = SearchActOrderByPokeID( wk, intrPokeID );
   if( actOrder && (actOrder->fDone == FALSE) ){
-    if( IntrActOrder(wk, actOrder) >= 0 ){
+    if( IntrActOrder(wk, actOrder, 0) >= 0 ){
       return TRUE;
     }
   }
@@ -1351,16 +1392,17 @@ static BOOL ActOrder_IntrReserve( BTL_SVFLOW_WORK* wk, u8 intrPokeID )
 //--------------------------------------------------------------
 /**
  *  アクションの割り込み実行（使用ワザ指定）
+ *  ※割り込んで、現在処理しているアクションの直後に実行（現状は“りんしょう”にのみ使用）
  */
 //--------------------------------------------------------------
 static BOOL ActOrder_IntrReserveByWaza( BTL_SVFLOW_WORK* wk, WazaID waza )
 {
   ACTION_ORDER_WORK* actOrder = SearchActOrderByWaza( wk, waza, 0 );
-  int intrIdx;
+  int intrIdx = 0;
   BOOL result = FALSE;
   while( actOrder )
   {
-    intrIdx = IntrActOrder( wk, actOrder );
+    intrIdx = IntrActOrder( wk, actOrder, intrIdx );
     if( intrIdx >= 0 ){
       actOrder = SearchActOrderByWaza( wk, waza, ++intrIdx );
       result = TRUE;
@@ -1369,6 +1411,20 @@ static BOOL ActOrder_IntrReserveByWaza( BTL_SVFLOW_WORK* wk, WazaID waza )
     }
   }
   return result;
+}
+//--------------------------------------------------------------
+/**
+ *  アクションを最後に回す（ポケモンID指定）
+ */
+//--------------------------------------------------------------
+static BOOL ActOrder_SendLast( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+  ACTION_ORDER_WORK* actOrder = SearchActOrderByPokeID( wk, pokeID );
+  if( actOrder && (actOrder->fDone == FALSE) ){
+    SendLastActOrder( wk, actOrder );
+    return TRUE;
+  }
+  return FALSE;
 }
 
 
@@ -5102,13 +5158,18 @@ static void scput_Fight_Uncategory( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
   default:
     {
       u32 hem_state = Hem_PushState( &wk->HEManager );
+      BOOL fEffective = FALSE;
       if( scEvent_UnCategoryWaza(wk, wazaParam, attacker, targets) ){
         if( scproc_HandEx_Root( wk, ITEM_DUMMY_DATA ) ){
           wazaEffSet_ImplicitTarget( wk );
+          fEffective = TRUE;
         }
-      }else{
+      }
+
+      if( !fEffective ){
         SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
       }
+
       Hem_PopState( &wk->HEManager, hem_state );
     }
     break;
@@ -9147,6 +9208,7 @@ static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, Bt
     { BTL_HANDEX_PUSHOUT,         sizeof(BTL_HANDEX_PARAM_PUSHOUT)         },
     { BTL_HANDEX_INTR_POKE,       sizeof(BTL_HANDEX_PARAM_INTR_POKE)       },
     { BTL_HANDEX_INTR_WAZA,       sizeof(BTL_HANDEX_PARAM_INTR_WAZA)       },
+    { BTL_HANDEX_SEND_LAST,       sizeof(BTL_HANDEX_PARAM_SEND_LAST)       },
   };
   u32 size, i;
 
@@ -9319,6 +9381,7 @@ static BOOL scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
     case BTL_HANDEX_PUSHOUT:        fPrevSucceed = scproc_HandEx_pushOut( wk, handEx_header ); break;
     case BTL_HANDEX_INTR_POKE:      fPrevSucceed = scproc_HandEx_intrPoke( wk, handEx_header ); break;
     case BTL_HANDEX_INTR_WAZA:      fPrevSucceed = scproc_HandEx_intrWaza( wk, handEx_header ); break;
+    case BTL_HANDEX_SEND_LAST:      fPrevSucceed = scproc_HandEx_sendLast( wk, handEx_header ); break;
     default:
       GF_ASSERT_MSG(0, "illegal handEx type = %d, userPokeID=%d", handEx_header->equip, handEx_header->userPokeID);
     }
@@ -10290,7 +10353,21 @@ static u8 scproc_HandEx_intrWaza( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
   }
   return 0;
 }
+/**
+ * 指定ポケモンの行動順を最後に回す
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_sendLast( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  BTL_HANDEX_PARAM_SEND_LAST* param = (BTL_HANDEX_PARAM_SEND_LAST*)param_header;
 
+  BTL_Printf("先送り対象ポケ=%d\n", param->pokeID);
+  if( ActOrder_SendLast(wk, param->pokeID) ){
+    handexSub_putString( wk, &param->exStr );
+    return 1;
+  }
+  return 0;
+}
 
 /*
 
