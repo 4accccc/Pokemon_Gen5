@@ -38,27 +38,21 @@ extern "C" {
 //----------------------------------------------------------------
 #define GFL_HEAPID_SYSTEM (0) // 基本ヒープＩＤ（INDEX:0 は必ずシステム定義にすること）
 
-#if 0 /* ↓heap_inter.h 内で外部でも使用する宣言 */
-//----------------------------------------------------------------
-/**
- *  基本ヒープ作成パラメータ構造体
- */
-//----------------------------------------------------------------
-typedef struct {
-  u32        size;    ///< ヒープサイズ
-  OSArenaId  arenaID;   ///< 作成先アリーナID
-}HEAP_INIT_HEADER;
-
 //----------------------------------------------------------------
 /**
  *  インライン関数
  */
 //----------------------------------------------------------------
-static inline  u16 HeapGetLow( HEAPID heapID )
+inline  HEAPID GetHeapLowID( HEAPID heapID )
 {
   return (( heapID & HEAPID_MASK )|( HEAPDIR_MASK ));
 }
-#endif
+
+static inline HEAPID GFL_HEAP_LOWID( HEAPID heapID )
+{
+  return (( heapID & HEAPID_MASK )|( HEAPDIR_MASK ));
+}
+
 
 //------------------------------------------------------------------------------
 /**

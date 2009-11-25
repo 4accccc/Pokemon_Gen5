@@ -36,21 +36,6 @@ typedef struct {
   OSArenaId  arenaID;   ///< 作成先アリーナID
 }HEAP_INIT_HEADER;
 
-//----------------------------------------------------------------
-/**
- *  インライン関数
- */
-//----------------------------------------------------------------
-inline  HEAPID GetHeapLowID( HEAPID heapID )
-{
-  return (( heapID & HEAPID_MASK )|( HEAPDIR_MASK ));
-}
-
-static inline HEAPID GFL_HEAP_LOWID( HEAPID heapID )
-{
-  return (( heapID & HEAPID_MASK )|( HEAPDIR_MASK ));
-}
-
 //------------------------------------------------------------------------------
 /**
  * システム初期化
