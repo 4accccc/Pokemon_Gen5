@@ -16,9 +16,9 @@
 //==========================================================================================
 // ■ギミック登録関数
 //==========================================================================================
-void GATE_GIMMICK_Setup( FIELDMAP_WORK* fieldmap );
-void GATE_GIMMICK_End( FIELDMAP_WORK* fieldmap );
-void GATE_GIMMICK_Move( FIELDMAP_WORK* fieldmap );
+extern void GATE_GIMMICK_Setup( FIELDMAP_WORK* fieldmap );
+extern void GATE_GIMMICK_End( FIELDMAP_WORK* fieldmap );
+extern void GATE_GIMMICK_Move( FIELDMAP_WORK* fieldmap );
 
 
 //==========================================================================================
@@ -32,7 +32,7 @@ void GATE_GIMMICK_Move( FIELDMAP_WORK* fieldmap );
  * @param fieldmap フィールドマップ
  */
 //------------------------------------------------------------------------------------------
-void GATE_GIMMICK_Elboard_SetupNormalNews( FIELDMAP_WORK* fieldmap );
+extern void GATE_GIMMICK_Elboard_SetupNormalNews( FIELDMAP_WORK* fieldmap );
 
 //------------------------------------------------------------------------------------------
 /**
@@ -43,7 +43,7 @@ void GATE_GIMMICK_Elboard_SetupNormalNews( FIELDMAP_WORK* fieldmap );
  * @param wordset  指定メッセージに展開するワードセット
  */
 //------------------------------------------------------------------------------------------
-void GATE_GIMMICK_Elboard_AddSpecialNews( 
+extern void GATE_GIMMICK_Elboard_AddSpecialNews( 
     FIELDMAP_WORK* fieldmap, u32 str_id, WORDSET* wordset );
 
 //------------------------------------------------------------------------------------------
@@ -53,4 +53,29 @@ void GATE_GIMMICK_Elboard_AddSpecialNews(
  * @param fieldmap フィールドマップ
  */
 //------------------------------------------------------------------------------------------
-void GATE_GIMMICK_Elboard_Recovery( FIELDMAP_WORK* fieldmap );
+extern void GATE_GIMMICK_Elboard_Recovery( FIELDMAP_WORK* fieldmap );
+
+
+//==========================================================================================
+// ■カメラ
+//==========================================================================================
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief カメラを電光掲示板に向ける
+ *
+ * @param fieldmap フィールドマップ
+ * @param frame    カメラの動作に要するフレーム数
+ */
+//------------------------------------------------------------------------------------------
+extern void GATE_GIMMICK_Camera_LookElboard( FIELDMAP_WORK* fieldmap, u16 frame );
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief カメラを元に戻す
+ *
+ * @param fieldmap フィールドマップ
+ * @param frame    カメラの動作に要するフレーム数
+ */
+//------------------------------------------------------------------------------------------
+extern void GATE_GIMMICK_Camera_Reset( FIELDMAP_WORK* fieldmap, u16 frame );

@@ -148,6 +148,7 @@ void FIELD_TASK_MAN_AddTask( FIELD_TASK_MAN* man, FIELD_TASK* task, FIELD_TASK* 
   OBATA_Printf( "==============================\n" );
   OBATA_Printf( "FIELD_TASK_MAN: task over flow\n" );
   OBATA_Printf( "==============================\n" );
+  FIELD_TASK_Delete( task );
 }
 
 

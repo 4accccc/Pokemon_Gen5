@@ -16,6 +16,7 @@
 #include "scrcmd_work.h"
 #include "script_local.h"
 #include "scrcmd.h"
+#include "event_look_elboard.h"
 
 
 //---------------------------------------------------------------------------------------
@@ -59,7 +60,7 @@ VMCMD_RESULT EvCmdElboard_AddSpecialNews( VMHANDLE *core, void *wk )
 
 //---------------------------------------------------------------------------------------
 /**
- * @brief 臨時ニュースを追加する
+ * @brief 掲示板を復帰させる
  * @param  core    仮想マシン制御構造体へのポインタ
  * @param  wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
@@ -73,4 +74,27 @@ VMCMD_RESULT EvCmdElboard_Recovery( VMHANDLE *core, void *wk )
 
   GATE_GIMMICK_Elboard_Recovery( fieldmap );
   return VMCMD_RESULT_CONTINUE;
+}
+
+//---------------------------------------------------------------------------------------
+/**
+ * @brief 電光掲示板を見るイベント呼び出し
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param  wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//---------------------------------------------------------------------------------------
+VMCMD_RESULT EvCmdLookElboard( VMHANDLE *core, void *wk )
+{ 
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*     script = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  u16               frame = SCRCMD_GetVMWorkValue( core, work );  // コマンド第一引数
+  GMEVENT* event;
+
+  // イベント呼び出し
+  event = EVENT_LookElboard( gsys, fieldmap, frame );
+  SCRIPT_CallEvent( script, event );
+  return VMCMD_RESULT_SUSPEND;
 }

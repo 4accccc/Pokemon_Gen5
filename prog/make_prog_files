@@ -220,7 +220,8 @@ SRCS  +=    $(SOUNDSRC) \
         field/field_flagcontrol.c \
         system/screentex.c \
         debug/debug_flg.c \
-        debug/debug_hudson.c
+        debug/debug_hudson.c \
+        field/event_look_elboard.c
 
 
 #================================================

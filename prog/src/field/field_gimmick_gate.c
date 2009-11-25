@@ -29,6 +29,12 @@
 #include "msg/msg_gate.h"
 #include "field/zonedata.h"
 
+#include "field_task_manager.h"
+#include "field_task.h"
+#include "field_task_camera_zoom.h"
+#include "field_task_camera_rot.h"
+#include "field_task_target_offset.h"
+
 
 //==========================================================================================
 // ■電光掲示板データ登録テーブル
@@ -380,6 +386,23 @@ void GATE_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
     FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
     FLD_EXP_OBJ_PlayAnime( exobj_cnt );
   }
+
+  // TEST:
+  {
+    int key = GFL_UI_KEY_GetCont();
+    int trg = GFL_UI_KEY_GetTrg();
+    if( key & PAD_BUTTON_L )
+    {
+      if( trg & PAD_BUTTON_A )
+      { 
+        GATE_GIMMICK_Camera_LookElboard( fieldmap, 30 );
+      }
+      if( trg & PAD_BUTTON_B )
+      { 
+        GATE_GIMMICK_Camera_Reset( fieldmap, 30 );
+      }
+    }
+  }
 }
 
 
@@ -514,6 +537,115 @@ void GATE_GIMMICK_Elboard_Recovery( FIELDMAP_WORK* fieldmap )
 
 
 //==========================================================================================
+// ■カメラ
+//==========================================================================================
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief カメラを電光掲示板に向ける
+ *
+ * @param fieldmap フィールドマップ
+ * @param frame    カメラの動作に要するフレーム数
+ */
+//------------------------------------------------------------------------------------------
+void GATE_GIMMICK_Camera_LookElboard( FIELDMAP_WORK* fieldmap, u16 frame )
+{
+  ELBOARD_ZONE_DATA elboard_data;
+  fx32 val_len;
+  u16 val_pitch, val_yaw;
+  VecFx32 val_target;
+
+  // 電光掲示板データを取得
+  if( !LoadGateData(&elboard_data, fieldmap) )
+  { // 取得失敗
+    OBATA_Printf( "==========================================\n" );
+    OBATA_Printf( "GIMMICK-GATE: 電光掲示板データの取得に失敗\n" );
+    OBATA_Printf( "==========================================\n" );
+    return;
+  }
+  // 電光掲示板の向きでカメラの回転を決定
+  switch( elboard_data.dir )
+  {
+  case DIR_DOWN:
+    val_pitch = 0x0ee5;
+    val_yaw   = 0;
+    val_len   = 0x0086 << FX32_SHIFT;
+    VEC_Set( &val_target, 0, 0x001b<<FX32_SHIFT, 0xfff94000 );
+    break;
+  case DIR_RIGHT: 
+    val_pitch = 0x1ad3;
+    val_yaw   = 0x3f5d;
+    val_len   = 0x0058 << FX32_SHIFT;
+    VEC_Set( &val_target, 0xfff5d000, 0x001a<<FX32_SHIFT, 0xfffff000 );
+    break;
+  case DIR_UP:
+  case DIR_LEFT:
+  default:
+    OBATA_Printf( "==================================\n" );
+    OBATA_Printf( "GIMMICK-GATE: 掲示板の向きが未対応\n" );
+    OBATA_Printf( "==================================\n" );
+    return;
+  } 
+  // タスク登録
+  {
+    FIELD_TASK_MAN* man;
+    FIELD_TASK* zoom;
+    FIELD_TASK* pitch;
+    FIELD_TASK* yaw;
+    FIELD_TASK* target;
+    zoom   = FIELD_TASK_CameraLinearZoom( fieldmap, frame, val_len );
+    pitch  = FIELD_TASK_CameraRot_Pitch( fieldmap, frame, val_pitch );
+    yaw    = FIELD_TASK_CameraRot_Yaw( fieldmap, frame, val_yaw );
+    target = FIELD_TASK_CameraTargetOffset( fieldmap, frame, &val_target );
+    man = FIELDMAP_GetTaskManager( fieldmap );
+    FIELD_TASK_MAN_AddTask( man, zoom, NULL );
+    FIELD_TASK_MAN_AddTask( man, pitch, NULL );
+    FIELD_TASK_MAN_AddTask( man, yaw, NULL );
+    FIELD_TASK_MAN_AddTask( man, target, NULL );
+  }
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief カメラを元に戻す
+ *
+ * @param fieldmap フィールドマップ
+ * @param frame    カメラの動作に要するフレーム数
+ */
+//------------------------------------------------------------------------------------------
+void GATE_GIMMICK_Camera_Reset( FIELDMAP_WORK* fieldmap, u16 frame )
+{
+  fx32 val_len;
+  u16 val_pitch, val_yaw;
+  VecFx32 val_target = {0, 0, 0};
+  FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( fieldmap );
+  FLD_CAMERA_PARAM def_param;
+  // デフォルトパラメータ取得
+  FIELD_CAMERA_GetInitialParameter( camera, &def_param );
+  val_len   = def_param.Distance << FX32_SHIFT;
+  val_pitch = def_param.Angle.x;
+  val_yaw   = def_param.Angle.y;
+  // タスク登録
+  {
+    FIELD_TASK_MAN* man;
+    FIELD_TASK* zoom;
+    FIELD_TASK* pitch;
+    FIELD_TASK* yaw;
+    FIELD_TASK* target;
+    zoom   = FIELD_TASK_CameraLinearZoom( fieldmap, frame, val_len );
+    pitch  = FIELD_TASK_CameraRot_Pitch( fieldmap, frame, val_pitch );
+    yaw    = FIELD_TASK_CameraRot_Yaw( fieldmap, frame, val_yaw );
+    target = FIELD_TASK_CameraTargetOffset( fieldmap, frame, &val_target );
+    man = FIELDMAP_GetTaskManager( fieldmap );
+    FIELD_TASK_MAN_AddTask( man, zoom, NULL );
+    FIELD_TASK_MAN_AddTask( man, pitch, NULL );
+    FIELD_TASK_MAN_AddTask( man, yaw, NULL );
+    FIELD_TASK_MAN_AddTask( man, target, NULL );
+  }
+}
+
+
+//==========================================================================================
 // ■ 非公開関数
 //==========================================================================================
 
@@ -521,7 +653,7 @@ void GATE_GIMMICK_Elboard_Recovery( FIELDMAP_WORK* fieldmap )
 /**
  * @brief ギミック状態を保存する
  *
- * @param fieldmap 依存するフィールドマップ
+* @param fieldmap 依存するフィールドマップ
  */
 //------------------------------------------------------------------------------------------
 static void GimmickSave( FIELDMAP_WORK* fieldmap )

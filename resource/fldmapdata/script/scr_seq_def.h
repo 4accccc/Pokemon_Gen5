@@ -2210,6 +2210,21 @@
   .short  EV_SEQ_ELBOARD_RECOVERY
   .endm
 
+//--------------------------------------------------------------
+/**
+ *  @def _LOOK_ELBOARD
+ *  @brief 電光掲示板を見る
+ *  @param frame カメラ移動に要するフレーム数
+ */
+//--------------------------------------------------------------
+#define _LOOK_ELBOARD( frame ) \
+    _ASM_LOOK_ELBOARD frame
+
+  .macro  _ASM_LOOK_ELBOARD frame
+  .short  EV_SEQ_LOOK_ELBOARD
+  .short \frame
+  .endm
+
 
 #if 0
 //--------------------------------------------------------------
