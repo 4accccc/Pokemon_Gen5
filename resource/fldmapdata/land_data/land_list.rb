@@ -292,11 +292,13 @@ def file_write_nogrid( name,
     file_copy( DIR_RES+"/"+FNAME_DMYFILE_NOGRID_IMD, check )
   end
   
+=begin
   check = DIR_RES + "/" + name + "h.imd"
   if( FileTest.exist?(check) != true )
     printf( "%sh.imdをダミーファイルから生成します\n", name )
     file_copy( DIR_RES+"/"+FNAME_DMYFILE_NOGRID_H_IMD, check )
   end
+=end
   
   check = DIR_RES + "/" + name + ".3dmd"
   if( FileTest.exist?(check) != true )
