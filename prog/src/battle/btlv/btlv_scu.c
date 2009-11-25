@@ -2164,6 +2164,8 @@ BOOL BTLV_SCU_WaitHPGauge( BTLV_SCU* wk )
 //=============================================================================================
 void BTLV_SCU_MoveGauge_Start( BTLV_SCU* wk, BtlPokePos pos1, BtlPokePos pos2 )
 {
+  statwin_hide( &wk->statusWin[ pos1 ] );
+  statwin_hide( &wk->statusWin[ pos2 ] );
   statwin_disp_start( &wk->statusWin[ pos1 ] );
   statwin_disp_start( &wk->statusWin[ pos2 ] );
 }
