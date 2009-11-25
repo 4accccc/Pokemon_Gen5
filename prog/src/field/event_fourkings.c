@@ -65,7 +65,7 @@ enum
 
 // ââèoÇÃíÜêS
 //static const VecFx32 EV_DEMO_CenterVec = { GRID_TO_FX32(16), 0, GRID_TO_FX32(10) };
-static const VecFx32 EV_DEMO_CenterVec = { 0, 0, 0 };
+static const VecFx32 EV_DEMO_CenterVec = { GRID_TO_FX32(16), 0, GRID_TO_FX32(16) };
 
 //-----------------------------------------------------------------------------
 /**
