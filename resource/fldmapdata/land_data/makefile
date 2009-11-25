@@ -10,7 +10,7 @@ SUBDIRS	= land_camera
 
 do-build: subdir
 	$(MAKE) -f $(MKFILE_LANDLIST)
-	$(MAKE) -f $(MKFILE_LAND)
+	$(MAKE) -j3 -f $(MKFILE_LAND)
 
 subdir:
 	@$(MAKE_SUBDIR)
