@@ -78,6 +78,7 @@ typedef enum {
   WAZASICK_KONRAN = POKESICK_MAX,
   WAZASICK_DOKUDOKU,
   WAZASICK_MEROMERO,
+
   WAZASICK_BIND,
   WAZASICK_AKUMU,
   WAZASICK_NOROI,
@@ -100,9 +101,12 @@ typedef enum {
   WAZASICK_MUSTHIT_TARGET,  ///< 特定相手に対してのみ必中状態
   WAZASICK_FLYING,          ///< でんじふゆう
   WAZASICK_FLYING_CANCEL,   ///< ふゆう状態になれない
+  WAZASICK_TELEKINESIS,     ///< テレキネシス
 
   WAZASICK_MAX,
   WAZASICK_NULL = POKESICK_NULL,
+  WAZASICK_STD_MAX = WAZASICK_MEROMERO+1, ///< 標準状態異常の数（メロメロまで）
+
   WAZASICK_SPECIAL_CODE = 0xffff, ///< 特殊処理コード
 
 }WazaSick;
