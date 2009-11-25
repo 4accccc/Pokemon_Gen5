@@ -6,6 +6,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../../prog/include/msg/script/msg_t02r0401.h"
+  .include  "t02r0401.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -24,17 +25,16 @@ _EVENT_DATA_END
 /*	T02R0401 GIRL4の会話用イベントスクリプト				*/
 /************************************************************/
 EVENT_START   ev_t02r0401_girl4_01
-	_TALK_OBJ_START()
-	
-	//【保留】会話終了後、ピアノに向き直すアニメを入れたい
-	
 	//すでにピアノを弾いているかチェック 数字はISSでスイッチするトラックのフラグ番号
 	_ISS_SWITCH_CHECK( SCWK_ANSWER,1 )
 
 	//ピアノ弾いてる/弾いていないで分岐
-	IF $SCWK_ANSWER == 0 THEN
+	IF $SCWK_ANSWER == FALSE THEN
 
 		//ピアノ弾いていない
+		
+		//振り向きアリ
+		_TALK_OBJ_START()
 		
 		//私の好きな曲 弾いてあげましょうか？
 		_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_01 )
@@ -44,56 +44,111 @@ EVENT_START   ev_t02r0401_girl4_01
 		IF $SCWK_ANSWER == SCR_YES THEN
 			//では聞いてください
 			_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_02 )
+			_MSGWIN_CLOSE()
 			
 			//ISSスイッチON：ピアノ音源のトラックを再生
 			_ISS_SWITCH_ON( 1 )
 			
+			//お嬢様：ピアノに向かう
+			_OBJ_ANIME( T02R0401_GIRL4_01 , anm_obj_dir_u )
+			_OBJ_ANIME_WAIT()
+			
+			
 		ELSE
 			//あら残念…
 			_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_03 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
 			
 		ENDIF
-		
-		_LAST_KEYWAIT()
-		_MSGWIN_CLOSE()
 	
 	
 	ELSE
 
 		//ピアノ弾いてる
 		
-		//もうピアノはいいですか？
-		_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_04 )
-		_YES_NO_WIN( SCWK_ANSWER )
-		_MSGWIN_CLOSE()
+		//振り向き無し
+		_TALK_START_TURN_NOT()
 		
-		IF $SCWK_ANSWER == SCR_YES THEN
-			//ISSスイッチOFF：ピアノ音源のトラックを停止
-			_ISS_SWITCH_OFF( 1 )
-			
-			//ああ楽しかった！
-			_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_05 )
-			
-		ELSE
-			//…この曲は 父の思い出なんです
-			_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_06 )
-			
-		ENDIF
-		
+		//えんそうに むちゅうだ！
+		_SYSWIN_MSG_DOWN( msg_t02r0401_girl4_04 )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 	
 	
 	ENDIF
 
-
 EVENT_END
 
-/**************************************************************/
-/*  T02R0401 MAN2の会話用イベントスクリプト*/
-/**************************************************************/
+//--------------------------------------------------------------
+//方向転換
+//--------------------------------------------------------------
+_ANIME_LABEL anm_obj_dir_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL anm_obj_dir_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+/************************************************************/
+/*		T02R0401 MAN2の会話用イベントスクリプト				*/
+/************************************************************/
 EVENT_START   ev_t02r0401_man2_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_man2_01 )
+	//ドラムが再生状態かチェック 数字はISSでスイッチするトラックのフラグ番号
+	_ISS_SWITCH_CHECK( SCWK_ANSWER,2 )
+
+	//ドラムを演奏しているかで分岐
+	IF $SCWK_ANSWER == FALSE THEN
+
+		//ドラム演奏していない
+		
+		//振り向きアリ
+		_TALK_OBJ_START()
+		
+		//ドラム聞く？
+		_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_man2_01 )
+		_YES_NO_WIN( SCWK_ANSWER )
+		_MSGWIN_CLOSE()
+		
+		IF $SCWK_ANSWER == SCR_YES THEN
+			//では聞いてください
+			_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_man2_02 )
+			_MSGWIN_CLOSE()
+			
+			//ISSスイッチON：ピアノ音源のトラックを再生
+			_ISS_SWITCH_ON( 2 )
+			
+			//男性：ピアノに向かう
+			_OBJ_ANIME( T02R0401_MAN2_01 , anm_obj_dir_d )
+			_OBJ_ANIME_WAIT()
+			
+			
+		ELSE
+			//残念…
+			_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_man2_03 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+		ENDIF
+	
+	
+	ELSE
+
+		//ピアノ弾いてる
+		
+		//振り向き無し
+		_TALK_START_TURN_NOT()
+		
+		//えんそうに むちゅうだ！
+		_SYSWIN_MSG_DOWN( msg_t02r0401_man2_04 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	
+	ENDIF
+
 EVENT_END
 
 /**************************************************************/
