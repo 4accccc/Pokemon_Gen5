@@ -96,9 +96,6 @@ int WAZADATA_GetParam( WazaID wazaID, WazaDataParam param )
   {
     WAZA_DATA* wp = loadWazaDataTmp( wazaID );
     int result = WAZADATA_PTR_GetParam( wp, param );
-    if( param == WAZAPARAM_TARGET ){
-      TAYA_Printf("[WAZADATA] ID=%d, target=%d\n", wazaID, result);
-    }
     return result;
   }
 }
@@ -450,7 +447,7 @@ u32 WT_WazaDataParaGet( int waza_no, int id )
     id = WAZAPARAM_POWER;
     break;
   case ID_WTD_wazatype:
-    id = WAZAPARAM_TYPE;;
+    id = WAZAPARAM_TYPE;
     break;
   case ID_WTD_hitprobability:
     id = WAZAPARAM_HITPER;
