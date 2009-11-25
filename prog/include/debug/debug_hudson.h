@@ -34,19 +34,19 @@
 //---------------------------------
 
 // HUDSON用アサート
-#define HUDSON_ASSERT(exp) GF_ASSERT(exp)
+#define HUDSON_ASSERT(exp)  GF_ASSERT(exp)
 // PRINT関数
-#define HUDSON_TPrintf(exp) OS_TPrintf(exp)
-#define HUDSON_Printf(exp)  OS_Printf(exp)
+#define HUDSON_TPrintf(...) OS_TPrintf(__VA_ARGS__)
+#define HUDSON_Printf(...)  OS_Printf(__VA_ARGS__)
 
 #else // DEBUG_ONLY_FOR_hudson
 
 //---------------------------------
 // 無効化
 //---------------------------------
-#define HUDSON_ASSERT(exp) ((void)0);
-#define HUDSON_TPrintf(exp) ((void)0);
-#define HUDSON_Printf(exp) ((void)0);
+#define HUDSON_ASSERT(exp) ((void)0)
+#define HUDSON_TPrintf(...) ((void)0)
+#define HUDSON_Printf(...) ((void)0)
 
 #endif // DEBUG_ONLY_FOR_hudson
 

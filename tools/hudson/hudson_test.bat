@@ -7,13 +7,13 @@ REM 日付    : 2009/11/24
 REM =================================================================
 
 REM main.srl
-SET PATH_MAIN_SRL=%PROJECT_PROGDIR%/bin/ARM9-TS/Release/main.srl
+SET PATH_MAIN_SRL=%PROJECT_PROGDIR%bin/ARM9-TS/Release/main.srl
 
 REM 実行タイムアウト(秒) >> hudsonで指定
-SET TIMEOUT_EXEC=60 
+REM SET TIMEOUT_EXEC=60 
 
 REM 対象DSのシリアルナンバー >> hudsonで指定
-SET SERIAL_NO=05093474
+REM SET SERIAL_NO=05113644
 
 REM 終了検出文字列(改行が来た時に先頭から判定)
 SET ABORT_STRING="  **** ASSERTION FAILED ! ****"
@@ -24,9 +24,13 @@ REM ================================
 SET USERNAME=hudson
 @echo USERNAME = %USERNAME%
 
+@echo loadpath = %PATH_MAIN_SRL%
+
 REM ================================
 REM ブート
 REM ================================
+REM buryarg %PATH_MAIN_SRL% 1
+
 loadrun -T %TIMEOUT_EXEC% -a %ABORT_STRING% -s %SERIAL_NO% %PATH_MAIN_SRL%
 echo ErrorLevel = %ERRORLEVEL%
 
