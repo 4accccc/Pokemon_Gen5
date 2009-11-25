@@ -593,7 +593,8 @@ static BTL_EVENT_FACTOR*  ADD_Sakiokuri( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Sakiokuri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_FastGuard( u16 pri, WazaID waza, u8 pokeID );
 static void handler_FastGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-
+static BTL_EVENT_FACTOR*  ADD_SideChange( u16 pri, WazaID waza, u8 pokeID );
+static void handler_SideChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 //=============================================================================================
@@ -837,6 +838,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_KARI_SAKIOKURI,        ADD_Sakiokuri       },
     { WAZANO_KARI_RINSYOU,          ADD_Rinsyou         },
     { WAZANO_KARI_FASTOGAADO,       ADD_FastGuard       },
+    { WAZANO_KARI_SAIDOCHENZI,      ADD_SideChange      },
   };
 
   int i;
@@ -2560,7 +2562,7 @@ static void handler_Oiuti_Intr( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 
   if( BTL_SVFLOW_GetThisTurnAction(flowWk, pokeID, &action) )
   {
-    u8 targetPokeID = BTL_SVFLOW_PokePosToPokeID( flowWk, action.fight.targetPos );
+    u8 targetPokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, action.fight.targetPos );
     BTL_Printf("ワシ[%d]が今から狙うポケ=%d, 入れ替わろうとしてるポケ=%d（位置:%d)\n",
       pokeID, targetPokeID, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1), action.fight.targetPos);
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1) == targetPokeID )
@@ -5914,7 +5916,7 @@ static void handler_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 
     eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_POSEFF_ADD, pokeID );
     eff_param->effect = BTL_POSEFF_MIKADUKINOMAI;
-    eff_param->pos = BTL_SVFLOW_PokeIDtoPokePos( flowWk, pokeID );
+    eff_param->pos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
 
     kill_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_KILL, pokeID );
     kill_param->pokeID = pokeID;
@@ -5942,7 +5944,7 @@ static void handler_IyasiNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 
     eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_POSEFF_ADD, pokeID );
     eff_param->effect = BTL_POSEFF_IYASINONEGAI;
-    eff_param->pos = BTL_SVFLOW_PokeIDtoPokePos( flowWk, pokeID );
+    eff_param->pos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
 
     kill_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_KILL, pokeID );
     kill_param->pokeID = pokeID;
@@ -5970,7 +5972,7 @@ static void handler_Negaigoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 
     eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_POSEFF_ADD, pokeID );
     eff_param->effect = BTL_POSEFF_NEGAIGOTO;
-    eff_param->pos = BTL_SVFLOW_PokeIDtoPokePos( flowWk, pokeID );
+    eff_param->pos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
   }
 }
 //----------------------------------------------------------------------------------
@@ -5996,7 +5998,7 @@ static void handler_Miraiyoti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 
     eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_POSEFF_ADD, pokeID );
     eff_param->effect = BTL_POSEFF_DELAY_ATTACK;
-    eff_param->pos = BTL_SVFLOW_PokeIDtoPokePos( flowWk, targetPokeID );
+    eff_param->pos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, targetPokeID );
     eff_param->param[0] = 3;
     eff_param->param[1] = BTL_EVENT_FACTOR_GetSubID( myHandle );
     eff_param->param_cnt = 2;
@@ -6029,7 +6031,7 @@ static void handler_HametuNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 
     eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_POSEFF_ADD, pokeID );
     eff_param->effect = BTL_POSEFF_DELAY_ATTACK;
-    eff_param->pos = BTL_SVFLOW_PokeIDtoPokePos( flowWk, targetPokeID );
+    eff_param->pos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, targetPokeID );
     eff_param->param[0] = 3; // delay turn
     eff_param->param[1] = BTL_EVENT_FACTOR_GetSubID( myHandle );
     eff_param->param_cnt = 2;
@@ -6222,7 +6224,7 @@ static void handler_BatonTouch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 
       eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_POSEFF_ADD, pokeID );
       eff_param->effect = BTL_POSEFF_BATONTOUCH;
-      eff_param->pos = BTL_SVFLOW_PokeIDtoPokePos( flowWk, pokeID );
+      eff_param->pos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
       eff_param->param[0] = pokeID;
       eff_param->param_cnt = 1;
 
@@ -8531,5 +8533,58 @@ static void handler_FastGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   BPP_SICK_CONT  cont = BPP_SICKCONT_MakeTurn( 1 );
   BtlSide side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
   common_SideEffect( myHandle, flowWk, pokeID, work, side, BTL_SIDEEFF_FASTGUARD, cont, BTL_STRID_STD_FastGuard );
+}
+//----------------------------------------------------------------------------------
+/**
+ * サイドチェンジ
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_SideChange( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORIZE_WAZA,  handler_SideChange   },  // 未分類ワザ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_SideChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  BtlPokePos myPos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
+  u8 target_pokeID = pokeID;
+  BtlPokePos targetPos;
+
+  switch( BTL_SVFTOOL_GetRule(flowWk) ){
+  case BTL_RULE_DOUBLE:
+  case BTL_RULE_ROTATION:
+    if( !BTL_SVFTOOL_IsMultiMode(flowWk) )
+    {
+      targetPos = BTL_MAINUTIL_GetFriendPokePos( myPos, 0 );
+      if( targetPos == myPos ){
+        targetPos = BTL_MAINUTIL_GetFriendPokePos( myPos, 1 );
+      }
+      target_pokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, targetPos );
+    }
+    break;
+  case BTL_RULE_TRIPLE:
+    if( !BTL_MAINUTIL_IsTripleCenterPos(myPos) )
+    {
+      targetPos = BTL_MAINUTIL_GetFriendPokePos( myPos, 0 );
+      if( targetPos == myPos ){
+        targetPos = BTL_MAINUTIL_GetFriendPokePos( myPos, 2 );
+      }
+      target_pokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, targetPos );
+    }
+    break;
+  }
+
+  if( (target_pokeID != pokeID) )
+  {
+    BTL_HANDEX_PARAM_SWAP_POKE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SWAP_POKE, pokeID );
+    param->pokeID1 = pokeID;
+    param->pokeID2 = target_pokeID;
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_SideChange );
+    HANDEX_STR_AddArg( &param->exStr, pokeID );
+    HANDEX_STR_AddArg( &param->exStr, target_pokeID );
+  }
 }
 

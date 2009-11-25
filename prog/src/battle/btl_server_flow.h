@@ -114,16 +114,16 @@ extern const BTL_WAZAREC* BTL_SVF_GetWazaRecord( BTL_SVFLOW_WORK* wk );
 extern const BTL_DEADREC* BTL_SVF_GetDeadRecord( BTL_SVFLOW_WORK* wk );
 
 extern void BTL_SVFLOW_RECEPT_CantEscapeAdd( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlCantEscapeCode code );
-extern void BTL_SVFLOW_RECEPT_CantEscapeSub( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlCantEscapeCode code );
 extern u32 BTL_SVFLOW_SimulationDamage( BTL_SVFLOW_WORK* flowWk, u8 atkPokeID, u8 defPokeID, WazaID waza, BOOL fAffinity, BOOL fCritical );
 extern BtlLandForm BTL_SVFLOW_GetLandForm( BTL_SVFLOW_WORK* wk );
 extern const BTL_PARTY* BTL_SVFLOW_GetPartyData( BTL_SVFLOW_WORK* wk, u8 pokeID );
-extern BtlPokePos BTL_SVFLOW_PokeIDtoPokePos( BTL_SVFLOW_WORK* wk, u8 pokeID );
+extern BtlPokePos BTL_SVFTOOL_PokeIDtoPokePos( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern BtlPokePos BTL_SVFLOW_ReqWazaTargetAuto( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID waza );
-extern u8 BTL_SVFLOW_PokePosToPokeID( BTL_SVFLOW_WORK* wk, u8 pokePos );
+extern u8 BTL_SVFTOOL_PokePosToPokeID( BTL_SVFLOW_WORK* wk, u8 pokePos );
 extern BOOL BTL_SVFLOW_GetThisTurnAction( BTL_SVFLOW_WORK* wk, u8 pokeID, BTL_ACTION_PARAM* dst );
 extern void* BTL_SVFLOW_GetHandlerTmpWork( BTL_SVFLOW_WORK* wk );
 extern WazaID BTL_SVFLOW_GetPrevExeWaza( BTL_SVFLOW_WORK* wk );
+extern BOOL BTL_SVFTOOL_IsMultiMode( BTL_SVFLOW_WORK* wk );
 
 //----------------------------
 extern BOOL BTL_SVFLOW_AddBonusMoney( BTL_SVFLOW_WORK* wk, u32 volume, u8 pokeID );
@@ -229,6 +229,7 @@ typedef enum {
   BTL_HANDEX_INTR_POKE,     ///< 指定ポケモンの割り込み行動を発生させる
   BTL_HANDEX_INTR_WAZA,     ///< 指定ワザを使おうとしているポケモンの割り込み行動を発生させる
   BTL_HANDEX_SEND_LAST,     ///< 指定ポケモンの行動を一番最後に回す
+  BTL_HANDEX_SWAP_POKE,     ///< 場に出ているポケモン同士を入れ替える
 
   BTL_HANDEX_MAX,
 
@@ -695,6 +696,15 @@ typedef struct {
   BTL_HANDEX_STR_PARAMS    exStr;    ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_SEND_LAST;
 
+/**
+ * 場に出ているポケモン同士を入れ替える（味方のみ）
+ */
+typedef struct {
+  BTL_HANDEX_PARAM_HEADER  header;
+  u8   pokeID1;                      ///< 対象ポケID 1
+  u8   pokeID2;                      ///< 対象ポケID 2
+  BTL_HANDEX_STR_PARAMS    exStr;    ///< 成功時メッセージ
+}BTL_HANDEX_PARAM_SWAP_POKE;
 
 
 extern void* BTL_SVF_HANDEX_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );

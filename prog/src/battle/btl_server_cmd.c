@@ -46,7 +46,7 @@ typedef enum {
 
   // à¯êîÇRå¬ÇÃå^
   SC_ARGFMT_53bit_1byte = SC_ARGFMT(3,0),
-  SC_ARGFMT_5_5_5bit    = SC_ARGFMT(3,1),
+  SC_ARGFMT_555bit      = SC_ARGFMT(3,1),
   SC_ARGFMT_5_5_14bit   = SC_ARGFMT(3,2),
   SC_ARGFMT_112byte     = SC_ARGFMT(3,3),
   SC_ARGFMT_114byte     = SC_ARGFMT(3,4),
@@ -59,7 +59,7 @@ typedef enum {
   SC_ARGFMT_5_5_6_2byte     = SC_ARGFMT(4,4),
 
   // à¯êîÇTå¬ÇÃå^
-  SC_ARGFMT_5_5_5bit_22byte = SC_ARGFMT(5,0),
+  SC_ARGFMT_555bit_22byte    = SC_ARGFMT(5,0),
   SC_ARGFMT_5_3_7_1bit_2byte = SC_ARGFMT(5,1),
 
   // à¯êîÇUå¬ÇÃå^
@@ -131,8 +131,8 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_112byte,          // SC_ACT_WAZA_DMG_PLURAL
   SC_ARGFMT_1byte,            // 1C_ACT_WAZA_DMG_ICHIGEKI
   SC_ARGFMT_1byte,            // SC_ACT_CONF_DMG
-  SC_ARGFMT_5_5_5bit,         // SC_ACT_RANKUP
-  SC_ARGFMT_5_5_5bit,         // SC_ACT_RANKDOWN
+  SC_ARGFMT_555bit,           // SC_ACT_RANKUP
+  SC_ARGFMT_555bit,           // SC_ACT_RANKDOWN
   SC_ARGFMT_1byte,            // SC_ACT_DEAD
   SC_ARGFMT_1byte,            // SC_ACT_MEMBER_OUT
   SC_ARGFMT_5353bit,          // SC_ACT_MEMBER_IN
@@ -142,7 +142,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_1byte,            // SC_ACT_SIMPLE_HP
   SC_ARGFMT_1byte,            // SC_ACT_KINOMI
   SC_ARGFMT_5_3bit,           // SC_ACT_KILL
-  SC_ARGFMT_5_3bit,           // SC_ACT_MOVE
+  SC_ARGFMT_555bit,           // SC_ACT_MOVE
   SC_ARGFMT_14byte,           // SC_ACT_EXP
   SC_ARGFMT_1x8byte,          // SC_ACT_EXP_LVUP
   SC_ARGFMT_5_5_6_2byte,      // SC_ACT_BALL_THROW
@@ -285,7 +285,7 @@ static void put_core( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ScArgFormat fmt, c
     scque_put1byte( que, pack1_2args(args[0], args[1], 5, 3) );
     scque_put1byte( que, args[2] );
     break;
-  case SC_ARGFMT_5_5_5bit:
+  case SC_ARGFMT_555bit:
     {
       u16 pack = pack_3args( 2, args[0],args[1],args[2], 5,5,5 );
       scque_put2byte( que, pack );
@@ -341,7 +341,7 @@ static void put_core( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ScArgFormat fmt, c
       scque_put2byte( que, args[3] );
     }
     break;
-  case SC_ARGFMT_5_5_5bit_22byte:
+  case SC_ARGFMT_555bit_22byte:
     {
       u16 pack = pack_3args( 2, args[0],args[1],args[2], 5,5,5 );
       scque_put2byte( que, pack );
@@ -429,7 +429,7 @@ static void read_core( BTL_SERVER_CMD_QUE* que, ScArgFormat fmt, int* args )
       args[2] = scque_read1byte( que );
     }
     break;
-  case SC_ARGFMT_5_5_5bit:
+  case SC_ARGFMT_555bit:
     {
       u16 pack = scque_read2byte( que );
       unpack_3args( 2, pack, 5,5,5, args, 0 );
@@ -492,7 +492,7 @@ static void read_core( BTL_SERVER_CMD_QUE* que, ScArgFormat fmt, int* args )
       args[3] = scque_read2byte( que );
     }
     break;
-  case SC_ARGFMT_5_5_5bit_22byte:
+  case SC_ARGFMT_555bit_22byte:
     {
       u16 pack = scque_read2byte( que );
       unpack_3args( 2, pack, 5, 5, 5, args, 0 );

@@ -143,7 +143,7 @@ static void handler_pos_Negaigoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
   work[0]++;
   if( work[0] >= 2 )
   {
-    u8 targetPokeID = BTL_SVFLOW_PokePosToPokeID( flowWk, pokePos );
+    u8 targetPokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, pokePos );
     const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
 
     if( !BPP_IsHPFull(target) )
@@ -177,7 +177,7 @@ static BTL_EVENT_FACTOR* ADD_POS_MikadukiNoMai( u16 pri, BtlPokePos pos, BtlPosE
 static void handler_pos_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
 {
   u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
-  if( BTL_SVFLOW_PokeIDtoPokePos(flowWk, pokeID) == pokePos )
+  if( BTL_SVFTOOL_PokeIDtoPokePos(flowWk, pokeID) == pokePos )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     BTL_HANDEX_PARAM_MESSAGE* msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, BTL_POKEID_NULL );
@@ -235,7 +235,7 @@ static BTL_EVENT_FACTOR* ADD_POS_IyasiNoNegai( u16 pri, BtlPokePos pos, BtlPosEf
 static void handler_pos_IyasiNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
 {
   u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
-  if( BTL_SVFLOW_PokeIDtoPokePos(flowWk, pokeID) == pokePos )
+  if( BTL_SVFTOOL_PokeIDtoPokePos(flowWk, pokeID) == pokePos )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     BTL_HANDEX_PARAM_MESSAGE* msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, BTL_POKEID_NULL );
@@ -285,7 +285,7 @@ static void handler_pos_DelayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
   {
     BTL_HANDEX_PARAM_DELAY_WAZADMG* param;
     BTL_HANDEX_PARAM_MESSAGE* msg_param;
-    u8 targetPokeID = BTL_SVFLOW_PokePosToPokeID( flowWk, pokePos );
+    u8 targetPokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, pokePos );
 
     msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, work[WORKIDX_USER_POKEID] );
     HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_DelayAttack );
@@ -324,8 +324,8 @@ static void handler_pos_BatonTouch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 
   u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
   BTL_Printf("[バトンタッチ] targetPokeID=%d, NowPow=%d, NowPosPokeID=%d\n",
-    targetPokeID, pokePos, BTL_SVFLOW_PokePosToPokeID(flowWk, pokePos));
-  if( targetPokeID == BTL_SVFLOW_PokePosToPokeID(flowWk, pokePos) )
+    targetPokeID, pokePos, BTL_SVFTOOL_PokePosToPokeID(flowWk, pokePos));
+  if( targetPokeID == BTL_SVFTOOL_PokePosToPokeID(flowWk, pokePos) )
   {
     BTL_HANDEX_PARAM_BATONTOUCH* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_BATONTOUCH, BTL_POKEID_NULL );
     param->userPokeID = work[ WORKIDX_USER_POKEID ];

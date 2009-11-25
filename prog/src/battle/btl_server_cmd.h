@@ -479,9 +479,9 @@ static inline void SCQUE_PUT_ACT_Kill( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 ef
 {
   SCQUE_PUT_Common( que, SC_ACT_KILL, pokeID, effectType );
 }
-static inline void SCQUE_PUT_ACT_MemberMove( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 posIdx )
+static inline void SCQUE_PUT_ACT_MemberMove( BTL_SERVER_CMD_QUE* que, u8 clientID, BtlPokePos pos1, BtlPokePos pos2 )
 {
-  SCQUE_PUT_Common( que, SC_ACT_MOVE, clientID, posIdx );
+  SCQUE_PUT_Common( que, SC_ACT_MOVE, clientID, pos1, pos2 );
 }
 static inline void SCQUE_PUT_ACT_AddExp( BTL_SERVER_CMD_QUE* que, u8 pokeID, u32 exp )
 {

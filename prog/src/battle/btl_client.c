@@ -2290,7 +2290,7 @@ static BOOL scProc_ACT_Kill( BTL_CLIENT* wk, int* seq, const int* args )
 //---------------------------------------------------------------------------------------
 /**
  *  ムーブ処理
- *  args .. [0]:対象クライアントID  [1]:対象ポケモンIndex
+ *  args .. [0]:対象クライアントID  [1]:対象ポケモン位置1  [2]:対象ポケモン位置2
  */
 //---------------------------------------------------------------------------------------
 static BOOL scProc_ACT_Move( BTL_CLIENT* wk, int* seq, const int* args )
@@ -2300,20 +2300,19 @@ static BOOL scProc_ACT_Move( BTL_CLIENT* wk, int* seq, const int* args )
   case 0:
     {
       u8 clientID = args[0];
-      u8 posIdx = args[1];
-      u8 pos1, pos2, vpos1, vpos2;
+      u8 pos1 = args[1];
+      u8 pos2 = args[2];
+      u8 posIdx1 = BTL_MAIN_BtlPosToPosIdx( wk->mainModule, pos1 );
+      u8 posIdx2 = BTL_MAIN_BtlPosToPosIdx( wk->mainModule, pos2 );
+      u8 vpos1 = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos1 );
+      u8 vpos2 = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos2 );
 
       BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
-      BTL_PARTY_SwapMembers( party, posIdx, 1 );
+      BTL_PARTY_SwapMembers( party, posIdx1, posIdx2 );
 
-      pos1 = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx );
-      pos2 = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, 1 );
-      vpos1 = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos1 );
-      vpos2 = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos2 );
+      BTL_Printf("ムーブ位置: %d <-> %d\n", pos1, pos2 );
 
-      BTL_Printf("ムーブ: %d <-> %d\n", pos1, pos2 );
-
-      BTLV_ACT_MoveMember_Start( wk->viewCore, clientID, vpos1, vpos2, posIdx, 1 );
+      BTLV_ACT_MoveMember_Start( wk->viewCore, clientID, vpos1, vpos2, posIdx1, posIdx2 );
       (*seq)++;
     }
     break;
