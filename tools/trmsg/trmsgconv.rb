@@ -87,7 +87,11 @@ end
     end
     label = "TRID_" + tr_id.upcase + "_" + msg_kind[ row[ PARA::MSG_KIND ] ]
     if row[ PARA::MSG_KANJI ] == nil
-      gmm.make_row( label, row[ PARA::MSG_JPN ] )
+      if row[ PARA::MSG_JPN ] == nil
+        gmm.make_row( label, "かりの　メッセージ" )
+      else
+        gmm.make_row( label, row[ PARA::MSG_JPN ] )
+      end
     else
       gmm.make_row_kanji( label, row[ PARA::MSG_JPN ], row[ PARA::MSG_KANJI ] )
     end
