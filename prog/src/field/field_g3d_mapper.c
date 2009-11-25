@@ -13,6 +13,7 @@
 #include "mapdatafunc/field_func_mapeditor_file.h"
 #include "mapdatafunc/field_func_pmcustom_file.h"
 #include "mapdatafunc/field_func_bridge_file.h"
+#include "mapdatafunc/field_func_nogrid_file.h"
 #include "mapdatafunc/field_func_wbnormal_file.h"
 #include "mapdatafunc/field_func_wbcross_file.h"
 #include "mapdatafunc/field_func_random_generate.h"
@@ -174,6 +175,7 @@ static const GFL_G3D_MAP_FILE_FUNC mapFileFuncTbl[] = {
 	{ WBGRIDPACK_HEADER, FieldLoadMapData_WBNormalFile, FieldGetAttr_WBNormalFile },
 	{ WBGCROSSPACK_HEADER, FieldLoadMapData_WBCrossFile, FieldGetAttr_WBCrossFile },
 	{ DP3PACK_HEADER, FieldLoadMapData_MapEditorFile, FieldGetAttr_MapEditorFile },
+  { NOGRIDPACK_HEADER, FieldLoadMapData_NoGridFile, FieldGetAttr_NoGridFile },
 	{ BRIDGEPACK_HEADER, FieldLoadMapData_BridgeFile, FieldGetAttr_BridgeFile },
 	{ MAPFILE_FUNC_DEFAULT, FieldLoadMapData_PMcustomFile, FieldGetAttr_PMcustomFile },	//TableEnd&default	
 };
@@ -181,6 +183,7 @@ static const GFL_G3D_MAP_FILE_FUNC mapFileFuncTbl[] = {
 static const GFL_G3D_MAP_FILE_FUNC randommapFileFuncTbl[] = {
 	{ WBGRIDPACK_HEADER, FieldLoadMapData_RandomGenerate, FieldGetAttr_RandomGenerate },
 	{ DP3PACK_HEADER, FieldLoadMapData_MapEditorFile, FieldGetAttr_MapEditorFile },
+  { NOGRIDPACK_HEADER, FieldLoadMapData_NoGridFile, FieldGetAttr_NoGridFile },
 	{ BRIDGEPACK_HEADER, FieldLoadMapData_BridgeFile, FieldGetAttr_BridgeFile },
 	{ MAPFILE_FUNC_DEFAULT, FieldLoadMapData_PMcustomFile, FieldGetAttr_PMcustomFile },	//TableEnd&default	
 };
