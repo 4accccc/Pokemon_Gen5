@@ -352,7 +352,7 @@ void WORDSET_RegisterPokeOyaName( WORDSET* wordset,  u32 bufID, const POKEMON_PA
 void WORDSET_RegisterWazaName( WORDSET* wordset, u32 bufID, u32 wazaID )
 {
   GFL_MSGDATA *man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
-          NARC_message_wazaname_dat, GetHeapLowID(wordset->heapID) );
+          NARC_message_wazaname_dat, GFL_HEAP_LOWID(wordset->heapID) );
   if( man )
   {
     GFL_MSG_GetString( man, wazaID, wordset->tmpBuf );
@@ -372,7 +372,7 @@ void WORDSET_RegisterWazaName( WORDSET* wordset, u32 bufID, u32 wazaID )
 void WORDSET_RegisterItemName( WORDSET* wordset, u32 bufID, u32 itemID )
 {
   GFL_MSGDATA *man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
-          NARC_message_itemname_dat, GetHeapLowID(wordset->heapID) );
+          NARC_message_itemname_dat, GFL_HEAP_LOWID(wordset->heapID) );
   if( man )
   {
     GFL_MSG_GetString( man, itemID, wordset->tmpBuf );
@@ -392,7 +392,7 @@ void WORDSET_RegisterItemName( WORDSET* wordset, u32 bufID, u32 itemID )
 void WORDSET_RegisterTokuseiName( WORDSET* wordset, u32 bufID, u32 tokuseiID )
 {
   GFL_MSGDATA *man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
-          NARC_message_tokusei_dat, GetHeapLowID(wordset->heapID) );
+          NARC_message_tokusei_dat, GFL_HEAP_LOWID(wordset->heapID) );
   if( man )
   {
     GFL_MSG_GetString( man, tokuseiID, wordset->tmpBuf );
@@ -412,7 +412,7 @@ void WORDSET_RegisterTokuseiName( WORDSET* wordset, u32 bufID, u32 tokuseiID )
 void WORDSET_RegisterSeikaku( WORDSET* wordset, u32 bufID, u32 seikakuID )
 {
   GFL_MSGDATA *man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
-          NARC_message_chr_dat, GetHeapLowID(wordset->heapID) );
+          NARC_message_chr_dat, GFL_HEAP_LOWID(wordset->heapID) );
   if( man )
   {
     GFL_MSG_GetString( man, seikakuID, wordset->tmpBuf );
@@ -691,7 +691,7 @@ void WORDSET_RegisterItemPocketName( WORDSET* wordset, u32 bufID, u32 pocketID )
 //------------------------------------------------------------------
 void WORDSET_RegisterPlaceName( WORDSET* wordset, u32 bufID, u32 zoneID )
 {
-  GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
+  GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
       ARCID_MESSAGE, NARC_message_place_name_dat, wordset->heapID );
 
   if( msg )
