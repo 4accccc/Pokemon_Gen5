@@ -19,7 +19,8 @@ enum {
 	NARC_winframe_fmenu_NCGR = 5,
 	NARC_winframe_spwin_NCGR = 6,
 	NARC_winframe_system_NCGR = 7,
-	NARC_winframe_talk_win00_NCGR = 8
+	NARC_winframe_syswin_NCGR = 8,
+	NARC_winframe_talk_win00_NCGR = 9
 };
 
 /* NARC_WINFRAME_NAIX_ */
