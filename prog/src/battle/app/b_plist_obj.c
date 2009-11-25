@@ -14,7 +14,7 @@
 #include "item/item.h"
 //#include "item/itemsym.h"
 #include "app/app_menu_common.h"
-#include "waza_tool/waza_tool.h"
+#include "waza_tool/wazadata.h"
 
 /*Å™[GS_CONVERT_TAG]*/
 //#include "system/procsys.h"

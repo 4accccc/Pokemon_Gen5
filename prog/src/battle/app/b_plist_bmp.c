@@ -12,7 +12,7 @@
 #include "message.naix"
 #include "item/item.h"
 #include "gamesystem/msgspeed.h"
-#include "waza_tool/waza_tool.h"
+#include "waza_tool/wazadata.h"
 #include "system/bmp_winframe.h"
 #include "poke_tool/gauge_tool.h"
 #include "app/app_menu_common.h"
