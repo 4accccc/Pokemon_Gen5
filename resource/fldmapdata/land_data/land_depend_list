@@ -291,6 +291,7 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/c03_o00_00.3dppack \
 	$(DIR_OUTPUT)/c03_p00_00.3dppack \
 	$(DIR_OUTPUT)/c03_q00_00.3dppack \
+	$(DIR_OUTPUT)/map_outtree1.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_01_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_01.3dppack \
@@ -621,6 +622,15 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_gym0602_00_00.3dppack \
 	$(DIR_OUTPUT)/m_bcbuill01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_bcmall01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_market02_00_00.3dppack \
+	$(DIR_OUTPUT)/m_market03_00_00.3dppack \
+	$(DIR_OUTPUT)/m_market04_00_00.3dppack \
+	$(DIR_OUTPUT)/m_market05_00_00.3dppack \
+	$(DIR_OUTPUT)/m_gym0701_01_00.3dppack \
+	$(DIR_OUTPUT)/m_gym0701_02_00.3dppack \
+	$(DIR_OUTPUT)/m_gym0701_00_01.3dppack \
+	$(DIR_OUTPUT)/m_gym0701_01_01.3dppack \
+	$(DIR_OUTPUT)/m_gym0701_02_01.3dppack \
 	$(DIR_OUTPUT)/C3_00_00.ngpack \
 	$(DIR_OUTPUT)/C3_00_01.ngpack \
 	$(DIR_OUTPUT)/C3_01_00.ngpack \

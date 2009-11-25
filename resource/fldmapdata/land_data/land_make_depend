@@ -2626,6 +2626,15 @@ $(DIR_TEMP)/c03_q00_00.nsbmd: $(DIR_RES)/c03_q00_00.imd
 	@echo create_nsbmd c03_q00_00
 	@$(G3DCVTR) $(DIR_RES)/c03_q00_00.imd -o $(DIR_TEMP)/c03_q00_00.nsbmd
 
+#map_outtree1
+$(DIR_OUTPUT)/map_outtree1.3dppack: $(DIR_TEMP)/map_outtree1.nsbmd $(DIR_RES)/map_outtree1.bin $(DIR_RES)/map_outtree1.3dmd
+	@echo create 3dppack map_outtree1
+	@$(BINLINKER) $(DIR_TEMP)/map_outtree1.nsbmd $(DIR_RES)/map_outtree1.bin $(DIR_RES)/map_outtree1.3dmd $(DIR_OUTPUT)/map_outtree1.3dppack WB
+
+$(DIR_TEMP)/map_outtree1.nsbmd: $(DIR_RES)/map_outtree1.imd
+	@echo create_nsbmd map_outtree1
+	@$(G3DCVTR) $(DIR_RES)/map_outtree1.imd -o $(DIR_TEMP)/map_outtree1.nsbmd
+
 #m_dun0101_00_00
 $(DIR_OUTPUT)/m_dun0101_00_00.3dppack: $(DIR_TEMP)/m_dun0101_00_00.nsbmd $(DIR_RES)/m_dun0101_00_00.bin $(DIR_RES)/m_dun0101_00_00_ex.bin $(DIR_RES)/m_dun0101_00_00.3dmd
 	@echo create 3dppack m_dun0101_00_00
@@ -5595,6 +5604,87 @@ $(DIR_OUTPUT)/m_bcmall01_00_00.3dppack: $(DIR_TEMP)/m_bcmall01_00_00.nsbmd $(DIR
 $(DIR_TEMP)/m_bcmall01_00_00.nsbmd: $(DIR_RES)/m_bcmall01_00_00.imd
 	@echo create_nsbmd m_bcmall01_00_00
 	@$(G3DCVTR) $(DIR_RES)/m_bcmall01_00_00.imd -o $(DIR_TEMP)/m_bcmall01_00_00.nsbmd
+
+#m_market02_00_00
+$(DIR_OUTPUT)/m_market02_00_00.3dppack: $(DIR_TEMP)/m_market02_00_00.nsbmd $(DIR_RES)/m_market02_00_00.bin $(DIR_RES)/m_market02_00_00.3dmd
+	@echo create 3dppack m_market02_00_00
+	@$(BINLINKER) $(DIR_TEMP)/m_market02_00_00.nsbmd $(DIR_RES)/m_market02_00_00.bin $(DIR_RES)/m_market02_00_00.3dmd $(DIR_OUTPUT)/m_market02_00_00.3dppack WB
+
+$(DIR_TEMP)/m_market02_00_00.nsbmd: $(DIR_RES)/m_market02_00_00.imd
+	@echo create_nsbmd m_market02_00_00
+	@$(G3DCVTR) $(DIR_RES)/m_market02_00_00.imd -o $(DIR_TEMP)/m_market02_00_00.nsbmd
+
+#m_market03_00_00
+$(DIR_OUTPUT)/m_market03_00_00.3dppack: $(DIR_TEMP)/m_market03_00_00.nsbmd $(DIR_RES)/m_market03_00_00.bin $(DIR_RES)/m_market03_00_00.3dmd
+	@echo create 3dppack m_market03_00_00
+	@$(BINLINKER) $(DIR_TEMP)/m_market03_00_00.nsbmd $(DIR_RES)/m_market03_00_00.bin $(DIR_RES)/m_market03_00_00.3dmd $(DIR_OUTPUT)/m_market03_00_00.3dppack WB
+
+$(DIR_TEMP)/m_market03_00_00.nsbmd: $(DIR_RES)/m_market03_00_00.imd
+	@echo create_nsbmd m_market03_00_00
+	@$(G3DCVTR) $(DIR_RES)/m_market03_00_00.imd -o $(DIR_TEMP)/m_market03_00_00.nsbmd
+
+#m_market04_00_00
+$(DIR_OUTPUT)/m_market04_00_00.3dppack: $(DIR_TEMP)/m_market04_00_00.nsbmd $(DIR_RES)/m_market04_00_00.bin $(DIR_RES)/m_market04_00_00.3dmd
+	@echo create 3dppack m_market04_00_00
+	@$(BINLINKER) $(DIR_TEMP)/m_market04_00_00.nsbmd $(DIR_RES)/m_market04_00_00.bin $(DIR_RES)/m_market04_00_00.3dmd $(DIR_OUTPUT)/m_market04_00_00.3dppack WB
+
+$(DIR_TEMP)/m_market04_00_00.nsbmd: $(DIR_RES)/m_market04_00_00.imd
+	@echo create_nsbmd m_market04_00_00
+	@$(G3DCVTR) $(DIR_RES)/m_market04_00_00.imd -o $(DIR_TEMP)/m_market04_00_00.nsbmd
+
+#m_market05_00_00
+$(DIR_OUTPUT)/m_market05_00_00.3dppack: $(DIR_TEMP)/m_market05_00_00.nsbmd $(DIR_RES)/m_market05_00_00.bin $(DIR_RES)/m_market05_00_00.3dmd
+	@echo create 3dppack m_market05_00_00
+	@$(BINLINKER) $(DIR_TEMP)/m_market05_00_00.nsbmd $(DIR_RES)/m_market05_00_00.bin $(DIR_RES)/m_market05_00_00.3dmd $(DIR_OUTPUT)/m_market05_00_00.3dppack WB
+
+$(DIR_TEMP)/m_market05_00_00.nsbmd: $(DIR_RES)/m_market05_00_00.imd
+	@echo create_nsbmd m_market05_00_00
+	@$(G3DCVTR) $(DIR_RES)/m_market05_00_00.imd -o $(DIR_TEMP)/m_market05_00_00.nsbmd
+
+#m_gym0701_01_00
+$(DIR_OUTPUT)/m_gym0701_01_00.3dppack: $(DIR_TEMP)/m_gym0701_01_00.nsbmd $(DIR_RES)/m_gym0701_01_00.bin $(DIR_RES)/m_gym0701_01_00.3dmd
+	@echo create 3dppack m_gym0701_01_00
+	@$(BINLINKER) $(DIR_TEMP)/m_gym0701_01_00.nsbmd $(DIR_RES)/m_gym0701_01_00.bin $(DIR_RES)/m_gym0701_01_00.3dmd $(DIR_OUTPUT)/m_gym0701_01_00.3dppack WB
+
+$(DIR_TEMP)/m_gym0701_01_00.nsbmd: $(DIR_RES)/m_gym0701_01_00.imd
+	@echo create_nsbmd m_gym0701_01_00
+	@$(G3DCVTR) $(DIR_RES)/m_gym0701_01_00.imd -o $(DIR_TEMP)/m_gym0701_01_00.nsbmd
+
+#m_gym0701_02_00
+$(DIR_OUTPUT)/m_gym0701_02_00.3dppack: $(DIR_TEMP)/m_gym0701_02_00.nsbmd $(DIR_RES)/m_gym0701_02_00.bin $(DIR_RES)/m_gym0701_02_00.3dmd
+	@echo create 3dppack m_gym0701_02_00
+	@$(BINLINKER) $(DIR_TEMP)/m_gym0701_02_00.nsbmd $(DIR_RES)/m_gym0701_02_00.bin $(DIR_RES)/m_gym0701_02_00.3dmd $(DIR_OUTPUT)/m_gym0701_02_00.3dppack WB
+
+$(DIR_TEMP)/m_gym0701_02_00.nsbmd: $(DIR_RES)/m_gym0701_02_00.imd
+	@echo create_nsbmd m_gym0701_02_00
+	@$(G3DCVTR) $(DIR_RES)/m_gym0701_02_00.imd -o $(DIR_TEMP)/m_gym0701_02_00.nsbmd
+
+#m_gym0701_00_01
+$(DIR_OUTPUT)/m_gym0701_00_01.3dppack: $(DIR_TEMP)/m_gym0701_00_01.nsbmd $(DIR_RES)/m_gym0701_00_01.bin $(DIR_RES)/m_gym0701_00_01.3dmd
+	@echo create 3dppack m_gym0701_00_01
+	@$(BINLINKER) $(DIR_TEMP)/m_gym0701_00_01.nsbmd $(DIR_RES)/m_gym0701_00_01.bin $(DIR_RES)/m_gym0701_00_01.3dmd $(DIR_OUTPUT)/m_gym0701_00_01.3dppack WB
+
+$(DIR_TEMP)/m_gym0701_00_01.nsbmd: $(DIR_RES)/m_gym0701_00_01.imd
+	@echo create_nsbmd m_gym0701_00_01
+	@$(G3DCVTR) $(DIR_RES)/m_gym0701_00_01.imd -o $(DIR_TEMP)/m_gym0701_00_01.nsbmd
+
+#m_gym0701_01_01
+$(DIR_OUTPUT)/m_gym0701_01_01.3dppack: $(DIR_TEMP)/m_gym0701_01_01.nsbmd $(DIR_RES)/m_gym0701_01_01.bin $(DIR_RES)/m_gym0701_01_01.3dmd
+	@echo create 3dppack m_gym0701_01_01
+	@$(BINLINKER) $(DIR_TEMP)/m_gym0701_01_01.nsbmd $(DIR_RES)/m_gym0701_01_01.bin $(DIR_RES)/m_gym0701_01_01.3dmd $(DIR_OUTPUT)/m_gym0701_01_01.3dppack WB
+
+$(DIR_TEMP)/m_gym0701_01_01.nsbmd: $(DIR_RES)/m_gym0701_01_01.imd
+	@echo create_nsbmd m_gym0701_01_01
+	@$(G3DCVTR) $(DIR_RES)/m_gym0701_01_01.imd -o $(DIR_TEMP)/m_gym0701_01_01.nsbmd
+
+#m_gym0701_02_01
+$(DIR_OUTPUT)/m_gym0701_02_01.3dppack: $(DIR_TEMP)/m_gym0701_02_01.nsbmd $(DIR_RES)/m_gym0701_02_01.bin $(DIR_RES)/m_gym0701_02_01.3dmd
+	@echo create 3dppack m_gym0701_02_01
+	@$(BINLINKER) $(DIR_TEMP)/m_gym0701_02_01.nsbmd $(DIR_RES)/m_gym0701_02_01.bin $(DIR_RES)/m_gym0701_02_01.3dmd $(DIR_OUTPUT)/m_gym0701_02_01.3dppack WB
+
+$(DIR_TEMP)/m_gym0701_02_01.nsbmd: $(DIR_RES)/m_gym0701_02_01.imd
+	@echo create_nsbmd m_gym0701_02_01
+	@$(G3DCVTR) $(DIR_RES)/m_gym0701_02_01.imd -o $(DIR_TEMP)/m_gym0701_02_01.nsbmd
 
 #C3_00_00
 $(DIR_OUTPUT)/C3_00_00.ngpack: $(DIR_TEMP)/C3_00_00.nsbmd $(DIR_RES)/C3_00_00.3dmd

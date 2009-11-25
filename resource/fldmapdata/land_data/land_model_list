@@ -291,6 +291,7 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/c03_o00_00.nsbmd \
 	$(DIR_TEMP)/c03_p00_00.nsbmd \
 	$(DIR_TEMP)/c03_q00_00.nsbmd \
+	$(DIR_TEMP)/map_outtree1.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_01_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_01.nsbmd \
@@ -621,6 +622,15 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_gym0602_00_00.nsbmd \
 	$(DIR_TEMP)/m_bcbuill01_00_00.nsbmd \
 	$(DIR_TEMP)/m_bcmall01_00_00.nsbmd \
+	$(DIR_TEMP)/m_market02_00_00.nsbmd \
+	$(DIR_TEMP)/m_market03_00_00.nsbmd \
+	$(DIR_TEMP)/m_market04_00_00.nsbmd \
+	$(DIR_TEMP)/m_market05_00_00.nsbmd \
+	$(DIR_TEMP)/m_gym0701_01_00.nsbmd \
+	$(DIR_TEMP)/m_gym0701_02_00.nsbmd \
+	$(DIR_TEMP)/m_gym0701_00_01.nsbmd \
+	$(DIR_TEMP)/m_gym0701_01_01.nsbmd \
+	$(DIR_TEMP)/m_gym0701_02_01.nsbmd \
 	$(DIR_TEMP)/C3_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_01.nsbmd \
 	$(DIR_TEMP)/C3_01_00.nsbmd \
