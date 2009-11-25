@@ -157,14 +157,6 @@ typedef void (*pMsgCallback)( BTL_SVFLOW_WORK*, const BTL_POKEPARAM*, void* );
 
 
 /**
- *  メッセージ表示処理コールバック用パラメータ
- */
-typedef struct {
-  pMsgCallback    func;
-  void*           arg;
-}MSG_CALLBACK_PARAM;
-
-/**
  *  経験値計算用ワーク
  */
 typedef struct {
@@ -368,13 +360,12 @@ static void scproc_WazaDamageAfter( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker
   const SVFL_WAZAPARAM* wazaParam, u32 damage, BOOL critical_flag );
 static void scproc_CheckItemReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static BOOL scproc_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPARAM* attacker,
-  WazaSick sick, BPP_SICK_CONT sickCont, BOOL fAlmost, MSG_CALLBACK_PARAM* msgCallbackParam );
+  WazaSick sick, BPP_SICK_CONT sickCont, BOOL fAlmost, BTL_HANDEX_STR_PARAMS* strParam );
 static BOOL addsick_core( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPARAM* attacker,
   WazaSick sick, BPP_SICK_CONT sickCont, BOOL fAlmost  );
 static BtlAddSickFailCode addsick_check_fail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
   WazaSick sick, BPP_SICK_CONT sickCont );
-static BOOL scEvent_AddSick_IsMustFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick );
-static BOOL scEvent_AddSick_CheckFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick  );
+static BOOL scEvent_StdSick_CheckFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick  );
 static void scEvent_AddSick_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick );
 static void scproc_Fight_Damage_After( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
 static void scproc_Fight_Damage_Shrink( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
@@ -394,6 +385,8 @@ static WazaSick scEvent_CheckAddSick( BTL_SVFLOW_WORK* wk, WazaID waza,
 static void scproc_Fight_SimpleSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
 static BOOL scproc_Fight_WazaSickCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target,
   WazaID waza, WazaSick sick, BPP_SICK_CONT sickCont, BOOL fAlmost );
+static WazaSick scEvent_DecideSpecialWazaSick( BTL_SVFLOW_WORK* wk,
+  const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, BTL_HANDEX_STR_PARAMS* str );
 static void scEvent_WazaSickCont( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target,
   WazaSick sick, BPP_SICK_CONT* sickCont );
 static void scproc_Fight_Damage_AddEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target );
@@ -1015,6 +1008,7 @@ static void clear_poke_actflags( BTL_SVFLOW_WORK* wk )
 //----------------------------------------------------------------------------------
 static void scproc_SetFlyingFlag( BTL_SVFLOW_WORK* wk )
 {
+  // じゅうりょくが効いていたら誰も浮けない
   if( !BTL_FIELD_CheckEffect(BTL_FLDEFF_JURYOKU) )
   {
     FRONT_POKE_SEEK_WORK  fps;
@@ -1023,10 +1017,13 @@ static void scproc_SetFlyingFlag( BTL_SVFLOW_WORK* wk )
     FRONT_POKE_SEEK_InitWork( &fps, wk );
     while( FRONT_POKE_SEEK_GetNext(&fps, wk, &bpp) )
     {
+      // タイプ「ひこう」、とくせい「ふゆう」、状態異常「でんじふゆう」「テレキネシス」が対象
       if( BPP_IsMatchType(bpp, POKETYPE_HIKOU)
       ||  (BPP_GetValue(bpp, BPP_TOKUSEI) == POKETOKUSEI_FUYUU)
       ||  (BPP_CheckSick(bpp, WAZASICK_FLYING))
+      ||  (BPP_CheckSick(bpp, WAZASICK_TELEKINESIS))
       ){
+        // でも「ふゆうキャンセル」状態なら浮けない
         if( !BPP_CheckSick(bpp, WAZASICK_FLYING_CANCEL) ){
           scPut_SetTurnFlag( wk, bpp, BPP_TURNFLG_FLYING );
         }
@@ -4090,14 +4087,12 @@ static void scproc_CheckItemReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
  * @param   sick
  * @param   sickCont
  * @param   fAlmost            失敗した時に原因メッセージを表示する
- * @param   msgCallbackParam   成功時、メッセージ表示コマンド生成するためのコールバック。
- *                             デフォルトメッセージで良ければNULL。
  *
  * @retval  BOOL       成功した場合TRUE
  */
 //--------------------------------------------------------------------------
 static BOOL scproc_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPARAM* attacker,
-  WazaSick sick, BPP_SICK_CONT sickCont, BOOL fAlmost, MSG_CALLBACK_PARAM* msgCallbackParam )
+  WazaSick sick, BPP_SICK_CONT sickCont, BOOL fAlmost, BTL_HANDEX_STR_PARAMS* strParam )
 {
   BOOL fSucceed;
 
@@ -4106,11 +4101,9 @@ static BOOL scproc_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKE
   {
     BTL_SICK_AddProc( wk, target, sick );
 
-    if( msgCallbackParam == NULL ){
+    if( strParam == NULL ){
       BTL_SICK_MakeDefaultMsg( sick, sickCont, target, &wk->strParam );
       handexSub_putString( wk, &wk->strParam );
-    }else{
-      msgCallbackParam->func( wk, target, msgCallbackParam->arg );
     }
 
     scproc_CheckItemReaction( wk, target );
@@ -4147,9 +4140,12 @@ static BOOL addsick_core( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPA
   }
   else
   {
-    BOOL failFlag = scEvent_AddSick_CheckFail( wk, target, sick );
+    BOOL fFail = FALSE;
+    if( sick < WAZASICK_STD_MAX ){
+      fFail = scEvent_StdSick_CheckFail( wk, target, sick );
+    }
 
-    if( !failFlag ){
+    if( !fFail ){
       scPut_AddSick( wk, target, sick, sickCont );
     }
     else if( fAlmost )
@@ -4159,7 +4155,7 @@ static BOOL addsick_core( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPA
       scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       Hem_PopState( &wk->HEManager, hem_state );
     }
-    return !failFlag;
+    return !fFail;
   }
 }
 static BtlAddSickFailCode addsick_check_fail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
@@ -4195,28 +4191,6 @@ static BtlAddSickFailCode addsick_check_fail( BTL_SVFLOW_WORK* wk, const BTL_POK
 
   return BTL_ADDSICK_FAIL_NULL;
 }
-static BOOL scEvent_AddSick_IsMustFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick )
-{
-  // てんこう「はれ」の時に「こおり」にはならない
-  if( (BTL_FIELD_GetWeather() == BTL_WEATHER_SHINE)
-  &&  (sick == POKESICK_KOORI )
-  ){
-    return TRUE;
-  }
-  // すでにポケモン系状態異常になっているなら、新たにポケモン系状態異常にはならない
-  if( (BPP_GetPokeSick(target) != POKESICK_NULL)
-  &&  (sick < POKESICK_MAX)
-  ){
-    return TRUE;
-  }
-
-  // @@@ すでに混乱なら混乱にならないとか… 失敗コードを返す必要があるかも
-  if( BPP_CheckSick(target, sick) ){
-    return TRUE;
-  }
-
-  return FALSE;
-}
 //----------------------------------------------------------------------------------
 /**
  * [Event] 状態異常を失敗するケースのチェック
@@ -4228,7 +4202,7 @@ static BOOL scEvent_AddSick_IsMustFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
  * @retval  BOOL    失敗する場合はTRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL scEvent_AddSick_CheckFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick  )
+static BOOL scEvent_StdSick_CheckFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick  )
 {
   BOOL fFail = FALSE;
   BTL_EVENTVAR_Push();
@@ -4692,9 +4666,62 @@ static void scproc_Fight_SimpleSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEP
 static BOOL scproc_Fight_WazaSickCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target,
   WazaID waza, WazaSick sick, BPP_SICK_CONT sickCont, BOOL fAlmost )
 {
+  HANDEX_STR_Clear( &wk->strParam );
+
+  if( sick == WAZASICK_SPECIAL_CODE )
+  {
+    sick = scEvent_DecideSpecialWazaSick( wk, attacker, target, &wk->strParam );
+    if( (sick == WAZASICK_NULL) || (sick == WAZASICK_SPECIAL_CODE) ){
+      return FALSE;
+    }
+  }
   scEvent_WazaSickCont( wk, attacker, target, sick, &sickCont );
-  return scproc_AddSick( wk, target, attacker, sick, sickCont, fAlmost, NULL );
+
+  {
+    // 特殊メッセージが何も用意されていなければ、scproc_AddSick 内で、
+    // できるだけ標準メッセージを出すようにしている。
+    BTL_HANDEX_STR_PARAMS* str = NULL;
+    if( HANDEX_STR_IsEnable(&wk->strParam) ){
+      str = &wk->strParam;
+    }
+
+    if( scproc_AddSick(wk, target, attacker, sick, sickCont, fAlmost, str) )
+    {
+      if( str != NULL ){
+        handexSub_putString( wk, str );
+      }
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ワザによる特殊処理の状態異常ID＆成功時メッセージを決定する
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   defender
+ * @param   str
+ *
+ * @retval  WazaSick
+ */
+//----------------------------------------------------------------------------------
+static WazaSick scEvent_DecideSpecialWazaSick( BTL_SVFLOW_WORK* wk,
+  const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, BTL_HANDEX_STR_PARAMS* str )
+{
+  WazaSick sickID;
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WORK_ADRS, (int)(str) );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_SICKID, WAZASICK_NULL );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZASICK_SPECIAL );
+    sickID = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
+  BTL_EVENTVAR_Pop();
+  return sickID;
+}
+
 //----------------------------------------------------------------------------------
 /**
  * [Event] ワザによる状態異常の継続パラメータ調整
@@ -4710,8 +4737,8 @@ static void scEvent_WazaSickCont( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* atta
   WazaSick sick, BPP_SICK_CONT* sickCont )
 {
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_SICK_CONT, sickCont->raw );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZASICK_PARAM );
     sickCont->raw = BTL_EVENTVAR_GetValue( BTL_EVAR_SICK_CONT );
@@ -7344,6 +7371,10 @@ static BOOL scEvent_checkHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
     return TRUE;
   }
 
+  if( BPP_CheckSick(defender, WAZASICK_TELEKINESIS) ){
+    return TRUE;
+  }
+
   {
     u8 wazaHitRatio, per;
     s8 hitRank, avoidRank, totalRank;
@@ -7430,7 +7461,7 @@ static BOOL scEvent_IsExcuseCalcHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* a
   {
     BTL_EVENTVAR_Push();
       BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-      BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, result );
+      BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, FALSE );
       BTL_EVENT_CallHandlers( wk, BTL_EVENT_EXCUSE_CALC_HIT );
       result = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
     BTL_EVENTVAR_Pop();
@@ -9063,12 +9094,13 @@ BtlCompetitor BTL_SVFTOOL_GetCompetitor( BTL_SVFLOW_WORK* wk )
  *
  * @param   wk
  *
- * @retval  BtlLandForm
+ * @retval  BtlBgType
  */
 //--------------------------------------------------------------------------------------
-BtlLandForm BTL_SVFLOW_GetLandForm( BTL_SVFLOW_WORK* wk )
+BtlBgType BTL_SVFLOW_GetLandForm( BTL_SVFLOW_WORK* wk )
 {
-  return BTL_MAIN_GetLandForm( wk->mainModule );
+  const BTL_FIELD_SITUATION* sit = BTL_MAIN_GetFieldSituation( wk->mainModule );
+  return sit->bgType;
 }
 //--------------------------------------------------------------------------------------
 /**
@@ -9624,24 +9656,30 @@ static u8 scproc_HandEx_addSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
   BTL_POKEPARAM* pp_user = (param_header->userPokeID != BTL_POKEID_NULL)?
                       BTL_POKECON_GetPokeParam(wk->pokeCon, param_header->userPokeID) : NULL;
 
-  BTL_POKEPARAM* pp_target;
-  MSG_CALLBACK_PARAM  cbParam;
+  BTL_POKEPARAM* target;
   u32 i;
   u8 result = 0;
 
-  cbParam.func = handex_addsick_msg;
-  cbParam.arg = (void*)param;
+  wk->strParam = param->exStr;
 
   for(i=0; i<param->poke_cnt; ++i)
   {
-    pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
-    if( !BPP_IsDead(pp_target) )
+    target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
+    if( !BPP_IsDead(target) )
     {
-      if( scproc_AddSick( wk, pp_target, pp_user, param->sickID, param->sickCont, param->fAlmost, &cbParam ) ){
+      if( scproc_AddSick( wk, target, pp_user, param->sickID, param->sickCont, param->fAlmost, NULL ) ){
         result = 1;
       }
     }
   }
+
+  if( result )
+  {
+    if( HANDEX_STR_IsEnable(&param->exStr) ){
+      handexSub_putString( wk, &param->exStr );
+    }
+  }
+
   return result;
 }
 //----------------------------------------------------------------------------------

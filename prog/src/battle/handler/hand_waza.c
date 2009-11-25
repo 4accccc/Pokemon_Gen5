@@ -44,7 +44,7 @@ enum {
   WAZANO_KARI_BENOMUSHOKKU,
   WAZANO_KARI_BODYPAAZI,
   WAZANO_KARI_IKARINOKONA,
-  WAZANO_KARI_TEREKINESISU,
+  WAZANO_KARI_TELEKINESISU,
   WAZANO_KARI_MAZIKKURUUMU,
   WAZANO_KARI_UTIOTOSU,
   WAZANO_KARI_GORINKUDAKI,
@@ -595,6 +595,8 @@ static BTL_EVENT_FACTOR*  ADD_FastGuard( u16 pri, WazaID waza, u8 pokeID );
 static void handler_FastGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_SideChange( u16 pri, WazaID waza, u8 pokeID );
 static void handler_SideChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_Telekinesis( u16 pri, WazaID waza, u8 pokeID );
+static void handler_Telekinesis( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 //=============================================================================================
@@ -839,6 +841,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_KARI_RINSYOU,          ADD_Rinsyou         },
     { WAZANO_KARI_FASTOGAADO,       ADD_FastGuard       },
     { WAZANO_KARI_SAIDOCHENZI,      ADD_SideChange      },
+    { WAZANO_KARI_TELEKINESISU,     ADD_Telekinesis     },
   };
 
   int i;
@@ -1028,18 +1031,18 @@ static void handler_Hogosyoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    BtlLandForm  land = BTL_SVFLOW_GetLandForm( flowWk );
-    PokeType type = POKETYPE_NORMAL;
+    BtlBgType  bg = BTL_SVFLOW_GetLandForm( flowWk );
+    PokeType   type = POKETYPE_NORMAL;
 
-    switch( land ){
-    case BTL_LANDFORM_GRASS:   type = POKETYPE_KUSA;   break;  ///< 草むら
-    case BTL_LANDFORM_SAND:    type = POKETYPE_JIMEN;  break;  ///< 砂地
-    case BTL_LANDFORM_SEA:     type = POKETYPE_MIZU;   break;  ///< 海
-    case BTL_LANDFORM_RIVER:   type = POKETYPE_MIZU;   break;  ///< 川
-    case BTL_LANDFORM_SNOW:    type = POKETYPE_KOORI;  break;  ///< 雪原
-    case BTL_LANDFORM_CAVE:    type = POKETYPE_IWA;    break;  ///< 洞窟
-    case BTL_LANDFORM_ROCK:    type = POKETYPE_IWA;    break;  ///< 岩場
-    case BTL_LANDFORM_ROOM:    type = POKETYPE_NORMAL; break;  ///< 室内
+    switch( bg ){
+    case BTL_BG_GRASS:   type = POKETYPE_KUSA;   break;  ///< 草むら
+    case BTL_BG_SAND:    type = POKETYPE_JIMEN;  break;  ///< 砂地
+    case BTL_BG_SEA:     type = POKETYPE_MIZU;   break;  ///< 海
+    case BTL_BG_SNOW:    type = POKETYPE_KOORI;  break;  ///< 雪原
+    case BTL_BG_CAVE:    type = POKETYPE_IWA;    break;  ///< 洞窟
+    case BTL_BG_ROCK:    type = POKETYPE_IWA;    break;  ///< 岩場
+    case BTL_BG_FOREST:  type = POKETYPE_KUSA;   break;  ///< 森
+    case BTL_BG_ROOM:    type = POKETYPE_NORMAL; break;  ///< 室内
     }
 
     {
@@ -1781,13 +1784,13 @@ static void handler_HimituNoTikara_Sick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    BtlLandForm  land = BTL_SVFLOW_GetLandForm( flowWk );
+    BtlBgType  bg = BTL_SVFLOW_GetLandForm( flowWk );
     WazaSick  sick;
     BPP_SICK_CONT  cont;
     WazaID  waza = BTL_EVENT_FACTOR_GetSubID( myHandle );
 
     // @@@ 本来は地形に応じてもっとフクザツに
-    if( land == BTL_LANDFORM_SNOW ){
+    if( bg == BTL_BG_SNOW ){
       sick = WAZASICK_KOORI;
     }else{
       sick = WAZASICK_MAHI;
@@ -7245,12 +7248,12 @@ static void handler_SizenNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BtlLandForm  land = BTL_SVFLOW_GetLandForm( flowWk );
+    BtlBgType  bg = BTL_SVFLOW_GetLandForm( flowWk );
     WazaID  waza;
     BtlPokePos pos;
 
     // @@@ 本来は地形に応じてもっとフクザツに
-    waza = (land & 1)? WAZANO_HAIDOROPONPU : WAZANO_REITOUBIIMU;
+    waza = (bg & 1)? WAZANO_HAIDOROPONPU : WAZANO_REITOUBIIMU;
     pos  = BTL_SVFLOW_ReqWazaTargetAuto( flowWk, pokeID, waza );
 
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZAID,  waza );
@@ -8009,16 +8012,31 @@ static void handler_TomoeNage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
  * うちおとす
  */
 //----------------------------------------------------------------------------------
+#define _UTIOTOSU_NEW
+
 static BTL_EVENT_FACTOR*  ADD_Utiotosu( u16 pri, WazaID waza, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
+#ifdef _UTIOTOSU_NEW
+    { BTL_EVENT_WAZASICK_SPECIAL,  handler_Utiotosu   },  // 特殊状態異常
+#else
     { BTL_EVENT_WAZA_DMG_REACTION,  handler_Utiotosu   },         // ダメージ直後
+#endif
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
 }
 static void handler_Utiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+#ifdef _UTIOTOSU_NEW
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BTL_HANDEX_STR_PARAMS* str = (BTL_HANDEX_STR_PARAMS*)BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICKID, WAZASICK_FLYING_CANCEL );
+    HANDEX_STR_Setup( str, BTL_STRTYPE_SET, BTL_STRID_SET_Utiotosu );
+    HANDEX_STR_AddArg( str, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
+  }
+#else
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
@@ -8031,8 +8049,8 @@ static void handler_Utiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Utiotosu );
     HANDEX_STR_AddArg( &param->exStr, targetPokeID );
   }
+#endif
 }
-
 //----------------------------------------------------------------------------------
 /**
  * からをやぶる
@@ -8585,6 +8603,29 @@ static void handler_SideChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_SideChange );
     HANDEX_STR_AddArg( &param->exStr, pokeID );
     HANDEX_STR_AddArg( &param->exStr, target_pokeID );
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * テレキネシス
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_Telekinesis( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZASICK_SPECIAL,  handler_Telekinesis   },  // 特殊状態異常
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_Telekinesis( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BTL_HANDEX_STR_PARAMS* str = (BTL_HANDEX_STR_PARAMS*)BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICKID, WAZASICK_TELEKINESIS );
+    HANDEX_STR_Setup( str, BTL_STRTYPE_SET, BTL_STRID_SET_Telekinesis );
+    HANDEX_STR_AddArg( str, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
   }
 }
 

@@ -509,7 +509,7 @@ static void enc_CreateBattleParam( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* 
     }
     GFL_HEAP_FreeMemory( pp );
 
-    BP_SETUP_Wild( bsp, gdata, heapID, BTL_RULE_SINGLE+efp->enc_double_f,partyEnemy, 0, 0 );
+    BP_SETUP_Wild( bsp, gdata, heapID, BTL_RULE_SINGLE+efp->enc_double_f,partyEnemy, 0, 0, 0 );
   }
   BATTLE_PARAM_SetUpBattleSituation( bsp, enc->fwork );
 }
@@ -533,13 +533,13 @@ static void enc_CreateTrainerBattleParam(
 
   if( (tr_id1 != 0) && tr_id0 != tr_id1 ){ //シングル
     BTL_SETUP_Single_Trainer(
-        param, gdata, NULL, BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, tr_id0, HEAPID_PROC );
+        param, gdata, NULL, BTL_BG_GRASS, 0, BTL_WEATHER_NONE, tr_id0, HEAPID_PROC );
   }else if( tr_id0 == tr_id1 ){ //ダブル
     BTL_SETUP_Double_Trainer(
-        param, gdata, NULL, BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, tr_id0, HEAPID_PROC );
+        param, gdata, NULL, BTL_BG_GRASS, 0, BTL_WEATHER_NONE, tr_id0, HEAPID_PROC );
   }else{
     BTL_SETUP_Single_Trainer(
-        param, gdata, NULL, BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, tr_id0, HEAPID_PROC );
+        param, gdata, NULL, BTL_BG_GRASS, 0, BTL_WEATHER_NONE, tr_id0, HEAPID_PROC );
   }
 
   { //対戦相手の手持ちポケモン生成
@@ -570,7 +570,7 @@ void FIELD_ENCOUNT_SetTrainerBattleParam(
  *  @brief  戦闘背景ID取得
  */
 //--------------------------------------------------------------
-static BtlLandForm btlparam_GetBattleLandForm( FIELDMAP_WORK* fieldWork )
+static BtlBgType btlparam_GetBattleLandForm( FIELDMAP_WORK* fieldWork )
 {
   u8  bg_type;
   MAPATTR attr;
@@ -591,7 +591,7 @@ static BtlLandForm btlparam_GetBattleLandForm( FIELDMAP_WORK* fieldWork )
   BTL_LANDFORM_ROCK,    ///< 岩場
   BTL_LANDFORM_ROOM,    ///< 室内
 */
-  return BTL_LANDFORM_GRASS;
+  return BTL_BG_GRASS;
 }
 
 static BtlWeather btlparam_GetBattleWeather( FIELDMAP_WORK* fieldWork )
@@ -634,12 +634,11 @@ static void BATTLE_PARAM_SetUpBattleSituation( BATTLE_SETUP_PARAM* bp, FIELDMAP_
     if( FIELD_PLAYER_GetMoveForm( fplayer ) == PLAYER_MOVE_FORM_SWIM ){
       bg_type = 0;
     }
-    bp->bgType = 0; //bg_type;
-    bp->bgAttr = 0; //bg_type;
-    bp->landForm = 0; //btlparam_GetBattleLandForm( fieldWork );
+    bp->fieldSituation.bgType = 0; //bg_type;
+    bp->fieldSituation.bgAttr = 0; //bg_type;
   }
   //タイムゾーン取得
-  bp->timezone = GFL_RTC_GetTimeZone();  //@todo EVTIMEからの取得に変更予定
+  bp->fieldSituation.timeZone = GFL_RTC_GetTimeZone();  //@todo EVTIMEからの取得に変更予定
 
 #if 0 //BGID定義が出来たら入れる予定
   if( bg_type == "洞窟だったら"){
@@ -648,7 +647,7 @@ static void BATTLE_PARAM_SetUpBattleSituation( BATTLE_SETUP_PARAM* bp, FIELDMAP_
 #endif
 
   //天候
-  bp->weather = btlparam_GetBattleWeather( fieldWork );
+  bp->fieldSituation.weather = btlparam_GetBattleWeather( fieldWork );
 
   //BGM(本当はイベント進行/現在マップなどを見て決める)
   bp->musicDefault = SEQ_BGM_VS_NORAPOKE;   ///< デフォルト時のBGMナンバー

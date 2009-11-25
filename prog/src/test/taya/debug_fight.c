@@ -1197,7 +1197,7 @@ FS_EXTERN_OVERLAY(battle);
 
       cutoff_wildParty( wk->partyEnemy1, rule );
       BP_SETUP_Wild( &wk->setupParam, wk->gameData, HEAPID_BTL_DEBUG_SYS, rule, wk->partyEnemy1,
-          BTL_LANDFORM_GRASS, BTL_WEATHER_NONE );
+          BTL_BG_GRASS, 0, BTL_WEATHER_NONE );
 
       PokeParty_Copy( wk->partyPlayer, wk->setupParam.partyPlayer );
     }
@@ -1236,19 +1236,19 @@ FS_EXTERN_OVERLAY(battle);
       switch( rule ){
       case BTL_RULE_SINGLE:
         BTL_SETUP_Single_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
-          BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
+          BTL_BG_GRASS, 0, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
         break;
       case BTL_RULE_DOUBLE:
         BTL_SETUP_Double_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
-          BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
+          BTL_BG_GRASS, 0, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
         break;
       case BTL_RULE_TRIPLE:
         BTL_SETUP_Triple_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
-          BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
+          BTL_BG_GRASS, 0, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
         break;
       case BTL_RULE_ROTATION:
         BTL_SETUP_Rotation_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
-          BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
+          BTL_BG_GRASS, 0, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
         break;
       }
       if( wk->setupParam.partyPlayer == NULL ){
@@ -1271,11 +1271,6 @@ FS_EXTERN_OVERLAY(battle);
     PMSND_StopBGM();
     setMainProc( wk, mainProc_Setup );
     break;
-/*
-  extern void BP_SETUP_Wild( BATTLE_SETUP_PARAM* bp, GAMEDATA* gameData, HEAPID heapID, const BtlRule rule,
-  const POKEPARTY* partyEnemy, const BtlLandForm landForm, const BtlWeather weather );
-*/
-
   }
   return FALSE;
 }

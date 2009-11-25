@@ -1441,16 +1441,16 @@ BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk )
 }
 //=============================================================================================
 /**
- * 地形タイプを返す
+ * フィールドシチュエーションデータポインタを返す
  *
  * @param   wk
  *
- * @retval  BtlLandForm
+ * @retval  const BTL_FIELD_SITUATION*
  */
 //=============================================================================================
-BtlLandForm BTL_MAIN_GetLandForm( const BTL_MAIN_MODULE* wk )
+const BTL_FIELD_SITUATION* BTL_MAIN_GetFieldSituation( const BTL_MAIN_MODULE* wk )
 {
-  return wk->setupParam->landForm;
+  return &wk->setupParam->fieldSituation;
 }
 
 //=============================================================================================

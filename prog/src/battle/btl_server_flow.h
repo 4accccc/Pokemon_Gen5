@@ -115,7 +115,7 @@ extern const BTL_DEADREC* BTL_SVF_GetDeadRecord( BTL_SVFLOW_WORK* wk );
 
 extern void BTL_SVFLOW_RECEPT_CantEscapeAdd( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlCantEscapeCode code );
 extern u32 BTL_SVFLOW_SimulationDamage( BTL_SVFLOW_WORK* flowWk, u8 atkPokeID, u8 defPokeID, WazaID waza, BOOL fAffinity, BOOL fCritical );
-extern BtlLandForm BTL_SVFLOW_GetLandForm( BTL_SVFLOW_WORK* wk );
+extern BtlBgType BTL_SVFLOW_GetLandForm( BTL_SVFLOW_WORK* wk );
 extern const BTL_PARTY* BTL_SVFLOW_GetPartyData( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern BtlPokePos BTL_SVFTOOL_PokeIDtoPokePos( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern BtlPokePos BTL_SVFLOW_ReqWazaTargetAuto( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID waza );

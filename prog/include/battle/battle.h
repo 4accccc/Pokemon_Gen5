@@ -100,6 +100,21 @@ typedef enum {
 
 //-----------------------------------------------------------------------------------
 /**
+ * フィールドの状態から決定されるバトルシチュエーションデータ
+ */
+//-----------------------------------------------------------------------------------
+typedef struct {
+
+  BtlBgType   bgType;
+  BtlBgAttr   bgAttr;
+  TIMEZONE    timeZone;
+  BtlWeather  weather;
+  u8          season;
+
+}BTL_FIELD_SITUATION;
+
+//-----------------------------------------------------------------------------------
+/**
  *  地形
  */
 //-----------------------------------------------------------------------------------
@@ -110,13 +125,9 @@ typedef struct {
   BtlRule         rule;
 
   //フィールドの状態から決定されるバトルシチュエーションデータ
-  BtlBgType       bgType;
-  BtlBgAttr       bgAttr;
-  u8              season;
+  BTL_FIELD_SITUATION   fieldSituation;
 
-  BtlLandForm     landForm;
-  BtlWeather      weather;
-  TIMEZONE        timezone;
+
   u16             musicDefault;   ///< デフォルト時のBGMナンバー
   u16             musicPinch;     ///< ピンチ時のBGMナンバー
 

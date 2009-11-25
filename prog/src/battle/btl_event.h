@@ -94,6 +94,7 @@ typedef enum {
   BTL_EVENT_RANKEFF_FAILED,         ///< 能力ランク増減失敗確定
   BTL_EVENT_RANKEFF_FIXED,          ///< 能力ランク増減処理後
   BTL_EVENT_WAZA_RANKEFF_FIXED,     ///< ワザによるランク増減効果成功
+  BTL_EVENT_WAZASICK_SPECIAL,       ///< 特殊処理の状態異常ID決定
   BTL_EVENT_WAZASICK_PARAM,         ///< ワザによる状態異常のパラメータチェック
   BTL_EVENT_ADD_SICK,               ///< ワザの追加効果による状態異常の発生チェック
   BTL_EVENT_ADDSICK_CHECKFAIL,      ///< 状態異常の失敗チェック

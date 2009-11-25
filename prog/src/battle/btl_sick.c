@@ -360,19 +360,20 @@ static int getCureStrID( WazaSick sick, BOOL fUseItem )
     s16       strID_notItem;
     s16       strID_useItem;
   }dispatchTbl[] = {
-    { WAZASICK_DOKU,      BTL_STRID_SET_DokuCure,         BTL_STRID_SET_UseItem_CureDoku    },
-    { POKESICK_YAKEDO,    BTL_STRID_SET_YakedoCure   ,    BTL_STRID_SET_UseItem_CureYakedo  },
-    { WAZASICK_NEMURI,    BTL_STRID_SET_NemuriWake,       BTL_STRID_SET_UseItem_CureNemuri  },
-    { WAZASICK_KOORI,     BTL_STRID_SET_KoriMelt,         BTL_STRID_SET_UseItem_CureKoori   },
-    { WAZASICK_MAHI,      BTL_STRID_SET_MahiCure,         BTL_STRID_SET_UseItem_CureMahi    },
-    { WAZASICK_ENCORE,    BTL_STRID_SET_EncoreCure,       -1                                },
-    { WAZASICK_KANASIBARI,BTL_STRID_SET_KanasibariCure,   -1                                },
-    { WAZASICK_SASIOSAE,  BTL_STRID_SET_SasiosaeCure,     -1                                },
-    { WAZASICK_BIND,      BTL_STRID_SET_BindCure,         BTL_STRID_SET_BindCure            },
-    { WAZASICK_YADORIGI,  BTL_STRID_SET_BindCure,         BTL_STRID_SET_BindCure            },
+    { WAZASICK_DOKU,          BTL_STRID_SET_DokuCure,         BTL_STRID_SET_UseItem_CureDoku    },
+    { POKESICK_YAKEDO,        BTL_STRID_SET_YakedoCure   ,    BTL_STRID_SET_UseItem_CureYakedo  },
+    { WAZASICK_NEMURI,        BTL_STRID_SET_NemuriWake,       BTL_STRID_SET_UseItem_CureNemuri  },
+    { WAZASICK_KOORI,         BTL_STRID_SET_KoriMelt,         BTL_STRID_SET_UseItem_CureKoori   },
+    { WAZASICK_MAHI,          BTL_STRID_SET_MahiCure,         BTL_STRID_SET_UseItem_CureMahi    },
+    { WAZASICK_ENCORE,        BTL_STRID_SET_EncoreCure,       -1                                },
+    { WAZASICK_KANASIBARI,    BTL_STRID_SET_KanasibariCure,   -1                                },
+    { WAZASICK_SASIOSAE,      BTL_STRID_SET_SasiosaeCure,     -1                                },
+    { WAZASICK_BIND,          BTL_STRID_SET_BindCure,         BTL_STRID_SET_BindCure            },
+    { WAZASICK_YADORIGI,      BTL_STRID_SET_BindCure,         BTL_STRID_SET_BindCure            },
+    { WAZASICK_TELEKINESIS,   BTL_STRID_SET_Telekinesis_End,  -1                                },
 
-    { WAZASICK_KONRAN,    -1,                             BTL_STRID_SET_UseItem_CureKonran  },
-    { WAZASICK_MEROMERO,  -1,                             BTL_STRID_SET_UseItem_CureMero    },
+    { WAZASICK_KONRAN,        -1,                             BTL_STRID_SET_UseItem_CureKonran  },
+    { WAZASICK_MEROMERO,      -1,                             BTL_STRID_SET_UseItem_CureMero    },
   };
 
   u32 i;
