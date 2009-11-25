@@ -73,7 +73,9 @@ static GFL_PROC_RESULT FieldMapProcInit
       }
       else
       {
-        heap_size = 0x148000 - 0x18000;
+        //@TODO ‚ª’Ê‚ç‚È‚¢
+        //heap_size = 0x148000 - 0x18000;
+        heap_size = 0x140000 - 0x18000;
       }
     }
   	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_FIELDMAP, heap_size );
