@@ -60,11 +60,12 @@ enum
 // 自機デモ後出現位置
 #define EV_HERO_WALK_END_GRID_X (16)
 #define EV_HERO_WALK_END_GRID_Y (0)
-#define EV_HERO_WALK_END_GRID_Z (0)
+#define EV_HERO_WALK_END_GRID_Z (17)
 #define EV_HERO_WALK_END_DIR (DIR_LEFT)
 
 // 演出の中心
-static const VecFx32 EV_DEMO_CenterVec = { GRID_TO_FX32(16), 0, 0 };
+//static const VecFx32 EV_DEMO_CenterVec = { GRID_TO_FX32(16), 0, GRID_TO_FX32(10) };
+static const VecFx32 EV_DEMO_CenterVec = { 0, 0, 0 };
 
 //-----------------------------------------------------------------------------
 /**
@@ -422,15 +423,19 @@ static void EV_CAMERA_Init( EV_CIRCLEWALK_CAMERA* p_wk, FIELD_CAMERA* p_camera, 
 //-----------------------------------------------------------------------------
 static void EV_CAMERA_Exit( EV_CIRCLEWALK_CAMERA* p_wk )
 {
+  // ターゲットのバインドをON
+  FIELD_CAMERA_BindDefaultTarget( p_wk->p_camera );
+  FIELD_CAMERA_SetTargetPos( p_wk->p_camera, FIELD_CAMERA_GetWatchTarget(p_wk->p_camera) );
+  
   // カメラを元に戻す
   FIELD_CAMERA_SetTargetOffset( p_wk->p_camera, &p_wk->camera_target_offset_save );
   FIELD_CAMERA_ChangeMode( p_wk->p_camera, p_wk->camera_mode_save );
   FIELD_CAMERA_SetCameraAreaActive( p_wk->p_camera, p_wk->camera_area_save );
   FIELD_CAMERA_SetCameraUp( p_wk->p_camera, &p_wk->camera_up_save );
 
-  // ターゲットのバインドをON
-  FIELD_CAMERA_BindDefaultTarget( p_wk->p_camera );
-  
+  // 最後にZONEの初期値に戻す
+  FIELD_CAMERA_SetDefaultParameter( p_wk->p_camera );
+
   // ダミーカメラ破棄
   GFL_G3D_CAMERA_Delete( p_wk->p_dummy_camera );
 
@@ -495,6 +500,8 @@ static void EV_CAMERA_SetUpParam( EV_CIRCLEWALK_CAMERA* p_wk )
   // 中心分平行移動
   VEC_Add( &pos, &EV_DEMO_CenterVec, &pos );
   VEC_Add( &target, &EV_DEMO_CenterVec, &target );
+
+  TOMOYA_Printf( "pos x[0x%x] y[0x%x] z[0x%x]\n", pos.x, pos.y, pos.z );
 
   // 座標をフィールドカメラに設定
   FIELD_CAMERA_SetCameraPos( p_wk->p_camera, &pos ); 
@@ -650,9 +657,11 @@ static void EV_HERO_Switch( EV_CIRCLEWALK_HERO* p_wk, BOOL sw )
       p_wk->p_player_core, 
       EV_HERO_WALK_END_GRID_X, EV_HERO_WALK_END_GRID_Y, EV_HERO_WALK_END_GRID_Z, 
       EV_HERO_WALK_END_DIR );
+    MMDL_UpdateCurrentHeight( p_wk->p_player_core );
 
     MMDL_GetVectorPos( p_wk->p_player_core, &vecpos );
     FIELD_PLAYER_SetPos( p_wk->p_player, &vecpos );
+
   }
 }
 
