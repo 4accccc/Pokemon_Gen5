@@ -338,10 +338,10 @@ end
   fp_header.printf( "#define  BATT_BG_TBL_NO_FILE     ( 0xffff )\n" )
   fp_header.printf( "#define  BATT_BG_TBL_SEASON_MAX  ( 4 )\n\n" )
   fp_header.printf( "typedef struct\n{\n" )
-  fp_header.printf( "\tBOOL time_zone;\n" )
-  fp_header.printf( "\tBOOL season;\n" )
-  fp_header.printf( "\tu8   bg_file[ ZONE_SPEC_ATTR_MAX ];\n" )
-  fp_header.printf( "\tu8   stage_file[ ZONE_SPEC_ATTR_MAX ];\n" )
+  fp_header.printf( "\tu8 time_zone;\n" )
+  fp_header.printf( "\tu8 season;\n" )
+  fp_header.printf( "\tu8 bg_file[ ZONE_SPEC_ATTR_MAX ];\n" )
+  fp_header.printf( "\tu8 stage_file[ ZONE_SPEC_ATTR_MAX ];\n" )
   fp_header.printf( "}BATT_BG_TBL_ZONE_SPEC_TABLE;\n\n" )
   fp_header.printf( "typedef struct\n{\n" )
   fp_header.printf( "\tARCDATID nsbmd_file[ BATT_BG_TBL_SEASON_MAX ];\n" )
@@ -390,6 +390,10 @@ end
     end
   }
 
+  padding = 4 - ( attribute.size * 2 + 2 ) % 4
+
+  p padding
+
   for i in 0..(zone_spec.get_zone_spec_size-1)
     if zone_spec.get_zone_spec_index( i ).get_time_zone == "Å~"
       time_zone = 0
@@ -401,7 +405,7 @@ end
     else
       season = 1
     end
-    write_data = [ time_zone, season ].pack("ll")
+    write_data = [ time_zone, season ].pack("CC")
     fp_spec.write( write_data )
     for j in 0..(attribute.size-1)
       attr_bg = zone_spec.get_zone_spec_index( i ).get_attr_bg( j )
@@ -413,6 +417,9 @@ end
       write_data = [ stage_hash[ attr_stage ] ].pack("C")
       fp_spec.write( write_data )
     end
+	  padding.times{
+		  fp_spec.print("0")
+	  }
   end
 
   fp_r.close
