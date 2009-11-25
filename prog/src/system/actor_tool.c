@@ -70,7 +70,7 @@ typedef struct _PLTTSLOT_SYSTEM{
  * @retval  パレットスロットへのポインタ
  */
 //--------------------------------------------------------------
-PLTTSLOT_SYS_PTR PLTTSLOT_Init(int heap_id, int main_num, int sub_num)
+PLTTSLOT_SYS_PTR PLTTSLOT_Init(HEAPID heap_id, int main_num, int sub_num)
 {
 	PLTTSLOT_SYS_PTR pssp;
 	int tbl, i;

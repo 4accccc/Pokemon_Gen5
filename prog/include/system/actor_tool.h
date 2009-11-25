@@ -22,7 +22,7 @@ typedef struct _PLTTSLOT_SYSTEM * PLTTSLOT_SYS_PTR;
 //	äOïîä÷êîêÈåæ
 //==============================================================================
 #if 1
-extern PLTTSLOT_SYS_PTR PLTTSLOT_Init(int heap_id, int main_num, int sub_num);
+extern PLTTSLOT_SYS_PTR PLTTSLOT_Init(HEAPID heap_id, int main_num, int sub_num);
 extern void PLTTSLOT_Exit(PLTTSLOT_SYS_PTR pssp);
 extern u32 PLTTSLOT_ResourceSet(PLTTSLOT_SYS_PTR pssp, ARCHANDLE *handle, u32 data_id, 
 	CLSYS_DRAW_TYPE draw_type, int pltt_num, int heap_id);
