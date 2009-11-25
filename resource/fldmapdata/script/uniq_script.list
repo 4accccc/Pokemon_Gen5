@@ -15,4 +15,5 @@ UNIQ_SCRIPTFILES	= \
   eggevent_scr.ev \
   poke_waza.ev \
   musical_scr.ev \
-  field_ev_scr.ev
+  field_ev_scr.ev \
+  c3center_scr.ev

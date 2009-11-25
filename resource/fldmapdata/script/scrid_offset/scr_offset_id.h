@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2009 11/24 (Tue) 15:36
+ * @date  2009 11/25 (Wed) 22:58
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -66,6 +66,9 @@
 
 #define ID_FIELD_EV_SCR_OFFSET           (10130) //各種フィールドイベント用
 #define ID_FIELD_EV_SCR_OFFSET_END       (10149)
+
+#define ID_C3CENTER_SCR_OFFSET           (10200) //C3中央部共通スクリプト
+#define ID_C3CENTER_SCR_OFFSET_END       (10249)
 
 
 #endif  /* SCR_OFFSET_ID_H */
