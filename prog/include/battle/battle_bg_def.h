@@ -45,4 +45,5 @@ typedef enum {
   BTL_LANDFORM_MAX,
 }BtlLandForm;
 
+typedef u8  BtlBgAttr;
 

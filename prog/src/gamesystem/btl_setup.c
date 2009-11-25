@@ -81,8 +81,9 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BtlLandFo
   dst->commPos = 0;
   dst->netID = 0;
   dst->multiMode = 0;
-  dst->landForm = landForm;
+//  dst->landForm = landForm;
   dst->weather  = weather;
+  dst->season = GAMEDATA_GetSeasonID( gameData );
 
   dst->partyPlayer = NULL;  //GAMEDATA_GetMyPokemon( gameData );
   dst->partyEnemy1 = NULL;

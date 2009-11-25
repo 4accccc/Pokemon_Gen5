@@ -111,6 +111,9 @@ typedef struct {
 
   //フィールドの状態から決定されるバトルシチュエーションデータ
   BtlBgType       bgType;
+  BtlBgAttr       bgAttr;
+  u8              season;
+
   BtlLandForm     landForm;
   BtlWeather      weather;
   TIMEZONE        timezone;

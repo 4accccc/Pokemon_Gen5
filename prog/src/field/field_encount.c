@@ -634,8 +634,9 @@ static void BATTLE_PARAM_SetUpBattleSituation( BATTLE_SETUP_PARAM* bp, FIELDMAP_
     if( FIELD_PLAYER_GetMoveForm( fplayer ) == PLAYER_MOVE_FORM_SWIM ){
       bg_type = 0;
     }
-    bp->bgType = bg_type;
-    bp->landForm = btlparam_GetBattleLandForm( fieldWork );
+    bp->bgType = 0; //bg_type;
+    bp->bgAttr = 0; //bg_type;
+    bp->landForm = 0; //btlparam_GetBattleLandForm( fieldWork );
   }
   //タイムゾーン取得
   bp->timezone = GFL_RTC_GetTimeZone();  //@todo EVTIMEからの取得に変更予定
