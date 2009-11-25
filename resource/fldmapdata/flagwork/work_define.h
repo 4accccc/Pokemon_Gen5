@@ -146,6 +146,9 @@
 #define WK_SCENE_D07R0101                16534 /* 0x4096 D07ネジ山：ヤーコンと遭遇イベント */
 #define WK_SCENE_C07                     16535 /* 0x4097 C07セッカシティ：イベント用ワーク */
 #define WK_SCENE_D08                     16536 /* 0x4098 D08リュウラセンの塔：イベント進行状況確認ワーク */
+#define WK_SCENE_C06                     16537 /* 0x4099 C06フキヨセシティ：POSイベント用ワーク */
+#define WK_SCENE_D06                     16538 /* 0x409a D06電気洞窟の外側：POSイベント用ワーク */
+#define WK_SCENE_D06R0101                16539 /* 0x409b C06フキヨセシティ：POSイベント用ワーク */
 
 #define WK_SCENE_AREA_END                16687 /* 0x412f  */
 

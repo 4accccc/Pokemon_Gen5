@@ -157,7 +157,7 @@
 #define FE_BADGEGATE06_OPEN                141 /* 0x008d バッジチェック飛行ゲートが開いた */
 #define FE_BADGEGATE07_OPEN                142 /* 0x008e バッジチェック氷ゲートが開いた */
 #define FE_BADGEGATE08_OPEN                143 /* 0x008f バッジチェックドラゴンゲートが開いた */
-		/* not used   144(0x0090) */
+#define FE_C06R0101_ITEMGET_01             144 /* 0x0090 C06R0101フキヨセシティ民家のアイテム入手フラグ（アイテム未定） */
 		/* not used   145(0x0091) */
 		/* not used   146(0x0092) */
 		/* not used   147(0x0093) */
@@ -602,11 +602,11 @@
 #define FV_C07_READER7                     578 /* 0x0242 C07セッカシティ：ハチク */
 #define FV_C07_HAKASE1                     579 /* 0x0243 C07セッカシティジム：アララギ（父） */
 #define FV_C07GYM0101_READER7_01           580 /* 0x0244 C07GYM0101セッカシティジム：ハチク */
-		/* not used   581(0x0245) */
-		/* not used   582(0x0246) */
-		/* not used   583(0x0247) */
-		/* not used   584(0x0248) */
-		/* not used   585(0x0249) */
+#define FV_C06_ZUKANCHK_01                 581 /* 0x0245 C０６フキヨセシティ：図鑑チェックイベントで登場する博士父とジムリーダー（フウロ） */
+#define FV_D06_LEADER5_01                  582 /* 0x0246 D06電気洞窟前に登場するC05ジムリーダー（ヤーコン） */
+#define FV_D06_STOPPER_01                  583 /* 0x0247 D06電気洞窟にあるデンチュラの巣 */
+#define FV_D06R0101_FRIENDS                584 /* 0x0248 D06R0101電気洞窟内部の博士とサポート */
+#define FV_D06R0201_BOSS_01                585 /* 0x0249 D06R0201のN（エヌ）、アイテムを貰う */
 		/* not used   586(0x024a) */
 		/* not used   587(0x024b) */
 		/* not used   588(0x024c) */
