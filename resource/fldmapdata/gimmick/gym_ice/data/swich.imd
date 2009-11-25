@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<imd version="1.6.0">
+
+<head>
+	<create user="ibe_mana" host="W00191" date="2009-11-25T11:32:27" source="swich.mb"/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<original_create user="ibe_mana" host="W00191" date="2009-11-25T11:32:27" source="swich.mb"/>
+<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+
+<model_info
+	pos_scale="1"
+	scaling_rule="standard"
+	vertex_style="direct"
+	magnify="1.000000"
+	tool_start_frame="1"
+	tex_matrix_mode="maya"
+	compress_node="merge" node_size="1 1"
+	compress_material="on" material_size="2 2"
+	output_texture="used"
+	force_full_weight="off"
+	use_primitive_strip="on"
+/>
+
+<box_test pos_scale="2" xyz="-2.000000 0.000000 -2.000000" whd="4.000000 1.000000 4.000000"/>
+
+<tex_image_array size="2">
+	<tex_image index="0" name="ice_s_01"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="ice_s_01_pl"
+		path="C:/home/wb_data3d/gimmick/gym_ice/tex/ice_s_01.tga"
+	>
+		<bitmap size="256">
+			2764 1332 6777 6666 1666 6111 1666 9986
+			8666 4332 6777 6666 1666 6111 1666 9986
+			8161 3322 6776 6661 6666 6111 1666 9986
+			2261 2332 6766 6674 6666 6111 1666 9986
+			3211 2233 7766 6664 6666 1111 1666 9986
+			3216 4411 7613 6664 6616 1116 1661 9986
+			4846 1611 7632 6614 6646 1116 1661 9986
+			1221 1661 7622 1644 6136 1116 1661 9986
+			1283 6666 6682 4634 6136 1116 1661 9986
+			1383 6666 6122 3121 6136 1166 1661 9986
+			6382 6666 6122 2421 6336 1166 1661 9986
+			6488 6666 6434 3326 6336 1166 1661 9986
+			6688 6666 6341 4336 3346 1166 1661 9986
+			6628 6666 6316 6416 3466 1166 1661 9986
+			6648 6666 1316 3466 3464 1166 1661 9986
+			6612 6666 3366 4166 3463 1166 1661 9986
+			6662 6666 2266 4461 4463 1166 1661 9986
+			6662 6616 8316 4461 4464 1164 1661 9986
+			6663 6623 2466 4161 4264 1164 1661 9986
+			1663 6688 2466 1664 4213 1664 1661 9986
+			4663 6488 2666 1663 4314 1664 1661 9986
+			4663 6888 3666 4662 4144 1664 1661 9986
+			8663 6282 4666 1612 4111 1664 1661 9986
+			8666 6282 1666 4642 4111 1664 1661 9986
+			2666 6282 6666 3634 4611 1664 1661 9986
+			2666 6223 6666 4634 1641 1664 1611 9986
+			2666 6222 6666 4621 6641 1664 1611 9986
+			2466 6288 6666 4686 6641 1666 1661 9986
+			2466 6222 6666 4626 6646 1666 1661 9986
+			2366 6882 6616 1636 6646 6666 1661 9986
+			2366 6822 6636 6626 1616 6666 1661 9986
+			8466 6222 6286 6636 6616 6666 1661 9986
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="ice_s_02"
+		width="8" height="16" original_width="8" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="ice_s_02_pl"
+		path="C:/home/wb_data3d/gimmick/gym_ice/tex/ice_s_02.tga"
+	>
+		<bitmap size="32">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="2">
+	<tex_palette index="0" name="ice_s_01_pl" color_size="16">
+		2a36 3e55 2df2 3214 3635 4276 4697 4ed8
+		29b0 14a6 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="1" name="ice_s_02_pl" color_size="8">
+		011f 79e0 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size="2">
+	<material index="0" name="lambert2"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="1" name="lambert3"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="1" tex_palette_idx="1"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+</material_array>
+
+<matrix_array size="1">
+	<matrix index="0" mtx_weight="1" node_idx="0"/>
+</matrix_array>
+
+<polygon_array size="2">
+	<polygon index="0" name="polygon0"
+		vertex_size="36" polygon_size="12"
+		triangle_size="0" quad_size="12"
+		volume_min="-4.000000 0.000000 -4.000000"
+		volume_max="4.000000 2.000000 4.000000"
+		volume_r="6.000000"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="3">
+				<primitive index="0" type="quad_strip" vertex_size="10">
+					<mtx idx="0"/>
+					<tex st="27.500000 1.187500"/>
+					<clr rgb="19 19 19"/>
+					<pos_s xyz="-3.000000 2.000000 3.000000"/>
+					<tex st="31.875000 1.187500"/>
+					<pos_s xyz="-2.500000 1.000000 2.500000"/>
+					<tex st="27.500000 1.187500"/>
+					<pos_s xyz="-3.000000 2.000000 -3.000000"/>
+					<tex st="31.875000 1.187500"/>
+					<pos_s xyz="-2.500000 1.000000 -2.500000"/>
+					<tex st="27.500000 1.187500"/>
+					<pos_s xyz="3.000000 2.000000 -3.000000"/>
+					<tex st="31.875000 1.187500"/>
+					<pos_s xyz="2.500000 1.000000 -2.500000"/>
+					<tex st="27.500000 1.187500"/>
+					<pos_s xyz="3.000000 2.000000 3.000000"/>
+					<tex st="31.875000 1.187500"/>
+					<pos_s xyz="2.500000 1.000000 2.500000"/>
+					<tex st="27.500000 1.187500"/>
+					<pos_s xyz="-3.000000 2.000000 3.000000"/>
+					<tex st="31.875000 1.187500"/>
+					<pos_s xyz="-2.500000 1.000000 2.500000"/>
+				</primitive>
+				<primitive index="1" type="quad_strip" vertex_size="10">
+					<tex st="0.875000 28.875000"/>
+					<clr rgb="31 31 31"/>
+					<pos_s xyz="-4.000000 2.000000 4.000000"/>
+					<tex st="4.062500 25.625000"/>
+					<pos_xz xz="-3.000000 3.000000"/>
+					<tex st="0.875000 3.125000"/>
+					<pos_xz xz="-4.000000 -4.000000"/>
+					<tex st="4.062500 6.375000"/>
+					<pos_xz xz="-3.000000 -3.000000"/>
+					<tex st="26.562500 3.125000"/>
+					<pos_xz xz="4.000000 -4.000000"/>
+					<tex st="23.375000 6.375000"/>
+					<pos_xz xz="3.000000 -3.000000"/>
+					<tex st="26.562500 28.875000"/>
+					<pos_xz xz="4.000000 4.000000"/>
+					<tex st="23.375000 25.625000"/>
+					<pos_xz xz="3.000000 3.000000"/>
+					<tex st="0.875000 28.875000"/>
+					<pos_xz xz="-4.000000 4.000000"/>
+					<tex st="4.062500 25.625000"/>
+					<pos_xz xz="-3.000000 3.000000"/>
+				</primitive>
+				<primitive index="2" type="quads" vertex_size="16">
+					<tex st="23.687500 29.187500"/>
+					<clr rgb="12 12 12"/>
+					<pos_s xyz="-4.000000 0.000000 -4.000000"/>
+					<tex st="1.437500 29.187500"/>
+					<pos_xz xz="-4.000000 4.000000"/>
+					<tex st="1.437500 2.812500"/>
+					<clr rgb="31 31 31"/>
+					<pos_xy xy="-4.000000 2.000000"/>
+					<tex st="23.687500 2.812500"/>
+					<pos_xz xz="-4.000000 -4.000000"/>
+					<tex st="23.687500 29.187500"/>
+					<clr rgb="12 12 12"/>
+					<pos_s xyz="4.000000 0.000000 4.000000"/>
+					<tex st="1.437500 29.187500"/>
+					<pos_xz xz="4.000000 -4.000000"/>
+					<tex st="1.437500 2.812500"/>
+					<clr rgb="31 31 31"/>
+					<pos_xy xy="4.000000 2.000000"/>
+					<tex st="23.687500 2.812500"/>
+					<pos_xz xz="4.000000 4.000000"/>
+					<tex st="23.687500 29.187500"/>
+					<pos_xz xz="-4.000000 -4.000000"/>
+					<tex st="1.437500 29.187500"/>
+					<pos_xy xy="4.000000 2.000000"/>
+					<tex st="1.437500 2.812500"/>
+					<clr rgb="12 12 12"/>
+					<pos_xy xy="4.000000 0.000000"/>
+					<tex st="23.687500 2.812500"/>
+					<pos_xy xy="-4.000000 0.000000"/>
+					<tex st="1.437500 29.187500"/>
+					<pos_xz xz="-4.000000 4.000000"/>
+					<tex st="23.687500 29.187500"/>
+					<pos_xy xy="4.000000 0.000000"/>
+					<tex st="23.687500 2.812500"/>
+					<pos_xy xy="4.000000 2.000000"/>
+					<tex st="1.437500 2.812500"/>
+					<pos_xy xy="-4.000000 2.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="1" name="polygon1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.500000 1.000000 -2.500000"
+		volume_max="2.500000 1.000000 2.500000"
+		volume_r="3.674316"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.687500 2.187500"/>
+					<clr rgb="25 25 25"/>
+					<pos_s xyz="-2.500000 1.000000 2.500000"/>
+					<clr rgb="31 31 31"/>
+					<pos_xy xy="2.500000 1.000000"/>
+					<pos_xz xz="2.500000 -2.500000"/>
+					<clr rgb="25 25 25"/>
+					<pos_xy xy="-2.500000 1.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size="1">
+	<node index="0" name="pCube1" kind="mesh"
+		parent="-1"
+		child="-1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="2"
+		vertex_size="40" polygon_size="13"
+		triangle_size="0" quad_size="13"
+		volume_min="-4.000000 0.000000 -4.000000"
+		volume_max="4.000000 2.000000 4.000000"
+		volume_r="6.000000"
+	>
+		<display index="0" material="0" polygon="0" priority="0"/>
+		<display index="1" material="1" polygon="1" priority="0"/>
+	</node>
+</node_array>
+
+<output_info vertex_size="40" polygon_size="13"
+	triangle_size="0" quad_size="13"/>
+
+</body>
+
+</imd>
