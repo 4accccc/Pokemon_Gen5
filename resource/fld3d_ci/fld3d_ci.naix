@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2009-11-17T22:09:03
+	Update:2009-11-25T10:05:36
  *****************************************************************************/
 
 #ifndef NARC_FLD3D_CI_NAIX_
@@ -34,7 +34,9 @@ enum {
 	NARC_fld3d_ci_gymbadge1_nsbta = 20,
 	NARC_fld3d_ci_badgecase_1_nsbta = 21,
 	NARC_fld3d_ci_badgecase_1_nsbma = 22,
-	NARC_fld3d_ci_badgecase_1_nsbca = 23
+	NARC_fld3d_ci_badgecase_1_nsbca = 23,
+	NARC_fld3d_ci_poke_ci_nsbmd = 24,
+	NARC_fld3d_ci_poke_ci_nsbca = 25
 };
 
 /* NARC_FLD3D_CI_NAIX_ */

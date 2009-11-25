@@ -22,4 +22,6 @@ ARC_TARGET_DATA = \
 	gymbadge1.nsbta \
 	badgecase_1.nsbta \
 	badgecase_1.nsbma \
-	badgecase_1.nsbca
+	badgecase_1.nsbca \
+	poke_ci.nsbmd \
+	poke_ci.nsbca
