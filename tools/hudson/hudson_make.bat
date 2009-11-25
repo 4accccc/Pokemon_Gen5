@@ -16,15 +16,12 @@ REM ================================
 REM 初回 make
 REM ================================
 @echo ***** make *****
-make
+REM make
 @echo errorlevel = %ERRORLEVEL%
 
 REM 正常終了判定
 if %ERRORLEVEL% == 0 goto END:
 
-REM ================================
-REM エラー処理
-REM ================================
 REM make cleanして再度make
 @echo ***** make clean *****
 make clean
@@ -33,16 +30,18 @@ make
 REM 正常終了判定
 if %ERRORLEVEL% == 0 goto END:
 
-c:\tools\softalk\SofTalk.exe メイクが通りません！
-
-REM エラーコードを丸々返す（cleanでもmakeが通らなかったらhudsonに通知)
-exit %ERRORLEVEL%
+REM ================================
+REM エラー処理
+REM ================================
+ERROR:
+  "C:\Program Files\Ipmsg\ipmsg.exe" /MSG W00159 "メイク失敗！"
+  exit %ERRORLEVEL%
 
 REM ================================
 REM 正常終了
 REM ================================
 :END
-  c:\tools\softalk\SofTalk.exe メイクが通りました！
+  REM "C:\Program Files\Ipmsg\ipmsg.exe" /MSG W00159 "メイク成功！"
   @echo hudson make end
 
 
