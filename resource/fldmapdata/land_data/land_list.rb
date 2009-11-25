@@ -228,7 +228,7 @@ def file_write_nogrid( name,
   
   #land_temp_list
 	file_temp_list.printf( "\t%s/%s.nsbmd", DIRSTR_TEMP, name )
-	file_temp_list.printf( "\t%s/%s.bhc", DIRSTR_TEMP, name )
+	#file_temp_list.printf( "\t%s/%s.bhc", DIRSTR_TEMP, name )
   
   #land_depend_list
 	file_depend_list.printf( "\t%s/%s.ngpack", DIRSTR_OUTPUT, name )
@@ -237,19 +237,21 @@ def file_write_nogrid( name,
   file_make_depend.printf( "#%s\n", name )
   
   file_make_depend.printf(
-    "%s/%s.ngpack: %s/%s.nsbmd %s/%s.bhc %s/%s.3dmd\n",
+    #"%s/%s.ngpack: %s/%s.nsbmd %s/%s.bhc %s/%s.3dmd\n",
+    "%s/%s.ngpack: %s/%s.nsbmd %s/%s.3dmd\n",
     DIRSTR_OUTPUT, name,
     DIRSTR_TEMP, name,
-    DIRSTR_TEMP, name,
+    #DIRSTR_TEMP, name,
     DIRSTR_RES, name )
   
   file_make_depend.printf( "\t@echo create ngpack %s\n", name )
   
   file_make_depend.printf(
-    "\t@%s %s/%s.nsbmd %s/%s.bhc %s/%s.3dmd %s/%s.ngpack BR\n\n",
+    #"\t@%s %s/%s.nsbmd %s/%s.bhc %s/%s.3dmd %s/%s.ngpack BR\n\n",
+    "\t@%s %s/%s.nsbmd %s/%s.3dmd %s/%s.ngpack NG\n\n",
     STR_BINLINKER,
     DIRSTR_TEMP, name,
-    DIRSTR_TEMP, name,
+    #DIRSTR_TEMP, name,
     DIRSTR_RES, name,
     DIRSTR_OUTPUT, name )
   
@@ -263,6 +265,7 @@ def file_write_nogrid( name,
   file_make_depend.printf( "\t@%s %s/%s.imd -emdl -o %s/%s.nsbmd\n\n",
     STR_G3DCVTR, DIRSTR_RES, name, DIRSTR_TEMP, name )
 
+=begin
   #land_make_depend bhc
   file_make_depend.printf( "%s/%s.bhc: %s/%sh.imd\n",
     DIRSTR_TEMP, name, DIRSTR_RES, name )
@@ -280,6 +283,7 @@ def file_write_nogrid( name,
     "\t@ruby %s %s/%sh.bhc %s/%s.bhc\n",
     RUBYNAME_PAD4BYTE, DIRSTR_RES, name, DIRSTR_TEMP, name )
   file_make_depend.printf( "\t@rm %s/%sh.bhc\n\n", DIRSTR_RES, name )
+=end
   
   #land_make_depend exist file check
   check = DIR_RES + "/" + name + ".imd"
