@@ -23,6 +23,7 @@ SET TIMEOUT_EXEC=%1
 
 REM 対象DSのシリアルナンバー >> hudsonで指定
 SET SERIAL_NO=%2
+
 REM wbrom:05093474
 REM hosaka:05113644
 
@@ -45,7 +46,7 @@ REM ================================
 
 REM buryarg %PATH_MAIN_SRL% 1
 
-loadrun -T %TIMEOUT_EXEC% %PATH_MAIN_SRL%
+loadrun -T %TIMEOUT_EXEC% -s %SERIAL_NO% -a %ABORT_STRING% %PATH_MAIN_SRL%
 echo ErrorLevel = %ERRORLEVEL%
 
 REM デバイスが見つからなかった
@@ -71,6 +72,7 @@ REM 正常終了
 REM ================================
 :_END
   @echo hudson test is SUCCESS .
+  REM devcon disable *HID*
   pause
   exit 0
 
