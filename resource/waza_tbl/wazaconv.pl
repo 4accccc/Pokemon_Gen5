@@ -598,8 +598,9 @@ sub storeRecord {
 
 	# 各種フラグ
 	$i = IDX_FLG_Touch;
-	for( $i < IDX_FLG_End ){
+	while( $i < IDX_FLG_End ){
 		$Record[ $i ] = $$refElems[ $i ];
+		$i++;
 	}
 
 	return $result;
@@ -695,13 +696,13 @@ sub outputBin {
 
 		# フラグ出力
 		my $flag = 0;
-		my $cnt;
+		my $cnt = 0;
+		my $bitPos = 0;
 		for($i=IDX_FLG_Start; $i<IDX_FLG_End; $i++)
 		{
 			if( $Record[$i] ){
-				$flag |= 1;
+				$flag |= (1 << $bitPos);
 			}
-			$flag <<= 1;
 			$cnt++;
 			if( $cnt >= 32 ){	# 32bitごとに書き出し
 				$buf = pack('I', $flag);
@@ -709,6 +710,7 @@ sub outputBin {
 				$cnt = 0;
 				$flag = 0;
 			}
+			$bitPos++;
 		}
 		if( $cnt )
 		{
