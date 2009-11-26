@@ -51,6 +51,20 @@ extern void FIELD_STATUS_SetFieldInitFlag( FIELD_STATUS * fldstatus, BOOL flag )
 //------------------------------------------------------------------
 extern BOOL FIELD_STATUS_GetFieldInitFlag( const FIELD_STATUS * fldstatus );
 
+//------------------------------------------------------------------
+/**
+ * @brief 季節表示フラグの設定
+ */
+//------------------------------------------------------------------
+extern void FIELD_STATUS_SetSeasonDispFlag( FIELD_STATUS * fldstatus, BOOL flag );
+
+//------------------------------------------------------------------
+/**
+ * @brief 季節表示フラグの取得
+ */
+//------------------------------------------------------------------
+extern BOOL FIELD_STATUS_GetSeasonDispFlag( const FIELD_STATUS * fldstatus );
+
 
 //------------------------------------------------------------------
 // フィールド技関連

@@ -26,6 +26,9 @@ struct _FIELD_STATUS{
   // フィールド技関連
   u8  fs_flash;      // フラッシュON
   u16 fs_mapeffect;  // 見た目の状態
+
+  // 季節表示の表示フラグ
+  BOOL seasonDispFlag;
 };
 
 //======================================================================
@@ -90,6 +93,26 @@ void FIELD_STATUS_SetFieldInitFlag( FIELD_STATUS * fldstatus, BOOL flag )
 BOOL FIELD_STATUS_GetFieldInitFlag( const FIELD_STATUS * fldstatus )
 {
   return fldstatus->isFieldInitFlag;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 季節表示フラグの設定
+ */
+//------------------------------------------------------------------
+void FIELD_STATUS_SetSeasonDispFlag( FIELD_STATUS * fldstatus, BOOL flag )
+{
+  fldstatus->seasonDispFlag = flag;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 季節表示フラグの取得
+ */
+//------------------------------------------------------------------
+BOOL FIELD_STATUS_GetSeasonDispFlag( const FIELD_STATUS * fldstatus )
+{
+  return fldstatus->seasonDispFlag;
 }
 
 
