@@ -632,6 +632,7 @@ static BOOL COMPSKB_Main( COMP_SKB_WORK* wk );
 static int COMPSKB_GetWordIndex( const COMP_SKB_WORK* wk );
 static BOOL compskb_strncmp( const STRBUF* str1, const STRBUF* str2, u32 len );
 static u32 compskb_search( COMP_SKB_WORK* wk, const STRBUF* word, int org_idx, int* first_idx );
+static BOOL comskb_is_match( COMP_SKB_WORK* wk, const STRBUF* word, int* match_idx );
 static u32 personal_getparam( const POKEMON_PARAM* pp, PokePersonalParamID paramID );
 static u8 personal_get_tokusei_kinds( const POKEMON_PARAM* pp );
 static u16 personal_get_tokusei( const POKEMON_PARAM* pp, u8 idx );
@@ -1505,7 +1506,14 @@ static BOOL COMPSKB_Main( COMP_SKB_WORK* wk )
 
   switch( reaction ){
   case GFL_SKB_REACTION_QUIT:
-    GFL_SKB_PickStr( wk->skb );
+    if( wk->index == -1 )
+    {
+      int idx;
+      GFL_SKB_PickStr( wk->skb );
+      if( comskb_is_match(wk, wk->buf, &idx) ){
+        wk->index = idx;
+      }
+    }
     return TRUE;
   case GFL_SKB_REACTION_INPUT:
     {
@@ -1639,6 +1647,38 @@ static u32 compskb_search( COMP_SKB_WORK* wk, const STRBUF* word, int org_idx, i
   }
   return 0;
 }
+//----------------------------------------------------------------------------------
+/**
+ * 完全一致する文字列をサーチ
+ *
+ * @param   wk
+ * @param   word
+ * @param   match_idx   [OUT] 完全一致した文字列index
+ *
+ * @retval  BOOL    完全一致が見つかればTRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL comskb_is_match( COMP_SKB_WORK* wk, const STRBUF* word, int* match_idx )
+{
+  u32 word_len = GFL_STR_GetBufferLength( word );
+  if( word_len )
+  {
+    u32 str_cnt, i=0;
+
+    str_cnt = GFL_MSG_GetStrCount( wk->msg );
+    while( i < str_cnt )
+    {
+      GFL_MSG_GetString( wk->msg, i, wk->fullword );
+      if( GFL_STR_CompareBuffer(word, wk->fullword) ){
+        *match_idx = i;
+        return TRUE;
+      }
+      ++i;
+    }
+  }
+  return FALSE;
+}
+
 
 //==============================================================================================
 //  パーソナルデータアクセス
