@@ -42,11 +42,11 @@
 //--------------------------------------------------------------
 enum
 {
-  CHAROFFS_CLEAR = 0, ///<クリアキャラ 0
-  CHAROFFS_WINFRAME = 1, ///<ウィンドウフレーム 1-10 (chara 9
-  CHAROFFS_BALLOONWIN = 11, ///<吹き出しウィンドウ 11-30 (chara 18
-  CHAROFFS_SYSWIN = 31, ///<システムウィンドウ 31-50 (chara 18
-  CHAROFFS_OTHERSWIN = 51, ///<その他ウィンドウ 46- (使用時に初期化
+  CHARNO_CLEAR = 0, ///<クリアキャラ 0
+  CHARNO_WINFRAME = 1, ///<ウィンドウフレーム 1-10 (chara 9
+  CHARNO_BALLOONWIN = 11, ///<吹き出しウィンドウ 11-30 (chara 18
+  CHARNO_SYSWIN = 31, ///<システムウィンドウ 31-50 (chara 18
+  CHARNO_OTHERSWIN = 51, ///<その他ウィンドウ 46- (使用時に初期化
 };
 
 //--------------------------------------------------------------
@@ -341,7 +341,7 @@ FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
 		GFL_BG_SetPriority( fmb->bgFrame, 0 );
 		GFL_BG_SetPriority( GFL_BG_FRAME0_M, 3 );
 		
-		GFL_BG_FillCharacter( fmb->bgFrame, CHAROFFS_CLEAR, 1, 0 );
+		GFL_BG_FillCharacter( fmb->bgFrame, CHARNO_CLEAR, 1, 0 );
 		GFL_BG_FillScreen( fmb->bgFrame,
 			0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 		
@@ -358,7 +358,7 @@ FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
 	}
 	
 	{	//window frame
-		BmpWinFrame_GraphicSet( fmb->bgFrame, CHAROFFS_WINFRAME,
+		BmpWinFrame_GraphicSet( fmb->bgFrame, CHARNO_WINFRAME,
 			PANO_MENU, MENU_TYPE_SYSTEM, heapID );
     debug_ROM091030_WindowColorOFF( heapID );
 	}
@@ -386,7 +386,7 @@ FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
       setup.heapID = fmb->heapID;
       setup.g3Dcamera = g3Dcamera;
       setup.fontHandle = fmb->fontHandle;
-      setup.chrNumOffs = CHAROFFS_BALLOONWIN;
+      setup.chrNumOffs = CHARNO_BALLOONWIN;
       setup.ini.frameID = FLDMSGBG_BGFRAME;
       setup.ini.winPltID = PANO_TALKMSGWIN;
       setup.ini.fontPltID = PANO_FONT_TALKMSGWIN;
@@ -505,7 +505,7 @@ void FLDMSGBG_ResetBGResource( FLDMSGBG *fmb )
 	}
 	
   {	//window frame
-		BmpWinFrame_GraphicSet( fmb->bgFrame, CHAROFFS_WINFRAME,
+		BmpWinFrame_GraphicSet( fmb->bgFrame, CHARNO_WINFRAME,
 			PANO_MENU, MENU_TYPE_SYSTEM, fmb->heapID );
     debug_ROM091030_WindowColorOFF( fmb->heapID );
 	}
@@ -516,7 +516,7 @@ void FLDMSGBG_ResetBGResource( FLDMSGBG *fmb )
       setup.heapID = fmb->heapID;
       setup.g3Dcamera = fmb->g3Dcamera;
       setup.fontHandle = fmb->fontHandle;
-      setup.chrNumOffs = CHAROFFS_BALLOONWIN;
+      setup.chrNumOffs = CHARNO_BALLOONWIN;
       setup.ini.frameID = FLDMSGBG_BGFRAME;
       setup.ini.winPltID = PANO_TALKMSGWIN;
       setup.ini.fontPltID = PANO_FONT_TALKMSGWIN;
@@ -2935,7 +2935,7 @@ FLDBGWIN * FLDBGWIN_Add( FLDMSGBG *fmb, FLDBGWIN_TYPE type )
 		  GFL_BMPWIN_GetPosX( bgWin->bmpwin ),
 		  GFL_BMPWIN_GetPosY( bgWin->bmpwin ),
 		  GFL_BMPWIN_GetSizeX( bgWin->bmpwin ),
-		  GFL_BMPWIN_GetSizeY( bgWin->bmpwin ), 64, PANO_BGWIN );
+		  GFL_BMPWIN_GetSizeY( bgWin->bmpwin ), CHARNO_OTHERSWIN, PANO_BGWIN );
     
 		GFL_BG_LoadScreenReq( fmb->bgFrame );
   }
@@ -3108,7 +3108,7 @@ static void bgwin_InitGraphic(
   
   GFL_ARC_UTIL_TransVramBgCharacter(
       ARCID_FLDMAP_WINFRAME, NARC_winframe_bgwin_NCGR,
-      bgframe, CHAROFFS_OTHERSWIN, 0, FALSE, heapID );
+      bgframe, CHARNO_OTHERSWIN, 0, FALSE, heapID );
   
   GFL_ARC_UTIL_TransVramPaletteEx(
       ARCID_FLDMAP_WINFRAME, NARC_winframe_bgwin_NCLR,
@@ -3611,7 +3611,7 @@ static void syswin_InitGraphic( HEAPID heapID )
 {
   GFL_ARC_UTIL_TransVramBgCharacter(
     ARCID_FLDMAP_WINFRAME, NARC_winframe_syswin_NCGR,
-    FLDMSGBG_BGFRAME, CHAROFFS_SYSWIN, 0, FALSE, heapID );
+    FLDMSGBG_BGFRAME, CHARNO_SYSWIN, 0, FALSE, heapID );
 }
 
 //--------------------------------------------------------------
@@ -3623,7 +3623,7 @@ static void syswin_InitGraphic( HEAPID heapID )
 //--------------------------------------------------------------
 static void syswin_WriteWindow( const GFL_BMPWIN *bmpwin )
 {
-  u16 cgx = CHAROFFS_SYSWIN;
+  u16 cgx = CHARNO_SYSWIN;
   u8 px = GFL_BMPWIN_GetPosX( bmpwin );
   u8 py = GFL_BMPWIN_GetPosY( bmpwin );
 	u8 sx = GFL_BMPWIN_GetSizeX( bmpwin );
@@ -3694,7 +3694,7 @@ static void syswin_ClearBmp( GFL_BMPWIN *bmpwin )
 	u8 frm = GFL_BMPWIN_GetFrame( bmpwin );
   
 	GFL_BG_FillScreen(
-		frm, CHAROFFS_CLEAR,
+		frm, CHARNO_CLEAR,
 		GFL_BMPWIN_GetPosX( bmpwin ) - 2,
 		GFL_BMPWIN_GetPosY( bmpwin ) - 1,
 		GFL_BMPWIN_GetSizeX( bmpwin ) + 3 + 2,
@@ -3799,7 +3799,7 @@ void FLDMSGBG_RecoveryBG( FLDMSGBG *fmb )
 	}
 	
 	{	//window frame
-		BmpWinFrame_GraphicSet( fmb->bgFrame, CHAROFFS_WINFRAME,
+		BmpWinFrame_GraphicSet( fmb->bgFrame, CHARNO_WINFRAME,
 			PANO_MENU, MENU_TYPE_SYSTEM, heapID );
     debug_ROM091030_WindowColorOFF( heapID );
 	}
