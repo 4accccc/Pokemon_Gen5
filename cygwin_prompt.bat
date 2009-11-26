@@ -1,6 +1,6 @@
 @echo off
 
-REM SET USERNAME=
+SET USERNAME=none
 
 SET HOME_TMP=%~dp0
 SET PROJECT_ROOT=%HOME_TMP:\=/%
@@ -16,15 +16,15 @@ SET CW_TWLSDK_ROOT=%WBLIBDIR%\TwlSDK
 SET LM_LICENSE_FILE=C:\Program Files\Freescale\CW for NINTENDO DSi V1.2\license.dat
 SET NITROSDK_ROOT=%WBLIBDIR%\TwlSDK
 SET NITROSYSTEM_ROOT=%WBLIBDIR%\TwlSystem
-SET NITROWIFI_ROOT=%WBLIBDIR%\TwlDWC
+SET NITROWIFI_ROOT=%WBLIBDIR%\TwlWiFi
 SET NITRODWC_ROOT=%WBLIBDIR%\TwlDWC
 
 REM ####################################################
 REM ハイブリッド対応の場合下記の部分を有効にしてください ハイブリッドでない時は無効にしてください
 REM NITROとかくとIS-NITRO用 TWLとかくとTWL用 両方書くと両方が出来上がります
 REM ####################################################
-REM SET TWLSDK_PLATFORM=TWL NITRO
-REM SET TARGET_PLATFORM=TWL NITRO
+REM SET TWLSDK_PLATFORM=TWL
+REM SET TARGET_PLATFORM=TWL
 
 REM ####################################################
 REM ハイブリッドでない場合下記の部分を有効にしてください ハイブリッドの時は無効にしてください
@@ -34,7 +34,7 @@ SET TARGET_PLATFORM=NITRO
 
 SET TWLSYSTEM_ROOT=%WBLIBDIR%\TwlSystem
 SET TWLSDK_ROOT=%WBLIBDIR%\TwlSDK
-SET TWLWIFI_ROOT=%WBLIBDIR%\TwlDWC
+SET TWLWIFI_ROOT=%WBLIBDIR%\TwlWiFi
 SET TWLDWC_ROOT=%WBLIBDIR%\TwlDWC
 
 SET TWLVCT_ROOT=%WBLIBDIR%\libVCT
