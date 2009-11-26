@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2009-11-24T14:41:09" source="m_gym05_jyuuki.mb"/>
+	<create user="ibe_mana" host="W00191" date="2009-11-26T12:27:23" source="m_gym05_jyuuki.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2009-11-24T14:41:09" source="m_gym05_jyuuki.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2009-11-26T12:27:23" source="m_gym05_jyuuki.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="7" xyz="-0.093750 -7.843750 -3.500000" whd="1.156250 0.359131 4.031250"/>
+<box_test pos_scale="7" xyz="-0.093750 0.031250 -3.500000" whd="1.156250 0.359131 4.031250"/>
 
 <tex_image_array size="3">
 	<tex_image index="0" name="in27_kage01"
@@ -3323,7 +3323,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="32.802734 -980.502441 -420.788574"
+		translate="32.802734 27.497559 -420.788574"
 		visibility="on"
 		display_size="2"
 		vertex_size="418" polygon_size="123"
@@ -3344,7 +3344,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="108.000000 -1004.000000 -160.000000"
+		translate="108.000000 4.000000 -160.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="8" polygon_size="4"
@@ -3364,7 +3364,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="107.450439 -980.474854 -160.514404"
+		translate="107.450439 27.525146 -160.514404"
 		visibility="on"
 		display_size="2"
 		vertex_size="418" polygon_size="123"
@@ -3385,7 +3385,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="32.000000 -1004.000000 -420.000000"
+		translate="32.000000 4.000000 -420.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="8" polygon_size="4"
@@ -3405,7 +3405,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="104.800049 -981.100098 24.800049"
+		translate="104.800049 26.899902 24.800049"
 		visibility="on"
 		display_size="2"
 		vertex_size="418" polygon_size="123"
@@ -3426,7 +3426,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="104.000000 -1004.000000 24.000000"
+		translate="104.000000 4.000000 24.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="8" polygon_size="4"
