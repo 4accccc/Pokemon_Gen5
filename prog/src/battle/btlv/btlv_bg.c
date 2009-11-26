@@ -85,20 +85,20 @@ void  BTLV_BG_Exit( BTLV_BG_WORK *bbw )
 /**
  *  座標移動
  *
- * @param[in] bbw     BTLV_BG_WORK管理ワークへのポインタ
- * @param[in] type    移動タイプ
- * @param[in] scr_x   移動タイプにより意味が変化
- * @param[in] scr_y   移動タイプにより意味が変化
- *                    EFFTOOL_CALCTYPE_DIRECT EFFTOOL_CALCTYPE_INTERPOLATION  移動先
- *                    EFFTOOL_CALCTYPE_ROUNDTRIP　往復の長さ
- * @param[in] frame   移動フレーム数（目的地まで何フレームで到達するか）
- * @param[in] wait    移動ウエイト
- * @param[in] count   往復カウント（EFFTOOL_CALCTYPE_ROUNDTRIPでしか意味のないパラメータ）
+ * @param[in] bbw       BTLV_BG_WORK管理ワークへのポインタ
+ * @param[in] position  攻撃側の立ち位置（スクロールの向きを決めるのに使用）
+ * @param[in] type      移動タイプ
+ * @param[in] scr_x     移動タイプにより意味が変化
+ * @param[in] scr_y     移動タイプにより意味が変化
+ *                      EFFTOOL_CALCTYPE_DIRECT EFFTOOL_CALCTYPE_INTERPOLATION  移動先
+ *                      EFFTOOL_CALCTYPE_ROUNDTRIP　往復の長さ
+ * @param[in] frame     移動フレーム数（目的地まで何フレームで到達するか）
+ * @param[in] wait      移動ウエイト
+ * @param[in] count     往復カウント（EFFTOOL_CALCTYPE_ROUNDTRIPでしか意味のないパラメータ）
  */
 //============================================================================================
-void  BTLV_BG_MovePosition( BTLV_BG_WORK *bbw, int type, int scr_x, int scr_y, int frame, int wait, int count )
+void  BTLV_BG_MovePosition( BTLV_BG_WORK *bbw, int position, int type, int scr_x, int scr_y, int frame, int wait, int count )
 {
-  GFL_CLACTPOS  start;
   VecFx32       start_fx32;
   VecFx32       pos_fx32;
 
@@ -109,6 +109,16 @@ void  BTLV_BG_MovePosition( BTLV_BG_WORK *bbw, int type, int scr_x, int scr_y, i
   start_fx32.x = GFL_BG_GetScrollX( GFL_BG_FRAME3_M ) << FX32_SHIFT;
   start_fx32.y = GFL_BG_GetScrollY( GFL_BG_FRAME3_M ) << FX32_SHIFT;
   start_fx32.z = 0;
+
+  //常にスクロールさせるときはポケモンの立ち位置で方向を決定する
+  if( type == BTLEFF_BG_SCROLL_EVERY )
+  { 
+    //ポケモンの視線の方向で＋－を決定する
+    if( position & 1 )
+    {
+      pos_fx32.x *= -1;
+    }
+  }
 
   //移動の補間は相対指定とする
   if( type == EFFTOOL_CALCTYPE_INTERPOLATION )
@@ -194,7 +204,24 @@ static  void  TCB_BTLV_BG_Move( GFL_TCB *tcb, void *work )
   int   scr_x, scr_y;
   BOOL  ret;
 
-  ret = BTLV_EFFTOOL_CalcParam( &bbtw->emw, &bbtw->now_value );
+  if( bbtw->emw.move_type == BTLEFF_BG_SCROLL_EVERY )
+  { 
+    bbtw->now_value.x += bbtw->emw.end_value.x;
+    bbtw->now_value.y += bbtw->emw.end_value.y;
+    if( bbtw->emw.vec_time == 0 )
+    { 
+      ret = TRUE;
+    }
+    else
+    { 
+      bbtw->emw.vec_time--;
+      ret = FALSE;
+    }
+  }
+  else
+  { 
+    ret = BTLV_EFFTOOL_CalcParam( &bbtw->emw, &bbtw->now_value );
+  }
   scr_x = bbtw->now_value.x >> FX32_SHIFT;
   scr_y = bbtw->now_value.y >> FX32_SHIFT;
   GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, scr_x );
