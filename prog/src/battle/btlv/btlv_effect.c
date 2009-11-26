@@ -16,9 +16,9 @@
 #include "btlv_effect.h"
 #include "btlv_effect_def.h"
 
-//暫定で戻し
 #include "arc_def.h"
-#include "particle/wazaeffect/spa.naix"
+#include "battle/batt_bg_tbl.h"
+#include "batt_bg_tbl.naix"
 
 //============================================================================================
 /**
@@ -96,11 +96,12 @@ void  BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position
 /**
  * @brief システム初期化
  *
- * @param[in] index     背景を決定するインデックスナンバー
- * @param[in] heapID    ヒープID
+ * @param[in] bsp         戦闘セットアップパラメータ
+ * @param[in] fontHandle  フォントハンドル
+ * @param[in] heapID      ヒープID
  */
 //============================================================================================
-void  BTLV_EFFECT_Init( BtlRule rule, int index, GFL_FONT* fontHandle, HEAPID heapID )
+void  BTLV_EFFECT_Init( BtlRule rule, const BTL_FIELD_SITUATION *bfs, GFL_FONT* fontHandle, HEAPID heapID )
 {
   GF_ASSERT( bew == NULL );
   bew = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_EFFECT_WORK ) );
@@ -121,14 +122,29 @@ void  BTLV_EFFECT_Init( BtlRule rule, int index, GFL_FONT* fontHandle, HEAPID he
   PaletteFadeWorkAllocSet( bew->pfd, FADE_SUB_OBJ, 0x1e0, heapID );
 
   bew->bmw  = BTLV_MCSS_Init( rule, bew->tcb_sys, heapID );
-  bew->bsw  = BTLV_STAGE_Init( index, heapID );
-  bew->bfw  = BTLV_FIELD_Init( index, heapID );
+
+  { 
+    BATT_BG_TBL_ZONE_SPEC_TABLE*  bbtzst = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL,
+                                                                  NARC_batt_bg_tbl_zone_spec_table_bin,
+                                                                  bew->heapID );
+    u8  season = 0;
+
+    if( bbtzst[ bfs->bgType ].season )
+    { 
+      season = bfs->season;
+    }
+    bew->bsw  = BTLV_STAGE_Init( bbtzst[ bfs->bgType ].stage_file[ bfs->bgAttr ], season, heapID );
+    bew->bfw  = BTLV_FIELD_Init( bbtzst[ bfs->bgType ].bg_file[ bfs->bgAttr ], season, heapID );
+    GFL_HEAP_FreeMemory( bbtzst );
+  }
+
   bew->bcw  = BTLV_CAMERA_Init( bew->tcb_sys, heapID );
   bew->bclw = BTLV_CLACT_Init( bew->tcb_sys, heapID );
   bew->bgw  = BTLV_GAUGE_Init( fontHandle, heapID );
   bew->btw  = BTLV_TIMER_Init( heapID );
   bew->bbw  = BTLV_BG_Init( bew->tcb_sys, heapID );
   //BTLV_TIMER_Create( bew->btw, 30, 1 );
+
 
   BTLV_MCSS_SetOrthoMode( bew->bmw );
 

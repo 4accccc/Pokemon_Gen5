@@ -269,8 +269,8 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
   switch( *seq ){
   case 0:
     setup_core( core, core->heapID );
-    BTLV_EFFECT_Init( BTL_MAIN_GetRule(core->mainModule), 0, core->smallFontHandle, core->heapID );
-
+    BTLV_EFFECT_Init( BTL_MAIN_GetRule( core->mainModule ), BTL_MAIN_GetFieldSituation( core->mainModule ),
+                      core->smallFontHandle, core->heapID );
     BTLV_SCU_Setup( core->scrnU );
     BTLV_SCD_Init( core->scrnD );
     (*seq)++;

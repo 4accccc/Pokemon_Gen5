@@ -12,10 +12,11 @@
 #include "btlv_stage.h"
 #include "btlv_efftool.h"
 
+#include "battle/batt_bg_tbl.h"
+
 #include "arc_def.h"
 #include "battle/battgra_wb.naix"
-
-#include "data/btlv_stage.cdat"
+#include "batt_bg_tbl.naix"
 
 //============================================================================================
 /**
@@ -53,6 +54,18 @@ struct _BTLV_STAGE_WORK
 
 //============================================================================================
 /**
+ *	お盆の位置テーブル
+ */
+//============================================================================================
+static	const	VecFx32	stage_pos_table[]={
+//  { 0, 0, FX_F32_TO_FX32( 6.845f ) },
+//  { 0, 0, FX_F32_TO_FX32( -12.0f ) },
+  { 0, 0, FX_F32_TO_FX32( 5.449f ) },
+  { 0, 0, FX_F32_TO_FX32( -13.718f ) },
+};
+
+//============================================================================================
+/**
  *	プロトタイプ宣言
  */
 //============================================================================================
@@ -62,45 +75,61 @@ static  void  BTLV_STAGE_CalcPaletteFade( BTLV_STAGE_WORK* bsw );
 /**
  *	システム初期化
  *
- * @param[in]	index	読み込むリソースのINDEX
+ * @param[in]	index   読み込むリソースのINDEX
+ * @param[in]	season	季節INDEX
  * @param[in]	heapID	ヒープID
  */
 //============================================================================================
-BTLV_STAGE_WORK	*BTLV_STAGE_Init( int index, HEAPID heapID )
+BTLV_STAGE_WORK	*BTLV_STAGE_Init( int index, u8 season, HEAPID heapID )
 {
 	BTLV_STAGE_WORK *bsw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_STAGE_WORK ) );
 	BOOL	ret;
-
-	GF_ASSERT( index < NELEMS( stage_resource_table ) );
+  BATT_BG_TBL_FILE_TABLE* bbtft = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL, NARC_batt_bg_tbl_batt_stage_bin, heapID );
 
 	bsw->heapID = heapID;
 
 	//リソース読み込み
-	bsw->stage_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, stage_resource_table[ index ]->nsbmd );
+	bsw->stage_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtft[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season ] );
 	ret = GFL_G3D_TransVramTexture( bsw->stage_resource );
 	GF_ASSERT( ret == TRUE );
 
-  bsw->anm_count = stage_resource_table[ index ]->anm_count;
+  bsw->anm_count = 0;
+  { 
+    int i;
+
+    for( i = BATT_BG_TBL_FILE_NSBCA ; i < BATT_BG_TBL_FILE_NSBMA + 1 ; i++ )
+    { 
+	    if( bbtft[ index ].file[ i ][ season ] != BATT_BG_TBL_NO_FILE )
+      { 
+        bsw->anm_count++;
+      }
+    }
+  }
 
 	//RENDER生成
 	bsw->stage_render = GFL_G3D_RENDER_Create( bsw->stage_resource, 0, bsw->stage_resource );
 
   if( bsw->anm_count )
   { 
-    int i;
+    int i, cnt;
 
     bsw->stage_anm_resource = GFL_HEAP_AllocMemory( bsw->heapID, 4 * bsw->anm_count );
     bsw->stage_anm = GFL_HEAP_AllocMemory( bsw->heapID, 4 * bsw->anm_count );
 
-    for( i = 0 ; i < bsw->anm_count ; i++ )
+    cnt = 0;
+
+    for( i = BATT_BG_TBL_FILE_NSBCA ; i < BATT_BG_TBL_FILE_NSBMA + 1 ; i++ )
     { 
-		  //ANIME生成
-	    bsw->stage_anm_resource[ i ] = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, stage_resource_table[ index ]->anm_table[ i ] );
-		  bsw->stage_anm[ i ] = GFL_G3D_ANIME_Create( bsw->stage_render, bsw->stage_anm_resource[ i ], BTLV_STAGE_ANM_MAX ); 
+	    if( bbtft[ index ].file[ i ][ season ] != BATT_BG_TBL_NO_FILE )
+      { 
+		    //ANIME生成
+	      bsw->stage_anm_resource[ cnt ] = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtft[ index ].file[ i ][ season ] );
+		    bsw->stage_anm[ cnt ] = GFL_G3D_ANIME_Create( bsw->stage_render, bsw->stage_anm_resource[ cnt ], BTLV_STAGE_ANM_MAX ); 
+        cnt++;
+      }
     }
 		//OBJ生成
 		bsw->stage_obj = GFL_G3D_OBJECT_Create( bsw->stage_render, bsw->stage_anm, bsw->anm_count );
-
     //ANIME起動
     for( i = 0 ; i < bsw->anm_count ; i++ )
     { 
@@ -145,7 +174,9 @@ BTLV_STAGE_WORK	*BTLV_STAGE_Init( int index, HEAPID heapID )
 	MTX_Identity33( &bsw->stage_status[ BTLV_STAGE_ENEMY ].rotate );
 
 	//エッジマーキングカラーセット
-	G3X_SetEdgeColorTable( &stage_resource_table[ index ]->edge_color[ 0 ] );
+	//G3X_SetEdgeColorTable( &stage_resource_table[ index ]->edge_color[ 0 ] );
+  //
+  GFL_HEAP_FreeMemory( bbtft );
 
 	return bsw;
 }

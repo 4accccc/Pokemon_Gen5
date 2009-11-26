@@ -22,11 +22,12 @@
 #include "btlv_efftool.h"
 #include "btlv_effvm.h"
 
+#include "battle/battle.h"
+
 #include "waza_tool/wazadata.h"
 #include "system/palanm.h"
 
 #include  "waza_tool/wazano_def.h"
-
 
 //戦闘エフェクト定義
 enum{
@@ -79,7 +80,7 @@ typedef struct {
   u8           continue_count;  ///< 連続して出すとエフェクトが異なる場合の連続カウンタ（ex. ころがる）
 }BTLV_WAZAEFFECT_PARAM;
 
-extern  void              BTLV_EFFECT_Init( BtlRule rule, int index, GFL_FONT* fontHandle, HEAPID heapID );
+extern  void              BTLV_EFFECT_Init( BtlRule rule, const BTL_FIELD_SITUATION *bfs, GFL_FONT* fontHandle, HEAPID heapID );
 extern  void              BTLV_EFFECT_Exit( void );
 extern  void              BTLV_EFFECT_Main( void );
 extern  void              BTLV_EFFECT_Add( int eff_no );
@@ -124,13 +125,3 @@ extern  BTLV_BG_WORK*     BTLV_EFFECT_GetBGWork( void );
 extern  void        BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position );
 #endif
 
-//管理構造体のポインタを返すバージョン
-#if 0
-extern  BTLV_EFFECT_WORK  *BTLV_EFFECT_Init( int index, HEAPID heapID );
-extern  void      BTLV_EFFECT_Exit( BTLV_EFFECT_WORK *bew );
-extern  void      BTLV_EFFECT_Main( BTLV_EFFECT_WORK *bew );
-extern  void      BTLV_EFFECT_Add( BTLV_EFFECT_WORK *bew, int eff_no );
-extern  BOOL      BTLV_EFFECT_CheckExecute( BTLV_EFFECT_WORK *bew );
-extern  void      BTLV_EFFECT_SetPokemon( BTLV_EFFECT_WORK *bew, POKEMON_PARAM *pp, int position );
-extern  BTLV_CAMERA_WORK  *BTLV_EFFECT_GetCameraWork( BTLV_EFFECT_WORK *bew );
-#endif

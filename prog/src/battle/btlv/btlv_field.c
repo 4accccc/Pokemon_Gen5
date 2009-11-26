@@ -12,8 +12,11 @@
 
 #include "btlv_effect.h"
 
+#include "battle/batt_bg_tbl.h"
+
 #include "arc_def.h"
 #include "battle/battgra_wb.naix"
+#include "batt_bg_tbl.naix"
 
 //============================================================================================
 /**
@@ -23,10 +26,13 @@
 
 struct _BTLV_FIELD_WORK
 {
-	GFL_G3D_RES*          field_resource[ BTLV_FIELD_MAX ];
-	GFL_G3D_RND*          field_render[ BTLV_FIELD_MAX ];
-	GFL_G3D_OBJ*          field_obj[ BTLV_FIELD_MAX ];
-	GFL_G3D_OBJSTATUS     field_status[ BTLV_FIELD_MAX ];
+	GFL_G3D_RES*          field_resource;
+  int                   anm_count;
+	GFL_G3D_RES**         field_anm_resource;
+	GFL_G3D_ANM**         field_anm;
+	GFL_G3D_RND*          field_render;
+	GFL_G3D_OBJ*          field_obj;
+	GFL_G3D_OBJSTATUS     field_status;
   EFFTOOL_PAL_FADE_WORK epfw;
   u32                   vanish_flag :1;
   u32                               :31;
@@ -39,6 +45,9 @@ typedef	struct
 	EFFTOOL_MOVE_WORK	emw;
 }BTLV_FIELD_TCB_WORK;
 
+#define	BTLV_FIELD_ANM_MAX        ( 0 )	    		//背景のアニメーション数
+                                                //（初期化関数から１の時は０を要求されているので実際は１）
+
 //============================================================================================
 /**
  *	プロトタイプ宣言
@@ -47,67 +56,98 @@ typedef	struct
 
 //============================================================================================
 /**
- *	背景のリソーステーブル
- */
-//============================================================================================
-//モデルデータ
-static	const	int	field_resource_table[][BTLV_FIELD_MAX]={
-	{ NARC_battgra_wb_batt_field01_nsbmd, NARC_battgra_wb_batt_bg01_nsbmd },
-};
-
-//============================================================================================
-/**
  *	システム初期化
  *
- * @param[in]	index	読み込むリソースのINDEX
+ * @param[in]	index   読み込むリソースのINDEX
+ * @param[in]	season	季節INDEX
  * @param[in]	heapID	ヒープID
  */
 //============================================================================================
-BTLV_FIELD_WORK	*BTLV_FIELD_Init( int index, HEAPID heapID )
+BTLV_FIELD_WORK	*BTLV_FIELD_Init( int index, u8 season, HEAPID heapID )
 {
 	BTLV_FIELD_WORK *bfw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_FIELD_WORK ) );
 	BOOL	ret;
-	int		i;
-
-	GF_ASSERT( index < NELEMS( field_resource_table ) );
+  BATT_BG_TBL_FILE_TABLE* bbtft = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL, NARC_batt_bg_tbl_batt_bg_bin, heapID );
 
 	bfw->heapID = heapID;
 
-  bfw->epfw.g3DRES          = GFL_HEAP_AllocMemory( bfw->heapID, 4 * BTLV_FIELD_MAX );
-  bfw->epfw.pData_dst       = GFL_HEAP_AllocMemory( bfw->heapID, 4 * BTLV_FIELD_MAX );
-  bfw->epfw.pal_fade_flag   = 0;
-  bfw->epfw.pal_fade_count  = BTLV_FIELD_MAX;
+	//リソース読み込み
+	bfw->field_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtft[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season ] );
+	ret = GFL_G3D_TransVramTexture( bfw->field_resource );
+	GF_ASSERT( ret == TRUE );
 
-	for( i = 0 ; i < BTLV_FIELD_MAX ; i++ ){
-		//リソース読み込み
-		bfw->field_resource[ i ] = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, field_resource_table[ index ][ i ] );
-		ret = GFL_G3D_TransVramTexture( bfw->field_resource[ i ] );
-		GF_ASSERT( ret == TRUE );
+  bfw->anm_count = 0;
+  { 
+    int i;
 
-		//RENDER生成
-		bfw->field_render[ i ] = GFL_G3D_RENDER_Create( bfw->field_resource[ i ], 0, bfw->field_resource[ i ] );
-
-		//OBJ生成
-		bfw->field_obj[ i ] = GFL_G3D_OBJECT_Create( bfw->field_render[ i ], NULL, 0 );
-
-		bfw->field_status[ i ].trans.x = 0;
-		bfw->field_status[ i ].trans.y = 0;
-		bfw->field_status[ i ].trans.z = 0;
-		bfw->field_status[ i ].scale.x = FX32_ONE * 2;
-		bfw->field_status[ i ].scale.y = FX32_ONE;
-		bfw->field_status[ i ].scale.z = FX32_ONE;
-		MTX_Identity33( &bfw->field_status[ i ].rotate );
-
-    //パレットフェード用ワーク生成
+    for( i = BATT_BG_TBL_FILE_NSBCA ; i < BATT_BG_TBL_FILE_NSBMA + 1 ; i++ )
     { 
-      NNSG3dResFileHeader*	header = GFL_G3D_GetResourceFileHeader( bfw->field_resource[ i ] );
-      NNSG3dResTex*		    	pTex = NNS_G3dGetTex( header ); 
-      u32                   size = (u32)pTex->plttInfo.sizePltt << 3;
-    
-      bfw->epfw.g3DRES[ i ]     = bfw->field_resource[ i ];
-      bfw->epfw.pData_dst[ i ]  = GFL_HEAP_AllocMemory( bfw->heapID, size );
+	    if( bbtft[ index ].file[ i ][ season ] != BATT_BG_TBL_NO_FILE )
+      { 
+        bfw->anm_count++;
+      }
     }
-	}
+  }
+
+	//RENDER生成
+	bfw->field_render = GFL_G3D_RENDER_Create( bfw->field_resource, 0, bfw->field_resource );
+
+  if( bfw->anm_count )
+  { 
+    int i, cnt;
+
+    bfw->field_anm_resource = GFL_HEAP_AllocMemory( bfw->heapID, 4 * bfw->anm_count );
+    bfw->field_anm = GFL_HEAP_AllocMemory( bfw->heapID, 4 * bfw->anm_count );
+
+    cnt = 0;
+
+    for( i = BATT_BG_TBL_FILE_NSBCA ; i < BATT_BG_TBL_FILE_NSBMA + 1 ; i++ )
+    { 
+	    if( bbtft[ index ].file[ i ][ season ] != BATT_BG_TBL_NO_FILE )
+      { 
+		    //ANIME生成
+	      bfw->field_anm_resource[ cnt ] = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtft[ index ].file[ i ][ season ] );
+		    bfw->field_anm[ cnt ] = GFL_G3D_ANIME_Create( bfw->field_render, bfw->field_anm_resource[ cnt ], BTLV_FIELD_ANM_MAX ); 
+        cnt++;
+      }
+    }
+		//OBJ生成
+		bfw->field_obj = GFL_G3D_OBJECT_Create( bfw->field_render, bfw->field_anm, bfw->anm_count );
+    //ANIME起動
+    for( i = 0 ; i < bfw->anm_count ; i++ )
+    { 
+		  GFL_G3D_OBJECT_EnableAnime( bfw->field_obj, i );
+    }
+  }
+  else
+  { 
+		bfw->field_obj = GFL_G3D_OBJECT_Create( bfw->field_render, NULL, 0 );
+  }
+
+	bfw->field_status.trans.x = 0;
+	bfw->field_status.trans.y = 0;
+	bfw->field_status.trans.z = 0;
+	bfw->field_status.scale.x = FX32_ONE;
+	bfw->field_status.scale.y = FX32_ONE;
+	bfw->field_status.scale.z = FX32_ONE;
+	MTX_Identity33( &bfw->field_status.rotate );
+  
+  //パレットフェード用ワーク生成
+  { 
+  	NNSG3dResFileHeader*	header = GFL_G3D_GetResourceFileHeader( bfw->field_resource );
+  	NNSG3dResTex*		    	pTex = NNS_G3dGetTex( header ); 
+    u32                   size = (u32)pTex->plttInfo.sizePltt << 3;
+
+    bfw->epfw.g3DRES     = GFL_HEAP_AllocMemory( bfw->heapID, 4 );
+    bfw->epfw.pData_dst  = GFL_HEAP_AllocMemory( bfw->heapID, 4 );
+    
+    bfw->epfw.g3DRES[ 0 ]     = bfw->field_resource;
+    bfw->epfw.pData_dst[ 0 ]  = GFL_HEAP_AllocMemory( bfw->heapID, size );
+	  bfw->epfw.pal_fade_flag   = 0;
+	  bfw->epfw.pal_fade_count  = 1;
+  }
+
+  GFL_HEAP_FreeMemory( bbtft );
 
 	return bfw;
 }
@@ -121,17 +161,27 @@ BTLV_FIELD_WORK	*BTLV_FIELD_Init( int index, HEAPID heapID )
 //============================================================================================
 void	BTLV_FIELD_Exit( BTLV_FIELD_WORK *bfw )
 {
-	int i;
+	GFL_G3D_OBJECT_Delete( bfw->field_obj );
 
-	for( i = 0 ; i < BTLV_FIELD_MAX ; i++ ){
-		GFL_G3D_DeleteResource( bfw->field_resource[ i ] );
-		GFL_G3D_RENDER_Delete( bfw->field_render[ i ] );
-		GFL_G3D_OBJECT_Delete( bfw->field_obj[ i ] );
-    GFL_HEAP_FreeMemory( bfw->epfw.pData_dst[ i ] );
-	}
+  if( bfw->anm_count )
+  { 
+    int i;
 
-  GFL_HEAP_FreeMemory( bfw->epfw.g3DRES );
+    for( i = 0 ; i < bfw->anm_count ; i++ )
+    { 
+		  GFL_G3D_ANIME_Delete( bfw->field_anm[ i ] );
+		  GFL_G3D_DeleteResource( bfw->field_anm_resource[ i ] );
+    }
+		GFL_HEAP_FreeMemory( bfw->field_anm );
+		GFL_HEAP_FreeMemory( bfw->field_anm_resource );
+  }
+
+	GFL_G3D_RENDER_Delete( bfw->field_render );
+	GFL_G3D_DeleteResource( bfw->field_resource );
+
+  GFL_HEAP_FreeMemory( bfw->epfw.pData_dst[ 0 ] );
   GFL_HEAP_FreeMemory( bfw->epfw.pData_dst );
+  GFL_HEAP_FreeMemory( bfw->epfw.g3DRES );
 
 	GFL_HEAP_FreeMemory( bfw );
 }
@@ -165,9 +215,7 @@ void	BTLV_FIELD_Draw( BTLV_FIELD_WORK *bfw )
     return;
   }
 
-	for( i = 0 ; i < BTLV_FIELD_MAX ; i++ ){
-		GFL_G3D_DRAW_DrawObject( bfw->field_obj[ i ], &bfw->field_status[ i ] );
-	}
+	GFL_G3D_DRAW_DrawObject( bfw->field_obj, &bfw->field_status );
 }
 
 //============================================================================================
@@ -211,7 +259,7 @@ BOOL	BTLV_FIELD_CheckExecutePaletteFade( BTLV_FIELD_WORK* bfw )
 /**
  *	バニッシュフラグセット
  *
- * @param[in]	bsw   BTLV_STAGE管理ワークへのポインタ
+ * @param[in]	bsw   BTLV_FIELD管理ワークへのポインタ
  * @param[in]	flag  セットするフラグ( BTLV_FIELD_VANISH_ON BTLV_FIELD_VANISH_OFF )
  */
 //============================================================================================

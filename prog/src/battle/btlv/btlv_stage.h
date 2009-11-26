@@ -24,7 +24,7 @@ typedef enum
 
 typedef struct _BTLV_STAGE_WORK BTLV_STAGE_WORK;
 
-extern	BTLV_STAGE_WORK*  BTLV_STAGE_Init( int index, HEAPID heapID );
+extern  BTLV_STAGE_WORK*  BTLV_STAGE_Init( int index, u8 season, HEAPID heapID );
 extern	void			        BTLV_STAGE_Exit( BTLV_STAGE_WORK *bsw );
 extern	void			        BTLV_STAGE_Main( BTLV_STAGE_WORK *bsw );
 extern	void			        BTLV_STAGE_Draw( BTLV_STAGE_WORK *bsw );
