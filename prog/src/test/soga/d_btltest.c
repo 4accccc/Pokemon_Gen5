@@ -36,6 +36,8 @@
 
 #include "tr_tool/tr_tool.h"
 
+#include "battle/battle.h"
+
 #define BTLV_MCSS_1vs1    //1vs1•`‰æ
 
 #define PAD_BUTTON_EXIT ( PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START )
@@ -210,8 +212,13 @@ static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void
 
   wk->seq_no = 0;
   {
+    BTL_FIELD_SITUATION bfs = { 
+      0, 0, 0, 0, 0
+    };
+
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, wk->heapID );
-    BTLV_EFFECT_Init( 0, 0, wk->small_font, wk->heapID );
+
+    BTLV_EFFECT_Init( BTL_RULE_SINGLE, &bfs, wk->small_font, wk->heapID );
     wk->bcw = BTLV_EFFECT_GetCameraWork();
   }
 

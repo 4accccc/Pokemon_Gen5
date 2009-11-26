@@ -254,9 +254,13 @@ static GFL_PROC_RESULT CaptureTestProcInit( GFL_PROC * proc, int * seq, void * p
   wk->seq_no = 0;
 #if 1
   {
+    BTL_FIELD_SITUATION bfs = { 
+      0, 0, 0, 0, 0
+    };
+
     wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_small_batt_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, wk->heapID );
-    BTLV_EFFECT_Init( 0, 0, wk->font, wk->heapID );
+    BTLV_EFFECT_Init( BTL_RULE_SINGLE, &bfs, wk->font, wk->heapID );
     wk->bcw = BTLV_EFFECT_GetCameraWork();
   }
 
@@ -264,7 +268,11 @@ static GFL_PROC_RESULT CaptureTestProcInit( GFL_PROC * proc, int * seq, void * p
 
 #else
   {
-    wk->bew = BTLV_EFFECT_Init( 0, &dispvramBank, wk->heapID );
+    BTL_FIELD_SITUATION bfs = { 
+      0, 0, 0, 0, 0
+    };
+
+    BTLV_EFFECT_Init( BTL_RULE_SINGLE, &bfs, wk->small_font, wk->heapID );
     wk->bcw = BTLV_EFFECT_GetCameraWork( wk->bew );
   }
 

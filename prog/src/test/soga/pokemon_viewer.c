@@ -374,8 +374,12 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
 
   //戦闘エフェクト初期化
   {
+    BTL_FIELD_SITUATION bfs = { 
+      0, 0, 0, 0, 0
+    };
+
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, pvw->heapID );
-    BTLV_EFFECT_Init( 0, 0, pvw->small_font, pvw->heapID );
+    BTLV_EFFECT_Init( BTL_RULE_SINGLE, &bfs, pvw->small_font, pvw->heapID );
   }
 
 //  set_pokemon( pvw );
