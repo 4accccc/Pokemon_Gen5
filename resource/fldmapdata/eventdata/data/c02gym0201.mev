@@ -1,10 +1,10 @@
 #event data
-#save date:2009/11/06 19:06:09
+#save date:2009/11/26 15:49:05
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02gym0201.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/11/06 19:06:09
+#save date:
 2
 #hold event type:
 1
@@ -37,6 +37,8 @@ DIR_UP
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -152 0 184
 #event number: 1
@@ -66,6 +68,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -72 0 -136
 #event number: 2
@@ -95,6 +99,8 @@ DIR_UP
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -40 0 72
 #event number: 3
@@ -124,6 +130,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -72 0 88
 #event number: 4
@@ -153,6 +161,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -24 0 88
 #event number: 5
@@ -182,6 +192,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -56 0 88
 #event number: 6
@@ -211,6 +223,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -40 0 88
 #event number: 7
@@ -240,6 +254,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -56 0 136
 #event number: 8
@@ -269,6 +285,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -40 0 136
 #event number: 9
@@ -298,6 +316,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -24 0 136
 #event number: 10
@@ -327,6 +347,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -56 0 120
 #event number: 11
@@ -356,6 +378,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -40 0 120
 #event number: 12
@@ -385,6 +409,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -24 0 120
 #event number: 13
@@ -414,6 +440,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -56 0 104
 #event number: 14
@@ -443,6 +471,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -40 0 104
 #event number: 15
@@ -472,6 +502,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -24 0 104
 #event number: 16
@@ -501,6 +533,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -72 0 104
 #event number: 17
@@ -530,6 +564,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -72 0 120
 #event number: 18
@@ -559,6 +595,8 @@ DIR_DOWN
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -72 0 136
 #event number: 19
@@ -588,13 +626,15 @@ DIR_RIGHT
 0
 #Move Limit Z Number
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -168 0 -104
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/11/06 19:06:09
+#save date:
 2
 #hold event type:
 1
@@ -609,6 +649,8 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_BG_C02GYM0201_STATUE_02
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -56 0 -168
 #event number: 1
@@ -620,6 +662,8 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_C02GYM0201_CATEGORY_02
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -168 0 200
 #event number: 2
@@ -631,6 +675,8 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_BG_C02GYM0201_STATUE_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -152 0 -168
 #event number: 3
@@ -642,6 +688,8 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_C02GYM0201_CATEGORY_03
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -152 0 200
 #event number: 4
@@ -653,6 +701,8 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_C02GYM0201_CATEGORY_04
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -136 0 200
 #event number: 5
@@ -664,6 +714,8 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_C02GYM0201_CATEGORY_05
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -184 0 88
 #event number: 6
@@ -675,8 +727,10 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_C02GYM0201_CATEGORY_06
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--168 0 88
+-168 36 104
 #event number: 7
 #Bg Event Label
 BG_C02GYM0201_CATEGORY_07
@@ -686,6 +740,8 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_C02GYM0201_CATEGORY_07
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -152 0 88
 #event number: 8
@@ -697,6 +753,8 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_C02GYM0201_CATEGORY_08
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -136 0 88
 #event number: 9
@@ -708,6 +766,8 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_C02GYM0201_CATEGORY_09
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -184 0 -8
 #event number: 10
@@ -719,6 +779,8 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_C02GYM0201_CATEGORY_10
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -168 0 -8
 #event number: 11
@@ -730,8 +792,10 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_C02GYM0201_CATEGORY_11
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--152 0 -8
+-152 36 8
 #event number: 12
 #Bg Event Label
 BG_C02GYM0201_CATEGORY_12
@@ -741,6 +805,8 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_C02GYM0201_CATEGORY_12
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -136 0 -8
 #event number: 13
@@ -752,6 +818,8 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_C02GYM0201_CATEGORY_13
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -72 0 200
 #event number: 14
@@ -763,6 +831,8 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_C02GYM0201_CATEGORY_14
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -56 0 200
 #event number: 15
@@ -774,6 +844,8 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_C02GYM0201_CATEGORY_15
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -40 0 200
 #event number: 16
@@ -785,6 +857,8 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_C02GYM0201_CATEGORY_16
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -24 0 200
 #event number: 17
@@ -796,6 +870,8 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_C02GYM0201_CATEGORY_24
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -24 0 -8
 #event number: 18
@@ -807,6 +883,8 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_C02GYM0201_CATEGORY_21
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -72 0 -8
 #event number: 19
@@ -818,6 +896,8 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_C02GYM0201_CATEGORY_22
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -56 0 -8
 #event number: 20
@@ -829,8 +909,10 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_C02GYM0201_CATEGORY_23
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
--40 0 -8
+-40 12 -8
 #event number: 21
 #Bg Event Label
 BG_C02GYM0201_CATEGORY_01
@@ -840,13 +922,15 @@ BG_TALK_TYPE_NORMAL
 BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_C02GYM0201_CATEGORY_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -184 0 200
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/11/06 19:06:09
+#save date:
 2
 #hold event type:
 1
@@ -861,17 +945,17 @@ SCRID_POS_C02GYM0201_SUNGLASSES_01
 WK_SCENE_C02GYM0201
 #Event Trigger Work Value
 0
-#Pos Event Size X
-3
-#Pos Event Size Z
-1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -120 0 -184
+#size
+3 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/11/06 19:06:09
+#save date:
 2
 #hold event type:
 1
@@ -888,8 +972,12 @@ DOOR_ID_C02GYM0101_C02GYM0201_EXIT01
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -120 0 -200
+#size
+1 1
 #event number: 1
 #Door Event Label
 DOOR_ID_C02GYM0201_C02GYM0101_EXIT02
@@ -901,8 +989,12 @@ DOOR_ID_C02GYM0101_C02GYM0201_EXIT01
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -104 0 -200
+#size
+1 1
 #event number: 2
 #Door Event Label
 DOOR_ID_C02GYM0201_C02GYM0101_EXIT03
@@ -914,8 +1006,12 @@ DOOR_ID_C02GYM0101_C02GYM0201_EXIT01
 EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -88 0 -200
+#size
+1 1
 #event number: 3
 #Door Event Label
 DOOR_ID_C02GYM0201_C02GYM0202_EXIT01
@@ -927,7 +1023,11 @@ DOOR_ID_C02GYM0202_C02GYM0201_EXIT01
 EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_STAIRS
+#Pos Type
+EVENTDATA_POSTYPE_GRID
 #position
 -56 0 104
+#size
+1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
