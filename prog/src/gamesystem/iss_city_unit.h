@@ -27,7 +27,7 @@ typedef struct _ISS_C_UNIT ISS_C_UNIT;
  * @param zone_id 読み込むユニットデータをゾーンIDで指定
  */
 //-----------------------------------------------------------------------------------------
-ISS_C_UNIT* ISS_C_UNIT_Create( HEAPID heap_id, u16 zone_id );
+extern ISS_C_UNIT* ISS_C_UNIT_Create( HEAPID heap_id, u16 zone_id );
 
 //-----------------------------------------------------------------------------------------
 /**
@@ -36,7 +36,7 @@ ISS_C_UNIT* ISS_C_UNIT_Create( HEAPID heap_id, u16 zone_id );
  * @param unit 破棄するユニット
  */
 //-----------------------------------------------------------------------------------------
-void ISS_C_UNIT_Delete( ISS_C_UNIT* unit );
+extern void ISS_C_UNIT_Delete( ISS_C_UNIT* unit );
 
 
 //=========================================================================================
@@ -52,7 +52,7 @@ void ISS_C_UNIT_Delete( ISS_C_UNIT* unit );
  * @return 指定したユニットのゾーンID
  */
 //-----------------------------------------------------------------------------------------
-u16 ISS_C_UNIT_GetZoneID( const ISS_C_UNIT* unit );
+extern u16 ISS_C_UNIT_GetZoneID( const ISS_C_UNIT* unit );
 
 //-----------------------------------------------------------------------------------------
 /**
@@ -64,7 +64,7 @@ u16 ISS_C_UNIT_GetZoneID( const ISS_C_UNIT* unit );
  * @return 指定した座標における音量[0, 127]
  */
 //-----------------------------------------------------------------------------------------
-int ISS_C_UNIT_GetVolume( const ISS_C_UNIT* unit, const VecFx32* pos );
+extern int ISS_C_UNIT_GetVolume( const ISS_C_UNIT* unit, const VecFx32* pos );
 
 
 //=========================================================================================
@@ -78,4 +78,4 @@ int ISS_C_UNIT_GetVolume( const ISS_C_UNIT* unit, const VecFx32* pos );
  * @param unit 出力対象ユニット
  */
 //-----------------------------------------------------------------------------------------
-void ISS_C_UNIT_DebugPrint( const ISS_C_UNIT* unit );
+extern void ISS_C_UNIT_DebugPrint( const ISS_C_UNIT* unit );

@@ -25,7 +25,7 @@ typedef struct _ISS_CITY_SYS ISS_CITY_SYS;
  * @return 街ISSシステム
  */
 //----------------------------------------------------------------------------
-ISS_CITY_SYS* ISS_CITY_SYS_Create( PLAYER_WORK* p_player, HEAPID heap_id );
+extern ISS_CITY_SYS* ISS_CITY_SYS_Create( PLAYER_WORK* p_player, HEAPID heap_id );
 
 //----------------------------------------------------------------------------
 /**
@@ -34,7 +34,7 @@ ISS_CITY_SYS* ISS_CITY_SYS_Create( PLAYER_WORK* p_player, HEAPID heap_id );
  * @param p_sys 破棄する街ISSシステム 
  */
 //----------------------------------------------------------------------------
-void ISS_CITY_SYS_Delete( ISS_CITY_SYS* p_sys );
+extern void ISS_CITY_SYS_Delete( ISS_CITY_SYS* p_sys );
 
 //----------------------------------------------------------------------------
 /**
@@ -43,7 +43,7 @@ void ISS_CITY_SYS_Delete( ISS_CITY_SYS* p_sys );
  * @param p_sys 操作対象のシステム
  */
 //----------------------------------------------------------------------------
-void ISS_CITY_SYS_Update( ISS_CITY_SYS* p_sys );
+extern void ISS_CITY_SYS_Update( ISS_CITY_SYS* p_sys );
 
 //----------------------------------------------------------------------------
 /**
@@ -53,7 +53,7 @@ void ISS_CITY_SYS_Update( ISS_CITY_SYS* p_sys );
  * @param next_zone_id 新しいゾーンID
  */
 //----------------------------------------------------------------------------
-void ISS_CITY_SYS_ZoneChange( ISS_CITY_SYS* p_sys, u16 next_zone_id );
+extern void ISS_CITY_SYS_ZoneChange( ISS_CITY_SYS* p_sys, u16 next_zone_id );
 
 //----------------------------------------------------------------------------
 /**

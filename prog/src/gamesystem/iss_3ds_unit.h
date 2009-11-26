@@ -30,7 +30,7 @@ typedef struct _ISS_3DS_UNIT ISS_3DS_UNIT;
  * @return 作成したユニット
  */
 //-------------------------------------------------------------------------------
-ISS_3DS_UNIT* ISS_3DS_UNIT_Create( HEAPID heap_id );
+extern ISS_3DS_UNIT* ISS_3DS_UNIT_Create( HEAPID heap_id );
 
 //-------------------------------------------------------------------------------
 /**
@@ -39,7 +39,7 @@ ISS_3DS_UNIT* ISS_3DS_UNIT_Create( HEAPID heap_id );
  * @param unit 破棄するユニット
  */
 //-------------------------------------------------------------------------------
-void ISS_3DS_UNIT_Delete( ISS_3DS_UNIT* unit );
+extern void ISS_3DS_UNIT_Delete( ISS_3DS_UNIT* unit );
 
 
 //===============================================================================
@@ -54,7 +54,7 @@ void ISS_3DS_UNIT_Delete( ISS_3DS_UNIT* unit );
  * @param dest 位置ベクトルの格納先
  */
 //-------------------------------------------------------------------------------
-void ISS_3DS_UNIT_GetPos( const ISS_3DS_UNIT* unit, VecFx32* dest );
+extern void ISS_3DS_UNIT_GetPos( const ISS_3DS_UNIT* unit, VecFx32* dest );
 
 //-------------------------------------------------------------------------------
 /**
@@ -65,7 +65,7 @@ void ISS_3DS_UNIT_GetPos( const ISS_3DS_UNIT* unit, VecFx32* dest );
  * @return 音が届く距離
  */
 //-------------------------------------------------------------------------------
-fx32 ISS_3DS_UNIT_GetRange( const ISS_3DS_UNIT* unit );
+extern fx32 ISS_3DS_UNIT_GetRange( const ISS_3DS_UNIT* unit );
 
 //-------------------------------------------------------------------------------
 /**
@@ -76,7 +76,7 @@ fx32 ISS_3DS_UNIT_GetRange( const ISS_3DS_UNIT* unit );
  * @return 最大音量(0～127)
  */
 //-------------------------------------------------------------------------------
-int ISS_3DS_UNIT_GetMaxVolume( const ISS_3DS_UNIT* unit ); 
+extern int ISS_3DS_UNIT_GetMaxVolume( const ISS_3DS_UNIT* unit ); 
 
 //-------------------------------------------------------------------------------
 /**
@@ -87,7 +87,7 @@ int ISS_3DS_UNIT_GetMaxVolume( const ISS_3DS_UNIT* unit );
  * @return トラックマスク
  */
 //-------------------------------------------------------------------------------
-u16 ISS_3DS_UNIT_GetTrackBit( const ISS_3DS_UNIT* unit );
+extern u16 ISS_3DS_UNIT_GetTrackBit( const ISS_3DS_UNIT* unit );
 
 //===============================================================================
 // ■情報設定
@@ -103,8 +103,8 @@ u16 ISS_3DS_UNIT_GetTrackBit( const ISS_3DS_UNIT* unit );
  * @param heap_id 使用するヒープＩＤ
  */
 //-------------------------------------------------------------------------------
-void ISS_3DS_UNIT_Load(  
-    ISS_3DS_UNIT* unit, ARCID arc_id, ARCDATID dat_id, HEAPID heap_id );
+extern void ISS_3DS_UNIT_Load( ISS_3DS_UNIT* unit, 
+                               ARCID arc_id, ARCDATID dat_id, HEAPID heap_id );
 
 //-------------------------------------------------------------------------------
 /**
@@ -114,7 +114,7 @@ void ISS_3DS_UNIT_Load(
  * @param pos  設定値
  */
 //-------------------------------------------------------------------------------
-void ISS_3DS_UNIT_SetPos( ISS_3DS_UNIT* unit, const VecFx32* pos );
+extern void ISS_3DS_UNIT_SetPos( ISS_3DS_UNIT* unit, const VecFx32* pos );
 
 //-------------------------------------------------------------------------------
 /**
@@ -124,7 +124,7 @@ void ISS_3DS_UNIT_SetPos( ISS_3DS_UNIT* unit, const VecFx32* pos );
  * @param range 設定値
  */
 //-------------------------------------------------------------------------------
-void ISS_3DS_UNIT_SetRange( ISS_3DS_UNIT* unit, fx32 range );
+extern void ISS_3DS_UNIT_SetRange( ISS_3DS_UNIT* unit, fx32 range );
 
 //-------------------------------------------------------------------------------
 /**
@@ -134,7 +134,7 @@ void ISS_3DS_UNIT_SetRange( ISS_3DS_UNIT* unit, fx32 range );
  * @param volume 設定値(0～127)
  */
 //-------------------------------------------------------------------------------
-void ISS_3DS_UNIT_SetMaxVolume( ISS_3DS_UNIT* unit, int volume );
+extern void ISS_3DS_UNIT_SetMaxVolume( ISS_3DS_UNIT* unit, int volume );
 
 //-------------------------------------------------------------------------------
 /**
@@ -144,4 +144,4 @@ void ISS_3DS_UNIT_SetMaxVolume( ISS_3DS_UNIT* unit, int volume );
  * @param track 操作対象トラックのマスク
  */
 //-------------------------------------------------------------------------------
-void ISS_3DS_UNIT_SetTrackBit( ISS_3DS_UNIT* unit, u16 track );
+extern void ISS_3DS_UNIT_SetTrackBit( ISS_3DS_UNIT* unit, u16 track );
