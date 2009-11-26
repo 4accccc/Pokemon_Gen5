@@ -22,6 +22,7 @@ void FIELD_PLACE_NAME_Draw( FIELD_PLACE_NAME* p_sys );
 void FIELD_PLACE_NAME_Display( FIELD_PLACE_NAME* p_sys, u32 next_zone_id );
 void FIELD_PLACE_NAME_DisplayForce( FIELD_PLACE_NAME* p_sys, u32 zone_id );
 void FIELD_PLACE_NAME_Hide( FIELD_PLACE_NAME* p_sys );
+void FIELD_PLACE_NAME_RecoverBG(FIELD_PLACE_NAME* sys);
 */
 
 
@@ -113,4 +114,11 @@ extern void FIELD_PLACE_NAME_DisplayForce( FIELD_PLACE_NAME* p_sys, u32 zone_id 
 //------------------------------------------------------------------------------------
 extern void FIELD_PLACE_NAME_Hide( FIELD_PLACE_NAME* p_sys );
 
+//------------------------------------------------------------------------------------
+/**
+ * @brief 地名表示ウィンドウのキャラクタデータ, スクリーンデータを復帰させる
+ *
+ * @param sys 地名表示システム
+ */
+//------------------------------------------------------------------------------------
 extern void FIELD_PLACE_NAME_RecoverBG(FIELD_PLACE_NAME* sys);

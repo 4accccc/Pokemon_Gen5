@@ -723,8 +723,10 @@ void FIELD_PLACE_NAME_RecoverBG(FIELD_PLACE_NAME* sys)
   GFL_BG_FillCharacterRelease( BG_FRAME, 1, 0 );
   GFL_BG_FillCharacter( BG_FRAME, 0, 1, 0 );
 	
+	LoadBGPaletteData( sys, ARCID_PLACE_NAME, NARC_place_name_place_name_back_NCLR );
   RecoveryBitmapWindow(sys);
 	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(sys->bmpWin) );
+	GFL_BMPWIN_MakeTransWindow( sys->bmpWin );
 }
 
 
@@ -1118,9 +1120,9 @@ static void SetState( FIELD_PLACE_NAME* sys, STATE next_state )
 			break;
     case STATE_SETUP:
       sys->currentZoneID = sys->nextZoneID;	   // 表示中ゾーンIDを更新
-			RecoveryBitmapWindow( sys );	  // ビットマップウィンドウを復帰
       SetupPlaceName( sys );          // 表示する地名を更新
       sys->writeCharNum = 0;          // 書き込み準備
+      FIELD_PLACE_NAME_RecoverBG( sys );  // キャラ・スクリーンデータ復帰
       break;
 		case STATE_FADE_IN:
       GFL_BG_SetVisible( BG_FRAME, VISIBLE_ON );	// BGを表示
