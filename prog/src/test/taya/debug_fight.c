@@ -136,6 +136,7 @@ typedef enum {
   SELITEM_SAVE,
   SELITEM_LOAD,
   SELITEM_MSGSPEED,
+  SELITEM_WAZAEFF,
 
   SELITEM_MAX,
   SELITEM_NULL = SELITEM_MAX,
@@ -172,6 +173,7 @@ enum {
 
   LAYOUT_LABEL_BTLTYPE_X  = 8,
   LAYOUT_LABEL_MSGSPEED_X = 144,
+  LAYOUT_LABEL_WAZAEFF_X  = 144,
 
   LAYOUT_CRIPMARK_OX = 240,
   LAYOUT_CRIPMARK_OY = 4,
@@ -193,6 +195,7 @@ static const struct {
   { DBGF_LABEL_ENEMY2,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LABEL_LINE_Y },
   { DBGF_LABEL_TYPE,    LAYOUT_LABEL_BTLTYPE_X,  LAYOUT_PARAM_LINE_Y1 },
   { DBGF_LABEL_MSGSPD,  LAYOUT_LABEL_MSGSPEED_X, LAYOUT_PARAM_LINE_Y1 },
+  { DBGF_LABEL_WAZAEFF, LAYOUT_LABEL_WAZAEFF_X,  LAYOUT_PARAM_LINE_Y2 },
 
   { DBGF_LABEL_WEATHER, 8, LAYOUT_PARAM_LINE_Y2 },
   { DBGF_LABEL_LAND,    8, LAYOUT_PARAM_LINE_Y3 },
@@ -236,6 +239,8 @@ static const struct {
 
   { SELITEM_BTL_TYPE,   LAYOUT_LABEL_BTLTYPE_X  +30, LAYOUT_PARAM_LINE_Y1 },
   { SELITEM_MSGSPEED,   LAYOUT_LABEL_MSGSPEED_X +52, LAYOUT_PARAM_LINE_Y1 },
+  { SELITEM_WAZAEFF,    LAYOUT_LABEL_WAZAEFF_X  +64, LAYOUT_PARAM_LINE_Y2 },
+
 
   { SELITEM_LOAD,        8, LAYOUT_PARAM_LINE_Y4 },
   { SELITEM_SAVE,       38, LAYOUT_PARAM_LINE_Y4 },
@@ -282,7 +287,8 @@ typedef struct {
   u8  btlType;
   u8  weather;
   u8  msgSpeed;
-  u8  dmy;
+  u8  fWazaEff : 1;
+  u8  dmy : 7;
 
   u8  pokeParaArea[ POKEPARA_SAVEAREA_SIZE ];
 
@@ -344,7 +350,10 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect );
 static void printItem_Poke( DEBUG_BTL_WORK* wk, u16 itemID, STRBUF* buf );
 static void printItem_BtlType( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_MsgSpeed( DEBUG_BTL_WORK* wk, STRBUF* buf );
+static void printItem_WazaEff( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_DirectStr( DEBUG_BTL_WORK* wk, u16 strID, STRBUF* buf );
+static void printClipMark( DEBUG_BTL_WORK* wk );
+static void clearClipMark( DEBUG_BTL_WORK* wk );
 static BOOL mainProc_Setup( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_MakePokePara( DEBUG_BTL_WORK* wk, int* seq );
@@ -637,6 +646,7 @@ static void savework_Init( DEBUG_BTL_SAVEDATA* saveData )
   saveData->btlType  = BTLTYPE_SINGLE_WILD;
   saveData->weather  = BTL_WEATHER_NONE;
   saveData->msgSpeed = MSGSPEED_FAST;
+  saveData->fWazaEff = 0;
 
   for(i=0; i<POKEPARA_MAX; ++i){
     pp = savework_GetPokeParaArea( saveData, i );
@@ -754,6 +764,11 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
 
   case SELITEM_MSGSPEED:
     save->msgSpeed = loopValue( save->msgSpeed+incValue, 0, MSGSPEED_FAST_EX );
+    break;
+
+  case SELITEM_WAZAEFF:
+    save->fWazaEff ^= 1;
+    break;
   }
 }
 //----------------------------------------------------------------------------------
@@ -854,6 +869,7 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
         switch( itemID ){
         case SELITEM_BTL_TYPE:  printItem_BtlType( wk, wk->strbuf ); break;
         case SELITEM_MSGSPEED:  printItem_MsgSpeed( wk, wk->strbuf ); break;
+        case SELITEM_WAZAEFF:   printItem_WazaEff( wk, wk->strbuf ); break;
         case SELITEM_SAVE:      printItem_DirectStr( wk, DBGF_ITEM_SAVE, wk->strbuf ); break;
         case SELITEM_LOAD:      printItem_DirectStr( wk, DBGF_ITEM_LOAD, wk->strbuf ); break;
 
@@ -885,6 +901,10 @@ static void printItem_BtlType( DEBUG_BTL_WORK* wk, STRBUF* buf )
 static void printItem_MsgSpeed( DEBUG_BTL_WORK* wk, STRBUF* buf )
 {
   GFL_MSG_GetString( wk->mm, DBGF_ITEM_MSGSPD_SLOW+wk->saveData.msgSpeed, buf );
+}
+static void printItem_WazaEff( DEBUG_BTL_WORK* wk, STRBUF* buf )
+{
+  GFL_MSG_GetString( wk->mm, DBGF_ITEM_WAZAEFF_ON+wk->saveData.fWazaEff, buf );
 }
 static void printItem_DirectStr( DEBUG_BTL_WORK* wk, u16 strID, STRBUF* buf )
 {
@@ -980,7 +1000,8 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_POKE_ENEMY2_5, SELITEM_POKE_ENEMY2_4, SELITEM_POKE_ENEMY2_6, SELITEM_POKE_SELF_5, SELITEM_POKE_FRIEND_5 },
       { SELITEM_POKE_ENEMY2_6, SELITEM_POKE_ENEMY2_5, SELITEM_MSGSPEED,      SELITEM_POKE_SELF_6, SELITEM_POKE_FRIEND_6 },
       { SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_6,   SELITEM_SAVE,          SELITEM_MSGSPEED,    SELITEM_MSGSPEED, },
-      { SELITEM_MSGSPEED,      SELITEM_POKE_ENEMY2_6, SELITEM_SAVE,          SELITEM_BTL_TYPE,    SELITEM_BTL_TYPE },
+      { SELITEM_MSGSPEED,      SELITEM_POKE_ENEMY2_6, SELITEM_WAZAEFF,       SELITEM_BTL_TYPE,    SELITEM_BTL_TYPE },
+      { SELITEM_WAZAEFF,       SELITEM_MSGSPEED,      SELITEM_SAVE,          SELITEM_BTL_TYPE,    SELITEM_BTL_TYPE },
       { SELITEM_SAVE,          SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_1,   SELITEM_LOAD,        SELITEM_LOAD },
       { SELITEM_LOAD,          SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_1,   SELITEM_SAVE,        SELITEM_SAVE },
     };
@@ -1140,7 +1161,7 @@ FS_EXTERN_OVERLAY(battle);
   };
 
   enum {
-    SYNC_ID = 2929, // ‚Ä‚«‚Æ
+    SYNC_ID = 2929, // ‚Ä‚«‚Æ‚¤
   };
 
   switch( *seq ){
@@ -1148,6 +1169,7 @@ FS_EXTERN_OVERLAY(battle);
     {
       CONFIG* config = SaveData_GetConfig( GAMEDATA_GetSaveControlWork(wk->gameData) );
       CONFIG_SetMsgSpeed( config, wk->saveData.msgSpeed );
+      CONFIG_SetWazaEffectMode( config, wk->saveData.fWazaEff );
     }
     BATTLE_PARAM_Init( &wk->setupParam );
     savework_SetParty( &wk->saveData, wk );
@@ -1198,8 +1220,6 @@ FS_EXTERN_OVERLAY(battle);
       cutoff_wildParty( wk->partyEnemy1, rule );
       BP_SETUP_Wild( &wk->setupParam, wk->gameData, HEAPID_BTL_DEBUG_SYS, rule, wk->partyEnemy1,
           BTL_BG_GRASS, 0, BTL_WEATHER_NONE );
-
-      PokeParty_Copy( wk->partyPlayer, wk->setupParam.partyPlayer );
     }
     else if( btltype_IsComm(wk->saveData.btlType) )
     {
@@ -1227,7 +1247,6 @@ FS_EXTERN_OVERLAY(battle);
       if( wk->setupParam.partyPlayer == NULL ){
         wk->setupParam.partyPlayer = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
       }
-      PokeParty_Copy( wk->partyPlayer, wk->setupParam.partyPlayer );
     }
     else
     {
@@ -1254,8 +1273,8 @@ FS_EXTERN_OVERLAY(battle);
       if( wk->setupParam.partyPlayer == NULL ){
         wk->setupParam.partyPlayer = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
       }
-      PokeParty_Copy( wk->partyPlayer, wk->setupParam.partyPlayer );
     }
+    PokeParty_Copy( wk->partyPlayer, wk->setupParam.partyPlayer );
     (*seq) = SEQ_BTL_START;
     break;
 
