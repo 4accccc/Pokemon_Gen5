@@ -6,6 +6,8 @@ REM 制作者  : hosaka_genya
 REM 日付    : 2009/11/24
 REM =================================================================
 
+SET IPMSG_BAT=tools/hudson/hudson_ipmsg.bat
+
 REM ================================
 REM ユーザーネーム設定
 REM ================================
@@ -17,15 +19,6 @@ REM 初回 make
 REM ================================
 @echo ***** make *****
 make
-@echo errorlevel = %ERRORLEVEL%
-
-REM 正常終了判定
-if %ERRORLEVEL% == 0 goto END:
-
-REM make cleanして再度make
-@echo ***** make clean *****
-make clean
-make
 
 REM 正常終了判定
 if %ERRORLEVEL% == 0 goto END:
@@ -33,17 +26,21 @@ if %ERRORLEVEL% == 0 goto END:
 REM ================================
 REM エラー処理
 REM ================================
-ERROR:
-  "C:\Program Files\Ipmsg\ipmsg.exe" /MSG W00159 "メイク失敗！"
-  exit %ERRORLEVEL%
+REM cleanしておく
+REM make clean
+
+REM IPMSGで通知(エラーレベルを上書きしてしまう)
+REM %IPMSG_BAT% 1
+REM なぜか↑を使うと、↓に流れてこない
+
+@echo errorlevel = %ERROR_LEVEL%
+exit %ERROR_LEVEL%
 
 REM ================================
 REM 正常終了
 REM ================================
 :END
-REM  "C:\Program Files\Ipmsg\ipmsg.exe" /MSG W00159 "メイク成功！"
-REM  "C:\Program Files\Ipmsg\ipmsg.exe" /MSG W00162 "メイク成功！"
-REM  C:\tools\softalk\make_ok.wav
+  REM %IPMSG_BAT% 0
   @echo hudson make end
 
 
