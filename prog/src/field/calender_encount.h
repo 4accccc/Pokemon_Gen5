@@ -38,7 +38,7 @@ enum
  * @return 作成したエンカウント・データ
  */
 //---------------------------------------------------------------------------------
-CALENDER_ENCOUNT_INFO* CALENDER_ENCOUNT_INFO_Create( HEAPID heap_id );
+extern CALENDER_ENCOUNT_INFO* CALENDER_ENCOUNT_INFO_Create( HEAPID heap_id );
 
 //---------------------------------------------------------------------------------
 /**
@@ -50,7 +50,7 @@ CALENDER_ENCOUNT_INFO* CALENDER_ENCOUNT_INFO_Create( HEAPID heap_id );
  * @return 指定した日付の出現率変化番号( ENCOUNT_NO_x )
  */
 //---------------------------------------------------------------------------------
-u8 CALENDER_ENCOUNT_INFO_GetEncountNo( CALENDER_ENCOUNT_INFO* p_info, const RTCDate* p_date ); 
+extern u8 CALENDER_ENCOUNT_INFO_GetEncountNo( CALENDER_ENCOUNT_INFO* p_info, const RTCDate* p_date ); 
 
 //---------------------------------------------------------------------------------
 /**
@@ -59,4 +59,4 @@ u8 CALENDER_ENCOUNT_INFO_GetEncountNo( CALENDER_ENCOUNT_INFO* p_info, const RTCD
  * @param p_info 破棄するデータ
  */ 
 //---------------------------------------------------------------------------------
-void CALENDER_ENCOUNT_INFO_Delete( CALENDER_ENCOUNT_INFO* p_info ); 
+extern void CALENDER_ENCOUNT_INFO_Delete( CALENDER_ENCOUNT_INFO* p_info ); 

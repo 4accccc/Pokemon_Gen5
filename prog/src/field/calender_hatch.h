@@ -35,7 +35,7 @@ enum
  * @return 作成した孵化データ
  */
 //---------------------------------------------------------------------------------
-CALENDER_HATCH_INFO* CALENDER_HATCH_INFO_Create( HEAPID heap_id );
+extern CALENDER_HATCH_INFO* CALENDER_HATCH_INFO_Create( HEAPID heap_id );
 
 //---------------------------------------------------------------------------------
 /**
@@ -47,7 +47,7 @@ CALENDER_HATCH_INFO* CALENDER_HATCH_INFO_Create( HEAPID heap_id );
  * @return 指定した日付の孵化変化番号
  */
 //---------------------------------------------------------------------------------
-u8 CALENDER_HATCH_INFO_GetHatchNo( CALENDER_HATCH_INFO* p_info, const RTCDate* p_date ); 
+extern u8 CALENDER_HATCH_INFO_GetHatchNo( CALENDER_HATCH_INFO* p_info, const RTCDate* p_date ); 
 
 //---------------------------------------------------------------------------------
 /**
@@ -56,4 +56,4 @@ u8 CALENDER_HATCH_INFO_GetHatchNo( CALENDER_HATCH_INFO* p_info, const RTCDate* p
  * @param p_info 破棄するデータ
  */ 
 //---------------------------------------------------------------------------------
-void CALENDER_HATCH_INFO_Delete( CALENDER_HATCH_INFO* p_info ); 
+extern void CALENDER_HATCH_INFO_Delete( CALENDER_HATCH_INFO* p_info ); 

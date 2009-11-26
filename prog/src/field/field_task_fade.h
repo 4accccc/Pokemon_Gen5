@@ -21,5 +21,5 @@
  * @return çÏê¨ÇµÇΩÉ^ÉXÉN
  */
 //-----------------------------------------------------------------------------------------------
-FIELD_TASK* FIELD_TASK_Fade( FIELDMAP_WORK* fieldmap, 
-                             int mode, int start_evy, int end_evy, int wait );
+extern FIELD_TASK* FIELD_TASK_Fade( FIELDMAP_WORK* fieldmap, 
+                                    int mode, int start_evy, int end_evy, int wait );

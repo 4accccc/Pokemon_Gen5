@@ -33,7 +33,7 @@ typedef struct _CALENDER CALENDER;
  * @return 作成したカレンダー
  */
 //-----------------------------------------------------------------------------
-CALENDER* CALENDER_Create( HEAPID heap_id );
+extern CALENDER* CALENDER_Create( HEAPID heap_id );
 
 //-----------------------------------------------------------------------------
 /**
@@ -42,7 +42,7 @@ CALENDER* CALENDER_Create( HEAPID heap_id );
  * @param p_sys 破棄するカレンダー
  */
 //-----------------------------------------------------------------------------
-void CALENDER_Delete( CALENDER* p_sys );
+extern void CALENDER_Delete( CALENDER* p_sys );
 
 
 //=============================================================================
@@ -63,7 +63,7 @@ void CALENDER_Delete( CALENDER* p_sys );
  *         指定ゾーンが登録されていない場合, 無効値 WEATHER_NO_NONE が返る
  */
 //----------------------------------------------------------------------------- 
-u16 CALENDER_GetWeather( CALENDER* p_sys, const RTCDate* p_date, u16 zone_id );
+extern u16 CALENDER_GetWeather( CALENDER* p_sys, const RTCDate* p_date, u16 zone_id );
 
 //-----------------------------------------------------------------------------
 /**
@@ -75,7 +75,7 @@ u16 CALENDER_GetWeather( CALENDER* p_sys, const RTCDate* p_date, u16 zone_id );
  * @return 出現率変化番号( ENCOUNT_NO_x )
  */
 //-----------------------------------------------------------------------------
-u8 CALENDER_GetEncountNo( CALENDER* p_sys, const RTCDate* p_date );
+extern u8 CALENDER_GetEncountNo( CALENDER* p_sys, const RTCDate* p_date );
 
 //-----------------------------------------------------------------------------
 /**
@@ -87,4 +87,4 @@ u8 CALENDER_GetEncountNo( CALENDER* p_sys, const RTCDate* p_date );
  * @return 孵化変化番号( HATCH_NO_x )
  */
 //-----------------------------------------------------------------------------
-u8 CALENDER_GetHatchNo( CALENDER* p_sys, const RTCDate* p_date );
+extern u8 CALENDER_GetHatchNo( CALENDER* p_sys, const RTCDate* p_date );

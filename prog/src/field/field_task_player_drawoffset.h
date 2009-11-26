@@ -19,4 +19,4 @@
  * @return 作成したフィールドタスク
  */
 //------------------------------------------------------------------------------------------
-FIELD_TASK* FIELD_TASK_TransDrawOffset( FIELDMAP_WORK* fieldmap, int frame, const VecFx32* vec ); 
+extern FIELD_TASK* FIELD_TASK_TransDrawOffset( FIELDMAP_WORK* fieldmap, int frame, const VecFx32* vec ); 

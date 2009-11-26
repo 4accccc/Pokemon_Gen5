@@ -26,7 +26,7 @@ typedef struct _CALENDER_WEATHER_INFO CALENDER_WEATHER_INFO;
  * @return 作成したカレンダー天気データ
  */
 //----------------------------------------------------------------------------------------
-CALENDER_WEATHER_INFO* CALENDER_WEATHER_INFO_Create( HEAPID heap_id );
+extern CALENDER_WEATHER_INFO* CALENDER_WEATHER_INFO_Create( HEAPID heap_id );
 
 //----------------------------------------------------------------------------------------
 /**
@@ -39,7 +39,7 @@ CALENDER_WEATHER_INFO* CALENDER_WEATHER_INFO_Create( HEAPID heap_id );
  * @return 指定日の指定ゾーンの天気
  */
 //----------------------------------------------------------------------------------------
-u16 CALENDER_WEATHER_INFO_GetWeather( CALENDER_WEATHER_INFO* p_info, const RTCDate* p_date, u16 zone_id );
+extern u16 CALENDER_WEATHER_INFO_GetWeather( CALENDER_WEATHER_INFO* p_info, const RTCDate* p_date, u16 zone_id );
 
 //----------------------------------------------------------------------------------------
 /**
@@ -48,4 +48,4 @@ u16 CALENDER_WEATHER_INFO_GetWeather( CALENDER_WEATHER_INFO* p_info, const RTCDa
  * @param p_info 破棄するデータ
  */ 
 //----------------------------------------------------------------------------------------
-void CALENDER_WEATHER_INFO_Delete( CALENDER_WEATHER_INFO* p_info );
+extern void CALENDER_WEATHER_INFO_Delete( CALENDER_WEATHER_INFO* p_info );

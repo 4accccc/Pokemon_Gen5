@@ -15,7 +15,7 @@
 // fieldmap_tcb_camera_zoom.c
 //============================
 // カメラのズーム
-void FIELDMAP_TCB_AddTask_CameraZoom(                   // 等速ズーム
+extern void FIELDMAP_TCB_AddTask_CameraZoom(                   // 等速ズーム
     FIELDMAP_WORK* fieldmap, int frame, fx32 dist );  
-void FIELDMAP_TCB_AddTask_CameraZoom_Sharp(             // 急発進ズーム
+extern void FIELDMAP_TCB_AddTask_CameraZoom_Sharp(             // 急発進ズーム
     FIELDMAP_WORK* fieldmap, int frame, fx32 dist );  

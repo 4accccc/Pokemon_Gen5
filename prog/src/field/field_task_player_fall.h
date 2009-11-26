@@ -19,4 +19,4 @@
  * @return 作成したフィールドタスク
  */
 //------------------------------------------------------------------------------------------
-FIELD_TASK* FIELD_TASK_PlayerFall( FIELDMAP_WORK* fieldmap, int frame, int dist );
+extern FIELD_TASK* FIELD_TASK_PlayerFall( FIELDMAP_WORK* fieldmap, int frame, int dist );

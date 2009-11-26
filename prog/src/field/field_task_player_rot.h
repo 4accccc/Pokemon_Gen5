@@ -17,7 +17,7 @@
  * @param rot_num  âÒì]âÒêî
  */
 //------------------------------------------------------------------------------------------
-FIELD_TASK* FIELD_TASK_PlayerRotate( FIELDMAP_WORK* fieldmap, int frame, int rot_num );
+extern FIELD_TASK* FIELD_TASK_PlayerRotate( FIELDMAP_WORK* fieldmap, int frame, int rot_num );
 
 //------------------------------------------------------------------------------------------
 /**
@@ -28,7 +28,7 @@ FIELD_TASK* FIELD_TASK_PlayerRotate( FIELDMAP_WORK* fieldmap, int frame, int rot
  * @param rot_num  âÒì]âÒêî
  */
 //------------------------------------------------------------------------------------------
-FIELD_TASK* FIELD_TASK_PlayerRotate_SpeedUp( FIELDMAP_WORK* fieldmap, int frame, int rot_num );
+extern FIELD_TASK* FIELD_TASK_PlayerRotate_SpeedUp( FIELDMAP_WORK* fieldmap, int frame, int rot_num );
 
 //------------------------------------------------------------------------------------------
 /**
@@ -39,4 +39,4 @@ FIELD_TASK* FIELD_TASK_PlayerRotate_SpeedUp( FIELDMAP_WORK* fieldmap, int frame,
  * @param rot_num  âÒì]âÒêî
  */
 //------------------------------------------------------------------------------------------
-FIELD_TASK* FIELD_TASK_PlayerRotate_SpeedDown( FIELDMAP_WORK* fieldmap, int frame, int rot_num );
+extern FIELD_TASK* FIELD_TASK_PlayerRotate_SpeedDown( FIELDMAP_WORK* fieldmap, int frame, int rot_num );

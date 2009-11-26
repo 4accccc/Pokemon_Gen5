@@ -17,4 +17,4 @@
  * @param frame    “®ìƒtƒŒ[ƒ€”
  */
 //----------------------------------------------------------------------------------------------
-FIELD_TASK* FIELD_TASK_Wait( FIELDMAP_WORK* fieldmap,  u16 frame );
+extern FIELD_TASK* FIELD_TASK_Wait( FIELDMAP_WORK* fieldmap,  u16 frame );

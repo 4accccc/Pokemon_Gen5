@@ -66,7 +66,7 @@ typedef struct _GOBJ_ELBOARD GOBJ_ELBOARD;
  * @return 作成した電光掲示板
  */
 //----------------------------------------------------------------------------------
-GOBJ_ELBOARD* GOBJ_ELBOARD_Create( ELBOARD_PARAM* param );
+extern GOBJ_ELBOARD* GOBJ_ELBOARD_Create( ELBOARD_PARAM* param );
 
 //----------------------------------------------------------------------------------
 /**
@@ -76,7 +76,7 @@ GOBJ_ELBOARD* GOBJ_ELBOARD_Create( ELBOARD_PARAM* param );
  * @param news_param 追加するニュース
  */
 //----------------------------------------------------------------------------------
-void GOBJ_ELBOARD_AddNews( GOBJ_ELBOARD* elboard, const NEWS_PARAM* news_param );
+extern void GOBJ_ELBOARD_AddNews( GOBJ_ELBOARD* elboard, const NEWS_PARAM* news_param );
 
 
 //==================================================================================
@@ -89,7 +89,7 @@ void GOBJ_ELBOARD_AddNews( GOBJ_ELBOARD* elboard, const NEWS_PARAM* news_param )
  * @param elboard 破棄する掲示板
  */
 //----------------------------------------------------------------------------------
-void GOBJ_ELBOARD_Delete( GOBJ_ELBOARD* elboard );
+extern void GOBJ_ELBOARD_Delete( GOBJ_ELBOARD* elboard );
 
 
 //==================================================================================
@@ -104,7 +104,7 @@ void GOBJ_ELBOARD_Delete( GOBJ_ELBOARD* elboard );
  * @param frame   動作フレーム数
  */
 //----------------------------------------------------------------------------------
-void GOBJ_ELBOARD_Main( GOBJ_ELBOARD* elboard, fx32 frame );
+extern void GOBJ_ELBOARD_Main( GOBJ_ELBOARD* elboard, fx32 frame );
 
 
 //==================================================================================
@@ -120,7 +120,7 @@ void GOBJ_ELBOARD_Main( GOBJ_ELBOARD* elboard, fx32 frame );
  * @return 指定した掲示板の現在の動作フレーム数
  */
 //----------------------------------------------------------------------------------
-fx32 GOBJ_ELBOARD_GetFrame( const GOBJ_ELBOARD* elboard );
+extern fx32 GOBJ_ELBOARD_GetFrame( const GOBJ_ELBOARD* elboard );
 
 //----------------------------------------------------------------------------------
 /**
@@ -131,7 +131,7 @@ fx32 GOBJ_ELBOARD_GetFrame( const GOBJ_ELBOARD* elboard );
  * @return 掲示板が使用するヒープID
  */
 //----------------------------------------------------------------------------------
-HEAPID GOBJ_ELBOARD_GetHeapID( const GOBJ_ELBOARD* elboard );
+extern HEAPID GOBJ_ELBOARD_GetHeapID( const GOBJ_ELBOARD* elboard );
 
 //----------------------------------------------------------------------------------
 /**
@@ -142,7 +142,7 @@ HEAPID GOBJ_ELBOARD_GetHeapID( const GOBJ_ELBOARD* elboard );
  * @return 指定した掲示板が表示するニュースの数
  */
 //----------------------------------------------------------------------------------
-u8 GOBJ_ELBOARD_GetNewsNum( const GOBJ_ELBOARD* elboard );
+extern u8 GOBJ_ELBOARD_GetNewsNum( const GOBJ_ELBOARD* elboard );
 
 
 //==================================================================================
@@ -157,4 +157,4 @@ u8 GOBJ_ELBOARD_GetNewsNum( const GOBJ_ELBOARD* elboard );
  * @param frame   設定するフレーム数
  */
 //----------------------------------------------------------------------------------
-void GOBJ_ELBOARD_SetFrame( GOBJ_ELBOARD* elboard, fx32 frame );
+extern void GOBJ_ELBOARD_SetFrame( GOBJ_ELBOARD* elboard, fx32 frame );

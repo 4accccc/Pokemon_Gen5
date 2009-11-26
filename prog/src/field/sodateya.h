@@ -53,7 +53,8 @@ typedef struct _SODATEYA SODATEYA;
  * @return 作成した育て屋さん
  */
 //---------------------------------------------------------------------------------------- 
-SODATEYA* SODATEYA_Create( HEAPID heap_id, FIELDMAP_WORK* fieldmap, SODATEYA_WORK* work );
+extern SODATEYA* SODATEYA_Create( HEAPID heap_id, 
+                                  FIELDMAP_WORK* fieldmap, SODATEYA_WORK* work );
 
 //----------------------------------------------------------------------------------------
 /**
@@ -62,7 +63,7 @@ SODATEYA* SODATEYA_Create( HEAPID heap_id, FIELDMAP_WORK* fieldmap, SODATEYA_WOR
  * @param sodateya 破棄する育て屋さん
  */
 //----------------------------------------------------------------------------------------
-void SODATEYA_Delete( SODATEYA* sodateya );
+extern void SODATEYA_Delete( SODATEYA* sodateya );
 
 
 //========================================================================================
@@ -78,7 +79,7 @@ void SODATEYA_Delete( SODATEYA* sodateya );
  * @param pos      預かるポケモンを指定
  */
 //---------------------------------------------------------------------------------------- 
-void SODATEYA_TakePokemon( SODATEYA* sodateya, POKEPARTY* party, int pos );
+extern void SODATEYA_TakePokemon( SODATEYA* sodateya, POKEPARTY* party, int pos );
 
 //----------------------------------------------------------------------------------------
 /**
@@ -89,7 +90,7 @@ void SODATEYA_TakePokemon( SODATEYA* sodateya, POKEPARTY* party, int pos );
  * @param party    返し先のパーティー
  */
 //---------------------------------------------------------------------------------------- 
-void SODATEYA_TakeBackPokemon( SODATEYA* sodateya, int index, POKEPARTY* party );
+extern void SODATEYA_TakeBackPokemon( SODATEYA* sodateya, int index, POKEPARTY* party );
 
 //----------------------------------------------------------------------------------------
 /**
@@ -99,7 +100,7 @@ void SODATEYA_TakeBackPokemon( SODATEYA* sodateya, int index, POKEPARTY* party )
  * @param party    渡す先のパーティー
  */
 //---------------------------------------------------------------------------------------- 
-void SODATEYA_TakeBackEgg( SODATEYA* sodateya, POKEPARTY* party );
+extern void SODATEYA_TakeBackEgg( SODATEYA* sodateya, POKEPARTY* party );
 
 //----------------------------------------------------------------------------------------
 /**
@@ -108,7 +109,7 @@ void SODATEYA_TakeBackEgg( SODATEYA* sodateya, POKEPARTY* party );
  * @param sodateya 育て屋さん
  */
 //---------------------------------------------------------------------------------------- 
-void SODATEYA_DeleteEgg( SODATEYA* sodateya );
+extern void SODATEYA_DeleteEgg( SODATEYA* sodateya );
 
 
 //========================================================================================
@@ -122,7 +123,7 @@ void SODATEYA_DeleteEgg( SODATEYA* sodateya );
  * @param sodateya ポケモンを育てる育て屋さん
  */
 //---------------------------------------------------------------------------------------- 
-void SODATEYA_BreedPokemon( SODATEYA* sodateya );
+extern void SODATEYA_BreedPokemon( SODATEYA* sodateya );
 
 
 //========================================================================================
@@ -137,7 +138,7 @@ void SODATEYA_BreedPokemon( SODATEYA* sodateya );
  * @return タマゴがある場合 TRUE
  */
 //----------------------------------------------------------------------------------------
-BOOL SODATEYA_HaveEgg( const SODATEYA* sodateya );
+extern BOOL SODATEYA_HaveEgg( const SODATEYA* sodateya );
 
 //----------------------------------------------------------------------------------------
 /**
@@ -147,7 +148,7 @@ BOOL SODATEYA_HaveEgg( const SODATEYA* sodateya );
  * @return 飼育中のポケモン数
  */
 //----------------------------------------------------------------------------------------
-u8 SODATEYA_GetPokemonNum( const SODATEYA* sodateya );
+extern u8 SODATEYA_GetPokemonNum( const SODATEYA* sodateya );
 
 //----------------------------------------------------------------------------------------
 /**
@@ -158,7 +159,7 @@ u8 SODATEYA_GetPokemonNum( const SODATEYA* sodateya );
  * @return 指定ポケモンの現時点のレベル
  */
 //---------------------------------------------------------------------------------------- 
-u32 SODATEYA_GetPokeLv_Current( const SODATEYA* sodateya, int index );
+extern u32 SODATEYA_GetPokeLv_Current( const SODATEYA* sodateya, int index );
 
 //----------------------------------------------------------------------------------------
 /**
@@ -169,7 +170,7 @@ u32 SODATEYA_GetPokeLv_Current( const SODATEYA* sodateya, int index );
  * @return 指定ポケモンの成長レベル数
  */
 //---------------------------------------------------------------------------------------- 
-u32 SODATEYA_GetPokeLv_GrowUp( const SODATEYA* sodateya, int index );
+extern u32 SODATEYA_GetPokeLv_GrowUp( const SODATEYA* sodateya, int index );
 
 //----------------------------------------------------------------------------------------
 /**
@@ -180,7 +181,7 @@ u32 SODATEYA_GetPokeLv_GrowUp( const SODATEYA* sodateya, int index );
  * @return 指定ポケモンの引き取り金額
  */
 //---------------------------------------------------------------------------------------- 
-u32 SODATEYA_GetCharge( const SODATEYA* sodateya, int index );
+extern u32 SODATEYA_GetCharge( const SODATEYA* sodateya, int index );
 
 //----------------------------------------------------------------------------------------
 /**
@@ -190,7 +191,7 @@ u32 SODATEYA_GetCharge( const SODATEYA* sodateya, int index );
  * @return 飼育ポケモン同士の相性[%]
  */
 //---------------------------------------------------------------------------------------- 
-u8 SODATEYA_GetLoveLevel( const SODATEYA* sodateya );
+extern u8 SODATEYA_GetLoveLevel( const SODATEYA* sodateya );
 
 //----------------------------------------------------------------------------------------
 /**
@@ -201,7 +202,7 @@ u8 SODATEYA_GetLoveLevel( const SODATEYA* sodateya );
  * @return 指定ポケモンの飼育開始当初のパラメータ
  */
 //---------------------------------------------------------------------------------------- 
-const POKEMON_PARAM* SODATEYA_GetPokemonParam( const SODATEYA* sodateya, int index );
+extern const POKEMON_PARAM* SODATEYA_GetPokemonParam( const SODATEYA* sodateya, int index );
 
 
 
@@ -218,4 +219,4 @@ const POKEMON_PARAM* SODATEYA_GetPokemonParam( const SODATEYA* sodateya, int ind
  * @param heap_id 使用するヒープID
  */
 //---------------------------------------------------------------------------------------- 
-void POKEMON_EGG_Birth( POKEMON_PARAM* egg, const MYSTATUS* owner, HEAPID heap_id );
+extern void POKEMON_EGG_Birth( POKEMON_PARAM* egg, const MYSTATUS* owner, HEAPID heap_id );

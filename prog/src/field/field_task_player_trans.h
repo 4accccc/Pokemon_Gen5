@@ -17,4 +17,4 @@
  * @param pos      à⁄ìÆêÊç¿ïW
  */
 //-----------------------------------------------------------------------------------------------
-FIELD_TASK* FIELD_TASK_TransPlayer( FIELDMAP_WORK* fieldmap, int frame, VecFx32* pos );
+extern FIELD_TASK* FIELD_TASK_TransPlayer( FIELDMAP_WORK* fieldmap, int frame, VecFx32* pos );
