@@ -6,7 +6,12 @@ REM 制作者  : hosaka_genya
 REM 日付    : 2009/11/24
 REM =================================================================
 
-SET IPMSG_BAT=tools/hudson/hudson_ipmsg.bat
+SET PATH_TOOLS=C:\.hudson\jobs\wb_make\workspace\pokemon_wb\tools\hudson
+
+REM デバイスのON/OFF は問題なく動作する。
+REM devcon enable *HID*
+
+REM IPMSGなぜかはhudsonがexit 0を拾ってしまう。
 
 REM ================================
 REM ユーザーネーム設定
@@ -29,18 +34,14 @@ REM ================================
 REM cleanしておく
 REM make clean
 
-REM IPMSGで通知(エラーレベルを上書きしてしまう)
-REM %IPMSG_BAT% 1
-REM ↑を使うと、↓に流れてこない...
-
 @echo errorlevel = %ERRORLEVEL%
+
 exit %ERRORLEVEL%
 
 REM ================================
 REM 正常終了
 REM ================================
 :END
-  REM %IPMSG_BAT% 0
   @echo hudson make end
 
 
