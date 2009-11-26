@@ -96,7 +96,7 @@ ev_hiden_kairiki_02:
   _AB_KEYWAIT()
   _SYSWIN_CLOSE()
   
-//  _CUTIN      SCWK_TEMP0 //カットイン
+  _CALL_POKE_CUTIN(SCWK_TEMP0) //カットイン
 //  _TALK_CLOSE    //カットインでMSG用BGがクリアされている対処
   
   _SYSWIN_MSG_DOWN( msg_kairiki_06 )
@@ -120,7 +120,8 @@ EVENT_START ev_hiden_kairiki_menu
     _SYSWIN_MSG_DOWN( msg_kairiki_05 )
     _SYSWIN_CLOSE()
 
-//    _CUTIN SCWK_PARAM0 //カットイン
+    _CALL_POKE_CUTIN(SCWK_PARAM0) //カットイン
+
     
       _SYSWIN_MSG_DOWN( msg_kairiki_06 )
     _LAST_KEYWAIT()
@@ -184,7 +185,7 @@ ev_hiden_naminori_02:
   _AB_KEYWAIT()
   _SYSWIN_CLOSE()
   
-  //_CUTIN      SCWK_TEMP0
+  _CALL_POKE_CUTIN(SCWK_TEMP0)
   _NAMINORI()
   
   //冒険ノート
@@ -252,7 +253,7 @@ ev_hiden_iaigiri_02:
   _SYSWIN_CLOSE()
   
   //カットイン
-//  _CUTIN      SCWK_TEMP0 //カットイン
+  _CALL_POKE_CUTIN(SCWK_TEMP0) //カットイン
   
   //居合い切りエフェクト
 //  _HIDENEFF_START 0,SCWK_TEMP1  // SCWK_TEMP1に1が入ったらエフェクト終了
@@ -281,7 +282,7 @@ EVENT_START ev_hiden_iaigiri_menu
 	_SYSWIN_CLOSE()
   
   //カットイン
-//	_CUTIN			SCWK_PARAM0
+	_CALL_POKE_CUTIN(SCWK_PARAM0)
   
   //居合い切りエフェクト
 //	_HIDENEFF_START 0,SCWK_TEMP1	// SCWK_TEMP1に1が入ったらエフェクト終了
@@ -338,7 +339,7 @@ ev_hiden_takinobori_02:
 	_SYSWIN_MSG_DOWN( msg_taki_02 )
 	_SYSWIN_CLOSE()
 
-	//_CUTIN			SCWK_TEMP0
+	_CALL_POKE_CUTIN(SCWK_TEMP0)
 	_TAKINOBORI( SCWK_TEMP0 )
   
   //冒険ノート
@@ -353,7 +354,7 @@ EVENT_START ev_hiden_takinobori_menu
 	_SYSWIN_CLOSE()
   
 //	_OBJ_PAUSE_CLEAR	FLDOBJ_ID_PLAYER
-	//_CUTIN			SCWK_PARAM0
+	_CALL_POKE_CUTIN(SCWK_PARAM0)
 	_TAKINOBORI( SCWK_PARAM0 )
   
   //冒険ノート
