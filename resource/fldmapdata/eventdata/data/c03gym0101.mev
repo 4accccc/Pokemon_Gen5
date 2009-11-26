@@ -1,5 +1,5 @@
 #event data
-#save date:2009/11/24 21:23:07
+#save date:2009/11/26 13:13:16
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 0 -280
+264 0 -280
 #event number: 1
 #type
 1
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-120 0 -216
+360 0 -216
 #event number: 2
 #type
 1
@@ -102,7 +102,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 -216
+168 0 -216
 #event number: 3
 #type
 1
@@ -133,7 +133,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--168 0 -152
+72 0 -152
 #event number: 4
 #type
 1
@@ -164,7 +164,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 -88
+168 0 -88
 #event number: 5
 #type
 1
@@ -195,7 +195,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-120 0 -88
+360 0 -88
 #event number: 6
 #type
 1
@@ -226,7 +226,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 0 -24
+264 0 -24
 #event number: 7
 #type
 1
@@ -257,7 +257,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-120 0 -136
+360 0 -136
 #event number: 8
 #type
 1
@@ -288,7 +288,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--168 0 -200
+72 0 -200
 #event number: 9
 #type
 1
@@ -319,7 +319,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 64 184
+264 64 184
 #event number: 10
 #type
 1
@@ -350,7 +350,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-56 0 -456
+296 0 -456
 #event number: 11
 #type
 1
@@ -381,7 +381,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-120 0 -8
+360 0 -8
 #event number: 12
 #type
 1
@@ -412,7 +412,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 -8
+168 0 -8
 #event number: 13
 #type
 1
@@ -443,7 +443,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 -280
+168 0 -280
 #event number: 14
 #type
 1
@@ -474,7 +474,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 0 -264
+392 0 -264
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -497,7 +497,7 @@ SCRID_BG_C03GYM0101_STATUE_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--24 0 -456
+216 0 -456
 #event number: 1
 #Bg Event Label
 BG_C03GYM0101_STATUE_02
@@ -510,7 +510,7 @@ SCRID_BG_C03GYM0101_STATUE_02
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-72 0 -456
+312 0 -456
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
@@ -533,7 +533,7 @@ LOCALWORK6
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 0 -216
+264 0 -216
 #size
 1 1
 #event number: 1
@@ -548,7 +548,7 @@ LOCALWORK7
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-216 0 -216
+456 0 -216
 #size
 1 1
 #event number: 2
@@ -563,7 +563,7 @@ LOCALWORK3
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 0 -88
+264 0 -88
 #size
 1 1
 #event number: 3
@@ -578,7 +578,7 @@ LOCALWORK5
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 -152
+168 0 -152
 #size
 1 1
 #event number: 4
@@ -593,7 +593,7 @@ LOCALWORK2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--168 0 -88
+72 0 -88
 #size
 1 1
 #event number: 5
@@ -608,7 +608,7 @@ LOCALWORK4
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-216 0 -88
+456 0 -88
 #size
 1 1
 #event number: 6
@@ -623,7 +623,7 @@ LOCALWORK0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 -24
+168 0 -24
 #size
 1 1
 #event number: 7
@@ -638,7 +638,7 @@ LOCALWORK1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-120 0 -24
+360 0 -24
 #size
 1 1
 #event number: 8
@@ -653,7 +653,7 @@ LOCALWORK9
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--168 0 -216
+72 0 -216
 #size
 1 1
 #event number: 9
@@ -668,7 +668,7 @@ LOCALWORK8
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-120 0 -152
+360 0 -152
 #size
 1 1
 #event number: 10
@@ -683,7 +683,7 @@ LOCALWORK15
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-8 0 -504
+248 0 -504
 #size
 3 1
 #Map Event List Data End
@@ -710,7 +710,7 @@ EXIT_TYPE_MAT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-8 0 -520
+248 0 -520
 #size
 1 1
 #event number: 1
@@ -727,7 +727,7 @@ EXIT_TYPE_MAT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 0 -520
+264 0 -520
 #size
 1 1
 #event number: 2
@@ -744,7 +744,7 @@ EXIT_TYPE_MAT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-40 0 -520
+280 0 -520
 #size
 1 1
 #Map Event List Data End
