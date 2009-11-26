@@ -6,14 +6,25 @@ REM 制作者  : hosaka_genya
 REM 日付    : 2009/11/24
 REM =================================================================
 
+REM ##################################################
+REM		パスの追加
+REM ##################################################
+PATH=c:\tools;%PROJECT_ROOT%;%PROJECT_ROOT%\tools;c:\tools\subversion\bin;c:\cygwin\bin;c:\tools\vim;C:\tools;%NITROSDK_ROOT%\tools\bin;%NITROSYSTEM_ROOT%\tools\bin;%PATH%;
+
+SET HOME_TMP=%~dp0
+SET PROJECT_ROOT=%HOME_TMP:\=/%
+SET PROJECT_PROGDIR=%PROJECT_ROOT%prog/
+
 REM main.srl
 SET PATH_MAIN_SRL=%PROJECT_PROGDIR%bin/ARM9-TS/Release/main.srl
 
 REM 実行タイムアウト(秒) >> hudsonで指定
-REM SET TIMEOUT_EXEC=60 
+SET TIMEOUT_EXEC=%1 
 
 REM 対象DSのシリアルナンバー >> hudsonで指定
-REM SET SERIAL_NO=05113644
+SET SERIAL_NO=%2
+REM wbrom:05093474
+REM hosaka:05113644
 
 REM 終了検出文字列(改行が来た時に先頭から判定)
 SET ABORT_STRING="  **** ASSERTION FAILED ! ****"
@@ -25,13 +36,16 @@ SET USERNAME=hudson
 @echo USERNAME = %USERNAME%
 
 @echo loadpath = %PATH_MAIN_SRL%
+@echo timeout_exec = %TIMEOUT_EXEC%
+@echo serial_no = %SERIAL_NO%
 
 REM ================================
 REM ブート
 REM ================================
+
 REM buryarg %PATH_MAIN_SRL% 1
 
-loadrun -T %TIMEOUT_EXEC% -a %ABORT_STRING% -s %SERIAL_NO% %PATH_MAIN_SRL%
+loadrun -T %TIMEOUT_EXEC% %PATH_MAIN_SRL%
 echo ErrorLevel = %ERRORLEVEL%
 
 REM デバイスが見つからなかった
@@ -59,4 +73,5 @@ REM ================================
   @echo hudson test is SUCCESS .
   pause
   exit 0
+
 
