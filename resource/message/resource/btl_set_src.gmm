@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-11-25T21:19:24"/>
+	<create user="taya" host="W00146" date="2009-11-26T15:51:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2570,6 +2570,67 @@
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 相手の　[1:02:ポケモンニックネーム:1]から▽
 [1:09:どうぐ名:2]を　受け取った！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_FreeFall">
+		<comment>フリーフォール</comment>
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]を
+じょうくうに　つれさった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]を
+上空に　連れ去った！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_FreeFall_2Y">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　やせいの　[1:02:ポケモンニックネーム:1]を
+じょうくうに　つれさった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　野生の　[1:02:ポケモンニックネーム:1]を
+上空に　連れ去った！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_FreeFall_2E">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　あいての　[1:02:ポケモンニックネーム:1]を
+じょうくうに　つれさった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　野生の　[1:02:ポケモンニックネーム:1]を
+上空に　連れ去った！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_FreeFall_Y">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]を
+じょうくうに　つれさった！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]を
+上空に　連れ去った！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_FreeFall_Y2Y">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+やせいの　[1:02:ポケモンニックネーム:1]を▽
+じょうくうに　つれさった！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+野生の　[1:02:ポケモンニックネーム:1]を▽
+上空に　連れ去った！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_FreeFall_E">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]を
+じょうくうに　つれさった！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]を
+上空に　連れ去った！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_FreeFall_E2E">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+あいての　[1:02:ポケモンニックネーム:1]を▽
+じょうくうに　つれさった！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+相手の　[1:02:ポケモンニックネーム:1]を▽
+上空に　連れ去った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Utiotosu">
