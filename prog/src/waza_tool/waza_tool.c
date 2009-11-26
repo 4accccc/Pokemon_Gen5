@@ -15,7 +15,12 @@
 
 #include  "waza_tool_def.h"
 
-
+/*------------------------------------------------------------------------------------*/
+/*  consts                                                                            */
+/*------------------------------------------------------------------------------------*/
+enum {
+  RANK_STORE_MAX = 3,
+};
 /*------------------------------------------------------------------------------------*/
 /*  structures                                                                        */
 /*------------------------------------------------------------------------------------*/
@@ -37,15 +42,9 @@ struct _WAZA_DATA {
   u8  sickTurnMax;  ///< 状態異常の継続ターン最大
   u8  criticalRank; ///< クリティカルランク
   u8  shrinkPer;    ///< ひるみ確率
-  u8  rankEffType1; ///< ステータスランク効果１
-  s8  rankEffValue1;///< ステータスランク効果１増減値
-  u8  rankEffPer1;  ///< ステータスランク効果１の発生率
-  u8  rankEffType2; ///< ステータスランク効果２
-  s8  rankEffValue2;///< ステータスランク効果２増減値
-  u8  rankEffPer2;  ///< ステータスランク効果２の発生率
-  u8  rankEffType3; ///< ステータスランク効果３
-  s8  rankEffValue3;///< ステータスランク効果３増減値
-  u8  rankEffPer3;  ///< ステータスランク効果３の発生率
+  u8  rankEffType[WAZA_RANKEFF_NUM_MAX]; ///< ステータスランク効果
+  s8  rankEffValue[WAZA_RANKEFF_NUM_MAX];///< ステータスランク増減値
+  u8  rankEffPer[WAZA_RANKEFF_NUM_MAX];  ///< ステータスランク発生率
   s8  damageRecoverRatio; ///< ダメージ回復率
   s8  HPRecoverRatio;     ///< HP回復率
   u8  target;       ///< ワザ効果範囲( enum WazaTarget )
@@ -151,24 +150,23 @@ int WAZADATA_PTR_GetParam( const WAZA_DATA* wazaData, WazaDataParam param )
     return wazaData->sickTurnMin;
   case WAZAPARAM_SICK_TURN_MAX:       ///< 状態異常の継続ターン最大
     return wazaData->sickTurnMax;
+
   case WAZAPARAM_RANKTYPE_1:          ///< ステータスランク効果１
-    return wazaData->rankEffType1;
-  case WAZAPARAM_RANKVALUE_1:         ///< ステータスランク効果１増減値
-    return wazaData->rankEffValue1;
-  case WAZAPARAM_RANKPER_1:           ///< ステータスランク効果１の発生率
-    return wazaData->rankEffPer1;
   case WAZAPARAM_RANKTYPE_2:          ///< ステータスランク効果２
-    return wazaData->rankEffType2;
-  case WAZAPARAM_RANKVALUE_2:         ///< ステータスランク効果２増減値
-    return wazaData->rankEffValue2;
-  case WAZAPARAM_RANKPER_2:           ///< ステータスランク効果２の発生率
-    return wazaData->rankEffPer2;
   case WAZAPARAM_RANKTYPE_3:          ///< ステータスランク効果３
-    return wazaData->rankEffType3;
+    return wazaData->rankEffType[ param - WAZAPARAM_RANKTYPE_1 ];
+
+  case WAZAPARAM_RANKVALUE_1:         ///< ステータスランク効果１増減値
+  case WAZAPARAM_RANKVALUE_2:         ///< ステータスランク効果２増減値
   case WAZAPARAM_RANKVALUE_3:         ///< ステータスランク効果３増減値
-    return wazaData->rankEffValue3;
+    return wazaData->rankEffValue[ param - WAZAPARAM_RANKVALUE_1 ];
+
+  case WAZAPARAM_RANKPER_1:           ///< ステータスランク効果１の発生率
+  case WAZAPARAM_RANKPER_2:           ///< ステータスランク効果２の発生率
   case WAZAPARAM_RANKPER_3:           ///< ステータスランク効果３の発生率
-    return wazaData->rankEffPer3;
+    return wazaData->rankEffPer[ param - WAZAPARAM_RANKPER_1 ];
+
+
   case WAZAPARAM_DAMAGE_RECOVER_RATIO:///< ダメージ回復率
     if( wazaData->damageRecoverRatio > 0 ){
       return wazaData->damageRecoverRatio;
@@ -234,6 +232,7 @@ BOOL WAZADATA_GetFlag( WazaID wazaID, WazaFlag flag )
 BOOL WAZADATA_PTR_GetFlag( const WAZA_DATA* wazaData, WazaFlag flag )
 {
   GF_ASSERT(flag<WAZAFLAG_MAX);
+  TAYA_Printf("FlagID=%d, bits=%08x\n", flag, wazaData->flags);
   return (wazaData->flags & (1<<flag)) != 0;
 }
 
@@ -272,17 +271,12 @@ WAZA_SICKCONT_PARAM WAZADATA_GetSickCont( WazaID id )
 u8 WAZADATA_GetRankEffectCount( WazaID id )
 {
   WAZA_DATA* wp = loadWazaDataTmp( id );
-  u8 cnt = 0;
-
-  do {
-    if( wp->rankEffType1 == WAZA_RANKEFF_NULL ){ break; }
-    ++cnt;
-    if( wp->rankEffType2 == WAZA_RANKEFF_NULL ){ break; }
-    ++cnt;
-    if( wp->rankEffType3 == WAZA_RANKEFF_NULL ){ break; }
-    ++cnt;
-  }while( 0 );
-
+  u32 i, cnt = 0;
+  for(i=0; i<RANK_STORE_MAX; ++i){
+    if( wp->rankEffType[i] != WAZA_RANKEFF_NULL ){
+      ++cnt;
+    }
+  }
   return cnt;
 }
 //=============================================================================================
@@ -301,18 +295,16 @@ WazaRankEffect WAZADATA_GetRankEffect( WazaID id, u32 idx, int* volume )
   GF_ASSERT(idx < WAZA_RANKEFF_NUM_MAX);
   {
     WAZA_DATA* wp = loadWazaDataTmp( id );
-    WAZA_SICKCONT_PARAM  param;
-    u8* ptr;
+    WazaRankEffect  eff;
 
-    ptr = &wp->rankEffType1;
-    ptr += (idx * 3);
-    if( *ptr != WAZA_RANKEFF_NULL )
-    {
-      *volume = *((s8*)(ptr+1));
-      return *ptr;
+    eff = wp->rankEffType[ idx ];
+    if( eff != WAZA_RANKEFF_NULL ){
+      *volume = wp->rankEffValue[ idx ];
     }
-    *volume = 0;
-    return WAZA_RANKEFF_NULL;
+    else{
+      *volume = 0;
+    }
+    return eff;
   }
 }
 //============================================================================================
