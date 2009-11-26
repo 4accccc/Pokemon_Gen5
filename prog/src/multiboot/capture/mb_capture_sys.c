@@ -24,6 +24,7 @@
 #include "multiboot/mb_local_def.h"
 #include "multiboot/mb_capture_sys.h"
 #include "./mb_cap_obj.h"
+#include "./mb_cap_poke.h"
 #include "./mb_cap_local_def.h"
 
 
@@ -64,6 +65,7 @@ typedef struct
   GFL_G3D_CAMERA    *camera;
   GFL_BBD_SYS     *bbdSys;
   
+  MB_CAP_POKE *pokeObj[MB_CAP_POKE_NUM];
   MB_CAP_OBJ  *fieldObj[MB_CAP_OBJ_NUM];
   
 }MB_CAPTURE_WORK;
@@ -86,18 +88,20 @@ static void MB_CAPTURE_LoadResource( MB_CAPTURE_WORK *work );
 
 static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work );
 static void MB_CAPTURE_TermObject( MB_CAPTURE_WORK *work );
+static void MB_CAPTURE_InitPoke( MB_CAPTURE_WORK *work );
+static void MB_CAPTURE_TermPoke( MB_CAPTURE_WORK *work );
 
 static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_BG_128_A,             // メイン2DエンジンのBG
   GX_VRAM_BGEXTPLTT_NONE,       // メイン2DエンジンのBG拡張パレット
   GX_VRAM_SUB_BG_128_C,         // サブ2DエンジンのBG
   GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
-  GX_VRAM_OBJ_128_B ,           // メイン2DエンジンのOBJ
+  GX_VRAM_OBJ_NONE ,           // メイン2DエンジンのOBJ
   GX_VRAM_OBJEXTPLTT_NONE,      // メイン2DエンジンのOBJ拡張パレット
   GX_VRAM_SUB_OBJ_128_D,        // サブ2DエンジンのOBJ
   GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
-  GX_VRAM_TEX_NONE,             // テクスチャイメージスロット
-  GX_VRAM_TEXPLTT_NONE,         // テクスチャパレットスロット
+  GX_VRAM_TEX_0_B,             // テクスチャイメージスロット
+  GX_VRAM_TEXPLTT_01_FG,         // テクスチャパレットスロット
   GX_OBJVRAMMODE_CHAR_1D_128K,
   GX_OBJVRAMMODE_CHAR_1D_128K
 };
@@ -115,6 +119,7 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
   work->vBlankTcb = GFUser_VIntr_CreateTCB( MB_CAPTURE_VBlankFunc , work , 8 );
 
   MB_CAPTURE_InitObject( work );
+  MB_CAPTURE_InitPoke( work );
 }
 
 //--------------------------------------------------------------
@@ -123,6 +128,7 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
 static void MB_CAPTURE_Term( MB_CAPTURE_WORK *work )
 {
   MB_CAPTURE_TermObject( work );
+  MB_CAPTURE_TermPoke( work );
 
   GFL_TCB_DeleteTask( work->vBlankTcb );
 
@@ -308,7 +314,7 @@ static void MB_CAPTURE_InitGraphic( MB_CAPTURE_WORK *work )
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO , GX_BUFFERMODE_Z );
   }
   {
-    VecFx32 bbdScale = {FX32_CONST(32.0f),FX32_CONST(32.0f),FX32_CONST(32.0f)};
+    VecFx32 bbdScale = {FX32_CONST(16.0f),FX32_CONST(16.0f),FX32_CONST(16.0f)};
     GFL_BBD_SETUP bbdSetup = {
       128,128,
       {FX32_ONE,FX32_ONE,FX32_ONE},
@@ -391,26 +397,47 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
   
   for( i=0;i<MB_CAP_OBJ_MAIN_NUM;i++ )
   {
-    initWork.pos.x = FX32_CONST( (i%MB_CAP_OBJ_X_NUM) * 40 + 48 );
-    initWork.pos.y = FX32_CONST( (i/MB_CAP_OBJ_X_NUM) * 40 + 64 );
+    initWork.type = MCOT_GRASS;
+    initWork.pos.x = FX32_CONST( (i%MB_CAP_OBJ_X_NUM) * MB_CAP_OBJ_MAIN_X_SPACE + MB_CAP_OBJ_MAIN_LEFT );
+    initWork.pos.y = FX32_CONST( (i/MB_CAP_OBJ_X_NUM) * MB_CAP_OBJ_MAIN_Y_SPACE + MB_CAP_OBJ_MAIN_TOP );
     initWork.pos.z = 0;
     work->fieldObj[i] = MB_CAP_OBJ_CreateObject( &initWork );
   }
   for( i=MB_CAP_OBJ_SUB_U_START;i<MB_CAP_OBJ_SUB_D_START;i++ )
   {
-    initWork.pos.x = 0;
-    initWork.pos.y = 0;
-    initWork.pos.y = 0;
+    const int idx = i-MB_CAP_OBJ_SUB_U_START;
+    initWork.type = MCOT_WOOD;
+    initWork.pos.x = FX32_CONST( idx * MB_CAP_OBJ_MAIN_X_SPACE + MB_CAP_OBJ_MAIN_LEFT );
+    initWork.pos.y = FX32_CONST( MB_CAP_OBJ_SUB_U_TOP );
+    initWork.pos.z = 0;
     work->fieldObj[i] = MB_CAP_OBJ_CreateObject( &initWork );
   }
   for( i=MB_CAP_OBJ_SUB_D_START;i<MB_CAP_OBJ_SUB_R_START;i++ )
   {
+    const int idx = i-MB_CAP_OBJ_SUB_D_START;
+    initWork.type = MCOT_WATER;
+    initWork.pos.x = FX32_CONST( idx * MB_CAP_OBJ_MAIN_X_SPACE + MB_CAP_OBJ_MAIN_LEFT );
+    initWork.pos.y = FX32_CONST( MB_CAP_OBJ_SUB_D_TOP );
+    initWork.pos.z = 0;
+    work->fieldObj[i] = MB_CAP_OBJ_CreateObject( &initWork );
   }
   for( i=MB_CAP_OBJ_SUB_R_START;i<MB_CAP_OBJ_SUB_L_START;i++ )
   {
+    const int idx = i-MB_CAP_OBJ_SUB_R_START;
+    initWork.type = MCOT_GRASS_SIDE;
+    initWork.pos.x = FX32_CONST( MB_CAP_OBJ_SUB_R_LEFT );
+    initWork.pos.y = FX32_CONST( idx * MB_CAP_OBJ_MAIN_Y_SPACE + MB_CAP_OBJ_MAIN_TOP );
+    initWork.pos.z = 0;
+    work->fieldObj[i] = MB_CAP_OBJ_CreateObject( &initWork );
   }
   for( i=MB_CAP_OBJ_SUB_L_START;i<MB_CAP_OBJ_NUM;i++ )
   {
+    const int idx = i-MB_CAP_OBJ_SUB_L_START;
+    initWork.type = MCOT_GRASS_SIDE;
+    initWork.pos.x = FX32_CONST( MB_CAP_OBJ_SUB_L_LEFT );
+    initWork.pos.y = FX32_CONST( idx * MB_CAP_OBJ_MAIN_Y_SPACE + MB_CAP_OBJ_MAIN_TOP );
+    initWork.pos.z = 0;
+    work->fieldObj[i] = MB_CAP_OBJ_CreateObject( &initWork );
   }
 }
 
@@ -419,8 +446,43 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
 //--------------------------------------------------------------
 static void MB_CAPTURE_TermObject( MB_CAPTURE_WORK *work )
 {
+  int i;
+  for( i=0;i<MB_CAP_OBJ_NUM;i++ )
+  {
+    MB_CAP_OBJ_DeleteObject( work->fieldObj[i] );
+  }
 }
 
+//--------------------------------------------------------------
+//  ポケモン作成
+//--------------------------------------------------------------
+static void MB_CAPTURE_InitPoke( MB_CAPTURE_WORK *work )
+{
+  int i;
+  MB_CAP_POKE_INIT_WORK initWork;
+  initWork.heapId = work->heapId;
+  initWork.bbdSys = work->bbdSys;
+  initWork.arcHandle = work->initWork->arcHandle;
+  initWork.pokeArcHandle = MB_ICON_GetArcHandle(GFL_HEAP_LOWID(work->heapId),work->initWork->cardType);
+  
+  for( i=0;i<MB_CAP_POKE_NUM;i++ )
+  {
+    initWork.ppp = work->initWork->ppp[i];
+    work->pokeObj[i] = MB_CAP_POKE_CreateObject( &initWork );
+  }
+}
+
+//--------------------------------------------------------------
+//  ポケモン開放
+//--------------------------------------------------------------
+static void MB_CAPTURE_TermPoke( MB_CAPTURE_WORK *work )
+{
+  int i;
+  for( i=0;i<MB_CAP_POKE_NUM;i++ )
+  {
+    MB_CAP_POKE_DeleteObject( work->pokeObj[i] );
+  }
+}
 
 
 #pragma mark [>proc func

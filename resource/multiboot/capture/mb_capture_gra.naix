@@ -12,7 +12,11 @@
 
 enum {
 	NARC_mb_capture_gra_wb_sound_palpark_game_sdat = 0,
-	NARC_mb_capture_gra_cap_obj_kusamura1_nsbtx = 1
+	NARC_mb_capture_gra_cap_obj_kusamura1_nsbtx = 1,
+	NARC_mb_capture_gra_cap_obj_kusamura2_nsbtx = 2,
+	NARC_mb_capture_gra_cap_obj_water_nsbtx = 3,
+	NARC_mb_capture_gra_cap_obj_wood_nsbtx = 4,
+	NARC_mb_capture_gra_cap_poke_dummy_nsbtx = 5
 };
 
 /* NARC_MB_CAPTURE_GRA_NAIX_ */

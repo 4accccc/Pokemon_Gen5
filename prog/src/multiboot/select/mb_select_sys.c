@@ -161,7 +161,7 @@ static void MB_SELECT_Init( MB_SELECT_WORK *work )
                 &cellInitData ,CLSYS_DRAW_MAIN , work->heapId );
 
       GFL_CLACT_WK_SetPlttOffs( work->pokeIcon[i] , 
-                                MB_ICON_GetPalNumber(work->initWork->ppp[i],type) ,
+                                MB_ICON_GetPalNumber(work->initWork->ppp[i]) ,
                                 CLWK_PLTTOFFS_MODE_PLTT_TOP );
 
     }

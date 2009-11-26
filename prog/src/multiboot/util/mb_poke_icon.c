@@ -202,7 +202,7 @@ u32 MB_ICON_GetAnmResId( const DLPLAY_CARD_TYPE cardType )
 }
 
 
-const u8 MB_ICON_GetPalNumber( POKEMON_PASO_PARAM *ppp , const DLPLAY_CARD_TYPE cardType )
+const u8 MB_ICON_GetPalNumber( POKEMON_PASO_PARAM *ppp )
 {
 //マルチブート用きり分け
 #ifndef MULTI_BOOT_MAKE  //通常時処理

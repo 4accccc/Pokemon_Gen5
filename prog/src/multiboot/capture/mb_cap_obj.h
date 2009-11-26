@@ -19,7 +19,15 @@
 //	enum
 //======================================================================
 #pragma mark [> enum
-
+typedef enum
+{
+  MCOT_GRASS,
+  MCOT_GRASS_SIDE,
+  MCOT_WOOD,
+  MCOT_WATER,
+  
+  MCOT_MAX,
+}MB_CAP_OBJ_TYPE;
 
 //======================================================================
 //	typedef struct
@@ -33,6 +41,7 @@ typedef struct
   GFL_BBD_SYS *bbdSys;
   ARCHANDLE   *arcHandle;
   
+  MB_CAP_OBJ_TYPE type;
   VecFx32     pos;
   
 }MB_CAP_OBJ_INIT_WORK;

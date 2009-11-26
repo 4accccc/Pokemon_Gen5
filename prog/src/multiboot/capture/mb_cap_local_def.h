@@ -28,7 +28,15 @@
 
 #define MB_CAP_OBJ_NUM (MB_CAP_OBJ_MAIN_NUM + MB_CAP_OBJ_X_NUM*2 + MB_CAP_OBJ_Y_NUM*2)
 
+#define MB_CAP_OBJ_MAIN_TOP (64)
+#define MB_CAP_OBJ_MAIN_LEFT (48)
+#define MB_CAP_OBJ_MAIN_X_SPACE (40)
+#define MB_CAP_OBJ_MAIN_Y_SPACE (40)
 
+#define MB_CAP_OBJ_SUB_U_TOP (24)
+#define MB_CAP_OBJ_SUB_D_TOP (184)
+#define MB_CAP_OBJ_SUB_R_LEFT (8)
+#define MB_CAP_OBJ_SUB_L_LEFT (248)
 
 //======================================================================
 //	enum

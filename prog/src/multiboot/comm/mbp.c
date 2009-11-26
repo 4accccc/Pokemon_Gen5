@@ -284,7 +284,7 @@ static BOOL MBP_RegistFile(const MBGameRegistry *gameInfo)
          * このメモリはサイズさえ充分であれば 静的に用意されていても構いません.
          */
         OS_TPrintf("LeastMbHeap[%x]",GFI_HEAP_GetHeapFreeSize(MB_HEAP_ID));
-        sFilebuf = GFL_HEAP_AllocClearMemory( MB_HEAP_ID , bufferSize);
+        sFilebuf = GFL_HEAP_AllocClearMemory( MB_HEAP_ID , 0x10000);
         OS_TPrintf("->MbHeap[%x](%x)\n",GFI_HEAP_GetHeapFreeSize(MB_HEAP_ID),bufferSize);
         if (sFilebuf == NULL)
         {
@@ -298,7 +298,7 @@ static BOOL MBP_RegistFile(const MBGameRegistry *gameInfo)
              * 抽出したセグメント情報は, ダウンロードプログラム配信中
              * メインメモリ上に常駐させておく必要があります.
              */
-            if (!MB_ReadSegment(p_file, sFilebuf, bufferSize))
+            if (!MB_ReadSegment(p_file, sFilebuf, 0x10000))
             {
                 /* 
                  * 不正なファイルによりセグメント抽出に失敗

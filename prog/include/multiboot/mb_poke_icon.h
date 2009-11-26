@@ -10,6 +10,7 @@
 //======================================================================
 #pragma once
 #include "multiboot/mb_data_def.h"
+#include "poke_tool/poke_tool.h"
 
 //======================================================================
 //	define
@@ -36,5 +37,5 @@ extern u32 MB_ICON_GetPltResId( const DLPLAY_CARD_TYPE cardType );
 extern u32 MB_ICON_GetCharResId( POKEMON_PASO_PARAM *ppp , const DLPLAY_CARD_TYPE cardType );
 extern u32 MB_ICON_GetCellResId( const DLPLAY_CARD_TYPE cardType );
 extern u32 MB_ICON_GetAnmResId( const DLPLAY_CARD_TYPE cardType );
-extern const u8 MB_ICON_GetPalNumber( POKEMON_PASO_PARAM *ppp , const DLPLAY_CARD_TYPE cardType );
+extern const u8 MB_ICON_GetPalNumber( POKEMON_PASO_PARAM *ppp );
 
