@@ -18,7 +18,12 @@
 
 #include "net/dwc_rapcommon.h"
 
-static HEAPID sc_heapID	= 0;
+typedef struct{
+	NNSFndHeapHandle headHandle;
+  void *heapPtr;
+} DWCRAPCOMMON_WORK;
+
+static DWCRAPCOMMON_WORK* pDwcRapWork;
 
 //----------------------------------------------------------------------------
 /**
@@ -35,18 +40,10 @@ static void* mydwc_alloc( DWCAllocType name, u32 size, int align )
 {	
 #pragma unused( name )
 
-	void * ptr;
-  OSIntrMode old;
-
-#ifdef DEBUGPRINT_ON
-  //NET_PRINT("HEAP取得(%d, %d) \n", size, align);
-#endif
-
-	GF_ASSERT_MSG( sc_heapID != 0, "DWC＿Alloc関数がヒープID設定されずに呼ばれました" );
-	GF_ASSERT(align <= 32);  // これをこえたら再対応
-	old = OS_DisableInterrupts();
-  ptr = GFL_NET_Align32Alloc(sc_heapID, size);
-	OS_RestoreInterrupts( old );
+  void *ptr;
+  OSIntrMode  enable = OS_DisableInterrupts();
+  ptr = NNS_FndAllocFromExpHeapEx( pDwcRapWork->headHandle, size, align );
+  (void)OS_RestoreInterrupts(enable);
 
   if(ptr == NULL){
     GF_ASSERT(ptr);
@@ -71,14 +68,15 @@ static void* mydwc_alloc( DWCAllocType name, u32 size, int align )
 static void mydwc_free( DWCAllocType name, void *ptr, u32 size )
 {	
 #pragma unused( name, size )
-  OSIntrMode old;
 
   if ( !ptr ){
     return;  //NULL開放を認める
   }
-  old = OS_DisableInterrupts();
-  GFL_NET_Align32Free(ptr);
-  OS_RestoreInterrupts( old );
+  {
+    OSIntrMode  enable = OS_DisableInterrupts();
+    NNS_FndFreeToExpHeap( pDwcRapWork->headHandle, ptr );
+    (void)OS_RestoreInterrupts(enable);
+  }
 }
 
 //==============================================================================
@@ -89,9 +87,32 @@ static void mydwc_free( DWCAllocType name, void *ptr, u32 size )
  */
 //==============================================================================
 
-void DWC_RAPCOMMON_SetHeapID(HEAPID id)
+void DWC_RAPCOMMON_SetHeapID(HEAPID id,int size)
 {
-  sc_heapID = id;
+  GF_ASSERT(pDwcRapWork==NULL);
+
+  pDwcRapWork=GFL_HEAP_AllocClearMemory(GFL_HEAPID_SYSTEM,sizeof(DWCRAPCOMMON_WORK));
+  pDwcRapWork->heapPtr = GFL_HEAP_AllocMemory(id, size-0x80);
+  pDwcRapWork->headHandle = NNS_FndCreateExpHeap( (void *)( ((u32)pDwcRapWork->heapPtr + 31) / 32 * 32 ), size-64);
+
+  
+}
+
+//==============================================================================
+/**
+ * @brief   WIFIで使うHEAPIDをセットする
+ * @param   id     変更するHEAPID
+ * @retval  none
+ */
+//==============================================================================
+
+void DWC_RAPCOMMON_ResetHeapID(void)
+{
+  GF_ASSERT(pDwcRapWork);
+  NNS_FndDestroyExpHeap( pDwcRapWork->headHandle );
+  GFL_HEAP_FreeMemory( pDwcRapWork->heapPtr  );
+  GFL_HEAP_FreeMemory(pDwcRapWork);
+  pDwcRapWork=NULL;
 }
 
 //==============================================================================
@@ -107,7 +128,7 @@ int mydwc_init(HEAPID heapID)
   u8* pWork;
   u8* pTemp;
 
-	sc_heapID	= heapID;
+  DWC_RAPCOMMON_SetHeapID(heapID, 0x40000);
 
   // DWCライブラリ初期化
 #ifdef DEBUG_SERVER
@@ -116,7 +137,7 @@ int mydwc_init(HEAPID heapID)
 	ret	= DWC_InitForProduction( GF_DWC_GAMENAME, GF_DWC_GAMECODE, mydwc_alloc, mydwc_free );
 #endif
 
-  sc_heapID = 0;
+  DWC_RAPCOMMON_ResetHeapID();
 
   return ret;
 }

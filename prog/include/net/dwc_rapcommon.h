@@ -60,7 +60,9 @@ extern BOOL mydwc_checkMyGSID(void);
  * @retval  none
  */
 //==============================================================================
-extern void DWC_RAPCOMMON_SetHeapID(HEAPID id);
+extern void DWC_RAPCOMMON_SetHeapID(HEAPID id,int size);
+extern void DWC_RAPCOMMON_ResetHeapID(void);
+
 //------------------------------------------------------------------------------
 /**
  * @brief   ビーコンのタイプを得る
