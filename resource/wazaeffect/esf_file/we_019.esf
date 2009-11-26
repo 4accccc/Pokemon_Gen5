@@ -1,14 +1,18 @@
 EFFSEQ
-$0003
+$0005
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_019_1.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_019_2.spa
+C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_327_bluesky.NSCR
+C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_327_bluesky.NSCR
 #001
 %00
-BGのパレットフェード	すべて	0	13	0	31:31:31
-BGの表示/非表示	お盆	非表示
+エフェクト終了待ち	すべて
+BGのロード	bg_327_bluesky
+BGのパレットフェード	すべて	0	13	2	31:31:31
 エフェクト終了待ち	すべて
 カメラ移動	追従	攻撃側	16	0	8
+エフェクト終了待ち	カメラ
 制御モード変更	継続
 SE再生	SEQ_SE_W051_01	SE1	0	0	115	0	0
 SE再生	SEQ_SE_W051_01	SE2	10	0	90	0	0
@@ -20,6 +24,12 @@ SE動的変化	SE1	追従	ボリューム	110	0	90	20:0:0
 SEパン	SE1	追従	攻撃側	攻撃側	0	120:0:0
 SEパン	SE2	追従	攻撃側	攻撃側	0	120:0:0
 制御モード変更	逐次
+BGの表示/非表示	お盆	非表示
+BGの表示/非表示	フィールド	非表示
+BGの表示/非表示	エフェクト	表示
+エフェクト終了待ち	すべて
+BGのパレットフェード	エフェクト面	13	0	4	31:31:31
+BGのスクロール	常に	0	4	80	0	0
 パーティクルデータロード	w_019_1
 パーティクル再生	w_019_1	W_019_1_019_BALL	攻撃側	方向無し	2	0
 パーティクル再生	w_019_1	W_019_1_019_RING_SPIN	攻撃側	方向無し	2	0
@@ -28,7 +38,8 @@ SEパン	SE2	追従	攻撃側	攻撃側	0	120:0:0
 パーティクル再生	w_019_1	W_019_1_019_ELLIPSE_UP	攻撃側	方向無し	2	0
 ポケモンバニッシュ	攻撃側	バニッシュオン
 エフェクト終了待ち	すべて
-BGのパレットフェード	すべて	13	0	0	31:31:31
+BGのパレットフェード	すべて	13	0	2	31:31:31
+BGの表示/非表示	フィールド	表示
 BGの表示/非表示	お盆	表示
 カメラ移動	追従	初期位置	16	0	8
 エフェクト終了待ち	すべて
