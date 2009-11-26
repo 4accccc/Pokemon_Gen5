@@ -171,14 +171,14 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeDoor(GMEVENT * event, int *
   switch (*seq)
   {
   case 0:
+    GMEVENT_CallEvent( event, EVENT_FieldDoorOutAnime( gsys, fieldmap ) );
+    ++ *seq;
+    break;
+  case 1:
     { 
       fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
       FIELD_PLACE_NAME_Display(FIELDMAP_GetPlaceNameSys(fieldmap), event_work->location.zone_id);
     }
-    ++ *seq;
-    break;
-  case 1:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorOutAnime( gsys, fieldmap ) );
     ++ *seq;
     break;
   case 2:
