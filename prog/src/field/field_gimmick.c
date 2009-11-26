@@ -22,6 +22,7 @@
 #include "gym_insect.h"
 #include "gym_ground.h"
 #include "gym_ground_ent.h"
+#include "gym_ice.h"
 
 extern void GYM_SetupTest(FIELDMAP_WORK *fieldWork);
 extern void GYM_EndTest(FIELDMAP_WORK *fieldWork);
@@ -39,6 +40,7 @@ const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
   GYM_INSECT_Setup,
   GYM_GROUND_Setup,
   GYM_GROUND_ENT_Setup,
+  GYM_ICE_Setup,
   H03_GIMMICK_Setup,
   GATE_GIMMICK_Setup,  // C04R0601
   GATE_GIMMICK_Setup,  // C08R0601
@@ -66,6 +68,7 @@ const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
   GYM_INSECT_End,
   GYM_GROUND_End,
   GYM_GROUND_ENT_End,
+  GYM_ICE_End,
   H03_GIMMICK_End,
   GATE_GIMMICK_End,  // C04R0601
   GATE_GIMMICK_End,  // C08R0601
@@ -93,6 +96,7 @@ const static FLD_GMK_END_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
   GYM_INSECT_Move,
   GYM_GROUND_Move,
   GYM_GROUND_ENT_Move,
+  GYM_ICE_Move,
   H03_GIMMICK_Move,
   GATE_GIMMICK_Move,  // C04R0601 
   GATE_GIMMICK_Move,  // C08R0601 

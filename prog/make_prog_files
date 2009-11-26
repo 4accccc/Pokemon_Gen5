@@ -515,7 +515,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/event_fourkings.c \
         field/fskill_sorawotobu.c \
         field/event_look_elboard.c \
-        field/event_season_display.c
+        field/event_season_display.c \
+        field/gym_ice.c
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP

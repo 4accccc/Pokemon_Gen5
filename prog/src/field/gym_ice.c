@@ -19,7 +19,7 @@
 #include "arc/fieldmap/gym_ice.naix"
 #include "system/main.h"    //for HEAPID_FIELDMAP
 
-//#include "../../../resource/fldmapdata/gimmick/gym_ground/gym_ice_local_def.h"
+#include "../../../resource/fldmapdata/gimmick/gym_ice/gym_ice_local_def.h"
 
 //#include "sound/pm_sndsys.h"
 //#include "gym_ice_se_def.h"
@@ -29,14 +29,133 @@
 
 #define GRID_HALF_SIZE ((FIELD_CONST_GRID_SIZE/2)*FX32_ONE)
 
-#define WALL_NUM_MAX    (3)
 #define WALL_ANM_NUM  (1)
+
+static const VecFx32 WallPos[WALL_NUM_MAX] = {
+  { WALL1_GX, WALL1_GY, WALL1_GZ },
+  { WALL2_GX, WALL2_GY, WALL2_GZ },
+  { WALL3_GX, WALL3_GY, WALL3_GZ },
+};
+
+static const VecFx32 SwPos[WALL_NUM_MAX] = {
+  { SW1_GX, SW1_GY, SW1_GZ },
+  { SW2_GX, SW2_GY, SW2_GZ },
+  { SW3_GX, SW3_GY, SW3_GZ },
+};
+
+//リソースの並び順番
+enum {
+  RES_ID_WALL1_MDL = 0,
+  RES_ID_WALL2_MDL,
+  RES_ID_SW_MDL,
+  RES_ID_WALL1_ANM,
+  RES_ID_WALL2_ANM,
+  RES_ID_SW_ANM_A,
+  RES_ID_SW_ANM_B,
+};
+
+//ＯＢＪインデックス
+enum {
+  OBJ_WALL_1 = 0,
+  OBJ_WALL_2,
+  OBJ_WALL_3,
+  OBJ_SW_1,
+  OBJ_SW_2,
+  OBJ_SW_3,
+};
 
 //ジム内部中の一時ワーク
 typedef struct GYM_ICE_TMP_tag
 {
   int dummy;
 }GYM_ICE_TMP;
+
+//--リソース関連--
+//読み込む3Dリソース
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
+	{ ARCID_GYM_GROUND, NARC_gym_ice_ice_karakuri_01_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
+  { ARCID_GYM_GROUND, NARC_gym_ice_ice_karakuri_02_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
+  { ARCID_GYM_GROUND, NARC_gym_ice_swich_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
+
+  { ARCID_GYM_GROUND, NARC_gym_ice_ice_karakuri_01_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
+  { ARCID_GYM_GROUND, NARC_gym_ice_ice_karakuri_02_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
+  { ARCID_GYM_GROUND, NARC_gym_ice_swich_br_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
+  { ARCID_GYM_GROUND, NARC_gym_ice_swich_br_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
+};
+
+//3Dアニメ　リフト
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_wall1[] = {
+	{ RES_ID_WALL1_ANM,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+};
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_wall2[] = {
+	{ RES_ID_WALL2_ANM,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+};
+
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_sw[] = {
+	{ RES_ID_SW_ANM_A,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_SW_ANM_B,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+};
+
+
+//3Dオブジェクト設定テーブル
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
+  //壁1
+	{
+		RES_ID_WALL2_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_WALL2_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_wall2,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_wall2),	//アニメリソース数
+	},
+  //壁2
+	{
+		RES_ID_WALL1_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_WALL1_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_wall1,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_wall1),	//アニメリソース数
+	},
+  //壁3
+	{
+		RES_ID_WALL2_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_WALL2_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_wall2,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_wall2),	//アニメリソース数
+	},
+  //スイッチ1
+	{
+		RES_ID_SW_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_SW_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_sw,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_sw),	//アニメリソース数
+	},
+  //スイッチ2
+	{
+		RES_ID_SW_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_SW_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_sw,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_sw),	//アニメリソース数
+	},
+  //スイッチ3
+	{
+		RES_ID_SW_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_SW_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_sw,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_sw),	//アニメリソース数
+	},
+};
+
+static const GFL_G3D_UTIL_SETUP Setup = {
+  g3Dutil_resTbl,				//リソーステーブル
+	NELEMS(g3Dutil_resTbl),		//リソース数
+	g3Dutil_objTbl,				//オブジェクト設定テーブル
+	NELEMS(g3Dutil_objTbl),		//オブジェクト数
+};
+
 
 static void SetupWallAnm(GYM_ICE_SV_WORK *gmk_sv_work, FLD_EXP_OBJ_CNT_PTR ptr, const int inWallIdx);
 
@@ -52,6 +171,7 @@ void GYM_ICE_Setup(FIELDMAP_WORK *fieldWork)
   int i;
   GYM_ICE_SV_WORK *gmk_sv_work;
   GYM_ICE_TMP *tmp;
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
     GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
@@ -100,7 +220,7 @@ void GYM_ICE_Setup(FIELDMAP_WORK *fieldWork)
 void GYM_ICE_End(FIELDMAP_WORK *fieldWork)
 {
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
-  GYM_ICE_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_GROUND_TMP_ASSIGN_ID);
+  GYM_ICE_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ICE_TMP_ASSIGN_ID);
 
   //汎用ワーク解放
   GMK_TMP_WK_FreeWork(fieldWork, GYM_ICE_TMP_ASSIGN_ID);
@@ -120,7 +240,7 @@ void GYM_ICE_Move(FIELDMAP_WORK *fieldWork)
   int i;
   GYM_ICE_SV_WORK *gmk_sv_work;
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
-  GYM_ICE_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_GROUND_TMP_ASSIGN_ID);
+  GYM_ICE_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ICE_TMP_ASSIGN_ID);
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
     GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
