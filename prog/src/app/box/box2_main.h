@@ -88,6 +88,10 @@
 
 #define	BOX2MAIN_BOXMOVE_FLG		( 0x80 )	// 他のトレイに投げるときのフラグ
 
+#define	BOX2MAIN_TRAY_SCROLL_SPD		( 8 )		// トレイスクロール速度
+#define	BOX2MAIN_TRAY_SCROLL_CNT		( 23 )	// トレイスクロールカウント
+
+
 // キャラリソースID
 enum {
 	BOX2MAIN_CHRRES_POKEICON = 0,	// ポケモンアイコン
@@ -210,18 +214,15 @@ enum {
 
 	BMPWIN_MARK_ENTER,			// マーキング決定
 	BMPWIN_MARK_CANCEL,			// マーキングキャンセル
-// ↑使用確定-----------------------------------------------------
 
-	BOX2BMPWIN_ID_TEMOCHI,		//「てもちポケモン」
-	BOX2BMPWIN_ID_IDOU,			//「ポケモンいどう」
-	BOX2BMPWIN_ID_MODORU,		//「もどる」
-	BOX2BMPWIN_ID_YAMERU,		//「やめる」
-	BOX2BMPWIN_ID_TOZIRU,		//「とじる」
-
-	BMPWIN_PARTY_CNG,			// 手持ちポケモン入れ替えorやめる
+	BOX2BMPWIN_ID_TEMOCHI,	//「てもちポケモン」
+	BOX2BMPWIN_ID_BOXLIST,	//「ボックスリスト」
 
 	BOX2BMPWIN_ID_MSG1,			// メッセージ１
 	BOX2BMPWIN_ID_MSG2,			// メッセージ２
+// ↑使用確定-----------------------------------------------------
+
+
 	BOX2BMPWIN_ID_MSG3,			// メッセージ３
 	BOX2BMPWIN_ID_MSG4,			// メッセージ４
 
@@ -249,14 +250,16 @@ enum {
 	BOX2MAIN_WINFRM_MARK,				// マーキングフレーム
 	BOX2MAIN_WINFRM_PARTY,			// 手持ちポケモンフレーム
 	BOX2MAIN_WINFRM_MOVE,				// ボックス移動フレーム
+
+	BOX2MAIN_WINFRM_POKE_BTN,			//「てもちポケモン」ボタン
+	BOX2MAIN_WINFRM_BOXLIST_BTN,	//「ボックスリスト」ボタン
+
 // ↑使用確定------------------------------------------------
 
 
 
 
 
-//	BOX2MAIN_WINFRM_POKE_BTN,	//「てもちポケモン」ボタン
-//	BOX2MAIN_WINFRM_MV_BTN,		//「ポケモンいどう」ボタン
 //	BOX2MAIN_WINFRM_RET_BTN,	//「もどる」ボタン
 //	BOX2MAIN_WINFRM_CLOSE_BTN,	//「とじる」ボタン
 	BOX2MAIN_WINFRM_BOXMV_MENU,	// ボックス移動時のメニュー
@@ -278,6 +281,8 @@ enum {
 	BOX2MAIN_FNTOAM_TRAY_NUM4,
 	BOX2MAIN_FNTOAM_TRAY_NUM5,
 	BOX2MAIN_FNTOAM_TRAY_NUM6,
+	BOX2MAIN_FNTOAM_BOX_NAME1,
+	BOX2MAIN_FNTOAM_BOX_NAME2,
 	BOX2MAIN_FNTOAM_MAX
 };
 
@@ -411,6 +416,7 @@ typedef struct {
 	u8	wall_area;
 
 	u8	wallpaper_pos;				// 壁紙選択位置
+	u8	wp_menu;				// 壁紙メニュー番号
 
 	u8	poke_get_key;		// キーでの取得位置
 	u8	poke_put_key;		// キーでの配置位置
@@ -612,7 +618,7 @@ typedef struct {
 }BOX2_POKEINFO_DATA;
 
 
-#define	BOX2MAIN_TRAY_SCROLL_CNT		( 9 )
+#define	BOX2MAIN_TRAYICON_SCROLL_CNT		( 9 )
 
 
 //============================================================================================
@@ -2707,8 +2713,10 @@ extern void BOX2MAIN_HandGetPokeSet( BOX2_SYS_WORK * syswk );
 
 
 extern int BOX2MAIN_VFuncTrayIconScrollUp( BOX2_SYS_WORK * syswk );
-
 extern int BOX2MAIN_VFuncTrayIconScrollDown( BOX2_SYS_WORK * syswk );
+
+extern int BOX2MAIN_VFuncTrayIconScrollUpJump( BOX2_SYS_WORK * syswk );
+extern int BOX2MAIN_VFuncTrayIconScrollDownJump( BOX2_SYS_WORK * syswk );
 
 
 #endif

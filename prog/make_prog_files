@@ -1071,10 +1071,6 @@ SRCS_OVERLAY_BOX    = app/box/box2.c \
                       app/box\box2_ui.c \
                       app/box\box2_bgwfrm.c
 
-#中村デバッグ
-#===> SRCS_OVERLAY_BOX
-SRCS_OVERLAY_NAKAHIRO_DEBUG = test/nakahiro/d_nakahiro.c
-
 # カメラテスト
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
@@ -1153,6 +1149,12 @@ SRCS_OVERLAY_DEBUG_DATA = gamesystem/debug_data.c
 SRCS_OVERLAY_NAMEIN	= app/name_input/namein.c \
 											app/name_input/namein_graphic.c \
 											app/name_input/namein_data.c
+
+#中村デバッグ
+#===> SRCS_OVERLAY_NAMEIN
+SRCS_OVERLAY_NAKAHIRO_DEBUG = test/nakahiro/d_nakahiro.c
+
+
 #	名木橋デバッグ
 #===> SRCS_OVERLAY_BATTLE_RECORDER
 #===> SRCS_OVERLAY_NAMEIN

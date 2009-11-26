@@ -35,7 +35,7 @@
 
 // 手持ちポケモンフレーム
 #define	PARTYPOKE_FRM_SX	( BOX2BGWFRM_PARTYPOKE_SX )		// 手持ちポケモンフレームＸサイズ
-#define	PARTYPOKE_FRM_SY	( 18 )		// 手持ちポケモンフレームＹサイズ
+#define	PARTYPOKE_FRM_SY	( 15 )		// 手持ちポケモンフレームＹサイズ
 #define	PARTYPOKE_FRM_PX	( 2 )		// 手持ちポケモンフレームＸ表示座標
 #define	PARTYPOKE_FRM_PY	( 21 )		// 手持ちポケモンフレームＹ表示座標
 #define	WINFRM_PARTYPOKE_LX	( BOX2BGWFRM_PARTYPOKE_LX )
@@ -84,11 +84,11 @@
 //「てもちポケモン」フレームデータ
 #define	WINFRM_TEMOCHI_PX		( 0 )
 #define	WINFRM_TEMOCHI_PY		( 21 )
-#define	WINFRM_TEMOCHI_OUT_PY	( 24 )
-//「ポケモンいどう」フレームデータ
-#define	WINFRM_IDOU_PX			( 12 )
-#define	WINFRM_IDOU_PY			( 21 )
-#define	WINFRM_IDOU_OUT_PY		( 24 )
+//#define	WINFRM_TEMOCHI_OUT_PY	( 24 )
+//「ボックスリスト」フレームデータ
+#define	WINFRM_BOXLIST_PX			( 0 )
+#define	WINFRM_BOXLIST_PY			( 21 )
+//#define	WINFRM_IDOU_OUT_PY		( 24 )
 //「もどる」フレームデータ
 #define	WINFRM_MODORU_PX		( 24 )
 #define	WINFRM_MODORU_PY		( 21 )
@@ -165,14 +165,19 @@ void BOX2BGWFRM_Init( BOX2_SYS_WORK * syswk )
 	BOX2BMP_PokeMenuBgFrmWkMake( appwk );				// メニュー
 	InitTouchBar( syswk );											// タッチバー
 
+	BOX2BMP_TemochiButtonBgFrmWkMake( syswk );	//「てもちポケモン」
+	BOX2BMP_BoxListButtonBgFrmWkMake( syswk );	//「ボックスリスト」
+
+	// 手持ちポケモンフレーム
+	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_PARTY, GFL_BG_FRAME1_M, PARTYPOKE_FRM_SX, PARTYPOKE_FRM_SY );
+	FrameArcLoad( appwk->wfrm, BOX2MAIN_WINFRM_PARTY, NARC_box_gra_box_poke_bg2_lz_NSCR );
+
 
 
 
 
 	// 壁紙変更フレーム
 	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_WPCHG, GFL_BG_FRAME1_M, WPCHG_FRM_SX, WPCHG_FRM_SY );
-	// 手持ちポケモンフレーム
-	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_PARTY, GFL_BG_FRAME1_M, PARTYPOKE_FRM_SX, PARTYPOKE_FRM_SY );
 	// マーキングフレーム
 //	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_MARK, GFL_BG_FRAME0_M, MARKING_FRM_SX, MARKING_FRM_SY );
 	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_MARK, GFL_BG_FRAME1_M, MARKING_FRM_SX, MARKING_FRM_SY );
@@ -181,10 +186,6 @@ void BOX2BGWFRM_Init( BOX2_SYS_WORK * syswk )
 	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_BOXMV_MENU, GFL_BG_FRAME1_M, BOX2BMP_BOXMVMENU_SX, BOX2BMP_BOXMVMENU_SY );
 
 
-	BOX2BMP_TemochiButtonBgFrmWkMake( appwk );	//「てもちポケモン」
-	BOX2BMP_IdouButtonBgFrmWkMake( appwk );			//「ポケモンいどう」
-	BOX2BMP_ModoruButtonBgFrmWkMake( appwk );		//「もどる」「やめる」
-	BOX2BMP_ToziruButtonBgFrmWkMake( syswk );		//「とじる」
 
 	if( syswk->dat->callMode == BOX_MODE_AZUKERU ){
 		BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_MOVE, GFL_BG_FRAME0_M, BOXMV_PTOUT_FRM_SX, BOXMV_PTOUT_FRM_SY );
@@ -196,12 +197,6 @@ void BOX2BGWFRM_Init( BOX2_SYS_WORK * syswk )
 
 	FrameArcLoad( appwk->wfrm, BOX2MAIN_WINFRM_WPCHG, NARC_box_gra_box_wpchg_bg_lz_NSCR );
 
-	if( syswk->dat->callMode == BOX_MODE_AZUKERU || syswk->dat->callMode == BOX_MODE_TURETEIKU ){
-		FrameArcLoad( appwk->wfrm, BOX2MAIN_WINFRM_PARTY, NARC_box_gra_box_poke_bg2_lz_NSCR );
-	}else{
-		BOX2BGWFRM_PartyPokeFrameLoadArrange( appwk->wfrm, BOX2MAIN_WINFRM_PARTY );
-		BOX2BMP_PartyCngButtonFrmPut( appwk );
-	}
 
 /*	上画面　技・アイテムフレーム
 	if( syswk->dat->callMode == BOX_MODE_ITEM ){
@@ -574,20 +569,18 @@ BOOL BOX2BGWFRM_AzukeruPartyPokeFrameMove( BOX2_SYS_WORK * syswk )
 	return ret;
 }
 
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		ＢＧウィンドウフレームに手持ちポケモンフレームグラフィックをセット
- *
- * @param		wk			ＢＧウィンドウフレームワーク
- * @param		index		ＢＧウィンドウフレームインデックス
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BGWFRM_PartyPokeFrameLoadArrange( BGWINFRM_WORK * wk, u32 index )
+// 手持ちポケモンフレームが右にあるか
+BOOL BOX2BGWFRM_CheckPartyPokeFrameRight( BGWINFRM_WORK * wk )
 {
-	FrameArcLoad( wk, index, NARC_box_gra_box_poke_bg_lz_NSCR );
+	s8	x, y;
+
+	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_PARTY, &x, &y );
+	if( x == WINFRM_PARTYPOKE_RX && y == WINFRM_PARTYPOKE_PY ){
+		return TRUE;
+	}
+	return FALSE;
 }
+
 
 
 //============================================================================================
@@ -951,78 +944,44 @@ void BOX2BGWFRM_PutTouchBar( BGWINFRM_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		「てもちポケモンボタン」ボタン配置
+ * @brief		「てもちポケモン」ボタン配置
  *
  * @param		syswk		ボックス画面システムワーク
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void BOX2BGWFRM_ButtonPutTemochi( BOX2_SYS_WORK * syswk )
+void BOX2BGWFRM_TemochiButtonOn( BOX2_APP_WORK * appwk )
 {
-/*
-	BOX2BMP_ButtonPutTemochi( syswk );
-	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_POKE_BTN, WINFRM_TEMOCHI_PX, WINFRM_TEMOCHI_PY );
-*/
+	BGWINFRM_FramePut( appwk->wfrm, BOX2MAIN_WINFRM_POKE_BTN, WINFRM_TEMOCHI_PX, WINFRM_TEMOCHI_PY );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * 「てもちポケモンボタン」ボタンを画面外に配置
+ * 「てもちポケモン」ボタン非表示
  *
  * @param	syswk	ボックス画面システムワーク
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void BOX2BGWFRM_ButtonOutPutTemochi( BOX2_SYS_WORK * syswk )
+void BOX2BGWFRM_TemochiButtonOff( BOX2_APP_WORK * appwk )
 {
-//	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_POKE_BTN, WINFRM_TEMOCHI_PX, WINFRM_TEMOCHI_OUT_PY );
+	BGWINFRM_FrameOff( appwk->wfrm, BOX2MAIN_WINFRM_POKE_BTN );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * 「てもちポケモンボタン」ボタン画面外への移動セット
- *
- * @param	wk		ＢＧウィンドウフレームワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BGWFRM_TemochiButtonOutSet( BGWINFRM_WORK * wk )
-{
-//	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_POKE_BTN, 0, 1, BOXPARTY_BTN_CNT );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * 「てもちポケモンボタン」ボタン画面内への移動セット
- *
- * @param	wk		ＢＧウィンドウフレームワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BGWFRM_TemochiButtonInSet( BGWINFRM_WORK * wk )
-{
-//	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_POKE_BTN, 0, -1, BOXPARTY_BTN_CNT );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		「ポケモンいどう」ボタン配置
+ * @brief		「ボックスリスト」ボタン配置
  *
  * @param		syswk		ボックス画面システムワーク
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void BOX2BGWFRM_ButtonPutIdou( BOX2_SYS_WORK * syswk )
+void BOX2BGWFRM_BoxListButtonOn( BOX2_APP_WORK * appwk )
 {
-/*
-	BOX2BMP_ButtonPutIdou( syswk );
-	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_MV_BTN, WINFRM_IDOU_PX, WINFRM_IDOU_PY );
-*/
+	BGWINFRM_FramePut( appwk->wfrm, BOX2MAIN_WINFRM_BOXLIST_BTN, WINFRM_BOXLIST_PX, WINFRM_BOXLIST_PY );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1034,161 +993,14 @@ void BOX2BGWFRM_ButtonPutIdou( BOX2_SYS_WORK * syswk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void BOX2BGWFRM_ButtonOutPutIdou( BOX2_SYS_WORK * syswk )
+void BOX2BGWFRM_BoxListButtonOff( BOX2_APP_WORK * appwk )
 {
-//	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_MV_BTN, WINFRM_IDOU_PX, WINFRM_IDOU_OUT_PY );
+	BGWINFRM_FrameOff( appwk->wfrm, BOX2MAIN_WINFRM_BOXLIST_BTN );
 }
 
-//--------------------------------------------------------------------------------------------
-/**
- * 「ポケモンいどう」ボタン画面外への移動セット
- *
- * @param	wk		ＢＧウィンドウフレームワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BGWFRM_IdouButtonOutSet( BGWINFRM_WORK * wk )
-{
-//	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_MV_BTN, 0, 1, BOXPARTY_BTN_CNT );
-}
 
-//--------------------------------------------------------------------------------------------
-/**
- * 「ポケモンいどう」ボタン画面内への移動セット
- *
- * @param	wk		ＢＧウィンドウフレームワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BGWFRM_IdouButtonInSet( BGWINFRM_WORK * wk )
-{
-//	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_MV_BTN, 0, -1, BOXPARTY_BTN_CNT );
-}
 
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		「もどる」ボタン配置
- *
- * @param		syswk		ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BGWFRM_ButtonPutModoru( BOX2_SYS_WORK * syswk )
-{
-	BOX2BMP_ButtonPutModoru( syswk );
-//	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_RET_BTN, WINFRM_MODORU_PX, WINFRM_MODORU_PY );
-}
 
-//--------------------------------------------------------------------------------------------
-/**
- * 「やめる」ボタン配置
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BGWFRM_ButtonPutYameru( BOX2_SYS_WORK * syswk )
-{
-	BOX2BMP_ButtonPutYameru( syswk );
-//	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_RET_BTN, WINFRM_MODORU_PX, WINFRM_MODORU_PY );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * キャンセルボタンを画面外に配置
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BGWFRM_RetButtonOutPut( BGWINFRM_WORK * wk )
-{
-//	BGWINFRM_FrameOff( wk, BOX2MAIN_WINFRM_RET_BTN );
-//	BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_RET_BTN, WINFRM_MODORU_PX, WINFRM_MODORU_OUT_PY );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * キャンセルボタン画面外への移動セット
- *
- * @param	wk		ＢＧウィンドウフレームワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BGWFRM_RetButtonOutSet( BGWINFRM_WORK * wk )
-{
-//	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_RET_BTN, 0, 1, BOXPARTY_BTN_CNT );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * キャンセルボタン画面内への移動セット
- *
- * @param	wk		ＢＧウィンドウフレームワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BGWFRM_RetButtonInSet( BGWINFRM_WORK * wk )
-{
-	// 手持ちフレーム動作で位置が変更されている可能性があるので、再設定
-//	BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_RET_BTN, WINFRM_MODORU_PX, WINFRM_MODORU_OUT_PY );
-//	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_RET_BTN, 0, -1, BOXPARTY_BTN_CNT );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * 「とじる」ボタン配置チェック
- *
- * @param	wk		ＢＧウィンドウフレームワーク
- *
- * @retval	"TRUE = 配置済み"
- * @retval	"FALSE = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-BOOL BOX2BGWFRM_CloseButtonPutCheck( BGWINFRM_WORK * wk )
-{
-/*
-	s8	px, py;
-
-	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_CLOSE_BTN, &px, &py );
-	if( py == WINFRM_MODORU_PY ){
-		return TRUE;
-	}
-	return FALSE;
-*/
-	return TRUE;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * 「てもちポケモン」「ポケモンいどう」ボタン非表示
- *
- * @param	wk		ＢＧウィンドウフレームワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BGWFRM_BoxPartyButtonVanish( BGWINFRM_WORK * wk )
-{
-/*
-	BGWINFRM_FrameOff( wk, BOX2MAIN_WINFRM_POKE_BTN );
-	BGWINFRM_FrameOff( wk, BOX2MAIN_WINFRM_MV_BTN );
-
-	BGWINFRM_FramePut(
-		wk, BOX2MAIN_WINFRM_POKE_BTN,
-		WINFRM_TEMOCHI_PX, WINFRM_TEMOCHI_PY+BOXPARTY_BTN_CNT );
-	BGWINFRM_FramePut(
-		wk, BOX2MAIN_WINFRM_MV_BTN,
-		WINFRM_IDOU_PX, WINFRM_IDOU_PY+BOXPARTY_BTN_CNT );
-*/
-}
 
 
 //============================================================================================
@@ -1543,8 +1355,6 @@ void BOX2BGWFRM_BoxMoveMenuOutSet( BGWINFRM_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BOX2BGWFRM_BoxMoveFrmPut( BOX2_SYS_WORK * syswk )
 {
-	BOX2BGWFRM_ButtonPutYameru( syswk );
-
 //	BGWINFRM_FrameOff( syswk->app->wfrm, BOX2MAIN_WINFRM_POKE_BTN );
 //	BGWINFRM_FrameOff( syswk->app->wfrm, BOX2MAIN_WINFRM_MV_BTN );
 //	BGWINFRM_FramePut( syswk->app->wfrm, BOX2MAIN_WINFRM_POKE_BTN, WINFRM_TEMOCHI_PX, WINFRM_TEMOCHI_OUT_PY );
@@ -1692,7 +1502,6 @@ void BOX2BGWFRM_ArrangeUnderButtonDel( BOX2_SYS_WORK * syswk )
 //	BGWINFRM_FrameOff( syswk->app->wfrm, BOX2MAIN_WINFRM_MV_BTN );
 
 //	BOX2BGWFRM_ButtonOutPutTemochi( syswk );
-//	BOX2BGWFRM_ButtonOutPutIdou( syswk );
 }
 
 

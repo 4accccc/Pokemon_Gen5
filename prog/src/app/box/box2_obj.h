@@ -56,9 +56,9 @@ enum {
 #define	BOX2OBJ_BLENDTYPE_PARTYITEM	( BOX2OBJ_BLENDTYPE_ITEM | BOX2OBJ_BLENDTYPE_PARTYPOKE )
 
 #define	BOX2OBJ_FNTOAM_BOXNAME_SX	( 12 )	// OAMフォント：ボックス名Ｘサイズ
-#define	BOX2OBJ_FNTOAM_BOXNAME_SY	( 2 )	// OAMフォント：ボックス名Ｙサイズ
-#define	BOX2OBJ_FNTOAM_BOXNUM_SX	( 2 )	// OAMフォント：格納数Ｘサイズ
-#define	BOX2OBJ_FNTOAM_BOXNUM_SY	( 1 )	// OAMフォント：格納数Ｙサイズ
+#define	BOX2OBJ_FNTOAM_BOXNAME_SY	( 2 )		// OAMフォント：ボックス名Ｙサイズ
+#define	BOX2OBJ_FNTOAM_BOXNUM_SX	( 2 )		// OAMフォント：格納数Ｘサイズ
+#define	BOX2OBJ_FNTOAM_BOXNUM_SY	( 1 )		// OAMフォント：格納数Ｙサイズ
 
 
 //============================================================================================
@@ -441,6 +441,8 @@ extern void BOX2OBJ_PartyPokeIconFrmSetRight( BOX2_SYS_WORK * syswk );
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PokeIconPriChg( BOX2_APP_WORK * appwk, u32 pos, u32 flg );
+
+extern void BOX2OBJ_PokeIconPriChg2( BOX2_APP_WORK * appwk, u32 icon_pos, u32 put_pos, u32 flg );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1084,6 +1086,12 @@ extern void BOX2OBJ_FontOamInit( BOX2_APP_WORK * appwk );
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_FontOamExit( BOX2_APP_WORK * appwk );
+
+extern void BOX2OBJ_FontOamVanish( BOX2_APP_WORK * appwk, u32 idx, BOOL flg );
+extern BOOL BOX2OBJ_CheckFontOamVanish( BOX2_APP_WORK * appwk, u32 idx );
+
+extern void BOX2OBJ_SetBoxNamePos( BOX2_APP_WORK * appwk, u32 idx, u32 mv );
+extern void BOX2OBJ_BoxNameScroll( BOX2_APP_WORK * appwk, s8 mv );
 
 //--------------------------------------------------------------------------------------------
 /**

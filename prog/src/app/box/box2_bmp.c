@@ -143,19 +143,19 @@
 #define	BMPWIN_ITEMINFO_PAL		( 1 )
 
 //「てもちポケモン」
-#define	BMPWIN_TEMOCHI_FRM		( GFL_BG_FRAME1_M )
-#define	BMPWIN_TEMOCHI_PX		( 0 )
-#define	BMPWIN_TEMOCHI_PY		( 0 )//( 21 )
-#define	BMPWIN_TEMOCHI_SX		( 11 )
-#define	BMPWIN_TEMOCHI_SY		( 3 )
+#define	BMPWIN_TEMOCHI_FRM		( GFL_BG_FRAME0_M )
+#define	BMPWIN_TEMOCHI_PX			( 0 )
+#define	BMPWIN_TEMOCHI_PY			( 0 )//( 21 )
+#define	BMPWIN_TEMOCHI_SX			( 12 )
+#define	BMPWIN_TEMOCHI_SY			( 3 )
 #define	BMPWIN_TEMOCHI_PAL		( BOX2MAIN_BG_PAL_SELWIN )
-//「ポケモンいどう」
-#define	BMPWIN_IDOU_FRM			( GFL_BG_FRAME1_M )
-#define	BMPWIN_IDOU_PX			( 0 )//( 12 )
-#define	BMPWIN_IDOU_PY			( 0 )//( 21 )
-#define	BMPWIN_IDOU_SX			( 11 )
-#define	BMPWIN_IDOU_SY			( 3 )
-#define	BMPWIN_IDOU_PAL			( 2 )
+//「ボックスリスト」
+#define	BMPWIN_BOXLIST_FRM		( GFL_BG_FRAME0_M )
+#define	BMPWIN_BOXLIST_PX			( 0 )//( 12 )
+#define	BMPWIN_BOXLIST_PY			( 0 )//( 21 )
+#define	BMPWIN_BOXLIST_SX			( 12 )
+#define	BMPWIN_BOXLIST_SY			( 3 )
+#define	BMPWIN_BOXLIST_PAL		( BOX2MAIN_BG_PAL_SELWIN )
 //「もどる」
 #define	BMPWIN_MODORU_FRM		( GFL_BG_FRAME1_M )
 #define	BMPWIN_MODORU_PX		( 0 )//( 24 )
@@ -233,8 +233,10 @@
 #define	BMPWIN_MSG1_SY		( 2 )
 #define	BMPWIN_MSG1_PAL		( BOX2MAIN_BG_PAL_SYSFNT )
 // メッセージ２
-#define	BMPWIN_MSG2_PX		( 2 )
-#define	BMPWIN_MSG2_PY		( 1 )
+#define	BMPWIN_MSG2_PX		( 1 )
+#define	BMPWIN_MSG2_PY		( 19 )
+#define	BMPWIN_MSG2_SX		( 18 )
+#define	BMPWIN_MSG2_SY		( 4 )
 // メッセージ３
 #define	BMPWIN_MSG3_SX		( 19 )
 #define	BMPWIN_MSG3_SY		( 2 )
@@ -459,38 +461,13 @@ static const u8	BoxBmpWinData[][6] =
 		BMPWIN_MARK_CANCEL_SX, BMPWIN_MARK_CANCEL_SY, BMPWIN_MARK_CANCEL_PAL,
 	},
 
-
-
-
-
-
-
 	{	//「てもちポケモン」
 		BMPWIN_TEMOCHI_FRM, BMPWIN_TEMOCHI_PX, BMPWIN_TEMOCHI_PY,
 		BMPWIN_TEMOCHI_SX, BMPWIN_TEMOCHI_SY, BMPWIN_TEMOCHI_PAL,
 	},
-	{	//「ポケモンいどう」
-		BMPWIN_IDOU_FRM, BMPWIN_IDOU_PX, BMPWIN_IDOU_PY,
-		BMPWIN_IDOU_SX, BMPWIN_IDOU_SY, BMPWIN_IDOU_PAL,
-	},
-	{	//「もどる」
-		BMPWIN_MODORU_FRM, BMPWIN_MODORU_PX, BMPWIN_MODORU_PY,
-		BMPWIN_MODORU_SX, BMPWIN_MODORU_SY, BMPWIN_MODORU_PAL,
-	},
-	{	//「やめる」
-		BMPWIN_YAMERU_FRM, BMPWIN_YAMERU_PX, BMPWIN_YAMERU_PY,
-		BMPWIN_YAMERU_SX, BMPWIN_YAMERU_SY, BMPWIN_YAMERU_PAL,
-	},
-	{	//「とじる」
-		BMPWIN_TOZIRU_FRM, BMPWIN_TOZIRU_PX, BMPWIN_TOZIRU_PY,
-		BMPWIN_TOZIRU_SX, BMPWIN_TOZIRU_SY, BMPWIN_TOZIRU_PAL,
-	},
-
-
-
-	{	// 手持ちポケモンフレーム・いれかえ
-		BMPWIN_PARTY_CNG_FRM, BMPWIN_PARTY_CNG_PX, BMPWIN_PARTY_CNG_PY,
-		BMPWIN_PARTY_CNG_SX, BMPWIN_PARTY_CNG_SY, BMPWIN_PARTY_CNG_PAL,
+	{	//「ボックスリスト」
+		BMPWIN_BOXLIST_FRM, BMPWIN_BOXLIST_PX, BMPWIN_BOXLIST_PY,
+		BMPWIN_BOXLIST_SX, BMPWIN_BOXLIST_SY, BMPWIN_BOXLIST_PAL,
 	},
 
 	{	// メッセージ１
@@ -499,8 +476,11 @@ static const u8	BoxBmpWinData[][6] =
 	},
 	{	// メッセージ２
 		BMPWIN_MSG1_FRM, BMPWIN_MSG2_PX, BMPWIN_MSG2_PY,
-		BMPWIN_MSG1_SX, BMPWIN_MSG1_SY, BMPWIN_MSG1_PAL,
+		BMPWIN_MSG2_SX, BMPWIN_MSG2_SY, BMPWIN_MSG1_PAL,
 	},
+
+
+
 	{	// メッセージ３
 		BMPWIN_MSG1_FRM, BMPWIN_MSG1_PX, BMPWIN_MSG1_PY,
 		BMPWIN_MSG3_SX, BMPWIN_MSG3_SY, BMPWIN_MSG1_PAL,
@@ -1178,7 +1158,7 @@ u32 BOX2BMP_PokeItemInfoWrite( BOX2_SYS_WORK * syswk, u16 item )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void ButtonPut_S( BOX2_SYS_WORK * syswk, u32 winID, const u32 strID )
+static void MakeBmpButton( BOX2_SYS_WORK * syswk, u32 winID, const u32 strID, u16 cgx, PRINTSYS_LSB	col )
 {
 	GFL_BMPWIN * win;
 	GFL_BMP_DATA * bmp;
@@ -1187,8 +1167,6 @@ static void ButtonPut_S( BOX2_SYS_WORK * syswk, u32 winID, const u32 strID )
 	void * buf;
 	u8 * raw;
 	NNSG2dCharacterData * chr;
-	PRINTSYS_LSB	col;
-	u16	cgx;
 	u8	frm, px, py, sx, sy;
 	u8	i;
 
@@ -1200,61 +1178,49 @@ static void ButtonPut_S( BOX2_SYS_WORK * syswk, u32 winID, const u32 strID )
 	sx  = GFL_BMPWIN_GetSizeX( win );
 	sy  = GFL_BMPWIN_GetSizeY( win );
 
-/*
-	if( sw == TRUE ){
-		GFL_BMP_Clear( win, FNTCOL_SELWIN_ON_B );
-		col = FNTCOL_SELWIN_ON;
-		cgx = BOX2MAIN_SELWIN_CGX_SIZ * 0x20;
-	}else{
-		GFL_BMP_Clear( win, FNTCOL_SELWIN_OFF_B );
-		col = FNTCOL_SELWIN_OFF;
-		cgx = 0;
-	}
-*/
 	GFL_BMP_Clear( bmp, FNTCOL_SELWIN_OFF_B );
-	col = FCOL_SELWIN_OFF;
-	cgx = 0;
 
-	buf = GFL_ARC_UTIL_LoadBGCharacter( ARCID_BOX2_GRA, NARC_box_gra_selwin_lz_NCGR, TRUE, &chr, HEAPID_BOX_APP );
+	buf = GFL_ARC_UTIL_LoadBGCharacter( ARCID_BOX2_GRA, NARC_box_gra_selwin_lz_NCGR, TRUE, &chr, HEAPID_BOX_APP_L );
 	raw = chr->pRawData;
+	cgx *= 0x20;
 
 	// 左上
-	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*0], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP );
+	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*0], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
 	GFL_BMP_Print( button, bmp, 0, 0, 0, 0, 8, 8, GF_BMPPRT_NOTNUKI );
 	GFL_BMP_Delete( button );
 	// 右上
-	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*2], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP );
+	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*2], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
 	GFL_BMP_Print( button, bmp, 0, 0, (sx-1)*8, 0, 8, 8, GF_BMPPRT_NOTNUKI );
 	GFL_BMP_Delete( button );
 	// 左下
-	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*9], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP );
+	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*9], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
 	GFL_BMP_Print( button, bmp, 0, 0, 0, (sy-1)*8, 8, 8, GF_BMPPRT_NOTNUKI );
 	GFL_BMP_Delete( button );
 	// 右下
-	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*11], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP );
+	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*11], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
 	GFL_BMP_Print( button, bmp, 0, 0, (sx-1)*8, (sy-1)*8, 8, 8, GF_BMPPRT_NOTNUKI );
 	GFL_BMP_Delete( button );
 
 	// 左
-	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*3], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP );
+	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*3], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
 	for( i=1; i<sy-1; i++ ){
 		GFL_BMP_Print( button, bmp, 0, 0, 0, i*8, 8, 8, GF_BMPPRT_NOTNUKI );
 	}
 	GFL_BMP_Delete( button );
 	// 右
-	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*5], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP );
+	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*5], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
 	for( i=1; i<sy-1; i++ ){
 		GFL_BMP_Print( button, bmp, 0, 0, (sx-1)*8, i*8, 8, 8, GF_BMPPRT_NOTNUKI );
 	}
 	GFL_BMP_Delete( button );
 	// 上
-	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*1], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP );
+	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*1], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
 	for( i=1; i<sx-1; i++ ){
 		GFL_BMP_Print( button, bmp, 0, 0, i*8, 0, 8, 8, GF_BMPPRT_NOTNUKI );
 	}
 	GFL_BMP_Delete( button );
 	// 下
-	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*10], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP );
+	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*10], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
 	for( i=1; i<sx-1; i++ ){
 		GFL_BMP_Print( button, bmp, 0, 0, i*8, (sy-1)*8, 8, 8, GF_BMPPRT_NOTNUKI );
 	}
@@ -1269,33 +1235,19 @@ static void ButtonPut_S( BOX2_SYS_WORK * syswk, u32 winID, const u32 strID )
 	GFL_STR_DeleteBuffer( str );
 
 //	GFL_BMPWIN_TransVramCharacter( win );
+}
 
-/*
-	GF_BGL_BmpWinPrintEx( win, &raw[cgx+0x20* 0], 0, 0, 8, 8, 0, 0, 8, 8, 0xff );				// 左上
-	GF_BGL_BmpWinPrintEx( win, &raw[cgx+0x20* 2], 0, 0, 8, 8, (sx-1)*8, 0, 8, 8, 0xff );		// 右上
+#define	BMPBUTTON_CHR_NORMAL		( 0 )
+#define	BMPBUTTON_CHR_TOUCHBAR	( BOX2MAIN_SELWIN_CGX_SIZ )
 
-	GF_BGL_BmpWinPrintEx( win, &raw[cgx+0x20* 9], 0, 0, 8, 8, 0, (sy-1)*8, 8, 8, 0xff );		// 左下
-	GF_BGL_BmpWinPrintEx( win, &raw[cgx+0x20*11], 0, 0, 8, 8, (sx-1)*8, (sy-1)*8, 8, 8, 0xff );	// 右下
+static void ButtonPut_S( BOX2_SYS_WORK * syswk, u32 winID, const u32 strID )
+{
+	MakeBmpButton( syswk, winID, strID, BMPBUTTON_CHR_NORMAL, FCOL_SELWIN_OFF );
+}
 
-	for( i=1; i<sy-1; i++ ){
-		GF_BGL_BmpWinPrintEx( win, &raw[cgx+0x20*3], 0, 0, 8, 8, 0, i*8, 8, 8, 0xff );				// 左
-		GF_BGL_BmpWinPrintEx( win, &raw[cgx+0x20*5], 0, 0, 8, 8, (sx-1)*8, i*8, 8, 8, 0xff );		// 右
-	}
-	for( i=1; i<sx-1; i++ ){
-		GF_BGL_BmpWinPrintEx( win, &raw[cgx+0x20* 1], 0, 0, 8, 8, i*8, 0, 8, 8, 0xff );				// 上
-		GF_BGL_BmpWinPrintEx( win, &raw[cgx+0x20*10], 0, 0, 8, 8, i*8, (sy-1)*8, 8, 8, 0xff );		// 下
-	}
-
-	GFL_HEAP_FreeMemory( buf );
-//↑[GS_CONVERT_TAG]
-
-	str = MSGMAN_AllocString( syswk->app->mman, strID );
-	StrPrintCore( win, str, sx*8/2, 4, FONT_TOUCH, col, STRPRINT_MODE_CENTER );
-	STRBUF_Delete( str );
-
-	GFL_BMPWIN_TransVramCharacter( win );
-//↑[GS_CONVERT_TAG]
-*/
+static void PutTouchBarButton( BOX2_SYS_WORK * syswk, u32 winID, const u32 strID )
+{
+	MakeBmpButton( syswk, winID, strID, BMPBUTTON_CHR_TOUCHBAR, FCOL_SELWIN_OFF );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1468,9 +1420,10 @@ void BOX2BMP_PokeMenuBgFrmWkMake( BOX2_APP_WORK * appwk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void BOX2BMP_TemochiButtonBgFrmWkMake( BOX2_APP_WORK * appwk )
+void BOX2BMP_TemochiButtonBgFrmWkMake( BOX2_SYS_WORK * syswk )
 {
-//	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_POKE_BTN, appwk->win[BOX2BMPWIN_ID_TEMOCHI].win );
+	PutTouchBarButton( syswk, BOX2BMPWIN_ID_TEMOCHI, mes_boxbutton_01_01 );
+	ButtonBgFrmMake2( syswk->app->wfrm, BOX2MAIN_WINFRM_POKE_BTN, syswk->app->win[BOX2BMPWIN_ID_TEMOCHI].win );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1482,42 +1435,12 @@ void BOX2BMP_TemochiButtonBgFrmWkMake( BOX2_APP_WORK * appwk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void BOX2BMP_IdouButtonBgFrmWkMake( BOX2_APP_WORK * appwk )
+void BOX2BMP_BoxListButtonBgFrmWkMake( BOX2_SYS_WORK * syswk )
 {
-//	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_MV_BTN, appwk->win[BOX2BMPWIN_ID_IDOU].win );
+	PutTouchBarButton( syswk, BOX2BMPWIN_ID_BOXLIST, mes_boxbutton_01_02 );
+	ButtonBgFrmMake2( syswk->app->wfrm, BOX2MAIN_WINFRM_BOXLIST_BTN, syswk->app->win[BOX2BMPWIN_ID_BOXLIST].win );
 }
 
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		ＢＧウィンドウフレーム作成：「もどる」「やめる」
- *
- * @param		appwk		ボックス画面アプリワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_ModoruButtonBgFrmWkMake( BOX2_APP_WORK * appwk )
-{
-//	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_RET_BTN, appwk->win[BOX2BMPWIN_ID_MODORU].win );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		ＢＧウィンドウフレーム作成：「とじる」
- *
- * @param		syswk		ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_ToziruButtonBgFrmWkMake( BOX2_SYS_WORK * syswk )
-{
-	BOX2_APP_WORK * appwk = syswk->app;
-
-//	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_CLOSE_BTN, appwk->win[BOX2BMPWIN_ID_TOZIRU].win );
-
-	ButtonPut_S( syswk, BOX2BMPWIN_ID_TOZIRU, mes_boxbutton_02_07 );
-}
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1528,10 +1451,12 @@ void BOX2BMP_ToziruButtonBgFrmWkMake( BOX2_SYS_WORK * syswk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BOX2BMP_PartyCngButtonFrmPut( BOX2_APP_WORK * appwk )
 {
 	BGWINFRM_BmpWinOn( appwk->wfrm, BOX2MAIN_WINFRM_PARTY, appwk->win[BMPWIN_PARTY_CNG].win );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1699,8 +1624,33 @@ void BOX2BMP_TrayNamePut( BOX2_SYS_WORK * syswk, u8 * cgx, u32 chr, u32 sx, u32 
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+void BOX2BMP_BoxNameWrite( BOX2_SYS_WORK * syswk, u32 tray, u32 idx )
+{
+	STRBUF * str;
+	u32	x;
+
+	str = GFL_STR_CreateBuffer( BOX_TRAYNAME_BUFSIZE, HEAPID_BOX_APP_L );
+
+	BOXDAT_GetBoxName( syswk->dat->sv_box, tray, str );
+	GFL_BMP_Clear( syswk->app->fobj[idx].bmp, 0 );
+	x = ( BOX2OBJ_FNTOAM_BOXNAME_SX * 8 - PRINTSYS_GetStrWidth( str, syswk->app->font, 0 ) ) / 2;
+	PRINTSYS_PrintColor( syswk->app->fobj[idx].bmp, x, 0, str, syswk->app->font, FCOL_FNTOAM );
+
+	GFL_STR_DeleteBuffer( str );
+
+	BmpOam_ActorBmpTrans( syswk->app->fobj[idx].oam );
+}
+
 void BOX2BMP_BoxMoveNameWrite( BOX2_SYS_WORK * syswk, u32 pos )
 {
+	pos = syswk->box_mv_pos + pos;
+	if( pos >= syswk->trayMax ){
+		pos -= syswk->trayMax;
+	}
+
+	BOX2BMP_BoxNameWrite( syswk, pos, BOX2MAIN_FNTOAM_TRAY_NAME );
+
+/*
 	STRBUF * str;
 	u32	x;
 
@@ -1719,6 +1669,7 @@ void BOX2BMP_BoxMoveNameWrite( BOX2_SYS_WORK * syswk, u32 pos )
 	GFL_STR_DeleteBuffer( str );
 
 	BmpOam_ActorBmpTrans( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NAME].oam );
+*/
 }
 
 // 格納数書き込み
@@ -1794,7 +1745,7 @@ void BOX2BMP_WallPaperNameWrite( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 void BOX2BMP_ButtonPutTemochi( BOX2_SYS_WORK * syswk )
 {
-	ButtonPut_S( syswk, BOX2BMPWIN_ID_TEMOCHI, mes_boxbutton_01_01 );
+//	ButtonPut_S( syswk, BOX2BMPWIN_ID_TEMOCHI, mes_boxbutton_01_01 );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1911,25 +1862,12 @@ static void PokeMoveButtonPut( BOX2_SYS_WORK * syswk, u32 winID, u32 strID )
 void BOX2BMP_ButtonPutIdou( BOX2_SYS_WORK * syswk )
 {
 	if( syswk->dat->callMode == BOX_MODE_ITEM ){
-		PokeMoveButtonPut( syswk, BOX2BMPWIN_ID_IDOU, mes_boxbutton_01_05 );
+		PokeMoveButtonPut( syswk, BOX2BMPWIN_ID_BOXLIST, mes_boxbutton_01_05 );
 	}else{
-		PokeMoveButtonPut( syswk, BOX2BMPWIN_ID_IDOU, mes_boxbutton_01_02 );
+		PokeMoveButtonPut( syswk, BOX2BMPWIN_ID_BOXLIST, mes_boxbutton_01_02 );
 	}
 }
 
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		「もどる」ボタン作成
- *
- * @param		syswk		ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_ButtonPutModoru( BOX2_SYS_WORK * syswk )
-{
-	ButtonPut_S( syswk, BOX2BMPWIN_ID_MODORU, mes_boxbutton_01_03 );
-}
 
 
 
@@ -1977,33 +1915,7 @@ void BOX2BMP_MarkingButtonPut( BOX2_APP_WORK * appwk )
 	FrmStrPut( appwk, BMPWIN_MARK_CANCEL, mes_boxbutton_03_02 );
 }
 
-//--------------------------------------------------------------------------------------------
-/**
- * 手持ちポケモンフレームに「いれかえ」描画
- *
- * @param	appwk	ボックス画面アプリワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_PartyChangeButtonPut( BOX2_APP_WORK * appwk )
-{
-	FrmStrPut( appwk, BMPWIN_PARTY_CNG, mes_boxbutton_04_01 );
-}
 
-//--------------------------------------------------------------------------------------------
-/**
- * 手持ちポケモンフレームに「やめる」描画
- *
- * @param	appwk	ボックス画面アプリワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_PartySelectButtonPut( BOX2_APP_WORK * appwk )
-{
-	FrmStrPut( appwk, BMPWIN_PARTY_CNG, mes_boxbutton_04_02 );
-}
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2021,33 +1933,6 @@ void BOX2BMP_MarkingButtonFrmPut( BOX2_APP_WORK * appwk )
 	BOX2BMP_MarkingButtonPut( appwk );
 }
 
-//--------------------------------------------------------------------------------------------
-/**
- * 「やめる」ボタン作成
- *
- * @param	appwk	ボックス画面アプリワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_ButtonPutYameru( BOX2_SYS_WORK * syswk )
-{
-	ButtonPut_S( syswk, BOX2BMPWIN_ID_YAMERU, mes_boxbutton_04_03 );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * 「とじる」ボタン作成
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_ButtonPutToziru( BOX2_SYS_WORK * syswk )
-{
-	ButtonPut_S( syswk, BOX2BMPWIN_ID_TOZIRU, mes_boxbutton_02_07 );
-}
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2504,11 +2389,19 @@ void BOX2BMP_BoxThemaMsgPut( BOX2_SYS_WORK * syswk, u32 msgID, u32 winID )
 	u32	str;
 
 	switch( msgID ){
-	case BOX2BMP_MSGID_THEMA_INIT:		// ボックスを　どうする？
+	case BOX2BMP_MSGID_THEMA_INIT:		// このボックスを　どうしますか？
 		str = msg_boxmes_01_08;
 		break;
 
-	case BOX2BMP_MSGID_THEMA_WALL:		// どの　かべがみに　する？
+	case BOX2BMP_MSGID_THEMA_JUMP:		// どのボックスに　ジャンプしますか？
+		str = msg_boxmes_01_09;
+		break;
+
+	case BOX2BMP_MSGID_THEMA_MES:			// どのテーマに　しますか？
+		str = msg_boxmes_01_10;
+		break;
+
+	case BOX2BMP_MSGID_THEMA_WALL:		// どの　かべがみに　しますか？
 		str = msg_boxmes_01_11;
 		break;
 	}

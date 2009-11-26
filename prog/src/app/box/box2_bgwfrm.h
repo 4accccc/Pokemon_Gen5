@@ -23,6 +23,7 @@
 //#define	WINFRM_PARTYPOKE_RET_PX		( 24 )
 //#define	WINFRM_PARTYPOKE_RET_PY		( 15 )
 #define	BOX2BGWFRM_PARTYPOKE_SX	( 11 )		// 手持ちポケモンフレームＸサイズ
+#define	BOX2BGWFRM_PARTYPOKE_SY	( 15 )		// 手持ちポケモンフレームＹサイズ
 
 
 //============================================================================================
@@ -51,28 +52,17 @@ extern void BOX2BGWFRM_Init( BOX2_SYS_WORK * syswk );
 //--------------------------------------------------------------------------------------------
 extern void BOX2BGWFRM_Exit( BOX2_APP_WORK * appwk );
 
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		ＢＧウィンドウフレームに手持ちポケモンフレームグラフィックをセット
- *
- * @param		wk			ＢＧウィンドウフレームワーク
- * @param		index		ＢＧウィンドウフレームインデックス
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-extern void BOX2BGWFRM_PartyPokeFrameLoadArrange( BGWINFRM_WORK * wk, u32 index );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		「てもちポケモンボタン」ボタン配置
+ * @brief		「てもちポケモン」ボタン配置
  *
  * @param		syswk		ボックス画面システムワーク
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2BGWFRM_ButtonPutTemochi( BOX2_SYS_WORK * syswk );
+extern void BOX2BGWFRM_TemochiButtonOn( BOX2_APP_WORK * appwk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -83,18 +73,9 @@ extern void BOX2BGWFRM_ButtonPutTemochi( BOX2_SYS_WORK * syswk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2BGWFRM_ButtonPutIdou( BOX2_SYS_WORK * syswk );
+extern void BOX2BGWFRM_BoxListButtonOn( BOX2_APP_WORK * appwk );
 
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		「もどる」ボタン配置
- *
- * @param		syswk		ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-extern void BOX2BGWFRM_ButtonPutModoru( BOX2_SYS_WORK * syswk );
+
 
 extern void BOX2BGWFRM_SubDispWazaFrmOutPosSet( BGWINFRM_WORK * wk );
 
@@ -108,13 +89,13 @@ extern void BOX2BGWFRM_PartyPokeFrameOnlyOutSet( BGWINFRM_WORK * wk );
 
 extern BOOL BOX2BGWFRM_AzukeruPartyPokeFrameMove( BOX2_SYS_WORK * syswk );
 
+extern BOOL BOX2BGWFRM_CheckPartyPokeFrameRight( BGWINFRM_WORK * wk );
+
 extern BOOL BOX2BGWFRM_BoxMoveButtonCheck( BGWINFRM_WORK * wk );
 
 extern void BOX2BGWFRM_BoxMoveButtonOutSet( BGWINFRM_WORK * wk );
 
 extern void BOX2BGWFRM_PokeMenuOutSet( BGWINFRM_WORK * wk );
-
-extern void BOX2BGWFRM_RetButtonInSet( BGWINFRM_WORK * wk );
 
 extern BOOL BOX2BGWFRM_PokeMenuPutCheck( BGWINFRM_WORK * wk );
 
@@ -125,9 +106,7 @@ extern void BOX2BGWFRM_BoxMoveButtonInSet( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_BoxMoveFrmOutSet( BGWINFRM_WORK * wk );
 extern BOOL BOX2BGWFRM_CheckBoxMoveFrm( BGWINFRM_WORK * wk );
 
-extern void BOX2BGWFRM_IdouButtonInSet( BGWINFRM_WORK * wk );
 
-extern void BOX2BGWFRM_IdouButtonOutSet( BGWINFRM_WORK * wk );
 
 extern void BOX2BGWFRM_MarkingFrameOutSet( BGWINFRM_WORK * wk );
 
@@ -141,8 +120,6 @@ extern void BOX2BGWFRM_PokeMenuInSet( BGWINFRM_WORK * wk );
 
 extern void BOX2BGWFRM_PokeMenuOff( BGWINFRM_WORK * wk );
 
-extern void BOX2BGWFRM_RetButtonOutSet( BGWINFRM_WORK * wk );
-
 extern void BOX2BGWFRM_SubDispItemFrmInSet( BGWINFRM_WORK * wk );
 
 extern void BOX2BGWFRM_AzukeruPartyPokeFrameLeftMoveSet( BGWINFRM_WORK * wk );
@@ -151,7 +128,6 @@ extern void BOX2BGWFRM_AzukeruPartyPokeFrameRightMoveSet( BGWINFRM_WORK * wk );
 
 extern void BOX2BGWFRM_BoxMoveMenuInSet( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_BoxMoveMenuOutSet( BGWINFRM_WORK * wk );
-extern BOOL BOX2BGWFRM_CloseButtonPutCheck( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_PartyPokeFrameInitPutRight( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_BoxMoveFrmInSet( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_BoxThemaMenuOutSet( BGWINFRM_WORK * wk );
@@ -160,9 +136,6 @@ extern void BOX2BGWFRM_BoxThemaMenuInSet( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_SubDispWazaFrmInSet( BOX2_APP_WORK * appwk );
 extern void BOX2BGWFRM_PartyPokeFrameLeftMoveSet( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_SubDispWazaFrmOutSet( BOX2_APP_WORK * appwk );
-extern void BOX2BGWFRM_TemochiButtonInSet( BGWINFRM_WORK * wk );
-extern void BOX2BGWFRM_BoxPartyButtonVanish( BGWINFRM_WORK * wk );
-extern void BOX2BGWFRM_ButtonPutYameru( BOX2_SYS_WORK * syswk );
 extern BOOL BOX2BGWFRM_YStatusButtonCheck( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_YStatusButtonInSet( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_YStatusButtonOutSet( BGWINFRM_WORK * wk );
@@ -171,18 +144,16 @@ extern void BOX2BGWFRM_BoxMoveFrmPut( BOX2_SYS_WORK * syswk );
 extern void BOX2BGWFRM_BoxThemaFrmPut( BOX2_SYS_WORK * syswk );
 extern void BOX2BGWFRM_MarkingFrameInSet( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_MarkingFramePut( BOX2_SYS_WORK * syswk );
-extern void BOX2BGWFRM_ButtonOutPutIdou( BOX2_SYS_WORK * syswk );
-extern void BOX2BGWFRM_ButtonOutPutTemochi( BOX2_SYS_WORK * syswk );
+extern void BOX2BGWFRM_BoxListButtonOff( BOX2_APP_WORK * appwk );
+extern void BOX2BGWFRM_TemochiButtonOff( BOX2_APP_WORK * appwk );
 extern void BOX2BGWFRM_MarkingSwitch( BOX2_SYS_WORK * syswk, u32 pos );
 extern void BOX2BGWFRM_PartyPokeFrameInitPutLeft( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_PartyPokeFrameOff( BOX2_SYS_WORK * syswk );
 extern void BOX2BGWFRM_PartyPokeFramePut( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_PartyPokeFramePutRight( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_PokeMenuOpenPosSet( BGWINFRM_WORK * wk );
-extern void BOX2BGWFRM_RetButtonOutPut( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_SubDispItemFrmInPosSet( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_SubDispWazaFrmInPosSet( BOX2_APP_WORK * appwk );
-extern void BOX2BGWFRM_TemochiButtonOutSet( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_WallPaperFrameInSet( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_WallPaperFrameOutSet( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_YStatusButtonPut( BGWINFRM_WORK * wk );

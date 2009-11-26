@@ -77,7 +77,7 @@ enum {
 */
 // フォントOAMで使用するOBJ管理数
 // トレイ名と収納数で使用するBMPWINのキャラサイズ分が最大なので、それだけあれば足りる。
-#define	FNTOAM_CHR_MAX		( BOX2OBJ_FNTOAM_BOXNAME_SX*BOX2OBJ_FNTOAM_BOXNAME_SY + BOX2OBJ_FNTOAM_BOXNUM_SX*BOX2OBJ_FNTOAM_BOXNUM_SY*6 )
+#define	FNTOAM_CHR_MAX		( BOX2OBJ_FNTOAM_BOXNAME_SX*BOX2OBJ_FNTOAM_BOXNAME_SY*3 + BOX2OBJ_FNTOAM_BOXNUM_SX*BOX2OBJ_FNTOAM_BOXNUM_SY*6 )
 
 // ポケモンアイコンのプライオリティ（80は適当）
 #define	POKEICON_OBJ_PRI(a)			( 80 + BOX2OBJ_POKEICON_MAX - a*2 )	// 通常のOBJプライオリティ
@@ -98,6 +98,11 @@ enum {
 #define	BOX2OBJ_TRAYNUM_PX		( 316 )	// トレイの格納数のデフォルトＸ座標
 #define	BOX2OBJ_TRAYNUM_PY		( 2 )		// トレイの格納数のデフォルトＹ座標
 #define	BOX2OBJ_TRAYNUM_SY		( 34 )	// トレイの格納数のＹ座標配置間隔
+
+#define	BOX2OBJ_BOXNAME_DPX		( 36 )	// ボックス名のデフォルトＸ座標
+#define	BOX2OBJ_BOXNAME_DPY		( 20 )	// ボックス名のデフォルトＹ座標
+#define	BOX2OBJ_BOXNAME_RPX		( BOX2OBJ_BOXNAME_DPX+BOX2MAIN_TRAY_SCROLL_CNT*BOX2MAIN_TRAY_SCROLL_SPD )	// ボックス名の右配置Ｘ座標
+#define	BOX2OBJ_BOXNAME_LPX		( BOX2OBJ_BOXNAME_DPX-BOX2MAIN_TRAY_SCROLL_CNT*BOX2MAIN_TRAY_SCROLL_SPD )	// ボックス名の左配置Ｘ座標
 
 
 #define	BOX2OBJ_WPICON_SX		( 46 )	// 壁紙アイコンのＸ座標配置間隔
@@ -1468,6 +1473,24 @@ void BOX2OBJ_PokeIconPriChg( BOX2_APP_WORK * appwk, u32 pos, u32 flg )
 	}
 }
 
+void BOX2OBJ_PokeIconPriChg2( BOX2_APP_WORK * appwk, u32 icon_pos, u32 put_pos, u32 flg )
+{
+	u32	id = appwk->pokeicon_id[icon_pos];
+
+	if( flg == BOX2OBJ_POKEICON_PRI_CHG_GET ){
+		BOX2OBJ_BgPriChange( appwk, id, POKEICON_BG_PRI_GET );
+		BOX2OBJ_ObjPriChange( appwk, id, POKEICON_OBJ_PRI_GET );
+	}else{
+		if( put_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+			BOX2OBJ_BgPriChange( appwk, id, POKEICON_TBG_PRI_PUT );
+		}else{
+			BOX2OBJ_BgPriChange( appwk, id, POKEICON_PBG_PRI_PUT );
+		}
+		BOX2OBJ_ObjPriChange( appwk, id, POKEICON_OBJ_PRI_PUT(put_pos) );
+	}
+}
+
+
 //--------------------------------------------------------------------------------------------
 /**
  * ポケモンアイコンのプライオリティを変更（掴んだ手持ちをトレイに落とすとき）
@@ -1851,7 +1874,7 @@ void BOX2OBJ_PutPokeIcon( BOX2_APP_WORK * appwk, u32 pos )
 	appwk->pokeicon_id[BOX2OBJ_POKEICON_GET_POS] = tmp;
 
 	BOX2OBJ_SetPos( appwk, appwk->pokeicon_id[BOX2OBJ_POKEICON_GET_POS], x, y, CLSYS_DEFREND_MAIN );
-	BOX2OBJ_PokeIconPriChg( appwk, pos, BOX2OBJ_POKEICON_PRI_CHG_PUT );
+//	BOX2OBJ_PokeIconPriChg( appwk, pos, BOX2OBJ_POKEICON_PRI_CHG_PUT );
 /*
 	if( pos < BOX2OBJ_POKEICON_TRAY_MAX || pos == BOX2OBJ_POKEICON_GET_POS ){
 		BOX2OBJ_BgPriChange( appwk, appwk->pokeicon_id[pos], POKEICON_TBG_PRI_PUT );
@@ -3457,7 +3480,7 @@ void BOX2OBJ_TrayIconScroll( BOX2_SYS_WORK * syswk, s16 mv )
 	s16	prm;
 	u16	tray;
 
-	if( GFL_STD_Abs(mv) == BOX2MAIN_TRAY_SCROLL_CNT ){
+	if( GFL_STD_Abs(mv) == BOX2MAIN_TRAYICON_SCROLL_CNT ){
 		prm = 2;
 	}else{
 		prm = 4;
@@ -3917,7 +3940,7 @@ void BOX2OBJ_FontOamInit( BOX2_APP_WORK * appwk )
 
 	appwk->fntoam = BmpOam_Init( HEAPID_BOX_APP, appwk->clunit );
 
-	// ボックス名
+	// ボックス名（ボックス移動用）
 	fobj = &appwk->fobj[BOX2MAIN_FNTOAM_TRAY_NAME];
 
 	fobj->bmp = GFL_BMP_Create( BOX2OBJ_FNTOAM_BOXNAME_SX, BOX2OBJ_FNTOAM_BOXNAME_SY, GFL_BMP_16_COLOR, HEAPID_BOX_APP );
@@ -3936,6 +3959,17 @@ void BOX2OBJ_FontOamInit( BOX2_APP_WORK * appwk )
 	fobj->oam = BmpOam_ActorAdd( appwk->fntoam, &finit );
 	BmpOam_ActorSetDrawEnable( fobj->oam, FALSE );
 
+	// ボックス名（常時表示）
+	for( i=BOX2MAIN_FNTOAM_BOX_NAME1; i<=BOX2MAIN_FNTOAM_BOX_NAME2; i++ ){
+		fobj = &appwk->fobj[i];
+		fobj->bmp = GFL_BMP_Create( BOX2OBJ_FNTOAM_BOXNAME_SX, BOX2OBJ_FNTOAM_BOXNAME_SY, GFL_BMP_16_COLOR, HEAPID_BOX_APP );
+		finit.bmp = fobj->bmp;
+		finit.x = BOX2OBJ_BOXNAME_DPX;
+		finit.y = BOX2OBJ_BOXNAME_DPY;
+		finit.bg_pri = 3;				// BGプライオリティ
+		fobj->oam = BmpOam_ActorAdd( appwk->fntoam, &finit );
+	}
+
 	// 格納数
 	for( i=0; i<BOX2OBJ_TRAYICON_MAX; i++ ){
 		fobj = &appwk->fobj[BOX2MAIN_FNTOAM_TRAY_NUM1+i];
@@ -3943,6 +3977,7 @@ void BOX2OBJ_FontOamInit( BOX2_APP_WORK * appwk )
 		finit.bmp = fobj->bmp;
 		finit.x = BOX2OBJ_TRAYNUM_PX;
 		finit.y = BOX2OBJ_TRAYNUM_PY+BOX2OBJ_TRAYNUM_SY*i;
+		finit.bg_pri = 1;				// BGプライオリティ
 		fobj->oam = BmpOam_ActorAdd( appwk->fntoam, &finit );
 	}
 }
@@ -3966,6 +4001,42 @@ void BOX2OBJ_FontOamExit( BOX2_APP_WORK * appwk )
 	}
 	BmpOam_Exit( appwk->fntoam );
 }
+
+void BOX2OBJ_FontOamVanish( BOX2_APP_WORK * appwk, u32 idx, BOOL flg )
+{
+	BmpOam_ActorSetDrawEnable( appwk->fobj[idx].oam, flg );
+}
+
+BOOL BOX2OBJ_CheckFontOamVanish( BOX2_APP_WORK * appwk, u32 idx )
+{
+	return BmpOam_ActorGetDrawEnable( appwk->fobj[idx].oam );
+}
+
+
+void BOX2OBJ_SetBoxNamePos( BOX2_APP_WORK * appwk, u32 idx, u32 mv )
+{
+	if( mv == BOX2MAIN_TRAY_SCROLL_L ){
+		BmpOam_ActorSetPos( appwk->fobj[idx].oam, BOX2OBJ_BOXNAME_LPX, BOX2OBJ_BOXNAME_DPY );
+	}else{
+		BmpOam_ActorSetPos( appwk->fobj[idx].oam, BOX2OBJ_BOXNAME_RPX, BOX2OBJ_BOXNAME_DPY );
+	}
+}
+
+void BOX2OBJ_BoxNameScroll( BOX2_APP_WORK * appwk, s8 mv )
+{
+	u32	i;
+	s16	x, y;
+
+	for( i=BOX2MAIN_FNTOAM_BOX_NAME1; i<=BOX2MAIN_FNTOAM_BOX_NAME2; i++ ){
+		BmpOam_ActorGetPos( appwk->fobj[i].oam, &x, &y );
+		BmpOam_ActorSetPos( appwk->fobj[i].oam, x+mv, y );
+		if( x+mv == BOX2OBJ_BOXNAME_LPX || x+mv == BOX2OBJ_BOXNAME_RPX ){
+			BOX2OBJ_FontOamVanish( appwk, i, FALSE );
+		}
+	}
+}
+
+
 
 //--------------------------------------------------------------------------------------------
 /**

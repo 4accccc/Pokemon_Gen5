@@ -22,16 +22,21 @@ enum {
 
 	BOX2UI_INIT_ID_PTIN_MAIN,			// つれていく・メイン
 
-	BOX2UI_INIT_ID_ARRANGE_MAIN,		// ボックス整理・メイン
-	BOX2UI_INIT_ID_ARRANGE_MOVE,		// ボックス整理・ポケモン移動
-	BOX2UI_INIT_ID_ARRANGE_PARTY,		// ボックス整理・手持ちポケモン
+	BOX2UI_INIT_ID_ARRANGE_MAIN,				// ボックス整理・メイン
+	BOX2UI_INIT_ID_ARRANGE_MOVE,				// ボックス整理・ポケモン移動（ボックス間）
+	BOX2UI_INIT_ID_ARRANGE_PARTY,				// ボックス整理・手持ちポケモン
+	BOX2UI_INIT_ID_ARRANGE_PARTY_MOVE,	// ボックス整理・ポケモン移動（手持ち）
 
 	BOX2UI_INIT_ID_ITEM_A_MAIN,		// 持ち物整理・メイン
 	BOX2UI_INIT_ID_ITEM_A_PARTY,		// 持ち物整理・手持ちポケモン
 
-	BOX2UI_INIT_ID_MARKING,			// マーキング
+	BOX2UI_INIT_ID_MARKING,					// マーキング
+
 	BOX2UI_INIT_ID_BOXTHEMA_CHG,		// ボックステーマ変更
+
 	BOX2UI_INIT_ID_WALLPAPER_CHG,		// 壁紙変更
+
+	BOX2UI_INIT_ID_BOXJUMP_MAIN,		// ボックスジャンプ
 };
 
 // ボタンＩＤ
@@ -50,7 +55,7 @@ enum {
 	BOX2UI_ARRANGE_MAIN_ITEM,			// 38: もちもの
 	BOX2UI_ARRANGE_MAIN_MARKING,	// 39: マーキング
 	BOX2UI_ARRANGE_MAIN_FREE,			// 40: にがす
-	BOX2UI_ARRANGE_MAIN_CLOSE,		// 41: とじる
+	BOX2UI_ARRANGE_MAIN_CLOSE,		// 41: やめる
 
 	// ボックス整理・「つかむ」トレイ移動
 	BOX2UI_ARRANGE_PGT_POKE1 = 0,	// 00: ポケモン
@@ -68,6 +73,68 @@ enum {
 	BOX2UI_ARRANGE_PGT_PARTY,		// 39: 手持ちポケモン
 	BOX2UI_ARRANGE_PGT_STTUS,		// 40: ステータス
 	BOX2UI_ARRANGE_PGT_RET,			// 41: 戻る
+
+	// ボックス整理・手持ちポケモン
+	BOX2UI_ARRANGE_PARTY_POKE1 = 0,	// 00: 手持ちポケモン
+	BOX2UI_ARRANGE_PARTY_POKE2,
+	BOX2UI_ARRANGE_PARTY_POKE3,
+	BOX2UI_ARRANGE_PARTY_POKE4,
+	BOX2UI_ARRANGE_PARTY_POKE5,
+	BOX2UI_ARRANGE_PARTY_POKE6,
+
+	BOX2UI_ARRANGE_PARTY_BOXLIST,		// 06:「ボックスリスト」
+	BOX2UI_ARRANGE_PARTY_RETURN1,		// 07: 戻る１
+	BOX2UI_ARRANGE_PARTY_RETURN2,		// 08: 戻る２
+
+	BOX2UI_ARRANGE_PARTY_GET,				// 09: つかむ
+	BOX2UI_ARRANGE_PARTY_STATUS,		// 10: ようすをみる
+	BOX2UI_ARRANGE_PARTY_ITEM,			// 11: もちもの
+	BOX2UI_ARRANGE_PARTY_MARKING,		// 12: マーキング
+	BOX2UI_ARRANGE_PARTY_FREE,			// 13: にがす
+	BOX2UI_ARRANGE_PARTY_CLOSE,			// 14: やめる
+
+	// ボックス整理・「つかむ」トレイ移動（手持ち）
+	BOX2UI_ARRANGE_PTGT_POKE1 = 0,	// 00: ポケモン
+	BOX2UI_ARRANGE_PTGT_PARTY_POKE = BOX2UI_ARRANGE_PTGT_POKE1 + BOX2OBJ_POKEICON_TRAY_MAX,	// 30: 手持ちポケモン
+	BOX2UI_ARRANGE_PTGT_NAME = BOX2UI_ARRANGE_PTGT_PARTY_POKE + BOX2OBJ_POKEICON_MINE_MAX,	// 36: ボックス名
+	BOX2UI_ARRANGE_PTGT_LEFT,			// 37: ボックス切り替え矢印（左）
+	BOX2UI_ARRANGE_PTGT_RIGHT,		// 38: ボックス切り替え矢印（右）
+	BOX2UI_ARRANGE_PTGT_BOXLIST,	// 39: ボックスリスト
+	BOX2UI_ARRANGE_PTGT_STTUS,		// 40: ステータス
+	BOX2UI_ARRANGE_PTGT_RET,			// 41: 戻る
+
+	// ボックステーマ変更
+	BOX2UI_BOXTHEMA_MENU1 = 0,		// 00: ジャンプする
+	BOX2UI_BOXTHEMA_MENU2,				// 01: かべがみ
+	BOX2UI_BOXTHEMA_MENU3,				// 02: なまえ
+	BOX2UI_BOXTHEMA_MENU4,				// 03: やめる
+
+	// ボックスジャンプ
+	BOX2UI_BOXJUMP_TRAY1 = 0,		// 00: トレイアイコン
+	BOX2UI_BOXJUMP_TRAY2,				// 01: トレイアイコン
+	BOX2UI_BOXJUMP_TRAY3,				// 02: トレイアイコン
+	BOX2UI_BOXJUMP_TRAY4,				// 03: トレイアイコン
+	BOX2UI_BOXJUMP_TRAY5,				// 04: トレイアイコン
+	BOX2UI_BOXJUMP_TRAY6,				// 05: トレイアイコン
+	BOX2UI_BOXJUMP_RET,					// 06: 戻る
+
+	// 壁紙選択
+	BOX2UI_WALLPAPER_MENU1 = 0,		// 00: メニュー１
+	BOX2UI_WALLPAPER_MENU2,				// 01: メニュー２
+	BOX2UI_WALLPAPER_MENU3,				// 02: メニュー３
+	BOX2UI_WALLPAPER_MENU4,				// 03: メニュー４
+	BOX2UI_WALLPAPER_MENU5,				// 04: もどる
+
+	// マーキング
+	BOX2UI_MARKING_MARK1 = 0,		// 00: ●
+	BOX2UI_MARKING_MARK2,				// 01: ▲
+	BOX2UI_MARKING_MARK3,				// 02: ■
+	BOX2UI_MARKING_MARK4,				// 03: ハート
+	BOX2UI_MARKING_MARK5,				// 04: ★
+	BOX2UI_MARKING_MARK6,				// 05: ◆
+	BOX2UI_MARKING_ENTER,				// 06:「けってい」
+	BOX2UI_MARKING_CANCEL,			// 07:「やめる」
+
 
 
 
@@ -141,24 +208,6 @@ enum {
 
 	BOX2UI_ARRANGE_MOVE_CHANGE,	// 45: ボックスをきりかえる
 
-	// ボックス整理・手持ちポケモン
-	BOX2UI_ARRANGE_PARTY_POKE1 = 0,	// 手持ちポケモン
-	BOX2UI_ARRANGE_PARTY_POKE2,
-	BOX2UI_ARRANGE_PARTY_POKE3,
-	BOX2UI_ARRANGE_PARTY_POKE4,
-	BOX2UI_ARRANGE_PARTY_POKE5,
-	BOX2UI_ARRANGE_PARTY_POKE6,
-
-	BOX2UI_ARRANGE_PARTY_CHANGE,		//「いれかえ」
-	BOX2UI_ARRANGE_PARTY_RETURN,		//「もどる」
-
-	BOX2UI_ARRANGE_PARTY_MOVE,			//「ポケモンいどう」（メニュー）
-	BOX2UI_ARRANGE_PARTY_STATUS,		//「ようすをみる」
-	BOX2UI_ARRANGE_PARTY_ITEM,			//「もちもの」
-	BOX2UI_ARRANGE_PARTY_MARKING,		//「マーキング」
-	BOX2UI_ARRANGE_PARTY_FREE,			//「にがす」
-
-	BOX2UI_ARRANGE_PARTY_CLOSE,		//「とじる」
 
 	// 持ち物整理・メイン操作
 	BOX2UI_ITEM_A_MAIN_POKE1 = 0,	// 00: ポケモン
@@ -186,15 +235,6 @@ enum {
 	BOX2UI_ITEM_A_PARTY_MENU1,		// バッグへ or もたせる
 	BOX2UI_ITEM_A_PARTY_CLOSE,		//「とじる」
 
-	// マーキング
-	BOX2UI_MARKING_MARK1 = 0,		// 00: ●
-	BOX2UI_MARKING_MARK2,			// 01: ▲
-	BOX2UI_MARKING_MARK3,			// 02: ■
-	BOX2UI_MARKING_MARK4,			// 03: ハート
-	BOX2UI_MARKING_MARK5,			// 04: ★
-	BOX2UI_MARKING_MARK6,			// 05: ◆
-	BOX2UI_MARKING_ENTER,			// 06:「けってい」
-	BOX2UI_MARKING_CANCEL,			// 07:「やめる」
 
 	// ボックステーマ変更
 	BOX2UI_BOXTHEMA_CHG_TRAY1 = 0,		// 00: トレイアイコン
@@ -320,6 +360,8 @@ extern u32 BOX2UI_BoxArrangePokeMove( BOX2_SYS_WORK * syswk );
 //--------------------------------------------------------------------------------------------
 extern u32 BOX2UI_ArrangePokeGetMain( BOX2_SYS_WORK * syswk );
 
+extern u32 BOX2UI_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk );
+
 //--------------------------------------------------------------------------------------------
 /**
  * 「ボックスをせいりする」手持ちポケモン操作
@@ -437,4 +479,6 @@ extern BOOL BOX2UI_HitCheckTrayScroll( u32 * x, u32 * y );
 
 
 extern u32 BOX2UI_HitCheckTrayIcon( u32 x, u32 y );
+
+extern BOOL BOX2UI_HitCheckPartyFrameLeft(void);
 
