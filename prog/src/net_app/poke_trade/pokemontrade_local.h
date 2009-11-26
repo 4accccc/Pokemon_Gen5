@@ -21,6 +21,7 @@
 #include "system/touch_subwindow.h"
 #include "pokemontrade_snd.h"
 #include "sound/pm_sndsys.h"
+#include "net/network_define.h"
 
 #include "print/wordset.h"
 
@@ -557,6 +558,8 @@ extern void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork);
 extern void IRCPOKETRADE_PokeDeleteMcss( POKEMON_TRADE_WORK *pWork,int no  );
 extern void IRCPOKETRADE_PokeCreateMcss( POKEMON_TRADE_WORK *pWork ,int no, int bFront, const POKEMON_PARAM *pp );
 extern POKEMON_PASO_PARAM* IRCPOKEMONTRADE_GetPokeDataAddress(BOX_MANAGER* boxData , int trayNo, int index,POKEMON_TRADE_WORK* pWork);
+
+extern void IRC_POKETRADE_SetSubStatusIcon(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_SetMainStatusBG(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_ResetMainStatusBG(POKEMON_TRADE_WORK* pWork);
 extern void IRCPOKEMONTRADE_ResetPokemonStatusMessage(POKEMON_TRADE_WORK* pWork, int side);
@@ -642,12 +645,25 @@ extern int IRC_TRADE_LINE2POKEINDEX(int lineno,int verticalindex);
 #define _CLACT_SOFTPRI_SELECT (15)
 #define _CLACT_SOFTPRI_POKELIST  (16)
 
+
+///通信コマンド
+typedef enum {
+  _NETCMD_SELECT_POKEMON = GFL_NET_CMD_IRCTRADE,
+  _NETCMD_CHANGE_POKEMON,
+  _NETCMD_EGG_AND_BATTLE,
+  _NETCMD_LOOKATPOKE,
+  _NETCMD_CHANGE_CANCEL,
+  _NETCMD_END,
+  _NETCMD_CANCEL_POKEMON,
+  _NETCMD_SCROLLBAR,
+} _POKEMON_TRADE_SENDCMD;
+
+
 extern BOOL POKE_GTS_PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork,int index,int boxno);
 extern void POKE_GTS_CreatePokeIconResource(POKEMON_TRADE_WORK* pWork,int mainsub);
 extern void POKE_GTS_StatusMessageDisp(POKEMON_TRADE_WORK* pWork);
 extern void POKE_GTS_EndWork(POKEMON_TRADE_WORK* pWork);
 extern void POKE_GTS_InitWork(POKEMON_TRADE_WORK* pWork);
-extern void POKE_GTS_PokemonReset(POKEMON_TRADE_WORK* pWork,int side, int no);
 extern void POKE_GTS_Select6Init(POKEMON_TRADE_WORK* pWork);
 
 
@@ -663,12 +679,23 @@ extern void POKETRADE_MESSAGE_HeapEnd(POKEMON_TRADE_WORK* pWork);
 extern void POKETRADE_MESSAGE_AppMenuOpen(POKEMON_TRADE_WORK* pWork, int *menustr,int num);
 extern void POKETRADE_MESSAGE_AppMenuClose(POKEMON_TRADE_WORK* pWork);
 extern void POKETRADE_MESSAGE_ChangePokemonMyStDisp(POKEMON_TRADE_WORK* pWork,int pageno,int leftright,POKEMON_PARAM* pp);
-extern void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON_PARAM* pp);
 extern void POKETRADE_MESSAGE_SetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork, int side,POKEMON_PARAM* pp);
 extern void POKETRADE_MESSAGE_ResetPokemonMyStDisp(POKEMON_TRADE_WORK* pWork);
 extern void POKETRADE_MESSAGE_ResetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork);
-extern void POKETRADE_MESSAGE_CreatePokemonParamDisp(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_MESSAGE_CreatePokemonParamDisp(POKEMON_TRADE_WORK* pWork, POKEMON_PARAM* pp);
 extern void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork);
 
 //ポケモン２Ｄ
-extern void POKETRADE_2D_PokemonIconSet(POKEMON_TRADE_WORK* pWork, int side,int no, POKEMON_PARAM* pp, int hilow);
+extern void POKETRADE_2D_GTSPokemonIconSet(POKEMON_TRADE_WORK* pWork, int side,int no, POKEMON_PARAM* pp, int hilow);
+extern void POKETRADE_2D_GTSPokemonIconReset(POKEMON_TRADE_WORK* pWork,int side, int no);
+
+
+//ポケモンプロセス ir union wifi用
+extern void POKETRADE_PROC_PokemonStatusStart(POKEMON_TRADE_WORK* pWork);
+
+
+//ポケモンネゴシエーション用
+extern void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork);
+extern BOOL POKETRADE_NEGO_IsSelect(POKEMON_TRADE_WORK* pWork,int line , int height);
+

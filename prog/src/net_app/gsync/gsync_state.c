@@ -12,6 +12,8 @@
 #include "arc_def.h"
 #include "libdpw/dwci_ghttp.h"
 #include "net_app/gsync.h"
+#include <nitroWiFi/nhttp.h>
+#include "nitrowifidummy.h"
 
 #include "system/main.h"  //HEAPID
 #include "message.naix"
@@ -30,17 +32,17 @@
 
 #if _TWLDWC_HTTP
 
-//typedef struct _G_SYNC_WORK G_SYNC_WORK;
+static G_SYNC_WORK* _pWork;
 
 typedef void (StateFunc)(G_SYNC_WORK* pState);
 
-#define POSTURL "http://219.118.175.21:10610/cgi-bin/cgeartest/gsync.cgi"
-#define GETURL1 "http://219.118.175.21:10610/cgi-bin/cgeartest/gsyncget.cgi?name=data1&mac=1"
-#define GETURL2 "http://219.118.175.21:10610/cgi-bin/cgeartest/gsyncget.cgi?name=data2&mac=1"
-#define GETURL3 "http://219.118.175.21:10610/cgi-bin/cgeartest/gsyncget.cgi?name=data3&mac=1"
-#define GETURL4 "http://219.118.175.21:10610/cgi-bin/cgeartest/gsyncget.cgi?name=data4&mac=1"
-#define GETURL5 "http://219.118.175.21:10610/cgi-bin/cgeartest/gsyncget.cgi?name=data5&mac=1"
-#define GETURL6 "http://219.118.175.21:10610/cgi-bin/cgeartest/gsyncget.cgi?name=data6&mac=1"
+#define POSTURL "https://wbext.gamefreak.co.jp:10610/cgi-bin/cgeartest/gsync.cgi"
+#define GETURL1 "https://wbext.gamefreak.co.jp:10610/cgi-bin/cgeartest/gsyncget.cgi?name=data1&mac=1"
+#define GETURL2 "https://wbext.gamefreak.co.jp:10610/cgi-bin/cgeartest/gsyncget.cgi?name=data2&mac=1"
+#define GETURL3 "https://wbext.gamefreak.co.jp:10610/cgi-bin/cgeartest/gsyncget.cgi?name=data3&mac=1"
+#define GETURL4 "https://wbext.gamefreak.co.jp:10610/cgi-bin/cgeartest/gsyncget.cgi?name=data4&mac=1"
+#define GETURL5 "https://wbext.gamefreak.co.jp:10610/cgi-bin/cgeartest/gsyncget.cgi?name=data5&mac=1"
+#define GETURL6 "https://wbext.gamefreak.co.jp:10610/cgi-bin/cgeartest/gsyncget.cgi?name=data6&mac=1"
 
 
 static void _changeState(G_SYNC_WORK* pWork,StateFunc* state);
@@ -55,6 +57,12 @@ static void _changeStateDebug(G_SYNC_WORK* pWork,StateFunc* state, int line);
 #endif //_NET_DEBUG
 
 
+extern CPSCaInfo PDW_CA;
+
+static CPSCaInfo* cainfos[] = {
+    &PDW_CA,
+};
+
 
 struct _G_SYNC_WORK {
   GFL_FONT      *fontHandle;
@@ -66,6 +74,8 @@ struct _G_SYNC_WORK {
   STRBUF      *strbufEx;
   WORDSET     *WordSet;               // メッセージ展開用ワークマネージャー
 
+	NNSFndHeapHandle headHandle;
+  void *heapPtr;
   SAVE_CONTROL_WORK* pSaveData;
   StateFunc* state;      ///< ハンドルのプログラム状態
   vu32 count;
@@ -253,10 +263,6 @@ static void _ghttpConnecting(G_SYNC_WORK* pWork)
   }
 
 
-  // ghttpの初期化
-  if(DWC_InitGHTTP(NULL) != TRUE){
-    OS_Printf("error at SCInitialize()\n");
-  }
   _msgPrint(pWork, DEBUG_OHNO_MSG0007);
 
   _CHANGE_STATE(_ghttpKeyWait);
@@ -279,16 +285,16 @@ static void _ghttpPost(G_SYNC_WORK* pWork)
   // post data
   //-------------------------------------------
   {
-    DWC_GHTTPNewPost(&pWork->post);
+//    DWC_GHTTPNewPost(&pWork->post);
 //    DWC_GHTTPPostAddString(&pWork->post, "name", "sogabe");
 //    DWC_GHTTPPostAddString(&pWork->post, "mac", "123456");
 //    DWC_GHTTPPostAddString(&pWork->post, "save", "datatest");
 
-    DWC_GHTTPPostAddFileFromMemory(&pWork->post, "name1", (const char*)"sogabe",6,
-                                   "name.txt","application/octet-stream");
+  //  DWC_GHTTPPostAddFileFromMemory(&pWork->post, "name1", (const char*)"sogabe",6,
+    //                               "name.txt","application/octet-stream");
 
-    DWC_GHTTPPostAddFileFromMemory(&pWork->post, "file1", (const char*)SaveControl_GetPointer(),0x80000,
-                                   "test.bin","application/octet-stream");
+ //   DWC_GHTTPPostAddFileFromMemory(&pWork->post, "file1", (const char*)SaveControl_GetPointer(),0x80000,
+ //                                  "test.bin","application/octet-stream");
 
 //    DWC_GHTTPPostAddFileFromMemory(&pWork->post, "mac", (const char*)pWork->mac,6,
   //                                 "mac.bin","application/octet-stream");
@@ -298,22 +304,10 @@ static void _ghttpPost(G_SYNC_WORK* pWork)
   pWork->count = OS_GetVBlankCount();
   OS_TPrintf("start %d\n",OS_GetVBlankCount());
 
-  OS_TPrintf("DWC_GHTTP_HOST_LOOKUP       %d\n",DWC_GHTTP_HOST_LOOKUP       );
-  OS_TPrintf("DWC_GHTTP_CONNECTING        %d\n",DWC_GHTTP_CONNECTING        );
-  OS_TPrintf("DWC_GHTTP_SECURING_SESSION  %d\n",DWC_GHTTP_SECURING_SESSION  );
-  OS_TPrintf("DWC_GHTTP_SENDING_REQUEST   %d\n",DWC_GHTTP_SENDING_REQUEST   );
-  OS_TPrintf("DWC_GHTTP_POSTING           %d\n",DWC_GHTTP_POSTING           );
-  OS_TPrintf("DWC_GHTTP_WAITING           %d\n",DWC_GHTTP_WAITING           );
-  OS_TPrintf("DWC_GHTTP_RECEIVING_STATUS  %d\n",DWC_GHTTP_RECEIVING_STATUS  );
-  OS_TPrintf("DWC_GHTTP_RECEIVING_HEADERS %d\n",DWC_GHTTP_RECEIVING_HEADERS );
-  OS_TPrintf("DWC_GHTTP_RECEIVING_FILE    %d\n",DWC_GHTTP_RECEIVING_FILE    );
-  OS_TPrintf("DWC_GHTTP_SOCKET_INIT       %d\n",DWC_GHTTP_SOCKET_INIT       );
-  OS_TPrintf("DWC_GHTTP_LOOKUP_PENDING    %d\n",DWC_GHTTP_LOOKUP_PENDING    );
-
   pWork->bEnd = FALSE;
 
 
-  pWork->req = DWC_PostGHTTPData(POSTURL, &pWork->post, POSTCallback, pWork);
+//  pWork->req = DWC_PostGHTTPData(POSTURL, &pWork->post, POSTCallback, pWork);
 
   if( 0 <= pWork->req){
     _msgPrint(pWork, DEBUG_OHNO_MSG0008);
@@ -321,6 +315,218 @@ static void _ghttpPost(G_SYNC_WORK* pWork)
     _CHANGE_STATE(_ghttpPosting);
   }
 }
+
+
+
+static void* AllocForNhttp(u32 size, int alignment)
+{
+  void *ptr;
+  OSIntrMode  enable = OS_DisableInterrupts();
+  ptr = NNS_FndAllocFromExpHeapEx( _pWork->headHandle, size, alignment );
+  (void)OS_RestoreInterrupts(enable);
+  return ptr;
+}
+
+static void FreeForNhttp(void* ptr)
+{
+  OSIntrMode  enable = OS_DisableInterrupts();
+  NNS_FndFreeToExpHeap( _pWork->headHandle, ptr );
+  (void)OS_RestoreInterrupts(enable);
+}
+
+static int ConnectionCallback( NHTTPConnectionHandle handle, NHTTPConnectionEvent event, void* arg )
+{
+    (void)handle;
+    switch ( event )
+    {
+    case NHTTP_EVENT_BODY_RECV_FULL:
+    case NHTTP_EVENT_BODY_RECV_DONE:
+        {
+            NHTTPBodyBufArg*    bbArg = (NHTTPBodyBufArg*)arg;
+            bbArg->offset = 0;
+        }
+    case NHTTP_EVENT_POST_SEND:
+        {
+            NHTTPPostSendArg*   psArg = (NHTTPPostSendArg*)arg;
+        }
+    }
+    return NHTTP_ERROR_NONE;
+}
+
+#define DISPLAY_INTERVAL (2)
+
+static void _DoDownload(void)
+{
+    int     result;
+    static char recvBuffer[4096] ATTRIBUTE_ALIGN(32);
+    
+    result = NHTTPStartup(AllocForNhttp, FreeForNhttp, 12);
+    
+    {
+        NHTTPConnectionHandle   handle;
+        NHTTPError              err;
+        OSTick                  tickStart, tickPrevious;
+        u32                     receivedCurrent = 0, receivedPrevious = 0;
+        u32                     contentLength;
+        u32                     averageSpeed = 0, currentSpeed = 0, maxSpeed = 0;
+
+        OS_TPrintf("=================================================================================\n"
+                   " Target URL: %s %d\n", POSTURL );
+        OS_TPrintf("---------------------------------------------------------------------------------\n");
+        handle = NHTTPCreateConnection(POSTURL, NHTTP_REQMETHOD_POST,
+                                       recvBuffer, sizeof(recvBuffer),
+                                       ConnectionCallback, NULL);
+
+        if ( 0 > ( err = (NHTTPError)NHTTP_SetRootCA( handle, (const char *)cainfos, sizeof(cainfos)/sizeof(CPSCaInfo*) )))
+        {
+            OS_TPrintf(" NHTTP_SetRootCA(%d) Failed \n",err);
+            OS_Halt();
+        }
+
+        if ( 0 != ( err = NHTTPStartConnection(handle)))
+        {
+            OS_TPrintf(" NHTTPStartConnection(%d) Failed \n",err);
+            OS_Halt();
+        }
+
+        tickStart = OS_GetTick();
+
+        while ( NHTTP_ERROR_BUSY == (err = NHTTPGetConnectionError(handle)))
+        {
+            NHTTPConnectionStatus   status = NHTTPGetConnectionStatus(handle);
+            OSTick tickNow;
+
+            OS_Sleep(DISPLAY_INTERVAL);
+            tickNow = OS_GetTick();
+            if ( NHTTP_ERROR_NONE == NHTTPGetConnectionProgress(handle, &receivedCurrent, &contentLength))
+            {
+                averageSpeed = (u32)((f32)receivedCurrent*8 / (f32)OS_TicksToMilliSeconds(tickNow - tickStart));
+                currentSpeed = (u32)((f32)(receivedCurrent - receivedPrevious)*8 / (f32)OS_TicksToMilliSeconds(tickNow - tickPrevious));
+                
+                OS_TPrintf("% 10u / % 10u bytes received. (average % 4u kbps, current % 4u kbps)\n",
+                           receivedCurrent, contentLength, averageSpeed, currentSpeed);
+                
+                tickPrevious = OS_GetTick();
+                receivedPrevious = receivedCurrent;
+                if (maxSpeed < currentSpeed)
+                {
+                    maxSpeed = currentSpeed;
+                }
+            }
+        }
+        OS_TPrintf("---------------------------------------------------------------------------------\n");
+        if (err == NHTTP_ERROR_NONE)
+        {
+            averageSpeed = (u32)((f32)receivedCurrent*8 / (f32)OS_TicksToMilliSeconds(OS_GetTick() - tickStart));
+            OS_TPrintf("Result: average % 4u kbps (%u sec), max % 4u kbps (%u msec)\n"
+                       "\n" , averageSpeed, (u32)OS_TicksToSeconds(OS_GetTick() - tickStart), maxSpeed, DISPLAY_INTERVAL);
+        }
+        else
+        {
+            OS_TPrintf("err = %d\n", err);
+        }
+        NHTTPDeleteConnection(handle);
+    }
+    NHTTPCleanup();
+}
+
+
+
+static void _DoUpload(void)
+{
+    int     result;
+    static char recvBuffer[4096] ATTRIBUTE_ALIGN(32);
+    
+    result = NHTTPStartup(AllocForNhttp, FreeForNhttp, 12);
+    
+    {
+        NHTTPConnectionHandle   handle;
+        NHTTPError              err;
+        OSTick                  tickStart, tickPrevious;
+        u32                     receivedCurrent = 0, receivedPrevious = 0;
+        u32                     contentLength;
+        u32                     averageSpeed = 0, currentSpeed = 0, maxSpeed = 0;
+
+        OS_TPrintf("=================================================================================\n"
+                   " Target URL: %s %d\n", GETURL1,sizeof(cainfos)/sizeof(CPSCaInfo*));
+        OS_TPrintf("---------------------------------------------------------------------------------\n");
+        handle = NHTTPCreateConnection(GETURL1, NHTTP_REQMETHOD_GET,
+                                       recvBuffer, sizeof(recvBuffer),
+                                       ConnectionCallback, NULL);
+
+        if ( 0 > ( err = (NHTTPError)NHTTP_SetRootCA( handle, (const char *)cainfos, sizeof(cainfos)/sizeof(CPSCaInfo*) )))
+        {
+            OS_TPrintf(" NHTTP_SetRootCA(%d) Failed \n",err);
+            OS_Halt();
+        }
+
+
+      if(0!=NHTTP_AddPostDataBinary(handle, "name1", (const char*)"sogabe",6 )){
+            OS_TPrintf(" NHTTP_AddPostDataBinary Failed \n");
+            OS_Halt();
+        
+      }
+
+      if(0!=NHTTP_AddPostDataBinary(handle, "file1", (const char*)SaveControl_GetPointer(),0x20000)){
+            OS_TPrintf(" NHTTP_AddPostDataBinary Failed \n");
+            OS_Halt();
+      }
+
+
+      
+        if ( 0 != ( err = NHTTPStartConnection(handle)))
+        {
+            OS_TPrintf(" NHTTPStartConnection(%d) Failed \n",err);
+            OS_Halt();
+        }
+
+
+
+
+
+
+      
+        tickStart = OS_GetTick();
+
+        while ( NHTTP_ERROR_BUSY == (err = NHTTPGetConnectionError(handle)))
+        {
+            NHTTPConnectionStatus   status = NHTTPGetConnectionStatus(handle);
+            OSTick tickNow;
+
+            OS_Sleep(DISPLAY_INTERVAL);
+            tickNow = OS_GetTick();
+            if ( NHTTP_ERROR_NONE == NHTTPGetConnectionProgress(handle, &receivedCurrent, &contentLength))
+            {
+                averageSpeed = (u32)((f32)receivedCurrent*8 / (f32)OS_TicksToMilliSeconds(tickNow - tickStart));
+                currentSpeed = (u32)((f32)(receivedCurrent - receivedPrevious)*8 / (f32)OS_TicksToMilliSeconds(tickNow - tickPrevious));
+                
+                OS_TPrintf("% 10u / % 10u bytes received. (average % 4u kbps, current % 4u kbps)\n",
+                           receivedCurrent, contentLength, averageSpeed, currentSpeed);
+                
+                tickPrevious = OS_GetTick();
+                receivedPrevious = receivedCurrent;
+                if (maxSpeed < currentSpeed)
+                {
+                    maxSpeed = currentSpeed;
+                }
+            }
+        }
+        OS_TPrintf("---------------------------------------------------------------------------------\n");
+        if (err == NHTTP_ERROR_NONE)
+        {
+            averageSpeed = (u32)((f32)receivedCurrent*8 / (f32)OS_TicksToMilliSeconds(OS_GetTick() - tickStart));
+            OS_TPrintf("Result: average % 4u kbps (%u sec), max % 4u kbps (%u msec)\n"
+                       "\n" , averageSpeed, (u32)OS_TicksToSeconds(OS_GetTick() - tickStart), maxSpeed, DISPLAY_INTERVAL);
+        }
+        else
+        {
+            OS_TPrintf("err = %d\n", err);
+        }
+        NHTTPDeleteConnection(handle);
+    }
+    NHTTPCleanup();
+}
+
 
 
 
@@ -336,19 +542,13 @@ static void _ghttpKeyWait(G_SYNC_WORK* pWork)
   switch(GFL_UI_KEY_GetTrg())
   {
   case PAD_BUTTON_X:
-    _CHANGE_STATE(_ghttpPost);
+    _DoDownload();
     break;
   case PAD_BUTTON_Y:
-
-    pWork->count = OS_GetVBlankCount();
-    OS_TPrintf("start %d  count %d\n",OS_GetVBlankCount(), pWork->getdataCount);
-    pWork->getdataCount = 0;//読み込み時は分割しないとヒープが足りない
-
-    _CHANGE_STATE(_ghttpGet);
+    _DoUpload();
     break;
   case PAD_BUTTON_B:
     _CHANGE_STATE(NULL);
-    DWC_ShutdownGHTTP();
     break;
   }
 }
@@ -363,7 +563,7 @@ static void _ghttpKeyWait(G_SYNC_WORK* pWork)
 static void _ghttpPosting(G_SYNC_WORK* pWork)
 {
 
-  DWC_ProcessGHTTP();
+//  DWC_ProcessGHTTP();
   //OS_TPrintf("state %d\n",DWC_GetGHTTPState(pWork->req));
 
   if( pWork->bEnd ){
@@ -392,12 +592,12 @@ static void _ghttpGet(G_SYNC_WORK* pWork)
 
   pWork->bEnd = FALSE;
 
-  if( 0 <= DWC_GetGHTTPData(bufadd[pWork->getdataCount], GETCallback, (void*)pWork)){
+//  if( 0 <= DWC_GetGHTTPData(bufadd[pWork->getdataCount], GETCallback, (void*)pWork)){
 
 
-    _msgPrint(pWork, DEBUG_OHNO_MSG0010);
+  //  _msgPrint(pWork, DEBUG_OHNO_MSG0010);
     _CHANGE_STATE(_ghttpGetting);
-  }
+//  }
 
 }
 
@@ -411,7 +611,7 @@ static void _ghttpGet(G_SYNC_WORK* pWork)
 static void _ghttpGetting(G_SYNC_WORK* pWork)
 {
 
-  DWC_ProcessGHTTP();
+//  DWC_ProcessGHTTP();
   if( pWork->bEnd ){
     pWork->getdataCount++;
     if(pWork->getdataCount < 6){   //710703バイトは一回131072なので 6回
@@ -472,8 +672,12 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
   {
     G_SYNC_WORK* pWork = GFL_PROC_AllocWork( proc, sizeof(G_SYNC_WORK), HEAPID_PROC );
 
+    _pWork = pWork;
     pWork->pSaveData = SaveControl_GetPointer();  //デバッグ
-    pWork->heapID = HEAPID_PROC;
+    pWork->heapID = GFL_HEAPID_APP;
+
+    pWork->heapPtr = GFL_HEAP_AllocMemory(GFL_HEAPID_APP,0x30000);
+    pWork->headHandle = NNS_FndCreateExpHeap( (void *)( ((u32)pWork->heapPtr + 31) / 32 * 32 ), 0x30000);
 
     GFL_DISP_SetBank( &vramBank );
 
@@ -580,6 +784,9 @@ static GFL_PROC_RESULT GSYNCProc_End( GFL_PROC * proc, int * seq, void * pwk, vo
 #if _TWLDWC_HTTP
   G_SYNC_WORK* pWork = mywk;
 
+  NNS_FndDestroyExpHeap( pWork->headHandle );
+  GFL_HEAP_FreeMemory( pWork->heapPtr  );
+  
   GFL_STR_DeleteBuffer(pWork->strbuf);
   GFL_STR_DeleteBuffer(pWork->strbufEx);
   GFL_MSG_Delete(pWork->mm);

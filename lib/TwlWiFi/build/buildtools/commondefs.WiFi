@@ -1,0 +1,116 @@
+#! make -f
+#----------------------------------------------------------------------------
+# Project:  TwlWiFi - buildtools
+# File:     commondefs.WiFi
+#
+# Copyright 2007-2009 Nintendo.  All rights reserved.
+#
+# These coded instructions, statements, and computer programs contain
+# proprietary information of Nintendo of America Inc. and/or Nintendo
+# Company Ltd., and are protected by Federal copyright law.  They may
+# not be disclosed to third parties or copied or duplicated in any form,
+# in whole or in part, without the prior written consent of Nintendo.
+#
+# $Date:: 2009-06-08#$
+# $Rev: 1183 $
+# $Author: okubata_ryoma $
+#----------------------------------------------------------------------------
+
+
+ifndef TWLWIFI_COMMONDEFS_WIFI_
+TWLWIFI_COMMONDEFS_WIFI_ = TRUE
+
+#
+# WiFi SDK root directory
+#
+
+TWLWIFI_ROOT		?= $(TWLSDK_ROOT)/../TwlWiFi
+
+
+ifneq ($(TWL_LIBTYPE),)
+TWIFI_LIBTYPE		?= $(TWL_LIBTYPE)
+else
+TWIFI_LIBTYPE		?= $(NITRO_LIBTYPE)
+endif
+
+TWIFI_LIBSUFFIX		 = $(if $(TWL_LIBSUFFIX),$(TWL_LIBSUFFIX),$(NITRO_LIBSUFFIX))
+TWIFI_EXSUFFIX	 	 = $(if $(TWLWIFI_INET),.so)
+TWIFI_LIBSUFFIX_EX	 = $(TWIFI_EXSUFFIX)$(TWIFI_LIBSUFFIX)
+
+OBJDIR				 = ./obj$(TWIFI_EXSUFFIX)/$(if $(TWL_BUILDTYPE),$(TWL_BUILDTYPE),$(NITRO_BUILDTYPE))
+BINDIR				 = ./bin$(TWIFI_EXSUFFIX)/$(if $(TWL_BUILDTYPE),$(TWL_BUILDTYPE),$(NITRO_BUILDTYPE))
+
+#----------------------------------------------------------------------------
+#  TWL WiFi SDK path settings
+#
+
+TWIFI_ROOT			:= $(call eupath,$(TWLWIFI_ROOT))
+TWIFI_PRIVATE_ROOT	:= $(TWIFI_ROOT)/../TwlWiFi_private
+TWIFI_INCDIR		 = $(TWIFI_ROOT)/include
+TWIFI_LIBDIR		 = $(TWIFI_ROOT)/lib/$(TWIFI_LIBTYPE)
+
+
+### SDK Library settings
+-include $(TWIFI_ROOT)/build/buildtools/commondefs.nossl
+
+TWLWIFI_LIBSSL		 = $(if $(TWLWIFI_NOSSL),libstubsssl$(TWL_LIBSUFFIX).a,libssl$(TWL_LIBSUFFIX).a)
+
+-include $(TWIFI_ROOT)/build/buildtools/@nssl@privatedefs
+
+ifeq ($(TARGET_PLATFORM),TWL)
+ifeq ($(TWLWIFI_NSSL_PRIVATE),TRUE)
+ifneq ($(findstring LIMITED,$(TWL_ARCHGEN)),)
+TWLWIFI_LIBNSSL		 = $(if $(TWLWIFI_NOSSL),,libnssl$(TWIFI_LIBSUFFIX_EX).a)
+endif
+endif
+endif
+
+TWLWIFI_LIBS_DEFAULT =  $(TWLWIFI_LIBNSSL)				\
+						libwcm$(TWL_LIBSUFFIX).a		\
+						libncfg$(TWL_LIBSUFFIX).a		\
+
+TWLWIFI_LIBS_DEFAULT+= $(if $(TWLWIFI_INET),			\
+							libnwip$(TWL_LIBSUFFIX).a	\
+						,								\
+							libsoc$(TWL_LIBSUFFIX).a	\
+							libcps$(TWL_LIBSUFFIX).a	\
+							$(TWLWIFI_LIBSSL)			\
+						)
+
+TWLWIFI_LIBS		?= $(TWLWIFI_LIBS_DEFAULT)
+
+
+### SDK Extention Library settings
+
+EINCLUDES			+= $(TWIFI_INCDIR) $(if $(TWLWIFI_NEWCPS),$(TWIFI_PRIVATE_ROOT)/include)
+ELIBRARY_DIRS		+= $(TWIFI_LIBDIR)
+ELIBRARIES			+= $(TWLWIFI_LIBS)
+
+TWLWIFI_ENABLE_NWM	?= TRUE
+
+MACRO_FLAGS			+= $(if $(filter TRUE,$(TWLWIFI_NOSSL)),-DSDK_WIFI_NOSSL,)
+MACRO_FLAGS			+= $(if $(filter TRUE,$(TWLWIFI_ENABLE_NWM)),-DSDK_WIFI_NWM)
+MACRO_FLAGS			+= $(if $(filter TRUE,$(TWLWIFI_INET)),-DSDK_WIFI_INET)
+MACRO_FLAGS			+= $(if $(filter TRUE,$(TWLWIFI_COMPAT)),-DSDK_WIFI_COMPAT)
+MACRO_FLAGS			+= $(if $(filter TRUE,$(TWLWIFI_NEWCPS)),-DSDK_WIFI_NEWCPS)
+#MACRO_FLAGS         += $(if $(filter TRUE,$(TWLWIFI_TCP_REORDER)),-DUSE_TCP_REORDER)
+
+#----------------------------------------------------------------------------
+#  TWL WiFi SDK install path
+#
+
+ifdef	TWLWIFI_INSTALL_ROOT
+TWLWIFI_INSTALL_ROOT_	= $(TWLWIFI_INSTALL_ROOT)
+else
+TWLWIFI_INSTALL_ROOT_	= $(TWLWIFI_ROOT)
+endif
+
+TWIFI_INSTALL_ROOT  	= $(subst $(SPACE),\ ,$(subst \,/,$(TWLWIFI_INSTALL_ROOT_)))
+TWIFI_INSTALL_INCDIR	= $(TWIFI_INSTALL_ROOT)/include
+TWIFI_INSTALL_TOOLSDIR	= $(TWIFI_INSTALL_ROOT)/tools
+TWIFI_INSTALL_LIBDIR	= $(TWIFI_INSTALL_ROOT)/lib/$(TWIFI_LIBTYPE)
+
+
+endif # TWLWIFI_COMMONDEFS_WIFI_
+
+#===== End of commondefs.WiFi =====

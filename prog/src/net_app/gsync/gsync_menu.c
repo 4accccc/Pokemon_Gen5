@@ -32,7 +32,7 @@
 #include "sound/pm_sndsys.h"
 
 #include "msg/msg_gsync.h"
-#include "../../field/event_ircbattle.h"
+#include "../../field/event_gsync.h"
 #include "gsync.naix"
 #include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
 
@@ -172,9 +172,8 @@ struct _GAMESYNC_MENU {
   APP_TASKMENU_WORK* pAppTask;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
 	APP_TASKMENU_RES* pAppTaskRes;
-  EVENT_IRCBATTLE_WORK * dbw;
+  EVENT_GSYNC_WORK * dbw;
   int windowNum;
-  BOOL IsIrc;
   GAMESYS_WORK *gameSys_;
   FIELDMAP_WORK *fieldWork_;
   GMEVENT* event_;
@@ -433,7 +432,6 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 //------------------------------------------------------------------------------
 static void _modeInit(GAMESYNC_MENU* pWork)
 {
-  pWork->IsIrc=FALSE;
 
   pWork->pStrBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
   pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
@@ -716,7 +714,7 @@ static void _modeReporting(GAMESYNC_MENU* pWork)
     return;
   }
   {
-    SAVE_RESULT svr = SaveControl_SaveAsyncMain(IrcBattle_GetSAVE_CONTROL_WORK(pWork->dbw));
+    SAVE_RESULT svr = SaveControl_SaveAsyncMain(pWork->dbw->ctrl);
 
     if(svr == SAVE_RESULT_OK){
 			BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
@@ -749,7 +747,7 @@ static void _modeReportWait2(GAMESYNC_MENU* pWork)
       GFL_MSG_GetString( pWork->pMsgData, GAMESYNC_007, pWork->pStrBuf );
       _infoMessageDisp(pWork);
       //セーブ開始
-      SaveControl_SaveAsyncInit( IrcBattle_GetSAVE_CONTROL_WORK(pWork->dbw) );
+      SaveControl_SaveAsyncInit( pWork->dbw->ctrl );
       _CHANGE_STATE(pWork,_modeReporting);
 #else
       _CHANGE_STATE(pWork,NULL);
@@ -814,6 +812,7 @@ static GFL_DISP_VRAM _defVBTbl = {
 //------------------------------------------------------------------------------
 static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+  EVENT_GSYNC_WORK* pParentWork =pwk;
 	
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x18000 );
 
@@ -848,7 +847,7 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
                                pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID  );
 
 		{
-			GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(IrcBattle_GetGAMESYS_WORK(pwk));
+			GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(pParentWork->gsys);
 			INFOWIN_Init( _SUBSCREEN_BGPLANE , _SUBSCREEN_PALLET , pGC , pWork->heapID);
 		}
 		WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
@@ -898,12 +897,11 @@ static GFL_PROC_RESULT GameSyncMenuProcMain( GFL_PROC * proc, int * seq, void * 
 static GFL_PROC_RESULT GameSyncMenuProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   GAMESYNC_MENU* pWork = mywk;
-  EVENT_IRCBATTLE_WORK* pParentWork =pwk;
+  EVENT_GSYNC_WORK* pParentWork =pwk;
 
   _workEnd(pWork);
-  EVENT_IrcBattleSetType(pParentWork, pWork->selectType);
+  pParentWork->selectType = pWork->selectType;
 
-  //	ConnectBGPalAnm_End(&pWork->cbp);
   GFL_PROC_FreeWork(proc);
 
   GFL_TCBL_Exit(pWork->pMsgTcblSys);

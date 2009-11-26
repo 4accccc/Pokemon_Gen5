@@ -44,7 +44,7 @@ extern "C" {
 #elif defined(NHTTP_FOR_NTR)
 
 #include <nitro.h>
-#include <nitroWiFi.h>
+//#include <nitroWiFi.h>
 #ifdef NHTTP_WITH_SSL_BSAFE
 #include <twlWiFi/nssl.h>
 #endif // NHTTP_WITH_SSL_BSAFE

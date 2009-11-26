@@ -28,7 +28,6 @@
 #include "net_app/irc_match/ircbattlemenu.h"
 #include "net_app/friend_trade/ircbattlefriend.h"
 #include "net_app/pokemontrade.h"
-#include "net_app/irc_compatible.h"
 #include "net_app/gsync.h"
 
 #include "net/dwc_raputil.h"
@@ -72,18 +71,6 @@ enum _EVENT_IRCBATTLE {
   _FIELD_END_IRCBATTLE,
   _CALL_GAMESYNC,
   _WAIT_IRCCOMMPATIBLE,
-};
-
-struct _EVENT_GSYNC_WORK{
-  GAMESYS_WORK * gsys;
-  FIELDMAP_WORK * fieldmap;
-  SAVE_CONTROL_WORK *ctrl;
-  BATTLE_SETUP_PARAM para;
-  BOOL isEndProc;
-  int selectType;
-  IRC_COMPATIBLE_PARAM  compatible_param; //ÔŠOüƒƒjƒ…[‚É“n‚·î•ñ
-  BOOL push;
-
 };
 
 
@@ -177,8 +164,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     (*seq)++;
     break;
   case _CALL_GAMESYNC:
-    dbw->compatible_param.p_gamesys   = dbw->gsys;
-    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(gamesync), &G_SYNC_ProcData, &dbw->compatible_param );
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(gamesync), &G_SYNC_ProcData, dbw);
     (*seq)++;
     break;
   case _WAIT_IRCCOMMPATIBLE:

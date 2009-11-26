@@ -1,0 +1,36 @@
+#! make -f
+#----------------------------------------------------------------------------
+# Project:  TwlWiFi - buildtools
+# File:     commondefs.demos
+#
+# Copyright 2003-2008 Nintendo.  All rights reserved.
+#
+# These coded instructions, statements, and computer programs contain
+# proprietary information of Nintendo of America Inc. and/or Nintendo
+# Company Ltd., and are protected by Federal copyright law.  They may
+# not be disclosed to third parties or copied or duplicated in any form,
+# in whole or in part, without the prior written consent of Nintendo.
+#
+# $Date:: 2008-12-17#$
+# $Rev: 1113 $
+# $Author: okubata_ryoma $
+#----------------------------------------------------------------------------
+
+include	$(TWLWIFI_ROOT)/build/buildtools/commondefs
+
+
+ifeq	($(TWLWIFI_SOCKET_PRIVATE),TRUE)
+
+TWIFI_DEMOS_NETCONNECT_ROOT		?= $(TWIFI_ROOT)/build/demos/netconnect
+TWIFI_DEMOS_NETCONNECT_INCDIR	?= $(TWIFI_DEMOS_NETCONNECT_ROOT)/include
+TWIFI_DEMOS_NETCONNECT_LIBS		?= libnetconnect$(TWIFI_LIBSUFFIX_EX).a
+
+TWIFI_DEMOS_NETCONNECT_LIBDIR	?= $(TWIFI_ROOT)/build/demos/netconnect/lib/$(TWL_LIBTYPE)
+
+EINCLUDES			+= $(TWIFI_DEMOS_NETCONNECT_INCDIR)
+ELIBRARY_DIRS		+= $(TWIFI_DEMOS_NETCONNECT_LIBDIR)
+ELIBRARIES			+= $(TWIFI_DEMOS_NETCONNECT_LIBS)
+
+endif	# ($(TWLWIFI_SOCKET_PRIVATE),TRUE)
+
+#===== End of commondefs.add-ins.sitedefs =====

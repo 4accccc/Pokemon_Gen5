@@ -1,0 +1,233 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>TWL-SDK Wi-Fi CHANGELOG</TITLE>
+</HEAD>
+<BODY style="padding-bottom: 1600px;">
+<HR>
+<H1>TWL-SDK Wi-Fi 変更履歴</H1>
+<HR>
+<DL>
+<DT>
+<A href="#wifi_3_3_%E6%AD%A3%E5%BC%8F%E7%89%88">■TWL-SDK Wi-Fi 3.3&#160;正式版</A> (2009/07/31)</DT>
+<DD><A href="#KnownIssues_3_3_%E6%AD%A3%E5%BC%8F%E7%89%88">SDK Wi-Fi ライブラリ 3.3&#160;正式版での既知の問題点</A></DD>
+</DL>
+<DL>
+<DT>
+<A href="#wifi_3_3_RC">■TWL-SDK Wi-Fi 3.3&#160;RC</A> (2009/07/21)</DT>
+<DD><A href="#note36-01">Note 36-01: (CPS) DHCP のトランザクション ID の不具合修正</A></DD>
+<DD><A href="#KnownIssues_3_3_RC">SDK Wi-Fi ライブラリ 3.3&#160;RCでの既知の問題点</A></DD>
+</DL>
+<DL>
+<DT>
+<A href="#wifi_3_3_PR">■TWL-SDK Wi-Fi 3.3&#160;PR</A> (2009/07/01)</DT>
+<DD><A href="#note35-01">Note 35-01: (DevEnv) TWL-WiFi パッケージのビルドに使用する CodeWarrior のバージョン変更</A></DD>
+<DD><A href="#KnownIssues_3_3_PR">SDK Wi-Fi ライブラリ 3.3&#160;PRでの既知の問題点</A></DD>
+</DL>
+<DL>
+<DT>
+<A href="#wifi_3_2_%E6%AD%A3%E5%BC%8F%E7%89%88">■TWL-SDK Wi-Fi 3.2&#160;正式版</A> (2009/06/10)</DT>
+<DD><A href="#KnownIssues_3_2_%E6%AD%A3%E5%BC%8F%E7%89%88">SDK Wi-Fi ライブラリ 3.2&#160;正式版での既知の問題点</A></DD>
+</DL>
+<DL>
+<DT>
+<A href="#wifi_3_2_RC">■TWL-SDK Wi-Fi 3.2&#160;RC</A> (2009/05/22)</DT>
+<DD><A href="#note33-01">Note 33-01: (CPS) TCP ソケットが RST を送信しない問題の修正</A></DD>
+<DD><A href="#note33-02">Note 33-02: (SOC) TCP の接続先にブロードキャストアドレスが指定できる問題の修正</A></DD>
+<DD><A href="#note33-03">Note 33-03: (TOOL) certconv の修正</A></DD>
+<DD><A href="#KnownIssues_3_2_RC">SDK Wi-Fi ライブラリ 3.2&#160;RCでの既知の問題点</A></DD>
+</DL>
+<DL>
+<DT>
+<A href="#wifi_3_2_PR">■TWL-SDK Wi-Fi 3.2&#160;PR</A> (2009/04/16)</DT>
+<DD><A href="#note32-01">Note 32-01: (CPS) CPS_Cleanup 関数の不具合修正</A></DD>
+<DD><A href="#note32-02">Note 32-02: (NHTTP) NHTTP_AddPostDataBinary 関数の返り値の修正</A></DD>
+<DD><A href="#KnownIssues_3_2_PR">SDK Wi-Fi ライブラリ 3.2&#160;PRでの既知の問題点</A></DD>
+</DL>
+<DL>
+<DT>
+<A href="#wifi_3_1_%E6%AD%A3%E5%BC%8F%E7%89%88">■TWL-SDK Wi-Fi 3.1&#160;正式版</A> (2009/02/27)</DT>
+<DD><A href="#KnownIssues_3_1_%E6%AD%A3%E5%BC%8F%E7%89%88">SDK Wi-Fi ライブラリ 3.1&#160;正式版での既知の問題点</A></DD>
+</DL>
+<DL>
+<DT>
+<A href="#wifi_3_1_RC">■TWL-SDK Wi-Fi 3.1&#160;RC</A> (2009/02/10)</DT>
+<DD><A href="#KnownIssues_3_1_RC">SDK Wi-Fi ライブラリ 3.1&#160;RCでの既知の問題点</A></DD>
+</DL>
+<DL>
+<DT>
+<A href="#wifi_3_1_PR2">■TWL-SDK Wi-Fi 3.1&#160;PR2</A> (2009/01/15)</DT>
+<DD><A href="#note29-01">Note 29-01: (CPS) TCP 通信の接続性の向上</A></DD>
+<DD><A href="#note29-02">Note 29-02: (SOC/NHTTP/WCM) SOC、NHTTP、WCM の非公開化</A></DD>
+<DD><A href="#note29-03">Note 29-03: (WCM) 無線デバイスに依存しない WMGameInfo 取得 API の追加</A></DD>
+<DD><A href="#KnownIssues_3_1_PR2">SDK Wi-Fi ライブラリ 3.1&#160;PR2での既知の問題点</A></DD>
+</DL>
+<DL>
+<DT>
+<A href="#wifi_3_1_PR">■TWL-SDK Wi-Fi 3.1&#160;PR</A> (2008/12/10)</DT>
+<DD><A href="#note28-01">Note 28-01: (TWL無線) 受信可能な EtherType の制限解除</A></DD>
+<DD><A href="#note28-02">Note 28-02: (その他) TWL-WiFi パッケージ内のデモの非公開化</A></DD>
+<DD><A href="#KnownIssues_3_1_PR">SDK Wi-Fi ライブラリ 3.1&#160;PRでの既知の問題点</A></DD>
+</DL>
+<DL>
+<DT>
+<A href="#wifi_3_0_%E6%AD%A3%E5%BC%8F%E7%89%88">■TWL-SDK Wi-Fi 3.0&#160;正式版</A> (2008/10/23)</DT>
+<DD><A href="#note27-01">Note 27-01: (NSSL/NHTTP) NSSL ライブラリの非公開化</A></DD>
+<DD><A href="#note27-02">Note 27-02: (WCM) TWL 無線関連のコードを TWL 拡張領域に配置するように修正</A></DD>
+<DD><A href="#note27-03">Note 27-03: (WCM) WCM が必要とするワークバッファのサイズ削減</A></DD>
+<DD><A href="#KnownIssues_3_0_%E6%AD%A3%E5%BC%8F%E7%89%88">SDK Wi-Fi ライブラリ 3.0&#160;正式版での既知の問題点</A></DD>
+</DL>
+<HR>
+<H2 style="line-height: 0"><A name="wifi_3_3_%E6%AD%A3%E5%BC%8F%E7%89%88">■ TWL-SDK Wi-Fi Version 3.3&#160;正式版</A></H2>
+<DIV style="text-align: right"><P style="line-height: 0">(2009/07/31)</P></DIV>
+<HR>
+<H3><A name="KnownIssues_3_3_%E6%AD%A3%E5%BC%8F%E7%89%88">SDK Wi-Fi ライブラリ 3.3&#160;正式版 での既知の問題点</A></H3>
+<P>　ありません。</P>
+<HR>
+<H2 style="line-height: 0"><A name="wifi_3_3_RC">■ TWL-SDK Wi-Fi Version 3.3&#160;RC</A></H2>
+<DIV style="text-align: right"><P style="line-height: 0">(2009/07/21)</P></DIV>
+<HR>
+<H3><A name="note36-01">Note 36-01: (CPS) DHCP のトランザクション ID の不具合修正</A></H3>
+<P><description>
+        トランザクション ID(xid) が、DHCP OFFER と DHCP REQUEST で異なる不具合があり、これを修正しました。<br>
+        この不具合に関して 2009年7月3日 の現在、任天堂の動作確認済み無線アクセスポイントとの接続の問題は報告されておりません。
+      </description></P>
+<HR>
+<H3><A name="KnownIssues_3_3_RC">SDK Wi-Fi ライブラリ 3.3&#160;RC での既知の問題点</A></H3>
+<P>　ありません。</P>
+<HR>
+<H2 style="line-height: 0"><A name="wifi_3_3_PR">■ TWL-SDK Wi-Fi Version 3.3&#160;PR</A></H2>
+<DIV style="text-align: right"><P style="line-height: 0">(2009/07/01)</P></DIV>
+<HR>
+<H3><A name="note35-01">Note 35-01: (DevEnv) TWL-WiFi パッケージのビルドに使用する CodeWarrior のバージョン変更</A></H3>
+<P><description>
+        TWL-WiFi パッケージのビルドに使用する CodeWarrior を CodeWarrior for DSi v1.1 patch1 に変更しました。
+      </description></P>
+<HR>
+<H3><A name="KnownIssues_3_3_PR">SDK Wi-Fi ライブラリ 3.3&#160;PR での既知の問題点</A></H3>
+<P>　ありません。</P>
+<HR>
+<H2 style="line-height: 0"><A name="wifi_3_2_%E6%AD%A3%E5%BC%8F%E7%89%88">■ TWL-SDK Wi-Fi Version 3.2&#160;正式版</A></H2>
+<DIV style="text-align: right"><P style="line-height: 0">(2009/06/10)</P></DIV>
+<HR>
+<H3><A name="KnownIssues_3_2_%E6%AD%A3%E5%BC%8F%E7%89%88">SDK Wi-Fi ライブラリ 3.2&#160;正式版 での既知の問題点</A></H3>
+<P>　ありません。</P>
+<HR>
+<H2 style="line-height: 0"><A name="wifi_3_2_RC">■ TWL-SDK Wi-Fi Version 3.2&#160;RC</A></H2>
+<DIV style="text-align: right"><P style="line-height: 0">(2009/05/22)</P></DIV>
+<HR>
+<H3><A name="note33-01">Note 33-01: (CPS) TCP ソケットが RST を送信しない問題の修正</A></H3>
+<P><description>
+        TCP コネクションにおいて、RST を全く送信しておりませんでした。<br>
+        これを修正し、接続後の SYN、閉じたポートへの SYN など不適切なパケットに対して RST を返すように修正しました。
+      </description></P>
+<HR>
+<H3><A name="note33-02">Note 33-02: (SOC) TCP の接続先にブロードキャストアドレスが指定できる問題の修正</A></H3>
+<P><description>
+        SOC_Connect 関数で TCP の接続先にブロードキャストアドレスを指定できる問題があり、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note33-03">Note 33-03: (TOOL) certconv の修正</A></H3>
+<P><description>
+        ASN.1 の UTF8String タグに対応しました。
+      </description></P>
+<HR>
+<H3><A name="KnownIssues_3_2_RC">SDK Wi-Fi ライブラリ 3.2&#160;RC での既知の問題点</A></H3>
+<P>　ありません。</P>
+<HR>
+<H2 style="line-height: 0"><A name="wifi_3_2_PR">■ TWL-SDK Wi-Fi Version 3.2&#160;PR</A></H2>
+<DIV style="text-align: right"><P style="line-height: 0">(2009/04/16)</P></DIV>
+<HR>
+<H3><A name="note32-01">Note 32-01: (CPS) CPS_Cleanup 関数の不具合修正</A></H3>
+<P><description>
+        呼び出すタイミングによって CPS_Cleanup 関数が返ってこないという不具合があり、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note32-02">Note 32-02: (NHTTP) NHTTP_AddPostDataBinary 関数の返り値の修正</A></H3>
+<P><description>
+        NHTTP_AddPostDataBinary 関数の返り値は成功時に 0 を、失敗時に -1 を返す仕様ですがこれが逆になっており、この不具合を修正しました。
+      </description></P>
+<HR>
+<H3><A name="KnownIssues_3_2_PR">SDK Wi-Fi ライブラリ 3.2&#160;PR での既知の問題点</A></H3>
+<P>　ありません。</P>
+<HR>
+<H2 style="line-height: 0"><A name="wifi_3_1_%E6%AD%A3%E5%BC%8F%E7%89%88">■ TWL-SDK Wi-Fi Version 3.1&#160;正式版</A></H2>
+<DIV style="text-align: right"><P style="line-height: 0">(2009/02/27)</P></DIV>
+<HR>
+<H3><A name="KnownIssues_3_1_%E6%AD%A3%E5%BC%8F%E7%89%88">SDK Wi-Fi ライブラリ 3.1&#160;正式版 での既知の問題点</A></H3>
+<P>　ありません。</P>
+<HR>
+<H2 style="line-height: 0"><A name="wifi_3_1_RC">■ TWL-SDK Wi-Fi Version 3.1&#160;RC</A></H2>
+<DIV style="text-align: right"><P style="line-height: 0">(2009/02/10)</P></DIV>
+<HR>
+<H3><A name="KnownIssues_3_1_RC">SDK Wi-Fi ライブラリ 3.1&#160;RC での既知の問題点</A></H3>
+<P>　ありません。</P>
+<HR>
+<H2 style="line-height: 0"><A name="wifi_3_1_PR2">■ TWL-SDK Wi-Fi Version 3.1&#160;PR2</A></H2>
+<DIV style="text-align: right"><P style="line-height: 0">(2009/01/15)</P></DIV>
+<HR>
+<H3><A name="note29-01">Note 29-01: (CPS) TCP 通信の接続性の向上</A></H3>
+<P><description>
+        状況の悪い通信路において、特定のサーバ実装と TCP 通信を行う際に受信速度が極端に遅くなったり、通信が切断されることがありましたので、これを改善しました。<br>
+        なお、この変更により、ソケット関連の構造体のサイズが変更されています。<br>
+        ネットワークを使用するライブラリは再ビルドの必要がありますので、利用しているライブラリの対応状況をご確認ください。
+      </description></P>
+<HR>
+<H3><A name="note29-02">Note 29-02: (SOC/NHTTP/WCM) SOC、NHTTP、WCM の非公開化</A></H3>
+<P><description>
+        SOC、NHTTP、WCM は非公開になりました。<br>
+        この変更に伴って、関数リファレンスも非公開になっています。<br>
+        これらの API を直接使用したい方は弊社窓口までお問い合わせ下さい。
+      </description></P>
+<HR>
+<H3><A name="note29-03">Note 29-03: (WCM) 無線デバイスに依存しない WMGameInfo 取得 API の追加</A></H3>
+<P><description>
+        WCM を使用して NintendoZone 情報を取得するために、使用している無線デバイスに因らずに WCM が取得した BssDesc から WMGameInfo を取得する API を新設しました。
+      </description></P>
+<HR>
+<H3><A name="KnownIssues_3_1_PR2">SDK Wi-Fi ライブラリ 3.1&#160;PR2 での既知の問題点</A></H3>
+<P>　ありません。</P>
+<HR>
+<H2 style="line-height: 0"><A name="wifi_3_1_PR">■ TWL-SDK Wi-Fi Version 3.1&#160;PR</A></H2>
+<DIV style="text-align: right"><P style="line-height: 0">(2008/12/10)</P></DIV>
+<HR>
+<H3><A name="note28-01">Note 28-01: (TWL無線) 受信可能な EtherType の制限解除</A></H3>
+<P><description>
+        TWL 無線を使用した場合に IPv4、ARP 以外のパケットはドライバが受信直後に破棄する仕様になっておりましたが、これを辞め WPA 接続に使用する EAPOL 以外の全てのプロトコルを受信し、上位レイヤーに通知するよう変更しました。
+      </description></P>
+<HR>
+<H3><A name="note28-02">Note 28-02: (その他) TWL-WiFi パッケージ内のデモの非公開化</A></H3>
+<P><description>
+        ネットワーク接続を行うアプリケーションは、対戦機能の有無にかかわらず TWL-DWC パッケージに含まれるネットワーク接続関数の使用が必須となっています。<br>
+        しかし、誤って TWL-WiFi 内のデモ用の接続関数を使用して製品の開発を進めてしまうケースがありましたので、TWL-WiFi のデモを非公開化しました。
+      </description></P>
+<HR>
+<H3><A name="KnownIssues_3_1_PR">SDK Wi-Fi ライブラリ 3.1&#160;PR での既知の問題点</A></H3>
+<P>　ありません。</P>
+<HR>
+<H2 style="line-height: 0"><A name="wifi_3_0_%E6%AD%A3%E5%BC%8F%E7%89%88">■ TWL-SDK Wi-Fi Version 3.0&#160;正式版</A></H2>
+<DIV style="text-align: right"><P style="line-height: 0">(2008/10/23)</P></DIV>
+<HR>
+<H3><A name="note27-01">Note 27-01: (NSSL/NHTTP) NSSL ライブラリの非公開化</A></H3>
+<P><description>
+        NSSL ライブラリを非公開にしました。<br>
+        非公開化に伴い NHTTP ライブラリが使用する SSL は CPS の SSL になります。<br><br>
+        この変更は 3.0RC3 で入っていましたが、changelog から漏れていました。
+      </description></P>
+<HR>
+<H3><A name="note27-02">Note 27-02: (WCM) TWL 無線関連のコードを TWL 拡張領域に配置するように修正</A></H3>
+<P><description>
+        WCM の TWL 無線に関連するコードが NITRO でも利用可能なメインメモリに配置されておりましたので、HYBRID アプリ開発の支障にならないよう TWL 拡張メモリ領域に配置されるように変更しました。
+      </description></P>
+<HR>
+<H3><A name="note27-03">Note 27-03: (WCM) WCM が必要とするワークバッファのサイズ削減</A></H3>
+<P><description>
+        TWL 無線を使用する場合に WCM が必要とするワークバッファのサイズを 64KB から 18KB に削減しました。
+      </description></P>
+<HR>
+<H3><A name="KnownIssues_3_0_%E6%AD%A3%E5%BC%8F%E7%89%88">SDK Wi-Fi ライブラリ 3.0&#160;正式版 での既知の問題点</A></H3>
+<P>　ありません。</P>
+<HR>
+</BODY>
+</HTML>

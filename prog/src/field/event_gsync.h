@@ -16,7 +16,16 @@
 
 typedef struct _EVENT_GSYNC_WORK EVENT_GSYNC_WORK;
 
-
+struct _EVENT_GSYNC_WORK{
+  GAMESYS_WORK * gsys;
+  FIELDMAP_WORK * fieldmap;
+  SAVE_CONTROL_WORK *ctrl;
+  BATTLE_SETUP_PARAM para;
+  BOOL isEndProc;
+  int selectType;
+//  IRC_COMPATIBLE_PARAM  compatible_param; //ÔŠOüƒƒjƒ…[‚É“n‚·î•ñ
+  BOOL push;
+};
 
 extern void EVENT_GSYNC_SetEnd(EVENT_GSYNC_WORK* pWk);
 

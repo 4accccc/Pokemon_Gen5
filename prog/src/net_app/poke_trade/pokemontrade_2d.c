@@ -919,13 +919,20 @@ static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxDa
         
         GFL_STD_MemCopy(&pWork->pCharMem[4*8*4*4*monsno] , (char*)((u32)obj_vram) + aproxy.vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_2DSUB], 4*8*4*4);
 
-        
-        if(bTemoti && _hedenWazaCheck(ppp)){
-          pltNum -= _OBJPLT_POKEICON_GRAY; 
+        {
+          NNSG2dImagePaletteProxy proxy;
+          u32 res;
+          if((bTemoti && _hedenWazaCheck(ppp))  || ( POKETRADE_NEGO_IsSelect(pWork,line,i)) ){
+            res = pWork->cellRes[PLT_POKEICON_GRAY];
+          }
+          else{
+            res = pWork->cellRes[PLT_POKEICON];
+          }
+          GFL_CLGRP_PLTT_GetProxy(res , &proxy);
+          GFL_CLACT_WK_SetPlttProxy( pWork->pokeIcon[k][i] , &proxy);
         }
-        
-        GFL_CLACT_WK_SetPlttOffs( pWork->pokeIcon[k][i] , pltNum , CLWK_PLTTOFFS_MODE_PLTT_TOP );
 
+        GFL_CLACT_WK_SetPlttOffs( pWork->pokeIcon[k][i] , pltNum , CLWK_PLTTOFFS_MODE_PLTT_TOP );
 
         GFL_CLACT_WK_SetAutoAnmFlag( pWork->pokeIcon[k][i] , FALSE );
         GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[k][i], TRUE );
@@ -1624,7 +1631,7 @@ void IRC_POKETRADE_InitBoxCursor(POKEMON_TRADE_WORK* pWork)
 
 //------------------------------------------------------------------------------
 /**
- * @brief   上画面のステータス表示&下画面の選択アイコン表示
+ * @brief   上画面のステータス表示
  * @param   POKEMON_TRADE_WORK work
  * @retval  none
  */
@@ -1640,6 +1647,19 @@ void IRC_POKETRADE_SetMainStatusBG(POKEMON_TRADE_WORK* pWork)
 																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1), 0, 0,
 																				 pWork->heapID);
 	GFL_ARC_CloseDataHandle( p_handle );
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   下画面の選択アイコン表示
+ * @param   POKEMON_TRADE_WORK work
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void IRC_POKETRADE_SetSubStatusIcon(POKEMON_TRADE_WORK* pWork)
+{
+  
 #if 1
   {
     GFL_CLWK_DATA cellInitData;
@@ -2126,8 +2146,36 @@ void IRC_POKETRADE_StatusWindowMessagePaletteTrans(POKEMON_TRADE_WORK* pWork, in
   
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモンステータスウインドウ用のパレットを合成する
+ * @param   POKEMON_TRADE_WORK
+ * @param   palno      パレットを送る番号
+ * @param   palType   パレット転送タイプ MAINかSUB
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
 
-void POKETRADE_2D_PokemonIconSet(POKEMON_TRADE_WORK* pWork, int side,int no, POKEMON_PARAM* pp, int hilow)
+void POKETRADE_2D_GTSPokemonIconReset(POKEMON_TRADE_WORK* pWork,int side, int no)
+{
+  if(pWork->pokeIconGTS[side][no]){
+    GFL_CLACT_WK_Remove( pWork->pokeIconGTS[side][no]);
+    pWork->pokeIconGTS[side][no]=NULL;
+    GFL_CLGRP_CGR_Release( pWork->pokeIconNcgResGTS[side][no] );
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモンステータスウインドウ用のパレットを合成する
+ * @param   POKEMON_TRADE_WORK
+ * @param   palno      パレットを送る番号
+ * @param   palType   パレット転送タイプ MAINかSUB
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKETRADE_2D_GTSPokemonIconSet(POKEMON_TRADE_WORK* pWork, int side,int no, POKEMON_PARAM* pp, int hilow)
 {
   POKEMON_PASO_PARAM* ppp = PP_GetPPPPointer(pp);
   ARCHANDLE *arcHandlePoke = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
@@ -2136,6 +2184,8 @@ void POKETRADE_2D_PokemonIconSet(POKEMON_TRADE_WORK* pWork, int side,int no, POK
   GFL_POINT pokemonpos[]={{40,92},{72,92},{104,92} , {40+128,92},{72+128,92},{104+128,92}};
   GFL_POINT pokemonposl[]={{20,36},{20,84},{20,132}, {20+128,36},{20+128,84},{20+128,132} };
 
+  POKETRADE_2D_GTSPokemonIconReset(pWork, side, no);
+  
   if(hilow){
     cellInitData.pos_x = pokemonpos[no+side*GTS_NEGO_POKESLT_MAX].x;
     cellInitData.pos_y = pokemonpos[no+side*GTS_NEGO_POKESLT_MAX].y;

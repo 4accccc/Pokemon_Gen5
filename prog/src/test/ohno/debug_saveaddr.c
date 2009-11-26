@@ -155,26 +155,26 @@ static void _keyWait(SAVEADDR_WORK* pWork)
     {//DreamWorld関連
       DREAMWORLD_SAVEDATA* pDW = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
       pAddr = (u8*)DREAMWORLD_SV_GetSleepPokemon(pDW);
-      OS_TPrintf("SLEEP POKEMON ,0x%x, %d\n", (u32)pAddr-(u32)topAddr, POKETOOL_GetPPPWorkSize());
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","SLEEP_POKEMON", (u32)pAddr-(u32)topAddr, POKETOOL_GetPPPWorkSize());
     }
     {//Myステータス
       MYSTATUS* pMy = SaveData_GetMyStatus(pWork->pSaveData);
       pAddr = (u8*)&pMy->gold;
-      OS_TPrintf("GOLD ,0x%x, %d\n", (u32)pAddr-(u32)topAddr, sizeof(pMy->gold));
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PLAYER_GOLD", (u32)pAddr-(u32)topAddr, sizeof(pMy->gold));
       pAddr = (u8*)&pMy->name;
-      OS_TPrintf("PLAYER NAME ,0x%x, %d\n", (u32)pAddr-(u32)topAddr, sizeof(pMy->name));
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PLAYER_NAME", (u32)pAddr-(u32)topAddr, sizeof(pMy->name));
       pAddr = (u8*)&pMy->id;
-      OS_TPrintf("PLAYER ID ,0x%x ,%d\n", (u32)pAddr-(u32)topAddr,sizeof(pMy->id));
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n", "PLAYER_ID",(u32)pAddr-(u32)topAddr,sizeof(pMy->id));
       pAddr = (u8*)&pMy->sex;
-      OS_TPrintf("PLAYER SEX ,0x%x ,%d\n", (u32)pAddr-(u32)topAddr,sizeof(pMy->sex));
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n", "PLAYER_SEX",(u32)pAddr-(u32)topAddr,sizeof(pMy->sex));
 
     }
 
     {//レコード
       long* rec = (long*)SaveData_GetRecord(pWork->pSaveData);
       
-      OS_TPrintf("CAPTURE_POKE ,0x%x ,%d\n", (u32)&rec[RECID_CAPTURE_POKE]-(u32)topAddr, 4);
-      OS_TPrintf("FISHING_SUCCESS ,0x%x ,%d\n", (u32)&rec[RECID_FISHING_SUCCESS]-(u32)topAddr, 4);
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","RECID_CAPTURE_POKE", (u32)&rec[RECID_CAPTURE_POKE]-(u32)topAddr, 4);
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","RECID_FISHING_SUCCESS", (u32)&rec[RECID_FISHING_SUCCESS]-(u32)topAddr, 4);
     }
   }
   
