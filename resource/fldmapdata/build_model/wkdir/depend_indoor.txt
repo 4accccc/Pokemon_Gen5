@@ -101,4 +101,11 @@ DEP_INDOOR	=	\
 	$(RESDIR)/pcev01.nsbmd \
 	$(RESDIR)/m_gym05_jyuuki.nsbmd \
 	$(RESDIR)/m_gym05_belt.nsbmd \
+	$(RESDIR)/c09gate_01.nsbmd \
+	$(RESDIR)/c09gate_02.nsbmd \
+	$(RESDIR)/c09gate_03.nsbmd \
+	$(RESDIR)/c09gate_04.nsbmd \
+	$(RESDIR)/warp01.nsbmd \
+	$(RESDIR)/warp02.nsbmd \
+	$(RESDIR)/warp03.nsbmd \
 
