@@ -1802,7 +1802,7 @@ void BPP_Clear_ForDead( BTL_POKEPARAM* bpp )
   BPP_MIGAWARI_Delete( bpp );
 
   clearWazaSickWork( bpp, TRUE );
-  ConfrontRec_Clear( bpp );
+//  ConfrontRec_Clear( bpp );
   Effrank_Init( &bpp->varyParam );
 }
 //=============================================================================================
@@ -1823,7 +1823,7 @@ void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
 
   clearUsedWazaFlag( bpp );
   clearCounter( bpp );
-  ConfrontRec_Clear( bpp );
+//  ConfrontRec_Clear( bpp );
 }
 //=============================================================================================
 /**

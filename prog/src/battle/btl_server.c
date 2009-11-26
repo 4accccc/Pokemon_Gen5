@@ -99,7 +99,6 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq );
-static BOOL checkBattleShowdown( BTL_SERVER* server );
 static void SetAdapterCmd( BTL_SERVER* server, BtlAdapterCmd cmd );
 static void SetAdapterCmdEx( BTL_SERVER* server, BtlAdapterCmd cmd, const void* sendData, u32 dataSize );
 static BOOL WaitAdapterCmd( BTL_SERVER* server );
@@ -488,6 +487,10 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
           BTL_MAIN_NotifyCapturedPokePos( server->mainModule, pos );
         }
         return TRUE;
+      case SVFLOW_RESULT_BTL_SHOWDOWN:
+        BTL_Printf("決着がついた！\n");
+        setMainProc( server, ServerMain_ExitBattle );
+        return FALSE;
       default:
         GF_ASSERT(0);
         /* fallthru */
@@ -526,18 +529,11 @@ static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq )
     {
       BTL_Printf("入場ポケモン選択し終わった\n");
       ResetAdapterCmd( server );
-      if( checkBattleShowdown(server) ){
-        BTL_Printf("決着がついた！\n");
-        setMainProc( server, ServerMain_ExitBattle );
-        return FALSE;
-      }
-      else{
-        SCQUE_Init( server->que );
-        server->flowResult = BTL_SVFLOW_StartAfterPokeIn( server->flowWork );
-        BTL_Printf("サーバー処理結果=%d\n", server->flowResult );
-        SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
-        (*seq)++;
-      }
+      SCQUE_Init( server->que );
+      server->flowResult = BTL_SVFLOW_StartAfterPokeIn( server->flowWork );
+      BTL_Printf("サーバー処理結果=%d\n", server->flowResult );
+      SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
+      (*seq)++;
     }
     break;
 
@@ -547,13 +543,16 @@ static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq )
       ResetAdapterCmd( server );
       BTL_MAIN_SyncServerCalcData( server->mainModule );
 
-      if( server->flowResult != SVFLOW_RESULT_POKE_IN_REQ )
-      {
-        setMainProc_Root( server );
-      }
-      else
-      {
+      switch( server->flowResult ){
+      case SVFLOW_RESULT_POKE_IN_REQ:
         (*seq) = 0;
+        break;
+      case SVFLOW_RESULT_BTL_SHOWDOWN:
+        setMainProc( server, ServerMain_ExitBattle );
+        break;
+      default:
+        setMainProc_Root( server );
+        break;
       }
     }
     break;
@@ -601,13 +600,16 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
       ResetAdapterCmd( server );
       BTL_MAIN_SyncServerCalcData( server->mainModule );
 
-      if( server->flowResult != SVFLOW_RESULT_POKE_IN_REQ )
-      {
-        setMainProc_Root( server );
-      }
-      else
-      {
+      switch( server->flowResult ){
+      case SVFLOW_RESULT_POKE_IN_REQ:
         setMainProc( server, ServerMain_SelectPokemonIn );
+        break;
+      case SVFLOW_RESULT_BTL_SHOWDOWN:
+        setMainProc( server, ServerMain_ExitBattle );
+        break;
+      default:
+        setMainProc_Root( server );
+        break;
       }
     }
     break;
@@ -646,48 +648,6 @@ static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
   }
   return FALSE;
 }
-
-
-//----------------------------------------------------------------------------------
-/**
- * 戦闘の決着がついた状態か判定
- *
- * @param   server
- *
- * @retval  BOOL
- */
-//----------------------------------------------------------------------------------
-static BOOL checkBattleShowdown( BTL_SERVER* server )
-{
-  u8  pokeExist[2];
-  u32 i;
-
-  pokeExist[0] = pokeExist[1] = FALSE;
-
-  for(i=0; i<BTL_CLIENT_MAX; ++i)
-  {
-    if( BTL_POKECON_IsExsitClient(server->pokeCon, i) )
-    {
-      BTL_PARTY* party = BTL_POKECON_GetPartyData( server->pokeCon, i );
-      u8 side = BTL_MAIN_GetClientSide( server->mainModule, i );
-      if( BTL_PARTY_GetAliveMemberCount(party) )
-      {
-        BTL_Printf("クライアント_%d (SIDE:%d) のポケはまだ何体か生きている\n", i, side);
-        pokeExist[ side] = TRUE;
-      }
-      else{
-        BTL_Printf("クライアント_%d (SIDE:%d) のポケは全滅した\n", i, side);
-      }
-    }
-  }
-
-  if( (pokeExist[0] == FALSE) || (pokeExist[1] == FALSE) ){
-    return TRUE;
-  }
-  return FALSE;
-}
-
-
 
 //----------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------

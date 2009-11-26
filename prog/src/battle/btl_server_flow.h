@@ -33,7 +33,8 @@ typedef enum {
   SVFLOW_RESULT_DEFAULT = 0,  ///< そのまま続行
   SVFLOW_RESULT_POKE_CHANGE,  ///< ポケモン入れ替えフェーズ->バトル継続
   SVFLOW_RESULT_POKE_IN_REQ,  ///< ポケモン死亡->新ポケ選択へ
-  SVFLOW_RESULT_BTL_QUIT,     ///< バトル終了（決着）
+  SVFLOW_RESULT_BTL_SHOWDOWN, ///< バトル終了（決着）
+  SVFLOW_RESULT_BTL_QUIT,     ///< バトル終了（逃げ）
   SVFLOW_RESULT_POKE_GET,     ///< バトル終了（ポケモン捕獲）
 }SvflowResult;
 
