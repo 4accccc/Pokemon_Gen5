@@ -170,6 +170,19 @@
 
 //--------------------------------------------------------------
 /**
+ * 簡易BGウィンドウメッセージ表示
+ * @param msg_id 表示するメッセージID
+ * @param bg_type 表示するタイプ TYPE_INFO,TYPE_TOWN,TYPE_POST,TYPE_ROAD
+ */
+//--------------------------------------------------------------
+  .macro _ASM_EASY_BGWIN_MSG msg_id, bg_type
+  _ASM_TALK_START_SE_PLAY
+  _ASM_BGWIN_MSG \msg_id, \bg_type
+  _ASM_BGWIN_CLOSE
+  .endm
+
+//--------------------------------------------------------------
+/**
  * 簡易鳴き声メッセージコマンド
  *
  * @param monsno
