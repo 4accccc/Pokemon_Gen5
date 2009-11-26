@@ -93,6 +93,11 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BtlBgType
   dst->itemData     = GAMEDATA_GetMyItem( gameData );
   dst->bagCursor    = GAMEDATA_GetBagCursor( gameData );
   dst->zukanData    = GAMEDATA_GetZukanSave( gameData );
+  {
+    // @todo いずれSAVE_CONTROL_WORKに直アクセスしないように書き換える？
+    SAVE_CONTROL_WORK* saveCtrl = GAMEDATA_GetSaveControlWork( gameData );
+    dst->configData = SaveData_GetConfig( saveCtrl );
+  }
 
   // @todo 現在は仮作成
   dst->fieldSituation.bgType = bgType;

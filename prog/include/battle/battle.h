@@ -19,6 +19,7 @@
 #include "savedata/zukan_savedata.h"
 #include "savedata/mystatus.h"
 #include "savedata/myitem_savedata.h"
+#include "savedata/config.h"
 
 #include "battle_bg_def.h"  //zonetableコンバータから参照させたいので定義を分離しました by iwasawa
 
@@ -126,8 +127,6 @@ typedef struct {
 
   //フィールドの状態から決定されるバトルシチュエーションデータ
   BTL_FIELD_SITUATION   fieldSituation;
-
-
   u16             musicDefault;   ///< デフォルト時のBGMナンバー
   u16             musicPinch;     ///< ピンチ時のBGMナンバー
 
@@ -147,9 +146,11 @@ typedef struct {
 
   //セーブデータ系
   const MYSTATUS*   statusPlayer; ///< プレイヤーのステータス
+  const CONFIG*     configData;   ///< コンフィグデータ
   MYITEM*           itemData;     ///< アイテムデータ
   BAG_CURSOR*       bagCursor;    ///< バッグカーソルデータ
   ZUKAN_SAVEDATA*   zukanData;    ///< 図鑑データ
+
 
   //----- 以下、バトルの結果格納パラメータ ----
 
