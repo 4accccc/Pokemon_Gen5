@@ -1,5 +1,5 @@
 #event data
-#save date:2009/11/26 15:49:05
+#save date:2009/11/26 21:42:11
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02gym0201.wms
 #SECTION START:OBJ_EVENT
@@ -730,7 +730,7 @@ SCRID_BG_C02GYM0201_CATEGORY_06
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--168 36 104
+-168 24 88
 #event number: 7
 #Bg Event Label
 BG_C02GYM0201_CATEGORY_07
@@ -795,7 +795,7 @@ SCRID_BG_C02GYM0201_CATEGORY_11
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--152 36 8
+-152 28 -8
 #event number: 12
 #Bg Event Label
 BG_C02GYM0201_CATEGORY_12
@@ -935,7 +935,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
+3
 #event number: 0
 #Pos Event Label
 POS_C02GYM0201_SUNGLASSES_01
@@ -951,6 +951,36 @@ EVENTDATA_POSTYPE_GRID
 -120 0 -184
 #size
 3 1
+#event number: 1
+#Pos Event Label
+POS_C02GYM0201_TRAINER_01
+#Pos Script Name
+SCRID_POS_C02GYM0201_TRAINER_01
+#Event Trigger Work Name
+WK_SCENE_C02GYM0201
+#Event Trigger Work Value
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 0 168
+#size
+1 3
+#event number: 2
+#Pos Event Label
+POS_C02GYM0201_TRAINER_02
+#Pos Script Name
+SCRID_POS_C02GYM0201_TRAINER_01
+#Event Trigger Work Name
+WK_SCENE_C02GYM0201
+#Event Trigger Work Value
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 0 184
+#size
+1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

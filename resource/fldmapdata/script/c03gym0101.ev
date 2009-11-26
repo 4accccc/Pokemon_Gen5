@@ -156,15 +156,15 @@ IF FLAG_OFF( FE_C03GYM_ITEM) THEN
     
     //プレイヤーが通る3グリッド分を用意
     SWITCH $POSX
-    CASE 16THEN
+    CASE 31THEN
      _OBJ_ANIME( C03GYM0101_SUNGLASSES_01,anm_sunglasses_move_d )
      _OBJ_ANIME_WAIT()
      
-    CASE 17 THEN
+    CASE 32 THEN
      _OBJ_ANIME( C03GYM0101_SUNGLASSES_01,anm_sunglasses_move_e )
      _OBJ_ANIME_WAIT()
      
-    CASE 18 THEN
+    CASE 33 THEN
      _OBJ_ANIME( C03GYM0101_SUNGLASSES_01,anm_sunglasses_move_f )
      _OBJ_ANIME_WAIT()
  
