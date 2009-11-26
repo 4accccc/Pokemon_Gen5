@@ -921,15 +921,6 @@ static const FLDMENUFUNC_LIST DATA_SeasonMenuList[PMSEASON_TOTAL] =
   { DEBUG_FIELD_STR_WINTER, (void*)PMSEASON_WINTER },
 };
 
-/*
-typedef struct {
-  u16 msg_arc_id;
-  u16 max;
-  FLDMENUFUNC_LIST * menulist;
-  const FLDMENUFUNC_HEADER * menuH;
-  u8 px, py, sx, sy;
-}DEBUG_MENU_INITIALIZER;
-*/
 static const DEBUG_MENU_INITIALIZER DebugSeasonJumpMenuData = {
   NARC_message_d_field_dat,
   NELEMS(DATA_SeasonMenuList),
