@@ -54,7 +54,6 @@ TWL_LIBS		= 								\
 				   libfx$(TWL_LIBSUFFIX).a		\
 				   libgx$(TWL_LIBSUFFIX).a		\
 				   libmath$(TWL_LIBSUFFIX).a	\
-				   libmb$(TWL_LIBSUFFIX).a		\
 				   libmi$(TWL_LIBSUFFIX).a		\
 				   libnvram$(TWL_LIBSUFFIX).a	\
 				   libos$(TWL_LIBSUFFIX).a		\
@@ -65,7 +64,6 @@ TWL_LIBS		= 								\
 				   libsnd$(TWL_LIBSUFFIX).a		\
 				   libspi$(TWL_LIBSUFFIX).a		\
 				   libstd$(TWL_LIBSUFFIX).a		\
-				   libwbt$(TWL_LIBSUFFIX).a		\
 				   libwfs$(TWL_LIBSUFFIX).a		\
 				   libwm$(TWL_LIBSUFFIX).a		\
 				   libctrdg$(TWL_LIBSUFFIX).a	\
