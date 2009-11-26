@@ -17,6 +17,7 @@
 
 #include "field_rail.h"
 
+#include "map_attr_def.h"
 #include "rail_attr.h"
 
 //-----------------------------------------------------------------------------
@@ -250,7 +251,7 @@ MAPATTR RAIL_ATTR_GetAttribute( const RAIL_ATTR_DATA* cp_work, const RAIL_LOCATI
 //-----------------------------------------------------------------------------
 BOOL RAIL_ATTR_VALUE_CheckSlipDown( const MAPATTR_VALUE val )
 {
-  if( (val == 0xa0) || (val == 0xa1) || (val == 0xa2) )
+  if( (val == MATTR_SLIP_01) || (val == MATTR_SLIP_GRASS_LOW) || (val == MATTR_SLIP_GRASS_HIGH) )
   {
     return TRUE;
   }
@@ -269,12 +270,49 @@ BOOL RAIL_ATTR_VALUE_CheckSlipDown( const MAPATTR_VALUE val )
 //-----------------------------------------------------------------------------
 BOOL RAIL_ATTR_VALUE_CheckHybridBaseSystemChange( const MAPATTR_VALUE val )
 {
-  if( (val == 0xa3) )
+  if( (val == MATTR_HYBRID_CHANGE) )
   {
     return TRUE;
   }
   return FALSE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ïXÅ@ç∂âÒì]
+ *
+ *	@param	val 
+ *
+ *	@retval TRUE  FALSE
+ */
+//-----------------------------------------------------------------------------
+BOOL RAIL_ATTR_VALUE_CheckIceSpinL( const MAPATTR_VALUE val )
+{
+  if( (val == MATTR_SLIP_LEFT) )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ïXÅ@âEâÒì]
+ *
+ *	@param	val 
+ *
+ *	@retval TRUE  FALSE
+ */
+//-----------------------------------------------------------------------------
+BOOL RAIL_ATTR_VALUE_CheckIceSpinR( const MAPATTR_VALUE val )
+{
+  if( (val == MATTR_SLIP_RIGHT) )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
 
 
 

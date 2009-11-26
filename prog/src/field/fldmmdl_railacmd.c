@@ -178,7 +178,7 @@ static void AcRailWalkInit( MMDL * mmdl, int dir, s16 wait, u16 draw )
 
   MMDL_ReqRailMove( mmdl, dir, wait );
 	MMDL_Rail_UpdateGridPosDir( mmdl, dir );
-	MMDL_SetDirAll( mmdl, dir );
+  MMDL_SetDirAll( mmdl, dir );
 	MMDL_SetDrawStatus( mmdl, draw );
 	MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVE_START );
 	MMDL_IncAcmdSeq( mmdl );

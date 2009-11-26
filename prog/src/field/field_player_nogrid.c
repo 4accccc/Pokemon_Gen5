@@ -46,6 +46,31 @@ static const MMDL_HEADER data_MMdlHeader =
   MMDL_HEADER_POSTYPE_RAIL,
 };
 
+
+//--------------------------------------------------------------
+/// FIELD_PLAYER_NOGRID_MOVEBIT
+//  field_player_gridの仕組みをコピー
+//--------------------------------------------------------------
+typedef enum
+{
+  ///特に無し
+  FIELD_PLAYER_NOGRID_MOVEBIT_NON = (0),
+  ///強制移動中
+  FIELD_PLAYER_NOGRID_MOVEBIT_FORCE       = (1<<0),
+  ///足元無効
+  FIELD_PLAYER_NOGRID_MOVEBIT_UNDER_OFF   = (1<<1),
+  ///一歩移動
+  FIELD_PLAYER_NOGRID_MOVEBIT_STEP        = (1<<2),
+  ///描画左回転
+  FIELD_PLAYER_NOGRID_MOVEBIT_SPIN_L      = (1<<3),
+  ///描画右回転
+  FIELD_PLAYER_NOGRID_MOVEBIT_SPIN_R      = (1<<4),
+  ///最大
+  FIELD_PLAYER_NOGRID_MOVEBIT_BITMAX      = (1<<5),
+}FIELD_PLAYER_NOGRID_MOVEBIT;
+
+#define FIELD_PLAYER_NOGRID_MOVEBIT_MAX (3)
+
 //--------------------------------------------------------------
 ///	PLAYER_MOVE
 //--------------------------------------------------------------
@@ -56,6 +81,20 @@ typedef enum
 	PLAYER_MOVE_TURN,
 	PLAYER_MOVE_HITCH,
 } PLAYER_MOVE;
+
+
+
+//--------------------------------------------------------------
+/// UNDER
+//--------------------------------------------------------------
+typedef enum
+{
+  UNDER_NONE = 0, //何も無し
+  UNDER_ICE, //滑る床
+  UNDER_ICE_L, //滑る床 左回転
+  UNDER_ICE_R, //滑る床 右回転
+  UNDER_MAX,
+}UNDER;
 
 //--------------------------------------------------------------
 ///	PLAYER_SET
@@ -70,16 +109,39 @@ typedef enum
 //  PLAYER_SET_JUMP,
 } PLAYER_SET;
 
+//--------------------------------------------------------------
+///	KURUKURU方向
+//--------------------------------------------------------------
+typedef enum
+{
+  KURUKURU_L,
+  KURUKURU_R,
+
+  KURUKURU_DIR_MAX,
+} KURUKURU_DIR;
 
 //======================================================================
 //	struct
 //======================================================================
+//-------------------------------------
+///	回転ワーク
+//=====================================
+typedef struct 
+{
+  u8 kurukuru_flag;
+  u8 left_or_right;
+  s16 frame;
+} KURUKURU_WORK;
+
+
 //-------------------------------------
 ///	レール動作用補助ワーク
 //=====================================
 struct _FIELD_PLAYER_NOGRID
 {
   int move_state;
+  FIELD_PLAYER_NOGRID_MOVEBIT move_bit;
+  KURUKURU_WORK kurukuru;
   
   FIELD_PLAYER* p_player;
 	FIELDMAP_WORK* p_fieldwork;
@@ -103,6 +165,63 @@ static BOOL nogridPC_Move_CalcSetGroundMove(
 
 
 static void updateFormChange( FIELD_PLAYER_NOGRID* p_player );
+static PLAYER_SET nogridGetMoveStartSet( FIELD_PLAYER_NOGRID* p_player, int dir, int key_trg, int key_cont, BOOL debug );
+static void nogridSetMove( FIELD_PLAYER_NOGRID* p_player, PLAYER_SET set, int dir, int key_trg, int key_cont, BOOL debug );
+static void nogridMoveStartControl( FIELD_PLAYER_NOGRID* p_player, PLAYER_SET set );
+
+static u32 nogrid_HitCheckMove( FIELD_PLAYER_NOGRID* p_player, MMDL *mmdl, u16 dir );
+
+static void nogrid_KuruKuruStart( FIELD_PLAYER_NOGRID* p_player, BOOL left_right );
+static void nogrid_KuruKuruStop( FIELD_PLAYER_NOGRID* p_player );
+static void nogrid_KuruKuruMain( FIELD_PLAYER_NOGRID* p_player );
+
+
+//自機動作ビット
+static void nogrid_OnMoveBit(
+    FIELD_PLAYER_NOGRID *nogrid, FIELD_PLAYER_NOGRID_MOVEBIT bit );
+static void nogrid_OffMoveBit(
+    FIELD_PLAYER_NOGRID *nogrid, FIELD_PLAYER_NOGRID_MOVEBIT bit );
+static BOOL nogrid_CheckMoveBit(
+    FIELD_PLAYER_NOGRID *nogrid, FIELD_PLAYER_NOGRID_MOVEBIT bit );
+static void nogrid_OnMoveBitForce( FIELD_PLAYER_NOGRID *nogrid );
+static void nogrid_OffMoveBitForce( FIELD_PLAYER_NOGRID *nogrid );
+static BOOL nogrid_CheckMoveBitForce( FIELD_PLAYER_NOGRID *nogrid );
+static void nogrid_OnMoveBitUnderOff( FIELD_PLAYER_NOGRID *nogrid );
+static void nogrid_OffMoveBitUnderOff( FIELD_PLAYER_NOGRID *nogrid );
+static void nogrid_OnMoveBitStep( FIELD_PLAYER_NOGRID *nogrid );
+static void nogrid_OffMoveBitStep( FIELD_PLAYER_NOGRID *nogrid );
+static void nogrid_OnMoveBitSpinL( FIELD_PLAYER_NOGRID *nogrid );
+static void nogrid_OffMoveBitSpinL( FIELD_PLAYER_NOGRID *nogrid );
+static void nogrid_OnMoveBitSpinR( FIELD_PLAYER_NOGRID *nogrid );
+static void nogrid_OffMoveBitSpinR( FIELD_PLAYER_NOGRID *nogrid );
+
+static UNDER nogrid_CheckUnder( FIELD_PLAYER_NOGRID *nogrid, u16 dir );
+
+static u16 nogrid_ControlUnder(
+    FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug );
+static void nogrid_ControlUnder_Clear( FIELD_PLAYER_NOGRID *nogrid );
+
+static u16 nogrid_ControlUnderIce( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug );
+static u16 nogrid_ControlUnderIceSpinL( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug );
+static u16 nogrid_ControlUnderIceSpinR( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug );
+
+
+static u16 (* const nogrid_ControlUnderFunc[ UNDER_MAX ])( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug ) = 
+{
+  NULL,
+  nogrid_ControlUnderIce,
+  nogrid_ControlUnderIceSpinL,
+  nogrid_ControlUnderIceSpinR,
+};
+
+
+
+//======================================================================
+//	kurukuru work
+//======================================================================
+static void nogrid_KuruKuru_Start( KURUKURU_WORK* wk, KURUKURU_DIR left_or_right );
+static void nogrid_KuruKuru_Stop( KURUKURU_WORK* wk );
+static void nogrid_KuruKuru_Main( KURUKURU_WORK* wk, MMDL* player );
 
 
 //======================================================================
@@ -110,6 +229,10 @@ static void updateFormChange( FIELD_PLAYER_NOGRID* p_player );
 //======================================================================
 //通常移動
 static void jikiMove_Normal(
+		FIELD_PLAYER_NOGRID *p_player, PLAYER_SET set, int key_trg, int key_cont,
+    u16 dir, BOOL debug_flag );
+
+static PLAYER_SET jikiMove_Normal_GetSet(
 		FIELD_PLAYER_NOGRID *p_player, int key_trg, int key_cont,
     u16 dir, BOOL debug_flag );
 
@@ -147,6 +270,10 @@ static void player_SetMove_Hitch(
 
 //自転車移動
 static void jikiMove_Cycle(
+		FIELD_PLAYER_NOGRID *p_player, PLAYER_SET set, int key_trg, int key_cont,
+    u16 dir, BOOL debug_flag );
+
+static PLAYER_SET jikiMove_Cycle_GetSet(
 		FIELD_PLAYER_NOGRID *p_player, int key_trg, int key_cont,
     u16 dir, BOOL debug_flag );
 
@@ -302,7 +429,7 @@ void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER_NOGRID* p_player, int key_trg, int k
 {
 	u16 dir;
 	BOOL debug_flag;
-  PLAYER_MOVE_FORM form;
+  PLAYER_SET set;
 
   GF_ASSERT( p_player->p_railwork );
 
@@ -327,45 +454,20 @@ void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER_NOGRID* p_player, int key_trg, int k
 	}
 #endif
 
-#if 0
-  if( key_trg & PAD_BUTTON_SELECT ){
-    VecFx32 pos;
-    FLDEFF_CTRL *fectrl = FIELDMAP_GetFldEffCtrl( gjiki->fieldWork );
-    MMDL *mmdl = FIELD_PLAYER_GetMMdl( gjiki->fld_player );
-    u16 dir = MMDL_GetDirDisp( mmdl );
-    MMDL_GetVectorPos( mmdl, &pos );
-    MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
-    
-    gjiki->fldeff_joint = FLDEFF_NAMIPOKE_SetMMdl(
-        fectrl, dir, &pos, mmdl, FALSE );
-  }
-#endif
+  // 強制移動制御
+  dir = nogrid_ControlUnder( p_player, dir, debug_flag );
+
+  // 移動設定を取得
+  set = nogridGetMoveStartSet( p_player, dir, key_trg, key_cont, debug_flag );
+
+  // 移動開始、ビット管理
+  nogridMoveStartControl( p_player, set );
   
-//  FIELD_PLAYER_NOGRID_UpdateRequest( gjiki );
+  // dir方向に移動
+  nogridSetMove( p_player, set, dir, key_trg, key_cont, debug_flag );
   
-  form = FIELD_PLAYER_GetMoveForm( p_player->p_player );
-  switch( form ){
-  case PLAYER_MOVE_FORM_NORMAL:
-    jikiMove_Normal( p_player, key_trg, key_cont, dir, debug_flag );
-	  break;
-  case PLAYER_MOVE_FORM_CYCLE:
-    jikiMove_Cycle( p_player, key_trg, key_cont, dir, debug_flag );
-	  break;
-  case PLAYER_MOVE_FORM_SWIM:
-    GF_ASSERT( form == PLAYER_MOVE_FORM_SWIM );
-    break;
-  default:
-    GF_ASSERT( 0 );
-  }
-
-
-
-#ifdef PM_DEBUG
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
-  {
-    FIELD_RAIL_WORK_DEBUG_PrintRailGrid( p_player->p_railwork );
-  }
-#endif
+  // くるくるまわす
+  nogrid_KuruKuruMain( p_player );
 }
 
 //----------------------------------------------------------------------------
@@ -748,6 +850,145 @@ static void updateFormChange( FIELD_PLAYER_NOGRID* p_player )
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  各自機移動の移動情報を取得する
+ *  
+ *	@param	p_player    自機ワーク
+ *	@param	dir         ほうこう
+ *	@param	key_trg     キー
+ *	@param	key_cont
+ *	@param	debug       デバックフラグ
+ *
+ *	@return DIRから求めた移動情報
+ */
+//-----------------------------------------------------------------------------
+static PLAYER_SET nogridGetMoveStartSet( FIELD_PLAYER_NOGRID* p_player, int dir, int key_trg, int key_cont, BOOL debug )
+{
+  PLAYER_MOVE_FORM form;
+  PLAYER_SET set;
+
+  form = FIELD_PLAYER_GetMoveForm( p_player->p_player );
+  switch( form ){
+  case PLAYER_MOVE_FORM_NORMAL:
+    set = jikiMove_Normal_GetSet( p_player, key_trg, key_cont, dir, debug );
+	  break;
+  case PLAYER_MOVE_FORM_CYCLE:
+    set = jikiMove_Cycle_GetSet( p_player, key_trg, key_cont, dir, debug );
+	  break;
+  case PLAYER_MOVE_FORM_SWIM:
+    GF_ASSERT( form == PLAYER_MOVE_FORM_SWIM );
+    break;
+  default:
+    GF_ASSERT( 0 );
+  }
+
+  return set;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自機動作の設定
+ *
+ *	@param	p_player    自機ワーク
+ *	@param  dir         方向
+ *	@param	key_trg     トリガ
+ *	@param	key_cont    コント
+ *	@param	debug       デバック
+ */
+//-----------------------------------------------------------------------------
+static void nogridSetMove( FIELD_PLAYER_NOGRID* p_player, PLAYER_SET set, int dir, int key_trg, int key_cont, BOOL debug )
+{
+  PLAYER_MOVE_FORM form;
+
+  form = FIELD_PLAYER_GetMoveForm( p_player->p_player );
+  switch( form ){
+  case PLAYER_MOVE_FORM_NORMAL:
+    jikiMove_Normal( p_player, set, key_trg, key_cont, dir, debug );
+	  break;
+  case PLAYER_MOVE_FORM_CYCLE:
+    jikiMove_Cycle( p_player, set, key_trg, key_cont, dir, debug );
+	  break;
+  case PLAYER_MOVE_FORM_SWIM:
+    GF_ASSERT( form == PLAYER_MOVE_FORM_SWIM );
+    break;
+  default:
+    GF_ASSERT( 0 );
+  }
+
+
+
+#ifdef PM_DEBUG
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
+  {
+    FIELD_RAIL_WORK_DEBUG_PrintRailGrid( p_player->p_railwork );
+  }
+#endif
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  動作開始でのビット管理
+ *
+ *	@param	p_player    自機ワーク
+ *	@param	set         自機動作情報
+ */
+//-----------------------------------------------------------------------------
+static void nogridMoveStartControl( FIELD_PLAYER_NOGRID* p_player, PLAYER_SET set )
+{
+  nogrid_OffMoveBitStep( p_player );
+  
+  if( set == PLAYER_SET_WALK ){
+    nogrid_OffMoveBitUnderOff( p_player );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  動作チェック共通処理
+ *
+ *	@param	p_player    プレイヤーワーク
+ *	@param	mmdl        モデル
+ *	@param	dir         ほうこう
+ *
+ *	@return ヒット情報
+ */
+//-----------------------------------------------------------------------------
+static u32 nogrid_HitCheckMove( FIELD_PLAYER_NOGRID* p_player, MMDL *mmdl, u16 dir )
+{
+  u32 hit = MMDL_HitCheckRailMoveDir( mmdl, dir );
+  return hit;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  MoveBitをみて、自機の絵を回転させる
+ *
+ *	@param	p_player  プレイヤー
+ */
+//-----------------------------------------------------------------------------
+static void nogrid_KuruKuruMain( FIELD_PLAYER_NOGRID* p_player )
+{
+  // 回転開始
+  if( nogrid_CheckMoveBit( p_player, FIELD_PLAYER_NOGRID_MOVEBIT_SPIN_L ) )
+  {
+    nogrid_KuruKuru_Start( &p_player->kurukuru, KURUKURU_L );
+  }
+  else if( nogrid_CheckMoveBit( p_player, FIELD_PLAYER_NOGRID_MOVEBIT_SPIN_R ) )
+  {
+    nogrid_KuruKuru_Start( &p_player->kurukuru, KURUKURU_R );
+  }
+  // 停止
+  else
+  {
+    nogrid_KuruKuru_Stop( &p_player->kurukuru );
+  }
+
+  // メイン動作
+  nogrid_KuruKuru_Main( &p_player->kurukuru, FIELD_PLAYER_GetMMdl( p_player->p_player ) );
+}
+
+
 
 
 
@@ -765,34 +1006,11 @@ static void updateFormChange( FIELD_PLAYER_NOGRID* p_player )
  */
 //--------------------------------------------------------------
 static void jikiMove_Normal(
-		FIELD_PLAYER_NOGRID *p_player, int key_trg, int key_cont,
+		FIELD_PLAYER_NOGRID *p_player, PLAYER_SET set, int key_trg, int key_cont,
     u16 dir, BOOL debug_flag )
 {
-	PLAYER_SET set;
 	MMDL *mmdl = FIELD_PLAYER_GetMMdl( p_player->p_player );
    
-	set = PLAYER_SET_NON;
-	switch( p_player->move_state ){
-	case PLAYER_MOVE_STOP:
-		set = player_CheckMoveStart_Stop(
-			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
-		break;
-	case PLAYER_MOVE_WALK:
-		set = player_CheckMoveStart_Walk(
-			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
-		break;
-	case PLAYER_MOVE_TURN:
-		set = player_CheckMoveStart_Turn(
-			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
-		break;
-	case PLAYER_MOVE_HITCH:
-		set = player_CheckMoveStart_Hitch(
-			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
-		break;
-	default:
-		GF_ASSERT( 0 );
-	}
-	
 	switch( set ){
 	case PLAYER_SET_NON:
 		player_SetMove_Non(
@@ -819,6 +1037,42 @@ static void jikiMove_Normal(
 			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
     break;//*/
 	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  PLAYER_SETの取得
+ */
+//-----------------------------------------------------------------------------
+static PLAYER_SET jikiMove_Normal_GetSet(
+		FIELD_PLAYER_NOGRID *p_player, int key_trg, int key_cont,
+    u16 dir, BOOL debug_flag )
+{
+	PLAYER_SET set;
+	MMDL *mmdl = FIELD_PLAYER_GetMMdl( p_player->p_player );
+
+	set = PLAYER_SET_NON;
+	switch( p_player->move_state ){
+	case PLAYER_MOVE_STOP:
+		set = player_CheckMoveStart_Stop(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_MOVE_WALK:
+		set = player_CheckMoveStart_Walk(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_MOVE_TURN:
+		set = player_CheckMoveStart_Turn(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_MOVE_HITCH:
+		set = player_CheckMoveStart_Hitch(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	default:
+		GF_ASSERT( 0 );
+	}
+  return set;
 }
 
 //======================================================================
@@ -886,7 +1140,7 @@ static PLAYER_SET player_CheckMoveStart_Walk(
 	}
 	
 	{
-		u32 hit = MMDL_HitCheckRailMoveDir( mmdl, dir );
+		u32 hit = nogrid_HitCheckMove( p_player, mmdl, dir );
 
 		if( debug_flag == TRUE )
     {
@@ -1191,33 +1445,11 @@ static void player_SetMove_Jump(
  */
 //--------------------------------------------------------------
 static void jikiMove_Cycle(
-		FIELD_PLAYER_NOGRID *p_player, int key_trg, int key_cont,
+		FIELD_PLAYER_NOGRID *p_player, PLAYER_SET set, int key_trg, int key_cont,
     u16 dir, BOOL debug_flag )
 {
-	PLAYER_SET set;
 	MMDL *mmdl = FIELD_PLAYER_GetMMdl( p_player->p_player );
    
-	set = PLAYER_SET_NON;
-	switch( p_player->move_state ){
-	case PLAYER_MOVE_STOP:
-		set = playerCycle_CheckMoveStart_Stop(
-			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
-		break;
-	case PLAYER_MOVE_WALK:
-		set = playerCycle_CheckMoveStart_Walk(
-			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
-		break;
-	case PLAYER_MOVE_TURN:
-		set = playerCycle_CheckMoveStart_Turn(
-			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
-		break;
-	case PLAYER_MOVE_HITCH:
-		set = playerCycle_CheckMoveStart_Hitch(
-			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
-		break;
-	default:
-		GF_ASSERT( 0 );
-	}
 	
 	switch( set ){
 	case PLAYER_SET_NON:
@@ -1246,6 +1478,43 @@ static void jikiMove_Cycle(
     break;
 //*/
 	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  PLAYER_SETの取得　自転車
+ */
+//-----------------------------------------------------------------------------
+static PLAYER_SET jikiMove_Cycle_GetSet(
+		FIELD_PLAYER_NOGRID *p_player, int key_trg, int key_cont,
+    u16 dir, BOOL debug_flag )
+{
+	PLAYER_SET set;
+	MMDL *mmdl = FIELD_PLAYER_GetMMdl( p_player->p_player );
+
+	set = PLAYER_SET_NON;
+	switch( p_player->move_state ){
+	case PLAYER_MOVE_STOP:
+		set = playerCycle_CheckMoveStart_Stop(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_MOVE_WALK:
+		set = playerCycle_CheckMoveStart_Walk(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_MOVE_TURN:
+		set = playerCycle_CheckMoveStart_Turn(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_MOVE_HITCH:
+		set = playerCycle_CheckMoveStart_Hitch(
+			p_player, mmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	default:
+		GF_ASSERT( 0 );
+	}
+
+  return set;
 }
 
 //======================================================================
@@ -1313,7 +1582,7 @@ static PLAYER_SET playerCycle_CheckMoveStart_Walk(
 	}
 	
 	{
-		u32 hit = MMDL_HitCheckRailMoveDir( mmdl, dir );
+		u32 hit = nogrid_HitCheckMove( p_player, mmdl, dir );
 		
 		if( debug_flag == TRUE )
     {
@@ -1597,4 +1866,491 @@ static void playerCycle_SetMove_Jump(
   PMSND_PlaySE( SEQ_SE_DANSA );
 }
 #endif
+
+
+//======================================================================
+//  自機動作ビット
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * FIELD_PLAYER_NOGRID_MOVEBIT ON
+ * @param nogrid FIELD_PLAYER_NOGRID
+ * @param bit FIELD_PLAYER_NOGRID_MOVEBIT
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void nogrid_OnMoveBit(
+    FIELD_PLAYER_NOGRID *nogrid, FIELD_PLAYER_NOGRID_MOVEBIT bit )
+{
+  GF_ASSERT( bit < FIELD_PLAYER_NOGRID_MOVEBIT_BITMAX );
+  nogrid->move_bit |= bit;
+}
+
+//--------------------------------------------------------------
+/**
+ * FIELD_PLAYER_NOGRID_MOVEBIT OFF
+ * @param nogrid FIELD_PLAYER_NOGRID
+ * @param bit FIELD_PLAYER_NOGRID_MOVEBIT
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void nogrid_OffMoveBit(
+    FIELD_PLAYER_NOGRID *nogrid, FIELD_PLAYER_NOGRID_MOVEBIT bit )
+{
+  GF_ASSERT( bit < FIELD_PLAYER_NOGRID_MOVEBIT_BITMAX );
+  nogrid->move_bit &= ~bit;
+}
+
+//--------------------------------------------------------------
+/**
+ * FIELD_PLAYER_NOGRID_MOVEBIT Check
+ * @param nogrid FIELD_PLAYER_NOGRID
+ * @param bit FIELD_PLAYER_NOGRID_MOVEBIT
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static BOOL nogrid_CheckMoveBit(
+    FIELD_PLAYER_NOGRID *nogrid, FIELD_PLAYER_NOGRID_MOVEBIT bit )
+{
+  GF_ASSERT( bit < FIELD_PLAYER_NOGRID_MOVEBIT_BITMAX );
+  if( (nogrid->move_bit & bit) ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * FIELD_PLAYER_NOGRID_MOVEBIT 強制移動ビットON
+ * @param nogrid FIELD_PLAYER_NOGRID
+ * @param bit FIELD_PLAYER_NOGRID_MOVEBIT
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void nogrid_OnMoveBitForce( FIELD_PLAYER_NOGRID *nogrid )
+{
+  nogrid_OnMoveBit( nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_FORCE );
+}
+
+//--------------------------------------------------------------
+/**
+ * FIELD_PLAYER_NOGRID_MOVEBIT 強制移動ビットOFF
+ * @param nogrid FIELD_PLAYER_NOGRID
+ * @param bit FIELD_PLAYER_NOGRID_MOVEBIT
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void nogrid_OffMoveBitForce( FIELD_PLAYER_NOGRID *nogrid )
+{
+  nogrid_OffMoveBit( nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_FORCE );
+}
+
+//--------------------------------------------------------------
+/**
+ * FIELD_PLAYER_NOGRID_MOVEBIT 強制移動ビットチェック
+ * @param nogrid FIELD_PLAYER_NOGRID
+ * @retval BOOL 
+ */
+//--------------------------------------------------------------
+static BOOL nogrid_CheckMoveBitForce( FIELD_PLAYER_NOGRID *nogrid )
+{
+  if( nogrid_CheckMoveBit(nogrid,FIELD_PLAYER_NOGRID_MOVEBIT_FORCE) ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * FIELD_PLAYER_NOGRID_MOVEBIT 足元無効ON
+ * @param nogrid FIELD_PLAYER_NOGRID
+ * @param bit FIELD_PLAYER_NOGRID_MOVEBIT
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void nogrid_OnMoveBitUnderOff( FIELD_PLAYER_NOGRID *nogrid )
+{
+  nogrid_OnMoveBit( nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_UNDER_OFF );
+}
+
+//--------------------------------------------------------------
+/**
+ * FIELD_PLAYER_NOGRID_MOVEBIT 足元無効OFF
+ * @param nogrid FIELD_PLAYER_NOGRID
+ * @param bit FIELD_PLAYER_NOGRID_MOVEBIT
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void nogrid_OffMoveBitUnderOff( FIELD_PLAYER_NOGRID *nogrid )
+{
+  nogrid_OffMoveBit( nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_UNDER_OFF );
+}
+
+//--------------------------------------------------------------
+/**
+ * FIELD_PLAYER_NOGRID_MOVEBIT 一歩移動 ON
+ * @param nogrid FIELD_PLAYER_NOGRID
+ * @param bit FIELD_PLAYER_NOGRID_MOVEBIT
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void nogrid_OnMoveBitStep( FIELD_PLAYER_NOGRID *nogrid )
+{
+  nogrid_OnMoveBit( nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_STEP );
+}
+
+//--------------------------------------------------------------
+/**
+ * FIELD_PLAYER_NOGRID_MOVEBIT 一歩移動 OFF
+ * @param nogrid FIELD_PLAYER_NOGRID
+ * @param bit FIELD_PLAYER_NOGRID_MOVEBIT
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void nogrid_OffMoveBitStep( FIELD_PLAYER_NOGRID *nogrid )
+{
+  nogrid_OffMoveBit( nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_STEP );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  左回り回転　ON
+ *
+ *	@param	nogrid 
+ */
+//-----------------------------------------------------------------------------
+static void nogrid_OnMoveBitSpinL( FIELD_PLAYER_NOGRID *nogrid )
+{
+  nogrid_OnMoveBit( nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_SPIN_L );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  左回り回転　OFF
+ *
+ *	@param	nogrid 
+ */
+//-----------------------------------------------------------------------------
+static void nogrid_OffMoveBitSpinL( FIELD_PLAYER_NOGRID *nogrid )
+{
+  nogrid_OffMoveBit( nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_SPIN_L );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  右回り回転　ON
+ *
+ *	@param	nogrid 
+ */
+//-----------------------------------------------------------------------------
+static void nogrid_OnMoveBitSpinR( FIELD_PLAYER_NOGRID *nogrid )
+{
+  nogrid_OnMoveBit( nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_SPIN_R );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  右回り回転　OFF
+ *
+ *	@param	nogrid 
+ */
+//-----------------------------------------------------------------------------
+static void nogrid_OffMoveBitSpinR( FIELD_PLAYER_NOGRID *nogrid )
+{
+  nogrid_OffMoveBit( nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_SPIN_R );
+}
+
+
+
+//--------------------------------------------------------------
+/**
+ * 自機足元をチェックする
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static UNDER nogrid_CheckUnder( FIELD_PLAYER_NOGRID *nogrid, u16 dir )
+{
+  MMDL *mmdl = FIELD_PLAYER_GetMMdl( nogrid->p_player );
+  MAPATTR attr = MMDL_GetMapAttr( mmdl );
+  
+  if( nogrid_CheckMoveBit(
+        nogrid,FIELD_PLAYER_NOGRID_MOVEBIT_UNDER_OFF) == FALSE ){
+    int i = 0;
+    MAPATTR_VALUE val = MAPATTR_GetAttrValue( attr );
+    
+    if( MAPATTR_VALUE_CheckIce(val) == TRUE ){
+      return( UNDER_ICE );
+    }
+
+    if( RAIL_ATTR_VALUE_CheckIceSpinL(val) == TRUE )
+    {
+      return ( UNDER_ICE_L );
+    }
+    if( RAIL_ATTR_VALUE_CheckIceSpinR(val) == TRUE )
+    {
+      return ( UNDER_ICE_R );
+    }
+  }
+  
+  return( UNDER_NONE );
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機足元処理
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static u16 nogrid_ControlUnder(
+    FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug )
+{
+  MMDL *mmdl = FIELD_PLAYER_GetMMdl( nogrid->p_player );
+
+  // 移動完了しているか？
+  if(MMDL_CheckPossibleAcmd(mmdl) == FALSE)
+  {
+    return dir;
+  }
+  
+  if( debug == FALSE )
+  {
+    UNDER under = nogrid_CheckUnder( nogrid, dir );
+    
+    if( under!=UNDER_NONE )
+    {
+      GF_ASSERT( nogrid_ControlUnderFunc[ under ] );
+      return nogrid_ControlUnderFunc[ under ]( nogrid, dir, debug );
+    }
+  }
+  
+  // 強制移動停止
+  nogrid_ControlUnder_Clear( nogrid );
+  return( dir );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  足元処理の状態をクリア
+ *
+ *	@param	nogrid 
+ */
+//-----------------------------------------------------------------------------
+static void nogrid_ControlUnder_Clear( FIELD_PLAYER_NOGRID *nogrid )
+{
+  MMDL *mmdl = FIELD_PLAYER_GetMMdl( nogrid->p_player );
+
+
+  // Pause情報のクリア
+  if( nogrid_CheckMoveBit( nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_FORCE|FIELD_PLAYER_NOGRID_MOVEBIT_SPIN_L|FIELD_PLAYER_NOGRID_MOVEBIT_SPIN_R ) )
+  {
+    MMDL_OffStatusBit( mmdl, MMDL_STABIT_PAUSE_DIR|MMDL_STABIT_PAUSE_ANM );
+  }
+
+  // 強制移動OFF
+  if( nogrid_CheckMoveBit(nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_FORCE) )
+  {
+    nogrid_OffMoveBitForce( nogrid );
+    nogrid_OnMoveBitUnderOff( nogrid ); // 歩き出すまで強制移動はなし
+    FIELD_PLAYER_SetMoveValue( nogrid->p_player, PLAYER_MOVE_VALUE_STOP );
+  }
+
+  // 回転OFF
+  if( nogrid_CheckMoveBit(nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_SPIN_L|FIELD_PLAYER_NOGRID_MOVEBIT_SPIN_R) )
+  {
+    u16 dir;
+    
+    nogrid_OffMoveBitSpinL( nogrid );
+    nogrid_OffMoveBitSpinR( nogrid );
+
+    // 描画方向の調整
+    dir = MMDL_GetDirMove( mmdl );
+    dir = MMDL_TOOL_FlipDir( dir );
+    MMDL_SetDirAll( mmdl, dir );
+  }
+
+
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  氷床処理
+ *
+ *	@param	nogrid    ノーグリッド
+ *	@param	dir       ほうこう
+ *	@param	debug     デバック
+ *
+ *	@return 方向
+ */
+//-----------------------------------------------------------------------------
+static u16 nogrid_ControlUnderIce( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug )
+{
+  MAPATTR attr;
+  MMDL *mmdl = FIELD_PLAYER_GetMMdl( nogrid->p_player );
+  u16 jiki_dir = MMDL_GetDirMove( mmdl );
+  u32 hit = nogrid_HitCheckMove( nogrid, mmdl, jiki_dir );
+	
+  if( hit != MMDL_MOVEHITBIT_NON ){ //障害物ヒット
+    nogrid_ControlUnder_Clear( nogrid );
+    return( dir );
+  }
+  
+  nogrid_OnMoveBitForce( nogrid );
+
+  // スピン停止
+  nogrid_OffMoveBitSpinL(nogrid);
+  nogrid_OffMoveBitSpinR(nogrid);
+  
+  {
+	  u16 code = MMDL_ChangeDirAcmdCode( jiki_dir, AC_WALK_U_4F );
+    
+    MMDL_SetAcmd( mmdl, code );
+    MMDL_OnStatusBit( mmdl, MMDL_STABIT_PAUSE_DIR|MMDL_STABIT_PAUSE_ANM );
+    
+    nogrid->move_state = PLAYER_MOVE_WALK;
+    FIELD_PLAYER_SetMoveValue( nogrid->p_player, PLAYER_MOVE_VALUE_WALK );
+	  return( jiki_dir );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  氷強制移動＋左回転
+ *
+ *	@param	nogrid
+ *	@param	dir
+ *	@param	debug 
+ */
+//-----------------------------------------------------------------------------
+static u16 nogrid_ControlUnderIceSpinL( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug )
+{
+  MAPATTR attr;
+  MMDL *mmdl = FIELD_PLAYER_GetMMdl( nogrid->p_player );
+  u16 jiki_dir = MMDL_GetDirMove( mmdl );
+  u32 hit = nogrid_HitCheckMove( nogrid, mmdl, jiki_dir );
+	
+  if( hit != MMDL_MOVEHITBIT_NON ){ //障害物ヒット
+    nogrid_ControlUnder_Clear( nogrid );
+    return( dir );
+  }
+  
+  nogrid_OnMoveBitForce( nogrid );
+  nogrid_OnMoveBitSpinL( nogrid );
+  
+  // スピン停止
+  nogrid_OffMoveBitSpinR(nogrid);
+  {
+	  u16 code = MMDL_ChangeDirAcmdCode( jiki_dir, AC_WALK_U_4F );
+    
+    MMDL_SetAcmd( mmdl, code );
+    MMDL_OnStatusBit( mmdl, MMDL_STABIT_PAUSE_DIR|MMDL_STABIT_PAUSE_ANM );
+    
+    nogrid->move_state = PLAYER_MOVE_WALK;
+    FIELD_PLAYER_SetMoveValue( nogrid->p_player, PLAYER_MOVE_VALUE_WALK );
+	  return( jiki_dir );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  氷強制移動＋右回転
+ *
+ *	@param	nogrid
+ *	@param	dir
+ *	@param	debug 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static u16 nogrid_ControlUnderIceSpinR( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug )
+{
+  MAPATTR attr;
+  MMDL *mmdl = FIELD_PLAYER_GetMMdl( nogrid->p_player );
+  u16 jiki_dir = MMDL_GetDirMove( mmdl );
+  u32 hit = nogrid_HitCheckMove( nogrid, mmdl, jiki_dir );
+	
+  if( hit != MMDL_MOVEHITBIT_NON ){ //障害物ヒット
+    nogrid_ControlUnder_Clear( nogrid );
+    return( dir );
+  }
+  
+  nogrid_OnMoveBitForce( nogrid );
+  nogrid_OnMoveBitSpinR( nogrid );
+  
+  // スピン停止
+  nogrid_OffMoveBitSpinL(nogrid);
+  {
+	  u16 code = MMDL_ChangeDirAcmdCode( jiki_dir, AC_WALK_U_4F );
+    
+    MMDL_SetAcmd( mmdl, code );
+    MMDL_OnStatusBit( mmdl, MMDL_STABIT_PAUSE_DIR|MMDL_STABIT_PAUSE_ANM );
+    
+    nogrid->move_state = PLAYER_MOVE_WALK;
+    FIELD_PLAYER_SetMoveValue( nogrid->p_player, PLAYER_MOVE_VALUE_WALK );
+	  return( jiki_dir );
+  }
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  くるくる処理　開始
+ *
+ *	@param	wk              ノーグリッド
+ *	@param	left_or_right   左回転　右回転
+ */
+//-----------------------------------------------------------------------------
+static void nogrid_KuruKuru_Start( KURUKURU_WORK* wk, KURUKURU_DIR left_or_right )
+{
+  // すでに設定済みでないかチェック
+  if( (wk->kurukuru_flag == TRUE) && (left_or_right == wk->left_or_right) )
+  {
+    return;
+  }
+
+  wk->kurukuru_flag = TRUE;
+  wk->left_or_right = left_or_right;
+  wk->frame         = 0;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  くるくる処理　停止
+ *
+ *	@param	wk 
+ */
+//-----------------------------------------------------------------------------
+static void nogrid_KuruKuru_Stop( KURUKURU_WORK* wk )
+{
+  wk->kurukuru_flag = FALSE;
+  wk->frame         = 0;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  くるくる処理　メイン
+ *
+ *	@param	wk 
+ */
+//-----------------------------------------------------------------------------
+static void nogrid_KuruKuru_Main( KURUKURU_WORK* wk, MMDL* player )
+{
+  static const u8 sc_DATA_KuruKuruTbl[KURUKURU_DIR_MAX][4] = 
+  {
+    {DIR_UP, DIR_LEFT, DIR_DOWN, DIR_RIGHT},
+    {DIR_UP, DIR_RIGHT, DIR_DOWN, DIR_LEFT},
+  };
+
+  if( !wk->kurukuru_flag )
+  {
+    return ;
+  }
+  wk->frame = (wk->frame + 1) % 4;
+
+  MMDL_SetForceDirDisp( player, sc_DATA_KuruKuruTbl[wk->left_or_right][wk->frame] ); 
+}
 

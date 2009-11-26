@@ -805,7 +805,7 @@ void MMDL_Rail_UpdateGridPosDir( MMDL *mmdl, u16 dir )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  プレイヤーが向いている方向を取得する
+ *	@brief  プレイヤー進行方向を取得する
  *	        
  *
  *	@param  mmdl    モデルワーク
@@ -822,7 +822,7 @@ void MMDL_Rail_GetFrontWay( const MMDL *mmdl, VecFx16* way )
 
   p_railwk = MMDL_GetRailWork( mmdl );
 
-  dir = MMDL_GetDirDisp( mmdl );
+  dir = MMDL_GetDirMove( mmdl );
   MMDL_Rail_GetDirLineWay( mmdl, dir, way );
 }
 
