@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T14:34:54"/>
+	<create user="matsumiya" host="W00207" date="2009-11-26T19:05:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -414,7 +414,7 @@
 読んでいて　気づいてくれない……[BE:00:ページ切り替え（行送り）]</language>
 	</row>
 
-	<row id="msg_c02gym0101_girl3_02">
+	<row id="msg_c02gym0101_girl3_02" text-color=",,,,,,#ff0000,,,,,,,,,,,,">
 		<comment>♀：トレーナー
 ・フラグ成立後＝戦闘前（画面下を向いている）</comment>
 		<language name="JPN" width="256">このほんだなを　しらべたいの？
@@ -434,6 +434,21 @@
 		<language name="JPN_KANJI" width="256">もうすぐ　ジムリーダーに　会えるわ[BE:01:ページ切り替え（クリア）]
 最後の本を　読んでとき
 なにが　起きるか　楽しみにしてね</language>
+	</row>
+
+	<row id="msg_c02gym0101_girl3_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c02gym0101_girl3_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c02gym0101_girl3_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
 	<row id="msg_c02gym0101_assitantw_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
