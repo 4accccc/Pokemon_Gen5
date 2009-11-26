@@ -6,12 +6,14 @@ REM 制作者  : hosaka_genya
 REM 日付    : 2009/11/24
 REM =================================================================
 
+REM hudsonで定義される環境変数を利用
+SET PROJECT_ROOT=%WORKSPACE%
+SET PROJECT_PROGDIR=%PROJECT_ROOT%/prog/
+
 REM ##################################################
 REM		パスの追加
 REM ##################################################
 PATH=c:\tools;%PROJECT_ROOT%;%PROJECT_ROOT%\tools;c:\tools\subversion\bin;c:\cygwin\bin;c:\tools\vim;C:\tools;%NITROSDK_ROOT%\tools\bin;%NITROSYSTEM_ROOT%\tools\bin;%PATH%;
-
-SET PROJECT_PROGDIR=../../prog/
 
 REM main.srl
 SET PATH_MAIN_SRL=%PROJECT_PROGDIR%bin/ARM9-TS/Release/main.srl
@@ -71,5 +73,6 @@ REM ================================
   @echo hudson test is SUCCESS .
   pause
   exit 0
+
 
 
