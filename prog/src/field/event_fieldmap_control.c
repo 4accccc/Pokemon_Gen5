@@ -20,8 +20,15 @@
 #include "./event_fieldmap_control.h"
 
 #include "system/main.h"      // HEAPID_PROC
+
+#include "event_season_display.h"  // for EVENT_SeasonDisplay
+#include "field_status_local.h"  // for FIELD_STATUS
+
+
 FS_EXTERN_OVERLAY(pokelist);
 FS_EXTERN_OVERLAY(poke_status);
+
+
 
 //============================================================================================
 //============================================================================================
@@ -32,6 +39,8 @@ FS_EXTERN_OVERLAY(poke_status);
 //
 //============================================================================================
 typedef struct {
+  GAMESYS_WORK* gsys;
+  FIELDMAP_WORK* fieldmap;
 	FIELD_FADE_TYPE fade_type;
   FIELD_FADE_WAIT_TYPE wait_type;
 }FADE_EVENT_WORK;
@@ -73,6 +82,8 @@ GMEVENT * EVENT_FieldFadeOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap,
 {
 	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldFadeOutEvent, sizeof(FADE_EVENT_WORK));
 	FADE_EVENT_WORK * few = GMEVENT_GetEventWork(event);
+  few->gsys      = gsys;
+  few->fieldmap  = fieldmap;
 	few->fade_type = type;
   few->wait_type = wait;
 
@@ -83,14 +94,28 @@ GMEVENT * EVENT_FieldFadeOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap,
 //------------------------------------------------------------------
 static GMEVENT_RESULT FieldFadeInEvent(GMEVENT * event, int *seq, void * work)
 {
-	FADE_EVENT_WORK * few = work;
+	FADE_EVENT_WORK* few = work;
+
 	switch (*seq) {
 	case 0:
-    // @todo フェード速度を元に戻す
-    // 作業効率Upのためにフェードを短縮 11/17 obata
-		GFL_FADE_SetMasterBrightReq(
-				GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,
-				16, 0, -8);
+    {
+      GAMEDATA*       gdata = GAMESYSTEM_GetGameData( few->gsys );
+      FIELD_STATUS* fstatus = GAMEDATA_GetFieldStatus( gdata );
+
+      if( FIELD_STATUS_GetSeasonDispFlag(fstatus) )
+      { // 四季表示
+        GMEVENT_CallEvent( event, EVENT_SeasonDisplay( few->gsys, few->fieldmap ) );
+        FIELD_STATUS_SetSeasonDispFlag( fstatus, FALSE );
+      }
+      else
+      {
+        // @todo フェード速度を元に戻す
+        // 作業効率Upのためにフェードを短縮 11/17 obata
+        GFL_FADE_SetMasterBrightReq(
+            GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,
+            16, 0, -8);
+      }
+    }
 		(*seq) ++;
 		break;
 	case 1:
@@ -117,6 +142,8 @@ GMEVENT * EVENT_FieldFadeIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap,
 {
 	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldFadeInEvent, sizeof(FADE_EVENT_WORK));
 	FADE_EVENT_WORK * few = GMEVENT_GetEventWork(event);
+  few->gsys      = gsys;
+  few->fieldmap  = fieldmap;
 	few->fade_type = type;
   few->wait_type = wait;
 

@@ -220,8 +220,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/field_flagcontrol.c \
         system/screentex.c \
         debug/debug_flg.c \
-        debug/debug_hudson.c \
-        field/event_look_elboard.c
+        debug/debug_hudson.c
 
 
 #================================================
@@ -517,7 +516,9 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fld_wipe_3dobj.c \
         field/scrcmd_fldci.c \
         field/event_fourkings.c \
-        field/fskill_sorawotobu.c
+        field/fskill_sorawotobu.c \
+        field/event_look_elboard.c \
+        field/event_season_display.c
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP

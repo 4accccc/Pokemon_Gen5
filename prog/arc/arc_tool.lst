@@ -222,4 +222,5 @@
   ARCID_H01_GIMMICK "h01.narc"  # H01ギミックデータ
   ARCID_FLDSKILL_MAPEFF "fieldmap/fieldskill_mapeff.narc"  # フィールド技のマップ効果データ
   ARCID_FOURKINGS_SCENE "fourkings_scene.narc"  # 四天王部屋　移動シーンデータ
+  ARCID_SEASON_DISPLAY "season_display.narc"  # 季節表示データ
   ARCID_BATT_BG_TBL "batt_bg_tbl.narc"  # 戦闘背景テーブル
