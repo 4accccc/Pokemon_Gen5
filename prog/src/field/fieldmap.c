@@ -127,7 +127,7 @@
 #define DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK_DRAW_KEY ( PAD_BUTTON_L )
 #endif //DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK
 
-#define FLD3DCUTIN_SIZE   (0x8000)   //フィールド3Ｄカットインのヒープサイズ
+#define FLD3DCUTIN_SIZE   (0xc000)   //フィールド3Ｄカットインのヒープサイズ
 
 //======================================================================
 //	define
@@ -2845,12 +2845,12 @@ static void Draw3DNormalMode( FIELDMAP_WORK * fieldWork )
 
   //フィールド拡張3ＤＯＢＪ描画
   FLD_EXP_OBJ_Draw( fieldWork->ExpObjCntPtr );
-
+#ifdef PM_DEBUG
   if (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG){
     if (/*GFL_UI_KEY_GetTrg() & PAD_BUTTON_L*/0){
       FLD3D_CI_CallCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr, 0);
     }else if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){
-      FLD3D_CI_CallCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr, 1);
+      FLD3D_CI_CallPokeCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr);
     }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_R){
       FLD3D_CI_FlySkyCameraDebug(
           fieldWork->gsys, fieldWork->Fld3dCiPtr, fieldWork->camera_control,
@@ -2865,6 +2865,7 @@ static void Draw3DNormalMode( FIELDMAP_WORK * fieldWork )
       GX_SetBankForBG(GX_VRAM_BG_128_D);
     }
   }
+#endif  //PM_DEBUG  
 
   FLD_PRTCL_Main();
   FLD3D_CI_Draw( fieldWork->Fld3dCiPtr );
