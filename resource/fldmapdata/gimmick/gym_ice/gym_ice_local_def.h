@@ -9,10 +9,13 @@
 
 //スイッチのグリッド位置座標
 #define SW1_GX (26)
+#define SW1_GY (0)
 #define SW1_GZ (17)
 #define SW2_GX (38)
+#define SW2_GY (0)
 #define SW2_GZ (17)
 #define SW3_GX (20)
+#define SW3_GY (0)
 #define SW3_GZ (21)
 //回転壁の位置座標
 #define WALL1_GX (10)
