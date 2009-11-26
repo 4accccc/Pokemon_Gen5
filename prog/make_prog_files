@@ -444,6 +444,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_encount.c \
         field/scrcmd_camera.c \
         field/scrcmd_sodateya.c \
+        field/scrcmd_fourkings.c \
 				field/rail_editor.c \
         field/field_rail.c \
         field/field_rail_func.c \

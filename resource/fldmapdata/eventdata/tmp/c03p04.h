@@ -18,6 +18,7 @@
 #define DOOR_ID_C03P04_C03R0601_EXIT03   13
 #define DOOR_ID_C03P04_C03R0601_EXIT02   14
 #define DOOR_ID_C03P04_C03R0601_EXIT01   15
+#define DOOR_ID_C03CT_C03P07_EXIT01_C03P04 16
 
 #endif //ZONE_C03P04_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03p04.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -14,6 +14,7 @@ SUBDIRS	=	zonetable/zoneindex \
 					map_matrix \
 					build_model \
 					mm_list \
+					eventdata/groupdata \
 					eventdata/define \
 					script \
 					effect \

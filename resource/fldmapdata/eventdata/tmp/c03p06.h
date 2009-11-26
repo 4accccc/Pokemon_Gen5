@@ -36,6 +36,7 @@
 #define DOOR_ID_C03P06_C03_EXIT16        31
 #define DOOR_ID_C03P06_C03PC0101_EXIT01  32
 #define DOOR_ID_C03P06_C03R0101_EXIT01   33
+#define DOOR_ID_C03CT_C03P07_EXIT01_C03P06 34
 
 #endif //ZONE_C03P06_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03p06.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

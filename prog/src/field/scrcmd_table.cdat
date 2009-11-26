@@ -656,6 +656,12 @@
   NO_CMD()
   NO_CMD()
 
+  // 四天王関連
+  DEF_CMD( EvCmdFourKings_WalkEvent, EV_SEQ_FOURKINGS_WALKEVENT )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

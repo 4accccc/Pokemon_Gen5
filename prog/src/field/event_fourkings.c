@@ -31,6 +31,19 @@
 #include "fieldmap_func.h"
 
 
+#ifdef PM_DEBUG
+
+#define DEBUG_FRAME_CONTROL // フレームのコマ送りなどを行う
+
+#endif
+
+#ifdef DEBUG_FRAME_CONTROL
+
+static BOOL s_DEBUG_FRAME_CONTROL_FLAG = 0;
+
+#endif
+
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -120,6 +133,7 @@ typedef struct {
   FIELD_PLAYER* p_player;
   MMDL* p_player_core;
   
+  int frame;
 } EV_CIRCLEWALK_HERO;
 
 //-------------------------------------
@@ -161,6 +175,7 @@ typedef struct
 */
 //-----------------------------------------------------------------------------
 
+static fx32 G3DANM_GetFrameMax( const GFL_G3D_ANM* cp_anm );
 
 static void VBLANK_Update( GFL_TCB * p_tcb, void* p_work );
 
@@ -230,6 +245,22 @@ GMEVENT* EVENT_FourKings_CircleWalk( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fiel
  *        private関数
  */
 //-----------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメーションのフレーム最大数を取得する
+ *
+ *	@param	cp_anm  アニメーションオブジェ
+ *
+ *	@return フレーム最大数
+ */
+//-----------------------------------------------------------------------------
+static fx32 G3DANM_GetFrameMax( const GFL_G3D_ANM* cp_anm )
+{
+  const NNSG3dAnmObj* cp_anm_core = GFL_G3D_ANIME_GetAnmObj( cp_anm ); 
+  return NNS_G3dAnmObjGetNumFrame( cp_anm_core );
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -335,6 +366,13 @@ static GMEVENT_RESULT EVENT_CircleWalk( GMEVENT* p_event, int* p_seq, void* p_wk
     {
       BOOL result1;
       BOOL result2;
+
+#ifdef DEBUG_FRAME_CONTROL
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
+      {
+        s_DEBUG_FRAME_CONTROL_FLAG ^= TRUE;
+      }
+#endif
 
       result1 = EV_CAMERA_Update( &p_work->camera );
       result2 = EV_HERO_Update( &p_work->hero );
@@ -470,18 +508,58 @@ static void EV_CAMERA_Exit( EV_CIRCLEWALK_CAMERA* p_wk )
 static BOOL EV_CAMERA_Update( EV_CIRCLEWALK_CAMERA* p_wk )
 {
   BOOL result;
+  fx32 max_frame;
 
+  max_frame = ICA_ANIME_GetMaxFrame( p_wk->p_anime )<<FX32_SHIFT;
+
+#ifndef DEBUG_FRAME_CONTROL
   // すでに完了していないか？
-  if( (ICA_ANIME_GetMaxFrame( p_wk->p_anime )<<FX32_SHIFT) <= (p_wk->frame + EV_CAMERA_ANIME_SPEED) )
+  if( max_frame <= (p_wk->frame + EV_CAMERA_ANIME_SPEED) )
   {
     result = TRUE;
-    p_wk->frame = (ICA_ANIME_GetMaxFrame( p_wk->p_anime )<<FX32_SHIFT) - FX32_ONE;
+    p_wk->frame = max_frame - FX32_ONE;
   }
   else
   {
     result = FALSE;
     p_wk->frame += EV_CAMERA_ANIME_SPEED;
   }
+#else
+
+  if( s_DEBUG_FRAME_CONTROL_FLAG == FALSE )
+  {
+    // すでに完了していないか？
+    if( max_frame <= (p_wk->frame + EV_CAMERA_ANIME_SPEED) )
+    {
+      result = TRUE;
+      p_wk->frame = max_frame - FX32_ONE;
+    }
+    else
+    {
+      result = FALSE;
+      p_wk->frame += EV_CAMERA_ANIME_SPEED;
+    }
+  }
+  else
+  {
+    result = FALSE;
+    if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L )
+    {
+      if( (p_wk->frame - EV_CAMERA_ANIME_SPEED) >= 0 )
+      {
+        p_wk->frame -= EV_CAMERA_ANIME_SPEED;
+      }
+    }
+    if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R )
+    {
+      if( (p_wk->frame + EV_CAMERA_ANIME_SPEED) < max_frame )
+      {
+        p_wk->frame += EV_CAMERA_ANIME_SPEED;
+      }
+    }
+  }
+#endif
+
 
   // アニメーションを進め、カメラ座標を設定
   ICA_ANIME_SetAnimeFrame( p_wk->p_anime, p_wk->frame );
@@ -536,6 +614,9 @@ static void EV_HERO_Init0( EV_CIRCLEWALK_HERO* p_wk, FIELD_PLAYER * p_fld_player
   u32 sex;
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_FOURKINGS_SCENE, GFL_HEAP_LOWID(heapID) );
   BOOL result;
+
+  // フレームの初期化
+  p_wk->frame = 0;
 
   // 最初は非表示
   p_wk->draw = FALSE;
@@ -641,16 +722,63 @@ static void EV_HERO_Exit( EV_CIRCLEWALK_HERO* p_wk )
 static BOOL EV_HERO_Update( EV_CIRCLEWALK_HERO* p_wk )
 {
   BOOL result;
+  fx32 max_frame;
+
+  max_frame = G3DANM_GetFrameMax( p_wk->p_anm[HERO_ANIME_ICA] );
+
+#ifndef DEBUG_FRAME_CONTROL
+  // すでに完了していないか？
+  if( max_frame <= (p_wk->frame + EV_CAMERA_ANIME_SPEED) )
+  {
+    result = TRUE;
+    p_wk->frame = max_frame - FX32_ONE;
+  }
+  else
+  {
+    result = FALSE;
+    p_wk->frame += EV_CAMERA_ANIME_SPEED;
+  }
+#else
+
+  if( s_DEBUG_FRAME_CONTROL_FLAG == FALSE )
+  {
+    // すでに完了していないか？
+    if( max_frame <= (p_wk->frame + EV_CAMERA_ANIME_SPEED) )
+    {
+      result = TRUE;
+      p_wk->frame = max_frame - FX32_ONE;
+    }
+    else
+    {
+      result = FALSE;
+      p_wk->frame += EV_CAMERA_ANIME_SPEED;
+    }
+  }
+  else
+  {
+    result = FALSE;
+    if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L )
+    {
+      if( (p_wk->frame - EV_CAMERA_ANIME_SPEED) >= 0 )
+      {
+        p_wk->frame -= EV_CAMERA_ANIME_SPEED;
+      }
+    }
+    if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R )
+    {
+      if( (p_wk->frame + EV_CAMERA_ANIME_SPEED) < max_frame )
+      {
+        p_wk->frame += EV_CAMERA_ANIME_SPEED;
+      }
+    }
+  }
+#endif
 
   //　アニメーションをすすめる
-  result = GFL_G3D_OBJECT_IncAnimeFrame( p_wk->p_obj, HERO_ANIME_ICA, EV_CAMERA_ANIME_SPEED );
-  result = GFL_G3D_OBJECT_IncAnimeFrame( p_wk->p_obj, HERO_ANIME_ITP, EV_CAMERA_ANIME_SPEED );
+  GFL_G3D_OBJECT_SetAnimeFrame( p_wk->p_obj, HERO_ANIME_ICA, &p_wk->frame );
+  GFL_G3D_OBJECT_SetAnimeFrame( p_wk->p_obj, HERO_ANIME_ITP, &p_wk->frame );
 
-  if( result == FALSE )
-  {
-    return TRUE;
-  }
-  return FALSE;
+  return result;
 }
 
 //----------------------------------------------------------------------------
