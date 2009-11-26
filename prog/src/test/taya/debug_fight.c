@@ -197,8 +197,9 @@ static const struct {
   { DBGF_LABEL_MSGSPD,  LAYOUT_LABEL_MSGSPEED_X, LAYOUT_PARAM_LINE_Y1 },
   { DBGF_LABEL_WAZAEFF, LAYOUT_LABEL_WAZAEFF_X,  LAYOUT_PARAM_LINE_Y2 },
 
-  { DBGF_LABEL_WEATHER, 8, LAYOUT_PARAM_LINE_Y2 },
-  { DBGF_LABEL_LAND,    8, LAYOUT_PARAM_LINE_Y3 },
+  { DBGF_LABEL_LAND,    8, LAYOUT_PARAM_LINE_Y2 },
+  { DBGF_LABEL_WEATHER, 8, LAYOUT_PARAM_LINE_Y3 },
+
 
 };
 /*
@@ -314,6 +315,7 @@ struct _DEBUG_BTL_WORK {
   POKEPARTY*      partyEnemy2;
   const POKEMON_PARAM*  clipPoke;
   u8              fNetConnect;
+  u8              fPlayerPartyAllocated;
   pMainProc       mainProc;
   int             mainSeq;
   u8              prevItemStrWidth[ SELITEM_MAX ];
@@ -360,6 +362,7 @@ static BOOL mainProc_MakePokePara( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_Save( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_Load( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_StartBattle( DEBUG_BTL_WORK* wk, int* seq );
+static void printPartyInfo( POKEPARTY* party );
 static void cutoff_wildParty( POKEPARTY* party, BtlRule rule );
 static void* testBeaconGetFunc( void* pWork );
 static int testBeaconGetSizeFunc( void* pWork );
@@ -561,7 +564,7 @@ static void quitGraphicSystems( void )
 }
 //----------------------------------------------------------------------------------
 /**
- *
+ * 一時的モジュール（バトル実行中は消えている）を作成・構築
  *
  * @param   wk
  * @param   heapID
@@ -587,7 +590,7 @@ static void createTemporaryModules( DEBUG_BTL_WORK* wk, HEAPID heapID )
 }
 //----------------------------------------------------------------------------------
 /**
- *
+ * 一時的モジュール（バトル実行中は消えている）を破棄
  *
  * @param   wk
  */
@@ -704,6 +707,8 @@ static void savework_SetParty( DEBUG_BTL_SAVEDATA* saveData, DEBUG_BTL_WORK* wk 
   {
     pp = savework_GetPokeParaArea( saveData, i );
     if( PP_Get(pp, ID_PARA_monsno, NULL) ){
+      u32 monsno = PP_Get(pp, ID_PARA_monsno, NULL);
+      TAYA_Printf("敵パーティ(%p)に対し、PP(%p) : monsno=%d を追加\n", wk->partyEnemy1, pp, monsno);
       PokeParty_Add( wk->partyEnemy1, pp );
     }
   }
@@ -1213,6 +1218,10 @@ FS_EXTERN_OVERLAY(battle);
 
   // バトルパラメータセット
   case SEQ_SETUP_START:
+    wk->setupParam.partyPlayer = NULL;
+    wk->fPlayerPartyAllocated = FALSE;
+
+    // 野生
     if( btltype_IsWild(wk->saveData.btlType) )
     {
       BtlRule rule = btltype_GetRule( wk->saveData.btlType );
@@ -1221,6 +1230,7 @@ FS_EXTERN_OVERLAY(battle);
       BP_SETUP_Wild( &wk->setupParam, wk->gameData, HEAPID_BTL_DEBUG_SYS, rule, wk->partyEnemy1,
           BTL_BG_GRASS, 0, BTL_WEATHER_NONE );
     }
+    // 通信対戦
     else if( btltype_IsComm(wk->saveData.btlType) )
     {
       BtlRule rule = btltype_GetRule( wk->saveData.btlType );
@@ -1244,10 +1254,8 @@ FS_EXTERN_OVERLAY(battle);
         BTL_SETUP_Rotation_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS );
         break;
       }
-      if( wk->setupParam.partyPlayer == NULL ){
-        wk->setupParam.partyPlayer = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
-      }
     }
+    // VSゲーム内トレーナー
     else
     {
       BtlRule rule = btltype_GetRule( wk->saveData.btlType );
@@ -1270,9 +1278,12 @@ FS_EXTERN_OVERLAY(battle);
           BTL_BG_GRASS, 0, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
         break;
       }
-      if( wk->setupParam.partyPlayer == NULL ){
-        wk->setupParam.partyPlayer = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
-      }
+    }
+    if( wk->setupParam.partyPlayer == NULL ){
+      wk->setupParam.partyPlayer = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
+      wk->fPlayerPartyAllocated = TRUE;
+    }else if(wk->setupParam.partyPlayer != GAMEDATA_GetMyPokemon(wk->gameData)){
+      wk->fPlayerPartyAllocated = TRUE;
     }
     PokeParty_Copy( wk->partyPlayer, wk->setupParam.partyPlayer );
     (*seq) = SEQ_BTL_START;
@@ -1280,12 +1291,17 @@ FS_EXTERN_OVERLAY(battle);
 
   case SEQ_BTL_START:
     PMSND_PlayBGM( wk->setupParam.musicDefault );
+    printPartyInfo( wk->setupParam.partyEnemy1 );
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(battle), &BtlProcData, &wk->setupParam );
     (*seq) = SEQ_BTL_RETURN;
     break;
 
   case SEQ_BTL_RETURN:
-    BATTLE_PARAM_Release( &wk->setupParam );
+//    BATTLE_PARAM_Release( &wk->setupParam );
+    if( wk->fPlayerPartyAllocated ){
+      GFL_HEAP_FreeMemory( wk->setupParam.partyPlayer );
+      wk->setupParam.partyPlayer = NULL;
+    }
     changeScene_recover( wk );
     PMSND_StopBGM();
     setMainProc( wk, mainProc_Setup );
@@ -1293,7 +1309,21 @@ FS_EXTERN_OVERLAY(battle);
   }
   return FALSE;
 }
+static void printPartyInfo( POKEPARTY* party )
+{
+  POKEMON_PARAM* pp;
+  u32 cnt, i;
 
+  TAYA_Printf("*** PartyInfo : adrs(%p)\n", party);
+
+  cnt = PokeParty_GetPokeCount( party );
+  TAYA_Printf("Member Count=%d\n", cnt);
+  for(i=0; i<cnt; ++i)
+  {
+    pp = PokeParty_GetMemberPointer( party, i );
+    TAYA_Printf(" member[%d] : monsno=%d\n", i, PP_Get(pp, ID_PARA_monsno, NULL) );
+  }
+}
 //----------------------------------------------------------------------------------
 /**
  * ルールに応じて野生戦のパーティメンバー余分をカットする
