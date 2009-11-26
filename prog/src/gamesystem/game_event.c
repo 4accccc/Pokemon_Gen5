@@ -232,6 +232,66 @@ void GMEVENT_CallProc( GMEVENT * parent,
   GMEVENT_CallEvent( parent, proc_event );
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief オーバレイ配置の別イベント呼び出しイベント用ワーク定義
+ */
+//------------------------------------------------------------------
+typedef struct _CALL_OVERLAY_EVENT_WORK{
+  FSOverlayID ov_id;
+  const GMEVENT* call_event;
+  const GFL_PROC_DATA * proc_data;
+  void * pwk;
+}COEW;
+
+//------------------------------------------------------------------
+/**
+ * @brief オーバーレイ配置の別イベント呼び出しイベント
+ */
+//------------------------------------------------------------------
+static GMEVENT_RESULT callOverlayEvent( GMEVENT * event, int *seq, void * work)
+{
+  COEW * coew = (COEW *)work;
+  GAMESYS_WORK * gsys = GMEVENT_GetGameSysWork(event);
+  switch(*seq)
+  {
+  case 0:
+    GMEVENT_CallEvent( event, (GMEVENT*)coew->call_event );
+    (*seq)++;
+    break;
+  case 1:
+    GFL_OVERLAY_Unload( coew->ov_id );
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief OverlayイベントCall→オーバーレイ解放
+ * @param ov_id       呼び出すイベントのオーバーレイID指定
+ * @param cb_event_create_func  内部でCallしたいイベントを生成するCallBack指定
+ * @param cb_work イベント生成コールバックに引き渡すワーク 
+ * 
+ * 内部で指定のオーバーレイに配置されたイベントをCallし、
+ * 終了後にオーバーレイ解放を行って終了するイベントを生成する
+ */
+//------------------------------------------------------------------
+GMEVENT* GMEVENT_CreateOverlayEventCall( GAMESYS_WORK* gsys, 
+    FSOverlayID ov_id, GMEVENT_CREATE_CB_FUNC cb_event_create_func, void* work )
+{
+  COEW * coew;
+  GMEVENT *event;
+  event = GMEVENT_Create(gsys, NULL, callOverlayEvent, sizeof(COEW) );
+
+  coew = GMEVENT_GetEventWork( event );
+  coew->ov_id = ov_id;
+
+  GFL_OVERLAY_Load( ov_id );
+  coew->call_event = (cb_event_create_func)( gsys, work );
+
+  return event;
+}
 
 //=============================================================================
 //

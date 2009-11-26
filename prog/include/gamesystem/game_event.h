@@ -41,6 +41,13 @@ typedef GMEVENT_RESULT (*GMEVENT_FUNC)(GMEVENT *, int *, void *);
 //-----------------------------------------------------------------------------
 typedef GMEVENT * (*EVCHECK_FUNC)(GAMESYS_WORK *, void*);
 
+//-----------------------------------------------------------------------------
+/*
+ * @brief Overlayイベントコール　イベント生成コールバック関数型
+ */
+//-----------------------------------------------------------------------------
+typedef GMEVENT* (*GMEVENT_CREATE_CB_FUNC)( GAMESYS_WORK* gsys, void* work );
+
 //=============================================================================
 //
 //	関数外部参照
@@ -101,6 +108,20 @@ extern void GMEVENT_CallEvent(GMEVENT * parent, GMEVENT * child);
 //------------------------------------------------------------------
 extern void GMEVENT_CallProc( GMEVENT * parent, 
     FSOverlayID ov_id, const GFL_PROC_DATA * proc_data, void * pwk);
+
+//------------------------------------------------------------------
+/**
+ * @brief OverlayイベントCall→オーバーレイ解放
+ * @param ov_id       呼び出すイベントのオーバーレイID指定
+ * @param cb_event_create_func  内部でCallしたいイベントを生成するCallBack指定
+ * @param cb_work イベント生成コールバックに引き渡すワーク 
+ * 
+ * 内部で指定のオーバーレイに配置されたイベントをCallし、
+ * 終了後にオーバーレイ解放を行って終了するイベントを生成する
+ */
+//------------------------------------------------------------------
+extern GMEVENT* GMEVENT_CreateOverlayEventCall( GAMESYS_WORK* gsys, 
+    FSOverlayID ov_id, GMEVENT_CREATE_CB_FUNC cb_event_create_func, void* work );
 
 //=============================================================================
 //=============================================================================
