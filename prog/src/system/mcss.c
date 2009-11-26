@@ -27,7 +27,7 @@
 
 #define	MCSS_CONST(x)	( x << MCSS_DEFAULT_SHIFT )
 
-#define	MCSS_TEX_ADRS	(0x20000)
+#define	MCSS_TEX_ADRS	(0x24000)
 #define	MCSS_TEX_SIZE	(0x4000)
 #define	MCSS_PAL_ADRS	(0x1000)
 #define	MCSS_PAL_SIZE	(0x0020)
