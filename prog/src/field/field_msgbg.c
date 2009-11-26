@@ -3807,6 +3807,10 @@ void FLDMSGBG_RecoveryBG( FLDMSGBG *fmb )
   { //バルーンウィンドウ
     TALKMSGWIN_ReTransWindowBG( fmb->talkMsgWinSys );
   }
+
+  { //SYSWIN
+    syswin_InitGraphic( heapID );
+  }
 }
 
 //======================================================================
