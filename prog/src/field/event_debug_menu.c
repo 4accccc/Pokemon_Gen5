@@ -46,6 +46,7 @@
 
 #include "field_event_check.h"
 #include "event_debug_item.h" //EVENT_DebugItemMake
+#include "event_debug_numinput.h"
 #include "savedata/box_savedata.h"  //デバッグアイテム生成用
 #include  "item/itemsym.h"  //ITEM_DATA_MAX
 #include  "item/item.h"  //ITEM_CheckEnable
@@ -71,6 +72,7 @@
 #include "savedata/save_tbl.h"
 #include "savedata/c_gear_picture.h"
 
+#include "event_debug_local.h"
 
 //======================================================================
 //  define
@@ -99,16 +101,6 @@ typedef enum
 //======================================================================
 //  typedef struct
 //======================================================================
-//--------------------------------------------------------------
-/// DEBUG_MENU_EVENT_WORK
-//--------------------------------------------------------------
-typedef struct _TAG_DEBUG_MENU_EVENT_WORK DEBUG_MENU_EVENT_WORK;
-
-//--------------------------------------------------------------
-/// メニュー呼び出し関数
-/// BOOL TRUE=イベント継続 FALSE==デバッグメニューイベント終了
-//--------------------------------------------------------------
-typedef BOOL (* DEBUG_MENU_CALLPROC)(DEBUG_MENU_EVENT_WORK*);
 
 //--------------------------------------------------------------
 /// DEBUG_MENU_LISTDATA
@@ -120,49 +112,6 @@ typedef struct
   u32 max;
   const FLDMENUFUNC_LIST *list;
 }DEBUG_MENU_LISTDATA;
-
-//--------------------------------------------------------------
-/// DEBUG_MENU_EVENT_WORK
-//--------------------------------------------------------------
-struct _TAG_DEBUG_MENU_EVENT_WORK
-{
-  HEAPID heapID;
-  GMEVENT *gmEvent;
-  GAMESYS_WORK *gmSys;
-  GAMEDATA * gdata;
-  FIELDMAP_WORK * fieldWork;
-  
-  DEBUG_MENU_CALLPROC call_proc;
-  GFL_MSGDATA *msgData;
-  FLDMENUFUNC *menuFunc;
-};
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-typedef void MAKE_LIST_FUNC(GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID );
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-typedef u16 GET_MAX_FUNC(FIELDMAP_WORK * fieldmap );
-
-//--------------------------------------------------------------
-/**
- * @brief   メニュー初期化構造体
- *
- * @note
- * 可変メニューの場合、makeListFunc/getMaxFuncも定義する必要がある。
- * 使用方法についてはどこでもジャンプなどを参照のこと。
- */
-//--------------------------------------------------------------
-typedef struct {
-  u16 msg_arc_id;     ///<引用するメッセージアーカイブの指定
-  u16 max;            ///<項目最大数
-  const FLDMENUFUNC_LIST * menulist;  ///<参照するメニューデータ（生成する場合はNULL)
-  const FLDMENUFUNC_HEADER * menuH;   ///<メニュー表示指定データ
-  u8 px, py, sx, sy;
-  MAKE_LIST_FUNC * makeListFunc;      ///<メニュー生成関数へのポインタ（固定メニューの場合はNULL)
-  GET_MAX_FUNC * getMaxFunc;          ///<項目最大数取得関数へのポインタ（固定メニューの場合はNULL)
-}DEBUG_MENU_INITIALIZER;
 
 //======================================================================
 //  proto
@@ -222,6 +171,7 @@ static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_GDS( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_UITemplate( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Jump( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_NumInput( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_Kairiki( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_ControlLinerCamera( DEBUG_MENU_EVENT_WORK *wk );
@@ -248,6 +198,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR38, debugMenuCallProc_DebugSkyJump },
   { DEBUG_FIELD_STR17, debugMenuCallProc_FieldPosData },
   { DEBUG_FIELD_STR43, debugMenuCallProc_Jump },
+  { DEBUG_FIELD_NUMINPUT, debugMenuCallProc_NumInput },
   { DEBUG_FIELD_STR02, debugMenuCallProc_ControlCamera },
   { DEBUG_FIELD_STR20, debugMenuCallProc_ControlTarget },
   { DEBUG_FIELD_STR03, debugMenuCallProc_GridScaleSwitch },
@@ -365,7 +316,7 @@ GMEVENT * DEBUG_EVENT_DebugMenu(
 //======================================================================
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static FLDMENUFUNC * DebugMenuInit(
+FLDMENUFUNC * DebugMenuInit(
     FIELDMAP_WORK * fieldmap, HEAPID heapID,
     const DEBUG_MENU_INITIALIZER * init )
 {
@@ -903,6 +854,27 @@ static GMEVENT_RESULT debugMenuZoneJump(GMEVENT *event, int *seq, void *wk )
   return( GMEVENT_RES_CONTINUE );
 }
 
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し 数値入力　
+ * @param wk  DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_NumInput( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GAMESYS_WORK *gsys = wk->gmSys;
+  HEAPID heapID = wk->heapID;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  GMEVENT *event;
+ 
+  event = GMEVENT_CreateOverlayEventCall( wk->gmSys, 
+    FS_OVERLAY_ID( d_numinput ), EVENT_DMenuNumInput, wk );
+  
+  GMEVENT_ChangeEvent( wk->gmEvent, event );
+
+  return( TRUE );
+}
 
 //======================================================================
 //  デバッグメニュー　四季ジャンプ
