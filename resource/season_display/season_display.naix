@@ -1,0 +1,29 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: season_display.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_SEASON_DISPLAY_NAIX_
+#define NARC_SEASON_DISPLAY_NAIX_
+
+enum {
+	NARC_season_display_spring_nclr = 0,
+	NARC_season_display_spring_ncgr = 1,
+	NARC_season_display_spring_nscr = 2,
+	NARC_season_display_summer_nclr = 3,
+	NARC_season_display_summer_ncgr = 4,
+	NARC_season_display_summer_nscr = 5,
+	NARC_season_display_autumn_nclr = 6,
+	NARC_season_display_autumn_ncgr = 7,
+	NARC_season_display_autumn_nscr = 8,
+	NARC_season_display_winter_nclr = 9,
+	NARC_season_display_winter_ncgr = 10,
+	NARC_season_display_winter_nscr = 11
+};
+
+/* NARC_SEASON_DISPLAY_NAIX_ */
+#endif

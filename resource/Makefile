@@ -102,7 +102,8 @@ SUBDIRS	=	wmi \
 			battle_recorder \
 			monolith \
 			fourkings_scene \
-			multiboot
+			multiboot \
+			season_display
 
 include $(RESOURCE_MACRO)
 
