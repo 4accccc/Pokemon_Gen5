@@ -188,7 +188,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
                 WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
 
-    PMSND_PlayBGM( SEQ_BGM_PALPARK_BOX );
+    //PMSND_PlayBGM( SEQ_BGM_PALPARK_BOX );
     work->state = MCS_WAIT_FADEIN;
     break;
     
@@ -515,6 +515,7 @@ static GFL_PROC_RESULT MB_CHILD_ProcInit( GFL_PROC * proc, int * seq , void *pwk
 {
   MB_CHILD_WORK *work;
   
+  OS_TPrintf("LeastAppHeap[%x]",GFI_HEAP_GetHeapFreeSize(GFL_HEAPID_APP));
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MULTIBOOT, 0xC0000 );
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MULTIBOOT_DATA, 0xC0000 );
   work = GFL_PROC_AllocWork( proc, sizeof(MB_CHILD_WORK), HEAPID_MULTIBOOT );
