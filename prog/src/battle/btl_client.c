@@ -1831,20 +1831,24 @@ static BOOL scProc_ACT_WazaEffect( BTL_CLIENT* wk, int* seq, const int* args )
 {
   switch( *seq ) {
   case 0:
-  {
-    WazaID waza;
-    u8 atPokePos, defPokePos;
-    const BTL_PARTY* party;
-    const BTL_POKEPARAM* poke;
+    if( BTL_MAIN_IsWazaEffectEnable(wk->mainModule) )
+    {
+      WazaID waza;
+      u8 atPokePos, defPokePos;
+      const BTL_PARTY* party;
+      const BTL_POKEPARAM* poke;
 
-    atPokePos  = args[0];
-    defPokePos = args[1];
-    waza       = args[2];
-    poke = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, atPokePos );
-    BTLV_ACT_WazaEffect_Start( wk->viewCore, atPokePos, defPokePos, waza, BTLV_WAZAEFF_TURN_DEFAULT, 0 );
-    (*seq)++;
-  }
-  break;
+      atPokePos  = args[0];
+      defPokePos = args[1];
+      waza       = args[2];
+      poke = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, atPokePos );
+      BTLV_ACT_WazaEffect_Start( wk->viewCore, atPokePos, defPokePos, waza, BTLV_WAZAEFF_TURN_DEFAULT, 0 );
+      (*seq)++;
+    }
+    else{
+      return TRUE;
+    }
+    break;
 
   case 1:
     if( BTLV_ACT_WazaEffect_Wait(wk->viewCore) )
@@ -1860,20 +1864,25 @@ static BOOL scProc_ACT_WazaEffectEx( BTL_CLIENT* wk, int* seq, const int* args )
 {
   switch( *seq ) {
   case 0:
-  {
-    WazaID waza;
-    u8 atPokePos, defPokePos, turnType;
-    const BTL_PARTY* party;
-    const BTL_POKEPARAM* poke;
+    if( BTL_MAIN_IsWazaEffectEnable(wk->mainModule) )
+    {
+      WazaID waza;
+      u8 atPokePos, defPokePos, turnType;
+      const BTL_PARTY* party;
+      const BTL_POKEPARAM* poke;
 
-    atPokePos  = args[0];
-    defPokePos = args[1];
-    waza       = args[2];
-    turnType   = args[3];
-    poke = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, atPokePos );
-    BTLV_ACT_WazaEffect_Start( wk->viewCore, atPokePos, defPokePos, waza, turnType, 0 );
-    (*seq)++;
-  }
+      atPokePos  = args[0];
+      defPokePos = args[1];
+      waza       = args[2];
+      turnType   = args[3];
+      poke = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, atPokePos );
+      BTLV_ACT_WazaEffect_Start( wk->viewCore, atPokePos, defPokePos, waza, turnType, 0 );
+      (*seq)++;
+    }
+    else{
+      return TRUE;
+    }
+
   break;
 
   case 1:

@@ -94,10 +94,6 @@ struct _BTL_MAIN_MODULE {
 
   u8        posCoverClientID[ BTL_POS_MAX ];
 
-  u8        numClients;
-  u8        myClientID;
-  u8        myOrgPos;
-  u8        ImServer;
   u32       bonusMoney;
 
   BTL_PROC    subProc;
@@ -109,6 +105,12 @@ struct _BTL_MAIN_MODULE {
   u8          escapeClientID;
   u8          sendClientID;
 
+  u8        numClients;
+  u8        myClientID;
+  u8        myOrgPos;
+  u8        ImServer;
+  u8        fWazaEffEnable;
+  u8        changeMode;
 
 };
 
@@ -204,6 +206,9 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->setupParam->capturedPokeIdx = TEMOTI_POKEMAX;
 
       wk->escapeClientID = BTL_CLIENTID_NULL;
+      wk->fWazaEffEnable = (CONFIG_GetWazaEffectMode(setup_param->configData) == WAZAEFF_MODE_ON);
+      wk->changeMode = (CONFIG_GetBattleRule(setup_param->configData) == BATTLERULE_IREKAE)?
+          BTL_CHANGEMODE_IREKAE : BTL_CHANGEMODE_KATINUKI;
 
       BTL_NET_InitSystem( setup_param->netHandle, HEAPID_BTL_NET );
       BTL_CALC_ITEM_InitSystem( HEAPID_BTL_SYSTEM );
@@ -1354,6 +1359,19 @@ static BOOL MainLoop_Comm_NotServer( BTL_MAIN_MODULE* wk )
 BtlRule BTL_MAIN_GetRule( const BTL_MAIN_MODULE* wk )
 {
   return wk->setupParam->rule;
+}
+//=============================================================================================
+/**
+ * ワザエフェクト表示が有効かチェック
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_MAIN_IsWazaEffectEnable( const BTL_MAIN_MODULE* wk )
+{
+  return wk->fWazaEffEnable;
 }
 
 //=============================================================================================

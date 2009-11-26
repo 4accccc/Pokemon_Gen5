@@ -126,5 +126,15 @@ typedef enum {
   BTL_ROTATEDIR_L,
 }BtlRotateDir;
 
+//--------------------------------------------------------------
+/**
+ *  ポケモンひん死の時の処理タイプ
+ */
+//--------------------------------------------------------------
+typedef enum {
+  BTL_CHANGEMODE_IREKAE = 0,  ///<
+  BTL_CHANGEMODE_KATINUKI,
+}BtlChangeMode;
+
 
 #endif

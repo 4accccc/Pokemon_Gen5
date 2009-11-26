@@ -9,10 +9,24 @@
 #include "btl_pokeparam.h"
 
 
-
+/*------------------------------------------------------------------------------*/
+/* ルールなど基本情報                                                           */
+/*------------------------------------------------------------------------------*/
 extern BtlRule BTL_MAIN_GetRule( const BTL_MAIN_MODULE* wk );
 extern BtlCompetitor BTL_MAIN_GetCompetitor( const BTL_MAIN_MODULE* wk );
 extern BtlCommMode BTL_MAIN_GetCommMode( const BTL_MAIN_MODULE* wk );
+extern BOOL BTL_MAIN_IsWazaEffectEnable( const BTL_MAIN_MODULE* wk );
+extern BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk );
+extern const MYSTATUS* BTL_MAIN_GetPlayerStatus( const BTL_MAIN_MODULE* wk );
+extern POKEPARTY* BTL_MAIN_GetPlayerPokeParty( BTL_MAIN_MODULE* wk );
+extern const BTL_FIELD_SITUATION* BTL_MAIN_GetFieldSituation( const BTL_MAIN_MODULE* wk );
+
+/*------------------------------------------------------------------------------*/
+/* 通信情報                                                                     */
+/*------------------------------------------------------------------------------*/
+extern BOOL BTL_MAIN_IsServerMachine( BTL_MAIN_MODULE * wk );
+extern BOOL BTL_MAIN_IsMultiMode( const BTL_MAIN_MODULE * wk );
+
 extern BtlPokePos BTL_MAIN_GetClientPokePos( const BTL_MAIN_MODULE* wk, u8 clientID, u8 posIdx );
 extern BtlPokePos BTL_MAIN_GetOpponentPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos basePos, u8 idx );
 extern BtlPokePos BTL_MAIN_GetNextPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos basePos );
@@ -21,24 +35,23 @@ extern BOOL BTL_MAIN_IsOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID1
 extern u8 BTL_MAIN_BtlPosToClientID( const BTL_MAIN_MODULE* wk, BtlPokePos pos );
 extern u8 BTL_MAIN_BtlPosToViewPos( const BTL_MAIN_MODULE* wk, BtlPokePos pos );
 extern BtlSide BTL_MAIN_GetClientSide( const BTL_MAIN_MODULE* wk, u8 clientID );
-extern BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk );
 extern u8 BTL_MAINUTIL_PokeIDtoClientID( u8 pokeID );
-extern const MYSTATUS* BTL_MAIN_GetPlayerStatus( const BTL_MAIN_MODULE* wk );
-extern BOOL BTL_MAIN_IsServerMachine( BTL_MAIN_MODULE * wk );
-extern BOOL BTL_MAIN_IsMultiMode( const BTL_MAIN_MODULE * wk );
-extern BtlPokePos BTL_MAIN_GetEnablePosEnd( const BTL_MAIN_MODULE* wk );
-extern POKEPARTY* BTL_MAIN_GetPlayerPokeParty( BTL_MAIN_MODULE* wk );
-extern u8 BTL_MAIN_GetPlayerClientID( const BTL_MAIN_MODULE* wk );
-extern u16 BTL_MAIN_GetClientTrainerType( const BTL_MAIN_MODULE* wk, u8 clientID );
-extern void BTL_MAIN_NotifyCapturedPokePos( BTL_MAIN_MODULE* wk, BtlPokePos pos );
-extern BOOL BTL_MAIN_CheckFrontPoke( BTL_MAIN_MODULE* wk, const BTL_POKE_CONTAINER* pokeCon, u8 pokeID );
 
-//-------------------------
+extern BtlPokePos BTL_MAIN_GetEnablePosEnd( const BTL_MAIN_MODULE* wk );
+extern u16 BTL_MAIN_GetClientTrainerType( const BTL_MAIN_MODULE* wk, u8 clientID );
+extern u8 BTL_MAIN_GetPlayerClientID( const BTL_MAIN_MODULE* wk );
+
+
+
+/*------------------------------------------------------------------------------*/
+/* フィールドへ引き継ぐ情報の通知                                               */
+/*------------------------------------------------------------------------------*/
+extern void BTL_MAIN_NotifyCapturedPokePos( BTL_MAIN_MODULE* wk, BtlPokePos pos );
 extern void BTL_MAIN_AddBonusMoney( BTL_MAIN_MODULE* wk, u32 volume );
 
 
 //-------------------------
-extern const BTL_FIELD_SITUATION* BTL_MAIN_GetFieldSituation( const BTL_MAIN_MODULE* wk );
+
 
 
 //=========================================================
@@ -81,7 +94,7 @@ extern const BTL_PARTY* BTL_POKECON_GetPartyDataConst( const BTL_POKE_CONTAINER*
 
 extern BtlPokePos BTL_MAIN_ViewPosToBtlPos( const BTL_MAIN_MODULE* wk, u8 vpos );
 extern BOOL BTL_POKECON_IsExsitClient( const BTL_POKE_CONTAINER* wk, u8 clientID );
-
+extern BOOL BTL_MAIN_CheckFrontPoke( BTL_MAIN_MODULE* wk, const BTL_POKE_CONTAINER* pokeCon, u8 pokeID );
 
 //-------------------------------------------------------------------------------
 /**

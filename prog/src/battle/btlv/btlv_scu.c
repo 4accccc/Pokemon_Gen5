@@ -1895,12 +1895,7 @@ void BTLV_SCU_StartWazaEffect( BTLV_SCU* wk, BtlvMcssPos atPos, BtlvMcssPos defP
   param.turn_count = turnType;
   param.continue_count = continueCount;
 
-#ifdef DEBUG_ONLY_FOR_taya
-//  @@@ ロジックを追うのにエフェクトが出る時間が無駄なのでオフる
-//  BTLV_EFFECT_AddWazaEffect( &param );
-#else
   BTLV_EFFECT_AddWazaEffect( &param );
-#endif
 }
 
 //=============================================================================================
