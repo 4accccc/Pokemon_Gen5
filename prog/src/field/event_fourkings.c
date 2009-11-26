@@ -82,9 +82,9 @@ enum
 #define EV_CAMERA_ANIME_SPEED (FX32_ONE)
 
 // 自機デモ後出現位置
-#define EV_HERO_WALK_END_GRID_X (16)
+#define EV_HERO_WALK_END_GRID_X (15)
 #define EV_HERO_WALK_END_GRID_Y (0)
-#define EV_HERO_WALK_END_GRID_Z (17)
+#define EV_HERO_WALK_END_GRID_Z (16)
 #define EV_HERO_WALK_END_DIR (DIR_LEFT)
 
 // 演出の中心
