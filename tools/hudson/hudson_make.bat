@@ -16,7 +16,7 @@ REM ================================
 REM 初回 make
 REM ================================
 @echo ***** make *****
-REM make
+make
 @echo errorlevel = %ERRORLEVEL%
 
 REM 正常終了判定
@@ -41,7 +41,9 @@ REM ================================
 REM 正常終了
 REM ================================
 :END
-  REM "C:\Program Files\Ipmsg\ipmsg.exe" /MSG W00159 "メイク成功！"
+REM  "C:\Program Files\Ipmsg\ipmsg.exe" /MSG W00159 "メイク成功！"
+REM  "C:\Program Files\Ipmsg\ipmsg.exe" /MSG W00162 "メイク成功！"
+REM  C:\tools\softalk\make_ok.wav
   @echo hudson make end
 
 
