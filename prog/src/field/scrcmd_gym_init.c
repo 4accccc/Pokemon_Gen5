@@ -112,4 +112,6 @@ VMCMD_RESULT EvCmdGymInsect_Init( VMHANDLE *core, void *wk )
   GFL_OVERLAY_Load( FS_OVERLAY_ID(field_gym_init) );		//オーバーレイロード
   GYM_INIT_Insect(gsys);
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(field_gym_init));		//オーバーレイアンロード
+
+  return VMCMD_RESULT_CONTINUE;
 }
