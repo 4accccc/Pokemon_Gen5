@@ -26,6 +26,7 @@ SUBDIRS	=	wmi \
 			fldmapdata\
 			pokegra\
 			battle\
+			batt_bg_tbl\
 			net_err\
 			font\
 			itemconv\
