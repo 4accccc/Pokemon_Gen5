@@ -316,12 +316,13 @@ extern int BPP_RankEffectDownLimit( const BTL_POKEPARAM* pp, BppValueID rankType
 
 //-------------------------
 typedef void (*BtlSickTurnCheckFunc)( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT oldCont, BOOL fCure, void* work );
+typedef void( *BppCureWazaSickDependPokeCallback)( void* arg, BTL_POKEPARAM* bpp, WazaSick sickID, u8 dependPokeID );
 
 
 extern void BPP_SetWazaSick( BTL_POKEPARAM* pp, WazaSick sick, BPP_SICK_CONT contParam );
 extern void BPP_CurePokeSick( BTL_POKEPARAM* pp );
 extern void BPP_CureWazaSick( BTL_POKEPARAM* pp, WazaSick sick );
-extern void BPP_CureWazaSickDependPoke( BTL_POKEPARAM* pp, u8 depend_pokeID );
+extern void BPP_CureWazaSickDependPoke( BTL_POKEPARAM* pp, u8 depend_pokeID, BppCureWazaSickDependPokeCallback callBackFunc, void* callbackArg );
 extern void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFunc, void* callbackWork );
 extern void BPP_GetNickName( const BTL_POKEPARAM* bpp, STRBUF* dst );
 extern void BPP_ReflectLevelup( BTL_POKEPARAM* bpp, u8 nextLevel, u8 hpMax, u8 atk, u8 def, u8 spAtk, u8 spDef, u8 agi );

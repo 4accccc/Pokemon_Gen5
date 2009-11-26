@@ -10,14 +10,14 @@
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static void contProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, WazaSick sick );
+static void turncheck_contProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, WazaSick sick );
 static void contDamageCommon( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp, u8 pokeID, WazaSick sick, u16 damage );
 static int getWazaSickDamageStrID( WazaSick sick );
 static void cont_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
 static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
 static void cont_NeWoHaru( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
 static void cont_Bind( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
-static void cureProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, WazaSick sick, BPP_SICK_CONT oldCont );
+static void turncheck_cureProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, WazaSick sick, BPP_SICK_CONT oldCont );
 static void cure_Akubi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp );
 static void cure_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp );
 static void putHorobiCounter( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp, u8 count );
@@ -52,16 +52,16 @@ void BTL_SICK_TurnCheckCallback( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CON
   u8 pokeID = BPP_GetID( bpp );
 
   if( fCure ){
-    cureProc( work, bpp, pokeID, sick, oldCont );
+    turncheck_cureProc( work, bpp, pokeID, sick, oldCont );
   }else{
-    contProc( work, bpp, pokeID, sick );
+    turncheck_contProc( work, bpp, pokeID, sick );
   }
 }
 
 //----------------------------------------------------------------------------------------------
 // èÛë‘àŸèÌåpë±
 //----------------------------------------------------------------------------------------------
-static void contProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, WazaSick sick )
+static void turncheck_contProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, WazaSick sick )
 {
   {
     u32 damage =  BPP_CalcSickDamage( bpp, sick );
@@ -195,7 +195,7 @@ static void cont_Bind( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID )
 //----------------------------------------------------------------------------------------------
 // èÛë‘àŸèÌâÒïú
 //----------------------------------------------------------------------------------------------
-static void cureProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, WazaSick sick, BPP_SICK_CONT oldCont )
+static void turncheck_cureProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, WazaSick sick, BPP_SICK_CONT oldCont )
 {
   BTL_HANDEX_STR_PARAMS  str;
   if( BTL_SICK_MakeDefaultCureMsg(sick, oldCont, bpp, ITEM_DUMMY_DATA, &str) )
@@ -277,7 +277,6 @@ static void cure_Bind( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp, BPP_SI
 static int getDefaultSickStrID( WazaSick sickID, BPP_SICK_CONT cont )
 {
   int strID = -1;
-
 
   switch( sickID ){
   case WAZASICK_YAKEDO:     strID = BTL_STRID_SET_YakedoGet; break;

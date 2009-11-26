@@ -168,6 +168,7 @@ static void Effrank_Recover( BPP_VARIABLE_PARAM* rank );
 static BppValueID ConvertValueID( const BTL_POKEPARAM* bpp, BppValueID vid );
 static const s8* getRankVaryStatusConst( const BTL_POKEPARAM* pp, BppValueID type, s8* min, s8* max );
 static s8* getRankVaryStatus( BTL_POKEPARAM* pp, BppValueID type, s8* min, s8* max );
+static void cureDependSick( BTL_POKEPARAM* bpp, WazaSick sickID );
 static void clearWazaSickWork( BTL_POKEPARAM* bpp, BOOL fPokeSickInclude );
 static void dmgrecClearWork( BTL_POKEPARAM* bpp );
 static void dmgrecFwdTurn( BTL_POKEPARAM* bpp );
@@ -1450,15 +1451,33 @@ void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFu
  *
  */
 //=============================================================================================
-void BPP_CurePokeSick( BTL_POKEPARAM* pp )
+void BPP_CurePokeSick( BTL_POKEPARAM* bpp )
 {
   u32 i;
   for(i=POKESICK_ORIGIN; i<POKESICK_MAX; ++i)
   {
-    pp->sickCont[ i ] = BPP_SICKCONT_MakeNull();
+    bpp->sickCont[ i ] = BPP_SICKCONT_MakeNull();
+    cureDependSick( bpp, i );
   }
-  pp->sickCont[WAZASICK_AKUMU] = BPP_SICKCONT_MakeNull();    // ñ∞ÇËÇ™é°ÇÍÇŒÅgÇ†Ç≠ÇﬁÅhÇ‡é°ÇÈ
-  pp->sickCont[WAZASICK_DOKUDOKU] = BPP_SICKCONT_MakeNull(); // ì≈Ç™é°ÇÍÇŒÅgÇ«Ç≠Ç«Ç≠ÅhÇ‡é°ÇÈ
+}
+//----------------------------------------------------------------------------------
+/**
+ * Ç†ÇÈèÛë‘àŸèÌÇ™é°Ç¡ÇΩéûÇ…ìØéûÇ…é°ÇÈèÛë‘ÇÃèàóù
+ *
+ * @param   bpp
+ * @param   sickID
+ */
+//----------------------------------------------------------------------------------
+static void cureDependSick( BTL_POKEPARAM* bpp, WazaSick sickID  )
+{
+  switch( sickID ){
+  case WAZASICK_NEMURI:
+    bpp->sickCont[ WAZASICK_AKUMU ] = BPP_SICKCONT_MakeNull();    // ñ∞ÇËÇ™é°ÇÍÇŒÅgÇ†Ç≠ÇﬁÅhÇ‡é°ÇÈ
+    break;
+  case WAZASICK_DOKU:
+    bpp->sickCont[ WAZASICK_DOKUDOKU ] = BPP_SICKCONT_MakeNull(); // ì≈Ç™é°ÇÍÇŒÅgÇ«Ç≠Ç«Ç≠ÅhÇ‡é°ÇÈ
+    break;
+  }
 }
 //=============================================================================================
 /**
@@ -1488,27 +1507,26 @@ void BPP_CureWazaSick( BTL_POKEPARAM* pp, WazaSick sick )
  * @param   depend_pokeID
  */
 //=============================================================================================
-void BPP_CureWazaSickDependPoke( BTL_POKEPARAM* pp, u8 depend_pokeID )
+void BPP_CureWazaSickDependPoke( BTL_POKEPARAM* bpp, u8 depend_pokeID, BppCureWazaSickDependPokeCallback callbackFunc, void* callbackArg )
 {
   u32 i;
   u8 fCure;
   for(i=0; i<WAZASICK_MAX; ++i)
   {
-    switch( pp->sickCont[i].type ){
+    switch( bpp->sickCont[i].type ){
     case WAZASICK_CONT_POKE:
-      fCure = ( pp->sickCont[i].poke.ID == depend_pokeID );
+      fCure = ( bpp->sickCont[i].poke.ID == depend_pokeID );
       break;
     case WAZASICK_CONT_POKETURN:
-      fCure = ( pp->sickCont[i].poketurn.pokeID == depend_pokeID );
+      fCure = ( bpp->sickCont[i].poketurn.pokeID == depend_pokeID );
       break;
     default:
       fCure = FALSE;
     }
     if( fCure ){
-      pp->sickCont[i] = BPP_SICKCONT_MakeNull();
-      if( i == WAZASICK_NEMURI ){
-        pp->sickCont[WAZASICK_AKUMU] = BPP_SICKCONT_MakeNull();
-      }
+      bpp->sickCont[i] = BPP_SICKCONT_MakeNull();
+      cureDependSick( bpp, i );
+      callbackFunc( callbackArg, bpp, i, depend_pokeID );
     }
   }
 }

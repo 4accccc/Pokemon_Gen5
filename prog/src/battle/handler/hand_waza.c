@@ -597,6 +597,10 @@ static BTL_EVENT_FACTOR*  ADD_SideChange( u16 pri, WazaID waza, u8 pokeID );
 static void handler_SideChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Telekinesis( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Telekinesis( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_FreeFall( u16 pri, WazaID waza, u8 pokeID );
+static void handler_FreeFall_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_FreeFall_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_FreeFall_TypeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 //=============================================================================================
@@ -842,6 +846,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_KARI_FASTOGAADO,       ADD_FastGuard       },
     { WAZANO_KARI_SAIDOCHENZI,      ADD_SideChange      },
     { WAZANO_KARI_TELEKINESISU,     ADD_Telekinesis     },
+    { WAZANO_KARI_FURIIFOORU,       ADD_FreeFall        },
   };
 
   int i;
@@ -8628,4 +8633,85 @@ static void handler_Telekinesis( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     HANDEX_STR_AddArg( str, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * フリーフォール
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_FreeFall( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_TAME_START,       handler_FreeFall_TameStart },     // 溜め開始
+    { BTL_EVENT_TAME_RELEASE,     handler_FreeFall_TameRelease },   // 溜め解放
+    { BTL_EVENT_NOEFFECT_TYPE_CHECK,  handler_FreeFall_TypeCheck },
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_FreeFall_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BTL_HANDEX_PARAM_SET_CONTFLAG* param;
+    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+
+    param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_CONTFLAG, pokeID );
+    param->pokeID = pokeID;
+    param->flag = BPP_CONTFLG_SORAWOTOBU;
+
+    param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_CONTFLAG, pokeID );
+    param->pokeID = targetPokeID;
+    param->flag = BPP_CONTFLG_SORAWOTOBU;
+
+    {
+      BTL_HANDEX_PARAM_ADD_SICK* sick_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
+      sick_param->poke_cnt = 1;
+      sick_param->pokeID[0] = targetPokeID;
+      sick_param->sickID = WAZASICK_FREEFALL;
+      sick_param->sickCont = BPP_SICKCONT_MakePoke( pokeID );
+    }
+
+    {
+      BTL_HANDEX_PARAM_MESSAGE* msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_FreeFall );
+      HANDEX_STR_AddArg( &msg_param->str, pokeID );
+      HANDEX_STR_AddArg( &msg_param->str, targetPokeID );
+    }
+  }
+}
+static void handler_FreeFall_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BTL_HANDEX_PARAM_SET_CONTFLAG* param;
+    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+
+    param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RESET_CONTFLAG, pokeID );
+    param->pokeID = pokeID;
+    param->flag = BPP_CONTFLG_SORAWOTOBU;
+
+    param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RESET_CONTFLAG, pokeID );
+    param->pokeID = targetPokeID;
+    param->flag = BPP_CONTFLG_SORAWOTOBU;
+
+    {
+      BTL_HANDEX_PARAM_CURE_SICK* cure_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+      cure_param->poke_cnt = 1;
+      cure_param->pokeID[0] = targetPokeID;
+      cure_param->sickCode = WAZASICK_FREEFALL;
+    }
+  }
+}
+static void handler_FreeFall_TypeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
+    if( BPP_IsMatchType(target, POKETYPE_HIKOU) )
+    {
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, TRUE );
+    }
+  }
+}
+
 

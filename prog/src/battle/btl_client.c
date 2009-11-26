@@ -1864,30 +1864,32 @@ static BOOL scProc_ACT_WazaEffectEx( BTL_CLIENT* wk, int* seq, const int* args )
 {
   switch( *seq ) {
   case 0:
-    if( BTL_MAIN_IsWazaEffectEnable(wk->mainModule) )
     {
-      WazaID waza;
-      u8 atPokePos, defPokePos, turnType;
-      const BTL_PARTY* party;
-      const BTL_POKEPARAM* poke;
+      u8 turnType = args[3];
+      if( (BTL_MAIN_IsWazaEffectEnable(wk->mainModule))
+// @todo 本来有効な行だが今はワザエフェクトが用意されておらずフリーズするのでコメントアウト
+//      ||  (turnType == BTLV_WAZAEFF_TURN_TAME)
+      ){
+        WazaID waza;
+        u8 atPokePos, defPokePos, turnType;
+        const BTL_PARTY* party;
+        const BTL_POKEPARAM* poke;
 
-      atPokePos  = args[0];
-      defPokePos = args[1];
-      waza       = args[2];
-      turnType   = args[3];
-      poke = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, atPokePos );
-      BTLV_ACT_WazaEffect_Start( wk->viewCore, atPokePos, defPokePos, waza, turnType, 0 );
-      (*seq)++;
+        atPokePos  = args[0];
+        defPokePos = args[1];
+        waza       = args[2];
+        poke = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, atPokePos );
+        BTLV_ACT_WazaEffect_Start( wk->viewCore, atPokePos, defPokePos, waza, turnType, 0 );
+        (*seq)++;
+      }
+      else{
+        return TRUE;
+      }
     }
-    else{
-      return TRUE;
-    }
-
-  break;
+    break;
 
   case 1:
-    if( BTLV_ACT_WazaEffect_Wait(wk->viewCore) )
-    {
+    if( BTLV_ACT_WazaEffect_Wait(wk->viewCore) ){
       return TRUE;
     }
     break;
