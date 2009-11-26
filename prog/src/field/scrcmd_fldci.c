@@ -78,7 +78,16 @@ VMCMD_RESULT EvCmdFldCi_CallPokeCutin( VMHANDLE *core, void *wk )
   {
     GMEVENT *call_event;
     SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-    call_event = FLD3D_CI_CreatePokeCutInEvt(gsys, ptr, 3,0,0,0);
+    GAMEDATA*      gdata = SCRCMD_WORK_GetGameData( work );
+    POKEPARTY*     party = GAMEDATA_GetMyPokemon( gdata );
+    POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, pos );
+
+    int monsno = PP_Get( pp, ID_PARA_monsno, NULL );
+    int formno = PP_Get( pp, ID_PARA_form_no, NULL );
+    int sex = PP_Get( pp, ID_PARA_sex, NULL );
+    int rare = PP_CheckRare( pp );
+
+    call_event = FLD3D_CI_CreatePokeCutInEvt(gsys, ptr, monsno,formno,sex,rare);
     SCRIPT_CallEvent( sc, call_event );
   }
   
