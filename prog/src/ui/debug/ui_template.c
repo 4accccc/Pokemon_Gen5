@@ -144,7 +144,7 @@ enum
   PLTID_OBJ_BALLICON_M = 13, // 1本使用
 	PLTID_OBJ_TOWNMAP_M	= 14,		
 	//サブOBJ
-  PLTID_OBJ_PMS_DRAW = 0, // 2-5本使用 // @TODO 未定
+  PLTID_OBJ_PMS_DRAW = 0, // 5本使用
 };
 
 //=============================================================================

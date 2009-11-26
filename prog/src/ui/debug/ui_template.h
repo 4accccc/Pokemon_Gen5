@@ -6,7 +6,7 @@
  *	@author	Toru=Nagihashi / genya hosaka
  *	@data		2009.09.29
  *	@note   1.ファイルをコピペします。
- *	@note   2.UITemplate / UI_TEMPLATE をアプリ名にリネームしてください。
+ *	@note   2.UITemplate / UI_TEMPLATE / ui_template をアプリ名にリネームしてください。
  *	@note   3.HEAPID_UI_DEBUG をアプリ用のヒープに書き換えてください。
  *	@note   4.不要な要素を外します
  *
