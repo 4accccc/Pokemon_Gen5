@@ -448,6 +448,22 @@ BOOL MAPATTR_VALUE_CheckEncountGrassB( const MAPATTR_VALUE val )
 
 //--------------------------------------------------------------
 /**
+ * アトリビュートバリュー チェック 草むらエンカウント
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckEncountGrass( const MAPATTR_VALUE val )
+{
+  if( MAPATTR_VALUE_CheckEncountGrassA(val) == TRUE ||
+      MAPATTR_VALUE_CheckEncountGrassB(val) == TRUE ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
  * アトリビュートバリュー チェック 怪力穴
  * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う
@@ -555,4 +571,114 @@ BOOL MAPATTR_VALUE_CheckIce( const MAPATTR_VALUE val )
 BOOL MAPATTR_VALUE_CheckMarsh( const MAPATTR_VALUE val )
 {
   return( val == MATTR_MARSH_01 );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　砂丘
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckSand( const MAPATTR_VALUE val )
+{
+  return( val == MATTR_SAND_01 );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　砂丘
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckDesert( const MAPATTR_VALUE val )
+{
+  return( val == MATTR_E_DESERT_01 || val == MATTR_DESERT_01 );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　砂系アトリビュート
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckSandType( const MAPATTR_VALUE val )
+{
+  if( MAPATTR_VALUE_CheckSand(val) || MAPATTR_VALUE_CheckDesert(val) ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　雪系アトリビュート
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckWaterType( const MAPATTR_VALUE val )
+{
+  if( (val == MATTR_WATER_01) || (val == MATTR_SEA_01) || (val == MATTR_DEEP_MARSH_01) ) {
+    return( TRUE );
+  }
+  return( FALSE );
+}
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　通常地面
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckMonoGround( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_ZIMEN_01 );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　季節変化地面１
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckSeasonGround1( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_ZIMEN_S01 );
+}
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　季節変化地面２
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckSeasonGround2( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_ZIMEN_S02 );
+}
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　地面（エンカウント）
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckEncountGround( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_E_ZIMEN_01 );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　芝生
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckLawn( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_LAWN_01 );
 }

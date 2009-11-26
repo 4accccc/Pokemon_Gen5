@@ -82,6 +82,7 @@ extern BOOL MAPATTR_VALUE_CheckEncountGrassB1( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckEncountGrassB2( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckEncountGrassA( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckEncountGrassB( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckEncountGrass( const MAPATTR_VALUE val );
 
 extern BOOL MAPATTR_VALUE_CheckKairikiAna( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckShore( const MAPATTR_VALUE val );
@@ -92,3 +93,14 @@ extern BOOL MAPATTR_VALUE_CheckSnow( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckSnowType( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckIce( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckMarsh( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckSand( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckDesert( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckSandType( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckWaterType( const MAPATTR_VALUE val );
+
+extern BOOL MAPATTR_VALUE_CheckMonoGround( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckSeasonGround1( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckSeasonGround2( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckEncountGround( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckLawn( const MAPATTR_VALUE val );
+
