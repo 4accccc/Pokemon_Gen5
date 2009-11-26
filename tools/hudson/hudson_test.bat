@@ -11,9 +11,7 @@ REM		ƒpƒX‚Ì’Ç‰Á
 REM ##################################################
 PATH=c:\tools;%PROJECT_ROOT%;%PROJECT_ROOT%\tools;c:\tools\subversion\bin;c:\cygwin\bin;c:\tools\vim;C:\tools;%NITROSDK_ROOT%\tools\bin;%NITROSYSTEM_ROOT%\tools\bin;%PATH%;
 
-SET HOME_TMP=%~dp0
-SET PROJECT_ROOT=%HOME_TMP:\=/%
-SET PROJECT_PROGDIR=%PROJECT_ROOT%prog/
+SET PROJECT_PROGDIR=../../prog/
 
 REM main.srl
 SET PATH_MAIN_SRL=%PROJECT_PROGDIR%bin/ARM9-TS/Release/main.srl
