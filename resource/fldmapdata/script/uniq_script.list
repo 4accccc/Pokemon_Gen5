@@ -16,4 +16,5 @@ UNIQ_SCRIPTFILES	= \
   poke_waza.ev \
   musical_scr.ev \
   field_ev_scr.ev \
-  c3center_scr.ev
+  c3center_scr.ev \
+  gate_scr.ev
