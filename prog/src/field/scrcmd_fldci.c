@@ -31,7 +31,7 @@
 
 //--------------------------------------------------------------
 /**
- * カメラ移動開始
+ * フィールドカットイン
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
  */
@@ -58,4 +58,31 @@ VMCMD_RESULT EvCmdFldCi_CallCutin( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//--------------------------------------------------------------
+/**
+ * ポケモンカットイン
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdFldCi_CallPokeCutin( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*    work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLD3D_CI_PTR ptr = FIELDMAP_GetFld3dCiPtr(fieldWork);
+
+  u16 pos = SCRCMD_GetVMWorkValue( core, work );
+  
+  //カットインイベントをコール
+  {
+    GMEVENT *call_event;
+    SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+    call_event = FLD3D_CI_CreatePokeCutInEvt(gsys, ptr, 3,0,0,0);
+    SCRIPT_CallEvent( sc, call_event );
+  }
+  
+  //イベントコールするので、一度制御を返す
+  return VMCMD_RESULT_SUSPEND;
+}
 

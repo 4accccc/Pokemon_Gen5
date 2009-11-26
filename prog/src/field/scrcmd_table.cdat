@@ -652,7 +652,7 @@
 
   //フィールドカットイン関連
   DEF_CMD( EvCmdFldCi_CallCutin, EV_SEQ_CALL_FLD3D_CUTIN )
-  NO_CMD()
+  DEF_CMD( EvCmdFldCi_CallPokeCutin, EV_SEQ_CALL_POKE_CUTIN )
   NO_CMD()
   NO_CMD()
 

@@ -5267,6 +5267,19 @@
   .short  EV_SEQ_CALL_FLD3D_CUTIN
   .short  \no
   .endm
+
+//--------------------------------------------------------------
+/**
+ * ポケモンカットイン
+ * @param pos         手持ち位置
+ */
+//--------------------------------------------------------------
+#define _CALL_POKE_CUTIN(pos) _ASM_CALL_POKE_CUTIN pos
+
+  .macro  _ASM_CALL_POKE_CUTIN pos
+  .short  EV_SEQ_CALL_POKE_CUTIN
+  .short  \pos
+  .endm
   
 //======================================================================
 // 四天王関連
