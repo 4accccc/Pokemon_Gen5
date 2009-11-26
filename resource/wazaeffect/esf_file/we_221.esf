@@ -1,7 +1,8 @@
 EFFSEQ
-$0002
+$0003
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_221.spa
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_200_fire.NSCR
+C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_221_fire.NSCR
 #001
 %00
 カメラ移動	追従	防御側	16	0	8
@@ -18,7 +19,7 @@ SEパン	PSG	追従	防御側	防御側	0	140:0:0
 SEパン	SE1	追従	防御側	防御側	0	140:0:0
 SEパン	SE2	追従	防御側	防御側	0	140:0:0
 制御モード変更	逐次
-BGのロード	bg_200_fire
+BGのロード	bg_221_fire
 BGの表示/非表示	フィールド	非表示
 BGのスクロール	追従	-1600	0	140	0	0
 BGの表示/非表示	エフェクト	表示
