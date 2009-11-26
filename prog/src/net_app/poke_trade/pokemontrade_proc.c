@@ -1771,6 +1771,73 @@ static void _touchState(POKEMON_TRADE_WORK* pWork)
 
 
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief もう一回ポケモンを選択する為にtouchStateに戻ってきた場合この関数
+ * @param POKEMON_TRADE_WORK* ワーク
+ */
+//--------------------------------------------------------------------------------------------
+static void _touchStateGTS(POKEMON_TRADE_WORK* pWork)
+{
+  int i;
+
+  GFL_STD_MemClear(pWork->pokeIconNo,sizeof(pWork->pokeIconNo));
+
+  _CatchPokemonPositionRewind(pWork);
+
+
+////
+
+  if(pWork->pAppTask==NULL){
+    int msg[]={POKETRADE_STR2_26};
+    POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
+  }
+
+
+  if(pWork->pAppTask!=NULL){
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+  }
+
+
+  _PokemonReset(pWork,0);
+  
+  if(!GFL_NET_IsInit()){
+    _PokemonReset(pWork,1);
+    _userNetCommandClear(pWork);
+  }
+  else{
+    int myID = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+
+    pWork->userNetCommand[myID]=0;
+    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CANCEL_POKEMON,0,NULL);
+  }
+
+  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
+  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
+  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
+  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, FALSE );
+  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, FALSE );
+  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_RETURN ,TRUE );
+  GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
+
+  IRC_POKETRADE_SendVramBoxNameChar(pWork); // ボックス名初期化
+  G2S_BlendNone();
+
+  pWork->oldLine++;
+  pWork->bgscrollRenew = TRUE;
+
+  _scrollMainFunc(pWork,FALSE,FALSE);
+
+//  _userNetCommandClear(pWork);
+
+  
+  _CHANGE_STATE(pWork,_touchStateCommon);
+
+}
+
+
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1833,6 +1900,8 @@ static void _touchStateCommon(POKEMON_TRADE_WORK* pWork)
 
   if( !GFL_UI_TP_GetCont() ){
     if(pWork->touchON && pWork->bUpVec && pWork->pCatchCLWK){
+      TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE);
+      TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, TRUE);
       pWork->touchON = FALSE;
       pWork->bUpVec = FALSE;
       PMSND_PlaySystemSE(POKETRADESE_UPPOKE);
@@ -1842,12 +1911,9 @@ static void _touchStateCommon(POKEMON_TRADE_WORK* pWork)
       pWork->selectBoxno = pWork->underSelectBoxno;
       pWork->underSelectIndex = -1;
       pWork->underSelectBoxno = -1;
-      pWork->pCatchCLWK = NULL;
-
-      TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE);
-      TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, TRUE);
 
       if(pWork->type!=POKEMONTRADE_GTSNEGO){
+        pWork->pCatchCLWK = NULL;
         GFL_CLACT_WK_SetDrawEnable( pWork->pSelectCLWK, FALSE);
         _PokemonsetAndSendData(pWork);
       }

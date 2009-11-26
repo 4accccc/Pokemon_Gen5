@@ -1012,9 +1012,9 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 //				FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_DEBUG_PALACEJUMP);
 				break;
 			case CGEAR_PANELTYPE_WIFI:
-#if DEBUG_ONLY_FOR_ohno
+//#if DEBUG_ONLY_FOR_ohno
 				FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_GSYNC);
-#endif
+//#endif
 				break;
 			}
 		}
@@ -1604,9 +1604,9 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
 	//	GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, _BRIGHTNESS_SYNC);
 	_modeInit(pWork);
 
-#if DEBUG_ONLY_FOR_ohno
+//#if DEBUG_ONLY_FOR_ohno
   _loadExData(pWork,pGameSys);
-#endif
+//#endif
   
 
 #if 0

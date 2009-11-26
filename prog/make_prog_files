@@ -285,18 +285,15 @@ SRCS  +=    $(SOUNDSRC) \
 #LIB=>          libsoc.$HYB.a
 #LIB=>          libssl.$HYB.a
 #LIB=>          libncfg.$HYB.a
-#LIB=>          libnhttp.$HYB.a
 #LIB=>          libstubsssl.$HYB.a
 #LIB=>          libwcm.$HYB.a
 #LIB=>          libdwcnonport.$HYB.a
 #LIB=>          libdwcnd.$HYB.a
 #LIB=>          libdwcnas.$HYB.a
-#LIB=>          libdwcghttp.$HYB.a
 #LIB=>          libdwcmatch.$HYB.a
 #LIB=>          libdwcauth.$HYB.a
 #LIB=>          libdwcgdb.$HYB.a
 #LIB=>          libdwcgscommon.$HYB.a
-#LIB=>          libdwcgsghttp.$HYB.a
 #LIB=>          libdwcgsgp.$HYB.a
 #LIB=>          libdwcgsgstats.$HYB.a
 #LIB=>          libdwcgsgt2.$HYB.a
@@ -889,6 +886,8 @@ SRCS_OVERLAY_PALACE = app/palace/palace_edit.c \
 #===> SRCS_OVERLAY_DEV_WIFI
 #LIB=>          libdwcnd.$HYB.a
 #LIB=>          libnhttp.$HYB.a
+#LIB=>          libdwcghttp.$HYB.a
+#LIB=>          libdwcgsghttp.$HYB.a
 SRCS_OVERLAY_DPW_COMMON   = libdpw/dpwi_encrypt.c \
               libdpw/dpwi_session.c \
 							libdpw/dpw_tr.c
