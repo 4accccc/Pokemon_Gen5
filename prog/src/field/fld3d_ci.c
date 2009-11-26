@@ -124,11 +124,10 @@ typedef struct {
 
 static void SetupResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCutInNo);
 static void SetupResourceCore(FLD3D_CI_PTR ptr, const GFL_G3D_UTIL_SETUP *inSetup);
-static void DeleteResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat);
+static void DeleteResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *ioDat);
 static BOOL PlayParticle(FLD3D_CI_PTR ptr);
 static BOOL PlayMdlAnm1(FLD3D_CI_PTR ptr);
 static BOOL PlayMdlAnm2(FLD3D_CI_PTR ptr);
-static BOOL CheckAnmEnd(FLD3D_CI_PTR ptr);
 
 static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work );
 
@@ -137,7 +136,7 @@ static void ParticleCallBack(GFL_EMIT_PTR emit);
 static void Generate(FLD3D_CI_PTR ptr, const u32 inResNo);
 
 static void CreateRes(RES_SETUP_DAT *outDat, const u8 inResArcIdx, const HEAPID inHeapID);
-static void DeleteRes(RES_SETUP_DAT *outDat);
+static void DeleteRes(RES_SETUP_DAT *ioDat);
 
 static void PushPriority(FLD3D_CI_PTR ptr);
 static void PushDisp(FLD3D_CI_PTR ptr);
@@ -216,7 +215,8 @@ void FLD3D_CI_End(FLD3D_CI_PTR ptr)
 /**
  * リソースセットアップ
  *
- * @param   
+ * @param   ptr       カットイン管理ポインタ
+ * @param   inSetup   セットアップデータ
  *
  * @return	none
  */
@@ -248,23 +248,19 @@ static void SetupResourceCore(FLD3D_CI_PTR ptr, const GFL_G3D_UTIL_SETUP *inSetu
   }
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * 描画
+ *
+ * @param   ptr     カットイン管理ポインタ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void FLD3D_CI_Draw( FLD3D_CI_PTR ptr )
 {
   u8 i,j;
   
-#if 0
-#ifdef PM_DEBUG
-  static int test_ofs = 8;
-  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG){
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
-      test_ofs++;
-    }else if(GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN){
-      test_ofs--;
-    }
-      OS_Printf("ofs=%d\n",test_ofs);
-  }
-#endif  //PM_DEBUG  
-#endif
   GFL_G3D_CAMERA_Switching( ptr->g3Dcamera );
   {
     fx32 ofs;
@@ -293,7 +289,7 @@ void FLD3D_CI_Draw( FLD3D_CI_PTR ptr )
   }
 }
 
-
+#ifdef PM_DEBUG
 //カットイン呼び出し
 void FLD3D_CI_CallCutIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInNo )
 {
@@ -318,8 +314,19 @@ void FLD3D_CI_CallPokeCutIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr )
 
   GAMESYSTEM_SetEvent(gsys, event);
 }
+#endif
 
-//カットインイベント作成
+//--------------------------------------------------------------------------------------------
+/**
+ * カットインイベント作成
+ *
+ * @param   gsys        ゲームシステムポインタ
+ * @param   ptr         カットイン管理ポインタ
+ * @param   inCutInNo   カットインナンバー
+ *
+ * @return	event       イベントポインタ
+ */
+//--------------------------------------------------------------------------------------------
 GMEVENT *FLD3D_CI_CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInNo)
 {
   GMEVENT * event;
@@ -343,7 +350,49 @@ GMEVENT *FLD3D_CI_CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 
   return event;
 }
 
-//カットインイベント
+//--------------------------------------------------------------------------------------------
+/**
+ * ポケモンカットインイベント作成
+ *
+ * @param   gsys        ゲームシステムポインタ
+ * @param   ptr         カットイン管理ポインタ
+ * @apram   inMonsNo    モンスターナンバー
+ * @param   inFormNo    フォルムナンバー
+ * @param   inSex       性別
+ * @param   inRare      レアか？
+ *
+ * @return	event       イベントポインタ
+ */
+//--------------------------------------------------------------------------------------------
+GMEVENT *FLD3D_CI_CreatePokeCutInEvt( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr,
+                                      const int inMonsNo, const int inFormNo,
+                                      const int inSex, const int inRare )
+{
+  GMEVENT * event;
+  int no = FLDCIID_POKE;
+  event = FLD3D_CI_CreateCutInEvt(gsys, ptr, no);
+  //セットアップ後コールバック設定
+  ptr->SetupCallBack = ReTransToPokeGra;
+  //ポケモンカットイン用ポケモン指定変数セット
+  ptr->MonsNo = inMonsNo;
+  ptr->FormNo = inFormNo;
+  ptr->Sex = inSex;
+  ptr->Rare = inRare;
+
+  return event;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * カットインイベント
+ *
+ * @param   event       イベントポインタ
+ * @param   *seq        シーケンサ
+ * @param   work        ワークポインタ
+ *
+ * @return	GMEVENT_RESULT    イベント結果
+ */
+//--------------------------------------------------------------------------------------------
 static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
 {
   FLD3D_CI_PTR ptr;
@@ -537,7 +586,15 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
   return GMEVENT_RES_CONTINUE;
 }
 
-//パーティクル再生
+//--------------------------------------------------------------------------------------------
+/**
+ * パーティクル再生
+ *
+ * @param   ptr         カットイン管理ポインタ
+ *
+ * @return	BOOL        TRUEで再生終了
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL PlayParticle(FLD3D_CI_PTR ptr)
 {
   if (!ptr->PartGene){
@@ -577,7 +634,15 @@ static BOOL PlayParticle(FLD3D_CI_PTR ptr)
   return FALSE;
 }
 
-//モデルアニメ1再生
+//--------------------------------------------------------------------------------------------
+/**
+ * モデルアニメ1再生
+ *
+ * @param   ptr         カットイン管理ポインタ
+ *
+ * @return	BOOL        TRUEで再生終了
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL PlayMdlAnm1(FLD3D_CI_PTR ptr)
 {
   //アニメがない場合は終了とみなす
@@ -604,7 +669,15 @@ static BOOL PlayMdlAnm1(FLD3D_CI_PTR ptr)
   return FALSE;
 }
 
-//モデルアニメ2再生
+//--------------------------------------------------------------------------------------------
+/**
+ * モデルアニメ2再生
+ *
+ * @param   ptr         カットイン管理ポインタ
+ *
+ * @return	BOOL        TRUEで再生終了
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL PlayMdlAnm2(FLD3D_CI_PTR ptr)
 {
   //アニメがない場合は終了とみなす
@@ -632,6 +705,17 @@ static BOOL PlayMdlAnm2(FLD3D_CI_PTR ptr)
   return FALSE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * リソースセットアップ
+ *
+ * @param   ptr         カットイン管理ポインタ
+ * @param   outDat      セットアップデータ格納バッファ
+ * @param   inCutInNo   カットインナンバー
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void SetupResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCutInNo)
 {
   void *resource;
@@ -712,26 +796,34 @@ static void SetupResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCu
   }
 }
 
-static void DeleteResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat)
+//--------------------------------------------------------------------------------------------
+/**
+ * リソース削除
+ *
+ * @param   ptr         カットイン管理ポインタ
+ * @param   ioDat      セットアップデータ格納バッファ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void DeleteResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *ioDat)
 {
-  DeleteRes(outDat);
+  DeleteRes(ioDat);
   GFL_G3D_UTIL_DelUnit( ptr->Util, ptr->UnitIdx );
   ptr->UnitIdx = UNIT_NONE;
   FLD_PRTCL_Delete(ptr->PrtclSys);
 }
 
-static BOOL CheckAnmEnd(FLD3D_CI_PTR ptr)
-{
-  //パーティクル終了判定
-  if ( !FLD_PRTCL_CheckEmitEnd( ptr->PrtclSys ) ){
-    return FALSE;
-  }
-
-  return TRUE;
-}
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * パーティクルジェネレート
+ *
+ * @param   ptr         カットイン管理ポインタ
+ * @param   inResNo     リソースナンバー
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void Generate(FLD3D_CI_PTR ptr, const u32 inResNo)
 {
 ///  GFL_PTC_SetCameraType(sys->PrtclPtr, GFL_G3D_PRJORTH);
@@ -762,7 +854,9 @@ static void ParticleCallBack(GFL_EMIT_PTR emit)
 /**
  * @brief	リソース作成関数
  *
- * @param	
+ * @param     outDat          セットアップデータ格納バッファ
+ * @param     inResArcIdx     アーカイブインデックス
+ * @param     inHeapID        ヒープＩＤ
  *
  * @retval	none	
  *
@@ -903,25 +997,25 @@ static void CreateRes(RES_SETUP_DAT *outDat, const u8 inResArcIdx, const HEAPID 
 /**
  * @brief	リソース破棄関数
  *
- * @param	
+ * @param	  ioDat   セットアップデータ格納バッファ
  *
  * @retval	none	
  *
  */
 //--------------------------------------------------------------
-static void DeleteRes(RES_SETUP_DAT *outDat)
+static void DeleteRes(RES_SETUP_DAT *ioDat)
 {
-  if (outDat->Anm1 != NULL){
-    GFL_HEAP_FreeMemory( outDat->Anm1 );
+  if (ioDat->Anm1 != NULL){
+    GFL_HEAP_FreeMemory( ioDat->Anm1 );
   }
-  if (outDat->Anm2 != NULL){
-    GFL_HEAP_FreeMemory( outDat->Anm2 );
+  if (ioDat->Anm2 != NULL){
+    GFL_HEAP_FreeMemory( ioDat->Anm2 );
   }
-  if (outDat->Obj != NULL){
-    GFL_HEAP_FreeMemory( outDat->Obj );
+  if (ioDat->Obj != NULL){
+    GFL_HEAP_FreeMemory( ioDat->Obj );
   }
-  if(outDat->Res != NULL){
-    GFL_HEAP_FreeMemory( outDat->Res );
+  if(ioDat->Res != NULL){
+    GFL_HEAP_FreeMemory( ioDat->Res );
   }
 }
 
@@ -1073,16 +1167,23 @@ static GMEVENT_RESULT DebugFlySkyEffEvt( GMEVENT* event, int* seq, void* work )
   return GMEVENT_RES_CONTINUE;
 }
 
-//キャプチャリクエスト
+#endif  //PM_DEBUG
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	キャプチャリクエスト
+ *
+ *	@param	カットイン管理ポインタ
+ *
+ *	@return none
+ */
+//-----------------------------------------------------------------------------
 static void ReqCapture(FLD3D_CI_PTR ptr)
 {
   ptr->CapEndFlg = FALSE;
   GX_SetBankForLCDC(GX_VRAM_LCDC_D);
   GFUser_VIntr_CreateTCB(Graphic_Tcb_Capture, &ptr->CapEndFlg, 0 );
 }
-
-
-#endif  //PM_DEBUG
 
 //----------------------------------------------------------------------------
 /**
