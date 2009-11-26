@@ -31,10 +31,10 @@ REM make clean
 
 REM IPMSGで通知(エラーレベルを上書きしてしまう)
 REM %IPMSG_BAT% 1
-REM なぜか↑を使うと、↓に流れてこない
+REM ↑を使うと、↓に流れてこない...
 
-@echo errorlevel = %ERROR_LEVEL%
-exit %ERROR_LEVEL%
+@echo errorlevel = %ERRORLEVEL%
+exit %ERRORLEVEL%
 
 REM ================================
 REM 正常終了
