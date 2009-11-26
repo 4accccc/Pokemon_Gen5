@@ -36,14 +36,14 @@
 //隔壁位置
 #define WALL_Y_POS (-40)
 //降下時フォグフェード位置
-#define DOWN_FOG_FADE_START (-45)
+#define DOWN_FOG_FADE_START (-55)
 //上昇時フォグフェード位置
 #define UP_FOG_FADE_START (-45)
 //移動速度が速いときのフォグフェードシンク
-#define FOG_FADE_SPEED_FAST (40)
+#define FOG_FADE_SPEED_FAST (32)
 //移動速度が遅いときのフォグフェードシンク
-#define FOG_FADE_SPEED_SLOW (8)
+#define FOG_FADE_SPEED_SLOW (16)
 //フォグオフセット
-#define FOG_OFFSET (32671)
+#define FOG_OFFSET (32735)
 //フォグスロープ
-#define FOG_SLOPE (8)
+#define FOG_SLOPE (9)
