@@ -30,14 +30,15 @@
 
 #ifdef DEBUG_ONLY_FOR_hudson
 //---------------------------------
-// HUDSONさんのみ実体を定義
+// HUDSONのみ実体を定義
 //---------------------------------
 
 // HUDSON用アサート
 #define HUDSON_ASSERT(exp)  GF_ASSERT(exp)
 // PRINT関数
-#define HUDSON_TPrintf(...) OS_TPrintf(__VA_ARGS__)
 #define HUDSON_Printf(...)  OS_Printf(__VA_ARGS__)
+// PRINT関数(軽量版)
+#define HUDSON_TPrintf(...) OS_TPrintf(__VA_ARGS__)
 
 #else // DEBUG_ONLY_FOR_hudson
 

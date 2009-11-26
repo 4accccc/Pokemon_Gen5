@@ -843,8 +843,7 @@ SRCS_OVERLAY_PMSINPUT = app/pms_input/pms_input_data.c \
         app/pms_input/pms_input.c \
         app/pms_input/pmsiv_wordwin.c \
         app/pms_select/pms_select.c \
-        app/pms_select/pms_select_graphic.c \
-        app/pms_select/pms_ui_listbar.c
+        app/pms_select/pms_select_graphic.c
 
 
 # ミュージカル
