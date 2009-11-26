@@ -417,23 +417,23 @@ int ZONEDATA_GetRailDataID(u16 zone_id)
   switch (zone_id)
   {
   case ZONE_ID_C03:
-    return NARC_field_rail_setup_C03_dat;
+    return NARC_field_rail_setup_C03_bin;
   case ZONE_ID_H01:
-    return NARC_field_rail_setup_H01_dat;
+    return NARC_field_rail_setup_H01_bin;
   case ZONE_ID_C03P02:
-    return NARC_field_rail_setup_C03P02_dat;
+    return NARC_field_rail_setup_C03P02_bin;
   case ZONE_ID_D09:
-    return NARC_field_rail_setup_D09_dat;
+    return NARC_field_rail_setup_D09_bin;
   case ZONE_ID_R07R0101:
-    return NARC_field_rail_setup_R07R0101_dat;
+    return NARC_field_rail_setup_R07R0101_bin;
   case ZONE_ID_R07R0102:
-    return NARC_field_rail_setup_R07R0102_dat;
+    return NARC_field_rail_setup_R07R0102_bin;
   case ZONE_ID_R07R0103:
-    return NARC_field_rail_setup_R07R0103_dat;
+    return NARC_field_rail_setup_R07R0103_bin;
   case ZONE_ID_R07R0104:
-    return NARC_field_rail_setup_R07R0104_dat;
+    return NARC_field_rail_setup_R07R0104_bin;
   case ZONE_ID_C07GYM0101:
-    return NARC_field_rail_setup_C07GYM0101_dat;
+    return NARC_field_rail_setup_C07GYM0101_bin;
   }
   return ZONEDATA_NO_RAILDATA_ID;
 }
