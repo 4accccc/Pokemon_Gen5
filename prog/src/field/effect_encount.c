@@ -28,11 +28,14 @@
 
 ///////////////////////////////////////////////////////////////
 //
-#define EFFENC_SEARCH_OX (10)
-#define EFFENC_SEARCH_OZ (10)
+#define EFFENC_SEARCH_OX (5)
+#define EFFENC_SEARCH_OZ (5)
 #define EFFENC_SEARCH_WX  (EFFENC_SEARCH_OX*2+1)
 #define EFFENC_SEARCH_WZ  (EFFENC_SEARCH_OZ*2+1)
 #define EFFENC_SEARCH_AREA_MAX  (EFFENC_SEARCH_WX*EFFENC_SEARCH_WZ)
+
+#define EFFENC_DEFAULT_INTERVAL (50)
+#define EFFENC_DEFAULT_PROB (20)
 
 #define GRID_MAP_W  (32)
 
@@ -125,8 +128,8 @@ void EFFECT_ENC_Init( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
   eff_wk->walk_ct_interval = 10;
   eff_wk->prob = 100;
 #else
-  eff_wk->walk_ct_interval = 200;
-  eff_wk->prob = 10;
+  eff_wk->walk_ct_interval = EFFENC_DEFAULT_INTERVAL;
+  eff_wk->prob = EFFENC_DEFAULT_PROB;
 #endif
 
   //ƒpƒ‰ƒ[ƒ^‚ðPop
