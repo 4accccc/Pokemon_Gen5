@@ -11,8 +11,7 @@
 #define NARC_ISS_SWITCH_NAIX_
 
 enum {
-	NARC_iss_switch_iss_switch_data_seq_bgm_t_01_bin = 0,
-	NARC_iss_switch_iss_switch_data_seq_bgm_t_02_bin = 1
+	NARC_iss_switch_iss_switch_data_seq_bgm_t_02_bin = 0
 };
 
 /* NARC_ISS_SWITCH_NAIX_ */
