@@ -23,9 +23,8 @@
 
 #include "../../../resource/fldmapdata/gimmick/gym_insect/gym_insect_local_def.h"
 
-//#include "sound/pm_sndsys.h"
-
-//#include "gym_onsect_se_def.h"
+#include "sound/pm_sndsys.h"
+#include "gym_insect_se_def.h"
 
 #include "event_fldmmdl_control.h"  //for EVENT_ObjAnime
 
@@ -1018,6 +1017,7 @@ void GYM_INSECT_Move(FIELDMAP_WORK *fieldWork)
 
   //アニメーション再生
   FLD_EXP_OBJ_PlayAnime( ptr );
+
 }
 
 //--------------------------------------------------------------
@@ -1218,6 +1218,9 @@ static GMEVENT_RESULT PushWallEvt( GMEVENT* event, int* seq, void* work )
         FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_INSECT_UNIT_IDX, detail_obj_idx, anm_idx, 0 );
         //アニメ停止
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+
+        //壁押し込みSE
+        PMSND_PlaySE(GYM_INSECT_SE_WALL_PUSH);
         (*seq)++;
       }
     }
@@ -1294,6 +1297,8 @@ static GMEVENT_RESULT PushWallEvt( GMEVENT* event, int* seq, void* work )
         child = EVENT_ObjAnime( gsys, fieldWork, MMDL_ID_PLAYER, tbl );
         GMEVENT_CallEvent(event, child);
       }
+      //壁つきぬけSE
+      PMSND_PlaySE(GYM_INSECT_SE_WALL_THROUGH);
     }
     break;
   case 3:
@@ -1380,6 +1385,12 @@ static GMEVENT_RESULT WallReverseEvt( GMEVENT* event, int* seq, void* work )
     {
       tmp->Val = 0;
       (*seq)++;
+    }
+
+    //シーケンスシフトが発生したら
+    if (*seq == 1) {
+      //弾かれSE
+      PMSND_PlaySE(GYM_INSECT_SE_WALL_RETURN);
     }
     break;
   case 1:
@@ -1500,6 +1511,8 @@ static GMEVENT_RESULT PushWallSideEvt( GMEVENT* event, int* seq, void* work )
     FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
     //頭出し
     FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_INSECT_UNIT_IDX, detail_obj_idx, anm_idx, 0 );
+    //壁に触れたSE
+    PMSND_PlaySE(GYM_INSECT_SE_WALL_TOUCH);
     
     (*seq)++;
     break;
@@ -1572,6 +1585,8 @@ static GMEVENT_RESULT PushWallNoBreakEvt( GMEVENT* event, int* seq, void* work )
     FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
     //頭出し
     FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_INSECT_UNIT_IDX, detail_obj_idx, anm_idx, 0 );
+    //壁に触れたSE
+    PMSND_PlaySE(GYM_INSECT_SE_WALL_TOUCH);
     (*seq)++;
     break;
   case 1:
@@ -1820,6 +1835,8 @@ static GMEVENT_RESULT PoleEvt( GMEVENT* event, int* seq, void* work )
               //頭出し
               FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_INSECT_UNIT_IDX, detail_wall_obj_idx, wall_anm_idx, 0 );
             }
+            //柵降りるSE
+            PMSND_PlaySE(GYM_INSECT_SE_WALL_OPEN);
             (*seq)++;
           }
           else
