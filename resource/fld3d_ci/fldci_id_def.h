@@ -19,3 +19,4 @@
 #define FLDCIID_GYM06 (5)
 #define FLDCIID_GYM07 (6)
 #define FLDCIID_GYM08 (7)
+#define FLDCIID_POKE (3)

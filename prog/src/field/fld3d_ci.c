@@ -9,6 +9,10 @@
 #include "fld3d_ci.h"
 #include "arc_def.h"
 #include "gamesystem/game_event.h"
+#include "field/field_msgbg.h"    //for FLDMSGBG_RecoveryBG
+#include "system/pokegra.h"
+
+#include "../../../resource/fld3d_ci/fldci_id_def.h"
 
 #define EMITCOUNT_MAX  (2)
 #define OBJCOUNT_MAX  (2)
@@ -21,14 +25,18 @@
 
 #define	PRO_MAT_Z_OFS	(20*FX32_ONE)   //プロジェクションマトリックスによるデプスバッファ操作値
 
+#define TEXSIZ_S  (128)
+#define TEXSIZ_T  (128)
+#define TEXVRAMSIZ		(TEXSIZ_S/8 * TEXSIZ_T/8 * 0x20)	// chrNum_x * chrNum_y * chrSiz
+
 #ifdef PM_DEBUG
 
 #include "fieldmap.h" //for FIELDMAP_～
 #include "event_mapchange.h"
 
-#include "field/field_msgbg.h"    //for FLDMSGBG_RecoveryBG
-
 #endif  //PM_DEBUG
+
+typedef void (*SETUP_CALLBACK)(FLD3D_CI_PTR ptr);
 
 
 typedef struct FLD3D_CI_tag
@@ -53,6 +61,21 @@ typedef struct FLD3D_CI_tag
   BOOL CapEndFlg;
   BOOL Emit1;
   BOOL Emit2;
+  BOOL Anm1Flg;
+  BOOL Anm2Flg;
+
+  //ポケモン展開用
+  NNSG2dCharacterData * chr;
+  NNSG2dPaletteData* plt;
+  GFL_BMP_DATA* pokeImgBitmap;
+  void *chr_buf;
+  void *pal_buf;
+  int MonsNo;
+  int FormNo;
+  int Sex;
+  int Rare;
+
+  SETUP_CALLBACK SetupCallBack;
 }FLD3D_CI;
 
 //バイナリデータフォーマット
@@ -75,10 +98,11 @@ typedef struct {
   u16 SpaWait[EMITCOUNT_MAX];
   u16 MdlAAnmWait;
   u16 MdlBAnmWait;
+  u32 SpaIdx;
   u8 ResNum;
   u8 ObjNum;
-  u8 AnmNum;
-  u8 SpaIdx;
+  u8 Anm1Num;
+  u8 Anm2Num;
 }RES_SETUP_DAT;
 
 typedef struct {
@@ -127,6 +151,7 @@ static void Graphic_Tcb_Capture( GFL_TCB *p_tcb, void *p_work );
 static GMEVENT_RESULT DebugFlySkyEffEvt( GMEVENT* event, int* seq, void* work );
 #endif  //PM_DEBUG
 
+static void ReTransToPokeGra(FLD3D_CI_PTR ptr);
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -208,6 +233,7 @@ static void SetupResourceCore(FLD3D_CI_PTR ptr, const GFL_G3D_UTIL_SETUP *inSetu
   setup = inSetup;
 
   unitIdx = GFL_G3D_UTIL_AddUnit( ptr->Util, setup );
+  NOZOMU_Printf("unit_idx=%d\n",unitIdx);
   obj_num = setup->objCount;
   if (obj_num == 0){
     GF_ASSERT_MSG(0,"OBJ NOTHING\n");
@@ -276,6 +302,23 @@ void FLD3D_CI_CallCutIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInN
   GAMESYSTEM_SetEvent(gsys, event);
 }
 
+//ポケモンカットイン呼び出し
+void FLD3D_CI_CallPokeCutIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr )
+{
+  GMEVENT * event;
+  int no = FLDCIID_POKE;
+  event = FLD3D_CI_CreateCutInEvt(gsys, ptr, no);
+  //セットアップ後コールバック設定
+  ptr->SetupCallBack = ReTransToPokeGra;
+  //ポケモンカットイン用ポケモン指定変数セット
+  ptr->MonsNo = 3;
+  ptr->FormNo = 0;
+  ptr->Sex = 0;
+  ptr->Rare = 0;
+
+  GAMESYSTEM_SetEvent(gsys, event);
+}
+
 //カットインイベント作成
 GMEVENT *FLD3D_CI_CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInNo)
 {
@@ -286,6 +329,8 @@ GMEVENT *FLD3D_CI_CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 
   size = sizeof(FLD3D_CI_EVENT_WORK);
   ptr->PartGene = 0;
   ptr->CutInNo = inCutInNo;
+  //セットアップ後コールバックなしでセットする
+  ptr->SetupCallBack = NULL;
   //イベント作成
   {
     event = GMEVENT_Create( gsys, NULL, CutInEvt, size );
@@ -369,13 +414,21 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
     {
       int size = GFL_HEAP_GetHeapFreeSize(ptr->HeapID);
-      OS_Printf("START::FLD3DCUTIN_HEAP_REST %x\n",size);
+      NOZOMU_Printf("START::FLD3DCUTIN_HEAP_REST %x\n",size);
     }
     //フィールド表示モード切替
     FIELDMAP_SetDraw3DMode(fieldmap, DRAW3DMODE_CUTIN);
     (*seq)++;
     break;
   case 4:
+    //1シンク待ったので、ポケモングラフィックを展開していた場合は解放する
+    if (ptr->pokeImgBitmap != NULL)
+    {
+      GFL_BMP_Delete(ptr->pokeImgBitmap);
+      ptr->pokeImgBitmap = NULL;
+      GFL_HEAP_FreeMemory( ptr->chr_buf );
+      GFL_HEAP_FreeMemory( ptr->pal_buf );
+    }
     //画面復帰
     if (1){
       (*seq)++;
@@ -406,7 +459,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
   case 7:
     {
       int size = GFL_HEAP_GetHeapFreeSize(ptr->HeapID);
-      OS_Printf("END::FLD3DCUTIN_HEAP_REST %x\n",size);
+      NOZOMU_Printf("END::FLD3DCUTIN_HEAP_REST %x\n",size);
     }
 
     //描画モード戻し
@@ -527,6 +580,9 @@ static BOOL PlayParticle(FLD3D_CI_PTR ptr)
 //モデルアニメ1再生
 static BOOL PlayMdlAnm1(FLD3D_CI_PTR ptr)
 {
+  //アニメがない場合は終了とみなす
+  if (!ptr->Anm1Flg) return TRUE;
+
   if (ptr->MdlAnm1Wait > 0){
     ptr->MdlAnm1Wait--;
   }else{
@@ -551,6 +607,9 @@ static BOOL PlayMdlAnm1(FLD3D_CI_PTR ptr)
 //モデルアニメ2再生
 static BOOL PlayMdlAnm2(FLD3D_CI_PTR ptr)
 {
+  //アニメがない場合は終了とみなす
+  if (!ptr->Anm2Flg) return TRUE;
+
   if (ptr->MdlAnm2Wait > 0){
     ptr->MdlAnm2Wait--;
   }else{
@@ -584,12 +643,17 @@ static void SetupResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCu
   //3Ｄモデルリソースをセットアップ
   SetupResourceCore(ptr, &outDat->Setup);
   //パーティクルリソースセットアップ
+  if ( outDat->SpaIdx != NONDATA )
   {
     resource = FLD_PRTCL_LoadResource(ptr->PrtclSys,
 			ARCID_FLD3D_CI, outDat->SpaIdx);
 
     FLD_PRTCL_SetResource(ptr->PrtclSys, resource, TRUE, NULL);
+  }else
+  {
+    resource = NULL;
   }
+
   //アニメを有効にする
   {
     u8 i,j;
@@ -613,8 +677,11 @@ static void SetupResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCu
   ptr->MdlAnm2Wait = outDat->MdlBAnmWait;
   //リソースの中のｓｐｒの数で分岐
   {
-    u16 res_num = GFL_PTC_GetResNum( resource );
-    OS_Printf("resnum=%d\n",res_num);
+    u16 res_num;
+    if (resource != NULL) res_num = GFL_PTC_GetResNum( resource );
+    else res_num = 0;
+
+    NOZOMU_Printf("resnum=%d\n",res_num);
     if ( res_num == EMITCOUNT_MAX )
     {
       ptr->Emit1 = FALSE;
@@ -630,6 +697,18 @@ static void SetupResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCu
       ptr->Emit1 = TRUE;
       ptr->Emit2 = TRUE;
     }
+  }
+  //ＯＢＪのアニメ数で再生処理をするかを判断する
+  {
+    ptr->Anm1Flg = FALSE;
+    ptr->Anm2Flg = FALSE;
+    if (outDat->Anm1Num != 0) ptr->Anm1Flg = TRUE;
+    if (outDat->Anm2Num != 0) ptr->Anm2Flg = TRUE;
+  }
+
+  if (ptr->SetupCallBack != NULL )
+  {
+    ptr->SetupCallBack(ptr);
   }
 }
 
@@ -750,7 +829,8 @@ static void CreateRes(RES_SETUP_DAT *outDat, const u8 inResArcIdx, const HEAPID 
   //リソース数記憶
   outDat->ResNum = res_num;
   outDat->ObjNum = obj_num;
-  outDat->AnmNum = anm1_num+anm2_num;
+  outDat->Anm1Num = anm1_num;
+  outDat->Anm2Num = anm2_num;
   //ウェイト記憶
   outDat->SpaWait[0] = def_dat.SpaWait[0];
   outDat->SpaWait[1] = def_dat.SpaWait[1];
@@ -887,6 +967,8 @@ static GMEVENT_RESULT DebugFlySkyEffEvt( GMEVENT* event, int* seq, void* work )
 
   switch(*seq){
   case 0:
+    //カメラエリア動作をフック
+    FIELD_CAMERA_SetCameraAreaActive( wk->camera, FALSE );
     //現在ウォッチターゲットを保存
     wk->Watch = FIELD_CAMERA_GetWatchTarget(wk->camera);
     FIELD_CAMERA_StopTraceRequest(wk->camera);
@@ -922,6 +1004,7 @@ static GMEVENT_RESULT DebugFlySkyEffEvt( GMEVENT* event, int* seq, void* work )
       param.Chk.Dist = TRUE;
       param.Chk.Fovy = TRUE;
       param.Chk.Pos = TRUE;
+      NOZOMU_Printf("plyer_pos = %d,%d,%d\n",player_vec.x, player_vec.y, player_vec.z);
       FIELD_CAMERA_SetLinerParam(wk->camera, &param, FLYSKY_CAM_MOVE_FRAME);
     }
     (*seq)++;
@@ -981,6 +1064,8 @@ static GMEVENT_RESULT DebugFlySkyEffEvt( GMEVENT* event, int* seq, void* work )
       FLDNOGRID_MAPPER_SetRailCameraActive( wk->mapper, TRUE );
       //復帰データのクリア
       FIELD_CAMERA_ClearRecvCamParam(wk->camera);
+      //カメラエリア動作をフック解除
+      FIELD_CAMERA_SetCameraAreaActive( wk->camera, TRUE );
       return GMEVENT_RES_FINISH;
     }
   }
@@ -1085,6 +1170,101 @@ static void PopDisp(FLD3D_CI_PTR ptr)
   GFL_DISP_GX_SetVisibleControlDirect(ptr->Mask);
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ポケモングラフィックに書き換え
+ *
+ *	@param	ptr       カットイン管理ポインタ
+ *	@return none
+ */
+//-----------------------------------------------------------------------------
+static void ReTransToPokeGra(FLD3D_CI_PTR ptr)
+{
+  u32 tex_adr;
+  u32 pal_adr;
+  HEAPID heapID = ptr->HeapID;
+  ptr->pokeImgBitmap = GFL_BMP_Create(TEXSIZ_S/8, TEXSIZ_T/8, GFL_BMP_16_COLOR, heapID);
+  //リソースのＶＲＡＭアドレス取得
+  {
+    GFL_G3D_RES* res = GFL_G3D_UTIL_GetResHandle( ptr->Util, 0 );
+    NNSG3dTexKey texkey = GFL_G3D_GetTextureDataVramKey( res );
+    NNSG3dPlttKey palkey = GFL_G3D_GetTexturePlttVramKey( res );
+    tex_adr = NNS_GfdGetTexKeyAddr(texkey);
+    pal_adr = NNS_GfdGetPlttKeyAddr(palkey);
+    NOZOMU_Printf("key = %d %d\n",texkey, palkey);
+    NOZOMU_Printf("adr = %x %x\n",tex_adr, pal_adr);
+    NOZOMU_Printf("resid = %d\n",GFL_G3D_UTIL_GetUnitResIdx( ptr->Util,0 ) );
+    
+  }
+  //ポケモングラフィック取得
+  {
+    u32 cgr, pal;
+    //リソース受け取り
+    cgr	= POKEGRA_GetCgrArcIndex( ptr->MonsNo,ptr->FormNo,ptr->Sex,ptr->Rare,POKEGRA_DIR_FRONT );
+    pal = POKEGRA_GetPalArcIndex( ptr->MonsNo,ptr->FormNo,ptr->Sex,ptr->Rare,POKEGRA_DIR_FRONT );
+    ptr->chr = NULL;
+    ptr->plt = NULL;
+    //リソースはOBJとして作っているので、LoadOBJじゃないと読み込めない
+    ptr->chr_buf = GFL_ARC_UTIL_LoadOBJCharacter( POKEGRA_GetArcID(), cgr, FALSE, &ptr->chr, heapID );
+    ptr->pal_buf = GFL_ARC_UTIL_LoadPalette( POKEGRA_GetArcID(), pal, &ptr->plt, heapID );
+  }
+  //12x12chrポケグラを16x16chrの真ん中に貼り付ける
+  {
+    u8	*src, *dst;
+    int x, y;
+    int	chrNum = 0;
 
+    src = ptr->chr->pRawData;
+		dst = GFL_BMP_GetCharacterAdrs(ptr->pokeImgBitmap);
+    GFL_STD_MemClear32((void*)dst, 16*16*0x20);
 
+    dst += ( (2*16+2) * 0x20 );
+    //キャラデータは8x8、4x8、8x4、4x4の順番で1Dマッピングされている
+    for (y=0; y<8; y++){
+      for(x=0; x<8; x++){
+        GFL_STD_MemCopy32((void*)(&src[chrNum*0x20]), (void*)(&dst[(y*16+x)*0x20]), 0x20);
+        chrNum++;
+      }
+    }
+    for (y=0; y<8; y++){
+      for(x=8; x<12; x++){
+        GFL_STD_MemCopy32((void*)(&src[chrNum*0x20]), (void*)(&dst[(y*16+x)*0x20]), 0x20);
+        chrNum++;
+      }
+    }
+    for (y=8; y<12; y++){
+      for(x=0; x<8; x++){
+        GFL_STD_MemCopy32((void*)(&src[chrNum*0x20]), (void*)(&dst[(y*16+x)*0x20]), 0x20);
+        chrNum++;
+      }
+    }
+    for (y=8; y<12; y++){
+      for(x=8; x<12; x++){
+        GFL_STD_MemCopy32((void*)(&src[chrNum*0x20]), (void*)(&dst[(y*16+x)*0x20]), 0x20);
+        chrNum++;
+      }
+    }
+  }
+  //16x16chrフォーマットデータをＢＭＰデータに変換
+  GFL_BMP_DataConv_to_BMPformat(ptr->pokeImgBitmap, FALSE, heapID);
+  //転送
+  {
+    BOOL rc;
+    void*	src;
+		u32		dst;
+    src = (void*)GFL_BMP_GetCharacterAdrs(ptr->pokeImgBitmap);
+		dst = tex_adr;
+    rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_VRAM, dst, src, TEXVRAMSIZ);
+    GF_ASSERT(rc);
+    src = ptr->plt->pRawData;
+		dst = pal_adr;
+    rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_PLTT, dst, src, 32);
+    GF_ASSERT(rc);
+  }
+
+  {
+    int size = GFL_HEAP_GetHeapFreeSize(ptr->HeapID);
+    NOZOMU_Printf("::FLD3DCUTIN_HEAP_REST %x\n",size);
+  }
+}
 
