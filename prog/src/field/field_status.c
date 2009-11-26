@@ -27,8 +27,9 @@ struct _FIELD_STATUS{
   u8  fs_flash;      // フラッシュON
   u16 fs_mapeffect;  // 見た目の状態
 
-  // 季節表示の表示フラグ
-  BOOL seasonDispFlag;
+  // 季節表示
+  BOOL seasonDispFlag;  // 表示フラグ
+  u8   seasonDispLast;  // 最後に表示した季節 PMSEASON_xxxx
 };
 
 //======================================================================
@@ -113,6 +114,26 @@ void FIELD_STATUS_SetSeasonDispFlag( FIELD_STATUS * fldstatus, BOOL flag )
 BOOL FIELD_STATUS_GetSeasonDispFlag( const FIELD_STATUS * fldstatus )
 {
   return fldstatus->seasonDispFlag;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 最後に表示した季節の設定
+ */
+//------------------------------------------------------------------
+void FIELD_STATUS_SetSeasonDispLast( FIELD_STATUS * fldstatus, u8 season )
+{
+  fldstatus->seasonDispLast = season;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 最後に表示した季節の取得
+ */
+//------------------------------------------------------------------
+u8 FIELD_STATUS_GetSeasonDispLast( const FIELD_STATUS * fldstatus )
+{
+  return fldstatus->seasonDispLast;
 }
 
 
