@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-11-26T15:51:50"/>
+	<create user="taya" host="W00146" date="2009-11-26T18:44:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2631,6 +2631,13 @@
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 相手の　[1:02:ポケモンニックネーム:1]を▽
 上空に　連れ去った！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_FreeFall_End">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+フリーフォールから　かいほうされた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+フリーフォールから　解放された！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Utiotosu">
