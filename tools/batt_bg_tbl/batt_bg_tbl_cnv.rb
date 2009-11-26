@@ -324,49 +324,23 @@ end
   }
   fp_hash.printf( "\t}\n" )
 
-  #ヘッダファイル生成
-  fp_header.print( "\n//============================================================================================\n" )
-  fp_header.print( "/**\n" )
-  fp_header.print( " * @file	batt_bg_tbl.h\n" )
-  fp_header.print( " * @bfief	戦闘背景テーブル\n" )
-  fp_header.print( " * @author	BattBGConverter\n" )
-  fp_header.print( " * 戦闘背景テーブルコンバータから生成されました\n" )
-  fp_header.print( "*/\n")
-  fp_header.print( "//============================================================================================\n\n" )
-  fp_header.printf( "#pragma once\n\n" )
-  fp_header.printf( "#define  ZONE_SPEC_ATTR_MAX  ( %d )\n", attribute.size )
-  fp_header.printf( "#define  BATT_BG_TBL_NO_FILE     ( 0xffff )\n" )
-  fp_header.printf( "#define  BATT_BG_TBL_SEASON_MAX  ( 4 )\n\n" )
-  fp_header.printf( "typedef struct\n{\n" )
-  fp_header.printf( "\tu8 time_zone;\n" )
-  fp_header.printf( "\tu8 season;\n" )
-  fp_header.printf( "\tu8 bg_file[ ZONE_SPEC_ATTR_MAX ];\n" )
-  fp_header.printf( "\tu8 stage_file[ ZONE_SPEC_ATTR_MAX ];\n" )
-  fp_header.printf( "}BATT_BG_TBL_ZONE_SPEC_TABLE;\n\n" )
-  fp_header.printf( "typedef struct\n{\n" )
-  fp_header.printf( "\tARCDATID nsbmd_file[ BATT_BG_TBL_SEASON_MAX ];\n" )
-  fp_header.printf( "\tARCDATID nsbca_file[ BATT_BG_TBL_SEASON_MAX ];\n" )
-  fp_header.printf( "\tARCDATID nsbta_file[ BATT_BG_TBL_SEASON_MAX ];\n" )
-  fp_header.printf( "\tARCDATID nsbma_file[ BATT_BG_TBL_SEASON_MAX ];\n" )
-  fp_header.printf( "}BATT_BG_TBL_FILE_TABLE;\n" )
-
-  ext_table = [ "NSBMD", "NSBCA", "NSCTA", "NSBMA" ]
+  ext_table = [ "NSBMD", "NSBCA", "NSBTA", "NSBMA" ]
   stage_hash = { "×"=>0xff }
   bg_hash = { "×"=>0xff }
 
   #お盆ファイルテーブル生成
   fp_stage.printf( "\t.text\n\n" )
   fp_stage.print( "\t.include ../../resource/battle/battgra_wb_def.h\n\n" )
-  fp_stage.printf( "#define BATT_BG_TBL_NO_FILE ( 0xffff )\n\n" )
+  fp_stage.printf( "#define BATT_BG_TBL_NO_FILE ( 0xffffffff )\n\n" )
   stage.size.times{|i|
     fp_stage.printf( "//%s\n", stage[ i ].get_table_name )
     stage_hash[ stage[ i ].get_table_name ] = i
     for kind in FILE_IMD..FILE_IMA
       for season in FILE_SPRING..FILE_WINTER
         if stage[ i ].get_file_name( kind, season ) == "×"
-          fp_stage.printf( "\t.short\tBATT_BG_TBL_NO_FILE\n" )
+          fp_stage.printf( "\t.long\tBATT_BG_TBL_NO_FILE\n" )
         else
-          fp_stage.printf( "\t.short\t%s_%s\n", stage[ i ].get_file_name( FILE_IMD, season ).upcase, ext_table[ kind ] )
+          fp_stage.printf( "\t.long\t%s_%s\n", stage[ i ].get_file_name( FILE_IMD, season ).upcase, ext_table[ kind ] )
         end
       end
     end
@@ -375,16 +349,16 @@ end
   #背景ＢＧファイルテーブル生成
   fp_bg.printf( "\t.text\n\n" )
   fp_bg.print( "\t.include ../../resource/battle/battgra_wb_def.h\n\n" )
-  fp_bg.printf( "#define BATT_BG_TBL_NO_FILE ( 0xffff )\n\n" )
+  fp_bg.printf( "#define BATT_BG_TBL_NO_FILE ( 0xffffffff )\n\n" )
   bg.size.times{|i|
     fp_bg.printf( "//%s\n", bg[ i ].get_table_name )
     bg_hash[ bg[ i ].get_table_name ] = i
     for kind in FILE_IMD..FILE_IMA
       for season in FILE_SPRING..FILE_WINTER
         if bg[ i ].get_file_name( kind, season ) == "×"
-          fp_bg.printf( "\t.short\tBATT_BG_TBL_NO_FILE\n" )
+          fp_bg.printf( "\t.long\tBATT_BG_TBL_NO_FILE\n" )
         else
-          fp_bg.printf( "\t.short\t%s_%s\n", bg[ i ].get_file_name( FILE_IMD, season ).upcase, ext_table[ kind ] )
+          fp_bg.printf( "\t.long\t%s_%s\n", bg[ i ].get_file_name( FILE_IMD, season ).upcase, ext_table[ kind ] )
         end
       end
     end
@@ -392,7 +366,9 @@ end
 
   padding = 4 - ( attribute.size * 2 + 2 ) % 4
 
-  p padding
+  if padding == 4
+    padding = 0
+  end
 
   for i in 0..(zone_spec.get_zone_spec_size-1)
     if zone_spec.get_zone_spec_index( i ).get_time_zone == "×"
@@ -421,6 +397,40 @@ end
 		  fp_spec.print("0")
 	  }
   end
+
+  #ヘッダファイル生成
+  fp_header.print( "\n//============================================================================================\n" )
+  fp_header.print( "/**\n" )
+  fp_header.print( " * @file	batt_bg_tbl.h\n" )
+  fp_header.print( " * @bfief	戦闘背景テーブル\n" )
+  fp_header.print( " * @author	BattBGConverter\n" )
+  fp_header.print( " * 戦闘背景テーブルコンバータから生成されました\n" )
+  fp_header.print( "*/\n")
+  fp_header.print( "//============================================================================================\n\n" )
+  fp_header.printf( "#pragma once\n\n" )
+  fp_header.printf( "#define  ZONE_SPEC_ATTR_MAX  ( %d )\n", attribute.size )
+  fp_header.printf( "#define  BATT_BG_TBL_NO_FILE     ( 0xffffffff )\n" )
+  fp_header.printf( "#define  BATT_BG_TBL_FILE_MAX  ( 4 )\n\n" )
+  fp_header.printf( "#define  BATT_BG_TBL_SEASON_MAX  ( 4 )\n\n" )
+  fp_header.printf( "typedef enum\n" )
+  fp_header.printf( "{\n" )
+  fp_header.printf( "\tBATT_BG_TBL_FILE_NSBMD = 0,\n" )
+  fp_header.printf( "\tBATT_BG_TBL_FILE_NSBCA,\n" )
+  fp_header.printf( "\tBATT_BG_TBL_FILE_NSBTA,\n" )
+  fp_header.printf( "\tBATT_BG_TBL_FILE_NSBMA,\n" )
+  fp_header.printf( "}BATT_BG_TBL_FILE;\n\n" )
+  fp_header.printf( "typedef struct\n{\n" )
+  fp_header.printf( "\tu8 time_zone;\n" )
+  fp_header.printf( "\tu8 season;\n" )
+  fp_header.printf( "\tu8 bg_file[ ZONE_SPEC_ATTR_MAX ];\n" )
+  fp_header.printf( "\tu8 stage_file[ ZONE_SPEC_ATTR_MAX ];\n" )
+  if padding != 0
+    fp_header.printf( "\tu8 padding[ %d ];\n", padding )
+  end
+  fp_header.printf( "}BATT_BG_TBL_ZONE_SPEC_TABLE;\n\n" )
+  fp_header.printf( "typedef struct\n{\n" )
+  fp_header.printf( "\tARCDATID file[BATT_BG_TBL_FILE_MAX ][ BATT_BG_TBL_SEASON_MAX ];\n" )
+  fp_header.printf( "}BATT_BG_TBL_FILE_TABLE;\n" )
 
   fp_r.close
   fp_spec.close
