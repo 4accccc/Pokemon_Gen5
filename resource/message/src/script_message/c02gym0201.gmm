@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-26T19:05:51"/>
+	<create user="matsumiya" host="W00207" date="2009-11-26T20:16:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="192" top="192" right="889" bottom="808" maximized="no" rayout="Vertical2">
+	<dialog left="192" top="193" right="888" bottom="808" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="522"/>
+		<band id="0" index="1" style="0000" width="521"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="535"/>
+		<band id="2" index="3" style="0000" width="534"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="689"/>
+		<band id="4" index="0" style="0000" width="688"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -408,47 +408,75 @@
 		<comment>♀：トレーナー「じゅくがえり」
 ・フラグ成立前（本棚を向いている）</comment>
 		<attribute name="キャラ指定">本棚ストッパー１</attribute>
-		<language name="JPN" width="256">ポケモンの　ジャンルにある　ほんを
-よんでいて　きづいてくれない……[BE:00:ページ切り替え（行送り）]</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　ジャンルにある　本を
-読んでいて　気づいてくれない……[BE:00:ページ切り替え（行送り）]</language>
+		<language name="JPN" width="256">「はじめまして　ポケモンちゃん」は
+いりぐちに　ちかい　ほんだなよ▼
+さがす　ほんが　あれば
+また　ききに　きてね</language>
+		<language name="JPN_KANJI" width="256">「はじめまして　ポケモンちゃん」は
+入り口に　近い　本棚よ▼
+探す　本が　あれば
+また　聞きに　きてね</language>
 	</row>
 
-	<row id="msg_c02gym0101_girl3_02" text-color=",,,,,,#ff0000,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_girl3_02">
 		<comment>♀：トレーナー
 ・フラグ成立後＝戦闘前（画面下を向いている）</comment>
-		<language name="JPN" width="256">このほんだなを　しらべたいの？
-べんきょうねっしんね……　わかったわ[BE:00:ページ切り替え（行送り）]
-わたしにかてたら　よませてあげる[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">この本棚を　調べたいの？
-勉強熱心ね……　わかったわ[BE:00:ページ切り替え（行送り）]
-私に勝てたら　読ませてあげる[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">「ポケモンけんきゅうの　れきし」ね▼
+ポケモンの　ほんは
+この　れつの　どこかに　あるはずよ</language>
+		<language name="JPN_KANJI" width="256">「ポケモン研究の　歴史」ね▼
+ポケモンの　本は
+この列の　どこかに　あるはずよ</language>
 	</row>
 
 	<row id="msg_c02gym0101_girl3_03">
 		<comment>♀：トレーナー
 ・戦闘後</comment>
-		<language name="JPN" width="256">もうすぐ　ジムリーダーに　あえるわ[BE:01:ページ切り替え（クリア）]
-さいごのほんを　よんだとき
-なにが　おきるか　たのしみにしてね</language>
-		<language name="JPN_KANJI" width="256">もうすぐ　ジムリーダーに　会えるわ[BE:01:ページ切り替え（クリア）]
-最後の本を　読んでとき
-なにが　起きるか　楽しみにしてね</language>
+		<language name="JPN" width="256">「こどもを　げんきに　そだてる」ね▼
+しゃかいコーナー　だから
+いちれつ　おくの　ほんだなに　あるわ▼
+よむひとが　おおい　ほんね
+たちよみを　している　ひとも　いたわ</language>
+		<language name="JPN_KANJI" width="256">「子供を　げんきに　育てる」ね▼
+社会コーナー　だから
+一列　奥の　本棚に　あるわ▼
+読む人が　多い　本ね
+立ち読みを　している人も　いたわ</language>
 	</row>
 
-	<row id="msg_c02gym0101_girl3_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+	<row id="msg_c02gym0101_girl3_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<language name="JPN" width="256">えほんを　さがしているの？▼
+この　ちかくには　ないわね
+えほんなら　じどうしょコーナーね▼
+みつからない　ほんが　あれば
+また　きてね</language>
+		<language name="JPN_KANJI" width="256">絵本を　探しているの?▼
+この　近くには　無いわね
+絵本なら　じどうしょコーナーね▼
+見つからない　本があれば
+また　来てね</language>
 	</row>
 
-	<row id="msg_c02gym0101_girl3_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+	<row id="msg_c02gym0101_girl3_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<language name="JPN" width="256">なぞなぞから　ほんを　さがして
+ここに　たどりついたのでしょ？▼
+いいわ！　わたしに　かてたら
+ほんだなを　しらべさせて　あげる▼</language>
+		<language name="JPN_KANJI" width="256">なぞなぞから　本を　探して
+ここに　たどり着いたのでしょ？▼
+いいわ！　私に　勝てたら
+本棚を　調べさせて　あげる▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_girl3_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">もうすぐ　ジムリーダーに　あえるわ
+ここが　さいごの　ほんなの▼
+さいごのほんを　よんだとき
+なにが　おきるか　たのしみにしてね</language>
+		<language name="JPN_KANJI" width="256">もうすぐ　ジムリーダーに　会えるわ
+ここが　最後の　本なの▼
+最後の本を　読んでとき
+なにが　起きるか　楽しみにしてね</language>
 	</row>
 
 	<row id="msg_c02gym0101_assitantw_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -456,9 +484,13 @@
 ・フラグ成立前（本棚を向いている）</comment>
 		<attribute name="キャラ指定">本棚ストッパー２</attribute>
 		<language name="JPN" width="256">いま　よんでいるのは
-「こどもを　げんきに　そだてる」よ▼</language>
+「こどもを　げんきに　そだてる」よ▼
+このほんを　よみたくなったら
+わたしに　いってね▼</language>
 		<language name="JPN_KANJI" width="256">今　読んでいるのは
-「子供を　元気に　育てる」よ▼</language>
+「子供を　げんきに　育てる」よ▼
+この本を　読みたくなったら
+私に　言ってね▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_assitantw_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -477,10 +509,10 @@
 	<row id="msg_c02gym0101_assitantw_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：トレーナー
 ・戦闘後</comment>
-		<language name="JPN" width="256">ジムリーダーに　あいたいなら
-なぞなぞを　とくことです！</language>
-		<language name="JPN_KANJI" width="256">ジムリーダーに　会いたいなら
-なぞなぞを　解くことです！</language>
+		<language name="JPN" width="256">よんだ　ほんは　ほんだなにもどす……
+ほんを　よむときの　ルールよね</language>
+		<language name="JPN_KANJI" width="256">読んだ　本は　本棚に　戻す……
+本を　読むときの　ルールよね</language>
 	</row>
 
 	<row id="msg_c02gym0101_category_01">
@@ -547,9 +579,9 @@
 	</row>
 
 	<row id="msg_c02gym0101_headline_05" back-color="#80ff80,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
-		<language name="JPN" width="256">「けんきゅうの　れきし」
+		<language name="JPN" width="256">「ポケモンけんきゅうの　れきし」
 この　ほんを　よみますか？</language>
-		<language name="JPN_KANJI" width="256">「研究の　歴史」
+		<language name="JPN_KANJI" width="256">「ポケモン研究の　歴史」
 この本を　読みますか?</language>
 	</row>
 
@@ -871,20 +903,16 @@
 
 	<row id="msg_c02gym0101_book_14" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<language name="JPN" width="256">さいごの　ページに　メモが　ある……！▼
-ポケモンの　けんきゅうを
-していますが　なぞ　ばかりです▼
-しかし　しゃかいを　よりよくするため
-けんきゅうを　つづけています▼
+ポケモンの　けんきゅうを　していますが
+なぞ　ばかりです▼
 さて　つぎは　いちれつ　おくにある
 しゃかい　ジャンルです▼
 おすすめする　ほんは
 [FF:00:色:1]こそだてに　やくだつ　ほん[FF:00:色:0]です▽
 うらひょうしに　メモが　あります</language>
 		<language name="JPN_KANJI" width="256">最後の　ページに　メモが　ある……！▼
-ポケモンの　研究を
-していますが　なぞ　ばかりです▼
-しかし　しゃかいを　よりよくするため
-けんきゅうを　つづけています▼
+ポケモンの　研究を　していますが
+なぞ　ばかりです▼
 さて　次は　一列　奥にある
 社会　ジャンルです▼
 お薦めする　本は
@@ -898,37 +926,35 @@
 ここが　さいごの　ほんです▼
 いまから　あなたに　
 あえることが　とても　たのしみです▽
-　　　ジムリーダー　アロエ</language>
+ジムリーダー　アロエ</language>
 		<language name="JPN_KANJI" width="256">本に　手紙が　挟んである……！▼
 正解です
 ここが　最後の　本です▼
 いまから　あなたに　
 あえることが　とても　たのしみです▽
-　　　ジムリーダー　アロエ</language>
+ジムリーダー　アロエ</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_16" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<language name="JPN" width="256">ほんに　メモが　はさんである……！▼
-ジムリーダーの　アロエです
-ここには　けんきゅうに
-つかう　ほんが　あります▼
-そのなから　おすすめする　５さつの
-ほんを　えらび　メモを　かくしました▼
+ジムリーダーの　アロエです▼
+この　としょかんに　ある
+５さつの　ほんに　メモを　かくしました▼
+メモには　つぎの　
+ほんへの　ヒントが　あります▼
 ２さつめの　ほんは
 いちれつ　おくの　ポケモン　ジャンル▼
-ほんの　タイトルは
-「[FF:00:色:1]けんきゅうの　れきし[FF:00:色:0]」です▽
+「[FF:00:色:1]ポケモンけんきゅうの　れきし[FF:00:色:0]」です
 さいごの　ページに　メモが　あります</language>
-		<language name="JPN_KANJI" width="256">本に　メモが　挟んである……！▼
+		<language name="JPN_KANJI" width="256">本に　メモが　挟んである･･････!▼
 ジムリーダーの　アロエです▼
-ここには　研究に
-使う　本が　あります▼
-その中から　お薦めする　５冊の
-本を　選び　メモを　隠しました▼
-２冊めの　本は
+この　図書館に　ある
+５冊の　本に　メモを　隠しました▼
+メモには　次の　
+本への　ヒントが　あります▼
+２冊目の　本は
 一列　奥の　ポケモン　ジャンル▼
-本の　タイトルは
-「[FF:00:色:1]研究の　歴史[FF:00:色:0]」です▽
+「[FF:00:色:1]ポケモン研究の　歴史[FF:00:色:0]」です
 最後の　ページに　メモが　あります</language>
 	</row>
 
@@ -1069,10 +1095,10 @@
 	</row>
 
 	<row id="msg_c02gym0101_switch_03" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
-		<language name="JPN" width="256">「ヒコザル」を　よむために
+		<language name="JPN" width="256">「ヒコザルの　生態」を　よむために
 とろうとしたら　ほんについている[BE:00:ページ切り替え（行送り）]
 ヒモを　ひっぱってしまった！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">「ヒコザル」を　読むために
+		<language name="JPN_KANJI" width="256">「ヒコザルの　せいたい」を　読むために
 取ろうとしたら　本についている[BE:00:ページ切り替え（行送り）]
 ヒモを　引っ張ってしまった！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
