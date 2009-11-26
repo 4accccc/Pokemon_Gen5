@@ -419,6 +419,8 @@ BOOL    BTLV_EFFVM_Main( VMHANDLE *vmh )
     //HPゲージ表示
     BTLV_EFFECT_SetGaugeDrawEnable( TRUE );
 
+    GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
+
     GFL_HEAP_FreeMemory( bevw->sequence );
     bevw->sequence = NULL;
   }
@@ -460,6 +462,12 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   { 
     bevw->param = *param;
   }
+  
+  //@todo 暫定で新技は技エフェクトを出さない
+  if( ( waza > WAZANO_SYADOODAIBU ) && ( waza <= WAZANO_MAX ) )
+  { 
+    return;
+  }
 
   bevw->attack_pos = from;
   bevw->defence_pos = to;
@@ -469,6 +477,7 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
     bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_WAZAEFF_SEQ, waza, bevw->heapID );
     //HPゲージ非表示
     BTLV_EFFECT_SetGaugeDrawEnable( FALSE );
+    GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
     bevw->execute_effect_type = EXECUTE_EFF_TYPE_WAZA;
   }
   else
