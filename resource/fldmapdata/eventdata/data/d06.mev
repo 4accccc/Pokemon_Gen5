@@ -1,5 +1,5 @@
 #event data
-#save date:2009/11/23 17:24:24
+#save date:2009/11/26 23:15:25
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d06.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d06.wms
 #hold event type:
 1
 #hold event number:
-3
+2
 #event number: 0
 #type
 1
@@ -53,7 +53,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_D06_LEADER5_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
@@ -72,37 +72,6 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -136 8 -248
-#event number: 2
-#type
-1
-#ID name
-D06_POKE2_01
-#OBJ CODE Number
-POKE2
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--88 16 -136
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -129,9 +98,9 @@ POS_D06_LEADER5_01
 #Pos Script Name
 SCRID_POS_D06_LEADER5_01
 #Event Trigger Work Name
-LOCALWORK15
+WK_SCENE_D06
 #Event Trigger Work Value
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position

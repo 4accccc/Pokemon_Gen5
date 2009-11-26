@@ -38,8 +38,8 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START   ev_c06r0101_veteranw_01
 	
-	//フラグが仮＋入手わざマシンについても仮
-	_EASY_TALK_ITEM_EVENT( ITEM_WAZAMASIN01, 1, FH_01, msg_c06r0101_veteranw_01, msg_c06r0101_veteranw_02, msg_c06r0101_veteranw_02)
+	//【仮】入手わざマシンについて仮
+	_EASY_TALK_ITEM_EVENT( ITEM_WAZAMASIN01, 1, FE_C06R0101_ITEMGET_01, msg_c06r0101_veteranw_01, msg_c06r0101_veteranw_02, msg_c06r0101_veteranw_02)
 	
 EVENT_END
 

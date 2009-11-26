@@ -39,14 +39,10 @@ EVENT_END
 /**************************************************************/
 EVENT_START    ev_pos_d06_leader5_01
 
-//_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_05 )
-
-//IF $SCWK_TEMP0 == 1 THEN 
-
 //===============フラグ操作===============//
-//【仮】フラグが無い為、仮
 	//POSを踏むとヤーコンを表示する。
-//	_FLAG_RESET()
+	_FLAG_RESET(FV_D06_LEADER5_01)
+	_OBJ_ADD( D06_LEADER5_01 )
 //========================================//
 	
 	//主人公がヤーコンに気づく
@@ -83,14 +79,11 @@ EVENT_START    ev_pos_d06_leader5_01
 	_BALLOONWIN_OBJMSG( msg_d06_leader_02, D06_LEADER5_01)
 	_BALLOONWIN_CLOSE()
 	
-//===============フラグ操作===============//
-//【仮】フラグが無い為、仮	
-//ポケモンの動作モデルが出現
-//	_FLAG_RESET()
-//========================================//
+	//ヤーコンのポケモンが出現
+	_OBJ_ADD_EX( 106, 344, DIR_UP, MMDL_ID_EVENTOBJ_00, POKE2, MV_DMY )
 	
 	//ポケモンが巣に向かう
-	_OBJ_ANIME( D06_POKE2_01,anm_poke2_kuru_01)
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_kuru_01)
 	_OBJ_ANIME_WAIT()
 	
 	//ヤーコンが喋る
@@ -100,14 +93,13 @@ EVENT_START    ev_pos_d06_leader5_01
 	
 	//【仮】スクリプトの動きだけ出来るのか。エフェクトはいるのか
 	//ポケモンがわざを出したような処理
-	_OBJ_ANIME( D06_POKE2_01,anm_poke2_waza_01)
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_waza_01)
 	_OBJ_ANIME_WAIT()
 
 //===============フラグ操作===============//
-//【仮】フラグが無い為、仮	
 //デンチュラの巣を消す
-//_OBJ_DEL( D06_STOPPER_01 )
-//	_FLAG_SET()
+	_OBJ_DEL( D06_STOPPER_01 )
+ 	_FLAG_SET(FV_D06_STOPPER_01)
 //========================================//
 
 	//ヤーコンが振り向く
@@ -132,41 +124,22 @@ EVENT_START    ev_pos_d06_leader5_01
 	
 	//ヤーコンが立ち去る
 	_OBJ_ANIME( D06_LEADER5_01,anm_leader5_saru_01)
-	_OBJ_ANIME( D06_POKE2_01,anm_poke2_saru_01)
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_saru_01)
 	_OBJ_ANIME_WAIT()
 	
 //===============フラグ操作===============//
 	//【仮】フラグが無い為、仮
 	//POSイベントを無効に
-	$LOCALWORK15 = 1
+	$WK_SCENE_D06 = 2
 
 	//ジムリーダーを消す
 	//ストッパーを消す
-//	_FLAG_SET( FV_C06_LEADER06 )
-//	_FLAG_SET( FV_C06_HAKASE1 )
-
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	_OBJ_DEL( FV_D06_LEADER5_01 )
+	_FLAG_SET( FV_D06_LEADER5_01 )
+	
 //========================================//
 
-/*
-	_OBJ_DEL( D06_LEADER5_01 )
-	_OBJ_DEL( D06_STOPPER_01 )
-	_OBJ_DEL( D06_POKE2_01 )
-	
-	//ジムリーダーが画面外に移動
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_leader5)
-	_OBJ_ANIME_WAIT()
-	
-	_OBJ_ANIME( D06_LEADER5_01,anm_leader5)
-	_OBJ_ANIME_WAIT()
-	
-	_OBJ_ANIME( D06_POKE2_01,anm_leader5)
-	_OBJ_ANIME_WAIT()
-	
-	//ヤーコン:
-	_BALLOONWIN_OBJMSG( msg_d06_leader5_, D06_LEADER5_01)
-	_BALLOONWIN_CLOSE()
-
-*/
 //ENDIF
 
 EVENT_END

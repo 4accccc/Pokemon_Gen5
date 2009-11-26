@@ -215,13 +215,11 @@ EVENT_START    ev_pos_c06_hakase1_01
 	_OBJ_DEL( C06_HAKASE1_01 )
 
 	//===============フラグ操作===============//
-	//【仮】フラグが無い為、仮
 	//POSイベントを無効に
-	$LOCALWORK15 = 1
+	$WK_SCENE_C06 = 1
 
 	//博士とジムリーダーを消す
-//	_FLAG_SET( FV_C06_LEADER06 )
-//	_FLAG_SET( FV_C06_HAKASE1 )
+	_FLAG_SET( FV_C06_ZUKANCHK_01 )
 
 	//========================================//
 

@@ -12,6 +12,5 @@
 
 #define D06_STOPPER_01                     0
 #define D06_LEADER5_01                     1
-#define D06_POKE2_01                       2
 
 #endif //ZONE_D06_EVC_H

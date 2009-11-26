@@ -90,6 +90,12 @@ init_flags:
 	//５番道路のジムリーダーとライバル
 	_FLAG_SET( FV_R05_RIVAL )
 	_FLAG_SET( FV_R05_LEADER4 )
+	
+	//D06のヤーコンをイベントまで非表示
+	_FLAG_SET( FV_D06_LEADER5_01)
+	
+	//D06R0101のサポートと博士（娘）をイベントまで非表示
+	_FLAG_SET( FV_D06R0101_FRIENDS )
 
 	//C01R0101：発明家、誘導イベントまで非表示
 	_FLAG_SET( FV_C01R0101_INVENTOR_01 )

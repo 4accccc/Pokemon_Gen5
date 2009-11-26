@@ -32,11 +32,11 @@ _EVENT_DATA_END
 EVENT_START    ev_pos_d06r0101_denki_01
 
 //===============フラグ操作===============//
-//【仮】フラグが無い為、仮
 	//POSを踏むホワイトを表示する。
 	//POSを踏む博士2を表示する。
-//	_FLAG_RESET()
-//	_FLAG_RESET()
+	_FLAG_RESET(FV_D06R0101_FRIENDS)
+	_OBJ_ADD( D06R0101_HEROINE_01 )
+	_OBJ_ADD( D06R0101_HAKASE2_01 )
 //========================================//
 	
 	//主人公がびっくり
@@ -115,7 +115,7 @@ EVENT_START    ev_pos_d06r0101_denki_01
 //===============フラグ操作===============//
 //【仮】ワークが無い為、仮
 	//POSイベントを無効に
-	$LOCALWORK15 = 1
+	$WK_SCENE_D06R0101 = 1
 //========================================//
 
 EVENT_END
@@ -253,7 +253,7 @@ EVENT_START    ev_pos_d06r0101_denki_02
 //===============フラグ操作===============//
 //【仮】ワークが無い為、仮
 	//POSイベントを無効に
-	$LOCALWORK15 = 2
+	$WK_SCENE_D06R0101 = 2
 //========================================//
 
 EVENT_END
@@ -296,7 +296,8 @@ EVENT_START    ev_pos_d06r0101_denki_03
 	//ホワイトの場所を移動
 	_OBJ_POS_CHANGE( D06R0101_HAKASE2_01, 56, 0, 13, DIR_RIGHT )
 	_OBJ_POS_CHANGE( D06R0101_HEROINE_01, 58, 0, 14, DIR_RIGHT )
-
+	_OBJ_ADD_EX( 60, 13, DIR_DOWN, MMDL_ID_EVENTOBJ_00, BOSS, MV_DMY )
+	
 	//主人公がびっくり
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe)
 	_OBJ_ANIME_WAIT()
@@ -306,7 +307,7 @@ EVENT_START    ev_pos_d06r0101_denki_03
 	_OBJ_ANIME_WAIT()
 	
 	//Nがやってくる
-	_OBJ_ANIME( D06R0101_BOSS_01,anm_boss_kuru_01)
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_boss_kuru_01)
 	_OBJ_ANIME_WAIT()
 
 	//主人公が下を向く
@@ -316,7 +317,7 @@ EVENT_START    ev_pos_d06r0101_denki_03
 	//Nが喋る
 	//はい・いいえの選択
 	//Ｎ『……さてと　ポケモンではなく　じぶんの　ちからで
-	_BALLOONWIN_OBJMSG( msg_d06r0101_boss_01, D06R0101_BOSS_01)
+	_BALLOONWIN_OBJMSG( msg_d06r0101_boss_01, MMDL_ID_EVENTOBJ_00)
 	_YES_NO_WIN( SCWK_ANSWER )
 	_BALLOONWIN_CLOSE()
 	
@@ -325,14 +326,14 @@ EVENT_START    ev_pos_d06r0101_denki_03
 		//はい
 		//Nが喋る
 		//Ｎ『……さてと　ポケモンではなく　じぶんの　ちからで
-		_BALLOONWIN_OBJMSG( msg_d06r0101_boss_02, D06R0101_BOSS_01)
+		_BALLOONWIN_OBJMSG( msg_d06r0101_boss_02, MMDL_ID_EVENTOBJ_00)
 		_BALLOONWIN_CLOSE()
 	
 	ELSE
 		//いいえ
 		//Nが喋る
 		//Ｎ『……さてと　ポケモンではなく　じぶんの　ちからで
-		_BALLOONWIN_OBJMSG( msg_d06r0101_boss_03, D06R0101_BOSS_01)
+		_BALLOONWIN_OBJMSG( msg_d06r0101_boss_03, MMDL_ID_EVENTOBJ_00)
 		_BALLOONWIN_CLOSE()
 	
 	ENDIF
@@ -342,7 +343,7 @@ EVENT_START    ev_pos_d06r0101_denki_03
 	
 	//Nが喋る
 	//Ｎ『……ふしぎだな　なぜ　キミのような　にんげんが
-	_BALLOONWIN_OBJMSG( msg_d06r0101_boss_04, D06R0101_BOSS_01)
+	_BALLOONWIN_OBJMSG( msg_d06r0101_boss_04, MMDL_ID_EVENTOBJ_00)
 	_BALLOONWIN_CLOSE()
 	
 	//プレイヤーの名前を格納
@@ -372,12 +373,12 @@ EVENT_START    ev_pos_d06r0101_denki_03
 	_BALLOONWIN_CLOSE()
 
 	//Nが博士を向く
-	_OBJ_ANIME( D06R0101_BOSS_01,anm_boss_muku_01)
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_boss_muku_01)
 	_OBJ_ANIME_WAIT()
 	
 	//Nが喋る
 	//Ｎ『……アララギか　はじめまして
-	_BALLOONWIN_OBJMSG( msg_d06r0101_boss_05, D06R0101_BOSS_01)
+	_BALLOONWIN_OBJMSG( msg_d06r0101_boss_05, MMDL_ID_EVENTOBJ_00)
 	_BALLOONWIN_CLOSE()
 	
 	//ホワイトが両者を向く
@@ -392,11 +393,11 @@ EVENT_START    ev_pos_d06r0101_denki_03
 	
 	//Nが喋る
 	//Ｎ『……それでは　まちがった　にんげんが
-	_BALLOONWIN_OBJMSG( msg_d06r0101_boss_06, D06R0101_BOSS_01)
+	_BALLOONWIN_OBJMSG( msg_d06r0101_boss_06, MMDL_ID_EVENTOBJ_00)
 	_BALLOONWIN_CLOSE()
 	
 	//Nが画面外に移動
-	_OBJ_ANIME( D06R0101_BOSS_01,anm_boss_saru_01)
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_boss_saru_01)
 	_OBJ_ANIME_WAIT()
 	
 	//博士2がNの方を向く
@@ -431,17 +432,16 @@ EVENT_START    ev_pos_d06r0101_denki_03
 	//博士とホワイト、Nを非表示にする
 	_OBJ_DEL( D06R0101_HEROINE_01 )
 	_OBJ_DEL( D06R0101_HAKASE2_01 )
-	_OBJ_DEL( D06R0101_BOSS_01 )
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 	
 //===============フラグ操作===============//
 //【仮】フラグが無い為、仮
 	//POSイベントを無効にする
-	$LOCALWORK15 = 3
+	$WK_SCENE_D06R0101 = 3
 	
 	//博士とホワイト、Nを消す
-//	_FLAG_RESET()
-//	_FLAG_RESET()
-//	_FLAG_RESET()
+	_FLAG_SET(FV_D06R0101_FRIENDS)
+	_FLAG_SET(FV_D06R0201_BOSS_01)
 //========================================//
 
 EVENT_END
