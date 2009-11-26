@@ -734,13 +734,6 @@ static  void  BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work )
 //============================================================================================
 void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
 {
-  //‚a‚fƒ‚[ƒhÝ’è
-  {
-    static const GFL_BG_SYS_HEADER sysHeader = {
-      GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_3, GX_BG0_AS_3D,
-    };
-    GFL_BG_SetBGMode( &sysHeader );
-  }
   biw->handle   = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, biw->heapID );
   biw->wazatype_clunit = GFL_CLACT_UNIT_Create( PTL_WAZA_MAX, 0, biw->heapID );
   biw->ballgauge_clunit = GFL_CLACT_UNIT_Create( TEMOTI_POKEMAX * 2, 0, biw->heapID );
