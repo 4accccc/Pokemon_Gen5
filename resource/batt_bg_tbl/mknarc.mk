@@ -53,7 +53,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 #パーソナルデータ生成
 do-build: batt_bg_tbl.narc
 
-%.bin:%.s
+%.bin: %.s ../battle/battgra_wb_def.h
 	$(MWAS) $< -o $*.o
 	$(MWLD) -dis -o $*.elf $*.o
 	$(ELF2BIN) $*.elf

@@ -11,8 +11,18 @@
 #pragma once
 
 #define  ZONE_SPEC_ATTR_MAX  ( 13 )
-#define  BATT_BG_TBL_NO_FILE     ( 0xffff )
+#define  BATT_BG_TBL_NO_FILE     ( 0xffffffff )
+#define  BATT_BG_TBL_FILE_MAX  ( 4 )
+
 #define  BATT_BG_TBL_SEASON_MAX  ( 4 )
+
+typedef enum
+{
+	BATT_BG_TBL_FILE_NSBMD = 0,
+	BATT_BG_TBL_FILE_NSBCA,
+	BATT_BG_TBL_FILE_NSBTA,
+	BATT_BG_TBL_FILE_NSBMA,
+}BATT_BG_TBL_FILE;
 
 typedef struct
 {
@@ -24,8 +34,5 @@ typedef struct
 
 typedef struct
 {
-	ARCDATID nsbmd_file[ BATT_BG_TBL_SEASON_MAX ];
-	ARCDATID nsbca_file[ BATT_BG_TBL_SEASON_MAX ];
-	ARCDATID nsbta_file[ BATT_BG_TBL_SEASON_MAX ];
-	ARCDATID nsbma_file[ BATT_BG_TBL_SEASON_MAX ];
+	ARCDATID file[BATT_BG_TBL_FILE_MAX ][ BATT_BG_TBL_SEASON_MAX ];
 }BATT_BG_TBL_FILE_TABLE;
