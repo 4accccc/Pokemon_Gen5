@@ -1,0 +1,24 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: gym_ice.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2009-11-26T18:53:12
+ *****************************************************************************/
+
+#ifndef NARC_GYM_ICE_NAIX_
+#define NARC_GYM_ICE_NAIX_
+
+enum {
+	NARC_gym_ice_ice_karakuri_01_nsbmd = 0,
+	NARC_gym_ice_ice_karakuri_02_nsbmd = 1,
+	NARC_gym_ice_swich_nsbmd = 2,
+	NARC_gym_ice_ice_karakuri_01_nsbca = 3,
+	NARC_gym_ice_ice_karakuri_02_nsbca = 4,
+	NARC_gym_ice_swich_br_nsbta = 5,
+	NARC_gym_ice_swich_rb_nsbta = 6
+};
+
+/* NARC_GYM_ICE_NAIX_ */
+#endif
