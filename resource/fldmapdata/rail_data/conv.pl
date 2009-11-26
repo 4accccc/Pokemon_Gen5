@@ -67,7 +67,7 @@ foreach $one ( @input_file )
 
 
       #o—Í
-      open( FILEOUT, ">".$TAG.".dat" );
+      open( FILEOUT, ">".$TAG.".bin" );
       binmode( FILEOUT );
 
       print( FILEOUT pack( $DATA_OUT_SIZE, $RAIL_ID ) );

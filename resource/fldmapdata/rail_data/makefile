@@ -34,7 +34,7 @@ include	$(PROJECT_RSCDIR)\macro_define
 XLSFILE = rail_data.xls
 XLS_CSV_FILE = rail_data.txt
 
-DAT_FILE = $(wildcard *.dat)
+DAT_FILE = $(wildcard *.bin)
 
 #エクセルコンバーター
 CSV_CVTR	= $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
@@ -88,7 +88,7 @@ $(targetname).narc: $(XLSFILE) $(RAILDATA_NAIX) $(SCENEDATA_NAIX)
 	$(CSV_CVTR) -o $(XLS_CSV_FILE) -p 1 $(XLSFILE)
 	perl conv.pl $(XLS_CSV_FILE) $(RAILDATA_NAIX) $(SCENEDATA_NAIX)
 	
-	-ls *.dat > $(LIST_FILE)
+	-ls *.bin > $(LIST_FILE)
 	$(ARCLIST_MAKE) $(LIST_FILE)
 	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix
@@ -97,7 +97,7 @@ $(targetname).narc: $(XLSFILE) $(RAILDATA_NAIX) $(SCENEDATA_NAIX)
 else
 
 $(targetname).narc: $(DAT_FILE)
-	-ls *.dat > $(LIST_FILE)
+	-ls *.bin > $(LIST_FILE)
 	$(ARCLIST_MAKE) $(LIST_FILE)
 	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix
@@ -118,7 +118,7 @@ clean:
 
 #コンバート対象者のみ、中間ファイル削除
 ifeq	($(CONVERTUSER),true)	
-	rm -f *.dat
+	rm -f *.bin
 endif
 
 
