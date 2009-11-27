@@ -37,96 +37,98 @@
 #define	BMPWIN_TITLE_SX		( 30 )
 #define	BMPWIN_TITLE_SY		( 3 )
 #define	BMPWIN_TITLE_PAL	( BOX2MAIN_BG_PAL_SYSFNT_S )
+// 図鑑番号
+#define	BMPWIN_ZKNNUM_FRM	( GFL_BG_FRAME0_S )
+#define	BMPWIN_ZKNNUM_PX	( 1 )
+#define	BMPWIN_ZKNNUM_PY	( 4 )
+#define	BMPWIN_ZKNNUM_SX	( 7 )
+#define	BMPWIN_ZKNNUM_SY	( 2 )
+#define	BMPWIN_ZKNNUM_PAL	( BOX2MAIN_BG_PAL_SYSFNT_S )
 // ポケモン名
 #define	BMPWIN_NAME_FRM		( GFL_BG_FRAME0_S )
-#define	BMPWIN_NAME_PX		( 8 )
-#define	BMPWIN_NAME_PY		( 5 )
-#define	BMPWIN_NAME_SX		( 7 )
+#define	BMPWIN_NAME_PX		( 1 )
+#define	BMPWIN_NAME_PY		( 6 )
+#define	BMPWIN_NAME_SX		( 8 )
 #define	BMPWIN_NAME_SY		( 2 )
 #define	BMPWIN_NAME_PAL		( BOX2MAIN_BG_PAL_SYSFNT_S )
 // ニックネーム
 #define	BMPWIN_NICKNAME_FRM	( GFL_BG_FRAME0_S )
 #define	BMPWIN_NICKNAME_PX	( 1 )
-#define	BMPWIN_NICKNAME_PY	( 7 )
+#define	BMPWIN_NICKNAME_PY	( 10 )
 #define	BMPWIN_NICKNAME_SX	( 8 )
 #define	BMPWIN_NICKNAME_SY	( 2 )
 #define	BMPWIN_NICKNAME_PAL	( BOX2MAIN_BG_PAL_SYSFNT_S )
+// 性別
+#define	BMPWIN_SEX_FRM		( GFL_BG_FRAME0_S )
+#define	BMPWIN_SEX_PX			( 9 )
+#define	BMPWIN_SEX_PY			( 10 )
+#define	BMPWIN_SEX_SX			( 2 )
+#define	BMPWIN_SEX_SY			( 2 )
+#define	BMPWIN_SEX_PAL		( BOX2MAIN_BG_PAL_SYSFNT_S )
 // レベル
 #define	BMPWIN_LV_FRM		( GFL_BG_FRAME0_S )
-#define	BMPWIN_LV_PX		( 4 )
-#define	BMPWIN_LV_PY		( 9 )
+#define	BMPWIN_LV_PX		( 11 )
+#define	BMPWIN_LV_PY		( 10 )
 #define	BMPWIN_LV_SX		( 6 )
 #define	BMPWIN_LV_SY		( 2 )
 #define	BMPWIN_LV_PAL		( BOX2MAIN_BG_PAL_SYSFNT_S )
-// 性別
-#define	BMPWIN_SEX_FRM		( GFL_BG_FRAME0_S )
-#define	BMPWIN_SEX_PX		( 16 )
-#define	BMPWIN_SEX_PY		( 5 )
-#define	BMPWIN_SEX_SX		( 2 )
-#define	BMPWIN_SEX_SY		( 2 )
-#define	BMPWIN_SEX_PAL		( BOX2MAIN_BG_PAL_SYSFNT_S )
-// 図鑑番号
-#define	BMPWIN_ZKNNUM_FRM	( GFL_BG_FRAME0_S )
-#define	BMPWIN_ZKNNUM_PX	( 1 )
-#define	BMPWIN_ZKNNUM_PY	( 5 )
-#define	BMPWIN_ZKNNUM_SX	( 6 )
-#define	BMPWIN_ZKNNUM_SY	( 2 )
-#define	BMPWIN_ZKNNUM_PAL	( BOX2MAIN_BG_PAL_SYSFNT_S )
-// 性格
-#define	BMPWIN_SEIKAKU_FRM	( GFL_BG_FRAME0_S )
-#define	BMPWIN_SEIKAKU_PX	( 1 )
-#define	BMPWIN_SEIKAKU_PY	( 13 )
-#define	BMPWIN_SEIKAKU_SX	( 8 )
-#define	BMPWIN_SEIKAKU_SY	( 2 )
-#define	BMPWIN_SEIKAKU_PAL	( BOX2MAIN_BG_PAL_SYSFNT_S )
-// 特性
-#define	BMPWIN_TOKUSEI_FRM	( GFL_BG_FRAME0_S )
-#define	BMPWIN_TOKUSEI_PX	( 1 )
-#define	BMPWIN_TOKUSEI_PY	( 17 )
-#define	BMPWIN_TOKUSEI_SX	( 11 )
-#define	BMPWIN_TOKUSEI_SY	( 2 )
-#define	BMPWIN_TOKUSEI_PAL	( BOX2MAIN_BG_PAL_SYSFNT_S )
-// 持ち物
-#define	BMPWIN_ITEM_FRM		( GFL_BG_FRAME0_S )
-#define	BMPWIN_ITEM_PX		( 1 )
-#define	BMPWIN_ITEM_PY		( 21 )
-#define	BMPWIN_ITEM_SX		( 12 )
-#define	BMPWIN_ITEM_SY		( 2 )
-#define	BMPWIN_ITEM_PAL		( BOX2MAIN_BG_PAL_SYSFNT_S )
 //「せいかく」
 #define	BMPWIN_SEIKAKU_STR_FRM	( GFL_BG_FRAME0_S )
-#define	BMPWIN_SEIKAKU_STR_PX	( 1 )
-#define	BMPWIN_SEIKAKU_STR_PY	( 11 )
-#define	BMPWIN_SEIKAKU_STR_SX	( 8 )
-#define	BMPWIN_SEIKAKU_STR_SY	( 2 )
+#define	BMPWIN_SEIKAKU_STR_PX		( 1 )
+#define	BMPWIN_SEIKAKU_STR_PY		( 12 )
+#define	BMPWIN_SEIKAKU_STR_SX		( 8 )
+#define	BMPWIN_SEIKAKU_STR_SY		( 2 )
 #define	BMPWIN_SEIKAKU_STR_PAL	( BOX2MAIN_BG_PAL_SYSFNT_S )
+// 性格
+#define	BMPWIN_SEIKAKU_FRM	( GFL_BG_FRAME0_S )
+#define	BMPWIN_SEIKAKU_PX		( 1 )
+#define	BMPWIN_SEIKAKU_PY		( 14 )
+#define	BMPWIN_SEIKAKU_SX		( 8 )
+#define	BMPWIN_SEIKAKU_SY		( 2 )
+#define	BMPWIN_SEIKAKU_PAL	( BOX2MAIN_BG_PAL_SYSFNT_S )
 //「とくせい」
 #define	BMPWIN_TOKUSEI_STR_FRM	( GFL_BG_FRAME0_S )
-#define	BMPWIN_TOKUSEI_STR_PX	( 1 )
-#define	BMPWIN_TOKUSEI_STR_PY	( 15 )
-#define	BMPWIN_TOKUSEI_STR_SX	( 11 )
-#define	BMPWIN_TOKUSEI_STR_SY	( 2 )
+#define	BMPWIN_TOKUSEI_STR_PX		( 1 )
+#define	BMPWIN_TOKUSEI_STR_PY		( 16 )
+#define	BMPWIN_TOKUSEI_STR_SX		( 11 )
+#define	BMPWIN_TOKUSEI_STR_SY		( 2 )
 #define	BMPWIN_TOKUSEI_STR_PAL	( BOX2MAIN_BG_PAL_SYSFNT_S )
+// 特性
+#define	BMPWIN_TOKUSEI_FRM	( GFL_BG_FRAME0_S )
+#define	BMPWIN_TOKUSEI_PX		( 1 )
+#define	BMPWIN_TOKUSEI_PY		( 18 )
+#define	BMPWIN_TOKUSEI_SX		( 11 )
+#define	BMPWIN_TOKUSEI_SY		( 2 )
+#define	BMPWIN_TOKUSEI_PAL	( BOX2MAIN_BG_PAL_SYSFNT_S )
 //「もちもの」
 #define	BMPWIN_ITEM_STR_FRM		( GFL_BG_FRAME0_S )
 #define	BMPWIN_ITEM_STR_PX		( 1 )
-#define	BMPWIN_ITEM_STR_PY		( 19 )
+#define	BMPWIN_ITEM_STR_PY		( 20 )
 #define	BMPWIN_ITEM_STR_SX		( 12 )
 #define	BMPWIN_ITEM_STR_SY		( 2 )
 #define	BMPWIN_ITEM_STR_PAL		( BOX2MAIN_BG_PAL_SYSFNT_S )
+// 持ち物
+#define	BMPWIN_ITEM_FRM		( GFL_BG_FRAME0_S )
+#define	BMPWIN_ITEM_PX		( 1 )
+#define	BMPWIN_ITEM_PY		( 22 )
+#define	BMPWIN_ITEM_SX		( 12 )
+#define	BMPWIN_ITEM_SY		( 2 )
+#define	BMPWIN_ITEM_PAL		( BOX2MAIN_BG_PAL_SYSFNT_S )
+//「もっているわざ」
+#define	BMPWIN_WAZA_STR_FRM		( GFL_BG_FRAME0_S )
+#define	BMPWIN_WAZA_STR_PX		( 19 )
+#define	BMPWIN_WAZA_STR_PY		( 14 )
+#define	BMPWIN_WAZA_STR_SX		( 11 )
+#define	BMPWIN_WAZA_STR_SY		( 2 )
+#define	BMPWIN_WAZA_STR_PAL		( BOX2MAIN_BG_PAL_SYSFNT_S )
 // 技
-#define	BMPWIN_WAZA_FRM		( GFL_BG_FRAME2_S )
+#define	BMPWIN_WAZA_FRM		( GFL_BG_FRAME0_S )
+#define	BMPWIN_WAZA_PX		( 19 )
+#define	BMPWIN_WAZA_PY		( 16 )
 #define	BMPWIN_WAZA_SX		( 11 )
-#define	BMPWIN_WAZA_SY		( 2 )
-#define	BMPWIN_WAZA_PAL		( 1 )
-#define	BMPWIN_WAZA1_PX		( 1 )
-#define	BMPWIN_WAZA1_PY		( 1 )
-#define	BMPWIN_WAZA2_PX		( 1 )
-#define	BMPWIN_WAZA2_PY		( 3 )
-#define	BMPWIN_WAZA3_PX		( 1 )
-#define	BMPWIN_WAZA3_PY		( 5 )
-#define	BMPWIN_WAZA4_PX		( 1 )
-#define	BMPWIN_WAZA4_PY		( 7 )
+#define	BMPWIN_WAZA_SY		( 8 )
+#define	BMPWIN_WAZA_PAL		( BOX2MAIN_BG_PAL_SYSFNT_S )
+
 // アイテム名（説明ウィンドウのタブ部分）
 #define	BMPWIN_ITEMLABEL_FRM	( GFL_BG_FRAME2_S )
 #define	BMPWIN_ITEMLABEL_PX		( 1 )
@@ -363,39 +365,14 @@ static const u8	BoxBmpWinData[][6] =
 		BMPWIN_ITEM_FRM, BMPWIN_ITEM_PX, BMPWIN_ITEM_PY,
 		BMPWIN_ITEM_SX, BMPWIN_ITEM_SY, BMPWIN_ITEM_PAL,
 	},
-	{	// 技１
-		BMPWIN_WAZA_FRM, BMPWIN_WAZA1_PX, BMPWIN_WAZA1_PY,
+	{	// 技
+		BMPWIN_WAZA_FRM, BMPWIN_WAZA_PX, BMPWIN_WAZA_PY,
 		BMPWIN_WAZA_SX, BMPWIN_WAZA_SY, BMPWIN_WAZA_PAL,
 	},
-	{	// 技２
-		BMPWIN_WAZA_FRM, BMPWIN_WAZA2_PX, BMPWIN_WAZA2_PY,
-		BMPWIN_WAZA_SX, BMPWIN_WAZA_SY, BMPWIN_WAZA_PAL,
+	{	//「もっているわざ」
+		BMPWIN_WAZA_STR_FRM, BMPWIN_WAZA_STR_PX, BMPWIN_WAZA_STR_PY,
+		BMPWIN_WAZA_STR_SX, BMPWIN_WAZA_STR_SY, BMPWIN_WAZA_STR_PAL,
 	},
-	{	// 技３
-		BMPWIN_WAZA_FRM, BMPWIN_WAZA3_PX, BMPWIN_WAZA3_PY,
-		BMPWIN_WAZA_SX, BMPWIN_WAZA_SY, BMPWIN_WAZA_PAL,
-	},
-	{	// 技４
-		BMPWIN_WAZA_FRM, BMPWIN_WAZA4_PX, BMPWIN_WAZA4_PY,
-		BMPWIN_WAZA_SX, BMPWIN_WAZA_SY, BMPWIN_WAZA_PAL,
-	},
-	{	// 技１（スワップ用）
-		BMPWIN_WAZA_FRM, BMPWIN_WAZA1_PX, BMPWIN_WAZA1_PY,
-		BMPWIN_WAZA_SX, BMPWIN_WAZA_SY, BMPWIN_WAZA_PAL,
-	},
-	{	// 技２（スワップ用）
-		BMPWIN_WAZA_FRM, BMPWIN_WAZA2_PX, BMPWIN_WAZA2_PY,
-		BMPWIN_WAZA_SX, BMPWIN_WAZA_SY, BMPWIN_WAZA_PAL,
-	},
-	{	// 技３（スワップ用）
-		BMPWIN_WAZA_FRM, BMPWIN_WAZA3_PX, BMPWIN_WAZA3_PY,
-		BMPWIN_WAZA_SX, BMPWIN_WAZA_SY, BMPWIN_WAZA_PAL,
-	},
-	{	// 技４（スワップ用）
-		BMPWIN_WAZA_FRM, BMPWIN_WAZA4_PX, BMPWIN_WAZA4_PY,
-		BMPWIN_WAZA_SX, BMPWIN_WAZA_SY, BMPWIN_WAZA_PAL,
-	},
-
 	{	//「せいかく」
 		BMPWIN_SEIKAKU_STR_FRM, BMPWIN_SEIKAKU_STR_PX, BMPWIN_SEIKAKU_STR_PY,
 		BMPWIN_SEIKAKU_STR_SX, BMPWIN_SEIKAKU_STR_SY, BMPWIN_SEIKAKU_STR_PAL,
@@ -752,9 +729,14 @@ void BOX2BMP_DefStrPut( BOX2_SYS_WORK * syswk )
 
 	appwk = syswk->app;
 
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(appwk->win[BOX2BMPWIN_ID_WAZA_STR].win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(appwk->win[BOX2BMPWIN_ID_SEIKAKU_STR].win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(appwk->win[BOX2BMPWIN_ID_TOKUSEI_STR].win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(appwk->win[BOX2BMPWIN_ID_ITEM_STR].win), 0 );
+
+	StrPrint(
+		appwk, BOX2BMPWIN_ID_WAZA_STR, appwk->mman,
+		mes_box_subst_01_15, 0, 0, appwk->font, FCOL_N_BLACK );
 
 	StrPrint(
 		appwk, BOX2BMPWIN_ID_SEIKAKU_STR, appwk->mman,
@@ -768,6 +750,7 @@ void BOX2BMP_DefStrPut( BOX2_SYS_WORK * syswk )
 		appwk, BOX2BMPWIN_ID_ITEM_STR, appwk->mman,
 		mes_box_subst_01_08, 0, 0, appwk->font, FCOL_N_BLACK );
 
+	PrintScreenTrans( &syswk->app->win[BOX2BMPWIN_ID_WAZA_STR] );
 	PrintScreenTrans( &syswk->app->win[BOX2BMPWIN_ID_SEIKAKU_STR] );
 	PrintScreenTrans( &syswk->app->win[BOX2BMPWIN_ID_TOKUSEI_STR] );
 	PrintScreenTrans( &syswk->app->win[BOX2BMPWIN_ID_ITEM_STR] );
@@ -792,6 +775,9 @@ static void PokeNamePut( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info, u32 w
 		WORDSET_RegisterPokeMonsNamePPP( appwk->wset, 0, info->ppp );
 		ExStrPrint(
 			appwk, winID, appwk->mman, mes_boxmenu_01_01, 0, 0, appwk->font, FCOL_N_BLACK );
+	}else{
+		GFL_BMPWIN_TransVramCharacter( appwk->win[winID].win );
+		return;
 	}
 
 	PrintScreenTrans( &appwk->win[winID] );
@@ -844,6 +830,9 @@ static void PokeLvPut( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info, u32 win
 			appwk->wset, 0, info->lv, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 		ExStrPrint(
 			appwk, winID, appwk->mman, mes_box_subst_01_09, npx, 0, appwk->font, FCOL_N_BLACK );
+	}else{
+		GFL_BMPWIN_TransVramCharacter( appwk->win[winID].win );
+		return;
 	}
 
 	PrintScreenTrans( &appwk->win[winID] );
@@ -871,7 +860,13 @@ static void PokeSexPut( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info, u32 wi
 		}else if( info->sex == PTL_SEX_FEMALE ){
 			StrPrint(
 				appwk, winID, appwk->mman, mes_box_subst_01_02, 0, 0, appwk->font, FCOL_N_RED );
+		}else{
+			GFL_BMPWIN_TransVramCharacter( appwk->win[winID].win );
+			return;
 		}
+	}else{
+		GFL_BMPWIN_TransVramCharacter( appwk->win[winID].win );
+		return;
 	}
 
 	PrintScreenTrans( &appwk->win[winID] );
@@ -912,7 +907,13 @@ static void PokeNumberPut( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * info, u32
 			ExStrPrint(
 				syswk->app, winID, syswk->app->mman,
 				mes_box_subst_01_10, npx, 0, syswk->app->font, FCOL_N_BLACK );
+		}else{
+			GFL_BMPWIN_TransVramCharacter( syswk->app->win[winID].win );
+			return;
 		}
+	}else{
+		GFL_BMPWIN_TransVramCharacter( syswk->app->win[winID].win );
+		return;
 	}
 
 	PrintScreenTrans( &syswk->app->win[winID] );
@@ -1005,6 +1006,29 @@ static void PokeItemPut( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info, u32 w
 	PrintScreenTrans( &appwk->win[winID] );
 }
 
+static void PokeWazaPut( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info, u32 winID )
+{
+	GFL_MSGDATA * man;
+	u32	i;
+
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(appwk->win[winID].win), 0 );
+
+	man = GFL_MSG_Create(
+					GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wazaname_dat, HEAPID_BOX_APP_L );
+
+	if( info->tamago == 0 ){
+		for( i=0; i<4; i++ ){
+			StrPrint( appwk, winID, man, info->waza[i], 0, i*16, appwk->font, FCOL_N_BLACK );
+		}
+	}else{
+		StrPrint( appwk, winID, man, mes_box_subst_01_12, 0, 0, appwk->font, FCOL_N_BLACK );
+	}
+
+	GFL_MSG_Delete( man );
+
+	PrintScreenTrans( &appwk->win[winID] );
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * 上画面ポケモンデータ表示
@@ -1025,6 +1049,7 @@ void BOX2BMP_PokeDataPut( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * info )
 	PokeSeikakuPut( syswk->app, info, BOX2BMPWIN_ID_SEIKAKU );
 	PokeTokuseiPut( syswk->app, info, BOX2BMPWIN_ID_TOKUSEI );
 	PokeItemPut( syswk->app, info, BOX2BMPWIN_ID_ITEM );
+	PokeWazaPut( syswk->app, info, BOX2BMPWIN_ID_WAZA );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1046,6 +1071,7 @@ void BOX2BMP_PokeDataOff( BOX2_APP_WORK * appwk )
 	ClearScreen( &appwk->win[BOX2BMPWIN_ID_SEIKAKU] );
 	ClearScreen( &appwk->win[BOX2BMPWIN_ID_TOKUSEI] );
 	ClearScreen( &appwk->win[BOX2BMPWIN_ID_ITEM] );
+	ClearScreen( &appwk->win[BOX2BMPWIN_ID_WAZA] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1058,6 +1084,7 @@ void BOX2BMP_PokeDataOff( BOX2_APP_WORK * appwk )
  * @return	表示したBMPWINのID
  */
 //--------------------------------------------------------------------------------------------
+/*
 u32 BOX2BMP_PokeSkillWrite( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * info )
 {
 	NNSG2dCharacterData * chr;
@@ -1105,6 +1132,7 @@ u32 BOX2BMP_PokeSkillWrite( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * info )
 
 	return winID;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1118,6 +1146,7 @@ u32 BOX2BMP_PokeSkillWrite( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * info )
 //--------------------------------------------------------------------------------------------
 u32 BOX2BMP_PokeItemInfoWrite( BOX2_SYS_WORK * syswk, u16 item )
 {
+/*
 	PRINT_UTIL * pu;
 	GFL_BMPWIN * win;
 	u32	winID;
@@ -1144,6 +1173,8 @@ u32 BOX2BMP_PokeItemInfoWrite( BOX2_SYS_WORK * syswk, u16 item )
 	}
 
 	return winID;
+*/
+	return 0;
 }
 
 
@@ -2298,6 +2329,8 @@ void BOX2BMP_ItemSetMsgPut( BOX2_SYS_WORK * syswk, u32 item, u32 winID )
 	if( item == 0 ){
 		WORDSET_RegisterItemName( syswk->app->wset, 0, ITEM_HAKKINDAMA );
 		SysMesPut( syswk, msg_boxmes_05_01, winID );
+	}else if( ITEM_CheckMail( item ) == TRUE ){
+		SysMesPut( syswk, msg_boxmes_06_06, winID );
 	}else{
 		WORDSET_RegisterItemName( syswk->app->wset, 0, item );
 		SysMesPut( syswk, msg_boxmes_01_17, winID );
@@ -2602,4 +2635,23 @@ void BOX2BMP_VBlankMsgPut( BOX2_SYS_WORK * syswk, u32 winID )
 	BmpWinFrame_Write(
 		syswk->app->win[winID].win, WINDOW_TRANS_ON_V,
 		GFL_ARCUTIL_TRANSINFO_GetPos(syswk->app->syswinInfo), BOX2MAIN_BG_PAL_SYSWIN );
+}
+
+
+
+void BOX2BMP_PutPokeMoveErrMsg( BOX2_SYS_WORK * syswk, u32 errID, u32 winID )
+{
+	u32	str;
+
+	switch( errID ){
+	case BOX2MAIN_ERR_CODE_MAIL:			// メールを持っている
+		str = msg_boxmes_06_01;
+		break;
+
+	case BOX2MAIN_ERR_CODE_BATTLE:		// 戦えるポケモンがいなくなる
+		str = msg_boxmes_06_03;
+		break;
+	}
+
+	SysMesPut( syswk, str, winID );
 }

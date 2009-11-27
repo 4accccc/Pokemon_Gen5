@@ -99,12 +99,13 @@ enum {
 	BOX2MAIN_CHRRES_POKEGRA2,
 	BOX2MAIN_CHRRES_ITEMICON,
 	BOX2MAIN_CHRRES_ITEMICON_SUB,
-	BOX2MAIN_CHRRES_TYPEICON1,
-	BOX2MAIN_CHRRES_TYPEICON2,
-	BOX2MAIN_CHRRES_TRAYICON,
+	BOX2MAIN_CHRRES_TYPEICON,
+	BOX2MAIN_CHRRES_TRAYICON = BOX2MAIN_CHRRES_TYPEICON + POKETYPE_MAX,
 	BOX2MAIN_CHRRES_WPICON = BOX2MAIN_CHRRES_TRAYICON + BOX2OBJ_TRAYICON_MAX,
 	BOX2MAIN_CHRRES_BOXOBJ = BOX2MAIN_CHRRES_WPICON + BOX2OBJ_WPICON_MAX,
 	BOX2MAIN_CHRRES_TOUCH_BAR,
+	BOX2MAIN_CHRRES_POKEMARK,
+	BOX2MAIN_CHRRES_POKERUSICON,
 	BOX2MAIN_CHRRES_MAX
 };
 // パレットリソースID
@@ -119,6 +120,8 @@ enum {
 	BOX2MAIN_PALRES_WPICON,
 	BOX2MAIN_PALRES_BOXOBJ,
 	BOX2MAIN_PALRES_TOUCH_BAR,
+	BOX2MAIN_PALRES_POKEMARK,
+	BOX2MAIN_PALRES_POKERUSICON,
 	BOX2MAIN_PALRES_MAX
 };
 // セルリソースID
@@ -132,6 +135,8 @@ enum {
 	BOX2MAIN_CELRES_WPICON,
 	BOX2MAIN_CELRES_BOXOBJ,
 	BOX2MAIN_CELRES_TOUCH_BAR,
+	BOX2MAIN_CELRES_POKEMARK,
+	BOX2MAIN_CELRES_POKERUSICON,
 	BOX2MAIN_CELRES_MAX
 };
 
@@ -155,13 +160,24 @@ enum {
 
 	BOX2OBJ_ID_ITEMICON,
 	BOX2OBJ_ID_ITEMICON_SUB,
-	BOX2OBJ_ID_TYPEICON1,
-	BOX2OBJ_ID_TYPEICON2,
 
 	BOX2OBJ_ID_POKEGRA,
 	BOX2OBJ_ID_POKEGRA2,
 
-	BOX2OBJ_ID_TRAYICON,
+	BOX2OBJ_ID_MARK1,
+	BOX2OBJ_ID_MARK2,
+	BOX2OBJ_ID_MARK3,
+	BOX2OBJ_ID_MARK4,
+	BOX2OBJ_ID_MARK5,
+	BOX2OBJ_ID_MARK6,
+
+	BOX2OBJ_ID_RARE,
+	BOX2OBJ_ID_POKERUS,
+	BOX2OBJ_ID_POKERUS_ICON,
+
+	BOX2OBJ_ID_TYPEICON,
+
+	BOX2OBJ_ID_TRAYICON = BOX2OBJ_ID_TYPEICON + POKETYPE_MAX,
 
 	BOX2OBJ_ID_WPICON = BOX2OBJ_ID_TRAYICON + BOX2OBJ_TRAYICON_MAX,
 
@@ -177,25 +193,19 @@ enum {
 	// 上画面
 	BOX2BMPWIN_ID_NAME = 0,		// ポケモン名
 	BOX2BMPWIN_ID_NICKNAME,		// ニックネーム
-	BOX2BMPWIN_ID_LV,			// レベル
-	BOX2BMPWIN_ID_TITLE,		// タイトル
-	BOX2BMPWIN_ID_SEX,			// 性別
-	BOX2BMPWIN_ID_ZKNNUM,		// 図鑑番号
+	BOX2BMPWIN_ID_LV,					// レベル
+	BOX2BMPWIN_ID_TITLE,			// タイトル
+	BOX2BMPWIN_ID_SEX,				// 性別
+	BOX2BMPWIN_ID_ZKNNUM,			// 図鑑番号
 	BOX2BMPWIN_ID_SEIKAKU,		// 性格
 	BOX2BMPWIN_ID_TOKUSEI,		// 特性
-	BOX2BMPWIN_ID_ITEM,			// 持ち物
-	BOX2BMPWIN_ID_WAZA1,		// 技１
-	BOX2BMPWIN_ID_WAZA2,		// 技２
-	BOX2BMPWIN_ID_WAZA3,		// 技３
-	BOX2BMPWIN_ID_WAZA4,		// 技４
-	BOX2BMPWIN_ID_WAZA1_2,		// 技１（スワップ用）
-	BOX2BMPWIN_ID_WAZA2_2,		// 技２（スワップ用）
-	BOX2BMPWIN_ID_WAZA3_2,		// 技３（スワップ用）
-	BOX2BMPWIN_ID_WAZA4_2,		// 技４（スワップ用）
+	BOX2BMPWIN_ID_ITEM,				// 持ち物
+	BOX2BMPWIN_ID_WAZA,				// 技
 
+	BOX2BMPWIN_ID_WAZA_STR,			//「もっているわざ」
 	BOX2BMPWIN_ID_SEIKAKU_STR,	//「せいかく」
 	BOX2BMPWIN_ID_TOKUSEI_STR,	//「とくせい」
-	BOX2BMPWIN_ID_ITEM_STR,		//「もちもの」
+	BOX2BMPWIN_ID_ITEM_STR,			//「もちもの」
 
 	BOX2BMPWIN_ID_ITEMLABEL,	// アイテム名（説明ウィンドウのタブ部分）
 	BOX2BMPWIN_ID_ITEMINFO,		// アイテム説明
@@ -263,7 +273,6 @@ enum {
 //	BOX2MAIN_WINFRM_RET_BTN,	//「もどる」ボタン
 //	BOX2MAIN_WINFRM_CLOSE_BTN,	//「とじる」ボタン
 	BOX2MAIN_WINFRM_BOXMV_MENU,	// ボックス移動時のメニュー
-	BOX2MAIN_WINFRM_WPCHG,		// 壁紙変更フレーム
 	BOX2MAIN_WINFRM_BOXMV_BTN,	// ボックス移動時のボタン
 	BOX2MAIN_WINFRM_Y_ST_BTN,	// Ｙボタンステータス
 
@@ -339,6 +348,9 @@ typedef struct {
 
 
 */
+	int	key_repeat_speed;
+	int	key_repeat_wait;
+
 	GFL_TCB * vtask;					// TCB ( VBLANK )
 
 	BOX2_IRQWK	vfunk;				// VBLANK関数ワーク
@@ -399,13 +411,15 @@ typedef struct {
 	u16	get_item;						// 取得アイテム
 	u16	get_item_init_pos;	// アイテム取得位置
 
-	u8	subdisp_win_swap:4;		// サブ画面BMPWINのスワップフラグ
-	u8	subdisp_waza_put:3;		// サブ画面技BMPWINのスワップフラグ
-	u8	poke_free_err:1;			// 逃がすが実行できないとき１
+//	u8	subdisp_win_swap:4;		// サブ画面BMPWINのスワップフラグ
+//	u8	subdisp_waza_put:3;		// サブ画面技BMPWINのスワップフラグ
+//	u8	poke_free_err:1;			// 逃がすが実行できないとき１
+	u8	poke_free_err;			// 逃がすが実行できないとき
 
 	u8	party_frm;			// 手持ちポケモンフレーム制御
 
 	u8	msg_put;				// メッセージを表示するか
+	u8	mv_err_code;		// ポケモン移動エラーコード
 
 	BOOL poke_mv_cur_flg;	// ポケモンアイコン移動後にアウトラインを表示するか
 
@@ -418,7 +432,6 @@ typedef struct {
 	u8	wallpaper_pos;				// 壁紙選択位置
 	u8	wp_menu;				// 壁紙メニュー番号
 
-	u8	poke_get_key;		// キーでの取得位置
 	u8	poke_put_key;		// キーでの配置位置
 	u8	chg_tray_pos;		// 切り替えるトレイ
 
@@ -451,7 +464,8 @@ typedef struct {
 
 	void * subProcWork;				// サブプロセスで使用するワーク
 	u16	subRet;								// サブプロセスの戻り値などを保存する場所
-	u16	subProcType;					// サブプロセスの種類
+	u8	subProcType;					// サブプロセスの種類
+	u8	subProcMode;					// サブプロセスの呼び出しモード
 
 	u8	tray;										// 現在のトレイ
 	u8	trayMax;								// 開放されているトレイ数
@@ -460,6 +474,7 @@ typedef struct {
 
 	u8	get_pos;								// 取得位置
 	u8	get_tray;								// 取得トレイ
+	u8	poke_get_key;						// 掴んでいるか
 
 	u8	box_mv_pos;							// ボックス移動選択位置
 //	u8	box_mv_scroll;
@@ -471,17 +486,16 @@ typedef struct {
 
 	u8	y_status_flg;		// Ｙボタンでステータスを開いたかどうか
 	u8	y_status_hand;		// Ｙステータス時に掴んでいるか
-	u8	y_status_pos;		// Ｙステータス時に掴んでいたときの戻り位置
+	u8	y_status_pos;		// Ｙステータス時に掴んでいたときの戻り位置	←WBでも使う！（そのうちリネームする）
 
 	u8	pokechg_mode;		// 入れ替えモード
 
 	u8	party_sel_flg;		// 手持ち選択フラグ
 	u8	box_mv_flg;			// ボックス移動フラグ
-//	u8	box_mv_pos;			// ボックス移動選択位置
 
-	BOOL	tb_ret_flg;
-	BOOL	tb_exit_flg;
-	BOOL	tb_status_flg;
+	u8	tb_ret_btn;			// タッチバーに表示している戻るボタンの表示状況
+	u8	tb_exit_btn;		// タッチバーに表示している終了ボタンの表示状況
+	u8	tb_status_btn;	// タッチバーに表示しているステータスボタンの表示状況
 
 	u32	cur_rcv_pos;		// カーソル表示復帰位置
 
@@ -610,8 +624,10 @@ typedef struct {
 	u16	mark;					// ボックスマーク
 	u8	lv:7;					// レベル
 	u8	tamago:1;			// タマゴフラグ
-	u8	sex:7;				// 性別
+	u8	sex:4;				// 性別
 	u8	sex_put:1;		// 性別表示（ニドラン用）1=ON, 0=OFF
+	u8	rare:1;				// レア
+	u8	pokerus:2;		// ポケルス
 
 	u16	waza[4];			// 技
 
@@ -619,6 +635,15 @@ typedef struct {
 
 
 #define	BOX2MAIN_TRAYICON_SCROLL_CNT		( 9 )
+
+
+// ポケモン移動エラーコード
+enum {
+	BOX2MAIN_ERR_CODE_NONE = 0,		// エラーなし
+	BOX2MAIN_ERR_CODE_BOXMAX,			// ボックスがいっぱい
+	BOX2MAIN_ERR_CODE_MAIL,				// メールを持っている
+	BOX2MAIN_ERR_CODE_BATTLE,			// 戦えるポケモンがいなくなる
+};
 
 
 //============================================================================================

@@ -154,8 +154,6 @@ extern void BOX2BGWFRM_PartyPokeFramePutRight( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_PokeMenuOpenPosSet( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_SubDispItemFrmInPosSet( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_SubDispWazaFrmInPosSet( BOX2_APP_WORK * appwk );
-extern void BOX2BGWFRM_WallPaperFrameInSet( BGWINFRM_WORK * wk );
-extern void BOX2BGWFRM_WallPaperFrameOutSet( BGWINFRM_WORK * wk );
 extern void BOX2BGWFRM_YStatusButtonPut( BGWINFRM_WORK * wk );
 
 extern void BOX2BGWFRM_SubDispWinFrmMove( BOX2_SYS_WORK * syswk );

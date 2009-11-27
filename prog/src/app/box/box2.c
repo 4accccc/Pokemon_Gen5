@@ -19,6 +19,7 @@
 
 #include "box2_seq.h"
 #include "box2_main.h"
+#include "box2_obj.h"
 
 
 //============================================================================================
@@ -92,9 +93,9 @@ static GFL_PROC_RESULT Box2Proc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 	}
 
 	// 初期タッチバーアイコンの設定
-	syswk->tb_exit_flg    = TRUE;
-	syswk->tb_ret_flg     = TRUE;
-	syswk->tb_status_flg  = FALSE;
+	syswk->tb_exit_btn    = BOX2OBJ_TB_ICON_ON;
+	syswk->tb_ret_btn     = BOX2OBJ_TB_ICON_ON;
+	syswk->tb_status_btn  = BOX2OBJ_TB_ICON_OFF;
 
 
 /*

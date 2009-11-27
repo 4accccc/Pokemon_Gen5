@@ -176,8 +176,6 @@ void BOX2BGWFRM_Init( BOX2_SYS_WORK * syswk )
 
 
 
-	// 壁紙変更フレーム
-	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_WPCHG, GFL_BG_FRAME1_M, WPCHG_FRM_SX, WPCHG_FRM_SY );
 	// マーキングフレーム
 //	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_MARK, GFL_BG_FRAME0_M, MARKING_FRM_SX, MARKING_FRM_SY );
 	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_MARK, GFL_BG_FRAME1_M, MARKING_FRM_SX, MARKING_FRM_SY );
@@ -194,8 +192,6 @@ void BOX2BGWFRM_Init( BOX2_SYS_WORK * syswk )
 		BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_MOVE, GFL_BG_FRAME1_M, BOXMOVE_FRM_SX, BOXMOVE_FRM_SY );
 		FrameArcLoad( appwk->wfrm, BOX2MAIN_WINFRM_MOVE, NARC_box_gra_box_move_bg_lz_NSCR );
 	}
-
-	FrameArcLoad( appwk->wfrm, BOX2MAIN_WINFRM_WPCHG, NARC_box_gra_box_wpchg_bg_lz_NSCR );
 
 
 /*	上画面　技・アイテムフレーム
@@ -1261,41 +1257,6 @@ void BOX2BGWFRM_MarkingFrameInSet( BGWINFRM_WORK * wk )
 void BOX2BGWFRM_MarkingFrameOutSet( BGWINFRM_WORK * wk )
 {
 	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_MARK, 0, 1, WINFRM_MARK_MV_CNT );
-}
-
-
-//============================================================================================
-//	壁紙変更フレーム
-//============================================================================================
-
-//--------------------------------------------------------------------------------------------
-/**
- * 壁紙変更フレームインセット
- *
- * @param	wk		ＢＧウィンドウフレームワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BGWFRM_WallPaperFrameInSet( BGWINFRM_WORK * wk )
-{
-	BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_WPCHG, WINFRM_WALLPAPER_PX, WINFRM_WALLPAPER_IN_PY );
-	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_WPCHG, 0, 1, WPCHG_FRM_SY );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * 壁紙変更フレームアウトセット
- *
- * @param	wk		ＢＧウィンドウフレームワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BGWFRM_WallPaperFrameOutSet( BGWINFRM_WORK * wk )
-{
-	BGWINFRM_FramePut( wk, BOX2MAIN_WINFRM_WPCHG, WINFRM_WALLPAPER_PX, WINFRM_WALLPAPER_OUT_PY );
-	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_WPCHG, 0, -1, WPCHG_FRM_SY );
 }
 
 

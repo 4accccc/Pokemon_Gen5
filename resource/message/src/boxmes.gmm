@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2009-11-25T16:42:49"/>
+	<create user="hiro_nakamura" host="W00144" date="2009-11-26T19:43:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -685,6 +685,11 @@
 		<comment>「もちものせいり」でアイテムを移動しようとしたとき</comment>
 		<language name="JPN" font=" 1:small" width="216">ポケモンに　もたせることが　できます</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ポケモンに　もたせることが　できます</language>
+	</row>
+
+	<row id="msg_boxmes_06_06" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#ff0000,,#00ffff,#ff0000,#00ffff,#00ffff,,,#00ffff,,">
+		<language name="JPN" font=" 1:small" width="216">ここでは　メールを　もたせられません</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ここでは　メールを　もたせられません</language>
 	</row>
 
 	<flowchart-group-list>

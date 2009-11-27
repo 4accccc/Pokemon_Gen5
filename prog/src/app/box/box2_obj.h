@@ -15,24 +15,19 @@
 
 // アニメID
 enum {
-	BOX2OBJ_ANM_TRAY_CURSOR = 0,		// トレイカーソル
+	BOX2OBJ_ANM_TRAY_CURSOR = 0,	// トレイカーソル
 	BOX2OBJ_ANM_L_ARROW_OFF,			// 左矢印（非選択）
 	BOX2OBJ_ANM_L_ARROW_ON,				// 左矢印（選択）
 	BOX2OBJ_ANM_R_ARROW_OFF,			// 右矢印（非選択）
 	BOX2OBJ_ANM_R_ARROW_ON,				// 右矢印（選択）
 	BOX2OBJ_ANM_TRAY_NAME,				// トレイ名
-	BOX2OBJ_ANM_TRAY_ARROW,				// トレイ収納数
-	BOX2OBJ_ANM_WP_NAME,				// 壁紙名
 	BOX2OBJ_ANM_HAND_NORMAL,			// 手カーソル：通常
 	BOX2OBJ_ANM_HAND_OPEN,				// 手カーソル：開く
 	BOX2OBJ_ANM_HAND_CLOSE,				// 手カーソル：閉じる
-	BOX2OBJ_ANM_HAND_PUSH1,				// 手カーソル：押す１
-	BOX2OBJ_ANM_HAND_PUSH2,				// 手カーソル：押す２
 	BOX2OBJ_ANM_HAND_SHADOW,			// 手カーソル：影
-	BOX2OBJ_ANM_HAND_TRAY,				// 手カーソル：横（トレイなど選択用）
-	BOX2OBJ_ANM_HAND_TRAY2,				// 手カーソル：横（いらないような？）
 	BOX2OBJ_ANM_TB_STATUS,				// タッチバーステータス
 	BOX2OBJ_ANM_TB_STATUS_ON,			// タッチバーステータス・ON
+	BOX2OBJ_ANM_TB_STATUS_OFF,		// タッチバーステータス・OFF
 };
 
 #define	BOX2OBJ_TRAYPOKE_PX		( 24 )		// トレイのポケモンアイコン表示開始Ｘ座標
@@ -59,6 +54,13 @@ enum {
 #define	BOX2OBJ_FNTOAM_BOXNAME_SY	( 2 )		// OAMフォント：ボックス名Ｙサイズ
 #define	BOX2OBJ_FNTOAM_BOXNUM_SX	( 2 )		// OAMフォント：格納数Ｘサイズ
 #define	BOX2OBJ_FNTOAM_BOXNUM_SY	( 1 )		// OAMフォント：格納数Ｙサイズ
+
+// タッチーバーに表示されているボタンの状態
+enum {
+	BOX2OBJ_TB_ICON_ON = 0,		// 表示
+	BOX2OBJ_TB_ICON_OFF,			// 非表示
+	BOX2OBJ_TB_ICON_PASSIVE,	// パッシブ
+};
 
 
 //============================================================================================
@@ -1106,5 +1108,5 @@ extern void BOX2OBJ_BoxNameScroll( BOX2_APP_WORK * appwk, s8 mv );
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_FontOamResetBmp( BOX2_APP_WORK * appwk, GFL_BMPWIN * win, u32 id );
 
-extern void BOX2OBJ_SetTouchBarButton( BOX2_SYS_WORK * syswk, BOOL ret, BOOL exit, BOOL status );
+extern void BOX2OBJ_SetTouchBarButton( BOX2_SYS_WORK * syswk, u8 ret, u8 exit, u8 status );
 extern void BOX2OBJ_VanishTouchBarButton( BOX2_SYS_WORK * syswk );

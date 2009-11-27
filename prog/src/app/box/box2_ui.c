@@ -538,7 +538,7 @@ static const CURSORMOVE_DATA BoxArrangeMainCursorMoveData[] =
 	{ 212,  64, 0, 0,	37, 39, 38, 38, {  64,  87, 168, 255 } },	// 38: もちもの
 	{ 212,  88, 0, 0,	38, 40, 39, 39, {  88, 111, 168, 255 } },	// 39: マーキング
 	{ 212, 112, 0, 0,	39, 41, 40, 40, { 112, 135, 168, 255 } },	// 40: にがす
-	{ 212, 136, 0, 0,	40, 36, 41, 41, { 136, 159, 192, 255 } },	// 41: とじる
+	{ 212, 136, 0, 0,	40, 36, 41, 41, { 136, 159, 168, 255 } },	// 41: とじる
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -631,7 +631,7 @@ static const CURSORMOVE_DATA BoxArrangePartyPokeCursorMoveData[] =
 	{ 212,  64, 0, 0,	10, 12, 11, 11, {  64,  87, 168, 255 } },	// 11: もちもの
 	{ 212,  88, 0, 0,	11, 13, 12, 12, {  88, 111, 168, 255 } },	// 12: マーキング
 	{ 212, 112, 0, 0,	12, 14, 13, 13, { 112, 135, 168, 255 } },	// 13: にがす
-	{ 212, 136, 0, 0,	13,  9, 14, 14, { 136, 159, 192, 255 } },	// 14: とじる
+	{ 212, 136, 0, 0,	13,  9, 14, 14, { 136, 159, 168, 255 } },	// 14: とじる
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -1331,7 +1331,7 @@ static void PartyOutBoxSelCallBack_On( void * work, int now_pos, int old_pos )
 	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, TRUE );
 
 	if( now_pos >= BOX2UI_PTOUT_BOXSEL_TRAY1 && now_pos <= BOX2UI_PTOUT_BOXSEL_TRAY6 ){
-		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_TRAY );
+//		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_TRAY );
 	}else{
 		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_NORMAL );
 	}
@@ -1353,7 +1353,7 @@ static void PartyOutBoxSelCallBack_Move( void * work, int now_pos, int old_pos )
 	BOX2_SYS_WORK * syswk = work;
 
 	if( now_pos >= BOX2UI_PTOUT_BOXSEL_TRAY1 && now_pos <= BOX2UI_PTOUT_BOXSEL_TRAY6 ){
-		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_TRAY );
+//		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_TRAY );
 	}else{
 		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_NORMAL );
 	}
@@ -1717,6 +1717,26 @@ u32 BOX2UI_BoxArrangePokeMove( BOX2_SYS_WORK * syswk )
 	return ret;
 }
 
+// ポケモン取得時のタッチバーボタン設定
+static void SetTouchBarIconPokeGet( BOX2_SYS_WORK * syswk, u32 pos, u32 max )
+{
+	u8	ret, status;
+
+	ret    = BOX2OBJ_TB_ICON_ON;
+	status = BOX2OBJ_TB_ICON_ON;
+
+	if( syswk->poke_get_key == 1 ){
+		ret = BOX2OBJ_TB_ICON_PASSIVE;
+	}else{
+		if( pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
+			status = BOX2OBJ_TB_ICON_PASSIVE;
+		}else if( BOX2MAIN_PokeParaGet(syswk,pos,syswk->tray,ID_PARA_poke_exist,NULL) == 0 ){
+			status = BOX2OBJ_TB_ICON_PASSIVE;
+		}
+	}
+	BOX2OBJ_SetTouchBarButton( syswk, ret, BOX2OBJ_TB_ICON_OFF, status );
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * 「ボックスをせいりする」ポケモン移動操作コールバック関数：カーソル表示時
@@ -1752,7 +1772,7 @@ static void BoxArrangePokeMoveCallBack_On( void * work, int now_pos, int old_pos
 
 	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, TRUE );
 
-	if( syswk->app->poke_get_key == 0 ){
+	if( syswk->poke_get_key == 0 ){
 		if( now_pos >= BOX2UI_ARRANGE_MOVE_TRAY1 && now_pos <= BOX2UI_ARRANGE_MOVE_TRAY6 ){
 			BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_TRAY );
 		}else{
@@ -1777,6 +1797,8 @@ static void BoxArrangePokeMoveCallBack_On( void * work, int now_pos, int old_pos
 	}else{
 		CursorObjMove( syswk, now_pos );
 	}
+
+	SetTouchBarIconPokeGet( syswk, now_pos, BOX2OBJ_POKEICON_TRAY_MAX );
 
 	syswk->app->old_cur_pos = now_pos;
 }
@@ -1805,7 +1827,7 @@ static void BoxArrangePokeMoveCallBack_Move( void * work, int now_pos, int old_p
 	BOX2_SYS_WORK * syswk = work;
 
 /*
-	if( syswk->app->poke_get_key == 0 ){
+	if( syswk->poke_get_key == 0 ){
 		if( now_pos >= BOX2UI_ARRANGE_MOVE_TRAY1 && now_pos <= BOX2UI_ARRANGE_MOVE_TRAY6 ){
 			BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_TRAY );
 		}else{
@@ -1871,11 +1893,16 @@ static void BoxArrangePokeMoveCallBack_Move( void * work, int now_pos, int old_p
 		}
 	}
 */
+
+/*
 	if( now_pos >= BOX2UI_ARRANGE_PGT_TRAY2 && now_pos <= BOX2UI_ARRANGE_PGT_TRAY5 ){
 		BOX2OBJ_ChangeTrayName( syswk, now_pos-BOX2UI_ARRANGE_PGT_TRAY2, TRUE );
 	}else{
 		BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
 	}
+*/
+
+	SetTouchBarIconPokeGet( syswk, now_pos, BOX2OBJ_POKEICON_TRAY_MAX );
 
 	BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 	BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
@@ -1919,6 +1946,8 @@ static void BoxArrangePokeMoveCallBack_Touch( void * work, int now_pos, int old_
 	}else{
 		CursorObjMove( syswk, now_pos );
 	}
+
+	SetTouchBarIconPokeGet( syswk, now_pos, BOX2OBJ_POKEICON_TRAY_MAX );
 
 	syswk->app->old_cur_pos = now_pos;
 }
@@ -2156,7 +2185,7 @@ static void BoxArrangePartyPokeMoveCallBack_On( void * work, int now_pos, int ol
 
 	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, TRUE );
 
-	if( syswk->app->poke_get_key == 0 ){
+	if( syswk->poke_get_key == 0 ){
 		if( now_pos >= BOX2UI_ARRANGE_MOVE_TRAY1 && now_pos <= BOX2UI_ARRANGE_MOVE_TRAY6 ){
 			BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_TRAY );
 		}else{
@@ -2179,6 +2208,8 @@ static void BoxArrangePartyPokeMoveCallBack_On( void * work, int now_pos, int ol
 	}else{
 		CursorObjMove( syswk, now_pos );
 	}
+
+	SetTouchBarIconPokeGet( syswk, now_pos, BOX2OBJ_POKEICON_PUT_MAX );
 
 	syswk->app->old_cur_pos = now_pos;
 }
@@ -2207,7 +2238,7 @@ static void BoxArrangePartyPokeMoveCallBack_Move( void * work, int now_pos, int 
 	BOX2_SYS_WORK * syswk = work;
 
 /*
-	if( syswk->app->poke_get_key == 0 ){
+	if( syswk->poke_get_key == 0 ){
 		if( now_pos >= BOX2UI_ARRANGE_MOVE_TRAY1 && now_pos <= BOX2UI_ARRANGE_MOVE_TRAY6 ){
 			BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_TRAY );
 		}else{
@@ -2273,6 +2304,9 @@ static void BoxArrangePartyPokeMoveCallBack_Move( void * work, int now_pos, int 
 		}
 	}
 */
+
+	SetTouchBarIconPokeGet( syswk, now_pos, BOX2OBJ_POKEICON_PUT_MAX );
+
 	BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 	BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
 
@@ -2313,6 +2347,8 @@ static void BoxArrangePartyPokeMoveCallBack_Touch( void * work, int now_pos, int
 	}else{
 		CursorObjMove( syswk, now_pos );
 	}
+
+	SetTouchBarIconPokeGet( syswk, now_pos, BOX2OBJ_POKEICON_PUT_MAX );
 
 	syswk->app->old_cur_pos = now_pos;
 }
