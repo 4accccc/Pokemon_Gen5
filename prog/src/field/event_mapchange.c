@@ -53,6 +53,9 @@
 
 #include "net_app/union/union_main.h" // for UNION_CommBoot
 
+#include "savedata/gametime.h"  // for GMTIME
+#include "gamesystem/pm_season.h"  // for PMSEASON_TOTAL
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -277,13 +280,46 @@ typedef MAPCHANGE_WORK* MAPCHANGE_WORK_PTR;
 
 
 //------------------------------------------------------------------
+/**
+ * @brief 季節を更新する
+ */
+//------------------------------------------------------------------
+static void UpdateSeason( GAMEDATA* gamedata )
+{
+  RTCDate date_start, date_now;
+  RTCTime time_start;
+  GMTIME* gmtime;
+  SAVE_CONTROL_WORK* scw;
+  u8 season;
+
+  // ゲーム開始日時を取得
+  scw = GAMEDATA_GetSaveControlWork( gamedata );
+  gmtime = SaveData_GetGameTime( scw );
+  RTC_ConvertSecondToDateTime( &date_start, &time_start, gmtime->start_sec );
+  // 現在の日付を取得
+  RTC_GetDate( &date_now );
+  // 現在の季節を求める
+  season = (date_now.month - date_start.month + 12) % PMSEASON_TOTAL;
+  // 季節が変化したら, 季節表示フラグを立てる
+  if( season != GAMEDATA_GetSeasonID(gamedata) )
+  {
+    FIELD_STATUS* fstatus = GAMEDATA_GetFieldStatus( gamedata );
+    FIELD_STATUS_SetSeasonDispFlag( fstatus, TRUE );
+    // DEBUG:
+    OBATA_Printf( "update season: ==> %d\n", season );
+  }
+  // ゲームデータ更新
+  GAMEDATA_SetSeasonID( gamedata, season );
+}
+
+//------------------------------------------------------------------
 //------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* work )
 {
-	MAPCHANGE_WORK*       mcw = *( (MAPCHANGE_WORK_PTR*)work );
-	GAMESYS_WORK*        gsys = mcw->gsys;
+	MAPCHANGE_WORK*     mcw = *( (MAPCHANGE_WORK_PTR*)work );
+	GAMESYS_WORK*      gsys = mcw->gsys;
 	FIELDMAP_WORK* fieldmap = mcw->fieldmap;
-	GAMEDATA*        gamedata = mcw->gamedata;
+	GAMEDATA*      gamedata = mcw->gamedata;
 
 	switch( *seq )
   {
@@ -299,6 +335,9 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     { 
       FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
     }
+
+    // 季節の更新
+    UpdateSeason( gamedata );
 
     //新しいマップモードなど機能指定を行う
     MAPCHG_setupMapTools( gsys, &mcw->loc_req );

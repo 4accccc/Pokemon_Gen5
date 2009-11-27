@@ -106,6 +106,7 @@ static GMEVENT_RESULT FieldFadeInEvent(GMEVENT * event, int *seq, void * work)
       { // Žl‹G•\Ž¦
         GMEVENT_CallEvent( event, EVENT_SeasonDisplay( few->gsys, few->fieldmap ) );
         FIELD_STATUS_SetSeasonDispFlag( fstatus, FALSE );
+        FIELD_STATUS_SetSeasonDispLast( fstatus, GAMEDATA_GetSeasonID(gdata) );
       }
       else
       {

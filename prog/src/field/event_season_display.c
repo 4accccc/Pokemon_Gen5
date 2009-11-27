@@ -14,6 +14,7 @@
 #include "gamesystem/pm_season.h"  // for PMSEASON_xxxx
 #include "arc/arc_def.h"  // for ARCID_SEASON_DISPLAY
 #include "arc/season_display.naix"  // for datid
+#include "field_status_local.h"  // for FIELD_STATUS
 
 
 //========================================================================================
@@ -181,19 +182,24 @@ GMEVENT* EVENT_SeasonDisplay( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
 //----------------------------------------------------------------------------------------
 u32 GetSeasonDispEventFrame( GAMESYS_WORK* gsys )
 {
+  GAMEDATA* gdata;
+  FIELD_STATUS* fstatus;
   u32 frame;
-  int disp_season_num;
+  u8 last, now, num;
 
-  // 表示する季節の数を決定
-  // @todo 現在の状況から決定する
-  disp_season_num = 3;
+  // 表示する季節の数を求める
+  gdata   = GAMESYSTEM_GetGameData( gsys );
+  fstatus = GAMEDATA_GetFieldStatus( gdata );
+  last    =  FIELD_STATUS_GetSeasonDispLast( fstatus );
+  now     = GAMEDATA_GetSeasonID( gdata );
+  num     = (now - last + PMSEASON_TOTAL) % PMSEASON_TOTAL;
 
   // フレーム数を計算
   frame  = 0;
-  frame += 3;  // INIT, PREPARE, EXIT の分
-  frame += (disp_season_num - 1) *   // スキップ表示の分
-           (FADEIN_FRAME_SHORT + WAIT_FRAME_SHORT + FADEOUT_FRAME_SHORT);
-  frame += (FADEIN_FRAME_LONG + WAIT_FRAME_LONG + FADEOUT_FRAME_LONG); // 現季節表示の分
+  frame += 2;  // INIT, EXIT の分
+  frame += (num - 1) *   // スキップ表示の分 (PREPARE, FADEIN, WAIT, FADEOUT)
+           (1 + FADEIN_FRAME_SHORT + WAIT_FRAME_SHORT + FADEOUT_FRAME_SHORT);
+  frame += (1 + FADEIN_FRAME_LONG + WAIT_FRAME_LONG + FADEOUT_FRAME_LONG); // 現季節表示の分
   return frame;
 }
 
@@ -403,9 +409,15 @@ static void SetSeq( EVENT_WORK* work, int* seq, int next )
     // BG初期設定
     InitBG();
     // TEST: 初期状態を設定
-    work->lastSeason    = PMSEASON_AUTUMN;
-    work->currentSeason = PMSEASON_SUMMER;
-    work->dispSeason    = work->lastSeason;
+    {
+      GAMEDATA* gdata;
+      FIELD_STATUS* fstatus;
+      gdata   = GAMESYSTEM_GetGameData( work->gsys );
+      fstatus = GAMEDATA_GetFieldStatus( gdata );
+      work->lastSeason    = FIELD_STATUS_GetSeasonDispLast( fstatus );
+      work->currentSeason = GAMEDATA_GetSeasonID( gdata );
+      work->dispSeason    = work->lastSeason;
+    }
     break;
   // 表示準備
   case SEQ_PREPARE:
