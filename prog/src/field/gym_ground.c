@@ -1132,9 +1132,7 @@ static void SetupLiftAnm(GYM_GROUND_SV_WORK *gmk_sv_work, FLD_EXP_OBJ_CNT_PTR pt
 static int GetWatchLiftAnmIdx(GYM_GROUND_SV_WORK *gmk_sv_work, const int inLiftIdx)
 {
   int valid_anm_idx;
-  int obj_idx;
 
-  obj_idx = OBJ_LIFT_1 + inLiftIdx;
   if ( gmk_sv_work->LiftMoved[inLiftIdx] )
   {
     if ( LiftBaseUP[inLiftIdx] )
