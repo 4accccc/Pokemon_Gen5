@@ -52,7 +52,10 @@ echo ErrorLevel = %ERRORLEVEL%
 REM デバイスが見つからなかった
 if %ERRORLEVEL% == -1 goto _ERROR_END:
 
-REM タイムアウト判定
+REM 表示タイムアウト判定
+if %ERRORLEVEL% == 204 goto _END:
+
+REM 実行タイムアウト判定
 if %ERRORLEVEL% == 205 goto _END:
 
 REM 指定文字列検知で終了
