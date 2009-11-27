@@ -23,6 +23,8 @@
 #include "print/gf_font.h"
 #include "font/font.naix"
 
+#include "system/brightness.h"
+
 //PRINT_QUE
 #include "print/printsys.h"
 #include "print/wordset.h"
@@ -201,6 +203,10 @@ enum
   // SUB
 	BG_FRAME_BACK_S	= GFL_BG_FRAME2_S,
   BG_FRAME_TEXT_S = GFL_BG_FRAME0_S, 
+
+  BG_MENU_BRIGHT = -8,
+  BG_MENU_MASK_PLANE = (PLANEMASK_BG1|PLANEMASK_BG2|PLANEMASK_BG3|PLANEMASK_OBJ),
+  BG_MENU_MASK_DISP = (MASK_MAIN_DISPLAY),
 };
 //-------------------------------------
 ///	ƒpƒŒƒbƒg
@@ -1812,6 +1818,9 @@ static BOOL SceneCmdSelect_Init( UI_SCENE_CNT_PTR cnt, void* work )
 
   wk->menu = PMSSelect_TASKMENU_Init( wk->menu_res, wk->msg, wk->heapID );
 
+  
+  SetBrightness( BG_MENU_BRIGHT, BG_MENU_MASK_PLANE, BG_MENU_MASK_DISP );
+
   return TRUE;
 }
 
@@ -1875,6 +1884,8 @@ static BOOL SceneCmdSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
 static BOOL SceneCmdSelect_End( UI_SCENE_CNT_PTR cnt, void* work )
 { 
   PMS_SELECT_MAIN_WORK* wk = work;
+  
+  SetBrightness( 0, BG_MENU_MASK_PLANE, BG_MENU_MASK_DISP );
 
 	PMSSelect_TASKMENU_Exit( wk->menu );
 
