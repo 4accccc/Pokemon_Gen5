@@ -50,6 +50,12 @@ EVENT_WORK;
 static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeNone(GMEVENT * event, int *seq, void * work);
 static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeDoor(GMEVENT * event, int *seq, void * work);
 static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep(GMEVENT * event, int *seq, void * work);
+static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeWarp(GMEVENT * event, int *seq, void * work);
+static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP1(GMEVENT * event, int *seq, void * work);
+static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP2(GMEVENT * event, int *seq, void * work);
+static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP3(GMEVENT * event, int *seq, void * work);
+static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP4(GMEVENT * event, int *seq, void * work);
+static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP5(GMEVENT * event, int *seq, void * work);
 
 
 //=======================================================================================
@@ -90,6 +96,12 @@ GMEVENT* EVENT_EntranceIn( GMEVENT* parent,
     EVENT_FUNC_EntranceIn_ExitTypeStep,   //EXIT_TYPE_STAIRS
     EVENT_FUNC_EntranceIn_ExitTypeDoor,   //EXIT_TYPE_DOOR
     EVENT_FUNC_EntranceIn_ExitTypeStep,   //EXIT_TYPE_WALL
+    EVENT_FUNC_EntranceIn_ExitTypeWarp,   //EXIT_TYPE_WARP
+    EVENT_FUNC_EntranceIn_ExitTypeSP1,    //EXIT_TYPE_SP1
+    EVENT_FUNC_EntranceIn_ExitTypeSP2,    //EXIT_TYPE_SP2
+    EVENT_FUNC_EntranceIn_ExitTypeSP3,    //EXIT_TYPE_SP3
+    EVENT_FUNC_EntranceIn_ExitTypeSP4,    //EXIT_TYPE_SP4
+    EVENT_FUNC_EntranceIn_ExitTypeSP5,    //EXIT_TYPE_SP5
   };
 
   // イベント作成
@@ -215,3 +227,148 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep(GMEVENT * event, int *s
   }
   return GMEVENT_RES_CONTINUE;
 }
+
+//---------------------------------------------------------------------------------------
+/**
+ * @breif ワープ時の進入イベント
+ */
+//---------------------------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeWarp(GMEVENT * event, int *seq, void * work)
+{
+	EVENT_WORK*      event_work = work;
+	GAMESYS_WORK*    gsys       = event_work->gsys;
+	FIELDMAP_WORK* fieldmap   = event_work->fieldmap;
+	GAMEDATA*        gamedata   = event_work->gdata;
+
+  switch ( *seq )
+  {
+  case 0:
+    { // BGM更新リクエスト
+      FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
+      PLAYER_WORK* player = GAMEDATA_GetPlayerWork( gamedata, 0 );
+      PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
+      FIELD_SOUND_ChangePlayZoneBGM( fsnd, gamedata, form, event_work->location.zone_id );
+    }
+		GMEVENT_CallEvent( event, EVENT_FieldFadeOut(gsys, fieldmap, 0, FIELD_FADE_WAIT) );
+    ++ *seq;
+    break;
+  case 1:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//---------------------------------------------------------------------------------------
+/**
+ * @breif 進入イベント( SP1 )
+ */
+//---------------------------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP1(GMEVENT * event, int *seq, void * work)
+{
+	EVENT_WORK*      event_work = work;
+	GAMESYS_WORK*    gsys       = event_work->gsys;
+	FIELDMAP_WORK* fieldmap   = event_work->fieldmap;
+
+  switch ( *seq )
+  {
+  case 0:
+    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location ) );
+    ++ *seq;
+    break;
+  case 1:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//---------------------------------------------------------------------------------------
+/**
+ * @breif 進入イベント( SP2 )
+ */
+//---------------------------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP2(GMEVENT * event, int *seq, void * work)
+{
+	EVENT_WORK*      event_work = work;
+	GAMESYS_WORK*    gsys       = event_work->gsys;
+	FIELDMAP_WORK* fieldmap   = event_work->fieldmap;
+
+  switch ( *seq )
+  {
+  case 0:
+    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location ) );
+    ++ *seq;
+    break;
+  case 1:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//---------------------------------------------------------------------------------------
+/**
+ * @breif 進入イベント( SP3 )
+ */
+//---------------------------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP3(GMEVENT * event, int *seq, void * work)
+{
+	EVENT_WORK*      event_work = work;
+	GAMESYS_WORK*    gsys       = event_work->gsys;
+	FIELDMAP_WORK* fieldmap   = event_work->fieldmap;
+
+  switch ( *seq )
+  {
+  case 0:
+    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location ) );
+    ++ *seq;
+    break;
+  case 1:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//---------------------------------------------------------------------------------------
+/**
+ * @breif 進入イベント( SP4 )
+ */
+//---------------------------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP4(GMEVENT * event, int *seq, void * work)
+{
+	EVENT_WORK*      event_work = work;
+	GAMESYS_WORK*    gsys       = event_work->gsys;
+	FIELDMAP_WORK* fieldmap   = event_work->fieldmap;
+
+  switch ( *seq )
+  {
+  case 0:
+    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location ) );
+    ++ *seq;
+    break;
+  case 1:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//---------------------------------------------------------------------------------------
+/**
+ * @breif 進入イベント( SP5 )
+ */
+//---------------------------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP5(GMEVENT * event, int *seq, void * work)
+{
+	EVENT_WORK*      event_work = work;
+	GAMESYS_WORK*    gsys       = event_work->gsys;
+	FIELDMAP_WORK* fieldmap   = event_work->fieldmap;
+
+  switch ( *seq )
+  {
+  case 0:
+    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location ) );
+    ++ *seq;
+    break;
+  case 1:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+} 
