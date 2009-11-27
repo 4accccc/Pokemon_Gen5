@@ -221,6 +221,44 @@ typedef enum {
   POKETOKUSEI_FURAWAAGIFUTO,
   POKETOKUSEI_NAITOMEA,
 
+  POKETOKUSEI_WARUITEGUSE,        // わるいてぐせ
+  POKETOKUSEI_TIKARADUKU,         // ちからづく
+  POKETOKUSEI_AMANOJAKU,          // あまのじゃく
+  POKETOKUSEI_KINCHOUKAN,         // きんちょうかん
+  POKETOKUSEI_MAKENKI,            // まけんき
+  POKETOKUSEI_YOWAKI,             // よわき
+  POKETOKUSEI_NOROWAREBODY,       // のろわれボディ
+  POKETOKUSEI_MORATERAPII,        // モラテラピー
+  POKETOKUSEI_NAKAMAISIKI,        // なかまいしき
+  POKETOKUSEI_KUDAKERUYOROI,      // くだけるよろい
+  POKETOKUSEI_HEVYMETARU,         // ヘヴィメタル
+  POKETOKUSEI_RAITOMETARU,        // ライトメタル
+  POKETOKUSEI_MARUTISUKEIRU,      // マルチスケイル
+  POKETOKUSEI_DOKUBOUSOU,         // どくぼうそう
+  POKETOKUSEI_NETUBOUSOU,         // ねつぼうそう
+  POKETOKUSEI_SYUUKAKU,           // しゅうかく
+  POKETOKUSEI_AUNNOIKI,           // あうんのいき
+  POKETOKUSEI_MURAKKE,            // ムラっけ
+  POKETOKUSEI_BOUJIN,             // ぼうじん
+  POKETOKUSEI_DOKUSYU,            // どくしゅ
+  POKETOKUSEI_MITEI,              // 名前未定
+  POKETOKUSEI_HATOMUNE,           // はとむね
+  POKETOKUSEI_SUNAKAKI,           // すなかき
+  POKETOKUSEI_HUHEN,              // ふへん
+  POKETOKUSEI_SINGARI,            // しんがり
+  POKETOKUSEI_IRYUUJON,           // イリュージョン
+  POKETOKUSEI_HENSIN,             // へんしん
+  POKETOKUSEI_SURINUKE,           // すりぬけ
+  POKETOKUSEI_MIIRA,              // ミイラ
+  POKETOKUSEI_JISINKAJOU,         // じしんかじょう
+  POKETOKUSEI_SEIGINOKOKORO,      // せいぎのこころ
+  POKETOKUSEI_BIBIRI,             // びびり
+  POKETOKUSEI_MAJIKKUMIRAA,       // マジックミラー
+  POKETOKUSEI_SOUSYOKU,           // そうしょく
+  POKETOKUSEI_ITAZURAGOKORO,      // いたずらごころ
+  POKETOKUSEI_SUNANOTIKARA,       // すなのちから
+
+
   POKETOKUSEI_MAX,
 
 }PokeTokusei;
