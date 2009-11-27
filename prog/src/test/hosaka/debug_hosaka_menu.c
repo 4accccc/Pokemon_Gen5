@@ -14,14 +14,14 @@
  *							プロトタイプ宣言
  */
 //=============================================================================
-static BOOL TESTMODE_ITEM_SelectDemoEngine( TESTMODE_WORK *work, const int idx );
+static BOOL TESTMODE_ITEM_SelectDemo3D( TESTMODE_WORK *work, const int idx );
 static BOOL TESTMODE_ITEM_SelectPmsSelect( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectMicTest( TESTMODE_WORK *work , const int idx );
 
 // メニューリスト
 static TESTMODE_MENU_LIST menuHosaka[] = 
 {
-	{L"デモエンジン",TESTMODE_ITEM_SelectDemoEngine },
+	{L"デモエンジン",TESTMODE_ITEM_SelectDemo3D },
 	{L"かんい会話選択",TESTMODE_ITEM_SelectPmsSelect },
 	{L"マイクテスト",TESTMODE_ITEM_SelectMicTest },
 	
@@ -36,11 +36,12 @@ static TESTMODE_MENU_LIST menuHosaka[] =
 
 // 3Dデモエンジン
 #include "debug_3d_demo.h"
+#include "demo/demo3d.h"
 FS_EXTERN_OVERLAY(debug_hosaka);
-static BOOL TESTMODE_ITEM_SelectDemoEngine( TESTMODE_WORK *work, const int idx )
+static BOOL TESTMODE_ITEM_SelectDemo3D( TESTMODE_WORK *work, const int idx )
 {
-  TESTMODE_COMMAND_ChangeProc( work, FS_OVERLAY_ID(debug_hosaka), &Debug3DDemoProcData, NULL );
-//	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(demo_engine), &TitleMicTestProcData, NULL );
+//  TESTMODE_COMMAND_ChangeProc( work, FS_OVERLAY_ID(debug_hosaka), &Debug3DDemoProcData, NULL );
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(demo3d), &Demo3DProcData, NULL );
   return TRUE;
 }
 
