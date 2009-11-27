@@ -224,3 +224,4 @@
   ARCID_FOURKINGS_SCENE "fourkings_scene.narc"  # 四天王部屋　移動シーンデータ
   ARCID_SEASON_DISPLAY "season_display.narc"  # 季節表示データ
   ARCID_BATT_BG_TBL "batt_bg_tbl.narc"  # 戦闘背景テーブル
+  ARCID_GYM_ICE	"fieldmap/gym_ice.narc"	#氷ジム
