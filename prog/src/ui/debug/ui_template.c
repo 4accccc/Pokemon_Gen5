@@ -761,6 +761,9 @@ static void UITemplate_BG_LoadResource( UI_TEMPLATE_BG_WORK* wk, HEAPID heapID )
 static void UITemplate_INFOWIN_Init( GAMESYS_WORK *gamesys, HEAPID heapID )
 {	
 	GAME_COMM_SYS_PTR comm;
+
+  GF_ASSERT( gamesys );
+
 	comm	= GAMESYSTEM_GetGameCommSysPtr(gamesys);
 	INFOWIN_Init( BG_FRAME_BAR_M, PLTID_BG_INFOWIN_M, comm, heapID );
 }
