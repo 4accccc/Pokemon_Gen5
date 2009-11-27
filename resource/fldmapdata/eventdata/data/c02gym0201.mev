@@ -1,5 +1,5 @@
 #event data
-#save date:2009/11/27 1:22:28
+#save date:2009/11/27 20:50:34
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02gym0201.wms
 #SECTION START:OBJ_EVENT
@@ -691,7 +691,7 @@ SCRID_BG_C02GYM0201_CATEGORY_03
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--152 0 200
+-152 8 200
 #event number: 4
 #Bg Event Label
 BG_C02GYM0201_CATEGORY_04
@@ -730,7 +730,7 @@ SCRID_BG_C02GYM0201_CATEGORY_06
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--168 23 88
+-168 8 88
 #event number: 7
 #Bg Event Label
 BG_C02GYM0201_CATEGORY_07
@@ -795,7 +795,7 @@ SCRID_BG_C02GYM0201_CATEGORY_11
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--152 28 -8
+-152 8 -8
 #event number: 12
 #Bg Event Label
 BG_C02GYM0201_CATEGORY_12
@@ -912,7 +912,7 @@ SCRID_BG_C02GYM0201_CATEGORY_23
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--40 16 -8
+-40 8 -8
 #event number: 21
 #Bg Event Label
 BG_C02GYM0201_CATEGORY_01

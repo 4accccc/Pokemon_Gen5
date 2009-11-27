@@ -3,8 +3,6 @@
 #define ZONE_C07GYM0101_EVD_H
 
 #define DOOR_ID_C07GYM0101_C07_EXIT01     0
-#define DOOR_ID_C07GYM0101_C07_EXIT02     1
-#define DOOR_ID_C07GYM0101_C07_EXIT03     2
 
 #endif //ZONE_C07GYM0101_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c07gym0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -12,5 +10,6 @@
 #define ZONE_C07GYM0101_EVC_H
 
 #define C07GYM0101_LEADER7_01              0
+#define C07GYM0101_SUNGLASSES_01           1
 
 #endif //ZONE_C07GYM0101_EVC_H
