@@ -20,8 +20,19 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c07gym0101_leader7_01
+_EVENT_DATA    ev_pos_c07gym0101_test_01
 _EVENT_DATA_END
 
+
+
+
+
+EVENT_START	ev_pos_c07gym0101_test_01
+
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+
+EVENT_END
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
