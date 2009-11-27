@@ -8474,16 +8474,24 @@ static void scEvent_AfterDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
 static BOOL scEvent_CheckAddRankEffectOccur( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target )
 {
   u8 per = WAZADATA_GetParam( wazaParam->wazaID, WAZAPARAM_RANKPER_1 );
+  u8 failFlag;
 
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, FALSE );
     BTL_EVENTVAR_SetValue( BTL_EVAR_ADD_PER, per );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_ADD_RANK_TARGET );
+    failFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
     per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
   BTL_EVENTVAR_Pop();
 
-  return perOccur(per);
+  if( !failFlag ){
+    return perOccur(per);
+  }else{
+    return FALSE;
+  }
 }
 //--------------------------------------------------------------------------
 /**
