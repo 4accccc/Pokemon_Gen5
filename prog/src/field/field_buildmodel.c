@@ -1617,6 +1617,10 @@ G3DMAPOBJST ** FIELD_BMODEL_MAN_CreateObjStatusList
     {
     case BM_SEARCH_ID_DOOR:
       if ( FIELD_BMODEL_MAN_G3DMAPOBJSTisDoor(man, obj) == FALSE) continue;
+      break;
+    case BM_SEARCH_ID_SANDSTREAM:
+      break;
+    case BM_SEARCH_ID_NULL:
     default:
       break;
     }

@@ -111,7 +111,9 @@ typedef enum {
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef enum {
-  BM_SEARCH_ID_DOOR = 0,
+  BM_SEARCH_ID_NULL = 0,
+  BM_SEARCH_ID_DOOR,
+  BM_SEARCH_ID_SANDSTREAM,
 
   BM_SEARCH_ID_MAX,
 }BM_SEARCH_ID;
