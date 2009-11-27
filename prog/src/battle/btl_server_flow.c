@@ -4646,29 +4646,36 @@ static WazaSick scEvent_CheckAddSick( BTL_SVFLOW_WORK* wk, WazaID waza,
   WazaSick sick = WAZADATA_GetParam( waza, WAZAPARAM_SICK );
   WAZA_SICKCONT_PARAM  waza_contParam = WAZADATA_GetSickCont( waza );
   u8 per = WAZADATA_GetParam( waza, WAZAPARAM_SICK_PER );
+  u8 failFlag = FALSE;
 
   BTL_CALC_WazaSickContToBppSickCont( waza_contParam, attacker, &sickCont );
 
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, waza );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_SICKID, sick );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, failFlag );
     BTL_EVENTVAR_SetValue( BTL_EVAR_SICK_CONT, sickCont.raw );
     BTL_EVENTVAR_SetValue( BTL_EVAR_ADD_PER, per );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_ADD_SICK );
     per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
     sick = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
+    failFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
     if( sick == WAZASICK_SPECIAL_CODE ){
       sick = WAZASICK_NULL;
     }
     sickCont.raw = BTL_EVENTVAR_GetValue( BTL_EVAR_SICK_CONT );
   BTL_EVENTVAR_Pop();
 
-  if( sick != WAZASICK_NULL )
+  if( !failFlag )
   {
-    if( perOccur(per) ){
-      *pSickCont = sickCont;
-      return sick;
+    if( sick != WAZASICK_NULL )
+    {
+      if( perOccur(per) ){
+        *pSickCont = sickCont;
+        return sick;
+      }
     }
   }
   return  WAZASICK_NULL;
@@ -4778,7 +4785,6 @@ static WazaSick scEvent_DecideSpecialWazaSick( BTL_SVFLOW_WORK* wk,
   BTL_EVENTVAR_Pop();
   return sickID;
 }
-
 //----------------------------------------------------------------------------------
 /**
  * [Event] ワザによる状態異常の継続パラメータ調整
@@ -4813,6 +4819,40 @@ static void scproc_Fight_Damage_AddEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAP
     {
       scproc_WazaRankEffect_Common( wk, wazaParam, attacker, target, FALSE );
     }
+  }
+}
+//--------------------------------------------------------------------------
+/**
+ * 【Event】ワザによる追加ランク効果の発生チェック
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   target
+ * @param   waza
+ *
+ * @retval  BOOL    発生したらTRUE
+ */
+//--------------------------------------------------------------------------
+static BOOL scEvent_CheckAddRankEffectOccur( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target )
+{
+  u8 per = WAZADATA_GetParam( wazaParam->wazaID, WAZAPARAM_RANKPER_1 );
+  u8 failFlag;
+
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, FALSE );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_ADD_PER, per );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_ADD_RANK_TARGET );
+    failFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
+    per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
+  BTL_EVENTVAR_Pop();
+
+  if( !failFlag ){
+    return perOccur(per);
+  }else{
+    return FALSE;
   }
 }
 //---------------------------------------------------------------------------------------------
@@ -8208,8 +8248,8 @@ static u16 scEvent_getAttackPower( BTL_SVFLOW_WORK* wk,
     fx32 ratio;
     u16 power;
     BTL_EVENTVAR_Push();
-      BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-      BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
       BTL_EVENTVAR_SetValue( BTL_EVAR_SWAP_POKEID, BTL_POKEID_NULL );
       BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, FALSE );    //
       BTL_EVENT_CallHandlers( wk, BTL_EVENT_ATTACKER_POWER_PREV );
@@ -8237,7 +8277,7 @@ static u16 scEvent_getAttackPower( BTL_SVFLOW_WORK* wk,
       }
       BTL_EVENTVAR_SetValue( BTL_EVAR_POWER, power );
       BTL_EVENTVAR_SetMulValue( BTL_EVAR_RATIO, FX32_ONE, FX32_CONST(0.1), FX32_CONST(32) );
-      BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
       BTL_EVENT_CallHandlers( wk, BTL_EVENT_ATTACKER_POWER );
       power = BTL_EVENTVAR_GetValue( BTL_EVAR_POWER );
       ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
@@ -8461,40 +8501,6 @@ static void scEvent_AfterDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
 }
 //--------------------------------------------------------------------------
 /**
- * 【Event】ワザによる追加ランク効果の発生チェック
- *
- * @param   wk
- * @param   attacker
- * @param   target
- * @param   waza
- *
- * @retval  BOOL    発生したらTRUE
- */
-//--------------------------------------------------------------------------
-static BOOL scEvent_CheckAddRankEffectOccur( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target )
-{
-  u8 per = WAZADATA_GetParam( wazaParam->wazaID, WAZAPARAM_RANKPER_1 );
-  u8 failFlag;
-
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
-    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, FALSE );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_ADD_PER, per );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_ADD_RANK_TARGET );
-    failFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
-    per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
-  BTL_EVENTVAR_Pop();
-
-  if( !failFlag ){
-    return perOccur(per);
-  }else{
-    return FALSE;
-  }
-}
-//--------------------------------------------------------------------------
-/**
  * [Event] ワザによる（直接・追加）ランク増減効果を取得
  *
  * @param   wk
@@ -8580,9 +8586,9 @@ static void scEvent_RankEffect_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
 static void scEvent_RankEffect_Fix( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, WazaRankEffect rankType, int volume )
 {
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_STATUS_TYPE, rankType );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, volume );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_STATUS_TYPE, rankType );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_VOLUME, volume );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_RANKEFF_FIXED );
   BTL_EVENTVAR_Pop();
 }
@@ -8601,10 +8607,10 @@ static void scEvent_WazaRankEffectFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARA
   WazaID wazaID, WazaRankEffect effectID, int volume )
 {
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(target) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, wazaID );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_STATUS_TYPE, effectID );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, volume );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(target) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaID );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_STATUS_TYPE, effectID );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_VOLUME, volume );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_RANKEFF_FIXED );
   BTL_EVENTVAR_Pop();
 }

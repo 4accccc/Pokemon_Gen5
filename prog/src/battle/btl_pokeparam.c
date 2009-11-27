@@ -291,6 +291,9 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP )
   bpp->formNo = PP_Get( srcPP, ID_PARA_form_no, 0 );
   bpp->exp = PP_Get( srcPP, ID_PARA_exp, NULL );
   bpp->weight = POKETOOL_GetPersonalParam( bpp->baseParam.monsno, bpp->formNo, POKEPER_ID_weight ) / 10;
+  if( bpp->weight < BTL_POKE_WEIGHT_MIN ){
+    bpp->weight = BTL_POKE_WEIGHT_MIN;
+  }
 }
 //----------------------------------------------------------------------------------
 /**
@@ -2031,6 +2034,9 @@ u32 BPP_GetWazaContCounter( const BTL_POKEPARAM* pp )
 //=============================================================================================
 void BPP_SetWeight( BTL_POKEPARAM* bpp, u16 weight )
 {
+  if( weight < BTL_POKE_WEIGHT_MIN ){
+    weight = BTL_POKE_WEIGHT_MIN;
+  }
   bpp->weight = weight;
 }
 //=============================================================================================
@@ -2044,7 +2050,16 @@ void BPP_SetWeight( BTL_POKEPARAM* bpp, u16 weight )
 //=============================================================================================
 u16 BPP_GetWeight( const BTL_POKEPARAM* bpp )
 {
-  return bpp->weight;
+  u16 weight = bpp->weight;
+  if( bpp->tokusei == POKETOKUSEI_HEVYMETARU ){
+    weight *= 2;
+  }else if( bpp->tokusei == POKETOKUSEI_RAITOMETARU ){
+    weight /= 2;
+    if( weight < BTL_POKE_WEIGHT_MIN ){
+      weight = BTL_POKE_WEIGHT_MIN;
+    }
+  }
+  return weight;
 }
 //----------------------------------------------------------------------------------
 /**
