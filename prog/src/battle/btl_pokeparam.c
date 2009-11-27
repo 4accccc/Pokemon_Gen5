@@ -2051,7 +2051,7 @@ void BPP_SetWeight( BTL_POKEPARAM* bpp, u16 weight )
 u16 BPP_GetWeight( const BTL_POKEPARAM* bpp )
 {
   u16 weight = bpp->weight;
-  if( bpp->tokusei == POKETOKUSEI_HEVYMETARU ){
+  if( bpp->tokusei == POKETOKUSEI_HEVIMETARU ){
     weight *= 2;
   }else if( bpp->tokusei == POKETOKUSEI_RAITOMETARU ){
     weight /= 2;
