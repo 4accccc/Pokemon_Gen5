@@ -2,6 +2,8 @@
 "ice_karakuri_02.nsbmd"
 "swich.nsbmd"
 "ice_karakuri_01.nsbca"
+"ice_karakuri_01_2.nsbca"
 "ice_karakuri_02.nsbca"
+"ice_karakuri_02_2.nsbca"
 "swich_br.nsbta"
 "swich_rb.nsbta"
