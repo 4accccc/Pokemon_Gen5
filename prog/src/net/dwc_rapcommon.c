@@ -93,7 +93,7 @@ void DWC_RAPCOMMON_SetHeapID(HEAPID id,int size)
 
   pDwcRapWork=GFL_HEAP_AllocClearMemory(GFL_HEAPID_SYSTEM,sizeof(DWCRAPCOMMON_WORK));
   pDwcRapWork->heapPtr = GFL_HEAP_AllocMemory(id, size-0x80);
-  pDwcRapWork->headHandle = NNS_FndCreateExpHeap( (void *)( ((u32)pDwcRapWork->heapPtr + 31) / 32 * 32 ), size-64);
+  pDwcRapWork->headHandle = NNS_FndCreateExpHeap( (void *)( ((u32)pDwcRapWork->heapPtr + 31) / 32 * 32 ), size-0x80-64);
 
   
 }
