@@ -31,16 +31,37 @@
 
 #define WALL_ANM_NUM  (1)
 
+#define WALL1_X (WALL1_GX*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define WALL2_X (WALL2_GX*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define WALL3_X (WALL3_GX*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define WALL1_Y (WALL1_GY*FIELD_CONST_GRID_FX32_SIZE)
+#define WALL2_Y (WALL2_GY*FIELD_CONST_GRID_FX32_SIZE)
+#define WALL3_Y (WALL3_GY*FIELD_CONST_GRID_FX32_SIZE)
+#define WALL1_Z (WALL1_GZ*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define WALL2_Z (WALL2_GZ*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define WALL3_Z (WALL3_GZ*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+
+#define SW1_X (SW1_GX*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define SW2_X (SW2_GX*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define SW3_X (SW3_GX*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define SW1_Y (SW1_GY*FIELD_CONST_GRID_FX32_SIZE)
+#define SW2_Y (SW2_GY*FIELD_CONST_GRID_FX32_SIZE)
+#define SW3_Y (SW3_GY*FIELD_CONST_GRID_FX32_SIZE)
+#define SW1_Z (SW1_GZ*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define SW2_Z (SW2_GZ*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define SW3_Z (SW3_GZ*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+
+
 static const VecFx32 WallPos[WALL_NUM_MAX] = {
-  { WALL1_GX, WALL1_GY, WALL1_GZ },
-  { WALL2_GX, WALL2_GY, WALL2_GZ },
-  { WALL3_GX, WALL3_GY, WALL3_GZ },
+  { WALL1_X, WALL1_Y, WALL1_Z },
+  { WALL2_X, WALL2_Y, WALL2_Z },
+  { WALL3_X, WALL3_Y, WALL3_Z },
 };
 
 static const VecFx32 SwPos[WALL_NUM_MAX] = {
-  { SW1_GX, SW1_GY, SW1_GZ },
-  { SW2_GX, SW2_GY, SW2_GZ },
-  { SW3_GX, SW3_GY, SW3_GZ },
+  { SW1_X, SW1_Y, SW1_Z },
+  { SW2_X, SW2_Y, SW2_Z },
+  { SW3_X, SW3_Y, SW3_Z },
 };
 
 //リソースの並び順番
@@ -73,14 +94,14 @@ typedef struct GYM_ICE_TMP_tag
 //--リソース関連--
 //読み込む3Dリソース
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
-	{ ARCID_GYM_GROUND, NARC_gym_ice_ice_karakuri_01_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
-  { ARCID_GYM_GROUND, NARC_gym_ice_ice_karakuri_02_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
-  { ARCID_GYM_GROUND, NARC_gym_ice_swich_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
+	{ ARCID_GYM_ICE, NARC_gym_ice_ice_karakuri_01_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
+  { ARCID_GYM_ICE, NARC_gym_ice_ice_karakuri_02_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
+  { ARCID_GYM_ICE, NARC_gym_ice_swich_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
 
-  { ARCID_GYM_GROUND, NARC_gym_ice_ice_karakuri_01_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
-  { ARCID_GYM_GROUND, NARC_gym_ice_ice_karakuri_02_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
-  { ARCID_GYM_GROUND, NARC_gym_ice_swich_br_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
-  { ARCID_GYM_GROUND, NARC_gym_ice_swich_br_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
+  { ARCID_GYM_ICE, NARC_gym_ice_ice_karakuri_01_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
+  { ARCID_GYM_ICE, NARC_gym_ice_ice_karakuri_02_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
+  { ARCID_GYM_ICE, NARC_gym_ice_swich_br_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
+  { ARCID_GYM_ICE, NARC_gym_ice_swich_br_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
 };
 
 //3Dアニメ　リフト
@@ -157,7 +178,7 @@ static const GFL_G3D_UTIL_SETUP Setup = {
 };
 
 
-static void SetupWallAnm(GYM_ICE_SV_WORK *gmk_sv_work, FLD_EXP_OBJ_CNT_PTR ptr, const int inWallIdx);
+static void SetupWallSwAnm(GYM_ICE_SV_WORK *gmk_sv_work, FLD_EXP_OBJ_CNT_PTR ptr, const int inWallIdx);
 
 //--------------------------------------------------------------
 /**
@@ -189,13 +210,30 @@ void GYM_ICE_Setup(FIELDMAP_WORK *fieldWork)
   for (i=0;i<WALL_NUM_MAX;i++)
   {
     int j;
-    int idx = OBJ_WALL_1 + i;
-    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_ICE_UNIT_IDX, idx);
+    int idx;
+    GFL_G3D_OBJSTATUS *status;
+    //壁
+    idx = OBJ_WALL_1 + i;
+    status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_ICE_UNIT_IDX, idx);
     status->trans = WallPos[i];
-
     //カリングする
     FLD_EXP_OBJ_SetCulling(ptr, GYM_ICE_UNIT_IDX, idx, TRUE);
+    for (j=0;j<WALL_ANM_NUM;j++)
+    {
+      //1回再生設定
+      EXP_OBJ_ANM_CNT_PTR anm;
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ICE_UNIT_IDX, idx, j);
+      FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+      //アニメ停止
+      FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+    }
 
+    //スイッチ
+    idx = OBJ_SW_1 + i;
+    status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_ICE_UNIT_IDX, idx);
+    status->trans = SwPos[i];
+    //カリングする
+    FLD_EXP_OBJ_SetCulling(ptr, GYM_ICE_UNIT_IDX, idx, TRUE);
     for (j=0;j<WALL_ANM_NUM;j++)
     {
       //1回再生設定
@@ -206,7 +244,7 @@ void GYM_ICE_Setup(FIELDMAP_WORK *fieldWork)
       FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
     }
     
-    SetupWallAnm(gmk_sv_work, ptr, i);
+    SetupWallSwAnm(gmk_sv_work, ptr, i);
   }
 }
 
@@ -254,14 +292,14 @@ void GYM_ICE_Move(FIELDMAP_WORK *fieldWork)
 
 //--------------------------------------------------------------
 /**
- * 壁アニメ準備
+ * 壁、スイッチアニメ準備
  * @param   gmk_sv_work   ギミックセーブワーク
  * @param   ptr       拡張ＯＢＪコントロールポインタ
  * @param	  inWallIdx 壁インデックス
  * @return  none
  */
 //--------------------------------------------------------------
-static void SetupWallAnm(GYM_ICE_SV_WORK *gmk_sv_work, FLD_EXP_OBJ_CNT_PTR ptr, const int inWallIdx)
+static void SetupWallSwAnm(GYM_ICE_SV_WORK *gmk_sv_work, FLD_EXP_OBJ_CNT_PTR ptr, const int inWallIdx)
 {
 }
 
