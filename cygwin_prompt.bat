@@ -1,6 +1,6 @@
 @echo off
 
-SET USERNAME=none
+SET USERNAME=
 
 SET HOME_TMP=%~dp0
 SET PROJECT_ROOT=%HOME_TMP:\=/%
