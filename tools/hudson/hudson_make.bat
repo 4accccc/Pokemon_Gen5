@@ -11,7 +11,7 @@ SET PATH_TOOLS=C:\.hudson\jobs\wb_make\workspace\pokemon_wb\tools\hudson
 REM デバイスのON/OFF は問題なく動作する。
 REM devcon enable *HID*
 
-REM IPMSGなぜかはhudsonがexit 0を拾ってしまう。
+REM IPMSGはなぜかhudsonがexit 0を拾ってしまう。
 
 REM ================================
 REM ユーザーネーム設定
@@ -31,7 +31,7 @@ if %ERRORLEVEL% == 0 goto END:
 REM ================================
 REM エラー処理
 REM ================================
-REM cleanしておく
+REM cleanしておく-> 通知が遅れてしまうので一端コメントアウト
 REM make clean
 
 @echo errorlevel = %ERRORLEVEL%

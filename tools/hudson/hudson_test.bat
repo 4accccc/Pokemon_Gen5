@@ -18,8 +18,8 @@ PATH=c:\tools;%PROJECT_ROOT%;%PROJECT_ROOT%\tools;c:\tools\subversion\bin;c:\cyg
 REM main.srl
 SET PATH_MAIN_SRL=%PROJECT_PROGDIR%bin/ARM9-TS/Release/main.srl
 
-REM 実行タイムアウト(秒) >> hudsonで指定
-SET TIMEOUT_EXEC=%1 
+REM 最後のPrintfからのタイムアウト(秒) >> hudsonで指定
+SET TIMEOUT_DISP=%1 
 
 REM 対象DSのシリアルナンバー >> hudsonで指定
 SET SERIAL_NO=%2
@@ -37,7 +37,7 @@ SET USERNAME=hudson
 @echo USERNAME = %USERNAME%
 
 @echo loadpath = %PATH_MAIN_SRL%
-@echo timeout_exec = %TIMEOUT_EXEC%
+@echo TIMEOUT_DISP = %TIMEOUT_DISP%
 @echo serial_no = %SERIAL_NO%
 
 REM ================================
@@ -46,7 +46,7 @@ REM ================================
 
 REM buryarg %PATH_MAIN_SRL% 1
 
-loadrun -T %TIMEOUT_EXEC% -s %SERIAL_NO% -a %ABORT_STRING% %PATH_MAIN_SRL%
+loadrun -t %TIMEOUT_DISP% -s %SERIAL_NO% -a %ABORT_STRING% %PATH_MAIN_SRL%
 echo ErrorLevel = %ERRORLEVEL%
 
 REM デバイスが見つからなかった
