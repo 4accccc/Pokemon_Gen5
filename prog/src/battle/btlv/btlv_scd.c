@@ -765,12 +765,12 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
   BTL_POS_2ND_2,
 #endif
     bisp.bidp[ vpos ].hp = BPP_GetValue( bpp, BPP_HP );
+    bisp.bidp[ vpos ].exist = 1;
     if( bisp.bidp[ vpos ].hp )
     {
       int mons_no = BPP_GetMonsNo( bpp );
       bisp.bidp[ vpos ].pp = pp;
       bisp.bidp[ vpos ].hpmax = BPP_GetValue( bpp, BPP_MAX_HP );
-      bisp.bidp[ vpos ].exist = 1;
       if( ( mons_no == MONSNO_NIDORAN_M ) || ( mons_no == MONSNO_NIDORAN_F ) )
       {
         bisp.bidp[ vpos ].sex = PTL_SEX_UNKNOWN;
@@ -791,7 +791,6 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
     }
     else
     {
-      bisp.bidp[ vpos ].exist = 0;
       bisp.bidp[ vpos ].status = BTLV_INPUT_STATUS_DEAD;
     }
     pos++;
