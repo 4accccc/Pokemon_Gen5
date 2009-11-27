@@ -722,18 +722,24 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btlv/btlv_timer.c \
 			battle/btlv/btlv_bg.c \
 			battle/app/b_app_tool.c \
-			battle/app/b_bag_bmp.c \
+			poke_tool/pp_to_rpp.c
+
+# バトル用バッグ
+#===> SRCS_OVERLAY_BATTLE
+SRCS_OVERLAY_BATTLE_BAG = battle/app/b_bag_bmp.c \
 			battle/app/b_bag_item.c \
 			battle/app/b_bag_anm.c \
 			battle/app/b_bag_obj.c \
 			battle/app/b_bag_main.c \
-			battle/app/b_bag_ui.c \
-			battle/app/b_plist_anm.c \
+			battle/app/b_bag_ui.c
+
+# バトル用ポケモンリスト
+#===> SRCS_OVERLAY_BATTLE
+SRCS_OVERLAY_BATTLE_PLIST = battle/app/b_plist_anm.c \
 			battle/app/b_plist_bmp.c \
 			battle/app/b_plist_obj.c \
 			battle/app/b_plist_main.c \
-			battle/app/b_plist_ui.c \
-			poke_tool/pp_to_rpp.c
+			battle/app/b_plist_ui.c
 
 # WIFICLUB
 #===> SRCS_OVERLAY_DEV_WIFI
