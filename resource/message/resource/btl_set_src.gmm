@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-11-27T14:42:39"/>
+	<create user="taya" host="W00146" date="2009-11-27T16:55:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -470,7 +470,7 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 こうげきが　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
-こうげきが　上がった！</language>
+攻撃が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_DEF" back-color=",,,,#00ff00,,,,,,,,,,,,,,">
@@ -484,7 +484,7 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 とくこうが　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
-とくこうが上がった！</language>
+特攻が上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_SPDEF">
@@ -520,7 +520,7 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 こうげきが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
-こうげきが　ぐーんと上がった！</language>
+攻撃が　ぐーんと上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_RankupEx_DEF">
@@ -534,7 +534,7 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 とくこうが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
-とくこうがぐーんと上がった！</language>
+特攻がぐーんと上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_RankupEx_SPDEF">
