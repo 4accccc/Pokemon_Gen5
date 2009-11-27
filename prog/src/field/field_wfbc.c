@@ -63,6 +63,17 @@ static const WFBC_PEOPLE_POS  sc_WFBC_PEOPLE_POS[ FIELD_WFBC_CORE_TYPE_MAX ][ FI
     { 51,12 },
     { 55,20 },
     { 59,30 },
+
+    { 24,13 },
+    { 28,33 },
+    { 32,25 },
+    { 36,30 },
+    { 40,18 },
+    { 44,17 },
+    { 48,29 },
+    { 52,13 },
+    { 56,21 },
+    { 60,31 },
   },
   
 
@@ -78,6 +89,17 @@ static const WFBC_PEOPLE_POS  sc_WFBC_PEOPLE_POS[ FIELD_WFBC_CORE_TYPE_MAX ][ FI
     { 51,12 },
     { 55,20 },
     { 59,30 },
+
+    { 24,13 },
+    { 28,33 },
+    { 32,25 },
+    { 36,30 },
+    { 40,18 },
+    { 44,17 },
+    { 48,29 },
+    { 52,13 },
+    { 56,21 },
+    { 60,31 },
   },
 };
 
@@ -96,9 +118,13 @@ struct _FIELD_WFBC_PEOPLE
   u16   npcid;    // 人物ID
   u16   objcode;  // 見た目
   u16   move_code;// 動作
+  u8    mood;     // 機嫌
+  u8    one_day_msk;// バトルフラグ
 
   u16   gx;   // グリッドｘ座標
   u16   gz;   // グリッドｚ座標
+
+  const FIELD_WFBC_CORE_PEOPLE* cp_core;
 };
 
 //-------------------------------------
@@ -108,6 +134,8 @@ struct _FIELD_WFBC
 {
   FIELD_WFBC_CORE_TYPE type;
   FIELD_WFBC_PEOPLE people[ FIELD_WFBC_PEOPLE_MAX ];
+
+  const FIELD_WFBC_CORE* cp_core;
 };
 
 //-----------------------------------------------------------------------------
@@ -466,6 +494,8 @@ static void WFBC_SetCore( FIELD_WFBC* p_wk, const FIELD_WFBC_CORE* cp_buff )
       WFBC_PEOPLE_SetUp( &p_wk->people[i], &cp_buff->people[i], &sc_WFBC_PEOPLE_POS[ p_wk->type ][ i ] );
     }
   }
+
+  p_wk->cp_core = cp_buff;
 }
 
 //----------------------------------------------------------------------------
@@ -528,8 +558,10 @@ static void WFBC_PEOPLE_SetUp( FIELD_WFBC_PEOPLE* p_people, const FIELD_WFBC_COR
   result = FIELD_WFBC_CORE_PEOPLE_IsInData( cp_core );
   GF_ASSERT( result == TRUE );
 
-  p_people->status  = FIELD_WFBC_PEOPLE_STATUS_NORMAL;
-  p_people->npcid   = cp_core->npc_id;
+  p_people->status        = FIELD_WFBC_PEOPLE_STATUS_NORMAL;
+  p_people->npcid         = cp_core->npc_id;
+  p_people->mood          = cp_core->mood;
+  p_people->one_day_msk   = cp_core->one_day_msk;
 
   // NPCIDの基本情報を読み込む
   p_people->objcode   = 0x5;
@@ -537,7 +569,8 @@ static void WFBC_PEOPLE_SetUp( FIELD_WFBC_PEOPLE* p_people, const FIELD_WFBC_COR
   p_people->gx        = cp_pos->gx;
   p_people->gz        = cp_pos->gz;
 
-  // 拡張データを設定する
+  // コア情報を保存
+  p_people->cp_core = cp_core;
 }
 
 
