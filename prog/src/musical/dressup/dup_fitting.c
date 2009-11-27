@@ -1195,6 +1195,12 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
       }
       */
       work->itemStateBase[work->totalItemNum].isNew = FALSE;
+#ifdef PM_DEBUG
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+      {
+        work->itemStateBase[work->totalItemNum].isNew = TRUE;
+      }
+#endif
       work->totalItemNum++;
     }
   }
