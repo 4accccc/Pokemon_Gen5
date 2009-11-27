@@ -11,7 +11,6 @@
 #pragma once
 
 #include "poke_tool/poke_tool.h"
-#include "multiboot/mb_data_def.h"
 #include "multiboot/mb_local_def.h"
 
 //======================================================================
@@ -32,12 +31,7 @@ typedef struct _MB_CAP_POKE MB_CAP_POKE;
 
 typedef struct
 {
-  HEAPID      heapId;
-  GFL_BBD_SYS *bbdSys;
-  ARCHANDLE   *arcHandle;
   ARCHANDLE   *pokeArcHandle;
-
-  DLPLAY_CARD_TYPE cardType;
   
   POKEMON_PASO_PARAM *ppp;
   
@@ -51,6 +45,6 @@ typedef struct
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------
-extern MB_CAP_POKE *MB_CAP_POKE_CreateObject( MB_CAP_POKE_INIT_WORK *initWork );
-extern void MB_CAP_POKE_DeleteObject( MB_CAP_POKE *mbPoke );
+extern MB_CAP_POKE *MB_CAP_POKE_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE_INIT_WORK *initWork );
+extern void MB_CAP_POKE_DeleteObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
 

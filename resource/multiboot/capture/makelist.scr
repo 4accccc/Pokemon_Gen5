@@ -1,5 +1,21 @@
 "wb_sound_palpark_game.sdat"
 
+"cap_bgd.NCLR"
+"cap_bgd.NCGR"
+"cap_bgd.NSCR"
+"cap_bgu.NCLR"
+"cap_bgu.NCGR"
+"cap_bgu_field.NSCR"
+"cap_bgu_gage.NSCR"
+"cap_bow.NCLR"
+"cap_bow.NCGR"
+"cap_bow.NSCR"
+
+"cap_objd.NCLR"
+"cap_objd.NCGR"
+"cap_objd.NCER"
+"cap_objd.NANR"
+
 "cap_obj_kusamura1.nsbtx"
 "cap_obj_kusamura2.nsbtx"
 "cap_obj_water.nsbtx"

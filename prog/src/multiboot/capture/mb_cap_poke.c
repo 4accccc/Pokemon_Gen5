@@ -16,6 +16,7 @@
 
 #include "multiboot/mb_poke_icon.h"
 
+#include "./mb_cap_local_def.h"
 #include "./mb_cap_poke.h"
 
 //======================================================================
@@ -35,8 +36,6 @@
 #pragma mark [> struct
 struct _MB_CAP_POKE
 {
-  GFL_BBD_SYS *bbdSys;
-  
   int resIdx;
   int objIdx;
 };
@@ -56,12 +55,18 @@ typedef struct
 //--------------------------------------------------------------
 //	オブジェクト作成
 //--------------------------------------------------------------
-MB_CAP_POKE *MB_CAP_POKE_CreateObject( MB_CAP_POKE_INIT_WORK *initWork )
+MB_CAP_POKE *MB_CAP_POKE_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE_INIT_WORK *initWork )
 {
-  MB_CAP_POKE *mbPoke = GFL_HEAP_AllocClearMemory( initWork->heapId , sizeof( MB_CAP_POKE ) );
+  const HEAPID heapId = MB_CAPTURE_GetHeapId( capWork );
+  GFL_BBD_SYS *bbdSys = MB_CAPTURE_GetBbdSys( capWork );
+  ARCHANDLE *arcHandle = MB_CAPTURE_GetArcHandle( capWork );
+  const DLPLAY_CARD_TYPE cardType = MB_CAPTURE_GetCardType( capWork );
 
-  GFL_G3D_RES* res = GFL_G3D_CreateResourceHandle( initWork->arcHandle , NARC_mb_capture_gra_cap_poke_dummy_nsbtx );
+  MB_CAP_POKE *pokeWork = GFL_HEAP_AllocClearMemory( heapId , sizeof( MB_CAP_POKE ) );
+
+  GFL_G3D_RES* res = GFL_G3D_CreateResourceHandle( arcHandle , NARC_mb_capture_gra_cap_poke_dummy_nsbtx );
   const BOOL flg = TRUE;
+#if DEB_ARI
   VecFx32 pos = {0,0,0};
   static u8 tempPos = 0;
   
@@ -69,44 +74,42 @@ MB_CAP_POKE *MB_CAP_POKE_CreateObject( MB_CAP_POKE_INIT_WORK *initWork )
   pos.y = FX32_CONST(80);
   pos.z = FX32_CONST(200);
   tempPos++;
-  
-  mbPoke->bbdSys = initWork->bbdSys;
-  
+#endif
   GFL_G3D_TransVramTexture( res );
-  mbPoke->resIdx = GFL_BBD_AddResource( mbPoke->bbdSys , 
+  pokeWork->resIdx = GFL_BBD_AddResource( bbdSys , 
                                        res , 
                                        GFL_BBD_TEXFMT_PAL16 ,
                                        GFL_BBD_TEXSIZDEF_32x64 ,
                                        32 , 32 );
-  GFL_BBD_CutResourceData( mbPoke->bbdSys , mbPoke->resIdx );
+  GFL_BBD_CutResourceData( bbdSys , pokeWork->resIdx );
   
-  mbPoke->objIdx = GFL_BBD_AddObject( mbPoke->bbdSys , 
-                                     mbPoke->resIdx ,
+  pokeWork->objIdx = GFL_BBD_AddObject( bbdSys , 
+                                     pokeWork->resIdx ,
                                      FX32_ONE , 
                                      FX32_ONE , 
                                      &pos ,
                                      31 ,
                                      GFL_BBD_LIGHT_NONE );
-  GFL_BBD_SetObjectDrawEnable( mbPoke->bbdSys , mbPoke->objIdx , &flg );
+  GFL_BBD_SetObjectDrawEnable( bbdSys , pokeWork->objIdx , &flg );
   //3D設定の関係で反転させる・・・
-  GFL_BBD_SetObjectFlipT( mbPoke->bbdSys , mbPoke->objIdx , &flg );
+  GFL_BBD_SetObjectFlipT( bbdSys , pokeWork->objIdx , &flg );
 
   //アイコンデータをVRAMへ送る
   {
-    const u32 pltResNo = MB_ICON_GetPltResId( initWork->cardType );
-    const u32 ncgResNo = MB_ICON_GetCharResId( initWork->ppp , initWork->cardType );
+    const u32 pltResNo = MB_ICON_GetPltResId( cardType );
+    const u32 ncgResNo = MB_ICON_GetCharResId( initWork->ppp , cardType );
     const u8  palNo = MB_ICON_GetPalNumber( initWork->ppp );
     NNSG2dPaletteData *pltData;
     NNSG2dCharacterData *charData;
-    void *pltRes = GFL_ARCHDL_UTIL_LoadPalette( initWork->pokeArcHandle , pltResNo , &pltData , GFL_HEAP_LOWID( initWork->heapId ) );
-    void *ncgRes = GFL_ARCHDL_UTIL_LoadOBJCharacter( initWork->pokeArcHandle , ncgResNo , FALSE , &charData , GFL_HEAP_LOWID( initWork->heapId ) );
+    void *pltRes = GFL_ARCHDL_UTIL_LoadPalette( initWork->pokeArcHandle , pltResNo , &pltData , GFL_HEAP_LOWID( heapId ) );
+    void *ncgRes = GFL_ARCHDL_UTIL_LoadOBJCharacter( initWork->pokeArcHandle , ncgResNo , FALSE , &charData , GFL_HEAP_LOWID( heapId ) );
     u32 texAdr,pltAdr,pltDataAdr;
-    GFL_BMP_DATA *bmpData = GFL_BMP_CreateWithData( charData->pRawData , 4 , 8 , GFL_BMP_16_COLOR , GFL_HEAP_LOWID( initWork->heapId ) );
+    GFL_BMP_DATA *bmpData = GFL_BMP_CreateWithData( charData->pRawData , 4 , 8 , GFL_BMP_16_COLOR , GFL_HEAP_LOWID( heapId ) );
     
-    GFL_BMP_DataConv_to_BMPformat( bmpData , FALSE , GFL_HEAP_LOWID( initWork->heapId ) );
+    GFL_BMP_DataConv_to_BMPformat( bmpData , FALSE , GFL_HEAP_LOWID( heapId ) );
     
-    GFL_BBD_GetResourceTexPlttAdrs( mbPoke->bbdSys , mbPoke->resIdx , &pltAdr );
-    GFL_BBD_GetResourceTexDataAdrs( mbPoke->bbdSys , mbPoke->resIdx , &texAdr );
+    GFL_BBD_GetResourceTexPlttAdrs( bbdSys , pokeWork->resIdx , &pltAdr );
+    GFL_BBD_GetResourceTexDataAdrs( bbdSys , pokeWork->resIdx , &texAdr );
     //pltData->pRawData;
     //charData->pRawData;
     
@@ -125,16 +128,20 @@ MB_CAP_POKE *MB_CAP_POKE_CreateObject( MB_CAP_POKE_INIT_WORK *initWork )
     GFL_HEAP_FreeMemory( ncgRes );
   }
 
-  return mbPoke;
+  return pokeWork;
 }
 
 //--------------------------------------------------------------
 //	オブジェクト開放
 //--------------------------------------------------------------
-void MB_CAP_POKE_DeleteObject( MB_CAP_POKE *CAP_POKE )
+void MB_CAP_POKE_DeleteObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork )
 {
- 
-  GFL_HEAP_FreeMemory( CAP_POKE );
+  GFL_BBD_SYS *bbdSys = MB_CAPTURE_GetBbdSys( capWork );
+
+  GFL_BBD_RemoveObject( bbdSys , pokeWork->objIdx );
+  GFL_BBD_RemoveResource( bbdSys , pokeWork->resIdx );
+
+  GFL_HEAP_FreeMemory( pokeWork );
 }
 
 

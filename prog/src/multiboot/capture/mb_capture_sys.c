@@ -17,7 +17,7 @@
 #include "system/wipe.h"
 
 #include "arc_def.h"
-#include "mb_child_gra.naix"
+#include "mb_capture_gra.naix"
 
 #include "multiboot/mb_util_msg.h"
 #include "multiboot/mb_poke_icon.h"
@@ -25,6 +25,7 @@
 #include "multiboot/mb_capture_sys.h"
 #include "./mb_cap_obj.h"
 #include "./mb_cap_poke.h"
+#include "./mb_cap_down.h"
 #include "./mb_cap_local_def.h"
 
 
@@ -32,10 +33,6 @@
 //	define
 //======================================================================
 #pragma mark [> define
-#define MB_CAPTURE_FRAME_MSG (GFL_BG_FRAME1_M)
-#define MB_CAPTURE_FRAME_BG  (GFL_BG_FRAME3_M)
-
-#define MB_CAPTURE_FRAME_SUB_BG  (GFL_BG_FRAME3_S)
 
 //======================================================================
 //	enum
@@ -54,7 +51,7 @@ typedef enum
 //	typedef struct
 //======================================================================
 #pragma mark [> struct
-typedef struct
+struct _MB_CAPTURE_WORK
 {
   HEAPID heapId;
   GFL_TCB *vBlankTcb;
@@ -65,10 +62,10 @@ typedef struct
   GFL_G3D_CAMERA    *camera;
   GFL_BBD_SYS     *bbdSys;
   
-  MB_CAP_POKE *pokeObj[MB_CAP_POKE_NUM];
-  MB_CAP_OBJ  *fieldObj[MB_CAP_OBJ_NUM];
-  
-}MB_CAPTURE_WORK;
+  MB_CAP_POKE *pokeWork[MB_CAP_POKE_NUM];
+  MB_CAP_OBJ  *objWork[MB_CAP_OBJ_NUM];
+  MB_CAP_DOWN *downWork;
+};
 
 
 //======================================================================
@@ -96,14 +93,14 @@ static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_BGEXTPLTT_NONE,       // メイン2DエンジンのBG拡張パレット
   GX_VRAM_SUB_BG_128_C,         // サブ2DエンジンのBG
   GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
-  GX_VRAM_OBJ_NONE ,           // メイン2DエンジンのOBJ
+  GX_VRAM_OBJ_64_E ,           // メイン2DエンジンのOBJ
   GX_VRAM_OBJEXTPLTT_NONE,      // メイン2DエンジンのOBJ拡張パレット
   GX_VRAM_SUB_OBJ_128_D,        // サブ2DエンジンのOBJ
   GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
   GX_VRAM_TEX_0_B,             // テクスチャイメージスロット
   GX_VRAM_TEXPLTT_01_FG,         // テクスチャパレットスロット
-  GX_OBJVRAMMODE_CHAR_1D_128K,
-  GX_OBJVRAMMODE_CHAR_1D_128K
+  GX_OBJVRAMMODE_CHAR_1D_32K,
+  GX_OBJVRAMMODE_CHAR_1D_32K
 };
 
 
@@ -120,6 +117,7 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
 
   MB_CAPTURE_InitObject( work );
   MB_CAPTURE_InitPoke( work );
+  work->downWork = MB_CAP_DOWN_InitSystem( work );
 }
 
 //--------------------------------------------------------------
@@ -127,6 +125,7 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
 //--------------------------------------------------------------
 static void MB_CAPTURE_Term( MB_CAPTURE_WORK *work )
 {
+  MB_CAP_POKE_DeleteSystem( work , work->downWork );
   MB_CAPTURE_TermObject( work );
   MB_CAPTURE_TermPoke( work );
 
@@ -173,6 +172,8 @@ static const BOOL MB_CAPTURE_Main( MB_CAPTURE_WORK *work )
     }
     break;
   }
+
+  MB_CAP_POKE_UpdateSystem( work , work->downWork );
 
   //3D描画  
   GFL_G3D_DRAW_Start();
@@ -229,13 +230,13 @@ static void MB_CAPTURE_InitGraphic( MB_CAPTURE_WORK *work )
   //Vram割り当ての設定
   {
     static const GFL_BG_SYS_HEADER sys_data = {
-        GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
+        GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_1, GX_BG0_AS_3D,
     };
-    // BG1 MAIN (メッセージ
+    // BG1 MAIN (枠
     static const GFL_BG_BGCNT_HEADER header_main1 = {
       0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000,0x6000,
+      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x18000,0x0000,
       GX_BG_EXTPLTT_01, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG2 MAIN (キャラ
@@ -253,19 +254,26 @@ static void MB_CAPTURE_InitGraphic( MB_CAPTURE_WORK *work )
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
-    // BG3 SUB (背景
-    static const GFL_BG_BGCNT_HEADER header_sub3 = {
+    // BG2 SUB (背景
+    static const GFL_BG_BGCNT_HEADER header_sub2 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x18000,0x08000,
+      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x18000,0x08000,
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
+    // BG3 SUB (弓・アフィン
+    static const GFL_BG_BGCNT_HEADER header_sub3 = {
+      0, 0, 0x1000, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
+      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x08000,0x10000,
+      GX_BG_EXTPLTT_23, 2, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     GFL_BG_SetBGMode( &sys_data );
 
-    MB_CAPTURE_SetupBgFunc( &header_main1 , MB_CAPTURE_FRAME_MSG , GFL_BG_MODE_TEXT );
-    //MB_CAPTURE_SetupBgFunc( &header_main2 , LTVT_FRAME_CHARA , GFL_BG_MODE_TEXT );
+    MB_CAPTURE_SetupBgFunc( &header_main1 , MB_CAPTURE_FRAME_FRAME , GFL_BG_MODE_TEXT );
     MB_CAPTURE_SetupBgFunc( &header_main3 , MB_CAPTURE_FRAME_BG , GFL_BG_MODE_TEXT );
-    MB_CAPTURE_SetupBgFunc( &header_sub3  , MB_CAPTURE_FRAME_SUB_BG , GFL_BG_MODE_TEXT );
+    MB_CAPTURE_SetupBgFunc( &header_sub2  , MB_CAPTURE_FRAME_SUB_BG , GFL_BG_MODE_TEXT );
+    MB_CAPTURE_SetupBgFunc( &header_sub3  , MB_CAPTURE_FRAME_SUB_BOW , GFL_BG_MODE_AFFINE );
     
   }
 
@@ -275,6 +283,7 @@ static void MB_CAPTURE_InitGraphic( MB_CAPTURE_WORK *work )
     GFL_CLACT_SYS_Create( &cellSysInitData , &vramBank ,work->heapId );
     
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
+    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
   }
   
   //3Dの初期化
@@ -338,9 +347,10 @@ static void MB_CAPTURE_TermGraphic( MB_CAPTURE_WORK *work )
   GFL_G3D_Exit();
 
   GFL_CLACT_SYS_Delete();
-  GFL_BG_FreeBGControl( MB_CAPTURE_FRAME_MSG );
+  GFL_BG_FreeBGControl( MB_CAPTURE_FRAME_FRAME );
   GFL_BG_FreeBGControl( MB_CAPTURE_FRAME_BG );
   GFL_BG_FreeBGControl( MB_CAPTURE_FRAME_SUB_BG );
+  GFL_BG_FreeBGControl( MB_CAPTURE_FRAME_SUB_BOW );
   GFL_BMPWIN_Exit();
   GFL_BG_Exit();
 }
@@ -363,25 +373,21 @@ static void MB_CAPTURE_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPla
 //--------------------------------------------------------------
 static void MB_CAPTURE_LoadResource( MB_CAPTURE_WORK *work )
 {
-  ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_MB_CHILD , work->heapId );
-
-  //下画面
-  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mb_child_gra_bg_sub_NCLR , 
-                    PALTYPE_SUB_BG , 0 , 0 , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mb_child_gra_bg_sub_NCGR ,
-                    MB_CAPTURE_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mb_child_gra_bg_sub_NSCR , 
-                    MB_CAPTURE_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
+  //下画面はmb_cap_downで
   
   //上画面
-  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mb_child_gra_bg_main_NCLR , 
+  GFL_ARCHDL_UTIL_TransVramPalette( work->initWork->arcHandle , NARC_mb_capture_gra_cap_bgu_NCLR , 
                     PALTYPE_MAIN_BG , 0 , 0 , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mb_child_gra_bg_main_NCGR ,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( work->initWork->arcHandle , NARC_mb_capture_gra_cap_bgu_NCGR ,
                     MB_CAPTURE_FRAME_BG , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mb_child_gra_bg_main_NSCR , 
+  GFL_ARCHDL_UTIL_TransVramScreen( work->initWork->arcHandle , NARC_mb_capture_gra_cap_bgu_field_NSCR , 
                     MB_CAPTURE_FRAME_BG ,  0 , 0, FALSE , work->heapId );
-  
-  GFL_ARC_CloseDataHandle( arcHandle );
+  GFL_ARCHDL_UTIL_TransVramScreen( work->initWork->arcHandle , NARC_mb_capture_gra_cap_bgu_gage_NSCR , 
+                    MB_CAPTURE_FRAME_FRAME ,  0 , 0, FALSE , work->heapId );
+
+  GFL_BG_LoadScreenV_Req( MB_CAPTURE_FRAME_BG );
+  GFL_BG_LoadScreenV_Req( MB_CAPTURE_FRAME_FRAME );
+
 }
 
 //--------------------------------------------------------------
@@ -391,17 +397,13 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
 {
   int i;
   MB_CAP_OBJ_INIT_WORK initWork;
-  initWork.heapId = work->heapId;
-  initWork.bbdSys = work->bbdSys;
-  initWork.arcHandle = work->initWork->arcHandle;
-  
   for( i=0;i<MB_CAP_OBJ_MAIN_NUM;i++ )
   {
     initWork.type = MCOT_GRASS;
     initWork.pos.x = FX32_CONST( (i%MB_CAP_OBJ_X_NUM) * MB_CAP_OBJ_MAIN_X_SPACE + MB_CAP_OBJ_MAIN_LEFT );
     initWork.pos.y = FX32_CONST( (i/MB_CAP_OBJ_X_NUM) * MB_CAP_OBJ_MAIN_Y_SPACE + MB_CAP_OBJ_MAIN_TOP );
     initWork.pos.z = 0;
-    work->fieldObj[i] = MB_CAP_OBJ_CreateObject( &initWork );
+    work->objWork[i] = MB_CAP_OBJ_CreateObject( work , &initWork );
   }
   for( i=MB_CAP_OBJ_SUB_U_START;i<MB_CAP_OBJ_SUB_D_START;i++ )
   {
@@ -410,7 +412,7 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
     initWork.pos.x = FX32_CONST( idx * MB_CAP_OBJ_MAIN_X_SPACE + MB_CAP_OBJ_MAIN_LEFT );
     initWork.pos.y = FX32_CONST( MB_CAP_OBJ_SUB_U_TOP );
     initWork.pos.z = 0;
-    work->fieldObj[i] = MB_CAP_OBJ_CreateObject( &initWork );
+    work->objWork[i] = MB_CAP_OBJ_CreateObject( work , &initWork );
   }
   for( i=MB_CAP_OBJ_SUB_D_START;i<MB_CAP_OBJ_SUB_R_START;i++ )
   {
@@ -419,7 +421,7 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
     initWork.pos.x = FX32_CONST( idx * MB_CAP_OBJ_MAIN_X_SPACE + MB_CAP_OBJ_MAIN_LEFT );
     initWork.pos.y = FX32_CONST( MB_CAP_OBJ_SUB_D_TOP );
     initWork.pos.z = 0;
-    work->fieldObj[i] = MB_CAP_OBJ_CreateObject( &initWork );
+    work->objWork[i] = MB_CAP_OBJ_CreateObject( work , &initWork );
   }
   for( i=MB_CAP_OBJ_SUB_R_START;i<MB_CAP_OBJ_SUB_L_START;i++ )
   {
@@ -428,7 +430,7 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
     initWork.pos.x = FX32_CONST( MB_CAP_OBJ_SUB_R_LEFT );
     initWork.pos.y = FX32_CONST( idx * MB_CAP_OBJ_MAIN_Y_SPACE + MB_CAP_OBJ_MAIN_TOP );
     initWork.pos.z = 0;
-    work->fieldObj[i] = MB_CAP_OBJ_CreateObject( &initWork );
+    work->objWork[i] = MB_CAP_OBJ_CreateObject( work , &initWork );
   }
   for( i=MB_CAP_OBJ_SUB_L_START;i<MB_CAP_OBJ_NUM;i++ )
   {
@@ -437,7 +439,7 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
     initWork.pos.x = FX32_CONST( MB_CAP_OBJ_SUB_L_LEFT );
     initWork.pos.y = FX32_CONST( idx * MB_CAP_OBJ_MAIN_Y_SPACE + MB_CAP_OBJ_MAIN_TOP );
     initWork.pos.z = 0;
-    work->fieldObj[i] = MB_CAP_OBJ_CreateObject( &initWork );
+    work->objWork[i] = MB_CAP_OBJ_CreateObject( work , &initWork );
   }
 }
 
@@ -449,7 +451,7 @@ static void MB_CAPTURE_TermObject( MB_CAPTURE_WORK *work )
   int i;
   for( i=0;i<MB_CAP_OBJ_NUM;i++ )
   {
-    MB_CAP_OBJ_DeleteObject( work->fieldObj[i] );
+    MB_CAP_OBJ_DeleteObject( work , work->objWork[i] );
   }
 }
 
@@ -460,15 +462,12 @@ static void MB_CAPTURE_InitPoke( MB_CAPTURE_WORK *work )
 {
   int i;
   MB_CAP_POKE_INIT_WORK initWork;
-  initWork.heapId = work->heapId;
-  initWork.bbdSys = work->bbdSys;
-  initWork.arcHandle = work->initWork->arcHandle;
   initWork.pokeArcHandle = MB_ICON_GetArcHandle(GFL_HEAP_LOWID(work->heapId),work->initWork->cardType);
   
   for( i=0;i<MB_CAP_POKE_NUM;i++ )
   {
     initWork.ppp = work->initWork->ppp[i];
-    work->pokeObj[i] = MB_CAP_POKE_CreateObject( &initWork );
+    work->pokeWork[i] = MB_CAP_POKE_CreateObject( work , &initWork );
   }
 }
 
@@ -480,7 +479,7 @@ static void MB_CAPTURE_TermPoke( MB_CAPTURE_WORK *work )
   int i;
   for( i=0;i<MB_CAP_POKE_NUM;i++ )
   {
-    MB_CAP_POKE_DeleteObject( work->pokeObj[i] );
+    MB_CAP_POKE_DeleteObject( work , work->pokeWork[i] );
   }
 }
 
@@ -592,5 +591,27 @@ static GFL_PROC_RESULT MB_CAPTURE_ProcMain( GFL_PROC * proc, int * seq , void *p
   return GFL_PROC_RES_CONTINUE;
 }
 
+
+
+#pragma mark [>outer func
+//--------------------------------------------------------------
+//  外部提供関数群
+//--------------------------------------------------------------
+const HEAPID MB_CAPTURE_GetHeapId( MB_CAPTURE_WORK *work )
+{
+  return work->heapId;
+}
+GFL_BBD_SYS* MB_CAPTURE_GetBbdSys( MB_CAPTURE_WORK *work )
+{
+  return work->bbdSys;
+}
+ARCHANDLE* MB_CAPTURE_GetArcHandle( MB_CAPTURE_WORK *work )
+{
+  return work->initWork->arcHandle;
+}
+const DLPLAY_CARD_TYPE MB_CAPTURE_GetCardType( MB_CAPTURE_WORK *work )
+{
+  return work->initWork->cardType;
+}
 
 

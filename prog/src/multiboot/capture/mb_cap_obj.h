@@ -10,6 +10,8 @@
 //======================================================================
 #pragma once
 
+#include "./mb_cap_local_def.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -37,13 +39,8 @@ typedef struct _MB_CAP_OBJ MB_CAP_OBJ;
 
 typedef struct
 {
-  HEAPID      heapId;
-  GFL_BBD_SYS *bbdSys;
-  ARCHANDLE   *arcHandle;
-  
   MB_CAP_OBJ_TYPE type;
   VecFx32     pos;
-  
 }MB_CAP_OBJ_INIT_WORK;
 
 //======================================================================
@@ -54,6 +51,6 @@ typedef struct
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------
-extern MB_CAP_OBJ *MB_CAP_OBJ_CreateObject( MB_CAP_OBJ_INIT_WORK *initWork );
-extern void MB_CAP_OBJ_DeleteObject( MB_CAP_OBJ *mbObj );
+extern MB_CAP_OBJ *MB_CAP_OBJ_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ_INIT_WORK *initWork );
+extern void MB_CAP_OBJ_DeleteObject( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ *objWork );
 
