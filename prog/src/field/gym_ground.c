@@ -261,8 +261,8 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 
   { ARCID_GYM_GROUND, NARC_gym_ground_rif_anim01_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
   { ARCID_GYM_GROUND, NARC_gym_ground_rif_anim02_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
-  { ARCID_GYM_GROUND, NARC_gym_ground_rif_anim01_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
-  { ARCID_GYM_GROUND, NARC_gym_ground_rif_anim02_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
+  { ARCID_GYM_GROUND, NARC_gym_ground_mainrif_anim01_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
+  { ARCID_GYM_GROUND, NARC_gym_ground_mainrif_anim02_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
   { ARCID_GYM_GROUND, NARC_gym_ground_kakuheki_anim01_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
 };
 
