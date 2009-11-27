@@ -35,6 +35,7 @@
 #include "gym_insect.h"
 #include "gym_ground.h"
 #include "gym_ground_ent.h"
+#include "gym_ice.h"
 
 //--電気--
 //--------------------------------------------------------------
@@ -428,3 +429,61 @@ VMCMD_RESULT EvCmdGymGroundEnt_ExitLift( VMHANDLE *core, void *wk )
   //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
 }
+
+//--氷--
+//--------------------------------------------------------------
+/**
+ * 氷ジムギミック　スイッチアニメ起動
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymIce_SwAnm( VMHANDLE *core, void *wk )
+{
+  u16 idx;
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  idx = VMGetU16( core );
+  call_event = GYM_ICE_CreateSwEvt(gsys, idx);
+  
+  if (call_event == NULL){
+    GF_ASSERT(0);
+    return VMCMD_RESULT_SUSPEND;
+  }
+
+  SCRIPT_CallEvent( sc, call_event );  
+  //イベントコールするので、一度制御を返す
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * 氷ジムギミック　壁アニメ起動
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymIce_WallAnm( VMHANDLE *core, void *wk )
+{
+  u16 idx;
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  idx = VMGetU16( core );
+  call_event = GYM_ICE_CreateWallEvt(gsys, idx);
+  
+  if (call_event == NULL){
+    GF_ASSERT(0);
+    return VMCMD_RESULT_SUSPEND;
+  }
+
+  SCRIPT_CallEvent( sc, call_event );  
+  //イベントコールするので、一度制御を返す
+  return VMCMD_RESULT_SUSPEND;
+}
+
