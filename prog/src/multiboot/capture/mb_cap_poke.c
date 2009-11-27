@@ -66,8 +66,8 @@ MB_CAP_POKE *MB_CAP_POKE_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE_IN
 
   GFL_G3D_RES* res = GFL_G3D_CreateResourceHandle( arcHandle , NARC_mb_capture_gra_cap_poke_dummy_nsbtx );
   const BOOL flg = TRUE;
-#if DEB_ARI
   VecFx32 pos = {0,0,0};
+#if DEB_ARI
   static u8 tempPos = 0;
   
   pos.x = FX32_CONST(tempPos*32+32);
