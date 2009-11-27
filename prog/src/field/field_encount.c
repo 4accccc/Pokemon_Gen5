@@ -66,7 +66,7 @@ static BOOL enc_CheckEncountWalk( FIELD_ENCOUNT *enc, u32 per );
 static void enc_CreateBattleParam( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* spa,
     BATTLE_SETUP_PARAM *bsp, HEAPID heapID, const ENC_POKE_PARAM* inPokeTbl );
 
-static void BATTLE_PARAM_SetUpBattleSituation( BATTLE_SETUP_PARAM* bp, FIELDMAP_WORK* fieldWork );
+static void BTL_FIELD_SITUATION_SetFromFieldStatus( BTL_FIELD_SITUATION* sit, GAMEDATA* gdata, FIELDMAP_WORK* fieldWork );
 
 static u32 enc_GetPercentRand( void );
 
@@ -425,61 +425,8 @@ static BOOL enc_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_WORK* ewk, u32 per )
   if( enc_GetPercentRand() < per ){
     return( TRUE );
   }
-#if 0   //091006時点では歩数によるエンカウント率補正はない
-  calc_per = per << CALC_SHIFT;
-
-  if( enc_CheckEncountWalk(enc,calc_per) == FALSE ){
-    enc_AddWalkCount( enc ); //歩数カウント
-
-    if( enc_GetPercentRand() >= WALK_NEXT_PERCENT ){ //5%で次の処理へ
-      return( FALSE );
-    }
-  }
-
-  next_per = NEXT_PERCENT; //エンカウント基本確率
-
-  { //日付による確率変動
-  }
-
-  if( next_per > 100 ){ //100%超えチェック
-    next_per = 100;
-  }
-
-  if( enc_GetPercentRand() < next_per ){ //確率チェック
-    if( enc_GetPercentRand() >= per ){
-      return( TRUE );
-    }
-  }
-#endif
   return( FALSE );
 }
-
-#if 0
-//--------------------------------------------------------------
-/**
- * エンカウントチェック　歩数チェック
- * @param enc FIELD_ENCOUNT
- * @param per エンカウント確率
- * @retval BOOL TRUE=エンカウントした
- */
-//--------------------------------------------------------------
-static BOOL enc_CheckEncountWalk( FIELD_ENCOUNT *enc, u32 per )
-{
-  per = (per/10) >> CALC_SHIFT;
-
-  if( per > WALK_COUNT_GLOBAL ){
-    per = WALK_COUNT_GLOBAL;
-  }
-
-  per = WALK_COUNT_GLOBAL - per;
-
-  if( enc_GetWalkCount(enc) >= per ){
-    return( TRUE );
-  }
-
-  return( FALSE );
-}
-#endif
 
 //======================================================================
 //  バトルパラム
@@ -499,6 +446,7 @@ static void enc_CreateBattleParam( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* 
   //エネミーパーティ生成
   {
     int i;
+    BTL_FIELD_SITUATION sit;
     POKEPARTY* partyEnemy = PokeParty_AllocPartyWork( heapID );
     POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemory( heapID, POKETOOL_GetWorkSize() );
     MYSTATUS* myStatus = GAMEDATA_GetMyStatus( gdata );
@@ -507,11 +455,13 @@ static void enc_CreateBattleParam( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* 
       ENCPOKE_PPSetup( pp, efp, &inPokeTbl[i] );
       PokeParty_Add( partyEnemy, pp );
     }
-    GFL_HEAP_FreeMemory( pp );
 
-    BP_SETUP_Wild( bsp, gdata, heapID, BTL_RULE_SINGLE+efp->enc_double_f,partyEnemy, 0, 0, 0 );
+    BTL_FIELD_SITUATION_SetFromFieldStatus( &sit, enc->gdata, enc->fwork );
+    BTL_SETUP_Wild( bsp, gdata, partyEnemy, &sit, BTL_RULE_SINGLE+efp->enc_double_f, heapID );
+
+    GFL_HEAP_FreeMemory( pp );
+    GFL_HEAP_FreeMemory( partyEnemy );
   }
-  BATTLE_PARAM_SetUpBattleSituation( bsp, enc->fwork );
 }
 
 //--------------------------------------------------------------
@@ -523,31 +473,29 @@ static void enc_CreateBattleParam( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* 
 //--------------------------------------------------------------
 static void enc_CreateTrainerBattleParam(
     FIELD_ENCOUNT *enc,
-    BATTLE_SETUP_PARAM *param, const HEAPID heapID,
+    BATTLE_SETUP_PARAM *bp, const HEAPID heapID,
     TrainerID tr_id0, TrainerID tr_id1 )
 {
   GAMESYS_WORK *gsys = enc->gsys;
   GAMEDATA *gdata = enc->gdata;
+  BTL_FIELD_SITUATION sit;
 
-  BATTLE_PARAM_Init(param);
+  BATTLE_PARAM_Init(bp);
 
-  if( (tr_id1 != 0) && tr_id0 != tr_id1 ){ //シングル
-    BTL_SETUP_Single_Trainer(
-        param, gdata, NULL, BATTLE_BG_TYPE_GRASS, 0, BTL_WEATHER_NONE, tr_id0, HEAPID_PROC );
-  }else if( tr_id0 == tr_id1 ){ //ダブル
-    BTL_SETUP_Double_Trainer(
-        param, gdata, NULL, BATTLE_BG_TYPE_GRASS, 0, BTL_WEATHER_NONE, tr_id0, HEAPID_PROC );
-  }else{
-    BTL_SETUP_Single_Trainer(
-        param, gdata, NULL, BATTLE_BG_TYPE_GRASS, 0, BTL_WEATHER_NONE, tr_id0, HEAPID_PROC );
+  BTL_FIELD_SITUATION_SetFromFieldStatus( &sit, enc->gdata, enc->fwork );
+
+  if( (tr_id1 != TRID_NULL) && tr_id0 != tr_id1 )
+  { //タッグ
+    BTL_SETUP_Single_Trainer( bp, gdata, NULL, &sit, tr_id0, heapID );
+  }else if( tr_id0 == tr_id1 )
+  { //ダブル
+    BTL_SETUP_Double_Trainer( bp, gdata, NULL, &sit, tr_id0, heapID );
+  }else
+  { //シングル
+    BTL_SETUP_Single_Trainer( bp, gdata, NULL, &sit, tr_id0, heapID );
   }
-
-  { //対戦相手の手持ちポケモン生成
-    param->partyEnemy1 = PokeParty_AllocPartyWork( heapID );
-    GF_ASSERT( param->partyEnemy1 != NULL );
-    TT_EncountTrainerDataMake( param, heapID );
-  }
-  BATTLE_PARAM_SetUpBattleSituation( param, enc->fwork );
+  //対戦相手の手持ちポケモン生成
+  TT_EncountTrainerDataMake( bp, heapID );
 }
 
 //--------------------------------------------------------------
@@ -589,34 +537,27 @@ static BtlWeather btlparam_GetBattleWeather( FIELDMAP_WORK* fieldWork )
 }
 
 /*
- *  @brief  戦闘背景/天候 など FIELDMAP_WORKを参照して決定されるデータをセットする
- *
- *  ＊BP_SETUP_XXXX系の関数を呼び、バトルの基本パラメータをセットした後で呼び出してください
- *
+ *  @brief  戦闘背景/天候 など FIELDMAP_WORKを参照して決定されるシチュエーションデータを取得する
  *  @todo 仮処理
  */
-static void BATTLE_PARAM_SetUpBattleSituation( BATTLE_SETUP_PARAM* bp, FIELDMAP_WORK* fieldWork )
+static void BTL_FIELD_SITUATION_SetFromFieldStatus( BTL_FIELD_SITUATION* sit, GAMEDATA* gdata, FIELDMAP_WORK* fieldWork )
 {
   u16 zone_id = FIELDMAP_GetZoneID( fieldWork );
   FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( fieldWork );
 
   //戦闘背景
-  bp->fieldSituation.bgType = ZONEDATA_GetBattleBGType(zone_id);
+  sit->bgType = ZONEDATA_GetBattleBGType(zone_id);
   {
     MAPATTR attr = FIELD_PLAYER_GetMapAttr( fplayer );
-    bp->fieldSituation.bgAttr = FIELD_BATTLE_GetBattleAttrID(MAPATTR_GetAttrValue(attr));
+    sit->bgAttr = FIELD_BATTLE_GetBattleAttrID(MAPATTR_GetAttrValue(attr));
   }
   //タイムゾーン取得
-  bp->fieldSituation.timeZone = GFL_RTC_GetTimeZone();  //@todo EVTIMEからの取得に変更予定
+  sit->timeZone = GFL_RTC_GetTimeZone();  //@todo EVTIMEからの取得に変更予定
 
   //天候
-  bp->fieldSituation.weather = btlparam_GetBattleWeather( fieldWork );
-
-  //BGM(本当はイベント進行/現在マップなどを見て決める)
-  bp->musicDefault = SEQ_BGM_VS_NORAPOKE;   ///< デフォルト時のBGMナンバー
-  bp->musicPinch = SEQ_BGM_BATTLEPINCH;     ///< ピンチ時のBGMナンバー
-
-  //エンカウントエフェクト
+  sit->weather = btlparam_GetBattleWeather( fieldWork );
+  
+  sit->season = GAMEDATA_GetSeasonID( gdata );
 }
 
 //======================================================================

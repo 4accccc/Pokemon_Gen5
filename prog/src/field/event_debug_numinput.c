@@ -47,24 +47,28 @@ typedef struct _DNINPUT_EV_WORK{
   FLDMENUFUNC *menuFunc;
 }DNINPUT_EV_WORK;
 
+///数値入力リストデータ
+typedef struct DEBUG_NUMINPUT_LIST{
+  u16 gmm_id;
+  u32 min,max;
+  u32 param;
+  void* set_func;
+  void* get_func;
+}DEBUG_NUMINPUT_LIST;
 
 ///数値入力リスト初期化パラメータ定義
 typedef struct{ 
   D_NINPUT_DATA_TYPE data_type;       ///<データの種別
   u32   file_id;                      ///<D_NINPUT_DATA_ALLOCの場合の参照ファイルID
-#if 0
+  
   /** D_NINPUT_DATA_CONSTの場合：各項目の数値入力時処理指定データ
    *  D_NINPUT_DATA_ALLOCの場合：生成時に使用するデフォルトデータ
    */
-  const DEBUG_NUMINPUT_LIST * pList; 
-  const GMM_MENU_PARAM * pMenu;       ///<項目リスト表示用データ
-#else
-  void* list;
-  void* menu;
-#endif
+  const DEBUG_NUMINPUT_LIST * pList;
   const u32 list_count;               ///<リストの大きさ
 
 }DEBUG_NUMINPUT_INITIALIZER;
+
 
 
 /////////////////////////////////////////////////////////
@@ -72,17 +76,16 @@ typedef struct{
 /////////////////////////////////////////////////////////
 static GMEVENT_RESULT dninput_MainEvent( GMEVENT * event, int *seq, void * work);
 
-
 /////////////////////////////////////////////////////////
 //データ定義
 /////////////////////////////////////////////////////////
+#include "debug_numinput.cdat"
+
 static const DEBUG_NUMINPUT_INITIALIZER DATA_Initializer[D_NUMINPUT_MODE_MAX] = { 
   { D_NINPUT_DATA_CONST,  0,
-    NULL /*Debug_NumInputL_Tower*/,
-    NULL /*Debug_NumInputG_Tower*/, 0/*NELEMS(Debug_NumInputG_Tower)*/ },
+    DNI_EffectEncountList, NELEMS( DNI_EffectEncountList ) },
   { D_NINPUT_DATA_CONST,  0,
-    NULL /*Debug_NumInputL_Tower*/,
-    NULL /*Debug_NumInputG_Tower*/, 0/*NELEMS(Debug_NumInputG_Tower)*/ },
+    DNI_EffectEncountList, NELEMS( DNI_EffectEncountList ) },
 };
 
 /// 数値入力　メニューヘッダー
@@ -118,6 +121,16 @@ static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer = {
   NARC_message_d_numinput_dat,  //メッセージアーカイブ
   NELEMS(DATA_DNumInputMenu),  //項目数max
   DATA_DNumInputMenu, //メニュー項目リスト
+  &DATA_DNumInput_MenuFuncHeader, //メニュヘッダ
+  1, 4, 30, 16,
+  NULL/*DEBUG_SetMenuWorkZoneID_SelectZone*/,
+  NULL,
+};
+
+static const DEBUG_MENU_INITIALIZER DATA_DNumInput_ListMenuInitializer = {
+  NARC_message_d_numinput_dat,  //メッセージアーカイブ
+  0,  //項目数max
+  NULL, //メニュー項目リスト
   &DATA_DNumInput_MenuFuncHeader, //メニュヘッダ
   1, 4, 30, 16,
   NULL/*DEBUG_SetMenuWorkZoneID_SelectZone*/,

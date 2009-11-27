@@ -596,49 +596,11 @@ static void IRC_BATTLE_InitBattleProc( IRC_BATTLE_WORK *work )
 }
 static void IRC_BATTLE_InitBattleSetupParam( IRC_BATTLE_WORK *work )
 {
-  /*
-  u8 selfId,enemyId;
-  if( GFL_NET_IsParentMachine() == TRUE )
-  {
-    work->battleParam.engine = BTL_ENGINE_COMM_PARENT;
-    selfId = 0;
-    enemyId = 1;
-  }
-  else
-  {
-    work->battleParam.engine = BTL_ENGINE_COMM_CHILD;
-    selfId = 1;
-    enemyId = 0;
-  }
-  
-  work->battleParam.competitor = BTL_COMPETITOR_COMM;
-  work->battleParam.rule = BTL_RULE_SINGLE;
-  work->battleParam.landForm = BTL_LANDFORM_GRASS;
-  work->battleParam.weather = BTL_WEATHER_NONE;
-  work->battleParam.netHandle = GFL_NET_HANDLE_GetCurrentHandle();
-  work->battleParam.commMode = BTL_COMM_DS;
-  work->battleParam.commPos = 0;
-  work->battleParam.netID = selfId;
-  work->battleParam.multiMode = 0;
-
-  work->battleParam.partyPlayer = IRC_BATTLE_BattleData_GetPokeParty( work->sendBattleData );  ///< プレイヤーのパーティ
-  work->battleParam.partyPartner = NULL; ///< 2vs2時の味方AI（不要ならnull）
-  work->battleParam.partyEnemy1 = IRC_BATTLE_BattleData_GetPokeParty( work->postBattleData[enemyId] );  ;  ///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
-  work->battleParam.partyEnemy2 = NULL;  ///< 2vs2時の２番目敵AI用（不要ならnull）
-  
-  work->battleParam.statusPlayer = work->initWork->statusPlayer; ///< プレイヤーのステータス
-  work->battleParam.itemData     = work->initWork->itemData;     ///< アイテムデータ
-  work->battleParam.bagCursor    = work->initWork->bagCursor;    ///< バッグカーソルデータ
-  work->battleParam.trID         = 0;         ///<対戦相手トレーナーID（7/31ROMでトレーナーエンカウントを実現するための暫定）
-
-  work->battleParam.musicDefault = SEQ_BGM_VS_NORAPOKE;
-  work->battleParam.musicPinch = SEQ_BGM_BATTLEPINCH;
-  */
-  
   BTL_SETUP_Single_Comm( &work->battleParam , work->initWork->gameData , 
-                         GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS );
+                         GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, work->heapId );
 
-  work->battleParam.partyPlayer = work->battleParty;
+  BATTLE_PARAM_SetPokeParty( &work->battleParam, work->battleParty, BTL_CLIENT_PLAYER );
+  
   OS_TPrintf("[[%d]]\n",PokeParty_GetPokeCount(work->battleParam.partyPlayer));
 }
 
@@ -647,6 +609,7 @@ static void IRC_BATTLE_ExitBattleProc( IRC_BATTLE_WORK *work )
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
   GFL_NET_DelCommandTable( GFL_NET_CMD_BATTLE );
 
+  BATTLE_PARAM_Release( &work->battleParam );
   OS_TPrintf("BattleEnd least heap[%x]\n",GFL_HEAP_GetHeapFreeSize( HEAPID_IRC_BATTLE ) );
 
   IRC_BATTLE_InitGraphic( work );

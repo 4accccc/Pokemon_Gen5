@@ -85,11 +85,10 @@ static GFL_PROC_RESULT IntrudeBattleProc_Main( GFL_PROC * proc, int * seq, void 
 	INTRUDE_COMM_SYS_PTR intcomm;
 
   intcomm = Intrude_Check_CommConnect(game_comm);
-  
+ 
   switch(*seq){
   case 0:
-    BTL_SETUP_Single_Comm(&ibs->para, gamedata, GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS);
-    ibs->para.partyPlayer = GAMEDATA_GetMyPokemon(gamedata);
+    BTL_SETUP_Single_Comm(&ibs->para, gamedata, GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS, HEAPID_PROC );
     (*seq)++;
     break;
   case 1:
@@ -136,6 +135,8 @@ static GFL_PROC_RESULT IntrudeBattleProc_Main( GFL_PROC * proc, int * seq, void 
     OS_TPrintf("ƒoƒgƒ‹Š®—¹\n");
     GFL_NET_DelCommandTable(GFL_NET_CMD_BATTLE);
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+    
+    BATTLE_PARAM_Release( &ibs->para );
     return GFL_PROC_RES_FINISH;
   }
   

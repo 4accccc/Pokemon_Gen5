@@ -9,6 +9,7 @@
 #include <gflib.h>
 #include "net/network_define.h"
 
+#include "system\main.h"
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_init.h"
 #include "gamesystem/game_event.h"
@@ -112,6 +113,7 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
     }
     OS_TPrintf("バトル完了\n");
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+    BATTLE_PARAM_Release( &cbw->para );
     (*seq)++;
     break;
 
@@ -165,7 +167,7 @@ GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, UN
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:   //コロシアム
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD_SHOOTER:   //コロシアム
     BTL_SETUP_Single_Comm(para, GAMESYSTEM_GetGameData(gsys), 
-      GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS);
+      GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS, HEAPID_PROC );
     break;
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50:         //コロシアム
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50_SHOOTER:         //コロシアム
@@ -174,7 +176,7 @@ GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, UN
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD:   //コロシアム
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD_SHOOTER:   //コロシアム
     BTL_SETUP_Double_Comm(para, GAMESYSTEM_GetGameData(gsys), 
-      GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS);
+      GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS, HEAPID_PROC );
     break;
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_50:         //コロシアム
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_50_SHOOTER:         //コロシアム
@@ -183,7 +185,7 @@ GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, UN
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_STANDARD:   //コロシアム
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_STANDARD_SHOOTER:   //コロシアム
     BTL_SETUP_Triple_Comm(para, GAMESYSTEM_GetGameData(gsys), 
-      GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS);
+      GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS, HEAPID_PROC );
     break;
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_50:         //コロシアム
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_50_SHOOTER:         //コロシアム
@@ -193,18 +195,17 @@ GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, UN
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_STANDARD_SHOOTER:   //コロシアム
     //※check まだローテーションの定義が無いのでとりあえずトリプル指定
     BTL_SETUP_Triple_Comm(para, GAMESYSTEM_GetGameData(gsys), 
-      GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS);
+      GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS, HEAPID_PROC );
     break;
   case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:      //コロシアム
     BTL_SETUP_Multi_Comm(para, GAMESYSTEM_GetGameData(gsys), 
-      GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS, setup->standing_pos);
+      GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS, setup->standing_pos, HEAPID_PROC );
     break;
   default:
     GF_ASSERT_MSG(0, "play_category = %d\n", play_category);
     return NULL;
   }
-
-  para->partyPlayer = setup->partyPlayer;
+  BATTLE_PARAM_SetPokeParty( para, setup->partyPlayer, BTL_CLIENT_PLAYER );
 #if 0 //戦闘内部でシェアしあうので、ここで指定はいらない
   para->partyEnemy1 = setup->partyEnemy1;   ///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
   para->partyPartner = setup->partyPartner; ///< 2vs2時の味方AI（不要ならnull）

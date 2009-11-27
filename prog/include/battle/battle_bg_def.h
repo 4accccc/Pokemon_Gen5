@@ -29,7 +29,7 @@ typedef enum {
    
   BATTLE_BG_TYPE_MAX,
 
-  //å„Ç≈è¡Ç∑ó\íË
+  //å„Ç≈è¡Ç∑ó\íËãMêlãñ
   BATTLE_BG_TYPE_SNOW,
   BATTLE_BG_TYPE_ROCK,
 }BtlBgType;

@@ -39,11 +39,11 @@ struct _TAG_DEBUG_MENU_EVENT_WORK
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-typedef void MAKE_LIST_FUNC(GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID );
+typedef void MAKE_LIST_FUNC( GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work );
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-typedef u16 GET_MAX_FUNC(FIELDMAP_WORK * fieldmap );
+typedef u16 GET_MAX_FUNC( GAMESYS_WORK* gsys, void* c_work );
 
 //--------------------------------------------------------------
 /**
@@ -72,3 +72,5 @@ typedef struct {
  */
 extern FLDMENUFUNC * DebugMenuInit(
     FIELDMAP_WORK * fieldmap, HEAPID heapID, const DEBUG_MENU_INITIALIZER * init );
+FLDMENUFUNC * DebugMenuInitEx(
+    FIELDMAP_WORK * fieldmap, HEAPID heapID, const DEBUG_MENU_INITIALIZER * init, void* cb_work );

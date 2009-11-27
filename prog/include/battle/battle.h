@@ -99,6 +99,13 @@ typedef enum {
 
 }BtlResult;
 
+typedef enum{
+  BTL_CLIENT_PLAYER,
+  BTL_CLIENT_PARTNER,
+  BTL_CLIENT_ENEMY1,
+  BTL_CLIENT_ENEMY2,
+}BTL_CLIENT_ID;
+
 //-----------------------------------------------------------------------------------
 /**
  * フィールドの状態から決定されるバトルシチュエーションデータ
@@ -112,15 +119,11 @@ typedef struct {
   
   TIMEZONE    timeZone;
   u8          season;
-  
-  u16             musicDefault;   ///< デフォルト時のBGMナンバー
-  u16             musicPinch;     ///< ピンチ時のBGMナンバー
-
 }BTL_FIELD_SITUATION;
 
 //-----------------------------------------------------------------------------------
 /**
- *  地形
+ *  バトルセットアップパラメータ 
  */
 //-----------------------------------------------------------------------------------
 typedef struct {

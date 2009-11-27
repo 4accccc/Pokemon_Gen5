@@ -43,33 +43,63 @@ extern void BATTLE_PARAM_Init( BATTLE_SETUP_PARAM* bp );
  */
 extern void BATTLE_PARAM_Release( BATTLE_SETUP_PARAM* bp );
 
-extern void BP_SETUP_Wild( BATTLE_SETUP_PARAM* bp, GAMEDATA* gameData, HEAPID heapID, const BtlRule rule,
-  const POKEPARTY* partyEnemy, const BtlBgType bgType, const BtlBgAttr bgAttr, const BtlWeather weather );
+/*
+ *  @brief  バトルパラム　PokePartyデータセット
+ *
+ *  渡されたポインタの内容をコピーします
+ */
+extern void BATTLE_PARAM_SetPokeParty( BATTLE_SETUP_PARAM* bp, const POKEPARTY* party, BTL_CLIENT_ID client );
+
+////////////////////////////////////////////////////////////////////////
+//
+/*
+ *  @brief  戦闘フィールドシチュエーションデータデフォルト初期化
+ */
+extern void BTL_FIELD_SITUATION_Init( BTL_FIELD_SITUATION* sit );
+
+
+////////////////////////////////////////////////////////////////////////
+/*
+ * BATTLE_SETUP_PARAM初期化ユーティリティ関数群
+ *
+ *  BTL_SETUP系関数は、内部でメモリアロケーションを行います
+ *  バトルが終了したら、必ずBATTLE_PARAM_Release()orBATTLE_PARAM_Delete()関数で解放を行ってください
+ */
+////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////
+//ローカルバトル系
+//////////////////////////////////////////////
+extern void BTL_SETUP_Wild( BATTLE_SETUP_PARAM* bp, GAMEDATA* gdata,
+  const POKEPARTY* partyEnemy, const BTL_FIELD_SITUATION* sit, const BtlRule rule, HEAPID heapID );
 
 extern void BTL_SETUP_Single_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  POKEPARTY* partyEnemy, BtlBgType bgType, BtlBgAttr bgAttr, BtlWeather weather, TrainerID trID, HEAPID heapID );
-
-extern void BTL_SETUP_Single_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  GFL_NETHANDLE* netHandle, BtlCommMode commMode );
+  POKEPARTY* partyEnemy, BTL_FIELD_SITUATION* sit, TrainerID trID, HEAPID heapID );
 
 extern void BTL_SETUP_Double_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  POKEPARTY* partyEnemy, BtlBgType bgType, BtlBgAttr bgAttr, BtlWeather weather, TrainerID trID, HEAPID heapID );
-
-extern void BTL_SETUP_Double_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  GFL_NETHANDLE* netHandle, BtlCommMode commMode );
-
-extern void BTL_SETUP_Multi_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  GFL_NETHANDLE* netHandle, BtlCommMode commMode, u8 commPos );
+  POKEPARTY* partyEnemy, BTL_FIELD_SITUATION* sit, TrainerID trID, HEAPID heapID );
 
 extern void BTL_SETUP_Triple_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  POKEPARTY* partyEnemy, BtlBgType bgType, BtlBgAttr bgAttr, BtlWeather weather, TrainerID trID, HEAPID heapID );
-
-extern void BTL_SETUP_Triple_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  GFL_NETHANDLE* netHandle, BtlCommMode commMode );
+  POKEPARTY* partyEnemy, BTL_FIELD_SITUATION* sit, TrainerID trID, HEAPID heapID );
 
 extern void BTL_SETUP_Rotation_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  POKEPARTY* partyEnemy, BtlBgType bgType, BtlBgAttr bgAttr, BtlWeather weather, TrainerID trID, HEAPID heapID );
+  POKEPARTY* partyEnemy, BTL_FIELD_SITUATION* sit, TrainerID trID, HEAPID heapID );
+
+//////////////////////////////////////////////
+//通信バトル系
+//////////////////////////////////////////////
+extern void BTL_SETUP_Single_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
+  GFL_NETHANDLE* netHandle, BtlCommMode commMode, HEAPID heapID );
+
+extern void BTL_SETUP_Double_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
+  GFL_NETHANDLE* netHandle, BtlCommMode commMode, HEAPID heapID );
+
+extern void BTL_SETUP_Multi_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
+  GFL_NETHANDLE* netHandle, BtlCommMode commMode, u8 commPos, HEAPID heapID );
+
+extern void BTL_SETUP_Triple_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
+  GFL_NETHANDLE* netHandle, BtlCommMode commMode, HEAPID heapID );
 
 extern void BTL_SETUP_Rotation_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  GFL_NETHANDLE* netHandle, BtlCommMode commMode );
+  GFL_NETHANDLE* netHandle, BtlCommMode commMode, HEAPID heapID );
 

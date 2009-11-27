@@ -137,8 +137,8 @@ static debugMenuCallProc_SubscreenSelect( DEBUG_MENU_EVENT_WORK *wk );
 static debugMenuCallProc_MusicalSelect( DEBUG_MENU_EVENT_WORK *wk );
 
 static void DEBUG_SetMenuWorkZoneIDNameAll(
-    GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID );
-static u16 DEBUG_GetZoneIDNameMax( FIELDMAP_WORK * fieldmap );
+    GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work );
+static u16 DEBUG_GetZoneIDNameMax( GAMESYS_WORK* gsys, void* cb_work );
 
 
 static BOOL debugMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk );
@@ -316,9 +316,9 @@ GMEVENT * DEBUG_EVENT_DebugMenu(
 //======================================================================
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-FLDMENUFUNC * DebugMenuInit(
+static FLDMENUFUNC * DebugMenuInitCore(
     FIELDMAP_WORK * fieldmap, HEAPID heapID,
-    const DEBUG_MENU_INITIALIZER * init )
+    const DEBUG_MENU_INITIALIZER * init, void* cb_work )
 {
   GAMESYS_WORK * gsys;
   FLDMENUFUNC * ret;
@@ -333,13 +333,13 @@ FLDMENUFUNC * DebugMenuInit(
   msgData = FLDMSGBG_CreateMSGDATA( msgBG, init->msg_arc_id );
 
   if (init->getMaxFunc) {
-    max = init->getMaxFunc( fieldmap );
+    max = init->getMaxFunc( gsys, cb_work );
   } else {
     max = init->max;
   }
   if (init->makeListFunc) {
     listdata = FLDMENUFUNC_CreateListData( max, heapID );
-    init->makeListFunc( gsys, listdata, heapID );
+    init->makeListFunc( gsys, listdata, heapID, msgData, cb_work );
   } else {
     listdata = FLDMENUFUNC_CreateMakeListData( init->menulist, max, msgData, heapID );
   }
@@ -352,6 +352,19 @@ FLDMENUFUNC * DebugMenuInit(
   ret = FLDMENUFUNC_AddMenu( msgBG, &menuH, listdata );
   GFL_MSG_Delete( msgData );
   return ret;
+}
+
+FLDMENUFUNC * DebugMenuInit(
+    FIELDMAP_WORK * fieldmap, HEAPID heapID,
+    const DEBUG_MENU_INITIALIZER * init )
+{
+  return DebugMenuInitCore( fieldmap, heapID, init, NULL );
+}
+FLDMENUFUNC * DebugMenuInitEx(
+    FIELDMAP_WORK * fieldmap, HEAPID heapID,
+    const DEBUG_MENU_INITIALIZER * init, void* cb_work )
+{
+  return DebugMenuInitCore( fieldmap, heapID, init, cb_work );
 }
 
 //--------------------------------------------------------------
@@ -776,7 +789,7 @@ static BOOL debugMenuCallProc_Jump( DEBUG_MENU_EVENT_WORK *wk )
 }
 
 static void DEBUG_SetMenuWorkZoneID_SelectZone(
-    GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID )
+    GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work )
 {
   int i;
   STRBUF *strBuf = GFL_STR_CreateBuffer( 64, heapID );
@@ -1502,7 +1515,7 @@ static void DEBUG_SetSTRBUF_ZoneIDName(
  */
 //--------------------------------------------------------------
 static void DEBUG_SetMenuWorkZoneIDNameAll(
-    GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID )
+    GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work )
 {
   int id,max = ZONEDATA_GetZoneIDMax();
   STRBUF *strBuf1 = GFL_STR_CreateBuffer( 64, heapID );
@@ -1534,7 +1547,7 @@ static void DEBUG_SetMenuWorkZoneIDNameAll(
  * @return  マップ最大数
  */
 //--------------------------------------------------------------
-static u16 DEBUG_GetZoneIDNameMax( FIELDMAP_WORK * fieldmap )
+static u16 DEBUG_GetZoneIDNameMax( GAMESYS_WORK* gsys, void* cb_work )
 {
   return ZONEDATA_GetZoneIDMax();
 }
@@ -1918,7 +1931,7 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
     GMEVENT *event, int *seq, void *wk );
 static u16 * DEBUG_GetOBJCodeStrBuf( HEAPID heapID, u16 code );
 static void DEBUG_SetMenuWorkMMdlList(
-    GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID );
+    GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work );
 
 /// 動作モデルリスト メニューヘッダー
 static const FLDMENUFUNC_HEADER DATA_DebugMenuList_MMdlList =
@@ -1950,6 +1963,7 @@ static const DEBUG_MENU_INITIALIZER DebugMMdlListData = {
   &DATA_DebugMenuList_MMdlList,
   1, 1, 11, 16,
   DEBUG_SetMenuWorkMMdlList,
+  NULL,
 };
 
 //--------------------------------------------------------------
@@ -2133,7 +2147,7 @@ static u16 * DEBUG_GetOBJCodeStrBuf( HEAPID heapID, u16 code )
  */
 //--------------------------------------------------------------
 static void DEBUG_SetMenuWorkMMdlList(
-    GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID )
+    GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work )
 {
   u16 *str;
   int id,max;

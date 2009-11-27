@@ -50,6 +50,8 @@ enum {
   HEAPID_TEMP = HEAPID_TAYA_DEBUG_SUB,
 };
 
+#define HEAPID_CORE_LOW (GFL_HEAP_LOWID( HEAPID_CORE))
+
 /*--------------------------------------------------------------------------*/
 /* Typedefs                                                                 */
 /*--------------------------------------------------------------------------*/
@@ -899,8 +901,8 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
     {
       BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
 
-      wk->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );  ///< プレイヤーのパーティ
-      wk->partyEnemy  = PokeParty_AllocPartyWork( HEAPID_CORE );  ///< 対戦相手パーティ
+      wk->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE_LOW );  ///< プレイヤーのパーティ
+      wk->partyEnemy  = PokeParty_AllocPartyWork( HEAPID_CORE_LOW );  ///< 対戦相手パーティ
 
       #ifdef DEBUG_ONLY_FOR_taya
         setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_GYARADOSU,   MONSNO_PIKATYUU, 0 );
@@ -927,17 +929,26 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 
       {
         u16 key = GFL_UI_KEY_GetCont();
+        BTL_FIELD_SITUATION sit;
+
+        BTL_FIELD_SITUATION_Init(&sit);
+
         if( key & PAD_BUTTON_L ){
-          BTL_SETUP_Single_Trainer( para, wk->gameData, wk->partyEnemy, BATTLE_BG_TYPE_ROOM, 0, BTL_WEATHER_NONE, 2, HEAPID_CORE );
+          sit.bgType = BATTLE_BG_TYPE_ROOM;
+          sit.bgType = BATTLE_BG_ATTR_NORMAL_GROUND;
+          BTL_SETUP_Single_Trainer( para, wk->gameData, wk->partyEnemy, &sit, 2, HEAPID_CORE );
         }else if( key & PAD_BUTTON_R ){
-          BTL_SETUP_Double_Trainer( para, wk->gameData, wk->partyEnemy, BATTLE_BG_TYPE_ROOM, 0, BTL_WEATHER_NONE, 2, HEAPID_CORE );
+          sit.bgType = BATTLE_BG_TYPE_ROOM;
+          sit.bgAttr = BATTLE_BG_ATTR_NORMAL_GROUND;
+          BTL_SETUP_Double_Trainer( para, wk->gameData, wk->partyEnemy, &sit, 2, HEAPID_CORE );
         }else{
 //          BTL_SETUP_Triple_Trainer( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE, 2 );
 //          setup_party( HEAPID_CORE, wk->partyEnemy, MONSNO_MANYUURA, 0 );
 //          BTL_SETUP_Single_Wild( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE );
-          BP_SETUP_Wild( para, wk->gameData, HEAPID_CORE, BTL_RULE_SINGLE, wk->partyEnemy, BATTLE_BG_TYPE_GRASS, 0, BTL_WEATHER_NONE );
+          sit.bgType = BATTLE_BG_TYPE_GRASS;
+          sit.bgAttr = BATTLE_BG_ATTR_GRASS;
+          BTL_SETUP_Wild( para, wk->gameData, wk->partyEnemy, &sit, BTL_RULE_SINGLE, HEAPID_CORE );
         }
-        para->partyPlayer = wk->partyPlayer;
 
         MYITEM_AddItem( para->itemData, ITEM_MASUTAABOORU, 1, HEAPID_CORE );
         MYITEM_AddItem( para->itemData, ITEM_HAIPAABOORU, 4, HEAPID_CORE );
@@ -948,8 +959,13 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 
       if( wk->testPokeEditFlag )
       {
-        PokeParty_SetMemberData( para->partyPlayer, 0, wk->testPoke );
+        PokeParty_SetMemberData( wk->partyPlayer, 0, wk->testPoke );
       }
+      BATTLE_PARAM_SetPokeParty( para, wk->partyPlayer, BTL_CLIENT_PLAYER );
+
+      GFL_HEAP_FreeMemory( wk->partyEnemy );
+      GFL_HEAP_FreeMemory( wk->partyPlayer );
+      
       PMSND_PlayBGM( para->musicDefault );
       GFL_PROC_SysCallProc( FS_OVERLAY_ID(battle), &BtlProcData, para );
       (*seq)++;
@@ -1153,7 +1169,7 @@ static BOOL SUBPROC_CommBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk 
       GFL_NETHANDLE* netHandle = GFL_NET_HANDLE_GetCurrentHandle();
 
 
-      wk->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );
+      wk->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE_LOW );
       if( GFL_NET_GetNetID(netHandle) == 0 ){
 //        setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_PORIGON, MONSNO_PIKATYUU, MONSNO_RIZAADON, 0 );
         setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_NOZUPASU,   MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA,
@@ -1163,8 +1179,11 @@ static BOOL SUBPROC_CommBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk 
                   MONSNO_ENEKO, MONSNO_NYAASU, 0 );
       }
 
-      BTL_SETUP_Single_Comm( para, wk->gameData, netHandle,  BTL_COMM_DS );
-      para->partyPlayer = wk->partyPlayer;
+      BTL_SETUP_Single_Comm( para, wk->gameData, netHandle,  BTL_COMM_DS, HEAPID_CORE );
+     
+      BATTLE_PARAM_SetPokeParty( para, wk->partyPlayer, BTL_CLIENT_PLAYER );
+      GFL_HEAP_FreeMemory( wk->partyPlayer );
+
       set_test_playername( (MYSTATUS*)(para->statusPlayer) );
 
       DEBUG_PerformanceSetActive( FALSE );
@@ -1173,6 +1192,7 @@ static BOOL SUBPROC_CommBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk 
     }
     break;
   case 5:
+    BATTLE_PARAM_Release( (BATTLE_SETUP_PARAM*)getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) ) );
     changeScene_recover( wk );
     return TRUE;
   }
@@ -1309,12 +1329,16 @@ static BOOL SUBPROC_MultiBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk
     if( GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), MULTI_TIMING_NUMBER) )
     {
       BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
+      GFL_NETHANDLE* netHandle = GFL_NET_HANDLE_GetCurrentHandle();
+      TAYA_Printf("[DTAYA] Multi Timing Sync Finish! NetHandle=%p\n", netHandle );
 
+      BTL_SETUP_Multi_Comm( para, wk->gameData,
+        netHandle, BTL_COMM_DS, 0, HEAPID_CORE );
+/*
       para->rule = BTL_RULE_DOUBLE;
       para->competitor = BTL_COMPETITOR_COMM;
 
       para->netHandle = GFL_NET_HANDLE_GetCurrentHandle();
-      TAYA_Printf("[DTAYA] Multi Timing Sync Finish! NetHandle=%p\n", para->netHandle);
       para->netID = GFL_NET_GetNetID( para->netHandle );
       para->commMode = BTL_COMM_DS;
       para->multiMode = 1;
@@ -1323,7 +1347,7 @@ static BOOL SUBPROC_MultiBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk
       para->partyEnemy1 = NULL;   ///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
       para->partyPartner = NULL;  ///< 2vs2時の味方AI（不要ならnull）
       para->partyEnemy2 = NULL;   ///< 2vs2時の２番目敵AI用（不要ならnull）
-
+*/
       switch( para->netID ){
       case 0:
         setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_GYARADOSU, MONSNO_PIKATYUU, MONSNO_RIZAADON, 0 );
@@ -1346,6 +1370,7 @@ static BOOL SUBPROC_MultiBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk
     break;
 
   case 8:
+    BATTLE_PARAM_Release( (BATTLE_SETUP_PARAM*)getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) ) );
     changeScene_recover( wk );
     return TRUE;
   }

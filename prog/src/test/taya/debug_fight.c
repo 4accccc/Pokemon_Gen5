@@ -1218,17 +1218,19 @@ FS_EXTERN_OVERLAY(battle);
 
   // バトルパラメータセット
   case SEQ_SETUP_START:
-    wk->setupParam.partyPlayer = NULL;
+    BATTLE_PARAM_Init( &wk->setupParam );
     wk->fPlayerPartyAllocated = FALSE;
 
     // 野生
     if( btltype_IsWild(wk->saveData.btlType) )
     {
+      BTL_FIELD_SITUATION sit;
       BtlRule rule = btltype_GetRule( wk->saveData.btlType );
 
       cutoff_wildParty( wk->partyEnemy1, rule );
-      BP_SETUP_Wild( &wk->setupParam, wk->gameData, HEAPID_BTL_DEBUG_SYS, rule, wk->partyEnemy1,
-          BATTLE_BG_TYPE_GRASS, 0, BTL_WEATHER_NONE );
+
+      BTL_FIELD_SITUATION_Init(&sit);
+      BTL_SETUP_Wild( &wk->setupParam, wk->gameData, wk->partyEnemy1, &sit, rule, HEAPID_BTL_DEBUG_SYS );
     }
     // 通信対戦
     else if( btltype_IsComm(wk->saveData.btlType) )
@@ -1237,55 +1239,52 @@ FS_EXTERN_OVERLAY(battle);
       GFL_NETHANDLE* netHandle = GFL_NET_HANDLE_GetCurrentHandle();
       switch( rule ){
       case BTL_RULE_SINGLE:
-        BTL_SETUP_Single_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS );
+        BTL_SETUP_Single_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS, HEAPID_BTL_DEBUG_SYS );
         break;
       case BTL_RULE_DOUBLE:
         if( !btltype_IsMulti(wk->saveData.btlType) ){
-          BTL_SETUP_Double_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS );
+          BTL_SETUP_Double_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS, HEAPID_BTL_DEBUG_SYS );
         }else{
           BTL_SETUP_Multi_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS,
-            GFL_NET_GetNetID(netHandle) );
+            GFL_NET_GetNetID(netHandle), HEAPID_BTL_DEBUG_SYS );
         }
         break;
       case BTL_RULE_TRIPLE:
-        BTL_SETUP_Triple_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS );
+        BTL_SETUP_Triple_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS, HEAPID_BTL_DEBUG_SYS );
         break;
       case BTL_RULE_ROTATION:
-        BTL_SETUP_Rotation_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS );
+        BTL_SETUP_Rotation_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS, HEAPID_BTL_DEBUG_SYS );
         break;
       }
     }
     // VSゲーム内トレーナー
     else
     {
+      BTL_FIELD_SITUATION sit;
       BtlRule rule = btltype_GetRule( wk->saveData.btlType );
       TrainerID  trID = 1 + GFL_STD_MtRand( 50 ); // てきとーにランダムで
+      
+      BTL_FIELD_SITUATION_Init(&sit);
       switch( rule ){
       case BTL_RULE_SINGLE:
         BTL_SETUP_Single_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
-          BATTLE_BG_TYPE_GRASS, 0, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
+          &sit, trID, HEAPID_BTL_DEBUG_SYS );
         break;
       case BTL_RULE_DOUBLE:
         BTL_SETUP_Double_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
-          BATTLE_BG_TYPE_GRASS, 0, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
+          &sit, trID, HEAPID_BTL_DEBUG_SYS );
         break;
       case BTL_RULE_TRIPLE:
         BTL_SETUP_Triple_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
-          BATTLE_BG_TYPE_GRASS, 0, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
+          &sit, trID, HEAPID_BTL_DEBUG_SYS );
         break;
       case BTL_RULE_ROTATION:
         BTL_SETUP_Rotation_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
-          BATTLE_BG_TYPE_GRASS, 0, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
+          &sit, trID, HEAPID_BTL_DEBUG_SYS );
         break;
       }
     }
-    if( wk->setupParam.partyPlayer == NULL ){
-      wk->setupParam.partyPlayer = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
-      wk->fPlayerPartyAllocated = TRUE;
-    }else if(wk->setupParam.partyPlayer != GAMEDATA_GetMyPokemon(wk->gameData)){
-      wk->fPlayerPartyAllocated = TRUE;
-    }
-    PokeParty_Copy( wk->partyPlayer, wk->setupParam.partyPlayer );
+    BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyPlayer, BTL_CLIENT_PLAYER );
     (*seq) = SEQ_BTL_START;
     break;
 
@@ -1297,11 +1296,8 @@ FS_EXTERN_OVERLAY(battle);
     break;
 
   case SEQ_BTL_RETURN:
-//    BATTLE_PARAM_Release( &wk->setupParam );
-    if( wk->fPlayerPartyAllocated ){
-      GFL_HEAP_FreeMemory( wk->setupParam.partyPlayer );
-      wk->setupParam.partyPlayer = NULL;
-    }
+    BATTLE_PARAM_Release( &wk->setupParam );
+    
     changeScene_recover( wk );
     PMSND_StopBGM();
     setMainProc( wk, mainProc_Setup );
