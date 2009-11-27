@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2008-11-17T17:14:20"/>
+	<create user="taya" host="W00146" date="2009-11-27T12:06:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -579,6 +579,150 @@
 
 	<row id="TOKUSEI_123">
 		<language name="JPN">ナイトメア</language>
+	</row>
+
+	<row id="TOKUSEI_124">
+		<language name="JPN">わるいてぐせ</language>
+	</row>
+
+	<row id="TOKUSEI_125">
+		<language name="JPN">ちからづく</language>
+	</row>
+
+	<row id="TOKUSEI_126">
+		<language name="JPN">あまのじゃく</language>
+	</row>
+
+	<row id="TOKUSEI_127">
+		<language name="JPN">きんちょうかん</language>
+	</row>
+
+	<row id="TOKUSEI_128">
+		<language name="JPN">まけんき</language>
+	</row>
+
+	<row id="TOKUSEI_129">
+		<language name="JPN">よわき</language>
+	</row>
+
+	<row id="TOKUSEI_130">
+		<language name="JPN">のろわれボディ</language>
+	</row>
+
+	<row id="TOKUSEI_131">
+		<language name="JPN">モラテラピー</language>
+	</row>
+
+	<row id="TOKUSEI_132">
+		<language name="JPN">なかまいしき</language>
+	</row>
+
+	<row id="TOKUSEI_133">
+		<language name="JPN">くだけるよろい</language>
+	</row>
+
+	<row id="TOKUSEI_134">
+		<language name="JPN">ヘヴィメタル</language>
+	</row>
+
+	<row id="TOKUSEI_135">
+		<language name="JPN">ライトメタル</language>
+	</row>
+
+	<row id="TOKUSEI_136">
+		<language name="JPN">マルチスケイル</language>
+	</row>
+
+	<row id="TOKUSEI_137">
+		<language name="JPN">どくぼうそう</language>
+	</row>
+
+	<row id="TOKUSEI_138">
+		<language name="JPN">ねつぼうそう</language>
+	</row>
+
+	<row id="TOKUSEI_139">
+		<language name="JPN">しゅうかく</language>
+	</row>
+
+	<row id="TOKUSEI_140">
+		<language name="JPN">あうんのいき</language>
+	</row>
+
+	<row id="TOKUSEI_141">
+		<language name="JPN">ムラっけ</language>
+	</row>
+
+	<row id="TOKUSEI_142">
+		<language name="JPN">ぼうじん</language>
+	</row>
+
+	<row id="TOKUSEI_143">
+		<language name="JPN">どくしゅ</language>
+	</row>
+
+	<row id="TOKUSEI_144">
+		<language name="JPN">名前未定</language>
+	</row>
+
+	<row id="TOKUSEI_145">
+		<language name="JPN">はとむね</language>
+	</row>
+
+	<row id="TOKUSEI_146">
+		<language name="JPN">すなかき</language>
+	</row>
+
+	<row id="TOKUSEI_147">
+		<language name="JPN">ふへん</language>
+	</row>
+
+	<row id="TOKUSEI_148">
+		<language name="JPN">しんがり</language>
+	</row>
+
+	<row id="TOKUSEI_149">
+		<language name="JPN">イリュージョン</language>
+	</row>
+
+	<row id="TOKUSEI_150">
+		<language name="JPN">へんしん</language>
+	</row>
+
+	<row id="TOKUSEI_151">
+		<language name="JPN">すりぬけ</language>
+	</row>
+
+	<row id="TOKUSEI_152">
+		<language name="JPN">ミイラ</language>
+	</row>
+
+	<row id="TOKUSEI_153">
+		<language name="JPN">じしんかじょう</language>
+	</row>
+
+	<row id="TOKUSEI_154">
+		<language name="JPN">せいぎのこころ</language>
+	</row>
+
+	<row id="TOKUSEI_155">
+		<language name="JPN">びびり</language>
+	</row>
+
+	<row id="TOKUSEI_156">
+		<language name="JPN">マジックミラー</language>
+	</row>
+
+	<row id="TOKUSEI_157">
+		<language name="JPN">そうしょく</language>
+	</row>
+
+	<row id="TOKUSEI_158">
+		<language name="JPN">いたずらごころ</language>
+	</row>
+
+	<row id="TOKUSEI_159">
+		<language name="JPN">すなのちから</language>
 	</row>
 
 	<flowchart-group-list>
