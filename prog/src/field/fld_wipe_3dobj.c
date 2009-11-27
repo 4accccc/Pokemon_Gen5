@@ -83,7 +83,7 @@ void FLD_WIPEOBJ_Main( FLD_WIPEOBJ* fw, fx32 scale, u8 alpha )
 						(GFL_G3D_RENDER_GetRenderObj(GFL_G3D_OBJECT_GetG3Drnd(fw->g3Dobj)) );
 
 		NNS_G3dMdlSetMdlLightEnableFlag(pMdl, 0, 0);
-		NNS_G3dMdlSetMdlPolygonID(pMdl, 0, 63);
+		NNS_G3dMdlSetMdlPolygonID(pMdl, 0, 0);
 		NNS_G3dMdlSetMdlCullMode(pMdl, 0, GX_CULL_BACK); 
 		NNS_G3dMdlSetMdlAlpha(pMdl, 0, alpha);
 		NNS_G3dMdlSetMdlPolygonMode(pMdl, 0, GX_POLYGONMODE_MODULATE);
