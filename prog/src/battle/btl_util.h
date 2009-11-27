@@ -387,7 +387,7 @@ typedef enum {
   BTL_PRINTTYPE_STANDALONE,
 }BtlPrintType;
 
-#if defined(DEBUG_ONLY_FOR_taya) | defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko) | \
+#if defined(DEBUG_ONLY_FOR_taya) | \
     defined(DEBUG_ONLY_FOR_nishino) | defined(DEBUG_ONLY_FOR_morimoto)
 #ifdef PM_DEBUG
   #define BTL_PRINT_SYSTEM_ENABLE
