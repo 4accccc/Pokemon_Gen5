@@ -67,6 +67,9 @@ static const VecFx32 * mapCtrlHybrid_GetCameraTarget( FIELDMAP_WORK* p_fieldmap 
 static void mapCtrlHybrid_Main_Grid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HYBRID* p_wk );
 static void mapCtrlHybrid_Main_Rail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HYBRID* p_wk );
 
+static void mapCtrlHybrid_ChangeGridToRail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HYBRID* p_wk );
+static void mapCtrlHybrid_ChangeRailToGrid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HYBRID* p_wk );
+
 
 // ベースシステムの変更
 static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HYBRID* p_wk, FLDMAP_BASESYS_TYPE type, const void* cp_pos );
@@ -137,6 +140,25 @@ FIELD_PLAYER_NOGRID* FIELDMAP_CTRL_HYBRID_GetFieldPlayerNoGrid( const FIELDMAP_C
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  今の状態でベースシステムを変更
+ *
+ *	@param	p_wk          ワーク
+ *	@param	p_fieldmap    フィールドワーク
+ */
+//-----------------------------------------------------------------------------
+void FIELDMAP_CTRL_HYBRID_ChangeBaseSystem( FIELDMAP_CTRL_HYBRID* p_wk, FIELDMAP_WORK* p_fieldmap )
+{
+  if( p_wk->base_type == FLDMAP_BASESYS_GRID )
+  {
+    mapCtrlHybrid_ChangeGridToRail( p_fieldmap, p_wk );
+  }
+  else
+  {
+    mapCtrlHybrid_ChangeRailToGrid( p_fieldmap, p_wk );
+  }
+}
 
 
 
@@ -290,29 +312,7 @@ static void mapCtrlHybrid_Main_Grid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
 
     if( RAIL_ATTR_VALUE_CheckHybridBaseSystemChange( value ) )
     {
-    
-      FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_fieldmap );
-      const FIELD_RAIL_MAN* cp_railman = FLDNOGRID_MAPPER_GetRailMan( p_mapper );
-      RAIL_LOCATION location;
-      VecFx32 hitpos;
-      VecFx32 startpos, endpos;
-      BOOL result;
-
-      // 開始ポジション
-      FIELD_PLAYER_GetPos( p_wk->p_player, &startpos );
-      VEC_Set( &endpos, startpos.x, 
-          startpos.y + FIELDMAP_CTRL_HYBRID_RAILPLANE_CHECK_Y,
-          startpos.z );
-      startpos.y -= FIELDMAP_CTRL_HYBRID_RAILPLANE_CHECK_Y;
-
-      // レール上の位置を取得、設定し、試す
-      result = FIELD_RAIL_MAN_Calc3DVecRailLocation( cp_railman, &startpos, &endpos, &location, &hitpos );
-
-      if( result == TRUE )
-      {
-        // レールに変更
-        mapCtrlHybrid_ChangeBaseSystem( p_fieldmap, p_wk, FLDMAP_BASESYS_RAIL, &location );
-      }
+      mapCtrlHybrid_ChangeGridToRail( p_fieldmap, p_wk );
     }
 
     p_wk->last_move = FALSE;
@@ -349,12 +349,7 @@ static void mapCtrlHybrid_Main_Rail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
     
     if( RAIL_ATTR_VALUE_CheckHybridBaseSystemChange( value ) )
     {
-      VecFx32 pos;
-
-      FIELD_PLAYER_GetPos( p_wk->p_player, &pos );
-      
-      // グリッドに変更
-      mapCtrlHybrid_ChangeBaseSystem( p_fieldmap, p_wk, FLDMAP_BASESYS_GRID, &pos );
+      mapCtrlHybrid_ChangeRailToGrid( p_fieldmap, p_wk );
     }
 
     p_wk->last_move = FALSE;
@@ -365,6 +360,59 @@ static void mapCtrlHybrid_Main_Rail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
     p_wk->last_move = TRUE;
   }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  グリッドマップからレールマップに移動
+ *
+ *	@param	p_fieldmap
+ *	@param	p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void mapCtrlHybrid_ChangeGridToRail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HYBRID* p_wk )
+{
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_fieldmap );
+  const FIELD_RAIL_MAN* cp_railman = FLDNOGRID_MAPPER_GetRailMan( p_mapper );
+  RAIL_LOCATION location;
+  VecFx32 hitpos;
+  VecFx32 startpos, endpos;
+  BOOL result;
+
+  // 開始ポジション
+  FIELD_PLAYER_GetPos( p_wk->p_player, &startpos );
+  VEC_Set( &endpos, startpos.x, 
+      startpos.y + FIELDMAP_CTRL_HYBRID_RAILPLANE_CHECK_Y,
+      startpos.z );
+  startpos.y -= FIELDMAP_CTRL_HYBRID_RAILPLANE_CHECK_Y;
+
+  // レール上の位置を取得、設定し、試す
+  result = FIELD_RAIL_MAN_Calc3DVecRailLocation( cp_railman, &startpos, &endpos, &location, &hitpos );
+
+  if( result == TRUE )
+  {
+    // レールに変更
+    mapCtrlHybrid_ChangeBaseSystem( p_fieldmap, p_wk, FLDMAP_BASESYS_RAIL, &location );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レールマップからグリッドマップに移動
+ *
+ *	@param	p_fieldmap
+ *	@param	p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void mapCtrlHybrid_ChangeRailToGrid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HYBRID* p_wk )
+{
+  VecFx32 pos;
+
+  FIELD_PLAYER_GetPos( p_wk->p_player, &pos );
+  
+  // グリッドに変更
+  mapCtrlHybrid_ChangeBaseSystem( p_fieldmap, p_wk, FLDMAP_BASESYS_GRID, &pos );
+}
+
 
 
 //----------------------------------------------------------------------------
