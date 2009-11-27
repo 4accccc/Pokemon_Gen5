@@ -289,6 +289,8 @@ static void handler_Nenchaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Nenchaku( u16 pri, u16 tokID, u8 pokeID );
 static void handler_WaruiTeguse( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_WaruiTeguse( u16 pri, u16 tokID, u8 pokeID );
+static void handler_NorowareBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_NorowareBody( u16 pri, u16 tokID, u8 pokeID );
 static void handler_Tikarazuku_WazaPow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tikarazuku_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tikarazuku( u16 pri, u16 tokID, u8 pokeID );
@@ -297,8 +299,12 @@ static void handler_Makenki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Makenki( u16 pri, u16 tokID, u8 pokeID );
 static void handler_Yowaki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Yowaki( u16 pri, u16 tokID, u8 pokeID );
-
-
+static void handler_MultiScale( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_MultiScale( u16 pri, u16 tokID, u8 pokeID );
+static void handler_Moraterapi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Moraterapi( u16 pri, u16 tokID, u8 pokeID );
+static void handler_NakamaIsiki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_NakamaIsiki( u16 pri, u16 tokID, u8 pokeID );
 
 
 
@@ -435,6 +441,38 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
     { POKETOKUSEI_TIKARAZUKU,     HAND_TOK_ADD_Tikarazuku   },
     { POKETOKUSEI_MAKENKI,        HAND_TOK_ADD_Makenki      },
     { POKETOKUSEI_YOWAKI,         HAND_TOK_ADD_Yowaki       },
+    { POKETOKUSEI_MARUTISUKEIRU,  HAND_TOK_ADD_MultiScale   },
+
+    { POKETOKUSEI_AMANOJAKU,        HAND_TOK_ADD_Nenchaku  },  // あまのじゃく
+    { POKETOKUSEI_KINCHOUKAN,       HAND_TOK_ADD_Nenchaku  },  // きんちょうかん
+    { POKETOKUSEI_NOROWAREBODY,     HAND_TOK_ADD_NorowareBody },  // のろわれボディ
+    { POKETOKUSEI_MORATERAPII,      HAND_TOK_ADD_Moraterapi   },  // モラテラピー
+    { POKETOKUSEI_NAKAMAISIKI,      HAND_TOK_ADD_NakamaIsiki  },  // なかまいしき
+    { POKETOKUSEI_KUDAKERUYOROI,    HAND_TOK_ADD_Nenchaku  },  // くだけるよろい
+    { POKETOKUSEI_DOKUBOUSOU,       HAND_TOK_ADD_Nenchaku  },  // どくぼうそう
+    { POKETOKUSEI_NETUBOUSOU,       HAND_TOK_ADD_Nenchaku  },  // ねつぼうそう
+    { POKETOKUSEI_SYUUKAKU,         HAND_TOK_ADD_Nenchaku  },  // しゅうかく
+    { POKETOKUSEI_AUNNOIKI,         HAND_TOK_ADD_Nenchaku  },  // あうんのいき
+    { POKETOKUSEI_MURAKKE,          HAND_TOK_ADD_Nenchaku  },  // ムラっけ
+    { POKETOKUSEI_BOUJIN,           HAND_TOK_ADD_Nenchaku  },  // ぼうじん
+    { POKETOKUSEI_DOKUSYU,          HAND_TOK_ADD_Nenchaku  },  // どくしゅ
+    { POKETOKUSEI_MITEI,            HAND_TOK_ADD_Nenchaku  },  // 名前未定
+    { POKETOKUSEI_HATOMUNE,         HAND_TOK_ADD_Nenchaku  },  // はとむね
+    { POKETOKUSEI_SUNAKAKI,         HAND_TOK_ADD_Nenchaku  },  // すなかき
+    { POKETOKUSEI_HUHEN,            HAND_TOK_ADD_Nenchaku  },  // ふへん
+    { POKETOKUSEI_SINGARI,          HAND_TOK_ADD_Nenchaku  },  // しんがり
+    { POKETOKUSEI_IRYUUJON,         HAND_TOK_ADD_Nenchaku  },  // イリュージョン
+    { POKETOKUSEI_HENSIN,           HAND_TOK_ADD_Nenchaku  },  // へんしん
+    { POKETOKUSEI_SURINUKE,         HAND_TOK_ADD_Nenchaku  },  // すりぬけ
+    { POKETOKUSEI_MIIRA,            HAND_TOK_ADD_Nenchaku  },  // ミイラ
+    { POKETOKUSEI_JISINKAJOU,       HAND_TOK_ADD_Nenchaku  },  // じしんかじょう
+    { POKETOKUSEI_SEIGINOKOKORO,    HAND_TOK_ADD_Nenchaku  },  // せいぎのこころ
+    { POKETOKUSEI_BIBIRI,           HAND_TOK_ADD_Nenchaku  },  // びびり
+    { POKETOKUSEI_MAJIKKUMIRAA,     HAND_TOK_ADD_Nenchaku  },  // マジックミラー
+    { POKETOKUSEI_SOUSYOKU,         HAND_TOK_ADD_Nenchaku  },  // そうしょく
+    { POKETOKUSEI_ITAZURAGOKORO,    HAND_TOK_ADD_Nenchaku  },  // いたずらごころ
+    { POKETOKUSEI_SUNANOTIKARA,     HAND_TOK_ADD_Nenchaku  },  // すなのちから
+
   };
 
 
@@ -4064,6 +4102,47 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_WaruiTeguse( u16 pri, u16 tokID, u8 pokeI
 }
 //------------------------------------------------------------------------------
 /**
+ *  とくせい「のろわれボディ」
+ */
+//------------------------------------------------------------------------------
+static void handler_NorowareBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+  {
+    WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+    const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
+
+    if( !BPP_CheckSick(target, WAZASICK_KANASIBARI) )
+    {
+      if( GFL_STD_MtRand(100) < 30 )
+      {
+        WazaID  prevWaza = BPP_GetPrevWazaID( target );
+        if( prevWaza != WAZANO_NULL )
+        {
+          u8 prevWazaIdx = BPP_WAZA_SearchIdx( target, prevWaza );
+          BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
+          u8 turns = BTL_CALC_RandRange( 2, 5 );
+
+          param->sickID = WAZASICK_KANASIBARI;
+          param->sickCont = BPP_SICKCONT_MakeTurnParam( turns, prevWazaIdx );
+          param->poke_cnt = 1;
+          param->pokeID[0] = targetPokeID;
+        }
+      }
+    }
+  }
+}
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_NorowareBody( u16 pri, u16 tokID, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_DMG_REACTION,    handler_NorowareBody },  // ダメージ反応ハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
+}
+//------------------------------------------------------------------------------
+/**
  *  とくせい「ちからずく」
  */
 //------------------------------------------------------------------------------
@@ -4151,6 +4230,7 @@ static void handler_Makenki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
     {
       BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
 
+      param->header.tokwin_flag = TRUE;
       param->rankType = BPP_ATTACK;
       param->rankVolume = 2;
       param->fAlmost = TRUE;
@@ -4189,6 +4269,96 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Yowaki( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_ATTACKER_POWER,    handler_Yowaki },  // 攻撃側能力の計算ハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
+}
+//------------------------------------------------------------------------------
+/**
+ *  とくせい「マルチスケイル」
+ */
+//------------------------------------------------------------------------------
+static void handler_MultiScale( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  // HP満タンならダメージ半減
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( BPP_IsHPFull(bpp) )
+    {
+      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.5f) );
+    }
+  }
+}
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_MultiScale( u16 pri, u16 tokID, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_DMG_PROC2,    handler_MultiScale },  // ダメージ計算最終チェックハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
+}
+//------------------------------------------------------------------------------
+/**
+ *  とくせい「なかまいしき」
+ */
+//------------------------------------------------------------------------------
+static void handler_NakamaIsiki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  u8 defPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+
+  // 自分以外の味方へのダメージ半減
+  if( (defPokeID != pokeID)
+  &&  BTL_MAINUTIL_IsFriendPokeID(pokeID, defPokeID)
+  ){
+    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.5f) );
+  }
+}
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_NakamaIsiki( u16 pri, u16 tokID, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_DMG_PROC2,    handler_NakamaIsiki },  // ダメージ計算最終チェックハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
+}
+//------------------------------------------------------------------------------
+/**
+ *  とくせい「モラテラピー」
+ */
+//------------------------------------------------------------------------------
+static void handler_Moraterapi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  BtlPokePos  myPos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
+  BtlExPos    exPos = EXPOS_MAKE( BTL_EXPOS_MYSIDE_ALL, myPos );
+
+  const BTL_POKEPARAM* bpp;
+  u8 targetID[ BTL_POSIDX_MAX ];
+  u8 cnt, i;
+
+  cnt = BTL_SVFTOOL_ExpandPokeID( flowWk, exPos, targetID );
+  for(i=0; i<cnt; ++i)
+  {
+    if( targetID[ i ] == pokeID ){ continue; }
+    bpp = BTL_SVFTOOL_GetPokeParam( flowWk, targetID[i] );
+    if( BPP_GetPokeSick(bpp) != POKESICK_NULL )
+    {
+      if( GFL_STD_MtRand(100) < 90 )
+      {
+        BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+
+        param->header.tokwin_flag = TRUE;
+        param->poke_cnt = 1;
+        param->pokeID[0] = targetID[i];
+        param->sickCode = WAZASICK_EX_POKEFULL;
+      }
+    }
+  }
+}
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Moraterapi( u16 pri, u16 tokID, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_TURNCHECK_BEGIN,    handler_Moraterapi },  // ダメージ計算最終チェックハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );

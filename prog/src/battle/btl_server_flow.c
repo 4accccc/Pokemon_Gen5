@@ -3158,10 +3158,10 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   // 出たワザレコード記録
   BTL_WAZAREC_Add( &wk->wazaRec, waza, wk->turnCount, pokeID );
 
-
   // 死んでるポケモンは除外
   TargetPokeRec_RemoveDeadPokemon( targetRec );
-  // ターゲットは居たはずだがモロモロの理由で残っていない場合はハズレたことにして終了
+
+  // ターゲットは居たはずだがモロモロの理由で残っていない->うまく決まらなかった、終了
   if( (TargetPokeRec_GetCountMax(targetRec) > 0)
   &&  (TargetPokeRec_GetCount(targetRec) == 0)
   ){
@@ -3172,6 +3172,12 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   // 対象ごとの無効チェック＆回避チェック
   flowsub_checkNotEffect( wk, &wk->wazaParam, attacker, targetRec );
   flowsub_checkWazaAvoid( wk, waza, attacker, targetRec );
+  // ターゲットは居たはずだがモロモロの理由で残っていない->何も表示せず終了
+  if( (TargetPokeRec_GetCountMax(targetRec) > 0)
+  &&  (TargetPokeRec_GetCount(targetRec) == 0)
+  ){
+    return;
+  }
 
   BTL_Printf("ワザ=%d, カテゴリ=%d\n", wk->wazaParam.wazaID, category );
   switch( category ){
@@ -9817,10 +9823,20 @@ static u8 scproc_HandEx_rankEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
   const BTL_HANDEX_PARAM_RANK_EFFECT* param = (BTL_HANDEX_PARAM_RANK_EFFECT*)param_header;
   BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
   BTL_POKEPARAM* pp_target;
+  u8 fEffective = FALSE;
   u8 result = 0;
   u32 i;
 
-  if( param_header->tokwin_flag ){
+  for(i=0; i<param->poke_cnt; ++i){
+    pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
+    if( !BPP_IsDead( pp_target )
+    &&  BPP_IsRankEffectValid( pp_target, param->rankType, param->rankVolume )
+    ){
+      fEffective = TRUE;
+      break;
+    }
+  }
+  if( fEffective && param_header->tokwin_flag ){
     scPut_TokWin_In( wk, pp_user );
   }
 
@@ -9836,7 +9852,7 @@ static u8 scproc_HandEx_rankEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
     }
   }
 
-  if( param_header->tokwin_flag ){
+  if( fEffective && param_header->tokwin_flag ){
     scPut_TokWin_Out( wk, pp_user );
   }
 

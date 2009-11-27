@@ -5162,18 +5162,10 @@ static void handler_Kanasibari( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
         param->sickCont = BPP_SICKCONT_MakeTurnParam( turns, prevWazaIdx );
         param->poke_cnt = 1;
         param->pokeID[0] = targetPokeID;
-
-        param->fExMsg = TRUE;
-        param->exStr.type = BTL_STRTYPE_SET;
-        param->exStr.ID = BTL_STRID_SET_Kanasibari;
-        param->exStr.argCnt = 2;
-        param->exStr.args[0] = targetPokeID;
-        param->exStr.args[1] = prevWaza;
       }
     }
   }
 }
-
 //----------------------------------------------------------------------------------
 /**
  * ‚Ó‚¤‚¢‚ñ
