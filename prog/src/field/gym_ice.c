@@ -69,8 +69,10 @@ enum {
   RES_ID_WALL1_MDL = 0,
   RES_ID_WALL2_MDL,
   RES_ID_SW_MDL,
-  RES_ID_WALL1_ANM,
-  RES_ID_WALL2_ANM,
+  RES_ID_WALL1_ANM_A,
+  RES_ID_WALL1_ANM_B,
+  RES_ID_WALL2_ANM_A,
+  RES_ID_WALL2_ANM_B,
   RES_ID_SW_ANM_A,
   RES_ID_SW_ANM_B,
 };
@@ -88,7 +90,7 @@ enum {
 //ジム内部中の一時ワーク
 typedef struct GYM_ICE_TMP_tag
 {
-  int dummy;
+  int TargetIdx;
 }GYM_ICE_TMP;
 
 //--リソース関連--
@@ -99,17 +101,21 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
   { ARCID_GYM_ICE, NARC_gym_ice_swich_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
 
   { ARCID_GYM_ICE, NARC_gym_ice_ice_karakuri_01_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
+  { ARCID_GYM_ICE, NARC_gym_ice_ice_karakuri_01_2_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
   { ARCID_GYM_ICE, NARC_gym_ice_ice_karakuri_02_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
+  { ARCID_GYM_ICE, NARC_gym_ice_ice_karakuri_02_2_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
   { ARCID_GYM_ICE, NARC_gym_ice_swich_br_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
   { ARCID_GYM_ICE, NARC_gym_ice_swich_br_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
 };
 
 //3Dアニメ　リフト
 static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_wall1[] = {
-	{ RES_ID_WALL1_ANM,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+	{ RES_ID_WALL1_ANM_A,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_WALL1_ANM_B,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
 };
 static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_wall2[] = {
-	{ RES_ID_WALL2_ANM,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+	{ RES_ID_WALL2_ANM_A,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_WALL2_ANM_B,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
 };
 
 static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_sw[] = {
@@ -179,6 +185,10 @@ static const GFL_G3D_UTIL_SETUP Setup = {
 
 
 static void SetupWallSwAnm(GYM_ICE_SV_WORK *gmk_sv_work, FLD_EXP_OBJ_CNT_PTR ptr, const int inWallIdx);
+static int GetWatchAnmIdx(GYM_ICE_SV_WORK *gmk_sv_work, const int inTargetIdx);
+
+static GMEVENT_RESULT SwitchEvt( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT WallEvt( GMEVENT* event, int* seq, void* work );
 
 //--------------------------------------------------------------
 /**
@@ -288,7 +298,32 @@ void GYM_ICE_Move(FIELDMAP_WORK *fieldWork)
   //アニメーション再生
   FLD_EXP_OBJ_PlayAnime( ptr );
 }
+#if 0
+//--------------------------------------------------------------
+/**
+ * スイッチイベント作成
+ * @param	      gsys        ゲームシステムポインタ
+ * @param       inTargetIdx   ギミック対象インデックス
+ * @return      GMEVENT     イベントポインタ
+ */
+//--------------------------------------------------------------
+GMEVENT *GYM_ICE_CreateSwEvt(GAMESYS_WORK *gsys, const int inTargetIdx)
+{
+  GMEVENT * event;
+  GYM_ICE_TMP *tmp;
+  {
+    FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+    tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ICE_TMP_ASSIGN_ID);
+  }
 
+  tmp->TargetIdx = inTargetIdx;
+
+  //イベント作成
+  event = GMEVENT_Create( gsys, NULL, SwitchEvt, 0 );
+}
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -335,4 +370,133 @@ static void SetupWallSwAnm(GYM_ICE_SV_WORK *gmk_sv_work, FLD_EXP_OBJ_CNT_PTR ptr
   FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
 }
 
+//--------------------------------------------------------------
+/**
+ * 終了監視するアニメインデックスを取得
+ * @param   gmk_sv_work   ギミックセーブワーク
+ * @param	  inTargetIdx ギミック対象インデックス 0～2
+ * @return  int     終了監視するアニメインデックス　0～1
+ */
+//--------------------------------------------------------------
+static int GetWatchAnmIdx(GYM_ICE_SV_WORK *gmk_sv_work, const int inTargetIdx)
+{
+  int valid_anm_idx;
+  if ( gmk_sv_work->WallMoved[inTargetIdx] ) valid_anm_idx = 1;
+  else valid_anm_idx = 0;
+
+  return valid_anm_idx;
+}
+
+
+//--------------------------------------------------------------
+/**
+ * スイッチイベント
+ * @param	      fieldWork     フィールドワークポインタ
+ * @return      none
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT SwitchEvt( GMEVENT* event, int* seq, void* work )
+{
+  GYM_ICE_SV_WORK *gmk_sv_work;
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  GYM_ICE_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ICE_TMP_ASSIGN_ID);
+
+  {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ICE );
+  }
+
+  switch(*seq){
+  case 0:  //スイッチアニメ開始
+    {
+      EXP_OBJ_ANM_CNT_PTR anm;
+      u8 sw_obj_idx;
+      u8 anm_idx;
+      sw_obj_idx = OBJ_SW_1 + tmp->TargetIdx;
+      anm_idx = GetWatchAnmIdx(gmk_sv_work, tmp->TargetIdx);
+      //アニメを開始
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ICE_UNIT_IDX, sw_obj_idx, anm_idx );
+      //アニメ停止解除
+      FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+    }
+    (*seq)++;
+    break;
+  case 1:
+    {
+      EXP_OBJ_ANM_CNT_PTR anm;
+      u8 obj_idx;
+      u8 anm_idx;
+      obj_idx = OBJ_SW_1 + tmp->TargetIdx;
+      anm_idx = GetWatchAnmIdx(gmk_sv_work, tmp->TargetIdx);
+      //↓アニメ終了判定
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ICE_UNIT_IDX, obj_idx, anm_idx);
+      //スイッチアニメ終了待ち
+      if ( FLD_EXP_OBJ_ChkAnmEnd(anm) ) return GMEVENT_RES_FINISH; //イベント終了
+    }
+    break;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 壁回転イベント
+ * @param	      fieldWork     フィールドワークポインタ
+ * @return      none
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT WallEvt( GMEVENT* event, int* seq, void* work )
+{
+  GYM_ICE_SV_WORK *gmk_sv_work;
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  GYM_ICE_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ICE_TMP_ASSIGN_ID);
+
+  {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ICE );
+  }
+
+  switch(*seq){
+  case 0:  //スイッチアニメ開始
+    {
+      EXP_OBJ_ANM_CNT_PTR anm;
+      u8 obj_idx;
+      u8 anm_idx;
+      obj_idx = OBJ_WALL_1 + tmp->TargetIdx;
+      anm_idx = GetWatchAnmIdx(gmk_sv_work, tmp->TargetIdx);
+      //アニメを開始
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ICE_UNIT_IDX, obj_idx, anm_idx );
+      //アニメ停止解除
+      FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+    }
+    (*seq)++;
+    break;
+  case 1:
+    {
+      EXP_OBJ_ANM_CNT_PTR anm;
+      u8 obj_idx;
+      u8 anm_idx;
+
+      obj_idx = OBJ_WALL_1 + tmp->TargetIdx;
+      anm_idx = GetWatchAnmIdx(gmk_sv_work, tmp->TargetIdx);
+      //↓アニメ終了判定
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ICE_UNIT_IDX, obj_idx, anm_idx);
+      //スイッチアニメ終了待ち
+      if ( FLD_EXP_OBJ_ChkAnmEnd(anm) )
+      {
+        //セーブワーク書き換え
+        gmk_sv_work->WallMoved[tmp->TargetIdx] = TRUE;
+        return GMEVENT_RES_FINISH; //イベント終了
+      }
+    }
+    break;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
 
