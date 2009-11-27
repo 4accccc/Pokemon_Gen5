@@ -69,6 +69,7 @@ typedef struct{
   int               effect_end_wait_kind;
   int               camera_projection;
   BTLV_EFFVM_PARAM  param;
+  WazaID            waza;
 #ifdef PM_DEBUG
   const DEBUG_PARTICLE_DATA*  dpd;
   BOOL                        debug_flag;
@@ -416,15 +417,18 @@ BOOL    BTLV_EFFVM_Main( VMHANDLE *vmh )
 
   if( ( ret == FALSE ) && ( bevw->sequence ) )
   {
-    //HPゲージ表示
-    BTLV_EFFECT_SetGaugeDrawEnable( TRUE );
-
-    GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
-
-    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,
-                      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 |
-                      GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
-                      31, 3 );
+    if( bevw->waza < BTLEFF_SINGLE_ENCOUNT_1 )
+    { 
+      //HPゲージ表示
+      BTLV_EFFECT_SetGaugeDrawEnable( TRUE );
+  
+      GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
+  
+      G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,
+                        GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 |
+                        GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+                        31, 3 );
+    }
 
     GFL_HEAP_FreeMemory( bevw->sequence );
     bevw->sequence = NULL;
@@ -471,7 +475,8 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   bevw->attack_pos = from;
   bevw->defence_pos = to;
   bevw->camera_projection = BTLEFF_CAMERA_PROJECTION_PERSPECTIVE;
-  if( waza < BTLEFF_SINGLE_ENCOUNT_1 )
+  bevw->waza = waza;
+  if( bevw->waza < BTLEFF_SINGLE_ENCOUNT_1 )
   { 
     bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_WAZAEFF_SEQ, waza, bevw->heapID );
     //HPゲージ非表示
@@ -503,9 +508,6 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   }
 
   start_ofs = (int *)&bevw->sequence[ table_ofs ];
-
-  GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, 0 );
-  GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, 0 );
 
   VM_Start( vmh, &bevw->sequence[ start_ofs[ 0 ] ] );
 }
@@ -1699,6 +1701,9 @@ static VMCMD_RESULT VMEC_BG_SCROLL( VMHANDLE *vmh, void *context_work )
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_BG_SCROLL\n");
 #endif DEBUG_OS_PRINT
+
+  GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, 0 );
+  GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, 0 );
 
   BTLV_BG_MovePosition( BTLV_EFFECT_GetBGWork(), position, type, scr_x, scr_y, frame, wait, count );
 
@@ -3616,9 +3621,6 @@ void  BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, co
                     GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 |
                     GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
                     0, 0 );
-
-  GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, 0 );
-  GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, 0 );
 
   bevw->attack_pos = from;
   bevw->defence_pos = to;
