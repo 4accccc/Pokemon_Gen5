@@ -231,7 +231,7 @@ typedef enum {
   POKETOKUSEI_MORATERAPII,        // モラテラピー
   POKETOKUSEI_NAKAMAISIKI,        // なかまいしき
   POKETOKUSEI_KUDAKERUYOROI,      // くだけるよろい
-  POKETOKUSEI_HEVYMETARU,         // ヘヴィメタル
+  POKETOKUSEI_HEVIMETARU,         // ヘヴィメタル
   POKETOKUSEI_RAITOMETARU,        // ライトメタル
   POKETOKUSEI_MARUTISUKEIRU,      // マルチスケイル
   POKETOKUSEI_DOKUBOUSOU,         // どくぼうそう
