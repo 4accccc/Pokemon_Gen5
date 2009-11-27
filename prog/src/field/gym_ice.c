@@ -29,7 +29,7 @@
 
 #define GRID_HALF_SIZE ((FIELD_CONST_GRID_SIZE/2)*FX32_ONE)
 
-#define WALL_ANM_NUM  (1)
+#define WALL_ANM_NUM  (2)
 
 #define WALL1_X (WALL1_GX*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
 #define WALL2_X (WALL2_GX*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
@@ -301,6 +301,38 @@ void GYM_ICE_Move(FIELDMAP_WORK *fieldWork)
 //--------------------------------------------------------------
 static void SetupWallSwAnm(GYM_ICE_SV_WORK *gmk_sv_work, FLD_EXP_OBJ_CNT_PTR ptr, const int inWallIdx)
 {
+  EXP_OBJ_ANM_CNT_PTR anm;
+  int wall_obj_idx;
+  int sw_obj_idx;
+  int valid_anm_idx, invalid_anm_idx;
+
+  if ( gmk_sv_work->WallMoved[inWallIdx] )
+  {
+    valid_anm_idx = 0;
+    invalid_anm_idx = 1;
+  }
+  else {
+    valid_anm_idx = 1;
+    invalid_anm_idx = 0;
+  }
+
+  //•Ç
+  FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_ICE_UNIT_IDX, wall_obj_idx, valid_anm_idx, TRUE);
+  FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_ICE_UNIT_IDX, wall_obj_idx, invalid_anm_idx, FALSE);
+  //“ª‚¾‚µ
+  FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_ICE_UNIT_IDX, wall_obj_idx, valid_anm_idx, 0 );
+  //’âŽ~‚É‚µ‚Ä‚¨‚­
+  anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ICE_UNIT_IDX, wall_obj_idx, valid_anm_idx);
+  FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+
+  //ƒXƒCƒbƒ`
+  FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_ICE_UNIT_IDX, sw_obj_idx, valid_anm_idx, TRUE);
+  FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_ICE_UNIT_IDX, sw_obj_idx, invalid_anm_idx, FALSE);
+  //“ª‚¾‚µ
+  FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_ICE_UNIT_IDX, sw_obj_idx, valid_anm_idx, 0 );
+  //’âŽ~‚É‚µ‚Ä‚¨‚­
+  anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ICE_UNIT_IDX, sw_obj_idx, valid_anm_idx);
+  FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
 }
 
 
