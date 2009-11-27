@@ -132,6 +132,8 @@
 //======================================================================
 //	define
 //======================================================================
+//#define CROSSFADE_MODE
+
 //--------------------------------------------------------------
 ///	GAMEMODE
 //--------------------------------------------------------------
@@ -481,13 +483,13 @@ static MAINSEQ_RESULT mainSeqFunc_setup_system(GAMESYS_WORK *gsys, FIELDMAP_WORK
 	GFL_STD_MtRandInit(0);
 
 	//VRAMクリア
-	GFL_DISP_ClearVRAM( GX_VRAM_D );
+	//GFL_DISP_ClearVRAM( GX_VRAM_D );
 	//VRAM設定
 	GFL_DISP_SetBank( &fldmapdata_dispVram );
 
 	//BG初期化
 	fldmap_BG_Init( fieldWork );
-	
+
 	// CLACT初期化
 	GFL_CLACT_SYS_Create(
 			&fldmapdata_CLSYS_Init, &fldmapdata_dispVram, heapID );
@@ -546,15 +548,19 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   //フィールド3Ｄカットインヒープ確保
   GFL_HEAP_CreateHeap( HEAPID_FIELDMAP, HEAPID_FLD3DCUTIN, FLD3DCUTIN_SIZE );
 
-  fieldWork->fldMsgBG = FLDMSGBG_Setup(
-      fieldWork->heapID, fieldWork->g3Dcamera );
-
+#ifndef CROSSFADE_MODE
+  fieldWork->fldMsgBG = FLDMSGBG_Setup( fieldWork->heapID, fieldWork->g3Dcamera );
+#else
+  fieldWork->fldMsgBG = NULL;
+#endif
   fieldWork->goldMsgWin = NULL;
 
+#ifndef CROSSFADE_MODE
   // 地名表示システム作成
   fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( fieldWork->heapID, fieldWork->fldMsgBG );
-
-
+#else
+  fieldWork->placeNameSys = NULL;
+#endif
   // フラッシュチェック
   {
     FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( fieldWork->gamedata );
@@ -707,14 +713,19 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 	// フィールドマップ用制御タスクシステム
 	fieldWork->fldmapFuncSys = FLDMAPFUNC_Sys_Create( fieldWork, fieldWork->heapID, FLDMAPFUNC_TASK_MAX );
 
+#ifndef CROSSFADE_MODE
   //フィールドデバッグ初期化
   fieldWork->debugWork = FIELD_DEBUG_Init( fieldWork, fieldWork->heapID );
 
 #if USE_DEBUGWIN_SYSTEM
-  DEBUGWIN_InitProc( GFL_BG_FRAME1_M , FLDMSGBG_GetFontHandle(fieldWork->fldMsgBG) );
-  DEBUGWIN_ChangeLetterColor( 31,31,31 );
-  FIELD_FUNC_RANDOM_GENERATE_InitDebug( fieldWork->heapID, GAMEDATA_GetMyWFBCCoreData( fieldWork->gamedata ) );
+	DEBUGWIN_InitProc( GFL_BG_FRAME1_M , FLDMSGBG_GetFontHandle(fieldWork->fldMsgBG) );
+	DEBUGWIN_ChangeLetterColor( 31,31,31 );
+	FIELD_FUNC_RANDOM_GENERATE_InitDebug
+		( fieldWork->heapID, GAMEDATA_GetMyWFBCCoreData( fieldWork->gamedata ) );
 #endif  //USE_DEBUGWIN_SYSTEM
+#else
+  fieldWork->debugWork = NULL;
+#endif
 
   //フィールドパーティクル
   fieldWork->FldPrtclSys = FLD_PRTCL_Init(HEAPID_FLD3DCUTIN);
@@ -743,9 +754,9 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 	fldmap_G3D_Draw( fieldWork );
 	GFL_CLACT_SYS_Main(); // CLSYSメイン
   
-  FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
+  if(fieldWork->fldMsgBG){ FLDMSGBG_PrintMain( fieldWork->fldMsgBG ); }
   
-  FIELD_DEBUG_UpdateProc( fieldWork->debugWork );
+  if(fieldWork->debugWork){ FIELD_DEBUG_UpdateProc( fieldWork->debugWork ); }
   
   if( fieldWork->fldMMdlSys != NULL ){
     MMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
@@ -817,7 +828,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   }
 
   // 地名表示システム動作処理
-  FIELD_PLACE_NAME_Process( fieldWork->placeNameSys );
+  if(fieldWork->placeNameSys){ FIELD_PLACE_NAME_Process( fieldWork->placeNameSys ); }
 
   // フラッシュ処理
   FIELDSKILL_MAPEFF_Main( fieldWork->fieldskill_mapeff );
@@ -830,8 +841,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   Union_Main(GAMESYSTEM_GetGameCommSysPtr(gsys), fieldWork);
   
   FIELD_SUBSCREEN_Main(fieldWork->fieldSubscreenWork);
-  FIELD_DEBUG_UpdateProc( fieldWork->debugWork );
-
+  if(fieldWork->debugWork){ FIELD_DEBUG_UpdateProc( fieldWork->debugWork ); }
   
   if( fieldWork->fldMMdlSys != NULL ){
     MMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
@@ -845,7 +855,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 	// フィールドマップ用制御タスクシステム
 	FLDMAPFUNC_Sys_Main( fieldWork->fldmapFuncSys );
 
-  FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
+  if(fieldWork->fldMsgBG ){ FLDMSGBG_PrintMain( fieldWork->fldMsgBG ); }
 
   // TCB
   GFL_TCB_Main( fieldWork->fieldmapTCB );
@@ -880,9 +890,9 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
   FIELD_SUBSCREEN_Draw(fieldWork->fieldSubscreenWork);
   FIELD_CAMERA_Main( fieldWork->camera_control, GFL_UI_KEY_GetCont() );
   
-  FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
+  if(fieldWork->fldMsgBG ){ FLDMSGBG_PrintMain( fieldWork->fldMsgBG ); }
 
-  FIELD_PLACE_NAME_Draw( fieldWork->placeNameSys );
+  if(fieldWork->placeNameSys){ FIELD_PLACE_NAME_Draw( fieldWork->placeNameSys ); }
   
 	MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);
 	fldmap_G3D_Draw( fieldWork );
@@ -964,7 +974,7 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   }
   
   // 地名表示システム破棄
-  FIELD_PLACE_NAME_Delete( fieldWork->placeNameSys );
+  if(fieldWork->placeNameSys){ FIELD_PLACE_NAME_Delete( fieldWork->placeNameSys ); }
 
   //ギミック終了
   FLDGMK_EndFieldGimmick(fieldWork);
@@ -1024,9 +1034,9 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
     FLDMSGWIN_Delete( fieldWork->goldMsgWin );
   }
   
-  FLDMSGBG_Delete( fieldWork->fldMsgBG );
+  if(fieldWork->fldMsgBG ){ FLDMSGBG_Delete( fieldWork->fldMsgBG ); }
 
-  FIELD_DEBUG_Delete( fieldWork->debugWork );
+  if(fieldWork->debugWork){ FIELD_DEBUG_Delete( fieldWork->debugWork ); }
 
 	GAMEDATA_SetFrameSpritEnable(GAMESYSTEM_GetGameData(gsys), FALSE);
 	GFL_UI_StartFrameRateMode( GFL_UI_FRAMERATE_60 );
@@ -1775,7 +1785,7 @@ static void	fldmap_BG_Init( FIELDMAP_WORK *fieldWork )
 	//背景色パレット転送
   GFL_BG_LoadPalette( GFL_BG_FRAME0_M, (void*)fldmapdata_bgColorTable, 16*2, 0 ); //メイン画面の背景色
   GFL_BG_LoadPalette( GFL_BG_FRAME0_S, (void*)fldmapdata_bgColorTable, 16*2, 0 ); //サブ画面の背景色
-
+#ifndef CROSSFADE_MODE
 	//ＢＧモード設定
 	GFL_BG_SetBGMode( &fldmapdata_bgsysHeader );
 
@@ -1790,6 +1800,41 @@ static void	fldmap_BG_Init( FIELDMAP_WORK *fieldWork )
   
   //使用するウィンドウ
   GX_SetVisibleWnd( GX_WNDMASK_NONE );
+#endif
+}
+
+void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork );
+void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork )
+{
+	//ＢＧモード設定
+	GFL_BG_SetBGMode( &fldmapdata_bgsysHeader );
+
+	//ＢＧコントロール設定
+	G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 16, 8 );
+	
+	GFL_BG_SetBGControl3D( FIELD_3D_FRAME_PRI );
+
+	//ディスプレイ面の選択
+	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
+	GFL_DISP_SetDispOn();
+  
+  //使用するウィンドウ
+  GX_SetVisibleWnd( GX_WNDMASK_NONE );
+
+  // 会話ウインドウシステム作成
+  fieldWork->fldMsgBG = FLDMSGBG_Setup( fieldWork->heapID, fieldWork->g3Dcamera );
+  // 地名表示システム作成
+  fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( fieldWork->heapID, fieldWork->fldMsgBG );
+
+  //フィールドデバッグ初期化
+  fieldWork->debugWork = FIELD_DEBUG_Init( fieldWork, fieldWork->heapID );
+
+#if USE_DEBUGWIN_SYSTEM
+	DEBUGWIN_InitProc( GFL_BG_FRAME1_M , FLDMSGBG_GetFontHandle(fieldWork->fldMsgBG) );
+	DEBUGWIN_ChangeLetterColor( 31,31,31 );
+	FIELD_FUNC_RANDOM_GENERATE_InitDebug
+		( fieldWork->heapID, GAMEDATA_GetMyWFBCCoreData( fieldWork->gamedata ) );
+#endif  //USE_DEBUGWIN_SYSTEM
 }
 
 //--------------------------------------------------------------
@@ -2326,7 +2371,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	zoneChange_UpdatePlayerWork( gdata, new_zone_id );
 
 	// 地名表示システムに, ゾーンの切り替えを通達
-	FIELD_PLACE_NAME_Display( fieldWork->placeNameSys, new_zone_id );
+  if(fieldWork->placeNameSys){ FIELD_PLACE_NAME_Display( fieldWork->placeNameSys, new_zone_id ); }
 
   SET_CHECK();
 	//ゾーンID更新
@@ -2794,8 +2839,7 @@ static void Draw3DNormalMode( FIELDMAP_WORK * fieldWork )
 	GFL_G3D_CAMERA_Switching( fieldWork->g3Dcamera );
 	GFL_G3D_LIGHT_Switching( fieldWork->g3Dlightset );
   
-  FLDMSGBG_PrintG3D( fieldWork->fldMsgBG );
-  
+  if(fieldWork->fldMsgBG ){ FLDMSGBG_PrintG3D( fieldWork->fldMsgBG ); }
 
 	FLDMAPPER_Draw( fieldWork->g3Dmapper, fieldWork->g3Dcamera );
 	FIELDSKILL_MAPEFF_Draw( fieldWork->fieldskill_mapeff );

@@ -157,7 +157,9 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 		break;
 	case 3:
 		fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-    FIELD_PLACE_NAME_DisplayForce(FIELDMAP_GetPlaceNameSys(fieldmap), fmw->loc_req.zone_id);
+    if(FIELDMAP_GetPlaceNameSys(fieldmap)){
+			FIELD_PLACE_NAME_DisplayForce(FIELDMAP_GetPlaceNameSys(fieldmap), fmw->loc_req.zone_id);
+		}
 		return GMEVENT_RES_FINISH;
 	}
 	return GMEVENT_RES_CONTINUE;
@@ -449,7 +451,9 @@ static GMEVENT_RESULT EVENT_MapChangeNoFade(GMEVENT * event, int *seq, void*work
 		(*seq)++;
     break;
 	case 3:
-    FIELD_PLACE_NAME_Display(FIELDMAP_GetPlaceNameSys(fieldmap), mcw->loc_req.zone_id);
+    if(FIELDMAP_GetPlaceNameSys(fieldmap)){
+			FIELD_PLACE_NAME_Display(FIELDMAP_GetPlaceNameSys(fieldmap), mcw->loc_req.zone_id);
+		}
 		(*seq) ++;
 		break;
   case 4:

@@ -24,15 +24,17 @@
 #include "event_season_display.h"  // for EVENT_SeasonDisplay
 #include "field_status_local.h"  // for FIELD_STATUS
 
+#include "system/screentex.h"
 
 FS_EXTERN_OVERLAY(pokelist);
 FS_EXTERN_OVERLAY(poke_status);
 
 
-
+extern void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork );
 //============================================================================================
 //============================================================================================
 
+//#define CROSSFADE_MODE
 //============================================================================================
 //
 //		サブイベント
@@ -43,6 +45,8 @@ typedef struct {
   FIELDMAP_WORK* fieldmap;
 	FIELD_FADE_TYPE fade_type;
   FIELD_FADE_WAIT_TYPE wait_type;
+
+	int alphaWork;
 }FADE_EVENT_WORK;
 
 //------------------------------------------------------------------
@@ -50,6 +54,7 @@ typedef struct {
 static GMEVENT_RESULT FieldFadeOutEvent(GMEVENT * event, int *seq, void * work)
 {
 	FADE_EVENT_WORK * few = work;
+#ifndef  CROSSFADE_MODE
 	switch (*seq) {
 	case 0:
     // @todo フェード速度を元に戻す
@@ -65,6 +70,49 @@ static GMEVENT_RESULT FieldFadeOutEvent(GMEVENT * event, int *seq, void * work)
 		break;
 	}
 	return GMEVENT_RES_CONTINUE;
+#else
+	switch (*seq) {
+	case 0:
+		// 画面キャプチャ→VRAM_D
+		GX_SetBankForLCDC(GX_VRAM_LCDC_D);
+		GX_SetCapture(GX_CAPTURE_SIZE_256x192,				// Capture size
+				          GX_CAPTURE_MODE_A,							// Capture mode
+				          GX_CAPTURE_SRCA_2D3D,						// Blend src A
+				          GX_CAPTURE_SRCB_VRAM_0x00000,		// Blend src B
+									GX_CAPTURE_DEST_VRAM_D_0x00000,	// dst
+								  16, 0);             // Blend parameter for src A, B
+
+		//OS_WaitVBlankIntr();	// 0ライン待ちウエイト
+		//OS_WaitVBlankIntr();	// キャプチャー待ちウエイト
+		(*seq)++;
+		break;
+
+	case 1:	// 0ライン待ちウエイト
+	case 2:	// キャプチャー待ちウエイト
+		(*seq)++;
+		break;
+
+	case 3:
+		//描画モード変更
+		{
+			const GFL_BG_SYS_HEADER bg_sys_header = 
+						{ GX_DISPMODE_GRAPHICS,GX_BGMODE_5,GX_BGMODE_0,GX_BG0_AS_3D };
+			GFL_BG_SetBGMode( &bg_sys_header );
+		}
+		//ＢＧセットアップ
+		G2_SetBG2ControlDCBmp
+			(GX_BG_SCRSIZE_DCBMP_256x256, GX_BG_AREAOVER_XLU, GX_BG_BMPSCRBASE_0x00000);
+		GX_SetBankForBG(GX_VRAM_BG_128_D);
+		//アルファブレンド
+		//G2_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE, GX_BLEND_PLANEMASK_BG2, 0,0);
+		GFL_BG_SetPriority(GFL_BG_FRAME2_M, 0);
+		GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
+
+		return GMEVENT_RES_FINISH;
+	}
+
+	return GMEVENT_RES_CONTINUE;
+#endif
 }
 
 //------------------------------------------------------------------
@@ -95,7 +143,7 @@ GMEVENT * EVENT_FieldFadeOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap,
 static GMEVENT_RESULT FieldFadeInEvent(GMEVENT * event, int *seq, void * work)
 {
 	FADE_EVENT_WORK* few = work;
-
+#ifndef  CROSSFADE_MODE
 	switch (*seq) {
 	case 0:
     {
@@ -123,9 +171,45 @@ static GMEVENT_RESULT FieldFadeInEvent(GMEVENT * event, int *seq, void * work)
     if( few->wait_type == FIELD_FADE_NO_WAIT ){ return GMEVENT_RES_FINISH; }
 		if( GFL_FADE_CheckFade() == FALSE ){ return GMEVENT_RES_FINISH; }
 		break;
+#if 0
+    if( few->wait_type == FIELD_FADE_NO_WAIT ){ (*seq)++; break; }
+		if( GFL_FADE_CheckFade() == FALSE ){ (*seq)++; break; }
+		break;
+	case 2:
+		FIELDMAP_InitBG(few->fieldmap);
+		return GMEVENT_RES_FINISH;
+#endif
 	}
 
 	return GMEVENT_RES_CONTINUE;
+#else
+	switch (*seq) {
+	case 0:
+		few->alphaWork = 16;
+		GFL_BG_SetPriority(GFL_BG_FRAME2_M, 0);
+		GFL_BG_SetPriority(GFL_BG_FRAME0_M, 1);
+		GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
+		G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG0, few->alphaWork, 0 );
+		(*seq) ++;
+		break;
+
+	case 1:
+		if(few->alphaWork){
+			few->alphaWork--;
+			G2_ChangeBlendAlpha( few->alphaWork, 16 - few->alphaWork );
+		} else {
+			GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
+			(*seq) ++;
+		}
+		break;
+
+	case 2:
+		FIELDMAP_InitBG(few->fieldmap);
+		return GMEVENT_RES_FINISH;
+	}
+
+	return GMEVENT_RES_CONTINUE;
+#endif
 }
 
 //------------------------------------------------------------------
@@ -201,9 +285,11 @@ static GMEVENT_RESULT FieldOpenEvent(GMEVENT * event, int *seq, void*work)
 	switch(*seq) {
 	case 0:
 		if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL) break;
+#if 0
 		GFL_FADE_SetMasterBrightReq(
 				GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,
         16, 16, 0);
+#endif
 		GAMESYSTEM_CallFieldProc(gsys);
 		(*seq) ++;
 		break;
