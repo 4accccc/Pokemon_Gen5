@@ -1,0 +1,14 @@
+/*
+  @file debug_numinput.cdat
+  @brief  数値入力デバッグメニュー　パラメータリスト定義ファイル
+  @author Miyuki Iwasawa
+  @date   09.11.26
+*/
+
+static const DEBUG_NUMINPUT_LIST DNI_EffectEncountList[] = {
+ { dni_effenc_interval, 1, 0xFFFF, 0, NULL, NULL },
+ { dni_effenc_prob, 0, 100, 0, NULL, NULL },
+ { dni_effenc_pos_ofsx, 0, 10, 0, NULL, NULL },
+ { dni_effenc_pos_ofsz, 0, 10, 0, NULL, NULL },
+};
+
