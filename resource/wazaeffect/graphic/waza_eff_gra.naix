@@ -71,13 +71,10 @@ enum {
 	NARC_waza_eff_gra_bg_464_downer_NSCR = 57,
 	NARC_waza_eff_gra_bg_464_downer_NCGR = 58,
 	NARC_waza_eff_gra_bg_464_downer_NCLR = 59,
-	NARC_waza_eff_gra_test_NSCR = 60,
-	NARC_waza_eff_gra_test_NCGR = 61,
-	NARC_waza_eff_gra_test_NCLR = 62,
-	NARC_waza_eff_gra_ball_anim_NCGR = 63,
-	NARC_waza_eff_gra_ball_anim_NCLR = 64,
-	NARC_waza_eff_gra_ball_anim_NCER = 65,
-	NARC_waza_eff_gra_ball_anim_NANR = 66
+	NARC_waza_eff_gra_ball_anim_NCGR = 60,
+	NARC_waza_eff_gra_ball_anim_NCLR = 61,
+	NARC_waza_eff_gra_ball_anim_NCER = 62,
+	NARC_waza_eff_gra_ball_anim_NANR = 63
 };
 
 /* NARC_WAZA_EFF_GRA_NAIX_ */

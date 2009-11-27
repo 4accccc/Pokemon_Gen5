@@ -61,12 +61,9 @@
 #define	BG_464_DOWNER_NSCR			(57)
 #define	BG_464_DOWNER_NCGR			(58)
 #define	BG_464_DOWNER_NCLR			(59)
-#define	TEST_NSCR					(60)
-#define	TEST_NCGR					(61)
-#define	TEST_NCLR					(62)
-#define	BALL_ANIM_NCGR				(63)
-#define	BALL_ANIM_NCLR				(64)
-#define	BALL_ANIM_NCER				(65)
-#define	BALL_ANIM_NANR				(66)
+#define	BALL_ANIM_NCGR				(60)
+#define	BALL_ANIM_NCLR				(61)
+#define	BALL_ANIM_NCER				(62)
+#define	BALL_ANIM_NANR				(63)
 
 #endif
