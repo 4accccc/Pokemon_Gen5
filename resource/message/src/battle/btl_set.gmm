@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-11-27T14:42:39"/>
+	<create user="taya" host="W00146" date="2009-11-27T19:20:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -485,19 +485,19 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 こうげきが　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
-こうげきが　上がった！</language>
+攻撃が　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_Rankup_ATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 こうげきが　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
-こうげきが　上がった！</language>
+攻撃が　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_Rankup_ATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 こうげきが　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]の
-こうげきが　上がった！</language>
+攻撃が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_DEF" back-color=",,,,#00ff00,,,,,,,,,,,,,,">
@@ -523,19 +523,19 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 とくこうが　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
-とくこうが上がった！</language>
+特攻が上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_Rankup_SPATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 とくこうが　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
-とくこうが上がった！</language>
+特攻が上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_Rankup_SPATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 とくこうが　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]の
-とくこうが上がった！</language>
+特攻が上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_SPDEF">
@@ -619,19 +619,19 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 こうげきが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
-こうげきが　ぐーんと上がった！</language>
+攻撃が　ぐーんと上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_RankupEx_ATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 こうげきが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
-こうげきが　ぐーんと上がった！</language>
+攻撃が　ぐーんと上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_RankupEx_ATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 こうげきが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]の
-こうげきが　ぐーんと上がった！</language>
+攻撃が　ぐーんと上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_RankupEx_DEF">
@@ -657,19 +657,19 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 とくこうが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
-とくこうがぐーんと上がった！</language>
+特攻がぐーんと上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_RankupEx_SPATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 とくこうが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
-とくこうがぐーんと上がった！</language>
+特攻がぐーんと上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_RankupEx_SPATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 とくこうが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]の
-とくこうがぐーんと上がった！</language>
+特攻がぐーんと上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_RankupEx_SPDEF">
@@ -2492,6 +2492,26 @@
 はねかえした！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]の　[1:07:わざ名:1]を
 はね返した！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_AunNoIki">
+		<comment>あうんのいき</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+みかたからの　こうげきを　うけない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+味方からの攻撃を　受けない！</language>
+	</row>
+	<row id="BTL_STRID_SET_AunNoIki_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+みかたからの　こうげきを　うけない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+味方からの攻撃を　受けない！</language>
+	</row>
+	<row id="BTL_STRID_SET_AunNoIki_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+みかたからの　こうげきを　うけない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+味方からの攻撃を　受けない！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_SkillSwap" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
