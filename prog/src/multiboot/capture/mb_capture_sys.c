@@ -254,6 +254,13 @@ static void MB_CAPTURE_InitGraphic( MB_CAPTURE_WORK *work )
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
+    // BG1 SUB (‹|‚ÌŒ·
+    static const GFL_BG_BGCNT_HEADER header_sub1 = {
+      0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000,0x06000,
+      GX_BG_EXTPLTT_23, 2, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
     // BG2 SUB (”wŒi
     static const GFL_BG_BGCNT_HEADER header_sub2 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
@@ -266,12 +273,13 @@ static void MB_CAPTURE_InitGraphic( MB_CAPTURE_WORK *work )
       0, 0, 0x1000, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
       GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x08000,0x10000,
-      GX_BG_EXTPLTT_23, 2, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+      GX_BG_EXTPLTT_23, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     GFL_BG_SetBGMode( &sys_data );
 
     MB_CAPTURE_SetupBgFunc( &header_main1 , MB_CAPTURE_FRAME_FRAME , GFL_BG_MODE_TEXT );
     MB_CAPTURE_SetupBgFunc( &header_main3 , MB_CAPTURE_FRAME_BG , GFL_BG_MODE_TEXT );
+    MB_CAPTURE_SetupBgFunc( &header_sub1  , MB_CAPTURE_FRAME_SUB_BOW_LINE , GFL_BG_MODE_TEXT );
     MB_CAPTURE_SetupBgFunc( &header_sub2  , MB_CAPTURE_FRAME_SUB_BG , GFL_BG_MODE_TEXT );
     MB_CAPTURE_SetupBgFunc( &header_sub3  , MB_CAPTURE_FRAME_SUB_BOW , GFL_BG_MODE_AFFINE );
     
@@ -349,6 +357,7 @@ static void MB_CAPTURE_TermGraphic( MB_CAPTURE_WORK *work )
   GFL_CLACT_SYS_Delete();
   GFL_BG_FreeBGControl( MB_CAPTURE_FRAME_FRAME );
   GFL_BG_FreeBGControl( MB_CAPTURE_FRAME_BG );
+  GFL_BG_FreeBGControl( MB_CAPTURE_FRAME_SUB_BOW_LINE );
   GFL_BG_FreeBGControl( MB_CAPTURE_FRAME_SUB_BG );
   GFL_BG_FreeBGControl( MB_CAPTURE_FRAME_SUB_BOW );
   GFL_BMPWIN_Exit();
@@ -613,5 +622,4 @@ const DLPLAY_CARD_TYPE MB_CAPTURE_GetCardType( MB_CAPTURE_WORK *work )
 {
   return work->initWork->cardType;
 }
-
 

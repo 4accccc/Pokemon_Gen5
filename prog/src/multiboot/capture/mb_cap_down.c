@@ -28,6 +28,10 @@
 #define MB_CAP_DOWN_BALL_X (128)
 #define MB_CAP_DOWN_BALL_Y (82)
 
+//‹|‚Ì’†S‚©‚çŒ·‚ÌŠJŽnˆÊ’u‚Ü‚Å‚Ì‹——£
+#define MB_CAP_DOWN_BOW_LINE_X (84)
+#define MB_CAP_DOWN_BOW_LINE_Y (26)
+
 #define MB_CAP_DOWN_DEF_BALL_LEN (MB_CAP_DOWN_BALL_Y-MB_CAP_DOWN_BOW_Y)
 
 //‹| ”½‚èŒn”’l
@@ -63,15 +67,6 @@ typedef enum
   MCDA_MAX,
 }MB_CAP_DOWN_ANMTYPE;
 
-//ƒXƒe[ƒg
-typedef enum
-{
-  MCDS_NONE,        //ˆ—–³‚µ
-  MCDS_DRAG,        //ˆø‚Á’£‚é
-  MCDS_SHOT_WAIT,   //”ò‚ñ‚Å‚é
-  MCDS_SUPPLY_BALL, //ƒ{[ƒ‹•â[
-}MB_CAP_DOWN_STATE;
-
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -90,10 +85,13 @@ struct _MB_CAP_DOWN
   
   int ballPosX;
   int ballPosY;
+  fx32 pullLen;
+  u16  rotAngle;
   
   //‹|ŠÖŒW
-  int rot;    //‰ñ“]
-  fx32 pull;   //ˆø‚Á’£‚é—Í
+  int rotBow;    //‰ñ“]
+  fx32 pullBow;   //ˆø‚Á’£‚é—Í
+  GFL_BMP_DATA *lineBmp;
 };
 
 //======================================================================
@@ -101,6 +99,9 @@ struct _MB_CAP_DOWN
 //======================================================================
 #pragma mark [> proto
 static void MB_CAP_DOWN_UpdateBow( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork );
+static void MB_CAP_DOWN_UpdateBow_DrawLine( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork );
+static void MB_CAP_DOWN_UpdateBow_DrawLine_Func( const u8* vramAdr , const int x1 , const int y1 , const int x2 , const int y2 );
+static void MB_CAP_DOWN_UpdateBow_DrawDot( const u8* vramAdr , const int x , const int y );
 static void MB_CAP_DOWN_UpdateBall( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork );
 static void MB_CAP_DOWN_UpdateTP( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork , u32 tpx , u32 tpy );
 
@@ -166,12 +167,26 @@ MB_CAP_DOWN* MB_CAP_DOWN_InitSystem( MB_CAPTURE_WORK *capWork )
               &cellInitData ,CLSYS_DEFREND_SUB , heapId );
   }
   
-  downWork->rot  = 0;
-  downWork->pull = 0;
+  downWork->rotBow  = 0;
+  downWork->pullBow = 0;
   downWork->state = MCDS_NONE;
   downWork->ballPosX = MB_CAP_DOWN_BALL_X;
   downWork->ballPosY = MB_CAP_DOWN_BALL_Y;
   downWork->isUpdateBall = TRUE;
+  
+  downWork->lineBmp = GFL_BMP_CreateInVRAM( G2S_GetBG1CharPtr() , 32 , 24 , GFL_BMP_16_COLOR , heapId );
+  {
+    u8 x,y;
+    for( x=0;x<32;x++ )
+    {
+      for(y=0;y<24;y++)
+      {
+        u16 data = x+y*32;
+        GFL_BG_WriteScreen( MB_CAPTURE_FRAME_SUB_BOW_LINE , &data , x,y,1,1 );
+      }
+    }
+  }
+  GFL_BG_LoadScreenV_Req( MB_CAPTURE_FRAME_SUB_BOW_LINE );
   
   return downWork;
 }
@@ -181,6 +196,8 @@ MB_CAP_DOWN* MB_CAP_DOWN_InitSystem( MB_CAPTURE_WORK *capWork )
 //--------------------------------------------------------------
 void MB_CAP_POKE_DeleteSystem( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork )
 {
+  GFL_BMP_Delete( downWork->lineBmp );
+  
   GFL_CLACT_WK_Remove( downWork->clwkBall );
   GFL_CLGRP_PLTT_Release( downWork->cellRes[MCDO_PLT] );
   GFL_CLGRP_CGR_Release( downWork->cellRes[MCDO_NCG] );
@@ -212,78 +229,198 @@ static void MB_CAP_DOWN_UpdateBow( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downW
   /*
   if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
   {
-    downWork->rot += 4;
+    downWork->rotBow += 4;
     isUpdate = TRUE;
   }
   else
   if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
   {
-    downWork->rot -= 4;
+    downWork->rotBow -= 4;
     isUpdate = TRUE;
   }
   else
   if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
   {
-    if( downWork->pull > 0 )
+    if( downWork->pullBow > 0 )
     {
-      downWork->pull -= FX32_CONST(0.1f);
+      downWork->pullBow -= FX32_CONST(0.1f);
       isUpdate = TRUE;
     }
   }
   else
   if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
   {
-    downWork->pull += FX32_CONST(0.1f);
+    downWork->pullBow += FX32_CONST(0.1f);
     isUpdate = TRUE;
   }
   */
   
   if( downWork->state == MCDS_DRAG )
   {
-    const s32 subX = downWork->ballPosX - MB_CAP_DOWN_BOW_X;
-    const s32 subY = downWork->ballPosY - MB_CAP_DOWN_BOW_Y;
-    const s32 len_mul = subX*subX + subY*subY;
-    const fx32 len_fx = FX_Sqrt( FX32_CONST(len_mul) );
-    const fx32 len_sub = len_fx - FX32_CONST(MB_CAP_DOWN_DEF_BALL_LEN);
-    
+    //”½‚éŒvŽZ
+    if( downWork->pullLen > MB_CAP_DOWN_BOWBEND_SCALE_LEN_MAX )
     {
-      //”½‚éŒvŽZ
-      if( len_sub > MB_CAP_DOWN_BOWBEND_SCALE_LEN_MAX )
-      {
-        downWork->pull = MB_CAP_DOWN_BOWBEND_SCALE_MAX;
-      }
-      else
-      {
-        const fx32 len_rate = FX_Div(len_sub,MB_CAP_DOWN_BOWBEND_SCALE_LEN_MAX);
-        downWork->pull = FX_Mul( MB_CAP_DOWN_BOWBEND_SCALE_MAX , len_rate );
-      }
-      //‰ñ“]ŒvŽZ
-      {
-        const u16 angle = FX_Atan2Idx(FX32_CONST(-subX), FX32_CONST(subY));
-        downWork->rot = angle*360/0x10000;
-      }
+      downWork->pullBow = MB_CAP_DOWN_BOWBEND_SCALE_MAX;
     }
+    else
+    {
+      const fx32 len_rate = FX_Div(downWork->pullLen,MB_CAP_DOWN_BOWBEND_SCALE_LEN_MAX);
+      downWork->pullBow = FX_Mul( MB_CAP_DOWN_BOWBEND_SCALE_MAX , len_rate );
+    }
+    //‰ñ“]ŒvŽZ
+    downWork->rotBow = downWork->rotAngle*360/0x10000;
     isUpdate = TRUE;
   }
   else
   {
-    downWork->rot = 0;
-    downWork->pull = 0;
+    downWork->rotBow = 0;
+    downWork->pullBow = 0;
     isUpdate = TRUE;
   }
   
   
   if( isUpdate == TRUE )
   {
-    const u16  rot = (downWork->rot<0?downWork->rot+360:downWork->rot);
-    const fx32 xScale = FX32_ONE + downWork->pull;
-    const fx32 yScale = FX32_ONE - downWork->pull;
-    GFL_BG_SetRadianReq( MB_CAPTURE_FRAME_SUB_BOW , GFL_BG_RADION_SET , rot );
+    const u16  rotBow = (downWork->rotBow<0?downWork->rotBow+360:downWork->rotBow);
+    const fx32 xScale = FX32_ONE - downWork->pullBow;
+    const fx32 yScale = FX32_ONE + downWork->pullBow;
+/*
+    MtxFx22 mtx;
+    mtx._00 = FX_Inv(xScale);
+    mtx._01 = 0;
+    mtx._10 = 0;
+    mtx._11 = FX_Inv(yScale);
+    
+    G2S_SetBG3Affine(&mtx,MB_CAP_DOWN_BOW_X,MB_CAP_DOWN_BOW_Y,0,0);
+*/
+    
+    GFL_BG_SetRadianReq( MB_CAPTURE_FRAME_SUB_BOW , GFL_BG_RADION_SET , rotBow );
     GFL_BG_SetScaleReq( MB_CAPTURE_FRAME_SUB_BOW , GFL_BG_SCALE_X_SET , xScale );
     GFL_BG_SetScaleReq( MB_CAPTURE_FRAME_SUB_BOW , GFL_BG_SCALE_Y_SET , yScale );
   }
+  MB_CAP_DOWN_UpdateBow_DrawLine( capWork , downWork );
 }
 
+//--------------------------------------------------------------
+//	Œ·‚ð‘‚­
+//--------------------------------------------------------------
+static void MB_CAP_DOWN_UpdateBow_DrawLine( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork )
+{
+  u8 *vramAdr = GFL_BMP_GetCharacterAdrs( downWork->lineBmp );
+  GFL_BMP_Clear( downWork->lineBmp , 0 );
+  
+  {
+    //Šgk‘Î‰ž
+    const u8 subBowX = (MB_CAP_DOWN_BOW_LINE_X * (FX32_ONE - downWork->pullBow))>>FX32_SHIFT;
+    const u8 subBowY = (MB_CAP_DOWN_BOW_LINE_Y * (FX32_ONE + downWork->pullBow))>>FX32_SHIFT;
+    const fx16 sin = FX_SinIdx( downWork->rotAngle );
+    const fx16 cos = FX_CosIdx( downWork->rotAngle );
+
+    const int subX1 = ((subBowX*cos)-(subBowY*sin))>>FX16_SHIFT;
+    const int subY1 = ((subBowX*sin)+(subBowY*cos))>>FX16_SHIFT;
+    const int subX2 = ((-subBowX*cos)-(subBowY*sin))>>FX16_SHIFT;
+    const int subY2 = ((-subBowX*sin)+(subBowY*cos))>>FX16_SHIFT;
+
+    MB_CAP_DOWN_UpdateBow_DrawLine_Func( vramAdr ,
+                                         MB_CAP_DOWN_BOW_X + subX1 ,
+                                         MB_CAP_DOWN_BOW_Y + subY1 ,
+                                         downWork->ballPosX , 
+                                         downWork->ballPosY +8);
+    MB_CAP_DOWN_UpdateBow_DrawLine_Func( vramAdr ,
+                                         MB_CAP_DOWN_BOW_X + subX2 ,
+                                         MB_CAP_DOWN_BOW_Y + subY2 ,
+                                         downWork->ballPosX , 
+                                         downWork->ballPosY +8);
+  }
+  
+  
+  //ŠJŽn’n“_‚ðŒvŽZ
+  #if 0
+  {
+    static u8 posX = 128;
+    static u8 posY = 96;
+    BOOL isUpdateDot = FALSE;
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+    {
+      posX--;
+      isUpdateDot = TRUE;
+    }
+    else
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+    {
+      posX++;
+      isUpdateDot = TRUE;
+    }
+    else
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+    {
+      posY--;
+      isUpdateDot = TRUE;
+    }
+    else
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+    {
+      posY++;
+      isUpdateDot = TRUE;
+    }
+    if( isUpdateDot == TRUE )
+    {
+      MB_CAP_DOWN_UpdateBow_DrawLine_Func( vramAdr , posX , posY );
+    }
+  }
+  #endif
+}
+
+static void MB_CAP_DOWN_UpdateBow_DrawLine_Func( const u8* vramAdr , const int x1 , const int y1 , const int x2 , const int y2 )
+{
+  const int xLen = MATH_ABS( x1-x2 );
+  const int yLen = MATH_ABS( y1-y2 );
+  const int loopNum = ( xLen > yLen ? xLen : yLen );
+  fx32 addX = FX32_CONST(x2-x1) / loopNum;
+  fx32 addY = FX32_CONST(y2-y1) / loopNum;
+  fx32 subX = 0;
+  fx32 subY = 0;
+  
+  u8 i;
+  
+  
+  
+  for( i=0;i<loopNum;i++ )
+  {
+    const int posX = x1 + (subX>>FX32_SHIFT);
+    const int posY = y1 + (subY>>FX32_SHIFT);
+    
+    MB_CAP_DOWN_UpdateBow_DrawDot( vramAdr , posX , posY );
+    
+    subX += addX;
+    subY += addY;
+  }
+  
+}
+
+static void MB_CAP_DOWN_UpdateBow_DrawDot( const u8* vramAdr , const int x , const int y )
+{
+  const u8 drawCol = 1;
+
+  const int charX = x/8;
+  const int charY = y/8;
+  const u16 charNo = charX+charY*32;
+  const u8 ofsX = x%8;
+  const u8 ofsY = y%8;
+  const u8 ofsXmod = ofsX%4;
+  const u32 ofsAdr = (ofsX/4) + ofsY*2;
+  u16 *trgAdr = (u16*)((u32)vramAdr + charNo*0x20 + ofsAdr*2);
+
+  static const u16 shiftArr[4]={0x0001*drawCol,
+                                0x0010*drawCol,
+                                0x0100*drawCol,
+                                0x1000*drawCol};
+  if( (u32)trgAdr <  (u32)vramAdr+0x6000 &&
+      (u32)trgAdr >= (u32)vramAdr )
+  {
+    *trgAdr |= shiftArr[ofsXmod];
+  }
+}
 //--------------------------------------------------------------
 //	ƒ{[ƒ‹XV
 //--------------------------------------------------------------
@@ -335,5 +472,26 @@ static void MB_CAP_DOWN_UpdateTP( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWo
       downWork->ballPosY = MB_CAP_DOWN_BALL_Y;
       downWork->isUpdateBall = TRUE;
     }
+    //‹——£EŠp“xŒvŽZ
+    {
+      const s32 subX = downWork->ballPosX - MB_CAP_DOWN_BOW_X;
+      const s32 subY = downWork->ballPosY - MB_CAP_DOWN_BOW_Y;
+      const s32 len_mul = subX*subX + subY*subY;
+      const fx32 len_fx = FX_Sqrt( FX32_CONST(len_mul) );
+      const fx32 len_sub = len_fx - FX32_CONST(MB_CAP_DOWN_DEF_BALL_LEN);
+      
+      downWork->pullLen = len_sub;
+      downWork->rotAngle = FX_Atan2Idx(FX32_CONST(-subX), FX32_CONST(subY));;
+    }
+    
   }
+}
+
+#pragma mark [>outer func
+//--------------------------------------------------------------
+//  ŠO•”’ñ‹ŸŠÖ”ŒQ
+//--------------------------------------------------------------
+const MB_CAP_DOWN_STATE MB_CAP_DOWN_GetState( const MB_CAP_DOWN *downWork )
+{
+  return downWork->state;
 }
