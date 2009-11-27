@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T16:46:44"/>
+	<create user="matsumiya" host="W00207" date="2009-11-27T18:03:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="533"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="687"/>
-		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -301,20 +301,20 @@
 0＝主人公名前</comment>
 		<attribute name="キャラ指定">DOCTOR_JR
 博士</attribute>
-		<language name="JPN" width="256">アララギ『まちかねたぞ！
+		<language name="JPN" width="256">アララギ『ハーイ！
 [1:00:トレーナー名:0]！！[BE:01:ページ切り替え（クリア）]
 ポケモンと　いっしょに　みちをゆく！
-これが　トレーナーの　よろこびだよな[BE:01:ページ切り替え（クリア）]
-よし！　トレーナーにとって
+これが　トレーナーの　よろこびだよね[BE:01:ページ切り替え（クリア）]
+ということで！　トレーナーにとって
 いちばん　だいじな　ばしょを[BE:00:ページ切り替え（行送り）]
-おしえるから　おいで！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アララギ『待ちかねたぞ！
+おしえるから　ついてきてね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『ハーイ！
 [1:00:トレーナー名:0]！！[BE:01:ページ切り替え（クリア）]
-ポケモンと　一緒に　道を行く！
-これが　トレーナーの　喜びだよな[BE:01:ページ切り替え（クリア）]
-よし！　トレーナーにとって
-一番　大事な　施設を[BE:00:ページ切り替え（行送り）]
-教えるから　おいで！[BE:01:ページ切り替え（クリア）]</language>
+ポケモンと　いっしょに　みちをゆく！
+これが　トレーナーの　よろこびだよね[BE:01:ページ切り替え（クリア）]
+ということで！　トレーナーにとって
+いちばん　だいじな　ばしょを[BE:00:ページ切り替え（行送り）]
+おしえるから　ついてきてね！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t02_hakaim_stop_01">
