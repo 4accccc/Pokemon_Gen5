@@ -733,7 +733,14 @@ static  void  BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work )
  */
 //============================================================================================
 void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
-{
+{ 
+  //ＢＧモード設定
+  {
+    static const GFL_BG_SYS_HEADER sysHeader = {
+      GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_3, GX_BG0_AS_3D,
+    };
+    GFL_BG_SetBGModeDisp( &sysHeader, GFL_BG_SUB_DISP );
+  }
   biw->handle   = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, biw->heapID );
   biw->wazatype_clunit = GFL_CLACT_UNIT_Create( PTL_WAZA_MAX, 0, biw->heapID );
   biw->ballgauge_clunit = GFL_CLACT_UNIT_Create( TEMOTI_POKEMAX * 2, 0, biw->heapID );
@@ -2451,7 +2458,7 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
                       monsname_pos[ type ][ i ][ 1 ], monsname_p, biw->font );
       GFL_STR_DeleteBuffer( monsname_src );
     }
-    biw->button_exist[ i ] = ( bisp->bidp[ i ].hp != 0 );  //押せるボタンかどうかチェック
+    biw->button_exist[ i ] = bisp->bidp[ i ].exist;  //押せるボタンかどうかチェック
     BTL_Printf("ボタン[%d]有効 : %d\n", i, biw->button_exist[i] );
   }
   biw->button_exist[ i ] = TRUE;  //押せるボタンかどうかチェック
