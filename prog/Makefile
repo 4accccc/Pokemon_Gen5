@@ -46,8 +46,9 @@ TWL_ADDIN_IRC_LIBS =
 
 # JPEGライブラリをオーバーレイする為の定義
 
+ifneq	($(filter NITRO,$(TARGET_PLATFORM_LIST)),)
 
-NITRO_LIBS		?= 									\
+NITRO_LIBS		= 									\
 				   libcard$(NITRO_LIBSUFFIX).a		\
 				   libcp$(NITRO_LIBSUFFIX).a		\
 				   libenv$(NITRO_LIBSUFFIX).a		\
@@ -83,6 +84,41 @@ TWL_LIBS += NITRO_LIBS
 TWL_LIBS += $(CRT0_O)
 NITRO_LIBS += $(CRT0_O)
 
+endif
+
+ifneq	($(filter TWL,$(TARGET_PLATFORM_LIST)),)
+
+NITRO_LIBS		=
+
+TWL_LIBS		= 									\
+				   libcard$(NITRO_LIBSUFFIX).a		\
+				   libcp$(NITRO_LIBSUFFIX).a		\
+				   libenv$(NITRO_LIBSUFFIX).a		\
+				   libext$(NITRO_LIBSUFFIX).a		\
+				   libfs$(NITRO_LIBSUFFIX).a		\
+				   libfx$(NITRO_LIBSUFFIX).a		\
+				   libgx$(NITRO_LIBSUFFIX).a		\
+				   libmath$(NITRO_LIBSUFFIX).a		\
+				   libmi$(NITRO_LIBSUFFIX).a		\
+				   libnvram$(NITRO_LIBSUFFIX).a		\
+				   libos$(NITRO_LIBSUFFIX).a		\
+				   libprc$(NITRO_LIBSUFFIX).a		\
+				   libpxi$(NITRO_LIBSUFFIX).a		\
+				   librtc$(NITRO_LIBSUFFIX).a		\
+				   libsnd$(NITRO_LIBSUFFIX).a		\
+				   libspi$(NITRO_LIBSUFFIX).a		\
+				   libstd$(NITRO_LIBSUFFIX).a		\
+				   libwfs$(NITRO_LIBSUFFIX).a		\
+				   libwm$(NITRO_LIBSUFFIX).a		\
+				   libcrypto$(NITRO_LIBSUFFIX).a	\
+				   libctrdg$(NITRO_LIBSUFFIX).a		\
+			       libcht$(NITRO_LIBSUFFIX).a		\
+				   libwxc$(NITRO_LIBSUFFIX).a		\
+				   $(notdir $(LIBSYSCALL_)) \
+				   $(notdir $(LIBSYSCALL_TWL_)) \
+						$(CRT0_O)
+
+endif
 
 
 # nitrosystemをオーバーレイで使用する場合のLibrary定義
