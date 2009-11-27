@@ -15,6 +15,7 @@
   FILE_SUMMER = 1
   FILE_AUTUMN = 2
   FILE_WINTER = 3
+  DATA_EDGE_COLOR  = 4
 
 #	ゾーン別指定クラス
 class	ZoneSpec
@@ -258,6 +259,7 @@ end
   SUMMER_FILE = 3
   AUTUMN_FILE = 4
   WINTER_FILE = 5
+  EDGE_COLOR  = 6
 
   file_kind = {
     "imd"=>FILE_IMD,
@@ -286,7 +288,7 @@ end
       stage << GraFile.new( split_data[ ATTR_NAME ] )
     end
     cnt = stage.size - 1
-    for i in 0..3
+    for i in FILE_SPRING..DATA_EDGE_COLOR
       stage[ cnt ].set_file_name( split_data[ SPRING_FILE + i ], file_kind[ split_data[ FILE_KIND ] ], i )
     end
   end
@@ -336,6 +338,15 @@ end
     fp_stage.printf( "//%s\n", stage[ i ].get_table_name )
     stage_hash[ stage[ i ].get_table_name ] = i
     for kind in FILE_IMD..FILE_IMA
+      if kind == FILE_IMD
+        edge_color = stage[ i ].get_file_name( kind, DATA_EDGE_COLOR )
+        if edge_color == nil || edge_color == ""
+          p "エッジカラーが設定されていません"
+          exit( 1 )
+        end
+        split_ec = edge_color.split(/:/)
+        fp_bg.printf( "\tlong\t(%s<<10)|(%s<<5)|(%s)\n", split_ec[ 0 ], split_ec[ 1 ], split_ec[ 2 ] )
+      end
       for season in FILE_SPRING..FILE_WINTER
         if stage[ i ].get_file_name( kind, season ) == "×"
           fp_stage.printf( "\t.long\tBATT_BG_TBL_NO_FILE\n" )
@@ -385,12 +396,20 @@ end
     fp_spec.write( write_data )
     for j in 0..(attribute.size-1)
       attr_bg = zone_spec.get_zone_spec_index( i ).get_attr_bg( j )
-      write_data = [ bg_hash[ attr_bg ] ].pack("C")
+      if bg_hash[ attr_bg ] == nil
+        write_data = [ 0 ].pack("C")
+      else
+        write_data = [ bg_hash[ attr_bg ] ].pack("C")
+      end
       fp_spec.write( write_data )
     end
     for j in 0..(attribute.size-1)
       attr_stage = zone_spec.get_zone_spec_index( i ).get_attr_stage( j )
-      write_data = [ stage_hash[ attr_stage ] ].pack("C")
+      if bg_hash[ attr_stage ] == nil
+        write_data = [ 0 ].pack("C")
+      else
+        write_data = [ stage_hash[ attr_stage ] ].pack("C")
+      end
       fp_spec.write( write_data )
     end
 	  padding.times{
@@ -429,6 +448,8 @@ end
   end
   fp_header.printf( "}BATT_BG_TBL_ZONE_SPEC_TABLE;\n\n" )
   fp_header.printf( "typedef struct\n{\n" )
+  fp_header.printf( "\tu16  edge_color;\n" )
+  fp_header.printf( "\tu16  padding;\n" )
   fp_header.printf( "\tARCDATID file[BATT_BG_TBL_FILE_MAX ][ BATT_BG_TBL_SEASON_MAX ];\n" )
   fp_header.printf( "}BATT_BG_TBL_FILE_TABLE;\n" )
 
