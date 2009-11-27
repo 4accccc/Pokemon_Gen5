@@ -25,7 +25,7 @@
 
 // NEAR scale alpha
 #define FLASH_NEAR_SCALE  ( 0x3000 )
-#define FLASH_NEAR_ALPHA  ( 31 )  // 不透明にするとエッジマーキングがつく＋ポリゴンとのかさなりが汚い　ギリギリ半透明が良い
+#define FLASH_NEAR_ALPHA  ( 31 )
 
 // FAR scale alpha
 #define FLASH_FAR_SCALE  ( 0xAA00 )
