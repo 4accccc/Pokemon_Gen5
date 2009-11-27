@@ -1040,14 +1040,14 @@ static void handler_Hogosyoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     PokeType   type = POKETYPE_NORMAL;
 
     switch( bg ){
-    case BTL_BG_GRASS:   type = POKETYPE_KUSA;   break;  ///< ‘‚Þ‚ç
-    case BTL_BG_SAND:    type = POKETYPE_JIMEN;  break;  ///< »’n
-    case BTL_BG_SEA:     type = POKETYPE_MIZU;   break;  ///< ŠC
-    case BTL_BG_SNOW:    type = POKETYPE_KOORI;  break;  ///< áŒ´
-    case BTL_BG_CAVE:    type = POKETYPE_IWA;    break;  ///< “´ŒA
-    case BTL_BG_ROCK:    type = POKETYPE_IWA;    break;  ///< Šâê
-    case BTL_BG_FOREST:  type = POKETYPE_KUSA;   break;  ///< X
-    case BTL_BG_ROOM:    type = POKETYPE_NORMAL; break;  ///< Žº“à
+    case BATTLE_BG_TYPE_GRASS:   type = POKETYPE_KUSA;   break;  ///< ‘‚Þ‚ç
+    case BATTLE_BG_TYPE_SAND:    type = POKETYPE_JIMEN;  break;  ///< »’n
+    case BATTLE_BG_TYPE_SEA:     type = POKETYPE_MIZU;   break;  ///< ŠC
+    case BATTLE_BG_TYPE_SNOW:    type = POKETYPE_KOORI;  break;  ///< áŒ´
+    case BATTLE_BG_TYPE_CAVE:    type = POKETYPE_IWA;    break;  ///< “´ŒA
+    case BATTLE_BG_TYPE_ROCK:    type = POKETYPE_IWA;    break;  ///< Šâê
+    case BATTLE_BG_TYPE_FOREST:  type = POKETYPE_KUSA;   break;  ///< X
+    case BATTLE_BG_TYPE_ROOM:    type = POKETYPE_NORMAL; break;  ///< Žº“à
     }
 
     {
@@ -1795,7 +1795,7 @@ static void handler_HimituNoTikara_Sick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     WazaID  waza = BTL_EVENT_FACTOR_GetSubID( myHandle );
 
     // @@@ –{—ˆ‚Í’nŒ`‚É‰ž‚¶‚Ä‚à‚Á‚ÆƒtƒNƒUƒc‚É
-    if( bg == BTL_BG_SNOW ){
+    if( bg == BATTLE_BG_TYPE_SNOW ){
       sick = WAZASICK_KOORI;
     }else{
       sick = WAZASICK_MAHI;

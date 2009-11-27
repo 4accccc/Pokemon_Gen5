@@ -1228,7 +1228,7 @@ FS_EXTERN_OVERLAY(battle);
 
       cutoff_wildParty( wk->partyEnemy1, rule );
       BP_SETUP_Wild( &wk->setupParam, wk->gameData, HEAPID_BTL_DEBUG_SYS, rule, wk->partyEnemy1,
-          BTL_BG_GRASS, 0, BTL_WEATHER_NONE );
+          BATTLE_BG_TYPE_GRASS, 0, BTL_WEATHER_NONE );
     }
     // ’ÊM‘Îí
     else if( btltype_IsComm(wk->saveData.btlType) )
@@ -1263,19 +1263,19 @@ FS_EXTERN_OVERLAY(battle);
       switch( rule ){
       case BTL_RULE_SINGLE:
         BTL_SETUP_Single_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
-          BTL_BG_GRASS, 0, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
+          BATTLE_BG_TYPE_GRASS, 0, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
         break;
       case BTL_RULE_DOUBLE:
         BTL_SETUP_Double_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
-          BTL_BG_GRASS, 0, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
+          BATTLE_BG_TYPE_GRASS, 0, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
         break;
       case BTL_RULE_TRIPLE:
         BTL_SETUP_Triple_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
-          BTL_BG_GRASS, 0, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
+          BATTLE_BG_TYPE_GRASS, 0, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
         break;
       case BTL_RULE_ROTATION:
         BTL_SETUP_Rotation_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
-          BTL_BG_GRASS, 0, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
+          BATTLE_BG_TYPE_GRASS, 0, BTL_WEATHER_NONE, trID, HEAPID_BTL_DEBUG_SYS );
         break;
       }
     }

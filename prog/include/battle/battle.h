@@ -108,9 +108,13 @@ typedef struct {
 
   BtlBgType   bgType;
   BtlBgAttr   bgAttr;
-  TIMEZONE    timeZone;
   BtlWeather  weather;
+  
+  TIMEZONE    timeZone;
   u8          season;
+  
+  u16             musicDefault;   ///< デフォルト時のBGMナンバー
+  u16             musicPinch;     ///< ピンチ時のBGMナンバー
 
 }BTL_FIELD_SITUATION;
 

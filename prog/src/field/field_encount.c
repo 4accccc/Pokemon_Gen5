@@ -533,13 +533,13 @@ static void enc_CreateTrainerBattleParam(
 
   if( (tr_id1 != 0) && tr_id0 != tr_id1 ){ //シングル
     BTL_SETUP_Single_Trainer(
-        param, gdata, NULL, BTL_BG_GRASS, 0, BTL_WEATHER_NONE, tr_id0, HEAPID_PROC );
+        param, gdata, NULL, BATTLE_BG_TYPE_GRASS, 0, BTL_WEATHER_NONE, tr_id0, HEAPID_PROC );
   }else if( tr_id0 == tr_id1 ){ //ダブル
     BTL_SETUP_Double_Trainer(
-        param, gdata, NULL, BTL_BG_GRASS, 0, BTL_WEATHER_NONE, tr_id0, HEAPID_PROC );
+        param, gdata, NULL, BATTLE_BG_TYPE_GRASS, 0, BTL_WEATHER_NONE, tr_id0, HEAPID_PROC );
   }else{
     BTL_SETUP_Single_Trainer(
-        param, gdata, NULL, BTL_BG_GRASS, 0, BTL_WEATHER_NONE, tr_id0, HEAPID_PROC );
+        param, gdata, NULL, BATTLE_BG_TYPE_GRASS, 0, BTL_WEATHER_NONE, tr_id0, HEAPID_PROC );
   }
 
   { //対戦相手の手持ちポケモン生成
@@ -563,35 +563,6 @@ void FIELD_ENCOUNT_SetTrainerBattleParam(
 {
   KAGAYA_Printf( "トレーナーバトルパラム作成 HEAPID=%d\n", heapID );
   enc_CreateTrainerBattleParam( enc, setup, heapID, tr_id0, tr_id1 );
-}
-
-//--------------------------------------------------------------
-/*
- *  @brief  戦闘背景ID取得
- */
-//--------------------------------------------------------------
-static BtlBgType btlparam_GetBattleLandForm( FIELDMAP_WORK* fieldWork )
-{
-  u8  bg_type;
-  MAPATTR attr;
-  u16 zone_id = FIELDMAP_GetZoneID( fieldWork );
-  FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( fieldWork );
-  MAPATTR_FLAG attr_flag;
-
-  attr = FIELD_PLAYER_GetMapAttr( FIELDMAP_GetFieldPlayer( fieldWork ) );
-  bg_type = ZONEDATA_GetBattleBGType(zone_id);
-
-/*
-  BTL_LANDFORM_GRASS,   ///< 草むら
-  BTL_LANDFORM_SAND,    ///< 砂地
-  BTL_LANDFORM_SEA,     ///< 海
-  BTL_LANDFORM_RIVER,   ///< 川
-  BTL_LANDFORM_SNOW,    ///< 雪原
-  BTL_LANDFORM_CAVE,    ///< 洞窟
-  BTL_LANDFORM_ROCK,    ///< 岩場
-  BTL_LANDFORM_ROOM,    ///< 室内
-*/
-  return BTL_BG_GRASS;
 }
 
 static BtlWeather btlparam_GetBattleWeather( FIELDMAP_WORK* fieldWork )
@@ -629,22 +600,14 @@ static void BATTLE_PARAM_SetUpBattleSituation( BATTLE_SETUP_PARAM* bp, FIELDMAP_
   u16 zone_id = FIELDMAP_GetZoneID( fieldWork );
   FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( fieldWork );
 
-  { //戦闘背景
-    u8 bg_type = ZONEDATA_GetBattleBGType(zone_id);
-    if( FIELD_PLAYER_GetMoveForm( fplayer ) == PLAYER_MOVE_FORM_SWIM ){
-      bg_type = 0;
-    }
-    bp->fieldSituation.bgType = 0; //bg_type;
-    bp->fieldSituation.bgAttr = 0; //bg_type;
+  //戦闘背景
+  bp->fieldSituation.bgType = ZONEDATA_GetBattleBGType(zone_id);
+  {
+    MAPATTR attr = FIELD_PLAYER_GetMapAttr( fplayer );
+    bp->fieldSituation.bgAttr = FIELD_BATTLE_GetBattleAttrID(MAPATTR_GetAttrValue(attr));
   }
   //タイムゾーン取得
   bp->fieldSituation.timeZone = GFL_RTC_GetTimeZone();  //@todo EVTIMEからの取得に変更予定
-
-#if 0 //BGID定義が出来たら入れる予定
-  if( bg_type == "洞窟だったら"){
-    bp->time_zone = TIMEZONE_NIGHT;
-  }
-#endif
 
   //天候
   bp->fieldSituation.weather = btlparam_GetBattleWeather( fieldWork );

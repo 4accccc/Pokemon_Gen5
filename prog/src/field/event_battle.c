@@ -302,26 +302,26 @@ static GMEVENT_RESULT fieldBattleEvent(
 /**
  * @brief   バトル画面でのアトリビュート指定を返す
  * @param value   マップアトリビュート
- * @retval  BATTLE_ATTR_ID
+ * @retval  BtlBgAttr
  */
 //--------------------------------------------------------------
-BATTLE_ATTR_ID FIELD_BATTLE_GetBattleAttrID( MAPATTR_VALUE value )
+BtlBgAttr FIELD_BATTLE_GetBattleAttrID( MAPATTR_VALUE value )
 {
-  if ( MAPATTR_VALUE_CheckLawn(value) ) return BATTLE_ATTR_ID_LAWN; //芝生
-  if ( MAPATTR_VALUE_CheckMonoGround(value) ) return BATTLE_ATTR_ID_NORMAL_GROUND; //通常地面
-  if ( MAPATTR_VALUE_CheckSeasonGround1(value) ) return BATTLE_ATTR_ID_GROUND1; //地面１
-  if ( MAPATTR_VALUE_CheckSeasonGround2(value) ) return BATTLE_ATTR_ID_GROUND2; //地面２
-  if ( MAPATTR_VALUE_CheckEncountGrass(value) ) return BATTLE_ATTR_ID_GRASS;
-  if ( MAPATTR_VALUE_CheckWaterType(value) ) return BATTLE_ATTR_ID_WATER; //みず
-  if ( MAPATTR_VALUE_CheckSnowType(value) ) return BATTLE_ATTR_ID_SNOW;
-  if ( MAPATTR_VALUE_CheckSandType(value) ) return BATTLE_ATTR_ID_SAND;
-  if ( MAPATTR_VALUE_CheckMarsh(value) ) return BATTLE_ATTR_ID_MARSH;
-  if ( MAPATTR_VALUE_CheckEncountGround(value) ) return BATTLE_ATTR_ID_CAVE; //どうくつ
-  if ( MAPATTR_VALUE_CheckPool(value) ) return BATTLE_ATTR_ID_POOL;
-  if ( MAPATTR_VALUE_CheckShoal(value) ) return BATTLE_ATTR_ID_SHOAL;
-  if ( MAPATTR_VALUE_CheckIce(value) ) return BATTLE_ATTR_ID_ICE;
+  if ( MAPATTR_VALUE_CheckLawn(value) ) return BATTLE_BG_ATTR_LAWN; //芝生
+  if ( MAPATTR_VALUE_CheckMonoGround(value) ) return BATTLE_BG_ATTR_NORMAL_GROUND; //通常地面
+  if ( MAPATTR_VALUE_CheckSeasonGround1(value) ) return BATTLE_BG_ATTR_GROUND1; //地面１
+  if ( MAPATTR_VALUE_CheckSeasonGround2(value) ) return BATTLE_BG_ATTR_GROUND2; //地面２
+  if ( MAPATTR_VALUE_CheckEncountGrass(value) ) return BATTLE_BG_ATTR_GRASS;
+  if ( MAPATTR_VALUE_CheckWaterType(value) ) return BATTLE_BG_ATTR_WATER; //みず
+  if ( MAPATTR_VALUE_CheckSnowType(value) ) return BATTLE_BG_ATTR_SNOW;
+  if ( MAPATTR_VALUE_CheckSandType(value) ) return BATTLE_BG_ATTR_SAND;
+  if ( MAPATTR_VALUE_CheckMarsh(value) ) return BATTLE_BG_ATTR_MARSH;
+  if ( MAPATTR_VALUE_CheckEncountGround(value) ) return BATTLE_BG_ATTR_CAVE; //どうくつ
+  if ( MAPATTR_VALUE_CheckPool(value) ) return BATTLE_BG_ATTR_POOL;
+  if ( MAPATTR_VALUE_CheckShoal(value) ) return BATTLE_BG_ATTR_SHOAL;
+  if ( MAPATTR_VALUE_CheckIce(value) ) return BATTLE_BG_ATTR_ICE;
   GF_ASSERT(0); //ふつーは定義済みのでいいだろ！
-  return BATTLE_ATTR_ID_LAWN; //標準
+  return BATTLE_BG_ATTR_LAWN; //標準
 }
 
 //--------------------------------------------------------------

@@ -7,6 +7,7 @@
 
 #include <gflib.h>
 #include "system/main.h"
+#include "gamesystem/pm_season.h"
 #include "sound/wb_sound_data.sadl" //サウンドラベルファイル
 
 #include "gamesystem/btl_setup.h"
@@ -14,6 +15,8 @@
 ///プロトタイプ
 void BATTLE_PARAM_Init( BATTLE_SETUP_PARAM* bp );
 void BATTLE_PARAM_Release( BATTLE_SETUP_PARAM* bp );
+
+static void setup_situation_common( BTL_FIELD_SITUATION* sit );
 
 /*
  *  @brief  戦闘パラメータワーク生成
@@ -53,6 +56,7 @@ void BATTLE_PARAM_Delete( BATTLE_SETUP_PARAM* bp )
 void BATTLE_PARAM_Init( BATTLE_SETUP_PARAM* bp )
 {
   MI_CpuClear8( bp, sizeof(BATTLE_SETUP_PARAM) );
+  setup_situation_common( &bp->fieldSituation );
 }
 
 /*
@@ -74,6 +78,19 @@ void BATTLE_PARAM_Release( BATTLE_SETUP_PARAM* bp )
     GFL_HEAP_FreeMemory(bp->partyEnemy2);
   }
   MI_CpuClear8(bp,sizeof(BATTLE_SETUP_PARAM));
+}
+
+static void setup_situation_common( BTL_FIELD_SITUATION* sit )
+{
+  // @todo 現在は仮作成
+  sit->bgType = BATTLE_BG_TYPE_GRASS;
+  sit->bgAttr = BATTLE_BG_ATTR_LAWN;
+  sit->timeZone = TIMEZONE_MORNING;
+  sit->season = PMSEASON_SPRING;
+  sit->weather = BTL_WEATHER_NONE; 
+
+  sit->musicDefault = SEQ_BGM_VS_NORAPOKE;
+  sit->musicPinch = SEQ_BGM_BATTLEPINCH;
 }
 
 static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BtlBgType bgType, BtlBgAttr bgAttr, BtlWeather weather )
@@ -103,9 +120,8 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BtlBgType
   dst->fieldSituation.bgType = bgType;
   dst->fieldSituation.bgAttr = bgAttr;
   dst->fieldSituation.timeZone = TIMEZONE_MORNING;
-  dst->fieldSituation.season = GAMEDATA_GetSeasonID( gameData );;
+  dst->fieldSituation.season = GAMEDATA_GetSeasonID( gameData );
   dst->fieldSituation.weather = weather;
-
 
   dst->musicDefault = SEQ_BGM_VS_NORAPOKE;
   dst->musicPinch = SEQ_BGM_BATTLEPINCH;
@@ -181,7 +197,7 @@ void BTL_SETUP_Single_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 void BTL_SETUP_Single_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   GFL_NETHANDLE* netHandle, BtlCommMode commMode )
 {
-  setup_common( dst, gameData, BTL_BG_ROOM, 0, BTL_WEATHER_NONE );
+  setup_common( dst, gameData, BATTLE_BG_TYPE_ROOM, 0, BTL_WEATHER_NONE );
 
   dst->competitor = BTL_COMPETITOR_COMM;
   dst->rule = BTL_RULE_SINGLE;
@@ -231,7 +247,7 @@ void BTL_SETUP_Double_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 void BTL_SETUP_Double_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   GFL_NETHANDLE* netHandle, BtlCommMode commMode )
 {
-  setup_common( dst, gameData, BTL_BG_ROOM, 0, BTL_WEATHER_NONE );
+  setup_common( dst, gameData, BATTLE_BG_TYPE_ROOM, 0, BTL_WEATHER_NONE );
 
   dst->competitor = BTL_COMPETITOR_COMM;
   dst->rule = BTL_RULE_DOUBLE;
@@ -258,7 +274,7 @@ void BTL_SETUP_Double_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 void BTL_SETUP_Multi_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   GFL_NETHANDLE* netHandle, BtlCommMode commMode, u8 commPos )
 {
-  setup_common( dst, gameData, BTL_BG_ROOM, 0, BTL_WEATHER_NONE );
+  setup_common( dst, gameData, BATTLE_BG_TYPE_ROOM, 0, BTL_WEATHER_NONE );
 
   dst->competitor = BTL_COMPETITOR_COMM;
   dst->rule = BTL_RULE_DOUBLE;
@@ -308,7 +324,7 @@ void BTL_SETUP_Triple_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 void BTL_SETUP_Triple_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   GFL_NETHANDLE* netHandle, BtlCommMode commMode )
 {
-  setup_common( dst, gameData, BTL_BG_ROOM, 0, BTL_WEATHER_NONE );
+  setup_common( dst, gameData, BATTLE_BG_TYPE_ROOM, 0, BTL_WEATHER_NONE );
 
   dst->competitor = BTL_COMPETITOR_COMM;
   dst->rule = BTL_RULE_TRIPLE;
@@ -357,7 +373,7 @@ void BTL_SETUP_Rotation_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 void BTL_SETUP_Rotation_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   GFL_NETHANDLE* netHandle, BtlCommMode commMode )
 {
-  setup_common( dst, gameData, BTL_BG_ROOM, 0, BTL_WEATHER_NONE );
+  setup_common( dst, gameData, BATTLE_BG_TYPE_ROOM, 0, BTL_WEATHER_NONE );
 
   dst->competitor = BTL_COMPETITOR_COMM;
   dst->rule = BTL_RULE_ROTATION;
