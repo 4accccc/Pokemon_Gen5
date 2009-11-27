@@ -31,6 +31,9 @@
 
 #include "btlv_core.h"
 
+//バトルバッグとバトルポケモンリストをオーバーレイ化
+FS_EXTERN_OVERLAY(battle_bag);
+FS_EXTERN_OVERLAY(battle_plist);
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
@@ -549,6 +552,7 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
   case 1:
     if( BTLV_SCD_FadeFwd(wk->scrnD) ){
       BTLV_SCD_Cleanup( wk->scrnD );
+      GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_plist ) );
       BattlePokeList_TaskAdd( &wk->plistData );
       wk->selectItemSeq++;
     }
@@ -559,6 +563,7 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
       if( wk->plistData.sel_poke != BPL_SEL_EXIT ){
         BTL_POKESELECT_RESULT_Push( wk->pokeselResult, wk->plistData.sel_poke );
       }
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_plist ) );
       BTLV_SCD_FadeIn( wk->scrnD );
       BTLV_SCD_Setup( wk->scrnD );
       wk->selectItemSeq++;
@@ -631,6 +636,7 @@ BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk )
   case 2:
     if( BTLV_SCD_FadeFwd(wk->scrnD) ){
       BTLV_SCD_Cleanup( wk->scrnD );
+      GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_bag ) );
       BattleBag_TaskAdd( &wk->bagData );
       wk->selectItemSeq++;
     }
@@ -638,6 +644,7 @@ BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk )
 
   case 3:
     if( wk->bagData.end_flg ){
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_bag ) );
       wk->selectItemSeq++;
     }
     break;
@@ -647,6 +654,7 @@ BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk )
     &&  (wk->bagData.ret_page != BBAG_POKE_BALL)
     ){
       wk->plistData.item = wk->bagData.ret_item;
+      GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_plist ) );
       BattlePokeList_TaskAdd( &wk->plistData );
       BTL_Printf("アイテム選択:%d\n", wk->plistData.item);
       wk->selectItemSeq++;
@@ -659,6 +667,7 @@ BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk )
 
   case 5:
     if( wk->plistData.end_flg ){
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_plist ) );
       BTLV_SCD_FadeIn( wk->scrnD );
       BTLV_SCD_Setup( wk->scrnD );
       wk->selectItemSeq++;
