@@ -10,16 +10,19 @@
 #ifndef __BATTLE_H__
 #define __BATTLE_H__
 
+#include <gflib.h>
 #include <net.h>
 #include <procsys.h>
 
 #include "system/timezone.h"
+#include "system/pms_data.h"
 #include "poke_tool/pokeparty.h"
 #include "tr_tool/trno_def.h"
 #include "savedata/zukan_savedata.h"
 #include "savedata/mystatus.h"
 #include "savedata/myitem_savedata.h"
 #include "savedata/config.h"
+#include "buflen.h"
 
 #include "battle_bg_def.h"  //zonetableコンバータから参照させたいので定義を分離しました by iwasawa
 
@@ -104,6 +107,7 @@ typedef enum{
   BTL_CLIENT_PARTNER,
   BTL_CLIENT_ENEMY1,
   BTL_CLIENT_ENEMY2,
+  BTL_CLIENT_NUM,
 }BTL_CLIENT_ID;
 
 //-----------------------------------------------------------------------------------
@@ -120,6 +124,25 @@ typedef struct {
   TIMEZONE    timeZone;
   u8          season;
 }BTL_FIELD_SITUATION;
+
+//-----------------------------------------------------------------------------------
+/**
+ * トレーナーデータ構造体
+ */
+//-----------------------------------------------------------------------------------
+typedef struct {
+  u32     tr_id;
+  u32	    tr_type;					//トレーナー分類
+  u32     ai_bit;
+ 	u16			use_item[4];      //使用道具
+
+	STRCODE		name[ BUFLEN_PERSON_NAME ];	//トレーナー名
+
+  //バトルサブウェイ他 Wifi-DLトレーナーとの対戦時にのみ必要
+  PMS_DATA	win_word;   //戦闘終了時勝利メッセージ
+  PMS_DATA	lose_word;  //戦闘終了時負けメッセージ
+
+}BSP_TRAINER_DATA;
 
 //-----------------------------------------------------------------------------------
 /**
@@ -150,6 +173,8 @@ typedef struct {
   POKEPARTY*      partyEnemy1;  ///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
   POKEPARTY*      partyEnemy2;  ///< 2vs2時の２番目敵AI用（不要ならnull）
   TrainerID       trID;         ///<対戦相手トレーナーID（7/31ROMでトレーナーエンカウントを実現するための暫定）
+
+  BSP_TRAINER_DATA  trainer_data[BTL_CLIENT_NUM]; //トレーナーデータ
 
   //セーブデータ系
   const MYSTATUS*   statusPlayer; ///< プレイヤーのステータス
