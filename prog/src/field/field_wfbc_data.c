@@ -70,7 +70,7 @@ static BOOL WFBC_CORE_People_AddMood( FIELD_WFBC_CORE_PEOPLE* p_people, int add 
  *	@brief  WFBCワークのクリア
  */
 //-----------------------------------------------------------------------------
-void FIELD_WFBC_CORE_Crear( FIELD_WFBC_CORE* p_wk )
+void FIELD_WFBC_CORE_Clear( FIELD_WFBC_CORE* p_wk )
 {
   int i;
 
@@ -81,7 +81,46 @@ void FIELD_WFBC_CORE_Crear( FIELD_WFBC_CORE* p_wk )
 
   for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
   {
-    FIELD_WFBC_CORE_PEOPLE_Crear( &p_wk->people[i] );
+    FIELD_WFBC_CORE_PEOPLE_Clear( &p_wk->people[i] );
+    FIELD_WFBC_CORE_PEOPLE_Clear( &p_wk->back_people[i] );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief ノーマルマップの情報をクリア
+ *
+ *	@param	p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_CORE_ClearNormal( FIELD_WFBC_CORE* p_wk )
+{
+  int i;
+
+  GF_ASSERT( p_wk );
+  
+  for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+  {
+    FIELD_WFBC_CORE_PEOPLE_Clear( &p_wk->people[i] );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  裏世界の人情報をクリア
+ *
+ *	@param	p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_CORE_ClearBack( FIELD_WFBC_CORE* p_wk )
+{
+  int i;
+
+  GF_ASSERT( p_wk );
+  
+  for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+  {
+    FIELD_WFBC_CORE_PEOPLE_Clear( &p_wk->back_people[i] );
   }
 }
 
@@ -287,7 +326,7 @@ void FIELD_WFBC_CORE_CalcOneDataStart( FIELD_WFBC_CORE* p_wk )
         // 背面世界側のワークに格納後クリア
         // けつの情報を裏世界に渡す。
         WFBC_CORE_PushPeopleArray( p_wk->back_people, &p_wk->people[i] );
-        FIELD_WFBC_CORE_PEOPLE_Crear( &p_wk->people[i] );
+        FIELD_WFBC_CORE_PEOPLE_Clear( &p_wk->people[i] );
       }
     }
   }
@@ -392,7 +431,7 @@ FIELD_WFBC_CORE_PEOPLE* FIELD_WFBC_CORE_GetNpcIDPeople( FIELD_WFBC_CORE* p_wk, u
  *	@param	p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
-void FIELD_WFBC_CORE_PEOPLE_Crear( FIELD_WFBC_CORE_PEOPLE* p_wk )
+void FIELD_WFBC_CORE_PEOPLE_Clear( FIELD_WFBC_CORE_PEOPLE* p_wk )
 {
   GF_ASSERT( p_wk );
 
@@ -732,7 +771,7 @@ static void WFBC_CORE_PackPeopleArray( FIELD_WFBC_CORE_PEOPLE* p_array )
         GFL_STD_MemCopy( &p_array[j], &p_array[j-1], sizeof(FIELD_WFBC_CORE_PEOPLE) );
       }
       // 最後のワークをクリア
-      FIELD_WFBC_CORE_PEOPLE_Crear( &p_array[FIELD_WFBC_PEOPLE_MAX-1] );
+      FIELD_WFBC_CORE_PEOPLE_Clear( &p_array[FIELD_WFBC_PEOPLE_MAX-1] );
     }
   }
 }
@@ -756,7 +795,7 @@ static void WFBC_CORE_PushPeople( FIELD_WFBC_CORE* p_wk, const FIELD_WFBC_CORE_P
   {
     // けつの情報を裏世界に渡す。
     WFBC_CORE_PushPeopleArray( p_wk->back_people, &p_wk->people[FIELD_WFBC_PEOPLE_MAX - 1] );
-    FIELD_WFBC_CORE_PEOPLE_Crear( &p_wk->people[FIELD_WFBC_PEOPLE_MAX - 1] );
+    FIELD_WFBC_CORE_PEOPLE_Clear( &p_wk->people[FIELD_WFBC_PEOPLE_MAX - 1] );
   }
 
   // 通常世界の情報に追加

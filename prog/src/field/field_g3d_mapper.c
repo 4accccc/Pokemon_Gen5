@@ -1610,12 +1610,13 @@ FIELD_WFBC* FLDMAPPER_GetWfbcWork( const FLDMAPPER* g3Dmapper)
  *
  *	@param	g3Dmapper
  *	@param	cp_core 
+ *	@param  mapmode
  */
 //-----------------------------------------------------------------------------
-void FLDMAPPER_SetWfbcData( FLDMAPPER* g3Dmapper, const FIELD_WFBC_CORE* cp_core )
+void FLDMAPPER_SetWfbcData( FLDMAPPER* g3Dmapper, FIELD_WFBC_CORE* p_core, MAPMODE mapmode )
 {
   GF_ASSERT( g3Dmapper );
-  FIELD_WFBC_SetUp( g3Dmapper->wfbcwork, cp_core );
+  FIELD_WFBC_SetUp( g3Dmapper->wfbcwork, p_core, mapmode );
 }
 
 

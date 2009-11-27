@@ -146,8 +146,10 @@ extern FIELD_WFBC_CORE* GAMEDATA_GetWFBCCoreData( GAMEDATA * gamedata, GAMEDATA_
 //-------------------------------------
 ///	FIELD_WFBC_CORE用関数
 //=====================================
-//ワークのクリア
-extern void FIELD_WFBC_CORE_Crear( FIELD_WFBC_CORE* p_wk );
+//ワークの全クリア
+extern void FIELD_WFBC_CORE_Clear( FIELD_WFBC_CORE* p_wk );
+extern void FIELD_WFBC_CORE_ClearNormal( FIELD_WFBC_CORE* p_wk );
+extern void FIELD_WFBC_CORE_ClearBack( FIELD_WFBC_CORE* p_wk );
 //街の情報をセットアップ
 extern void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus );
 //整合性チェック
@@ -174,7 +176,7 @@ extern FIELD_WFBC_CORE_PEOPLE* FIELD_WFBC_CORE_GetNpcIDPeople( FIELD_WFBC_CORE* 
 ///	FIELD_WFBC_CORE_PEOPLE用関数
 //=====================================
 //ワークのクリア
-extern void FIELD_WFBC_CORE_PEOPLE_Crear( FIELD_WFBC_CORE_PEOPLE* p_wk );
+extern void FIELD_WFBC_CORE_PEOPLE_Clear( FIELD_WFBC_CORE_PEOPLE* p_wk );
 //整合性チェック 
 //@TODO　最終的には、対応する人の情報ももらって、整合性をあわせる
 extern BOOL FIELD_WFBC_CORE_PEOPLE_IsConfomity( const FIELD_WFBC_CORE_PEOPLE* cp_wk );

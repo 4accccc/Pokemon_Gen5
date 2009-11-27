@@ -46,7 +46,7 @@ int RANDOMMAP_SAVE_GetWorkSize(void)
 void RANDOMMAP_SAVE_InitWork(RANDOMMAP_SAVE *randomMapSave)
 {
   // ƒNƒŠƒA
-  FIELD_WFBC_CORE_Crear( &randomMapSave->mapdata );
+  FIELD_WFBC_CORE_Clear( &randomMapSave->mapdata );
 }
 
 //----------------------------------------------------------

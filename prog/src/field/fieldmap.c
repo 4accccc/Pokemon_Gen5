@@ -589,7 +589,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     // WFBC街情報を設定
     // @TODO　後々は、パレス接続先の人の街情報を設定する
     {
-      FLDMAPPER_SetWfbcData( fieldWork->g3Dmapper, GAMEDATA_GetMyWFBCCoreData( fieldWork->gamedata ) );
+      FLDMAPPER_SetWfbcData( fieldWork->g3Dmapper, GAMEDATA_GetMyWFBCCoreData( fieldWork->gamedata ), MAPMODE_NORMAL );
 
       // WFBCの人を配置
       zoneChange_SetMMdlZoneWFBC( gdata, fieldWork, fieldWork->map_id );

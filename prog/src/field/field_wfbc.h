@@ -22,6 +22,8 @@ extern "C"{
 
 #include "debug/debugwin_sys.h"
 
+#include "field_status_local.h"
+
 #include "fldmmdl.h"
 
 //-----------------------------------------------------------------------------
@@ -36,6 +38,7 @@ typedef enum
 {
   FIELD_WFBC_PEOPLE_STATUS_NONE,    // いない
   FIELD_WFBC_PEOPLE_STATUS_NORMAL,  // 通常
+  FIELD_WFBC_PEOPLE_STATUS_AWAY,    // 誰かの街へいった
 
   FIELD_WFBC_PEOPLE_STATUS_MAX,
 
@@ -70,17 +73,18 @@ typedef struct _FIELD_WFBC_PEOPLE FIELD_WFBC_PEOPLE;
 extern FIELD_WFBC* FIELD_WFBC_Create( HEAPID heapID );
 extern void FIELD_WFBC_Delete( FIELD_WFBC* p_wk );
 
-
 //-------------------------------------
 ///	全体情報の取得
 //=====================================
 extern void FIELD_WFBC_GetCore( const FIELD_WFBC* cp_wk, FIELD_WFBC_CORE* p_buff );
 
 extern u32 FIELD_WFBC_GetPeopleNum( const FIELD_WFBC* cp_wk );
-extern const FIELD_WFBC_PEOPLE* FIELD_WFBC_GetPeople( const FIELD_WFBC* cp_wk, int index );
+extern const FIELD_WFBC_PEOPLE* FIELD_WFBC_GetPeople( const FIELD_WFBC* cp_wk, u32 npc_id );
 
 // 街タイプ
 extern FIELD_WFBC_CORE_TYPE FIELD_WFBC_GetType( const FIELD_WFBC* cp_wk );
+// 動作タイプ
+extern MAPMODE FIELD_WFBC_GetMapMode( const FIELD_WFBC* cp_wk );
 
 // WFの高さ情報
 
@@ -94,15 +98,21 @@ extern MMDL_HEADER* FIELD_WFBC_MMDLHeaderCreateHeapLo( const FIELD_WFBC* cp_wk, 
 //-------------------------------------
 ///	全体情報の設定
 //=====================================
-extern void FIELD_WFBC_SetUp( FIELD_WFBC* p_wk, const FIELD_WFBC_CORE* cp_core );
+extern void FIELD_WFBC_SetUp( FIELD_WFBC* p_wk, FIELD_WFBC_CORE* p_core, MAPMODE mapmode );
 
-extern int FIELD_WFBC_AddPeople( FIELD_WFBC* p_wk, const FIELD_WFBC_CORE_PEOPLE* cp_core );
-extern void FIELD_WFBC_DeletePeople( FIELD_WFBC* p_wk, int index );
+extern void FIELD_WFBC_AddPeople( FIELD_WFBC* p_wk, const FIELD_WFBC_CORE_PEOPLE* cp_core );
+extern void FIELD_WFBC_DeletePeople( FIELD_WFBC* p_wk, u32 npc_id );
+
+// 連れて行かれた設定
+extern void FIELD_WFBC_SetAwayPeople( FIELD_WFBC* p_wk, u32 npc_id );
+
+
 
 //-------------------------------------
 ///	人物情報の取得
 //=====================================
 extern u32 FIELD_WFBC_PEOPLE_GetOBJCode( const FIELD_WFBC_PEOPLE* cp_people );
+extern FIELD_WFBC_PEOPLE_STATUS FIELD_WFBC_PEOPLE_GetStatus( const FIELD_WFBC_PEOPLE* cp_people );
 
 
 //============================================================================================
@@ -115,7 +125,7 @@ extern FIELD_WFBC* FLDMAPPER_GetWfbcWork( const FLDMAPPER* g3Dmapper);
 //-------------------------------------
 ///	マッパーのWFBCワークに街情報を設定する
 //=====================================
-extern void FLDMAPPER_SetWfbcData( FLDMAPPER* g3Dmapper, const FIELD_WFBC_CORE* cp_core );
+extern void FLDMAPPER_SetWfbcData( FLDMAPPER* g3Dmapper, FIELD_WFBC_CORE* p_core, MAPMODE mapmode );
 
 
 #ifdef PM_DEBUG

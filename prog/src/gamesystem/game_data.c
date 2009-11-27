@@ -191,7 +191,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 
   //ŠX‹’î•ñ
   for(i = 0; i < GAMEDATA_WFBC_ID_MAX; i++){
-    FIELD_WFBC_CORE_Crear(&gd->wfbc[i]);
+    FIELD_WFBC_CORE_Clear(&gd->wfbc[i]);
   }
   // ŠX©•ª‚ÌêŠ‰Šú‰»
   FIELD_WFBC_CORE_SetUp( &gd->wfbc[GAMEDATA_WFBC_ID_MINE], GAMEDATA_GetMyStatus(gd) );
