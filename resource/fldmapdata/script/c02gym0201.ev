@@ -513,11 +513,17 @@ EVENT_START		ev_pos_c02gym0201_trainer_01
 	   	CASE 5 THEN
 	    	_OBJ_ANIME( C02GYM0201_ASSITANTW_01, anm_trainer_turn_a )
 			_OBJ_ANIME_WAIT()
-	     
+	     	
+	    	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turn_a )
+			_OBJ_ANIME_WAIT()
+			
 	    CASE 6 THEN
 	   		_OBJ_ANIME( C02GYM0201_ASSITANTW_01, anm_trainer_turn_b )
 			_OBJ_ANIME_WAIT()
-	     
+	     	
+	    	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turn_a )
+			_OBJ_ANIME_WAIT()
+			
 	    DEFAULT
 	   	ENDSWITCH
 	   	
@@ -576,6 +582,20 @@ _ANIME_LABEL	anm_trainer_turn_a
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_trainer_turn_b
 	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	トレーナー、左から話しかけ時
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_player_turn_a
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	トレーナー、下から話しかけ時
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_player_turn_b
+	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
