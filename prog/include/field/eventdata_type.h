@@ -32,6 +32,14 @@ typedef enum {
 	EXIT_TYPE_STAIRS,
 	EXIT_TYPE_DOOR,
 	EXIT_TYPE_WALL,
+  EXIT_TYPE_WARP,
+  EXIT_TYPE_SP1,
+  EXIT_TYPE_SP2,
+  EXIT_TYPE_SP3,
+  EXIT_TYPE_SP4,
+  EXIT_TYPE_SP5,
+
+  EXIT_TYPE_MAX,
 }EXIT_TYPE;
 
 //------------------------------------------------------------------
