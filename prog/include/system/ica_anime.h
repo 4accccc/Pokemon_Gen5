@@ -33,7 +33,7 @@ void ICA_ANIME_Delete( ICA_ANIME* anime );
 BOOL ICA_ANIME_IncAnimeFrame( ICA_ANIME* anime, fx32 frame );
 void ICA_ANIME_SetAnimeFrame( ICA_ANIME* anime, fx32 frame );
 u32 ICA_ANIME_GetMaxFrame( ICA_ANIME* anime );
-u32 ICA_ANIME_GetNowFrame( ICA_ANIME* anime );
+fx32 ICA_ANIME_GetNowFrame( ICA_ANIME* anime );
 BOOL ICA_ANIME_GetTranslate( const ICA_ANIME* anime, VecFx32* vec_dst );
 BOOL ICA_ANIME_GetRotate( const ICA_ANIME* anime, VecFx32* vec_dst );
 BOOL ICA_ANIME_GetScale( const ICA_ANIME* anime, VecFx32* vec_dst );
@@ -171,7 +171,7 @@ extern u32 ICA_ANIME_GetMaxFrame( ICA_ANIME* anime );
  * @return 指定したアニメーション全体のフレーム数
  */
 //-----------------------------------------------------------------------------------
-extern u32 ICA_ANIME_GetNowFrame( ICA_ANIME* anime );
+extern fx32 ICA_ANIME_GetNowFrame( ICA_ANIME* anime );
 
 
 //===================================================================================

@@ -303,7 +303,7 @@ u32 ICA_ANIME_GetMaxFrame( ICA_ANIME* anime )
  * @return 指定したアニメーション全体のフレーム数
  */
 //-----------------------------------------------------------------------------------
-u32 ICA_ANIME_GetNowFrame( ICA_ANIME* anime )
+fx32 ICA_ANIME_GetNowFrame( ICA_ANIME* anime )
 {
   return anime->nowFrame;
 }

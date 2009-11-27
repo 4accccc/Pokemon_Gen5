@@ -194,7 +194,7 @@ void SOUNDOBJ_SetAnimeFrame( SOUNDOBJ* sobj, fx32 frame )
  * @return 現在のアニメーションフレーム数
  */
 //-----------------------------------------------------------------------------------------
-u32 SOUNDOBJ_GetAnimeFrame( SOUNDOBJ* sobj ) 
+fx32 SOUNDOBJ_GetAnimeFrame( SOUNDOBJ* sobj ) 
 {
   // アニメーション未登録なら, 何もしない
   if( sobj->icaAnime == NULL )
