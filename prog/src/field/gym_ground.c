@@ -572,7 +572,7 @@ void GYM_GROUND_Move(FIELDMAP_WORK *fieldWork)
     GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_GROUND );
   }
-
+#ifdef PM_DEBUG
   //フィールドの残りヒープをプリント
   if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
     int size = GFI_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP);
@@ -617,6 +617,7 @@ void GYM_GROUND_Move(FIELDMAP_WORK *fieldWork)
       FIELD_PLAYER_SetPos( fld_player, &pos );
     }
   }
+#endif  //PM_DEBUG
 
   //アニメーション再生
   FLD_EXP_OBJ_PlayAnime( ptr );
