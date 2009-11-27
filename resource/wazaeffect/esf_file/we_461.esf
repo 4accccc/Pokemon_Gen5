@@ -1,5 +1,5 @@
 EFFSEQ
-$0013
+$0016
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_461_1.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_461_2.spa
@@ -13,6 +13,9 @@ C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_461_cresecent.NSCR
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_457_smallbang.NSCR
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_236_moon.NSCR
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_461_cresecent.NSCR
+C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_461_cresecent.NSCR
+C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_236_moon.NSCR
+C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_461_cresecent.NSCR
 #001
 %00
 BGのロード	bg_461_cresecent
@@ -21,7 +24,7 @@ BGの表示/非表示	エフェクト	表示
 エフェクト終了待ち	すべて
 BGの表示/非表示	お盆	非表示
 BGの表示/非表示	フィールド	非表示
-BGのスクロール	常に	0	10	120	0	0
+BGのスクロール	常に	0	2	80	0	0
 パーティクルデータロード	w_461_1
 制御モード変更	継続
 SE再生	SEQ_SE_W112_02	SE1	0	0	115	0	0
