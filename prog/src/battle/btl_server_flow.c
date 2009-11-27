@@ -3165,7 +3165,7 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   if( (TargetPokeRec_GetCountMax(targetRec) > 0)
   &&  (TargetPokeRec_GetCount(targetRec) == 0)
   ){
-    scPut_WazaAvoid( wk, attacker, wk->wazaParam.wazaID );
+    scPut_WazaFail( wk, attacker, waza );
     return;
   }
 
@@ -8476,8 +8476,8 @@ static BOOL scEvent_CheckAddRankEffectOccur( BTL_SVFLOW_WORK* wk, const SVFL_WAZ
   u8 per = WAZADATA_GetParam( wazaParam->wazaID, WAZAPARAM_RANKPER_1 );
 
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_ADD_PER, per );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_ADD_RANK_TARGET );
     per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
@@ -10216,6 +10216,53 @@ static u8 scproc_HandEx_setItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
   return 1;
 }
 /**
+ * ポケモン装備アイテム交換
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_swapItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_SWAP_ITEM* param = (const BTL_HANDEX_PARAM_SWAP_ITEM*)(param_header);
+
+  BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+  BTL_POKEPARAM* self = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
+
+  // 対象の能力で失敗するケースをチェック
+  {
+    u32 hem_state = Hem_PushState( &wk->HEManager );
+    u8  failed = scEventSetItem( wk, target );
+    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+    Hem_PopState( &wk->HEManager, hem_state );
+    if( failed ){
+      return 0;
+    }
+  }
+
+  // ここまで来たら成功
+  {
+    u16 selfItem = BPP_GetItem( self );
+    u16 targetItem = BPP_GetItem( target );
+
+    handexSub_itemSet( wk, self, targetItem );
+    handexSub_itemSet( wk, target, selfItem );
+  }
+
+  if( param_header->tokwin_flag ){
+    scPut_TokWin_In( wk, self );
+  }
+
+  handexSub_putString( wk, &param->exStr );
+
+  if( param_header->tokwin_flag ){
+    scPut_TokWin_Out( wk, self );
+  }
+
+  scproc_CheckItemReaction( wk, self );
+  scproc_CheckItemReaction( wk, target );
+
+  return 1;
+}
+
+/**
  * ポケモンにアイテム効果を強制発動
  * @return 成功時 1 / 失敗時 0
  */
@@ -10246,43 +10293,6 @@ static u8 scproc_HandEx_consumeItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM
 {
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
   scPut_RemoveItem( wk, bpp );
-  return 1;
-}
-/**
- * ポケモン装備アイテム交換
- * @return 成功時 1 / 失敗時 0
- */
-static u8 scproc_HandEx_swapItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
-{
-  const BTL_HANDEX_PARAM_SWAP_ITEM* param = (const BTL_HANDEX_PARAM_SWAP_ITEM*)(param_header);
-
-  BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-  BTL_POKEPARAM* self = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
-
-  {
-    u32 hem_state = Hem_PushState( &wk->HEManager );
-    u8  failed = scEventSetItem( wk, target );
-    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-    Hem_PopState( &wk->HEManager, hem_state );
-    if( failed ){
-      return 0;
-    }
-  }
-
-  {
-    u16 selfItem = BPP_GetItem( self );
-    u16 targetItem = BPP_GetItem( target );
-
-    handexSub_itemSet( wk, self, targetItem );
-    handexSub_itemSet( wk, target, selfItem );
-  }
-
-  if( param->fSucceedMsg ){
-    scPut_Message_SetExPoke( wk, self, param->succeedStrID, param->succeedStrArgCnt, param->succeedStrArgs );
-  }
-  scproc_CheckItemReaction( wk, self );
-  scproc_CheckItemReaction( wk, target );
-
   return 1;
 }
 //----------------------------------------------------------------------------------

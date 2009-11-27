@@ -4164,11 +4164,9 @@ static void handler_Dorobou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
       {
         BTL_HANDEX_PARAM_SWAP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SWAP_ITEM, pokeID );
         param->pokeID = target_pokeID;
-        param->fSucceedMsg = TRUE;
-        param->succeedStrID = BTL_STRID_SET_Dorobou;
-        param->succeedStrArgCnt = 2;
-        param->succeedStrArgs[0] = target_pokeID;
-        param->succeedStrArgs[1] = BPP_GetItem( target );
+        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Dorobou );
+        HANDEX_STR_AddArg( &param->exStr, target_pokeID );
+        HANDEX_STR_AddArg( &param->exStr, BPP_GetItem(target) );
       }
     }
   }
@@ -4199,8 +4197,7 @@ static void handler_Trick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
       {
         BTL_HANDEX_PARAM_SWAP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SWAP_ITEM, pokeID );
         param->pokeID = target_pokeID;
-        param->fSucceedMsg = TRUE;
-        param->succeedStrID = BTL_STRID_SET_Trick;
+        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Trick );
       }
     }
   }

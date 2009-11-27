@@ -568,10 +568,7 @@ typedef struct {
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   u8              pokeID;            ///< 対象ポケモンID
-  u8              fSucceedMsg;
-  u8              succeedStrArgCnt;
-  u16             succeedStrID;
-  int             succeedStrArgs[ BTL_STR_ARG_MAX ];
+  BTL_HANDEX_STR_PARAMS   exStr;     ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_SWAP_ITEM;
 
 /**
