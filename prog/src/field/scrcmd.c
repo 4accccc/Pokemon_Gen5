@@ -64,6 +64,7 @@
 #include "scrcmd_gate.h"
 #include "scrcmd_fldci.h"
 #include "scrcmd_fourkings.h"
+#include "scrcmd_pl_boat.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

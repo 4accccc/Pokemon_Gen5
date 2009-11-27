@@ -29,6 +29,7 @@
 //#include "savedata/intrude_save.h"      //OCCUPY_INFO
 #include "system/shortcut_data.h"			//SHORTCUT_ID
 //#include "savedata/gimmickwork.h"
+#include "field/pleasure_boat.h"
 
 //============================================================================================
 //============================================================================================
@@ -496,3 +497,11 @@ extern void GAMEDATA_SetShortCutCursor( GAMEDATA *gamedata, SHORTCUT_CURSOR *cur
 //-----------------------------------------------------------------------------
 extern SHORTCUT_CURSOR * GAMEDATA_GetShortCutCursor( GAMEDATA *gamedata );
 
+//----------------------------------------------------------
+/**
+ * @brief   遊覧船へのポインタ取得
+ * @param	  gamedata			GAMEDATAへのポインタ
+ * @return	遊覧船ワークへのポインタ
+ */
+//----------------------------------------------------------
+extern PL_BOAT_WORK_PTR *GAMEDATA_GetPlBoatWorkPtr(GAMEDATA * gamedata);

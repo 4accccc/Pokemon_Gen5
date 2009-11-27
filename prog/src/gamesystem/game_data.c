@@ -100,6 +100,7 @@ struct _GAMEDATA{
 	SHORTCUT_CURSOR	shortcut_cursor;	///<ショートカット画面のカーソル
 
   GIMMICKWORK GimmickWork;      //ギミックワーク
+  PL_BOAT_WORK_PTR PlBoatWorkPtr;   //遊覧船ワーク
 };
 
 //==============================================================================
@@ -211,6 +212,10 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 	SHORTCUT_CURSOR_Init( &gd->shortcut_cursor );
 
   GAMEDATA_SaveDataLoad(gd);	//セーブデータから必要なものをロードしてくる
+
+  //遊覧船ポインタをＮＵＬＬ初期化
+  gd->PlBoatWorkPtr = NULL;
+
   return gd;
 }
 
@@ -1232,4 +1237,17 @@ GIMMICKWORK * GAMEDATA_GetGimmickWork(GAMEDATA * gamedata)
 {
 	return &gamedata->GimmickWork;
 }
+
+//----------------------------------------------------------
+/**
+ * @brief   遊覧船へのポインタ取得
+ * @param	  gamedata			GAMEDATAへのポインタ
+ * @return	遊覧船ワークへのポインタ
+ */
+//----------------------------------------------------------
+PL_BOAT_WORK_PTR *GAMEDATA_GetPlBoatWorkPtr(GAMEDATA * gamedata)
+{
+	return &gamedata->PlBoatWorkPtr;
+}
+
 

@@ -662,6 +662,17 @@
   NO_CMD()
   NO_CMD()
 
+  // 遊覧船関連
+  DEF_CMD( EvCmdPlBoat_Start, EV_SEQ_START_PL_BOAT )
+  DEF_CMD( EvCmdPlBoat_End, EV_SEQ_END_PL_BOAT )
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

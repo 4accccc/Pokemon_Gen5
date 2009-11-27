@@ -5307,3 +5307,27 @@
   .short  fourking_id
   .endm
 
+
+
+//--------------------------------------------------------------
+/**
+ * 遊覧船モード開始
+ */
+//--------------------------------------------------------------
+#define _START_PL_BOAT() _ASM_START_PL_BOAT
+
+  .macro  _ASM_START_PL_BOAT
+  .short  EV_SEQ_START_PL_BOAT
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 遊覧船モード終了
+ */
+//--------------------------------------------------------------
+#define _END_PL_BOAT() _ASM_END_PL_BOAT
+
+  .macro  _ASM_END_PL_BOAT
+  .short  EV_SEQ_END_PL_BOAT
+  .endm  
+  

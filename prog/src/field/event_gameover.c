@@ -74,6 +74,8 @@
 
 #include "arc/fieldmap/zone_id.h"
 
+#include "pleasure_boat.h"
+
 //==============================================================================================
 //==============================================================================================
 //--------------------------------------------------------------
@@ -504,6 +506,12 @@ GMEVENT * EVENT_NormalLose( GAMESYS_WORK * gsys )
   param->gsys = gsys;
   param->rev_type = getRevType( gamedata );
   param->mystatus = GAMEDATA_GetMyStatus( gamedata );
+
+  //—V——‘Dƒ[ƒN‰ğ•ú
+  {
+    PL_BOAT_WORK_PTR *ptr = GAMEDATA_GetPlBoatWorkPtr(gamedata);
+    PL_BOAT_End(ptr);
+  }
   return event;
 }
 
