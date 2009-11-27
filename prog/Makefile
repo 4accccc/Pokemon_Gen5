@@ -45,35 +45,45 @@ TWLWIFI_LIBS =
 TWL_ADDIN_IRC_LIBS = 
 
 # JPEGライブラリをオーバーレイする為の定義
+
+
+NITRO_LIBS		?= 									\
+				   libcard$(NITRO_LIBSUFFIX).a		\
+				   libcp$(NITRO_LIBSUFFIX).a		\
+				   libenv$(NITRO_LIBSUFFIX).a		\
+				   libext$(NITRO_LIBSUFFIX).a		\
+				   libfs$(NITRO_LIBSUFFIX).a		\
+				   libfx$(NITRO_LIBSUFFIX).a		\
+				   libgx$(NITRO_LIBSUFFIX).a		\
+				   libmath$(NITRO_LIBSUFFIX).a		\
+				   libmi$(NITRO_LIBSUFFIX).a		\
+				   libnvram$(NITRO_LIBSUFFIX).a		\
+				   libos$(NITRO_LIBSUFFIX).a		\
+				   libprc$(NITRO_LIBSUFFIX).a		\
+				   libpxi$(NITRO_LIBSUFFIX).a		\
+				   librtc$(NITRO_LIBSUFFIX).a		\
+				   libsnd$(NITRO_LIBSUFFIX).a		\
+				   libspi$(NITRO_LIBSUFFIX).a		\
+				   libstd$(NITRO_LIBSUFFIX).a		\
+				   libwfs$(NITRO_LIBSUFFIX).a		\
+				   libwm$(NITRO_LIBSUFFIX).a		\
+				   libcrypto$(NITRO_LIBSUFFIX).a	\
+				   libctrdg$(NITRO_LIBSUFFIX).a		\
+			       libcht$(NITRO_LIBSUFFIX).a		\
+				   libwxc$(NITRO_LIBSUFFIX).a		\
+				   $(notdir $(LIBSYSCALL_))
+
+
+
 TWL_LIBS		= 								\
-				   libcard$(TWL_LIBSUFFIX).a	\
-				   libcp$(TWL_LIBSUFFIX).a		\
-				   libel$(TWL_LIBSUFFIX).a		\
-				   libenv$(TWL_LIBSUFFIX).a		\
-				   libext$(TWL_LIBSUFFIX).a		\
-				   libfs$(TWL_LIBSUFFIX).a		\
-				   libfx$(TWL_LIBSUFFIX).a		\
-				   libgx$(TWL_LIBSUFFIX).a		\
-				   libmath$(TWL_LIBSUFFIX).a	\
-				   libmi$(TWL_LIBSUFFIX).a		\
-				   libnvram$(TWL_LIBSUFFIX).a	\
-				   libos$(TWL_LIBSUFFIX).a		\
-				   libprc$(TWL_LIBSUFFIX).a		\
-				   libpxi$(TWL_LIBSUFFIX).a		\
-				   librtc$(TWL_LIBSUFFIX).a		\
-				   libscfg$(TWL_LIBSUFFIX).a	\
-				   libsnd$(TWL_LIBSUFFIX).a		\
-				   libspi$(TWL_LIBSUFFIX).a		\
-				   libstd$(TWL_LIBSUFFIX).a		\
-				   libwfs$(TWL_LIBSUFFIX).a		\
-				   libwm$(TWL_LIBSUFFIX).a		\
-				   libctrdg$(TWL_LIBSUFFIX).a	\
-				   libcrypto$(TWL_LIBSUFFIX).a	\
-			       libcht$(TWL_LIBSUFFIX).a		\
-				   libwxc$(TWL_LIBSUFFIX).a		\
-				   $(notdir $(LIBSYSCALL_))		\
-				   $(notdir $(LIBSYSCALL_TWL_))	\
-				   $(CRT0_O)
+				   $(notdir $(LIBSYSCALL_TWL_))
+
+TWL_LIBS += NITRO_LIBS
+
+TWL_LIBS += $(CRT0_O)
+NITRO_LIBS += $(CRT0_O)
+
+
 
 # nitrosystemをオーバーレイで使用する場合のLibrary定義
 TWLSYSTEM_LIBS = \
