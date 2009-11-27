@@ -193,8 +193,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
     FIELD_WFBC_CORE_Crear(&gd->wfbc[i]);
   }
   // 街自分の場所初期化
-  // @TODO ここでいいのか？ 
-  FIELD_WFBC_CORE_SetUp( &gd->wfbc[GAMEDATA_WFBC_ID_MINE] );
+  FIELD_WFBC_CORE_SetUp( &gd->wfbc[GAMEDATA_WFBC_ID_MINE], GAMEDATA_GetMyStatus(gd) );
   
   //歩数カウント
   gd->fieldmap_walk_count = 0;
