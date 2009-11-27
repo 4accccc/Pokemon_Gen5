@@ -13,6 +13,7 @@
 #include "pc_recovery_anime.naix"
 #include "sound/pm_sndsys.h"
 #include "field_buildmodel.h"
+#include "../../../resource/fldmapdata/build_model/output/buildmodel_indoor.naix"
 
 
 //========================================================================================
@@ -201,7 +202,7 @@ static void SetupEvent(
   // ボールの配置モデルを作成
   {
     int i;
-    BMODEL_ID bmodel_id = 0;
+    BMODEL_ID bmodel_id = NARC_output_buildmodel_indoor_mball01_nsbmd;
     GFL_G3D_OBJSTATUS status;
     VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
     GFL_CALC3D_MTX_CreateRot( 0, 0, 0, &status.rotate );
