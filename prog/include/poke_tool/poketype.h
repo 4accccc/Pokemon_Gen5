@@ -222,7 +222,7 @@ typedef enum {
   POKETOKUSEI_NAITOMEA,
 
   POKETOKUSEI_WARUITEGUSE,        // ‚í‚é‚¢‚Ä‚®‚¹
-  POKETOKUSEI_TIKARADUKU,         // ‚¿‚©‚ç‚Ã‚­
+  POKETOKUSEI_TIKARAZUKU,         // ‚¿‚©‚ç‚Ã‚­
   POKETOKUSEI_AMANOJAKU,          // ‚ ‚Ü‚Ì‚¶‚á‚­
   POKETOKUSEI_KINCHOUKAN,         // ‚«‚ñ‚¿‚å‚¤‚©‚ñ
   POKETOKUSEI_MAKENKI,            // ‚Ü‚¯‚ñ‚«
