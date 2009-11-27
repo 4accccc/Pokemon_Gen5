@@ -1831,7 +1831,8 @@ static GMEVENT * checkSubScreenEvent(
 			if(GAME_COMM_NO_FIELD_BEACON_SEARCH == no){
 				GameCommSys_ExitReq(gcsp);
 			}
-			if((GAME_COMM_NO_FIELD_BEACON_SEARCH == no) || (GAME_COMM_NO_NULL == no)){
+			if((GAME_COMM_NO_FIELD_BEACON_SEARCH == no) || (GAME_COMM_NO_NULL == no)||
+         (GAME_COMM_NO_DEBUG_SCANONLY == no)){
 				event = EVENT_IrcBattle(gsys, fieldWork, NULL, TRUE);
 			}
 		}

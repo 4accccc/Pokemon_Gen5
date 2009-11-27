@@ -54,7 +54,7 @@
 
 #include "pokemontrade_local.h"
 
-#define HEAPSIZE_POKETRADE (0xd3000)   //全共通 WiFiだとほぼマックス
+#define HEAPSIZE_POKETRADE (0xd2000)   //全共通 WiFiだとほぼマックス
 
 //#define _ENDTABLE  {192-32, 192, 256-32, 256}     //終了
 //#define _SEARCHTABLE  {192-32, 192, 0, 32}        //検索ボタン
@@ -67,6 +67,7 @@ static void _recvChangeCancel(const int netID, const int size, const void* pData
 static void _recvEnd(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 
 static void _touchState(POKEMON_TRADE_WORK* pWork);
+static void _touchStateGTS(POKEMON_TRADE_WORK* pWork);
 static u8* _setChangePokemonBuffer(int netID, void* pWork, int size);
 static void _changeWaitState(POKEMON_TRADE_WORK* pWork);
 static void _endWaitState(POKEMON_TRADE_WORK* pWork);
@@ -949,7 +950,7 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
       }
       else{
         POKE_GTS_PokemonsetAndSendData(pWork,pWork->selectIndex,pWork->selectBoxno);  //記録
-        _CHANGE_STATE(pWork, _touchState);
+        _CHANGE_STATE(pWork, _touchStateGTS);//タッチに戻る
       }
     }
     else{
@@ -1786,32 +1787,15 @@ static void _touchStateGTS(POKEMON_TRADE_WORK* pWork)
   _CatchPokemonPositionRewind(pWork);
 
 
-////
-
-  if(pWork->pAppTask==NULL){
-    int msg[]={POKETRADE_STR2_26};
-    POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
-  }
-
-
   if(pWork->pAppTask!=NULL){
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
     pWork->pAppTask=NULL;
   }
-
-
-  _PokemonReset(pWork,0);
-  
-  if(!GFL_NET_IsInit()){
-    _PokemonReset(pWork,1);
-    _userNetCommandClear(pWork);
+  if(pWork->GTSSelectIndex[0][0]!=-1){
+    int msg[]={POKETRADE_STR2_26};
+    POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
   }
-  else{
-    int myID = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
 
-    pWork->userNetCommand[myID]=0;
-    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CANCEL_POKEMON,0,NULL);
-  }
 
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
@@ -1829,9 +1813,6 @@ static void _touchStateGTS(POKEMON_TRADE_WORK* pWork)
 
   _scrollMainFunc(pWork,FALSE,FALSE);
 
-//  _userNetCommandClear(pWork);
-
-  
   _CHANGE_STATE(pWork,_touchStateCommon);
 
 }

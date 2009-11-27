@@ -5963,7 +5963,7 @@ static int _parentRestart( WIFIP2PMATCH_WORK *wk, int seq )
     wk->bRetryBattle = FALSE;
 
     //        CommInfoInitialize( wk->pSaveData, NULL );   //@@OO
-    //CommCommandWFP2PMF_MatchStartInitialize(wk);
+    CommCommandWFP2PMF_MatchStartInitialize(wk);
 
     // 自分を教える
     //        CommInfoSendPokeData();  //@@OO
@@ -6801,7 +6801,7 @@ static int _childModeMatchMenuLoop( WIFIP2PMATCH_WORK *wk, int seq )
       //    _timeWaitIconDel(wk);   timeWait内でMsgWinを破棄しているということはメッセージ終了でもOK↓
       EndMessageWindowOff(wk);
       //    CommInfoInitialize(wk->pSaveData,NULL);   //Info初期化   //@@OO
-      //CommCommandWFP2PMF_MatchStartInitialize(wk);
+      CommCommandWFP2PMF_MatchStartInitialize(wk);
       wk->timer = 30;
 
     }
@@ -6955,7 +6955,7 @@ static int _parentModeCallMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
   _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
   WifiP2PMatchMessagePrint(wk, msg_wifilobby_008, FALSE);
   //   CommInfoInitialize(wk->pSaveData,NULL);   //Info初期化  //@@OO
-  //CommCommandWFP2PMF_MatchStartInitialize(wk);
+  CommCommandWFP2PMF_MatchStartInitialize(wk);
   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_YESNO);
   wk->timer = 30;
   return seq;
@@ -10415,7 +10415,7 @@ static BOOL WifiP2PMatch_CommWifiBattleStart( WIFIP2PMATCH_WORK* wk, int friendn
 
   // 接続する前に４人募集で送られてくる可能性のある
   // コマンドを設定する
-  //CommCommandWFP2PMF_MatchStartInitialize(wk);
+  CommCommandWFP2PMF_MatchStartInitialize(wk);
 
   return GFL_NET_StateStartWifiPeerMatch( friendno );
 }

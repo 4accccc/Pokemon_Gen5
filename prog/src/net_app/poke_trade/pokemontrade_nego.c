@@ -100,19 +100,16 @@ static int _addPokemon(POKEMON_TRADE_WORK* pWork,int side,int index,int boxno,co
   int i;
   
   for(i = 0;i < GTS_NEGO_POKESLT_MAX;i++){
-    if(pWork->GTSSelectIndex[side][i] == -1){
+    if((pWork->GTSSelectIndex[side][i] == -1) || (i==GTS_NEGO_POKESLT_MAX-1)){
+      OS_TPrintf("‘ã“ü %d %d\n",boxno,index);
+
       pWork->GTSSelectIndex[side][i] = index;
       pWork->GTSSelectBoxno[side][i] = boxno;
       GFL_STD_MemCopy(pp,pWork->GTSSelectPP[side][i],POKETOOL_GetWorkSize());
       return i;
     }
   }
-  //•K‚¸“ü‚ê‘Ö‚í‚é
-  i=GTS_NEGO_POKESLT_MAX-1;
-  pWork->GTSSelectIndex[side][i] = index;
-  pWork->GTSSelectBoxno[side][i] = boxno;
-  GFL_STD_MemCopy(pp,pWork->GTSSelectPP[side][i],POKETOOL_GetWorkSize());
-  return i;
+  return -1;
 }
 
 //ƒ|ƒPƒ‚ƒ“íœ

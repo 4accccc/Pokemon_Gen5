@@ -748,6 +748,8 @@ SRCS_OVERLAY_BATTLE_PLIST = battle/app/b_plist_anm.c \
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_WIFICLUB =   net_app/wificlub/wifi_p2pmatchroom.c \
+							net_app/wificlub/comm_command_wfp2pmf.c \
+							net_app/wificlub/comm_command_wfp2pmf_func.c \
               net_app/wificlub/wifi_p2pmatchroom_map.c \
               net_app/wificlub/wifi_p2pmatch.c
 

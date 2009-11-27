@@ -36,7 +36,7 @@ static DWCRAPCOMMON_WORK* pDwcRapWork;
  *	@return	確保成功した場合、アライメントされたバッファ。　失敗した場合NULL
  */
 //-----------------------------------------------------------------------------
-static void* mydwc_alloc( DWCAllocType name, u32 size, int align )
+void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
 {	
 #pragma unused( name )
 
@@ -65,7 +65,7 @@ static void* mydwc_alloc( DWCAllocType name, u32 size, int align )
  *	@param	size							無視する情報
  */
 //-----------------------------------------------------------------------------
-static void mydwc_free( DWCAllocType name, void *ptr, u32 size )
+void DWC_RAPCOMMON_Free( DWCAllocType name, void *ptr, u32 size )
 {	
 #pragma unused( name, size )
 
@@ -132,9 +132,9 @@ int mydwc_init(HEAPID heapID)
 
   // DWCライブラリ初期化
 #ifdef DEBUG_SERVER
-	ret	= DWC_InitForDevelopment( GF_DWC_GAMENAME, GF_DWC_GAMECODE, mydwc_alloc, mydwc_free );
+	ret	= DWC_InitForDevelopment( GF_DWC_GAMENAME, GF_DWC_GAMECODE, DWC_RAPCOMMON_Alloc, DWC_RAPCOMMON_Free );
 #else
-	ret	= DWC_InitForProduction( GF_DWC_GAMENAME, GF_DWC_GAMECODE, mydwc_alloc, mydwc_free );
+	ret	= DWC_InitForProduction( GF_DWC_GAMENAME, GF_DWC_GAMECODE, DWC_RAPCOMMON_Alloc, DWC_RAPCOMMON_Free );
 #endif
 
   DWC_RAPCOMMON_ResetHeapID();

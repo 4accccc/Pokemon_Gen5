@@ -796,10 +796,9 @@ int GFL_NET_DWC_stepmatch( int isCancel )
     {
       GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
 #ifdef MYDWC_USEVCHA
-      //                if(!CommLocalIsWiFiQuartetGroup(CommStateGetServiceNo())){   // ４人接続の時はボイスチャットを自動起動しない @@OO
-      GFL_NET_DWC_StartVChat(pNetInit->wifiHeapID);
-      //              }
       if(_dWork->bVChat){
+//        GFL_NET_DWC_StartVChat(pNetInit->wifiHeapID);
+        GFL_NET_DWC_StartVChat(pNetInit->netHeapID);
         _dWork->myvchaton = 1;
       }
       else{
@@ -1357,9 +1356,9 @@ static void UserRecvCallback( u8 aid, u8* buffer, int size,void* param )
   //	MYDWC_DEBUGPRINT( "受信(%d)\n",*((s32*)buffer) );
   //NET_PRINT( "受信(%d)\n",aid );
 
-#if 0
+#if 1
   {
-    u16 *temp = buffer + 4;
+    u16 *temp = (u16*)buffer + 2;
     
     if( DWC_GetMyAID() == 0 )
     {
@@ -1395,8 +1394,8 @@ static void UserRecvCallback( u8 aid, u8* buffer, int size,void* param )
     }
 
     mydwc_FreeFunc(NULL, temp, size - 4);
-#endif
   }
+#endif
 }
 
 /*---------------------------------------------------------------------------*
@@ -1482,6 +1481,7 @@ static void ConnectionClosedCallback(DWCError error,
 /*---------------------------------------------------------------------------*
   メモリ確保関数
  *---------------------------------------------------------------------------*/
+#if 0
 void* mydwc_AllocFunc( DWCAllocType name, u32   size, int align )
 {
 #pragma unused( name )
@@ -1506,6 +1506,7 @@ void* mydwc_AllocFunc( DWCAllocType name, u32   size, int align )
   }
   return ptr;
 }
+#endif
 
 /*---------------------------------------------------------------------------*
   メモリ開放関数
@@ -2718,7 +2719,8 @@ void mydwc_allocRecvBuff(int i)
 
   if(_dWork->recvPtr[i]==NULL){
     NET_PRINT("_SetRecvBufferメモリ確保 %d\n",i);
-    _dWork->recvPtr[i] = GFL_NET_Align32Alloc(pNetInit->wifiHeapID, SIZE_RECV_BUFFER);
+//    _dWork->recvPtr[i] = GFL_NET_Align32Alloc(pNetInit->wifiHeapID, SIZE_RECV_BUFFER);
+    _dWork->recvPtr[i] = GFL_NET_Align32Alloc(pNetInit->netHeapID, SIZE_RECV_BUFFER);
     DWC_SetRecvBuffer( i, _dWork->recvPtr[i], SIZE_RECV_BUFFER );
   }
 }

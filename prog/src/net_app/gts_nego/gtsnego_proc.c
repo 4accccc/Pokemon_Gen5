@@ -647,6 +647,10 @@ static void _matchKeyMake( GTSNEGO_WORK *pWork )
   STD_TSPrintf( pWork->filter, "ty=%d And db=%d", pWork->changeMode,MATCHINGKEY);
 
   if( GFL_NET_DWC_StartMatchFilter( pWork->filter, 2 ,&_evalcallback, pWork) != 0){
+
+    GFL_NET_DWC_SetVChat(FALSE);
+
+
     _CHANGE_STATE(pWork,_matchingState);
   }
   else{

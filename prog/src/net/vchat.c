@@ -10,6 +10,7 @@
 #include "gflib.h"
 
 #include "net/dwc_rap.h"
+#include "net/dwc_rapcommon.h"
 #include "vchat.h"
 #include <vct.h>
 
@@ -518,9 +519,15 @@ void myvct_init( int heapID, int codec,int maxEntry )
 	if( _vWork == NULL )
 	{
 		void* vWork_temp=NULL;
-		_vWork = GFL_NET_Align32Alloc(heapID, sizeof(MYVCT_WORK));
+
+#if 1
+		_vWork = DWC_RAPCOMMON_Alloc(heapID, sizeof(MYVCT_WORK),32);
+		_vWork->pAudioBuffer = DWC_RAPCOMMON_Alloc(heapID, VCT_AUDIO_BUFFER_SIZE * maxEntry * VCT_DEFAULT_AUDIO_BUFFER_COUNT + 32 ,32);
+#else
+    _vWork = GFL_NET_Align32Alloc(heapID, sizeof(MYVCT_WORK));
 		_vWork->pAudioBuffer = GFL_NET_Align32Alloc(heapID, VCT_AUDIO_BUFFER_SIZE * maxEntry * VCT_DEFAULT_AUDIO_BUFFER_COUNT + 32 );
-		_vWork->heapID = heapID;
+#endif
+    //	_vWork->heapID = heapID;
 		_vWork->disconnectCallback = NULL;
 		InitFirst();
 	}
@@ -688,8 +695,8 @@ void myvct_free(void){
 		VCT_Cleanup();
 
 		// メモリを解放
-		GFL_NET_Align32Free(  _vWork->pAudioBuffer );
-		GFL_NET_Align32Free( _vWork  );
+		DWC_RAPCOMMON_Free( 0, _vWork->pAudioBuffer,0 );
+		DWC_RAPCOMMON_Free( 0,_vWork,0  );
 		_vWork = NULL;
 
 		// コールバックの呼び出し。

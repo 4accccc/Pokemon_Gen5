@@ -860,6 +860,22 @@ static BOOL _hedenWazaCheck(POKEMON_PASO_PARAM* ppp)
 }
 
 
+static void _pokeIconPaletteGray(POKEMON_TRADE_WORK* pWork,int line, int i,POKEMON_PASO_PARAM* ppp,BOOL bTemoti,int k)
+{
+  NNSG2dImagePaletteProxy proxy;
+  u32 res;
+
+  if((bTemoti && _hedenWazaCheck(ppp))  || ( POKETRADE_NEGO_IsSelect(pWork,line,i)) ){
+    res = pWork->cellRes[PLT_POKEICON_GRAY];
+  }
+  else{
+    res = pWork->cellRes[PLT_POKEICON];
+  }
+  GFL_CLGRP_PLTT_GetProxy(res , &proxy);
+  GFL_CLACT_WK_SetPlttProxy( pWork->pokeIcon[k][i] , &proxy);
+}
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   ラインにあわせたポケモン表示
@@ -904,6 +920,8 @@ static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxDa
       }
       else if(pWork->pokeIconNo[k][i] == monsno){
         GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[k][i], TRUE );
+        _pokeIconPaletteGray(pWork, line, i, ppp,bTemoti,k);
+
       }
       else if(pWork->pokeIconNo[k][i] != monsno){
         u8 pltNum;
@@ -919,18 +937,7 @@ static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxDa
         
         GFL_STD_MemCopy(&pWork->pCharMem[4*8*4*4*monsno] , (char*)((u32)obj_vram) + aproxy.vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_2DSUB], 4*8*4*4);
 
-        {
-          NNSG2dImagePaletteProxy proxy;
-          u32 res;
-          if((bTemoti && _hedenWazaCheck(ppp))  || ( POKETRADE_NEGO_IsSelect(pWork,line,i)) ){
-            res = pWork->cellRes[PLT_POKEICON_GRAY];
-          }
-          else{
-            res = pWork->cellRes[PLT_POKEICON];
-          }
-          GFL_CLGRP_PLTT_GetProxy(res , &proxy);
-          GFL_CLACT_WK_SetPlttProxy( pWork->pokeIcon[k][i] , &proxy);
-        }
+        _pokeIconPaletteGray(pWork, line, i, ppp,bTemoti,k);
 
         GFL_CLACT_WK_SetPlttOffs( pWork->pokeIcon[k][i] , pltNum , CLWK_PLTTOFFS_MODE_PLTT_TOP );
 

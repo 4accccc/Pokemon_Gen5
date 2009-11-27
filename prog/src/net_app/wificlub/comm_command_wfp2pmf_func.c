@@ -111,7 +111,7 @@ void CommWFP2PMFGameResult(const int netID, const int size, const void* pData, v
 		return ;
 	}
 	
-	WFP2PMF_CommResultRecv( p_wk, p_data );
+	//WFP2PMF_CommResultRecv( p_wk, p_data );
 }
 
 //----------------------------------------------------------------------------
@@ -133,7 +133,7 @@ void CommWFP2PMFGameStart(const int netID, const int size, const void* pData, vo
 	}
 	
 	// ゲーム開始
-	WFP2PMF_CommStartRecv( p_wk );
+	//WFP2PMF_CommStartRecv( p_wk );
 }
 
 //----------------------------------------------------------------------------
@@ -155,5 +155,5 @@ void CommWFP2PMFGameVchat(const int netID, const int size, const void* pData, vo
 	}
 	
 	// VCHATフラグ取得
-	WFP2PMF_CommVchatRecv( p_wk, pData );
+//	WFP2PMF_CommVchatRecv( p_wk, pData );
 }

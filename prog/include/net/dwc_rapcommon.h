@@ -62,6 +62,9 @@ extern BOOL mydwc_checkMyGSID(void);
 //==============================================================================
 extern void DWC_RAPCOMMON_SetHeapID(HEAPID id,int size);
 extern void DWC_RAPCOMMON_ResetHeapID(void);
+extern void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align );
+extern void DWC_RAPCOMMON_Free( DWCAllocType name, void *ptr, u32 size );
+
 
 //------------------------------------------------------------------------------
 /**
