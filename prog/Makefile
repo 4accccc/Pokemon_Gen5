@@ -42,6 +42,7 @@ TWLDWC_LIB_GSMODULES_ =
 NITROVCT_LIBS = 
 TWLVCT_LIBS = 
 TWLWIFI_LIBS = 
+TWL_ADDIN_IRC_LIBS = 
 
 # JPEGライブラリをオーバーレイする為の定義
 TWL_LIBS		= 								\

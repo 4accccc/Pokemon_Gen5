@@ -332,6 +332,7 @@ SRCS_OVERLAY_DEV_WIRELESS   =   net/net_devwireless.c \
 
 # ircƒvƒƒOƒ‰ƒ€
 #===> SRCS_OVERLAY_DEV_WIRELESS
+#LIB=>          libirc.$HYB.a
 SRCS_OVERLAY_DEV_IRC    =   net/net_devirc.c \
                 net/net_irc.c
 
