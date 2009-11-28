@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-28T15:03:51"/>
+	<create user="matsumiya" host="W00207" date="2009-11-28T18:18:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="192" top="193" right="888" bottom="808" maximized="no" rayout="Vertical2">
+	<dialog left="155" top="-14" right="851" bottom="995" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="521"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="534"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="688"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -436,12 +436,12 @@
 ・戦闘後</comment>
 		<language name="JPN" width="256">「こどもを　げんきに　そだてる」ね▼
 しゃかいコーナー　だから
-ちゅうおうの　れつの　ほんだなね▼
+いちばん　おくの　ほんだなね▼
 よむひとが　おおい　ほんね
 たちよみを　している　ひとも　いたわ</language>
 		<language name="JPN_KANJI" width="256">「子供を　げんきに　育てる」ね▼
 社会コーナー　だから
-中央の　列の　本棚ね▼
+一番　奥の　本棚ね▼
 読む人が　多い　本ね
 立ち読みを　している人も　いたわ</language>
 	</row>
@@ -470,14 +470,14 @@
 本棚を　調べさせて　あげる▼</language>
 	</row>
 
-	<row id="msg_c02gym0101_girl3_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c02gym0101_girl3_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<language name="JPN" width="256">もうすぐ　ジムリーダーに　あえるわ
 ここが　さいごの　ほんなの▼
 さいごのほんを　よんだとき
 なにが　おきるか　たのしみにしてね</language>
 		<language name="JPN_KANJI" width="256">もうすぐ　ジムリーダーに　会えるわ
 ここが　最後の　本なの▼
-最後の本を　読んでとき
+最後の本を　読んだとき
 なにが　起きるか　楽しみにしてね</language>
 	</row>
 
@@ -801,10 +801,14 @@
 	<row id="msg_c02gym0101_book_05" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>「ポケモンの　きょういく」
 この　ほんを　よみますか？</comment>
-		<language name="JPN" width="256">ポケモンけんきゅうの　れきしが
-わかりやすく　かかれている</language>
-		<language name="JPN_KANJI" width="256">ポケモン研究の　歴史が
-わかりやすく　書かれている</language>
+		<language name="JPN" width="256">ピカチュウの　せいたいが　かいてある
+よわった　なかまの　ピカチュウに▽
+でんきをながし　ショックをあたえて▽
+げんきを　わけあたえることも　ある</language>
+		<language name="JPN_KANJI" width="256">ピカチュウの　生態が　書いてある
+弱った　仲間の　ピカチュウに▽
+電気を流し　ショックを与えて▽
+元気を　分け与える事も　ある</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_06" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -942,8 +946,8 @@
 ５さつの　ほんに　メモを　かくしました▼
 メモには　つぎの　
 ほんへの　ヒントが　あります▼
-２さつめの　ほんは
-いちれつ　おくの　ポケモン　ジャンル▼
+つぎの　ほんは　ちゅうおうの　れつ
+ポケモンの　ジャンルに　ある▼
 「[FF:00:色:1]ピカチュウの　せいたい[FF:00:色:0]」です
 さいごの　ページに　メモが　あります</language>
 		<language name="JPN_KANJI" width="256">本に　メモが　挟んである･･････!▼
@@ -952,8 +956,8 @@
 ５冊の　本に　メモを　隠しました▼
 メモには　次の　
 本への　ヒントが　あります▼
-２冊目の　本は
-一列　奥の　ポケモン　ジャンル▼
+次の　本は　中央の　列
+ポケモンの　ジャンルに　ある▼
 「[FF:00:色:1]ピカチュウの　生態[FF:00:色:0]」です
 最後の　ページに　メモが　あります</language>
 	</row>
