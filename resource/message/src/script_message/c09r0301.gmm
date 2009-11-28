@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-27T19:57:18"/>
+	<create user="matsumiya" host="W00207" date="2009-11-27T20:11:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -328,7 +328,11 @@
 ・戦闘前：フィールド
 　メッセージ表示後、トレーナー戦闘に</comment>
 		<language name="JPN" width="256">テストメッセージ▼</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ▼</language>
+		<language name="JPN_KANJI" width="256">壊すのは　？？
+貫くのは　信念
+そして
+望むは　勝利！
+（体言止めばかりで）</language>
 	</row>
 
 	<row id="msg_c09r0301_bigfour3_06">
