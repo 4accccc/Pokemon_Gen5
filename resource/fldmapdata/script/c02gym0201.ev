@@ -455,7 +455,8 @@ EVENT_START		ev_c02gym0201_girl3_01
 			_OBJ_ANIME_WAIT()
 			
 	    	CASE 13 THEN
-	     		_OBJ_ANIME( C02GYM0201_GIRL3_01, anm_tranier_move_d )
+	     		_OBJ_ANIME( C02GYM0201_GIRL3_01, anm_tranier_move_c )
+	     		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_a )
 				_OBJ_ANIME_WAIT()
 	     
 	    	DEFAULT
@@ -486,14 +487,13 @@ _ANIME_LABEL	anm_tranier_move_c
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	トレーナー：本棚から移動-下から話しかけ時
+//	主人公：一歩後ろに下がる
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_tranier_move_d
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_WALK_R_8F,5
-	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	AC_DIR_L,1
+_ANIME_LABEL	anm_player_move_a
+	_ANIME_DATA	AC_DIR_U,1		
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1	
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -521,7 +521,7 @@ EVENT_START		ev_pos_c02gym0201_trainer_01
 	   		_OBJ_ANIME( C02GYM0201_ASSITANTW_01, anm_trainer_turn_b )
 			_OBJ_ANIME_WAIT()
 	     	
-	    	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turn_a )
+	    	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turn_b )
 			_OBJ_ANIME_WAIT()
 			
 	    DEFAULT
@@ -559,7 +559,8 @@ EVENT_START		ev_pos_c02gym0201_trainer_01
 			_OBJ_ANIME_WAIT()
 	     
 	    CASE 6 THEN
-	   		_OBJ_ANIME( C02GYM0201_ASSITANTW_01, anm_trainer_move_b )
+	   		_OBJ_ANIME( C02GYM0201_ASSITANTW_01, anm_trainer_move_a )
+	   		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_a )
 			_OBJ_ANIME_WAIT()
 	     
 	    DEFAULT
@@ -604,16 +605,6 @@ _ANIME_LABEL	anm_player_turn_b
 _ANIME_LABEL	anm_trainer_move_a
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,4
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	トレーナー、本棚から移動‐下から話しかけ時
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_trainer_move_b
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_WALK_L_8F,3
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
 
