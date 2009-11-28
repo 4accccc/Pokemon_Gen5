@@ -115,6 +115,11 @@ end
 #   ‚±‚±‚©‚ç–{‘Ì
 #
 ###############################################################
+if ARGV.length == 0 then
+  puts "Usage:"
+  puts "ruby make_dummy_script.rb directory symbol"
+  exit 0
+end
 directory = ARGV[0]
 symbol = ARGV[1].downcase
 unless FileTest.exists?(directory) then

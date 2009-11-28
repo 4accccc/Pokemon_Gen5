@@ -1,20 +1,32 @@
-#マップに依存しないスクリプトはここに追加してください
-UNIQ_SCRIPTFILES	= \
-	common_scr.ev	\
-  shop_scr.ev \
-  item_get_scr.ev \
-	c99.ev	\
-  bg_attr.ev \
+#======================================================================
+#
+# @file  uniq_script.list
+# @bfief 非マップ依存のスクリプトリスト
+# @author  tamada GAMEFREAK inc.
+# @date  2009 11/28 (Sat) 15:26
+#
+#  このファイルはコンバータにより自動生成されています
+#
+#======================================================================
+
+UNIQ_SCRIPTFILES = \
+	common_scr.ev \
+	pokecen_scr.ev \
+	sodateya_scr.ev \
+	eggevent_scr.ev \
+	poke_waza.ev \
+	bg_attr.ev \
+	item_get_scr.ev \
 	trainer.ev \
-  init_scr.ev \
-  sodateya_scr.ev \
-  pokecen_scr.ev \
-  hiden.ev \
-  fld_item.ev \
-  wifi_club_scr.ev \
-  eggevent_scr.ev \
-  poke_waza.ev \
-  musical_scr.ev \
-  field_ev_scr.ev \
-  c3center_scr.ev \
-  gate_scr.ev
+	fld_item.ev \
+	init_scr.ev \
+	hiden.ev \
+	wifi_club_scr.ev \
+	shop_scr.ev \
+	musical_scr.ev \
+	field_ev_scr.ev \
+	c3center_scr.ev \
+	gate_scr.ev \
+	debug_scr.ev \
+
+# 自動生成ファイルuniq_script.list　末尾

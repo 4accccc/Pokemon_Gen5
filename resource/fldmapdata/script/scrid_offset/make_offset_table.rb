@@ -19,6 +19,7 @@ class ScrOfsConverterError < Exception; end
 XLS2TAB = "ruby #{ENV["PROJECT_ROOT"]}tools/exceltool/xls2xml/tab_out.rb -c "
 
 #----------------------------------------------------------------------------
+# スクリプトオフセット指定のデータセット
 #----------------------------------------------------------------------------
 class ScrOfs
   attr_reader :name, :startno, :max, :scriptfile, :msgfile, :comment
@@ -40,6 +41,7 @@ class ScrOfs
 end
 
 #----------------------------------------------------------------------------
+# ScrOfsをまとめる
 #----------------------------------------------------------------------------
 class ScrOfsData
 
@@ -134,6 +136,13 @@ end
 
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
+def set_date_string(string, keyword)
+  date_string = Time.new.localtime.strftime("%Y %m/%d (%a) %H:%M")
+  return string.sub(keyword, date_string)
+end
+
+#----------------------------------------------------------------------------
+#----------------------------------------------------------------------------
 def make_offset_header(scrData)
   head_string = <<END_OF_STRING
 //======================================================================
@@ -158,9 +167,7 @@ END_OF_STRING
 #endif  /* SCR_OFFSET_ID_H */
 END_OF_STRING
 
-date_string = Time.new.localtime.strftime("%Y %m/%d (%a) %H:%M")
-output = String.new
-output = head_string.sub(/DATE_STRING/,date_string)
+output = set_date_string( head_string, /DATE_STRING/ )
 
 scrData.ofsdatas.each{|data|
   start_id = "ID_#{data.name.upcase}_OFFSET"
@@ -200,9 +207,7 @@ END_OF_STRING
 };
 END_OF_STRING
 
-date_string = Time.new.localtime.strftime("%Y %m/%d (%a) %H:%M")
-output = String.new
-output = head_string.sub(/DATE_STRING/,date_string)
+output = set_date_string( head_string, /DATE_STRING/ )
 
 scrData.ofsdatas.reverse_each{|data|
   start_id = "ID_#{data.name.upcase}_OFFSET,"
@@ -226,6 +231,45 @@ end
 
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
+def make_uniq_script_list( scrData )
+  head_string =<<END_OF_STRING
+#======================================================================
+#
+# @file  uniq_script.list
+# @bfief 非マップ依存のスクリプトリスト
+# @author  tamada GAMEFREAK inc.
+# @date  DATE_STRING
+#
+#  このファイルはコンバータにより自動生成されています
+#
+#======================================================================
+
+UNIQ_SCRIPTFILES = \\
+END_OF_STRING
+
+  tail_string =<<END_OF_STRING
+
+# 自動生成ファイルuniq_script.list　末尾
+END_OF_STRING
+
+output = set_date_string( head_string, /DATE_STRING/ )
+
+filenames = Hash.new
+
+scrData.ofsdatas.each{|data|
+  filename = data.scriptfile
+  if filename != nil && filenames.has_key?(filename) == false then
+    output += sprintf("\t%s \\\n", filename)
+    filenames[filename] = true
+  end
+}
+output += tail_string
+return output
+
+end
+
+#----------------------------------------------------------------------------
+#----------------------------------------------------------------------------
 
 scrData =ScrOfsData.new(ARGV[0])
 
@@ -241,4 +285,8 @@ File.open("scr_offset.cdat","w"){|file|
   file.puts table
 }
 
+File.open("../uniq_script.list", "w"){|file|
+  list = make_uniq_script_list( scrData )
+  file.puts list
+}
 

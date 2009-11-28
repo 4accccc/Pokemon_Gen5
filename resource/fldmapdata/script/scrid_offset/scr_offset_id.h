@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2009 11/26 (Thu) 11:50
+ * @date  2009 11/28 (Sat) 15:26
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -46,7 +46,7 @@
 #define ID_FLD_ITEM_OFFSET               (7000) //フィールドアイテムスクリプト
 #define ID_FLD_ITEM_OFFSET_END           (7799)
 
-#define ID_HIDE_ITEM_OFFSET              (8000) //隠しアイテムスクリプト
+#define ID_HIDE_ITEM_OFFSET              (8000) //隠しアイテムスクリプト（予約領域）
 #define ID_HIDE_ITEM_OFFSET_END          (8799)
 
 #define ID_INIT_SCR_OFFSET               (9600) //初期化スクリプト
@@ -72,6 +72,9 @@
 
 #define ID_GATE_SCR_OFFSET               (10250) //ゲート用共通スクリプト
 #define ID_GATE_SCR_OFFSET_END           (10259)
+
+#define ID_DEBUG_SCR_OFFSET              (12000) //デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
+#define ID_DEBUG_SCR_OFFSET_END          (12199)
 
 
 #endif  /* SCR_OFFSET_ID_H */

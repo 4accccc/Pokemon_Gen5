@@ -17,11 +17,11 @@ DEPENDHEADERS = usescript.h scr_seq_def.h easy_event_def.h \
 								$(PROJECT_PROGDIR)src/field/scrcmd_table.cdat \
 								../flagwork/flag_define.h ../flagwork/work_define.h
 
-#マップ依存のスクリプト：定義ファイルは自動生成
+#マップ依存のスクリプト（t01.ev,sp_t01.ev etc.）：定義ファイルは自動生成
 SCRIPTFILES	=
 include zone_script.list
 
-#マップ非依存スクリプトはここに追加してください
+#マップ非依存スクリプト（common_scr.ev init_scr.ev等）：定義ファイルは自動生成
 #UNIQ_SCRIPTFILES =
 include uniq_script.list
 
@@ -46,11 +46,7 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 EV_DEF = ruby ./scr_tools/ev_def.rb
 
 #script_offset_id.h
-#SCR_OFFS_ID_H = ../../../prog/src/field/script_offset_id.h
 SCR_OFFS_ID_H	= scrid_offset/scr_offset_id.h
-
-#eventdata WB NULL
-#IPATH	=	-I../eventdata
 
 #target
 TARGET_DIR = $(PROJECT_ARCDIR)fieldmap
