@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ica version="1.6.0">
+
+<head>
+	<create user="fujiwara_maiko" host="W00194" date="2009-11-28T13:50:54" source="pl_ele_00.mb"/>
+	<title>Character Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<node_anm_info
+	frame_size="60"
+	scaling_rule="standard"
+	magnify="1.000000"
+	tool_start_frame="1"
+	tool_end_frame="60"
+	interpolation="frame"
+	compress_node="merge" node_size="1 1"
+	frame_step_mode="1"
+	tolerance_scale="0.100000"
+	tolerance_rotate="0.100000"
+	tolerance_translate="0.010000"
+/>
+
+<node_scale_data size="1">
+	1.000000
+</node_scale_data>
+
+<node_rotate_data size="1">
+	0.000000
+</node_rotate_data>
+
+<node_translate_data size="61">
+	0.000000 0.000000 -1.694824 -3.389893 -5.084717 -6.779541 -8.474609 -10.169434 -11.864502 -13.559326
+	-15.254150 -16.949219 -18.644043 -20.338867 -22.033936 -23.728760 -25.423828 -27.118652 -28.813477 -30.508545
+	-32.203369 -33.898193 -35.593262 -37.288086 -38.983154 -40.677979 -42.372803 -44.067871 -45.762695 -47.457520
+	-49.152588 -50.847412 -52.542480 -54.237305 -55.932129 -57.627197 -59.322021 -61.016846 -62.711914 -64.406738
+	-66.101807 -67.796631 -69.491455 -71.186523 -72.881348 -74.576172 -76.271240 -77.966064 -79.661133 -81.355957
+	-83.050781 -84.745850 -86.440674 -88.135498 -89.830566 -91.525391 -93.220459 -94.915283 -96.610107 -98.305176
+	-100.000000
+</node_translate_data>
+
+<node_anm_array size="1">
+	<node_anm index="0">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="0"/>
+		<translate_y frame_step="1" data_size="60" data_head="1"/>
+		<translate_z frame_step="1" data_size="1" data_head="0"/>
+	</node_anm>
+</node_anm_array>
+
+</body>
+
+</ica>
