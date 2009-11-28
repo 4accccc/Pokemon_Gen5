@@ -267,7 +267,7 @@ static void handler_side_Refrector( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
   {
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_DAMAGE_TYPE) == WAZADATA_DMG_PHYSIC )
     {
-      BTL_Printf("リフレクターではんぶんに\n");
+      BTL_Printf("リフレクターでダメージはんぶんに\n");
       BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.5f) );
     }
   }

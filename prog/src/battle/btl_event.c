@@ -227,19 +227,6 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
 }
 //=============================================================================================
 /**
- * スキップチェックハンドラをアタッチする
- *
- * @param   factor
- * @param   handler
- */
-//=============================================================================================
-void BTL_EVENT_FACTOR_AttachSkipCheckHandler( BTL_EVENT_FACTOR* factor, BtlEventSkipCheckHandler handler )
-{
-  factor->skipCheckHandler = handler;
-}
-
-//=============================================================================================
-/**
  * イベント反応要素を削除
  *
  * @param   factor
@@ -391,6 +378,19 @@ static void callHandlers( BTL_EVENT_FACTOR* factor, BtlEventType eventType, BTL_
     factor->forceCallFlag = FALSE;
   }
 }
+//=============================================================================================
+/**
+ * スキップチェックハンドラをアタッチする
+ *
+ * @param   factor
+ * @param   handler
+ */
+//=============================================================================================
+void BTL_EVENT_FACTOR_AttachSkipCheckHandler( BTL_EVENT_FACTOR* factor, BtlEventSkipCheckHandler handler )
+{
+  factor->skipCheckHandler = handler;
+}
+
 /**
  *  特定ハンドラをスキップするかチェック
  */
