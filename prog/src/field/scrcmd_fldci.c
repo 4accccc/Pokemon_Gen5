@@ -86,8 +86,9 @@ VMCMD_RESULT EvCmdFldCi_CallPokeCutin( VMHANDLE *core, void *wk )
     int formno = PP_Get( pp, ID_PARA_form_no, NULL );
     int sex = PP_Get( pp, ID_PARA_sex, NULL );
     int rare = PP_CheckRare( pp );
+    int egg = PP_Get( pp, ID_PARA_tamago_flag, NULL );
 
-    call_event = FLD3D_CI_CreatePokeCutInEvt(gsys, ptr, monsno,formno,sex,rare);
+    call_event = FLD3D_CI_CreatePokeCutInEvt(gsys, ptr, monsno,formno,sex,rare,egg);
     SCRIPT_CallEvent( sc, call_event );
   }
   

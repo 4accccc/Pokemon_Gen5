@@ -27,7 +27,7 @@ extern void FLD3D_CI_Draw( FLD3D_CI_PTR ptr );
 extern GMEVENT *FLD3D_CI_CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInNo);
 extern GMEVENT *FLD3D_CI_CreatePokeCutInEvt( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr,
                                       const int inMonsNo, const int inFormNo,
-                                      const int inSex, const int inRare );
+                                      const int inSex, const int inRare, const BOOL inEgg );
 #ifdef PM_DEBUG
 extern void FLD3D_CI_FlySkyCameraDebug(
     GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, FIELD_CAMERA *camera, FIELD_PLAYER * player, FLDNOGRID_MAPPER *mapper);

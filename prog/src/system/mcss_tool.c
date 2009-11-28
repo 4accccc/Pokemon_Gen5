@@ -66,8 +66,9 @@ void	MCSS_TOOL_MakeMAWPPP( const POKEMON_PASO_PARAM *ppp, MCSS_ADD_WORK *maw, in
 	int	form_no = PPP_Get( ppp, ID_PARA_form_no,NULL );
 	int	sex		= PPP_Get( ppp, ID_PARA_sex,	NULL );
 	int	rare	= PPP_CheckRare( ppp );
+	int	egg	  = PPP_Get( ppp, ID_PARA_tamago_flag,	NULL );
 
-	MCSS_TOOL_MakeMAWParam( mons_no, form_no, sex, rare, maw, dir );
+	MCSS_TOOL_MakeMAWParam( mons_no, form_no, sex, rare, egg, maw, dir );
 }
 
 //============================================================================================
@@ -82,16 +83,16 @@ void	MCSS_TOOL_MakeMAWPPP( const POKEMON_PASO_PARAM *ppp, MCSS_ADD_WORK *maw, in
  * @param[in]	dir		ポケモンの向き（MCSS_DIR_FRONT:正面、MCSS_DIR_BACK:背面）
  */
 //============================================================================================
-void	MCSS_TOOL_MakeMAWParam( int	mons_no, int form_no, int sex, int rare, MCSS_ADD_WORK *maw, int dir )
+void	MCSS_TOOL_MakeMAWParam( int	mons_no, int form_no, int sex, int rare, BOOL egg, MCSS_ADD_WORK *maw, int dir )
 {
 	maw->arcID = POKEGRA_GetArcID();
-	maw->ncbr = POKEGRA_GetCbrArcIndex( mons_no, form_no, sex, rare, dir );
-	maw->nclr = POKEGRA_GetPalArcIndex( mons_no, form_no, sex, rare, dir );
-	maw->ncer = POKEGRA_GetCelArcIndex( mons_no, form_no, sex, rare, dir );
-	maw->nanr = POKEGRA_GetAnmArcIndex( mons_no, form_no, sex, rare, dir );
-	maw->nmcr = POKEGRA_GetMCelArcIndex( mons_no, form_no, sex, rare, dir );
-	maw->nmar = POKEGRA_GetMAnmArcIndex( mons_no, form_no, sex, rare, dir );
-	maw->ncec = POKEGRA_GetNcecArcIndex( mons_no, form_no, sex, rare, dir );
+	maw->ncbr = POKEGRA_GetCbrArcIndex( mons_no, form_no, sex, rare,  dir, egg );
+	maw->nclr = POKEGRA_GetPalArcIndex( mons_no, form_no, sex, rare,  dir, egg );
+	maw->ncer = POKEGRA_GetCelArcIndex( mons_no, form_no, sex, rare,  dir, egg );
+	maw->nanr = POKEGRA_GetAnmArcIndex( mons_no, form_no, sex, rare,  dir, egg );
+	maw->nmcr = POKEGRA_GetMCelArcIndex( mons_no, form_no, sex, rare,  dir, egg );
+	maw->nmar = POKEGRA_GetMAnmArcIndex( mons_no, form_no, sex, rare,  dir, egg );
+	maw->ncec = POKEGRA_GetNcecArcIndex( mons_no, form_no, sex, rare,  dir, egg );
 }
 
 //============================================================================================

@@ -29,7 +29,7 @@
  */
 //=============================================================================
 static void* POKE2DGRA_LoadCharacterPPP( NNSG2dCharacterData **ncg_data, const POKEMON_PASO_PARAM* ppp, int dir, HEAPID heapID );
-static void* POKE2DGRA_LoadCharacter( NNSG2dCharacterData **ncg_data, int mons_no, int form_no, int sex, int rare, int dir, HEAPID heapID );
+static void* POKE2DGRA_LoadCharacter( NNSG2dCharacterData **ncg_data, int mons_no, int form_no, int sex, int rare, int dir, BOOL egg, HEAPID heapID );
 //=============================================================================
 /**
  *					外部公開
@@ -54,8 +54,9 @@ static void* POKE2DGRA_LoadCharacterPPP( NNSG2dCharacterData **ncg_data, const P
 	int	form_no = PPP_Get( ppp, ID_PARA_form_no,NULL );
 	int	sex		= PPP_Get( ppp, ID_PARA_sex,	NULL );
 	int	rare	= PPP_CheckRare( ppp );
+	int	egg		= PPP_Get( ppp, ID_PARA_tamago_flag,	NULL );
 
-	return POKE2DGRA_LoadCharacter( ncg_data, mons_no, form_no, sex, rare, dir, heapID );
+	return POKE2DGRA_LoadCharacter( ncg_data, mons_no, form_no, sex, rare, dir, egg, heapID );
 }
 
 //----------------------------------------------------------------------------
@@ -70,13 +71,13 @@ static void* POKE2DGRA_LoadCharacterPPP( NNSG2dCharacterData **ncg_data, const P
  *	@return
  */
 //-----------------------------------------------------------------------------
-static void* POKE2DGRA_LoadCharacter( NNSG2dCharacterData **ncg_data, int mons_no, int form_no, int sex, int rare, int dir, HEAPID heapID )
+static void* POKE2DGRA_LoadCharacter( NNSG2dCharacterData **ncg_data, int mons_no, int form_no, int sex, int rare, int dir, BOOL egg, HEAPID heapID )
 {	
 	u32 cgr;
 	void *p_buf;
 
 	//リソース受け取り
-	cgr	= POKEGRA_GetCgrArcIndex( mons_no, form_no, sex, rare, dir );
+	cgr	= POKEGRA_GetCgrArcIndex( mons_no, form_no, sex, rare, dir, egg );
 	//リソースはOBJとして作っているので、LoadOBJじゃないと読み込めない
 	p_buf = GFL_ARC_UTIL_LoadOBJCharacter( POKEGRA_GetArcID(), cgr, FALSE, ncg_data, heapID );
 
@@ -107,8 +108,9 @@ void POKE2DGRA_BG_TransResourcePPP( const POKEMON_PASO_PARAM* ppp, int dir, u32 
 	int	form_no = PPP_Get( ppp, ID_PARA_form_no,NULL );
 	int	sex		= PPP_Get( ppp, ID_PARA_sex,	NULL );
 	int	rare	= PPP_CheckRare( ppp );
+  int	egg		= PPP_Get( ppp, ID_PARA_tamago_flag,	NULL );
 
-	POKE2DGRA_BG_TransResource( mons_no, form_no, sex, rare, dir, frm, chr_offs, plt_offs, heapID );
+	POKE2DGRA_BG_TransResource( mons_no, form_no, sex, rare, dir, egg, frm, chr_offs, plt_offs, heapID );
 
 }
 
@@ -133,8 +135,9 @@ GFL_ARCUTIL_TRANSINFO POKE2DGRA_BG_TransResourceByAreaManPPP( const POKEMON_PASO
 	int	form_no = PPP_Get( ppp, ID_PARA_form_no,NULL );
 	int	sex		= PPP_Get( ppp, ID_PARA_sex,	NULL );
 	int	rare	= PPP_CheckRare( ppp );
+  int	egg		= PPP_Get( ppp, ID_PARA_tamago_flag,	NULL );
 
-	return POKE2DGRA_BG_TransResourceByAreaMan( mons_no, form_no, sex, rare, dir, frm, plt_offs, heapID );
+	return POKE2DGRA_BG_TransResourceByAreaMan( mons_no, form_no, sex, rare, dir, egg, frm, plt_offs, heapID );
 }
 //----------------------------------------------------------------------------
 /**
@@ -151,7 +154,7 @@ GFL_ARCUTIL_TRANSINFO POKE2DGRA_BG_TransResourceByAreaManPPP( const POKEMON_PASO
  *	@param	heapID												ヒープID
  */
 //-----------------------------------------------------------------------------
-void POKE2DGRA_BG_TransResource( int mons_no, int form_no, int sex, int rare, int dir,  u32 frm, u32 chr_offs, u32 plt_offs, HEAPID heapID )
+void POKE2DGRA_BG_TransResource( int mons_no, int form_no, int sex, int rare, int dir, BOOL egg, u32 frm, u32 chr_offs, u32 plt_offs, HEAPID heapID )
 {
 	PALTYPE	paltype;
 	ARCID		arc;
@@ -170,8 +173,8 @@ void POKE2DGRA_BG_TransResource( int mons_no, int form_no, int sex, int rare, in
 	//リソース受け取り
 	{	
 		arc	= POKEGRA_GetArcID();
-		cgr	= POKEGRA_GetCgrArcIndex( mons_no, form_no, sex, rare, dir );
-		plt	= POKEGRA_GetPalArcIndex( mons_no, form_no, sex, rare, dir );
+		cgr	= POKEGRA_GetCgrArcIndex( mons_no, form_no, sex, rare, dir, egg );
+		plt	= POKEGRA_GetPalArcIndex( mons_no, form_no, sex, rare, dir, egg );
 	}
 
 	//リソース読み込み
@@ -185,7 +188,7 @@ void POKE2DGRA_BG_TransResource( int mons_no, int form_no, int sex, int rare, in
 		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, plt,
 				paltype, plt_offs*0x20, POKEGRA_POKEMON_PLT_SIZE, heapID );
 
-		p_buff	= POKE2DGRA_LoadCharacter( &ncg_data, mons_no, form_no, sex, rare, dir, heapID );
+		p_buff	= POKE2DGRA_LoadCharacter( &ncg_data, mons_no, form_no, sex, rare, dir, egg, heapID );
 		GFL_BG_LoadCharacter( frm, ncg_data->pRawData, POKEGRA_POKEMON_CHARA_SIZE, chr_offs );
 
 		GFL_ARC_CloseDataHandle( p_handle );
@@ -211,7 +214,7 @@ void POKE2DGRA_BG_TransResource( int mons_no, int form_no, int sex, int rare, in
  *
  */
 //-----------------------------------------------------------------------------
-GFL_ARCUTIL_TRANSINFO POKE2DGRA_BG_TransResourceByAreaMan( int mons_no, int form_no, int sex, int rare, int dir, u32 frm, u32 plt_offs, HEAPID heapID )
+GFL_ARCUTIL_TRANSINFO POKE2DGRA_BG_TransResourceByAreaMan( int mons_no, int form_no, int sex, int rare, int dir, BOOL egg, u32 frm, u32 plt_offs, HEAPID heapID )
 {	
 	PALTYPE	paltype;
 	ARCID		arc;
@@ -231,8 +234,8 @@ GFL_ARCUTIL_TRANSINFO POKE2DGRA_BG_TransResourceByAreaMan( int mons_no, int form
 	//リソース受け取り
 	{	
 		arc	= POKEGRA_GetArcID();
-		cgr	= POKEGRA_GetCgrArcIndex( mons_no, form_no, sex, rare, dir );
-		plt	= POKEGRA_GetPalArcIndex( mons_no, form_no, sex, rare, dir );
+		cgr	= POKEGRA_GetCgrArcIndex( mons_no, form_no, sex, rare, dir, egg );
+		plt	= POKEGRA_GetPalArcIndex( mons_no, form_no, sex, rare, dir, egg );
 	}
 
 	//リソース読み込み
@@ -247,7 +250,7 @@ GFL_ARCUTIL_TRANSINFO POKE2DGRA_BG_TransResourceByAreaMan( int mons_no, int form
 		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, plt,
 				paltype, plt_offs, POKEGRA_POKEMON_PLT_SIZE, heapID );
 
-		p_buff	= POKE2DGRA_LoadCharacter( &ncg_data, mons_no, form_no, sex, rare, dir, heapID );
+		p_buff	= POKE2DGRA_LoadCharacter( &ncg_data, mons_no, form_no, sex, rare, dir, egg, heapID );
 		pos = GFL_BG_LoadCharacterAreaMan( frm, ncg_data->pRawData, POKEGRA_POKEMON_CHARA_SIZE );
 
 		if(  pos == AREAMAN_POS_NOTFOUND )
@@ -343,10 +346,10 @@ ARCHANDLE *POKE2DGRA_OpenHandle( HEAPID heapID )
  *	@return	登録ID
  */
 //-----------------------------------------------------------------------------
-u32 POKE2DGRA_OBJ_PLTT_Register( ARCHANDLE *p_handle, int mons_no, int form_no, int sex, int rare, int dir, CLSYS_DRAW_TYPE vramType, u16 byteOffs, HEAPID heapID )
+u32 POKE2DGRA_OBJ_PLTT_Register( ARCHANDLE *p_handle, int mons_no, int form_no, int sex, int rare, int dir, BOOL egg, CLSYS_DRAW_TYPE vramType, u16 byteOffs, HEAPID heapID )
 {	
 	u32 plt;
-	plt	= POKEGRA_GetPalArcIndex( mons_no, form_no, sex, rare, dir );
+	plt	= POKEGRA_GetPalArcIndex( mons_no, form_no, sex, rare, dir, egg );
 
 	//読み込み
 	return GFL_CLGRP_PLTT_RegisterEx( p_handle, plt, vramType, byteOffs, 0, POKEGRA_POKEMON_PLT_NUM, heapID );
@@ -367,10 +370,10 @@ u32 POKE2DGRA_OBJ_PLTT_Register( ARCHANDLE *p_handle, int mons_no, int form_no, 
  *	@return	登録番号
  */
 //-----------------------------------------------------------------------------
-u32 POKE2DGRA_OBJ_CGR_Register( ARCHANDLE *p_handle, int mons_no, int form_no, int sex, int rare, int dir, CLSYS_DRAW_TYPE vramType, HEAPID heapID )
+u32 POKE2DGRA_OBJ_CGR_Register( ARCHANDLE *p_handle, int mons_no, int form_no, int sex, int rare, int dir, BOOL egg, CLSYS_DRAW_TYPE vramType, HEAPID heapID )
 {	
 	u32 cgr;
-	cgr	= POKEGRA_GetCgrArcIndex( mons_no, form_no, sex, rare, dir );
+	cgr	= POKEGRA_GetCgrArcIndex( mons_no, form_no, sex, rare, dir, egg );
 	//読み込み
 	return GFL_CLGRP_CGR_Register( p_handle, cgr, FALSE, vramType, heapID );
 }
@@ -390,7 +393,7 @@ u32 POKE2DGRA_OBJ_CGR_Register( ARCHANDLE *p_handle, int mons_no, int form_no, i
  *	@return
  */
 //-----------------------------------------------------------------------------
-u32 POKE2DGRA_OBJ_CELLANM_Register( int mons_no, int form_no, int sex, int rare, int dir, APP_COMMON_MAPPING mapping, CLSYS_DRAW_TYPE vramType, HEAPID heapID )
+u32 POKE2DGRA_OBJ_CELLANM_Register( int mons_no, int form_no, int sex, int rare, int dir, BOOL egg, APP_COMMON_MAPPING mapping, CLSYS_DRAW_TYPE vramType, HEAPID heapID )
 {	
 	ARCHANDLE *p_handle;
 	u32 cel, anm;
@@ -426,9 +429,10 @@ u32 POKE2DGRA_OBJ_PLTT_RegisterPPP( ARCHANDLE *p_handle, const POKEMON_PASO_PARA
 	int	form_no = PPP_Get( ppp, ID_PARA_form_no,NULL );
 	int	sex		= PPP_Get( ppp, ID_PARA_sex,	NULL );
 	int	rare	= PPP_CheckRare( ppp );
+  int egg   = PPP_Get( ppp, ID_PARA_tamago_flag, NULL );
 
 	//読み込み
-	return POKE2DGRA_OBJ_PLTT_Register( p_handle, mons_no, form_no, sex, rare, dir, vramType, byteOffs, heapID );
+	return POKE2DGRA_OBJ_PLTT_Register( p_handle, mons_no, form_no, sex, rare, dir, egg, vramType, byteOffs, heapID );
 }
 //----------------------------------------------------------------------------
 /**
@@ -449,9 +453,10 @@ u32 POKE2DGRA_OBJ_CGR_RegisterPPP( ARCHANDLE *p_handle, const POKEMON_PASO_PARAM
 	int	form_no = PPP_Get( ppp, ID_PARA_form_no,NULL );
 	int	sex		= PPP_Get( ppp, ID_PARA_sex,	NULL );
 	int	rare	= PPP_CheckRare( ppp );
+  int egg   = PPP_Get( ppp, ID_PARA_tamago_flag, NULL );
 
 	//読み込み
-	return POKE2DGRA_OBJ_CGR_Register( p_handle, mons_no, form_no, sex, rare, dir, vramType, heapID );
+	return POKE2DGRA_OBJ_CGR_Register( p_handle, mons_no, form_no, sex, rare, dir, egg, vramType, heapID );
 }
 //----------------------------------------------------------------------------
 /**
@@ -472,6 +477,7 @@ u32 POKE2DGRA_OBJ_CELLANM_RegisterPPP( const POKEMON_PASO_PARAM* ppp, int dir, A
 	int	form_no = PPP_Get( ppp, ID_PARA_form_no,NULL );
 	int	sex		= PPP_Get( ppp, ID_PARA_sex,	NULL );
 	int	rare	= PPP_CheckRare( ppp );
+  int egg   = PPP_Get( ppp, ID_PARA_tamago_flag, NULL );
 
-	return POKE2DGRA_OBJ_CELLANM_Register( mons_no, form_no, sex, rare, dir, mapping, vramType, heapID );
+	return POKE2DGRA_OBJ_CELLANM_Register( mons_no, form_no, sex, rare, dir, egg, mapping, vramType, heapID );
 }

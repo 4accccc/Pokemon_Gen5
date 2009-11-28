@@ -20,7 +20,7 @@
 
 extern	void	MCSS_TOOL_MakeMAWPP( const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int dir );
 extern	void	MCSS_TOOL_MakeMAWPPP( const POKEMON_PASO_PARAM *ppp, MCSS_ADD_WORK *maw, int dir );
-extern	void	MCSS_TOOL_MakeMAWParam( int mons_no, int form_no, int sex, int rare, MCSS_ADD_WORK *maw, int dir );
+extern	void	MCSS_TOOL_MakeMAWParam( int mons_no, int form_no, int sex, int rare, BOOL egg, MCSS_ADD_WORK *maw, int dir );
 extern  void	MCSS_TOOL_MakeMAWTrainer( int tr_type, MCSS_ADD_WORK *maw, int dir );
 
 

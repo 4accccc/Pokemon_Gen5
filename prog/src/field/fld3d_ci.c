@@ -74,6 +74,7 @@ typedef struct FLD3D_CI_tag
   int FormNo;
   int Sex;
   int Rare;
+  BOOL Egg;
 
   SETUP_CALLBACK SetupCallBack;
 }FLD3D_CI;
@@ -360,13 +361,14 @@ GMEVENT *FLD3D_CI_CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 
  * @param   inFormNo    フォルムナンバー
  * @param   inSex       性別
  * @param   inRare      レアか？
+ * @param   inEgg       卵か
  *
  * @return	event       イベントポインタ
  */
 //--------------------------------------------------------------------------------------------
 GMEVENT *FLD3D_CI_CreatePokeCutInEvt( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr,
                                       const int inMonsNo, const int inFormNo,
-                                      const int inSex, const int inRare )
+                                      const int inSex, const int inRare, const BOOL inEgg )
 {
   GMEVENT * event;
   int no = FLDCIID_POKE;
@@ -378,6 +380,7 @@ GMEVENT *FLD3D_CI_CreatePokeCutInEvt( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr,
   ptr->FormNo = inFormNo;
   ptr->Sex = inSex;
   ptr->Rare = inRare;
+  ptr->Egg  = inEgg;
 
   return event;
 }
@@ -1301,8 +1304,8 @@ static void ReTransToPokeGra(FLD3D_CI_PTR ptr)
   {
     u32 cgr, pal;
     //リソース受け取り
-    cgr	= POKEGRA_GetCgrArcIndex( ptr->MonsNo,ptr->FormNo,ptr->Sex,ptr->Rare,POKEGRA_DIR_FRONT );
-    pal = POKEGRA_GetPalArcIndex( ptr->MonsNo,ptr->FormNo,ptr->Sex,ptr->Rare,POKEGRA_DIR_FRONT );
+    cgr	= POKEGRA_GetCgrArcIndex( ptr->MonsNo,ptr->FormNo,ptr->Sex,ptr->Rare,POKEGRA_DIR_FRONT, ptr->Egg );
+    pal = POKEGRA_GetPalArcIndex( ptr->MonsNo,ptr->FormNo,ptr->Sex,ptr->Rare,POKEGRA_DIR_FRONT, ptr->Egg );
     ptr->chr = NULL;
     ptr->plt = NULL;
     //リソースはOBJとして作っているので、LoadOBJじゃないと読み込めない
