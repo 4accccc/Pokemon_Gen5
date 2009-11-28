@@ -329,6 +329,8 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Sunakaki( u16 pri, u16 tokID, u8 pokeID )
 static void handler_Sunakaki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_MilacreSkin( u16 pri, u16 tokID, u8 pokeID );
 static void handler_MilacreSkin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Sinuti( u16 pri, u16 tokID, u8 pokeID );
+static void handler_Sinuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 
@@ -483,8 +485,8 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
     { POKETOKUSEI_SAISEIRYOKU,      HAND_TOK_ADD_SaiseiRyoku },  // さいせいりょく
     { POKETOKUSEI_HATOMUNE,         HAND_TOK_ADD_Hatomune  },  // はとむね
     { POKETOKUSEI_SUNAKAKI,         HAND_TOK_ADD_Sunakaki  },  // すなかき
-    { POKETOKUSEI_MIRAKURUSUKIN,    HAND_TOK_ADD_Nenchaku  },  // ミラクルスキン
-    { POKETOKUSEI_SINUTI,           HAND_TOK_ADD_Nenchaku  },  // しんうち
+    { POKETOKUSEI_MIRAKURUSUKIN,    HAND_TOK_ADD_MilacreSkin  },  // ミラクルスキン
+    { POKETOKUSEI_SINUTI,           HAND_TOK_ADD_Sinuti    },  // しんうち
     { POKETOKUSEI_IRYUUJON,         HAND_TOK_ADD_Nenchaku  },  // イリュージョン
     { POKETOKUSEI_HENSIN,           HAND_TOK_ADD_Nenchaku  },  // へんしん
     { POKETOKUSEI_SURINUKE,         HAND_TOK_ADD_Nenchaku  },  // すりぬけ
@@ -4833,5 +4835,32 @@ static void handler_MilacreSkin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     }
   }
 }
-
-
+//------------------------------------------------------------------------------
+/**
+ *  とくせい「しんうち」
+ */
+//------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Sinuti( u16 pri, u16 tokID, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_POWER, handler_Sinuti   },    // ワザ威力計算ハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
+}
+// ワザ威力計算ハンドラ
+static void handler_Sinuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  // 自分が号劇側で
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    u8 myOrder, totalAction;
+    // 順番最後なら威力増加
+    if( BTL_SVFTOOL_GetMyActionOrder(flowWk, pokeID, &myOrder, &totalAction) ){
+      if( (myOrder+1) == totalAction )
+      {
+        BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.3) );
+      }
+    }
+  }
+}

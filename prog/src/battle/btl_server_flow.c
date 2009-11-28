@@ -9179,6 +9179,31 @@ BOOL BTL_SVFLOW_GetThisTurnAction( BTL_SVFLOW_WORK* wk, u8 pokeID, BTL_ACTION_PA
 }
 //--------------------------------------------------------------------------------------
 /**
+ * [ハンドラ用ツール] 自分のアクションが全体の何番目かを取得
+ *
+ * @param   wk
+ * @param   pokeID
+ * @param   myOrder       [out] 自分の順位
+ * @param   totalAction   [out] 全アクション数
+ *
+ * @retval  BOOL    正しく取得できたらTRUE（現ターン、参加していないポケなどが指定されたらFALSE）
+ */
+//--------------------------------------------------------------------------------------
+BOOL BTL_SVFTOOL_GetMyActionOrder( BTL_SVFLOW_WORK* wk, u8 pokeID, u8* myOrder, u8* totalAction )
+{
+  u32 i;
+  for(i=0; i<wk->numActOrder; ++i)
+  {
+    if( BPP_GetID(wk->actOrder[i].bpp) == pokeID ){
+      *myOrder = i;
+      *totalAction = wk->numActOrder;
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+//--------------------------------------------------------------------------------------
+/**
  * [ハンドラ用ツール] 直前に出されたワザを取得
  *
  * @param   wk
@@ -9201,7 +9226,6 @@ WazaID BTL_SVFLOW_GetPrevExeWaza( BTL_SVFLOW_WORK* wk )
 //--------------------------------------------------------------------------------------
 void* BTL_SVFLOW_GetHandlerTmpWork( BTL_SVFLOW_WORK* wk, u32 size )
 {
-  // @todo これサイズ指定させるか…
   GF_ASSERT(size < sizeof(wk->handlerTmpWork) );
   return wk->handlerTmpWork;
 }
