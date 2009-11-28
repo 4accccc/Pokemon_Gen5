@@ -86,7 +86,7 @@ typedef enum {
   BTL_EVENT_ADD_RANK_TARGET,        ///< ワザを受けた側への追加効果
   BTL_EVENT_ADD_RANK_USER,          ///< ワザを使った側への追加効果
   BTL_EVENT_MENBERCHANGE_INTR,      ///< メンバー入れ替え割り込み
-  BTL_EVENT_MEMBER_OUT,             ///< 個別ポケ退場直前
+  BTL_EVENT_MEMBER_OUT_FIXED,       ///< 個別ポケ退場確定後
   BTL_EVENT_MEMBER_IN,              ///< 個別ポケ入場直後
   BTL_EVENT_MEMBER_COMP,            ///< 全参加ポケ登場後
   BTL_EVENT_GET_RANKEFF_VALUE,      ///< ワザによる能力ランク増減値チェック
@@ -116,6 +116,7 @@ typedef enum {
   BTL_EVENT_WEATHER_CHANGE,         ///< 天候の変化（直前）
   BTL_EVENT_WEATHER_CHANGE_AFTER,   ///< 天候の変化（直後）
   BTL_EVENT_CALC_WEATHER_DAMAGE,    ///< 天候ダメージ計算
+  BTL_EVENT_WEATHER_TOK_REACTION,   ///< 天候に対するとくせいの反応
   BTL_EVENT_SIMPLE_DAMAGE_ENABLE,   ///< ワザ以外ダメージ有効判定
   BTL_EVENT_DAMAGEPROC_END,         ///< ダメージワザ処理直後
   BTL_EVENT_CHANGE_TOKUSEI,         ///< とくせい書き換え

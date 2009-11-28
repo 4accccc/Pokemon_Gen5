@@ -1871,7 +1871,7 @@ static BOOL scProc_ACT_WazaEffectEx( BTL_CLIENT* wk, int* seq, const int* args )
 //      ||  (turnType == BTLV_WAZAEFF_TURN_TAME)
       ){
         WazaID waza;
-        u8 atPokePos, defPokePos, turnType;
+        u8 atPokePos, defPokePos;
         const BTL_PARTY* party;
         const BTL_POKEPARAM* poke;
 
@@ -2701,6 +2701,7 @@ static BOOL scProc_OP_SickSet( BTL_CLIENT* wk, int* seq, const int* args )
   BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
   BPP_SICK_CONT cont;
   cont.raw = args[2];
+  BTL_Printf("ó‘ÔˆÙíƒR[ƒh:%d\n", args[1]);
   BPP_SetWazaSick( pp, args[1], cont );
   return TRUE;
 }

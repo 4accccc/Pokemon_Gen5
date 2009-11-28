@@ -314,6 +314,8 @@ static int getDefaultSickStrID( WazaSick sickID, BPP_SICK_CONT cont )
     break;
   }
 
+  BTL_Printf("sickID=%d, defMsgID=%d\n", sickID, strID);
+
   return strID;
 }
 

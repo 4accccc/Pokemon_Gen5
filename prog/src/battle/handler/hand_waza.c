@@ -7284,7 +7284,8 @@ static void handler_Nekonote( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     const BTL_PARTY* party = BTL_SVFLOW_GetPartyData( flowWk, pokeID );
-    u16* wazaAry = BTL_SVFLOW_GetHandlerTmpWork( flowWk );
+    u32  arySize = PTL_WAZA_MAX * BTL_PARTY_MEMBER_MAX * sizeof(u16);
+    u16* wazaAry = BTL_SVFLOW_GetHandlerTmpWork( flowWk, arySize );
     const BTL_POKEPARAM* bpp;
 
     u8 frontMemberCnt, memberCnt, wazaCnt, i;

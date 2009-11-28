@@ -63,9 +63,10 @@ struct _SVCL_WORK {
 
 typedef struct {
 
-  WazaID        wazaID;
-  PokeTypePair  userType;
-  PokeType      wazaType;
+  WazaID          wazaID;
+  PokeTypePair    userType;
+  PokeType        wazaType;
+  WazaDamageType  damageType;
 
 }SVFL_WAZAPARAM;
 
@@ -122,7 +123,7 @@ extern BtlPokePos BTL_SVFTOOL_PokeIDtoPokePos( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern BtlPokePos BTL_SVFLOW_ReqWazaTargetAuto( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID waza );
 extern u8 BTL_SVFTOOL_PokePosToPokeID( BTL_SVFLOW_WORK* wk, u8 pokePos );
 extern BOOL BTL_SVFLOW_GetThisTurnAction( BTL_SVFLOW_WORK* wk, u8 pokeID, BTL_ACTION_PARAM* dst );
-extern void* BTL_SVFLOW_GetHandlerTmpWork( BTL_SVFLOW_WORK* wk );
+extern void* BTL_SVFLOW_GetHandlerTmpWork( BTL_SVFLOW_WORK* wk, u32 size );
 extern WazaID BTL_SVFLOW_GetPrevExeWaza( BTL_SVFLOW_WORK* wk );
 extern BOOL BTL_SVFTOOL_IsMultiMode( BTL_SVFLOW_WORK* wk );
 
@@ -336,6 +337,7 @@ typedef struct {
 typedef struct {
   BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
   u8     poke_cnt;
+  u8     fEffectDisable;              ///< ゲージエフェクト等無効
   u8     pokeID[ BTL_POS_MAX ];
   int    volume[ BTL_POS_MAX ];
 }BTL_HANDEX_PARAM_SHIFT_HP;
