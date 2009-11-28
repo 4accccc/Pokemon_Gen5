@@ -2223,7 +2223,7 @@ static void handler_MetalPowder( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 }
 //------------------------------------------------------------------------------
 /**
- *  メタルコート
+ *  スピードパウダー
  */
 //------------------------------------------------------------------------------
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_SpeedPowder( u16 pri, u16 itemID, u8 pokeID )
@@ -2238,8 +2238,12 @@ static void handler_SpeedPowder( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    // すばやさ上昇
-    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
+    // 自分がメタモンなら素早さ２倍
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( BPP_GetMonsNo(bpp) == MONSNO_METAMON )
+    {
+      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
+    }
   }
 }
 //------------------------------------------------------------------------------

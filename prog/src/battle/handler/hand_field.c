@@ -135,9 +135,7 @@ static BTL_EVENT_FACTOR* ADD_Fld_TrickRoom( u16 pri, BtlFieldEffect effect, u8 s
 }
 static void handler_fld_TrickRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work )
 {
-  u16 agi = BTL_EVENTVAR_GetValue( BTL_EVAR_AGILITY );
-  agi = BTL_CALC_AGILITY_MAX - agi;
-  BTL_EVENTVAR_RewriteValue( BTL_EVAR_AGILITY, agi );
+  BTL_EVENTVAR_RewriteValue( BTL_EVAR_TRICK_FLAG, TRUE );
 }
 //--------------------------------------------------------------------------------------
 /**

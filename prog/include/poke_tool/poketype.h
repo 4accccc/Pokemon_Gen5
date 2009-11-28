@@ -241,11 +241,11 @@ typedef enum {
   POKETOKUSEI_MURAKKE,            // ムラっけ
   POKETOKUSEI_BOUJIN,             // ぼうじん
   POKETOKUSEI_DOKUSYU,            // どくしゅ
-  POKETOKUSEI_MITEI,              // 名前未定
+  POKETOKUSEI_SAISEIRYOKU,        // さいせいりょく
   POKETOKUSEI_HATOMUNE,           // はとむね
   POKETOKUSEI_SUNAKAKI,           // すなかき
-  POKETOKUSEI_HUHEN,              // ふへん
-  POKETOKUSEI_SINGARI,            // しんがり
+  POKETOKUSEI_MIRAKURUSUKIN,      // ミラクルスキン
+  POKETOKUSEI_SINUTI,             // しんうち
   POKETOKUSEI_IRYUUJON,           // イリュージョン
   POKETOKUSEI_HENSIN,             // へんしん
   POKETOKUSEI_SURINUKE,           // すりぬけ
