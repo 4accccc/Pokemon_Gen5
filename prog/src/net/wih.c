@@ -1115,6 +1115,7 @@ static void WH_StateOutStartParent(void *arg)
 			}
       GFL_NET_WL_DisconnectError();
 			GFI_NET_HANDLE_Delete(cb->aid);
+      GFL_NET_HANDLE_RequestResetNegotiation(cb->aid);
 		}
 		break;
 

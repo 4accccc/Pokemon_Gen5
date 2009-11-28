@@ -36,6 +36,7 @@ static G_SYNC_WORK* _pWork;
 
 typedef void (StateFunc)(G_SYNC_WORK* pState);
 
+/*
 #define POSTURL "https://wbext.gamefreak.co.jp:10610/cgi-bin/cgeartest/gsync.cgi"
 #define GETURL1 "https://wbext.gamefreak.co.jp:10610/cgi-bin/cgeartest/gsyncget.cgi?name=data1&mac=1"
 #define GETURL2 "https://wbext.gamefreak.co.jp:10610/cgi-bin/cgeartest/gsyncget.cgi?name=data2&mac=1"
@@ -43,6 +44,34 @@ typedef void (StateFunc)(G_SYNC_WORK* pState);
 #define GETURL4 "https://wbext.gamefreak.co.jp:10610/cgi-bin/cgeartest/gsyncget.cgi?name=data4&mac=1"
 #define GETURL5 "https://wbext.gamefreak.co.jp:10610/cgi-bin/cgeartest/gsyncget.cgi?name=data5&mac=1"
 #define GETURL6 "https://wbext.gamefreak.co.jp:10610/cgi-bin/cgeartest/gsyncget.cgi?name=data6&mac=1"
+*/
+
+
+#define POSTURL "https://pokemon-ds.basementfactorysystems.com/bindata-test/data2.php"
+#define GETURL1 "https://pokemon-ds.basementfactorysystems.com/bindata-test/data1.php"
+
+
+//
+// PHP とのインターフェース構造体
+//
+typedef struct tag_EVENT_DATA
+{
+	unsigned long rom_code;
+	unsigned short country_code;
+	unsigned char id;
+	unsigned char send_flag;
+	unsigned long dec_code;
+	unsigned short cat_id;
+	unsigned short present;
+	unsigned char status;
+	unsigned char idname1[26];
+	unsigned char idname2[26];
+	unsigned char idname3[26];
+	unsigned char idname4[26];
+	unsigned char idname5[26];
+}
+EVENT_DATA;
+
 
 
 static void _changeState(G_SYNC_WORK* pWork,StateFunc* state);
@@ -355,10 +384,15 @@ static int ConnectionCallback( NHTTPConnectionHandle handle, NHTTPConnectionEven
 
 #define DISPLAY_INTERVAL (2)
 
-static void _DoDownload(void)
+
+static EVENT_DATA aEvData;
+static char recvBuffer[sizeof(EVENT_DATA)+100] ATTRIBUTE_ALIGN(32);
+static char recvBuffer2[sizeof(EVENT_DATA)+100] ATTRIBUTE_ALIGN(32);
+
+
+static void _DoUpload(void)
 {
     int     result;
-    static char recvBuffer[4096] ATTRIBUTE_ALIGN(32);
     
     result = NHTTPStartup(AllocForNhttp, FreeForNhttp, 12);
     
@@ -371,7 +405,7 @@ static void _DoDownload(void)
         u32                     averageSpeed = 0, currentSpeed = 0, maxSpeed = 0;
 
         OS_TPrintf("=================================================================================\n"
-                   " Target URL: %s %d\n", POSTURL );
+                   " Target URL: %s %d\n", POSTURL,sizeof(EVENT_DATA) );
         OS_TPrintf("---------------------------------------------------------------------------------\n");
         handle = NHTTPCreateConnection(POSTURL, NHTTP_REQMETHOD_POST,
                                        recvBuffer, sizeof(recvBuffer),
@@ -383,6 +417,18 @@ static void _DoDownload(void)
             OS_Halt();
         }
 
+
+      NHTTP_AddHeaderField(handle, "Accept", "*/*" );
+      NHTTP_AddHeaderField(handle, "User-Agent", "Test" );
+
+      {
+        char str[100] = "Basic ";
+        char strpass[] = "pokemon:2Phfv9MY";
+        DWC_Base64Encode(strpass,sizeof(strpass),&str[7] ,100);
+        NHTTP_AddHeaderField(handle, "Authorization", str);
+      }
+
+      
         if ( 0 != ( err = NHTTPStartConnection(handle)))
         {
             OS_TPrintf(" NHTTPStartConnection(%d) Failed \n",err);
@@ -432,10 +478,10 @@ static void _DoDownload(void)
 
 
 
-static void _DoUpload(void)
+static void _DoDownload(void)
 {
     int     result;
-    static char recvBuffer[4096] ATTRIBUTE_ALIGN(32);
+  
     
     result = NHTTPStartup(AllocForNhttp, FreeForNhttp, 12);
     
@@ -448,7 +494,7 @@ static void _DoUpload(void)
         u32                     averageSpeed = 0, currentSpeed = 0, maxSpeed = 0;
 
         OS_TPrintf("=================================================================================\n"
-                   " Target URL: %s %d\n", GETURL1,sizeof(cainfos)/sizeof(CPSCaInfo*));
+                   " Target URL: %s %d\n", GETURL1,sizeof(EVENT_DATA));
         OS_TPrintf("---------------------------------------------------------------------------------\n");
         handle = NHTTPCreateConnection(GETURL1, NHTTP_REQMETHOD_GET,
                                        recvBuffer, sizeof(recvBuffer),
@@ -461,31 +507,18 @@ static void _DoUpload(void)
         }
 
 
-      if(0!=NHTTP_AddPostDataBinary(handle, "name1", (const char*)"sogabe",6 )){
-            OS_TPrintf(" NHTTP_AddPostDataBinary Failed \n");
-            OS_Halt();
-        
-      }
 
-      if(0!=NHTTP_AddPostDataBinary(handle, "file1", (const char*)SaveControl_GetPointer(),0x20000)){
-            OS_TPrintf(" NHTTP_AddPostDataBinary Failed \n");
-            OS_Halt();
-      }
-
+      NHTTP_AddHeaderField(handle, "Accept", "*/*" );
+      NHTTP_AddHeaderField(handle, "User-Agent", "Test" );
+      NHTTP_SetBasicAuthorization( handle, "pokemon", "2Phfv9MY");
 
       
-        if ( 0 != ( err = NHTTPStartConnection(handle)))
-        {
-            OS_TPrintf(" NHTTPStartConnection(%d) Failed \n",err);
-            OS_Halt();
-        }
+      if ( 0 != ( err = NHTTPStartConnection(handle)))
+      {
+        OS_TPrintf(" NHTTPStartConnection(%d) Failed \n",err);
+        OS_Halt();
+      }
 
-
-
-
-
-
-      
         tickStart = OS_GetTick();
 
         while ( NHTTP_ERROR_BUSY == (err = NHTTPGetConnectionError(handle)))
@@ -522,6 +555,46 @@ static void _DoUpload(void)
         {
             OS_TPrintf("err = %d\n", err);
         }
+
+
+      {
+        EVENT_DATA* pEvent = (EVENT_DATA*)recvBuffer;
+        char* pChar;
+        int d,j;
+        u32 size;
+
+        NHTTP_GetBodyBuffer( handle, &pChar , &size);
+
+        OS_TPrintf(" size %d    \n",size);
+        pEvent = (EVENT_DATA*)pChar;
+        
+     //   DWC_Base64Decode(recvBuffer,sizeof(recvBuffer),recvBuffer2 ,sizeof(recvBuffer2));
+
+        OS_TPrintf("%s",recvBuffer);
+/*        
+        for(j=0;j<26;j++){
+          for(d=0;d<16;d++){
+            OS_TPrintf("%x ",recvBuffer[j*16+d]);
+          }
+          OS_TPrintf("\n");
+        }
+*/
+        OS_TPrintf("%d \n",	pEvent->rom_code);
+        OS_TPrintf("%d \n",	 pEvent->country_code);
+        OS_TPrintf("%d \n",	pEvent->id);
+        OS_TPrintf("%d \n",	pEvent->send_flag);
+        OS_TPrintf("%d \n",	pEvent->dec_code);
+        OS_TPrintf("%d \n",	 pEvent->cat_id);
+        OS_TPrintf("%d \n",	 pEvent->present);
+        OS_TPrintf("%d \n",	pEvent->status);
+
+        
+      }
+      
+     // NHTTP_GetBodyBuffer(handle, &recvBuffer, u32* size);
+
+
+      
         NHTTPDeleteConnection(handle);
     }
     NHTTPCleanup();
@@ -542,10 +615,11 @@ static void _ghttpKeyWait(G_SYNC_WORK* pWork)
   switch(GFL_UI_KEY_GetTrg())
   {
   case PAD_BUTTON_X:
+  case PAD_BUTTON_Y:
     _DoDownload();
     break;
-  case PAD_BUTTON_Y:
-    _DoUpload();
+//  case PAD_BUTTON_Y:
+  //  _DoUpload();
     break;
   case PAD_BUTTON_B:
     _CHANGE_STATE(NULL);
@@ -587,8 +661,8 @@ static void _ghttpPosting(G_SYNC_WORK* pWork)
 
 static void _ghttpGet(G_SYNC_WORK* pWork)
 {
-  char* bufadd[]={GETURL1,GETURL2,GETURL3,GETURL4,GETURL4,GETURL6};
-
+//  char* bufadd[]={GETURL1,GETURL2,GETURL3,GETURL4,GETURL4,GETURL6};
+  char* bufadd[]={GETURL1};
 
   pWork->bEnd = FALSE;
 
@@ -663,12 +737,16 @@ static const GFL_DISP_VRAM vramBank = {
 };
 #endif
 
+FS_EXTERN_OVERLAY(dpw_common);
 
 static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 #if _TWLDWC_HTTP
   //GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_PROC, 0x70000 );//テスト
 
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
+
+  
   {
     G_SYNC_WORK* pWork = GFL_PROC_AllocWork( proc, sizeof(G_SYNC_WORK), HEAPID_PROC );
 
@@ -797,6 +875,7 @@ static GFL_PROC_RESULT GSYNCProc_End( GFL_PROC * proc, int * seq, void * pwk, vo
   GFL_PROC_FreeWork(proc);
   GFL_HEAP_DeleteHeap(HEAPID_PROC);  //テスト
 #endif
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common));
   return GFL_PROC_RES_FINISH;
 }
 

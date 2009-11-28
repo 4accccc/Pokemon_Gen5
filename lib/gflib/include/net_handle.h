@@ -25,14 +25,17 @@ struct _GFL_NETHANDLE2{
 
 
 
-
-
+typedef struct{
+	u8 child_netid;				    ///< 切断するID
+  u8 bSend;  ///送ったかどうか
+} NEGOTIATION_RESET_DATA;
 
 ///<  @brief  ネットワークハンドル
 struct _GFL_NETHANDLE{
   void* pInfomation;       ///<ユーザー同士が交換するデータのポインタ
   int infomationSize;      ///< ユーザー同士が交換するデータのサイズ
   void* negoBuff[GFL_NET_HANDLE_MAX];       ///< 子機からの受け取り記録
+  NEGOTIATION_RESET_DATA aResetBuff[GFL_NET_HANDLE_MAX];
   u16 negotiationBit;  ///< 他の接続を許すかどうか 0なら許可
   u16 negotiationReturn;  ///< 他の接続を許すかどうか 0なら許可
   u8 timingRecv;       ///< 通信で受け取った番号
@@ -237,7 +240,23 @@ extern int GFL_NET_HANDLE_GetInfomationDataSize(const GFL_NETHANDLE* pNetHandle)
 //------------------------------------------------------------------------------
 extern GFL_NET_NEGOTIATION_TYPE_E GFL_NET_HANDLE_GetNegotiationType(GFL_NETHANDLE* pHandle);
 
+//==============================================================================
+/**
+ * @brief       ネゴシエーションを解消する事を子機に送信する
+ * @param[in]   通信解消するID
+ * @return      none
+ */
+//==============================================================================
+extern void GFL_NET_HANDLE_RequestResetNegotiation(int netID);
 
+//==============================================================================
+/**
+ * @brief   ネゴシエーション用リセットコールバック GFL_NET_CMD_NEGOTIATION_RESET
+ * @param   callback用引数
+ * @retval  none
+ */
+//==============================================================================
+extern void GFL_NET_HANDLE_RecvNegotiationReset(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 #ifdef __cplusplus
