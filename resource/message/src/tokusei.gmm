@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-11-27T12:06:03"/>
+	<create user="taya" host="W00146" date="2009-11-28T14:38:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -614,7 +614,7 @@
 	</row>
 
 	<row id="TOKUSEI_132">
-		<language name="JPN">なかまいしき</language>
+		<language name="JPN">フレンドガード</language>
 	</row>
 
 	<row id="TOKUSEI_133">
@@ -662,7 +662,7 @@
 	</row>
 
 	<row id="TOKUSEI_144">
-		<language name="JPN">名前未定</language>
+		<language name="JPN">さいせいりょく</language>
 	</row>
 
 	<row id="TOKUSEI_145">
@@ -674,11 +674,11 @@
 	</row>
 
 	<row id="TOKUSEI_147">
-		<language name="JPN">ふへん</language>
+		<language name="JPN">ミラクルスキン</language>
 	</row>
 
 	<row id="TOKUSEI_148">
-		<language name="JPN">しんがり</language>
+		<language name="JPN">しんうち</language>
 	</row>
 
 	<row id="TOKUSEI_149">

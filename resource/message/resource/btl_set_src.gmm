@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-11-27T19:20:27"/>
+	<create user="taya" host="W00146" date="2009-11-27T22:50:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1235,6 +1235,22 @@
 みかたからの　こうげきを　うけない！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 味方からの攻撃を　受けない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Boujin">
+		<comment>ぼうじん</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+てんこうによる　ダメージを　うけない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+天候によるダメージを　受けない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Dokusyu">
+		<comment>どくしゅ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]に
+どくを　あびせた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]に
+毒を　あびせた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_SkillSwap" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
