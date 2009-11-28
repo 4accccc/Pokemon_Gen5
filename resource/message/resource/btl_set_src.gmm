@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-11-27T22:50:47"/>
+	<create user="taya" host="W00146" date="2009-11-28T17:32:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -786,7 +786,14 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 こうげきは　さがらない！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
-こうげきは　下がらない！</language>
+攻撃は　下がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankdownFail_DEF">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
+ぼうぎょは　さがらない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
+防御は　下がらない！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_RankdownFail_HIT">
