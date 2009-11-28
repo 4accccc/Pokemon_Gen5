@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-28T20:05:21"/>
+	<create user="matsumiya" host="W00207" date="2009-11-28T20:07:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -771,6 +771,23 @@ WOMAN2</attribute>
 ものすごーく　つよいんだからね！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">アイリス『あたしだって
 ものすごーく　つよいんだからね！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c08_gymstop_01">
+		<comment>♂
+・ジム挑戦可能な条件を満たしていないとき
+　詳細未定
+・ジム挑戦可能なら
+　このマップから削除</comment>
+		<attribute name="キャラクター">SUNGLASSES</attribute>
+		<language name="JPN" width="256">ちょうせんしゃ？[BE:01:ページ切り替え（クリア）]
+もうしわけないね
+いま　ジムリーダーは[BE:00:ページ切り替え（行送り）]
+しゅぎょうちゅう　でね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ちょうせんしゃ？[BE:01:ページ切り替え（クリア）]
+もうしわけないね
+いま　ジムリーダーは[BE:00:ページ切り替え（行送り）]
+しゅぎょうちゅう　でね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c08_gentleman_01w">

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T14:39:17"/>
+	<create user="matsumiya" host="W00207" date="2009-11-28T20:33:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="175"/>
+		<comment position="4" width="211"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="131">
 		</attribute>
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="248" top="176" right="951" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="528"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="695"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,57 +292,204 @@
 	</lock>
 
 
-	<row id="msg_c08gym0101_leader_01">
-		<comment>戦闘前メッセージ</comment>
-		<attribute name="キャラ指定">LEADER8</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c08gym0101_leader_01w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・WHITEver
+　戦闘前メッセージ</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">はい！
+ジムリーダーの　アイリスです！[BE:01:ページ切り替え（クリア）]
+ねーねー！　どんな　ポケモンと
+どんなふうに　たたかうの！？[BE:01:ページ切り替え（クリア）]
+あたし　きょうみしんしん　だから
+もう　はじめちゃうね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">はい！
+ジムリーダーの　アイリスです！[BE:01:ページ切り替え（クリア）]
+ねーねー！　どんな　ポケモンと
+どんなふうに　たたかうの！？[BE:01:ページ切り替え（クリア）]
+あたし　きょうみしんしん　だから
+もう　はじめちゃうね！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08gym0101_leader_02">
-		<comment>戦闘後メッセージ</comment>
-		<attribute name="キャラ指定">LEADER8</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c08gym0101_leader_02w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・WHITEver
+　戦闘後メッセージ</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">ほへー[BE:01:ページ切り替え（クリア）]
+……　……　……
+……　……　……[BE:01:ページ切り替え（クリア）]
+すごいすごいっ！！[BE:01:ページ切り替え（クリア）]
+アイリス　こんなに
+つよいトレーナーさんと　たたかえて[BE:00:ページ切り替え（行送り）]
+すっごく　うれしー！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ほへー[BE:01:ページ切り替え（クリア）]
+……　……　……
+……　……　……[BE:01:ページ切り替え（クリア）]
+すごいすごいっ！！[BE:01:ページ切り替え（クリア）]
+アイリス　こんなに
+つよいトレーナーさんと　たたかえて[BE:00:ページ切り替え（行送り）]
+すっごく　うれしー！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08gym0101_leader_w_03">
-		<comment>ファンファーレ＋バッジ入手処理</comment>
-		<attribute name="キャラ指定">LEADER8</attribute>
+	<row id="msg_c08gym0101_leader_03w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・WHITEver
+　ファンファーレ＋バッジ入手処理</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　アイリスから
-レジェンドバッジを　もらった！</language>
+レジェンドバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　アイリスから
-レジェンドバッジを　もらった！</language>
+レジェンドバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08gym0101_leader_b_03">
-		<comment>ファンファーレ＋バッジ入手処理</comment>
-		<attribute name="キャラ指定">LEADER8</attribute>
+	<row id="msg_c08gym0101_leader_04w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・WHITEver
+　アイテム入手処理</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">ねーねー
+この　わざマシンも　あげるー！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ねーねー
+この　わざマシンも　あげるー！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c08gym0101_leader_05w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・WHITEver
+　アイテム入手処理後</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">ドラゴンテールは……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">わざマシンの解説</language>
+	</row>
+
+	<row id="msg_c08gym0101_leader_06w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・WHITEver
+　クリア前、leader_05表示後に再度会話</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c08gym0101_leader_06w0002" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
+		<comment>♀
+・WHITEver
+　クリア後、leader_05表示後に再度会話</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c08gym0101_leader_01b">
+		<comment>♂
+・BLACKver
+　戦闘前メッセージ</comment>
+		<attribute name="キャラ指定">ジムリーダー
+シャガ</attribute>
+		<language name="JPN" width="256">よくぞ　まいられた[BE:01:ページ切り替え（クリア）]
+わたしが　ソウリュウ　ポケモンジム
+ジムリーダーの　シャガで　ある[BE:01:ページ切り替え（クリア）]
+……しちょうとして
+まちの　はってんに　じんりょくし[BE:01:ページ切り替え（クリア）]
+トレーナーとして　ただ
+つよさを　おいもとめた……[BE:01:ページ切り替え（クリア）]
+そんないま　もとめるのは
+あかるい　みらいを　みせてくれる[BE:00:ページ切り替え（行送り）]
+わかい　トレーナーの　そんざい[BE:01:ページ切り替え（クリア）]
+きみが　アイリスの　ように
+わたしに　みらいを　みせてくれること[BE:00:ページ切り替え（行送り）]
+のぞんでも　いいのだろうか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">よくぞ　まいられた[BE:01:ページ切り替え（クリア）]
+わたしが　ソウリュウ　ポケモンジム
+ジムリーダーの　シャガで　ある[BE:01:ページ切り替え（クリア）]
+……しちょうとして
+まちの　はってんに　じんりょくし[BE:01:ページ切り替え（クリア）]
+トレーナーとして　ただ
+つよさを　おいもとめた……[BE:01:ページ切り替え（クリア）]
+そんないま　もとめるのは
+あかるい　みらいを　みせてくれる[BE:00:ページ切り替え（行送り）]
+わかい　トレーナーの　そんざい[BE:01:ページ切り替え（クリア）]
+きみが　アイリスの　ように
+わたしに　みらいを　みせてくれること[BE:00:ページ切り替え（行送り）]
+のぞんでも　いいのだろうか[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c08gym0101_leader_02b">
+		<comment>♂
+・BLACKver
+　戦闘後メッセージ</comment>
+		<attribute name="キャラ指定">ジムリーダー
+シャガ</attribute>
+		<language name="JPN" width="256">すばらしい[BE:01:ページ切り替え（クリア）]
+きみと　であい
+たたかえたこと　かんしゃする[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">すばらしい[BE:01:ページ切り替え（クリア）]
+きみと　であい
+たたかえたこと　かんしゃする[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c08gym0101_leader_03b">
+		<comment>♂
+・BLACKver
+　ファンファーレ＋バッジ入手処理</comment>
+		<attribute name="キャラ指定">ジムリーダー
+シャガ</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　シャガから
-レジェンドバッジを　もらった！</language>
+レジェンドバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　シャガから
-レジェンドバッジを　もらった！</language>
+レジェンドバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08gym0101_leader_04">
-		<comment>アイテム入手処理</comment>
-		<attribute name="キャラ指定">LEADER8</attribute>
+	<row id="msg_c08gym0101_leader_04b">
+		<comment>♂
+・BLACKver
+　アイテム入手処理</comment>
+		<attribute name="キャラ指定">ジムリーダー
+シャガ</attribute>
+		<language name="JPN" width="256">これも　もらってくれたまえ[BE:01:ページ切り替え（クリア）]
+わたしが　すきな
+わざマシンの　ひとつ[BE:01:ページ切り替え（クリア）]
+そのなも　ドラゴンテール[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">これも　もらってくれたまえ[BE:01:ページ切り替え（クリア）]
+わたしが　すきな
+わざマシンの　ひとつ[BE:01:ページ切り替え（クリア）]
+そのなも　ドラゴンテール[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c08gym0101_leader_05b">
+		<comment>♂
+・BLACKver
+　アイテム入手処理後</comment>
+		<attribute name="キャラ指定">ジムリーダー
+シャガ</attribute>
+		<language name="JPN" width="256">わざマシンの　かいせつ</language>
+		<language name="JPN_KANJI" width="256">わざマシンの解説</language>
+	</row>
+
+	<row id="msg_c08gym0101_leader_06b">
+		<comment>♂
+・BLACKver
+　クリア前、leader_05表示後に再度会話</comment>
+		<attribute name="キャラ指定">ジムリーダー
+シャガ</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_c08gym0101_leader_05">
-		<comment>アイテム入手処理後
-</comment>
-		<attribute name="キャラ指定">LEADER8</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_c08gym0101_leader_06">
-		<comment>msg_c01gym0101_leader_05
-表示後に再度会話</comment>
-		<attribute name="キャラ指定">LEADER8</attribute>
+	<row id="msg_c08gym0101_leader_06b0002">
+		<comment>♂
+・BLACKver
+　クリア後、leader_05表示後に再度会話</comment>
+		<attribute name="キャラ指定">ジムリーダー
+シャガ</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
@@ -387,7 +534,7 @@
 にんてい　トレーナー！</language>
 		<language name="JPN_KANJI" width="256">ソウリュウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　アイリス
-にんてい　トレーナー！</language>
+認定　トレーナー！</language>
 	</row>
 
 	<row id="msg_c02gym0101_statue_w_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -400,7 +547,7 @@
 [1:00:トレーナー名:0]</language>
 		<language name="JPN_KANJI" width="256">ソウリュウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　アイリス
-にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
+認定　トレーナー！[BE:00:ページ切り替え（行送り）]
 [1:00:トレーナー名:0]</language>
 	</row>
 
@@ -416,10 +563,10 @@
 ともだち♀</language>
 		<language name="JPN_KANJI" width="256">ソウリュウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　アイリス
-にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
+認定　トレーナー！[BE:00:ページ切り替え（行送り）]
 [1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
-ともだち♂[BE:00:ページ切り替え（行送り）]
-ともだち♀</language>
+ブラッカー[BE:00:ページ切り替え（行送り）]
+ホワイティ</language>
 	</row>
 
 	<row id="msg_c02gym0101_statue_b_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -431,7 +578,7 @@
 にんてい　トレーナー！</language>
 		<language name="JPN_KANJI" width="256">ソウリュウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　シャガ
-にんてい　トレーナー！</language>
+認定　トレーナー！</language>
 	</row>
 
 	<row id="msg_c02gym0101_statue_b_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -444,7 +591,7 @@
 [1:00:トレーナー名:0]</language>
 		<language name="JPN_KANJI" width="256">ソウリュウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　シャガ
-にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
+認定　トレーナー！[BE:00:ページ切り替え（行送り）]
 [1:00:トレーナー名:0]</language>
 	</row>
 
@@ -460,7 +607,7 @@
 ホワイティ</language>
 		<language name="JPN_KANJI" width="256">ソウリュウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　シャガ
-にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
+認定　トレーナー！[BE:00:ページ切り替え（行送り）]
 [1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
 ブラッカー[BE:00:ページ切り替え（行送り）]
 ホワイティ</language>
