@@ -48,3 +48,10 @@ extern void MB_CAP_POKE_DeleteSystem( MB_CAPTURE_WORK *work , MB_CAP_DOWN *downW
 extern void MB_CAP_POKE_UpdateSystem( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork );
 
 extern const MB_CAP_DOWN_STATE MB_CAP_DOWN_GetState( const MB_CAP_DOWN *downWork );
+
+extern const fx32 MB_CAP_DOWN_GetPullLen( const MB_CAP_DOWN *downWork );
+extern const u16  MB_CAP_DOWN_GetRotAngle( const MB_CAP_DOWN *downWork );
+
+//É{Å[ÉãÇÃï‚è[
+extern void MB_CAP_DOWN_ReloadBall( MB_CAP_DOWN *downWork );
+

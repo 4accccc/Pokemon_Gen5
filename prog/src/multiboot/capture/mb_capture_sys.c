@@ -65,6 +65,13 @@ struct _MB_CAPTURE_WORK
   MB_CAP_POKE *pokeWork[MB_CAP_POKE_NUM];
   MB_CAP_OBJ  *objWork[MB_CAP_OBJ_NUM];
   MB_CAP_DOWN *downWork;
+  
+  //ã‰æ–ÊŒn
+  int resIdxTarget;
+  int objIdxTarget;
+  
+  VecFx32 targetPos;
+
 };
 
 
@@ -87,6 +94,10 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work );
 static void MB_CAPTURE_TermObject( MB_CAPTURE_WORK *work );
 static void MB_CAPTURE_InitPoke( MB_CAPTURE_WORK *work );
 static void MB_CAPTURE_TermPoke( MB_CAPTURE_WORK *work );
+
+static void MB_CAPTURE_InitUpper( MB_CAPTURE_WORK *work );
+static void MB_CAPTURE_TermUpper( MB_CAPTURE_WORK *work );
+static void MB_CAPTURE_UpdateUpper( MB_CAPTURE_WORK *work );
 
 static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_BG_128_A,             // ƒƒCƒ“2DƒGƒ“ƒWƒ“‚ÌBG
@@ -117,6 +128,7 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
 
   MB_CAPTURE_InitObject( work );
   MB_CAPTURE_InitPoke( work );
+  MB_CAPTURE_InitUpper( work );
   work->downWork = MB_CAP_DOWN_InitSystem( work );
 }
 
@@ -126,6 +138,7 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
 static void MB_CAPTURE_Term( MB_CAPTURE_WORK *work )
 {
   MB_CAP_POKE_DeleteSystem( work , work->downWork );
+  MB_CAPTURE_TermUpper( work );
   MB_CAPTURE_TermObject( work );
   MB_CAPTURE_TermPoke( work );
 
@@ -151,11 +164,6 @@ static const BOOL MB_CAPTURE_Main( MB_CAPTURE_WORK *work )
   case MSS_WAIT_FADEIN:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
-      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-      {
-        
-        work->state = MSS_FADEOUT;
-      }
     }
     break;
 
@@ -174,6 +182,7 @@ static const BOOL MB_CAPTURE_Main( MB_CAPTURE_WORK *work )
   }
 
   MB_CAP_POKE_UpdateSystem( work , work->downWork );
+  MB_CAPTURE_UpdateUpper( work );
 
   //3D•`‰æ  
   GFL_G3D_DRAW_Start();
@@ -478,6 +487,7 @@ static void MB_CAPTURE_InitPoke( MB_CAPTURE_WORK *work )
     initWork.ppp = work->initWork->ppp[i];
     work->pokeWork[i] = MB_CAP_POKE_CreateObject( work , &initWork );
   }
+  GFL_ARC_CloseDataHandle( initWork.pokeArcHandle );
 }
 
 //--------------------------------------------------------------
@@ -491,6 +501,98 @@ static void MB_CAPTURE_TermPoke( MB_CAPTURE_WORK *work )
     MB_CAP_POKE_DeleteObject( work , work->pokeWork[i] );
   }
 }
+
+#pragma mark [>upper func
+//--------------------------------------------------------------
+//  ã‰æ–ÊŒn‰Šú‰»
+//--------------------------------------------------------------
+static void MB_CAPTURE_InitUpper( MB_CAPTURE_WORK *work )
+{
+  GFL_G3D_RES* res = GFL_G3D_CreateResourceHandle( work->initWork->arcHandle , NARC_mb_capture_gra_cap_obj_target_nsbtx );
+  VecFx32 pos = {0,0,0};
+  const BOOL flg = TRUE;
+  GFL_G3D_TransVramTexture( res );
+  work->resIdxTarget = GFL_BBD_AddResource( work->bbdSys , 
+                                       res , 
+                                       GFL_BBD_TEXFMT_PAL16 ,
+                                       GFL_BBD_TEXSIZDEF_32x32 ,
+                                       32 , 32 );
+  GFL_BBD_CutResourceData( work->bbdSys , work->resIdxTarget );
+  
+  work->objIdxTarget = GFL_BBD_AddObject( work->bbdSys , 
+                                     work->resIdxTarget ,
+                                     FX32_ONE , 
+                                     FX32_ONE , 
+                                     &pos ,
+                                     31 ,
+                                     GFL_BBD_LIGHT_NONE );
+
+  //3DÝ’è‚ÌŠÖŒW‚Å”½“]‚³‚¹‚éEEE
+  GFL_BBD_SetObjectFlipT( work->bbdSys , work->objIdxTarget , &flg );
+
+}
+
+//--------------------------------------------------------------
+//  ã‰æ–ÊŒnŠJ•ú
+//--------------------------------------------------------------
+static void MB_CAPTURE_TermUpper( MB_CAPTURE_WORK *work )
+{
+  GFL_BBD_RemoveObject( work->bbdSys , work->resIdxTarget );
+  GFL_BBD_RemoveResource( work->bbdSys , work->objIdxTarget );
+
+}
+
+//--------------------------------------------------------------
+//  ã‰æ–ÊŒnXV
+//--------------------------------------------------------------
+static void MB_CAPTURE_UpdateUpper( MB_CAPTURE_WORK *work )
+{
+  const MB_CAP_DOWN_STATE downState = MB_CAP_DOWN_GetState( work->downWork );
+  
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+    MB_CAP_DOWN_ReloadBall( work->downWork );
+  }
+  
+  if( downState == MCDS_DRAG )
+  {
+    const BOOL flg = TRUE;
+    VecFx32 pos = {FX32_CONST(128),FX32_CONST(MB_CAP_UPPER_BALL_POS_BASE_Y),FX32_CONST(280)};
+    VecFx32 ofs = {0,0,0};
+    
+    {
+      //‹——£ŒvŽZ
+      const fx32 pullLen = MB_CAP_DOWN_GetPullLen( work->downWork );
+      const fx32 rate = FX_Div(pullLen,MB_CAP_DOWN_BOW_PULL_LEN_MAX);
+      const fx32 len = (MB_CAP_UPPER_BALL_LEN_MAX-MB_CAP_UPPER_BALL_LEN_MIN)*rate;
+      ofs.y = len;
+    }
+    {
+      //‰ñ“]ŒvŽZ
+      const u16 rotAngle = MB_CAP_DOWN_GetRotAngle( work->downWork );
+      const fx32 sin = FX_SinIdx( rotAngle );
+      const fx32 cos = FX_CosIdx( rotAngle );
+      
+      ofs.x = -FX_Mul( ofs.y , sin );
+      ofs.y = FX_Mul( ofs.y , cos );
+      
+    }
+    VEC_Subtract( &pos , &ofs , &work->targetPos );
+    
+    GFL_BBD_SetObjectDrawEnable( work->bbdSys , work->objIdxTarget , &flg );
+    GFL_BBD_SetObjectTrans( work->bbdSys , work->objIdxTarget , &work->targetPos );
+  }
+  else
+  if( downState == MCDS_SHOT_WAIT )
+  {
+  }
+  else
+  {
+    const BOOL flg = FALSE;
+    GFL_BBD_SetObjectDrawEnable( work->bbdSys , work->objIdxTarget , &flg );
+  }
+}
+
 
 
 #pragma mark [>proc func

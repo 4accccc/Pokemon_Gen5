@@ -40,12 +40,6 @@ struct _MB_CAP_POKE
   int objIdx;
 };
 
-typedef struct
-{
-  const u32 datId;
-  const u32 texSize;
-}MB_CAP_POKE_DATA;
-
 //======================================================================
 //	proto
 //======================================================================
@@ -55,7 +49,7 @@ typedef struct
 //--------------------------------------------------------------
 //	オブジェクト作成
 //--------------------------------------------------------------
-MB_CAP_POKE *MB_CAP_POKE_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE_INIT_WORK *initWork )
+MB_CAP_POKE* MB_CAP_POKE_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE_INIT_WORK *initWork )
 {
   const HEAPID heapId = MB_CAPTURE_GetHeapId( capWork );
   GFL_BBD_SYS *bbdSys = MB_CAPTURE_GetBbdSys( capWork );
@@ -126,6 +120,7 @@ MB_CAP_POKE *MB_CAP_POKE_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE_IN
     
     GFL_HEAP_FreeMemory( pltRes );
     GFL_HEAP_FreeMemory( ncgRes );
+    GFL_BMP_Delete( bmpData );
   }
 
   return pokeWork;

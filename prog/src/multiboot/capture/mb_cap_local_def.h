@@ -28,7 +28,7 @@
 #define MB_CAPTURE_PAL_SUB_OBJ_MAIN (0) //4本
 #define MB_CAPTURE_PAL_SUB_OBJ_MAIN_NUM (4) //4本
 
-
+//OBJ系
 #define MB_CAP_OBJ_X_NUM (5)
 #define MB_CAP_OBJ_Y_NUM (3)
 #define MB_CAP_OBJ_MAIN_NUM (MB_CAP_OBJ_X_NUM*MB_CAP_OBJ_Y_NUM)
@@ -52,6 +52,16 @@
 #define MB_CAP_OBJ_SUB_D_TOP (184)
 #define MB_CAP_OBJ_SUB_R_LEFT (10)
 #define MB_CAP_OBJ_SUB_L_LEFT (244)
+
+//弓系
+#define MB_CAP_DOWN_BOW_PULL_LEN_MAX (FX32_CONST(100))
+
+//上系数値
+//ボールの飛ぶ基本位置(ターゲットの回転中心)
+#define MB_CAP_UPPER_BALL_POS_BASE_Y ( 256 )
+//ボールの最低・最高飛距離
+#define MB_CAP_UPPER_BALL_LEN_MIN ( 32 )
+#define MB_CAP_UPPER_BALL_LEN_MAX ( 300 )
 
 //======================================================================
 //	enum

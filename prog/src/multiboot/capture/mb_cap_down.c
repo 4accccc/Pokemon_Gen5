@@ -26,7 +26,10 @@
 #define MB_CAP_DOWN_BOW_Y (62)
 
 #define MB_CAP_DOWN_BALL_X (128)
-#define MB_CAP_DOWN_BALL_Y (82)
+#define MB_CAP_DOWN_BALL_Y (88)
+
+#define MB_CAP_DOWN_BALL_SUPPLY_X (128)
+#define MB_CAP_DOWN_BALL_SUPPLY_Y (-32)
 
 //‹|‚Ì’†S‚©‚çŒ·‚ÌŠJŽnˆÊ’u‚Ü‚Å‚Ì‹——£
 #define MB_CAP_DOWN_BOW_LINE_X (84)
@@ -36,10 +39,14 @@
 
 //‹| ”½‚èŒn”’l
 #define MB_CAP_DOWN_BOWBEND_SCALE_MAX (FX32_HALF)
-#define MB_CAP_DOWN_BOWBEND_SCALE_LEN_MAX (FX32_CONST(100))
 
 //ƒ^ƒbƒ`”»’è”¼Œa
 #define MB_CAP_DOWN_BALL_TOUCH_LEN (8)
+
+//ƒ{[ƒ‹‘¬“x
+#define MB_CAP_DOWN_BALL_SHOT_SPD (32)
+#define MB_CAP_DOWN_BALL_SUPPLY_SPD (12)
+#define MB_CAP_DOWN_BOW_SUPPLY_ROT (0x600)
 
 //======================================================================
 //	enum
@@ -83,10 +90,17 @@ struct _MB_CAP_DOWN
   GFL_CLUNIT  *cellUnit;
   GFL_CLWK    *clwkBall;
   
-  int ballPosX;
-  int ballPosY;
+  //ƒ{[ƒ‹À•W‚Í¸“xŠm•Û‚Ì‚½‚ßFX32‚Å
+  fx32 ballPosX;
+  fx32 ballPosY;
   fx32 pullLen;
   u16  rotAngle;
+
+  fx32 shotBallSpdX;
+  fx32 shotBallSpdY;
+  
+  //‹|‚©‚ç—£‚ê‚½‚©H
+  BOOL isFlying;
   
   //‹|ŠÖŒW
   int rotBow;    //‰ñ“]
@@ -203,6 +217,8 @@ void MB_CAP_POKE_DeleteSystem( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork 
   GFL_CLGRP_CGR_Release( downWork->cellRes[MCDO_NCG] );
   GFL_CLGRP_CELLANIM_Release( downWork->cellRes[MCDO_ANM] );
 
+  GFL_CLACT_UNIT_Delete( downWork->cellUnit );
+
   GFL_HEAP_FreeMemory( downWork );
 }
 
@@ -226,54 +242,48 @@ void MB_CAP_POKE_UpdateSystem( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork 
 static void MB_CAP_DOWN_UpdateBow( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork )
 {
   BOOL isUpdate = FALSE;
-  /*
-  if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
-  {
-    downWork->rotBow += 4;
-    isUpdate = TRUE;
-  }
-  else
-  if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
-  {
-    downWork->rotBow -= 4;
-    isUpdate = TRUE;
-  }
-  else
-  if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
-  {
-    if( downWork->pullBow > 0 )
-    {
-      downWork->pullBow -= FX32_CONST(0.1f);
-      isUpdate = TRUE;
-    }
-  }
-  else
-  if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
-  {
-    downWork->pullBow += FX32_CONST(0.1f);
-    isUpdate = TRUE;
-  }
-  */
-  
-  if( downWork->state == MCDS_DRAG )
+
+  if( downWork->state == MCDS_DRAG ||
+      downWork->state == MCDS_SHOT_WAIT )
   {
     //”½‚éŒvŽZ
-    if( downWork->pullLen > MB_CAP_DOWN_BOWBEND_SCALE_LEN_MAX )
+    if( downWork->pullLen > MB_CAP_DOWN_BOW_PULL_LEN_MAX )
     {
       downWork->pullBow = MB_CAP_DOWN_BOWBEND_SCALE_MAX;
     }
     else
     {
-      const fx32 len_rate = FX_Div(downWork->pullLen,MB_CAP_DOWN_BOWBEND_SCALE_LEN_MAX);
+      const fx32 len_rate = FX_Div(downWork->pullLen,MB_CAP_DOWN_BOW_PULL_LEN_MAX);
       downWork->pullBow = FX_Mul( MB_CAP_DOWN_BOWBEND_SCALE_MAX , len_rate );
     }
-    //‰ñ“]ŒvŽZ
-    downWork->rotBow = downWork->rotAngle*360/0x10000;
+    isUpdate = TRUE;
+  }
+  else
+  if( downWork->state == MCDS_SUPPLY_BALL )
+  {
+    if( downWork->rotAngle < 0x8000 )
+    {
+      downWork->rotAngle -= MB_CAP_DOWN_BOW_SUPPLY_ROT;
+      if( downWork->rotAngle > 0x8000 )
+      {
+        downWork->rotAngle = 0;
+      }
+    }
+    else
+    if( downWork->rotAngle > 0x8000 )
+    {
+      downWork->rotAngle += MB_CAP_DOWN_BOW_SUPPLY_ROT;
+      if( downWork->rotAngle < 0x8000 )
+      {
+        downWork->rotAngle = 0;
+      }
+    }
     isUpdate = TRUE;
   }
   else
   {
-    downWork->rotBow = 0;
+    downWork->rotAngle = 0;
+    downWork->pullLen = 0;
     downWork->pullBow = 0;
     isUpdate = TRUE;
   }
@@ -281,7 +291,8 @@ static void MB_CAP_DOWN_UpdateBow( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downW
   
   if( isUpdate == TRUE )
   {
-    const u16  rotBow = (downWork->rotBow<0?downWork->rotBow+360:downWork->rotBow);
+    const int rotBowTemp = downWork->rotAngle*360/0x10000;
+    const u16 rotBow = (rotBowTemp<0 ? rotBowTemp+360 : rotBowTemp);
     const fx32 xScale = FX32_ONE - downWork->pullBow;
     const fx32 yScale = FX32_ONE + downWork->pullBow;
 /*
@@ -320,17 +331,41 @@ static void MB_CAP_DOWN_UpdateBow_DrawLine( MB_CAPTURE_WORK *capWork , MB_CAP_DO
     const int subY1 = ((subBowX*sin)+(subBowY*cos))>>FX16_SHIFT;
     const int subX2 = ((-subBowX*cos)-(subBowY*sin))>>FX16_SHIFT;
     const int subY2 = ((-subBowX*sin)+(subBowY*cos))>>FX16_SHIFT;
-
-    MB_CAP_DOWN_UpdateBow_DrawLine_Func( vramAdr ,
-                                         MB_CAP_DOWN_BOW_X + subX1 ,
-                                         MB_CAP_DOWN_BOW_Y + subY1 ,
-                                         downWork->ballPosX , 
-                                         downWork->ballPosY +8);
-    MB_CAP_DOWN_UpdateBow_DrawLine_Func( vramAdr ,
-                                         MB_CAP_DOWN_BOW_X + subX2 ,
-                                         MB_CAP_DOWN_BOW_Y + subY2 ,
-                                         downWork->ballPosX , 
-                                         downWork->ballPosY +8);
+    
+    if( downWork->isFlying == FALSE )
+    {
+      MB_CAP_DOWN_UpdateBow_DrawLine_Func( vramAdr ,
+                                           MB_CAP_DOWN_BOW_X + subX1 ,
+                                           MB_CAP_DOWN_BOW_Y + subY1 ,
+                                           F32_CONST(downWork->ballPosX) , 
+                                           F32_CONST(downWork->ballPosY) +8);
+      MB_CAP_DOWN_UpdateBow_DrawLine_Func( vramAdr ,
+                                           MB_CAP_DOWN_BOW_X + subX2 ,
+                                           MB_CAP_DOWN_BOW_Y + subY2 ,
+                                           F32_CONST(downWork->ballPosX) , 
+                                           F32_CONST(downWork->ballPosY) +8);
+    }
+    else
+    {
+      MB_CAP_DOWN_UpdateBow_DrawLine_Func( vramAdr ,
+                                           MB_CAP_DOWN_BOW_X + subX1 ,
+                                           MB_CAP_DOWN_BOW_Y + subY1 ,
+                                           MB_CAP_DOWN_BOW_X + subX2 ,
+                                           MB_CAP_DOWN_BOW_Y + subY2 );
+/*
+      MB_CAP_DOWN_UpdateBow_DrawLine_Func( vramAdr ,
+                                           MB_CAP_DOWN_BOW_X + subX1 ,
+                                           MB_CAP_DOWN_BOW_Y + subY1 ,
+                                           MB_CAP_DOWN_BALL_X , 
+                                           MB_CAP_DOWN_BALL_Y );
+      
+      MB_CAP_DOWN_UpdateBow_DrawLine_Func( vramAdr ,
+                                           MB_CAP_DOWN_BOW_X + subX2 ,
+                                           MB_CAP_DOWN_BOW_Y + subY2 ,
+                                           MB_CAP_DOWN_BALL_X , 
+                                           MB_CAP_DOWN_BALL_Y );
+*/
+    }
   }
   
   
@@ -426,11 +461,68 @@ static void MB_CAP_DOWN_UpdateBow_DrawDot( const u8* vramAdr , const int x , con
 //--------------------------------------------------------------
 static void MB_CAP_DOWN_UpdateBall( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork )
 {
+  if( downWork->state == MCDS_NONE )
+  {
+    downWork->ballPosX = FX32_CONST(MB_CAP_DOWN_BALL_X);
+    downWork->ballPosY = FX32_CONST(MB_CAP_DOWN_BALL_Y);
+    downWork->isFlying = FALSE;
+  }
+  else
+  if( downWork->state == MCDS_DRAG )
+  {
+    downWork->isFlying = FALSE;
+  }
+  else
+  if( downWork->state == MCDS_SHOT_WAIT )
+  {
+    //ƒ{[ƒ‹”ò‚Ô
+    if( downWork->ballPosY > FX32_CONST(-32) )
+    {
+      downWork->ballPosX -= downWork->shotBallSpdX;
+      downWork->ballPosY -= downWork->shotBallSpdY;
+      downWork->isUpdateBall = TRUE;
+      {
+        if( downWork->ballPosY < FX32_CONST(MB_CAP_DOWN_BALL_Y) )
+        {
+          downWork->pullLen = 0;
+          downWork->isFlying = TRUE;
+        }
+        else
+        {
+          const s32 subX = F32_CONST(downWork->ballPosX) - MB_CAP_DOWN_BOW_X;
+          const s32 subY = F32_CONST(downWork->ballPosY) - MB_CAP_DOWN_BOW_Y;
+          const s32 len_mul = subX*subX + subY*subY;
+          const fx32 len_fx = FX_Sqrt( FX32_CONST(len_mul) );
+          const fx32 len_sub = len_fx - FX32_CONST(MB_CAP_DOWN_DEF_BALL_LEN);
+          
+          downWork->pullLen = len_sub;
+          downWork->isFlying = FALSE;
+        }
+      }
+    }
+    else
+    {
+      downWork->pullLen = 0;
+      downWork->isFlying = TRUE;
+    }
+  }
+  else
+  if( downWork->state == MCDS_SUPPLY_BALL )
+  {
+    downWork->ballPosY += FX32_CONST(MB_CAP_DOWN_BALL_SUPPLY_SPD);
+    if( downWork->ballPosY > FX32_CONST(MB_CAP_DOWN_BALL_Y) )
+    {
+      downWork->ballPosY = FX32_CONST(MB_CAP_DOWN_BALL_Y);
+      downWork->state = MCDS_NONE;
+    }
+    downWork->isUpdateBall = TRUE;
+  }
+
   if( downWork->isUpdateBall == TRUE )
   {
     GFL_CLACTPOS cellPos;
-    cellPos.x = downWork->ballPosX;
-    cellPos.y = downWork->ballPosY;
+    cellPos.x = F32_CONST(downWork->ballPosX);
+    cellPos.y = F32_CONST(downWork->ballPosY);
     GFL_CLACT_WK_SetPos( downWork->clwkBall , &cellPos , CLSYS_DEFREND_SUB );
     downWork->isUpdateBall = FALSE;
   }
@@ -445,8 +537,8 @@ static void MB_CAP_DOWN_UpdateTP( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWo
   {
     if( downWork->state == MCDS_NONE )
     {
-      const u32 subX = downWork->ballPosX - tpx;
-      const u32 subY = downWork->ballPosY - tpy;
+      const u32 subX = F32_CONST(downWork->ballPosX) - tpx;
+      const u32 subY = F32_CONST(downWork->ballPosY) - tpy;
       const u32 ballLen = subX*subX + subY*subY;
       if( ballLen < MB_CAP_DOWN_BALL_TOUCH_LEN*MB_CAP_DOWN_BALL_TOUCH_LEN )
       {
@@ -460,30 +552,33 @@ static void MB_CAP_DOWN_UpdateTP( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWo
   {
     if( downWork->isTouch == TRUE )
     {
-      downWork->ballPosX = tpx;
-      downWork->ballPosY = tpy;
+      downWork->ballPosX = FX32_CONST(tpx);
+      downWork->ballPosY = FX32_CONST(tpy);
       downWork->isUpdateBall = TRUE;
-
+      //‹——£EŠp“xŒvŽZ
+      {
+        const s32 subX = F32_CONST(downWork->ballPosX) - MB_CAP_DOWN_BOW_X;
+        const s32 subY = F32_CONST(downWork->ballPosY) - MB_CAP_DOWN_BOW_Y;
+        const s32 len_mul = subX*subX + subY*subY;
+        const fx32 len_fx = FX_Sqrt( FX32_CONST(len_mul) );
+        const fx32 len_sub = len_fx - FX32_CONST(MB_CAP_DOWN_DEF_BALL_LEN);
+        
+        downWork->pullLen = len_sub;
+        downWork->rotAngle = FX_Atan2Idx(FX32_CONST(-subX), FX32_CONST(subY));;
+      }
+      //TODO‚±‚±‚Å”ÍˆÍŠO‚ÌŠp“xE‹——£‚ª‚ ‚Á‚½ê‡‚ÍA•â³‚ð‚©‚¯‚ÄC³‚·‚é
     }
     else
     {
-      downWork->state = MCDS_NONE;
-      downWork->ballPosX = MB_CAP_DOWN_BALL_X;
-      downWork->ballPosY = MB_CAP_DOWN_BALL_Y;
-      downWork->isUpdateBall = TRUE;
-    }
-    //‹——£EŠp“xŒvŽZ
-    {
-      const s32 subX = downWork->ballPosX - MB_CAP_DOWN_BOW_X;
-      const s32 subY = downWork->ballPosY - MB_CAP_DOWN_BOW_Y;
-      const s32 len_mul = subX*subX + subY*subY;
-      const fx32 len_fx = FX_Sqrt( FX32_CONST(len_mul) );
-      const fx32 len_sub = len_fx - FX32_CONST(MB_CAP_DOWN_DEF_BALL_LEN);
+      //TODO‹——£‚È‚Ç‚ðŒ©‚Ä”ò‚Î‚·‚©‚Ì”»’è
+      const fx32 subX = downWork->ballPosX - FX32_CONST(MB_CAP_DOWN_BOW_X);
+      const fx32 subY = downWork->ballPosY - FX32_CONST(MB_CAP_DOWN_BOW_Y);
       
-      downWork->pullLen = len_sub;
-      downWork->rotAngle = FX_Atan2Idx(FX32_CONST(-subX), FX32_CONST(subY));;
+      downWork->shotBallSpdX = FX_Div(subX*MB_CAP_DOWN_BALL_SHOT_SPD,downWork->pullLen);
+      downWork->shotBallSpdY = FX_Div(subY*MB_CAP_DOWN_BALL_SHOT_SPD,downWork->pullLen);
+      
+      downWork->state = MCDS_SHOT_WAIT;
     }
-    
   }
 }
 
@@ -495,3 +590,22 @@ const MB_CAP_DOWN_STATE MB_CAP_DOWN_GetState( const MB_CAP_DOWN *downWork )
 {
   return downWork->state;
 }
+const fx32 MB_CAP_DOWN_GetPullLen( const MB_CAP_DOWN *downWork )
+{
+  return downWork->pullLen;
+}
+const u16  MB_CAP_DOWN_GetRotAngle( const MB_CAP_DOWN *downWork )
+{
+  return downWork->rotAngle;
+}
+
+//--------------------------------------------------------------
+//  ƒ{[ƒ‹‚ð•â[‚·‚é
+//--------------------------------------------------------------
+void MB_CAP_DOWN_ReloadBall( MB_CAP_DOWN *downWork )
+{
+  downWork->state = MCDS_SUPPLY_BALL;
+  downWork->ballPosX = FX32_CONST(MB_CAP_DOWN_BALL_SUPPLY_X);
+  downWork->ballPosY = FX32_CONST(MB_CAP_DOWN_BALL_SUPPLY_Y);
+}
+
