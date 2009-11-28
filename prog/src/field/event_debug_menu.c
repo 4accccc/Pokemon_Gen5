@@ -64,6 +64,8 @@
 #include "eventwork.h"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
+#include "event_wifibattlematch.h"
+
 #include "field/field_comm/intrude_field.h" //PALACE_MAP_LEN
 
 //CGEAR PICTURE
@@ -178,7 +180,7 @@ static BOOL debugMenuCallProc_ControlLinerCamera( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_ControlDelicateCamera( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenu_ControlShortCut( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_BeaconFriendCode( DEBUG_MENU_EVENT_WORK *wk );
-
+static BOOL debugMenuCallProc_WifiBattleMatch( DEBUG_MENU_EVENT_WORK *wk );
 static GMEVENT_RESULT debugMenuWazaOshie( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
 static BOOL debugMenuCallProc_WazaOshie( DEBUG_MENU_EVENT_WORK *p_wk );
 
@@ -233,6 +235,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR49, debugMenuCallProc_BeaconFriendCode },
   { DEBUG_FIELD_STR50, debugMenuCallProc_WazaOshie },
 	{	DEBUG_FIELD_STR52, debugMenuCallProc_ControlDelicateCamera },
+  { DEBUG_FIELD_STR56, debugMenuCallProc_WifiBattleMatch },
 
 };
 
@@ -3710,7 +3713,20 @@ static BOOL debugMenuCallProc_BeaconFriendCode( DEBUG_MENU_EVENT_WORK *wk )
   return TRUE;
 }
 
-
+//----------------------------------------------------------------------------
+/**
+ *  @brief  WiFi世界対戦へ接続
+ *
+ *  @param  DEBUG_MENU_EVENT_WORK *wk   ワーク
+ *
+ *  @return TRUEイベント継続
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_WifiBattleMatch( DEBUG_MENU_EVENT_WORK *wk )
+{ 
+  GMEVENT_ChangeEvent( wk->gmEvent, EVENT_WifiBattleMatch( wk->gmSys, wk->fieldWork ) );
+  return TRUE;
+}
 
 
 

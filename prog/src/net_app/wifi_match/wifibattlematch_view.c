@@ -998,9 +998,9 @@ static void PlayerInfo_TRAINER_Cleate( PLAYERINFO_WORK * p_wk, u32 trainerID, GF
 				heapID );
 
 
-	 	CLWK_TransNSBTX( p_wk->p_clwk[PLAYERINFO_CLWK_TRAINER], 
+	/* 	CLWK_TransNSBTX( p_wk->p_clwk[PLAYERINFO_CLWK_TRAINER], 
 				ARCID_MMDL_RES, trainerID, 3, NSBTX_DEF_SX, NSBTX_DEF_SY, 0, CLSYS_DRAW_SUB, heapID );
-	}
+*/	}
 }
 
 //----------------------------------------------------------------------------
@@ -1521,9 +1521,9 @@ static void MatchInfo_TRAINER_Create( MATCHINFO_WORK * p_wk, u32 trainerID, GFL_
 				heapID );
 
 
-	 	CLWK_TransNSBTX( p_wk->p_clwk, 
+/*	 	CLWK_TransNSBTX( p_wk->p_clwk, 
 				ARCID_MMDL_RES, trainerID, 3, NSBTX_DEF_SX, NSBTX_DEF_SY, 0, CLSYS_DRAW_MAIN, heapID );
-	}
+*/	}
 
 }
 //----------------------------------------------------------------------------

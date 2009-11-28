@@ -38,7 +38,7 @@ LLIBRARIES		+=  	gflib.a
 # wifiをオーバーレイで使用する場合のLibrary定義
 LDEPENDS_NEF += $(TWLDWC_LIB_DEPENDS)
 TWLDWC_LIB_MODULES_   = bm account common ac
-TWLDWC_LIB_GSMODULES_ = 
+TWLDWC_LIB_GSMODULES_ =
 NITROVCT_LIBS = 
 TWLVCT_LIBS = 
 TWLWIFI_LIBS = 

@@ -16,7 +16,7 @@
 #define GAME_NAME					"syachi2ds"		// 使用するゲーム名
 #define GAME_SECRET_KEY		"tXH2sN"					// 使用するシークレットキー
 #define GAME_PRODUCTID		12230							// 使用するプロダクトID
-
+#define GAME_ID           2911              // ゲームID
 
 #if 0
 
@@ -159,6 +159,7 @@ enum NetworkServiceID_e {
   WB_NET_GDS,              ///<GDS
   WB_NET_GTSNEGO,          ///< GTSネゴシエーション
 	WB_NET_DEBUG_BEACON_FRIENDCODE,	///<デバッグ　ビーコンでの友達コード交換
+  WB_NET_WIFIMATCH,         ///<WIFI世界対戦
 
   WB_NET_SERVICEID_MAX   // 終端
 };
@@ -198,6 +199,8 @@ enum NetworkCommandHeaderNo_e {
   GFL_NET_CMD_GDS   = (WB_NET_GDS<<8),    ///< GDS
   GFL_NET_CMD_GTSNEGO   = (WB_NET_GTSNEGO<<8),    ///< GTSネゴシエーション
 	GFL_NET_CMD_DEBUG_BEACON_FRIENDCODE	= (WB_NET_DEBUG_BEACON_FRIENDCODE<<8),	///<デバッグ　ビーコンでの友達コード交換
+  GFL_NET_CMD_WIFIMATCH = (WB_NET_WIFIMATCH<<8),         ///<WIFI世界対戦
+ 
 };
 
 #include "net_irc.h"

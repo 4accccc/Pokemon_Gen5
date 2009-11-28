@@ -31,16 +31,21 @@
 #include "print/printsys.h"
 #include "print/wordset.h"
 
+//  NET
+#include "savedata/wifilist.h"
 
 //	mine
 #include "wifibattlematch_graphic.h"
 #include "wifibattlematch_view.h"
 #include "net_app/wifibattlematch.h"
+#include "dwcrap_sc_gdb.h"
+#include "wifibattlematch_net.h"
 
 //-------------------------------------
 ///	オーバーレイ
 //=====================================
 FS_EXTERN_OVERLAY(ui_common);
+FS_EXTERN_OVERLAY(dpw_common);
 
 //=============================================================================
 /**
@@ -79,7 +84,8 @@ enum
 } ;
 
 //=============================================================================
-/*
+/**
+ *        構造体
 */
 //=============================================================================
 //-------------------------------------
@@ -91,25 +97,33 @@ typedef struct
 	WIFIBATTLEMATCH_GRAPHIC_WORK	*p_graphic;
 
 	//共通で使うフォント
-	GFL_FONT				*p_font;
+	GFL_FONT			            *p_font;
 
 	//共通で使うキュー
-	PRINT_QUE				*p_que;
+	PRINT_QUE				          *p_que;
 
 	//共通で使うメッセージ
-	GFL_MSGDATA			*p_msg;
+	GFL_MSGDATA	          		*p_msg;
 
 	//共通で使う単語
-	WORDSET					*p_word;
+	WORDSET				          	*p_word;
 
 	//上画面情報
-	PLAYERINFO_WORK	*p_playerinfo;
+	PLAYERINFO_WORK         	*p_playerinfo;
 
 	//対戦者情報
-	MATCHINFO_WORK	*p_matchinfo;
+	MATCHINFO_WORK          	*p_matchinfo;
+
+  //DWCのラップ
+  DWCRAP_SC_GDB_WORK        *p_dwc;
+
+  //ネット
+  WIFIBATTLEMATCH_NET_WORK  *p_net;
+
+  DWCUserData               *p_user_data;
 
 	//引数
-	WIFIBATTLEMATCH_PARAM	*p_param;
+	WIFIBATTLEMATCH_PARAM	    *p_param;
 } WIFIBATTLEMATCH_WORK;
 
 //=============================================================================
@@ -162,8 +176,12 @@ const GFL_PROC_DATA	WifiBattleMaptch_ProcData =
 static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {	
 	WIFIBATTLEMATCH_WORK	*p_wk;
+  WIFIBATTLEMATCH_PARAM *p_param  = p_param_adrs;
+
+
 
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
 
 	//ヒープ作成
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH, 0x30000 );
@@ -171,6 +189,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(WIFIBATTLEMATCH_WORK), HEAPID_WIFIBATTLEMATCH );
 	GFL_STD_MemClear( p_wk, sizeof(WIFIBATTLEMATCH_WORK) );	
+  p_wk->p_user_data = WifiList_GetMyUserInfo( SaveData_GetWifiListData( p_param->p_save ) );
 
 	//引数受け取り
 	p_wk->p_param	= p_param_adrs;
@@ -200,6 +219,9 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
 		p_wk->p_playerinfo	= PLAYERINFO_Init( p_wk->p_param->mode, &player_data, p_wk->p_param->p_my, p_unit, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, HEAPID_WIFIBATTLEMATCH );
 
 		p_wk->p_matchinfo		= MATCHINFO_Init( &match_data, p_unit, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, HEAPID_WIFIBATTLEMATCH );
+
+    p_wk->p_net = WIFIBATTLEMATCH_NET_Init( HEAPID_WIFIBATTLEMATCH );
+    p_wk->p_dwc = DWCRAP_SC_GDB_Init( HEAPID_WIFIBATTLEMATCH );
 	}
 
 	GX_SetMasterBrightness( 0 );
@@ -259,6 +281,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, 
 
 	//モジュールの破棄
 	{	
+    DWCRAP_SC_GDB_Exit( p_wk->p_dwc );
+    WIFIBATTLEMATCH_NET_Exit( p_wk->p_net );
 		MATCHINFO_Exit( p_wk->p_matchinfo );
 		PLAYERINFO_Exit( p_wk->p_playerinfo );
 	}
@@ -278,6 +302,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, 
 	//ヒープ破棄
 	GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH );
 	
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common));
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
 
 	return GFL_PROC_RES_FINISH;
@@ -297,7 +322,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, 
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {
-	WIFIBATTLEMATCH_WORK	*p_wk	= p_wk_adrs;
+	WIFIBATTLEMATCH_WORK	*p_wk	    = p_wk_adrs;
+  WIFIBATTLEMATCH_PARAM *p_param  = p_param_adrs;
 
 	//描画
 	WIFIBATTLEMATCH_GRAPHIC_2D_Draw( p_wk->p_graphic );
@@ -308,11 +334,67 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
 	PLAYERINFO_PrintMain( p_wk->p_playerinfo, p_wk->p_que );
 	MATCHINFO_PrintMain( p_wk->p_matchinfo, p_wk->p_que );
 	
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-	{	
-		return GFL_PROC_RES_FINISH;
-	}
+  switch( *p_seq )
+  { 
+  case 0:
+    WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net );
+    (*p_seq)++;
+    break;
+
+  case 1:
+    if( WIFIBATTLEMATCH_NET_WaitMatchMake( p_wk->p_net ) )
+    { 
+      NAGI_Printf( "接続完了！\n" );
+      (*p_seq)++;
+    }
+    break;
+
+  case 2:
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+    {	
+      return GFL_PROC_RES_FINISH;
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    { 
+      DWCRAP_SC_Start( p_wk->p_dwc );
+      NAGI_Printf( "SC開始！\n" );
+      (*p_seq)  = 3;
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+    { 
+      NAGI_Printf( "GDB開始！\n" );
+      DWCRAP_GDB_Start( p_wk->p_dwc );
+      (*p_seq)  = 4;
+    }
+    break;
+
+  case 3:
+    { 
+      DWCScResult result;
+      if( DWCRAP_SC_Process( p_wk->p_dwc, p_wk->p_user_data, &result ) )
+      { 
+        NAGI_Printf( "送ったよ！%d\n", result );
+        (*p_seq)  = 2;
+      }
+      GF_ASSERT( result == DWC_SC_RESULT_NO_ERROR );
+    }
+    break;
+
+  case 4:
+    { 
+      DWCGdbError error;
+      if( DWCRAP_GDB_Process( p_wk->p_dwc, p_wk->p_user_data, &error ) )
+      { 
+        NAGI_Printf( "データベースからもらったよ！%d\n", error );
+        (*p_seq)  = 2;
+      }
+      GF_ASSERT( error == DWC_GDB_ERROR_NONE );
+    }
+    break;
+  }
+
 
 
 	return GFL_PROC_RES_CONTINUE;
 }
+

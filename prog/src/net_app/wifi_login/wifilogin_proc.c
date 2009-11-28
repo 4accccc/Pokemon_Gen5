@@ -610,10 +610,10 @@ static void _connectingWait(WIFILOGIN_WORK* pWork)
 static void _connectionStart(WIFILOGIN_WORK* pWork)
 {
   if( OS_IsRunOnTwl() ){//DSIならマッチングのメモリが大きくとられる為、領域を多くしないといけない
-    aGFLNetInit.heapSize = GFL_NET_DWCLOBBY_HEAPSIZE;
+    aGFLNetInit.heapSize = GFL_NET_DWCLOBBY_HEAPSIZE + 0x40000;
   }
   else{
-    aGFLNetInit.heapSize = GFL_NET_DWC_HEAPSIZE;
+    aGFLNetInit.heapSize = GFL_NET_DWC_HEAPSIZE + 0x40000;
   }
   GFL_NET_Init(&aGFLNetInit, NULL, pWork);	//通信初期化
   GFL_NET_StateWifiEnterLogin();

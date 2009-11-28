@@ -10,6 +10,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
+#include "savedata/mystatus.h"
 //=============================================================================
 /**
  *					íËêîêÈåæ
@@ -41,6 +42,7 @@ typedef struct
 {
 	WIFIBATTLEMATCH_MODE	mode;
 	const MYSTATUS				*p_my;
+  SAVE_CONTROL_WORK     *p_save;
 } WIFIBATTLEMATCH_PARAM;
 
 
