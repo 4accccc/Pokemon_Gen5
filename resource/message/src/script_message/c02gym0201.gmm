@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-27T12:33:43"/>
+	<create user="matsumiya" host="W00207" date="2009-11-28T15:03:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -423,10 +423,10 @@
 	<row id="msg_c02gym0101_girl3_02">
 		<comment>♀：トレーナー
 ・フラグ成立後＝戦闘前（画面下を向いている）</comment>
-		<language name="JPN" width="256">「ポケモンけんきゅうの　れきし」ね▼
+		<language name="JPN" width="256">「ピカチュウの　せいたい」ね▼
 ポケモンの　ほんは
 この　れつの　どこかに　あるはずよ</language>
-		<language name="JPN_KANJI" width="256">「ポケモン研究の　歴史」ね▼
+		<language name="JPN_KANJI" width="256">「ピカチュウの　生態」ね▼
 ポケモンの　本は
 この列の　どこかに　あるはずよ</language>
 	</row>
@@ -436,12 +436,12 @@
 ・戦闘後</comment>
 		<language name="JPN" width="256">「こどもを　げんきに　そだてる」ね▼
 しゃかいコーナー　だから
-いちれつ　おくの　ほんだなに　あるわ▼
+ちゅうおうの　れつの　ほんだなね▼
 よむひとが　おおい　ほんね
 たちよみを　している　ひとも　いたわ</language>
 		<language name="JPN_KANJI" width="256">「子供を　げんきに　育てる」ね▼
 社会コーナー　だから
-一列　奥の　本棚に　あるわ▼
+中央の　列の　本棚ね▼
 読む人が　多い　本ね
 立ち読みを　している人も　いたわ</language>
 	</row>
@@ -581,9 +581,9 @@
 	</row>
 
 	<row id="msg_c02gym0101_headline_05" back-color="#80ff80,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
-		<language name="JPN" width="256">「ポケモンけんきゅうの　れきし」
+		<language name="JPN" width="256">「ピカチュウの　せいたい」
 この　ほんを　よみますか？</language>
-		<language name="JPN_KANJI" width="256">「ポケモン研究の　歴史」
+		<language name="JPN_KANJI" width="256">「ピカチュウの　生態」
 この本を　読みますか?</language>
 	</row>
 
@@ -800,9 +800,7 @@
 
 	<row id="msg_c02gym0101_book_05" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>「ポケモンの　きょういく」
-この　ほんを　よみますか？
-
-※文章修正</comment>
+この　ほんを　よみますか？</comment>
 		<language name="JPN" width="256">ポケモンけんきゅうの　れきしが
 わかりやすく　かかれている</language>
 		<language name="JPN_KANJI" width="256">ポケモン研究の　歴史が
@@ -946,7 +944,7 @@
 ほんへの　ヒントが　あります▼
 ２さつめの　ほんは
 いちれつ　おくの　ポケモン　ジャンル▼
-「[FF:00:色:1]ポケモンけんきゅうの　れきし[FF:00:色:0]」です
+「[FF:00:色:1]ピカチュウの　せいたい[FF:00:色:0]」です
 さいごの　ページに　メモが　あります</language>
 		<language name="JPN_KANJI" width="256">本に　メモが　挟んである･･････!▼
 ジムリーダーの　アロエです▼
@@ -956,7 +954,7 @@
 本への　ヒントが　あります▼
 ２冊目の　本は
 一列　奥の　ポケモン　ジャンル▼
-「[FF:00:色:1]ポケモン研究の　歴史[FF:00:色:0]」です
+「[FF:00:色:1]ピカチュウの　生態[FF:00:色:0]」です
 最後の　ページに　メモが　あります</language>
 	</row>
 
