@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-11-28T19:21:06"/>
+	<create user="taya" host="W00146" date="2009-11-29T04:43:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -396,37 +396,36 @@
 		<comment position="1" width="277"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
-			<message position="3" width="302"/>
-			<font default=" 0:large" position="5" width="100">
+			<message position="2" width="302"/>
+			<font default=" 0:large" position="4" width="100">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
 			</font>
-			<size position="6" width="100"/>
-			<space position="7" width="100"/>
-			<width position="8" width="100"/>
-			<line position="9" width="100"/>
+			<size position="5" width="100"/>
+			<space position="6" width="100"/>
+			<width position="7" width="100"/>
+			<line position="8" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="4" width="301"/>
-			<font default=" 0:large" position="10" width="100">
+			<message position="3" width="301"/>
+			<font default=" 0:large" position="9" width="100">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
 			</font>
-			<size position="11" width="100"/>
-			<space position="12" width="100"/>
-			<width position="13" width="100"/>
-			<line position="14" width="100"/>
+			<size position="10" width="100"/>
+			<space position="11" width="100"/>
+			<width position="12" width="100"/>
+			<line position="13" width="100"/>
 		</language>
 	</columns>
 
 	<dialog left="130" top="0" right="811" bottom="508" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="618" right="1024" bottom="768" visible="no"/>
 		<tag-palette left="783" top="534" right="1214" bottom="932" visible="yes"/>
-		<band id="0" index="1" style="0001" width="506"/>
-		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="496"/>
-		<band id="3" index="4" style="0000" width="175"/>
-		<band id="4" index="0" style="0000" width="673"/>
+		<band id="0" index="0" style="0001" width="506"/>
+		<band id="1" index="1" style="0000" width="165"/>
+		<band id="2" index="2" style="0000" width="673"/>
+		<band id="3" index="3" style="0000" width="673"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -452,27 +451,31 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　たおれた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　たおれた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Dead_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　たおれた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　たおれた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Dead_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　たおれた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　たおれた！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_Relive" back-color=",,,,#00ff00,,,,,,,,,,,,,,">
+	<row id="BTL_STRID_SET_Relive" back-color=",,,,#00ff00,,,,,,,,,,,,,">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 げんきを　とりもどした！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 元気を　取り戻した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Relive_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 げんきを　とりもどした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 元気を　取り戻した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Relive_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 げんきを　とりもどした！</language>
@@ -480,19 +483,21 @@
 元気を　取り戻した！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_Rankup_ATK" back-color=",,,#ffff00,#00ff00,,,,,,,,,,,,,,">
+	<row id="BTL_STRID_SET_Rankup_ATK" back-color=",,,#ffff00,#00ff00,,,,,,,,,,,,,">
 		<comment>↓能力ランク１段上昇</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 こうげきが　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 攻撃が　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankup_ATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 こうげきが　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 攻撃が　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankup_ATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 こうげきが　あがった！</language>
@@ -500,18 +505,20 @@
 攻撃が　上がった！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_Rankup_DEF" back-color=",,,,#00ff00,,,,,,,,,,,,,,">
+	<row id="BTL_STRID_SET_Rankup_DEF" back-color=",,,,#00ff00,,,,,,,,,,,,,">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 ぼうぎょが　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 防御が　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankup_DEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 ぼうぎょが　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 防御が　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankup_DEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 ぼうぎょが　あがった！</language>
@@ -519,18 +526,20 @@
 防御が　上がった！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_Rankup_SPATK" back-color=",,,,#00ff00,,,,,,,,,,,,,,">
+	<row id="BTL_STRID_SET_Rankup_SPATK" back-color=",,,,#00ff00,,,,,,,,,,,,,">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 とくこうが　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 特攻が上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankup_SPATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 とくこうが　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 特攻が上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankup_SPATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 とくこうが　あがった！</language>
@@ -544,12 +553,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 特防が　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankup_SPDEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 とくぼうが　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 特防が　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankup_SPDEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 とくぼうが　あがった！</language>
@@ -563,12 +574,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 素早さが　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankup_AGI_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 すばやさが　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 素早さが　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankup_AGI_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 すばやさが　あがった！</language>
@@ -582,12 +595,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 命中率が上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankup_HIT_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 めいちゅうりつが　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 命中率が上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankup_HIT_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 めいちゅうりつが　あがった！</language>
@@ -601,12 +616,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 かいひ率が上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankup_AVOID_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 かいひりつが　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 かいひ率が上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankup_AVOID_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 かいひりつが　あがった！</language>
@@ -614,19 +631,21 @@
 かいひ率が上がった！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_RankupEx_ATK" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
+	<row id="BTL_STRID_SET_RankupEx_ATK" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>↓能力ランク２段以上上昇</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 こうげきが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 攻撃が　ぐーんと上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupEx_ATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 こうげきが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 攻撃が　ぐーんと上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupEx_ATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 こうげきが　ぐーんと　あがった！</language>
@@ -640,12 +659,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 防御が　ぐーんと上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupEx_DEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 ぼうぎょが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 防御が　ぐーんと上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupEx_DEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 ぼうぎょが　ぐーんと　あがった！</language>
@@ -659,12 +680,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 特攻がぐーんと上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupEx_SPATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 とくこうが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 特攻がぐーんと上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupEx_SPATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 とくこうが　ぐーんと　あがった！</language>
@@ -678,12 +701,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 特防が　ぐーんと上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupEx_SPDEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 とくぼうが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 特防が　ぐーんと上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupEx_SPDEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 とくぼうが　ぐーんと　あがった！</language>
@@ -697,12 +722,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 素早さが　ぐーんと上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupEx_AGI_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 すばやさが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 素早さが　ぐーんと上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupEx_AGI_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 すばやさが　ぐーんと　あがった！</language>
@@ -716,12 +743,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 命中率が　ぐーんと上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupEx_HIT_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 めいちゅうりつが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 命中率が　ぐーんと上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupEx_HIT_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 めいちゅうりつが　ぐーんと　あがった！</language>
@@ -735,12 +764,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 かいひ率が　ぐーんと上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupEx_AVOID_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 かいひりつが　ぐーんと　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 かいひ率が　ぐーんと上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupEx_AVOID_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 かいひりつが　ぐーんと　あがった！</language>
@@ -748,19 +779,21 @@
 かいひ率が　ぐーんと上がった！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_Rankdown_ATK" back-color=",,,#ffff00,#00ff00,,,,,,,,,,,,,,">
+	<row id="BTL_STRID_SET_Rankdown_ATK" back-color=",,,#ffff00,#00ff00,,,,,,,,,,,,,">
 		<comment>↓能力ランク１段下降</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 こうげきが　さがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 攻撃が　下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankdown_ATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 こうげきが　さがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 攻撃が　下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankdown_ATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 こうげきが　さがった！</language>
@@ -768,18 +801,20 @@
 攻撃が　下がった！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_Rankdown_DEF" back-color=",,,,#00ff00,,,,,,,,,,,,,,">
+	<row id="BTL_STRID_SET_Rankdown_DEF" back-color=",,,,#00ff00,,,,,,,,,,,,,">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 ぼうぎょが　さがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 防御が　下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankdown_DEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 ぼうぎょが　さがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 防御が　下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankdown_DEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 ぼうぎょが　さがった！</language>
@@ -787,18 +822,20 @@
 防御が　下がった！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_Rankdown_SPATK" back-color=",,,,#00ff00,,,,,,,,,,,,,,">
+	<row id="BTL_STRID_SET_Rankdown_SPATK" back-color=",,,,#00ff00,,,,,,,,,,,,,">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 とくこうが　さがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 特攻が　下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankdown_SPATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 とくこうが　さがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 特攻が　下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankdown_SPATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 とくこうが　さがった！</language>
@@ -812,12 +849,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 特防　が　下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankdown_SPDEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 とくぼう　が　さがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 特防　が　下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankdown_SPDEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 とくぼう　が　さがった！</language>
@@ -831,12 +870,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 素早さが　下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankdown_AGI_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 すばやさが　さがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 素早さが　下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankdown_AGI_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 すばやさが　さがった！</language>
@@ -850,12 +891,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 命中率が下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankdown_HIT_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 めいちゅうりつ　が　さがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 命中率が下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankdown_HIT_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 めいちゅうりつ　が　さがった！</language>
@@ -869,12 +912,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 かいひ率が下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankdown_AVOID_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 かいひりつが　さがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 かいひ率が下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Rankdown_AVOID_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 かいひりつが　さがった！</language>
@@ -882,19 +927,21 @@
 かいひ率が下がった！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_RankdownEx_ATK" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
+	<row id="BTL_STRID_SET_RankdownEx_ATK" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>↓能力ランク２段以上下降</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 こうげきが　がくっと　さがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 攻撃が　がくっと下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownEx_ATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 こうげきが　がくっと　さがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 攻撃が　がくっと下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownEx_ATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 こうげきが　がくっと　さがった！</language>
@@ -908,12 +955,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 防御が　がくっと下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownEx_DEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 ぼうぎょが　がくっと　さがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 防御が　がくっと下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownEx_DEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 ぼうぎょが　がくっと　さがった！</language>
@@ -927,12 +976,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 特攻が　がくっと下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownEx_SPATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 とくこうが　がくっと　さがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 特攻が　がくっと下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownEx_SPATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 とくこうが　がくっと　さがった！</language>
@@ -946,12 +997,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 特防が　がくっと下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownEx_SPDEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 とくぼうが　がくっと　さがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 特防が　がくっと下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownEx_SPDEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 とくぼうが　がくっと　さがった！</language>
@@ -965,12 +1018,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 素早さが　がくっと下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownEx_AGI_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 すばやさが　がくっと　さがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 素早さが　がくっと下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownEx_AGI_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 すばやさが　がくっと　さがった！</language>
@@ -984,12 +1039,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 命中率が　がくっと下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownEx_HIT_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 めいちゅうりつが　がくっと　さがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 命中率が　がくっと下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownEx_HIT_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 めいちゅうりつが　がくっと　さがった！</language>
@@ -1003,12 +1060,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 かいひ率が　がくっと下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownEx_AVOID_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 かいひりつが　がくっと　さがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 かいひ率が　がくっと下がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownEx_AVOID_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 かいひりつが　がくっと　さがった！</language>
@@ -1016,19 +1075,21 @@
 かいひ率が　がくっと下がった！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_RankupMax_ATK" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
+	<row id="BTL_STRID_SET_RankupMax_ATK" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>↓能力ランクこれ以上あがらない</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 こうげきは　もう　あがらない！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 攻撃は　もう　上がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupMax_ATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 こうげきは　もう　あがらない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 攻撃は　もう　上がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupMax_ATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 こうげきは　もう　あがらない！</language>
@@ -1042,12 +1103,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 防御は　もう　上がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupMax_DEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 ぼうぎょは　もう　あがらない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 防御は　もう　上がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupMax_DEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 ぼうぎょは　もう　あがらない！</language>
@@ -1061,12 +1124,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 特攻は　もう　上がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupMax_SPATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 とくこうは　もう　あがらない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 特攻は　もう　上がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupMax_SPATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 とくこうは　もう　あがらない！</language>
@@ -1080,12 +1145,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 特防は　もう　上がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupMax_SPDEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 とくぼうは　もう　あがらない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 特防は　もう　上がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupMax_SPDEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 とくぼうは　もう　あがらない！</language>
@@ -1099,12 +1166,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 素早さは　もう　上がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupMax_AGI_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 すばやさは　もう　あがらない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 素早さは　もう　上がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupMax_AGI_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 すばやさは　もう　あがらない！</language>
@@ -1118,12 +1187,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 命中率は　もう　上がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupMax_HIT_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 めいちゅうりつは　もう　あがらない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 命中率は　もう　上がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupMax_HIT_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 めいちゅうりつは　もう　あがらない！</language>
@@ -1137,12 +1208,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 かいひ率は　もう　上がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupMax_AVOID_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 かいひりつは　もう　あがらない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 かいひ率は　もう　上がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankupMax_AVOID_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 かいひりつは　もう　あがらない！</language>
@@ -1150,19 +1223,21 @@
 かいひ率は　もう　上がらない！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_RankdownMin_ATK" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
+	<row id="BTL_STRID_SET_RankdownMin_ATK" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>↓能力ランクこれ以上さがらない</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 こうげきは　もう　さがらない！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 攻撃は　もう　下がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownMin_ATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 こうげきは　もう　さがらない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 攻撃は　もう　下がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownMin_ATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 こうげきは　もう　さがらない！</language>
@@ -1176,12 +1251,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 防御は　もう　下がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownMin_DEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 ぼうぎょは　もう　さがらない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 防御は　もう　下がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownMin_DEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 ぼうぎょは　もう　さがらない！</language>
@@ -1195,12 +1272,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 特攻は　もう　下がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownMin_SPATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 とくこうは　もう　さがらない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 特攻は　もう　下がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownMin_SPATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 とくこうは　もう　さがらない！</language>
@@ -1214,12 +1293,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 特防は　もう　下がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownMin_SPDEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 とくぼうは　もう　さがらない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 特防は　もう　下がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownMin_SPDEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 とくぼうは　もう　さがらない！</language>
@@ -1233,12 +1314,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 素早さは　もう　下がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownMin_AGI_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 すばやさは　もう　さがらない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 素早さは　もう　下がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownMin_AGI_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 すばやさは　もう　さがらない！</language>
@@ -1252,12 +1335,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 命中率は　もう　下がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownMin_HIT_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 めいちゅうりつは　もう　さがらない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 命中率は　もう　下がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownMin_HIT_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 めいちゅうりつは　もう　さがらない！</language>
@@ -1271,12 +1356,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 かいひ率は　もう　下がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownMin_AVOID_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 かいひりつは　もう　さがらない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 かいひ率は　もう　下がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownMin_AVOID_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 かいひりつは　もう　さがらない！</language>
@@ -1291,12 +1378,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 のうりょくへんかが　元にもどった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankReset_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 のうりょくへんかが　もとにもどった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 のうりょくへんかが　元にもどった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankReset_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 のうりょくへんかが　もとにもどった！</language>
@@ -1304,7 +1393,7 @@
 のうりょくへんかが　元にもどった！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_RankdownFail" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
+	<row id="BTL_STRID_SET_RankdownFail" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加効果・状態異常効果などが通用しない時の
 メッセージ群</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
@@ -1312,12 +1401,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 能力は　下がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownFail_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 のうりょくは　さがらない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 能力は　下がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownFail_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 のうりょくは　さがらない！</language>
@@ -1331,12 +1422,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 攻撃は　下がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownFail_ATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 こうげきは　さがらない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 攻撃は　下がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownFail_ATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 こうげきは　さがらない！</language>
@@ -1350,12 +1443,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 防御は　下がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownFail_DEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 ぼうぎょは　さがらない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 防御は　下がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownFail_DEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 ぼうぎょは　さがらない！</language>
@@ -1369,12 +1464,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 命中率は　下がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownFail_HIT_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 めいちゅうりつは　さがらない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 命中率は　下がらない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankdownFail_HIT_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 めいちゅうりつは　さがらない！</language>
@@ -1388,12 +1485,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]には
 効果が　無いようだ…</language>
 	</row>
+
 	<row id="BTL_STRID_SET_NoEffect_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]には
 こうかが　ない　ようだ…</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]には
 効果が　無いようだ…</language>
 	</row>
+
 	<row id="BTL_STRID_SET_NoEffect_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]には
 こうかが　ない　ようだ…</language>
@@ -1407,12 +1506,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]には
 当たらなかった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_WazaAvoid_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]には
 あたらなかった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]には
 当たらなかった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_WazaAvoid_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]には
 あたらなかった！</language>
@@ -1427,12 +1528,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]への　ダメージを
 [1:09:どうぐ名:1]が　弱めた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Item_DamageShrink_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]への　ダメージを
 [1:09:どうぐ名:1]が　よわめた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]への　ダメージを
 [1:09:どうぐ名:1]が　弱めた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Item_DamageShrink_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]への　ダメージを
 [1:09:どうぐ名:1]が　よわめた！</language>
@@ -1447,12 +1550,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]を　落とした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Shooter_ItemDrop_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]を　おとした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]を　落とした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Shooter_ItemDrop_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]を　おとした！</language>
@@ -1466,12 +1571,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 ステータスが　元に戻った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Shooter_FlatCall_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 ステータスが　もとに　もどった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 ステータスが　元に戻った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Shooter_FlatCall_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 ステータスが　もとに　もどった！</language>
@@ -1479,19 +1586,21 @@
 ステータスが　元に戻った！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_DokuGet" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
+	<row id="BTL_STRID_SET_DokuGet" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>ポケモン系状態異常メッセージ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 どく　を　あびた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 毒を　あびた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_DokuGet_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 どく　を　あびた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 毒を　あびた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_DokuGet_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 どく　を　あびた！</language>
@@ -1505,12 +1614,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 猛毒　を　あびた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MoudokuGet_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 もうどく　を　あびた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 猛毒　を　あびた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MoudokuGet_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 もうどく　を　あびた！</language>
@@ -1525,6 +1636,7 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で　猛毒を　あびた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MoudokuGetSP_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で▽
@@ -1532,6 +1644,7 @@
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で　猛毒を　あびた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MoudokuGetSP_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で▽
@@ -1546,12 +1659,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 毒のダメージを受けた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_DokuDamage_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 どく　のダメージを　うけた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 毒のダメージを受けた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_DokuDamage_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 どく　のダメージを　うけた！</language>
@@ -1565,12 +1680,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の　毒は
 きれいさっぱり　無くなった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_DokuCure_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の　どくは
 きれいさっぱり　なくなった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の　毒は
 きれいさっぱり　無くなった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_DokuCure_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の　どくは
 きれいさっぱり　なくなった！</language>
@@ -1584,12 +1701,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　すでに
 毒を　あびている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_DokuAlready_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　すでに
 どくを　あびている！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　すでに
 毒を　あびている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_DokuAlready_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　すでに
 どくを　あびている！</language>
@@ -1604,12 +1723,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 やけどを　負った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_YakedoGet_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 やけどを　おった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 やけどを　負った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_YakedoGet_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 やけどを　おった！</language>
@@ -1623,12 +1744,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で　やけどを　負った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_YakedoGetSP_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で　やけどを　おった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で　やけどを　負った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_YakedoGetSP_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で　やけどを　おった！</language>
@@ -1642,12 +1765,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 やけどの　ダメージを　受けた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_YakedoDamage_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 やけどの　ダメージを　うけた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 やけどの　ダメージを　受けた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_YakedoDamage_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 やけどの　ダメージを　うけた！</language>
@@ -1661,12 +1786,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 やけどが　治った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_YakedoCure_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 やけどが　なおった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 やけどが　治った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_YakedoCure_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 やけどが　なおった！</language>
@@ -1680,12 +1807,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　すでに
 やけどを　負っている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_YakedoAlready_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　すでに
 やけどを　おっている！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　すでに
 やけどを　負っている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_YakedoAlready_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　すでに
 やけどを　おっている！</language>
@@ -1700,12 +1829,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　まひして
 わざが　出にくくなった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MahiGet_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　まひして
 わざが　でにくくなった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　まひして
 わざが　出にくくなった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MahiGet_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　まひして
 わざが　でにくくなった！</language>
@@ -1719,12 +1850,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 体がしびれて動かない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MahiAct_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 からだが　しびれて　うごかない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 体がしびれて動かない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MahiAct_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 からだが　しびれて　うごかない！</language>
@@ -1738,12 +1871,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 しびれが　とれた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MahiCure_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 しびれが　とれた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 しびれが　とれた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MahiCure_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 しびれが　とれた！</language>
@@ -1757,12 +1892,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 すでに　まひしている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MahiAlready_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 すでに　まひしている！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 すでに　まひしている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MahiAlready_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 すでに　まひしている！</language>
@@ -1777,12 +1914,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 凍りついた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KoriGet_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 こおりついた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 凍りついた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KoriGet_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 こおりついた！</language>
@@ -1796,12 +1935,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 凍ってしまって動けない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KoriAct_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 こおって　しまって　うごけない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 凍ってしまって動けない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KoriAct_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 こおって　しまって　うごけない！</language>
@@ -1815,12 +1956,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 こおりが　溶けた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KoriMelt_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 こおりが　とけた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 こおりが　溶けた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KoriMelt_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 こおりが　とけた！</language>
@@ -1835,12 +1978,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 眠ってしまった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_NemuriGet_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 ねむってしまった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 眠ってしまった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_NemuriGet_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 ねむってしまった！</language>
@@ -1854,12 +1999,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 眠っている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_NemuriAct_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 ねむっている！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 眠っている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_NemuriAct_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 ねむっている！</language>
@@ -1873,12 +2020,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 目を　さました！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_NemuriWake_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 めを　さました！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 目を　さました！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_NemuriWake_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 めを　さました！</language>
@@ -1893,12 +2042,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 悪夢を　見始めた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_AkumuGet_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 あくむを　みはじめた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 悪夢を　見始めた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_AkumuGet_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 あくむを　みはじめた！</language>
@@ -1912,12 +2063,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 悪夢に　うなされている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_AkumuDamage_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 あくむに　うなされている！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 悪夢に　うなされている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_AkumuDamage_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 あくむに　うなされている！</language>
@@ -1932,12 +2085,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 メロメロに　なった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MeromeroGet_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 メロメロに　なった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 メロメロに　なった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MeromeroGet_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 メロメロに　なった！</language>
@@ -1951,12 +2106,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:02:ポケモンニックネーム:1]に　メロメロだ！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MeromeroAct_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:02:ポケモンニックネーム:1]に　メロメロだ！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:02:ポケモンニックネーム:1]に　メロメロだ！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MeromeroAct_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:02:ポケモンニックネーム:1]に　メロメロだ！</language>
@@ -1970,12 +2127,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 メロメロで　技が出せなかった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MeromeroExe_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 メロメロで　わざが　だせなかった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 メロメロで　技が出せなかった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MeromeroExe_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 メロメロで　わざが　だせなかった！</language>
@@ -1989,12 +2148,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 状態が　元に　もどった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_PokeSick_Cure_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 じょうたいが　もとに　もどった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 状態が　元に　もどった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_PokeSick_Cure_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 じょうたいが　もとに　もどった！</language>
@@ -2002,19 +2163,21 @@
 状態が　元に　もどった！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_KonranGet" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
+	<row id="BTL_STRID_SET_KonranGet" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>こんらん</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 こんらん　した！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 混乱した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KonranGet_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 こんらん　した！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 混乱した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KonranGet_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 こんらん　した！</language>
@@ -2028,12 +2191,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 混乱している！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KonranAct_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 こんらん　している！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 混乱している！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KonranAct_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 こんらん　している！</language>
@@ -2047,12 +2212,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 混乱が　解けた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KonranCure_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 こんらんが　とけた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 混乱が　解けた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KonranCure_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 こんらんが　とけた！</language>
@@ -2066,12 +2233,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　すでに
 混乱している！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KonranAlready_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　すでに
 こんらん　している！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　すでに
 混乱している！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KonranAlready_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　すでに
 こんらん　している！</language>
@@ -2086,12 +2255,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 ひるんで　技が出せない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_ShrinkExe_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 ひるんで　わざが　だせない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 ひるんで　技が出せない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_ShrinkExe_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 ひるんで　わざが　だせない！</language>
@@ -2106,12 +2277,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 正体を　見破った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Miyaburu_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 しょうたいを　みやぶった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 正体を　見破った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Miyaburu_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 しょうたいを　みやぶった！</language>
@@ -2126,12 +2299,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]の
 ダメージを　受けている</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Bind_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]の
 ダメージを　うけている</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]の
 ダメージを　受けている</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Bind_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]の
 ダメージを　うけている</language>
@@ -2145,12 +2320,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]から　解放された！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_BindCure_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]から　かいほうされた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]から　解放された！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_BindCure_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]から　かいほうされた！</language>
@@ -2164,12 +2341,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 反動による　ダメージを　受けた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_ReactionDmg_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 はんどうによる　ダメージを　うけた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 反動による　ダメージを　受けた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_ReactionDmg_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 はんどうによる　ダメージを　うけた！</language>
@@ -2183,12 +2362,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 [1:06:とくせい名:1]　を　トレースした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Trace_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 [1:06:とくせい名:1]　を　トレースした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 [1:06:とくせい名:1]　を　トレースした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Trace_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 [1:06:とくせい名:1]　を　トレースした！</language>
@@ -2202,12 +2383,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 急所に　当たった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_CriticalHit_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 きゅうしょに　あたった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 急所に　当たった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_CriticalHit_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 きゅうしょに　あたった！</language>
@@ -2221,12 +2404,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 体力が　回復した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_HP_Recover_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 たいりょくが　かいふくした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 体力が　回復した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_HP_Recover_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 たいりょくが　かいふくした！</language>
@@ -2240,12 +2425,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]の　ＰＰを回復した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_PP_Recover_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]の　ＰＰを　かいふくした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]の　ＰＰを回復した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_PP_Recover_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]の　ＰＰを　かいふくした！</language>
@@ -2259,12 +2446,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 全てのワザの　ＰＰを回復した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_PP_AllRecover_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 すべての　わざの　ＰＰを　かいふくした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 全てのワザの　ＰＰを回復した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_PP_AllRecover_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 すべての　わざの　ＰＰを　かいふくした！</language>
@@ -2279,12 +2468,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:06:とくせい名:1]に　なった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_TokuseiChange_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:06:とくせい名:1]に　なった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:06:とくせい名:1]に　なった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_TokuseiChange_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:06:とくせい名:1]に　なった！</language>
@@ -2292,7 +2483,7 @@
 [1:06:とくせい名:1]に　なった！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_MoraibiExe" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
+	<row id="BTL_STRID_SET_MoraibiExe" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>個別とくせい用メッセージ
 </comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
@@ -2300,12 +2491,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 ほのおの　いりょくが　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MoraibiExe_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 ほのおの　いりょくが　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 ほのおの　いりょくが　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MoraibiExe_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 ほのおの　いりょくが　あがった！</language>
@@ -2320,12 +2513,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]　を　読み取った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_YotimuExe_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]　を　よみとった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]　を　読み取った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_YotimuExe_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]　を　よみとった！</language>
@@ -2340,12 +2535,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 みぶるいした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Kikenyoti_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 みぶるいした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 みぶるいした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Kikenyoti_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 みぶるいした！</language>
@@ -2360,12 +2557,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]　を　お見通しだ！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Omitoosi_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]　を　おみとおしだ！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]　を　お見通しだ！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Omitoosi_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]　を　おみとおしだ！</language>
@@ -2380,12 +2579,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 かたやぶりだ！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Katayaburi_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 かたやぶりだ！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 かたやぶりだ！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Katayaburi_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 かたやぶりだ！</language>
@@ -2400,12 +2601,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 なまけていて　技が　出せない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Namake_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 なまけていて　わざが　だせない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 なまけていて　技が　出せない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Namake_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 なまけていて　わざが　だせない！</language>
@@ -2420,12 +2623,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 きゅうばんで　はりついている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Kyuuban_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 きゅうばんで　はりついている！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 きゅうばんで　はりついている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Kyuuban_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 きゅうばんで　はりついている！</language>
@@ -2440,12 +2645,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 ヘドロえきを　吸い取った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_HedoroEki_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 ヘドロえきを　すいとった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 ヘドロえきを　吸い取った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_HedoroEki_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 ヘドロえきを　すいとった！</language>
@@ -2460,12 +2667,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 [1:09:どうぐ名:1]を　奪った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_WaruiTeguse_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 [1:09:どうぐ名:1]を　うばった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 [1:09:どうぐ名:1]を　奪った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_WaruiTeguse_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 [1:09:どうぐ名:1]を　うばった！</language>
@@ -2480,12 +2689,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 ミイラになっちゃった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Miira_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 ミイラになっちゃった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 ミイラになっちゃった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Miira_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 ミイラになっちゃった！</language>
@@ -2500,12 +2711,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の　[1:07:わざ名:1]を
 はね返した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MajicMirror_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の　[1:07:わざ名:1]を
 はねかえした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の　[1:07:わざ名:1]を
 はね返した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MajicMirror_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の　[1:07:わざ名:1]を
 はねかえした！</language>
@@ -2520,12 +2733,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 味方からの攻撃を　受けない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_AunNoIki_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 みかたからの　こうげきを　うけない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 味方からの攻撃を　受けない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_AunNoIki_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 みかたからの　こうげきを　うけない！</language>
@@ -2540,12 +2755,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 天候によるダメージを　受けない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Boujin_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 てんこうによる　ダメージを　うけない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 天候によるダメージを　受けない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Boujin_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 てんこうによる　ダメージを　うけない！</language>
@@ -2560,12 +2777,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]に
 毒を　あびせた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Dokusyu_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]に
 どくを　あびせた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]に
 毒を　あびせた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Dokusyu_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]に
 どくを　あびせた！</language>
@@ -2573,19 +2792,21 @@
 毒を　あびせた！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_SkillSwap" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
+	<row id="BTL_STRID_SET_SkillSwap" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>個別ワザ用メッセージ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 おたがいの　とくせいを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 おたがいの　とくせいを　入れかえた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_SkillSwap_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 おたがいの　とくせいを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 おたがいの　とくせいを　入れかえた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_SkillSwap_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 おたがいの　とくせいを　いれかえた！</language>
@@ -2599,12 +2820,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 こらえる　体勢に　入った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Koraeru_Ready_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 こらえる　たいせいに　はいった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 こらえる　体勢に　入った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Koraeru_Ready_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 こらえる　たいせいに　はいった！</language>
@@ -2618,12 +2841,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 攻撃を　こらえた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Koraeru_Exe_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 こうげきを　こらえた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 攻撃を　こらえた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Koraeru_Exe_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 こうげきを　こらえた！</language>
@@ -2637,12 +2862,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 守りの体勢に入った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MamoruReady_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 まもりの　たいせいに　はいった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 守りの体勢に入った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MamoruReady_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 まもりの　たいせいに　はいった！</language>
@@ -2656,12 +2883,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 守りを　打ち破った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MamoruBreak_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 まもりを　うちやぶった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 守りを　打ち破った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MamoruBreak_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 まもりを　うちやぶった！</language>
@@ -2676,12 +2905,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 フェイントに　引っかかった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Feint_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 フェイントに　ひっかかった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 フェイントに　引っかかった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Feint_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 フェイントに　ひっかかった！</language>
@@ -2696,12 +2927,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 攻撃から　身を守った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Mamoru_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 こうげきから　みを　まもった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 攻撃から　身を守った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Mamoru_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 こうげきから　みを　まもった！</language>
@@ -2716,12 +2949,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 空高く　飛び上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_SoraWoTobu_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 そらたかく　とびあがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 空高く　飛び上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_SoraWoTobu_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 そらたかく　とびあがった！</language>
@@ -2736,12 +2971,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 水中に　身を潜めた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Diving_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 すいちゅうに　みをひそめた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 水中に　身を潜めた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Diving_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 すいちゅうに　みをひそめた！</language>
@@ -2756,12 +2993,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 地面に　潜った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_AnaWoHoru_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 じめんに　もぐった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 地面に　潜った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_AnaWoHoru_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 じめんに　もぐった！</language>
@@ -2776,12 +3015,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の姿が
 一瞬にして　消えた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_ShadowDive_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]のすがたが
 いっしゅんにして　きえた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の姿が
 一瞬にして　消えた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_ShadowDive_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]のすがたが
 いっしゅんにして　きえた！</language>
@@ -2796,12 +3037,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 高く　飛び跳ねた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Tobihaneru_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 たかく　とびはねた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 高く　飛び跳ねた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Tobihaneru_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 たかく　とびはねた！</language>
@@ -2816,12 +3059,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の周りで
 空気が渦を巻く！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Kamaitati_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の　まわりで
 くうきが　うずをまく！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の周りで
 空気が渦を巻く！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Kamaitati_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の　まわりで
 くうきが　うずをまく！</language>
@@ -2836,12 +3081,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]を
 激しい光が包む！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_GodBird_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]を
 はげしい　ひかりが　つつむ！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]を
 激しい光が包む！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_GodBird_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]を
 はげしい　ひかりが　つつむ！</language>
@@ -2856,12 +3103,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 光を　吸収した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_SolarBeam_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 ひかりを　きゅうしゅうした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 光を　吸収した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_SolarBeam_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 ひかりを　きゅうしゅうした！</language>
@@ -2876,12 +3125,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 首を　引っ込めた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RocketZutuki_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 くびを　ひっこめた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 首を　引っ込めた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RocketZutuki_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 くびを　ひっこめた！</language>
@@ -2896,12 +3147,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 アンコールを受けた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Encore_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 アンコールをうけた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 アンコールを受けた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Encore_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 アンコールをうけた！</language>
@@ -2915,12 +3168,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 アンコール状態が　解けた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_EncoreCure_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 アンコールじょうたいが　とけた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 アンコール状態が　解けた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_EncoreCure_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 アンコールじょうたいが　とけた！</language>
@@ -2935,12 +3190,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 とくせいが　効かなくなった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Ieki_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 とくせいが　きかなくなった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 とくせいが　効かなくなった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Ieki_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 とくせいが　きかなくなった！</language>
@@ -2955,12 +3212,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 挑発に　乗ってしまった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Chouhatu_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 ちょうはつに　のってしまった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 挑発に　乗ってしまった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Chouhatu_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 ちょうはつに　のってしまった！</language>
@@ -2974,12 +3233,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　挑発されて
 [1:07:わざ名:1]が　出せない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_ChouhatuWarn_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　ちょうはつ　されて
 [1:07:わざ名:1]が　だせない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　挑発されて
 [1:07:わざ名:1]が　出せない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_ChouhatuWarn_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　ちょうはつ　されて
 [1:07:わざ名:1]が　だせない！</language>
@@ -2994,12 +3255,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 いちゃもんを　つけられた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Ichamon_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 いちゃもんを　つけられた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 いちゃもんを　つけられた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Ichamon_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 いちゃもんを　つけられた！</language>
@@ -3015,6 +3278,7 @@
 いちゃもんを　つけられたので
 続けて　同じ技が　出せない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_IchamonWarn_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 いちゃもんを　つけられたので
@@ -3023,6 +3287,7 @@
 いちゃもんを　つけられたので
 続けて　同じ技が　出せない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_IchamonWarn_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 いちゃもんを　つけられたので
@@ -3039,12 +3304,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 相手の技を　封印した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Fuuin_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 あいての　わざを　ふういんした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 相手の技を　封印した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Fuuin_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 あいての　わざを　ふういんした！</language>
@@ -3059,6 +3326,7 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 封印で　[1:07:わざ名:1]が　出せない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_FuuinWarn_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 ふういんで▽
@@ -3066,6 +3334,7 @@
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 封印で　[1:07:わざ名:1]が　出せない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_FuuinWarn_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 ふういんで▽
@@ -3081,12 +3350,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 [1:07:わざ名:1]を　封じこめた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Kanasibari_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 [1:07:わざ名:1]を　ふうじこめた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 [1:07:わざ名:1]を　封じこめた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Kanasibari_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 [1:07:わざ名:1]を　ふうじこめた！</language>
@@ -3100,12 +3371,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　金縛りで
 [1:07:わざ名:1]が　出せない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KanasibariWarn_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　かなしばりで
 [1:07:わざ名:1]が　だせない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　金縛りで
 [1:07:わざ名:1]が　出せない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KanasibariWarn_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　かなしばりで
 [1:07:わざ名:1]が　だせない！</language>
@@ -3119,12 +3392,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 金縛りが　解けた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KanasibariCure_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 かなしばりが　とけた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 金縛りが　解けた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KanasibariCure_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 かなしばりが　とけた！</language>
@@ -3139,12 +3414,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 水のリングを　まとった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_AquaRing_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 みずのリングを　まとった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 水のリングを　まとった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_AquaRing_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 みずのリングを　まとった！</language>
@@ -3158,12 +3435,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 水のリングで　体力を回復！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_AquaRingRecover_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 みずのリングで　たいりょくを　かいふく！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 水のリングで　体力を回復！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_AquaRingRecover_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 みずのリングで　たいりょくを　かいふく！</language>
@@ -3178,12 +3457,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]に
 種を　植えつけた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Yadorigi_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]に
 たねを　うえつけた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]に
 種を　植えつけた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Yadorigi_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]に
 たねを　うえつけた！</language>
@@ -3197,12 +3478,14 @@
 		<language name="JPN_KANJI" width="216">やどりぎが　[1:02:ポケモンニックネーム:0]の
 体力を奪う！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_YadorigiTurn_Y">
 		<language name="JPN" width="216">やどりぎが　やせいの　[1:02:ポケモンニックネーム:0]の
 たいりょくを　うばう！</language>
 		<language name="JPN_KANJI" width="216">やどりぎが　野生の　[1:02:ポケモンニックネーム:0]の
 体力を奪う！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_YadorigiTurn_E">
 		<language name="JPN" width="216">やどりぎが　あいての　[1:02:ポケモンニックネーム:0]の
 たいりょくを　うばう！</language>
@@ -3217,12 +3500,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 体力を削って　パワー全開！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Haradaiko_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 たいりょくを　けずって　パワーぜんかい！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 体力を削って　パワー全開！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Haradaiko_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 たいりょくを　けずって　パワーぜんかい！</language>
@@ -3237,12 +3522,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 集中力を高めている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KiaiPunch_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 しゅうちゅうりょくを　たかめている！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 集中力を高めている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KiaiPunch_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 しゅうちゅうりょくを　たかめている！</language>
@@ -3257,12 +3544,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]の
 [1:06:とくせい名:2]を　コピーした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Narikiri_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]の
 [1:06:とくせい名:2]を　コピーした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]の
 [1:06:とくせい名:2]を　コピーした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Narikiri_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]の
 [1:06:とくせい名:2]を　コピーした！</language>
@@ -3277,12 +3566,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　相手を
 道連れに　しようとしている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MichidureReady_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　あいてを
 みちづれに　しようとしている！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　相手を
 道連れに　しようとしている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MichidureReady_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　あいてを
 みちづれに　しようとしている！</language>
@@ -3296,12 +3587,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　相手を
 道連れに　した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MichidureDone_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　あいてを
 みちづれに　した！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　相手を
 道連れに　した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MichidureDone_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　あいてを
 みちづれに　した！</language>
@@ -3316,12 +3609,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　相手に
 おんねんを　かけようとしている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_OnnenReady_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　あいてに
 おんねんを　かけようとしている！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　相手に
 おんねんを　かけようとしている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_OnnenReady_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　あいてに
 おんねんを　かけようとしている！</language>
@@ -3337,6 +3632,7 @@
 [1:07:わざ名:1]は
 おんねんで　ＰＰが０になった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_OnnenDone_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 [1:07:わざ名:1]は
@@ -3345,6 +3641,7 @@
 [1:07:わざ名:1]は
 おんねんで　ＰＰが０になった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_OnnenDone_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 [1:07:わざ名:1]は
@@ -3361,12 +3658,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　眠って
 元気に　なった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Nemuru_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　ねむって
 げんきに　なった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　眠って
 元気に　なった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Nemuru_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　ねむって
 げんきに　なった！</language>
@@ -3381,12 +3680,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 [1:07:わざ名:1]を　[2:00:１桁:2]削った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Urami_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 [1:07:わざ名:1]を　[2:00:１桁:2]けずった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 [1:07:わざ名:1]を　[2:00:１桁:2]削った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Urami_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 [1:07:わざ名:1]を　[2:00:１桁:2]けずった！</language>
@@ -3401,12 +3702,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:02:ポケモンニックネーム:1]に　変身した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Hensin_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:02:ポケモンニックネーム:1]に　へんしんした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:02:ポケモンニックネーム:1]に　変身した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Hensin_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:02:ポケモンニックネーム:1]に　へんしんした！</language>
@@ -3421,12 +3724,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]に
 ねらいを　さだめた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_LockOn_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]に
 ねらいを　さだめた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]に
 ねらいを　さだめた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_LockOn_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]に
 ねらいを　さだめた！</language>
@@ -3441,12 +3746,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 電磁力で　浮かびあがった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_DenjiFuyu_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 でんじりょくで　うかびあがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 電磁力で　浮かびあがった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_DenjiFuyu_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 でんじりょくで　うかびあがった！</language>
@@ -3461,12 +3768,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 充電を始めた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Juuden_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 じゅうでんを　はじめた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 充電を始めた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Juuden_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 じゅうでんを　はじめた！</language>
@@ -3481,12 +3790,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 眠気を　誘った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Akubi_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 ねむけを　さそった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 眠気を　誘った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Akubi_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 ねむけを　さそった！</language>
@@ -3501,12 +3812,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 注目の的になった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Konoyubi_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 ちゅうもくの　まとになった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 注目の的になった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Konoyubi_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 ちゅうもくの　まとになった！</language>
@@ -3521,12 +3834,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　相手と自分の
 能力変化を　入れ替えた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_HeartSwap_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　あいてと　じぶんの
 のうりょく　へんかを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　相手と自分の
 能力変化を　入れ替えた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_HeartSwap_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　あいてと　じぶんの
 のうりょく　へんかを　いれかえた！</language>
@@ -3542,6 +3857,7 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　相手と自分の
 攻める　能力変化を　入れ替えた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_PowerSwap_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　あいてと　じぶんの
 せめる　のうりょく　へんかを▽
@@ -3549,6 +3865,7 @@
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　相手と自分の
 攻める　能力変化を　入れ替えた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_PowerSwap_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　あいてと　じぶんの
 せめる　のうりょく　へんかを▽
@@ -3564,12 +3881,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　相手と自分の
 守る　能力変化を　入れ替えた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_GuardSwap_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　あいてと　じぶんの
 守る　のうりょく　へんかを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　相手と自分の
 守る　能力変化を　入れ替えた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_GuardSwap_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　あいてと　じぶんの
 守る　のうりょく　へんかを　いれかえた！</language>
@@ -3584,12 +3903,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 お互いの　道具を入れ替えた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Trick_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　おたがいの
 どうぐを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 お互いの　道具を入れ替えた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Trick_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　おたがいの
 どうぐを　いれかえた！</language>
@@ -3604,12 +3925,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]を　覚えた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Monomane_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]を　おぼえた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]を　覚えた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Monomane_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]を　おぼえた！</language>
@@ -3624,12 +3947,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]を　スケッチした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Sketch_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]を　スケッチした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]を　スケッチした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Sketch_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]を　スケッチした！</language>
@@ -3644,12 +3969,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]を　振り払った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Kiribarai_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]を　ふりはらった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]を　振り払った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Kiribarai_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]を　ふりはらった！</language>
@@ -3664,12 +3991,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　神秘的な
 月の光に　包まれた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MikadukiNoMai_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　しんぴてきな
 つきの　ひかりに　つつまれた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　神秘的な
 月の光に　包まれた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MikadukiNoMai_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　しんぴてきな
 つきの　ひかりに　つつまれた！</language>
@@ -3684,12 +4013,14 @@
 		<language name="JPN_KANJI" width="216">いやしのねがいが
 [1:02:ポケモンニックネーム:0]に　届いた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_IyasiNoNegai_Y">
 		<language name="JPN" width="216">いやしのねがいが
 やせいの　[1:02:ポケモンニックネーム:0]に　とどいた！</language>
 		<language name="JPN_KANJI" width="216">いやしのねがいが
 野生の　[1:02:ポケモンニックネーム:0]に　届いた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_IyasiNoNegai_E">
 		<language name="JPN" width="216">いやしのねがいが
 あいての　[1:02:ポケモンニックネーム:0]に　とどいた！</language>
@@ -3704,12 +4035,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 ねがいごとが　かなった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Negaigoto_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 ねがいごとが　かなった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 ねがいごとが　かなった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Negaigoto_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 ねがいごとが　かなった！</language>
@@ -3724,12 +4057,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 騒ぎだした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Sawagu_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 さわぎだした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 騒ぎだした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Sawagu_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 さわぎだした！</language>
@@ -3743,12 +4078,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 騒がしくて　目が覚めた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_SawaguWake_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 さわがしくて　めが　さめた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 騒がしくて　目が覚めた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_SawaguWake_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 さわがしくて　めが　さめた！</language>
@@ -3762,12 +4099,14 @@
 		<language name="JPN_KANJI" width="216">しかし　[1:02:ポケモンニックネーム:0]は
 騒がしくて　眠れない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_SawaguSleepless_Y">
 		<language name="JPN" width="216">しかし　やせいの　[1:02:ポケモンニックネーム:0]は
 さわがしくて　ねむれない！</language>
 		<language name="JPN_KANJI" width="216">しかし　野生の　[1:02:ポケモンニックネーム:0]は
 騒がしくて　眠れない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_SawaguSleepless_E">
 		<language name="JPN" width="216">しかし　あいての　[1:02:ポケモンニックネーム:0]は
 さわがしくて　ねむれない！</language>
@@ -3781,12 +4120,14 @@
 		<language name="JPN_KANJI" width="216">しかし　[1:02:ポケモンニックネーム:0]は
 騒いでいて　眠れない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_SawaguSleeplessSelf_Y">
 		<language name="JPN" width="216">しかし　やせいの　[1:02:ポケモンニックネーム:0]は
 さわいでいて　ねむれない！</language>
 		<language name="JPN_KANJI" width="216">しかし　野生の　[1:02:ポケモンニックネーム:0]は
 騒いでいて　眠れない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_SawaguSleeplessSelf_E">
 		<language name="JPN" width="216">しかし　あいての　[1:02:ポケモンニックネーム:0]は
 さわいでいて　ねむれない！</language>
@@ -3800,12 +4141,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 おとなしくなった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_SawaguCure_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 おとなしくなった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 おとなしくなった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_SawaguCure_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 おとなしくなった！</language>
@@ -3820,12 +4163,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [2:00:１桁:1]つ　たくわえた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Takuwaeru_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [2:00:１桁:1]つ　たくわえた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [2:00:１桁:1]つ　たくわえた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Takuwaeru_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [2:00:１桁:1]つ　たくわえた！</language>
@@ -3839,12 +4184,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]が
 たくわえていた　効果が切れた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_TakuwaeOff_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]が
 たくわえていた　こうかが　きれた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]が
 たくわえていた　効果が切れた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_TakuwaeOff_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]が
 たくわえていた　こうかが　きれた！</language>
@@ -3859,12 +4206,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]には
 道具が　使えなくなった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Sasiosae_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]には
 どうぐが　つかえなくなった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]には
 道具が　使えなくなった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Sasiosae_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]には
 どうぐが　つかえなくなった！</language>
@@ -3878,12 +4227,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]に
 道具が　使えるようになった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_SasiosaeCure_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]に
 どうぐが　つかえるようになった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]に
 道具が　使えるようになった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_SasiosaeCure_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]に
 どうぐが　つかえるようになった！</language>
@@ -3898,12 +4249,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]を　拾ってきた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Recycle_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]を　ひろってきた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]を　拾ってきた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Recycle_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]を　ひろってきた！</language>
@@ -3916,10 +4269,12 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　ねを　はった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　根を　はった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_NeWoHaru_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　ねを　はった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　根を　はった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_NeWoHaru_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　ねを　はった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　根を　はった！</language>
@@ -3931,12 +4286,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　根から
 養分を　吸い取った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_NeWoHaruRecover_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　ねから
 ようぶんを　すいとった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　根から
 養分を　吸い取った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_NeWoHaruRecover_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　ねから
 ようぶんを　すいとった！</language>
@@ -3949,10 +4306,12 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　がまんしている</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　がまんしている</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Gaman_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　がまんしている</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　がまんしている</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Gaman_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　がまんしている</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　がまんしている</language>
@@ -3964,12 +4323,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 がまんが　解かれた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_GamanEnd_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 がまんが　とかれた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 がまんが　解かれた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_GamanEnd_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 がまんが　とかれた！</language>
@@ -3984,12 +4345,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 相手の出方を　うかがっている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_YokodoriReady_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 あいての　でかたを　うかがっている！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 相手の出方を　うかがっている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_YokodoriReady_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 あいての　でかたを　うかがっている！</language>
@@ -4050,45 +4413,6 @@
 技を　横取りした！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_YokodoriExe_E2E0002">
-		<language name="JPN" width="216"></language>
-		<language name="JPN_KANJI" width="216"></language>
-	</row>
-	<row id="BTL_STRID_SET_YokodoriExe_E2E0002_Y">
-		<language name="JPN" width="216"></language>
-		<language name="JPN_KANJI" width="216"></language>
-	</row>
-	<row id="BTL_STRID_SET_YokodoriExe_E2E0002_E">
-		<language name="JPN" width="216"></language>
-		<language name="JPN_KANJI" width="216"></language>
-	</row>
-
-	<row id="BTL_STRID_SET_YokodoriExe_E2E0003">
-		<language name="JPN" width="216"></language>
-		<language name="JPN_KANJI" width="216"></language>
-	</row>
-	<row id="BTL_STRID_SET_YokodoriExe_E2E0003_Y">
-		<language name="JPN" width="216"></language>
-		<language name="JPN_KANJI" width="216"></language>
-	</row>
-	<row id="BTL_STRID_SET_YokodoriExe_E2E0003_E">
-		<language name="JPN" width="216"></language>
-		<language name="JPN_KANJI" width="216"></language>
-	</row>
-
-	<row id="BTL_STRID_SET_YokodoriExe_E2E0004">
-		<language name="JPN" width="216"></language>
-		<language name="JPN_KANJI" width="216"></language>
-	</row>
-	<row id="BTL_STRID_SET_YokodoriExe_E2E0004_Y">
-		<language name="JPN" width="216"></language>
-		<language name="JPN_KANJI" width="216"></language>
-	</row>
-	<row id="BTL_STRID_SET_YokodoriExe_E2E0004_E">
-		<language name="JPN" width="216"></language>
-		<language name="JPN_KANJI" width="216"></language>
-	</row>
-
 	<row id="BTL_STRID_SET_MagicCoatReady">
 		<comment>マジックコート</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
@@ -4096,12 +4420,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 マジックコートに　包まれた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MagicCoatReady_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 マジックコートに　つつまれた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 マジックコートに　包まれた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MagicCoatReady_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 マジックコートに　つつまれた！</language>
@@ -4115,12 +4441,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の　[1:07:わざ名:1]は
 マジックコートに　跳ね返された！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MagicCoatExe_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の　[1:07:わざ名:1]は
 マジックコートに　はねかえされた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の　[1:07:わざ名:1]は
 マジックコートに　跳ね返された！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MagicCoatExe_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の　[1:07:わざ名:1]は
 マジックコートに　はねかえされた！</language>
@@ -4135,12 +4463,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 戦闘から　離脱した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Teleport_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 せんとうから　りだつした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 戦闘から　離脱した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Teleport_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 せんとうから　りだつした！</language>
@@ -4155,12 +4485,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:00:トレーナー名:1]の元へ　戻っていく！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Tonbogaeri_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:00:トレーナー名:1]のもとへ　もどっていく！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:00:トレーナー名:1]の元へ　戻っていく！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Tonbogaeri_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:00:トレーナー名:1]のもとへ　もどっていく！</language>
@@ -4175,12 +4507,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 攻撃と防御を　入れ替えた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_PowerTrick_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 こうげきと　ぼうぎょを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 攻撃と防御を　入れ替えた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_PowerTrick_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 こうげきと　ぼうぎょを　いれかえた！</language>
@@ -4195,12 +4529,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]を　奪って　食べた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Tuibamu_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]を　うばって　たべた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]を　奪って　食べた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Tuibamu_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]を　うばって　たべた！</language>
@@ -4215,12 +4551,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]を　投げつけた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Nagetukeru_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]を　なげつけた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]を　投げつけた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Nagetukeru_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]を　なげつけた！</language>
@@ -4235,12 +4573,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]を　吹き飛ばした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KousokuSpin_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]を　ふきとばした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]を　吹き飛ばした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KousokuSpin_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]を　ふきとばした！</language>
@@ -4255,12 +4595,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 身代わりが 現れた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MigawariAppear_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 みがわりが　あらわれた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 身代わりが 現れた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MigawariAppear_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 みがわりが　あらわれた！</language>
@@ -4274,12 +4616,14 @@
 		<language name="JPN_KANJI" width="216">しかし　[1:02:ポケモンニックネーム:0]の
 身代わりは　すでに出ていた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MigawariExist_Y">
 		<language name="JPN" width="216">しかし　やせいの　[1:02:ポケモンニックネーム:0]の
 みがわりは　すでに　でていた！</language>
 		<language name="JPN_KANJI" width="216">しかし　野生の　[1:02:ポケモンニックネーム:0]の
 身代わりは　すでに出ていた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MigawariExist_E">
 		<language name="JPN" width="216">しかし　あいての　[1:02:ポケモンニックネーム:0]の
 みがわりは　すでに　でていた！</language>
@@ -4293,12 +4637,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]に　かわって
 身代わりが 攻撃を受けた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MigawariDamage_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]に　かわって
 みがわりが　こうげきを　うけた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]に　かわって
 身代わりが 攻撃を受けた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MigawariDamage_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]に　かわって
 みがわりが　こうげきを　うけた！</language>
@@ -4312,12 +4658,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 身代わりは　消えてしまった…</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MigawariDestract_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 みがわりは　きえてしまった…</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 身代わりは　消えてしまった…</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MigawariDestract_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 みがわりは　きえてしまった…</language>
@@ -4332,12 +4680,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 ワイドガードで　守られた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_WideGuard_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 ワイドガードで　まもられた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 ワイドガードで　守られた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_WideGuard_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 ワイドガードで　まもられた！</language>
@@ -4352,12 +4702,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 ファストガードで　守られた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_FastGuard_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 ファストガードで　まもられた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 ファストガードで　守られた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_FastGuard_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 ファストガードで　まもられた！</language>
@@ -4372,12 +4724,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　
 神秘のベールに　守られている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_SinpiNoMamori_Exe_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　
 しんぴのベールに　まもられている！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　
 神秘のベールに　守られている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_SinpiNoMamori_Exe_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　
 しんぴのベールに　まもられている！</language>
@@ -4392,12 +4746,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　
 白い霧に　守られている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_SiroiKiri_Exe_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　
 しろいきりに　まもられている！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　
 白い霧に　守られている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_SiroiKiri_Exe_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　
 しろいきりに　まもられている！</language>
@@ -4411,12 +4767,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 せんとうに　引きずり出された！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_PushOutChange_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 せんとうに　ひきずりだされた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 せんとうに　引きずり出された！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_PushOutChange_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 せんとうに　ひきずりだされた！</language>
@@ -4430,12 +4788,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 攻撃の　反動で　動けない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_CantAction_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 こうげきの　はんどうで　うごけない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 攻撃の　反動で　動けない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_CantAction_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 こうげきの　はんどうで　うごけない！</language>
@@ -4450,12 +4810,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 まきびしの　ダメージを受けた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MakibisiDamage_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 まきびしの　ダメージを　うけた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 まきびしの　ダメージを受けた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_MakibisiDamage_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 まきびしの　ダメージを　うけた！</language>
@@ -4470,12 +4832,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]に
 とがった岩が　食い込んだ！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_StealthRockDamage_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]に
 とがった　いわが　くいこんだ！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]に
 とがった岩が　食い込んだ！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_StealthRockDamage_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]に
 とがった　いわが　くいこんだ！</language>
@@ -4490,12 +4854,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 時空を　ゆがめた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_TrickRoom_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 じくうを　ゆがめた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 時空を　ゆがめた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_TrickRoom_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 じくうを　ゆがめた！</language>
@@ -4509,12 +4875,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 ゆがんだ　時空を　元に戻した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_TrickRoomOff_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 ゆがんだ　じくうを　もとに　もどした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 ゆがんだ　時空を　元に戻した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_TrickRoomOff_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 ゆがんだ　じくうを　もとに　もどした！</language>
@@ -4529,12 +4897,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 滅びのカウントが　[2:00:１桁:1]になった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_HorobiCountDown_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 ほろびのカウントが　[2:00:１桁:1]になった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 滅びのカウントが　[2:00:１桁:1]になった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_HorobiCountDown_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 ほろびのカウントが　[2:00:１桁:1]になった！</language>
@@ -4551,6 +4921,7 @@
 [1:06:とくせい名:1]　で
 にげることが　できない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_CantEscTok_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の　
 [1:06:とくせい名:1]　で
@@ -4559,6 +4930,7 @@
 [1:06:とくせい名:1]　で
 にげることが　できない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_CantEscTok_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の　
 [1:06:とくせい名:1]　で
@@ -4574,12 +4946,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 もう　逃げられない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_CantEscWaza_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 もう　にげられない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 もう　逃げられない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_CantEscWaza_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 もう　にげられない！</language>
@@ -4596,6 +4970,7 @@
 [1:06:とくせい名:1]　で
 入れかえることが　できない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_CantChangeTok_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の　
 [1:06:とくせい名:1]　で
@@ -4604,6 +4979,7 @@
 [1:06:とくせい名:1]　で
 入れかえることが　できない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_CantChangeTok_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の　
 [1:06:とくせい名:1]　で
@@ -4620,12 +4996,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　かいふくふうじで
 [1:07:わざ名:1]が　出せない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KaifukuFuji_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　かいふくふうじで
 [1:07:わざ名:1]が　だせない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　かいふくふうじで
 [1:07:わざ名:1]が　出せない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KaifukuFuji_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　かいふくふうじで
 [1:07:わざ名:1]が　だせない！</language>
@@ -4639,12 +5017,14 @@
 		<language name="JPN_KANJI" width="216">しかし　[1:02:ポケモンニックネーム:0]は
 体力が　満タンだ！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_HPFull_Y">
 		<language name="JPN" width="216">しかし　やせいの　[1:02:ポケモンニックネーム:0]は
 たいりょくが　まんたんだ！</language>
 		<language name="JPN_KANJI" width="216">しかし　野生の　[1:02:ポケモンニックネーム:0]は
 体力が　満タンだ！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_HPFull_E">
 		<language name="JPN" width="216">しかし　あいての　[1:02:ポケモンニックネーム:0]は
 たいりょくが　まんたんだ！</language>
@@ -4659,12 +5039,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:0F:ポケモンのタイプ:1]タイプに　なった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_ChangePokeType_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:0F:ポケモンのタイプ:1]タイプに　なった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:0F:ポケモンのタイプ:1]タイプに　なった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_ChangePokeType_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:0F:ポケモンのタイプ:1]タイプに　なった！</language>
@@ -4679,12 +5061,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]から
 体力を　吸い取った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Drain_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]から
 たいりょくを　すいとった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]から
 体力を　吸い取った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Drain_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]から
 たいりょくを　すいとった！</language>
@@ -4699,12 +5083,14 @@
 		<language name="JPN_KANJI" width="216">勢いあまって　[1:02:ポケモンニックネーム:0]は
 地面に　ぶつかった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_HazureJibaku_Y">
 		<language name="JPN" width="216">いきおいあまって　やせいの　[1:02:ポケモンニックネーム:0]は
 じめんに　ぶつかった！</language>
 		<language name="JPN_KANJI" width="216">勢いあまって　野生の　[1:02:ポケモンニックネーム:0]は
 地面に　ぶつかった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_HazureJibaku_E">
 		<language name="JPN" width="216">いきおいあまって　あいての　[1:02:ポケモンニックネーム:0]は
 じめんに　ぶつかった！</language>
@@ -4712,7 +5098,7 @@
 地面に　ぶつかった！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_UseItem_RecoverHP" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
+	<row id="BTL_STRID_SET_UseItem_RecoverHP" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>アイテム使用メッセージ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -4721,6 +5107,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 体力を　回復した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_RecoverHP_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -4729,6 +5116,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 体力を　回復した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_RecoverHP_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -4746,6 +5134,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 [1:07:わざ名:0]のPPを　回復した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_RecoverPP_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -4754,6 +5143,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 [1:07:わざ名:0]のPPを　回復した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_RecoverPP_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -4769,12 +5159,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で 少し　回復</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_RecoverLittle_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で すこし　かいふく</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で 少し　回復</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_RecoverLittle_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で すこし　かいふく</language>
@@ -4790,6 +5182,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 毒が　治った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_CureDoku_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -4798,6 +5191,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 毒が　治った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_CureDoku_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -4815,6 +5209,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 マヒが　治った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_CureMahi_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -4823,6 +5218,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 マヒが　治った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_CureMahi_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -4840,6 +5236,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 目を覚ました！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_CureNemuri_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -4848,6 +5245,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 目を覚ました！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_CureNemuri_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -4865,6 +5263,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 氷状態が　治った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_CureKoori_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -4873,6 +5272,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 氷状態が　治った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_CureKoori_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -4890,6 +5290,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 火傷が　治った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_CureYakedo_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -4898,6 +5299,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 火傷が　治った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_CureYakedo_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -4915,6 +5317,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 混乱が　治った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_CureKonran_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -4923,6 +5326,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 混乱が　治った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_CureKonran_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -4940,6 +5344,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 メロメロ状態が　治った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_CureMero_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -4948,6 +5353,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 メロメロ状態が　治った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_CureMero_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -4965,6 +5371,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 攻撃　が　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_Rankup_ATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -4973,6 +5380,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 攻撃　が　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_Rankup_ATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -4990,6 +5398,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 防御　が　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_Rankup_DEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -4998,6 +5407,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 防御　が　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_Rankup_DEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5015,6 +5425,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくこう　が　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_Rankup_SPATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5023,6 +5434,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくこう　が　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_Rankup_SPATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5040,6 +5452,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくぼう　が　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_Rankup_SPDEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5048,6 +5461,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくぼう　が　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_Rankup_SPDEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5065,6 +5479,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 素早さ　が　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_Rankup_AGI_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5073,6 +5488,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 素早さ　が　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_Rankup_AGI_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5090,6 +5506,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 命中率　が　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_Rankup_HIT_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5098,6 +5515,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 命中率　が　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_Rankup_HIT_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5115,6 +5533,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 回避率　が　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_Rankup_AVOID_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5123,6 +5542,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 回避率　が　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_Rankup_AVOID_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5140,6 +5560,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 攻撃　が　ぐーんと　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_RankupEx_ATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5148,6 +5569,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 攻撃　が　ぐーんと　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_RankupEx_ATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5165,6 +5587,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 防御　が　ぐーんと　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_RankupEx_DEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5173,6 +5596,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 防御　が　ぐーんと　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_RankupEx_DEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5190,6 +5614,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくこう　が　ぐーんと　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_RankupEx_SPATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5198,6 +5623,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくこう　が　ぐーんと　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_RankupEx_SPATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5215,6 +5641,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくぼう　が　ぐーんと　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_RankupEx_SPDEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5223,6 +5650,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 とくぼう　が　ぐーんと　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_RankupEx_SPDEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5240,6 +5668,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 素早さ　が　ぐーんと　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_RankupEx_AGI_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5248,6 +5677,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 素早さ　が　ぐーんと　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_RankupEx_AGI_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5265,6 +5695,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 命中率　が　ぐーんと　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_RankupEx_HIT_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5273,6 +5704,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 命中率　が　ぐーんと　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_RankupEx_HIT_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5290,6 +5722,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 回避率　が　ぐーんと　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_RankupEx_AVOID_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5298,6 +5731,7 @@
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
 回避率　が　ぐーんと　上がった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_RankupEx_AVOID_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
@@ -5315,6 +5749,7 @@
 [1:09:どうぐ名:1]を　使って[BE:00:ページ切り替え（行送り）]
 張り切りだした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_Rankup_Critical_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]を　つかって[BE:00:ページ切り替え（行送り）]
@@ -5323,6 +5758,7 @@
 [1:09:どうぐ名:1]を　使って[BE:00:ページ切り替え（行送り）]
 張り切りだした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_UseItem_Rankup_Critical_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]を　つかって[BE:00:ページ切り替え（行送り）]
@@ -5338,12 +5774,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で　もちこたえた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KoraeItem_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で　もちこたえた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で　もちこたえた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KoraeItem_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で　もちこたえた！</language>
@@ -5357,12 +5795,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
 ステータスを　もとに　もどした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankRecoverItem_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
 ステータスを　もとに　もどした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
 ステータスを　もとに　もどした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_RankRecoverItem_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
 ステータスを　もとに　もどした！</language>
@@ -5376,12 +5816,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 はりきっている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KiaiDame_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 はりきっている！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 はりきっている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_KiaiDame_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 はりきっている！</language>
@@ -5393,10 +5835,12 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は ねむらない！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は 眠らない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Fumin_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は ねむらない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は 眠らない！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Fumin_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は ねむらない！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は 眠らない！</language>
@@ -5409,12 +5853,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]を
 手助けする　体勢に入った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Tedasuke_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]を
 てだすけする　たいせいに　はいった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]を
 手助けする　体勢に入った！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Tedasuke_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]を
 てだすけする　たいせいに　はいった！</language>
@@ -5429,12 +5875,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]の
 能力変化を　コピーした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_JikoAnji_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]の
 のうりょく　へんかを　コピーした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]の
 能力変化を　コピーした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_JikoAnji_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]の
 のうりょく　へんかを　コピーした！</language>
@@ -5449,12 +5897,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]の
 [1:09:どうぐ名:2]を　はたき落とした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Hatakiotosu_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]の
 [1:09:どうぐ名:2]を　はたきおとした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]の
 [1:09:どうぐ名:2]を　はたき落とした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Hatakiotosu_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]の
 [1:09:どうぐ名:2]を　はたきおとした！</language>
@@ -5469,12 +5919,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]から
 [1:09:どうぐ名:2]を　奪いとった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Dorobou_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]から
 [1:09:どうぐ名:2]を　うばいとった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]から
 [1:09:どうぐ名:2]を　奪いとった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Dorobou_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は [1:02:ポケモンニックネーム:1]から
 [1:09:どうぐ名:2]を　うばいとった！</language>
@@ -5491,6 +5943,7 @@
 自分の体力を　削って[BE:00:ページ切り替え（行送り）]
 [1:02:ポケモンニックネーム:1]に　のろいを　かけた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Noroi_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 じぶんの　たいりょくを　けずって[BE:00:ページ切り替え（行送り）]
@@ -5499,6 +5952,7 @@
 自分の体力を　削って[BE:00:ページ切り替え（行送り）]
 [1:02:ポケモンニックネーム:1]に　のろいを　かけた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Noroi_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 じぶんの　たいりょくを　けずって[BE:00:ページ切り替え（行送り）]
@@ -5514,12 +5968,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 のろわれている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_NoroiDamage_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 のろわれている！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 のろわれている！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_NoroiDamage_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 のろわれている！</language>
@@ -5534,12 +5990,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 未来に　攻撃を予知した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Miraiyoti_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 みらいに　こうげきを　よちした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 未来に　攻撃を予知した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Miraiyoti_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 みらいに　こうげきを　よちした！</language>
@@ -5554,12 +6012,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 はめつのねがいを　未来に託した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_HametuNoNegai_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 はめつのねがいを　みらいに　たくした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 はめつのねがいを　未来に託した！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_HametuNoNegai_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 はめつのねがいを　みらいに　たくした！</language>
@@ -5574,12 +6034,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]の　攻撃を受けた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_DelayAttack_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]の　こうげきを　うけた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]の　攻撃を受けた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_DelayAttack_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]の　こうげきを　うけた！</language>
@@ -5648,12 +6110,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 おたがいのパワーを　シェアした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_PowerShare_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 おたがいのパワーを　シェアした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 おたがいのパワーを　シェアした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_PowerShare_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 おたがいのパワーを　シェアした！</language>
@@ -5668,12 +6132,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 おたがいのガードを　シェアした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_GuardShare_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 おたがいのガードを　シェアした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 おたがいのガードを　シェアした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_GuardShare_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 おたがいのガードを　シェアした！</language>
@@ -5688,12 +6154,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 身軽になった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_BodyPurge_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 みがるになった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 身軽になった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_BodyPurge_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 みがるになった！</language>
@@ -5708,12 +6176,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]にも
 火花が　降りかかった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_HajikeruHonoo_Side_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]にも
 ひばなが　ふりかかった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]にも
 火花が　降りかかった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_HajikeruHonoo_Side_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]にも
 ひばなが　ふりかかった！</language>
@@ -5728,12 +6198,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 [1:09:どうぐ名:1]は　焼けて無くなった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Yakitukusu_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 [1:09:どうぐ名:1]は　やけてなくなった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 [1:09:どうぐ名:1]は　焼けて無くなった！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Yakitukusu_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 [1:09:どうぐ名:1]は　やけてなくなった！</language>
@@ -5863,12 +6335,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 フリーフォールから　解放された！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_FreeFall_End_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 フリーフォールから　かいほうされた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 フリーフォールから　解放された！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_FreeFall_End_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 フリーフォールから　かいほうされた！</language>
@@ -5883,12 +6357,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 撃ち落とされて　地面に　落ちた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Utiotosu_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 うちおとされて　じめんに　おちた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 撃ち落とされて　地面に　落ちた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Utiotosu_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 うちおとされて　じめんに　おちた！</language>
@@ -5903,12 +6379,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 順番を　先送りした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Sakiokuri_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 じゅんばんを　さきおくりした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
 順番を　先送りした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Sakiokuri_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 じゅんばんを　さきおくりした！</language>
@@ -5923,12 +6401,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 お言葉に　甘えることにした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_OsakiniDouzo_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 おことばに　あまえることにした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 お言葉に　甘えることにした！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_OsakiniDouzo_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 おことばに　あまえることにした！</language>
@@ -5943,12 +6423,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]と
 [1:02:ポケモンニックネーム:1]は　場所を入れ替えた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_SideChange_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]と
 [1:02:ポケモンニックネーム:1]は　ばしょを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]と
 [1:02:ポケモンニックネーム:1]は　場所を入れ替えた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_SideChange_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]と
 [1:02:ポケモンニックネーム:1]は　ばしょを　いれかえた！</language>
@@ -5963,12 +6445,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]を
 宙に　浮かせた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Telekinesis_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]を
 ちゅうに　うかせた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]を
 宙に　浮かせた！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Telekinesis_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]を
 ちゅうに　うかせた！</language>
@@ -5982,12 +6466,14 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 テレキネシスから　解放された！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Telekinesis_End_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 テレキネシスから　かいほうされた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 テレキネシスから　解放された！</language>
 	</row>
+
 	<row id="BTL_STRID_SET_Telekinesis_End_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 テレキネシスから　かいほうされた！</language>
