@@ -105,6 +105,7 @@ def make_dummy(path, sym, content)
     File.open(path, "w"){|file|
       file.puts "#{content.gsub(/ZONEIDSYMBOL/,sym)}"
     }
+    system( "dos2unix -D #{path}" )
     puts "スクリプトファイル#{path} を生成しました！！！."
   end
 end

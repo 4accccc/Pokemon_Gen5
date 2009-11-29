@@ -34,6 +34,13 @@ COMPILE_TARGETS	= $(UNIQ_SCRIPTFILES:.ev=.bin) $(SCRIPTFILES:.ev=.bin)
 #（非マップスクリプトを追加してもアーカイブIDがずれないように）
 ARCHIVE_TARGETS = $(SCRIPTFILES:.ev=.bin) $(UNIQ_SCRIPTFILES:.ev=.bin)
 
+ifeq ($(PM_DEBUG),yes)		#デバッグビルドの場合
+DEBUG_SCR_LIST_BIN	= scr_debug/debug_list.bin
+DEBUG_SCR_LIST_H		= scr_debug/debug_list.h
+COMPILE_TARGETS += $(DEBUG_SCR_LIST_BIN)
+ARCHIVE_TARGETS += $(DEBUG_SCR_LIST_BIN)
+endif
+
 #MWAS,MWLD
 include	$(NITROSYSTEM_ROOT)/build/buildtools/commondefs
 ## この定義はcommondefsの下に書く必要がある
@@ -85,6 +92,9 @@ do-build: $(TARGET_DIR)/$(TARGET_NARC)
 $(TARGET_DIR)/$(TARGET_NARC): $(TARGET_NARC)
 	$(COPY) $(TARGET_NARC) $(TARGET_DIR)
 	$(COPY) $(TARGET_NAIX) $(TARGET_DIR)
+ifeq ($(PM_DEBUG),yes)		#デバッグビルドの場合
+	$(COPY)	$(DEBUG_SCR_LIST_H) $(TARGET_DIR)
+endif
 
 ifeq ($(CONVERTUSER),true) #CONVERTUSER
 #*.bin
@@ -98,6 +108,12 @@ ifeq ($(CONVERTUSER),true) #CONVERTUSER
 	@rm $*.o $*.elf
 	@rm temp_$*.s
 	@$(EV_DEF) $< $(SCR_OFFS_ID_H)
+
+ifeq ($(PM_DEBUG),yes)		#デバッグビルドの場合
+$(DEBUG_SCR_LIST_BIN):	debug_scr_def.h
+	ruby scr_debug/debug_scr_list.rb debug_scr_def.h $(DEBUG_SCR_LIST_BIN) > $(DEBUG_SCR_LIST_H)
+endif	#PM_DEBUG
+
 endif #CONVERTUSER
 
 
