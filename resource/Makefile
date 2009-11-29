@@ -104,6 +104,7 @@ SUBDIRS	=	wmi \
 			monolith \
 			fourkings_scene \
 			multiboot \
+			field_wfbc_data \
 			season_display
 
 include $(RESOURCE_MACRO)
