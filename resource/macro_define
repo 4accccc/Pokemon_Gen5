@@ -4,6 +4,7 @@
 #	SUBDIRSに定義したディレクトリそれぞれについて再帰的にMakeを行う
 #
 #------------------------------------------------------------------------------
+include $(PROJECT_PROGDIR)version
 AND	=	&&
 ECHO	:= echo
 define MAKE_SUBDIR
