@@ -175,7 +175,7 @@ static GMEVENT_RESULT dninput_MainEvent( GMEVENT * event, int *seq, void * work)
   switch(*seq)
   {
   case 0:
-    wk->menuFunc = DebugMenuInit( wk->fieldWork, wk->heapID, &DATA_DNumInput_MenuInitializer );
+    wk->menuFunc = DEBUGFLDMENU_Init( wk->fieldWork, wk->heapID, &DATA_DNumInput_MenuInitializer );
     (*seq)++;
     break;
   case 1:

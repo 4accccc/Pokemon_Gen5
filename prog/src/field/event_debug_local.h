@@ -33,7 +33,6 @@ struct _TAG_DEBUG_MENU_EVENT_WORK
   FIELDMAP_WORK * fieldWork;
   
   DEBUG_MENU_CALLPROC call_proc;
-  GFL_MSGDATA *msgData;
   FLDMENUFUNC *menuFunc;
 };
 
@@ -56,7 +55,7 @@ typedef u16 GET_MAX_FUNC( GAMESYS_WORK* gsys, void* c_work );
 //--------------------------------------------------------------
 typedef struct {
   u16 msg_arc_id;     ///<引用するメッセージアーカイブの指定
-  u16 max;            ///<項目最大数
+  u16 max;            ///<項目最大数（固定リストでない場合、０）
   const FLDMENUFUNC_LIST * menulist;  ///<参照するメニューデータ（生成する場合はNULL)
   const FLDMENUFUNC_HEADER * menuH;   ///<メニュー表示指定データ
   u8 px, py, sx, sy;
@@ -67,10 +66,49 @@ typedef struct {
 //======================================================================
 // extern 
 //======================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+extern const FLDMENUFUNC_HEADER DATA_DebugMenuList_ZoneSel;
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+extern void DEBUG_ConvertAsciiToUTF16( const u8 * ascii, u32 size, u16 * utf16_buf );
+
+//--------------------------------------------------------------
 /*
  *  @brief  デバッグメニュー初期化
  */
-extern FLDMENUFUNC * DebugMenuInit(
+//--------------------------------------------------------------
+extern FLDMENUFUNC * DEBUGFLDMENU_Init(
     FIELDMAP_WORK * fieldmap, HEAPID heapID, const DEBUG_MENU_INITIALIZER * init );
-FLDMENUFUNC * DebugMenuInitEx(
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+extern FLDMENUFUNC * DEBUGFLDMENU_InitEx(
     FIELDMAP_WORK * fieldmap, HEAPID heapID, const DEBUG_MENU_INITIALIZER * init, void* cb_work );
+
+//======================================================================
+//
+//    サブメニューイベント
+//
+//======================================================================
+//--------------------------------------------------------------
+///サブメニューイベント：デバッグスクリプト選択
+//--------------------------------------------------------------
+extern GMEVENT * DEBUG_EVENT_FLDMENU_DebugScript( const DEBUG_MENU_EVENT_WORK * now_wk );
+
+//--------------------------------------------------------------
+///サブメニューイベント：マップジャンプ（限定版）
+//--------------------------------------------------------------
+extern GMEVENT * DEBUG_EVENT_FLDMENU_JumpEasy( GAMESYS_WORK * gsys, HEAPID heapID );
+
+//--------------------------------------------------------------
+///サブメニューイベント：季節変化
+//--------------------------------------------------------------
+extern GMEVENT * DEBUG_EVENT_FLDMENU_ChangeSeason( GAMESYS_WORK * gsys, HEAPID heapID );
+
+//--------------------------------------------------------------
+///サブメニューイベント：マップジャンプ（全ゾーンID版）
+//--------------------------------------------------------------
+extern GMEVENT * DEBUG_EVENT_FLDMENU_JumpAllZone( GAMESYS_WORK * gsys, HEAPID heapID );
+
