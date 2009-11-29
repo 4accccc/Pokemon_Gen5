@@ -139,6 +139,7 @@ static void APP_TASKMENU_CreateMenuWin( APP_TASKMENU_WORK *work, const APP_TASKM
 static void APP_TASKMENU_TransFrame( GFL_BMPWIN *bmpwin, const APP_TASKMENU_RES *res, APP_TASKMENU_WIN_TYPE type );
 static void APP_TASKMENU_SetActiveItem( GFL_BMPWIN *bmpwin, const APP_TASKMENU_RES *res, const BOOL isActive );
 static void APP_TASKMENU_UpdatePalletAnime( u16 *anmCnt , u16 *transBuf , u8 bgFrame , u8 pltNo );
+static void APP_TASKMENU_ResetPallet( u16 *transBuf, u8 bgFrame , u8 pltNo );
 static void APP_TASKMENU_UpdateKey( APP_TASKMENU_WORK *work );
 static void APP_TASKMENU_UpdateTP( APP_TASKMENU_WORK *work );
 
@@ -388,6 +389,29 @@ static void APP_TASKMENU_UpdatePalletAnime( u16 *anmCnt , u16 *transBuf , u8 bgF
                                           transBuf , 2 );
     }
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パレットアニメをした後、リソースを使い続ける際の、パレット初期化
+ *
+ *	@param	u8 bgFrame  BG面
+ *	@param	pltNo       パレットNO
+ */
+//-----------------------------------------------------------------------------
+static void APP_TASKMENU_ResetPallet( u16 *transBuf, u8 bgFrame , u8 pltNo )
+{ 
+    if( bgFrame <= GFL_BG_FRAME3_M )
+    {
+      NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN ,
+                                          pltNo * 32 + APP_TASKMENU_ANIME_COL*2 ,
+                                          transBuf , 2 );
+    }
+    else
+    {
+      NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
+                                          pltNo * 32 + APP_TASKMENU_ANIME_COL*2 ,
+                                          transBuf , 2 );
+    }
 }
 
 #pragma mark [>main func
@@ -702,6 +726,7 @@ void APP_TASKMENU_WIN_Update( APP_TASKMENU_WIN_WORK *wk )
 //-----------------------------------------------------------------------------
 void APP_TASKMENU_WIN_SetActive( APP_TASKMENU_WIN_WORK *wk, BOOL isActive )
 {	
+  wk->transAnmCnt = 0;
 	APP_TASKMENU_SetActiveItem( wk->bmpwin, wk->res, isActive );
 }
 //----------------------------------------------------------------------------
