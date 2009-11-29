@@ -4,6 +4,7 @@
 
 require "rexml/document"
 require "rexml/parseexception"
+include REXML
 require "kconv"
 
 # XMLファイル名を入力するファンクション

@@ -44,10 +44,10 @@
 
 
 
-#define HEAPID_CORE GFL_HEAPID_APP
-
 FS_EXTERN_OVERLAY(gamesync);
 FS_EXTERN_OVERLAY(fieldmap);
+FS_EXTERN_OVERLAY(wifi_login);
+extern const GFL_PROC_DATA WiFiLogin_ProcData;
 
 
 #define _LOCALMATCHNO (100)
@@ -70,7 +70,9 @@ enum _EVENT_IRCBATTLE {
   _FIELD_FADEOUT_IRCBATTLE,
   _FIELD_END_IRCBATTLE,
   _CALL_GAMESYNC,
-  _WAIT_IRCCOMMPATIBLE,
+  _WAIT_GAMESYNCLOGIN,
+  _GAMESYNC_MAINPROC,
+  _WAIT_GAMESYNC_MAINPROC,
 };
 
 
@@ -154,8 +156,6 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     }
     PMSND_FadeInBGM(60);
     return GMEVENT_RES_FINISH;
-
-  //相性チェックはプロセス移動
   case _FIELD_FADEOUT_IRCBATTLE:
     GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, dbw->fieldmap, FIELD_FADE_BLACK, FIELD_FADE_WAIT));
     (*seq)++;
@@ -164,10 +164,20 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     (*seq)++;
     break;
   case _CALL_GAMESYNC:
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &dbw->aLoginWork);
+    (*seq)++;
+    break;
+  case _WAIT_GAMESYNCLOGIN:
+    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL)
+    {
+      (*seq)=_GAMESYNC_MAINPROC;
+    }
+    break;
+  case _GAMESYNC_MAINPROC:
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(gamesync), &G_SYNC_ProcData, dbw);
     (*seq)++;
     break;
-  case _WAIT_IRCCOMMPATIBLE:
+  case _WAIT_GAMESYNC_MAINPROC:
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL)
     {
       GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
@@ -199,6 +209,9 @@ GMEVENT* EVENT_GSync(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * pre
   dbw->ctrl = SaveControl_GetPointer();
   dbw->gsys = gsys;
   dbw->fieldmap = fieldmap;
+  dbw->aLoginWork.gsys=gsys;
+  dbw->aLoginWork.ctrl=dbw->ctrl;
+  dbw->aLoginWork.fieldmap = fieldmap;
   return event;
 }
 
