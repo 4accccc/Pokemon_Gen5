@@ -329,7 +329,6 @@ typedef struct
 	GFL_POINT	next_pos;
 	GFL_POINT	init_pos;
 
-	MtxFx22	mtx;
 } MAP_WORK;
 //-------------------------------------
 ///	上画面情報
@@ -1455,7 +1454,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 			}
 
 			PLACE_Scale( &p_wk->place, FX32_CONST(2), &sc_center_pos, &next_pos );
-			MAP_Scale( &p_wk->map, FX32_CONST(0.5), &sc_center_pos, &next_pos );
+			MAP_Scale( &p_wk->map, FX32_CONST(2), &sc_center_pos, &next_pos );
 
 			PLACE_SetVisible( &p_wk->place, FALSE );
 
@@ -3077,6 +3076,8 @@ static void MAP_Main( MAP_WORK *p_wk )
 		add	= (p_wk->next_scale - p_wk->init_scale)/MAP_SCALE_SYNC;
 		p_wk->now_scale	= p_wk->init_scale + add * p_wk->sync;
 
+    OS_FPrintf( 3, "init %f next %f now %f \n", FX_FX32_TO_F32(p_wk->init_scale), FX_FX32_TO_F32(p_wk->next_scale), FX_FX32_TO_F32(p_wk->now_scale) );
+
 		//中心座標計算
 		//中心座標計算といいつつも、中心は常に画面中心で、
 		//中心がずれて見えるように座標をずらす
@@ -3149,11 +3150,16 @@ static void MAP_Main( MAP_WORK *p_wk )
 			p_wk->is_scale_end	= TRUE;
 		}
 		
-		//反映
-		MTX_Scale22( &p_wk->mtx, p_wk->now_scale, p_wk->now_scale );
-		GFL_BG_SetAffine( p_wk->map_frm, &p_wk->mtx, sc_center_pos.x, sc_center_pos.y );
-		GFL_BG_SetAffine( p_wk->road_frm, &p_wk->mtx, sc_center_pos.x, sc_center_pos.y );
+#if 0
+    { 
+      MtxFx22 mtx;
+      MTX_Scale22( &mtx, p_wk->now_scale, p_wk->now_scale );
+      GFL_BG_SetAffine( p_wk->map_frm, &mtx, sc_center_pos.x, sc_center_pos.y );
+      GFL_BG_SetAffine( p_wk->road_frm, &mtx, sc_center_pos.x, sc_center_pos.y );
+    }
+#endif
 
+		//反映
 #if 1
 		MAP_SetWldPos( p_wk, &p_wk->pos );
 #else
@@ -3193,9 +3199,10 @@ static void MAP_Scale( MAP_WORK *p_wk, fx32 scale, const GFL_POINT *cp_center_st
 	p_wk->init_pos.y	= cp_center_start->y - 96;
 	p_wk->next_pos.x	= cp_center_end->x - 128;
 	p_wk->next_pos.y	= cp_center_end->y - 96;
-	//NAGI_Printf( "Scale start sx%d sy%d ex%d ey%d\n", p_wk->init_pos.x, p_wk->init_pos.y, 
-		//	p_wk->next_pos.x, p_wk->next_pos.y);
+	NAGI_Printf( "Scale start sx%d sy%d ex%d ey%d\n", p_wk->init_pos.x, p_wk->init_pos.y, 
+			p_wk->next_pos.x, p_wk->next_pos.y);
 
+  OS_FPrintf( 3, "init %f next %f\n", FX_FX32_TO_F32(p_wk->init_scale), FX_FX32_TO_F32(p_wk->next_scale) );
 
 	//道路は消す
 	GFL_BG_SetVisible( p_wk->road_frm, FALSE );

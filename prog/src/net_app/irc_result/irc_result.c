@@ -61,8 +61,6 @@
 //-------------------------------------
 ///	マクロ
 //=====================================
-//BGのスケールはOBJと逆なので同じにするマクロ
-#define SCALEBG_SET(a)	(FX_Div(FX32_ONE,(a)))
 
 //-------------------------------------
 ///	パレット
@@ -742,7 +740,7 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 	}
 
 	//SCALEBG
-	SCALEBG_Init( &p_wk->scalebg, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], SCALEBG_SET(FX32_CONST(0.2)), SCALEBG_SET(FX32_CONST(1)), p_wk->p_param->score, HEAPID_IRCRESULT );
+	SCALEBG_Init( &p_wk->scalebg, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], FX32_CONST(0.2), FX32_CONST(1), p_wk->p_param->score, HEAPID_IRCRESULT );
 
 	//デバッグ
 	DEBUGPRINT_Init( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_BACK], FALSE, HEAPID_IRCRESULT );

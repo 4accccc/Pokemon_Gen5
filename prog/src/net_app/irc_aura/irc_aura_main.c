@@ -232,7 +232,6 @@ enum{
 //=====================================
 typedef enum {
   MSG_FONT_TYPE_LARGE,
-  MSG_FONT_TYPE_SMALL,
 }MSG_FONT_TYPE;
 
 //-------------------------------------
@@ -2065,10 +2064,6 @@ static void MSG_Init( MSG_WORK *p_wk, MSG_FONT_TYPE font, HEAPID heapID )
     p_wk->p_font  = GFL_FONT_Create( ARCID_FONT,
         NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
     break;
-  case MSG_FONT_TYPE_SMALL:
-    p_wk->p_font  = GFL_FONT_Create( ARCID_FONT,
-        NARC_font_small_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
-    break;
   default:
     GF_ASSERT_MSG( 0, "MSGFONT_ERRO %d", font );
   };
@@ -2464,172 +2459,6 @@ static GFL_BMPWIN *MSGWND_GetBmpWin( const MSGWND_WORK* cp_wk )
  *        個人結果画面
  */
 //=============================================================================
-#if 0
-//----------------------------------------------------------------------------
-/**
- *  @brief  個人結果画面  初期化
- *
- *  @param  AURA_ONLYRESULT_WORK* p_wk  ワーク
- *  @param  frm                 使用フレーム
- *  @param  MSG_WORK *cp_wk     メッセージ
- *  @param  heapID              ヒープID
- *
- */
-//-----------------------------------------------------------------------------
-static void AURA_ONLYRESULT_Init( AURA_ONLYRESULT_WORK* p_wk, u8 frm, const MSG_WORK *cp_msg, const SHAKE_SEARCH_WORK *cp_search,  HEAPID heapID )
-{
-  GFL_STD_MemClear( p_wk, sizeof(AURA_ONLYRESULT_WORK) );
-  p_wk->cp_msg    = cp_msg;
-  p_wk->cp_search = cp_search;
-
-  MSGWND_Init( &p_wk->msgwnd[AOR_MSGWNDID_TITLE], frm, AOR_MSGWND_TITLE_X, AOR_MSGWND_TITLE_Y,
-        AOR_MSGWND_TITLE_W, AOR_MSGWND_TITLE_H, heapID );
-  MSGWND_Init( &p_wk->msgwnd[AOR_MSGWNDID_MSG], frm, AOR_MSGWND_MSG_X, AOR_MSGWND_MSG_Y,
-        AOR_MSGWND_MSG_W, AOR_MSGWND_MSG_H, heapID );
-
-  MSGWND_Init( &p_wk->msgwnd[AOR_MSGWNDID_DEBUG], frm, AOR_MSGWND_DEBUG_X, AOR_MSGWND_DEBUG_Y,
-        AOR_MSGWND_DEBUG_W, AOR_MSGWND_DEBUG_H, heapID );
-
-  MSGWND_Print( &p_wk->msgwnd[AOR_MSGWNDID_TITLE], cp_msg, AURA_RES_000, 0, 0 );
-
-
-  //文字列作成
-  {
-    u32 msg_idx;
-    u32 shake_abs;
-    int i;
-
-    shake_abs = 0;
-    for( i = 1; i <TOUCH_COUNTER_SHAKE_MAX; i++ )
-    {
-      shake_abs += MATH_IAbs( cp_search->shake[i].x - cp_search->shake[0].x );
-      shake_abs += MATH_IAbs( cp_search->shake[i].y - cp_search->shake[0].y );
-    }
-
-    if( 40 <= shake_abs )
-    {
-      msg_idx = 0;
-    }
-    else if( 20 < shake_abs && shake_abs < 40 )
-    {
-      msg_idx = 1;
-    }
-    else if( shake_abs <= 20 )
-    {
-      msg_idx = 2;
-    }
-    else
-    {
-      GF_ASSERT( 0 );
-    }
-    OS_Printf( "ブレ幅の絶対値 %d\n", shake_abs );
-
-    MSGWND_Print( &p_wk->msgwnd[AOR_MSGWNDID_MSG], cp_msg, AURA_RESMSG_000 + msg_idx, 0, 0 );
-  }
-
-  //デバッグ文字列作成
-  {
-    MSGWND_WORK* p_msgwnd;
-    PRINT_QUE*  p_que;
-    GFL_FONT*   p_font;
-    int i;
-    u32 shake_abs;
-    u32 shake_sum;
-    STRBUF *p_strbuf;
-
-    static const u16 *scp_sec[] =
-    {
-      L"0.5s",
-      L"1.0s",
-      L"1.5s",
-      L"2.0s",
-      L"2.5s",
-      L"3.0s",
-      L"3.5s",
-      L"4.0s",
-      L"4.5s",
-      L"5.0s",
-    };
-
-    p_msgwnd  = &p_wk->msgwnd[AOR_MSGWNDID_DEBUG];
-    p_font  = GFL_FONT_Create( ARCID_FONT,
-          NARC_font_small_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
-    shake_sum = 0;
-    for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
-    {
-      shake_abs = MATH_IAbs( cp_search->shake[i].x - cp_search->shake[0].x );
-      shake_abs += MATH_IAbs( cp_search->shake[i].y - cp_search->shake[0].y );
-      shake_sum += shake_abs;
-
-      p_strbuf  = DEBUGPRINT_CreateWideChar( scp_sec[i], heapID );
-      PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_msgwnd->p_bmpwin ), i*20, 0, p_strbuf, p_font );
-      GFL_STR_DeleteBuffer( p_strbuf );
-
-      p_strbuf  = DEBUGPRINT_CreateWideCharNumber( L" %d", shake_abs, heapID );
-      PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_msgwnd->p_bmpwin ), i*20, 10, p_strbuf, p_font );
-      GFL_STR_DeleteBuffer( p_strbuf );
-    }
-
-    p_strbuf  = DEBUGPRINT_CreateWideChar( L"合計", heapID );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_msgwnd->p_bmpwin ), i*20, 0, p_strbuf, p_font );
-    GFL_STR_DeleteBuffer( p_strbuf );
-
-
-    p_strbuf  = DEBUGPRINT_CreateWideCharNumber( L" %d", shake_sum, heapID );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_msgwnd->p_bmpwin ), i*20, 10, p_strbuf, p_font );
-    GFL_STR_DeleteBuffer( p_strbuf );
-
-    GFL_BMPWIN_MakeTransWindow( p_msgwnd->p_bmpwin );
-    GFL_FONT_Delete( p_font );
-  }
-}
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  個人結果画面  破棄
- *
- *  @param  AURA_ONLYRESULT_WORK* p_wk  ワーク
- *
- */
-//-----------------------------------------------------------------------------
-static void AURA_ONLYRESULT_Exit( AURA_ONLYRESULT_WORK* p_wk )
-{
-  int i;
-  for( i = 0; i < AOR_MSGWNDID_MAX; i++ )
-  {
-    MSGWND_Exit( &p_wk->msgwnd[i] );
-  }
-  GFL_STD_MemClear( p_wk, sizeof(AURA_ONLYRESULT_WORK) );
-}
-//----------------------------------------------------------------------------
-/**
- *  @brief  個人結果画面  メイン処理
- *
- *  @param  AURA_ONLYRESULT_WORK* p_wk ワーク
- *
- *  @retval TRUEならば終了
- *  @retval FALSEならば処理中
- */
-//-----------------------------------------------------------------------------
-static BOOL AURA_ONLYRESULT_Main( AURA_ONLYRESULT_WORK* p_wk )
-{
-
-  {
-    int i;
-    for( i = 0; i < MSGWNDID_MAX; i++ )
-    {
-      MSGWND_Main( &p_wk->msgwnd[i], p_wk->cp_msg );
-    }
-  }
-
-  if( GFL_UI_TP_GetTrg() )
-  {
-    return TRUE;
-  }
-
-  return FALSE;
-}
-#endif
 //=============================================================================
 /**
  *        SEQ
