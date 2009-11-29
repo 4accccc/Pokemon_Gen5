@@ -53,6 +53,8 @@
 #define MB_CAP_OBJ_SUB_R_LEFT (10)
 #define MB_CAP_OBJ_SUB_L_LEFT (244)
 
+#define MB_CAP_BALL_NUM (10)
+
 //‹|Œn
 #define MB_CAP_DOWN_BOW_PULL_LEN_MAX (FX32_CONST(100))
 
@@ -63,11 +65,29 @@
 #define MB_CAP_UPPER_BALL_LEN_MIN ( 32 )
 #define MB_CAP_UPPER_BALL_LEN_MAX ( 300 )
 
+
+#define MB_CAP_OBJ_BASE_Z (20)
+#define MB_CAP_POKE_BASE_Z (20)
+#define MB_CAP_UPPER_BALL_BASE_Z (50)
+#define MB_CAP_UPPER_TARGET_BASE_Z (280)
+
 //======================================================================
 //	enum
 //======================================================================
 #pragma mark [> enum
+typedef enum
+{
+  MCBR_SHADOW,
+  MCBR_BALL,
+  MCBR_BALL_BONUS,
+  //ˆÈ‰ºOBJ‚Í•À‚Ñ‚ðOBJ‚ÌTYPE’è‹`‚Æ‚ ‚í‚¹‚é
+  MCBR_OBJ_GRASS,
+  MCBR_OBJ_GRASS_SIDE,
+  MCBR_OBJ_WOOD,
+  MCBR_OBJ_WATER,
 
+  MCBR_MAX,
+}MB_CAP_BBD_RES;
 
 //======================================================================
 //	typedef struct
@@ -80,7 +100,8 @@ typedef struct _MB_CAPTURE_WORK MB_CAPTURE_WORK;
 //	proto
 //======================================================================
 #pragma mark [> proto
-extern const HEAPID MB_CAPTURE_GetHeapId( MB_CAPTURE_WORK *work );
+extern const HEAPID MB_CAPTURE_GetHeapId( const MB_CAPTURE_WORK *work );
 extern GFL_BBD_SYS* MB_CAPTURE_GetBbdSys( MB_CAPTURE_WORK *work );
 extern ARCHANDLE* MB_CAPTURE_GetArcHandle( MB_CAPTURE_WORK *work );
-extern const DLPLAY_CARD_TYPE MB_CAPTURE_GetCardType( MB_CAPTURE_WORK *work );
+extern const DLPLAY_CARD_TYPE MB_CAPTURE_GetCardType( const MB_CAPTURE_WORK *work );
+extern const int MB_CAPTURE_GetBbdResIdx( const MB_CAPTURE_WORK *work , const MB_CAP_BBD_RES resType );

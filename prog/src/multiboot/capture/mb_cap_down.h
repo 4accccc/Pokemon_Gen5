@@ -44,13 +44,15 @@ typedef struct _MB_CAP_DOWN MB_CAP_DOWN;
 //	
 //--------------------------------------------------------------
 extern MB_CAP_DOWN* MB_CAP_DOWN_InitSystem( MB_CAPTURE_WORK *work );
-extern void MB_CAP_POKE_DeleteSystem( MB_CAPTURE_WORK *work , MB_CAP_DOWN *downWork );
-extern void MB_CAP_POKE_UpdateSystem( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork );
+extern void MB_CAP_DOWN_DeleteSystem( MB_CAPTURE_WORK *work , MB_CAP_DOWN *downWork );
+extern void MB_CAP_DOWN_UpdateSystem( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork );
 
 extern const MB_CAP_DOWN_STATE MB_CAP_DOWN_GetState( const MB_CAP_DOWN *downWork );
 
 extern const fx32 MB_CAP_DOWN_GetPullLen( const MB_CAP_DOWN *downWork );
 extern const u16  MB_CAP_DOWN_GetRotAngle( const MB_CAP_DOWN *downWork );
+extern const fx32 MB_CAP_DOWN_GetShotLen( const MB_CAP_DOWN *downWork );
+extern const u16  MB_CAP_DOWN_GetShotAngle( const MB_CAP_DOWN *downWork );
 
 //É{Å[ÉãÇÃï‚è[
 extern void MB_CAP_DOWN_ReloadBall( MB_CAP_DOWN *downWork );

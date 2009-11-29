@@ -26,6 +26,7 @@
 #include "./mb_cap_obj.h"
 #include "./mb_cap_poke.h"
 #include "./mb_cap_down.h"
+#include "./mb_cap_ball.h"
 #include "./mb_cap_local_def.h"
 
 
@@ -61,16 +62,20 @@ struct _MB_CAPTURE_WORK
   
   GFL_G3D_CAMERA    *camera;
   GFL_BBD_SYS     *bbdSys;
+  int             bbdRes[MCBR_MAX];
   
   MB_CAP_POKE *pokeWork[MB_CAP_POKE_NUM];
   MB_CAP_OBJ  *objWork[MB_CAP_OBJ_NUM];
+  MB_CAP_BALL  *ballWork[MB_CAP_BALL_NUM];
   MB_CAP_DOWN *downWork;
   
   //è„âÊñ ån
+  BOOL isShotBall;
   int resIdxTarget;
   int objIdxTarget;
   
   VecFx32 targetPos;
+  
 
 };
 
@@ -120,6 +125,7 @@ static const GFL_DISP_VRAM vramBank = {
 //--------------------------------------------------------------
 static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
 {
+  u8 i;
   work->state = MSS_FADEIN;
   
   MB_CAPTURE_InitGraphic( work );
@@ -130,6 +136,12 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
   MB_CAPTURE_InitPoke( work );
   MB_CAPTURE_InitUpper( work );
   work->downWork = MB_CAP_DOWN_InitSystem( work );
+  work->isShotBall = FALSE;
+
+  for( i=0;i<MB_CAP_BALL_NUM;i++ )
+  {
+    work->ballWork[i] = NULL;
+  }
 }
 
 //--------------------------------------------------------------
@@ -137,12 +149,26 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
 //--------------------------------------------------------------
 static void MB_CAPTURE_Term( MB_CAPTURE_WORK *work )
 {
-  MB_CAP_POKE_DeleteSystem( work , work->downWork );
+  u8 i;
+  for( i=0;i<MB_CAP_BALL_NUM;i++ )
+  {
+    if( work->ballWork[i] != NULL )
+    {
+      MB_CAP_BALL_DeleteObject( work , work->ballWork[i] );
+    }
+  }
+
+  MB_CAP_DOWN_DeleteSystem( work , work->downWork );
   MB_CAPTURE_TermUpper( work );
   MB_CAPTURE_TermObject( work );
   MB_CAPTURE_TermPoke( work );
 
   GFL_TCB_DeleteTask( work->vBlankTcb );
+
+  for( i=0;i<MCBR_MAX;i++ )
+  {
+    GFL_BBD_RemoveResource( work->bbdSys , work->bbdRes[i] );
+  }
 
   MB_CAPTURE_TermGraphic( work );
 }
@@ -181,7 +207,7 @@ static const BOOL MB_CAPTURE_Main( MB_CAPTURE_WORK *work )
     break;
   }
 
-  MB_CAP_POKE_UpdateSystem( work , work->downWork );
+  MB_CAP_DOWN_UpdateSystem( work , work->downWork );
   MB_CAPTURE_UpdateUpper( work );
 
   //3Dï`âÊ  
@@ -405,7 +431,39 @@ static void MB_CAPTURE_LoadResource( MB_CAPTURE_WORK *work )
 
   GFL_BG_LoadScreenV_Req( MB_CAPTURE_FRAME_BG );
   GFL_BG_LoadScreenV_Req( MB_CAPTURE_FRAME_FRAME );
-
+  
+  //BBDÉäÉ\Å[ÉX
+  {
+    static const u32 resListArr[MCBR_MAX] = {
+      NARC_mb_capture_gra_cap_obj_shadow_nsbtx ,
+      NARC_mb_capture_gra_cap_obj_ballnormal_nsbtx ,
+      NARC_mb_capture_gra_cap_obj_ballbonus_nsbtx ,
+      NARC_mb_capture_gra_cap_obj_kusamura1_nsbtx ,
+      NARC_mb_capture_gra_cap_obj_kusamura2_nsbtx ,
+      NARC_mb_capture_gra_cap_obj_wood_nsbtx ,
+      NARC_mb_capture_gra_cap_obj_water_nsbtx };
+    static const u32 resSizeArr[MCBR_MAX] = {
+      GFL_BBD_TEXSIZDEF_32x32 ,
+      GFL_BBD_TEXSIZDEF_256x32 ,
+      GFL_BBD_TEXSIZDEF_256x32 ,
+      GFL_BBD_TEXSIZDEF_128x32 ,
+      GFL_BBD_TEXSIZDEF_128x32 ,
+      GFL_BBD_TEXSIZDEF_128x32 ,
+      GFL_BBD_TEXSIZDEF_32x32 };
+    u8 i;
+    
+    for( i=0;i<MCBR_MAX;i++ )
+    {
+      GFL_G3D_RES* res = GFL_G3D_CreateResourceHandle( work->initWork->arcHandle , resListArr[i] );
+      GFL_G3D_TransVramTexture( res );
+      work->bbdRes[i] = GFL_BBD_AddResource( work->bbdSys , 
+                                       res , 
+                                       GFL_BBD_TEXFMT_PAL16 ,
+                                       resSizeArr[i] ,
+                                       32 , 32 );
+      GFL_BBD_CutResourceData( work->bbdSys , work->bbdRes[i] );
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -420,7 +478,7 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
     initWork.type = MCOT_GRASS;
     initWork.pos.x = FX32_CONST( (i%MB_CAP_OBJ_X_NUM) * MB_CAP_OBJ_MAIN_X_SPACE + MB_CAP_OBJ_MAIN_LEFT );
     initWork.pos.y = FX32_CONST( (i/MB_CAP_OBJ_X_NUM) * MB_CAP_OBJ_MAIN_Y_SPACE + MB_CAP_OBJ_MAIN_TOP );
-    initWork.pos.z = 0;
+    initWork.pos.z = FX32_CONST( MB_CAP_OBJ_BASE_Z );
     work->objWork[i] = MB_CAP_OBJ_CreateObject( work , &initWork );
   }
   for( i=MB_CAP_OBJ_SUB_U_START;i<MB_CAP_OBJ_SUB_D_START;i++ )
@@ -429,7 +487,7 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
     initWork.type = MCOT_WOOD;
     initWork.pos.x = FX32_CONST( idx * MB_CAP_OBJ_MAIN_X_SPACE + MB_CAP_OBJ_MAIN_LEFT );
     initWork.pos.y = FX32_CONST( MB_CAP_OBJ_SUB_U_TOP );
-    initWork.pos.z = 0;
+    initWork.pos.z = FX32_CONST( MB_CAP_OBJ_BASE_Z );
     work->objWork[i] = MB_CAP_OBJ_CreateObject( work , &initWork );
   }
   for( i=MB_CAP_OBJ_SUB_D_START;i<MB_CAP_OBJ_SUB_R_START;i++ )
@@ -438,7 +496,7 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
     initWork.type = MCOT_WATER;
     initWork.pos.x = FX32_CONST( idx * MB_CAP_OBJ_MAIN_X_SPACE + MB_CAP_OBJ_MAIN_LEFT );
     initWork.pos.y = FX32_CONST( MB_CAP_OBJ_SUB_D_TOP );
-    initWork.pos.z = 0;
+    initWork.pos.z = FX32_CONST( MB_CAP_OBJ_BASE_Z );
     work->objWork[i] = MB_CAP_OBJ_CreateObject( work , &initWork );
   }
   for( i=MB_CAP_OBJ_SUB_R_START;i<MB_CAP_OBJ_SUB_L_START;i++ )
@@ -447,7 +505,7 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
     initWork.type = MCOT_GRASS_SIDE;
     initWork.pos.x = FX32_CONST( MB_CAP_OBJ_SUB_R_LEFT );
     initWork.pos.y = FX32_CONST( idx * MB_CAP_OBJ_MAIN_Y_SPACE + MB_CAP_OBJ_MAIN_TOP );
-    initWork.pos.z = 0;
+    initWork.pos.z = FX32_CONST( MB_CAP_OBJ_BASE_Z );
     work->objWork[i] = MB_CAP_OBJ_CreateObject( work , &initWork );
   }
   for( i=MB_CAP_OBJ_SUB_L_START;i<MB_CAP_OBJ_NUM;i++ )
@@ -456,7 +514,7 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
     initWork.type = MCOT_GRASS_SIDE;
     initWork.pos.x = FX32_CONST( MB_CAP_OBJ_SUB_L_LEFT );
     initWork.pos.y = FX32_CONST( idx * MB_CAP_OBJ_MAIN_Y_SPACE + MB_CAP_OBJ_MAIN_TOP );
-    initWork.pos.z = 0;
+    initWork.pos.z = FX32_CONST( MB_CAP_OBJ_BASE_Z );
     work->objWork[i] = MB_CAP_OBJ_CreateObject( work , &initWork );
   }
 }
@@ -547,17 +605,14 @@ static void MB_CAPTURE_TermUpper( MB_CAPTURE_WORK *work )
 //--------------------------------------------------------------
 static void MB_CAPTURE_UpdateUpper( MB_CAPTURE_WORK *work )
 {
+  u8 i;
+  u8 activeBallNum = 0;
   const MB_CAP_DOWN_STATE downState = MB_CAP_DOWN_GetState( work->downWork );
-  
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-  {
-    MB_CAP_DOWN_ReloadBall( work->downWork );
-  }
-  
+
   if( downState == MCDS_DRAG )
   {
     const BOOL flg = TRUE;
-    VecFx32 pos = {FX32_CONST(128),FX32_CONST(MB_CAP_UPPER_BALL_POS_BASE_Y),FX32_CONST(280)};
+    VecFx32 pos = {FX32_CONST(128),FX32_CONST(MB_CAP_UPPER_BALL_POS_BASE_Y),FX32_CONST(MB_CAP_UPPER_TARGET_BASE_Z)};
     VecFx32 ofs = {0,0,0};
     
     {
@@ -575,21 +630,64 @@ static void MB_CAPTURE_UpdateUpper( MB_CAPTURE_WORK *work )
       
       ofs.x = -FX_Mul( ofs.y , sin );
       ofs.y = FX_Mul( ofs.y , cos );
-      
     }
     VEC_Subtract( &pos , &ofs , &work->targetPos );
     
     GFL_BBD_SetObjectDrawEnable( work->bbdSys , work->objIdxTarget , &flg );
     GFL_BBD_SetObjectTrans( work->bbdSys , work->objIdxTarget , &work->targetPos );
+    work->isShotBall = FALSE;
+
   }
   else
   if( downState == MCDS_SHOT_WAIT )
   {
+    if( work->isShotBall == FALSE )
+    {
+      u8 i;
+      for( i=0;i<MB_CAP_BALL_NUM;i++ )
+      {
+        if( work->ballWork[i] == NULL )
+        {
+          MB_CAP_BALL_INIT_WORK initWork;
+          
+          initWork.isBonus = FALSE;
+          initWork.targetPos = work->targetPos;
+          work->ballWork[i] = MB_CAP_BALL_CreateObject( work , &initWork );
+          break;
+        }
+      }
+      work->isShotBall = TRUE;
+    }
   }
   else
   {
     const BOOL flg = FALSE;
     GFL_BBD_SetObjectDrawEnable( work->bbdSys , work->objIdxTarget , &flg );
+  }
+
+  for( i=0;i<MB_CAP_BALL_NUM;i++ )
+  {
+    if( work->ballWork[i] != NULL )
+    {
+      MB_CAP_BALL_UpdateObject( work , work->ballWork[i] );
+      if( MB_CAP_BALL_IsFinish( work->ballWork[i] ) == TRUE )
+      {
+        MB_CAP_BALL_DeleteObject( work , work->ballWork[i] );
+        work->ballWork[i] = NULL;
+      }
+      else
+      {
+        activeBallNum++;
+      }
+    }
+  }
+  
+  if( activeBallNum == 0 &&
+      downState == MCDS_SHOT_WAIT &&
+      work->isShotBall == TRUE )
+  {
+    MB_CAP_DOWN_ReloadBall( work->downWork );
+    work->isShotBall = FALSE;
   }
 }
 
@@ -708,7 +806,7 @@ static GFL_PROC_RESULT MB_CAPTURE_ProcMain( GFL_PROC * proc, int * seq , void *p
 //--------------------------------------------------------------
 //  äOïîíÒãüä÷êîåQ
 //--------------------------------------------------------------
-const HEAPID MB_CAPTURE_GetHeapId( MB_CAPTURE_WORK *work )
+const HEAPID MB_CAPTURE_GetHeapId( const MB_CAPTURE_WORK *work )
 {
   return work->heapId;
 }
@@ -720,8 +818,13 @@ ARCHANDLE* MB_CAPTURE_GetArcHandle( MB_CAPTURE_WORK *work )
 {
   return work->initWork->arcHandle;
 }
-const DLPLAY_CARD_TYPE MB_CAPTURE_GetCardType( MB_CAPTURE_WORK *work )
+const DLPLAY_CARD_TYPE MB_CAPTURE_GetCardType( const MB_CAPTURE_WORK *work )
 {
   return work->initWork->cardType;
 }
+const int MB_CAPTURE_GetBbdResIdx( const MB_CAPTURE_WORK *work , const MB_CAP_BBD_RES resType )
+{
+  return work->bbdRes[resType];
+}
+
 

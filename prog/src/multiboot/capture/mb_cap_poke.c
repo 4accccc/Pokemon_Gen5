@@ -66,7 +66,7 @@ MB_CAP_POKE* MB_CAP_POKE_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE_IN
   
   pos.x = FX32_CONST(tempPos*32+32);
   pos.y = FX32_CONST(80);
-  pos.z = FX32_CONST(200);
+  pos.z = FX32_CONST(MB_CAP_POKE_BASE_Z);
   tempPos++;
 #endif
   GFL_G3D_TransVramTexture( res );

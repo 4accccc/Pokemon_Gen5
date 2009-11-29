@@ -44,7 +44,7 @@
 #define MB_CAP_DOWN_BALL_TOUCH_LEN (8)
 
 //ƒ{[ƒ‹‘¬“x
-#define MB_CAP_DOWN_BALL_SHOT_SPD (32)
+#define MB_CAP_DOWN_BALL_SHOT_SPD (16)
 #define MB_CAP_DOWN_BALL_SUPPLY_SPD (12)
 #define MB_CAP_DOWN_BOW_SUPPLY_ROT (0x600)
 
@@ -95,7 +95,9 @@ struct _MB_CAP_DOWN
   fx32 ballPosY;
   fx32 pullLen;
   u16  rotAngle;
-
+  fx32 shotLen; //Œ‚‚Á‚½uŠÔ‚Ì’l
+  u16  shotAngle;
+  
   fx32 shotBallSpdX;
   fx32 shotBallSpdY;
   
@@ -103,7 +105,6 @@ struct _MB_CAP_DOWN
   BOOL isFlying;
   
   //‹|ŠÖŒW
-  int rotBow;    //‰ñ“]
   fx32 pullBow;   //ˆø‚Á’£‚é—Í
   GFL_BMP_DATA *lineBmp;
 };
@@ -181,7 +182,6 @@ MB_CAP_DOWN* MB_CAP_DOWN_InitSystem( MB_CAPTURE_WORK *capWork )
               &cellInitData ,CLSYS_DEFREND_SUB , heapId );
   }
   
-  downWork->rotBow  = 0;
   downWork->pullBow = 0;
   downWork->state = MCDS_NONE;
   downWork->ballPosX = MB_CAP_DOWN_BALL_X;
@@ -208,7 +208,7 @@ MB_CAP_DOWN* MB_CAP_DOWN_InitSystem( MB_CAPTURE_WORK *capWork )
 //--------------------------------------------------------------
 //	‰º‰æ–ÊŠJ•ú
 //--------------------------------------------------------------
-void MB_CAP_POKE_DeleteSystem( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork )
+void MB_CAP_DOWN_DeleteSystem( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork )
 {
   GFL_BMP_Delete( downWork->lineBmp );
   
@@ -225,7 +225,7 @@ void MB_CAP_POKE_DeleteSystem( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork 
 //--------------------------------------------------------------
 //	‰º‰æ–ÊXV
 //--------------------------------------------------------------
-void MB_CAP_POKE_UpdateSystem( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork )
+void MB_CAP_DOWN_UpdateSystem( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork )
 {
   u32 tpx,tpy;
   downWork->isTrg = GFL_UI_TP_GetTrg();
@@ -410,7 +410,7 @@ static void MB_CAP_DOWN_UpdateBow_DrawLine_Func( const u8* vramAdr , const int x
 {
   const int xLen = MATH_ABS( x1-x2 );
   const int yLen = MATH_ABS( y1-y2 );
-  const int loopNum = ( xLen > yLen ? xLen : yLen );
+  const int loopNum = ( xLen > yLen ? xLen : yLen )+1;
   fx32 addX = FX32_CONST(x2-x1) / loopNum;
   fx32 addY = FX32_CONST(y2-y1) / loopNum;
   fx32 subX = 0;
@@ -418,14 +418,13 @@ static void MB_CAP_DOWN_UpdateBow_DrawLine_Func( const u8* vramAdr , const int x
   
   u8 i;
   
-  
-  
   for( i=0;i<loopNum;i++ )
   {
     const int posX = x1 + (subX>>FX32_SHIFT);
     const int posY = y1 + (subY>>FX32_SHIFT);
     
     MB_CAP_DOWN_UpdateBow_DrawDot( vramAdr , posX , posY );
+    MB_CAP_DOWN_UpdateBow_DrawDot( vramAdr , posX , posY+1 );
     
     subX += addX;
     subY += addY;
@@ -515,6 +514,7 @@ static void MB_CAP_DOWN_UpdateBall( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *down
       downWork->ballPosY = FX32_CONST(MB_CAP_DOWN_BALL_Y);
       downWork->state = MCDS_NONE;
     }
+    downWork->isFlying = TRUE;
     downWork->isUpdateBall = TRUE;
   }
 
@@ -577,6 +577,9 @@ static void MB_CAP_DOWN_UpdateTP( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWo
       downWork->shotBallSpdX = FX_Div(subX*MB_CAP_DOWN_BALL_SHOT_SPD,downWork->pullLen);
       downWork->shotBallSpdY = FX_Div(subY*MB_CAP_DOWN_BALL_SHOT_SPD,downWork->pullLen);
       
+      downWork->shotLen = downWork->pullLen;
+      downWork->shotAngle = downWork->rotAngle;
+      
       downWork->state = MCDS_SHOT_WAIT;
     }
   }
@@ -597,6 +600,14 @@ const fx32 MB_CAP_DOWN_GetPullLen( const MB_CAP_DOWN *downWork )
 const u16  MB_CAP_DOWN_GetRotAngle( const MB_CAP_DOWN *downWork )
 {
   return downWork->rotAngle;
+}
+const fx32 MB_CAP_DOWN_GetShotLen( const MB_CAP_DOWN *downWork )
+{
+  return downWork->shotLen;
+}
+const u16  MB_CAP_DOWN_GetShotAngle( const MB_CAP_DOWN *downWork )
+{
+  return downWork->shotAngle;
 }
 
 //--------------------------------------------------------------
