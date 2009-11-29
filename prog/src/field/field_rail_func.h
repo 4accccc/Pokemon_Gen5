@@ -39,6 +39,7 @@ typedef struct
 	fx32 z;
 } RAIL_POSFUNC_CURVE_WORK;
 extern void FIELD_RAIL_POSFUNC_CurveLine(const FIELD_RAIL_WORK * work, VecFx32 * pos);
+extern void FIELD_RAIL_POSFUNC_YCurveLine(const FIELD_RAIL_WORK * work, VecFx32 * pos);
 
 
 //-----------------------------------------------------------------------------

@@ -1704,9 +1704,9 @@ static void RE_InputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
 	// カメラターゲットを中心に回転移動
 	FIELD_CAMERA_GetTargetPos( p_camera, &target );
 	FIELD_PLAYER_GetPos( p_player, &pl_pos );
-	pos_y = pl_pos.y;
+  pos_y = pl_pos.y;
+  target.y	= pl_pos.y;
 
-	target.y	= pl_pos.y;
 	len				= VEC_Distance( &target, &pl_pos );
 	yaw = FIELD_CAMERA_GetAngleYaw( p_camera );
 
@@ -1784,6 +1784,18 @@ static void RE_InputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
 			target.z += FX_Mul( FX_CosIdx( yaw + 0x4000 ), 4*FX32_ONE );
       target.x += FX_Mul( FX_SinIdx( yaw + 0x4000 ), 4*FX32_ONE );
 		}
+		else if( key_repeat & PAD_BUTTON_Y )
+		{ 
+			change = TRUE;
+			target.y -= 4*FX32_ONE;
+			pos_y -= 4*FX32_ONE;
+		}
+		else if( key_repeat & PAD_BUTTON_X )
+		{ 
+			change = TRUE;
+			target.y += 4*FX32_ONE;
+			pos_y += 4*FX32_ONE;
+		}
 		if( change )
 		{
 			FIELD_CAMERA_SetTargetPos( p_camera, &target );
@@ -1826,7 +1838,7 @@ static void RE_InputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
       if( location.type == FIELD_RAIL_TYPE_LINE )
       {
         linepos_set = cp_rail_setting->line_table[ location.rail_index ].line_pos_set;
-        if( cp_rail_setting->linepos_table[ linepos_set ].func_index == FIELD_RAIL_LOADER_LINEPOS_FUNC_CURVE )
+        if( (cp_rail_setting->linepos_table[ linepos_set ].func_index == FIELD_RAIL_LOADER_LINEPOS_FUNC_CURVE) || (cp_rail_setting->linepos_table[ linepos_set ].func_index == FIELD_RAIL_LOADER_LINEPOS_FUNC_YCURVE) )
         {
           RAIL_POSFUNC_CURVE_WORK* p_curve_wk = (RAIL_POSFUNC_CURVE_WORK*)cp_rail_setting->linepos_table[ linepos_set ].work;
           p_curve_wk->x = target.x;
@@ -2030,9 +2042,10 @@ static void RE_InitInputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
 
   OS_TPrintf( "::::::自由回転動作 操作方法::::::\n" );
   OS_TPrintf( "左右 回転移動\n" );
+  OS_TPrintf( "XY 上下移動\n" );
   OS_TPrintf( "上下　中心からの距離を変更\n" );
   OS_TPrintf( "LorR   カメラズーム操作\n" );
-  OS_TPrintf( "A＋上下左右　回転中心座標を変更\n" );
+  OS_TPrintf( "A＋上下左右XY　回転中心座標を変更\n" );
 
 	FLDNOGRID_MAPPER_SetActive(p_mapper, FALSE);
   FLDNOGRID_MAPPER_SetRailCameraActive(p_mapper, FALSE);
@@ -2045,7 +2058,7 @@ static void RE_InitInputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
 	if( location.type == FIELD_RAIL_TYPE_LINE )
 	{
 		linepos_set = cp_rail_setting->line_table[ location.rail_index ].line_pos_set;
-		if( cp_rail_setting->linepos_table[ linepos_set ].func_index == FIELD_RAIL_LOADER_LINEPOS_FUNC_CURVE )
+		if( (cp_rail_setting->linepos_table[ linepos_set ].func_index == FIELD_RAIL_LOADER_LINEPOS_FUNC_CURVE) || (cp_rail_setting->linepos_table[ linepos_set ].func_index == FIELD_RAIL_LOADER_LINEPOS_FUNC_YCURVE) )
 		{
 			const RAIL_POSFUNC_CURVE_WORK* cp_curve_wk = (const RAIL_POSFUNC_CURVE_WORK*)cp_rail_setting->linepos_table[ linepos_set ].work;
 			target.x = cp_curve_wk->x;

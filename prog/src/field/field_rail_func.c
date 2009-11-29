@@ -348,6 +348,93 @@ void FIELD_RAIL_POSFUNC_CurveLine(const FIELD_RAIL_WORK * work, VecFx32 * pos)
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Y軸にもカーブするライン処理
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_POSFUNC_YCurveLine(const FIELD_RAIL_WORK * work, VecFx32 * pos)
+{
+  const RAIL_LINE * nLine = FIELD_RAIL_GetLine(work);
+	const RAIL_LINEPOS_SET* line_pos_set;
+	const RAIL_POINT* point_s = FIELD_RAIL_GetPointStart( work );
+	const RAIL_POINT* point_e = FIELD_RAIL_GetPointEnd( work );
+  const VecFx32 * p_s = &point_s->pos;
+  const VecFx32 * p_e = &point_e->pos;
+	const RAIL_POSFUNC_CURVE_WORK* cp_wk;
+  VecFx32 center, vec_s, vec_e, vec_i;
+	s32 line_ofs			= FIELD_RAIL_GetLineOfs( work );
+	s32 line_ofs_max	= FIELD_RAIL_GetLineOfsMax( work );
+  fx32 ofs = FX_Div( (line_ofs * FX32_ONE), line_ofs_max*FX32_ONE );
+  VecFx32 pos_sub;
+
+
+  // すべて含めて計算
+	line_pos_set = FIELD_RAIL_GetLinePosSet( work );
+	cp_wk = (const RAIL_POSFUNC_CURVE_WORK*)line_pos_set->work;
+	center.x = cp_wk->x;
+	center.y = cp_wk->y;
+	center.z = cp_wk->z;
+
+	VEC_Subtract(p_s, &center, &vec_s);
+	VEC_Subtract(p_e, &center, &vec_e);
+
+  VEC_Subtract( &vec_e, &vec_s, &pos_sub );
+  VEC_Normalize( &pos_sub, &pos_sub );
+
+	
+	getIntermediateVector(&vec_i, &vec_s, &vec_e, ofs);
+	VEC_Add(&center, &vec_i, pos);
+
+  // 幅の計算処理
+	{
+		VecFx32 w_vec;
+    VecFx32 normal;
+		s32 width_ofs = FIELD_RAIL_GetWidthOfs( work );
+		fx32 ofs_unit = FIELD_RAIL_GetOfsUnit( work );
+    fx32 ofs_w = FX_Mul( width_ofs<<FX32_SHIFT, ofs_unit );
+
+    // 横方向はXZ平面
+    if( (vec_i.x != 0) && (vec_i.z != 0) )
+    {
+      vec_i.y = 0;
+    }
+    else
+    {
+      VecFx32 up = {0,FX32_ONE,0};
+      // XZの変化する方向の横を求めればよい
+      VEC_Subtract( p_e, p_s, &vec_i );
+
+      VEC_CrossProduct( &vec_i, &up, &vec_i );
+    }
+		VEC_Normalize(&vec_i, &w_vec);
+    VEC_CrossProduct( &w_vec, &pos_sub, &normal );
+    if( normal.y < 0 )
+    {
+  		VEC_MultAdd(-(ofs_w), &w_vec, pos, pos);
+    }
+    else
+    {
+  		VEC_MultAdd(ofs_w, &w_vec, pos, pos);
+    }
+	}
+
+  if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B)
+  {
+    debugPrintWholeVector("Center:", &center, "\n");
+    debugPrintWholeVector("start: ", p_s, "\n");
+    debugPrintWholeVector("end:   ", p_e, "\n");
+    debugPrintWholeVector("v_s:   ", &vec_s, "\n");
+    OS_TPrintf("v_s:len=%08x\n",VEC_Mag(&vec_s));
+    debugPrintWholeVector("v_e:   ", &vec_e, "\n");
+    OS_TPrintf("v_e:len=%08x\n",VEC_Mag(&vec_e));
+    debugPrintWholeVector("v_i:   ", &vec_i, "\n");
+    debugPrintHexVector(&vec_i);
+    OS_TPrintf("v_i:len=%08x\n",VEC_Mag(&vec_i));
+    debugPrintWholeVector("pos:   ", pos, "\n");
+  }
+}
+
 
 //-----------------------------------------------------------------------------
 /**
