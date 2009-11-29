@@ -29,6 +29,7 @@ enum{
   INTRUDE_COMM_STATUS_HARD_CONNECT, ///<ハードは接続した(ネゴシエーションはまだ)
   INTRUDE_COMM_STATUS_BASIC_SEND,   ///<基本情報送信中
   INTRUDE_COMM_STATUS_UPDATE,       ///<メイン更新実行中
+  INTRUDE_COMM_STATUS_RESTART,      ///<通信再起動中
   INTRUDE_COMM_STATUS_EXIT_START,   ///<終了処理開始
   INTRUDE_COMM_STATUS_EXIT,         ///<終了処理完了
   INTRUDE_COMM_STATUS_ERROR,        ///<エラー

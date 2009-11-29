@@ -40,6 +40,7 @@
 //  プロトタイプ宣言
 //==============================================================================
 static void Intrude_CheckProfileReq(INTRUDE_COMM_SYS_PTR intcomm);
+static void Intrude_CheckLeavePlayer(INTRUDE_COMM_SYS_PTR intcomm);
 static void Intrude_CheckTalkAnswerNG(INTRUDE_COMM_SYS_PTR intcomm);
 static void Intrude_ConvertPlayerPos(INTRUDE_COMM_SYS_PTR intcomm, ZONEID mine_zone_id, fx32 mine_x, INTRUDE_STATUS *target);
 static int Intrude_GetPalaceOffsetNo(const INTRUDE_COMM_SYS_PTR intcomm, int palace_area);
@@ -207,6 +208,8 @@ void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm)
   }
   //通信が確立されているメンバーでプロフィールを持っていないメンバーがいるならリクエストをかける
   Intrude_CheckProfileReq(intcomm);
+  //離脱者チェック
+  Intrude_CheckLeavePlayer(intcomm);
   
   //話しかけお断りの返事が貯まっているなら返事を送信する
   Intrude_CheckTalkAnswerNG(intcomm);
@@ -241,9 +244,33 @@ static void Intrude_CheckProfileReq(INTRUDE_COMM_SYS_PTR intcomm)
   for(net_id = 0; net_id < intcomm->member_num; net_id++){
     if(GFL_NET_IsConnectMember(net_id) == TRUE 
         && (intcomm->recv_profile & (1 << net_id)) == 0){
+      OS_TPrintf("%d番のプロフィールが無い\n", net_id);
       IntrudeSend_ProfileReq();
       intcomm->profile_req_wait = INTRUDE_PROFILE_REQ_RETRY_WAIT;
       return;
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 離脱者がいればプロフィール削除命令を送信
+ *
+ * @param   intcomm		
+ */
+//--------------------------------------------------------------
+static void Intrude_CheckLeavePlayer(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  int net_id;
+  
+  if(GFL_NET_IsParentMachine() == FALSE){
+    return;
+  }
+  
+  for(net_id = 0; net_id < intcomm->member_num; net_id++){
+    if(GFL_NET_IsConnectMember(net_id) == FALSE 
+        && (intcomm->recv_profile & (1 << net_id))){
+      IntrudeSend_DeleteProfile(intcomm, net_id);
     }
   }
 }
@@ -868,6 +895,24 @@ u16 Intrude_GetObjCode(const INTRUDE_STATUS *sta, const MYSTATUS *myst)
   }
   
   return obj_code;
+}
+
+//--------------------------------------------------------------
+/**
+ * 自分以外のプレイヤーが存在しているか調べる
+ *
+ * @param   none		
+ *
+ * @retval  BOOL		TRUE:存在している。　FALSE:誰もいない
+ */
+//--------------------------------------------------------------
+BOOL Intrude_OtherPlayerExistence(void)
+{
+  if(GFL_NET_GetConnectNum() > 1){
+    return TRUE;
+  }
+  OS_TPrintf("誰も居なくなった %d\n", GFL_NET_GetConnectNum());
+  return FALSE;
 }
 
 //==================================================================

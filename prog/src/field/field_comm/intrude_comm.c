@@ -124,8 +124,9 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
   MISSION_Init(&intcomm->mission);
 
   GAMEDATA_SetIntrudeMyID(gamedata, 0);
-
+  
   GFL_NET_Init( &aGFLNetInit, IntrudeComm_FinishInitCallback, intcomm );
+  OS_TPrintf("INTRUDE_CMD_SHUTDOWN = %d\n", INTRUDE_CMD_SHUTDOWN);
   return intcomm;
 }
 
@@ -178,6 +179,7 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
 
   //通信エラーチェック
   if(NetErr_App_CheckError() == TRUE){
+    GF_ASSERT(0);
     intcomm->comm_status = INTRUDE_COMM_STATUS_ERROR;
     GameCommSys_ExitReq(intcomm->game_comm);
     return;
@@ -228,6 +230,32 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
 
   case 3: //通常更新
     Intrude_Main(intcomm);
+  #if 0
+    if(Intrude_OtherPlayerExistence() == FALSE){
+      intcomm->comm_status = INTRUDE_COMM_STATUS_RESTART;
+      *seq = 100;
+    }
+  #endif
+    break;
+  
+  case 100: //一度通信を終了し再度通信を起動  (子機に離脱されて親が一人残った場合のみここに来る)
+    OS_TPrintf("通信再起動：システム終了\n");
+    GFL_NET_Exit( NULL );
+    (*seq)++;
+    break;
+  case 101:
+    if(GFL_NET_IsExit() == TRUE){
+      GFL_NET_Init( &aGFLNetInit, NULL, intcomm );
+      (*seq)++;
+    }
+    break;
+  case 102:
+    if(GFL_NET_IsInit() == TRUE){
+      OS_TPrintf("通信再起動：親として起動\n");
+      GFL_NET_ChangeoverConnect(NULL);
+      intcomm->comm_status = INTRUDE_COMM_STATUS_BOOT_PARENT;
+      *seq = 0;
+    }
     break;
   }
 }

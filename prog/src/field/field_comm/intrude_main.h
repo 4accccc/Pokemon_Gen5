@@ -91,6 +91,7 @@ extern int Intrude_GetPalaceTownZoneID(int town_tblno);
 extern void Intrude_GetPalaceTownRandPos(int town_tblno, VecFx32 *vec);
 extern INTRUDE_COMM_SYS_PTR Intrude_Check_CommConnect(GAME_COMM_SYS_PTR game_comm);
 extern u16 Intrude_GetObjCode(const INTRUDE_STATUS *sta, const MYSTATUS *myst);
+extern BOOL Intrude_OtherPlayerExistence(void);
 extern BOOL Intrude_ObjPauseCheck(GAMESYS_WORK *gsys);
 
 //==============================================================================

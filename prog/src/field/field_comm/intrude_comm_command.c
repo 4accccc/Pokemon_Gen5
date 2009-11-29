@@ -26,6 +26,7 @@ static void _IntrudeRecv_Shutdown(const int netID, const int size, const void* p
 static void _IntrudeRecv_MemberNum(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_ProfileReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_Profile(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_DeleteProfile(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_PlayerStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_Talk(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_TalkAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -40,6 +41,7 @@ static void _IntrudeRecv_MissionAchieve(const int netID, const int size, const v
 static void _IntrudeRecv_MissionResult(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_OccupyInfo(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_TargetTiming(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_Test(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 //==============================================================================
@@ -51,6 +53,7 @@ const NetRecvFuncTable Intrude_CommPacketTbl[] = {
   {_IntrudeRecv_MemberNum, NULL},              //INTRUDE_CMD_MEMBER_NUM
   {_IntrudeRecv_ProfileReq, NULL},             //INTRUDE_CMD_PROFILE_REQ
   {_IntrudeRecv_Profile, NULL},                //INTRUDE_CMD_PROFILE
+  {_IntrudeRecv_DeleteProfile, NULL},          //INTRUDE_CMD_DELETE_PROFILE
   {_IntrudeRecv_PlayerStatus, NULL},           //INTRUDE_CMD_PLAYER_STATUS
   {_IntrudeRecv_Talk, NULL},                   //INTRUDE_CMD_TALK
   {_IntrudeRecv_TalkAnswer, NULL},             //INTRUDE_CMD_TALK_ANSWER
@@ -75,7 +78,6 @@ SDK_COMPILER_ASSERT(NELEMS(Intrude_CommPacketTbl) == INTRUDE_CMD_NUM);
 //  
 //
 //==============================================================================
-
 //--------------------------------------------------------------
 /**
  * 巨大データ用受信バッファ取得
@@ -99,6 +101,23 @@ static u8 * _RecvHugeBuffer(int netID, void* pWork, int size)
 #endif
 }
 
+//--------------------------------------------------------------
+/**
+ * 自分以外のプレイヤーが存在しているか調べる
+ *
+ * @param   none		
+ *
+ * @retval  BOOL		TRUE:存在している。　FALSE:誰もいない
+ * 
+ * 離脱などで親一人になった場合、キューに貯まったバッファが解消されず、キューが溢れてしまうので
+ * 送信コマンドを実行しないようにチェックする関数
+ */
+//--------------------------------------------------------------
+static BOOL _OtherPlayerExistence(void)
+{
+  return Intrude_OtherPlayerExistence();
+}
+
 //==============================================================================
 //  
 //==============================================================================
@@ -118,7 +137,7 @@ static void _IntrudeRecv_Shutdown(const int netID, const int size, const void* p
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
   
   intcomm->exit_recv = TRUE;
-  OS_TPrintf("切断コマンド受信\n");
+  OS_TPrintf("切断コマンド受信 netID=%d\n", netID);
 }
 
 //==================================================================
@@ -128,8 +147,18 @@ static void _IntrudeRecv_Shutdown(const int netID, const int size, const void* p
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL IntrudeSend_Shutdown(void)
+BOOL IntrudeSend_Shutdown(INTRUDE_COMM_SYS_PTR intcomm)
 {
+  OS_TPrintf("SEND:切断コマンド\n");
+  
+  if(_OtherPlayerExistence() == FALSE){
+    //既に誰もいないので自分で受信命令を呼び出す
+    OS_TPrintf("自分で切断コールバックを直接呼び出す\n");
+    _IntrudeRecv_Shutdown(
+      GFL_NET_SystemGetCurrentID(), 0, NULL, intcomm, GFL_NET_HANDLE_GetCurrentHandle());
+    return TRUE;
+  }
+  
   return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), INTRUDE_CMD_SHUTDOWN, 0, NULL);
 }
 
@@ -171,6 +200,10 @@ static void _IntrudeRecv_MemberNum(const int netID, const int size, const void* 
 //==================================================================
 BOOL IntrudeSend_MemberNum(INTRUDE_COMM_SYS_PTR intcomm, u8 member_num)
 {
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
+  
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, 
     INTRUDE_CMD_MEMBER_NUM, sizeof(member_num), &member_num, TRUE, FALSE, FALSE);
 }
@@ -206,6 +239,10 @@ static void _IntrudeRecv_ProfileReq(const int netID, const int size, const void*
 //==================================================================
 BOOL IntrudeSend_ProfileReq(void)
 {
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
+
   return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), INTRUDE_CMD_PROFILE_REQ, 0, NULL);
 }
 
@@ -248,6 +285,10 @@ BOOL IntrudeSend_Profile(INTRUDE_COMM_SYS_PTR intcomm)
 {
   BOOL ret;
   
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
+
   ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
     INTRUDE_CMD_PROFILE, sizeof(INTRUDE_PROFILE), &intcomm->send_profile);
   if(ret == TRUE){
@@ -255,7 +296,8 @@ BOOL IntrudeSend_Profile(INTRUDE_COMM_SYS_PTR intcomm)
     OS_TPrintf("自分プロフィール送信\n");
     if(GFL_NET_IsParentMachine() == TRUE){
       //親の場合、プロフィールを要求されていたという事は途中参加者がいるので
-      //現在のミッションも送信する
+      //現在の参加人数、ミッションも送信する
+      intcomm->member_send_req = TRUE;
       MISSION_Set_DataSendReq(&intcomm->mission);
     }
   }
@@ -263,6 +305,52 @@ BOOL IntrudeSend_Profile(INTRUDE_COMM_SYS_PTR intcomm)
     OS_TPrintf("自分プロフィール送信失敗\n");
   }
   return ret;
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：離脱者のプロフィールを削除
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_DeleteProfile(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  const int *leave_netid = pData;
+  
+  if(intcomm->recv_profile & (1 << (*leave_netid))){
+    intcomm->recv_profile ^= 1 << (*leave_netid);
+    CommPlayer_Del(intcomm->cps, *leave_netid);
+  }
+  OS_TPrintf("Receive:離脱者のプロフィール削除 離脱者のNetID = %d\n", *leave_netid);
+}
+
+//==================================================================
+/**
+ * データ送信：離脱者のプロフィールを削除(親機専用命令)
+ * @param   leave_netid   離脱者のNetID
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_DeleteProfile(INTRUDE_COMM_SYS_PTR intcomm, int leave_netid)
+{
+  if(_OtherPlayerExistence() == FALSE){
+    _IntrudeRecv_DeleteProfile(GFL_NET_SystemGetCurrentID(), 
+      sizeof(leave_netid), &leave_netid, intcomm, GFL_NET_HANDLE_GetCurrentHandle());
+    return TRUE;
+  }
+
+  GF_ASSERT(GFL_NET_IsParentMachine() == TRUE);
+  OS_TPrintf("Send:離脱者のプロフィール削除 離脱者のNetID = %d\n", leave_netid);
+  return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), INTRUDE_CMD_DELETE_PROFILE, sizeof(leave_netid), &leave_netid);
 }
 
 //==============================================================================
@@ -311,6 +399,10 @@ BOOL IntrudeSend_PlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_STATUS *send
 {
   BOOL ret;
   
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
+
   ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
     INTRUDE_CMD_PLAYER_STATUS, sizeof(INTRUDE_STATUS), send_status);
   if(ret == TRUE){
@@ -350,6 +442,10 @@ static void _IntrudeRecv_Talk(const int netID, const int size, const void* pData
 //==================================================================
 BOOL IntrudeSend_Talk(int send_net_id)
 {
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
+
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
     INTRUDE_CMD_TALK, 0, NULL, FALSE, FALSE, FALSE);
 }
@@ -386,6 +482,10 @@ static void _IntrudeRecv_TalkAnswer(const int netID, const int size, const void*
 //==================================================================
 BOOL IntrudeSend_TalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, INTRUDE_TALK_STATUS answer)
 {
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
+
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
     INTRUDE_CMD_TALK_ANSWER, sizeof(INTRUDE_TALK_STATUS), &answer, FALSE, FALSE, FALSE);
 }
@@ -421,6 +521,10 @@ static void _IntrudeRecv_TalkCancel(const int netID, const int size, const void*
 //==================================================================
 BOOL IntrudeSend_TalkCancel(int send_net_id)
 {
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
+
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
     INTRUDE_CMD_TALK_CANCEL, 0, NULL, FALSE, FALSE, FALSE);
 }
@@ -457,6 +561,10 @@ static void _IntrudeRecv_BingoIntrusion(const int netID, const int size, const v
 //==================================================================
 BOOL IntrudeSend_BingoIntrusion(int send_net_id)
 {
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
+
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
     INTRUDE_CMD_BINGO_INTRUSION, 0, NULL, FALSE, FALSE, FALSE);
 }
@@ -497,6 +605,10 @@ static void _IntrudeRecv_BingoIntrusionAnswer(const int netID, const int size, c
 //==================================================================
 BOOL IntrudeSend_BingoIntrusionAnswer(int send_net_id, BINGO_INTRUSION_ANSWER answer)
 {
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
+
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
     INTRUDE_CMD_BINGO_INTRUSION_ANSWER, sizeof(BINGO_INTRUSION_ANSWER), 
     &answer, FALSE, FALSE, FALSE);
@@ -534,6 +646,10 @@ static void _IntrudeRecv_ReqBingoIntrusionParam(const int netID, const int size,
 //==================================================================
 BOOL IntrudeSend_ReqBingoBattleIntrusionParam(int send_net_id)
 {
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
+
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
     INTRUDE_CMD_REQ_BINGO_INTRUSION_PARAM, 0, NULL, FALSE, FALSE, FALSE);
 }
@@ -571,6 +687,10 @@ static void _IntrudeRecv_BingoIntrusionParam(const int netID, const int size, co
 //==================================================================
 BOOL IntrudeSend_BingoBattleIntrusionParam(BINGO_SYSTEM *bingo, int send_net_id)
 {
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
+
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
     INTRUDE_CMD_BINGO_INTRUSION_PARAM, sizeof(BINGO_INTRUSION_PARAM), &bingo->intrusion_param, 
     FALSE, FALSE, FALSE);
@@ -620,6 +740,10 @@ BOOL IntrudeSend_MissionReq(INTRUDE_COMM_SYS_PTR intcomm, int monolith_type, u16
 {
   MISSION_REQ req;
   
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
+
   req.monolith_type = monolith_type;
   req.zone_id = zone_id;
   return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
@@ -661,6 +785,10 @@ static void _IntrudeRecv_MissionData(const int netID, const int size, const void
 BOOL IntrudeSend_MissionData(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission)
 {
   BOOL ret;
+
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
   
   ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
     INTRUDE_CMD_MISSION_DATA, sizeof(MISSION_DATA), &mission->data);
@@ -710,6 +838,10 @@ static void _IntrudeRecv_MissionAchieve(const int netID, const int size, const v
 BOOL IntrudeSend_MissionAchieve(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission)
 {
   BOOL ret;
+
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
   
   ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
     INTRUDE_CMD_MISSION_ACHIEVE, sizeof(MISSION_DATA), &mission->data);
@@ -762,6 +894,10 @@ BOOL IntrudeSend_MissionResult(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTE
 {
   BOOL ret;
   
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
+
   ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
     INTRUDE_CMD_MISSION_RESULT, sizeof(MISSION_RESULT), &mission->result);
   if(ret == TRUE){
@@ -825,6 +961,10 @@ BOOL IntrudeSend_OccupyInfo(INTRUDE_COMM_SYS_PTR intcomm)
   const OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
   BOOL ret;
   
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
+
   ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
     INTRUDE_CMD_OCCUPY_INFO, sizeof(OCCUPY_INFO), occupy);
   if(ret == TRUE){
@@ -876,6 +1016,10 @@ static void _IntrudeRecv_TargetTiming(const int netID, const int size, const voi
 //==================================================================
 BOOL IntrudeSend_TargetTiming(INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid, u8 timing_no)
 {
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
+
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), 
     send_netid, INTRUDE_CMD_TARGET_TIMING, sizeof(timing_no), &timing_no, FALSE, FALSE, FALSE);
 }

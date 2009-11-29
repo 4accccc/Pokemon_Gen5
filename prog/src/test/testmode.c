@@ -212,11 +212,11 @@ static BOOL TESTMODE_ITEM_DebugFight( TESTMODE_WORK *work , const int idx );
 static TESTMODE_MENU_LIST topMenu[] =
 {
   //汎用
-  {L"デバッグ開始"        ,TESTMODE_ITEM_SelectFuncDebugStart },
-  {L"デバッグ開始(通信)"  ,TESTMODE_ITEM_SelectFuncDebugStartComm },
+  {L"デバッグ開始(処理負荷：サーチ)"        ,TESTMODE_ITEM_SelectFuncDebugStart },
+  {L"デバッグ開始(処理負荷：接続(要侵入)"  ,TESTMODE_ITEM_SelectFuncDebugStartComm },
   {L"続きから"            ,TESTMODE_ITEM_SelectFuncContinue },
   {L"続きから(通信)"      ,TESTMODE_ITEM_SelectFuncContinueComm },
-  {L"名前を選んで開始"    ,TESTMODE_ITEM_SelectFuncChangeSelectName },
+  {L"名前を選んで開始(処理負荷：サーチ)"    ,TESTMODE_ITEM_SelectFuncChangeSelectName },
   {L"RTC調整"             ,TESTMODE_ITEM_SelectFuncRTCEdit },
   {L"セーブ破かい"        ,TESTMODE_ITEM_SelectFuncSave },
   {L"SOUND"               ,TESTMODE_ITEM_SelectFuncSound },
