@@ -711,8 +711,8 @@ class PosEvent < AllEvent
     @number = readEventNumber( lines )
     @pos_id = read( lines, /#Pos Event Label/)
     @event_id = read(lines, /#Pos Script Name/)
-    if lines[0] =~ /#Pos Event Type/ then
-      @check_type = read( lines,/#Pos Event Type/ )
+    if lines[0] =~ /#Pos Check Type/ then
+      @check_type = read( lines,/#Pos Check Type/ )
     else
       @check_type = "POS_CHECK_TYPE_NORMAL"
     end
