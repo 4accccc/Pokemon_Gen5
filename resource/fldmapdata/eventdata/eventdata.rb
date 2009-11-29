@@ -5,6 +5,7 @@
 #
 #   2009.05.24    tamada
 #   2009.10.07    tomoya  pos_typeをあわせて出力するように変更
+#   2009.11.29    tamada  分割されていたのをヘッダ・依存ファイル・バイナリのすべてを扱うように集約
 #
 #
 #============================================================================
@@ -689,6 +690,7 @@ class PosEvent < AllEvent
   attr :number
   attr :pos_id
   attr :event_id
+  attr :check_type
   attr :workname
   attr :workvalue
   attr :pos_type
@@ -709,6 +711,11 @@ class PosEvent < AllEvent
     @number = readEventNumber( lines )
     @pos_id = read( lines, /#Pos Event Label/)
     @event_id = read(lines, /#Pos Script Name/)
+    if lines[0] =~ /#Pos Event Type/ then
+      @check_type = read( lines,/#Pos Event Type/ )
+    else
+      @check_type = "POS_CHECK_TYPE_NORMAL"
+    end
     @workname = read(lines, /#Event Trigger Work Name/)
     @workvalue = read(lines, /#Event Trigger Work Value/)
     
@@ -737,6 +744,7 @@ class PosEvent < AllEvent
     output.write [headerArray.sarch( @event_id, @pos_id )].pack("S")
     output.write [headerArray.sarch( @workvalue, @pos_id )].pack("S")
     output.write [headerArray.sarch( @workname, @pos_id )].pack("S")
+    output.write [headerArray.sarch( @check_type, @pos_id )].pack("S")
     output.write [headerArray.sarch( @pos_type, @pos_id )].pack("S")
 
     if @pos_type == EVENTDATA_POS_TYPE_GRID
