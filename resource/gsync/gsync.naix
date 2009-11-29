@@ -13,10 +13,14 @@
 enum {
 	NARC_gsync_connect_NCLR = 0,
 	NARC_gsync_connect_anm_NCLR = 1,
-	NARC_gsync_connect_NCGR = 2,
-	NARC_gsync_connect_sub_NCGR = 3,
-	NARC_gsync_connect_01_NSCR = 4,
-	NARC_gsync_connect_sub_NSCR = 5
+	NARC_gsync_gsync_bg_NCLR = 2,
+	NARC_gsync_connect_NCGR = 3,
+	NARC_gsync_connect_sub_NCGR = 4,
+	NARC_gsync_gsync_bg_NCGR = 5,
+	NARC_gsync_connect_01_NSCR = 6,
+	NARC_gsync_connect_sub_NSCR = 7,
+	NARC_gsync_downner_bg_NSCR = 8,
+	NARC_gsync_upper_bg_NSCR = 9
 };
 
 /* NARC_GSYNC_NAIX_ */
