@@ -13,7 +13,10 @@
 
 #include "gflib.h"
 
+#include "arc/arc_def.h"
+
 #include "system/gfl_use.h"
+
 
 #include "field/field_wfbc_data.h"
 
@@ -57,7 +60,7 @@ static FIELD_WFBC_CORE_PEOPLE* WFBC_CORE_GetClearPeopleArray( FIELD_WFBC_CORE_PE
 //-------------------------------------
 ///	人物情報
 //=====================================
-static void WFBC_CORE_SetUpPeople( FIELD_WFBC_CORE_PEOPLE* p_people, u8 npc_id, const MYSTATUS* cp_mystatus );
+static void WFBC_CORE_SetUpPeople( FIELD_WFBC_CORE_PEOPLE* p_people, u8 npc_id, const MYSTATUS* cp_mystatus, u16 mood );
 static BOOL WFBC_CORE_People_IsGoBack( const FIELD_WFBC_CORE_PEOPLE* cp_people );
 static BOOL WFBC_CORE_People_AddMood( FIELD_WFBC_CORE_PEOPLE* p_people, int add );
 
@@ -130,15 +133,19 @@ void FIELD_WFBC_CORE_ClearBack( FIELD_WFBC_CORE* p_wk )
  *
  *	@param	p_wk          ワーク
  *	@param  cp_mystatus   まいステータス
+ *	@param  heapID        ヒープID
  */
 //-----------------------------------------------------------------------------
-void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus )
+void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, HEAPID heapID )
 {
   int i;
   int pos_idx;
   int npc_idx;
   int set_npc_idx;
   FIELD_WFBC_CORE_PEOPLE* p_people;
+  FIELD_WFBC_PEOPLE_DATA_LOAD* p_loader;
+  const FIELD_WFBC_PEOPLE_DATA* cp_data;
+  u32 mood;
   GF_ASSERT( p_wk );
   
   p_wk->data_in = TRUE;
@@ -148,6 +155,9 @@ void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus )
   p_wk->type    = FIELD_WFBC_CORE_TYPE_WHITE_FOREST; 
 #endif  // PM_VERSION == VERSION_BLACK
 
+  p_loader = FIELD_WFBC_PEOPLE_DATA_Create( 0, GFL_HEAP_LOWID(heapID) );
+  cp_data = FIELD_WFBC_PEOPLE_DATA_GetData( p_loader );
+
   // 人を設定する
   for( i=0; i<FIELD_WFBC_INIT_PEOPLE_NUM; i++ )
   {
@@ -156,8 +166,19 @@ void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus )
 
     p_people  = WFBC_CORE_GetClearPeopleArray( p_wk->people );
     set_npc_idx = WFBC_CORE_GetNotUseNpcID( p_wk, npc_idx );
-    WFBC_CORE_SetUpPeople( p_people, set_npc_idx, cp_mystatus );
+
+    // NPC情報読み込み
+    FIELD_WFBC_PEOPLE_DATA_Load( p_loader, set_npc_idx );
+    
+    if( p_wk->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY ){
+      mood = cp_data->mood_bc;
+    }else{
+      mood = cp_data->mood_wf;
+    }
+    WFBC_CORE_SetUpPeople( p_people, set_npc_idx, cp_mystatus, mood );
   }
+
+  FIELD_WFBC_PEOPLE_DATA_Delete( p_loader );
 }
 
 
@@ -580,6 +601,111 @@ u32 FIELD_WFBC_CORE_PEOPLE_GetNpcID( const FIELD_WFBC_CORE_PEOPLE* cp_wk )
 
 
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+/**
+ *					WFBC人物情報へのアクセス
+*/
+//-----------------------------------------------------------------------------
+//-------------------------------------
+///	人物情報ローダー
+//=====================================
+struct _FIELD_WFBC_PEOPLE_DATA_LOAD {
+  ARCHANDLE* p_handle;
+  u32 npc_id;
+  FIELD_WFBC_PEOPLE_DATA buff;
+};
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物情報ローダー生成
+ *
+ *	@param	npc_id    NPCID
+ *	@param	heapID 
+ *
+ *	@return ローダー
+ */
+//-----------------------------------------------------------------------------
+FIELD_WFBC_PEOPLE_DATA_LOAD* FIELD_WFBC_PEOPLE_DATA_Create( u32 npc_id, HEAPID heapID )
+{
+  FIELD_WFBC_PEOPLE_DATA_LOAD* p_loader;
+
+  p_loader = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_WFBC_PEOPLE_DATA_LOAD) );
+
+  p_loader->p_handle = GFL_ARC_OpenDataHandle( ARCID_WFBC_PEOPLE, heapID );
+
+  // 読み込み
+  GF_ASSERT( npc_id < FIELD_WFBC_NPCID_MAX );
+  GFL_ARC_LoadDataByHandle( p_loader->p_handle, npc_id, &p_loader->buff );
+  p_loader->npc_id = npc_id;
+  
+  return p_loader;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物情報ローダー破棄
+ *
+ *	@param	p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_PEOPLE_DATA_Delete( FIELD_WFBC_PEOPLE_DATA_LOAD* p_wk )
+{
+  GFL_ARC_CloseDataHandle( p_wk->p_handle );
+  GFL_HEAP_FreeMemory( p_wk );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物情報再読みこみ
+ *
+ *	@param	p_wk      ワーク
+ *	@param	npc_id    NPCID
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_PEOPLE_DATA_Load( FIELD_WFBC_PEOPLE_DATA_LOAD* p_wk, u32 npc_id )
+{
+  GF_ASSERT( npc_id < FIELD_WFBC_NPCID_MAX );
+  GFL_ARC_LoadDataByHandle( p_wk->p_handle, npc_id, &p_wk->buff );
+  p_wk->npc_id = npc_id;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物情報  取得
+ *
+ *	@param	cp_wk   ワーク
+ *
+ *	@return データバッファ
+ */
+//-----------------------------------------------------------------------------
+const FIELD_WFBC_PEOPLE_DATA* FIELD_WFBC_PEOPLE_DATA_GetData( const FIELD_WFBC_PEOPLE_DATA_LOAD* cp_wk )
+{
+  GF_ASSERT( cp_wk );
+  return &cp_wk->buff;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物情報  読み込まれているNPCIDを取得
+ *
+ *	@param	cp_wk   ワーク
+ *
+ *	@return NPCID
+ */
+//-----------------------------------------------------------------------------
+u32 FIELD_WFBC_PEOPLE_DATA_GetLoadNpcID( const FIELD_WFBC_PEOPLE_DATA_LOAD* cp_wk )
+{
+  GF_ASSERT( cp_wk );
+  return cp_wk->npc_id;
+}
+
+
+
+
 
 
 
@@ -884,11 +1010,11 @@ static FIELD_WFBC_CORE_PEOPLE* WFBC_CORE_GetClearPeopleArray( FIELD_WFBC_CORE_PE
  *	@param	npc_id    NPCID
  */
 //-----------------------------------------------------------------------------
-static void WFBC_CORE_SetUpPeople( FIELD_WFBC_CORE_PEOPLE* p_people, u8 npc_id, const MYSTATUS* cp_mystatus )
+static void WFBC_CORE_SetUpPeople( FIELD_WFBC_CORE_PEOPLE* p_people, u8 npc_id, const MYSTATUS* cp_mystatus, u16 mood )
 {
   p_people->data_in = TRUE;
   p_people->npc_id  = npc_id;
-  p_people->mood    = FIELD_WFBC_MOOD_DEFAULT;
+  p_people->mood    = mood;
   p_people->one_day_msk  = FIELD_WFBC_ONEDAY_MSK_INIT;
 
   // 親の設定

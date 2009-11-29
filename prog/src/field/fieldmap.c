@@ -594,12 +594,10 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     FIELD_BMODEL_MAN_Load(bmodel_man, fieldWork->map_id, fieldWork->areadata);
     // WFBC街情報を設定
     // @TODO　後々は、パレス接続先の人の街情報を設定する
-    {
-      FLDMAPPER_SetWfbcData( fieldWork->g3Dmapper, GAMEDATA_GetMyWFBCCoreData( fieldWork->gamedata ), MAPMODE_NORMAL );
+    FLDMAPPER_SetWfbcData( fieldWork->g3Dmapper, GAMEDATA_GetMyWFBCCoreData( fieldWork->gamedata ), MAPMODE_NORMAL );
 
-      // WFBCの人を配置
-      zoneChange_SetMMdlZoneWFBC( gdata, fieldWork, fieldWork->map_id );
-    }
+    // WFBCの人を配置
+    zoneChange_SetMMdlZoneWFBC( gdata, fieldWork, fieldWork->map_id );
   }
 
   //フィールドマップ用ロケーション作成
@@ -2431,7 +2429,7 @@ static void zoneChange_SetMMdlZoneWFBC( GAMEDATA *gdata,
   {
     return ;
   }
-
+  
   {
     FIELD_WFBC* p_wfbc;
     MMDL_HEADER* p_header;
@@ -2443,8 +2441,9 @@ static void zoneChange_SetMMdlZoneWFBC( GAMEDATA *gdata,
     p_header  = FIELD_WFBC_MMDLHeaderCreateHeapLo( p_wfbc, fieldWork->heapID );
     count     = FIELD_WFBC_GetPeopleNum( p_wfbc );
     
-    if( p_header )
+    if( p_header && (count > 0) )
     {
+      TOMOYA_Printf( "WFBC MMDL SetUp\n" );
 		  MMDLSYS_SetMMdl( fmmdlsys, p_header, zone_id, count, evwork );
 
 

@@ -115,9 +115,7 @@ static const WFBC_PEOPLE_POS  sc_WFBC_PEOPLE_POS[ FIELD_WFBC_CORE_TYPE_MAX ][ FI
 struct _FIELD_WFBC_PEOPLE 
 {
   u16   status;   // FIELD_WFBC_PEOPLE_STATUS
-  u16   objcode;  // 見た目
-  u16   move_code;// 動作
-  u16   pad;
+  FIELD_WFBC_PEOPLE_DATA people_data;
   FIELD_WFBC_CORE_PEOPLE people_local;
 
   u16   gx;   // グリッドｘ座標
@@ -131,10 +129,13 @@ struct _FIELD_WFBC
 {
   u8    type;     // WF / BC FIELD_WFBC_CORE_TYPE
   u8    mapmode;  // マップモードMAPMODE
-  FIELD_WFBC_PEOPLE people[ FIELD_WFBC_PEOPLE_MAX ];
+  FIELD_WFBC_PEOPLE* p_people;
 
   // mapmodeがMAPMODE_NORMALなら、即時に変更がセーブデータに設定される。
   FIELD_WFBC_CORE* p_core;  
+
+  // ローダー
+  FIELD_WFBC_PEOPLE_DATA_LOAD* p_loader;
 };
 
 //-----------------------------------------------------------------------------
@@ -146,6 +147,9 @@ struct _FIELD_WFBC
 //-------------------------------------
 ///	FIELD_WFBC
 //=====================================
+static void WFBC_InitSystem( FIELD_WFBC* p_wk, HEAPID heapID );
+static void WFBC_ExitSystem( FIELD_WFBC* p_wk );
+
 static void WFBC_Clear( FIELD_WFBC* p_wk );
 static int WFBC_GetClearPeople( const FIELD_WFBC* cp_wk );
 static int WFBC_GetPeopleNum( const FIELD_WFBC* cp_wk );
@@ -162,7 +166,7 @@ static const FIELD_WFBC_PEOPLE* WFBC_GetConstPeople( const FIELD_WFBC* cp_wk, u3
 ///	FIELD_WFBC_PEOPLE
 //=====================================
 static void WFBC_PEOPLE_Clear( FIELD_WFBC_PEOPLE* p_people );
-static void WFBC_PEOPLE_SetUp( FIELD_WFBC_PEOPLE* p_people, const FIELD_WFBC_CORE_PEOPLE* cp_core, const WFBC_PEOPLE_POS* cp_pos );
+static void WFBC_PEOPLE_SetUp( FIELD_WFBC_PEOPLE* p_people, const FIELD_WFBC_CORE_PEOPLE* cp_core, const WFBC_PEOPLE_POS* cp_pos, const FIELD_WFBC_PEOPLE_DATA* cp_data );
 static void WFBC_PEOPLE_GetCore( const FIELD_WFBC_PEOPLE* cp_people, FIELD_WFBC_CORE_PEOPLE* p_core );
 
 
@@ -196,6 +200,8 @@ FIELD_WFBC* FIELD_WFBC_Create( HEAPID heapID )
 void FIELD_WFBC_Delete( FIELD_WFBC* p_wk )
 {
   GF_ASSERT( p_wk );
+
+  WFBC_ExitSystem( p_wk );
 
   GFL_HEAP_FreeMemory( p_wk );
 }
@@ -309,15 +315,15 @@ MMDL_HEADER* FIELD_WFBC_MMDLHeaderCreateHeapLo( const FIELD_WFBC* cp_wk, HEAPID 
   count = 0;
   for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
   {
-    if( cp_wk->people[i].status == FIELD_WFBC_PEOPLE_STATUS_NORMAL )
+    if( cp_wk->p_people[i].status == FIELD_WFBC_PEOPLE_STATUS_NORMAL )
     {
       // 人物として登録
       p_buff[count] = sc_DEFAULT_HEADER;
 
-      p_buff[count].id          = FIELD_WFBC_CORE_PEOPLE_GetNpcID(&cp_wk->people[i].people_local);
-      p_buff[count].obj_code    = cp_wk->people[i].objcode;
-      p_buff[count].move_code   = cp_wk->people[i].move_code;
-      MMDLHEADER_SetGridPos( &p_buff[count], cp_wk->people[i].gx, cp_wk->people[i].gz, 0 );
+      p_buff[count].id          = FIELD_WFBC_CORE_PEOPLE_GetNpcID(&cp_wk->p_people[i].people_local);
+      p_buff[count].obj_code    = cp_wk->p_people[i].people_data.objid;
+      p_buff[count].move_code   = MV_RND;
+      MMDLHEADER_SetGridPos( &p_buff[count], cp_wk->p_people[i].gx, cp_wk->p_people[i].gz, 0 );
 
       count ++;
     }
@@ -333,19 +339,36 @@ MMDL_HEADER* FIELD_WFBC_MMDLHeaderCreateHeapLo( const FIELD_WFBC* cp_wk, HEAPID 
  *	@param	p_wk        ワーク
  *	@param	cp_core     コア情報
  *	@param  mapmode     マップモード
+ *	@param  heapID      ヒープID
  */
 //-----------------------------------------------------------------------------
-void FIELD_WFBC_SetUp( FIELD_WFBC* p_wk, FIELD_WFBC_CORE* p_core, MAPMODE mapmode )
+void FIELD_WFBC_SetUp( FIELD_WFBC* p_wk, FIELD_WFBC_CORE* p_core, MAPMODE mapmode, HEAPID heapID )
 {
+  // 内部ワークの初期か
+  WFBC_InitSystem( p_wk, heapID );
+  
   WFBC_SetCore( p_wk, p_core, mapmode );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  街情報をクリア
+ *
+ *	@param	p_wk 
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_Clear( FIELD_WFBC* p_wk )
+{
+  WFBC_Clear( p_wk );
+  WFBC_ExitSystem( p_wk );
+}
+
 
 //----------------------------------------------------------------------------
 /**
  *	@brief  人物の追加
  *
  *	@param	p_wk    ワーク
- *	@param	objcode オブジェコード
  *
  *	@retval 追加したインデックス
  */
@@ -358,8 +381,11 @@ void FIELD_WFBC_AddPeople( FIELD_WFBC* p_wk, const FIELD_WFBC_CORE_PEOPLE* cp_co
   // 空いているワークを取得
   index = WFBC_GetClearPeople( p_wk );
 
+  // NPC情報読み込み
+  FIELD_WFBC_PEOPLE_DATA_Load( p_wk->p_loader, cp_core->npc_id );
+  
   // 人情報をセットアップ
-  WFBC_PEOPLE_SetUp( &p_wk->people[index], cp_core, &sc_WFBC_PEOPLE_POS[ p_wk->type ][ index ] );
+  WFBC_PEOPLE_SetUp( &p_wk->p_people[index], cp_core, &sc_WFBC_PEOPLE_POS[ p_wk->type ][ index ], FIELD_WFBC_PEOPLE_DATA_GetData( p_wk->p_loader ) );
 
   // セーブデータに反映
   WFBC_UpdateCore( p_wk );
@@ -419,7 +445,7 @@ void FIELD_WFBC_SetAwayPeople( FIELD_WFBC* p_wk, u32 npc_id )
 u32 FIELD_WFBC_PEOPLE_GetOBJCode( const FIELD_WFBC_PEOPLE* cp_people )
 {
   GF_ASSERT( cp_people );
-  return cp_people->objcode;
+  return cp_people->people_data.objid;
 }
 
 //----------------------------------------------------------------------------
@@ -437,6 +463,37 @@ FIELD_WFBC_PEOPLE_STATUS FIELD_WFBC_PEOPLE_GetStatus( const FIELD_WFBC_PEOPLE* c
   return cp_people->status;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物データ  から　人物基本情報を取得
+ *
+ *	@param	cp_people   人物ワーク
+ *
+ *	@return 基本情報
+ */
+//-----------------------------------------------------------------------------
+const FIELD_WFBC_PEOPLE_DATA* FIELD_WFBC_PEOPLE_GetPeopleData( const FIELD_WFBC_PEOPLE* cp_people )
+{
+  GF_ASSERT( cp_people );
+  return &cp_people->people_data;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物データ　から　ローカル　のセーブ人物情報を取得
+ *
+ *	@param	cp_people   人物ワーク
+ *
+ *	@return ローカルのセーブ人物情報
+ */
+//-----------------------------------------------------------------------------
+const FIELD_WFBC_CORE_PEOPLE* FIELD_WFBC_PEOPLE_GetPeopleCore( const FIELD_WFBC_PEOPLE* cp_people )
+{
+  GF_ASSERT( cp_people );
+  return &cp_people->people_local;
+}
+
+
 
 
 
@@ -450,6 +507,51 @@ FIELD_WFBC_PEOPLE_STATUS FIELD_WFBC_PEOPLE_GetStatus( const FIELD_WFBC_PEOPLE* c
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  必要システムの初期化
+ *
+ *	@param	p_wk        ワーク
+ *	@param	heapID      ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void WFBC_InitSystem( FIELD_WFBC* p_wk, HEAPID heapID )
+{
+  int i;
+  
+  if(p_wk->p_loader == NULL)
+  {
+    p_wk->p_loader = FIELD_WFBC_PEOPLE_DATA_Create( 0, heapID );
+    p_wk->p_people = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_WFBC_PEOPLE) * FIELD_WFBC_PEOPLE_MAX );
+
+    //　人物ワークをクリア
+    for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+    {
+      WFBC_PEOPLE_Clear( &p_wk->p_people[i] );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  必要システムの破棄
+ *
+ *	@param	p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static void WFBC_ExitSystem( FIELD_WFBC* p_wk )
+{
+  if(p_wk->p_loader)
+  {
+    FIELD_WFBC_PEOPLE_DATA_Delete( p_wk->p_loader );
+    GFL_HEAP_FreeMemory( p_wk->p_people );
+
+    p_wk->p_loader = NULL;
+    p_wk->p_people = NULL;
+  } 
+}
+
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  WFBCワークをクリア
  */
 //-----------------------------------------------------------------------------
@@ -457,12 +559,17 @@ static void WFBC_Clear( FIELD_WFBC* p_wk )
 {
   int i;
 
-  GFL_STD_MemClear( p_wk, sizeof(FIELD_WFBC) );
+  p_wk->type = 0;
+  p_wk->mapmode = 0;
+  p_wk->p_core = NULL;
 
   //　人物ワークをクリア
-  for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+  if( p_wk->p_people )
   {
-    WFBC_PEOPLE_Clear( &p_wk->people[i] );
+    for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+    {
+      WFBC_PEOPLE_Clear( &p_wk->p_people[i] );
+    }
   }
 }
 
@@ -481,11 +588,14 @@ static int WFBC_GetClearPeople( const FIELD_WFBC* cp_wk )
 
   GF_ASSERT( cp_wk );
 
-  for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+  if( cp_wk->p_people )
   {
-    if( cp_wk->people[i].status != FIELD_WFBC_PEOPLE_STATUS_NONE )
+    for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
     {
-      return i;
+      if( cp_wk->p_people[i].status != FIELD_WFBC_PEOPLE_STATUS_NONE )
+      {
+        return i;
+      }
     }
   }
 
@@ -510,11 +620,14 @@ static int WFBC_GetPeopleNum( const FIELD_WFBC* cp_wk )
   GF_ASSERT( cp_wk );
 
   num = 0;
-  for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+  if( cp_wk->p_people )
   {
-    if( cp_wk->people[i].status != FIELD_WFBC_PEOPLE_STATUS_NONE )
+    for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
     {
-      num ++;
+      if( cp_wk->p_people[i].status != FIELD_WFBC_PEOPLE_STATUS_NONE )
+      {
+        num ++;
+      }
     }
   }
 
@@ -536,6 +649,8 @@ static void WFBC_SetCore( FIELD_WFBC* p_wk, FIELD_WFBC_CORE* p_buff, MAPMODE map
   BOOL result;
 
   GF_ASSERT( p_wk );
+  GF_ASSERT( p_wk->p_people );
+  GF_ASSERT( p_wk->p_loader );
   GF_ASSERT( p_buff );
 
   result = FIELD_WFBC_CORE_IsInData( p_buff );
@@ -554,14 +669,18 @@ static void WFBC_SetCore( FIELD_WFBC* p_wk, FIELD_WFBC_CORE* p_buff, MAPMODE map
     {
       if( FIELD_WFBC_CORE_PEOPLE_IsInData( &p_buff->people[i] ) )
       {
-        WFBC_PEOPLE_SetUp( &p_wk->people[i], &p_buff->people[i], &sc_WFBC_PEOPLE_POS[ p_wk->type ][ i ] );
+        // NPC情報読み込み
+        FIELD_WFBC_PEOPLE_DATA_Load( p_wk->p_loader, p_buff->people[i].npc_id );
+        WFBC_PEOPLE_SetUp( &p_wk->p_people[i], &p_buff->people[i], &sc_WFBC_PEOPLE_POS[ p_wk->type ][ i ], FIELD_WFBC_PEOPLE_DATA_GetData( p_wk->p_loader ) );
       }
     }
     else
     {
       if( FIELD_WFBC_CORE_PEOPLE_IsInData( &p_buff->back_people[i] ) )
       {
-        WFBC_PEOPLE_SetUp( &p_wk->people[i], &p_buff->back_people[i], &sc_WFBC_PEOPLE_POS[ p_wk->type ][ i ] );
+        // NPC情報読み込み
+        FIELD_WFBC_PEOPLE_DATA_Load( p_wk->p_loader, p_buff->back_people[i].npc_id );
+        WFBC_PEOPLE_SetUp( &p_wk->p_people[i], &p_buff->back_people[i], &sc_WFBC_PEOPLE_POS[ p_wk->type ][ i ], FIELD_WFBC_PEOPLE_DATA_GetData( p_wk->p_loader ) );
       }
     }
   }
@@ -591,8 +710,8 @@ static void WFBC_GetCore( const FIELD_WFBC* cp_wk, FIELD_WFBC_CORE* p_buff )
 
   GF_ASSERT( cp_wk );
   GF_ASSERT( p_buff );
+  GF_ASSERT( cp_wk->p_people );
 
-  
   // 情報を格納
   p_buff->data_in = TRUE;
   p_buff->type    = cp_wk->type;
@@ -603,7 +722,7 @@ static void WFBC_GetCore( const FIELD_WFBC* cp_wk, FIELD_WFBC_CORE* p_buff )
     for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
     {
       // データがあったら設定
-      WFBC_PEOPLE_GetCore( &cp_wk->people[i], &p_buff->people[i] );
+      WFBC_PEOPLE_GetCore( &cp_wk->p_people[i], &p_buff->people[i] );
     }
   }
   else
@@ -612,7 +731,7 @@ static void WFBC_GetCore( const FIELD_WFBC* cp_wk, FIELD_WFBC_CORE* p_buff )
     for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
     {
       // データがあったら設定
-      WFBC_PEOPLE_GetCore( &cp_wk->people[i], &p_buff->back_people[i] );
+      WFBC_PEOPLE_GetCore( &cp_wk->p_people[i], &p_buff->back_people[i] );
     }
   }
 }
@@ -650,13 +769,16 @@ static FIELD_WFBC_PEOPLE* WFBC_GetPeople( FIELD_WFBC* p_wk, u32 npc_id )
   GF_ASSERT( p_wk );
   GF_ASSERT( npc_id < FIELD_WFBC_NPCID_MAX );
 
-  for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+  if(p_wk->p_people)
   {
-    if( p_wk->people[i].status != FIELD_WFBC_PEOPLE_STATUS_NONE )
+    for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
     {
-      if( FIELD_WFBC_CORE_PEOPLE_GetNpcID(&p_wk->people[i].people_local ) == npc_id )
+      if( p_wk->p_people[i].status != FIELD_WFBC_PEOPLE_STATUS_NONE )
       {
-        return &p_wk->people[i];
+        if( FIELD_WFBC_CORE_PEOPLE_GetNpcID(&p_wk->p_people[i].people_local ) == npc_id )
+        {
+          return &p_wk->p_people[i];
+        }
       }
     }
   }
@@ -681,13 +803,16 @@ static const FIELD_WFBC_PEOPLE* WFBC_GetConstPeople( const FIELD_WFBC* cp_wk, u3
   GF_ASSERT( cp_wk );
   GF_ASSERT( npc_id < FIELD_WFBC_NPCID_MAX );
 
-  for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+  if(cp_wk->p_people)
   {
-    if( cp_wk->people[i].status != FIELD_WFBC_PEOPLE_STATUS_NONE )
+    for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
     {
-      if( FIELD_WFBC_CORE_PEOPLE_GetNpcID(&cp_wk->people[i].people_local) == npc_id )
+      if( cp_wk->p_people[i].status != FIELD_WFBC_PEOPLE_STATUS_NONE )
       {
-        return &cp_wk->people[i];
+        if( FIELD_WFBC_CORE_PEOPLE_GetNpcID(&cp_wk->p_people[i].people_local) == npc_id )
+        {
+          return &cp_wk->p_people[i];
+        }
       }
     }
   }
@@ -717,9 +842,10 @@ static void WFBC_PEOPLE_Clear( FIELD_WFBC_PEOPLE* p_people )
  *	@param	p_people    人物ワーク
  *	@param	cp_core     人物CORE情報
  *	@param  cp_pos      位置情報
+ *	@param  cp_data     データ
  */
 //-----------------------------------------------------------------------------
-static void WFBC_PEOPLE_SetUp( FIELD_WFBC_PEOPLE* p_people, const FIELD_WFBC_CORE_PEOPLE* cp_core, const WFBC_PEOPLE_POS* cp_pos )
+static void WFBC_PEOPLE_SetUp( FIELD_WFBC_PEOPLE* p_people, const FIELD_WFBC_CORE_PEOPLE* cp_core, const WFBC_PEOPLE_POS* cp_pos, const FIELD_WFBC_PEOPLE_DATA* cp_data )
 {
   BOOL result;
   
@@ -732,8 +858,7 @@ static void WFBC_PEOPLE_SetUp( FIELD_WFBC_PEOPLE* p_people, const FIELD_WFBC_COR
   GFL_STD_MemCopy( cp_core, &p_people->people_local, sizeof(FIELD_WFBC_CORE_PEOPLE) );
 
   // NPCIDの基本情報を読み込む
-  p_people->objcode   = 0x5;
-  p_people->move_code = MV_DIR_RND;
+  GFL_STD_MemCopy( cp_data, &p_people->people_data, sizeof(FIELD_WFBC_PEOPLE_DATA) );
   p_people->gx        = cp_pos->gx;
   p_people->gz        = cp_pos->gz;
 }

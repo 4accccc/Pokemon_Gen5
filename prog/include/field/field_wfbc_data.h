@@ -18,6 +18,7 @@ extern "C"{
 
 #include "gamesystem/gamedata_def.h"  //GAMEDATA
 #include "field/intrude_common.h"
+#include "field/field_wfbc_people_def.h"
 
 #include "savedata/mystatus.h"
 
@@ -88,11 +89,6 @@ typedef enum
 #define FIELD_WFBC_MOOD_ADD_TALK    ( 10 )  // 話をすると1日1回足される値
 #define FIELD_WFBC_MOOD_SUB         ( -5 ) // 1日1回減る値
 
-//-------------------------------------
-///	NPCIDの最大値
-//=====================================
-#define FIELD_WFBC_NPCID_MAX  ( 50 )
-
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
@@ -151,7 +147,7 @@ extern void FIELD_WFBC_CORE_Clear( FIELD_WFBC_CORE* p_wk );
 extern void FIELD_WFBC_CORE_ClearNormal( FIELD_WFBC_CORE* p_wk );
 extern void FIELD_WFBC_CORE_ClearBack( FIELD_WFBC_CORE* p_wk );
 //街の情報をセットアップ
-extern void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus );
+extern void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, HEAPID heapID );
 //整合性チェック
 extern BOOL FIELD_WFBC_CORE_IsConfomity( const FIELD_WFBC_CORE* cp_wk );
 //データの調整  不正データの場合、正常な情報に書き換えます。
@@ -193,6 +189,90 @@ extern void FIELD_WFBC_CORE_PEOPLE_SetParentData( FIELD_WFBC_CORE_PEOPLE* p_wk, 
 extern void FIELD_WFBC_CORE_PEOPLE_GetParentName( const FIELD_WFBC_CORE_PEOPLE* cp_wk, STRCODE* p_buff );
 extern u32 FIELD_WFBC_CORE_PEOPLE_GetParentID( const FIELD_WFBC_CORE_PEOPLE* cp_wk );
 extern u32 FIELD_WFBC_CORE_PEOPLE_GetNpcID( const FIELD_WFBC_CORE_PEOPLE* cp_wk );
+
+
+
+
+
+
+
+
+//-----------------------------------------------------------------------------
+/**
+ *					WFBC人物情報へのアクセス
+*/
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+/**
+ *					定数宣言
+*/
+//-----------------------------------------------------------------------------
+// エンカウントポケモンの数
+#define FIELD_WFBC_PEOPLE_ENC_POKE_MAX  (3)
+// バトルポケモンの数
+#define FIELD_WFBC_PEOPLE_BTL_POKE_MAX  (3)
+
+// メッセージの数
+#define FIELD_WFBC_PEOPLE_WF_MESSAGE_MAX  (3)
+#define FIELD_WFBC_PEOPLE_BC_MESSAGE_MAX  (4)
+
+//-----------------------------------------------------------------------------
+/**
+ *					構造体宣言
+*/
+//-----------------------------------------------------------------------------
+//-------------------------------------
+///	人物情報
+// 68バイト
+//=====================================
+typedef struct 
+{
+  u16     objid;    // オブジェコード
+  u16     trtype;   // トレーナータイプ
+  u16     mood_wf;  // 機嫌値　WF
+  u16     mood_bc;  // 機嫌値  BC
+  // エンカウント情報
+  u16     enc_monsno[FIELD_WFBC_PEOPLE_ENC_POKE_MAX+1]; //+1パディング 8byte
+  u8      enc_lv[FIELD_WFBC_PEOPLE_ENC_POKE_MAX+1];       // 4byte
+  u8      enc_percent[FIELD_WFBC_PEOPLE_ENC_POKE_MAX+1];  // 4byte
+  // バトルポケモン情報
+  u16     btl_monsno[FIELD_WFBC_PEOPLE_BTL_POKE_MAX+1];   // 8byte
+  u8      btl_lv[FIELD_WFBC_PEOPLE_BTL_POKE_MAX+1];   // 4byte
+  u8      btl_sex[FIELD_WFBC_PEOPLE_BTL_POKE_MAX+1];  // 4byte
+  u8      btl_tokusei[FIELD_WFBC_PEOPLE_BTL_POKE_MAX+1]; // 4byte
+  // MESSAGE
+  u16     msg_wf[FIELD_WFBC_PEOPLE_WF_MESSAGE_MAX+1]; // 8byte
+  u16     msg_bc[FIELD_WFBC_PEOPLE_BC_MESSAGE_MAX]; // 8byte
+  // 道具
+  u16     goods_wf;
+  u16     goods_wf_percent;
+  u16     goods_bc;
+  u16     goods_bc_money;
+} FIELD_WFBC_PEOPLE_DATA;
+
+//-------------------------------------
+///	人物情報ローダー
+//=====================================
+typedef struct _FIELD_WFBC_PEOPLE_DATA_LOAD FIELD_WFBC_PEOPLE_DATA_LOAD;
+
+
+//-----------------------------------------------------------------------------
+/**
+ *					プロトタイプ宣言
+*/
+//-----------------------------------------------------------------------------
+
+extern FIELD_WFBC_PEOPLE_DATA_LOAD* FIELD_WFBC_PEOPLE_DATA_Create( u32 npc_id, HEAPID heapID );
+extern void FIELD_WFBC_PEOPLE_DATA_Delete( FIELD_WFBC_PEOPLE_DATA_LOAD* p_wk );
+
+// 再読み込み
+extern void FIELD_WFBC_PEOPLE_DATA_Load( FIELD_WFBC_PEOPLE_DATA_LOAD* p_wk, u32 npc_id );
+
+// 情報の取得
+extern const FIELD_WFBC_PEOPLE_DATA* FIELD_WFBC_PEOPLE_DATA_GetData( const FIELD_WFBC_PEOPLE_DATA_LOAD* cp_wk );
+extern u32 FIELD_WFBC_PEOPLE_DATA_GetLoadNpcID( const FIELD_WFBC_PEOPLE_DATA_LOAD* cp_wk );
+
+
 
 #ifdef _cplusplus
 }	// extern "C"{
