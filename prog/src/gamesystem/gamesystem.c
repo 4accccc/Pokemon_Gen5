@@ -165,6 +165,8 @@ static GFL_PROC_RESULT GameMainProcEnd(GFL_PROC * proc, int * seq, void * pwk, v
 	GameSystem_End(gsys);
 	GFL_PROC_FreeWork(proc);
 	GFL_HEAP_DeleteHeap( HEAPID_WORLD );
+  GFL_HEAP_DeleteHeap( HEAPID_PROC );
+  GFL_HEAP_DeleteHeap( HEAPID_APP_CONTROL );
 	return GFL_PROC_RES_FINISH;
 }
 //------------------------------------------------------------------
