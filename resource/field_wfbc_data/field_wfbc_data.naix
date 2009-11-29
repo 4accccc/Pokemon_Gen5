@@ -1,0 +1,67 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: field_wfbc_data.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_FIELD_WFBC_DATA_NAIX_
+#define NARC_FIELD_WFBC_DATA_NAIX_
+
+enum {
+	NARC_field_wfbc_data_wfbc_people_00_bin = 0,
+	NARC_field_wfbc_data_wfbc_people_01_bin = 1,
+	NARC_field_wfbc_data_wfbc_people_02_bin = 2,
+	NARC_field_wfbc_data_wfbc_people_03_bin = 3,
+	NARC_field_wfbc_data_wfbc_people_04_bin = 4,
+	NARC_field_wfbc_data_wfbc_people_05_bin = 5,
+	NARC_field_wfbc_data_wfbc_people_06_bin = 6,
+	NARC_field_wfbc_data_wfbc_people_07_bin = 7,
+	NARC_field_wfbc_data_wfbc_people_08_bin = 8,
+	NARC_field_wfbc_data_wfbc_people_09_bin = 9,
+	NARC_field_wfbc_data_wfbc_people_10_bin = 10,
+	NARC_field_wfbc_data_wfbc_people_11_bin = 11,
+	NARC_field_wfbc_data_wfbc_people_12_bin = 12,
+	NARC_field_wfbc_data_wfbc_people_13_bin = 13,
+	NARC_field_wfbc_data_wfbc_people_14_bin = 14,
+	NARC_field_wfbc_data_wfbc_people_15_bin = 15,
+	NARC_field_wfbc_data_wfbc_people_16_bin = 16,
+	NARC_field_wfbc_data_wfbc_people_17_bin = 17,
+	NARC_field_wfbc_data_wfbc_people_18_bin = 18,
+	NARC_field_wfbc_data_wfbc_people_19_bin = 19,
+	NARC_field_wfbc_data_wfbc_people_20_bin = 20,
+	NARC_field_wfbc_data_wfbc_people_21_bin = 21,
+	NARC_field_wfbc_data_wfbc_people_22_bin = 22,
+	NARC_field_wfbc_data_wfbc_people_23_bin = 23,
+	NARC_field_wfbc_data_wfbc_people_24_bin = 24,
+	NARC_field_wfbc_data_wfbc_people_25_bin = 25,
+	NARC_field_wfbc_data_wfbc_people_26_bin = 26,
+	NARC_field_wfbc_data_wfbc_people_27_bin = 27,
+	NARC_field_wfbc_data_wfbc_people_28_bin = 28,
+	NARC_field_wfbc_data_wfbc_people_29_bin = 29,
+	NARC_field_wfbc_data_wfbc_people_30_bin = 30,
+	NARC_field_wfbc_data_wfbc_people_31_bin = 31,
+	NARC_field_wfbc_data_wfbc_people_32_bin = 32,
+	NARC_field_wfbc_data_wfbc_people_33_bin = 33,
+	NARC_field_wfbc_data_wfbc_people_34_bin = 34,
+	NARC_field_wfbc_data_wfbc_people_35_bin = 35,
+	NARC_field_wfbc_data_wfbc_people_36_bin = 36,
+	NARC_field_wfbc_data_wfbc_people_37_bin = 37,
+	NARC_field_wfbc_data_wfbc_people_38_bin = 38,
+	NARC_field_wfbc_data_wfbc_people_39_bin = 39,
+	NARC_field_wfbc_data_wfbc_people_40_bin = 40,
+	NARC_field_wfbc_data_wfbc_people_41_bin = 41,
+	NARC_field_wfbc_data_wfbc_people_42_bin = 42,
+	NARC_field_wfbc_data_wfbc_people_43_bin = 43,
+	NARC_field_wfbc_data_wfbc_people_44_bin = 44,
+	NARC_field_wfbc_data_wfbc_people_45_bin = 45,
+	NARC_field_wfbc_data_wfbc_people_46_bin = 46,
+	NARC_field_wfbc_data_wfbc_people_47_bin = 47,
+	NARC_field_wfbc_data_wfbc_people_48_bin = 48,
+	NARC_field_wfbc_data_wfbc_people_49_bin = 49
+};
+
+/* NARC_FIELD_WFBC_DATA_NAIX_ */
+#endif
