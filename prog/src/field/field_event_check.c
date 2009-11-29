@@ -1118,7 +1118,9 @@ static GMEVENT * DEBUG_checkKeyEvent(EV_REQUEST * req, GAMESYS_WORK * gsys, FIEL
 
 	//ソフトリセットチェック
 	if( (req->key_cont & resetCont) == resetCont ){
+#if 0
 		return DEBUG_EVENT_GameEnd(gsys, fieldWork);
+#endif
 	}
 	
 	//マップ変更チェック
