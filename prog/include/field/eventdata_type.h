@@ -54,6 +54,19 @@ typedef enum {
 	EXIT_DIR_MAX
 }EXIT_DIR;
 
+//------------------------------------------------------------------
+/// POSƒCƒxƒ“ƒg‚ÌŽí—Þ
+//------------------------------------------------------------------
+typedef enum {
+  POS_CHECK_TYPE_NORMAL = 0,
+  POS_CHECK_TYPE_UP,
+  POS_CHECK_TYPE_DOWN,
+  POS_CHECK_TYPE_LEFT,
+  POS_CHECK_TYPE_RIGHT,
+
+  POS_CHECK_TYPE_MAX,
+}POS_CHECK_TYPE;
+
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

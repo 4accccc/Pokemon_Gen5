@@ -114,6 +114,7 @@ struct _POS_EVENT_DATA{
 	u16	id;			//ID
 	u16 param;
 	u16 workID;
+  u16 check_type;
 
   u16 pos_type; // ポジションタイプ EVENTDATA_POSTYPE
   u8  pos_buf[POS_EVENT_DATA_POSBUF_SIZE];
