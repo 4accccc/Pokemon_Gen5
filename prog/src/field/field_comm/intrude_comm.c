@@ -26,6 +26,12 @@
 #include "intrude_mission.h"
 
 
+//==============================================================================
+//  定数定義
+//==============================================================================
+///自分一人になった場合、通信終了へ遷移するまでのタイムアウト
+#define OTHER_PLAYER_TIMEOUT    (60 * 3)
+
 //--------------------------------------------------------------
 //  デバッグ用変数宣言
 //--------------------------------------------------------------
@@ -230,12 +236,19 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
 
   case 3: //通常更新
     Intrude_Main(intcomm);
-  #if 0
+    
+    //自分一人になった場合、通信終了へ遷移するまでのタイムアウト
     if(Intrude_OtherPlayerExistence() == FALSE){
-      intcomm->comm_status = INTRUDE_COMM_STATUS_RESTART;
-      *seq = 100;
+      intcomm->other_player_timeout++;
+      if(intcomm->other_player_timeout > OTHER_PLAYER_TIMEOUT){
+        intcomm->comm_status = INTRUDE_COMM_STATUS_RESTART;
+        *seq = 100;
+      }
     }
-  #endif
+    else{
+      intcomm->other_player_timeout = 0;
+    }
+    
     break;
   
   case 100: //一度通信を終了し再度通信を起動  (子機に離脱されて親が一人残った場合のみここに来る)

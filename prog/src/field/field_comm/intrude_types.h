@@ -148,7 +148,8 @@ typedef struct _INTRUDE_COMM_SYS{
   u8 send_occupy;             ///<TRUE:自分の占拠情報を送信リクエスト
   u8 recv_target_timing_no;   ///<相手指定タイミングコマンドの同期番号の受信バッファ
   
+  u16 other_player_timeout;   ///<自分一人になった場合、通信終了へ遷移するまでのタイムアウト
   u8 recv_target_timing_netid;  ///<相手指定タイミングコマンドの送信者のNetID
-  u8 padding[3];
+  u8 padding;
 }INTRUDE_COMM_SYS;
 
