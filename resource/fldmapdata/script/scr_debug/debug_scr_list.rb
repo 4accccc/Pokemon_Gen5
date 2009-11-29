@@ -15,7 +15,7 @@ def reader  file
   file.each{|line|
     if line =~/#define SCRID_DEBUG/ then
       column = line.split
-      sym = column[1].sub(/SCRID_DEBUG_/,"").downcase
+      sym = column[1].sub(/SCRID_DEBUG_/,"").upcase
       id = Integer(column[2].gsub(/[()]/,"") )
       result << [ id, sym ]
     end

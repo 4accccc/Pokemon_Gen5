@@ -20,7 +20,16 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA   ev_debug_test
+_EVENT_DATA   ev_debug_masafumi
+_EVENT_DATA   ev_debug_ando
+_EVENT_DATA   ev_debug_suginaka
+_EVENT_DATA   ev_debug_murakami
 _EVENT_DATA   ev_debug_tamada
+_EVENT_DATA   ev_debug_kagaya
+_EVENT_DATA   ev_debug_iwasawa
+_EVENT_DATA   ev_debug_nozomu
+_EVENT_DATA   ev_debug_tomoya
+_EVENT_DATA   ev_debug_obata
 _EVENT_DATA_END
 
 
@@ -40,5 +49,64 @@ EVENT_END
 /*                                                            */
 /**************************************************************/
 EVENT_START ev_debug_tamada
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_sample )
+  _OBJ_ANIME_WAIT()
+EVENT_END
+
+_ANIME_LABEL  anm_sample
+  _ANIME_DATA AC_WALK_L_4F, 1
+  _ANIME_DATA AC_WALK_R_4F, 1
+  _ANIME_DATA ACMD_END, 0
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START ev_debug_masafumi
+EVENT_END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START   ev_debug_ando
+EVENT_END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START   ev_debug_suginaka
+EVENT_END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START   ev_debug_murakami
+EVENT_END
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START   ev_debug_kagaya
+EVENT_END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START   ev_debug_iwasawa
+EVENT_END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START   ev_debug_nozomu
+EVENT_END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START   ev_debug_tomoya
+EVENT_END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START   ev_debug_obata
 EVENT_END
 
