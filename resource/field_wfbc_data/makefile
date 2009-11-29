@@ -70,7 +70,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ÉãÅ[Éã
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	subdir $(TARGETDIR)/$(targetname).narc $(COPY_DIR)$(OUTPUT_HEADER)
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -79,6 +79,8 @@ subdir:
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR)
+	
+$(COPY_DIR)$(OUTPUT_HEADER): $(OUTPUT_HEADER)
 	$(COPY) $(OUTPUT_HEADER) $(COPY_DIR)
 
 
