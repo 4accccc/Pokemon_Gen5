@@ -673,6 +673,13 @@
   NO_CMD()
   NO_CMD()
 
+  // 氷ジム
+  DEF_CMD( EvCmdGymIce_SwAnm, EV_SEQ_GYM_ICE_SW_ANM )
+  DEF_CMD( EvCmdGymIce_WallAnm, EV_SEQ_GYM_ICE_WALL_ANM )
+  NO_CMD()
+  NO_CMD()
+
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

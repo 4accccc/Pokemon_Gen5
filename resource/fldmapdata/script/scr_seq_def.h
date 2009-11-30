@@ -4479,7 +4479,33 @@
   .short  EV_SEQ_GYM_GROUND_ENT_EXIT_LIFT
   .short  \exit
   .endm
- 
+
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　氷ジムスイッチアニメ
+ * @param idx   ギミックインデックス0～2
+ */
+//--------------------------------------------------------------
+#define _GYM_ICE_SW_ANM(idx) _ASM_GYM_ICE_SW_ANM idx
+
+  .macro  _ASM_GYM_ICE_SW_ANM idx
+  .short  EV_SEQ_GYM_ICE_SW_ANM
+  .short  \idx
+  .endm
+  
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　氷ジム壁アニメ
+ * @param idx   ギミックインデックス0～2
+ */
+//--------------------------------------------------------------
+#define _GYM_ICE_WALL_ANM(idx) _ASM_GYM_ICE_WALL_ANM idx
+
+  .macro  _ASM_GYM_ICE_WALL_ANM idx
+  .short  EV_SEQ_GYM_ICE_WALL_ANM
+  .short  \idx
+  .endm
+
 //======================================================================
 //
 //  モデルアニメ関連
