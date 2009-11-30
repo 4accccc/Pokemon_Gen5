@@ -1,13 +1,17 @@
 #=======================================================================
 #	アーカイブデータfldeff.narc　連結対象ファイル定義
 #=======================================================================
-
+#---------------------------------------------------------------
+# 特定ディレクトリ定義
+#---------------------------------------------------------------
 EFFENC_SGRASS = eff_enc/s_grass/
 EFFENC_LGRASS = eff_enc/l_grass/
 EFFENC_BIRD = eff_enc/bird/
 EFFENC_WATER = eff_enc/water/
 EFFENC_SEA = eff_enc/sea/
 EFFENC_CAVE = eff_enc/cave/
+
+EFF_D06DENKI = eff_denkidoukutu/
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　itpアニメ定義
@@ -20,7 +24,8 @@ G3D_FE_ANMITP = hero_kemu.itp \
   taki_roop_f.itp \
   taki_start_f.itp \
   taki_start_s.itp \
-  iwakudaki.itp
+  iwakudaki.itp \
+  $(EFF_D06DENKI)d6_yuka_biri01.itp
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　icaアニメ定義
@@ -32,7 +37,11 @@ G3D_FE_ANMICA = shibuki01.ica \
   taki_start_f.ica \
   taki_start_s.ica \
   iwakudaki.ica \
-  $(EFFENC_BIRD)bird_shadow.ica
+  $(EFFENC_BIRD)bird_shadow.ica \
+  $(EFF_D06DENKI)d6_ishi_big01.ica \
+  $(EFF_D06DENKI)d6_ishi_big02.ica \
+  $(EFF_D06DENKI)d6_ishi_mini01.ica \
+  $(EFF_D06DENKI)d6_ishi_mini02.ica
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　imaアニメ定義
@@ -106,7 +115,11 @@ G3D_FE_MDL = kage.imd \
   $(EFFENC_SGRASS)short_grass_au2.imd \
   $(EFFENC_SGRASS)short_grass_wi2.imd \
   $(EFFENC_BIRD)bird_shadow.imd \
-  iwakudaki.imd
+  iwakudaki.imd \
+  $(EFF_D06DENKI)d6_ishi_big01.imd \
+  $(EFF_D06DENKI)d6_ishi_mini01.imd \
+  $(EFF_D06DENKI)d6_yuka_biri01.imd \
+  $(EFF_D06DENKI)d6_ishikage01.imd
 
 
 #---------------------------------------------------------------
