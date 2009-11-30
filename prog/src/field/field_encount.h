@@ -12,6 +12,7 @@
 #include "field/fieldmap_proc.h"
 
 #include "field/encount_data.h"   //ENCOUNT_TYPE
+#include "field/field_wfbc.h"
 
 //======================================================================
 //  define
@@ -52,6 +53,7 @@ extern void ENCOUNT_WORK_Delete( ENCOUNT_WORK* wp );
 extern void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type );
 extern void* FIELD_ENCOUNT_SetWildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv, u16 flags );
 extern void* FIELD_ENCOUNT_CheckFishingEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type );
+extern void* FIELD_ENCOUNT_CheckWfbcEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type, const FIELD_WFBC* cp_wfbcdata );
 
 extern void FIELD_ENCOUNT_SetTrainerBattleParam(
     FIELD_ENCOUNT *enc, BATTLE_SETUP_PARAM *setup, int tr_id0, int tr_id1, HEAPID heapID );

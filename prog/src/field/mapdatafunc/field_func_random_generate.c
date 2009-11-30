@@ -192,6 +192,103 @@ BOOL FieldLoadMapData_RandomGenerate( GFL_G3D_MAP* g3Dmap, void * exWork )
           }
         }
 			}
+
+      // 地面を配置
+      {
+#if 0
+        static const u8 GroundMapData[ 4 ][ 16 ] = 
+        {
+          // マップインデックス00
+          {
+            0xff,0xff,0xff,0xff,
+            0xff,0x00,0x00,0x00,
+            0xff,0x00,0x00,0x00,
+            0xff,0x00,0x00,0x00,
+          },
+          // マップインデックス01
+          {
+            0xff,0xff,0xff,0xff,
+            0x00,0x00,0xff,0xff,
+            0x00,0x00,0x00,0xff,
+            0x00,0x00,0x00,0xff,
+          },
+          // マップインデックス02
+          {
+            0xff,0x00,0x00,0x00,
+            0xff,0x00,0xff,0x00,
+            0xff,0xff,0x00,0x00,
+            0xff,0xff,0xff,0xff,
+          },
+          // マップインデックス03
+          {
+            0x00,0xff,0x00,0xff,
+            0x00,0x00,0x00,0xff,
+            0x00,0x00,0x00,0xff,
+            0xff,0xff,0xff,0xff,
+          },
+        };
+#else
+        static const u8 GroundMapData[ 4 ][ 16 ] = 
+        {
+          // マップインデックス00
+          {
+            0xff,0xff,0xff,0xff,
+            0xff,0xff,0xff,0xff,
+            0xff,0x00,0xff,0xff,
+            0xff,0xff,0xff,0xff,
+          },
+          // マップインデックス01
+          {
+            0xff,0x02,0xff,0xff,
+            0xff,0xff,0xff,0xff,
+            0xff,0xff,0xff,0xff,
+            0xff,0xff,0xff,0xff,
+          },
+          // マップインデックス02
+          {
+            0xff,0xff,0xff,0xff,    
+            0xff,0xff,0x01,0xff,
+            0xff,0xff,0xff,0xff,
+            0xff,0xff,0xff,0xff,
+          },
+          // マップインデックス03
+          {
+            0xff,0xff,0xff,0xff,
+            0xff,0xff,0xff,0xff,
+            0xff,0xff,0xff,0xff,
+            0xff,0xff,0xff,0xff,
+          },
+        };
+#endif
+        int i, j;
+        int index;
+        const u8 mapIndex = FLD_G3D_MAP_EXWORK_GetMapIndex(p_exwork);
+        FIELD_BMODEL_MAN * bm = FLD_G3D_MAP_EXWORK_GetBModelMan(p_exwork);
+        
+        //マップインデックスの地面を配置 
+        for( i=0; i<4; i++ )
+        {
+          for( j=0; j<4; j++ )
+          {
+            index = (i * 4) + j;
+            
+            if( GroundMapData[ mapIndex ][ index ] != 0xff )
+            {
+              u32 resId = NARC_output_buildmodel_outdoor_bc_block_00_nsbmd + GroundMapData[ mapIndex ][ index ];
+              PositionSt objStatus;
+              objStatus.resourceID = resId + (3*GFUser_GetPublicRand(3));
+              objStatus.rotate = 0;
+              objStatus.billboard = 0;
+              objStatus.xpos = (j*(16*8)) << FX32_SHIFT;
+              objStatus.ypos = 0;
+              objStatus.zpos = -(i*(16*8)) << FX32_SHIFT; // ResistMapObject内で-反転されるので
+              TOMOYA_Printf( "x=%d z=%d  pos x[%d] z[%d] \n", FX_Whole(objStatus.xpos), FX_Whole(-objStatus.zpos), 0, 0 );
+              FIELD_BMODEL_MAN_ResistMapObject( bm, g3Dmap, &objStatus, 10+index );
+  					}
+          }
+        }
+      }
+      
 		}
 		//>>GFL_G3D_MAP_SetTransVramParam( g3Dmap );	//テクスチャ転送設定
 		GFL_G3D_MAP_MakeRenderObj( g3Dmap );
@@ -307,12 +404,12 @@ static const u8 FieldFuncRandom_GetBilduingHeight( const u8 idxTop , const u8 id
 #else
   static const u8 idxArr[6][6] =
   {
-    {1,1,1,1,1,1},
-    {1,8,0,0,8,1},
-    {1,0,10,0,0,1},
-    {1,0,0,10,0,1},
-    {1,8,0,0,8,1},
-    {1,1,1,1,1,1},
+    {0,0,0,0,0,0},
+    {0,8,0,0,8,0},
+    {0,0,10,7,0,0},
+    {0,0,7,10,0,0},
+    {0,8,0,0,8,0},
+    {0,0,0,0,0,0},
   };
 #endif
 

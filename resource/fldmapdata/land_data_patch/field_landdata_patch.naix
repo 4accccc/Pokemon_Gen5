@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: field_landdata_patch.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_FIELD_LANDDATA_PATCH_NAIX_
+#define NARC_FIELD_LANDDATA_PATCH_NAIX_
+
+enum {
+	NARC_field_landdata_patch_WFBC_BLOCK_00_dat = 0
+};
+
+/* NARC_FIELD_LANDDATA_PATCH_NAIX_ */
+#endif

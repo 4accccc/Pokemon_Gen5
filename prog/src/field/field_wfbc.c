@@ -323,6 +323,12 @@ MMDL_HEADER* FIELD_WFBC_MMDLHeaderCreateHeapLo( const FIELD_WFBC* cp_wk, HEAPID 
       p_buff[count].id          = FIELD_WFBC_CORE_PEOPLE_GetNpcID(&cp_wk->p_people[i].people_local);
       p_buff[count].obj_code    = cp_wk->p_people[i].people_data.objid;
       p_buff[count].move_code   = MV_RND;
+      if( cp_wk->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY ){
+        p_buff[count].event_id    = cp_wk->p_people[i].people_data.script_wf;
+      }else{
+        p_buff[count].event_id    = cp_wk->p_people[i].people_data.script_bc;
+      }
+      
       MMDLHEADER_SetGridPos( &p_buff[count], cp_wk->p_people[i].gx, cp_wk->p_people[i].gz, 0 );
 
       count ++;

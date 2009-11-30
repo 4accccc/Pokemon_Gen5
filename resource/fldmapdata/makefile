@@ -9,6 +9,7 @@ SUBDIRS	=	zonetable/zoneindex \
 					flagwork \
 					area_data \
 					land_data \
+					land_data_patch \
 					camera_data \
 					gimmick \
 					map_matrix \

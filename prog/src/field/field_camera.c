@@ -475,6 +475,20 @@ void FIELD_CAMERA_SetDefaultParameter( FIELD_CAMERA * camera )
   camera->camera_area_active = TRUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラのデフォルトタイプを変更します。
+ *
+ *	@param	camera        カメラ
+ *	@param	camera_type   タイプ（resource/fldmapdata/camera_dataのエクセルのカメラをしてする値です。）
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_SetCameraType( FIELD_CAMERA * camera, u32 camera_type )
+{
+  camera->type = camera_type;
+  FIELD_CAMERA_SetDefaultParameter( camera );
+}
+
 
 //============================================================================================
 //

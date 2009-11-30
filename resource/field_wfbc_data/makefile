@@ -50,6 +50,7 @@ OBJCODE_HEADER = ../fldmmdl/fldmmdl_objcode.h
 TRTYPE_HEADER = ../trdata/trtype_def.h
 MONSNO_HEADER = ../personal/monsno_def.h
 MESSAGE_HEADER = ../message/dst/script/msg_bcwftest.h
+SCRIPT_HEADER = ../fldmapdata/script/bcwftest_def.h
 ITEM_HEADER = ../itemconv/itemsort_abc_def.h
 
 
@@ -87,12 +88,12 @@ $(COPY_DIR)$(OUTPUT_HEADER): $(OUTPUT_HEADER)
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(XLSFILE) $(OBJCODE_HEADER) $(TRTYPE_HEADER) $(MONSNO_HEADER) $(MESSAGE_HEADER) $(ITEM_HEADER)
+$(targetname).narc: $(XLSFILE) $(OBJCODE_HEADER) $(TRTYPE_HEADER) $(MONSNO_HEADER) $(SCRIPT_HEADER) $(ITEM_HEADER)
 	
 	#エクセルデータをタブ区切りにする。
 	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $(TABFILE) -p 3 -s tab $(XLSFILE)
 	#コンバート
-	perl wfbc_people_conv.pl $(TABFILE) $(OBJCODE_HEADER) $(TRTYPE_HEADER) $(MONSNO_HEADER) $(MESSAGE_HEADER) $(ITEM_HEADER) $(OUTPUT_HEADER)
+	perl wfbc_people_conv.pl $(TABFILE) $(OBJCODE_HEADER) $(TRTYPE_HEADER) $(MONSNO_HEADER) $(SCRIPT_HEADER) $(ITEM_HEADER) $(OUTPUT_HEADER)
 
 	-ls *.bin > $(LIST_FILE)
 	$(ARCLIST_MAKE) $(LIST_FILE)

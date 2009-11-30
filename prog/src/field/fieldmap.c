@@ -389,6 +389,8 @@ static void zoneChange_SetCameraArea( FIELDMAP_WORK* fieldWork, u32 zone_id );
 //etc
 static void fldmap_ClearMapCtrlWork( FIELDMAP_WORK *fieldWork );
 static void setupCameraArea( FIELDMAP_WORK *fieldWork, u32 zone_id, HEAPID heapID );
+static void setupWfbc( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id );
+
 
 //data
 static const GFL_DISP_VRAM fldmapdata_dispVram;
@@ -591,12 +593,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 
     //ここで配置モデルリストをセットする
     FIELD_BMODEL_MAN_Load(bmodel_man, fieldWork->map_id, fieldWork->areadata);
-    // WFBC街情報を設定
-    // @TODO　後々は、パレス接続先の人の街情報を設定する
-    FLDMAPPER_SetWfbcData( fieldWork->g3Dmapper, GAMEDATA_GetMyWFBCCoreData( fieldWork->gamedata ), MAPMODE_NORMAL );
 
-    // WFBCの人を配置
-    zoneChange_SetMMdlZoneWFBC( gdata, fieldWork, fieldWork->map_id );
+    // WFBC街情報を設定
+    setupWfbc( gdata, fieldWork, fieldWork->map_id );
   }
 
   //フィールドマップ用ロケーション作成
@@ -2555,6 +2554,47 @@ static void setupCameraArea( FIELDMAP_WORK *fieldWork, u32 zone_id, HEAPID heapI
   else
   {
     FIELD_CAMERA_ClearCameraArea( fieldWork->camera_control );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  wfbcのセットアップ
+ *
+ *  @param  gdata
+ *	@param	fieldWork
+ *	@param	zone_id 
+ */
+//-----------------------------------------------------------------------------
+static void setupWfbc( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id )
+{
+  FIELD_WFBC_CORE* p_core;
+  
+  if( fieldWork->map_id == ZONE_ID_BCWFTEST )
+  {
+    p_core = GAMEDATA_GetMyWFBCCoreData( fieldWork->gamedata );
+    
+    // WFBC街情報を設定
+    // @TODO　後々は、パレス接続先の人の街情報を設定する
+    FLDMAPPER_SetWfbcData( fieldWork->g3Dmapper, p_core, MAPMODE_NORMAL );
+
+    // WFBCの人を配置
+    zoneChange_SetMMdlZoneWFBC( gdata, fieldWork, fieldWork->map_id );
+
+    // カメラのセットアップ
+    {
+      u32 people_num = FIELD_WFBC_CORE_GetPeopleNum( p_core );
+      u32 camera_type = 20;
+      if( people_num >= 5 )
+      {
+        camera_type = 21;
+      }
+      else if( people_num >= 18 )
+      {
+        camera_type = 22;
+      }
+      FIELD_CAMERA_SetCameraType( fieldWork->camera_control, camera_type );
+    }
   }
 }
 

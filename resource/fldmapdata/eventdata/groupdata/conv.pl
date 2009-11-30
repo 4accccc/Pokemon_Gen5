@@ -1133,7 +1133,8 @@ sub WriteMevHeader
   $mon += 1;
   
   print( FILEOUT "#event data\r\n" );
-  print( FILEOUT "#save date:$year/$mon/$mday ".$hour.":".$min.":".$sec."\r\n" );
+  #print( FILEOUT "#save date:$year/$mon/$mday ".$hour.":".$min.":".$sec."\r\n" );
+  print( FILEOUT "#save date:2000/00/00 00:00:00\r\n" );
   print( FILEOUT "# linked worldmap file name\r\n" );
   print( FILEOUT "C:\\home\\pokemon_wb\\resource\\fldmapdata\\eventdata\\data\\$zone_name.wms\r\n" );
 }
@@ -1152,7 +1153,8 @@ sub  WriteMev_OBJEVENT
   
   print( FILEOUT "#SECTION START:OBJ_EVENT\r\n" );
   print( FILEOUT "#Map Event List data\r\n" );
-  print( FILEOUT "#save date:$year/$mon/$mday ".$hour.":".$min.":".$sec."\r\n" );
+#  print( FILEOUT "#save date:$year/$mon/$mday ".$hour.":".$min.":".$sec."\r\n" );
+  print( FILEOUT "#save date:2000/00/00 00:00:00\r\n" );
   print( FILEOUT "2\r\n" );
   print( FILEOUT "#hold event type:\r\n" );
   print( FILEOUT "1\r\n" );
@@ -1232,7 +1234,8 @@ sub  WriteMev_BGEVENT
   
   print( FILEOUT "#SECTION START:BG_EVENT\r\n" );
   print( FILEOUT "#Map Event List data\r\n" );
-  print( FILEOUT "#save date:$year/$mon/$mday ".$hour.":".$min.":".$sec."\r\n" );
+  #print( FILEOUT "#save date:$year/$mon/$mday ".$hour.":".$min.":".$sec."\r\n" );
+  print( FILEOUT "#save date:2000/00/00 00:00:00\r\n" );
   print( FILEOUT "2\r\n" );
   print( FILEOUT "#hold event type:\r\n" );
   print( FILEOUT "1\r\n" );
@@ -1284,7 +1287,8 @@ sub  WriteMev_POSEVENT
   
   print( FILEOUT "#SECTION START:POS_EVENT\r\n" );
   print( FILEOUT "#Map Event List data\r\n" );
-  print( FILEOUT "#save date:$year/$mon/$mday ".$hour.":".$min.":".$sec."\r\n" );
+  #print( FILEOUT "#save date:$year/$mon/$mday ".$hour.":".$min.":".$sec."\r\n" );
+  print( FILEOUT "#save date:2000/00/00 00:00:00\r\n" );
   print( FILEOUT "2\r\n" );
   print( FILEOUT "#hold event type:\r\n" );
   print( FILEOUT "1\r\n" );
@@ -1341,7 +1345,8 @@ sub  WriteMev_DOOREVENT
   
   print( FILEOUT "#SECTION START:DOOR_EVENT\r\n" );
   print( FILEOUT "#Map Event List data\r\n" );
-  print( FILEOUT "#save date:$year/$mon/$mday ".$hour.":".$min.":".$sec."\r\n" );
+  #print( FILEOUT "#save date:$year/$mon/$mday ".$hour.":".$min.":".$sec."\r\n" );
+  print( FILEOUT "#save date:2000/00/00 00:00:00\r\n" );
   print( FILEOUT "2\r\n" );
   print( FILEOUT "#hold event type:\r\n" );
   print( FILEOUT "1\r\n" );

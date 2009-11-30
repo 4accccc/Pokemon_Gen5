@@ -223,7 +223,7 @@ extern u32 FIELD_WFBC_CORE_PEOPLE_GetNpcID( const FIELD_WFBC_CORE_PEOPLE* cp_wk 
 //-----------------------------------------------------------------------------
 //-------------------------------------
 ///	人物情報
-// 68バイト
+// 56バイト
 //=====================================
 typedef struct 
 {
@@ -240,9 +240,9 @@ typedef struct
   u8      btl_lv[FIELD_WFBC_PEOPLE_BTL_POKE_MAX+1];   // 4byte
   u8      btl_sex[FIELD_WFBC_PEOPLE_BTL_POKE_MAX+1];  // 4byte
   u8      btl_tokusei[FIELD_WFBC_PEOPLE_BTL_POKE_MAX+1]; // 4byte
-  // MESSAGE
-  u16     msg_wf[FIELD_WFBC_PEOPLE_WF_MESSAGE_MAX+1]; // 8byte
-  u16     msg_bc[FIELD_WFBC_PEOPLE_BC_MESSAGE_MAX]; // 8byte
+  // SCRIPT
+  u16     script_wf; 
+  u16     script_bc; 
   // 道具
   u16     goods_wf;
   u16     goods_wf_percent;

@@ -180,4 +180,13 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/d19_house01.nsbmd \
 	$(RESDIR)/panhouse01.nsbmd \
 	$(RESDIR)/c6_bhouse_01.nsbmd \
+	$(RESDIR)/bc_block_00.nsbmd \
+	$(RESDIR)/bc_block_01.nsbmd \
+	$(RESDIR)/bc_block_02.nsbmd \
+	$(RESDIR)/bc_block_03.nsbmd \
+	$(RESDIR)/bc_block_04.nsbmd \
+	$(RESDIR)/bc_block_05.nsbmd \
+	$(RESDIR)/bc_block_06.nsbmd \
+	$(RESDIR)/bc_block_07.nsbmd \
+	$(RESDIR)/bc_block_08.nsbmd \
 

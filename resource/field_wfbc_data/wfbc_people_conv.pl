@@ -3,7 +3,7 @@
 #
 #   WFBC  人物情報のコンバート
 #
-#   wfbc_people_conv.pl excel_tab objcode trtypedef monsno_def  message_h item_def output_header
+#   wfbc_people_conv.pl excel_tab objcode trtypedef monsno_def  script_h item_def output_header
 #
 #
 #
@@ -13,7 +13,7 @@
 #引数　チェック
 if( @ARGV < 7 )
 {
-  print( "wfbc_people_conv.pl excel_tab objcode trtypedef monsno_def  message_h item_def output_header\n" );
+  print( "wfbc_people_conv.pl excel_tab objcode trtypedef monsno_def  script_h item_def output_header\n" );
   exit(1);
 }
 
@@ -21,7 +21,7 @@ if( @ARGV < 7 )
 @OBJCODE = undef;
 @TRTYPE_DEF = undef;
 @MONSNO_DEF = undef;
-@MESSAGE = undef;
+@SCRIPT = undef;
 @ITEM_DEF = undef;
 
 
@@ -42,7 +42,7 @@ open( FILEIN, $ARGV[3] );
 @MONSNO_DEF = <FILEIN>;
 close( FILEIN );
 open( FILEIN, $ARGV[4] );
-@MESSAGE = <FILEIN>;
+@SCRIPT = <FILEIN>;
 close( FILEIN );
 open( FILEIN, $ARGV[5] );
 @ITEM_DEF = <FILEIN>;
@@ -84,18 +84,13 @@ $PP_DATA_IDX_BTL_MONSNO_02 = 23;
 $PP_DATA_IDX_BTL_LV_02 = 24;
 $PP_DATA_IDX_BTL_SEX_02 = 25;
 $PP_DATA_IDX_BTL_TOKUSEI_02 = 26;
-$PP_DATA_IDX_MESSAGE_WF_00 = 27;
-$PP_DATA_IDX_MESSAGE_WF_01 = 28;
-$PP_DATA_IDX_MESSAGE_WF_02 = 29;
-$PP_DATA_IDX_MESSAGE_BC_00 = 30;
-$PP_DATA_IDX_MESSAGE_BC_01 = 31;
-$PP_DATA_IDX_MESSAGE_BC_02 = 32;
-$PP_DATA_IDX_MESSAGE_BC_03 = 33;
-$PP_DATA_IDX_ITEM_WF = 34;
-$PP_DATA_IDX_ITEM_PERCENT_WF = 35;
-$PP_DATA_IDX_ITEM_BC = 36;
-$PP_DATA_IDX_ITEM_MONEY_BC = 37;
-$PP_DATA_IDX_NUM = 38;
+$PP_DATA_IDX_SCRIPT_WF_00 = 27;
+$PP_DATA_IDX_SCRIPT_BC_00 = 28;
+$PP_DATA_IDX_ITEM_WF = 29;
+$PP_DATA_IDX_ITEM_PERCENT_WF = 30;
+$PP_DATA_IDX_ITEM_BC = 31;
+$PP_DATA_IDX_ITEM_MONEY_BC = 32;
+$PP_DATA_IDX_NUM = 33;
 
 
 
@@ -236,22 +231,11 @@ for( $i=0; $i<$PEOPLE_MAX; $i++ )
   $outnum = $PP_DATA[ $index + $PP_DATA_IDX_BTL_TOKUSEI_02 ];
   print( FILEOUT pack( "C", $outnum ) );
   print( FILEOUT pack( "C", 0 ) ); #pad
-  #メッセージ　WF
-  $outnum = &MESSAGE_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_MESSAGE_WF_00 ] );
+  #スクリプト　WF
+  $outnum = &SCRIPT_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_SCRIPT_WF_00 ] );
   print( FILEOUT pack( "S", $outnum ) );
-  $outnum = &MESSAGE_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_MESSAGE_WF_01 ] );
-  print( FILEOUT pack( "S", $outnum ) );
-  $outnum = &MESSAGE_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_MESSAGE_WF_02 ] );
-  print( FILEOUT pack( "S", $outnum ) );
-  print( FILEOUT pack( "S", 0 ) );  #PAD
-  #メッセージ　BC
-  $outnum = &MESSAGE_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_MESSAGE_BC_00 ] );
-  print( FILEOUT pack( "S", $outnum ) );
-  $outnum = &MESSAGE_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_MESSAGE_BC_01 ] );
-  print( FILEOUT pack( "S", $outnum ) );
-  $outnum = &MESSAGE_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_MESSAGE_BC_02 ] );
-  print( FILEOUT pack( "S", $outnum ) );
-  $outnum = &MESSAGE_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_MESSAGE_BC_03 ] );
+  #スクリプト　BC
+  $outnum = &SCRIPT_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_SCRIPT_BC_00 ] );
   print( FILEOUT pack( "S", $outnum ) );
   #道具 WF
   $outnum = &ITEMDEF_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_ITEM_WF ] );
@@ -345,7 +329,7 @@ sub MONSNO_GetIdx
   exit(1);
 }
 
-sub MESSAGE_GetIdx
+sub SCRIPT_GetIdx
 {
   my( $name ) = @_;
   my( $code, @codeline );
@@ -353,7 +337,7 @@ sub MESSAGE_GetIdx
   #大文字化
   $name = uc( $name );
 
-  foreach $code (@MESSAGE)
+  foreach $code (@SCRIPT)
   {
     $code =~ s/ +/ /g;
     $code =~ s/\t+/ /g;
@@ -366,7 +350,7 @@ sub MESSAGE_GetIdx
     }
   }
 
-  print( "message $name がみつかりません\n" );
+  print( "script $name がみつかりません\n" );
   exit(1);
 }
 

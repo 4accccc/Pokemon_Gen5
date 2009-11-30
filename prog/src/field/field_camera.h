@@ -193,6 +193,15 @@ extern void FIELD_CAMERA_ChangeMode( FIELD_CAMERA * camera, FIELD_CAMERA_MODE mo
 //------------------------------------------------------------------
 extern void FIELD_CAMERA_SetDefaultParameter( FIELD_CAMERA * camera );
 
+
+//------------------------------------------------------------------
+// デフォルトのカメラタイプを変更する。
+// 　resource/fldmapdata/camera_dataのエクセルのカメラをしてする値です。
+//
+// 変えると、カメラパラメータを読み込んで設定しなおします。
+//------------------------------------------------------------------
+extern void FIELD_CAMERA_SetCameraType( FIELD_CAMERA * camera, u32 camera_type );
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern void FIELD_CAMERA_SetNear(FIELD_CAMERA * camera, fx32 near);
