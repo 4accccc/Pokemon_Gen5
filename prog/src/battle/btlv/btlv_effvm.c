@@ -975,11 +975,15 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_ORTHO( VMHANDLE *vmh, void *context_work 
     proj.far    = FX32_ONE * 1024;
 	  proj.scaleW	= FX32_ONE;
 
-    GFL_PTC_PersonalCameraCreate( bevw->ptc[ ptc_no ], &proj, DEFAULT_PERSP_WAY, &Eye, &vUp, &at, bevw->heapID );
+    if( GFL_PTC_GetCameraPtr( bevw->ptc[ ptc_no ] ) == NULL )
+    { 
+      GFL_PTC_PersonalCameraCreate( bevw->ptc[ ptc_no ], &proj, DEFAULT_PERSP_WAY, &Eye, &vUp, &at, bevw->heapID );
+    }
   }
 
   beeiw->vmh = vmh;
   beeiw->src = ( int )VMGetU32( vmh );
+  beeiw->dst = beeiw->src;
   beeiw->ofs.x = ( fx32 )VMGetU32( vmh );
   beeiw->ofs.y = ( fx32 )VMGetU32( vmh );
   beeiw->ofs.z = ( fx32 )VMGetU32( vmh );
