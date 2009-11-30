@@ -37,4 +37,9 @@ typedef struct
 	u16  edge_color;
 	u16  padding;
 	ARCDATID file[BATT_BG_TBL_FILE_MAX ][ BATT_BG_TBL_SEASON_MAX ];
-}BATT_BG_TBL_FILE_TABLE;
+}BATT_BG_TBL_STAGE_TABLE;
+
+typedef struct
+{
+	ARCDATID file[BATT_BG_TBL_FILE_MAX ][ BATT_BG_TBL_SEASON_MAX ];
+}BATT_BG_TBL_BG_TABLE;
