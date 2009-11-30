@@ -828,6 +828,7 @@ end
   fp_wot.print( "\t.text\n\n" )
   fp_wot.print( "\t.include perdata.h\n\n" )
   fp_wot.print( "\t.short 0xffff\n" )
+  fp_wot.print( "\t.short 0xffff\n" )
   fp_wot.close
   print "wot_000.s 生成終了\n"
 
@@ -1014,16 +1015,8 @@ end
       fp_wot.print( "\t.include perdata.h\n\n" )
       waza_cnt = 0
       while split_data[ PARA::WAZA1 + waza_cnt ] != ""
-#u16バージョン（旧フォーマット）
-#=begin
-        level = ( split_data[ PARA::WAZA_LV1 + waza_cnt ].to_i ) << 9
-        fp_wot.printf( "\t.short\t%d|%s\n", level, label.make_label( "WAZANO_", split_data[ PARA::WAZA1 + waza_cnt ] ) )
-#=end
-#u32バージョン
-=begin
-        fp_wot.printf( "\t.short\t%s\n", split_data[ PARA::WAZA_LV1 + waza_cnt ] )
         fp_wot.printf( "\t.short\t%s\n", label.make_label( "WAZANO_", split_data[ PARA::WAZA1 + waza_cnt ] ) )
-=end
+        fp_wot.printf( "\t.short\t%s\n", split_data[ PARA::WAZA_LV1 + waza_cnt ] )
         #技覚えハッシュテーブル生成
         wothash[ split_data[ PARA::POKENAME ] ] << split_data[ PARA::WAZA1 + waza_cnt ]
         waza_cnt += 1
