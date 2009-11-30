@@ -6,8 +6,7 @@
  * @date	05.02.01
  */
 //============================================================================================
-#ifndef B_PLIST_MAIN_H
-#define B_PLIST_MAIN_H
+#pragma	once
 
 #include "print/wordset.h"
 #include "system/palanm.h"
@@ -363,6 +362,7 @@ typedef struct {
 	BPLIST_DATA * dat;	// 外部参照データ
 
 	BPL_POKEDATA	poke[TEMOTI_POKEMAX];	// ポケモンデータ
+	u8	listRow[TEMOTI_POKEMAX];				// リストの並び
 
 	GFL_TCBLSYS * tcbl;		// TCBL
 
@@ -502,5 +502,4 @@ extern u8 BattlePokeList_MultiCheck( BPLIST_WORK * wk );
 //--------------------------------------------------------------------------------------------
 extern u8 BattlePokeList_MultiPosCheck( BPLIST_WORK * wk, u8 pos );
 
-
-#endif	// B_PLIST_MAIN_H
+extern u8 BPLISTMAIN_GetListRow( BPLIST_WORK * wk, u32 pos );

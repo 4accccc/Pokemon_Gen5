@@ -633,24 +633,27 @@ static void BPL_ButtonScreenMake( BPLIST_WORK * wk, u16 * buf, u8 id, u8 anm, u8
 	case BPL_BUTTON_POKE4:		// ポケモン４
 	case BPL_BUTTON_POKE5:		// ポケモン５
 	case BPL_BUTTON_POKE6:		// ポケモン６
-		if( wk->poke[id-BPL_BUTTON_POKE1].mons == 0 ){ break; }
-		if( wk->poke[id-BPL_BUTTON_POKE1].egg != 0 ){
-			u16	fill[2];
-			fill[0] = buf[ POKE_SCRN_HP_PY*sx+POKE_SCRN_HP_PX-1 ];
-			fill[1] = buf[ (POKE_SCRN_HP_PY+1)*sx+POKE_SCRN_HP_PX-1 ];
-			for( i=0; i<POKE_SCRN_HP_SY; i++ ){
-				for( j=0; j<POKE_SCRN_HP_SX; j++ ){
-					buf[ (POKE_SCRN_HP_PY+i)*sx+POKE_SCRN_HP_PX+j ] = fill[i];
+		{
+			u8	pos = BPLISTMAIN_GetListRow( wk, id-BPL_BUTTON_POKE1 );
+			if( wk->poke[pos].mons == 0 ){ break; }
+			if( wk->poke[pos].egg != 0 ){
+				u16	fill[2];
+				fill[0] = buf[ POKE_SCRN_HP_PY*sx+POKE_SCRN_HP_PX-1 ];
+				fill[1] = buf[ (POKE_SCRN_HP_PY+1)*sx+POKE_SCRN_HP_PX-1 ];
+				for( i=0; i<POKE_SCRN_HP_SY; i++ ){
+					for( j=0; j<POKE_SCRN_HP_SX; j++ ){
+						buf[ (POKE_SCRN_HP_PY+i)*sx+POKE_SCRN_HP_PX+j ] = fill[i];
+					}
 				}
-			}
-		}else{
-			if( wk->poke[id-BPL_BUTTON_POKE1].hp == 0 ){
-				for( i=0; i<sx*sy; i++ ){
-					buf[i] = ( buf[i] & 0xfff ) | POKE_COL_DEATH;
-				}
-			}else if( BattlePokeList_MultiPosCheck( wk, id-BPL_BUTTON_POKE1 ) == TRUE ){
-				for( i=0; i<sx*sy; i++ ){
-					buf[i] = ( buf[i] & 0xfff ) | POKE_COL_MULTI;
+			}else{
+				if( wk->poke[pos].hp == 0 ){
+					for( i=0; i<sx*sy; i++ ){
+						buf[i] = ( buf[i] & 0xfff ) | POKE_COL_DEATH;
+					}
+				}else if( BattlePokeList_MultiPosCheck( wk, id-BPL_BUTTON_POKE1 ) == TRUE ){
+					for( i=0; i<sx*sy; i++ ){
+						buf[i] = ( buf[i] & 0xfff ) | POKE_COL_MULTI;
+					}
 				}
 			}
 		}
@@ -956,7 +959,7 @@ void BattlePokeList_ButtonPageScreenInit( BPLIST_WORK * wk, u8 page )
 	case BPLIST_PAGE_POKE_CHG:		// ポケモン入れ替えページ
 		BPL_ButtonScreenWrite( wk, BPL_BUTTON_RET, 0, 0 );
 		BPL_ButtonScreenWrite( wk, BPL_BUTTON_POKE_CHG, 0, 0 );
-		if( wk->poke[wk->dat->sel_poke].egg != 0 ){
+		if( wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ].egg != 0 ){
 			BPL_ButtonScreenWrite( wk, BPL_BUTTON_STATUS1, BPL_BANM_NONE, 0 );
 			BPL_ButtonScreenWrite( wk, BPL_BUTTON_WAZASEL1, BPL_BANM_NONE, 0 );
 		}else{
@@ -986,7 +989,7 @@ void BattlePokeList_ButtonPageScreenInit( BPLIST_WORK * wk, u8 page )
 			BPL_ButtonScreenWrite( wk, BPL_BUTTON_DOWN, BPL_BANM_NONE, 0 );
 		}
 		for( i=0; i<4; i++ ){
-			if( wk->poke[wk->dat->sel_poke].waza[i].id != 0 ){
+			if( wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ].waza[i].id != 0 ){
 				BPL_ButtonScreenWrite( wk, BPL_BUTTON_WAZA1+i, BPL_BANM_PAT0, 0 );
 			}else{
 				BPL_ButtonScreenWrite( wk, BPL_BUTTON_WAZA1+i, BPL_BANM_NONE, 0 );
@@ -1009,7 +1012,7 @@ void BattlePokeList_ButtonPageScreenInit( BPLIST_WORK * wk, u8 page )
 
 	case BPLIST_PAGE_PP_RCV:		// PP回復技選択ページ
 		for( i=0; i<4; i++ ){
-			if( wk->poke[wk->dat->sel_poke].waza[i].id != 0 ){
+			if( wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ].waza[i].id != 0 ){
 				BPL_ButtonScreenWrite( wk, BPL_BUTTON_WAZARCV1+i, BPL_BANM_PAT0, 0 );
 			}else{
 				BPL_ButtonScreenWrite( wk, BPL_BUTTON_WAZARCV1+i, BPL_BANM_NONE, 0 );

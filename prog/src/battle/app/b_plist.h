@@ -24,6 +24,11 @@
 
 #define	BPL_CHANGE_SEL_NONE		( BPL_SEL_EXIT )	// ダブル/トリプルですでに選択されているポケモンがいないとき
 
+#define	BPL_SELNUM_MAX		( 3 )			// 入れ替え時に選択できる最大数
+
+#define	BPL_SELPOS_SET		( 0xfe )	// 入れ替える必要あり
+#define	BPL_SELPOS_NONE		( 0xff )	// 入れ替える必要なし
+
 // リスト処理定義
 enum {
 	BPL_MODE_NORMAL = 0,	// 通常のポケモン選択
@@ -51,8 +56,9 @@ typedef struct {
 	u16	chg_waza;				// いれかえ禁止技・新しく覚える技
 
 	// [in & out]
-	u8	sel_poke;				// 選択されたポケモン or 戻る
-	u8 * cursor_flg;		// カーソル表示フラグ
+	u8	sel_poke;									// 選択されたポケモン or 戻る
+	u8	sel_pos[BPL_SELNUM_MAX];	// 選択されたポケモン
+	u8 * cursor_flg;							// カーソル表示フラグ
 
 	// [out]
 	u8	sel_wp;			// 選択された技位置

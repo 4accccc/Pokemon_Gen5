@@ -1031,7 +1031,7 @@ static void BPL_NamePut( BPLIST_WORK * wk, u32 idx, u16 pos, u8 px, u8 py )
 
   win = wk->add_win[idx].win;
   pal = GFL_BMPWIN_GetPalette( win );
-  pd  = &wk->poke[pos];
+  pd  = &wk->poke[ BPLISTMAIN_GetListRow(wk,pos) ];
   exp = GFL_STR_CreateBuffer( BUFLEN_POKEMON_NAME, wk->dat->heap );
   str = GFL_MSG_CreateString( wk->mman, NameMsgID_Tbl[pos] );
 
@@ -1098,7 +1098,7 @@ static void BPL_LvPut( BPLIST_WORK * wk, u32 idx, u16 pos, u8 px, u8 py )
   BPL_POKEDATA * pd;
   STRBUF * str;
 
-  pd  = &wk->poke[pos];
+  pd  = &wk->poke[ BPLISTMAIN_GetListRow(wk,pos) ];
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_01_701 );
 
   WORDSET_RegisterNumber(
@@ -1132,7 +1132,7 @@ static void BPL_HPPut( BPLIST_WORK * wk, u32 idx, u16 pos, u8 px, u8 py )
   STRBUF * str;
   u8  sx;
 
-  pd  = &wk->poke[pos];
+  pd  = &wk->poke[ BPLISTMAIN_GetListRow(wk,pos) ];
 
   //「／」
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_01_702 );
@@ -1190,7 +1190,7 @@ static void BPL_HPGagePut( BPLIST_WORK * wk, u32 idx, u16 pos, u8 px, u8 py )
   u8  col=1;
   u8  dot;
 
-  pd  = &wk->poke[pos];
+  pd  = &wk->poke[ BPLISTMAIN_GetListRow(wk,pos) ];
   col = 1;
   dot = GAUGETOOL_GetNumDotto( pd->hp, pd->mhp, BPL_HP_DOTTO_MAX );
 
@@ -1237,7 +1237,7 @@ static void BPL_TokuseiPut( BPLIST_WORK * wk, u32 idx, u32 pos )
   STRBUF * exp;
   STRBUF * str;
 
-  pd  = &wk->poke[pos];
+  pd  = &wk->poke[ BPLISTMAIN_GetListRow(wk,pos) ];
   exp = GFL_STR_CreateBuffer( BUFLEN_POKEMON_ABILITY_NAME, wk->dat->heap );
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_02_000 );
 
@@ -1272,7 +1272,7 @@ static void BPL_ItemPut( BPLIST_WORK * wk, u32 idx, u32 pos )
   STRBUF * exp;
   STRBUF * str;
 
-  pd  = &wk->poke[pos];
+  pd  = &wk->poke[ BPLISTMAIN_GetListRow(wk,pos) ];
   if( pd->item == 0 ){
     exp = GFL_MSG_CreateString( wk->mman, mes_b_plist_02_600 );
   }else{
@@ -1510,7 +1510,7 @@ static void BPL_P3_LvPut( BPLIST_WORK * wk, u32 pos )
   STRBUF * exp;
   u16 px;
 
-  pd   = &wk->poke[pos];
+  pd   = &wk->poke[ BPLISTMAIN_GetListRow(wk,pos) ];
 
   // 「Lv.」
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_000 );
@@ -1587,7 +1587,7 @@ static void BPL_P3_PowPut( BPLIST_WORK * wk, u32 pos )
   u8  siz;
   u8  px;
 
-  pd   = &wk->poke[pos];
+  pd   = &wk->poke[ BPLISTMAIN_GetListRow(wk,pos) ];
 
   // 「こうげき」
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_400 );
@@ -1634,7 +1634,7 @@ static void BPL_P3_DefPut( BPLIST_WORK * wk, u32 pos )
   u8  siz;
   u8  px;
 
-  pd   = &wk->poke[pos];
+  pd   = &wk->poke[ BPLISTMAIN_GetListRow(wk,pos) ];
 
   // 「ぼうぎょ」
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_500 );
@@ -1682,7 +1682,7 @@ static void BPL_P3_AgiPut( BPLIST_WORK * wk, u32 pos )
   u8  siz;
   u8  px;
 
-  pd   = &wk->poke[pos];
+  pd   = &wk->poke[ BPLISTMAIN_GetListRow(wk,pos) ];
 
   // 「すばやさ」
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_800 );
@@ -1730,7 +1730,7 @@ static void BPL_P3_SppPut( BPLIST_WORK * wk, u32 pos )
   u8  siz;
   u8  px;
 
-  pd   = &wk->poke[pos];
+  pd   = &wk->poke[ BPLISTMAIN_GetListRow(wk,pos) ];
 
   // 「とくこう」
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_600 );
@@ -1778,7 +1778,7 @@ static void BPL_P3_SpdPut( BPLIST_WORK * wk, u32 pos )
   u8  siz;
   u8  px;
 
-  pd   = &wk->poke[pos];
+  pd   = &wk->poke[ BPLISTMAIN_GetListRow(wk,pos) ];
 
   // 「とくぼう」
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_700 );
@@ -1826,7 +1826,7 @@ static void BPL_P3_HPPut( BPLIST_WORK * wk, u32 pos )
   u32 sra_siz, tmp_siz;
   u16 px;
 
-  pd   = &wk->poke[pos];
+  pd   = &wk->poke[ BPLISTMAIN_GetListRow(wk,pos) ];
 
   // 「HP」
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_300 );
@@ -1894,7 +1894,7 @@ static void BPL_P3_TokuseiInfoPut( BPLIST_WORK * wk, u32 pos )
   GFL_MSGDATA * man;
   STRBUF * str;
 
-  pd   = &wk->poke[pos];
+  pd   = &wk->poke[ BPLISTMAIN_GetListRow(wk,pos) ];
 
   man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_tokuseiinfo_dat, wk->dat->heap );
   str = GFL_MSG_CreateString( man, pd->spa );
@@ -2480,14 +2480,17 @@ static void BPL_WazaButtonPPRcv( BPLIST_WORK * wk, BPL_POKEWAZA * waza, u32 idx 
 //--------------------------------------------------------------------------------------------
 static void BPL_Page1BmpWrite( BPLIST_WORK * wk )
 {
-  s32 i;
+	u16	pos;
+  s16 i;
 
   wk->putWin = PokeSelPutWin;
 
   for( i=0; i<TEMOTI_POKEMAX; i++ ){
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P1_POKE1+i].win), 0 );
 
-    if( wk->poke[i].mons == 0 ){
+		pos = BPLISTMAIN_GetListRow( wk, i );
+
+    if( wk->poke[pos].mons == 0 ){
       wk->add_win[WIN_P1_POKE1+i].transReq = TRUE;
 //      GFL_BMPWIN_TransVramCharacter( wk->add_win[WIN_P1_POKE1+i].win );
       continue;
@@ -2495,11 +2498,11 @@ static void BPL_Page1BmpWrite( BPLIST_WORK * wk )
 
     BPL_NamePut( wk, WIN_P1_POKE1+i, i, P1_NAME_PX, P1_NAME_PY );
 
-    if( wk->poke[i].egg == 0 ){
+    if( wk->poke[pos].egg == 0 ){
       BattlePokeList_P1_HPPut( wk, i );
     }
 
-    if( APP_COMMON_GetStatusIconAnime( wk->poke[i].pp ) != APP_COMMON_ST_ICON_NONE ){
+    if( APP_COMMON_GetStatusIconAnime( wk->poke[pos].pp ) != APP_COMMON_ST_ICON_NONE ){
       continue;
     }
 
@@ -2546,7 +2549,7 @@ void BattlePokeList_P1_HPPut( BPLIST_WORK * wk, u8 pos )
 //--------------------------------------------------------------------------------------------
 void BattlePokeList_P1_LvPut( BPLIST_WORK * wk, u8 pos )
 {
-  if( wk->poke[pos].egg == 0 ){
+  if( wk->poke[ BPLISTMAIN_GetListRow(wk,pos) ].egg == 0 ){
     BPL_LvPut( wk, WIN_P1_POKE1+pos, pos, P1_LV_PX, P1_LV_PY );
   }
 }
@@ -2581,7 +2584,7 @@ static void BPL_ChgPageBmpWrite( BPLIST_WORK * wk )
 
   BPL_StrCommandPut( wk, WIN_CHG_IREKAE, mes_b_plist_02_501 );
 
-  if( wk->poke[wk->dat->sel_poke].egg == 0 ){
+  if( wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ].egg == 0 ){
     BPL_StrCommandPut( wk, WIN_CHG_STATUS, mes_b_plist_02_504 );
     BPL_StrCommandPut( wk, WIN_CHG_WAZACHECK, mes_b_plist_02_505 );
   }else{
@@ -2616,7 +2619,7 @@ static void BPL_IrekaeNamePut( BPLIST_WORK * wk, u32 pos )
   u8  px;
 
   win = wk->add_win[WIN_CHG_NAME].win;
-  pd  = &wk->poke[pos];
+  pd  = &wk->poke[ BPLISTMAIN_GetListRow(wk,pos) ];
   exp = GFL_STR_CreateBuffer( BUFLEN_POKEMON_NAME, wk->dat->heap );
   str = GFL_MSG_CreateString( wk->mman, NameMsgID_Tbl[pos] );
 
@@ -2709,7 +2712,7 @@ static void BPL_StWazaSelPageBmpWrite( BPLIST_WORK * wk )
   BPL_NamePut( wk, WIN_STW_NAME, wk->dat->sel_poke, STW_NAME_PX, STW_NAME_PY );
 
   for( i=0; i<4; i++ ){
-    waza = &wk->poke[wk->dat->sel_poke].waza[i];
+    waza = &wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ].waza[i];
     if( waza->id == 0 ){
       wk->add_win[WIN_STW_SKILL1+i].transReq = TRUE;
 //      GFL_BMPWIN_TransVramCharacter( wk->add_win[WIN_STW_SKILL1+i].win );
@@ -2827,7 +2830,7 @@ static void BPL_StWazaInfoPageBmpWrite( BPLIST_WORK * wk )
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_BRNAME].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_INFO].win), 0 );
 
-  waza = &wk->poke[wk->dat->sel_poke].waza[wk->dat->sel_wp];
+  waza = &wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ].waza[wk->dat->sel_wp];
 
   BPL_NamePut( wk, WIN_P4_NAME, wk->dat->sel_poke, P4_NAME_PX, P4_NAME_PY );
   BPL_PPPut( wk, WIN_P4_PP, P4_PP_PX, P4_PP_PY );
@@ -2874,7 +2877,7 @@ static void BPL_WazaDelSelPageBmpWrite( BPLIST_WORK * wk )
   BPL_NamePut( wk, WIN_P5_NAME, wk->dat->sel_poke, P5_NAME_PX, P5_NAME_PY );
 
   for( i=0; i<4; i++ ){
-    waza = &wk->poke[wk->dat->sel_poke].waza[i];
+    waza = &wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ].waza[i];
     if( waza->id == 0 ){ continue; }
 
     BPL_WazaNamePut(
@@ -2946,7 +2949,7 @@ static void BPL_Page6BmpWrite( BPLIST_WORK * wk )
   BPL_WazaBunruiStrPut( wk, WIN_P6_BUNRUI );
 
   if( wk->dat->sel_wp < 4 ){
-    BPL_POKEWAZA * waza = &wk->poke[wk->dat->sel_poke].waza[wk->dat->sel_wp];
+    BPL_POKEWAZA * waza = &wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ].waza[wk->dat->sel_wp];
 
     BPL_WazaNamePut(
       wk, waza->id, WIN_P6_SKILL,
@@ -3004,7 +3007,7 @@ static void BPL_PPRcvPageBmpWrite( BPLIST_WORK * wk )
   BPL_NamePut( wk, WIN_P7_NAME, wk->dat->sel_poke, P7_NAME_PX, P7_NAME_PY );
 
   for( i=0; i<4; i++ ){
-    waza = &wk->poke[wk->dat->sel_poke].waza[i];
+    waza = &wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ].waza[i];
     if( waza->id == 0 ){ continue; }
 
     BPL_WazaNamePut(
@@ -3051,7 +3054,7 @@ void BattlePokeList_PPRcv( BPLIST_WORK * wk, u16 widx, u16 pos )
   BPL_WazaButtonPPPut( wk, waza, widx );
   GFL_BMPWIN_MakeTransWindow_VBlank( wk->add_win[ widx ] );
 */
-  BPL_POKEWAZA * waza = &wk->poke[wk->dat->sel_poke].waza[pos];
+  BPL_POKEWAZA * waza = &wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ].waza[pos];
 
   BPL_WazaButtonPPRcv( wk, waza, widx );
 }
@@ -3101,7 +3104,7 @@ static void BPL_Page8BmpWrite( BPLIST_WORK * wk )
   }
 
   if( wk->dat->sel_wp < 4 ){
-    BPL_POKEWAZA * waza = &wk->poke[wk->dat->sel_poke].waza[wk->dat->sel_wp];
+    BPL_POKEWAZA * waza = &wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ].waza[wk->dat->sel_wp];
 
     BPL_WazaNamePut(
       wk, waza->id, WIN_P8_SKILL,
