@@ -130,6 +130,7 @@ typedef enum {
   BTL_EVENT_CALC_DRAIN,             ///< ドレイン系ワザ回復量計算
   BTL_EVENT_CALC_SPECIAL_DRAIN,     ///< ドレイン系ワザ回復量計算
   BTL_EVENT_RECOVER_HP_RATIO,       ///< HP回復ワザの回復率計算
+  BTL_EVENT_CHECK_ITEMEQUIP_FAIL,   ///< 装備アイテム使用可否チェック
   BTL_EVENT_CHECK_ITEM_REACTION,    ///< アイテム反応チェック
   BTL_EVENT_CHECK_TAMETURN_SKIP,    ///< 溜めターンスキップ判定
   BTL_EVENT_TAME_START,             ///< 溜め開始

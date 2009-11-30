@@ -423,6 +423,8 @@ static BTL_EVENT_FACTOR*  ADD_WideGuard( u16 pri, WazaID waza, u8 pokeID );
 static void handler_WideGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void common_SideEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work,
   BtlSide side, BtlSideEffect effect, BPP_SICK_CONT cont, u16 strID );
+static BTL_EVENT_FACTOR*  ADD_Hensin( u16 pri, WazaID waza, u8 pokeID );
+static void handler_Hensin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_MikadukiNoMai( u16 pri, WazaID waza, u8 pokeID );
 static void handler_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_IyasiNoNegai( u16 pri, WazaID waza, u8 pokeID );
@@ -809,6 +811,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_UZUSIO,          ADD_Uzusio        },
     { WAZANO_HUKITOBASI,      ADD_KousokuSpin   },
     { WAZANO_PAWAATORIKKU,    ADD_PowerTrick    },
+    { WAZANO_HENSIN,          ADD_Hensin        },
 
     // 以下、新ワザ
     { WAZANO_KARI_BENOMUSHOKKU,     ADD_BenomShock      },
@@ -1547,7 +1550,7 @@ static void handler_KuroiKiri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 
     {
       BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokeID( flowWk, pokeID );
-      BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_ALL, myPos );
+      BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_AREA_ALL, myPos );
 
       reset_param->poke_cnt = BTL_SVFTOOL_ExpandPokeID( flowWk, expos, reset_param->pokeID );
     }
@@ -2938,7 +2941,7 @@ static void handler_Sawagu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
       {
         BTL_HANDEX_PARAM_CURE_SICK* cure_param;
         BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokeID( flowWk, pokeID );
-        BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_MYSIDE_ALL, myPos );
+        BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_AREA_FRIENDS, myPos );
 
         cure_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
         cure_param->sickCode = WAZASICK_NEMURI;
@@ -3103,11 +3106,8 @@ static void handler_GyroBall( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    const BTL_POKEPARAM* self = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
-
-    u16 selfAgi = BPP_GetActionAgility( self );
-    u16 targetAgi = BPP_GetActionAgility( target );
+    u16 selfAgi = BTL_SVFTOOL_GetThisTurnAgility( flowWk, pokeID );
+    u16 targetAgi = BTL_SVFTOOL_GetThisTurnAgility( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF)  );
 
     u32 pow = 1 + (25 * targetAgi / selfAgi);
     if( pow > 150 ){
@@ -5277,7 +5277,7 @@ static void common_CureFriendPokeSick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     BTL_HANDEX_PARAM_MESSAGE   *msg_param;
     BTL_HANDEX_PARAM_CURE_SICK *cure_param;
     BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokeID( flowWk, pokeID );
-    BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_MYSIDE_ALL, myPos );
+    BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_AREA_FRIENDS, myPos );
 
     msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
     HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_STD, strID );
@@ -5931,6 +5931,32 @@ static void common_SideEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 }
 //----------------------------------------------------------------------------------
 /**
+ * へんしん
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_Hensin( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_UNCATEGORIZE_WAZA,  handler_Hensin   },  // 未分類ワザ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_Hensin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BTL_HANDEX_PARAM_HENSIN* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_HENSIN, pokeID );
+    param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Hensin );
+    HANDEX_STR_AddArg( &param->exStr, pokeID );
+    HANDEX_STR_AddArg( &param->exStr, param->pokeID );
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
  * みかづきのまい
  */
 //----------------------------------------------------------------------------------
@@ -6373,8 +6399,8 @@ static void handler_Nagetukeru_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
       int equip = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_NAGETUKERU_EFF );
       if( equip )
       {
-         BTL_HANDEX_PARAM_EQUIP_ITEM*  param;
-         param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EQUIP_ITEM, pokeID );
+         BTL_HANDEX_PARAM_ITEM_SP*  param;
+         param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ITEM_SP, pokeID );
          param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
          param->itemID = itemID;
       }
@@ -6902,7 +6928,7 @@ static void handler_Tuibamu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
     if( ITEM_CheckNuts(itemID) )
     {
       BTL_HANDEX_PARAM_SET_ITEM* item_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
-      BTL_HANDEX_PARAM_EQUIP_ITEM* eq_param;
+      BTL_HANDEX_PARAM_ITEM_SP* eq_param;
 
       item_param->pokeID = targetPokeID;
       item_param->itemID = ITEM_DUMMY_DATA;
@@ -6910,7 +6936,7 @@ static void handler_Tuibamu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
       HANDEX_STR_AddArg( &item_param->exStr, pokeID );
       HANDEX_STR_AddArg( &item_param->exStr, itemID );
 
-      eq_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EQUIP_ITEM, pokeID );
+      eq_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ITEM_SP, pokeID );
       eq_param->header.failSkipFlag = TRUE;
       eq_param->itemID = itemID;
       eq_param->pokeID = pokeID;
@@ -8347,7 +8373,7 @@ static void handler_HajikeruHonoo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokeID( flowWk, pokeID );
-    BtlExPos   exPos = EXPOS_MAKE( BTL_EXPOS_MYSIDE_ALL, myPos );
+    BtlExPos   exPos = EXPOS_MAKE( BTL_EXPOS_AREA_FRIENDS, myPos );
     u8  targetPokeID[ BTL_POSIDX_MAX ];
     u8  targetCnt;
     u8  i;

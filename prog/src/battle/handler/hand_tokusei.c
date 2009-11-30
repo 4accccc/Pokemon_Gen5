@@ -359,6 +359,9 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Syuukaku( u16 pri, u16 tokID, u8 pokeID )
 static void handler_Syuukaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Amanojaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Amanojaku( u16 pri, u16 tokID, u8 pokeID );
+static void handler_Kinchoukan_CheckItemEquip( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Kinchoukan_MemberOutFixed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Kinchoukan( u16 pri, u16 tokID, u8 pokeID );
 
 
 
@@ -497,7 +500,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
     { POKETOKUSEI_YOWAKI,           HAND_TOK_ADD_Yowaki        },
     { POKETOKUSEI_MARUTISUKEIRU,    HAND_TOK_ADD_MultiScale    },
     { POKETOKUSEI_AMANOJAKU,        HAND_TOK_ADD_Amanojaku     }, // あまのじゃく
-    { POKETOKUSEI_KINCHOUKAN,       HAND_TOK_ADD_Nenchaku      }, // きんちょうかん
+    { POKETOKUSEI_KINCHOUKAN,       HAND_TOK_ADD_Kinchoukan    }, // きんちょうかん
     { POKETOKUSEI_NOROWAREBODY,     HAND_TOK_ADD_NorowareBody  }, // のろわれボディ
     { POKETOKUSEI_MORATERAPII,      HAND_TOK_ADD_Moraterapi    }, // モラテラピー
     { POKETOKUSEI_NAKAMAISIKI,      HAND_TOK_ADD_NakamaIsiki   }, // なかまいしき
@@ -635,7 +638,7 @@ static void handler_Ikaku_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 
       {
         BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokeID( flowWk, pokeID );
-        BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_ENEMY_ALL, myPos );
+        BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, myPos );
 
         param->poke_cnt = BTL_SVFTOOL_ExpandPokeID( flowWk, expos, param->pokeID );
       }
@@ -3835,7 +3838,7 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Jiryoku( u16 pri, u16 tokID, u8 pokeID )
  *  とくせい「かたやぶり」
  */
 //------------------------------------------------------------------------------
-// ワザパラメータ決定ハンドラ
+// メンバー入場ハンドラ
 static void handler_Katayaburi_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
@@ -4455,7 +4458,7 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_NakamaIsiki( u16 pri, u16 tokID, u8 pokeI
 static void handler_Moraterapi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   BtlPokePos  myPos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
-  BtlExPos    exPos = EXPOS_MAKE( BTL_EXPOS_MYSIDE_ALL, myPos );
+  BtlExPos    exPos = EXPOS_MAKE( BTL_EXPOS_AREA_FRIENDS, myPos );
 
   const BTL_POKEPARAM* bpp;
   u8 targetID[ BTL_POSIDX_MAX ];
@@ -5247,7 +5250,7 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_MagicMirror( u16 pri, u16 tokID, u8 pokeI
 static void handler_Syuukaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-  if( BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_EAT_NUTS) )
+  if( BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_ITEM_REMOVED) )
   {
     u16 usedItem = BPP_GetUsedItem( bpp );
     if( ITEM_CheckNuts(usedItem) )
@@ -5264,7 +5267,6 @@ static void handler_Syuukaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
       HANDEX_STR_AddArg( &param->exStr, usedItem );
 
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
-
     }
   }
 }
@@ -5299,6 +5301,82 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Amanojaku( u16 pri, u16 tokID, u8 pokeID 
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_RANKVALUE_CHANGE,        handler_Amanojaku },  // ランク増減値修正ハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
+}
+//------------------------------------------------------------------------------
+/**
+ *  とくせい「きんちょうかん」
+ */
+//------------------------------------------------------------------------------
+// メンバー入場
+static void handler_Kinchoukan_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    BTL_HANDEX_PARAM_MESSAGE* param;
+    BtlSide side = BTL_MAINUTIL_GetOpponentSide( BTL_MAINUTIL_PokeIDtoSide(pokeID) );
+
+    BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+    param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_STD, BTL_STRID_STD_Kinchoukan );
+    HANDEX_STR_AddArg( &param->str, side );
+    BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
+  }
+}
+// 装備アイテム使用チェックハンドラ
+static void handler_Kinchoukan_CheckItemEquip( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  // work[0] が初期状態なら相手側の装備アイテム使用を失敗させる
+  if( work[0] == 0 )
+  {
+    u8 userPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
+    if( userPokeID != pokeID )
+    {
+      u16 itemID = BTL_EVENTVAR_GetValue( BTL_EVAR_ITEM );
+      if( ITEM_CheckNuts(itemID) )
+      {
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+      }
+    }
+  }
+}
+// メンバー退場確定ハンドラ
+static void handler_Kinchoukan_MemberOutFixed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    const BTL_POKEPARAM* bpp;
+    u8 targetPokeID[ BTL_POSIDX_MAX ];
+    u8 targetCnt, i;
+
+    BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokeID( flowWk, pokeID );
+    BtlExPos   exPos = EXPOS_MAKE( BTL_EXPOS_FULL_ENEMY, myPos );
+
+    // work[0] に値を入れて装備アイテム使用チェック機能をオフ
+    work[0] = 1;
+
+
+    targetCnt = BTL_SVFTOOL_ExpandPokeID( flowWk, exPos, targetPokeID );
+    for(i=0; i<targetCnt; ++i)
+    {
+      bpp = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID[i] );
+      if( !BPP_IsDead(bpp) )
+      {
+        BTL_HANDEX_PARAM_EQUIP_ITEM* param;
+        param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EQUIP_ITEM, pokeID );
+        param->pokeID = targetPokeID[ i ];
+      }
+    }
+  }
+}
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Kinchoukan( u16 pri, u16 tokID, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_MEMBER_IN,             handler_Kinchoukan_MemberIn },        // メンバー入場ハンドラ
+    { BTL_EVENT_CHECK_ITEMEQUIP_FAIL,  handler_Kinchoukan_CheckItemEquip },  // 装備アイテム使用チェックハンドラ
+    { BTL_EVENT_MEMBER_OUT_FIXED,      handler_Kinchoukan_MemberOutFixed },  // メンバー退場確定ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );

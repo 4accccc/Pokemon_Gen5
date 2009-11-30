@@ -76,7 +76,7 @@ typedef enum {
   BPP_TURNFLG_MUST_SHRINK,  ///< ダメージで必ずひるむ
   BPP_TURNFLG_MAMORU,       ///< “まもる”発動
   BPP_TURNFLG_FLYING,       ///< 宙に浮いてる
-  BPP_TURNFLG_EAT_NUTS,     ///< きのみを食べた
+  BPP_TURNFLG_ITEM_REMOVED, ///< アイテム（使用・どろぼうなどで）無くなった
 
   BPP_TURNFLG_MAX,
 
@@ -248,8 +248,6 @@ extern BtlPokePos  BPP_GetPrevTargetPos( const BTL_POKEPARAM* pp );
 extern u32  BPP_GetWazaContCounter( const BTL_POKEPARAM* pp );
 extern fx32  BPP_GetHPRatio( const BTL_POKEPARAM* pp );
 
-extern void BPP_SetActionAgility( BTL_POKEPARAM* bpp, u16 actionAgility );
-extern u16 BPP_GetActionAgility( const BTL_POKEPARAM* bpp );
 
 extern void BPP_COUNTER_Set( BTL_POKEPARAM* bpp, BppCounter cnt, u8 value );
 extern u8 BPP_COUNTER_Get( const BTL_POKEPARAM* bpp, BppCounter cnt );

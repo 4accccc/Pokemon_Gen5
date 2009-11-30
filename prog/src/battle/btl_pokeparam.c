@@ -43,12 +43,14 @@ enum {
 
 //--------------------------------------------------------------
 /**
- *  コアパラメータ  --バトル中、不変な要素--
+ *  コアパラメータ  - へんしんしても書き換わらない要素 -
  */
 //--------------------------------------------------------------
 typedef struct {
   const POKEMON_PARAM*  ppSrc;
   const POKEMON_PARAM*  hensinSrc;
+  u32   exp;
+  u16   monsno;
   u16   hp;
   u16   item;
   u16   usedItem;
@@ -120,8 +122,6 @@ struct _BTL_POKEPARAM {
 
   PokeTypePair  type;
   u16  tokusei;
-  u16  actionAgility;
-  u32  exp;
 
   u16 turnCount;        ///< 継続して戦闘に出ているカウンタ
   u16 appearedTurn;     ///< 戦闘に出たターンを記録
@@ -196,6 +196,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   BTL_POKEPARAM* bpp = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_POKEPARAM) );
 
   bpp->coreParam.myID = pokeID;
+  bpp->coreParam.monsno = PP_Get( pp, ID_PARA_monsno, 0 );
   bpp->coreParam.ppSrc = pp;
   bpp->coreParam.hp = PP_Get( pp, ID_PARA_hp, 0 );
   bpp->coreParam.item = PP_Get( pp, ID_PARA_item, NULL );
@@ -204,7 +205,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
 
   setupBySrcData( bpp, pp );
 
-  BTL_Printf("setup pokeID=%d, monsno=%d, ppSrc=%p\n", pokeID, bpp->baseParam.monsno, pp );
+  BTL_Printf("setup pokeID=%d, monsno=%d, ppSrc=%p\n", pokeID, bpp->coreParam.monsno, pp );
 
   // ランク効果初期化
   Effrank_Init( &bpp->varyParam );
@@ -228,7 +229,6 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   bpp->turnCount = 0;
   bpp->prevWazaID = WAZANO_NULL;
   bpp->sameWazaCounter = 0;
-  bpp->actionAgility = 0;
   bpp->migawariHP = 0;
 
   flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
@@ -249,11 +249,10 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
 //----------------------------------------------------------------------------------
 static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP )
 {
-  u16 monsno = PP_Get( srcPP, ID_PARA_monsno, 0 );
+  u16 monsno = bpp->coreParam.monsno;
   int i;
 
   // 基本パラメタ初期化
-  bpp->baseParam.monsno = monsno;
   bpp->baseParam.type1 = PP_Get( srcPP, ID_PARA_type1, 0 );
   bpp->baseParam.type2 = PP_Get( srcPP, ID_PARA_type2, 0 );
   bpp->baseParam.sex = PP_GetSex( srcPP );
@@ -289,8 +288,8 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP )
   bpp->type = PokeTypePair_Make( bpp->baseParam.type1, bpp->baseParam.type2 );
   bpp->tokusei = PP_Get( srcPP, ID_PARA_speabino, 0 );
   bpp->formNo = PP_Get( srcPP, ID_PARA_form_no, 0 );
-  bpp->exp = PP_Get( srcPP, ID_PARA_exp, NULL );
-  bpp->weight = POKETOOL_GetPersonalParam( bpp->baseParam.monsno, bpp->formNo, POKEPER_ID_weight ) / 10;
+  bpp->coreParam.exp = PP_Get( srcPP, ID_PARA_exp, NULL );
+  bpp->weight = POKETOOL_GetPersonalParam( bpp->coreParam.monsno, bpp->formNo, POKEPER_ID_weight ) / 10;
   if( bpp->weight < BTL_POKE_WEIGHT_MIN ){
     bpp->weight = BTL_POKE_WEIGHT_MIN;
   }
@@ -391,7 +390,7 @@ u8 BPP_GetID( const BTL_POKEPARAM* pp )
 
 u16 BPP_GetMonsNo( const BTL_POKEPARAM* pp )
 {
-  return pp->baseParam.monsno;
+  return pp->coreParam.monsno;
 }
 
 u8 BPP_WAZA_GetCount( const BTL_POKEPARAM* pp )
@@ -592,7 +591,7 @@ int BPP_GetValue( const BTL_POKEPARAM* bpp, BppValueID vid )
 
   case BPP_TOKUSEI:         return bpp->tokusei;
   case BPP_FORM:            return bpp->formNo;
-  case BPP_EXP:             return bpp->exp;
+  case BPP_EXP:             return bpp->coreParam.exp;
 
   default:
     GF_ASSERT(0);
@@ -2173,33 +2172,6 @@ BOOL BPP_WAZADMGREC_Get( const BTL_POKEPARAM* bpp, u8 turn_ridx, u8 rec_ridx, BP
   }
   return FALSE;
 }
-//=============================================================================================
-/**
- * 行動順ソートの時に使用された「すばやさ」を記録しておく
- *（とくせい、ランク効果、アイテム装備効果などが反映されたもの）
- *
- * @param   bpp
- * @param   actionAgility
- */
-//=============================================================================================
-void BPP_SetActionAgility( BTL_POKEPARAM* bpp, u16 actionAgility )
-{
-  bpp->actionAgility = actionAgility;
-}
-//=============================================================================================
-/**
- * 行動順ソートの時に使用された「すばやさ」を取得
- *（とくせい、ランク効果、アイテム装備効果などが反映されたもの）
- *
- * @param   bpp
- *
- * @retval  u16
- */
-//=============================================================================================
-u16 BPP_GetActionAgility( const BTL_POKEPARAM* bpp )
-{
-  return bpp->actionAgility;
-}
 
 //=============================================================================================
 /**
@@ -2248,9 +2220,9 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
   {
     u32 expNow, expSum, expBorder;
 
-    expNow = bpp->exp;
+    expNow = bpp->coreParam.exp;
     expSum = expNow + (*expRest);
-    expBorder = POKETOOL_GetMinExp( bpp->baseParam.monsno, bpp->formNo, bpp->baseParam.level+1 );
+    expBorder = POKETOOL_GetMinExp( bpp->coreParam.monsno, bpp->formNo, bpp->baseParam.level+1 );
 
     if( expSum >= expBorder )
     {
@@ -2262,8 +2234,8 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
       info->sp_def = bpp->baseParam.sp_defence;
       info->agi    = bpp->baseParam.agility;
 
-      bpp->exp = (expNow + expAdd);
-      PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_exp, bpp->exp );
+      bpp->coreParam.exp = (expNow + expAdd);
+      PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_exp, bpp->coreParam.exp );
       PP_Renew( (POKEMON_PARAM*)(bpp->coreParam.ppSrc) );
 
       bpp->baseParam.level = PP_Get( bpp->coreParam.ppSrc, ID_PARA_level, 0 );
@@ -2290,10 +2262,10 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
     }
     else
     {
-      BTL_Printf("pp[%p]に経験値 %d->%d\n", bpp->coreParam.ppSrc, bpp->exp, expSum);
-      bpp->exp = expSum;
-      PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_exp, bpp->exp );
-      BTL_Printf("  ... exp=%d=%d\n", PP_Get(bpp->coreParam.ppSrc, ID_PARA_exp, NULL),bpp->exp);
+      BTL_Printf("pp[%p]に経験値 %d->%d\n", bpp->coreParam.ppSrc, bpp->coreParam.exp, expSum);
+      bpp->coreParam.exp = expSum;
+      PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_exp, bpp->coreParam.exp );
+      BTL_Printf("  ... exp=%d=%d\n", PP_Get(bpp->coreParam.ppSrc, ID_PARA_exp, NULL),bpp->coreParam.exp);
     }
   }
 
@@ -2309,7 +2281,7 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
 //=============================================================================================
 void BPP_ReflectLevelup( BTL_POKEPARAM* bpp, u8 nextLevel, u8 hpMax, u8 atk, u8 def, u8 spAtk, u8 spDef, u8 agi )
 {
-  bpp->exp = POKETOOL_GetMinExp( bpp->baseParam.monsno, bpp->formNo, nextLevel );
+  bpp->coreParam.exp = POKETOOL_GetMinExp( bpp->coreParam.monsno, bpp->formNo, nextLevel );
   bpp->baseParam.level = nextLevel;
   bpp->baseParam.hpMax      += hpMax;
   bpp->baseParam.attack     += atk;
@@ -2328,7 +2300,7 @@ void BPP_ReflectLevelup( BTL_POKEPARAM* bpp, u8 nextLevel, u8 hpMax, u8 atk, u8 
 void BPP_ReflectExpAdd( BTL_POKEPARAM* bpp )
 {
   POKEMON_PARAM* pp = (POKEMON_PARAM*)(bpp->coreParam.ppSrc);
-  bpp->exp = PP_Get( pp, ID_PARA_exp, NULL );
+  bpp->coreParam.exp = PP_Get( pp, ID_PARA_exp, NULL );
 }
 
 //=============================================================================================
@@ -2343,7 +2315,7 @@ void BPP_ReflectPP( BTL_POKEPARAM* bpp )
   POKEMON_PARAM* pp = (POKEMON_PARAM*)(bpp->coreParam.ppSrc);
   u32 i;
 
-  PP_Put( pp, ID_PARA_exp, bpp->exp );
+  PP_Put( pp, ID_PARA_exp, bpp->coreParam.exp );
   PP_Put( pp, ID_PARA_hp, bpp->coreParam.hp );
   if( bpp->coreParam.hp )
   {
@@ -2371,7 +2343,7 @@ void BPP_SetSrcPP( BTL_POKEPARAM* bpp, POKEMON_PARAM* pp )
 {
   {
     u16 monsno = PP_Get( pp, ID_PARA_monsno, NULL );
-    GF_ASSERT_MSG( (monsno == bpp->baseParam.monsno), "bppMonsNo=%d, ppMonsNo=%d", bpp->baseParam.monsno, monsno );
+    GF_ASSERT_MSG( (monsno == bpp->coreParam.monsno), "bppMonsNo=%d, ppMonsNo=%d", bpp->coreParam.monsno, monsno );
   }
   bpp->coreParam.ppSrc = pp;
 }
@@ -2447,7 +2419,6 @@ BOOL BPP_HENSIN_Set( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* target )
     bpp->turnCount = 0;
     bpp->prevWazaID = WAZANO_NULL;
     bpp->sameWazaCounter = 0;
-    bpp->actionAgility = 0;
 
     bpp->coreParam.hensinSrc = target->coreParam.ppSrc;
 

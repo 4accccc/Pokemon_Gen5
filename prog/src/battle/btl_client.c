@@ -102,6 +102,7 @@ struct _BTL_CLIENT {
   CANT_ESC_CONTROL        cantEscCtrl;
 
 
+  HEAPID heapID;
   u8  myID;
   u8  myType;
   u8  myState;
@@ -251,6 +252,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
   int i;
 
   wk->myID = clientID;
+  wk->heapID = heapID;
   wk->myType = clientType;
   wk->adapter = BTL_ADAPTER_Create( netHandle, heapID, clientID );
   wk->myParty = BTL_POKECON_GetPartyDataConst( pokecon, clientID );

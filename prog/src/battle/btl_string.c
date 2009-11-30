@@ -352,7 +352,35 @@ void BTL_STR_MakeStringStd( STRBUF* buf, BtlStrID_STD strID, u32 numArgs, ... )
 //=============================================================================================
 void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const int* args )
 {
-  BTL_Printf(" strID=%d\n", strID);
+  /**
+   *  ëŒè€êwâcÇ…âûÇ∂ÇƒIDÇï‚ê≥Ç∑ÇÈï∂éöóÒåQ
+   */
+  static const u16 sideConvStrID[] = {
+    BTL_STRID_STD_Makibisi,
+    BTL_STRID_STD_Dokubisi,
+    BTL_STRID_STD_StealthRock,
+    BTL_STRID_STD_WideGuard,
+    BTL_STRID_STD_FastGuard,
+    BTL_STRID_STD_Kinchoukan,
+  };
+  int i;
+
+  BTL_Printf(" STD:strID=%d\n", strID);
+
+  // ëŒè€êwâcÇ…ÇÊÇÈï‚ê≥ÅFëŒè€êwâcÇÕ args[0] Ç…ì¸ÇÍÇƒÇ®Ç≠Ç±Ç∆
+  for(i=0; i<NELEMS(sideConvStrID); ++i)
+  {
+    if( strID == sideConvStrID[i] )
+    {
+      if( !BTL_MAIN_IsPlayerSide(SysWork.mainModule, args[0]) ){
+        ++strID;
+        BTL_Printf("  ->=%d\n", strID);
+      }
+      break;
+    }
+  }
+
+
   ms_std_simple( buf, strID, args );
 }
 
@@ -951,28 +979,6 @@ void BTL_STR_MakeWazaUIString( STRBUF* dst, u16 wazaID, u8 wazaPP, u8 wazaPPMax 
 }
 
 
-//--------------------------------------------------------------------
-// Ç±ÇÃâ∫ÇÕÇøÇÂÇ§âºçÏê¨ÅBÇ¢Ç∏ÇÍè¡Ç¶Ç‹Ç∑ÇΩÇ‘ÇÒÅc
-//--------------------------------------------------------------------
 
-
-void BTL_STR_MakeStatusWinStr( STRBUF* dst, const BTL_POKEPARAM* bpp, u16 hp )
-{
-  u16 hpMax = BPP_GetValue( bpp, BPP_MAX_HP );
-
-  WORDSET_RegisterPokeNickName( SysWork.wset, 0, BPP_GetSrcData(bpp) );
-  WORDSET_RegisterNumber( SysWork.wset, 1, hp, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( SysWork.wset, 2, hpMax, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_UI], BTLSTR_UI_StatWinForm, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-
-void BTL_STR_MakeWarnStr( STRBUF* dst, const BTL_POKEPARAM* bpp, u16 strID )
-{
-  WORDSET_RegisterPokeNickName( SysWork.wset, 0, BPP_GetSrcData(bpp) );
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_UI], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
 
 

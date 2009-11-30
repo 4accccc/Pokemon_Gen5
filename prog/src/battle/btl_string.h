@@ -86,9 +86,7 @@ extern void BTL_STR_MakeStringWaza( STRBUF* buf, u8 pokeID, u16 waza );
 
 extern void BTL_STR_GetUIString( STRBUF* dst, u16 strID );
 extern void BTL_STR_MakeWazaUIString( STRBUF* dst, u16 wazaID, u8 wazaPP, u8 wazaPPMax );
-extern void BTL_STR_MakeWarnStr( STRBUF* dst, const BTL_POKEPARAM* bpp, u16 strID );
 
-extern void BTL_STR_MakeStatusWinStr( STRBUF* dst, const BTL_POKEPARAM* bpp, u16 hp );
 
 
 

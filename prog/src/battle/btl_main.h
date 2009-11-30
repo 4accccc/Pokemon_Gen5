@@ -27,6 +27,9 @@ extern const BTL_FIELD_SITUATION* BTL_MAIN_GetFieldSituation( const BTL_MAIN_MOD
 extern BOOL BTL_MAIN_IsServerMachine( BTL_MAIN_MODULE * wk );
 extern BOOL BTL_MAIN_IsMultiMode( const BTL_MAIN_MODULE * wk );
 
+/*------------------------------------------------------------------------------*/
+/* クライアントID，ポケモンID，位置IDなどの情報＆相互変換                       */
+/*------------------------------------------------------------------------------*/
 extern BtlPokePos BTL_MAIN_GetClientPokePos( const BTL_MAIN_MODULE* wk, u8 clientID, u8 posIdx );
 extern BtlPokePos BTL_MAIN_GetOpponentPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos basePos, u8 idx );
 extern BtlPokePos BTL_MAIN_GetNextPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos basePos );
@@ -40,7 +43,41 @@ extern u8 BTL_MAINUTIL_PokeIDtoClientID( u8 pokeID );
 extern BtlPokePos BTL_MAIN_GetEnablePosEnd( const BTL_MAIN_MODULE* wk );
 extern u16 BTL_MAIN_GetClientTrainerType( const BTL_MAIN_MODULE* wk, u8 clientID );
 extern u8 BTL_MAIN_GetPlayerClientID( const BTL_MAIN_MODULE* wk );
+extern BtlSide BTL_MAIN_GetPlayerSide( const BTL_MAIN_MODULE* wk );
 
+//-------------------------------------------------------------------------------
+/**
+ *  サイドID関連
+ */
+//-------------------------------------------------------------------------------
+extern BOOL BTL_MAINUTIL_IsFriendPokeID( u8 pokeID1, u8 pokeID2 );
+extern BtlSide BTL_MAINUTIL_PokeIDtoSide( u8 pokeID );
+extern BtlPokePos BTL_MAINUTIL_GetFriendPokePos( BtlPokePos basePos, u8 idx );
+extern BtlPokePos BTL_MAINUTIL_GetOpponentPokePos( BtlRule rule, BtlPokePos basePos, u8 idx );
+extern u32 BTL_MAIN_GetOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID, u8 idx );
+extern BOOL BTL_MAIN_IsPlayerSide( const BTL_MAIN_MODULE* wk, BtlSide side );
+
+static inline BtlSide BTL_MAINUTIL_GetOpponentSide( BtlSide side )
+{
+  GF_ASSERT(side < BTL_SIDE_MAX);
+  return !side;
+}
+static inline BtlPokePos BTL_MAINUTIL_GetSidePos( BtlSide side, u8 idx )
+{
+  GF_ASSERT(side < BTL_SIDE_MAX);
+  GF_ASSERT(idx < BTL_POSIDX_MAX);
+
+  return (side&1) + idx*2;
+}
+static inline BtlSide BTL_MAINUTIL_PokeIDtoOpponentSide( u8 pokeID )
+{
+  BtlSide  side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
+  return BTL_MAINUTIL_GetOpponentSide( side );
+}
+static inline BtlSide BTL_MAINUTIL_PosToSide( BtlPokePos pos )
+{
+  return pos & 1;
+}
 
 
 /*------------------------------------------------------------------------------*/
@@ -96,42 +133,6 @@ extern BtlPokePos BTL_MAIN_ViewPosToBtlPos( const BTL_MAIN_MODULE* wk, u8 vpos )
 extern BOOL BTL_POKECON_IsExsitClient( const BTL_POKE_CONTAINER* wk, u8 clientID );
 extern BOOL BTL_MAIN_CheckFrontPoke( BTL_MAIN_MODULE* wk, const BTL_POKE_CONTAINER* pokeCon, u8 pokeID );
 
-//-------------------------------------------------------------------------------
-/**
- *  サイドID関連
- */
-//-------------------------------------------------------------------------------
-extern BOOL BTL_MAINUTIL_IsFriendPokeID( u8 pokeID1, u8 pokeID2 );
-extern BtlSide BTL_MAINUTIL_PokeIDtoSide( u8 pokeID );
-extern BtlPokePos BTL_MAINUTIL_GetFriendPokePos( BtlPokePos basePos, u8 idx );
-extern BtlPokePos BTL_MAINUTIL_GetOpponentPokePos( BtlRule rule, BtlPokePos basePos, u8 idx );
-extern u32 BTL_MAIN_GetOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID, u8 idx );
-extern BOOL BTL_MAIN_IsPlayerSide( const BTL_MAIN_MODULE* wk, BtlSide side );
-
-static inline BtlSide BTL_MAINUTIL_GetOpponentSide( BtlSide side )
-{
-  GF_ASSERT(side < BTL_SIDE_MAX);
-  return !side;
-}
-
-static inline BtlPokePos BTL_MAINUTIL_GetSidePos( BtlSide side, u8 idx )
-{
-  GF_ASSERT(side < BTL_SIDE_MAX);
-  GF_ASSERT(idx < BTL_POSIDX_MAX);
-
-  return (side&1) + idx*2;
-}
-
-static inline BtlSide BTL_MAINUTIL_PokeIDtoOpponentSide( u8 pokeID )
-{
-  BtlSide  side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
-  return BTL_MAINUTIL_GetOpponentSide( side );
-}
-
-static inline BtlSide BTL_MAINUTIL_PosToSide( BtlPokePos pos )
-{
-  return pos & 1;
-}
 
 //-------------------------------------------------------------------------------
 /**
@@ -140,13 +141,17 @@ static inline BtlSide BTL_MAINUTIL_PosToSide( BtlPokePos pos )
 //-------------------------------------------------------------------------------
 typedef enum {
 
-  BTL_EXPOS_DEFAULT = 0,    ///< 自分だけ
-  BTL_EXPOS_ENEMY_ALL,      ///< 相手全部
-  BTL_EXPOS_WITHOUT_ME,     ///< 自分以外全部
-  BTL_EXPOS_MYSIDE_ALL,     ///< 味方全部
-  BTL_EXPOS_ALL,            ///< 敵・味方全部
+  BTL_EXPOS_DEFAULT = 0,      ///< 自分だけ
 
-//  BTL_EXPOS_ENEMY_ALL
+  BTL_EXPOS_AREA_ENEMY,       ///< （攻撃範囲内の）相手全部
+  BTL_EXPOS_AREA_OTHERS,      ///< （攻撃範囲内の）自分以外全部
+  BTL_EXPOS_AREA_FRIENDS,     ///< （攻撃範囲内の）味方全部
+  BTL_EXPOS_AREA_ALL,         ///< （攻撃範囲内の）敵・味方全部
+
+  BTL_EXPOS_FULL_ENEMY,       ///< （全フィールドの）相手全部
+
+
+//  BTL_EXPOS_AREA_ENEMY
 
 }BtlExPosType;
 
