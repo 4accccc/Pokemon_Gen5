@@ -362,6 +362,8 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Amanojaku( u16 pri, u16 tokID, u8 pokeID 
 static void handler_Kinchoukan_CheckItemEquip( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Kinchoukan_MemberOutFixed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Kinchoukan( u16 pri, u16 tokID, u8 pokeID );
+static void handler_Hensin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Hensin( u16 pri, u16 tokID, u8 pokeID );
 
 
 
@@ -517,8 +519,8 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
     { POKETOKUSEI_SUNAKAKI,         HAND_TOK_ADD_Sunakaki      }, // すなかき
     { POKETOKUSEI_MIRAKURUSUKIN,    HAND_TOK_ADD_MilacreSkin   }, // ミラクルスキン
     { POKETOKUSEI_SINUTI,           HAND_TOK_ADD_Sinuti        }, // しんうち
-    { POKETOKUSEI_IRYUUJON,         HAND_TOK_ADD_Nenchaku      }, // イリュージョン
-    { POKETOKUSEI_HENSIN,           HAND_TOK_ADD_Nenchaku      }, // へんしん
+    { POKETOKUSEI_IRYUUJON,         HAND_TOK_ADD_Hensin        }, // イリュージョン
+    { POKETOKUSEI_HENSIN,           HAND_TOK_ADD_Hensin        }, // へんしん
     { POKETOKUSEI_SURINUKE,         HAND_TOK_ADD_Surinuke      }, // すりぬけ
     { POKETOKUSEI_MIIRA,            HAND_TOK_ADD_Miira         }, // ミイラ
     { POKETOKUSEI_JISINKAJOU,       HAND_TOK_ADD_JisinKajou    }, // じしんかじょう
@@ -3832,7 +3834,6 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Jiryoku( u16 pri, u16 tokID, u8 pokeID )
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
 }
-
 //------------------------------------------------------------------------------
 /**
  *  とくせい「かたやぶり」
@@ -5377,6 +5378,42 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Kinchoukan( u16 pri, u16 tokID, u8 pokeID
     { BTL_EVENT_MEMBER_IN,             handler_Kinchoukan_MemberIn },        // メンバー入場ハンドラ
     { BTL_EVENT_CHECK_ITEMEQUIP_FAIL,  handler_Kinchoukan_CheckItemEquip },  // 装備アイテム使用チェックハンドラ
     { BTL_EVENT_MEMBER_OUT_FIXED,      handler_Kinchoukan_MemberOutFixed },  // メンバー退場確定ハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
+}
+//------------------------------------------------------------------------------
+/**
+ *  とくせい「へんしん」
+ */
+//------------------------------------------------------------------------------
+// 入場ハンドラ
+static void handler_Hensin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    BtlPokePos myPos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
+    BtlRule rule = BTL_SVFTOOL_GetRule( flowWk );
+    BtlPokePos tgtPos = BTL_MAINUTIL_GetFacedPokePos( rule, myPos );
+
+    u8 tgtPokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, tgtPos );
+    const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, tgtPokeID );
+    if( !BPP_IsDead(target) )
+    {
+      BTL_HANDEX_PARAM_HENSIN* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_HENSIN, pokeID );
+      param->header.tokwin_flag = TRUE;
+      param->pokeID = tgtPokeID;
+
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Hensin );
+      HANDEX_STR_AddArg( &param->exStr, pokeID );
+      HANDEX_STR_AddArg( &param->exStr, param->pokeID );
+    }
+  }
+}
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Hensin( u16 pri, u16 tokID, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_MEMBER_IN,        handler_Hensin },  // 入場ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );

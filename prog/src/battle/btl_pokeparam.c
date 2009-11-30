@@ -122,36 +122,32 @@ struct _BTL_POKEPARAM {
 
   PokeTypePair  type;
   u16  tokusei;
-
-  u16 turnCount;        ///< 継続して戦闘に出ているカウンタ
-  u16 appearedTurn;     ///< 戦闘に出たターンを記録
-
-  u16 prevWazaID;             ///< 直前に使ったワザナンバー
-  u16 sameWazaCounter;        ///< 同じワザを何連続で出しているかカウンタ
-  BtlPokePos  prevTargetPos;  ///< 直前に狙った相手
+  u16  weight;
 
   BPP_SICK_CONT   sickCont[ WAZASICK_MAX ];
   u8  wazaSickCounter[ WAZASICK_MAX ];
+  u8  wazaCnt;
+  u8  formNo;
+  u8  criticalRank;
 
+  u16 turnCount;        ///< 継続して戦闘に出ているカウンタ
+  u16 appearedTurn;     ///< 戦闘に出たターンを記録
+  u16 prevWazaID;             ///< 直前に使ったワザナンバー
+  u16 sameWazaCounter;        ///< 同じワザを何連続で出しているかカウンタ
+  BtlPokePos  prevTargetPos;  ///< 直前に狙った相手
   u8  turnFlag[ TURNFLG_BUF_SIZE ];
   u8  actFlag [ ACTFLG_BUF_SIZE ];
   u8  contFlag[ CONTFLG_BUF_SIZE ];
   u8  counter[ BPP_COUNTER_MAX ];
-
   BPP_WAZADMG_REC  wazaDamageRec[ WAZADMG_REC_TURN_MAX ][ WAZADMG_REC_MAX ];
   u8               dmgrecCount[ WAZADMG_REC_TURN_MAX ];
   u8               dmgrecTurnPtr;
   u8               dmgrecPtr;
 
-  u8  wazaCnt;
-  u8  formNo;
-  u8  criticalRank;
   u8  confrontRecCount;
   u8  confrontRec[ BTL_POKEID_MAX ];
 
   u16 migawariHP;
-  u16 weight;
-
 //  u32 dmy;
 };
 
@@ -2310,7 +2306,7 @@ void BPP_ReflectExpAdd( BTL_POKEPARAM* bpp )
  * @param   bpp
  */
 //=============================================================================================
-void BPP_ReflectPP( BTL_POKEPARAM* bpp )
+void BPP_ReflectToPP( BTL_POKEPARAM* bpp )
 {
   POKEMON_PARAM* pp = (POKEMON_PARAM*)(bpp->coreParam.ppSrc);
   u32 i;
@@ -2331,6 +2327,18 @@ void BPP_ReflectPP( BTL_POKEPARAM* bpp )
     PP_Put( pp, ID_PARA_pp1+i, bpp->waza[i].pp );
   }
 }
+//=============================================================================================
+/**
+ * Srcポケモンデータからパラメータを再構築
+ *
+ * @param   bpp
+ */
+//=============================================================================================
+void BPP_ReflectByPP( BTL_POKEPARAM* bpp )
+{
+  setupBySrcData( bpp, bpp->coreParam.ppSrc );
+}
+
 //=============================================================================================
 /**
  * Srcポケモンデータポインタを差し替える
@@ -2389,6 +2397,7 @@ BOOL BPP_HENSIN_Set( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* target )
 {
   if( (bpp->coreParam.hensinSrc == NULL)
   &&  (target->coreParam.hensinSrc == NULL)
+  &&  (target->migawariHP == 0)
   ){
     static BPP_CORE_PARAM  core = {0};
     int i;

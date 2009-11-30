@@ -1819,6 +1819,57 @@ BtlPokePos BTL_MAIN_GetOpponentPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos ba
 }
 //=============================================================================================
 /**
+ * ある位置から見て、目の前（対戦側）にあたる戦闘位置を返す
+ *
+ * @param   rule
+ * @param   pos
+ *
+ * @retval  BtlPokePos
+ */
+//=============================================================================================
+BtlPokePos BTL_MAINUTIL_GetFacedPokePos( BtlRule rule, BtlPokePos pos )
+{
+  switch( rule ){
+  case BTL_RULE_SINGLE:
+  default:
+    return BTL_MAINUTIL_GetOpponentPokePos( rule, pos, 0 );
+
+  case BTL_RULE_DOUBLE:
+  case BTL_RULE_ROTATION:
+    {
+      u8 idx = btlPos_to_sidePosIdx( pos );
+      idx ^= 1;
+      return BTL_MAINUTIL_GetOpponentPokePos( rule, pos, idx );
+    }
+
+  case BTL_RULE_TRIPLE:
+    {
+      u8 idx = btlPos_to_sidePosIdx( pos );
+      if( idx == 0 ){
+        idx = 2;
+      }else if(idx == 2){
+        idx = 0;
+      }
+      return BTL_MAINUTIL_GetOpponentPokePos( rule, pos, idx );
+    }
+  }
+}
+//=============================================================================================
+/**
+ * ある位置から見て、目の前（対戦側）にあたる戦闘位置を返す
+ *
+ * @param   wk
+ * @param   pos
+ *
+ * @retval  BtlPokePos
+ */
+//=============================================================================================
+BtlPokePos BTL_MAIN_GetFacedPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos pos )
+{
+  return BTL_MAINUTIL_GetFacedPokePos( wk->setupParam->rule, pos );
+}
+//=============================================================================================
+/**
  * 指定位置から見て隣りの戦闘位置を返す
  *
  * @param   wk
@@ -2771,7 +2822,7 @@ static void srcParty_RefrectBtlParty( BTL_MAIN_MODULE* wk, u8 clientID )
   for(i=0; i<memberCount; ++i)
   {
     bpp = BTL_PARTY_GetMemberData( btlParty, i );
-    BPP_ReflectPP( bpp );
+    BPP_ReflectToPP( bpp );
     pp = BPP_GetSrcData( bpp );
     PokeParty_Add( wk->tmpParty, pp );
   }
@@ -2803,7 +2854,7 @@ static void srcParty_RefrectBtlPartyStartOrder( BTL_MAIN_MODULE* wk, u8 clientID
       bpp = BTL_PARTY_GetMemberData( btlParty, j );
       if( BPP_GetID(bpp) == (orgPokeID+i) )
       {
-        BPP_ReflectPP( bpp );
+        BPP_ReflectToPP( bpp );
         pp = BPP_GetSrcData( bpp );
         PokeParty_Add( wk->tmpParty, pp );
         break;
