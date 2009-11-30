@@ -549,7 +549,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   GFL_HEAP_CreateHeap( HEAPID_FIELDMAP, HEAPID_FLD3DCUTIN, FLD3DCUTIN_SIZE );
 
 #ifndef CROSSFADE_MODE
-  fieldWork->fldMsgBG = FLDMSGBG_Setup( fieldWork->heapID, fieldWork->g3Dcamera );
+  fieldWork->fldMsgBG = FLDMSGBG_Create( fieldWork->heapID, fieldWork->g3Dcamera );
 #else
   fieldWork->fldMsgBG = NULL;
 #endif
@@ -1820,7 +1820,7 @@ void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork )
   GX_SetVisibleWnd( GX_WNDMASK_NONE );
 
   // 会話ウインドウシステム作成
-  fieldWork->fldMsgBG = FLDMSGBG_Setup( fieldWork->heapID, fieldWork->g3Dcamera );
+  fieldWork->fldMsgBG = FLDMSGBG_Create( fieldWork->heapID, fieldWork->g3Dcamera );
   // 地名表示システム作成
   fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( fieldWork->heapID, fieldWork->fldMsgBG );
 
