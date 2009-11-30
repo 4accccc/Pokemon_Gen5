@@ -137,6 +137,9 @@ void EVENT_CAMERA_ACT_PrepareForDoorOut( FIELDMAP_WORK* fieldmap )
   u16              dir    = MMDL_GetDirDisp( fmmdl );
   FIELD_CAMERA*    cam    = FIELDMAP_GetFieldCamera( fieldmap );
 
+  FIELD_CAMERA_MODE cam_mode = FIELD_CAMERA_GetMode( cam );
+  FIELD_CAMERA_ChangeMode( cam, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+
   // 主人公の向きに応じたカメラ設定
   switch( dir )
   {
@@ -158,6 +161,8 @@ void EVENT_CAMERA_ACT_PrepareForDoorOut( FIELDMAP_WORK* fieldmap )
   default:
     break;
   }
+  
+  FIELD_CAMERA_ChangeMode( cam, cam_mode );
 }
 
 //-----------------------------------------------------------------------------------------------
@@ -692,6 +697,7 @@ static GMEVENT_RESULT EVENT_FUNC_RightDoorOut( GMEVENT* event, int* seq, void* w
     }
     ++( *seq );
     break;
+#if 0
   case 1:
     { // タスク終了待ち
       FIELD_TASK_MAN* man;
@@ -702,7 +708,8 @@ static GMEVENT_RESULT EVENT_FUNC_RightDoorOut( GMEVENT* event, int* seq, void* w
       }
     }
     break;
-  case 2:
+#endif
+  case 1:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;

@@ -62,6 +62,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     SEQ_DOOROUT_WAIT_SOUND_LOAD,
     SEQ_DOOROUT_OPENANIME_START,
     SEQ_DOOROUT_CAMERA_ACT,
+    SEQ_DOOROUT_FADEIN,
     SEQ_DOOROUT_OPENANIME_WAIT,
     SEQ_DOOROUT_PLAYER_STEP,
     SEQ_DOOROUT_CLOSEANIME_START,
@@ -83,7 +84,6 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     EVENT_CAMERA_ACT_PrepareForDoorOut( fieldmap );
     //自機を消す
     MAPCHANGE_setPlayerVanish( fieldmap, TRUE );
-		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0, FIELD_FADE_WAIT));
     *seq = SEQ_DOOROUT_WAIT_SOUND_LOAD;
     break;
 
@@ -110,6 +110,11 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
 
   case SEQ_DOOROUT_CAMERA_ACT:
     EVENT_CAMERA_ACT_CallDoorOutEvent( event, gsys, fieldmap );
+    *seq = SEQ_DOOROUT_FADEIN;
+    break;
+
+  case SEQ_DOOROUT_FADEIN:
+		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0, FIELD_FADE_WAIT));
     if (fdaw->ctrl == NULL)
     { /* エラーよけ、ドアがない場合 */
       *seq = SEQ_DOOROUT_PLAYER_STEP;
