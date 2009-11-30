@@ -21,9 +21,9 @@
 
 #include "../../../resource/fldmapdata/gimmick/gym_ground/gym_ground_local_def.h"
 
-//#include "sound/pm_sndsys.h"
+#include "sound/pm_sndsys.h"
 
-//#include "gym_ground_se_def.h"
+#include "gym_ground_se_def.h"
 
 #include "height_ex.h"    //for ExHeight
 
@@ -775,7 +775,7 @@ static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work )
     {
       //カメラトレースが生きている間は処理を進めない
       if ( FIELD_CAMERA_CheckTrace(camera) ) break;
-
+      PMSND_PlaySE(GYM_GROUND_SE_LIFT_MOVE);
       //トレース終了
       (*seq)++;
     }
@@ -792,6 +792,8 @@ static GMEVENT_RESULT UpDownEvt( GMEVENT* event, int* seq, void* work )
       tmp->NowHeight = tmp->DstHeight;
       //リフト振動セットアップ
       InitLiftShake(tmp->TargetLiftIdx, tmp->AddVal, FALSE, camera, &tmp->ShakeWork);
+      //リフト停止音
+      PMSND_PlaySE(GYM_GROUND_SE_LIFT_STOP);
       //次のシーケンスへ
       (*seq)++;
     }
@@ -1197,6 +1199,8 @@ static void FuncMainLiftOnly(GAMESYS_WORK *gsys)
       anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, 0);
       //アニメ開始
       FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+      //隔壁開く音
+      PMSND_PlaySE(GYM_GROUND_SE_WALL_OPEN);
     }
     tmp->NowHeight = WALL_OPEN_HEIGHT;
     tmp->LiftMvStop = TRUE;
