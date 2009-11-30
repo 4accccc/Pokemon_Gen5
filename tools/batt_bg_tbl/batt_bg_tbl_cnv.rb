@@ -345,7 +345,7 @@ end
           exit( 1 )
         end
         split_ec = edge_color.split(/:/)
-        fp_bg.printf( "\tlong\t(%s<<10)|(%s<<5)|(%s)\n", split_ec[ 0 ], split_ec[ 1 ], split_ec[ 2 ] )
+        fp_stage.printf( "\t.long\t(%s<<10)|(%s<<5)|(%s)\n", split_ec[ 0 ], split_ec[ 1 ], split_ec[ 2 ] )
       end
       for season in FILE_SPRING..FILE_WINTER
         if stage[ i ].get_file_name( kind, season ) == "~"
