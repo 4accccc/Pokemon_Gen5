@@ -946,7 +946,7 @@ void  PP_SetWazaDefault( POKEMON_PARAM *pp )
 //============================================================================================
 void  PPP_SetWazaDefault( POKEMON_PASO_PARAM *ppp )
 {
-  static  u16 wot[ POKEPER_WAZAOBOE_TABLE_ELEMS ];  //技覚えテーブル
+  static  POKEPER_WAZAOBOE_CODE wot[ POKEPER_WAZAOBOE_TABLE_ELEMS ];  //技覚えテーブル
 
   BOOL  flag;
   int i;

@@ -88,7 +88,7 @@ void POKE_PERSONAL_LoadData( u16 mons_no, u16 form_no, POKEMON_PERSONAL_DATA* pp
  *
  */
 //=============================================================================================
-void POKE_PERSONAL_LoadWazaOboeTable( u16 mons_no, u16 form_no, u16* dst )
+void POKE_PERSONAL_LoadWazaOboeTable( u16 mons_no, u16 form_no, POKEPER_WAZAOBOE_CODE* dst )
 {
 	u16 personalID = get_personalID( mons_no, form_no );
 	GFL_ARC_LoadData( dst, ARCID_WOTBL, personalID );
