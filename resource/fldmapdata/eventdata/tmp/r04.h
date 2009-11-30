@@ -30,5 +30,8 @@
 #define TR_BACKPACKERW_01                  9
 #define R04_FLD_ITEM_02                   10
 #define R04_FLD_ITEM_01                   11
+#define R04_STOP_01                       12
+#define R04_WOMAN2_01                     13
+#define R04_MAN2_01                       14
 
 #endif //ZONE_R04_EVC_H

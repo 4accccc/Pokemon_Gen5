@@ -11,5 +11,6 @@
 #ifndef ZONE_D03_EVC_H
 #define ZONE_D03_EVC_H
 
+#define D03_BOY3_01                        0
 
 #endif //ZONE_D03_EVC_H
