@@ -72,6 +72,7 @@ typedef struct GYM_GROUND_TMP_tag
   BOOL FogFadeFlg;
   s32 FogBaseOffset;
   s32 FogBaseSlope;
+  BOOL WallAnmWatch;
 }GYM_GROUND_TMP;
 
 typedef struct FLOOR_RECT_tag
@@ -677,6 +678,10 @@ GMEVENT *GYM_GROUND_CreateLiftMoveEvt(GAMESYS_WORK *gsys, const int inLiftIdx)
   if ( tmp->DstHeight - tmp->NowHeight < 0 ) tmp->AddVal = -speed;
   else tmp->AddVal = speed;
 
+  
+  //隔壁アニメ監視フラグオフ
+  tmp->WallAnmWatch = FALSE;
+
   //イベント作成
   event = GMEVENT_Create( gsys, NULL, UpDownEvt, 0 );
 
@@ -1213,6 +1218,9 @@ static void FuncMainLiftOnly(GAMESYS_WORK *gsys)
     tmp->LiftMvStop = TRUE;
     tmp->StopTime = 0;
     tmp->MainLiftSeq = 0;
+
+    //隔壁アニメ終了監視フラグオン
+    tmp->WallAnmWatch = TRUE;
   }
 
   if ( tmp->LiftMvStop ){
@@ -1274,6 +1282,21 @@ static void FuncMainLiftOnly(GAMESYS_WORK *gsys)
 
       FIELD_FOG_FADE_Init( fog, fog_offset, fog_slope, fog_sync );
       tmp->FogFadeFlg = FALSE;
+    }
+  }
+
+  //隔壁アニメ監視
+  if (tmp->WallAnmWatch)
+  {
+    EXP_OBJ_ANM_CNT_PTR anm;
+    int obj_idx = OBJ_WALL;
+    //隔壁アニメーション終了監視
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, 0);
+    if ( FLD_EXP_OBJ_ChkAnmEnd(anm) )
+    {
+      PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
+      //隔壁アニメ監視フラグオフ
+      tmp->WallAnmWatch = FALSE;
     }
   }
 }
