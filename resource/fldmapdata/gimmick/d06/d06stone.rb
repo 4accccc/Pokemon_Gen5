@@ -45,8 +45,9 @@ while line = file_csv0.gets
   str = line.split( "," )
   
   if( str[1] != nil && str[1] != "" &&
-      str[2] != nil && str[2] != "" )
-      buf << sprintf( "\t{%s,0,%s},\n", str[1], str[2] )
+      str[2] != nil && str[2] != "" &&
+      str[3] != nil && str[3] != "" )
+      buf << sprintf( "\t{%s,%s,%s},\n", str[1], str[2], str[3] )
   else
     break
   end
