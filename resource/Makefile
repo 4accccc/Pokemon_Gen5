@@ -105,6 +105,7 @@ SUBDIRS	=	wmi \
 			fourkings_scene \
 			multiboot \
 			field_wfbc_data \
+			mail \
 			season_display
 
 include $(RESOURCE_MACRO)
