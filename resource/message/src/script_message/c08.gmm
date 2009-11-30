@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-28T20:07:29"/>
+	<create user="matsumiya" host="W00207" date="2009-11-30T11:08:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -725,10 +725,10 @@ WOMAN2</attribute>
 つよい　ポケモントレーナー　だからね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08_leader8a_04_01" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c08_leader8a_05" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
-・WHITEならleader8b_04
-・BLACKならleader8b_05</comment>
+・WHITEならleader8b_05w
+・BLACKならleader8b_05b</comment>
 		<attribute name="キャラクター">ジムリーダー
 シャガ</attribute>
 		<language name="JPN" width="256">さて　[1:00:トレーナー名:0]といったか[BE:01:ページ切り替え（クリア）]
@@ -736,8 +736,9 @@ WOMAN2</attribute>
 きみが　さきに　すすむには[BE:01:ページ切り替え（クリア）]
 ソウリュウシティ　ポケモンジムの
 ジムリーダーと　たたかわねばならない[BE:01:ページ切り替え（クリア）]
-では　わたしたちは
-ポケモンジムで　まっている[BE:01:ページ切り替え（クリア）]</language>
+が　そのまえに[BE:01:ページ切り替え（クリア）]
+わたしの　いえに　きなさい
+はなしておくことが　ある[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">さて　[1:00:トレーナー名:0]といったか[BE:01:ページ切り替え（クリア）]
 かれを　おいかけるにしろ
 きみが　さきに　すすむには[BE:01:ページ切り替え（クリア）]
@@ -747,30 +748,30 @@ WOMAN2</attribute>
 ポケモンジムで　まっている[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08_leader8b_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08_leader8b_05w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・メッセージ表示後、ジムリーダー2人
-　ポケモンジムのほうへ移動
+　c08r0101（暫定）のほうへ移動
 ・画面外に消えると主人公操作可能に</comment>
 		<attribute name="キャラクター">ジムリーダー
 アイリス</attribute>
-		<language name="JPN" width="256">アイリス『シャガの　おじーちゃんも
-ものすごーく　つよいんだからね！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アイリス『シャガの　おじーちゃんも
-ものすごーく　つよいんだからね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">アイリス『シンの　はなし！
+あたしたちが　おしえてあげる！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アイリス『シンの　はなし！
+あたしたちが　おしえてあげる！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08_leader8b_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08_leader8b_05b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・メッセージ表示後、ジムリーダー2人
-　ポケモンジムのほうへ移動
+　c08r0101（暫定）のほうへ移動
 ・画面外に消えると主人公操作可能に</comment>
 		<attribute name="キャラクター">ジムリーダー
 アイリス</attribute>
-		<language name="JPN" width="256">アイリス『あたしだって
-ものすごーく　つよいんだからね！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アイリス『あたしだって
-ものすごーく　つよいんだからね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">アイリス『ムの　はなし！
+あたしたちが　おしえてあげる！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アイリス『ムの　はなし！
+あたしたちが　おしえてあげる！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c08_gymstop_01">
