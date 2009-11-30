@@ -8,7 +8,8 @@
 //======================================================================
 #include <gflib.h>
 #include "system/gfl_use.h"
-#include "include/savedata/gimmickwork.h"
+#include "sound/pm_sndsys.h"
+#include "savedata/gimmickwork.h"
 
 #include "fieldmap.h"
 #include "map_attr.h"
@@ -17,9 +18,7 @@
 
 #include "field_gimmick_d06.h"
 
-//======================================================================
-//  浮遊石配置cdatファイル
-//======================================================================
+//浮遊石配置cdatファイル
 #include "../../../resource/fldmapdata/gimmick/d06/d06stone.cdat"
 
 //======================================================================
@@ -356,6 +355,7 @@ static GMEVENT_RESULT event_BigStonePush(
     if( MMDL_CheckPossibleAcmd(m_jiki) == TRUE ){
       MMDL_SetAcmd( m_jiki,
           MMDL_ChangeDirAcmdCode(work->dir,AC_STAY_WALK_U_16F) );
+      PMSND_PlaySE( SEQ_SE_FLD_63 );
       (*seq)++;
     }
     break;
@@ -376,6 +376,7 @@ static GMEVENT_RESULT event_BigStonePush(
           MMDL_ChangeDirAcmdCode(work->dir,ac) );
         work->length--;
       }else{
+        PMSND_PlaySE( SEQ_SE_FLD_50 );
         (*seq)++;
       }
     }
@@ -414,6 +415,7 @@ static GMEVENT_RESULT event_BigStoneShake(
     if( MMDL_CheckPossibleAcmd(m_jiki) == TRUE ){
       MMDL_SetAcmd( m_jiki,
           MMDL_ChangeDirAcmdCode(work->dir,AC_STAY_WALK_U_16F) );
+      PMSND_PlaySE( SEQ_SE_FLD_63 );
       (*seq)++;
     }
   case 1:

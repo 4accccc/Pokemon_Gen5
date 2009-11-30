@@ -8,6 +8,7 @@
 //======================================================================
 #include <gflib.h>
 #include "system/gfl_use.h"
+#include "sound/pm_sndsys.h"
 
 #include "fieldmap.h"
 #include "field_effect.h"
@@ -302,6 +303,8 @@ static void biribiriTask_Init( FLDEFF_TASK *task, void *wk )
   work->obj = GFL_G3D_OBJECT_Create(
       work->obj_rnd, &work->obj_anm, 1 );
   GFL_G3D_OBJECT_EnableAnime( work->obj, 0 );
+  
+  PMSND_PlaySE( SEQ_SE_FLD_49 );
 }
 
 //--------------------------------------------------------------
