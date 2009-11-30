@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2009-11-20T13:01:12" source="d6_ishi_big01.ma"/>
+	<create user="ibe_mana" host="W00191" date="2009-11-30T18:05:34" source="d6_ishi_big01.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -25,7 +25,7 @@
 />
 
 <node_scale_data size="1">
-	1.000000
+	0.600098
 </node_scale_data>
 
 <node_rotate_data size="1">
