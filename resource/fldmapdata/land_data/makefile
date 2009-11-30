@@ -18,3 +18,4 @@ subdir:
 clean:
 	$(MAKE) -f $(MKFILE_LANDLIST) clean
 	$(MAKE) -f $(MKFILE_LAND) clean
+	@$(MAKE_SUBDIR) clean
