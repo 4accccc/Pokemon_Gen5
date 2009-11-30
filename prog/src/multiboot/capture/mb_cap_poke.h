@@ -22,12 +22,24 @@
 //	enum
 //======================================================================
 #pragma mark [> enum
+typedef enum
+{
+  MCPS_NONE,
+  MCPS_HIDE,
+  MCPS_LOOK,
+
+  MCPS_RUN_HIDE,
+  MCPS_RUN_LOOK,
+  
+  MCPS_CAPTURE,
+
+  MCPS_MAX,
+}MB_CAP_POKE_STATE;
 
 //======================================================================
 //	typedef struct
 //======================================================================
 #pragma mark [> struct
-typedef struct _MB_CAP_POKE MB_CAP_POKE;
 
 typedef struct
 {
@@ -47,4 +59,14 @@ typedef struct
 //--------------------------------------------------------------
 extern MB_CAP_POKE *MB_CAP_POKE_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE_INIT_WORK *initWork );
 extern void MB_CAP_POKE_DeleteObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
+extern void MB_CAP_POKE_UpdateObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
+
+extern void MB_CAP_POKE_SetHide( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork , const u8 idxX , const u8 idxY );
+extern void MB_CAP_POKE_SetRun( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
+extern void MB_CAP_POKE_SetCapture( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
+
+//éwíËç¿ïWÇ…Ç¢ÇÈÇ©ÅH
+extern const BOOL MB_CAP_POKE_CheckPos( const MB_CAP_POKE *pokeWork , const u8 idxX , const u8 idxY );
+extern const MB_CAP_POKE_STATE MB_CAP_POKE_GetState( const MB_CAP_POKE *pokeWork );
+extern void MB_CAP_POKE_GetHitWork( MB_CAP_POKE *pokeWork , MB_CAP_HIT_WORK *hitWork );
 

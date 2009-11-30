@@ -27,6 +27,7 @@
 #include "./mb_cap_poke.h"
 #include "./mb_cap_down.h"
 #include "./mb_cap_ball.h"
+#include "./mb_cap_effect.h"
 #include "./mb_cap_local_def.h"
 
 
@@ -67,6 +68,7 @@ struct _MB_CAPTURE_WORK
   MB_CAP_POKE *pokeWork[MB_CAP_POKE_NUM];
   MB_CAP_OBJ  *objWork[MB_CAP_OBJ_NUM];
   MB_CAP_BALL  *ballWork[MB_CAP_BALL_NUM];
+  MB_CAP_EFFECT  *effWork[MB_CAP_EFFECT_NUM];
   MB_CAP_DOWN *downWork;
   
   //上画面系
@@ -142,6 +144,10 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
   {
     work->ballWork[i] = NULL;
   }
+  for( i=0;i<MB_CAP_EFFECT_NUM;i++ )
+  {
+    work->effWork[i] = NULL;
+  }
 }
 
 //--------------------------------------------------------------
@@ -155,6 +161,13 @@ static void MB_CAPTURE_Term( MB_CAPTURE_WORK *work )
     if( work->ballWork[i] != NULL )
     {
       MB_CAP_BALL_DeleteObject( work , work->ballWork[i] );
+    }
+  }
+  for( i=0;i<MB_CAP_EFFECT_NUM;i++ )
+  {
+    if( work->effWork[i] != NULL )
+    {
+      MB_CAP_EFFECT_DeleteObject( work , work->effWork[i] );
     }
   }
 
@@ -222,8 +235,8 @@ static const BOOL MB_CAPTURE_Main( MB_CAPTURE_WORK *work )
   GFL_CLACT_SYS_Main();
 
   
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START &&
-      GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_START &&
+      GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT )
   {
     return TRUE;
   }
@@ -441,7 +454,11 @@ static void MB_CAPTURE_LoadResource( MB_CAPTURE_WORK *work )
       NARC_mb_capture_gra_cap_obj_kusamura1_nsbtx ,
       NARC_mb_capture_gra_cap_obj_kusamura2_nsbtx ,
       NARC_mb_capture_gra_cap_obj_wood_nsbtx ,
-      NARC_mb_capture_gra_cap_obj_water_nsbtx };
+      NARC_mb_capture_gra_cap_obj_water_nsbtx ,
+      NARC_mb_capture_gra_cap_obj_hit_nsbtx ,
+      NARC_mb_capture_gra_cap_obj_kemuri_nsbtx ,
+      NARC_mb_capture_gra_cap_obj_getefect_nsbtx ,
+      };
     static const u32 resSizeArr[MCBR_MAX] = {
       GFL_BBD_TEXSIZDEF_32x32 ,
       GFL_BBD_TEXSIZDEF_256x32 ,
@@ -449,7 +466,11 @@ static void MB_CAPTURE_LoadResource( MB_CAPTURE_WORK *work )
       GFL_BBD_TEXSIZDEF_128x32 ,
       GFL_BBD_TEXSIZDEF_128x32 ,
       GFL_BBD_TEXSIZDEF_128x32 ,
-      GFL_BBD_TEXSIZDEF_32x32 };
+      GFL_BBD_TEXSIZDEF_32x32 ,
+      GFL_BBD_TEXSIZDEF_64x32 ,
+      GFL_BBD_TEXSIZDEF_256x32 ,
+      GFL_BBD_TEXSIZDEF_256x32 ,
+      };
     u8 i;
     
     for( i=0;i<MCBR_MAX;i++ )
@@ -475,10 +496,10 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
   MB_CAP_OBJ_INIT_WORK initWork;
   for( i=0;i<MB_CAP_OBJ_MAIN_NUM;i++ )
   {
+    const u8 idxX = (i%MB_CAP_OBJ_X_NUM);
+    const u8 idxY = (i/MB_CAP_OBJ_X_NUM);
     initWork.type = MCOT_GRASS;
-    initWork.pos.x = FX32_CONST( (i%MB_CAP_OBJ_X_NUM) * MB_CAP_OBJ_MAIN_X_SPACE + MB_CAP_OBJ_MAIN_LEFT );
-    initWork.pos.y = FX32_CONST( (i/MB_CAP_OBJ_X_NUM) * MB_CAP_OBJ_MAIN_Y_SPACE + MB_CAP_OBJ_MAIN_TOP );
-    initWork.pos.z = FX32_CONST( MB_CAP_OBJ_BASE_Z );
+    MB_CAPTURE_GetGrassObjectPos( idxX , idxY , &initWork.pos );
     work->objWork[i] = MB_CAP_OBJ_CreateObject( work , &initWork );
   }
   for( i=MB_CAP_OBJ_SUB_U_START;i<MB_CAP_OBJ_SUB_D_START;i++ )
@@ -487,7 +508,7 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
     initWork.type = MCOT_WOOD;
     initWork.pos.x = FX32_CONST( idx * MB_CAP_OBJ_MAIN_X_SPACE + MB_CAP_OBJ_MAIN_LEFT );
     initWork.pos.y = FX32_CONST( MB_CAP_OBJ_SUB_U_TOP );
-    initWork.pos.z = FX32_CONST( MB_CAP_OBJ_BASE_Z );
+    initWork.pos.z = FX32_CONST( MB_CAP_OBJ_BASE_Z + MB_CAP_OBJ_LINEOFS_Z*MB_CAP_OBJ_Y_NUM );
     work->objWork[i] = MB_CAP_OBJ_CreateObject( work , &initWork );
   }
   for( i=MB_CAP_OBJ_SUB_D_START;i<MB_CAP_OBJ_SUB_R_START;i++ )
@@ -496,7 +517,7 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
     initWork.type = MCOT_WATER;
     initWork.pos.x = FX32_CONST( idx * MB_CAP_OBJ_MAIN_X_SPACE + MB_CAP_OBJ_MAIN_LEFT );
     initWork.pos.y = FX32_CONST( MB_CAP_OBJ_SUB_D_TOP );
-    initWork.pos.z = FX32_CONST( MB_CAP_OBJ_BASE_Z );
+    initWork.pos.z = FX32_CONST( MB_CAP_OBJ_BASE_Z - MB_CAP_OBJ_LINEOFS_Z );
     work->objWork[i] = MB_CAP_OBJ_CreateObject( work , &initWork );
   }
   for( i=MB_CAP_OBJ_SUB_R_START;i<MB_CAP_OBJ_SUB_L_START;i++ )
@@ -505,7 +526,7 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
     initWork.type = MCOT_GRASS_SIDE;
     initWork.pos.x = FX32_CONST( MB_CAP_OBJ_SUB_R_LEFT );
     initWork.pos.y = FX32_CONST( idx * MB_CAP_OBJ_MAIN_Y_SPACE + MB_CAP_OBJ_MAIN_TOP );
-    initWork.pos.z = FX32_CONST( MB_CAP_OBJ_BASE_Z );
+    initWork.pos.z = FX32_CONST( MB_CAP_OBJ_BASE_Z + (MB_CAP_OBJ_Y_NUM-idx-1)*MB_CAP_OBJ_LINEOFS_Z );
     work->objWork[i] = MB_CAP_OBJ_CreateObject( work , &initWork );
   }
   for( i=MB_CAP_OBJ_SUB_L_START;i<MB_CAP_OBJ_NUM;i++ )
@@ -514,7 +535,7 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
     initWork.type = MCOT_GRASS_SIDE;
     initWork.pos.x = FX32_CONST( MB_CAP_OBJ_SUB_L_LEFT );
     initWork.pos.y = FX32_CONST( idx * MB_CAP_OBJ_MAIN_Y_SPACE + MB_CAP_OBJ_MAIN_TOP );
-    initWork.pos.z = FX32_CONST( MB_CAP_OBJ_BASE_Z );
+    initWork.pos.z = FX32_CONST( MB_CAP_OBJ_BASE_Z + (MB_CAP_OBJ_Y_NUM-idx-1)*MB_CAP_OBJ_LINEOFS_Z );
     work->objWork[i] = MB_CAP_OBJ_CreateObject( work , &initWork );
   }
 }
@@ -536,7 +557,7 @@ static void MB_CAPTURE_TermObject( MB_CAPTURE_WORK *work )
 //--------------------------------------------------------------
 static void MB_CAPTURE_InitPoke( MB_CAPTURE_WORK *work )
 {
-  int i;
+  int i,j;
   MB_CAP_POKE_INIT_WORK initWork;
   initWork.pokeArcHandle = MB_ICON_GetArcHandle(GFL_HEAP_LOWID(work->heapId),work->initWork->cardType);
   
@@ -546,6 +567,31 @@ static void MB_CAPTURE_InitPoke( MB_CAPTURE_WORK *work )
     work->pokeWork[i] = MB_CAP_POKE_CreateObject( work , &initWork );
   }
   GFL_ARC_CloseDataHandle( initWork.pokeArcHandle );
+
+  //出現設定
+  for( i=0;i<MB_CAP_POKE_NUM;i++ )
+  {
+    BOOL isLoop = TRUE;
+    while( isLoop == TRUE )
+    {
+      const u8 idxX = GFUser_GetPublicRand0( MB_CAP_OBJ_X_NUM );
+      const u8 idxY = GFUser_GetPublicRand0( MB_CAP_OBJ_Y_NUM );
+      isLoop = FALSE;
+      for( j=0;j<i;j++ )
+      {
+        if( MB_CAP_POKE_CheckPos( work->pokeWork[j] , idxX , idxY ) == TRUE )
+        {
+          isLoop = TRUE;
+          break;
+        }
+      }
+      if( isLoop == FALSE )
+      {
+        MB_CAP_POKE_SetHide( work , work->pokeWork[j] , idxX , idxY );
+        OS_TPrintf("[%d][%d]\n",idxX,idxY);
+      }
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -652,6 +698,7 @@ static void MB_CAPTURE_UpdateUpper( MB_CAPTURE_WORK *work )
           
           initWork.isBonus = FALSE;
           initWork.targetPos = work->targetPos;
+          initWork.rotAngle = MB_CAP_DOWN_GetShotAngle( work->downWork );
           work->ballWork[i] = MB_CAP_BALL_CreateObject( work , &initWork );
           break;
         }
@@ -677,10 +724,31 @@ static void MB_CAPTURE_UpdateUpper( MB_CAPTURE_WORK *work )
       }
       else
       {
-        activeBallNum++;
+        if( MB_CAP_BALL_GetState( work->ballWork[i] ) == MCBS_FLYING )
+        {
+          activeBallNum++;
+        }
       }
     }
   }
+  for( i=0;i<MB_CAP_EFFECT_NUM;i++ )
+  {
+    if( work->effWork[i] != NULL )
+    {
+      MB_CAP_EFFECT_UpdateObject( work , work->effWork[i] );
+      if( MB_CAP_EFFECT_IsFinish( work->effWork[i] ) == TRUE )
+      {
+        MB_CAP_EFFECT_DeleteObject( work , work->effWork[i] );
+        work->effWork[i] = NULL;
+      }
+    }
+  }
+
+  for( i=0;i<MB_CAP_POKE_NUM;i++ )
+  {
+    MB_CAP_POKE_UpdateObject( work , work->pokeWork[i] );
+  }
+
   
   if( activeBallNum == 0 &&
       downState == MCDS_SHOT_WAIT &&
@@ -826,5 +894,75 @@ const int MB_CAPTURE_GetBbdResIdx( const MB_CAPTURE_WORK *work , const MB_CAP_BB
 {
   return work->bbdRes[resType];
 }
+MB_CAP_OBJ* MB_CAPTURE_GetObjWork( MB_CAPTURE_WORK *work , const u8 idx )
+{
+  return work->objWork[idx];
+}
+MB_CAP_POKE* MB_CAPTURE_GetPokeWork( MB_CAPTURE_WORK *work , const u8 idx )
+{
+  return work->pokeWork[idx];
+}
+
+//--------------------------------------------------------------
+//  ポケモン捕獲処理
+//--------------------------------------------------------------
+void MB_CAPTURE_GetPokeFunc( MB_CAPTURE_WORK *work , MB_CAP_BALL *ballWork , const u8 pokeIdx )
+{
+  MB_CAP_POKE *pokeWork = work->pokeWork[pokeIdx];
+  
+  MB_CAP_POKE_SetCapture( work , pokeWork );
+}
+
+//--------------------------------------------------------------
+//  エフェクトを作る
+//--------------------------------------------------------------
+void MB_CAPTURE_CreateEffect( MB_CAPTURE_WORK *work , VecFx32 *pos , const MB_CAP_EFFECT_TYPE type )
+{
+  u8 i;
+  for( i=0;i<MB_CAP_EFFECT_NUM;i++ )
+  {
+    if( work->effWork[i] == NULL )
+    {
+      MB_CAP_EFFECT_INIT_WORK initWork;
+      
+      initWork.pos = *pos;
+      initWork.type = type;
+      work->effWork[i] = MB_CAP_EFFECT_CreateObject( work , &initWork );
+      break;
+    }
+  }
+  
+}
 
 
+#pragma mark [>outer func
+//--------------------------------------------------------------
+//  便利関数
+//--------------------------------------------------------------
+void MB_CAPTURE_GetGrassObjectPos( const u8 idxX , const u8 idxY , VecFx32 *ret )
+{
+  ret->x = FX32_CONST( idxX * MB_CAP_OBJ_MAIN_X_SPACE + MB_CAP_OBJ_MAIN_LEFT);
+  ret->y = FX32_CONST( idxY * MB_CAP_OBJ_MAIN_Y_SPACE + MB_CAP_OBJ_MAIN_TOP);
+  ret->z = FX32_CONST( MB_CAP_OBJ_BASE_Z + (MB_CAP_OBJ_Y_NUM-idxY-1)*MB_CAP_OBJ_LINEOFS_Z );
+}
+
+//--------------------------------------------------------------
+//  当たり判定のチェック
+//--------------------------------------------------------------
+const BOOL MB_CAPTURE_CheckHit( const MB_CAP_HIT_WORK *work1 , MB_CAP_HIT_WORK *work2 )
+{
+  if((work1->pos->x - work1->size.x < work2->pos->x + work2->size.x) &&
+     (work1->pos->x + work1->size.x > work2->pos->x - work2->size.x) &&
+     (work1->pos->y - work1->size.y < work2->pos->y + work2->size.y) &&
+     (work1->pos->y + work1->size.y > work2->pos->y - work2->size.y) &&
+     (work1->height - work1->size.z < work2->height + work2->size.z) &&
+     (work1->height + work1->size.z > work2->height - work2->size.z) )
+  {
+//    OS_Printf("A[%6.2f][%6.2f][%6.2f]\n",F32_CONST(work1->pos->x),F32_CONST(work1->pos->y),F32_CONST(work1->height));
+//    OS_Printf(" [%6.2f][%6.2f][%6.2f]\n",F32_CONST(work1->size.x),F32_CONST(work1->size.y),F32_CONST(work1->size.z));
+//    OS_Printf("B[%6.2f][%6.2f][%6.2f]\n",F32_CONST(work2->pos->x),F32_CONST(work2->pos->y),F32_CONST(work2->height));
+//    OS_Printf(" [%6.2f][%6.2f][%6.2f]\n",F32_CONST(work2->size.x),F32_CONST(work2->size.y),F32_CONST(work2->size.z));
+    return TRUE;
+  }
+  return FALSE;
+}

@@ -34,6 +34,8 @@
 struct _MB_CAP_OBJ
 {
   int objIdx;
+  
+  VecFx32 pos;
 };
 
 //======================================================================
@@ -53,11 +55,12 @@ MB_CAP_OBJ *MB_CAP_OBJ_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ_INIT_
   const int resIdx = MB_CAPTURE_GetBbdResIdx( capWork , MCBR_OBJ_GRASS + initWork->type );
   const BOOL flg = TRUE;
   
+  objWork->pos = initWork->pos;
   objWork->objIdx = GFL_BBD_AddObject( bbdSys , 
                                      resIdx ,
                                      FX32_ONE , 
                                      FX32_ONE , 
-                                     &initWork->pos ,
+                                     &objWork->pos ,
                                      31 ,
                                      GFL_BBD_LIGHT_NONE );
   GFL_BBD_SetObjectDrawEnable( bbdSys , objWork->objIdx , &flg );
@@ -78,5 +81,16 @@ void MB_CAP_OBJ_DeleteObject( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ *objWork )
   GFL_HEAP_FreeMemory( objWork );
 }
 
+//--------------------------------------------------------------
+//  “–‚½‚è”»’èì¬
+//--------------------------------------------------------------
+void MB_CAP_OBJ_GetHitWork( MB_CAP_OBJ *objWork , MB_CAP_HIT_WORK *hitWork )
+{
+  hitWork->pos = &objWork->pos;
+  hitWork->height = 0;
+  hitWork->size.x = FX32_CONST(MB_CAP_OBJ_HITSIZE_XY);
+  hitWork->size.y = FX32_CONST(MB_CAP_OBJ_HITSIZE_XY);
+  hitWork->size.z = FX32_CONST(MB_CAP_OBJ_HITSIZE_Z);
+}
 
 

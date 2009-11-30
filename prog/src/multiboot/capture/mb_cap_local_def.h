@@ -65,11 +65,34 @@
 #define MB_CAP_UPPER_BALL_LEN_MIN ( 32 )
 #define MB_CAP_UPPER_BALL_LEN_MAX ( 300 )
 
+//エフェクト
+//個数適当
+#define MB_CAP_EFFECT_NUM (16)
 
-#define MB_CAP_OBJ_BASE_Z (20)
-#define MB_CAP_POKE_BASE_Z (20)
-#define MB_CAP_UPPER_BALL_BASE_Z (50)
+#define MB_CAP_EFFECT_SMOKE_FRAME (5)
+#define MB_CAP_EFFECT_SMOKE_SPEED (5)
+#define MB_CAP_EFFECT_SMOKE_FRAME_MAX (MB_CAP_EFFECT_SMOKE_FRAME*MB_CAP_EFFECT_SMOKE_SPEED)
+
+#define MB_CAP_EFFECT_TRANS_FRAME (6)
+#define MB_CAP_EFFECT_TRANS_SPEED (4)
+#define MB_CAP_EFFECT_TRANS_FRAME_MAX (MB_CAP_EFFECT_TRANS_FRAME*MB_CAP_EFFECT_TRANS_SPEED)
+
+
+#define MB_CAP_OBJ_BASE_Z (50)
+#define MB_CAP_POKE_BASE_Z (45)
+#define MB_CAP_OBJ_LINEOFS_Z (30)
+
+#define MB_CAP_UPPER_BALL_BASE_Z (250)
+#define MB_CAP_EFFECT_Z (270)
 #define MB_CAP_UPPER_TARGET_BASE_Z (280)
+
+#define MB_CAP_BALL_HITSIZE   (4)
+#define MB_CAP_OBJ_HITSIZE_XY (12)
+#define MB_CAP_OBJ_HITSIZE_Z  (4)
+#define MB_CAP_POKE_HITSIZE_X (10)
+#define MB_CAP_POKE_HITSIZE_Y ( 6)
+#define MB_CAP_POKE_HITSIZE_Z ( 8)
+
 
 //======================================================================
 //	enum
@@ -86,15 +109,39 @@ typedef enum
   MCBR_OBJ_WOOD,
   MCBR_OBJ_WATER,
 
+  //以下EFFは並びをEFFECTのTYPE定義とあわせる
+  MCBR_EFF_HIT,
+  MCBR_EFF_SMOKE,
+  MCBR_EFF_TRANS,
+
   MCBR_MAX,
 }MB_CAP_BBD_RES;
+
+typedef enum
+{
+  MCET_HIT,
+  MCET_CAPTURE_SMOKE,
+  MCET_CAPTURE_TRANS,
+  
+  MCET_MAX
+}MB_CAP_EFFECT_TYPE;
 
 //======================================================================
 //	typedef struct
 //======================================================================
 #pragma mark [> struct
 typedef struct _MB_CAPTURE_WORK MB_CAPTURE_WORK;
+typedef struct _MB_CAP_OBJ MB_CAP_OBJ;
+typedef struct _MB_CAP_POKE MB_CAP_POKE;
+typedef struct _MB_CAP_BALL MB_CAP_BALL;
 
+//あたり判定のチェックに使う
+typedef struct
+{
+  VecFx32 *pos;
+  fx32    height;
+  VecFx32 size;
+}MB_CAP_HIT_WORK;
 
 //======================================================================
 //	proto
@@ -105,3 +152,11 @@ extern GFL_BBD_SYS* MB_CAPTURE_GetBbdSys( MB_CAPTURE_WORK *work );
 extern ARCHANDLE* MB_CAPTURE_GetArcHandle( MB_CAPTURE_WORK *work );
 extern const DLPLAY_CARD_TYPE MB_CAPTURE_GetCardType( const MB_CAPTURE_WORK *work );
 extern const int MB_CAPTURE_GetBbdResIdx( const MB_CAPTURE_WORK *work , const MB_CAP_BBD_RES resType );
+extern MB_CAP_OBJ* MB_CAPTURE_GetObjWork( MB_CAPTURE_WORK *work , const u8 idx );
+extern MB_CAP_POKE* MB_CAPTURE_GetPokeWork( MB_CAPTURE_WORK *work , const u8 idx );
+
+extern void MB_CAPTURE_GetPokeFunc( MB_CAPTURE_WORK *work , MB_CAP_BALL *ballWork , const u8 pokeIdx );
+extern void MB_CAPTURE_CreateEffect( MB_CAPTURE_WORK *work , VecFx32 *pos , const MB_CAP_EFFECT_TYPE type );
+
+extern void MB_CAPTURE_GetGrassObjectPos( const u8 idxX , const u8 idxY , VecFx32 *ret );
+extern const BOOL MB_CAPTURE_CheckHit( const MB_CAP_HIT_WORK *work1 , MB_CAP_HIT_WORK *work2 );
