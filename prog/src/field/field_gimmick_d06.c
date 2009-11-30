@@ -11,6 +11,8 @@
 #include "sound/pm_sndsys.h"
 #include "savedata/gimmickwork.h"
 
+#include "arc/fieldmap/zone_id.h"
+
 #include "fieldmap.h"
 #include "map_attr.h"
 #include "fldeff_d06denki.h"
@@ -46,6 +48,26 @@ typedef struct
 }POINT;
 
 //--------------------------------------------------------------
+// STONE_POS
+//--------------------------------------------------------------
+typedef struct
+{
+  int x;
+  int y;
+  int z;
+}STONE_POS;
+
+//--------------------------------------------------------------
+// STONE_INDEX
+//--------------------------------------------------------------
+typedef struct
+{
+  u32 zone_id;
+  u32 stone_max;
+  STONE_POS *stone_pos;
+}STONE_INDEX;
+
+//--------------------------------------------------------------
 /// D06GMK_WORK
 //--------------------------------------------------------------
 struct _TAG_D06GMK_WORK
@@ -76,6 +98,7 @@ typedef struct
 //--------------------------------------------------------------
 struct _TAG_D06_WORK
 {
+  u32 zone_id;
   D06GMK_WORK *d06gmk_work;
   FIELDMAP_WORK *fieldmap;
   
@@ -105,6 +128,67 @@ static void miniStone_Add( D06_WORK *d06,
 static void miniStone_SetShake( FIELDMAP_WORK *fieldmap, int no );
 
 static MMDL * d06_AddMMdl( FIELDMAP_WORK *fieldmap, int gx, int gz );
+static D06_WORK * d06_getFieldMapD06Work( FIELDMAP_WORK *fieldmap );
+static int d06_ZoneID_to_GimmickID( u32 zone_id );
+
+//======================================================================
+//  cdatファイルデータインデックス関連
+//======================================================================
+static const STONE_INDEX * getBigStoneIndex( u32 zone_id )
+{
+  u32 i = 0;
+  const STONE_INDEX *index = (const STONE_INDEX*)data_d06BigStoneZoneIndex;
+  
+  for( ; i < BIGSTONE_ZONECOUNT; i++, index++ ){
+    if( index->zone_id == zone_id ){
+      return( index );
+    }
+  }
+
+  GF_ASSERT( 0 );
+  index = (const STONE_INDEX*)data_d06BigStoneZoneIndex;
+  return( index );
+}
+
+static const STONE_POS * getBigStonePosData( u32 zone_id )
+{
+  const STONE_INDEX *index = getBigStoneIndex( zone_id );
+  return( index->stone_pos );
+}
+
+static u32 getBigStonePosMax( u32 zone_id )
+{
+  const STONE_INDEX *index = getBigStoneIndex( zone_id );
+  return( index->stone_max );
+}
+
+static const STONE_INDEX * getMiniStoneIndex( u32 zone_id )
+{
+  u32 i = 0;
+  const STONE_INDEX *index = (const STONE_INDEX *)data_d06MiniStoneZoneIndex;
+  
+  for( ; i < MINISTONE_ZONECOUNT; i++, index++ ){
+    if( index->zone_id == zone_id ){
+      return( index );
+    }
+  }
+
+  GF_ASSERT( 0 );
+  index = (const STONE_INDEX *)data_d06MiniStoneZoneIndex;
+  return( index );
+}
+
+static const STONE_POS * getMiniStonePosData( u32 zone_id )
+{
+  const STONE_INDEX *index = getMiniStoneIndex( zone_id );
+  return( index->stone_pos );
+}
+
+static u32 getMiniStonePosMax( u32 zone_id )
+{
+  const STONE_INDEX *index = getMiniStoneIndex( zone_id );
+  return( index->stone_max );
+}
 
 //======================================================================
 //  D06電気洞窟
@@ -123,13 +207,16 @@ void D06_GIMMICK_Setup( FIELDMAP_WORK *fieldmap )
   GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
   GIMMICKWORK *gmk_work = GAMEDATA_GetGimmickWork( gdata );
   FLDEFF_CTRL *fectrl = FIELDMAP_GetFldEffCtrl( fieldmap );
-  D06GMK_WORK *d06gmk = GIMMICKWORK_Get( gmk_work, FLD_GIMMICK_D06 );
+  u32 zone_id = FIELDMAP_GetZoneID( fieldmap );
+  int gmk_id = d06_ZoneID_to_GimmickID( zone_id );
+  D06GMK_WORK *d06gmk = GIMMICKWORK_Get( gmk_work, gmk_id );
   D06_WORK *d06 = GFL_HEAP_AllocClearMemory( heap_id, sizeof(D06_WORK) );
   
   { //ワーク初期化
     d06gmk->d06_work = d06;
     d06->d06gmk_work = d06gmk;
     d06->fieldmap = fieldmap;
+    d06->zone_id = zone_id;
   }
   
   { //エフェクトセットアップ
@@ -138,10 +225,13 @@ void D06_GIMMICK_Setup( FIELDMAP_WORK *fieldmap )
   }
   
   if( d06gmk->init_flag == FALSE ){ //浮遊石セットアップ
-    int i;
-    for( i = 0; i < BIGSTONE_MAX; i++ ){
+    u32 i;
+    u32 max = getBigStonePosMax( d06->zone_id );
+    const STONE_POS *stone_pos = getBigStonePosData( d06->zone_id );
+    
+    for( i = 0; i < max; i++, stone_pos++ ){
       bigStone_Add( d06, &d06->big_stone_tbl[i],
-        data_d06BigStonePos[i][0], data_d06BigStonePos[i][2] );
+        stone_pos->x, stone_pos->z );
     }
   }else{
     u32 i = 0, no = 0;
@@ -161,11 +251,12 @@ void D06_GIMMICK_Setup( FIELDMAP_WORK *fieldmap )
   
   { //小さな浮遊石
     u32 i;
-    for( i = 0; i < MINISTONE_MAX; i++ ){
+    u32 max = getMiniStonePosMax( d06->zone_id );
+    const STONE_POS *stone_pos = getMiniStonePosData( d06->zone_id );
+
+    for( i = 0; i < max; i++, stone_pos++ ){
       miniStone_Add( d06, &d06->mini_stone_tbl[i], 
-          data_d06MiniStonePos[i][0],
-          data_d06MiniStonePos[i][1],
-          data_d06MiniStonePos[i][2] );
+          stone_pos->x, stone_pos->y, stone_pos->z );
     }
   }
 
@@ -186,7 +277,9 @@ void D06_GIMMICK_End( FIELDMAP_WORK *fieldmap )
   GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
   GIMMICKWORK *gmk_work = GAMEDATA_GetGimmickWork( gdata );
   FLDEFF_CTRL *fectrl = FIELDMAP_GetFldEffCtrl( fieldmap );
-  D06GMK_WORK *d06gmk = GIMMICKWORK_Get( gmk_work, FLD_GIMMICK_D06 );
+  u32 zone_id = FIELDMAP_GetZoneID( fieldmap );
+  int gmk_id = d06_ZoneID_to_GimmickID( zone_id );
+  D06GMK_WORK *d06gmk = GIMMICKWORK_Get( gmk_work, gmk_id );
   
   GFL_HEAP_FreeMemory( d06gmk->d06_work );
 }
@@ -215,13 +308,14 @@ void D06_GIMMICK_Move( FIELDMAP_WORK *fieldmap )
 //--------------------------------------------------------------
 GMEVENT * D06_GIMMICK_CheckPushEvent( FIELDMAP_WORK *fieldmap, u16 dir )
 {
-  int i;
+  u32 i;
   s16 gx,gz;
   VecFx32 pos;
   MMDL *mmdl;
   MMDLSYS *mmdlsys;
   FIELD_PLAYER *fld_player;
   GMEVENT *event = NULL;
+  D06_WORK *d06 = d06_getFieldMapD06Work( fieldmap );
   
   fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
   FIELD_PLAYER_GetPos( fld_player, &pos );
@@ -231,11 +325,15 @@ GMEVENT * D06_GIMMICK_CheckPushEvent( FIELDMAP_WORK *fieldmap, u16 dir )
   gz = SIZE_GRID_FX32( pos.z );
   
   KAGAYA_Printf( "GX=%d,GZ=%d\n", gx, gz );
-
-  for( i = 0; i < MINISTONE_MAX; i++ ){
-    if( data_d06MiniStonePos[i][0] == gx &&
-        data_d06MiniStonePos[i][2] == gz ){
-      miniStone_SetShake( fieldmap, i );
+  
+  {
+    u32 max = getMiniStonePosMax( d06->zone_id );
+    const STONE_POS *stone_pos = getMiniStonePosData( d06->zone_id );
+    
+    for( i = 0; i < max; i++, stone_pos++ ){
+      if( stone_pos->x == gx && stone_pos->z == gz ){
+        miniStone_SetShake( fieldmap, i );
+      }
     }
   }
   
@@ -287,13 +385,10 @@ static GMEVENT * d06Event_SetPushBigStone(
   u16 no;
   int length;
   GMEVENT *event;
-  EVENT_BIGSTONE_PUSH_WORK *work;
-  GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldmap );
-  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-  GIMMICKWORK *gmk_work = GAMEDATA_GetGimmickWork( gdata );
-  D06GMK_WORK *d06gmk = GIMMICKWORK_Get( gmk_work, FLD_GIMMICK_D06 );
-  D06_WORK *d06 = d06gmk->d06_work;
   BIGSTONE_WORK *big_stone;
+  EVENT_BIGSTONE_PUSH_WORK *work;
+  D06_WORK *d06 = d06_getFieldMapD06Work( fieldmap );
+  GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldmap );
   
   for( no = 0; no < BIGSTONE_MAX; no++ ){
     if( d06->big_stone_tbl[no].mmdl == mmdl ){
@@ -626,7 +721,9 @@ static void miniStone_SetShake( FIELDMAP_WORK *fieldmap, int no )
   GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldmap );
   GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
   GIMMICKWORK *gmk_work = GAMEDATA_GetGimmickWork( gdata );
-  D06GMK_WORK *d06gmk = GIMMICKWORK_Get( gmk_work, FLD_GIMMICK_D06 );
+  u32 zone_id = FIELDMAP_GetZoneID( fieldmap );
+  int gmk_id = d06_ZoneID_to_GimmickID( zone_id );
+  D06GMK_WORK *d06gmk = GIMMICKWORK_Get( gmk_work, gmk_id );
   D06_WORK *d06 = d06gmk->d06_work;
   MINISTONE_WORK *mini_stone = &d06->mini_stone_tbl[no];
   FLDEFF_D06DENKI_MINISTONE_SetShake( mini_stone->eff_task );
@@ -654,7 +751,41 @@ static MMDL * d06_AddMMdl( FIELDMAP_WORK *fieldmap, int gx, int gz )
   return( mmdl );
 }
 
-//======================================================================
-//  data
-//======================================================================
-//14,2,51
+//--------------------------------------------------------------
+/**
+ * fieldmap -> d06ワーク
+ * @param fieldmap  FIELDMAP_WORK
+ * @retval D06_WORK*
+ */
+//--------------------------------------------------------------
+static D06_WORK * d06_getFieldMapD06Work( FIELDMAP_WORK *fieldmap )
+{
+  GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldmap );
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  GIMMICKWORK *gmk_work = GAMEDATA_GetGimmickWork( gdata );
+  u32 zone_id = FIELDMAP_GetZoneID( fieldmap );
+  int gmk_id = d06_ZoneID_to_GimmickID( zone_id );
+  D06GMK_WORK *d06gmk = GIMMICKWORK_Get( gmk_work, gmk_id );
+  return( d06gmk->d06_work );
+}
+
+//--------------------------------------------------------------
+/**
+ * ゾーンID -> ギミックID
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static int d06_ZoneID_to_GimmickID( u32 zone_id )
+{
+  switch( zone_id ){
+  case ZONE_ID_D06R0101:
+    return( FLD_GIMMICK_D06R0101 );
+  case ZONE_ID_D06R0201:
+    return( FLD_GIMMICK_D06R0201 );
+  case ZONE_ID_D06R0301:
+    return( FLD_GIMMICK_D06R0301 );
+  }
+  GF_ASSERT( 0 );
+  return( FLD_GIMMICK_D06R0101 );
+}

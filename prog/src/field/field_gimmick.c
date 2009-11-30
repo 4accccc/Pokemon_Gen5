@@ -57,6 +57,8 @@ const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
   GATE_GIMMICK_Setup,  // H01R0201
   GATE_GIMMICK_Setup,  // C03R0601
   D06_GIMMICK_Setup,
+  D06_GIMMICK_Setup,
+  D06_GIMMICK_Setup,
 };
 
 const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
@@ -86,6 +88,8 @@ const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
   GATE_GIMMICK_End,  // H01R0201
   GATE_GIMMICK_End,  // C03R0601
   D06_GIMMICK_End,
+  D06_GIMMICK_End,
+  D06_GIMMICK_End,
 };
 
 const static FLD_GMK_END_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
@@ -114,6 +118,8 @@ const static FLD_GMK_END_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
   GATE_GIMMICK_Move,  // H01R0101 
   GATE_GIMMICK_Move,  // H01R0201 
   GATE_GIMMICK_Move,  // C03R0601 
+  D06_GIMMICK_Move,
+  D06_GIMMICK_Move,
   D06_GIMMICK_Move,
 };
 
