@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-27T19:57:31"/>
+	<create user="matsumiya" host="W00207" date="2009-11-30T18:15:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="298" top="270" right="1003" bottom="890" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -298,58 +298,176 @@
 　メッセージ表示後、トレーナー戦闘に</comment>
 		<attribute name="キャラ指定">四天王：悪
 ギーマ</attribute>
-		<language name="JPN" width="256">テストメッセージ▼</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ▼</language>
+		<language name="JPN" width="256">やれやれ……
+きょうは　どういう　ひ　かな？▼
+つづけざまに　ちょうせんしゃが
+やってくるとは……▼
+まあいいさ
+してんのう　ギーマ▼
+その　やくわりに　したがい
+おあいて　するまで▼</language>
+		<language name="JPN_KANJI" width="256">やれやれ……
+きょうは　どういう　ひ　かな？▼
+つづけざまに　ちょうせんしゃが
+やってくるとは……▼
+まあいいさ
+してんのう　ギーマ▼
+その　やくわりに　したがい
+おあいて　するまで▼</language>
 	</row>
 
 	<row id="msg_c09r0201_bigfour2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：クリア前
 ・戦闘後：フィールド</comment>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ぜんりょくを　つくそうと
+うんが　あろうと　なかろうと▽
+まけは　まけ……▼
+だからこそさ
+しょうりは　ひかりかがやく▼
+そう　いまの　きみたち
+すごく　まぶしいよ</language>
+		<language name="JPN_KANJI" width="256">ぜんりょくを　つくそうと
+うんが　あろうと　なかろうと▽
+まけは　まけ……▼
+だからこそさ
+しょうりは　ひかりかがやく▼
+そう　いまの　きみたち
+すごく　まぶしいよ</language>
 	</row>
 
 	<row id="msg_c09r0201_bigfour2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：クリア前
 ・bigfour2_02表示後に再度会話</comment>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">そう　いまの　オレは
+ぶざまな　はいぼくしゃ……▽
+それいじょうでも　いかでもない▼
+さて……
+きみの　その　つよさ……▼
+ほかの　してんのう　あいてに
+ためすが　いい</language>
+		<language name="JPN_KANJI" width="256">そう　いまの　オレは
+ぶざまな　はいぼくしゃ……▽
+それいじょうでも　いかでもない▼
+さて……
+きみの　その　つよさ……▼
+ほかの　してんのう　あいてに
+ためすが　いい</language>
 	</row>
 
 	<row id="msg_c09r0201_bigfour2_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：クリア前
 ・チャンピオン部屋にいける場合</comment>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">……すごいね▼
+きみは　ポケモンリーグ　すべての
+してんのうに　しょうりした▼
+だが　まだ　おわりではない！▼
+きみの　その　つよさを　しめすべき
+あいてが　もうひとり　いる▼
+……Ｎという　おとこ
+あいつに　かてると　おもうなら……▽
+いや　かたねばならぬと　きめたなら▼
+エレベータに　のり
+さいごの　へやに　すすむが　いいさ</language>
+		<language name="JPN_KANJI" width="256">……すごいね▼
+きみは　ポケモンリーグ　すべての
+してんのうに　しょうりした▼
+だが　まだ　おわりではない！▼
+きみの　その　つよさを　しめすべき
+あいてが　もうひとり　いる▼
+……Ｎという　おとこ
+あいつに　かてると　おもうなら……▽
+いや　かたねばならぬと　きめたなら▼
+エレベータに　のり
+さいごの　へやに　すすむが　いいさ</language>
 	</row>
 
 	<row id="msg_c09r0201_bigfour2_05">
 		<comment>♂：クリア後
 ・戦闘前：フィールド
 　メッセージ表示後、トレーナー戦闘に</comment>
-		<language name="JPN" width="256">テストメッセージ▼</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ▼</language>
+		<language name="JPN" width="256">やあ
+ちょうせんしゃ▼
+しょうりの　めがみに
+あいされているか　たしかめに▽
+ここまで　きたんだろ？▼
+いいさ……
+かったものが　すべてを　てにいれ▽
+まけたものには　なにも　のこらない▼
+そんな　しょうぶ　こそが
+いきている　あかし……▼</language>
+		<language name="JPN_KANJI" width="256">やあ
+ちょうせんしゃ▼
+しょうりの　めがみに
+あいされているか　たしかめに▽
+ここまで　きたんだろ？▼
+いいさ……
+かったものが　すべてを　てにいれ▽
+まけたものには　なにも　のこらない▼
+そんな　しょうぶ　こそが
+いきている　あかし……▼</language>
 	</row>
 
 	<row id="msg_c09r0201_bigfour2_06">
 		<comment>♂：クリア後
 ・戦闘後：フィールド</comment>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">さて　よのなか　には
+わるい　かちかた……▽
+いい　まけかた　も　あってね▼
+そう　かんたんに　わりきれないのが
+おもしろいところ　なんじゃない？▼
+コインだってさ
+かならず　うらか　おもての▼
+ふたつじゃ　ないんだよね……</language>
+		<language name="JPN_KANJI" width="256">さて　よのなか　には
+わるい　かちかた……▽
+いい　まけかた　も　あってね▼
+そう　かんたんに　わりきれないのが
+おもしろいところ　なんじゃない？▼
+コインだってさ
+かならず　うらか　おもての▼
+ふたつじゃ　ないんだよね……</language>
 	</row>
 
 	<row id="msg_c09r0201_bigfour2_07">
 		<comment>♂：クリア後
 ・bigfour2_06表示後に再度会話</comment>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">おみごと……▼
+ポケモンしょうぶの　いいところは
+まけた　ものにも▽
+なにかを　おしえてくれること　かな？▼
+さて……
+きみの　その　つよさ……▼
+ほかの　してんのう　あいてに
+ためすが　いい</language>
+		<language name="JPN_KANJI" width="256">おみごと……▼
+ポケモンしょうぶの　いいところは
+まけた　ものにも▽
+なにかを　おしえてくれること　かな？▼
+さて……
+きみの　その　つよさ……▼
+ほかの　してんのう　あいてに
+ためすが　いい</language>
 	</row>
 
 	<row id="msg_c09r0201_bigfour2_08">
 		<comment>♂：クリア後
 ・チャンピオン部屋にいける場合</comment>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">……すごいね▼
+きみは　ポケモンリーグ　すべての
+してんのうに　しょうりした▼
+だが　まだ　おわりではない！▼
+きみの　その　つよさを　しめすべき
+あいてが　もうひとり　いる▼
+エレベータに　のり
+さいごの　へやに　すすむが　いいさ</language>
+		<language name="JPN_KANJI" width="256">……すごいね▼
+きみは　ポケモンリーグ　すべての
+してんのうに　しょうりした▼
+だが　まだ　おわりではない！▼
+きみの　その　つよさを　しめすべき
+あいてが　もうひとり　いる▼
+エレベータに　のり
+さいごの　へやに　すすむが　いいさ</language>
 	</row>
 
 	<flowchart-group-list>
