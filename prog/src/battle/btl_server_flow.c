@@ -10992,6 +10992,13 @@ static u8 scproc_HandEx_hensin( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
 
     SCQUE_PUT_OP_Hensin( wk->que, usrPokeID, tgtPokeID );
 
+    if( param_header->tokwin_flag ){
+      scPut_TokWin_In( wk, user );
+    }
+    handexSub_putString( wk, &param->exStr );
+    if( param_header->tokwin_flag ){
+      scPut_TokWin_Out( wk, user );
+    }
 
 
   }

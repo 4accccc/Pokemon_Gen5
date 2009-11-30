@@ -2230,16 +2230,31 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, const POKEPARTY* part
 {
   u8 pokeID = ClientBasePokeID[ clientID ];
   BTL_PARTY* party = &pokecon->party[ clientID ];
-  u32 i, max = PokeParty_GetPokeCount( party_src );
+  u32 max = PokeParty_GetPokeCount( party_src );
+  u8  fIllusion = FALSE;
+  POKEMON_PARAM* pp;
+  u8 i;
 
   BTL_Printf(" CreateClient(%d)'s party ... numMembers=%d\n", clientID, max);
   for(i=0; i<max; ++i, ++pokeID)
   {
-    pokecon->pokeParam[ pokeID ] = BTL_POKEPARAM_Create(
-                        PokeParty_GetMemberPointer(party_src, i), pokeID, HEAPID_BTL_SYSTEM
-    );
+    pp = PokeParty_GetMemberPointer( party_src, i );
+    pokecon->pokeParam[ pokeID ] = BTL_POKEPARAM_Create( pp, pokeID, HEAPID_BTL_SYSTEM );
+
+    // １個前のポケがイリュージョン使いなら、自分のSrcPPデータを見せかけ用データとしてセットする
+    if( fIllusion ){
+      BPP_SetViewSrcData( pokecon->pokeParam[ pokeID-1 ], pp );
+    }
+    fIllusion = (BPP_GetValue( pokecon->pokeParam[pokeID], BPP_TOKUSEI) == POKETOKUSEI_IRYUUJON);
+
     BTL_Printf(" Create Client(%d)'s PokeParam ID=%d, adrs=%p\n", clientID, pokeID, pokecon->pokeParam[i]);
     BTL_PARTY_AddMember( party, pokecon->pokeParam[ pokeID ] );
+  }
+
+  // 最後の１体がイリュージョン使いなら、先頭のSrcPPを見せかけデータにする
+  if( fIllusion && (max>1)){
+    pp = PokeParty_GetMemberPointer( party_src, 0 );
+    BPP_SetViewSrcData( pokecon->pokeParam[ pokeID-1 ], pp );
   }
 }
 static void PokeCon_Release( BTL_POKE_CONTAINER* pokecon )

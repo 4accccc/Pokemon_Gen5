@@ -220,6 +220,8 @@ extern PokeTypePair BPP_GetPokeType( const BTL_POKEPARAM* pp );
 extern u32 BPP_GetItem( const BTL_POKEPARAM* pp );
 extern BOOL BPP_IsMatchType( const BTL_POKEPARAM* pp, PokeType type );
 extern const POKEMON_PARAM* BPP_GetSrcData( const BTL_POKEPARAM* bpp );
+extern void BPP_SetViewSrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* fakePP );
+extern const POKEMON_PARAM* BPP_GetViewSrcData( const BTL_POKEPARAM* bpp );
 
 extern u8 BPP_WAZA_GetCount( const BTL_POKEPARAM* pp );
 extern u8 BPP_WAZA_GetUsedCount( const BTL_POKEPARAM* pp );

@@ -48,13 +48,14 @@ enum {
 //--------------------------------------------------------------
 typedef struct {
   const POKEMON_PARAM*  ppSrc;
-  const POKEMON_PARAM*  hensinSrc;
+  const POKEMON_PARAM*  ppFake;
   u32   exp;
   u16   monsno;
   u16   hp;
   u16   item;
   u16   usedItem;
   u8    myID;
+  u8    fHensin;
 }BPP_CORE_PARAM;
 
 //--------------------------------------------------------------
@@ -194,10 +195,11 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   bpp->coreParam.myID = pokeID;
   bpp->coreParam.monsno = PP_Get( pp, ID_PARA_monsno, 0 );
   bpp->coreParam.ppSrc = pp;
+  bpp->coreParam.ppFake = NULL;
   bpp->coreParam.hp = PP_Get( pp, ID_PARA_hp, 0 );
   bpp->coreParam.item = PP_Get( pp, ID_PARA_item, NULL );
   bpp->coreParam.usedItem = ITEM_DUMMY_DATA;
-  bpp->coreParam.hensinSrc = NULL;
+  bpp->coreParam.fHensin = TRUE;
 
   setupBySrcData( bpp, pp );
 
@@ -462,6 +464,17 @@ BOOL BPP_IsMatchType( const BTL_POKEPARAM* pp, PokeType type )
 
 const POKEMON_PARAM* BPP_GetSrcData( const BTL_POKEPARAM* bpp )
 {
+  return bpp->coreParam.ppSrc;
+}
+void BPP_SetViewSrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* fakePP )
+{
+  bpp->coreParam.ppFake =  fakePP;
+}
+const POKEMON_PARAM* BPP_GetViewSrcData( const BTL_POKEPARAM* bpp )
+{
+  if( bpp->coreParam.ppFake ){
+    return bpp->coreParam.ppFake;
+  }
   return bpp->coreParam.ppSrc;
 }
 
@@ -2395,8 +2408,8 @@ static inline BOOL flgbuf_get( const u8* buf, u32 flagID )
 
 BOOL BPP_HENSIN_Set( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* target )
 {
-  if( (bpp->coreParam.hensinSrc == NULL)
-  &&  (target->coreParam.hensinSrc == NULL)
+  if( (bpp->coreParam.fHensin == FALSE)
+  &&  (target->coreParam.fHensin == FALSE)
   &&  (target->migawariHP == 0)
   ){
     static BPP_CORE_PARAM  core = {0};
@@ -2429,7 +2442,7 @@ BOOL BPP_HENSIN_Set( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* target )
     bpp->prevWazaID = WAZANO_NULL;
     bpp->sameWazaCounter = 0;
 
-    bpp->coreParam.hensinSrc = target->coreParam.ppSrc;
+    bpp->coreParam.fHensin = TRUE;
 
     return TRUE;
   }

@@ -222,7 +222,7 @@ static inline void register_PokeName( u8 pokeID, u8 bufID )
   const POKEMON_PARAM* pp;
 
   bpp = BTL_POKECON_GetPokeParamConst( SysWork.pokeCon, pokeID );
-  pp = BPP_GetSrcData( bpp );
+  pp = BPP_GetViewSrcData( bpp );
 
   WORDSET_RegisterPokeMonsName( SysWork.wset, bufID, pp );
 }
