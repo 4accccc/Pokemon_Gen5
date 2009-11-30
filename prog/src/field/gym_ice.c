@@ -24,12 +24,17 @@
 //#include "sound/pm_sndsys.h"
 //#include "gym_ice_se_def.h"
 
+#include "field/fieldmap_proc.h"    //for FLDMAP_CTRLTYPE
+#include "fieldmap_ctrl_hybrid.h" //for FIELDMAP_CTRL_HYBRID
+
 #define GYM_ICE_UNIT_IDX (0)
 #define GYM_ICE_TMP_ASSIGN_ID  (1)
 
 #define GRID_HALF_SIZE ((FIELD_CONST_GRID_SIZE/2)*FX32_ONE)
 
 #define WALL_ANM_NUM  (2)
+
+#define RAIL_CHECK_MAX  (8)
 
 #define WALL1_X (WALL1_GX*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
 #define WALL2_X (WALL2_GX*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
@@ -188,7 +193,25 @@ static const GFL_G3D_UTIL_SETUP Setup = {
 	NELEMS(g3Dutil_objTbl),		//オブジェクト数
 };
 
+typedef struct RAIL_CHECK_tag
+{
+  u16 SwIdx;      //0～2
+  u16 SwState;    //0or1  0：デフォルト　1：変更後
+}RAIL_CHECK;
 
+//0：スイッチがデフォルトのとき　1：スイッチを押したとき レールが有効になる
+const RAIL_CHECK RailCheck[RAIL_CHECK_MAX] = {
+  {0,0},    //チェックインデックス0
+  {0,1},
+  {1,0},
+  {1,1},
+  {2,0},
+  {2,1},
+  {2,0},
+  {2,1},    //チェックインデックス7
+};
+
+static BOOL CheckChgRail(GYM_ICE_SV_WORK *gmk_sv_work, const int inCheckIdx);
 static void SetupWallSwAnm(FLD_EXP_OBJ_CNT_PTR ptr, const BOOL inMoved, const int inTargetIdx, const OBJ_KIND inKind);
 static int GetWatchAnmIdx(GYM_ICE_SV_WORK *gmk_sv_work, const int inTargetIdx);
 
@@ -381,6 +404,69 @@ GMEVENT *GYM_ICE_CreateWallEvt(GAMESYS_WORK *gsys, const int inTargetIdx)
   event = GMEVENT_Create( gsys, NULL, WallEvt, 0 );
 
   return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * レールマップへの切り替え
+ * @param	      gsys        ゲームシステムポインタ
+ * @param       inCheckIdx  レールマップ切り替え判定インデックス（出発位置インデックス）0～7
+ * @return      none
+ */
+//--------------------------------------------------------------
+void GYM_ICE_ChangeRailMap(GAMESYS_WORK *gsys, const int inCheckIdx)
+{
+  GYM_ICE_SV_WORK *gmk_sv_work;
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLDMAP_CTRLTYPE type = FIELDMAP_GetMapControlType( fieldWork );
+  {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ICE );
+  }
+
+  if (inCheckIdx >= RAIL_CHECK_MAX)
+  {
+    GF_ASSERT(0);
+    return;
+  }
+
+  if ( type == FLDMAP_CTRLTYPE_HYBRID )
+  {
+    //レールに切り替えるかどうかを現在のスイッチ状況で判断する
+    if ( CheckChgRail(gmk_sv_work, inCheckIdx) )
+    {
+      FIELDMAP_CTRL_HYBRID *ctrl_work;
+      ctrl_work = FIELDMAP_GetMapCtrlWork( fieldWork );
+      FIELDMAP_CTRL_HYBRID_ChangeBaseSystem( ctrl_work, fieldWork );
+    }
+  }
+  else
+  {
+    GF_ASSERT(0);
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * レールマップ切り替えチェック
+ *   
+ * @param   gmk_sv_work ギミックセーブワークポインタ
+ * @param   inCheckIdx    チェック座標インデックス  0～7
+ * @return  BOOL      TRUEでレールマップに変更する
+ */
+//--------------------------------------------------------------
+static BOOL CheckChgRail(GYM_ICE_SV_WORK *gmk_sv_work, const int inCheckIdx)
+{
+  u16 state;
+  u16 target_sw = RailCheck[inCheckIdx].SwIdx;
+  BOOL moved = gmk_sv_work->WallMoved[target_sw];
+  if (moved) state = 1;
+  else state = 0;
+
+  if ( RailCheck[inCheckIdx].SwState == state ) return TRUE;
+
+  return FALSE;
 }
 
 //--------------------------------------------------------------
