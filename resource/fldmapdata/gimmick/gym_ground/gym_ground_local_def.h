@@ -15,12 +15,12 @@
 #define HEIGHT4 (-59)	//第4層
 //リフト移動速度
 #define LIFT_MOVE_SPEED (4)
-#define SP_LIFT_MOVE_SPEED1 (10)
+#define SP_LIFT_MOVE_SPEED1 (8)
 #define SP_LIFT_MOVE_SPEED2 (2)
 //隔壁オープン待ち時間
-#define WALL_ANM_WAIT (60)
+#define WALL_ANM_WAIT (80)
 //隔壁オープン開始高さ
-#define WALL_ANM_START_HEIHGT (-30)
+#define WALL_ANM_START_HEIHGT (-35)
 //リフト振動幅
 #define LIFT_SHAKE_VAL (2)
 #define SP_LIFT_SHAKE_VAL (4)
@@ -36,13 +36,13 @@
 //隔壁位置
 #define WALL_Y_POS (-40)
 //降下時フォグフェード位置
-#define DOWN_FOG_FADE_START (-55)
+#define DOWN_FOG_FADE_START (-50)
 //上昇時フォグフェード位置
-#define UP_FOG_FADE_START (-45)
+#define UP_FOG_FADE_START (-42)
 //移動速度が速いときのフォグフェードシンク
-#define FOG_FADE_SPEED_FAST (32)
+#define FOG_FADE_SPEED_FAST (16)
 //移動速度が遅いときのフォグフェードシンク
-#define FOG_FADE_SPEED_SLOW (16)
+#define FOG_FADE_SPEED_SLOW (32)
 //フォグオフセット
 #define FOG_OFFSET (32735)
 //フォグスロープ
