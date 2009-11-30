@@ -172,10 +172,12 @@ EVENT_END
 EVENT_START		ev_c05gym0101_lift_00u
 	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
 
-	//スイッチの上側以外から話しかけた&リフトが下にある場合はリフト起動
-	IF $SCWK_ANSWER != DIR_DOWN && FLAG_ON( FH_10 ) THEN
+	//スイッチの下側から話しかけた&リフトが下にある場合はリフト起動
+	IF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_10 ) THEN
 		//リフトを上昇させる（引数はリフトインデックス）
+		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 0 )
+		_SE_WAIT()
 		_FLAG_RESET( FH_10 )
 	ENDIF
 
@@ -187,10 +189,12 @@ EVENT_END
 EVENT_START		ev_c05gym0101_lift_00d
 	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
 
-	//スイッチの上側以外から話しかけた&リフトが上にある場合はリフト起動
-	IF $SCWK_ANSWER != DIR_DOWN && FLAG_OFF( FH_10 ) THEN
+	//スイッチの下側から話しかけた&リフトが上にある場合はリフト起動
+	IF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_10 ) THEN
 		//リフトを下降させる（引数はリフトインデックス）
+		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 0 )
+		_SE_WAIT()
 		_FLAG_SET( FH_10 )
 	ENDIF
 
@@ -203,10 +207,12 @@ EVENT_END
 EVENT_START		ev_c05gym0101_lift_01u
 	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
 
-	//スイッチの上側以外から話しかけた&リフトが下にある場合はリフト起動
-	IF $SCWK_ANSWER != DIR_DOWN && FLAG_ON( FH_11 ) THEN
+	//スイッチの下側から話しかけた&リフトが下にある場合はリフト起動
+	IF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_11 ) THEN
 		//リフトを上昇させる（引数はリフトインデックス）
+		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 1 )
+		_SE_WAIT()
 		_FLAG_RESET( FH_11 )
 	ENDIF
 
@@ -219,10 +225,12 @@ EVENT_END
 EVENT_START		ev_c05gym0101_lift_01d
 	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
 
-	//スイッチの上側以外から話しかけた&リフトが上にある場合はリフト起動
-	IF $SCWK_ANSWER != DIR_DOWN && FLAG_OFF( FH_11 ) THEN
+	//スイッチの下側から話しかけた&リフトが上にある場合はリフト起動
+	IF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_11 ) THEN
 		//リフトを上昇させる（引数はリフトインデックス）
+		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 1 )
+		_SE_WAIT()
 		_FLAG_SET( FH_11 )
 	ENDIF
 
@@ -235,10 +243,12 @@ EVENT_END
 EVENT_START		ev_c05gym0101_lift_02u
 	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
 
-	//スイッチの上側以外から話しかけた&リフトが下にある場合はリフト起動
-	IF $SCWK_ANSWER != DIR_DOWN && FLAG_ON( FH_12 ) THEN
+	//スイッチの下側から話しかけた&リフトが下にある場合はリフト起動
+	IF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_12 ) THEN
 		//リフトを動作させる（引数はリフトインデックス）
+		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 2 )
+		_SE_WAIT()
 		_FLAG_RESET( FH_12 )
 	ENDIF
 
@@ -251,10 +261,12 @@ EVENT_END
 EVENT_START		ev_c05gym0101_lift_02d
 	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
 
-	//スイッチの上側以外から話しかけた&リフトが上にある場合はリフト起動
-	IF $SCWK_ANSWER != DIR_DOWN && FLAG_OFF( FH_12 ) THEN
+	//スイッチの下側から話しかけた&リフトが上にある場合はリフト起動
+	IF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_12 ) THEN
 		//リフトを動作させる（引数はリフトインデックス）
+		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 2 )
+		_SE_WAIT()
 		_FLAG_SET( FH_12 )
 	ENDIF
 
@@ -267,10 +279,12 @@ EVENT_END
 EVENT_START		ev_c05gym0101_lift_03u
 	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
 
-	//スイッチの上側以外から話しかけた&リフトが下にある場合はリフト起動
-	IF $SCWK_ANSWER != DIR_DOWN && FLAG_ON( FH_13 ) THEN
+	//スイッチの下側から話しかけた&リフトが下にある場合はリフト起動
+	IF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_13 ) THEN
 		//リフトを動作させる（引数はリフトインデックス）
+		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 3 )
+		_SE_WAIT()
 		_FLAG_RESET( FH_13 )
 	ENDIF
 
@@ -283,10 +297,12 @@ EVENT_END
 EVENT_START		ev_c05gym0101_lift_03d
 	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
 
-	//スイッチの上側以外から話しかけた&リフトが上にある場合はリフト起動
-	IF $SCWK_ANSWER != DIR_DOWN && FLAG_OFF( FH_13 ) THEN
+	//スイッチの下側から話しかけた&リフトが上にある場合はリフト起動
+	IF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_13 ) THEN
 		//リフトを動作させる（引数はリフトインデックス）
+		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 3 )
+		_SE_WAIT()
 		_FLAG_SET( FH_13 )
 	ENDIF
 
@@ -299,10 +315,12 @@ EVENT_END
 EVENT_START		ev_c05gym0101_lift_04u
 	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
 
-	//スイッチの上側以外から話しかけた&リフトが下にある場合はリフト起動
-	IF $SCWK_ANSWER != DIR_DOWN && FLAG_ON( FH_14 ) THEN
+	//スイッチの下側から話しかけた&リフトが下にある場合はリフト起動
+	IF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_14 ) THEN
 		//リフトを動作させる（引数はリフトインデックス）
+		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 4 )
+		_SE_WAIT()
 		_FLAG_RESET( FH_14 )
 	ENDIF
 
@@ -315,10 +333,12 @@ EVENT_END
 EVENT_START		ev_c05gym0101_lift_04d
 	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
 
-	//スイッチの上側以外から話しかけた&リフトが上にある場合はリフト起動
-	IF $SCWK_ANSWER != DIR_DOWN && FLAG_OFF( FH_14 ) THEN
+	//スイッチの下側から話しかけた&リフトが上にある場合はリフト起動
+	IF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_14 ) THEN
 		//リフトを動作させる（引数はリフトインデックス）
+		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 4 )
+		_SE_WAIT()
 		_FLAG_SET( FH_14 )
 	ENDIF
 
@@ -331,10 +351,12 @@ EVENT_END
 EVENT_START		ev_c05gym0101_lift_05u
 	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
 
-	//スイッチの上側以外から話しかけた&リフトが下にある場合はリフト起動
-	IF $SCWK_ANSWER != DIR_DOWN && FLAG_ON( FH_15 ) THEN
+	//スイッチの下側から話しかけた&リフトが下にある場合はリフト起動
+	IF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_15 ) THEN
 		//リフトを動作させる（引数はリフトインデックス）
+		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 5 )
+		_SE_WAIT()
 		_FLAG_RESET( FH_15 )
 	ENDIF
 
@@ -347,10 +369,12 @@ EVENT_END
 EVENT_START		ev_c05gym0101_lift_05d
 	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
 
-	//スイッチの上側以外から話しかけた&リフトが上にある場合はリフト起動
-	IF $SCWK_ANSWER != DIR_DOWN && FLAG_OFF( FH_15 ) THEN
+	//スイッチの下側から話しかけた&リフトが上にある場合はリフト起動
+	IF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_15 ) THEN
 		//リフトを動作させる（引数はリフトインデックス）
+		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 5 )
+		_SE_WAIT()
 		_FLAG_SET( FH_15 )
 	ENDIF
 
@@ -371,8 +395,11 @@ EVENT_END
 EVENT_START	ev_c05gym0101_exitlift_00u
 	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
 
-	//スイッチの上側以外から話しかけた場合はリフト起動
-	IF $SCWK_ANSWER != DIR_DOWN THEN
+	//スイッチの下側から話しかけた場合はリフト起動
+	IF $SCWK_ANSWER == DIR_UP THEN
+		_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
+		_SE_WAIT()
+
 		//ブラックアウト
 		_BLACK_OUT()
 
@@ -380,7 +407,7 @@ EVENT_START	ev_c05gym0101_exitlift_00u
 		_GYM_GROUND_EXIT_LIFT( 1 )
 
 		_DISP_FADE_END_CHECK()
-
+
 		//========================================//
 
 		//エントランスリフトのジム戻り演出イベントを有効にする

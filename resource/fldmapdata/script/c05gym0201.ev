@@ -65,8 +65,11 @@ EVENT_END
 EVENT_START	ev_c05gym0201_startlift_01
 	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
 
-	//スイッチの上側以外から話しかけた場合はリフト起動
-	IF $SCWK_ANSWER != DIR_DOWN THEN
+	//スイッチの下側から話しかけた場合はリフト起動
+	IF $SCWK_ANSWER == DIR_UP THEN
+		_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
+		_SE_WAIT()
+
 		//ブラックアウト
 		_BLACK_OUT()
 
