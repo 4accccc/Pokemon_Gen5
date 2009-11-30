@@ -30,6 +30,8 @@
 
 #include "pleasure_boat.h"
 
+#include "pl_boat_def.h"
+
 //--------------------------------------------------------------
 /**
  * 遊覧船モード開始
@@ -69,6 +71,39 @@ VMCMD_RESULT EvCmdPlBoat_End( VMHANDLE *core, void *wk )
   PL_BOAT_WORK_PTR *ptr = GAMEDATA_GetPlBoatWorkPtr(gamedata);
   PL_BOAT_End(ptr);
   
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 船内トレーナー数を取得
+ * @param   core          仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPlBoat_GetTrNum( VMHANDLE *core, void *wk )
+{
+  u16 type;
+  u16 *ret;
+
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+
+  type = VMGetU16( core );
+  ret = SCRCMD_GetVMWork( core, work );
+
+  switch(type){
+  case PL_TR_SEARCH_TYPE_LEFT:
+    break;
+  case PL_TR_SEARCH_TYPE_RIGHT:
+    break;
+  default:
+    ;
+  }
+  *ret = 0;
+
   return VMCMD_RESULT_CONTINUE;
 }
 

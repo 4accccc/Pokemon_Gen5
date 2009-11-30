@@ -663,9 +663,9 @@
   NO_CMD()
 
   // —V——‘DŠÖ˜A
-  DEF_CMD( EvCmdPlBoat_Start, EV_SEQ_START_PL_BOAT )
-  DEF_CMD( EvCmdPlBoat_End, EV_SEQ_END_PL_BOAT )
-  NO_CMD()
+  DEF_CMD( EvCmdPlBoat_Start, EV_SEQ_PL_BOAT_START )
+  DEF_CMD( EvCmdPlBoat_End, EV_SEQ_PL_BOAT_END )
+  DEF_CMD( EvCmdPlBoat_GetTrNum, EV_SEQ_PL_BOAT_GET_TR_NUM )
   NO_CMD()
 
   NO_CMD()
