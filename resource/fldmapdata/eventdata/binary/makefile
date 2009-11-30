@@ -77,7 +77,7 @@ $(targetname).narc: $(BINDAT)
 	ls *.bin > $(LIST_FILE)
 	echo dummy_data >> $(LIST_FILE)
 	$(ARCLIST_MAKE) $(LIST_FILE)
-	nnsarc -c -l -n -i -S $(LIST_FILE) $(targetname)
+	nnsarc -c -l -n -i -S $(LIST_FILE) $(targetname) > arc_result.txt
 	-rm *.bin
 	-rm $(LIST_FILE)
 
@@ -94,11 +94,12 @@ endif
 #------------------------------------------------------------------------------
 clean:
 	@$(MAKE_SUBDIR)
-	-rm $(TARGET_DIR)/$(targetname).narc
-	-rm $(TARGET_DIR)/$(targetname).naix
-	-rm $(targetname).narc
-	-rm $(targetname).naix
+	@echo clean up eventdata/define ...
+	-rm -f $(TARGET_DIR)/$(targetname).narc
+	-rm -f $(TARGET_DIR)/$(targetname).naix
+	-rm -f $(targetname).narc
+	-rm -f $(targetname).naix
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作、ここから
-	-rm $(TMPDIR)/*.bin
+	@-rm -f $(TMPDIR)/*.bin
 endif
 

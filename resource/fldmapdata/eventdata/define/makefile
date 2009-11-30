@@ -61,14 +61,15 @@ endif
 #	make cleanルール
 #------------------------------------------------------------------------------
 clean:
+	@echo clean up eventdata/define ...
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作、ここから
-	-rm event_*.h event_*.tmp
-	-rm $(HEADER)
+	@-rm -f event_*.h event_*.tmp
+	@-rm -f $(HEADER)
 endif
-	-rm $(TARGET) 
-	-rm $(TARGET2)
-	-rm ../tmp/*.cdat
-	-rm ../tmp/*_make_list_depend*
+	@-rm -f $(TARGET) 
+	@-rm -f $(TARGET2)
+	@-rm -f ../tmp/*.cdat
+	@-rm -f ../tmp/*_make_list_depend*
 
 test:
 	@echo $(HEADER)

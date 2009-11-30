@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_r10r0201.h"
-  //.include  "r10r0201.h"
+  .include  "r10r0201.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,200 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r10r0201
+_EVENT_DATA     ev_r10r0201_veteranm_01
+_EVENT_DATA     ev_pos_r10r0201_limitter_01
+_EVENT_DATA     ev_zone_r10r0201
+_EVENT_DATA     ev_init_r10r0201
+_EVENT_DATA     ev_recover_r10r0201
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*            特殊スクリプト：ゾーン切り替えタイミング  　    */
 /**************************************************************/
-//ev_zone_r10r0201:
-//  _END
+INIT_EVENT_START ev_zone_r10r0201
+
+  IF  FLAG_ON( FE_BADGEGATE02_OPEN ) THEN
+    $LOCALWORK0 = 1
+  ENDIF
+INIT_EVENT_END
+
 
 /**************************************************************/
-/*                                                            */
+/*            特殊スクリプト：マップ構築タイミング（初回）  　*/
 /**************************************************************/
-ev_r10r0201:
-  //とりあえず最初のラベルだけ生成している
-  _END
+INIT_EVENT_START  ev_init_r10r0201
+  IF FLAG_ON( FE_BADGEGATE02_OPEN ) THEN
+    _DOOR_ANIME_SET_OPENED( 15, 7 )
+  ENDIF
+INIT_EVENT_END
+
+
+/**************************************************************/
+/*            特殊スクリプト：マップ構築タイミング（毎回）  　*/
+/**************************************************************/
+INIT_EVENT_START  ev_recover_r10r0201
+  IF FLAG_ON( FE_BADGEGATE02_OPEN ) THEN
+    _DOOR_ANIME_SET_OPENED( 15, 7 )
+  ENDIF
+INIT_EVENT_END
+
+/**************************************************************/
+/* OBJイベント・バッジチェックゲート                          */
+/**************************************************************/
+EVENT_START     ev_r10r0201_veteranm_01
+  _TALK_OBJ_START()
+
+  IF FLAG_ON( FE_BADGEGATE02_OPEN ) THEN
+    _BALLOONWIN_OBJMSG( msg_r10r0201_badge_03, R10R0201_VETERANM )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ELSE
+    //とりあえず
+      _FLAG_SET( FE_BADGEGATE02_OPEN )
+      _SET_BADGE_FLAG( BADGE_ID_02 )
+
+    _CALL ev_sub_gate_event
+  ENDIF
+
+EVENT_END
+
+
+/**************************************************************/
+/* POSイベント・バッジチェックゲート                          */
+/**************************************************************/
+EVENT_START     ev_pos_r10r0201_limitter_01
+  _TURN_HERO_SITE()
+
+    //待てい！
+  _BALLOONWIN_OBJMSG( msg_r10r0201_badge_05, R10R0201_VETERANM )
+  _BALLOONWIN_CLOSE()
+
+  _CALL ev_sub_gate_event
+
+  //POSの場合は一歩戻します
+  IF $SCWK_ANSWER == FALSE THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_limitter_hero_go_down )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+
+EVENT_END
+
+
+/**************************************************************/
+/* イベント・バッジチェックゲート（共通部分）                 */
+/**************************************************************/
+ev_sub_gate_event:
+  //「～バッジをもっているのか？」
+  _BALLOONWIN_OBJMSG( msg_r10r0201_badge_01, R10R0201_VETERANM )
+  _BALLOONWIN_CLOSE()
+
+  _GET_BADGE_FLAG( SCWK_ANSWER, BADGE_ID_02 )
+  IF $SCWK_ANSWER == TRUE THEN
+
+    //バッジもってる→「うむ！よろしい！」
+    _BALLOONWIN_OBJMSG( msg_r10r0201_badge_02, R10R0201_VETERANM )
+    _BALLOONWIN_CLOSE()
+
+    _CALL ev_sub_gate_open_demo
+
+	  _MAP_CHANGE_NO_FADE( ZONE_ID_R10R0301, 15, 0, 22, DIR_UP )
+
+    _BLACK_IN()
+    _DISP_FADE_END_CHECK()
+    _RET
+  ELSE
+
+    //バッジもってない→「まずはてにいれるのだ」
+    _BALLOONWIN_OBJMSG( msg_r10r0201_badge_04, R10R0201_VETERANM )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+
+  ENDIF
+  _RET
+
+
+/**************************************************************/
+/*  カメラ切り替え→ゲートが開く→自機でていく演出            */
+/**************************************************************/
+ev_sub_gate_open_demo:
+    _CAMERA_START()
+
+    _CAMERA_PURGE() //対象物とカメラのバインドを解く（この場面で対象物＝自機）
+    _CAMERA_MOVE(5720,0,970752,1015808,135168,360448, 60 ) 
+    _CAMERA_WAIT_MOVE()
+
+    {
+      //ローカル定義
+      DEFINE_LOCAL	DOOR_ANIME_ID
+
+      //ゲートアニメ制御
+      _DOOR_ANIME_CREATE( DOOR_ANIME_ID, 15, 7 )
+      _DOOR_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+      _DOOR_ANIME_WAIT( DOOR_ANIME_ID )
+
+      //「～バッジをもつものよ！さきにすすみゆうきをしめせ！」
+      _BALLOONWIN_OBJMSG( msg_r10r0201_badge_03, R10R0201_VETERANM )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+
+      {
+        DEFINE_LOCAL  HEROX
+        DEFINE_LOCAL  HEROY
+        _PLAYER_POS_GET( HEROX, HEROY )
+        SWITCH $HEROX
+        CASE 19 THEN
+          _OBJ_ANIME( MMDL_ID_PLAYER, anm_walkout_hero_talk_up )
+          _OBJ_ANIME_WAIT()
+        CASE 20 THEN
+          _OBJ_ANIME( MMDL_ID_PLAYER, anm_walkout_hero_talk_left )
+          _OBJ_ANIME_WAIT()
+        CASE 18 THEN
+          _OBJ_ANIME( MMDL_ID_PLAYER, anm_walkout_hero_talk_right )
+          _OBJ_ANIME_WAIT()
+        DEFAULT
+          _OBJ_ANIME( MMDL_ID_PLAYER, anm_walkout_hero_other )
+          _OBJ_ANIME_WAIT()
+        ENDSWITCH
+      }
+
+      //フェードアウト
+      _BLACK_OUT()
+      _DISP_FADE_END_CHECK()
+
+      _DOOR_ANIME_DELETE( DOOR_ANIME_ID )
+    }
+
+    _CAMERA_PURGE() //対象物とカメラのバインドを解く（この場面で対象物＝自機）
+    _CAMERA_END()
+
+    _RET
+
+//--------------------------------------------------------------------
+//主人公：一歩下がる
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_limitter_hero_go_down
+	_ANIME_DATA	AC_WALK_D_4F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL  anm_walkout_hero_talk_up
+	_ANIME_DATA	AC_WALK_L_8F,4
+  _ANIME_DATA AC_WALK_U_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL  anm_walkout_hero_talk_left
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,5
+  _ANIME_DATA AC_WALK_U_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL  anm_walkout_hero_talk_right
+	_ANIME_DATA	AC_WALK_L_8F,4
+  _ANIME_DATA AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+
+_ANIME_LABEL  anm_walkout_hero_other
+  _ANIME_DATA AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
 
