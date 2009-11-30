@@ -83,7 +83,6 @@ typedef struct
 
   u8 currentSeason;  // 現在の季節
   u8 dispSeason;     // 表示中の季節
-  u8 lastSeason;     // 最後に表示した季節
   u32 count;         // カウンタ
   u32 maxCount;      // カウンタ最大値
 
@@ -150,11 +149,14 @@ static GMEVENT_RESULT SeasonDisplay( GMEVENT* event, int* seq, void* wk )
  *
  * @param gsys     ゲームシステム
  * @param fieldmap フィールドマップ
+ * @param start    開始季節
+ * @param end      最終季節 
  *
  * @return 作成したイベント
  */
 //----------------------------------------------------------------------------------------
-GMEVENT* EVENT_SeasonDisplay( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
+GMEVENT* EVENT_SeasonDisplay( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap,
+                              u8 start, u8 end )
 {
   GMEVENT* event;
   EVENT_WORK* work;
@@ -163,10 +165,12 @@ GMEVENT* EVENT_SeasonDisplay( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
   // イベント生成
   event = GMEVENT_Create( gsys, NULL, SeasonDisplay, sizeof(EVENT_WORK) ); 
   // イベントワーク初期化
-  seq            = GMEVENT_GetSequenceWork( event );
-  work           = GMEVENT_GetEventWork( event );
-  work->gsys     = gsys;
-  work->fieldmap = fieldmap;
+  seq                 = GMEVENT_GetSequenceWork( event );
+  work                = GMEVENT_GetEventWork( event );
+  work->gsys          = gsys;
+  work->fieldmap      = fieldmap;
+  work->currentSeason = end;
+  work->dispSeason    = (start + PMSEASON_TOTAL - 1) % PMSEASON_TOTAL;
   SetSeq( work, seq, SEQ_INIT );
   return event;
 }
@@ -358,9 +362,7 @@ static int GetNextSeq( const EVENT_WORK* work, int seq )
   {
   // 初期化
   case SEQ_INIT:
-    // 最後に表示した季節と 今の季節が同じなら, 表示しない
-    if( work->currentSeason == work->lastSeason ){ next = SEQ_EXIT; }
-    else{ next = SEQ_PREPARE; }
+    next = SEQ_PREPARE;
     break;
   // 表示準備
   case SEQ_PREPARE:
@@ -408,16 +410,6 @@ static void SetSeq( EVENT_WORK* work, int* seq, int next )
   case SEQ_INIT:
     // BG初期設定
     InitBG();
-    // TEST: 初期状態を設定
-    {
-      GAMEDATA* gdata;
-      FIELD_STATUS* fstatus;
-      gdata   = GAMESYSTEM_GetGameData( work->gsys );
-      fstatus = GAMEDATA_GetFieldStatus( gdata );
-      work->lastSeason    = FIELD_STATUS_GetSeasonDispLast( fstatus );
-      work->currentSeason = GAMEDATA_GetSeasonID( gdata );
-      work->dispSeason    = work->lastSeason;
-    }
     break;
   // 表示準備
   case SEQ_PREPARE:

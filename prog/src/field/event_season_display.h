@@ -15,11 +15,14 @@
  *
  * @param gsys     ゲームシステム
  * @param fieldmap フィールドマップ
+ * @param start    開始季節
+ * @param end      最終季節 
  *
  * @return 作成したイベント
  */
 //----------------------------------------------------------------------------------------
-extern GMEVENT* EVENT_SeasonDisplay( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap );
+extern GMEVENT* EVENT_SeasonDisplay( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap,
+                                     u8 start, u8 end );
 
 //----------------------------------------------------------------------------------------
 /**

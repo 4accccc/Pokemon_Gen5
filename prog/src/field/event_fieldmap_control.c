@@ -26,6 +26,8 @@
 
 #include "system/screentex.h"
 
+#include "gamesystem/pm_season.h"  // for PMSEASON_xxxx
+
 FS_EXTERN_OVERLAY(pokelist);
 FS_EXTERN_OVERLAY(poke_status);
 
@@ -154,9 +156,13 @@ static GMEVENT_RESULT FieldFadeInEvent(GMEVENT * event, int *seq, void * work)
 
       if( outdoor && FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(屋外&&フラグON)
       { // 四季表示
-        GMEVENT_CallEvent( event, EVENT_SeasonDisplay( few->gsys, few->fieldmap ) );
+        u8 start, end;
+        start = (FIELD_STATUS_GetSeasonDispLast( fstatus ) + 1) % PMSEASON_TOTAL;
+        end   = GAMEDATA_GetSeasonID( gdata );
+        GMEVENT_CallEvent( event, EVENT_SeasonDisplay( few->gsys, few->fieldmap, start, end ) );
         FIELD_STATUS_SetSeasonDispFlag( fstatus, FALSE );
-        FIELD_STATUS_SetSeasonDispLast( fstatus, GAMEDATA_GetSeasonID(gdata) );
+        FIELD_STATUS_SetSeasonDispLast( fstatus, end );
+        OBATA_Printf( "SEASON DISPLAY: %d ==> %d\n", start, end );
       }
       else
       {

@@ -173,7 +173,6 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
         season = (season-1+PMSEASON_TOTAL) % PMSEASON_TOTAL;
         FIELD_STATUS_SetSeasonDispFlag( fstatus, TRUE );
         FIELD_STATUS_SetSeasonDispLast( fstatus, season );
-        OBATA_Printf( "-------------------------------------------------------------%d\n",season);
       }
     }
 		(*seq) ++;
@@ -329,7 +328,7 @@ static void UpdateSeason( GAMEDATA* gamedata )
   // 現在の日付を取得
   RTC_GetDate( &date_now );
   // 現在の季節を求める
-  season = (date_now.month - date_start.month + 12) % PMSEASON_TOTAL;
+  season = (date_now.month + 12 - date_start.month) % PMSEASON_TOTAL;
   // 季節が変化したら, 季節表示フラグを立てる
   if( season != GAMEDATA_GetSeasonID(gamedata) )
   {
