@@ -26,6 +26,7 @@
 #include "sound/bgm_info.h"
 #include "../../resource/sound/bgm_info/iss_type.h"
 #include "field/zonedata.h"  // for ZONEDATA_GetBGMID
+#include "event_appear.h"  // for EVENT_APPEAR_xxxx
 
 
 
@@ -261,7 +262,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeWarp(GMEVENT * event, int *
   switch (*seq)
   {
   case 0:
-		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0, FIELD_FADE_WAIT));
+		GMEVENT_CallEvent(event, EVENT_APPEAR_Teleport(NULL, gsys, fieldmap) );
     ++ *seq;
     break;
   case 1:

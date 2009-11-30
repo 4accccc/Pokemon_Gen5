@@ -23,6 +23,7 @@
 #include "field_sound.h"
 #include "sound/bgm_info.h"
 #include "../../resource/sound/bgm_info/iss_type.h"
+#include "event_disappear.h"  // for EVENT_DISAPPEAR_xxxx
 
 
 //=======================================================================================
@@ -237,19 +238,12 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeWarp(GMEVENT * event, int *s
 {
 	EVENT_WORK*      event_work = work;
 	GAMESYS_WORK*    gsys       = event_work->gsys;
-	FIELDMAP_WORK* fieldmap   = event_work->fieldmap;
-	GAMEDATA*        gamedata   = event_work->gdata;
+	FIELDMAP_WORK*   fieldmap   = event_work->fieldmap;
 
   switch ( *seq )
   {
   case 0:
-    { // BGM更新リクエスト
-      FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
-      PLAYER_WORK* player = GAMEDATA_GetPlayerWork( gamedata, 0 );
-      PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
-      FIELD_SOUND_ChangePlayZoneBGM( fsnd, gamedata, form, event_work->location.zone_id );
-    }
-		GMEVENT_CallEvent( event, EVENT_FieldFadeOut(gsys, fieldmap, 0, FIELD_FADE_WAIT) );
+		GMEVENT_CallEvent( event, EVENT_DISAPPEAR_Teleport(NULL, gsys, fieldmap) );
     ++ *seq;
     break;
   case 1:
