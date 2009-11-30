@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T16:30:49"/>
+	<create user="matsumiya" host="W00207" date="2009-11-30T20:52:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -606,6 +606,16 @@
 なんだか　よくわからないけど
 森林の　中が　心地良いのは[BE:00:ページ切り替え（行送り）]
 フィトンチッドの　おかげ　だって！</language>
+	</row>
+
+	<row id="msg_d02r0101_stone_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+・リーフィア進化用の岩</comment>
+		<attribute name="キャラ指定">苔生した岩</attribute>
+		<language name="JPN" width="256">ひょうめんが　コケで　おおわれている
+さわると　なんとなく　きもちいい</language>
+		<language name="JPN_KANJI" width="256">ひょうめんが　コケで　おおわれている
+さわると　なんとなく　きもちいい</language>
 	</row>
 
 	<flowchart-group-list>
