@@ -31,12 +31,12 @@
 FS_EXTERN_OVERLAY(pokelist);
 FS_EXTERN_OVERLAY(poke_status);
 
-
 extern void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork );
 //============================================================================================
 //============================================================================================
 
-//#define CROSSFADE_MODE
+#define CROSSFADE_MODE
+
 //============================================================================================
 //
 //		サブイベント
@@ -84,17 +84,19 @@ static GMEVENT_RESULT FieldFadeOutEvent(GMEVENT * event, int *seq, void * work)
 									GX_CAPTURE_DEST_VRAM_D_0x00000,	// dst
 								  16, 0);             // Blend parameter for src A, B
 
-		//OS_WaitVBlankIntr();	// 0ライン待ちウエイト
-		//OS_WaitVBlankIntr();	// キャプチャー待ちウエイト
+		OS_WaitVBlankIntr();	// 0ライン待ちウエイト
+		OS_WaitVBlankIntr();	// キャプチャー待ちウエイト
 		(*seq)++;
 		break;
 
 	case 1:	// 0ライン待ちウエイト
+#if 0
 	case 2:	// キャプチャー待ちウエイト
 		(*seq)++;
 		break;
 
 	case 3:
+#endif
 		//描画モード変更
 		{
 			const GFL_BG_SYS_HEADER bg_sys_header = 
@@ -179,39 +181,71 @@ static GMEVENT_RESULT FieldFadeInEvent(GMEVENT * event, int *seq, void * work)
     if( few->wait_type == FIELD_FADE_NO_WAIT ){ return GMEVENT_RES_FINISH; }
 		if( GFL_FADE_CheckFade() == FALSE ){ return GMEVENT_RES_FINISH; }
 		break;
-#if 0
-    if( few->wait_type == FIELD_FADE_NO_WAIT ){ (*seq)++; break; }
-		if( GFL_FADE_CheckFade() == FALSE ){ (*seq)++; break; }
-		break;
-	case 2:
-		FIELDMAP_InitBG(few->fieldmap);
-		return GMEVENT_RES_FINISH;
-#endif
 	}
 
 	return GMEVENT_RES_CONTINUE;
 #else
 	switch (*seq) {
 	case 0:
-		few->alphaWork = 16;
-		GFL_BG_SetPriority(GFL_BG_FRAME2_M, 0);
-		GFL_BG_SetPriority(GFL_BG_FRAME0_M, 1);
-		GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
-		G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG0, few->alphaWork, 0 );
-		(*seq) ++;
+		{
+			int brightness = GX_GetMasterBrightness();
+
+			if((brightness == 16)||(brightness == -16)){
+				GAMEDATA*       gdata = GAMESYSTEM_GetGameData( few->gsys );
+				FIELD_STATUS* fstatus = GAMEDATA_GetFieldStatus( gdata );
+				AREADATA*    areadata = FIELDMAP_GetAreaData( few->fieldmap );
+				BOOL          outdoor = ( AREADATA_GetInnerOuterSwitch(areadata) != 0 );
+
+				if( outdoor && FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(屋外&&フラグON)
+				{ // 四季表示
+					u8 start, end;
+					start = (FIELD_STATUS_GetSeasonDispLast( fstatus ) + 1) % PMSEASON_TOTAL;
+					end   = GAMEDATA_GetSeasonID( gdata );
+					GMEVENT_CallEvent( event, EVENT_SeasonDisplay( few->gsys, few->fieldmap, start, end ) );
+					FIELD_STATUS_SetSeasonDispFlag( fstatus, FALSE );
+					FIELD_STATUS_SetSeasonDispLast( fstatus, end );
+					OBATA_Printf( "SEASON DISPLAY: %d ==> %d\n", start, end );
+				}
+				else
+				{
+				 // @todo フェード速度を元に戻す
+				 // 作業効率Upのためにフェードを短縮 11/17 obata
+				 GFL_FADE_SetMasterBrightReq(
+				     GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,
+				     16, 0, -8);
+				}
+				*seq = 1;
+			} else {
+				few->alphaWork = 16;
+				GFL_BG_SetPriority(GFL_BG_FRAME2_M, 0);
+				GFL_BG_SetPriority(GFL_BG_FRAME0_M, 1);
+				GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
+				G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG0, few->alphaWork, 0 );
+				*seq = 3;
+			}
+    }
 		break;
 
-	case 1:
+	case 1:	// 輝度フェード
+    if( few->wait_type == FIELD_FADE_NO_WAIT ){ *seq = 2; break; }
+		if( GFL_FADE_CheckFade() == FALSE )				{ *seq = 2; break; }
+		break;
+
+	case 2:	// 輝度フェードEND
+		FIELDMAP_InitBG(few->fieldmap);
+		return GMEVENT_RES_FINISH;
+
+	case 3:	// クロスフェード
 		if(few->alphaWork){
 			few->alphaWork--;
 			G2_ChangeBlendAlpha( few->alphaWork, 16 - few->alphaWork );
 		} else {
 			GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
-			(*seq) ++;
+			*seq = 4;
 		}
 		break;
 
-	case 2:
+	case 4:	// クロスフェードEND
 		FIELDMAP_InitBG(few->fieldmap);
 		return GMEVENT_RES_FINISH;
 	}

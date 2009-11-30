@@ -132,7 +132,7 @@
 //======================================================================
 //	define
 //======================================================================
-//#define CROSSFADE_MODE
+#define CROSSFADE_MODE
 
 //--------------------------------------------------------------
 ///	GAMEMODE
@@ -548,10 +548,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   //フィールド3Ｄカットインヒープ確保
   GFL_HEAP_CreateHeap( HEAPID_FIELDMAP, HEAPID_FLD3DCUTIN, FLD3DCUTIN_SIZE );
 
-#ifndef CROSSFADE_MODE
   fieldWork->fldMsgBG = FLDMSGBG_Create( fieldWork->heapID, fieldWork->g3Dcamera );
-#else
-  fieldWork->fldMsgBG = NULL;
+#ifndef CROSSFADE_MODE
+	FLDMSGBG_SetupResource( fieldWork->fldMsgBG );
 #endif
   fieldWork->goldMsgWin = NULL;
 
@@ -1781,24 +1780,24 @@ static void	fldmap_BG_Init( FIELDMAP_WORK *fieldWork )
 	GFL_BG_Init( fieldWork->heapID );
 	
 	//背景色パレット転送
-  GFL_BG_LoadPalette( GFL_BG_FRAME0_M, (void*)fldmapdata_bgColorTable, 16*2, 0 ); //メイン画面の背景色
-  GFL_BG_LoadPalette( GFL_BG_FRAME0_S, (void*)fldmapdata_bgColorTable, 16*2, 0 ); //サブ画面の背景色
+	//メイン画面の背景色
+  GFL_BG_LoadPalette( GFL_BG_FRAME0_M, (void*)fldmapdata_bgColorTable, 16*2, 0 );
+	//サブ画面の背景色
+  GFL_BG_LoadPalette( GFL_BG_FRAME0_S, (void*)fldmapdata_bgColorTable, 16*2, 0 );
 #ifndef CROSSFADE_MODE
 	//ＢＧモード設定
 	GFL_BG_SetBGMode( &fldmapdata_bgsysHeader );
-
 	//ＢＧコントロール設定
 	G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 16, 8 );
-	
-	GFL_BG_SetBGControl3D( FIELD_3D_FRAME_PRI );
 
+	GFL_BG_SetBGControl3D( FIELD_3D_FRAME_PRI );
+#endif
 	//ディスプレイ面の選択
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
 	GFL_DISP_SetDispOn();
   
   //使用するウィンドウ
   GX_SetVisibleWnd( GX_WNDMASK_NONE );
-#endif
 }
 
 void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork );
@@ -1806,21 +1805,13 @@ void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork )
 {
 	//ＢＧモード設定
 	GFL_BG_SetBGMode( &fldmapdata_bgsysHeader );
-
 	//ＢＧコントロール設定
 	G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 16, 8 );
 	
 	GFL_BG_SetBGControl3D( FIELD_3D_FRAME_PRI );
 
-	//ディスプレイ面の選択
-	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
-	GFL_DISP_SetDispOn();
-  
-  //使用するウィンドウ
-  GX_SetVisibleWnd( GX_WNDMASK_NONE );
-
-  // 会話ウインドウシステム作成
-  fieldWork->fldMsgBG = FLDMSGBG_Create( fieldWork->heapID, fieldWork->g3Dcamera );
+  // 会話ウインドウリソースセットアップ
+	FLDMSGBG_SetupResource( fieldWork->fldMsgBG );
   // 地名表示システム作成
   fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( fieldWork->heapID, fieldWork->fldMsgBG );
 

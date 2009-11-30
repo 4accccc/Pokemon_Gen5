@@ -343,7 +343,7 @@ FLDMSGBG * FLDMSGBG_Create( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
         fmb->heapID, fmb->heapID, FLDMSGBG_PRINT_STREAM_MAX, 4 );
   }
   
-  FLDMSGBG_SetupResource( fmb );
+  //FLDMSGBG_SetupResource( fmb );
 	return( fmb );
 }
 
