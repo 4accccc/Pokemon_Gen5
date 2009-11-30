@@ -84,12 +84,12 @@ BTLV_STAGE_WORK	*BTLV_STAGE_Init( int index, u8 season, HEAPID heapID )
 {
 	BTLV_STAGE_WORK *bsw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_STAGE_WORK ) );
 	BOOL	ret;
-  BATT_BG_TBL_FILE_TABLE* bbtft = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL, NARC_batt_bg_tbl_batt_stage_bin, heapID );
+  BATT_BG_TBL_STAGE_TABLE* bbtst = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL, NARC_batt_bg_tbl_batt_stage_bin, heapID );
 
 	bsw->heapID = heapID;
 
 	//リソース読み込み
-	bsw->stage_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtft[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season ] );
+	bsw->stage_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtst[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season ] );
 	ret = GFL_G3D_TransVramTexture( bsw->stage_resource );
 	GF_ASSERT( ret == TRUE );
 
@@ -99,7 +99,7 @@ BTLV_STAGE_WORK	*BTLV_STAGE_Init( int index, u8 season, HEAPID heapID )
 
     for( i = BATT_BG_TBL_FILE_NSBCA ; i < BATT_BG_TBL_FILE_NSBMA + 1 ; i++ )
     { 
-	    if( bbtft[ index ].file[ i ][ season ] != BATT_BG_TBL_NO_FILE )
+	    if( bbtst[ index ].file[ i ][ season ] != BATT_BG_TBL_NO_FILE )
       { 
         bsw->anm_count++;
       }
@@ -120,10 +120,10 @@ BTLV_STAGE_WORK	*BTLV_STAGE_Init( int index, u8 season, HEAPID heapID )
 
     for( i = BATT_BG_TBL_FILE_NSBCA ; i < BATT_BG_TBL_FILE_NSBMA + 1 ; i++ )
     { 
-	    if( bbtft[ index ].file[ i ][ season ] != BATT_BG_TBL_NO_FILE )
+	    if( bbtst[ index ].file[ i ][ season ] != BATT_BG_TBL_NO_FILE )
       { 
 		    //ANIME生成
-	      bsw->stage_anm_resource[ cnt ] = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtft[ index ].file[ i ][ season ] );
+	      bsw->stage_anm_resource[ cnt ] = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtst[ index ].file[ i ][ season ] );
 		    bsw->stage_anm[ cnt ] = GFL_G3D_ANIME_Create( bsw->stage_render, bsw->stage_anm_resource[ cnt ], BTLV_STAGE_ANM_MAX ); 
         cnt++;
       }
@@ -174,9 +174,9 @@ BTLV_STAGE_WORK	*BTLV_STAGE_Init( int index, u8 season, HEAPID heapID )
 	MTX_Identity33( &bsw->stage_status[ BTLV_STAGE_ENEMY ].rotate );
 
 	//エッジマーキングカラーセット
-	//G3X_SetEdgeColorTable( &stage_resource_table[ index ]->edge_color[ 0 ] );
-  //
-  GFL_HEAP_FreeMemory( bbtft );
+	G3X_SetEdgeColorTable( &bbtst[ index ].edge_color );
+  
+  GFL_HEAP_FreeMemory( bbtst );
 
 	return bsw;
 }

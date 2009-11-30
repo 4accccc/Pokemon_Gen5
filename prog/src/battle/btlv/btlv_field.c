@@ -67,12 +67,12 @@ BTLV_FIELD_WORK	*BTLV_FIELD_Init( int index, u8 season, HEAPID heapID )
 {
 	BTLV_FIELD_WORK *bfw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_FIELD_WORK ) );
 	BOOL	ret;
-  BATT_BG_TBL_FILE_TABLE* bbtft = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL, NARC_batt_bg_tbl_batt_bg_bin, heapID );
+  BATT_BG_TBL_BG_TABLE* bbtbt = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL, NARC_batt_bg_tbl_batt_bg_bin, heapID );
 
 	bfw->heapID = heapID;
 
 	//ƒŠƒ\[ƒX“Ç‚Ýž‚Ý
-	bfw->field_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtft[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season ] );
+	bfw->field_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtbt[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season ] );
 	ret = GFL_G3D_TransVramTexture( bfw->field_resource );
 	GF_ASSERT( ret == TRUE );
 
@@ -82,7 +82,7 @@ BTLV_FIELD_WORK	*BTLV_FIELD_Init( int index, u8 season, HEAPID heapID )
 
     for( i = BATT_BG_TBL_FILE_NSBCA ; i < BATT_BG_TBL_FILE_NSBMA + 1 ; i++ )
     { 
-	    if( bbtft[ index ].file[ i ][ season ] != BATT_BG_TBL_NO_FILE )
+	    if( bbtbt[ index ].file[ i ][ season ] != BATT_BG_TBL_NO_FILE )
       { 
         bfw->anm_count++;
       }
@@ -103,10 +103,10 @@ BTLV_FIELD_WORK	*BTLV_FIELD_Init( int index, u8 season, HEAPID heapID )
 
     for( i = BATT_BG_TBL_FILE_NSBCA ; i < BATT_BG_TBL_FILE_NSBMA + 1 ; i++ )
     { 
-	    if( bbtft[ index ].file[ i ][ season ] != BATT_BG_TBL_NO_FILE )
+	    if( bbtbt[ index ].file[ i ][ season ] != BATT_BG_TBL_NO_FILE )
       { 
 		    //ANIME¶¬
-	      bfw->field_anm_resource[ cnt ] = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtft[ index ].file[ i ][ season ] );
+	      bfw->field_anm_resource[ cnt ] = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtbt[ index ].file[ i ][ season ] );
 		    bfw->field_anm[ cnt ] = GFL_G3D_ANIME_Create( bfw->field_render, bfw->field_anm_resource[ cnt ], BTLV_FIELD_ANM_MAX ); 
         cnt++;
       }
@@ -147,7 +147,7 @@ BTLV_FIELD_WORK	*BTLV_FIELD_Init( int index, u8 season, HEAPID heapID )
 	  bfw->epfw.pal_fade_count  = 1;
   }
 
-  GFL_HEAP_FreeMemory( bbtft );
+  GFL_HEAP_FreeMemory( bbtbt );
 
 	return bfw;
 }
