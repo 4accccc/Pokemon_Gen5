@@ -171,8 +171,6 @@ static void nogridMoveStartControl( FIELD_PLAYER_NOGRID* p_player, PLAYER_SET se
 
 static u32 nogrid_HitCheckMove( FIELD_PLAYER_NOGRID* p_player, MMDL *mmdl, u16 dir );
 
-static void nogrid_KuruKuruStart( FIELD_PLAYER_NOGRID* p_player, BOOL left_right );
-static void nogrid_KuruKuruStop( FIELD_PLAYER_NOGRID* p_player );
 static void nogrid_KuruKuruMain( FIELD_PLAYER_NOGRID* p_player );
 
 
@@ -2311,6 +2309,9 @@ static void nogrid_KuruKuru_Start( KURUKURU_WORK* wk, KURUKURU_DIR left_or_right
     return;
   }
 
+  // Ç≠ÇÈÇ≠ÇÈSEäJén
+  PMSND_PlaySE( FIELD_PLAYER_SE_NOGRID_ICE_SPIN );
+
   wk->kurukuru_flag = TRUE;
   wk->left_or_right = left_or_right;
   wk->frame         = 0;
@@ -2328,6 +2329,9 @@ static void nogrid_KuruKuru_Stop( KURUKURU_WORK* wk )
 {
   wk->kurukuru_flag = FALSE;
   wk->frame         = 0;
+
+  // Ç≠ÇÈÇ≠ÇÈSEí‚é~
+  PMSND_StopSE();
 }
 
 //----------------------------------------------------------------------------
