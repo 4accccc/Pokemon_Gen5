@@ -5340,10 +5340,10 @@
  * 遊覧船モード開始
  */
 //--------------------------------------------------------------
-#define _START_PL_BOAT() _ASM_START_PL_BOAT
+#define _PL_BOAT_START() _ASM_PL_BOAT_START
 
-  .macro  _ASM_START_PL_BOAT
-  .short  EV_SEQ_START_PL_BOAT
+  .macro  _ASM_PL_BOAT_START
+  .short  EV_SEQ_PL_BOAT_START
   .endm
 
 //--------------------------------------------------------------
@@ -5351,9 +5351,24 @@
  * 遊覧船モード終了
  */
 //--------------------------------------------------------------
-#define _END_PL_BOAT() _ASM_END_PL_BOAT
+#define _PL_BOAT_END() _ASM_PL_BOAT_END
 
-  .macro  _ASM_END_PL_BOAT
-  .short  EV_SEQ_END_PL_BOAT
+  .macro  _ASM_PL_BOAT_END
+  .short  EV_SEQ_PL_BOAT_END
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 遊覧船内トレーナ数取得
+ * @param type　    検索タイプ  PL_TR_SEARCH_TYPE_～　pl_boat_def.h 参照
+ * @param ret_wk    検索結トレーナー数
+ */
+//--------------------------------------------------------------
+#define _PL_BOAT_GET_TR_NUM(type,ret) _ASM_PL_BOAT_GET_TR_NUM type ret_wk
+
+  .macro  _ASM_PL_BOAT_GET_TR_NUM
+  .short  EV_SEQ_PL_BOAT_GET_TR_NUM
+  .short  \type
+  .short  \ret_wk
   .endm  
-  
+
