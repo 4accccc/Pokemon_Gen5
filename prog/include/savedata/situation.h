@@ -54,4 +54,7 @@ extern void SaveData_SituationLoad_PlayerWorkSave(SAVE_CONTROL_WORK *sv, PLAYERW
 extern void SaveData_SituationDataUpdateStatus(SITUATION * st, const FIELD_STATUS * status );
 extern void SaveData_SituationDataLoadStatus(const SITUATION * st, FIELD_STATUS* status);
 
+extern void SaveData_SituationUpdateSeasonID(SITUATION * st, const u8 season);
+extern void SaveData_SituationLoadSeasonID(SITUATION * st, u8 * season);
+
 #endif	//__SITUATION_H__

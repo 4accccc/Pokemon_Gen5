@@ -27,7 +27,7 @@ struct _SITUATION {
   LOCATION escape_loc;    ///<脱出先LOCATION
   u16 warp_id;            ///<ワープ飛び先指定ID
   u8  fs_flash;           ///<フラッシュフラグ          
-  u8  pad;
+  u8  season_id;          ///<季節
 
 	//PLAYER_WORKからセーブに必要なものだけを抜粋
 	PLAYERWORK_SAVE plsv;
@@ -224,4 +224,29 @@ void SaveData_SituationDataLoadStatus(const SITUATION * st, FIELD_STATUS* status
 {
   // フラッシュフラグ
   FIELD_STATUS_SetFieldSkillFlash( status, st->fs_flash );
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  季節 のセーブ情報を更新
+ *
+ *	@param	sv
+ *	@param	u8
+ */
+//-----------------------------------------------------------------------------
+extern void SaveData_SituationUpdateSeasonID(SITUATION * st, const u8 season)
+{
+  st->season_id = season;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  季節 のセーブ情報を取得
+ */
+//-----------------------------------------------------------------------------
+extern void SaveData_SituationLoadSeasonID(SITUATION * st, u8 * season)
+{
+  *season = st->season_id;
 }

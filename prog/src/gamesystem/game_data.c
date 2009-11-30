@@ -1102,8 +1102,8 @@ static void GAMEDATA_SaveDataLoad(GAMEDATA *gamedata)
   { //FIELD_STATUS
     SITUATION * situation = SaveData_GetSituation( gamedata->sv_control_ptr );
     SaveData_SituationDataLoadStatus( situation, gamedata->fldstatus );
-  }
-  
+    SaveData_SituationLoadSeasonID( situation, &gamedata->season_id );
+  } 
 }
 
 //--------------------------------------------------------------
@@ -1147,6 +1147,7 @@ static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata)
   { //FIELD_STATUS
     SITUATION * situation = SaveData_GetSituation( gamedata->sv_control_ptr );
     SaveData_SituationDataUpdateStatus( situation, gamedata->fldstatus );
+    SaveData_SituationUpdateSeasonID( situation, gamedata->season_id );
   }
 }
 
