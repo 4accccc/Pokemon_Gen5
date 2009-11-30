@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-28T15:13:21"/>
+	<create user="matsumiya" host="W00207" date="2009-11-30T18:59:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -298,75 +298,179 @@
 　メッセージ表示後、トレーナー戦闘に</comment>
 		<attribute name="キャラ指定">四天王：エスパー
 カトレア</attribute>
-		<language name="JPN" width="256">テストメッセージ▼</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ▼</language>
+		<language name="JPN" width="256">どなた……？▼
+アタクシの　ねむりを　さまたげる
+やぼな　トレーナーさんは？▼
+アナタ　ね……▼
+ふうん……▼
+つよさと　やさしさを　あわせもち
+なんだか　つよそう……▼
+だけど　あくびが　でちゃうような
+たいくつな　しょうぶ　だけは▽
+かんべん　ね……▼</language>
+		<language name="JPN_KANJI" width="256">どなた……？▼
+アタクシの　ねむりを　さまたげる
+やぼな　トレーナーさんは？▼
+アナタ　ね……▼
+ふうん……▼
+つよさと　やさしさを　あわせもち
+なんだか　つよそう……▼
+だけど　あくびが　でちゃうような
+たいくつな　しょうぶ　だけは▽
+かんべん　ね……▼</language>
 	</row>
 
 	<row id="msg_c09r0401_bigfour4_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：クリア前
 ・戦闘後：フィールド</comment>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">まだ　たたかっていない
+してんのうが　いるのでしょ？▼
+アタクシに　かまわず
+さきに　すすみなさいな</language>
+		<language name="JPN_KANJI" width="256">まだ　たたかっていない
+してんのうが　いるのでしょ？▼
+アタクシに　かまわず
+さきに　すすみなさいな</language>
 	</row>
 
 	<row id="msg_c09r0401_bigfour4_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：クリア前
 ・bigfour4_02表示後に再度会話</comment>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">……しょうぶを　するたびに
+かんじょうを　おおきく　ゆらし▼
+ちからが　はつどうし
+まわりの　ものを　こわしてしまった▽
+よわい　じぶんは　もう　いない……▼
+だけれども　まだまだ　ね……▼
+アタクシの　りそうは
+エレガントに　かちを　おさめること▼
+アナタ……　これからも
+アタクシの　あいてを　してね</language>
+		<language name="JPN_KANJI" width="256">……しょうぶを　するたびに
+かんじょうを　おおきく　ゆらし▼
+ちからが　はつどうし
+まわりの　ものを　こわしてしまった▽
+よわい　じぶんは　もう　いない……▼
+だけれども　まだまだ　ね……▼
+アタクシの　りそうは
+エレガントに　かちを　おさめること▼
+アナタ……　これからも
+アタクシの　あいてを　してね</language>
 	</row>
 
 	<row id="msg_c09r0401_bigfour4_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：クリア前
-・チャンピオン部屋にいける場合</comment>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+・条件（＝四天王全員に勝利）を満たしていれば
+　戦闘後フィールド復帰時に自動で表示
+・チャンピオン部屋に行くまで繰り返し</comment>
+		<language name="JPN" width="256">……どうやら　ポケモンリーグの
+してんのう　ぜんいんに　かったのね▼
+あらわれた　エレベータを　つかえば
+チャンピオンの　へやに　いける……▼
+ただ　そこに　いるのは
+あぶない　トレーナー▼
+あたくしとは　ことなる
+しゅるいの　ちから……▽
+みらいよちを　もつ　おとこ　よ……</language>
+		<language name="JPN_KANJI" width="256">……どうやら　ポケモンリーグの
+してんのう　ぜんいんに　かったのね▼
+あらわれた　エレベータを　つかえば
+チャンピオンの　へやに　いける……▼
+ただ　そこに　いるのは
+あぶない　トレーナー▼
+あたくしとは　ことなる
+しゅるいの　ちから……▽
+みらいよちを　もつ　おとこ　よ……</language>
 	</row>
 
 	<row id="msg_c09r0401_bigfour4_05">
 		<comment>♀：クリア後
 ・戦闘前：フィールド
 　メッセージ表示後、トレーナー戦闘に</comment>
-		<language name="JPN" width="256">テストメッセージ▼</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ▼</language>
+		<language name="JPN" width="256">どなた……？▼
+アタクシの　ねむりを　さまたげる
+やぼな　トレーナーさんは？▼
+……ふうん
+また　アナタ　なのね……▼
+あいかわらず
+つよさと　やさしさを　あわせもち▽
+さらに　つよくなった　みたい……▼
+だけど　あくびが　でちゃうような
+たいくつな　しょうぶ　だけは▽
+かんべん　ね……▼</language>
+		<language name="JPN_KANJI" width="256">どなた……？▼
+アタクシの　ねむりを　さまたげる
+やぼな　トレーナーさんは？▼
+……ふうん
+また　アナタ　なのね……▼
+あいかわらず
+つよさと　やさしさを　あわせもち▽
+さらに　つよくなった　みたい……▼
+だけど　あくびが　でちゃうような
+たいくつな　しょうぶ　だけは▽
+かんべん　ね……▼</language>
 	</row>
 
 	<row id="msg_c09r0401_bigfour4_06">
 		<comment>♀：クリア後
-・戦闘後：フィールド</comment>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+・戦闘後：フィールド
+　戦闘からフィールドに復帰時、自動で表示</comment>
+		<language name="JPN" width="256">いちぞくに　つたわる
+トレーナーの　こころえ　たしなみを▽
+もってしても　かてない……▼
+アナタのような　トレーナーと
+たたかうため　ここに　きたの……</language>
+		<language name="JPN_KANJI" width="256">いちぞくに　つたわる
+トレーナーの　こころえ　たしなみを▽
+もってしても　かてない……▼
+アナタのような　トレーナーと
+たたかうため　ここに　きたの……</language>
 	</row>
 
 	<row id="msg_c09r0401_bigfour4_07">
 		<comment>♀：クリア後
 ・bigfour4_06表示後に再度会話</comment>
 		<language name="JPN" width="256">……みじゅくな　こころゆえ
-ちからが　ぼうそうし
-たたかいを　きんじられていた　ひび
-
-そのときに　アタクシが　のぞんでいたのは
-いまのような　こころおどる　たたかい
-
-いちぞくに　つたわる
-トレーナーの　こころえ　たしなみを
-もってしても　かてないような
-
-ウフフ
-いま　アタクシ　えがおに　なっている
-すこし　はずかしい　な</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+ちからが　ぼうそうし▽
+たたかいを　きんじられていた　ひび▼
+そのときに　アタクシが
+こころから　こがれていたのは▽
+いまのような　こころおどる　とき▼
+ウフフ……
+いま　アタクシ　えがおに　なっている▽
+すこし　はずかしい</language>
+		<language name="JPN_KANJI" width="256">……みじゅくな　こころゆえ
+ちからが　ぼうそうし▽
+たたかいを　きんじられていた　ひび▼
+そのときに　アタクシが
+こころから　こがれていたのは▽
+いまのような　こころおどる　とき▼
+ウフフ……
+いま　アタクシ　えがおに　なっている▽
+すこし　はずかしい</language>
 	</row>
 
 	<row id="msg_c09r0401_bigfour4_08">
 		<comment>♀：クリア後
-・チャンピオン部屋にいける場合</comment>
+・条件（＝四天王全員に勝利）を満たしていれば
+　戦闘後フィールド復帰時に自動で表示
+・チャンピオン部屋に行くまで繰り返し</comment>
 		<language name="JPN" width="256">……ポケモンリーグの　してんのう
 ぜんいんに　かったのね▼
 それなら　アナタは
 チャンピオンの　へやに　いく▽
-しかくを　えたと　いうこと……▼</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+しかくを　えたと　いうこと……▼
+いくだけでは　いみは　ないわ……▼
+そこで　おもうぞんぶん
+ちからを　はっき　しなさい</language>
+		<language name="JPN_KANJI" width="256">……ポケモンリーグの　してんのう
+ぜんいんに　かったのね▼
+それなら　アナタは
+チャンピオンの　へやに　いく▽
+しかくを　えたと　いうこと……▼
+いくだけでは　いみは　ないわね……▼
+そこで　おもうぞんぶん
+ちからを　はっき　しなさいな</language>
 	</row>
 
 	<flowchart-group-list>

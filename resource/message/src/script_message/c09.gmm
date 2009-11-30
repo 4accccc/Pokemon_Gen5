@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-27T20:03:48"/>
+	<create user="matsumiya" host="W00207" date="2009-11-30T19:07:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="139"/>
+		<comment position="4" width="248"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -293,10 +293,43 @@
 
 
 	<row id="msg_c09_veteranm1_01">
+		<comment>♂
+・GRIDX=30、GRIDZ=54（仮）
+・初めてここに来たとき
+　一歩でも動けばメッセージ表示
+　（戻ってマップ切り替えたとき以外）
+・続けてveteranm1_02</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
+		<language name="JPN" width="256">かいせつ　しよう！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">解説しよう！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c09_veteranm1_02">
+		<comment>♂
+・続けてveteranm2_01
+・このメッセージ表示以降、veteranm1_03繰り返し</comment>
+		<language name="JPN" width="256">ポケモンリーグは
+４にんいる　してんのう[BE:00:ページ切り替え（行送り）]
+だれからでも　　ちょうせん　できる[BE:01:ページ切り替え（クリア）]
+そして　してんのうぜんいんに　かてば
+チャンピオンに　ちょうせん　できる！[BE:01:ページ切り替え（クリア）]
+ただし！　ただしである
+いちど　ちょうせんを　はじめたなら[BE:00:ページ切り替え（行送り）]
+かちぬくか[BE:00:ページ切り替え（行送り）]
+はいぼく　するまで　でられないぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ポケモンリーグは　４人いる
+四天王　だれからでも　挑戦できる[BE:01:ページ切り替え（クリア）]
+そして　四天王全員に　勝てば
+チャンピオンに　挑戦できる！[BE:01:ページ切り替え（クリア）]
+ただし！　ただしである
+一度　挑戦を　はじめたなら[BE:00:ページ切り替え（行送り）]
+勝ち抜くか[BE:00:ページ切り替え（行送り）]
+敗北するまで　でられないぞ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c09_veteranm1_03">
 		<comment>♂</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">かいせつ　しよう！[BE:01:ページ切り替え（クリア）]
-ポケモンリーグは
+		<language name="JPN" width="256">ポケモンリーグは
 ４にんいる　してんのう[BE:00:ページ切り替え（行送り）]
 だれからでも　　ちょうせん　できる[BE:01:ページ切り替え（クリア）]
 そして　してんのうぜんいんに　かてば
@@ -305,8 +338,7 @@
 いちど　ちょうせんを　はじめたなら[BE:00:ページ切り替え（行送り）]
 かちぬくか[BE:00:ページ切り替え（行送り）]
 はいぼく　するまで　でられないぞ！</language>
-		<language name="JPN_KANJI" width="256">解説しよう！[BE:01:ページ切り替え（クリア）]
-ポケモンリーグは　４人いる
+		<language name="JPN_KANJI" width="256">ポケモンリーグは　４人いる
 四天王　だれからでも　挑戦できる[BE:01:ページ切り替え（クリア）]
 そして　四天王全員に　勝てば
 チャンピオンに　挑戦できる！[BE:01:ページ切り替え（クリア）]
@@ -316,21 +348,49 @@
 敗北するまで　でられないぞ！</language>
 	</row>
 
-	<row id="msg_c09_veteranm2_01">
-		<comment>♂</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+	<row id="msg_c09_veteranm2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・GRIDX=23、GRIDZ=53（仮）
+・msg_c09_veteranm1_02表示後
+　続けてこのメッセージ
+・このとき動作モデルを中心にカメラ移動
+・続けてveteranm2_02</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
+		<language name="JPN" width="256">ポケモンリーグは
+すべての　トレーナーに　とって[BE:00:ページ切り替え（行送り）]
+さいだいの　なんかん！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ポケモンリーグは
+全ての　トレーナーに　とって[BE:00:ページ切り替え（行送り）]
+最大の　難関！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c09_veteranm2_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・このとき画面左を向く</comment>
+		<language name="JPN" width="256">こちらで　じゅんびを　しておくがいい[BE:01:ページ切り替え（クリア）]
+いちどでも　まけると
+さいしょから　やりなおし　だからな！</language>
+		<language name="JPN_KANJI" width="256">こちらで　準備を　しておくがいい[BE:01:ページ切り替え（クリア）]
+一度でも　負けると
+最初から　やりなおし　だからな！</language>
+	</row>
+
+	<row id="msg_c09_veteranm2_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・veteranm2_02表示以降
+　このメッセージを繰り返し表示</comment>
 		<language name="JPN" width="256">ポケモンリーグは
 すべての　トレーナーに　とって[BE:00:ページ切り替え（行送り）]
 さいだいの　なんかん！[BE:01:ページ切り替え（クリア）]
 こちらで　じゅんびを　しておくがいい[BE:01:ページ切り替え（クリア）]
-まけると
-さいしょから　やりなおし　なのだ！</language>
+いちどでも　まけると
+さいしょから　やりなおし　だからな！</language>
 		<language name="JPN_KANJI" width="256">ポケモンリーグは
-すべての　トレーナーに　とって[BE:00:ページ切り替え（行送り）]
-さいだいの　なんかん！[BE:01:ページ切り替え（クリア）]
-こちらで　じゅんびを　しておくがいい[BE:01:ページ切り替え（クリア）]
-まけると
-さいしょから　やりなおし　なのだ！</language>
+全ての　トレーナーに　とって[BE:00:ページ切り替え（行送り）]
+最大の　難関！[BE:01:ページ切り替え（クリア）]
+こちらで　準備を　しておくがいい[BE:01:ページ切り替え（クリア）]
+一度でも　負けると
+最初から　やりなおし　だからな！</language>
 	</row>
 
 	<flowchart-group-list>

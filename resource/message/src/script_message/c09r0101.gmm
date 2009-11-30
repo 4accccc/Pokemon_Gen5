@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-30T17:55:25"/>
+	<create user="matsumiya" host="W00207" date="2009-11-30T18:52:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -376,7 +376,9 @@
 
 	<row id="msg_c09r0101_bigfour1_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：クリア前
-・チャンピオン部屋にいける場合</comment>
+・条件（＝四天王全員に勝利）を満たしていれば
+　戦闘後フィールド復帰時に自動で表示
+・チャンピオン部屋に行くまで繰り返し</comment>
 		<attribute name="キャラ指定">四天王：ゴースト
 シキミ</attribute>
 		<language name="JPN" width="256">あの……
@@ -594,7 +596,9 @@
 
 	<row id="msg_c09r0101_bigfour1_08">
 		<comment>♀：クリア後
-・チャンピオン部屋にいける場合</comment>
+・条件（＝四天王全員に勝利）を満たしていれば
+　戦闘後フィールド復帰時に自動で表示
+・チャンピオン部屋に行くまで繰り返し</comment>
 		<attribute name="キャラ指定">四天王：ゴースト
 シキミ</attribute>
 		<language name="JPN" width="256">あの……

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-30T18:40:01"/>
+	<create user="matsumiya" host="W00207" date="2009-11-30T18:52:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -356,7 +356,9 @@
 
 	<row id="msg_c09r0301_bigfour3_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：クリア前
-・チャンピオン部屋にいける場合</comment>
+・条件（＝四天王全員に勝利）を満たしていれば
+　戦闘後フィールド復帰時に自動で表示
+・チャンピオン部屋に行くまで繰り返し</comment>
 		<language name="JPN" width="256">いま……　おまえは
 この　ポケモンリーグで▽
 さいきょうの　トレーナーとなった▼
@@ -447,7 +449,9 @@
 
 	<row id="msg_c09r0301_bigfour3_08">
 		<comment>♂：クリア後
-・チャンピオン部屋にいける場合</comment>
+・条件（＝四天王全員に勝利）を満たしていれば
+　戦闘後フィールド復帰時に自動で表示
+・チャンピオン部屋に行くまで繰り返し</comment>
 		<language name="JPN" width="256">きみたちの　つよさ
 ぞんぶんに　おそわった……▼
 つぎの　へやに　いき
