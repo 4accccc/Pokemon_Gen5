@@ -23,6 +23,7 @@
 #include "gym_ground.h"
 #include "gym_ground_ent.h"
 #include "gym_ice.h"
+#include "field_gimmick_d06.h"
 
 extern void GYM_SetupTest(FIELDMAP_WORK *fieldWork);
 extern void GYM_EndTest(FIELDMAP_WORK *fieldWork);
@@ -55,6 +56,7 @@ const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
   GATE_GIMMICK_Setup,  // H01R0101
   GATE_GIMMICK_Setup,  // H01R0201
   GATE_GIMMICK_Setup,  // C03R0601
+  D06_GIMMICK_Setup,
 };
 
 const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
@@ -83,6 +85,7 @@ const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
   GATE_GIMMICK_End,  // H01R0101
   GATE_GIMMICK_End,  // H01R0201
   GATE_GIMMICK_End,  // C03R0601
+  D06_GIMMICK_End,
 };
 
 const static FLD_GMK_END_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
@@ -111,6 +114,7 @@ const static FLD_GMK_END_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
   GATE_GIMMICK_Move,  // H01R0101 
   GATE_GIMMICK_Move,  // H01R0201 
   GATE_GIMMICK_Move,  // C03R0601 
+  D06_GIMMICK_Move,
 };
 
 #if 0

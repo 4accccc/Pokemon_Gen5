@@ -104,3 +104,6 @@ extern BOOL MAPATTR_VALUE_CheckSeasonGround2( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckEncountGround( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckLawn( const MAPATTR_VALUE val );
 
+extern BOOL MAPATTR_VALUE_CheckElecFloor( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckShakeElecStone( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckElecRock( const MAPATTR_VALUE val );

@@ -512,7 +512,9 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/pleasure_boat.c \
         field/scrcmd_pl_boat.c \
         field/event_autoway.c \
-        field/event_current.c
+        field/event_current.c \
+        field/fldeff_d06denki.c \
+        field/field_gimmick_d06.c
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP

@@ -285,7 +285,11 @@ void FLDEFF_CTRL_DeleteEffect( FLDEFF_CTRL *fectrl, FLDEFF_PROCID id )
   const FLDEFF_PROCEFF_DATA *proc_data;
   
   proc = fectrl_SearchProcEffect( fectrl, id );
-  GF_ASSERT( proc != NULL ); //未登録
+  
+  if( proc == NULL ){ //未登録
+    GF_ASSERT( 0 );
+    return;
+  }
   
   proc_data = search_ProcEffectData( id );
   proc_data->proc_del( fectrl, proc->proc_work );
@@ -799,6 +803,7 @@ HEAPID FLDEFF_TASK_GetHeapID( const FLDEFF_TASK *task )
 #include "fldeff_splash.h"
 #include "fldeff_encount.h"
 #include "fldeff_iwakudaki.h"
+#include "fldeff_d06denki.h"
 
 FLDEFF_PROCEFF_DATA DATA_FLDEFF_ProcEffectDataTbl[FLDEFF_PROCID_MAX+1] =
 {
@@ -813,6 +818,8 @@ FLDEFF_PROCEFF_DATA DATA_FLDEFF_ProcEffectDataTbl[FLDEFF_PROCID_MAX+1] =
   {FLDEFF_PROCID_SPLASH,FLDEFF_SPLASH_Init,FLDEFF_SPLASH_Delete},
   {FLDEFF_PROCID_NAMIPOKE_EFFECT,FLDEFF_NAMIPOKE_EFFECT_Init,FLDEFF_NAMIPOKE_EFFECT_Delete},
   {FLDEFF_PROCID_IWAKUDAKI,FLDEFF_IWAKUDAKI_Init,FLDEFF_IWAKUDAKI_Delete},
+  {FLDEFF_PROCID_D06DENKI,FLDEFF_D06DENKI_Init,FLDEFF_D06DENKI_Delete},
+  
   //ここからエフェクトエンカウント用
   {FLDEFF_PROCID_ENC_SGRASS,FLDEFF_ENCOUNT_SGrassInit,FLDEFF_ENCOUNT_Delete},
   {FLDEFF_PROCID_ENC_LGRASS,FLDEFF_ENCOUNT_LGrassInit,FLDEFF_ENCOUNT_Delete},

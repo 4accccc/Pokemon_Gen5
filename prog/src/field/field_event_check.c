@@ -69,6 +69,7 @@
 #include "gym_elec.h"     //for GYM_ELEC_CreateMoveEvt
 #include "gym_fly.h"     //for GYM_FLY_CreateShotEvt
 #include "gym_insect.h"     //for GYM_INSECT_CreatePushWallEvt
+#include "field_gimmick_d06.h"
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
@@ -393,11 +394,6 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
         u32 scr_id = MMDL_GetEventID( fmmdl_talk );
         MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
         FIELD_PLAYER_GRID_ForceStop( req.field_player );
-#ifdef DEBUG_ONLY_FOR_kagaya
-        if( MMDL_GetOBJCode(fmmdl_talk) == ROCK ){
-          scr_id = 10000;
-        }
-#endif
         EFFECT_ENC_EffectDelete( encount );
         return EVENT_FieldTalk( gsys, fieldWork,
           scr_id, fmmdl_player, fmmdl_talk, req.heapID );
@@ -1377,6 +1373,10 @@ static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
     return GYM_INSECT_CreatePushWallEvt(gsys, x, z);
   }
   
+  //D06“d‹C“´ŒA
+  if ( FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_D06) ){
+    return( D06_GIMMICK_CheckPushEvent(fieldWork,req->player_dir) );
+  }
 #if 1
   {
 		FLDMAPPER *g3Dmapper = FIELDMAP_GetFieldG3Dmapper(fieldWork);
@@ -1892,6 +1892,7 @@ static GMEVENT * checkNormalEncountEvent( const EV_REQUEST * req, GAMESYS_WORK *
     return NULL;
   }
 #endif
+  
   enc_type = ENC_TYPE_NORMAL; //(ZONEDATA_IsBingo( req->map_id ) == TRUE) ? ENC_TYPE_BINGO : ENC_TYPE_NORMAL;
   return (GMEVENT*)FIELD_ENCOUNT_CheckEncount(encount, enc_type);
 }

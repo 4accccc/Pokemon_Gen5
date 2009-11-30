@@ -19,6 +19,7 @@
 #include "fldeff_reflect.h"
 #include "fldeff_ripple.h"
 #include "fldeff_splash.h"
+#include "fldeff_d06denki.h"
 
 //======================================================================
 //	define
@@ -120,6 +121,9 @@ static void MMdl_MapAttrReflect_2(
 		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 
 static void MMdl_MapAttrBridgeProc_01(
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
+
+static void MMdl_MapAttrBiriBiri_2(
 		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 
 static void MMdl_MapAttrSEProc_1(
@@ -425,6 +429,7 @@ static void MMdl_MapAttrProc_MoveEnd( MMDL * fmmdl )
 		MMdl_MapAttrSplashProc_012( fmmdl, now, old, prm );
 		MMdl_MapAttrReflect_2( fmmdl, now, old, prm );
 		MMdl_MapAttrShadowProc_2( fmmdl, now, old, prm );
+    MMdl_MapAttrBiriBiri_2( fmmdl, now, old, prm );
 	}
 }
 
@@ -454,6 +459,7 @@ static void MMdl_MapAttrProc_MoveEndJump( MMDL * fmmdl )
 		MMdl_MapAttrShadowProc_2( fmmdl, now, old, prm );
 		MMdl_MapAttrGrassProc_12( fmmdl, now, old, prm );
 		MMdl_MapAttrGroundSmokeProc_2( fmmdl, now, old, prm );
+    MMdl_MapAttrBiriBiri_2( fmmdl, now, old, prm );
 	}
 }
 
@@ -1071,6 +1077,30 @@ static void MMdl_MapAttrBridgeProc_01(
 		}
 	}
 	#endif
+}
+
+//======================================================================
+//	アトリビュート　ビリビリ床
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * ビリビリ床　動作終了 2
+ * @param	fmmdl		MMDL *
+ * @param	now			現在のアトリビュート
+ * @param	old			過去のアトリビュート
+ * @param	prm		OBJCODE_PARAM
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void MMdl_MapAttrBiriBiri_2(
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
+{
+  MAPATTR_VALUE val = MAPATTR_GetAttrValue( now );
+  
+  if( MAPATTR_VALUE_CheckElecFloor(val) == TRUE ){
+    FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( fmmdl );
+    FLDEFF_D06DENKI_BIRIBIRI_SetMMdl( fmmdl, fectrl );
+  }
 }
 
 //======================================================================
@@ -2033,6 +2063,9 @@ static FLDEFF_CTRL * mmdl_GetFldEffCtrl( MMDL *mmdl )
   return( FIELDMAP_GetFldEffCtrl(fieldMapWork) );
 }
 
+//--------------------------------------------------------------
+/// カメラ横角度変換
+//--------------------------------------------------------------
 static const u8 data_angle8_4[16] =
 {
   0, 0,
@@ -2042,12 +2075,17 @@ static const u8 data_angle8_4[16] =
   0,
 };
 
+static const u16 data_dir_angle[DIR_MAX4] =
+{
+  0, 0, 0, 0,
+};
+
 static const u8 data_angleChange360_4[4][4] =
 {
-  {DIR_UP,DIR_DOWN,DIR_LEFT,DIR_RIGHT}, //0
-  {DIR_RIGHT,DIR_LEFT,DIR_UP,DIR_DOWN}, //1
-  {DIR_DOWN,DIR_UP,DIR_RIGHT,DIR_LEFT}, //2
-  {DIR_LEFT,DIR_RIGHT,DIR_DOWN,DIR_UP}, //3
+  {DIR_UP,DIR_DOWN,DIR_LEFT,DIR_RIGHT}, //0 0x0000
+  {DIR_RIGHT,DIR_LEFT,DIR_UP,DIR_DOWN}, //1 0x4000
+  {DIR_DOWN,DIR_UP,DIR_RIGHT,DIR_LEFT}, //2 0x8000
+  {DIR_LEFT,DIR_RIGHT,DIR_DOWN,DIR_UP}, //3 0xc000
 };
 
 //--------------------------------------------------------------

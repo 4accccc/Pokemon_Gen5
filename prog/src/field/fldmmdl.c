@@ -4771,7 +4771,7 @@ void MMDL_MoveInitProcDummy( MMDL * mmdl )
 //--------------------------------------------------------------
 void MMDL_MoveProcDummy( MMDL * mmdl )
 {
-#ifdef  DEBUG_ONLY_FOR_kagaya
+#if 0
   if( MMDL_GetOBJID(mmdl) != MMDL_ID_PLAYER ){
     if( MMDL_GetDirDisp(mmdl) != DIR_UP ){
       OS_Printf( "ìÆçÏÉÇÉfÉã ID %d DIR %d\n",

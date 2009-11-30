@@ -682,3 +682,39 @@ BOOL MAPATTR_VALUE_CheckLawn( const MAPATTR_VALUE val )
 {
   return ( val == MATTR_LAWN_01 );
 }
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　ビリビリ床
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckElecFloor( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_ELECTORIC_FLOOR );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　小浮遊石揺れ
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckShakeElecStone( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_FLOAT_FLOOR );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック 電気岩
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckElecRock( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_ELECTORIC_ROCK );
+}

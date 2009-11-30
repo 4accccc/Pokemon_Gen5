@@ -49,12 +49,12 @@ typedef struct
 }FLD_G3DTEX_ARCIDX;
 
 //--------------------------------------------------------------
-/// FLD_G3DTEX_ARCIDX
+/// FLD_G3DANM_ARCIDX
 //--------------------------------------------------------------
 typedef struct
 {
   ARCHANDLE *handle;
-  u32 *arcIdxTbl;
+  const u32 *arcIdxTbl;
   u32 count;
 }FLD_G3DANM_ARCIDX;
 

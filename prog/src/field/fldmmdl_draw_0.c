@@ -1044,7 +1044,8 @@ static void comManAnmCtrl_Update( COMMAN_ANMCTRL_WORK *work,
         
         work->next_walk_frmidx = GFL_BBDACT_GetAnimeFrmIdx( actSys, actID );
         
-        #ifdef DEBUG_ONLY_FOR_kagaya
+//        #ifdef DEBUG_ONLY_FOR_kagaya
+        #if 0
         if( MMDL_GetOBJID(mmdl) == MMDL_ID_PLAYER ){
           OS_Printf( "自機アニメ切り替え　移動系->停止 それまでのIDX=%d\n",
               work->next_walk_frmidx ); 
@@ -1070,7 +1071,8 @@ static void comManAnmCtrl_Update( COMMAN_ANMCTRL_WORK *work,
       { //次のアニメを表示
         work->next_walk_frmidx = GFL_BBDACT_GetAnimeFrmIdx( actSys, actID );
 
-        #ifdef DEBUG_ONLY_FOR_kagaya
+//        #ifdef DEBUG_ONLY_FOR_kagaya
+        #if 0
         if( MMDL_GetOBJID(mmdl) == MMDL_ID_PLAYER ){
           OS_Printf( "自機アニメ切り替え　移動系継続 それまでのIDX=%d\n",
               work->next_walk_frmidx ); 
