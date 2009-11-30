@@ -279,8 +279,11 @@ static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work )
       {
         //目的高さで上書き
         tmp->NowHeight = tmp->DstHeight;
-        //リフト停止音
-        PMSND_PlaySE(GYM_GROUND_SE_LIFT_STOP);
+        if (!tmp->Exit)
+        {
+          //リフト停止音
+          PMSND_PlaySE(GYM_GROUND_SE_LIFT_STOP);
+        }
         //次のシーケンスへ
         (*seq)++;
       }
