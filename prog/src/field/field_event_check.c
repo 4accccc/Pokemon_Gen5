@@ -88,6 +88,8 @@
 
 #include "event_fourkings.h"  // 
 
+#include "pleasure_boat.h"    //for PL_BOAT_
+
 //======================================================================
 //======================================================================
 
@@ -244,6 +246,13 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
       EFFECT_ENC_EffectDelete( encount );
       return event;
     }
+  }
+
+  //—V——‘DŽžŠÔŠÄŽ‹
+  {
+    PL_BOAT_WORK_PTR *wk_ptr = GAMEDATA_GetPlBoatWorkPtr(req.gamedata);
+    event = PL_BOAT_CheckEvt(*wk_ptr);
+    if (event != NULL) return event;
   }
 
 

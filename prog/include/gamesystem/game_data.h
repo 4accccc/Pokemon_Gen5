@@ -29,7 +29,7 @@
 //#include "savedata/intrude_save.h"      //OCCUPY_INFO
 #include "system/shortcut_data.h"			//SHORTCUT_ID
 //#include "savedata/gimmickwork.h"
-#include "field/pleasure_boat.h"
+#include "field/pleasure_boat_ptr.h"
 
 //============================================================================================
 //============================================================================================

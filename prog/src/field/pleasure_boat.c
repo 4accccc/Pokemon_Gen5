@@ -5,9 +5,8 @@
  * @author  Saito
  */
 //======================================================================
-
-#include "pleasure_boat.h"
 #include <gflib.h>
+#include "pleasure_boat.h"
 #include "system/main.h"  //for HEAPID_APP_CONTROL
 
 //#define FASE_MAX    (5)
@@ -104,11 +103,11 @@ void PL_BOAT_Main(PL_BOAT_WORK_PTR work)
 //--------------------------------------------------------------
 /**
  * @brief	時間経過チェック
- * @param	work      PL_BOAT_WORK_PTR
- * @retval	BOOL    TRUEでイベント発生	
+ * @param	 work      PL_BOAT_WORK_PTR
+ * @retval GMEVENT *event    発生イベントポインタ	
 */
 //--------------------------------------------------------------
-BOOL PL_BOAT_Check(PL_BOAT_WORK_PTR work)
+GMEVENT *PL_BOAT_CheckEvt(PL_BOAT_WORK_PTR work)
 {
 #if 0  
   int diff;
@@ -140,8 +139,9 @@ BOOL PL_BOAT_Check(PL_BOAT_WORK_PTR work)
 
 #else
   PL_BOAT_EVT evt_type;
+  GMEVENT *event;
 
-  if ( work == NULL ) return FALSE;
+  if ( work == NULL ) return NULL;
 
   //時間経過
   work->Time++;
@@ -171,12 +171,12 @@ BOOL PL_BOAT_Check(PL_BOAT_WORK_PTR work)
       rc = FALSE;
     }
   
-    if (rc) return TRUE;
+    if (rc) return event;
   }
 
 #endif  
 
-  return FALSE;
+  return NULL;
 }
 
 #if 0
