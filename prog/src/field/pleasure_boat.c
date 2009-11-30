@@ -8,12 +8,14 @@
 #include <gflib.h>
 #include "pleasure_boat.h"
 #include "system/main.h"  //for HEAPID_APP_CONTROL
+#include "../../../resource/fldmapdata/script/c03r0801_def.h"  //for SCRID_～
+#include "script.h"     //for SCRIPT_SetEventScript
 
 //#define FASE_MAX    (5)
 //#define FIRST_FASE_TIME (10)
 //#define FASE_TIME (45)
 
-#define PL_BOAT_MODE_TIME (180*30)    //180秒
+#define PL_BOAT_MODE_TIME (10*30)    //180秒
 
 typedef struct PL_BOAT_WORK_tag
 {
@@ -107,37 +109,8 @@ void PL_BOAT_Main(PL_BOAT_WORK_PTR work)
  * @retval GMEVENT *event    発生イベントポインタ	
 */
 //--------------------------------------------------------------
-GMEVENT *PL_BOAT_CheckEvt(PL_BOAT_WORK_PTR work)
+GMEVENT *PL_BOAT_CheckEvt(GAMESYS_WORK *gsys, PL_BOAT_WORK_PTR work)
 {
-#if 0  
-  int diff;
-
-  if ( work == NULL ) return FALSE;
-
-  diff = GetDiffTime(work);
-  
-  //現在のフェーズにおける経過時間を超過しているか
-  if ( diff >= work->FaseRestTime ){
-    //超過しているので、フェーズシフト
-    work->NowFase++;
-    if (work->NowFase >= FASE_MAX)
-    {
-      //終了
-      ;
-      return TRUE;
-    }
-    else
-    {
-      //汽笛リクエスト
-      work->WhistleReq = TRUE;
-      //時間上書き
-      work->BaseSec = GFL_RTC_GetDateTimeBySecond();
-      //フェーズ残り時間
-      work->FaseRestTime = GetNowFaseTime(work);
-    }
-  }
-
-#else
   PL_BOAT_EVT evt_type;
   GMEVENT *event;
 
@@ -164,7 +137,7 @@ GMEVENT *PL_BOAT_CheckEvt(PL_BOAT_WORK_PTR work)
       break;
     case PL_BOAT_EVT_END:
       //時間満了　終了スクリプトコール
-      ;
+      event = SCRIPT_SetEventScript( gsys, SCRID_PRG_C03R0801_TIMEUP, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
       rc = TRUE;
       break;
     default:
@@ -173,8 +146,6 @@ GMEVENT *PL_BOAT_CheckEvt(PL_BOAT_WORK_PTR work)
   
     if (rc) return event;
   }
-
-#endif  
 
   return NULL;
 }

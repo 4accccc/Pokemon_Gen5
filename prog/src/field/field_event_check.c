@@ -251,7 +251,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
   //—V——‘DŽžŠÔŠÄŽ‹
   {
     PL_BOAT_WORK_PTR *wk_ptr = GAMEDATA_GetPlBoatWorkPtr(req.gamedata);
-    event = PL_BOAT_CheckEvt(*wk_ptr);
+    event = PL_BOAT_CheckEvt(gsys, *wk_ptr);
     if (event != NULL) return event;
   }
 

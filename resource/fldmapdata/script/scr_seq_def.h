@@ -5364,9 +5364,9 @@
  * @param ret_wk    検索結トレーナー数
  */
 //--------------------------------------------------------------
-#define _PL_BOAT_GET_TR_NUM(type,ret) _ASM_PL_BOAT_GET_TR_NUM type ret_wk
+#define _PL_BOAT_GET_TR_NUM(type,ret_wk) _ASM_PL_BOAT_GET_TR_NUM type ret_wk
 
-  .macro  _ASM_PL_BOAT_GET_TR_NUM
+  .macro  _ASM_PL_BOAT_GET_TR_NUM type ret_wk
   .short  EV_SEQ_PL_BOAT_GET_TR_NUM
   .short  \type
   .short  \ret_wk
