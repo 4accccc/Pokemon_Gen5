@@ -1344,6 +1344,37 @@ static u32 get_line_width( const STRCODE* sp, GFL_FONT* font, u16 margin, const 
   return width;
 }
 
+//=============================================================================================
+/**
+ * ï∂éöóÒÇÃçsêîÇï‘Ç∑
+ *
+ * @param   str
+ *
+ * @retval  u32
+ */
+//=============================================================================================
+u32 PRINTSYS_GetLineCount( const STRBUF* str )
+{
+  const STRCODE* sp = GFL_STR_GetStringCodePointer( str );
+  u32 count = 1;
+
+  while( *sp != EOM_CODE )
+  {
+    if( *sp != SPCODE_TAG_START_ )
+    {
+      if( *sp == CR_CODE ){
+        ++count;
+      }
+      ++sp;
+    }
+    else
+    {
+      sp = STR_TOOL_SkipTag( sp );
+    }
+  }
+
+  return count;
+}
 
 //==============================================================================================
 /**
