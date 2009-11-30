@@ -1,0 +1,65 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: mail_gra.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_MAIL_GRA_NAIX_
+#define NARC_MAIL_GRA_NAIX_
+
+enum {
+	NARC_mail_gra_mail_000_nclr = 0,
+	NARC_mail_gra_mail_001_nclr = 1,
+	NARC_mail_gra_mail_002_nclr = 2,
+	NARC_mail_gra_mail_003_nclr = 3,
+	NARC_mail_gra_mail_004_nclr = 4,
+	NARC_mail_gra_mail_005_nclr = 5,
+	NARC_mail_gra_mail_006_nclr = 6,
+	NARC_mail_gra_mail_007_nclr = 7,
+	NARC_mail_gra_mail_008_nclr = 8,
+	NARC_mail_gra_mail_009_nclr = 9,
+	NARC_mail_gra_mail_010_nclr = 10,
+	NARC_mail_gra_mail_011_nclr = 11,
+	NARC_mail_gra_mail_000_lz_ncgr = 12,
+	NARC_mail_gra_mail_001_lz_ncgr = 13,
+	NARC_mail_gra_mail_002_lz_ncgr = 14,
+	NARC_mail_gra_mail_003_lz_ncgr = 15,
+	NARC_mail_gra_mail_004_lz_ncgr = 16,
+	NARC_mail_gra_mail_005_lz_ncgr = 17,
+	NARC_mail_gra_mail_006_lz_ncgr = 18,
+	NARC_mail_gra_mail_007_lz_ncgr = 19,
+	NARC_mail_gra_mail_008_lz_ncgr = 20,
+	NARC_mail_gra_mail_009_lz_ncgr = 21,
+	NARC_mail_gra_mail_010_lz_ncgr = 22,
+	NARC_mail_gra_mail_011_lz_ncgr = 23,
+	NARC_mail_gra_mail_000_lz_nscr = 24,
+	NARC_mail_gra_mail_001_lz_nscr = 25,
+	NARC_mail_gra_mail_002_lz_nscr = 26,
+	NARC_mail_gra_mail_003_lz_nscr = 27,
+	NARC_mail_gra_mail_004_lz_nscr = 28,
+	NARC_mail_gra_mail_005_lz_nscr = 29,
+	NARC_mail_gra_mail_006_lz_nscr = 30,
+	NARC_mail_gra_mail_007_lz_nscr = 31,
+	NARC_mail_gra_mail_008_lz_nscr = 32,
+	NARC_mail_gra_mail_009_lz_nscr = 33,
+	NARC_mail_gra_mail_010_lz_nscr = 34,
+	NARC_mail_gra_mail_011_lz_nscr = 35,
+	NARC_mail_gra_mail_scr_lz_nscr = 36,
+	NARC_mail_gra_mailbox_d_lz_NSCR = 37,
+	NARC_mail_gra_mailbox_d_lz_NCGR = 38,
+	NARC_mail_gra_mailbox_d_NCLR = 39,
+	NARC_mail_gra_mailbox_win_lz_NSCR = 40,
+	NARC_mail_gra_mailbox_u_lz_NSCR = 41,
+	NARC_mail_gra_mailbox_u_lz_NCGR = 42,
+	NARC_mail_gra_mailbox_u_NCLR = 43,
+	NARC_mail_gra_mailbox_obj_lz_NCGR = 44,
+	NARC_mail_gra_mailbox_obj_NCER = 45,
+	NARC_mail_gra_mailbox_obj_NANR = 46,
+	NARC_mail_gra_mailbox_obj_NCLR = 47
+};
+
+/* NARC_MAIL_GRA_NAIX_ */
+#endif
