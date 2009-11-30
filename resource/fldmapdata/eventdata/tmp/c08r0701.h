@@ -11,5 +11,6 @@
 #ifndef ZONE_C08R0701_EVC_H
 #define ZONE_C08R0701_EVC_H
 
+#define C08R0701_POLICEMAN_01              0
 
 #endif //ZONE_C08R0701_EVC_H
