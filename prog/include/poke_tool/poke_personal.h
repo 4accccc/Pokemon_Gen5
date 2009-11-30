@@ -129,7 +129,12 @@ POKEPER_EGG_GROUP_MUSEISYOKU, //15：無生殖
  */
 //--------------------------------------------------------------
 
-typedef u16 POKEPER_WAZAOBOE_CODE;    ///< ワザ覚えデータコード
+///< ワザ覚えデータコード
+typedef struct
+{ 
+  u16 waza_no;    //覚える技ナンバー
+  u16 level;      //覚えるレベル
+}POKEPER_WAZAOBOE_CODE;
 
 enum {
   POKEPER_WAZAOBOE_TABLE_ELEMS = 26,  ///< ワザおぼえテーブルのロードに必要な要素数
@@ -139,17 +144,17 @@ enum {
 // ワザ覚えデータコード：終端チェック
 static inline BOOL POKEPER_WAZAOBOE_IsEndCode( POKEPER_WAZAOBOE_CODE code )
 {
-  return code == POKEPER_WAZAOBOE_ENDCODE;
+  return ( ( code.waza_no == POKEPER_WAZAOBOE_ENDCODE ) && ( code.level == POKEPER_WAZAOBOE_ENDCODE ) );
 }
 // ワザ覚えデータコード：レベル取得
-static inline u8 POKEPER_WAZAOBOE_GetLevel( POKEPER_WAZAOBOE_CODE code )
+static inline u16 POKEPER_WAZAOBOE_GetLevel( POKEPER_WAZAOBOE_CODE code )
 {
-  return (code >> 9) & 0x7f;
+  return code.level;
 }
 // ワザ覚えデータコード：ワザID取得
 static inline u16 POKEPER_WAZAOBOE_GetWazaID( POKEPER_WAZAOBOE_CODE code )
 {
-  return code & 0x1ff;
+  return code.waza_no;
 }
 
 
