@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_C03R0801 (1)
+#define SCRID_PRG_C03R0801_TIMEUP (2)
 
 #endif //_C03R0801_DEF_H_

@@ -20,6 +20,8 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c03r0801
+_EVENT_DATA		ev_prg_c03r0801_timeup
+
 _EVENT_DATA_END
 
 
@@ -36,3 +38,7 @@ ev_c03r0801:
   //とりあえず最初のラベルだけ生成している
   _END
 
+//遊覧船タイムアップ
+EVENT_START ev_prg_c03r0801_timeup
+
+EVENT_END
