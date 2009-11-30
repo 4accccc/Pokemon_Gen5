@@ -339,11 +339,29 @@ void BTL_EVENT_CallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID )
 {
   BTL_EVENT_FACTOR* factor;
   BTL_EVENT_FACTOR* next_factor;
+  BTL_EVENT_FACTOR* scFactor;
+  BOOL fSkip;
 
   for( factor=FirstFactorPtr; factor!=NULL; )
   {
     next_factor = factor->next;
-    callHandlers( factor, eventID, flowWork );
+
+    // スキップチェックハンドラを持つ要素があれば、今から呼び出そうとする要素をスキップするか判定させる
+    fSkip = FALSE;
+    for( scFactor=FirstFactorPtr; scFactor!=NULL; scFactor=scFactor->next ){
+      if( scFactor->skipCheckHandler ){
+        if( scFactor->skipCheckHandler(factor, factor->factorType, eventID, factor->subID, factor->pokeID) )
+        {
+          fSkip = TRUE;
+          break;
+        }
+      }
+    }
+
+    if( !fSkip ){
+      callHandlers( factor, eventID, flowWork );
+    }
+
     factor = next_factor;
   }
 }
@@ -389,6 +407,17 @@ static void callHandlers( BTL_EVENT_FACTOR* factor, BtlEventType eventType, BTL_
 void BTL_EVENT_FACTOR_AttachSkipCheckHandler( BTL_EVENT_FACTOR* factor, BtlEventSkipCheckHandler handler )
 {
   factor->skipCheckHandler = handler;
+}
+//=============================================================================================
+/**
+ * スキップチェックハンドラをデタッチする
+ *
+ * @param   factor
+ */
+//=============================================================================================
+void BTL_EVENT_FACTOR_DettachSkipCheckHandler( BTL_EVENT_FACTOR* factor )
+{
+  factor->skipCheckHandler = NULL;
 }
 
 /**

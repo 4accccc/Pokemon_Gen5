@@ -28,12 +28,17 @@
 typedef enum {
   BTL_EVENT_NULL = 0,
 
+  BTL_EVENT_WAZASEQ_START,          ///< ワザ処理開始
+  BTL_EVENT_WAZASEQ_END,            ///< ワザ処理終了
+  BTL_EVENT_WAZASEQ_ROB,            ///< ワザ乗っ取り確定
+  BTL_EVENT_WAZASEQ_REFRECT,        ///< ワザ跳ね返し確定
   BTL_EVENT_CHECK_CHANGE,           ///< いれかえチェック
   BTL_EVENT_SKIP_NIGERU_CALC,       ///< にげる確率計算スキップチェック
   BTL_EVENT_SKIP_NIGERU_FORBID,     ///< にげる封じスキップチェック
   BTL_EVENT_NIGERU_FORBID,          ///< にげる封じチェック
   BTL_EVENT_NIGERU_EXMSG,           ///< にげる特殊メッセージ
   BTL_EVENT_CHECK_SP_PRIORITY,      ///< とくしゅ優先度チェック
+  BTL_EVENT_GET_WAZA_PRI,           ///< ワザプライオリティ取得
   BTL_EVENT_CALC_AGILITY,           ///< すばやさ計算
   BTL_EVENT_CHECK_CONF,             ///< 混乱チェック
   BTL_EVENT_CALC_CONF_DAMAGE,       ///< 混乱ダメージ計算
@@ -178,6 +183,7 @@ typedef enum {
   BTL_EVAR_WAZAID,
   BTL_EVAR_WAZA_TYPE,
   BTL_EVAR_WAZA_IDX,
+  BTL_EVAR_WAZA_PRI,
   BTL_EVAR_DAMAGE_TYPE,
   BTL_EVAR_USER_TYPE,
   BTL_EVAR_SICKID,
