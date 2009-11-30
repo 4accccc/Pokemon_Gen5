@@ -451,7 +451,10 @@ end
   fp_header.printf( "\tu16  edge_color;\n" )
   fp_header.printf( "\tu16  padding;\n" )
   fp_header.printf( "\tARCDATID file[BATT_BG_TBL_FILE_MAX ][ BATT_BG_TBL_SEASON_MAX ];\n" )
-  fp_header.printf( "}BATT_BG_TBL_FILE_TABLE;\n" )
+  fp_header.printf( "}BATT_BG_TBL_STAGE_TABLE;\n\n" )
+  fp_header.printf( "typedef struct\n{\n" )
+  fp_header.printf( "\tARCDATID file[BATT_BG_TBL_FILE_MAX ][ BATT_BG_TBL_SEASON_MAX ];\n" )
+  fp_header.printf( "}BATT_BG_TBL_BG_TABLE;\n" )
 
   fp_r.close
   fp_spec.close
