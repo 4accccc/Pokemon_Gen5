@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-12T11:55:49"/>
+	<create user="matsumiya" host="W00207" date="2009-11-30T12:30:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c08pc0101_lady_w01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c08pc0101_lady_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・WHITEver
 ・仮メッセージ</comment>
@@ -306,7 +306,7 @@
 年老いた　私に　ぴったりね</language>
 	</row>
 
-	<row id="msg_c08pc0101_lady_b01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c08pc0101_lady_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・BLACKver
 ・仮メッセージ</comment>
@@ -318,7 +318,7 @@
 それができるのが　ソウリュウシティね</language>
 	</row>
 
-	<row id="msg_c08pc0101_gentleman_w01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c08pc0101_gentleman_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・WHITEver
 ・仮メッセージ</comment>
@@ -334,7 +334,7 @@
 そんな　世界が　あるんじゃないかと</language>
 	</row>
 
-	<row id="msg_c08pc0101_gentleman_b01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c08pc0101_gentleman_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver
 ・仮メッセージ</comment>

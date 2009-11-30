@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-12T12:01:18"/>
+	<create user="matsumiya" host="W00207" date="2009-11-30T12:31:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c08r0501_00_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c08r0501_man3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・c08での演説イベント前
 ・仮メッセージ</comment>
@@ -301,19 +301,21 @@
 		<language name="JPN" width="256">モグモグ……[BE:01:ページ切り替え（クリア）]
 なんでも　ソウリュウシティに
 でんせつの　ポケモンを　つれた[BE:00:ページ切り替え（行送り）]
-おとこが　きているらしいよ……[BE:01:ページ切り替え（クリア）]
+おとこが　きてたらしいよ……[BE:01:ページ切り替え（クリア）]
 モグモゴ　モゴモグ……</language>
 		<language name="JPN_KANJI" width="256">モグモグ……[BE:01:ページ切り替え（クリア）]
 なんでも　ソウリュウシティに
 伝説の　ポケモンを　連れた[BE:00:ページ切り替え（行送り）]
-男が　来ているらしいよ……[BE:01:ページ切り替え（クリア）]
+男が　来てたらしいよ……[BE:01:ページ切り替え（クリア）]
 モグモゴ　モゴモグ……</language>
 	</row>
 
-	<row id="msg_c08r0501_00_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c08r0501_man3_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・c08での演説イベント後
 ・仮メッセージ</comment>
+		<attribute name="キャラ指定">MAN3
+太った兄さん</attribute>
 		<language name="JPN" width="256">モグモグ……
 たべているときは　ハッピー！[BE:01:ページ切り替え（クリア）]
 モグモグ
