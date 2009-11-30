@@ -20,19 +20,22 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c07gym0101_leader7_01
-_EVENT_DATA    ev_pos_c07gym0101_test_01
+_EVENT_DATA    ev_c07gym0101_sunglasses_01
+_EVENT_DATA    ev_bg_c07gym0101_statue_01
+_EVENT_DATA    ev_pos_c07gym0101_switch_01
+_EVENT_DATA    ev_pos_c07gym0101_switch_02
+_EVENT_DATA    ev_pos_c07gym0101_switch_03
 _EVENT_DATA_END
 
+//------------------------------注意--------------------------------//
+//																	//
+//	ジムギミックに LOCALWORK15 を使用ししています                   //
+//	同マップ内の使用を禁止します。									//
+//	LOCALWORK15 ⇒ POS起動WORK。常に0。								//
+//																	//
+//------------------------------------------------------------------//
 
 
-
-
-EVENT_START	ev_pos_c07gym0101_test_01
-
-	_SE_PLAY( SEQ_SE_KAIDAN )
-	_SE_WAIT()
-
-EVENT_END
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
@@ -57,7 +60,7 @@ EVENT_START		ev_c07gym0101_leader7_01
 		_BALLOONWIN_OBJMSG( msg_c07gym0101_leader_01,C07GYM0101_LEADER7_01 )
 		_BALLOONWIN_CLOSE()
 		
-		//【仮】戦闘処理スキップ
+		//【仮】トレーナーID仮
 		//戦闘処理
 		_TRAINER_BTL_SET( TRID_LEADER6_01, 0 )
 		//結果チェック
@@ -115,4 +118,129 @@ EVENT_START		ev_c07gym0101_leader7_01
 		_BALLOONWIN_CLOSE()
 	ENDIF
 
+EVENT_END
+
+/************************************************************/
+/*						ジムガイド							*/
+/************************************************************/
+EVENT_START	ev_c07gym0101_sunglasses_01
+	_TALK_OBJ_START()
+
+	//バッジフラグ取得
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_07 )
+
+	//バッジフラグで分岐
+	IF $SCWK_TEMP0 == 0 THEN
+		//バッジ入手前の処理
+
+		//アイテム入手フラグで分岐
+		IF FLAG_OFF( FE_C07GYM_ITEM ) THEN
+			//アイテム未入手なら、おいしいみず入手イベント
+			_BALLOONWIN_TALKOBJ_MSG( msg_c07gym0101_glasses_01 )
+			_BALLOONWIN_CLOSE()
+			_ITEM_EVENT_KEYWAIT( ITEM_OISIIMIZU, 1 )
+			_BALLOONWIN_TALKOBJ_MSG( msg_c07gym0101_glasses_02 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+
+			_FLAG_SET( FE_C07GYM_ITEM )			//アイテム入手フラグをセット
+
+		ELSE
+			//入手済みならメッセージのみ
+			_BALLOONWIN_TALKOBJ_MSG( msg_c07gym0101_glasses_02 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+		ENDIF
+
+	ELSE
+		//バッジ入手後の処理
+
+		//思い出してほしいっすね
+		_BALLOONWIN_TALKOBJ_MSG( msg_c07gym0101_glasses_03 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+
+	ENDIF
+
+EVENT_END
+
+/************************************************************/
+/*							石像							*/
+/************************************************************/
+EVENT_START	ev_bg_c07gym0101_statue_01
+	_TALK_OBJ_START()
+
+
+	_PLAYER_NAME( 0 )		//主人公名取得
+
+	//バッジフラグ取得
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_07 )
+	//ジムバッジフラグによって分岐
+	IF $SCWK_TEMP0 == 0 THEN
+		//バッジ入手前なら
+		_SYSWIN_MSG_DOWN( msg_c07gym0101_statue_01 )
+
+	ELSE
+		//バッジ入手後なら　【仮】イベント進行で分岐（？？後友達の名前も入る）
+		IF FLAG_OFF( FH_01) THEN
+			//イベント進行前
+			_SYSWIN_MSG_DOWN( msg_c07gym0101_statue_02 )
+		ELSE
+			//イベント進行後
+			_SYSWIN_MSG_DOWN( msg_c07gym0101_statue_03 )
+		ENDIF
+
+	ENDIF
+
+	_LAST_KEYWAIT()
+	_SYSWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*    ジムギミック（１）                                      */
+/**************************************************************/
+EVENT_START	ev_pos_c07gym0101_switch_01
+
+	//SE再生
+	 _SE_PLAY( SEQ_SE_FLD_64 )
+	//スイッチアニメ
+	_GYM_ICE_SW_ANM(0)
+	//障害物のアニメＳＥ
+	 _SE_PLAY( SEQ_SE_FLD_65 )
+	//障害物のアニメ
+	_GYM_ICE_WALL_ANM(0)
+	
+EVENT_END
+
+/**************************************************************/
+/*    ジムギミック（２）                                      */
+/**************************************************************/
+EVENT_START	ev_pos_c07gym0101_switch_02
+
+	//SE再生
+	 _SE_PLAY( SEQ_SE_FLD_64 )
+	//スイッチアニメ
+	_GYM_ICE_SW_ANM(1)
+	//障害物のアニメＳＥ
+	 _SE_PLAY( SEQ_SE_FLD_65 )
+	//障害物のアニメ
+	_GYM_ICE_WALL_ANM(1)
+	
+EVENT_END
+
+/**************************************************************/
+/*    ジムギミック（３）                                      */
+/**************************************************************/
+EVENT_START	ev_pos_c07gym0101_switch_03
+
+	//SE再生
+	 _SE_PLAY( SEQ_SE_FLD_64 )
+	//スイッチアニメ
+	_GYM_ICE_SW_ANM(2)
+	//障害物のアニメＳＥ
+	 _SE_PLAY( SEQ_SE_FLD_65 )
+	//障害物のアニメ
+	_GYM_ICE_WALL_ANM(2)
+	
 EVENT_END
