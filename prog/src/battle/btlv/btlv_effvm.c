@@ -1680,6 +1680,9 @@ static VMCMD_RESULT VMEC_BG_LOAD( VMHANDLE *vmh, void *context_work )
   PaletteWorkSetEx_Arc( BTLV_EFFECT_GetPfd(), ARCID_WAZAEFF_GRA, datID + 2, bevw->heapID, FADE_MAIN_BG, 0,
                         BTLV_EFFVM_BG_PAL * 16, 0 );
 
+  GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, 0 );
+  GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, 0 );
+
   return bevw->control_mode;
 }
 
@@ -1705,9 +1708,6 @@ static VMCMD_RESULT VMEC_BG_SCROLL( VMHANDLE *vmh, void *context_work )
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_BG_SCROLL\n");
 #endif DEBUG_OS_PRINT
-
-  GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, 0 );
-  GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, 0 );
 
   BTLV_BG_MovePosition( BTLV_EFFECT_GetBGWork(), position, type, scr_x, scr_y, frame, wait, count );
 
