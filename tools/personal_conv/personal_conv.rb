@@ -453,7 +453,6 @@ end
   fp_monsno.print( " * @file	monsno_def.h\n" )
   fp_monsno.print( " * @bfief	ポケモンNoのDefine定義ファイル\n" )
   fp_monsno.print( " * @author	PersonalConverter\n" )
-  fp_monsno.printf( " * @date\t%s\n", Date::today.to_s )
   fp_monsno.print( " * パーソナルコンバータから生成されました\n" )
   fp_monsno.print( "*/\n")
   fp_monsno.print( "//============================================================================================\n" )
