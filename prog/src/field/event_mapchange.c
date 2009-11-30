@@ -152,10 +152,38 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 		break;
 	case 2:
 		fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-		GMEVENT_CallEvent(event,EVENT_FieldFadeIn(gsys, fieldmap, 0, FIELD_FADE_WAIT));
+    { // 季節表示の初期設定
+      BOOL disp = FALSE;
+      AREADATA* areadata = FIELDMAP_GetAreaData( fieldmap );
+      BOOL outdoor = ( AREADATA_GetInnerOuterSwitch(areadata) != 0 );
+      u8 season = GAMEDATA_GetSeasonID( gamedata );
+      FIELD_STATUS* fstatus = GAMEDATA_GetFieldStatus( gamedata );
+      if( game_init_work->mode == GAMEINIT_MODE_DEBUG )
+      { // デバッグスタート ==> 表示なし
+        FIELD_STATUS_SetSeasonDispFlag( fstatus, FALSE );
+        FIELD_STATUS_SetSeasonDispLast( fstatus, season );
+      }
+      else if( (game_init_work->mode == GAMEINIT_MODE_CONTINUE) && (outdoor != TRUE) )
+      { // 「つづきから」で屋内にいる場合 ==> 表示なし
+        FIELD_STATUS_SetSeasonDispFlag( fstatus, FALSE );
+        FIELD_STATUS_SetSeasonDispLast( fstatus, season );
+      }
+      else
+      { // それ以外 ==> 開始時の季節を表示
+        season = (season-1+PMSEASON_TOTAL) % PMSEASON_TOTAL;
+        FIELD_STATUS_SetSeasonDispFlag( fstatus, TRUE );
+        FIELD_STATUS_SetSeasonDispLast( fstatus, season );
+        OBATA_Printf( "-------------------------------------------------------------%d\n",season);
+      }
+    }
 		(*seq) ++;
 		break;
 	case 3:
+		fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+		GMEVENT_CallEvent(event,EVENT_FieldFadeIn(gsys, fieldmap, 0, FIELD_FADE_WAIT));
+		(*seq) ++;
+		break;
+	case 4:
 		fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
     if(FIELDMAP_GetPlaceNameSys(fieldmap)){
 			FIELD_PLACE_NAME_DisplayForce(FIELDMAP_GetPlaceNameSys(fieldmap), fmw->loc_req.zone_id);

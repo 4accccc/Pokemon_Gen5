@@ -149,8 +149,10 @@ static GMEVENT_RESULT FieldFadeInEvent(GMEVENT * event, int *seq, void * work)
     {
       GAMEDATA*       gdata = GAMESYSTEM_GetGameData( few->gsys );
       FIELD_STATUS* fstatus = GAMEDATA_GetFieldStatus( gdata );
+      AREADATA*    areadata = FIELDMAP_GetAreaData( few->fieldmap );
+      BOOL          outdoor = ( AREADATA_GetInnerOuterSwitch(areadata) != 0 );
 
-      if( FIELD_STATUS_GetSeasonDispFlag(fstatus) )
+      if( outdoor && FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(屋外&&フラグON)
       { // 四季表示
         GMEVENT_CallEvent( event, EVENT_SeasonDisplay( few->gsys, few->fieldmap ) );
         FIELD_STATUS_SetSeasonDispFlag( fstatus, FALSE );
