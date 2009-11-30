@@ -349,6 +349,7 @@ static void handler_side_SiroiKiri_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SV
   u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
   if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_VOLUME) < 0)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) != pokeID)
   ){
     work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
     if( work[0] ){

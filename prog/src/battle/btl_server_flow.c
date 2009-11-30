@@ -412,7 +412,9 @@ static BOOL scEvent_CheckAddRankEffectOccur( BTL_SVFLOW_WORK* wk, const SVFL_WAZ
 static void scproc_Fight_SimpleEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
 static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, BOOL fAlmost );
 static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target,
-  WazaRankEffect effect, int volume, u16 itemID, BOOL fAlmost, BOOL fStdMsg );
+  WazaRankEffect effect, int volume, u8 wazaUsePokeID, u16 itemID, BOOL fAlmost, BOOL fStdMsg );
+static int scEvent_RankValueChange( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaRankEffect rankType,
+  u8 wazaUsePokeID, u16 itemID, int volume );
 static void scproc_Fight_EffectSick( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
 static void scproc_Fight_SimpleRecover( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
 static BOOL scproc_RecoverHP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 recoverHP );
@@ -577,7 +579,7 @@ static void scEvent_AfterDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
 static void scEvent_GetWazaRankEffectValue( BTL_SVFLOW_WORK* wk, WazaID waza, u32 idx,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, WazaRankEffect* effect, int* volume );
 static BOOL scEvent_CheckRankEffectSuccess( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
-  WazaRankEffect effect, int volume );
+  WazaRankEffect effect, u8 wazaUsePokeID, int volume );
 static void scEvent_RankEffect_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scEvent_RankEffect_Fix( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, WazaRankEffect rankType, int volume );
 static void scEvent_WazaRankEffectFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
@@ -5160,6 +5162,7 @@ static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPA
 {
   BOOL ret = FALSE;
   u32 eff_cnt, i;
+  u8 atkPokeID = BPP_GetID( attacker );
 
   eff_cnt = WAZADATA_GetRankEffectCount( wazaParam->wazaID );
   BTL_Printf("ワザ:%dのエフェクト数=%d\n", wazaParam->wazaID, eff_cnt);
@@ -5169,7 +5172,7 @@ static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPA
     int  volume;
 
     scEvent_GetWazaRankEffectValue( wk, wazaParam->wazaID, i, attacker, target, &effect, &volume );
-    if( scproc_RankEffectCore(wk, target, effect, volume, ITEM_DUMMY_DATA, fAlmost, TRUE) )
+    if( scproc_RankEffectCore(wk, target, effect, volume, atkPokeID, ITEM_DUMMY_DATA, fAlmost, TRUE) )
     {
       u32 hem_state = Hem_PushState( &wk->HEManager );
       scEvent_WazaRankEffectFixed( wk, target, wazaParam->wazaID, effect, volume );
@@ -5188,6 +5191,7 @@ static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPA
  * @param   target
  * @param   effect
  * @param   volume
+ * @param   wazaUsePokeID    ワザによるランク増減ならワザ使用者ポケID（それ以外は BTL_POKEID_NULL）
  * @param   itemID    アイテム使用によるランク増減ならアイテムID指定（それ以外は ITEM_DUMMY_DATA を指定）
  * @param   fAlmost   特殊要因で効果失敗した時、そのメッセージを表示する
  * @param   fStdMsg   標準メッセージを出力する（○○は××があがった！など）
@@ -5196,8 +5200,10 @@ static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPA
  */
 //--------------------------------------------------------------------------
 static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target,
-  WazaRankEffect effect, int volume, u16 itemID, BOOL fAlmost, BOOL fStdMsg )
+  WazaRankEffect effect, int volume, u8 wazaUsePokeID, u16 itemID, BOOL fAlmost, BOOL fStdMsg )
 {
+  volume = scEvent_RankValueChange( wk, target, effect, wazaUsePokeID, itemID, volume );
+
   if( !BPP_IsRankEffectValid(target, effect, volume) ){
     if( fAlmost ){
       scPut_RankEffectLimit( wk, target, effect, volume );
@@ -5208,7 +5214,7 @@ static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target,
   {
     BOOL ret = TRUE;
 
-    if( scEvent_CheckRankEffectSuccess(wk, target, effect, volume) )
+    if( scEvent_CheckRankEffectSuccess(wk, target, effect, wazaUsePokeID, volume) )
     {
       BTL_Printf("ランク効果発生：type=%d, volume=%d\n", effect, volume );
       scPut_RankEffect( wk, target, effect, volume, itemID, fStdMsg );
@@ -5235,6 +5241,34 @@ static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target,
     return ret;
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ランク効果の増減値を変化させる
+ *
+ * @param   wk
+ * @param   target
+ * @param   rankType
+ * @param   wazaUsePokeID
+ * @param   itemID
+ * @param   volume
+ *
+ * @retval  int   変化後の増減値
+ */
+//----------------------------------------------------------------------------------
+static int scEvent_RankValueChange( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaRankEffect rankType,
+  u8 wazaUsePokeID, u16 itemID, int volume )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(target) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, wazaUsePokeID );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_STATUS_TYPE, rankType );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_VOLUME, volume );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_RANKVALUE_CHANGE );
+    volume  = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
+  BTL_EVENTVAR_Pop();
+  return volume;
+}
+
 //---------------------------------------------------------------------------------------------
 // サーバーフロー：ランク効果＆状態異常を同時に与えるワザ
 //---------------------------------------------------------------------------------------------
@@ -8807,12 +8841,13 @@ static void scEvent_GetWazaRankEffectValue( BTL_SVFLOW_WORK* wk, WazaID waza, u3
  */
 //--------------------------------------------------------------------------
 static BOOL scEvent_CheckRankEffectSuccess( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
-  WazaRankEffect effect, int volume )
+  WazaRankEffect effect, u8 wazaUsePokeID, int volume )
 {
   BOOL failFlag = FALSE;
 
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(target) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, wazaUsePokeID );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_STATUS_TYPE, effect );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_VOLUME, volume );
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, failFlag );
@@ -10100,7 +10135,7 @@ static u8 scproc_HandEx_rankEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
     if( !BPP_IsDead(pp_target) )
     {
       if( scproc_RankEffectCore(wk, pp_target, param->rankType, param->rankVolume,
-        itemID, param->fAlmost, !(param->fStdMsgDisable))
+        BTL_POKEID_NULL, itemID, param->fAlmost, !(param->fStdMsgDisable))
       ){
         result = 1;
       }

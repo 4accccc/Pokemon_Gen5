@@ -357,6 +357,8 @@ static void handler_MagicMirror_Reflect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_MagicMirror( u16 pri, u16 tokID, u8 pokeID );
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Syuukaku( u16 pri, u16 tokID, u8 pokeID );
 static void handler_Syuukaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Amanojaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Amanojaku( u16 pri, u16 tokID, u8 pokeID );
 
 
 
@@ -494,7 +496,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
     { POKETOKUSEI_MAKENKI,          HAND_TOK_ADD_Makenki       },
     { POKETOKUSEI_YOWAKI,           HAND_TOK_ADD_Yowaki        },
     { POKETOKUSEI_MARUTISUKEIRU,    HAND_TOK_ADD_MultiScale    },
-    { POKETOKUSEI_AMANOJAKU,        HAND_TOK_ADD_Nenchaku      }, // あまのじゃく
+    { POKETOKUSEI_AMANOJAKU,        HAND_TOK_ADD_Amanojaku     }, // あまのじゃく
     { POKETOKUSEI_KINCHOUKAN,       HAND_TOK_ADD_Nenchaku      }, // きんちょうかん
     { POKETOKUSEI_NOROWAREBODY,     HAND_TOK_ADD_NorowareBody  }, // のろわれボディ
     { POKETOKUSEI_MORATERAPII,      HAND_TOK_ADD_Moraterapi    }, // モラテラピー
@@ -1691,8 +1693,9 @@ static void handler_ClearBody_Guard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
 //----------------------------------------------------------------------------------
 static void common_RankDownGuard_Check( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, WazaRankEffect rankType )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) != pokeID)
+  ){
     if( (rankType == WAZA_RANKEFF_MAX)
     ||  (BTL_EVENTVAR_GetValue(BTL_EVAR_STATUS_TYPE) == rankType)
     ){
@@ -5265,7 +5268,6 @@ static void handler_Syuukaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     }
   }
 }
-
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Syuukaku( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
@@ -5274,3 +5276,31 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Syuukaku( u16 pri, u16 tokID, u8 pokeID )
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
 }
+//------------------------------------------------------------------------------
+/**
+ *  とくせい「あまのじゃく」
+ */
+//------------------------------------------------------------------------------
+// ランク増減値修正ハンドラ
+static void handler_Amanojaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    int volume = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
+    if( (volume > 0)
+    ||  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) != pokeID)
+    ){
+      volume *= -1;
+      work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_VOLUME, volume );
+    }
+  }
+}
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Amanojaku( u16 pri, u16 tokID, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_RANKVALUE_CHANGE,        handler_Amanojaku },  // ランク増減値修正ハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
+}
+

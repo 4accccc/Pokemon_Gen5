@@ -95,7 +95,8 @@ typedef enum {
   BTL_EVENT_MEMBER_IN,              ///< 個別ポケ入場直後
   BTL_EVENT_MEMBER_COMP,            ///< 全参加ポケ登場後
   BTL_EVENT_GET_RANKEFF_VALUE,      ///< ワザによる能力ランク増減値チェック
-  BTL_EVENT_RANKEFF_LAST_CHECK,     ///< 能力ランク増減最終チェック
+  BTL_EVENT_RANKVALUE_CHANGE,       ///< ランク増減値の最終チェック
+  BTL_EVENT_RANKEFF_LAST_CHECK,     ///< ランク増減成否チェック
   BTL_EVENT_RANKEFF_FAILED,         ///< 能力ランク増減失敗確定
   BTL_EVENT_RANKEFF_FIXED,          ///< 能力ランク増減処理後
   BTL_EVENT_WAZA_RANKEFF_FIXED,     ///< ワザによるランク増減効果成功
@@ -142,6 +143,8 @@ typedef enum {
 
 
 }BtlEventType;
+
+
 
 
 
