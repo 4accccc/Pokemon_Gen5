@@ -339,7 +339,7 @@ static BTL_EVENT_FACTOR* ADD_SIDE_SiroiKiri( u16 pri, BtlSide side, BtlSideEffec
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_RANKEFF_LAST_CHECK,  handler_side_SiroiKiri_CheckFail   },  // ランク増減失敗チェック
-    { BTL_EVENT_RANKEFF_FAILED,      handler_side_SiroiKiri_FixFail     },   // 失敗確定
+    { BTL_EVENT_RANKEFF_FAILED,      handler_side_SiroiKiri_FixFail     },  // 失敗確定
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_SIDE, eff, pri, side, HandlerTable );
@@ -352,7 +352,7 @@ static void handler_side_SiroiKiri_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SV
   ){
     work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
     if( work[0] ){
-      BTL_Printf("しろいきりで防ぐぞ\n");
+      BTL_Printf("しろいきりで防いだ\n");
     }
   }
 }
@@ -374,11 +374,12 @@ static void handler_side_SiroiKiri_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
 static BTL_EVENT_FACTOR* ADD_SIDE_Oikaze( u16 pri, BtlSide side, BtlSideEffect eff )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_RANKEFF_LAST_CHECK,  handler_side_Oikaze  },  // ランク増減失敗チェック
+    { BTL_EVENT_CALC_AGILITY,  handler_side_Oikaze  },  // すばやさ計算ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_SIDE, eff, pri, side, HandlerTable );
 }
+// すばやさ計算ハンドラ
 static void handler_side_Oikaze( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
   u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );

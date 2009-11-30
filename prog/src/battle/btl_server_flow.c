@@ -8812,9 +8812,9 @@ static BOOL scEvent_CheckRankEffectSuccess( BTL_SVFLOW_WORK* wk, const BTL_POKEP
   BOOL failFlag = FALSE;
 
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(target) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_STATUS_TYPE, effect );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, volume );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(target) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_STATUS_TYPE, effect );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_VOLUME, volume );
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, failFlag );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_RANKEFF_LAST_CHECK );
     failFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );

@@ -5251,7 +5251,7 @@ static void handler_Syuukaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     {
       BTL_HANDEX_PARAM_SET_ITEM* param;
 
-      BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_TOKWIN_IN, pokeID );
+      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
 
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
       param->itemID = usedItem;
@@ -5260,7 +5260,7 @@ static void handler_Syuukaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
       HANDEX_STR_AddArg( &param->exStr, pokeID );
       HANDEX_STR_AddArg( &param->exStr, usedItem );
 
-      BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_TOKWIN_OUT, pokeID );
+      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
 
     }
   }
