@@ -947,6 +947,8 @@ static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work )
       //カメラのバインドを切る
       FIELD_CAMERA_FreeTarget(camera);
     }
+    //リフト移動ＳＥ
+    PMSND_PlaySE(GYM_GROUND_SE_LIFT_MOVE);
     (*seq)++;
     break;
   case 1:
@@ -959,7 +961,12 @@ static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work )
         //目的高さで上書き
         tmp->NowHeight = tmp->DstHeight;
         //リフト振動セットアップ
-        InitLiftShake(EXIT_LIFT_IDX, tmp->AddVal, FALSE, camera, &tmp->ShakeWork);
+        if (!tmp->Exit)
+        {
+          InitLiftShake(EXIT_LIFT_IDX, tmp->AddVal, FALSE, camera, &tmp->ShakeWork);
+          //リフト停止ＳＥ
+          PMSND_PlaySE(GYM_GROUND_SE_LIFT_STOP);
+        }
         //次のシーケンスへ
         (*seq)++;
       }

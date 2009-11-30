@@ -19,9 +19,9 @@
 #include "arc/fieldmap/gym_ground.naix"
 #include "system/main.h"    //for HEAPID_FIELDMAP
 
-//#include "sound/pm_sndsys.h"
+#include "sound/pm_sndsys.h"
 
-//#include "gym_ground_se_def.h"
+#include "gym_ground_se_def.h"
 
 #define GYM_GROUND_ENT_UNIT_IDX (0)
 #define GYM_GROUND_ENT_TMP_ASSIGN_ID  (1)
@@ -266,6 +266,8 @@ static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work )
       //カメラのバインドを切る
       FIELD_CAMERA_FreeTarget(camera);
     }
+    //リフト移動ＳＥ
+    PMSND_PlaySE(GYM_GROUND_SE_LIFT_MOVE);
     (*seq)++;
     break;
   case 1:
@@ -277,6 +279,8 @@ static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work )
       {
         //目的高さで上書き
         tmp->NowHeight = tmp->DstHeight;
+        //リフト停止音
+        PMSND_PlaySE(GYM_GROUND_SE_LIFT_STOP);
         //次のシーケンスへ
         (*seq)++;
       }
