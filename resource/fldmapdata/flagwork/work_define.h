@@ -149,6 +149,7 @@
 #define WK_SCENE_C06                     16537 /* 0x4099 C06フキヨセシティ：POSイベント用ワーク */
 #define WK_SCENE_D06                     16538 /* 0x409a D06電気洞窟の外側：POSイベント用ワーク */
 #define WK_SCENE_D06R0101                16539 /* 0x409b C06フキヨセシティ：POSイベント用ワーク */
+#define WK_SCENE_R04                     16540 /* 0x409c ４番道路：POSイベント用ワーク */
 
 #define WK_SCENE_AREA_END                16687 /* 0x412f  */
 
