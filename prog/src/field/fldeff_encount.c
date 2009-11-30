@@ -13,6 +13,9 @@
 #include "field_effect.h"
 #include "fldmmdl.h"
 
+#include "sound/pm_sndsys.h"
+#include "sound/wb_sound_data.sadl"
+
 #include "fldeff_encount.h"
 
 //======================================================================
@@ -35,7 +38,9 @@ typedef struct _TAG_FLDEFF_ENCOUNT FLDEFF_ENCOUNT;
 typedef struct _EFFRES_DATA{
   u8  anm_num;
   u8  season_f:4;
-  u8  area_f:4;
+  u8  area_f:2;
+  u8  inout_f:2;
+  u16 se_no;
   u16 mdl_id;
   u16 anm_tbl[ENCOUNT_ANMRES_MAX];
 }EFFRES_DATA;
@@ -82,45 +87,56 @@ typedef struct
   GFL_G3D_RND *obj_rnd;
 }TASKWORK_ENCOUNT;
 
+#define ENCEFF_SE_GRASS (SEQ_SE_FLD_70)
+#define ENCEFF_SE_WATER (SEQ_SE_FLD_71)
+#define ENCEFF_SE_BIRD  (SEQ_SE_FLD_72)
+#define ENCEFF_SE_SMOKE (SEQ_SE_FLD_73)
 
 static EFFRES_DATA DATA_EffEncountRes[EFFENC_TYPE_MAX] = {
  {  //íZÇ¢ëê EFFENC_TYPE_SGRASS
-   1,TRUE,TRUE,NARC_fldeff_short_grass_sp_nsbmd,
+   1,TRUE,TRUE,FALSE, ENCEFF_SE_GRASS, 
+   NARC_fldeff_short_grass_sp_nsbmd,
    {
      NARC_fldeff_short_grass_sp_nsbta,
      0,0,0
    },
  },
  {  //EFFENC_TYPE_LGRASS,  ///<í∑Ç¢ëê
-   1,TRUE,TRUE,NARC_fldeff_short_grass_sp_nsbmd,
+   1,TRUE,FALSE,FALSE, ENCEFF_SE_GRASS,
+   NARC_fldeff_long_grass_sp_nsbmd,
    {
-     NARC_fldeff_short_grass_sp_nsbta,
+     NARC_fldeff_long_grass_sp_nsbta,
      0,0,0
    },
  },
  {  //EFFENC_TYPE_CAVE,    ///<ì¥åA
-   1,TRUE,TRUE,NARC_fldeff_short_grass_sp_nsbmd,
+   2,FALSE,FALSE,FALSE, ENCEFF_SE_SMOKE,
+   NARC_fldeff_soil_smoke_nsbmd,
    {
-     NARC_fldeff_short_grass_sp_nsbta,
-     0,0,0
+     NARC_fldeff_soil_smoke_nsbta,
+     NARC_fldeff_soil_smoke_nsbca,
+     0,0
    },
  },
  {  //EFFENC_TYPE_WATER,   ///<íWêÖ
-   1,TRUE,TRUE,NARC_fldeff_short_grass_sp_nsbmd,
+   1,FALSE,FALSE,TRUE, ENCEFF_SE_WATER,
+   NARC_fldeff_freshwater_in_nsbmd,
    {
-     NARC_fldeff_short_grass_sp_nsbta,
+     NARC_fldeff_freshwater_in_nsbca,
      0,0,0
    },
  },
  {  //EFFENC_TYPE_SEA,     ///<äC
-   1,TRUE,TRUE,NARC_fldeff_short_grass_sp_nsbmd,
+   1,FALSE,FALSE,FALSE, ENCEFF_SE_WATER,
+   NARC_fldeff_sea_out_nsbmd,
    {
-     NARC_fldeff_short_grass_sp_nsbta,
+     NARC_fldeff_sea_out_nsbca,
      0,0,0
    },
  },
  {  //EFFENC_TYPE_BRIDGE,  ///<ã¥
-   3,FALSE,FALSE,NARC_fldeff_bird_shadow_nsbmd,
+   3,FALSE,FALSE,FALSE, ENCEFF_SE_BIRD,
+   NARC_fldeff_bird_shadow_nsbmd,
    {
      NARC_fldeff_bird_shadow_nsbta,
      NARC_fldeff_bird_shadow_nsbma,
@@ -236,7 +252,10 @@ static void enc_InitResource( FLDEFF_ENCOUNT* enc, EFFENC_TYPE_ID type )
     if( enc->data.area_f ){
       ofs += FLDEFF_CTRL_GetHasSeasonDiff( enc->fectrl )*4;
     }
+  }else if( enc->data.inout_f ){
+    ofs = FLDEFF_CTRL_GetAreaInOutSwitch( enc->fectrl );
   }
+
   enc->g3d_res_mdl = GFL_G3D_CreateResourceHandle( handle, enc->data.mdl_id+ofs );
   ret = GFL_G3D_TransVramTexture( enc->g3d_res_mdl );
   GF_ASSERT( ret );
@@ -379,7 +398,14 @@ static void encountTask_Update( FLDEFF_TASK *task, void *wk )
   int i;
   TASKWORK_ENCOUNT *work = wk;
   FLDEFF_ENCOUNT* enc = work->head.eff_enc;
-  
+ 
+  {
+    int frame;
+ 	  GFL_G3D_OBJECT_GetAnimeFrame( work->obj, 0, &frame );
+    if(frame == 0){
+      PMSND_PlaySE( enc->data.se_no);
+    }
+  }
   for( i = 0;i < enc->data.anm_num; i++){
     GFL_G3D_OBJECT_LoopAnimeFrame( work->obj, i, FX32_ONE );
   }

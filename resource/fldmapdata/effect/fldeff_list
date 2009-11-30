@@ -37,7 +37,11 @@ G3D_FE_ANMICA = shibuki01.ica \
   taki_start_f.ica \
   taki_start_s.ica \
   iwakudaki.ica \
+  $(EFFENC_WATER)freshwater_in.ica \
+  $(EFFENC_WATER)freshwater_out.ica \
+  $(EFFENC_SEA)sea_out.ica \
   $(EFFENC_BIRD)bird_shadow.ica \
+  $(EFFENC_CAVE)soil_smoke.ica \
   $(EFF_D06DENKI)d6_ishi_big01.ica \
   $(EFF_D06DENKI)d6_ishi_big02.ica \
   $(EFF_D06DENKI)d6_ishi_mini01.ica \
@@ -62,7 +66,12 @@ G3D_FE_ANMITA = shibuki01.ita \
   $(EFFENC_SGRASS)short_grass_su2.ita \
   $(EFFENC_SGRASS)short_grass_au2.ita \
   $(EFFENC_SGRASS)short_grass_wi2.ita \
+  $(EFFENC_LGRASS)long_grass_sp.ita \
+  $(EFFENC_LGRASS)long_grass_su.ita \
+  $(EFFENC_LGRASS)long_grass_au.ita \
+  $(EFFENC_LGRASS)long_grass_wi.ita \
   $(EFFENC_BIRD)bird_shadow.ita \
+  $(EFFENC_CAVE)soil_smoke.ita \
   iwakudaki.ita
 
 #---------------------------------------------------------------
@@ -114,7 +123,15 @@ G3D_FE_MDL = kage.imd \
   $(EFFENC_SGRASS)short_grass_su2.imd \
   $(EFFENC_SGRASS)short_grass_au2.imd \
   $(EFFENC_SGRASS)short_grass_wi2.imd \
+  $(EFFENC_LGRASS)long_grass_sp.imd \
+  $(EFFENC_LGRASS)long_grass_su.imd \
+  $(EFFENC_LGRASS)long_grass_au.imd \
+  $(EFFENC_LGRASS)long_grass_wi.imd \
+  $(EFFENC_WATER)freshwater_in.imd \
+  $(EFFENC_WATER)freshwater_out.imd \
+  $(EFFENC_SEA)sea_out.imd \
   $(EFFENC_BIRD)bird_shadow.imd \
+  $(EFFENC_CAVE)soil_smoke.imd \
   iwakudaki.imd \
   $(EFF_D06DENKI)d6_ishi_big01.imd \
   $(EFF_D06DENKI)d6_ishi_mini01.imd \
