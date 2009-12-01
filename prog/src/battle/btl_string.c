@@ -193,6 +193,17 @@ static inline void register_PokeNickname( u8 pokeID, WordBufID bufID )
 
   WORDSET_RegisterPokeNickName( SysWork.wset, bufID, pp );
 }
+
+static inline void register_PokeNicknameTruth( u8 pokeID, WordBufID bufID )
+{
+  const BTL_POKEPARAM* bpp;
+  const POKEMON_PARAM* pp;
+
+  bpp = BTL_POKECON_GetPokeParamConst( SysWork.pokeCon, pokeID );
+  pp = BPP_GetSrcData( bpp );
+
+  WORDSET_RegisterPokeNickName( SysWork.wset, bufID, pp );
+}
 static inline void register_PokeName( u8 pokeID, u8 bufID )
 {
   const BTL_POKEPARAM* bpp;
@@ -309,16 +320,6 @@ static void ms_std_simple( STRBUF* dst, BtlStrID_STD strID, const int* args )
 {
   GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
   registerWords( SysWork.tmpBuf, args, SysWork.wset );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-
-// [arg0]は [arg1]しかだせない！
-// arg0: ポケID, arg1:ワザID
-static void ms_waza_lock( STRBUF* dst, BtlStrID_STD strID, const int* args )
-{
-  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-  WORDSET_RegisterWazaName( SysWork.wset, 1, args[1] );
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
 
@@ -448,6 +449,7 @@ static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
     TAGIDX_TOKUSEI_NAME = 6,
     TAGIDX_WAZA_NAME = 7,
     TAGIDX_ITEM_NAME = 9,
+    TAGIDX_POKE_NICKNAME_TRUTH = 12,
     TAGIDX_TRAINER_TYPE = 14,
   };
   const STRCODE* sp = GFL_STR_GetStringCodePointer( buf );
@@ -499,6 +501,10 @@ static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
           case TAGIDX_POKE_NICKNAME:
             BTL_Printf("[TAG] Set PokeNickName ... pokeID=%d\n", args[argIdx]);
             register_PokeNickname( args[argIdx], bufIdx );
+            break;
+          case TAGIDX_POKE_NICKNAME_TRUTH:
+            BTL_Printf("[TAG] Set PokeNickName ... pokeID=%d\n", args[argIdx]);
+            register_PokeNicknameTruth( args[argIdx], bufIdx );
             break;
           case TAGIDX_POKE_NAME:
             BTL_Printf("[TAG] Set PokeName ... pokeIdx=%d\n", args[argIdx] );

@@ -67,13 +67,12 @@ typedef enum {
 //----------------------------------------------------------------------
 typedef struct {
   u16   strID;          ///< 基本文字列ID
-  u8    strType : 7;    ///< BtlStrType
-  u8    fUserOnly : 1;  ///< ユーザにのみ表示する（イリュージョンの影響を無視する）
+  u8    strType;        ///< BtlStrType
   u8    argCnt;         ///< 引数の数
   int   args[BTL_STR_ARG_MAX];  ///< 引数
 }BTLV_STRPARAM;
 
-static inline void BTLV_STRPARAM_Setup( BTLV_STRPARAM* sp, BtlStrType strType, u16 strID, BOOL fUserOnly )
+static inline void BTLV_STRPARAM_Setup( BTLV_STRPARAM* sp, BtlStrType strType, u16 strID )
 {
   int i;
   for(i=0; i<NELEMS(sp->args); ++i){
@@ -82,7 +81,6 @@ static inline void BTLV_STRPARAM_Setup( BTLV_STRPARAM* sp, BtlStrType strType, u
   sp->argCnt = 0;
   sp->strID = strID;
   sp->strType = strType;
-  sp->fUserOnly = fUserOnly;
 }
 static inline void BTLV_STRPARAM_AddArg( BTLV_STRPARAM* sp, int arg )
 {

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-11-30T15:14:47"/>
+	<create user="taya" host="W00146" date="2009-12-01T12:09:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -66,6 +66,11 @@
 			</tag>
 			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
 			</tag>
 			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -234,9 +239,16 @@
 				<comment language="english">当該行の文字列を
 ウィンドウ内で右寄せします。</comment>
 			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
 		</group>
 
-		<group entry="190" japanese="動的コントロール" english="Word">
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
 			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
 			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
 			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
@@ -268,13 +280,6 @@
 		<group entry="254" japanese="文字列展開" english="Word">
 		</group>
 
-		<set japanese="操作（上→下）" english="操作（上→下）" value="2:00:１桁:0"/>
-		<set japanese="注視（上→下）" english="注視（上→下）" value="2:00:１桁:1"/>
-		<set japanese="操作（下→上）" english="操作（下→上）" value="2:00:１桁:2"/>
-		<set japanese="注視（下→上）" english="注視（下→上）" value="2:00:１桁:3"/>
-		<set japanese="許可しない" english="許可しない" value="BE:09:特殊ウェイト::0:0"/>
-		<set japanese="通信時は許可しない" english="通信時は許可しない" value="BE:09:特殊ウェイト::1:0"/>
-		<set japanese="許可する" english="許可する" value="BE:09:特殊ウェイト::2:0"/>
 		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
 		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
 		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
@@ -321,13 +326,13 @@
 		</language>
 	</columns>
 
-	<dialog left="240" top="137" right="921" bottom="651" maximized="no" rayout="Vertical2">
+	<dialog left="240" top="137" right="1079" bottom="748" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="618" right="1024" bottom="768" visible="no"/>
-		<tag-palette left="198" top="443" right="629" bottom="841" visible="no"/>
-		<band id="0" index="0" style="0001" width="506"/>
+		<tag-palette left="198" top="443" right="629" bottom="841" visible="yes"/>
+		<band id="0" index="0" style="0001" width="445"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="673"/>
-		<band id="3" index="3" style="0000" width="673"/>
+		<band id="2" index="2" style="0000" width="217"/>
+		<band id="3" index="3" style="0000" width="831"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -406,24 +411,24 @@
 
 	<row id="BTL_STRID_STD_PutSingle" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>自分がくりだす　１体</comment>
-		<language name="JPN" width="216">ゆけっ！　[1:02:ポケモンニックネーム:0]！</language>
-		<language name="JPN_KANJI" width="216">ゆけっ！　[1:02:ポケモンニックネーム:0]！</language>
+		<language name="JPN" width="216">ゆけっ！　[1:0C:ポケモンニックネーム（正体）:0]！</language>
+		<language name="JPN_KANJI" width="216">ゆけっ！　[1:0C:ポケモンニックネーム（正体）:0]！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_PutDouble" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>自分がくりだす　２体</comment>
-		<language name="JPN" width="216">ゆけっ！　[1:02:ポケモンニックネーム:0]！
-[1:02:ポケモンニックネーム:1]！</language>
-		<language name="JPN_KANJI" width="216">ゆけっ！　[1:02:ポケモンニックネーム:0]！
-[1:02:ポケモンニックネーム:1]！</language>
+		<language name="JPN" width="216">ゆけっ！　[1:0C:ポケモンニックネーム（正体）:0]！
+[1:0C:ポケモンニックネーム（正体）:1]！</language>
+		<language name="JPN_KANJI" width="216">ゆけっ！　[1:0C:ポケモンニックネーム（正体）:0]！
+[1:0C:ポケモンニックネーム（正体）:1]！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_PutTriple" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>自分がくりだす　３体</comment>
-		<language name="JPN" width="216">ゆけっ！　[1:02:ポケモンニックネーム:0]！
-[1:02:ポケモンニックネーム:1]！　[1:02:ポケモンニックネーム:2]！</language>
-		<language name="JPN_KANJI" width="216">ゆけっ！　[1:02:ポケモンニックネーム:0]！
-[1:02:ポケモンニックネーム:1]！　[1:02:ポケモンニックネーム:2]！</language>
+		<language name="JPN" width="216">ゆけっ！　[1:0C:ポケモンニックネーム（正体）:0]！
+[1:0C:ポケモンニックネーム（正体）:1]！　[1:0C:ポケモンニックネーム（正体）:2]！</language>
+		<language name="JPN_KANJI" width="216">ゆけっ！　[1:0C:ポケモンニックネーム（正体）:0]！
+[1:0C:ポケモンニックネーム（正体）:1]！　[1:0C:ポケモンニックネーム（正体）:2]！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_PutSingle_NPC" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
@@ -621,8 +626,8 @@
 	</row>
 
 	<row id="BTL_STRID_STD_SelectAction" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
-		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　どうする？</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　どうする？</language>
+		<language name="JPN" width="216">[1:0C:ポケモンニックネーム（正体）:0]は　どうする？</language>
+		<language name="JPN_KANJI" width="216">[1:0C:ポケモンニックネーム（正体）:0]は　どうする？</language>
 	</row>
 
 	<row id="BTL_STRID_STD_WazaFail">
@@ -760,9 +765,9 @@
 	</row>
 
 	<row id="BTL_STRID_STD_WazaLock">
-		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+		<language name="JPN" width="216">[1:0C:ポケモンニックネーム（正体）:0]は
 [1:07:わざ名:1]しか　だせない！</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+		<language name="JPN_KANJI" width="216">[1:0C:ポケモンニックネーム（正体）:0]は
 [1:07:わざ名:1]しか　出せない！</language>
 	</row>
 
