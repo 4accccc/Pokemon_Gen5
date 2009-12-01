@@ -175,7 +175,7 @@ static GMEVENT_RESULT FieldFadeInEvent(GMEVENT * event, int *seq, void * work)
         // 作業効率Upのためにフェードを短縮 11/17 obata
         GFL_FADE_SetMasterBrightReq(
             GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,
-            16, 0, -8);
+            16, 0, -2);
       }
     }
 		(*seq) ++;
@@ -215,8 +215,9 @@ static GMEVENT_RESULT FieldFadeInEvent(GMEVENT * event, int *seq, void * work)
 				 // 作業効率Upのためにフェードを短縮 11/17 obata
 				 GFL_FADE_SetMasterBrightReq(
 				     GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,
-				     16, 0, -8);
+				     16, 0, -2);
 				}
+				FIELDMAP_InitBG(few->fieldmap);
 				*seq = 1;
 			} else {
 				few->alphaWork = 16;
@@ -235,7 +236,6 @@ static GMEVENT_RESULT FieldFadeInEvent(GMEVENT * event, int *seq, void * work)
 		break;
 
 	case 2:	// 輝度フェードEND
-		FIELDMAP_InitBG(few->fieldmap);
 		return GMEVENT_RES_FINISH;
 
 	case 3:	// クロスフェード
@@ -244,6 +244,7 @@ static GMEVENT_RESULT FieldFadeInEvent(GMEVENT * event, int *seq, void * work)
 			G2_ChangeBlendAlpha( few->alphaWork, 16 - few->alphaWork );
 		} else {
 			GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
+
 			// サブ画面輝度復帰
       GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, -8);
 			*seq = 4;
