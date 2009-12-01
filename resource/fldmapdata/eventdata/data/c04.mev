@@ -1,5 +1,5 @@
 #event data
-#save date:2009/11/25 10:58:39
+#save date:2009/12/01 17:19:07
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04.wms
 #SECTION START:OBJ_EVENT
@@ -164,7 +164,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 16 -40
+-8 16 -72
 #event number: 5
 #type
 1
@@ -288,7 +288,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-360 16 -408
+312 16 -488
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -324,7 +324,7 @@ SCRID_BG_C04_BOARD_02
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-168 16 -56
+200 16 -56
 #event number: 2
 #Bg Event Label
 BGID_C04_BOARD_05
@@ -363,7 +363,7 @@ SCRID_BG_C04_BOARD_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-408 16 -472
+408 16 -504
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
@@ -379,6 +379,8 @@ EVENTDATA_POSTYPE_GRID
 POSID_C04_SUPPORT_01
 #Pos Script Name
 SCRID_POS_C04_SUPPORT_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_C04
 #Event Trigger Work Value
@@ -394,6 +396,8 @@ EVENTDATA_POSTYPE_GRID
 POSID_C04_LEADER4_01
 #Pos Script Name
 SCRID_POS_C04_LEADER4_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_C04
 #Event Trigger Work Value
@@ -632,7 +636,7 @@ EXIT_TYPE_MAT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-136 16 -24
+168 16 -24
 #size
 1 1
 #event number: 13
@@ -666,7 +670,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-40 16 -408
+56 16 -568
 #size
 1 1
 #event number: 15
@@ -692,7 +696,7 @@ DOOR_ID_C04_C04R0101_EXIT01
 #Next Zone ID Name
 ZONE_ID_C04R0101
 #Next Door ID Name
-DOOR_ID_C04R0101_C04_EXIT03
+DOOR_ID_C04R0101_C04_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
@@ -700,7 +704,7 @@ EXIT_TYPE_MAT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-360 16 -392
+360 16 -408
 #size
 1 1
 #event number: 17
@@ -717,7 +721,7 @@ EXIT_TYPE_MAT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--40 16 -408
+-40 16 -568
 #size
 1 1
 #event number: 18
