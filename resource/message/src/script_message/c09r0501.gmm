@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-01T19:32:35"/>
+	<create user="matsumiya" host="W00207" date="2009-12-01T21:49:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -353,11 +353,11 @@
 		<comment>♂
 ・続けてchampion_01</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">それにさ　しんだ　ポケモンも
-チャンピオンに　こきつかわれたのが[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="256">それにさ　ポケモンが　しんだのも
+チャンピオンに　ムリ　させられたのが[BE:00:ページ切り替え（行送り）]
 りゆう　なんじゃ　ないの？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">それにさ　しんだ　ポケモンも
-チャンピオンに　こきつかわれたのが[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">それにさ　ポケモンが　しんだのも
+チャンピオンに　ムリ　させられたのが[BE:00:ページ切り替え（行送り）]
 りゆう　なんじゃ　ないの？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -367,8 +367,8 @@
 ・続けてboss_04</comment>
 		<attribute name="キャラ指定">チャンピオン
 アデク</attribute>
-		<language name="JPN" width="256">アデク『……なっ　なにを！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アデク『……なっ　なにを！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">アデク『なんと　かなしいことを……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アデク『なんと　かなしいことを……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
