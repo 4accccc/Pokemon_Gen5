@@ -22,14 +22,15 @@ XLS2TAB = "ruby #{ENV["PROJECT_ROOT"]}tools/exceltool/xls2xml/tab_out.rb -c "
 # スクリプトオフセット指定のデータセット
 #----------------------------------------------------------------------------
 class ScrOfs
-  attr_reader :name, :startno, :max, :scriptfile, :msgfile, :comment
+  attr_reader :name, :startno, :max, :scriptfile, :msgfile, :eventuse, :comment
 
-  def initialize(name, startno, max, scriptfile, msgfile, comment)
+  def initialize(name, startno, max, scriptfile, msgfile, eventuse, comment)
     @name = name
     @startno = startno
     @max = max
     @scriptfile = scriptfile
     @msgfile = msgfile
+    @eventuse = eventuse
     @comment = comment
 
     STDERR.puts "MAKE SCRIPT OFFSET \"#{name}\", #{startno}-#{endno}"
@@ -50,7 +51,8 @@ class ScrOfsData
   COL_MAX       = 2
   COL_SCRFILE   = 3
   COL_MSGFILE   = 4
-  COL_COMMENT   = 5
+  COL_EVENTUSE  = 5
+  COL_COMMENT   = 6
 
   attr_reader :manager_filename, :ofsdatas, :define_count
 
@@ -80,6 +82,7 @@ class ScrOfsData
     raiseError(errorMsg,lincount) if column[COL_MAX] != "最大値"
     raiseError(errorMsg,lincount) if column[COL_SCRFILE] != "対象スクリプトファイル"
     raiseError(errorMsg,lincount) if column[COL_MSGFILE] != "対象メッセージファイル"
+    raiseError(errorMsg,lincount) if column[COL_EVENTUSE] != "イベント参照"
     raiseError(errorMsg,lincount) if column[COL_COMMENT] != "コメント"
 
     names = Hash.new
@@ -101,6 +104,7 @@ class ScrOfsData
       max = Integer(column[COL_MAX])
       scrfile = column[COL_SCRFILE]
       msgfile = column[COL_MSGFILE]
+      eventuse = column[COL_EVENTUSE]
 
       raiseError("領域名が重なっています.#{areaname}",linecount) if names.has_key?(areaname)
       names[areaname] = nil
@@ -122,9 +126,12 @@ class ScrOfsData
       else
         scrfile = nil
       end
+      if eventuse != "○" && eventuse != "×" then
+        raiseError("イベント参照に無効な値(#{eventuse})が設定されています",linecount)
+      end
 
       comment = column[COL_COMMENT]
-      @ofsdatas << ScrOfs.new(areaname, startno, max, scrfile, msgfile, comment)
+      @ofsdatas << ScrOfs.new(areaname, startno, max, scrfile, msgfile, eventuse, comment)
       @define_count += 1
     }
   end
@@ -244,13 +251,16 @@ def make_uniq_script_list( scrData )
 #
 #======================================================================
 
-UNIQ_SCRIPTFILES = \\
 END_OF_STRING
 
   tail_string =<<END_OF_STRING
 
 # 自動生成ファイルuniq_script.list　末尾
 END_OF_STRING
+
+all_ev_list = "UNIQ_SCRIPTFILES = "
+top_ev_list = "UNIQ_TOP_EVENT_SCRFILES = "
+sub_ev_list = "UNIQ_SUB_EVENT_SCRFILES = "
 
 output = set_date_string( head_string, /DATE_STRING/ )
 
@@ -259,10 +269,22 @@ filenames = Hash.new
 scrData.ofsdatas.each{|data|
   filename = data.scriptfile
   if filename != nil && filenames.has_key?(filename) == false then
-    output += sprintf("\t%s \\\n", filename)
+    all_ev_list += sprintf("\\\n\t%s ", filename)
     filenames[filename] = true
+
+    if data.eventuse == "○" then
+      top_ev_list += sprintf("\\\n\t%s ", filename)
+    else
+      sub_ev_list += sprintf("\\\n\t%s ", filename)
+    end
   end
 }
+output += "#非マップ依存のスクリプトファイルすべて\n"
+output += all_ev_list + "\n\n"
+output += "#イベントデータで指定され直接呼ばれるスクリプトファイル\n"
+output += top_ev_list + "\n\n"
+output += "#プログラムやスクリプトから呼ばれるスクリプトファイル\n"
+output += sub_ev_list + "\n\n"
 output += tail_string
 return output
 
