@@ -92,6 +92,10 @@
 
 #include "event_autoway.h" // for EVENT_PlayerMoveOnAutoWay
 
+#ifdef PM_DEBUG
+extern BOOL DebugBGInitEnd;    //BG初期化監視フラグ
+#endif
+
 
 //======================================================================
 //======================================================================
@@ -684,6 +688,10 @@ GMEVENT * FIELD_EVENT_CheckNormal_Wrap( GAMESYS_WORK *gsys, void *work )
 	FIELDMAP_WORK *fieldmap_work;
 	FIELD_PLACE_NAME *place_name_sys;
 
+#ifdef PM_DEBUG
+  GF_ASSERT_MSG(DebugBGInitEnd,"BG NOT INITIALIZE");    //BG初期化監視フラグ
+#endif  
+
 	// イベント起動チェック
 	event = FIELD_EVENT_CheckNormal( gsys, work );
 
@@ -824,6 +832,10 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
 	GMEVENT *event;
 	FIELDMAP_WORK *fieldmap_work;
 	FIELD_PLACE_NAME *place_name_sys;
+
+#ifdef PM_DEBUG
+  GF_ASSERT_MSG(DebugBGInitEnd,"BG NOT INITIALIZE");    //BG初期化監視フラグ
+#endif
 
 	// イベント起動チェック
 	event = eventCheckNoGrid( gsys, work );
