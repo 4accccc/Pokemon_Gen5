@@ -151,7 +151,12 @@ while line = input_file.gets
   submodel_pos << SubModelPos.new( column[COL_SUBMODEL_X],
                                   column[COL_SUBMODEL_Y],
                                   column[COL_SUBMODEL_Z] ) 
-  puts "#{line}"
+end
+
+if syms.length > 255 then
+  puts "配置モデルの種類が制限値（255)を超えています！！"
+  puts "プログラマに連絡してください。"
+  exit 1
 end
 
 submodel_ids = makeSubmodelIDList(syms, submodels)
