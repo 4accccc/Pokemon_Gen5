@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2009-11-30T18:05:34" source="d6_ishi_big01.mb"/>
+	<create user="ibe_mana" host="W00191" date="2009-11-30T19:43:01" source="d6_ishi_big01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2009-11-30T18:05:34" source="d6_ishi_big01.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2009-11-30T19:43:01" source="d6_ishi_big01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="3" xyz="-1.200195 0.000000 -1.200195" whd="2.399902 6.100098 2.399902"/>
+<box_test pos_scale="3" xyz="-0.800049 0.000000 -0.800049" whd="1.599854 4.066650 1.599854"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="fuyuuishi_big.1"
@@ -522,7 +522,7 @@
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
-		scale="0.600098 0.600098 0.600098"
+		scale="0.399902 0.399902 0.399902"
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
