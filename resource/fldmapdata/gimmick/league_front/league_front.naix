@@ -1,0 +1,23 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: league_front.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_LEAGUE_FRONT_NAIX_
+#define NARC_LEAGUE_FRONT_NAIX_
+
+enum {
+	NARC_league_front_pl_ele_00_nsbmd = 0,
+	NARC_league_front_pl_ele_00_nsbca = 1,
+	NARC_league_front_pl_ele_00_nsbta = 2,
+	NARC_league_front_pl_ele_01_nsbmd = 3,
+	NARC_league_front_pl_ele_01_nsbca = 4,
+	NARC_league_front_pl_ele_01_nsbta = 5
+};
+
+/* NARC_LEAGUE_FRONT_NAIX_ */
+#endif

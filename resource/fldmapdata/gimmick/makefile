@@ -15,7 +15,8 @@ SUBDIRS	=	gym_denki \
 					h01 \
 					h03 \
 					gate \
-					d06
+					d06 \
+					league_front
 
 .PHONY:	do-build clean
 
