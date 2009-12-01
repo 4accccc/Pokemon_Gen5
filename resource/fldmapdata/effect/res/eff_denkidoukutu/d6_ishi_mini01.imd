@@ -3,18 +3,18 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2009-12-01T11:53:53" source="d6_ishi_mini01.mb"/>
+	<create user="ibe_mana" host="W00191" date="2009-12-01T14:49:15" source="d6_ishi_mini01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2009-12-01T11:53:53" source="d6_ishi_mini01.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2009-12-01T14:49:15" source="d6_ishi_mini01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
-	pos_scale="3"
+	pos_scale="2"
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="3" xyz="-2.039063 0.511963 -1.765869" whd="4.077637 2.779541 3.531494"/>
+<box_test pos_scale="3" xyz="-2.039063 0.511963 -1.765869" whd="4.077637 5.779541 3.531494"/>
 
 <tex_image_array size="2">
 	<tex_image index="0" name="d6kage_01"
@@ -235,13 +235,13 @@
 					<pos_xyz xyz="0.301270 0.000000 -0.301270"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_xy xy="0.301270 0.000000"/>
-					<nrm xyz="0.000000 0.000000 0.000000"/>
+					<nrm xyz="0.000000 0.000000 -1.000000"/>
 					<pos_xy xy="0.301270 0.000000"/>
-					<nrm xyz="0.000000 0.339844 0.941406"/>
+					<nrm xyz="0.000000 0.537109 -0.843750"/>
 					<pos_xy xy="0.301270 0.000000"/>
-					<nrm xyz="0.000000 0.000000 0.000000"/>
+					<nrm xyz="0.000000 0.000000 -1.000000"/>
 					<pos_xy xy="-0.301270 0.000000"/>
-					<nrm xyz="0.000000 -0.941406 0.339844"/>
+					<nrm xyz="0.000000 -0.980469 -0.199219"/>
 					<pos_xy xy="-0.301270 0.000000"/>
 				</primitive>
 				<primitive index="1" type="quad_strip" vertex_size="6">
@@ -261,9 +261,9 @@
 				</primitive>
 				<primitive index="2" type="triangles" vertex_size="6">
 					<clr rgb="2 11 14"/>
-					<nrm xyz="0.000000 0.000000 0.000000"/>
+					<nrm xyz="0.000000 0.000000 -1.000000"/>
 					<pos_xyz xyz="-0.301270 0.000000 -0.301270"/>
-					<nrm xyz="0.000000 -0.941406 0.339844"/>
+					<nrm xyz="0.000000 -0.980469 -0.199219"/>
 					<pos_xy xy="-0.301270 0.000000"/>
 					<nrm xyz="0.000000 -1.000000 0.000000"/>
 					<pos_xy xy="-0.301270 0.000000"/>
@@ -570,9 +570,9 @@
 	<polygon index="2" name="polygon2"
 		vertex_size="18" polygon_size="6"
 		triangle_size="6" quad_size="0"
-		volume_min="-2.038818 0.512207 -1.765869"
-		volume_max="2.038818 0.512207 1.765869"
-		volume_r="2.102295"
+		volume_min="-4.077881 1.024414 -3.531494"
+		volume_max="4.077881 1.024414 3.531494"
+		volume_r="4.204590"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -583,49 +583,49 @@
 					<mtx idx="0"/>
 					<tex st="16.000000 1.062500"/>
 					<clr rgb="12 12 12"/>
-					<pos_xyz xyz="2.038818 0.512207 0.000000"/>
+					<pos_xyz xyz="4.077881 1.024414 0.000000"/>
 					<tex st="0.000000 1.062500"/>
-					<pos_xz xz="1.019531 -1.765869"/>
+					<pos_xz xz="2.038818 -3.531494"/>
 					<tex st="8.000000 14.937500"/>
 					<clr rgb="31 31 31"/>
 					<pos_xz xz="0.000000 0.000000"/>
 					<tex st="16.000000 1.062500"/>
 					<clr rgb="12 12 12"/>
-					<pos_xz xz="1.019531 1.765869"/>
+					<pos_xz xz="2.038818 3.531494"/>
 					<tex st="0.000000 1.062500"/>
-					<pos_xz xz="2.038818 0.000000"/>
+					<pos_xz xz="4.077881 0.000000"/>
 					<tex st="8.000000 14.937500"/>
 					<clr rgb="31 31 31"/>
-					<pos_xy xy="0.000000 0.512207"/>
+					<pos_xy xy="0.000000 1.024414"/>
 					<tex st="16.000000 1.062500"/>
 					<clr rgb="12 12 12"/>
-					<pos_xz xz="-1.019531 1.765869"/>
+					<pos_xz xz="-2.038818 3.531494"/>
 					<tex st="0.000000 1.062500"/>
-					<pos_xy xy="1.019531 0.512207"/>
-					<tex st="8.000000 14.937500"/>
-					<clr rgb="31 31 31"/>
-					<pos_xz xz="0.000000 0.000000"/>
-					<tex st="16.000000 1.062500"/>
-					<clr rgb="12 12 12"/>
-					<pos_xy xy="-2.038818 0.512207"/>
-					<tex st="0.000000 1.062500"/>
-					<pos_xz xz="-1.019531 1.765869"/>
+					<pos_xy xy="2.038818 1.024414"/>
 					<tex st="8.000000 14.937500"/>
 					<clr rgb="31 31 31"/>
 					<pos_xz xz="0.000000 0.000000"/>
 					<tex st="16.000000 1.062500"/>
 					<clr rgb="12 12 12"/>
-					<pos_xz xz="-1.019531 -1.765869"/>
+					<pos_xy xy="-4.077881 1.024414"/>
 					<tex st="0.000000 1.062500"/>
-					<pos_xz xz="-2.038818 0.000000"/>
+					<pos_xz xz="-2.038818 3.531494"/>
 					<tex st="8.000000 14.937500"/>
 					<clr rgb="31 31 31"/>
-					<pos_xy xy="0.000000 0.512207"/>
+					<pos_xz xz="0.000000 0.000000"/>
 					<tex st="16.000000 1.062500"/>
 					<clr rgb="12 12 12"/>
-					<pos_xz xz="1.019531 -1.765869"/>
+					<pos_xz xz="-2.038818 -3.531494"/>
 					<tex st="0.000000 1.062500"/>
-					<pos_xy xy="-1.019531 0.512207"/>
+					<pos_xz xz="-4.077881 0.000000"/>
+					<tex st="8.000000 14.937500"/>
+					<clr rgb="31 31 31"/>
+					<pos_xy xy="0.000000 1.024414"/>
+					<tex st="16.000000 1.062500"/>
+					<clr rgb="12 12 12"/>
+					<pos_xz xz="2.038818 -3.531494"/>
+					<tex st="0.000000 1.062500"/>
+					<pos_xy xy="-2.038818 1.024414"/>
 					<tex st="8.000000 14.937500"/>
 					<clr rgb="31 31 31"/>
 					<pos_xz xz="0.000000 0.000000"/>
@@ -636,7 +636,7 @@
 </polygon_array>
 
 <node_array size="3">
-	<node index="0" name="world_root" kind="null"
+	<node index="0" name="group1" kind="null"
 		parent="-1"
 		child="1"
 		brother_next="-1"
@@ -657,9 +657,9 @@
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
-		scale="0.500000 0.500000 0.500000"
+		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 6.000000 0.000000"
+		translate="0.000000 30.000000 0.000000"
 		visibility="on"
 		display_size="2"
 		vertex_size="130" polygon_size="54"
@@ -685,9 +685,9 @@
 		display_size="1"
 		vertex_size="18" polygon_size="6"
 		triangle_size="6" quad_size="0"
-		volume_min="-2.038818 0.512207 -1.765869"
-		volume_max="2.038818 0.512207 1.765869"
-		volume_r="2.102295"
+		volume_min="-4.077881 1.024414 -3.531494"
+		volume_max="4.077881 1.024414 3.531494"
+		volume_r="4.204590"
 	>
 		<display index="0" material="0" polygon="2" priority="0"/>
 	</node>
