@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2009-12-01T19:01:12" source="bcgata05_00_00_015.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2009-12-01T22:37:32" source="bcgata05_00_00_016.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2009-12-01T19:01:12" source="bcgata05_00_00_015.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2009-12-01T22:37:32" source="bcgata05_00_00_016.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="5" xyz="-3.191895 0.225098 -2.260254" whd="5.883545 0.769531 0.619873"/>
+<box_test pos_scale="5" xyz="-3.176514 0.237793 -2.250000" whd="5.852539 0.743652 0.599121"/>
 
 <tex_image_array size="4">
 	<tex_image index="0" name="denyer.1"
@@ -250,9 +250,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="8" polygon_size="2"
 		triangle_size="0" quad_size="2"
-		volume_min="-6.383789 0.450439 -4.520264"
-		volume_max="5.383789 1.989502 -3.280273"
-		volume_r="7.924805"
+		volume_min="-6.352783 0.476074 -4.499512"
+		volume_max="5.352539 1.963867 -3.300781"
+		volume_r="7.887939"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -263,21 +263,21 @@
 					<mtx idx="0"/>
 					<tex st="32.000000 32.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_xyz xyz="-5.960938 0.450439 -3.280273"/>
+					<pos_xyz xyz="-5.944092 0.476074 -3.300781"/>
 					<tex st="32.000000 0.000000"/>
-					<pos_xyz xyz="-4.529297 1.022461 -3.323730"/>
+					<pos_xyz xyz="-4.560303 1.029053 -3.342773"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xyz xyz="-4.951904 1.989502 -4.520264"/>
+					<pos_xyz xyz="-4.968750 1.963867 -4.499512"/>
 					<tex st="0.000000 32.000000"/>
-					<pos_xyz xyz="-6.383789 1.417480 -4.476807"/>
+					<pos_xyz xyz="-6.352783 1.410889 -4.457520"/>
 					<tex st="32.000000 32.000000"/>
-					<pos_xyz xyz="4.960938 0.450439 -3.280273"/>
+					<pos_xyz xyz="4.944092 0.476074 -3.301025"/>
 					<tex st="0.000000 32.000000"/>
-					<pos_xyz xyz="5.383789 1.417480 -4.476807"/>
+					<pos_xyz xyz="5.352539 1.410889 -4.457520"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xyz xyz="3.951904 1.989502 -4.520264"/>
+					<pos_xyz xyz="3.968750 1.963623 -4.499512"/>
 					<tex st="32.000000 0.000000"/>
-					<pos_xyz xyz="3.529297 1.022461 -3.323730"/>
+					<pos_xyz xyz="3.560303 1.029053 -3.343018"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -299,9 +299,9 @@
 		display_size="1"
 		vertex_size="8" polygon_size="2"
 		triangle_size="0" quad_size="2"
-		volume_min="-6.383789 0.450439 -4.520264"
-		volume_max="5.383789 1.989502 -3.280273"
-		volume_r="7.924805"
+		volume_min="-6.352783 0.476074 -4.499512"
+		volume_max="5.352539 1.963867 -3.300781"
+		volume_r="7.887939"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
