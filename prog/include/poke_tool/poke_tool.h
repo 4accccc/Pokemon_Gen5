@@ -14,6 +14,7 @@
 #include "savedata\mystatus.h"
 #include "poke_tool\poketype.h"
 #include "poke_tool\poke_personal.h"
+#include "waza_tool\wazadata.h"
 
 
 // 性別
@@ -461,6 +462,9 @@ enum{
 #define PTL_WAZASET_FAIL    (0xffff)  //技のセットができなかったときの返り値
 #define PTL_WAZASET_SAME    (0xfffe)  //すでに覚えていた技のときの返り値
 
+#define PTL_WAZAOBOE_NONE   (0x0000)            //技覚えで覚える技が無かったときの返り値
+#define PTL_WAZAOBOE_FULL   (PTL_WAZASET_FAIL)  //技覚えで手持ちの技がいっぱいだったときの返り値
+
 ///<ポケモン進化データの構造体
 typedef struct pokemon_shinka_data POKEMON_SHINKA_DATA;
 
@@ -659,6 +663,7 @@ extern  void  PPP_SetWazaPush( POKEMON_PASO_PARAM *ppp, u16 wazano );
 extern  void  PP_SetWazaPos( POKEMON_PARAM *pp, u16 wazano, u8 pos );
 extern  void  PPP_SetWazaPos( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos );
 extern  void  PP_RecoverWazaPPAll( POKEMON_PARAM* pp );
+extern  WazaID  PP_CheckWazaOboe( POKEMON_PARAM *pp, int* index, HEAPID  heapID );
 
 // パラメータ設定系（その他）
 extern  void  PP_SetSick( POKEMON_PARAM* pp, PokeSick sick );
