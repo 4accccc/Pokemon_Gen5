@@ -441,6 +441,7 @@ static void namipokeTask_Delete( FLDEFF_TASK *task, void *wk )
 static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_NAMIPOKE *work = wk;
+  VecFx32 oya_offs = { 0, 0, 0 };
   
   if( work->joint == NAMIPOKE_JOINT_OFF ){ //Ú‘±‚µ‚È‚¢
     return;
@@ -460,21 +461,32 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
 			work->shake_offs = FX32_ONE;
 			work->shake_value = -work->shake_value;
 		}
-  
+    
     { //‰^“]Žè‚É—h‚ê‚ð’Ç‰Á
-      VecFx32 offs;
-      offs.x = 0;
-      offs.y = work->shake_offs + NAMIPOKE_RIDE_Y_OFFSET;
-      offs.z = NAMIPOKE_RIDE_Z_OFFSET;
-      MMDL_SetVectorOuterDrawOffsetPos( work->head.mmdl,  &offs );
+      oya_offs.x = 0;
+      oya_offs.y = work->shake_offs + NAMIPOKE_RIDE_Y_OFFSET;
+      oya_offs.z = NAMIPOKE_RIDE_Z_OFFSET;
+      MMDL_SetVectorOuterDrawOffsetPos( work->head.mmdl, &oya_offs );
     }
   }
-  
+
   { //À•W
+    #if 0  
     VecFx32 pos;
     MMDL_GetVectorPos( work->head.mmdl, &pos );
     pos.y += work->shake_offs - FX32_ONE;
     FLDEFF_TASK_SetPos( task, &pos );
+    #else
+    VecFx32 pos;
+    MMDL_GetDrawVectorPos( work->head.mmdl, &pos );
+    
+    pos.x -= oya_offs.x;
+    pos.y -= oya_offs.y;
+    pos.z -= oya_offs.z;
+    
+    pos.y += work->shake_offs - FX32_ONE;
+    FLDEFF_TASK_SetPos( task, &pos );
+    #endif
   }
   
   if( work->joint == NAMIPOKE_JOINT_ONLY ){ //”g‚ðo‚³‚È‚¢
@@ -488,7 +500,6 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
     GFL_G3D_OBJECT_LoopAnimeFrame( rip->obj, 0, FX32_ONE );
 	  GFL_G3D_OBJECT_LoopAnimeFrame( rip->obj, 1, FX32_ONE );
     
-#if 1    
     MMDL_GetVectorPos( work->head.mmdl, &pos );
     
     if( work->dir != rip->dir ){ //•ûŒüXV
@@ -548,13 +559,6 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
     }
     
     rip->save_pos = pos;
-#else
-    rip->vanish_flag = FALSE;
-    rip->dir = DIR_UP;
-    rip->scale.x = FX32_ONE*1;
-    rip->scale.y = FX32_ONE*1;
-    rip->scale.z = FX32_ONE*1;
-#endif
   }
 }
 

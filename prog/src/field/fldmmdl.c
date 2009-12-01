@@ -4647,7 +4647,7 @@ static u16 WorkOBJCode_GetOBJCode( const EVENTWORK *ev, u16 code )
   if( code >= WKOBJCODE_START && code <= WKOBJCODE_END ){
     if( ev == NULL ){
       GF_ASSERT( 0 );
-      code = BOY1; //無難なコードに強制
+      code = BOY1; //無難なコードに強制変更
     }else{
       u16 *work;
       code -= WKOBJCODE_START;
