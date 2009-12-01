@@ -16,30 +16,27 @@ FMMDL_RESLIST_NCGIMD = \
 	girl2.imd \
 	girl3.imd \
 	girl4.imd \
-	man1.imd \
 	man2.imd \
-	man3.imd \
 	woman1.imd \
-	woman2.imd \
 	woman3.imd \
-	middleman1.imd \
 	middleman2.imd \
-	middlewoman1.imd \
 	middlewoman2.imd \
-	oldman1.imd \
-	oldwoman1.imd \
-	trainerm.imd \
-	trainerw.imd \
 	breederm.imd \
 	breederw.imd \
+	rangerm.imd \
+	rangerw.imd \
+	waiter.imd \
+	waitress.imd \
 	backpackerm.imd \
 	backpackerw.imd \
 	doctor.imd \
 	nurse.imd \
-	businessman.imd \
-	ol.imd \
-	dancer.imd \
+	baseballm.imd \
+	soccerm.imd \
+	footballm.imd \
 	tennisw.imd \
+	baker.imd \
+	workman.imd \
 	pilot.imd \
 	assistantm.imd \
 	assistantw.imd \
@@ -52,18 +49,15 @@ FMMDL_RESLIST_NCGIMD = \
 	wifism.imd \
 	wifisw.imd \
 	sunglasses.imd \
-	hakase1.imd \
 	hakase2.imd \
-	icpo.imd \
 	tree.imd \
 	rock.imd \
 	monsterball.imd \
 	pikachu.imd \
-	obj_kabi32.imd \
 	accordion.imd \
 	basketm.imd \
 	support.imd \
-	none.imd \
+	none_debug.imd \
 	gethero.imd \
 	getheroine.imd \
 	reporthero.imd \
@@ -76,11 +70,6 @@ FMMDL_RESLIST_NCGIMD = \
 	blackmonolith.imd \
 	whitemonolith.imd \
 	mama.imd \
-	spider.imd \
-	pipe.imd \
-	grasssound.imd \
-	fiddle.imd \
-	guitar.imd \
 	babyboy2.imd \
 	babygirl2.imd \
 	workman2.imd \
