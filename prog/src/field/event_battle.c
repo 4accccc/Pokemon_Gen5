@@ -320,7 +320,7 @@ BtlBgAttr FIELD_BATTLE_GetBattleAttrID( MAPATTR_VALUE value )
   if ( MAPATTR_VALUE_CheckPool(value) ) return BATTLE_BG_ATTR_POOL;
   if ( MAPATTR_VALUE_CheckShoal(value) ) return BATTLE_BG_ATTR_SHOAL;
   if ( MAPATTR_VALUE_CheckIce(value) ) return BATTLE_BG_ATTR_ICE;
-  GF_ASSERT(0); //ふつーは定義済みのでいいだろ！
+  OS_Printf("Warning! GetBattleAttrID = 0x%02x\n", value ); //ふつーは定義済みのでいいだろ！
   return BATTLE_BG_ATTR_LAWN; //標準
 }
 

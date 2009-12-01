@@ -570,16 +570,14 @@ static void enc_CreateTrainerBattleParam(
 
   if( (tr_id1 != TRID_NULL) && tr_id0 != tr_id1 )
   { //タッグ
-    BTL_SETUP_Single_Trainer( bp, gdata, NULL, &sit, tr_id0, heapID );
+    BTL_SETUP_Tag_Trainer( bp, gdata, &sit, tr_id0, tr_id1, heapID );
   }else if( tr_id0 == tr_id1 )
   { //ダブル
-    BTL_SETUP_Double_Trainer( bp, gdata, NULL, &sit, tr_id0, heapID );
+    BTL_SETUP_Double_Trainer( bp, gdata, &sit, tr_id0, heapID );
   }else
   { //シングル
-    BTL_SETUP_Single_Trainer( bp, gdata, NULL, &sit, tr_id0, heapID );
+    BTL_SETUP_Single_Trainer( bp, gdata, &sit, tr_id0, heapID );
   }
-  //対戦相手の手持ちポケモン生成
-  TT_EncountTrainerDataMake( bp, heapID );
 }
 
 //--------------------------------------------------------------

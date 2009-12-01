@@ -1267,20 +1267,24 @@ FS_EXTERN_OVERLAY(battle);
       BTL_FIELD_SITUATION_Init(&sit);
       switch( rule ){
       case BTL_RULE_SINGLE:
-        BTL_SETUP_Single_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
+        BTL_SETUP_Single_Trainer( &wk->setupParam, wk->gameData,
           &sit, trID, HEAPID_BTL_DEBUG_SYS );
+        BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
         break;
       case BTL_RULE_DOUBLE:
-        BTL_SETUP_Double_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
+        BTL_SETUP_Double_Trainer( &wk->setupParam, wk->gameData,
           &sit, trID, HEAPID_BTL_DEBUG_SYS );
+        BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
         break;
       case BTL_RULE_TRIPLE:
-        BTL_SETUP_Triple_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
+        BTL_SETUP_Triple_Trainer( &wk->setupParam, wk->gameData, 
           &sit, trID, HEAPID_BTL_DEBUG_SYS );
+        BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
         break;
       case BTL_RULE_ROTATION:
-        BTL_SETUP_Rotation_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
+        BTL_SETUP_Rotation_Trainer( &wk->setupParam, wk->gameData, 
           &sit, trID, HEAPID_BTL_DEBUG_SYS );
+        BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
         break;
       }
     }

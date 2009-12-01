@@ -105,13 +105,15 @@ typedef	struct
 	u16		waza[ PTL_WAZA_MAX ];		//éùÇ¡ÇƒÇÈãZ
 }POKEDATA_TYPE_MULTI;
 
-extern	void	TT_EncountTrainerDataMake( BATTLE_SETUP_PARAM* bsp, HEAPID heapID );
 extern	u32		TT_TrainerDataParaGet( int tr_id, int id );
 extern	BOOL	TT_TrainerMessageCheck( int tr_id, int kindID, HEAPID heapID );
 extern	void	TT_TrainerMessageGet( int tr_id, int msgID, STRBUF* msg, HEAPID heapID );
 extern	void	TT_TrainerDataGet( int tr_id, TRAINER_DATA* td );
 extern	void	TT_TrainerPokeDataGet( int tr_id,void* tpd );
 extern	u8		TT_TrainerTypeSexGet( int trtype );
+
+extern void	TT_EncountTrainerPersonalDataMake( TrainerID tr_id, BSP_TRAINER_DATA* data, HEAPID heapID );
+extern void	TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID heapID );
 
 #endif	__ASM_NO_DEF_
 

@@ -33,27 +33,9 @@
  * プロトタイプ宣言
  */
 //============================================================================================
-static	void	TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID heapID );
 static	void	RndTmpGet( int mons_no, int form_no, int para, u32* rnd_tmp, HEAPID heapID );
 static	void	PokeParaSetFriend( POKEMON_PARAM *pp );
 static inline u32 TTL_SETUP_POW_PACK( u8 pow );
-
-//============================================================================================
-/**
- *  @brief  エンカウントトレーナーデータを生成する
- *
- *  @param[in/out]  bp      戦闘システムに引き渡す構造体のポインタ
- *  @param[in]      sv      セーブデータ構造体（ライバルの名前を取り出すのに必要）
- *  @param[in]      heapID	メモリ確保するためのヒープID
- */
-//============================================================================================
-void	TT_EncountTrainerDataMake( BATTLE_SETUP_PARAM *bsp, HEAPID heapID )
-{
-  //いろいろなトレーナーデータの処理をbspに対してやるはず
-
-  //手持ちポケモンデータ生成
-	TT_EncountTrainerPokeDataMake( bsp->trID, bsp->partyEnemy1, heapID );
-}
 
 //============================================================================================
 /**
@@ -232,9 +214,38 @@ u8	TT_TrainerTypeSexGet( int trtype )
 
 //============================================================================================
 /**
- *							外部公開しない関数郡
+ *  @brief  エンカウントトレーナーデータを取得する
+ *
+ *  @param[in/out]	bp    	戦闘システムに引き渡す構造体のポインタ
+ *  @param[in]      num   	何番目のトレーナーID？（タッグの時のため）
+ *  @param[in]      heapID	メモリ確保するためのヒープID
  */
 //============================================================================================
+void TT_EncountTrainerPersonalDataMake( TrainerID tr_id, BSP_TRAINER_DATA* data, HEAPID heapID )
+{
+  TRAINER_DATA*   td;
+
+	td = GFL_HEAP_AllocMemory( heapID, sizeof( TRAINER_DATA ) );
+
+  TT_TrainerDataGet( tr_id, td );
+
+  data->tr_id = tr_id;
+  data->tr_type = td->tr_type;
+  data->ai_bit = td->aibit;
+  
+  {
+    GFL_MSGDATA* man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_trname_dat, heapID );
+    GFL_MSG_GetString( man, tr_id, data->name );
+    GFL_MSG_Delete(man);
+  }
+ 
+  MI_CpuCopy16( td->use_item, data->use_item, sizeof(u16)*4);
+  PMSDAT_Clear( &data->win_word );
+  PMSDAT_Clear( &data->lose_word );
+
+  GFL_HEAP_FreeMemory( td );
+}
+
 //============================================================================================
 /**
  *  @brief  エンカウントトレーナー持ちポケモンデータを生成する
@@ -244,7 +255,7 @@ u8	TT_TrainerTypeSexGet( int trtype )
  *  @param[in]      heapID	メモリ確保するためのヒープID
  */
 //============================================================================================
-static	void	TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID heapID )
+void TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID heapID )
 {
   TRAINER_DATA*   td;
 	void*           buf;
@@ -396,6 +407,12 @@ static	void	TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, H
 	GFL_HEAP_FreeMemory( buf );
 	GFL_HEAP_FreeMemory( pp );
 }
+
+//============================================================================================
+/**
+ *							外部公開しない関数郡
+ */
+//============================================================================================
 			
 //============================================================================================
 /**

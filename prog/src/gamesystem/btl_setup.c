@@ -9,12 +9,18 @@
 #include "system/main.h"
 #include "gamesystem/pm_season.h"
 #include "sound/wb_sound_data.sadl" //サウンドラベルファイル
+#include "tr_tool/tr_tool.h"
+#include "tr_tool/trno_def.h"
+#include "tr_tool/trtype_def.h"
+#include "buflen.h"
 
 #include "gamesystem/btl_setup.h"
 
 ///プロトタイプ
 void BATTLE_PARAM_Init( BATTLE_SETUP_PARAM* bp );
 void BATTLE_PARAM_Release( BATTLE_SETUP_PARAM* bp );
+static BSP_TRAINER_DATA* BSP_TRAINER_DATA_Create( HEAPID heapID );
+static void BSP_TRAINER_DATA_Delete( BSP_TRAINER_DATA* tr_data );
 
 static void setup_common_situation( BTL_FIELD_SITUATION* sit );
 
@@ -65,6 +71,7 @@ void BATTLE_PARAM_Init( BATTLE_SETUP_PARAM* bp )
  */
 void BATTLE_PARAM_Release( BATTLE_SETUP_PARAM* bp )
 {
+  int i;
   if(bp->partyPlayer){
     GFL_HEAP_FreeMemory(bp->partyPlayer);
   }
@@ -77,8 +84,15 @@ void BATTLE_PARAM_Release( BATTLE_SETUP_PARAM* bp )
   if(bp->partyEnemy2){
     GFL_HEAP_FreeMemory(bp->partyEnemy2);
   }
+  for( i = 0;i < BTL_CLIENT_NUM;i++){
+    if(bp->tr_data[i] != NULL){
+      BSP_TRAINER_DATA_Delete( bp->tr_data[i]);
+    }
+  }
+
   MI_CpuClear8(bp,sizeof(BATTLE_SETUP_PARAM));
 }
+
 /*
  *  @brief  バトルパラム　PokePartyデータセット
  *
@@ -105,13 +119,31 @@ void BATTLE_PARAM_SetPokeParty( BATTLE_SETUP_PARAM* bp, const POKEPARTY* party, 
 }
 
 /*
+ *  @brief  バトルパラム　PokePartyポインタ取得
+ */
+POKEPARTY* BATTLE_PARAM_GetPokePartyPointer( BATTLE_SETUP_PARAM* bp, BTL_CLIENT_ID client )
+{
+  switch( client ){
+  case BTL_CLIENT_PLAYER:
+    return bp->partyPlayer;
+  case BTL_CLIENT_PARTNER:
+    return bp->partyPartner;
+  case BTL_CLIENT_ENEMY1:
+    return bp->partyEnemy1;
+  case BTL_CLIENT_ENEMY2:
+    return bp->partyEnemy2;
+  }
+  GF_ASSERT(0);
+  return NULL;
+}
+
+/*
  *  @brief  戦闘フィールドシチュエーションデータデフォルト初期化
  */
 void BTL_FIELD_SITUATION_Init( BTL_FIELD_SITUATION* sit )
 {
   setup_common_situation( sit );
 }
-
 
 static void setup_common_situation( BTL_FIELD_SITUATION* sit )
 {
@@ -123,8 +155,64 @@ static void setup_common_situation( BTL_FIELD_SITUATION* sit )
   sit->weather = BTL_WEATHER_NONE; 
 }
 
-static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD_SITUATION* sit )
+/*
+ *  @brief  戦闘トレーナーデータワーク初期化
+ *
+ *  内部でメモリをアロケートするため、必ずBSP_TRAINER_DATA_Createで解放してください
+ */
+static BSP_TRAINER_DATA* BSP_TRAINER_DATA_Create( HEAPID heapID )
+{
+  BSP_TRAINER_DATA* tr_data = GFL_HEAP_AllocClearMemory( heapID, sizeof( BSP_TRAINER_DATA ) );
+  tr_data->name = 	GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, heapID );
 
+  return tr_data;
+}
+
+/*
+ *  @brief  戦闘トレーナーデータワーク解放
+ *
+ *  内部でメモリをアロケートするため、必ず解放してください
+ */
+static void BSP_TRAINER_DATA_Delete( BSP_TRAINER_DATA* tr_data )
+{
+	GFL_STR_DeleteBuffer( tr_data->name );
+
+  GFL_HEAP_FreeMemory( tr_data );
+}
+
+/*
+ *  @brief  トレーナーパラメータセット
+ */
+static void setup_trainer_param( BATTLE_SETUP_PARAM* dst, BTL_CLIENT_ID client, POKEPARTY** party, TrainerID tr_id, HEAPID heapID )
+{
+  *party = PokeParty_AllocPartyWork( heapID );
+  dst->tr_data[client] = BSP_TRAINER_DATA_Create( heapID );
+
+  if(tr_id != TRID_NULL){
+    TT_EncountTrainerPersonalDataMake( tr_id, dst->tr_data[client], heapID );
+    TT_EncountTrainerPokeDataMake( tr_id, *party, heapID );
+  }
+}
+
+/*
+ *  @brief  プレイヤーパラメータセット
+ */
+static void setup_player_param( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, HEAPID heapID )
+{
+  BSP_TRAINER_DATA* tr_data;
+  PLAYER_WORK * player = GAMEDATA_GetMyPlayerWork( gameData );
+
+  dst->partyPlayer = PokeParty_AllocPartyWork( heapID );
+  PokeParty_Copy( GAMEDATA_GetMyPokemon( gameData ), dst->partyPlayer );
+  
+  dst->tr_data[BTL_CLIENT_PLAYER] = BSP_TRAINER_DATA_Create( heapID );
+  tr_data = dst->tr_data[BTL_CLIENT_PLAYER];
+
+  MyStatus_CopyNameString( (const MYSTATUS*)&player->mystatus , tr_data->name );
+  tr_data->tr_type = TRTYPE_HERO + MyStatus_GetMySex( (const MYSTATUS*)&player->mystatus );
+}
+
+static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD_SITUATION* sit )
 {
   dst->netHandle = NULL;
   dst->commMode = BTL_COMM_NONE;
@@ -169,14 +257,12 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD
  *      バトル終了後、BATTLE_PARAM_Release()もしくはBATTLE_PARAM_Delete()で必ず解放処理を行ってください
  */
 //=============================================================================================
-void BTL_SETUP_Wild( BATTLE_SETUP_PARAM* bp, GAMEDATA* gdata,
+void BTL_SETUP_Wild( BATTLE_SETUP_PARAM* bp, GAMEDATA* gameData,
   const POKEPARTY* partyEnemy, const BTL_FIELD_SITUATION* sit, const BtlRule rule, HEAPID heapID )
 {
   BATTLE_PARAM_Init( bp );
-  setup_common( bp, gdata, (BTL_FIELD_SITUATION*)sit );
-
-  bp->partyPlayer = PokeParty_AllocPartyWork( heapID );
-  PokeParty_Copy( GAMEDATA_GetMyPokemon(gdata), bp->partyPlayer );
+  setup_common( bp, gameData, (BTL_FIELD_SITUATION*)sit );
+  setup_player_param( bp, gameData, heapID );
 
   bp->partyEnemy1 = PokeParty_AllocPartyWork( heapID );
   if( partyEnemy != NULL ){
@@ -204,24 +290,19 @@ void BTL_SETUP_Wild( BATTLE_SETUP_PARAM* bp, GAMEDATA* gdata,
  *      バトル終了後、BATTLE_PARAM_Release()もしくはBATTLE_PARAM_Delete()で必ず解放処理を行ってください
  */
 //=============================================================================================
-static void setup_common_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BtlRule rule,
-  POKEPARTY* partyEnemy, BTL_FIELD_SITUATION* sit, TrainerID trID, HEAPID heapID )
+static void setup_common_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
+  BtlRule rule, BTL_FIELD_SITUATION* sit, HEAPID heapID )
 {
   BATTLE_PARAM_Init( dst );
   setup_common( dst, gameData, sit );
+  setup_player_param( dst, gameData, heapID );
 
-  dst->partyPlayer = PokeParty_AllocPartyWork( heapID );
-  PokeParty_Copy( GAMEDATA_GetMyPokemon(gameData), dst->partyPlayer );
-  
-  dst->partyEnemy1 = PokeParty_AllocPartyWork( heapID );
-  if( partyEnemy != NULL ){
-    PokeParty_Copy( partyEnemy, dst->partyEnemy1 );
-  }
+  dst->tr_data[BTL_CLIENT_PLAYER] = BSP_TRAINER_DATA_Create( heapID );
 
   dst->competitor = BTL_COMPETITOR_TRAINER;
   dst->rule = rule;
 
-  dst->trID = trID;
+//  dst->trID = trID;
 }
 
 //=============================================================================================
@@ -249,10 +330,8 @@ static void setup_common_CommTrainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameDat
   sit.bgAttr = BATTLE_BG_ATTR_NORMAL_GROUND;
 
   setup_common( dst, gameData, &sit );
+  setup_player_param( dst, gameData, heapID ); 
 
-  dst->partyPlayer = PokeParty_AllocPartyWork( heapID );
-  PokeParty_Copy( GAMEDATA_GetMyPokemon(gameData), dst->partyPlayer );
-  
   dst->competitor = BTL_COMPETITOR_COMM;
   dst->rule = rule;
 
@@ -263,6 +342,10 @@ static void setup_common_CommTrainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameDat
 
   dst->trID = TRID_NULL;
 }
+
+///////////////////////////////////////////////////////////////////////////////
+//  ローカルトレーナー対戦関連
+///////////////////////////////////////////////////////////////////////////////
 
 //=============================================================================================
 /**
@@ -279,11 +362,135 @@ static void setup_common_CommTrainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameDat
  */
 //=============================================================================================
 void BTL_SETUP_Single_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  POKEPARTY* partyEnemy, BTL_FIELD_SITUATION* sit, TrainerID trID, HEAPID heapID )
+  BTL_FIELD_SITUATION* sit, TrainerID trID, HEAPID heapID )
 {
-  setup_common_Trainer( dst, gameData, BTL_RULE_SINGLE, partyEnemy, sit, trID, heapID );
+  setup_common_Trainer( dst, gameData, BTL_RULE_SINGLE, sit, heapID );
+
+  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->partyEnemy1, trID, heapID );
+
+  dst->trID = trID; //@todo
 }
 
+//=============================================================================================
+/**
+ * ダブル ゲーム内トレーナー対戦
+ *
+ * @param   dst
+ * @param   gameData
+ * @param   landForm
+ * @param   weather
+ * @param   trID
+ *
+ * @li  内部でメモリの確保を行います。
+ *      バトル終了後、BATTLE_PARAM_Release()もしくはBATTLE_PARAM_Delete()で必ず解放処理を行ってください
+ */
+//=============================================================================================
+void BTL_SETUP_Double_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
+  BTL_FIELD_SITUATION* sit, TrainerID trID, HEAPID heapID )
+{
+  setup_common_Trainer( dst, gameData, BTL_RULE_DOUBLE, sit, heapID );
+  
+  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->partyEnemy1, trID, heapID );
+  dst->trID = trID; //@todo
+}
+//=============================================================================================
+/**
+ * トリプル ゲーム内トレーナー対戦
+ *
+ * @param   dst
+ * @param   gameData
+ * @param   landForm
+ * @param   weather
+ * @param   trID
+ *
+ * @li  内部でメモリの確保を行います。
+ *      バトル終了後、BATTLE_PARAM_Release()もしくはBATTLE_PARAM_Delete()で必ず解放処理を行ってください
+ */
+//=============================================================================================
+void BTL_SETUP_Triple_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
+  BTL_FIELD_SITUATION* sit, TrainerID trID, HEAPID heapID )
+{
+  setup_common_Trainer( dst, gameData, BTL_RULE_TRIPLE, sit, heapID );
+  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->partyEnemy1, trID, heapID );
+  dst->trID = trID; //@todo
+}
+
+//=============================================================================================
+/**
+ * ローテーション ゲーム内トレーナー対戦
+ *
+ * @param   dst
+ * @param   gameData
+ * @param   landForm
+ * @param   weather
+ * @param   trID
+ *
+ * @li  内部でメモリの確保を行います。
+ *      バトル終了後、BATTLE_PARAM_Release()もしくはBATTLE_PARAM_Delete()で必ず解放処理を行ってください
+ */
+//=============================================================================================
+void BTL_SETUP_Rotation_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
+  BTL_FIELD_SITUATION* sit, TrainerID trID, HEAPID heapID )
+{
+  setup_common_Trainer( dst, gameData, BTL_RULE_ROTATION, sit, heapID );
+  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->partyEnemy1, trID, heapID );
+  dst->trID = trID; //@todo
+}
+
+//=============================================================================================
+/**
+ * タッグ ゲーム内トレーナー対戦
+ *
+ * @param   dst
+ * @param   gameData
+ * @param   partyEnemy
+ * @param   landForm
+ * @param   weather
+ * @param   trID
+ *
+ * @li  内部でメモリの確保を行います。
+ *      バトル終了後、BATTLE_PARAM_Release()もしくはBATTLE_PARAM_Delete()で必ず解放処理を行ってください
+ */
+//=============================================================================================
+void BTL_SETUP_Tag_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
+  BTL_FIELD_SITUATION* sit, TrainerID tr_id0, TrainerID tr_id1, HEAPID heapID )
+{
+  setup_common_Trainer( dst, gameData, BTL_RULE_DOUBLE, sit, heapID );
+  
+  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->partyEnemy1, tr_id0, heapID );
+  setup_trainer_param( dst, BTL_CLIENT_ENEMY2, &dst->partyEnemy2, tr_id1, heapID );
+  dst->trID = tr_id0; //@todo
+}
+
+//=============================================================================================
+/**
+ * AIマルチ ゲーム内トレーナー対戦
+ *
+ * @param   dst
+ * @param   gameData
+ * @param   partyEnemy
+ * @param   landForm
+ * @param   weather
+ * @param   trID
+ *
+ * @li  内部でメモリの確保を行います。
+ *      バトル終了後、BATTLE_PARAM_Release()もしくはBATTLE_PARAM_Delete()で必ず解放処理を行ってください
+ */
+//=============================================================================================
+void BTL_SETUP_AIMulti_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
+  BTL_FIELD_SITUATION* sit, TrainerID partner, TrainerID tr_id0, TrainerID tr_id1, HEAPID heapID )
+{
+  setup_common_Trainer( dst, gameData, BTL_RULE_DOUBLE, sit, heapID );
+  
+  setup_trainer_param( dst, BTL_CLIENT_PARTNER, &dst->partyPartner, partner, heapID );
+  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->partyEnemy1, tr_id0, heapID );
+  setup_trainer_param( dst, BTL_CLIENT_ENEMY2, &dst->partyEnemy2, tr_id1, heapID );
+  dst->trID = tr_id0; //@todo
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//  通信対戦関連
+///////////////////////////////////////////////////////////////////////////////
 //=============================================================================================
 /**
  * シングル 通信対戦
@@ -305,27 +512,6 @@ void BTL_SETUP_Single_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 
 //=============================================================================================
 /**
- * ダブル ゲーム内トレーナー対戦
- *
- * @param   dst
- * @param   gameData
- * @param   partyEnemy
- * @param   landForm
- * @param   weather
- * @param   trID
- *
- * @li  内部でメモリの確保を行います。
- *      バトル終了後、BATTLE_PARAM_Release()もしくはBATTLE_PARAM_Delete()で必ず解放処理を行ってください
- */
-//=============================================================================================
-void BTL_SETUP_Double_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  POKEPARTY* partyEnemy, BTL_FIELD_SITUATION* sit, TrainerID trID, HEAPID heapID )
-{
-  setup_common_Trainer( dst, gameData, BTL_RULE_DOUBLE, partyEnemy, sit, trID, heapID );
-}
-
-//=============================================================================================
-/**
  * ダブル 通信対戦
  *
  * @param   dst
@@ -342,6 +528,7 @@ void BTL_SETUP_Double_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 {
   setup_common_CommTrainer( dst, gameData, BTL_RULE_DOUBLE, FALSE, netHandle, commMode, heapID );
 }
+
 
 //=============================================================================================
 /**
@@ -365,27 +552,6 @@ void BTL_SETUP_Multi_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 
 //=============================================================================================
 /**
- * トリプル ゲーム内トレーナー対戦
- *
- * @param   dst
- * @param   gameData
- * @param   partyEnemy
- * @param   landForm
- * @param   weather
- * @param   trID
- *
- * @li  内部でメモリの確保を行います。
- *      バトル終了後、BATTLE_PARAM_Release()もしくはBATTLE_PARAM_Delete()で必ず解放処理を行ってください
- */
-//=============================================================================================
-void BTL_SETUP_Triple_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  POKEPARTY* partyEnemy, BTL_FIELD_SITUATION* sit, TrainerID trID, HEAPID heapID )
-{
-  setup_common_Trainer( dst, gameData, BTL_RULE_TRIPLE, partyEnemy, sit, trID, heapID );
-}
-
-//=============================================================================================
-/**
  * トリプル 通信対戦
  *
  * @param   dst
@@ -403,26 +569,6 @@ void BTL_SETUP_Triple_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   setup_common_CommTrainer( dst, gameData, BTL_RULE_TRIPLE, FALSE, netHandle, commMode, heapID );
 }
 
-//=============================================================================================
-/**
- * ローテーション ゲーム内トレーナー対戦
- *
- * @param   dst
- * @param   gameData
- * @param   partyEnemy
- * @param   landForm
- * @param   weather
- * @param   trID
- *
- * @li  内部でメモリの確保を行います。
- *      バトル終了後、BATTLE_PARAM_Release()もしくはBATTLE_PARAM_Delete()で必ず解放処理を行ってください
- */
-//=============================================================================================
-void BTL_SETUP_Rotation_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  POKEPARTY* partyEnemy, BTL_FIELD_SITUATION* sit, TrainerID trID, HEAPID heapID )
-{
-  setup_common_Trainer( dst, gameData, BTL_RULE_ROTATION, partyEnemy, sit, trID, heapID );
-}
 
 //=============================================================================================
 /**
