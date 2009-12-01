@@ -4,8 +4,6 @@
  * @file   event_autoway.c
  * @author obata
  * @date   2009.11.27
- *
- * @todo SEをあてる
  */
 ///////////////////////////////////////////////////////////////////////////////////////////////
 #include <gflib.h>
@@ -18,6 +16,8 @@
 #include "fldmmdl.h"
 #include "fldmmdl_code.h"
 #include "map_attr_def.h"  // for MATTR_xxxx
+#include "sound/pm_sndsys.h"  // for PMSND_PlaySE
+#include "sound/wb_sound_data.sadl"  // for SEQ_SE_xxxx
 
 
 //=============================================================================================
@@ -155,7 +155,8 @@ static GMEVENT_RESULT AutoMove( GMEVENT* event, int* seq, void* wk )
       AttributeCheck( work );
       // 衝突チェック
       if( HitCheck(work) )  // if(衝突)
-      { 
+      { // SE停止
+        PMSND_StopSE(); 
         *seq = SEQ_EXIT; 
         break;
       }
@@ -329,6 +330,9 @@ static void MoveStart( EVENT_WORK* work )
 
   // 移動アニメーションによる向きの変更を一時停止
   MMDL_OnStatusBit( work->mmdl, MMDL_STABIT_PAUSE_DIR );
+
+  // SE再生
+  if( PMSND_CheckPlaySE() == FALSE ){ PMSND_PlaySE( SEQ_SE_FLD_35 ); }
 }
 
 //---------------------------------------------------------------------------------------------
