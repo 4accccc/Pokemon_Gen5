@@ -2849,6 +2849,14 @@ static BOOL tokwin_renew_progress( TOK_WIN* tokwin )
     }else{
       G2_BG3Mosaic( FALSE );
     }
+    (tokwin->seq++);
+    break;
+  case 5:
+    if(  !PMSND_CheckPlaySE() ){
+      tokwin->seq++;
+    }
+    break;
+  default:
     return TRUE;
   }
   return FALSE;

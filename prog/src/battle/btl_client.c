@@ -358,7 +358,7 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
     ClientSubProc   procs[ BTL_THINKER_TYPE_MAX ];
   }procTbl[] = {
 
-    { BTL_ACMD_NOTIFY_POKEDATA, { SubProc_UI_NotifyPokeData,SubProc_AI_NotifyPokeData }, },
+    { BTL_ACMD_NOTIFY_POKEDATA, { SubProc_UI_NotifyPokeData, SubProc_AI_NotifyPokeData }, },
     { BTL_ACMD_WAIT_SETUP,      { SubProc_UI_Setup,          SubProc_AI_Setup } },
     { BTL_ACMD_SELECT_ROTATION, { SubProc_UI_SelectRotation, SubProc_AI_SelectRotation } },
     { BTL_ACMD_SELECT_ACTION,   { SubProc_UI_SelectAction,   SubProc_AI_SelectAction } },
@@ -2454,6 +2454,7 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
         break;
       default:
         BPP_ReflectByPP( bpp );
+        BTL_MAIN_ClientPokemonReflectToServer( wk->mainModule, args[0] );
         BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_WAZAOBOE, msg_waza_oboe_04 );
         BTLV_STRPARAM_AddArg( &wk->strParam, args[0] );
         BTLV_STRPARAM_AddArg( &wk->strParam, waza_no );

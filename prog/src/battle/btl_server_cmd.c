@@ -41,7 +41,7 @@ typedef enum {
   SC_ARGFMT_12byte = SC_ARGFMT(2,1),
   SC_ARGFMT_14byte = SC_ARGFMT(2,2),
   SC_ARGFMT_44bit  = SC_ARGFMT(2,3),
-  SC_ARGFMT_53bit = SC_ARGFMT(2,4),
+  SC_ARGFMT_53bit  = SC_ARGFMT(2,4),
 
 
   // à¯êîÇRå¬ÇÃå^

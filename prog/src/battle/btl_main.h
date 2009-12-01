@@ -88,6 +88,7 @@ static inline BtlSide BTL_MAINUTIL_PosToSide( BtlPokePos pos )
 /*------------------------------------------------------------------------------*/
 extern void BTL_MAIN_NotifyCapturedPokePos( BTL_MAIN_MODULE* wk, BtlPokePos pos );
 extern void BTL_MAIN_AddBonusMoney( BTL_MAIN_MODULE* wk, u32 volume );
+extern void BTL_MAIN_ClientPokemonReflectToServer( BTL_MAIN_MODULE* wk, u8 pokeID );
 
 
 //-------------------------

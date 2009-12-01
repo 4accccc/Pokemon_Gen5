@@ -2912,6 +2912,24 @@ static void srcParty_RefrectBtlPartyStartOrder( BTL_MAIN_MODULE* wk, u8 clientID
 //
 //----------------------------------------------------------------------------------------------
 
+//=============================================================================================
+/**
+ * クライアント側でレベルアップ処理を行った後、サーバ側パラメータに書き戻す
+ * ※スタンドアロン実行時のみ有効
+ *
+ * @param   wk
+ * @param   pokeID
+ */
+//=============================================================================================
+void BTL_MAIN_ClientPokemonReflectToServer( BTL_MAIN_MODULE* wk, u8 pokeID )
+{
+  GF_ASSERT(wk->setupParam->competitor != BTL_COMPETITOR_COMM);
+  {
+    BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( &wk->pokeconForServer, pokeID );
+    BPP_ReflectByPP( bpp );
+  }
+}
+
 //----------------------------------------------------------------------------------
 /**
  * バトル内パーティデータを、結果としてセットアップパラメータに書き戻す

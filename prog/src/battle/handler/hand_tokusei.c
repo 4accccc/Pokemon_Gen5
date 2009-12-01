@@ -5486,8 +5486,9 @@ static void handler_Illusion_Ieki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 // ‚Æ‚­‚¹‚¢•ÏŠ·’¼‘Oƒnƒ“ƒhƒ‰
 static void handler_Illusion_ChangeTok( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_TOKUSEI) != BTL_EVENT_FACTOR_GetSubID(myHandle))
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  ){
     common_IllusionBreak( myHandle, flowWk, pokeID );
   }
 }
