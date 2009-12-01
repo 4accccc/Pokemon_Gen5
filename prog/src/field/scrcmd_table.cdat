@@ -666,7 +666,7 @@
   DEF_CMD( EvCmdPlBoat_Start, EV_SEQ_PL_BOAT_START )
   DEF_CMD( EvCmdPlBoat_End, EV_SEQ_PL_BOAT_END )
   DEF_CMD( EvCmdPlBoat_GetTrNum, EV_SEQ_PL_BOAT_GET_TR_NUM )
-  NO_CMD()
+  DEF_CMD( EvCmdPlBoat_AddTime, EV_SEQ_PL_BOAT_ADD_TIME )
 
   NO_CMD()
   NO_CMD()

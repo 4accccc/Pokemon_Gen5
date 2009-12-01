@@ -107,5 +107,29 @@ VMCMD_RESULT EvCmdPlBoat_GetTrNum( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * 船内時間強制加算
+ * @param   core          仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPlBoat_AddTime( VMHANDLE *core, void *wk )
+{
+  u16 add_time;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+  PL_BOAT_WORK_PTR *ptr = GAMEDATA_GetPlBoatWorkPtr(gamedata);
+
+  add_time = VMGetU16( core );
+
+  PL_BOAT_AddTimeEvt(*ptr, add_time);
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
 
 

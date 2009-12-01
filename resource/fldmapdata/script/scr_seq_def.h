@@ -5370,5 +5370,19 @@
   .short  EV_SEQ_PL_BOAT_GET_TR_NUM
   .short  \type
   .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 遊覧船内時間更新
+ * @param add_time    加算時間（秒）
+ */
+//--------------------------------------------------------------
+#define _PL_BOAT_ADD_TIME(add_time) _ASM_PL_BOAT_ADD_TIME add_time
+
+  .macro  _ASM_PL_BOAT_ADD_TIME add_time
+  .short  EV_SEQ_PL_BOAT_ADD_TIME
+  .short  \add_time
   .endm  
+  
 
