@@ -3781,11 +3781,11 @@
 //--------------------------------------------------------------
 /**
  * @def _GET_PARTY_FRONT_POKEMON
- * @brief
- * @param ret_wk チェック結果を受け取るワーク
+ * @brief 手持ちの先頭ポケモンがいる位置を取得
+ * @param ret_wk チェック結果を受け取るワーク（0～5の数値で返します）
  * @param count_mode 数え方指定(POKECOUNT_MODE_XXXX)
- 		POKECOUNT_MODE_NOT_EGG       (1)  // タマゴを除く手持ちの数
- 		POKECOUNT_MODE_BATTLE_ENABLE (2)  // 戦える(タマゴと瀕死を除いた)ポケモン数
+ 		POKECOUNT_MODE_NOT_EGG       (1)  // タマゴを除く
+ 		POKECOUNT_MODE_BATTLE_ENABLE (2)  // 戦える(タマゴと瀕死を除いた)ポケモン
  	* @retval u16 位置
   *
   * _GET_PARTY_POKE_COUNTと同じ引数をとるが、使えないものもあるので注意！
