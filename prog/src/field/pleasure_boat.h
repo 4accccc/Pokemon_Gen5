@@ -15,5 +15,6 @@ extern PL_BOAT_WORK_PTR PL_BOAT_Init(void);
 extern void PL_BOAT_End(PL_BOAT_WORK_PTR *work);
 extern void PL_BOAT_Main(PL_BOAT_WORK_PTR work);
 extern GMEVENT *PL_BOAT_CheckEvt(GAMESYS_WORK *gsys, PL_BOAT_WORK_PTR work);
-extern void PL_BOAT_FlushTime(PL_BOAT_WORK_PTR work);
+extern void PL_BOAT_AddTimeEvt(PL_BOAT_WORK_PTR work, const int inAddSec);
+
 

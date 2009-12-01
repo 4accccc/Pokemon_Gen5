@@ -11,20 +11,17 @@
 #include "../../../resource/fldmapdata/script/c03r0801_def.h"  //for SCRID_～
 #include "script.h"     //for SCRIPT_SetEventScript
 
-//#define FASE_MAX    (5)
-//#define FIRST_FASE_TIME (10)
-//#define FASE_TIME (45)
+#define WHISTLE_MARGINE (45)
 
 #define PL_BOAT_MODE_TIME (10*30)    //180秒
 
+#define NPC_TOTAL_NUM (15)
+
 typedef struct PL_BOAT_WORK_tag
 {
-//  int NowFase;
-//  int FaseRestTime;
   BOOL WhistleReq;
-//  s64 BaseSec;
-
   int Time;
+  int WhistleCount;   //汽笛なった回数
 }PL_BOAT_WORK;
 
 typedef enum {
@@ -34,10 +31,9 @@ typedef enum {
   PL_BOAT_EVT_END,
 }PL_BOAT_EVT;
 
-#if 0
-static int GetDiffTime(PL_BOAT_WORK_PTR work);
-static int GetNowFaseTime(PL_BOAT_WORK_PTR work);
-#endif
+static const u8 WeekTrNum[7] = {
+  4,3,4,5,4,6,7
+};
 
 static PL_BOAT_EVT GetEvt(PL_BOAT_WORK_PTR work);
 
@@ -55,13 +51,9 @@ PL_BOAT_WORK_PTR PL_BOAT_Init(void)
 
   work = GFL_HEAP_AllocClearMemory(HEAPID_APP_CONTROL, sizeof(PL_BOAT_WORK));
 
-//  work->NowFase = 0;
-//  work->FaseRestTime = FIRST_FASE_TIME;
   work->WhistleReq = FALSE;
-//  work->BaseSec = GFL_RTC_GetDateTimeBySecond();
-
   work->Time = 0;
-
+  work->WhistleCount = 0;
   //イベント時間テーブルをロードするかも
   ;
   return work;
@@ -98,6 +90,7 @@ void PL_BOAT_Main(PL_BOAT_WORK_PTR work)
   if (work->WhistleReq)
   {
     ;
+    work->WhistleCount++;
     work->WhistleReq = FALSE;
   }
 }
@@ -150,88 +143,39 @@ GMEVENT *PL_BOAT_CheckEvt(GAMESYS_WORK *gsys, PL_BOAT_WORK_PTR work)
   return NULL;
 }
 
-#if 0
-u32 PL_BOAT_GetMsgCntIdx()
-{
-  //現在時間から取得できるメッセージの管理番号を返す
-  ;
-}
-#endif
-
-#if 0
 //--------------------------------------------------------------
 /**
- * @brief	時間経過フラッシュ
- * @param	work      PL_BOAT_WORK_PTR
- * @retval	none
+ * @brief	強制的に時間経過させる　汽笛時間をまたいた場合は汽笛時間直前までの制限をかける
+ * @param   work      PL_BOAT_WORK_PTR
+ * @param   inAddSec  加算時間（秒）
+ * @retval  none
 */
 //--------------------------------------------------------------
-void PL_BOAT_FlushTime(PL_BOAT_WORK_PTR work)
+void PL_BOAT_AddTimeEvt(PL_BOAT_WORK_PTR work, const int inAddSec)
 {
-  int diff;
-
-  //現在までの消費時間算出
-  diff = GetDiffTime(work);
-
-  if (diff < work->FaseRestTime)
+  int margine = work->Time%(WHISTLE_MARGINE*30);
+  OS_Printf("now_time = %d::%d SEC\n",work->Time, work->Time/30);
+  //時間加算
+  margine += (inAddSec*30);
+  if ( margine >= WHISTLE_MARGINE*30 )
   {
-    work->FaseRestTime -= diff;
+    //汽笛が鳴る直前まで時間を進行
+    work->Time = (work->WhistleCount+1)*(WHISTLE_MARGINE*30)-1;
   }
   else
   {
-    work->FaseRestTime = 0;
+    work->Time += (inAddSec*30);
   }
-  //時間上書き
-  work->BaseSec = GFL_RTC_GetDateTimeBySecond();
+  OS_Printf("add_after_time = %d::%d SEC\n",work->Time, work->Time/30);
 }
 
 //--------------------------------------------------------------
 /**
- * @brief	経過時間取得
- * @param	work      PL_BOAT_WORK_PTR
- * @retval	int     経過時間（時間差分）
+ * @brief	イベント取得
+ * @param	 work      PL_BOAT_WORK_PTR
+ * @retval PL_BOAT_EVT    発生イベントタイプ
 */
 //--------------------------------------------------------------
-static int GetDiffTime(PL_BOAT_WORK_PTR work)
-{
-  s64 sec;
-  int diff;
-  int fase_time;
-  
-  fase_time = GetNowFaseTime(work);
-  sec = GFL_RTC_GetDateTimeBySecond();
-  OS_Printf("sec = %d\n",sec);
-  //差分計算
-  diff = work->BaseSec - sec;
-  //先祖がえりはありえないが念のため
-  if (diff < 0){
-    GF_ASSERT(0);
-    diff = fase_time;
-  }
-
-  if (diff > fase_time) diff = fase_time;
-
-  return diff;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief	現在のフェーズの最大経過秒数
- * @param	work      PL_BOAT_WORK_PTR
- * @retval	int     フェーズの最大秒数
-*/
-//--------------------------------------------------------------
-static int GetNowFaseTime(PL_BOAT_WORK_PTR work)
-{
-  int fase_time;
-  //現在のフェーズで分岐
-  if (work->NowFase == 0) fase_time = FIRST_FASE_TIME;
-  else fase_time = FASE_TIME;
-
-  return fase_time;
-}
-#endif
-
 static PL_BOAT_EVT GetEvt(PL_BOAT_WORK_PTR work)
 {
   //現在時間でイベントが発生するかを調べる
@@ -239,8 +183,57 @@ static PL_BOAT_EVT GetEvt(PL_BOAT_WORK_PTR work)
     return PL_BOAT_EVT_END;
   }
 
-  if ( work->Time % (36*30) == 0 ){
+  if ( work->Time % (WHISTLE_MARGINE*30) == 0 ){
     return PL_BOAT_EVT_WHISTLE;
   }
   return PL_BOAT_EVT_NONE;
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief	トレーナー抽選
+ * @param	 work      PL_BOAT_WORK_PTR
+ * @retval none
+*/
+//--------------------------------------------------------------
+static void EntryTrainer(void)
+{
+  int tr_num;
+  RTCDate date;
+  RTC_GetDate( &date ); 
+  //曜日別にトレーナー数を決定
+  switch( date.week ){
+  case RTC_WEEK_MONDAY:
+    tr_num = WeekTrNum[0];
+    break;
+  case RTC_WEEK_TUESDAY:
+    tr_num = WeekTrNum[1];
+    break;
+  case RTC_WEEK_WEDNESDAY:
+    tr_num = WeekTrNum[2];
+    break;
+  case RTC_WEEK_THURSDAY:
+    tr_num = WeekTrNum[3];
+    break;
+  case RTC_WEEK_FRIDAY:
+    tr_num = WeekTrNum[4];
+    break;
+  case RTC_WEEK_SATURDAY:
+    tr_num = WeekTrNum[5];
+    break;
+  case RTC_WEEK_SUNDAY:
+    tr_num = WeekTrNum[6];
+    break;
+  default:
+    GF_ASSERT(0);
+    tr_num = 0;
+  }
+
+
+  //テーブルからトレーナをエントリ
+  ;
+  //テーブルから非トレーナーをエントリ
+  ;
+ 
+}
+
