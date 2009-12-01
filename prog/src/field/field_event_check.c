@@ -90,6 +90,9 @@
 
 #include "pleasure_boat.h"    //for PL_BOAT_
 
+#include "event_autoway.h" // for EVENT_PlayerMoveOnAutoWay
+
+
 //======================================================================
 //======================================================================
 
@@ -146,6 +149,7 @@ static BOOL checkPartyEgg( POKEPARTY* party );
 
 static GMEVENT * checkExit(EV_REQUEST * req,
     FIELDMAP_WORK *fieldWork, const VecFx32 *now_pos );
+static GMEVENT * checkAttribute(EV_REQUEST * req, FIELDMAP_WORK *fieldWork );
 static GMEVENT * checkPushExit(EV_REQUEST * req,
 		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
@@ -275,11 +279,15 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
     if( event != NULL ){
       EFFECT_ENC_EffectDelete( encount );
       return event;
-    }
-
+    } 
     //座標接続チェック
     event = checkExit(&req, fieldWork, req.now_pos);
     if( event != NULL ){
+      return event;
+    }
+    // アトリビュートチェック
+    event = checkAttribute( &req, fieldWork );
+    if( event != NULL ) {
       return event;
     }
     //汎用一歩移動イベントチェック群
@@ -1211,6 +1219,35 @@ static GMEVENT * checkExit(EV_REQUEST * req,
 	//マップ遷移発生の場合、出入口を記憶しておく
   rememberExitInfo(req, fieldWork, idx, now_pos);
   return getChangeMapEvent(req, fieldWork, idx, now_pos);
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント アトリビュートチェック
+ *
+ * @param req   イベントチェック用ワーク
+ * @param fieldWork FIELDMAP_WORK
+ * @return GMEVENT  発生したイベントデータへのポインタ。 NULLの場合、イベントなし
+ */
+//--------------------------------------------------------------
+static GMEVENT * checkAttribute(EV_REQUEST * req, FIELDMAP_WORK *fieldWork )
+{
+  VecFx32 pos;
+  MAPATTR attr;
+  MAPATTR_VALUE attrval;
+  FLDMAPPER* mapper;
+
+  // 足元のアトリビュートを取得
+  FIELD_PLAYER_GetPos( req->field_player, &pos );
+  mapper  = FIELDMAP_GetFieldG3Dmapper( fieldWork );
+  attr    = MAPATTR_GetAttribute( mapper, &pos );
+  attrval = MAPATTR_GetAttrValue( attr );
+
+  if( CheckAttributeIsAutoWay(attrval) )
+  { // 移動床
+    return EVENT_PlayerMoveOnAutoWay( NULL, req->gsys, fieldWork );
+  }
+  return NULL;
 }
 
 //--------------------------------------------------------------
