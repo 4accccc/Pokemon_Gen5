@@ -135,7 +135,7 @@ EVENT_START    ev_pos_d06_leader5_01
 	//ジムリーダーを消す
 	//ストッパーを消す
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
-	_OBJ_DEL( FV_D06_LEADER5_01 )
+	_OBJ_DEL(  D06_LEADER5_01 )
 	_FLAG_SET( FV_D06_LEADER5_01 )
 	
 //========================================//
