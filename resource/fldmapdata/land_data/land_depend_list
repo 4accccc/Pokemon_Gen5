@@ -652,6 +652,7 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_cabin01_02_00.3dppack \
 	$(DIR_OUTPUT)/m_cabin01_03_00.3dppack \
 	$(DIR_OUTPUT)/m_cabin01_04_00.3dppack \
+	$(DIR_OUTPUT)/m_bsubway02_01_00.3dppack \
 	$(DIR_OUTPUT)/C3_00_00.ngpack \
 	$(DIR_OUTPUT)/C3_00_01.ngpack \
 	$(DIR_OUTPUT)/C3_01_00.ngpack \
