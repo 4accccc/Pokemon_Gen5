@@ -1078,7 +1078,11 @@ static  void  PutNameOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, const BTL
 
   GFL_BMP_Clear( bmp, 0 );
 
-  BPP_GetNickName( bpp, monsname );
+  {
+    const POKEMON_PARAM* pp = BPP_GetViewSrcData( bpp );
+    PP_Get( pp, ID_PARA_nickname, monsname );
+  }
+
 
   GFL_FONTSYS_GetColor( &letter, &shadow, &back );
   GFL_FONTSYS_SetColor( PRINTSYS_LSB_GetL( color ), PRINTSYS_LSB_GetS( color ), PRINTSYS_LSB_GetB( color ) );
