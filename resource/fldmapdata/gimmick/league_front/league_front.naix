@@ -12,11 +12,12 @@
 
 enum {
 	NARC_league_front_pl_ele_00_nsbmd = 0,
-	NARC_league_front_pl_ele_00_nsbca = 1,
-	NARC_league_front_pl_ele_00_nsbta = 2,
-	NARC_league_front_pl_ele_01_nsbmd = 3,
-	NARC_league_front_pl_ele_01_nsbca = 4,
-	NARC_league_front_pl_ele_01_nsbta = 5
+	NARC_league_front_pl_ele_00_00_nsbta = 1,
+	NARC_league_front_pl_ele_00_01_nsbta = 2,
+	NARC_league_front_pl_ele_00_02_nsbta = 3,
+	NARC_league_front_pl_ele_00_03_nsbta = 4,
+	NARC_league_front_pl_ele_00_04_nsbta = 5,
+	NARC_league_front_pl_ele_00_ica_bin = 6
 };
 
 /* NARC_LEAGUE_FRONT_NAIX_ */

@@ -35,11 +35,12 @@ GRAPHIC_SOURCE = ./graphic
 GRAPHIC_BIN = ./graphic/bin
 
 CONVERTDATA = $(GRAPHIC_BIN)/pl_ele_00.nsbmd \
-							$(GRAPHIC_BIN)/pl_ele_00.nsbca \
-							$(GRAPHIC_BIN)/pl_ele_00.nsbta \
-							$(GRAPHIC_BIN)/pl_ele_01.nsbmd \
-							$(GRAPHIC_BIN)/pl_ele_01.nsbca \
-							$(GRAPHIC_BIN)/pl_ele_01.nsbta \
+							$(GRAPHIC_BIN)/pl_ele_00_00.nsbta \
+							$(GRAPHIC_BIN)/pl_ele_00_01.nsbta \
+							$(GRAPHIC_BIN)/pl_ele_00_02.nsbta \
+							$(GRAPHIC_BIN)/pl_ele_00_03.nsbta \
+							$(GRAPHIC_BIN)/pl_ele_00_04.nsbta \
+							$(GRAPHIC_BIN)/pl_ele_00_ica.bin
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -59,11 +60,12 @@ subdir:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # コンバート
 	g3dcvtr $(GRAPHIC_SOURCE)/pl_ele_00.imd -o $(GRAPHIC_BIN)/pl_ele_00.nsbmd
-	g3dcvtr $(GRAPHIC_SOURCE)/pl_ele_00.ica -o $(GRAPHIC_BIN)/pl_ele_00.nsbca
-	g3dcvtr $(GRAPHIC_SOURCE)/pl_ele_00.ita -o $(GRAPHIC_BIN)/pl_ele_00.nsbta
-	g3dcvtr $(GRAPHIC_SOURCE)/pl_ele_01.imd -o $(GRAPHIC_BIN)/pl_ele_01.nsbmd
-	g3dcvtr $(GRAPHIC_SOURCE)/pl_ele_01.ica -o $(GRAPHIC_BIN)/pl_ele_01.nsbca
-	g3dcvtr $(GRAPHIC_SOURCE)/pl_ele_01.ita -o $(GRAPHIC_BIN)/pl_ele_01.nsbta 
+	g3dcvtr $(GRAPHIC_SOURCE)/pl_ele_00_00.ita -o $(GRAPHIC_BIN)/pl_ele_00_00.nsbta
+	g3dcvtr $(GRAPHIC_SOURCE)/pl_ele_00_01.ita -o $(GRAPHIC_BIN)/pl_ele_00_01.nsbta
+	g3dcvtr $(GRAPHIC_SOURCE)/pl_ele_00_02.ita -o $(GRAPHIC_BIN)/pl_ele_00_02.nsbta
+	g3dcvtr $(GRAPHIC_SOURCE)/pl_ele_00_03.ita -o $(GRAPHIC_BIN)/pl_ele_00_03.nsbta
+	g3dcvtr $(GRAPHIC_SOURCE)/pl_ele_00_04.ita -o $(GRAPHIC_BIN)/pl_ele_00_04.nsbta
+	ruby $(ICACONV) -t $(GRAPHIC_SOURCE)/pl_ele_00.ica $(GRAPHIC_BIN)/pl_ele_00_ica.bin
 endif
 
 

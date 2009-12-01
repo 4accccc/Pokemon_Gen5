@@ -24,6 +24,8 @@
 #include "gym_ground_ent.h"
 #include "gym_ice.h"
 #include "field_gimmick_d06.h"
+#include "field_gimmick_league_front01.h"
+#include "field_gimmick_league_front02.h"
 
 extern void GYM_SetupTest(FIELDMAP_WORK *fieldWork);
 extern void GYM_EndTest(FIELDMAP_WORK *fieldWork);
@@ -59,6 +61,8 @@ const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
   D06_GIMMICK_Setup,
   D06_GIMMICK_Setup,
   D06_GIMMICK_Setup,
+  LEAGUE_FRONT_01_GIMMICK_Setup,
+  LEAGUE_FRONT_02_GIMMICK_Setup,
 };
 
 const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
@@ -90,6 +94,8 @@ const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
   D06_GIMMICK_End,
   D06_GIMMICK_End,
   D06_GIMMICK_End,
+  LEAGUE_FRONT_01_GIMMICK_End,
+  LEAGUE_FRONT_02_GIMMICK_End,
 };
 
 const static FLD_GMK_END_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
@@ -121,6 +127,8 @@ const static FLD_GMK_END_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
   D06_GIMMICK_Move,
   D06_GIMMICK_Move,
   D06_GIMMICK_Move,
+  LEAGUE_FRONT_01_GIMMICK_Move,
+  LEAGUE_FRONT_02_GIMMICK_Move,
 };
 
 #if 0
