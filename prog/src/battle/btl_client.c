@@ -116,6 +116,7 @@ struct _BTL_CLIENT {
 
   u8          fieldEffectFlag[ CLIENT_FLDEFF_BITFLAG_SIZE ];
 
+  int wazaoboe_index;   //技覚えテーブル参照用インデックスワーク
 };
 
 
@@ -2425,11 +2426,48 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
       break;
   case 3:
     if( BTLV_IsJustDoneMsg(wk->viewCore) ){
-      PMSND_PlayBGM( WAVE_ME_WB_LVUP );
+      PMSND_PlayBGM( SEQ_ME_LVUP );
     }
     if( BTLV_WaitMsg(wk->viewCore) ){
-      return TRUE;
+      wk->wazaoboe_index = 0;
+      (*seq)++;
     }
+    break;
+  case 4:
+    //技覚えチェック
+    { 
+      BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+      const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
+      WazaID waza_no = PP_CheckWazaOboe( ( POKEMON_PARAM* )pp, &wk->wazaoboe_index, wk->heapID );
+      switch( waza_no ){ 
+      case PTL_WAZAOBOE_NONE:
+        return TRUE;
+        break;
+      case PTL_WAZAOBOE_FULL:
+        (*seq) = 6;
+        break;
+      default:
+        BPP_ReflectByPP( bpp );
+        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_WAZAOBOE, msg_waza_oboe_04 );
+        BTLV_STRPARAM_AddArg( &wk->strParam, args[0] );
+        BTLV_STRPARAM_AddArg( &wk->strParam, waza_no );
+        BTLV_StartMsg( wk->viewCore, &wk->strParam );
+        (*seq) = 5;
+        break;
+      }
+    }
+    break;
+  case 5:
+    //技覚え処理
+    if( BTLV_IsJustDoneMsg(wk->viewCore) ){
+      PMSND_PlayBGM( SEQ_ME_LVUP );
+    }
+    if( BTLV_WaitMsg(wk->viewCore) ){
+      (*seq) = 4;
+    }
+    break;
+  case 6:
+    //技忘れ処理
     break;
   }
   return FALSE;

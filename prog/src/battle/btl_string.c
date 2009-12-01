@@ -72,6 +72,7 @@ typedef enum {
   MSGSRC_ATK,
   MSGSRC_UI,
   MSGSRC_TOKUSEI,
+  MSGSRC_WAZAOBOE,
 
   MSGDATA_MAX,
 }MsgSrcID;
@@ -120,6 +121,7 @@ static void ms_set_rankdown( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rank_limit( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_useitem( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_poke2poke( STRBUF* dst, u16 strID, const int* args );
+static void ms_wazaoboe_simple( STRBUF* dst, BtlStrID_WAZAOBOE strID, const int* args );
 
 
 
@@ -142,6 +144,7 @@ void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* cl
     NARC_message_btl_attack_dat,
     NARC_message_btl_ui_dat,
     NARC_message_tokusei_dat,
+    NARC_message_waza_oboe_dat,
   };
 
   int i;
@@ -695,7 +698,26 @@ void BTL_STR_MakeWazaUIString( STRBUF* dst, u16 wazaID, u8 wazaPP, u8 wazaPPMax 
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
 
+//=============================================================================================
+/**
+ * 技覚えメッセージの生成（引数配列渡し版）
+ *
+ * @param   buf
+ * @param   strID
+ * @param   args
+ *
+ */
+//=============================================================================================
+void BTL_STR_MakeStringWazaOboeWithArgArray( STRBUF* buf, BtlStrID_WAZAOBOE strID, const int* args )
+{
+  BTL_Printf(" strID=%d\n", strID);
+  ms_wazaoboe_simple( buf, strID, args );
+}
 
-
-
+static void ms_wazaoboe_simple( STRBUF* dst, BtlStrID_WAZAOBOE strID, const int* args )
+{
+  GFL_MSG_GetString( SysWork.msg[MSGSRC_WAZAOBOE], strID, SysWork.tmpBuf );
+  registerWords( SysWork.tmpBuf, args, SysWork.wset );
+  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
 

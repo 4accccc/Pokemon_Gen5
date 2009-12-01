@@ -18,6 +18,7 @@ typedef enum {
   BTL_STRTYPE_STD,
   BTL_STRTYPE_SET,
   BTL_STRTYPE_WAZA,
+  BTL_STRTYPE_WAZAOBOE,
 }BtlStrType;
 
 enum {
@@ -88,7 +89,23 @@ extern void BTL_STR_GetUIString( STRBUF* dst, u16 strID );
 extern void BTL_STR_MakeWazaUIString( STRBUF* dst, u16 wazaID, u8 wazaPP, u8 wazaPPMax );
 
 
+//---------------------------------------------------------------------------------------
+/**
+ * 技覚えメッセージの生成
+ *
+ * 標準メッセージ：対象者なし、あるいは対象が誰であっても一定のフォーマットで生成される文字列
+ */
+//---------------------------------------------------------------------------------------
 
+#include "msg/msg_waza_oboe.h"
+
+enum {
+  BTL_STRID_WAZAOBOE_MAX = msg_waza_oboe_max,
+};
+
+typedef u16 BtlStrID_WAZAOBOE;
+
+extern void BTL_STR_MakeStringWazaOboeWithArgArray( STRBUF* buf, BtlStrID_WAZAOBOE strID, const int* array );
 
 
 
