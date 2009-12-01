@@ -15,9 +15,12 @@ enum {
 	NARC_area_map_itp_bcgata02_fire_itpdat = 1,
 	NARC_area_map_itp_bcgata02_isi_itpdat = 2,
 	NARC_area_map_itp_bcgata02_water_itpdat = 3,
-	NARC_area_map_itp_hana01_anim_itpdat = 4,
-	NARC_area_map_itp_kawa_test_itp1_itpdat = 5,
-	NARC_area_map_itp_kawa_test_itp2_itpdat = 6
+	NARC_area_map_itp_bcgata05_blu_itpdat = 4,
+	NARC_area_map_itp_bcgata05_red_itpdat = 5,
+	NARC_area_map_itp_bcgata05_yer_itpdat = 6,
+	NARC_area_map_itp_hana01_anim_itpdat = 7,
+	NARC_area_map_itp_kawa_test_itp1_itpdat = 8,
+	NARC_area_map_itp_kawa_test_itp2_itpdat = 9
 };
 
 /* NARC_AREA_MAP_ITP_NAIX_ */
