@@ -1171,6 +1171,50 @@ void  PPP_SetWazaPos( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos )
     PPP_Put( ppp, ID_PARA_pp1 + pos, maxPP );
   }
 }
+
+//============================================================================================
+/**
+ *  今のレベルで覚える技をセットする（レベルアップ時に呼ばれること想定）
+ *
+ * @param[in]     pp      セットするポケモンパラメータ構造体のポインタ
+ * @param[in/out] index   技覚えテーブル参照インデックス
+ * @param[in]     heapID  技覚えテーブル確保用ヒープのヒープID
+ *
+ * @retval  セットした技ナンバー（ PTL_WAZAOBOE_NONE:覚えなかった PTL_WAZAOBOE_FULL:手持ち技がいっぱい）
+ */
+//============================================================================================
+WazaID  PP_CheckWazaOboe( POKEMON_PARAM *pp, int* index, HEAPID heapID )
+{ 
+	POKEPER_WAZAOBOE_CODE*  wot = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( heapID ),
+                                                      POKEPER_WAZAOBOE_TABLE_ELEMS * sizeof( POKEPER_WAZAOBOE_CODE ) );
+	WazaID  ret = PTL_WAZAOBOE_NONE;
+	u16     mons_no;
+	int     form_no;
+	u8      level;
+
+	mons_no = PP_Get( pp, ID_PARA_monsno, NULL );
+	form_no = PP_Get( pp, ID_PARA_form_no, NULL );
+	level = PP_Get( pp, ID_PARA_level, NULL );
+  POKE_PERSONAL_LoadWazaOboeTable( mons_no, form_no, wot );
+
+	while( !POKEPER_WAZAOBOE_IsEndCode( wot[ index[ 0 ] ] ) ){
+  	if( POKEPER_WAZAOBOE_GetLevel( wot[ index[ 0 ] ] ) == level )
+    {
+  		ret = PP_SetWaza( pp, POKEPER_WAZAOBOE_GetWazaID( wot[ index[ 0 ] ] ) );
+      if( ret != PTL_WAZASET_SAME )
+      { 
+        index[ 0 ]++;
+        break;
+      }
+  	}
+    index[ 0 ]++;
+  }
+
+	GFL_HEAP_FreeMemory( wot );
+
+	return	ret;
+}
+
 //============================================================================================
 /**
  *  ポケモンデータからポケモンのレベルを取得
