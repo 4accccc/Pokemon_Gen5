@@ -15,6 +15,9 @@
 #include "fieldmap.h"
 #include "eventwork.h"
 
+//OBJCHRWORK0
+#include "../../../resource/fldmapdata/flagwork/work_define.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -223,8 +226,10 @@ struct _TAG_MMDL_ROCKPOS
 static void MMdlSys_DeleteProc( MMDLSYS *fos );
 
 //MMDL 追加、削除
+static MMDL * mmdlsys_AddMMdlCore( MMDLSYS *fos,
+    const MMDL_HEADER *header, int zone_id, const EVENTWORK *ev );
 static void MMdl_SetHeaderBefore(
-	MMDL * mmdl, const MMDL_HEADER *head, void *sys );
+	MMDL * mmdl, const MMDL_HEADER *head, const EVENTWORK *ev );
 static void MMdl_SetHeaderAfter(
 	MMDL * mmdl, const MMDL_HEADER *head, void *sys );
 static void MMdl_SetHeaderPos(MMDL *mmdl,const MMDL_HEADER *head);
@@ -285,7 +290,7 @@ static void MMdlSys_InitOBJCodeParam( MMDLSYS *mmdlsys );
 static void MMdlSys_DeleteOBJCodeParam( MMDLSYS *mmdlsys );
 
 //parts
-static u16 WorkOBJCode_GetOBJCode( void *fsys, int code );
+static u16 WorkOBJCode_GetOBJCode( const EVENTWORK *ev, u16 code );
 static u16 OBJCode_GetDataNumber( u16 code );
 static const MMDL_MOVE_PROC_LIST * MoveProcList_GetList( u16 code );
 static const MMDL_DRAW_PROC_LIST * DrawProcList_GetList(
@@ -351,8 +356,8 @@ void MMDLSYS_FreeSystem( MMDLSYS *fos )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void MMDLSYS_SetupProc(
-	MMDLSYS *fos, HEAPID heapID, const FLDMAPPER *pG3DMapper, FLDNOGRID_MAPPER* pNOGRIDMapper )
+void MMDLSYS_SetupProc( MMDLSYS *fos, HEAPID heapID,
+    const FLDMAPPER *pG3DMapper, FLDNOGRID_MAPPER* pNOGRIDMapper )
 {
 	fos->heapID = heapID;
 	fos->pG3DMapper = pG3DMapper;
@@ -457,15 +462,18 @@ void MMDLSYS_SetupDrawProc( MMDLSYS *fos, const u16 *angleYaw )
 //======================================================================
 //--------------------------------------------------------------
 /**
- * MMDLSYS フィールド動作モデルを追加
+ * MMDLSYS フィールド動作モデルを追加　コア部分
  * @param	fos			MMDLSYS *
  * @param	header		追加する情報を纏めたMMDL_HEADER *
  * @param	zone_id		ゾーンID
+ * @param ev EVENTWORK*
  * @retval	MMDL	追加されたMMDL *
+ * @attention ev==NULL状態の際に
+ * WKOBJCODE00等のワーク参照型OBJコードが来るとエラーとなる。
  */
 //--------------------------------------------------------------
-MMDL * MMDLSYS_AddMMdl(
-	MMDLSYS *fos, const MMDL_HEADER *header, int zone_id )
+static MMDL * mmdlsys_AddMMdlCore( MMDLSYS *fos,
+    const MMDL_HEADER *header, int zone_id, const EVENTWORK *ev )
 {
 	MMDL *mmdl;
 	MMDL_HEADER header_data = *header;
@@ -474,7 +482,7 @@ MMDL * MMDLSYS_AddMMdl(
 	mmdl = MMdlSys_SearchSpaceMMdl( fos );
 	GF_ASSERT( mmdl != NULL );
 	
-	MMdl_SetHeaderBefore( mmdl, head, NULL );
+	MMdl_SetHeaderBefore( mmdl, head, ev );
 	MMdl_InitWork( mmdl, fos );
 	MMDL_SetZoneID( mmdl, zone_id );
   
@@ -494,16 +502,26 @@ MMDL * MMDLSYS_AddMMdl(
 	}
 	
 	MMdlSys_IncrementOBJCount( (MMDLSYS*)MMDL_GetMMdlSys(mmdl) );
-
-#ifdef DEBUG_ONLY_FOR_kagaya
-  if( MMDL_GetOBJID(mmdl) == 1 && MMDL_GetOBJCode(mmdl) == WOMAN2 &&
-      MMDL_GetMoveCode(mmdl) == MV_DMY ){
-    KAGAYA_Printf( "追加されました\n" );
-  }
-#endif
-
-	MMdl_SetHeaderAfter( mmdl, head, NULL );
+	
+  MMdl_SetHeaderAfter( mmdl, head, NULL );
 	return( mmdl );
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDLSYS フィールド動作モデルを追加
+ * @param	fos			MMDLSYS *
+ * @param	header		追加する情報を纏めたMMDL_HEADER *
+ * @param	zone_id		ゾーンID
+ * @retval	MMDL	追加されたMMDL *
+ */
+//--------------------------------------------------------------
+MMDL * MMDLSYS_AddMMdl(
+	MMDLSYS *fos, const MMDL_HEADER *header, int zone_id )
+{
+	MMDL *mmdl;
+  mmdl = mmdlsys_AddMMdlCore( fos, header, zone_id, NULL );
+  return( mmdl );
 }
 
 //--------------------------------------------------------------
@@ -565,7 +583,7 @@ void MMDLSYS_SetMMdl( MMDLSYS *fos,
 	do{
     if( MMdlHeader_CheckAlies(header) == TRUE ||
         MMdlSys_CheckEventFlag(eventWork,header->event_flag) == FALSE ){
-		  MMDLSYS_AddMMdl( fos, header, zone_id );
+		  mmdlsys_AddMMdlCore( fos, header, zone_id, eventWork );
     }
 #ifdef PM_DEBUG
     else{
@@ -609,7 +627,7 @@ MMDL * MMDLSYS_AddMMdlHeaderID( MMDLSYS *fos,
         if( MMdlSys_CheckEventFlag(
               eventWork,header->event_flag) == FALSE )
         {
-		      mmdl = MMDLSYS_AddMMdl( fos, header, zone_id );
+		      mmdl = mmdlsys_AddMMdlCore( fos, header, zone_id, eventWork );
           break;
         }
       }
@@ -697,15 +715,17 @@ void MMDLSYS_DeleteMMdl( const MMDLSYS *fos )
  * MMDL フィールド動作モデル　ヘッダー情報反映
  * @param	mmdl		設定するMMDL * 
  * @param	head		反映する情報を纏めたMMDL_HEADER *
- * @param	fsys		FIELDSYS_WORK *
+ * @param	ev      EVENTWORK*
  * @retval	nothing
+ * @attention ev==NULL状態の際に
+ * WKOBJCODE00等のワーク参照型OBJコードが来るとエラーとなる。
  */
 //--------------------------------------------------------------
 static void MMdl_SetHeaderBefore(
-	MMDL * mmdl, const MMDL_HEADER *head, void *sys )
+	MMDL * mmdl, const MMDL_HEADER *head, const EVENTWORK *ev )
 {
 	MMDL_SetOBJID( mmdl, head->id );
-	MMDL_SetOBJCode( mmdl, WorkOBJCode_GetOBJCode(sys,head->obj_code) );
+	MMDL_SetOBJCode( mmdl, WorkOBJCode_GetOBJCode(ev,head->obj_code) );
 	MMDL_SetMoveCode( mmdl, head->move_code );
 	MMDL_SetEventType( mmdl, head->event_type );
 	MMDL_SetEventFlag( mmdl, head->event_flag );
@@ -4622,16 +4642,20 @@ const OBJCODE_PARAM_BUF_MDL * MMDL_GetOBJCodeParamBufMDL(
  * @retval	int		チェックされたOBJコード
  */
 //--------------------------------------------------------------
-static u16 WorkOBJCode_GetOBJCode( void *fsys, int code )
+static u16 WorkOBJCode_GetOBJCode( const EVENTWORK *ev, u16 code )
 {
-	#ifndef MMDL_PL_NULL
-	if( code >= WKOBJCODE_ORG && code <= WKOBJCODE_END ){
-		code -= WKOBJCODE_ORG;
-		code = GetEvDefineObjCode( fsys, code );
-	}
-	#else
-//	GF_ASSERT( 0 );
-	#endif
+  if( code >= WKOBJCODE_START && code <= WKOBJCODE_END ){
+    if( ev == NULL ){
+      GF_ASSERT( 0 );
+      code = BOY1; //無難なコードに強制
+    }else{
+      u16 *work;
+      code -= WKOBJCODE_START;
+      code += OBJCHRWORK0;
+      work = EVENTWORK_GetEventWorkAdrs( (EVENTWORK*)ev, code );
+      code = *work;
+    }
+  }
 	
 	return( code );
 }

@@ -386,6 +386,12 @@ typedef enum
 //--------------------------------------------------------------
 #define MMDL_HEADER_POSBUF_SIZE ( 8 )
 
+//--------------------------------------------------------------
+/// ワーク参照OBJコード
+//--------------------------------------------------------------
+#define WKOBJCODE_START (WKOBJCODE00)
+#define WKOBJCODE_END (WKOBJCODE15)
+
 //======================================================================
 //	struct
 //======================================================================
@@ -669,8 +675,8 @@ extern MMDLSYS * MMDLSYS_CreateSystem(
     HEAPID heapID, u32 max, MMDL_ROCKPOS *rockpos );
 extern void MMDLSYS_FreeSystem( MMDLSYS *fos );
 
-extern void MMDLSYS_SetupProc(
-	MMDLSYS *fos, HEAPID heapID, const FLDMAPPER *pG3DMapper, FLDNOGRID_MAPPER* pNOGRIDMapper );
+extern void MMDLSYS_SetupProc( MMDLSYS *fos, HEAPID heapID,
+    const FLDMAPPER *pG3DMapper, FLDNOGRID_MAPPER* pNOGRIDMapper );
 extern void MMDLSYS_DeleteProc( MMDLSYS *fos );
 extern void MMDLSYS_UpdateProc( MMDLSYS *fos );
 extern void MMDLSYS_VBlankProc( MMDLSYS *fos );
