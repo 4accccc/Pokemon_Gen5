@@ -29,9 +29,12 @@ _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
 //																	//
-//	ジムギミックに LOCALWORK15 を使用ししています                   //
+//	ジムギミックに LOCALWORK15、01、02、03 を使用ししています。     //
 //	同マップ内の使用を禁止します。									//
 //	LOCALWORK15 ⇒ POS起動WORK。常に0。								//
+//	LOCALWORK01 ⇒ 歯車0を管理するWORK。オンオフで0か1になる。      //
+//	LOCALWORK02 ⇒ 歯車1を管理するWORK。オンオフで0か1になる。      //
+//	LOCALWORK03 ⇒ 歯車2を管理するWORK。オンオフで0か1になる。      //
 //																	//
 //------------------------------------------------------------------//
 
@@ -211,6 +214,34 @@ EVENT_START	ev_pos_c07gym0101_switch_01
 	//障害物のアニメ
 	_GYM_ICE_WALL_ANM(0)
 	
+	//スイッチをオンにした時
+	IF $LOCALWORK1 == 0 THEN
+		
+		_OBJ_POS_CHANGE(C07GYM0101_TOUMEI0_02,19,0,54,DIR_DOWN)
+		_OBJ_POS_CHANGE(C07GYM0101_TOUMEI0_03,18,0,53,DIR_DOWN)
+		
+		//========================================//
+	
+		//歯車0をオンに
+		$LOCALWORK1 = 1
+
+		//========================================//
+	
+	//スイッチをオフにした時
+	ELSE
+	
+		_OBJ_POS_CHANGE(C07GYM0101_TOUMEI0_02,18,0,55,DIR_DOWN)
+		_OBJ_POS_CHANGE(C07GYM0101_TOUMEI0_03,17,0,54,DIR_DOWN)
+		
+		//========================================//
+	
+		//歯車0をオンに
+		$LOCALWORK1 = 0
+
+		//========================================//
+	
+	ENDIF
+	
 EVENT_END
 
 /**************************************************************/
@@ -226,6 +257,34 @@ EVENT_START	ev_pos_c07gym0101_switch_02
 	 _SE_PLAY( SEQ_SE_FLD_65 )
 	//障害物のアニメ
 	_GYM_ICE_WALL_ANM(1)
+
+	//スイッチをオンにした時
+	IF $LOCALWORK2 == 0 THEN
+		
+		_OBJ_POS_CHANGE(C07GYM0101_TOUMEI1_02,55,3,42,DIR_DOWN)
+		_OBJ_POS_CHANGE(C07GYM0101_TOUMEI1_03,54,3,43,DIR_DOWN)
+		
+		//========================================//
+	
+		//歯車0をオンに
+		$LOCALWORK2 = 1
+
+		//========================================//
+	
+	//スイッチをオフにした時
+	ELSE
+	
+		_OBJ_POS_CHANGE(C07GYM0101_TOUMEI1_02,55,3,44,DIR_DOWN)
+		_OBJ_POS_CHANGE(C07GYM0101_TOUMEI1_03,56,3,43,DIR_DOWN)
+		
+		//========================================//
+	
+		//歯車0をオンに
+		$LOCALWORK2 = 0
+
+		//========================================//
+	
+	ENDIF
 	
 EVENT_END
 
@@ -242,5 +301,33 @@ EVENT_START	ev_pos_c07gym0101_switch_03
 	 _SE_PLAY( SEQ_SE_FLD_65 )
 	//障害物のアニメ
 	_GYM_ICE_WALL_ANM(2)
+
+	//スイッチをオンにした時
+	IF $LOCALWORK3 == 0 THEN
+		
+		_OBJ_POS_CHANGE(C07GYM0101_TOUMEI2_02,17,6,32,DIR_DOWN)
+		_OBJ_POS_CHANGE(C07GYM0101_TOUMEI2_03,18,6,33,DIR_DOWN)
+		
+		//========================================//
+	
+		//歯車0をオンに
+		$LOCALWORK3 = 1
+
+		//========================================//
+	
+	//スイッチをオフにした時
+	ELSE
+	
+		_OBJ_POS_CHANGE(C07GYM0101_TOUMEI2_02,16,6,33,DIR_DOWN)
+		_OBJ_POS_CHANGE(C07GYM0101_TOUMEI2_03,17,6,34,DIR_DOWN)
+		
+		//========================================//
+	
+		//歯車0をオンに
+		$LOCALWORK3 = 0
+
+		//========================================//
+	
+	ENDIF
 	
 EVENT_END
