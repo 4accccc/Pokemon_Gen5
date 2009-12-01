@@ -95,7 +95,7 @@ POKEMON_PASO_PARAM* DREAMWORLD_SV_GetSleepPokemon(DREAMWORLD_SAVEDATA* pSV)
 //--------------------------------------------------------------------------------------------
 void DREAMWORLD_SV_SetSleepPokemon(DREAMWORLD_SAVEDATA* pSV,POKEMON_PASO_PARAM* ppp)
 {
-  GFL_STD_MemCopy(ppp,&pSV->ppp,sizeof(POKETOOL_GetPPPWorkSize()));
+  GFL_STD_MemCopy(ppp,&pSV->ppp,POKETOOL_GetPPPWorkSize());
 }
 
 //--------------------------------------------------------------------------------------------
