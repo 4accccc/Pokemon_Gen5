@@ -76,6 +76,8 @@
 
 #include "event_debug_local.h"
 
+#include "event_season_display.h" // for EVENT_SeasonDisplay
+
 //======================================================================
 //  define
 //======================================================================
@@ -162,6 +164,8 @@ static BOOL debugMenuCallProc_WazaOshie( DEBUG_MENU_EVENT_WORK *p_wk );
 
 static BOOL debugMenuCallProc_UseMemoryDump( DEBUG_MENU_EVENT_WORK *p_wk );
 
+static BOOL debugMenuCallProc_SeasonDisplay( DEBUG_MENU_EVENT_WORK *p_wk );
+
 
 //======================================================================
 //  デバッグメニューリスト
@@ -211,7 +215,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR50, debugMenuCallProc_WazaOshie },
 	{	DEBUG_FIELD_STR52, debugMenuCallProc_ControlDelicateCamera },
   { DEBUG_FIELD_STR56, debugMenuCallProc_WifiBattleMatch },
-
+  { DEBUG_FIELD_SEASON_DISPLAY, debugMenuCallProc_SeasonDisplay }, 
 };
 
 
@@ -3692,3 +3696,20 @@ static void debugMenuWriteUseMemoryDump( DEBUG_USEMEMORY_EVENT_WORK* p_wk )
 
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  季節表示
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_SeasonDisplay( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GAMESYS_WORK  *gsys  = wk->gmSys;
+  GAMEDATA* gdata = wk->gdata;
+  GMEVENT       *parent    = wk->gmEvent;
+  FIELDMAP_WORK *fieldmap  = wk->fieldWork;
+  u8 start = GAMEDATA_GetSeasonID( gdata );
+  u8 end   = GAMEDATA_GetSeasonID( gdata );
+
+  GMEVENT_ChangeEvent( parent, EVENT_SeasonDisplay( gsys, fieldmap, start, end ) );
+  return TRUE;
+}
