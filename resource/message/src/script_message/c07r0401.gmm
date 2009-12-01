@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-18T12:01:15"/>
+	<create user="matsumiya" host="W00207" date="2009-12-01T14:06:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -310,7 +310,7 @@
 会長なので　あります！</language>
 	</row>
 
-	<row id="msg_c07r0401_woman1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c07r0401_woman1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀：がんばり屋
 ・先頭のポケモンをチェック
 　努力値がマックス→woman1_02
@@ -323,64 +323,6 @@
 きみの　[1:01:ポケモン種族名:0]……▼</language>
 		<language name="JPN_KANJI" width="256">あら？
 きみの　[1:01:ポケモン種族名:0]……▼</language>
-	</row>
-
-	<row id="msg_c07r0401_woman1_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♀：努力値がマックス
-・続けてwoman1_03</comment>
-		<attribute name="キャラ指定">WOMAN1
-普通女性</attribute>
-		<language name="JPN" width="256">ものすごく　がんばったんだ！▼
-じゃあ　ごほうびと　して
-この　がんばリボンを　つけてあげて！▼</language>
-		<language name="JPN_KANJI" width="256">ものすごく　がんばったんだ！▼
-じゃあ　ごほうびと　して
-この　がんばリボンを　つけてあげて！▼</language>
-	</row>
-
-	<row id="msg_c07r0401_woman1_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♀
-・続けてwoman1_04
-・1＝主人公名</comment>
-		<attribute name="キャラ指定">システム</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-がんばリボンを　もらった！▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-がんばリボンを　もらった！▼</language>
-	</row>
-
-	<row id="msg_c07r0401_woman1_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♀
-・0＝ポケモン名（先頭のポケモン）
-・1＝主人公名</comment>
-		<attribute name="キャラ指定">システム</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は　がんばリボンを
-[1:01:ポケモン種族名:1]に　つけてあげた！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　がんばリボンを
-[1:01:ポケモン種族名:1]に　つけてあげた！</language>
-	</row>
-
-	<row id="msg_c07r0401_woman1_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♀：努力値がマックスでない</comment>
-		<attribute name="キャラ指定">WOMAN1
-普通女性</attribute>
-		<language name="JPN" width="256">まだ　がんばれそうね！▼
-ものすごく　がんばったら
-すてきなリボンを　あげるから！</language>
-		<language name="JPN_KANJI" width="256">まだ　がんばれそうね！▼
-ものすごく　がんばったら
-すてきなリボンを　あげるから！</language>
-	</row>
-
-	<row id="msg_c07r0401_woman1_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♀：「がんばリボン」を所有
-・0＝ポケモン名（先頭のポケモン）</comment>
-		<attribute name="キャラ指定">WOMAN1
-普通女性</attribute>
-		<language name="JPN" width="256">その　がんばリボン
-きみの　[1:01:ポケモン種族名:0]に　ぴったり！</language>
-		<language name="JPN_KANJI" width="256">その　がんばリボン
-きみの　[1:01:ポケモン種族名:0]に　ぴったり！</language>
 	</row>
 
 	<row id="msg_c07r0401_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
