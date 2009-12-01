@@ -1165,7 +1165,7 @@ void BTLV_StartMsg( BTLV_CORE* wk, const BTLV_STRPARAM* param )
 {
   switch( param->strType ){
   case BTL_STRTYPE_STD:
-    BTL_STR_MakeStringStd( wk->strBuf, param->strID, param->argCnt, param->args );
+    BTL_STR_MakeStringStdWithArgArray( wk->strBuf, param->strID, param->args );
     break;
   case BTL_STRTYPE_SET:
     BTL_STR_MakeStringSet( wk->strBuf, param->strID, param->args );
