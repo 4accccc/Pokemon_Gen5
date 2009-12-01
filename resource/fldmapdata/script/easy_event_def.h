@@ -18,7 +18,7 @@
  * @param ret_wk      結果を受け取るためのワーク
  */
 //--------------------------------------------------------------
-  .macro _ASM_REPORT_EVENT_CALL ret_wk
+  .macro _ASM_REPORT_EVENT_CALL ret_wk  
   _PUSH_WORK  SCWK_PARAM0
   _PUSH_WORK  SCWK_PARAM1
   _PUSH_WORK  SCWK_PARAM2
@@ -198,48 +198,6 @@
     _ASM_LAST_KEYWAIT
     _ASM_BALLOONWIN_CLOSE
     .endm
-
-//--------------------------------------------------------------
-/**
- *  @def  _BALLOONWIN_OBJMSG_MF
- *  @brief  吹き出しウィンドウ描画　バージョン別
- *  @param msg_id_m 表示するメッセージID、ホワイト版
- *  @param msg_id_f 表示するメッセージID、ブラック版
- *  @param obj_id 吹き出しを出す対象OBJ ID
- *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DONW,WIN_NONE
- */
-//--------------------------------------------------------------
-  .macro _ASM_BALLOONWIN_OBJMSG_MF msg_id_m, msg_id_f, obj_id, pos
-  _PUSH_WORK SCWK_ANSWER
-  _ASM_GET_MY_SEX SCWK_ANSWER
-	IF $SCWK_ANSWER == PM_MALE THEN
-    _ASM_BALLOONWIN_OBJMSG_POS \msg_id_m, \obj_id, \pos
-  ELSE
-    _ASM_BALLOONWIN_OBJMSG_POS \msg_id_f, \obj_id, \pos
-  ENDIF
-  _POP_WORK SCWK_ANSWER
-  .endm
-
-//--------------------------------------------------------------
-/**
- *  @def  _BALLOONWIN_OBJMSG_WB
- *  @brief  吹き出しウィンドウ描画　バージョン別
- *  @param msg_id_w 表示するメッセージID、ホワイト版
- *  @param msg_id_b 表示するメッセージID、ブラック版
- *  @param obj_id 吹き出しを出す対象OBJ ID
- *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DONW,WIN_NONE
- */
-//--------------------------------------------------------------
-  .macro _ASM_BALLOONWIN_OBJMSG_WB msg_id_w, msg_id_b, obj_id, pos
-  _PUSH_WORK SCWK_ANSWER
-  _ASM_GET_ROM_VERSION SCWK_ANSWER
-	IF $SCWK_ANSWER == VERSION_WHITE THEN
-    _ASM_BALLOONWIN_OBJMSG_POS \msg_id_w, \obj_id, \pos
-  ELSE
-    _ASM_BALLOONWIN_OBJMSG_POS \msg_id_b, \obj_id, \pos
-  ENDIF
-  _POP_WORK SCWK_ANSWER
-  .endm
 
 //======================================================================
 //  ショップ

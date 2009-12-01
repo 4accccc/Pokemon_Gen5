@@ -1077,8 +1077,17 @@
  *  @param pos 吹き出しウィンドウ位置 WIN_UP,WIN_DONW,WIN_NONE
  */
 //--------------------------------------------------------------
-#define _BALLOONWIN_OBJMSG_MF( msg_id_w, msg_id_b, obj_id, pos ) \
-    _ASM_BALLOONWIN_OBJMSG_MF msg_id_w, msg_id_b, obj_id, pos
+#define _BALLOONWIN_OBJMSG_MF( msg_id_m, msg_id_f, obj_id, pos ) \
+    _ASM_BALLOONWIN_OBJMSG_MF msg_id_m, msg_id_f, obj_id, pos
+
+  .macro _ASM_BALLOONWIN_OBJMSG_MF msg_id_m, msg_id_f, obj_id, pos
+  .short  EV_SEQ_BALLOONWIN_OBJMSG_MF
+  .short 0x0400
+  .short \msg_id_m
+  .short \msg_id_f
+  .byte \obj_id
+  .byte \pos
+  .endm
 
 //--------------------------------------------------------------
 /**
@@ -1092,6 +1101,16 @@
 //--------------------------------------------------------------
 #define _BALLOONWIN_OBJMSG_WB( msg_id_w, msg_id_b, obj_id, pos ) \
     _ASM_BALLOONWIN_OBJMSG_WB msg_id_w, msg_id_b, obj_id, pos
+
+  .macro _ASM_BALLOONWIN_OBJMSG_WB msg_id_w, msg_id_b, obj_id, pos
+  .short  EV_SEQ_BALLOONWIN_OBJMSG_WB
+  .short 0x0400
+  .short \msg_id_w
+  .short \msg_id_b
+  .byte \obj_id
+  .byte \pos
+  .endm
+ 
 
 //--------------------------------------------------------------
 /**
