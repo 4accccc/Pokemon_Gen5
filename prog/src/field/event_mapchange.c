@@ -170,7 +170,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
       }
       else
       { // それ以外 ==> 開始時の季節を表示
-        season = (season-1+PMSEASON_TOTAL) % PMSEASON_TOTAL;
+        season = (season + PMSEASON_TOTAL - 1) % PMSEASON_TOTAL;
         FIELD_STATUS_SetSeasonDispFlag( fstatus, TRUE );
         FIELD_STATUS_SetSeasonDispLast( fstatus, season );
       }
