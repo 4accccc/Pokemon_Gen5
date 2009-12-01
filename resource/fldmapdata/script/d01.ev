@@ -18,146 +18,14 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d01_talkobj_boy2
-_EVENT_DATA    ev_pos_d01_support_01
-_EVENT_DATA    ev_d01_support_02
+_EVENT_DATA    ev_d01_dummy
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/*            未使用スクリプト                               */
 /**************************************************************/
-//ev_d01_flag_change:
-//  _END
-
-/**************************************************************/
-/*  D01 サポートとジムリーダーの出会い　　                    */
-/**************************************************************/
-EVENT_START    ev_pos_d01_support_01
-
-	//サポート主人公に駆け寄って話をする
-	_OBJ_ANIME(D01_SUPPORT,anm_d01_support_01)
-	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG(mes_d01_white_01,D01_SUPPORT)
-	_AB_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-	
-	//サポート何かに気づく
-	_OBJ_ANIME(D01_SUPPORT,anm_d01_support_02)
-	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG(mes_d01_white_02,D01_SUPPORT)
-	_AB_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-	
-	//二人で下に移動
-	_OBJ_ANIME(D01_SUPPORT,anm_d01_support_03)
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_d01_support_03)
-	_OBJ_ANIME_WAIT()
-	
-	//ジムリーダー独り言
-	_BALLOONWIN_OBJMSG(mes_d01_leader1_01,D01_GYMLD)
-	_AB_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-	
-	//ジムリーダー二人に気づいて去る
-	_OBJ_ANIME(D01_GYMLD,anm_d01_gymld_01)
-	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG(mes_d01_leader1_02,D01_GYMLD)
-	_AB_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-	_OBJ_ANIME(D01_GYMLD,anm_d01_gymld_02)
-	_OBJ_ANIME_WAIT()
-	
-	//サポート、主人公を見て話す
-	_OBJ_ANIME(D01_SUPPORT,anm_d01_support_04)
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_d01_player_01)
-	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG(mes_d01_white_03,D01_SUPPORT)
-	_AB_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-	_OBJ_DEL(D01_GYMLD)
-	_FLAG_SET(FV_D01_GYM_LEADER)
-	$WK_SCENE_D01 = 1
-
+EVENT_START	ev_d01_dummy
 EVENT_END
 
-/**************************************************************/
-/*  D01 サポート通常会話                                      */
-/**************************************************************/
-EVENT_START    ev_d01_support_02
-	//バッジ取得のフラグが設定されたら返答を分岐（現状仮）
-	_EASY_BALLOONWIN_TALKOBJ_MSG(mes_d01_white_04)
-EVENT_END
 
-/**************************************************************/
-/*  D01 BOY2の会話用イベントスクリプト                      */
-/**************************************************************/
-EVENT_START    ev_d01_talkobj_boy2
-	_EASY_BALLOONWIN_TALKOBJ_MSG(mes_d01_boy2_01)
-EVENT_END
-
-//--------------------------------------------------------------
-//	D01：サポート主人公に駆け寄る
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_d01_support_01
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	D01：サポート何かに気づく
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_d01_support_02
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	D01：サポートと主人公下に移動
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_d01_support_03
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_WALK_R_8F,4
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	AC_WALK_D_8F,6
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	D01：ジムリーダー振り向く
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_d01_gymld_01
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	D01：ジムリーダー立ち去る
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_d01_gymld_02
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WALK_L_8F,3
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_WALK_U_8F,8
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WALK_L_8F,8
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	D01：サポート主人公のほうを向く
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_d01_support_04
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	D01：主人公サポートのほうを向く
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_d01_player_01
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	ACMD_END,0
