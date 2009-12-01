@@ -147,9 +147,8 @@ static GMEVENT_RESULT debugMenuSeasonSelectEvent( GMEVENT *event, int *seq, void
       }
       else
       {
-        u8 start = GAMEDATA_GetSeasonID( work->gdata );
         GMEVENT_ChangeEvent( event, 
-                             EVENT_SeasonDisplay(work->gsys, work->fieldmap, start, ret) );
+                             EVENT_SeasonDisplay(work->gsys, work->fieldmap, ret, ret) );
       }
     }
     break;
