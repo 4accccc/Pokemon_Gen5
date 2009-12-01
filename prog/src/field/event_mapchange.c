@@ -179,7 +179,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 		break;
 	case 3:
 		fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-		GMEVENT_CallEvent(event,EVENT_FieldFadeIn(gsys, fieldmap, 0, FIELD_FADE_WAIT));
+		GMEVENT_CallEvent(event,EVENT_FieldBrightIn(gsys, fieldmap, 0, FIELD_FADE_WAIT));
 		(*seq) ++;
 		break;
 	case 4:
@@ -478,9 +478,11 @@ static GMEVENT_RESULT EVENT_MapChangeNoFade(GMEVENT * event, int *seq, void*work
 		(*seq)++;
     break;
 	case 3:
+#if 0   //地名表示はリクエストしない
     if(FIELDMAP_GetPlaceNameSys(fieldmap)){
 			FIELD_PLACE_NAME_Display(FIELDMAP_GetPlaceNameSys(fieldmap), mcw->loc_req.zone_id);
 		}
+#endif    
 		(*seq) ++;
 		break;
   case 4:

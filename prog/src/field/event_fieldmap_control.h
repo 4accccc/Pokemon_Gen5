@@ -69,6 +69,32 @@ extern GMEVENT * EVENT_FieldFadeIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap
 
 //------------------------------------------------------------------
 /**
+ * @brief	ブライトネスアウトイベント生成
+ * @param	gsys		  GAMESYS_WORKへのポインタ
+ * @param	fieldmap	フィールドマップワークへのポインタ
+ * @param	type		  フェードの種類指定
+ * @param wait      フェード完了を待つかどうか
+ * @return	GMEVENT	生成したイベントへのポインタ
+ */
+//------------------------------------------------------------------
+extern GMEVENT * EVENT_FieldBrightOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
+                                     FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait );
+
+//------------------------------------------------------------------
+/**
+ * @brief	ブライトネスインイベント生成
+ * @param	gsys		  GAMESYS_WORKへのポインタ
+ * @param	fieldmap  フィールドマップワークへのポインタ
+ * @param	type		  フェードの種類指定
+ * @param wait      フェード完了を待つかどうか
+ * @return	GMEVENT	生成したイベントへのポインタ
+ */
+//------------------------------------------------------------------
+extern GMEVENT * EVENT_FieldBrightIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
+                                    FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait );
+
+//------------------------------------------------------------------
+/**
  * @brief	フィールドマップ開始イベントの生成
  * @param	gsys		GAMESYS_WORKへのポインタ
  * @param	fieldmap	フィールドマップワークへのポインタ

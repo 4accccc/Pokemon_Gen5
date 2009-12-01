@@ -31,6 +31,10 @@
 FS_EXTERN_OVERLAY(pokelist);
 FS_EXTERN_OVERLAY(poke_status);
 
+#ifdef PM_DEBUG
+BOOL DebugBGInitEnd = FALSE;    //BG初期化監視フラグ
+#endif
+
 extern void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork );
 //============================================================================================
 //============================================================================================
@@ -50,6 +54,90 @@ typedef struct {
 
 	int alphaWork;
 }FADE_EVENT_WORK;
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT FieldBrightOutEvent(GMEVENT * event, int *seq, void * work)
+{
+	FADE_EVENT_WORK * few = work;
+	switch (*seq) {
+	case 0:
+    {
+      int mode;
+      if (few->fade_type == FIELD_FADE_BLACK)
+      {
+        mode = GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB;
+      }else
+      {
+        mode = GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN | GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB;
+      }
+      GFL_FADE_SetMasterBrightReq(mode, 0, 16, 0);
+    }
+		(*seq) ++;
+		break;
+	case 1:
+    if( few->wait_type == FIELD_FADE_NO_WAIT ){ return GMEVENT_RES_FINISH; }
+		if( GFL_FADE_CheckFade() == FALSE ){ return GMEVENT_RES_FINISH; }
+		break;
+	}
+	return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT FieldBrightInEvent(GMEVENT * event, int *seq, void * work)
+{
+	FADE_EVENT_WORK* few = work;
+	switch (*seq) {
+	case 0:
+    {
+      GAMEDATA*       gdata = GAMESYSTEM_GetGameData( few->gsys );
+      FIELD_STATUS* fstatus = GAMEDATA_GetFieldStatus( gdata );
+      AREADATA*    areadata = FIELDMAP_GetAreaData( few->fieldmap );
+      BOOL          outdoor = ( AREADATA_GetInnerOuterSwitch(areadata) != 0 );
+
+      if( outdoor && FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(屋外&&フラグON)
+      { // 四季表示
+        u8 start, end;
+        start = (FIELD_STATUS_GetSeasonDispLast( fstatus ) + 1) % PMSEASON_TOTAL;
+        end   = GAMEDATA_GetSeasonID( gdata );
+        GMEVENT_CallEvent( event, EVENT_SeasonDisplay( few->gsys, few->fieldmap, start, end ) );
+        FIELD_STATUS_SetSeasonDispFlag( fstatus, FALSE );
+        FIELD_STATUS_SetSeasonDispLast( fstatus, end );
+        OBATA_Printf( "SEASON DISPLAY: %d ==> %d\n", start, end );
+      }
+      else
+      {
+        int mode;
+        if ( few->fade_type ==  FIELD_FADE_BLACK)
+        {
+          mode = GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB;
+        }
+        else
+        {
+          mode = GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN | GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB;
+        }
+        GFL_FADE_SetMasterBrightReq(mode, 16, 0, 0);
+      }
+    }
+		(*seq) ++;
+		break;
+	case 1:
+    {
+      BOOL rc = FALSE;
+      if( few->wait_type == FIELD_FADE_NO_WAIT ) rc = TRUE;
+		  if( GFL_FADE_CheckFade() == FALSE ) rc = TRUE;
+
+      if (rc) {
+        FIELDMAP_InitBG(few->fieldmap);
+        return GMEVENT_RES_FINISH;
+      }
+    }
+		break;
+	}
+
+	return GMEVENT_RES_CONTINUE;
+}
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -136,6 +224,29 @@ GMEVENT * EVENT_FieldFadeOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap,
                               FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait )
 {
 	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldFadeOutEvent, sizeof(FADE_EVENT_WORK));
+	FADE_EVENT_WORK * few = GMEVENT_GetEventWork(event);
+  few->gsys      = gsys;
+  few->fieldmap  = fieldmap;
+	few->fade_type = type;
+  few->wait_type = wait;
+
+	return event;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	ブライトネスアウトイベント生成
+ * @param	gsys		  GAMESYS_WORKへのポインタ
+ * @param	fieldmap	フィールドマップワークへのポインタ
+ * @param	type		  フェードの種類指定
+ * @param wait      フェード完了を待つかどうか
+ * @return	GMEVENT	生成したイベントへのポインタ
+ */
+//------------------------------------------------------------------
+GMEVENT * EVENT_FieldBrightOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
+                              FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait )
+{
+	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldBrightOutEvent, sizeof(FADE_EVENT_WORK));
 	FADE_EVENT_WORK * few = GMEVENT_GetEventWork(event);
   few->gsys      = gsys;
   few->fieldmap  = fieldmap;
@@ -282,6 +393,30 @@ GMEVENT * EVENT_FieldFadeIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap,
 
 	return event;
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief	ブライトネスインイベント生成
+ * @param	gsys		  GAMESYS_WORKへのポインタ
+ * @param	fieldmap  フィールドマップワークへのポインタ
+ * @param	type		  フェードの種類指定
+ * @param wait      フェード完了を待つかどうか
+ * @return	GMEVENT	生成したイベントへのポインタ
+ */
+//------------------------------------------------------------------
+GMEVENT * EVENT_FieldBrightIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
+                             FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait )
+{
+	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldBrightInEvent, sizeof(FADE_EVENT_WORK));
+	FADE_EVENT_WORK * few = GMEVENT_GetEventWork(event);
+  few->gsys      = gsys;
+  few->fieldmap  = fieldmap;
+	few->fade_type = type;
+  few->wait_type = wait;
+
+	return event;
+}
+
 
 //============================================================================================
 //============================================================================================

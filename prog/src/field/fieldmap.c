@@ -110,6 +110,9 @@
 #include "field_task.h"  
 #include "field_task_manager.h"
 
+#ifdef PM_DEBUG
+#include "pleasure_boat.h"    //for PL_BOAT_
+#endif
 
 //======================================================================
 //	DEBUG定義
@@ -133,6 +136,10 @@
 //	define
 //======================================================================
 #define CROSSFADE_MODE
+
+#ifdef PM_DEBUG
+BOOL DebugBGInitEnd;    //BG初期化監視フラグ
+#endif
 
 //--------------------------------------------------------------
 ///	GAMEMODE
@@ -1164,6 +1171,9 @@ void FIELDMAP_Close( FIELDMAP_WORK *fieldWork )
 {
 	fieldWork->gamemode = GAMEMODE_FINISH;
 	fieldWork->seq = FLDMAPSEQ_FREE;
+#ifdef PM_DEBUG
+  DebugBGInitEnd = FALSE;    //BG初期化監視フラグクリア
+#endif
 }
 
 //--------------------------------------------------------------
@@ -1818,6 +1828,11 @@ void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork )
 	FIELD_FUNC_RANDOM_GENERATE_InitDebug
 		( fieldWork->heapID, GAMEDATA_GetMyWFBCCoreData( fieldWork->gamedata ) );
 #endif  //USE_DEBUGWIN_SYSTEM
+
+#ifdef PM_DEBUG
+  //ＢＧ初期化終了
+  DebugBGInitEnd = TRUE;
+#endif
 }
 
 //--------------------------------------------------------------
@@ -2926,12 +2941,9 @@ static void Draw3DNormalMode( FIELDMAP_WORK * fieldWork )
           FIELDMAP_GetFieldPlayer(fieldWork),
           FIELDMAP_GetFldNoGridMapper( fieldWork ) );
     }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_B){
-      static const GFL_BG_SYS_HEADER sc_bg_sys_header = 
-      {
-				GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
-      };
-      GFL_BG_SetBGMode( &sc_bg_sys_header );
-      GX_SetBankForBG(GX_VRAM_BG_128_D);
+      GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+      PL_BOAT_WORK_PTR *ptr = GAMEDATA_GetPlBoatWorkPtr(gamedata);
+      if ( *ptr == NULL ) *ptr = PL_BOAT_Init();
     }
   }
 #endif  //PM_DEBUG  

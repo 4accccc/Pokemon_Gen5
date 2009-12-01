@@ -151,7 +151,7 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
     //カメラ復帰パラメータクリア（復帰しないでマップ遷移するので）
     FIELD_CAMERA_ClearRecvCamParam(camera);
     //ブラックアウトリクエスト
-    GMEVENT_CallEvent(event, EVENT_FieldFadeOut(wk->gsys, fieldWork, FIELD_FADE_BLACK, FIELD_FADE_WAIT));
+    GMEVENT_CallEvent(event, EVENT_FieldBrightOut(wk->gsys, fieldWork, FIELD_FADE_BLACK, FIELD_FADE_WAIT));
     (*seq)++;
     break;
   case 4:
@@ -226,7 +226,7 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
         MMDL_SetStatusBitVanish(mmdl, TRUE);
       }
       //ブラックインリクエスト
-      GMEVENT_CallEvent(event, EVENT_FieldFadeIn(wk->gsys, fieldWork, FIELD_FADE_BLACK, FIELD_FADE_WAIT));
+      GMEVENT_CallEvent(event, EVENT_FieldBrightIn(wk->gsys, fieldWork, FIELD_FADE_BLACK, FIELD_FADE_WAIT));
       (*seq)++;
     }
     break;
