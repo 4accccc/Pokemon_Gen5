@@ -37,6 +37,8 @@
 
 #define FLDMSGBG_STRLEN (128)				///<文字列長さ標準
 
+#define SPWIN_HEIGHT_FONT_SPACE (2)
+
 //--------------------------------------------------------------
 //  メッセージウィンドウ、キャラオフセット
 //--------------------------------------------------------------
@@ -223,6 +225,19 @@ struct _TAG_FLDBGWIN
   KEYCURSOR_WORK cursor_work;
 };
 
+//--------------------------------------------------------------
+/// FLDSPWIN
+//--------------------------------------------------------------
+struct _TAG_FLDSPWIN
+{
+	GFL_BMPWIN *bmpwin;
+  STRBUF *strBuf;
+	FLDMSGBG *fmb;
+  
+  GFL_BMP_DATA *bmp_bg;
+  KEYCURSOR_WORK cursor_work;
+};
+
 //======================================================================
 //	proto
 //======================================================================
@@ -255,6 +270,8 @@ static void keyCursor_Clear(
     KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col );
 static void keyCursor_Write(
     KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col );
+static void keyCursor_WriteBmpBG(
+    KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, GFL_BMP_DATA *bmp_bg );
 
 static void syswin_InitGraphic( HEAPID heapID );
 static void syswin_WriteWindow( const GFL_BMPWIN *bmpwin );
@@ -3189,18 +3206,6 @@ static BOOL bgwin_ScrollBmp(
 //  特殊ウィンドウ 
 //======================================================================
 //--------------------------------------------------------------
-/// FLDSPWIN
-//--------------------------------------------------------------
-struct _TAG_FLDSPWIN
-{
-	GFL_BMPWIN *bmpwin;
-  STRBUF *strBuf;
-	FLDMSGBG *fmb;
-  
-  GFL_BMP_DATA *bmp_bg;
-};
-
-//--------------------------------------------------------------
 /**
  * 特殊ウィンドウ　グラフィック初期化
  * @param bgframe BGフレーム
@@ -3281,13 +3286,12 @@ static void spwin_WriteBmpBG(
  * @retval
  */
 //--------------------------------------------------------------
-static void spwin_Print(
+static void spwin_Print( u16 x, u16 y,
     GFL_BMP_DATA *bmp, GFL_FONT *font, const STRBUF *strbuf, HEAPID heapID )
 {
   STRBUF *buf;
   int line = 0;
-  int x = 1, y = 1;
-  int height = GFL_FONT_GetLineHeight( font ) + 1;
+  int height = GFL_FONT_GetLineHeight( font ) + SPWIN_HEIGHT_FONT_SPACE;
   
   line = GFL_STR_GetBufferLength( strbuf ) + 1;
   buf = GFL_STR_CreateBuffer( line, heapID );
@@ -3338,8 +3342,10 @@ FLDSPWIN * FLDSPWIN_Add( FLDMSGBG *fmb, FLDSPWIN_TYPE type,
 	GFL_BMPWIN_TransVramCharacter( spWin->bmpwin );
 	GFL_BG_LoadScreenReq( fmb->bgFrame );
   
-  fmb->deriveWin_plttNo = PANO_FONT;
-  setBlendAlpha( TRUE );
+  keyCursor_Init( &spWin->cursor_work, fmb->heapID );
+
+  fmb->deriveWin_plttNo = PANO_FONT_TALKMSGWIN;
+  setBlendAlpha( FALSE );
   return( spWin );
 }
 
@@ -3360,6 +3366,8 @@ void FLDSPWIN_Delete( FLDSPWIN *spWin )
 		  GFL_BMPWIN_GetSizeY( spWin->bmpwin ), GFL_BG_SCRWRT_PALIN );
 	GFL_BMPWIN_TransVramCharacter( spWin->bmpwin );
 	GFL_BG_LoadScreenReq( spWin->fmb->bgFrame );
+  
+  keyCursor_Delete( &spWin->cursor_work );
 
   GFL_BMP_Delete( spWin->bmp_bg );
   GFL_BMPWIN_Delete( spWin->bmpwin );
@@ -3379,7 +3387,7 @@ void FLDSPWIN_Delete( FLDSPWIN *spWin )
 void FLDSPWIN_PrintStrBufStart(
     FLDSPWIN *spWin, u16 x, u16 y, const STRBUF *strBuf )
 {
-  spwin_Print(
+  spwin_Print( x, y,
       GFL_BMPWIN_GetBmp(spWin->bmpwin),
       spWin->fmb->fontHandle,
       strBuf,
@@ -3408,7 +3416,66 @@ BOOL FLDSPWIN_Print( FLDSPWIN *spWin )
     return( TRUE );
   }
   
+  keyCursor_WriteBmpBG( &spWin->cursor_work,
+      GFL_BMPWIN_GetBmp(spWin->bmpwin), spWin->bmp_bg );
+	GFL_BMPWIN_TransVramCharacter( spWin->bmpwin );
   return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDSPWIN 特殊ウィンドウ メッセージから必要なウィンドウ横幅を取得
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+u32 FLDSPWIN_GetNeedWindowWidthCharaSize(
+    FLDMSGBG *fmb, const STRBUF *strbuf, u32 margin )
+{
+  u32 w = PRINTSYS_GetStrWidth(strbuf,fmb->fontHandle,0) + (margin<<1);
+  u32 c = w;
+  w >>= 3;
+  if( (c&0x07) ){
+    w++;
+  }
+  return( w );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDSPWIN 特殊ウィンドウ メッセージから必要なウィンドウ縦幅を取得
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+u32 FLDSPWIN_GetNeedWindowHeightCharaSize(
+    FLDMSGBG *fmb, const STRBUF *strbuf, u32 margin )
+{
+  u32 line;
+  u32 h = PRINTSYS_GetStrHeight(strbuf,fmb->fontHandle) + (margin<<1);
+  STRBUF *tmpbuf = GFL_STR_CreateCopyBuffer( strbuf, fmb->heapID );
+  
+  line = 0;
+  while( PRINTSYS_CopyLineStr(strbuf,tmpbuf,line) == TRUE ){
+    line++;
+    if( line >= 24 ){
+      break;
+    }
+  }
+  OS_Printf( "界行数　系%d\n", line );
+  line--;
+
+  GFL_STR_DeleteBuffer( tmpbuf );
+  
+  line *= SPWIN_HEIGHT_FONT_SPACE;
+  h += line;
+  
+  if( (h&0x07) ){
+    h += 8;
+  }
+  
+  h >>= 3;
+  return( h );
 }
 
 //======================================================================
@@ -3488,6 +3555,48 @@ static void keyCursor_Write(
     work->cursor_anm_no %= 3;
   }
 
+  x = GFL_BMP_GetSizeX( bmp ) - 11;
+  y = GFL_BMP_GetSizeY( bmp ) - 9;
+  offs = tbl[work->cursor_anm_no];
+  
+  GFL_BMP_Print( work->bmp_cursor, bmp, 0, 2, x, y+offs, 10, 7, 0x00 );
+}
+
+//--------------------------------------------------------------
+/**
+ * キー送りカーソル 表示　背景BITMAP指定
+ * @param work KEYCURSOR_WORK
+ * @param bmp 表示先GFL_BMP_DATA
+ * @param bmp_bg 背景に張る1キャラ分のGFL_BMP_DATA
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void keyCursor_WriteBmpBG(
+    KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, GFL_BMP_DATA *bmp_bg )
+{
+  s16 x,y,offs;
+  u16 tbl[3] = { 0, 1, 2 };
+  
+  x = GFL_BMP_GetSizeX( bmp ) - 16;
+  y = GFL_BMP_GetSizeY( bmp ) - 16;
+  
+  if( x >= 0 && y >= 0 ){ //BGを張る領域がある
+    s16 ix,iy;
+    for( iy = y; iy < (y+16); iy += 8 ){
+      for( ix = x; ix < (x+16); ix += 8 ){
+        GFL_BMP_Print( bmp_bg, bmp, 0, 0, ix, iy, 8, 8, GF_BMPPRT_NOTNUKI );
+      }
+    }
+  }
+  
+  work->cursor_anm_frame++;
+  
+  if( work->cursor_anm_frame >= 4 ){
+    work->cursor_anm_frame = 0;
+    work->cursor_anm_no++;
+    work->cursor_anm_no %= 3;
+  }
+  
   x = GFL_BMP_GetSizeX( bmp ) - 11;
   y = GFL_BMP_GetSizeY( bmp ) - 9;
   offs = tbl[work->cursor_anm_no];

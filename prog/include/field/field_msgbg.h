@@ -342,6 +342,10 @@ extern void FLDSPWIN_Delete( FLDSPWIN *spWin );
 extern void FLDSPWIN_PrintStrBufStart(
     FLDSPWIN *spWin, u16 x, u16 y, const STRBUF *strBuf );
 extern BOOL FLDSPWIN_Print( FLDSPWIN *spWin );
+extern u32 FLDSPWIN_GetNeedWindowWidthCharaSize(
+    FLDMSGBG *fmb, const STRBUF *strbuf, u32 margin );
+extern u32 FLDSPWIN_GetNeedWindowHeightCharaSize(
+    FLDMSGBG *fmb, const STRBUF *strbuf, u32 margin );
 
 //‚»‚Ì‘¼
 extern void FLDMSGBG_SetBlendAlpha( BOOL set );

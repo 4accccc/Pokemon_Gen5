@@ -1200,10 +1200,12 @@ VMCMD_RESULT EvCmdSpWinMsg( VMHANDLE *core, void *wk )
   STRBUF *msgbuf = SetExpandWord( work, sc, msg_id );
   
   {
+#if 0
+    u32 len;
     SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
     GFL_FONT *font = FLDMSGBG_GetFontHandle( fparam->msgBG );
-    u32 w = PRINTSYS_GetStrWidth( msgbuf, font, 0 );
-    u32 h = PRINTSYS_GetStrHeight( msgbuf, font );
+    u32 w = PRINTSYS_GetStrWidth( msgbuf, font, 0 ) + 8;
+    u32 h = PRINTSYS_GetStrHeight( msgbuf, font ) + 8;
     u32 c = w;
     w >>= 3;
     if( (c&0x07) ){
@@ -1214,12 +1216,16 @@ VMCMD_RESULT EvCmdSpWinMsg( VMHANDLE *core, void *wk )
     if( (c&0x07) ){
       h++;
     }
-    
+#else
+    SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+    u16 w = FLDSPWIN_GetNeedWindowWidthCharaSize( fparam->msgBG, msgbuf, 4 );
+    u16 h = FLDSPWIN_GetNeedWindowHeightCharaSize( fparam->msgBG, msgbuf, 4 );
+#endif
     spWin = FLDSPWIN_Add( fparam->msgBG, type, x, y, w, h );
     SCRCMD_WORK_SetMsgWinPtr( work, spWin );
   }
   
-  FLDSPWIN_PrintStrBufStart( spWin, 1, 1, msgbuf );
+  FLDSPWIN_PrintStrBufStart( spWin, 4, 4, msgbuf );
   VMCMD_SetWait( core, SpWinMsgWait );
   
   SCREND_CHK_SetBitOn( SCREND_CHK_SPWIN_OPEN );
