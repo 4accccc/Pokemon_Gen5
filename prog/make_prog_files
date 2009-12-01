@@ -515,6 +515,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/event_current.c \
         field/fldeff_d06denki.c \
         field/field_gimmick_d06.c \
+        field/land_data_patch.c \
         field/event_debug_season_display.c
 
 # フィールド天気

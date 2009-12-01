@@ -15,6 +15,8 @@
 #include "../field_buildmodel.h"
 #include "../field_g3dmap_exwork.h"	// GFL_G3D_MAP拡張ワーク
 
+#include "../land_data_patch.h"	// マップ情報に追加パッチをあてる
+
 
 #include "savedata/save_control.h"
 #include "fieldmap/buildmodel_outdoor.naix"
@@ -66,9 +68,13 @@ BOOL FieldLoadMapData_RandomGenerate( GFL_G3D_MAP* g3Dmap, void * exWork )
 {
 	GFL_G3D_MAP_LOAD_STATUS* ldst;
 	FLD_G3D_MAP_EXWORK* p_exwork;	// GFL_G3D_MAP拡張ワーク
+  HEAPID heapID;
 
 	// 拡張ワーク取得
 	p_exwork = exWork;
+
+  // ヒープIDを取得　パッチ読み込み用 
+  heapID = FLD_G3D_MAP_EXWORK_GetHeapID( p_exwork );
 
 	GFL_G3D_MAP_GetLoadStatusPointer( g3Dmap, &ldst );
 
@@ -264,6 +270,8 @@ BOOL FieldLoadMapData_RandomGenerate( GFL_G3D_MAP* g3Dmap, void * exWork )
         int index;
         const u8 mapIndex = FLD_G3D_MAP_EXWORK_GetMapIndex(p_exwork);
         FIELD_BMODEL_MAN * bm = FLD_G3D_MAP_EXWORK_GetBModelMan(p_exwork);
+        int count = 10;
+
         
         //マップインデックスの地面を配置 
         for( i=0; i<4; i++ )
@@ -274,16 +282,20 @@ BOOL FieldLoadMapData_RandomGenerate( GFL_G3D_MAP* g3Dmap, void * exWork )
             
             if( GroundMapData[ mapIndex ][ index ] != 0xff )
             {
-              u32 resId = NARC_output_buildmodel_outdoor_bc_block_00_nsbmd + GroundMapData[ mapIndex ][ index ];
-              PositionSt objStatus;
-              objStatus.resourceID = resId + (3*GFUser_GetPublicRand(3));
-              objStatus.rotate = 0;
-              objStatus.billboard = 0;
-              objStatus.xpos = (j*(16*8)) << FX32_SHIFT;
-              objStatus.ypos = 0;
-              objStatus.zpos = -(i*(16*8)) << FX32_SHIFT; // ResistMapObject内で-反転されるので
-              TOMOYA_Printf( "x=%d z=%d  pos x[%d] z[%d] \n", FX_Whole(objStatus.xpos), FX_Whole(-objStatus.zpos), 0, 0 );
-              FIELD_BMODEL_MAN_ResistMapObject( bm, g3Dmap, &objStatus, 10+index );
+              // 追加パッチを当てる
+              FIELD_DATA_PATCH* p_patch;
+				      NormalVtxFormat* p_attr = (NormalVtxFormat*)((u32)mem + fileHeader->vertexOffset);
+
+              p_patch = FIELD_DATA_PATCH_Create( GroundMapData[ mapIndex ][ index ] + (3*GFUser_GetPublicRand(3)), GFL_HEAP_LOWID(heapID) );
+
+              // アトリビュート上書き
+              FIELD_DATA_PATCH_OverWriteAttr( p_patch, p_attr, j*8, i*8 );
+
+              // 配置上書き
+              count = FIELD_LAND_DATA_PATCH_AddBuildModel( p_patch, bm, g3Dmap, count, j*8, i*8 );
+
+              // パッチ情報破棄
+              FIELD_DATA_PATCH_Delete( p_patch );
   					}
           }
         }

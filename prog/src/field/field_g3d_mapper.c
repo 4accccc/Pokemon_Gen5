@@ -75,6 +75,7 @@ struct _FLD_G3D_MAP_EXWORK{
 	FIELD_BMODEL_MAN * bmodel_man;	// 
 	FIELD_WFBC * wfbcwork;	// 
 	u32               mapIndex;     //マップのindex(ランダムマップで使用
+  HEAPID          heapID;       // ヒープID
 };
 
 
@@ -151,7 +152,7 @@ static s32 GetMapperBlockStartIdxLoop( u32 blockNum, fx32 width, fx32 pos );
 static FIELD_GRANM * createGroundAnime( u32 blockNum, GFL_G3D_RES* globalTexture,
     const FLDMAPPER_RESIST_GROUND_ANIME * resistGroundAnimeData, u32 heapID );
 // FLD_G3D_MAP_EXWORK　操作関数
-static void FLD_G3D_MAP_ExWork_Init( FLD_G3D_MAP_EXWORK* p_wk, FLDMAPPER* g3Dmapper, u32 index );
+static void FLD_G3D_MAP_ExWork_Init( FLD_G3D_MAP_EXWORK* p_wk, FLDMAPPER* g3Dmapper, u32 index, HEAPID heapID );
 static void FLD_G3D_MAP_ExWork_Exit( FLD_G3D_MAP_EXWORK* p_wk );
 static void FLD_G3D_MAP_ExWork_ClearBlockData( FLD_G3D_MAP_EXWORK* p_wk );
 static BOOL FLD_G3D_MAP_ExWork_IsGranm( const FLD_G3D_MAP_EXWORK* cp_wk );
@@ -645,7 +646,7 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
       BLOCKINFO_init(&g3Dmapper->blockWk[i].blockInfo);
 
 			// 拡張ワークの初期化
-			FLD_G3D_MAP_ExWork_Init( &g3Dmapper->blockWk[i].g3DmapExWork, g3Dmapper, i );
+			FLD_G3D_MAP_ExWork_Init( &g3Dmapper->blockWk[i].g3DmapExWork, g3Dmapper, i, g3Dmapper->heapID );
 			setup.externalWork = &g3Dmapper->blockWk[i].g3DmapExWork;
 
 			// ブロック情報生成
@@ -1742,20 +1743,36 @@ const u32 FLD_G3D_MAP_EXWORK_GetMapIndex( const FLD_G3D_MAP_EXWORK* cp_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  マップ系用のヒープIDを取得
+ *
+ *	@param	cp_wk   ワーク
+ *
+ *	@return ヒープID
+ */
+//-----------------------------------------------------------------------------
+HEAPID FLD_G3D_MAP_EXWORK_GetHeapID( const FLD_G3D_MAP_EXWORK* cp_wk )
+{
+  return cp_wk->heapID;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	GFL_G3D_MAPの拡張ワーク初期化
  *
  *	@param	p_wk				ワーク
  *	@param	g3Dmapper		マッパーワーク
  *	@param	index				ブロックインデックス
+ *	@param  heapID      ヒープID
  */
 //-----------------------------------------------------------------------------
-static void FLD_G3D_MAP_ExWork_Init( FLD_G3D_MAP_EXWORK* p_wk, FLDMAPPER* g3Dmapper, u32 index )
+static void FLD_G3D_MAP_ExWork_Init( FLD_G3D_MAP_EXWORK* p_wk, FLDMAPPER* g3Dmapper, u32 index, HEAPID heapID )
 {
 	// 地面アニメ
 	p_wk->p_granm_wk = FIELD_GRANM_GetWork( g3Dmapper->granime, index );
   p_wk->bmodel_man = g3Dmapper->bmodel_man;
   p_wk->wfbcwork = g3Dmapper->wfbcwork;
   p_wk->mapIndex = index;
+  p_wk->heapID   = heapID;
 }
 
 //----------------------------------------------------------------------------
