@@ -689,7 +689,7 @@ GMEVENT * FIELD_EVENT_CheckNormal_Wrap( GAMESYS_WORK *gsys, void *work )
 	FIELD_PLACE_NAME *place_name_sys;
 
 #ifdef PM_DEBUG
-  GF_ASSERT_MSG(DebugBGInitEnd,"BG NOT INITIALIZE");    //BG初期化監視フラグ
+///  GF_ASSERT_MSG(DebugBGInitEnd,"BG NOT INITIALIZE");    //BG初期化監視フラグ
 #endif  
 
 	// イベント起動チェック
