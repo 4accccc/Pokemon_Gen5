@@ -615,10 +615,9 @@ static BOOL balloonWin_Write( SCRCMD_WORK *work,
     if( pos.z < jiki_pos.z ){
       idx = FLDTALKMSGWIN_IDX_UPPER;
     }
-    
-    SetFldMsgWinStream(work, fparam->msgBG, idx, p_pos, *msgbuf);
   }
   
+  SetFldMsgWinStream(work, fparam->msgBG, idx, p_pos, *msgbuf);
   return( TRUE );
 }
 
@@ -724,6 +723,34 @@ VMCMD_RESULT EvCmdBalloonWinWriteMF( VMHANDLE *core, void *wk )
     if( sex != PM_MALE ){
       msg_id = msg_id_f;
     }
+  }
+  
+  if( balloonWin_Write(work,obj_id,arc_id,msg_id,win_idx) == TRUE ){
+    VMCMD_SetWait( core, BallonWinMsgWait );
+    return VMCMD_RESULT_SUSPEND;
+  }
+  
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 吹き出しウィンドウ 描画 バージョン別メッセージ表示
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBalloonWinWriteWB( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  u16 arc_id = SCRCMD_GetVMWorkValue( core, work );
+  u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
+  u16 msg_id_b = SCRCMD_GetVMWorkValue( core, work );
+  u8 obj_id = VMGetU8( core );
+  u8 win_idx = VMGetU8( core );
+  
+  if( PM_VERSION == VERSION_BLACK ){
+    msg_id = msg_id_b;
   }
   
   if( balloonWin_Write(work,obj_id,arc_id,msg_id,win_idx) == TRUE ){

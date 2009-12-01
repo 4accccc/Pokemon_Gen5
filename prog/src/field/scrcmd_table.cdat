@@ -168,7 +168,8 @@
   
   //(ÇÕÇ¢ )ÅAÇ¢Ç¢Ç¶Å@èàóù
   DEF_CMD( EvCmdYesNoWin, EV_SEQ_YES_NO_WIN )
-  NO_CMD()
+  DEF_CMD( EvCmdBalloonWinWriteMF, EV_SEQ_BALLOONWIN_OBJMSG_MF )
+  DEF_CMD( EvCmdBalloonWinWriteWB, EV_SEQ_BALLOONWIN_OBJMSG_WB )
   NO_CMD()
   NO_CMD()
   

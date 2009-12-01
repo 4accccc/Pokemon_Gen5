@@ -29,6 +29,7 @@ extern VMCMD_RESULT EvCmdSysWinClose( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBalloonWinWrite( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBalloonWinTalkWrite( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBalloonWinWriteMF( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdBalloonWinWriteWB( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBalloonWinClose( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk );
 
