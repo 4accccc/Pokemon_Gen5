@@ -11,18 +11,45 @@
 #include "../../../resource/fldmapdata/script/c03r0801_def.h"  //for SCRID_～
 #include "script.h"     //for SCRIPT_SetEventScript
 
+#include "pl_boat_def.h"
+
 #define WHISTLE_MARGINE (45)
 
 #define PL_BOAT_MODE_TIME (10*30)    //180秒
 
 #define NPC_TOTAL_NUM (15)
+#define ROOM_NUM  (14)
+#define DOUBLE_ROOM_NUM  (6)
+#define LEFT_ROOM_NUM (8)
+#define RIGHT_ROOM_NUM (6)
+
+typedef struct PL_BOAT_ROOM_PRM_tag
+{
+  int TrID;       //トレーナーの場合はトレーナーＩＤ
+  int CbjCode;    //見た目
+  int NpcCode;    //メッセージとかＮＰＣタイプとかの識別用
+}PL_BOAT_ROOM_PRM;
 
 typedef struct PL_BOAT_WORK_tag
 {
   BOOL WhistleReq;
   int Time;
   int WhistleCount;   //汽笛なった回数
+  PL_BOAT_ROOM_PRM RoomParam[ROOM_NUM];
+  u8 TrNumLeft;
+  u8 TrNumRight;
+  u8 TrNumSingle;
+  u8 TrNumDouble;
 }PL_BOAT_WORK;
+
+typedef struct ENTRY_WORK_tag
+{
+  u8 RoomIdx[ROOM_NUM];
+  u8 RoomEntry[ROOM_NUM];
+  u8 EntryCount;
+  u8 LastIdx;
+}ENTRY_WORK;
+
 
 typedef enum {
   PL_BOAT_EVT_NONE,
@@ -31,12 +58,68 @@ typedef enum {
   PL_BOAT_EVT_END,
 }PL_BOAT_EVT;
 
+typedef enum {
+  ROOM_SIDE_LEFT,
+  ROOM_SIDE_RIGHT,
+}ROOM_SIDE;
+
+typedef enum {
+  ROOM_TYPE_SINGLE,
+  ROOM_TYPE_DOUBLE,
+}ROOM_TYPE;
+
+//曜日ごとのトレーナー数（月～日）
 static const u8 WeekTrNum[7] = {
   4,3,4,5,4,6,7
 };
 
+//部屋情報
+typedef struct ROOM_ST_tag
+{
+  ROOM_SIDE Side;    //LEFT or RIGHT
+  ROOM_TYPE Type;    //SINGLE or DOUBLE
+}ROOM_ST;
+
+static const ROOM_ST RoomSt[ROOM_NUM] = {
+  {ROOM_SIDE_LEFT, ROOM_TYPE_DOUBLE},
+  {ROOM_SIDE_LEFT, ROOM_TYPE_DOUBLE},
+  {ROOM_SIDE_LEFT, ROOM_TYPE_DOUBLE},
+  {ROOM_SIDE_LEFT, ROOM_TYPE_DOUBLE},
+  {ROOM_SIDE_RIGHT, ROOM_TYPE_DOUBLE},
+  {ROOM_SIDE_RIGHT, ROOM_TYPE_DOUBLE},
+
+  {ROOM_SIDE_LEFT, ROOM_TYPE_SINGLE},
+  {ROOM_SIDE_LEFT, ROOM_TYPE_SINGLE},
+  {ROOM_SIDE_LEFT, ROOM_TYPE_SINGLE},
+  {ROOM_SIDE_LEFT, ROOM_TYPE_SINGLE},
+  {ROOM_SIDE_RIGHT, ROOM_TYPE_SINGLE},
+  {ROOM_SIDE_RIGHT, ROOM_TYPE_SINGLE},
+  {ROOM_SIDE_RIGHT, ROOM_TYPE_SINGLE},
+  {ROOM_SIDE_RIGHT, ROOM_TYPE_SINGLE},
+};
+
+//ダブル型部屋インデックス群
+static const u8 DoubleRoom[DOUBLE_ROOM_NUM] = {
+  0,1,2,3,4,5
+};
+
+//船内左の部屋インデックス群
+static const u8 LeftRoom[LEFT_ROOM_NUM] = {
+  0,1,2,3,6,7,8,9
+};
+//船内右の部屋インデックス群
+static const u8 RightRoom[RIGHT_ROOM_NUM] = {
+  4,5,10,11,12,13
+};
+
 static PL_BOAT_EVT GetEvt(PL_BOAT_WORK_PTR work);
 
+
+static void InitEntryWork(ENTRY_WORK *work);
+static int SearchRoomIdx(ENTRY_WORK *work, int inRoomIdx);
+static int GetEntryItem(ENTRY_WORK *work, const int inIdx);
+static BOOL DelEntry(ENTRY_WORK *work, const int inIdx);
+static BOOL EntryRoom(ENTRY_WORK *work);
 
 //--------------------------------------------------------------
 /**
@@ -54,6 +137,11 @@ PL_BOAT_WORK_PTR PL_BOAT_Init(void)
   work->WhistleReq = FALSE;
   work->Time = 0;
   work->WhistleCount = 0;
+  work->TrNumLeft = 0;
+  work->TrNumRight = 0;
+  work->TrNumSingle = 0;
+  work->TrNumDouble = 0;
+  
   //イベント時間テーブルをロードするかも
   ;
   return work;
@@ -171,6 +259,37 @@ void PL_BOAT_AddTimeEvt(PL_BOAT_WORK_PTR work, const int inAddSec)
 
 //--------------------------------------------------------------
 /**
+ * @brief　トレーナー数の取得
+ * @param   work      PL_BOAT_WORK_PTR
+ * @param   inSearchType    pl_boat_def.h　参照
+ * @retval  int トレーナー数
+*/
+//--------------------------------------------------------------
+int PL_BOAT_GetTrNum(PL_BOAT_WORK_PTR work, const int inSearchType)
+{
+  int num;
+  switch(inSearchType){
+  case PL_TR_SEARCH_TYPE_LEFT:
+    num = work->TrNumLeft;
+    break;
+  case PL_TR_SEARCH_TYPE_RIGHT:
+    num = work->TrNumRight;
+    break;
+  case PL_TR_SEARCH_TYPE_SINGLE:
+    num = work->TrNumSingle;
+    break;
+  case PL_TR_SEARCH_TYPE_DOUBLE:
+    num = work->TrNumDouble;
+    break;
+  default:
+    GF_ASSERT(0);
+    num = 0;
+  }
+  return num;
+}
+
+//--------------------------------------------------------------
+/**
  * @brief	イベント取得
  * @param	 work      PL_BOAT_WORK_PTR
  * @retval PL_BOAT_EVT    発生イベントタイプ
@@ -196,11 +315,24 @@ static PL_BOAT_EVT GetEvt(PL_BOAT_WORK_PTR work)
  * @retval none
 */
 //--------------------------------------------------------------
-static void EntryTrainer(void)
+static void EntryTrainer(PL_BOAT_WORK *work)
 {
   int tr_num;
   RTCDate date;
-  RTC_GetDate( &date ); 
+  u8 i;
+  ENTRY_WORK entry_work;
+  RTC_GetDate( &date );
+
+  //部屋のエントリワークを初期化
+  InitEntryWork(&entry_work);
+  //部屋のエントリ
+  {
+    BOOL rc;
+    rc = EntryRoom(&entry_work);
+    //不測の事態のための対処策
+    if (!rc)  InitEntryWork(&entry_work);   //初期化状態で続行
+  }
+
   //曜日別にトレーナー数を決定
   switch( date.week ){
   case RTC_WEEK_MONDAY:
@@ -234,6 +366,137 @@ static void EntryTrainer(void)
   ;
   //テーブルから非トレーナーをエントリ
   ;
+  //トレーナ数が決まったら、それぞれの部屋の数を数える
+  for (i=0;i<tr_num;i++)
+  {
+    int room_idx;
+    room_idx = entry_work.RoomEntry[i];
+    if (RoomSt[room_idx].Side == ROOM_SIDE_LEFT) work->TrNumLeft++;
+    else work->TrNumRight++;
+    if (RoomSt[room_idx].Type == ROOM_TYPE_SINGLE) work->TrNumSingle++;
+    else work->TrNumDouble++;
+  }
  
+}
+
+//エントリワーク初期化関数
+static void InitEntryWork(ENTRY_WORK *work)
+{
+  int i;
+  work->LastIdx = ROOM_NUM-1;
+  work->EntryCount = 0;
+  //部屋インデックス初期化
+  for (i=0;i<ROOM_NUM;i++)
+  {
+    work->RoomIdx[i] = i;
+    work->RoomEntry[i] = 0;
+  }
+}
+
+//テーブルの中身を検索して指定インデックス場所を返す
+static int SearchRoomIdx(ENTRY_WORK *work, const int inRoomIdx)
+{
+  int i;
+  for (i=0;i<ROOM_NUM;i++){
+    if (work->RoomIdx[i] == inRoomIdx) return i;
+  }
+  GF_ASSERT(0);
+  return -1;
+}
+
+//指定インデックスの要素を取得
+static int GetEntryItem(ENTRY_WORK *work, const int inIdx)
+{
+  //抽選最後尾インデックスを超えていたらアサート
+  if (inIdx >= work->LastIdx)
+  {
+    GF_ASSERT(0);
+    return -1;
+  }
+  return work->RoomIdx[inIdx];
+}
+
+//抽選対象から指定インデックスの要素をはずす
+static BOOL DelEntry(ENTRY_WORK *work, const int inIdx)
+{
+  //抽選最後尾インデックスを超えていたらアサート
+  if (inIdx >= work->LastIdx)
+  {
+    GF_ASSERT(0);
+    return FALSE;
+  }
+
+  if ( inIdx < 0 )
+  {
+    GF_ASSERT(0);
+    return FALSE;
+  }
+
+  //抽選対象最後尾の要素で上書きする
+  work->RoomIdx[inIdx] = work->RoomIdx[work->LastIdx];
+  
+  //既に最後尾が0のときは例外処理
+  if ( work->LastIdx == 0 )
+  {
+    GF_ASSERT(0);
+    return FALSE;
+  }
+
+  //最後尾インデックスをデクリメント
+  work->LastIdx--;
+
+  return TRUE;
+}
+
+//部屋のエントリ順番決定
+static BOOL EntryRoom(ENTRY_WORK *work)
+{
+  int i;
+  int idx, room_idx, del_idx;
+  BOOL rc;
+  //ダブル型の部屋を1つ選択
+  idx = GFUser_GetPublicRand(DOUBLE_ROOM_NUM);
+  room_idx = DoubleRoom[idx];
+  del_idx = SearchRoomIdx(work, room_idx);
+  //エントリ対象から抽選したインデックッスを除く
+  rc = DelEntry(work, del_idx);
+  if (!rc) return FALSE;
+  //エントリテーブルに格納
+  work->RoomEntry[work->EntryCount] = room_idx;
+  work->EntryCount++;
+
+  //始めに選んだ部屋が船内の左右どちらにあるかで次の部屋の候補を絞る
+  if ( RoomSt[idx].Side == ROOM_SIDE_LEFT ){    //左のとき
+    //右の部屋から抽選する
+    idx = GFUser_GetPublicRand(RIGHT_ROOM_NUM);
+    room_idx = RightRoom[idx];
+  }else{    //右のとき
+    //左の部屋から抽選する
+    idx = GFUser_GetPublicRand(LEFT_ROOM_NUM);
+    room_idx = RightRoom[idx];
+  }
+  del_idx = SearchRoomIdx(work, room_idx);
+  //エントリ対象から抽選したインデックッスを除く
+  rc = DelEntry(work, del_idx);
+  if (!rc) return FALSE;
+  //エントリテーブルに格納
+  work->RoomEntry[work->EntryCount] = room_idx;
+  work->EntryCount++;
+
+  //残りの部屋をエントリ
+  for (i=0;i<ROOM_NUM-2;i++)
+  {
+    int denominator = (ROOM_NUM-2)-i;
+    idx = GFUser_GetPublicRand(denominator);
+    room_idx = GetEntryItem(work, idx);
+    if (room_idx < 0) return FALSE;   //例外が起きた場合
+    rc = DelEntry(work, idx);
+    if (!rc) return FALSE;
+    //エントリテーブルに格納
+    work->RoomEntry[work->EntryCount] = room_idx;
+    work->EntryCount++;
+  }
+
+  return TRUE;
 }
 

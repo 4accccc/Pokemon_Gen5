@@ -90,19 +90,13 @@ VMCMD_RESULT EvCmdPlBoat_GetTrNum( VMHANDLE *core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+  PL_BOAT_WORK_PTR *ptr = GAMEDATA_GetPlBoatWorkPtr(gamedata);
 
   type = VMGetU16( core );
   ret = SCRCMD_GetVMWork( core, work );
 
-  switch(type){
-  case PL_TR_SEARCH_TYPE_LEFT:
-    break;
-  case PL_TR_SEARCH_TYPE_RIGHT:
-    break;
-  default:
-    ;
-  }
-  *ret = 0;
+  *ret = PL_BOAT_GetTrNum(*ptr, type);
 
   return VMCMD_RESULT_CONTINUE;
 }
