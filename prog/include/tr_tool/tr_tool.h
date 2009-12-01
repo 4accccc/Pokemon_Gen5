@@ -67,10 +67,6 @@ typedef struct{
 	u16			use_item[4];      //使用道具
 
 	u32			aibit;						//AIパターン
-
-	STRCODE		name[ BUFLEN_PERSON_NAME ];	//トレーナー名
-//	PMS_DATA	win_word;
-//	PMS_DATA	lose_word;
 }TRAINER_DATA;
 
 //トレーナー持ちポケモンパラメータ（データタイプノーマル）
