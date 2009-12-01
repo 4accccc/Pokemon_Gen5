@@ -37,6 +37,9 @@ $INPUT_DATA_MAX = 0;
 $data_in = 0;
 foreach $one ( @EXCEL_FILE )
 {
+  $one =~ s/\r\n//g;
+  $one =~ s/\n//g;
+  
   @line = split( /\t/, $one );
   
   if( $data_in == 0 )
@@ -82,22 +85,45 @@ for( $i=0; $i<$INPUT_DATA_MAX; $i++ )
   
   #.bin
   $filename = $INPUT_DATA[ ($i * $PARA_MAX) + $PARA_ATTR_IDX ];
-  open( FILEIN, $filename );
-  binmode( FILEIN );
+  if( -e $filename )
+  {
+    open( FILEIN, $filename );
+    binmode( FILEIN );
 
-  @data_s = unpack( "S*", <FILEIN> ); #unsigned shortでみる
-  @data_c = unpack( "C*", <FILEIN> ); #unsigned charでみる
+    @data_s = unpack( "S*", <FILEIN> ); #unsigned shortでみる
 
-  close( FILEIN );
+    close( FILEIN );
+
+    open( FILEIN, $filename );
+    binmode( FILEIN );
+
+    @data_c = unpack( "C*", <FILEIN> ); #unsigned charでみる
+
+    close( FILEIN );
+
+  }
+  else
+  {
+    print( "$filename がありません\n" );
+    exit(1);
+  }
 
   #.3dmd
   $filename_3dmd = $INPUT_DATA[ ($i * $PARA_MAX) + $PARA_MDL_IDX ];
-  open( FILEIN, $filename_3dmd );
-  binmode( FILEIN );
+  if( -e $filename_3dmd )
+  {
+    open( FILEIN, $filename_3dmd );
+    binmode( FILEIN );
 
-  @data3dmd_c = unpack( "C*", <FILEIN> ); #unsigned charでみる
+    @data3dmd_c = unpack( "C*", <FILEIN> ); #unsigned charでみる
 
-  close( FILEIN );
+    close( FILEIN );
+  }
+  else
+  {
+    print( "$filename_3dmd がありません\n" );
+    exit(1);
+  }
 
   #最初の2つはグリッド数
   $grid_x =  $data_s[0];
@@ -127,7 +153,8 @@ for( $i=0; $i<$INPUT_DATA_MAX; $i++ )
 
   #各情報へのオフセット
   print( FILEOUT pack( "S", 4 ) );
-  print( FILEOUT pack( "S", ($size + 4) ) );
+  $attr_size = ((($input_grid_x * $input_grid_z) * $size_one) + 4);
+  print( FILEOUT pack( "S", $attr_size + 4 ) ); #
   
   #グリッドサイズ
   print( FILEOUT pack( "S", $input_grid_x ) );
@@ -150,7 +177,8 @@ for( $i=0; $i<$INPUT_DATA_MAX; $i++ )
       #サイズ分情報を出力
       for( $l=0; $l<$size_one; $l++ )
       {
-        print( FILEOUT pack( "C", $data_c[ $data_index + $l ] ) );
+        #最初4バイト分　グリッドサイズが入っているので、その先から出力
+        print( FILEOUT pack( "C", $data_c[ 4 + $data_index + $l ] ) );
       }
 
     }

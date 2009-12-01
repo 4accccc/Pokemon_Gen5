@@ -33,6 +33,9 @@ include	$(PROJECT_RSCDIR)\macro_define
 XLSFILE = land_data_patch.xls
 TABFILE = land_data_patch.txt
 
+FILE_3DMD = $(wildcard *.3dmd)
+FILE_ATTR = $(wildcard *.bin)
+
 
 
 ##########################################
@@ -40,7 +43,8 @@ TABFILE = land_data_patch.txt
 ##########################################
 LIST_FILE 	= list.txt
 
-TAG_HEADER = land_data_patch.h
+TAG_HEADER = land_data_patch_def.h
+OLD_TAG_HEADER = land_data_patch.h
 
 #------------------------------------------------------------------------------
 #	#サフィックス
@@ -74,7 +78,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(XLSFILE)
+$(targetname).narc: $(XLSFILE) $(FILE_3DMD) $(FILE_ATTR)
 	
 	#エクセルデータをタブ区切りにする。
 	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $(TABFILE) -p 0 -s tab $(XLSFILE)
@@ -84,7 +88,7 @@ $(targetname).narc: $(XLSFILE)
 	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix
 	-rm	$(LIST_FILE)
-	-rm *.dat
+	-rm	*.dat
 endif
 
 #------------------------------------------------------------------------------
@@ -95,6 +99,9 @@ clean:
 	@$(MAKE_SUBDIR)
 	rm -f $(TARGETDIR)/$(targetname).narc
 	rm -f $(TARGETDIR)/$(targetname).naix
+	rm -f $(TARGETDIR)$(TAG_HEADER)
+	rm -f $(TARGETDIR)$(OLD_TAG_HEADER)
+
 
 #コンバート対象者のみ、中間ファイル削除
 ifeq	($(CONVERTUSER),true)	
