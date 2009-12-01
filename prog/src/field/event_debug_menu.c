@@ -76,7 +76,7 @@
 
 #include "event_debug_local.h"
 
-#include "event_season_display.h" // for EVENT_SeasonDisplay
+#include "event_debug_season_display.h" // for DEBUG_EVENT_FLDMENU_SeasonDispSelect
 
 //======================================================================
 //  define
@@ -3703,13 +3703,11 @@ static void debugMenuWriteUseMemoryDump( DEBUG_USEMEMORY_EVENT_WORK* p_wk )
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_SeasonDisplay( DEBUG_MENU_EVENT_WORK *wk )
 {
-  GAMESYS_WORK  *gsys  = wk->gmSys;
-  GAMEDATA* gdata = wk->gdata;
-  GMEVENT       *parent    = wk->gmEvent;
-  FIELDMAP_WORK *fieldmap  = wk->fieldWork;
-  u8 start = GAMEDATA_GetSeasonID( gdata );
-  u8 end   = GAMEDATA_GetSeasonID( gdata );
+  GMEVENT*         parent = wk->gmEvent;
+  GAMESYS_WORK*      gsys = wk->gmSys;
+  FIELDMAP_WORK* fieldmap = wk->fieldWork;
+  HEAPID          heap_id = FIELDMAP_GetHeapID( fieldmap );
 
-  GMEVENT_ChangeEvent( parent, EVENT_SeasonDisplay( gsys, fieldmap, start, end ) );
+  GMEVENT_ChangeEvent( parent, DEBUG_EVENT_FLDMENU_SeasonDispSelect( gsys, heap_id ) );
   return TRUE;
 }
