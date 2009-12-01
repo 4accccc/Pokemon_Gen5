@@ -190,6 +190,7 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Rotation( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_FakeDisable( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args );
@@ -1614,6 +1615,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_BALL_THROW,        scProc_ACT_BallThrow      },
     { SC_ACT_ROTATION,          scProc_ACT_Rotation       },
     { SC_ACT_CHANGE_TOKUSEI,    scProc_ACT_ChangeTokusei  },
+    { SC_ACT_FAKE_DISABLE,      scProc_ACT_FakeDisable    },
   };
 
 restart:
@@ -2435,11 +2437,11 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
     break;
   case 4:
     //技覚えチェック
-    { 
+    {
       BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
       const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
       WazaID waza_no = PP_CheckWazaOboe( ( POKEMON_PARAM* )pp, &wk->wazaoboe_index, wk->heapID );
-      switch( waza_no ){ 
+      switch( waza_no ){
       case PTL_WAZAOBOE_NONE:
         return TRUE;
         break;
@@ -2634,6 +2636,38 @@ static BOOL scProc_ACT_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args 
   }
   return FALSE;
 }
+//---------------------------------------------------------------------------------------
+/**
+ *  イリュージョン状態を解除
+ *  args .. [0]:対象のポケモンID
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_FakeDisable( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  switch( *seq ){
+  case 0:
+    {
+      u8 pokeID = args[0];
+      BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, pokeID );
+      BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+
+      BPP_FakeDisable( bpp );
+      BTLV_FakeDisable_Start( wk->viewCore, pos );
+      (*seq)++;
+    }
+    break;
+  case 1:
+    if( BTLV_FakeDisable_Wait(wk->viewCore) )
+    {
+      (*seq)++;
+    }
+    break;
+  default:
+    return TRUE;
+  }
+  return FALSE;
+}
+
 //---------------------------------------------------------------------------------------
 /**
  *  とくせいウィンドウ表示オン

@@ -236,6 +236,7 @@ typedef enum {
   BTL_HANDEX_SEND_LAST,         ///< 指定ポケモンの行動を一番最後に回す
   BTL_HANDEX_SWAP_POKE,         ///< 場に出ているポケモン同士を入れ替える
   BTL_HANDEX_HENSIN,            ///< へんしんする
+  BTL_HANDEX_FAKE_BREAK,        ///< イリュージョン解除
 
   BTL_HANDEX_MAX,
 
@@ -726,6 +727,15 @@ typedef struct {
   u8   pokeID;                       ///< 対象ポケID
   BTL_HANDEX_STR_PARAMS    exStr;    ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_HENSIN;
+
+/**
+ * イリュージョン解除
+ */
+typedef struct {
+  BTL_HANDEX_PARAM_HEADER  header;
+  u8   pokeID;                       ///< 対象ポケID
+  BTL_HANDEX_STR_PARAMS    exStr;    ///< 成功時メッセージ
+}BTL_HANDEX_PARAM_FAKE_BREAK;
 
 
 extern void* BTL_SVF_HANDEX_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );

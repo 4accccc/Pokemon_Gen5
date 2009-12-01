@@ -364,6 +364,8 @@ static void handler_Kinchoukan_MemberOutFixed( BTL_EVENT_FACTOR* myHandle, BTL_S
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Kinchoukan( u16 pri, u16 tokID, u8 pokeID );
 static void handler_Hensin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Hensin( u16 pri, u16 tokID, u8 pokeID );
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Illusion( u16 pri, u16 tokID, u8 pokeID );
+static void handler_Illusion( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 
@@ -519,7 +521,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
     { POKETOKUSEI_SUNAKAKI,         HAND_TOK_ADD_Sunakaki      }, // すなかき
     { POKETOKUSEI_MIRAKURUSUKIN,    HAND_TOK_ADD_MilacreSkin   }, // ミラクルスキン
     { POKETOKUSEI_SINUTI,           HAND_TOK_ADD_Sinuti        }, // しんうち
-    { POKETOKUSEI_IRYUUJON,         HAND_TOK_ADD_Hensin        }, // イリュージョン
+    { POKETOKUSEI_IRYUUJON,         HAND_TOK_ADD_Illusion      }, // イリュージョン
     { POKETOKUSEI_HENSIN,           HAND_TOK_ADD_Hensin        }, // へんしん
     { POKETOKUSEI_SURINUKE,         HAND_TOK_ADD_Surinuke      }, // すりぬけ
     { POKETOKUSEI_MIIRA,            HAND_TOK_ADD_Miira         }, // ミイラ
@@ -5205,7 +5207,6 @@ static void handler_MagicMirror_CheckRob( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
   if( fEnable )
   {
     WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-    BTL_Printf("乗っ取るよ\n");
     if( WAZADATA_GetFlag(waza, WAZAFLAG_MagicCoat) )
     {
       if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_POKEID, pokeID) ){
@@ -5417,5 +5418,35 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Hensin( u16 pri, u16 tokID, u8 pokeID )
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
+}
+//------------------------------------------------------------------------------
+/**
+ *  とくせい「イリュージョン」
+ */
+//------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Illusion( u16 pri, u16 tokID, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_DMG_REACTION, handler_Illusion   },    // ダメージ反応ハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
+}
+// ダメージ反応ハンドラ
+static void handler_Illusion( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  // 自分が防御側で
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+  {
+    // イリュージョン継続中なら正体を明かす
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( BPP_IsFakeEnable(bpp) )
+    {
+      BTL_HANDEX_PARAM_FAKE_BREAK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_FAKE_BREAK, pokeID );
+      param->pokeID = pokeID;
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Illusion_Break );
+      HANDEX_STR_AddArg( &param->exStr, pokeID );
+    }
+  }
 }
 

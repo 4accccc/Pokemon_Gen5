@@ -373,6 +373,10 @@ extern void BPP_BatonTouchParam( BTL_POKEPARAM* target, const BTL_POKEPARAM* use
 extern void BPP_ReflectToPP( BTL_POKEPARAM* bpp );
 extern void BPP_ReflectByPP( BTL_POKEPARAM* bpp );
 extern void BPP_SetSrcPP( BTL_POKEPARAM* bpp, POKEMON_PARAM* pp );
+extern BOOL BPP_IsFakeEnable( const BTL_POKEPARAM* bpp );
+extern void BPP_FakeDisable( BTL_POKEPARAM* bpp );
+
+
 extern u8 BPP_GetCriticalRank( const BTL_POKEPARAM* bpp );
 extern BOOL BPP_AddCriticalRank( BTL_POKEPARAM* bpp, int value );
 extern void BPP_SetBaseStatus( BTL_POKEPARAM* bpp, BppValueID vid, u8 value );

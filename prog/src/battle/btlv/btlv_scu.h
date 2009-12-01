@@ -75,6 +75,8 @@ extern BOOL BTLV_SCU_KinomiAct_Wait( BTLV_SCU* wk, BtlvMcssPos pos );
 
 extern void BTLV_SCU_UpdateGauge_Start( BTLV_SCU* wk, BtlPokePos pos );
 extern BOOL BTLV_SCU_UpdateGauge_Wait( BTLV_SCU* wk, BtlPokePos pos );
+extern void BTLV_SCU_FakeDisable_Start( BTLV_SCU* wk, BtlPokePos pos );
+extern BOOL BTLV_SCU_FakeDisable_Wait( BTLV_SCU* wk );
 
 
 //=============================================================================================

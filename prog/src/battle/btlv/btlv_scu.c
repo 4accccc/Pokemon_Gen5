@@ -224,6 +224,7 @@ static BOOL btlinEff_MyPokeInTriple( BTLV_SCU* wk, int* seq );
 static u16 btlfinEffsub_getOpponentPokeInStrID( BTLV_SCU* wk, u8 pokeCount );
 static void taskPokeOutAct( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskPokeInEffect( GFL_TCBL* tcbl, void* wk_adrs );
+static void taskFakeDisable( GFL_TCBL* tcbl, void* wk_adrs );
 static void msgWinVisible_Init( MSGWIN_VISIBLE* wk, GFL_BMPWIN* win );
 static void msgWinVisible_Hide( MSGWIN_VISIBLE* wk );
 static void msgWinVisible_Disp( MSGWIN_VISIBLE* wk );
@@ -232,7 +233,7 @@ static void statwin_setupAll( BTLV_SCU* wk );
 static void statwin_cleanupAll( BTLV_SCU* wk );
 static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, BtlPokePos pokePos );
 static void statwin_cleanup( STATUS_WIN* stwin );
-static void statwin_hide( STATUS_WIN* stWin );
+static void statwin_hide( STATUS_WIN* stwin );
 static void statwin_disp_start( STATUS_WIN* stwin );
 static TokwinSide PokePosToTokwinSide( const BTL_MAIN_MODULE* mainModule, BtlPokePos pos );
 static void tokwin_setupAll( BTLV_SCU* wk );
@@ -2035,7 +2036,6 @@ static void taskPokeOutAct( GFL_TCBL* tcbl, void* wk_adrs )
   }
 }
 
-
 //--------------------------------------------------------
 // ポケモン入場アクション
 //--------------------------------------------------------
@@ -2236,6 +2236,83 @@ void BTLV_SCU_KinomiAct_Start( BTLV_SCU* wk, BtlvMcssPos pos )
 BOOL BTLV_SCU_KinomiAct_Wait( BTLV_SCU* wk, BtlvMcssPos pos )
 {
   return BTLV_EFFECT_CheckExecute() == FALSE;
+}
+
+//==============================================================================================
+// イリュージョン解除動作
+//==============================================================================================
+
+//--------------------------------------------------------
+// ポケモン入場アクション
+//--------------------------------------------------------
+typedef struct {
+
+  BTLV_SCU*    parentWork;
+  BtlPokePos   pos;
+  BtlvMcssPos  vpos;
+  u32          seq;
+  u8*          pTaskCounter;
+
+}FAKEDISABLE_ACT_WORK;
+
+
+//=============================================================================================
+
+
+/**
+ *  イリュージョン解除動作：開始
+ */
+void BTLV_SCU_FakeDisable_Start( BTLV_SCU* wk, BtlPokePos pos )
+{
+  GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, taskFakeDisable, sizeof(FAKEDISABLE_ACT_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
+  FAKEDISABLE_ACT_WORK* twk = GFL_TCBL_GetWork( tcbl );
+
+  twk->parentWork = wk;
+  twk->pos = pos;
+  twk->vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+  twk->pTaskCounter = &wk->taskCounter[TASKTYPE_DEFAULT];
+  twk->seq = 0;
+
+  (*(twk->pTaskCounter))++;
+}
+
+/**
+ *  イリュージョン解除動作：終了待ち
+ */
+BOOL BTLV_SCU_FakeDisable_Wait( BTLV_SCU* wk )
+{
+  return ( wk->taskCounter[ TASKTYPE_DEFAULT ] == 0 );
+}
+
+/**
+ *  イリュージョン解除動作：実行タスク
+ */
+static void taskFakeDisable( GFL_TCBL* tcbl, void* wk_adrs )
+{
+  FAKEDISABLE_ACT_WORK* wk = wk_adrs;
+
+  // @todo 今はただ消して, 出してるだけです
+  switch( wk->seq ){
+  case 0:
+    BTLV_EFFECT_DelPokemon( wk->vpos );
+    BTLV_EFFECT_DelGauge( wk->vpos );
+    wk->seq++;
+    break;
+  case 1:
+    {
+      const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->parentWork->pokeCon, wk->pos );
+      const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
+      BTLV_EFFECT_SetPokemon( pp, wk->vpos );
+      BTLV_EFFECT_SetGauge( bpp, wk->vpos );
+      wk->seq++;
+    }
+  case 2:
+    if( !BTLV_EFFECT_CheckExecute() ){
+      (*(wk->pTaskCounter))--;
+      GFL_TCBL_Delete( tcbl );
+    }
+    break;
+  }
 }
 
 //==============================================================================================

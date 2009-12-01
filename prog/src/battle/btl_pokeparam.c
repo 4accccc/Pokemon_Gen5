@@ -56,6 +56,7 @@ typedef struct {
   u16   usedItem;
   u8    myID;
   u8    fHensin;
+  u8    fFakeEnable;
 }BPP_CORE_PARAM;
 
 //--------------------------------------------------------------
@@ -195,11 +196,12 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   bpp->coreParam.myID = pokeID;
   bpp->coreParam.monsno = PP_Get( pp, ID_PARA_monsno, 0 );
   bpp->coreParam.ppSrc = pp;
-  bpp->coreParam.ppFake = NULL;
   bpp->coreParam.hp = PP_Get( pp, ID_PARA_hp, 0 );
   bpp->coreParam.item = PP_Get( pp, ID_PARA_item, NULL );
   bpp->coreParam.usedItem = ITEM_DUMMY_DATA;
   bpp->coreParam.fHensin = TRUE;
+  bpp->coreParam.ppFake = NULL;
+  bpp->coreParam.fFakeEnable = NULL;
 
   setupBySrcData( bpp, pp );
 
@@ -469,10 +471,13 @@ const POKEMON_PARAM* BPP_GetSrcData( const BTL_POKEPARAM* bpp )
 void BPP_SetViewSrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* fakePP )
 {
   bpp->coreParam.ppFake =  fakePP;
+  bpp->coreParam.fFakeEnable = TRUE;
 }
 const POKEMON_PARAM* BPP_GetViewSrcData( const BTL_POKEPARAM* bpp )
 {
-  if( bpp->coreParam.ppFake ){
+  if( (bpp->coreParam.ppFake != NULL)
+  &&  (bpp->coreParam.fFakeEnable)
+  ){
     return bpp->coreParam.ppFake;
   }
   return bpp->coreParam.ppSrc;
@@ -1803,6 +1808,10 @@ void BPP_Clear_ForDead( BTL_POKEPARAM* bpp )
   clearWazaSickWork( bpp, TRUE );
 //  ConfrontRec_Clear( bpp );
   Effrank_Init( &bpp->varyParam );
+
+  if( bpp->coreParam.ppFake ){
+    bpp->coreParam.fFakeEnable = TRUE;
+  }
 }
 //=============================================================================================
 /**
@@ -1823,6 +1832,9 @@ void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
   clearUsedWazaFlag( bpp );
   clearCounter( bpp );
 //  ConfrontRec_Clear( bpp );
+  if( bpp->coreParam.ppFake ){
+    bpp->coreParam.fFakeEnable = TRUE;
+  }
 }
 //=============================================================================================
 /**
@@ -2339,6 +2351,29 @@ void BPP_ReflectByPP( BTL_POKEPARAM* bpp )
 {
   setupBySrcData( bpp, bpp->coreParam.ppSrc );
 }
+//=============================================================================================
+/**
+ * フェイクのPPが有効な状態かどうか判定
+ *
+ * @param   bpp
+ */
+//=============================================================================================
+BOOL BPP_IsFakeEnable( const BTL_POKEPARAM* bpp )
+{
+  return bpp->coreParam.fFakeEnable;
+}
+//=============================================================================================
+/**
+ * フェイクのPPを無効にする
+ *
+ * @param   bpp
+ */
+//=============================================================================================
+void BPP_FakeDisable( BTL_POKEPARAM* bpp )
+{
+  bpp->coreParam.fFakeEnable = FALSE;
+}
+
 
 //=============================================================================================
 /**

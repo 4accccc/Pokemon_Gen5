@@ -654,6 +654,7 @@ static u8 scproc_HandEx_intrWaza( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
 static u8 scproc_HandEx_sendLast( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_swapPoke( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_hensin( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_fakeBreak( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 
 
 BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
@@ -9734,6 +9735,7 @@ static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, Bt
     { BTL_HANDEX_SEND_LAST,        sizeof(BTL_HANDEX_PARAM_SEND_LAST)       },
     { BTL_HANDEX_SWAP_POKE,        sizeof(BTL_HANDEX_PARAM_SWAP_POKE)       },
     { BTL_HANDEX_HENSIN,           sizeof(BTL_HANDEX_PARAM_HENSIN)          },
+    { BTL_HANDEX_FAKE_BREAK,       sizeof(BTL_HANDEX_PARAM_FAKE_BREAK)      },
   };
   u32 size, i;
 
@@ -9910,6 +9912,7 @@ static BOOL scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
     case BTL_HANDEX_SEND_LAST:        fPrevSucceed = scproc_HandEx_sendLast( wk, handEx_header ); break;
     case BTL_HANDEX_SWAP_POKE:        fPrevSucceed = scproc_HandEx_swapPoke( wk, handEx_header ); break;
     case BTL_HANDEX_HENSIN:           fPrevSucceed = scproc_HandEx_hensin( wk, handEx_header ); break;
+    case BTL_HANDEX_FAKE_BREAK:       fPrevSucceed = scproc_HandEx_fakeBreak( wk, handEx_header ); break;
     default:
       GF_ASSERT_MSG(0, "illegal handEx type = %d, userPokeID=%d", handEx_header->equip, handEx_header->userPokeID);
     }
@@ -10999,12 +11002,29 @@ static u8 scproc_HandEx_hensin( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
     if( param_header->tokwin_flag ){
       scPut_TokWin_Out( wk, user );
     }
-
-
   }
-
   return 0;
 }
+/**
+ * ƒCƒŠƒ…[ƒWƒ‡ƒ“‰ğœ
+ * @return ¬Œ÷ 1 / ¸”s 0
+ */
+static u8 scproc_HandEx_fakeBreak( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  BTL_HANDEX_PARAM_HENSIN* param = (BTL_HANDEX_PARAM_HENSIN*)param_header;
+
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon,  param->pokeID );
+
+  if( BPP_IsFakeEnable(bpp) )
+  {
+    BPP_FakeDisable( bpp );
+    SCQUE_PUT_ACT_FakeDisable( wk->que, param->pokeID );
+    handexSub_putString( wk, &param->exStr );
+    return 1;
+  }
+  return 0;
+}
+
 
 
 /*
