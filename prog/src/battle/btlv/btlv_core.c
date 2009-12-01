@@ -299,7 +299,7 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
 {
   switch( *seq ){
   case 0:
-    BTL_Printf("SelectAction pokeID=%d\n", core->procPokeID);
+    BTL_Printf( "SelectAction pokeID=%d\n", core->procPokeID );
     BTL_STR_MakeStringStd( core->strBuf, BTL_STRID_STD_SelectAction, 1, core->procPokeID );
     BTLV_SCU_StartMsg( core->scrnU, core->strBuf, BTLV_MSGWAIT_NONE );
     (*seq)++;
@@ -307,7 +307,8 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
   case 1:
     if( BTLV_SCU_WaitMsg(core->scrnU) )
     {
-      BTLV_SCD_StartActionSelect( core->scrnD, core->procPokeParam, core->fActionPrevButton, core->actionParam );
+      BTLV_SCD_StartActionSelect( core->scrnD, core->procPokeParam,
+          core->fActionPrevButton, core->actionParam );
       (*seq)++;
     }
     break;
@@ -1063,7 +1064,7 @@ void BTLV_StartMsg( BTLV_CORE* wk, const BTLV_STRPARAM* param )
 {
   switch( param->strType ){
   case BTL_STRTYPE_STD:
-    BTL_STR_MakeStringStdWithArgArray( wk->strBuf, param->strID, param->args );
+    BTL_STR_MakeStringStd( wk->strBuf, param->strID, param->argCnt, param->args );
     break;
   case BTL_STRTYPE_SET:
     BTL_STR_MakeStringSet( wk->strBuf, param->strID, param->args );
@@ -1090,7 +1091,6 @@ void BTLV_StartMsgStd( BTLV_CORE* wk, u16 strID, const int* args )
 {
   BTL_STR_MakeStringStdWithArgArray( wk->strBuf, strID, args );
   BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
-//  printf( wk->strBuf );
 }
 
 //=============================================================================================
@@ -1106,7 +1106,6 @@ void BTLV_StartMsgSet( BTLV_CORE* wk, u16 strID, const int* args )
 {
   BTL_STR_MakeStringSet( wk->strBuf, strID, args );
   BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
-//  printf( wk->strBuf );
 }
 
 void BTLV_StartMsgWaza( BTLV_CORE* wk, u8 pokeID, u16 waza )

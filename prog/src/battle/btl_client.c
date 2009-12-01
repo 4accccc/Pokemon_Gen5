@@ -1069,7 +1069,7 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
       if( waza != prevWazaID ){
         if( strParam != NULL )
         {
-          BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_STD, BTL_STRID_STD_KodawariLock );
+          BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_STD, BTL_STRID_STD_KodawariLock, TRUE );
           BTLV_STRPARAM_AddArg( strParam, BPP_GetItem(bpp) );
           BTLV_STRPARAM_AddArg( strParam, prevWazaID );
         }
@@ -1084,7 +1084,7 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
     if( waza != BPP_GetPrevWazaID(bpp) ){
       if( strParam != NULL )
       {
-        BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_STD, BTL_STRID_STD_WazaLock );
+        BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_STD, BTL_STRID_STD_WazaLock, TRUE );
         BTLV_STRPARAM_AddArg( strParam, BPP_GetID(bpp) );
         BTLV_STRPARAM_AddArg( strParam, waza );
       }
@@ -1099,7 +1099,7 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
     {
       if( strParam != NULL )
       {
-        BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_SET, BTL_STRID_SET_ChouhatuWarn );
+        BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_SET, BTL_STRID_SET_ChouhatuWarn, TRUE );
         BTLV_STRPARAM_AddArg( strParam, BPP_GetID(bpp) );
         BTLV_STRPARAM_AddArg( strParam, waza );
       }
@@ -1114,7 +1114,7 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
     {
       if( strParam != NULL )
       {
-        BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_SET, BTL_STRID_SET_IchamonWarn );
+        BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_SET, BTL_STRID_SET_IchamonWarn, TRUE );
         BTLV_STRPARAM_AddArg( strParam, BPP_GetID(bpp) );
         BTLV_STRPARAM_AddArg( strParam, waza );
       }
@@ -1130,7 +1130,7 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
     {
       if( strParam != NULL )
       {
-        BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_SET, BTL_STRID_SET_KanasibariWarn );
+        BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_SET, BTL_STRID_SET_KanasibariWarn, TRUE );
         BTLV_STRPARAM_AddArg( strParam, BPP_GetID(bpp) );
         BTLV_STRPARAM_AddArg( strParam, waza );
       }
@@ -1153,7 +1153,7 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
         BTL_Printf("そのワザ(%d)はふういんポケが持ってますので使えません\n", waza);
         if( strParam != NULL )
         {
-          BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_SET, BTL_STRID_SET_FuuinWarn );
+          BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_SET, BTL_STRID_SET_FuuinWarn, TRUE );
           BTLV_STRPARAM_AddArg( strParam, myPokeID );
           BTLV_STRPARAM_AddArg( strParam, waza );
         }
@@ -1713,7 +1713,7 @@ static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
 
       if( !BTL_MAIN_IsOpponentClientID(wk->mainModule, wk->myID, clientID) )
       {
-        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_PutSingle );
+        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_PutSingle, FALSE );
         BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
       }
       else
@@ -1721,13 +1721,13 @@ static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
         // 相手が入れ替え
         if( BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_TRAINER )
         {
-          BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_PutSingle_NPC );
+          BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_PutSingle_NPC, FALSE );
           BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
           BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
         }
         else
         {
-          BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_PutSingle_Player );
+          BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_PutSingle_Player, FALSE );
           BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
           BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
         }
@@ -2414,7 +2414,7 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
       {
         BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
 
-        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_LevelUp );
+        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_LevelUp, TRUE );
         BTLV_STRPARAM_AddArg( &wk->strParam, args[0] );
         BTLV_STRPARAM_AddArg( &wk->strParam, args[1] );
         BTLV_StartMsg( wk->viewCore, &wk->strParam );
@@ -2457,7 +2457,7 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
       if( args[2] )
       {
         const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, args[0] );
-        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_BallThrowS );
+        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_BallThrowS, FALSE );
         BTLV_STRPARAM_AddArg( &wk->strParam, BPP_GetID( bpp ) );
       }
       // 捕獲失敗メッセージ
@@ -2473,7 +2473,7 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
           strID = strTbl[ 0 ];
         }
 
-        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, strID );
+        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, strID, TRUE );
 
       }
       BTLV_StartMsg( wk->viewCore, &wk->strParam );

@@ -104,6 +104,7 @@ static struct {
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static inline void register_PokeNickname( u8 pokeID, WordBufID bufID );
+static inline void register_PokeName( u8 pokeID, u8 bufID );
 static void register_TrainerType( WORDSET* wset, u8 bufIdx, u8 clientID );
 static void register_TrainerName( WORDSET* wset, u8 bufIdx, u8 clientID );
 static inline SetStrFormat get_strFormat( u8 pokeID );
@@ -111,38 +112,14 @@ static inline u16 get_setStrID( u8 pokeID, u16 defaultStrID );
 static inline u16 get_setStrID_Poke2( u8 pokeID1, u8 pokeID2, u16 defaultStrID );
 static inline u16 get_setPtnStrID( u8 pokeID, u16 originStrID, u8 ptnNum );
 static void ms_std_simple( STRBUF* dst, BtlStrID_STD strID, const int* args );
-static void ms_encount( STRBUF* dst, BtlStrID_STD strID, const int* args );
-static void ms_encount_double( STRBUF* dst, BtlStrID_STD strID, const int* args );
-static void ms_encount_tr1( STRBUF* dst, BtlStrID_STD strID, const int* args );
-static void ms_put_tr_item( STRBUF* dst, BtlStrID_STD strID, const int* args );
-static void ms_put_single( STRBUF* dst, BtlStrID_STD strID, const int* args );
-static void ms_put_double( STRBUF* dst, BtlStrID_STD strID, const int* args );
-static void ms_put_single_npc( STRBUF* dst, BtlStrID_STD strID, const int* args );
-static void ms_select_action_ready( STRBUF* dst, BtlStrID_STD strID, const int* args );
-static void ms_out_member1( STRBUF* dst, BtlStrID_STD strID, const int* args );
-static void ms_kodawari_lock( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_waza_lock( STRBUF* dst, BtlStrID_STD strID, const int* args );
-static void ms_waza_only( STRBUF* dst, BtlStrID_STD strID, const int* args );
-static void ms_side_eff( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset );
 static void ms_set_std( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankdown( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rank_limit( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_useitem( STRBUF* dst, u16 strID, const int* args );
-static void ms_set_poke( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_poke2poke( STRBUF* dst, u16 strID, const int* args );
-static void ms_set_trace( STRBUF* dst, u16 strID, const int* args );
-static void ms_set_yotimu( STRBUF* dst, u16 strID, const int* args );
-static void ms_set_omitoosi( STRBUF* dst, u16 strID, const int* args );
-static void ms_set_change_poke_type( STRBUF* dst, u16 strID, const int* args );
-static void ms_set_item_common( STRBUF* dst, u16 strID, const int* args );
-static void ms_set_kinomi_rankup( STRBUF* dst, u16 strID, const int* args );
-static void ms_set_waza_sp( STRBUF* dst, u16 strID, const int* args );
-static void ms_set_waza_num( STRBUF* dst, u16 strID, const int* args );
-static void ms_set_poke_num( STRBUF* dst, u16 strID, const int* args );
-static void ms_set_poke_trainer( STRBUF* dst, u16 strID, const int* args );
-static void ms_set_item_recover_pp( STRBUF* dst, u16 strID, const int* args );
 
 
 
@@ -212,7 +189,7 @@ static inline void register_PokeNickname( u8 pokeID, WordBufID bufID )
   const POKEMON_PARAM* pp;
 
   bpp = BTL_POKECON_GetPokeParamConst( SysWork.pokeCon, pokeID );
-  pp = BPP_GetSrcData( bpp );
+  pp = BPP_GetViewSrcData( bpp );
 
   WORDSET_RegisterPokeNickName( SysWork.wset, bufID, pp );
 }
@@ -240,68 +217,12 @@ static void register_TrainerName( WORDSET* wset, u8 bufIdx, u8 clientID )
     WORDSET_RegisterTrainerName( wset, bufIdx, trainerID );
   }else{
     const MYSTATUS* status = BTL_MAIN_GetClientPlayerData( SysWork.mainModule, clientID );
-    BTL_Printf("Register Trainer Name...myst=%p\n", status);
     WORDSET_RegisterPlayerName( wset, bufIdx, status );
   }
-
 }
 
-//--------------------------------------------------------------------------
-/**
- * ポケモンIDから、「自分の・野生の・相手の」いずれのパターンか判定
- *
- * @param   pokeID
- *
- * @retval  SetStrFormat
- */
-//--------------------------------------------------------------------------
-static inline SetStrFormat get_strFormat( u8 pokeID )
-{
-  u8 targetClientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
-
-  if( BTL_MAIN_IsOpponentClientID(SysWork.mainModule, SysWork.clientID, targetClientID) )
-  {
-    if( BTL_MAIN_GetCompetitor(SysWork.mainModule) == BTL_COMPETITOR_WILD )
-    {
-      return SETTYPE_WILD;
-    }
-    else
-    {
-      return SETTYPE_ENEMY;
-    }
-  }
-  return SETTYPE_MINE;
-}
-static inline u16 get_setStrID( u8 pokeID, u16 defaultStrID )
-{
-  return defaultStrID + get_strFormat( pokeID );
-}
-static inline u16 get_setStrID_Poke2( u8 pokeID1, u8 pokeID2, u16 defaultStrID )
-{
-  SetStrFormat  fmt = get_strFormat( pokeID1 );
-  switch( fmt ){
-  case SETTYPE_MINE:
-    return defaultStrID + get_strFormat( pokeID2 );
-  case SETTYPE_WILD:
-    defaultStrID += SETTYPE_MAX;
-    break;
-  case SETTYPE_ENEMY:
-    defaultStrID += (SETTYPE_MAX + 2);
-    break;
-  }
-  if( get_strFormat(pokeID2) == fmt ){
-    defaultStrID++;
-  }
-  return defaultStrID;
-}
-static inline u16 get_setPtnStrID( u8 pokeID, u16 originStrID, u8 ptnNum )
-{
-  return originStrID + (ptnNum * SETTYPE_MAX) + get_strFormat( pokeID );
-}
 
 //--------------------------------------------------------------------------------------
-
-
 //--------------------------------------------------------------------------------------
 
 //=============================================================================================
@@ -367,7 +288,7 @@ void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const i
 
   BTL_Printf(" STD:strID=%d\n", strID);
 
-  // 対象陣営による補正：対象陣営は args[0] に入れておくこと
+  // 対象陣営による補正：対象陣営ID（BtlSide）は args[0] に入れておくこと
   for(i=0; i<NELEMS(sideConvStrID); ++i)
   {
     if( strID == sideConvStrID[i] )
@@ -391,86 +312,6 @@ static void ms_std_simple( STRBUF* dst, BtlStrID_STD strID, const int* args )
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
 
-// 野生エンカウントシングル
-static void ms_encount( STRBUF* dst, BtlStrID_STD strID, const int* args )
-{
-  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-// 野生エンカウントダブル
-static void ms_encount_double( STRBUF* dst, BtlStrID_STD strID, const int* args )
-{
-  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-  register_PokeNickname( args[1], BUFIDX_POKE_2ND );
-
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-// 野生エンカウントダブル
-static void ms_encount_tr1( STRBUF* dst, BtlStrID_STD strID, const int* args )
-{
-  WORDSET_RegisterTrTypeName( SysWork.wset, 0, args[0] );
-  WORDSET_RegisterTrainerName( SysWork.wset, 1, args[0] );
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-static void ms_put_tr_item( STRBUF* dst, BtlStrID_STD strID, const int* args )
-{
-  // @@@ 後々はNPC，通信対戦とも共通の構成で名前を引っ張れるようにする。
-  // @@@ 現状はアイテム名だけを参照
-  WORDSET_RegisterItemName( SysWork.wset, 1, args[1] );
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-// ゆけっ！シングル
-static void ms_put_single( STRBUF* dst, BtlStrID_STD strID, const int* args )
-{
-  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-// ゆけっ！ダブル
-static void ms_put_double( STRBUF* dst, BtlStrID_STD strID, const int* args )
-{
-  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-  register_PokeNickname( args[1], BUFIDX_POKE_2ND );
-
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-// NPCトレーナーがくりだしたシングル  arg0:TrainerID,  arg1:TrainerID,  arg2:pokeID
-static void ms_put_single_npc( STRBUF* dst, BtlStrID_STD strID, const int* args )
-{
-  WORDSET_RegisterTrTypeName( SysWork.wset, 0, args[0] );
-  WORDSET_RegisterTrainerName( SysWork.wset, 1, args[1] );
-  register_PokeNickname( args[2], 2 );
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-// ○○はどうする？
-static void ms_select_action_ready( STRBUF* dst, BtlStrID_STD strID, const int* args )
-{
-  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-// ○○　もどれ！  args[0]:pokeID
-static void ms_out_member1( STRBUF* dst, BtlStrID_STD strID, const int* args )
-{
-  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-// [arg0]のこうかで [arg1]しかだせない！
-// arg0: アイテムID, arg1:ワザID
-static void ms_kodawari_lock( STRBUF* dst, BtlStrID_STD strID, const int* args )
-{
-  WORDSET_RegisterItemName( SysWork.wset, 0, args[0] );
-  WORDSET_RegisterWazaName( SysWork.wset, 1, args[1] );
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
 // [arg0]は [arg1]しかだせない！
 // arg0: ポケID, arg1:ワザID
 static void ms_waza_lock( STRBUF* dst, BtlStrID_STD strID, const int* args )
@@ -480,28 +321,71 @@ static void ms_waza_lock( STRBUF* dst, BtlStrID_STD strID, const int* args )
   GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
-// [arg0]が出た！など
-// arg0: ワザID
-static void ms_waza_only( STRBUF* dst, BtlStrID_STD strID, const int* args )
-{
-  WORDSET_RegisterWazaName( SysWork.wset, 0, args[0] );
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-// arg[0]: SideID、味方側と相手側で文字列IDを変える
-static void ms_side_eff( STRBUF* dst, BtlStrID_STD strID, const int* args )
-{
-  if( BTL_MAIN_GetClientSide(SysWork.mainModule, SysWork.clientID) != args[0] ){
-    ++strID;
-  }
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, dst );
-}
-
-
 
 
 
 //----------------------------------------------------------------------
+//--------------------------------------------------------------------------
+/**
+ * ポケモンIDから、「自分の・野生の・相手の」いずれのパターンか判定
+ *
+ * @param   pokeID
+ *
+ * @retval  SetStrFormat
+ */
+//--------------------------------------------------------------------------
+static inline SetStrFormat get_strFormat( u8 pokeID )
+{
+  u8 targetClientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
+
+  if( BTL_MAIN_IsOpponentClientID(SysWork.mainModule, SysWork.clientID, targetClientID) )
+  {
+    if( BTL_MAIN_GetCompetitor(SysWork.mainModule) == BTL_COMPETITOR_WILD )
+    {
+      return SETTYPE_WILD;
+    }
+    else
+    {
+      return SETTYPE_ENEMY;
+    }
+  }
+  return SETTYPE_MINE;
+}
+/**
+ *  セット文字列ID変換（自分の・野生の・相手の３パターン）
+ */
+static inline u16 get_setStrID( u8 pokeID, u16 defaultStrID )
+{
+  return defaultStrID + get_strFormat( pokeID );
+}
+/**
+ *  セット文字列ID変換（自分→自分、自分→野生、野生→自分など、ポケ名２つを含む７パターン）
+ */
+static inline u16 get_setStrID_Poke2( u8 pokeID1, u8 pokeID2, u16 defaultStrID )
+{
+  SetStrFormat  fmt = get_strFormat( pokeID1 );
+  switch( fmt ){
+  case SETTYPE_MINE:
+    return defaultStrID + get_strFormat( pokeID2 );
+  case SETTYPE_WILD:
+    defaultStrID += SETTYPE_MAX;
+    break;
+  case SETTYPE_ENEMY:
+    defaultStrID += (SETTYPE_MAX + 2);
+    break;
+  }
+  if( get_strFormat(pokeID2) == fmt ){
+    defaultStrID++;
+  }
+  return defaultStrID;
+}
+/**
+ *  セット文字列ID変換（パターン数指定）
+ */
+static inline u16 get_setPtnStrID( u8 pokeID, u16 originStrID, u8 ptnNum )
+{
+  return originStrID + (ptnNum * SETTYPE_MAX) + get_strFormat( pokeID );
+}
 
 //=============================================================================================
 /**
@@ -544,6 +428,16 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
 
   ms_set_std( buf, strID, args );
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * 文字列中のタブIDから必要な情報を判別してWORDSETに登録する
+ *
+ * @param   buf
+ * @param   args
+ * @param   wset
+ */
+//----------------------------------------------------------------------------------
 static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
 {
   enum {
@@ -729,22 +623,6 @@ static void ms_set_useitem( STRBUF* dst, u16 strID, const int* args )
 
 //--------------------------------------------------------------
 /**
- *  ○○は××にねらいをさだめた！　等
- *  args... [0]:pokeID,  [1]:targetPokeID
- */
-//--------------------------------------------------------------
-static void ms_set_poke( STRBUF* dst, u16 strID, const int* args )
-{
-  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-  register_PokeNickname( args[1], BUFIDX_POKE_2ND );
-
-  strID = get_setStrID( args[0], strID );
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-
-}
-//--------------------------------------------------------------
-/**
  *  ○○は××にねらいをさだめた！　等（野生→野生など含む７パターン）
  *  args... [0]:pokeID,  [1]:targetPokeID
  */
@@ -758,173 +636,6 @@ static void ms_set_poke2poke( STRBUF* dst, u16 strID, const int* args )
   GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 
-}
-//--------------------------------------------------------------
-/**
- *  ○○の××をトレースした！
- *  args... [0]:pokeID,  [1]:targetPokeID, [2]:tokusei
- */
-//--------------------------------------------------------------
-static void ms_set_trace( STRBUF* dst, u16 strID, const int* args )
-{
-  register_PokeNickname( args[1], BUFIDX_POKE_1ST );
-  WORDSET_RegisterTokuseiName( SysWork.wset, 1, args[2] );
-  strID = get_setStrID( args[1], strID );
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-//--------------------------------------------------------------
-/**
- *  ○○は××をよみとった！
- *  args... [0]:pokeID,  [1]:wazaID
- */
-//--------------------------------------------------------------
-static void ms_set_yotimu( STRBUF* dst, u16 strID, const int* args )
-{
-  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-  WORDSET_RegisterWazaName( SysWork.wset, 1, args[1] );
-  strID = get_setStrID( args[0], strID );
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-//--------------------------------------------------------------
-/**
- *  ○○は××を　おみとおしだ！
- *  args... [0]:pokeID,  [1]:itemID
- */
-//--------------------------------------------------------------
-static void ms_set_omitoosi( STRBUF* dst, u16 strID, const int* args )
-{
-  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-  WORDSET_RegisterItemName( SysWork.wset, 1, args[1] );
-  strID = get_setStrID( args[0], strID );
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-//--------------------------------------------------------------
-/**
- *  ○○は××タイプにかわった！
- *  args... [0]:pokeID,  [1]:typeID
- */
-//--------------------------------------------------------------
-static void ms_set_change_poke_type( STRBUF* dst, u16 strID, const int* args )
-{
-  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-  WORDSET_RegisterPokeTypeName( SysWork.wset, 1, args[1] );
-  strID = get_setStrID( args[0], strID );
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-//--------------------------------------------------------------
-/**
- *  ○○は××で　たいりょくをかいふくした！  等々、アイテム効果。
- *  args... [0]:pokeID,  [1]:itemID
- */
-//--------------------------------------------------------------
-static void ms_set_item_common( STRBUF* dst, u16 strID, const int* args )
-{
-  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-  WORDSET_RegisterItemName( SysWork.wset, 1, args[1] );
-  strID = get_setStrID( args[0], strID );
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-//--------------------------------------------------------------
-/**
- *  ○○は××で△△が　（ぐーんと）あがった！ （木の実でランク効果）
- *  args... [0]:pokeID  [1]:statusType  [2]:volume  [3]:itemID
- */
-//--------------------------------------------------------------
-static void ms_set_kinomi_rankup( STRBUF* dst, u16 strID, const int* args )
-{
-  u8 statusType = args[1] - WAZA_RANKEFF_ORIGIN;
-  if( args[2] > 1 )
-  {
-    strID += (SETTYPE_MAX * WAZA_RANKEFF_NUMS);
-  }
-  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-  WORDSET_RegisterItemName( SysWork.wset, 1, args[3] );
-
-  strID = get_setPtnStrID( args[0], strID, statusType );
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-//--------------------------------------------------------------
-/**
- *  ○○は　かいふくふうじで  ××が使えない！　など
- *  args... [0]:pokeID  [1]:wazaID
- */
-//--------------------------------------------------------------
-static void ms_set_waza_sp( STRBUF* dst, u16 strID, const int* args )
-{
-  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-  WORDSET_RegisterWazaName( SysWork.wset, 1, args[1] );
-
-  strID = get_setStrID( args[0], strID );
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-//--------------------------------------------------------------
-/**
- *  ○○の　××××を　△けずった！　など
- *  args... [0]:pokeID  [1]:wazaID  [2]: number(1桁)
- */
-//--------------------------------------------------------------
-static void ms_set_waza_num( STRBUF* dst, u16 strID, const int* args )
-{
-  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-  WORDSET_RegisterWazaName( SysWork.wset, 1, args[1] );
-  WORDSET_RegisterNumber( SysWork.wset, 2, args[2], 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-
-  strID = get_setStrID( args[0], strID );
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-//--------------------------------------------------------------
-/**
- *  ○○の　カウントが△になった！　など
- *  args... [0]:pokeID  [1]:number(1桁)
- */
-//--------------------------------------------------------------
-static void ms_set_poke_num( STRBUF* dst, u16 strID, const int* args )
-{
-  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-  WORDSET_RegisterNumber( SysWork.wset, 1, args[1], 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-
-  strID = get_setStrID( args[0], strID );
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-//--------------------------------------------------------------
-/**
- *  ○○は××（トレーナー名）のもとにかえっていく！など
- *  args... [0]:pokeID  [1]:clientID
- */
-//--------------------------------------------------------------
-static void ms_set_poke_trainer( STRBUF* dst, u16 strID, const int* args )
-{
-  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-  // @@@ これではプレイヤー名がどちらにも出てしまう…
-  WORDSET_RegisterPlayerName( SysWork.wset, 1, BTL_MAIN_GetPlayerStatus(SysWork.mainModule) );
-
-  strID = get_setStrID( args[0], strID );
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-//--------------------------------------------------------------
-/**
- *  ○○は××で△△のPPが回復！など
- *  args... [0]:pokeID  [1]:itemID  [2]:wazaID
- */
-//--------------------------------------------------------------
-static void ms_set_item_recover_pp( STRBUF* dst, u16 strID, const int* args )
-{
-  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-  WORDSET_RegisterItemName( SysWork.wset, 1, args[1] );
-  WORDSET_RegisterWazaName( SysWork.wset, 2, args[2] );
-  strID = get_setStrID( args[0], strID );
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
-  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
 
 //=============================================================================================
