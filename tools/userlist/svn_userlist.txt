@@ -18,6 +18,7 @@ james_turner
 kagaya
 kageyama_shota
 kawachimaru
+kawada_koji
 kitakaze_tomohiro
 lee_hyunjung
 masuda
@@ -32,6 +33,7 @@ moritsugu_keiko
 murakami_naoto
 nagihashi
 nagihashi_toru
+nakamura_akira
 nakatsui
 nishino
 nozomu_saitou
@@ -64,5 +66,4 @@ yoshida
 nagata_daisuke
 nishihata_natsumi
 takahashi_chihiro
-kawada_koji
 hudson
