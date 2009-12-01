@@ -434,13 +434,13 @@ struct _FIELD_PLACE_NAME
  */
 //===================================================================================
 // BGの設定
+static void LoadBGResource( FIELD_PLACE_NAME* sys );
 static void SetupBG( FIELD_PLACE_NAME* sys );	
 static void AllocNullCharacterArea(); 
 // リソースの読み込み
-static void LoadBGScreenData( FIELD_PLACE_NAME* sys, u32 arc_id, u32 data_id );
-static void LoadBGCharacterData( FIELD_PLACE_NAME* sys, u32 arc_id, u32 data_id );
 static void LoadBGPaletteData( FIELD_PLACE_NAME* sys, u32 arc_id, u32 data_id ); 
 static void LoadClactResource( FIELD_PLACE_NAME* sys ); 
+// リソースのセットアップ
 // 各種オブジェクトの作成
 static void CreateClactUnit( FIELD_PLACE_NAME* sys ); // セルアクターユニット
 static void CreateCharUnit( FIELD_PLACE_NAME* sys );  // 文字ユニット
@@ -519,7 +519,8 @@ FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( HEAPID heap_id, FLDMSGBG* msgbg )
 	sys->heapID = heap_id;
 
 	// BGの使用準備
-	SetupBG( sys );
+	//SetupBG( sys );
+  LoadBGResource( sys );
 
 	// セルアクター用リソースの読み込み
 	LoadClactResource( sys );
@@ -720,6 +721,7 @@ void FIELD_PLACE_NAME_Hide( FIELD_PLACE_NAME* sys )
 //------------------------------------------------------------------------------------
 void FIELD_PLACE_NAME_RecoverBG(FIELD_PLACE_NAME* sys)
 {
+  SetupBG( sys );
   GFL_BG_FillCharacterRelease( BG_FRAME, 1, 0 );
   GFL_BG_FillCharacter( BG_FRAME, 0, 1, 0 );
 	
@@ -733,6 +735,52 @@ void FIELD_PLACE_NAME_RecoverBG(FIELD_PLACE_NAME* sys)
 //===================================================================================
 // ■非公開関数
 //===================================================================================
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief BGのリソース読み込みを行う
+ *
+ * @param sys 読み込みを行うシステム
+ */
+//-----------------------------------------------------------------------------------
+static void LoadBGResource( FIELD_PLACE_NAME* sys )
+{
+	GFL_BG_BGCNT_HEADER bgcnt = 
+	{
+		0, 0,					          // 初期表示位置
+		0x800,						      // スクリーンバッファサイズ
+		0,							        // スクリーンバッファオフセット
+		GFL_BG_SCRSIZ_256x256,	// スクリーンサイズ
+		GX_BG_COLORMODE_16,			// カラーモード
+		GX_BG_SCRBASE_0x1000,		// スクリーンベースブロック
+		GX_BG_CHARBASE_0x04000,	// キャラクタベースブロック
+		GFL_BG_CHRSIZ_256x256,	// キャラクタエリアサイズ
+		GX_BG_EXTPLTT_01,			  // BG拡張パレットスロット選択
+		1,							        // 表示プライオリティー
+		0,							        // エリアオーバーフラグ
+		0,							        // DUMMY
+		FALSE,						      // モザイク設定
+	}; 
+	GFL_BG_SetBGControl( BG_FRAME, &bgcnt, GFL_BG_MODE_TEXT );
+
+	// キャラVRAM・スクリーンVRAMをクリア
+	//GFL_BG_ClearFrame( BG_FRAME );
+
+	// NULLキャラクタデータを確保
+	AllocNullCharacterArea();
+
+	// ビットマップ・ウィンドウを作成する
+	sys->bmpWin = GFL_BMPWIN_Create( BG_FRAME,
+                                   BMPWIN_POS_X_CHAR, BMPWIN_POS_Y_CHAR, 
+                                   BMPWIN_WIDTH_CHAR, BMPWIN_HEIGHT_CHAR,
+                                   BG_PALETTE_NO, GFL_BMP_CHRAREA_GET_F ); 
+  // キャラクタデータ読み込み
+	sys->bmpOrg = GFL_BMP_LoadCharacter( ARCID_PLACE_NAME, 
+                                       NARC_place_name_place_name_back_NCGR, 
+                                       FALSE, sys->heapID ); 
+  // パレットデータを読み込む
+	LoadBGPaletteData( sys, ARCID_PLACE_NAME, NARC_place_name_place_name_back_NCLR );
+}
 
 //-----------------------------------------------------------------------------------
 /**
@@ -759,7 +807,7 @@ static void SetupBG( FIELD_PLACE_NAME* sys )
 		0,							        // DUMMY
 		FALSE,						      // モザイク設定
 	}; 
-	GFL_BG_SetBGControl( BG_FRAME, &bgcnt, GFL_BG_MODE_TEXT );
+	//GFL_BG_SetBGControl( BG_FRAME, &bgcnt, GFL_BG_MODE_TEXT );
 	GFL_BG_SetPriority( BG_FRAME, BG_FRAME_PRIORITY );
 	GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF ); 
 	G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, ALPHA_VALUE_1, ALPHA_VALUE_2 );
@@ -767,41 +815,11 @@ static void SetupBG( FIELD_PLACE_NAME* sys )
 	// キャラVRAM・スクリーンVRAMをクリア
 	GFL_BG_ClearFrame( BG_FRAME );
 
-	// NULLキャラクタデータを確保
-	AllocNullCharacterArea();
-
-	// ビットマップ・ウィンドウを作成する
-	sys->bmpWin = GFL_BMPWIN_Create( 
-			BG_FRAME,
-			BMPWIN_POS_X_CHAR, BMPWIN_POS_Y_CHAR, BMPWIN_WIDTH_CHAR, BMPWIN_HEIGHT_CHAR,
-			BG_PALETTE_NO, GFL_BMP_CHRAREA_GET_F );
-
-	// パレット・キャラクタ・スクリーンを転送
-	LoadBGCharacterData( sys, ARCID_PLACE_NAME, NARC_place_name_place_name_back_NCGR );
+  // パレットデータを読み込む
 	LoadBGPaletteData( sys, ARCID_PLACE_NAME, NARC_place_name_place_name_back_NCLR );
-	//LoadBGScreenData( sys, ARCID_PLACE_NAME, NARC_area_win_gra_place_name_back_NSCR );
 	
 	// ビットマップ・ウィンドウのデータをVRAMに転送
-	GFL_BMPWIN_MakeTransWindow( sys->bmpWin );
-
-	// DEBUG: スクリーン・バッファを書き出す
-	/*
-	{
-		int i,j;
-		u8* p_screen = (u8*)GFL_BG_GetScreenBufferAdrs( BG_FRAME );
-
-		OBATA_Printf( "=============================== screen\n" );
-
-		for( i=0; i<32; i++ )
-		{
-			for( j=0; j<32; j++ )
-			{
-				OBATA_Printf( "%d ", p_screen[ i*32 + j ] );
-			}
-			OBATA_Printf( "\n" );
-		}
-	}
-	*/
+	GFL_BMPWIN_MakeTransWindow( sys->bmpWin ); 
 }
 
 //------------------------------------------------------------------------------------
@@ -814,78 +832,6 @@ static void AllocNullCharacterArea()
 {
 	GFL_BG_AllocCharacterArea( BG_FRAME, CHAR_SIZE * CHAR_SIZE / 2, GFL_BG_CHRAREA_GET_F );
 	//GFL_BG_FillCharacter( BG_FRAME, 0, 1, 0 );
-}
-
-//------------------------------------------------------------------------------------
-/**
- * @brief スクリーン・データを読み込む
- *
- * @param sys   読み込みを行うシステム
- * @param arc_id  アーカイブデータのインデックス
- * @param data_id アーカイブ内データインデックス
- */
-//------------------------------------------------------------------------------------
-static void LoadBGScreenData( FIELD_PLACE_NAME* sys, u32 arc_id, u32 data_id )
-{
-	ARCHANDLE* handle;
-	u32 size;
-	void* src;
-	NNSG2dScreenData* p_screen;
-	handle = GFL_ARC_OpenDataHandle( arc_id, sys->heapID );					// アーカイブデータハンドルオープン
-	size    = GFL_ARC_GetDataSizeByHandle( handle, data_id );					// データサイズ取得
-	src   = GFL_HEAP_AllocMemoryLo( sys->heapID, size );					// データバッファ確保
-	GFL_ARC_LoadDataByHandle( handle, data_id, src );						// データ取得
-	NNS_G2dGetUnpackedScreenData( src, &p_screen );							// バイナリからデータを展開
-	GFL_BG_LoadScreenBuffer( BG_FRAME, p_screen->rawData, p_screen->szByte );	// BGSYS内部バッファに転送
-	GFL_BG_LoadScreenReq( BG_FRAME );											// VRAMに転送
-	GFL_HEAP_FreeMemory( src );												// データバッファ解放
-	GFL_ARC_CloseDataHandle( handle );											// アーカイブデータハンドルクローズ
-}
-
-//------------------------------------------------------------------------------------
-/**
- * @brief キャラクタデータをロードする
- *
- * @param sys   読み込みを行うシステム
- * @param arc_id  アーカイブデータのインデックス
- * @param data_id アーカイブ内データインデックス
- */
-//------------------------------------------------------------------------------------
-static void LoadBGCharacterData( FIELD_PLACE_NAME* sys, u32 arc_id, u32 data_id )
-{ 
-	int i;
-	u16 sx, sy, dx, dy;
-	GFL_BMP_DATA* dst_bmp = NULL;
-
-	// コピー元・コピー先ビットマップを取得
-	sys->bmpOrg = GFL_BMP_LoadCharacter( arc_id, data_id, FALSE, sys->heapID );
-	dst_bmp     = GFL_BMPWIN_GetBmp( sys->bmpWin );
-
-	// 1キャラずつコピーする
-	sx = 0;
-	sy = 0;
-	dx = 0;
-	dy = 0;
-	for( i=0; i<BMPWIN_WIDTH_CHAR * BMPWIN_HEIGHT_CHAR; i++ )
-	{
-		// コピー
-		GFL_BMP_Print( sys->bmpOrg, dst_bmp, dx, sy, dx, dy, CHAR_SIZE, CHAR_SIZE, 0 );
-
-		// コピー元座標の更新
-		sx += CHAR_SIZE;
-		if( BMPWIN_WIDTH_DOT <= sx )
-		{
-			sx  = 0;
-			sy += CHAR_SIZE;
-		}
-		// コピー先座標の更新
-		dx += CHAR_SIZE;
-		if( BMPWIN_WIDTH_DOT <= dx )
-		{
-			dx  = 0;
-			dy += CHAR_SIZE;
-		}
-	}
 }
 
 //------------------------------------------------------------------------------------

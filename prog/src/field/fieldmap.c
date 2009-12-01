@@ -107,7 +107,7 @@
 #include "sodateya.h"
 #include "system/net_err.h"
 
-#include "field_task.h"
+#include "field_task.h"  
 #include "field_task_manager.h"
 
 
@@ -556,12 +556,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 #endif
   fieldWork->goldMsgWin = NULL;
 
-#ifndef CROSSFADE_MODE
   // 地名表示システム作成
   fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( fieldWork->heapID, fieldWork->fldMsgBG );
-#else
-  fieldWork->placeNameSys = NULL;
-#endif
+
   // フラッシュチェック
   {
     FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( fieldWork->gamedata );
@@ -1811,8 +1808,6 @@ void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork )
 
   // 会話ウインドウリソースセットアップ
 	FLDMSGBG_SetupResource( fieldWork->fldMsgBG );
-  // 地名表示システム作成
-  fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( fieldWork->heapID, fieldWork->fldMsgBG );
 
   //フィールドデバッグ初期化
   fieldWork->debugWork = FIELD_DEBUG_Init( fieldWork, fieldWork->heapID );
