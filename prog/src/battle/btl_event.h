@@ -106,8 +106,8 @@ typedef enum {
   BTL_EVENT_ADDSICK_CHECKFAIL,      ///< 状態異常の失敗チェック
   BTL_EVENT_ADDSICK_FIX,            ///< 状態異常確定
   BTL_EVENT_ADDSICK_FAILED,         ///< 状態異常失敗
-  BTL_EVENT_MAKE_POKESICK,          ///< ポケモン系の状態異常にする
-  BTL_EVENT_MAKE_WAZASICK,          ///< ワザ系の状態異常にする
+  BTL_EVENT_POKESICK_FIXED,         ///< ポケモン系状態異常確定
+  BTL_EVENT_IEKI_FIXED,             ///< いえきによる特性無効化の確定
   BTL_EVENT_SICK_DAMAGE,            ///< 状態異常によるダメージ計算
   BTL_EVENT_WAZA_SHRINK_PER,        ///< ワザによるひるみ確率計算
   BTL_EVENT_SHRINK_CHECK,           ///< ひるみ計算
@@ -125,7 +125,8 @@ typedef enum {
   BTL_EVENT_WEATHER_TOK_REACTION,   ///< 天候に対するとくせいの反応
   BTL_EVENT_SIMPLE_DAMAGE_ENABLE,   ///< ワザ以外ダメージ有効判定
   BTL_EVENT_DAMAGEPROC_END,         ///< ダメージワザ処理直後
-  BTL_EVENT_CHANGE_TOKUSEI,         ///< とくせい書き換え
+  BTL_EVENT_CHANGE_TOKUSEI_BEFORE,  ///< とくせい書き換え直前（書き換え確定）
+  BTL_EVENT_CHANGE_TOKUSEI_AFTER,   ///< とくせい書き換え後
   BTL_EVENT_CHECK_PUSHOUT,          ///< ふきとばし系ワザチェック
   BTL_EVENT_CALC_DRAIN,             ///< ドレイン系ワザ回復量計算
   BTL_EVENT_CALC_SPECIAL_DRAIN,     ///< ドレイン系ワザ回復量計算
@@ -182,6 +183,7 @@ typedef enum {
   BTL_EVAR_POKEID_TARGET6,
   BTL_EVAR_POKEPOS,
   BTL_EVAR_POKEPOS_ORG,
+  BTL_EVAR_TOKUSEI,
   BTL_EVAR_SP_PRIORITY_A,
   BTL_EVAR_SP_PRIORITY_B,
   BTL_EVAR_WAZAID,
@@ -400,6 +402,7 @@ typedef enum {
 extern void BTL_EVENT_InitSystem( void );
 extern void BTL_EVENT_StartTurn( void );
 extern void BTL_EVENT_CallHandlers( BTL_SVFLOW_WORK* server, BtlEventType type );
+extern void BTL_EVENT_ForceCallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID );
 
 
 #endif

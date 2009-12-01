@@ -355,17 +355,24 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_ItazuraGokoro( u16 pri, u16 tokID, u8 pok
 static void handler_MagicMirror_CheckRob( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_MagicMirror_Reflect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_MagicMirror( u16 pri, u16 tokID, u8 pokeID );
-static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Syuukaku( u16 pri, u16 tokID, u8 pokeID );
 static void handler_Syuukaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Syuukaku( u16 pri, u16 tokID, u8 pokeID );
 static void handler_Amanojaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Amanojaku( u16 pri, u16 tokID, u8 pokeID );
+static void handler_Kinchoukan_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Kinchoukan_CheckItemEquip( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Kinchoukan_MemberOutFixed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Kinchoukan_Ieki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Kinchoukan_ChangeTok( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void common_KinchoukanOff( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Kinchoukan( u16 pri, u16 tokID, u8 pokeID );
 static void handler_Hensin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Hensin( u16 pri, u16 tokID, u8 pokeID );
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Illusion( u16 pri, u16 tokID, u8 pokeID );
-static void handler_Illusion( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Illusion_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Illusion_Ieki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Illusion_ChangeTok( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void common_IllusionBreak( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID );
 
 
 
@@ -384,119 +391,119 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
     PokeTokusei           tokusei;
     pTokuseiEventAddFunc  func;
   }funcTbl[] = {
-    { POKETOKUSEI_IKAKU,          HAND_TOK_ADD_Ikaku },
-    { POKETOKUSEI_KURIABODY,      HAND_TOK_ADD_ClearBody },
-    { POKETOKUSEI_SIROIKEMURI,    HAND_TOK_ADD_ClearBody }, // しろいけむり=クリアボディと等価
-    { POKETOKUSEI_SEISINRYOKU,    HAND_TOK_ADD_Seisinryoku },
-    { POKETOKUSEI_FUKUTUNOKOKORO, HAND_TOK_ADD_Fukutsuno },
-    { POKETOKUSEI_ATUISIBOU,      HAND_TOK_ADD_AtuiSibou },
-    { POKETOKUSEI_KAIRIKIBASAMI,  HAND_TOK_ADD_KairikiBasami },
-    { POKETOKUSEI_TIKARAMOTI,     HAND_TOK_ADD_Tikaramoti },
-    { POKETOKUSEI_YOGAPAWAA,      HAND_TOK_ADD_Tikaramoti },  // ヨガパワー = ちからもちと等価
-    { POKETOKUSEI_IROMEGANE,      HAND_TOK_ADD_Iromegane },
-    { POKETOKUSEI_KASOKU,         HAND_TOK_ADD_Kasoku },
-    { POKETOKUSEI_MOUKA,          HAND_TOK_ADD_Mouka },
-    { POKETOKUSEI_GEKIRYUU,       HAND_TOK_ADD_Gekiryu },
-    { POKETOKUSEI_SINRYOKU,       HAND_TOK_ADD_Sinryoku },
-    { POKETOKUSEI_MUSINOSIRASE,   HAND_TOK_ADD_MusinoSirase },
-    { POKETOKUSEI_KONJOU,         HAND_TOK_ADD_Konjou },
-    { POKETOKUSEI_SUKIRURINKU,    HAND_TOK_ADD_SkillLink },
-    { POKETOKUSEI_SURUDOIME,      HAND_TOK_ADD_Surudoime },
-    { POKETOKUSEI_TANJUN,         HAND_TOK_ADD_Tanjun },
-    { POKETOKUSEI_HAADOROKKU,     HAND_TOK_ADD_HardRock },
-    { POKETOKUSEI_FIRUTAA,        HAND_TOK_ADD_HardRock },  // フィルター = ハードロックと等価
-    { POKETOKUSEI_FUSIGINAUROKO,  HAND_TOK_ADD_FusiginaUroko },
-    { POKETOKUSEI_TOUSOUSIN,      HAND_TOK_ADD_Tousousin },
-    { POKETOKUSEI_RIIFUGAADO,     HAND_TOK_ADD_ReafGuard },
-    { POKETOKUSEI_AMEFURASI,      HAND_TOK_ADD_Amefurasi },
-    { POKETOKUSEI_HIDERI,         HAND_TOK_ADD_Hideri },
-    { POKETOKUSEI_SUNAOKOSI,      HAND_TOK_ADD_Sunaokosi },
-    { POKETOKUSEI_YUKIFURASI,     HAND_TOK_ADD_Yukifurasi },
-    { POKETOKUSEI_EAROKKU,        HAND_TOK_ADD_AirLock },
-    { POKETOKUSEI_NOOTENKI,       HAND_TOK_ADD_AirLock }, // ノーてんき = エアロックと等価
-    { POKETOKUSEI_TEKUNISYAN,     HAND_TOK_ADD_Technician },
-    { POKETOKUSEI_DONKAN,         HAND_TOK_ADD_Donkan },
-    { POKETOKUSEI_URUOIBODY,      HAND_TOK_ADD_UruoiBody },
-    { POKETOKUSEI_POIZUNHIIRU,    HAND_TOK_ADD_PoisonHeal },
-    { POKETOKUSEI_AISUBODY,       HAND_TOK_ADD_IcoBody },
-    { POKETOKUSEI_AMEUKEZARA,     HAND_TOK_ADD_AmeukeZara },
-    { POKETOKUSEI_RINPUN,         HAND_TOK_ADD_Rinpun },
-    { POKETOKUSEI_TEKIOURYOKU,    HAND_TOK_ADD_Tekiouryoku },
-    { POKETOKUSEI_TENNOMEGUMI,    HAND_TOK_ADD_TennoMegumi },
-    { POKETOKUSEI_SANPAWAA,       HAND_TOK_ADD_SunPower },
-    { POKETOKUSEI_SUISUI,         HAND_TOK_ADD_Suisui },
-    { POKETOKUSEI_YOURYOKUSO,     HAND_TOK_ADD_Youryokuso },
-    { POKETOKUSEI_DAPPI,          HAND_TOK_ADD_Dappi },
-    { POKETOKUSEI_TIDORIASI,      HAND_TOK_ADD_Tidoriasi },
-    { POKETOKUSEI_HAYAASI,        HAND_TOK_ADD_Hayaasi },
-    { POKETOKUSEI_HARIKIRI,       HAND_TOK_ADD_Harikiri },
-    { POKETOKUSEI_KABUTOAAMAA,    HAND_TOK_ADD_KabutoArmor },
-    { POKETOKUSEI_SHERUAAMAA,     HAND_TOK_ADD_KabutoArmor }, // シェルアーマー=カブトアーマーと等価
-    { POKETOKUSEI_KYOUUN,         HAND_TOK_ADD_Kyouun },
-    { POKETOKUSEI_IKARINOTUBO,    HAND_TOK_ADD_IkarinoTubo },
-    { POKETOKUSEI_SUNAIPAA,       HAND_TOK_ADD_Sniper },
-    { POKETOKUSEI_TETUNOKOBUSI,   HAND_TOK_ADD_TetunoKobusi },
-    { POKETOKUSEI_FUKUGAN,        HAND_TOK_ADD_Fukugan },
-    { POKETOKUSEI_ISIATAMA,       HAND_TOK_ADD_Isiatama },
-    { POKETOKUSEI_SUTEMI ,        HAND_TOK_ADD_Sutemi },
-    { POKETOKUSEI_SEIDENKI ,      HAND_TOK_ADD_Seidenki },
-    { POKETOKUSEI_DOKUNOTOGE,     HAND_TOK_ADD_DokunoToge },
-    { POKETOKUSEI_HONOONOKARADA,  HAND_TOK_ADD_HonoNoKarada },
-    { POKETOKUSEI_HOUSI,          HAND_TOK_ADD_Housi },
-    { POKETOKUSEI_PURASU,         HAND_TOK_ADD_Plus },
-    { POKETOKUSEI_MAINASU,        HAND_TOK_ADD_Minus },
-    { POKETOKUSEI_MEROMEROBODY,   HAND_TOK_ADD_MeromeroBody },
-    { POKETOKUSEI_SUNAGAKURE ,    HAND_TOK_ADD_Sunagakure },
-    { POKETOKUSEI_YUKIGAKURE ,    HAND_TOK_ADD_Yukigakure },
-    { POKETOKUSEI_TOREESU,        HAND_TOK_ADD_Trace },
-    { POKETOKUSEI_NOOMARUSUKIN,   HAND_TOK_ADD_NormalSkin },
-    { POKETOKUSEI_SAMEHADA,       HAND_TOK_ADD_Samehada },
-    { POKETOKUSEI_SIZENKAIFUKU,   HAND_TOK_ADD_SizenKaifuku },
-    { POKETOKUSEI_SINKURO,        HAND_TOK_ADD_Syncro },
-    { POKETOKUSEI_DAUNROODO,      HAND_TOK_ADD_DownLoad },
-    { POKETOKUSEI_GANJOU,         HAND_TOK_ADD_Ganjou },
-    { POKETOKUSEI_TAINETU,        HAND_TOK_ADD_Tainetu },
-    { POKETOKUSEI_TENNEN,         HAND_TOK_ADD_Tennen },
-    { POKETOKUSEI_KANSOUHADA,     HAND_TOK_ADD_Kansouhada },
-    { POKETOKUSEI_TIKUDEN,        HAND_TOK_ADD_Tikuden },
-    { POKETOKUSEI_TYOSUI,         HAND_TOK_ADD_Tyosui },
-    { POKETOKUSEI_DENKIENJIN,     HAND_TOK_ADD_DenkiEngine },
-    { POKETOKUSEI_JUUNAN,         HAND_TOK_ADD_Juunan },
-    { POKETOKUSEI_FUMIN,          HAND_TOK_ADD_Fumin },
-    { POKETOKUSEI_YARUKI,         HAND_TOK_ADD_Fumin },   // やるき=ふみんと等価
-    { POKETOKUSEI_MAIPEESU,       HAND_TOK_ADD_MyPace },
-    { POKETOKUSEI_MAGUMANOYOROI,  HAND_TOK_ADD_MagumaNoYoroi },
-    { POKETOKUSEI_MIZUNOBEERU,    HAND_TOK_ADD_MizuNoBale },
-    { POKETOKUSEI_MENEKI,         HAND_TOK_ADD_Meneki },
-    { POKETOKUSEI_NOOGAADO,       HAND_TOK_ADD_NoGuard },
-    { POKETOKUSEI_KIMOTTAMA,      HAND_TOK_ADD_Kimottama },
-    { POKETOKUSEI_BOUON,          HAND_TOK_ADD_Bouon },
-    { POKETOKUSEI_FUYUU,          HAND_TOK_ADD_Fuyuu },
-    { POKETOKUSEI_FURAWAAGIFUTO,  HAND_TOK_ADD_FlowerGift },
-    { POKETOKUSEI_MORAIBI,        HAND_TOK_ADD_Moraibi },
-    { POKETOKUSEI_YOTIMU,         HAND_TOK_ADD_Yotimu },
-    { POKETOKUSEI_KIKENYOTI,      HAND_TOK_ADD_KikenYoti },
-    { POKETOKUSEI_OMITOOSI,       HAND_TOK_ADD_Omitoosi },
-    { POKETOKUSEI_YOBIMIZU,       HAND_TOK_ADD_Yuubaku },
-    { POKETOKUSEI_NIGEASI,        HAND_TOK_ADD_Nigeasi },
-    { POKETOKUSEI_HENSYOKU,       HAND_TOK_ADD_Hensyoku },
-    { POKETOKUSEI_KATAYABURI,     HAND_TOK_ADD_Katayaburi },
-    { POKETOKUSEI_NAMAKE,         HAND_TOK_ADD_Namake },
-    { POKETOKUSEI_HIRAISIN,       HAND_TOK_ADD_Hiraisin },
-    { POKETOKUSEI_YOBIMIZU,       HAND_TOK_ADD_Yobimizu },
-    { POKETOKUSEI_SUROOSUTAATO,   HAND_TOK_ADD_SlowStart },
-    { POKETOKUSEI_ARIJIGOKU,      HAND_TOK_ADD_Arijigoku },
-    { POKETOKUSEI_KAGEFUMI,       HAND_TOK_ADD_Kagefumi },
-    { POKETOKUSEI_JIRYOKU,        HAND_TOK_ADD_Jiryoku },
-    { POKETOKUSEI_SIMERIKE,       HAND_TOK_ADD_Simerike },
-    { POKETOKUSEI_MARUTITAIPU,    HAND_TOK_ADD_MultiType },
-    { POKETOKUSEI_FUSIGINAMAMORI, HAND_TOK_ADD_FusiginaMamori },
-    { POKETOKUSEI_ATODASI,        HAND_TOK_ADD_Atodasi },
-    { POKETOKUSEI_TENKIYA,        HAND_TOK_ADD_Tenkiya },
-    { POKETOKUSEI_KYUUBAN,        HAND_TOK_ADD_Kyuuban },
-    { POKETOKUSEI_HEDOROEKI,      HAND_TOK_ADD_HedoroEki },
-    { POKETOKUSEI_BUKIYOU,        HAND_TOK_ADD_Bukiyou },
-    { POKETOKUSEI_NENCHAKU,       HAND_TOK_ADD_Nenchaku },
+    { POKETOKUSEI_IKAKU,            HAND_TOK_ADD_Ikaku         },
+    { POKETOKUSEI_KURIABODY,        HAND_TOK_ADD_ClearBody     },
+    { POKETOKUSEI_SIROIKEMURI,      HAND_TOK_ADD_ClearBody     }, // しろいけむり=クリアボディと等価
+    { POKETOKUSEI_SEISINRYOKU,      HAND_TOK_ADD_Seisinryoku   },
+    { POKETOKUSEI_FUKUTUNOKOKORO,   HAND_TOK_ADD_Fukutsuno     },
+    { POKETOKUSEI_ATUISIBOU,        HAND_TOK_ADD_AtuiSibou     },
+    { POKETOKUSEI_KAIRIKIBASAMI,    HAND_TOK_ADD_KairikiBasami },
+    { POKETOKUSEI_TIKARAMOTI,       HAND_TOK_ADD_Tikaramoti    },
+    { POKETOKUSEI_YOGAPAWAA,        HAND_TOK_ADD_Tikaramoti    }, // ヨガパワー = ちからもちと等価
+    { POKETOKUSEI_IROMEGANE,        HAND_TOK_ADD_Iromegane     },
+    { POKETOKUSEI_KASOKU,           HAND_TOK_ADD_Kasoku        },
+    { POKETOKUSEI_MOUKA,            HAND_TOK_ADD_Mouka         },
+    { POKETOKUSEI_GEKIRYUU,         HAND_TOK_ADD_Gekiryu       },
+    { POKETOKUSEI_SINRYOKU,         HAND_TOK_ADD_Sinryoku      },
+    { POKETOKUSEI_MUSINOSIRASE,     HAND_TOK_ADD_MusinoSirase  },
+    { POKETOKUSEI_KONJOU,           HAND_TOK_ADD_Konjou        },
+    { POKETOKUSEI_SUKIRURINKU,      HAND_TOK_ADD_SkillLink     },
+    { POKETOKUSEI_SURUDOIME,        HAND_TOK_ADD_Surudoime     },
+    { POKETOKUSEI_TANJUN,           HAND_TOK_ADD_Tanjun        },
+    { POKETOKUSEI_HAADOROKKU,       HAND_TOK_ADD_HardRock      },
+    { POKETOKUSEI_FIRUTAA,          HAND_TOK_ADD_HardRock      }, // フィルター = ハードロックと等価
+    { POKETOKUSEI_FUSIGINAUROKO,    HAND_TOK_ADD_FusiginaUroko },
+    { POKETOKUSEI_TOUSOUSIN,        HAND_TOK_ADD_Tousousin     },
+    { POKETOKUSEI_RIIFUGAADO,       HAND_TOK_ADD_ReafGuard     },
+    { POKETOKUSEI_AMEFURASI,        HAND_TOK_ADD_Amefurasi     },
+    { POKETOKUSEI_HIDERI,           HAND_TOK_ADD_Hideri        },
+    { POKETOKUSEI_SUNAOKOSI,        HAND_TOK_ADD_Sunaokosi     },
+    { POKETOKUSEI_YUKIFURASI,       HAND_TOK_ADD_Yukifurasi    },
+    { POKETOKUSEI_EAROKKU,          HAND_TOK_ADD_AirLock       },
+    { POKETOKUSEI_NOOTENKI,         HAND_TOK_ADD_AirLock       }, // ノーてんき = エアロックと等価
+    { POKETOKUSEI_TEKUNISYAN,       HAND_TOK_ADD_Technician    },
+    { POKETOKUSEI_DONKAN,           HAND_TOK_ADD_Donkan        },
+    { POKETOKUSEI_URUOIBODY,        HAND_TOK_ADD_UruoiBody     },
+    { POKETOKUSEI_POIZUNHIIRU,      HAND_TOK_ADD_PoisonHeal    },
+    { POKETOKUSEI_AISUBODY,         HAND_TOK_ADD_IcoBody       },
+    { POKETOKUSEI_AMEUKEZARA,       HAND_TOK_ADD_AmeukeZara    },
+    { POKETOKUSEI_RINPUN,           HAND_TOK_ADD_Rinpun        },
+    { POKETOKUSEI_TEKIOURYOKU,      HAND_TOK_ADD_Tekiouryoku   },
+    { POKETOKUSEI_TENNOMEGUMI,      HAND_TOK_ADD_TennoMegumi   },
+    { POKETOKUSEI_SANPAWAA,         HAND_TOK_ADD_SunPower      },
+    { POKETOKUSEI_SUISUI,           HAND_TOK_ADD_Suisui        },
+    { POKETOKUSEI_YOURYOKUSO,       HAND_TOK_ADD_Youryokuso    },
+    { POKETOKUSEI_DAPPI,            HAND_TOK_ADD_Dappi         },
+    { POKETOKUSEI_TIDORIASI,        HAND_TOK_ADD_Tidoriasi     },
+    { POKETOKUSEI_HAYAASI,          HAND_TOK_ADD_Hayaasi       },
+    { POKETOKUSEI_HARIKIRI,         HAND_TOK_ADD_Harikiri      },
+    { POKETOKUSEI_KABUTOAAMAA,      HAND_TOK_ADD_KabutoArmor   },
+    { POKETOKUSEI_SHERUAAMAA,       HAND_TOK_ADD_KabutoArmor   }, // シェルアーマー=カブトアーマーと等価
+    { POKETOKUSEI_KYOUUN,           HAND_TOK_ADD_Kyouun        },
+    { POKETOKUSEI_IKARINOTUBO,      HAND_TOK_ADD_IkarinoTubo   },
+    { POKETOKUSEI_SUNAIPAA,         HAND_TOK_ADD_Sniper        },
+    { POKETOKUSEI_TETUNOKOBUSI,     HAND_TOK_ADD_TetunoKobusi  },
+    { POKETOKUSEI_FUKUGAN,          HAND_TOK_ADD_Fukugan       },
+    { POKETOKUSEI_ISIATAMA,         HAND_TOK_ADD_Isiatama      },
+    { POKETOKUSEI_SUTEMI ,          HAND_TOK_ADD_Sutemi        },
+    { POKETOKUSEI_SEIDENKI ,        HAND_TOK_ADD_Seidenki      },
+    { POKETOKUSEI_DOKUNOTOGE,       HAND_TOK_ADD_DokunoToge    },
+    { POKETOKUSEI_HONOONOKARADA,    HAND_TOK_ADD_HonoNoKarada  },
+    { POKETOKUSEI_HOUSI,            HAND_TOK_ADD_Housi         },
+    { POKETOKUSEI_PURASU,           HAND_TOK_ADD_Plus          },
+    { POKETOKUSEI_MAINASU,          HAND_TOK_ADD_Minus         },
+    { POKETOKUSEI_MEROMEROBODY,     HAND_TOK_ADD_MeromeroBody  },
+    { POKETOKUSEI_SUNAGAKURE ,      HAND_TOK_ADD_Sunagakure    },
+    { POKETOKUSEI_YUKIGAKURE ,      HAND_TOK_ADD_Yukigakure    },
+    { POKETOKUSEI_TOREESU,          HAND_TOK_ADD_Trace         },
+    { POKETOKUSEI_NOOMARUSUKIN,     HAND_TOK_ADD_NormalSkin    },
+    { POKETOKUSEI_SAMEHADA,         HAND_TOK_ADD_Samehada      },
+    { POKETOKUSEI_SIZENKAIFUKU,     HAND_TOK_ADD_SizenKaifuku  },
+    { POKETOKUSEI_SINKURO,          HAND_TOK_ADD_Syncro        },
+    { POKETOKUSEI_DAUNROODO,        HAND_TOK_ADD_DownLoad      },
+    { POKETOKUSEI_GANJOU,           HAND_TOK_ADD_Ganjou        },
+    { POKETOKUSEI_TAINETU,          HAND_TOK_ADD_Tainetu       },
+    { POKETOKUSEI_TENNEN,           HAND_TOK_ADD_Tennen        },
+    { POKETOKUSEI_KANSOUHADA,       HAND_TOK_ADD_Kansouhada    },
+    { POKETOKUSEI_TIKUDEN,          HAND_TOK_ADD_Tikuden       },
+    { POKETOKUSEI_TYOSUI,           HAND_TOK_ADD_Tyosui        },
+    { POKETOKUSEI_DENKIENJIN,       HAND_TOK_ADD_DenkiEngine   },
+    { POKETOKUSEI_JUUNAN,           HAND_TOK_ADD_Juunan        },
+    { POKETOKUSEI_FUMIN,            HAND_TOK_ADD_Fumin         },
+    { POKETOKUSEI_YARUKI,           HAND_TOK_ADD_Fumin         }, // やるき=ふみんと等価
+    { POKETOKUSEI_MAIPEESU,         HAND_TOK_ADD_MyPace        },
+    { POKETOKUSEI_MAGUMANOYOROI,    HAND_TOK_ADD_MagumaNoYoroi },
+    { POKETOKUSEI_MIZUNOBEERU,      HAND_TOK_ADD_MizuNoBale    },
+    { POKETOKUSEI_MENEKI,           HAND_TOK_ADD_Meneki        },
+    { POKETOKUSEI_NOOGAADO,         HAND_TOK_ADD_NoGuard       },
+    { POKETOKUSEI_KIMOTTAMA,        HAND_TOK_ADD_Kimottama     },
+    { POKETOKUSEI_BOUON,            HAND_TOK_ADD_Bouon         },
+    { POKETOKUSEI_FUYUU,            HAND_TOK_ADD_Fuyuu         },
+    { POKETOKUSEI_FURAWAAGIFUTO,    HAND_TOK_ADD_FlowerGift    },
+    { POKETOKUSEI_MORAIBI,          HAND_TOK_ADD_Moraibi       },
+    { POKETOKUSEI_YOTIMU,           HAND_TOK_ADD_Yotimu        },
+    { POKETOKUSEI_KIKENYOTI,        HAND_TOK_ADD_KikenYoti     },
+    { POKETOKUSEI_OMITOOSI,         HAND_TOK_ADD_Omitoosi      },
+    { POKETOKUSEI_YOBIMIZU,         HAND_TOK_ADD_Yuubaku       },
+    { POKETOKUSEI_NIGEASI,          HAND_TOK_ADD_Nigeasi       },
+    { POKETOKUSEI_HENSYOKU,         HAND_TOK_ADD_Hensyoku      },
+    { POKETOKUSEI_KATAYABURI,       HAND_TOK_ADD_Katayaburi    },
+    { POKETOKUSEI_NAMAKE,           HAND_TOK_ADD_Namake        },
+    { POKETOKUSEI_HIRAISIN,         HAND_TOK_ADD_Hiraisin      },
+    { POKETOKUSEI_YOBIMIZU,         HAND_TOK_ADD_Yobimizu      },
+    { POKETOKUSEI_SUROOSUTAATO,     HAND_TOK_ADD_SlowStart     },
+    { POKETOKUSEI_ARIJIGOKU,        HAND_TOK_ADD_Arijigoku     },
+    { POKETOKUSEI_KAGEFUMI,         HAND_TOK_ADD_Kagefumi      },
+    { POKETOKUSEI_JIRYOKU,          HAND_TOK_ADD_Jiryoku       },
+    { POKETOKUSEI_SIMERIKE,         HAND_TOK_ADD_Simerike      },
+    { POKETOKUSEI_MARUTITAIPU,      HAND_TOK_ADD_MultiType     },
+    { POKETOKUSEI_FUSIGINAMAMORI,   HAND_TOK_ADD_FusiginaMamori},
+    { POKETOKUSEI_ATODASI,          HAND_TOK_ADD_Atodasi       },
+    { POKETOKUSEI_TENKIYA,          HAND_TOK_ADD_Tenkiya       },
+    { POKETOKUSEI_KYUUBAN,          HAND_TOK_ADD_Kyuuban       },
+    { POKETOKUSEI_HEDOROEKI,        HAND_TOK_ADD_HedoroEki     },
+    { POKETOKUSEI_BUKIYOU,          HAND_TOK_ADD_Bukiyou       },
+    { POKETOKUSEI_NENCHAKU,         HAND_TOK_ADD_Nenchaku      },
 
     { POKETOKUSEI_WARUITEGUSE,      HAND_TOK_ADD_WaruiTeguse   },
     { POKETOKUSEI_TIKARAZUKU,       HAND_TOK_ADD_Tikarazuku    },
@@ -534,7 +541,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
     { POKETOKUSEI_SUNANOTIKARA,     HAND_TOK_ADD_SunanoTikara  }, // すなのちから
   };
 
-  if( !BPP_CheckSick(pp, WAZASICK_IEKI) ) // "いえき" 状態のポケモンはとくせい追加しない
+//  if( !BPP_CheckSick(pp, WAZASICK_IEKI) )
   {
     u16 tokusei = BPP_GetValue( pp, BPP_TOKUSEI );
     int i;
@@ -1816,9 +1823,9 @@ static void handler_Juunan_Swap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Juunan( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_ADDSICK_CHECKFAIL,  handler_Juunan_PokeSick },  // ポケモン系状態異常処理ハンドラ
-    { BTL_EVENT_CHANGE_TOKUSEI,     handler_Juunan_Swap },      // とくせい書き換えハンドラ
-    { BTL_EVENT_ADDSICK_FAILED,     handler_AddSickFailCommon },
+    { BTL_EVENT_ADDSICK_CHECKFAIL,    handler_Juunan_PokeSick },  // ポケモン系状態異常処理ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_Juunan_Swap },      // とくせい書き換えハンドラ
+    { BTL_EVENT_ADDSICK_FAILED,       handler_AddSickFailCommon },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -1844,9 +1851,9 @@ static void handler_Fumin_Swap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Fumin( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_ADDSICK_CHECKFAIL,  handler_Fumin_PokeSick }, // ポケモン系状態異常処理ハンドラ
-    { BTL_EVENT_CHANGE_TOKUSEI,     handler_Fumin_Swap },     // とくせい書き換えハンドラ
-    { BTL_EVENT_ADDSICK_FAILED,     handler_AddSickFailCommon },
+    { BTL_EVENT_ADDSICK_CHECKFAIL,    handler_Fumin_PokeSick }, // ポケモン系状態異常処理ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_Fumin_Swap },     // とくせい書き換えハンドラ
+    { BTL_EVENT_ADDSICK_FAILED,       handler_AddSickFailCommon },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -1869,9 +1876,9 @@ static void handler_MagumaNoYoroi_Swap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_MagumaNoYoroi( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_ADDSICK_CHECKFAIL,    handler_MagumaNoYoroi_PokeSick }, // ポケモン系状態異常処理ハンドラ
-    { BTL_EVENT_CHANGE_TOKUSEI,       handler_MagumaNoYoroi_Swap },     // とくせい書き換えハンドラ
-    { BTL_EVENT_ADDSICK_FAILED,       handler_AddSickFailCommon },
+    { BTL_EVENT_ADDSICK_CHECKFAIL,     handler_MagumaNoYoroi_PokeSick }, // ポケモン系状態異常処理ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,  handler_MagumaNoYoroi_Swap },     // とくせい書き換えハンドラ
+    { BTL_EVENT_ADDSICK_FAILED,        handler_AddSickFailCommon },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -1894,9 +1901,9 @@ static void handler_Meneki_Swap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Meneki( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_ADDSICK_CHECKFAIL,  handler_Meneki_PokeSick },  // ポケモン系状態異常処理ハンドラ
-    { BTL_EVENT_CHANGE_TOKUSEI,     handler_Meneki_Swap },      // とくせい書き換えハンドラ
-    { BTL_EVENT_ADDSICK_FAILED,     handler_AddSickFailCommon },
+    { BTL_EVENT_ADDSICK_CHECKFAIL,     handler_Meneki_PokeSick },  // ポケモン系状態異常処理ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,  handler_Meneki_Swap },      // とくせい書き換えハンドラ
+    { BTL_EVENT_ADDSICK_FAILED,        handler_AddSickFailCommon },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -1919,9 +1926,9 @@ static void handler_MyPace_Swap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_MyPace( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MAKE_POKESICK,    handler_MyPace_PokeSick },  // ポケモン系状態異常処理ハンドラ
-    { BTL_EVENT_CHANGE_TOKUSEI,   handler_MyPace_Swap },      // とくせい書き換えハンドラ
-    { BTL_EVENT_ADDSICK_FAILED,   handler_AddSickFailCommon },
+    { BTL_EVENT_ADDSICK_CHECKFAIL,     handler_MyPace_PokeSick },  // ポケモン系状態異常処理ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,  handler_MyPace_Swap },      // とくせい書き換えハンドラ
+    { BTL_EVENT_ADDSICK_FAILED,        handler_AddSickFailCommon },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -1944,9 +1951,9 @@ static void handler_MizuNoBale_Swap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_MizuNoBale( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_ADDSICK_CHECKFAIL,  handler_MizuNoBale_PokeSick },  // ポケモン系状態異常処理ハンドラ
-    { BTL_EVENT_CHANGE_TOKUSEI,     handler_MizuNoBale_Swap },      // とくせい書き換えハンドラ
-    { BTL_EVENT_ADDSICK_FAILED,     handler_AddSickFailCommon },
+    { BTL_EVENT_ADDSICK_CHECKFAIL,    handler_MizuNoBale_PokeSick },  // ポケモン系状態異常処理ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_MizuNoBale_Swap },      // とくせい書き換えハンドラ
+    { BTL_EVENT_ADDSICK_FAILED,       handler_AddSickFailCommon },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -2795,7 +2802,7 @@ static void handler_Syncro( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Syncro( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MAKE_POKESICK,      handler_Syncro }, // ポケモン系状態異常ハンドラ
+    { BTL_EVENT_POKESICK_FIXED,      handler_Syncro }, // ポケモン系状態異常ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -5349,36 +5356,61 @@ static void handler_Kinchoukan_MemberOutFixed( BTL_EVENT_FACTOR* myHandle, BTL_S
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    const BTL_POKEPARAM* bpp;
-    u8 targetPokeID[ BTL_POSIDX_MAX ];
-    u8 targetCnt, i;
+    common_KinchoukanOff( flowWk, pokeID, work );
+  }
+}
+// いえき確定ハンドラ
+static void handler_Kinchoukan_Ieki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    common_KinchoukanOff( flowWk, pokeID, work );
+  }
+}
+// とくせい変更確定ハンドラ
+static void handler_Kinchoukan_ChangeTok( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_TOKUSEI) != BTL_EVENT_FACTOR_GetSubID(myHandle))
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  ){
+    common_KinchoukanOff( flowWk, pokeID, work );
+  }
+}
+// きんちょうかん無効化共通
+static void common_KinchoukanOff( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  const BTL_POKEPARAM* bpp;
+  u8 targetPokeID[ BTL_POSIDX_MAX ];
+  u8 targetCnt, i;
 
-    BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokeID( flowWk, pokeID );
-    BtlExPos   exPos = EXPOS_MAKE( BTL_EXPOS_FULL_ENEMY, myPos );
+  BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokeID( flowWk, pokeID );
+  BtlExPos   exPos = EXPOS_MAKE( BTL_EXPOS_FULL_ENEMY, myPos );
 
-    // work[0] に値を入れて装備アイテム使用チェック機能をオフ
-    work[0] = 1;
+  // work[0] に値を入れて装備アイテム使用チェック機能をオフ
+  work[0] = 1;
 
-
-    targetCnt = BTL_SVFTOOL_ExpandPokeID( flowWk, exPos, targetPokeID );
-    for(i=0; i<targetCnt; ++i)
+  targetCnt = BTL_SVFTOOL_ExpandPokeID( flowWk, exPos, targetPokeID );
+  for(i=0; i<targetCnt; ++i)
+  {
+    bpp = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID[i] );
+    if( !BPP_IsDead(bpp) )
     {
-      bpp = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID[i] );
-      if( !BPP_IsDead(bpp) )
-      {
-        BTL_HANDEX_PARAM_EQUIP_ITEM* param;
-        param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EQUIP_ITEM, pokeID );
-        param->pokeID = targetPokeID[ i ];
-      }
+      BTL_HANDEX_PARAM_EQUIP_ITEM* param;
+      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EQUIP_ITEM, pokeID );
+      param->pokeID = targetPokeID[ i ];
     }
   }
 }
+
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Kinchoukan( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MEMBER_IN,             handler_Kinchoukan_MemberIn },        // メンバー入場ハンドラ
-    { BTL_EVENT_CHECK_ITEMEQUIP_FAIL,  handler_Kinchoukan_CheckItemEquip },  // 装備アイテム使用チェックハンドラ
-    { BTL_EVENT_MEMBER_OUT_FIXED,      handler_Kinchoukan_MemberOutFixed },  // メンバー退場確定ハンドラ
+    { BTL_EVENT_MEMBER_IN,             handler_Kinchoukan_MemberIn       }, // メンバー入場ハンドラ
+    { BTL_EVENT_CHECK_ITEMEQUIP_FAIL,  handler_Kinchoukan_CheckItemEquip }, // 装備アイテム使用チェックハンドラ
+    { BTL_EVENT_MEMBER_OUT_FIXED,      handler_Kinchoukan_MemberOutFixed }, // メンバー退場確定ハンドラ
+    { BTL_EVENT_IEKI_FIXED,            handler_Kinchoukan_Ieki           }, // いえき確定ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_BEFORE, handler_Kinchoukan_ChangeTok      }, // とくせい変換直前
+
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -5427,26 +5459,49 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Hensin( u16 pri, u16 tokID, u8 pokeID )
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Illusion( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_REACTION, handler_Illusion   },    // ダメージ反応ハンドラ
+    { BTL_EVENT_WAZA_DMG_REACTION,     handler_Illusion_Damage    },   // ダメージ反応ハンドラ
+    { BTL_EVENT_IEKI_FIXED,            handler_Illusion_Ieki      },   // いえき確定ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_BEFORE, handler_Illusion_ChangeTok },   // とくせい変換直前
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
 }
 // ダメージ反応ハンドラ
-static void handler_Illusion( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_Illusion_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  // 自分が防御側で
+  // 自分が防御側ならイリュージョン解除
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
-    // イリュージョン継続中なら正体を明かす
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    if( BPP_IsFakeEnable(bpp) )
-    {
-      BTL_HANDEX_PARAM_FAKE_BREAK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_FAKE_BREAK, pokeID );
-      param->pokeID = pokeID;
-      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Illusion_Break );
-      HANDEX_STR_AddArg( &param->exStr, pokeID );
-    }
+    common_IllusionBreak( myHandle, flowWk, pokeID );
+  }
+}
+// いえき確定ハンドラ
+static void handler_Illusion_Ieki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    common_IllusionBreak( myHandle, flowWk, pokeID );
+  }
+}
+// とくせい変換直前ハンドラ
+static void handler_Illusion_ChangeTok( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    common_IllusionBreak( myHandle, flowWk, pokeID );
+  }
+}
+
+static void common_IllusionBreak( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID )
+{
+  // イリュージョン継続中なら正体を明かす
+  const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+  if( BPP_IsFakeEnable(bpp) )
+  {
+    BTL_HANDEX_PARAM_FAKE_BREAK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_FAKE_BREAK, pokeID );
+    param->pokeID = pokeID;
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Illusion_Break );
+    HANDEX_STR_AddArg( &param->exStr, pokeID );
   }
 }
 

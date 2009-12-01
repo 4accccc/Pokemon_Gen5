@@ -385,6 +385,8 @@ static BtlAddSickFailCode addsick_check_fail( BTL_SVFLOW_WORK* wk, const BTL_POK
   WazaSick sick, BPP_SICK_CONT sickCont );
 static BOOL scEvent_StdSick_CheckFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick  );
 static void scEvent_AddSick_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick );
+static void scEvent_PokeSickFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, const BTL_POKEPARAM* attacker, PokeSick sick );
+static void scEvent_IekiFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target );
 static void scproc_Fight_Damage_After( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
 static void scproc_Fight_Damage_Shrink( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
 static BOOL scproc_AddShrinkCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaID waza, u32 per );
@@ -431,7 +433,6 @@ static BOOL scproc_FieldEffectCore( BTL_SVFLOW_WORK* wk, BtlFieldEffect effect, 
 static void scEvent_FieldEffectCall( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scput_Fight_Uncategory( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
 static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
-static void scput_Fight_Uncategory_Hensin( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
 static void scproc_Migawari_Create( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static BOOL scproc_Migawari_Damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 damage );
 static void scproc_Migawari_CheckNoEffect( BTL_SVFLOW_WORK* wk, SVFL_WAZAPARAM* wazaParam,
@@ -571,7 +572,7 @@ static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
   const SVFL_WAZAPARAM* wazaParam, BOOL criticalFlag );
 static fx32 scEvent_CalcTypeMatchRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, PokeType waza_type );
 static PokeTypePair scEvent_getDefenderPokeType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender );
-static void scEvent_MemberIn( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
+static void scEvent_AfterMemberIn( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static u32 scEvent_GetWazaShrinkPer( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker );
 static BOOL scEvent_CheckShrink( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* target, WazaID waza, u32 per );
@@ -592,7 +593,8 @@ static BOOL scEvent_CheckChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather,
 static void scEvent_AfterChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather );
 static u32 scEvent_CalcRecoverHP( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* bpp );
 static BOOL scEventSetItem( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
-static void scEvent_ChangeTokusei( BTL_SVFLOW_WORK* wk, u8 pokeID );
+static void scEvent_ChangeTokuseiBefore( BTL_SVFLOW_WORK* wk, u8 pokeID, u16 tokuseiID );
+static void scEvent_ChangeTokuseiAfter( BTL_SVFLOW_WORK* wk, u8 pokeID );
 static void Hem_Init( HANDLER_EXHIBISION_MANAGER* wk );
 static u32 Hem_PushState( HANDLER_EXHIBISION_MANAGER* wk );
 static void Hem_PopState( HANDLER_EXHIBISION_MANAGER* wk, u32 state );
@@ -886,7 +888,6 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk )
   }
   scproc_AfterMemberIn( wk );
 
-
   {
     u8 numDeadPoke = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
     return ( numDeadPoke == 0)?  SVFLOW_RESULT_DEFAULT : SVFLOW_RESULT_POKE_IN_REQ;
@@ -969,7 +970,6 @@ void BTL_SVFLOW_CreateRotationCommand( BTL_SVFLOW_WORK* wk, u8 clientID, BtlRota
     BTL_POSPOKE_Rotate( &wk->pospokeWork, dir, clientID, inPoke, wk->pokeCon );
   }
 }
-
 //----------------------------------------------------------------------------------
 /**
  *
@@ -1005,7 +1005,6 @@ static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk )
   }
   return result;
 }
-
 //=============================================================================================
 /**
  * 逃げたクライアントIDを取得
@@ -2052,11 +2051,17 @@ static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 
   return TRUE;
 }
-
-//-----------------------------------------------------------------------------------
-// サーバーフロー：メンバーを場に登場させる
-//-----------------------------------------------------------------------------------
-static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 next_poke_idx )
+//----------------------------------------------------------------------------------
+/**
+ * メンバー入場コア
+ *
+ * @param   wk
+ * @param   clientID      クライアントID
+ * @param   posIdx        入場位置 index
+ * @param   nextPokeIdx   入場させるポケモンの現パーティ内 index
+ */
+//----------------------------------------------------------------------------------
+static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 nextPokeIdx )
 {
   SVCL_WORK* clwk;
   BTL_POKEPARAM* bpp;
@@ -2065,11 +2070,20 @@ static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8
   clwk = BTL_SERVER_GetClientWork( wk->server, clientID );
   GF_ASSERT(posIdx < clwk->numCoverPos);
 
-  if( posIdx != next_poke_idx ){
-    BTL_PARTY_SwapMembers( clwk->party, posIdx, next_poke_idx );
+  {
+    BTL_POKEPARAM* tmpBpp = BTL_PARTY_GetMemberData( clwk->party, nextPokeIdx );
+    if( BPP_GetValue(tmpBpp, BPP_TOKUSEI) == POKETOKUSEI_IRYUUJON ){
+      SCQUE_PUT_OP_SetFakeSrcMember( wk->que, clientID, nextPokeIdx );
+      BTL_PARTY_SetFakeSrcMember( clwk->party, nextPokeIdx );
+    }
+  }
+
+  if( posIdx != nextPokeIdx ){
+    BTL_PARTY_SwapMembers( clwk->party, posIdx, nextPokeIdx );
   }
   bpp = BTL_PARTY_GetMemberData( clwk->party, posIdx );
   pokeID = BPP_GetID( bpp );
+
 
   BTL_HANDLER_TOKUSEI_Add( bpp );
   BTL_HANDLER_ITEM_Add( bpp );
@@ -2077,13 +2091,23 @@ static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8
   BPP_Clear_ForIn( bpp );
   wk->pokeInFlag[ pokeID ] = TRUE;
 
-  SCQUE_PUT_OP_MemberIn( wk->que, clientID, posIdx, next_poke_idx, wk->turnCount );
+  SCQUE_PUT_OP_MemberIn( wk->que, clientID, posIdx, nextPokeIdx, wk->turnCount );
   {
     BtlPokePos  pos = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx );
     BTL_POSPOKE_PokeIn( &wk->pospokeWork, pos, BPP_GetID(bpp), wk->pokeCon );
   }
 }
-
+//----------------------------------------------------------------------------------
+/**
+ * メンバー入れ替え
+ *
+ * @param   wk
+ * @param   clientID
+ * @param   posIdx
+ * @param   next_poke_idx
+ * @param   fPutMsg
+ */
+//----------------------------------------------------------------------------------
 static void scproc_MemberInForChange( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 next_poke_idx, BOOL fPutMsg )
 {
   scproc_MemberInCore( wk, clientID, posIdx, next_poke_idx );
@@ -2116,7 +2140,7 @@ static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
     {
       BTL_Printf("メンバーIN EventCall: pokeID=%d\n", pokeID);
 
-      scEvent_MemberIn( wk, bpp );
+      scEvent_AfterMemberIn( wk, bpp );
       scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       wk->pokeInFlag[ pokeID ] = FALSE;
     }
@@ -2569,7 +2593,7 @@ static u8 ShooterEff_ItemCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
 static u8 ShooterEff_SkillCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
   u32 hem_state = Hem_PushState( &wk->HEManager );
-  scEvent_MemberIn( wk, bpp );
+  scEvent_AfterMemberIn( wk, bpp );
   scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
   Hem_PopState( &wk->HEManager, hem_state );
   return TRUE;
@@ -4434,10 +4458,22 @@ static BOOL scproc_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKE
     BTL_SICK_AddProc( wk, target, sick );
 
     if( fDefaultMsgEnable ){
-      BTL_Printf("状態異常[%d]デフォルトメッセージ出力します\n", sick);
       BTL_SICK_MakeDefaultMsg( sick, sickCont, target, &wk->strParam );
       handexSub_putString( wk, &wk->strParam );
     }
+
+    {
+      u32 hem_state = Hem_PushState( &wk->HEManager );
+
+      if( sick < POKESICK_MAX ){
+        scEvent_PokeSickFixed( wk, target, attacker, sick );
+      }else if( sick == WAZASICK_IEKI ){
+        scEvent_IekiFixed( wk, target );
+      }
+      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+      Hem_PopState( &wk->HEManager, hem_state );
+    }
+
 
     scproc_CheckItemReaction( wk, target );
   }
@@ -4563,6 +4599,40 @@ static void scEvent_AddSick_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* ta
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_SICKID, sick );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_ADDSICK_FAILED );
+  BTL_EVENTVAR_Pop();
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ポケモン系状態異常確定
+ *
+ * @param   wk
+ * @param   target
+ * @param   attacker
+ * @param   sick
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_PokeSickFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, const BTL_POKEPARAM* attacker, PokeSick sick )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(target) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_SICKID, sick );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_POKESICK_FIXED );
+  BTL_EVENTVAR_Pop();
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] いえきによる特性無効化の確定
+ *
+ * @param   wk
+ * @param   target
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_IekiFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(target) );
+    BTL_EVENT_ForceCallHandlers( wk, BTL_EVENT_IEKI_FIXED );
   BTL_EVENTVAR_Pop();
 }
 
@@ -5679,43 +5749,29 @@ static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
     scPut_WazaEffectOn( wk, attacker, target, WAZANO_SUKIRUSUWAPPU );
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_SkillSwap, atkPokeID );
 
+    {
+      u32 hem_state = Hem_PushState( &wk->HEManager );
+      scEvent_ChangeTokuseiBefore( wk, atkPokeID, tgt_tok );
+      scEvent_ChangeTokuseiBefore( wk, tgtPokeID, atk_tok );
+      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+      Hem_PopState( &wk->HEManager, hem_state );
+    }
+
     BPP_ChangeTokusei( attacker, tgt_tok );
     BPP_ChangeTokusei( target, atk_tok );
     SCQUE_PUT_OP_ChangeTokusei( wk->que, atkPokeID, atk_tok );
     SCQUE_PUT_OP_ChangeTokusei( wk->que, tgtPokeID, tgt_tok );
-
     BTL_HANDLER_TOKUSEI_Swap( attacker, target );
 
     {
       u32 hem_state = Hem_PushState( &wk->HEManager );
-      scEvent_ChangeTokusei( wk, atkPokeID );
-      scEvent_ChangeTokusei( wk, tgtPokeID );
+      scEvent_ChangeTokuseiAfter( wk, atkPokeID );
+      scEvent_ChangeTokuseiAfter( wk, tgtPokeID );
       scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       Hem_PopState( &wk->HEManager, hem_state );
     }
   }
 }
-// へんしん
-static void scput_Fight_Uncategory_Hensin( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec )
-{
-  BTL_POKEPARAM* target = TargetPokeRec_Get( targetRec, 0 );
-
-  if( BPP_HENSIN_Set(attacker, target) )
-  {
-    u8 atkPokeID = BPP_GetID( attacker );
-    u8 tgtPokeID = BPP_GetID( target );
-
-    scPut_WazaEffectOn( wk, attacker, target, WAZANO_HENSIN );
-    SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Hensin, atkPokeID, tgtPokeID );
-
-    BTL_HANDLER_Waza_RemoveForceAll( attacker );
-    BTL_HANDLER_TOKUSEI_Remove( attacker );
-    BTL_HANDLER_TOKUSEI_Add( attacker );
-
-    SCQUE_PUT_OP_Hensin( wk->que, atkPokeID, tgtPokeID );
-  }
-}
-
 //----------------------------------------------------------------------------------
 /**
  * みがわり - 作成
@@ -8372,7 +8428,7 @@ static void scEvent_ItemEquipTmp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp 
 {
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_USE_ITEM_TMP );
+    BTL_EVENT_ForceCallHandlers( wk, BTL_EVENT_USE_ITEM_TMP );
   BTL_EVENTVAR_Pop();
 }
 //----------------------------------------------------------------------------------
@@ -8728,14 +8784,14 @@ static PokeTypePair scEvent_getDefenderPokeType( BTL_SVFLOW_WORK* wk, const BTL_
 }
 //--------------------------------------------------------------------------
 /**
- * [Event] メンバーを場に登場させる
+ * [Event] メンバーを場に登場させた直後
  *
  * @param   wk
  * @param   bpp
  *
  */
 //--------------------------------------------------------------------------
-static void scEvent_MemberIn( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
+static void scEvent_AfterMemberIn( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 {
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
@@ -9093,17 +9149,34 @@ static BOOL scEventSetItem( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
 }
 //----------------------------------------------------------------------------------
 /**
+ * [Event] とくせい変更が確定（変更の直前）
+ *
+ * @param   wk
+ * @param   pokeID
+ * @param   tokuseiID
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_ChangeTokuseiBefore( BTL_SVFLOW_WORK* wk, u8 pokeID, u16 tokuseiID )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, pokeID );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_TOKUSEI, tokuseiID );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHANGE_TOKUSEI_BEFORE );
+  BTL_EVENTVAR_Pop();
+}
+//----------------------------------------------------------------------------------
+/**
  * [Event] とくせいが変更された
  *
  * @param   wk
  * @param   pokeID
  */
 //----------------------------------------------------------------------------------
-static void scEvent_ChangeTokusei( BTL_SVFLOW_WORK* wk, u8 pokeID )
+static void scEvent_ChangeTokuseiAfter( BTL_SVFLOW_WORK* wk, u8 pokeID )
 {
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, pokeID );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHANGE_TOKUSEI );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, pokeID );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHANGE_TOKUSEI_AFTER );
   BTL_EVENTVAR_Pop();
 }
 
@@ -10556,19 +10629,28 @@ static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
   if( ( param->tokuseiID != prevTokusei )
   &&  !BTL_CALC_TOK_CheckCantChange(param->tokuseiID)
   ){
-    BTL_HANDLER_TOKUSEI_Remove( bpp );
-
-    BPP_ChangeTokusei( bpp, param->tokuseiID );
     SCQUE_PUT_ACT_ChangeTokusei( wk->que, param->pokeID, param->tokuseiID );
+
+    // とくせい書き換え直前イベント
+    {
+      u32 hem_state = Hem_PushState( &wk->HEManager );
+      scEvent_ChangeTokuseiBefore( wk, param->pokeID, param->tokuseiID );
+      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+      Hem_PopState( &wk->HEManager, hem_state );
+    }
+
+    BTL_HANDLER_TOKUSEI_Remove( bpp );
+    BPP_ChangeTokusei( bpp, param->tokuseiID );
     SCQUE_PUT_OP_ChangeTokusei( wk->que, param->pokeID, param->tokuseiID );
     BTL_HANDLER_TOKUSEI_Add( bpp );
 
     handexSub_putString( wk, &param->exStr );
     SCQUE_PUT_TOKWIN_OUT( wk->que, param->pokeID );
 
+    // とくせい書き換え完了イベント
     {
       u32 hem_state = Hem_PushState( &wk->HEManager );
-      scEvent_ChangeTokusei( wk, param->pokeID );
+      scEvent_ChangeTokuseiAfter( wk, param->pokeID );
       scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       Hem_PopState( &wk->HEManager, hem_state );
     }

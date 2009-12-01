@@ -232,6 +232,7 @@ static BOOL scProc_OP_BatonTouch( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_MigawariCreate( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_MigawariDelete( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ShooterCharge( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_SetFakeSrc( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetStatus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetWeight( BTL_CLIENT* wk, int* seq, const int* args );
 static void cec_addCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
@@ -1608,6 +1609,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_MIGAWARI_CREATE,    scProc_OP_MigawariCreate  },
     { SC_OP_MIGAWARI_DELETE,    scProc_OP_MigawariDelete  },
     { SC_OP_SHOOTER_CHARGE,     scProc_OP_ShooterCharge   },
+    { SC_OP_SET_FAKESRC,        scProc_OP_SetFakeSrc      },
     { SC_ACT_KILL,              scProc_ACT_Kill           },
     { SC_ACT_MOVE,              scProc_ACT_Move           },
     { SC_ACT_EXP,               scProc_ACT_Exp            },
@@ -2422,6 +2424,8 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
         BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_LevelUp );
         BTLV_STRPARAM_AddArg( &wk->strParam, args[0] );
         BTLV_STRPARAM_AddArg( &wk->strParam, args[1] );
+        BTL_Printf("レベルアップメッセージ：numArgs=%d, arg0=%d, arg1=%d\n",
+          wk->strParam.argCnt, wk->strParam.args[0], wk->strParam.args[1] );
         BTLV_StartMsg( wk->viewCore, &wk->strParam );
         (*seq)++;
       }
@@ -2979,6 +2983,16 @@ static BOOL scProc_OP_ShooterCharge( BTL_CLIENT* wk, int* seq, const int* args )
   }
   return TRUE;
 }
+static BOOL scProc_OP_SetFakeSrc( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  u8 clientID = args[0];
+  u8 memberIdx = args[1];
+
+  BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
+  BTL_PARTY_SetFakeSrcMember( party, memberIdx );
+  return TRUE;
+}
+
 /*
  *  能力基本値書き換え  [0]:pokeID, [1]:statusID [2]:value
  */

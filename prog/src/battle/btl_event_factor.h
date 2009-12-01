@@ -87,7 +87,6 @@ extern void BTL_EVENT_FACTOR_SetWorkValue( BTL_EVENT_FACTOR* factor, u8 workIdx,
 extern u8 BTL_EVENT_FACTOR_GetPokeID( const BTL_EVENT_FACTOR* factor );
 extern void BTL_EVENT_FACTOR_AttachSkipCheckHandler( BTL_EVENT_FACTOR* factor, BtlEventSkipCheckHandler handler );
 extern void BTL_EVENT_FACTOR_DettachSkipCheckHandler( BTL_EVENT_FACTOR* factor );
-extern void BTL_EVENT_FACTOR_SetForceCallFlag( BTL_EVENT_FACTOR* factor );
 
 //=============================================================================================
 /**

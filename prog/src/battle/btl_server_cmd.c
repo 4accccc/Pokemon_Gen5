@@ -40,8 +40,8 @@ typedef enum {
   SC_ARGFMT_11byte = SC_ARGFMT(2,0),
   SC_ARGFMT_12byte = SC_ARGFMT(2,1),
   SC_ARGFMT_14byte = SC_ARGFMT(2,2),
-  SC_ARGFMT_4_4bit = SC_ARGFMT(2,3),
-  SC_ARGFMT_5_3bit = SC_ARGFMT(2,4),
+  SC_ARGFMT_44bit  = SC_ARGFMT(2,3),
+  SC_ARGFMT_53bit = SC_ARGFMT(2,4),
 
 
   // à¯êîÇRå¬ÇÃå^
@@ -100,8 +100,8 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_53bit_1byte,      // SC_OP_SET_STATUS
   SC_ARGFMT_12byte,           // SC_OP_SET_WEIGHT
   SC_ARGFMT_1byte,            // SC_OP_WAZASICK_TURNCHECK
-  SC_ARGFMT_5_3bit,           // SC_OP_CANTESCAPE_ADD
-  SC_ARGFMT_5_3bit,           // SC_OP_CANTESCAPE_SUB
+  SC_ARGFMT_53bit,            // SC_OP_CANTESCAPE_ADD
+  SC_ARGFMT_53bit,            // SC_OP_CANTESCAPE_SUB
   SC_ARGFMT_12byte,           // SC_OP_CHANGE_POKETYPE
   SC_ARGFMT_11byte,           // SC_OP_CHANGE_POKEFORM
   SC_ARGFMT_1byte,            // SC_OP_REMOVE_ITEM
@@ -124,7 +124,8 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_11byte,           // SC_OP_BATONTOUCH
   SC_ARGFMT_12byte,           // SC_OP_MIGAWARI_CREATE
   SC_ARGFMT_1byte,            // SC_OP_MIGAWARI_DELETE
-  SC_ARGFMT_4_4bit,           // SC_OP_SHOOTER_CHARGE
+  SC_ARGFMT_44bit,            // SC_OP_SHOOTER_CHARGE
+  SC_ARGFMT_44bit,            // SC_OP_SET_FAKESRC
   SC_ARGFMT_5_5_14bit,        // SC_ACT_WAZA_EFFECT
   SC_ARGFMT_5_5_14bit_1byte,  // SC_ACT_WAZA_EFFECT_EX
   SC_ARGFMT_5_5_14bit_2byte,  // SC_ACT_WAZA_DMG
@@ -136,17 +137,17 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_1byte,            // SC_ACT_DEAD
   SC_ARGFMT_1byte,            // SC_ACT_MEMBER_OUT
   SC_ARGFMT_5353bit,          // SC_ACT_MEMBER_IN
-  SC_ARGFMT_4_4bit,           // SC_ACT_WEATHER_DMG,
+  SC_ARGFMT_44bit,            // SC_ACT_WEATHER_DMG,
   SC_ARGFMT_1byte,            // SC_ACT_WEATHER_START,
   SC_ARGFMT_1byte,            // SC_ACT_WEATHER_END,
   SC_ARGFMT_1byte,            // SC_ACT_SIMPLE_HP
   SC_ARGFMT_1byte,            // SC_ACT_KINOMI
-  SC_ARGFMT_5_3bit,           // SC_ACT_KILL
+  SC_ARGFMT_53bit,            // SC_ACT_KILL
   SC_ARGFMT_555bit,           // SC_ACT_MOVE
   SC_ARGFMT_14byte,           // SC_ACT_EXP
   SC_ARGFMT_1x8byte,          // SC_ACT_EXP_LVUP
   SC_ARGFMT_5_5_6_2byte,      // SC_ACT_BALL_THROW
-  SC_ARGFMT_4_4bit,           // SC_ACT_ROTATION
+  SC_ARGFMT_44bit,            // SC_ACT_ROTATION
   SC_ARGFMT_12byte,           // SC_ACT_CHANGE_TOKUSEI
   SC_ARGFMT_1byte,            // SC_ACT_FAKE_DISABLE
   SC_ARGFMT_1byte,            // SC_TOKWIN_IN
@@ -276,10 +277,10 @@ static void put_core( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ScArgFormat fmt, c
     scque_put1byte( que, args[0] );
     scque_put4byte( que, args[1] );
     break;
-  case SC_ARGFMT_4_4bit:
+  case SC_ARGFMT_44bit:
     scque_put1byte( que, pack1_2args(args[0], args[1], 4, 4) );
     break;
-  case SC_ARGFMT_5_3bit:
+  case SC_ARGFMT_53bit:
     scque_put1byte( que, pack1_2args(args[0], args[1], 5, 3) );
     break;
   case SC_ARGFMT_53bit_1byte:
@@ -411,13 +412,13 @@ static void read_core( BTL_SERVER_CMD_QUE* que, ScArgFormat fmt, int* args )
     args[0] = scque_read1byte( que );
     args[1] = scque_read4byte( que );
     break;
-  case SC_ARGFMT_4_4bit:
+  case SC_ARGFMT_44bit:
     {
       u8 pack = scque_read1byte( que );
       unpack1_2args( pack, 4, 4, args, 0 );
     }
     break;
-  case SC_ARGFMT_5_3bit:
+  case SC_ARGFMT_53bit:
     {
       u8 pack = scque_read1byte( que );
       unpack1_2args( pack, 5, 3, args, 0 );

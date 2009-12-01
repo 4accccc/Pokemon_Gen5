@@ -65,7 +65,7 @@ struct _BTL_EVENT_FACTOR {
   u8        pokeID;
   u8        callingFlag : 1;      ///< 呼び出し中を再呼び出ししないためのフラグ
   u8        sleepFlag : 1;        ///< 休眠
-  u8        forceCallFlag : 1;    ///< 呼び出し不可条件でも強制的に呼び出し
+  u8        dummy     : 6;
 };
 
 /*--------------------------------------------------------------------------*/
@@ -95,8 +95,8 @@ static VAR_STACK VarStack = {0};
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static void callHandlers( BTL_EVENT_FACTOR* factor, BtlEventType eventType, BTL_SVFLOW_WORK* flowWork );
-static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* factor, BtlEventType eventType );
+static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, BOOL fSkipCheck );
+static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* factor, BtlEventType eventID );
 static BTL_EVENT_FACTOR* popFactor( void );
 static void pushFactor( BTL_EVENT_FACTOR* factor );
 static void clearFactorWork( BTL_EVENT_FACTOR* factor );
@@ -175,7 +175,6 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
     newFactor->subID = subID;
     newFactor->callingFlag = FALSE;
     newFactor->sleepFlag = FALSE;
-    newFactor->forceCallFlag = FALSE;
     newFactor->skipCheckHandler = NULL;
     GFL_STD_MemClear( newFactor->work, sizeof(newFactor->work) );
 
@@ -327,9 +326,22 @@ void BTL_EVENT_FACTOR_SetWorkValue( BTL_EVENT_FACTOR* factor, u8 workIdx, int va
   factor->work[ workIdx ] = value;
 }
 
+
 //=============================================================================================
 /**
- * 全登録要素に対し、指定イベントの通知
+ * 全登録要素の対し、指定イベントの強制通知（スキップ条件を見ない）
+ *
+ * @param   flowWork
+ * @param   eventID
+ */
+//=============================================================================================
+void BTL_EVENT_ForceCallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID )
+{
+  CallHandlersCore( flowWork, eventID, FALSE );
+}
+//=============================================================================================
+/**
+ * 全登録要素に対し、指定イベントの通知（スキップ条件をチェック：通常はこちらを呼ぶ）
  *
  * @param   flowWork
  * @param   eventID
@@ -337,65 +349,85 @@ void BTL_EVENT_FACTOR_SetWorkValue( BTL_EVENT_FACTOR* factor, u8 workIdx, int va
 //=============================================================================================
 void BTL_EVENT_CallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID )
 {
+  CallHandlersCore( flowWork, eventID, TRUE );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * 指定イベント通知コア
+ *
+ * @param   flowWork
+ * @param   eventID
+ * @param   fSkipCheck
+ */
+//----------------------------------------------------------------------------------
+static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, BOOL fSkipCheck )
+{
   BTL_EVENT_FACTOR* factor;
   BTL_EVENT_FACTOR* next_factor;
-  BTL_EVENT_FACTOR* scFactor;
-  BOOL fSkip;
 
   for( factor=FirstFactorPtr; factor!=NULL; )
   {
     next_factor = factor->next;
 
-    // スキップチェックハンドラを持つ要素があれば、今から呼び出そうとする要素をスキップするか判定させる
-    fSkip = FALSE;
-    for( scFactor=FirstFactorPtr; scFactor!=NULL; scFactor=scFactor->next ){
-      if( scFactor->skipCheckHandler ){
-        if( scFactor->skipCheckHandler(factor, factor->factorType, eventID, factor->subID, factor->pokeID) )
+    if( (factor->callingFlag==FALSE) && (factor->sleepFlag == FALSE) )
+    {
+      const BtlEventHandlerTable* tbl = factor->handlerTable;
+      int i;
+      for(i=0; tbl[i].eventType!=BTL_EVENT_NULL; i++)
+      {
+        if( tbl[i].eventType == eventID )
         {
-          fSkip = TRUE;
+          if( !fSkipCheck || !check_handler_skip(flowWork, factor, eventID) )
+          {
+            factor->callingFlag = TRUE;
+            tbl[i].handler( factor, flowWork, factor->pokeID, factor->work );
+            factor->callingFlag = FALSE;
+          }
           break;
         }
       }
     }
 
-    if( !fSkip ){
-      callHandlers( factor, eventID, flowWork );
-    }
-
     factor = next_factor;
   }
 }
-//----------------------------------------------------------------------------------
 /**
- * 登録ハンドラ呼び出し
- *
- * @param   factor
- * @param   eventType
- * @param   flowWork
+ *  特定ハンドラをスキップするかチェック
  */
-//----------------------------------------------------------------------------------
-static void callHandlers( BTL_EVENT_FACTOR* factor, BtlEventType eventType, BTL_SVFLOW_WORK* flowWork )
+static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* factor, BtlEventType eventID )
 {
-  if( (factor->callingFlag == FALSE) && (factor->sleepFlag == FALSE) )
-  {
-    const BtlEventHandlerTable* tbl = factor->handlerTable;
+  const BTL_POKEPARAM* bpp;
 
-    int i;
-    for(i=0; tbl[i].eventType!=BTL_EVENT_NULL; i++)
+  // 「いえき」状態のポケモンは、とくせいハンドラを呼び出さない
+  bpp = BTL_SVFTOOL_GetPokeParam( flowWork, factor->pokeID );
+  if( BPP_CheckSick(bpp, WAZASICK_IEKI) && (factor->factorType == BTL_EVENT_FACTOR_TOKUSEI) ){
+    return TRUE;
+  }
+
+  // 「マジックルーム」発動状態なら、装備アイテムハンドラを呼び出さない
+  if( BTL_FIELD_CheckEffect(BTL_FLDEFF_MAGICROOM) )
+  {
+    if( factor->factorType == BTL_EVENT_FACTOR_ITEM ){
+      return TRUE;
+    }
+  }
+
+  // スキップチェックハンドラが登録されていたら判断させる
+  {
+    BTL_EVENT_FACTOR* fp;
+    for(fp=FirstFactorPtr; fp!=NULL; fp=fp->next)
     {
-      if( tbl[i].eventType == eventType )
-      {
-        if( !check_handler_skip(flowWork, factor, eventType) )
-        {
-          factor->callingFlag = TRUE;
-          tbl[i].handler( factor, flowWork, factor->pokeID, factor->work );
-          factor->callingFlag = FALSE;
+      if( fp->skipCheckHandler != NULL ){
+        if( factor->skipCheckHandler( factor, factor->factorType, eventID, factor->subID, factor->pokeID) ){
+          return FALSE;
         }
       }
     }
-    factor->forceCallFlag = FALSE;
   }
+  return FALSE;
 }
+
 //=============================================================================================
 /**
  * スキップチェックハンドラをアタッチする
@@ -418,55 +450,6 @@ void BTL_EVENT_FACTOR_AttachSkipCheckHandler( BTL_EVENT_FACTOR* factor, BtlEvent
 void BTL_EVENT_FACTOR_DettachSkipCheckHandler( BTL_EVENT_FACTOR* factor )
 {
   factor->skipCheckHandler = NULL;
-}
-
-/**
- *  特定ハンドラをスキップするかチェック
- */
-static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* factor, BtlEventType eventType )
-{
-  const BTL_POKEPARAM* bpp;
-
-  // 強制呼び出しフラグONならスキップしない
-  if( factor->forceCallFlag ){
-    return FALSE;
-  }
-
-  // 「いえき」状態のポケモンは、とくせいハンドラを呼び出さない
-  bpp = BTL_SVFTOOL_GetPokeParam( flowWork, factor->pokeID );
-  if( BPP_CheckSick(bpp, WAZASICK_IEKI) && (factor->factorType == BTL_EVENT_FACTOR_TOKUSEI) ){
-    return TRUE;
-  }
-
-  // 「マジックルーム」発動状態なら、装備アイテムハンドラを呼び出さない
-  if( BTL_FIELD_CheckEffect(BTL_FLDEFF_MAGICROOM) )
-  {
-    if( factor->factorType == BTL_EVENT_FACTOR_ITEM ){
-      return TRUE;
-    }
-  }
-
-  // スキップチェックハンドラが登録されていたら判断させる
-  if( factor->skipCheckHandler != NULL ){
-    if( factor->skipCheckHandler( factor, factor->factorType, eventType, factor->subID, factor->pokeID) ){
-      return TRUE;
-    }
-  }
-
-  return FALSE;
-}
-
-
-//=============================================================================================
-/**
- * 強制呼び出しフラグON
- *
- * @param   factor
- */
-//=============================================================================================
-void BTL_EVENT_FACTOR_SetForceCallFlag( BTL_EVENT_FACTOR* factor )
-{
-  factor->forceCallFlag = TRUE;
 }
 
 

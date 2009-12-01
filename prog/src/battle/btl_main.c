@@ -2593,6 +2593,35 @@ s16 BTL_PARTY_FindMember( const BTL_PARTY* party, const BTL_POKEPARAM* param )
   }
   return -1;
 }
+//----------------------------------------------------------------------
+/**
+ * とくせい「イリュージョン」を持つメンバーの参照ポケデータ更新
+ *
+ * @param   party
+ * @param   memberIdx
+ */
+//----------------------------------------------------------------------
+void BTL_PARTY_SetFakeSrcMember( BTL_PARTY* party, u8 memberIdx )
+{
+  if( (party->memberCount > memberIdx)
+  &&  (party->memberCount > 1)
+  ){
+    BTL_POKEPARAM* bpp = party->member[ memberIdx ];
+    if( BPP_GetValue(bpp, BPP_TOKUSEI) == POKETOKUSEI_IRYUUJON )
+    {
+      BTL_POKEPARAM* refPoke;
+      u8 idx = memberIdx + 1;
+      if( idx >= party->memberCount ){
+        idx = 0;
+      }
+      refPoke = party->member[idx];
+      BPP_SetViewSrcData( bpp, BPP_GetSrcData(refPoke) );
+      BTL_Printf("%d番目にいるイリュージョン持ちポケモン[%d]の参照ポケを\n", memberIdx, BPP_GetID(bpp));
+      BTL_PrintfSimple("     %d番目のポケ[%d]に変更", idx, BPP_GetID(refPoke));
+    }
+  }
+}
+
 
 POKEPARTY* BTL_MAIN_GetPlayerPokeParty( BTL_MAIN_MODULE* wk )
 {
