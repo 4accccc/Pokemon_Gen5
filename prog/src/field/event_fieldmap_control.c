@@ -75,6 +75,9 @@ static GMEVENT_RESULT FieldFadeOutEvent(GMEVENT * event, int *seq, void * work)
 #else
 	switch (*seq) {
 	case 0:
+		// サブ画面だけブラックアウト
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, -8);
+
 		// 画面キャプチャ→VRAM_D
 		GX_SetBankForLCDC(GX_VRAM_LCDC_D);
 		GX_SetCapture(GX_CAPTURE_SIZE_256x192,				// Capture size
@@ -86,11 +89,11 @@ static GMEVENT_RESULT FieldFadeOutEvent(GMEVENT * event, int *seq, void * work)
 
 		OS_WaitVBlankIntr();	// 0ライン待ちウエイト
 		OS_WaitVBlankIntr();	// キャプチャー待ちウエイト
+#if 0
 		(*seq)++;
 		break;
 
 	case 1:	// 0ライン待ちウエイト
-#if 0
 	case 2:	// キャプチャー待ちウエイト
 		(*seq)++;
 		break;
@@ -241,6 +244,8 @@ static GMEVENT_RESULT FieldFadeInEvent(GMEVENT * event, int *seq, void * work)
 			G2_ChangeBlendAlpha( few->alphaWork, 16 - few->alphaWork );
 		} else {
 			GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
+			// サブ画面輝度復帰
+      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, -8);
 			*seq = 4;
 		}
 		break;
