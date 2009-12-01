@@ -37,7 +37,8 @@ struct _MB_CAP_EFFECT
   u16 anmIdx;
   int objIdx;
   BOOL isFinish;
-    
+  BOOL isLoop;
+  
   VecFx32 pos;
   
   MB_CAP_EFFECT_TYPE type;
@@ -49,8 +50,8 @@ struct _MB_CAP_EFFECT
 //======================================================================
 #pragma mark [> proto
 
-static const u8 MB_CAP_EFFECT_ANIME_FRAME[MCET_MAX] = { 2,MB_CAP_EFFECT_SMOKE_FRAME,MB_CAP_EFFECT_TRANS_FRAME };
-static const u8 MB_CAP_EFFECT_ANIME_SPEED[MCET_MAX] = { 1,MB_CAP_EFFECT_SMOKE_SPEED,MB_CAP_EFFECT_TRANS_SPEED };
+static const u8 MB_CAP_EFFECT_ANIME_FRAME[MCET_MAX] = { 2,MB_CAP_EFFECT_SMOKE_FRAME,MB_CAP_EFFECT_TRANS_FRAME,4 };
+static const u8 MB_CAP_EFFECT_ANIME_SPEED[MCET_MAX] = { 1,MB_CAP_EFFECT_SMOKE_SPEED,MB_CAP_EFFECT_TRANS_SPEED,6 };
 
 //--------------------------------------------------------------
 //	エフェクト作成
@@ -80,6 +81,7 @@ MB_CAP_EFFECT* MB_CAP_EFFECT_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_EFF
   effWork->anmIdx = 0;
   effWork->type = initWork->type;
   effWork->isFinish = FALSE;
+  effWork->isLoop = FALSE;
 
   return effWork;
 }
@@ -110,9 +112,17 @@ void MB_CAP_EFFECT_UpdateObject( MB_CAPTURE_WORK *capWork , MB_CAP_EFFECT *effWo
     effWork->anmIdx++;
     if( effWork->anmIdx >= MB_CAP_EFFECT_ANIME_FRAME[effWork->type] )
     {
-      const BOOL isDisp = FALSE;
-      effWork->isFinish = TRUE;
-      GFL_BBD_SetObjectDrawEnable( bbdSys , effWork->objIdx , &isDisp );
+      if( effWork->isLoop == FALSE )
+      {
+        const BOOL isDisp = FALSE;
+        effWork->isFinish = TRUE;
+        GFL_BBD_SetObjectDrawEnable( bbdSys , effWork->objIdx , &isDisp );
+      }
+      else
+      {
+        effWork->anmIdx = 0;
+        GFL_BBD_SetObjectCelIdx( bbdSys , effWork->objIdx , &effWork->anmIdx );
+      }
     }
     else
     {
@@ -129,3 +139,13 @@ const BOOL MB_CAP_EFFECT_IsFinish( const MB_CAP_EFFECT *effWork )
 {
   return effWork->isFinish;
 }
+void MB_CAP_EFFECT_SetIsFinish( MB_CAP_EFFECT *effWork , const BOOL isFinish )
+{
+  effWork->isFinish = isFinish;
+}
+
+void MB_CAP_EFFECT_SetIsLoop( MB_CAP_EFFECT *effWork , const BOOL isLoop )
+{
+  effWork->isLoop = isLoop;
+}
+

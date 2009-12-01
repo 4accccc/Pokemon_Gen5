@@ -50,8 +50,8 @@
 
 #define MB_CAP_OBJ_SUB_U_TOP (48)
 #define MB_CAP_OBJ_SUB_D_TOP (184)
-#define MB_CAP_OBJ_SUB_R_LEFT (10)
-#define MB_CAP_OBJ_SUB_L_LEFT (244)
+#define MB_CAP_OBJ_SUB_R_LEFT (244)
+#define MB_CAP_OBJ_SUB_L_LEFT (10)
 
 #define MB_CAP_BALL_NUM (10)
 
@@ -113,6 +113,7 @@ typedef enum
   MCBR_EFF_HIT,
   MCBR_EFF_SMOKE,
   MCBR_EFF_TRANS,
+  MCBR_EFF_DOWN,
 
   MCBR_MAX,
 }MB_CAP_BBD_RES;
@@ -122,6 +123,7 @@ typedef enum
   MCET_HIT,
   MCET_CAPTURE_SMOKE,
   MCET_CAPTURE_TRANS,
+  MCET_DOWN,
   
   MCET_MAX
 }MB_CAP_EFFECT_TYPE;
@@ -134,6 +136,7 @@ typedef struct _MB_CAPTURE_WORK MB_CAPTURE_WORK;
 typedef struct _MB_CAP_OBJ MB_CAP_OBJ;
 typedef struct _MB_CAP_POKE MB_CAP_POKE;
 typedef struct _MB_CAP_BALL MB_CAP_BALL;
+typedef struct _MB_CAP_EFFECT MB_CAP_EFFECT;
 
 //あたり判定のチェックに使う
 typedef struct
@@ -156,7 +159,7 @@ extern MB_CAP_OBJ* MB_CAPTURE_GetObjWork( MB_CAPTURE_WORK *work , const u8 idx )
 extern MB_CAP_POKE* MB_CAPTURE_GetPokeWork( MB_CAPTURE_WORK *work , const u8 idx );
 
 extern void MB_CAPTURE_GetPokeFunc( MB_CAPTURE_WORK *work , MB_CAP_BALL *ballWork , const u8 pokeIdx );
-extern void MB_CAPTURE_CreateEffect( MB_CAPTURE_WORK *work , VecFx32 *pos , const MB_CAP_EFFECT_TYPE type );
+extern MB_CAP_EFFECT* MB_CAPTURE_CreateEffect( MB_CAPTURE_WORK *work , VecFx32 *pos , const MB_CAP_EFFECT_TYPE type );
 
-extern void MB_CAPTURE_GetGrassObjectPos( const u8 idxX , const u8 idxY , VecFx32 *ret );
+extern void MB_CAPTURE_GetGrassObjectPos( const s8 idxX , const s8 idxY , VecFx32 *ret );
 extern const BOOL MB_CAPTURE_CheckHit( const MB_CAP_HIT_WORK *work1 , MB_CAP_HIT_WORK *work2 );

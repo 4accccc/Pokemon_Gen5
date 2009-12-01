@@ -17,6 +17,7 @@
 #include "multiboot/mb_poke_icon.h"
 
 #include "./mb_cap_down.h"
+#include "./mb_cap_snd_def.h"
 
 //======================================================================
 //	define
@@ -83,6 +84,7 @@ struct _MB_CAP_DOWN
   BOOL isTrg;
   BOOL isTouch;
   BOOL isUpdateBall;
+  BOOL isPlayBowPullSnd;
   
   MB_CAP_DOWN_STATE state;
   
@@ -187,6 +189,7 @@ MB_CAP_DOWN* MB_CAP_DOWN_InitSystem( MB_CAPTURE_WORK *capWork )
   downWork->ballPosX = MB_CAP_DOWN_BALL_X;
   downWork->ballPosY = MB_CAP_DOWN_BALL_Y;
   downWork->isUpdateBall = TRUE;
+  downWork->isPlayBowPullSnd = FALSE;
   
   downWork->lineBmp = GFL_BMP_CreateInVRAM( G2S_GetBG1CharPtr() , 32 , 24 , GFL_BMP_16_COLOR , heapId );
   {
@@ -543,6 +546,7 @@ static void MB_CAP_DOWN_UpdateTP( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWo
       if( ballLen < MB_CAP_DOWN_BALL_TOUCH_LEN*MB_CAP_DOWN_BALL_TOUCH_LEN )
       {
         downWork->state = MCDS_DRAG;
+        downWork->isPlayBowPullSnd = FALSE;
       }
     }
   }
@@ -566,6 +570,12 @@ static void MB_CAP_DOWN_UpdateTP( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWo
         downWork->pullLen = len_sub;
         downWork->rotAngle = FX_Atan2Idx(FX32_CONST(-subX), FX32_CONST(subY));;
       }
+      if( downWork->pullLen > (MB_CAP_DOWN_BOW_PULL_LEN_MAX/4) &&
+          downWork->isPlayBowPullSnd == FALSE )
+      {
+        PMSND_PlaySE( MB_SND_BOW_PULL );
+        downWork->isPlayBowPullSnd = TRUE;
+      }
       //TODO‚±‚±‚Å”ÍˆÍŠO‚ÌŠp“xE‹——£‚ª‚ ‚Á‚½ê‡‚ÍA•â³‚ð‚©‚¯‚ÄC³‚·‚é
     }
     else
@@ -581,6 +591,7 @@ static void MB_CAP_DOWN_UpdateTP( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWo
       downWork->shotAngle = downWork->rotAngle;
       
       downWork->state = MCDS_SHOT_WAIT;
+      PMSND_PlaySE( MB_SND_BOW_SHOT );
     }
   }
 }

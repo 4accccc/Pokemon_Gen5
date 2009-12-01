@@ -18,6 +18,9 @@
 
 #include "./mb_cap_local_def.h"
 #include "./mb_cap_poke.h"
+#include "./mb_cap_effect.h"
+
+#include "./mb_cap_snd_def.h"
 
 //======================================================================
 //	define
@@ -25,6 +28,7 @@
 #pragma mark [> define
 
 #define MB_CAP_POKE_OFS_Y (8)
+#define MB_CAP_POKE_MOVE_OFS_Y (4)
 
 
 #define MB_CAP_POKE_HIDE_LOOK_TIME (60*3)
@@ -33,24 +37,22 @@
 
 #define MB_CAP_POKE_HIDE_LOOK_OFS (10)
 
-#define MB_CAP_POKE_RUN_LOOK_TIME (60*3)
+#define MB_CAP_POKE_RUN_LOOK_TIME (60*1)
 #define MB_CAP_POKE_RUN_HIDE_TIME (60*5)
 #define MB_CAP_POKE_JUMP_HEIGHT (24)
 
+#define MB_CAP_POKE_DOWN_TIME (60*3)
+
 #define MB_CAP_POKE_ANIM_SPEED (8)
 #define MB_CAP_POKE_ANIM_FRAME (2)
+
+#define MB_CAP_POKE_FALL_SPEED (FX32_HALF)
+#define MB_CAP_POKE_DOWN_EFF_OFS (FX32_CONST(16))
 
 //======================================================================
 //	enum
 //======================================================================
 #pragma mark [> enum
-typedef enum
-{
-  MCPD_LEFT,
-  MCPD_RIGHT,
-  MCPD_UP,
-  MCPD_DOWN,
-}MB_CAP_POKE_DIR;
 
 //======================================================================
 //	typedef struct
@@ -70,6 +72,7 @@ struct _MB_CAP_POKE
   u8 posXidx;
   u8 posYidx;
   MB_CAP_POKE_DIR dir;
+  VecFx32 startPos;
   VecFx32 pos;
   fx32 height;
   
@@ -77,6 +80,7 @@ struct _MB_CAP_POKE
   int objIdx;
   int objShadowIdx;
   
+  MB_CAP_EFFECT *downEff;
 };
 
 
@@ -87,7 +91,7 @@ struct _MB_CAP_POKE
 static void MB_CAP_POKE_StateNone(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
 static void MB_CAP_POKE_StateHide(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
 static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
-
+static void MB_CAP_POKE_StateDown(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
 
 //--------------------------------------------------------------
 //	オブジェクト作成
@@ -148,8 +152,6 @@ MB_CAP_POKE* MB_CAP_POKE_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE_IN
     
     GFL_BBD_GetResourceTexPlttAdrs( bbdSys , pokeWork->resIdx , &pltAdr );
     GFL_BBD_GetResourceTexDataAdrs( bbdSys , pokeWork->resIdx , &texAdr );
-    //pltData->pRawData;
-    //charData->pRawData;
     
     GX_BeginLoadTex();
     DC_FlushRange( charData->pRawData , 32*64*0x20 );
@@ -176,6 +178,8 @@ MB_CAP_POKE* MB_CAP_POKE_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE_IN
   pokeWork->posYidx = 0xFF;
   pokeWork->height = 0;
   
+  pokeWork->downEff = NULL;
+
   return pokeWork;
 }
 
@@ -235,14 +239,36 @@ void MB_CAP_POKE_SetHide( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork , con
 //--------------------------------------------------------------
 void MB_CAP_POKE_SetRun( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork )
 {
-  if( pokeWork->cnt < MB_CAP_POKE_HIDE_LOOK_TIME )
+  if( pokeWork->state == MCPS_LOOK )
   {
-    pokeWork->dir = MCPD_LEFT;
+    if( pokeWork->cnt < MB_CAP_POKE_HIDE_LOOK_TIME )
+    {
+      pokeWork->dir = MCPD_LEFT;
+    }
+    else
+    {
+      pokeWork->dir = MCPD_RIGHT;
+    }
+    pokeWork->cnt = 0;
+    pokeWork->stateFunc = MB_CAP_POKE_StateRun;
+    //草からの基準位置
+    MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx , pokeWork->posYidx , &pokeWork->startPos );
+    pokeWork->startPos.y -= FX32_CONST( MB_CAP_POKE_MOVE_OFS_Y );
+    pokeWork->startPos.z -= FX32_CONST( MB_CAP_OBJ_BASE_Z-MB_CAP_POKE_BASE_Z );
   }
   else
   {
-    pokeWork->dir = MCPD_RIGHT;
+    //隠れている時はすぐ移動を始める
+    pokeWork->cnt = 0;
   }
+}
+
+//--------------------------------------------------------------
+//	ポケモンセット(逃げる・周囲にボールが落ちた場合
+//--------------------------------------------------------------
+void MB_CAP_POKE_SetRunChangeDir( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork , const MB_CAP_POKE_DIR dir )
+{
+  pokeWork->dir = dir;
   pokeWork->cnt = 0;
   pokeWork->stateFunc = MB_CAP_POKE_StateRun;
 }
@@ -259,6 +285,23 @@ void MB_CAP_POKE_SetCapture( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork )
 
   pokeWork->state = MCPS_CAPTURE;
   pokeWork->stateFunc = MB_CAP_POKE_StateNone;
+  
+  if( pokeWork->downEff != NULL )
+  {
+    MB_CAP_EFFECT_SetIsFinish( pokeWork->downEff , TRUE );
+    pokeWork->downEff = NULL;
+  }
+
+}
+
+//--------------------------------------------------------------
+//	ポケモンセット(ダウン
+//--------------------------------------------------------------
+void MB_CAP_POKE_SetDown( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork )
+{
+  GFL_BBD_SYS *bbdSys = MB_CAPTURE_GetBbdSys( capWork );
+  pokeWork->state = MCPS_DOWN_MOVE;
+  pokeWork->stateFunc = MB_CAP_POKE_StateDown;
 }
 
 #pragma mark [>state func
@@ -292,6 +335,8 @@ static void MB_CAP_POKE_StateHide(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWo
 
     pokeWork->cnt = 0;
     pokeWork->state = MCPS_LOOK;
+
+    PMSND_PlaySE_byPlayerID( MB_SND_GRASS_SHAKE , SEPLAYER_SE2 );
   }
   else
   if( pokeWork->cnt == MB_CAP_POKE_HIDE_LOOK_TIME+MB_CAP_POKE_HIDE_HIDE_TIME )
@@ -308,6 +353,8 @@ static void MB_CAP_POKE_StateHide(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWo
     GFL_BBD_SetObjectFlipS( bbdSys , pokeWork->objIdx , &flipFlg );
 
     pokeWork->state = MCPS_LOOK;
+
+    PMSND_PlaySE_byPlayerID( MB_SND_GRASS_SHAKE , SEPLAYER_SE2 );
   }
   else
   if( pokeWork->cnt == MB_CAP_POKE_HIDE_LOOK_TIME ||
@@ -332,41 +379,58 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
 {
   GFL_BBD_SYS *bbdSys = MB_CAPTURE_GetBbdSys( capWork );
   pokeWork->cnt++;
+  if( pokeWork->cnt == 1)
+  {
+    PMSND_PlaySE( MB_SND_POKE_JUMP );
+  }
   if( pokeWork->cnt < MB_CAP_POKE_RUN_LOOK_TIME )
   {
     //飛ぶ
     const BOOL flg = TRUE;
     BOOL flipFlg = FALSE;
     VecFx32 dispPos;
-    //草からの基準位置
-    MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx , pokeWork->posYidx , &pokeWork->pos );
-    //pos.y -= FX32_CONST( MB_CAP_POKE_OFS_Y );
-    pokeWork->pos.z -= FX32_CONST( MB_CAP_OBJ_BASE_Z-MB_CAP_POKE_BASE_Z );
     
     {
       //ジャンプの計算
       const u16 rot = 0x8000*pokeWork->cnt/MB_CAP_POKE_RUN_LOOK_TIME;
       fx32 ofs;
+      VecFx32 nextPos;
       pokeWork->height = FX_SinIdx( rot ) * MB_CAP_POKE_JUMP_HEIGHT;
       switch( pokeWork->dir )
       {
       case MCPD_LEFT:
-        ofs = -FX32_CONST(MB_CAP_OBJ_MAIN_X_SPACE);
-        pokeWork->pos.x += ofs*pokeWork->cnt/MB_CAP_POKE_RUN_LOOK_TIME;
+        //草からの基準位置
+        MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx-1 , pokeWork->posYidx , &nextPos );
+        ofs = nextPos.x - pokeWork->startPos.x;
+        pokeWork->pos.x = pokeWork->startPos.x + ofs*pokeWork->cnt/MB_CAP_POKE_RUN_LOOK_TIME;
+        pokeWork->pos.y = pokeWork->startPos.y;
+        pokeWork->pos.z = pokeWork->startPos.z;
         break;
       case MCPD_RIGHT:
-        ofs = FX32_CONST(MB_CAP_OBJ_MAIN_X_SPACE);
-        pokeWork->pos.x += ofs*pokeWork->cnt/MB_CAP_POKE_RUN_LOOK_TIME;
+        //草からの基準位置
+        MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx+1 , pokeWork->posYidx , &nextPos );
+        ofs = nextPos.x - pokeWork->startPos.x;
+        pokeWork->pos.x = pokeWork->startPos.x + ofs*pokeWork->cnt/MB_CAP_POKE_RUN_LOOK_TIME;
+        pokeWork->pos.y = pokeWork->startPos.y;
+        pokeWork->pos.z = pokeWork->startPos.z;
         flipFlg = TRUE;
         break;
       case MCPD_UP:
-        ofs = -FX32_CONST(MB_CAP_OBJ_MAIN_Y_SPACE);
-        pokeWork->pos.y += ofs*pokeWork->cnt/MB_CAP_POKE_RUN_LOOK_TIME;
+        MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx , pokeWork->posYidx-1 , &nextPos );
+        ofs = (nextPos.y - FX32_CONST( MB_CAP_POKE_MOVE_OFS_Y )) - pokeWork->startPos.y;
+        pokeWork->pos.x = pokeWork->startPos.x;
+        pokeWork->pos.y = pokeWork->startPos.y + ofs*pokeWork->cnt/MB_CAP_POKE_RUN_LOOK_TIME;
+        pokeWork->pos.z = pokeWork->startPos.z;
         flipFlg = TRUE;
         break;
       case MCPD_DOWN:
-        ofs = FX32_CONST(MB_CAP_OBJ_MAIN_Y_SPACE);
-        pokeWork->pos.y += ofs*pokeWork->cnt/MB_CAP_POKE_RUN_LOOK_TIME;
+        MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx , pokeWork->posYidx+1 , &nextPos );
+        ofs = (nextPos.y - FX32_CONST( MB_CAP_POKE_MOVE_OFS_Y )) - pokeWork->startPos.y;
+        pokeWork->pos.x = pokeWork->startPos.x;
+        pokeWork->pos.y = pokeWork->startPos.y + ofs*pokeWork->cnt/MB_CAP_POKE_RUN_LOOK_TIME;
+        pokeWork->pos.z = pokeWork->startPos.z;
+        //下移動のときだけZ補正
+        pokeWork->pos.z += FX32_CONST( MB_CAP_OBJ_LINEOFS_Z );
         break;
       }
     
@@ -407,14 +471,77 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
       break;
     }    
     pokeWork->state = MCPS_RUN_HIDE;
+    
+    MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx , pokeWork->posYidx , &pokeWork->startPos );
+    pokeWork->startPos.y -= FX32_CONST( MB_CAP_POKE_MOVE_OFS_Y );
+    pokeWork->startPos.z -= FX32_CONST( MB_CAP_OBJ_BASE_Z-MB_CAP_POKE_BASE_Z );
   }
   else
   if( pokeWork->cnt >= MB_CAP_POKE_RUN_LOOK_TIME+MB_CAP_POKE_RUN_HIDE_TIME )
   {
     pokeWork->cnt = 0;
   }
-  
+}
 
+//--------------------------------------------------------------
+//	ステート：ダウン！
+//--------------------------------------------------------------
+static void MB_CAP_POKE_StateDown(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork )
+{
+  GFL_BBD_SYS *bbdSys = MB_CAPTURE_GetBbdSys( capWork );
+  if( pokeWork->state == MCPS_DOWN_MOVE )
+  {
+    VecFx32 pos;
+    if( pokeWork->height <= MB_CAP_POKE_FALL_SPEED )
+    {
+      VecFx32 effPos = pokeWork->pos;
+      effPos.y -= MB_CAP_POKE_DOWN_EFF_OFS;
+      effPos.z = MB_CAP_EFFECT_Z;
+      pokeWork->downEff = MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_DOWN );
+      MB_CAP_EFFECT_SetIsLoop( pokeWork->downEff , TRUE );
+
+      pokeWork->height = 0;
+      pokeWork->cnt = 0;
+      pokeWork->state = MCPS_DOWN_WAIT;
+    }
+    else
+    {
+      pokeWork->height -= MB_CAP_POKE_FALL_SPEED;
+    }
+    pos.x = pokeWork->pos.x;
+    pos.y = pokeWork->pos.y - pokeWork->height;
+    pos.z = pokeWork->pos.z + FX32_ONE;
+    GFL_BBD_SetObjectTrans( bbdSys , pokeWork->objIdx , &pos );
+  }
+  else
+  {
+    pokeWork->cnt++;
+    if( pokeWork->cnt > MB_CAP_POKE_DOWN_TIME )
+    {
+      //方向転換して移動
+      switch( pokeWork->dir )
+      {
+      case MCPD_LEFT:
+        pokeWork->dir = MCPD_RIGHT;
+        break;
+      case MCPD_RIGHT:
+        pokeWork->dir = MCPD_LEFT;
+        break;
+      case MCPD_UP:
+        pokeWork->dir = MCPD_DOWN;
+        break;
+      case MCPD_DOWN:
+        pokeWork->dir = MCPD_UP;
+        break;
+      }
+      pokeWork->startPos = pokeWork->pos;
+      pokeWork->cnt = 0;
+      pokeWork->stateFunc = MB_CAP_POKE_StateRun;
+
+      MB_CAP_EFFECT_SetIsFinish( pokeWork->downEff , TRUE );
+      pokeWork->downEff = NULL;
+    }
+  }
 }
 
 #pragma mark [>outer func

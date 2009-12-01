@@ -33,8 +33,19 @@ typedef enum
   
   MCPS_CAPTURE,
 
+  MCPS_DOWN_MOVE,
+  MCPS_DOWN_WAIT,
+
   MCPS_MAX,
 }MB_CAP_POKE_STATE;
+
+typedef enum
+{
+  MCPD_LEFT,
+  MCPD_RIGHT,
+  MCPD_UP,
+  MCPD_DOWN,
+}MB_CAP_POKE_DIR;
 
 //======================================================================
 //	typedef struct
@@ -63,7 +74,9 @@ extern void MB_CAP_POKE_UpdateObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *po
 
 extern void MB_CAP_POKE_SetHide( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork , const u8 idxX , const u8 idxY );
 extern void MB_CAP_POKE_SetRun( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
+extern void MB_CAP_POKE_SetRunChangeDir( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork , const MB_CAP_POKE_DIR dir );
 extern void MB_CAP_POKE_SetCapture( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
+extern void MB_CAP_POKE_SetDown( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
 
 //éwíËç¿ïWÇ…Ç¢ÇÈÇ©ÅH
 extern const BOOL MB_CAP_POKE_CheckPos( const MB_CAP_POKE *pokeWork , const u8 idxX , const u8 idxY );

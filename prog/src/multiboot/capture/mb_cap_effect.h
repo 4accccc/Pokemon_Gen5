@@ -27,8 +27,6 @@
 //======================================================================
 #pragma mark [> struct
 
-typedef struct _MB_CAP_EFFECT MB_CAP_EFFECT;
-
 typedef struct
 {
   MB_CAP_EFFECT_TYPE type;
@@ -47,4 +45,7 @@ extern MB_CAP_EFFECT *MB_CAP_EFFECT_CreateObject( MB_CAPTURE_WORK *capWork , MB_
 extern void MB_CAP_EFFECT_DeleteObject( MB_CAPTURE_WORK *capWork , MB_CAP_EFFECT *effWork );
 extern void MB_CAP_EFFECT_UpdateObject( MB_CAPTURE_WORK *capWork , MB_CAP_EFFECT *effWork );
 extern const BOOL MB_CAP_EFFECT_IsFinish( const MB_CAP_EFFECT *effWork );
+
+extern void MB_CAP_EFFECT_SetIsFinish( MB_CAP_EFFECT *effWork , const BOOL isFinish );
+extern void MB_CAP_EFFECT_SetIsLoop( MB_CAP_EFFECT *effWork , const BOOL isLoop );
 

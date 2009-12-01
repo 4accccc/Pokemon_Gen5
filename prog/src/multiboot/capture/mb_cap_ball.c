@@ -18,6 +18,8 @@
 #include "./mb_cap_poke.h"
 #include "./mb_cap_ball.h"
 
+#include "./mb_cap_snd_def.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -73,6 +75,8 @@ struct _MB_CAP_BALL
 //======================================================================
 #pragma mark [> proto
 static void MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork );
+static void MB_CAP_BALL_CheckHitObj_CheckSide( MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork , 
+                const s8 idxX , const s8 idxY , const s8 ofsX , const s8 ofsY );
 static void MB_CAP_BALL_CheckHitPoke_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork );
 
 static void MB_CAP_BALL_StateShot(MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork );
@@ -168,6 +172,7 @@ void MB_CAP_BALL_UpdateObject( MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork 
 static void MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork )
 {
   int i;
+  BOOL isHitAny = FALSE;
   MB_CAP_HIT_WORK ballHit;
   
   //オブジェとの当たり判定
@@ -181,9 +186,11 @@ static void MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork , MB_CA
     isHit = MB_CAPTURE_CheckHit( &ballHit , &objHit );
     if( isHit == TRUE )
     {
+      isHitAny = TRUE;
       if( i < MB_CAP_OBJ_MAIN_NUM )
       {
         int j;
+        BOOL isHitAnyPoke = FALSE;
         for( j=0;j<MB_CAP_POKE_NUM;j++ )
         {
           MB_CAP_POKE *pokeWork = MB_CAPTURE_GetPokeWork( capWork , j );
@@ -192,10 +199,125 @@ static void MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork , MB_CA
           if( pokeState == MCPS_LOOK && isHitPoke == TRUE )
           {
             MB_CAP_POKE_SetRun( capWork , pokeWork );
+            isHitAnyPoke = TRUE;
+          }
+          else
+          if( pokeState == MCPS_RUN_HIDE && isHitPoke == TRUE )
+          {
+            MB_CAP_POKE_SetRun( capWork , pokeWork );
+            isHitAnyPoke = TRUE;
+          }
+          else
+          if( pokeState == MCPS_HIDE && isHitPoke == TRUE )
+          {
+            PMSND_PlaySE( MB_SND_BALL_BOUND );
+            isHitAnyPoke = TRUE;
           }
         }
+        if( isHitAnyPoke == FALSE )
+        {
+          PMSND_PlaySE( MB_SND_GRASS_SHAKE );
+        }
+        //周囲の方向チェック
+        {
+          const s8 idxX = i%MB_CAP_OBJ_X_NUM;
+          const s8 idxY = i/MB_CAP_OBJ_X_NUM;
+          
+          MB_CAP_BALL_CheckHitObj_CheckSide( capWork , ballWork , idxX , idxY , -1 ,  0 );
+          MB_CAP_BALL_CheckHitObj_CheckSide( capWork , ballWork , idxX , idxY ,  1 ,  0 );
+          MB_CAP_BALL_CheckHitObj_CheckSide( capWork , ballWork , idxX , idxY ,  0 , -1 );
+          MB_CAP_BALL_CheckHitObj_CheckSide( capWork , ballWork , idxX , idxY ,  0 ,  1 );
+        }
+      }
+      else
+      if( i < MB_CAP_OBJ_SUB_D_START )
+      {
+        //上の木
+        const s8 idxX = (i-MB_CAP_OBJ_SUB_U_START);
+        const s8 idxY = -1;
+        MB_CAP_BALL_CheckHitObj_CheckSide( capWork , ballWork , idxX , idxY , 0 , 1 );
+        PMSND_PlaySE( MB_SND_BALL_HIT_WOOD );
+      }
+      else
+      if( i < MB_CAP_OBJ_SUB_R_START )
+      {
+        //下の水の木
+        const s8 idxX = (i-MB_CAP_OBJ_SUB_D_START);
+        const s8 idxY = MB_CAP_OBJ_Y_NUM;
+        MB_CAP_BALL_CheckHitObj_CheckSide( capWork , ballWork , idxX , idxY , 0 , -1 );
+        PMSND_PlaySE( MB_SND_BALL_HIT_WATER );
+      }
+      else
+      if( i < MB_CAP_OBJ_SUB_L_START )
+      {
+        //右の草
+        const s8 idxX = MB_CAP_OBJ_X_NUM;
+        const s8 idxY = (i-MB_CAP_OBJ_SUB_R_START);
+        MB_CAP_BALL_CheckHitObj_CheckSide( capWork , ballWork , idxX , idxY , -1 , 0 );
+        PMSND_PlaySE( MB_SND_GRASS_SHAKE );
+      }
+      else
+      if( i < MB_CAP_OBJ_NUM )
+      {
+        //左の草
+        const s8 idxX = -1;
+        const s8 idxY = (i-MB_CAP_OBJ_SUB_L_START);
+        MB_CAP_BALL_CheckHitObj_CheckSide( capWork , ballWork , idxX , idxY , 1 , 0 );
+        PMSND_PlaySE( MB_SND_GRASS_SHAKE );
       }
     }
+  }
+  if( isHitAny == FALSE )
+  {
+    PMSND_PlaySE( MB_SND_BALL_NO_HIT );
+  }
+}
+
+//--------------------------------------------------------------
+//	ボールとOBJの当たり判定(ショット終了時処理の後の4方向チェック
+//--------------------------------------------------------------
+static void MB_CAP_BALL_CheckHitObj_CheckSide( MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork , const s8 idxX , const s8 idxY , const s8 ofsX , const s8 ofsY )
+{
+  if( idxX + ofsX >= 0 &&
+      idxX + ofsX < MB_CAP_OBJ_X_NUM &&
+      idxY + ofsY >= 0 &&
+      idxY + ofsY < MB_CAP_OBJ_Y_NUM )
+  {
+    u8 i;
+    for( i=0;i<MB_CAP_POKE_NUM;i++ )
+    {
+      MB_CAP_POKE *pokeWork = MB_CAPTURE_GetPokeWork( capWork , i );
+      const MB_CAP_POKE_STATE pokeState = MB_CAP_POKE_GetState( pokeWork );
+      const BOOL isHitPoke = MB_CAP_POKE_CheckPos( pokeWork , idxX+ofsX , idxY+ofsY );
+      
+      if( isHitPoke == TRUE &&
+          pokeState == MCPS_RUN_HIDE )
+      {
+        MB_CAP_POKE_DIR dir;
+        if( ofsX == -1 )
+        {
+          dir = MCPD_LEFT;
+        }
+        else
+        if( ofsX == 1 )
+        {
+          dir = MCPD_RIGHT;
+        }
+        else
+        if( ofsY == -1 )
+        {
+          dir = MCPD_UP;
+        }
+        else
+        if( ofsY == 1 )
+        {
+          dir = MCPD_DOWN;
+        }
+        
+        MB_CAP_POKE_SetRunChangeDir( capWork , pokeWork , dir );
+      }
+    }
+    
   }
 }
 
@@ -208,7 +330,7 @@ static void MB_CAP_BALL_CheckHitPoke_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP
   int i;
   MB_CAP_HIT_WORK ballHit;
   
-  //オブジェとの当たり判定
+  //ポケとの当たり判定
   MB_CAP_BALL_GetHitWork( ballWork , &ballHit );
   for( i=0;i<MB_CAP_POKE_NUM;i++ )
   {
@@ -219,7 +341,10 @@ static void MB_CAP_BALL_CheckHitPoke_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP
 
     MB_CAP_POKE_GetHitWork( pokeWork , &pokeHit );
     isHit = MB_CAPTURE_CheckHit( &ballHit , &pokeHit );
-    if( isHit == TRUE && pokeState == MCPS_RUN_LOOK )
+    if( isHit == TRUE && 
+        ( pokeState == MCPS_RUN_LOOK || 
+          pokeState == MCPS_DOWN_WAIT || 
+          pokeState == MCPS_DOWN_MOVE ) )
     {
       const u16 cellIdx = 0;
       const u16 rot = 0;
@@ -238,6 +363,7 @@ static void MB_CAP_BALL_CheckHitPoke_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP
       GFL_BBD_SetObjectCelIdx( bbdSys , ballWork->objIdx , &cellIdx );
       GFL_BBD_SetObjectRotate( bbdSys , ballWork->objIdx , &rot );
       OS_TPrintf("Hit!!\n");
+      PMSND_PlaySE( MB_SND_POKE_CAPTURE );
     }
   }
 }
@@ -328,6 +454,7 @@ static void MB_CAP_BALL_StateCaptureAnime(MB_CAPTURE_WORK *capWork , MB_CAP_BALL
         ballWork->cnt = 0;
         ballWork->state = MCBS_CAPTURE_TRANS;
         GFL_BBD_SetObjectDrawEnable( bbdSys , ballWork->objShadowIdx , &isDisp );
+        PMSND_PlaySE( MB_SND_POKE_TRANS );
       }
       else
       {
