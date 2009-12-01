@@ -2,6 +2,8 @@
 #ifndef ZONE_N01R0501_EVD_H
 #define ZONE_N01R0501_EVD_H
 
+#define DOOR_ID_N01R0501_N01R0401_EXIT01  0
+#define DOOR_ID_N01R0501_N01R0502_EXIT01  1
 
 #endif //ZONE_N01R0501_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/n01r0501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
