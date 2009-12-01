@@ -39,6 +39,8 @@
 
 #define SPWIN_HEIGHT_FONT_SPACE (2)
 
+#define MSG_SKIP_BTN (PAD_BUTTON_A|PAD_BUTTON_B)
+
 //--------------------------------------------------------------
 //  メッセージウィンドウ、キャラオフセット
 //--------------------------------------------------------------
@@ -1669,7 +1671,7 @@ static PRINTSTREAM_STATE fldMsgPrintStream_ProcPrint(
       stm->flag_key_trg = TRUE;
     }
     
-    if( stm->flag_key_trg == TRUE && (cont & PAD_BUTTON_A) ){
+    if( stm->flag_key_trg == TRUE && (cont & MSG_SKIP_BTN) ){
       PRINTSYS_PrintStreamShortWait( stm->printStream, 0 );
     }
 #if 0
@@ -2365,7 +2367,7 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
       tmsg->flag_key_trg = TRUE;
     }
     
-    if( tmsg->flag_key_trg == TRUE && (cont & PAD_BUTTON_A) ){
+    if( tmsg->flag_key_trg == TRUE && (cont & MSG_SKIP_BTN) ){
       PRINTSYS_PrintStreamShortWait( stream, 0 );
     }
 #if 0
@@ -2555,7 +2557,7 @@ BOOL FLDPLAINMSGWIN_Print( FLDPLAINMSGWIN *plnwin )
       plnwin->flag_key_trg = TRUE;
     }
     
-    if( plnwin->flag_key_trg == TRUE && (cont & PAD_BUTTON_A) ){
+    if( plnwin->flag_key_trg == TRUE && (cont & MSG_SKIP_BTN) ){
       PRINTSYS_PrintStreamShortWait( stream, 0 );
     }
     break;
