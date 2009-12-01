@@ -7,6 +7,5 @@
 //スクリプトデータID定義
 #define SCRID_C07R0401_GENTLEMAN_01 (1)
 #define SCRID_C07R0401_WOMAN2_01 (2)
-#define SCRID_C07R0401_WOMAN1_01 (3)
 
 #endif //_C07R0401_DEF_H_
