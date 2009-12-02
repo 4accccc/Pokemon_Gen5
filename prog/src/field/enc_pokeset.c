@@ -243,6 +243,81 @@ int ENCPOKE_GetNormalEncountPokeData( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PA
   return num;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WFBCエンカウントポケモンの取得
+ *
+ *	@param	cp_wfbc     WFBCワーク
+ *	@param  efp         エンカウントの状況
+ *	@param	outPokeTbl  出力先
+ *
+ * @return  抽選されたポケモン数(0ならエンカウント失敗)
+ */
+//-----------------------------------------------------------------------------
+u32 ENCPOKE_GetWFBCEncountPoke( const FIELD_WFBC* cp_wfbc, ENCPOKE_FLD_PARAM* efp, ENC_POKE_PARAM* outPokeTbl )
+{
+  u32 num = 0;
+  int i;
+  int tbl_index;
+  const FIELD_WFBC_PEOPLE* cp_people;
+  const FIELD_WFBC_PEOPLE_DATA* cp_people_data;
+  u32 rand;
+  
+  GF_ASSERT( cp_wfbc );
+  GF_ASSERT( outPokeTbl );
+
+  switch( efp->location )
+  {
+  case ENC_LOCATION_GROUND_L:
+    tbl_index=  FIELD_WFBC_PEOPLE_ENC_POKE_GRASS_LOW;
+    break;
+  case ENC_LOCATION_GROUND_H:
+    tbl_index=  FIELD_WFBC_PEOPLE_ENC_POKE_GRASS_HIGH;
+    break;
+  case ENC_LOCATION_WATER:
+    tbl_index=  FIELD_WFBC_PEOPLE_ENC_POKE_WATER;
+    break;
+
+  // なしはさようなら
+  case ENC_LOCATION_NONE:
+    return 0;
+
+  default:
+    GF_ASSERT_MSG( 0, "WFBC enc not support enc_location = %d\n", efp->location );
+    break;
+  }
+  
+
+  for( i=0; i<FIELD_WFBC_NPCID_MAX; i++ )
+  {
+
+    cp_people  = FIELD_WFBC_GetPeople( cp_wfbc, i );
+    if( cp_people )
+    {
+      cp_people_data = FIELD_WFBC_PEOPLE_GetPeopleData( cp_people );
+
+      rand = GFUser_GetPublicRand( FIELD_WFBC_PEOPLE_ENC_POKE_PERCENT_MAX );
+
+      TOMOYA_Printf( "percent %d\n", cp_people_data->enc_percent[ tbl_index ] );
+      // ポケモン抽選
+      if( rand < cp_people_data->enc_percent[ tbl_index ] )
+      {
+        GFL_STD_MemClear( &outPokeTbl[0], sizeof(ENC_POKE_PARAM) );
+        
+        // ヒット
+        outPokeTbl[0].monsNo  = cp_people_data->enc_monsno[ tbl_index ];
+        outPokeTbl[0].level   = cp_people_data->enc_lv[ tbl_index ];
+
+        TOMOYA_Printf( "monsNo %d level %d\n", outPokeTbl[0].monsNo, outPokeTbl[0].level );
+        return 1;
+      }
+    }
+  }
+
+
+  return 0;
+}
+
 /*
  *  @brief  エンカウントポケモン　POKEPARA生成
  */

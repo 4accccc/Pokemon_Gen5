@@ -338,6 +338,7 @@ MMDL_HEADER* FIELD_WFBC_MMDLHeaderCreateHeapLo( const FIELD_WFBC* cp_wk, HEAPID 
   return p_buff;
 }
 
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  ŠXî•ñ‚ğİ’è

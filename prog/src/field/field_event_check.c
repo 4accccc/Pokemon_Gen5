@@ -1962,6 +1962,14 @@ static GMEVENT * checkNormalEncountEvent( const EV_REQUEST * req, GAMESYS_WORK *
   }
 #endif
   
+  // WFBC
+  if( ZONEDATA_IsWfbc( req->map_id ) )
+  {
+    FLDMAPPER * p_mapper = FIELDMAP_GetFieldG3Dmapper( fieldWork );
+    FIELD_WFBC * p_wfbc = FLDMAPPER_GetWfbcWork( p_mapper );
+    return (GMEVENT*)FIELD_ENCOUNT_CheckWfbcEncount(encount, p_wfbc );
+  }
+  
   enc_type = ENC_TYPE_NORMAL; //(ZONEDATA_IsBingo( req->map_id ) == TRUE) ? ENC_TYPE_BINGO : ENC_TYPE_NORMAL;
   return (GMEVENT*)FIELD_ENCOUNT_CheckEncount(encount, enc_type);
 }

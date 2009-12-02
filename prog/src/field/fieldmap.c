@@ -2593,7 +2593,7 @@ static void setupWfbc( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id )
 {
   FIELD_WFBC_CORE* p_core;
   
-  if( fieldWork->map_id == ZONE_ID_BCWFTEST )
+  if( ZONEDATA_IsWfbc( fieldWork->map_id ) )
   {
     p_core = GAMEDATA_GetMyWFBCCoreData( fieldWork->gamedata );
     

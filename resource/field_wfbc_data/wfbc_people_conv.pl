@@ -319,9 +319,9 @@ sub MONSNO_GetIdx
     @codeline = split( /\s/, $code );
     if( "".$codeline[1] eq "MONSNO_".$name )
     {
-      $codeline[2] =~ s/\(//;
-      $codeline[2] =~ s/\)//;
-      return $codeline[2];
+      $codeline[3] =~ s/\(//;
+      $codeline[3] =~ s/\)//;
+      return $codeline[3];
     }
   }
 

@@ -314,13 +314,12 @@ void* FIELD_ENCOUNT_CheckFishingEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_ty
 /**
  * エンカウントチェック(釣りエンカウト)
  * @param enc           FIELD_ENCOUNT
- * @param enc_mode      ENCOUNT_MODE_???
  * @param cp_wfbcedata  wfbc情報
  * @retval  NULL  エンカウントなし
  * @retval  GMEVENT*  エンカウント成功
  */
 //-----------------------------------------------------------------------------
-void* FIELD_ENCOUNT_CheckWfbcEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type, const FIELD_WFBC* cp_wfbcdata )
+void* FIELD_ENCOUNT_CheckWfbcEncount( FIELD_ENCOUNT *enc, const FIELD_WFBC* cp_wfbcdata )
 {
   u32 per,enc_num;
   BOOL ret = FALSE,force_f = FALSE;
@@ -331,13 +330,12 @@ void* FIELD_ENCOUNT_CheckWfbcEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type,
   ENCPOKE_FLD_PARAM fld_spa;
   FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( enc->fwork );
 
+
+
   ewk = GAMEDATA_GetEncountWork(enc->gdata);
-  if( enc_type == ENC_TYPE_FORCE || enc_type == ENC_TYPE_EFFECT ){
-    force_f = TRUE;
-  }else{
-    //最後のエンカウントからのプレイヤーの歩数を加算
-    encwork_AddPlayerWalkCount( ewk, fplayer);
-  }
+
+  //最後のエンカウントからのプレイヤーの歩数を加算
+  encwork_AddPlayerWalkCount( ewk, fplayer);
 
 #ifdef PM_DEBUG
   //デバッグ強制エンカウントOffルーチン
@@ -349,17 +347,14 @@ void* FIELD_ENCOUNT_CheckWfbcEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type,
   //ロケーションチェック
   {
     u8 prob_rev = 0;
-    enc_loc = enc_GetLocation( enc, enc_type, &prob_rev );
-    per = enc_GetLocationPercent( enc, enc_loc, prob_rev );
-  }
-  if( per <= 0 ){
-    return( NULL ); //確率0
+    enc_loc = enc_GetLocation( enc, ENC_TYPE_WFBC, &prob_rev );
   }
 
   //ENCPOKE_FLD_PARAM作成
-  ENCPOKE_SetEFPStruct( &fld_spa, enc->gdata, enc_loc, enc_type,
+  ENCPOKE_SetEFPStruct( &fld_spa, enc->gdata, enc_loc, ENC_TYPE_WFBC,
       FIELD_WEATHER_GetWeatherNo(FIELDMAP_GetFieldWeather( enc->fwork )) );
 
+#if 0
   if( !force_f )
   {
     //道具＆特性によるエンカウント率変動
@@ -369,6 +364,7 @@ void* FIELD_ENCOUNT_CheckWfbcEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type,
       return NULL;
     }
   }
+#endif
 
   { //移動ポケモンチェック
 
@@ -376,7 +372,7 @@ void* FIELD_ENCOUNT_CheckWfbcEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type,
 
   //エンカウントデータ生成
   MI_CpuClear8(poke_tbl,sizeof(ENC_POKE_PARAM)*FLD_ENCPOKE_NUM_MAX);
-  enc_num = ENCPOKE_GetNormalEncountPokeData( enc->encdata, &fld_spa, poke_tbl );
+  enc_num = ENCPOKE_GetWFBCEncountPoke( cp_wfbcdata, &fld_spa, poke_tbl );
 
   if( enc_num == 0 ){ //エンカウント失敗
     return NULL;

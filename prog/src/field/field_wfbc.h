@@ -94,7 +94,6 @@ extern MAPMODE FIELD_WFBC_GetMapMode( const FIELD_WFBC* cp_wk );
 // 戻り値は、GFL_HEAP_Freeをしてください。
 extern MMDL_HEADER* FIELD_WFBC_MMDLHeaderCreateHeapLo( const FIELD_WFBC* cp_wk, HEAPID heapID );
 
-
 //-------------------------------------
 ///	全体情報の設定
 //=====================================

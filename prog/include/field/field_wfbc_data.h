@@ -208,13 +208,23 @@ extern u32 FIELD_WFBC_CORE_PEOPLE_GetNpcID( const FIELD_WFBC_CORE_PEOPLE* cp_wk 
 */
 //-----------------------------------------------------------------------------
 // エンカウントポケモンの数
-#define FIELD_WFBC_PEOPLE_ENC_POKE_MAX  (3)
+typedef enum
+{
+  FIELD_WFBC_PEOPLE_ENC_POKE_GRASS_LOW,
+  FIELD_WFBC_PEOPLE_ENC_POKE_GRASS_HIGH,
+  FIELD_WFBC_PEOPLE_ENC_POKE_WATER,
+  FIELD_WFBC_PEOPLE_ENC_POKE_MAX,
+  
+} FIELD_WFBC_PEOPLE_ENC_POKE_TYPE;
 // バトルポケモンの数
 #define FIELD_WFBC_PEOPLE_BTL_POKE_MAX  (3)
 
 // メッセージの数
 #define FIELD_WFBC_PEOPLE_WF_MESSAGE_MAX  (3)
 #define FIELD_WFBC_PEOPLE_BC_MESSAGE_MAX  (4)
+
+// エンカウント抽選確率　最大値
+#define FIELD_WFBC_PEOPLE_ENC_POKE_PERCENT_MAX  ( 100 )
 
 //-----------------------------------------------------------------------------
 /**
