@@ -119,6 +119,7 @@ SRCS  +=    $(SOUNDSRC) \
         poke_tool/poke_regulation.c \
         poke_tool/pokeparty.c \
         poke_tool/poke_personal.c \
+        poke_tool/pokerus.c \
         pokeicon/pokeicon.c \
         waza_tool/waza_tool.c \
         print/printsys.c \
