@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00207" date="2009-12-02T17:22:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,11 +292,198 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c03_businessman1_01">
+		<comment>♂
+・実験用</comment>
+		<attribute name="キャラ指定">BUSINESSMAN
+ビジネスマン</attribute>
+		<language name="JPN" width="256">いそがしい　いそがしいッ！</language>
+		<language name="JPN_KANJI" width="256">忙しい　忙しいッ！</language>
+	</row>
+
+	<row id="msg_c03_businessman2_01">
+		<comment>♂
+・実験用</comment>
+		<attribute name="キャラ指定">BUSINESSMAN
+ビジネスマン</attribute>
+		<language name="JPN" width="256">いちびょうを　あらそう</language>
+		<language name="JPN_KANJI" width="256">一秒を　争う！</language>
+	</row>
+
+	<row id="msg_c03_businessman3_01">
+		<comment>♂
+・実験用</comment>
+		<attribute name="キャラ指定">BUSINESSMAN
+ビジネスマン</attribute>
+		<language name="JPN" width="256">オレさまは
+あるくだけでも　かっこいいよな！</language>
+		<language name="JPN_KANJI" width="256">オレさまは
+歩くだけでも　かっこいいよな！</language>
+	</row>
+
+	<row id="msg_c03_businessman4_01">
+		<comment>♂
+・実験用</comment>
+		<attribute name="キャラ指定">BUSINESSMAN
+ビジネスマン</attribute>
+		<language name="JPN" width="256">やあ！　トレーナー！
+きみの　ポケモン　げんきかい？</language>
+		<language name="JPN_KANJI" width="256">やあ！　トレーナー！
+きみの　ポケモン　元気かい？</language>
+	</row>
+
+	<row id="msg_c03_businessman5_01">
+		<comment>♂
+・実験用</comment>
+		<attribute name="キャラ指定">BUSINESSMAN
+ビジネスマン</attribute>
+		<language name="JPN" width="256">……ブツブツ</language>
+		<language name="JPN_KANJI" width="256">……ブツブツ</language>
+	</row>
+
+	<row id="msg_c03_businessman6_01">
+		<comment>♂
+・実験用</comment>
+		<attribute name="キャラ指定">BUSINESSMAN
+ビジネスマン</attribute>
+		<language name="JPN" width="256">１・２！　１・２！</language>
+		<language name="JPN_KANJI" width="256">１・２！　１・２！</language>
+	</row>
+
+	<row id="msg_c03_businessman7_01">
+		<comment>♂
+・実験用</comment>
+		<attribute name="キャラ指定">BUSINESSMAN
+ビジネスマン</attribute>
+		<language name="JPN" width="256">タイム　イズ　マネー</language>
+		<language name="JPN_KANJI" width="256">タイム　イズ　マネー</language>
+	</row>
+
+	<row id="msg_c03_businessman8_01">
+		<comment>♂
+・実験用</comment>
+		<attribute name="キャラ指定">BUSINESSMAN
+ビジネスマン</attribute>
+		<language name="JPN" width="256">あいかわらず　ひとが　おおい……</language>
+		<language name="JPN_KANJI" width="256">あいかわらず　人が　多い……</language>
+	</row>
+
+	<row id="msg_c03_businessman9_01">
+		<comment>♂
+・実験用</comment>
+		<attribute name="キャラ指定">BUSINESSMAN
+ビジネスマン</attribute>
+		<language name="JPN" width="256">……どこで　さぼろうかな</language>
+		<language name="JPN_KANJI" width="256">……どこで　さぼろうかな</language>
+	</row>
+
+	<row id="msg_c03_businessman10_01">
+		<comment>♂
+・実験用</comment>
+		<attribute name="キャラ指定">BUSINESSMAN
+ビジネスマン</attribute>
+		<language name="JPN" width="256">この　まちは
+ねむらない　まち……</language>
+		<language name="JPN_KANJI" width="256">この　街は
+眠らない　街……</language>
+	</row>
+
+	<row id="msg_c03_businessman11_01">
+		<comment>♂
+・実験用</comment>
+		<attribute name="キャラ指定">BUSINESSMAN
+ビジネスマン</attribute>
+		<language name="JPN" width="256">あしたも　この　みちを　あるくだろう
+あさっても　しあさっても……</language>
+		<language name="JPN_KANJI" width="256">明日も　この道を　歩くだろう
+明後日も　明明後日も……</language>
+	</row>
+
+	<row id="msg_c03_businessman12_01">
+		<comment>♂
+・実験用</comment>
+		<attribute name="キャラ指定">BUSINESSMAN
+ビジネスマン</attribute>
+		<language name="JPN" width="256">おとくいさま
+まっているだろうなあ……</language>
+		<language name="JPN_KANJI" width="256">お得意様
+待っているだろうなあ……</language>
+	</row>
+
+	<row id="msg_c03_businessman13_01">
+		<comment>♂
+・実験用</comment>
+		<attribute name="キャラ指定">BUSINESSMAN
+ビジネスマン</attribute>
+		<language name="JPN" width="256">わたしは　たたかう　ビジネスマン</language>
+		<language name="JPN_KANJI" width="256">私は　闘う　ビジネスマン</language>
+	</row>
+
+	<row id="msg_c03_businessman14_01">
+		<comment>♂
+・実験用</comment>
+		<attribute name="キャラ指定">BUSINESSMAN
+ビジネスマン</attribute>
+		<language name="JPN" width="256">がんばれ！　おれ！！</language>
+		<language name="JPN_KANJI" width="256">がんばれ！　おれ！！</language>
+	</row>
+
+	<row id="msg_c03_businessman15_01">
+		<comment>♂
+・実験用</comment>
+		<attribute name="キャラ指定">BUSINESSMAN
+ビジネスマン</attribute>
+		<language name="JPN" width="256">こんどの　やすみは
+ベースボールかんせん　だな</language>
+		<language name="JPN_KANJI" width="256">今度の　休みは
+ベースボール観戦だな</language>
+	</row>
+
+	<row id="msg_c03_ol1_01">
+		<comment>♀
+・実験用</comment>
+		<attribute name="キャラ指定">OL
+</attribute>
+		<language name="JPN" width="256">ごめんなさい！
+ちょっと　いそいでいるの！</language>
+		<language name="JPN_KANJI" width="256">ごめんなさい！
+ちょっと　急いでいるの！</language>
+	</row>
+
+	<row id="msg_c03_ol2_01">
+		<comment>♀
+・実験用</comment>
+		<attribute name="キャラ指定">OL
+</attribute>
+		<language name="JPN" width="256">あら？　こんにちは！</language>
+		<language name="JPN_KANJI" width="256">あら？　こんにちは！</language>
+	</row>
+
+	<row id="msg_c03_ol3_01">
+		<comment>♀
+・実験用</comment>
+		<attribute name="キャラ指定">OL
+</attribute>
+		<language name="JPN" width="256">はたらく　じょせいは　うつくしい</language>
+		<language name="JPN_KANJI" width="256">働く　女性は　美しい</language>
+	</row>
+
+	<row id="msg_c03_ol4_01">
+		<comment>♀
+・実験用</comment>
+		<attribute name="キャラ指定">OL
+</attribute>
+		<language name="JPN" width="256">えっと　つぎの　しごとは……</language>
+		<language name="JPN_KANJI" width="256">えっと　次の　仕事は……</language>
+	</row>
+
+	<row id="msg_c03_ol5_01">
+		<comment>♀
+・実験用</comment>
+		<attribute name="キャラ指定">OL
+</attribute>
+		<language name="JPN" width="256">モデルのような　あるきかたよ</language>
+		<language name="JPN_KANJI" width="256">モデルのような　歩き方よ</language>
 	</row>
 
 	<flowchart-group-list>
