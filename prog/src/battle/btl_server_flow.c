@@ -5009,6 +5009,7 @@ static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
       scPut_EatNutsAct( wk, bpp );
     }
 
+    BTL_Printf("ポケ[%d]のアイテム(%d)使用する\n", BPP_GetID(bpp), itemID);
     scproc_HandEx_Root( wk, itemID );
     Hem_PopState( &wk->HEManager, hem_state_2nd );
     if( ITEM_CheckNuts(itemID) ){
@@ -5380,7 +5381,7 @@ static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target,
 
     if( scEvent_CheckRankEffectSuccess(wk, target, effect, wazaUsePokeID, volume) )
     {
-      BTL_Printf("ランク効果発生：type=%d, volume=%d\n", effect, volume );
+      BTL_Printf("ランク効果発生：type=%d, volume=%d, itemID=%d\n", effect, volume, itemID );
       scPut_RankEffect( wk, target, effect, volume, itemID, fStdMsg );
       {
         u32 hem_state = Hem_PushState( &wk->HEManager );
@@ -7064,7 +7065,7 @@ static void scPut_RankEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaRa
       if( itemID == ITEM_DUMMY_DATA ){
         SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Rankup_ATK, pokeID, effect, volume );
       }else{
-        SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_UseItem_Rankup_ATK, pokeID, effect, volume, itemID );
+        SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_UseItem_Rankup_ATK, pokeID, itemID, effect, volume );
       }
     }
   }

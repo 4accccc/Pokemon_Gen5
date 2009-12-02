@@ -287,9 +287,11 @@ static void handler_NerainoMato( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_SimetukeBand( u16 pri, u16 itemID, u8 pokeID );
 static void handler_SimetukeBand( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_Kyuukon( u16 pri, u16 itemID, u8 pokeID );
-static void handler_Kyuukon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Kyuukon_DmgReaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Kyuukon_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_Juudenti( u16 pri, u16 itemID, u8 pokeID );
-static void handler_Juudenti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Juudenti_DmgReaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Juudenti_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_DassyutuPod( u16 pri, u16 itemID, u8 pokeID );
 static void handler_DassyutuPod( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_HonooNoJuel( u16 pri, u16 itemID, u8 pokeID );
@@ -3409,7 +3411,6 @@ static void handler_RedCard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
     }
   }
 }
-
 //------------------------------------------------------------------------------
 /**
  *  ねらいのまと
@@ -3418,14 +3419,21 @@ static void handler_RedCard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_NerainoMato( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,     handler_NerainoMato },
+    { BTL_EVENT_NOEFFECT_TYPE_CHECK,     handler_NerainoMato },   // タイプ相性による無効化チェック
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
+// タイプ相性による無効化チェック
 static void handler_NerainoMato( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-
+  // 自分が防御側の時、相性により無効化されていれば有効に書き換え
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+  {
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_NOEFFECT_FLAG) ){
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, FALSE );
+    }
+  }
 }
 //------------------------------------------------------------------------------
 /**
@@ -3452,14 +3460,39 @@ static void handler_SimetukeBand( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_Kyuukon( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,     handler_Kyuukon },
+    { BTL_EVENT_WAZA_DMG_REACTION,     handler_Kyuukon_DmgReaction },   // ダメージ反応ハンドラ
+    { BTL_EVENT_USE_ITEM,              handler_Kyuukon_Use   },         // どうぐ使用ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
-static void handler_Kyuukon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// ダメージ反応ハンドラ
+static void handler_Kyuukon_DmgReaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-
+  // 自分が水タイプのワザダメージを受けた時、特攻がまだ上がるなら反応する
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+  {
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == POKETYPE_MIZU )
+    {
+      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+      if( BPP_IsRankEffectValid(bpp, BPP_SP_ATTACK, 1) )
+      {
+        BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
+      }
+    }
+  }
+}
+// どうぐ使用ハンドラ
+static void handler_Kyuukon_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
+    param->poke_cnt = 1;
+    param->pokeID[0] = pokeID;
+    param->rankType = BPP_SP_ATTACK;
+    param->rankVolume = 1;
+  }
 }
 //------------------------------------------------------------------------------
 /**
@@ -3469,14 +3502,39 @@ static void handler_Kyuukon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_Juudenti( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,     handler_Juudenti },
+    { BTL_EVENT_WAZA_DMG_REACTION,     handler_Juudenti_DmgReaction },   // ダメージ反応ハンドラ
+    { BTL_EVENT_USE_ITEM,              handler_Juudenti_Use   },         // どうぐ使用ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
-static void handler_Juudenti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// ダメージ反応ハンドラ
+static void handler_Juudenti_DmgReaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-
+  // 自分が電気タイプのワザダメージを受けた時、攻撃がまだ上がるなら反応する
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+  {
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == POKETYPE_DENKI )
+    {
+      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+      if( BPP_IsRankEffectValid(bpp, BPP_ATTACK, 1) )
+      {
+        BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
+      }
+    }
+  }
+}
+// どうぐ使用ハンドラ
+static void handler_Juudenti_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
+    param->poke_cnt = 1;
+    param->pokeID[0] = pokeID;
+    param->rankType = BPP_ATTACK;
+    param->rankVolume = 1;
+  }
 }
 //------------------------------------------------------------------------------
 /**

@@ -106,17 +106,18 @@ static struct {
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static inline void register_PokeNickname( u8 pokeID, WordBufID bufID );
+static inline void register_PokeNicknameTruth( u8 pokeID, WordBufID bufID );
 static inline void register_PokeName( u8 pokeID, u8 bufID );
 static void register_TrainerType( WORDSET* wset, u8 bufIdx, u8 clientID );
 static void register_TrainerName( WORDSET* wset, u8 bufIdx, u8 clientID );
+static void ms_std_simple( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static inline SetStrFormat get_strFormat( u8 pokeID );
 static inline u16 get_setStrID( u8 pokeID, u16 defaultStrID );
 static inline u16 get_setStrID_Poke2( u8 pokeID1, u8 pokeID2, u16 defaultStrID );
 static inline u16 get_setPtnStrID( u8 pokeID, u16 originStrID, u8 ptnNum );
-static void ms_std_simple( STRBUF* dst, BtlStrID_STD strID, const int* args );
-static void ms_waza_lock( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset );
 static void ms_set_std( STRBUF* dst, u16 strID, const int* args );
+static void ms_set_rankup_item( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankdown( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rank_limit( STRBUF* dst, u16 strID, const int* args );
@@ -412,9 +413,10 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
     void  (* func)( STRBUF*, u16, const int* );
   }funcTbl[] = {
     { BTL_STRID_SET_Rankup_ATK,           ms_set_rankup           },
-    { BTL_STRID_SET_Rankdown_ATK,         ms_set_rankdown         },
+    { BTL_STRID_SET_Rankdown_ATK,         ms_set_rankup           },
     { BTL_STRID_SET_RankupMax_ATK,        ms_set_rank_limit       },
     { BTL_STRID_SET_RankdownMin_ATK,      ms_set_rank_limit       },
+    { BTL_STRID_SET_UseItem_Rankup_ATK,   ms_set_rankup_item      },
     { BTL_STRID_STD_UseItem_Self,         ms_set_useitem          },
     { BTL_STRID_SET_YokodoriExe,          ms_set_poke2poke        },
     { BTL_STRID_SET_MirrorType,           ms_set_poke2poke        },
@@ -564,6 +566,27 @@ static void ms_set_std( STRBUF* dst, u16 strID, const int* args )
 }
 //--------------------------------------------------------------
 /**
+ *  ○○は△△で××が（ぐーんと）あがった！
+ *  args... [0]:pokeID,  [1]:itemID,  [2]:statusType,  [3]:volume
+ */
+//--------------------------------------------------------------
+static void ms_set_rankup_item( STRBUF* dst, u16 strID, const int* args )
+{
+  u8 statusType = args[2] - WAZA_RANKEFF_ORIGIN;
+  if( args[3] > 1 )
+  {
+    strID += (SETTYPE_MAX * WAZA_RANKEFF_NUMS);
+  }
+  strID = get_setPtnStrID( args[0], strID, statusType );
+  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
+  WORDSET_RegisterItemName( SysWork.wset, 1, args[1] );
+
+  GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
+  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
+
+//--------------------------------------------------------------
+/**
  *  ○○の××が（ぐーんと）あがった！
  *  args... [0]:pokeID,  [1]:statusType, [2]:volume
  */
@@ -580,6 +603,7 @@ static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args )
   GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
+
 //--------------------------------------------------------------
 /**
  *  ○○の××が（がくっと）さがった！
