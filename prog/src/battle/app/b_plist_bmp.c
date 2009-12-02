@@ -107,6 +107,9 @@ static void BPL_WazaDelSelPageBmpWrite( BPLIST_WORK * wk );
 static void BPL_Page6BmpWrite( BPLIST_WORK * wk );
 //static void BPL_Page8BmpWrite( BPLIST_WORK * wk );
 
+static void BPL_PokeSelStrPut( BPLIST_WORK * wk, u32 midx );
+
+
 static void AddDummyBmpWin( BPLIST_WORK * wk );
 static void DelDummyBmpWin( BPLIST_WORK * wk );
 
@@ -665,6 +668,7 @@ void BattlePokeList_BmpAdd( BPLIST_WORK * wk, u32 page )
 
   switch( page ){
   case BPLIST_PAGE_SELECT:    // ポケモン選択ページ
+	case BPLIST_PAGE_DEAD:			// 瀕死入れ替え選択ページ
     dat = Page1_BmpData[0];
     wk->bmp_add_max = WIN_P1_MAX;
     break;
@@ -968,6 +972,11 @@ void BattlePokeList_BmpWrite( BPLIST_WORK * wk, u32 page )
   switch( page ){
   case BPLIST_PAGE_SELECT:    // ポケモン選択ページ
     BPL_Page1BmpWrite( wk );
+		break;
+
+	case BPLIST_PAGE_DEAD:			// 瀕死入れ替え選択ページ
+    BPL_Page1BmpWrite( wk );
+    BPL_PokeSelStrPut( wk, mes_b_plist_01_602 );
     break;
 
   case BPLIST_PAGE_POKE_CHG:    // ポケモン入れ替えページ
@@ -1432,6 +1441,17 @@ static void BPL_PokeSelStrPut( BPLIST_WORK * wk, u32 midx )
 //  BAPPTOOL_PrintScreenTrans( &wk->win[WIN_COMMENT] );
 //  BAPPTOOL_PrintQueOn( &wk->win[WIN_COMMENT] );
 }
+
+void BPLISTBMP_PokeSelInfoMesPut( BPLIST_WORK * wk )
+{
+	BPL_PokeSelStrPut( wk, mes_b_plist_01_600 );
+}
+
+void BPLISTBMP_DeadSelInfoMesPut( BPLIST_WORK * wk )
+{
+	BPL_PokeSelStrPut( wk, mes_b_plist_01_602 );
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -3360,13 +3380,18 @@ void BPLISTBMP_PrintMain( BPLIST_WORK * wk )
   BAPPTOOL_PrintUtilTrans( wk->add_win, wk->que, wk->bmp_add_max );
 }
 
-void BPLIST_SetStrScrn( BPLIST_WORK * wk )
+void BPLISTBMP_SetStrScrn( BPLIST_WORK * wk )
 {
   BAPPTOOL_SetStrScrn( wk->add_win, wk->putWin );
+	BPLISTBMP_SetCommentScen( wk );
+}
+
+void BPLISTBMP_SetCommentScen( BPLIST_WORK * wk )
+{
   if( wk->page_chg_comm == 1 ){
-    BmpWinFrame_Write(
-      wk->win[WIN_COMMENT].win, WINDOW_TRANS_OFF, TALK_WIN_CGX_POS, BPL_PAL_TALK_WIN );
-    BAPPTOOL_PrintScreenTrans( &wk->win[WIN_COMMENT] );
+		BmpWinFrame_Write(
+			wk->win[WIN_COMMENT].win, WINDOW_TRANS_OFF, TALK_WIN_CGX_POS, BPL_PAL_TALK_WIN );
+		BAPPTOOL_PrintScreenTrans( &wk->win[WIN_COMMENT] );
     wk->page_chg_comm = 0;
   }
 }

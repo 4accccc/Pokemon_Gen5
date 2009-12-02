@@ -26,15 +26,14 @@
 
 #define	BPL_SELNUM_MAX		( 3 )			// 入れ替え時に選択できる最大数
 
-#define	BPL_SELPOS_SET		( 0xfe )	// 入れ替える必要あり
-#define	BPL_SELPOS_NONE		( 0xff )	// 入れ替える必要なし
+#define	BPL_SELPOS_NONE		( 0xff )	// 入れ替えなし
 
 // リスト処理定義
 enum {
 	BPL_MODE_NORMAL = 0,	// 通常のポケモン選択
-	BPL_MODE_NO_CANCEL,		// キャンセル不可
-	BPL_MODE_ITEMUSE,		// アイテム使用
-	BPL_MODE_WAZASET,		// 技忘れ
+	BPL_MODE_CHG_DEAD,		// 瀕死入れ替え選択
+	BPL_MODE_ITEMUSE,			// アイテム使用
+	BPL_MODE_WAZASET,			// 技忘れ
 };
 
 // リストデータ
@@ -57,10 +56,10 @@ typedef struct {
 
 	// [in & out]
 	u8	sel_poke;									// 選択されたポケモン or 戻る
-	u8	sel_pos[BPL_SELNUM_MAX];	// 選択されたポケモン
 	u8 * cursor_flg;							// カーソル表示フラグ
 
 	// [out]
+	u8	sel_pos[BPL_SELNUM_MAX];	// 選択されたポケモン
 	u8	sel_wp;			// 選択された技位置
 	u8	end_flg;		// 終了フラグ
 

@@ -6,8 +6,7 @@
  * @date	05.03.16
  */
 //============================================================================================
-#ifndef B_PLIST_ANM_H
-#define B_PLIST_ANM_H
+#pragma	once
 
 
 //============================================================================================
@@ -33,7 +32,7 @@ enum {
 	BPL_BUTTON_WAZA2,		// ãZÇQ
 	BPL_BUTTON_WAZA3,		// ãZÇR
 	BPL_BUTTON_WAZA4,		// ãZÇS
-	BPL_BUTTON_CONTEST,		// ÉRÉìÉeÉXÉgãZ<->êÌÇ§ãZ
+//	BPL_BUTTON_CONTEST,		// ÉRÉìÉeÉXÉgãZ<->êÌÇ§ãZ
 
 	BPL_BUTTON_WAZARCV1,	// ãZâÒïúÇP
 	BPL_BUTTON_WAZARCV2,	// ãZâÒïúÇQ
@@ -142,5 +141,4 @@ extern void BattlePokeList_ButtonPalSet( BPLIST_WORK * wk, u8 page );
 //--------------------------------------------------------------------------------------------
 extern void BPL_HPRcvButtonPut( BPLIST_WORK * wk );
 
-
-#endif	// B_PLIST_ANM_H
+extern void BPLISTANM_RetButtonPut( BPLIST_WORK * wk );

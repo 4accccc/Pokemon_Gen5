@@ -90,9 +90,13 @@ enum {
   SEQ_BPL_IREKAE,     // 入れ替えページコントロール
   SEQ_BPL_ST_MAIN,    // ステータスメイン画面コントロール
   SEQ_BPL_ST_WAZASEL,   // ステータス技選択画面コントロール
-  SEQ_BPL_ST_SKILL,   // ステータス技画面コントロール
+	SEQ_BPL_ST_SKILL,   // ステータス技画面コントロール
 
-  SEQ_BPL_PAGE1_CHG,      // ポケモン選択へ
+  SEQ_BPL_POKESEL_DEAD,		// 瀕死入れ替え選択コントロール
+  SEQ_BPL_POKECHG_DEAD,		// 瀕死入れ替えアニメ
+  SEQ_BPL_DEAD_ERR_RET,
+
+  SEQ_BPL_PAGE1_CHG,				 // ポケモン選択へ
   SEQ_BPL_PAGECHG_IREKAE,   // 入れ替えページへ
   SEQ_BPL_PAGECHG_STMAIN,   // ステータス詳細へ
   SEQ_BPL_PAGECHG_WAZASEL,  // ステータス技選択へ
@@ -100,6 +104,7 @@ enum {
   SEQ_BPL_PAGECHG_WAZASET_S,  // 技忘れ選択画面へ
   SEQ_BPL_PAGECHG_WAZASET_I,  // 技忘れ決定へ
   SEQ_BPL_PAGECHG_PPRCV,    // 技回復へ
+  SEQ_BPL_PAGECHG_DEAD,    // 瀕死入れ替え選択へ
 
   SEQ_BPL_POKECHG,    // ポケモン切り替え
   SEQ_BPL_CHG_ERR_SET,  // 入れ替えエラーセット
@@ -234,8 +239,17 @@ static void CursorMoveSet( BPLIST_WORK * wk, u8 page );
 static void InitListRow( BPLIST_WORK * wk );
 static void ChangeListRow( BPLIST_WORK * wk, u32 pos1, u32 pos2 );
 static BOOL CheckListRow( BPLIST_WORK * wk, u32 pos );
-static BOOL CheckRetNum( BPLIST_WORK * wk );
-static void SetRetNum( BPLIST_WORK * wk );
+//static BOOL CheckRetNum( BPLIST_WORK * wk );
+//static void SetRetNum( BPLIST_WORK * wk );
+static void SetLog( BPLIST_WORK * wk, u8 pos1, u8 pos2 );
+static int BPL_SeqPageChgDead( BPLIST_WORK * wk );
+static int BPL_SeqPokeSelDead( BPLIST_WORK * wk );
+static int BPL_SeqPokeChgDead( BPLIST_WORK * wk );
+static int BPL_SeqDeadErrRet( BPLIST_WORK * wk );
+static BOOL CheckDeadPoke( BPLIST_WORK * wk );
+static void SetDeadChangeData( BPLIST_WORK * wk );
+static BOOL CheckNextDeadSel( BPLIST_WORK * wk );
+
 
 
 //============================================================================================
@@ -251,6 +265,10 @@ static const pBPlistFunc MainSeqFunc[] = {
   BPL_SeqWazaSelect,
   BPL_SeqStInfoWaza,
 
+	BPL_SeqPokeSelDead,
+	BPL_SeqPokeChgDead,
+	BPL_SeqDeadErrRet,
+
   BPL_SeqPage1Chg,
   BPL_SeqPageChgIrekae,
   BPL_SeqPageChgStatus,
@@ -259,6 +277,7 @@ static const pBPlistFunc MainSeqFunc[] = {
   BPL_SeqPageChgWazaSetSel,
   BPL_SeqPageChgWazaSetEnter,
   BPL_SeqPageChgPPRcv,
+	BPL_SeqPageChgDead,
 
   BPL_SeqPokeChange,
   BPL_SeqChgErrSet,
@@ -447,20 +466,14 @@ void BattlePokeList_TaskAdd( BPLIST_DATA * dat )
 //  wk->dat->sel_poke = 1;
 //  wk->dat->chg_waza = 20;
 //  wk->page = BPLIST_PAGE_PP_RCV;    // PP回復技選択ページ
+
 /*
-  wk->dat->mode = BPL_MODE_NO_CANCEL;   // キャンセル不可
+  wk->dat->mode = BPL_MODE_CHG_DEAD;   // キャンセル不可
 //  wk->dat->rule = BTL_RULE_SINGLE;
 //  wk->dat->rule = BTL_RULE_DOUBLE;
 	wk->dat->rule = BTL_RULE_TRIPLE;
-	{
-		wk->dat->sel_pos[0] = BPL_SELPOS_SET;
-		wk->dat->sel_pos[1] = BPL_SELPOS_SET;
-		wk->dat->sel_pos[2] = BPL_SELPOS_SET;
-//		wk->dat->sel_pos[0] = BPL_SELPOS_SET;
-//		wk->dat->sel_pos[1] = BPL_SELPOS_SET;
-//		wk->dat->sel_pos[2] = BPL_SELPOS_SET;
-	}
 */
+
 /**************/
 }
 
@@ -665,7 +678,7 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
 
   BattlePokeList_BmpInit( wk );
   BattlePokeList_BmpWrite( wk, wk->page );
-  BPLIST_SetStrScrn( wk );
+  BPLISTBMP_SetStrScrn( wk );
 
 //  wk->dat->cursor_flg = 1;
 /*
@@ -744,11 +757,26 @@ static int BPL_SeqPokeSelect( BPLIST_WORK * wk )
 
   if( BPL_PokemonSelect( wk ) == TRUE ){
     if( wk->dat->sel_poke == BPL_SEL_EXIT ){
-      if( wk->dat->mode != BPL_MODE_NO_CANCEL ){
+      if( wk->dat->mode != BPL_MODE_CHG_DEAD ){
         PMSND_PlaySE( SEQ_SE_DECIDE2 );
         BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
         return SEQ_BPL_ENDSET;
-      }
+      }else{
+				u8	pos1, pos2;
+				if( BPLISTMAIN_GetNewLog( wk, &pos1, &pos2, TRUE ) == TRUE ){
+					if( pos1 < pos2 ){
+						GF_ASSERT_MSG( pos1 < BPL_SELNUM_MAX, "pos1 = %d\n", pos1 );
+						wk->dat->sel_pos[pos1] = BPL_SELPOS_NONE;
+					}else{
+						GF_ASSERT_MSG( pos2 < BPL_SELNUM_MAX, "pos2 = %d\n", pos2 );
+						wk->dat->sel_pos[pos2] = BPL_SELPOS_NONE;
+					}
+					wk->chg_pos1 = pos1;
+					wk->chg_pos2 = pos2;
+					wk->btn_seq = 0;
+					return SEQ_BPL_POKECHG_DEAD;
+				}
+			}
     }else{
       PMSND_PlaySE( SEQ_SE_DECIDE2 );
       BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_POKE1+wk->dat->sel_poke );
@@ -883,18 +911,16 @@ static int BPL_SeqPokeIrekae( BPLIST_WORK * wk )
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_POKE_CHG );
     if( BPL_IrekaeCheck( wk ) == TRUE ){
 			// 通常の入れ替え
-			if( wk->dat->mode != BPL_MODE_NO_CANCEL ){
+			if( wk->dat->mode != BPL_MODE_CHG_DEAD ){
 	      return SEQ_BPL_ENDSET;
 			}
 			// 瀕死時の入れ替え
-			if( CheckRetNum( wk ) == TRUE ){
+			if( CheckDeadPoke( wk ) == FALSE ){
 				// 即戻りなら、ここでワークをセットして終了
-				SetRetNum( wk );
+				SetDeadChangeData( wk );
 	      return SEQ_BPL_ENDSET;
 			}else{
-				// とりあえず、ここで入れ替え
-				SetRetNum( wk );
-		    wk->ret_seq = SEQ_BPL_PAGE1_CHG;
+		    wk->ret_seq = SEQ_BPL_PAGECHG_DEAD;
 		    return SEQ_BPL_BUTTON_WAIT;
 			}
     }
@@ -1508,11 +1534,17 @@ static int BPL_SeqPageChgWazaSetSel( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqPageChgWazaSetEnter( BPLIST_WORK * wk )
 {
+/*
   if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
     return SEQ_BPL_PAGECHG_WAZASET_I;
   }
   BattlePokelist_WazaTypeSet( wk );
   BPL_PageChange( wk, BPLIST_PAGE_WAZASET_BI );
+*/
+	if( BPL_PageChange( wk, BPLIST_PAGE_WAZASET_BI ) == FALSE ){
+		return SEQ_BPL_PAGECHG_WAZASET_I;
+	}
+//  BattlePokelist_WazaTypeSet( wk );
   return SEQ_BPL_WAZADEL_MAIN;
 }
 
@@ -2190,6 +2222,11 @@ static void BPL_PokeDataMake( BPLIST_WORK * wk )
       waza->pow  = WAZADATA_GetParam( waza->id, WAZAPARAM_POWER );
     }
   }
+/*
+	wk->poke[0].hp = 0;
+  wk->poke[1].hp = 0;
+  wk->poke[2].hp = 0;
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2815,7 +2852,7 @@ static BOOL BPL_PageChange( BPLIST_WORK * wk, u8 next_page )
       BPL_PageChgBgScreenChg( wk, next_page );
       GFL_BG_ClearScreenCodeVReq( GFL_BG_FRAME0_S, 0 );
       GFL_BG_ClearScreenCodeVReq( GFL_BG_FRAME1_S, 0 );
-      BPLIST_SetStrScrn( wk );
+      BPLISTBMP_SetStrScrn( wk );
       BPL_ExpGagePut( wk, next_page );
       BattlePokeList_PageObjSet( wk, next_page );
       CursorMoveSet( wk, next_page );
@@ -2843,6 +2880,7 @@ static const u32 ScreenArc[][2] =
   { NARC_b_plist_gra_waza_delb_main_t_lz_NSCR, NARC_b_plist_gra_waza_delb_main_u_lz_NSCR }, // ステータス技忘れ２ページ（戦闘技詳細）
 //  { NARC_b_plist_gra_waza_delc_sel_t_NSCR, NARC_b_plist_gra_waza_delc_sel_u_NSCR }, // ステータス技忘れ３ページ（コンテスト技詳細）
 //  { NARC_b_plist_gra_waza_delc_main_t_NSCR, NARC_b_plist_gra_waza_delc_main_u_NSCR }, // ステータス技忘れ４ページ（コンテスト技選択）
+  { NARC_b_plist_gra_poke_sel_t_lz_NSCR, NARC_b_plist_gra_poke_sel_u_lz_NSCR },       // 瀕死入れ替え選択ページ
 };
 
 //--------------------------------------------------------------------------------------------
@@ -3181,6 +3219,30 @@ static BOOL FightPokeCheck( BPLIST_WORK * wk, u32 pos )
   return FALSE;
 }
 
+static BOOL FightPosCheck( BPLIST_WORK * wk, u32 pos )
+{
+  switch( wk->dat->rule ){
+  case BTL_RULE_SINGLE:   // シングル
+    if( pos == 0 ){
+      return TRUE;
+    }
+    break;
+
+  case BTL_RULE_DOUBLE:   // ダブル
+    if( pos == 0 || pos == 1 ){
+      return TRUE;
+    }
+    break;
+
+  case BTL_RULE_TRIPLE:   // トリプル
+  case BTL_RULE_ROTATION: // ローテーション
+    if( pos == 0 || pos == 1 || pos == 2 ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
 static BOOL ChangePokeCheck( BPLIST_WORK * wk, u32 pos )
 {
 	pos = BPLISTMAIN_GetListRow( wk, pos );
@@ -3205,6 +3267,7 @@ static void CursorMoveSet( BPLIST_WORK * wk, u8 page )
 
   switch( page ){
   case BPLIST_PAGE_SELECT:    // ポケモン選択ページ
+	case BPLIST_PAGE_DEAD:			// 瀕死入れ替え選択ページ
     wk->chg_page_cp = 0;
     wk->dat->sel_wp = 0;
     pos = wk->dat->sel_poke;
@@ -3239,6 +3302,14 @@ static void CursorMoveSet( BPLIST_WORK * wk, u8 page )
 
 
 
+
+
+//============================================================================================
+//============================================================================================
+//============================================================================================
+//============================================================================================
+//============================================================================================
+//============================================================================================
 static void InitListRow( BPLIST_WORK * wk )
 {
 	u32	i;
@@ -3247,17 +3318,22 @@ static void InitListRow( BPLIST_WORK * wk )
 	for( i=0; i<TEMOTI_POKEMAX; i++ ){
 		wk->listRow[i] = i;
 	}
-/*
-	// 戦闘に戻すデータを初期化
+	// 
 	for( i=0; i<BPL_SELNUM_MAX; i++ ){
 		wk->dat->sel_pos[i] = BPL_SELPOS_NONE;
 	}
-*/
+	// ログ初期化
+	for( i=0; i<BPL_SELNUM_MAX-1; i++ ){
+		wk->chg_log[i].pos1 = BPL_SELPOS_NONE;
+		wk->chg_log[i].pos2 = BPL_SELPOS_NONE;
+	}
 }
 
 static void ChangeListRow( BPLIST_WORK * wk, u32 pos1, u32 pos2 )
 {
-	u8	tmp = wk->listRow[pos1];
+	u8	tmp;
+	
+	tmp = wk->listRow[pos1];
 	wk->listRow[pos1] = wk->listRow[pos2];
 	wk->listRow[pos2] = tmp;
 }
@@ -3274,14 +3350,12 @@ static BOOL CheckListRow( BPLIST_WORK * wk, u32 pos )
 	return FALSE;
 }
 
-
-
 u8 BPLISTMAIN_GetListRow( BPLIST_WORK * wk, u32 pos )
 {
 	return wk->listRow[pos];
 }
 
-
+/*
 static BOOL CheckRetNum( BPLIST_WORK * wk )
 {
 	u16	i, j;
@@ -3297,8 +3371,8 @@ static BOOL CheckRetNum( BPLIST_WORK * wk )
 	}
 	return TRUE;
 }
-
-
+*/
+/*
 static void SetRetNum( BPLIST_WORK * wk )
 {
 	u32	i;
@@ -3311,4 +3385,430 @@ static void SetRetNum( BPLIST_WORK * wk )
 	}
 
 	ChangeListRow( wk, i, wk->dat->sel_poke );
+}
+*/
+
+static void SetRetNum( BPLIST_WORK * wk, u8 pos, u8 row )
+{
+	wk->dat->sel_pos[pos] = BPLISTMAIN_GetListRow( wk, row );
+}
+
+static void SetLog( BPLIST_WORK * wk, u8 pos1, u8 pos2 )
+{
+	u8	i;
+
+	// ログ作成
+	for( i=0; i<BPL_SELNUM_MAX-1; i++ ){
+		if( wk->chg_log[i].pos1 == BPL_SELPOS_NONE ){
+			wk->chg_log[i].pos1 = pos1;
+			wk->chg_log[i].pos2 = pos2;
+			break;
+		}
+	}
+}
+
+BOOL BPLISTMAIN_GetNewLog( BPLIST_WORK * wk, u8 * pos1, u8 * pos2, BOOL del )
+{
+	s32	i;
+
+	for( i=BPL_SELNUM_MAX-1-1; i>=0; i-- ){
+		if( wk->chg_log[i].pos1 != BPL_SELPOS_NONE ){
+			*pos1 = wk->chg_log[i].pos1;
+			*pos2 = wk->chg_log[i].pos2;
+			if( del == TRUE ){
+				wk->chg_log[i].pos1 = BPL_SELPOS_NONE;
+				wk->chg_log[i].pos2 = BPL_SELPOS_NONE;
+			}
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+
+
+
+static int BPL_SeqPageChgDead( BPLIST_WORK * wk )
+{
+  if( BPL_PageChange( wk, BPLIST_PAGE_DEAD ) == FALSE ){
+		wk->chg_poke_sel = wk->dat->sel_poke;
+    return SEQ_BPL_PAGECHG_DEAD;
+  }
+  return SEQ_BPL_POKESEL_DEAD;
+}
+
+static BOOL CheckDeadChange( BPLIST_WORK * wk )
+{
+  BPL_POKEDATA * dat;
+  STRBUF * str;
+
+  dat = &wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ];
+
+  // 他人
+#if 0
+  if( BattlePokeList_MultiPosCheck( wk, wk->dat->sel_poke ) == TRUE ){
+    str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m05 );
+    {
+      int pcn;
+
+      pcn = BattleWorkPartnerClientNoGet( wk->dat->bw, wk->dat->client_no );
+//      WORDSET_RegisterPlayerName( wk->wset, 0, BattleWorkMyStatusGet(wk->dat->bw,pcn) );
+      WORDSET_RegisterTrainerNameBattle(
+        wk->wset, 0, BattleWorkTrainerDataGet(wk->dat->bw,pcn) );
+    }
+    WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
+    GFL_STR_DeleteBuffer( str );
+    return FALSE;
+  }
+#endif
+
+  // 入れ替え可能位置ではない
+  if( FightPosCheck( wk, wk->dat->sel_poke ) == FALSE ){
+    str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m21 );
+    WORDSET_RegisterPokeNickName( wk->wset, 0, dat->pp );
+    WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
+    GFL_STR_DeleteBuffer( str );
+    return FALSE;
+  }
+
+  // 瀕死
+  if( dat->hp != 0 ){
+    str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m01 );
+    WORDSET_RegisterPokeNickName( wk->wset, 0, dat->pp );
+    WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
+    GFL_STR_DeleteBuffer( str );
+    return FALSE;
+  }
+
+/*
+  // タマゴ
+  if( BPL_TamagoCheck( wk ) == TRUE ){
+    GFL_MSG_GetString( wk->mman, mes_b_plist_m04, wk->msg_buf );
+    return FALSE;
+  }
+
+  // 選択されている
+//  if( wk->dat->double_sel != 6 && wk->dat->list_row[wk->dat->sel_poke] == wk->dat->double_sel ){
+  if( ChangePokeCheck( wk, wk->dat->sel_poke ) == TRUE ){
+    dat = &wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ];
+    str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m18 );
+    WORDSET_RegisterPokeNickName( wk->wset, 0, dat->pp );
+    WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
+    GFL_STR_DeleteBuffer( str );
+    return FALSE;
+  }
+
+  // 技
+  if( wk->dat->chg_waza != 0 ){
+    dat = &wk->poke[ BPLISTMAIN_GetListRow(wk,wk->init_poke) ];
+    str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m03 );
+    WORDSET_RegisterPokeNickName( wk->wset, 0, dat->pp );
+    WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
+    GFL_STR_DeleteBuffer( str );
+    return FALSE;
+  }
+*/
+
+  return TRUE;
+}
+
+static int BPL_SeqPokeSelDead( BPLIST_WORK * wk )
+{
+  if( PaletteFadeCheck( wk->pfd ) != 0 ){ return SEQ_BPL_POKESEL_DEAD; }
+
+  if( BPL_PokemonSelect( wk ) == TRUE ){
+    if( wk->dat->sel_poke == BPL_SEL_EXIT ){
+      BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
+			wk->dat->sel_poke = wk->chg_poke_sel;
+      wk->ret_seq = SEQ_BPL_PAGECHG_IREKAE;
+			return SEQ_BPL_BUTTON_WAIT;
+		}else	if( wk->dat->sel_poke == wk->chg_poke_sel ){
+			return SEQ_BPL_PAGECHG_IREKAE;
+    }else{
+/*
+      PMSND_PlaySE( SEQ_SE_DECIDE2 );
+      BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_POKE1+wk->dat->sel_poke );
+      if( wk->dat->mode == BPL_MODE_ITEMUSE ){
+        return BPL_PokeItemUse( wk );
+      }else{
+        wk->ret_seq = SEQ_BPL_PAGECHG_IREKAE;
+      }
+      return SEQ_BPL_BUTTON_WAIT;
+*/
+			if( CheckDeadChange( wk ) == TRUE ){
+				SetLog( wk, wk->dat->sel_poke, wk->chg_poke_sel );
+				SetRetNum( wk, wk->dat->sel_poke, wk->chg_poke_sel );
+				wk->chg_pos1 = wk->dat->sel_poke;
+				wk->chg_pos2 = wk->chg_poke_sel;
+				wk->btn_seq = 0;
+				return SEQ_BPL_POKECHG_DEAD;
+			}else{
+	      BattlePokeList_TalkMsgSet( wk );
+		    wk->ret_seq = SEQ_BPL_DEAD_ERR_RET;
+		    return SEQ_BPL_MSG_WAIT;
+			}
+    }
+  }
+
+  return SEQ_BPL_POKESEL_DEAD;
+}
+
+static int BPL_SeqDeadErrRet( BPLIST_WORK * wk )
+{
+  BmpWinFrame_Clear( wk->win[WIN_TALK].win, WINDOW_TRANS_ON );
+	BPLISTBMP_DeadSelInfoMesPut( wk );
+	BPLISTBMP_SetCommentScen( wk );
+  return SEQ_BPL_POKESEL_DEAD;
+}
+
+
+
+static void GetDeadScrnPos( u8 * x, u8 * y, u8 num )
+{
+	*x = ( num & 1 ) * BPL_BSX_PLATE;
+	*y = num / 2 * BPL_BSY_PLATE + ( num & 1 );
+}
+
+static void MakeDeadChgScrn( u16 * scrn, u8 frm, u8 num )
+{
+	u16 * buf;
+	u8	x, y;
+	u8	i;
+
+	buf = GFL_BG_GetScreenBufferAdrs( frm );
+	GetDeadScrnPos( &x, &y, num );
+
+	for( i=0; i<BPL_BSY_PLATE; i++ ){
+		GFL_STD_MemCopy16( &buf[(y+i)*32+x], &scrn[i*BPL_BSX_PLATE], BPL_BSX_PLATE*2 );
+	}
+}
+
+static void MoveDeadChgObj( BPLIST_WORK * wk, u8 num, u8 mode )
+{
+	u8	pos;
+	s8	mv;
+
+	if( num & 1 ){
+		if( mode == 0 ){
+			mv = 8;
+		}else{
+			mv = -8;
+		}
+	}else{
+		if( mode == 0 ){
+			mv = -8;
+		}else{
+			mv = 8;
+		}
+	}
+
+	BPLISTOBJ_MoveDeadChg( wk, num, mv );
+}
+
+static BOOL MoveDeadChangeMain( BPLIST_WORK * wk )
+{
+	switch( wk->btn_seq ){
+	case 0:
+		wk->chg_wfrm = BGWINFRM_Create( BGWINFRM_TRANS_VBLANK, 4, wk->dat->heap );
+		BGWINFRM_Add( wk->chg_wfrm, 0, GFL_BG_FRAME1_S, BPL_BSX_PLATE, BPL_BSY_PLATE );
+		BGWINFRM_Add( wk->chg_wfrm, 1, GFL_BG_FRAME2_S, BPL_BSX_PLATE, BPL_BSY_PLATE );
+		BGWINFRM_Add( wk->chg_wfrm, 2, GFL_BG_FRAME1_S, BPL_BSX_PLATE, BPL_BSY_PLATE );
+		BGWINFRM_Add( wk->chg_wfrm, 3, GFL_BG_FRAME2_S, BPL_BSX_PLATE, BPL_BSY_PLATE );
+		{
+			u16 * buf = GFL_HEAP_AllocMemory( wk->dat->heap, BPL_BSX_PLATE*BPL_BSY_PLATE*2 );
+			MakeDeadChgScrn( buf, GFL_BG_FRAME1_S, wk->chg_pos1 );
+			BGWINFRM_FrameSet( wk->chg_wfrm, 0, buf );
+			MakeDeadChgScrn( buf, GFL_BG_FRAME2_S, wk->chg_pos1 );
+			BGWINFRM_FrameSet( wk->chg_wfrm, 1, buf );
+			MakeDeadChgScrn( buf, GFL_BG_FRAME1_S, wk->chg_pos2 );
+			BGWINFRM_FrameSet( wk->chg_wfrm, 2, buf );
+			MakeDeadChgScrn( buf, GFL_BG_FRAME2_S, wk->chg_pos2 );
+			BGWINFRM_FrameSet( wk->chg_wfrm, 3, buf );
+			GFL_HEAP_FreeMemory( buf );
+		}
+		{
+			u8	x, y;
+			GetDeadScrnPos( &x, &y, wk->chg_pos1 );
+			BGWINFRM_FramePut( wk->chg_wfrm, 0, x, y );
+			BGWINFRM_FramePut( wk->chg_wfrm, 1, x, y );
+			GetDeadScrnPos( &x, &y, wk->chg_pos2 );
+			BGWINFRM_FramePut( wk->chg_wfrm, 2, x, y );
+			BGWINFRM_FramePut( wk->chg_wfrm, 3, x, y );
+		}
+		BGWINFRM_MoveMain( wk->chg_wfrm );
+		wk->btn_seq++;
+		break;
+
+	case 1:
+		if( wk->chg_pos1 & 1 ){
+			BGWINFRM_MoveInit( wk->chg_wfrm, 0, 1, 0, BPL_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 1, 1, 0, BPL_BSX_PLATE );
+		}else{
+			BGWINFRM_MoveInit( wk->chg_wfrm, 0, -1, 0, BPL_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 1, -1, 0, BPL_BSX_PLATE );
+		}
+		if( wk->chg_pos2 & 1 ){
+			BGWINFRM_MoveInit( wk->chg_wfrm, 2, 1, 0, BPL_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 3, 1, 0, BPL_BSX_PLATE );
+		}else{
+			BGWINFRM_MoveInit( wk->chg_wfrm, 2, -1, 0, BPL_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 3, -1, 0, BPL_BSX_PLATE );
+		}
+		wk->btn_seq++;
+		break;
+
+	case 2:
+		BGWINFRM_MoveMain( wk->chg_wfrm );
+		MoveDeadChgObj( wk, wk->chg_pos1, 0 );
+		MoveDeadChgObj( wk, wk->chg_pos2, 0 );
+		{
+			s8	x1, y1, x2, y2;
+			BGWINFRM_PosGet( wk->chg_wfrm, 0, &x1, &y1 );
+			BGWINFRM_PosGet( wk->chg_wfrm, 2, &x2, &y2 );
+			if( BGWINFRM_MoveCheck( wk->chg_wfrm, 0 ) == FALSE ){
+				ChangeListRow( wk, wk->chg_pos1, wk->chg_pos2 );
+				BGWINFRM_FramePut( wk->chg_wfrm, 0, x2, y2 );
+				BGWINFRM_FramePut( wk->chg_wfrm, 1, x2, y2 );
+				BGWINFRM_FramePut( wk->chg_wfrm, 2, x1, y1 );
+				BGWINFRM_FramePut( wk->chg_wfrm, 3, x1, y1 );
+				BPLISTOBJ_ChgDeadSel( wk, wk->chg_pos1, wk->chg_pos2 );
+				wk->btn_seq++;
+			}
+		}
+		break;
+
+	case 3:
+		BGWINFRM_MoveMain( wk->chg_wfrm );
+		if( wk->chg_pos2 & 1 ){
+			BGWINFRM_MoveInit( wk->chg_wfrm, 0, -1, 0, BPL_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 1, -1, 0, BPL_BSX_PLATE );
+		}else{
+			BGWINFRM_MoveInit( wk->chg_wfrm, 0, 1, 0, BPL_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 1, 1, 0, BPL_BSX_PLATE );
+		}
+		if( wk->chg_pos1 & 1 ){
+			BGWINFRM_MoveInit( wk->chg_wfrm, 2, -1, 0, BPL_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 3, -1, 0, BPL_BSX_PLATE );
+		}else{
+			BGWINFRM_MoveInit( wk->chg_wfrm, 2, 1, 0, BPL_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 3, 1, 0, BPL_BSX_PLATE );
+		}
+		wk->btn_seq++;
+		break;
+
+	case 4:
+		BGWINFRM_MoveMain( wk->chg_wfrm );
+		MoveDeadChgObj( wk, wk->chg_pos1, 1 );
+		MoveDeadChgObj( wk, wk->chg_pos2, 1 );
+		{
+			s8	x1, y1, x2, y2;
+			BGWINFRM_PosGet( wk->chg_wfrm, 0, &x1, &y1 );
+			BGWINFRM_PosGet( wk->chg_wfrm, 2, &x2, &y2 );
+			if( BGWINFRM_MoveCheck( wk->chg_wfrm, 0 ) == FALSE ){
+				wk->btn_seq++;
+			}
+		}
+		break;
+
+	case 5:
+		BGWINFRM_Exit( wk->chg_wfrm );
+		wk->btn_seq = 0;
+	  return FALSE;
+	}
+
+	return TRUE;
+}
+
+static int BPL_SeqPokeChgDead( BPLIST_WORK * wk )
+{
+	if( MoveDeadChangeMain( wk ) == FALSE ){
+		if( CheckNextDeadSel( wk ) == FALSE ){
+			return SEQ_BPL_ENDSET;
+		}
+		BPLISTANM_RetButtonPut( wk );
+		BPLISTBMP_PokeSelInfoMesPut( wk );
+		BPLISTBMP_SetCommentScen( wk );
+	  return SEQ_BPL_SELECT;
+	}
+	return SEQ_BPL_POKECHG_DEAD;
+}
+
+// 瀕死入れ替え動作が必要かどうか
+static BOOL CheckDeadPoke( BPLIST_WORK * wk )
+{
+	u8	cnt;
+	u8	max;
+	u8	i;
+
+	if( wk->dat->rule == BTL_RULE_SINGLE ){
+		return FALSE;
+	}else if( wk->dat->rule == BTL_RULE_DOUBLE ){
+		max = 2;
+	}else{
+		max = 3;
+	}
+
+	// 空きが複数ある
+	cnt = 0;
+	for( i=0; i<max; i++ ){
+		u32	row = BPLISTMAIN_GetListRow( wk, i );
+		if( wk->poke[row].hp == 0 ){
+			cnt++;
+			if( cnt == 2 ){
+				return TRUE;
+			}
+		}
+	}
+
+/*
+	// 入れ替え可能なポケモンが複数いるか
+	cnt = 0;
+	for( i=max; i<TEMOTI_POKEMAX; i++ ){
+		if( wk->poke[i].mons != 0 && wk->poke[i].egg != 0 ){
+			cnt++;
+			if( cnt == 2 ){
+				return TRUE;
+			}
+		}
+	}
+*/
+
+	return FALSE;
+}
+
+static BOOL CheckNextDeadSel( BPLIST_WORK * wk )
+{
+	u8	max;
+	u8	i;
+
+	if( wk->dat->rule == BTL_RULE_SINGLE ){
+		return FALSE;
+	}else if( wk->dat->rule == BTL_RULE_DOUBLE ){
+		max = 2;
+	}else{
+		max = 3;
+	}
+
+	// 入れ替え可能なポケモンがいるか
+	for( i=max; i<TEMOTI_POKEMAX; i++ ){
+		u32	row = BPLISTMAIN_GetListRow( wk, i );
+		if( wk->poke[row].mons != 0 && wk->poke[row].egg == 0 && wk->poke[row].hp != 0 ){
+			return TRUE;
+		}
+	}
+
+	return FALSE;
+}
+
+// 上から検索して瀕死の箇所に強制的にセット
+static void SetDeadChangeData( BPLIST_WORK * wk )
+{
+	u32	i;
+
+	for( i=0; i<BPL_SELNUM_MAX; i++ ){
+		u32	row = BPLISTMAIN_GetListRow( wk, i );
+		if( wk->poke[row].hp == 0 ){
+			wk->dat->sel_pos[i] = wk->dat->sel_poke;
+			break;
+		}
+	}
 }

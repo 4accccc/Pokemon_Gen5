@@ -6,8 +6,7 @@
  * @date	05.02.07
  */
 //============================================================================================
-#ifndef B_PLIST_OBJ_H
-#define B_PLIST_OBJ_H
+#pragma	once
 
 
 //============================================================================================
@@ -94,4 +93,5 @@ extern void BPL_PokeIconAnime( BPLIST_WORK * wk );
 //extern void BattlePokeList_CursorOff( BPLIST_WORK * wk );
 
 
-#endif	// B_PLIST_OBJ_H
+extern void BPLISTOBJ_MoveDeadChg( BPLIST_WORK * wk, u8 num, s8 mv );
+extern void BPLISTOBJ_ChgDeadSel( BPLIST_WORK * wk, u8 num1, u8 num2 );

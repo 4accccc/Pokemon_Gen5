@@ -1002,12 +1002,15 @@ void BattlePokeList_PageObjSet( BPLIST_WORK * wk, u32 page )
   }
 
   switch( page ){
-  case BPLIST_PAGE_SELECT:  // ポケモン選択ページ
+  case BPLIST_PAGE_SELECT:	  // ポケモン選択ページ
+	case BPLIST_PAGE_DEAD:			// 瀕死入れ替え選択ページ
     BPL_Page1ObjSet( wk );
     break;
+
   case BPLIST_PAGE_POKE_CHG:  // ポケモン入れ替えページ
     BPL_ChgPageObjSet( wk );
     break;
+
   case BPLIST_PAGE_MAIN:    // ステータスメインページ
     BPL_StMainPageObjSet( wk );
     break;
@@ -2162,3 +2165,56 @@ void BattlePokeList_CursorOff( BPLIST_WORK * wk )
   BCURSOR_OFF( BAPP_CursorMvWkGetBCURSOR_PTR( wk->cmv_wk ) );
 }
 */
+
+void BPLISTOBJ_MoveDeadChg( BPLIST_WORK * wk, u8 num, s8 mv )
+{
+	GFL_CLACTPOS	pos;
+	u32	row;
+
+	row = BPLISTMAIN_GetListRow( wk, num );
+
+  GFL_CLACT_WK_GetPos( wk->clwk[BPL_CA_ITEM1+row], &pos, CLSYS_DRAW_SUB );
+	pos.x += mv;
+  GFL_CLACT_WK_SetPos( wk->clwk[BPL_CA_ITEM1+row], &pos, CLSYS_DRAW_SUB );
+
+  GFL_CLACT_WK_GetPos( wk->clwk[BPL_CA_POKE1+row], &pos, CLSYS_DRAW_SUB );
+	pos.x += mv;
+  GFL_CLACT_WK_SetPos( wk->clwk[BPL_CA_POKE1+row], &pos, CLSYS_DRAW_SUB );
+
+  GFL_CLACT_WK_GetPos( wk->clwk[BPL_CA_STATUS1+row], &pos, CLSYS_DRAW_SUB );
+	pos.x += mv;
+  GFL_CLACT_WK_SetPos( wk->clwk[BPL_CA_STATUS1+row], &pos, CLSYS_DRAW_SUB );
+
+  GFL_CLACT_WK_GetPos( wk->clwk[BPL_CA_HPGAUGE1+row], &pos, CLSYS_DRAW_SUB );
+	pos.x += mv;
+  GFL_CLACT_WK_SetPos( wk->clwk[BPL_CA_HPGAUGE1+row], &pos, CLSYS_DRAW_SUB );
+}
+
+void BPLISTOBJ_ChgDeadSel( BPLIST_WORK * wk, u8 num1, u8 num2 )
+{
+	GFL_CLACTPOS	pos1, pos2;
+	u32	row1, row2;
+
+	row1 = BPLISTMAIN_GetListRow( wk, num1 );
+	row2 = BPLISTMAIN_GetListRow( wk, num2 );
+
+  GFL_CLACT_WK_GetPos( wk->clwk[BPL_CA_ITEM1+row1], &pos1, CLSYS_DRAW_SUB );
+  GFL_CLACT_WK_GetPos( wk->clwk[BPL_CA_ITEM1+row2], &pos2, CLSYS_DRAW_SUB );
+  GFL_CLACT_WK_SetPos( wk->clwk[BPL_CA_ITEM1+row1], &pos2, CLSYS_DRAW_SUB );
+  GFL_CLACT_WK_SetPos( wk->clwk[BPL_CA_ITEM1+row2], &pos1, CLSYS_DRAW_SUB );
+
+  GFL_CLACT_WK_GetPos( wk->clwk[BPL_CA_POKE1+row1], &pos1, CLSYS_DRAW_SUB );
+  GFL_CLACT_WK_GetPos( wk->clwk[BPL_CA_POKE1+row2], &pos2, CLSYS_DRAW_SUB );
+  GFL_CLACT_WK_SetPos( wk->clwk[BPL_CA_POKE1+row1], &pos2, CLSYS_DRAW_SUB );
+  GFL_CLACT_WK_SetPos( wk->clwk[BPL_CA_POKE1+row2], &pos1, CLSYS_DRAW_SUB );
+
+  GFL_CLACT_WK_GetPos( wk->clwk[BPL_CA_STATUS1+row1], &pos1, CLSYS_DRAW_SUB );
+  GFL_CLACT_WK_GetPos( wk->clwk[BPL_CA_STATUS1+row2], &pos2, CLSYS_DRAW_SUB );
+  GFL_CLACT_WK_SetPos( wk->clwk[BPL_CA_STATUS1+row1], &pos2, CLSYS_DRAW_SUB );
+  GFL_CLACT_WK_SetPos( wk->clwk[BPL_CA_STATUS1+row2], &pos1, CLSYS_DRAW_SUB );
+
+  GFL_CLACT_WK_GetPos( wk->clwk[BPL_CA_HPGAUGE1+row1], &pos1, CLSYS_DRAW_SUB );
+  GFL_CLACT_WK_GetPos( wk->clwk[BPL_CA_HPGAUGE1+row2], &pos2, CLSYS_DRAW_SUB );
+  GFL_CLACT_WK_SetPos( wk->clwk[BPL_CA_HPGAUGE1+row1], &pos2, CLSYS_DRAW_SUB );
+  GFL_CLACT_WK_SetPos( wk->clwk[BPL_CA_HPGAUGE1+row2], &pos1, CLSYS_DRAW_SUB );
+}

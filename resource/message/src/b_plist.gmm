@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2009-09-10T19:34:41"/>
+	<create user="hiro_nakamura" host="W00144" date="2009-12-01T20:06:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -391,6 +391,11 @@
 		<comment>会話ウインドウ：道具を使うポケモン選択メッセージ</comment>
 		<language name="JPN" width="176">どの　ポケモンに　つかう？</language>
 		<language name="JPN_KANJI" width="176">どの　ポケモンに　つかう？</language>
+	</row>
+
+	<row id="mes_b_plist_01_602">
+		<language name="JPN" width="176">どれと　いれかえる？</language>
+		<language name="JPN_KANJI" width="176">どれと　いれかえる？</language>
 	</row>
 
 	<row id="mes_b_plist_01_701" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
@@ -1110,6 +1115,16 @@ HP表示</comment>
 [1:02:ポケモンニックネーム:0]には　つかえません！</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">[1:07:わざ名:1]の　こうかで
 [1:02:ポケモンニックネーム:0]には　つかえません！</language>
+	</row>
+
+	<row id="mes_b_plist_m21">
+		<comment>戦闘に出てないポケモンと入れ替えようとしたとき
+０：ニックネーム
+</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">[1:02:ポケモンニックネーム:0]と
+いれかえることは　できません！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">[1:02:ポケモンニックネーム:0]と
+いれかえることは　できません！</language>
 	</row>
 
 	<flowchart-group-list>

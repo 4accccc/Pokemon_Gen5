@@ -248,7 +248,7 @@ static const BUTTON_ANM ButtonScreenAnm[] =
 	{ SCR_WAZA2_PX, SCR_WAZA2_PY, BPL_BSX_WAZA, BPL_BSY_WAZA },				// 技２
 	{ SCR_WAZA3_PX, SCR_WAZA3_PY, BPL_BSX_WAZA, BPL_BSY_WAZA },				// 技３
 	{ SCR_WAZA4_PX, SCR_WAZA4_PY, BPL_BSX_WAZA, BPL_BSY_WAZA },				// 技４
-	{ SCR_CONTEST_PX, SCR_CONTEST_PY, BPL_BSX_CONTEST, BPL_BSY_CONTEST },	// コンテスト技<->戦う技
+//	{ SCR_CONTEST_PX, SCR_CONTEST_PY, BPL_BSX_CONTEST, BPL_BSY_CONTEST },	// コンテスト技<->戦う技
 
 	{ SCR_WAZA1_PX, SCR_WAZA1_PY, BPL_BSX_WAZA, BPL_BSY_WAZA },		// 技回復１
 	{ SCR_WAZA2_PX, SCR_WAZA2_PY, BPL_BSX_WAZA, BPL_BSY_WAZA },		// 技回復２
@@ -444,6 +444,7 @@ void BattlePokeList_ButtonScreenMake( BPLIST_WORK * wk, u16 * scrn )
 	BPL_ScrnCopy( wk->btn_del[2], scrn, DAT_PX_DEL_3, DAT_PY_DEL_3, BPL_BSX_DEL, BPL_BSY_DEL );
 
 	// コンテスト切り替えボタン
+/*
 	BPL_ScrnCopy(
 		wk->btn_contest[0], scrn,
 		DAT_PX_CONTEST_1, DAT_PY_CONTEST_1, BPL_BSX_CONTEST, BPL_BSY_CONTEST );
@@ -453,6 +454,7 @@ void BattlePokeList_ButtonScreenMake( BPLIST_WORK * wk, u16 * scrn )
 	BPL_ScrnCopy(
 		wk->btn_contest[2], scrn,
 		DAT_PX_CONTEST_3, DAT_PY_CONTEST_3, BPL_BSX_CONTEST, BPL_BSY_CONTEST );
+*/
 
 	// 技位置ボタン
 	BPL_ScrnCopy( wk->btn_wp[0], scrn, DAT_PX_WP1, DAT_PY_WP1, BPL_BSX_WP, BPL_BSY_WP );
@@ -579,8 +581,10 @@ static u16 * BPL_ButtonScreenBufGet( BPLIST_WORK * wk, u8 id, u8 num, u8 pat )
 //	case BPL_BUTTON_WAZADEL_C:	// 忘れさせる
 		return wk->btn_del[num];
 
+/*
 	case BPL_BUTTON_CONTEST:	// コンテスト技<->戦う技
 		return wk->btn_contest[num];
+*/
 
 	case BPL_BUTTON_WAZAPOS1:	// 技切り替え１
 	case BPL_BUTTON_WAZAPOS2:	// 技切り替え２
@@ -949,11 +953,25 @@ void BattlePokeList_ButtonPageScreenInit( BPLIST_WORK * wk, u8 page )
 				BPL_ButtonScreenWrite( wk, BPL_BUTTON_POKE1+i, BPL_BANM_PAT0, 1 );
 			}
 		}
-		if( wk->dat->mode == BPL_MODE_NO_CANCEL ){
-			BPL_ButtonScreenWrite( wk, BPL_BUTTON_RET, BPL_BANM_NONE, 0 );
+		if( wk->dat->mode == BPL_MODE_CHG_DEAD ){
+			BPLISTANM_RetButtonPut( wk );
 		}else{
 			BPL_ButtonScreenWrite( wk, BPL_BUTTON_RET, BPL_BANM_PAT0, 0 );
 		}
+		break;
+
+	case BPLIST_PAGE_DEAD:			// 瀕死入れ替え選択ページ
+		for( i=0; i<TEMOTI_POKEMAX; i++ ){
+			j = BattlePokeList_PokeSetCheck( wk, i );
+			if( j == 0 ){
+				BPL_ButtonScreenWrite( wk, BPL_BUTTON_POKE1+i, BPL_BANM_NONE, 1 );
+			}else if( j == 1 ){
+				BPL_ButtonScreenWrite( wk, BPL_BUTTON_POKE1+i, BPL_BANM_PAT0, 0 );
+			}else if( j == 2 ){
+				BPL_ButtonScreenWrite( wk, BPL_BUTTON_POKE1+i, BPL_BANM_PAT0, 1 );
+			}
+		}
+		BPL_ButtonScreenWrite( wk, BPL_BUTTON_RET, BPL_BANM_PAT0, 0 );
 		break;
 
 	case BPLIST_PAGE_POKE_CHG:		// ポケモン入れ替えページ
@@ -1107,5 +1125,18 @@ void BPL_HPRcvButtonPut( BPLIST_WORK * wk )
 		BPL_ButtonScreenWrite( wk, BPL_BUTTON_POKE1+wk->dat->sel_poke, 0, 1 );
 	}else{
 		BPL_ButtonScreenWrite( wk, BPL_BUTTON_POKE1+wk->dat->sel_poke, 0, 0 );
+	}
+}
+
+
+
+void BPLISTANM_RetButtonPut( BPLIST_WORK * wk )
+{
+	u8	pos1, pos2;
+
+	if( BPLISTMAIN_GetNewLog( wk, &pos1, &pos2, FALSE ) == TRUE ){
+		BPL_ButtonScreenWrite( wk, BPL_BUTTON_RET, BPL_BANM_PAT0, 0 );
+	}else{
+		BPL_ButtonScreenWrite( wk, BPL_BUTTON_RET, BPL_BANM_NONE, 0 );
 	}
 }

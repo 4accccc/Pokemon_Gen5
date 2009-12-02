@@ -11,6 +11,7 @@
 #include "print/wordset.h"
 #include "system/palanm.h"
 #include "system/cursor_move.h"
+#include "system/bgwinfrm.h"
 #include "b_app_tool.h"
 #include "b_plist.h"
 
@@ -22,15 +23,16 @@
 // ページ定義
 enum {
 	BPLIST_PAGE_SELECT = 0,		// ポケモン選択ページ
-	BPLIST_PAGE_POKE_CHG,		// ポケモン入れ替えページ
-	BPLIST_PAGE_MAIN,			// ステータスメインページ	
-	BPLIST_PAGE_WAZA_SEL,		// ステータス技選択ページ
-	BPLIST_PAGE_SKILL,			// ステータス技詳細ページ
-	BPLIST_PAGE_PP_RCV,			// PP回復技選択ページ
+	BPLIST_PAGE_POKE_CHG,			// ポケモン入れ替えページ
+	BPLIST_PAGE_MAIN,					// ステータスメインページ	
+	BPLIST_PAGE_WAZA_SEL,			// ステータス技選択ページ
+	BPLIST_PAGE_SKILL,				// ステータス技詳細ページ
+	BPLIST_PAGE_PP_RCV,				// PP回復技選択ページ
 	BPLIST_PAGE_WAZASET_BS,		// ステータス技忘れ１ページ（戦闘技選択）
 	BPLIST_PAGE_WAZASET_BI,		// ステータス技忘れ２ページ（戦闘技詳細）
 //	BPLIST_PAGE_WAZASET_CS,		// ステータス技忘れ３ページ（コンテスト技選択）
 //	BPLIST_PAGE_WAZASET_CI,		// ステータス技忘れ４ページ（コンテスト技詳細）
+	BPLIST_PAGE_DEAD,					// 瀕死入れ替え選択ページ
 };
 
 // パレット定義
@@ -359,6 +361,11 @@ typedef struct {
 #define	BPL_BSY_WP		( 2 )
 
 typedef struct {
+	u16	pos1;
+	u16	pos2;
+}BPLIST_CHGLOG;
+
+typedef struct {
 	BPLIST_DATA * dat;	// 外部参照データ
 
 	BPL_POKEDATA	poke[TEMOTI_POKEMAX];	// ポケモンデータ
@@ -377,10 +384,11 @@ typedef struct {
 	u16	btn_chg[BPL_BANM_MAX_N][BPL_BSX_CHG*BPL_BSY_CHG];				// 入れ替えボタン
 	u16	btn_waza[BPL_BANM_MAX_E][BPL_BSX_WAZA*BPL_BSY_WAZA];			// 技ボタン
 	u16	btn_del[BPL_BANM_MAX_N][BPL_BSX_DEL*BPL_BSY_DEL];				// 忘れるボタン
-	u16	btn_contest[BPL_BANM_MAX_N][BPL_BSX_CONTEST*BPL_BSY_CONTEST];	// コンテスト切り替えボタン
+//	u16	btn_contest[BPL_BANM_MAX_N][BPL_BSX_CONTEST*BPL_BSY_CONTEST];	// コンテスト切り替えボタン
 	u16	btn_wp[BPL_BANM_MAX_N][BPL_BSX_WP*BPL_BSY_WP];					// 技位置ボタン
 
-	u16	wb_pal[16*2];	// 技ボタンのパレット
+//	u16	wb_pal[16*2];	// 技ボタンのパレット
+	u16	wb_pal[16];			// 技ボタンのパレット
 
 	u8	btn_seq;
 	u8	btn_cnt;
@@ -435,6 +443,15 @@ typedef struct {
 	u8	wwm_page_cp;			// ステータス技忘れ技詳細ページのカーソル位置
 
 	u8	multi_pos;				// マルチバトルの立ち位置
+
+	// 瀕死入れ替え
+	BGWINFRM_WORK * chg_wfrm;
+	u16	chg_scrn1[2][BPL_BSX_PLATE*BPL_BSY_PLATE];
+	u16	chg_scrn2[2][BPL_BSX_PLATE*BPL_BSY_PLATE];
+	u8	chg_poke_sel;						// 瀕死入れ替え時の位置保持用
+	u8	chg_pos1;
+	u8	chg_pos2;
+	BPLIST_CHGLOG	chg_log[BPL_SELNUM_MAX-1];
 
 	u32	chrRes[BPLIST_CHRRES_MAX];
 	u32	palRes[BPLIST_PALRES_MAX];
@@ -503,3 +520,5 @@ extern u8 BattlePokeList_MultiCheck( BPLIST_WORK * wk );
 extern u8 BattlePokeList_MultiPosCheck( BPLIST_WORK * wk, u8 pos );
 
 extern u8 BPLISTMAIN_GetListRow( BPLIST_WORK * wk, u32 pos );
+
+extern BOOL BPLISTMAIN_GetNewLog( BPLIST_WORK * wk, u8 * pos1, u8 * pos2, BOOL del );

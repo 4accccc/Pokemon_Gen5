@@ -147,9 +147,11 @@ static const CURSORMOVE_DATA * const PointTable[] = {
 	PPRcv_CursorPosTbl,				// 技回復ページのタッチパネル座標
 	DelSel_CursorPosTbl,			// 技忘れ選択ページのタッチパネル座標
 	DelInfo_CursorPosTbl,			// 技忘れ決定ページのタッチパネル座標
+	PokeSel_CursorMoveTbl,		// 瀕死入れ替え選択
 };
 
 static const CURSORMOVE_CALLBACK * const CallBackTable[] = {
+	&P1_CallBack,
 	&P1_CallBack,
 	&P1_CallBack,
 	&P1_CallBack,

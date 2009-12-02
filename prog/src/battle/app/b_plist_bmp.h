@@ -6,8 +6,7 @@
  * @date	05.02.01
  */
 //============================================================================================
-#ifndef B_PLIST_BMP_H
-#define B_PLIST_BMP_H
+#pragma	once
 
 
 //============================================================================================
@@ -168,8 +167,8 @@ extern void BattlePokeList_ItemUseSkillErrMsgSet( BPLIST_WORK * wk );
 
 extern void BPLISTBMP_PrintMain( BPLIST_WORK * wk );
 
-extern void BPLIST_SetStrScrn( BPLIST_WORK * wk );
+extern void BPLISTBMP_SetStrScrn( BPLIST_WORK * wk );
+extern void BPLISTBMP_SetCommentScen( BPLIST_WORK * wk );
 
-
-
-#endif	// B_PLIST_BMP_H
+extern void BPLISTBMP_PokeSelInfoMesPut( BPLIST_WORK * wk );
+extern void BPLISTBMP_DeadSelInfoMesPut( BPLIST_WORK * wk );
