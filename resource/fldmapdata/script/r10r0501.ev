@@ -118,8 +118,8 @@ ev_sub_gate_event:
 
 	  _MAP_CHANGE_NO_FADE( ZONE_ID_R10R0601, 15, 0, 22, DIR_UP )
 
-    _BLACK_IN()
-    _DISP_FADE_END_CHECK()
+    _MAP_FADE_BLACK_IN()
+    _MAP_FADE_END_CHECK()
     _RET
   ELSE
 
@@ -177,8 +177,8 @@ ev_sub_gate_open_demo:
       }
 
       //フェードアウト
-      _BLACK_OUT()
-      _DISP_FADE_END_CHECK()
+      _MAP_FADE_BLACK_OUT()
+      _MAP_FADE_END_CHECK()
 
       _DOOR_ANIME_DELETE( DOOR_ANIME_ID )
     }
