@@ -5402,6 +5402,66 @@
   .macro  _ASM_PL_BOAT_ADD_TIME add_time
   .short  EV_SEQ_PL_BOAT_ADD_TIME
   .short  \add_time
-  .endm  
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * マップフェードブラックイン
+ */
+//--------------------------------------------------------------
+#define _MAP_FADE_BLACK_IN() _ASM_MAP_FADE_BLACK_IN
+
+  .macro  _ASM_MAP_FADE_BLACK_IN
+  .short  EV_SEQ_MAP_FADE_BLACK_IN
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * マップフェードブラックアウト
+ */
+//--------------------------------------------------------------
+#define _MAP_FADE_BLACK_OUT() _ASM_MAP_FADE_BLACK_OUT
+
+  .macro  _ASM_MAP_FADE_BLACK_OUT
+  .short  EV_SEQ_MAP_FADE_BLACK_OUT
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * マップフェードホワイトイン
+ */
+//--------------------------------------------------------------
+#define _MAP_FADE_WHITE_IN() _ASM_MAP_FADE_WHITE_IN
+
+  .macro  _ASM_MAP_FADE_WHITE_IN
+  .short  EV_SEQ_MAP_FADE_WHITE_IN
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * マップフェードホワイトアウト
+ */
+//--------------------------------------------------------------
+#define _MAP_FADE_WHITE_OUT() _ASM_MAP_FADE_WHITE_OUT
+
+  .macro  _ASM_MAP_FADE_WHITE_OUT
+  .short  EV_SEQ_MAP_FADE_WHITE_OUT
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _DISP_FADE_CHECK　マップ遷移用フェード終了チェック
+ *  @param none
+ */
+//--------------------------------------------------------------
+#define _MAP_FADE_END_CHECK()  _ASM_MAP_FADE_END_CHECK
+
+  .macro  _ASM_MAP_FADE_END_CHECK
+  .short EV_SEQ_MAP_FADE_CHECK
+  .endm
+  
+
+
+
   
 
