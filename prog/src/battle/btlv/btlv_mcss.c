@@ -56,8 +56,9 @@ struct _BTLV_MCSS_WORK
   GFL_TCB*        tcb[ BTLV_MCSS_MAX ];
 
   u32             mcss_pos_3vs3   :1;
+  u32             mcss_pos_rotate :1;
   u32             mcss_proj_mode  :1;
-  u32                             :30;
+  u32                             :29;
   u32             mcss_tcb_move_execute;
   u32             mcss_tcb_scale_execute;
   u32             mcss_tcb_rotate_execute;
@@ -145,8 +146,15 @@ static  const VecFx32 poke_pos_triple_table[]={
   { 0x00004800, 0x00000666, 0xffff4000 }, //POS_B
   { 0x00000c00, 0x00000666, 0x00004c00 }, //POS_C
   { 0x00000bcd, 0x00000666, 0xffff7000 }, //POS_D
-  { 0x00005300, 0x00000666, 0x00006300 }, //POS_E
-  { 0xffffb9cd, 0x00000666, 0xffff4000 }, //POS_F
+};
+
+static  const VecFx32 poke_pos_rotate_table[]={
+  { 0xffffe500, 0x00000666, 0x00007000 }, //POS_A
+  { 0x000026cd, 0x00000666, 0xffff5a00 }, //POS_B
+  { 0x00002800, 0x00000666, 0x00007000 }, //POS_C
+  { 0xffffdccd, 0x00000666, 0xffff4700 }, //POS_D
+  { 0x00000800, 0x00000666, 0x0000a000 }, //POS_E
+  { 0x000004cd, 0x00000666, 0xffff3000 }, //POS_F
 };
 
 static  const VecFx32 trainer_pos_table[]={
@@ -184,6 +192,15 @@ static  const fx32 poke_scale_triple_table[]={
   0x00001400, //POS_F
 };
 
+static  const fx32 poke_scale_rotate_table[]={
+  0x000010f0, //POS_A
+  0x00001205, //POS_B
+  0x00000f00, //POS_C
+  0x00001320, //POS_D
+  0x00000e00, //POS_E
+  0x000010f0, //POS_F
+};
+
 static  const fx32 trainer_scale_table[]={
   0x1030,   //POS_TR_AA
   0x119b,   //POS_TR_BB
@@ -209,6 +226,7 @@ BTLV_MCSS_WORK  *BTLV_MCSS_Init( BtlRule rule, GFL_TCBSYS *tcb_sys, HEAPID heapI
   bmw->tcb_sys  = tcb_sys;
 
   bmw->mcss_pos_3vs3 = ( rule == BTL_RULE_TRIPLE ) ? 1 : 0;
+  bmw->mcss_pos_rotate = ( rule == BTL_RULE_ROTATION ) ? 1 : 0;
 
   return bmw;
 }
@@ -1275,7 +1293,11 @@ static  void  BTLV_MCSS_GetDefaultPos( BTLV_MCSS_WORK *bmw, VecFx32 *pos, BtlvMc
   case BTLV_MCSS_POS_B:
   case BTLV_MCSS_POS_C:
   case BTLV_MCSS_POS_D:
-    if( bmw->mcss_pos_3vs3 )
+    if( bmw->mcss_pos_rotate )
+    { 
+      pos_table = &poke_pos_rotate_table[ position - BTLV_MCSS_POS_A ];
+    }
+    else if( bmw->mcss_pos_3vs3 )
     {
       pos_table = &poke_pos_triple_table[ position - BTLV_MCSS_POS_A ];
     }
@@ -1286,8 +1308,15 @@ static  void  BTLV_MCSS_GetDefaultPos( BTLV_MCSS_WORK *bmw, VecFx32 *pos, BtlvMc
     break;
   case BTLV_MCSS_POS_E:
   case BTLV_MCSS_POS_F:
-    GF_ASSERT( bmw->mcss_pos_3vs3 == 1 );
-    pos_table = &poke_pos_triple_table[ position - BTLV_MCSS_POS_A ];
+    GF_ASSERT( bmw->mcss_pos_3vs3 == 1 || bmw->mcss_pos_rotate == 1 );
+    if( bmw->mcss_pos_rotate )
+    { 
+      pos_table = &poke_pos_rotate_table[ position - BTLV_MCSS_POS_A ];
+    }
+    else
+    { 
+      pos_table = &poke_pos_triple_table[ position - BTLV_MCSS_POS_A ];
+    }
     break;
   case BTLV_MCSS_POS_TR_AA:
   case BTLV_MCSS_POS_TR_BB:
@@ -1331,7 +1360,11 @@ static  fx32  BTLV_MCSS_GetDefaultScale( BTLV_MCSS_WORK* bmw, BtlvMcssPos positi
     case BTLV_MCSS_POS_B:
     case BTLV_MCSS_POS_C:
     case BTLV_MCSS_POS_D:
-      if( bmw->mcss_pos_3vs3 )
+      if( bmw->mcss_pos_rotate )
+      { 
+        scale = poke_scale_rotate_table[ position - BTLV_MCSS_POS_A ];
+      }
+      else if( bmw->mcss_pos_3vs3 )
       {
         scale = poke_scale_triple_table[ position - BTLV_MCSS_POS_A ];
       }
@@ -1342,8 +1375,15 @@ static  fx32  BTLV_MCSS_GetDefaultScale( BTLV_MCSS_WORK* bmw, BtlvMcssPos positi
       break;
     case BTLV_MCSS_POS_E:
     case BTLV_MCSS_POS_F:
-      GF_ASSERT( bmw->mcss_pos_3vs3 == 1 );
-      scale = poke_scale_triple_table[ position - BTLV_MCSS_POS_A ];
+      GF_ASSERT( bmw->mcss_pos_3vs3 == 1 || bmw->mcss_pos_rotate == 1 );
+      if( bmw->mcss_pos_rotate )
+      { 
+        scale = poke_scale_rotate_table[ position - BTLV_MCSS_POS_A ];
+      }
+      else
+      { 
+        scale = poke_scale_triple_table[ position - BTLV_MCSS_POS_A ];
+      }
       break;
     case BTLV_MCSS_POS_TR_AA:
     case BTLV_MCSS_POS_TR_BB:
@@ -1409,6 +1449,19 @@ void  BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, 
 void  BTLV_MCSS_SetMcss3vs3( BTLV_MCSS_WORK *bmw, int flag )
 {
   bmw->mcss_pos_3vs3 = flag;
+}
+
+//============================================================================================
+/**
+ * @brief mcss_pos_rotateに値をセット（デバッグ用）
+ *
+ * @param[in] bmw   BTLV_MCSS管理ワークへのポインタ
+ * @param[in] flag  セットする値
+ */
+//============================================================================================
+void  BTLV_MCSS_SetMcssRotate( BTLV_MCSS_WORK *bmw, int flag )
+{
+  bmw->mcss_pos_rotate = flag;
 }
 
 //============================================================================================
