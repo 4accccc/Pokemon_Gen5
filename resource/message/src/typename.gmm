@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-01-26T16:40:52"/>
+	<create user="taya" host="W00146" date="2009-12-02T15:28:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -376,11 +376,6 @@
 	<row id="TYPENAME_008">
 		<language name="JPN">はがね</language>
 		<language name="JPN_KANJI">はがね</language>
-	</row>
-
-	<row id="TYPENAME_009">
-		<language name="JPN">？？？</language>
-		<language name="JPN_KANJI">？？？</language>
 	</row>
 
 	<row id="TYPENAME_010">
