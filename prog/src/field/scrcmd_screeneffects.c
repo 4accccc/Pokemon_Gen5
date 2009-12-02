@@ -34,7 +34,35 @@
 #include "field/field_const.h"
 #include "sound/pm_sndsys.h"      //PMSND_PlaySE, PMSND_CheckPlaySE
 
+#include "event_fieldmap_control.h"   //for EVENT_Field～
+#include "system/main.h"  //for HEAPID_PROC
+
+typedef enum {
+  FADE_IN,
+  FADE_OUT,
+}FADE_IO;
+
+typedef struct BRIGHT_CNT_WORK_tag
+{
+  GAMESYS_WORK* gsys;
+  FIELDMAP_WORK* fieldmap;
+	FIELD_FADE_TYPE fade_type;
+  FIELD_FADE_WAIT_TYPE wait_type;
+  FADE_IO   fade_io;
+  int Seq;
+}BRIGHT_CNT_WORK;
+
 static BOOL EvWaitDispFade( VMHANDLE *core, void *wk );
+static BOOL EvWaitMapFade( VMHANDLE *core, void *wk );
+static void CreateBrightFadeTask( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, FADE_IO fade_io,
+                             FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait );
+static void BrightCntTcb( GFL_TCB* tcb, void* work );
+
+#ifdef PM_DEBUG
+extern BOOL MapFadeReqFlg;  //マップフェードリクエストフラグ  宣言元　script.c
+#endif
+
+extern void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork );
 
 //======================================================================
 //  画面フェード
@@ -73,6 +101,112 @@ static BOOL EvWaitDispFade( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * マップ遷移フェード終了チェック ウェイト部分
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+static BOOL EvWaitMapFade( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
+  if( FIELDMAP_CheckMapFadeReqFlg( fieldWork ) == TRUE ){
+    return FALSE;
+  }
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * マップチェンジ用　ブラックイン
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdMapFade_BlackIn( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  CreateBrightFadeTask( gsys, fieldWork, FADE_IN, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
+#ifdef PM_DEBUG
+  GF_ASSERT_MSG(MapFadeReqFlg,"ERROR:NOT CALL MAP_FADE_OUT");
+  MapFadeReqFlg = FALSE;
+#endif
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * マップチェンジ用　ブラックアウト
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdMapFade_BlackOut( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  CreateBrightFadeTask( gsys, fieldWork, FADE_OUT, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
+#ifdef PM_DEBUG
+  GF_ASSERT_MSG(!MapFadeReqFlg,"ERROR:ALREADY CALLED MAP_FADE_OUT");
+  MapFadeReqFlg = TRUE;
+#endif  
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * マップチェンジ用　ホワイトイン
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdMapFade_WhiteIn( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  CreateBrightFadeTask( gsys, fieldWork, FADE_IN, FIELD_FADE_WHITE, FIELD_FADE_WAIT );
+#ifdef PM_DEBUG
+  GF_ASSERT_MSG(MapFadeReqFlg,"ERROR:NOT CALL MAP_FADE_OUT");
+  MapFadeReqFlg = FALSE;
+#endif  
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * マップチェンジ用　ホワイトアウト
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdMapFade_WhiteOut( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  CreateBrightFadeTask( gsys, fieldWork, FADE_OUT, FIELD_FADE_WHITE, FIELD_FADE_WAIT );
+#ifdef PM_DEBUG
+  GF_ASSERT_MSG(!MapFadeReqFlg,"ERROR:ALREADY CALLED MAP_FADE_OUT");
+  MapFadeReqFlg = TRUE;
+#endif  
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
  * 画面フェード終了チェック
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
@@ -84,6 +218,18 @@ VMCMD_RESULT EvCmdDispFadeCheck( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//--------------------------------------------------------------
+/**
+ * マップ遷移用フェード終了チェック
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdMapFadeCheck( VMHANDLE *core, void *wk )
+{
+  VMCMD_SetWait( core, EvWaitMapFade );
+  return VMCMD_RESULT_SUSPEND;
+}
 
 //======================================================================
 //
@@ -344,4 +490,93 @@ static BOOL EvWaitDoorAnime( VMHANDLE *core, void *wk )
   }
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief	ブライトネスフェードタスク生成
+ * @param	gsys		  GAMESYS_WORKへのポインタ
+ * @param	fieldmap  フィールドマップワークへのポインタ
+ * @param fade_io   イン　or アウト
+ * @param	type		  フェードの種類指定
+ * @param wait      フェード完了を待つかどうか
+ * @return	none
+ */
+//------------------------------------------------------------------
+static void CreateBrightFadeTask( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, FADE_IO fade_io,
+                             FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait )
+{
+  BRIGHT_CNT_WORK *task_wk;
+  GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( fieldmap );
+  //ワーク作成
+  task_wk = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(BRIGHT_CNT_WORK) );
+  // TCBを追加
+  GFL_TCB_AddTask( tcbsys, BrightCntTcb, task_wk, 0 );
+  
+  //リクエストフラグ立てる
+  FIELDMAP_SetMapFadeReqFlg( fieldmap, TRUE );
+
+  task_wk->Seq  = 0;
+  task_wk->gsys      = gsys;
+  task_wk->fieldmap  = fieldmap;
+	task_wk->fade_type = type;
+  task_wk->wait_type = wait;
+  task_wk->fade_io = fade_io;
+}
+
+//--------------------------------------------------------------
+/**
+ * ブライトネスフェードタスク
+ * @param   tcb        タスクポインタ
+ * @param   work      ワーク 
+ * @retval  none
+ */
+//--------------------------------------------------------------
+static void BrightCntTcb( GFL_TCB* tcb, void* work )
+{
+  BRIGHT_CNT_WORK *wk = work;
+  switch(wk->Seq){
+  case 0:
+    {
+      int mode;
+      int start, end;
+      if ( wk->fade_io == FADE_IN )
+      {
+        start = 16;
+        end = 0;
+      }
+      else
+      {
+        start = 0;
+        end = 16;
+      }
+
+      if ( wk->fade_type ==  FIELD_FADE_BLACK)
+      {
+        mode = GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB;
+      }
+      else
+      {
+        mode = GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN | GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB;
+      }
+      GFL_FADE_SetMasterBrightReq(mode, start, end, 0);
+    }
+    wk->Seq++;
+    break;
+  case 1:
+    {
+      BOOL rc = FALSE;
+      if( wk->wait_type == FIELD_FADE_NO_WAIT ) rc = TRUE;
+		  if( GFL_FADE_CheckFade() == FALSE ) rc = TRUE;
+
+      if (rc) { //フェード終了
+        //フェードインのときはＢＧ初期化する
+        if (wk->fade_io == FADE_IN) FIELDMAP_InitBG(wk->fieldmap);
+        
+        FIELDMAP_SetMapFadeReqFlg( wk->fieldmap, FALSE ); //リクエスト落す
+        GFL_TCB_DeleteTask( tcb );
+        GFL_HEAP_FreeMemory( work );
+      }
+    }
+		break;
+  }
+}
 

@@ -327,6 +327,8 @@ struct _FIELDMAP_WORK
   FLD_G3DOBJ_CTRL *fieldG3dObjCtrl;
 
   FIELD_TASK_MAN* taskManager;  // タスクマネージャ
+
+  BOOL MapFadeReq;     //マップ遷移用フェードリクエスト
 };
 
 //--------------------------------------------------------------
@@ -3085,4 +3087,28 @@ FIELDSKILL_MAPEFF * FIELDMAP_GetFieldSkillMapEffect( FIELDMAP_WORK * fieldWork )
   return fieldWork->fieldskill_mapeff;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  マップフェードリクエストセット
+ *
+ *	@param	fieldWork   ワーク
+ *	@param  BOOL
+ */
+//-----------------------------------------------------------------------------
+void FIELDMAP_SetMapFadeReqFlg( FIELDMAP_WORK * fieldWork, const BOOL inReq )
+{
+  fieldWork->MapFadeReq = inReq;
+}
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  マップフェードリクエストチェック
+ *
+ *	@param	fieldWork   ワーク
+ *	@return  BOOL     TRUE：リクエスト中
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELDMAP_CheckMapFadeReqFlg( FIELDMAP_WORK * fieldWork  )
+{
+  return fieldWork->MapFadeReq;
+}

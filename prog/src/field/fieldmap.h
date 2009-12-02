@@ -132,3 +132,6 @@ extern void FIELDMAP_SetDraw3DMode(FIELDMAP_WORK *fieldWork, DRAW3DMODE mode);
 extern FLD3D_CI_PTR FIELDMAP_GetFld3dCiPtr(FIELDMAP_WORK *fieldWork);
 extern FIELDSKILL_MAPEFF * FIELDMAP_GetFieldSkillMapEffect( FIELDMAP_WORK * fieldWork );
 
+extern void FIELDMAP_SetMapFadeReqFlg( FIELDMAP_WORK * fieldWork, const BOOL inReq );
+extern BOOL FIELDMAP_CheckMapFadeReqFlg( FIELDMAP_WORK * fieldWork );
+

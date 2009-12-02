@@ -93,7 +93,8 @@
 #include "event_autoway.h" // for EVENT_PlayerMoveOnAutoWay
 
 #ifdef PM_DEBUG
-extern BOOL DebugBGInitEnd;    //BG初期化監視フラグ
+extern BOOL DebugBGInitEnd;    //BG初期化監視フラグ             宣言元　fieldmap.c
+extern BOOL MapFadeReqFlg;    //マップフェードリクエストフラグ  宣言元　script.c
 #endif
 
 
@@ -253,6 +254,11 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
       return event;
     }
   }
+
+#ifdef PM_DEBUG
+  GF_ASSERT_MSG(DebugBGInitEnd,"ERROR:BG NOT INITIALIZE");    //BG初期化監視フラグ
+  GF_ASSERT_MSG(!MapFadeReqFlg,"ERROR:CALLED MAP FADE REQ");   //マップフェードリクエストフラグ
+#endif  
 
   //遊覧船時間監視
   {
@@ -703,10 +709,6 @@ GMEVENT * FIELD_EVENT_CheckNormal_Wrap( GAMESYS_WORK *gsys, void *work )
 	FIELDMAP_WORK *fieldmap_work;
 	FIELD_PLACE_NAME *place_name_sys;
 
-#ifdef PM_DEBUG
-///  GF_ASSERT_MSG(DebugBGInitEnd,"BG NOT INITIALIZE");    //BG初期化監視フラグ
-#endif  
-
 	// イベント起動チェック
 	event = FIELD_EVENT_CheckNormal( gsys, work );
 
@@ -841,10 +843,6 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
 	GMEVENT *event;
 	FIELDMAP_WORK *fieldmap_work;
 	FIELD_PLACE_NAME *place_name_sys;
-
-#ifdef PM_DEBUG
-  GF_ASSERT_MSG(DebugBGInitEnd,"BG NOT INITIALIZE");    //BG初期化監視フラグ
-#endif
 
 	// イベント起動チェック
 	event = eventCheckNoGrid( gsys, work );
@@ -1501,6 +1499,12 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
 
 //☆☆☆特殊スクリプト起動チェックがここに入る
     /* 今はない */
+
+
+#ifdef PM_DEBUG
+  GF_ASSERT_MSG(DebugBGInitEnd,"ERROR:BG NOT INITIALIZE");    //BG初期化監視フラグ
+  GF_ASSERT_MSG(!MapFadeReqFlg,"ERROR:CALLED MAP FADE REQ");   //マップフェードリクエストフラグ
+#endif  
 
 //☆☆☆トレーナー視線チェックがここに入る
   if( !(req.debugRequest) ){
