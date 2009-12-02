@@ -39,6 +39,7 @@
 //	mine
 #include "debug_template.h"
 
+#include "debug/debug_str_conv.h"
 
 static const u16 PMS_SrcFileID[] = {
 	NARC_message_monsname_dat,
@@ -77,10 +78,11 @@ static inline void DEBUG_STRBUF_Print( const STRBUF *cp_str )
 
 	for( i = 0; i < len; i++ )
 	{
-		STD_ConvertCharUnicodeToSjis( str, cp_code[i]);
+		DEB_STR_CONV_StrcodeToSjis( &cp_code[i] , str , 1 );
 		NAGI_Printf( "%s ", str );
 	}
 	NAGI_Printf("\n");
+
 }
 
 // ˆ—ŽžŠÔ‚Ì•\Ž¦

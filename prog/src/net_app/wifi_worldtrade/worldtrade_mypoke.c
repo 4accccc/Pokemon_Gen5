@@ -29,6 +29,7 @@
 
 #include "worldtrade.naix"			// グラフィックアーカイブ定義
 
+#include "debug/debug_str_conv.h"
 
 
 //============================================================================================
@@ -165,9 +166,12 @@ int WorldTrade_MyPoke_Init(WORLDTRADE_WORK *wk, int seq)
 #ifdef PM_DEBUG
 	{	
 		static char string[256]	= {0};
+		/*
 		STD_ConvertStringUnicodeToSjis( string, NULL,
                                          wk->UploadPokemonData.name, NULL,
                                          NULL );
+    */
+    DEB_STR_CONV_StrcodeToSjis( wk->UploadPokemonData.name , string , 128 );
 		OS_Printf( "親名 %s\n", string );
 	}
 #endif //PM_DEBUG

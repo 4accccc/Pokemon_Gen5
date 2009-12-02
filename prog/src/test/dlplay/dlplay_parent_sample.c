@@ -369,7 +369,7 @@ static GFL_PROC_RESULT DebugDLPlayMainProcMain(GFL_PROC * proc, int * seq, void 
 	
 					DLPlayFunc_ClearString( parentData->msgSys_ );
 	 
-					STD_ConvertStringUnicodeToSjis( w1Str , &strLen , boxIndex->boxName_[bi] , NULL , NULL );
+					//STD_ConvertStringUnicodeToSjis( w1Str , &strLen , boxIndex->boxName_[bi] , NULL , NULL );
 					w1Str[strLen] = '\0';
 					sprintf(str,"BoxName[%s]",w1Str);
 					DLPlayFunc_PutStringLine( 0,str,parentData->msgSys_ );
@@ -384,7 +384,7 @@ static GFL_PROC_RESULT DebugDLPlayMainProcMain(GFL_PROC * proc, int * seq, void 
 						else
 						{
 							strLen = 64;
-							STD_ConvertStringUnicodeToSjis( w1Str , &strLen , pokeData->name_ , NULL , NULL );
+							//STD_ConvertStringUnicodeToSjis( w1Str , &strLen , pokeData->name_ , NULL , NULL );
 							w1Str[strLen] = '\0';
 							sprintf(w2Str,"[%3d][%s:%s][%d]",pokeData->pokeNo_,w1Str,sexStr[pokeData->sex_],pokeData->lv_);
 							if( pokeData->isEgg_ == 1 )

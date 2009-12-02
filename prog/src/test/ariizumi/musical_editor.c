@@ -33,6 +33,7 @@
 #include "musical/musical_camera_def.h"
 
 #include "debug/gf_mcs.h"
+#include "debug/debug_str_conv.h"
 #include "test/ariizumi/ari_debug.h"
 
 #if USE_MUSICAL_EDIT
@@ -1421,12 +1422,13 @@ static void MusicalSetting_UpdateTouch( MUS_EDIT_LOCAL_WORK *work )
         static const char *posName[] = {"‰EŽ¨","¶Ž¨","“ª","–Ú•@","Šç","“·","˜","‰EŽè","¶Žè"};
         int jisSize = 128 , uniSize = 32;
         char jisStr[128];
-        STRBUF *str = GFL_STR_CreateBuffer( 32 , work->heapId );
+        STRBUF *str = GFL_STR_CreateBuffer( uniSize , work->heapId );
         STRCODE *code = (STRCODE*)GFL_STR_GetStringCodePointer(str);
         code[GFL_STR_GetBufferLength(str)] = 0;
         GFL_STD_MemClear( jisStr , 128 );
         GFL_MSG_GetString( work->itemMsgHandle , MUS_ITEM_DRAW_GetArcIdx( itemNo )+ITEM_NAME_000 , str );
-        STD_ConvertStringUnicodeToSjis( jisStr , &jisSize , code , &uniSize , NULL );
+        //STD_ConvertStringUnicodeToSjis( jisStr , &jisSize , code , &uniSize , NULL );
+        DEB_STR_CONV_StrcodeToSjis( code , jisStr , uniSize );
         
         OS_TPrintf("%s %s 5 ",jisStr,posName[ePos]);
         cnt++;

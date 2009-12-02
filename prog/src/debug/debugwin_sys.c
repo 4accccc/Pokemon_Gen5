@@ -12,6 +12,8 @@
 
 #include "print/printsys.h"
 
+#include "debug/debug_str_conv.h"
+
 #include "debug/debugwin_sys.h"
 #include "debug/debug_system_group.h"
 
@@ -664,7 +666,8 @@ void DEBUGWIN_ITEM_SetName( DEBUGWIN_ITEM* item , const char *nameStr )
   int bufLen = DEBUGWIN_ITEM_NAME_LEN-1;
   STRCODE strCode[DEBUGWIN_ITEM_NAME_LEN];
   
-  STD_ConvertStringSjisToUnicode( strCode , &bufLen , nameStr , NULL , NULL );
+  //STD_ConvertStringSjisToUnicode( strCode , &bufLen , nameStr , NULL , NULL );
+  DEB_STR_CONV_SjisToStrcode( nameStr , strCode , bufLen );
 
   strCode[bufLen] = GFL_STR_GetEOMCode();
   GFL_STR_SetStringCode( item->name , strCode );
@@ -724,7 +727,8 @@ void DEBUGWIN_DrawStr( const u8 posX , const u8 posY , const HEAPID heapId , con
   strBuf = GFL_STR_CreateBuffer( len+1 , heapId );
   strCode = GFL_HEAP_AllocMemory( heapId , sizeof(STRCODE)*(len+1) ); 
   
-  STD_ConvertStringSjisToUnicode( strCode , &len , str , NULL , NULL );
+  //STD_ConvertStringSjisToUnicode( strCode , &len , str , NULL , NULL );
+  DEB_STR_CONV_SjisToStrcode( str , strCode , len );
   strCode[len] = GFL_STR_GetEOMCode();
   GFL_STR_SetStringCode( strBuf , strCode );
 

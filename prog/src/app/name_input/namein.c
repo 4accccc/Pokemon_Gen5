@@ -47,6 +47,8 @@
 #include "namein_data.h"		//名前入力データ（キー配列と変換）
 #include "app/name_input.h"	//外部参照
 
+#include "debug/debug_str_conv.h"
+
 //=============================================================================
 /**
  *					定数宣言
@@ -67,7 +69,7 @@ static inline void DEBUG_NAMEIN_Print( STRCODE *x , int len )
 	char str[3]	= {0};
 	for( i = 0; i < len; i++ )
 	{
-		STD_ConvertCharUnicodeToSjis( str, x[i]);
+		DEB_STR_CONV_StrcodeToSjis( &cp_code[i] , str , 1 );
 		NAGI_Printf( "%s ", str );
 	}
 	NAGI_Printf("\n");

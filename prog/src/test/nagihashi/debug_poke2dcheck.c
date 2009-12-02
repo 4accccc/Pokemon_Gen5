@@ -28,6 +28,9 @@
 
 //ŠO•”ŽQÆ
 #include "debug_poke2dcheck.h"
+
+#include "debug/debug_str_conv.h"
+
 //=============================================================================
 /**
  *					’è”éŒ¾
@@ -1165,7 +1168,8 @@ static void DEBUGPRINT_Print( DEBUGPRINT_WORK *p_wk, u16 x, u16 y, const char *c
   int bufLen = DEBUGPRINT_STRBUFF_LEN-1;
   STRCODE strCode[DEBUGPRINT_STRBUFF_LEN];
 
-  STD_ConvertStringSjisToUnicode( strCode , &bufLen , cp_str, NULL , NULL );
+  //STD_ConvertStringSjisToUnicode( strCode , &bufLen , cp_str, NULL , NULL );
+  DEB_STR_CONV_SjisToStrcode( cp_str , strCode , bufLen );
   strCode[bufLen] = GFL_STR_GetEOMCode();
 
   GFL_STR_SetStringCode( p_wk->p_strbuf, strCode );

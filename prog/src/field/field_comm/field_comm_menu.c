@@ -22,6 +22,7 @@
 #include "message.naix"
 #include "font/font.naix"
 #include "msg/msg_d_field.h"
+#include "debug/debug_str_conv.h"
 
 #define NULL_OLD_FLDMSG (0) //FLDMSGBG’u‚«Š·‚¦‘O
 
@@ -442,7 +443,7 @@ void  FIELD_COMM_MENU_UpdateDebugWindow( FIELD_COMM_MAIN *commSys )
           codeTempLen = 128;
           sprintf(strBase,"P%d:%3d(%2d):%3d(%2d):%d  \0",i+1,(int)F32_CONST(plWork->position.x),px,(int)F32_CONST(plWork->position.z),pz,(int)F32_CONST(plWork->position.y));
           //sprintf(strBase,"P%d:%3d:%3d  \0",i+1,plWork->position.x,plWork->position.z);
-          STD_ConvertStringSjisToUnicode( codeTemp ,&codeTempLen, strBase , NULL , NULL);
+          //STD_ConvertStringSjisToUnicode( codeTemp ,&codeTempLen, strBase , NULL , NULL);
           GFL_STR_SetStringCodeOrderLength( strTemp , codeTemp , codeTempLen);
           FLDMSGWIN_PrintStrBuf( commMenu->msgWin_, (i%2)*128, (i/2)*16, (void*)strTemp );
         }
