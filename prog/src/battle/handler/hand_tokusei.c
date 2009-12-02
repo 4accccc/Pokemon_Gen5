@@ -3530,28 +3530,18 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Bouon( u16 pri, u16 tokID, u8 pokeID )
  *  とくせい「ふゆう」
  */
 //------------------------------------------------------------------------------
-// 無効化チェックLv1ハンドラ
+// 飛行フラグチェックハンドラ
 static void handler_Fuyuu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  // 自分が防御側の時
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    // 場に「じゅうりょく」が効いていなければ
-    if( BTL_FIELD_CheckEffect(BTL_FLDEFF_JURYOKU) )
-    {
-      // じめんタイプワザ無効
-      WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
-      if( WAZADATA_GetType(waza) == POKETYPE_JIMEN )
-      {
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, TRUE );
-      }
-    }
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
   }
 }
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Fuyuu( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_NOEFFECT_CHECK_L1,        handler_Fuyuu },  // 無効化チェックLv1ハンドラ
+    { BTL_EVENT_CHECK_FLYING,        handler_Fuyuu },  // 飛行フラグチェックハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -4152,7 +4142,7 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Nenchaku( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_NOEFFECT_CHECK_L2,    handler_Nenchaku_NoEff },  // 無効化チェックLv2ハンドラ
-    { BTL_EVENT_SET_ITEM_BEFORE,      handler_Nenchaku   },
+    { BTL_EVENT_ITEMSET_CHECK,        handler_Nenchaku   },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -4614,7 +4604,7 @@ static void handler_Murakke( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 
   }CALC_WORK;
 
-  CALC_WORK* work = BTL_SVFLOW_GetHandlerTmpWork( flowWk, sizeof(CALC_WORK) );
+  CALC_WORK* work = BTL_SVFTOOL_GetTmpWork( flowWk, sizeof(CALC_WORK) );
   const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
   u8 upEffect, downEffect, upCnt, downCnt, ptnCnt;
   u32 i;

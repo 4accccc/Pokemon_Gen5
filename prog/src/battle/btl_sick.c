@@ -425,18 +425,16 @@ BOOL BTL_SICK_MakeDefaultCureMsg( WazaSick sickID, BPP_SICK_CONT oldCont, const 
   return FALSE;
 }
 
+/*----------------------------------------------------------------------------------------------------*/
+/* イベントハンドラ同様、特定イベントに反応する状態異常ハンドラ                                       */
+/*----------------------------------------------------------------------------------------------------*/
 
-
-//=============================================================================================
-/**
- *
- *
- * @param   flowWk
- * @param   defender
- */
-//=============================================================================================
-void BTL_SICK_CheckNotEffectByType( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* defender )
+/**-------------------------------------------------------------
+ * タイプごとの相性無効ハンドラ
+ *------------------------------------------------------------*/
+void BTL_SICKEVENT_CheckNotEffectByType( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* defender )
 {
+  // とくていタイプを「みやぶる」状態なら、相性無効をキャンセルする
   if( BPP_CheckSick(defender, WAZASICK_MIYABURU) )
   {
     BPP_SICK_CONT cont = BPP_GetSickCont( defender, WAZASICK_MIYABURU );
@@ -446,8 +444,10 @@ void BTL_SICK_CheckNotEffectByType( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM
     }
   }
 }
-
-void BTL_SICK_CheckDamageAffinity(  BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* defender )
+/**-------------------------------------------------------------
+ * 相性計算ハンドラ
+ *------------------------------------------------------------*/
+void BTL_SICKEVENT_CheckDamageAffinity(  BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* defender )
 {
   // 「みやぶる」状態の時、効果無しのワザを等倍ヒットに変換
   if( BPP_CheckSick(defender, WAZASICK_MIYABURU) )
@@ -462,7 +462,20 @@ void BTL_SICK_CheckDamageAffinity(  BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM
     }
   }
 }
-
+/**-------------------------------------------------------------
+ * 飛行フラグチェックハンドラ
+ *------------------------------------------------------------*/
+void BTL_SICKEVENT_CheckFlying( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp )
+{
+  if( BPP_CheckSick(bpp, WAZASICK_TELEKINESIS)
+  ||  BPP_CheckSick(bpp, WAZASICK_FLYING)
+  ){
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
+  }
+  if( BPP_CheckSick(bpp, WAZASICK_FLYING_CANCEL) ){
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+  }
+}
 
 
 

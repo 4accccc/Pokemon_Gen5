@@ -175,6 +175,8 @@ static inline void flgbuf_set( u8* buf, u32 flagID );
 static inline void flgbuf_reset( u8* buf, u32 flagID );
 static inline BOOL flgbuf_get( const u8* buf, u32 flagID );
 static void ConfrontRec_Clear( BTL_POKEPARAM* bpp );
+static inline BOOL IsMatchTokusei( const BTL_POKEPARAM* bpp, PokeTokusei tokusei );
+static inline BOOL IsMatchItem( const BTL_POKEPARAM* bpp, u16 itemID );
 
 
 
@@ -1406,7 +1408,7 @@ void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFu
       if( turnMax )
       {
         u8 n = 1;
-        if( (sick == WAZASICK_NEMURI) && (bpp->tokusei == POKETOKUSEI_HAYAOKI) ){
+        if( (sick == WAZASICK_NEMURI) && (IsMatchTokusei(bpp, POKETOKUSEI_HAYAOKI)) ){
           n = 2;    // とくせい「はやおき」は眠りカウンタ２倍速
         }
         BTL_Printf("ポケ[%d - %p], 状態異常[%d] 最大ターン=%d, counter=%d ->",
@@ -2059,14 +2061,21 @@ void BPP_SetWeight( BTL_POKEPARAM* bpp, u16 weight )
 u16 BPP_GetWeight( const BTL_POKEPARAM* bpp )
 {
   u16 weight = bpp->weight;
-  if( bpp->tokusei == POKETOKUSEI_HEVIMETARU ){
+
+  if( IsMatchTokusei(bpp, POKETOKUSEI_HEVIMETARU) ){
     weight *= 2;
-  }else if( bpp->tokusei == POKETOKUSEI_RAITOMETARU ){
+  }else if( IsMatchTokusei(bpp, POKETOKUSEI_RAITOMETARU) ){
     weight /= 2;
-    if( weight < BTL_POKE_WEIGHT_MIN ){
-      weight = BTL_POKE_WEIGHT_MIN;
-    }
   }
+
+  if( IsMatchItem(bpp, ITEM_KARUISI) ){
+    weight /= 2;
+  }
+
+  if( weight < BTL_POKE_WEIGHT_MIN ){
+    weight = BTL_POKE_WEIGHT_MIN;
+  }
+
   return weight;
 }
 //----------------------------------------------------------------------------------
@@ -2571,5 +2580,21 @@ u8 BPP_CONFRONT_REC_GetPokeID( const BTL_POKEPARAM* bpp, u8 idx )
     return bpp->confrontRec[ idx ];
   }
   return BTL_POKEID_NULL;
+}
+
+
+//---------------------------------------------------------------------------------------------
+// とくせい・アイテム参照（いえき、さしおさえ等の影響を考慮して、直接参照しないようにするため）
+//---------------------------------------------------------------------------------------------
+static inline BOOL IsMatchTokusei( const BTL_POKEPARAM* bpp, PokeTokusei tokusei )
+{
+  if( BPP_CheckSick(bpp, WAZASICK_IEKI) ){
+    return FALSE;
+  }
+  return (bpp->tokusei == tokusei);
+}
+static inline BOOL IsMatchItem( const BTL_POKEPARAM* bpp, u16 itemID )
+{
+  return (bpp->coreParam.item == itemID);
 }
 

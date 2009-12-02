@@ -20,6 +20,7 @@
 #include "..\btl_client.h"
 #include "..\btl_event_factor.h"
 
+#include "hand_common.h"
 #include "hand_side.h"
 #include "hand_field.h"
 #include "hand_waza.h"
@@ -2941,13 +2942,21 @@ static void handler_Sawagu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
       {
         BTL_HANDEX_PARAM_CURE_SICK* cure_param;
         BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokeID( flowWk, pokeID );
-        BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_AREA_FRIENDS, myPos );
+        BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_AREA_ALL, myPos );
 
-        cure_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
-        cure_param->sickCode = WAZASICK_NEMURI;
-        cure_param->poke_cnt = BTL_SVFTOOL_ExpandPokeID( flowWk, expos, cure_param->pokeID );
-        cure_param->fExMsg = TRUE;
-        cure_param->exStrID = BTL_STRID_SET_SawaguWake;
+        HANDWORK_POKEID* idwk = BTL_SVFTOOL_GetTmpWork( flowWk, sizeof(HANDWORK_POKEID) );
+        u32 i;
+
+        idwk->pokeCnt = BTL_SVFTOOL_ExpandPokeID( flowWk, expos, idwk->pokeID );
+        for(i=0; i<idwk->pokeCnt; ++i)
+        {
+          cure_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+          cure_param->sickCode = WAZASICK_NEMURI;
+          cure_param->poke_cnt = 1;
+          cure_param->pokeID[0] = idwk->pokeID[i];
+          HANDEX_STR_Setup( &cure_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_SawaguWake );
+          HANDEX_STR_AddArg( &cure_param->exStr, idwk->pokeID[i] );
+        }
       }
 
       work[ WORKIDX_STICK ] = 1;
@@ -7349,7 +7358,7 @@ static void handler_Nekonote( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   {
     const BTL_PARTY* party = BTL_SVFLOW_GetPartyData( flowWk, pokeID );
     u32  arySize = PTL_WAZA_MAX * BTL_PARTY_MEMBER_MAX * sizeof(u16);
-    u16* wazaAry = BTL_SVFLOW_GetHandlerTmpWork( flowWk, arySize );
+    u16* wazaAry = BTL_SVFTOOL_GetTmpWork( flowWk, arySize );
     const BTL_POKEPARAM* bpp;
 
     u8 frontMemberCnt, memberCnt, wazaCnt, i;
@@ -7586,7 +7595,7 @@ static void handler_Manekko_CheckParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    WazaID waza = BTL_SVFLOW_GetPrevExeWaza( flowWk );
+    WazaID waza = BTL_SVFTOOL_GetPrevExeWaza( flowWk );
     if( (waza != WAZANO_NULL)
     &&  (!isReqWazaExclude(waza))
     ){
@@ -7807,7 +7816,7 @@ static void handler_EchoVoice( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    const BTL_WAZAREC* rec = BTL_SVF_GetWazaRecord( flowWk );
+    const BTL_WAZAREC* rec = BTL_SVFTOOL_GetWazaRecord( flowWk );
     WazaID  wazaID = BTL_EVENT_FACTOR_GetSubID( myHandle );
     int turn_cnt = BTL_SVFTOOL_GetTurnCount( flowWk ) - 1;
     int cont_cnt = 0;
@@ -7850,7 +7859,7 @@ static void handler_Katakiuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    const BTL_DEADREC* rec = BTL_SVF_GetDeadRecord( flowWk );
+    const BTL_DEADREC* rec = BTL_SVFTOOL_GetDeadRecord( flowWk );
     u8 deadPokeCnt, deadPokeID, i;
 
     // 前のターンに味方が死んでいたら威力を倍
@@ -8564,7 +8573,7 @@ static void handler_Rinsyou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
   // このターンにまだ誰も同じワザを使っていなければ、同じワザを使う予定のポケを繰り上げる
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    const BTL_WAZAREC* rec = BTL_SVF_GetWazaRecord( flowWk );
+    const BTL_WAZAREC* rec = BTL_SVFTOOL_GetWazaRecord( flowWk );
     WazaID  wazaID = BTL_EVENT_FACTOR_GetSubID( myHandle );
     u32 thisTurn = BTL_SVFTOOL_GetTurnCount( flowWk );
     if( !BTL_WAZAREC_IsUsedWaza(rec, wazaID, thisTurn) )
@@ -8580,7 +8589,7 @@ static void handler_Rinsyou_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
   // このターンに同じワザを使っていれば威力が倍
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    const BTL_WAZAREC* rec = BTL_SVF_GetWazaRecord( flowWk );
+    const BTL_WAZAREC* rec = BTL_SVFTOOL_GetWazaRecord( flowWk );
     WazaID  wazaID = BTL_EVENT_FACTOR_GetSubID( myHandle );
     u32 thisTurn = BTL_SVFTOOL_GetTurnCount( flowWk );
     // 既に自分のワザがレコードされているので１件を越えてたら２番目以降と判定
