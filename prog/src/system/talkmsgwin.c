@@ -18,7 +18,8 @@
 
 #include "system/talkmsgwin.h"
 
-#include "talkwin_test.naix"
+//#include "talkwin_test.naix"
+#include "winframe.naix"
 //============================================================================================
 /**
  *
