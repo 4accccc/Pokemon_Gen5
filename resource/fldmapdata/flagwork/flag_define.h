@@ -158,8 +158,8 @@
 #define FE_BADGEGATE07_OPEN                142 /* 0x008e バッジチェック氷ゲートが開いた */
 #define FE_BADGEGATE08_OPEN                143 /* 0x008f バッジチェックドラゴンゲートが開いた */
 #define FE_C06R0101_ITEMGET_01             144 /* 0x0090 C06R0101フキヨセシティ民家のアイテム入手フラグ（アイテム未定） */
-		/* not used   145(0x0091) */
-		/* not used   146(0x0092) */
+#define FE_D04R0201_KASEKIGET              145 /* 0x0091 D04遺跡でカセキ入手した */
+#define FE_D04R0201_KASEKITALK             146 /* 0x0092 D04遺跡でカセキくれる人に話しかけた */
 		/* not used   147(0x0093) */
 		/* not used   148(0x0094) */
 		/* not used   149(0x0095) */
@@ -607,12 +607,12 @@
 #define FV_D06_STOPPER_01                  583 /* 0x0247 D06電気洞窟にあるデンチュラの巣 */
 #define FV_D06R0101_FRIENDS                584 /* 0x0248 D06R0101電気洞窟内部の博士とサポート */
 #define FV_D06R0201_BOSS_01                585 /* 0x0249 D06R0201のN（エヌ）、アイテムを貰う */
-		/* not used   586(0x024a) */
-		/* not used   587(0x024b) */
-		/* not used   588(0x024c) */
-		/* not used   589(0x024d) */
-		/* not used   590(0x024e) */
-		/* not used   591(0x024f) */
+#define FV_D03R0101_SUNGLASSES_01          586 /* 0x024a D03砂漠のサングラス */
+#define FV_D03R0101_RIVAL_01               587 /* 0x024b D03砂漠のライバル（一人目） */
+#define FV_D03R0101_RIVAL_02               588 /* 0x024c D03砂漠のライバル（二人目） */
+#define FV_D03R0101_CHAMPION_01            589 /* 0x024d D03砂漠のチャンピオン */
+#define FV_D04R0601_EVENT_01               590 /* 0x024e D04遺跡のゲーチス、チャンピオン、ライバル（共有） */
+#define FV_D04R0101_CORN_01                591 /* 0x024f 道路のコーン（ストッパー） */
 		/* not used   592(0x0250) */
 		/* not used   593(0x0251) */
 		/* not used   594(0x0252) */
