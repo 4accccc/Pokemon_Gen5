@@ -399,9 +399,16 @@ static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* fac
 {
   const BTL_POKEPARAM* bpp;
 
-  // 「いえき」状態のポケモンは、とくせいハンドラを呼び出さない
   bpp = BTL_SVFTOOL_GetPokeParam( flowWork, factor->pokeID );
+
+  // 「いえき」状態のポケモンは、とくせいハンドラを呼び出さない
   if( BPP_CheckSick(bpp, WAZASICK_IEKI) && (factor->factorType == BTL_EVENT_FACTOR_TOKUSEI) ){
+    return TRUE;
+  }
+
+  // 「さしおさえ」状態のポケモンは、アイテムハンドラを呼び出さない？
+  // @todo これについては仕様の再確認が必要か
+  if( BPP_CheckSick(bpp, WAZASICK_SASIOSAE) && (factor->factorType == BTL_EVENT_FACTOR_ITEM) ){
     return TRUE;
   }
 
@@ -590,7 +597,7 @@ void BTL_EVENTVAR_Push( void )
     stack->label[ stack->sp++ ] = BTL_EVAR_SYS_SEPARATE;
     #ifdef PM_DEBUG
     if( stack->sp >= (NELEMS(stack->label)/8*7) ){
-      BTL_Printf("Var Stack sp=%d 危険水域です！！\n", stack->sp);
+      GF_ASSERT_MSG(0, "Event StackPointer =%d 危険水域です！！", stack->sp);
     }
     #endif
   }

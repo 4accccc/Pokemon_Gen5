@@ -476,6 +476,15 @@ void BTL_SICKEVENT_CheckFlying( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bp
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
   }
 }
+/**-------------------------------------------------------------
+ * 飛行フラグチェックハンドラ
+ *------------------------------------------------------------*/
+void BTL_SICKEVENT_CheckPushOutFail( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp )
+{
+  if( BPP_CheckSick(bpp, WAZASICK_NEWOHARU) ){
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+  }
+}
 
 
 

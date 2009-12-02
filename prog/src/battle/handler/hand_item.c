@@ -3375,23 +3375,46 @@ static void handler_Huusen_ItemSetFixed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     param->fStdMsgDisable = TRUE;
   }
 }
-
-
-
+//------------------------------------------------------------------------------
+/**
+ *  レッドカード
+ */
+//------------------------------------------------------------------------------
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_RedCard( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,     handler_RedCard },
+    { BTL_EVENT_WAZA_DMG_REACTION,     handler_RedCard },   /// ダメージ反応ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
+/// ダメージ反応ハンドラ
 static void handler_RedCard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+  {
+    BTL_HANDEX_PARAM_PUSHOUT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_PUSHOUT, pokeID );
+    param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
 
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_RedCard );
+    HANDEX_STR_AddArg( &param->exStr, pokeID );
+    HANDEX_STR_AddArg( &param->exStr, param->pokeID );
+
+    // 相手を吹き飛ばしたら、アイテムを消費する
+    {
+      BTL_HANDEX_PARAM_SET_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
+      param->header.failSkipFlag = TRUE;
+      param->pokeID = pokeID;
+      param->itemID = ITEM_DUMMY_DATA;
+    }
+  }
 }
 
-
+//------------------------------------------------------------------------------
+/**
+ *  ねらいのまと
+ */
+//------------------------------------------------------------------------------
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_NerainoMato( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
@@ -3404,8 +3427,11 @@ static void handler_NerainoMato( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 {
 
 }
-
-
+//------------------------------------------------------------------------------
+/**
+ *  しめつけバンド
+ */
+//------------------------------------------------------------------------------
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_SimetukeBand( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
@@ -3418,8 +3444,11 @@ static void handler_SimetukeBand( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 {
 
 }
-
-
+//------------------------------------------------------------------------------
+/**
+ *  きゅうこん
+ */
+//------------------------------------------------------------------------------
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_Kyuukon( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
@@ -3432,7 +3461,11 @@ static void handler_Kyuukon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 {
 
 }
-
+//------------------------------------------------------------------------------
+/**
+ *  じゅうでんち
+ */
+//------------------------------------------------------------------------------
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_Juudenti( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
@@ -3445,7 +3478,11 @@ static void handler_Juudenti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 {
 
 }
-
+//------------------------------------------------------------------------------
+/**
+ *  だっしゅつポッド
+ */
+//------------------------------------------------------------------------------
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_DassyutuPod( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
@@ -3458,7 +3495,11 @@ static void handler_DassyutuPod( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 {
 
 }
-
+//------------------------------------------------------------------------------
+/**
+ *  ○○○ジュエル
+ */
+//------------------------------------------------------------------------------
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_HonooNoJuel( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
@@ -3471,7 +3512,6 @@ static void handler_HonooNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 {
 
 }
-
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_MizuNoJuel( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {

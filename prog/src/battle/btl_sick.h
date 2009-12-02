@@ -26,6 +26,7 @@ BOOL BTL_SICK_MakeDefaultCureMsg( WazaSick sickID, BPP_SICK_CONT cont, const BTL
 extern void BTL_SICKEVENT_CheckNotEffectByType( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* defender );
 extern void BTL_SICKEVENT_CheckDamageAffinity(  BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* defender );
 extern void BTL_SICKEVENT_CheckFlying(  BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* defender );
+extern void BTL_SICKEVENT_CheckPushOutFail( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp );
 
 
 extern BOOL BTL_SICK_CheckBatonTouch( WazaSick sick );

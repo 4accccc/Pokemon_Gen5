@@ -420,6 +420,7 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
     { BTL_STRID_SET_MirrorType,           ms_set_poke2poke        },
     { BTL_STRID_SET_GiftPass,             ms_set_poke2poke        },
     { BTL_STRID_SET_FreeFall,             ms_set_poke2poke        },
+    { BTL_STRID_SET_RedCard,              ms_set_poke2poke        },
   };
 
   int i;
@@ -641,11 +642,9 @@ static void ms_set_useitem( STRBUF* dst, u16 strID, const int* args )
 //--------------------------------------------------------------
 static void ms_set_poke2poke( STRBUF* dst, u16 strID, const int* args )
 {
-  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-  register_PokeNickname( args[1], BUFIDX_POKE_2ND );
-
   strID = get_setStrID_Poke2( args[0], args[1], strID );
   GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
+  registerWords( SysWork.tmpBuf, args, SysWork.wset );
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 
 }

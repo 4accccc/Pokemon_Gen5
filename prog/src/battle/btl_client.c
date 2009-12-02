@@ -2852,11 +2852,9 @@ static BOOL scProc_OP_PPMinus( BTL_CLIENT* wk, int* seq, const int* args )
   u8 pokeID = args[0];
   u8 wazaIdx = args[1];
   u8 value = args[2];
-  u8 pokePos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, pokeID );
 
-  BTL_POKEPARAM* pp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, pokePos );
+  BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
   BPP_PPMinus( pp, wazaIdx, value );
-  BTL_Printf("ƒ|ƒPƒ‚ƒ“‚ÌPP Œ¸‚ç‚µ‚Ü‚· pokeID=%d, waza=%d, val=%d\n", pokeID, wazaIdx, value);
 
   return TRUE;
 }
