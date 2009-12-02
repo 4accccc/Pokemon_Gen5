@@ -15,6 +15,7 @@
 #include "system\main.h"
 #include "savedata\box_savedata.h"
 #include "app\name_input.h"
+#include "poke_tool\pokerus.h"
 
 // local includes --------------------
 #include "event_battle_return.h"
@@ -111,6 +112,16 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
       MYSTATUS*  myStatus = GAMEDATA_GetMyStatus( param->gameData );
 
       PokeParty_Copy( param->btlResult->partyPlayer, party );
+
+      //ポケルス感染チェック
+      //通信対戦では感染チェックをしない
+      if( param->btlResult->competitor != BTL_COMPETITOR_COMM )
+      { 
+        //感染チェック
+        POKERUS_CheckCatchPokerus( party );
+        //伝染チェック
+        POKERUS_CheckContagion( party );
+      }
 
       // @todo 図鑑フラグをセットする
 
