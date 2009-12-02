@@ -40,13 +40,13 @@ _EVENT_DATA_END
 /************************************************************/
 EVENT_START	ev_scene_c05gym0201_gymback_01
 
-	//ブラックイン
-	_BLACK_IN()
+	//マップ遷移ブラックイン
+	_MAP_FADE_BLACK_IN()
 
 	//ジムからリフトが戻ってくる演出（引数0 = 上昇アニメ）
 	_GYM_GROUND_ENT_EXIT_LIFT( 0 )
 
-	_DISP_FADE_END_CHECK()
+	_MAP_FADE_END_CHECK()
 
 	//========================================//
 	
@@ -70,13 +70,15 @@ EVENT_START	ev_c05gym0201_startlift_01
 		_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
 		_SE_WAIT()
 
-		//ブラックアウト
-		_BLACK_OUT()
+    //マップ遷移ブラックアウト
+		_MAP_FADE_BLACK_OUT()
 
 		//リフトを下降させる（1 = 下降アニメ）
 		_GYM_GROUND_ENT_EXIT_LIFT( 1 )
 
-		_DISP_FADE_END_CHECK()
+		_MAP_FADE_END_CHECK()
+
+    
 
 		//マップチェンジ
 		_MAP_CHANGE_NO_FADE( ZONE_ID_C05GYM0101, 17, 50, 25, DIR_UP )

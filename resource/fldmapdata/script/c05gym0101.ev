@@ -68,13 +68,13 @@ INIT_EVENT_END
 /************************************************************/
 EVENT_START	ev_scene_c05gym0101_gymstart_01
 
-	//ブラックイン
-	_BLACK_IN()
+	//マップ遷移ブラックイン
+	_MAP_FADE_BLACK_IN()
 
 	//エントランスからリフトが降りる演出（引数0 = 降下アニメ）
 	_GYM_GROUND_EXIT_LIFT( 0 )
 
-	_DISP_FADE_END_CHECK()
+	_MAP_FADE_END_CHECK()
 
 
 	//========================================//
@@ -399,13 +399,16 @@ EVENT_START	ev_c05gym0101_exitlift_00u
 		_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
 		_SE_WAIT()
 
-		//ブラックアウト
-		_BLACK_OUT()
+
+    //マップ遷移ブラックアウト
+		_MAP_FADE_BLACK_OUT()
 
 		//リフトを上昇させる（1 = エントランスに移動アニメ）
 		_GYM_GROUND_EXIT_LIFT( 1 )
 
-		_DISP_FADE_END_CHECK()
+		_MAP_FADE_END_CHECK()
+    
+    
 
 		//========================================//
 
