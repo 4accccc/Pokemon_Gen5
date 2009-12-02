@@ -54,7 +54,7 @@ $ExcelIndex = 0;
 #-----------------------------
 @MEV_OBJEVENT_KEY = ( "TYPE", "OBJID", "OBJCODE", "MOVECODE", "EVENTTYPE", "FLAG_NAME", "EVENTNAME", "Direction", "Parameter0", "Parameter1", "Parameter2", "MoveLimit X", "MoveLimit Z", "Position Type", "Position X", "Position Y", "Position Z" );
 @MEV_BGEVENT_KEY = ( "BGID", "BG_TYPE", "BG_DIR", "EVENT_NAME", "Position Type", "Position X", "Position Y", "Position Z" );
-@MEV_POSEVENT_KEY = ( "POSID", "EVENT_NAME", "WORK_NAME", "WORK_EQUAL_VALUE", "Position Type", "Position X", "Position Y", "Position Z", "SizeX", "SizeZ" );
+@MEV_POSEVENT_KEY = ( "POSID", "EVENT_NAME", "POS CHECK TYPE", "WORK_NAME", "WORK_EQUAL_VALUE", "Position Type", "Position X", "Position Y", "Position Z", "SizeX", "SizeZ" );
 @MEV_DOOREVENT_KEY = ( "DOORID", "Next Zone ID", "Next Door ID", "Door Direction", "Door Type", "Position Type", "Position X", "Position Y", "Position Z", "SizeX", "SizeZ" );
 
 #ゾーンごとの情報
@@ -75,6 +75,7 @@ $DUMMY_POS_GRID     = 16;
 $DUMMY_POS_GRID_Z   = -16;
 $DUMMY_POS_X_MAX    = 8;
 $DUMMY_POS_Y        = 0;
+$DUMMY_POS_CHECK_TYPE = "POS_CHECK_TYPE_NORMAL";
 
 $DUMMY_BG_DIR        = "BG_TALK_DIR_ALL";
 
@@ -1003,6 +1004,8 @@ sub SetMevData_POSEVENT
       &SetArrayKeyNum( $mev_ev, \@MEV_POSEVENT_KEY, $merge_index, "Position Type", $DUMMY_POSTYPE );
       &SetArrayKeyNum( $mev_ev, \@MEV_POSEVENT_KEY, $merge_index, "SizeX", $DUMMY_SIZE );
       &SetArrayKeyNum( $mev_ev, \@MEV_POSEVENT_KEY, $merge_index, "SizeZ", $DUMMY_SIZE );
+
+      &SetArrayKeyNum( $mev_ev, \@MEV_POSEVENT_KEY, $merge_index, "POS CHECK TYPE", $DUMMY_POS_CHECK_TYPE );
     
 
       #データインデックスからポジションの自動生成
@@ -1303,6 +1306,9 @@ sub  WriteMev_POSEVENT
     print( FILEOUT "$output\r\n" );
     print( FILEOUT "#Pos Script Name\r\n" );
     $output = &GetArrayKeyNum( $mev_file, \@MEV_POSEVENT_KEY, $i, "EVENT_NAME" );
+    print( FILEOUT "$output\r\n" );
+    print( FILEOUT "#Pos Check Type\r\n" );
+    $output = &GetArrayKeyNum( $mev_file, \@MEV_POSEVENT_KEY, $i, "POS CHECK TYPE" );
     print( FILEOUT "$output\r\n" );
     print( FILEOUT "#Event Trigger Work Name\r\n" );
     $output = &GetArrayKeyNum( $mev_file, \@MEV_POSEVENT_KEY, $i, "WORK_NAME" );
