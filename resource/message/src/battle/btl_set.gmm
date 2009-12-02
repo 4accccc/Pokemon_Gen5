@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-02T15:53:48"/>
+	<create user="taya" host="W00146" date="2009-12-02T19:12:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2332,7 +2332,27 @@
 ふうせんが　割れた！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_RedCard" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
+	<row id="BTL_STRID_SET_DassyutuPod">
+		<comment>だっしゅつポッド</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+だっしゅつポッドで　もどっていった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+だっしゅつポッドで　戻っていった！</language>
+	</row>
+	<row id="BTL_STRID_SET_DassyutuPod_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+だっしゅつポッドで　もどっていった！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+だっしゅつポッドで　戻っていった！</language>
+	</row>
+	<row id="BTL_STRID_SET_DassyutuPod_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+だっしゅつポッドで　もどっていった！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+だっしゅつポッドで　戻っていった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RedCard">
 		<comment>レッドカード</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　レッドカードで
 [1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
