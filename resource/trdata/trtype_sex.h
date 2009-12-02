@@ -3,7 +3,7 @@
  * @file	trtype_sex.h
  * @bfief	トレーナー性別定義
  * @author	TrainerDataConverter
- * @date	2009-11-24
+ * @date	2009-12-02
  * @author	このファイルは、コンバータが吐き出したファイルです
 */
 //============================================================================================
@@ -86,5 +86,7 @@ static	const	u8	TrTypeSexTable[]={
 	PTL_SEX_MALE,		//ぼうそうぞく
 	PTL_SEX_MALE,		//やきゅうせんしゅ
 	PTL_SEX_MALE,		//やまおとこ
+	PTL_SEX_FEMALE,		//マダム
+	PTL_SEX_MALE,		//ジェントルマン
 };
 
