@@ -1412,6 +1412,8 @@ static void MusicalSetting_UpdateTouch( MUS_EDIT_LOCAL_WORK *work )
   {
     int ePos;
     int cnt = 0;
+    const u8 langId = GFL_MSGSYS_GetLangID();
+    GFL_MSGSYS_SetLangID( 0 );
     OS_TPrintf("-----------------------------------\n");
     for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
     {
@@ -1439,6 +1441,7 @@ static void MusicalSetting_UpdateTouch( MUS_EDIT_LOCAL_WORK *work )
       OS_TPrintf("‘•”õ–³‚µ –Ú•@ 5 ");
     }
     
+    GFL_MSGSYS_SetLangID( langId );
     OS_TPrintf("\n-----------------------------------\n");
   }
   
