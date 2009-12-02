@@ -117,6 +117,7 @@ struct _BTL_CLIENT {
   u8          fieldEffectFlag[ CLIENT_FLDEFF_BITFLAG_SIZE ];
 
   int wazaoboe_index;   //技覚えテーブル参照用インデックスワーク
+  WazaID  wazaoboe_no;  //技覚えで覚える技ナンバー
 };
 
 
@@ -2444,27 +2445,35 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
     {
       BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
       const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
-      WazaID waza_no = PP_CheckWazaOboe( ( POKEMON_PARAM* )pp, &wk->wazaoboe_index, wk->heapID );
-      switch( waza_no ){
-      case PTL_WAZAOBOE_NONE:
+      wk->wazaoboe_no = PP_CheckWazaOboe( ( POKEMON_PARAM* )pp, &wk->wazaoboe_index, wk->heapID );
+      if( wk->wazaoboe_no == PTL_WAZAOBOE_NONE )
+      { 
         return TRUE;
-        break;
-      case PTL_WAZAOBOE_FULL:
-        (*seq) = 6;
-        break;
-      default:
-        BPP_ReflectByPP( bpp );
-        BTL_MAIN_ClientPokemonReflectToServer( wk->mainModule, args[0] );
-        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_WAZAOBOE, msg_waza_oboe_04 );
-        BTLV_STRPARAM_AddArg( &wk->strParam, args[0] );
-        BTLV_STRPARAM_AddArg( &wk->strParam, waza_no );
-        BTLV_StartMsg( wk->viewCore, &wk->strParam );
+      }
+      else if( wk->wazaoboe_no & PTL_WAZAOBOE_FULL )
+      { 
+        wk->wazaoboe_no &= ( PTL_WAZAOBOE_FULL ^ 0xffff );
+        (*seq) = 7;
+      }
+      else
+      { 
         (*seq) = 5;
-        break;
       }
     }
     break;
   case 5:
+    {  
+      BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+      const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
+      BPP_ReflectByPP( bpp );
+      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_WAZAOBOE, msg_waza_oboe_04 );
+      BTLV_STRPARAM_AddArg( &wk->strParam, args[0] );
+      BTLV_STRPARAM_AddArg( &wk->strParam, wk->wazaoboe_no );
+      BTLV_StartMsg( wk->viewCore, &wk->strParam );
+      (*seq)++;
+    }
+    /* fallthru */
+  case 6:
     //技覚え処理
     if( BTLV_IsJustDoneMsg(wk->viewCore) ){
       PMSND_PlayBGM( SEQ_ME_LVUP );
@@ -2473,12 +2482,126 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
       (*seq) = 4;
     }
     break;
-  case 6:
+  case 7:
+    //技忘れ確認処理
+    BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_WAZAOBOE, msg_waza_oboe_05 );
+    BTLV_STRPARAM_AddArg( &wk->strParam, args[0] );
+    BTLV_STRPARAM_AddArg( &wk->strParam, wk->wazaoboe_no );
+    BTLV_StartMsg( wk->viewCore, &wk->strParam );
+    (*seq)++;
+    /* fallthru */
+  case 8:
+    if( BTLV_IsJustDoneMsg(wk->viewCore) ){
+      BTLV_STRPARAM   yesParam;
+      BTLV_STRPARAM   noParam;
+      BTLV_STRPARAM_Setup( &yesParam, BTL_STRTYPE_YESNO, msgid_yesno_wazawasureru );
+      BTLV_STRPARAM_Setup( &noParam, BTL_STRTYPE_YESNO, msgid_yesno_wazawasurenai );
+      BTLV_YESNO_Start( wk->viewCore, &yesParam, &noParam );
+    }
+    if( BTLV_WaitMsg(wk->viewCore) ){
+      (*seq)++;
+    }
+    break;
+  case 9:
+    { 
+      BtlYesNo result;
+
+      if( BTLV_YESNO_Wait( wk->viewCore, &result ) )
+      { 
+        if( result == BTL_YESNO_YES )
+        { 
+          u8 pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
+          BTLV_WAZAWASURE_Start( wk->viewCore, pos, wk->wazaoboe_no );
+          (*seq) = 10;
+        }
+        else
+        { 
+          BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_WAZAOBOE, msg_waza_oboe_08 );
+          BTLV_STRPARAM_AddArg( &wk->strParam, args[0] );
+          BTLV_STRPARAM_AddArg( &wk->strParam, wk->wazaoboe_no );
+          BTLV_StartMsg( wk->viewCore, &wk->strParam );
+          (*seq) = 100;
+        }
+      }
+    }
+    break;
+  case 10:
+    //技忘れ選択処理
+    { 
+      u8 result;
+
+      if( BTLV_WAZAWASURE_Wait( wk->viewCore, &result ) )
+      { 
+        if( result == BPL_SEL_WP_CANCEL )
+        { 
+          (*seq) = 6;
+        }
+        else
+        { 
+          BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+          const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
+          WazaID forget_wazano = PP_Get( pp, ID_PARA_waza1 + result, NULL );
+          PP_SetWazaPos( ( POKEMON_PARAM* )pp, wk->wazaoboe_no, result );
+          BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_WAZAOBOE, msg_waza_oboe_06 );
+          BTLV_STRPARAM_AddArg( &wk->strParam, args[0] );
+          BTLV_STRPARAM_AddArg( &wk->strParam, forget_wazano );
+          BTLV_StartMsg( wk->viewCore, &wk->strParam );
+          (*seq)++;
+        }
+      }
+    }
+    break;
+  case 11:
     //技忘れ処理
+    if( BTLV_WaitMsg(wk->viewCore) ){
+      (*seq) = 5;
+    }
+    break;
+  case 100:
+    //技忘れあきらめ確認処理
+    if( BTLV_IsJustDoneMsg(wk->viewCore) ){
+      BTLV_STRPARAM   yesParam;
+      BTLV_STRPARAM   noParam;
+      BTLV_STRPARAM_Setup( &yesParam, BTL_STRTYPE_YESNO, msgid_yesno_wazaakirameru );
+      BTLV_STRPARAM_AddArg( &yesParam, wk->wazaoboe_no );
+      BTLV_STRPARAM_Setup( &noParam, BTL_STRTYPE_YESNO, msgid_yesno_wazaakiramenai );
+      BTLV_STRPARAM_AddArg( &noParam, wk->wazaoboe_no );
+      BTLV_YESNO_Start( wk->viewCore, &yesParam, &noParam );
+    }
+    if( BTLV_WaitMsg(wk->viewCore) ){
+      (*seq)++;
+    }
+    break;
+  case 101:
+    { 
+      BtlYesNo result;
+
+      if( BTLV_YESNO_Wait( wk->viewCore, &result ) )
+      { 
+        if( result == BTL_YESNO_YES )
+        { 
+          BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_WAZAOBOE, msg_waza_oboe_09 );
+          BTLV_STRPARAM_AddArg( &wk->strParam, args[0] );
+          BTLV_STRPARAM_AddArg( &wk->strParam, wk->wazaoboe_no );
+          BTLV_StartMsg( wk->viewCore, &wk->strParam );
+          (*seq) = 102;
+        }
+        else
+        { 
+          (*seq) = 6;
+        }
+      }
+    }
+    break;
+  case 102:
+    if( BTLV_WaitMsg(wk->viewCore) ){
+      (*seq) = 4;
+    }
     break;
   }
   return FALSE;
 }
+
 //---------------------------------------------------------------------------------------
 /**
  *  モンスターボール投げつけ

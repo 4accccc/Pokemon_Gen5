@@ -2590,21 +2590,14 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_CreateYesNoScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT_YESNO_PARAM *biyp )
 {
-  GFL_MSGDATA*  msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, biyp->msg_datID, GFL_HEAP_LOWID(biw->heapID) );
   STRBUF*       src;
   int           dot_len, char_len;
 
-  src = GFL_MSG_CreateString( msg, biyp->yes_msg_index );
-  FontLenGet( src, biw->font, &dot_len, &char_len );
-  PRINTSYS_Print( biw->bmp_data, BTLV_INPUT_YESNO_MSG_X - ( dot_len / 2 ), BTLV_INPUT_YES_MSG_Y, src, biw->font );
-  GFL_STR_DeleteBuffer( src );
+  FontLenGet( biyp->yes_msg, biw->font, &dot_len, &char_len );
+  PRINTSYS_Print( biw->bmp_data, BTLV_INPUT_YESNO_MSG_X - ( dot_len / 2 ), BTLV_INPUT_YES_MSG_Y, biyp->yes_msg, biw->font );
 
-  src = GFL_MSG_CreateString( msg, biyp->no_msg_index );
-  FontLenGet( src, biw->font, &dot_len, &char_len );
-  PRINTSYS_Print( biw->bmp_data, BTLV_INPUT_YESNO_MSG_X - ( dot_len / 2 ), BTLV_INPUT_NO_MSG_Y, src, biw->font );
-  GFL_STR_DeleteBuffer( src );
-
-  GFL_MSG_Delete( msg );
+  FontLenGet( biyp->no_msg, biw->font, &dot_len, &char_len );
+  PRINTSYS_Print( biw->bmp_data, BTLV_INPUT_YESNO_MSG_X - ( dot_len / 2 ), BTLV_INPUT_NO_MSG_Y, biyp->no_msg, biw->font );
 
   //2個分押せる状態にする
   biw->button_exist[ 0 ] = TRUE;  //押せるボタンかどうかチェック

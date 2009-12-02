@@ -990,6 +990,29 @@ BOOL BTLV_SCD_SelectRotate_Wait( BTLV_SCD* wk, BtlRotateDir* result )
   return FALSE;
 }
 
+//=============================================================================================
+//  ‚Í‚¢^‚¢‚¢‚¦‘I‘ð
+//=============================================================================================
+#include "data\yesno_sel.cdat"
+
+void BTLV_SCD_SelectYesNo_Start( BTLV_SCD* wk, BTLV_INPUT_YESNO_PARAM* param )
+{
+  BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_YES_NO, param );
+}
+
+BOOL BTLV_SCD_SelectYesNo_Wait( BTLV_SCD* wk, BtlYesNo* result )
+{
+  int input = BTLV_INPUT_CheckInput( wk->biw, YesNoTouchData, YesNoKeyData );
+  if( input != GFL_UI_TP_HIT_NONE )
+  {
+    SePlayDecide();
+    *result = input;
+    BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
+    return TRUE;
+  }
+  return FALSE;
+}
+
 
 
 //=============================================================================================

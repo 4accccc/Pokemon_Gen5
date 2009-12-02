@@ -1170,6 +1170,12 @@ void BTLV_StartMsg( BTLV_CORE* wk, const BTLV_STRPARAM* param )
   case BTL_STRTYPE_SET:
     BTL_STR_MakeStringSet( wk->strBuf, param->strID, param->args );
     break;
+  case BTL_STRTYPE_WAZAOBOE:
+    BTL_STR_MakeStringWazaOboeWithArgArray( wk->strBuf, param->strID, param->args );
+    break;
+  case BTL_STRTYPE_YESNO:
+    BTL_STR_MakeStringYesNoWithArgArray( wk->strBuf, param->strID, param->args );
+    break;
   case BTL_STRTYPE_WAZA:
     BTL_STR_MakeStringWaza( wk->strBuf, param->args[0], param->args[1] );
   default:
@@ -1638,6 +1644,97 @@ static BOOL subprocRotateMember( int* seq, void* wk_adrs )
       }
     }
     break;
+  }
+  return FALSE;
+}
+
+//=============================================================================================
+/**
+ * はい／いいえ選択
+ *
+ * @param   wk
+ * @param   yes_msg はいのボタンに出すメッセージ
+ * @param   no_msg  いいえのボタンに出すメッセージ
+ */
+//=============================================================================================
+void BTLV_YESNO_Start( BTLV_CORE* wk, BTLV_STRPARAM* yes_msg, BTLV_STRPARAM* no_msg )
+{
+  BTLV_INPUT_YESNO_PARAM* yesnoParam = getGenericWork( wk, sizeof( BTLV_INPUT_YESNO_PARAM ) );
+
+  yesnoParam->yes_msg = GFL_STR_CreateBuffer( BTL_YESNO_MSG_LENGTH, wk->heapID );
+  yesnoParam->no_msg = GFL_STR_CreateBuffer( BTL_YESNO_MSG_LENGTH, wk->heapID );
+
+  BTL_STR_MakeStringYesNoWithArgArray( yesnoParam->yes_msg, yes_msg->strID, yes_msg->args );
+  BTL_STR_MakeStringYesNoWithArgArray( yesnoParam->no_msg, no_msg->strID, no_msg->args );
+
+  BTLV_SCD_SelectYesNo_Start( wk->scrnD, yesnoParam );
+
+  GFL_HEAP_FreeMemory( yesnoParam->yes_msg );
+  GFL_HEAP_FreeMemory( yesnoParam->no_msg );
+}
+
+BOOL BTLV_YESNO_Wait( BTLV_CORE* wk, BtlYesNo* result )
+{
+  return BTLV_SCD_SelectYesNo_Wait( wk->scrnD, result );
+}
+
+//=============================================================================================
+/**
+ * 技忘れ
+ *
+ * @param   wk
+ * @param   pos   技を覚えるポケモンの位置
+ * @param   waza  新しく覚える技ナンバー
+ */
+//=============================================================================================
+void BTLV_WAZAWASURE_Start( BTLV_CORE* wk, u8 pos, WazaID waza )
+{
+  wk->plistData.pp = BTL_MAIN_GetPlayerPokeParty( wk->mainModule );
+  wk->plistData.font = wk->largeFontHandle;
+  wk->plistData.heap = wk->heapID;
+  wk->plistData.mode = BPL_MODE_WAZASET;
+  wk->plistData.end_flg = FALSE;
+  wk->plistData.sel_poke = pos;
+  wk->plistData.chg_waza = waza;
+  wk->plistData.rule = BTL_MAIN_GetRule( wk->mainModule );
+  wk->plistData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
+
+  wk->selectItemSeq = 0;
+}
+
+BOOL BTLV_WAZAWASURE_Wait( BTLV_CORE* wk, u8* result )
+{
+  switch( wk->selectItemSeq ){
+  case 0:
+    BTLV_SCD_FadeOut( wk->scrnD );
+    wk->selectItemSeq++;
+    break;
+  case 1:
+    if( BTLV_SCD_FadeFwd(wk->scrnD) ){
+      BTLV_SCD_Cleanup( wk->scrnD );
+      GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_plist ) );
+      BattlePokeList_TaskAdd( &wk->plistData );
+      wk->selectItemSeq++;
+    }
+    break;
+  case 2:
+    if( wk->plistData.end_flg )
+    {
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_plist ) );
+      BTLV_SCD_FadeIn( wk->scrnD );
+      BTLV_SCD_Setup( wk->scrnD );
+      wk->selectItemSeq++;
+    }
+    break;
+  case 3:
+    if( BTLV_SCD_FadeFwd(wk->scrnD) ){
+      wk->selectItemSeq++;
+    }
+    break;
+  default:
+    *result = wk->plistData.sel_wp;
+    wk->selectItemSeq = 0;
+    return TRUE;
   }
   return FALSE;
 }

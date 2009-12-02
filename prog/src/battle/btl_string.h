@@ -19,6 +19,7 @@ typedef enum {
   BTL_STRTYPE_SET,
   BTL_STRTYPE_WAZA,
   BTL_STRTYPE_WAZAOBOE,
+  BTL_STRTYPE_YESNO,
 }BtlStrType;
 
 enum {
@@ -108,5 +109,23 @@ typedef u16 BtlStrID_WAZAOBOE;
 extern void BTL_STR_MakeStringWazaOboeWithArgArray( STRBUF* buf, BtlStrID_WAZAOBOE strID, const int* array );
 
 
+//---------------------------------------------------------------------------------------
+/**
+ * はい／いいえメッセージの生成
+ *
+ * 標準メッセージ：対象者なし、あるいは対象が誰であっても一定のフォーマットで生成される文字列
+ */
+//---------------------------------------------------------------------------------------
+
+#include "msg/msg_yesnomenu.h"
+
+enum {
+  BTL_STRID_YESNO_MAX = msg_yesnomenu_max,
+  BTL_YESNO_MSG_LENGTH = 32,    //はい／いいえメッセージの長さ
+};
+
+typedef u16 BtlStrID_YESNO;
+
+extern void BTL_STR_MakeStringYesNoWithArgArray( STRBUF* buf, BtlStrID_YESNO strID, const int* array );
 
 

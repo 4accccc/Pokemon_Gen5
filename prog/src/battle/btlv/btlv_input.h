@@ -48,9 +48,8 @@ typedef struct{
 
 ///YES/NO選択画面構成用のSceneワーク
 typedef struct{
-  ARCDATID  msg_datID;        //メッセージが格納されているARCDATID
-  int       yes_msg_index;    //YESに相当するメッセージのインデックス
-  int       no_msg_index;     //NOに相当するメッセージのインデックス
+  STRBUF*   yes_msg;    //YESに相当するメッセージ
+  STRBUF*   no_msg;     //NOに相当するメッセージ
 }BTLV_INPUT_YESNO_PARAM;
 
 typedef enum
