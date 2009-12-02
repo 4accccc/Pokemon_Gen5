@@ -680,6 +680,16 @@
   NO_CMD()
   NO_CMD()
 
+  // マップフェード
+  DEF_CMD( EvCmdMapFade_BlackIn, EV_SEQ_MAP_FADE_BLACK_IN )
+  DEF_CMD( EvCmdMapFade_BlackOut, EV_SEQ_MAP_FADE_BLACK_OUT )
+  DEF_CMD( EvCmdMapFade_WhiteIn, EV_SEQ_MAP_FADE_WHITE_IN )
+  DEF_CMD( EvCmdMapFade_WhiteOut, EV_SEQ_MAP_FADE_WHITE_OUT )
+
+  DEF_CMD( EvCmdMapFadeCheck, EV_SEQ_MAP_FADE_CHECK )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
 
   END_CMD
   //スクリプトコマンドテーブル終了
