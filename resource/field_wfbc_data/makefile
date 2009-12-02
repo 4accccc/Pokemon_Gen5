@@ -91,7 +91,7 @@ ifeq	($(CONVERTUSER),true)
 $(targetname).narc: $(XLSFILE) $(OBJCODE_HEADER) $(TRTYPE_HEADER) $(MONSNO_HEADER) $(SCRIPT_HEADER) $(ITEM_HEADER)
 	
 	#エクセルデータをタブ区切りにする。
-	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $(TABFILE) -p 3 -s tab $(XLSFILE)
+	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $(TABFILE) -p 0 -s tab $(XLSFILE)
 	#コンバート
 	perl wfbc_people_conv.pl $(TABFILE) $(OBJCODE_HEADER) $(TRTYPE_HEADER) $(MONSNO_HEADER) $(SCRIPT_HEADER) $(ITEM_HEADER) $(OUTPUT_HEADER)
 
