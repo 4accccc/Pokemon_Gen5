@@ -259,7 +259,10 @@ VMCMD_RESULT EvCmdDoorAnimeDelete( VMHANDLE * core, void *wk )
   BMANIME_CONTROL_WORK * ctrl;
 
   ctrl = getMemory( anime_id );
-  BMANIME_CTRL_Delete( ctrl );
+  if ( ctrl )
+  {
+    BMANIME_CTRL_Delete( ctrl );
+  }
   releaseKey( anime_id );
 
   return VMCMD_RESULT_CONTINUE;
@@ -282,10 +285,13 @@ VMCMD_RESULT EvCmdDoorAnimeSet( VMHANDLE * core, void *wk )
   u16 seNo;
 
   ctrl = getMemory( anime_id );
-  BMANIME_CTRL_SetAnime( ctrl, anime_type );
-  if( BMANIME_CTRL_GetSENo( ctrl, anime_type, &seNo) )
+  if (ctrl != NULL)
   {
-    PMSND_PlaySE( seNo );
+    BMANIME_CTRL_SetAnime( ctrl, anime_type );
+    if( BMANIME_CTRL_GetSENo( ctrl, anime_type, &seNo) )
+    {
+      PMSND_PlaySE( seNo );
+    }
   }
 
   return VMCMD_RESULT_CONTINUE;
@@ -323,7 +329,12 @@ static BOOL EvWaitDoorAnime( VMHANDLE *core, void *wk )
 {
   BMANIME_CONTROL_WORK * ctrl;
   ctrl = getMemory( DOOR_ANIME_KEY_01 );  //Žè”²‚«
-  if ( BMANIME_CTRL_WaitAnime( ctrl ) == TRUE && PMSND_CheckPlaySE() == FALSE )
+  if ( ctrl != NULL && BMANIME_CTRL_WaitAnime( ctrl ) == FALSE)
+  {
+    return FALSE;
+  }
+
+  if ( PMSND_CheckPlaySE() == FALSE )
   {
     return TRUE;
   }
