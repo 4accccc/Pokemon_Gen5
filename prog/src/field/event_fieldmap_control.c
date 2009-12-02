@@ -363,6 +363,12 @@ static GMEVENT_RESULT FieldFadeInEvent(GMEVENT * event, int *seq, void * work)
 		break;
 
 	case 4:	// クロスフェードEND
+		//VRAMクリア
+		GX_SetBankForLCDC(GX_VRAM_LCDC_D);
+		MI_CpuClearFast((void *)HW_LCDC_VRAM, HW_VRAM_D_SIZE);
+		(void)GX_DisableBankForLCDC();
+
+		OS_WaitVBlankIntr();	// 画面ちらつき防止用ウエイト
 		FIELDMAP_InitBG(few->fieldmap);
 		return GMEVENT_RES_FINISH;
 	}
