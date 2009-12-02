@@ -305,38 +305,40 @@ s32 ITEM_GetParam( u16 item, u16 param, HEAPID heap_id )
 s32 ITEM_GetBufParam( ITEMDATA * item, u16 param )
 {
   switch( param ){
-  case ITEM_PRM_PRICE:        // 買値
+  case ITEM_PRM_PRICE:							// 買値
     return (s32)item->price;
-  case ITEM_PRM_EQUIP:        // 装備効果
+  case ITEM_PRM_EQUIP:							// 装備効果
     return (s32)item->eqp;
-  case ITEM_PRM_ATTACK:       // 威力
+  case ITEM_PRM_ATTACK:							// 威力
     return (s32)item->atc;
-  case ITEM_PRM_EVENT:        // 重要
+  case ITEM_PRM_EVENT:							// 重要
     return (s32)item->imp;
-  case ITEM_PRM_CNV:          // 便利ボタン
+  case ITEM_PRM_CNV:								// 便利ボタン
     return (s32)item->cnv_btn;
-  case ITEM_PRM_POCKET:       // 保存先（ポケット番号）
+  case ITEM_PRM_POCKET:							// 保存先（ポケット番号）
     return (s32)item->fld_pocket;
-  case ITEM_PRM_FIELD:        // field機能
+  case ITEM_PRM_FIELD:							// field機能
     return (s32)item->field_func;
-  case ITEM_PRM_BATTLE:       // battle機能
+  case ITEM_PRM_BATTLE:							// battle機能
     return (s32)item->battle_func;
-  case ITEM_PRM_TUIBAMU_EFF:      // ついばむ効果
+  case ITEM_PRM_TUIBAMU_EFF:				// ついばむ効果
     return (s32)item->tuibamu_eff;
-  case ITEM_PRM_NAGETUKERU_EFF:   // なげつける効果
+  case ITEM_PRM_NAGETUKERU_EFF:			// なげつける効果
     return (s32)item->nage_eff;
-  case ITEM_PRM_NAGETUKERU_ATC:   // なげつける威力
+  case ITEM_PRM_NAGETUKERU_ATC:			// なげつける威力
     return (s32)item->nage_atc;
   case ITEM_PRM_SIZENNOMEGUMI_ATC:  // しぜんのめぐみ威力
     return (s32)item->sizen_atc;
   case ITEM_PRM_SIZENNOMEGUMI_TYPE: // しぜんのめぐみタイプ
     return (s32)item->sizen_type;
-  case ITEM_PRM_BTL_POCKET:     // 戦闘保存先（ポケット番号）
+  case ITEM_PRM_BTL_POCKET:					// 戦闘保存先（ポケット番号）
     return (s32)item->btl_pocket;
-  case ITEM_PRM_W_TYPE:       // ワークタイプ
+  case ITEM_PRM_W_TYPE:							// ワークタイプ
     return (s32)item->work_type;
-	case ITEM_PRM_ITEM_TYPE:		// アイテム種類
+	case ITEM_PRM_ITEM_TYPE:					// アイテム種類
 		return (s32)item->type;
+	case ITEM_PRM_ITEM_SPEND:					// 消費するか
+		return (s32)item->spend;
 
   default:              // 汎用ワーク
     switch( item->work_type ){

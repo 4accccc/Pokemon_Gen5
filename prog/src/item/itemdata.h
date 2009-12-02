@@ -14,28 +14,30 @@ struct _ITEM_DATA {
 
 	u8	work[20];				// 汎用ワーク
 */
-	u16	price;				// 買値
-	u8	eqp;				// 装備効果
-	u8	atc;				// 威力
+	u16	price;					// 買値
+	u8	eqp;						// 装備効果
+	u8	atc;						// 威力
 
 	u8	tuibamu_eff;		// ついばむ効果
-	u8	nage_eff;			// なげつける効果
-	u8	nage_atc;			// なげつける威力
+	u8	nage_eff;				// なげつける効果
+	u8	nage_atc;				// なげつける威力
 	u8	sizen_atc;			// しぜんのめぐみ威力
 
 	u16	sizen_type:5;		// しぜんのめぐみタイプ
-	u16	imp:1;				// 重要
+	u16	imp:1;					// 重要
 	u16	cnv_btn:1;			// 便利ボタン
 	u16	fld_pocket:4;		// フィールド保存先（ポケット番号）
 	u16	btl_pocket:5;		// 戦闘保存先（ポケット番号）
-
 	u8	field_func;			// field機能
 	u8	battle_func;		// battle機能
+
 	u8	work_type;			// ワークタイプ
+	u8	type;						// アイテム種類
+	u8	spend;					// 消費するか
 
-	u8	type;				// アイテム種類
+	u8	dmy;						// ダミー（余り）
 
-	u8	work[22];			// 汎用ワーク
+	u8	work[20];				// 汎用ワーク
 };
 
 // ダミーワーク

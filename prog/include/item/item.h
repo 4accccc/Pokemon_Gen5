@@ -64,6 +64,7 @@ enum {
   ITEM_PRM_BTL_POCKET,      // 戦闘保存先（ポケット番号）
   ITEM_PRM_W_TYPE,        // ワークタイプ
 	ITEM_PRM_ITEM_TYPE,			// アイテム種類
+	ITEM_PRM_ITEM_SPEND,		// 消費するか
 
   ITEM_PRM_SLEEP_RCV,       // 眠り回復
   ITEM_PRM_POISON_RCV,      // 毒回復
