@@ -1975,7 +1975,14 @@ static void RE_InputPoint_FreeGrid( DEBUG_RAIL_EDITOR* p_wk )
     gy ++;
   }
   MMDL_InitGridPosition( p_mmdl, gx, gy, gz, dir );
+
+  if( key & PAD_BUTTON_L )
+  {
+    MMDL_UpdateCurrentHeight( p_mmdl );
+  }
+
   MMDL_GetVectorPos( p_mmdl, &pos );
+
 
   FIELD_PLAYER_SetPos( p_player, &pos );
   p_wk->camera_target = pos;
@@ -2208,6 +2215,7 @@ static void RE_InitInputPoint_FreeGrid( DEBUG_RAIL_EDITOR* p_wk )
   OS_TPrintf( "::::::自由グリッド動作 操作方法::::::\n" );
   OS_TPrintf( "上下左右 移動\n" );
   OS_TPrintf( "Y X　高さ移動\n" );
+  OS_TPrintf( "L　グリッドの高さ位置設定\n" );
 
 	FIELD_CAMERA_BindDefaultTarget( p_camera );
 

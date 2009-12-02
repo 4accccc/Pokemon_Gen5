@@ -318,7 +318,7 @@ static void mapCtrlHybrid_Main_Grid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
     p_wk->last_move = FALSE;
   }
   // 移動したら、移動したことを設定
-  else if( (FIELD_PLAYER_GetMoveValue( p_wk->p_player ) == PLAYER_MOVE_VALUE_WALK) )
+  else if( (FIELD_PLAYER_GetMoveValue( p_wk->p_player ) != PLAYER_MOVE_VALUE_STOP) )
   {
     p_wk->last_move = TRUE;
   }
@@ -340,7 +340,7 @@ static void mapCtrlHybrid_Main_Rail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
   FIELD_PLAYER_NOGRID_Move( p_wk->p_player_nogrid, key_trg, key_cont );
 
   // 動作できないとき、レール動作への遷移を試みる
-  if( FIELD_PLAYER_GetMoveValue( p_wk->p_player ) == PLAYER_MOVE_VALUE_STOP )
+  if( (FIELD_PLAYER_GetMoveValue( p_wk->p_player ) == PLAYER_MOVE_VALUE_STOP) && (p_wk->last_move == TRUE) )
   {
 
     // アトリビュートの取得
@@ -355,7 +355,7 @@ static void mapCtrlHybrid_Main_Rail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
     p_wk->last_move = FALSE;
   }
   // 移動したら、移動したことを設定
-  else if( (FIELD_PLAYER_GetMoveValue( p_wk->p_player ) == PLAYER_MOVE_VALUE_WALK) )
+  else if( (FIELD_PLAYER_GetMoveValue( p_wk->p_player ) != PLAYER_MOVE_VALUE_STOP) )
   {
     p_wk->last_move = TRUE;
   }
