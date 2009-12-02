@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: grid_camera_scene.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_GRID_CAMERA_SCENE_NAIX_
+#define NARC_GRID_CAMERA_SCENE_NAIX_
+
+enum {
+	NARC_grid_camera_scene_camera_scene_C04_dat = 0
+};
+
+/* NARC_GRID_CAMERA_SCENE_NAIX_ */
+#endif
