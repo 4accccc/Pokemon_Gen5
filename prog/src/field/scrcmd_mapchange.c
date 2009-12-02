@@ -119,7 +119,7 @@ VMCMD_RESULT EvCmdMapChangeBySandStream( VMHANDLE *core, void *wk )
     EVENTWORK *        evwork = GAMEDATA_GetEventWork( gamedata );
     FIELD_PLAYER *     player = FIELDMAP_GetFieldPlayer( fieldmap );
     FIELD_PLAYER_GetPos( player, &pos );
-    pos_event = EVENTDATA_GetPosEvent_XZ( evdata, evwork, &pos );
+    pos_event = EVENTDATA_GetPosEvent_XZ( evdata, evwork, &pos, DIR_NOT );
     if( pos_event )
     {
       EVENTDATA_GetPosEventCenterPos( pos_event, &disappear_pos );

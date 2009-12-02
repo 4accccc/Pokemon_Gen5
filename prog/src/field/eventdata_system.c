@@ -555,25 +555,42 @@ u16 EVENTDATA_GetNpcCount( const EVENTDATA_SYSTEM *evdata )
 //============================================================================================
 //  POSイベント関連
 //============================================================================================
-enum {
-  POS_EVENT_DATA_RANGE = 2,
-};
+//------------------------------------------------------------------
+/// 向きにあったPosCheckCodeを取得する
+//------------------------------------------------------------------
+u16 getPosCheckCode( u16 dir )
+{
+  switch (dir) {
+  case DIR_UP:
+    return POS_CHECK_TYPE_UP;
+  case DIR_DOWN:
+    return POS_CHECK_TYPE_DOWN;
+  case DIR_LEFT:
+    return POS_CHECK_TYPE_LEFT;
+  case DIR_RIGHT:
+    return POS_CHECK_TYPE_RIGHT;
+  }
+  return POS_CHECK_TYPE_NORMAL;   //DIR_NOTの場合、通常チェック
+}
+
 //------------------------------------------------------------------
 /**
  * @brief	座標イベントチェック
  * @param	evdata イベントデータへのポインタ
  * @param evwork イベントワークへのポインタ 
  * @param pos チェックする座標
+ * @param dir チェックする方向（DIR_NOTのとき、向き指定なし）
  * @retval POS_EVENT_DATA* (NULL = イベントなし)
  */
 //------------------------------------------------------------------
 const POS_EVENT_DATA * EVENTDATA_GetPosEvent(
-    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos )
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos, u16 dir )
 {
   const POS_EVENT_DATA *data = evdata->pos_data;
   
   if( data != NULL )
   {
+    u16 check_type = getPosCheckCode( dir );
     u16 i = 0;
     u16 *work_val;
     u16 max = evdata->pos_count;
@@ -584,11 +601,14 @@ const POS_EVENT_DATA * EVENTDATA_GetPosEvent(
       {
         continue;
       }
+      if ( data->check_type != check_type )
       {
-        work_val = EVENTWORK_GetEventWorkAdrs( evwork, data->workID );
-        if( (*work_val) == data->param ){
-          return data;
-        }
+        continue;
+      }
+      work_val = EVENTWORK_GetEventWorkAdrs( evwork, data->workID );
+      if( (*work_val) == data->param )
+      {
+        return data;
       }
     }
   }
@@ -601,18 +621,18 @@ const POS_EVENT_DATA * EVENTDATA_GetPosEvent(
  * @param	evdata イベントデータへのポインタ
  * @param evwork イベントワークへのポインタ 
  * @param pos チェックする座標
- * @param gx_range チェックするx方向範囲(グリッド）
- * @param gz_range チェックするz方向範囲(グリッド)
+ * @param dir チェックする方向
  * @retval POS_EVENT_DATA* (NULL = イベントなし)
  */
 //------------------------------------------------------------------
 const POS_EVENT_DATA * EVENTDATA_GetPosEvent_XZ(
-    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos )
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos, u16 dir )
 {
   const POS_EVENT_DATA *data = evdata->pos_data;
   
   if( data != NULL )
   {
+    u16 check_type = getPosCheckCode( dir );
     u16 i = 0;
     u16 *work_val;
     u16 max = evdata->pos_count;
@@ -623,11 +643,14 @@ const POS_EVENT_DATA * EVENTDATA_GetPosEvent_XZ(
       {
         continue;
       }
+      if ( data->check_type != check_type )
       {
-        work_val = EVENTWORK_GetEventWorkAdrs( evwork, data->workID );
-        if( (*work_val) == data->param ){
-          return data;
-        }
+        continue;
+      }
+      work_val = EVENTWORK_GetEventWorkAdrs( evwork, data->workID );
+      if( (*work_val) == data->param )
+      {
+        return data;
       }
     }
   }
@@ -683,9 +706,9 @@ const POS_EVENT_DATA * EVENTDATA_GetPosEventRailLocation(
  */
 //------------------------------------------------------------------
 u16 EVENTDATA_CheckPosEvent(
-    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos )
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos, u16 dir )
 {
-  const POS_EVENT_DATA* data = EVENTDATA_GetPosEvent( evdata,evwork,pos );
+  const POS_EVENT_DATA* data = EVENTDATA_GetPosEvent( evdata,evwork,pos,dir );
   
   if ( DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEvents) ) return EVENTDATA_ID_NONE;
   if( data != NULL ){
@@ -1746,6 +1769,7 @@ static void debugPrint_PosData( const POS_EVENT_DATA* cp_data )
 {
   OS_TPrintf( "print POS_EVENT_DATA\n" );
   OS_TPrintf( "id=%d\n", cp_data->id );
+  OS_TPrintf( "check=%d\n", cp_data->check_type );
   OS_TPrintf( "param=%d\n", cp_data->param );
   OS_TPrintf( "workID=%d\n", cp_data->workID );
 

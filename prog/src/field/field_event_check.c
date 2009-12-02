@@ -100,9 +100,6 @@ extern BOOL DebugBGInitEnd;    //BG初期化監視フラグ
 //======================================================================
 //======================================================================
 
-extern u16 EVENTDATA_CheckPosEvent(
-    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos );
-
 extern u16 EVENTDATA_CheckTalkBGEvent(
     const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork,
     const VecFx32 *pos, u16 talk_dir );
@@ -193,6 +190,7 @@ static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap);
 static int checkPokeWazaGroup( GAMEDATA *gdata, u32 waza_no );
 
 static GMEVENT* checkPosEvent( EV_REQUEST* req );
+static GMEVENT* checkPosEvent_direction( EV_REQUEST * req, u16 dir );
 static GMEVENT* checkPosEvent_sandstream( EV_REQUEST* req );
 
 //-----------------------------------------------------------------------------
@@ -301,9 +299,16 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
     }
   }
 
-
-	
 //☆☆☆ステップチェック（一歩移動or振り向き）がここから
+  if (req.stepRequest )
+  {
+    event = checkPosEvent_direction( &req, req.player_dir );
+    if (event)
+    {
+      return event;
+    }
+  }
+	
   //戦闘移行チェック
   { //ノーマルエンカウントイベント起動チェック
     GMEVENT* enc_event = checkNormalEncountEvent( &req, gsys, fieldWork );
@@ -582,19 +587,29 @@ static GMEVENT* checkPosEvent( EV_REQUEST* req )
     }
     return NULL;
   }
-
   // 通常POSイベントチェック
-  { 
-    u16 id;
-    EVENTWORK *evwork = GAMEDATA_GetEventWork( req->gamedata ); 
-    FIELD_PLAYER_GetPos( req->field_player, &pos );
-    id = EVENTDATA_CheckPosEvent( req->evdata, evwork, &pos ); 
-    if( id != EVENTDATA_ID_NONE ) 
-    { //座標イベント起動
-      GMEVENT* event = SCRIPT_SetEventScript( req->gsys, id, NULL, req->heapID );
-      return event;
-    } 
-  }
+  return checkPosEvent_direction( req, DIR_NOT );
+}
+//--------------------------------------------------------------
+/**
+ * @brief POSイベントチェック
+ * @param req EV_REQUEST
+ * @param dir チェックする向きの指定
+ * @return 起動したPOSイベント
+ */
+//--------------------------------------------------------------
+static GMEVENT* checkPosEvent_direction( EV_REQUEST * req, u16 dir )
+{
+  u16 id;
+  VecFx32 pos;
+  EVENTWORK *evwork = GAMEDATA_GetEventWork( req->gamedata ); 
+  FIELD_PLAYER_GetPos( req->field_player, &pos );
+  id = EVENTDATA_CheckPosEvent( req->evdata, evwork, &pos, DIR_NOT ); 
+  if( id != EVENTDATA_ID_NONE ) 
+  { //座標イベント起動
+    GMEVENT* event = SCRIPT_SetEventScript( req->gsys, id, NULL, req->heapID );
+    return event;
+  } 
   return NULL;
 }
 
@@ -635,7 +650,7 @@ static GMEVENT* checkPosEvent_sandstream( EV_REQUEST* req )
   // 流砂POSイベントを取得
   {
     EVENTWORK *evwork = GAMEDATA_GetEventWork( req->gamedata );
-    pos_event = EVENTDATA_GetPosEvent_XZ( req->evdata, evwork, &pos );
+    pos_event = EVENTDATA_GetPosEvent_XZ( req->evdata, evwork, &pos, DIR_NOT );
     if( !pos_event ) return NULL;   // POSイベントが無い
     if( pos_event->pos_type != EVENTDATA_POSTYPE_GRID ) return NULL; // グリッド以外のPOSイベント発見
   }
@@ -756,15 +771,9 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
   //座標イベントチェック
   if( req.moveRequest )
   {
-    VecFx32 pos;
-    u16 id;
-    EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
-    FIELD_PLAYER_GetPos( req.field_player, &pos );
-    
-    id = EVENTDATA_CheckPosEvent( req.evdata, evwork, &pos );
-    
-    if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
-      event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
+    GMEVENT * event = checkPosEvent_direction( &req, DIR_NOT );
+    if ( event != NULL )
+    {
       return event;
     }
 

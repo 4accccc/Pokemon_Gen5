@@ -28,7 +28,7 @@ extern void * EVENTDATA_GetEncountDataTable( EVENTDATA_SYSTEM * evdata );
 
 //check event
 extern u16 EVENTDATA_CheckPosEvent(
-  const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos );
+  const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos, u16 dir );
 extern u16 EVENTDATA_CheckTalkBGEvent(
     const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork,
     const VecFx32 *pos, u16 talk_dir );

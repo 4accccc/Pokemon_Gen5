@@ -141,11 +141,12 @@ extern u16 EVENTDATA_GetNpcCount( const EVENTDATA_SYSTEM *evdata );
  * @param	evdata イベントデータへのポインタ
  * @param evwork イベントワークへのポインタ 
  * @param pos チェックする座標
+ * @param dir チェックする方向（DIR_NOTのとき、向き指定なし）
  * @retval NULL = イベントなし
  */
 //------------------------------------------------------------------
 extern const POS_EVENT_DATA * EVENTDATA_GetPosEvent( 
-    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos );
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos, u16 dir );
 
 //------------------------------------------------------------------
 /**
@@ -153,11 +154,12 @@ extern const POS_EVENT_DATA * EVENTDATA_GetPosEvent(
  * @param	evdata イベントデータへのポインタ
  * @param evwork イベントワークへのポインタ 
  * @param pos チェックする座標
+ * @param dir チェックする方向（DIR_NOTのとき、向き指定なし）
  * @retval NULL = イベントなし
  */
 //------------------------------------------------------------------
 extern const POS_EVENT_DATA * EVENTDATA_GetPosEvent_XZ( 
-    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos ); 
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos, u16 dir ); 
 
 //------------------------------------------------------------------
 /**
