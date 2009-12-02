@@ -202,7 +202,7 @@ SRCS  +=    $(SOUNDSRC) \
         gamesystem/iss_switch_sys.c \
         system/ica_anime.c \
         system/ica_camera.c \
-		poke_tool/status_rcv.c \
+		    poke_tool/status_rcv.c \
         system/bgwinfrm.c \
         field/scrcmd_gym_init.c \
         poke_tool/gauge_tool.c \
@@ -214,7 +214,7 @@ SRCS  +=    $(SOUNDSRC) \
         system/pms_draw.c \
         field/field_encount_st.c \
         field/field_skill.c \
-	app/waza_oshie/waza_oshie.c \
+	      app/waza_oshie/waza_oshie.c \
         field/scrcmd_network.c \
 				system/shortcut_data.c \
         app/bag/bag_param.c\
@@ -223,7 +223,9 @@ SRCS  +=    $(SOUNDSRC) \
         system/screentex.c \
         debug/debug_flg.c \
         debug/debug_hudson.c \
-		debug/debug_str_conv.c
+        debug/debug_hudson.c \
+    		debug/debug_str_conv.c \
+        field/ev_time.c
 
 
 #================================================
