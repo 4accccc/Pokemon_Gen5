@@ -19,6 +19,7 @@ extern "C"{
 #include "field_g3d_mapper.h"
 
 #include "field/field_wfbc_data.h"
+#include "field/eventdata_system.h"
 
 #include "debug/debugwin_sys.h"
 
@@ -93,6 +94,9 @@ extern MAPMODE FIELD_WFBC_GetMapMode( const FIELD_WFBC* cp_wk );
 // 人物情報
 // 戻り値は、GFL_HEAP_Freeをしてください。
 extern MMDL_HEADER* FIELD_WFBC_MMDLHeaderCreateHeapLo( const FIELD_WFBC* cp_wk, HEAPID heapID );
+
+// イベントデータの書換え
+extern void FILED_WFBC_EventDataOverwrite( const FIELD_WFBC* cp_wk, EVENTDATA_SYSTEM* p_evdata, HEAPID heapID );
 
 //-------------------------------------
 ///	全体情報の設定

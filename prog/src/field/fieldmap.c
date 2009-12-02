@@ -2434,7 +2434,11 @@ static void zoneChange_SetMMdl( GAMEDATA *gdata,
 	}
 }
 
-// @TODO WFBC用の人配置
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WFBC用の人配置
+ */
+//-----------------------------------------------------------------------------
 static void zoneChange_SetMMdlZoneWFBC( GAMEDATA *gdata,
 		FIELDMAP_WORK* fieldWork, u32 zone_id )
 {
@@ -2592,6 +2596,8 @@ static void setupCameraArea( FIELDMAP_WORK *fieldWork, u32 zone_id, HEAPID heapI
 static void setupWfbc( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id )
 {
   FIELD_WFBC_CORE* p_core;
+  FIELD_WFBC* p_wfbc;
+  EVENTDATA_SYSTEM* p_evdata;
   
   if( ZONEDATA_IsWfbc( fieldWork->map_id ) )
   {
@@ -2601,8 +2607,16 @@ static void setupWfbc( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id )
     // @TODO　後々は、パレス接続先の人の街情報を設定する
     FLDMAPPER_SetWfbcData( fieldWork->g3Dmapper, p_core, MAPMODE_NORMAL );
 
+    // 
+    p_wfbc = FLDMAPPER_GetWfbcWork( fieldWork->g3Dmapper );
+    p_evdata = GAMEDATA_GetEventData( gdata );
+
+    // イベントの設定
+    FILED_WFBC_EventDataOverwrite( p_wfbc, p_evdata, fieldWork->heapID );
+    
     // WFBCの人を配置
     zoneChange_SetMMdlZoneWFBC( gdata, fieldWork, fieldWork->map_id );
+    
 
     // カメラのセットアップ
     {

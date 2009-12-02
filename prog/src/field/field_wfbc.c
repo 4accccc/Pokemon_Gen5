@@ -15,6 +15,8 @@
 
 #include "field_wfbc.h"
 
+#include "eventdata_local.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -336,6 +338,32 @@ MMDL_HEADER* FIELD_WFBC_MMDLHeaderCreateHeapLo( const FIELD_WFBC* cp_wk, HEAPID 
   }
 
   return p_buff;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベントの設定変更
+ *
+ *	@param	cp_wk     ワーク
+ *	@param	p_evdata  イベントシステム
+ *	@param	heapID    ヒープID
+ */
+//-----------------------------------------------------------------------------
+void FILED_WFBC_EventDataOverwrite( const FIELD_WFBC* cp_wk, EVENTDATA_SYSTEM* p_evdata, HEAPID heapID )
+{
+  u16 bg_num, npc_num, connect_num, pos_num;
+
+  bg_num      = EVENTDATA_GetBgEventNum(p_evdata);
+  npc_num     = EVENTDATA_GetNpcEventNum(p_evdata);
+  connect_num = EVENTDATA_GetConnectEventNum(p_evdata);
+  pos_num     = EVENTDATA_GetPosEventNum(p_evdata);
+
+  bg_num      ++;
+  npc_num     ++;
+  connect_num ++;
+  pos_num     ++;
+  
+  EVENTDATA_SYS_ReloadEventDataEx( p_evdata, bg_num, npc_num, connect_num, pos_num );
 }
 
 

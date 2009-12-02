@@ -71,6 +71,12 @@ struct _EVDATA_SYS {
 	const CONNECT_DATA * connect_data;
 	const POS_EVENT_DATA * pos_data;
 
+  // 格納可能最大イベント数
+	u16 bg_max;
+	u16 npc_max;
+	u16 connect_max;
+	u16 pos_max;
+
 	ENCOUNT_DATA encount_work;
 	u32 load_buffer[EVDATA_SIZE / sizeof(u32)];
 	u32 spscr_buffer[SPSCR_DATA_SIZE / sizeof(u32)];
@@ -110,9 +116,11 @@ static void debugPrint_PosData( const POS_EVENT_DATA* cp_data );
 
 //============================================================================================
 //============================================================================================
-static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id);
+static void loadEventDataTableNormal(EVENTDATA_SYSTEM * evdata, u16 zone_id);
+static void loadEventDataTableExact(EVENTDATA_SYSTEM * evdata, u16 zone_id, u16 bg_num, u16 mmdl_num, u16 connect_num, u16 pos_num);
 static void loadSpecialScriptData( EVENTDATA_SYSTEM * evdata, u16 zone_id );
 static void loadEncountDataTable(EVENTDATA_SYSTEM* evdata, u16 zone_id, u8 season_id );
+static void clearEventDataTable( EVENTDATA_SYSTEM* evdata );
 
 
 //============================================================================================
@@ -175,15 +183,7 @@ void EVENTDATA_SYS_Delete(EVENTDATA_SYSTEM * evdata)
 //------------------------------------------------------------------
 void EVENTDATA_SYS_Clear(EVENTDATA_SYSTEM * evdata)
 {
-	evdata->bg_count = 0;
-	evdata->npc_count = 0;
-	evdata->connect_count = 0;
-	evdata->pos_count = 0;
-	evdata->bg_data = NULL;
-	evdata->npc_data = NULL;
-	evdata->connect_data = NULL;
-	evdata->pos_data = NULL;
-	GFL_STD_MemClear(evdata->load_buffer, EVDATA_SIZE);
+  clearEventDataTable( evdata );
 	GFL_STD_MemClear(evdata->spscr_buffer, SPSCR_DATA_SIZE);
 }
 
@@ -195,7 +195,7 @@ void EVENTDATA_SYS_Load( EVENTDATA_SYSTEM * evdata, u16 zone_id, u8 season_id )
 	evdata->now_zone_id = zone_id;
 
   loadSpecialScriptData( evdata, zone_id );
-  loadEventDataTable(evdata, zone_id);
+  loadEventDataTableNormal(evdata, zone_id);
   loadEncountDataTable( evdata, zone_id, season_id );
 }
 
@@ -205,6 +205,186 @@ void * EVENTDATA_GetSpecialScriptData( EVENTDATA_SYSTEM * evdata )
 {
   return &evdata->spscr_buffer;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベント情報をイベントデータの枠を確保しつつ読み込み
+ *
+ *	@param	evdata        イベントデータ
+ *	@param	bg_num        BGイベント数
+ *	@param	mmdl_num      モデルイベント数
+ *	@param	connect_num   接続イベント数
+ *	@param	pos_num       ポスイベント数
+ */
+//-----------------------------------------------------------------------------
+void EVENTDATA_SYS_ReloadEventDataEx(EVENTDATA_SYSTEM * evdata, u16 bg_num, u16 mmdl_num, u16 connect_num, u16 pos_num )
+{
+  clearEventDataTable( evdata );
+  loadEventDataTableExact(evdata, evdata->now_zone_id, bg_num, mmdl_num, connect_num, pos_num);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BGイベントを追加
+ *
+ *	@param	evdata    イベントシステム
+ *	@param	cp_data   BGイベント
+ *  
+ *	@return 追加INDEX
+ */
+//-----------------------------------------------------------------------------
+u32 EVENTDATA_SYS_AddTalkBgEvent( EVENTDATA_SYSTEM * evdata, const BG_TALK_DATA* cp_data )
+{
+  u32 index;
+  BG_TALK_DATA * p_bgevent;
+  
+  GF_ASSERT( evdata );
+  GF_ASSERT( cp_data );
+
+  if( evdata->bg_max > evdata->bg_count )
+  {
+    // 追加
+    evdata->bg_count ++;
+  }
+  else
+  {
+    // BGTALK追加オーバー 
+    // 登録せずに終わる
+    GF_ASSERT( 0 );
+    return 0;
+  }
+
+  index = evdata->bg_count;
+
+  // 追加
+  p_bgevent = (BG_TALK_DATA *)evdata->bg_data;
+  GFL_STD_MemCopy( cp_data, &p_bgevent[ index ], sizeof(BG_TALK_DATA) );
+  
+  return index;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  MMDLイベントの追加
+ *
+ *	@param	evdata    イベントシステム
+ *	@param	cp_data   動作モデル
+ *
+ *	@return 追加INDEX
+ */
+//-----------------------------------------------------------------------------
+u32 EVENTDATA_SYS_AddMmdlEvent( EVENTDATA_SYSTEM * evdata, const MMDL_HEADER* cp_data )
+{
+  u32 index;
+  MMDL_HEADER * p_event;
+  
+  GF_ASSERT( evdata );
+  GF_ASSERT( cp_data );
+
+  if( evdata->npc_max > evdata->npc_count )
+  {
+    // 追加
+    evdata->npc_count ++;
+  }
+  else
+  {
+    // MMDL追加オーバー 
+    // 登録せずに終わる
+    GF_ASSERT( 0 );
+    return 0;
+  }
+
+  index = evdata->npc_count;
+
+  // 追加
+  p_event = (MMDL_HEADER*)evdata->npc_data;
+  GFL_STD_MemCopy( cp_data, &p_event[ index ], sizeof(MMDL_HEADER) );
+  
+  return index;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  接続イベントの追加
+ *    
+ *	@param	evdata    イベントシステム
+ *	@param	cp_data   接続イベント
+ *
+ *	@return 追加INDEX
+ */
+//-----------------------------------------------------------------------------
+u32 EVENTDATA_SYS_AddConnectEvent( EVENTDATA_SYSTEM * evdata, const CONNECT_DATA* cp_data )
+{
+  u32 index;
+  CONNECT_DATA * p_event;
+  
+  GF_ASSERT( evdata );
+  GF_ASSERT( cp_data );
+
+  if( evdata->connect_max > evdata->connect_count )
+  {
+    // 追加
+    evdata->connect_count ++;
+  }
+  else
+  {
+    //　接続追加オーバー 
+    // 登録せずに終わる
+    GF_ASSERT( 0 );
+    return 0;
+  }
+
+  index = evdata->connect_count;
+
+  // 追加
+  p_event = (CONNECT_DATA*)evdata->connect_data;
+  GFL_STD_MemCopy( cp_data, &p_event[ index ], sizeof(CONNECT_DATA) );
+  
+  return index;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  POSイベントの追加
+ *
+ *	@param	evdata    イベントシステム
+ *	@param	cp_data   POSイベント
+ *
+ *	@return 追加INDEX
+ */
+//-----------------------------------------------------------------------------
+u32 EVENTDATA_SYS_AddPosEvent( EVENTDATA_SYSTEM * evdata, const POS_EVENT_DATA* cp_data )
+{
+  u32 index;
+  POS_EVENT_DATA * p_event;
+  
+  GF_ASSERT( evdata );
+  GF_ASSERT( cp_data );
+
+  if( evdata->pos_max > evdata->pos_count )
+  {
+    // 追加
+    evdata->pos_count ++;
+  }
+  else
+  {
+    // POS追加オーバー 
+    // 登録せずに終わる
+    GF_ASSERT( 0 );
+    return 0;
+  }
+
+  index = evdata->pos_count;
+
+  // 追加
+  p_event = (POS_EVENT_DATA*)evdata->pos_data;
+  GFL_STD_MemCopy( cp_data, &p_event[ index ], sizeof(POS_EVENT_DATA) );
+  
+  return index;
+}
+
+
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -216,7 +396,7 @@ static void loadSpecialScriptData( EVENTDATA_SYSTEM * evdata, u16 zone_id )
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id)
+static void loadEventDataTableNormal(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 {
   int i;
   const EVENTDATA_TABLE* table;
@@ -247,6 +427,13 @@ static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id)
   ofs += sizeof(CONNECT_DATA) * table->connect_count;
   evdata->pos_count = table->pos_count;
   evdata->pos_data = (const POS_EVENT_DATA*)&buf[ofs];
+  
+
+  // 格納最大数＝データ数
+  evdata->bg_max        = evdata->bg_count;
+  evdata->npc_max       = evdata->npc_count;
+  evdata->connect_max   = evdata->connect_count;
+  evdata->pos_max       = evdata->pos_count;
 
 
 #ifdef DEBUG_EVENTDATA_PRINT
@@ -275,6 +462,87 @@ static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id)
     }
   }
 #endif // DEBUG_EVENTDATA_PRINT
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベント情報の読み込み　各イベント個数指定バージョン
+ *
+ *	@param	evdata      イベントデータ
+ *	@param	zone_id     ゾーンID
+ */
+//-----------------------------------------------------------------------------
+static void loadEventDataTableExact(EVENTDATA_SYSTEM * evdata, u16 zone_id, u16 bg_num, u16 mmdl_num, u16 connect_num, u16 pos_num )
+{
+  int i;
+  const EVENTDATA_TABLE* table;
+  s32 ofs;
+  u8* buf;
+  u32 arcID;
+  u32 size;
+  u16 event_num;
+
+  // 総サイズオーバーチェック
+  size = 0;
+  size += 4;
+  size += sizeof(BG_TALK_DATA) * bg_num;
+  size += sizeof(MMDL_HEADER) * mmdl_num;
+  size += sizeof(CONNECT_DATA) * connect_num;
+  size += sizeof(POS_EVENT_DATA) * connect_num;
+  // サイズオーバーチェック
+  GF_ASSERT( EVDATA_SIZE > size );
+  
+  
+
+  arcID = ZONEDATA_GetEventDataArcID(zone_id);
+  size = GFL_ARC_GetDataSizeByHandle( evdata->eventHandle, arcID );
+  // サイズオーバーチェック
+  GF_ASSERT( EVDATA_SIZE > size );
+
+  ofs = 0;
+  table = (const EVENTDATA_TABLE*)evdata->load_buffer; 
+  buf = (u8*)table->buf;
+
+  // まず、ヘッダー部を読み込む
+  GFL_ARC_LoadDataOfsByHandle(evdata->eventHandle, arcID, ofs, 4, evdata->load_buffer);
+  ofs += 4;
+
+  // それぞれのイベント数がオーバーしてないかチェック
+  GF_ASSERT( table->bg_count < bg_num );
+  GF_ASSERT( table->npc_count < mmdl_num );
+  GF_ASSERT( table->connect_count < connect_num );
+  GF_ASSERT( table->pos_count < pos_num );
+
+  // BGイベント
+  GFL_ARC_LoadDataOfsByHandle(evdata->eventHandle, arcID, ofs, table->bg_count * sizeof(BG_TALK_DATA), &buf[ofs]);
+  evdata->bg_count = table->bg_count;
+  evdata->bg_data = (const BG_TALK_DATA*)&buf[ofs];
+  ofs += sizeof(BG_TALK_DATA) * table->bg_count;
+
+  // MMDLイベント
+  GFL_ARC_LoadDataOfsByHandle(evdata->eventHandle, arcID, ofs, table->npc_count * sizeof(MMDL_HEADER), &buf[ofs]);
+  evdata->npc_count = table->npc_count;
+  evdata->npc_data = (const MMDL_HEADER*)&buf[ofs];
+  ofs += sizeof(MMDL_HEADER) * table->npc_count;
+
+  // CONNECTイベント
+  GFL_ARC_LoadDataOfsByHandle(evdata->eventHandle, arcID, ofs, table->connect_count * sizeof(CONNECT_DATA), &buf[ofs]);
+  evdata->connect_count = table->connect_count;
+  evdata->connect_data = (const CONNECT_DATA*)&buf[ofs];
+  ofs += sizeof(CONNECT_DATA) * table->connect_count;
+
+  // POSイベント
+  GFL_ARC_LoadDataOfsByHandle(evdata->eventHandle, arcID, ofs, table->pos_count * sizeof(POS_EVENT_DATA), &buf[ofs]);
+  evdata->pos_count = table->pos_count;
+  evdata->pos_data = (const POS_EVENT_DATA*)&buf[ofs];
+
+
+
+  // 格納最大数
+  evdata->bg_max        = bg_num;
+  evdata->npc_max       = mmdl_num;
+  evdata->connect_max   = connect_num;
+  evdata->pos_max       = pos_num;
 }
 
 //------------------------------------------------------------------
@@ -313,6 +581,31 @@ static void loadEncountDataTable(EVENTDATA_SYSTEM* evdata, u16 zone_id, u8 seaso
   evdata->encount_work.enable_f = TRUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベントデータテーブルクリア
+ *
+ *	@param	evdata  イベントデータシステム
+ */
+//-----------------------------------------------------------------------------
+static void clearEventDataTable( EVENTDATA_SYSTEM* evdata )
+{
+	evdata->bg_max = 0;
+	evdata->npc_max = 0;
+	evdata->connect_max = 0;
+	evdata->pos_max = 0;
+	evdata->bg_count = 0;
+	evdata->npc_count = 0;
+	evdata->connect_count = 0;
+	evdata->pos_count = 0;
+	evdata->bg_data = NULL;
+	evdata->npc_data = NULL;
+	evdata->connect_data = NULL;
+	evdata->pos_data = NULL;
+	GFL_STD_MemClear(evdata->load_buffer, EVDATA_SIZE);
+}
+
+
 //------------------------------------------------------------------
 /*
  *  @brief  現ゾーンエンカウントデータ取得
@@ -323,6 +616,68 @@ void* EVENTDATA_GetEncountDataTable(EVENTDATA_SYSTEM* evdata)
 {
   return &evdata->encount_work;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BGイベントの数を取得
+ *
+ *	@param	evdata  イベントワーク
+ *
+ *	@return BGイベント数
+ */
+//-----------------------------------------------------------------------------
+u32 EVENTDATA_GetBgEventNum( const EVENTDATA_SYSTEM * evdata )
+{
+  GF_ASSERT( evdata );
+  return evdata->bg_count;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  MMLDイベントの数を取得
+ *
+ *	@param	evdata  イベントワーク
+ *
+ *	@return MMDLイベント数
+ */
+//-----------------------------------------------------------------------------
+u32 EVENTDATA_GetNpcEventNum( const EVENTDATA_SYSTEM * evdata )
+{
+  GF_ASSERT( evdata );
+  return evdata->npc_count;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  接続イベントの数を取得
+ *
+ *	@param	evdata  イベントワーク
+ *
+ *	@return 接続イベントの数
+ */
+//-----------------------------------------------------------------------------
+u32 EVENTDATA_GetConnectEventNum( const EVENTDATA_SYSTEM * evdata )
+{
+  GF_ASSERT( evdata );
+  return evdata->connect_count;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  POSイベントの数を取得
+ *
+ *	@param	evdata  イベントワーク
+ *  
+ *	@return POSイベントの数
+ */
+//-----------------------------------------------------------------------------
+u32 EVENTDATA_GetPosEventNum( const EVENTDATA_SYSTEM * evdata )
+{
+  GF_ASSERT( evdata );
+  return evdata->pos_count;
+}
+
 
 
 //============================================================================================

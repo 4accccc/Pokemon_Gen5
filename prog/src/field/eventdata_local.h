@@ -9,6 +9,9 @@
 
 #pragma once
 
+#include "field/eventdata_type.h"
+#include "fldmmdl.h"
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 struct _EVENTDATA_HEADER {
@@ -119,4 +122,16 @@ struct _POS_EVENT_DATA{
   u16 pos_type; // ポジションタイプ EVENTDATA_POSTYPE
   u8  pos_buf[POS_EVENT_DATA_POSBUF_SIZE];
 };
+
+
+
+//------------------------------------------------------------------
+//  イベントデータ　を　後から追加設定するための関数
+//------------------------------------------------------------------
+extern void EVENTDATA_SYS_ReloadEventDataEx(EVENTDATA_SYSTEM * evdata, u16 bg_num, u16 mmdl_num, u16 connect_num, u16 pos_num );
+extern u32 EVENTDATA_SYS_AddTalkBgEvent( EVENTDATA_SYSTEM * evdata, const BG_TALK_DATA* cp_data );
+extern u32 EVENTDATA_SYS_AddMmdlEvent( EVENTDATA_SYSTEM * evdata, const MMDL_HEADER* cp_data );
+extern u32 EVENTDATA_SYS_AddConnectEvent( EVENTDATA_SYSTEM * evdata, const CONNECT_DATA* cp_data );
+extern u32 EVENTDATA_SYS_AddPosEvent( EVENTDATA_SYSTEM * evdata, const POS_EVENT_DATA* cp_data );
+
 

@@ -23,6 +23,14 @@ extern void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 mapid, u8 season_i
 extern void * EVENTDATA_GetSpecialScriptData( EVENTDATA_SYSTEM * evdata );
 extern void * EVENTDATA_GetEncountDataTable( EVENTDATA_SYSTEM * evdata );
 
+extern u32 EVENTDATA_GetBgEventNum( const EVENTDATA_SYSTEM * evdata );
+extern u32 EVENTDATA_GetNpcEventNum( const EVENTDATA_SYSTEM * evdata );
+extern u32 EVENTDATA_GetConnectEventNum( const EVENTDATA_SYSTEM * evdata );
+extern u32 EVENTDATA_GetPosEventNum( const EVENTDATA_SYSTEM * evdata );
+
+
+
+
 #include "field/eventwork.h"
 #include "field/rail_location.h"
 
