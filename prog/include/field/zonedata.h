@@ -19,6 +19,7 @@
 enum {
   ZONEDATA_NO_RAILDATA_ID = -1,
   ZONEDATA_NO_CAMERA_AREA_ID = 0xffff,
+  ZONEDATA_NO_SCENEAREA_ID = 0xffff,
 };
 
 //============================================================================================
@@ -208,8 +209,6 @@ extern u32 ZONEDATA_GetFog(u16 zone_id);
 //------------------------------------------------------------------
 extern u32 ZONEDATA_GetLight(u16 zone_id);
 
-
-
 //------------------------------------------------------------------
 // フィールド技　マップエフェクト
 // fieldskill_mapeff.h
@@ -217,4 +216,8 @@ extern u32 ZONEDATA_GetLight(u16 zone_id);
 //------------------------------------------------------------------
 extern u32 ZONEDATA_GetFieldSkillMapEffMsk(u16 zone_id);
 
-
+//------------------------------------------------------------------
+//  シーンエリア（カメラ演出など）　の取得
+//return 
+//------------------------------------------------------------------
+extern u32 ZONEDATA_GetSceneAreaID(u16 zone_id);

@@ -13,6 +13,7 @@
 #include "arc/fieldmap/zonedata.naix"
 #include "arc/fieldmap/zone_id.h"
 #include "arc/fieldmap/map_matrix.naix"
+#include "arc/fieldmap/grid_camera_scene.naix"
 
 #include "field/field_const.h"
 
@@ -725,6 +726,24 @@ u32 ZONEDATA_GetFieldSkillMapEffMsk(u16 zone_id)
   }
 
   return ret;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  シーンエリアIDの取得
+ *
+ *	@param	zone_id ゾーンID
+ *
+ *	@return シーンエリアデータID
+ */
+//-----------------------------------------------------------------------------
+u32 ZONEDATA_GetSceneAreaID(u16 zone_id)
+{
+  if( zone_id == ZONE_ID_C04 )
+  {
+    return NARC_grid_camera_scene_camera_scene_C04_dat;
+  }
+  return ZONEDATA_NO_SCENEAREA_ID;
 }
 
 

@@ -392,8 +392,7 @@ static void zoneChange_SetZoneFogLight( FIELDMAP_WORK *fieldWork, u32 zone_id );
 static void zoneChange_UpdatePlayerWork( GAMEDATA *gdata, u32 zone_id );
 static void zoneChange_SetCameraArea( FIELDMAP_WORK* fieldWork, u32 zone_id );
 
-//@TODO 今はこれで確認 tomoya 
-static void zoneChangeC04Scene( FIELDMAP_WORK *fieldWork, u32 zone_id );
+static void zoneChangeScene( FIELDMAP_WORK *fieldWork, u32 zone_id );
 
 //etc
 static void fldmap_ClearMapCtrlWork( FIELDMAP_WORK *fieldWork );
@@ -745,8 +744,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 
   // scenearea
   {
-    // @TODO　C04カメラ動作実験 tomoya
-    zoneChangeC04Scene( fieldWork, fieldWork->map_id );
+    zoneChangeScene( fieldWork, fieldWork->map_id );
   }
 
   //3Ｄ描画モードは通常でセットアップ
@@ -2378,8 +2376,8 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	//PLAYER_WORK更新
 	zoneChange_UpdatePlayerWork( gdata, new_zone_id );
 
-  // @TODO　C04カメラ動作実験 tomoya
-  zoneChangeC04Scene( fieldWork, fieldWork->map_id );
+  //SCENEAREA更新 
+  zoneChangeScene( fieldWork, fieldWork->map_id );
 
 	// 地名表示システムに, ゾーンの切り替えを通達
   if(fieldWork->placeNameSys){ FIELD_PLACE_NAME_Display( fieldWork->placeNameSys, new_zone_id ); }
@@ -2622,21 +2620,21 @@ static void setupWfbc( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id )
 }
 
 
-//@TODO 今はこれで確認 tomoya
 //----------------------------------------------------------------------------
 /**
- *	@brief  C04シーンのセットアップ
+ *	@brief  シーンエリアのセットアップ
  *
  *	@param	fieldWork ワーク
  *	@param	zone_id   ゾーンID
  */
 //-----------------------------------------------------------------------------
-static void zoneChangeC04Scene( FIELDMAP_WORK *fieldWork, u32 zone_id )
+static void zoneChangeScene( FIELDMAP_WORK *fieldWork, u32 zone_id )
 {
-  if( zone_id == ZONE_ID_C04 ) 
+  u32 id = ZONEDATA_GetSceneAreaID( zone_id );
+  if( id != ZONEDATA_NO_SCENEAREA_ID ) 
   {
     // シーンエリアを読み込んで設定
-    FLD_SCENEAREA_LOADER_LoadOriginal( fieldWork->sceneAreaLoader, ARCID_GRID_CAMERA_SCENE, 0, fieldWork->heapID );
+    FLD_SCENEAREA_LOADER_LoadOriginal( fieldWork->sceneAreaLoader, ARCID_GRID_CAMERA_SCENE, id, fieldWork->heapID );
 
 
     FLD_SCENEAREA_Load( fieldWork->sceneArea, 
