@@ -25,10 +25,15 @@ NAIXNAME_W	=	$(NARCNAME_W:.narc=.naix)
 NARCNAME_B	=	$(subst $(DQ),,$(TARGET_BIN_FILE_B))
 NAIXNAME_B	=	$(NARCNAME_B:.narc=.naix)
 
+GENERATE_DAT = generate_enc.cdat
+GENERATE_SRC = $(GENERATE_DAT:.cdat=.csv)
+GENERATE_HEADER = $(subst .cdat,_def.h,$(GENERATE_DAT))
+
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
 TARGETDIR	= $(PROJECT_ARCDIR)
+GENERATE_DIR = $(PROJECT_ARCDIR)../src/field
 
 #中間ファイル出力先
 BIN_DIR_W	 = $(subst $(DQ),,$(WFBIN_DIR))
@@ -42,15 +47,13 @@ ARCB_LIST_FILE = $(subst $(DQ),,$(ARCB_LIST_FILENAME))
 #リソース
 SRC_TEXT = $(subst $(DQ),,$(SRC_TXT_FILENAME))
 
-SRC_DAT = $(BIN_DIR_W)/r10.bin
-
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
 SUBDIRS		=
 
 #Makeで生成される*.bin,*.datはmake cleanの削除対象にする
-CLEANFILES	= $(BIN_DIR_W)/*.* $(BIN_DIR_B)/*.*
+CLEANFILES	= $(BIN_DIR_W)/*.* $(BIN_DIR_B)/*.* $(GENERATE_DAT) $(GENERATE_HEADER)
 
 vpath %bin $(BIN_DIR_W) $(BIN_DIR_B)
 vpath %dat $(BIN_DIR_W) $(BIN_DIR_B)
@@ -62,12 +65,17 @@ vpath %dat $(BIN_DIR_W) $(BIN_DIR_B)
 #	ルール定義
 #
 #----------------------------------------------------------------------------
-do-build: $(TARGETDIR)/$(NARCNAME_W) $(TARGETDIR)/$(NARCNAME_B)
+do-build: $(TARGETDIR)/$(NARCNAME_W) $(TARGETDIR)/$(NARCNAME_B) \
+					$(GENERATE_DIR)/$(GENERATE_DAT) $(GENERATE_DIR)/$(GENERATE_HEADER)
 
 $(TARGETDIR)/$(NARCNAME_W): $(NARCNAME_W)
 	$(COPY) $(NARCNAME_W) $(TARGETDIR)
 $(TARGETDIR)/$(NARCNAME_B): $(NARCNAME_B)
 	$(COPY) $(NARCNAME_B) $(TARGETDIR)
+$(GENERATE_DIR)/$(GENERATE_DAT): $(GENERATE_DAT)
+	$(COPY) $(GENERATE_DAT) $(GENERATE_DIR)
+$(GENERATE_DIR)/$(GENERATE_HEADER): $(GENERATE_HEADER)
+	$(COPY) $(GENERATE_HEADER) $(GENERATE_DIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ生成
 
@@ -84,12 +92,17 @@ $(NARCNAME_W): $(ARCW_LIST_FILE)
 $(NARCNAME_B): $(ARCB_LIST_FILE)
 	nnsarc -c -l -n $(NARCNAME_B) -S $(ARCB_LIST_FILE)  > arc_result_b.txt
 
+$(GENERATE_DAT): $(GENERATE_SRC)
+	ruby generate_conv.rb $(GENERATE_SRC) $(GENERATE_DAT)
+$(GENERATE_HEADER): $(GENERATE_SRC)
+	ruby generate_conv.rb $(GENERATE_SRC) $(GENERATE_DAT)
+
 endif
 
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
 clean:
-	@-rm $(TARGETDIR)/$(NARCNAME_W) $(TARGETDIR)/$(NARCNAME_B)
+	@-rm $(TARGETDIR)/$(NARCNAME_W) $(TARGETDIR)/$(NARCNAME_B) $(GENERATE_DIR)/$(GENERATE_DAT) $(GENERATE_DIR)/$(GENERATE_HEADER)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ生成
 	@-rm $(NARCNAME_W) $(ARCW_LIST_FILE) $(NAIXNAME_W)
 	@-rm $(NARCNAME_B) $(ARCB_LIST_FILE)

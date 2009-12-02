@@ -12,6 +12,7 @@
 #include "savedata/encount_sv.h"
 #include "system/gfl_use.h"
 //#include "field/move_pokemon_def.h"
+#include "field/generate_enc_def.h"
 
 #define MOVE_POKE_MAX (3) ///@todo
 
@@ -46,7 +47,7 @@ typedef struct ENC_SV_DATA_tag
 	PLAYER_ZONE_HIST	PlayerZoneHist;	//ゾーン履歴
 	MV_POKE_DATA	MovePokeData[MOVE_POKE_MAX];	//移動ポケモンデータ
 	u8 MovePokeZoneIdx[MOVE_POKE_MAX];	//移動ポケモン現在ゾーンインデックス
-	u8 GenerateValid;					//大量発生発動フラグ
+	u8 GenerateZoneIdx;					//大量発生発動フラグ
 	u8 SprayCount;						//スプレー有効歩数(最大250歩)
 	
 }ENC_SV_DATA;
@@ -94,11 +95,8 @@ void EncDataSave_Init(ENC_SV_PTR outEncData)
 {
 	MI_CpuClear8( outEncData, sizeof(ENC_SV_DATA) );
 
-	//ランダムの種セット
-	outEncData->GenerateRandSeed = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
-	
 	//大量発生発動フラグを落とす
-	outEncData->GenerateValid = 0;
+	outEncData->GenerateZoneIdx = 0;
 	//スプレー
 	outEncData->SprayCount = 0;
 
@@ -108,60 +106,20 @@ void EncDataSave_Init(ENC_SV_PTR outEncData)
 
 }
 
-//----------------------------------------------------------
-/**
- * @brief		エンカウント関連ランダムの種更新
- * 
- * @param	outEncData		エンカウント関連セーブデータへのポインタ
- *
- * @return	none
- */
-//----------------------------------------------------------
-void EncDataSave_UpdateRandSeed(ENC_SV_PTR ioEncData, const u32 inRandSeed)
-{
-	ioEncData->GenerateRandSeed = inRandSeed;
-
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_ENCOUNT)
-	SVLD_SetCrc(GMDATA_ID_ENCOUNT);
-#endif //CRC_LOADCHECK
-
-}
-
-//----------------------------------------------------------
-/**
- * @brief	エンカウント関連ランダムの種取得
- * 
- * @param	inEncData		エンカウント関連セーブデータへのポインタ
- * @param	inSeedType		ランダムの種の種類（encount.hに意義）
- *
- * @return	u32				サファリランダムの種
- */
-//----------------------------------------------------------
-u32 EncDataSave_GetRandSeed(ENC_SV_PTR inEncData, const u8 inSeedType)
-{
-	switch(inSeedType){
-	case ENC_RND_SEED_GENERATE:
-		return inEncData->GenerateRandSeed;
-	default:
-		GF_ASSERT(0);
-		return 0;
-	}
-}
-
 //==============================================================================
 /**
- * 大量発生開始
+ * 大量発生ランダム更新
  *
  * @param	sv				セーブポインタ
  *
  * @return	none
  */
 //==============================================================================
-void EncDataSave_StartGenerate( SAVE_CONTROL_WORK * sv )
+void EncDataSave_UpdateGenerate( SAVE_CONTROL_WORK * sv )
 {
 	ENC_SV_PTR enc_data;
 	enc_data = EncDataSave_GetSaveDataPtr(sv);
-	enc_data->GenerateValid = 1;
+	enc_data->GenerateZoneIdx = GFUser_GetPublicRand0(GENERATE_ENC_POKE_MAX);
 
 #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_ENCOUNT)
 	SVLD_SetCrc(GMDATA_ID_ENCOUNT);
@@ -171,16 +129,16 @@ void EncDataSave_StartGenerate( SAVE_CONTROL_WORK * sv )
 
 //==============================================================================
 /**
- * 大量発生中かを返す
+ * 大量発生ゾーンindexを返す
  *
  * @param	inEncData			エンカウント関連セーブポインタ
  *
  * @return	u8 0以外：大量発生中
  */
 //==============================================================================
-u8 EncDataSave_IsGenerate( ENC_SV_PTR inEncData )
+u8 EncDataSave_GetGenerateZoneIdx( ENC_SV_PTR inEncData )
 {
-	return inEncData->GenerateValid;
+	return inEncData->GenerateZoneIdx;
 }
 
 //==============================================================================

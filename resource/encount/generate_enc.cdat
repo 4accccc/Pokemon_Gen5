@@ -1,0 +1,55 @@
+/*
+	@file	generate_enc.cdat
+	@brief	大量発生ポケモンデータテーブル
+	@author	このファイルはコンバータから出力されています
+
+	from resource/encount/generate_enc.rb
+*/
+#pragma once
+
+#if PM_VERSION == VERSION_WHITE
+
+static const GENERATE_ENCOUNT DATA_GenerateEncount[] = {
+ { ZONE_ID_R01, 241,0, 15,30 },	//ミルタンク
+ { ZONE_ID_R02, 312,0, 15,40 },	//マイナン
+ { ZONE_ID_R03, 314,0, 15,30 },	//イルミーゼ
+ { ZONE_ID_R04, 335,0, 15,30 },	//ザングース
+ { ZONE_ID_R05, 338,0, 15,30 },	//ソルロック
+ { ZONE_ID_R06, 83,0, 15,30 },	//カモネギ
+ { ZONE_ID_R07, 115,0, 15,30 },	//ガルーラ
+ { ZONE_ID_R08, 127,0, 15,30 },	//カイロス
+ { ZONE_ID_R09, 132,0, 15,30 },	//メタモン
+ { ZONE_ID_R10, 203,0, 15,30 },	//キリンリキ
+ { ZONE_ID_R11, 206,0, 15,30 },	//ノコッチ
+ { ZONE_ID_R12, 213,0, 15,30 },	//ツボツボ
+ { ZONE_ID_R13, 225,0, 15,30 },	//デリバード
+ { ZONE_ID_R14, 234,0, 15,30 },	//オドシシ
+ { ZONE_ID_R15, 235,0, 15,30 },	//ドーブル
+ { ZONE_ID_R16, 327,0, 15,30 },	//パッチール
+ { ZONE_ID_R18, 455,0, 15,30 },	//マスキッパ
+};
+
+#else
+
+static const GENERATE_ENCOUNT DATA_GenerateEncount[] = {
+ { ZONE_ID_R01, 128,0, 15,30 },	//ケンタロス
+ { ZONE_ID_R02, 311,0, 15,30 },	//プラスル
+ { ZONE_ID_R03, 313,0, 15,30 },	//バルビート
+ { ZONE_ID_R04, 336,0, 15,30 },	//ハブネーク
+ { ZONE_ID_R05, 337,0, 15,30 },	//ルナトーン
+ { ZONE_ID_R06, 83,0, 15,30 },	//カモネギ
+ { ZONE_ID_R07, 115,0, 15,30 },	//ガルーラ
+ { ZONE_ID_R08, 127,0, 15,30 },	//カイロス
+ { ZONE_ID_R09, 132,0, 15,30 },	//メタモン
+ { ZONE_ID_R10, 203,0, 15,30 },	//キリンリキ
+ { ZONE_ID_R11, 206,0, 15,30 },	//ノコッチ
+ { ZONE_ID_R12, 213,0, 15,30 },	//ツボツボ
+ { ZONE_ID_R13, 225,0, 15,30 },	//デリバード
+ { ZONE_ID_R14, 234,0, 15,30 },	//オドシシ
+ { ZONE_ID_R15, 235,0, 15,30 },	//ドーブル
+ { ZONE_ID_R16, 327,0, 15,30 },	//パッチール
+ { ZONE_ID_R18, 455,0, 15,30 },	//マスキッパ
+};
+
+#endif
+

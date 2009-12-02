@@ -29,10 +29,9 @@ extern int EncDataSave_GetWorkSize(void);
 extern ENC_SV_PTR EncDataSave_GetSaveDataPtr(SAVE_CONTROL_WORK * sv);
 extern void EncDataSave_Init(ENC_SV_PTR outEncData);
 
-extern void EncDataSave_UpdateRandSeed(ENC_SV_PTR ioEncData, const u32 inRandSeed);
-extern u32 EncDataSave_GetRandSeed(ENC_SV_PTR inEncData, const u8 inSeedType);
-extern void EncDataSave_StartGenerate( SAVE_CONTROL_WORK * sv );
-extern u8 EncDataSave_IsGenerate( ENC_SV_PTR inEncData );
+extern void EncDataSave_UpdateGenerate( SAVE_CONTROL_WORK * sv );
+extern u8 EncDataSave_GetGenerateZoneIdx( ENC_SV_PTR inEncData );
+
 extern void EncDataSave_UpdatePlayerZoneHist(ENC_SV_PTR ioEncData, const int inZoneID);
 extern int EncDataSave_GetPlayerOldZone(ENC_SV_PTR inEncData);
 extern u8 EncDataSave_GetMovePokeZoneIdx(ENC_SV_PTR inEncData, const u8 inTargetPoke);

@@ -7,6 +7,7 @@
 #pragma once
 
 #include "field/weather_no.h"
+#include "savedata/encount_sv.h"
 #include "field_wfbc.h"
 
 #define FLD_ENCPOKE_NUM_MAX (2) ///<一度にエンカウントするポケモン数max
@@ -35,6 +36,8 @@ typedef struct _ENC_POKE_PARAM
 
 typedef struct _ENCPOKE_FLD_PARAM
 {
+  ENC_SV_PTR enc_save;
+
   //ロケーション他
   ENCOUNT_LOCATION  location;
   ENCOUNT_TYPE      enc_type;
@@ -48,7 +51,6 @@ typedef struct _ENCPOKE_FLD_PARAM
   u16 mons_item;  //アイテムチェック
 	u8  mons_egg_f; //タマゴフラグチェック
 	u8  mons_spa;  //手持ち先頭特性チェック
-//  u8  mons_lv;  //モンスターLvチェック
   u8  mons_sex; //性別チェック
   u8  mons_chr; //性格チェック
 	u8  spray_lv; //むしよけスプレー及び低レベルエンカウント回避チェックに用いるレベル
@@ -57,6 +59,7 @@ typedef struct _ENCPOKE_FLD_PARAM
   MYSTATUS* my;
 
   //各種フラグ
+  u32 gameclear_f:1;  ///<ゲームクリアしているかどうか？
   u32 fishing_f:1;    ///<釣りエンカウントフラグ
 	u32 spray_f:1;     ///<スプレーチェックするかのフラグ	TRUE:チェックする
 	u32 enc_force_f:1;  ///<戦闘回避無効	TRUE:無効	FALSE:有効		(現状では、あまいかおり・あまいミツ用)
@@ -78,15 +81,15 @@ typedef struct _ENCPOKE_FLD_PARAM
   u32 spa_high_lv_hit:1;  ///<レベルの高いポケモンとエンカウントしやすい(やるき他)
   u32 spa_low_lv_rm:1;    ///<レベルの低いポケモンとエンカウントしない(威嚇他)
 
-  u32 dmy:18;
+  u32 dmy:17;
 }ENCPOKE_FLD_PARAM;
 
 extern void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
-    const ENCOUNT_LOCATION location, const ENCOUNT_TYPE enc_type,const WEATHER_NO weather );
+    const ENCOUNT_LOCATION location, const ENCOUNT_TYPE enc_type, const WEATHER_NO weather );
 
 extern u32 ENCPOKE_EncProbManipulation(const ENCPOKE_FLD_PARAM* efp, const GAMEDATA* gdata, const u32 inProb);
 extern u32 ENCPOKE_GetEncountPoke( const ENCPOKE_FLD_PARAM *efp, const ENC_COMMON_DATA *enc_tbl, ENC_POKE_PARAM* outPokeTbl );
-extern int ENCPOKE_GetNormalEncountPokeData( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* efp, ENC_POKE_PARAM* outPokeTbl);
+extern int ENCPOKE_GetNormalEncountPokeData( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* efp, u16 zone_id, ENC_POKE_PARAM* outPokeTbl);
 extern u32 ENCPOKE_GetWFBCEncountPoke( const FIELD_WFBC* cp_wfbc, ENCPOKE_FLD_PARAM* efp, ENC_POKE_PARAM* outPokeTbl );
 
 extern POKEMON_PARAM* ENCPOKE_PPCreate(const ENCPOKE_FLD_PARAM* efp, const ENC_POKE_PARAM* poke, int heapID);

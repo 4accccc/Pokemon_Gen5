@@ -192,7 +192,8 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
 
   //エンカウントデータ生成
   MI_CpuClear8(poke_tbl,sizeof(ENC_POKE_PARAM)*FLD_ENCPOKE_NUM_MAX);
-  enc_num = ENCPOKE_GetNormalEncountPokeData( enc->encdata, &fld_spa, poke_tbl );
+  enc_num = ENCPOKE_GetNormalEncountPokeData( enc->encdata,
+              &fld_spa, FIELDMAP_GetZoneID( enc->fwork ),poke_tbl );
 
   if( enc_num == 0 ){ //エンカウント失敗
     return NULL;
@@ -295,7 +296,7 @@ void* FIELD_ENCOUNT_CheckFishingEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_ty
 
   //エンカウントデータ生成
   MI_CpuClear8(poke_tbl,sizeof(ENC_POKE_PARAM)*FLD_ENCPOKE_NUM_MAX);
-  enc_num = ENCPOKE_GetNormalEncountPokeData( enc->encdata, &fld_spa, poke_tbl );
+  enc_num = ENCPOKE_GetNormalEncountPokeData( enc->encdata, &fld_spa, FIELDMAP_GetZoneID( enc->fwork), poke_tbl );
 
   if( enc_num == 0 ){ //エンカウント失敗
     return NULL;

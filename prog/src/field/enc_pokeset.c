@@ -29,9 +29,21 @@
 
 #include "enc_pokeset.h"
 
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
+
 //======================================================================
 //  struct
 //======================================================================
+
+///大量発生ポケモンデータテーブル型
+typedef struct GENERATE_ENCOUNT{
+  u16 zone_id;
+  u16 mons_no;
+  u8  form;
+  u8  lv_min;
+  u8  lv_max;
+}GENERATE_ENCOUNT;
+
 ///ランダムポケモン抽選関数型
 typedef u32 (*ENC_PROB_CALC_FUNC)( u32 max );
 
@@ -50,13 +62,19 @@ static u8 DATA_ItemRangeTable[][PPD_ITEM_SLOT_NUM] = {
    {55,20,5}, //ビンゴふくがん
 };
 
+//大量発生データ
+#include "fieldmap/zone_id.h"
+#include "generate_enc_def.h"
+#include "generate_enc.cdat"
+
+#define GENERATE_ENC_PROB (40*10)
 
 ////////////////////////////////////////////////////////////
 //プロトタイプ
 static u32 eps_GetPercentRand( void );
 static void efp_MonsSpaCheck( ENCPOKE_FLD_PARAM* efp, const WEATHER_NO weather );
 
-static u32 eps_GetEncountTable( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* ioEfp,ENC_COMMON_DATA* outTable);
+static u32 eps_GetEncountTable( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* ioEfp, u16 zone_id, ENC_COMMON_DATA* outTable);
 
 static void eps_SetPokeParam(const ENC_COMMON_DATA* data,ENC_POKE_PARAM* outPoke);
 static u8 eps_LotFixTypeEncount(const ENCPOKE_FLD_PARAM* efp,const ENC_COMMON_DATA* enc_data,const u8 type );
@@ -98,7 +116,9 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
 
   outEfp->location = location;
   outEfp->enc_type = enc_type;
-  
+
+  outEfp->enc_save = EncDataSave_GetSaveDataPtr( save );
+
   //プレイヤーのIDセット
   outEfp->my = GAMEDATA_GetMyStatus( (GAMEDATA*)gdata );
   outEfp->myID = MyStatus_GetID(outEfp->my);
@@ -121,7 +141,9 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
   
   //////////////////////////////
   //フラグチェック
-  
+  outEfp->gameclear_f = EVENTWORK_CheckEventFlag(GAMEDATA_GetEventWork( (GAMEDATA*)gdata ),SYS_FLAG_GAME_CLEAR); 
+  outEfp->gameclear_f = TRUE; //@todo 仮　クリアフラグが立つようになったら削除
+
   //釣り戦闘かどうか
   if( location == ENC_LOCATION_FISHING || location == ENC_LOCATION_FISHING_SP ){
     outEfp->fishing_f = TRUE;
@@ -229,13 +251,13 @@ u32 ENCPOKE_GetEncountPoke( const ENCPOKE_FLD_PARAM *efp, const ENC_COMMON_DATA 
  * @return  変動後の確率
  */
 //--------------------------------------------------------------
-int ENCPOKE_GetNormalEncountPokeData( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* efp, ENC_POKE_PARAM* outPokeTbl)
+int ENCPOKE_GetNormalEncountPokeData( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* efp, u16 zone_id, ENC_POKE_PARAM* outPokeTbl)
 {
   u32 num = 0;
   ENC_COMMON_DATA enc_tbl[ENC_MONS_NUM_MAX];
 
   //ROMからエンカウントデータテーブルを取得
-  eps_GetEncountTable( inData, efp, enc_tbl);
+  eps_GetEncountTable( inData, efp, zone_id, enc_tbl);
 
   //エンカウント抽選
   num = ENCPOKE_GetEncountPoke( efp, enc_tbl, outPokeTbl );
@@ -452,6 +474,45 @@ static void efp_MonsSpaCheck( ENCPOKE_FLD_PARAM* ioEfp, const WEATHER_NO weather
     return;
   }
 }
+
+//--------------------------------------------------------------
+/**
+ * 大量発生チェック
+ * @param inData    エンカウントデータ
+ * @param location  取得するロケーション
+ * @param type      エンカウントタイプ
+ * @param outTable  取得したモンスターデータテーブルを格納するバッファポインタ
+ * @retuen  テーブル長
+ */
+//--------------------------------------------------------------
+static BOOL eps_CheckGeneratePoke( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* ioEfp, u16 zone_id, ENC_COMMON_DATA* outTable)
+{
+  const GENERATE_ENCOUNT* gene;
+  u8  idx = EncDataSave_GetGenerateZoneIdx( ioEfp->enc_save );
+
+  if( idx >= GENERATE_ENC_POKE_MAX ){
+    idx = 0;
+  }
+  idx = 0;
+  gene = &DATA_GenerateEncount[idx];
+
+  if(!ioEfp->gameclear_f || gene->zone_id != zone_id){
+    return FALSE;
+  }
+  if( ioEfp->location != ENC_LOCATION_GROUND_L && ioEfp->location != ENC_LOCATION_GROUND_H ){
+    return FALSE;
+  }
+  if( GFUser_GetPublicRand0( 1000 ) >= GENERATE_ENC_PROB ){
+    return FALSE;
+  }
+  outTable[0].monsNo = gene->mons_no;
+  outTable[0].minLevel = gene->lv_min;
+  outTable[0].maxLevel = gene->lv_max;
+  outTable[0].form = gene->form;
+  ioEfp->tbl_num = 1;
+  return TRUE;
+}
+
 //--------------------------------------------------------------
 /**
  * フィールドエンカウントデータテーブルをロケーションとタイプから取得
@@ -462,7 +523,7 @@ static void efp_MonsSpaCheck( ENCPOKE_FLD_PARAM* ioEfp, const WEATHER_NO weather
  * @retuen  テーブル長
  */
 //--------------------------------------------------------------
-static u32 eps_GetEncountTable( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* ioEfp,ENC_COMMON_DATA* outTable)
+static u32 eps_GetEncountTable( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* ioEfp, u16 zone_id, ENC_COMMON_DATA* outTable)
 {
   u32 num = 0,calctype = ENCPROB_CALCTYPE_NORMAL;
   const ENC_COMMON_DATA* src;
@@ -475,6 +536,9 @@ static u32 eps_GetEncountTable( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* i
     return ioEfp->tbl_num;
   }
   //@todo 大量発生チェック
+  if( eps_CheckGeneratePoke( inData, ioEfp, zone_id, outTable)){
+    return 1;  
+  }
 
   //テーブル取得
   if( ioEfp->location >= ENC_LOCATION_MAX ){
