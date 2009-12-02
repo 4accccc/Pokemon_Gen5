@@ -1227,6 +1227,8 @@ static void FuncMainLiftOnly(GAMESYS_WORK *gsys)
     switch(tmp->MainLiftSeq){
     case 0:
       InitLiftShake(tmp->TargetLiftIdx, tmp->AddVal, FALSE, camera, &tmp->ShakeWork);
+      //リフト停止ＳＥ
+      PMSND_PlaySE(GYM_GROUND_SE_LIFT_STOP);
       tmp->MainLiftSeq++;
       break;
     case 1:
@@ -1240,6 +1242,8 @@ static void FuncMainLiftOnly(GAMESYS_WORK *gsys)
           {
             tmp->AddVal = -SP_LIFT_MOVE_SPD2;   //スピード変更
             tmp->LiftMvStop = FALSE;            //ストップ解除
+            //リフト移動開始再開
+            PMSND_PlaySE(GYM_GROUND_SE_LIFT_MOVE);
           }
         }
       }
