@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c08.h"
-  //.include  "c08.h"
+  .include  "c08.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,228 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c08
+_EVENT_DATA    ev_pos_c08_champions_01
+_EVENT_DATA    ev_c08_sunglasses_01
+_EVENT_DATA    ev_c08_gentleman_01
+_EVENT_DATA    ev_c08_fighterm_01
+_EVENT_DATA    ev_c08_boy2_01
+_EVENT_DATA    ev_c08_woman1_01
+_EVENT_DATA    ev_c08_iss_01
 _EVENT_DATA_END
 
+/**************************************************************/
+/* POS：チャンピオンとジムリーダー                            */
+/**************************************************************/
+
+//ジム挑戦可能になるまで表示
+EVENT_START   ev_pos_c08_champions_01
+
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+
+	//チャンピオン隣接して発言
+	_BALLOONWIN_OBJMSG( msg_c08_champion_01 , C08_CHAMPION_01 )
+	_BALLOONWIN_CLOSE()
+
+	//チャンピオン誘導アニメーション
+	
+	//上を向いてゲーヂスにコメント
+	_BALLOONWIN_OBJMSG( msg_c08_champion_02 , C08_CHAMPION_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//カメラ操作　ゲーヂス中心に
+	
+	//ゲーヂスの演説
+	_BALLOONWIN_OBJMSG( msg_c08_sage1_01 , C08_SAGE1_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//群集反応
+	/*
+	_SUBWIN_MSG( msg_c08_crowd1_01 , 10 , 10 , 1 )
+	_SUBWIN_MSG( msg_c08_crowd2_01 , 15 , 15 , 2 )
+	_SUBWIN_CLOSE( 1 )
+	_SUBWIN_MSG( msg_c08_crowd3_01 , 20 , 20 , 3 )
+	_SUBWIN_CLOSE( 2 )
+	_SUBWIN_CLOSE( 3 )
+	*/
+	
+	//ゲーヂスの演説
+	_BALLOONWIN_OBJMSG( msg_c08_sage1_02 , C08_SAGE1_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//群集反応
+	/*
+	_SUBWIN_MSG( msg_c08_crowd1_02 , 15 , 15 , 4 )
+	_SUBWIN_MSG( msg_c08_crowd3_02 , 20 , 20 , 5 )
+	_SUBWIN_CLOSE( 4 )
+	_SUBWIN_CLOSE( 5 )
+	*/
+	
+	//ゲーヂスの演説
+	_BALLOONWIN_OBJMSG( msg_c08_sage1_03 , C08_SAGE1_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//群集反応
+	/*
+	_SUBWIN_MSG( msg_c08_crowd1_03 , 10 , 10 , 6 )
+	_SUBWIN_MSG( msg_c08_crowd2_02 , 15 , 15 , 7 )
+	_SUBWIN_CLOSE( 6 )
+	_SUBWIN_MSG( msg_c08_crowd3_03 , 20 , 20 , 8 )
+	_SUBWIN_CLOSE( 7 )
+	_SUBWIN_CLOSE( 8 )
+	*/
+	
+	//群集散ってゆくアニメーション
+	
+	//群集・ゲーヂスOBJ削除
+	
+	
+	//アイリスとシャガ
+	_BALLOONWIN_OBJMSG( msg_c08_leader8b_01 , C08_LEADER8B_01 )
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG( msg_c08_leader8a_01 , C08_LEADER8A_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//チャンピオン、リーダーの方に歩み寄る
+	
+	//チャンピオン、アイリス＆シャガと会話
+	_BALLOONWIN_OBJMSG( msg_c08_champion_03 , C08_CHAMPION_01 )
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG( msg_c08_leader8b_02 , C08_LEADER8B_01 )
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG( msg_c08_leader8a_02 , C08_LEADER8A_01 )
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG( msg_c08_champion_04 , C08_CHAMPION_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//バージョンを取得して演出と発言者を分岐
+	DEFINE_LOCAL LCWK_VERSION
+	_GET_ROM_VERSION( LCWK_VERSION )
+	
+	//white･アイリス
+	IF $LCWK_VERSION == VERSION_WHITE THEN
+	
+		//アイリスその場ジャンプ
+		
+		//アイリス発言
+		_BALLOONWIN_OBJMSG( msg_c08_leader8b_03w , C08_LEADER8B_01 )
+		_BALLOONWIN_CLOSE()
+	
+	//black･シャガ
+	ELSE
+	
+		//シャガ発言
+		_BALLOONWIN_OBJMSG( msg_c08_leader8a_03b , C08_LEADER8A_01 )
+		_BALLOONWIN_CLOSE()
+	
+	ENDIF
+	
+	//チャンピオン発言
+	_BALLOONWIN_OBJMSG( msg_c08_champion_05 , C08_CHAMPION_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//チャンピオン主人公に向き合う
+	
+	//チャンピオン発言
+	_BALLOONWIN_OBJMSG( msg_c08_champion_06 , C08_CHAMPION_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//チャンピオン退場
+	
+	//シャガ発言
+	_BALLOONWIN_OBJMSG( msg_c08_leader8a_04 , C08_LEADER8A_01 )
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG( msg_c08_leader8a_05 , C08_LEADER8A_01 )
+	_BALLOONWIN_CLOSE()
+
+	//white発言
+	IF $LCWK_VERSION == VERSION_WHITE THEN
+		
+		_BALLOONWIN_OBJMSG( msg_c08_leader8b_05w , C08_LEADER8B_01 )
+		_BALLOONWIN_CLOSE()
+	
+	//black発言
+	ELSE
+	
+		_BALLOONWIN_OBJMSG( msg_c08_leader8b_05b , C08_LEADER8B_01 )
+		_BALLOONWIN_CLOSE()
+	ENDIF
+	
+	//チャンピオン・リーダーOBJ削除
+	
+	//======================================//
+	
+	//演説イベントOBJ非表示
+	//_FLAG_SET( FV_C07_HAKASE1 )
+	
+	//C08演説イベントPOSを無効に
+	//$WK_SCENE_C07 = 1
+	
+	//======================================//
+
+EVENT_END
+
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/* ストッパー：SUNGLASSES_01                                   */
 /**************************************************************/
-//ev_c08_flag_change:
-//  _END
+
+//ジム挑戦可能になるまで表示
+EVENT_START   ev_c08_sunglasses_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08_gymstop_01 )
+EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/* GEGNTLEMAN_01                                              */
 /**************************************************************/
-ev_c08:
-  //とりあえず最初のラベルだけ生成している
-  _END
 
+EVENT_START   ev_c08_gentleman_01
+	//WB分岐メッセージ
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_WB( msg_c08_gentleman_01w , msg_c08_gentleman_01b , C08_GENTLEMAN_01 , WIN_NONE)
+	_BALLOONWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/* FIGHTERM_01                                               */
+/**************************************************************/
+
+EVENT_START   ev_c08_fighterm_01
+	//WB分岐メッセージ
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_WB( msg_c08_fighterm_01w , msg_c08_fighterm_01b , C08_FIGHTERM_01 , WIN_NONE)
+	_BALLOONWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/* BOY2_01                                               */
+/**************************************************************/
+
+EVENT_START   ev_c08_boy2_01
+	//WB分岐メッセージ
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_WB( msg_c08_boy2_01w , msg_c08_boy2_01b , C08_BOY2_01 , WIN_NONE)
+	_BALLOONWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/* WOMAN1_01                                               */
+/**************************************************************/
+
+EVENT_START   ev_c08_woman1_01
+	//WB分岐メッセージ
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_WB( msg_c08_woman1_01w , msg_c08_woman1_01b , C08_WOMAN1_01 , WIN_NONE)
+	_BALLOONWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/* ISS_01                                                     */
+/**************************************************************/
+
+EVENT_START   ev_c08_iss_01
+	//WB分岐メッセージ
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_WB( msg_c08_iss_01w , msg_c08_iss_01b , C08_ISS_01 , WIN_NONE)
+	_BALLOONWIN_CLOSE()
+EVENT_END

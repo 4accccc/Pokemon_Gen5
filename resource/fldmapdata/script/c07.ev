@@ -230,15 +230,14 @@ EVENT_START   ev_c07_hakaiw_01
 EVENT_END
 
 /**************************************************************/
-/* 【仮】GIRL2_01                                             */
+/* GIRL2_01                                                   */
 /**************************************************************/
 EVENT_START   ev_c07_girl2_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_girl2_01w )
-	/*WB分岐メッセージ
+	//WB分岐メッセージ
 	_TALK_OBJ_START()
 	_BALLOONWIN_OBJMSG_WB( msg_c07_girl2_01w , msg_c07_girl2_01b , C07_GIRL2_01 , WIN_NONE)
 	_BALLOONWIN_CLOSE()
-	*/
+	
 EVENT_END
 
 /**************************************************************/
@@ -249,15 +248,13 @@ EVENT_START   ev_c07_ambrella_01
 EVENT_END
 
 /**************************************************************/
-/* 【仮】MAN3_01                                               */
+/* MAN3_01                                                    */
 /**************************************************************/
 EVENT_START   ev_c07_man3_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_man3_01w )
-	/*WB分岐メッセージ
+	//WB分岐メッセージ
 	_TALK_OBJ_START()
 	_BALLOONWIN_OBJMSG_WB( msg_c07_man3_01w , msg_c07_man3_01b , C07_MAN3_01 , WIN_NONE)
 	_BALLOONWIN_CLOSE()
-	*/
 EVENT_END
 
 /**************************************************************/

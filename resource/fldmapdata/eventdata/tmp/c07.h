@@ -23,5 +23,7 @@
 #define C07_HAKAIW_01                      4
 #define C07_HAKASE1_01                     5
 #define C07_LEADER7_01                     6
+#define C07_GIRL2_01                       7
+#define C07_MAN3_01                        8
 
 #endif //ZONE_C07_EVC_H
