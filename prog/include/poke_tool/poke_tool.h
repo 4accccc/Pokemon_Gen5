@@ -462,8 +462,8 @@ enum{
 #define PTL_WAZASET_FAIL    (0xffff)  //技のセットができなかったときの返り値
 #define PTL_WAZASET_SAME    (0xfffe)  //すでに覚えていた技のときの返り値
 
-#define PTL_WAZAOBOE_NONE   (0x0000)            //技覚えで覚える技が無かったときの返り値
-#define PTL_WAZAOBOE_FULL   (PTL_WAZASET_FAIL)  //技覚えで手持ちの技がいっぱいだったときの返り値
+#define PTL_WAZAOBOE_NONE   (0x0000)  //技覚えで覚える技が無かったときの返り値
+#define PTL_WAZAOBOE_FULL   (0x8000)  //技覚えで手持ちの技がいっぱいだったときに立てる
 
 ///<ポケモン進化データの構造体
 typedef struct pokemon_shinka_data POKEMON_SHINKA_DATA;
