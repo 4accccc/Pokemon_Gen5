@@ -32,6 +32,8 @@
 
 #include "event_debug_local.h"
 
+#include "debug/debug_str_conv.h" // for DEB_STR_CONV_SjisToStrcode
+
 static void DEBUG_SetMenuWorkZoneIDNameAll(
     GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work );
 static u16 DEBUG_GetZoneIDNameMax( GAMESYS_WORK* gsys, void* cb_work );
@@ -408,11 +410,15 @@ static GMEVENT_RESULT debugMenuSeasonSelectEvent(
 static u16 * DEBUG_GetZoneNameUTF16( u32 heapID, u32 zoneID )
 {
   u16 *pStrBuf;
-  u8 name8[64];
+  char name8[64];
   
   pStrBuf = GFL_HEAP_AllocClearMemory( heapID, sizeof(u16)*64 );
+#if 0
   ZONEDATA_DEBUG_GetZoneName( (char*)name8, zoneID );
   DEBUG_ConvertAsciiToUTF16( name8, 64, pStrBuf );
+#endif
+  ZONEDATA_DEBUG_GetZoneName( name8, zoneID );
+  DEB_STR_CONV_SjisToStrcode( name8, pStrBuf, 64 );
   return pStrBuf;
 }
 

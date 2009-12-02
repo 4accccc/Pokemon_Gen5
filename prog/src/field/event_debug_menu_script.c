@@ -22,13 +22,13 @@
 #include "field_debug.h"
 
 
-
-
 #include "event_debug_local.h"
 
 #include "arc/fieldmap/debug_list.h"  //DEBUG_SCR_
 #include "arc/fieldmap/script_seq.naix"
 #include "script.h" //SCRIPT_ChangeScript
+
+#include "debug/debug_str_conv.h" // for DEB_STR_CONV_SjisToStrcode
 
 //======================================================================
 //======================================================================
@@ -61,7 +61,9 @@ static void DEBUG_SetMenuWork_DebugScript(
       GFL_ARC_LoadDataOfsByHandle(p_handle, NARC_script_seq_debug_list_bin,
           id * DEBUG_SCR_EACH_SIZE, DEBUG_SCR_EACH_SIZE, buffer);
       real_id = *((u16*)&buffer[DEBUG_SCR_OFS_ID]);
-      DEBUG_ConvertAsciiToUTF16( buffer + DEBUG_SCR_OFS_NAME, DEBUG_SCR_NAME_LEN, utfStr );
+      DEB_STR_CONV_SjisToStrcode(
+          (const char*)(buffer + DEBUG_SCR_OFS_NAME), utfStr, DEBUG_SCR_NAME_LEN );
+      //DEBUG_ConvertAsciiToUTF16( buffer + DEBUG_SCR_OFS_NAME, DEBUG_SCR_NAME_LEN, utfStr );
       //OS_Printf("DEBUG SCRIPT %5d:%s\n", real_id, buffer + DEBUG_SCR_OFS_NAME);
       GFL_STR_SetStringCode( strBuf, utfStr );
     }

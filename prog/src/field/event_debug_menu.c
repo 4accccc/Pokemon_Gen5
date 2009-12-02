@@ -78,6 +78,8 @@
 
 #include "event_debug_season_display.h" // for DEBUG_EVENT_FLDMENU_SeasonDispSelect
 
+#include "debug/debug_str_conv.h" // for DEB_STR_CONV_SJIStoStrcode
+
 //======================================================================
 //  define
 //======================================================================
@@ -989,91 +991,6 @@ static void setupMusicarAll(DEB_MENU_MUS_WORK * work)
         NO_OVERLAY_ID, &Musical_ProcData, work->musInitWork );
 }
 
-//======================================================================
-//  デバッグ用ZoneID文字列変換
-//======================================================================
-//--------------------------------------------------------------
-//  文字コード
-//--------------------------------------------------------------
-#define ASCII_EOM (0x00)
-#define ASCII_0 (0x30)
-#define ASCII_9 (0x39)
-#define ASCII_A (0x41)
-#define ASCII_Z (0x5a)
-#define ASCII_UL (0x5f)
-
-//半角
-#define UTF16H_0 (0x0030)
-#define UTF16H_9 (0x0039)
-#define UTF16H_A (0x0041)
-#define UTF16H_Z (0x005a)
-#define UTF16H_UL (0x005f)
-
-//全角
-#define UTF16_0 (0xff10)
-#define UTF16_9 (0xff19)
-#define UTF16_A (0xff21)
-#define UTF16_Z (0xff3a)
-
-//--------------------------------------------------------------
-/**
- * ASCII->UTF-16
- * @param str ASCII 半角英数字
- * @retval  u16 UTF-16 str
- */
-//--------------------------------------------------------------
-static u16 DEBUG_ASCIICODE_UTF16( u8 code )
-{
-  if( code == ASCII_EOM ){
-    return( GFL_STR_GetEOMCode() );
-  }
-  
-  if( code == ASCII_UL ){
-    return( UTF16H_UL );
-  }
-  
-  if( code >= ASCII_0 && code <= ASCII_9 ){
-    code -= ASCII_0;
-    return( UTF16H_0 + code );
-  }
-  
-  if( code >= ASCII_A && code <= ASCII_Z ){
-    code -= ASCII_A;
-    return( UTF16H_A + code );
-  }
-  
-  //未対応文字
-#if 0 
-  GF_ASSERT( 0 );
-#else
-  OS_Printf( "未対応文字 CODE=%d\n", code );
-  return( GFL_STR_GetEOMCode() );
-#endif
-}
-
-//--------------------------------------------------------------
-/**
- * @brief ascii文字列→UTF16文字列
- */
-//--------------------------------------------------------------
-void DEBUG_ConvertAsciiToUTF16( const u8 * ascii, u32 size, u16 * utf16_buf )
-{
-  int i;
-  u16 utf16,utf16_eom;
-  
-  utf16_eom = GFL_STR_GetEOMCode();
-  
-  for( i = 0; i < size; i++ ){
-    utf16 = DEBUG_ASCIICODE_UTF16( ascii[i] );
-    utf16_buf[i] = utf16;
-    if( utf16 == utf16_eom ){
-      return;
-    }
-  }
-  
-  utf16_buf[i-1] = utf16_eom; //文字数オーバー
-  GF_ASSERT( 0 );
-}
 
 
 //======================================================================
@@ -1640,7 +1557,8 @@ static u16 * DEBUG_GetOBJCodeStrBuf( HEAPID heapID, u16 code )
   pStrBuf = GFL_HEAP_AllocClearMemory( heapID,
       sizeof(u16)*DEBUG_OBJCODE_STR_LENGTH );
   name8 = DEBUG_MMDL_GetOBJCodeString( code, heapID );
-  DEBUG_ConvertAsciiToUTF16( name8, DEBUG_OBJCODE_STR_LENGTH, pStrBuf );
+  //DEBUG_ConvertAsciiToUTF16( name8, DEBUG_OBJCODE_STR_LENGTH, pStrBuf );
+  DEB_STR_CONV_SjisToStrcode( (const char *)name8, pStrBuf, DEBUG_OBJCODE_STR_LENGTH );
   GFL_HEAP_FreeMemory( name8 );
   
   return( pStrBuf );
