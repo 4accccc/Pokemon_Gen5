@@ -15,8 +15,12 @@
 
 #include "arc_def.h"
 
+
+#include "field/field_const.h"
+
 #include "fld_scenearea_loader_func.h"
 #include "fld_scenearea_loader.h"
+
 
 //-----------------------------------------------------------------------------
 /**
@@ -45,15 +49,23 @@ static void C3_SCENEAREA_Update( const FLD_SCENEAREA* cp_sys, const FLD_SCENEARE
 static void C3_SCENEAREA_FxCamera( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
 
 
+static BOOL SCENEAREA_CheckGridRect( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
+static void SCENEAREA_UpdateGridAngleChange( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
+
+
 static FLD_SCENEAREA_CHECK_AREA_FUNC* sp_FLD_SCENEAREA_CHECK_AREA_FUNC[FLD_SCENEAREA_AREACHECK_MAX] = 
 {
 	C3_SCENEAREA_CheckArea,
+
+  SCENEAREA_CheckGridRect,
 };
 
 static FLD_SCENEAREA_UPDATA_FUNC* sp_FLD_SCENEAREA_UPDATA_FUNC[FLD_SCENEAREA_UPDATE_MAX] = 
 {
 	C3_SCENEAREA_Update,
 	C3_SCENEAREA_FxCamera,
+
+  SCENEAREA_UpdateGridAngleChange,
 };
 
 static const FLD_SCENEAREA_FUNC sc_FLD_SCENEAREA_FUNC = 
@@ -82,7 +94,7 @@ static const FLD_SCENEAREA_FUNC sc_FLD_SCENEAREA_FUNC =
  *	@return	ローダー
  */
 //-----------------------------------------------------------------------------
-FLD_SCENEAREA_LOADER* FLD_SCENEAREA_LOADER_Create( u32 heapID )
+FLD_SCENEAREA_LOADER* FLD_SCENEAREA_LOADER_Create( HEAPID heapID )
 {
 	FLD_SCENEAREA_LOADER* p_sys;
 
@@ -113,13 +125,28 @@ void FLD_SCENEAREA_LOADER_Delete( FLD_SCENEAREA_LOADER* p_sys )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-void FLD_SCENEAREA_LOADER_Load( FLD_SCENEAREA_LOADER* p_sys, u32 datano, u32 heapID )
+void FLD_SCENEAREA_LOADER_Load( FLD_SCENEAREA_LOADER* p_sys, u32 datano, HEAPID heapID )
+{
+  FLD_SCENEAREA_LOADER_LoadOriginal( p_sys, ARCID_SCENEAREA_DATA, datano, heapID );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ARCIDも指定するバージョン
+ *
+ *	@param	p_sys			システム
+ *	@param	arcID     アーカイブID
+ *	@param	datano		データナンバー
+ *	@param	heapID		ヒープID
+ */
+//-----------------------------------------------------------------------------
+void FLD_SCENEAREA_LOADER_LoadOriginal( FLD_SCENEAREA_LOADER* p_sys, u32 arcID, u32 datano, HEAPID heapID )
 {
 	u32 size;
 	
 	GF_ASSERT( p_sys );
 
-	p_sys->p_data = GFL_ARC_UTIL_LoadEx( ARCID_SCENEAREA_DATA, datano, FALSE, heapID, &size );
+	p_sys->p_data = GFL_ARC_UTIL_LoadEx( arcID, datano, FALSE, heapID, &size );
 	p_sys->num		= size / sizeof(FLD_SCENEAREA_DATA);
 
 	TOMOYA_Printf( "SCENEAREA_size = %d\n", size );
@@ -380,4 +407,119 @@ static void C3_SCENEAREA_FxCamera( const FLD_SCENEAREA* cp_sys, const FLD_SCENEA
   FIELD_CAMERA_SetTargetPos( p_camera, &target );
   FIELD_CAMERA_SetCameraPos( p_camera, &camera_pos );
 }
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  グリッド　矩形チェック
+ *
+ *	@param	cp_sys      システム
+ *	@param	cp_data     データ
+ *	@param	cp_pos      位置
+ *
+ *	@retval TRUE  ヒット* 
+ *	@retval FALSE 外野  
+ */
+//-----------------------------------------------------------------------------
+static BOOL SCENEAREA_CheckGridRect( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
+{
+  const FLD_SCENEAREA_GRIDCHANGEANGLE_PARAM* cp_param = (const FLD_SCENEAREA_GRIDCHANGEANGLE_PARAM*)cp_data->area;
+  u16 grid_x, grid_z, grid_sizx, grid_sizz;
+
+  grid_x = FX32_TO_GRID( cp_pos->x );
+  grid_z = FX32_TO_GRID( cp_pos->z );
+
+  // X と Zどちらかが1である必要がある
+  GF_ASSERT( (cp_param->grid_sizx == 1) || (cp_param->grid_sizz == 1) );
+  
+  if( cp_param->grid_sizx == 1 )
+  {
+    grid_sizx = cp_param->grid_depth;
+    grid_sizz = cp_param->grid_sizz;
+  }
+  else
+  {
+    grid_sizx = cp_param->grid_sizx;
+    grid_sizz = cp_param->grid_depth;
+  }
+
+  if( (grid_x >= cp_param->grid_x) && (grid_x < cp_param->grid_x + grid_sizx) )
+  {
+    if( (grid_z >= cp_param->grid_z) && (grid_z < cp_param->grid_z + grid_sizz) )
+    {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  グリッド　アングルスムーズ変更
+ *
+ *	@param	cp_sys      システム
+ *	@param	cp_data     データ
+ *	@param	cp_pos      位置
+ */
+//-----------------------------------------------------------------------------
+static void SCENEAREA_UpdateGridAngleChange( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
+{
+  const FLD_SCENEAREA_GRIDCHANGEANGLE_PARAM* cp_param = (const FLD_SCENEAREA_GRIDCHANGEANGLE_PARAM*)cp_data->area;
+  FIELD_CAMERA* p_camera;
+  VecFx32 target, camera_pos;
+  fx32 dist;
+  fx32 start_num;
+  fx32 sub_num;
+  s32 pitch;
+  s32 yaw;
+  fx32 length;
+
+  p_camera = FLD_SCENEAREA_GetFieldCamera( cp_sys );
+
+	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+
+  TOMOYA_Printf( "param\n" );
+  TOMOYA_Printf( "start angle pitch=0x%x yaw=0x%x len=0x%x\n", cp_param->start_pitch, cp_param->start_yaw, cp_param->start_length );
+  TOMOYA_Printf( "end angle pitch=0x%x yaw=0x%x len=0x%x\n", cp_param->end_pitch, cp_param->end_yaw, cp_param->end_length );
+
+  // 入り口からの奥への距離から、カメラを動かす
+  dist = GRID_TO_FX32( cp_param->grid_depth );
+  // 横？　縦？
+  if( cp_param->grid_sizx == 1 )
+  {
+    // 右に奥行き
+    start_num = GRID_TO_FX32( cp_param->grid_x );
+    sub_num   = cp_pos->x - start_num;
+  }
+  else
+  {
+    // 手前に奥行き
+    start_num = GRID_TO_FX32( cp_param->grid_z );
+    sub_num   = cp_pos->z - start_num;
+  }
+
+  // 移動割合からアングルと距離を求める
+  pitch = cp_param->end_pitch - cp_param->start_pitch;
+  pitch = (pitch * sub_num) / dist;
+  pitch += cp_param->start_pitch;
+
+  yaw = cp_param->end_yaw - cp_param->start_yaw;
+  yaw = (yaw * sub_num) / dist;
+  yaw += cp_param->start_yaw;
+
+  length = cp_param->end_length - cp_param->start_length;
+  length = FX_Div( FX_Mul(length, sub_num), dist );
+  length += cp_param->start_length;
+
+  TOMOYA_Printf( "set angle\n" );
+  TOMOYA_Printf( "pitch 0x%x yaw 0x%x len 0x%x\n", (u16)pitch, (u16)yaw, length );
+
+  // アングルを設定
+  FIELD_CAMERA_SetAnglePitch( p_camera, pitch );
+  FIELD_CAMERA_SetAngleYaw( p_camera, yaw );
+  FIELD_CAMERA_SetAngleLen( p_camera, length );
+}
+
+
 

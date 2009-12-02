@@ -41,12 +41,13 @@ typedef struct _FLD_SCENEAREA_LOADER FLD_SCENEAREA_LOADER;
 //-----------------------------------------------------------------------------
 
 //生成　破棄
-extern FLD_SCENEAREA_LOADER* FLD_SCENEAREA_LOADER_Create( u32 heapID );
+extern FLD_SCENEAREA_LOADER* FLD_SCENEAREA_LOADER_Create( HEAPID heapID );
 extern void FLD_SCENEAREA_LOADER_Delete( FLD_SCENEAREA_LOADER* p_sys );
 
 
 // 読み込み、クリア
-extern void FLD_SCENEAREA_LOADER_Load( FLD_SCENEAREA_LOADER* p_sys, u32 datano, u32 heapID );
+extern void FLD_SCENEAREA_LOADER_Load( FLD_SCENEAREA_LOADER* p_sys, u32 datano, HEAPID heapID );
+extern void FLD_SCENEAREA_LOADER_LoadOriginal( FLD_SCENEAREA_LOADER* p_sys, u32 arcID, u32 datano, HEAPID heapID );
 extern void FLD_SCENEAREA_LOADER_Clear( FLD_SCENEAREA_LOADER* p_sys );
 
 // 情報の取得

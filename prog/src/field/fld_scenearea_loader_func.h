@@ -26,7 +26,8 @@ enum
 {
 	// scenearea_conv.pl用コメント　修正しないで。
 	//AREACHECK_FUNC_ID_START
-	FLD_SCENEAREA_AREACHECK_CIRCLE,
+	FLD_SCENEAREA_AREACHECK_CIRCLE,   // 円形形チェック
+	FLD_SCENEAREA_AREACHECK_GRID_RECT, // グリッド矩形チェック
 
 	FLD_SCENEAREA_AREACHECK_MAX,
 };
@@ -42,6 +43,7 @@ enum
 	//UPDATE_FUNC_ID_START
 	FLD_SCENEAREA_UPDATE_CIRCLE,
 	FLD_SCENEAREA_UPDATE_FXCAMERA,
+	FLD_SCENEAREA_UPDATE_ANGLECHANGE,  // スムーズアングル変更
 
 	FLD_SCENEAREA_UPDATE_MAX,
 };
@@ -105,6 +107,32 @@ typedef struct {
   fx32  camera_y;
   fx32  camera_z;
 } FLD_SCENEAREA_CIRCLE_FIXCAMERA_PARAM;
+
+//-------------------------------------
+/// グリッド、　カメラスムーズ移動
+//
+//対応関数
+//FLD_SCENEAREA_AREACHECK_GRID
+//FLD_SCENEAREA_UPDATE_ANGLECHANGE
+//=====================================
+typedef struct {
+
+  // グリッド判定情報
+  u16 grid_x;     // 入り口グリッドX
+  u16 grid_z;     // 入り口グリッドZ
+  u16 grid_sizx;  // 入り口グリッドサイズX
+  u16 grid_sizz;  // 入り口グリッドサイズZ
+  u16 grid_depth; // 奥行き
+  u16 pad;        // パディング
+  
+  u16 start_pitch;// 開始ピッチ
+  u16 start_yaw;// 開始ヨー
+  fx32 start_length;// 開始レングス
+  u16 end_pitch;// 終了ピッチ
+  u16 end_yaw;// 終了ヨー
+  fx32 end_length;// 終了レングス
+
+} FLD_SCENEAREA_GRIDCHANGEANGLE_PARAM;
 
 
 #ifdef _cplusplus
