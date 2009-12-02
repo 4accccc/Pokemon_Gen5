@@ -299,6 +299,19 @@ GMEVENT* EFFECT_ENC_CheckEventApproch( FIELD_ENCOUNT* enc )
   return event;
 }
 
+/*
+ *  @brief  エフェクトエンカウント　フィールド生成時エフェクト復帰強制キャンセル
+ */
+void EFFECT_ENC_EffectRecoverCancel( FIELD_ENCOUNT* enc )
+{
+  ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
+  EFFENC_PARAM* ep = &ewk->effect_encount.param; 
+
+  if( ep->valid_f ){
+    ep->push_cancel_f = TRUE;
+  }
+}
+
 //--------------------------------------------------------------------
 /**
  * @brief   エフェクトエンカウトアイテム取得イベントで手に入れるItemNoを取得する

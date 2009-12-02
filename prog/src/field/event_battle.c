@@ -30,6 +30,7 @@
 #include "poke_tool/poke_tool.h"
 
 #include "event_encount_effect.h"
+#include "effect_encount.h"
 
 #include "field_sound.h"
 
@@ -124,6 +125,8 @@ GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BAT
   BEW_Initialize( bew, gsys, bp );
   bew->is_sub_event = sub_event_f;
 
+  //エフェクトエンカウト　エフェクト復帰キャンセル
+  EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap));
   return event;
 }
 
@@ -169,6 +172,8 @@ GMEVENT * EVENT_TrainerBattle(
   {
     bew->is_no_lose = TRUE;
   }
+  //エフェクトエンカウト　エフェクト復帰キャンセル
+  EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap));
 
   return event;
 }

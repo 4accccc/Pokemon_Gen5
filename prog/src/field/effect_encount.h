@@ -63,6 +63,11 @@ extern BOOL EFFECT_ENC_CheckEffectPos( const FIELD_ENCOUNT* enc, MMDL_GRIDPOS* p
  */
 extern GMEVENT* EFFECT_ENC_CheckEventApproch( FIELD_ENCOUNT* enc );
 
+/*
+ *  @brief  エフェクトエンカウント　フィールド生成時エフェクト復帰強制キャンセル
+ */
+extern void EFFECT_ENC_EffectRecoverCancel( FIELD_ENCOUNT* enc );
+
 /**
  * @brief   エフェクトエンカウトアイテム取得イベントで手に入れるItemNoを取得する
  * @retval itemno

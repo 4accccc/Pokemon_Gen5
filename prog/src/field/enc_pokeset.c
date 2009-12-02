@@ -509,6 +509,8 @@ static BOOL eps_CheckGeneratePoke( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM
   outTable[0].minLevel = gene->lv_min;
   outTable[0].maxLevel = gene->lv_max;
   outTable[0].form = gene->form;
+  
+  ioEfp->prob_calctype = ENCPROB_CALCTYPE_EQUAL;
   ioEfp->tbl_num = 1;
   return TRUE;
 }
@@ -537,7 +539,7 @@ static u32 eps_GetEncountTable( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* i
   }
   //@todo 大量発生チェック
   if( eps_CheckGeneratePoke( inData, ioEfp, zone_id, outTable)){
-    return 1;  
+    return ioEfp->tbl_num;
   }
 
   //テーブル取得
