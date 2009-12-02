@@ -174,6 +174,14 @@ enum{
   VALUE_MAX,
 };
 
+enum{ 
+  MODE_NORMAL = 0,
+  MODE_3vs3,
+  MODE_ROTATE,
+
+  MODE_MAX,
+};
+
 //============================================================================================
 //  ç\ë¢ëÃíËã`
 //============================================================================================
@@ -189,7 +197,7 @@ typedef struct
   int                   mcs_enable;
   POKEMON_PARAM*        pp;
   int                   mons_no[ BTLV_MCSS_POS_MAX ];
-  fx32                  value[ 2 ][ VALUE_MAX ][ BTLV_MCSS_POS_MAX ];
+  fx32                  value[ MODE_MAX ][ VALUE_MAX ][ BTLV_MCSS_POS_MAX ];
   GFL_BMPWIN*           bmpwin[ BMPWIN_MAX ];
   GFL_BMPWIN*           bmpwin2;
   int                   key_repeat_speed;
@@ -565,25 +573,32 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
     int mcss_mode;
     int mcss_pos;
 
-    for( mcss_mode = 0 ; mcss_mode < 2 ; mcss_mode++ )
+    for( mcss_mode = 0 ; mcss_mode < MODE_MAX ; mcss_mode++ )
     {
       for( mcss_pos = BTLV_MCSS_POS_AA ; mcss_pos < BTLV_MCSS_POS_MAX ; mcss_pos++ )
       {
-        if( mcss_mode == 0 )
-        {
+        switch( mcss_mode ){ 
+        case MODE_NORMAL:
           OS_TPrintf("2vs2 pos:%d pos_x:%08x pos_y:%08x pos_z:%08x scale:%08x\n", mcss_pos,
               pvw->value[ mcss_mode ][ VALUE_X ][ mcss_pos ],
               pvw->value[ mcss_mode ][ VALUE_Y ][ mcss_pos ],
               pvw->value[ mcss_mode ][ VALUE_Z ][ mcss_pos ],
               pvw->value[ mcss_mode ][ VALUE_SCALE_PERS ][ mcss_pos ] );
-        }
-        else
-        {
+          break;
+        case MODE_3vs3:
           OS_TPrintf("3vs3 pos:%d pos_x:%08x pos_y:%08x pos_z:%08x scale:%08x\n", mcss_pos,
               pvw->value[ mcss_mode ][ VALUE_X ][ mcss_pos ],
               pvw->value[ mcss_mode ][ VALUE_Y ][ mcss_pos ],
               pvw->value[ mcss_mode ][ VALUE_Z ][ mcss_pos ],
               pvw->value[ mcss_mode ][ VALUE_SCALE_PERS ][ mcss_pos ] );
+          break;
+        case MODE_ROTATE:
+          OS_TPrintf("rotate pos:%d pos_x:%08x pos_y:%08x pos_z:%08x scale:%08x\n", mcss_pos,
+              pvw->value[ mcss_mode ][ VALUE_X ][ mcss_pos ],
+              pvw->value[ mcss_mode ][ VALUE_Y ][ mcss_pos ],
+              pvw->value[ mcss_mode ][ VALUE_Z ][ mcss_pos ],
+              pvw->value[ mcss_mode ][ VALUE_SCALE_PERS ][ mcss_pos ] );
+          break;
         }
       }
     }
@@ -1332,11 +1347,14 @@ static  void  get_default_value( POKEMON_VIEWER_WORK *pvw )
   int     pos;
   int     pos_max;
   VecFx32 vpos;
+  int     mode_flag_3vs3[ MODE_MAX ] = { 0, 1, 0 };
+  int     mode_flag_rotate[ MODE_MAX ] = { 0, 0, 1 };
 
-  for ( mode = 0 ; mode < 2 ; mode++ )
+  for ( mode = 0 ; mode < MODE_MAX ; mode++ )
   {
-    BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), mode );
-    pos_max = ( mode == 0 ) ? ( BTLV_MCSS_POS_D + 1 ) : BTLV_MCSS_POS_MAX;
+    BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), mode_flag_3vs3[ mode ] );
+    BTLV_MCSS_SetMcssRotate( BTLV_EFFECT_GetMcssWork(), mode_flag_rotate[ mode ] );
+    pos_max = ( mode == MODE_NORMAL ) ? ( BTLV_MCSS_POS_D + 1 ) : BTLV_MCSS_POS_MAX;
     for ( pos = BTLV_MCSS_POS_AA ; pos < pos_max ; pos++ )
     {
       BTLV_MCSS_GetPokeDefaultPos( BTLV_EFFECT_GetMcssWork(), &vpos, pos );
@@ -1349,16 +1367,24 @@ static  void  get_default_value( POKEMON_VIEWER_WORK *pvw )
                                                                                        BTLV_MCSS_PROJ_ORTHO );
     }
   }
-  BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), pvw->mcss_mode );
+  BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), mode_flag_3vs3[ pvw->mcss_mode ] );
+  BTLV_MCSS_SetMcssRotate( BTLV_EFFECT_GetMcssWork(), mode_flag_rotate[ pvw->mcss_mode ] );
 }
 
 static  void  mcss_mode_change( POKEMON_VIEWER_WORK *pvw )
 {
   int mcss_pos;
+  int mode_flag_3vs3[ MODE_MAX ] = { 0, 1, 0 };
+  int mode_flag_rotate[ MODE_MAX ] = { 0, 0, 1 };
 
-  pvw->mcss_mode ^= 1;
+  pvw->mcss_mode++;
+  if( pvw->mcss_mode == MODE_MAX )
+  { 
+    pvw->mcss_mode = MODE_NORMAL;
+  }
 
-  BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), pvw->mcss_mode );
+  BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), mode_flag_3vs3[ pvw->mcss_mode ] );
+  BTLV_MCSS_SetMcssRotate( BTLV_EFFECT_GetMcssWork(), mode_flag_rotate[ pvw->mcss_mode ] );
 
   for( mcss_pos = BTLV_MCSS_POS_AA ; mcss_pos < BTLV_MCSS_POS_MAX ; mcss_pos++ )
   {
