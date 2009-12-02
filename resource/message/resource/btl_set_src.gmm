@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-02T14:30:30"/>
+	<create user="taya" host="W00146" date="2009-12-02T15:53:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1147,7 +1147,7 @@
 [1:06:とくせい名:1]に　なった！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_FuusenIn">
+	<row id="BTL_STRID_SET_FuusenIn" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
 		<comment>個別アイテム用メッセージ
 ふうせん</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
@@ -1161,6 +1161,63 @@
 ふうせんが　われた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 ふうせんが　割れた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RedCard" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
+		<comment>レッドカード</comment>
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　レッドカードで
+[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　レッドカードで
+[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RedCard_2Y">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　レッドカードで
+やせいの　[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　レッドカードで
+野生の　[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RedCard_2E">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　レッドカードで
+あいての　[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　レッドカードで
+相手の　[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RedCard_Y">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　レッドカードで
+[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　レッドカードで
+[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RedCard_Y2Y">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　レッドカードで
+やせいの　[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　レッドカードで
+野生の　[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RedCard_E">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　レッドカードで
+[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
+		<language name="JPN_KANJI" width="216">あいての　[1:02:ポケモンニックネーム:0]は　レッドカードで
+[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RedCard_E2E">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">相手の　[1:02:ポケモンニックネーム:0]は　レッドカードで
+相手の　[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　レッドカードで
+相手の　[1:02:ポケモンニックネーム:1]を　ひっこめた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_MoraibiExe" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
