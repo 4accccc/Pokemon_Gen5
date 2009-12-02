@@ -2068,16 +2068,16 @@ static FLDEFF_CTRL * mmdl_GetFldEffCtrl( MMDL *mmdl )
 //--------------------------------------------------------------
 static const u8 data_angle8_4[16] =
 {
-  0, 0,
-  1, 1, 1, 1, 1,
-  2, 2, 2,
-  3, 3, 3, 3, 3,
+  0,
+  1, 1, 1, 1, 1, 1,
+  2, 2,
+  3, 3, 3, 3, 3, 3,
   0,
 };
 
 static const u16 data_dir_angle[DIR_MAX4] =
 {
-  0, 0, 0, 0,
+  0x8000, 0, 0x4000, 0xC000,
 };
 
 static const u8 data_angleChange360_4[4][4] =
@@ -2098,10 +2098,10 @@ static const u8 data_angleChange360_4[4][4] =
 //--------------------------------------------------------------
 u16 MMDL_TOOL_GetAngleYawToDirFour( u16 dir, u16 angleYaw )
 {
-//angleYaw = angleYaw / (0x10000/360) //256->360
+  angleYaw += data_dir_angle[dir];  //　dirの方向が下向きになる角度分アングルを変更
   angleYaw >>= 12; // angle/0x1000(16)
   angleYaw = data_angle8_4[angleYaw];
-  angleYaw = data_angleChange360_4[angleYaw][dir];
+  angleYaw = data_angleChange360_4[angleYaw][DIR_DOWN]; // 下向き基準で考えているので。
   GF_ASSERT( angleYaw < DIR_MAX4 );
   return( angleYaw );
 }
