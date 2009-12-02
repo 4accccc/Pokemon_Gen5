@@ -1180,7 +1180,7 @@ void  PPP_SetWazaPos( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos )
  * @param[in/out] index   技覚えテーブル参照インデックス
  * @param[in]     heapID  技覚えテーブル確保用ヒープのヒープID
  *
- * @retval  セットした技ナンバー（ PTL_WAZAOBOE_NONE:覚えなかった PTL_WAZAOBOE_FULL:手持ち技がいっぱい）
+ * @retval  セットした技ナンバー（ PTL_WAZAOBOE_NONE:覚えなかった PTL_WAZAOBOE_FULLビットが立っている:手持ち技がいっぱい）
  */
 //============================================================================================
 WazaID  PP_CheckWazaOboe( POKEMON_PARAM *pp, int* index, HEAPID heapID )
@@ -1201,7 +1201,13 @@ WazaID  PP_CheckWazaOboe( POKEMON_PARAM *pp, int* index, HEAPID heapID )
   	if( POKEPER_WAZAOBOE_GetLevel( wot[ index[ 0 ] ] ) == level )
     {
   		ret = PP_SetWaza( pp, POKEPER_WAZAOBOE_GetWazaID( wot[ index[ 0 ] ] ) );
-      if( ret != PTL_WAZASET_SAME )
+      if( ret == PTL_WAZASET_FAIL )
+      { 
+  		  ret = POKEPER_WAZAOBOE_GetWazaID( wot[ index[ 0 ] ] ) | PTL_WAZAOBOE_FULL;
+        index[ 0 ]++;
+        break;
+      }
+      else if( ret != PTL_WAZASET_SAME )
       { 
         index[ 0 ]++;
         break;
