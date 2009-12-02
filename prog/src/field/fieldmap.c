@@ -2642,7 +2642,7 @@ static void zoneChangeScene( FIELDMAP_WORK *fieldWork, u32 zone_id )
         FLD_SCENEAREA_LOADER_GetDataNum(fieldWork->sceneAreaLoader),
         FLD_SCENEAREA_LOADER_GetFunc(fieldWork->sceneAreaLoader) );
   }
-  else
+  else if( !ZONEDATA_IsRailMap( zone_id ) )
   {
 
     FLD_SCENEAREA_Release( fieldWork->sceneArea );
