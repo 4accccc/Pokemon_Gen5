@@ -33,9 +33,11 @@ void	POKERUS_CheckCatchPokerus( POKEPARTY *ppt )
 	u8				pokerus;
 	int				count;
 	int				pos;
+  u8        infect;
 
 	count = PokeParty_GetPokeCount( ppt );
 	rnd = GFL_STD_MtRand( 0x10000 );
+	infect = POKERUS_CheckInfected( ppt );
 
 	if( ( rnd == 16384 ) || ( rnd == 32768 ) || ( rnd == 49152 ) )
   {
@@ -51,7 +53,7 @@ void	POKERUS_CheckCatchPokerus( POKEPARTY *ppt )
 				pos = count;
 			}
 		}while( pos == count );
-		if( POKERUS_CheckInfected( ppt, No2Bit( pos ) ) == 0 )
+		if( ( infect & No2Bit( pos ) ) == 0 )
     {
 			do{
 				pokerus = GFL_STD_MtRand( 0x100 );
@@ -201,7 +203,7 @@ u8	POKERUS_CheckInfect( POKEPARTY *ppt )
  * @retval	感染しているポケモンをビットで返す
  */
 //============================================================================================
-u8	POKERUS_CheckInfected( POKEPARTY *ppt, u8 check_bit )
+u8	POKERUS_CheckInfected( POKEPARTY *ppt )
 {
 	POKEMON_PARAM	*pp;
 	int	pos;
