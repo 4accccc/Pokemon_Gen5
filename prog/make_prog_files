@@ -1125,20 +1125,29 @@ SRCS_OVERLAY_WAZA_OSHIE = app/waza_oshie/wo_main.c
 SRCS_OVERLAY_LOCAL_TVT = app/local_tvt/local_tvt_sys.c \
 		app/local_tvt/local_tvt_chara.c 
 
-# WIFIバトルマッチング
+# WIFIバトルマッチングシステム
+#===> SRCS_OVERLAY_BATTLE
+#===> SRCS_OVERLAY_BATTLE_BAG
+#===> SRCS_OVERLAY_BATTLE_PLIST
+SRCS_OVERLAY_WIFIBATTLEMATCH_SYS  = net_app/wifi_match/wifibattlematch_sys.c \
+                                    net_app/wifi_match/wifibattlematch_subproc.c \
+                                    net_app/wifi_match/wifibattlematch_data.c
+
+# WIFIバトルマッチング表示周り部分
 #===> SRCS_OVERLAY_DPW_COMMON
 #===> SRCS_OVERLAY_UI_COMMON
+#===> SRCS_OVERLAY_WIFIBATTLEMATCH_SYS
 #LIB=>          libdwcgssake.$HYB.a
 #LIB=>          libdwcsc.$HYB.a
 #LIB=>          libdwcgssc.$HYB.a
 #LIB=>          libdwcgdb.$HYB.a
 #LIB=>          libdwcgswebservices.$HYB.a
-SRCS_OVERLAY_WIFIBATTLEMATCH = net_app/wifi_match/wifibattlematch.c \
+SRCS_OVERLAY_WIFIBATTLEMATCH_CORE = net_app/wifi_match/wifibattlematch_core.c \
                 net_app/wifi_match/wifibattlematch_graphic.c \
 								net_app/wifi_match/wifibattlematch_view.c \
-								net_app/wifi_match/dwcrap_sc_gdb.c \
                 net_app/wifi_match/wifibattlematch_net.c \
-                net_app/wifi_match/atlas_syachi2ds_v1.c
+                net_app/wifi_match/atlas_syachi2ds_v1.c \
+                net_app/wifi_match/wifibattlematch_util.c
 
 # コマンドデモ
 #===> SRCS_OVERLAY_DEV_WIFI

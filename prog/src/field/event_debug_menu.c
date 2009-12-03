@@ -2554,6 +2554,7 @@ static GMEVENT_RESULT debugMenuSkyJump( GMEVENT *p_event, int *p_seq, void *p_wk
     break;
 
   case SEQ_CHANGE_MAP:
+    NAGI_Printf("ƒ][ƒ“ID %d",p_wk->p_param->zoneID);
     GMEVENT_CallEvent( p_wk->p_event, DEBUG_EVENT_ChangeMapDefaultPos( p_wk->p_gamesys, p_wk->p_field, p_wk->p_param->zoneID ) );
     *p_seq  = SEQ_EXIT;
     break;
@@ -3147,7 +3148,24 @@ static BOOL debugMenuCallProc_BeaconFriendCode( DEBUG_MENU_EVENT_WORK *wk )
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_WifiBattleMatch( DEBUG_MENU_EVENT_WORK *wk )
 { 
-  GMEVENT_ChangeEvent( wk->gmEvent, EVENT_WifiBattleMatch( wk->gmSys, wk->fieldWork ) );
+  WIFIBATTLEMATCH_MODE mode = WIFIBATTLEMATCH_MODE_RANDOM;
+  BtlRule btl_rule  = BTL_RULE_SINGLE;
+#ifdef PM_DEBUG
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L && GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  { 
+    btl_rule  = BTL_RULE_ROTATION;
+  }
+  else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+  { 
+    btl_rule  = BTL_RULE_DOUBLE;
+  }
+  else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  { 
+    btl_rule  = BTL_RULE_TRIPLE;
+  }
+#endif
+
+  GMEVENT_ChangeEvent( wk->gmEvent, EVENT_WifiBattleMatch( wk->gmSys, wk->fieldWork, mode, btl_rule ) );
   return TRUE;
 }
 

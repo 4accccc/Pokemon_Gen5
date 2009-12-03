@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-11-05T19:52:26"/>
+	<create user="toru_nagihashi" host="W00160" date="2009-12-01T15:55:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -446,6 +446,107 @@
 	<row id="WIFIMATCH_STR_021">
 		<language name="JPN" width="256">[1:25:地域名:0]</language>
 		<language name="JPN_KANJI" width="256">[1:25:地域名:0]</language>
+	</row>
+
+	<row id="WIFIMATCH_TEXT_000">
+		<language name="JPN" width="256">データを　しゅとく　しています</language>
+		<language name="JPN_KANJI" width="256">データを　取得　しています</language>
+	</row>
+
+	<row id="WIFIMATCH_TEXT_001">
+		<language name="JPN" width="256">どの　モードで
+ちょうせん　しますか？</language>
+		<language name="JPN_KANJI" width="256">どの　モードで
+挑戦　しますか？</language>
+	</row>
+
+	<row id="WIFIMATCH_TEXT_002">
+		<language name="JPN" width="256">フリーモードを
+かいし　します</language>
+		<language name="JPN_KANJI" width="256">フリーモードを
+開始　します</language>
+	</row>
+
+	<row id="WIFIMATCH_TEXT_003">
+		<language name="JPN" width="256">フリー</language>
+		<language name="JPN_KANJI" width="256">フリー</language>
+	</row>
+
+	<row id="WIFIMATCH_TEXT_004">
+		<language name="JPN" width="256">レーティング</language>
+		<language name="JPN_KANJI" width="256">レーティング</language>
+	</row>
+
+	<row id="WIFIMATCH_TEXT_005">
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
+	</row>
+
+	<row id="WIFIMATCH_TEXT_006">
+		<language name="JPN" width="256">ランダムマッチを
+やめますか？</language>
+		<language name="JPN_KANJI" width="256">ランダムマッチを
+やめますか？</language>
+	</row>
+
+	<row id="WIFIMATCH_TEXT_007">
+		<language name="JPN" width="256">はい</language>
+		<language name="JPN_KANJI" width="256">はい</language>
+	</row>
+
+	<row id="WIFIMATCH_TEXT_008">
+		<language name="JPN" width="256">いいえ</language>
+		<language name="JPN_KANJI" width="256">いいえ</language>
+	</row>
+
+	<row id="WIFIMATCH_TEXT_009">
+		<language name="JPN" width="256">たいせん　あいてを
+さがして　います……</language>
+		<language name="JPN_KANJI" width="256">対戦　相手を
+探して　います……</language>
+	</row>
+
+	<row id="WIFIMATCH_TEXT_010">
+		<language name="JPN" width="256">たいせん　あいてが
+みつかり　ました！</language>
+		<language name="JPN_KANJI" width="256">対戦　相手が
+見つかり　ました！</language>
+	</row>
+
+	<row id="WIFIMATCH_TEXT_011">
+		<language name="JPN" width="256">たいせん　あいてを
+さがすのを　やめますか？</language>
+		<language name="JPN_KANJI" width="256">対戦　相手を
+探すのを　やめますか？</language>
+	</row>
+
+	<row id="WIFIMATCH_TEXT_012">
+		<language name="JPN" width="256">ポケモンを　えらんで
+ください</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　選んで
+ください</language>
+	</row>
+
+	<row id="WIFIMATCH_TEXT_013">
+		<language name="JPN" width="256">データを　そうしん　しています</language>
+		<language name="JPN_KANJI" width="256">データを　送信　しています</language>
+	</row>
+
+	<row id="WIFIMATCH_TEXT_014">
+		<language name="JPN" width="256">いまの　たいせんを
+バトルビデオに　きろくしますか？</language>
+		<language name="JPN_KANJI" width="256">今の　対戦を
+バトルビデオに　記録しますか？</language>
+	</row>
+
+	<row id="WIFIMATCH_TEXT_015">
+		<language name="JPN" width="256">たいせんを　つづけますか？</language>
+		<language name="JPN_KANJI" width="256">対戦を　つづけますか？</language>
+	</row>
+
+	<row id="WIFIMATCH_TEXT_016">
+		<language name="JPN" width="256">ランダムマッチを　やめますか？</language>
+		<language name="JPN_KANJI" width="256">ランダムマッチを　やめますか？</language>
 	</row>
 
 	<flowchart-group-list>

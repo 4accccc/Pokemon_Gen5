@@ -54,6 +54,18 @@ enum _EVENT_GTSNEGO {
   _FIELD_END
 };
 
+//-------------------------------------
+///	EVENT_GTSNEGO用接続ワーク
+//=====================================
+typedef struct 
+{
+  GAMESYS_WORK        *gsys;
+  FIELDMAP_WORK       *fieldmap;
+  EVENT_GTSNEGO_WORK  gts;
+  WIFILOGIN_PARAM     login;
+} EVENT_GTSNEGO_LINK_WORK;
+
+
 
 //============================================================================================
 //
@@ -62,7 +74,7 @@ enum _EVENT_GTSNEGO {
 //============================================================================================
 static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work)
 {
-  EVENT_GTSNEGO_WORK * dbw = work;
+  EVENT_GTSNEGO_LINK_WORK * dbw = work;
   GAMESYS_WORK * gsys = dbw->gsys;
 
 
@@ -75,16 +87,25 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
     }
     break;
   case _CALL_WIFILOGIN:
-    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, dbw);
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &dbw->login);
     (*seq)++;
     break;
   case _WAIT_WIFILOGIN:
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
-      (*seq) ++;
+      if( dbw->login.result == WIFILOGIN_RESULT_LOGIN )
+      { 
+        (*seq) ++;
+        NAGI_Printf( "ログインした\n" );
+      }
+      else
+      { 
+        (*seq)  = _WAIT_NET_END;
+        NAGI_Printf( "ログインしなかった\n" );
+      }
     }
     break;
   case _CALL_WIFINEGO:
-    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(gts_negotiate), &GtsNego_ProcData, dbw);
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(gts_negotiate), &GtsNego_ProcData, &dbw->gts);
     (*seq)++;
     break;
   case _WAIT_WIFINEGO:
@@ -93,7 +114,7 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
     }
     break;
   case _CALL_TRADE:
-    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokemon_trade), &PokemonTradeWiFiProcData, dbw);
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokemon_trade), &PokemonTradeWiFiProcData, &dbw->gts);
     (*seq)++;
     break;
   case _WAIT_TRADE:
@@ -112,8 +133,8 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
     (*seq) ++;
     break;
   case _FIELD_END:
-    GFL_HEAP_FreeMemory(dbw->pStatus[0]);
-    GFL_HEAP_FreeMemory(dbw->pStatus[1]);
+    GFL_HEAP_FreeMemory(dbw->gts.pStatus[0]);
+    GFL_HEAP_FreeMemory(dbw->gts.pStatus[1]);
     return GMEVENT_RES_FINISH;
   default:
     GF_ASSERT(0);
@@ -128,7 +149,7 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
 static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
 {
   BATTLE_SETUP_PARAM * para;
-  EVENT_GTSNEGO_WORK * dbw;
+  EVENT_GTSNEGO_LINK_WORK * dbw;
 
   if(GAME_COMM_NO_NULL!= GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gsys))){
     GameCommSys_ExitReq(GAMESYSTEM_GetGameCommSysPtr(gsys));
@@ -137,12 +158,25 @@ static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WOR
   dbw = GMEVENT_GetEventWork(event);
   dbw->gsys = gsys;
   dbw->fieldmap = fieldmap;
-  dbw->ctrl = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gsys));
-  dbw->pStatus[0] = GFL_HEAP_AllocClearMemory(HEAPID_PROC,MyStatus_GetWorkSize());
-  dbw->pStatus[1] = GFL_HEAP_AllocClearMemory(HEAPID_PROC,MyStatus_GetWorkSize());
+
+  //GTSNEGO引数の設定
   {
-    MYSTATUS * pMy =GAMEDATA_GetMyStatusPlayer(GAMESYSTEM_GetGameData(gsys), 0);
-    GFL_STD_MemCopy(pMy,dbw->pStatus[0], MyStatus_GetWorkSize());
+    GFL_STD_MemClear( &dbw->gts, sizeof(EVENT_GTSNEGO_WORK) );
+    dbw->gts.gsys = gsys;
+    dbw->gts.ctrl = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gsys));
+    dbw->gts.pStatus[0] = GFL_HEAP_AllocClearMemory(HEAPID_PROC,MyStatus_GetWorkSize());
+    dbw->gts.pStatus[1] = GFL_HEAP_AllocClearMemory(HEAPID_PROC,MyStatus_GetWorkSize());
+    dbw->gts.fieldmap = fieldmap;
+    {
+      MYSTATUS * pMy =GAMEDATA_GetMyStatusPlayer(GAMESYSTEM_GetGameData(gsys), 0);
+      GFL_STD_MemCopy(pMy,dbw->gts.pStatus[0], MyStatus_GetWorkSize());
+    }
+  }
+  //WIFI引数の設定
+  { 
+    GFL_STD_MemClear( &dbw->login, sizeof(WIFILOGIN_PARAM) );
+    dbw->login.gsys = gsys;
+    dbw->login.ctrl = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gsys));
   }
 }
 
@@ -153,7 +187,7 @@ static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WOR
 //------------------------------------------------------------------
 GMEVENT* EVENT_GTSNego( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
 {
-  GMEVENT * event = GMEVENT_Create(gsys, NULL, EVENT_GTSNegoMain, sizeof(EVENT_GTSNEGO_WORK));
+  GMEVENT * event = GMEVENT_Create(gsys, NULL, EVENT_GTSNegoMain, sizeof(EVENT_GTSNEGO_LINK_WORK));
   wifi_SetEventParam( event, gsys, fieldmap );
 
   return event;
@@ -165,7 +199,7 @@ GMEVENT* EVENT_GTSNego( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
 //------------------------------------------------------------------
 void EVENT_GTSNegoChange(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * event)
 {
-  GMEVENT_Change( event, EVENT_GTSNegoMain, sizeof(EVENT_GTSNEGO_WORK) );
+  GMEVENT_Change( event, EVENT_GTSNegoMain, sizeof(EVENT_GTSNEGO_LINK_WORK) );
   wifi_SetEventParam( event, gsys, fieldmap );
 }
 

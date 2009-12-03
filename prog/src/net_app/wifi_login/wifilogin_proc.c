@@ -160,7 +160,7 @@ struct _WIFILOGIN_WORK {
   WIFILOGIN_DISP_WORK* pDispWork;  // 描画系
   WIFILOGIN_MESSAGE_WORK* pMessageWork; //メッセージ系
   WIFI_LIST* pList;
-  EVENT_GTSNEGO_WORK * dbw;  //親のワーク
+  WIFILOGIN_PARAM * dbw;  //親のワーク
   GAMESYS_WORK *gameSys_;
   FIELDMAP_WORK *fieldWork_;
   GMEVENT* event_;
@@ -654,9 +654,11 @@ static void _modeLoginWait2(WIFILOGIN_WORK* pWork)
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
 
     if(selectno==0){
+      pWork->dbw->result  = WIFILOGIN_RESULT_LOGIN;
       _CHANGE_STATE(pWork,_connectionStart);
     }
     else{
+      pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
       GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
       _CHANGE_STATE(pWork,NULL);
     }
@@ -910,7 +912,7 @@ static void _modeReportWait(WIFILOGIN_WORK* pWork)
 //------------------------------------------------------------------------------
 static GFL_PROC_RESULT WiFiLogin_ProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-  EVENT_GTSNEGO_WORK* pEv=pwk;
+  WIFILOGIN_PARAM* pEv=pwk;
 	
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x18000 );
 
@@ -991,7 +993,7 @@ static GFL_PROC_RESULT WiFiLogin_ProcMain( GFL_PROC * proc, int * seq, void * pw
 //------------------------------------------------------------------------------
 static GFL_PROC_RESULT WiFiLogin_ProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-  EVENT_GTSNEGO_WORK* pEv=pwk;
+  WIFILOGIN_PARAM* pEv=pwk;
   WIFILOGIN_WORK* pWork = mywk;
 
 //  EVENT_IrcBattleSetType(pParentWork, pWork->selectType);

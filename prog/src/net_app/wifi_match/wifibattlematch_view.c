@@ -86,7 +86,6 @@ struct _PLAYERINFO_WORK
 	GFL_CLWK		*p_clwk[ PLAYERINFO_CLWK_MAX ];
 	u32					res[PLAYERINFO_RESID_MAX];
 	u32					clwk_max;
-	WIFIBATTLEMATCH_MODE mode;
 };
 
 //=============================================================================
@@ -97,29 +96,28 @@ struct _PLAYERINFO_WORK
 //-------------------------------------
 ///	BMPWIN作成
 //=====================================
-static void PlayerInfo_Bmpwin_Rnd_Create( PLAYERINFO_WORK * p_wk, WIFIBATTLEMATCH_MODE mode, const PLAYERINFO_RANDOMMATCH_DATA *cp_data, const MYSTATUS* p_my, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID );
-static void PlayerInfo_Bmpwin_Wifi_Create( PLAYERINFO_WORK * p_wk, WIFIBATTLEMATCH_MODE mode, const PLAYERINFO_WIFICUP_DATA *cp_data, const MYSTATUS* p_my, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID );
-static void PlayerInfo_Bmpwin_Live_Create( PLAYERINFO_WORK * p_wk, WIFIBATTLEMATCH_MODE mode, const PLAYERINFO_LIVECUP_DATA *cp_data,const MYSTATUS* p_my, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID );
+static void PlayerInfo_Bmpwin_Rnd_Create( PLAYERINFO_WORK * p_wk, BOOL is_rate, const PLAYERINFO_RANDOMMATCH_DATA *cp_data, const MYSTATUS* p_my, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID );
+static void PlayerInfo_Bmpwin_Wifi_Create( PLAYERINFO_WORK * p_wk, BOOL is_limit, const PLAYERINFO_WIFICUP_DATA *cp_data, const MYSTATUS* p_my, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID );
+static void PlayerInfo_Bmpwin_Live_Create( PLAYERINFO_WORK * p_wk, const PLAYERINFO_LIVECUP_DATA *cp_data,const MYSTATUS* p_my, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID );
 static BOOL PlayerInfo_Bmpwin_PrintMain( PLAYERINFO_WORK * p_wk, PRINT_QUE *p_que );
 static void PlayerInfo_Bmpwin_Delete( PLAYERINFO_WORK * p_wk );
 //-------------------------------------
 ///	CLWK作成
 //=====================================
-static void PlayerInfo_POKEICON_Create( PLAYERINFO_WORK * p_wk, WIFIBATTLEMATCH_MODE mode, const u16 *cp_poke, const u16 *cp_form, GFL_CLUNIT *p_unit, HEAPID heapID );
+static void PlayerInfo_POKEICON_Create( PLAYERINFO_WORK * p_wk, const u16 *cp_poke, const u16 *cp_form, GFL_CLUNIT *p_unit, HEAPID heapID );
 static void PlayerInfo_POKEICON_Delete( PLAYERINFO_WORK * p_wk );
 static void PlayerInfo_TRAINER_Cleate( PLAYERINFO_WORK * p_wk, u32 trainerID, GFL_CLUNIT *p_unit, HEAPID heapID );
 static void PlayerInfo_TRAINER_Delete( PLAYERINFO_WORK * p_wk );
 //=============================================================================
 /**
- *					外部公開関数
+ *					ランダムマッチ外部公開関数
 */
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	プレイヤー情報表示	初期化
+ *	@brief	ランダムマッチプレイヤー情報表示	初期化
  *
- *	@param	WIFIBATTLEMATCH_MODE mode	モード
- *	@param	void *cp_data							モード別の情報構造体
+ *	@param	cp_data							      情報構造体
  *	@param	*p_unit										セル作成のためのユニット
  *	@param	PRINT_QUE *p_que					文字表示用キュー
  *	@param	*p_msg										文字表示用メッセージデータ
@@ -129,97 +127,163 @@ static void PlayerInfo_TRAINER_Delete( PLAYERINFO_WORK * p_wk );
  *	@return	ワーク
  */
 //-----------------------------------------------------------------------------
-PLAYERINFO_WORK	* PLAYERINFO_Init( WIFIBATTLEMATCH_MODE mode, const void *cp_data_adrs, const MYSTATUS* p_my, GFL_CLUNIT *p_unit, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID )
-{	
-	PLAYERINFO_WORK	*	p_wk;
+PLAYERINFO_WORK *PLAYERINFO_RND_Init( const PLAYERINFO_RANDOMMATCH_DATA *cp_data, BOOL is_rate, const MYSTATUS* p_my, GFL_CLUNIT *p_unit, GFL_FONT	*p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID )
+{
+  PLAYERINFO_WORK	*	p_wk;
+
+  //ワーク作成
 	p_wk	= GFL_HEAP_AllocMemory( heapID, sizeof(PLAYERINFO_WORK) );
 	GFL_STD_MemClear( p_wk, sizeof(PLAYERINFO_WORK) );
-	p_wk->mode	= mode;
 
-	switch( mode )
-	{	
-	case WIFIBATTLEMATCH_MODE_RANDOM_FREE:
-		/* fallthrough */
-	case WIFIBATTLEMATCH_MODE_RANDOM_RATE:
-		{
-			const PLAYERINFO_RANDOMMATCH_DATA *cp_data	= cp_data_adrs;
-			PlayerInfo_Bmpwin_Rnd_Create( p_wk, mode, cp_data_adrs, p_my, p_font, p_que, p_msg, p_word, heapID );
-			PlayerInfo_TRAINER_Cleate( p_wk, cp_data->trainerID, p_unit, heapID );
+  //BMPWIN作成
+  PlayerInfo_Bmpwin_Rnd_Create( p_wk, is_rate, cp_data, p_my, p_font, p_que, p_msg, p_word, heapID );
+  //トレーナー作成
+  PlayerInfo_TRAINER_Cleate( p_wk, cp_data->trainerID, p_unit, heapID );
+  {	
+    GFL_CLACTPOS	pos;
+    pos.x	= PLAYERINFO_TRAINER_RND_X;
+    pos.y = PLAYERINFO_TRAINER_RND_Y;
+    GFL_CLACT_WK_SetPos( p_wk->p_clwk[ PLAYERINFO_CLWK_TRAINER ], &pos, CLSYS_DRAW_SUB );
+  }
 
-			{	
-				GFL_CLACTPOS	pos;
-				pos.x	= PLAYERINFO_TRAINER_RND_X;
-				pos.y = PLAYERINFO_TRAINER_RND_Y;
-				GFL_CLACT_WK_SetPos( p_wk->p_clwk[ PLAYERINFO_CLWK_TRAINER ], &pos, CLSYS_DRAW_SUB );
-			}
-		}
-		break;
-
-	case WIFIBATTLEMATCH_MODE_WIFI_LIMIT:
-		/* fallthrough */
-	case WIFIBATTLEMATCH_MODE_WIFI_NOLIMIT:
-		{	
-			const PLAYERINFO_WIFICUP_DATA *cp_data	= cp_data_adrs;
-			PlayerInfo_Bmpwin_Wifi_Create( p_wk, mode, cp_data, p_my, p_font, p_que, p_msg, p_word, heapID );
-			PlayerInfo_POKEICON_Create( p_wk, mode, cp_data->poke, cp_data->form, p_unit, heapID );
-			PlayerInfo_TRAINER_Cleate( p_wk, cp_data->trainerID, p_unit, heapID );
-
-			{	
-				GFL_CLACTPOS	pos;
-				pos.x	= PLAYERINFO_TRAINER_CUP_X;
-				pos.y = PLAYERINFO_TRAINER_CUP_Y;
-				GFL_CLACT_WK_SetPos( p_wk->p_clwk[ PLAYERINFO_CLWK_TRAINER ], &pos, CLSYS_DRAW_SUB );
-			}
-		}
-		break;
-
-	case WIFIBATTLEMATCH_MODE_LIVE:
-		{
-			const PLAYERINFO_LIVECUP_DATA *cp_data	= cp_data_adrs;
-			PlayerInfo_Bmpwin_Live_Create( p_wk, mode, cp_data, p_my, p_font, p_que, p_msg, p_word, heapID );
-			PlayerInfo_POKEICON_Create( p_wk, mode, cp_data->poke, cp_data->form, p_unit, heapID );
-			PlayerInfo_TRAINER_Cleate( p_wk, cp_data->trainerID, p_unit, heapID );
-
-			{	
-				GFL_CLACTPOS	pos;
-				pos.x	= PLAYERINFO_TRAINER_CUP_X;
-				pos.y = PLAYERINFO_TRAINER_CUP_Y;
-				GFL_CLACT_WK_SetPos( p_wk->p_clwk[ PLAYERINFO_CLWK_TRAINER ], &pos, CLSYS_DRAW_SUB );
-			}
-		}
-		break;
-	}
-
-
-
-	return p_wk;
+  return p_wk;
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	プレイヤー情報表示	破棄
+ *	@brief  ランダムマッチプレイヤー情報表示  破棄
  *
  *	@param	PLAYERINFO_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void PLAYERINFO_Exit( PLAYERINFO_WORK *p_wk )
-{
-	PlayerInfo_TRAINER_Delete( p_wk );
+void PLAYERINFO_RND_Exit( PLAYERINFO_WORK *p_wk )
+{ 
+  //BMPWIN破棄
+  PlayerInfo_Bmpwin_Delete( p_wk );
 
-	switch( p_wk->mode )
-	{	
-	case WIFIBATTLEMATCH_MODE_WIFI_LIMIT:
-		/* fallthrough */
-	case WIFIBATTLEMATCH_MODE_WIFI_NOLIMIT:
-		/* fallthrough */
-	case WIFIBATTLEMATCH_MODE_LIVE:
-		PlayerInfo_POKEICON_Delete( p_wk );
-		break;
-	}
+  //ワーク破棄
+	GFL_HEAP_FreeMemory( p_wk );
+}
+//=============================================================================
+/**
+ *					WIFI大会外部公開関数
+*/
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	WIFI大会プレイヤー情報表示	初期化
+ *
+ *	@param	cp_data							      情報構造体
+ *	@param	*p_unit										セル作成のためのユニット
+ *	@param	PRINT_QUE *p_que					文字表示用キュー
+ *	@param	*p_msg										文字表示用メッセージデータ
+ *	@param	*p_word										文字表示用単語登録
+ *	@param	heapID										ヒープID
+ *
+ *	@return	ワーク
+ */
+//-----------------------------------------------------------------------------
+PLAYERINFO_WORK *PLAYERINFO_WIFI_Init( const PLAYERINFO_WIFICUP_DATA *cp_data, BOOL is_limit, const MYSTATUS* p_my, GFL_CLUNIT *p_unit, GFL_FONT	*p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID )
+{ 
+  PLAYERINFO_WORK	*	p_wk;
+
+  //ワーク作成
+	p_wk	= GFL_HEAP_AllocMemory( heapID, sizeof(PLAYERINFO_WORK) );
+	GFL_STD_MemClear( p_wk, sizeof(PLAYERINFO_WORK) );
+
+  //BMPWIN作成
+  PlayerInfo_Bmpwin_Wifi_Create( p_wk, is_limit, cp_data, p_my, p_font, p_que, p_msg, p_word, heapID );
+
+  //ポケアイコン作成
+  PlayerInfo_POKEICON_Create( p_wk, cp_data->poke, cp_data->form, p_unit, heapID );
+
+  //トレーナー作成
+  PlayerInfo_TRAINER_Cleate( p_wk, cp_data->trainerID, p_unit, heapID );
+  {	
+    GFL_CLACTPOS	pos;
+    pos.x	= PLAYERINFO_TRAINER_CUP_X;
+    pos.y = PLAYERINFO_TRAINER_CUP_Y;
+    GFL_CLACT_WK_SetPos( p_wk->p_clwk[ PLAYERINFO_CLWK_TRAINER ], &pos, CLSYS_DRAW_SUB );
+  }
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WIFI大会プレイヤー情報表示  破棄
+ *
+ *	@param	PLAYERINFO_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void PLAYERINFO_WIFI_Exit( PLAYERINFO_WORK *p_wk )
+{ 
+	PlayerInfo_POKEICON_Delete( p_wk );
 
 	PlayerInfo_Bmpwin_Delete( p_wk );
 
 	GFL_HEAP_FreeMemory( p_wk );
 }
+//=============================================================================
+/**
+ *					LIVE大会外部公開関数
+*/
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	LIVE大会プレイヤー情報表示	初期化
+ *
+ *	@param	cp_data							      情報構造体
+ *	@param	*p_unit										セル作成のためのユニット
+ *	@param	PRINT_QUE *p_que					文字表示用キュー
+ *	@param	*p_msg										文字表示用メッセージデータ
+ *	@param	*p_word										文字表示用単語登録
+ *	@param	heapID										ヒープID
+ *
+ *	@return	ワーク
+ */
+//-----------------------------------------------------------------------------
+PLAYERINFO_WORK *PLAYERINFO_LIVE_Init( const PLAYERINFO_LIVECUP_DATA *cp_data, const MYSTATUS* p_my, GFL_CLUNIT *p_unit, GFL_FONT	*p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID )
+{ 
+  PLAYERINFO_WORK	*	p_wk;
+
+  //ワーク作成
+	p_wk	= GFL_HEAP_AllocMemory( heapID, sizeof(PLAYERINFO_WORK) );
+	GFL_STD_MemClear( p_wk, sizeof(PLAYERINFO_WORK) );
+
+  //BMPWIN作成
+  PlayerInfo_Bmpwin_Live_Create( p_wk, cp_data, p_my, p_font, p_que, p_msg, p_word, heapID );
+
+  //ポケアイコン作成
+  PlayerInfo_POKEICON_Create( p_wk, cp_data->poke, cp_data->form, p_unit, heapID );
+
+  //トレーナー作成
+  PlayerInfo_TRAINER_Cleate( p_wk, cp_data->trainerID, p_unit, heapID );
+  {	
+    GFL_CLACTPOS	pos;
+    pos.x	= PLAYERINFO_TRAINER_CUP_X;
+    pos.y = PLAYERINFO_TRAINER_CUP_Y;
+    GFL_CLACT_WK_SetPos( p_wk->p_clwk[ PLAYERINFO_CLWK_TRAINER ], &pos, CLSYS_DRAW_SUB );
+  }
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  LIVE大会プレイヤー情報表示  破棄
+ *
+ *	@param	PLAYERINFO_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void PLAYERINFO_LIVE_Exit( PLAYERINFO_WORK *p_wk )
+{ 
+	PlayerInfo_POKEICON_Delete( p_wk );
+
+	PlayerInfo_Bmpwin_Delete( p_wk );
+
+	GFL_HEAP_FreeMemory( p_wk );
+}
+//=============================================================================
+/**
+ *					共通外部公開関数
+*/
+//=============================================================================
 //----------------------------------------------------------------------------
 /**
  *	@brief	プリントメイン
@@ -254,7 +318,7 @@ BOOL PLAYERINFO_PrintMain( PLAYERINFO_WORK * p_wk, PRINT_QUE *p_que )
  *	@param	heapID																ヒープID
  */
 //-----------------------------------------------------------------------------
-static void PlayerInfo_Bmpwin_Rnd_Create( PLAYERINFO_WORK * p_wk, WIFIBATTLEMATCH_MODE mode, const PLAYERINFO_RANDOMMATCH_DATA *cp_data, const MYSTATUS* p_my, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID )
+static void PlayerInfo_Bmpwin_Rnd_Create( PLAYERINFO_WORK * p_wk, BOOL is_rate, const PLAYERINFO_RANDOMMATCH_DATA *cp_data, const MYSTATUS* p_my, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID )
 {	
 	enum
 	{	
@@ -364,8 +428,7 @@ static void PlayerInfo_Bmpwin_Rnd_Create( PLAYERINFO_WORK * p_wk, WIFIBATTLEMATC
 			switch( i )
 			{	
 			case PLAYERINFO_RND_BMPWIN_MODE:
-				GF_ASSERT( mode <= WIFIBATTLEMATCH_MODE_RANDOM_RATE );
-				GFL_MSG_GetString( p_msg, WIFIMATCH_STR_000 + mode, p_str );
+				GFL_MSG_GetString( p_msg, WIFIMATCH_STR_000 + is_rate, p_str );
 				break;
 			case PLAYERINFO_RND_BMPWIN_RULE:
 				GFL_MSG_GetString( p_msg, WIFIMATCH_STR_002 + cp_data->btl_rule, p_str );
@@ -376,7 +439,7 @@ static void PlayerInfo_Bmpwin_Rnd_Create( PLAYERINFO_WORK * p_wk, WIFIBATTLEMATC
 				WORDSET_ExpandStr( p_word, p_str, p_src );
 				break;
 			case PLAYERINFO_RND_BMPWIN_RATE_LABEL:
-				if( mode == WIFIBATTLEMATCH_MODE_RANDOM_RATE )
+				if( is_rate )
 				{	
 					GFL_MSG_GetString( p_msg, WIFIMATCH_STR_008, p_str );
 				}
@@ -386,7 +449,7 @@ static void PlayerInfo_Bmpwin_Rnd_Create( PLAYERINFO_WORK * p_wk, WIFIBATTLEMATC
 				}
 				break;
 			case PLAYERINFO_RND_BMPWIN_RATE_NUM:
-				if( mode == WIFIBATTLEMATCH_MODE_RANDOM_RATE )
+				if( is_rate )
 				{	
 					GFL_MSG_GetString( p_msg, WIFIMATCH_STR_009, p_src );
 					WORDSET_RegisterNumber( p_word, 0, cp_data->rate, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -449,7 +512,7 @@ static void PlayerInfo_Bmpwin_Rnd_Create( PLAYERINFO_WORK * p_wk, WIFIBATTLEMATC
  *	@param	heapID																ヒープID
  */
 //-----------------------------------------------------------------------------
-static void PlayerInfo_Bmpwin_Wifi_Create( PLAYERINFO_WORK * p_wk, WIFIBATTLEMATCH_MODE mode, const PLAYERINFO_WIFICUP_DATA *cp_data, const MYSTATUS* p_my, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID )
+static void PlayerInfo_Bmpwin_Wifi_Create( PLAYERINFO_WORK * p_wk, BOOL is_limit, const PLAYERINFO_WIFICUP_DATA *cp_data, const MYSTATUS* p_my, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID )
 {	
 	enum
 	{	
@@ -584,14 +647,14 @@ static void PlayerInfo_Bmpwin_Wifi_Create( PLAYERINFO_WORK * p_wk, WIFIBATTLEMAT
 				GFL_MSG_GetString( p_msg, WIFIMATCH_STR_010, p_str );
 				break;
 			case PLAYERINFO_CUP_BMPWIN_BTLCNT_NUM:
-				if( mode == WIFIBATTLEMATCH_MODE_WIFI_LIMIT )
+				if( is_limit )
 				{	
 					PRINTTOOL_PrintFraction(
 					&p_wk->print_util[i], p_que, p_font,
 					sc_bmpwin_range[i].w*4, 0, cp_data->btl_cnt, cp_data->btl_max, heapID );
 					is_print =FALSE;
 				}
-				else if( mode == WIFIBATTLEMATCH_MODE_WIFI_NOLIMIT )
+				else
 				{	
 					GFL_MSG_GetString( p_msg, WIFIMATCH_STR_011, p_src );
 					WORDSET_RegisterNumber( p_word, 0, cp_data->btl_cnt, 5, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -629,7 +692,7 @@ static void PlayerInfo_Bmpwin_Wifi_Create( PLAYERINFO_WORK * p_wk, WIFIBATTLEMAT
  *	@param	heapID																ヒープID
  */
 //-----------------------------------------------------------------------------
-static void PlayerInfo_Bmpwin_Live_Create( PLAYERINFO_WORK * p_wk, WIFIBATTLEMATCH_MODE mode, const PLAYERINFO_LIVECUP_DATA *cp_data,const MYSTATUS* p_my, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID )
+static void PlayerInfo_Bmpwin_Live_Create( PLAYERINFO_WORK * p_wk, const PLAYERINFO_LIVECUP_DATA *cp_data,const MYSTATUS* p_my, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID )
 {	
 	enum
 	{	
@@ -862,7 +925,7 @@ static void PlayerInfo_Bmpwin_Delete( PLAYERINFO_WORK * p_wk )
  *	@param	heapID				ヒープＩＤ
  */
 //-----------------------------------------------------------------------------
-static void PlayerInfo_POKEICON_Create( PLAYERINFO_WORK * p_wk, WIFIBATTLEMATCH_MODE mode, const u16 *cp_poke, const u16 *cp_form, GFL_CLUNIT *p_unit, HEAPID heapID )
+static void PlayerInfo_POKEICON_Create( PLAYERINFO_WORK * p_wk, const u16 *cp_poke, const u16 *cp_form, GFL_CLUNIT *p_unit, HEAPID heapID )
 {	
 	//リソース読みこみ
 	{	
@@ -1034,13 +1097,8 @@ static void PlayerInfo_TRAINER_Delete( PLAYERINFO_WORK * p_wk )
  *	@param	*p_data										受け取りワーク
  */
 //-----------------------------------------------------------------------------
-void PLAYERINFO_DEBUG_CreateData( WIFIBATTLEMATCH_MODE mode, void *p_data_adrs )
+void PLAYERINFO_DEBUG_CreateRndData( WIFIBATTLEMATCH_MODE mode, void *p_data_adrs )
 {	
-	switch( mode )
-	{	
-	case WIFIBATTLEMATCH_MODE_RANDOM_FREE:
-		/* fallthrough */
-	case WIFIBATTLEMATCH_MODE_RANDOM_RATE:
 		{	
 			PLAYERINFO_RANDOMMATCH_DATA	*p_data	= p_data_adrs;
 			GFL_STD_MemClear( p_data, sizeof(PLAYERINFO_RANDOMMATCH_DATA) );
@@ -1050,11 +1108,17 @@ void PLAYERINFO_DEBUG_CreateData( WIFIBATTLEMATCH_MODE mode, void *p_data_adrs )
 			p_data->win_cnt		= 70;
 			p_data->lose_cnt	= 29;	
 		}
-		break;
-
-	case WIFIBATTLEMATCH_MODE_WIFI_LIMIT:
-		/* fallthrough */
-	case WIFIBATTLEMATCH_MODE_WIFI_NOLIMIT:
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグ用データを作成
+ *
+ *	@param	WIFIBATTLEMATCH_MODE mode	モード
+ *	@param	*p_data										受け取りワーク
+ */
+//-----------------------------------------------------------------------------
+void PLAYERINFO_DEBUG_CreateWifiData( WIFIBATTLEMATCH_MODE mode, void *p_data_adrs )
+{ 
 		{	
 			PLAYERINFO_WIFICUP_DATA	*p_data	= p_data_adrs;
 			GFL_STD_MemClear( p_data, sizeof(PLAYERINFO_WIFICUP_DATA) );
@@ -1084,9 +1148,18 @@ void PLAYERINFO_DEBUG_CreateData( WIFIBATTLEMATCH_MODE mode, void *p_data_adrs )
 			p_data->poke[4]			= 5;
 			p_data->poke[5]			= 6;
 		}
-		break;
 
-	case WIFIBATTLEMATCH_MODE_LIVE:
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグ用データを作成
+ *
+ *	@param	WIFIBATTLEMATCH_MODE mode	モード
+ *	@param	*p_data										受け取りワーク
+ */
+//-----------------------------------------------------------------------------
+void PLAYERINFO_DEBUG_CreateLiveData( WIFIBATTLEMATCH_MODE mode, void *p_data_adrs )
+{ 
 		{	
 			PLAYERINFO_LIVECUP_DATA	*p_data	= p_data_adrs;
 			GFL_STD_MemClear( p_data, sizeof(PLAYERINFO_LIVECUP_DATA) );
@@ -1115,9 +1188,9 @@ void PLAYERINFO_DEBUG_CreateData( WIFIBATTLEMATCH_MODE mode, void *p_data_adrs )
 			p_data->poke[4]			= 5;
 			p_data->poke[5]			= 6;
 		}
-		break;
-	}
+
 }
+
 #endif
 
 
@@ -1174,7 +1247,7 @@ struct _MATCHINFO_WORK
 //-------------------------------------
 ///	BMPWIN
 //=====================================
-static void MatchInfo_Bmpwin_Create( MATCHINFO_WORK * p_wk, const MATCHINFO_DATA *cp_data, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID );
+static void MatchInfo_Bmpwin_Create( MATCHINFO_WORK * p_wk, const WIFIBATTLEMATCH_ENEMYDATA *cp_data, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID );
 static BOOL MatchInfo_Bmpwin_PrintMain( MATCHINFO_WORK * p_wk, PRINT_QUE *p_que );
 static void MatchInfo_Bmpwin_Delete( MATCHINFO_WORK * p_wk );
 //-------------------------------------
@@ -1207,7 +1280,7 @@ static void MatchInfo_TRAINER_Delete( MATCHINFO_WORK * p_wk );
  *	@return	ワーク
  */
 //-----------------------------------------------------------------------------
-MATCHINFO_WORK	* MATCHINFO_Init( const MATCHINFO_DATA *cp_data, GFL_CLUNIT *p_unit, GFL_FONT	*p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID )
+MATCHINFO_WORK	* MATCHINFO_Init( const WIFIBATTLEMATCH_ENEMYDATA *cp_data, GFL_CLUNIT *p_unit, GFL_FONT	*p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID )
 {	
 	MATCHINFO_WORK	*	p_wk;
 	p_wk	= GFL_HEAP_AllocMemory( heapID, sizeof(MATCHINFO_WORK) );
@@ -1217,7 +1290,7 @@ MATCHINFO_WORK	* MATCHINFO_Init( const MATCHINFO_DATA *cp_data, GFL_CLUNIT *p_un
 	
 
 	MatchInfo_Bmpwin_Create( p_wk, cp_data, p_font, p_que, p_msg, p_word, heapID );
-	MatchInfo_TRAINER_Create( p_wk, cp_data->trainerID, p_unit, heapID );
+	MatchInfo_TRAINER_Create( p_wk, cp_data->trainer_view, p_unit, heapID );
 
 	return p_wk;
 }
@@ -1298,7 +1371,7 @@ void MATCHINFO_DEBUG_CreateData( MATCHINFO_DATA *p_data )
  *	@param	heapID	ヒープID
  */
 //-----------------------------------------------------------------------------
-static void MatchInfo_Bmpwin_Create( MATCHINFO_WORK * p_wk, const MATCHINFO_DATA *cp_data, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID )
+static void MatchInfo_Bmpwin_Create( MATCHINFO_WORK * p_wk, const WIFIBATTLEMATCH_ENEMYDATA *cp_data, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID )
 {	
 	static const struct
 	{	
@@ -1392,12 +1465,12 @@ static void MatchInfo_Bmpwin_Create( MATCHINFO_WORK * p_wk, const MATCHINFO_DATA
 				break;
 			case MATCHINFO_BMPWIN_CONTRY:
 				GFL_MSG_GetString( p_msg, WIFIMATCH_STR_020, p_src );
-				WORDSET_RegisterCountryName( p_word, 0, cp_data->country );
+				WORDSET_RegisterCountryName( p_word, 0, cp_data->nation );
 				WORDSET_ExpandStr( p_word, p_str, p_src );
 				break;
 			case MATCHINFO_BMPWIN_PLACE:
 				GFL_MSG_GetString( p_msg, WIFIMATCH_STR_021, p_src );
-				WORDSET_RegisterLocalPlaceName( p_word, 0, cp_data->country, cp_data->area );
+				WORDSET_RegisterLocalPlaceName( p_word, 0, cp_data->nation, cp_data->area );
 				WORDSET_ExpandStr( p_word, p_str, p_src );
 				break;
 			case MATCHINFO_BMPWIN_GREET:

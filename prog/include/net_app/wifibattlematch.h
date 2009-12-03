@@ -10,7 +10,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
-#include "savedata/mystatus.h"
+#include "battle/battle.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -21,11 +21,9 @@
 //=====================================
 typedef enum
 {
-	WIFIBATTLEMATCH_MODE_RANDOM_FREE,
-	WIFIBATTLEMATCH_MODE_RANDOM_RATE,
-	WIFIBATTLEMATCH_MODE_WIFI_LIMIT,
-	WIFIBATTLEMATCH_MODE_WIFI_NOLIMIT,
-	WIFIBATTLEMATCH_MODE_LIVE,
+	WIFIBATTLEMATCH_MODE_RANDOM,  //ランダム対戦
+	WIFIBATTLEMATCH_MODE_WIFI,    //WIFI大会
+	WIFIBATTLEMATCH_MODE_LIVE,    //ライブ大会
 
 } WIFIBATTLEMATCH_MODE;
 
@@ -40,9 +38,9 @@ typedef enum
 //=====================================
 typedef struct 
 {
-	WIFIBATTLEMATCH_MODE	mode;
-	const MYSTATUS				*p_my;
-  SAVE_CONTROL_WORK     *p_save;
+  GAMEDATA              *p_game_data; //[in ]ゲームデータ
+  BtlRule               btl_rule;     //[in ]バトルルール
+	WIFIBATTLEMATCH_MODE	mode;         //[in ]起動モード
 } WIFIBATTLEMATCH_PARAM;
 
 
@@ -51,4 +49,5 @@ typedef struct
  *					外部参照
 */
 //=============================================================================
+FS_EXTERN_OVERLAY( wifibattlematch_sys );
 extern const GFL_PROC_DATA	WifiBattleMaptch_ProcData;

@@ -23,24 +23,46 @@ extern int ATLAS_GET_STAT_PAGE_BY_NAME(char* statName);
 // KEYS
 // Use these key ID's to report match data for your game.
 
-#define KEY_ARENA_GAMETYPE_1V1 1  // [TYPE: byte]
-#define KEY_NUM_SINGLE_MATCH_COUNTER 2  // [TYPE: int]
-#define KEY_ARENA_GAMETYPE_1V1_DOUBLE 3  // [TYPE: byte]
-#define ARENA_FFA_PLACE 4  // [TYPE: string]
+#define KEY_NUM_SINGLE_WIN_COUNTER 5  // [TYPE: short]
+#define KEY_NUM_SINGLE_LOSE_COUNTER 6  // [TYPE: short]
+#define KEY_NUM_DOUBLE_LOSE_COUNTER 7  // [TYPE: short]
+#define KEY_NUM_DOUBLE_WIN_COUNTER 8  // [TYPE: short]
+#define KEY_NUM_ROTATE_WIN_COUNTER 9  // [TYPE: short]
+#define KEY_NUM_ROTATE_LOSE_COUNTER 10  // [TYPE: short]
+#define KEY_NUM_TRIPLE_WIN_COUNTER 11  // [TYPE: short]
+#define KEY_NUM_TRIPLE_LOSE_COUNTER 12  // [TYPE: short]
+#define KEY_NUM_SHOOTER_WIN_COUNTER 13  // [TYPE: short]
+#define KEY_NUM_SHOOTER_LOSE_COUNTER 14  // [TYPE: short]
+#define KEY_ARENA_GAMETYPE_1V1_SINGLE 15  // [TYPE: byte]
+#define KEY_ARENA_GAMETYPE_1V1_DOUBLE 16  // [TYPE: byte]
+#define KEY_ARENA_GAMETYPE_1V1_ROTATE 17  // [TYPE: byte]
+#define KEY_ARENA_GAMETYPE_1V1_TRIPLE 18  // [TYPE: byte]
+#define KEY_ARENA_GAMETYPE_1V1_SHOOTER 19  // [TYPE: byte]
+#define KEY_CHEATS_COUNTER 20  // [TYPE: int]
 
 ///////////////////////////////////////////////////////////////////////////////
 
 // STATS
 // Use these stat ID's to query aggregate statistics for your game.
 
-#define ARENA_ELO_RATING_1V1 1  // [TYPE: int]
-#define ARENA_ELO_RATING_1V1_DOUBLE 7  // [TYPE: int]
-#define ARENA_INITIAL_RATING 8  // [TYPE: int]
+#define ARENA_ELO_RATING_1V1_DOUBLE 20  // [TYPE: int]
+#define ARENA_ELO_RATING_1V1_ROTATE 21  // [TYPE: int]
+#define ARENA_ELO_RATING_1V1_SHOOTER 23  // [TYPE: int]
+#define ARENA_ELO_RATING_1V1_SINGLE 19  // [TYPE: int]
+#define ARENA_ELO_RATING_1V1_TRIPLE 22  // [TYPE: int]
+#define CHEATS_COUNTER 24  // [TYPE: int]
 #define COMPLETE_MATCHES_COUNTER 4  // [TYPE: int]
-#define DISCONNECT_RATE 5  // [TYPE: float]
 #define DISCONNECTS_COUNTER 3  // [TYPE: int]
-#define NUM_SINGLE_MATCH_COUNTER 6  // [TYPE: int]
-#define TOTAL_MATCHES_COUNTER 2  // [TYPE: int]
+#define NUM_DOUBLE_LOSE_COUNTER 11  // [TYPE: short]
+#define NUM_DOUBLE_WIN_COUNTER 12  // [TYPE: short]
+#define NUM_ROTATE_LOSE_COUNTER 14  // [TYPE: short]
+#define NUM_ROTATE_WIN_COUNTER 13  // [TYPE: short]
+#define NUM_SHOOTER_LOSE_COUNTER 18  // [TYPE: short]
+#define NUM_SHOOTER_WIN_COUNTER 17  // [TYPE: short]
+#define NUM_SINGLE_LOSE_COUNTER 10  // [TYPE: short]
+#define NUM_SINGLE_WIN_COUNTER 9  // [TYPE: short]
+#define NUM_TRIPLE_LOSE_COUNTER 16  // [TYPE: short]
+#define NUM_TRIPLE_WIN_COUNTER 15  // [TYPE: short]
 
 
 #ifdef __cplusplus

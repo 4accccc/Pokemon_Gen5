@@ -14,12 +14,12 @@
 #include "pm_define.h"
 #include "pokeicon/pokeicon.h"
 #include "system/pms_draw.h"
-
+#include "wifibattlematch_data.h"
 //-------------------------------------
 ///	デバッグ
 //=====================================
 #ifdef PM_DEBUG
-#define DEBUG_DATA_CREATE
+//#define DEBUG_DATA_CREATE
 #endif //PM_DEBUG
 
 
@@ -33,8 +33,8 @@
  *					定数
 */
 //=============================================================================
-#define PLAYERINFO_BG_FRAME	(GFL_BG_FRAME0_S)
-#define PLAYERINFO_PLT_BG_FONT	(15)
+#define PLAYERINFO_BG_FRAME	(GFL_BG_FRAME1_S)
+#define PLAYERINFO_PLT_BG_FONT	    (15)
 #define PLAYERINFO_PLT_OBJ_POKEICON	(0)
 #define PLAYERINFO_PLT_OBJ_TRAINER	(PLAYERINFO_PLT_OBJ_POKEICON+POKEICON_PAL_MAX)
 
@@ -100,29 +100,39 @@ typedef struct
 	u16										form[TEMOTI_POKEMAX];				//使用ポケモンのフォルム
 } PLAYERINFO_LIVECUP_DATA;
 
-//-------------------------------------
-///	包括
-//=====================================
-typedef union
-{	
-	PLAYERINFO_RANDOMMATCH_DATA	rnd;
-	PLAYERINFO_WIFICUP_DATA			wifi;
-	PLAYERINFO_LIVECUP_DATA			live;
-} PLAYERINFO_DATA;
-
 //=============================================================================
 /**
  *					外部参照
 */
 //=============================================================================
-extern PLAYERINFO_WORK *PLAYERINFO_Init( WIFIBATTLEMATCH_MODE mode, const void *cp_data_adrs, const MYSTATUS* p_my, GFL_CLUNIT *p_unit, GFL_FONT	*p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID );
-extern void PLAYERINFO_Exit( PLAYERINFO_WORK *p_wk );
+//-------------------------------------
+///	ランダムマッチ
+//=====================================
+extern PLAYERINFO_WORK *PLAYERINFO_RND_Init( const PLAYERINFO_RANDOMMATCH_DATA *cp_data, BOOL is_rate, const MYSTATUS* p_my, GFL_CLUNIT *p_unit, GFL_FONT	*p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID );
+extern void PLAYERINFO_RND_Exit( PLAYERINFO_WORK *p_wk );
+//-------------------------------------
+///	WIFI大会
+//=====================================
+extern PLAYERINFO_WORK *PLAYERINFO_WIFI_Init( const PLAYERINFO_WIFICUP_DATA *cp_data, BOOL is_limit, const MYSTATUS* p_my, GFL_CLUNIT *p_unit, GFL_FONT	*p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID );
+extern void PLAYERINFO_WIFI_Exit( PLAYERINFO_WORK *p_wk );
+//-------------------------------------
+///	LIVE大会
+//=====================================
+extern PLAYERINFO_WORK *PLAYERINFO_LIVE_Init( const PLAYERINFO_LIVECUP_DATA *cp_data, const MYSTATUS* p_my, GFL_CLUNIT *p_unit, GFL_FONT	*p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID );
+extern void PLAYERINFO_LIVE_Exit( PLAYERINFO_WORK *p_wk );
+//-------------------------------------
+///	共通関数
+//=====================================
 extern BOOL PLAYERINFO_PrintMain( PLAYERINFO_WORK * p_wk, PRINT_QUE *p_que );
 
 #ifdef DEBUG_DATA_CREATE
-extern void PLAYERINFO_DEBUG_CreateData( WIFIBATTLEMATCH_MODE mode, void *p_data_adrs );
+extern void PLAYERINFO_DEBUG_CreateRndData( WIFIBATTLEMATCH_MODE mode, void *p_data_adrs );
+extern void PLAYERINFO_DEBUG_CreateWifiData( WIFIBATTLEMATCH_MODE mode, void *p_data_adrs );
+extern void PLAYERINFO_DEBUG_CreateLiveData( WIFIBATTLEMATCH_MODE mode, void *p_data_adrs );
 #else
-#define PLAYERINFO_DEBUG_CreateData(a,b)		/*  */
+#define PLAYERINFO_DEBUG_CreateRndData(a,b)		/*  */
+#define PLAYERINFO_DEBUG_CreateWifiData(a,b)		/*  */
+#define PLAYERINFO_DEBUG_CreateLiveData(a,b)		/*  */
 #endif //DEBUG_DATA_CREATE
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
@@ -135,7 +145,7 @@ extern void PLAYERINFO_DEBUG_CreateData( WIFIBATTLEMATCH_MODE mode, void *p_data
  *					定数
 */
 //=============================================================================
-#define MATCHINFO_BG_FRAME	(GFL_BG_FRAME0_M)
+#define MATCHINFO_BG_FRAME	(GFL_BG_FRAME1_M)
 #define MATCHINFO_PLT_BG_FONT	(15)
 #define MATCHINFO_PLT_OBJ_PMS	(0)
 #define MATCHINFO_PLT_OBJ_TRAINER	(MATCHINFO_PLT_OBJ_PMS+PMS_DRAW_OBJ_PLTT_NUM)
@@ -152,30 +162,17 @@ extern void PLAYERINFO_DEBUG_CreateData( WIFIBATTLEMATCH_MODE mode, void *p_data
 //=====================================
 typedef struct _MATCHINFO_WORK MATCHINFO_WORK;
 
-//-------------------------------------
-///	対戦者情報表示データ
-//=====================================
-typedef struct 
-{	
-	STRCODE								name[7+1];	
-	u32										trainerID;
-	u16										rate;
-	u8										area;
-	u8										country;
-	PMS_DATA							pms;
-} MATCHINFO_DATA;
-
 //=============================================================================
 /**
  *					外部参照
 */
 //=============================================================================
-extern MATCHINFO_WORK	* MATCHINFO_Init( const MATCHINFO_DATA *cp_data, GFL_CLUNIT *p_unit, GFL_FONT	*p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID );
+extern MATCHINFO_WORK	* MATCHINFO_Init( const WIFIBATTLEMATCH_ENEMYDATA *cp_data, GFL_CLUNIT *p_unit, GFL_FONT	*p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, HEAPID heapID );
 extern void MATCHINFO_Exit( MATCHINFO_WORK *p_wk );
 extern BOOL MATCHINFO_PrintMain( MATCHINFO_WORK *p_wk, PRINT_QUE *p_que );
 
 #ifdef DEBUG_DATA_CREATE
-extern void MATCHINFO_DEBUG_CreateData( MATCHINFO_DATA *p_data );
+//extern void MATCHINFO_DEBUG_CreateData( MATCHINFO_DATA *p_data );
 #else
 #define MATCHINFO_DEBUG_CreateData(a)		/*  */
 #endif //DEBUG_DATA_CREATE

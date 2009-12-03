@@ -14,6 +14,27 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 
+//-------------------------------------
+///	WIFILOGIN終了
+//=====================================
+typedef enum
+{
+  WIFILOGIN_RESULT_LOGIN, //ログインした
+  WIFILOGIN_RESULT_CANCEL,//キャンセルした
+} WIFILOGIN_RESULT;
+
+
+//-------------------------------------
+///	WIFILOGINに渡す引数
+//=====================================
+typedef struct 
+{
+  GAMESYS_WORK      *gsys;  //[in ]ゲームシステム
+  SAVE_CONTROL_WORK *ctrl;  //[in ]セーブデータ
+  WIFILOGIN_RESULT  result; //[out]終了方法
+} WIFILOGIN_PARAM;
+
+
 typedef struct _WIFILOGIN_WORK  WIFILOGIN_WORK;
 
 extern const GFL_PROC_DATA WiFiLogin_ProcData;
