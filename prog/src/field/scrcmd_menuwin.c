@@ -975,7 +975,7 @@ VMCMD_RESULT EvCmdSubWinMsg( VMHANDLE *core, void *wk )
   u8 y = VMGetU8( core );
   u16 win_id = VMGetU16( core );
   u16 sx,cx;
-  u8 sy = 2;
+  u8 cy = 2;
   
   {
     HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
@@ -993,7 +993,23 @@ VMCMD_RESULT EvCmdSubWinMsg( VMHANDLE *core, void *wk )
     cx = sx / 8;
     if( (sx&0x07) ){ cx++; }
     
-    FLDSUBMSGWIN_AddStrBuf( fparam->msgBG, msgBuf, win_id, x, y, cx, sy );
+#if 1
+    if( (x + cx) > 32 ){
+      OS_Printf( "SUBWIN ERROR: X(%d),WIDTH(%d) OVER 32", x, cx );
+      GF_ASSERT( 0 );
+      x = 4;
+      cx = 4;
+    }
+    
+    if( (y + cy) > 24 ){
+      OS_Printf( "SUBWIN ERROR: Y(%d),HEIGHT(%d) OVER 24", y, cy );
+      GF_ASSERT( 0 );
+      y = 4;
+      cy = 4;
+    }
+#endif
+    
+    FLDSUBMSGWIN_AddStrBuf( fparam->msgBG, msgBuf, win_id, x, y, cx, cy );
     GFL_STR_DeleteBuffer( msgBuf );
   }
   

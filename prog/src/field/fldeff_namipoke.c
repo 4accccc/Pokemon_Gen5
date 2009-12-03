@@ -826,6 +826,32 @@ FLDEFF_TASK * FLDEFF_NAMIPOKE_EFFECT_SetEffect( FLDEFF_CTRL *fectrl,
 
 //--------------------------------------------------------------
 /**
+ * 波乗りポケモンエフェクト　追加　波乗りポケモンに依存しない座標指定型
+ * @param FLDEFF_CTRL*
+ * @param type NAMIPOKE_EFFECT_TYPE 表示種類
+ * @param pos 表示する座標
+ * @retval FLDEFF_TASK*
+ */
+//--------------------------------------------------------------
+FLDEFF_TASK * FLDEFF_NAMIPOKE_EFFECT_SetEffectAlone( FLDEFF_CTRL *fectrl,
+    NAMIPOKE_EFFECT_TYPE type, const VecFx32 *pos )
+{
+  FLDEFF_TASK *task;
+  FLDEFF_NAMIPOKE_EFFECT *npoke_eff;
+  TASKHEADER_NAMIPOKE_EFFECT head;
+  
+  head.eff_npoke_eff = FLDEFF_CTRL_GetEffectWork(
+      fectrl, FLDEFF_PROCID_NAMIPOKE_EFFECT );
+  head.type = type;
+  head.efftask_namipoke = NULL;
+  
+  task = FLDEFF_CTRL_AddTask(
+      fectrl, &data_npoke_effTaskHeader, pos, 0, &head, 1 );
+  return( task );
+}
+
+//--------------------------------------------------------------
+/**
  * 波乗りポケモンエフェクト　終了チェック
  * @param task FLDEFF_TASK
  * @retval BOOL TRUE=終了
@@ -907,7 +933,7 @@ static void npoke_effTask_Init( FLDEFF_TASK *task, void *wk )
   GFL_G3D_OBJECT_EnableAnime( work->obj, 0 );
   GFL_G3D_OBJECT_EnableAnime( work->obj, 1 );
   
-  {
+  if( work->head.efftask_namipoke != NULL ){
     VecFx32 pos;
     VecFx32 tbl[NAMIPOKE_EFFECT_TYPE_MAX] =
     {
@@ -971,8 +997,8 @@ static void npoke_effTask_Update( FLDEFF_TASK *task, void *wk )
 	  GFL_G3D_OBJECT_LoopAnimeFrame( work->obj, 0, FX32_ONE );
 	  GFL_G3D_OBJECT_LoopAnimeFrame( work->obj, 1, FX32_ONE );
   }
-
-  {
+  
+  if( work->head.efftask_namipoke != NULL ){
     VecFx32 pos;
     FLDEFF_TASK_GetPos( work->head.efftask_namipoke, &pos );
     pos.x += work->offset.x;

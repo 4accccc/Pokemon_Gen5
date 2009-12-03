@@ -32,11 +32,11 @@ typedef enum
 //--------------------------------------------------------------
 typedef enum
 {
-  NAMIPOKE_EFFECT_TYPE_TAKI_SPLASH = 0,
-  NAMIPOKE_EFFECT_TYPE_TAKI_START_F,
-  NAMIPOKE_EFFECT_TYPE_TAKI_LOOP_F,
-  NAMIPOKE_EFFECT_TYPE_TAKI_START_S,
-  NAMIPOKE_EFFECT_TYPE_TAKI_LOOP_S,
+  NAMIPOKE_EFFECT_TYPE_TAKI_SPLASH = 0, ///<着地水飛沫
+  NAMIPOKE_EFFECT_TYPE_TAKI_START_F, ///<滝登り開始エフェクト　前
+  NAMIPOKE_EFFECT_TYPE_TAKI_LOOP_F, ///<滝登り移動中エフェクト　前
+  NAMIPOKE_EFFECT_TYPE_TAKI_START_S, ///<滝登り開始エフェクト　横
+  NAMIPOKE_EFFECT_TYPE_TAKI_LOOP_S, ///<滝登り開始エフェクト　横
   NAMIPOKE_EFFECT_TYPE_MAX,
 }NAMIPOKE_EFFECT_TYPE;
 
@@ -59,4 +59,6 @@ extern void FLDEFF_NAMIPOKE_EFFECT_Delete( FLDEFF_CTRL *fectrl, void *work );
 
 extern FLDEFF_TASK * FLDEFF_NAMIPOKE_EFFECT_SetEffect( FLDEFF_CTRL *fectrl,
     NAMIPOKE_EFFECT_TYPE type, const FLDEFF_TASK *efftask_namipoke );
+extern FLDEFF_TASK * FLDEFF_NAMIPOKE_EFFECT_SetEffectAlone( FLDEFF_CTRL *fectrl,
+    NAMIPOKE_EFFECT_TYPE type, const VecFx32 *pos );
 extern BOOL FLDEFF_NAMIPOKE_EFFECT_CheckTaskEnd( const FLDEFF_TASK *task );

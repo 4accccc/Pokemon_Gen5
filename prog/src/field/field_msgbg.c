@@ -2629,7 +2629,7 @@ static void fldSubMsgWin_Add(
   subwin->talkMsgWinSys = fmb->talkMsgWinSys;
   subwin->talkMsgWinIdx = idx;
   subwin->id = id;
-
+  
   setBlendAlpha( FALSE );
   
   TALKMSGWIN_CreateWindowAlone(
@@ -2715,7 +2715,6 @@ static void fldSubMsgWin_Delete( FLDSUBMSGWIN *subwin )
   TALKMSGWIN_DeleteWindow( subwin->talkMsgWinSys, subwin->talkMsgWinIdx );
   GFL_HEAP_FreeMemory( subwin );
 }
-
 
 //--------------------------------------------------------------
 /**
@@ -3940,8 +3939,9 @@ static void winframe_DeleteBmp( GFL_BMPWIN *bmpwin )
 //--------------------------------------------------------------
 /**
  * FLDMSGBG FLDSUBMSGWIN登録
- * @param
- * @retval
+ * @param fmb FLDMSGBG
+ * @param subwin 登録するFLDSUBMSGWIN
+ * @retval int ウィンドウインデックス
  */
 //--------------------------------------------------------------
 static int FldMsgBG_SetFldSubMsgWin( FLDMSGBG *fmb, FLDSUBMSGWIN *subwin )
@@ -3961,8 +3961,9 @@ static int FldMsgBG_SetFldSubMsgWin( FLDMSGBG *fmb, FLDSUBMSGWIN *subwin )
 //--------------------------------------------------------------
 /**
  * FLDMSGBG FLDSUBMSGWIN削除
- * @param
- * @retval
+ * @param fmb FLDMSGBG
+ * @param id 登録していたウィンドウID
+ * @retval FLDSUBMSGWIN idで使用していたFLDSUBMSGWIN
  */
 //--------------------------------------------------------------
 static FLDSUBMSGWIN * FldMsgBG_DeleteFldSubMsgWin( FLDMSGBG *fmb, int id )

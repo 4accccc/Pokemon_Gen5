@@ -697,18 +697,6 @@ BOOL MAPATTR_VALUE_CheckElecFloor( const MAPATTR_VALUE val )
 
 //--------------------------------------------------------------
 /**
- * アトリビュートバリュー　チェック　小浮遊石揺れ
- * @param val MAPATTR_VALUE
- * @retval BOOL FALSE=違う
- */
-//--------------------------------------------------------------
-BOOL MAPATTR_VALUE_CheckShakeElecStone( const MAPATTR_VALUE val )
-{
-  return ( val == MATTR_FLOAT_FLOOR );
-}
-
-//--------------------------------------------------------------
-/**
  * アトリビュートバリュー　チェック 電気岩
  * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う
@@ -717,4 +705,28 @@ BOOL MAPATTR_VALUE_CheckShakeElecStone( const MAPATTR_VALUE val )
 BOOL MAPATTR_VALUE_CheckElecRock( const MAPATTR_VALUE val )
 {
   return ( val == MATTR_ELECTORIC_ROCK );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　尾瀬
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckOze01( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_OZE_01 );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　尾瀬階段
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckOzeStairs( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_OZE_STAIRS );
 }
