@@ -82,11 +82,19 @@ endif
 
 .PHONY:	do-build clean subdir
 
+
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir 
-#$(obj_imd) $(obj_ica) $(obj_ita) $(obj_ima) $(obj_itp) $(obj_iva)
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバート処理
+
+do-build:	subdir $(obj_imd) $(obj_ica) $(obj_ita) $(obj_ima) $(obj_itp) $(obj_iva)
+
+else
+
+do-build:	subdir
+
+endif
 
 subdir:
 	@$(MAKE_SUBDIR)
