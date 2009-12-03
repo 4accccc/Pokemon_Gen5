@@ -1,5 +1,5 @@
 #../data/c03p02.mev
-../tmp/c03p02.bin:../data/c03p02.mev $(UNIQ_SCRIPTHEADER) ../tmp/c03p02.h ../../script/c03p02_def.h ../../zonetable/zone_id.h ../tmp/c03p03.h ../../../../prog/include/field/eventdata_type.h ../tmp/c03p04.h ../tmp/c03p05.h ../tmp/c03p06.h ../tmp/c03p07.h ../tmp/c03p08.h 
+../tmp/c03p02.bin:../data/c03p02.mev $(UNIQ_SCRIPTHEADER) ../tmp/c03p02.h ../../zonetable/zone_id.h ../tmp/c03p03.h ../../../../prog/include/field/eventdata_type.h ../tmp/c03p04.h ../tmp/c03p05.h ../tmp/c03p06.h ../tmp/c03p07.h ../tmp/c03p08.h 
 	@echo ../data/c03p02.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c03p02.h ../../script/c03p02_def.h ../../zonetable/zone_id.h ../tmp/c03p03.h ../../../../prog/include/field/eventdata_type.h ../tmp/c03p04.h ../tmp/c03p05.h ../tmp/c03p06.h ../tmp/c03p07.h ../tmp/c03p08.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c03p02.h ../../zonetable/zone_id.h ../tmp/c03p03.h ../../../../prog/include/field/eventdata_type.h ../tmp/c03p04.h ../tmp/c03p05.h ../tmp/c03p06.h ../tmp/c03p07.h ../tmp/c03p08.h 
 

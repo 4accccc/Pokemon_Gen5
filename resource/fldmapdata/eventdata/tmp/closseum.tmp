@@ -1,5 +1,5 @@
 #../data/closseum.mev
-../tmp/closseum.bin:../data/closseum.mev $(UNIQ_SCRIPTHEADER) ../tmp/closseum.h ../../script/closseum_def.h 
+../tmp/closseum.bin:../data/closseum.mev $(UNIQ_SCRIPTHEADER) ../tmp/closseum.h 
 	@echo ../data/closseum.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/closseum.h ../../script/closseum_def.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/closseum.h 
 

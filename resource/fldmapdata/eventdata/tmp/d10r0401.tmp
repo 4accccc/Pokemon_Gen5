@@ -1,5 +1,5 @@
 #../data/d10r0401.mev
-../tmp/d10r0401.bin:../data/d10r0401.mev $(UNIQ_SCRIPTHEADER) ../tmp/d10r0401.h ../../script/d10r0401_def.h 
+../tmp/d10r0401.bin:../data/d10r0401.mev $(UNIQ_SCRIPTHEADER) ../tmp/d10r0401.h 
 	@echo ../data/d10r0401.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/d10r0401.h ../../script/d10r0401_def.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/d10r0401.h 
 

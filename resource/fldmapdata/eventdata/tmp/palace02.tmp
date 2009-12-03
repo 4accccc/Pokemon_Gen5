@@ -1,5 +1,5 @@
 #../data/palace02.mev
-../tmp/palace02.bin:../data/palace02.mev $(UNIQ_SCRIPTHEADER) ../tmp/palace02.h ../../script/palace02_def.h 
+../tmp/palace02.bin:../data/palace02.mev $(UNIQ_SCRIPTHEADER) ../tmp/palace02.h 
 	@echo ../data/palace02.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/palace02.h ../../script/palace02_def.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/palace02.h 
 

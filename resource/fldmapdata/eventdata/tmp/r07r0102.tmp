@@ -1,5 +1,5 @@
 #../data/r07r0102.mev
-../tmp/r07r0102.bin:../data/r07r0102.mev $(UNIQ_SCRIPTHEADER) ../tmp/r07r0102.h ../../script/r07r0102_def.h 
+../tmp/r07r0102.bin:../data/r07r0102.mev $(UNIQ_SCRIPTHEADER) ../tmp/r07r0102.h 
 	@echo ../data/r07r0102.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/r07r0102.h ../../script/r07r0102_def.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/r07r0102.h 
 

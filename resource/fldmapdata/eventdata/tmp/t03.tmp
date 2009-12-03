@@ -1,5 +1,5 @@
 #../data/t03.mev
-../tmp/t03.bin:../data/t03.mev $(UNIQ_SCRIPTHEADER) ../tmp/t03.h ../../script/t03_def.h 
+../tmp/t03.bin:../data/t03.mev $(UNIQ_SCRIPTHEADER) ../tmp/t03.h 
 	@echo ../data/t03.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/t03.h ../../script/t03_def.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/t03.h 
 

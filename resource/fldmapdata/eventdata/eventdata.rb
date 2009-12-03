@@ -408,9 +408,11 @@ end   # end of class EventData
 #============================================================================
 class AllEvent
   attr :header
+  attr :zonename
 
-  def initialize lines, header
+  def initialize lines, header, zonename
     @header = header
+    @zonename = zonename
     #readEventNumber lines
   end
 
@@ -485,7 +487,7 @@ class DoorEvent < AllEvent
   attr :rail_side_size
 
 
-  def initialize lines, header
+  def initialize lines, header, zonename
     super
     @number = readEventNumber( lines )
     @door_id = read( lines, /#Door Event Label/)
@@ -594,7 +596,7 @@ class ObjEvent < AllEvent
   attr :rail_front
   attr :rail_side
 
-  def initialize lines, header
+  def initialize lines, header, zonename
     super
     @number = readEventNumber( lines )
     @type = read(lines, /#type/)
@@ -677,6 +679,9 @@ class ObjEvent < AllEvent
     header.push( "../../flagwork/flag_define.h " )
 
     header.push( "../../../../prog/include/field/eventdata_type.h " )
+
+    #script
+    header.push( "../../script/#{@zonename}_def.h " )
   end
 end
 
@@ -706,7 +711,7 @@ class PosEvent < AllEvent
   attr :rail_side_size
 
 
-  def initialize lines, header
+  def initialize lines, header, zonename
     super
     @number = readEventNumber( lines )
     @pos_id = read( lines, /#Pos Event Label/)
@@ -777,6 +782,9 @@ class PosEvent < AllEvent
 
     #eventdata_type.h
     header.push( "../../../../prog/include/field/eventdata_type.h " )
+
+    #script
+    header.push( "../../script/#{@zonename}_def.h " )
   end
 end
 
@@ -801,7 +809,7 @@ class BgEvent < AllEvent
   attr :rail_side
 
 
-  def initialize lines, header
+  def initialize lines, header, zonename
     super
     @number = readEventNumber( lines )
     @bg_id = read( lines, /#Bg Event Label/)
@@ -857,6 +865,9 @@ class BgEvent < AllEvent
 
     #eventdata_type.h
     header.push( "../../../../prog/include/field/eventdata_type.h " )
+
+    #script
+    header.push( "../../script/#{@zonename}_def.h " )
   end
 end
 
@@ -875,7 +886,7 @@ class DoorEventData < EventData
     @doors = Array.new
     @items.each{|item|
       lines = item.split(/\r\n/)
-      @doors << DoorEvent.new(lines, header)
+      @doors << DoorEvent.new(lines, header, @zonename)
     }
   end
 
@@ -916,7 +927,7 @@ class ObjEventData < EventData
     @objs = Array.new
     @items.each{|item|
       lines = item.split(/\r\n/)
-      @objs << ObjEvent.new(lines, header)
+      @objs << ObjEvent.new(lines, header, @zonename)
     }
   end
 
@@ -953,7 +964,7 @@ class BgEventData < EventData
     @bgs = Array.new
     @items.each{|item|
       lines = item.split(/\r\n/)
-      @bgs << BgEvent.new(lines, header)
+      @bgs << BgEvent.new(lines, header, @zonename)
     }
   end
 
@@ -982,7 +993,7 @@ class PosEventData < EventData
     @poss = Array.new
     @items.each{|item|
       lines = item.split(/\r\n/)
-      @poss << PosEvent.new(lines, header)
+      @poss << PosEvent.new(lines, header, @zonename)
     }
   end
 
@@ -1012,6 +1023,8 @@ end
 #------------------------------------------------------------------------------
 def make_depend( filename )
   begin
+
+    ofilename = "";
     
     File.open( filename ){|file|
       header = EventHeader.new(file)
@@ -1038,7 +1051,6 @@ def make_depend( filename )
       depend_header.push( "$(UNIQ_SCRIPTHEADER) " )
 
       depend_header.push( "../tmp/#{zonename}.h " )
-      depend_header.push( "../../script/#{zonename}_def.h " )
 
       door_events.getIncludeHeader( depend_header )
       obj_events.getIncludeHeader( depend_header )
@@ -1095,7 +1107,7 @@ def make_binary( filename, allHeader )
       zonename = File.basename(filename,".*").downcase
       ofilename = "../tmp/" + zonename
 
-      headerArray.load( "../../script/#{zonename}_def.h" )
+      #headerArray.load( "../../script/#{zonename}_def.h" ) Doorイベントのみのmevの場合、スクリプトは関係ないので・
 
       File.open("#{ofilename}.bin", "wb"){|file|
 

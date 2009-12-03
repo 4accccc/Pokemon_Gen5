@@ -12,12 +12,16 @@ USERS	= tomoya_takahashi ohmori
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
-targetname = field_wfbc_data
+targetname0 = bc_block_event.mev
+targetname1 = wf_block_event.mev
+targetname2 = bc_block_event.evp
+targetname3 = wf_block_event.evp
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
-TARGETDIR = $(PROJECT_ARCDIR)
+TARGETDIR = $(PROJECT_RSCDIR)fldmapdata/eventdata/data/
+TARGETDIR2 = $(PROJECT_RSCDIR)field_wfbc_data/after/
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -30,28 +34,8 @@ include	$(PROJECT_RSCDIR)\macro_define
 ##########################################
 #コンバートファイル
 ##########################################
-XLSFILE = wb_wfbc.xls
+XLSFILE = ../wb_wfbc.xls
 TABFILE = wb_wfbc.txt
-
-
-
-##########################################
-#ターゲットファイル
-##########################################
-LIST_FILE 	= list.txt
-
-OUTPUT_HEADER = field_wfbc_people_def.h
-COPY_DIR	= $(PROJECT_PROGDIR)include/field/
-
-##########################################
-#参照ヘッダー
-##########################################
-OBJCODE_HEADER = ../fldmmdl/fldmmdl_objcode.h
-TRTYPE_HEADER = ../trdata/trtype_def.h
-MONSNO_HEADER = ../personal/monsno_def.h
-MESSAGE_HEADER = ../message/dst/script/msg_bcwftest.h
-SCRIPT_HEADER = ../fldmapdata/script/bcwftest_def.h
-ITEM_HEADER = ../itemconv/itemsort_abc_def.h
 
 
 #------------------------------------------------------------------------------
@@ -71,35 +55,50 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc $(COPY_DIR)$(OUTPUT_HEADER)
+do-build:	subdir $(TARGETDIR)/$(targetname0) $(TARGETDIR)/$(targetname1) $(TARGETDIR2)/$(targetname2) $(TARGETDIR2)/$(targetname3)
 
 subdir:
 	@$(MAKE_SUBDIR)
 
-# narc のコピーだけ実行する
-$(TARGETDIR)/$(targetname).narc: $(targetname).narc
-	$(COPY) $(targetname).narc $(TARGETDIR)
-	$(COPY) $(targetname).naix $(TARGETDIR)
-	
-$(COPY_DIR)$(OUTPUT_HEADER): $(OUTPUT_HEADER)
-	$(COPY) $(OUTPUT_HEADER) $(COPY_DIR)
+$(TARGETDIR)/$(targetname0): $(targetname0)
+	$(COPY) $(targetname0) $(TARGETDIR)
 
+$(TARGETDIR)/$(targetname1): $(targetname1)
+	$(COPY) $(targetname1) $(TARGETDIR)
+
+$(TARGETDIR2)/$(targetname2): $(targetname2)
+	$(COPY) $(targetname2) $(TARGETDIR2)
+
+$(TARGETDIR2)/$(targetname3): $(targetname3)
+	$(COPY) $(targetname3) $(TARGETDIR2)
+	
 
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	
-# コピー先のnarcが古い場合実行する
-$(targetname).narc: $(XLSFILE) $(OBJCODE_HEADER) $(TRTYPE_HEADER) $(MONSNO_HEADER) $(SCRIPT_HEADER) $(ITEM_HEADER)
-	
+$(targetname0): $(XLSFILE)
 	#エクセルデータをタブ区切りにする。
-	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $(TABFILE) -p 0 -s tab $(XLSFILE)
+	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $(TABFILE) -p 2 -s tab $(XLSFILE)
 	#コンバート
-	perl wfbc_people_conv.pl $(TABFILE) $(OBJCODE_HEADER) $(TRTYPE_HEADER) $(MONSNO_HEADER) $(SCRIPT_HEADER) $(ITEM_HEADER) $(OUTPUT_HEADER)
+	perl wfbc_event_conv.pl $(TABFILE) $(targetname0) $(targetname1) $(targetname2) $(targetname3)
 
-	-ls *.bin > $(LIST_FILE)
-	$(ARCLIST_MAKE) $(LIST_FILE)
-	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
-	$(NAIXCUT) $(targetname).naix
-	-rm	$(LIST_FILE)
+$(targetname1): $(XLSFILE)
+	#エクセルデータをタブ区切りにする。
+	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $(TABFILE) -p 2 -s tab $(XLSFILE)
+	#コンバート
+	perl wfbc_event_conv.pl $(TABFILE) $(targetname0) $(targetname1) $(targetname2) $(targetname3)
+
+$(targetname2): $(XLSFILE)
+	#エクセルデータをタブ区切りにする。
+	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $(TABFILE) -p 2 -s tab $(XLSFILE)
+	#コンバート
+	perl wfbc_event_conv.pl $(TABFILE) $(targetname0) $(targetname1) $(targetname2) $(targetname3)
+
+$(targetname3): $(XLSFILE)
+	#エクセルデータをタブ区切りにする。
+	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $(TABFILE) -p 2 -s tab $(XLSFILE)
+	#コンバート
+	perl wfbc_event_conv.pl $(TABFILE) $(targetname0) $(targetname1) $(targetname2) $(targetname3)
+	
 endif
 
 #------------------------------------------------------------------------------
@@ -108,15 +107,18 @@ endif
 #------------------------------------------------------------------------------
 clean:
 	@$(MAKE_SUBDIR)
-	rm -f $(TARGETDIR)/$(targetname).narc
-	rm -f $(TARGETDIR)/$(targetname).naix
+	rm -f $(TARGETDIR)/$(targetname0)
+	rm -f $(TARGETDIR)/$(targetname1)
+	rm -f $(TARGETDIR2)/$(targetname2)
+	rm -f $(TARGETDIR2)/$(targetname3)
 
 #コンバート対象者のみ、中間ファイル削除
 ifeq	($(CONVERTUSER),true)	
-	rm -f *.bin
 	rm -f *.txt
-	rm -f $(targetname).narc
-	rm -f $(targetname).naix
+	rm -f $(targetname0)
+	rm -f $(targetname1)
+	rm -f $(targetname2)
+	rm -f $(targetname3)
 endif
 
 

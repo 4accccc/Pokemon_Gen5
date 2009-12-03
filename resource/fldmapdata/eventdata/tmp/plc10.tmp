@@ -1,5 +1,5 @@
 #../data/plc10.mev
-../tmp/plc10.bin:../data/plc10.mev $(UNIQ_SCRIPTHEADER) ../tmp/plc10.h ../../script/plc10_def.h 
+../tmp/plc10.bin:../data/plc10.mev $(UNIQ_SCRIPTHEADER) ../tmp/plc10.h 
 	@echo ../data/plc10.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/plc10.h ../../script/plc10_def.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/plc10.h 
 

@@ -1,5 +1,5 @@
 #../data/wc10pcr0101.mev
-../tmp/wc10pcr0101.bin:../data/wc10pcr0101.mev $(UNIQ_SCRIPTHEADER) ../tmp/wc10pcr0101.h ../../script/wc10pcr0101_def.h 
+../tmp/wc10pcr0101.bin:../data/wc10pcr0101.mev $(UNIQ_SCRIPTHEADER) ../tmp/wc10pcr0101.h 
 	@echo ../data/wc10pcr0101.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/wc10pcr0101.h ../../script/wc10pcr0101_def.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/wc10pcr0101.h 
 

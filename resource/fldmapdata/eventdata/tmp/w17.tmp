@@ -1,5 +1,5 @@
 #../data/w17.mev
-../tmp/w17.bin:../data/w17.mev $(UNIQ_SCRIPTHEADER) ../tmp/w17.h ../../script/w17_def.h 
+../tmp/w17.bin:../data/w17.mev $(UNIQ_SCRIPTHEADER) ../tmp/w17.h 
 	@echo ../data/w17.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/w17.h ../../script/w17_def.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/w17.h 
 

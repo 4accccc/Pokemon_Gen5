@@ -1,5 +1,5 @@
 #../data/plt03.mev
-../tmp/plt03.bin:../data/plt03.mev $(UNIQ_SCRIPTHEADER) ../tmp/plt03.h ../../script/plt03_def.h 
+../tmp/plt03.bin:../data/plt03.mev $(UNIQ_SCRIPTHEADER) ../tmp/plt03.h 
 	@echo ../data/plt03.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/plt03.h ../../script/plt03_def.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/plt03.h 
 

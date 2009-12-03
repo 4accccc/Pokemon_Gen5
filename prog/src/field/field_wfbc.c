@@ -13,6 +13,10 @@
 
 #include "gflib.h"
 
+#include "arc/arc_def.h"
+#include "arc/field_wfbc_data.naix"
+#include "arc/fieldmap/eventdata.naix"
+
 #include "field_wfbc.h"
 
 #include "eventdata_local.h"
@@ -106,11 +110,67 @@ static const WFBC_PEOPLE_POS  sc_WFBC_PEOPLE_POS[ FIELD_WFBC_CORE_TYPE_MAX ][ FI
 };
 
 
+//-------------------------------------
+///	ブロック配置情報
+//=====================================
+#define FIELD_WFBC_BLOCK_SIZE_X     (8)
+#define FIELD_WFBC_BLOCK_SIZE_Z     (8)
+#define FIELD_WFBC_BLOCK_PATCH_MAX  (20)
+#define FIELD_WFBC_BLOCK_NONE  (0xff)
+static const u32 sc_FIELD_WFBC_BLOCK_FILE[ FIELD_WFBC_CORE_TYPE_MAX ] = 
+{
+  NARC_field_wfbc_data_wb_wfbc_block_bc_block,
+  NARC_field_wfbc_data_wb_wfbc_block_wf_block,
+};
+#define FIELD_WFBC_BLOCK_BUFF_SIZE  ( 0x600 )
+
+
+//-------------------------------------
+///	イベント情報
+//=====================================
+#define FIELD_WFBC_EVENT_WF  (NARC_eventdata_wf_block_event_bin)
+#define FIELD_WFBC_EVENT_BC  (NARC_eventdata_bc_block_event_bin)
+
+
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
 */
 //-----------------------------------------------------------------------------
+
+//-------------------------------------
+///	land_data_patchの情報
+//=====================================
+typedef struct 
+{
+  u32 patch[FIELD_WFBC_BLOCK_PATCH_MAX];
+} FIELD_WFBC_BLOCK_PATCH;
+
+//-------------------------------------
+///	ブロック配置情報
+//=====================================
+typedef struct 
+{
+  // 各グリッド位置のブロック情報
+  u8 block_data[FIELD_WFBC_BLOCK_SIZE_X][FIELD_WFBC_BLOCK_SIZE_Z];
+
+  // パッチ情報
+  FIELD_WFBC_BLOCK_PATCH patch[]; 
+} FIELD_WFBC_BLOCK_DATA;
+
+
+#if 0
+//-------------------------------------
+///	イベント起動情報
+//=====================================
+typedef struct 
+{
+  // 条件
+  u32 if_para[];
+} FIELD_WFBC_EVENT_IF;
+#endif
+
+
 //-------------------------------------
 ///	人物情報
 //=====================================
@@ -138,7 +198,14 @@ struct _FIELD_WFBC
 
   // ローダー
   FIELD_WFBC_PEOPLE_DATA_LOAD* p_loader;
+
+  // アーカイブハンドル
+  ARCHANDLE* p_handle;
+
+  // ブロック配置情報
+  FIELD_WFBC_BLOCK_DATA* p_block;
 };
+
 
 //-----------------------------------------------------------------------------
 /**
@@ -188,6 +255,7 @@ FIELD_WFBC* FIELD_WFBC_Create( HEAPID heapID )
   p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_WFBC) );
 
   WFBC_Clear( p_wk );
+
 
   return p_wk;
 }
@@ -562,6 +630,13 @@ static void WFBC_InitSystem( FIELD_WFBC* p_wk, HEAPID heapID )
     {
       WFBC_PEOPLE_Clear( &p_wk->p_people[i] );
     }
+
+  
+    // データ読み込みようのハンドル生成
+    p_wk->p_handle = GFL_ARC_OpenDataHandle( ARCID_WFBC_PEOPLE, heapID );
+
+    // 配置情報のバッファを生成
+    p_wk->p_block = GFL_HEAP_AllocClearMemory( heapID, FIELD_WFBC_BLOCK_BUFF_SIZE );
   }
 }
 
@@ -576,11 +651,15 @@ static void WFBC_ExitSystem( FIELD_WFBC* p_wk )
 {
   if(p_wk->p_loader)
   {
+    GFL_HEAP_FreeMemory( p_wk->p_block );
+    GFL_ARC_CloseDataHandle( p_wk->p_handle );
     FIELD_WFBC_PEOPLE_DATA_Delete( p_wk->p_loader );
     GFL_HEAP_FreeMemory( p_wk->p_people );
 
     p_wk->p_loader = NULL;
     p_wk->p_people = NULL;
+    p_wk->p_handle = NULL;
+    p_wk->p_block = NULL;
   } 
 }
 
@@ -605,6 +684,12 @@ static void WFBC_Clear( FIELD_WFBC* p_wk )
     {
       WFBC_PEOPLE_Clear( &p_wk->p_people[i] );
     }
+  }
+
+  // ブロック配置情報をクリア
+  if( p_wk->p_block )
+  {
+    GFL_STD_MemClear( p_wk->p_block, FIELD_WFBC_BLOCK_BUFF_SIZE );
   }
 }
 
@@ -728,6 +813,14 @@ static void WFBC_SetCore( FIELD_WFBC* p_wk, FIELD_WFBC_CORE* p_buff, MAPMODE map
   else
   {
     p_wk->p_core = NULL;
+  }
+
+
+  // ブロック配置情報を読み込む
+  {
+    u32 size = GFL_ARC_GetDataSizeByHandle( p_wk->p_handle, sc_FIELD_WFBC_BLOCK_FILE[p_wk->type] );
+    GF_ASSERT( size < FIELD_WFBC_BLOCK_BUFF_SIZE );
+    GFL_ARC_LoadDataByHandle( p_wk->p_handle, sc_FIELD_WFBC_BLOCK_FILE[p_wk->type], p_wk->p_block );
   }
 }
 

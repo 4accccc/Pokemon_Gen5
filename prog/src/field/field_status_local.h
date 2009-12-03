@@ -27,6 +27,8 @@
 typedef enum{
   MAPMODE_NORMAL,     ///<’Êíó‘Ô
   MAPMODE_INTRUDE,    ///<N“ü’†
+
+  MAPMODE_MAX,    ///<Å‘å’l@
 }MAPMODE;
 
 //======================================================================

@@ -1,5 +1,5 @@
 #../data/c03p19.mev
-../tmp/c03p19.bin:../data/c03p19.mev $(UNIQ_SCRIPTHEADER) ../tmp/c03p19.h ../../script/c03p19_def.h 
+../tmp/c03p19.bin:../data/c03p19.mev $(UNIQ_SCRIPTHEADER) ../tmp/c03p19.h 
 	@echo ../data/c03p19.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c03p19.h ../../script/c03p19_def.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c03p19.h 
 

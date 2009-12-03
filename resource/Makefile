@@ -23,6 +23,7 @@ SUBDIRS	=	wmi \
 			message\
 			fldmmdl \
 			encount \
+			field_wfbc_data/before \
 			fldmapdata\
 			pokegra\
 			battle\
@@ -104,7 +105,7 @@ SUBDIRS	=	wmi \
 			monolith \
 			fourkings_scene \
 			multiboot \
-			field_wfbc_data \
+			field_wfbc_data/after \
 			mail \
 			season_display \
 			zukan_gra \
