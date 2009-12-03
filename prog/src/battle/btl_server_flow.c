@@ -6814,6 +6814,7 @@ static WazaSick scPut_CureSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWaza
     if( sick < POKESICK_MAX ){
       BPP_CurePokeSick( bpp );
       SCQUE_PUT_OP_CurePokeSick( wk->que, pokeID );
+      SCQUE_PUT_ACT_SickIcon( wk->que, pokeID, POKESICK_NULL );
     }else{
       BPP_CureWazaSick( bpp, sick );
       SCQUE_PUT_OP_CureWazaSick( wk->que, pokeID, sick );
@@ -7168,6 +7169,9 @@ static void scPut_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaSick 
 
   BPP_SetWazaSick( target, sick, sickCont );
   SCQUE_PUT_OP_SetSick( wk->que, pokeID, sick, sickCont.raw );
+  if( sick < POKESICK_MAX ){
+    SCQUE_PUT_ACT_SickIcon( wk->que, pokeID, sick );
+  }
 }
 static void scPut_AddSickFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, BtlAddSickFailCode failCode, WazaSick sick )
 {

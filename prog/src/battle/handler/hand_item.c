@@ -3477,7 +3477,6 @@ static void handler_SimetukeBand( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 
     cont.raw = BTL_EVENTVAR_GetValue( BTL_EVAR_SICK_CONT );
     BPP_SICKCONT_SetFlag( &cont, TRUE );
-    BTL_Printf("‚µ‚ß‚Â‚¯‚é‚æ\n");
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICK_CONT, cont.raw );
   }
 }

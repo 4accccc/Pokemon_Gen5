@@ -75,6 +75,7 @@ typedef enum {
   SC_ACT_WAZA_DMG,          ///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]
   SC_ACT_WAZA_DMG_PLURAL,   ///< 【アクション】複数体同時ダメージ処理 [ pokeCnt, affAbout, ... ]
   SC_ACT_WAZA_ICHIGEKI,     ///< 【アクション】一撃ワザ処理
+  SC_ACT_SICK_ICON,         ///< 【アクション】ゲージに状態異常アイコン表示
   SC_ACT_CONF_DMG,          ///< 【アクション】こんらん自爆ダメージ [ pokeID ]
   SC_ACT_RANKUP,            ///< 【ランクアップ効果】 ○○の×××があがった！[ ClientID, statusType, volume ]
   SC_ACT_RANKDOWN,          ///< 【ランクダウン効果】 ○○の×××がさがった！[ ClientID, statusType, volume ]
@@ -424,6 +425,12 @@ static inline void SCQUE_PUT_ACT_WazaDamagePlural( BTL_SERVER_CMD_QUE* que, u8 p
 static inline void SCQUE_PUT_ACT_WazaIchigeki( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {
   SCQUE_PUT_Common( que, SC_ACT_WAZA_ICHIGEKI, pokeID );
+}
+
+// 【アクション】ゲージに状態異常アイコンを表示（POKESICK_NULLで表示オフ）
+static inline void SCQUE_PUT_ACT_SickIcon( BTL_SERVER_CMD_QUE* que, u8 pokeID, PokeSick sick )
+{
+  SCQUE_PUT_Common( que, SC_ACT_SICK_ICON, pokeID, sick );
 }
 
 // 【アクション】こんらん自爆ダメージ

@@ -1823,8 +1823,9 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
     break;
 
   case SEQ_WAIT_USERCTRL_NOT_COMM: // 待ち指定あり（非通信時）
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-    {
+    if( (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B))
+    ||  (GFL_UI_TP_GetTrg())
+    ){
       wk->printWait = 0;
     }
     if( wk->printWait ){
