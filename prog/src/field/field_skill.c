@@ -22,6 +22,8 @@
 #include "script.h"
 #include "../../../resource/fldmapdata/script/hiden_def.h" //script id
 
+#include "event_mapchange.h"  //EVENT_ChangeMapByTeleport
+
 //======================================================================
 //  define
 //======================================================================
@@ -59,6 +61,8 @@ static GMEVENT_RESULT GMEVENT_Naminori(GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT GMEVENT_Takinobori(GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT GMEVENT_Kairiki(GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT GMEVENT_Flash(GMEVENT *event, int *seq, void *wk );
+static GMEVENT_RESULT GMEVENT_Anawohoru(GMEVENT *event, int *seq, void *wk );
+static GMEVENT_RESULT GMEVENT_Teleport(GMEVENT *event, int *seq, void *wk );
 
 static FLDSKILL_CHECK_FUNC GetCheckFunc( FLDSKILL_IDX idx );
 static FLDSKILL_USE_FUNC GetUseFunc( FLDSKILL_IDX idx );
@@ -71,9 +75,6 @@ static void InitHSW( HIDEN_SCR_WORK *hsw,
 
 static BOOL IsEnableSkill(
     const FLDSKILL_CHECK_WORK *scwk, FLDSKILL_IDX skill_idx );
-static BOOL CheckBadge(
-    const FLDSKILL_CHECK_WORK *scwk, int badge_id );
-static BOOL CheckCompanion( const FLDSKILL_CHECK_WORK *scwk );
 static BOOL CheckPark( const FLDSKILL_CHECK_WORK *scwk );
 static BOOL CheckPokePark( const FLDSKILL_CHECK_WORK * scwk );
 static BOOL CheckMapModeUse( const FLDSKILL_CHECK_WORK * scwk );
@@ -93,6 +94,10 @@ static const FLDSKILL_FUNC_DATA SkillFuncTable[FLDSKILL_IDX_MAX];
  * @param  fsys  フィールドワーク
  * @param  id    チェックワーク
  * @return  none
+ *
+ * @note
+ * メニュー内などではフィールドマップがなく判定が困難なため、
+ * フィールドわざが使用可能な状況かどうかを事前にチェックしておく
  */
 //--------------------------------------------------------------
 void FLDSKILL_InitCheckWork(
@@ -163,6 +168,15 @@ void FLDSKILL_InitCheckWork(
   }
 #endif
   
+  //屋内屋外チェック
+  if (AREADATA_GetInnerOuterSwitch( FIELDMAP_GetAreaData( fieldmap ) ) != 0 )
+  {
+      scwk->enable_skill |= IDXBIT( FLDSKILL_IDX_SORAWOTOBU );
+      scwk->enable_skill |= IDXBIT( FLDSKILL_IDX_TELEPORT );
+  } else {
+      scwk->enable_skill |= IDXBIT( FLDSKILL_IDX_ANAWOHORU );
+  }
+
   {
     MAPATTR_VALUE val = MAPATTR_GetAttrValue( fattr );
     
@@ -257,13 +271,6 @@ static FLDSKILL_RET SkillCheck_Iaigiri( const FLDSKILL_CHECK_WORK * scwk)
   }
 #endif
 
-  // バッジチェック
-#if 0 //wb 現状無視
-  if( CheckBadge(scwk,0) == FALSE ){
-    return FLDSKILL_RET_NO_BADGE;
-  }
-#endif
-
   if( IsEnableSkill(scwk,FLDSKILL_IDX_IAIGIRI) ){
     return FLDSKILL_RET_USE_OK;
   }
@@ -335,24 +342,10 @@ static FLDSKILL_RET SkillCheck_Naminori( const FLDSKILL_CHECK_WORK * scwk)
   }
 #endif
 
-  // バッジチェック
-#if 0 //wb 現状無視
-  if( CheckBadge(scwk,0) == FALSE ){
-    return FLDSKILL_RET_NO_BADGE;
-  }
-#endif
-  
   //波乗り中
   if( scwk->moveform == PLAYER_MOVE_FORM_SWIM ){
     return FLDSKILL_RET_PLAYER_SWIM;
   }
-  
-	// 連れ歩き
-#if 0 //wb 現状無視
-	if( CompanionCheck( scwk ) == TRUE ){
-		return FIELDSKILL_COMPANION;
-	}
-#endif
   
   if( IsEnableSkill(scwk,FLDSKILL_IDX_NAMINORI) ){
     return FLDSKILL_RET_USE_OK;
@@ -425,13 +418,6 @@ static FLDSKILL_RET SkillCheck_Takinobori( const FLDSKILL_CHECK_WORK * scwk)
   }
 #endif
 
-  // バッジチェック
-#if 0 //wb 現状無視
-  if( CheckBadge(scwk,0) == FALSE ){
-    return FLDSKILL_RET_NO_BADGE;
-  }
-#endif
-
   if( IsEnableSkill(scwk,FLDSKILL_IDX_TAKINOBORI) ){
     return FLDSKILL_RET_USE_OK;
   }
@@ -501,13 +487,6 @@ static FLDSKILL_RET SkillCheck_Kairiki( const FLDSKILL_CHECK_WORK * scwk)
 #if 0 //wb 現状無視
   if( CheckMapModeUse(scwk) == TRUE ){
     return FLDSKILL_RET_USE_NG;
-  }
-#endif
-
-  // バッジチェック
-#if 0 //wb 現状無視
-  if( CheckBadge(scwk,0) == FALSE ){
-    return FLDSKILL_RET_NO_BADGE;
   }
 #endif
 
@@ -641,21 +620,7 @@ static FLDSKILL_RET SkillCheck_Sorawotobu( const FLDSKILL_CHECK_WORK * scwk)
   }
 #endif
 
-  // バッジチェック
-#if 0 //wb 現状無視
-  if( CheckBadge(scwk,0) == FALSE ){
-    return FLDSKILL_RET_NO_BADGE;
-  }
-#endif
-  
-	// 連れ歩き
-#if 0 //wb 現状無視
-	if( CompanionCheck( scwk ) == TRUE ){
-		return FIELDSKILL_COMPANION;
-	}
-#endif
-  
-  if( /*IsEnableSkill(scwk,FLDSKILL_IDX_SORAWOTOBU)*/1){
+  if( IsEnableSkill(scwk,FLDSKILL_IDX_SORAWOTOBU) ){
     return FLDSKILL_RET_USE_OK;
   }
   
@@ -744,6 +709,17 @@ static GMEVENT_RESULT GMEVENT_Flash(GMEVENT *event, int *seq, void *wk )
     switch( *seq )
     {
     case 0:
+        {
+          u16 prm0;
+          SCRIPT_WORK *sc;
+          
+          prm0 = hsw->head.poke_pos;
+          sc = SCRIPT_CallScript( event, SCRID_HIDEN_FLASH_MENU, NULL, NULL, HEAPID_FIELDMAP );
+          SCRIPT_SetScriptWorkParam( sc, prm0, 0, 0, 0 );
+        }
+        (*seq) ++;
+        break;
+    case 1:
       // ON
       if( !FIELD_STATUS_IsFieldSkillFlash(fldstatus) )
       {
@@ -758,7 +734,7 @@ static GMEVENT_RESULT GMEVENT_Flash(GMEVENT *event, int *seq, void *wk )
       (*seq) ++;
       break;
 
-    case 1:
+    case 2:
       if( FIELD_FLASH_GetStatus( flash ) == FIELD_FLASH_STATUS_FAR )
       {
         return GMEVENT_RES_FINISH;  // 完了
@@ -770,6 +746,174 @@ static GMEVENT_RESULT GMEVENT_Flash(GMEVENT *event, int *seq, void *wk )
   return GMEVENT_RES_CONTINUE;
 }
 
+//======================================================================
+//  あなをほる
+//======================================================================
+
+//--------------------------------------------------------------
+/**
+ * あなをほる使用チェック
+ * @param scwk  FLDSKILL_CHECK_WORK
+ * @retval FLDSLILL_RET
+ */
+//--------------------------------------------------------------
+static FLDSKILL_RET SkillCheck_Anawohoru( const FLDSKILL_CHECK_WORK * scwk)
+{
+#if 0
+	// コロシアム・ユニオンルームチェック
+	if( MapModeUseChack( scwk ) == FALSE ){
+		return FIELDSKILL_USE_FALSE;
+	}
+#endif
+
+	if (IsEnableSkill(scwk, FLDSKILL_IDX_ANAWOHORU)) {
+		return FLDSKILL_RET_USE_OK;
+	} else {
+		return FLDSKILL_RET_USE_NG;
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * あなをほる使用
+ * @param head FLDSKILL_USE_HEADER
+ * @parama  scwk FLDSKILL_CHECK_WORK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static GMEVENT * SkillUse_Anawohoru(
+    const FLDSKILL_USE_HEADER *head, const FLDSKILL_CHECK_WORK *scwk )
+{
+  GMEVENT *event;
+  HIDEN_SCR_WORK *hsw;
+  
+  event = GMEVENT_Create( scwk->gsys, NULL,
+      GMEVENT_Anawohoru, sizeof(HIDEN_SCR_WORK) );
+  hsw = GMEVENT_GetEventWork( event );
+  InitHSW( hsw, head, scwk );
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * あなをほる呼び出しイベント
+ * @param event GMEVENT*
+ * @parama seq シーケンス
+ * @param wk event work
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT GMEVENT_Anawohoru(GMEVENT *event, int *seq, void *wk )
+{
+  HIDEN_SCR_WORK *hsw = wk;
+  switch (*seq)
+  {
+  case 0:
+    {
+      u16 prm0;
+      SCRIPT_WORK *sc;
+      
+      prm0 = hsw->head.poke_pos;
+      sc = SCRIPT_CallScript( event, SCRID_HIDEN_ANAWOHORU_MENU, NULL, NULL, HEAPID_FIELDMAP );
+      SCRIPT_SetScriptWorkParam( sc, prm0, 0, 0, 0 );
+    }
+    ++(*seq);
+    break;
+  case 1:
+    {
+      GMEVENT *next_event = EVENT_ChangeMapByAnawohoru( hsw->gsys );
+      GMEVENT_ChangeEvent( event, next_event );
+    }
+    break;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//======================================================================
+//  テレポート
+//======================================================================
+
+//--------------------------------------------------------------
+/**
+ * テレポート使用チェック
+ * @param scwk  FLDSKILL_CHECK_WORK
+ * @retval FLDSLILL_RET
+ */
+//--------------------------------------------------------------
+static FLDSKILL_RET SkillCheck_Teleport( const FLDSKILL_CHECK_WORK * scwk)
+{
+#if 0
+	// コロシアム・ユニオンルームチェック
+	if( MapModeUseChack( scwk ) == FALSE ){
+		return FIELDSKILL_USE_FALSE;
+	}
+#endif
+
+	if (IsEnableSkill(scwk, FLDSKILL_IDX_TELEPORT)) {
+		return FLDSKILL_RET_USE_OK;
+	} else {
+		return FLDSKILL_RET_USE_NG;
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * テレポート使用
+ * @param head FLDSKILL_USE_HEADER
+ * @parama  scwk FLDSKILL_CHECK_WORK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static GMEVENT * SkillUse_Teleport(
+    const FLDSKILL_USE_HEADER *head, const FLDSKILL_CHECK_WORK *scwk )
+{
+  GMEVENT *event;
+  HIDEN_SCR_WORK *hsw;
+  
+  event = GMEVENT_Create( scwk->gsys, NULL,
+      GMEVENT_Teleport, sizeof(HIDEN_SCR_WORK) );
+  hsw = GMEVENT_GetEventWork( event );
+  InitHSW( hsw, head, scwk );
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * テレポート呼び出しイベント
+ * @param event GMEVENT*
+ * @parama seq シーケンス
+ * @param wk event work
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT GMEVENT_Teleport(GMEVENT *event, int *seq, void *wk )
+{
+  HIDEN_SCR_WORK *hsw = wk;
+  switch (*seq)
+  {
+  case 0:
+    {
+      u16 prm0;
+      SCRIPT_WORK *sc;
+      
+      prm0 = hsw->head.poke_pos;
+      sc = SCRIPT_CallScript( event, SCRID_HIDEN_TELEPORT_MENU, NULL, NULL, HEAPID_FIELDMAP );
+      SCRIPT_SetScriptWorkParam( sc, prm0, 0, 0, 0 );
+    }
+    ++(*seq);
+    break;
+  case 1:
+    {
+      GMEVENT *next_event = EVENT_ChangeMapByTeleport( hsw->gsys );
+      GMEVENT_ChangeEvent( event, next_event );
+    }
+    break;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//======================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * ダミー使用チェック
@@ -882,38 +1026,6 @@ static BOOL IsEnableSkill(
 
 //--------------------------------------------------------------
 /**
- * バッジチェック
- * @param scwk FLDSKILL_CHECK_WORK
- * @param badge バッジID
- * @retval BOOL TRUE=バッジあり
- */
-//--------------------------------------------------------------
-static BOOL CheckBadge(
-    const FLDSKILL_CHECK_WORK *scwk, int badge_id )
-{
-  GAMEDATA *gdata = GAMESYSTEM_GetGameData( scwk->gsys );
-  MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
-  return MyStatus_GetBadgeFlag( mystatus, badge_id );
-}
-
-//--------------------------------------------------------------
-/**
- * 連れ歩きチェック
- * @param scwk FLDSKILL_CHECK_WORK
- * @retval TRUE=連れ歩き
- */
-//--------------------------------------------------------------
-static BOOL CheckCompanion( const FLDSKILL_CHECK_WORK *scwk )
-{
-#if 0 //wb null
-  return SysFlag_PairCheck( SaveData_GetEventWork(scwk->fsys->savedata) );
-#else
-  return FALSE;
-#endif
-}
-
-//--------------------------------------------------------------
-/**
  * サファリ・ポケパークチェック
  * @param scwk FLDSKILL_CHECK_WORK
  * @retval TRUE=サファリ・ポケパーク
@@ -996,8 +1108,8 @@ static const FLDSKILL_FUNC_DATA SkillFuncTable[FLDSKILL_IDX_MAX] =
   {SkillUse_Dummy,SkillCheck_Dummy},    // 06 :いわくだき
   {SkillUse_Dummy,SkillCheck_Dummy},    // 07 :ロッククライム
   {SkillUse_Flash,SkillCheck_Flash},    // 08 :フラッシュ
-  {SkillUse_Dummy,SkillCheck_Dummy},    // 09 :テレポート
-  {SkillUse_Dummy,SkillCheck_Dummy},    // 10 :あなをほる
+  {SkillUse_Teleport,SkillCheck_Teleport},    // 09 :テレポート
+  {SkillUse_Anawohoru,SkillCheck_Anawohoru},    // 10 :あなをほる
   {SkillUse_Amaikaori,SkillCheck_Amaikaori},   // 11 :あまいかおり
   {SkillUse_Dummy,SkillCheck_Dummy},    // 12 :おしゃべり
 };
