@@ -189,6 +189,7 @@ GMEVENT * EVENT_FieldCrossOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap,
 
 	return event;
 }
+
 //------------------------------------------------------------------
 /**
  * @brief	空を飛ぶブライトネスアウトイベント生成
@@ -211,6 +212,30 @@ GMEVENT * EVENT_FlySkyBrightOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap,
 
 	return event;
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief	ブライトネスアウトイベント生成
+ * @param	gsys		  GAMESYS_WORKへのポインタ
+ * @param	fieldmap	フィールドマップワークへのポインタ
+ * @param	type		  フェードの種類指定
+ * @param wait      フェード完了を待つかどうか
+ * @return	GMEVENT	生成したイベントへのポインタ
+ */
+//------------------------------------------------------------------
+GMEVENT * EVENT_FieldBrightOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
+                                FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait )
+{
+	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldBrightOutEvent, sizeof(FADE_EVENT_WORK));
+	FADE_EVENT_WORK * few = GMEVENT_GetEventWork(event);
+  few->gsys      = gsys;
+  few->fieldmap  = fieldmap;
+	few->fade_type = type;
+  few->wait_type = wait;
+
+	return event;
+}
+
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -267,7 +292,7 @@ static GMEVENT_RESULT FieldCrossInEvent(GMEVENT * event, int *seq, void * work)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static GMEVENT_RESULT FieldBrightInEvent(GMEVENT * event, int *seq, void * work)
+static GMEVENT_RESULT FlySkyBrightInEvent(GMEVENT * event, int *seq, void * work)
 {
 	FADE_EVENT_WORK* few = work;
 	switch (*seq) {
@@ -306,6 +331,66 @@ static GMEVENT_RESULT FieldBrightInEvent(GMEVENT * event, int *seq, void * work)
           GFL_DISP_GX_SetVisibleControlDirect( mv );
         }
         FIELDMAP_InitBG(few->fieldmap);
+      }
+    }
+		(*seq) ++;
+		break;
+	case 1:
+    {
+      BOOL rc = FALSE;
+      if( few->wait_type == FIELD_FADE_NO_WAIT ) rc = TRUE;
+		  if( GFL_FADE_CheckFade() == FALSE ) rc = TRUE; 
+      if( rc ){ (*seq) ++; }
+    }
+		break;
+  case 2:
+    return GMEVENT_RES_FINISH;
+	}
+
+	return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT FieldBrightInEvent(GMEVENT * event, int *seq, void * work)
+{
+	FADE_EVENT_WORK* few = work;
+	switch (*seq) {
+	case 0:
+    { 
+      GAMEDATA*       gdata = GAMESYSTEM_GetGameData( few->gsys );
+      FIELD_STATUS* fstatus = GAMEDATA_GetFieldStatus( gdata );
+      // BGモード設定と表示設定の復帰
+      {
+        int mv = GFL_DISP_GetMainVisible();
+        FIELDMAP_InitBGMode();
+        GFL_DISP_GX_SetVisibleControlDirect( mv );
+      }
+      FIELDMAP_InitBG(few->fieldmap);
+
+      if( FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(季節表示フラグON)
+      { // 四季表示
+        u8 start, end;
+        start = (FIELD_STATUS_GetSeasonDispLast( fstatus ) + 1) % PMSEASON_TOTAL;
+        end   = GAMEDATA_GetSeasonID( gdata );
+        GMEVENT_CallEvent( event, EVENT_SeasonDisplay( few->gsys, few->fieldmap, start, end ) );
+        FIELD_STATUS_SetSeasonDispFlag( fstatus, FALSE );
+        FIELD_STATUS_SetSeasonDispLast( fstatus, end );
+        *seq = 2;
+        break;
+      }
+      else
+      {
+        int mode;
+        if ( few->fade_type ==  FIELD_FADE_BLACK)
+        {
+          mode = GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB;
+        }
+        else
+        {
+          mode = GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN | GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB;
+        }
+        GFL_FADE_SetMasterBrightReq(mode, 16, 0, 0);
       }
     }
 		(*seq) ++;
@@ -398,6 +483,29 @@ GMEVENT * EVENT_FieldCrossIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap,
 GMEVENT * EVENT_FlySkyBrightIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
                                FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait )
 {
+	GMEVENT * event = GMEVENT_Create(gsys, NULL, FlySkyBrightInEvent, sizeof(FADE_EVENT_WORK));
+	FADE_EVENT_WORK * few = GMEVENT_GetEventWork(event);
+  few->gsys      = gsys;
+  few->fieldmap  = fieldmap;
+	few->fade_type = type;
+  few->wait_type = wait;
+
+	return event;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	ブライトネスインイベント生成
+ * @param	gsys		  GAMESYS_WORKへのポインタ
+ * @param	fieldmap  フィールドマップワークへのポインタ
+ * @param	type		  フェードの種類指定
+ * @param wait      フェード完了を待つかどうか
+ * @return	GMEVENT	生成したイベントへのポインタ
+ */
+//------------------------------------------------------------------
+GMEVENT * EVENT_FieldBrightIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
+                               FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait )
+{
 	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldBrightInEvent, sizeof(FADE_EVENT_WORK));
 	FADE_EVENT_WORK * few = GMEVENT_GetEventWork(event);
   few->gsys      = gsys;
@@ -407,6 +515,7 @@ GMEVENT * EVENT_FlySkyBrightIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap,
 
 	return event;
 }
+
 
 
 //============================================================================================
