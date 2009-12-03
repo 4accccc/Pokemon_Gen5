@@ -578,6 +578,20 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( fieldWork->gamedata );
     fieldWork->fieldskill_mapeff = FIELDSKILL_MAPEFF_Create( 
         FIELD_STATUS_GetFieldSkillMapEffectMsk(fldstatus), fieldWork->heapID ); 
+
+    // 整合性チェック
+#ifdef PM_DEBUG
+    {
+      u32 msk = FIELD_STATUS_GetFieldSkillMapEffectMsk(fldstatus);
+      BOOL flash = FIELD_STATUS_IsFieldSkillFlash(fldstatus);
+      msk = FIELDSKILL_MAPEFF_MSK_IS_ON( msk, FIELDSKILL_MAPEFF_MSK_FLASH_FAR );
+      if( msk )
+      {
+        msk = TRUE;
+      }
+      GF_ASSERT( msk == flash );
+    }
+#endif
   }
 
   fieldWork->camera_control = FIELD_CAMERA_Create(

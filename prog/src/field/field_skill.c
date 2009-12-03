@@ -723,8 +723,16 @@ static GMEVENT_RESULT GMEVENT_Flash(GMEVENT *event, int *seq, void *wk )
       // ON
       if( !FIELD_STATUS_IsFieldSkillFlash(fldstatus) )
       {
+        FIELD_STATUS * p_fldstatus = GAMEDATA_GetFieldStatus( gdata );
+        u32 msk;
+
         FIELD_STATUS_SetFieldSkillFlash( fldstatus, TRUE );
         FIELD_FLASH_Control( flash, FIELD_FLASH_REQ_FADEOUT );
+
+        msk = FIELD_STATUS_GetFieldSkillMapEffectMsk( p_fldstatus );
+        FIELDSKILL_MAPEFF_MSK_OFF( msk, FIELDSKILL_MAPEFF_MSK_FLASH_NEAR );
+        FIELDSKILL_MAPEFF_MSK_ON( msk, FIELDSKILL_MAPEFF_MSK_FLASH_FAR );
+        FIELD_STATUS_SetFieldSkillMapEffectMsk( p_fldstatus, msk );
       }
       else
       {
