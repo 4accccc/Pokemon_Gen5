@@ -69,6 +69,8 @@ enum{
 */
 //=============================================================================
 static void PokeGra_GetFileOffset( int mons_no, int form_no, int sex, int rare, int dir, BOOL egg, u32 *p_mons_offset, u32 *p_dir_offset, u32 *p_sex_offset, u32 *p_rare_offset );
+static BOOL PokeGra_IsEgg( int mons_no, BOOL egg );
+static int  PokeGra_CheckEggForm( int mons_no, int form_no );
 
 //=============================================================================
 /**
@@ -105,8 +107,26 @@ ARCDATID POKEGRA_GetCgrArcIndex( int mons_no, int form_no, int sex, int rare, in
 	u32 dir_offset;
 	u32 sex_offset;
 
-	PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, &dir_offset, &sex_offset, NULL );
-	return mons_offset + dir_offset + POKEGRA_M_NCGR + sex_offset;
+  if( PokeGra_IsEgg( mons_no, egg ) )
+  { 
+    //卵の場合、ファイル指定
+    form_no = PokeGra_CheckEggForm( mons_no, form_no );
+
+    if( form_no )
+    { 
+	    return NARC_pokegra_wb_pfwb_egg_manafi_m_NCGR;
+    }
+    else
+    { 
+	    return NARC_pokegra_wb_pfwb_egg_normal_m_NCGR;
+    }
+  }
+  else
+  { 
+    //ポケモンの場合は、ファイルオフセットから取得する
+    PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, &dir_offset, &sex_offset, NULL );
+    return mons_offset + dir_offset + POKEGRA_M_NCGR + sex_offset;
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -127,8 +147,9 @@ ARCDATID POKEGRA_GetCbrArcIndex( int mons_no, int form_no, int sex, int rare, in
 	u32 dir_offset;
 	u32 sex_offset;
 
-	PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, &dir_offset, &sex_offset, NULL );
-	return mons_offset + dir_offset + POKEGRA_M_NCBR + sex_offset;
+  //ポケモンの場合はオフセット
+  PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, &dir_offset, &sex_offset, NULL );
+  return mons_offset + dir_offset + POKEGRA_M_NCBR + sex_offset;
 }
 //----------------------------------------------------------------------------
 /**
@@ -145,12 +166,27 @@ ARCDATID POKEGRA_GetCbrArcIndex( int mons_no, int form_no, int sex, int rare, in
 //-----------------------------------------------------------------------------
 ARCDATID POKEGRA_GetPalArcIndex( int mons_no, int form_no, int sex, int rare, int dir, BOOL egg )
 {	
-	u32 mons_offset;
-	u32 rare_offset;
+  if( PokeGra_IsEgg( mons_no, egg ) )
+  { 
+    //卵の場合、ファイル指定
+    form_no = PokeGra_CheckEggForm( mons_no, form_no );
 
-	PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, NULL, NULL, &rare_offset );
-
-	return mons_offset + POKEGRA_NORMAL_NCLR + rare_offset;
+    if( form_no )
+    { 
+	    return NARC_pokegra_wb_pmwb_egg_manafi_n_NCLR;
+    }
+    else
+    { 
+	    return NARC_pokegra_wb_pmwb_egg_normal_n_NCLR;
+    }
+  }
+  else
+  {
+    u32 mons_offset;
+    u32 rare_offset;
+    PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, NULL, NULL, &rare_offset );
+    return mons_offset + POKEGRA_NORMAL_NCLR + rare_offset;
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -167,12 +203,29 @@ ARCDATID POKEGRA_GetPalArcIndex( int mons_no, int form_no, int sex, int rare, in
 //-----------------------------------------------------------------------------
 ARCDATID POKEGRA_GetCelArcIndex( int mons_no, int form_no, int sex, int rare, int dir, BOOL egg )
 {	
-	u32 mons_offset;
-	u32 dir_offset;
 
-	PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, &dir_offset, NULL, NULL );
+  if( PokeGra_IsEgg( mons_no, egg ) )
+  { 
+    //卵の場合、ファイル指定
+    form_no = PokeGra_CheckEggForm( mons_no, form_no );
 
-	return mons_offset + dir_offset + POKEGRA_NCER;
+    if( form_no )
+    { 
+	    return NARC_pokegra_wb_pfwb_egg_manafi_m_NCGR;
+    }
+    else
+    { 
+	    return NARC_pokegra_wb_pfwb_egg_normal_m_NCGR;
+    }
+  }
+  else
+  { 
+    u32 mons_offset;
+    u32 dir_offset;
+
+    PokeGra_GetFileOffset( mons_no, form_no, sex, rare, dir, egg, &mons_offset, &dir_offset, NULL, NULL );
+    return mons_offset + dir_offset + POKEGRA_NCER;
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -288,73 +341,42 @@ static void PokeGra_GetFileOffset( int mons_no, int form_no, int sex, int rare, 
 	u32 file_start;
 	u32 file_offset;
 
-  if( mons_no == MONSNO_TAMAGO || egg == TRUE )
-  { 
-    //卵チェック
-    GF_ASSERT_MSG( form_no >= 2, "卵のフォルムが２以上です。強制的に書き換えます。form_no%d\n", form_no  );
-    if( mons_no == MONSNO_MANAFI )
-    {
-      form_no = 1;
-    }
-    else
-    { 
-      if( mons_no != MONSNO_TAMAGO )
-      { 
-        form_no = 0;
-      }
-    }
+  //モンスターナンバーは１オリジン
+  //リソースは０オリジンのため、－１
+  mons_no	-= 1;
 
+  file_start	= POKEGRA_FILE_MAX * mons_no;
+  file_offset	= (dir == POKEGRA_DIR_FRONT) ? POKEGRA_FRONT_M_NCGR: POKEGRA_BACK_M_NCGR;
 
-    if( form_no )
-    { 
-	    file_start = NARC_pokegra_wb_pfwb_egg_manafi_m_NCGR;
-    }
-    else
-    { 
-	    file_start = NARC_pokegra_wb_pfwb_egg_normal_m_NCGR;
-    }
-    file_offset = 0;
-    sex = PTL_SEX_MALE;
-  }
-  else
-  { 
-	  //モンスターナンバーは１オリジン
-	  //リソースは０オリジンのため、－１
-	  mons_no	-= 1;
- 
-	  file_start	= POKEGRA_FILE_MAX * mons_no;
-	  file_offset	= (dir == POKEGRA_DIR_FRONT) ? POKEGRA_FRONT_M_NCGR: POKEGRA_BACK_M_NCGR;
-  
-	  //本来は別フォルム処理を入れる@todo
+  //本来は別フォルム処理を入れる@todo
 #if defined(DEBUG_ONLY_FOR_sogabe) || defined(DEBUG_ONLY_FOR_toru_nagihashi)
 #warning Another Form Nothing
 #endif
-  
-	  //性別のチェック
-	  switch( sex ){
-	  case PTL_SEX_MALE:
-		  break;
-	  case PTL_SEX_FEMALE:
-		  //オスメス書き分けしているかチェックする（サイズが０なら書き分けなし）
-		  sex = ( GFL_ARC_GetDataSize( ARCID_POKEGRA, file_start + file_offset + 1 ) == 0 ) ? PTL_SEX_MALE : PTL_SEX_FEMALE;
-		  break;
-	  case PTL_SEX_UNKNOWN:
-		  //性別なしは、オス扱いにする
-		  sex = PTL_SEX_MALE;
-		  break;
-	  default:
-		  //ありえない性別
-		  GF_ASSERT(0);
-		  break;
-	  }
+
+  //性別のチェック
+  switch( sex ){
+  case PTL_SEX_MALE:
+    break;
+  case PTL_SEX_FEMALE:
+    //オスメス書き分けしているかチェックする（サイズが０なら書き分けなし）
+    sex = ( GFL_ARC_GetDataSize( ARCID_POKEGRA, file_start + file_offset + 1 ) == 0 ) ? PTL_SEX_MALE : PTL_SEX_FEMALE;
+    break;
+  case PTL_SEX_UNKNOWN:
+    //性別なしは、オス扱いにする
+    sex = PTL_SEX_MALE;
+    break;
+  default:
+    //ありえない性別
+    GF_ASSERT(0);
+    break;
   }
 
-	//受け取り
-	if( p_mons_offset )
-	{	
-		*p_mons_offset	= file_start;
-	}
-	if( p_dir_offset )
+  //受け取り
+  if( p_mons_offset )
+  {	
+    *p_mons_offset	= file_start;
+  }
+  if( p_dir_offset )
 	{	
 		*p_dir_offset		= file_offset;
 	}
@@ -366,4 +388,48 @@ static void PokeGra_GetFileOffset( int mons_no, int form_no, int sex, int rare, 
 	{	
 		*p_rare_offset	= rare;
 	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  卵かチェック
+ *
+ *	@param	int mons_no モンスター番号
+ *	@param	egg         卵
+ *	@retval TRUE卵  FALSEモンスター
+ */
+//-----------------------------------------------------------------------------
+static BOOL PokeGra_IsEgg( int mons_no, BOOL egg )
+{ 
+
+  return mons_no == MONSNO_TAMAGO || egg == TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  卵のフォルムをチェック
+ *
+ *	@param	int mons_no モンスター番号
+ *	@param	form_no     フォルム
+ *
+ *	@return 修正したフォルム
+ */
+//-----------------------------------------------------------------------------
+static int  PokeGra_CheckEggForm( int mons_no, int form_no)
+{ 
+  GF_ASSERT_MSG( form_no < 2, "卵のフォルムが２以上です。強制的に書き換えます。form_no%d\n", form_no  );
+  if( mons_no == MONSNO_MANAFI )
+  {
+    form_no = 1;
+  }
+  else
+  { 
+    if( mons_no != MONSNO_TAMAGO )
+    { 
+      if( form_no >= 2 )
+      { 
+          form_no = 0;
+      }
+    }
+  }
+
+  return form_no;
 }

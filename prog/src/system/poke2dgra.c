@@ -11,6 +11,10 @@
 //ライブラリ
 #include <gflib.h>
 
+//アーカイブ
+#include "arc_def.h"
+#include "pokegra/pokegra_wb.naix"
+
 //リソース
 #include "system/pokegra.h"
 #include "app/app_menu_common.h"
@@ -399,14 +403,27 @@ u32 POKE2DGRA_OBJ_CELLANM_Register( int mons_no, int form_no, int sex, int rare,
 	u32 cel, anm;
 	u32 ret;
 
-	{	
-		cel	= APP_COMMON_GetDummyCellArcIdx( mapping );
-		anm	= APP_COMMON_GetDummyAnimeArcIdx( mapping );
-	}
+  if( mons_no == MONSNO_TAMAGO || egg == TRUE )
+  {
+    //卵の場合はファイル指定
+    p_handle  = POKE2DGRA_OpenHandle( heapID );
+    ret	= GFL_CLGRP_CELLANIM_Register( p_handle,
+        NARC_pokegra_wb_pfwb_egg_normal_NCER,
+        NARC_pokegra_wb_pfwb_egg_normal_NANR, heapID );
+    GFL_ARC_CloseDataHandle( p_handle );
+  }
+  else
+  { 
+    //ポケモン場合は、ダミーセル
+    {	
+      cel	= APP_COMMON_GetDummyCellArcIdx( mapping );
+      anm	= APP_COMMON_GetDummyAnimeArcIdx( mapping );
+    }
 
-	p_handle	= GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), heapID );
-	ret	= GFL_CLGRP_CELLANIM_Register( p_handle, cel, anm, heapID );
-	GFL_ARC_CloseDataHandle( p_handle );
+    p_handle	= GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), heapID );
+    ret	= GFL_CLGRP_CELLANIM_Register( p_handle, cel, anm, heapID );
+    GFL_ARC_CloseDataHandle( p_handle );
+  }
 
 	return ret;
 }//----------------------------------------------------------------------------
