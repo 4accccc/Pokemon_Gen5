@@ -18,7 +18,7 @@
 #define SP_LIFT_MOVE_SPEED1 (8)
 #define SP_LIFT_MOVE_SPEED2 (2)
 //隔壁オープン待ち時間
-#define WALL_ANM_WAIT (80)
+#define WALL_ANM_WAIT (100)
 //隔壁オープン開始高さ
 #define WALL_ANM_START_HEIHGT (-35)
 //リフト振動幅
@@ -36,7 +36,7 @@
 //隔壁位置
 #define WALL_Y_POS (-40)
 //降下時フォグフェード位置
-#define DOWN_FOG_FADE_START (-50)
+#define DOWN_FOG_FADE_START (-49)
 //上昇時フォグフェード位置
 #define UP_FOG_FADE_START (-42)
 //移動速度が速いときのフォグフェードシンク
