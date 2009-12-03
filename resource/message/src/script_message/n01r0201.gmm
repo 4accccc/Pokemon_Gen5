@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00207" date="2009-12-03T12:55:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="285"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,11 +292,60 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_n01r0201_ninja_01">
+		<comment>♂
+・この動作モデルは最初、表示されていない
+・pos（GRIDX=7、GRIDZ=13~17）を踏むとメッセージ表示
+・メッセージ表示後、主人公を
+　GRIDX=22、GRIDZ=15まで移動させると次のメッセージ</comment>
+		<attribute name="キャラ指定">NINJA
+ダークトリニティ</attribute>
+		<language name="JPN" width="256">？？？『すこしのあいだ
+おまえの　じゆうを　いただく[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">？？？『すこしのあいだ
+おまえの　じゆうを　いただく[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_n01r0201_ninja_02">
+		<comment>♂
+・主人公右向き、その背後に動作モデルを出現
+・主人公に！マーク表示後、主人公左向きにして
+　メッセージ表示
+</comment>
+		<language name="JPN" width="256">……わたしは
+ダークトリニティの　ひとり[BE:01:ページ切り替え（クリア）]
+……ゲーチスさまの
+ちゅうじつな　はいか[BE:01:ページ切り替え（クリア）]
+この　しろでも
+ポケモンの　かいふくや[BE:00:ページ切り替え（行送り）]
+パソコンは　つかえる……[BE:01:ページ切り替え（クリア）]
+あんしん　しろ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">……わたしは
+ダークトリニティの　ひとり[BE:01:ページ切り替え（クリア）]
+……ゲーチスさまの
+ちゅうじつな　はいか[BE:01:ページ切り替え（クリア）]
+この　しろでも
+ポケモンの　かいふくや[BE:00:ページ切り替え（行送り）]
+パソコンは　つかえる……[BE:01:ページ切り替え（クリア）]
+あんしん　しろ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_n01r0201_ninja_03">
+		<comment>♂
+・主人公とダークトリニティの動作モデル
+　上向きにしてメッセージ表示
+・メッセージ表示後、動作モデル消去
+　主人公、操作可能になる</comment>
+		<language name="JPN" width="256">……まずは　あのへやで
+ポケモンを　やすめるが　いい[BE:01:ページ切り替え（クリア）]
+おまえが　このしろの
+いちばん　おくに　すすむのが[BE:00:ページ切り替え（行送り）]
+ゲーチスさまの　のぞみ……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">……まずは　あのへやで
+ポケモンを　やすめるが　いい[BE:01:ページ切り替え（クリア）]
+おまえが　このしろの
+いちばん　おくに　すすむのが[BE:00:ページ切り替え（行送り）]
+ゲーチスさまの　のぞみ……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>
