@@ -2995,8 +2995,9 @@ static void checkWinner( BTL_MAIN_MODULE* wk )
     u8 restPokeCnt[2];
 
     GFL_STD_MemClear( restPokeCnt, sizeof(restPokeCnt) );
-    container = &wk->pokeconForServer;
+    container = &wk->pokeconForClient;
 
+    BTL_Printf("*** 勝敗チェック ***\n");
     for(i=0; i<BTL_CLIENT_MAX; ++i)
     {
       if( PokeCon_IsExistClient( container, i ) )
@@ -3005,10 +3006,14 @@ static void checkWinner( BTL_MAIN_MODULE* wk )
         if( BTL_PARTY_GetMemberCount(party) )
         {
           u8 side = BTL_MAIN_GetClientSide( wk, i );
-          restPokeCnt[side] += BTL_PARTY_GetAliveMemberCount( party );
+          u8 aliveCnt = BTL_PARTY_GetAliveMemberCount( party );
+          BTL_Printf("クライアント(%d)の生き残りポケモン数=%d\n", i, aliveCnt);
+          restPokeCnt[side] += aliveCnt;
         }
       }
     }
+
+    BTL_Printf("残りポケ数  side0=%d, side1=%d\n", restPokeCnt[0], restPokeCnt[1]);
 
     if( restPokeCnt[0] == restPokeCnt[1] )
     {
