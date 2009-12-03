@@ -613,8 +613,8 @@
 #define FV_D03R0101_CHAMPION_01            589 /* 0x024d D03砂漠のチャンピオン */
 #define FV_D04R0601_EVENT_01               590 /* 0x024e D04遺跡のゲーチス、チャンピオン、ライバル（共有） */
 #define FV_D04R0101_CORN_01                591 /* 0x024f 道路のコーン（ストッパー） */
-		/* not used   592(0x0250) */
-		/* not used   593(0x0251) */
+#define FV_C03R0801_FUTAGO_01              592 /* 0x0250 遊覧船イベントの双子ちゃん１（左側） */
+#define FV_C03R0801_FUTAGO_02              593 /* 0x0251 遊覧船イベントの双子ちゃん２（右側） */
 		/* not used   594(0x0252) */
 		/* not used   595(0x0253) */
 		/* not used   596(0x0254) */
