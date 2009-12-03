@@ -2252,6 +2252,7 @@ static void fldTalkMsgWin_Add(
   case FLDTALKMSGWIN_IDX_UPPER:
     TALKMSGWIN_CreateFixWindowUpper( tmsg->talkMsgWinSys,
         FLDTALKMSGWIN_IDX_UPPER, (VecFx32*)pos, strBuf, 15 );
+    break;
   case FLDTALKMSGWIN_IDX_LOWER:
     TALKMSGWIN_CreateFixWindowLower( tmsg->talkMsgWinSys,
         FLDTALKMSGWIN_IDX_LOWER, (VecFx32*)pos, strBuf, 15 );
