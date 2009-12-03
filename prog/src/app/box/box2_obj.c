@@ -3571,8 +3571,10 @@ void BOX2OBJ_TrayIconScroll( BOX2_SYS_WORK * syswk, s16 mv )
 
 	if( GFL_STD_Abs(mv) == BOX2MAIN_TRAYICON_SCROLL_CNT ){
 		prm = 2;
+//		prm = 4;
 	}else{
-		prm = 4;
+//		prm = 4;
+		prm = 8;
 	}
 	if( mv < 0 ){
 		prm *= -1;

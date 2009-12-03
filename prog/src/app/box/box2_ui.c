@@ -3594,12 +3594,27 @@ u32 BOX2UI_HitCheckContTrayIconScroll(void)
 }
 
 
+static const GFL_UI_TP_HITTBL TrayScrollStartHitTbl[] =
+{
+	{ 0, 167, 228, 255 },
+	{ 0, 167, 168, 195 },
+	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
+};
 static const GFL_UI_TP_HITTBL TrayScrollHitTbl[] =
 {
-	{ 0, 167, 240, 255 },
+	{ 0, 191, 168, 255 },
 	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
 
+
+BOOL BOX2UI_HitCheckTrayScrollStart( u32 * x, u32 * y )
+{
+	if( GFL_UI_TP_HitCont( TrayScrollStartHitTbl ) != GFL_UI_TP_HIT_NONE ){
+		GFL_UI_TP_GetPointCont( x, y );
+		return TRUE;
+	}
+	return FALSE;
+}
 
 BOOL BOX2UI_HitCheckTrayScroll( u32 * x, u32 * y )
 {

@@ -99,6 +99,12 @@ enum {
 	YESNO_ID_BOX_END_CANCEL,	// ボックス終了（キャンセル）
 };
 
+// トレイアイコンスクロールワーク
+typedef struct {
+	s16	cnt;
+	s16	mv;
+}SEQWK_TRAYICON_SCROLL;
+
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -275,9 +281,9 @@ static int MainSeq_ArrangePartyButton( BOX2_SYS_WORK * syswk );
 static int MainSeq_ArrangeMoveButton( BOX2_SYS_WORK * syswk );
 static int MainSeq_StatusCall( BOX2_SYS_WORK * syswk );
 static int MainSeq_ItemMenuCheck( BOX2_SYS_WORK * syswk );
-static int MainSeq_MarkingButton( BOX2_SYS_WORK * syswk );
+//static int MainSeq_MarkingButton( BOX2_SYS_WORK * syswk );
 //static int MainSeq_MarkingEndButton( BOX2_SYS_WORK * syswk );
-static int MainSeq_FreeButton( BOX2_SYS_WORK * syswk );
+//static int MainSeq_FreeButton( BOX2_SYS_WORK * syswk );
 static int MainSeq_ArrangeMenuClose( BOX2_SYS_WORK * syswk );
 static int MainSeq_ArrangePartyMenuClose( BOX2_SYS_WORK * syswk );
 static int MainSeq_PartyChgButton( BOX2_SYS_WORK * syswk );
@@ -419,6 +425,8 @@ static int SetCursorMoveRet( BOX2_SYS_WORK * syswk, int next );
 
 static int SetWallPaperChange( BOX2_SYS_WORK * syswk, u32 pos );
 
+static void CreateTrayIconScrollWork( BOX2_SYS_WORK * syswk );
+
 
 //============================================================================================
 //	グローバル変数
@@ -557,6 +565,7 @@ static const pBOX2_FUNC MainSeq[] = {
 	MainSeq_ArrangeBoxThemaButtonIn,
 	MainSeq_ArrangeBoxThemaChgMain,
 	MainSeq_BoxThemaChgCurMoveRet,
+/*
 	MainSeq_ArrangeWallPaperFrmIn,
 	MainSeq_ArrangeWallPaperMenuIn,
 	MainSeq_ArrangeWallPaperChgStart,
@@ -568,6 +577,7 @@ static const pBOX2_FUNC MainSeq[] = {
 	MainSeq_ArrangeWallPaperWhiteOut,
 	MainSeq_ArrangeWallPaperWhiteIn,
 	MainSeq_WallPaperChgCurMoveRet,
+*/
 
 
 	MainSeq_ArrangeBoxPartyChgMainCurMoveRet,
@@ -655,9 +665,9 @@ static const pBOX2_FUNC MainSeq[] = {
 	MainSeq_BoxEndCancelInit,
 	MainSeq_ArrangePartyButton,
 	MainSeq_ArrangeMoveButton,
-	MainSeq_MarkingButton,					// 消す予定
+//	MainSeq_MarkingButton,					// 消す予定
 //	MainSeq_MarkingEndButton,
-	MainSeq_FreeButton,							// 消す予定
+//	MainSeq_FreeButton,							// 消す予定
 
 	MainSeq_PartyChgButton,
 	MainSeq_ArrangePartyCloseButton,
@@ -665,9 +675,9 @@ static const pBOX2_FUNC MainSeq[] = {
 	MainSeq_ArrangeBoxMoveButton,
 	MainSeq_BoxMoveEndButton,
 	MainSeq_BoxThemaTrayChgButton,
-	MainSeq_BoxThemaWallPaperButton,
+//	MainSeq_BoxThemaWallPaperButton,
 	MainSeq_ArrangeWallPaperChgButton,
-	MainSeq_ArrangeWallPaperChgCancelButton,
+//	MainSeq_ArrangeWallPaperChgCancelButton,
 	MainSeq_PartyInButton,
 	MainSeq_PartyInCloseButton,
 	MainSeq_PartyOutButton,
@@ -2835,9 +2845,10 @@ static int MainSeq_BoxThemaJumpMain( BOX2_SYS_WORK * syswk )
 	u32	ret;
 
 	// タッチトレイスクロールチェック
-	if( BOX2UI_HitCheckTrayScroll( &x, &y ) == TRUE ){
+	if( BOX2UI_HitCheckTrayScrollStart( &x, &y ) == TRUE ){
 		syswk->app->tpy = y;
 		syswk->next_seq = BOX2SEQ_MAINSEQ_BOXTHEMA_JUMP_MAIN;
+		CreateTrayIconScrollWork( syswk );
 		return BOX2SEQ_MAINSEQ_TRAYSCROLL_TOUCH;
 	}
 
@@ -4328,6 +4339,7 @@ static int MainSeq_ArrangeBoxRetButtonIn( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_ArrangeBoxThemaChgMain( BOX2_SYS_WORK * syswk )
 {
+/*
 	switch( CURSORMOVE_MainCont( syswk->app->cmwk ) ){
 	case BOX2UI_BOXTHEMA_CHG_TRAY1:	// 00: トレイアイコン
 //		Snd_SePlay( SE_BOX2_DECIDE );
@@ -4400,6 +4412,7 @@ static int MainSeq_ArrangeBoxThemaChgMain( BOX2_SYS_WORK * syswk )
 //		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_RET_BTN, BOX2SEQ_MAINSEQ_ARRANGE_BOXTHEMA_EXIT_OUT );
 		return BOX2SEQ_MAINSEQ_ARRANGE_BOXTHEMA_EXIT_OUT;
 	}
+*/
 
 	return BOX2SEQ_MAINSEQ_ARRANGE_BOXTHEMA_CHG_MAIN;
 }
@@ -4574,6 +4587,7 @@ static int MainSeq_ArrangeBoxThemaButtonIn( BOX2_SYS_WORK * syswk )
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
+/*
 static int MainSeq_ArrangeWallPaperFrmIn( BOX2_SYS_WORK * syswk )
 {
 	syswk->app->wallpaper_pos = BOX2MAIN_GetWallPaperNumber( syswk, syswk->box_mv_pos );
@@ -4587,6 +4601,7 @@ static int MainSeq_ArrangeWallPaperFrmIn( BOX2_SYS_WORK * syswk )
 
 	return VFuncSet( syswk, BOX2MAIN_VFuncWallPaperFrmIn, BOX2SEQ_MAINSEQ_ARRANGE_WALLPAPER_MENU_IN );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -4597,12 +4612,14 @@ static int MainSeq_ArrangeWallPaperFrmIn( BOX2_SYS_WORK * syswk )
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
+/*
 static int MainSeq_ArrangeWallPaperMenuIn( BOX2_SYS_WORK * syswk )
 {
 	BOX2BMP_WallPaperChgMenuPrint( syswk );
 	BOX2BGWFRM_BoxMoveMenuInSet( syswk->app->wfrm );
 	return VFuncSet( syswk, BOX2MAIN_VFuncBoxMoveMenuIn, BOX2SEQ_MAINSEQ_ARRANGE_WALLPAPER_CHG_START );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -4613,6 +4630,7 @@ static int MainSeq_ArrangeWallPaperMenuIn( BOX2_SYS_WORK * syswk )
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
+/*
 static int MainSeq_ArrangeWallPaperChgStart( BOX2_SYS_WORK * syswk )
 {
 	syswk->app->old_cur_pos = syswk->app->wallpaper_pos % BOX2OBJ_WPICON_MAX;
@@ -4622,6 +4640,7 @@ static int MainSeq_ArrangeWallPaperChgStart( BOX2_SYS_WORK * syswk )
 	BOX2BMP_BoxThemaMsgPut( syswk, BOX2BMP_MSGID_THEMA_WALL, BOX2BMPWIN_ID_MSG3 );
 	return BOX2SEQ_MAINSEQ_ARRANGE_WALLPAPER_CHG_MAIN;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -4632,6 +4651,7 @@ static int MainSeq_ArrangeWallPaperChgStart( BOX2_SYS_WORK * syswk )
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
+/*
 static int MainSeq_ArrangeWallPaperChgMain( BOX2_SYS_WORK * syswk )
 {
 	switch( CURSORMOVE_MainCont( syswk->app->cmwk ) ){
@@ -4686,6 +4706,7 @@ static int MainSeq_ArrangeWallPaperChgMain( BOX2_SYS_WORK * syswk )
 
 	return BOX2SEQ_MAINSEQ_ARRANGE_WALLPAPER_CHG_MAIN;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -4696,11 +4717,13 @@ static int MainSeq_ArrangeWallPaperChgMain( BOX2_SYS_WORK * syswk )
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
+/*
 static int MainSeq_ArrangeWallPaperMenuOut( BOX2_SYS_WORK * syswk )
 {
 	BOX2BGWFRM_BoxMoveMenuOutSet( syswk->app->wfrm );
 	return VFuncSet( syswk, BOX2MAIN_VFuncBoxMoveMenuOut, BOX2SEQ_MAINSEQ_ARRANGE_WALLPAPER_FRM_OUT );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -4711,10 +4734,12 @@ static int MainSeq_ArrangeWallPaperMenuOut( BOX2_SYS_WORK * syswk )
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
+/*
 static int MainSeq_ArrangeWallPaperFrmOut( BOX2_SYS_WORK * syswk )
 {
 	return VFuncSet( syswk, BOX2MAIN_VFuncWallPaperFrmOut, BOX2SEQ_MAINSEQ_ARRANGE_WALLPAPER_CHG_END );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -4725,10 +4750,12 @@ static int MainSeq_ArrangeWallPaperFrmOut( BOX2_SYS_WORK * syswk )
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
+/*
 static int MainSeq_ArrangeWallPaperChgEnd( BOX2_SYS_WORK * syswk )
 {
 	return BoxMoveFrmInSet( syswk, BOX2SEQ_MAINSEQ_ARRANGE_BOXTHEMA_MENU_IN );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -4739,10 +4766,11 @@ static int MainSeq_ArrangeWallPaperChgEnd( BOX2_SYS_WORK * syswk )
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
+/*
 static int MainSeq_ArrangeWallPaperChange( BOX2_SYS_WORK * syswk )
 {
 	BOX2MAIN_WallPaperChange( syswk, syswk->app->wallpaper_pos );
-/*
+#if 0
 	// 追加壁紙はプラチナ以降の番号を使用している
 	if( syswk->app->wallpaper_pos < BOX_NORMAL_WALLPAPER_MAX ){
 		BOXDAT_SetWallPaperNumber( syswk->dat->sv_box, syswk->tray, syswk->app->wallpaper_pos );
@@ -4751,13 +4779,14 @@ static int MainSeq_ArrangeWallPaperChange( BOX2_SYS_WORK * syswk )
 			syswk->dat->sv_box, syswk->tray,
 			syswk->app->wallpaper_pos - BOX_NORMAL_WALLPAPER_MAX + BOX_TOTAL_WALLPAPER_MAX_PL );
 	}
-*/
+#endif
 	BOXDAT_SetWallPaperNumber( syswk->dat->sv_box, syswk->tray, syswk->app->wallpaper_pos );
 	BOX2OBJ_WallPaperCursorSet( syswk );
 	BOX2OBJ_TrayIconCgxMake( syswk, syswk->tray );
 
 	return BOX2SEQ_MAINSEQ_ARRANGE_WALLPAPER_WHITE_IN;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -4768,6 +4797,7 @@ static int MainSeq_ArrangeWallPaperChange( BOX2_SYS_WORK * syswk )
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
+/*
 static int MainSeq_ArrangeWallPaperWhiteOut( BOX2_SYS_WORK * syswk )
 {
 	PaletteWorkSet_VramCopy( syswk->app->pfd, FADE_MAIN_BG, 0, FADE_PAL_ALL_SIZE );
@@ -4775,6 +4805,7 @@ static int MainSeq_ArrangeWallPaperWhiteOut( BOX2_SYS_WORK * syswk )
 	syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_WALLPAPER_CHANGE;
 	return BOX2SEQ_MAINSEQ_PALETTE_FADE;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -4785,12 +4816,14 @@ static int MainSeq_ArrangeWallPaperWhiteOut( BOX2_SYS_WORK * syswk )
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
+/*
 static int MainSeq_ArrangeWallPaperWhiteIn( BOX2_SYS_WORK * syswk )
 {
 	PaletteFadeReq( syswk->app->pfd, PF_BIT_MAIN_BG, 0xc000, 0, 16, 0, 0x7fff, GFUser_VIntr_GetTCBSYS() );
 	syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_WALLPAPER_CHG_MAIN;
 	return BOX2SEQ_MAINSEQ_PALETTE_FADE;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -4895,12 +4928,18 @@ static int MainSeq_PartyInMain( BOX2_SYS_WORK * syswk )
 
 	case BOX2UI_PTIN_MAIN_MARKING:		//「マーキング」
 //		Snd_SePlay( SE_BOX2_DECIDE );
+/*
 		BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG3 );
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU4, BOX2SEQ_MAINSEQ_MARKING_BUTTON );
+*/
+		break;
 
 	case BOX2UI_PTIN_MAIN_FREE:		//「にがす」
+/*
 //		Snd_SePlay( SE_BOX2_DECIDE );
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, BOX2SEQ_MAINSEQ_FREE_BUTTON );
+*/
+		break;
 
 	case BOX2UI_PTIN_MAIN_CLOSE:		//「とじる」
 		{
@@ -5273,13 +5312,19 @@ static int MainSeq_PartyOutMain( BOX2_SYS_WORK * syswk )
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU3, BOX2SEQ_MAINSEQ_STATUS_CALL );
 
 	case BOX2UI_PTOUT_MAIN_MARKING:	//「マーキング」
+/*
 //		Snd_SePlay( SE_BOX2_DECIDE );
 		BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG3 );
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU4, BOX2SEQ_MAINSEQ_MARKING_BUTTON );
+*/
+		break;
 
 	case BOX2UI_PTOUT_MAIN_FREE:		//「にがす」
+/*
 //		Snd_SePlay( SE_BOX2_DECIDE );
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, BOX2SEQ_MAINSEQ_FREE_BUTTON );
+*/
+		break;
 
 	case BOX2UI_PTOUT_MAIN_CLOSE:		//「とじる」
 		{
@@ -5924,12 +5969,14 @@ static int MainSeq_BoxThemaChgCurMoveRet( BOX2_SYS_WORK * syswk )
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
+/*
 static int MainSeq_WallPaperChgCurMoveRet( BOX2_SYS_WORK * syswk )
 {
 	GFL_HEAP_FreeMemory( syswk->app->vfunk.work );
 //↑[GS_CONVERT_TAG]
 	return BOX2SEQ_MAINSEQ_ARRANGE_WALLPAPER_CHG_MAIN;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -8809,6 +8856,7 @@ static void WallPaperPosSet( BOX2_SYS_WORK * syswk, u32 pos )
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
+/*
 static int WallPaperChange( BOX2_SYS_WORK * syswk )
 {
 	if( syswk->app->wallpaper_pos >= BOX_NORMAL_WALLPAPER_MAX ){
@@ -8829,6 +8877,7 @@ static int WallPaperChange( BOX2_SYS_WORK * syswk )
 //	Snd_SePlay( SE_BOX2_DECIDE );
 	return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_BOXMV_MENU, BOX2SEQ_MAINSEQ_ARRANGE_WALLPAPER_WHITE_OUT );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -9595,9 +9644,10 @@ static int MainSeq_ArrangePokeGetMain( BOX2_SYS_WORK * syswk )
 	}
 
 	// タッチトレイスクロールチェック
-	if( BOX2UI_HitCheckTrayScroll( &x, &y ) == TRUE ){
+	if( BOX2UI_HitCheckTrayScrollStart( &x, &y ) == TRUE ){
 		syswk->app->tpy = y;
 		syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_MAIN;
+		CreateTrayIconScrollWork( syswk );
 		return BOX2SEQ_MAINSEQ_TRAYSCROLL_TOUCH;
 	}
 
@@ -10468,19 +10518,25 @@ static int MainSeq_ArrangePokeGetPartyChange( BOX2_SYS_WORK * syswk )
 // タッチでのトレイスクロール
 static int MainSeq_TrayScrollTouch( BOX2_SYS_WORK * syswk )
 {
+	SEQWK_TRAYICON_SCROLL * seqwk;
 	u32	x, y;
 	u32	oy;
 
 	if( BOX2UI_HitCheckTrayScroll( &x, &y ) == FALSE ){
+		GFL_HEAP_FreeMemory( syswk->app->seqwk );
 		return syswk->next_seq;
 	}
+
+	seqwk = syswk->app->seqwk;
 
 	oy = syswk->app->tpy;
 
 	syswk->app->tpy = y;
 
 	if( GFL_STD_Abs(oy-y) >= 3 ){
+		seqwk->cnt = GFL_STD_Abs( oy - y ) / 8;
 		if( y < oy ){
+			seqwk->mv = 1;
 			BOX2MAIN_InitTrayIconScroll( syswk, 1 );
 			if( syswk->next_seq == BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_MAIN ){
 				return VFuncSet( syswk, BOX2MAIN_VFuncTrayIconScrollUp, BOX2SEQ_MAINSEQ_TRAYSCROLL_TOUCH );
@@ -10489,6 +10545,27 @@ static int MainSeq_TrayScrollTouch( BOX2_SYS_WORK * syswk )
 			}
 		}
 		if( y > oy ){
+			seqwk->mv = -1;
+			BOX2MAIN_InitTrayIconScroll( syswk, -1 );
+			if( syswk->next_seq == BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_MAIN ){
+				return VFuncSet( syswk, BOX2MAIN_VFuncTrayIconScrollDown, BOX2SEQ_MAINSEQ_TRAYSCROLL_TOUCH );
+			}else{
+				return VFuncSet( syswk, BOX2MAIN_VFuncTrayIconScrollDownJump, BOX2SEQ_MAINSEQ_TRAYSCROLL_TOUCH );
+			}
+		}
+	}
+
+	if( seqwk->cnt != 0 ){
+		seqwk->cnt--;
+		if( seqwk->mv == 1 ){
+			BOX2MAIN_InitTrayIconScroll( syswk, 1 );
+			if( syswk->next_seq == BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_MAIN ){
+				return VFuncSet( syswk, BOX2MAIN_VFuncTrayIconScrollUp, BOX2SEQ_MAINSEQ_TRAYSCROLL_TOUCH );
+			}else{
+				return VFuncSet( syswk, BOX2MAIN_VFuncTrayIconScrollUpJump, BOX2SEQ_MAINSEQ_TRAYSCROLL_TOUCH );
+			}
+		}
+		if( seqwk->mv == -1 ){
 			BOX2MAIN_InitTrayIconScroll( syswk, -1 );
 			if( syswk->next_seq == BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_MAIN ){
 				return VFuncSet( syswk, BOX2MAIN_VFuncTrayIconScrollDown, BOX2SEQ_MAINSEQ_TRAYSCROLL_TOUCH );
@@ -10903,11 +10980,13 @@ static int MainSeq_ItemMenuCheck( BOX2_SYS_WORK * syswk )
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
+/*
 static int MainSeq_MarkingButton( BOX2_SYS_WORK * syswk )
 {
 //	return MarkingStartSet( syswk );
 	return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_MARKING_INIT );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -10934,11 +11013,13 @@ static int MainSeq_MarkingEndButton( BOX2_SYS_WORK * syswk )
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
+/*
 static int MainSeq_FreeButton( BOX2_SYS_WORK * syswk )
 {
 //	return PokeFreeStartSet( syswk );
 	return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_POKEFREE_INIT );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -11075,6 +11156,7 @@ static int MainSeq_BoxThemaTrayChgButton( BOX2_SYS_WORK * syswk )
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
+/*
 static int MainSeq_BoxThemaWallPaperButton( BOX2_SYS_WORK * syswk )
 {
 	BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG3 );
@@ -11082,6 +11164,7 @@ static int MainSeq_BoxThemaWallPaperButton( BOX2_SYS_WORK * syswk )
 	BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, TRUE );
 	return BoxMoveFrmOutSet( syswk, BOX2SEQ_MAINSEQ_ARRANGE_WALLPAPER_FRM_IN );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -11120,6 +11203,7 @@ static int MainSeq_ArrangeWallPaperChgButton( BOX2_SYS_WORK * syswk )
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
+/*
 static int MainSeq_ArrangeWallPaperChgCancelButton( BOX2_SYS_WORK * syswk )
 {
 	BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG3 );
@@ -11133,6 +11217,7 @@ static int MainSeq_ArrangeWallPaperChgCancelButton( BOX2_SYS_WORK * syswk )
 	syswk->cur_rcv_pos = BOX2UI_BOXTHEMA_CHG_WP;
 	return BOX2SEQ_MAINSEQ_ARRANGE_WALLPAPER_MENU_OUT;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -11793,4 +11878,14 @@ static int MainSeq_BattleBoxPartyPokeChgEnd( BOX2_SYS_WORK * syswk )
 	BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF );
 	BOX2BMP_PokeSelectMsgPut( syswk, syswk->get_pos, BOX2BMP_MSGID_PARTYIN_MENU, BOX2BMPWIN_ID_MSG1 );
 	return BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_MAIN;
+}
+
+
+
+static void CreateTrayIconScrollWork( BOX2_SYS_WORK * syswk )
+{
+	SEQWK_TRAYICON_SCROLL * wk = GFL_HEAP_AllocMemoryLo( HEAPID_BOX_APP, sizeof(SEQWK_TRAYICON_SCROLL) );
+	wk->cnt = 0;
+	wk->mv  = 0;
+	syswk->app->seqwk = wk;
 }

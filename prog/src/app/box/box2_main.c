@@ -17,6 +17,7 @@
 #include "system/bmp_winframe.h"
 #include "font/font.naix"
 #include "poke_tool/monsno_def.h"
+#include "poke_tool/pokerus.h"
 #include "item/item.h"
 
 #include "msg/msg_boxmenu.h"
@@ -3276,10 +3277,17 @@ static BOX2_POKEINFO_DATA * PokeInfoDataMake( POKEMON_PASO_PARAM * ppp )
 			info->rare = 0;
 		}
 
-//  ID_PARA_pokerus,              //ポケルス
-		info->pokerus = 0;
-//		info->pokerus = 1;
-//		info->pokerus = 2;
+		// ポケルス
+		if( POKERUS_CheckInfectPPP( ppp ) == TRUE ){
+			info->pokerus = 1;
+		}else if( POKERUS_CheckInfectedPPP( ppp ) == TRUE ){
+			info->pokerus = 2;
+		}else{
+			info->pokerus = 0;
+		}
+
+		info->rare = 1;
+		info->pokerus = 1;
 
 		if( info->mons != MONSNO_NIDORAN_F && info->mons != MONSNO_NIDORAN_M && info->tamago == 0 ){
 			info->sex_put = 1;
@@ -3564,12 +3572,15 @@ static void PutSubDispPokeMark( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info
 		BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_RARE, TRUE );
 	}
 
+	// ポケルスに感染していない
 	if( info->pokerus == 0 ){
 		BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_POKERUS, FALSE );
 		BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_POKERUS_ICON, FALSE );
+	// ポケルスに感染している
 	}else if( info->pokerus == 1 ){
 		BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_POKERUS, FALSE );
 		BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_POKERUS_ICON, TRUE );
+	// ポケルスに感染したことがある
 	}else{
 		BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_POKERUS, TRUE );
 		BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_POKERUS_ICON, FALSE );

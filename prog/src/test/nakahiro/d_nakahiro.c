@@ -190,9 +190,7 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		if( wk->bb_party != NULL ){
 			BATTLE_BOX_SAVE * sv;
 			sv = BATTLE_BOX_SAVE_GetBattleBoxSave( GAMEDATA_GetSaveControlWork(wk->gamedata) );
-			GFL_OVERLAY_Load( FS_OVERLAY_ID(box) );
 			BATTLE_BOX_SAVE_SetPokeParty( sv, wk->bb_party );
-			GFL_OVERLAY_Unload( FS_OVERLAY_ID(box) );
 			GFL_HEAP_FreeMemory( wk->bb_party );
 		}
 		OS_Printf( "nakahiroデバッグ処理終了しました\n" );
@@ -257,9 +255,7 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		{
 			BATTLE_BOX_SAVE * sv;
 			sv = BATTLE_BOX_SAVE_GetBattleBoxSave( GAMEDATA_GetSaveControlWork(wk->gamedata) );
-			GFL_OVERLAY_Load( FS_OVERLAY_ID(box) );
 			wk->bb_party = BATTLE_BOX_SAVE_MakePokeParty( sv, wk->heapID );
-			GFL_OVERLAY_Unload( FS_OVERLAY_ID(box) );
 		}
 		wk->box_data.gamedata  = wk->gamedata;
 		wk->box_data.sv_box    = GAMEDATA_GetBoxManager( wk->gamedata );

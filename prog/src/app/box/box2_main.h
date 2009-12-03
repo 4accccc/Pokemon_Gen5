@@ -634,7 +634,8 @@ typedef struct {
 }BOX2_POKEINFO_DATA;
 
 
-#define	BOX2MAIN_TRAYICON_SCROLL_CNT		( 9 )
+//#define	BOX2MAIN_TRAYICON_SCROLL_CNT		( 9 )
+#define	BOX2MAIN_TRAYICON_SCROLL_CNT		( 5 )
 
 
 // ポケモン移動エラーコード

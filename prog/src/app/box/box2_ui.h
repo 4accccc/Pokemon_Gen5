@@ -510,6 +510,7 @@ extern u32 BOX2UI_HitCheckContTrayArrow(void);
 extern u32 BOX2UI_HitCheckContTrayIconScroll(void);
 
 
+extern BOOL BOX2UI_HitCheckTrayScrollStart( u32 * x, u32 * y );
 extern BOOL BOX2UI_HitCheckTrayScroll( u32 * x, u32 * y );
 
 
