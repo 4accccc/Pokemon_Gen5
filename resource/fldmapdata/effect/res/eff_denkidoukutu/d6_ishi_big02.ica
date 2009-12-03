@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2009-11-30T19:43:45" source="d6_ishi_big02.mb"/>
+	<create user="ibe_mana" host="W00191" date="2009-12-01T16:29:18" source="d6_ishi_big02.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -43,14 +43,14 @@
 	3.064453 2.976074 2.761475 2.447998 2.062500 1.632080 1.183594 0.743896 0.340576 0.000000
 </node_rotate_data>
 
-<node_translate_data size="61">
+<node_translate_data size="62">
 	0.000000 0.000000 -0.178223 -0.366943 -0.565186 -0.771729 -0.985107 -1.204346 -1.427979 -1.654785
 	-1.883789 -2.113770 -2.343018 -2.570801 -2.795654 -3.016602 -3.231934 -3.440918 -3.642090 -3.833984
 	-4.015869 -4.186279 -4.343994 -4.487793 -4.616211 -4.728271 -4.822754 -4.898438 -4.954102 -4.988281
 	-5.000000 -4.989014 -4.957031 -4.905029 -4.833984 -4.745361 -4.639893 -4.519043 -4.383789 -4.235107
 	-4.073975 -3.902100 -3.719971 -3.529053 -3.330322 -3.125000 -2.914063 -2.698730 -2.479980 -2.259033
 	-2.037109 -1.814941 -1.593994 -1.375488 -1.159912 -0.948975 -0.743652 -0.544922 -0.354004 -0.172119
-	0.000000
+	0.000000 -8.000000
 </node_translate_data>
 
 <node_anm_array size="1">
@@ -63,7 +63,7 @@
 		<rotate_z frame_step="1" data_size="60" data_head="60"/>
 		<translate_x frame_step="1" data_size="1" data_head="0"/>
 		<translate_y frame_step="1" data_size="60" data_head="1"/>
-		<translate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_z frame_step="1" data_size="1" data_head="61"/>
 	</node_anm>
 </node_anm_array>
 

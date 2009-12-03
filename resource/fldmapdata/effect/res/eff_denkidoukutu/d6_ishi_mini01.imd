@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2009-12-01T14:49:15" source="d6_ishi_mini01.mb"/>
+	<create user="ibe_mana" host="W00191" date="2009-12-01T16:33:27" source="d6_ishi_mini01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2009-12-01T14:49:15" source="d6_ishi_mini01.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2009-12-01T16:33:27" source="d6_ishi_mini01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="3" xyz="-2.039063 0.511963 -1.765869" whd="4.077637 5.779541 3.531494"/>
+<box_test pos_scale="3" xyz="-2.039063 0.511963 -2.765869" whd="4.077637 6.779541 3.531494"/>
 
 <tex_image_array size="2">
 	<tex_image index="0" name="d6kage_01"
@@ -659,7 +659,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 30.000000 0.000000"
+		translate="0.000000 38.000000 -8.000000"
 		visibility="on"
 		display_size="2"
 		vertex_size="130" polygon_size="54"
@@ -680,7 +680,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 -8.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="18" polygon_size="6"
