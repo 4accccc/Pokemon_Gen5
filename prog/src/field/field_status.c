@@ -12,6 +12,9 @@
 
 
 #include "field_status_local.h"   //MAPMODE
+
+#include "script.h" //SCRID_NULL
+
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 
@@ -30,6 +33,9 @@ struct _FIELD_STATUS{
   // 季節表示
   BOOL seasonDispFlag;  // 表示フラグ
   u8   seasonDispLast;  // 最後に表示した季節 PMSEASON_xxxx
+
+  ///予約スクリプトID
+  u16 reserved_script_id;
 };
 
 //======================================================================
@@ -40,6 +46,7 @@ FIELD_STATUS * FIELD_STATUS_Create(HEAPID heapID)
 {
   FIELD_STATUS * fldstatus;
   fldstatus = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_STATUS) );
+  fldstatus->reserved_script_id = SCRID_NULL;
   return fldstatus;
 }
 
@@ -205,6 +212,29 @@ u32 FIELD_STATUS_GetFieldSkillMapEffectMsk( const FIELD_STATUS * fldstatus )
   return fldstatus->fs_mapeffect;
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief 予約スクリプトIDの登録
+ * @param fldstatus   ワーク
+ * @param scr_id    登録するスクリプトのID
+ */
+//------------------------------------------------------------------
+void FIELD_STATUS_SetReserveScript( FIELD_STATUS * fldstatus, u16 scr_id )
+{
+  fldstatus->reserved_script_id = scr_id;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 予約スクリプトIDの取得
+ * @param fldstatus
+ * @retval  u16   登録したスクリプトのID
+ */
+//------------------------------------------------------------------
+u16 FIELD_STATUS_GetReserveScript( const FIELD_STATUS * fldstatus )
+{
+  return fldstatus->reserved_script_id;
+}
 
 
 

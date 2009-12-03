@@ -915,6 +915,24 @@ static VMCMD_RESULT EvCmdIfCall( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   スクリプト呼び出しの予約
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param  work
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdReserveScript( VMHANDLE *core, void *wk )
+{
+  u16 reserve_scr_id = VMGetU16(core);
+  GAMEDATA *gamedata = SCRCMD_WORK_GetGameData( wk );
+  FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( gamedata );
+
+  FIELD_STATUS_SetReserveScript( fldstatus, reserve_scr_id );
+
+  return VMCMD_RESULT_CONTINUE;
+}
 
 //======================================================================
 //  イベントワーク関連

@@ -92,6 +92,8 @@
 
 #include "event_autoway.h" // for EVENT_PlayerMoveOnAutoWay
 
+#include "field_status_local.h" //FIELD_STATUS_GetReservedScript
+
 #ifdef PM_DEBUG
 extern BOOL DebugBGInitEnd;    //BG初期化監視フラグ             宣言元　fieldmap.c
 extern BOOL MapFadeReqFlg;    //マップフェードリクエストフラグ  宣言元　script.c
@@ -124,6 +126,7 @@ typedef struct {
 	PLAYER_MOVE_STATE player_state;
   PLAYER_MOVE_VALUE player_value;
   u16 player_dir;                   ///<自機の向き
+  u16 reserved_scr_id;        ///<予約スクリプトのID
   int key_trg;                ///<キー情報（トリガー）
   int key_cont;               ///<キー情報（）
   const VecFx32 * now_pos;        ///<現在のプレイヤー位置
@@ -224,19 +227,19 @@ static BOOL checkRailFrontMove( const FIELD_PLAYER* cp_player );
  * @retval GMEVENT NULL=イベント無し
  */
 //--------------------------------------------------------------
-static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
+static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work, BOOL *eff_delete_flag )
 {
 	
   EV_REQUEST req;
 	GMEVENT *event;
 	FIELDMAP_WORK *fieldWork = work;
-  FIELD_ENCOUNT* encount = FIELDMAP_GetEncount(fieldWork); 
 
+  *eff_delete_flag = FALSE;  //まずはリクエストなし
   //リクエスト更新
   setupRequest( &req, gsys, fieldWork );
 
   //エフェクトエンカウントの　OBJとの接触によるエフェクト破棄チェック
-  EFFECT_ENC_CheckObjHit( encount );
+  //EFFECT_ENC_CheckObjHit( encount );
 
   //デバッグ用チェック
 #ifdef  PM_DEBUG
@@ -248,9 +251,16 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 	
 //☆☆☆特殊スクリプト起動チェックがここに入る
   if (DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEvents) == FALSE) {
+    if (req.reserved_scr_id != SCRID_NULL)
+    {
+      FIELD_STATUS_SetReserveScript( GAMEDATA_GetFieldStatus(req.gamedata), SCRID_NULL );
+      event = SCRIPT_SetEventScript( gsys, req.reserved_scr_id, NULL, req.heapID );
+      return event;
+    }
     event = SCRIPT_SearchSceneScript( gsys, req.heapID );
     if (event){
-      EFFECT_ENC_EffectDelete( encount );
+      *eff_delete_flag = TRUE;
+      //EFFECT_ENC_EffectDelete( encount );
       return event;
     }
   }
@@ -273,7 +283,8 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
     BOOL flag = FIELD_EVENT_Check2vs2Battle( gsys );
     event = EVENT_CheckTrainerEye( fieldWork, flag );
     if( event != NULL ){
-      EFFECT_ENC_EffectDelete( encount );
+      *eff_delete_flag = TRUE;
+      //EFFECT_ENC_EffectDelete( encount );
       return event;
     }
   }
@@ -285,7 +296,8 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
     // POSイベントチェック
     event = checkPosEvent( &req );
     if( event != NULL ){
-      EFFECT_ENC_EffectDelete( encount );
+      *eff_delete_flag = TRUE;
+      //EFFECT_ENC_EffectDelete( encount );
       return event;
     } 
     //座標接続チェック
@@ -426,7 +438,8 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
         u32 scr_id = MMDL_GetEventID( fmmdl_talk );
         MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
         FIELD_PLAYER_GRID_ForceStop( req.field_player );
-        EFFECT_ENC_EffectDelete( encount );
+        *eff_delete_flag = TRUE;
+        //EFFECT_ENC_EffectDelete( encount );
         return EVENT_FieldTalk( gsys, fieldWork,
           scr_id, fmmdl_player, fmmdl_talk, req.heapID );
       }
@@ -706,17 +719,25 @@ static GMEVENT* checkPosEvent_sandstream( EV_REQUEST* req )
 GMEVENT * FIELD_EVENT_CheckNormal_Wrap( GAMESYS_WORK *gsys, void *work )
 {
 	GMEVENT *event;
-	FIELDMAP_WORK *fieldmap_work;
 	FIELD_PLACE_NAME *place_name_sys;
+	FIELDMAP_WORK * fieldmap_work = GAMESYSTEM_GetFieldMapWork( gsys );
+  FIELD_ENCOUNT* encount = FIELDMAP_GetEncount(fieldmap_work); 
+  BOOL eff_delete_flag;
+
+  //エフェクトエンカウントの　OBJとの接触によるエフェクト破棄チェック
+  EFFECT_ENC_CheckObjHit( encount );
 
 	// イベント起動チェック
-	event = FIELD_EVENT_CheckNormal( gsys, work );
+	event = FIELD_EVENT_CheckNormal( gsys, work, &eff_delete_flag );
 
 	// イベント生成時の処理
 	if( event != NULL )
 	{
+    if (eff_delete_flag)
+    {
+      EFFECT_ENC_EffectDelete( encount );
+    }
 		// 地名表示ウィンドウを消去
-		fieldmap_work   = (FIELDMAP_WORK*)GAMESYSTEM_GetFieldMapWork( gsys );
 		place_name_sys  = FIELDMAP_GetPlaceNameSys( fieldmap_work );
 		FIELD_PLACE_NAME_Hide( place_name_sys );
 	}
@@ -917,12 +938,9 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
   {
     MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req->field_player );
     req->player_dir = MMDL_GetDirDisp( fmmdl );
+    req->now_pos = MMDL_GetVectorPosAddress( fmmdl );
   }
-
-  {
-    MMDL *mmdl = FIELD_PLAYER_GetMMdl( req->field_player );
-    req->now_pos = MMDL_GetVectorPosAddress( mmdl );
-  }
+  req->reserved_scr_id = FIELD_STATUS_GetReserveScript( GAMEDATA_GetFieldStatus(req->gamedata) );
   
   // アトリビュート取得
   req->mapattr = FIELD_PLAYER_GetMapAttr( req->field_player );

@@ -95,7 +95,7 @@
   DEF_CMD( EvCmdIfCall, EV_SEQ_IF_CALL )
   NO_CMD()
 
-  NO_CMD()
+  DEF_CMD( EvCmdReserveScript, EV_SEQ_RESERVE_SCRIPT )
   NO_CMD()
   NO_CMD()
   NO_CMD()
