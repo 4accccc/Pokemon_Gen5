@@ -542,6 +542,8 @@ static void BrightCntTcb( GFL_TCB* tcb, void* work )
       {
         start = 16;
         end = 0;
+        //フェードインのときはＢＧ初期化する
+        FIELDMAP_InitBG(wk->fieldmap);
       }
       else
       {
@@ -568,9 +570,6 @@ static void BrightCntTcb( GFL_TCB* tcb, void* work )
 		  if( GFL_FADE_CheckFade() == FALSE ) rc = TRUE;
 
       if (rc) { //フェード終了
-        //フェードインのときはＢＧ初期化する
-        if (wk->fade_io == FADE_IN) FIELDMAP_InitBG(wk->fieldmap);
-        
         FIELDMAP_SetMapFadeReqFlg( wk->fieldmap, FALSE ); //リクエスト落す
         GFL_TCB_DeleteTask( tcb );
         GFL_HEAP_FreeMemory( work );
