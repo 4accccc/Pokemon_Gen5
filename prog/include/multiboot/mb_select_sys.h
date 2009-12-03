@@ -9,6 +9,7 @@
  */
 //======================================================================
 #pragma once
+
 #include "multiboot/mb_local_def.h"
 #include "multiboot/mb_data_def.h"
 #include "poke_tool/poke_tool.h"
@@ -32,6 +33,10 @@ typedef struct
   HEAPID parentHeap;
   DLPLAY_CARD_TYPE cardType;
   
+  //ボックスデータ
+  void *boxData[MB_POKE_BOX_TRAY][MB_POKE_BOX_POKE];
+  
+  //戻り値用
   //pppサイズ分のワークを確保しておいてください。
   void *ppp[MB_CAP_POKE_NUM];
 }MB_SELECT_INIT_WORK;

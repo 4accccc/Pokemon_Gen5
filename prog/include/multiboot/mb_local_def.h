@@ -8,7 +8,7 @@
  * モジュール名：MB_DEF
  */
 //======================================================================
-
+#pragma once
 
 #define MB_DEF_GGID (0x444)
 
@@ -44,3 +44,7 @@
 //共通定義
 //捕獲ポケ数
 #define MB_CAP_POKE_NUM (6)
+
+#define MB_POKE_BOX_TRAY (18)
+#define MB_POKE_BOX_POKE (30)
+

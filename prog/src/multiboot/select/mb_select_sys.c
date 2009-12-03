@@ -17,12 +17,14 @@
 #include "system/wipe.h"
 
 #include "arc_def.h"
-#include "mb_child_gra.naix"
+#include "mb_select_gra.naix"
 
 #include "multiboot/mb_select_sys.h"
 #include "multiboot/mb_util_msg.h"
 #include "multiboot/mb_poke_icon.h"
 #include "multiboot/mb_local_def.h"
+#include "./mb_sel_local_def.h"
+#include "./mb_sel_poke.h"
 
 
 //======================================================================
@@ -51,11 +53,13 @@ typedef enum
 //	typedef struct
 //======================================================================
 #pragma mark [> struct
-typedef struct
+struct _MB_SELECT_WORK
 {
   HEAPID heapId;
   GFL_TCB *vBlankTcb;
   MB_SELECT_INIT_WORK *initWork;
+  
+  ARCHANDLE *iconArcHandle;
   
   MB_SELECT_STATE  state;
   
@@ -63,14 +67,19 @@ typedef struct
   //メッセージ用
   MB_MSG_WORK *msgWork;
 
-  //仮出し
+  MB_SEL_POKE *boxPoke[MB_POKE_BOX_POKE];
+  MB_SEL_POKE *selPoke[MB_CAP_POKE_NUM];
+
   GFL_CLUNIT  *cellUnit;
+  u32         cellResIdx[MSCR_MAX];
+
+  //仮出し
   GFL_CLWK    *pokeIcon[MB_CAP_POKE_NUM];
   u32         iconPalRes;
   u32         iconAnmRes;
   u32         iconCharRes[MB_CAP_POKE_NUM];
   
-}MB_SELECT_WORK;
+};
 
 
 //======================================================================
@@ -86,7 +95,8 @@ static void MB_SELECT_VBlankFunc(GFL_TCB *tcb, void *wk );
 static void MB_SELECT_InitGraphic( MB_SELECT_WORK *work );
 static void MB_SELECT_TermGraphic( MB_SELECT_WORK *work );
 static void MB_SELECT_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane , u8 mode );
-static void MB_SELECT_LoadResource( MB_SELECT_WORK *work );
+static void MB_SELECT_LoadResource( MB_SELECT_WORK *work , ARCHANDLE *arcHandle );
+static void MB_SELECT_ReleaseResource( MB_SELECT_WORK *work );
 
 static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_BG_128_A,             // メイン2DエンジンのBG
@@ -109,15 +119,50 @@ static const GFL_DISP_VRAM vramBank = {
 //--------------------------------------------------------------
 static void MB_SELECT_Init( MB_SELECT_WORK *work )
 {
-  work->state = MSS_FADEIN;
-  
+  u8 i;
+  //アイコンでもダミーの取得で使うので外でハンドル確保
+  ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_MB_SELECT , work->heapId );
+
   MB_SELECT_InitGraphic( work );
-  MB_SELECT_LoadResource( work );
+  MB_SELECT_LoadResource( work , arcHandle );
+
   work->msgWork = MB_MSG_MessageInit( work->heapId , MB_SELECT_FRAME_MSG );
   work->vBlankTcb = GFUser_VIntr_CreateTCB( MB_SELECT_VBlankFunc , work , 8 );
 
+  //ポケモン設定
+  {
+    MB_SEL_POKE_INIT_WORK initWork;
 
+    initWork.heapId = work->heapId;
+    initWork.arcHandle = arcHandle;
+    initWork.iconType  = MSPT_BOX;
+    initWork.cellUnit  = work->cellUnit;
+    initWork.palResIdx = work->cellResIdx[MSCR_PLT_POKEICON];
+    initWork.anmResIdx = work->cellResIdx[MSCR_ANM_POKEICON];
+    for( i=0;i<MB_POKE_BOX_POKE;i++ )
+    {
+      initWork.idx = i;
+      work->boxPoke[i] = MB_SEL_POKE_CreateWork( work , &initWork );
+    }
+    initWork.iconType  = MSPT_TRAY;
+    for( i=0;i<MB_CAP_POKE_NUM;i++ )
+    {
+      initWork.idx = i;
+      work->selPoke[i] = MB_SEL_POKE_CreateWork( work , &initWork );
+    }
+  }
+
+  //最初のBOXの設定
+  for( i=0;i<MB_POKE_BOX_POKE;i++ )
+  {
+    MB_SEL_POKE_SetPPP( work , work->boxPoke[i] , work->initWork->boxData[0][i] );
+  }
+
+  work->state = MSS_FADEIN;
   
+  GFL_ARC_CloseDataHandle( arcHandle );
+  
+  /*
   {
     //仮
     u8 i;
@@ -167,6 +212,7 @@ static void MB_SELECT_Init( MB_SELECT_WORK *work )
     }
     GFL_ARC_CloseDataHandle( arcHandle );
   }
+  */
 }
 
 //--------------------------------------------------------------
@@ -174,6 +220,8 @@ static void MB_SELECT_Init( MB_SELECT_WORK *work )
 //--------------------------------------------------------------
 static void MB_SELECT_Term( MB_SELECT_WORK *work )
 {
+  u8 i;
+  /*
   {
     //仮
     u8 i;
@@ -186,10 +234,20 @@ static void MB_SELECT_Term( MB_SELECT_WORK *work )
     GFL_CLGRP_CELLANIM_Release( work->iconAnmRes );
     GFL_CLACT_UNIT_Delete( work->cellUnit );
   }
+  */
+  for( i=0;i<MB_CAP_POKE_NUM;i++ )
+  {
+    MB_SEL_POKE_DeleteWork( work , work->selPoke[i] );
+  }
+  for( i=0;i<MB_POKE_BOX_POKE;i++ )
+  {
+    MB_SEL_POKE_DeleteWork( work , work->boxPoke[i] );
+  }
 
   GFL_TCB_DeleteTask( work->vBlankTcb );
 
   MB_MSG_MessageTerm( work->msgWork );
+  MB_SELECT_ReleaseResource( work );
   MB_SELECT_TermGraphic( work );
 }
 
@@ -322,8 +380,12 @@ static void MB_SELECT_InitGraphic( MB_SELECT_WORK *work )
   //OBJ系の初期化
   {
     GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
+    cellSysInitData.CGR_RegisterMax = 64;
     GFL_CLACT_SYS_Create( &cellSysInitData , &vramBank ,work->heapId );
     
+    work->cellUnit = GFL_CLACT_UNIT_Create( 40 , 0, work->heapId );
+    GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit );
+
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
   }
   
@@ -331,6 +393,7 @@ static void MB_SELECT_InitGraphic( MB_SELECT_WORK *work )
 
 static void MB_SELECT_TermGraphic( MB_SELECT_WORK *work )
 {
+  GFL_CLACT_UNIT_Delete( work->cellUnit );
   GFL_CLACT_SYS_Delete();
   GFL_BG_FreeBGControl( MB_SELECT_FRAME_MSG );
   GFL_BG_FreeBGControl( MB_SELECT_FRAME_BG );
@@ -355,29 +418,50 @@ static void MB_SELECT_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlan
 //--------------------------------------------------------------
 //  リソース読み込み
 //--------------------------------------------------------------
-static void MB_SELECT_LoadResource( MB_SELECT_WORK *work )
+static void MB_SELECT_LoadResource( MB_SELECT_WORK *work , ARCHANDLE *arcHandle )
 {
-  ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_MB_CHILD , work->heapId );
 
-  //下画面
-  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mb_child_gra_bg_sub_NCLR , 
-                    PALTYPE_SUB_BG , 0 , 0 , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mb_child_gra_bg_sub_NCGR ,
-                    MB_SELECT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mb_child_gra_bg_sub_NSCR , 
-                    MB_SELECT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
-  
-  //上画面
-  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mb_child_gra_bg_main_NCLR , 
+  //下画面(MAIN
+  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mb_select_gra_box_bgd_NCLR , 
                     PALTYPE_MAIN_BG , 0 , 0 , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mb_child_gra_bg_main_NCGR ,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mb_select_gra_box_bgd_NCGR ,
                     MB_SELECT_FRAME_BG , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mb_child_gra_bg_main_NSCR , 
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mb_select_gra_box_bgd_NSCR , 
                     MB_SELECT_FRAME_BG ,  0 , 0, FALSE , work->heapId );
   
-  GFL_ARC_CloseDataHandle( arcHandle );
+  //上画面(SUB
+  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mb_select_gra_box_bgd_NCLR , 
+                    PALTYPE_SUB_BG , 0 , 0 , work->heapId );
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mb_select_gra_box_bgd_NCGR ,
+                    MB_SELECT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mb_select_gra_box_bgd_NSCR , 
+                    MB_SELECT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
+
+  
+  //セルアイコン素材
+  {
+    const DLPLAY_CARD_TYPE type = work->initWork->cardType;
+    work->iconArcHandle = MB_ICON_GetArcHandle( work->heapId , type );
+    work->cellResIdx[MSCR_PLT_POKEICON] = GFL_CLGRP_PLTT_RegisterComp( work->iconArcHandle , 
+                                MB_ICON_GetPltResId( type ) , 
+                                CLSYS_DRAW_MAIN , 
+                                3*32 , work->heapId  );
+    work->cellResIdx[MSCR_ANM_POKEICON] = GFL_CLGRP_CELLANIM_Register( work->iconArcHandle , 
+                                MB_ICON_GetCellResId( type ) , 
+                                MB_ICON_GetAnmResId( type ), 
+                                work->heapId  );
+  }
 }
 
+//--------------------------------------------------------------
+//  リソース破棄
+//--------------------------------------------------------------
+static void MB_SELECT_ReleaseResource( MB_SELECT_WORK *work )
+{
+  GFL_CLGRP_PLTT_Release( work->cellResIdx[MSCR_PLT_POKEICON] );
+  GFL_CLGRP_CELLANIM_Release( work->cellResIdx[MSCR_ANM_POKEICON] );
+  GFL_ARC_CloseDataHandle( work->iconArcHandle );
+}
 
 
 #pragma mark [>proc func
@@ -408,7 +492,7 @@ static GFL_PROC_RESULT MB_SELECT_ProcInit( GFL_PROC * proc, int * seq , void *pw
 #else                    //DL子機時処理
     const HEAPID parentHeap = HEAPID_MULTIBOOT;
 #endif //MULTI_BOOT_MAKE
-    u8 i;
+    u8 i,j;
     GFL_HEAP_CreateHeap( parentHeap , HEAPID_MB_BOX, 0x40000 );
     
     work = GFL_PROC_AllocWork( proc, sizeof(MB_SELECT_WORK), parentHeap );
@@ -416,9 +500,28 @@ static GFL_PROC_RESULT MB_SELECT_ProcInit( GFL_PROC * proc, int * seq , void *pw
 
     initWork->parentHeap = parentHeap;
     initWork->cardType = CARD_TYPE_DUMMY;
+    OS_TPrintf("デバッグポケ作成");
+    for( i=0;i<MB_POKE_BOX_TRAY;i++ )
+    {
+      for( j=0;j<MB_POKE_BOX_POKE;j++ )
+      {
+        initWork->boxData[i][j] = GFL_HEAP_AllocClearMemory( parentHeap , POKETOOL_GetPPPWorkSize() );
+        PPP_Clear( initWork->boxData[i][j] );
+        if( GFUser_GetPublicRand0(10) == 0 )
+        {
+          PPP_Setup( initWork->boxData[i][j] ,
+                     GFUser_GetPublicRand0(493)+1 ,
+                     GFUser_GetPublicRand0(100)+1 ,
+                     PTL_SETUP_ID_AUTO );
+        }
+      }
+      OS_TPrintf(".%d",i);
+    }
+    OS_TPrintf("Finish!\n");
     for( i=0;i<MB_CAP_POKE_NUM;i++ )
     {
       initWork->ppp[i] = GFL_HEAP_AllocClearMemory( parentHeap , POKETOOL_GetPPPWorkSize() );
+      PPP_Clear( initWork->ppp[i] );
     }
 
     work->initWork = initWork;
@@ -450,10 +553,17 @@ static GFL_PROC_RESULT MB_SELECT_ProcTerm( GFL_PROC * proc, int * seq , void *pw
 
   if( pwk == NULL )
   {
-    u8 i;
+    u8 i,j;
     for( i=0;i<MB_CAP_POKE_NUM;i++ )
     {
       GFL_HEAP_FreeMemory( work->initWork->ppp[i] );
+    }
+    for( i=0;i<MB_POKE_BOX_TRAY;i++ )
+    {
+      for( j=0;j<MB_POKE_BOX_POKE;j++ )
+      {
+        GFL_HEAP_FreeMemory( work->initWork->boxData[i][j] );
+      }
     }
     GFL_HEAP_FreeMemory( work->initWork );
   }
@@ -479,5 +589,21 @@ static GFL_PROC_RESULT MB_SELECT_ProcMain( GFL_PROC * proc, int * seq , void *pw
   return GFL_PROC_RES_CONTINUE;
 }
 
+#pragma mark [>outer func
+//--------------------------------------------------------------
+//  外部提供関数
+//--------------------------------------------------------------
+ARCHANDLE* MB_SELECT_GetIconArcHandle( MB_SELECT_WORK *work )
+{
+  return work->iconArcHandle;
+}
+const DLPLAY_CARD_TYPE MB_SELECT_GetCardType( const MB_SELECT_WORK *work )
+{
+  return work->initWork->cardType;
+}
+const HEAPID MB_SELECT_GetHeapId( const MB_SELECT_WORK *work )
+{
+  return work->heapId;
+}
 
 
