@@ -114,6 +114,7 @@
 #include "pleasure_boat.h"    //for PL_BOAT_
 #endif
 
+
 //======================================================================
 //	DEBUG定義
 //======================================================================
@@ -1816,14 +1817,18 @@ static void	fldmap_BG_Init( FIELDMAP_WORK *fieldWork )
   GX_SetVisibleWnd( GX_WNDMASK_NONE );
 }
 
-void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork );
-void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork )
+void FIELDMAP_InitBGMode( void );
+void FIELDMAP_InitBGMode( void )
 {
 	//ＢＧモード設定
 	GFL_BG_SetBGMode( &fldmapdata_bgsysHeader );
+}
+
+void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork );
+void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork )
+{
 	//ＢＧコントロール設定
-	G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 16, 8 );
-	
+	G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 16, 8 ); 
 	GFL_BG_SetBGControl3D( FIELD_3D_FRAME_PRI );
 
   // 会話ウインドウリソースセットアップ

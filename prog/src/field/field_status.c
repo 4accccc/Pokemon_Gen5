@@ -104,6 +104,7 @@ BOOL FIELD_STATUS_GetFieldInitFlag( const FIELD_STATUS * fldstatus )
 void FIELD_STATUS_SetSeasonDispFlag( FIELD_STATUS * fldstatus, BOOL flag )
 {
   fldstatus->seasonDispFlag = flag;
+  OBATA_Printf( "FIELD-STATUS: seasonDispFlag ==> %d\n", flag );
 }
 
 //------------------------------------------------------------------
@@ -124,6 +125,7 @@ BOOL FIELD_STATUS_GetSeasonDispFlag( const FIELD_STATUS * fldstatus )
 void FIELD_STATUS_SetSeasonDispLast( FIELD_STATUS * fldstatus, u8 season )
 {
   fldstatus->seasonDispLast = season;
+  OBATA_Printf( "FIELD-STATUS: seasonDispLast ==> %d\n", season );
 }
 
 //------------------------------------------------------------------

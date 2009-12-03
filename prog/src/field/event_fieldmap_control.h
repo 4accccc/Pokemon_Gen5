@@ -48,8 +48,7 @@ typedef enum{
  * @param	fieldmap	フィールドマップワークへのポインタ
  * @param	type		  フェードの種類指定
  * @param wait      フェード完了を待つかどうか
- * @return	GMEVENT	生成したイベントへのポインタ
- */
+ * @return	GMEVENT	生成したイベントへのポインタ*/
 //------------------------------------------------------------------
 extern GMEVENT * EVENT_FieldFadeOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
                                      FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait );
@@ -69,6 +68,30 @@ extern GMEVENT * EVENT_FieldFadeIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap
 
 //------------------------------------------------------------------
 /**
+ * @brief	クロスフェードアウトイベント生成
+ * @param	gsys		  GAMESYS_WORKへのポインタ
+ * @param	fieldmap	フィールドマップワークへのポインタ
+ * @param wait      フェード完了を待つかどうか
+ * @return	GMEVENT	生成したイベントへのポインタ
+ */
+//------------------------------------------------------------------
+extern GMEVENT * EVENT_FieldCrossOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
+                                      FIELD_FADE_WAIT_TYPE wait );
+
+//------------------------------------------------------------------
+/**
+ * @brief	クロスフェードインイベント生成
+ * @param	gsys		  GAMESYS_WORKへのポインタ
+ * @param	fieldmap  フィールドマップワークへのポインタ
+ * @param wait      フェード完了を待つかどうか
+ * @return	GMEVENT	生成したイベントへのポインタ
+ */
+//------------------------------------------------------------------
+extern GMEVENT * EVENT_FieldCrossIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
+                                     FIELD_FADE_WAIT_TYPE wait );
+
+//------------------------------------------------------------------
+/**
  * @brief	ブライトネスアウトイベント生成
  * @param	gsys		  GAMESYS_WORKへのポインタ
  * @param	fieldmap	フィールドマップワークへのポインタ
@@ -78,7 +101,7 @@ extern GMEVENT * EVENT_FieldFadeIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap
  */
 //------------------------------------------------------------------
 extern GMEVENT * EVENT_FieldBrightOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
-                                     FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait );
+                                       FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait );
 
 //------------------------------------------------------------------
 /**

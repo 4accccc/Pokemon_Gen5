@@ -308,43 +308,76 @@ typedef struct {
   u16 before_zone_id;         ///<‘JˆÚ‘Oƒ}ƒbƒvID
 	LOCATION loc_req;           ///<‘JˆÚæŽw’è
   EXIT_TYPE exit_type;
+  u8 next_season;  ///<‘JˆÚŒã‚Ì‹Gß
   VecFx32 stream_pos;  ///<—¬»‘JˆÚŽž‚É‚Ì‚ÝŽg—p
 }MAPCHANGE_WORK;
 
 typedef MAPCHANGE_WORK* MAPCHANGE_WORK_PTR;
 
+#define INVALID_SEASON_ID (0xff)  ///<‹GßID–³Œø’l
+
 
 //------------------------------------------------------------------
 /**
- * @brief ‹Gß‚ðXV‚·‚é
+ * @brief ‹Gß‚Ì•Ï‰»‚ðƒ`ƒFƒbƒN‚·‚é
  */
 //------------------------------------------------------------------
-static void UpdateSeason( GAMEDATA* gamedata )
+static void CheckSeasonChange( MAPCHANGE_WORK* work )
 {
   RTCDate date_start, date_now;
   RTCTime time_start;
   GMTIME* gmtime;
   SAVE_CONTROL_WORK* scw;
-  u8 season;
+  BOOL outdoor;
+  u8 last_season;
+  FIELD_STATUS* fstatus = GAMEDATA_GetFieldStatus( work->gamedata );
 
   // ƒQ[ƒ€ŠJŽn“úŽž‚ðŽæ“¾
-  scw = GAMEDATA_GetSaveControlWork( gamedata );
+  scw    = GAMEDATA_GetSaveControlWork( work->gamedata );
   gmtime = SaveData_GetGameTime( scw );
   RTC_ConvertSecondToDateTime( &date_start, &time_start, gmtime->start_sec );
-  // Œ»Ý‚Ì“ú•t‚ðŽæ“¾
+  // Œ»ÝŽž‚Æ‚»‚Ì‹Gß‚ð‹‚ß‚é
   RTC_GetDate( &date_now );
-  // Œ»Ý‚Ì‹Gß‚ð‹‚ß‚é
-  season = (date_now.month + 12 - date_start.month) % PMSEASON_TOTAL;
-  // ‹Gß‚ª•Ï‰»‚µ‚½‚ç, ‹Gß•\Ž¦ƒtƒ‰ƒO‚ð—§‚Ä‚é
-  if( season != GAMEDATA_GetSeasonID(gamedata) )
+  work->next_season = (date_now.month + 12 - date_start.month) % PMSEASON_TOTAL;
+  // ÅŒã‚É•\Ž¦‚µ‚½‹Gß‚ðŽæ“¾
+  last_season = FIELD_STATUS_GetSeasonDispLast( fstatus );
+  // ‘JˆÚæ‚ª‰®“à‚©‰®ŠO‚©‚ð”»’è
   {
-    FIELD_STATUS* fstatus = GAMEDATA_GetFieldStatus( gamedata );
+    HEAPID heap_id;
+    u16 area_id;
+    AREADATA* areadata;
+    heap_id  = FIELDMAP_GetHeapID( work->fieldmap );
+    area_id  = ZONEDATA_GetAreaID( work->loc_req.zone_id );
+    areadata = AREADATA_Create( heap_id, area_id, work->next_season );
+    outdoor  = ( AREADATA_GetInnerOuterSwitch(areadata) != 0 );
+    AREADATA_Delete( areadata );
+  }
+  // ‹Gß•\Ž¦‚Ì—L–³‚ðŒˆ’è
+  if( (work->next_season != last_season) && (outdoor != FALSE) )  // if(‹Gß•Ï‰»&&‘JˆÚæ‚ª‰®ŠO)
+  {
     FIELD_STATUS_SetSeasonDispFlag( fstatus, TRUE );
-    // DEBUG:
-    OBATA_Printf( "update season: ==> %d\n", season );
+  }
+}
+//------------------------------------------------------------------
+/**
+ * @brief ‹Gß‚ðXV‚·‚é
+ */
+//------------------------------------------------------------------
+static void UpdateSeason( MAPCHANGE_WORK* work )
+{
+  // ‘JˆÚæ‚Ì‹Gß‚ª‹‚ß‚ç‚ê‚Ä‚¢‚È‚¢
+  if( work->next_season == INVALID_SEASON_ID )
+  {
+    OBATA_Printf( "==================================\n" );
+    OBATA_Printf( "‘JˆÚæ‚Ì‹Gß‚ª‹‚ß‚ç‚ê‚Ä‚¢‚Ü‚¹‚ñI\n" );
+    OBATA_Printf( "==================================\n" );
+    return;
   }
   // ƒQ[ƒ€ƒf[ƒ^XV
-  GAMEDATA_SetSeasonID( gamedata, season );
+  GAMEDATA_SetSeasonID( work->gamedata, work->next_season );
+
+  // DEBUG:
+  OBATA_Printf( "change season: ==> %d\n", work->next_season );
 }
 
 //------------------------------------------------------------------
@@ -372,7 +405,7 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     }
 
     // ‹Gß‚ÌXV
-    UpdateSeason( gamedata );
+    UpdateSeason( mcw );
 
     //V‚µ‚¢ƒ}ƒbƒvƒ‚[ƒh‚È‚Ç‹@”\Žw’è‚ðs‚¤
     MAPCHG_setupMapTools( gsys, &mcw->loc_req );
@@ -430,6 +463,8 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 	GAMEDATA * gamedata = mcw->gamedata;
 	switch (*seq) {
   case 0:
+    // ‘JˆÚŒã‚Ì‹Gß‚ð‹‚ß‚é
+    CheckSeasonChange( mcw );
     // “®ìƒ‚ƒfƒ‹‚ÌˆÚ“®‚ðŽ~‚ß‚é
     {
       MMDLSYS *fmmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
@@ -467,6 +502,8 @@ static GMEVENT_RESULT EVENT_MapChangeNoFade(GMEVENT * event, int *seq, void*work
 	switch (*seq) {
   case 0:
     GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, fieldmap) );
+    // ‘JˆÚŒã‚Ì‹Gß‚ð‹‚ß‚é
+    CheckSeasonChange( mcw );
     (*seq) ++;
     break;
 	case 1:
@@ -510,6 +547,8 @@ static GMEVENT_RESULT EVENT_MapChangeBySandStream(GMEVENT * event, int *seq, voi
   {
   case 0:
     GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, fieldmap) );
+    // ‘JˆÚŒã‚Ì‹Gß‚ð‹‚ß‚é
+    CheckSeasonChange( mcw );
     (*seq) ++;
     break;
 	case 1: // —¬»‘ÞêƒCƒxƒ“ƒg
@@ -544,6 +583,8 @@ static GMEVENT_RESULT EVENT_MapChangeByAnanukenohimo(GMEVENT * event, int *seq, 
   {
   case 0:
     GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, fieldmap) );
+    // ‘JˆÚŒã‚Ì‹Gß‚ð‹‚ß‚é
+    CheckSeasonChange( mcw );
     (*seq) ++;
     break;
 	case 1: // ‘ÞêƒCƒxƒ“ƒg
@@ -578,6 +619,8 @@ static GMEVENT_RESULT EVENT_MapChangeByAnawohoru(GMEVENT * event, int *seq, void
   {
   case 0:
     GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, fieldmap) );
+    // ‘JˆÚŒã‚Ì‹Gß‚ð‹‚ß‚é
+    CheckSeasonChange( mcw );
     (*seq) ++;
     break;
 	case 1: // ‘ÞêƒCƒxƒ“ƒg
@@ -612,6 +655,8 @@ static GMEVENT_RESULT EVENT_MapChangeByTeleport(GMEVENT * event, int *seq, void*
   {
   case 0:
     GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, fieldmap) );
+    // ‘JˆÚŒã‚Ì‹Gß‚ð‹‚ß‚é
+    CheckSeasonChange( mcw );
     (*seq) ++;
     break;
 	case 1: // ‘ÞêƒCƒxƒ“ƒg
@@ -646,6 +691,8 @@ static GMEVENT_RESULT EVENT_MapChangeToUnion(GMEVENT * event, int *seq, void*wor
   {
   case 0:
     GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, fieldmap) );
+    // ‘JˆÚŒã‚Ì‹Gß‚ð‹‚ß‚é
+    CheckSeasonChange( mcw );
     (*seq) ++;
     break;
 	case 1:
@@ -683,6 +730,7 @@ static void MAPCHANGE_WORK_init(MAPCHANGE_WORK * mcw, GAMESYS_WORK * gsys)
   mcw->gamedata = GAMESYSTEM_GetGameData( gsys );
   mcw->fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   mcw->before_zone_id = FIELDMAP_GetZoneID( mcw->fieldmap );
+  mcw->next_season = INVALID_SEASON_ID;
 }
 
 //------------------------------------------------------------------

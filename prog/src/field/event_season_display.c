@@ -6,6 +6,7 @@
  * @date   2009.11.25
  */
 //////////////////////////////////////////////////////////////////////////////////////////
+#include <gflib.h>
 #include "fieldmap.h"
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
@@ -17,18 +18,25 @@
 #include "field_status_local.h"  // for FIELD_STATUS
 
 
+extern void FIELDMAP_InitBGMode( void );
+extern void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork );
+
+
 //========================================================================================
 // ■BG
 //========================================================================================
-#define BG_FRAME_FIELD    (GFL_BG_FRAME0_M)         // フィールドを表示しているBG面
-#define BG_FRAME_SEASON   (GFL_BG_FRAME3_M)         // 季節表示に使用するBG面
-#define BG_PRIORITY       (1)                       // 季節BG面の表示優先順位
-#define ALPHA_MASK_SEASON (GX_BLEND_PLANEMASK_BG3)  // αブレンディング第一対象面(季節表示)
-#define ALPHA_MASK_FIELD  (GX_BLEND_PLANEMASK_BG0)  // αブレンディング第二対象面(フィールド)
-#define ALPHA_MAX         (16)                      // α最大値
-#define ALPHA_MIN         (0)                       // α最小値
-#define BRIGHT_MAX        (0)                       // 輝度最大値
-#define BRIGHT_MIN        (-16)                     // 輝度最小値
+#define BG_FRAME_NUM       (8)                       // BGフレーム数(メイン＋サブ)
+#define BG_FRAME_FIELD     (GFL_BG_FRAME0_M)         // フィールドを表示しているBG面
+#define BG_FRAME_SEASON    (GFL_BG_FRAME3_M)         // 季節表示に使用するBG面
+#define BG_PRIORITY_OTHER  (3)                       // 使用しないBG面の表示優先順位
+#define BG_PRIORITY_FIELD  (1)                       // フィールド表示面の表示優先順位
+#define BG_PRIORITY_SEASON (0)                       // 季節表示面の表示優先順位
+#define ALPHA_MASK_SEASON  (GX_BLEND_PLANEMASK_BG3)  // αブレンディング第一対象面(季節表示)
+#define ALPHA_MASK_FIELD   (GX_BLEND_PLANEMASK_BG0)  // αブレンディング第二対象面(フィールド)
+#define ALPHA_MAX          (16)                      // α最大値
+#define ALPHA_MIN          (0)                       // α最小値
+#define BRIGHT_MAX         (0)                       // 輝度最大値
+#define BRIGHT_MIN         (-16)                     // 輝度最小値
 
 // BGコントロール
 static const GFL_BG_BGCNT_HEADER bg_header = 
@@ -42,7 +50,7 @@ static const GFL_BG_BGCNT_HEADER bg_header =
   GX_BG_CHARBASE_0x08000,	// キャラクタベースブロック
   GFL_BG_CHRSIZ_256x256,	// キャラクタエリアサイズ
   GX_BG_EXTPLTT_01,			  // BG拡張パレットスロット選択
-  BG_PRIORITY,		        // 表示プライオリティー
+  BG_PRIORITY_SEASON,		        // 表示プライオリティー
   0,							        // エリアオーバーフラグ
   0,							        // DUMMY
   FALSE,						      // モザイク設定
@@ -92,12 +100,13 @@ typedef struct
 //========================================================================================
 // ■非公開関数のプロトタイプ宣言
 //========================================================================================
-static void InitBG();
+static void InitBG( EVENT_WORK* work );
 static void LoadGraphicData( u8 season, HEAPID heap_id );
 static void UpdateAlpha( const EVENT_WORK* work, int seq );
 static int GetNextSeq( const EVENT_WORK* work, int seq );
 static void SetSeq( EVENT_WORK* work, int* seq, int next );
 static void StepNextSeq( EVENT_WORK* work, int* seq );
+static void Exit( EVENT_WORK* work );
 
 
 //========================================================================================
@@ -129,6 +138,7 @@ static GMEVENT_RESULT SeasonDisplay( GMEVENT* event, int* seq, void* wk )
     break;
   // 終了
   case SEQ_EXIT:
+    Exit( work );
     return GMEVENT_RES_FINISH;
   }
 
@@ -215,14 +225,20 @@ u32 GetSeasonDispEventFrame( GAMESYS_WORK* gsys )
 //----------------------------------------------------------------------------------------
 /**
  * @brief BGに関する初期設定を行う
+ *
+ * @param work イベントワーク
  */
 //----------------------------------------------------------------------------------------
-static void InitBG()
-{
+static void InitBG( EVENT_WORK* work )
+{ 
   // 初期設定
   //GFL_BG_SetBGControl( BG_FRAME_SEASON, &bg_header, GFL_BG_MODE_TEXT );
-  //GFL_BG_SetPriority( BG_FRAME_SEASON, BG_PRIORITY );
   //G2_SetBlendAlpha( ALPHA_MASK_SEASON, ALPHA_MASK_FIELD, ALPHA_MIN, ALPHA_MAX ); 
+  // プライオリティを設定
+  GFL_BG_SetPriority( BG_FRAME_FIELD,  BG_PRIORITY_FIELD );
+  GFL_BG_SetPriority( BG_FRAME_SEASON, BG_PRIORITY_SEASON ); 
+  GFL_BG_SetPriority( GFL_BG_FRAME1_M, BG_PRIORITY_OTHER ); 
+  GFL_BG_SetPriority( GFL_BG_FRAME2_M, BG_PRIORITY_OTHER ); 
   // キャラVRAM・スクリーンVRAMをクリア
   GFL_BG_ClearFrame( BG_FRAME_SEASON ); 
 }
@@ -408,8 +424,14 @@ static void SetSeq( EVENT_WORK* work, int* seq, int next )
   {
   // 初期化
   case SEQ_INIT:
+    // BGモード設定と表示設定の復帰
+    {
+      int mv = GFL_DISP_GetMainVisible();
+      FIELDMAP_InitBGMode();  // この中で表示設定がクリアされる
+      GFL_DISP_GX_SetVisibleControlDirect( mv );
+    }
     // BG初期設定
-    InitBG();
+    InitBG( work );
     break;
   // 表示準備
   case SEQ_PREPARE:
@@ -448,12 +470,12 @@ static void SetSeq( EVENT_WORK* work, int* seq, int next )
     // 最後の表示をフェードアウトさせる時は, 裏にフィールドを表示する
     if( work->dispSeason == work->currentSeason )
     {
-      GFL_BG_SetVisible( BG_FRAME_FIELD, VISIBLE_ON ); 
+      FIELDMAP_InitBG( work->fieldmap );
+      GFL_BG_SetVisible( BG_FRAME_SEASON, VISIBLE_ON ); 
     }
     break;
   // 終了
   case SEQ_EXIT:
-    GFL_BG_SetVisible( BG_FRAME_SEASON, VISIBLE_OFF ); 
     break;
   }
 
@@ -494,4 +516,17 @@ static void StepNextSeq( EVENT_WORK* work, int* seq )
   {
     SetSeq( work, seq, next );
   }
+}
+
+//----------------------------------------------------------------------------------------
+/**
+ * @brief イベント終了処理
+ *
+ * @param work イベントワーク
+ */
+//----------------------------------------------------------------------------------------
+static void Exit( EVENT_WORK* work )
+{
+  // BGを非表示に設定
+  GFL_BG_SetVisible( BG_FRAME_SEASON, VISIBLE_OFF ); 
 }

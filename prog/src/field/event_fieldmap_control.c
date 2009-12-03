@@ -35,11 +35,11 @@ FS_EXTERN_OVERLAY(poke_status);
 BOOL DebugBGInitEnd = FALSE;    //BG初期化監視フラグ
 #endif
 
+extern void FIELDMAP_InitBGMode( void );
 extern void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork );
 //============================================================================================
 //============================================================================================
 
-#define CROSSFADE_MODE
 
 //============================================================================================
 //
@@ -85,83 +85,12 @@ static GMEVENT_RESULT FieldBrightOutEvent(GMEVENT * event, int *seq, void * work
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static GMEVENT_RESULT FieldBrightInEvent(GMEVENT * event, int *seq, void * work)
-{
-	FADE_EVENT_WORK* few = work;
-	switch (*seq) {
-	case 0:
-    {
-      GAMEDATA*       gdata = GAMESYSTEM_GetGameData( few->gsys );
-      FIELD_STATUS* fstatus = GAMEDATA_GetFieldStatus( gdata );
-      AREADATA*    areadata = FIELDMAP_GetAreaData( few->fieldmap );
-      BOOL          outdoor = ( AREADATA_GetInnerOuterSwitch(areadata) != 0 );
-
-      if( outdoor && FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(屋外&&フラグON)
-      { // 四季表示
-        u8 start, end;
-        start = (FIELD_STATUS_GetSeasonDispLast( fstatus ) + 1) % PMSEASON_TOTAL;
-        end   = GAMEDATA_GetSeasonID( gdata );
-        GMEVENT_CallEvent( event, EVENT_SeasonDisplay( few->gsys, few->fieldmap, start, end ) );
-        FIELD_STATUS_SetSeasonDispFlag( fstatus, FALSE );
-        FIELD_STATUS_SetSeasonDispLast( fstatus, end );
-        OBATA_Printf( "SEASON DISPLAY: %d ==> %d\n", start, end );
-      }
-      else
-      {
-        int mode;
-        if ( few->fade_type ==  FIELD_FADE_BLACK)
-        {
-          mode = GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB;
-        }
-        else
-        {
-          mode = GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN | GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB;
-        }
-        GFL_FADE_SetMasterBrightReq(mode, 16, 0, 0);
-      }
-    }
-		(*seq) ++;
-		break;
-	case 1:
-    {
-      BOOL rc = FALSE;
-      if( few->wait_type == FIELD_FADE_NO_WAIT ) rc = TRUE;
-		  if( GFL_FADE_CheckFade() == FALSE ) rc = TRUE;
-
-      if (rc) {
-        FIELDMAP_InitBG(few->fieldmap);
-        return GMEVENT_RES_FINISH;
-      }
-    }
-		break;
-	}
-
-	return GMEVENT_RES_CONTINUE;
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static GMEVENT_RESULT FieldFadeOutEvent(GMEVENT * event, int *seq, void * work)
+static GMEVENT_RESULT FieldCrossOutEvent(GMEVENT * event, int *seq, void * work)
 {
 	FADE_EVENT_WORK * few = work;
-#ifndef  CROSSFADE_MODE
-	switch (*seq) {
-	case 0:
-    // @todo フェード速度を元に戻す
-    // 作業効率Upのためにフェードを短縮 11/17 obata
-		GFL_FADE_SetMasterBrightReq(
-				GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,
-				0, 16, -8);
-		(*seq) ++;
-		break;
-	case 1:
-    if( few->wait_type == FIELD_FADE_NO_WAIT ){ return GMEVENT_RES_FINISH; }
-		if( GFL_FADE_CheckFade() == FALSE ){ return GMEVENT_RES_FINISH; }
-		break;
-	}
-	return GMEVENT_RES_CONTINUE;
-#else
-	switch (*seq) {
+
+	switch (*seq)
+  {
 	case 0:
 		// サブ画面だけブラックアウト
 		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, -8);
@@ -207,7 +136,6 @@ static GMEVENT_RESULT FieldFadeOutEvent(GMEVENT * event, int *seq, void * work)
 	}
 
 	return GMEVENT_RES_CONTINUE;
-#endif
 }
 
 //------------------------------------------------------------------
@@ -220,19 +148,47 @@ static GMEVENT_RESULT FieldFadeOutEvent(GMEVENT * event, int *seq, void * work)
  * @return	GMEVENT	生成したイベントへのポインタ
  */
 //------------------------------------------------------------------
-GMEVENT * EVENT_FieldFadeOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
-                              FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait )
+GMEVENT* EVENT_FieldFadeOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
+                             FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait )
+{ 
+  GMEVENT* event;
+
+  GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
+  FIELD_STATUS* fstatus = GAMEDATA_GetFieldStatus( gdata );
+
+  // 季節表示の有無でフェード方法を変える
+  if( FIELD_STATUS_GetSeasonDispFlag(fstatus) )
+  { // 輝度フェード
+    event = EVENT_FieldBrightOut( gsys, fieldmap, type, wait );
+  } 
+  else
+  { // クロスフェード
+    event = EVENT_FieldCrossOut( gsys, fieldmap, wait );
+  }
+	return event;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	クロスフェードアウトイベント生成
+ * @param	gsys		  GAMESYS_WORKへのポインタ
+ * @param	fieldmap	フィールドマップワークへのポインタ
+ * @param	type		  フェードの種類指定
+ * @param wait      フェード完了を待つかどうか
+ * @return	GMEVENT	生成したイベントへのポインタ
+ */
+//------------------------------------------------------------------
+GMEVENT * EVENT_FieldCrossOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
+                               FIELD_FADE_WAIT_TYPE wait )
 {
-	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldFadeOutEvent, sizeof(FADE_EVENT_WORK));
+	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldCrossOutEvent, sizeof(FADE_EVENT_WORK));
 	FADE_EVENT_WORK * few = GMEVENT_GetEventWork(event);
   few->gsys      = gsys;
   few->fieldmap  = fieldmap;
-	few->fade_type = type;
   few->wait_type = wait;
 
 	return event;
 }
-
 //------------------------------------------------------------------
 /**
  * @brief	ブライトネスアウトイベント生成
@@ -244,7 +200,7 @@ GMEVENT * EVENT_FieldFadeOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap,
  */
 //------------------------------------------------------------------
 GMEVENT * EVENT_FieldBrightOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
-                              FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait )
+                                FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait )
 {
 	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldBrightOutEvent, sizeof(FADE_EVENT_WORK));
 	FADE_EVENT_WORK * few = GMEVENT_GetEventWork(event);
@@ -258,98 +214,22 @@ GMEVENT * EVENT_FieldBrightOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap,
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static GMEVENT_RESULT FieldFadeInEvent(GMEVENT * event, int *seq, void * work)
+static GMEVENT_RESULT FieldCrossInEvent(GMEVENT * event, int *seq, void * work)
 {
 	FADE_EVENT_WORK* few = work;
-#ifndef  CROSSFADE_MODE
-	switch (*seq) {
+
+	switch (*seq)
+  {
 	case 0:
-    {
-      GAMEDATA*       gdata = GAMESYSTEM_GetGameData( few->gsys );
-      FIELD_STATUS* fstatus = GAMEDATA_GetFieldStatus( gdata );
-      AREADATA*    areadata = FIELDMAP_GetAreaData( few->fieldmap );
-      BOOL          outdoor = ( AREADATA_GetInnerOuterSwitch(areadata) != 0 );
+    few->alphaWork = 16;
+    GFL_BG_SetPriority(GFL_BG_FRAME2_M, 0);
+    GFL_BG_SetPriority(GFL_BG_FRAME0_M, 1);
+    GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG0, few->alphaWork, 0 );
+    ++ *seq;
+    break;
 
-      if( outdoor && FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(屋外&&フラグON)
-      { // 四季表示
-        u8 start, end;
-        start = (FIELD_STATUS_GetSeasonDispLast( fstatus ) + 1) % PMSEASON_TOTAL;
-        end   = GAMEDATA_GetSeasonID( gdata );
-        GMEVENT_CallEvent( event, EVENT_SeasonDisplay( few->gsys, few->fieldmap, start, end ) );
-        FIELD_STATUS_SetSeasonDispFlag( fstatus, FALSE );
-        FIELD_STATUS_SetSeasonDispLast( fstatus, end );
-        OBATA_Printf( "SEASON DISPLAY: %d ==> %d\n", start, end );
-      }
-      else
-      {
-        // @todo フェード速度を元に戻す
-        // 作業効率Upのためにフェードを短縮 11/17 obata
-        GFL_FADE_SetMasterBrightReq(
-            GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,
-            16, 0, -2);
-      }
-    }
-		(*seq) ++;
-		break;
-	case 1:
-    if( few->wait_type == FIELD_FADE_NO_WAIT ){ return GMEVENT_RES_FINISH; }
-		if( GFL_FADE_CheckFade() == FALSE ){ return GMEVENT_RES_FINISH; }
-		break;
-	}
-
-	return GMEVENT_RES_CONTINUE;
-#else
-	switch (*seq) {
-	case 0:
-		{
-			int brightness = GX_GetMasterBrightness();
-
-			if((brightness == 16)||(brightness == -16)){
-				GAMEDATA*       gdata = GAMESYSTEM_GetGameData( few->gsys );
-				FIELD_STATUS* fstatus = GAMEDATA_GetFieldStatus( gdata );
-				AREADATA*    areadata = FIELDMAP_GetAreaData( few->fieldmap );
-				BOOL          outdoor = ( AREADATA_GetInnerOuterSwitch(areadata) != 0 );
-
-				if( outdoor && FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(屋外&&フラグON)
-				{ // 四季表示
-					u8 start, end;
-					start = (FIELD_STATUS_GetSeasonDispLast( fstatus ) + 1) % PMSEASON_TOTAL;
-					end   = GAMEDATA_GetSeasonID( gdata );
-					GMEVENT_CallEvent( event, EVENT_SeasonDisplay( few->gsys, few->fieldmap, start, end ) );
-					FIELD_STATUS_SetSeasonDispFlag( fstatus, FALSE );
-					FIELD_STATUS_SetSeasonDispLast( fstatus, end );
-					OBATA_Printf( "SEASON DISPLAY: %d ==> %d\n", start, end );
-				}
-				else
-				{
-				 // @todo フェード速度を元に戻す
-				 // 作業効率Upのためにフェードを短縮 11/17 obata
-				 GFL_FADE_SetMasterBrightReq(
-				     GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,
-				     16, 0, -2);
-				}
-				FIELDMAP_InitBG(few->fieldmap);
-				*seq = 1;
-			} else {
-				few->alphaWork = 16;
-				GFL_BG_SetPriority(GFL_BG_FRAME2_M, 0);
-				GFL_BG_SetPriority(GFL_BG_FRAME0_M, 1);
-				GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
-				G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG0, few->alphaWork, 0 );
-				*seq = 3;
-			}
-    }
-		break;
-
-	case 1:	// 輝度フェード
-    if( few->wait_type == FIELD_FADE_NO_WAIT ){ *seq = 2; break; }
-		if( GFL_FADE_CheckFade() == FALSE )				{ *seq = 2; break; }
-		break;
-
-	case 2:	// 輝度フェードEND
-		return GMEVENT_RES_FINISH;
-
-	case 3:	// クロスフェード
+	case 1:	// クロスフェード
 		if(few->alphaWork){
 			few->alphaWork--;
 			G2_ChangeBlendAlpha( few->alphaWork, 16 - few->alphaWork );
@@ -358,11 +238,11 @@ static GMEVENT_RESULT FieldFadeInEvent(GMEVENT * event, int *seq, void * work)
 
 			// サブ画面輝度復帰
       GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, -8);
-			*seq = 4;
+			++ *seq;
 		}
 		break;
 
-	case 4:	// クロスフェードEND
+	case 2:	// クロスフェードEND
 		//VRAMクリア
 		GX_SetBankForLCDC(GX_VRAM_LCDC_D);
 		MI_CpuClearFast((void *)HW_LCDC_VRAM, HW_VRAM_D_SIZE);
@@ -372,12 +252,77 @@ static GMEVENT_RESULT FieldFadeInEvent(GMEVENT * event, int *seq, void * work)
 		GX_SetBankForBG(GX_VRAM_LCDC_D);	
 
 		OS_WaitVBlankIntr();	// 画面ちらつき防止用ウエイト
+
+    // BGモード設定と表示設定の復帰
+    {
+      int mv = GFL_DISP_GetMainVisible();
+      FIELDMAP_InitBGMode();
+      GFL_DISP_GX_SetVisibleControlDirect( mv );
+    }
 		FIELDMAP_InitBG(few->fieldmap);
 		return GMEVENT_RES_FINISH;
+	} 
+	return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT FieldBrightInEvent(GMEVENT * event, int *seq, void * work)
+{
+	FADE_EVENT_WORK* few = work;
+	switch (*seq) {
+	case 0:
+    { 
+      GAMEDATA*       gdata = GAMESYSTEM_GetGameData( few->gsys );
+      FIELD_STATUS* fstatus = GAMEDATA_GetFieldStatus( gdata );
+
+      if( FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(季節表示フラグON)
+      { // 四季表示
+        u8 start, end;
+        start = (FIELD_STATUS_GetSeasonDispLast( fstatus ) + 1) % PMSEASON_TOTAL;
+        end   = GAMEDATA_GetSeasonID( gdata );
+        GMEVENT_CallEvent( event, EVENT_SeasonDisplay( few->gsys, few->fieldmap, start, end ) );
+        FIELD_STATUS_SetSeasonDispFlag( fstatus, FALSE );
+        FIELD_STATUS_SetSeasonDispLast( fstatus, end );
+        *seq = 2;
+        break;
+      }
+      else
+      {
+        int mode;
+        if ( few->fade_type ==  FIELD_FADE_BLACK)
+        {
+          mode = GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB;
+        }
+        else
+        {
+          mode = GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN | GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB;
+        }
+        GFL_FADE_SetMasterBrightReq(mode, 16, 0, 0);
+        // BGモード設定と表示設定の復帰
+        {
+          int mv = GFL_DISP_GetMainVisible();
+          FIELDMAP_InitBGMode();
+          GFL_DISP_GX_SetVisibleControlDirect( mv );
+        }
+        FIELDMAP_InitBG(few->fieldmap);
+      }
+    }
+		(*seq) ++;
+		break;
+	case 1:
+    {
+      BOOL rc = FALSE;
+      if( few->wait_type == FIELD_FADE_NO_WAIT ) rc = TRUE;
+		  if( GFL_FADE_CheckFade() == FALSE ) rc = TRUE; 
+      if( rc ){ (*seq) ++; }
+    }
+		break;
+  case 2:
+    return GMEVENT_RES_FINISH;
 	}
 
 	return GMEVENT_RES_CONTINUE;
-#endif
 }
 
 //------------------------------------------------------------------
@@ -393,11 +338,48 @@ static GMEVENT_RESULT FieldFadeInEvent(GMEVENT * event, int *seq, void * work)
 GMEVENT * EVENT_FieldFadeIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
                              FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait )
 {
-	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldFadeInEvent, sizeof(FADE_EVENT_WORK));
+  GMEVENT* event;
+  int brightness = GX_GetMasterBrightness();
+
+  GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
+  FIELD_STATUS* fstatus = GAMEDATA_GetFieldStatus( gdata );
+
+  if( (brightness == 16) || (brightness == -16) )
+  { // 輝度フェード
+    event = EVENT_FieldBrightIn( gsys, fieldmap, type, wait );
+  }
+  else
+  { 
+    // 季節表示の有無でフェード方法を変える
+    if( FIELD_STATUS_GetSeasonDispFlag(fstatus) )
+    { // 輝度フェード
+      event = EVENT_FieldBrightIn( gsys, fieldmap, type, wait );
+    } 
+    else
+    { // クロスフェード
+      event = EVENT_FieldCrossIn( gsys, fieldmap, wait );
+    }
+  }
+	return event;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	クロスフェードインイベント生成
+ * @param	gsys		  GAMESYS_WORKへのポインタ
+ * @param	fieldmap  フィールドマップワークへのポインタ
+ * @param	type		  フェードの種類指定
+ * @param wait      フェード完了を待つかどうか
+ * @return	GMEVENT	生成したイベントへのポインタ
+ */
+//------------------------------------------------------------------
+GMEVENT * EVENT_FieldCrossIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
+                              FIELD_FADE_WAIT_TYPE wait )
+{
+	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldCrossInEvent, sizeof(FADE_EVENT_WORK));
 	FADE_EVENT_WORK * few = GMEVENT_GetEventWork(event);
   few->gsys      = gsys;
   few->fieldmap  = fieldmap;
-	few->fade_type = type;
   few->wait_type = wait;
 
 	return event;
@@ -414,7 +396,7 @@ GMEVENT * EVENT_FieldFadeIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap,
  */
 //------------------------------------------------------------------
 GMEVENT * EVENT_FieldBrightIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
-                             FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait )
+                               FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait )
 {
 	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldBrightInEvent, sizeof(FADE_EVENT_WORK));
 	FADE_EVENT_WORK * few = GMEVENT_GetEventWork(event);
