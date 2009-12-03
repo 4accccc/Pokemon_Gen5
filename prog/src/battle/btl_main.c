@@ -272,7 +272,7 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
   switch( *seq ){
   case 0:
     wk->subSeq = 0;
-    *seq++;
+    (*seq)++;
     /* fallthru */
   case 1:
     if( wk->subSeq > -16 ){
@@ -280,7 +280,7 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
       GX_SetMasterBrightness( wk->subSeq );
       GXS_SetMasterBrightness( wk->subSeq );
     }else{
-      *seq++;
+      (*seq)++;
     }
     break;
   case 2:

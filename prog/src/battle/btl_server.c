@@ -638,9 +638,13 @@ static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
     break;
   case 1:
     {
-      u8 touch = ( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_A) != 0);
-      u8 bgm_end = !PMSND_CheckPlayBGM();
-      if( touch || bgm_end ){
+      u8 touch = FALSE;
+      if( (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B))
+      ||  (GFL_UI_TP_GetTrg())
+      ){
+        touch = TRUE;
+      }
+      if( touch ){
         return TRUE;
       }
     }
