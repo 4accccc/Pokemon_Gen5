@@ -591,7 +591,8 @@ static void DEBUG_PalaceMapInCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
     
     //ビーコンサーチ状態でパレスに入ってきた場合
     if(ZONEDATA_IsPalace(zone_id) == TRUE && (comm_no == GAME_COMM_NO_FIELD_BEACON_SEARCH
-        || comm_no == GAME_COMM_NO_DEBUG_SCANONLY)){
+        || comm_no == GAME_COMM_NO_DEBUG_SCANONLY)
+        && GameCommSys_CheckSystemWaiting(game_comm) == FALSE){
       OS_TPrintf("ビーコンサーチを終了\n");
       GameCommSys_ExitReq(game_comm);
       debug_palace_comm_seq++;
