@@ -1043,7 +1043,7 @@ static void handler_Hogosyoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    BtlBgType  bg = BTL_SVFLOW_GetLandForm( flowWk );
+    BtlBgType  bg = BTL_SVFTOOL_GetLandForm( flowWk );
     PokeType   type = POKETYPE_NORMAL;
 
     switch( bg ){
@@ -1242,7 +1242,7 @@ static void handler_Kiribarai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static BTL_EVENT_FACTOR*  ADD_Kawarawari( u16 pri, WazaID waza, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_DETERMINE, handler_Kawarawari },    // 未分類ワザハンドラ
+    { BTL_EVENT_WAZA_DMG_DETERMINE, handler_Kawarawari },    // ダメージ確定ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
@@ -1290,7 +1290,7 @@ static void handler_Tobigeri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   {
     u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
     WazaID  waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-    u32 damage = BTL_SVFLOW_SimulationDamage( flowWk, pokeID, targetPokeID, waza, FALSE, TRUE );
+    u32 damage = BTL_SVFTOOL_SimulationDamage( flowWk, pokeID, targetPokeID, waza, FALSE, TRUE );
     const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
     u32 maxHP = BPP_GetValue( target, BPP_MAX_HP );
 
@@ -1796,7 +1796,7 @@ static void handler_HimituNoTikara_Sick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    BtlBgType  bg = BTL_SVFLOW_GetLandForm( flowWk );
+    BtlBgType  bg = BTL_SVFTOOL_GetLandForm( flowWk );
     WazaSick  sick;
     BPP_SICK_CONT  cont;
     WazaID  waza = BTL_EVENT_FACTOR_GetSubID( myHandle );
@@ -2534,7 +2534,7 @@ static void handler_Fuiuti_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
       if( BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_WAZAPROC_DONE) ){ break; }
 
       // 現ターンのアクションが取得できなかったら失敗
-      if( !BTL_SVFLOW_GetThisTurnAction( flowWk, targetPokeID, &action ) ){ break; }
+      if( !BTL_SVFTOOL_GetThisTurnAction( flowWk, targetPokeID, &action ) ){ break; }
 
       // 相手がダメージワザを選択していない場合も失敗
       waza = BTL_ACTION_GetWazaID( &action );
@@ -2576,7 +2576,7 @@ static void handler_Oiuti_Intr( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 {
   BTL_ACTION_PARAM  action;
 
-  if( BTL_SVFLOW_GetThisTurnAction(flowWk, pokeID, &action) )
+  if( BTL_SVFTOOL_GetThisTurnAction(flowWk, pokeID, &action) )
   {
     u8 targetPokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, action.fight.targetPos );
     BTL_Printf("ワシ[%d]が今から狙うポケ=%d, 入れ替わろうとしてるポケ=%d（位置:%d)\n",
@@ -2594,7 +2594,7 @@ static void handler_Oiuti_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   {
     BTL_ACTION_PARAM  action;
     u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
-    if( BTL_SVFLOW_GetThisTurnAction(flowWk, targetPokeID, &action) )
+    if( BTL_SVFTOOL_GetThisTurnAction(flowWk, targetPokeID, &action) )
     {
       if( BTL_ACTION_GetAction(&action) == BTL_ACTION_CHANGE ){
         BTL_Printf("入れ替わろうとしてるヤツには２倍です\n");
@@ -2739,7 +2739,7 @@ static void handler_NekoNiKoban( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u32 volume = BPP_GetValue( bpp, BPP_LEVEL ) * 20;
-    if( BTL_SVFLOW_AddBonusMoney(flowWk, volume, pokeID) )
+    if( BTL_SVFRET_AddBonusMoney(flowWk, volume, pokeID) )
     {
       BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
       HANDEX_STR_Setup( &param->str, BTL_STRTYPE_STD, BTL_STRID_STD_NekoNiKoban );
@@ -4209,6 +4209,7 @@ static void handler_Dorobou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
         BTL_HANDEX_PARAM_SWAP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SWAP_ITEM, pokeID );
         param->pokeID = target_pokeID;
         HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Dorobou );
+        HANDEX_STR_AddArg( &param->exStr, pokeID );
         HANDEX_STR_AddArg( &param->exStr, target_pokeID );
         HANDEX_STR_AddArg( &param->exStr, BPP_GetItem(target) );
       }
@@ -6187,8 +6188,8 @@ static void handler_TonboGaeri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    const BTL_PARTY* party = BTL_SVFLOW_GetPartyData( flowWk, pokeID );
-    u8 numCoverPos = BTL_SVFLOW_GetClientCoverPosCount( flowWk, pokeID );
+    const BTL_PARTY* party = BTL_SVFTOOL_GetPartyData( flowWk, pokeID );
+    u8 numCoverPos = BTL_SVFTOOL_GetClientCoverPosCount( flowWk, pokeID );
     if( BTL_PARTY_GetAliveMemberCountRear(party, numCoverPos) )
     {
       BTL_HANDEX_PARAM_CHANGE_MEMBER* param;
@@ -6285,8 +6286,8 @@ static void handler_BatonTouch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    const BTL_PARTY* party = BTL_SVFLOW_GetPartyData( flowWk, pokeID );
-    u8 numCoverPos = BTL_SVFLOW_GetClientCoverPosCount( flowWk, pokeID );
+    const BTL_PARTY* party = BTL_SVFTOOL_GetPartyData( flowWk, pokeID );
+    u8 numCoverPos = BTL_SVFTOOL_GetClientCoverPosCount( flowWk, pokeID );
     if( BTL_PARTY_GetAliveMemberCountRear(party, numCoverPos) )
     {
       BTL_HANDEX_PARAM_POSEFF_ADD* eff_param;
@@ -6512,7 +6513,7 @@ static void handler_FukuroDataki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    const BTL_PARTY* party = BTL_SVFLOW_GetPartyData( flowWk, pokeID );
+    const BTL_PARTY* party = BTL_SVFTOOL_GetPartyData( flowWk, pokeID );
     const BTL_POKEPARAM* bpp;
     u32 cnt_max, cnt, i;
 
@@ -7266,17 +7267,17 @@ static void handler_YubiWoFuru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     WazaID     waza = BTL_CALC_RandWaza( ReqWazaExcludeTbl, NELEMS(ReqWazaExcludeTbl) );
-    BtlPokePos pos  = BTL_SVFLOW_ReqWazaTargetAuto( flowWk, pokeID, waza );
+    BtlPokePos pos  = BTL_SVFTOOL_ReqWazaTargetAuto( flowWk, pokeID, waza );
 
     #if 0
     #ifdef PM_DEBUG
     if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
       waza = WAZANO_MAHHAPANTI;
-      pos  = BTL_SVFLOW_ReqWazaTargetAuto( flowWk, pokeID, waza );
+      pos  = BTL_SVFTOOL_ReqWazaTargetAuto( flowWk, pokeID, waza );
     }
     if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
       waza = WAZANO_MAMORU;
-      pos  = BTL_SVFLOW_ReqWazaTargetAuto( flowWk, pokeID, waza );
+      pos  = BTL_SVFTOOL_ReqWazaTargetAuto( flowWk, pokeID, waza );
     }
     #endif
     #endif
@@ -7315,13 +7316,13 @@ static void handler_SizenNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BtlBgType  bg = BTL_SVFLOW_GetLandForm( flowWk );
+    BtlBgType  bg = BTL_SVFTOOL_GetLandForm( flowWk );
     WazaID  waza;
     BtlPokePos pos;
 
     // @@@ 本来は地形に応じてもっとフクザツに
     waza = (bg & 1)? WAZANO_HAIDOROPONPU : WAZANO_REITOUBIIMU;
-    pos  = BTL_SVFLOW_ReqWazaTargetAuto( flowWk, pokeID, waza );
+    pos  = BTL_SVFTOOL_ReqWazaTargetAuto( flowWk, pokeID, waza );
 
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZAID,  waza );
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEPOS, pos );
@@ -7356,14 +7357,14 @@ static void handler_Nekonote( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    const BTL_PARTY* party = BTL_SVFLOW_GetPartyData( flowWk, pokeID );
+    const BTL_PARTY* party = BTL_SVFTOOL_GetPartyData( flowWk, pokeID );
     u32  arySize = PTL_WAZA_MAX * BTL_PARTY_MEMBER_MAX * sizeof(u16);
     u16* wazaAry = BTL_SVFTOOL_GetTmpWork( flowWk, arySize );
     const BTL_POKEPARAM* bpp;
 
     u8 frontMemberCnt, memberCnt, wazaCnt, i;
 
-    frontMemberCnt = BTL_SVFLOW_GetClientCoverPosCount( flowWk, pokeID );
+    frontMemberCnt = BTL_SVFTOOL_GetClientCoverPosCount( flowWk, pokeID );
     memberCnt = BTL_PARTY_GetMemberCount( party );
     for(i=frontMemberCnt, wazaCnt=0; i<memberCnt; ++i)
     {
@@ -7386,7 +7387,7 @@ static void handler_Nekonote( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     if( wazaCnt )
     {
       u8 idx = GFL_STD_MtRand( wazaCnt );
-      BtlPokePos  pos= BTL_SVFLOW_ReqWazaTargetAuto( flowWk, pokeID, wazaAry[idx] );
+      BtlPokePos  pos= BTL_SVFTOOL_ReqWazaTargetAuto( flowWk, pokeID, wazaAry[idx] );
 
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZAID,  wazaAry[idx] );
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEPOS, pos );
@@ -7437,7 +7438,7 @@ static void handler_Negoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
       if( cnt )
       {
         u8 idx = GFL_STD_MtRand( cnt );
-        BtlPokePos  pos= BTL_SVFLOW_ReqWazaTargetAuto( flowWk, pokeID, work[idx] );
+        BtlPokePos  pos= BTL_SVFTOOL_ReqWazaTargetAuto( flowWk, pokeID, work[idx] );
 
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZAID,  work[idx] );
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEPOS, pos );
@@ -7549,7 +7550,7 @@ static void handler_Sakidori_CheckParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
         if( BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_WAZAPROC_DONE) ){ break; }
 
         // 現ターンのアクションが取得できなかったら失敗
-        if( !BTL_SVFLOW_GetThisTurnAction( flowWk, targetPokeIDAry[0], &action ) ){ break; }
+        if( !BTL_SVFTOOL_GetThisTurnAction( flowWk, targetPokeIDAry[0], &action ) ){ break; }
 
         // 相手がダメージワザを選択していない場合も失敗
         waza = BTL_ACTION_GetWazaID( &action );
@@ -7599,7 +7600,7 @@ static void handler_Manekko_CheckParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
     if( (waza != WAZANO_NULL)
     &&  (!isReqWazaExclude(waza))
     ){
-      BtlPokePos  pos = BTL_SVFLOW_ReqWazaTargetAuto( flowWk, pokeID, waza );
+      BtlPokePos  pos = BTL_SVFTOOL_ReqWazaTargetAuto( flowWk, pokeID, waza );
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZAID, waza );
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEPOS, pos );
     }

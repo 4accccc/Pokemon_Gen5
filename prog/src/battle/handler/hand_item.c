@@ -293,41 +293,61 @@ static BTL_EVENT_FACTOR* HAND_ADD_ITEM_Juudenti( u16 pri, u16 itemID, u8 pokeID 
 static void handler_Juudenti_DmgReaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Juudenti_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_DassyutuPod( u16 pri, u16 itemID, u8 pokeID );
-static void handler_DassyutuPod( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_DassyutuPod_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_DassyutuPod_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void common_Juel_Power( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType type );
+static void common_Juel_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType type );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_HonooNoJuel( u16 pri, u16 itemID, u8 pokeID );
-static void handler_HonooNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_HonooNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_HonooNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_MizuNoJuel( u16 pri, u16 itemID, u8 pokeID );
-static void handler_MizuNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_MizuNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_MizuNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_DenkiNoJuel( u16 pri, u16 itemID, u8 pokeID );
-static void handler_DenkiNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_DenkiNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_DenkiNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KusaNoJuel( u16 pri, u16 itemID, u8 pokeID );
-static void handler_KusaNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_KusaNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_KusaNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KooriNoJuel( u16 pri, u16 itemID, u8 pokeID );
-static void handler_KooriNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_KooriNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_KooriNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KakutouJuel( u16 pri, u16 itemID, u8 pokeID );
-static void handler_KakutouJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_KakutouJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_KakutouJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_DokuNoJuel( u16 pri, u16 itemID, u8 pokeID );
-static void handler_DokuNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_DokuNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_DokuNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_JimenNoJuel( u16 pri, u16 itemID, u8 pokeID );
-static void handler_JimenNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_JimenNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_JimenNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_HikouNoJuel( u16 pri, u16 itemID, u8 pokeID );
-static void handler_HikouNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_HikouNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_HikouNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_EsperJuel( u16 pri, u16 itemID, u8 pokeID );
-static void handler_EsperJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_EsperJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_EsperJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_MusiNoJuel( u16 pri, u16 itemID, u8 pokeID );
-static void handler_MusiNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_MusiNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_MusiNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_IwaNoJuel( u16 pri, u16 itemID, u8 pokeID );
-static void handler_IwaNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_IwaNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_IwaNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_GhostJuel( u16 pri, u16 itemID, u8 pokeID );
-static void handler_GhostJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_GhostJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_GhostJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_DragonJuel( u16 pri, u16 itemID, u8 pokeID );
-static void handler_DragonJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_DragonNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_DragonNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_AkuNoJuel( u16 pri, u16 itemID, u8 pokeID );
-static void handler_AkuNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_AkuNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_AkuNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_HaganeNoJuel( u16 pri, u16 itemID, u8 pokeID );
-static void handler_HaganeNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_HaganeNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_HaganeNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_NormalJuel( u16 pri, u16 itemID, u8 pokeID );
-static void handler_NormalJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_NormalJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_NormalJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 
@@ -3544,218 +3564,408 @@ static void handler_Juudenti_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_DassyutuPod( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,     handler_DassyutuPod },
+    { BTL_EVENT_WAZA_DMG_REACTION,     handler_DassyutuPod_Reaction },  // ダメージ反応ハンドラ
+    { BTL_EVENT_USE_ITEM,              handler_DassyutuPod_Use      },  // どうぐ使用ハンドラ
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
-static void handler_DassyutuPod( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// ダメージ反応ハンドラ
+static void handler_DassyutuPod_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-
+  // 自分がダメージを受けたら、どうぐ使用ハンドラ呼び出し
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+  {
+    BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
+  }
 }
+// どうぐ使用ハンドラ
+static void handler_DassyutuPod_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    BTL_HANDEX_PARAM_PUSHOUT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_PUSHOUT, pokeID );
+    param->pokeID = pokeID;
+
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_DassyutuPod );
+    HANDEX_STR_AddArg( &param->exStr, pokeID );
+  }
+}
+
+
+
 //------------------------------------------------------------------------------
 /**
  *  ○○○ジュエル
  */
 //------------------------------------------------------------------------------
+
+// ダメージ確定ハンドラ共通
+static void common_Juel_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType type )
+{
+  // 自分が攻撃側＆タイプがマッチしていたらメッセージ表示
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == type)
+  ){
+    BTL_HANDEX_PARAM_MESSAGE* param;
+
+    param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Juel );
+    HANDEX_STR_AddArg( &param->str, pokeID );
+    HANDEX_STR_AddArg( &param->str, BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) );
+  }
+}
+
+// 威力計算ハンドラ共通
+static void common_Juel_Power( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType type )
+{
+  // 自分が攻撃側＆タイプがマッチしていたら威力を増加＆アイテム削除
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == type)
+  ){
+    BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.5f) );
+    BTL_SVFRET_RemoveItem( flowWk, pokeID );
+  }
+}
+/**
+ *  ほのおのジュエル
+ */
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_HonooNoJuel( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,     handler_HonooNoJuel },
+    { BTL_EVENT_WAZA_POWER,             handler_HonooNoJuel_Pow },
+    { BTL_EVENT_WAZA_DMG_DETERMINE,     handler_HonooNoJuel_Dmg },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
-static void handler_HonooNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_HonooNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-
+  common_Juel_Power( myHandle, flowWk, pokeID, work, POKETYPE_HONOO );
 }
+static void handler_HonooNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_Juel_DmgDetermine( myHandle, flowWk, pokeID, work, POKETYPE_HONOO );
+}
+/**
+ *  みずのジュエル
+ */
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_MizuNoJuel( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,     handler_MizuNoJuel },
+    { BTL_EVENT_WAZA_POWER,             handler_MizuNoJuel_Pow },
+    { BTL_EVENT_WAZA_DMG_DETERMINE,     handler_MizuNoJuel_Dmg },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
-static void handler_MizuNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_MizuNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-
+  common_Juel_Power( myHandle, flowWk, pokeID, work, POKETYPE_MIZU );
 }
-
+static void handler_MizuNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_Juel_DmgDetermine( myHandle, flowWk, pokeID, work, POKETYPE_MIZU );
+}
+/**
+ *  でんきのジュエル
+ */
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_DenkiNoJuel( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,     handler_DenkiNoJuel },
+    { BTL_EVENT_WAZA_POWER,             handler_DenkiNoJuel_Pow },
+    { BTL_EVENT_WAZA_DMG_DETERMINE,     handler_DenkiNoJuel_Dmg },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
-static void handler_DenkiNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_DenkiNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-
+  common_Juel_Power( myHandle, flowWk, pokeID, work, POKETYPE_DENKI );
 }
-
+static void handler_DenkiNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_Juel_DmgDetermine( myHandle, flowWk, pokeID, work, POKETYPE_DENKI );
+}
+/**
+ *  くさのジュエル
+ */
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KusaNoJuel( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,     handler_KusaNoJuel },
+    { BTL_EVENT_WAZA_POWER,             handler_KusaNoJuel_Pow },
+    { BTL_EVENT_WAZA_DMG_DETERMINE,     handler_KusaNoJuel_Dmg },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
-static void handler_KusaNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_KusaNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  common_Juel_Power( myHandle, flowWk, pokeID, work, POKETYPE_KUSA );
 }
-
+static void handler_KusaNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_Juel_DmgDetermine( myHandle, flowWk, pokeID, work, POKETYPE_KUSA );
+}
+/**
+ *  こおりのジュエル
+ */
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KooriNoJuel( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,     handler_KooriNoJuel },
+    { BTL_EVENT_WAZA_POWER,             handler_KooriNoJuel_Pow },
+    { BTL_EVENT_WAZA_DMG_DETERMINE,     handler_KooriNoJuel_Dmg },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
-static void handler_KooriNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_KooriNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  common_Juel_Power( myHandle, flowWk, pokeID, work, POKETYPE_KOORI );
 }
-
+static void handler_KooriNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_Juel_DmgDetermine( myHandle, flowWk, pokeID, work, POKETYPE_KOORI );
+}
+/**
+ *  かくとうジュエル
+ */
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KakutouJuel( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,     handler_KakutouJuel },
+    { BTL_EVENT_WAZA_POWER,             handler_KakutouJuel_Pow },
+    { BTL_EVENT_WAZA_DMG_DETERMINE,     handler_KakutouJuel_Dmg },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
-static void handler_KakutouJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_KakutouJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  common_Juel_Power( myHandle, flowWk, pokeID, work, POKETYPE_KAKUTOU );
 }
+static void handler_KakutouJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_Juel_DmgDetermine( myHandle, flowWk, pokeID, work, POKETYPE_KAKUTOU );
+}
+/**
+ *  どくのジュエル
+ */
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_DokuNoJuel( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,     handler_DokuNoJuel },
+    { BTL_EVENT_WAZA_POWER,             handler_DokuNoJuel_Pow },
+    { BTL_EVENT_WAZA_DMG_DETERMINE,     handler_DokuNoJuel_Dmg },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
-static void handler_DokuNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_DokuNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  common_Juel_Power( myHandle, flowWk, pokeID, work, POKETYPE_DOKU );
 }
-
+static void handler_DokuNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_Juel_DmgDetermine( myHandle, flowWk, pokeID, work, POKETYPE_DOKU );
+}
+/**
+ *  じめんのジュエル
+ */
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_JimenNoJuel( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,     handler_JimenNoJuel },
+    { BTL_EVENT_WAZA_POWER,             handler_JimenNoJuel_Pow },
+    { BTL_EVENT_WAZA_DMG_DETERMINE,     handler_JimenNoJuel_Dmg },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
-static void handler_JimenNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_JimenNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  common_Juel_Power( myHandle, flowWk, pokeID, work, POKETYPE_JIMEN );
 }
-
+static void handler_JimenNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_Juel_DmgDetermine( myHandle, flowWk, pokeID, work, POKETYPE_JIMEN );
+}
+/**
+ *  ひこうのジュエル
+ */
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_HikouNoJuel( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,     handler_HikouNoJuel },
+    { BTL_EVENT_WAZA_POWER,             handler_HikouNoJuel_Pow },
+    { BTL_EVENT_WAZA_DMG_DETERMINE,     handler_HikouNoJuel_Dmg },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
-static void handler_HikouNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_HikouNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  common_Juel_Power( myHandle, flowWk, pokeID, work, POKETYPE_HIKOU );
 }
-
+static void handler_HikouNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_Juel_DmgDetermine( myHandle, flowWk, pokeID, work, POKETYPE_HIKOU );
+}
+/**
+ *  エスパージュエル
+ */
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_EsperJuel( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,     handler_EsperJuel },
+    { BTL_EVENT_WAZA_POWER,             handler_EsperJuel_Pow },
+    { BTL_EVENT_WAZA_DMG_DETERMINE,     handler_EsperJuel_Dmg },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
-static void handler_EsperJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_EsperJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  common_Juel_Power( myHandle, flowWk, pokeID, work, POKETYPE_ESPER );
 }
-
+static void handler_EsperJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_Juel_DmgDetermine( myHandle, flowWk, pokeID, work, POKETYPE_ESPER );
+}
+/**
+ *  むしのジュエル
+ */
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_MusiNoJuel( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,     handler_MusiNoJuel },
+    { BTL_EVENT_WAZA_POWER,             handler_MusiNoJuel_Pow },
+    { BTL_EVENT_WAZA_DMG_DETERMINE,     handler_MusiNoJuel_Dmg },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
-static void handler_MusiNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_MusiNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  common_Juel_Power( myHandle, flowWk, pokeID, work, POKETYPE_MUSHI );
 }
-
+static void handler_MusiNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_Juel_DmgDetermine( myHandle, flowWk, pokeID, work, POKETYPE_MUSHI );
+}
+/**
+ *  いわのジュエル
+ */
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_IwaNoJuel( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,     handler_IwaNoJuel },
+    { BTL_EVENT_WAZA_POWER,             handler_IwaNoJuel_Pow },
+    { BTL_EVENT_WAZA_DMG_DETERMINE,     handler_IwaNoJuel_Dmg },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
-static void handler_IwaNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_IwaNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  common_Juel_Power( myHandle, flowWk, pokeID, work, POKETYPE_IWA );
 }
-
+static void handler_IwaNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_Juel_DmgDetermine( myHandle, flowWk, pokeID, work, POKETYPE_IWA );
+}
+/**
+ *  ゴーストジュエル
+ */
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_GhostJuel( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,     handler_GhostJuel },
+    { BTL_EVENT_WAZA_POWER,             handler_GhostJuel_Pow },
+    { BTL_EVENT_WAZA_DMG_DETERMINE,     handler_GhostJuel_Dmg },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
-static void handler_GhostJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_GhostJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  common_Juel_Power( myHandle, flowWk, pokeID, work, POKETYPE_GHOST );
 }
+static void handler_GhostJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_Juel_DmgDetermine( myHandle, flowWk, pokeID, work, POKETYPE_GHOST );
+}
+/**
+ *  ドラゴンジュエル
+ */
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_DragonJuel( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,     handler_DragonJuel },
+    { BTL_EVENT_WAZA_POWER,             handler_DragonNoJuel_Pow },
+    { BTL_EVENT_WAZA_DMG_DETERMINE,     handler_DragonNoJuel_Dmg },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
-static void handler_DragonJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_DragonNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  common_Juel_Power( myHandle, flowWk, pokeID, work, POKETYPE_DRAGON );
 }
+static void handler_DragonNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_Juel_DmgDetermine( myHandle, flowWk, pokeID, work, POKETYPE_DRAGON );
+}
+/**
+ *  あくのジュエル
+ */
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_AkuNoJuel( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,     handler_AkuNoJuel },
+    { BTL_EVENT_WAZA_POWER,             handler_AkuNoJuel_Pow },
+    { BTL_EVENT_WAZA_DMG_DETERMINE,     handler_AkuNoJuel_Dmg },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
-static void handler_AkuNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_AkuNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  common_Juel_Power( myHandle, flowWk, pokeID, work, POKETYPE_AKU );
 }
+static void handler_AkuNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_Juel_DmgDetermine( myHandle, flowWk, pokeID, work, POKETYPE_AKU );
+}
+/**
+ *  はがねのジュエル
+ */
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_HaganeNoJuel( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,     handler_HaganeNoJuel },
+    { BTL_EVENT_WAZA_POWER,             handler_HaganeNoJuel_Pow },
+    { BTL_EVENT_WAZA_DMG_DETERMINE,     handler_HaganeNoJuel_Dmg },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
-static void handler_HaganeNoJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_HaganeNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  common_Juel_Power( myHandle, flowWk, pokeID, work, POKETYPE_HAGANE );
 }
+static void handler_HaganeNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_Juel_DmgDetermine( myHandle, flowWk, pokeID, work, POKETYPE_HAGANE );
+}
+/**
+ *  ノーマルジュエル
+ */
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_NormalJuel( u16 pri, u16 itemID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,     handler_NormalJuel },
+    { BTL_EVENT_WAZA_POWER,             handler_NormalJuel_Pow },
+    { BTL_EVENT_WAZA_DMG_DETERMINE,     handler_NormalJuel_Dmg },
     { BTL_EVENT_NULL, NULL },
   };
   return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
 }
-static void handler_NormalJuel( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_NormalJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-
+  common_Juel_Power( myHandle, flowWk, pokeID, work, POKETYPE_NORMAL );
 }
+static void handler_NormalJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_Juel_DmgDetermine( myHandle, flowWk, pokeID, work, POKETYPE_NORMAL );
+}
+
+

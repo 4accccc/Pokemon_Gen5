@@ -3780,7 +3780,7 @@ static void handler_Arijigoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_SVFLOW_RECEPT_CantEscapeAdd( flowWk, pokeID, BTL_CANTESC_ARIJIGOKU );
+    BTL_SVFRET_CantEscapeAdd( flowWk, pokeID, BTL_CANTESC_ARIJIGOKU );
   }
 }
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Arijigoku( u16 pri, u16 tokID, u8 pokeID )
@@ -3801,7 +3801,7 @@ static void handler_Kagefumi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_SVFLOW_RECEPT_CantEscapeAdd( flowWk, pokeID, BTL_CANTESC_KAGEFUMI );
+    BTL_SVFRET_CantEscapeAdd( flowWk, pokeID, BTL_CANTESC_KAGEFUMI );
   }
 }
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Kagefumi( u16 pri, u16 tokID, u8 pokeID )
@@ -3822,7 +3822,7 @@ static void handler_Jiryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_SVFLOW_RECEPT_CantEscapeAdd( flowWk, pokeID, BTL_CANTESC_JIRYOKU );
+    BTL_SVFRET_CantEscapeAdd( flowWk, pokeID, BTL_CANTESC_JIRYOKU );
   }
 }
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Jiryoku( u16 pri, u16 tokID, u8 pokeID )

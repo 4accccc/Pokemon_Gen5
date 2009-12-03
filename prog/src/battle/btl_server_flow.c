@@ -1020,7 +1020,6 @@ u8 BTL_SVFLOW_GetEscapeClientID( const BTL_SVFLOW_WORK* wk )
 {
   return wk->escapeClientID;
 }
-
 //=============================================================================================
 /**
  * 捕獲したポケモンの位置を取得
@@ -4183,6 +4182,16 @@ static void scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
   }
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * ワザによるダメージを与えることが確定した
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   wazaParam
+ * @param   targets
+ */
+//----------------------------------------------------------------------------------
 static void scproc_Fight_Damage_Determine( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
   const SVFL_WAZAPARAM* wazaParam, TARGET_POKE_REC* targets )
 {
@@ -4193,7 +4202,16 @@ static void scproc_Fight_Damage_Determine( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* a
 
   Hem_PopState( &wk->HEManager, hem_state );
 }
-
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ワザによるダメージを与えることが確定した
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   wazaParam
+ * @param   targets
+ */
+//----------------------------------------------------------------------------------
 static void scEvent_WazaDamageDetermine( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker,
   const SVFL_WAZAPARAM* wazaParam, TARGET_POKE_REC* targets )
 {
@@ -4204,12 +4222,14 @@ static void scEvent_WazaDamageDetermine( BTL_SVFLOW_WORK* wk, const BTL_POKEPARA
     const BTL_POKEPARAM* bpp;
     u32 i;
     BTL_EVENTVAR_Push();
-      BTL_EVENTVAR_SetValue( BTL_EVAR_TARGET_POKECNT, target_cnt );
-      BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_TARGET_POKECNT, target_cnt );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
       for(i=0; i<target_cnt; ++i)
       {
         bpp = TargetPokeRec_Get( targets, i );
-        BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_TARGET1+i, BPP_GetID(bpp) );
+        BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_TARGET1+i, BPP_GetID(bpp) );
       }
       BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_DETERMINE );
     BTL_EVENTVAR_Pop();
@@ -5016,7 +5036,6 @@ static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
       scPut_RemoveItem( wk, bpp );
       scPut_SetTurnFlag( wk, bpp, BPP_TURNFLG_ITEM_REMOVED );
     }
-
   }
   else
   {
@@ -9345,7 +9364,7 @@ BOOL BTL_SVFTOOL_CheckExistTokuseiPokemon( BTL_SVFLOW_WORK* wk, PokeTokusei toku
  * @retval  u32
  */
 //--------------------------------------------------------------------------------------
-u32 BTL_SVFLOW_SimulationDamage( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8 defPokeID, WazaID waza, BOOL fAffinity, BOOL fCriticalCheck )
+u32 BTL_SVFTOOL_SimulationDamage( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8 defPokeID, WazaID waza, BOOL fAffinity, BOOL fCriticalCheck )
 {
   const BTL_POKEPARAM* attacker = BTL_POKECON_GetPokeParam( wk->pokeCon, atkPokeID );
   const BTL_POKEPARAM* defender = BTL_POKECON_GetPokeParam( wk->pokeCon, defPokeID );
@@ -9384,7 +9403,7 @@ u32 BTL_SVFLOW_SimulationDamage( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8 defPokeID
  * @retval  u8
  */
 //--------------------------------------------------------------------------------------
-u8 BTL_SVFLOW_GetClientCoverPosCount( BTL_SVFLOW_WORK* wk, u8 pokeID )
+u8 BTL_SVFTOOL_GetClientCoverPosCount( BTL_SVFLOW_WORK* wk, u8 pokeID )
 {
   SVCL_WORK* clwk;
   u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
@@ -9429,7 +9448,7 @@ u8 BTL_SVFTOOL_ExpandPokeID( BTL_SVFLOW_WORK* wk, BtlExPos exPos, u8* dst_pokeID
  * @retval  const BTL_PARTY*
  */
 //--------------------------------------------------------------------------------------
-const BTL_PARTY* BTL_SVFLOW_GetPartyData( BTL_SVFLOW_WORK* wk, u8 pokeID )
+const BTL_PARTY* BTL_SVFTOOL_GetPartyData( BTL_SVFLOW_WORK* wk, u8 pokeID )
 {
   u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
   return BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID );
@@ -9475,7 +9494,7 @@ u8 BTL_SVFTOOL_PokePosToPokeID( BTL_SVFLOW_WORK* wk, u8 pokePos )
  * @retval  BtlPokePos
  */
 //--------------------------------------------------------------------------------------
-BtlPokePos BTL_SVFLOW_ReqWazaTargetAuto( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID waza )
+BtlPokePos BTL_SVFTOOL_ReqWazaTargetAuto( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID waza )
 {
   BtlRule rule = BTL_MAIN_GetRule( wk->mainModule );
   BtlPokePos targetPos = BTL_POS_NULL;
@@ -9556,7 +9575,7 @@ BtlPokePos BTL_SVFLOW_ReqWazaTargetAuto( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID 
  * @retval  BOOL    正しく取得できたらTRUE（現ターン、参加していないポケなどが指定されたらFALSE）
  */
 //--------------------------------------------------------------------------------------
-BOOL BTL_SVFLOW_GetThisTurnAction( BTL_SVFLOW_WORK* wk, u8 pokeID, BTL_ACTION_PARAM* dst )
+BOOL BTL_SVFTOOL_GetThisTurnAction( BTL_SVFLOW_WORK* wk, u8 pokeID, BTL_ACTION_PARAM* dst )
 {
   u32 i;
   for(i=0; i<wk->numActOrder; ++i)
@@ -9570,7 +9589,7 @@ BOOL BTL_SVFLOW_GetThisTurnAction( BTL_SVFLOW_WORK* wk, u8 pokeID, BTL_ACTION_PA
 }
 //--------------------------------------------------------------------------------------
 /**
- * このターンの行動プライオリティ決定に使われた素早さの値を取得
+ * [ハンドラ用ツール] このターンの行動プライオリティ決定に使われた素早さの値を取得
  * ※このターンに行動していないポケモンを指定された場合、素のすばやさ値を返す
  *
  * @param   wokk
@@ -9674,7 +9693,7 @@ const BTL_DEADREC* BTL_SVFTOOL_GetDeadRecord( BTL_SVFLOW_WORK* wk )
 }
 //--------------------------------------------------------------------------------------
 /**
- * [ハンドラ用ツール]現在の経過ターン数を取得
+ * [ハンドラ用ツール] 現在の経過ターン数を取得
  *
  * @param   wk
  *
@@ -9713,21 +9732,21 @@ BtlCompetitor BTL_SVFTOOL_GetCompetitor( BTL_SVFLOW_WORK* wk )
 }
 //--------------------------------------------------------------------------------------
 /**
- * 戦闘地形タイプを取得
+ * [ハンドラ用ツール] 戦闘地形タイプを取得
  *
  * @param   wk
  *
  * @retval  BtlBgType
  */
 //--------------------------------------------------------------------------------------
-BtlBgType BTL_SVFLOW_GetLandForm( BTL_SVFLOW_WORK* wk )
+BtlBgType BTL_SVFTOOL_GetLandForm( BTL_SVFLOW_WORK* wk )
 {
   const BTL_FIELD_SITUATION* sit = BTL_MAIN_GetFieldSituation( wk->mainModule );
   return sit->bgType;
 }
 //--------------------------------------------------------------------------------------
 /**
- * マルチモードかどうかチェック
+ * [ハンドラ用ツール] マルチモードかどうかチェック
  *
  * @param   wk
  *
@@ -9738,9 +9757,23 @@ BOOL BTL_SVFTOOL_IsMultiMode( BTL_SVFLOW_WORK* wk )
 {
   return BTL_MAIN_IsMultiMode( wk->mainModule );
 }
+
 //=============================================================================================
 /**
- * 逃げ交換禁止コードの追加を全クライアントに通知
+ * [ハンドラからの操作呼び出し] ポケモンのアイテム削除
+ *
+ * @param   wk
+ * @param   pokeID
+ */
+//=============================================================================================
+void BTL_SVFRET_RemoveItem( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+  scPut_RemoveItem( wk, bpp );
+}
+//=============================================================================================
+/**
+ * [ハンドラからの操作呼び出し] 逃げ交換禁止コードの追加を全クライアントに通知
  *
  * @param   wk
  * @param   clientID      禁止コードを発行したポケモンID
@@ -9748,12 +9781,13 @@ BOOL BTL_SVFTOOL_IsMultiMode( BTL_SVFLOW_WORK* wk )
  *
  */
 //=============================================================================================
-void BTL_SVFLOW_RECEPT_CantEscapeAdd( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlCantEscapeCode code )
+void BTL_SVFRET_CantEscapeAdd( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlCantEscapeCode code )
 {
   SCQUE_PUT_OP_CantEscape_Add( wk->que, pokeID, code );
 }
 //=============================================================================================
 /**
+ * [ハンドラからの操作呼び出し]
  *  スタンドアローンバトルで、プレイヤーポケモンの使用したハンドラから呼び出された場合のみ
  *  おこづかいを上乗せする（ネコにこばん専用）
  *
@@ -9764,7 +9798,7 @@ void BTL_SVFLOW_RECEPT_CantEscapeAdd( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlCantEsc
  * @retval  BOOL      条件を満たした（上乗せした）場合にTRUEが返る
  */
 //=============================================================================================
-BOOL BTL_SVFLOW_AddBonusMoney( BTL_SVFLOW_WORK* wk, u32 volume, u8 pokeID )
+BOOL BTL_SVFRET_AddBonusMoney( BTL_SVFLOW_WORK* wk, u32 volume, u8 pokeID )
 {
   if( (BTL_MAIN_GetCommMode(wk->mainModule) == BTL_COMM_NONE)
   &&  (BTL_MAINUTIL_PokeIDtoClientID(pokeID) == BTL_STANDALONE_PLAYER_CLIENT_ID)
