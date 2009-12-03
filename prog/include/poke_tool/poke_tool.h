@@ -381,7 +381,7 @@ enum{
   ID_PARA_event_get_flag,           //イベントで配布されたことを示すフラグ
   ID_PARA_sex,                //性別
   ID_PARA_form_no,              //形状ナンバー（アンノーン、デオキシス、ミノメスなど用）
-  ID_PARA_dummy_p2_1,             //あまり
+  ID_PARA_seikaku,             //性格
   ID_PARA_dummy_p2_2,             //あまり
   ID_PARA_new_get_place,            //1eh 捕まえた場所（なぞの場所対応用）
   ID_PARA_new_birth_place,          //20h 生まれた場所（なぞの場所対応用）
@@ -464,17 +464,6 @@ enum{
 
 #define PTL_WAZAOBOE_NONE   (0x0000)  //技覚えで覚える技が無かったときの返り値
 #define PTL_WAZAOBOE_FULL   (0x8000)  //技覚えで手持ちの技がいっぱいだったときに立てる
-
-///<ポケモン進化データの構造体
-typedef struct pokemon_shinka_data POKEMON_SHINKA_DATA;
-
-typedef struct pokemon_shinka_table POKEMON_SHINKA_TABLE;
-
-enum{
-  ID_EVO_Cond=0,
-  ID_EVO_Data,
-  ID_EVO_Mons
-};
 
 ///<戦闘録画用ポケモンパラメータの構造体
 typedef struct rec_pokepara REC_POKEPARA;
@@ -692,10 +681,9 @@ extern  const POKEMON_PASO_PARAM *PP_GetPPPPointerConst( const POKEMON_PARAM *pp
 extern  u32   POKETOOL_CalcLevel( u16 mons_no, u16 form_no, u32 exp );
 extern  u32   POKETOOL_GetMinExp( u16 mons_no, u16 form_no, u16 level );
 extern  u8    POKETOOL_GetSex( u16 mons_no, u16 form_no, u32 personal_rnd );
-extern  u8    POKETOOL_GetSeikaku( u32 personal_rnd );
 extern  BOOL  POKETOOL_CheckRare( u32 id, u32 personal_rnd );
 extern  u32   POKETOOL_GetPersonalParam( u16 mons_no, u16 form_no, PokePersonalParamID param );
-extern  u32   POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 chr, u8 sex );
+extern  u32   POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 sex );
 
 // 戦闘録画用に外部公開
 extern void  POKETOOL_encode_data( void *data, u32 size, u32 code );

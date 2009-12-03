@@ -438,6 +438,10 @@ void  PPP_SetupEx( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 id, PtlS
   val = PPP_GetSex( ppp );
   PPP_Put( ppp, ID_PARA_sex, val );
 
+//性格セット
+  val = GFUser_GetPublicRand( PTL_SEIKAKU_MAX );
+  PPP_Put( ppp, ID_PARA_seikaku, val );
+
 //技セット
   PPP_SetWazaDefault( ppp );
 
@@ -1411,31 +1415,8 @@ u8  PP_GetSeikaku( const POKEMON_PARAM *pp )
 //============================================================================================
 u8  PPP_GetSeikaku( const POKEMON_PASO_PARAM *ppp )
 {
-  BOOL  flag;
-  u32   rnd;
-
-  flag = PPP_FastModeOn( (POKEMON_PASO_PARAM*)ppp );
-  rnd = PPP_Get( ppp, ID_PARA_personal_rnd, 0 );
-  PPP_FastModeOff( (POKEMON_PASO_PARAM*)ppp, flag );
-
-  return POKETOOL_GetSeikaku( rnd );
+  return PPP_Get( ppp, ID_PARA_seikaku, 0 );
 }
-//============================================================================================
-/**
- *  ポケモンの性格を取得
- *
- *  性格は、個性乱数を25で割った余りから算出される
- *
- * @param[in] rnd 取得したい個性乱数
- *
- * @return  取得した性格
- */
-//============================================================================================
-u8 POKETOOL_GetSeikaku( u32 personal_rnd )
-{
-  return ( u8 )( personal_rnd % PTL_SEIKAKU_MAX );
-}
-
 
 //=============================================================================================
 /**
@@ -1490,17 +1471,14 @@ const POKEMON_PASO_PARAM  *PP_GetPPPPointerConst( const POKEMON_PARAM *pp )
  *
  * @param[in] mons_no     モンスターナンバー
  * @param[in] form_no     フォルムーナンバー（不要なら PTR_FORM_NONE）
- * @param[in] chr         性格( 0 - 24 )
  * @param[in] sex         性別( PTL_SEX_MALE or PTL_SEX_FEMALE or PTL_SEX_UNKNOWN )
  *
  * @retval  計算した個性乱数
  */
 //============================================================================================
-u32  POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 chr, u8 sex )
+u32  POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 sex )
 {
   u32 rnd;
-
-  GF_ASSERT( chr < 25 );
 
   // 性別 : 下位 1byte を調整
   {
@@ -1513,24 +1491,6 @@ u32  POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 chr, u8 sex )
       }
     }
     rnd = byte;
-  }
-
-  // 性格 ： 性別に影響の無い範囲で値を調整
-  {
-    int diff = chr - POKETOOL_GetSeikaku( rnd );
-    if( diff < 0 ){
-      diff += PTL_SEIKAKU_MAX;
-    }
-    if( diff )
-    {
-      static const u16 addtbl[] = {
-        256*21, 256*17, 256*13, 256* 9, 256* 5, 256* 1,
-        256*22, 256*18, 256*14, 256*10, 256* 6, 256* 2,
-        256*23, 256*19, 256*15, 256*11, 256* 7, 256* 3,
-        256*24, 256*20, 256*16, 256*12, 256* 8, 256* 4,
-      };
-      rnd |= addtbl[ diff-1 ];
-    }
   }
 
   return rnd;
@@ -2056,8 +2016,8 @@ static  u32 ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
     case ID_PARA_form_no:
       ret = ppp2->form_no;
       break;
-    case ID_PARA_dummy_p2_1:
-      ret = ppp2->dummy_p2_1;
+    case ID_PARA_seikaku:
+      ret = ppp2->seikaku;
       break;
     case ID_PARA_dummy_p2_2:
       ret = ppp2->dummy_p2_2;
@@ -2516,8 +2476,8 @@ static  void  ppp_putAct( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg )
     case ID_PARA_form_no:
       ppp2->form_no = arg;
       break;
-    case ID_PARA_dummy_p2_1:
-      ppp2->dummy_p2_1 = arg;
+    case ID_PARA_seikaku:
+      ppp2->seikaku = arg;
       break;
     case ID_PARA_dummy_p2_2:
       ppp2->dummy_p2_2 = arg;

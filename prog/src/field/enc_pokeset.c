@@ -386,6 +386,12 @@ void ENCPOKE_PPSetup(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, const ENC_P
   PP_Put( pp, ID_PARA_oyasex, MyStatus_GetMySex(efp->my) );
   PP_Put( pp, ID_PARA_oyaname_raw, (u32)MyStatus_GetMyName(efp->my) );
 
+  //«Ši‘ã“üˆ—
+  if( efp->spa_chr_fix )
+  {
+    PP_Put( pp, ID_PARA_seikaku, efp->mons_chr );
+  }
+
   POKE_PERSONAL_CloseHandle( personal );
 }
 
@@ -775,12 +781,17 @@ static u32 eps_EncPokeCalcPersonalRand(
     IWASAWA_Printf("PP_Rnd = %08x\n",p_rnd);
 //    OS_Printf("PP_Rnd = %08x\n",p_rnd);
 
+    //«Ši‚ÍŒÂ«—”‚©‚ç“±‚©‚ê‚È‚­‚È‚è‚Ü‚µ‚½
+#if 0
     if( efp->spa_chr_fix )
     {
       if( POKETOOL_GetSeikaku(p_rnd) == efp->mons_chr ){
         break;  //«Šiw’èˆê’v
       }
     }else if( sex != PTL_SEX_UNKNOWN )
+#else
+    if( sex != PTL_SEX_UNKNOWN )
+#endif
     {
       if( POKETOOL_GetSex( poke->monsNo, poke->form, p_rnd) == sex ){
         break;  //«•Êw’èˆê’v

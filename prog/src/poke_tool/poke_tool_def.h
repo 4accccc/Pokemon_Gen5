@@ -136,7 +136,7 @@ struct pokemon_paso_param2
 	u8	event_get_flag	:1;					//		イベントで配布したことを示すフラグ
 	u8	sex				:2;					//   	ポケモンの性別
 	u8	form_no			:5;					//19h	形状ナンバー（アンノーン、デオキシス、ミノメスなど用）
-	u8	dummy_p2_1;							//1ah	あまり
+	u8	seikaku;							//1ah	性格
 	u16	dummy_p2_2;							//1ch	あまり
 	u16	new_get_place;						//1eh	捕まえた場所（なぞの場所対応用）
 	u16	new_birth_place;					//20h	生まれた場所（なぞの場所対応用）
@@ -430,16 +430,6 @@ struct	pokemon_param
 {
 	POKEMON_PASO_PARAM	ppp;				//88h
 	POKEMON_CALC_PARAM	pcp;				//dch 220
-};
-
-struct pokemon_shinka_data{
-	u16	ShinkaCond;
-	u16	ShinkaData;
-	u16	ShinkaMons;
-};
-
-struct pokemon_shinka_table{
-	POKEMON_SHINKA_DATA	psd[7];
 };
 
 //==============================================================================

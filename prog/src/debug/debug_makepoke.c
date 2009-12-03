@@ -971,14 +971,13 @@ static BOOL is_hiragana( const STRBUF* buf )
 //----------------------------------------------------------------------------------
 static void update_dst( DMP_MAINWORK* wk )
 {
-  u32 personal_rnd, mons_no, seikaku, tokusei, sex, level;
+  u32 personal_rnd, mons_no, tokusei, sex, level;
 
   mons_no = box_getvalue( wk, INPUTBOX_ID_POKETYPE );
-  seikaku = box_getvalue( wk, INPUTBOX_ID_SEIKAKU );
   tokusei = box_getvalue( wk, INPUTBOX_ID_TOKUSEI );
   sex = box_getvalue( wk, INPUTBOX_ID_SEX );
   level = box_getvalue( wk, INPUTBOX_ID_LEVEL );
-  personal_rnd = POKETOOL_CalcPersonalRand( mons_no, PTL_FORM_NONE, seikaku, sex );
+  personal_rnd = POKETOOL_CalcPersonalRand( mons_no, PTL_FORM_NONE, sex );
 
   PP_Clear( wk->dst );
   {
@@ -1017,6 +1016,10 @@ static void update_dst( DMP_MAINWORK* wk )
   {
     u32 item = box_getvalue( wk, INPUTBOX_ID_ITEM );
     PP_Put( wk->dst, ID_PARA_item, item );
+  }
+  { 
+    u8  seikaku = box_getvalue( wk, INPUTBOX_ID_SEIKAKU );
+    PP_Put( wk->dst, ID_PARA_seikaku, seikaku );
   }
 }
 
