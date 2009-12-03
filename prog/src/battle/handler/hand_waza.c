@@ -3908,6 +3908,9 @@ static void handler_SabakiNoTubute( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_TYPE, type );
   }
 }
+
+
+
 //----------------------------------------------------------------------------------
 /**
  * めざめるパワー
@@ -3924,29 +3927,13 @@ static BTL_EVENT_FACTOR*  ADD_MezameruPower( u16 pri, WazaID waza, u8 pokeID )
 }
 static void handler_MezameruPower_Type( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  static const u8 typeTbl[] = {
-    POKETYPE_KAKUTOU, POKETYPE_HIKOU, POKETYPE_DOKU,   POKETYPE_JIMEN,
-    POKETYPE_IWA,     POKETYPE_MUSHI, POKETYPE_GHOST,  POKETYPE_HAGANE,
-    POKETYPE_HONOO,   POKETYPE_MIZU,  POKETYPE_KUSA,   POKETYPE_DENKI,
-    POKETYPE_ESPER,   POKETYPE_KOORI, POKETYPE_DRAGON, POKETYPE_AKU,
-  };
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
-    u32 val=0;
-    if( PP_Get(pp, ID_PARA_hp_rnd, NULL) & 1){ val += 1; }
-    if( PP_Get(pp, ID_PARA_pow_rnd, NULL) & 1){ val += 2; }
-    if( PP_Get(pp, ID_PARA_def_rnd, NULL) & 1){ val += 4; }
-    if( PP_Get(pp, ID_PARA_agi_rnd, NULL) & 1){ val += 8; }
-    if( PP_Get(pp, ID_PARA_spepow_rnd, NULL) & 1){ val += 16; }
-    if( PP_Get(pp, ID_PARA_spedef_rnd, NULL) & 1){ val += 32; }
+    PokeType type = POKETOOL_GetMezaPa_Type( pp );
 
-    val = val * 15 / 63;
-    while( val > NELEMS(typeTbl) ){ // テーブルサイズを越えることは有り得ないハズだが念のため
-      val -= NELEMS(typeTbl);
-    }
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_TYPE, typeTbl[val] );
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_TYPE, type );
   }
 }
 static void handler_MezameruPower_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
@@ -3955,16 +3942,9 @@ static void handler_MezameruPower_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
-    u32 val=0;
-    if( (PP_Get(pp, ID_PARA_hp_rnd, NULL) % 4)    > 1){ val += 1; }
-    if( (PP_Get(pp, ID_PARA_pow_rnd, NULL) % 4)   > 1){ val += 2; }
-    if( (PP_Get(pp, ID_PARA_def_rnd, NULL) % 4)   > 1){ val += 4; }
-    if( (PP_Get(pp, ID_PARA_agi_rnd, NULL) % 4)   > 1){ val += 8; }
-    if( (PP_Get(pp, ID_PARA_spepow_rnd, NULL) % 4)> 1){ val += 16; }
-    if( (PP_Get(pp, ID_PARA_spedef_rnd, NULL) % 4)> 1){ val += 32; }
+    u32 pow = POKETOOL_GetMezaPa_Power( pp );
 
-    val = 30 + (val * 40 / 63);
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, val );
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
   }
 
 }

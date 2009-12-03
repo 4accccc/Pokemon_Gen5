@@ -1354,7 +1354,7 @@ static u8 calcPuttablePokemons( BTL_CLIENT* wk, u8* list )
 //--------------------------------------------------------------------------
 static void setup_pokesel_param_change( BTL_CLIENT* wk, BTL_POKESELECT_PARAM* param )
 {
-  BTL_POKESELECT_PARAM_Init( param, wk->myParty, 1, TRUE );
+  BTL_POKESELECT_PARAM_Init( param, wk->myParty, 1, BPL_MODE_NORMAL );
   BTL_POKESELECT_PARAM_SetProhibitFighting( param, wk->numCoverPos );
 }
 //--------------------------------------------------------------------------
@@ -1369,7 +1369,7 @@ static void setup_pokesel_param_change( BTL_CLIENT* wk, BTL_POKESELECT_PARAM* pa
 //--------------------------------------------------------------------------
 static void setup_pokesel_param_dead( BTL_CLIENT* wk, u8 numSelect, BTL_POKESELECT_PARAM* param )
 {
-  BTL_POKESELECT_PARAM_Init( param, wk->myParty, numSelect, TRUE );
+  BTL_POKESELECT_PARAM_Init( param, wk->myParty, numSelect, BPL_MODE_CHG_DEAD );
   BTL_POKESELECT_PARAM_SetProhibitFighting( param, wk->numCoverPos );
 }
 

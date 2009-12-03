@@ -13,6 +13,8 @@
 #include "btl_common.h"
 #include "btl_main_def.h"
 
+#include "app\b_plist.h"
+
 //------------------------------
 /**
  *  選択できない理由
@@ -37,7 +39,7 @@ typedef struct {
   const BTL_PARTY*  party;        ///< パーティデータ
   u8                numSelect;    ///< 選択するポケモン数
   u8                prohibit[ BTL_PARTY_MEMBER_MAX ];
-  u8                aliveOnly;    ///< TRUEだと生きているポケモンしか選べない
+  u8                bplMode;      ///< バトルリスト画面モード
 
 }BTL_POKESELECT_PARAM;
 
@@ -69,6 +71,5 @@ extern u8 BTL_POKESELECT_RESULT_GetCount( const BTL_POKESELECT_RESULT* result );
 extern u8 BTL_POKESELECT_RESULT_GetLast( const BTL_POKESELECT_RESULT* result );
 extern u8 BTL_POKESELECT_RESULT_Get( const BTL_POKESELECT_RESULT* result, u8 idx );
 
-extern BtlPokeselReason BTL_POKESELECT_CheckProhibit( const BTL_POKESELECT_PARAM* param, const BTL_POKESELECT_RESULT* result, u8 idx );
 
 #endif

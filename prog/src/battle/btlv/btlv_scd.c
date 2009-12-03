@@ -395,7 +395,7 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
       //Ž©•ª‚ÌŽèŽ‚¿
       party = wk->playerParty;
       members = BTL_PARTY_GetMemberCount( party );
-      BTL_Printf("members=%d\n", members);
+
       switch( BTL_MAIN_GetRule( wk->mainModule ) ){
       case BTL_RULE_SINGLE:    ///< ƒVƒ“ƒOƒ‹
         bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, BTL_MAIN_ViewPosToBtlPos( wk->mainModule, BTLV_MCSS_POS_AA ) );
@@ -447,14 +447,12 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
                                              BTL_MAIN_GetOpponentClientID( wk->mainModule,
                                              BTL_MAIN_GetPlayerClientID( wk->mainModule ), 0 ) );
       members = BTL_PARTY_GetMemberCount( party );
-      BTL_Printf("members=%d\n", members);
     }
 
     for(i=0; i<members; ++i)
     {
       bpp = BTL_PARTY_GetMemberDataConst( party, i );
       pp  = BPP_GetSrcData( bpp );
-      BTL_Printf("member[%d]=%p, %p\n", i, bpp, pp);
       hp = PP_Get( pp, ID_PARA_hp, NULL );
 
       if( hp )

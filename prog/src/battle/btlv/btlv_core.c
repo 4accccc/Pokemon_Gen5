@@ -620,7 +620,7 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BTL
   wk->plistData.pp = BTL_MAIN_GetPlayerPokeParty( wk->mainModule );
   wk->plistData.font = wk->largeFontHandle;
   wk->plistData.heap = wk->heapID;
-  wk->plistData.mode = (param->aliveOnly)? BPL_MODE_CHG_DEAD : BPL_MODE_NORMAL;
+  wk->plistData.mode = param->bplMode;
   BTL_Printf("交換リスト画面モード=%d\n", wk->plistData.mode);
   wk->plistData.end_flg = FALSE;
   wk->plistData.sel_poke = 0;
@@ -663,11 +663,16 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
   case 2:
     if( wk->plistData.end_flg )
     {
-      if( wk->plistData.sel_poke != BPL_SEL_EXIT ){
+      BTL_Printf("ポケ選択おわった\n");
+
+      if( wk->plistData.sel_poke != BPL_SEL_EXIT )
+      {
         if( wk->plistData.mode == BPL_MODE_NORMAL ){
           BTL_Printf("選んだポケは%d番目\n", wk->plistData.sel_poke);
           BTL_POKESELECT_RESULT_Push( wk->pokeselResult, wk->plistData.sel_poke );
-        }else{
+        }
+        else
+        {
           u8 i;
           for(i=0; i<NELEMS(wk->plistData.sel_pos); ++i){
             if( wk->plistData.sel_pos[i] != BPL_SELPOS_NONE )

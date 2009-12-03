@@ -21,16 +21,16 @@
  * @param   param       [out]
  * @param   party       パーティデータポインタ
  * @param   numSelect   選択する必要のあるポケモン数
- * @param   aliveOnly   生きているポケモンしか選択させない場合TRUE
+ * @param   bplMode     バトルリスト画面モード
  *
  */
 //=============================================================================================
-void BTL_POKESELECT_PARAM_Init( BTL_POKESELECT_PARAM* param, const BTL_PARTY* party, u8 numSelect, u8 aliveOnly )
+void BTL_POKESELECT_PARAM_Init( BTL_POKESELECT_PARAM* param, const BTL_PARTY* party, u8 numSelect, u8 bplMode )
 {
   int i;
   param->party = party;
   param->numSelect = numSelect;
-  param->aliveOnly = aliveOnly;
+  param->bplMode = bplMode;
   for(i=0; i<NELEMS(param->prohibit); i++)
   {
     param->prohibit[i] = BTL_POKESEL_CANT_NONE;
@@ -130,6 +130,7 @@ void BTL_POKESELECT_RESULT_Pop( BTL_POKESELECT_RESULT* result )
 //=============================================================================================
 BOOL BTL_POKESELECT_IsDone( const BTL_POKESELECT_RESULT* result )
 {
+  BTL_Printf("選ばねばならん=%d体、選んだ=%d体\n", result->max, result->cnt);
   return result->cnt == result->max;
 }
 
@@ -187,47 +188,3 @@ u8 BTL_POKESELECT_RESULT_Get( const BTL_POKESELECT_RESULT* result, u8 idx )
 
 
 
-//=============================================================================================
-/**
- * 選択しても良いポケモンかどうか判定
- *
- * @param   param     [in]
- * @param   result    [in]
- * @param   idx       選択ポケモンインデックス
- *
- * @retval  BtlPokeselReason    不可理由（不可でなければ BTL_POKESEL_CANT_NONE）
- */
-//=============================================================================================
-BtlPokeselReason BTL_POKESELECT_CheckProhibit( const BTL_POKESELECT_PARAM* param, const BTL_POKESELECT_RESULT* result, u8 idx )
-{
-  // 生きてるポケしか選べない場合のチェック
-  if( param->aliveOnly )
-  {
-    const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst( param->party, idx );
-
-    if( BPP_IsDead(bpp) )
-    {
-      return BTL_POKESEL_CANT_DEAD;
-    }
-  }
-
-  // 個別理由チェック
-  if( param->prohibit[idx] != BTL_POKESEL_CANT_NONE )
-  {
-    return param->prohibit[idx];
-  }
-
-  // 既に選んだポケは選べない
-  {
-    u8 i;
-    for(i=0; i<result->cnt; i++)
-    {
-      if( result->selIdx[i] == idx )
-      {
-        return BTL_POKESEL_CANT_SELECTED;
-      }
-    }
-  }
-
-  return BTL_POKESEL_CANT_NONE;
-}
