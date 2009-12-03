@@ -1137,7 +1137,6 @@ SRCS_OVERLAY_WIFIBATTLEMATCH_SYS  = net_app/wifi_match/wifibattlematch_sys.c \
 # WIFIバトルマッチング表示周り部分
 #===> SRCS_OVERLAY_DPW_COMMON
 #===> SRCS_OVERLAY_UI_COMMON
-#===> SRCS_OVERLAY_WIFIBATTLEMATCH_SYS
 #LIB=>          libdwcgssake.$HYB.a
 #LIB=>          libdwcsc.$HYB.a
 #LIB=>          libdwcgssc.$HYB.a
