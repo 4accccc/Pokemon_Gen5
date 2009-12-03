@@ -1,6 +1,6 @@
 //=============================================================================================
 /**
- * @file  shinka.h
+ * @file  shinka_def.h
  * @brief ポケモン進化
  * @author  sogabe
  *
@@ -41,3 +41,5 @@
 #define	SHINKA_PLACE_KOKE			    ( 25 )
 #define	SHINKA_PLACE_ICE			    ( 26 )
 
+#define	SHINKA_COND_MAX	( 7 )	  //進化条件のMAX
+#define SHINKA_FRIEND   ( 220 ) //進化に必要ななつき度
