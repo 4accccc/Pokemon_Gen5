@@ -158,6 +158,10 @@ void FIELDMAP_CTRL_HYBRID_ChangeBaseSystem( FIELDMAP_CTRL_HYBRID* p_wk, FIELDMAP
   {
     mapCtrlHybrid_ChangeRailToGrid( p_fieldmap, p_wk );
   }
+
+  // æ‚èŠ·‚¦‚½‚Ì‚ÅA
+  // ŽŸ‚Ì“®ì‚Ü‚ÅƒŒ[ƒ‹‚ðæ‚èŠ·‚¦‚È‚¢
+  p_wk->last_move = FALSE;
 }
 
 
