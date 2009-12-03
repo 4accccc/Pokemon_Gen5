@@ -784,11 +784,12 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
   // 全アクション処理し終えた
   if( i == wk->numActOrder )
   {
-    u8 numDeadPoke = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
-    wk->numEndActOrder = wk->numActOrder;
+    u8 numDeadPoke;
 
+    wk->numEndActOrder = wk->numActOrder;
     // ターンチェック処理
     scproc_TurnCheck( wk );
+    numDeadPoke = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
 
     // 死亡・生き返りなどでポケ交換の必要があるかチェック
     if( relivePokeRec_CheckNecessaryPokeIn(wk)

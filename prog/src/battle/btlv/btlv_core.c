@@ -620,7 +620,8 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BTL
   wk->plistData.pp = BTL_MAIN_GetPlayerPokeParty( wk->mainModule );
   wk->plistData.font = wk->largeFontHandle;
   wk->plistData.heap = wk->heapID;
-  wk->plistData.mode = BPL_MODE_NORMAL;
+  wk->plistData.mode = (param->aliveOnly)? BPL_MODE_CHG_DEAD : BPL_MODE_NORMAL;
+  BTL_Printf("交換リスト画面モード=%d\n", wk->plistData.mode);
   wk->plistData.end_flg = FALSE;
   wk->plistData.sel_poke = 0;
   wk->plistData.chg_waza = 0;
@@ -663,7 +664,17 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
     if( wk->plistData.end_flg )
     {
       if( wk->plistData.sel_poke != BPL_SEL_EXIT ){
-        BTL_POKESELECT_RESULT_Push( wk->pokeselResult, wk->plistData.sel_poke );
+        if( wk->plistData.mode == BPL_MODE_NORMAL ){
+          BTL_POKESELECT_RESULT_Push( wk->pokeselResult, wk->plistData.sel_poke );
+        }else{
+          u8 i;
+          for(i=0; i<NELEMS(wk->plistData.sel_pos); ++i){
+            if( wk->plistData.sel_pos[i] != BPL_SELPOS_NONE )
+            {
+              BTL_POKESELECT_RESULT_Push( wk->pokeselResult, wk->plistData.sel_pos[i] );
+            }
+          }
+        }
       }
       GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_plist ) );
       BTLV_SCD_FadeIn( wk->scrnD );
@@ -999,6 +1010,7 @@ void BTLV_ACT_DamageEffectPlural_Start( BTLV_CORE* wk, u32 pokeCnt, BtlTypeAffAb
     }
   }
 }
+
 BOOL BTLV_ACT_DamageEffectPlural_Wait( BTLV_CORE* wk )
 {
   DMG_PLURAL_ACT_WORK* subwk = getGenericWork(wk, sizeof(DMG_PLURAL_ACT_WORK));

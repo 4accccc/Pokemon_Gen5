@@ -271,14 +271,26 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
 
   switch( *seq ){
   case 0:
+    wk->subSeq = 0;
+    *seq++;
+    /* fallthru */
+  case 1:
+    if( wk->subSeq > -16 ){
+      wk->subSeq--;
+      GX_SetMasterBrightness( wk->subSeq );
+      GXS_SetMasterBrightness( wk->subSeq );
+    }else{
+      *seq++;
+    }
+    break;
+  case 2:
     BTL_Printf("クリーンアッププロセス１\n");
     srcParty_Quit( wk );
     trainerParam_Clear( wk );
     setSubProcForClanup( &wk->subProc, wk, wk->setupParam );
     (*seq)++;
     break;
-
-  case 1:
+  case 3:
     if( BTL_UTIL_CallProc(&wk->subProc) )
     {
       BTL_Printf("クリーンアッププロセス２－１\n");
@@ -290,8 +302,7 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
       (*seq)++;
     }
     break;
-
-  case 2:
+  case 4:
     BTL_Printf("クリーンアッププロセス３\n");
     GFL_PROC_FreeWork( proc );
     GFL_HEAP_DeleteHeap( HEAPID_BTL_VIEW );

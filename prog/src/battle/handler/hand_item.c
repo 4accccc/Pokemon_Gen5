@@ -2768,7 +2768,6 @@ static void handler_KaigaraNoSuzu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     {
       GF_ASSERT(0);
     }
-
   }
 }
 

@@ -961,6 +961,10 @@ static BOOL mainProc_Setup( DEBUG_BTL_WORK* wk, int* seq )
 
   setMainProc( wk, mainProc_Root );
 
+  GX_SetMasterBrightness( 0 );
+  GXS_SetMasterBrightness( 0 );
+
+
   return FALSE;
 }
 //----------------------------------------------------------------------------------
@@ -1263,7 +1267,7 @@ FS_EXTERN_OVERLAY(battle);
       BTL_FIELD_SITUATION sit;
       BtlRule rule = btltype_GetRule( wk->saveData.btlType );
       TrainerID  trID = 1 + GFL_STD_MtRand( 50 ); // ‚Ä‚«‚Æ[‚Éƒ‰ƒ“ƒ_ƒ€‚Å
-      
+
       BTL_FIELD_SITUATION_Init(&sit);
       switch( rule ){
       case BTL_RULE_SINGLE:
@@ -1277,12 +1281,12 @@ FS_EXTERN_OVERLAY(battle);
         BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
         break;
       case BTL_RULE_TRIPLE:
-        BTL_SETUP_Triple_Trainer( &wk->setupParam, wk->gameData, 
+        BTL_SETUP_Triple_Trainer( &wk->setupParam, wk->gameData,
           &sit, trID, HEAPID_BTL_DEBUG_SYS );
         BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
         break;
       case BTL_RULE_ROTATION:
-        BTL_SETUP_Rotation_Trainer( &wk->setupParam, wk->gameData, 
+        BTL_SETUP_Rotation_Trainer( &wk->setupParam, wk->gameData,
           &sit, trID, HEAPID_BTL_DEBUG_SYS );
         BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
         break;
@@ -1301,7 +1305,7 @@ FS_EXTERN_OVERLAY(battle);
 
   case SEQ_BTL_RETURN:
     BATTLE_PARAM_Release( &wk->setupParam );
-    
+
     changeScene_recover( wk );
     PMSND_StopBGM();
     setMainProc( wk, mainProc_Setup );

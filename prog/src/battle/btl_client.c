@@ -1382,6 +1382,8 @@ static void store_pokesel_to_action( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT
   {
     u8 clientID, posIdx, selIdx, i;
 
+    BTL_Printf("入れ替えポケモンを%d体、選びました\n", res->cnt);
+
     for(i=0; i<res->cnt; i++)
     {
       selIdx = res->selIdx[i];
