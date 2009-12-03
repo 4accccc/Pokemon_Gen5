@@ -14,6 +14,7 @@
 #include "waza_tool\wazano_def.h"
 #include "item\item.h"
 #include "item\itemtype_def.h"
+#include "poke_tool\shinka_check.h"
 
 #include "btl_event.h"
 #include "btl_server_cmd.h"
@@ -190,6 +191,7 @@ struct _BTL_SVFLOW_WORK {
   BtlBagMode              bagMode;
   BTL_WAZAREC             wazaRec;
   BTL_DEADREC             deadRec;
+  ARCHANDLE*              sinkaArcHandle;
   WAZAEFF_CTRL            wazaEffCtrl;
 
   HEAPID  heapID;
@@ -681,6 +683,7 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   wk->bagMode = bagMode;
   wk->escapeClientID = BTL_CLIENTID_NULL;
   wk->getPokePos = BTL_POS_NULL;
+  wk->sinkaArcHandle = SHINKA_GetArcHandle( heapID );
   BTL_WAZAREC_Init( &wk->wazaRec );
   BTL_DEADREC_Init( &wk->deadRec );
   {
@@ -703,6 +706,7 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
 
 void BTL_SVFLOW_QuitSystem( BTL_SVFLOW_WORK* wk )
 {
+  GFL_ARC_CloseDataHandle( wk->sinkaArcHandle );
   GFL_HEAP_FreeMemory( wk );
 }
 
@@ -8245,9 +8249,9 @@ static BOOL scEvent_CheckDmgToRecover( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
   BOOL ret = FALSE;
 
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, ret );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_DMG_TO_RECOVER_CHECK );
     ret = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
@@ -8744,9 +8748,9 @@ static u16 scEvent_getAttackPower( BTL_SVFLOW_WORK* wk,
           BTL_Printf("通常ヒットなので攻撃力=%d\n", power);
         }
       }
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
       BTL_EVENTVAR_SetValue( BTL_EVAR_POWER, power );
       BTL_EVENTVAR_SetMulValue( BTL_EVAR_RATIO, FX32_ONE, FX32_CONST(0.1), FX32_CONST(32) );
-      BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
       BTL_EVENT_CallHandlers( wk, BTL_EVENT_ATTACKER_POWER );
       power = BTL_EVENTVAR_GetValue( BTL_EVAR_POWER );
       ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
@@ -8802,10 +8806,10 @@ static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
     BTL_EVENTVAR_SetValue( BTL_EVAR_GUARD, guard );
     BTL_EVENTVAR_SetMulValue( BTL_EVAR_RATIO, ratio, FX32_CONST(0.1), FX32_CONST(32) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_DEFENDER_GUARD );
     guard = BTL_EVENTVAR_GetValue( BTL_EVAR_GUARD );
     ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
@@ -9760,6 +9764,29 @@ BOOL BTL_SVFTOOL_IsMultiMode( BTL_SVFLOW_WORK* wk )
 {
   return BTL_MAIN_IsMultiMode( wk->mainModule );
 }
+//--------------------------------------------------------------------------------------
+/**
+ * 進化前ポケモンかどうかチェック
+ *
+ * @param   wk
+ * @param   pokeID
+ *
+ * @retval  BOOL
+ */
+//--------------------------------------------------------------------------------------
+BOOL BTL_SVFTOOL_CheckSinkaMae( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+  const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+  u16 monsno = BPP_GetMonsNo( bpp );
+  u16 i;
+  for(i=SHINKA_COND_START; i<SHINKA_COND_MAX; ++i){
+    if( SHINKA_GetParamByHandle(wk->sinkaArcHandle, monsno, 0, i) ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
 
 //=============================================================================================
 /**

@@ -1420,9 +1420,7 @@ static void handler_FlowerGift_Guard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
       if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_SPECIAL )
       {
-        u32 guard = BTL_EVENTVAR_GetValue( BTL_EVAR_GUARD );
-        guard = BTL_CALC_MulRatio( guard, BTL_CALC_TOK_FLOWERGIFT_GUARDRATIO );
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_GUARD, guard );
+        BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, BTL_CALC_TOK_FLOWERGIFT_GUARDRATIO );
       }
     }
   }
@@ -1575,14 +1573,10 @@ static void handler_FusiginaUroko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     if( BPP_GetPokeSick(bpp) != POKESICK_NULL )
     {
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-      // ダメージタイプが特殊の時
+      // ダメージタイプが特殊の時、特防上昇
       if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_SPECIAL )
       {
-        // 防御２倍
-        u32 guard = BTL_EVENTVAR_GetValue( BTL_EVAR_GUARD );
-        guard = BTL_CALC_MulRatio( guard, BTL_CALC_TOK_FUSIGINAUROKO_GDRATIO );
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_GUARD, guard );
-        BTL_Printf("ポケ[%d]の ふしぎなうろこ で防御1.5倍\n", pokeID);
+        BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, BTL_CALC_TOK_FUSIGINAUROKO_GDRATIO );
       }
     }
   }
@@ -3658,11 +3652,10 @@ static void handler_Moraibi_NoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
     // 炎ワザは無効＆「もらいび」発動
-    WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-    PokeType waza_type = WAZADATA_GetType( waza );
+    PokeType waza_type = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE );
     if( waza_type == POKETYPE_HONOO )
     {
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, TRUE );
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
       if( work[0] == 0 )
       {
         work[0] = 1;  // 「もらいび」発動フラグとして利用
@@ -3700,7 +3693,7 @@ static void handler_Moraibi_AtkPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Moraibi( u16 pri, u16 tokID, u8 pokeID )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_NOEFFECT_CHECK_L1,    handler_Moraibi_NoEffect }, // 無効化チェックLv1ハンドラ
+    { BTL_EVENT_DMG_TO_RECOVER_CHECK,    handler_Moraibi_NoEffect }, // ダメージワザ回復化チェックハンドラ
     { BTL_EVENT_ATTACKER_POWER,       handler_Moraibi_AtkPower }, // 攻撃力決定ハンドラ
     { BTL_EVENT_NULL, NULL },
   };

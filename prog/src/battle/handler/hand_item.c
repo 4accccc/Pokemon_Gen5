@@ -348,6 +348,8 @@ static void handler_HaganeNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_NormalJuel( u16 pri, u16 itemID, u8 pokeID );
 static void handler_NormalJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_NormalJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR* HAND_ADD_ITEM_SinkanoKiseki( u16 pri, u16 itemID, u8 pokeID );
+static void handler_SinkanoKiseki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 
@@ -459,6 +461,7 @@ static const struct {
   { ITEM_DOKUDOKUDAMA,      HAND_ADD_ITEM_DokudokuDama    },
   { ITEM_KAENDAMA,          HAND_ADD_ITEM_KaenDama        },
 
+  { ITEM_SINKANOKISEKI,     HAND_ADD_ITEM_SinkanoKiseki   },  // しんかのきせき
   { ITEM_GOTUGOTUMETTO,     HAND_ADD_ITEM_GotugotuMet     },  // ゴツゴツメット
   { ITEM_HUUSEN,            HAND_ADD_ITEM_Huusen          },  // ふうせん
   { ITEM_REDDOKAADO,        HAND_ADD_ITEM_RedCard         },  // レッドカード
@@ -2280,9 +2283,7 @@ static void handler_SinkaiNoUroko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
       if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_SPECIAL )
       {
-        u32 guard = BTL_EVENTVAR_GetValue( BTL_EVAR_GUARD );
-        guard *= 2;
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_GUARD, guard );
+        BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
       }
     }
   }
@@ -2314,9 +2315,7 @@ static void handler_MetalPowder( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
       if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_PHYSIC )
       {
-        u32 guard = BTL_EVENTVAR_GetValue( BTL_EVAR_GUARD );
-        guard *= 2;
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_GUARD, guard );
+        BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
       }
     }
   }
@@ -2418,10 +2417,7 @@ static void handler_KokoroNoSizuku_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
       if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_SPECIAL )
       {
-        u32 item_pow = 100 + common_GetItemParam( myHandle, flowWk, ITEM_PRM_ATTACK );
-        fx32 ratio = FX32_CONST(item_pow) / 100;
-//        BTL_EVENTVAR_RewriteValue( BTL_EVAR_POWER, pow );
-        BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, ratio );
+        BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(1.5) );
 
       }
     }
@@ -2441,10 +2437,7 @@ static void handler_KokoroNoSizuku_Guard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
       if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_SPECIAL )
       {
-        u32 guard = BTL_EVENTVAR_GetValue( BTL_EVAR_GUARD );
-        u32 ratio = 100 + common_GetItemParam( myHandle, flowWk, ITEM_PRM_ATTACK );
-        guard = (guard * ratio) / 100;
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_GUARD, guard );
+        BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(1.5) );
       }
     }
   }
@@ -3302,6 +3295,31 @@ static void common_PowerUpSpecificType( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 }
 
 
+//------------------------------------------------------------------------------
+/**
+ *  しんかのきせき
+ */
+//------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR* HAND_ADD_ITEM_SinkanoKiseki( u16 pri, u16 itemID, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_DEFENDER_GUARD,     handler_SinkanoKiseki },   // 防御側ガード力チェックハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
+}
+// 防御側ガード力チェックハンドラ
+static void handler_SinkanoKiseki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  // 自分が防御側で進化前だったら防御・特防1.5倍
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+  {
+    if( BTL_SVFTOOL_CheckSinkaMae(flowWk, pokeID) )
+    {
+      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(1.5) );
+    }
+  }
+}
 //------------------------------------------------------------------------------
 /**
  *  ゴツゴツメット

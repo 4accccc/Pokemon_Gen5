@@ -665,6 +665,7 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
     {
       if( wk->plistData.sel_poke != BPL_SEL_EXIT ){
         if( wk->plistData.mode == BPL_MODE_NORMAL ){
+          BTL_Printf("‘I‚ñ‚¾ƒ|ƒP‚Í%d”Ô–Ú\n", wk->plistData.sel_poke);
           BTL_POKESELECT_RESULT_Push( wk->pokeselResult, wk->plistData.sel_poke );
         }else{
           u8 i;
