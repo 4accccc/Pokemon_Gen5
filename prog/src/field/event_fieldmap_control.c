@@ -368,6 +368,9 @@ static GMEVENT_RESULT FieldFadeInEvent(GMEVENT * event, int *seq, void * work)
 		MI_CpuClearFast((void *)HW_LCDC_VRAM, HW_VRAM_D_SIZE);
 		(void)GX_DisableBankForLCDC();
 
+		// メインBGへの割り当て復帰(fieldmap.cと整合性をとること)
+		GX_SetBankForBG(GX_VRAM_LCDC_D);	
+
 		OS_WaitVBlankIntr();	// 画面ちらつき防止用ウエイト
 		FIELDMAP_InitBG(few->fieldmap);
 		return GMEVENT_RES_FINISH;
