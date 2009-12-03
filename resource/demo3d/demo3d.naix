@@ -1,0 +1,24 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: demo3d.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_DEMO3D_NAIX_
+#define NARC_DEMO3D_NAIX_
+
+enum {
+	NARC_demo3d_c_camera_bin = 0,
+	NARC_demo3d_c_camera_nsbca = 1,
+	NARC_demo3d_cdemo_01_bin = 2,
+	NARC_demo3d_cdemo_01_nsbca = 3,
+	NARC_demo3d_cdemo_01_nsbmd = 4,
+	NARC_demo3d_cdemo_02_nsbmd = 5,
+	NARC_demo3d_cdemo_03_nsbmd = 6
+};
+
+/* NARC_DEMO3D_NAIX_ */
+#endif
