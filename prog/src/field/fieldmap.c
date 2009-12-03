@@ -109,6 +109,7 @@
 
 #include "field_task.h"  
 #include "field_task_manager.h"
+#include "ev_time.h"  //EVTIME_Update
 
 #ifdef PM_DEBUG
 #include "pleasure_boat.h"    //for PL_BOAT_
@@ -836,6 +837,9 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   if( GAMESYSTEM_GetEvent(gsys) == NULL) {
     //登録テーブルごとに個別のメイン処理を呼び出し
     fieldWork->func_tbl->main_func( fieldWork, &fieldWork->now_pos ); 
+
+    //時間イベントのアップデート処理を呼び出し
+    EVTIME_Update( fieldWork->gamedata );
   }
 
   // 地名表示システム動作処理

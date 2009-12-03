@@ -55,6 +55,7 @@
 
 #include "savedata/gametime.h"  // for GMTIME
 #include "gamesystem/pm_season.h"  // for PMSEASON_TOTAL
+#include "ev_time.h"  //EVTIME_Update
 
 //============================================================================================
 //============================================================================================
@@ -139,6 +140,8 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
     case GAMEINIT_MODE_CONTINUE:
       //新しいマップモードなど機能指定を行う
       MAPCHG_setupMapTools( gsys, &fmw->loc_req );
+      //イベント時間更新
+      EVTIME_Update( gamedata );
       //コンティニューによるフラグ落とし処理
       FIELD_FLAGCONT_INIT_Continue( gamedata, fmw->loc_req.zone_id );
       break;
@@ -1011,6 +1014,9 @@ void MAPCHG_GameOver( GAMESYS_WORK * gsys )
   //新しいマップID、初期位置をセット
   MAPCHG_updateGameData( gsys, &loc_req );
 
+  //イベント時間更新
+  EVTIME_Update( gamedata );
+
   //ゲームオーバー時のフラグのクリア
   FIELD_FLAGCONT_INIT_GameOver( gamedata, loc_req.zone_id );
 }
@@ -1119,6 +1125,9 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
 
   //特殊スクリプト呼び出し：ゾーン切り替え
   SCRIPT_CallZoneChangeScript( gsys, HEAPID_PROC );
+
+  //イベント時間更新
+  EVTIME_Update( gamedata );
 
   //マップ遷移時のフラグ初期化
   FIELD_FLAGCONT_INIT_MapJump( gamedata, loc.zone_id );
