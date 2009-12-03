@@ -12,4 +12,5 @@
 #define GYM_GROUND_SE_LIFT_STOP  (SEQ_SE_FLD_60)    //リフト停止
 #define GYM_GROUND_SE_SWITCH  (SEQ_SE_FLD_61)     //スイッチ
 #define GYM_GROUND_SE_WALL_OPEN  (SEQ_SE_FLD_62)     //隔壁開く
+#define GYM_GROUND_SE_LIFT_MOVE_IN  (SEQ_SE_FLD_75)  //リフト移動(出入り口)
 

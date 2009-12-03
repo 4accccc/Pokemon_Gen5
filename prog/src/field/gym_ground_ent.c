@@ -267,7 +267,8 @@ static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work )
       FIELD_CAMERA_FreeTarget(camera);
     }
     //ƒŠƒtƒgˆÚ“®‚r‚d
-    PMSND_PlaySE(GYM_GROUND_SE_LIFT_MOVE);
+    if (!tmp->Exit) PMSND_PlaySE(GYM_GROUND_SE_LIFT_MOVE_IN);
+    else PMSND_PlaySE(GYM_GROUND_SE_LIFT_MOVE);
     (*seq)++;
     break;
   case 1:
