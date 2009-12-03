@@ -140,7 +140,7 @@
 #define CROSSFADE_MODE
 
 #ifdef PM_DEBUG
-BOOL DebugBGInitEnd;    //BG初期化監視フラグ
+extern BOOL DebugBGInitEnd;    //BG初期化監視フラグ
 #endif
 
 //--------------------------------------------------------------
