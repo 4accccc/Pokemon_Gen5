@@ -191,7 +191,7 @@ GMEVENT * EVENT_FieldCrossOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap,
 }
 //------------------------------------------------------------------
 /**
- * @brief	ブライトネスアウトイベント生成
+ * @brief	空を飛ぶブライトネスアウトイベント生成
  * @param	gsys		  GAMESYS_WORKへのポインタ
  * @param	fieldmap	フィールドマップワークへのポインタ
  * @param	type		  フェードの種類指定
@@ -199,7 +199,7 @@ GMEVENT * EVENT_FieldCrossOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap,
  * @return	GMEVENT	生成したイベントへのポインタ
  */
 //------------------------------------------------------------------
-GMEVENT * EVENT_FieldBrightOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
+GMEVENT * EVENT_FlySkyBrightOut( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
                                 FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait )
 {
 	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldBrightOutEvent, sizeof(FADE_EVENT_WORK));
@@ -387,7 +387,7 @@ GMEVENT * EVENT_FieldCrossIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap,
 
 //------------------------------------------------------------------
 /**
- * @brief	ブライトネスインイベント生成
+ * @brief	空を飛ぶブライトネスインイベント生成
  * @param	gsys		  GAMESYS_WORKへのポインタ
  * @param	fieldmap  フィールドマップワークへのポインタ
  * @param	type		  フェードの種類指定
@@ -395,7 +395,7 @@ GMEVENT * EVENT_FieldCrossIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap,
  * @return	GMEVENT	生成したイベントへのポインタ
  */
 //------------------------------------------------------------------
-GMEVENT * EVENT_FieldBrightIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
+GMEVENT * EVENT_FlySkyBrightIn( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
                                FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait )
 {
 	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldBrightInEvent, sizeof(FADE_EVENT_WORK));
