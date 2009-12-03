@@ -12,6 +12,8 @@
   .include  "msg_debug_scr.h"
   //.include  "debug_scr.h"
 
+  .include  "pokecen_scr_def.h"
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -49,8 +51,9 @@ EVENT_END
 /*                                                            */
 /**************************************************************/
 EVENT_START ev_debug_tamada
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_sample )
-  _OBJ_ANIME_WAIT()
+  _RESERVE_SCRIPT( SCRID_PC )
+  //_OBJ_ANIME( MMDL_ID_PLAYER, anm_sample )
+  //_OBJ_ANIME_WAIT()
 EVENT_END
 
 _ANIME_LABEL  anm_sample
