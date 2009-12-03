@@ -106,7 +106,8 @@ SUBDIRS	=	wmi \
 			multiboot \
 			field_wfbc_data \
 			mail \
-			season_display
+			season_display \
+			zukan_gra
 
 include $(RESOURCE_MACRO)
 
