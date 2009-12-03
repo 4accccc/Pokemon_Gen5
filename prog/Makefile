@@ -183,6 +183,21 @@ ifeq	($(USERNAME),ohno)
 CCFLAGS_MSGSTYLE	?= -msgstyle gcc
 endif
 
+
+#----------------------------------------------------------------------------
+#		makelcf.exeの引数オーバー対処のため追加 by tomoya
+#----------------------------------------------------------------------------
+ifneq	($(filter TWL,$(TARGET_PLATFORM)),)
+
+LCFDEF_FILE = lcf_def_twl.txt
+
+else
+
+LCFDEF_FILE = lcf_def.txt
+
+endif
+
+
 #----------------------------------------------------------------------------
 # コンパイル時の警告抑止
 #----------------------------------------------------------------------------
@@ -256,6 +271,59 @@ include $(TWLSYSTEM_ROOT)/build/buildtools/commondefs
 include $(TWLSYSTEM_ROOT)/build/buildtools/nnslibdefs
 include $(TWLSYSTEM_ROOT)/build/buildtools/modulerules
 
+ifneq	($(filter NITRO,$(TARGET_PLATFORM)),)
+
+MAKELCF_DEFS		 = -DNITROSDK_ROOT='$(ROOT_M)'									\
+					   -DTARGET_NAME='$(TARGET_NAME)'								\
+							-Mlcf_def.txt	\
+					   -DGLIBS='$(GLIBRARIES_LINK)'									\
+					   -DLLIBS='$(LLIBRARIES_LINK)'									\
+					   -DCC_LIBS='$(CC_LIBS)'										\
+					   -DCW_LIBS='$(CC_LIBS)'										\
+					   -DOBJDIR='$(OBJDIR_M)'										\
+					   -DLIBDIR='$(LIBDIR_M)'										\
+					   -DBINDIR='$(BINDIR_M)'										\
+					   -DCRT0_O='$(CRT0_O)'											\
+					   -DPROC='$(CODEGEN_PROC)'										\
+					   -DPLATFORM='$(NITRO_PLATFORM)'								\
+					   -DCODEGEN='$(NITRO_LIBSUFFIX)'								\
+					   -DLIBSUFFIX='$(NITRO_LIBSUFFIX)'								\
+					   -DBUILD='$(NITRO_BUILD_DIR)'									\
+					   -DADDRESS_STATIC='$(ADDRESS_STATIC)'							\
+					   -DADDRESS_ITCM='$(ADDRESS_ITCM)'								\
+					   -DADDRESS_DTCM='$(ADDRESS_DTCM)'
+
+endif
+
+ifneq	($(filter TWL,$(TARGET_PLATFORM)),)
+
+MAKELCF_DEFS	= -DTWLSDK_ROOT='$(ROOT_M)'									\
+		  -DTARGET_NAME='$(TARGET_NAME)'									\
+			-Mlcf_def_twl.txt	\
+		  -DOBJS_LTDAUTOLOAD='$(foreach OBJ,$(OBJS_LTDAUTOLOAD_M),$(OBJ))'	\
+		  -DOBJS_LTDOVERLAY='$(foreach OBJ,$(OBJS_LTDOVERLAY_M),$(OBJ))'	\
+		  -DGLIBS='$(GLIBRARIES_LINK)'										\
+		  -DGLIBS_EX='$(GLIBRARIES_EX_LINK)'								\
+		  -DLLIBS='$(LLIBRARIES_LINK)'										\
+		  -DLLIBS_EX='$(LLIBRARIES_EX_LINK)'								\
+		  -DCC_LIBS='$(CC_LIBS)'											\
+		  -DCW_LIBS='$(CC_LIBS)'											\
+		  -DOBJDIR='$(OBJDIR_M)'											\
+		  -DLIBDIR='$(LIBDIR_M)'											\
+		  -DBINDIR='$(BINDIR_M)'											\
+		  -DCRT0_O='$(CRT0_O)'												\
+		  -DPROC='$(CODEGEN_PROC)'											\
+		  -DPLATFORM='$(TWL_PLATFORM)'										\
+		  -DCODEGEN='$(TWL_LIBSUFFIX)'										\
+		  -DARCHGEN='$(ARCHGEN_TYPE)'										\
+		  -DLIBSUFFIX='$(TWL_LIBSUFFIX)'									\
+		  -DBUILD='$(TWL_BUILD_DIR)'										\
+		  -DADDRESS_STATIC='$(ADDRESS_STATIC)'								\
+		  -DADDRESS_ITCM='$(ADDRESS_ITCM)'									\
+		  -DADDRESS_DTCM='$(ADDRESS_DTCM)'
+
+endif
+
 #----------------------------------------------------------------------------
 #	WiFi定義
 #----------------------------------------------------------------------------
@@ -263,23 +331,49 @@ include $(TWLSYSTEM_ROOT)/build/buildtools/modulerules
 #include	$(TWLDWC_ROOT)/build/buildtools/modulerules
 include	$(TWLVCT_ROOT)/build/buildtools/modulerules
 
+
+
+
 #----------------------------------------------------------------------------
 #	makefileがインクルードするファイルが更新されたらmakelcfが動作するようにした
 #----------------------------------------------------------------------------
-#$(MAKEFILE):  make_prog_files overlay/overlay_files
-#	ruby overlay/overlaytool.rb
-#	//touch $(MAKEFILE)
+
+ifneq	($(filter NITRO,$(TARGET_PLATFORM)),)
 
 overlay/main.lsf:	make_prog_files
 	ruby overlay/overlaytool.rb
+	-rm $(LCFDEF_FILE)
+	echo OBJS_STATIC=$(OBJS_STATIC) > $(LCFDEF_FILE)
+	echo OBJS_AUTOLOAD=$(OBJS_AUTOLOAD) >> $(LCFDEF_FILE)
+	echo OBJS_OVERLAY=$(OBJS_OVERLAY) >> $(LCFDEF_FILE)
 
-overlay/overlay_files:	make_prog_files
+endif
+
+ifneq	($(filter TWL,$(TARGET_PLATFORM)),)
+
+overlay/main.TWL.HYB.lsf:	make_prog_files
 	ruby overlay/overlaytool.rb
+	-rm $(LCFDEF_FILE)
+	echo OBJS_STATIC=$(OBJS_STATIC) > $(LCFDEF_FILE)
+	echo OBJS_AUTOLOAD=$(OBJS_AUTOLOAD) >> $(LCFDEF_FILE)
+	echo OBJS_OVERLAY=$(OBJS_OVERLAY) >> $(LCFDEF_FILE)
+
+endif
+
+
+$(LCFDEF_FILE): $(OBJS_STATIC) $(OBJS_OVERLAY)
+	echo OBJS_STATIC=$(OBJS_STATIC) > $(LCFDEF_FILE)
+	echo OBJS_AUTOLOAD=$(OBJS_AUTOLOAD) >> $(LCFDEF_FILE)
+	echo OBJS_OVERLAY=$(OBJS_OVERLAY) >> $(LCFDEF_FILE)
+
+
 
 #--------------------------------------- ----------------------------
 programs = $(TARGETS)
 
-do-build: precompile $(TARGETS)
+do-build: precompile  $(LCFDEF_FILE) $(TARGETS)
+
+
 
 
 #----------------------------------------------------------------------------
