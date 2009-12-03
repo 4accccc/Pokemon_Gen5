@@ -39,6 +39,16 @@ void	POKERUS_CheckCatchPokerus( POKEPARTY *ppt )
 	rnd = GFL_STD_MtRand( 0x10000 );
 	infect = POKERUS_CheckInfected( ppt );
 
+#ifdef PM_DEBUG
+  { 
+    //デバッグボタンが押されていたら、ポケルスに感染させる
+    if( GFL_UI_KEY_GetCont() == PAD_BUTTON_DEBUG )
+    { 
+      rnd = 16384;
+    }
+  }
+#endif
+
 	if( ( rnd == 16384 ) || ( rnd == 32768 ) || ( rnd == 49152 ) )
   {
 		do{
