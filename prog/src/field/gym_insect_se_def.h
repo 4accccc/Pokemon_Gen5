@@ -13,4 +13,5 @@
 #define GYM_INSECT_SE_WALL_RETURN  (SEQ_SE_FLD_53)     //•Ç‚É’e‚©‚ê‚½
 #define GYM_INSECT_SE_WALL_TOUCH  (SEQ_SE_FLD_54)     //•Ç‚ÉG‚ê‚½
 #define GYM_INSECT_SE_WALL_OPEN  (SEQ_SE_FLD_57)    //ò‚ª“®ì‚·‚é
+#define GYM_INSECT_SE_WALL_OPEN_END  (SEQ_SE_FLD_77)    //ò“®ìI—¹
 

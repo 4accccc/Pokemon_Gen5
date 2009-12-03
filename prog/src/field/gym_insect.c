@@ -1886,6 +1886,8 @@ static GMEVENT_RESULT PoleEvt( GMEVENT* event, int* seq, void* work )
           //アニメする壁を非表示
           FLD_EXP_OBJ_SetVanish( ptr, GYM_INSECT_UNIT_IDX, detail_wall_obj_idx, TRUE);
         }
+        //柵移動終了ＳＥ
+        PMSND_PlaySE(GYM_INSECT_SE_WALL_OPEN_END);
         //イベント終了
         return GMEVENT_RES_FINISH;
       }
