@@ -685,6 +685,12 @@ extern  BOOL  POKETOOL_CheckRare( u32 id, u32 personal_rnd );
 extern  u32   POKETOOL_GetPersonalParam( u16 mons_no, u16 form_no, PokePersonalParamID param );
 extern  u32   POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 sex );
 
+// めざめるパワー計算
+extern PokeType POKETOOL_GetMezaPa_Type( const POKEMON_PARAM* pp );
+extern u32 POKETOOL_GetMezaPa_Power( const POKEMON_PARAM* pp );
+
+
+
 // 戦闘録画用に外部公開
 extern void  POKETOOL_encode_data( void *data, u32 size, u32 code );
 #define POKETOOL_decord_data( data, size, code )   POKETOOL_encode_data( data, size, code );

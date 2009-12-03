@@ -1188,41 +1188,41 @@ void  PPP_SetWazaPos( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos )
  */
 //============================================================================================
 WazaID  PP_CheckWazaOboe( POKEMON_PARAM *pp, int* index, HEAPID heapID )
-{ 
-	POKEPER_WAZAOBOE_CODE*  wot = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( heapID ),
+{
+  POKEPER_WAZAOBOE_CODE*  wot = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( heapID ),
                                                       POKEPER_WAZAOBOE_TABLE_ELEMS * sizeof( POKEPER_WAZAOBOE_CODE ) );
-	WazaID  ret = PTL_WAZAOBOE_NONE;
-	u16     mons_no;
-	int     form_no;
-	u8      level;
+  WazaID  ret = PTL_WAZAOBOE_NONE;
+  u16     mons_no;
+  int     form_no;
+  u8      level;
 
-	mons_no = PP_Get( pp, ID_PARA_monsno, NULL );
-	form_no = PP_Get( pp, ID_PARA_form_no, NULL );
-	level = PP_Get( pp, ID_PARA_level, NULL );
+  mons_no = PP_Get( pp, ID_PARA_monsno, NULL );
+  form_no = PP_Get( pp, ID_PARA_form_no, NULL );
+  level = PP_Get( pp, ID_PARA_level, NULL );
   POKE_PERSONAL_LoadWazaOboeTable( mons_no, form_no, wot );
 
-	while( !POKEPER_WAZAOBOE_IsEndCode( wot[ index[ 0 ] ] ) ){
-  	if( POKEPER_WAZAOBOE_GetLevel( wot[ index[ 0 ] ] ) == level )
+  while( !POKEPER_WAZAOBOE_IsEndCode( wot[ index[ 0 ] ] ) ){
+    if( POKEPER_WAZAOBOE_GetLevel( wot[ index[ 0 ] ] ) == level )
     {
-  		ret = PP_SetWaza( pp, POKEPER_WAZAOBOE_GetWazaID( wot[ index[ 0 ] ] ) );
+      ret = PP_SetWaza( pp, POKEPER_WAZAOBOE_GetWazaID( wot[ index[ 0 ] ] ) );
       if( ret == PTL_WAZASET_FAIL )
-      { 
-  		  ret = POKEPER_WAZAOBOE_GetWazaID( wot[ index[ 0 ] ] ) | PTL_WAZAOBOE_FULL;
+      {
+        ret = POKEPER_WAZAOBOE_GetWazaID( wot[ index[ 0 ] ] ) | PTL_WAZAOBOE_FULL;
         index[ 0 ]++;
         break;
       }
       else if( ret != PTL_WAZASET_SAME )
-      { 
+      {
         index[ 0 ]++;
         break;
       }
-  	}
+    }
     index[ 0 ]++;
   }
 
-	GFL_HEAP_FreeMemory( wot );
+  GFL_HEAP_FreeMemory( wot );
 
-	return	ret;
+  return  ret;
 }
 
 //============================================================================================
@@ -1496,6 +1496,61 @@ u32  POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 sex )
   return rnd;
 }
 
+//=============================================================================================
+/**
+ * ワザ「めざめるパワー」の実行時タイプ取得
+ *
+ * @param   pp
+ *
+ * @retval  PokeType
+ */
+//=============================================================================================
+PokeType POKETOOL_GetMezaPa_Type( const POKEMON_PARAM* pp )
+{
+  static const u8 typeTbl[] = {
+    POKETYPE_KAKUTOU, POKETYPE_HIKOU, POKETYPE_DOKU,   POKETYPE_JIMEN,
+    POKETYPE_IWA,     POKETYPE_MUSHI, POKETYPE_GHOST,  POKETYPE_HAGANE,
+    POKETYPE_HONOO,   POKETYPE_MIZU,  POKETYPE_KUSA,   POKETYPE_DENKI,
+    POKETYPE_ESPER,   POKETYPE_KOORI, POKETYPE_DRAGON, POKETYPE_AKU,
+  };
+
+  u32 val=0;
+  if( PP_Get(pp, ID_PARA_hp_rnd, NULL) & 1){ val += 1; }
+  if( PP_Get(pp, ID_PARA_pow_rnd, NULL) & 1){ val += 2; }
+  if( PP_Get(pp, ID_PARA_def_rnd, NULL) & 1){ val += 4; }
+  if( PP_Get(pp, ID_PARA_agi_rnd, NULL) & 1){ val += 8; }
+  if( PP_Get(pp, ID_PARA_spepow_rnd, NULL) & 1){ val += 16; }
+  if( PP_Get(pp, ID_PARA_spedef_rnd, NULL) & 1){ val += 32; }
+
+  val = val * 15 / 63;
+  while( val > NELEMS(typeTbl) ){ // テーブルサイズを越えることは有り得ないハズだが念のため
+    val -= NELEMS(typeTbl);
+  }
+
+  return typeTbl[ val ];
+}
+//=============================================================================================
+/**
+ * ワザ「めざめるパワー」の実行時威力を取得
+ *
+ * @param   pp
+ *
+ * @retval  PokeType
+ */
+//=============================================================================================
+u32 POKETOOL_GetMezaPa_Power( const POKEMON_PARAM* pp )
+{
+  u32 pow=0;
+  if( (PP_Get(pp, ID_PARA_hp_rnd, NULL) % 4)    > 1){ pow += 1; }
+  if( (PP_Get(pp, ID_PARA_pow_rnd, NULL) % 4)   > 1){ pow += 2; }
+  if( (PP_Get(pp, ID_PARA_def_rnd, NULL) % 4)   > 1){ pow += 4; }
+  if( (PP_Get(pp, ID_PARA_agi_rnd, NULL) % 4)   > 1){ pow += 8; }
+  if( (PP_Get(pp, ID_PARA_spepow_rnd, NULL) % 4)> 1){ pow += 16; }
+  if( (PP_Get(pp, ID_PARA_spedef_rnd, NULL) % 4)> 1){ pow += 32; }
+
+  pow = 30 + (pow * 40 / 63);
+  return pow;
+}
 
 
 //--------------------------------------------------------------------------
