@@ -1,5 +1,5 @@
 #event data
-#save date:2009/11/28 17:20:52
+#save date:2009/12/03 19:53:58
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03r0801.wms
 #SECTION START:OBJ_EVENT
@@ -9,14 +9,14 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03r0801.wms
 #hold event type:
 1
 #hold event number:
-10
+27
 #event number: 0
 #type
 1
 #ID name
 C03R0801_CREW_01
 #OBJ CODE Number
-WORKMAN
+MAN1
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -24,7 +24,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_C03R0801_CREW_01
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number
@@ -47,7 +47,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C03R0801_CREW_02
 #OBJ CODE Number
-WORKMAN
+MAN1
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -55,7 +55,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_C03R0801_CREW_02
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -71,14 +71,14 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-104 0 136
+152 0 24
 #event number: 2
 #type
 1
 #ID name
 C03R0801_CREW_03
 #OBJ CODE Number
-WORKMAN
+MAN1
 #MOVE CODE Number
 MV_DIR_RND
 #EVENT TYPE Number
@@ -86,7 +86,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_C03R0801_CREW_03
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number
@@ -109,7 +109,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C03R0801_CREW_04
 #OBJ CODE Number
-WORKMAN
+MAN1
 #MOVE CODE Number
 MV_DIR_RND
 #EVENT TYPE Number
@@ -117,7 +117,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_C03R0801_CREW_04
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -140,7 +140,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C03R0801_CREW_05
 #OBJ CODE Number
-WORKMAN
+MAN1
 #MOVE CODE Number
 MV_DIR_RND
 #EVENT TYPE Number
@@ -148,7 +148,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_C03R0801_CREW_05
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -164,14 +164,14 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-520 0 8
+344 0 -40
 #event number: 5
 #type
 1
 #ID name
 C03R0801_VISITOR_01
 #OBJ CODE Number
-BOY1
+GIRL1
 #MOVE CODE Number
 MV_RTLUDR       
 #EVENT TYPE Number
@@ -179,7 +179,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_C03R0801_VISITOR_01
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number
@@ -210,7 +210,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_C03R0801_VISITOR_02
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number
@@ -233,15 +233,15 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C03R0801_VISITOR_03
 #OBJ CODE Number
-MAN1
+GIRL1
 #MOVE CODE Number
-MV_RTRUDL       
+MV_RND_UDR
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_C03R0801_VISITOR_03
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number
@@ -264,15 +264,15 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C03R0801_VISITOR_04
 #OBJ CODE Number
-WOMAN1
+GIRL1
 #MOVE CODE Number
-MV_RTDLRU       
+MV_RTRDUL       
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_C03R0801_VISITOR_04
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number
@@ -295,15 +295,15 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C03R0801_VISITOR_05
 #OBJ CODE Number
-MIDDLEWOMAN1
+GIRL1
 #MOVE CODE Number
-MV_DOWN
+MV_RTRD         
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_C03R0801_VISITOR_05
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number
@@ -319,7 +319,534 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-616 0 8
+600 0 8
+#event number: 10
+#type
+1
+#ID name
+C03R0801_WKOBJCODE07_01
+#OBJ CODE Number
+WKOBJCODE07
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03R0801_WKOBJCODE07_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+2056 0 -56
+#event number: 11
+#type
+1
+#ID name
+C03R0801_WKOBJCODE08_01
+#OBJ CODE Number
+WKOBJCODE08
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03R0801_WKOBJCODE08_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+2152 0 184
+#event number: 12
+#type
+1
+#ID name
+C03R0801_WKOBJCODE06_01
+#OBJ CODE Number
+WKOBJCODE06
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03R0801_WKOBJCODE06_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1960 0 184
+#event number: 13
+#type
+1
+#ID name
+C03R0801_WKOBJCODE04_01
+#OBJ CODE Number
+WKOBJCODE04
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03R0801_WKOBJCODE04_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1720 0 184
+#event number: 14
+#type
+1
+#ID name
+C03R0801_WKOBJCODE03_01
+#OBJ CODE Number
+WKOBJCODE03
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03R0801_WKOBJCODE03_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1624 0 -56
+#event number: 15
+#type
+1
+#ID name
+C03R0801_WKOBJCODE05_01
+#OBJ CODE Number
+WKOBJCODE05
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03R0801_WKOBJCODE05_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1848 0 -72
+#event number: 16
+#type
+1
+#ID name
+C03R0801_WKOBJCODE01_01
+#OBJ CODE Number
+WKOBJCODE01
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03R0801_WKOBJCODE01_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1432 0 -56
+#event number: 17
+#type
+1
+#ID name
+C03R0801_WKOBJCODE02_01
+#OBJ CODE Number
+WKOBJCODE02
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03R0801_WKOBJCODE02_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1528 0 200
+#event number: 18
+#type
+1
+#ID name
+C03R0801_WKOBJCODE14_01
+#OBJ CODE Number
+WKOBJCODE14
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03R0801_WKOBJCODE14_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1304 0 200
+#event number: 19
+#type
+1
+#ID name
+C03R0801_WKOBJCODE13_01
+#OBJ CODE Number
+WKOBJCODE13
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03R0801_WKOBJCODE13_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1240 0 200
+#event number: 20
+#type
+1
+#ID name
+C03R0801_WKOBJCODE00_01
+#OBJ CODE Number
+WKOBJCODE00
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03R0801_WKOBJCODE00_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1208 0 -56
+#event number: 21
+#type
+1
+#ID name
+C03R0801_WKOBJCODE12_01
+#OBJ CODE Number
+WKOBJCODE12
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03R0801_WKOBJCODE12_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1032 0 -56
+#event number: 22
+#type
+1
+#ID name
+C03R0801_WKOBJCODE11_01
+#OBJ CODE Number
+WKOBJCODE11
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03R0801_WKOBJCODE11_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+936 0 -72
+#event number: 23
+#type
+1
+#ID name
+C03R0801_WKOBJCODE09_01
+#OBJ CODE Number
+WKOBJCODE09
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03R0801_WKOBJCODE09_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+904 0 184
+#event number: 24
+#type
+1
+#ID name
+C03R0801_WKOBJCODE10_01
+#OBJ CODE Number
+WKOBJCODE10
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03R0801_WKOBJCODE10_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1016 0 200
+#event number: 25
+#type
+1
+#ID name
+C03R0801_BABYGIRL1_01
+#OBJ CODE Number
+BABYGIRL1
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03R0801_BABYGIRL1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1544 0 200
+#event number: 26
+#type
+1
+#ID name
+C03R0801_BABYGIRL1_02
+#OBJ CODE Number
+BABYGIRL1
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03R0801_BABYGIRL1_02
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+2072 0 -56
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -329,7 +856,20 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-0
+1
+#event number: 0
+#Bg Event Label
+BG_C03R0801_LOCK_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C03R0801_LOCK_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+680 0 168
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
@@ -349,6 +889,516 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-0
+30
+#event number: 0
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT02
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT17
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 0 -136
+#size
+1 1
+#event number: 1
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT01
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT16
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 136
+#size
+1 1
+#event number: 2
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT09
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT24
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-24 0 24
+#size
+1 1
+#event number: 3
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT10
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT25
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 0 24
+#size
+1 1
+#event number: 4
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT11
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT26
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 0 184
+#size
+1 1
+#event number: 5
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT12
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT27
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+136 0 184
+#size
+1 1
+#event number: 6
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT03
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT18
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+136 0 -136
+#size
+1 1
+#event number: 7
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT05
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT20
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+296 0 -136
+#size
+1 1
+#event number: 8
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT07
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT22
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+456 0 -136
+#size
+1 1
+#event number: 9
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT04
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT19
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+296 0 88
+#size
+1 1
+#event number: 10
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT13
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT28
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+392 0 24
+#size
+1 1
+#event number: 11
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT14
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT29
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+472 0 24
+#size
+1 1
+#event number: 12
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT06
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT21
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+408 0 184
+#size
+1 1
+#event number: 13
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT08
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT23
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+552 0 184
+#size
+1 1
+#event number: 14
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT24
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT09
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+904 0 136
+#size
+3 1
+#event number: 15
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT26
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT11
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+904 0 -120
+#size
+3 1
+#event number: 16
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT27
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT12
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1000 0 -120
+#size
+3 1
+#event number: 17
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT25
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT10
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1000 0 136
+#size
+3 1
+#event number: 18
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT28
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT13
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1208 0 136
+#size
+3 1
+#event number: 19
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT29
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT14
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1304 0 136
+#size
+3 1
+#event number: 20
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT17
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT02
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1512 0 136
+#size
+3 1
+#event number: 21
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT16
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT01
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1416 0 -120
+#size
+3 1
+#event number: 22
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT18
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT03
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1624 0 -120
+#size
+3 1
+#event number: 23
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT19
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT04
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1720 0 136
+#size
+3 1
+#event number: 24
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT20
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT05
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1832 0 -120
+#size
+3 1
+#event number: 25
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT21
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT06
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1928 0 136
+#size
+3 1
+#event number: 26
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT22
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT07
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+2040 0 -120
+#size
+3 1
+#event number: 27
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT23
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT08
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+2136 0 136
+#size
+3 1
+#event number: 28
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT00
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT15
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 0 24
+#size
+1 1
+#event number: 29
+#Door Event Label
+DOOR_ID_C03R0801_C03R0801_EXIT15
+#Next Zone ID Name
+ZONE_ID_C03R0801
+#Next Door ID Name
+DOOR_ID_C03R0801_C03R0801_EXIT00
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_MAT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1208 0 -120
+#size
+3 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

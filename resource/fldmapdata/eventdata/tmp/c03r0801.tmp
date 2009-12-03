@@ -1,5 +1,13 @@
 #../data/c03r0801.mev
+<<<<<<< .mine
+../tmp/c03r0801.bin:../data/c03r0801.mev $(UNIQ_SCRIPTHEADER) ../tmp/c03r0801.h ../../script/c03r0801_def.h ../../zonetable/zone_id.h ../../../../prog/include/field/eventdata_type.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h 
+=======
 ../tmp/c03r0801.bin:../data/c03r0801.mev $(UNIQ_SCRIPTHEADER) ../tmp/c03r0801.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../../../prog/include/field/eventdata_type.h ../../script/C03R0801_def.h 
+>>>>>>> .r13465
 	@echo ../data/c03r0801.mev
+<<<<<<< .mine
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c03r0801.h ../../script/c03r0801_def.h ../../zonetable/zone_id.h ../../../../prog/include/field/eventdata_type.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h 
+=======
 	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c03r0801.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../../../prog/include/field/eventdata_type.h ../../script/C03R0801_def.h 
+>>>>>>> .r13465
 

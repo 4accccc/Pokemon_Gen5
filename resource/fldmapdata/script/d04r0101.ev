@@ -10,8 +10,8 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d04r0101.h"
-	.include  "../zonetable/zone_id.h"
-  //.include  "d04r0101.h"
+  .include  "../zonetable/zone_id.h"
+  .include  "d04r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -20,8 +20,11 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_mapchange1
-_EVENT_DATA    ev_mapchange2
+_EVENT_DATA		ev_mapchange1
+_EVENT_DATA		ev_mapchange2
+_EVENT_DATA		ev_d04r0101_sunglasses_01
+_EVENT_DATA		ev_pos_d04r0101_sunglasses_01
+_EVENT_DATA		ev_d04r0101_corn_01
 _EVENT_DATA_END
 
 
@@ -42,3 +45,179 @@ EVENT_START ev_mapchange2
 	_MAP_CHANGE_SAND_STREAM( ZONE_ID_D04R0201, 10, 10 )
 EVENT_END
 
+/**************************************************************/
+/*			サングラス	D04R0101イベントスクリプト			  */
+/**************************************************************/
+EVENT_START		ev_d04r0101_sunglasses_01
+
+_TALK_OBJ_START()
+
+	//D03R0101にてライバルPOS発動後の場合
+	IF $WK_SCENE_D03R0101 == 2 THEN 
+		
+		//おう！　おいしいみずを　くれた　ひと　こだいのしろを　おおう
+		_BALLOONWIN_TALKOBJ_MSG( msg_d04r0101_sunglasses_02 )
+		_BALLOONWIN_CLOSE()
+	
+	//それ以外
+	ELSE
+		
+		//おう！　おいしいみずを　くれた　ひと　なんでも　この
+		_BALLOONWIN_TALKOBJ_MSG( msg_d04r0101_sunglasses_01 )
+		_BALLOONWIN_CLOSE()
+	
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*			サングラスPOS	D04R0101イベントスクリプト		  */
+/**************************************************************/
+EVENT_START		ev_pos_d04r0101_sunglasses_01
+
+//D08イベント終了後のみのPOSイベントです。
+
+	//ローカル変数を定義
+	DEFINE_LOCAL	LWK_HERO_X
+	DEFINE_LOCAL	LWK_HERO_Z
+	
+	//X軸が21の場合
+	IF $LWK_HERO_X == 21 THEN
+	
+		//Z軸が15の場合
+		IF $LWK_HERO_Z == 15 THEN
+			
+			//自機に近づく
+			_OBJ_ANIME( D04R0101_SUNGLASSES_01, anm_sunglasses_15tikaduku )
+			_OBJ_ANIME_WAIT()
+			
+			//自機がサングラスの方へ向く
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_up )
+			_OBJ_ANIME_WAIT()
+			
+			//おう！　おいしいみずを　くれた　ひと　こだいのしろを　おおう
+			_BALLOONWIN_OBJMSG( msg_d04r0101_sunglasses_02 , D04R0101_SUNGLASSES_01 )
+			_BALLOONWIN_CLOSE()
+			
+			//持ち場に戻る
+			_OBJ_ANIME( D04R0101_SUNGLASSES_01, anm_sunglasses_15return )
+			_OBJ_ANIME_WAIT()
+		
+		//それ以外の座標（ありえない）
+		ELSE
+		
+		ENDIF
+		
+	//X軸が22の場合
+	ELSE
+	
+		//Z軸が14の場合
+		IF $LWK_HERO_Z == 14 THEN
+			
+			//自機に近づく
+			_OBJ_ANIME( D04R0101_SUNGLASSES_01, anm_sunglasses_14tikaduku )
+			_OBJ_ANIME_WAIT()
+			
+			//自機がサングラスの方へ向く
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_up )
+			_OBJ_ANIME_WAIT()
+			
+			//おう！　おいしいみずを　くれた　ひと　こだいのしろを　おおう
+			_BALLOONWIN_OBJMSG( msg_d04r0101_sunglasses_02 , D04R0101_SUNGLASSES_01 )
+			_BALLOONWIN_CLOSE()
+			
+			//持ち場に戻る
+			_OBJ_ANIME( D04R0101_SUNGLASSES_01, anm_sunglasses_14return )
+			_OBJ_ANIME_WAIT()
+		
+		//Z軸が16の場合
+		ELSIF $LWK_HERO_Z == 16 THEN
+			
+			//自機に近づく
+			_OBJ_ANIME( D04R0101_SUNGLASSES_01, anm_sunglasses_16tikaduku )
+			_OBJ_ANIME_WAIT()
+			
+			//自機がサングラスの方へ向く
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_up )
+			_OBJ_ANIME_WAIT()
+			
+			//おう！　おいしいみずを　くれた　ひと　こだいのしろを　おおう
+			_BALLOONWIN_OBJMSG( msg_d04r0101_sunglasses_02 , D04R0101_SUNGLASSES_01 )
+			_BALLOONWIN_CLOSE()
+			
+			//持ち場に戻る
+			_OBJ_ANIME( D04R0101_SUNGLASSES_01, anm_sunglasses_16return )
+			_OBJ_ANIME_WAIT()
+
+		//それ以外の座標（ありえない）
+		ELSE
+		
+		ENDIF
+	
+	ENDIF
+
+//========================================//
+		
+//D08サングラスPOS終了
+$WK_SCENE_D04R0101 = 0
+		
+//========================================//
+
+
+
+EVENT_END
+
+//--------------------------------------------------------------
+//	サングラス：自機に近づく
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_sunglasses_15tikaduku
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sunglasses_14tikaduku
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sunglasses_16tikaduku
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	サングラス：持ち場に戻る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_sunglasses_15return
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sunglasses_14return
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sunglasses_16return
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	サングラス：持ち場に戻る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_player_up
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*			道路用コーン	D04R0101イベントスクリプト		  */
+/**************************************************************/
+EVENT_START		ev_d04r0101_corn_01
+
+EVENT_END
