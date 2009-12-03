@@ -142,6 +142,7 @@ struct _TAG_FLDEFF_NAMIPOKE_EFFECT
 //--------------------------------------------------------------
 typedef struct
 {
+  BOOL dead_flag;
   FLDEFF_NAMIPOKE_EFFECT *eff_npoke_eff;
   NAMIPOKE_EFFECT_TYPE type;
   const FLDEFF_TASK *efftask_namipoke;
@@ -818,7 +819,8 @@ FLDEFF_TASK * FLDEFF_NAMIPOKE_EFFECT_SetEffect( FLDEFF_CTRL *fectrl,
       fectrl, FLDEFF_PROCID_NAMIPOKE_EFFECT );
   head.type = type;
   head.efftask_namipoke = efftask_namipoke;
-  
+  head.dead_flag = FALSE;
+
   task = FLDEFF_CTRL_AddTask(
       fectrl, &data_npoke_effTaskHeader, NULL, 0, &head, 1 );
   return( task );
@@ -831,6 +833,7 @@ FLDEFF_TASK * FLDEFF_NAMIPOKE_EFFECT_SetEffect( FLDEFF_CTRL *fectrl,
  * @param type NAMIPOKE_EFFECT_TYPE 表示種類
  * @param pos 表示する座標
  * @retval FLDEFF_TASK*
+ * @attention NAMIPOKE_EFFECT_TYPE_TAKI_SPLASHのみエフェクト終了
  */
 //--------------------------------------------------------------
 FLDEFF_TASK * FLDEFF_NAMIPOKE_EFFECT_SetEffectAlone( FLDEFF_CTRL *fectrl,
@@ -844,6 +847,7 @@ FLDEFF_TASK * FLDEFF_NAMIPOKE_EFFECT_SetEffectAlone( FLDEFF_CTRL *fectrl,
       fectrl, FLDEFF_PROCID_NAMIPOKE_EFFECT );
   head.type = type;
   head.efftask_namipoke = NULL;
+  head.dead_flag = TRUE;
   
   task = FLDEFF_CTRL_AddTask(
       fectrl, &data_npoke_effTaskHeader, pos, 0, &head, 1 );
@@ -982,6 +986,11 @@ static void npoke_effTask_Delete( FLDEFF_TASK *task, void *wk )
 static void npoke_effTask_Update( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_NAMIPOKE_EFFECT *work = wk;
+  
+  if( work->end_flag == TRUE && work->head.dead_flag == TRUE ){
+    FLDEFF_TASK_CallDelete( task );
+    return;
+  }
   
   if( work->head.type == NAMIPOKE_EFFECT_TYPE_TAKI_SPLASH ){
     if( work->end_flag == FALSE ){
