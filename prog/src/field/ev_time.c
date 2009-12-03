@@ -34,6 +34,8 @@
 #include "savedata/gametime.h"
 #include "savedata/encount_sv.h"
 
+#include "poke_tool/pokerus.h"
+
 //============================================================================================
 //============================================================================================
 
@@ -162,12 +164,10 @@ static void UpdateDayEvent(GAMEDATA * gdata, s32 diff_days)
 
 	//ポケルス感染の経過を見る
 	{
-#if 0
 		POKEPARTY *ppt;
 
-		ppt=SaveData_GetTemotiPokemon(gdata->savedata);
-		PokerusCounterDec(ppt,diff_days);
-#endif
+		ppt = GAMEDATA_GetMyPokemon( gdata );
+		POKERUS_DecCounter( ppt, diff_days );
 	}
 
 	//ポケモンクジ
