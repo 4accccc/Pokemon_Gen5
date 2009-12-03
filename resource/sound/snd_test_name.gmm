@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-10-14T18:43:11"/>
+	<create user="taya" host="W00146" date="2009-12-01T12:04:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -66,6 +66,11 @@
 			</tag>
 			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
 			</tag>
 			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -234,7 +239,7 @@
 				<comment language="english">当該行の文字列を
 ウィンドウ内で右寄せします。</comment>
 			</tag>
-			<tag entry="04" japanese="X加算" english="X加算" view="EP">
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
 				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
 				<comment language="japanese">描画X座標を加算します。
 使用は許可制です。</comment>
@@ -7356,33 +7361,33 @@
 		<language name="JPN" width="256">FLD-74</language>
 		<language name="JPN_KANJI" width="256">FLD-74</language>
 	</row>
-	<row id="msg_seq_se_dmy_050">
-		<language name="JPN" width="256">DMY-050</language>
-		<language name="JPN_KANJI" width="256">DMY-050</language>
+	<row id="msg_seq_se_fld_75">
+		<language name="JPN" width="256">FLD-75</language>
+		<language name="JPN_KANJI" width="256">FLD-75</language>
 	</row>
-	<row id="msg_seq_se_dmy_051">
-		<language name="JPN" width="256">DMY-051</language>
-		<language name="JPN_KANJI" width="256">DMY-051</language>
+	<row id="msg_seq_se_fld_76">
+		<language name="JPN" width="256">FLD-76</language>
+		<language name="JPN_KANJI" width="256">FLD-76</language>
 	</row>
-	<row id="msg_seq_se_dmy_052">
-		<language name="JPN" width="256">DMY-052</language>
-		<language name="JPN_KANJI" width="256">DMY-052</language>
+	<row id="msg_seq_se_fld_77">
+		<language name="JPN" width="256">FLD-77</language>
+		<language name="JPN_KANJI" width="256">FLD-77</language>
 	</row>
-	<row id="msg_seq_se_dmy_053">
-		<language name="JPN" width="256">DMY-053</language>
-		<language name="JPN_KANJI" width="256">DMY-053</language>
+	<row id="msg_seq_se_call1">
+		<language name="JPN" width="256">CALL1</language>
+		<language name="JPN_KANJI" width="256">CALL1</language>
 	</row>
-	<row id="msg_seq_se_dmy_054">
-		<language name="JPN" width="256">DMY-054</language>
-		<language name="JPN_KANJI" width="256">DMY-054</language>
+	<row id="msg_seq_se_sort">
+		<language name="JPN" width="256">SORT</language>
+		<language name="JPN_KANJI" width="256">SORT</language>
 	</row>
-	<row id="msg_seq_se_dmy_055">
-		<language name="JPN" width="256">DMY-055</language>
-		<language name="JPN_KANJI" width="256">DMY-055</language>
+	<row id="msg_seq_se_topbottom">
+		<language name="JPN" width="256">TOPBOTTOM</language>
+		<language name="JPN_KANJI" width="256">TOPBOTTOM</language>
 	</row>
-	<row id="msg_seq_se_dmy_056">
-		<language name="JPN" width="256">DMY-056</language>
-		<language name="JPN_KANJI" width="256">DMY-056</language>
+	<row id="msg_seq_se_rightleft">
+		<language name="JPN" width="256">RIGHTLEFT</language>
+		<language name="JPN_KANJI" width="256">RIGHTLEFT</language>
 	</row>
 	<row id="msg_seq_se_dmy_057">
 		<language name="JPN" width="256">DMY-057</language>
