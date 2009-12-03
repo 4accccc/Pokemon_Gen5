@@ -122,3 +122,96 @@ BOOL Intrude_GetTargetTimingNo(INTRUDE_COMM_SYS_PTR intcomm, u8 timing_no, u8 ta
   }
   return FALSE;
 }
+
+//==================================================================
+/**
+ * 指定したパレスエリアの占拠情報を取得する
+ *
+ * @param   intcomm		
+ * @param   palace_area		  
+ *
+ * @retval  OCCUPY_INFO *		
+ */
+//==================================================================
+OCCUPY_INFO * Intrude_GetOccupyInfo(INTRUDE_COMM_SYS_PTR intcomm, int palace_area)
+{
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+  OCCUPY_INFO *occupy;
+  
+  if(palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
+    occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
+  }
+  else{
+    occupy = GAMEDATA_GetOccupyInfo(gamedata, palace_area);
+  }
+  
+  return occupy;
+}
+
+//==================================================================
+/**
+ * 指定したNetIDのMYSTATUSを取得する
+ *
+ * @param   intcomm		
+ * @param   net_id	  
+ *
+ * @retval  MYSTATUS *		
+ */
+//==================================================================
+MYSTATUS * Intrude_GetMyStatus(INTRUDE_COMM_SYS_PTR intcomm, int net_id)
+{
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+  MYSTATUS *myst;
+  
+  if(net_id == GAMEDATA_GetIntrudeMyID(gamedata)){
+    myst = GAMEDATA_GetMyStatus(gamedata);
+  }
+  else{
+    myst = GAMEDATA_GetMyStatusPlayer(gamedata, net_id);
+  }
+  
+  return myst;
+}
+
+//==================================================================
+/**
+ * 指定パレスエリアのミッション選択候補リストのポインタを取得
+ *
+ * @param   intcomm		
+ * @param   palace_area		パレスエリア
+ *
+ * @retval  MISSION_CHOICE_LIST *		ミッション選択候補リストへのポインタ
+ */
+//==================================================================
+MISSION_CHOICE_LIST * Intrude_GetChoiceList(INTRUDE_COMM_SYS_PTR intcomm, int palace_area)
+{
+  return &intcomm->mission.list[palace_area];
+}
+
+//==================================================================
+/**
+ * 現在実行中のミッションデータへのポインタを取得
+ *
+ * @param   intcomm		
+ *
+ * @retval  MISSION_DATA *		現在実行中のミッションデータへのポインタ
+ */
+//==================================================================
+MISSION_DATA * Intrude_GetExecuteMissionData(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  return &intcomm->mission.data;
+}
+
+//==================================================================
+/**
+ * 自分が今いるパレスエリアNoを取得する
+ *
+ * @param   intcomm		
+ *
+ * @retval  u8		パレスエリアNo
+ */
+//==================================================================
+u8 Intrude_GetPalaceArea(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  return intcomm->intrude_status_mine.palace_area;
+}

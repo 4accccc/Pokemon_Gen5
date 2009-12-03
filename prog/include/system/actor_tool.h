@@ -10,6 +10,7 @@
 #define __ACTOR_TOOL_H__
 
 //#include <obj_graphic_man.h>
+#include "system/palanm.h"
 
 //==============================================================================
 //	Œ^’è‹`
@@ -28,6 +29,10 @@ extern u32 PLTTSLOT_ResourceSet(PLTTSLOT_SYS_PTR pssp, ARCHANDLE *handle, u32 da
 	CLSYS_DRAW_TYPE draw_type, int pltt_num, int heap_id);
 extern u32 PLTTSLOT_ResourceCompSet(PLTTSLOT_SYS_PTR pssp, ARCHANDLE *handle, u32 data_id, 
   CLSYS_DRAW_TYPE draw_type, int pltt_num, int heap_id);
+extern u32 PLTTSLOT_ResourceSet_PalAnm(PALETTE_FADE_PTR pfd, PLTTSLOT_SYS_PTR pssp, 
+  ARCHANDLE *handle, u32 data_id, CLSYS_DRAW_TYPE draw_type, int pltt_num, int heap_id);
+extern u32 PLTTSLOT_ResourceCompSet_PalAnm(PALETTE_FADE_PTR pfd, PLTTSLOT_SYS_PTR pssp, 
+  ARCHANDLE *handle, u32 data_id, CLSYS_DRAW_TYPE draw_type, int pltt_num, int heap_id);
 extern u32 PLTTSLOT_GetPalNo(PLTTSLOT_SYS_PTR pssp, u32 index, CLSYS_DRAW_TYPE draw_type);
 extern void PLTTSLOT_ResourceFree(PLTTSLOT_SYS_PTR pssp, u32 index, CLSYS_DRAW_TYPE draw_type);
 #endif

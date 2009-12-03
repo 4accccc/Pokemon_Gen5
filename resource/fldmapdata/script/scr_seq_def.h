@@ -5330,6 +5330,17 @@
 
 //--------------------------------------------------------------
 /**
+ * 侵入コマンド　ミッション選択候補リスト要求リクエスト
+ */
+//--------------------------------------------------------------
+#define _INTRUDE_MISSION_CHOICE_LIST_REQ() _ASM_INTRUDE_MISSION_CHOICE_LIST_REQ
+
+  .macro  _ASM_INTRUDE_MISSION_CHOICE_LIST_REQ
+  .short  EV_SEQ_INTRUDE_MISSION_CHOICE_LIST_REQ
+  .endm
+
+//--------------------------------------------------------------
+/**
  * フィールドカットイン
  * @param no      カットインナンバー    fldci_id_def.h参照
  */

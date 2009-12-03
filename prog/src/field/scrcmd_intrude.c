@@ -33,6 +33,7 @@
 #include "field/field_comm/intrude_mission.h"
 #include "field/field_comm/intrude_message.h"
 #include "field/field_comm/intrude_field.h"
+
 #include "message.naix"
 #include "msg/msg_invasion.h"
 

@@ -49,6 +49,9 @@ ntrcomp -lex -A4 -o mono_bgu_power_lz.NSCR mono_bgu_power.NSCR
 ntrcomp -lex -A4 -o mono_bgd_lz.NCGR mono_bgd.NCGR
 ntrcomp -lex -A4 -o mono_bgu_lz.NCGR mono_bgu.NCGR
 
+g2dcvtr mono_bgd.ncl
+g2dcvtr mono_bgu.ncl
+g2dcvtr mono_obj.ncl
 
 echo narcçÏê¨
 nnsarc -c -l -n -i monolith -S monolith_arc.txt

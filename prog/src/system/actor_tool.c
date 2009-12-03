@@ -234,6 +234,61 @@ u32 PLTTSLOT_ResourceCompSet(PLTTSLOT_SYS_PTR pssp, ARCHANDLE *handle, u32 data_
 
 //--------------------------------------------------------------
 /**
+ * @brief   パレットリソースの転送(と領域確保) & パレットフェードバッファへも転送
+ *
+ * @param   pssp			パレットスロットへのポインタ
+ * @param   handle			アーカイブハンドル
+ * @param   data_id			実データへのデータIndex
+ * @param   pltt_num		転送するパレット本数
+ * @param   draw_type		CLSYS_DRAW_MAIN or CLSYS_DRAW_SUB
+ * @param   heap_id			テンポラリで使用するヒープID
+ *
+ * @retval  登録INDEX(パレット番号ではありません。削除時に必要になります)
+ */
+//--------------------------------------------------------------
+u32 PLTTSLOT_ResourceSet_PalAnm(PALETTE_FADE_PTR pfd, PLTTSLOT_SYS_PTR pssp, ARCHANDLE *handle, u32 data_id, CLSYS_DRAW_TYPE draw_type, int pltt_num, int heap_id)
+{
+  u32 index, pal_no;
+  FADEREQ fade_req;
+  
+  fade_req = (draw_type == CLSYS_DRAW_MAIN) ? FADE_MAIN_OBJ : FADE_SUB_OBJ;
+  
+  index = PLTTSLOT_ResourceSet(pssp, handle, data_id, draw_type, pltt_num, heap_id);
+  pal_no = PLTTSLOT_GetPalNo(pssp, index, draw_type);
+  PaletteWorkSet_VramCopy(pfd, fade_req, pal_no * 16, pltt_num * 0x20);
+  return index;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   圧縮パレットリソースの転送(と領域確保) ※-pcmオプションがついているパレットが対象
+ *           & パレットフェードバッファへも転送
+ *
+ * @param   pssp			パレットスロットへのポインタ
+ * @param   handle			アーカイブハンドル
+ * @param   data_id			実データへのデータIndex
+ * @param   pltt_num		転送するパレット本数
+ * @param   draw_type		CLSYS_DRAW_MAIN or CLSYS_DRAW_SUB
+ * @param   heap_id			テンポラリで使用するヒープID
+ *
+ * @retval  登録INDEX(パレット番号ではありません。削除時に必要になります)
+ */
+//--------------------------------------------------------------
+u32 PLTTSLOT_ResourceCompSet_PalAnm(PALETTE_FADE_PTR pfd, PLTTSLOT_SYS_PTR pssp, ARCHANDLE *handle, u32 data_id, CLSYS_DRAW_TYPE draw_type, int pltt_num, int heap_id)
+{
+  u32 index, pal_no;
+  FADEREQ fade_req;
+  
+  fade_req = (draw_type == CLSYS_DRAW_MAIN) ? FADE_MAIN_OBJ : FADE_SUB_OBJ;
+  
+  index = PLTTSLOT_ResourceCompSet(pssp, handle, data_id, draw_type, pltt_num, heap_id);
+  pal_no = PLTTSLOT_GetPalNo(pssp, index, draw_type);
+  PaletteWorkSet_VramCopy(pfd, fade_req, pal_no * 16, pltt_num * 0x20);
+  return index;
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   エントリー番号からパレット番号を取得
  * @param   pssp		パレットスロットへのポインタ
  * @param   index		登録INDEX (PLTTSLOT_ResourceSet関数の戻り値)

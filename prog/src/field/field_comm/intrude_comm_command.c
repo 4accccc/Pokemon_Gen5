@@ -35,6 +35,8 @@ static void _IntrudeRecv_BingoIntrusion(const int netID, const int size, const v
 static void _IntrudeRecv_BingoIntrusionAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_ReqBingoIntrusionParam(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_BingoIntrusionParam(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_MissionListReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_MissionList(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MissionReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MissionData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MissionAchieve(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -62,6 +64,8 @@ const NetRecvFuncTable Intrude_CommPacketTbl[] = {
   {_IntrudeRecv_BingoIntrusionAnswer, NULL},   //INTRUDE_CMD_BINGO_INTRUSION_ANSWER
   {_IntrudeRecv_ReqBingoIntrusionParam, NULL}, //INTRUDE_CMD_REQ_BINGO_INTRUSION_PARAM
   {_IntrudeRecv_BingoIntrusionParam, NULL},    //INTRUDE_CMD_BINGO_INTRUSION_PARAM
+  {_IntrudeRecv_MissionListReq, NULL},         //INTRUDE_CMD_MISSION_LIST_REQ
+  {_IntrudeRecv_MissionList, NULL},            //INTRUDE_CMD_MISSION_LIST
   {_IntrudeRecv_MissionReq, NULL},             //INTRUDE_CMD_MISSION_REQ
   {_IntrudeRecv_MissionData, NULL},            //INTRUDE_CMD_MISSION_DATA
   {_IntrudeRecv_MissionAchieve, NULL},         //INTRUDE_CMD_MISSION_ACHIEVE
@@ -694,6 +698,108 @@ BOOL IntrudeSend_BingoBattleIntrusionParam(BINGO_SYSTEM *bingo, int send_net_id)
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
     INTRUDE_CMD_BINGO_INTRUSION_PARAM, sizeof(BINGO_INTRUSION_PARAM), &bingo->intrusion_param, 
     FALSE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：ミッション選択候補リスト要求
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_MissionListReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  const u32 *palace_area = pData;
+  
+  if(GFL_NET_IsParentMachine() == FALSE){
+    return;
+  }
+  
+  OS_TPrintf("RECIEVE：ミッションリスト要求 net_id=%d\n", netID);
+  MISSION_MissionList_Create(intcomm, &intcomm->mission, netID, *palace_area);
+  MISSION_Set_ListSendReq(&intcomm->mission, *palace_area);
+}
+
+//==================================================================
+/**
+ * データ送信：ミッション選択候補リスト要求
+ *
+ * @param   intcomm         
+ * @param   monolith_type		MONOLITH_TYPE_???
+ * @param   zone_id		      ミニモノリスがあるゾーンID
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_MissionListReq(INTRUDE_COMM_SYS_PTR intcomm, u32 palace_area)
+{
+  MISSION_REQ req;
+  
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
+
+  OS_TPrintf("SEND:ミッションリスト要求\n");
+  return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
+    INTRUDE_CMD_MISSION_LIST_REQ, sizeof(palace_area), &palace_area);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：ミッション選択候補リスト
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_MissionList(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  const MISSION_CHOICE_LIST *mlist = pData;
+  
+  MISSION_SetMissionList(&intcomm->mission, mlist);
+  OS_TPrintf("RECEIVE: ミッションリスト palace_area = %d\n", mlist->palace_area);
+}
+
+//==================================================================
+/**
+ * データ送信：ミッション選択候補リスト
+ *
+ * @param   intcomm         
+ * @param   mission         ミッションデータ
+ * @param   palace_area     どのパレスエリアの候補リストなのか
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_MissionList(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission, int palace_area)
+{
+  BOOL ret;
+
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
+  
+  ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
+    INTRUDE_CMD_MISSION_LIST, sizeof(MISSION_CHOICE_LIST), &mission->list[palace_area]);
+  if(ret == TRUE){
+    OS_TPrintf("SEND：ミッションリスト palace_area=%d\n", palace_area);
+  }
+  return ret;
 }
 
 //==============================================================================

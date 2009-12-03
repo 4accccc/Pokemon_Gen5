@@ -9,6 +9,7 @@
 #pragma once
 
 #include "field/field_subscreen.h"
+#include "intrude_types.h"
 
 
 //==============================================================================

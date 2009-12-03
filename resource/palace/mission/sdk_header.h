@@ -8,4 +8,8 @@ typedef signed long s32;
 #define TRUE  1
 #define NULL  0
 
+typedef u16 STRCODE;
+#define	PERSON_NAME_SIZE	7	// 人物の名前の長さ（自分も含む）
+#define	EOM_SIZE			1	// 終了コードの長さ
 
+#define FIELD_COMM_MEMBER_MAX   (4)

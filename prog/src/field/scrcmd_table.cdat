@@ -611,7 +611,7 @@
   DEF_CMD( EvCmdIntrudeConnectMapSetting, EV_SEQ_INTRUDE_CONNECT_MAP_SETTING )
   DEF_CMD( EvCmdCallMonolithProc, EV_SEQ_CALL_MONOLITH_PROC )
   
-  NO_CMD()
+  DEF_CMD( EvCmdIntrudeMissionChoiceListReq, EV_SEQ_INTRUDE_MISSION_CHOICE_LIST_REQ )
   NO_CMD()
   NO_CMD()
   NO_CMD()

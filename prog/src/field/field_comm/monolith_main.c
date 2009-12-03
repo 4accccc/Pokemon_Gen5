@@ -22,15 +22,6 @@
 //==============================================================================
 //  定数定義
 //==============================================================================
-///モノリスメインメニューIndex
-typedef enum{
-  MONOLITH_MENU_TITLE,      ///<タイトル画面
-  MONOLITH_MENU_MISSION,    ///<ミッションを受ける
-  MONOLITH_MENU_STATUS,     ///<状態を見る
-  MONOLITH_MENU_RECORD,     ///<履歴を見る
-  MONOLITH_MENU_POWER,      ///<パワーを使う
-}MONOLITH_MENU;
-
 ///モノリス共通素材アクターパレット本数
 #define MONOLITH_COMMON_PLTT_NUM    (3)
 
@@ -44,8 +35,12 @@ typedef struct{
   MONOLITH_COMMON_WORK common;      ///<モノリス全画面共用ワーク
   MONOLITH_APP_PARENT app_parent;   ///<APP Proc用のParentWork
 	GFL_TCB *vintr_tcb;               ///<VBlankTCBへのポインタ
+  GFL_PROCSYS *procsys_up;          ///<上画面PROCシステム
+  GFL_PROCSYS *procsys_down;        ///<下画面PROCシステム
   u8 menu_index;                    ///<MONOLITH_MENU_???
-  u8 padding[3];
+  u8 proc_up_occ;                   ///<TRUE:上画面PROC有効
+  u8 proc_down_occ;                 ///<TRUE:下画面PROC有効
+  u8 padding;
 }MONOLITH_SYSTEM;
 
 
@@ -61,12 +56,12 @@ static void _Setup_PaletteSetting(MONOLITH_SETUP *setup);
 static void _Setup_PaletteExit(MONOLITH_SETUP *setup);
 static void _Setup_BGFrameSetting(void);
 static void _Setup_BGFrameExit(void);
-static void _Setup_BGGraphicLoad(MONOLITH_SETUP *setup, ARCHANDLE *hdl);
+static void _Setup_BGGraphicLoad(MONOLITH_SETUP *setup);
 static void _Setup_MessageSetting(MONOLITH_SETUP *setup);
 static void _Setup_MessageExit(MONOLITH_SETUP *setup);
 static void _Setup_ActorSetting(MONOLITH_SETUP *setup);
 static void _Setup_ActorExit(MONOLITH_SETUP *setup);
-static void _Setup_OBJGraphicLoad(MONOLITH_SETUP *setup, ARCHANDLE *hdl);
+static void _Setup_OBJGraphicLoad(MONOLITH_SETUP *setup);
 static void _Setup_OBJGraphicUnload(MONOLITH_SETUP *setup);
 static void _VblankFunc(GFL_TCB *tcb, void *work);
 
@@ -80,11 +75,11 @@ static const struct{
   const GFL_PROC_DATA *proc_down;  ///<下画面PROC
 }MonolithProcTbl[] = {
   {//MONOLITH_MENU_TITLE
-    &MonolithAppProc_Down_MissionSelect, //MonolithAppProc_Up_PalaceMap,
-    &MonolithAppProc_Down_MissionSelect, //MonolithAppProc_Down_Title,
+    &MonolithAppProc_Up_PalaceMap,
+    &MonolithAppProc_Down_Title,
   },
   {//MONOLITH_MENU_MISSION
-    &MonolithAppProc_Down_MissionSelect, //MonolithAppProc_Up_MissionExplain,
+    &MonolithAppProc_Up_MissionExplain,
     &MonolithAppProc_Down_MissionSelect,
   },
   {//MONOLITH_MENU_STATUS
@@ -152,7 +147,6 @@ static GFL_PROC_RESULT MonolithProc_Init(GFL_PROC * proc, int * seq, void * pwk,
 {
   MONOLITH_SYSTEM *monosys;
   MONOLITH_PARENT_WORK *parent = pwk;
-	ARCHANDLE *hdl;
   
 	//画面を真っ暗に
 	GX_SetMasterBrightness(-16);
@@ -173,27 +167,31 @@ static GFL_PROC_RESULT MonolithProc_Init(GFL_PROC * proc, int * seq, void * pwk,
 
 	//ヒープ作成
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MONOLITH, 0x70000 );
-
+  
   monosys = GFL_PROC_AllocWork(proc, sizeof(MONOLITH_SYSTEM), HEAPID_MONOLITH);
   GFL_STD_MemClear(monosys, sizeof(MONOLITH_SYSTEM));
   
-	//ファイルオープン
-	hdl = GFL_ARC_OpenDataHandle(ARCID_MONOLITH, HEAPID_MONOLITH);
+	monosys->setup.hdl = GFL_ARC_OpenDataHandle(ARCID_MONOLITH, HEAPID_MONOLITH);
   {
     _Setup_VramSetting();
     _Setup_PaletteSetting(&monosys->setup);
     _Setup_BGFrameSetting();
-    _Setup_BGGraphicLoad(&monosys->setup, hdl);
+    _Setup_BGGraphicLoad(&monosys->setup);
     _Setup_MessageSetting(&monosys->setup);
     _Setup_ActorSetting(&monosys->setup);
-    _Setup_OBJGraphicLoad(&monosys->setup, hdl);
+    _Setup_OBJGraphicLoad(&monosys->setup);
   }
-	//ファイルクローズ
-	GFL_ARC_CloseDataHandle(hdl);
 
+  //ローカルPROC作成
+  monosys->procsys_up = GFL_PROC_LOCAL_boot(HEAPID_MONOLITH);
+  monosys->procsys_down = GFL_PROC_LOCAL_boot(HEAPID_MONOLITH);
+  
 	//VブランクTCB登録
 	monosys->vintr_tcb = GFUser_VIntr_CreateTCB(_VblankFunc, monosys, 5);
 
+  monosys->app_parent.parent = parent;
+  monosys->app_parent.setup = &monosys->setup;
+  monosys->app_parent.common = &monosys->common;
   return GFL_PROC_RES_FINISH;
 }
 
@@ -210,12 +208,61 @@ static GFL_PROC_RESULT MonolithProc_Init(GFL_PROC * proc, int * seq, void * pwk,
 static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
   MONOLITH_SYSTEM *monosys = mywk;
-
+  enum{
+    SEQ_PROC_SET,
+    SEQ_PROC_MAIN,
+    SEQ_FINISH,
+  };
+  
   switch(*seq){
-  case 0:
+  case SEQ_PROC_SET:
+    if(monosys->proc_up_occ == FALSE){
+      GFL_PROC_LOCAL_CallProc(monosys->procsys_up, NO_OVERLAY_ID, 
+        MonolithProcTbl[monosys->menu_index].proc_up, &monosys->app_parent);
+      monosys->proc_up_occ = TRUE;
+    }
+    if(monosys->proc_down_occ == FALSE){
+      GFL_PROC_LOCAL_CallProc(monosys->procsys_down, NO_OVERLAY_ID, 
+        MonolithProcTbl[monosys->menu_index].proc_down, &monosys->app_parent);
+      monosys->proc_down_occ = TRUE;
+    }
+    
+    (*seq)++;
+    break;
+  case SEQ_PROC_MAIN:
+    {
+      GFL_PROC_MAIN_STATUS up_status, down_status;
+      
+      down_status = GFL_PROC_LOCAL_Main(monosys->procsys_down);//下画面が主導権を握るので下から処理
+      up_status = GFL_PROC_LOCAL_Main(monosys->procsys_up);
+      if(up_status != GFL_PROC_MAIN_VALID || down_status != GFL_PROC_MAIN_VALID){
+        if(monosys->app_parent.next_menu_index == MONOLITH_MENU_END){
+          OS_TPrintf("モノリス画面終了待ち up=%d, down=%d\n", up_status, down_status);
+          if(up_status == GFL_PROC_MAIN_NULL && down_status == GFL_PROC_MAIN_NULL){
+            (*seq)++;
+          }
+        }
+        else{
+          monosys->menu_index = monosys->app_parent.next_menu_index;
+          if(up_status != GFL_PROC_MAIN_VALID){
+            monosys->proc_up_occ = FALSE;
+          }
+          if(down_status != GFL_PROC_MAIN_VALID){
+            monosys->proc_down_occ = FALSE;
+          }
+          (*seq) = SEQ_PROC_SET;
+        }
+      }
+    }
+    break;
+  case SEQ_FINISH:
     return GFL_PROC_RES_FINISH;
   }
   
+	GFL_TCBL_Main( monosys->setup.tcbl_sys );
+	PRINTSYS_QUE_Main( monosys->setup.printQue );
+	GFL_CLACT_SYS_Main();
+
   return GFL_PROC_RES_CONTINUE;
 }
 
@@ -233,6 +280,9 @@ static GFL_PROC_RESULT MonolithProc_End( GFL_PROC * proc, int * seq, void * pwk,
 {
   MONOLITH_SYSTEM *monosys = mywk;
   
+  GFL_PROC_LOCAL_Exit(monosys->procsys_up);
+  GFL_PROC_LOCAL_Exit(monosys->procsys_down);
+  
 	GFL_TCB_DeleteTask(monosys->vintr_tcb);
 
   _Setup_OBJGraphicUnload(&monosys->setup);
@@ -241,6 +291,8 @@ static GFL_PROC_RESULT MonolithProc_End( GFL_PROC * proc, int * seq, void * pwk,
   _Setup_BGFrameExit();
   _Setup_PaletteExit(&monosys->setup);
   _Setup_VramExit();
+
+	GFL_ARC_CloseDataHandle(monosys->setup.hdl);
 
   GFL_PROC_FreeWork(proc);
 	GFL_HEAP_DeleteHeap(HEAPID_MONOLITH);
@@ -295,6 +347,7 @@ static void _Setup_PaletteSetting(MONOLITH_SETUP *setup)
   PaletteFadeWorkAllocSet(setup->pfd, FADE_SUB_OBJ, 16*32, HEAPID_MONOLITH);
   PaletteFadeWorkAllocSet(setup->pfd, FADE_MAIN_BG, 16*32, HEAPID_MONOLITH);
   PaletteFadeWorkAllocSet(setup->pfd, FADE_SUB_BG, 16*32, HEAPID_MONOLITH);
+  PaletteTrans_AutoSet(setup->pfd, TRUE);
 }
 
 //--------------------------------------------------------------
@@ -371,28 +424,26 @@ static void _Setup_BGFrameExit(void)
 //--------------------------------------------------------------
 /**
  * @brief   共通素材BGグラフィックをVRAMへ転送
- *
- * @param   hdl		アーカイブハンドル
  */
 //--------------------------------------------------------------
-static void _Setup_BGGraphicLoad(MONOLITH_SETUP *setup, ARCHANDLE *hdl)
+static void _Setup_BGGraphicLoad(MONOLITH_SETUP *setup)
 {
 	//共通パレット
-  PaletteWorkSetEx_ArcHandle(setup->pfd, hdl, NARC_monolith_mono_bgu_NCLR, HEAPID_MONOLITH,
-      FADE_MAIN_BG, 0, 0, 0);
-  PaletteWorkSetEx_ArcHandle(setup->pfd, hdl, NARC_monolith_mono_bgd_NCLR, HEAPID_MONOLITH,
-      FADE_SUB_BG, 0, 0, 0);
+  PaletteWorkSetEx_ArcHandle(setup->pfd, setup->hdl, 
+    NARC_monolith_mono_bgu_NCLR, HEAPID_MONOLITH, FADE_MAIN_BG, 0, 0, 0);
+  PaletteWorkSetEx_ArcHandle(setup->pfd, setup->hdl, 
+    NARC_monolith_mono_bgd_NCLR, HEAPID_MONOLITH, FADE_SUB_BG, 0, 0, 0);
 
 	//メイン画面：共通素材
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(hdl, NARC_monolith_mono_bgu_lz_NCGR, 
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(setup->hdl, NARC_monolith_mono_bgu_lz_NCGR, 
 		GFL_BG_FRAME3_M, 0, 0, TRUE, HEAPID_MONOLITH);
-	GFL_ARCHDL_UTIL_TransVramScreen(hdl, NARC_monolith_mono_bgu_base_lz_NSCR, 
+	GFL_ARCHDL_UTIL_TransVramScreen(setup->hdl, NARC_monolith_mono_bgu_base_lz_NSCR, 
 		GFL_BG_FRAME3_M, 0, 0, TRUE, HEAPID_MONOLITH);
 
 	//サブ画面：共通素材
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(hdl, NARC_monolith_mono_bgd_lz_NCGR, 
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(setup->hdl, NARC_monolith_mono_bgd_lz_NCGR, 
 		GFL_BG_FRAME3_S, 0, 0, TRUE, HEAPID_MONOLITH);
-	GFL_ARCHDL_UTIL_TransVramScreen(hdl, NARC_monolith_mono_bgd_base_lz_NSCR, 
+	GFL_ARCHDL_UTIL_TransVramScreen(setup->hdl, NARC_monolith_mono_bgd_base_lz_NSCR, 
 		GFL_BG_FRAME3_S, 0, 0, TRUE, HEAPID_MONOLITH);
 
 	//フォントパレット転送
@@ -414,7 +465,8 @@ static void _Setup_BGGraphicLoad(MONOLITH_SETUP *setup, ARCHANDLE *hdl)
 //--------------------------------------------------------------
 static void _Setup_MessageSetting(MONOLITH_SETUP *setup)
 {
-	GFL_FONTSYS_Init();
+//	GFL_FONTSYS_Init();
+  GFL_FONTSYS_SetColor( 2, 1, 0 );
 
 	setup->tcbl_sys = GFL_TCBL_Init(HEAPID_MONOLITH, HEAPID_MONOLITH, 4, 32);
 	setup->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
@@ -466,6 +518,7 @@ static void _Setup_ActorSetting(MONOLITH_SETUP *setup)
 	clsys_init.oamnum_main = 128-GFL_CLSYS_OAMMAN_INTERVAL;
 	clsys_init.oamst_sub = GFL_CLSYS_OAMMAN_INTERVAL;	//通信アイコンの分
 	clsys_init.oamnum_sub = 128-GFL_CLSYS_OAMMAN_INTERVAL;
+	clsys_init.CGR_RegisterMax = 64;  //BMPOAMで大量にリソース登録する為
 	GFL_CLACT_SYS_Create(&clsys_init, &MonolithVramBank, HEAPID_MONOLITH);
 	
 	setup->clunit = GFL_CLACT_UNIT_Create(64, 0, HEAPID_MONOLITH);
@@ -504,11 +557,9 @@ static void _Setup_ActorExit(MONOLITH_SETUP *setup)
 //--------------------------------------------------------------
 /**
  * @brief   共通素材OBJグラフィックをVRAMへ転送
- *
- * @param   hdl		アーカイブハンドル
  */
 //--------------------------------------------------------------
-static void _Setup_OBJGraphicLoad(MONOLITH_SETUP *setup, ARCHANDLE *hdl)
+static void _Setup_OBJGraphicLoad(MONOLITH_SETUP *setup)
 {
   int i;
   ARCHANDLE *font_hdl;
@@ -520,20 +571,21 @@ static void _Setup_OBJGraphicLoad(MONOLITH_SETUP *setup, ARCHANDLE *hdl)
     draw_type = (i == COMMON_RESOURCE_INDEX_UP) ? CLSYS_DRAW_MAIN : CLSYS_DRAW_SUB;
     
   	//共通パレット
-    setup->common_res[i].pltt_index = PLTTSLOT_ResourceSet(setup->plttslot, hdl, 
-      NARC_monolith_mono_obj_NCLR, draw_type, MONOLITH_COMMON_PLTT_NUM, HEAPID_MONOLITH);
+    setup->common_res[i].pltt_index = PLTTSLOT_ResourceSet_PalAnm(setup->pfd, setup->plttslot, 
+      setup->hdl, NARC_monolith_mono_obj_NCLR, draw_type, 
+      MONOLITH_COMMON_PLTT_NUM, HEAPID_MONOLITH);
 
   	//共通素材CGX
     setup->common_res[i].char_index = GFL_CLGRP_CGR_Register(
-      hdl, NARC_monolith_mono_obj_lz_NCGR, TRUE, draw_type, HEAPID_MONOLITH );
+      setup->hdl, NARC_monolith_mono_obj_lz_NCGR, TRUE, draw_type, HEAPID_MONOLITH );
 
     //共通素材CELL
     setup->common_res[i].cell_index = GFL_CLGRP_CELLANIM_Register(
-      hdl, NARC_monolith_mono_obj_NCER, NARC_monolith_mono_obj_NANR, HEAPID_MONOLITH);
+      setup->hdl, NARC_monolith_mono_obj_NCER, NARC_monolith_mono_obj_NANR, HEAPID_MONOLITH);
 
   	//フォントパレット転送(BMP FONT用)
-    setup->common_res[i].pltt_bmpfont_index = PLTTSLOT_ResourceSet(setup->plttslot, font_hdl, 
-      NARC_font_default_nclr, draw_type, 1, HEAPID_MONOLITH);
+    setup->common_res[i].pltt_bmpfont_index = PLTTSLOT_ResourceCompSet_PalAnm(setup->pfd, 
+      setup->plttslot, font_hdl, NARC_font_default_nclr, draw_type, 1, HEAPID_MONOLITH);
   }
 
   GFL_ARC_CloseDataHandle(font_hdl);
@@ -542,8 +594,6 @@ static void _Setup_OBJGraphicLoad(MONOLITH_SETUP *setup, ARCHANDLE *hdl)
 //--------------------------------------------------------------
 /**
  * @brief   共通素材OBJグラフィック解放処理
- *
- * @param   hdl		アーカイブハンドル
  */
 //--------------------------------------------------------------
 static void _Setup_OBJGraphicUnload(MONOLITH_SETUP *setup)

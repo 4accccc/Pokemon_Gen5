@@ -18,6 +18,12 @@ extern VMCMD_RESULT EvCmdIntrudeMinimonoSetting( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdIntrudeMissionStart( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdIntrudeConnectMapSetting( VMHANDLE *core, void *wk );
 
+//--------------------------------------------------------------
+//  fieldmapオーバーレイに配置
+//--------------------------------------------------------------
+extern VMCMD_RESULT EvCmdIntrudeMissionChoiceListReq( VMHANDLE *core, void *wk );
+
+
 #endif	/* __ASM_NO_DEF_ */
 
 #endif	/* __SCRCMD_INTRUDE_H__*/

@@ -522,7 +522,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/event_debug_season_display.c \
         field/field_gimmick_league_front01.c \
         field/field_gimmick_league_front02.c \
-        field/land_data_patch.c
+        field/land_data_patch.c \
+        field/scrcmd_intrude_field.c
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP
@@ -597,7 +598,10 @@ SRCS_OVERLAY_BAG = app/bag/itemmenu.c \
 #===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_MONOLITH = field/field_comm/monolith_main.c \
 									 field/field_comm/monolith_tool.c \
-									 field/field_comm/monolith_mission_select.c
+									 field/field_comm/monolith_mission_select.c \
+									 field/field_comm/monolith_palacemap.c \
+									 field/field_comm/monolith_title.c \
+									 field/field_comm/monolith_mission_explain.c
 
 
 # タウンマップ画面

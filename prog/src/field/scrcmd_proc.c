@@ -40,6 +40,9 @@
 #include "../../../resource/fldmapdata/script/usescript.h"
 
 #include "app/bag.h"
+
+#include "field_comm\intrude_main.h"
+#include "field/field_comm/intrude_work.h"
 #include "field/monolith_main.h"
 
 ////////////////////////////////////////////////////////////////
@@ -274,11 +277,34 @@ VMCMD_RESULT EvCmdCallMonolithProc( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAME_COMM_SYS_PTR game_comm= GAMESYSTEM_GetGameCommSysPtr(gsys);
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   MONOLITH_PARENT_WORK *parent;
-
+  INTRUDE_COMM_SYS_PTR intcomm;
+  const MISSION_CHOICE_LIST *list;
+  const MISSION_DATA *mdata;
+  int palace_area;
+  
+  intcomm = Intrude_Check_CommConnect(game_comm);
+  GF_ASSERT(intcomm != NULL);
+  
   parent = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(MONOLITH_PARENT_WORK));
+
+  if(intcomm != NULL){
+    palace_area = Intrude_GetPalaceArea(intcomm);
+    list = Intrude_GetChoiceList(intcomm, palace_area);
+    mdata = Intrude_GetExecuteMissionData(intcomm);
+    parent->list = *list;
+    parent->mdata = *mdata;
+  }
+  else{
+    OS_TPrintf("MonolithProc Call intcomm NULL!!\n");
+    palace_area = 0;
+  }
+
   parent->gsys = gsys;
+  parent->intcomm = intcomm;
+  parent->palace_area = palace_area;
   
   EVFUNC_CallSubProc(core, work, FS_OVERLAY_ID(monolith), &MonolithProcData, parent, NULL, NULL);
   

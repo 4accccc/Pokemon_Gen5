@@ -59,6 +59,9 @@ ev_palace01:
 /*  モノリス                                              */
 /**************************************************************/
 EVENT_START ev_palace01_monolith
+  //ミッション選択候補リストを要求(fieldmapオーバーレイに配置の為、フェードアウト中は回避)
+  _INTRUDE_MISSION_CHOICE_LIST_REQ()
+  
   _BLACK_OUT()
   _DISP_FADE_END_CHECK()
   _FIELD_CLOSE()

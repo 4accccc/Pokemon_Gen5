@@ -8,6 +8,8 @@
 //==============================================================================
 #pragma once
 
+#include "field/monolith_main.h"
+
 #include "print\printsys.h"
 #include "print\gf_font.h"
 #include "print\wordset.h"
@@ -19,6 +21,17 @@
 //==============================================================================
 //  定数定義
 //==============================================================================
+///モノリスメインメニューIndex
+typedef enum{
+  MONOLITH_MENU_TITLE,      ///<タイトル画面
+  MONOLITH_MENU_MISSION,    ///<ミッションを受ける
+  MONOLITH_MENU_STATUS,     ///<状態を見る
+  MONOLITH_MENU_RECORD,     ///<履歴を見る
+  MONOLITH_MENU_POWER,      ///<パワーを使う
+  
+  MONOLITH_MENU_END,        ///<モノリス画面終了
+}MONOLITH_MENU;
+
 ///共通素材展開アドレス
 enum{
   MONO_BG_COMMON_CHARBASE = GX_BG_CHARBASE_0x04000,   ///<共通素材BGキャラクタベース
@@ -41,12 +54,42 @@ typedef enum{
   COMMON_RESOURCE_INDEX_MAX,
 }COMMON_RESOURCE_INDEX;
 
+///共通素材セルのアニメシーケンス番号
+typedef enum{
+  COMMON_ANMSEQ_PANEL_LARGE,
+  COMMON_ANMSEQ_PANEL_SMALL,
+  COMMON_ANMSEQ_UP,
+  COMMON_ANMSEQ_DOWN,
+  COMMON_ANMSEQ_BLACK_TOWN,
+  COMMON_ANMSEQ_WHITE_TOWN,
+  COMMON_ANMSEQ_RETURN,
+}COMMON_ANMSEQ;
+
+///共通素材パレットの割り当て
+typedef enum{
+  COMMON_PAL_PANEL = 0,       ///<パレット(未選択)
+  COMMON_PAL_PANEL_FOCUS,     ///<パレット(選択されている)
+  
+  COMMON_PAL_TOWN = 0,        ///<街アイコン
+  
+  COMMON_PAL_CURSOR = 0,      ///<上下カーソル(未選択)
+  COMMON_PAL_CURSOR_FOCUS = 2,///<上下カーソル(選択されている)
+  
+  COMMON_PAL_RETURN = 0,      ///<戻るアイコン
+}COMMON_PAL;
+
+///パネルカラーモード
+typedef enum{
+  PANEL_COLORMODE_NONE,       ///<カラーアニメ無し
+  PANEL_COLORMODE_FOCUS,      ///<フォーカス中のカラーアニメ
+  PANEL_COLORMODE_FLASH,      ///<決定中のフラッシュアニメ
+}PANEL_COLORMODE;
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
 ///モノリス全画面共通設定データ
 typedef struct{
-  GAMESYS_WORK *gsys;
   PALETTE_FADE_PTR pfd;
   PLTTSLOT_SYS_PTR plttslot;
   PRINT_QUE *printQue;
@@ -59,6 +102,7 @@ typedef struct{
 	GFL_MSGDATA *mm_power_explain;  ///<power_explain.gmm
 	GFL_MSGDATA *mm_monolith;       ///<monolith.gmm
 	BMPOAM_SYS_PTR bmpoam_sys;
+	ARCHANDLE *hdl;
 	
 	struct{
     u32 pltt_index;          ///<アクター共通素材パレットIndex
@@ -75,10 +119,29 @@ typedef struct{
   u8 padding[2];
 }MONOLITH_COMMON_WORK;
 
+///パネルカラーアニメ制御構造体
+typedef struct{
+  u16 evy;            ///<EVY値(下位8ビット小数)
+  u8 mode;            ///<PANEL_COLORMODE_???
+  //フェードで使用
+  u8 add_dir;         ///<EVY加算方向
+  //フラッシュで使用
+  u8 wait;            ///<ウェイト
+  u8 count;           ///<フラッシュ回数をカウント
+  u8 padding[2];
+}PANEL_COLOR_CONTROL;
+
+///共有ツールで使用するワーク
+typedef struct{
+  PANEL_COLOR_CONTROL panel_color;
+}MONOLITH_TOOL_WORK;
+
 ///モノリスAPP PROC用ParentWork
 typedef struct{
+  MONOLITH_PARENT_WORK *parent;     ///<親PROCのParentWork
   MONOLITH_SETUP *setup;            ///<モノリス全画面共通設定データへのポインタ
   MONOLITH_COMMON_WORK *common;     ///<モノリス全画面共用ワークへのポインタ
+  MONOLITH_TOOL_WORK tool;          ///<共有ツールで使用するワーク
   u8 next_menu_index;     ///<APP Proc終了時に次の画面のメニューIndexをセットする
   u8 padding[3];
 }MONOLITH_APP_PARENT;
@@ -88,4 +151,7 @@ typedef struct{
 //==============================================================================
 //  外部データ
 //==============================================================================
+extern const GFL_PROC_DATA MonolithAppProc_Up_PalaceMap;
+extern const GFL_PROC_DATA MonolithAppProc_Down_Title;
 extern const GFL_PROC_DATA MonolithAppProc_Down_MissionSelect;
+extern const GFL_PROC_DATA MonolithAppProc_Up_MissionExplain;

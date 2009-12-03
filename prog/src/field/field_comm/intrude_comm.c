@@ -185,7 +185,6 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
 
   //通信エラーチェック
   if(NetErr_App_CheckError() == TRUE){
-    GF_ASSERT(0);
     intcomm->comm_status = INTRUDE_COMM_STATUS_ERROR;
     GameCommSys_ExitReq(intcomm->game_comm);
     return;

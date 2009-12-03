@@ -7,11 +7,16 @@
  */
 //==============================================================================
 #include <gflib.h>
+#include "system/main.h"
 #include "intrude_types.h"
 #include "intrude_mission.h"
 #include "intrude_comm_command.h"
 #include "msg/msg_invasion.h"
 #include "intrude_main.h"
+#include "intrude_work.h"
+#include "print/wordset.h"
+
+#include "mission.naix"
 
 
 //==============================================================================
@@ -26,6 +31,7 @@
 //==============================================================================
 static void MISSION_SendUpdate(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
 static void MISSION_SetMissionFail(MISSION_SYSTEM *mission, int fail_netid);
+static int _TragetNetID_Choice(INTRUDE_COMM_SYS_PTR intcomm, int accept_netid);
 
 
 
@@ -46,6 +52,25 @@ void MISSION_Init(MISSION_SYSTEM *mission)
   GFL_STD_MemClear(mission, sizeof(MISSION_SYSTEM));
   mission->data.mission_no = MISSION_NO_NULL;
   mission->result.mission_data.mission_no = MISSION_NO_NULL;
+  mission->data.accept_netid = INTRUDE_NETID_NULL;
+  
+  MISSION_Init_List(mission);
+}
+
+//==================================================================
+/**
+ * ミッションリスト初期化
+ *
+ * @param   mission		
+ */
+//==================================================================
+void MISSION_Init_List(MISSION_SYSTEM *mission)
+{
+  int i;
+
+  for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
+    mission->list[i].accept_netid = INTRUDE_NETID_NULL;
+  }
 }
 
 //==================================================================
@@ -60,7 +85,8 @@ void MISSION_Update(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
   //親機でミッション発動しているなら失敗までの秒数をカウントする
   if(GFL_NET_IsParentMachine() == TRUE 
       && MISSION_RecvCheck(mission) == TRUE 
-      && mission->result.mission_data.mission_no == MISSION_NO_NULL){
+      && mission->result.mission_data.mission_no == MISSION_NO_NULL
+      && mission->result.mission_data.accept_netid == INTRUDE_NETID_NULL){
     mission->timer++;
     if(mission->timer > MISSION_TIME_OVER){
       GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
@@ -70,6 +96,18 @@ void MISSION_Update(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
   
   //送信リクエストがあれば送信
   MISSION_SendUpdate(intcomm, mission);
+}
+
+//==================================================================
+/**
+ * ミッションリスト送信リクエストを設定する
+ *
+ * @param   mission		
+ */
+//==================================================================
+void MISSION_Set_ListSendReq(MISSION_SYSTEM *mission, int palace_area)
+{
+  mission->list_send_req[palace_area] = TRUE;
 }
 
 //==================================================================
@@ -97,34 +135,72 @@ void MISSION_Set_DataSendReq(MISSION_SYSTEM *mission)
 //==================================================================
 BOOL MISSION_SetEntry(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, const MISSION_REQ *req, int accept_netid)
 {
-  int i, target_no, connect_num;
   MISSION_DATA *mdata = &mission->data;
   
-  if(mdata->mission_no != MISSION_NO_NULL){
+  if(mdata->mission_no != MISSION_NO_NULL || mdata->accept_netid != INTRUDE_NETID_NULL){
     return FALSE;
   }
   mdata->mission_no = GFUser_GetPublicRand0(MISSION_NO_MAX);
   mdata->accept_netid = accept_netid;
   mdata->monolith_type = req->monolith_type;
   mdata->zone_id = req->zone_id;
+  mdata->target_netid = _TragetNetID_Choice(intcomm, accept_netid);
   
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ミッションのターゲット対象となるNetIDを決定する
+ *
+ * @param   intcomm		
+ * @param   accept_netid		ミッション受注者のNetID
+ *
+ * @retval  int		ターゲット対象者のNetID
+ */
+//--------------------------------------------------------------
+static int _TragetNetID_Choice(INTRUDE_COMM_SYS_PTR intcomm, int accept_netid)
+{
+  int i, target_no, connect_num;
+
   connect_num = GFL_NET_GetConnectNum();
   target_no = GFUser_GetPublicRand0(connect_num - 1); // -1 = 受注者分
   for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
     if(i != accept_netid && intcomm->recv_profile & (1 << i)){
       if(target_no == 0){
-        mdata->target_netid = i;
-        break;
+        return i;
       }
     }
   }
-  if(i == FIELD_COMM_MEMBER_MAX){
-    GF_ASSERT_MSG(0, "connect_num = %d, accept_netid = %d, recv_profile = %d\n", 
-      connect_num, accept_netid, intcomm->recv_profile);
-    mdata->target_netid = 0;
+  
+  GF_ASSERT_MSG(0, "connect_num = %d, accept_netid = %d, recv_profile = %d\n", 
+    connect_num, accept_netid, intcomm->recv_profile);
+  return 0;
+}
+
+//==================================================================
+/**
+ * ミッションリストをセット
+ *
+ * @param   mission		代入先
+ * @param   MISSION_CHOICE_LIST		    セットするデータ
+ */
+//==================================================================
+void MISSION_SetMissionList(MISSION_SYSTEM *mission, const MISSION_CHOICE_LIST *list)
+{
+  MISSION_CHOICE_LIST *mlist = &mission->list[list->palace_area];
+  
+  if(mlist->accept_netid != INTRUDE_NETID_NULL){
+    return; //既に受信済み
   }
   
-  return TRUE;
+  *mlist = *list;
+  //不正チェック
+#if 0 //もう少ししっかりとデータの取り扱いが決まってから有効にする
+  if(mdata->mission_no >= MISSION_NO_MAX || mdata->monolith_type >= MONOLITH_TYPE_MAX){
+    return;
+  }
+#endif
 }
 
 //==================================================================
@@ -142,7 +218,7 @@ void MISSION_SetMissionData(MISSION_SYSTEM *mission, const MISSION_DATA *src)
   //親の場合、既にmisison_noはセットされているので判定の前に受信フラグをセット
   mission->parent_data_recv = TRUE;
   mission->timer = 0;
-  if(mdata->mission_no != MISSION_NO_NULL){
+  if(mdata->mission_no != MISSION_NO_NULL || mdata->accept_netid != INTRUDE_NETID_NULL){
     return;
   }
   
@@ -166,6 +242,16 @@ void MISSION_SetMissionData(MISSION_SYSTEM *mission, const MISSION_DATA *src)
 //==================================================================
 static void MISSION_SendUpdate(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
 {
+  int i;
+  
+  for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
+    if(mission->list_send_req[i] == TRUE){
+      if(IntrudeSend_MissionList(intcomm, mission, i) == TRUE){
+        mission->list_send_req[i] = FALSE;
+      }
+    }
+  }
+  
   if(mission->data_send_req == TRUE){
     if(IntrudeSend_MissionData(intcomm, mission) == TRUE){
       mission->data_send_req = FALSE;
@@ -192,7 +278,7 @@ BOOL MISSION_RecvCheck(const MISSION_SYSTEM *mission)
 {
   const MISSION_DATA *mdata = &mission->data;
   
-  if(mdata->mission_no == MISSION_NO_NULL || mission->parent_data_recv == FALSE){
+  if(mdata->mission_no == MISSION_NO_NULL || mdata->accept_netid == INTRUDE_NETID_NULL || mission->parent_data_recv == FALSE){
     return FALSE;
   }
   return TRUE;
@@ -212,7 +298,7 @@ u16 MISSION_GetMissionMsgID(const MISSION_SYSTEM *mission)
   const MISSION_DATA *mdata = &mission->data;
   u16 msg_id;
   
-  if(mdata->mission_no == MISSION_NO_NULL || mdata->mission_no >= MISSION_NO_MAX){
+  if(mdata->accept_netid == INTRUDE_NETID_NULL || mdata->mission_no == MISSION_NO_NULL || mdata->mission_no >= MISSION_NO_MAX){
     return msg_invasion_mission000;
   }
   msg_id = mdata->mission_no * 2 + mdata->monolith_type;
@@ -232,7 +318,8 @@ u16 MISSION_GetAchieveMsgID(const MISSION_SYSTEM *mission, int my_netid)
 {
   const MISSION_RESULT *result = &mission->result;
   
-  if(result->mission_data.mission_no == MISSION_NO_FAIL
+  if(result->mission_data.accept_netid == INTRUDE_NETID_NULL
+      || result->mission_data.mission_no == MISSION_NO_FAIL
       || result->mission_data.mission_no == MISSION_NO_NULL 
       || result->mission_data.mission_no >= MISSION_NO_MAX){
     return msg_invasion_mission_sys002;
@@ -262,7 +349,7 @@ BOOL MISSION_EntryAchieve(MISSION_SYSTEM *mission, const MISSION_DATA *mdata, in
   MISSION_DATA *data = &mission->data;
   
   OS_TPrintf("ミッション達成エントリー net_id=%d\n", achieve_netid);
-  if(result->mission_data.mission_no != MISSION_NO_NULL || mission->parent_result_recv == TRUE){
+  if(result->mission_data.accept_netid != INTRUDE_NETID_NULL || result->mission_data.mission_no != MISSION_NO_NULL || mission->parent_result_recv == TRUE){
     OS_TPrintf("先に達成者がいたので受け付けない\n");
     return FALSE;
   }
@@ -290,7 +377,7 @@ static void MISSION_SetMissionFail(MISSION_SYSTEM *mission, int fail_netid)
   MISSION_RESULT *result = &mission->result;
   MISSION_DATA *data = &mission->data;
   
-  if(data->mission_no == MISSION_NO_NULL || result->mission_data.mission_no != MISSION_NO_NULL){
+  if(data->accept_netid == INTRUDE_NETID_NULL || data->mission_no == MISSION_NO_NULL || result->mission_data.mission_no != MISSION_NO_NULL){
     OS_TPrintf("MissionFailは受け入れられない %d, %d\n", 
       data->mission_no, result->mission_data.mission_no);
     return;
@@ -333,7 +420,7 @@ BOOL MISSION_RecvAchieve(const MISSION_SYSTEM *mission)
 {
   const MISSION_RESULT *result = &mission->result;
   
-  if(mission->parent_result_recv == TRUE && result->mission_data.mission_no != MISSION_NO_NULL){
+  if(mission->parent_result_recv == TRUE && result->mission_data.accept_netid != INTRUDE_NETID_NULL && result->mission_data.mission_no != MISSION_NO_NULL){
     return TRUE;
   }
   return FALSE;
@@ -353,7 +440,7 @@ BOOL MISSION_Talk_CheckAchieve(const MISSION_SYSTEM *mission, int talk_netid)
 {
   const MISSION_DATA *mdata = &mission->data;
   
-  if(mdata->mission_no == MISSION_NO_NULL){
+  if(mdata->mission_no == MISSION_NO_NULL || mdata->accept_netid == INTRUDE_NETID_NULL){
     return FALSE;
   }
   if(talk_netid == mdata->target_netid){
@@ -430,3 +517,279 @@ BOOL MISSION_AddPoint(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *missio
   return FALSE;
 }
 
+
+//==============================================================================
+//
+//  ミッションデータ
+//
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * ミッションデータをロード
+ *
+ * @retval  MISSION_CONV_DATA *		ミッションデータへのポインタ
+ */
+//--------------------------------------------------------------
+static MISSION_CONV_DATA * MISSIONDATA_Load(void)
+{
+  return GFL_ARC_LoadDataAlloc(ARCID_MISSION, NARC_mission_mission_data_bin, HEAPID_WORLD);
+}
+
+//--------------------------------------------------------------
+/**
+ * ミッションデータをアンロード
+ *
+ * @param   md		ミッションデータへのポインタ
+ */
+//--------------------------------------------------------------
+static void MISSIONDATA_Unload(MISSION_CONV_DATA *md)
+{
+  GFL_HEAP_FreeMemory(md);
+}
+
+//--------------------------------------------------------------
+/**
+ * ミッションデータの要素数を取得
+ *
+ * @retval  u32		要素数
+ */
+//--------------------------------------------------------------
+static u32 MISSIONDATA_GetArrayMax(void)
+{
+  return GFL_ARC_GetDataSize(ARCID_MISSION, NARC_mission_mission_data_bin);
+}
+
+//--------------------------------------------------------------
+/**
+ * ミッションデータを該当条件に合うものを選択してバッファに格納する
+ *
+ * @param   md		        ミッションデータへのポインタ
+ * @param   dest_md		    該当条件にあったデータの代入先
+ * @param   md_max		    ミッションデータ要素数
+ * @param   choice_type		選択タイプ
+ * @param   level		      パレスレベル
+ *
+ * @retval  BOOL		TRUE:条件に当てはまるものがあった。　FALSE:無かった
+ */
+//--------------------------------------------------------------
+static BOOL MISSIONDATA_Choice(const MISSION_CONV_DATA *cdata, MISSION_CONV_DATA *dest_md, int md_max, MISSION_TYPE choice_type, int level)
+{
+  int i;
+  
+  for(i = 0; i < md_max; i++){
+    if(cdata[i].type == choice_type && cdata[i].level <= level){
+      if(cdata[i].odds == 100 || cdata[i].odds <= GFUser_GetPublicRand(100)){
+        GFL_STD_MemCopy(&cdata[i], dest_md, sizeof(MISSION_CONV_DATA));
+        return TRUE;
+      }
+    }
+  }
+  
+  GF_ASSERT_MSG(0, "type=%d, level=%d\n", choice_type, level);
+  GFL_STD_MemCopy(&cdata[0], dest_md, sizeof(MISSION_CONV_DATA));
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ターゲット情報をセット
+ *
+ * @param   intcomm		
+ * @param   target	      	代入先
+ * @param   accept_netid		ミッション受注者のNetID
+ */
+//--------------------------------------------------------------
+static void MISSION_SetTargetInfo(INTRUDE_COMM_SYS_PTR intcomm, MISSION_TARGET_INFO *target, int accept_netid)
+{
+  const MYSTATUS *myst;
+  
+  target->net_id = _TragetNetID_Choice(intcomm, accept_netid);
+  
+  myst = Intrude_GetMyStatus(intcomm, target->net_id);
+  MyStatus_CopyNameStrCode(myst, target->name, PERSON_NAME_SIZE + EOM_SIZE);
+}
+
+//--------------------------------------------------------------
+/**
+ * ミッションデータ毎の拡張パラメータをセットする
+ *
+ * @param   mdata		        
+ * @param   accept_netid		ミッション受注者のNetID
+ */
+//--------------------------------------------------------------
+static void MISSIONDATA_ExtraParamSet(INTRUDE_COMM_SYS_PTR intcomm, MISSION_DATA *mdata, int accept_netid)
+{
+  MISSION_TYPE_WORK *exwork = &mdata->exwork;
+  
+  switch(mdata->cdata.type){
+  case MISSION_TYPE_VICTORY:     ///<勝利(LV)
+    MISSION_SetTargetInfo(intcomm, &exwork->victory.target_info, accept_netid);
+    break;
+  case MISSION_TYPE_SKILL:       ///<技
+    break;
+  case MISSION_TYPE_BASIC:       ///<基礎
+    MISSION_SetTargetInfo(intcomm, &exwork->victory.target_info, accept_netid);
+    break;
+  case MISSION_TYPE_SIZE:        ///<大きさ
+  case MISSION_TYPE_ATTRIBUTE:   ///<属性
+    break;
+  case MISSION_TYPE_ITEM:        ///<道具
+    MISSION_SetTargetInfo(intcomm, &exwork->victory.target_info, accept_netid);
+    break;
+  case MISSION_TYPE_OCCUR:       ///<発生(エンカウント)
+  case MISSION_TYPE_PERSONALITY: ///<性格
+    break;
+  }
+}
+
+//==================================================================
+/**
+ * ミッション選択候補リストを作成
+ *
+ * @param   intcomm		
+ * @param   mission		    
+ * @param   accept_netid  ミッション受注者のNetID
+ * @param   palace_area		選択候補を得る対象のパレスエリア
+ */
+//==================================================================
+void MISSION_MissionList_Create(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, int accept_netid, int palace_area)
+{
+  MISSION_CHOICE_LIST *list;
+  MISSION_TYPE type;
+  MISSION_CONV_DATA *cdata;
+  u32 md_array_max;
+  int palace_level;
+  const OCCUPY_INFO *occupy;
+  
+  list = &mission->list[palace_area];
+  if(list->accept_netid != INTRUDE_NETID_NULL){
+    return; //既に作成済み
+  }
+  list->accept_netid = accept_netid;
+  list->palace_area = palace_area;
+  
+  occupy = Intrude_GetOccupyInfo(intcomm, palace_area);
+  palace_level = occupy->intrude_level + 1;//ミッションデータが1originの為、合わせて1origin化
+  
+  cdata = MISSIONDATA_Load();
+  md_array_max = MISSIONDATA_GetArrayMax();
+  
+  occupy = Intrude_GetOccupyInfo(intcomm, palace_area);
+  
+  for(type = 0; type < MISSION_TYPE_MAX; type++){
+    MISSIONDATA_Choice(cdata, &list->md[type].cdata, md_array_max, type, palace_level);
+    MISSIONDATA_ExtraParamSet(intcomm, &list->md[type], accept_netid);
+  }
+
+  MISSIONDATA_Unload(cdata);
+}
+
+//==================================================================
+/**
+ * ミッション選択候補リストが有効かどうかチェック
+ *
+ * @param   mission		
+ * @param   palace_area		
+ *
+ * @retval  BOOL		TRUE:有効　FALSE:無効
+ */
+//==================================================================
+BOOL MISSION_MissionList_CheckOcc(MISSION_SYSTEM *mission, int palace_area)
+{
+  if(mission->list[palace_area].accept_netid != INTRUDE_NETID_NULL){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 生のSTRCODEをWORDSETする
+ *
+ * @param   wordset		
+ * @param   bufID		
+ * @param   code		        
+ * @param   str_length		  STRCODEの長さ
+ * @param   temp_heap_id		テンポラリで使用するヒープID
+ */
+//--------------------------------------------------------------
+static void _Wordset_Strcode(WORDSET *wordset, u32 bufID, const STRCODE *code, int str_length, HEAPID temp_heap_id)
+{
+  STRBUF *strbuf = 	GFL_STR_CreateBuffer(str_length, temp_heap_id);
+
+	GFL_STR_SetStringCodeOrderLength(strbuf, code, str_length);
+  WORDSET_RegisterWord(wordset, bufID, strbuf, 0, TRUE, PM_LANG);
+
+  GFL_STR_DeleteBuffer(strbuf);
+}
+
+//==================================================================
+/**
+ * ミッションデータに対応したメッセージをWORDSETする
+ *
+ * @param   intcomm		
+ * @param   mdata		        ミッションデータへのポインタ
+ * @param   wordset		      
+ * @param   temp_heap_id		テンポラリで使用するヒープID
+ */
+//==================================================================
+void MISSIONDATA_Wordset(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_DATA *mdata, WORDSET *wordset, HEAPID temp_heap_id)
+{
+  switch(mdata->cdata.type){
+  case MISSION_TYPE_VICTORY:     //勝利(LV)
+    {
+      const MISSION_TYPEDATA_VICTORY *d_vic = (void*)mdata->cdata.data;
+      
+      _Wordset_Strcode(wordset, 0, mdata->exwork.victory.target_info.name, 
+        PERSON_NAME_SIZE + EOM_SIZE, temp_heap_id);
+      
+      WORDSET_RegisterNumber(wordset, 1, d_vic->battle_level, 3, 
+        STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+    }
+    break;
+  case MISSION_TYPE_SKILL:       //技
+    break;
+  case MISSION_TYPE_BASIC:       //基礎
+    {
+      const MISSION_TYPEDATA_BASIC *d_bas = (void*)mdata->cdata.data;
+      
+      _Wordset_Strcode(wordset, 0, mdata->exwork.basic.target_info.name, 
+        PERSON_NAME_SIZE + EOM_SIZE, temp_heap_id);
+    }
+    break;
+  case MISSION_TYPE_SIZE:        //大きさ
+    break;
+  case MISSION_TYPE_ATTRIBUTE:   //属性
+    {
+      const MISSION_TYPEDATA_ATTRIBUTE *d_attr = (void*)mdata->cdata.data;
+      
+      WORDSET_RegisterPlaceName( wordset, 0, d_attr->zone_id );
+    }
+    break;
+  case MISSION_TYPE_ITEM:        //道具
+    {
+      const MISSION_TYPEDATA_ITEM *d_item = (void*)mdata->cdata.data;
+      
+      WORDSET_RegisterPlaceName( wordset, 0, d_item->item_no );
+      
+      _Wordset_Strcode(wordset, 1, mdata->exwork.item.target_info.name, 
+        PERSON_NAME_SIZE + EOM_SIZE, temp_heap_id);
+    }
+    break;
+  case MISSION_TYPE_OCCUR:       //発生(エンカウント)
+  case MISSION_TYPE_PERSONALITY: //性格
+    break;
+  }
+  
+  //制限時間
+  WORDSET_RegisterNumber(wordset, 2, mdata->cdata.time, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+  //報酬1位～4位
+  WORDSET_RegisterNumber(
+    wordset, 3, mdata->cdata.reward[0], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+  WORDSET_RegisterNumber(
+    wordset, 4, mdata->cdata.reward[1], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+  WORDSET_RegisterNumber(
+    wordset, 5, mdata->cdata.reward[2], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+  WORDSET_RegisterNumber(
+    wordset, 6, mdata->cdata.reward[3], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+}
