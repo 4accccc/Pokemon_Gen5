@@ -85,6 +85,7 @@ struct _MB_CAP_DOWN
   BOOL isTouch;
   BOOL isUpdateBall;
   BOOL isPlayBowPullSnd;
+  BOOL isBonusBall;
   
   MB_CAP_DOWN_STATE state;
   
@@ -620,14 +621,27 @@ const u16  MB_CAP_DOWN_GetShotAngle( const MB_CAP_DOWN *downWork )
 {
   return downWork->shotAngle;
 }
+const BOOL  MB_CAP_DOWN_GetIsBonusBall( const MB_CAP_DOWN *downWork )
+{
+  return downWork->isBonusBall;
+}
 
 //--------------------------------------------------------------
 //  ƒ{[ƒ‹‚ð•â[‚·‚é
 //--------------------------------------------------------------
-void MB_CAP_DOWN_ReloadBall( MB_CAP_DOWN *downWork )
+void MB_CAP_DOWN_ReloadBall( MB_CAP_DOWN *downWork , const BOOL isBonus )
 {
   downWork->state = MCDS_SUPPLY_BALL;
   downWork->ballPosX = FX32_CONST(MB_CAP_DOWN_BALL_SUPPLY_X);
   downWork->ballPosY = FX32_CONST(MB_CAP_DOWN_BALL_SUPPLY_Y);
+  downWork->isBonusBall = isBonus;
+  if( isBonus == TRUE )
+  {
+    GFL_CLACT_WK_SetAnmSeq( downWork->clwkBall , MCDA_BALL_BONUS );
+  }
+  else
+  {
+    GFL_CLACT_WK_SetAnmSeq( downWork->clwkBall , MCDA_BALL );
+  }
 }
 

@@ -35,6 +35,8 @@
 //	define
 //======================================================================
 #pragma mark [> define
+#define MB_CAP_TARGET_ANM_SPEED (6)
+#define MB_CAP_TARGET_ANM_FRAME (6)
 
 //======================================================================
 //	enum
@@ -75,11 +77,19 @@ struct _MB_CAPTURE_WORK
   BOOL isShotBall;
   int resIdxTarget;
   int objIdxTarget;
+  u8 targetAnmCnt;
+  u16 targetAnmFrame;
+
+  u16 bonusTime;
   
   VecFx32 targetPos;
   
   void* sndData;
 
+#if MB_CAP_DEB
+  //今のところデバッグ以外ではフォント使わないので
+  GFL_FONT *fontHandle;
+#endif
 };
 
 
@@ -122,6 +132,10 @@ static const GFL_DISP_VRAM vramBank = {
   GX_OBJVRAMMODE_CHAR_1D_32K
 };
 
+#if MB_CAP_DEB
+static void MB_CAPTURE_InitDebug( MB_CAPTURE_WORK *work );
+static void MB_CAPTURE_TermDebug( MB_CAPTURE_WORK *work );
+#endif
 
 //--------------------------------------------------------------
 //  初期化
@@ -146,6 +160,9 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
   MB_CAPTURE_InitUpper( work );
   work->downWork = MB_CAP_DOWN_InitSystem( work );
   work->isShotBall = FALSE;
+  work->targetAnmCnt = 0;
+  work->targetAnmFrame = 0;
+  work->bonusTime = 0;
 
   for( i=0;i<MB_CAP_BALL_NUM;i++ )
   {
@@ -157,6 +174,10 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
   }
   
   PMSND_PlayBGM( SEQ_BGM_PALPARK_GAME );
+
+#if MB_CAP_DEB
+  MB_CAPTURE_InitDebug( work );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -165,6 +186,10 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
 static void MB_CAPTURE_Term( MB_CAPTURE_WORK *work )
 {
   u8 i;
+#if MB_CAP_DEB
+  MB_CAPTURE_TermDebug( work );
+#endif
+
   for( i=0;i<MB_CAP_BALL_NUM;i++ )
   {
     if( work->ballWork[i] != NULL )
@@ -299,13 +324,13 @@ static void MB_CAPTURE_InitGraphic( MB_CAPTURE_WORK *work )
       GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x18000,0x0000,
       GX_BG_EXTPLTT_01, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
-    // BG2 MAIN (キャラ
-    //static const GFL_BG_BGCNT_HEADER header_main2 = {
-    //  0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
-    //  GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-    //  GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x10000,0x0C000,
-    //  GX_BG_EXTPLTT_23, 2, 1, 0, FALSE  // pal, pri, areaover, dmy, mosaic
-    //};
+    // BG2 MAIN (デバッグ
+    static const GFL_BG_BGCNT_HEADER header_main2 = {
+      0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x10000,0x08000,
+      GX_BG_EXTPLTT_23, 0, 1, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
     // BG3 MAIN (背景
     static const GFL_BG_BGCNT_HEADER header_main3 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
@@ -338,6 +363,7 @@ static void MB_CAPTURE_InitGraphic( MB_CAPTURE_WORK *work )
     GFL_BG_SetBGMode( &sys_data );
 
     MB_CAPTURE_SetupBgFunc( &header_main1 , MB_CAPTURE_FRAME_FRAME , GFL_BG_MODE_TEXT );
+    MB_CAPTURE_SetupBgFunc( &header_main2 , MB_CAPTURE_FRAME_DEBUG , GFL_BG_MODE_TEXT );
     MB_CAPTURE_SetupBgFunc( &header_main3 , MB_CAPTURE_FRAME_BG , GFL_BG_MODE_TEXT );
     MB_CAPTURE_SetupBgFunc( &header_sub1  , MB_CAPTURE_FRAME_SUB_BOW_LINE , GFL_BG_MODE_TEXT );
     MB_CAPTURE_SetupBgFunc( &header_sub2  , MB_CAPTURE_FRAME_SUB_BG , GFL_BG_MODE_TEXT );
@@ -416,6 +442,7 @@ static void MB_CAPTURE_TermGraphic( MB_CAPTURE_WORK *work )
 
   GFL_CLACT_SYS_Delete();
   GFL_BG_FreeBGControl( MB_CAPTURE_FRAME_FRAME );
+  GFL_BG_FreeBGControl( MB_CAPTURE_FRAME_DEBUG );
   GFL_BG_FreeBGControl( MB_CAPTURE_FRAME_BG );
   GFL_BG_FreeBGControl( MB_CAPTURE_FRAME_SUB_BOW_LINE );
   GFL_BG_FreeBGControl( MB_CAPTURE_FRAME_SUB_BG );
@@ -629,7 +656,7 @@ static void MB_CAPTURE_InitUpper( MB_CAPTURE_WORK *work )
   work->resIdxTarget = GFL_BBD_AddResource( work->bbdSys , 
                                        res , 
                                        GFL_BBD_TEXFMT_PAL16 ,
-                                       GFL_BBD_TEXSIZDEF_32x32 ,
+                                       GFL_BBD_TEXSIZDEF_256x32 ,
                                        32 , 32 );
   GFL_BBD_CutResourceData( work->bbdSys , work->resIdxTarget );
   
@@ -668,14 +695,17 @@ static void MB_CAPTURE_UpdateUpper( MB_CAPTURE_WORK *work )
   if( downState == MCDS_DRAG )
   {
     const BOOL flg = TRUE;
-    VecFx32 pos = {FX32_CONST(128),FX32_CONST(MB_CAP_UPPER_BALL_POS_BASE_Y),FX32_CONST(MB_CAP_UPPER_TARGET_BASE_Z)};
+    VecFx32 pos;
     VecFx32 ofs = {0,0,0};
     
+    pos.x = FX32_CONST(128);
+    pos.y = FX32_CONST(MB_CAP_UPPER_BALL_POS_BASE_Y);
+    pos.z = FX32_CONST(MB_CAP_UPPER_TARGET_BASE_Z);
     {
       //距離計算
       const fx32 pullLen = MB_CAP_DOWN_GetPullLen( work->downWork );
       const fx32 rate = FX_Div(pullLen,MB_CAP_DOWN_BOW_PULL_LEN_MAX);
-      const fx32 len = (MB_CAP_UPPER_BALL_LEN_MAX-MB_CAP_UPPER_BALL_LEN_MIN)*rate;
+      const fx32 len = (MB_CAP_UPPER_BALL_LEN_MAX-MB_CAP_UPPER_BALL_LEN_MIN)*rate + FX32_CONST(MB_CAP_UPPER_BALL_LEN_MIN);
       ofs.y = len;
     }
     {
@@ -706,7 +736,7 @@ static void MB_CAPTURE_UpdateUpper( MB_CAPTURE_WORK *work )
         {
           MB_CAP_BALL_INIT_WORK initWork;
           
-          initWork.isBonus = FALSE;
+          initWork.isBonus = MB_CAP_DOWN_GetIsBonusBall( work->downWork );
           initWork.targetPos = work->targetPos;
           initWork.rotAngle = MB_CAP_DOWN_GetShotAngle( work->downWork );
           work->ballWork[i] = MB_CAP_BALL_CreateObject( work , &initWork );
@@ -720,6 +750,21 @@ static void MB_CAPTURE_UpdateUpper( MB_CAPTURE_WORK *work )
   {
     const BOOL flg = FALSE;
     GFL_BBD_SetObjectDrawEnable( work->bbdSys , work->objIdxTarget , &flg );
+  }
+
+  //アニメの更新
+  {
+    work->targetAnmCnt++;
+    if( work->targetAnmCnt >= MB_CAP_TARGET_ANM_SPEED )
+    {
+      work->targetAnmCnt = 0;
+      work->targetAnmFrame++;
+      if( work->targetAnmFrame >= MB_CAP_TARGET_ANM_FRAME )
+      {
+        work->targetAnmFrame = 0;
+      }
+      GFL_BBD_SetObjectCelIdx( work->bbdSys , work->objIdxTarget , &work->targetAnmFrame );
+    }
   }
 
   for( i=0;i<MB_CAP_BALL_NUM;i++ )
@@ -786,11 +831,11 @@ static void MB_CAPTURE_UpdateUpper( MB_CAPTURE_WORK *work )
   }
 
   
-  if( activeBallNum == 0 &&
+  if( (activeBallNum == 0 || work->bonusTime > 0 )&&
       downState == MCDS_SHOT_WAIT &&
       work->isShotBall == TRUE )
   {
-    MB_CAP_DOWN_ReloadBall( work->downWork );
+    MB_CAP_DOWN_ReloadBall( work->downWork , MB_CAPTURE_IsBonusTime(work) );
     work->isShotBall = FALSE;
   }
 }
@@ -942,7 +987,14 @@ MB_CAP_POKE* MB_CAPTURE_GetPokeWork( MB_CAPTURE_WORK *work , const u8 idx )
 {
   return work->pokeWork[idx];
 }
-
+const BOOL MB_CAPTURE_IsBonusTime( MB_CAPTURE_WORK *work )
+{
+  if( work->bonusTime > 0 )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
 //--------------------------------------------------------------
 //  ポケモン捕獲処理
 //--------------------------------------------------------------
@@ -1007,3 +1059,343 @@ const BOOL MB_CAPTURE_CheckHit( const MB_CAP_HIT_WORK *work1 , MB_CAP_HIT_WORK *
   }
   return FALSE;
 }
+
+
+#pragma mark [>debug func
+#if MB_CAP_DEB
+
+#include "debug/debugwin_sys.h"
+#include "font/font.naix"
+
+#define MB_CAP_DEBUG_GROUP_TOP  (50)
+#define MB_CAP_DEBUG_GROUP_BALL (51)
+#define MB_CAP_DEBUG_GROUP_POKE (52)
+#define MB_CAP_DEBUG_GROUP_BGM  (53)
+
+int MB_CAP_UPPER_BALL_POS_BASE_Y = 256;
+fx32 MB_CAP_BALL_SHOT_SPEED = FX32_CONST(3.5f);
+
+int MB_CAP_POKE_HIDE_LOOK_TIME = (60*3);
+int MB_CAP_POKE_HIDE_HIDE_TIME = (60*4);
+int MB_CAP_POKE_RUN_LOOK_TIME = (60*1);
+int MB_CAP_POKE_RUN_HIDE_TIME = (60*5);
+int MB_CAP_POKE_DOWN_TIME = (60*3);
+
+int BgmTemp = 256;
+int BgmPitch = 0;
+
+static const BOOL MB_CAPTURE_Debug_UpdateValue_u16( u16 *val );
+static const BOOL MB_CAPTURE_Debug_UpdateValue_fx32( fx32 *val );
+static const BOOL MB_CAPTURE_Debug_UpdateValue_int( int *val );
+static void MCD_U_BonusTime( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_BonusTime( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_U_ResetPoke( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_U_BallBaseY( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_BallBaseY( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_U_BallSpd( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_BallSpd( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_U_PokeHideTime( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_PokeHideTime( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_U_PokeLookTime( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_PokeLookTime( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_U_PokeRunHideTime( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_PokeRunHideTime( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_U_PokeRunLookTime( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_PokeRunLookTime( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_U_PokeDownTime( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_PokeDownTime( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_U_BgmTempo( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_BgmTempo( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_U_BgmPitch( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_BgmPitch( void* userWork , DEBUGWIN_ITEM* item );
+
+static void MB_CAPTURE_InitDebug( MB_CAPTURE_WORK *work )
+{
+  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
+
+  DEBUGWIN_InitProc( MB_CAPTURE_FRAME_DEBUG , work->fontHandle );
+  DEBUGWIN_ChangeLetterColor( 0,0,0 );
+  
+  DEBUGWIN_AddGroupToTop( MB_CAP_DEBUG_GROUP_TOP , "パル" , work->heapId );
+  DEBUGWIN_AddGroupToGroup( MB_CAP_DEBUG_GROUP_BALL , "BALL" , MB_CAP_DEBUG_GROUP_TOP , work->heapId );
+  DEBUGWIN_AddGroupToGroup( MB_CAP_DEBUG_GROUP_POKE , "POKE" , MB_CAP_DEBUG_GROUP_TOP , work->heapId );
+  DEBUGWIN_AddGroupToGroup( MB_CAP_DEBUG_GROUP_BGM  , "BGM" , MB_CAP_DEBUG_GROUP_TOP , work->heapId );
+
+  DEBUGWIN_AddItemToGroupEx( MCD_U_BonusTime ,MCD_D_BonusTime , (void*)work , MB_CAP_DEBUG_GROUP_TOP , work->heapId );
+  DEBUGWIN_AddItemToGroup( "ResetPoke" , MCD_U_ResetPoke , (void*)work , MB_CAP_DEBUG_GROUP_TOP , work->heapId );
+
+  DEBUGWIN_AddItemToGroupEx( MCD_U_BallBaseY ,MCD_D_BallBaseY , (void*)work , MB_CAP_DEBUG_GROUP_BALL , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MCD_U_BallSpd   ,MCD_D_BallSpd   , (void*)work , MB_CAP_DEBUG_GROUP_BALL , work->heapId );
+
+  DEBUGWIN_AddItemToGroupEx( MCD_U_PokeHideTime   ,MCD_D_PokeHideTime   , (void*)work , MB_CAP_DEBUG_GROUP_POKE , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MCD_U_PokeLookTime   ,MCD_D_PokeLookTime   , (void*)work , MB_CAP_DEBUG_GROUP_POKE , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MCD_U_PokeRunHideTime   ,MCD_D_PokeRunHideTime   , (void*)work , MB_CAP_DEBUG_GROUP_POKE , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MCD_U_PokeRunLookTime   ,MCD_D_PokeRunLookTime   , (void*)work , MB_CAP_DEBUG_GROUP_POKE , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MCD_U_PokeDownTime   ,MCD_D_PokeDownTime   , (void*)work , MB_CAP_DEBUG_GROUP_POKE , work->heapId );
+
+  DEBUGWIN_AddItemToGroupEx( MCD_U_BgmTempo   ,MCD_D_BgmTempo   , (void*)work , MB_CAP_DEBUG_GROUP_BGM , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MCD_U_BgmPitch   ,MCD_D_BgmPitch   , (void*)work , MB_CAP_DEBUG_GROUP_BGM , work->heapId );
+}
+
+static void MB_CAPTURE_TermDebug( MB_CAPTURE_WORK *work )
+{
+  DEBUGWIN_RemoveGroup( MB_CAP_DEBUG_GROUP_TOP );
+  DEBUGWIN_ExitProc();
+
+  GFL_FONT_Delete( work->fontHandle );
+}
+
+
+static const BOOL MB_CAPTURE_Debug_UpdateValue_u16( u16 *val )
+{
+  u16 value;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){ value = 10; }
+  else{ value = 1; }
+
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  {
+    *val += value;
+    return TRUE;
+  }
+  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+  {
+    *val -= value;
+    return TRUE;
+  }
+  return FALSE;
+}
+static const BOOL MB_CAPTURE_Debug_UpdateValue_int( int *val )
+{
+  int value;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){ value = 10; }
+  else{ value = 1; }
+
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  {
+    *val += value;
+    return TRUE;
+  }
+  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+  {
+    *val -= value;
+    return TRUE;
+  }
+  return FALSE;
+}
+static const BOOL MB_CAPTURE_Debug_UpdateValue_fx32( fx32 *val )
+{
+  fx32 value;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){value = FX32_ONE;}
+  else{value = FX32_CONST(0.1f);}
+
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  {
+    *val += value;
+    return TRUE;
+  }
+  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+  {
+    *val -= value;
+    return TRUE;
+  }
+  return FALSE;
+}
+
+static void MCD_U_BonusTime( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MB_CAPTURE_WORK *work = (MB_CAPTURE_WORK*)userWork;
+  const u16 befTime = work->bonusTime;
+  const BOOL ret = MB_CAPTURE_Debug_UpdateValue_u16( &work->bonusTime );
+  if( ret == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+    
+    if( work->bonusTime > 0 &&
+        befTime == 0 )
+    {
+      PMSND_PlayBGM( SEQ_BGM_PALPARK_BONUS );
+    }
+    else
+    if( work->bonusTime == 0 &&
+        befTime > 0 )
+    {
+      PMSND_PlayBGM( SEQ_BGM_PALPARK_GAME );
+    }
+  }
+}
+
+static void MCD_D_BonusTime( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MB_CAPTURE_WORK *work = (MB_CAPTURE_WORK*)userWork;
+
+  DEBUGWIN_ITEM_SetNameV( item , "BonusTime[%d]",work->bonusTime );
+}
+
+static void MCD_U_ResetPoke( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MB_CAPTURE_WORK *work = (MB_CAPTURE_WORK*)userWork;
+  u8 i,j;
+  //出現設定
+  for( i=0;i<MB_CAP_POKE_NUM;i++ )
+  {
+    BOOL isLoop = TRUE;
+    while( isLoop == TRUE )
+    {
+      const u8 idxX = GFUser_GetPublicRand0( MB_CAP_OBJ_X_NUM );
+      const u8 idxY = GFUser_GetPublicRand0( MB_CAP_OBJ_Y_NUM );
+      isLoop = FALSE;
+      for( j=0;j<i;j++ )
+      {
+        if( MB_CAP_POKE_CheckPos( work->pokeWork[j] , idxX , idxY ) == TRUE )
+        {
+          isLoop = TRUE;
+          break;
+        }
+      }
+      if( isLoop == FALSE )
+      {
+        MB_CAP_POKE_SetHide( work , work->pokeWork[j] , idxX , idxY );
+        OS_TPrintf("[%d][%d]\n",idxX,idxY);
+      }
+    }
+  }  
+}
+
+static void MCD_U_BallBaseY( void* userWork , DEBUGWIN_ITEM* item )
+{
+  const BOOL ret = MB_CAPTURE_Debug_UpdateValue_int( &MB_CAP_UPPER_BALL_POS_BASE_Y );
+  if( ret == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MCD_D_BallBaseY( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MB_CAPTURE_WORK *work = (MB_CAPTURE_WORK*)userWork;
+
+  DEBUGWIN_ITEM_SetNameV( item , "posY[%d]",MB_CAP_UPPER_BALL_POS_BASE_Y );
+}
+
+
+static void MCD_U_BallSpd( void* userWork , DEBUGWIN_ITEM* item )
+{
+  const BOOL ret = MB_CAPTURE_Debug_UpdateValue_fx32( &MB_CAP_BALL_SHOT_SPEED );
+  if( ret == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MCD_D_BallSpd( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MB_CAPTURE_WORK *work = (MB_CAPTURE_WORK*)userWork;
+  const int upVal= (int)F32_CONST(MB_CAP_BALL_SHOT_SPEED);
+  const int downVal= ((int)F32_CONST(MB_CAP_BALL_SHOT_SPEED*10))%10;
+  
+  DEBUGWIN_ITEM_SetNameV( item , "speed[%d.%d]",upVal,downVal );
+  
+}
+
+static void MCD_U_PokeHideTime( void* userWork , DEBUGWIN_ITEM* item )
+{
+  const BOOL ret = MB_CAPTURE_Debug_UpdateValue_int( &MB_CAP_POKE_HIDE_HIDE_TIME );
+  if( ret == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MCD_D_PokeHideTime( void* userWork , DEBUGWIN_ITEM* item )
+{
+  DEBUGWIN_ITEM_SetNameV( item , "Stay HideTime[%d]",MB_CAP_POKE_HIDE_HIDE_TIME );
+}
+
+static void MCD_U_PokeLookTime( void* userWork , DEBUGWIN_ITEM* item )
+{
+  const BOOL ret = MB_CAPTURE_Debug_UpdateValue_int( &MB_CAP_POKE_HIDE_LOOK_TIME );
+  if( ret == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MCD_D_PokeLookTime( void* userWork , DEBUGWIN_ITEM* item )
+{
+  DEBUGWIN_ITEM_SetNameV( item , "Stay LookTime[%d]",MB_CAP_POKE_HIDE_LOOK_TIME );
+}
+
+static void MCD_U_PokeRunHideTime( void* userWork , DEBUGWIN_ITEM* item )
+{
+  const BOOL ret = MB_CAPTURE_Debug_UpdateValue_int( &MB_CAP_POKE_RUN_HIDE_TIME );
+  if( ret == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MCD_D_PokeRunHideTime( void* userWork , DEBUGWIN_ITEM* item )
+{
+  DEBUGWIN_ITEM_SetNameV( item , "Move HideTime[%d]",MB_CAP_POKE_RUN_HIDE_TIME );
+}
+
+static void MCD_U_PokeRunLookTime( void* userWork , DEBUGWIN_ITEM* item )
+{
+  const BOOL ret = MB_CAPTURE_Debug_UpdateValue_int( &MB_CAP_POKE_RUN_LOOK_TIME );
+  if( ret == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MCD_D_PokeRunLookTime( void* userWork , DEBUGWIN_ITEM* item )
+{
+  DEBUGWIN_ITEM_SetNameV( item , "Move LookTime[%d]",MB_CAP_POKE_RUN_LOOK_TIME );
+}
+
+static void MCD_U_PokeDownTime( void* userWork , DEBUGWIN_ITEM* item )
+{
+  const BOOL ret = MB_CAPTURE_Debug_UpdateValue_int( &MB_CAP_POKE_DOWN_TIME );
+  if( ret == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MCD_D_PokeDownTime( void* userWork , DEBUGWIN_ITEM* item )
+{
+  DEBUGWIN_ITEM_SetNameV( item , "DownTime[%d]",MB_CAP_POKE_DOWN_TIME );
+}
+
+static void MCD_U_BgmTempo( void* userWork , DEBUGWIN_ITEM* item )
+{
+  const BOOL ret = MB_CAPTURE_Debug_UpdateValue_int( &BgmTemp );
+  if( ret == TRUE )
+  {
+    PMSND_SetStatusBGM( BgmTemp , BgmPitch , PMSND_NOEFFECT );
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MCD_D_BgmTempo( void* userWork , DEBUGWIN_ITEM* item )
+{
+  DEBUGWIN_ITEM_SetNameV( item , "Tempo[%d]",BgmTemp );
+}
+
+static void MCD_U_BgmPitch( void* userWork , DEBUGWIN_ITEM* item )
+{
+  const BOOL ret = MB_CAPTURE_Debug_UpdateValue_int( &BgmPitch );
+  if( ret == TRUE )
+  {
+    PMSND_SetStatusBGM( BgmTemp , BgmPitch , PMSND_NOEFFECT );
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MCD_D_BgmPitch( void* userWork , DEBUGWIN_ITEM* item )
+{
+  DEBUGWIN_ITEM_SetNameV( item , "Pitch[%d]",BgmPitch );
+}
+
+
+#endif  //MB_CAP_DEB

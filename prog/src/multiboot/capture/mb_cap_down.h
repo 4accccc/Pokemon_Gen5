@@ -53,7 +53,8 @@ extern const fx32 MB_CAP_DOWN_GetPullLen( const MB_CAP_DOWN *downWork );
 extern const u16  MB_CAP_DOWN_GetRotAngle( const MB_CAP_DOWN *downWork );
 extern const fx32 MB_CAP_DOWN_GetShotLen( const MB_CAP_DOWN *downWork );
 extern const u16  MB_CAP_DOWN_GetShotAngle( const MB_CAP_DOWN *downWork );
+extern const BOOL MB_CAP_DOWN_GetIsBonusBall( const MB_CAP_DOWN *downWork );
 
 //É{Å[ÉãÇÃï‚è[
-extern void MB_CAP_DOWN_ReloadBall( MB_CAP_DOWN *downWork );
+extern void MB_CAP_DOWN_ReloadBall( MB_CAP_DOWN *downWork , const BOOL isBonus );
 

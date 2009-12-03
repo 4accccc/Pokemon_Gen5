@@ -14,8 +14,16 @@
 //======================================================================
 //	define
 //======================================================================
+
+//------------------------------------------------------
+//デバッグ有効
+//------------------------------------------------------
+#define MB_CAP_DEB (1)
+
+
 #pragma mark [> define
 #define MB_CAPTURE_FRAME_FRAME (GFL_BG_FRAME1_M)
+#define MB_CAPTURE_FRAME_DEBUG (GFL_BG_FRAME2_M)
 #define MB_CAPTURE_FRAME_BG  (GFL_BG_FRAME3_M)
 
 #define MB_CAPTURE_FRAME_SUB_BOW_LINE  (GFL_BG_FRAME1_S)
@@ -28,7 +36,9 @@
 #define MB_CAPTURE_PAL_SUB_OBJ_MAIN (0) //4本
 #define MB_CAPTURE_PAL_SUB_OBJ_MAIN_NUM (4) //4本
 
+//------------------------------------------------------
 //OBJ系
+//------------------------------------------------------
 #define MB_CAP_OBJ_X_NUM (5)
 #define MB_CAP_OBJ_Y_NUM (3)
 #define MB_CAP_OBJ_MAIN_NUM (MB_CAP_OBJ_X_NUM*MB_CAP_OBJ_Y_NUM)
@@ -55,17 +65,61 @@
 
 #define MB_CAP_BALL_NUM (10)
 
+//------------------------------------------------------
 //弓系
+//------------------------------------------------------
 #define MB_CAP_DOWN_BOW_PULL_LEN_MAX (FX32_CONST(100))
 
+//------------------------------------------------------
 //上系数値
+//------------------------------------------------------
+#if MB_CAP_DEB
+
+extern int  MB_CAP_UPPER_BALL_POS_BASE_Y;
+extern fx32 MB_CAP_BALL_SHOT_SPEED;
+
+#else //MB_CAP_DEB
+
 //ボールの飛ぶ基本位置(ターゲットの回転中心)
 #define MB_CAP_UPPER_BALL_POS_BASE_Y ( 256 )
-//ボールの最低・最高飛距離
-#define MB_CAP_UPPER_BALL_LEN_MIN ( 32 )
-#define MB_CAP_UPPER_BALL_LEN_MAX ( 300 )
+//X192:Y120の距離は226 //66フレームで飛んで行くには3.5くらい
+#define MB_CAP_BALL_SHOT_SPEED (FX32_CONST(3.5f))
 
+#endif  //MB_CAP_DEB
+
+//ボールの最低・最高飛距離
+#define MB_CAP_UPPER_BALL_LEN_MIN ( MB_CAP_UPPER_BALL_POS_BASE_Y-192 )
+#define MB_CAP_UPPER_BALL_LEN_MAX ((int)( MB_CAP_UPPER_BALL_POS_BASE_Y*1.2f ))
+
+//------------------------------------------------------
+//ポケモン関係
+//------------------------------------------------------
+//====================================
+#if MB_CAP_DEB  
+
+extern int MB_CAP_POKE_HIDE_LOOK_TIME;
+extern int MB_CAP_POKE_HIDE_HIDE_TIME;
+extern int MB_CAP_POKE_RUN_LOOK_TIME;
+extern int MB_CAP_POKE_RUN_HIDE_TIME;
+extern int MB_CAP_POKE_DOWN_TIME;
+
+#else //MB_CAP_DEB
+
+#define MB_CAP_POKE_HIDE_LOOK_TIME (60*3)
+#define MB_CAP_POKE_HIDE_HIDE_TIME (60*4)
+#define MB_CAP_POKE_RUN_LOOK_TIME (60*1)
+#define MB_CAP_POKE_RUN_HIDE_TIME (60*5)
+#define MB_CAP_POKE_DOWN_TIME (60*3)
+
+#endif  //MB_CAP_DEB
+//====================================
+
+#define MB_CAP_POKE_JUMP_HEIGHT (24)
+#define MB_CAP_POKE_HIDE_TOTAL_TIME (MB_CAP_POKE_HIDE_LOOK_TIME*2+MB_CAP_POKE_HIDE_HIDE_TIME*2)
+
+//------------------------------------------------------
 //エフェクト
+//------------------------------------------------------
 //個数適当
 #define MB_CAP_EFFECT_NUM (16)
 
@@ -92,7 +146,6 @@
 #define MB_CAP_POKE_HITSIZE_X (10)
 #define MB_CAP_POKE_HITSIZE_Y ( 6)
 #define MB_CAP_POKE_HITSIZE_Z ( 8)
-
 
 //======================================================================
 //	enum
@@ -157,6 +210,7 @@ extern const DLPLAY_CARD_TYPE MB_CAPTURE_GetCardType( const MB_CAPTURE_WORK *wor
 extern const int MB_CAPTURE_GetBbdResIdx( const MB_CAPTURE_WORK *work , const MB_CAP_BBD_RES resType );
 extern MB_CAP_OBJ* MB_CAPTURE_GetObjWork( MB_CAPTURE_WORK *work , const u8 idx );
 extern MB_CAP_POKE* MB_CAPTURE_GetPokeWork( MB_CAPTURE_WORK *work , const u8 idx );
+extern const BOOL MB_CAPTURE_IsBonusTime( MB_CAPTURE_WORK *work );
 
 extern void MB_CAPTURE_GetPokeFunc( MB_CAPTURE_WORK *work , MB_CAP_BALL *ballWork , const u8 pokeIdx );
 extern MB_CAP_EFFECT* MB_CAPTURE_CreateEffect( MB_CAPTURE_WORK *work , VecFx32 *pos , const MB_CAP_EFFECT_TYPE type );

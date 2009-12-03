@@ -24,8 +24,6 @@
 //	define
 //======================================================================
 #pragma mark [> define
-//X192:Y120‚Ì‹——£‚Í226 //66ƒtƒŒ[ƒ€‚Å”ò‚ñ‚Ås‚­‚É‚Í3.5‚­‚ç‚¢
-#define MB_CAP_BALL_SHOT_SPEED (FX32_CONST(3.5f))
 
 #define MB_CAP_BALL_ANIM_SHOT_SPEED (6)
 #define MB_CAP_BALL_ANIM_SHOT_FRAME (6)
@@ -91,10 +89,20 @@ MB_CAP_BALL* MB_CAP_BALL_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_BALL_IN
   GFL_BBD_SYS *bbdSys = MB_CAPTURE_GetBbdSys( capWork );
   ARCHANDLE *arcHandle = MB_CAPTURE_GetArcHandle( capWork );
   MB_CAP_BALL *ballWork = GFL_HEAP_AllocClearMemory( heapId , sizeof( MB_CAP_BALL ) );
-  const int resIdx = MB_CAPTURE_GetBbdResIdx( capWork , MCBR_BALL );
+  int resIdx;
   const int resShadowIdx = MB_CAPTURE_GetBbdResIdx( capWork , MCBR_SHADOW );
   const BOOL flg = TRUE;
   const u16 rot = 0x10000-initWork->rotAngle;
+
+  if( initWork->isBonus == TRUE )
+  {
+    resIdx = MB_CAPTURE_GetBbdResIdx( capWork , MCBR_BALL_BONUS );
+  }
+  else
+  {
+    resIdx = MB_CAPTURE_GetBbdResIdx( capWork , MCBR_BALL );
+  }
+
   ballWork->pos.x = FX32_CONST(128);
   ballWork->pos.y = FX32_CONST(MB_CAP_UPPER_BALL_POS_BASE_Y);
   ballWork->pos.z = FX32_CONST(MB_CAP_UPPER_BALL_BASE_Z);

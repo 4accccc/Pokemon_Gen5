@@ -28,6 +28,7 @@
 #define SJIS_S_Z (0x7a)
 #define SJIS_UL (0x5f)
 #define SJIS_H_SPACE  (0x20) //' '
+#define SJIS_H_DOT  (0x2e) //'.'
 
 #define SJIS_HIRA_XA (0x829f) //'‚Ÿ'
 #define SJIS_HIRA_N  (0x82f1) //'‚ñ'
@@ -47,6 +48,7 @@
 #define UTF16H_S_Z  (0x007a)
 #define UTF16H_UL (0x005f)
 #define UTF16H_SPACE (0x0020)
+#define UTF16H_DOT (0x002e)
 
 //STRCODE‘SŠp
 #define UTF16_HIRA_XA (0x3041) //'‚Ÿ'
@@ -258,6 +260,11 @@ const BOOL DEB_STR_CONV_SjisToStrcode_OneChara( const char* str1 , STRCODE *str2
       str2[0] = UTF16H_SPACE;
     }
     else
+    if( str1[0] == SJIS_H_DOT  )
+    {
+      str2[0] = UTF16H_DOT;
+    }
+    else
     {
       str2[0] = L'?';
     }
@@ -372,12 +379,17 @@ const BOOL DEB_STR_CONV_StrcodeToSjis_OneChara( const STRCODE *str1 , char* str2
   else
   if( str1[0] == UTF16H_UL )
   {
-    str2[0] = SJIS_UL + (str1[0]-UTF16H_UL);
+    str2[0] = SJIS_UL;
   }
   else
   if( str1[0] == UTF16H_SPACE )
   {
-    str2[0] = SJIS_H_SPACE + (str1[0]-UTF16H_SPACE);
+    str2[0] = SJIS_H_SPACE;
+  }
+  else
+  if( str1[0] == UTF16H_DOT )
+  {
+    str2[0] = SJIS_H_DOT;
   }
   else  //ƒRƒR‚©‚ç‘SŠp
   if( str1[0] >= UTF16_HIRA_XA &&
